@@ -1347,7 +1347,7 @@ Label_10_5006:
 	ld a, [wKeepMatchStatsFlag] ; $5027
 	or a, a ; $502a
 	jr z, Label_10_5030 ; $502b
-	jp Label_10_55b6 ; $502d
+	jp RunEraseSavedDataFlow.runMatch ; $502d
 Label_10_5030:
 	farcall RestoreStoryReturnPoint ; $5030
 	ld b, $0a ; $5033
@@ -1835,9 +1835,9 @@ RunEraseSavedDataFlow:
 	ld hl, $54ec ; $54e0
 	add a, l ; $54e3
 	ld l, a ; $54e4
-	jr nc, Label_10_54e8 ; $54e5
+	jr nc, .readHandler ; $54e5
 	inc h ; $54e7
-Label_10_54e8:
+.readHandler:
 	ld a, [hl+] ; $54e8
 	ld h, [hl] ; $54e9
 	ld l, a ; $54ea
@@ -1859,17 +1859,17 @@ Label_10_54e8:
 	farcall RunCharDataConfirmScreen ; $5506
 	pop bc ; $5509
 	or a, a ; $550a
-	jr nz, Label_10_5520 ; $550b
+	jr nz, .redrawAfterErase ; $550b
 	call ConfirmDiscardSuspendedExhibMatch ; $550d
 	or a, a ; $5510
-	jr nz, Label_10_5520 ; $5511
+	jr nz, .redrawAfterErase ; $5511
 	ld a, b ; $5513
 	ld [wCurrentStorySlot], a ; $5514
 	ld a, $00 ; $5517
 	farcall EraseStorySlotSaveData ; $5519
 	xor a, a ; $551c
 	ld [$cb1b], a ; $551d
-Label_10_5520:
+.redrawAfterErase:
 	call DisableLCDSafely ; $5520
 	farcall LoadMenuFontGfx ; $5523
 	farcall ResetScreenAndTextWindows ; $5526
@@ -1884,9 +1884,9 @@ Label_10_5520:
 	ld b, $01 ; $5541
 	farcall RunEraseDataConfirmMenu ; $5543
 	or a, a ; $5546
-	jr z, Label_10_554c ; $5547
+	jr z, .redrawAfterBlockErase ; $5547
 	farcall ClearSaveBlock11 ; $5549
-Label_10_554c:
+.redrawAfterBlockErase:
 	call DisableLCDSafely ; $554c
 	farcall LoadMenuFontGfx ; $554f
 	farcall ResetScreenAndTextWindows ; $5552
@@ -1901,7 +1901,7 @@ Label_10_554c:
 	ld b, $00 ; $556d
 	farcall RunEraseDataConfirmMenu ; $556f
 	or a, a ; $5572
-	jr nz, Label_10_5592 ; $5573
+	jr nz, .reinitSram ; $5573
 	call DisableLCDSafely ; $5575
 	farcall LoadMenuFontGfx ; $5578
 	farcall ResetScreenAndTextWindows ; $557b
@@ -1912,7 +1912,7 @@ Label_10_554c:
 	xor a, a ; $558b
 	ld [$cb1b], a ; $558c
 	jp RunEraseSavedDataFlow ; $558f
-Label_10_5592:
+.reinitSram:
 	farcall ReinitSaveRamPreservingBlock6 ; $5592
 	call DisableLCDSafely ; $5595
 	farcall LoadMenuFontGfx ; $5598
@@ -1926,11 +1926,11 @@ Label_10_5592:
 	ld [$cb20], a ; $55af
 	jp RunEraseSavedDataFlow ; $55b2
 	ret ; $55b5
-Label_10_55b6:
+.runMatch:
 	farcall RunMatch ; $55b6
 	ld a, [$c8a5] ; $55b9
 	or a, a ; $55bc
-	jr z, Label_10_55d5 ; $55bd
+	jr z, .matchFinished ; $55bd
 	farcall SaveStorySlotWithTimer ; $55bf
 	ld a, $00 ; $55c2
 	ld [wStoryModeCurrentLocation], a ; $55c4
@@ -1940,10 +1940,10 @@ Label_10_55b6:
 	ld [$c294], a ; $55ce
 	ld [wStoryModeExitLocationRequest], a ; $55d1
 	ret ; $55d4
-Label_10_55d5:
+.matchFinished:
 	ld a, [wGameMode] ; $55d5
 	cp a, $04 ; $55d8
-	jr nz, Label_10_5604 ; $55da
+	jr nz, .chooseReturn ; $55da
 	clear_flag FLAG_ISLAND_SKY_SCENE_ACTIVE ; $55dc
 	xor a, a ; $55df
 	ld [wKeepMatchStatsFlag], a ; $55e0
@@ -1952,20 +1952,20 @@ Label_10_55d5:
 	farcall SaveStoryReturnPoint ; $55e7
 	farcall SaveStorySlotWithTimer ; $55ea
 	test_flag FLAG_DEBUG_SKIP_LOCATION_EXIT ; $55ed
-	jr nz, Label_10_55fb ; $55f0
+	jr nz, .returnToLocation3 ; $55f0
 	ld a, $02 ; $55f2
 	ld [$c294], a ; $55f4
 	ld [wStoryModeExitLocationRequest], a ; $55f7
 	ret ; $55fa
-Label_10_55fb:
+.returnToLocation3:
 	ld a, $03 ; $55fb
 	ld [$c294], a ; $55fd
 	ld [wStoryModeExitLocationRequest], a ; $5600
 	ret ; $5603
-Label_10_5604:
+.chooseReturn:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $5604
 	cp a, $14 ; $5607
-	jr c, Label_10_561e ; $5609
+	jr c, .below14 ; $5609
 	ld a, $1c ; $560b
 	ld [wStoryModeCurrentLocation], a ; $560d
 	ld a, $0a ; $5610
@@ -1974,11 +1974,11 @@ Label_10_5604:
 	ld [$c294], a ; $5617
 	ld [wStoryModeExitLocationRequest], a ; $561a
 	ret ; $561d
-Label_10_561e:
+.below14:
 	cp a, $0f ; $561e
-	jr c, Label_10_564d ; $5620
+	jr c, .below0f ; $5620
 	test_flag FLAG_DOUBLES ; $5622
-	jr nz, Label_10_563a ; $5625
+	jr nz, .below14Doubles ; $5625
 	ld a, $19 ; $5627
 	ld [wStoryModeCurrentLocation], a ; $5629
 	ld a, $0a ; $562c
@@ -1987,7 +1987,7 @@ Label_10_561e:
 	ld [$c294], a ; $5633
 	ld [wStoryModeExitLocationRequest], a ; $5636
 	ret ; $5639
-Label_10_563a:
+.below14Doubles:
 	ld a, $19 ; $563a
 	ld [wStoryModeCurrentLocation], a ; $563c
 	ld a, $0b ; $563f
@@ -1996,9 +1996,9 @@ Label_10_563a:
 	ld [$c294], a ; $5646
 	ld [wStoryModeExitLocationRequest], a ; $5649
 	ret ; $564c
-Label_10_564d:
+.below0f:
 	cp a, $0a ; $564d
-	jr c, Label_10_5664 ; $564f
+	jr c, .below0a ; $564f
 	ld a, $07 ; $5651
 	ld [wStoryModeCurrentLocation], a ; $5653
 	ld a, $0d ; $5656
@@ -2007,10 +2007,10 @@ Label_10_564d:
 	ld [$c294], a ; $565d
 	ld [wStoryModeExitLocationRequest], a ; $5660
 	ret ; $5663
-Label_10_5664:
+.below0a:
 	cp a, $05 ; $5664
-	jr c, Label_10_5690 ; $5666
-	jr z, Label_10_567d ; $5668
+	jr c, .below05 ; $5666
+	jr z, .id05 ; $5668
 	ld a, $10 ; $566a
 	ld [wStoryModeCurrentLocation], a ; $566c
 	ld a, $0f ; $566f
@@ -2019,7 +2019,7 @@ Label_10_5664:
 	ld [$c294], a ; $5676
 	ld [wStoryModeExitLocationRequest], a ; $5679
 	ret ; $567c
-Label_10_567d:
+.id05:
 	ld a, $10 ; $567d
 	ld [wStoryModeCurrentLocation], a ; $567f
 	ld a, $09 ; $5682
@@ -2028,11 +2028,11 @@ Label_10_567d:
 	ld [$c294], a ; $5689
 	ld [wStoryModeExitLocationRequest], a ; $568c
 	ret ; $568f
-Label_10_5690:
+.below05:
 	test_flag FLAG_DOUBLES ; $5690
-	jr nz, Label_10_56bf ; $5693
+	jr nz, .otherRoom ; $5693
 	cp a, $00 ; $5695
-	jr z, Label_10_56ac ; $5697
+	jr z, .practiceRoomAlt ; $5697
 	ld a, $0b ; $5699
 	ld [wStoryModeCurrentLocation], a ; $569b
 	ld a, $0f ; $569e
@@ -2041,7 +2041,7 @@ Label_10_5690:
 	ld [$c294], a ; $56a5
 	ld [wStoryModeExitLocationRequest], a ; $56a8
 	ret ; $56ab
-Label_10_56ac:
+.practiceRoomAlt:
 	ld a, $0b ; $56ac
 	ld [wStoryModeCurrentLocation], a ; $56ae
 	ld a, $09 ; $56b1
@@ -2050,9 +2050,9 @@ Label_10_56ac:
 	ld [$c294], a ; $56b8
 	ld [wStoryModeExitLocationRequest], a ; $56bb
 	ret ; $56be
-Label_10_56bf:
+.otherRoom:
 	cp a, $00 ; $56bf
-	jr z, Label_10_56d6 ; $56c1
+	jr z, .otherRoomAlt ; $56c1
 	ld a, $0c ; $56c3
 	ld [wStoryModeCurrentLocation], a ; $56c5
 	ld a, $0f ; $56c8
@@ -2061,7 +2061,7 @@ Label_10_56bf:
 	ld [$c294], a ; $56cf
 	ld [wStoryModeExitLocationRequest], a ; $56d2
 	ret ; $56d5
-Label_10_56d6:
+.otherRoomAlt:
 	ld a, $0c ; $56d6
 	ld [wStoryModeCurrentLocation], a ; $56d8
 	ld a, $09 ; $56db

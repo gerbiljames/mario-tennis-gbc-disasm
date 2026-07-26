@@ -3193,175 +3193,175 @@ RunCharViewerInputLoop:
 	call AdvanceFrame ; $6ca8
 	ldh a, [hInputPressed] ; $6cab
 	bit PADB_UP, a ; $6cad
-	jr nz, Label_1a_6cd5 ; $6caf
+	jr nz, .up ; $6caf
 	bit 7, a ; $6cb1
-	jr nz, Label_1a_6d23 ; $6cb3
+	jr nz, .down ; $6cb3
 	bit 5, a ; $6cb5
-	jp nz, Label_1a_6d71 ; $6cb7
+	jp nz, .left ; $6cb7
 	bit 4, a ; $6cba
-	jp nz, Label_1a_6dae ; $6cbc
+	jp nz, .right ; $6cbc
 	bit 0, a ; $6cbf
-	jp nz, Label_1a_6de4 ; $6cc1
+	jp nz, .confirm ; $6cc1
 	bit 1, a ; $6cc4
-	jp nz, Label_1a_6e1d ; $6cc6
+	jp nz, .exit ; $6cc6
 	bit 3, a ; $6cc9
-	jp nz, Label_1a_6e29 ; $6ccb
+	jp nz, .prevPose ; $6ccb
 	bit 2, a ; $6cce
-	jp nz, Label_1a_6e35 ; $6cd0
+	jp nz, .nextPose ; $6cd0
 	jr RunCharViewerInputLoop ; $6cd3
-Label_1a_6cd5:
+.up:
 	sound $5e ; $6cd5
 	wram_bank $06 ; $6cd7
 	ld a, [$d000] ; $6cdd
 	or a, a ; $6ce0
-	jr nz, Label_1a_6d0c ; $6ce1
+	jr nz, .upWrapToChar ; $6ce1
 	ld a, [$d001] ; $6ce3
 	cp a, $0b ; $6ce6
-	jr c, Label_1a_6cf5 ; $6ce8
+	jr c, .upWrapToPalette ; $6ce8
 	ld a, [$d001] ; $6cea
 	sub a, $0b ; $6ced
 	ld [$d001], a ; $6cef
-	jp Label_1a_6e20 ; $6cf2
-Label_1a_6cf5:
+	jp .refresh ; $6cf2
+.upWrapToPalette:
 	wram_bank $06 ; $6cf5
 	ld a, [$d000] ; $6cfb
 	xor a, $01 ; $6cfe
 	ld [$d000], a ; $6d00
 	ld a, [$d004] ; $6d03
 	ld [$d001], a ; $6d06
-	jp Label_1a_6e20 ; $6d09
-Label_1a_6d0c:
+	jp .refresh ; $6d09
+.upWrapToChar:
 	wram_bank $06 ; $6d0c
 	ld a, [$d000] ; $6d12
 	xor a, $01 ; $6d15
 	ld [$d000], a ; $6d17
 	ld a, [$d003] ; $6d1a
 	ld [$d001], a ; $6d1d
-	jp Label_1a_6e20 ; $6d20
-Label_1a_6d23:
+	jp .refresh ; $6d20
+.down:
 	sound $5e ; $6d23
 	wram_bank $06 ; $6d25
 	ld a, [$d000] ; $6d2b
 	or a, a ; $6d2e
-	jr nz, Label_1a_6d5a ; $6d2f
+	jr nz, .downWrapToChar ; $6d2f
 	ld a, [$d001] ; $6d31
 	cp a, $0b ; $6d34
-	jr nc, Label_1a_6d43 ; $6d36
+	jr nc, .downWrapToPalette ; $6d36
 	ld a, [$d001] ; $6d38
 	add a, $0b ; $6d3b
 	ld [$d001], a ; $6d3d
-	jp Label_1a_6e20 ; $6d40
-Label_1a_6d43:
+	jp .refresh ; $6d40
+.downWrapToPalette:
 	wram_bank $06 ; $6d43
 	ld a, [$d000] ; $6d49
 	xor a, $01 ; $6d4c
 	ld [$d000], a ; $6d4e
 	ld a, [$d004] ; $6d51
 	ld [$d001], a ; $6d54
-	jp Label_1a_6e20 ; $6d57
-Label_1a_6d5a:
+	jp .refresh ; $6d57
+.downWrapToChar:
 	wram_bank $06 ; $6d5a
 	ld a, [$d000] ; $6d60
 	xor a, $01 ; $6d63
 	ld [$d000], a ; $6d65
 	ld a, [$d003] ; $6d68
 	ld [$d001], a ; $6d6b
-	jp Label_1a_6e20 ; $6d6e
-Label_1a_6d71:
+	jp .refresh ; $6d6e
+.left:
 	sound $5e ; $6d71
 	wram_bank $06 ; $6d73
 	ld a, [$d000] ; $6d79
 	or a, a ; $6d7c
-	jr nz, Label_1a_6d9f ; $6d7d
+	jr nz, .leftPalette ; $6d7d
 	ld a, [$d001] ; $6d7f
 	dec a ; $6d82
 	ld [$d001], a ; $6d83
 	cp a, $ff ; $6d86
-	jr nz, Label_1a_6d92 ; $6d88
+	jr nz, .leftWrapRow ; $6d88
 	ld a, $0a ; $6d8a
 	ld [$d001], a ; $6d8c
-	jp Label_1a_6e20 ; $6d8f
-Label_1a_6d92:
+	jp .refresh ; $6d8f
+.leftWrapRow:
 	cp a, $0a ; $6d92
-	jp nz, Label_1a_6e20 ; $6d94
+	jp nz, .refresh ; $6d94
 	ld a, $15 ; $6d97
 	ld [$d001], a ; $6d99
-	jp Label_1a_6e20 ; $6d9c
-Label_1a_6d9f:
+	jp .refresh ; $6d9c
+.leftPalette:
 	ld a, [$d001] ; $6d9f
 	dec a ; $6da2
 	cp a, $ff ; $6da3
-	jr nz, Label_1a_6da9 ; $6da5
+	jr nz, .storeLeftPalette ; $6da5
 	ld a, $04 ; $6da7
-Label_1a_6da9:
+.storeLeftPalette:
 	ld [$d001], a ; $6da9
-	jr Label_1a_6e20 ; $6dac
-Label_1a_6dae:
+	jr .refresh ; $6dac
+.right:
 	sound $5e ; $6dae
 	wram_bank $06 ; $6db0
 	ld a, [$d000] ; $6db6
 	or a, a ; $6db9
-	jr nz, Label_1a_6dd6 ; $6dba
+	jr nz, .rightPalette ; $6dba
 	ld a, [$d001] ; $6dbc
 	inc a ; $6dbf
 	ld [$d001], a ; $6dc0
 	cp a, $0b ; $6dc3
-	jr nz, Label_1a_6dcb ; $6dc5
+	jr nz, .rightWrapRow ; $6dc5
 	xor a, a ; $6dc7
 	ld [$d001], a ; $6dc8
-Label_1a_6dcb:
+.rightWrapRow:
 	cp a, $16 ; $6dcb
-	jr nz, Label_1a_6e20 ; $6dcd
+	jr nz, .refresh ; $6dcd
 	ld a, $0b ; $6dcf
 	ld [$d001], a ; $6dd1
-	jr Label_1a_6e20 ; $6dd4
-Label_1a_6dd6:
+	jr .refresh ; $6dd4
+.rightPalette:
 	ld a, [$d001] ; $6dd6
 	inc a ; $6dd9
 	cp a, $05 ; $6dda
-	jr nz, Label_1a_6ddf ; $6ddc
+	jr nz, .storeRightPalette ; $6ddc
 	xor a, a ; $6dde
-Label_1a_6ddf:
+.storeRightPalette:
 	ld [$d001], a ; $6ddf
-	jr Label_1a_6e20 ; $6de2
-Label_1a_6de4:
+	jr .refresh ; $6de2
+.confirm:
 	sound $5e ; $6de4
 	wram_bank $06 ; $6de6
 	ld a, [$d000] ; $6dec
 	or a, a ; $6def
-	jr nz, Label_1a_6e12 ; $6df0
+	jr nz, .selectPalette ; $6df0
 	ld a, [$d001] ; $6df2
 	ld [$d003], a ; $6df5
 	ld hl, Data_1a_792f ; $6df8
 	add a, l ; $6dfb
 	ld l, a ; $6dfc
-	jr nc, Label_1a_6e00 ; $6dfd
+	jr nc, .readAnimId ; $6dfd
 	inc h ; $6dff
-Label_1a_6e00:
+.readAnimId:
 	ld d, [hl] ; $6e00
 	wram_bank $04 ; $6e01
 	farcall SetCharAnimation ; $6e07
 	wram_bank $06 ; $6e0a
-	jr Label_1a_6e20 ; $6e10
-Label_1a_6e12:
+	jr .refresh ; $6e10
+.selectPalette:
 	ld a, [$d001] ; $6e12
 	ld [$d004], a ; $6e15
 	call ApplyCharViewerPalette ; $6e18
-	jr Label_1a_6e20 ; $6e1b
-Label_1a_6e1d:
+	jr .refresh ; $6e1b
+.exit:
 	sound $62 ; $6e1d
 	ret ; $6e1f
-Label_1a_6e20:
+.refresh:
 	call RefreshCharViewerSelection ; $6e20
 	call AdvanceFrame ; $6e23
 	jp RunCharViewerInputLoop ; $6e26
-Label_1a_6e29:
+.prevPose:
 	ld a, [$d005] ; $6e29
 	dec a ; $6e2c
 	and a, $07 ; $6e2d
 	ld [$d005], a ; $6e2f
 	jp RunCharViewerInputLoop ; $6e32
-Label_1a_6e35:
+.nextPose:
 	ld a, [$d005] ; $6e35
 	inc a ; $6e38
 	and a, $07 ; $6e39
