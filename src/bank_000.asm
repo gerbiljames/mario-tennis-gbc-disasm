@@ -1641,12 +1641,12 @@ DivHLByDE:
 	sub a, d ; $098d
 	ld b, a ; $098e
 	or a, c ; $098f
-	jr nz, Label_00_0998 ; $0990
+	jr nz, .divide ; $0990
 	ld hl, rIE ; $0992
 	pop bc ; $0995
 	pop af ; $0996
 	ret ; $0997
-Label_00_0998:
+.divide:
 	ld a, h ; $0998
 	ld h, l ; $0999
 	push hl ; $099a
@@ -1655,59 +1655,59 @@ Label_00_0998:
 	adc a, a ; $099f
 	rl l ; $09a0
 	add hl, bc ; $09a2
-	jr c, Label_00_09a7 ; $09a3
+	jr c, .hiBit6 ; $09a3
 	dec a ; $09a5
 	add hl, de ; $09a6
-Label_00_09a7:
+.hiBit6:
 	adc a, a ; $09a7
 	rl l ; $09a8
 	add hl, bc ; $09aa
-	jr c, Label_00_09af ; $09ab
+	jr c, .hiBit5 ; $09ab
 	dec a ; $09ad
 	add hl, de ; $09ae
-Label_00_09af:
+.hiBit5:
 	adc a, a ; $09af
 	rl l ; $09b0
 	add hl, bc ; $09b2
-	jr c, Label_00_09b7 ; $09b3
+	jr c, .hiBit4 ; $09b3
 	dec a ; $09b5
 	add hl, de ; $09b6
-Label_00_09b7:
+.hiBit4:
 	adc a, a ; $09b7
 	rl l ; $09b8
 	add hl, bc ; $09ba
-	jr c, Label_00_09bf ; $09bb
+	jr c, .hiBit3 ; $09bb
 	dec a ; $09bd
 	add hl, de ; $09be
-Label_00_09bf:
+.hiBit3:
 	adc a, a ; $09bf
 	rl l ; $09c0
 	add hl, bc ; $09c2
-	jr c, Label_00_09c7 ; $09c3
+	jr c, .hiBit2 ; $09c3
 	dec a ; $09c5
 	add hl, de ; $09c6
-Label_00_09c7:
+.hiBit2:
 	adc a, a ; $09c7
 	rl l ; $09c8
 	add hl, bc ; $09ca
-	jr c, Label_00_09cf ; $09cb
+	jr c, .hiBit1 ; $09cb
 	dec a ; $09cd
 	add hl, de ; $09ce
-Label_00_09cf:
+.hiBit1:
 	adc a, a ; $09cf
 	rl l ; $09d0
 	add hl, bc ; $09d2
-	jr c, Label_00_09d7 ; $09d3
+	jr c, .hiBit0 ; $09d3
 	dec a ; $09d5
 	add hl, de ; $09d6
-Label_00_09d7:
+.hiBit0:
 	adc a, a ; $09d7
 	rl l ; $09d8
 	add hl, bc ; $09da
-	jr c, Label_00_09df ; $09db
+	jr c, .hiDone ; $09db
 	dec a ; $09dd
 	add hl, de ; $09de
-Label_00_09df:
+.hiDone:
 	ld h, a ; $09df
 	pop af ; $09e0
 	push hl ; $09e1
@@ -1717,66 +1717,66 @@ Label_00_09df:
 	rl l ; $09e6
 	rl h ; $09e8
 	add hl, bc ; $09ea
-	jr c, Label_00_09ef ; $09eb
+	jr c, .loBit6 ; $09eb
 	dec a ; $09ed
 	add hl, de ; $09ee
-Label_00_09ef:
+.loBit6:
 	adc a, a ; $09ef
 	rl l ; $09f0
 	rl h ; $09f2
 	add hl, bc ; $09f4
-	jr c, Label_00_09f9 ; $09f5
+	jr c, .loBit5 ; $09f5
 	dec a ; $09f7
 	add hl, de ; $09f8
-Label_00_09f9:
+.loBit5:
 	adc a, a ; $09f9
 	rl l ; $09fa
 	rl h ; $09fc
 	add hl, bc ; $09fe
-	jr c, Label_00_0a03 ; $09ff
+	jr c, .loBit4 ; $09ff
 	dec a ; $0a01
 	add hl, de ; $0a02
-Label_00_0a03:
+.loBit4:
 	adc a, a ; $0a03
 	rl l ; $0a04
 	rl h ; $0a06
 	add hl, bc ; $0a08
-	jr c, Label_00_0a0d ; $0a09
+	jr c, .loBit3 ; $0a09
 	dec a ; $0a0b
 	add hl, de ; $0a0c
-Label_00_0a0d:
+.loBit3:
 	adc a, a ; $0a0d
 	rl l ; $0a0e
 	rl h ; $0a10
 	add hl, bc ; $0a12
-	jr c, Label_00_0a17 ; $0a13
+	jr c, .loBit2 ; $0a13
 	dec a ; $0a15
 	add hl, de ; $0a16
-Label_00_0a17:
+.loBit2:
 	adc a, a ; $0a17
 	rl l ; $0a18
 	rl h ; $0a1a
 	add hl, bc ; $0a1c
-	jr c, Label_00_0a21 ; $0a1d
+	jr c, .loBit1 ; $0a1d
 	dec a ; $0a1f
 	add hl, de ; $0a20
-Label_00_0a21:
+.loBit1:
 	adc a, a ; $0a21
 	rl l ; $0a22
 	rl h ; $0a24
 	add hl, bc ; $0a26
-	jr c, Label_00_0a2b ; $0a27
+	jr c, .loBit0 ; $0a27
 	dec a ; $0a29
 	add hl, de ; $0a2a
-Label_00_0a2b:
+.loBit0:
 	adc a, a ; $0a2b
 	rl l ; $0a2c
 	rl h ; $0a2e
 	add hl, bc ; $0a30
-	jr c, Label_00_0a35 ; $0a31
+	jr c, .done ; $0a31
 	dec a ; $0a33
 	add hl, de ; $0a34
-Label_00_0a35:
+.done:
 	pop hl ; $0a35
 	ld l, a ; $0a36
 	pop bc ; $0a37
@@ -2210,72 +2210,72 @@ MulHLByDE:
 	ld b, $00 ; $0c93
 	push hl ; $0c95
 	add a, a ; $0c96
-	jr c, Label_00_0cb7 ; $0c97
-	jr z, Label_00_0cb2 ; $0c99
+	jr c, .loTop7 ; $0c97
+	jr z, .loZero ; $0c99
 	ld e, l ; $0c9b
 	ld d, h ; $0c9c
 	add a, a ; $0c9d
-	jr c, Label_00_0cbf ; $0c9e
+	jr c, .loBit6 ; $0c9e
 	add a, a ; $0ca0
-	jr c, Label_00_0cc5 ; $0ca1
+	jr c, .loBit5 ; $0ca1
 	add a, a ; $0ca3
-	jr c, Label_00_0ccb ; $0ca4
+	jr c, .loBit4 ; $0ca4
 	add a, a ; $0ca6
-	jr c, Label_00_0cd1 ; $0ca7
+	jr c, .loBit3 ; $0ca7
 	add a, a ; $0ca9
-	jr c, Label_00_0cd7 ; $0caa
+	jr c, .loBit2 ; $0caa
 	add a, a ; $0cac
-	jr c, Label_00_0cdd ; $0cad
+	jr c, .loBit1 ; $0cad
 	xor a, a ; $0caf
-	jr Label_00_0ce3 ; $0cb0
-Label_00_0cb2:
+	jr .loDone ; $0cb0
+.loZero:
 	ld hl, $0000 ; $0cb2
-	jr Label_00_0ce3 ; $0cb5
-Label_00_0cb7:
+	jr .loDone ; $0cb5
+.loTop7:
 	ld e, l ; $0cb7
 	ld d, h ; $0cb8
 	add hl, hl ; $0cb9
 	adc a, a ; $0cba
-	jr nc, Label_00_0cbf ; $0cbb
+	jr nc, .loBit6 ; $0cbb
 	add hl, de ; $0cbd
 	adc a, b ; $0cbe
-Label_00_0cbf:
+.loBit6:
 	add hl, hl ; $0cbf
 	adc a, a ; $0cc0
-	jr nc, Label_00_0cc5 ; $0cc1
+	jr nc, .loBit5 ; $0cc1
 	add hl, de ; $0cc3
 	adc a, b ; $0cc4
-Label_00_0cc5:
+.loBit5:
 	add hl, hl ; $0cc5
 	adc a, a ; $0cc6
-	jr nc, Label_00_0ccb ; $0cc7
+	jr nc, .loBit4 ; $0cc7
 	add hl, de ; $0cc9
 	adc a, b ; $0cca
-Label_00_0ccb:
+.loBit4:
 	add hl, hl ; $0ccb
 	adc a, a ; $0ccc
-	jr nc, Label_00_0cd1 ; $0ccd
+	jr nc, .loBit3 ; $0ccd
 	add hl, de ; $0ccf
 	adc a, b ; $0cd0
-Label_00_0cd1:
+.loBit3:
 	add hl, hl ; $0cd1
 	adc a, a ; $0cd2
-	jr nc, Label_00_0cd7 ; $0cd3
+	jr nc, .loBit2 ; $0cd3
 	add hl, de ; $0cd5
 	adc a, b ; $0cd6
-Label_00_0cd7:
+.loBit2:
 	add hl, hl ; $0cd7
 	adc a, a ; $0cd8
-	jr nc, Label_00_0cdd ; $0cd9
+	jr nc, .loBit1 ; $0cd9
 	add hl, de ; $0cdb
 	adc a, b ; $0cdc
-Label_00_0cdd:
+.loBit1:
 	add hl, hl ; $0cdd
 	adc a, a ; $0cde
-	jr nc, Label_00_0ce3 ; $0cdf
+	jr nc, .loDone ; $0cdf
 	add hl, de ; $0ce1
 	adc a, b ; $0ce2
-Label_00_0ce3:
+.loDone:
 	ld e, h ; $0ce3
 	ld d, a ; $0ce4
 	ld a, c ; $0ce5
@@ -2283,72 +2283,72 @@ Label_00_0ce3:
 	pop hl ; $0ce7
 	push de ; $0ce8
 	add a, a ; $0ce9
-	jr c, Label_00_0d0a ; $0cea
-	jr z, Label_00_0d05 ; $0cec
+	jr c, .hiTop7 ; $0cea
+	jr z, .hiZero ; $0cec
 	ld e, l ; $0cee
 	ld d, h ; $0cef
 	add a, a ; $0cf0
-	jr c, Label_00_0d12 ; $0cf1
+	jr c, .hiBit6 ; $0cf1
 	add a, a ; $0cf3
-	jr c, Label_00_0d18 ; $0cf4
+	jr c, .hiBit5 ; $0cf4
 	add a, a ; $0cf6
-	jr c, Label_00_0d1e ; $0cf7
+	jr c, .hiBit4 ; $0cf7
 	add a, a ; $0cf9
-	jr c, Label_00_0d24 ; $0cfa
+	jr c, .hiBit3 ; $0cfa
 	add a, a ; $0cfc
-	jr c, Label_00_0d2a ; $0cfd
+	jr c, .hiBit2 ; $0cfd
 	add a, a ; $0cff
-	jr c, Label_00_0d30 ; $0d00
+	jr c, .hiBit1 ; $0d00
 	xor a, a ; $0d02
-	jr Label_00_0d36 ; $0d03
-Label_00_0d05:
+	jr .hiDone ; $0d03
+.hiZero:
 	ld hl, $0000 ; $0d05
-	jr Label_00_0d36 ; $0d08
-Label_00_0d0a:
+	jr .hiDone ; $0d08
+.hiTop7:
 	ld e, l ; $0d0a
 	ld d, h ; $0d0b
 	add hl, hl ; $0d0c
 	adc a, a ; $0d0d
-	jr nc, Label_00_0d12 ; $0d0e
+	jr nc, .hiBit6 ; $0d0e
 	add hl, de ; $0d10
 	adc a, b ; $0d11
-Label_00_0d12:
+.hiBit6:
 	add hl, hl ; $0d12
 	adc a, a ; $0d13
-	jr nc, Label_00_0d18 ; $0d14
+	jr nc, .hiBit5 ; $0d14
 	add hl, de ; $0d16
 	adc a, b ; $0d17
-Label_00_0d18:
+.hiBit5:
 	add hl, hl ; $0d18
 	adc a, a ; $0d19
-	jr nc, Label_00_0d1e ; $0d1a
+	jr nc, .hiBit4 ; $0d1a
 	add hl, de ; $0d1c
 	adc a, b ; $0d1d
-Label_00_0d1e:
+.hiBit4:
 	add hl, hl ; $0d1e
 	adc a, a ; $0d1f
-	jr nc, Label_00_0d24 ; $0d20
+	jr nc, .hiBit3 ; $0d20
 	add hl, de ; $0d22
 	adc a, b ; $0d23
-Label_00_0d24:
+.hiBit3:
 	add hl, hl ; $0d24
 	adc a, a ; $0d25
-	jr nc, Label_00_0d2a ; $0d26
+	jr nc, .hiBit2 ; $0d26
 	add hl, de ; $0d28
 	adc a, b ; $0d29
-Label_00_0d2a:
+.hiBit2:
 	add hl, hl ; $0d2a
 	adc a, a ; $0d2b
-	jr nc, Label_00_0d30 ; $0d2c
+	jr nc, .hiBit1 ; $0d2c
 	add hl, de ; $0d2e
 	adc a, b ; $0d2f
-Label_00_0d30:
+.hiBit1:
 	add hl, hl ; $0d30
 	adc a, a ; $0d31
-	jr nc, Label_00_0d36 ; $0d32
+	jr nc, .hiDone ; $0d32
 	add hl, de ; $0d34
 	adc a, b ; $0d35
-Label_00_0d36:
+.hiDone:
 	pop de ; $0d36
 	add hl, de ; $0d37
 	adc a, b ; $0d38
@@ -3921,7 +3921,7 @@ TangentTable:
 	dw $0a5e ; record 240
 	dw $0b14 ; record 241
 	dw $0be5 ; record 242
-	dw Label_00_0cd7 ; record 243
+	dw MulHLByDE.loBit2 ; record 243
 	dw $0df3 ; record 244
 	dw $0f43 ; record 245
 	dw $10d9 ; record 246

@@ -308,17 +308,17 @@ BuildResultsScreenPanels:
 	call FillMemoryC ; $4316
 	ld a, [wGameMode] ; $4319
 	or a, a ; $431c
-	jp z, Label_1e_4466 ; $431d
+	jp z, DrawStoryResultsHeader ; $431d
 	cp a, $04 ; $4320
-	jp z, Label_1e_44b1 ; $4322
+	jp z, DrawExhibitionResultsHeader ; $4322
 	cp a, $01 ; $4325
-	jp z, Label_1e_44f4 ; $4327
+	jp z, DrawRankMatchResultsHeader ; $4327
 	cp a, $02 ; $432a
-	jp z, Label_1e_451b ; $432c
+	jp z, DrawTournamentResultsHeader ; $432c
 	cp a, $03 ; $432f
-	jp z, Label_1e_453c ; $4331
+	jp z, DrawPracticeResultsHeader ; $4331
 	cp a, $0a ; $4334
-	jp z, Label_1e_44d3 ; $4336
+	jp z, DrawMarioExhibitionResultsHeader ; $4336
 	ret ; $4339
 LoadSinglesLabelTiles:
 	wram_bank $01 ; $433a
@@ -436,23 +436,23 @@ FillMemoryC:
 	dec c ; $4462
 	jr nz, FillMemoryC ; $4463
 	ret ; $4465
-Label_1e_4466:
+DrawStoryResultsHeader:
 	test_flag FLAG_ISLAND_SKY_SCENE_ACTIVE ; $4466
-	jr nz, Label_1e_4480 ; $4469
+	jr nz, .skyScene ; $4469
 	ld a, [$c8a9] ; $446b
 	cp a, $1d ; $446e
-	jr z, Label_1e_44a0 ; $4470
+	jr z, .altPosition ; $4470
 	ld hl, $04d8 ; $4472
 	ld de, $d1c3 ; $4475
 	ld bc, $0020 ; $4478
 	call DrawProportionalTextLine ; $447b
-	jr Label_1e_448c ; $447e
-Label_1e_4480:
+	jr .drawOpponentName ; $447e
+.skyScene:
 	ld hl, $04d9 ; $4480
 	ld de, $d1c2 ; $4483
 	ld bc, $0020 ; $4486
 	call DrawProportionalTextLine ; $4489
-Label_1e_448c:
+.drawOpponentName:
 	ld a, [$c8a9] ; $448c
 	add a, $79 ; $448f
 	ld l, a ; $4491
@@ -463,7 +463,7 @@ Label_1e_448c:
 	ld bc, $0020 ; $4499
 	call DrawProportionalTextLine ; $449c
 	ret ; $449f
-Label_1e_44a0:
+.altPosition:
 	add a, $79 ; $44a0
 	ld l, a ; $44a2
 	adc a, $01 ; $44a3
@@ -473,41 +473,41 @@ Label_1e_44a0:
 	ld bc, $0020 ; $44aa
 	call DrawProportionalTextLine ; $44ad
 	ret ; $44b0
-Label_1e_44b1:
+DrawExhibitionResultsHeader:
 	test_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $44b1
-	jr nz, Label_1e_44c4 ; $44b4
+	jr nz, .doubles ; $44b4
 	call LoadSinglesLabelTiles ; $44b6
 	xor a, a ; $44b9
 	call DrawResultsNameLabelRows ; $44ba
 	call DrawSinglesPlayerNames ; $44bd
 	call DrawSetsGamesScore ; $44c0
 	ret ; $44c3
-Label_1e_44c4:
+.doubles:
 	call LoadDoublesLabelTiles ; $44c4
 	ld a, $01 ; $44c7
 	call DrawResultsNameLabelRows ; $44c9
 	call DrawDoublesPlayerNames ; $44cc
 	call DrawSetsGamesScore ; $44cf
 	ret ; $44d2
-Label_1e_44d3:
+DrawMarioExhibitionResultsHeader:
 	test_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $44d3
-	jr nz, Label_1e_44e6 ; $44d6
+	jr nz, .doubles ; $44d6
 	call LoadSinglesLabelTiles ; $44d8
 	xor a, a ; $44db
 	call DrawResultsNameLabelRows ; $44dc
 	call DrawMarioExhibitionLabel ; $44df
 	call DrawSetsGamesScore ; $44e2
 	ret ; $44e5
-Label_1e_44e6:
+.doubles:
 	call LoadDoublesLabelTiles ; $44e6
 	xor a, a ; $44e9
 	call DrawResultsNameLabelRows ; $44ea
 	call DrawMarioExhibitionLabel ; $44ed
 	call DrawSetsGamesScore ; $44f0
 	ret ; $44f3
-Label_1e_44f4:
+DrawRankMatchResultsHeader:
 	test_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $44f4
-	jr nz, Label_1e_450a ; $44f7
+	jr nz, .doubles ; $44f7
 	call LoadSinglesLabelTiles ; $44f9
 	xor a, a ; $44fc
 	call DrawResultsNameLabelRows ; $44fd
@@ -515,7 +515,7 @@ Label_1e_44f4:
 	call DrawRankMatchLabel ; $4503
 	call DrawSetsGamesScore ; $4506
 	ret ; $4509
-Label_1e_450a:
+.doubles:
 	call LoadDoublesLabelTiles ; $450a
 	xor a, a ; $450d
 	call DrawResultsNameLabelRows ; $450e
@@ -523,25 +523,25 @@ Label_1e_450a:
 	call DrawRankMatchLabel ; $4514
 	call DrawSetsGamesScore ; $4517
 	ret ; $451a
-Label_1e_451b:
+DrawTournamentResultsHeader:
 	test_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $451b
-	jr nz, Label_1e_452e ; $451e
+	jr nz, .doubles ; $451e
 	call LoadSinglesLabelTiles ; $4520
 	xor a, a ; $4523
 	call DrawResultsNameLabelRows ; $4524
 	call DrawTournamentRoundLabel ; $4527
 	call DrawSetsGamesScore ; $452a
 	ret ; $452d
-Label_1e_452e:
+.doubles:
 	call LoadDoublesLabelTiles ; $452e
 	xor a, a ; $4531
 	call DrawResultsNameLabelRows ; $4532
 	call DrawTournamentRoundLabel ; $4535
 	call DrawSetsGamesScore ; $4538
 	ret ; $453b
-Label_1e_453c:
+DrawPracticeResultsHeader:
 	test_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $453c
-	jr nz, Label_1e_4552 ; $453f
+	jr nz, .doubles ; $453f
 	call LoadSinglesLabelTiles ; $4541
 	xor a, a ; $4544
 	call DrawResultsNameLabelRows ; $4545
@@ -549,7 +549,7 @@ Label_1e_453c:
 	call DrawPracticeMatchLabel ; $454b
 	call DrawSetsGamesScore ; $454e
 	ret ; $4551
-Label_1e_4552:
+.doubles:
 	call LoadDoublesLabelTiles ; $4552
 	xor a, a ; $4555
 	call DrawResultsNameLabelRows ; $4556

@@ -947,9 +947,10 @@ SendByteGetReplyMaster:
 	ei ; $45f5
 	pop bc ; $45f6
 	ret ; $45f7
+SendByteAwaitReplyMaster:
 	push bc ; $45f8
 	ldh [hLinkTxByte], a ; $45f9
-Label_07_45fb:
+.sendLoop:
 	ldh a, [hLinkTxByte] ; $45fb
 	ldh [rSB], a ; $45fd
 	push af ; $45ff
@@ -961,18 +962,18 @@ Label_07_45fb:
 	call AdvanceFrame ; $4609
 	ldh a, [hLinkRxByte] ; $460c
 	cp a, $00 ; $460e
-	jr z, Label_07_461d ; $4610
+	jr z, .retry ; $4610
 	cp a, $ff ; $4612
-	jr z, Label_07_461d ; $4614
+	jr z, .retry ; $4614
 	ld b, a ; $4616
 	xor a, a ; $4617
 	ldh [hLinkCounter], a ; $4618
 	ld a, b ; $461a
-	jr Label_07_4622 ; $461b
-Label_07_461d:
+	jr .done ; $461b
+.retry:
 	call IncrementLinkFrameCounter ; $461d
-	jr Label_07_45fb ; $4620
-Label_07_4622:
+	jr .sendLoop ; $4620
+.done:
 	pop bc ; $4622
 	ret ; $4623
 SendByteGetReplySlave:

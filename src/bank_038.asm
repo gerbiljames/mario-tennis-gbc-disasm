@@ -623,17 +623,18 @@ GetMenuCursorLinearIndex:
 	ld a, [wMenuCursorX] ; $43a6
 	add a, b ; $43a9
 	ret ; $43aa
+GetMenuCursorLinearIndexFromPtr:
 	push bc ; $43ab
 	ld a, [hl-] ; $43ac
 	ld b, a ; $43ad
 	xor a, a ; $43ae
 	inc b ; $43af
-Label_38_43b0:
+.mulLoop:
 	dec b ; $43b0
-	jr z, Label_38_43b6 ; $43b1
+	jr z, .addColumn ; $43b1
 	add a, c ; $43b3
-	jr Label_38_43b0 ; $43b4
-Label_38_43b6:
+	jr .mulLoop ; $43b4
+.addColumn:
 	ld b, a ; $43b6
 	ld a, [hl] ; $43b7
 	add a, b ; $43b8

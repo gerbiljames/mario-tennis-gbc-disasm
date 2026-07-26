@@ -651,17 +651,18 @@ GetMenuCursorIndex:
 	ld a, [wMenuCursorX] ; $43ce
 	add a, b ; $43d1
 	ret ; $43d2
+GetMenuCursorIndexFromPtr:
 	push bc ; $43d3
 	ld a, [hl-] ; $43d4
 	ld b, a ; $43d5
 	xor a, a ; $43d6
 	inc b ; $43d7
-Label_1b_43d8:
+.mulLoop:
 	dec b ; $43d8
-	jr z, Label_1b_43de ; $43d9
+	jr z, .addColumn ; $43d9
 	add a, c ; $43db
-	jr Label_1b_43d8 ; $43dc
-Label_1b_43de:
+	jr .mulLoop ; $43dc
+.addColumn:
 	ld b, a ; $43de
 	ld a, [hl] ; $43df
 	add a, b ; $43e0

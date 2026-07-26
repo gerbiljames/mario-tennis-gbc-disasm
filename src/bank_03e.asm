@@ -644,15 +644,16 @@ SetMenuCursorFromIndex_3e:
 	ld a, d ; $43f8
 	ld [wMenuCursorY], a ; $43f9
 	ret ; $43fc
+SetMenuCursorFromIndexToPtr:
 	ld d, $00 ; $43fd
 	ld a, c ; $43ff
-Label_3e_4400:
+.divLoop:
 	cp a, b ; $4400
-	jr c, Label_3e_4407 ; $4401
+	jr c, .store ; $4401
 	inc d ; $4403
 	sub a, b ; $4404
-	jr Label_3e_4400 ; $4405
-Label_3e_4407:
+	jr .divLoop ; $4405
+.store:
 	ld [hl+], a ; $4407
 	ld a, d ; $4408
 	ld [hl], a ; $4409

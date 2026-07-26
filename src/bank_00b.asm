@@ -161,24 +161,25 @@ CountDrillShotSuccesses:
 	pop hl ; $40fa
 	pop bc ; $40fb
 	ret ; $40fc
+CheckTwoPointLead:
 	ld a, [wPlayer2PointsWon] ; $40fd
 	ld b, a ; $4100
 	ld a, [wPlayer1PointsWon] ; $4101
 	sub a, b ; $4104
 	bit 7, a ; $4105
-	jr nz, Label_0b_4110 ; $4107
+	jr nz, .player2Ahead ; $4107
 	cp a, $02 ; $4109
-	jr c, Label_0b_4119 ; $410b
+	jr c, .tied ; $410b
 	ld a, $01 ; $410d
 	ret ; $410f
-Label_0b_4110:
+.player2Ahead:
 	cpl ; $4110
 	inc a ; $4111
 	cp a, $02 ; $4112
-	jr c, Label_0b_4119 ; $4114
+	jr c, .tied ; $4114
 	ld a, $02 ; $4116
 	ret ; $4118
-Label_0b_4119:
+.tied:
 	xor a, a ; $4119
 	ret ; $411a
 Unused_0b_411b:
