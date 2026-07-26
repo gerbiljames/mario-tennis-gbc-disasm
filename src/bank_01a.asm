@@ -616,7 +616,7 @@ ShowExpGainScreen:
 	pop hl ; $450a
 	ld a, h ; $450b
 	cp a, $00 ; $450c
-	jr nz, Label_1a_4527 ; $450e
+	jr nz, .done ; $450e
 	call DrawExpScreenYesNoBox ; $4510
 	ld a, $0e ; $4513
 	ld hl, StubNop_1a_4779 ; $4515
@@ -625,7 +625,7 @@ ShowExpGainScreen:
 	jp Label_1a_473e ; $451e
 	call StubNop_1a_4bba ; $4521
 	jp Label_1a_473e ; $4524
-Label_1a_4527:
+.done:
 	pop af ; $4527
 	wram_bank ; $4528
 	pop hl ; $452c
@@ -642,9 +642,9 @@ Label_1a_4527:
 	ld hl, wStoryModeNameOfMainCharacter ; $453f
 	ld a, [wStoryCharacterSlot] ; $4542
 	or a, a ; $4545
-	jr z, Label_1a_454a ; $4546
+	jr z, .gotRecord ; $4546
 	ld l, $40 ; $4548
-Label_1a_454a:
+.gotRecord:
 	ld a, l ; $454a
 	add a, $18 ; $454b
 	ld l, a ; $454d
@@ -654,14 +654,14 @@ Label_1a_454a:
 	pop af ; $4552
 	ld a, [hl] ; $4553
 	cp a, $63 ; $4554
-	jr z, Label_1a_455f ; $4556
+	jr z, .captionMaxLevel ; $4556
 	ld a, $02 ; $4558
 	call DrawExpScreenCaption ; $455a
-	jr Label_1a_4564 ; $455d
-Label_1a_455f:
+	jr .captionDrawn ; $455d
+.captionMaxLevel:
 	ld a, $05 ; $455f
 	call DrawExpScreenCaption ; $4561
-Label_1a_4564:
+.captionDrawn:
 	pop de ; $4564
 	push de ; $4565
 	wram_bank $06 ; $4566
@@ -741,30 +741,30 @@ Label_1a_4564:
 	push de ; $45fb
 	ld a, h ; $45fc
 	sub a, $04 ; $45fd
-	jp z, Label_1a_46de ; $45ff
+	jp z, .finish ; $45ff
 	ld hl, $d230 ; $4602
 	ld a, [hl+] ; $4605
 	ld h, [hl] ; $4606
 	ld l, a ; $4607
 	ld a, h ; $4608
 	or a, l ; $4609
-	jp z, Label_1a_46de ; $460a
-Label_1a_460d:
+	jp z, .finish ; $460a
+.fillLoop:
 	call AdvanceExpGaugeFill ; $460d
 	ld a, [$d238] ; $4610
 	and a, a ; $4613
-	jr nz, Label_1a_467b ; $4614
+	jr nz, .levelUp ; $4614
 	ld a, [$d239] ; $4616
 	and a, a ; $4619
-	jr nz, Label_1a_462a ; $461a
+	jr nz, .gaugeFull ; $461a
 	ldh a, [hPlayerInputFlags] ; $461c
 	and a, PADF_A | PADF_B ; $461e
-	jr nz, Label_1a_462a ; $4620
+	jr nz, .gaugeFull ; $4620
 	sound $5e ; $4622
 	call WaitFramesCmd ; $4624
 	db $04 ; $4627 inline arg
-	jr Label_1a_460d ; $4628
-Label_1a_462a:
+	jr .fillLoop ; $4628
+.gaugeFull:
 	ld a, $01 ; $462a
 	ld [$d239], a ; $462c
 	sound $5f ; $462f
@@ -775,14 +775,14 @@ Label_1a_462a:
 	ld l, a ; $4639
 	ld de, $fc18 ; $463a
 	add hl, de ; $463d
-	jr nc, Label_1a_4676 ; $463e
+	jr nc, .nextFrame ; $463e
 	ld hl, $d230 ; $4640
 	ld a, [hl+] ; $4643
 	ld h, [hl] ; $4644
 	ld l, a ; $4645
 	ld de, $d8f0 ; $4646
 	add hl, de ; $4649
-	jr nc, Label_1a_4664 ; $464a
+	jr nc, .fastFill ; $464a
 	call AdvanceExpGaugeFill ; $464c
 	call AdvanceExpGaugeFill ; $464f
 	call AdvanceExpGaugeFill ; $4652
@@ -791,48 +791,48 @@ Label_1a_462a:
 	call AdvanceExpGaugeFill ; $465b
 	call AdvanceExpGaugeFill ; $465e
 	call AdvanceExpGaugeFill ; $4661
-Label_1a_4664:
+.fastFill:
 	call AdvanceExpGaugeFill ; $4664
 	call AdvanceExpGaugeFill ; $4667
 	call AdvanceExpGaugeFill ; $466a
 	call AdvanceExpGaugeFill ; $466d
 	call AdvanceExpGaugeFill ; $4670
 	call AdvanceExpGaugeFill ; $4673
-Label_1a_4676:
+.nextFrame:
 	call AdvanceFrame ; $4676
-	jr Label_1a_460d ; $4679
-Label_1a_467b:
+	jr .fillLoop ; $4679
+.levelUp:
 	sound $5f ; $467b
 	ld a, [$c36f] ; $467d
 	and a, a ; $4680
-	jr z, Label_1a_46de ; $4681
+	jr z, .finish ; $4681
 	push af ; $4683
 	wram_bank $06 ; $4684
 	ld c, $00 ; $468a
 	ld a, [$d000] ; $468c
 	and a, a ; $468f
-	jr nz, Label_1a_4694 ; $4690
+	jr nz, .storeScroll ; $4690
 	ld c, $fc ; $4692
-Label_1a_4694:
+.storeScroll:
 	ld a, c ; $4694
 	ld hl, $d23a ; $4695
 	ld [hl], a ; $4698
 	ld b, $28 ; $4699
-Label_1a_469b:
+.bonusWaitLoop:
 	ld hl, $d23a ; $469b
 	ld a, [hl] ; $469e
 	and a, a ; $469f
-	jr z, Label_1a_46a4 ; $46a0
+	jr z, .bonusFrame ; $46a0
 	inc a ; $46a2
 	ld [hl], a ; $46a3
-Label_1a_46a4:
+.bonusFrame:
 	call AdvanceFrame ; $46a4
 	dec b ; $46a7
-	jr z, Label_1a_46af ; $46a8
+	jr z, .bonusDone ; $46a8
 	ldh a, [hInputRisingEdge] ; $46aa
 	or a, a ; $46ac
-	jr z, Label_1a_469b ; $46ad
-Label_1a_46af:
+	jr z, .bonusWaitLoop ; $46ad
+.bonusDone:
 	pop af ; $46af
 	call DrawExpBonusMessage ; $46b0
 	sound $5f ; $46b3
@@ -857,34 +857,34 @@ Label_1a_46af:
 	xor a, a ; $46d4
 	ld [$c36f], a ; $46d5
 	ld [$d238], a ; $46d8
-	jp Label_1a_460d ; $46db
-Label_1a_46de:
+	jp .fillLoop ; $46db
+.finish:
 	wram_bank $06 ; $46de
 	ld c, $00 ; $46e4
 	ld a, [$d000] ; $46e6
 	and a, a ; $46e9
-	jr nz, Label_1a_46ee ; $46ea
+	jr nz, .storeFinalScroll ; $46ea
 	ld c, $fc ; $46ec
-Label_1a_46ee:
+.storeFinalScroll:
 	ld a, c ; $46ee
 	ld hl, $d23a ; $46ef
 	ld [hl], a ; $46f2
 	ld b, $f0 ; $46f3
-Label_1a_46f5:
+.finalWaitLoop:
 	ld hl, $d23a ; $46f5
 	ld a, [hl] ; $46f8
 	and a, a ; $46f9
-	jr z, Label_1a_46fe ; $46fa
+	jr z, .finalFrame ; $46fa
 	inc a ; $46fc
 	ld [hl], a ; $46fd
-Label_1a_46fe:
+.finalFrame:
 	call AdvanceFrame ; $46fe
 	dec b ; $4701
-	jr z, Label_1a_4709 ; $4702
+	jr z, .fadeOut ; $4702
 	ldh a, [hInputRisingEdge] ; $4704
 	or a, a ; $4706
-	jr z, Label_1a_46f5 ; $4707
-Label_1a_4709:
+	jr z, .finalWaitLoop ; $4707
+.fadeOut:
 	ld c, $10 ; $4709
 	call BeginFadeOut ; $470b
 	call WaitFadeEnd ; $470e

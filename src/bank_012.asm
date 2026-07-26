@@ -696,10 +696,10 @@ WallPracticeLevelResultScript:
 	sub a, $01 ; $4ac4
 	ld a, a ; $4ac6
 	rst Rst00 ; $4ac7
-	dw Label_12_4bee ; $4ac8 jumptable
-	dw Label_12_4bde ; $4aca jumptable
-	dw Label_12_4bb2 ; $4acc jumptable
-	dw Label_12_4ba2 ; $4ace jumptable
+	dw WallPracticeExitCourtScript.variant4 ; $4ac8 jumptable
+	dw WallPracticeExitCourtScript.variant3 ; $4aca jumptable
+	dw WallPracticeExitCourtScript.variant2 ; $4acc jumptable
+	dw WallPracticeExitCourtScript.variant1 ; $4ace jumptable
 Label_12_4ad0:
 	ld a, [$c2b0] ; $4ad0
 	cp a, $04 ; $4ad3
@@ -749,25 +749,25 @@ WallPracticeExitCourtScript:
 	script_wait_move $07 ; $4b76
 	script_face $07, FACE_DOWN ; $4b7b
 	test_flag FLAG_DOUBLES ; $4b82
-	jr z, Label_12_4b94 ; $4b85
+	jr z, .done ; $4b85
 	script_get_actor_state ACTOR_PARTNER ; $4b87
 	ld c, l ; $4b8c
 	ld b, h ; $4b8d
 	ld de, $d000 ; $4b8e
 	farcall AttachActorStepMover ; $4b91
-Label_12_4b94:
+.done:
 	script_wait_frames $0a ; $4b94
 	ret ; $4b9b
 	; $4b9c, 6 bytes (records:2)
 	dw $14f3 ; record 0
 	dw $14f4 ; record 1
 	dw $14f5 ; record 2
-Label_12_4ba2:
+.variant1:
 	script_set_text Text_35_255 ; $4ba2
 	script_fade_in $06 ; $4ba8
 	call WaitFadeEnd ; $4bad
-	jr Label_12_4bfc ; $4bb0
-Label_12_4bb2:
+	jr .speakAndLeave ; $4bb0
+.variant2:
 	ldh a, [hWramBank] ; $4bb2
 	push af ; $4bb4
 	wram_bank $07 ; $4bb5
@@ -783,17 +783,17 @@ Label_12_4bb2:
 	script_set_text Text_35_254 ; $4bce
 	script_fade_in $06 ; $4bd4
 	call WaitFadeEnd ; $4bd9
-	jr Label_12_4bfc ; $4bdc
-Label_12_4bde:
+	jr .speakAndLeave ; $4bdc
+.variant3:
 	script_set_text Text_35_253 ; $4bde
 	script_fade_in $06 ; $4be4
 	call WaitFadeEnd ; $4be9
-	jr Label_12_4bfc ; $4bec
-Label_12_4bee:
+	jr .speakAndLeave ; $4bec
+.variant4:
 	script_set_text Text_35_252 ; $4bee
 	script_fade_in $06 ; $4bf4
 	call WaitFadeEnd ; $4bf9
-Label_12_4bfc:
+.speakAndLeave:
 	script_set_anim $07, $02 ; $4bfc
 	script_wait_idle $07 ; $4c03
 	script_speak $07 ; $4c08
