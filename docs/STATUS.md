@@ -22,7 +22,7 @@ less "proven" by the counter, more correct in the source.)
 5,000-odd INCBINs finds no uncarved code; what stays binary is graphics,
 resource descriptors, record arrays, or fill.
 
-Everything below is **committed** (HEAD `ae57ad6`); the whole history
+Everything below is **committed** (HEAD `HEADMARK`); the whole history
 rebuilds byte-perfect. Per-bank progress at any time: `python3
 tools/progress.py` (proven-code bytes, fill runs, label counts, human-named
 counts) and `tools/progress.py --unnamed <bank>` to list still-auto-named
@@ -189,7 +189,7 @@ What is left lives in the menu/UI banks (`$05`, `$1a`-`$1e`, `$39`-`$3f`), the
 minigame banks (`$0b`, `$0d`, `$17`) and ROM0 -- the same one-function-at-a-time
 work, on subsystems this pass did not reach.
 
-Two process notes worth keeping:
+Process notes worth keeping:
 
 * A bare flat offset in `labels.json` is `bank*0x4000 + cpu - 0x4000`, not
   `bank*0x4000 + cpu`. Two entries were written with the wrong formula, landed
