@@ -26,9 +26,9 @@ Everything below is **committed** (HEAD `61adc87`); the whole history
 rebuilds byte-perfect. Per-bank progress at any time: `python3
 tools/progress.py` (proven-code bytes, fill runs, label counts, human-named
 counts) and `tools/progress.py --unnamed <bank>` to list still-auto-named
-symbols. **14,628 of 20,746 labels are human-named** (see the caveat in the
+symbols. **17,128 of 20,746 labels are human-named** (see the caveat in the
 auto-split section below) (up from 4,816 on 2026-07-23); what is left is
-`Data_*` runs.
+2,204 data blobs.
 
 ### Local labels inside functions (2026-07-26)
 
@@ -171,15 +171,39 @@ actors, and `StepCharAnimation` (bank `$08`) for on-court characters -- only
 the latter implements `$fb`, which is why the flip command appears in the
 character banks and not in the overworld ones. Decoded, `AlexSpriteAnim01` is
 `02 0c 04 06 03 0c 04 07 ff 00` = frames 2,4,3,4 held 12/6/12/7 frames, looping
-from the top. These are still `INCBIN` blobs; a render spec (as the actor
-scripts got) would make all 570 of them readable.
+from the top. All 570 now render as `anim_*` macros rather than `INCBIN`
+(`sprite_anim` spec + macros in `macros.py`), so an animation reads directly:
+
+```
+AlexSpriteAnim03:
+        ; $7f5d, 34 bytes (sprite_anim)
+        anim_flip $20
+        anim_frame $17, $14
+        anim_frame $18, $0a
+        ...
+        anim_flip $00          ; the same seven frames again, mirrored
+        anim_frame $17, $14
+        ...
+        anim_loop $00
+```
+
+The renderer returns `None` on an odd length or an unimplemented command, so a
+mis-declared region falls back to plain bytes rather than rendering a lie.
+
+**The 267 code-loaded blobs are named after the function that loads them.**
+A loader's name already says what the data is for, so `LoadMenuHandCursorGfx`'s
+blob becomes `MenuHandCursorGfx`, `LookupScreen0AssetId`'s becomes
+`Screen0AssetIdTable`, and a loader that pulls several numbers them in address
+order (`RulesBorderAnimTiles0`-`5`). 246 of them replaced a *pinned* auto-style
+name -- `labels.json` holds 326 entries that force a label at an offset using
+the `Data_`/`Gfx_` convention, and those are exactly the ones worth replacing.
 
 What remains auto-named, by family:
 
 | count | family | to name it you first need |
 | --- | --- | --- |
 | 1,095 | blobs under `OamPtrs_*` tables (banks `$6a`, `$6f`-`$77`) | the OAM tables named -- i.e. which NPC each sprite set belongs to |
-| 479 | not in any `dw` table -- 267 loaded straight from code, 93 unreferenced | reading the loading function, one at a time (highest information per label) |
+| ~~479~~ 212 | not in any `dw` table | **done for the 267 loaded from code** -- see below; 93 unreferenced remain |
 | 363 | `$4000`-table slot targets | nothing: slot names auto-derive, so naming the blob improves both |
 | 351 | `SoundTable_*` entries (banks `$0c`, `$78`-`$7f`) | the sound-id tables mapped to `PlaySound` ids |
 
