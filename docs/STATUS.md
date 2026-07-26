@@ -26,7 +26,7 @@ shape, not *twins*, and the shot banks are near-identical copies of each
 other, so a routine only one bank failed to execute reads as ordinary data
 until you diff it against its siblings.
 
-Everything below is **committed** (HEAD `3d59d11`); the whole history
+Everything below is **committed** (HEAD `258e3d3`); the whole history
 rebuilds byte-perfect. Per-bank progress at any time: `python3
 tools/progress.py` (proven-code bytes, fill runs, label counts, human-named
 counts) and `tools/progress.py --unnamed <bank>` to list still-auto-named
@@ -4296,7 +4296,12 @@ WRAM1 `$d000` (64 raw bytes = the palettes, which pins the mapping), WRAM3
 maps) and WRAM6 `$d800` -- **and pops one slot into `hl` and immediately
 overwrites it**. That discarded slot is index 6, whose targets are not LZ
 streams and which no other code reads; they are named
-`<Scene>SceneUnusedSlot`.
+`<Scene>SceneUnusedSlot`. In **8 of the 14 scenes it points at the start of
+the bank's trailing `$ff` padding**, which is the clearest evidence that the
+field is vestigial. The fill itself was always handled correctly -- the
+section stops and `rgblink -p 0xff` pads the rest, so no bytes are emitted --
+but the pointer still needs a label to resolve, and `emit.py` now stems such a
+target `Fill_` rather than `Data_` when it has no curated name.
 
 For the runs with no named caller, the *decompressed output size* names the
 role, and the run length identifies the set: 64 bytes = a 16x16 icon, 240 = a
@@ -4334,5 +4339,5 @@ human-named.
 
 ## Repo state
 
-All work is committed (HEAD `3d59d11`); every commit rebuilds byte-perfect.
+All work is committed (HEAD `258e3d3`); every commit rebuilds byte-perfect.
 Gitignored: baserom.gbc, data/, build/, tools/rgbds/, *.o, *.gbc, *.sav.
