@@ -321,15 +321,15 @@ ShowYesNoPromptWindow:
 	and a, $7f ; $4242
 	ld e, a ; $4244
 	rl b ; $4245
-	jr nc, Label_0a_4255 ; $4247
+	jr nc, .fromActor ; $4247
 	cp a, $09 ; $4249
-	jr c, Label_0a_4251 ; $424b
+	jr c, .lowerRow ; $424b
 	ld e, $01 ; $424d
-	jr Label_0a_427f ; $424f
-Label_0a_4251:
+	jr .open ; $424f
+.lowerRow:
 	ld e, $0a ; $4251
-	jr Label_0a_427f ; $4253
-Label_0a_4255:
+	jr .open ; $4253
+.fromActor:
 	call GetActorStateAddr ; $4255
 	ld a, [wCameraY + 1] ; $4258
 	ld b, a ; $425b
@@ -349,12 +349,12 @@ Label_0a_4255:
 	ld a, [hl] ; $4273
 	sub a, b ; $4274
 	cp a, $0a ; $4275
-	jr c, Label_0a_427d ; $4277
+	jr c, .upperRow ; $4277
 	ld e, $0a ; $4279
-	jr Label_0a_427f ; $427b
-Label_0a_427d:
+	jr .open ; $427b
+.upperRow:
 	ld e, $01 ; $427d
-Label_0a_427f:
+.open:
 	pop af ; $427f
 	wram_bank ; $4280
 	ld d, $02 ; $4284
@@ -1994,7 +1994,7 @@ Label_0a_4da8:
 SetRankingMatchClearFlags:
 	ld c, $1c ; $4da9
 	ld de, $1800 ; $4dab
-Label_0a_4dae:
+.clearLoop:
 	push de ; $4dae
 	call ClearGameFlag ; $4daf
 	pop de ; $4db2
@@ -2003,12 +2003,12 @@ Label_0a_4dae:
 	ld d, h ; $4db7
 	ld e, l ; $4db8
 	dec c ; $4db9
-	jr nz, Label_0a_4dae ; $4dba
+	jr nz, .clearLoop ; $4dba
 	ld a, [wCharPosDepth] ; $4dbc
 	or a, a ; $4dbf
 	ret z ; $4dc0
 	ld hl, RankingFlagList_0a_4df2 ; $4dc1
-Label_0a_4dc4:
+.setListA:
 	ld a, [hl+] ; $4dc4
 	ld d, [hl] ; $4dc5
 	ld e, a ; $4dc6
@@ -2016,15 +2016,15 @@ Label_0a_4dc4:
 	ld a, d ; $4dc8
 	and a, d ; $4dc9
 	cp a, $ff ; $4dca
-	jr z, Label_0a_4dd3 ; $4dcc
+	jr z, .checkSecondList ; $4dcc
 	call SetGameFlag ; $4dce
-	jr Label_0a_4dc4 ; $4dd1
-Label_0a_4dd3:
+	jr .setListA ; $4dd1
+.checkSecondList:
 	ld a, [wCharPosDepth] ; $4dd3
 	cp a, $01 ; $4dd6
 	ret z ; $4dd8
 	ld hl, RankingFlagList_0a_4e00 ; $4dd9
-Label_0a_4ddc:
+.setListB:
 	ld a, [hl+] ; $4ddc
 	ld d, [hl] ; $4ddd
 	ld e, a ; $4dde
@@ -2032,10 +2032,10 @@ Label_0a_4ddc:
 	ld a, d ; $4de0
 	and a, d ; $4de1
 	cp a, $ff ; $4de2
-	jr z, Label_0a_4deb ; $4de4
+	jr z, .done ; $4de4
 	call SetGameFlag ; $4de6
-	jr Label_0a_4ddc ; $4de9
-Label_0a_4deb:
+	jr .setListB ; $4de9
+.done:
 	ret ; $4deb
 RankingFlagListPtrs_0a:
 	; $4dec, 6 bytes (records:2)
@@ -2063,7 +2063,7 @@ RankingFlagList_0a_4e00:
 SetMinigameClearFlags:
 	ld c, $09 ; $4e0e
 	ld de, $0a00 ; $4e10
-Label_0a_4e13:
+.clearLoop:
 	push de ; $4e13
 	call ClearGameFlag ; $4e14
 	pop de ; $4e17
@@ -2072,12 +2072,12 @@ Label_0a_4e13:
 	ld d, h ; $4e1c
 	ld e, l ; $4e1d
 	dec c ; $4e1e
-	jr nz, Label_0a_4e13 ; $4e1f
+	jr nz, .clearLoop ; $4e1f
 	ld a, [wCharPosX + 2] ; $4e21
 	or a, a ; $4e24
-	jr z, Label_0a_4e2a ; $4e25
+	jr z, .haveLevel ; $4e25
 	ld a, [wCharPosDepth + 1] ; $4e27
-Label_0a_4e2a:
+.haveLevel:
 	ld b, a ; $4e2a
 	ld a, [wCharPosDepth] ; $4e2b
 	ld c, a ; $4e2e
@@ -2090,19 +2090,19 @@ Label_0a_4e2a:
 	ld c, a ; $4e35
 	inc c ; $4e36
 	ld hl, RankingFlagList_0a_4e4b ; $4e37
-Label_0a_4e3a:
+.setLoop:
 	ld a, [hl+] ; $4e3a
 	ld d, [hl] ; $4e3b
 	ld e, a ; $4e3c
 	inc hl ; $4e3d
 	dec c ; $4e3e
-	jr z, Label_0a_4e4a ; $4e3f
+	jr z, .done ; $4e3f
 	ld a, d ; $4e41
 	or a, e ; $4e42
-	jr z, Label_0a_4e3a ; $4e43
+	jr z, .setLoop ; $4e43
 	call SetGameFlag ; $4e45
-	jr Label_0a_4e3a ; $4e48
-Label_0a_4e4a:
+	jr .setLoop ; $4e48
+.done:
 	ret ; $4e4a
 RankingFlagList_0a_4e4b:
 	; $4e4b, 42 bytes (records:2)
@@ -5344,17 +5344,17 @@ MoveMinigameTargetTowardGoal:
 	ld h, a ; $6635
 	ld a, h ; $6636
 	or a, l ; $6637
-	jr z, Label_0a_6650 ; $6638
+	jr z, .depthAxis ; $6638
 	ld de, $0010 ; $663a
 	bit 7, h ; $663d
-	jr z, Label_0a_6647 ; $663f
+	jr z, .stepX ; $663f
 	xor a, a ; $6641
 	sub a, e ; $6642
 	ld e, a ; $6643
 	sbc a, a ; $6644
 	sub a, d ; $6645
 	ld d, a ; $6646
-Label_0a_6647:
+.stepX:
 	ld hl, $dcf6 ; $6647
 	ld a, [hl] ; $664a
 	add a, e ; $664b
@@ -5362,7 +5362,7 @@ Label_0a_6647:
 	ld a, [hl] ; $664d
 	adc a, d ; $664e
 	ld [hl+], a ; $664f
-Label_0a_6650:
+.depthAxis:
 	ld hl, $dcf8 ; $6650
 	ld a, [hl+] ; $6653
 	ld d, [hl] ; $6654
@@ -5379,17 +5379,17 @@ Label_0a_6650:
 	ld h, a ; $6661
 	ld a, h ; $6662
 	or a, l ; $6663
-	jr z, Label_0a_667c ; $6664
+	jr z, .checkArrived ; $6664
 	ld de, $0010 ; $6666
 	bit 7, h ; $6669
-	jr z, Label_0a_6673 ; $666b
+	jr z, .stepDepth ; $666b
 	xor a, a ; $666d
 	sub a, e ; $666e
 	ld e, a ; $666f
 	sbc a, a ; $6670
 	sub a, d ; $6671
 	ld d, a ; $6672
-Label_0a_6673:
+.stepDepth:
 	ld hl, $dcf8 ; $6673
 	ld a, [hl] ; $6676
 	add a, e ; $6677
@@ -5397,7 +5397,7 @@ Label_0a_6673:
 	ld a, [hl] ; $6679
 	adc a, d ; $667a
 	ld [hl+], a ; $667b
-Label_0a_667c:
+.checkArrived:
 	ld hl, $dcf6 ; $667c
 	ld a, [hl+] ; $667f
 	ld d, [hl] ; $6680
@@ -5414,7 +5414,7 @@ Label_0a_667c:
 	ld h, a ; $668d
 	ld a, h ; $668e
 	or a, l ; $668f
-	jr nz, Label_0a_66ad ; $6690
+	jr nz, .done ; $6690
 	ld hl, $dcf8 ; $6692
 	ld a, [hl+] ; $6695
 	ld d, [hl] ; $6696
@@ -5431,10 +5431,10 @@ Label_0a_667c:
 	ld h, a ; $66a3
 	ld a, h ; $66a4
 	or a, l ; $66a5
-	jr nz, Label_0a_66ad ; $66a6
+	jr nz, .done ; $66a6
 	ld hl, $dcf0 ; $66a8
 	res 1, [hl] ; $66ab
-Label_0a_66ad:
+.done:
 	ret ; $66ad
 DrawMinigameTarget:
 	ld hl, $dcf8 ; $66ae

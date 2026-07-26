@@ -3191,16 +3191,16 @@ UpdateStarWarpTrailSparkles:
 	ld c, $00 ; $7265
 	ld hl, $d003 ; $7267
 	ld b, $10 ; $726a
-Label_0e_726c:
+.findFreeSlot:
 	ld a, [hl] ; $726c
 	or a, a ; $726d
-	jr z, Label_0e_7277 ; $726e
+	jr z, .spawnSparkle ; $726e
 	inc hl ; $7270
 	inc c ; $7271
 	dec b ; $7272
-	jr nz, Label_0e_726c ; $7273
-	jr Label_0e_729d ; $7275
-Label_0e_7277:
+	jr nz, .findFreeSlot ; $7273
+	jr .drawSparkles ; $7275
+.spawnSparkle:
 	ld [hl], $10 ; $7277
 	ld a, c ; $7279
 	rlca ; $727a
@@ -3230,18 +3230,18 @@ Label_0e_7277:
 	ld a, e ; $729a
 	ld [hl+], a ; $729b
 	ld [hl], d ; $729c
-Label_0e_729d:
+.drawSparkles:
 	ld hl, $d003 ; $729d
 	ld b, $00 ; $72a0
 	ld c, $10 ; $72a2
-Label_0e_72a4:
+.drawLoop:
 	push bc ; $72a4
 	push hl ; $72a5
 	ld a, [hl] ; $72a6
 	or a, a ; $72a7
-	jr z, Label_0e_72c1 ; $72a8
+	jr z, .nextSparkle ; $72a8
 	and a, $02 ; $72aa
-	jr z, Label_0e_72c1 ; $72ac
+	jr z, .nextSparkle ; $72ac
 	ld a, b ; $72ae
 	rlca ; $72af
 	add a, $14 ; $72b0
@@ -3255,18 +3255,18 @@ Label_0e_72a4:
 	ld b, $09 ; $72ba
 	ld c, $18 ; $72bc
 	call QueueSprite ; $72be
-Label_0e_72c1:
+.nextSparkle:
 	pop hl ; $72c1
 	pop bc ; $72c2
 	ld a, [hl] ; $72c3
 	or a, a ; $72c4
-	jr z, Label_0e_72c8 ; $72c5
+	jr z, .done ; $72c5
 	dec [hl] ; $72c7
-Label_0e_72c8:
+.done:
 	inc hl ; $72c8
 	inc b ; $72c9
 	dec c ; $72ca
-	jr nz, Label_0e_72a4 ; $72cb
+	jr nz, .drawLoop ; $72cb
 	ret ; $72cd
 StarWarpPalette:
 	; $72ce, 8 bytes (palettes)

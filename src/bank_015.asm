@@ -921,7 +921,7 @@ WaterSpriteRacketRewardScene:
 	call LoadPalettesImmediate ; $4e1d
 	sound $8a ; $4e20
 	ld a, $10 ; $4e22
-Label_15_4e24:
+.handOver:
 	ld d, a ; $4e24
 	script_set_active $14, $02 ; $4e25
 	script_wait_frames $04 ; $4e2c
@@ -932,7 +932,7 @@ Label_15_4e24:
 	pop af ; $4e3f
 	ld a, d ; $4e40
 	sub a, $02 ; $4e41
-	jp nz, Label_15_4e24 ; $4e43
+	jp nz, .handOver ; $4e43
 	script_set_active $14, $02 ; $4e46
 	script_wait_frames $3c ; $4e4d
 	script_set_position $16, $3f00, $3f00 ; $4e54
@@ -955,7 +955,7 @@ Label_15_4e24:
 	script_wait_idle $14 ; $4ec5
 	ld a, [wWaterSpriteMinigameSwingCount] ; $4eca
 	cp a, $96 ; $4ecd
-	jp nc, Label_15_4eef ; $4ecf
+	jp nc, .alreadyOwned ; $4ecf
 	farcall AdvanceDialogueTextCursor ; $4ed2
 	script_get_actor_state $15 ; $4ed5
 	ld c, l ; $4eda
@@ -969,12 +969,12 @@ Label_15_4e24:
 	set_flag FLAG_HAVE_SILVER_RACKET ; $4ee6
 	ld a, $05 ; $4ee9
 	ld b, a ; $4eeb
-	jp Label_15_4ef5 ; $4eec
-Label_15_4eef:
+	jp .speak ; $4eec
+.alreadyOwned:
 	set_flag FLAG_HAVE_GOLD_RACKET ; $4eef
 	ld a, $04 ; $4ef2
 	ld b, a ; $4ef4
-Label_15_4ef5:
+.speak:
 	ld a, [wEquippedRacket] ; $4ef5
 	and a, $f0 ; $4ef8
 	or a, b ; $4efa
@@ -1008,7 +1008,7 @@ Label_15_4ef5:
 	script_wait_frames $32 ; $4f94
 	sound $90 ; $4f9b
 	ld d, $10 ; $4f9d
-Label_15_4f9f:
+.done:
 	script_set_active $14, $00 ; $4f9f
 	script_wait_frames $04 ; $4fa6
 	script_set_active $14, $02 ; $4fad
@@ -1019,7 +1019,7 @@ Label_15_4f9f:
 	ld a, d ; $4fba
 	sub a, $02 ; $4fbb
 	ld d, a ; $4fbd
-	jp nz, Label_15_4f9f ; $4fbe
+	jp nz, .done ; $4fbe
 	script_set_active $14, $00 ; $4fc1
 	script_wait_frames $1e ; $4fc8
 	script_set_position $14, $3300, $0b00 ; $4fcf
@@ -1341,25 +1341,25 @@ TrainingCourtReentryDispatch:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $53a9
 	ld a, a ; $53ac
 	rst Rst00 ; $53ad
-	dw Label_15_53d2 ; $53ae jumptable
-	dw Label_15_53d2 ; $53b0 jumptable
-	dw Label_15_53d2 ; $53b2 jumptable
-	dw Label_15_5437 ; $53b4 jumptable
-	dw Label_15_5437 ; $53b6 jumptable
-	dw Label_15_5437 ; $53b8 jumptable
-	dw Label_15_5482 ; $53ba jumptable
-	dw Label_15_5482 ; $53bc jumptable
-	dw Label_15_5482 ; $53be jumptable
-	dw Label_15_54e7 ; $53c0 jumptable
-	dw Label_15_54e7 ; $53c2 jumptable
-	dw Label_15_54e7 ; $53c4 jumptable
-	dw Label_15_5532 ; $53c6 jumptable
-	dw Label_15_5532 ; $53c8 jumptable
-	dw Label_15_5532 ; $53ca jumptable
-	dw Label_15_5597 ; $53cc jumptable
-	dw Label_15_5597 ; $53ce jumptable
-	dw Label_15_5597 ; $53d0 jumptable
-Label_15_53d2:
+	dw TrainingCourtReentryDispatch.serveCourt ; $53ae jumptable
+	dw TrainingCourtReentryDispatch.serveCourt ; $53b0 jumptable
+	dw TrainingCourtReentryDispatch.serveCourt ; $53b2 jumptable
+	dw TrainingCourtReentryDispatch.netCourt ; $53b4 jumptable
+	dw TrainingCourtReentryDispatch.netCourt ; $53b6 jumptable
+	dw TrainingCourtReentryDispatch.netCourt ; $53b8 jumptable
+	dw TrainingCourtReentryDispatch.strokeCourt ; $53ba jumptable
+	dw TrainingCourtReentryDispatch.strokeCourt ; $53bc jumptable
+	dw TrainingCourtReentryDispatch.strokeCourt ; $53be jumptable
+	dw TrainingCourtReentryDispatch.serveCourtDoubles ; $53c0 jumptable
+	dw TrainingCourtReentryDispatch.serveCourtDoubles ; $53c2 jumptable
+	dw TrainingCourtReentryDispatch.serveCourtDoubles ; $53c4 jumptable
+	dw TrainingCourtReentryDispatch.netCourtDoubles ; $53c6 jumptable
+	dw TrainingCourtReentryDispatch.netCourtDoubles ; $53c8 jumptable
+	dw TrainingCourtReentryDispatch.netCourtDoubles ; $53ca jumptable
+	dw TrainingCourtReentryDispatch.strokeCourtDoubles ; $53cc jumptable
+	dw TrainingCourtReentryDispatch.strokeCourtDoubles ; $53ce jumptable
+	dw TrainingCourtReentryDispatch.strokeCourtDoubles ; $53d0 jumptable
+.serveCourt:
 	xor a, a ; $53d2
 	ld [wStoryModeShowLocationName], a ; $53d3
 	ld a, $06 ; $53d6
@@ -1383,7 +1383,7 @@ Label_15_53d2:
 	call WaitFadeEnd ; $5430
 	call WalkChallengerOntoCourt ; $5433
 	ret ; $5436
-Label_15_5437:
+.netCourt:
 	xor a, a ; $5437
 	ld [wStoryModeShowLocationName], a ; $5438
 	script_player_speed $00f0 ; $543b
@@ -1397,7 +1397,7 @@ Label_15_5437:
 	script_fade_in $04 ; $5479
 	call WaitFadeEnd ; $547e
 	ret ; $5481
-Label_15_5482:
+.strokeCourt:
 	xor a, a ; $5482
 	ld [wStoryModeShowLocationName], a ; $5483
 	ld a, $11 ; $5486
@@ -1421,7 +1421,7 @@ Label_15_5482:
 	call WaitFadeEnd ; $54e0
 	call WalkChallengerOntoCourt ; $54e3
 	ret ; $54e6
-Label_15_54e7:
+.serveCourtDoubles:
 	xor a, a ; $54e7
 	ld [wStoryModeShowLocationName], a ; $54e8
 	script_player_speed $00f0 ; $54eb
@@ -1435,7 +1435,7 @@ Label_15_54e7:
 	script_fade_in $04 ; $5529
 	call WaitFadeEnd ; $552e
 	ret ; $5531
-Label_15_5532:
+.netCourtDoubles:
 	xor a, a ; $5532
 	ld [wStoryModeShowLocationName], a ; $5533
 	ld a, $0c ; $5536
@@ -1459,7 +1459,7 @@ Label_15_5532:
 	call WaitFadeEnd ; $5590
 	call WalkChallengerOntoCourt ; $5593
 	ret ; $5596
-Label_15_5597:
+.strokeCourtDoubles:
 	xor a, a ; $5597
 	ld [wStoryModeShowLocationName], a ; $5598
 	script_player_speed $00f0 ; $559b
@@ -1556,7 +1556,7 @@ WaterSpriteSwingContestScene:
 	script_face ACTOR_PLAYER, FACE_DOWN ; $5661
 	ld b, $20 ; $5668
 	ld e, $10 ; $566a
-Label_15_566c:
+.contest:
 	ld a, $20 ; $566c
 	sub a, b ; $566e
 	ld d, a ; $566f
@@ -1575,7 +1575,7 @@ Label_15_566c:
 	ld [$c2bb], a ; $5689
 	script_wait_frames $01 ; $568c
 	dec b ; $5693
-	jp nz, Label_15_566c ; $5694
+	jp nz, .contest ; $5694
 	ld de, $0258 ; $5697
 	ld hl, wWaterSpriteMinigameTimer ; $569a
 	ld a, e ; $569d
@@ -1596,40 +1596,40 @@ Label_15_566c:
 	ld l, $03 ; $56bc
 	ld h, $00 ; $56be
 	ld de, $502c ; $56c0
-Label_15_56c3:
+.win:
 	sound $8c ; $56c3
 	ld b, $3c ; $56c5
-Label_15_56c7:
+.lose:
 	farcall DrawDecimalNumberSprites_39 ; $56c7
 	script_wait_frames $01 ; $56ca
 	dec b ; $56d1
-	jp nz, Label_15_56c7 ; $56d2
+	jp nz, .lose ; $56d2
 	dec l ; $56d5
-	jp nz, Label_15_56c3 ; $56d6
+	jp nz, .win ; $56d6
 	sound $75 ; $56d9
 	call TogglePlayerSpriteXFlip ; $56db
 	ld a, $01 ; $56de
 	ld hl, WaterSpriteSwingCountTask ; $56e0
 	call RegisterFrameTask ; $56e3
-Label_15_56e6:
+.reward:
 	call AdvanceFrame ; $56e6
 	ld a, [$c2b9] ; $56e9
 	cp a, $00 ; $56ec
-	jr z, Label_15_5708 ; $56ee
+	jr z, .finish ; $56ee
 	cp a, $01 ; $56f0
-	jr z, Label_15_56fe ; $56f2
+	jr z, .rewardWait ; $56f2
 	ld a, $09 ; $56f4
 	ld d, a ; $56f6
 	ld a, $00 ; $56f7
 	farcall ScriptSetActorAnimation ; $56f9
-	jr Label_15_56e6 ; $56fc
-Label_15_56fe:
+	jr .reward ; $56fc
+.rewardWait:
 	ld a, $0a ; $56fe
 	ld d, a ; $5700
 	ld a, $00 ; $5701
 	farcall ScriptSetActorAnimation ; $5703
-	jr Label_15_56e6 ; $5706
-Label_15_5708:
+	jr .reward ; $5706
+.finish:
 	sound $8d ; $5708
 	script_set_anim ACTOR_PLAYER, $02 ; $570a
 	script_wait_idle ACTOR_PLAYER ; $5711
@@ -1639,7 +1639,7 @@ Label_15_5708:
 	call UnregisterFrameTask ; $5723
 	ld b, $30 ; $5726
 	ld e, $10 ; $5728
-Label_15_572a:
+.done:
 	ld a, b ; $572a
 	sub a, $10 ; $572b
 	ld d, a ; $572d
@@ -1661,7 +1661,7 @@ Label_15_572a:
 	ld [$c2bb], a ; $574a
 	script_wait_frames $01 ; $574d
 	dec b ; $5754
-	jp nz, Label_15_572a ; $5755
+	jp nz, .done ; $5755
 	ld hl, QueueWaterSpriteMinigameHudPanels ; $5758
 	call UnregisterFrameTask ; $575b
 	call WaitFramesCmd ; $575e

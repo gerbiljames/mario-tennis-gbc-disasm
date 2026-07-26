@@ -172,9 +172,9 @@ SetupCenterCourtSceneVariant:
 	ld a, $00 ; $41b6
 	ld [$c2b0], a ; $41b8
 	test_flag FLAG_DOUBLES ; $41bb
-	jr nz, Label_11_41ec ; $41be
+	jr nz, .doneEarly ; $41be
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_SEMIFINAL ; $41c0
-	jr z, Label_11_41d6 ; $41c3
+	jr z, .stage1 ; $41c3
 	ld a, $03 ; $41c5
 	ld [$c2b0], a ; $41c7
 	ldh a, [hRomBank] ; $41ca
@@ -182,22 +182,22 @@ SetupCenterCourtSceneVariant:
 	farcall ScriptRespawnLocationActors ; $41cf
 	farcall BeginCutsceneScriptMode ; $41d2
 	ret ; $41d5
-Label_11_41d6:
+.stage1:
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_2 ; $41d6
-	jr z, Label_11_41e1 ; $41d9
+	jr z, .stage2 ; $41d9
 	ld a, $02 ; $41db
 	ld [$c2b0], a ; $41dd
 	ret ; $41e0
-Label_11_41e1:
+.stage2:
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_1 ; $41e1
-	jr z, Label_11_41eb ; $41e4
+	jr z, .stage3 ; $41e4
 	ld a, $01 ; $41e6
 	ld [$c2b0], a ; $41e8
-Label_11_41eb:
+.stage3:
 	ret ; $41eb
-Label_11_41ec:
+.doneEarly:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_SEMIFINAL ; $41ec
-	jr z, Label_11_4202 ; $41ef
+	jr z, .stage4 ; $41ef
 	ld a, $06 ; $41f1
 	ld [$c2b0], a ; $41f3
 	ldh a, [hRomBank] ; $41f6
@@ -205,13 +205,13 @@ Label_11_41ec:
 	farcall ScriptRespawnLocationActors ; $41fb
 	farcall BeginCutsceneScriptMode ; $41fe
 	ret ; $4201
-Label_11_4202:
+.stage4:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_ROUND_1 ; $4202
-	jr z, Label_11_420d ; $4205
+	jr z, .done ; $4205
 	ld a, $05 ; $4207
 	ld [$c2b0], a ; $4209
 	ret ; $420c
-Label_11_420d:
+.done:
 	ld a, $04 ; $420d
 	ld [$c2b0], a ; $420f
 	ret ; $4212
@@ -3239,15 +3239,15 @@ StartNextRankingMatch:
 	test_flag FLAG_DOUBLES ; $7825
 	jp nz, StartNextDoublesRankingMatch ; $7828
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_4 ; $782b
-	jr z, Label_11_7843 ; $782e
+	jr z, .rank2 ; $782e
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_3 ; $7830
-	jp z, Label_11_78cf ; $7833
+	jp z, .rank3 ; $7833
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_2 ; $7836
-	jp z, Label_11_795d ; $7839
+	jp z, .rank4 ; $7839
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $783c
-	jp z, Label_11_79e8 ; $783f
+	jp z, .done ; $783f
 	ret ; $7842
-Label_11_7843:
+.rank2:
 	script_face $03, FACE_RIGHT ; $7843
 	script_wait_frames $0f ; $784a
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $7851
@@ -3270,7 +3270,7 @@ Label_11_7843:
 	farcall RunStoryMatch ; $78c8
 	farcall RestoreOverworldAfterMatch ; $78cb
 	ret ; $78ce
-Label_11_78cf:
+.rank3:
 	script_face $03, FACE_LEFT ; $78cf
 	script_wait_frames $0f ; $78d6
 	script_face ACTOR_PLAYER, FACE_LEFT ; $78dd
@@ -3293,7 +3293,7 @@ Label_11_78cf:
 	farcall RunStoryMatch ; $7956
 	farcall RestoreOverworldAfterMatch ; $7959
 	ret ; $795c
-Label_11_795d:
+.rank4:
 	script_face $03, FACE_LEFT ; $795d
 	script_wait_frames $0f ; $7964
 	script_face ACTOR_PLAYER, FACE_LEFT ; $796b
@@ -3315,7 +3315,7 @@ Label_11_795d:
 	farcall RunStoryMatch ; $79e1
 	farcall RestoreOverworldAfterMatch ; $79e4
 	ret ; $79e7
-Label_11_79e8:
+.done:
 	script_face $03, FACE_RIGHT ; $79e8
 	script_wait_frames $0f ; $79ef
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $79f6

@@ -2233,9 +2233,9 @@ Label_13_61a5:
 	ret ; $61a8
 SetupVarsityCourtSceneVariant:
 	test_flag FLAG_DOUBLES ; $61a9
-	jr nz, Label_13_6222 ; $61ac
+	jr nz, .stage3 ; $61ac
 	test_flag FLAG_STORY_COMPLETE_SINGLES ; $61ae
-	jr z, Label_13_61e1 ; $61b1
+	jr z, .stage1 ; $61b1
 	ld hl, VarsityCourtNpcScriptsD_13 ; $61b3
 	ld de, $000c ; $61b6
 	farcall WriteStoryStateWord ; $61b9
@@ -2250,9 +2250,9 @@ SetupVarsityCourtSceneVariant:
 	script_set_position $06, $0500, $1500 ; $61ce
 	script_face $06, FACE_RIGHT ; $61d9
 	ret ; $61e0
-Label_13_61e1:
+.stage1:
 	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $61e1
-	jr z, Label_13_620a ; $61e4
+	jr z, .stage2 ; $61e4
 	ldh a, [hRomBank] ; $61e6
 	ld hl, VarsityCourtActorsC_13 ; $61e8
 	farcall ScriptRespawnLocationActors ; $61eb
@@ -2268,9 +2268,9 @@ Label_13_61e1:
 	ld e, $10 ; $6204
 	farcall WriteBehaviorMapCell ; $6206
 	ret ; $6209
-Label_13_620a:
+.stage2:
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $620a
-	jp z, Label_13_62bd ; $620d
+	jp z, .done ; $620d
 	ldh a, [hRomBank] ; $6210
 	ld hl, VarsityCourtActorsA_13 ; $6212
 	farcall ScriptRespawnLocationActors ; $6215
@@ -2278,9 +2278,9 @@ Label_13_620a:
 	ld de, $000c ; $621b
 	farcall WriteStoryStateWord ; $621e
 	ret ; $6221
-Label_13_6222:
+.stage3:
 	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $6222
-	jr z, Label_13_627e ; $6225
+	jr z, .stage4 ; $6225
 	ldh a, [hRomBank] ; $6227
 	ld hl, VarsityCourtActorsB_13 ; $6229
 	farcall ScriptRespawnLocationActors ; $622c
@@ -2301,9 +2301,9 @@ Label_13_6222:
 	script_set_position $07, $0f00, $1700 ; $6267
 	script_set_actor_script $07, ActorScript_13_7b2f ; $6272
 	ret ; $627d
-Label_13_627e:
+.stage4:
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $627e
-	jr z, Label_13_62a7 ; $6281
+	jr z, .stage5 ; $6281
 	ldh a, [hRomBank] ; $6283
 	ld hl, VarsityCourtActorsD_13 ; $6285
 	farcall ScriptRespawnLocationActors ; $6288
@@ -2319,16 +2319,16 @@ Label_13_627e:
 	ld e, $10 ; $62a1
 	farcall WriteBehaviorMapCell ; $62a3
 	ret ; $62a6
-Label_13_62a7:
+.stage5:
 	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_1 ; $62a7
-	jr z, Label_13_62bd ; $62aa
+	jr z, .done ; $62aa
 	ldh a, [hRomBank] ; $62ac
 	ld hl, VarsityCourtActorsB_13 ; $62ae
 	farcall ScriptRespawnLocationActors ; $62b1
 	ld hl, VarsityCourtNpcScriptsB_13 ; $62b4
 	ld de, $000c ; $62b7
 	farcall WriteStoryStateWord ; $62ba
-Label_13_62bd:
+.done:
 	ret ; $62bd
 ApplyPartnerCharacterVariant_13:
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $62be

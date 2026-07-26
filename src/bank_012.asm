@@ -2114,31 +2114,31 @@ SeniorCourtPositionActorsByProgressA:
 	jr nz, Label_12_5e38 ; $5e15
 	ld a, [$c2b1] ; $5e17
 	cp a, $03 ; $5e1a
-	jr c, Label_12_5e30 ; $5e1c
+	jr c, .checkStage9 ; $5e1c
 	script_set_position $07, $1b00, $0d00 ; $5e1e
 	script_face $07, FACE_LEFT ; $5e29
-Label_12_5e30:
+.checkStage9:
 	ld a, [$c2b1] ; $5e30
 	cp a, $09 ; $5e33
-	jr c, Label_12_5e37 ; $5e35
-Label_12_5e37:
+	jr c, .done ; $5e35
+.done:
 	ret ; $5e37
 Label_12_5e38:
 	ld a, [$c2b1] ; $5e38
 	cp a, $07 ; $5e3b
-	jr c, Label_12_5e73 ; $5e3d
+	jr c, .checkStage10 ; $5e3d
 	cp a, $09 ; $5e3f
-	jr nc, Label_12_5e73 ; $5e41
+	jr nc, .checkStage10 ; $5e41
 	script_set_position $09, $1b00, $0b00 ; $5e43
 	script_set_position $08, $1b00, $0d00 ; $5e4e
 	script_face $09, FACE_LEFT ; $5e59
 	script_face $08, FACE_LEFT ; $5e60
 	script_null_script $08 ; $5e67
 	script_set_anim $08, $01 ; $5e6c
-Label_12_5e73:
+.checkStage10:
 	ld a, [$c2b1] ; $5e73
 	cp a, $0a ; $5e76
-	jr c, Label_12_5e30 ; $5e78
+	jr c, SeniorCourtPositionActorsByProgressA.checkStage9 ; $5e78
 	script_set_position $04, $3f00, $3f00 ; $5e7a
 	script_set_position $05, $3f00, $3f00 ; $5e85
 	ret ; $5e90
@@ -2765,19 +2765,19 @@ ResumeSeniorOpponentScripts:
 SeniorSinglesMatchConfirm:
 	script_set_text Text_34_68 ; $6ae8
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_4 ; $6aee
-	jr z, Label_12_6af6 ; $6af1
+	jr z, .prompt ; $6af1
 	farcall AdvanceDialogueTextCursor ; $6af3
-Label_12_6af6:
+.prompt:
 	ld a, $03 ; $6af6
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $6af8
 	farcall RunDialogueYesNoPrompt ; $6afb
 	farcall ScriptCloseDialogueWindow ; $6afe
 	script_wait_frames $05 ; $6b01
 	and a, a ; $6b08
-	jp nz, Label_12_6b57 ; $6b09
+	jp nz, .done ; $6b09
 	script_set_anim $03, $03 ; $6b0c
 	script_wait_idle $03 ; $6b13
-Label_12_6b18:
+.declined:
 	script_set_anim $03, $03 ; $6b18
 	script_wait_idle $03 ; $6b1f
 	script_set_text Text_34_70 ; $6b24
@@ -2785,18 +2785,18 @@ Label_12_6b18:
 	call StartSeniorRankingMatch ; $6b2f
 	farcall EndCutsceneScriptMode ; $6b32
 	ret ; $6b35
-Label_12_6b36:
+.accepted:
 	script_set_text Text_34_72 ; $6b36
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_4 ; $6b3c
-	jr z, Label_12_6b44 ; $6b3f
+	jr z, .startMatch ; $6b3f
 	farcall AdvanceDialogueTextCursor ; $6b41
-Label_12_6b44:
+.startMatch:
 	script_speak $03 ; $6b44
 	call ResumeSeniorOpponentScripts ; $6b49
 	script_wait_frames $1e ; $6b4c
 	farcall EndCutsceneScriptMode ; $6b53
 	ret ; $6b56
-Label_12_6b57:
+.done:
 	script_set_text Text_34_71 ; $6b57
 	ld a, $03 ; $6b5d
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $6b5f
@@ -2804,33 +2804,33 @@ Label_12_6b57:
 	farcall ScriptCloseDialogueWindow ; $6b65
 	script_wait_frames $05 ; $6b68
 	and a, a ; $6b6f
-	jr z, Label_12_6b36 ; $6b70
-	jp Label_12_6b18 ; $6b72
+	jr z, .accepted ; $6b70
+	jp .declined ; $6b72
 	ret ; $6b75
 SeniorDoublesMatchConfirm:
 	script_set_text Text_34_116 ; $6b76
 	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_2 ; $6b7c
-	jr z, Label_12_6b84 ; $6b7f
+	jr z, .prompt ; $6b7f
 	farcall AdvanceDialogueTextCursor ; $6b81
-Label_12_6b84:
+.prompt:
 	ld a, $03 ; $6b84
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $6b86
 	farcall RunDialogueYesNoPrompt ; $6b89
 	farcall ScriptCloseDialogueWindow ; $6b8c
 	script_wait_frames $05 ; $6b8f
 	and a, a ; $6b96
-	jp nz, Label_12_6be4 ; $6b97
+	jp nz, .done ; $6b97
 	script_set_anim $03, $03 ; $6b9a
 	script_wait_idle $03 ; $6ba1
 	script_set_anim $03, $03 ; $6ba6
 	script_wait_idle $03 ; $6bad
 	script_set_text Text_34_118 ; $6bb2
 	script_speak $03 ; $6bb8
-Label_12_6bbd:
+.declined:
 	call StartSeniorRankingMatch ; $6bbd
 	farcall EndCutsceneScriptMode ; $6bc0
 	ret ; $6bc3
-Label_12_6bc4:
+.accepted:
 	script_speak $03 ; $6bc4
 	call ResumeSeniorOpponentScripts ; $6bc9
 	script_wait_frames $1e ; $6bcc
@@ -2841,7 +2841,7 @@ Label_12_6bc4:
 	farcall AttachActorStepMover ; $6bdd
 	farcall EndCutsceneScriptMode ; $6be0
 	ret ; $6be3
-Label_12_6be4:
+.done:
 	script_set_text Text_34_119 ; $6be4
 	ld a, $03 ; $6bea
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $6bec
@@ -2849,10 +2849,10 @@ Label_12_6be4:
 	farcall ScriptCloseDialogueWindow ; $6bf2
 	script_wait_frames $05 ; $6bf5
 	and a, a ; $6bfc
-	jr z, Label_12_6bc4 ; $6bfd
+	jr z, .accepted ; $6bfd
 	script_set_text Text_34_121 ; $6bff
 	script_speak $03 ; $6c05
-	jp Label_12_6bbd ; $6c0a
+	jp .declined ; $6c0a
 ActorScript_12_6c0d:
 	; $6c0d, 11 bytes (actor_script)
 	as_set_target $2b00, $1b00

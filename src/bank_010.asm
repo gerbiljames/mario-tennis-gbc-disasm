@@ -1223,23 +1223,23 @@ RunTitleAndMainMenuLoop:
 	call ResumeBGM ; $4f12
 	ld a, [wStoryModeEntryPoint] ; $4f15
 	cp a, $0a ; $4f18
-	jr nz, Label_10_4f3c ; $4f1a
+	jr nz, .newGame ; $4f1a
 	call ClearFrameTasks ; $4f1c
 	sound $00 ; $4f1f
 	call ResumeBGM ; $4f21
 	xor a, a ; $4f24
 	ld [$cb71], a ; $4f25
-Label_10_4f28:
+.intro:
 	farcall ShowIntroLogoScreen ; $4f28
 	farcall ScrollOutIntroLogo ; $4f2b
 	farcall RunIntroCutscene ; $4f2e
-Label_10_4f31:
+.titleScreen:
 	farcall RunTitleScreen ; $4f31
 	cp a, $ff ; $4f34
-	jr z, Label_10_4f28 ; $4f36
+	jr z, .intro ; $4f36
 	cp a, $01 ; $4f38
-	jr z, Label_10_4f28 ; $4f3a
-Label_10_4f3c:
+	jr z, .intro ; $4f3a
+.newGame:
 	farcall InitDefaultMatchSettings ; $4f3c
 	xor a, a ; $4f3f
 	ld [$cb1b], a ; $4f40
@@ -1256,14 +1256,14 @@ Label_10_4f3c:
 	call DisableLCDSafely ; $4f60
 	ld a, $01 ; $4f63
 	ld [wMenuSlideDirection], a ; $4f65
-Label_10_4f68:
+.redrawMenu:
 	call DisableLCDSafely ; $4f68
 	farcall LoadMenuFontGfx ; $4f6b
 	farcall ResetScreenAndTextWindows ; $4f6e
 	call EnableLCD ; $4f71
 	script_fade_in $10 ; $4f74
 	call WaitFadeEnd ; $4f79
-Label_10_4f7c:
+.menuLoop:
 	xor a, a ; $4f7c
 	ld [$cb22], a ; $4f7d
 	ld [$cb1c], a ; $4f80
@@ -1285,15 +1285,15 @@ Label_10_4f7c:
 	call InitSerialLink ; $4fad
 	farcall RunMainMenu ; $4fb0
 	cp a, $ff ; $4fb3
-	jp z, Label_10_4f31 ; $4fb5
+	jp z, .titleScreen ; $4fb5
 	ld e, a ; $4fb8
 	ld hl, MatchSelectHandlersB_10 ; $4fb9
 	add a, a ; $4fbc
 	add a, l ; $4fbd
 	ld l, a ; $4fbe
-	jr nc, Label_10_4fc2 ; $4fbf
+	jr nc, .done ; $4fbf
 	inc h ; $4fc1
-Label_10_4fc2:
+.done:
 	ld a, [hl+] ; $4fc2
 	ld h, [hl] ; $4fc3
 	ld l, a ; $4fc4
@@ -1340,7 +1340,7 @@ Label_10_5006:
 	or a, a ; $5017
 	jp z, Label_10_5093 ; $5018
 	cp a, $ff ; $501b
-	jp z, Label_10_4f68 ; $501d
+	jp z, RunTitleAndMainMenuLoop.redrawMenu ; $501d
 	xor a, a ; $5020
 	ld [$c8a5], a ; $5021
 	farcall SaveStorySlotWithTimer ; $5024
@@ -1374,7 +1374,7 @@ Label_10_5041:
 	farcall ResetScreenAndTextWindows ; $5065
 	call EnableLCD ; $5068
 	script_fade_in $10 ; $506b
-	jp Label_10_4f7c ; $5070
+	jp RunTitleAndMainMenuLoop.menuLoop ; $5070
 Label_10_5073:
 	call ResetGameTimer ; $5073
 	farcall GenerateUniqueStorySaveSignature ; $5076
@@ -1411,7 +1411,7 @@ Label_10_50a4:
 	jr nz, Label_10_50ca ; $50c0
 	ld a, $00 ; $50c2
 	ld [wMenuSlideDirection], a ; $50c4
-	jp Label_10_4f7c ; $50c7
+	jp RunTitleAndMainMenuLoop.menuLoop ; $50c7
 Label_10_50ca:
 	call GetStoryContinueDestination ; $50ca
 	ld [$cb74], a ; $50cd
@@ -1448,7 +1448,7 @@ Label_10_50f5:
 	or a, a ; $5115
 	jr z, Label_10_5124 ; $5116
 	cp a, $ff ; $5118
-	jp z, Label_10_4f68 ; $511a
+	jp z, RunTitleAndMainMenuLoop.redrawMenu ; $511a
 	ld a, [wKeepMatchStatsFlag] ; $511d
 	or a, a ; $5120
 	jp nz, Label_10_51db ; $5121
@@ -1471,7 +1471,7 @@ Label_10_5137:
 Label_10_5149:
 	farcall RunMatchFormatSelect ; $5149
 	cp a, $ff ; $514c
-	jp z, Label_10_4f7c ; $514e
+	jp z, RunTitleAndMainMenuLoop.menuLoop ; $514e
 	ld c, $10 ; $5151
 	call BeginFadeOut ; $5153
 	call WaitFadeEnd ; $5156
@@ -1551,7 +1551,7 @@ Label_10_51fd:
 	farcall ResetScreenAndTextWindows ; $5208
 	call EnableLCD ; $520b
 	script_fade_in $10 ; $520e
-	jp Label_10_4f7c ; $5213
+	jp RunTitleAndMainMenuLoop.menuLoop ; $5213
 RunMinigameModeFlow:
 	xor a, a ; $5216
 	ld [wKeepMatchStatsFlag], a ; $5217
@@ -1560,7 +1560,7 @@ RunMinigameModeFlow:
 	jr nz, Label_10_5229 ; $521f
 	ld a, $00 ; $5221
 	ld [wMenuSlideDirection], a ; $5223
-	jp Label_10_4f7c ; $5226
+	jp RunTitleAndMainMenuLoop.menuLoop ; $5226
 Label_10_5229:
 	ld a, $03 ; $5229
 	ld [wCurrentStorySlot], a ; $522b
@@ -1610,7 +1610,7 @@ Label_10_526e:
 	ld a, [wPointWinLoseFlag] ; $5296
 	cp a, $01 ; $5299
 	jr z, Label_10_5229 ; $529b
-	jp Label_10_4f7c ; $529d
+	jp RunTitleAndMainMenuLoop.menuLoop ; $529d
 	ld a, $03 ; $52a0
 	ld [wCurrentStorySlot], a ; $52a2
 	farcall InitStoryModeState ; $52a5
@@ -1620,7 +1620,7 @@ Label_10_526e:
 	call InitSerialLink ; $52af
 	pop af ; $52b2
 	cp a, $ff ; $52b3
-	jp z, Label_10_4f7c ; $52b5
+	jp z, RunTitleAndMainMenuLoop.menuLoop ; $52b5
 	ld a, $01 ; $52b8
 	ld [wMenuSlideDirection], a ; $52ba
 	call DisableLCDSafely ; $52bd
@@ -1628,11 +1628,11 @@ Label_10_526e:
 	farcall ResetScreenAndTextWindows ; $52c3
 	call EnableLCD ; $52c6
 	script_fade_in $10 ; $52c9
-	jp Label_10_4f7c ; $52ce
+	jp RunTitleAndMainMenuLoop.menuLoop ; $52ce
 RunSavedDataMenuFlow:
 	farcall RunSavedDataSourceSelect ; $52d1
 	cp a, $ff ; $52d4
-	jp z, Label_10_4f7c ; $52d6
+	jp z, RunTitleAndMainMenuLoop.menuLoop ; $52d6
 	cp a, $03 ; $52d9
 	jp nc, .checkSavedData ; $52db
 	ld [wCurrentStorySlot], a ; $52de
@@ -1825,11 +1825,11 @@ RunSavedDataMenuFlow:
 	script_fade_in $10 ; $54c9
 	ld a, $00 ; $54ce
 	ld [wMenuSlideDirection], a ; $54d0
-	jp Label_10_4f7c ; $54d3
+	jp RunTitleAndMainMenuLoop.menuLoop ; $54d3
 RunEraseSavedDataFlow:
 	farcall RunEraseSavedDataSelect ; $54d6
 	cp a, $ff ; $54d9
-	jp z, Label_10_4f7c ; $54db
+	jp z, RunTitleAndMainMenuLoop.menuLoop ; $54db
 	ld b, a ; $54de
 	add a, a ; $54df
 	ld hl, $54ec ; $54e0
