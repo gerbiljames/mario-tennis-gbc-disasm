@@ -2,171 +2,171 @@ SECTION "ROM Bank $7f", ROMX[$4000], BANK[$7f]
 
 SoundTable_7f:
 	dw $0000 ; $4000
-	dw Data_7f_40a8 ; $4002
+	dw Music96_Trk0 ; $4002
 	dw $0220 ; $4004
-	dw Data_7f_40cc ; $4006
+	dw Music96_Trk1 ; $4006
 	dw $0000 ; $4008
-	dw Data_7f_40f8 ; $400a
+	dw Music97_Trk0 ; $400a
 	dw $0000 ; $400c
-	dw Data_7f_4140 ; $400e
+	dw Music98_Trk0 ; $400e
 	dw $0300 ; $4010
-	dw Data_7f_4188 ; $4012
+	dw Music99_Trk0 ; $4012
 	dw $0000 ; $4014
-	dw Data_7f_41a2 ; $4016
+	dw Music9d_Trk0 ; $4016
 	dw $0000 ; $4018
-	dw Data_7f_41ae ; $401a
+	dw Music9e_Trk0 ; $401a
 	dw $0000 ; $401c
-	dw Data_7f_41ba ; $401e
+	dw Music9f_Trk0 ; $401e
 	dw $0000 ; $4020
-	dw Data_7f_41c6 ; $4022
+	dw Musica0_Trk0 ; $4022
 	dw $0000 ; $4024
-	dw Data_7f_41d2 ; $4026
+	dw Musica1_Trk0 ; $4026
 	dw $0000 ; $4028
-	dw Data_7f_41de ; $402a
+	dw Musica2_Trk0 ; $402a
 	dw $0000 ; $402c
-	dw Data_7f_41ea ; $402e
+	dw Musica3_Trk0 ; $402e
 	dw $0000 ; $4030
-	dw Data_7f_41f6 ; $4032
+	dw Musica4_Trk0 ; $4032
 	dw $0000 ; $4034
-	dw Data_7f_4202 ; $4036
+	dw Musica5_Trk0 ; $4036
 	dw $0000 ; $4038
-	dw Data_7f_420e ; $403a
+	dw Musica6_Trk0 ; $403a
 	dw $0000 ; $403c
-	dw Data_7f_421a ; $403e
+	dw Musica7_Trk0 ; $403e
 	dw $0000 ; $4040
-	dw Data_7f_4226 ; $4042
+	dw Musica8_Trk0 ; $4042
 	dw $0000 ; $4044
-	dw Data_7f_4232 ; $4046
+	dw Musica9_Trk0 ; $4046
 	dw $0000 ; $4048
-	dw Data_7f_423e ; $404a
+	dw Musicaa_Trk0 ; $404a
 	dw $0000 ; $404c
-	dw Data_7f_424a ; $404e
+	dw Musicab_Trk0 ; $404e
 	dw $0000 ; $4050
-	dw Data_7f_4256 ; $4052
+	dw Musicac_Trk0 ; $4052
 	dw $0000 ; $4054
-	dw Data_7f_4262 ; $4056
+	dw Musicad_Trk0 ; $4056
 	dw $0000 ; $4058
-	dw Data_7f_426e ; $405a
+	dw Musicae_Trk0 ; $405a
 	dw $0000 ; $405c
-	dw Data_7f_427a ; $405e
+	dw Musicaf_Trk0 ; $405e
 	dw $0000 ; $4060
-	dw Data_7f_4286 ; $4062
+	dw Musicb0_Trk0 ; $4062
 	dw $0000 ; $4064
-	dw Data_7f_4292 ; $4066
+	dw Musicb1_Trk0 ; $4066
 	dw $0000 ; $4068
-	dw Data_7f_429e ; $406a
+	dw Musicb2_Trk0 ; $406a
 	dw $0000 ; $406c
-	dw Data_7f_42aa ; $406e
+	dw Musicb3_Trk0 ; $406e
 	dw $0000 ; $4070
-	dw Data_7f_42b6 ; $4072
+	dw Musicb4_Trk0 ; $4072
 	dw $0000 ; $4074
-	dw Data_7f_42c2 ; $4076
+	dw Musicb5_Trk0 ; $4076
 	dw $0000 ; $4078
-	dw Data_7f_42ce ; $407a
+	dw Musicb6_Trk0 ; $407a
 	dw $0000 ; $407c
-	dw Data_7f_42da ; $407e
+	dw Musicb7_Trk0 ; $407e
 	dw $0000 ; $4080
-	dw Data_7f_42e6 ; $4082
+	dw Musicb8_Trk0 ; $4082
 	dw $0000 ; $4084
-	dw Data_7f_42f2 ; $4086
+	dw Musicb9_Trk0 ; $4086
 	dw $0020 ; $4088
-	dw Data_7f_42fe ; $408a
+	dw Musicba_Trk0 ; $408a
 	dw $0020 ; $408c
-	dw Data_7f_4346 ; $408e
+	dw Musicbb_Trk0 ; $408e
 	dw $0020 ; $4090
-	dw Data_7f_438e ; $4092
+	dw Musicbc_Trk0 ; $4092
 	dw $0020 ; $4094
-	dw Data_7f_43d6 ; $4096
+	dw Musicbd_Trk0 ; $4096
 	dw $0020 ; $4098
-	dw Data_7f_441e ; $409a
+	dw Musicbe_Trk0 ; $409a
 	dw $0020 ; $409c
-	dw Data_7f_4466 ; $409e
+	dw Musicbf_Trk0 ; $409e
 	dw $0020 ; $40a0
-	dw Data_7f_44ae ; $40a2
+	dw Musicc0_Trk0 ; $40a2
 	dw $0000 ; $40a4
-	dw Data_7f_44f6 ; $40a6
-Data_7f_40a8:
+	dw Musicc1_Trk0 ; $40a6
+Music96_Trk0:
 	INCBIN "data/bank_07f/d_40a8.bin" ; $40a8, 36 bytes
-Data_7f_40cc:
+Music96_Trk1:
 	INCBIN "data/bank_07f/d_40cc.bin" ; $40cc, 44 bytes
-Data_7f_40f8:
+Music97_Trk0:
 	INCBIN "data/bank_07f/d_40f8.bin" ; $40f8, 72 bytes
-Data_7f_4140:
+Music98_Trk0:
 	INCBIN "data/bank_07f/d_4140.bin" ; $4140, 72 bytes
-Data_7f_4188:
+Music99_Trk0:
 	INCBIN "data/bank_07f/d_4188.bin" ; $4188, 26 bytes
-Data_7f_41a2:
+Music9d_Trk0:
 	INCBIN "data/bank_07f/d_41a2.bin" ; $41a2, 12 bytes
-Data_7f_41ae:
+Music9e_Trk0:
 	INCBIN "data/bank_07f/d_41ae.bin" ; $41ae, 12 bytes
-Data_7f_41ba:
+Music9f_Trk0:
 	INCBIN "data/bank_07f/d_41ba.bin" ; $41ba, 12 bytes
-Data_7f_41c6:
+Musica0_Trk0:
 	INCBIN "data/bank_07f/d_41c6.bin" ; $41c6, 12 bytes
-Data_7f_41d2:
+Musica1_Trk0:
 	INCBIN "data/bank_07f/d_41d2.bin" ; $41d2, 12 bytes
-Data_7f_41de:
+Musica2_Trk0:
 	INCBIN "data/bank_07f/d_41de.bin" ; $41de, 12 bytes
-Data_7f_41ea:
+Musica3_Trk0:
 	INCBIN "data/bank_07f/d_41ea.bin" ; $41ea, 12 bytes
-Data_7f_41f6:
+Musica4_Trk0:
 	INCBIN "data/bank_07f/d_41f6.bin" ; $41f6, 12 bytes
-Data_7f_4202:
+Musica5_Trk0:
 	INCBIN "data/bank_07f/d_4202.bin" ; $4202, 12 bytes
-Data_7f_420e:
+Musica6_Trk0:
 	INCBIN "data/bank_07f/d_420e.bin" ; $420e, 12 bytes
-Data_7f_421a:
+Musica7_Trk0:
 	INCBIN "data/bank_07f/d_421a.bin" ; $421a, 12 bytes
-Data_7f_4226:
+Musica8_Trk0:
 	INCBIN "data/bank_07f/d_4226.bin" ; $4226, 12 bytes
-Data_7f_4232:
+Musica9_Trk0:
 	INCBIN "data/bank_07f/d_4232.bin" ; $4232, 12 bytes
-Data_7f_423e:
+Musicaa_Trk0:
 	INCBIN "data/bank_07f/d_423e.bin" ; $423e, 12 bytes
-Data_7f_424a:
+Musicab_Trk0:
 	INCBIN "data/bank_07f/d_424a.bin" ; $424a, 12 bytes
-Data_7f_4256:
+Musicac_Trk0:
 	INCBIN "data/bank_07f/d_4256.bin" ; $4256, 12 bytes
-Data_7f_4262:
+Musicad_Trk0:
 	INCBIN "data/bank_07f/d_4262.bin" ; $4262, 12 bytes
-Data_7f_426e:
+Musicae_Trk0:
 	INCBIN "data/bank_07f/d_426e.bin" ; $426e, 12 bytes
-Data_7f_427a:
+Musicaf_Trk0:
 	INCBIN "data/bank_07f/d_427a.bin" ; $427a, 12 bytes
-Data_7f_4286:
+Musicb0_Trk0:
 	INCBIN "data/bank_07f/d_4286.bin" ; $4286, 12 bytes
-Data_7f_4292:
+Musicb1_Trk0:
 	INCBIN "data/bank_07f/d_4292.bin" ; $4292, 12 bytes
-Data_7f_429e:
+Musicb2_Trk0:
 	INCBIN "data/bank_07f/d_429e.bin" ; $429e, 12 bytes
-Data_7f_42aa:
+Musicb3_Trk0:
 	INCBIN "data/bank_07f/d_42aa.bin" ; $42aa, 12 bytes
-Data_7f_42b6:
+Musicb4_Trk0:
 	INCBIN "data/bank_07f/d_42b6.bin" ; $42b6, 12 bytes
-Data_7f_42c2:
+Musicb5_Trk0:
 	INCBIN "data/bank_07f/d_42c2.bin" ; $42c2, 12 bytes
-Data_7f_42ce:
+Musicb6_Trk0:
 	INCBIN "data/bank_07f/d_42ce.bin" ; $42ce, 12 bytes
-Data_7f_42da:
+Musicb7_Trk0:
 	INCBIN "data/bank_07f/d_42da.bin" ; $42da, 12 bytes
-Data_7f_42e6:
+Musicb8_Trk0:
 	INCBIN "data/bank_07f/d_42e6.bin" ; $42e6, 12 bytes
-Data_7f_42f2:
+Musicb9_Trk0:
 	INCBIN "data/bank_07f/d_42f2.bin" ; $42f2, 12 bytes
-Data_7f_42fe:
+Musicba_Trk0:
 	INCBIN "data/bank_07f/d_42fe.bin" ; $42fe, 72 bytes
-Data_7f_4346:
+Musicbb_Trk0:
 	INCBIN "data/bank_07f/d_4346.bin" ; $4346, 72 bytes
-Data_7f_438e:
+Musicbc_Trk0:
 	INCBIN "data/bank_07f/d_438e.bin" ; $438e, 72 bytes
-Data_7f_43d6:
+Musicbd_Trk0:
 	INCBIN "data/bank_07f/d_43d6.bin" ; $43d6, 72 bytes
-Data_7f_441e:
+Musicbe_Trk0:
 	INCBIN "data/bank_07f/d_441e.bin" ; $441e, 72 bytes
-Data_7f_4466:
+Musicbf_Trk0:
 	INCBIN "data/bank_07f/d_4466.bin" ; $4466, 72 bytes
-Data_7f_44ae:
+Musicc0_Trk0:
 	INCBIN "data/bank_07f/d_44ae.bin" ; $44ae, 72 bytes
-Data_7f_44f6:
+Musicc1_Trk0:
 	INCBIN "data/bank_07f/d_44f6.bin" ; $44f6, 12 bytes
 	; $4502, 15102 bytes fill to bank end (linker-padded)

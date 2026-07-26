@@ -367,6 +367,12 @@ class Emitter:
         if self.flag_names:
             resolve_flag_names(lines, self.flag_names, self.flag_raw_sites,
                                base)
+        # Several emitters declare a label for the same offset (the fill /
+        # segment path that runs up to a blob, and the blob's own mark). Most
+        # guard on lines[-1]; collapsing here covers the rest -- two identical
+        # consecutive label lines are always an rgbasm redefinition error.
+        lines[:] = [l for i, l in enumerate(lines)
+                    if not (i and l == lines[i - 1] and _LABEL_LINE_RE.match(l))]
         self.emitted_labels.update(
             m.group(1) for l in lines if (m := _LABEL_LINE_RE.match(l)))
         Path(self.srcdir, f"bank_{bank:03x}.asm").write_text("\n".join(lines))
