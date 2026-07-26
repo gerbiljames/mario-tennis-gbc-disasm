@@ -1376,12 +1376,12 @@ UpdateViewFlipState:
 	ld c, $00 ; $4c33
 	ld a, [wCourtViewOption] ; $4c35
 	and a, a ; $4c38
-	jr z, Label_08_4c44 ; $4c39
+	jr z, .store ; $4c39
 	ld a, [$c8cf] ; $4c3b
 	and a, $02 ; $4c3e
-	jr z, Label_08_4c44 ; $4c40
+	jr z, .store ; $4c40
 	ld c, $01 ; $4c42
-Label_08_4c44:
+.store:
 	ld hl, wCourtViewFlipped ; $4c44
 	ld a, [hl] ; $4c47
 	ld [hl], c ; $4c48
@@ -2032,11 +2032,11 @@ UpdateBallVisuals:
 	call DrawBallTouchCharEffect ; $5162
 	ld a, [wMatchIsDoubles] ; $5165
 	and a, a ; $5168
-	jr nz, Label_08_5170 ; $5169
+	jr nz, .shiftHistory ; $5169
 	ldh a, [hDebugStepMode] ; $516b
 	and a, a ; $516d
-	jr z, Label_08_5170 ; $516e
-Label_08_5170:
+	jr z, .shiftHistory ; $516e
+.shiftHistory:
 	ld hl, wBallHistory + 6 ; $5170
 	ld de, wBallHistory ; $5173
 	ld bc, $001e ; $5176
@@ -3527,11 +3527,11 @@ AddBCToMem24:
 	adc a, b ; $5abb
 	ld [hl+], a ; $5abc
 	bit 7, b ; $5abd
-	jr nz, Label_08_5ac4 ; $5abf
+	jr nz, .negative ; $5abf
 	ret nc ; $5ac1
 	inc [hl] ; $5ac2
 	ret ; $5ac3
-Label_08_5ac4:
+.negative:
 	ret c ; $5ac4
 	dec [hl] ; $5ac5
 	ret ; $5ac6
@@ -3682,9 +3682,9 @@ AwardSet:
 	add a, a ; $5bde
 	ret z ; $5bdf
 	ld hl, wPlayer1SetsWon ; $5be0
-	jr nc, Label_08_5be8 ; $5be3
+	jr nc, .increment ; $5be3
 	ld hl, wPlayer2SetsWon ; $5be5
-Label_08_5be8:
+.increment:
 	inc [hl] ; $5be8
 	xor a, a ; $5be9
 	ld [wPlayer1GamesWon], a ; $5bea
@@ -3696,9 +3696,9 @@ AwardGame:
 	add a, a ; $5bf7
 	ret z ; $5bf8
 	ld hl, wPlayer1GamesWon ; $5bf9
-	jr nc, Label_08_5c01 ; $5bfc
+	jr nc, .increment ; $5bfc
 	ld hl, wPlayer2GamesWon ; $5bfe
-Label_08_5c01:
+.increment:
 	inc [hl] ; $5c01
 	xor a, a ; $5c02
 	ld [wPlayer1PointsWon], a ; $5c03
@@ -3809,21 +3809,21 @@ CheckMatchWon:
 	ld hl, wPlayer1SetsWon ; $5cca
 	ld a, [hl+] ; $5ccd
 	sub a, [hl] ; $5cce
-	jr z, Label_08_5ce7 ; $5ccf
+	jr z, .undecided ; $5ccf
 	bit 7, a ; $5cd1
-	jr nz, Label_08_5cde ; $5cd3
+	jr nz, .checkPlayer2 ; $5cd3
 	ld a, [wPlayer1SetsWon] ; $5cd5
 	cp a, b ; $5cd8
-	jr c, Label_08_5ce7 ; $5cd9
+	jr c, .undecided ; $5cd9
 	ld a, $01 ; $5cdb
 	ret ; $5cdd
-Label_08_5cde:
+.checkPlayer2:
 	ld a, [wPlayer2SetsWon] ; $5cde
 	cp a, b ; $5ce1
-	jr c, Label_08_5ce7 ; $5ce2
+	jr c, .undecided ; $5ce2
 	ld a, $ff ; $5ce4
 	ret ; $5ce6
-Label_08_5ce7:
+.undecided:
 	xor a, a ; $5ce7
 	ret ; $5ce8
 CheckSetWon:
@@ -4200,14 +4200,14 @@ WalkCharsToNewEnds:
 	call SnapCameraTo ; $5fc6
 	ld hl, $5fe5 ; $5fc9
 	call ForEachCharBank ; $5fcc
-Label_08_5fcf:
+.waitLoop:
 	call StepMatchFrame ; $5fcf
 	call ReadMatchInputPressed ; $5fd2
 	and a, $0b ; $5fd5
-	jr nz, Label_08_5fde ; $5fd7
+	jr nz, .settle ; $5fd7
 	call CheckAllCharsPhaseDone ; $5fd9
-	jr z, Label_08_5fcf ; $5fdc
-Label_08_5fde:
+	jr z, .waitLoop ; $5fdc
+.settle:
 	ld hl, $6003 ; $5fde
 	call ForEachCharBank ; $5fe1
 	ret ; $5fe4
@@ -4237,14 +4237,14 @@ WalkCharsOffCourt:
 	call SetCameraTarget ; $601c
 	ld hl, $6046 ; $601f
 	call ForEachCharBank ; $6022
-Label_08_6025:
+.waitLoop:
 	call StepMatchFrame ; $6025
 	call ReadMatchInputPressed ; $6028
 	and a, $0b ; $602b
-	jr nz, Label_08_6034 ; $602d
+	jr nz, .settle ; $602d
 	call CheckAllCharsPhaseDone ; $602f
-	jr z, Label_08_6025 ; $6032
-Label_08_6034:
+	jr z, .waitLoop ; $6032
+.settle:
 	ld a, $14 ; $6034
 	call StepMatchFrames ; $6036
 	call GetServeCameraTarget ; $6039
@@ -5261,7 +5261,7 @@ DidBallCrossGate:
 	ld a, h ; $678b
 	xor a, d ; $678c
 	bit 7, a ; $678d
-	jr z, Label_08_67c0 ; $678f
+	jr z, .no ; $678f
 	ld hl, $c798 ; $6791
 	ld a, [hl+] ; $6794
 	ld d, [hl] ; $6795
@@ -5277,7 +5277,7 @@ DidBallCrossGate:
 	sbc a, d ; $67a1
 	ld h, a ; $67a2
 	bit 7, h ; $67a3
-	jr nz, Label_08_67c0 ; $67a5
+	jr nz, .no ; $67a5
 	ld hl, $c79c ; $67a7
 	ld a, [hl+] ; $67aa
 	ld d, [hl] ; $67ab
@@ -5293,11 +5293,11 @@ DidBallCrossGate:
 	sbc a, d ; $67b7
 	ld h, a ; $67b8
 	bit 7, h ; $67b9
-	jr z, Label_08_67c0 ; $67bb
+	jr z, .no ; $67bb
 	xor a, a ; $67bd
 	inc a ; $67be
 	ret ; $67bf
-Label_08_67c0:
+.no:
 	xor a, a ; $67c0
 	ret ; $67c1
 IsBallInTargetZone:
@@ -5658,19 +5658,19 @@ UpdateCharStateMachine:
 	ld hl, $df10 ; $6a66
 	ld a, [hl] ; $6a69
 	and a, a ; $6a6a
-	jr z, Label_08_6a6f ; $6a6b
+	jr z, .dispatch ; $6a6b
 	dec [hl] ; $6a6d
 	ret ; $6a6e
-Label_08_6a6f:
+.dispatch:
 	ld hl, $df11 ; $6a6f
 	ld a, [hl] ; $6a72
 	and a, a ; $6a73
-	jr z, Label_08_6a77 ; $6a74
+	jr z, .runState ; $6a74
 	dec [hl] ; $6a76
-Label_08_6a77:
+.runState:
 	ld a, [wCharState] ; $6a77
 	rst Rst00 ; $6a7a
-	dw Label_08_6a8f ; $6a7b jumptable
+	dw AdvanceCharStatePhase.done ; $6a7b jumptable
 	dw CharRallyState ; $6a7d jumptable
 	dw Label_08_6bd9 ; $6a7f jumptable
 	dw CharServeState ; $6a81 jumptable
@@ -5681,27 +5681,27 @@ Label_08_6a77:
 AdvanceCharStatePhase:
 	ld hl, $df19 ; $6a8b
 	inc [hl] ; $6a8e
-Label_08_6a8f:
+.done:
 	ret ; $6a8f
-Label_08_6a90:
+CharRallyEndState:
 	ld a, [$df2e] ; $6a90
 	cp a, $05 ; $6a93
-	jr z, Label_08_6ad0 ; $6a95
+	jr z, .clearShot ; $6a95
 	cp a, $06 ; $6a97
-	jr z, Label_08_6ad0 ; $6a99
+	jr z, .clearShot ; $6a99
 	cp a, $07 ; $6a9b
-	jr z, Label_08_6ad0 ; $6a9d
+	jr z, .clearShot ; $6a9d
 	cp a, $09 ; $6a9f
-	jr z, Label_08_6ad0 ; $6aa1
+	jr z, .clearShot ; $6aa1
 	cp a, $0a ; $6aa3
-	jr z, Label_08_6ad0 ; $6aa5
+	jr z, .clearShot ; $6aa5
 	cp a, $0b ; $6aa7
-	jr z, Label_08_6ad0 ; $6aa9
+	jr z, .clearShot ; $6aa9
 	cp a, $12 ; $6aab
-	jr z, Label_08_6ad0 ; $6aad
+	jr z, .clearShot ; $6aad
 	ld hl, wCharFlags ; $6aaf
 	bit 2, [hl] ; $6ab2
-	jr nz, Label_08_6ad0 ; $6ab4
+	jr nz, .clearShot ; $6ab4
 	xor a, a ; $6ab6
 	ld [$df16], a ; $6ab7
 	ld [$df17], a ; $6aba
@@ -5713,7 +5713,7 @@ Label_08_6a90:
 	res 5, [hl] ; $6aca
 	ld hl, $df19 ; $6acc
 	inc [hl] ; $6acf
-Label_08_6ad0:
+.clearShot:
 	xor a, a ; $6ad0
 	ld [$df16], a ; $6ad1
 	ld [$df17], a ; $6ad4
@@ -5730,7 +5730,7 @@ CharServeState:
 	dw CharServeTossPhase ; $6aea jumptable
 	dw CharServeSwingWindowPhase ; $6aec jumptable
 	dw CharServeStrikePhase ; $6aee jumptable
-	dw Label_08_6a8f ; $6af0 jumptable
+	dw AdvanceCharStatePhase.done ; $6af0 jumptable
 CharServeInitPhase:
 	call ResetBallState ; $6af2
 	xor a, a ; $6af5
@@ -5850,9 +5850,9 @@ Label_08_6bd8:
 Label_08_6bd9:
 	ld a, [$df19] ; $6bd9
 	rst Rst00 ; $6bdc
-	dw Label_08_6a90 ; $6bdd jumptable
+	dw CharRallyEndState ; $6bdd jumptable
 	dw Label_08_6be3 ; $6bdf jumptable
-	dw Label_08_6a8f ; $6be1 jumptable
+	dw AdvanceCharStatePhase.done ; $6be1 jumptable
 Label_08_6be3:
 	call ApplyCharMovementInput ; $6be3
 	call UpdateCharRunAnimation ; $6be6
@@ -5860,11 +5860,11 @@ Label_08_6be3:
 CharRallyState:
 	ld a, [$df19] ; $6bea
 	rst Rst00 ; $6bed
-	dw Label_08_6a90 ; $6bee jumptable
+	dw CharRallyEndState ; $6bee jumptable
 	dw CharRallyReadyPhase ; $6bf0 jumptable
 	dw CharSwingWindupPhase ; $6bf2 jumptable
 	dw CharSwingContactPhase ; $6bf4 jumptable
-	dw Label_08_6a8f ; $6bf6 jumptable
+	dw AdvanceCharStatePhase.done ; $6bf6 jumptable
 CharRallyReadyPhase:
 	ld a, $01 ; $6bf8
 	ld [$df5a], a ; $6bfa
@@ -5967,16 +5967,16 @@ ResetSwingAnimation:
 CharStandbyState:
 	ld a, [$df19] ; $6cbe
 	rst Rst00 ; $6cc1
-	dw Label_08_6a90 ; $6cc2 jumptable
+	dw CharRallyEndState ; $6cc2 jumptable
 	dw Label_08_6cd4 ; $6cc4 jumptable
-	dw Label_08_6a8f ; $6cc6 jumptable
+	dw AdvanceCharStatePhase.done ; $6cc6 jumptable
 CharAwaitServeState:
 	ld a, [$df19] ; $6cc8
 	rst Rst00 ; $6ccb
-	dw Label_08_6a90 ; $6ccc jumptable
+	dw CharRallyEndState ; $6ccc jumptable
 	dw Label_08_6cdb ; $6cce jumptable
 	dw Label_08_6cd4 ; $6cd0 jumptable
-	dw Label_08_6a8f ; $6cd2 jumptable
+	dw AdvanceCharStatePhase.done ; $6cd2 jumptable
 Label_08_6cd4:
 	call ApplyCharMovementInput ; $6cd4
 	call UpdateCharRunAnimation ; $6cd7
@@ -6014,14 +6014,14 @@ CharWalkState:
 	ld a, [$df19] ; $6d0e
 	rst Rst00 ; $6d11
 	dw CharWalkToTargetPhase ; $6d12 jumptable
-	dw Label_08_6a8f ; $6d14 jumptable
+	dw AdvanceCharStatePhase.done ; $6d14 jumptable
 CharPointEndState:
 	ld a, [$df19] ; $6d16
 	rst Rst00 ; $6d19
-	dw Label_08_6a90 ; $6d1a jumptable
+	dw CharRallyEndState ; $6d1a jumptable
 	dw CharWalkToTargetPhase ; $6d1c jumptable
 	dw CharPointReactionPhase ; $6d1e jumptable
-	dw Label_08_6a8f ; $6d20 jumptable
+	dw AdvanceCharStatePhase.done ; $6d20 jumptable
 	dw PrintString.markDirty ; $6d22 jumptable
 	dw Label_00_34df ; $6d24 jumptable
 	ret ; $6d26
@@ -6265,20 +6265,20 @@ UpdateCharBallGeometry:
 	ld h, [hl] ; $6e9a
 	ld l, a ; $6e9b
 	bit 7, h ; $6e9c
-	jr z, Label_08_6ea6 ; $6e9e
+	jr z, .checkReach ; $6e9e
 	xor a, a ; $6ea0
 	sub a, l ; $6ea1
 	ld l, a ; $6ea2
 	sbc a, a ; $6ea3
 	sub a, h ; $6ea4
 	ld h, a ; $6ea5
-Label_08_6ea6:
+.checkReach:
 	xor a, a ; $6ea6
 	ld de, $fd60 ; $6ea7
 	add hl, de ; $6eaa
-	jr c, Label_08_6eaf ; $6eab
+	jr c, .storeFlags ; $6eab
 	set 4, a ; $6ead
-Label_08_6eaf:
+.storeFlags:
 	ld [$df50], a ; $6eaf
 	call CheckBallInSwingRange ; $6eb2
 	ld hl, $df50 ; $6eb5
@@ -7584,15 +7584,15 @@ BuildCharSpriteSlots:
 	ld c, a ; $76c1
 	ld a, [$df32] ; $76c2
 	cp a, $02 ; $76c5
-	jr z, Label_08_76cf ; $76c7
+	jr z, .mirrorSprite ; $76c7
 	cp a, $06 ; $76c9
-	jr z, Label_08_76cf ; $76cb
-	jr Label_08_76d4 ; $76cd
-Label_08_76cf:
+	jr z, .mirrorSprite ; $76cb
+	jr .store ; $76cd
+.mirrorSprite:
 	ld a, [$df94] ; $76cf
 	xor a, b ; $76d2
 	ld b, a ; $76d3
-Label_08_76d4:
+.store:
 	ld hl, wCharSpriteSlot ; $76d4
 	ld a, c ; $76d7
 	ld [hl+], a ; $76d8

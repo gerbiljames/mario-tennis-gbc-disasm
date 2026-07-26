@@ -627,15 +627,15 @@ ComputeNibbleBufferChecksum:
 	push hl ; $440f
 	ld hl, $ce40 ; $4410
 	ld de, $0000 ; $4413
-Label_07_4416:
+.sumLoop:
 	ld a, [hl+] ; $4416
 	add a, e ; $4417
 	ld e, a ; $4418
-	jr nc, Label_07_441c ; $4419
+	jr nc, .next ; $4419
 	inc d ; $441b
-Label_07_441c:
+.next:
 	dec c ; $441c
-	jr nz, Label_07_4416 ; $441d
+	jr nz, .sumLoop ; $441d
 	ld a, e ; $441f
 	ldh [$ffe5], a ; $4420
 	ld a, d ; $4422
@@ -2393,7 +2393,7 @@ AddChargeSpeedBonus:
 	srl a ; $5355
 .done:
 	call MulHLByASignedFull ; $5357
-	jr Label_07_5373 ; $535a
+	jr AddChargeSpeedBonusHalf.store ; $535a
 AddChargeSpeedBonusHalf:
 	ld a, [wShotChargeLevel] ; $535c
 	ld l, a ; $535f
@@ -2402,12 +2402,12 @@ AddChargeSpeedBonusHalf:
 	add hl, de ; $5365
 	ld a, $40 ; $5366
 	bit 7, h ; $5368
-	jr z, Label_07_536e ; $536a
+	jr z, .scale ; $536a
 	srl a ; $536c
-Label_07_536e:
+.scale:
 	call MulHLByASignedFull ; $536e
-	jr Label_07_5373 ; $5371
-Label_07_5373:
+	jr .store ; $5371
+.store:
 	ld a, l ; $5373
 	ld [$c45e], a ; $5374
 	ld a, h ; $5377
@@ -2706,7 +2706,7 @@ CheckBallInSmashRange:
 	ld bc, $0070 ; $5548
 	add hl, bc ; $554b
 	bit 7, h ; $554c
-	jr z, Label_07_557d ; $554e
+	jr z, .done ; $554e
 	call AngleFromVector16 ; $5550
 	push bc ; $5553
 	ld hl, wBallDepth ; $5554
@@ -2740,7 +2740,7 @@ CheckBallInSmashRange:
 	pop hl ; $5579
 	add hl, bc ; $557a
 	bit 7, h ; $557b
-Label_07_557d:
+.done:
 	ret ; $557d
 ApplyShotTypePresets:
 	ld a, [wCurrentShotType] ; $557e
@@ -2984,17 +2984,17 @@ ClampShotTargetX:
 	sbc a, b ; $56fb
 	ld h, a ; $56fc
 	bit 7, h ; $56fd
-	jr nz, Label_07_5703 ; $56ff
+	jr nz, .applyJitter ; $56ff
 	ld e, c ; $5701
 	ld d, b ; $5702
-Label_07_5703:
+.applyJitter:
 	call GetRandomAimJitter ; $5703
 	ld a, e ; $5706
 	sub a, h ; $5707
 	ld e, a ; $5708
-	jr nc, Label_07_570c ; $5709
+	jr nc, .done ; $5709
 	dec d ; $570b
-Label_07_570c:
+.done:
 	ret ; $570c
 GetRandomAimJitter:
 	farcall AdvanceMatchRng ; $570d

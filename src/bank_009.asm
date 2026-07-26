@@ -146,7 +146,7 @@ SpawnGameScoreDisplayObjs:
 	call ClearAllObjSlots ; $4130
 	ld a, [wScoreboardLayout] ; $4133
 	cp a, $03 ; $4136
-	jr z, Label_09_4184 ; $4138
+	jr z, .doubles ; $4138
 	ld a, [wCurrentServingPlayer] ; $413a
 	cpl ; $413d
 	and a, $01 ; $413e
@@ -177,7 +177,7 @@ SpawnGameScoreDisplayObjs:
 	ld bc, $dda0 ; $417d
 	call LoadObjTemplate_09 ; $4180
 	ret ; $4183
-Label_09_4184:
+.doubles:
 	ld a, $00 ; $4184
 	ld hl, $41fc ; $4186
 	ld bc, $dd80 ; $4189
@@ -186,7 +186,7 @@ Label_09_4184:
 DismissGameScoreDisplayObjs:
 	ld a, [$c7bb] ; $4190
 	and a, a ; $4193
-	jr nz, Label_09_41b2 ; $4194
+	jr nz, .doubles ; $4194
 	ld hl, ObjTemplates_09_41bc ; $4196
 	ld bc, $dd80 ; $4199
 	call StartObjExitAnim ; $419c
@@ -197,7 +197,7 @@ DismissGameScoreDisplayObjs:
 	ld bc, $dda0 ; $41ab
 	call StartObjExitAnim ; $41ae
 	ret ; $41b1
-Label_09_41b2:
+.doubles:
 	ld hl, $41fc ; $41b2
 	ld bc, $dd80 ; $41b5
 	call StartObjExitAnim ; $41b8
@@ -275,11 +275,11 @@ SpawnWinLoseResultObj:
 	call LoadObjTemplate_09 ; $42e1
 	pop af ; $42e4
 	add a, a ; $42e5
-	jr c, Label_09_42ef ; $42e6
+	jr c, .player2 ; $42e6
 	call GetPlayer1CharIconSprites ; $42e8
 	call SetObjSpriteTemplate ; $42eb
 	ret ; $42ee
-Label_09_42ef:
+.player2:
 	call GetPlayer2CharIconSprites ; $42ef
 	call SetObjSpriteTemplate ; $42f2
 	ret ; $42f5
@@ -867,9 +867,9 @@ LoadServeGfx:
 	add a, a ; $6c5f
 	add a, l ; $6c60
 	ld l, a ; $6c61
-	jr nc, Label_09_6c65 ; $6c62
+	jr nc, .queue ; $6c62
 	inc h ; $6c64
-Label_09_6c65:
+.queue:
 	ld de, $8380 ; $6c65
 	ld c, $04 ; $6c68
 	call QueueVRAMCopy ; $6c6a

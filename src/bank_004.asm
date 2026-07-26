@@ -427,7 +427,7 @@ UpdateActorJumpPhysics:
 	or a, h ; $427c
 	or a, d ; $427d
 	or a, e ; $427e
-	jr z, Label_04_42ad ; $427f
+	jr z, .done ; $427f
 	push hl ; $4281
 	ld hl, $0010 ; $4282
 	add hl, de ; $4285
@@ -436,7 +436,7 @@ UpdateActorJumpPhysics:
 	pop hl ; $4288
 	add hl, de ; $4289
 	bit 7, h ; $428a
-	jr nz, Label_04_429d ; $428c
+	jr nz, .storeVelocity ; $428c
 	xor a, a ; $428e
 	ld hl, $0010 ; $428f
 	add hl, bc ; $4292
@@ -446,8 +446,8 @@ UpdateActorJumpPhysics:
 	add hl, bc ; $4298
 	ld [hl+], a ; $4299
 	ld [hl+], a ; $429a
-	jr Label_04_42ad ; $429b
-Label_04_429d:
+	jr .done ; $429b
+.storeVelocity:
 	push hl ; $429d
 	ld hl, $0012 ; $429e
 	add hl, bc ; $42a1
@@ -460,7 +460,7 @@ Label_04_429d:
 	ld a, e ; $42aa
 	ld [hl+], a ; $42ab
 	ld [hl], d ; $42ac
-Label_04_42ad:
+.done:
 	ret ; $42ad
 AdvanceActorTowardTarget:
 	ld hl, $0005 ; $42ae
@@ -3798,13 +3798,13 @@ WaitActorJumpDone:
 	push af ; $5726
 	push bc ; $5727
 	ld c, $b4 ; $5728
-Label_04_572a:
+.waitLoop:
 	call IsActorJumping ; $572a
-	jr z, Label_04_5735 ; $572d
+	jr z, .done ; $572d
 	call AdvanceFrame ; $572f
 	dec c ; $5732
-	jr nz, Label_04_572a ; $5733
-Label_04_5735:
+	jr nz, .waitLoop ; $5733
+.done:
 	pop bc ; $5735
 	pop af ; $5736
 	ret ; $5737
@@ -3833,15 +3833,15 @@ WaitActorMoveDone:
 	push af ; $5755
 	push bc ; $5756
 	ld bc, $0258 ; $5757
-Label_04_575a:
+.waitLoop:
 	call IsActorMoving ; $575a
-	jr z, Label_04_5767 ; $575d
+	jr z, .done ; $575d
 	call AdvanceFrame ; $575f
 	dec bc ; $5762
 	ld a, c ; $5763
 	or a, b ; $5764
-	jr nz, Label_04_575a ; $5765
-Label_04_5767:
+	jr nz, .waitLoop ; $5765
+.done:
 	pop bc ; $5767
 	pop af ; $5768
 	ret ; $5769
