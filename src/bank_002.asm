@@ -1463,17 +1463,17 @@ Unused_02_ListForEach:
 	ld hl, Unused_02_4b99_Table ; $4b9b
 	add a, l ; $4b9e
 	ld l, a ; $4b9f
-	jr nc, Label_02_4ba3 ; $4ba0
+	jr nc, .step ; $4ba0
 	inc h ; $4ba2
-Label_02_4ba3:
+.step:
 	push hl ; $4ba3
 	ld d, $ff ; $4ba4
 	call LevelUpPlayer ; $4ba6
 	pop hl ; $4ba9
 	ld a, [hl+] ; $4baa
-Label_02_4bab:
+.loop:
 	or a, a ; $4bab
-	jr z, Label_02_4bba ; $4bac
+	jr z, .read ; $4bac
 	push af ; $4bae
 	push hl ; $4baf
 	ld d, $00 ; $4bb0
@@ -1481,12 +1481,12 @@ Label_02_4bab:
 	pop hl ; $4bb5
 	pop af ; $4bb6
 	dec a ; $4bb7
-	jr Label_02_4bab ; $4bb8
-Label_02_4bba:
+	jr .loop ; $4bb8
+.read:
 	ld a, [hl+] ; $4bba
-Label_02_4bbb:
+.loopB:
 	or a, a ; $4bbb
-	jr z, Label_02_4bca ; $4bbc
+	jr z, .readB ; $4bbc
 	push af ; $4bbe
 	push hl ; $4bbf
 	ld d, $01 ; $4bc0
@@ -1494,12 +1494,12 @@ Label_02_4bbb:
 	pop hl ; $4bc5
 	pop af ; $4bc6
 	dec a ; $4bc7
-	jr Label_02_4bbb ; $4bc8
-Label_02_4bca:
+	jr .loopB ; $4bc8
+.readB:
 	ld a, [hl+] ; $4bca
-Label_02_4bcb:
+.loopBB:
 	or a, a ; $4bcb
-	jr z, Label_02_4bda ; $4bcc
+	jr z, .readBB ; $4bcc
 	push af ; $4bce
 	push hl ; $4bcf
 	ld d, $02 ; $4bd0
@@ -1507,12 +1507,12 @@ Label_02_4bcb:
 	pop hl ; $4bd5
 	pop af ; $4bd6
 	dec a ; $4bd7
-	jr Label_02_4bcb ; $4bd8
-Label_02_4bda:
+	jr .loopBB ; $4bd8
+.readBB:
 	ld a, [hl+] ; $4bda
-Label_02_4bdb:
+.loopBBB:
 	or a, a ; $4bdb
-	jr z, Label_02_4bea ; $4bdc
+	jr z, .step2 ; $4bdc
 	push af ; $4bde
 	push hl ; $4bdf
 	ld d, $03 ; $4be0
@@ -1520,15 +1520,15 @@ Label_02_4bdb:
 	pop hl ; $4be5
 	pop af ; $4be6
 	dec a ; $4be7
-	jr Label_02_4bdb ; $4be8
-Label_02_4bea:
+	jr .loopBBB ; $4be8
+.step2:
 	xor a, a ; $4bea
 	ld hl, CharDataPtr_02 ; $4beb
 	add a, l ; $4bee
 	ld l, a ; $4bef
-	jr nc, Label_02_4bf3 ; $4bf0
+	jr nc, .readBBB ; $4bf0
 	inc h ; $4bf2
-Label_02_4bf3:
+.readBBB:
 	ld a, [hl+] ; $4bf3
 	ld d, [hl] ; $4bf4
 	ld e, a ; $4bf5
@@ -1536,7 +1536,7 @@ Label_02_4bf3:
 	add hl, bc ; $4bf9
 	ld a, [hl] ; $4bfa
 	cp a, $01 ; $4bfb
-	jr z, Label_02_4c17 ; $4bfd
+	jr z, .done ; $4bfd
 	ld h, d ; $4bff
 	ld l, e ; $4c00
 	ld d, a ; $4c01
@@ -1544,9 +1544,9 @@ Label_02_4bf3:
 	add a, d ; $4c03
 	add a, l ; $4c04
 	ld l, a ; $4c05
-	jr nc, Label_02_4c09 ; $4c06
+	jr nc, .step3 ; $4c06
 	inc h ; $4c08
-Label_02_4c09:
+.step3:
 	ld d, h ; $4c09
 	ld e, l ; $4c0a
 	ld hl, $002c ; $4c0b
@@ -1559,7 +1559,7 @@ Label_02_4c09:
 	inc de ; $4c14
 	ld a, [de] ; $4c15
 	ld [hl], a ; $4c16
-Label_02_4c17:
+.done:
 	ret ; $4c17
 Unused_02_4b99_Table:
 	; $4c18, 64 bytes (bytes:16)

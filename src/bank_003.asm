@@ -3428,13 +3428,13 @@ ApplyN64RecordsUnlockFlags:
 	ld b, $0b ; $56b8
 	call ReadSaveBlock ; $56ba
 	or a, a ; $56bd
-	jr nz, Label_03_56f1 ; $56be
+	jr nz, .restore ; $56be
 	ld hl, $d500 ; $56c0
 	ld a, [hl] ; $56c3
 	inc hl ; $56c4
 	add a, [hl] ; $56c5
 	or a, a ; $56c6
-	jr z, Label_03_56f1 ; $56c7
+	jr z, .restore ; $56c7
 	push de ; $56c9
 	ld de, SAVEFLAG_N64_RECORDS_PRESENT ; $56ca
 	farcall SetSaveFlag ; $56cd
@@ -3455,7 +3455,7 @@ ApplyN64RecordsUnlockFlags:
 	ld de, SAVEFLAG_UNLOCKED_SEAN ; $56ea
 	farcall SetSaveFlag ; $56ed
 	pop de ; $56f0
-Label_03_56f1:
+.restore:
 	pop af ; $56f1
 	wram_bank ; $56f2
 	pop hl ; $56f6
@@ -4120,25 +4120,25 @@ LoadCutsceneAnimFrameGfx_00_08:
 	wram_bank $06 ; $5b89
 	ld a, [$d000] ; $5b8f
 	cp a, $00 ; $5b92
-	jp z, Label_03_5bc2 ; $5b94
+	jp z, .step ; $5b94
 	cp a, $01 ; $5b97
-	jp z, Label_03_5bea ; $5b99
+	jp z, .step2 ; $5b99
 	cp a, $02 ; $5b9c
-	jp z, Label_03_5c12 ; $5b9e
+	jp z, .step3 ; $5b9e
 	cp a, $03 ; $5ba1
-	jp z, Label_03_5c3a ; $5ba3
+	jp z, .step4 ; $5ba3
 	cp a, $04 ; $5ba6
-	jp z, Label_03_5c62 ; $5ba8
+	jp z, .step5 ; $5ba8
 	cp a, $05 ; $5bab
-	jp z, Label_03_5c8a ; $5bad
+	jp z, .step6 ; $5bad
 	cp a, $06 ; $5bb0
-	jp z, Label_03_5cb2 ; $5bb2
+	jp z, .step7 ; $5bb2
 	cp a, $07 ; $5bb5
-	jp z, Label_03_5cda ; $5bb7
+	jp z, .step8 ; $5bb7
 	cp a, $08 ; $5bba
-	jp z, Label_03_5d02 ; $5bbc
-	jp Label_03_5d2a ; $5bbf
-Label_03_5bc2:
+	jp z, .step9 ; $5bbc
+	jp .step10 ; $5bbf
+.step:
 	wram_bank $01 ; $5bc2
 	ld hl, CutsceneAnimFrameLZ_00 ; $5bc8
 	ld de, $d000 ; $5bcb
@@ -4153,7 +4153,7 @@ Label_03_5bc2:
 	ld bc, $0300 ; $5be3
 	call QueueSpriteTemplate ; $5be6
 	ret ; $5be9
-Label_03_5bea:
+.step2:
 	wram_bank $01 ; $5bea
 	ld hl, CutsceneAnimFrameLZ_01 ; $5bf0
 	ld de, $d000 ; $5bf3
@@ -4168,7 +4168,7 @@ Label_03_5bea:
 	ld bc, $0300 ; $5c0b
 	call QueueSpriteTemplate ; $5c0e
 	ret ; $5c11
-Label_03_5c12:
+.step3:
 	wram_bank $01 ; $5c12
 	ld hl, CutsceneAnimFrameLZ_02 ; $5c18
 	ld de, $d000 ; $5c1b
@@ -4183,7 +4183,7 @@ Label_03_5c12:
 	ld bc, $0300 ; $5c33
 	call QueueSpriteTemplate ; $5c36
 	ret ; $5c39
-Label_03_5c3a:
+.step4:
 	wram_bank $01 ; $5c3a
 	ld hl, CutsceneAnimFrameLZ_03 ; $5c40
 	ld de, $d000 ; $5c43
@@ -4198,7 +4198,7 @@ Label_03_5c3a:
 	ld bc, $0300 ; $5c5b
 	call QueueSpriteTemplate ; $5c5e
 	ret ; $5c61
-Label_03_5c62:
+.step5:
 	wram_bank $01 ; $5c62
 	ld hl, CutsceneAnimFrameLZ_04 ; $5c68
 	ld de, $d000 ; $5c6b
@@ -4213,7 +4213,7 @@ Label_03_5c62:
 	ld bc, $0300 ; $5c83
 	call QueueSpriteTemplate ; $5c86
 	ret ; $5c89
-Label_03_5c8a:
+.step6:
 	wram_bank $01 ; $5c8a
 	ld hl, CutsceneAnimFrameLZ_05 ; $5c90
 	ld de, $d000 ; $5c93
@@ -4228,7 +4228,7 @@ Label_03_5c8a:
 	ld bc, $0300 ; $5cab
 	call QueueSpriteTemplate ; $5cae
 	ret ; $5cb1
-Label_03_5cb2:
+.step7:
 	wram_bank $01 ; $5cb2
 	ld hl, CutsceneAnimFrameLZ_06 ; $5cb8
 	ld de, $d000 ; $5cbb
@@ -4243,7 +4243,7 @@ Label_03_5cb2:
 	ld bc, $0300 ; $5cd3
 	call QueueSpriteTemplate ; $5cd6
 	ret ; $5cd9
-Label_03_5cda:
+.step8:
 	wram_bank $01 ; $5cda
 	ld hl, CutsceneAnimFrameLZ_07 ; $5ce0
 	ld de, $d000 ; $5ce3
@@ -4258,7 +4258,7 @@ Label_03_5cda:
 	ld bc, $0300 ; $5cfb
 	call QueueSpriteTemplate ; $5cfe
 	ret ; $5d01
-Label_03_5d02:
+.step9:
 	wram_bank $01 ; $5d02
 	ld hl, CutsceneAnimFrameLZ_08 ; $5d08
 	ld de, $d000 ; $5d0b
@@ -4273,7 +4273,7 @@ Label_03_5d02:
 	ld bc, $0300 ; $5d23
 	call QueueSpriteTemplate ; $5d26
 	ret ; $5d29
-Label_03_5d2a:
+.step10:
 	ld hl, SpriteTemplate_03_6ebd ; $5d2a
 	ld d, $fe ; $5d2d
 	ld e, $80 ; $5d2f
@@ -4288,25 +4288,25 @@ LoadCutsceneAnimFrameGfx_09_11:
 	ret c ; $5d44
 	ld a, b ; $5d45
 	cp a, $09 ; $5d46
-	jp z, Label_03_5d76 ; $5d48
+	jp z, .step ; $5d48
 	cp a, $0a ; $5d4b
-	jp z, Label_03_5d9e ; $5d4d
+	jp z, .step2 ; $5d4d
 	cp a, $0b ; $5d50
-	jp z, Label_03_5dc6 ; $5d52
+	jp z, .step3 ; $5d52
 	cp a, $0c ; $5d55
-	jp z, Label_03_5dee ; $5d57
+	jp z, .step4 ; $5d57
 	cp a, $0d ; $5d5a
-	jp z, Label_03_5e16 ; $5d5c
+	jp z, .step5 ; $5d5c
 	cp a, $0e ; $5d5f
-	jp z, Label_03_5e3e ; $5d61
+	jp z, .step6 ; $5d61
 	cp a, $0f ; $5d64
-	jp z, Label_03_5e66 ; $5d66
+	jp z, .step7 ; $5d66
 	cp a, $10 ; $5d69
-	jp z, Label_03_5e8e ; $5d6b
+	jp z, .step8 ; $5d6b
 	cp a, $11 ; $5d6e
-	jp z, Label_03_5eb6 ; $5d70
-	jp Label_03_5ede ; $5d73
-Label_03_5d76:
+	jp z, .step9 ; $5d70
+	jp .step10 ; $5d73
+.step:
 	wram_bank $01 ; $5d76
 	ld hl, CutsceneAnimFrameLZ_09 ; $5d7c
 	ld de, $d040 ; $5d7f
@@ -4321,7 +4321,7 @@ Label_03_5d76:
 	ld bc, $0204 ; $5d97
 	call QueueSpriteTemplate ; $5d9a
 	ret ; $5d9d
-Label_03_5d9e:
+.step2:
 	wram_bank $01 ; $5d9e
 	ld hl, CutsceneAnimFrameLZ_0a ; $5da4
 	ld de, $d040 ; $5da7
@@ -4336,7 +4336,7 @@ Label_03_5d9e:
 	ld bc, $0204 ; $5dbf
 	call QueueSpriteTemplate ; $5dc2
 	ret ; $5dc5
-Label_03_5dc6:
+.step3:
 	wram_bank $01 ; $5dc6
 	ld hl, CutsceneAnimFrameLZ_0b ; $5dcc
 	ld de, $d040 ; $5dcf
@@ -4351,7 +4351,7 @@ Label_03_5dc6:
 	ld bc, $0204 ; $5de7
 	call QueueSpriteTemplate ; $5dea
 	ret ; $5ded
-Label_03_5dee:
+.step4:
 	wram_bank $01 ; $5dee
 	ld hl, CutsceneAnimFrameLZ_0c ; $5df4
 	ld de, $d040 ; $5df7
@@ -4366,7 +4366,7 @@ Label_03_5dee:
 	ld bc, $0204 ; $5e0f
 	call QueueSpriteTemplate ; $5e12
 	ret ; $5e15
-Label_03_5e16:
+.step5:
 	wram_bank $01 ; $5e16
 	ld hl, CutsceneAnimFrameLZ_0d ; $5e1c
 	ld de, $d040 ; $5e1f
@@ -4381,7 +4381,7 @@ Label_03_5e16:
 	ld bc, $0204 ; $5e37
 	call QueueSpriteTemplate ; $5e3a
 	ret ; $5e3d
-Label_03_5e3e:
+.step6:
 	wram_bank $01 ; $5e3e
 	ld hl, CutsceneAnimFrameLZ_0e ; $5e44
 	ld de, $d040 ; $5e47
@@ -4396,7 +4396,7 @@ Label_03_5e3e:
 	ld bc, $0204 ; $5e5f
 	call QueueSpriteTemplate ; $5e62
 	ret ; $5e65
-Label_03_5e66:
+.step7:
 	wram_bank $01 ; $5e66
 	ld hl, CutsceneAnimFrameLZ_0f ; $5e6c
 	ld de, $d040 ; $5e6f
@@ -4411,7 +4411,7 @@ Label_03_5e66:
 	ld bc, $0204 ; $5e87
 	call QueueSpriteTemplate ; $5e8a
 	ret ; $5e8d
-Label_03_5e8e:
+.step8:
 	wram_bank $01 ; $5e8e
 	ld hl, CutsceneAnimFrameLZ_10 ; $5e94
 	ld de, $d040 ; $5e97
@@ -4426,7 +4426,7 @@ Label_03_5e8e:
 	ld bc, $0204 ; $5eaf
 	call QueueSpriteTemplate ; $5eb2
 	ret ; $5eb5
-Label_03_5eb6:
+.step9:
 	wram_bank $01 ; $5eb6
 	ld hl, CutsceneAnimFrameLZ_11 ; $5ebc
 	ld de, $d040 ; $5ebf
@@ -4441,7 +4441,7 @@ Label_03_5eb6:
 	ld bc, $0204 ; $5ed7
 	call QueueSpriteTemplate ; $5eda
 	ret ; $5edd
-Label_03_5ede:
+.step10:
 	ld hl, SpriteTemplate_03_6f0e ; $5ede
 	ld d, $0e ; $5ee1
 	ld e, $80 ; $5ee3
@@ -4456,25 +4456,25 @@ LoadCutsceneAnimFrameGfx_12_1A:
 	ret c ; $5ef8
 	ld a, b ; $5ef9
 	cp a, $12 ; $5efa
-	jp z, Label_03_5f2a ; $5efc
+	jp z, .step ; $5efc
 	cp a, $13 ; $5eff
-	jp z, Label_03_5f52 ; $5f01
+	jp z, .step2 ; $5f01
 	cp a, $14 ; $5f04
-	jp z, Label_03_5f7a ; $5f06
+	jp z, .step3 ; $5f06
 	cp a, $15 ; $5f09
-	jp z, Label_03_5fa2 ; $5f0b
+	jp z, .step4 ; $5f0b
 	cp a, $16 ; $5f0e
-	jp z, Label_03_5fca ; $5f10
+	jp z, .step5 ; $5f10
 	cp a, $17 ; $5f13
-	jp z, Label_03_5ff2 ; $5f15
+	jp z, .step6 ; $5f15
 	cp a, $18 ; $5f18
-	jp z, Label_03_601a ; $5f1a
+	jp z, .step7 ; $5f1a
 	cp a, $19 ; $5f1d
-	jp z, Label_03_6042 ; $5f1f
+	jp z, .step8 ; $5f1f
 	cp a, $1a ; $5f22
-	jp z, Label_03_606a ; $5f24
-	jp Label_03_6092 ; $5f27
-Label_03_5f2a:
+	jp z, .step9 ; $5f24
+	jp .step10 ; $5f27
+.step:
 	wram_bank $01 ; $5f2a
 	ld hl, CutsceneAnimFrameLZ_12 ; $5f30
 	ld de, $d080 ; $5f33
@@ -4489,7 +4489,7 @@ Label_03_5f2a:
 	ld bc, $0308 ; $5f4b
 	call QueueSpriteTemplate ; $5f4e
 	ret ; $5f51
-Label_03_5f52:
+.step2:
 	wram_bank $01 ; $5f52
 	ld hl, CutsceneAnimFrameLZ_13 ; $5f58
 	ld de, $d080 ; $5f5b
@@ -4504,7 +4504,7 @@ Label_03_5f52:
 	ld bc, $0308 ; $5f73
 	call QueueSpriteTemplate ; $5f76
 	ret ; $5f79
-Label_03_5f7a:
+.step3:
 	wram_bank $01 ; $5f7a
 	ld hl, CutsceneAnimFrameLZ_14 ; $5f80
 	ld de, $d080 ; $5f83
@@ -4519,7 +4519,7 @@ Label_03_5f7a:
 	ld bc, $0308 ; $5f9b
 	call QueueSpriteTemplate ; $5f9e
 	ret ; $5fa1
-Label_03_5fa2:
+.step4:
 	wram_bank $01 ; $5fa2
 	ld hl, CutsceneAnimFrameLZ_15 ; $5fa8
 	ld de, $d080 ; $5fab
@@ -4534,7 +4534,7 @@ Label_03_5fa2:
 	ld bc, $0308 ; $5fc3
 	call QueueSpriteTemplate ; $5fc6
 	ret ; $5fc9
-Label_03_5fca:
+.step5:
 	wram_bank $01 ; $5fca
 	ld hl, CutsceneAnimFrameLZ_16 ; $5fd0
 	ld de, $d080 ; $5fd3
@@ -4549,7 +4549,7 @@ Label_03_5fca:
 	ld bc, $0308 ; $5feb
 	call QueueSpriteTemplate ; $5fee
 	ret ; $5ff1
-Label_03_5ff2:
+.step6:
 	wram_bank $01 ; $5ff2
 	ld hl, CutsceneAnimFrameLZ_17 ; $5ff8
 	ld de, $d080 ; $5ffb
@@ -4564,7 +4564,7 @@ Label_03_5ff2:
 	ld bc, $0308 ; $6013
 	call QueueSpriteTemplate ; $6016
 	ret ; $6019
-Label_03_601a:
+.step7:
 	wram_bank $01 ; $601a
 	ld hl, CutsceneAnimFrameLZ_18 ; $6020
 	ld de, $d080 ; $6023
@@ -4579,7 +4579,7 @@ Label_03_601a:
 	ld bc, $0308 ; $603b
 	call QueueSpriteTemplate ; $603e
 	ret ; $6041
-Label_03_6042:
+.step8:
 	wram_bank $01 ; $6042
 	ld hl, CutsceneAnimFrameLZ_19 ; $6048
 	ld de, $d080 ; $604b
@@ -4594,7 +4594,7 @@ Label_03_6042:
 	ld bc, $0308 ; $6063
 	call QueueSpriteTemplate ; $6066
 	ret ; $6069
-Label_03_606a:
+.step9:
 	wram_bank $01 ; $606a
 	ld hl, CutsceneAnimFrameLZ_1a ; $6070
 	ld de, $d080 ; $6073
@@ -4609,7 +4609,7 @@ Label_03_606a:
 	ld bc, $0308 ; $608b
 	call QueueSpriteTemplate ; $608e
 	ret ; $6091
-Label_03_6092:
+.step10:
 	ld hl, SpriteTemplate_03_6f5f ; $6092
 	ld d, $1e ; $6095
 	ld e, $80 ; $6097
@@ -4624,25 +4624,25 @@ LoadCutsceneAnimFrameGfx_1B_23:
 	ret c ; $60ac
 	ld a, b ; $60ad
 	cp a, $1b ; $60ae
-	jp z, Label_03_60de ; $60b0
+	jp z, .step ; $60b0
 	cp a, $1c ; $60b3
-	jp z, Label_03_6106 ; $60b5
+	jp z, .step2 ; $60b5
 	cp a, $1d ; $60b8
-	jp z, Label_03_612e ; $60ba
+	jp z, .step3 ; $60ba
 	cp a, $1e ; $60bd
-	jp z, Label_03_6156 ; $60bf
+	jp z, .step4 ; $60bf
 	cp a, $1f ; $60c2
-	jp z, Label_03_617e ; $60c4
+	jp z, .step5 ; $60c4
 	cp a, $20 ; $60c7
-	jp z, Label_03_61a6 ; $60c9
+	jp z, .step6 ; $60c9
 	cp a, $21 ; $60cc
-	jp z, Label_03_61ce ; $60ce
+	jp z, .step7 ; $60ce
 	cp a, $22 ; $60d1
-	jp z, Label_03_61f6 ; $60d3
+	jp z, .step8 ; $60d3
 	cp a, $23 ; $60d6
-	jp z, Label_03_621e ; $60d8
-	jp Label_03_6246 ; $60db
-Label_03_60de:
+	jp z, .step9 ; $60d8
+	jp .step10 ; $60db
+.step:
 	wram_bank $01 ; $60de
 	ld hl, CutsceneAnimFrameLZ_1b ; $60e4
 	ld de, $d0c0 ; $60e7
@@ -4657,7 +4657,7 @@ Label_03_60de:
 	ld bc, $030c ; $60ff
 	call QueueSpriteTemplate ; $6102
 	ret ; $6105
-Label_03_6106:
+.step2:
 	wram_bank $01 ; $6106
 	ld hl, CutsceneAnimFrameLZ_1c ; $610c
 	ld de, $d0c0 ; $610f
@@ -4672,7 +4672,7 @@ Label_03_6106:
 	ld bc, $030c ; $6127
 	call QueueSpriteTemplate ; $612a
 	ret ; $612d
-Label_03_612e:
+.step3:
 	wram_bank $01 ; $612e
 	ld hl, CutsceneAnimFrameLZ_1d ; $6134
 	ld de, $d0c0 ; $6137
@@ -4687,7 +4687,7 @@ Label_03_612e:
 	ld bc, $030c ; $614f
 	call QueueSpriteTemplate ; $6152
 	ret ; $6155
-Label_03_6156:
+.step4:
 	wram_bank $01 ; $6156
 	ld hl, CutsceneAnimFrameLZ_1e ; $615c
 	ld de, $d0c0 ; $615f
@@ -4702,7 +4702,7 @@ Label_03_6156:
 	ld bc, $030c ; $6177
 	call QueueSpriteTemplate ; $617a
 	ret ; $617d
-Label_03_617e:
+.step5:
 	wram_bank $01 ; $617e
 	ld hl, CutsceneAnimFrameLZ_1f ; $6184
 	ld de, $d0c0 ; $6187
@@ -4717,7 +4717,7 @@ Label_03_617e:
 	ld bc, $030c ; $619f
 	call QueueSpriteTemplate ; $61a2
 	ret ; $61a5
-Label_03_61a6:
+.step6:
 	wram_bank $01 ; $61a6
 	ld hl, CutsceneAnimFrameLZ_20 ; $61ac
 	ld de, $d0c0 ; $61af
@@ -4732,7 +4732,7 @@ Label_03_61a6:
 	ld bc, $030c ; $61c7
 	call QueueSpriteTemplate ; $61ca
 	ret ; $61cd
-Label_03_61ce:
+.step7:
 	wram_bank $01 ; $61ce
 	ld hl, CutsceneAnimFrameLZ_21 ; $61d4
 	ld de, $d0c0 ; $61d7
@@ -4747,7 +4747,7 @@ Label_03_61ce:
 	ld bc, $030c ; $61ef
 	call QueueSpriteTemplate ; $61f2
 	ret ; $61f5
-Label_03_61f6:
+.step8:
 	wram_bank $01 ; $61f6
 	ld hl, CutsceneAnimFrameLZ_22 ; $61fc
 	ld de, $d0c0 ; $61ff
@@ -4762,7 +4762,7 @@ Label_03_61f6:
 	ld bc, $030c ; $6217
 	call QueueSpriteTemplate ; $621a
 	ret ; $621d
-Label_03_621e:
+.step9:
 	wram_bank $01 ; $621e
 	ld hl, CutsceneAnimFrameLZ_23 ; $6224
 	ld de, $d0c0 ; $6227
@@ -4777,7 +4777,7 @@ Label_03_621e:
 	ld bc, $030c ; $623f
 	call QueueSpriteTemplate ; $6242
 	ret ; $6245
-Label_03_6246:
+.step10:
 	ld hl, SpriteTemplate_03_6f90 ; $6246
 	ld d, $2e ; $6249
 	ld e, $80 ; $624b
@@ -4792,25 +4792,25 @@ LoadCutsceneAnimFrameGfx_24_2C:
 	ret c ; $6260
 	ld a, b ; $6261
 	cp a, $24 ; $6262
-	jp z, Label_03_6292 ; $6264
+	jp z, .step ; $6264
 	cp a, $25 ; $6267
-	jp z, Label_03_62ba ; $6269
+	jp z, .step2 ; $6269
 	cp a, $26 ; $626c
-	jp z, Label_03_62e2 ; $626e
+	jp z, .step3 ; $626e
 	cp a, $27 ; $6271
-	jp z, Label_03_630a ; $6273
+	jp z, .step4 ; $6273
 	cp a, $28 ; $6276
-	jp z, Label_03_6332 ; $6278
+	jp z, .step5 ; $6278
 	cp a, $29 ; $627b
-	jp z, Label_03_635a ; $627d
+	jp z, .step6 ; $627d
 	cp a, $2a ; $6280
-	jp z, Label_03_6382 ; $6282
+	jp z, .step7 ; $6282
 	cp a, $2b ; $6285
-	jp z, Label_03_63aa ; $6287
+	jp z, .step8 ; $6287
 	cp a, $2c ; $628a
-	jp z, Label_03_63d2 ; $628c
-	jp Label_03_63fa ; $628f
-Label_03_6292:
+	jp z, .step9 ; $628c
+	jp .step10 ; $628f
+.step:
 	wram_bank $01 ; $6292
 	ld hl, CutsceneAnimFrameLZ_24 ; $6298
 	ld de, $d0e0 ; $629b
@@ -4825,7 +4825,7 @@ Label_03_6292:
 	ld bc, $020e ; $62b3
 	call QueueSpriteTemplate ; $62b6
 	ret ; $62b9
-Label_03_62ba:
+.step2:
 	wram_bank $01 ; $62ba
 	ld hl, CutsceneAnimFrameLZ_25 ; $62c0
 	ld de, $d0e0 ; $62c3
@@ -4840,7 +4840,7 @@ Label_03_62ba:
 	ld bc, $020e ; $62db
 	call QueueSpriteTemplate ; $62de
 	ret ; $62e1
-Label_03_62e2:
+.step3:
 	wram_bank $01 ; $62e2
 	ld hl, CutsceneAnimFrameLZ_26 ; $62e8
 	ld de, $d0e0 ; $62eb
@@ -4855,7 +4855,7 @@ Label_03_62e2:
 	ld bc, $020e ; $6303
 	call QueueSpriteTemplate ; $6306
 	ret ; $6309
-Label_03_630a:
+.step4:
 	wram_bank $01 ; $630a
 	ld hl, CutsceneAnimFrameLZ_27 ; $6310
 	ld de, $d0e0 ; $6313
@@ -4870,7 +4870,7 @@ Label_03_630a:
 	ld bc, $020e ; $632b
 	call QueueSpriteTemplate ; $632e
 	ret ; $6331
-Label_03_6332:
+.step5:
 	wram_bank $01 ; $6332
 	ld hl, CutsceneAnimFrameLZ_28 ; $6338
 	ld de, $d0e0 ; $633b
@@ -4885,7 +4885,7 @@ Label_03_6332:
 	ld bc, $020e ; $6353
 	call QueueSpriteTemplate ; $6356
 	ret ; $6359
-Label_03_635a:
+.step6:
 	wram_bank $01 ; $635a
 	ld hl, CutsceneAnimFrameLZ_29 ; $6360
 	ld de, $d0e0 ; $6363
@@ -4900,7 +4900,7 @@ Label_03_635a:
 	ld bc, $020e ; $637b
 	call QueueSpriteTemplate ; $637e
 	ret ; $6381
-Label_03_6382:
+.step7:
 	wram_bank $01 ; $6382
 	ld hl, CutsceneAnimFrameLZ_2a ; $6388
 	ld de, $d0e0 ; $638b
@@ -4915,7 +4915,7 @@ Label_03_6382:
 	ld bc, $020e ; $63a3
 	call QueueSpriteTemplate ; $63a6
 	ret ; $63a9
-Label_03_63aa:
+.step8:
 	wram_bank $01 ; $63aa
 	ld hl, CutsceneAnimFrameLZ_2b ; $63b0
 	ld de, $d0e0 ; $63b3
@@ -4930,7 +4930,7 @@ Label_03_63aa:
 	ld bc, $020e ; $63cb
 	call QueueSpriteTemplate ; $63ce
 	ret ; $63d1
-Label_03_63d2:
+.step9:
 	wram_bank $01 ; $63d2
 	ld hl, CutsceneAnimFrameLZ_2c ; $63d8
 	ld de, $d0e0 ; $63db
@@ -4945,7 +4945,7 @@ Label_03_63d2:
 	ld bc, $020e ; $63f3
 	call QueueSpriteTemplate ; $63f6
 	ret ; $63f9
-Label_03_63fa:
+.step10:
 	ld hl, SpriteTemplate_03_6fbd ; $63fa
 	ld d, $36 ; $63fd
 	ld e, $80 ; $63ff
@@ -4960,25 +4960,25 @@ LoadCutsceneAnimFrameGfx_2D_35:
 	ret c ; $6414
 	ld a, b ; $6415
 	cp a, $2d ; $6416
-	jp z, Label_03_6446 ; $6418
+	jp z, .step ; $6418
 	cp a, $2e ; $641b
-	jp z, Label_03_646e ; $641d
+	jp z, .step2 ; $641d
 	cp a, $2f ; $6420
-	jp z, Label_03_6496 ; $6422
+	jp z, .step3 ; $6422
 	cp a, $30 ; $6425
-	jp z, Label_03_64be ; $6427
+	jp z, .step4 ; $6427
 	cp a, $31 ; $642a
-	jp z, Label_03_64e6 ; $642c
+	jp z, .step5 ; $642c
 	cp a, $32 ; $642f
-	jp z, Label_03_650e ; $6431
+	jp z, .step6 ; $6431
 	cp a, $33 ; $6434
-	jp z, Label_03_6536 ; $6436
+	jp z, .step7 ; $6436
 	cp a, $34 ; $6439
-	jp z, Label_03_655e ; $643b
+	jp z, .step8 ; $643b
 	cp a, $35 ; $643e
-	jp z, Label_03_6586 ; $6440
-	jp Label_03_65ae ; $6443
-Label_03_6446:
+	jp z, .step9 ; $6440
+	jp .step10 ; $6443
+.step:
 	wram_bank $01 ; $6446
 	ld hl, CutsceneAnimFrameLZ_2d ; $644c
 	ld de, $d100 ; $644f
@@ -4993,7 +4993,7 @@ Label_03_6446:
 	ld bc, $0310 ; $6467
 	call QueueSpriteTemplate ; $646a
 	ret ; $646d
-Label_03_646e:
+.step2:
 	wram_bank $01 ; $646e
 	ld hl, CutsceneAnimFrameLZ_2e ; $6474
 	ld de, $d100 ; $6477
@@ -5008,7 +5008,7 @@ Label_03_646e:
 	ld bc, $0310 ; $648f
 	call QueueSpriteTemplate ; $6492
 	ret ; $6495
-Label_03_6496:
+.step3:
 	wram_bank $01 ; $6496
 	ld hl, CutsceneAnimFrameLZ_2f ; $649c
 	ld de, $d100 ; $649f
@@ -5023,7 +5023,7 @@ Label_03_6496:
 	ld bc, $0310 ; $64b7
 	call QueueSpriteTemplate ; $64ba
 	ret ; $64bd
-Label_03_64be:
+.step4:
 	wram_bank $01 ; $64be
 	ld hl, CutsceneAnimFrameLZ_30 ; $64c4
 	ld de, $d100 ; $64c7
@@ -5038,7 +5038,7 @@ Label_03_64be:
 	ld bc, $0310 ; $64df
 	call QueueSpriteTemplate ; $64e2
 	ret ; $64e5
-Label_03_64e6:
+.step5:
 	wram_bank $01 ; $64e6
 	ld hl, CutsceneAnimFrameLZ_31 ; $64ec
 	ld de, $d100 ; $64ef
@@ -5053,7 +5053,7 @@ Label_03_64e6:
 	ld bc, $0310 ; $6507
 	call QueueSpriteTemplate ; $650a
 	ret ; $650d
-Label_03_650e:
+.step6:
 	wram_bank $01 ; $650e
 	ld hl, CutsceneAnimFrameLZ_32 ; $6514
 	ld de, $d100 ; $6517
@@ -5068,7 +5068,7 @@ Label_03_650e:
 	ld bc, $0310 ; $652f
 	call QueueSpriteTemplate ; $6532
 	ret ; $6535
-Label_03_6536:
+.step7:
 	wram_bank $01 ; $6536
 	ld hl, CutsceneAnimFrameLZ_33 ; $653c
 	ld de, $d100 ; $653f
@@ -5083,7 +5083,7 @@ Label_03_6536:
 	ld bc, $0310 ; $6557
 	call QueueSpriteTemplate ; $655a
 	ret ; $655d
-Label_03_655e:
+.step8:
 	wram_bank $01 ; $655e
 	ld hl, CutsceneAnimFrameLZ_34 ; $6564
 	ld de, $d100 ; $6567
@@ -5098,7 +5098,7 @@ Label_03_655e:
 	ld bc, $0310 ; $657f
 	call QueueSpriteTemplate ; $6582
 	ret ; $6585
-Label_03_6586:
+.step9:
 	wram_bank $01 ; $6586
 	ld hl, CutsceneAnimFrameLZ_35 ; $658c
 	ld de, $d100 ; $658f
@@ -5113,7 +5113,7 @@ Label_03_6586:
 	ld bc, $0310 ; $65a7
 	call QueueSpriteTemplate ; $65aa
 	ret ; $65ad
-Label_03_65ae:
+.step10:
 	ld hl, SpriteTemplate_03_6fea ; $65ae
 	ld d, $3e ; $65b1
 	ld e, $80 ; $65b3

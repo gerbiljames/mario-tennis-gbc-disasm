@@ -3400,9 +3400,9 @@ EquipListCursorSpriteTask:
 	ld hl, EquipListCursorYPositions_3e ; $59d2
 	add a, l ; $59d5
 	ld l, a ; $59d6
-	jr nc, Label_3e_59da ; $59d7
+	jr nc, .read ; $59d7
 	inc h ; $59d9
-Label_3e_59da:
+.read:
 	ld d, [hl] ; $59da
 	ld e, $06 ; $59db
 	ld b, $10 ; $59dd
@@ -3474,16 +3474,16 @@ GetItemStatModListPtr:
 	ld hl, $5a5f ; $5a46
 	ld a, [$d813] ; $5a49
 	or a, a ; $5a4c
-	jr z, Label_3e_5a52 ; $5a4d
+	jr z, .step ; $5a4d
 	ld hl, $5a6d ; $5a4f
-Label_3e_5a52:
+.step:
 	ld a, b ; $5a52
 	add a, a ; $5a53
 	add a, l ; $5a54
 	ld l, a ; $5a55
-	jr nc, Label_3e_5a59 ; $5a56
+	jr nc, .read ; $5a56
 	inc h ; $5a58
-Label_3e_5a59:
+.read:
 	ld a, [hl+] ; $5a59
 	ld h, [hl] ; $5a5a
 	ld l, a ; $5a5b

@@ -925,10 +925,10 @@ FindTennisDictionaryListEnd:
 	wram_bank $06 ; $511a
 	ld hl, SelectionMaskGrid_3f_539e ; $5120
 	ld c, $00 ; $5123
-Label_3f_5125:
+.loop:
 	ld a, [hl+] ; $5125
 	cp a, $40 ; $5126
-	jr nz, Label_3f_5125 ; $5128
+	jr nz, .loop ; $5128
 	dec hl ; $512a
 	ld a, h ; $512b
 	ld [$cb30], a ; $512c
@@ -1350,26 +1350,26 @@ SetTennisDictionaryListFromIndexRow:
 	call GetTennisDictionaryRowFirstLetter ; $5429
 	ld b, a ; $542c
 	or a, a ; $542d
-	jr z, Label_3f_5442 ; $542e
-Label_3f_5430:
+	jr z, .clearTennisDictCursorRow ; $542e
+.loop:
 	ld a, [hl+] ; $5430
 	and a, e ; $5431
-	jr z, Label_3f_5435 ; $5432
+	jr z, .compare ; $5432
 	inc c ; $5434
-Label_3f_5435:
+.compare:
 	cp a, $40 ; $5435
-	jr z, Label_3f_5442 ; $5437
+	jr z, .clearTennisDictCursorRow ; $5437
 	cp a, $00 ; $5439
-	jr nz, Label_3f_5430 ; $543b
+	jr nz, .loop ; $543b
 	dec b ; $543d
-	jr nz, Label_3f_5430 ; $543e
-	jr Label_3f_544a ; $5440
-Label_3f_5442:
+	jr nz, .loop ; $543e
+	jr .clearTennisDictCursorRow2 ; $5440
+.clearTennisDictCursorRow:
 	xor a, a ; $5442
 	ld [wTennisDictCursorRow], a ; $5443
 	ld [wTennisDictScrollTop], a ; $5446
 	ret ; $5449
-Label_3f_544a:
+.clearTennisDictCursorRow2:
 	xor a, a ; $544a
 	ld [wTennisDictCursorRow], a ; $544b
 	ld a, c ; $544e
@@ -1616,7 +1616,7 @@ HandleTennisDictionaryListInput:
 	ld [wTennisDictFlags], a ; $560e
 	ldh a, [hInputRisingEdge] ; $5611
 	bit PADB_A, a ; $5613
-	jp z, Label_3f_56a4 ; $5615
+	jp z, .step3 ; $5615
 	sound $5f ; $5618
 	call StartTennisDictionaryAnim ; $561a
 	ld a, [wTennisDictFlags] ; $561d
@@ -1626,25 +1626,25 @@ HandleTennisDictionaryListInput:
 	ld b, a ; $5628
 	ld a, [$cb33] ; $5629
 	cp a, $01 ; $562c
-	jr z, Label_3f_5640 ; $562e
+	jr z, .getTennisDictionarySelectedIndex ; $562e
 	call GetTennisDictionarySelectedIndex ; $5630
 	call GetTennisDictionaryEntryIndex ; $5633
 	ld hl, $1430 ; $5636
 	add a, l ; $5639
 	ld l, a ; $563a
-	jr nc, Label_3f_563e ; $563b
+	jr nc, .step ; $563b
 	inc h ; $563d
-Label_3f_563e:
-	jr Label_3f_564e ; $563e
-Label_3f_5640:
+.step:
+	jr .step2 ; $563e
+.getTennisDictionarySelectedIndex:
 	call GetTennisDictionarySelectedIndex ; $5640
 	call GetTennisDictionaryEntryCategory ; $5643
 	ld hl, $14a9 ; $5646
 	add a, l ; $5649
 	ld l, a ; $564a
-	jr nc, Label_3f_564e ; $564b
+	jr nc, .step2 ; $564b
 	inc h ; $564d
-Label_3f_564e:
+.step2:
 	push hl ; $564e
 	farcall ResetTextWindowsAndRestoreMap ; $564f
 	ld a, $05 ; $5652
@@ -1681,71 +1681,71 @@ Label_3f_564e:
 	res 0, a ; $5699
 	ld [wTennisDictFlags], a ; $569b
 	call EndTennisDictionaryAnim ; $569e
-	jp Label_3f_5746 ; $56a1
-Label_3f_56a4:
+	jp .restore ; $56a1
+.step3:
 	bit 1, a ; $56a4
-	jr z, Label_3f_56be ; $56a6
+	jr z, .step5 ; $56a6
 	pop af ; $56a8
 	sound $62 ; $56a9
 	ld a, [wTennisDictMode] ; $56ab
 	cp a, $06 ; $56ae
-	jr z, Label_3f_56b8 ; $56b0
+	jr z, .step4 ; $56b0
 	ld a, $01 ; $56b2
 	push af ; $56b4
-	jp Label_3f_5746 ; $56b5
-Label_3f_56b8:
+	jp .restore ; $56b5
+.step4:
 	ld a, $10 ; $56b8
 	push af ; $56ba
-	jp Label_3f_5746 ; $56bb
-Label_3f_56be:
+	jp .restore ; $56bb
+.step5:
 	ldh a, [hInputPressed] ; $56be
 	bit PADB_UP, a ; $56c0
-	jr z, Label_3f_56ea ; $56c2
+	jr z, .step6 ; $56c2
 	sound $5e ; $56c4
 	ld a, [wTennisDictCursorRow] ; $56c6
 	dec a ; $56c9
 	cp a, $ff ; $56ca
-	jr z, Label_3f_56d6 ; $56cc
+	jr z, .checkTennisDictScrollTop ; $56cc
 	ld [wTennisDictCursorRow], a ; $56ce
 	call DrawTennisDictionaryLetterLabels ; $56d1
-	jr Label_3f_5746 ; $56d4
-Label_3f_56d6:
+	jr .restore ; $56d4
+.checkTennisDictScrollTop:
 	ld a, [wTennisDictScrollTop] ; $56d6
 	dec a ; $56d9
 	cp a, $ff ; $56da
-	jr nz, Label_3f_56e2 ; $56dc
+	jr nz, .store ; $56dc
 	ld a, [wTennisDictEntryCount] ; $56de
 	dec a ; $56e1
-Label_3f_56e2:
+.store:
 	ld [wTennisDictScrollTop], a ; $56e2
 	call DrawTennisDictionaryList ; $56e5
-	jr Label_3f_5746 ; $56e8
-Label_3f_56ea:
+	jr .restore ; $56e8
+.step6:
 	bit 7, a ; $56ea
-	jr z, Label_3f_5714 ; $56ec
+	jr z, .step7 ; $56ec
 	sound $5e ; $56ee
 	ld a, [wTennisDictCursorRow] ; $56f0
 	inc a ; $56f3
 	cp a, $06 ; $56f4
-	jr nc, Label_3f_5700 ; $56f6
+	jr nc, .checkTennisDictEntryCount ; $56f6
 	ld [wTennisDictCursorRow], a ; $56f8
 	call DrawTennisDictionaryLetterLabels ; $56fb
-	jr Label_3f_5746 ; $56fe
-Label_3f_5700:
+	jr .restore ; $56fe
+.checkTennisDictEntryCount:
 	ld a, [wTennisDictEntryCount] ; $5700
 	ld b, a ; $5703
 	ld a, [wTennisDictScrollTop] ; $5704
 	inc a ; $5707
 	cp a, b ; $5708
-	jr nz, Label_3f_570c ; $5709
+	jr nz, .store2 ; $5709
 	xor a, a ; $570b
-Label_3f_570c:
+.store2:
 	ld [wTennisDictScrollTop], a ; $570c
 	call DrawTennisDictionaryList ; $570f
-	jr Label_3f_5746 ; $5712
-Label_3f_5714:
+	jr .restore ; $5712
+.step7:
 	bit 5, a ; $5714
-	jr z, Label_3f_572d ; $5716
+	jr z, .step8 ; $5716
 	ld a, [wTennisDictFlags] ; $5718
 	set 2, a ; $571b
 	ld [wTennisDictFlags], a ; $571d
@@ -1753,10 +1753,10 @@ Label_3f_5714:
 	call AdvanceFrame ; $5722
 	call ScrollTennisDictionaryToPrevLetter ; $5725
 	call DrawTennisDictionaryList ; $5728
-	jr Label_3f_5746 ; $572b
-Label_3f_572d:
+	jr .restore ; $572b
+.step8:
 	bit 4, a ; $572d
-	jr z, Label_3f_5746 ; $572f
+	jr z, .restore ; $572f
 	ld a, [wTennisDictFlags] ; $5731
 	set 3, a ; $5734
 	ld [wTennisDictFlags], a ; $5736
@@ -1764,8 +1764,8 @@ Label_3f_572d:
 	call AdvanceFrame ; $573b
 	call ScrollTennisDictionaryToNextLetter ; $573e
 	call DrawTennisDictionaryList ; $5741
-	jr Label_3f_5746 ; $5744
-Label_3f_5746:
+	jr .restore ; $5744
+.restore:
 	pop af ; $5746
 	pop bc ; $5747
 	ret ; $5748
@@ -1833,9 +1833,9 @@ QueueTennisDictionaryListRows:
 	push af ; $57da
 	ldh a, [rLCDC] ; $57db
 	bit 7, a ; $57dd
-	jr z, Label_3f_57e4 ; $57df
+	jr z, .restore ; $57df
 	call AdvanceFrame ; $57e1
-Label_3f_57e4:
+.restore:
 	pop af ; $57e4
 	pop af ; $57e5
 	wram_bank ; $57e6

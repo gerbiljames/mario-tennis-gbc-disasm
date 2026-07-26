@@ -229,9 +229,9 @@ IndexDrillTableByPoint:
 	add a, a ; $4164
 	add a, l ; $4165
 	ld l, a ; $4166
-	jr nc, Label_0b_416a ; $4167
+	jr nc, .step ; $4167
 	inc h ; $4169
-Label_0b_416a:
+.step:
 	ld b, h ; $416a
 	ld c, l ; $416b
 	ld hl, $0002 ; $416c
@@ -5526,24 +5526,24 @@ SelectStrokeTargetTableByPoint:
 	and a, $01 ; $6692
 	ld a, $00 ; $6694
 	or a, a ; $6696
-	jr nz, Label_0b_669e ; $6697
+	jr nz, .step ; $6697
 	ld hl, SignedTable_0b_46fb ; $6699
-	jr Label_0b_66a1 ; $669c
-Label_0b_669e:
+	jr .done ; $669c
+.step:
 	ld hl, SignedTable_0b_46f1 ; $669e
-Label_0b_66a1:
+.done:
 	ret ; $66a1
 SelectStrokeTargetTableByPointAlt:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $66a2
 	and a, $01 ; $66a5
 	ld a, $00 ; $66a7
 	or a, a ; $66a9
-	jr nz, Label_0b_66b1 ; $66aa
+	jr nz, .step ; $66aa
 	ld hl, SignedTable_0b_46f1 ; $66ac
-	jr Label_0b_66b4 ; $66af
-Label_0b_66b1:
+	jr .done ; $66af
+.step:
 	ld hl, SignedTable_0b_46fb ; $66b1
-Label_0b_66b4:
+.done:
 	ret ; $66b4
 TestBallBounceDepth:
 	ld a, [wBallBounceCount] ; $66b5

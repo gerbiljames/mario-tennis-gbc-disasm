@@ -3498,17 +3498,17 @@ GetRewardTableIndex:
 	ret nz ; $6cfe
 	cp a, $1a ; $6cff
 	ret c ; $6d01
-	jr nz, Label_1e_6d0c ; $6d02
+	jr nz, .checkFlag ; $6d02
 	test_flag FLAG_CLEARED_MACHINE_MASTER ; $6d04
-	jr z, Label_1e_6d0b ; $6d07
+	jr z, .done ; $6d07
 	add a, $02 ; $6d09
-Label_1e_6d0b:
+.done:
 	ret ; $6d0b
-Label_1e_6d0c:
+.checkFlag:
 	test_flag FLAG_CLEARED_WALL_MASTER ; $6d0c
-	jr z, Label_1e_6d13 ; $6d0f
+	jr z, .doneB ; $6d0f
 	add a, $02 ; $6d11
-Label_1e_6d13:
+.doneB:
 	ret ; $6d13
 RewardFlagListPtrs_1e:
 	; $6d14, 8 bytes (records:2)
@@ -4457,13 +4457,13 @@ ScrollProgressListDown:
 	wram_bank $05 ; $7386
 	ld a, [wCharPosDepth] ; $738c
 	sub a, $06 ; $738f
-	jr c, Label_1e_73ae ; $7391
+	jr c, .restore ; $7391
 	ld b, a ; $7393
 	ld hl, wCharPosDepth + 2 ; $7394
 	ld a, [hl] ; $7397
 	inc a ; $7398
 	cp a, b ; $7399
-	jr nc, Label_1e_73ae ; $739a
+	jr nc, .restore ; $739a
 	ld [hl], a ; $739c
 	sound $5e ; $739d
 	ld a, [wCharPosX + 1] ; $739f
@@ -4471,7 +4471,7 @@ ScrollProgressListDown:
 	farcall DrawTextWindowFrame ; $73a5
 	clear_flag FLAG_TEXT_RENDER_ACTIVE ; $73a8
 	call DrawProgressListRows ; $73ab
-Label_1e_73ae:
+.restore:
 	pop af ; $73ae
 	ret ; $73af
 ScrollProgressListUp:
@@ -4482,7 +4482,7 @@ ScrollProgressListUp:
 	ld a, [hl] ; $73bd
 	dec a ; $73be
 	bit 7, a ; $73bf
-	jr nz, Label_1e_73d5 ; $73c1
+	jr nz, .restore ; $73c1
 	ld [hl], a ; $73c3
 	sound $5e ; $73c4
 	ld a, [wCharPosX + 1] ; $73c6
@@ -4490,7 +4490,7 @@ ScrollProgressListUp:
 	farcall DrawTextWindowFrame ; $73cc
 	clear_flag FLAG_TEXT_RENDER_ACTIVE ; $73cf
 	call DrawProgressListRows ; $73d2
-Label_1e_73d5:
+.restore:
 	pop af ; $73d5
 	ret ; $73d6
 	ld d, $02 ; $73d7
@@ -4663,21 +4663,21 @@ DrawProgressListRows:
 	ld hl, $df70 ; $74c8
 	add a, l ; $74cb
 	ld l, a ; $74cc
-	jr nc, Label_1e_74d0 ; $74cd
+	jr nc, .step ; $74cd
 	inc h ; $74cf
-Label_1e_74d0:
+.step:
 	ld c, $07 ; $74d0
-Label_1e_74d2:
+.loop:
 	ld a, [hl+] ; $74d2
 	cp a, $ff ; $74d3
-	jr z, Label_1e_74f1 ; $74d5
+	jr z, .step3 ; $74d5
 	push hl ; $74d7
 	ld hl, $04a0 ; $74d8
 	add a, l ; $74db
 	ld l, a ; $74dc
-	jr nc, Label_1e_74e0 ; $74dd
+	jr nc, .step2 ; $74dd
 	inc h ; $74df
-Label_1e_74e0:
+.step2:
 	push bc ; $74e0
 	ld c, $10 ; $74e1
 	farcall RenderProportionalTextAt ; $74e3
@@ -4688,8 +4688,8 @@ Label_1e_74e0:
 	ld e, l ; $74ec
 	pop hl ; $74ed
 	dec c ; $74ee
-	jr nz, Label_1e_74d2 ; $74ef
-Label_1e_74f1:
+	jr nz, .loop ; $74ef
+.step3:
 	ld a, $70 ; $74f1
 	ld [$c3bb], a ; $74f3
 	farcall UploadGlyphBuffer ; $74f6
@@ -4881,31 +4881,31 @@ FillProgressListRowTiles:
 	ld h, [hl] ; $79ec
 	ld l, a ; $79ed
 	ld e, $09 ; $79ee
-Label_1e_79f0:
+.loop:
 	ld a, $2e ; $79f0
 	ld b, $2f ; $79f2
 	ld c, $0a ; $79f4
-Label_1e_79f6:
+.loopB:
 	ld [hl+], a ; $79f6
 	ld [hl], b ; $79f7
 	inc hl ; $79f8
 	dec c ; $79f9
-	jr nz, Label_1e_79f6 ; $79fa
+	jr nz, .loopB ; $79fa
 	ld bc, $000c ; $79fc
 	add hl, bc ; $79ff
 	ld a, $3e ; $7a00
 	ld b, $3f ; $7a02
 	ld c, $0a ; $7a04
-Label_1e_7a06:
+.loopBB:
 	ld [hl+], a ; $7a06
 	ld [hl], b ; $7a07
 	inc hl ; $7a08
 	dec c ; $7a09
-	jr nz, Label_1e_7a06 ; $7a0a
+	jr nz, .loopBB ; $7a0a
 	ld bc, $000c ; $7a0c
 	add hl, bc ; $7a0f
 	dec e ; $7a10
-	jr nz, Label_1e_79f0 ; $7a11
+	jr nz, .loop ; $7a11
 	ret ; $7a13
 FillProgressListRowAttrs:
 	ld hl, wShadowTilemapPtr ; $7a14
@@ -4916,16 +4916,16 @@ FillProgressListRowAttrs:
 	add hl, de ; $7a1d
 	ld a, $09 ; $7a1e
 	ld e, $12 ; $7a20
-Label_1e_7a22:
+.loop:
 	ld c, $14 ; $7a22
-Label_1e_7a24:
+.loopB:
 	ld [hl+], a ; $7a24
 	dec c ; $7a25
-	jr nz, Label_1e_7a24 ; $7a26
+	jr nz, .loopB ; $7a26
 	ld bc, $000c ; $7a28
 	add hl, bc ; $7a2b
 	dec e ; $7a2c
-	jr nz, Label_1e_7a22 ; $7a2d
+	jr nz, .loop ; $7a2d
 	ret ; $7a2f
 	ld hl, $d060 ; $7a30
 	ld de, $9860 ; $7a33
