@@ -173,13 +173,13 @@ SpawnGameScoreDisplayObjs:
 	call GetPlayer2CharIconSprites ; $4172
 	call SetObjSpriteTemplate ; $4175
 	ld a, $00 ; $4178
-	ld hl, Data_09_420c ; $417a
+	ld hl, SpawnGameScoreDisplayObjsObjTemplate ; $417a
 	ld bc, $dda0 ; $417d
 	call LoadObjTemplate_09 ; $4180
 	ret ; $4183
 .doubles:
 	ld a, $00 ; $4184
-	ld hl, Data_09_41fc ; $4186
+	ld hl, GameScoreDisplayObjsObjTemplate ; $4186
 	ld bc, $dd80 ; $4189
 	call LoadObjTemplate_09 ; $418c
 	ret ; $418f
@@ -193,12 +193,12 @@ DismissGameScoreDisplayObjs:
 	ld hl, ObjTemplates_09_41bc ; $419f
 	ld bc, $dd90 ; $41a2
 	call StartObjExitAnim ; $41a5
-	ld hl, Data_09_420c ; $41a8
+	ld hl, SpawnGameScoreDisplayObjsObjTemplate ; $41a8
 	ld bc, $dda0 ; $41ab
 	call StartObjExitAnim ; $41ae
 	ret ; $41b1
 .doubles:
-	ld hl, Data_09_41fc ; $41b2
+	ld hl, GameScoreDisplayObjsObjTemplate ; $41b2
 	ld bc, $dd80 ; $41b5
 	call StartObjExitAnim ; $41b8
 	ret ; $41bb
@@ -209,23 +209,23 @@ ObjTemplates_09_41bc:
 	dw $3450, $0000, $4764, $0000, $4764, $0002, $0066, $0000 ; record 1
 	dw $4c30, $0000, $4764, $0001, $4764, $0003, $0066, $0000 ; record 2
 	dw $3430, $0000, $4764, $0000, $4764, $0002, $0066, $0000 ; record 3
-Data_09_41fc:
+GameScoreDisplayObjsObjTemplate:
 	; $41fc, 16 bytes (records:16)
 ; 1 records x 16 bytes
 	dw $4040, $71f7, $4764, $0000, $4764, $0003, $0066, $0000 ; record 0
-Data_09_420c:
+SpawnGameScoreDisplayObjsObjTemplate:
 	; $420c, 32 bytes (records:16)
 ; 2 records x 16 bytes
 	dw $4040, $7090, $4758, $0000, $475e, $0000, $0066, $0000 ; record 0
 	dw $4050, $7090, $4764, $0000, $4764, $0002, $0066, $0000 ; record 1
 SpawnGameResultObj:
 	ld a, $01 ; $422c
-	ld hl, Data_09_420c ; $422e
+	ld hl, SpawnGameScoreDisplayObjsObjTemplate ; $422e
 	ld bc, $dda0 ; $4231
 	call LoadObjTemplate_09 ; $4234
 	ret ; $4237
 DismissGameResultObj:
-	ld hl, Data_09_420c ; $4238
+	ld hl, SpawnGameScoreDisplayObjsObjTemplate ; $4238
 	ld bc, $dda0 ; $423b
 	call StartObjExitAnim ; $423e
 	ret ; $4241

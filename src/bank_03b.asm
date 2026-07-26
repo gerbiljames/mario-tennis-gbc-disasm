@@ -91,7 +91,7 @@ QueueBouncingCursorCorners:
 ApplyCursorBounceX:
 	ldh a, [hVBlankCounter] ; $409b
 	and a, $0f ; $409d
-	ld hl, Data_3b_40b5 ; $409f
+	ld hl, CursorBounceXTable ; $409f
 	add a, l ; $40a2
 	ld l, a ; $40a3
 	jr nc, .readOffset ; $40a4
@@ -111,13 +111,13 @@ ApplyCursorBounceX:
 	sub a, b ; $40b2
 	ld d, a ; $40b3
 	ret ; $40b4
-Data_3b_40b5:
+CursorBounceXTable:
 	; $40b5, 16 bytes (bytes:16)
 	db $00, $00, $00, $01, $01, $01, $01, $01, $01, $01, $01, $00, $00, $00, $00, $00 ; 0x00
 ApplyCursorBounceY:
 	ldh a, [hVBlankCounter] ; $40c5
 	and a, $0f ; $40c7
-	ld hl, Data_3b_40df ; $40c9
+	ld hl, CursorBounceYTable ; $40c9
 	add a, l ; $40cc
 	ld l, a ; $40cd
 	jr nc, .readOffset ; $40ce
@@ -137,7 +137,7 @@ ApplyCursorBounceY:
 	sub a, b ; $40dc
 	ld e, a ; $40dd
 	ret ; $40de
-Data_3b_40df:
+CursorBounceYTable:
 	; $40df, 16 bytes (bytes:16)
 	db $00, $00, $00, $01, $01, $01, $01, $01, $01, $01, $01, $00, $00, $00, $00, $00 ; 0x00
 QueueCursorCornersStatic:
@@ -1138,7 +1138,7 @@ DrawChartCellMark:
 	push bc ; $4719
 	push de ; $471a
 	push hl ; $471b
-	ld hl, Data_3b_4738 ; $471c
+	ld hl, ChartCellMarkTable ; $471c
 	ld a, b ; $471f
 	add a, l ; $4720
 	ld l, a ; $4721
@@ -1162,13 +1162,13 @@ DrawChartCellMark:
 	pop bc ; $4735
 	pop af ; $4736
 	ret ; $4737
-Data_3b_4738:
+ChartCellMarkTable:
 	; $4738, 11 bytes (bytes:8)
 	db $a4, $9c, $94, $98, $78, $7c, $88, $8c ; 0x00
 	db $68, $6c, $a8 ; 0x08
 BuildN64ExhibColumnList:
 	wram_bank $03 ; $4743
-	ld hl, Data_3b_4772 ; $4749
+	ld hl, N64ExhibColumn ; $4749
 	ld de, $dc01 ; $474c
 	ld bc, $0001 ; $474f
 	call CopyMemoryFast ; $4752
@@ -1189,7 +1189,7 @@ BuildN64ExhibColumnList:
 	call BuildN64ExhibResultsGrid ; $476d
 	ret ; $4770
 	ret ; $4771
-Data_3b_4772:
+N64ExhibColumn:
 	; $4772, 17 bytes (bytes:8)
 	db $00, $01, $02, $03, $04, $05, $06, $07 ; 0x00
 	db $08, $09, $0a, $0b, $0c, $0d, $0e, $0f ; 0x08
@@ -1217,7 +1217,7 @@ BuildN64ExhibResultsGrid:
 	ld b, $00 ; $479d
 .loop:
 	push bc ; $479f
-	ld hl, Data_3b_47bc ; $47a0
+	ld hl, N64ExhibResultsGridTable ; $47a0
 	ld a, b ; $47a3
 	add a, l ; $47a4
 	ld l, a ; $47a5
@@ -1237,7 +1237,7 @@ BuildN64ExhibResultsGrid:
 	cp a, $10 ; $47b7
 	jr nz, .loop ; $47b9
 	ret ; $47bb
-Data_3b_47bc:
+N64ExhibResultsGridTable:
 	; $47bc, 16 bytes (bytes:16)
 	db $02, $0a, $01, $06, $00, $05, $0f, $09, $08, $0b, $07, $0c, $03, $04, $0e, $0d ; 0x00
 DecodeN64ExhibResultsRow:
@@ -1266,7 +1266,7 @@ DecodeN64ExhibResultsRow:
 .loop:
 	push bc ; $47e7
 	push hl ; $47e8
-	ld hl, Data_3b_4808 ; $47e9
+	ld hl, DecodeN64ExhibResultsRowTable ; $47e9
 	ld a, b ; $47ec
 	add a, l ; $47ed
 	ld l, a ; $47ee
@@ -1289,12 +1289,12 @@ DecodeN64ExhibResultsRow:
 	pop bc ; $4805
 	pop af ; $4806
 	ret ; $4807
-Data_3b_4808:
+DecodeN64ExhibResultsRowTable:
 	; $4808, 16 bytes (bytes:16)
 	db $0d, $05, $0e, $09, $0f, $0a, $00, $06, $07, $04, $08, $03, $0c, $0b, $01, $02 ; 0x00
 MapExhibCellValueToGlyph:
 	push hl ; $4818
-	ld hl, Data_3b_4824 ; $4819
+	ld hl, MapExhibCellValueToGlyphTable ; $4819
 	add a, l ; $481c
 	ld l, a ; $481d
 	jr nc, .read ; $481e
@@ -1303,7 +1303,7 @@ MapExhibCellValueToGlyph:
 	ld a, [hl] ; $4821
 	pop hl ; $4822
 	ret ; $4823
-Data_3b_4824:
+MapExhibCellValueToGlyphTable:
 	; $4824, 16 bytes (bytes:8)
 	db $00, $03, $05, $07, $09, $0a, $09, $09 ; 0x00
 	db $00, $02, $04, $06, $08, $08, $08, $08 ; 0x08
@@ -1475,7 +1475,7 @@ DrawChartCharIcon:
 	add hl, de ; $4914
 	ld a, b ; $4915
 	push hl ; $4916
-	ld hl, Data_3b_492e ; $4917
+	ld hl, ChartCharIconTable ; $4917
 	add a, l ; $491a
 	ld l, a ; $491b
 	jr nc, .readTile ; $491c
@@ -1494,7 +1494,7 @@ DrawChartCharIcon:
 	pop bc ; $492b
 	pop af ; $492c
 	ret ; $492d
-Data_3b_492e:
+ChartCharIconTable:
 	; $492e, 17 bytes (bytes:8)
 	db $0e, $0b, $0d, $0e, $0b, $0c, $0d, $0d ; 0x00
 	db $0f, $0c, $0e, $0c, $0d, $0e, $0c, $0e ; 0x08
@@ -2064,7 +2064,7 @@ LoadN64TnmtDataRecords:
 	ld hl, $d800 ; $4e05
 	ld bc, $0080 ; $4e08
 	call ClearMemory16 ; $4e0b
-	ld hl, Data_3b_4e44 ; $4e0e
+	ld hl, N64TnmtData ; $4e0e
 	ld de, $d810 ; $4e11
 	ld bc, $0010 ; $4e14
 	call CopyMemoryBC ; $4e17
@@ -2091,7 +2091,7 @@ LoadN64TnmtDataRecords:
 	ld [$d800], a ; $4e40
 .done:
 	ret ; $4e43
-Data_3b_4e44:
+N64TnmtData:
 	; $4e44, 16 bytes (bytes:16)
 	db $00, $01, $02, $03, $04, $05, $06, $07, $08, $09, $0a, $0b, $0c, $0d, $0e, $0f ; 0x00
 BuildN64TnmtTrophyGrid:
@@ -2117,7 +2117,7 @@ BuildN64TnmtTrophyGrid:
 	ret ; $4e73
 GetN64CharTrophyRowPtr:
 	ld a, b ; $4e74
-	ld hl, Data_3b_4e87 ; $4e75
+	ld hl, N64CharTrophyRowPtrTable ; $4e75
 	add a, l ; $4e78
 	ld l, a ; $4e79
 	jr nc, .read ; $4e7a
@@ -2131,7 +2131,7 @@ GetN64CharTrophyRowPtr:
 	inc h ; $4e85
 .done:
 	ret ; $4e86
-Data_3b_4e87:
+N64CharTrophyRowPtrTable:
 	; $4e87, 16 bytes (bytes:16)
 	db $02, $0a, $01, $06, $00, $05, $0f, $09, $08, $0b, $07, $0c, $03, $04, $0e, $0d ; 0x00
 DecodeN64CharTrophyCounts:
@@ -2655,7 +2655,7 @@ DrawRingShotRowIcons:
 LoadN64RingShotRecords:
 	wram_bank $03 ; $523e
 	call ReadN64RecordsSaveBlock ; $5244
-	ld hl, Data_3b_5278 ; $5247
+	ld hl, N64RingShot ; $5247
 	ld de, $dc40 ; $524a
 	ld bc, $0010 ; $524d
 	call CopyMemoryBC ; $5250
@@ -2678,47 +2678,47 @@ LoadN64RingShotRecords:
 	call ClearBytes ; $5271
 	call BuildRingShotResultsGrid ; $5274
 	ret ; $5277
-Data_3b_5278:
+N64RingShot:
 	; $5278, 16 bytes (bytes:16)
 	db $00, $01, $02, $03, $04, $05, $06, $07, $08, $09, $0a, $0b, $0c, $0d, $0e, $0f ; 0x00
 SeedDefaultRingShotRecords:
-	ld hl, Data_3b_52e9 ; $5288
+	ld hl, DefaultRingShot0 ; $5288
 	ld de, $d918 ; $528b
 	ld bc, $0010 ; $528e
 	call CopyMemoryBC ; $5291
-	ld hl, Data_3b_52e9 ; $5294
+	ld hl, DefaultRingShot0 ; $5294
 	ld de, $d928 ; $5297
 	ld bc, $0010 ; $529a
 	call CopyMemoryBC ; $529d
-	ld hl, Data_3b_52e9 ; $52a0
+	ld hl, DefaultRingShot0 ; $52a0
 	ld de, $d938 ; $52a3
 	ld bc, $0010 ; $52a6
 	call CopyMemoryBC ; $52a9
-	ld hl, Data_3b_52e9 ; $52ac
+	ld hl, DefaultRingShot0 ; $52ac
 	ld de, $d948 ; $52af
 	ld bc, $0010 ; $52b2
 	call CopyMemoryBC ; $52b5
-	ld hl, Data_3b_52f9 ; $52b8
+	ld hl, DefaultRingShot1 ; $52b8
 	ld de, $d958 ; $52bb
 	ld bc, $0020 ; $52be
 	call CopyMemoryBC ; $52c1
-	ld hl, Data_3b_52f9 ; $52c4
+	ld hl, DefaultRingShot1 ; $52c4
 	ld de, $d978 ; $52c7
 	ld bc, $0020 ; $52ca
 	call CopyMemoryBC ; $52cd
-	ld hl, Data_3b_52f9 ; $52d0
+	ld hl, DefaultRingShot1 ; $52d0
 	ld de, $d998 ; $52d3
 	ld bc, $0020 ; $52d6
 	call CopyMemoryBC ; $52d9
-	ld hl, Data_3b_52f9 ; $52dc
+	ld hl, DefaultRingShot1 ; $52dc
 	ld de, $d9b8 ; $52df
 	ld bc, $0020 ; $52e2
 	call CopyMemoryBC ; $52e5
 	ret ; $52e8
-Data_3b_52e9:
+DefaultRingShot0:
 	; $52e9, 16 bytes (bytes:16)
 	db $1f, $03, $0f, $01, $00, $01, $0f, $1f, $07, $05, $03, $0f, $1f, $03, $07, $03 ; 0x00
-Data_3b_52f9:
+DefaultRingShot1:
 	; $52f9, 32 bytes (bytes:16)
 	db $00, $33, $00, $44, $00, $55, $00, $66, $00, $11, $00, $28, $00, $22, $01, $ff ; 0x00
 	db $00, $02, $00, $00, $01, $43, $01, $00, $00, $01, $00, $21, $00, $12, $00, $12 ; 0x10
@@ -2726,7 +2726,7 @@ BuildRingShotResultsGrid:
 	ld de, $db00 ; $5319
 	ld c, $00 ; $531c
 .loop:
-	ld hl, Data_3b_5358 ; $531e
+	ld hl, RingShotResultsGridTable ; $531e
 	ld a, c ; $5321
 	add a, l ; $5322
 	ld l, a ; $5323
@@ -2747,7 +2747,7 @@ BuildRingShotResultsGrid:
 	ld de, $db04 ; $5338
 	ld c, $00 ; $533b
 .loopB:
-	ld hl, Data_3b_5358 ; $533d
+	ld hl, RingShotResultsGridTable ; $533d
 	ld a, c ; $5340
 	add a, l ; $5341
 	ld l, a ; $5342
@@ -2766,7 +2766,7 @@ BuildRingShotResultsGrid:
 	cp a, $10 ; $5353
 	jr nz, .loopB ; $5355
 	ret ; $5357
-Data_3b_5358:
+RingShotResultsGridTable:
 	; $5358, 16 bytes (bytes:16)
 	db $02, $0a, $01, $06, $00, $05, $0f, $09, $08, $0b, $07, $0c, $03, $04, $0e, $0d ; 0x00
 CopyRingShotCharScores:
@@ -3268,7 +3268,7 @@ RunMainMenu:
 	ld a, $ff ; $56ad
 	ret ; $56af
 MapMainMenuCursorToItemId:
-	ld hl, Data_3b_56ba ; $56b0
+	ld hl, MapMainMenuCursorToItemIdTable ; $56b0
 	add a, l ; $56b3
 	ld l, a ; $56b4
 	jr nc, .read ; $56b5
@@ -3276,7 +3276,7 @@ MapMainMenuCursorToItemId:
 .read:
 	ld a, [hl] ; $56b8
 	ret ; $56b9
-Data_3b_56ba:
+MapMainMenuCursorToItemIdTable:
 	; $56ba, 9 bytes (bytes:3)
 	db $03, $04, $05 ; 0x00
 	db $00, $01, $02 ; 0x03
@@ -3290,7 +3290,7 @@ LoadMainMenuGfx:
 .loop:
 	ld a, c ; $56cf
 	add a, a ; $56d0
-	ld hl, Data_3b_57e0 ; $56d1
+	ld hl, MainMenuTable0 ; $56d1
 	add a, l ; $56d4
 	ld l, a ; $56d5
 	jr nc, .read ; $56d6
@@ -3309,7 +3309,7 @@ LoadMainMenuGfx:
 	pop de ; $56e7
 	pop bc ; $56e8
 	pop af ; $56e9
-	ld hl, Data_3b_57ec ; $56ea
+	ld hl, MainMenuTable1 ; $56ea
 	ld a, c ; $56ed
 	add a, a ; $56ee
 	add a, l ; $56ef
@@ -3412,7 +3412,7 @@ LoadMainMenuGfx:
 	pop af ; $57da
 	wram_bank ; $57db
 	ret ; $57df
-Data_3b_57e0:
+MainMenuTable0:
 	; $57e0, 12 bytes (bytes:2)
 	db $12, $3c ; 0x00
 	db $14, $3c ; 0x02
@@ -3420,7 +3420,7 @@ Data_3b_57e0:
 	db $18, $3c ; 0x06
 	db $1a, $3c ; 0x08
 	db $1c, $3c ; 0x0a
-Data_3b_57ec:
+MainMenuTable1:
 	; $57ec, 20 bytes (bytes:2)
 	db $00, $a8 ; 0x00
 	db $00, $a9 ; 0x02
@@ -3555,16 +3555,16 @@ MainMenuCursorSpriteTask:
 	ret ; $58b9
 MainMenuCursorSpriteTaskPtrs:
 	; $58ba, 18 bytes (records:2)
-	dw Data_3b_58cc ; record 0
-	dw Data_3b_58ed ; record 1
-	dw Data_3b_58cc ; record 2
-	dw Data_3b_58cc ; record 3
-	dw Data_3b_58cc ; record 4
-	dw Data_3b_58cc ; record 5
-	dw Data_3b_58cc ; record 6
-	dw Data_3b_58cc ; record 7
-	dw Data_3b_58cc ; record 8
-Data_3b_58cc:
+	dw MainMenuCursorSpriteTask0 ; record 0
+	dw MainMenuCursorSpriteTask1 ; record 1
+	dw MainMenuCursorSpriteTask0 ; record 2
+	dw MainMenuCursorSpriteTask0 ; record 3
+	dw MainMenuCursorSpriteTask0 ; record 4
+	dw MainMenuCursorSpriteTask0 ; record 5
+	dw MainMenuCursorSpriteTask0 ; record 6
+	dw MainMenuCursorSpriteTask0 ; record 7
+	dw MainMenuCursorSpriteTask0 ; record 8
+MainMenuCursorSpriteTask0:
 	; $58cc, 33 bytes (bytes:4)
 	db $10, $08, $00, $00 ; 0x00
 	db $10, $10, $02, $00 ; 0x04
@@ -3575,18 +3575,8 @@ Data_3b_58cc:
 	db $10, $38, $0c, $00 ; 0x18
 	db $10, $40, $0e, $00 ; 0x1c
 	db $80 ; 0x20
-Data_3b_58ed:
-	; $58ed, 37 bytes (bytes:4)
-	db $10, $08, $00, $00 ; 0x00
-	db $10, $10, $02, $00 ; 0x04
-	db $10, $18, $04, $00 ; 0x08
-	db $10, $20, $06, $00 ; 0x0c
-	db $10, $28, $08, $00 ; 0x10
-	db $10, $30, $0a, $00 ; 0x14
-	db $10, $38, $0c, $00 ; 0x18
-	db $10, $40, $0e, $00 ; 0x1c
-	db $10, $48, $10, $00 ; 0x20
-	db $80 ; 0x24
+MainMenuCursorSpriteTask1:
+	INCBIN "data/bank_03b/d_58ed.bin" ; $58ed, 37 bytes
 SpriteTemplate_3b_5912:
 	; $5912, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
@@ -3754,31 +3744,31 @@ LoadMainMenuItemPalette:
 	ret ; $5a69
 MainMenuItemPalettePtrs:
 	; $5a6a, 18 bytes (records:2)
-	dw Data_3b_5a7c ; record 0
-	dw Data_3b_5a8c ; record 1
-	dw Data_3b_5a94 ; record 2
-	dw Data_3b_5a7c ; record 3
-	dw Data_3b_5a7c ; record 4
-	dw Data_3b_5a7c ; record 5
-	dw Data_3b_5a9c ; record 6
-	dw Data_3b_5a84 ; record 7
-	dw Data_3b_5aa4 ; record 8
-Data_3b_5a7c:
+	dw MainMenuItemPalette0 ; record 0
+	dw MainMenuItemPalette2 ; record 1
+	dw MainMenuItemPalette3 ; record 2
+	dw MainMenuItemPalette0 ; record 3
+	dw MainMenuItemPalette0 ; record 4
+	dw MainMenuItemPalette0 ; record 5
+	dw MainMenuItemPalette4 ; record 6
+	dw MainMenuItemPalette1 ; record 7
+	dw MainMenuItemPalette5 ; record 8
+MainMenuItemPalette0:
 	; $5a7c, 8 bytes (bytes:8)
 	db $9f, $3e, $ff, $6b, $0a, $50, $00, $00 ; 0x00
-Data_3b_5a84:
+MainMenuItemPalette1:
 	; $5a84, 8 bytes (bytes:8)
 	db $cc, $3a, $ff, $6b, $40, $65, $00, $00 ; 0x00
-Data_3b_5a8c:
+MainMenuItemPalette2:
 	; $5a8c, 8 bytes (bytes:8)
 	db $9f, $5a, $ff, $6b, $1f, $00, $00, $00 ; 0x00
-Data_3b_5a94:
+MainMenuItemPalette3:
 	; $5a94, 8 bytes (bytes:8)
 	db $32, $1b, $ff, $6b, $e0, $15, $00, $00 ; 0x00
-Data_3b_5a9c:
+MainMenuItemPalette4:
 	; $5a9c, 8 bytes (bytes:8)
 	db $5f, $1a, $ff, $6b, $7c, $00, $00, $00 ; 0x00
-Data_3b_5aa4:
+MainMenuItemPalette5:
 	; $5aa4, 8 bytes (bytes:8)
 	db $96, $59, $ff, $6b, $12, $14, $00, $00 ; 0x00
 BuildSaveSlotSummaries:
@@ -4202,26 +4192,26 @@ InitMatchFormatOptions:
 	call FillMatchFormatOptionCell ; $5dad
 	ld b, $02 ; $5db0
 	call FlushMatchFormatRowToVram ; $5db2
-	ld hl, Data_3b_5dd4 ; $5db5
+	ld hl, MatchFormatOptionsPalettes0 ; $5db5
 	ld d, $04 ; $5db8
 	ld e, $01 ; $5dba
 	call LoadPaletteShadow ; $5dbc
-	ld hl, Data_3b_5ddc ; $5dbf
+	ld hl, MatchFormatOptionsPalettes1 ; $5dbf
 	ld d, $06 ; $5dc2
 	ld e, $01 ; $5dc4
 	call LoadPaletteShadow ; $5dc6
-	ld hl, Data_3b_5de4 ; $5dc9
+	ld hl, MatchFormatOptionsPalettes2 ; $5dc9
 	ld d, $07 ; $5dcc
 	ld e, $01 ; $5dce
 	call LoadPaletteShadow ; $5dd0
 	ret ; $5dd3
-Data_3b_5dd4:
+MatchFormatOptionsPalettes0:
 	; $5dd4, 8 bytes (bytes:8)
 	db $df, $02, $ff, $7f, $a0, $01, $00, $00 ; 0x00
-Data_3b_5ddc:
+MatchFormatOptionsPalettes1:
 	; $5ddc, 8 bytes (bytes:8)
 	db $df, $02, $ff, $7f, $1f, $01, $00, $00 ; 0x00
-Data_3b_5de4:
+MatchFormatOptionsPalettes2:
 	; $5de4, 8 bytes (bytes:8)
 	db $1f, $03, $ff, $7f, $40, $51, $00, $00 ; 0x00
 LoadMatchFormatGfx:
@@ -4232,7 +4222,7 @@ LoadMatchFormatGfx:
 .loop:
 	ld a, c ; $5df7
 	add a, a ; $5df8
-	ld hl, Data_3b_5ebd ; $5df9
+	ld hl, MatchFormatTable0 ; $5df9
 	add a, l ; $5dfc
 	ld l, a ; $5dfd
 	jr nc, .read ; $5dfe
@@ -4251,7 +4241,7 @@ LoadMatchFormatGfx:
 	pop de ; $5e0f
 	pop bc ; $5e10
 	pop af ; $5e11
-	ld hl, Data_3b_5ecb ; $5e12
+	ld hl, MatchFormatTable1 ; $5e12
 	ld a, c ; $5e15
 	add a, a ; $5e16
 	add a, l ; $5e17
@@ -4331,7 +4321,7 @@ LoadMatchFormatGfx:
 	pop af ; $5eb7
 	wram_bank ; $5eb8
 	ret ; $5ebc
-Data_3b_5ebd:
+MatchFormatTable0:
 	; $5ebd, 14 bytes (bytes:2)
 	db $62, $3c ; 0x00
 	db $64, $3c ; 0x02
@@ -4340,7 +4330,7 @@ Data_3b_5ebd:
 	db $6a, $3c ; 0x08
 	db $6c, $3c ; 0x0a
 	db $6e, $3c ; 0x0c
-Data_3b_5ecb:
+MatchFormatTable1:
 	; $5ecb, 14 bytes (bytes:2)
 	db $00, $a8 ; 0x00
 	db $00, $a9 ; 0x02
@@ -4573,7 +4563,7 @@ FillMatchFormatOptionCell:
 	or a, a ; $6066
 	jr z, .fill ; $6067
 	ld a, b ; $6069
-	ld hl, Data_3b_6093 ; $606a
+	ld hl, MatchFormatOptionCellTable ; $606a
 	add a, l ; $606d
 	ld l, a ; $606e
 	jr nc, .readWidth ; $606f
@@ -4601,7 +4591,7 @@ FillMatchFormatOptionCellTable:
 	dw $d561 ; record 4
 	dw $d567 ; record 5
 	dw $d56d ; record 6
-Data_3b_6093:
+MatchFormatOptionCellTable:
 	; $6093, 7 bytes (bytes:8)
 	db $0c, $0c, $0e, $0e, $0f, $0f, $0f ; 0x00
 FlushMatchFormatRowToVram:
@@ -4918,7 +4908,7 @@ LoadMinigameSelectGfx:
 	push bc ; $6306
 	ld a, c ; $6307
 	add a, a ; $6308
-	ld hl, Data_3b_63f6 ; $6309
+	ld hl, MinigameSelectTable ; $6309
 	add a, l ; $630c
 	ld l, a ; $630d
 	jr nc, .read ; $630e
@@ -5018,7 +5008,7 @@ LoadMinigameSelectGfx:
 	db $6a, $3c ; 0x08
 	db $6c, $3c ; 0x0a
 	db $6e, $3c ; 0x0c
-Data_3b_63f6:
+MinigameSelectTable:
 	; $63f6, 20 bytes (bytes:2)
 	db $80, $b6 ; 0x00
 	db $10, $b7 ; 0x02
@@ -5412,7 +5402,7 @@ GetUnlockedStarCharAtGridSlot:
 	ret z ; $66c0
 	ld d, a ; $66c1
 	sub a, $1a ; $66c2
-	ld hl, Data_3b_66d8 ; $66c4
+	ld hl, UnlockedStarCharAtGridSlotTable ; $66c4
 	add a, l ; $66c7
 	ld l, a ; $66c8
 	jr nc, .readMask ; $66c9
@@ -5427,11 +5417,11 @@ GetUnlockedStarCharAtGridSlot:
 .unlocked:
 	ld a, d ; $66d6
 	ret ; $66d7
-Data_3b_66d8:
+UnlockedStarCharAtGridSlotTable:
 	; $66d8, 6 bytes (bytes:8)
 	db $01, $02, $04, $08, $10, $20 ; 0x00
 GetStarCharAtGridSlot:
-	ld hl, Data_3b_66e9 ; $66de
+	ld hl, StarCharAtGridSlotTable ; $66de
 	ld a, c ; $66e1
 	add a, l ; $66e2
 	ld l, a ; $66e3
@@ -5440,7 +5430,7 @@ GetStarCharAtGridSlot:
 .read:
 	ld a, [hl] ; $66e7
 	ret ; $66e8
-Data_3b_66e9:
+StarCharAtGridSlotTable:
 	; $66e9, 9 bytes (bytes:3)
 	db $1a, $17, $1f ; 0x00
 	db $19, $1c, $18 ; 0x03
@@ -6001,19 +5991,19 @@ LoadSavedDataSourceCellPalette:
 	ret ; $6b60
 SavedDataSourceCellPalettePtrs:
 	; $6b61, 18 bytes (records:2)
-	dw Data_3b_6b73 ; record 0
-	dw Data_3b_6b73 ; record 1
-	dw Data_3b_6b73 ; record 2
-	dw Data_3b_6b7b ; record 3
-	dw Data_3b_6b73 ; record 4
-	dw Data_3b_6b73 ; record 5
-	dw Data_3b_6b73 ; record 6
-	dw Data_3b_6b73 ; record 7
-	dw Data_3b_6b73 ; record 8
-Data_3b_6b73:
+	dw SavedDataSourceCellPalette0 ; record 0
+	dw SavedDataSourceCellPalette0 ; record 1
+	dw SavedDataSourceCellPalette0 ; record 2
+	dw SavedDataSourceCellPalette1 ; record 3
+	dw SavedDataSourceCellPalette0 ; record 4
+	dw SavedDataSourceCellPalette0 ; record 5
+	dw SavedDataSourceCellPalette0 ; record 6
+	dw SavedDataSourceCellPalette0 ; record 7
+	dw SavedDataSourceCellPalette0 ; record 8
+SavedDataSourceCellPalette0:
 	; $6b73, 8 bytes (bytes:8)
 	db $88, $7a, $ff, $6b, $00, $7d, $00, $00 ; 0x00
-Data_3b_6b7b:
+SavedDataSourceCellPalette1:
 	; $6b7b, 8 bytes (bytes:8)
 	db $9f, $5a, $ff, $6b, $1f, $00, $00, $00 ; 0x00
 DrawSavedDataSourceCaption:
@@ -6431,7 +6421,7 @@ MoveSavedDataPickerCursor:
 	jr .done ; $6ed5
 .checkMenuCursorX3:
 	ld a, [wMenuCursorX] ; $6ed7
-	ld hl, Data_3b_6f56 ; $6eda
+	ld hl, SavedDataPickerCursorTable0 ; $6eda
 	add a, l ; $6edd
 	ld l, a ; $6ede
 	jr nc, .read ; $6edf
@@ -6492,7 +6482,7 @@ MoveSavedDataPickerCursor:
 	jr .done ; $6f38
 .checkMenuCursorX6:
 	ld a, [wMenuCursorX] ; $6f3a
-	ld hl, Data_3b_6f59 ; $6f3d
+	ld hl, SavedDataPickerCursorTable1 ; $6f3d
 	add a, l ; $6f40
 	ld l, a ; $6f41
 	jr nc, .readB ; $6f42
@@ -6507,12 +6497,12 @@ MoveSavedDataPickerCursor:
 	jr .done ; $6f53
 .done:
 	ret ; $6f55
-Data_3b_6f56:
+SavedDataPickerCursorTable0:
 	; $6f56, 3 bytes (bytes:8)
 	db $00, $01, $01 ; 0x00
-Data_3b_6f59:
-	; $6f59, 2 bytes (bytes:8)
-	db $00, $02 ; 0x00
+SavedDataPickerCursorTable1:
+	db $00 ; $6f59
+	db $02 ; $6f5a
 EraseSavedDataCursorSpriteTask:
 	farcall TickMenuBgScroll ; $6f5b
 	ld c, $03 ; $6f5e
@@ -6710,19 +6700,19 @@ LoadEraseSavedDataCellPalette:
 	ret ; $70dd
 EraseSavedDataCellPalettePtrs:
 	; $70de, 18 bytes (records:2)
-	dw Data_3b_70f0 ; record 0
-	dw Data_3b_70f0 ; record 1
-	dw Data_3b_70f0 ; record 2
-	dw Data_3b_70f8 ; record 3
-	dw Data_3b_70f0 ; record 4
-	dw Data_3b_70f0 ; record 5
-	dw Data_3b_70f0 ; record 6
-	dw Data_3b_70f0 ; record 7
-	dw Data_3b_70f0 ; record 8
-Data_3b_70f0:
+	dw SavedDataCellPalette0 ; record 0
+	dw SavedDataCellPalette0 ; record 1
+	dw SavedDataCellPalette0 ; record 2
+	dw SavedDataCellPalette1 ; record 3
+	dw SavedDataCellPalette0 ; record 4
+	dw SavedDataCellPalette0 ; record 5
+	dw SavedDataCellPalette0 ; record 6
+	dw SavedDataCellPalette0 ; record 7
+	dw SavedDataCellPalette0 ; record 8
+SavedDataCellPalette0:
 	; $70f0, 8 bytes (bytes:8)
 	db $9f, $5a, $ff, $6b, $1f, $00, $00, $00 ; 0x00
-Data_3b_70f8:
+SavedDataCellPalette1:
 	; $70f8, 8 bytes (bytes:8)
 	db $cc, $3a, $ff, $6b, $40, $65, $00, $00 ; 0x00
 DrawEraseSavedDataCaption:
@@ -6895,7 +6885,7 @@ LoadN64RecordTypeGfx:
 .loop:
 	ld a, c ; $724e
 	add a, a ; $724f
-	ld hl, Data_3b_72e0 ; $7250
+	ld hl, N64RecordTypeTable0 ; $7250
 	add a, l ; $7253
 	ld l, a ; $7254
 	jr nc, .read ; $7255
@@ -6914,7 +6904,7 @@ LoadN64RecordTypeGfx:
 	pop de ; $7266
 	pop bc ; $7267
 	pop af ; $7268
-	ld hl, Data_3b_72e6 ; $7269
+	ld hl, N64RecordTypeTable1 ; $7269
 	ld a, c ; $726c
 	add a, a ; $726d
 	add a, l ; $726e
@@ -6974,12 +6964,12 @@ LoadN64RecordTypeGfx:
 	pop af ; $72da
 	wram_bank ; $72db
 	ret ; $72df
-Data_3b_72e0:
+N64RecordTypeTable0:
 	; $72e0, 6 bytes (bytes:2)
 	db $78, $3c ; 0x00
 	db $7a, $3c ; 0x02
 	db $7c, $3c ; 0x04
-Data_3b_72e6:
+N64RecordTypeTable1:
 	; $72e6, 6 bytes (bytes:2)
 	db $00, $a8 ; 0x00
 	db $00, $a9 ; 0x02
@@ -7208,22 +7198,22 @@ LoadN64RecordTypeCellPalette:
 	ret ; $746f
 N64RecordTypeCellPalettePtrs:
 	; $7470, 18 bytes (records:2)
-	dw Data_3b_7482 ; record 0
-	dw Data_3b_7492 ; record 1
-	dw Data_3b_748a ; record 2
-	dw Data_3b_7482 ; record 3
-	dw Data_3b_7482 ; record 4
-	dw Data_3b_7482 ; record 5
-	dw Data_3b_7482 ; record 6
-	dw Data_3b_7482 ; record 7
-	dw Data_3b_7482 ; record 8
-Data_3b_7482:
+	dw N64RecordTypeCellPalette0 ; record 0
+	dw N64RecordTypeCellPalette2 ; record 1
+	dw N64RecordTypeCellPalette1 ; record 2
+	dw N64RecordTypeCellPalette0 ; record 3
+	dw N64RecordTypeCellPalette0 ; record 4
+	dw N64RecordTypeCellPalette0 ; record 5
+	dw N64RecordTypeCellPalette0 ; record 6
+	dw N64RecordTypeCellPalette0 ; record 7
+	dw N64RecordTypeCellPalette0 ; record 8
+N64RecordTypeCellPalette0:
 	; $7482, 8 bytes (bytes:8)
 	db $9f, $3e, $ff, $6b, $4a, $50, $00, $00 ; 0x00
-Data_3b_748a:
+N64RecordTypeCellPalette1:
 	; $748a, 8 bytes (bytes:8)
 	db $cc, $3a, $ff, $6b, $40, $65, $00, $00 ; 0x00
-Data_3b_7492:
+N64RecordTypeCellPalette2:
 	; $7492, 8 bytes (bytes:8)
 	db $32, $1b, $ff, $6b, $e0, $15, $00, $00 ; 0x00
 DrawN64RecordTypeCaption:
@@ -7317,7 +7307,7 @@ LoadN64TransferItemGfx:
 .loop:
 	ld a, c ; $755d
 	add a, a ; $755e
-	ld hl, Data_3b_75fc ; $755f
+	ld hl, N64TransferItemTable0 ; $755f
 	add a, l ; $7562
 	ld l, a ; $7563
 	jr nc, .read ; $7564
@@ -7336,7 +7326,7 @@ LoadN64TransferItemGfx:
 	pop de ; $7575
 	pop bc ; $7576
 	pop af ; $7577
-	ld hl, Data_3b_7604 ; $7578
+	ld hl, N64TransferItemTable1 ; $7578
 	ld a, c ; $757b
 	add a, a ; $757c
 	add a, l ; $757d
@@ -7401,13 +7391,13 @@ LoadN64TransferItemGfx:
 	pop af ; $75f6
 	wram_bank ; $75f7
 	ret ; $75fb
-Data_3b_75fc:
+N64TransferItemTable0:
 	; $75fc, 8 bytes (bytes:2)
 	db $02, $3d ; 0x00
 	db $06, $3d ; 0x02
 	db $00, $3d ; 0x04
 	db $04, $3d ; 0x06
-Data_3b_7604:
+N64TransferItemTable1:
 	; $7604, 8 bytes (bytes:2)
 	db $00, $a8 ; 0x00
 	db $00, $a9 ; 0x02
@@ -7477,25 +7467,25 @@ LoadN64TransferItemCellPalette:
 	ret ; $7692
 N64TransferItemCellPalettePtrs:
 	; $7693, 18 bytes (records:2)
-	dw Data_3b_76a5 ; record 0
-	dw Data_3b_76bd ; record 1
-	dw Data_3b_76ad ; record 2
-	dw Data_3b_76b5 ; record 3
-	dw Data_3b_76b5 ; record 4
-	dw Data_3b_76a5 ; record 5
-	dw Data_3b_76a5 ; record 6
-	dw Data_3b_76a5 ; record 7
-	dw Data_3b_76a5 ; record 8
-Data_3b_76a5:
+	dw N64TransferItemCellPalette0 ; record 0
+	dw N64TransferItemCellPalette3 ; record 1
+	dw N64TransferItemCellPalette1 ; record 2
+	dw N64TransferItemCellPalette2 ; record 3
+	dw N64TransferItemCellPalette2 ; record 4
+	dw N64TransferItemCellPalette0 ; record 5
+	dw N64TransferItemCellPalette0 ; record 6
+	dw N64TransferItemCellPalette0 ; record 7
+	dw N64TransferItemCellPalette0 ; record 8
+N64TransferItemCellPalette0:
 	; $76a5, 8 bytes (bytes:8)
 	db $9f, $5a, $ff, $6b, $1f, $00, $00, $00 ; 0x00
-Data_3b_76ad:
+N64TransferItemCellPalette1:
 	; $76ad, 8 bytes (bytes:8)
 	db $cc, $3a, $ff, $6b, $40, $65, $00, $00 ; 0x00
-Data_3b_76b5:
+N64TransferItemCellPalette2:
 	; $76b5, 8 bytes (bytes:8)
 	db $ff, $29, $ff, $6b, $4a, $50, $00, $00 ; 0x00
-Data_3b_76bd:
+N64TransferItemCellPalette3:
 	; $76bd, 8 bytes (bytes:8)
 	db $bf, $02, $ff, $6b, $57, $05, $00, $00 ; 0x00
 DrawN64TransferItemCaption:
@@ -7718,21 +7708,21 @@ WriteBracketSinglesNames:
 	ret ; $7888
 WriteBracketSinglesNamesPtrs:
 	; $7889, 10 bytes (records:2)
-	dw Data_3b_7893 ; record 0
-	dw Data_3b_7893 ; record 1
-	dw Data_3b_7897 ; record 2
-	dw Data_3b_789b ; record 3
-	dw Data_3b_789f ; record 4
-Data_3b_7893:
+	dw BracketSinglesNames0 ; record 0
+	dw BracketSinglesNames0 ; record 1
+	dw BracketSinglesNames1 ; record 2
+	dw BracketSinglesNames2 ; record 3
+	dw BracketSinglesNames3 ; record 4
+BracketSinglesNames0:
 	; $7893, 4 bytes (bytes:4)
 	db $00, $01, $02, $03 ; 0x00
-Data_3b_7897:
+BracketSinglesNames1:
 	; $7897, 4 bytes (bytes:4)
 	db $01, $00, $02, $03 ; 0x00
-Data_3b_789b:
+BracketSinglesNames2:
 	; $789b, 4 bytes (bytes:4)
 	db $01, $02, $00, $03 ; 0x00
-Data_3b_789f:
+BracketSinglesNames3:
 	; $789f, 4 bytes (bytes:4)
 	db $01, $02, $03, $00 ; 0x00
 WriteBracketEntrantName:
@@ -7849,7 +7839,7 @@ HighlightBracketPlayerRow:
 	ld h, $05 ; $795e
 	farcall FillTilemapRect ; $7960
 	ld a, [$d801] ; $7963
-	ld hl, Data_3b_79c0 ; $7966
+	ld hl, BracketPlayerRowTable0 ; $7966
 	add a, a ; $7969
 	add a, l ; $796a
 	ld l, a ; $796b
@@ -7871,7 +7861,7 @@ HighlightBracketPlayerRow:
 	ret ; $7984
 .nonZero:
 	ld a, [$d801] ; $7985
-	ld hl, Data_3b_79ca ; $7988
+	ld hl, BracketPlayerRowTable1 ; $7988
 	add a, a ; $798b
 	add a, l ; $798c
 	ld l, a ; $798d
@@ -7886,7 +7876,7 @@ HighlightBracketPlayerRow:
 	ld h, $05 ; $7998
 	farcall FillTilemapRect ; $799a
 	ld a, [$d801] ; $799d
-	ld hl, Data_3b_79d0 ; $79a0
+	ld hl, BracketPlayerRowTable2 ; $79a0
 	add a, a ; $79a3
 	add a, l ; $79a4
 	ld l, a ; $79a5
@@ -7908,36 +7898,25 @@ HighlightBracketPlayerRowTable:
 	dw $d549 ; record 2
 	dw $d589 ; record 3
 	dw $d5c9 ; record 4
-Data_3b_79c0:
-	; $79c0, 10 bytes (records:2)
-	dw $0000 ; record 0
-	dw $d525 ; record 1
-	dw $d565 ; record 2
-	dw $d5a5 ; record 3
-	dw $d5e5 ; record 4
-Data_3b_79ca:
-	; $79ca, 6 bytes (records:2)
-	dw $0000 ; record 0
-	dw $d509 ; record 1
-	dw $d589 ; record 2
-Data_3b_79d0:
-	; $79d0, 6 bytes (records:2)
-	dw $0000 ; record 0
-	dw $d525 ; record 1
-	dw $d5a5 ; record 2
+BracketPlayerRowTable0:
+	INCBIN "data/bank_03b/d_79c0.bin" ; $79c0, 10 bytes
+BracketPlayerRowTable1:
+	INCBIN "data/bank_03b/d_79ca.bin" ; $79ca, 6 bytes
+BracketPlayerRowTable2:
+	INCBIN "data/bank_03b/d_79d0.bin" ; $79d0, 6 bytes
 BracketHighlightBlinkTask:
 	ld hl, $79e9 ; $79d6
 	ldh a, [hVBlankCounter] ; $79d9
 	and a, $10 ; $79db
 	jr z, .maskClear ; $79dd
-	ld hl, Data_3b_79f1 ; $79df
+	ld hl, BracketHighlightBlinkTaskPalettes ; $79df
 .maskClear:
 	ld de, $0501 ; $79e2
 	call LoadPalettesImmediate ; $79e5
 	ret ; $79e8
 	; $79e9, 8 bytes (bytes:8)
 	db $f9, $67, $00, $00, $1f, $3e, $ff, $33 ; 0x00
-Data_3b_79f1:
+BracketHighlightBlinkTaskPalettes:
 	; $79f1, 8 bytes (bytes:8)
 	db $f9, $67, $00, $00, $98, $00, $1f, $03 ; 0x00
 RunStarCharExhibResults:
@@ -8305,7 +8284,7 @@ BuildStarChartColumnList:
 	ld b, $10 ; $7ce4
 	jr .step2 ; $7ce6
 .step:
-	ld hl, Data_3b_7d15 ; $7ce8
+	ld hl, StarChartColumnTable ; $7ce8
 	ld a, c ; $7ceb
 	add a, l ; $7cec
 	ld l, a ; $7ced
@@ -8338,7 +8317,7 @@ StarChartColumnListTable:
 	dw $01a0 ; record 6
 	dw $0140 ; record 7
 	dw $0180 ; record 8
-Data_3b_7d15:
+StarChartColumnTable:
 	; $7d15, 9 bytes (bytes:3)
 	db $00, $01, $02 ; 0x00
 	db $03, $04, $05 ; 0x03

@@ -544,7 +544,7 @@ RunMinigameSelectMenu:
 	farcall RunPagedTextMenu ; $4645
 	cp a, $ff ; $4648
 	jp z, RunDoublesMatchListMenu.done ; $464a
-	ld de, Data_10_4684 ; $464d
+	ld de, MinigameSelectMenuTable ; $464d
 	add a, e ; $4650
 	ld e, a ; $4651
 	jr nc, .runPagedTextMenu ; $4652
@@ -568,7 +568,7 @@ RunMinigameSelectMenu:
 	ld [$c294], a ; $467d
 	ld [wStoryModeExitLocationRequest], a ; $4680
 	ret ; $4683
-Data_10_4684:
+MinigameSelectMenuTable:
 	; $4684, 9 bytes (bytes:16)
 	db $1c, $1d, $1e, $1f, $20, $21, $22, $23, $24 ; 0x00
 Test2MapScripts_10:
@@ -1187,7 +1187,7 @@ MainMenuInitScript_10:
 	call SetMusicMuted ; $4eca
 	ret ; $4ecd
 ApplyMatchTypeSettings:
-	ld hl, Data_10_4f08 ; $4ece
+	ld hl, MatchTypeSettingsTable0 ; $4ece
 	ld a, [wMatchFormatSets] ; $4ed1
 	add a, l ; $4ed4
 	ld l, a ; $4ed5
@@ -1196,7 +1196,7 @@ ApplyMatchTypeSettings:
 .readSets:
 	ld a, [hl] ; $4ed9
 	ld [wMatchTypeNumberOfSets], a ; $4eda
-	ld hl, Data_10_4f0b ; $4edd
+	ld hl, MatchTypeSettingsTable1 ; $4edd
 	ld a, [wMatchFormatGames] ; $4ee0
 	add a, l ; $4ee3
 	ld l, a ; $4ee4
@@ -1219,12 +1219,12 @@ ApplyMatchTypeSettings:
 	clear_flag FLAG_DOUBLES ; $4f04
 .done:
 	ret ; $4f07
-Data_10_4f08:
+MatchTypeSettingsTable0:
 	; $4f08, 3 bytes (bytes:16)
 	db $01, $03, $05 ; 0x00
-Data_10_4f0b:
-	; $4f0b, 2 bytes (bytes:16)
-	db $02, $06 ; 0x00
+MatchTypeSettingsTable1:
+	db $02 ; $4f0b
+	db $06 ; $4f0c
 RunTitleAndMainMenuLoop:
 	call ClearFrameTasks ; $4f0d
 	sound $00 ; $4f10
@@ -2084,7 +2084,7 @@ Func_10_54ec:
 	ld [wStoryModeExitLocationRequest], a ; $56e5
 	ret ; $56e8
 GetMinigameDrillId:
-	ld hl, Data_10_56f3 ; $56e9
+	ld hl, MinigameDrillIdTable ; $56e9
 	add a, l ; $56ec
 	ld l, a ; $56ed
 	jr nc, .read ; $56ee
@@ -2092,7 +2092,7 @@ GetMinigameDrillId:
 .read:
 	ld a, [hl] ; $56f1
 	ret ; $56f2
-Data_10_56f3:
+MinigameDrillIdTable:
 	; $56f3, 9 bytes (bytes:16)
 	db $1c, $1d, $1e, $1f, $20, $21, $22, $23, $24 ; 0x00
 CopyExhibitionCharSlotIds:

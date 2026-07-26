@@ -18,32 +18,32 @@ MatchGfxTilesA_28:
 	INCBIN "data/bank_028/d_45e0.bin" ; $45e0, 1472 bytes
 MatchGfxPalettesA_28:
 	INCLUDE "data/bank_028/palettes_4ba0.asm" ; $4ba0, 64 bytes (palettes)
-Data_28_4be0:
-	INCLUDE "data/bank_028/palettes_4be0.asm" ; $4be0, 16 bytes (palettes)
+MatchGraphicsPalettes:
+	INCBIN "data/bank_028/d_4be0.bin" ; $4be0, 16 bytes
 MatchGfxMapsA_28:
 	INCBIN "data/bank_028/d_4bf0.bin" ; $4bf0, 4672 bytes
 MatchGfxPalettesB_28:
 	INCLUDE "data/bank_028/palettes_5e30.asm" ; $5e30, 8 bytes (palettes)
-Data_28_5e38:
-	INCLUDE "data/bank_028/palettes_5e38.asm" ; $5e38, 24 bytes (palettes)
-Data_28_5e50:
-	INCLUDE "data/bank_028/palettes_5e50.asm" ; $5e50, 24 bytes (palettes)
-Data_28_5e68:
-	INCLUDE "data/bank_028/palettes_5e68.asm" ; $5e68, 16 bytes (palettes)
-Data_28_5e78:
-	INCLUDE "data/bank_028/palettes_5e78.asm" ; $5e78, 8 bytes (palettes)
-Data_28_5e80:
-	INCLUDE "data/bank_028/palettes_5e80.asm" ; $5e80, 24 bytes (palettes)
-Data_28_5e98:
-	INCLUDE "data/bank_028/palettes_5e98.asm" ; $5e98, 8 bytes (palettes)
-Data_28_5ea0:
-	INCLUDE "data/bank_028/palettes_5ea0.asm" ; $5ea0, 16 bytes (palettes)
+MatchVariantGraphicsPalettes0:
+	INCBIN "data/bank_028/d_5e38.bin" ; $5e38, 24 bytes
+MatchVariantGraphicsPalettes1:
+	INCBIN "data/bank_028/d_5e50.bin" ; $5e50, 24 bytes
+MatchVariantGraphicsPalettes2:
+	INCBIN "data/bank_028/d_5e68.bin" ; $5e68, 16 bytes
+MatchVariantGraphicsPalettes3:
+	INCBIN "data/bank_028/d_5e78.bin" ; $5e78, 8 bytes
+MatchVariantGraphicsPalettes4:
+	INCBIN "data/bank_028/d_5e80.bin" ; $5e80, 24 bytes
+MatchVariantGraphicsPalettes5:
+	INCBIN "data/bank_028/d_5e98.bin" ; $5e98, 8 bytes
+MatchVariantGraphicsPalettes6:
+	INCBIN "data/bank_028/d_5ea0.bin" ; $5ea0, 16 bytes
 LoadMatchGraphics:
 	wram_bank $01 ; $5eb0
 	ld hl, MatchGfxPalettesA_28 ; $5eb6
 	ld de, $0803 ; $5eb9
 	call LoadPaletteShadow ; $5ebc
-	ld hl, Data_28_4be0 ; $5ebf
+	ld hl, MatchGraphicsPalettes ; $5ebf
 	ld de, $0002 ; $5ec2
 	call LoadPaletteShadow ; $5ec5
 	ld hl, MatchGraphicsGfx ; $5ec8
@@ -103,7 +103,7 @@ LoadMatchVariantGraphics:
 	ld hl, MatchGfxPalettesB_28 ; $5f3a
 	ld de, $0b01 ; $5f3d
 	call LoadPaletteShadow ; $5f40
-	ld hl, Data_28_5e38 ; $5f43
+	ld hl, MatchVariantGraphicsPalettes0 ; $5f43
 	ld de, $0d03 ; $5f46
 	call LoadPaletteShadow ; $5f49
 	ld hl, $4d30 ; $5f4c
@@ -120,7 +120,7 @@ LoadMatchVariantGraphics:
 	call LoadMatchSharedTiles_28 ; $5f66
 	ret ; $5f69
 .loadPaletteShadow2:
-	ld hl, Data_28_5ea0 ; $5f6a
+	ld hl, MatchVariantGraphicsPalettes6 ; $5f6a
 	ld de, $0e02 ; $5f6d
 	call LoadPaletteShadow ; $5f70
 	ld hl, $5470 ; $5f73
@@ -130,7 +130,7 @@ LoadMatchVariantGraphics:
 	call LoadMatchSharedTiles_28 ; $5f7e
 	ret ; $5f81
 .loadPaletteShadow3:
-	ld hl, Data_28_5e68 ; $5f82
+	ld hl, MatchVariantGraphicsPalettes2 ; $5f82
 	ld de, $0e02 ; $5f85
 	call LoadPaletteShadow ; $5f88
 	ld hl, $5470 ; $5f8b
@@ -140,7 +140,7 @@ LoadMatchVariantGraphics:
 	call LoadMatchSharedTiles_28 ; $5f96
 	ret ; $5f99
 .loadPaletteShadow4:
-	ld hl, Data_28_5e78 ; $5f9a
+	ld hl, MatchVariantGraphicsPalettes3 ; $5f9a
 	ld de, $0f01 ; $5f9d
 	call LoadPaletteShadow ; $5fa0
 	ld hl, $5490 ; $5fa3
@@ -158,10 +158,10 @@ LoadMatchVariantGraphics:
 	ld de, $a200 ; $5fc0
 	ld c, $08 ; $5fc3
 	call QueueVRAMCopy ; $5fc5
-	ld hl, Data_28_5e80 ; $5fc8
+	ld hl, MatchVariantGraphicsPalettes4 ; $5fc8
 	ld de, $0e01 ; $5fcb
 	call LoadPaletteShadow ; $5fce
-	ld hl, Data_28_5e98 ; $5fd1
+	ld hl, MatchVariantGraphicsPalettes5 ; $5fd1
 	ld de, $0f01 ; $5fd4
 	call LoadPaletteShadow ; $5fd7
 	ld hl, $5470 ; $5fda
@@ -171,7 +171,7 @@ LoadMatchVariantGraphics:
 	call LoadMatchSharedTiles_28 ; $5fe5
 	ret ; $5fe8
 .loadPaletteShadow5:
-	ld hl, Data_28_5e50 ; $5fe9
+	ld hl, MatchVariantGraphicsPalettes1 ; $5fe9
 	ld de, $0d03 ; $5fec
 	call LoadPaletteShadow ; $5fef
 	ld hl, $4e30 ; $5ff2
@@ -185,7 +185,7 @@ LoadMatchVariantGraphics:
 	call LoadMatchSharedTiles_28 ; $6008
 	ret ; $600b
 .loadPaletteShadow6:
-	ld hl, Data_28_5e50 ; $600c
+	ld hl, MatchVariantGraphicsPalettes1 ; $600c
 	ld de, $0d03 ; $600f
 	call LoadPaletteShadow ; $6012
 	ld hl, $4e30 ; $6015
@@ -307,7 +307,7 @@ LoadMatchStoryGfx:
 	ld hl, MatchGfxPalettesC_28 ; $60cf
 	ld de, $0902 ; $60d2
 	call LoadPaletteShadow ; $60d5
-	ld hl, Data_28_6d54 ; $60d8
+	ld hl, MatchStoryGfxPalettes ; $60d8
 	ld de, $0002 ; $60db
 	call LoadPaletteShadow ; $60de
 	ld hl, MatchGfxTilesB_28 ; $60e1
@@ -385,6 +385,6 @@ MatchGfxTilesB_28:
 	INCBIN "data/bank_028/d_6180.bin" ; $6180, 2972 bytes
 MatchGfxPalettesC_28:
 	INCLUDE "data/bank_028/palettes_6d1c.asm" ; $6d1c, 56 bytes (palettes)
-Data_28_6d54:
-	INCLUDE "data/bank_028/palettes_6d54.asm" ; $6d54, 16 bytes (palettes)
+MatchStoryGfxPalettes:
+	INCBIN "data/bank_028/d_6d54.bin" ; $6d54, 16 bytes
 	; $6d64, 4764 bytes fill to bank end (linker-padded)

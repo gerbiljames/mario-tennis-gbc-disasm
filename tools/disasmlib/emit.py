@@ -553,14 +553,24 @@ class Emitter:
 
     def _data_run_end(self, run_start, bank_end):
         """The run ends at the next emitted structure. A curated label inside a
-        data run splits the run so the symbol anchors its own blob/segment."""
+        data run splits the run so the symbol anchors its own blob/segment --
+        unless the run renders itself in pieces, which places the label without
+        losing the spec for the bytes after it."""
+        natural = self._scan_run_end(run_start, bank_end, False)
+        if self._splits_itself(run_start, natural):
+            return natural
+        return self._scan_run_end(run_start, bank_end, True)
+
+    def _scan_run_end(self, run_start, bank_end, stop_at_cuts):
         off = run_start + 1
         while off < bank_end and off not in self.dis.instrs \
                 and off not in self.table_entries \
                 and off not in self.data_entries \
                 and off not in self.jt_entries and off not in self.data_marks \
                 and off not in self.dis.ptr_words \
-                and not (off in self.labels and self.labels[off] in self.curated):
+                and not (off in self.labels
+                         and self.labels[off] in self.curated) \
+                and not (stop_at_cuts and off in self.ptr_data_targets):
             off += 1
         return off
 
@@ -665,11 +675,11 @@ class Emitter:
                     or (b == 0x00 and k - j >= 256):
                 break
             j = k
-        # A declared table cuts itself at its interior pointer targets (see
-        # _emit_spec_pieces), so ending the segment at one would truncate the
-        # table and leave the remainder without its spec.
+        # A declared table cuts itself at its interior labels and pointer
+        # targets (see _emit_spec_pieces), so ending the segment at one would
+        # truncate the table and leave the remainder without its spec.
         sources = [self.data_tables, self.labels]
-        if seg not in self.data_tables:
+        if not self._splits_itself(seg, j):
             sources.append(self.ptr_data_targets)
         stops = [min((t for t in src if seg < t < j), default=0)
                  for src in sources]
@@ -777,8 +787,12 @@ class Emitter:
         spaces = rom[body:j].count(0x20)
         # A short run splits out of a string pool only when a curated label
         # names it, so one label per string can make a pointer table symbolic;
-        # the size floors still guard the unlabeled auto-detection.
-        named_string = seg in self.labels and 3 <= n < 32 and txt == n and letters
+        # the size floors still guard the unlabeled auto-detection. It must
+        # still look like a *string*: terminated, and more than one letter --
+        # otherwise naming a 5-byte row of tile ids (`bbebb`) turns a record
+        # table into prose.
+        named_string = (seg in self.labels and 3 <= n < 32 and txt == n
+                        and letters >= 2 and self.rom[j - 1] == 0)
         return bool(named_string or (n >= 32 and m >= 32 and txt >= m * 0.95
                                      and letters >= m // 3 and spaces >= m // 20))
 
@@ -883,12 +897,12 @@ class Emitter:
         return self.labels.get(
             off, f"Data_{off // BANK_SIZE:02x}_{offset_to_cpu(off):04x}")
 
-    def _cuts(self, start, end):
-        """The pointer targets strictly inside [start, end)."""
-        i = bisect.bisect_right(self.ptr_cuts, start)
+    @staticmethod
+    def _between(sorted_offsets, start, end):
+        i = bisect.bisect_right(sorted_offsets, start)
         out = []
-        while i < len(self.ptr_cuts) and self.ptr_cuts[i] < end:
-            out.append(self.ptr_cuts[i])
+        while i < len(sorted_offsets) and sorted_offsets[i] < end:
+            out.append(sorted_offsets[i])
             i += 1
         return out
 
@@ -896,10 +910,48 @@ class Emitter:
         """[start, end) as (from, to) pairs cut at every interior pointer
         target, so each one can anchor a label. A region whose rendering does
         not survive being cut (see is_splittable) stays in one piece."""
-        cuts = self._cuts(start, end) if (spec is None or is_splittable(spec)) \
-            else []
-        bounds = [start] + cuts + [end]
+        if spec is not None and not is_splittable(spec):
+            return [(start, end)]
+        cuts = set(self._between(self.ptr_cuts, start, end))
+        if spec is not None:
+            stride = self._stride(spec)
+            if stride:
+                # Mid-row cuts are not row boundaries; the pointer they came
+                # from falls back to a numeric operand (see run()).
+                cuts = {o for o in cuts if (o - start) % stride == 0}
+        bounds = [start] + sorted(cuts) + [end]
         return list(zip(bounds, bounds[1:]))
+
+    # The row size a spec's rendering repeats at. A cut that does not land on
+    # one is not a row boundary, which means the declaration does not really
+    # reach that far -- an over-running `palettes` run cut every 5 bytes would
+    # otherwise render 5-byte "palettes".
+    _STRIDES = {"palettes": 8, "text_ids": 2, "flag_ids": 2}
+
+    def _stride(self, spec):
+        # `bytes:N`/`tilemap:N` count display columns, not records -- their rows
+        # regroup around a cut -- so only a real record size constrains one.
+        kind, _, param = (spec or "").partition(":")
+        if kind == "records" and param.isdigit():
+            return int(param)
+        return self._STRIDES.get(kind)
+
+    def _splits_itself(self, start, end):
+        """True if the region [start, end) renders in pieces, so the run and
+        segment scans must not end at a label or pointer target inside it.
+        False when a cut would fall mid-row: the spec is then wrong about its
+        own extent, and ending the run there is right. A *curated* label always
+        ends the region -- a human naming an offset is the strongest available
+        statement that a new structure starts there, and carrying a spec past
+        one turned bank $1b's coordinate arrays into `records:2` pointers."""
+        spec = self.data_tables.get(start)
+        if not is_splittable(spec):
+            return False
+        stride = self._stride(spec)
+        if not stride:
+            return True
+        return all((o - start) % stride == 0
+                   for o in self._between(self.ptr_cuts, start, end))
 
     def _incbin(self, start, length, bank, prefix="d", note=""):
         """Register a blob in the manifest and return its INCBIN line."""

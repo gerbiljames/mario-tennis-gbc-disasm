@@ -1133,8 +1133,8 @@ GamePositionPtrs:
 	; $483f, 8 bytes (records:2)
 	dw GamePositionTables ; record 0
 	dw GamePositionTables ; record 1
-	dw Data_08_49b9 ; record 2
-	dw Data_08_4999 ; record 3
+	dw GamePosition1 ; record 2
+	dw GamePosition0 ; record 3
 FlipNearCharPosition:
 	ld b, $01 ; $4847
 	wram_bank $04 ; $4849
@@ -1199,8 +1199,8 @@ TiebreakPositionPtrs:
 	; $48e5, 8 bytes (records:2)
 	dw TiebreakPositionTables ; record 0
 	dw TiebreakPositionTables ; record 1
-	dw Data_08_4b59 ; record 2
-	dw Data_08_4a99 ; record 3
+	dw TiebreakPosition1 ; record 2
+	dw TiebreakPosition0 ; record 3
 LoadPositionRecord:
 	add a, a ; $48ed
 	add a, a ; $48ee
@@ -1277,13 +1277,13 @@ GamePositionTables:
 	db $03, $00, $09, $09, $01, $00, $09, $09 ; 0x08
 	db $03, $00, $09, $09, $00, $01, $09, $09 ; 0x10
 	db $00, $03, $09, $09, $01, $00, $09, $09 ; 0x18
-Data_08_4999:
+GamePosition0:
 	; $4999, 32 bytes (bytes:8)
 	db $00, $03, $01, $02, $00, $01, $02, $03 ; 0x00
 	db $03, $00, $02, $01, $01, $00, $03, $02 ; 0x08
 	db $02, $00, $03, $01, $02, $01, $00, $03 ; 0x10
 	db $00, $02, $01, $03, $01, $02, $03, $00 ; 0x18
-Data_08_49b9:
+GamePosition1:
 	; $49b9, 32 bytes (bytes:8)
 	db $00, $03, $09, $02, $00, $01, $09, $03 ; 0x00
 	db $03, $00, $09, $01, $01, $00, $09, $02 ; 0x08
@@ -1315,7 +1315,7 @@ TiebreakPositionTables:
 	db $02, $01, $09, $09, $01, $00, $09, $09 ; 0xa8
 	db $03, $00, $09, $09, $01, $00, $09, $09 ; 0xb0
 	db $02, $01, $09, $09, $00, $01, $09, $09 ; 0xb8
-Data_08_4a99:
+TiebreakPosition0:
 	; $4a99, 192 bytes (bytes:8)
 	db $00, $03, $01, $02, $00, $01, $02, $03 ; 0x00
 	db $00, $02, $01, $03, $03, $00, $01, $02 ; 0x08
@@ -1341,7 +1341,7 @@ Data_08_4a99:
 	db $03, $00, $02, $01, $03, $02, $01, $00 ; 0xa8
 	db $03, $01, $02, $00, $01, $02, $03, $00 ; 0xb0
 	db $02, $00, $03, $01, $00, $03, $02, $01 ; 0xb8
-Data_08_4b59:
+TiebreakPosition1:
 	; $4b59, 192 bytes (bytes:8)
 	db $00, $03, $09, $02, $00, $01, $09, $03 ; 0x00
 	db $01, $02, $09, $03, $01, $00, $09, $02 ; 0x08
@@ -8225,32 +8225,32 @@ AiServePressToss:
 	jp AiAdvancePhase ; $7a9a
 ServePressTossPtrs:
 	; $7a9d, 32 bytes (records:2)
-	dw Data_08_7abd ; record 0
-	dw Data_08_7ac5 ; record 1
-	dw Data_08_7acd ; record 2
-	dw Data_08_7ad5 ; record 3
-	dw Data_08_7acd ; record 4
-	dw Data_08_7acd ; record 5
-	dw Data_08_7acd ; record 6
-	dw Data_08_7acd ; record 7
-	dw Data_08_7acd ; record 8
-	dw Data_08_7acd ; record 9
-	dw Data_08_7acd ; record 10
-	dw Data_08_7acd ; record 11
-	dw Data_08_7acd ; record 12
-	dw Data_08_7acd ; record 13
-	dw Data_08_7acd ; record 14
-	dw Data_08_7acd ; record 15
-Data_08_7abd:
+	dw ServePressToss0 ; record 0
+	dw ServePressToss1 ; record 1
+	dw ServePressToss2 ; record 2
+	dw ServePressToss3 ; record 3
+	dw ServePressToss2 ; record 4
+	dw ServePressToss2 ; record 5
+	dw ServePressToss2 ; record 6
+	dw ServePressToss2 ; record 7
+	dw ServePressToss2 ; record 8
+	dw ServePressToss2 ; record 9
+	dw ServePressToss2 ; record 10
+	dw ServePressToss2 ; record 11
+	dw ServePressToss2 ; record 12
+	dw ServePressToss2 ; record 13
+	dw ServePressToss2 ; record 14
+	dw ServePressToss2 ; record 15
+ServePressToss0:
 	; $7abd, 8 bytes (bytes:8)
 	db $00, $00, $00, $00, $00, $00, $00, $00 ; 0x00
-Data_08_7ac5:
+ServePressToss1:
 	; $7ac5, 8 bytes (bytes:8)
 	db $00, $00, $00, $00, $00, $01, $01, $01 ; 0x00
-Data_08_7acd:
+ServePressToss2:
 	; $7acd, 8 bytes (bytes:8)
 	db $00, $00, $01, $01, $01, $01, $01, $01 ; 0x00
-Data_08_7ad5:
+ServePressToss3:
 	; $7ad5, 8 bytes (bytes:8)
 	db $01, $01, $01, $01, $01, $01, $01, $01 ; 0x00
 AiServeStrike:

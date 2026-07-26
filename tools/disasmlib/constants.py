@@ -6,9 +6,14 @@
 # pointer into the middle of one of these anchors a label there; every other
 # kind (bytecode, a table whose rows reference their own base, a decoded
 # header) has to stay whole, and a pointer into it stays numeric.
+#
+# `fill` and `pattern` are deliberately absent: they assert that one exact run
+# is padding, so a label inside one means the padding stopped there. Carrying
+# such a spec past a cut turned 1,472 bytes of bank $28 tile graphics into
+# `ds` runs -- wrong, and it would have inlined ROM content into the repo.
 SPLITTABLE_SPEC_KINDS = frozenset((
-    "bytes", "records", "tilemap", "palettes", "sound_data", "fill",
-    "pattern", "text_ids", "flag_ids",
+    "bytes", "records", "tilemap", "palettes", "sound_data",
+    "text_ids", "flag_ids",
 ))
 
 

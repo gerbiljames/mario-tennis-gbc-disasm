@@ -1040,7 +1040,7 @@ LoadExpScreenGfx:
 	ld de, $a800 ; $4870
 	ld c, $50 ; $4873
 	call QueueVRAMCopy ; $4875
-	ld hl, Data_1a_64e0 ; $4878
+	ld hl, ExpScreenGfxPalettes0 ; $4878
 	ld de, $0008 ; $487b
 	call LoadPalettesMasterOnly ; $487e
 	wram_bank $01 ; $4881
@@ -1050,45 +1050,45 @@ LoadExpScreenGfx:
 	ld a, [wStoryModeMainCharacterOverworldSprite] ; $488f
 	ld b, $00 ; $4892
 	wram_bank $01 ; $4894
-	ld hl, Data_1a_6680 ; $489a
+	ld hl, ExpScreenGfx6 ; $489a
 	ld de, $d000 ; $489d
 	call DecompressData ; $48a0
 	ld hl, $d000 ; $48a3
 	ld de, $ac00 ; $48a6
 	ld c, $04 ; $48a9
 	call QueueVRAMCopy ; $48ab
-	ld hl, Data_1a_66c8 ; $48ae
+	ld hl, ExpScreenGfx7 ; $48ae
 	ld de, $d000 ; $48b1
 	call DecompressData ; $48b4
 	ld hl, $d000 ; $48b7
 	ld de, $ac40 ; $48ba
 	ld c, $04 ; $48bd
 	call QueueVRAMCopy ; $48bf
-	ld hl, Data_1a_6711 ; $48c2
+	ld hl, ExpScreenGfxPalettes2 ; $48c2
 	ld de, $0901 ; $48c5
 	call LoadPalettesMasterOnly ; $48c8
 	pop hl ; $48cb
 	ld a, h ; $48cc
 	cp a, $01 ; $48cd
 	jr z, .processVRAMCopyQueues ; $48cf
-	ld hl, Data_1a_6650 ; $48d1
+	ld hl, ExpScreenGfx5 ; $48d1
 	ld de, $d000 ; $48d4
 	call DecompressData ; $48d7
 	ld hl, $d000 ; $48da
 	ld de, $ac80 ; $48dd
 	ld c, $02 ; $48e0
 	call QueueVRAMCopy ; $48e2
-	ld hl, Data_1a_6668 ; $48e5
+	ld hl, ExpScreenGfxPalettes1 ; $48e5
 	ld de, $0a01 ; $48e8
 	call LoadPalettesMasterOnly ; $48eb
 	jr .copyMemoryFast ; $48ee
 .processVRAMCopyQueues:
 	call ProcessVRAMCopyQueues ; $48f0
-	ld hl, Data_1a_6721 ; $48f3
+	ld hl, ExpScreenGfxPalettes3 ; $48f3
 	ld de, $0f01 ; $48f6
 	call LoadPalettesMasterOnly ; $48f9
 	wram_bank $01 ; $48fc
-	ld hl, Data_1a_6729 ; $4902
+	ld hl, ExpScreenGfx8 ; $4902
 	ld de, $de00 ; $4905
 	call DecompressData ; $4908
 	ld hl, $de00 ; $490b
@@ -2663,21 +2663,21 @@ StatChangeArrows4:
 	INCBIN "data/bank_01a/d_6474.bin" ; $6474, 16 bytes
 StatChangeArrows5:
 	INCBIN "data/bank_01a/d_6484.bin" ; $6484, 92 bytes
-Data_1a_64e0:
+ExpScreenGfxPalettes0:
 	INCBIN "data/bank_01a/d_64e0.bin" ; $64e0, 368 bytes
-Data_1a_6650:
+ExpScreenGfx5:
 	INCBIN "data/bank_01a/d_6650.bin" ; $6650, 24 bytes
-Data_1a_6668:
+ExpScreenGfxPalettes1:
 	INCBIN "data/bank_01a/d_6668.bin" ; $6668, 24 bytes
-Data_1a_6680:
+ExpScreenGfx6:
 	INCBIN "data/bank_01a/d_6680.bin" ; $6680, 72 bytes
-Data_1a_66c8:
+ExpScreenGfx7:
 	INCBIN "data/bank_01a/d_66c8.bin" ; $66c8, 73 bytes
-Data_1a_6711:
+ExpScreenGfxPalettes2:
 	INCBIN "data/bank_01a/d_6711.bin" ; $6711, 16 bytes
-Data_1a_6721:
+ExpScreenGfxPalettes3:
 	INCBIN "data/bank_01a/d_6721.bin" ; $6721, 8 bytes
-Data_1a_6729:
+ExpScreenGfx8:
 	INCBIN "data/bank_01a/d_6729.bin" ; $6729, 171 bytes
 RunDebugCharViewer:
 	xor a, a ; $67d4

@@ -1040,7 +1040,7 @@ ApplyStatModifierRow:
 CharStatClampPtrs_02:
 	; $46eb, 4 bytes (records:2)
 	dw CharStatClampData_02 ; record 0
-	dw Data_02_475f ; record 1
+	dw CharStatClamp ; record 1
 CharStatClampData_02:
 	; $46ef, 112 bytes (bytes:16)
 	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; 0x00
@@ -1050,7 +1050,7 @@ CharStatClampData_02:
 	db $00, $00, $02, $02, $ff, $ff, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; 0x40
 	db $00, $00, $ff, $ff, $03, $01, $01, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; 0x50
 	db $03, $00, $fe, $fe, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; 0x60
-Data_02_475f:
+CharStatClamp:
 	; $475f, 48 bytes (bytes:16)
 	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; 0x00
 	db $00, $00, $00, $00, $00, $00, $00, $fe, $fe, $fe, $fe, $00, $00, $00, $00, $00 ; 0x10
@@ -1103,9 +1103,9 @@ EquipData_02:
 EquipRecordPtrs_02:
 	; $47f2, 8 bytes (records:2)
 	dw EquipRecords_02 ; record 0
-	dw Data_02_486b ; record 1
-	dw Data_02_48dc ; record 2
-	dw Data_02_494d ; record 3
+	dw EquipRecord0 ; record 1
+	dw EquipRecord1 ; record 2
+	dw EquipRecord2 ; record 3
 EquipRecords_02:
 	; $47fa, 113 bytes (bytes:16)
 	db $01, $79, $00, $a0, $00, $99, $09, $0d, $00, $00, $00, $00, $00, $02, $05, $08 ; 0x00
@@ -1116,7 +1116,7 @@ EquipRecords_02:
 	db $0c, $0f, $12, $15, $1a, $fa, $fe, $01, $04, $07, $0a, $0e, $12, $18, $04, $07 ; 0x50
 	db $0a, $0d, $0f, $12, $15, $19, $1e, $03, $08, $0b, $0f, $12, $16, $1a, $1f, $26 ; 0x60
 	db $ff ; 0x70
-Data_02_486b:
+EquipRecord0:
 	; $486b, 113 bytes (bytes:16)
 	db $01, $80, $00, $a0, $00, $33, $09, $0e, $00, $00, $00, $00, $00, $04, $08, $0b ; 0x00
 	db $0e, $11, $14, $18, $1c, $22, $03, $07, $09, $0c, $0f, $11, $15, $19, $1e, $05 ; 0x10
@@ -1126,7 +1126,7 @@ Data_02_486b:
 	db $0e, $11, $14, $18, $1d, $04, $07, $09, $0b, $0d, $10, $12, $16, $1a, $fc, $01 ; 0x50
 	db $05, $09, $0d, $10, $15, $1b, $22, $02, $06, $0a, $0d, $10, $14, $18, $1d, $23 ; 0x60
 	db $ff ; 0x70
-Data_02_48dc:
+EquipRecord1:
 	; $48dc, 113 bytes (bytes:16)
 	db $01, $90, $00, $a3, $00, $99, $07, $0b, $00, $00, $00, $00, $00, $fd, $02, $06 ; 0x00
 	db $0a, $0e, $12, $17, $1d, $24, $02, $08, $0c, $10, $14, $18, $1d, $23, $2a, $f8 ; 0x10
@@ -1136,7 +1136,7 @@ Data_02_48dc:
 	db $13, $18, $1f, $26, $30, $02, $09, $0e, $13, $18, $1d, $23, $2b, $34, $03, $09 ; 0x50
 	db $0d, $11, $15, $1a, $1f, $25, $2d, $06, $0e, $14, $1a, $20, $26, $2d, $36, $41 ; 0x60
 	db $ff ; 0x70
-Data_02_494d:
+EquipRecord2:
 	; $494d, 113 bytes (bytes:16)
 	db $01, $86, $00, $a9, $00, $c2, $07, $0b, $00, $00, $00, $00, $00, $02, $08, $0c ; 0x00
 	db $10, $14, $18, $1d, $23, $2a, $fc, $02, $06, $0a, $0e, $13, $18, $1e, $26, $fe ; 0x10
@@ -2000,7 +2000,7 @@ DebugStoryStatsScreen:
 	pop de ; $4fdb
 	jp .printString ; $4fdc
 .zero:
-	ld hl, Data_02_5202 ; $4fdf
+	ld hl, DebugStoryStatsScreenString0 ; $4fdf
 	ld de, $0802 ; $4fe2
 	call PrintString ; $4fe5
 	call ValidateN64TransferRecord ; $4fe8
@@ -2033,10 +2033,10 @@ DebugStoryStatsScreen:
 	jr .loopB ; $5014
 .printString:
 	push de ; $5016
-	ld hl, Data_02_521a ; $5017
+	ld hl, DebugStoryStatsScreenString2 ; $5017
 	ld de, $0210 ; $501a
 	call PrintString ; $501d
-	ld hl, Data_02_521a ; $5020
+	ld hl, DebugStoryStatsScreenString2 ; $5020
 	ld de, $0810 ; $5023
 	call PrintString ; $5026
 	pop de ; $5029
@@ -2269,7 +2269,7 @@ DebugStoryStatsScreen:
 	jr z, .label_02_513f ; $51e2
 	sound $5f ; $51e4
 	push de ; $51e6
-	ld hl, Data_02_520a ; $51e7
+	ld hl, DebugStoryStatsScreenString1 ; $51e7
 	ld de, $0802 ; $51ea
 	call PrintString ; $51ed
 	farcall SaveStorySlotWithTimer ; $51f0
@@ -2280,13 +2280,11 @@ DebugStoryStatsScreen:
 MenuTilemaps_02:
 	; $51fa, 8 bytes (bytes:16)
 	db $46, $41, $49, $4c, $45, $44, $20, $00 ; 0x00
-Data_02_5202:
-	; $5202, 8 bytes (bytes:16)
-	db $4c, $4f, $41, $44, $45, $44, $20, $00 ; 0x00
-Data_02_520a:
-	; $520a, 16 bytes (bytes:16)
-	db $53, $41, $56, $45, $44, $20, $20, $00, $44, $45, $4c, $45, $54, $45, $44, $00 ; 0x00
-Data_02_521a:
+DebugStoryStatsScreenString0:
+	INCLUDE "data/bank_002/text_5202.asm" ; $5202, 8 bytes
+DebugStoryStatsScreenString1:
+	INCLUDE "data/bank_002/text_520a.asm" ; $520a, 16 bytes
+DebugStoryStatsScreenString2:
 	; $521a, 45 bytes (bytes:16)
 	db $20, $20, $20, $20, $20, $20, $00, $00, $01, $02, $03, $04, $05, $06, $07, $08 ; 0x00
 	db $09, $0a, $0b, $0c, $0d, $00, $00, $00, $00, $00, $00, $00, $00, $4d, $41, $52 ; 0x10

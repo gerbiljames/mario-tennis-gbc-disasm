@@ -940,7 +940,7 @@ InitMatchWinLoseScreen:
 	ld de, $a200 ; $45e4
 	ld c, $20 ; $45e7
 	call QueueVRAMCopy ; $45e9
-	ld hl, Data_16_48f4 ; $45ec
+	ld hl, MatchWinLoseScreenPalettes ; $45ec
 	ld de, $0803 ; $45ef
 	call LoadPaletteShadow ; $45f2
 	ld b, $09 ; $45f5
@@ -973,7 +973,7 @@ DiagramSpotMarkerSpriteTask:
 	INCBIN "data/bank_016/d_4876.bin" ; $4876, 75 bytes
 DiagramTargetBracketsSpriteTask:
 	INCBIN "data/bank_016/d_48c1.bin" ; $48c1, 51 bytes
-Data_16_48f4:
+MatchWinLoseScreenPalettes:
 	INCBIN "data/bank_016/d_48f4.bin" ; $48f4, 24 bytes
 LoadWinLoseScreenAssets:
 	ld a, [$d800] ; $490c
@@ -1098,27 +1098,27 @@ LoadMatchResultPalettes:
 	jr z, .eqff ; $4a14
 	ld a, $02 ; $4a16
 	ld [wAnimatedTileSet], a ; $4a18
-	ld hl, Data_16_4a4e ; $4a1b
+	ld hl, MatchResultPalettes1 ; $4a1b
 	ld de, $0101 ; $4a1e
 	call LoadPaletteShadow ; $4a21
-	ld hl, Data_16_4a46 ; $4a24
+	ld hl, MatchResultPalettes0 ; $4a24
 	ld de, $0201 ; $4a27
 	call LoadPaletteShadow ; $4a2a
 	ret ; $4a2d
 .eqff:
 	ld a, $03 ; $4a2e
 	ld [wAnimatedTileSet], a ; $4a30
-	ld hl, Data_16_4a4e ; $4a33
+	ld hl, MatchResultPalettes1 ; $4a33
 	ld de, $0201 ; $4a36
 	call LoadPaletteShadow ; $4a39
-	ld hl, Data_16_4a46 ; $4a3c
+	ld hl, MatchResultPalettes0 ; $4a3c
 	ld de, $0101 ; $4a3f
 	call LoadPaletteShadow ; $4a42
 	ret ; $4a45
-Data_16_4a46:
+MatchResultPalettes0:
 	INCLUDE "data/bank_016/palettes_4a46.asm" ; $4a46, 8 bytes (palettes)
-Data_16_4a4e:
-	INCLUDE "data/bank_016/palettes_4a4e.asm" ; $4a4e, 8 bytes (palettes)
+MatchResultPalettes1:
+	INCBIN "data/bank_016/d_4a4e.bin" ; $4a4e, 8 bytes
 AdjustResultTilemapForLoss:
 	ld a, [wMatchWinLoseFlag] ; $4a56
 	cp a, $ff ; $4a59

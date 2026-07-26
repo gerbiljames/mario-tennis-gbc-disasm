@@ -959,26 +959,26 @@ DrawMatchRulesInitialState:
 	call SetMatchRuleOptionAttrRect ; $45c8
 	ld b, $02 ; $45cb
 	call FlushMatchRuleRowAttrs ; $45cd
-	ld hl, Data_3e_45ef ; $45d0
+	ld hl, MatchRulesInitialStatePalettes0 ; $45d0
 	ld d, $04 ; $45d3
 	ld e, $01 ; $45d5
 	call LoadPaletteShadow ; $45d7
-	ld hl, Data_3e_45f7 ; $45da
+	ld hl, MatchRulesInitialStatePalettes1 ; $45da
 	ld d, $06 ; $45dd
 	ld e, $01 ; $45df
 	call LoadPaletteShadow ; $45e1
-	ld hl, Data_3e_45ff ; $45e4
+	ld hl, MatchRulesInitialStatePalettes2 ; $45e4
 	ld d, $07 ; $45e7
 	ld e, $01 ; $45e9
 	call LoadPaletteShadow ; $45eb
 	ret ; $45ee
-Data_3e_45ef:
+MatchRulesInitialStatePalettes0:
 	; $45ef, 8 bytes (bytes:8)
 	db $df, $02, $ff, $7f, $a0, $01, $00, $00 ; 0x00
-Data_3e_45f7:
+MatchRulesInitialStatePalettes1:
 	; $45f7, 8 bytes (bytes:8)
 	db $df, $02, $ff, $7f, $1f, $01, $00, $00 ; 0x00
-Data_3e_45ff:
+MatchRulesInitialStatePalettes2:
 	; $45ff, 8 bytes (bytes:8)
 	db $1f, $03, $ff, $7f, $40, $51, $00, $00 ; 0x00
 LoadMatchRulesMenuGraphics:
@@ -1008,7 +1008,7 @@ LoadMatchRulesMenuGraphics:
 	pop de ; $462a
 	pop bc ; $462b
 	pop af ; $462c
-	ld hl, Data_3e_46e6 ; $462d
+	ld hl, MatchRulesMenuTable ; $462d
 	ld a, c ; $4630
 	add a, a ; $4631
 	add a, l ; $4632
@@ -1097,15 +1097,8 @@ MatchRulesMenuGraphicsTable:
 	dw $3c6a ; record 4
 	dw $3c6c ; record 5
 	dw $3c6e ; record 6
-Data_3e_46e6:
-	; $46e6, 14 bytes (records:2)
-	dw $a800 ; record 0
-	dw $a900 ; record 1
-	dw $aa00 ; record 2
-	dw $ab00 ; record 3
-	dw $ac00 ; record 4
-	dw $ad00 ; record 5
-	dw $ae00 ; record 6
+MatchRulesMenuTable:
+	INCBIN "data/bank_03e/d_46e6.bin" ; $46e6, 14 bytes
 OpenMatchRulesPanel:
 	ld a, b ; $46f4
 	or a, a ; $46f5
@@ -1588,24 +1581,24 @@ AnimateLinkStatusPalette:
 	ret ; $4a76
 AnimateLinkStatusPalettePtrs:
 	; $4a77, 16 bytes (records:2)
-	dw Data_3e_4a87 ; record 0
-	dw Data_3e_4a87 ; record 1
-	dw Data_3e_4a8f ; record 2
-	dw Data_3e_4a8f ; record 3
-	dw Data_3e_4a97 ; record 4
-	dw Data_3e_4a97 ; record 5
-	dw Data_3e_4a9f ; record 6
-	dw Data_3e_4a9f ; record 7
-Data_3e_4a87:
+	dw LinkStatusPalette0 ; record 0
+	dw LinkStatusPalette0 ; record 1
+	dw LinkStatusPalette1 ; record 2
+	dw LinkStatusPalette1 ; record 3
+	dw LinkStatusPalette2 ; record 4
+	dw LinkStatusPalette2 ; record 5
+	dw LinkStatusPalette3 ; record 6
+	dw LinkStatusPalette3 ; record 7
+LinkStatusPalette0:
 	; $4a87, 8 bytes (bytes:8)
 	db $bf, $01, $ff, $0b, $67, $1f, $c8, $6c ; 0x00
-Data_3e_4a8f:
+LinkStatusPalette1:
 	; $4a8f, 8 bytes (bytes:8)
 	db $bf, $01, $ff, $7f, $67, $1f, $c8, $6c ; 0x00
-Data_3e_4a97:
+LinkStatusPalette2:
 	; $4a97, 8 bytes (bytes:8)
 	db $bf, $01, $ff, $0b, $ff, $7f, $c8, $6c ; 0x00
-Data_3e_4a9f:
+LinkStatusPalette3:
 	; $4a9f, 8 bytes (bytes:8)
 	db $bf, $01, $ff, $0b, $67, $1f, $ff, $7f ; 0x00
 ShowLinkErrorScreen:
@@ -1974,7 +1967,7 @@ EraseConfirmCursorSpriteTask:
 	ld a, [wMenuCursorY] ; $4e0f
 	or a, a ; $4e12
 	jr z, .queueEraseConfirmCursorSprites ; $4e13
-	ld de, Data_3e_7386 ; $4e15
+	ld de, ConfirmCursorSpriteTaskCursorSprites ; $4e15
 .queueEraseConfirmCursorSprites:
 	call QueueEraseConfirmCursorSprites ; $4e18
 	ret ; $4e1b
@@ -2254,19 +2247,19 @@ SetRacketShoesChoicePalette:
 	ret ; $504a
 RacketShoesChoicePalettePtrs:
 	; $504b, 18 bytes (records:2)
-	dw Data_3e_505d ; record 0
-	dw Data_3e_5065 ; record 1
-	dw Data_3e_505d ; record 2
-	dw Data_3e_505d ; record 3
-	dw Data_3e_505d ; record 4
-	dw Data_3e_505d ; record 5
-	dw Data_3e_505d ; record 6
-	dw Data_3e_505d ; record 7
-	dw Data_3e_505d ; record 8
-Data_3e_505d:
+	dw RacketShoesChoicePalette0 ; record 0
+	dw RacketShoesChoicePalette1 ; record 1
+	dw RacketShoesChoicePalette0 ; record 2
+	dw RacketShoesChoicePalette0 ; record 3
+	dw RacketShoesChoicePalette0 ; record 4
+	dw RacketShoesChoicePalette0 ; record 5
+	dw RacketShoesChoicePalette0 ; record 6
+	dw RacketShoesChoicePalette0 ; record 7
+	dw RacketShoesChoicePalette0 ; record 8
+RacketShoesChoicePalette0:
 	; $505d, 8 bytes (bytes:8)
 	db $df, $02, $ff, $7f, $a0, $01, $00, $00 ; 0x00
-Data_3e_5065:
+RacketShoesChoicePalette1:
 	; $5065, 8 bytes (bytes:8)
 	db $0a, $03, $ff, $7f, $40, $51, $00, $00 ; 0x00
 DrawRacketShoesChoiceCaption:
@@ -2659,16 +2652,16 @@ SetPlayAlonePartnerPalette:
 	ret ; $5332
 PlayAlonePartnerPalettePtrs:
 	; $5333, 18 bytes (records:2)
-	dw Data_3e_5345 ; record 0
-	dw Data_3e_5345 ; record 1
-	dw Data_3e_5345 ; record 2
-	dw Data_3e_5345 ; record 3
-	dw Data_3e_5345 ; record 4
-	dw Data_3e_5345 ; record 5
-	dw Data_3e_5345 ; record 6
-	dw Data_3e_5345 ; record 7
-	dw Data_3e_5345 ; record 8
-Data_3e_5345:
+	dw PlayAlonePartnerPalette ; record 0
+	dw PlayAlonePartnerPalette ; record 1
+	dw PlayAlonePartnerPalette ; record 2
+	dw PlayAlonePartnerPalette ; record 3
+	dw PlayAlonePartnerPalette ; record 4
+	dw PlayAlonePartnerPalette ; record 5
+	dw PlayAlonePartnerPalette ; record 6
+	dw PlayAlonePartnerPalette ; record 7
+	dw PlayAlonePartnerPalette ; record 8
+PlayAlonePartnerPalette:
 	; $5345, 16 bytes (bytes:8)
 	db $df, $02, $ff, $7f, $a0, $01, $00, $00 ; 0x00
 	db $0a, $03, $ff, $7f, $40, $51, $00, $00 ; 0x08
@@ -3539,7 +3532,7 @@ GetItemStatModListPtr:
 	ld a, [$d813] ; $5a49
 	or a, a ; $5a4c
 	jr z, .zero ; $5a4d
-	ld hl, Data_3e_5a6d ; $5a4f
+	ld hl, ItemStatModListPtrTable ; $5a4f
 .zero:
 	ld a, b ; $5a52
 	add a, a ; $5a53
@@ -3556,52 +3549,30 @@ GetItemStatModListPtr:
 	ret ; $5a5e
 ItemStatModListPtrPtrs:
 	; $5a5f, 14 bytes (records:2)
-	dw Data_3e_5a73 ; record 0
-	dw Data_3e_5a7a ; record 1
-	dw Data_3e_5a85 ; record 2
-	dw Data_3e_5a90 ; record 3
-	dw Data_3e_5aa6 ; record 4
-	dw Data_3e_5a9b ; record 5
-	dw Data_3e_5aaf ; record 6
-Data_3e_5a6d:
-	; $5a6d, 6 bytes (records:2)
-	dw Data_3e_5a73 ; record 0
-	dw Data_3e_5ab6 ; record 1
-	dw Data_3e_5ac1 ; record 2
-Data_3e_5a73:
+	dw ItemStatModList0 ; record 0
+	dw ItemStatModList1 ; record 1
+	dw ItemStatModList2 ; record 2
+	dw ItemStatModList3 ; record 3
+	dw ItemStatModList5 ; record 4
+	dw ItemStatModList4 ; record 5
+	dw ItemStatModList6 ; record 6
+ItemStatModListPtrTable:
+	INCBIN "data/bank_03e/d_5a6d.bin" ; $5a6d, 6 bytes
+ItemStatModList0:
 	; $5a73, 7 bytes (bytes:8)
 	db $fe, $fe, $fe, $fe, $0a, $fe, $ff ; 0x00
-Data_3e_5a7a:
-	; $5a7a, 11 bytes (bytes:8)
-	db $00, $81, $01, $81, $03, $82, $04, $02 ; 0x00
-	db $05, $01, $ff ; 0x08
-Data_3e_5a85:
-	; $5a85, 11 bytes (bytes:8)
-	db $00, $02, $01, $01, $03, $01, $04, $82 ; 0x00
-	db $05, $82, $ff ; 0x08
-Data_3e_5a90:
-	; $5a90, 11 bytes (bytes:8)
-	db $00, $82, $01, $82, $02, $82, $fe, $fe ; 0x00
-	db $0b, $fe, $ff ; 0x08
-Data_3e_5a9b:
-	; $5a9b, 11 bytes (bytes:8)
-	db $00, $81, $01, $81, $02, $03, $04, $01 ; 0x00
-	db $05, $01, $ff ; 0x08
-Data_3e_5aa6:
-	; $5aa6, 9 bytes (bytes:8)
-	db $00, $02, $01, $02, $02, $81, $04, $81 ; 0x00
-	db $ff ; 0x08
-Data_3e_5aaf:
-	; $5aaf, 7 bytes (bytes:8)
-	db $00, $82, $03, $03, $01, $82, $ff ; 0x00
-Data_3e_5ab6:
-	; $5ab6, 11 bytes (bytes:8)
-	db $07, $82, $0c, $82, $08, $82, $09, $82 ; 0x00
-	db $0b, $fe, $ff ; 0x08
-Data_3e_5ac1:
-	; $5ac1, 9 bytes (bytes:8)
-	db $07, $02, $0c, $02, $08, $82, $09, $82 ; 0x00
-	db $ff ; 0x08
+ItemStatModList1:
+	INCBIN "data/bank_03e/d_5a7a.bin" ; $5a7a, 11 bytes
+ItemStatModList2:
+	INCBIN "data/bank_03e/d_5a85.bin" ; $5a85, 11 bytes
+ItemStatModList3:
+	INCBIN "data/bank_03e/d_5a90.bin" ; $5a90, 11 bytes
+ItemStatModList4:
+	INCBIN "data/bank_03e/d_5a9b.bin" ; $5a9b, 11 bytes
+ItemStatModList5:
+	INCBIN "data/bank_03e/d_5aa6.bin" ; $5aa6, 9 bytes
+ItemStatModList6:
+	INCBIN "data/bank_03e/d_5aaf.bin" ; $5aaf, 27 bytes
 DrawStatModLabel:
 	push af ; $5aca
 	push bc ; $5acb
@@ -3713,18 +3684,18 @@ GetStatModRowAddr:
 	ret ; $5b62
 StatModRowAddrPtrs:
 	; $5b63, 6 bytes (records:2)
-	dw Data_3e_5b69 ; record 0
-	dw Data_3e_5b79 ; record 1
-	dw Data_3e_5b89 ; record 2
-Data_3e_5b69:
+	dw StatModRowAddr0 ; record 0
+	dw StatModRowAddr1 ; record 1
+	dw StatModRowAddr2 ; record 2
+StatModRowAddr0:
 	; $5b69, 16 bytes (bytes:8)
 	db $e1, $d0, $eb, $d0, $21, $d1, $2b, $d1 ; 0x00
 	db $61, $d1, $6b, $d1, $00, $00, $00, $00 ; 0x08
-Data_3e_5b79:
+StatModRowAddr1:
 	; $5b79, 16 bytes (bytes:8)
 	db $61, $d0, $6b, $d0, $a1, $d0, $ab, $d0 ; 0x00
 	db $e1, $d0, $eb, $d0, $00, $00, $00, $00 ; 0x08
-Data_3e_5b89:
+StatModRowAddr2:
 	; $5b89, 16 bytes (bytes:8)
 	db $81, $d1, $8b, $d1, $c1, $d1, $cb, $d1 ; 0x00
 	db $01, $d2, $0b, $d2, $00, $00, $00, $00 ; 0x08
@@ -3937,7 +3908,7 @@ LoadCourtSelectGraphics:
 	pop de ; $5d43
 	pop bc ; $5d44
 	pop af ; $5d45
-	ld hl, Data_3e_5e05 ; $5d46
+	ld hl, CourtSelectTable ; $5d46
 	ld a, c ; $5d49
 	add a, a ; $5d4a
 	add a, l ; $5d4b
@@ -4031,17 +4002,8 @@ CourtSelectGraphicsTable:
 	dw $3f10 ; record 7
 	dw $3f12 ; record 8
 	dw $3f14 ; record 9
-Data_3e_5e05:
-	; $5e05, 18 bytes (records:2)
-	dw $a800 ; record 0
-	dw $a900 ; record 1
-	dw $aa00 ; record 2
-	dw $ab00 ; record 3
-	dw $ac00 ; record 4
-	dw $ad00 ; record 5
-	dw $ae00 ; record 6
-	dw $af00 ; record 7
-	dw $b700 ; record 8
+CourtSelectTable:
+	INCBIN "data/bank_03e/d_5e05.bin" ; $5e05, 18 bytes
 GetCourtThumbnailPtr:
 	push af ; $5e17
 	push bc ; $5e18
@@ -4184,24 +4146,19 @@ CourtSelect4CursorSpriteTask:
 	ret ; $5ee9
 CourtSelect4CursorSpriteTaskPtrs:
 	; $5eea, 8 bytes (records:2)
-	dw Data_3e_5ef2 ; record 0
-	dw Data_3e_5ef2 ; record 1
-	dw Data_3e_5ef2 ; record 2
-	dw Data_3e_5f13 ; record 3
-Data_3e_5ef2:
+	dw CourtSelect4CursorSpriteTask0 ; record 0
+	dw CourtSelect4CursorSpriteTask0 ; record 1
+	dw CourtSelect4CursorSpriteTask0 ; record 2
+	dw CourtSelect4CursorSpriteTask1 ; record 3
+CourtSelect4CursorSpriteTask0:
 	; $5ef2, 33 bytes (bytes:8)
 	db $10, $08, $00, $00, $10, $10, $02, $00 ; 0x00
 	db $10, $18, $04, $00, $10, $20, $06, $00 ; 0x08
 	db $10, $28, $08, $00, $10, $30, $0a, $00 ; 0x10
 	db $10, $38, $0c, $00, $10, $40, $0e, $00 ; 0x18
 	db $80 ; 0x20
-Data_3e_5f13:
-	; $5f13, 37 bytes (bytes:8)
-	db $10, $08, $00, $00, $10, $10, $02, $00 ; 0x00
-	db $10, $18, $04, $00, $10, $20, $06, $00 ; 0x08
-	db $10, $28, $08, $00, $10, $30, $0a, $00 ; 0x10
-	db $10, $38, $0c, $00, $10, $40, $0e, $00 ; 0x18
-	db $10, $48, $10, $00, $80 ; 0x20
+CourtSelect4CursorSpriteTask1:
+	INCBIN "data/bank_03e/d_5f13.bin" ; $5f13, 37 bytes
 SpriteTemplate_3e_5f38:
 	; $5f38, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
@@ -4312,25 +4269,25 @@ SetCourtSelect4Palette:
 	ret ; $5ff0
 CourtSelect4PalettePtrs:
 	; $5ff1, 18 bytes (records:2)
-	dw Data_3e_6003 ; record 0
-	dw Data_3e_600b ; record 1
-	dw Data_3e_6013 ; record 2
-	dw Data_3e_601b ; record 3
-	dw Data_3e_6003 ; record 4
-	dw Data_3e_6003 ; record 5
-	dw Data_3e_6003 ; record 6
-	dw Data_3e_6003 ; record 7
-	dw Data_3e_6003 ; record 8
-Data_3e_6003:
+	dw CourtSelect4Palette0 ; record 0
+	dw CourtSelect4Palette1 ; record 1
+	dw CourtSelect4Palette2 ; record 2
+	dw CourtSelect4Palette3 ; record 3
+	dw CourtSelect4Palette0 ; record 4
+	dw CourtSelect4Palette0 ; record 5
+	dw CourtSelect4Palette0 ; record 6
+	dw CourtSelect4Palette0 ; record 7
+	dw CourtSelect4Palette0 ; record 8
+CourtSelect4Palette0:
 	; $6003, 8 bytes (bytes:8)
 	db $40, $7d, $ff, $7f, $a0, $3c, $00, $00 ; 0x00
-Data_3e_600b:
+CourtSelect4Palette1:
 	; $600b, 8 bytes (bytes:8)
 	db $1f, $00, $ff, $7f, $12, $00, $00, $00 ; 0x00
-Data_3e_6013:
+CourtSelect4Palette2:
 	; $6013, 8 bytes (bytes:8)
 	db $e0, $01, $ff, $7f, $40, $01, $00, $00 ; 0x00
-Data_3e_601b:
+CourtSelect4Palette3:
 	; $601b, 194 bytes (bytes:8)
 	db $12, $48, $ff, $7f, $08, $00, $00, $00 ; 0x00
 	db $f0, $96, $f5, $3e, $03, $e0, $96, $e0 ; 0x08
@@ -5018,40 +4975,40 @@ SetCourtSelect9Palette:
 	ret ; $68d8
 CourtSelect9PalettePtrs:
 	; $68d9, 18 bytes (records:2)
-	dw Data_3e_68eb ; record 0
-	dw Data_3e_68f3 ; record 1
-	dw Data_3e_68fb ; record 2
-	dw Data_3e_6903 ; record 3
-	dw Data_3e_691b ; record 4
-	dw Data_3e_6913 ; record 5
-	dw Data_3e_690b ; record 6
-	dw Data_3e_6923 ; record 7
-	dw Data_3e_692b ; record 8
-Data_3e_68eb:
+	dw CourtSelect9Palette0 ; record 0
+	dw CourtSelect9Palette1 ; record 1
+	dw CourtSelect9Palette2 ; record 2
+	dw CourtSelect9Palette3 ; record 3
+	dw CourtSelect9Palette6 ; record 4
+	dw CourtSelect9Palette5 ; record 5
+	dw CourtSelect9Palette4 ; record 6
+	dw CourtSelect9Palette7 ; record 7
+	dw CourtSelect9Palette8 ; record 8
+CourtSelect9Palette0:
 	; $68eb, 8 bytes (bytes:8)
 	db $40, $7d, $ff, $7f, $a0, $3c, $00, $00 ; 0x00
-Data_3e_68f3:
+CourtSelect9Palette1:
 	; $68f3, 8 bytes (bytes:8)
 	db $1f, $00, $ff, $7f, $12, $00, $00, $00 ; 0x00
-Data_3e_68fb:
+CourtSelect9Palette2:
 	; $68fb, 8 bytes (bytes:8)
 	db $e0, $01, $ff, $7f, $40, $01, $00, $00 ; 0x00
-Data_3e_6903:
+CourtSelect9Palette3:
 	; $6903, 8 bytes (bytes:8)
 	db $12, $48, $ff, $7f, $08, $00, $00, $00 ; 0x00
-Data_3e_690b:
+CourtSelect9Palette4:
 	; $690b, 8 bytes (bytes:8)
 	db $5e, $79, $ff, $6b, $40, $01, $00, $00 ; 0x00
-Data_3e_6913:
+CourtSelect9Palette5:
 	; $6913, 8 bytes (bytes:8)
 	db $c0, $2e, $ff, $6b, $12, $00, $00, $00 ; 0x00
-Data_3e_691b:
+CourtSelect9Palette6:
 	; $691b, 8 bytes (bytes:8)
 	db $1f, $01, $ff, $6b, $40, $01, $00, $00 ; 0x00
-Data_3e_6923:
+CourtSelect9Palette7:
 	; $6923, 8 bytes (bytes:8)
 	db $e0, $03, $ff, $6b, $40, $01, $00, $00 ; 0x00
-Data_3e_692b:
+CourtSelect9Palette8:
 	; $692b, 47 bytes (bytes:8)
 	db $1f, $01, $ff, $6b, $8f, $00, $00, $00 ; 0x00
 	db $f0, $96, $f5, $3e, $03, $e0, $96, $e0 ; 0x08
@@ -5145,8 +5102,8 @@ StubNop_3e:
 	ret ; $69d4
 AwardCeremonyTiles:
 	INCBIN "data/bank_03e/lz_69d5.bin" ; $69d5, 2481 bytes
-Data_3e_7386:
-	INCBIN "data/bank_03e/lz_7386.bin" ; $7386, 160 bytes
+ConfirmCursorSpriteTaskCursorSprites:
+	INCBIN "data/bank_03e/d_7386.bin" ; $7386, 160 bytes
 AwardCeremonyPalettes:
 	INCLUDE "data/bank_03e/palettes_7426.asm" ; $7426, 64 bytes (palettes)
 AwardCeremonyTilemap5:

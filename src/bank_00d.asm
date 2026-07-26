@@ -191,57 +191,32 @@ MinigamePracticeTargetScores:
 	dw $000f ; record 0
 	dw $001e ; record 1
 	dw $003c ; record 2
-Data_0d_4150:
-	; $4150, 8 bytes (records:2)
-	dw $0064 ; record 0
-	dw $0032 ; record 1
-	dw $0032 ; record 2
-	dw $0032 ; record 3
-Data_0d_4158:
-	; $4158, 6 bytes (records:2)
-	dw $0032 ; record 0
-	dw $270f ; record 1
-	dw $270f ; record 2
+MinigameDefaultRecordValue00:
+	INCBIN "data/bank_00d/d_4150.bin" ; $4150, 8 bytes
+MinigameDefaultRecordValue01:
+	INCBIN "data/bank_00d/d_4158.bin" ; $4158, 6 bytes
 MinigameTargetScores:
 	; $415e, 2 bytes (records:8)
 ; 0 records x 8 bytes
 	db $1e, $00
-Data_0d_4160:
-	; $4160, 8 bytes (records:8)
-; 1 records x 8 bytes
-	dw $003c, $270f, $0000, $001e ; record 0
-Data_0d_4168:
-	; $4168, 8 bytes (records:8)
-; 1 records x 8 bytes
-	dw $003c, $270f, $0000, $0015 ; record 0
-Data_0d_4170:
-	; $4170, 8 bytes (records:8)
-; 1 records x 8 bytes
-	dw $0015, $270f, $0000, $001e ; record 0
-Data_0d_4178:
-	; $4178, 8 bytes (records:8)
-; 1 records x 8 bytes
-	dw $003c, $270f, $0000, $0032 ; record 0
-Data_0d_4180:
-	; $4180, 8 bytes (records:8)
-; 1 records x 8 bytes
-	dw $0064, $270f, $0000, $001e ; record 0
-Data_0d_4188:
-	; $4188, 8 bytes (records:8)
-; 1 records x 8 bytes
-	dw $003c, $270f, $0000, $00c8 ; record 0
-Data_0d_4190:
-	; $4190, 8 bytes (records:8)
-; 1 records x 8 bytes
-	dw $012c, $270f, $0000, $0064 ; record 0
-Data_0d_4198:
-	; $4198, 8 bytes (records:8)
-; 1 records x 8 bytes
-	dw $012c, $270f, $0000, $0001 ; record 0
-Data_0d_41a0:
-	; $41a0, 6 bytes (records:8)
-; 0 records x 8 bytes
-	db $01, $00, $0f, $27, $00, $00
+MinigameDefaultRecordValue02:
+	INCBIN "data/bank_00d/d_4160.bin" ; $4160, 8 bytes
+MinigameDefaultRecordValue03:
+	INCBIN "data/bank_00d/d_4168.bin" ; $4168, 8 bytes
+MinigameDefaultRecordValue04:
+	INCBIN "data/bank_00d/d_4170.bin" ; $4170, 8 bytes
+MinigameDefaultRecordValue05:
+	INCBIN "data/bank_00d/d_4178.bin" ; $4178, 8 bytes
+MinigameDefaultRecordValue06:
+	INCBIN "data/bank_00d/d_4180.bin" ; $4180, 8 bytes
+MinigameDefaultRecordValue07:
+	INCBIN "data/bank_00d/d_4188.bin" ; $4188, 8 bytes
+MinigameDefaultRecordValue08:
+	INCBIN "data/bank_00d/d_4190.bin" ; $4190, 8 bytes
+MinigameDefaultRecordValue09:
+	INCBIN "data/bank_00d/d_4198.bin" ; $4198, 8 bytes
+MinigameDefaultRecordValue10:
+	INCBIN "data/bank_00d/d_41a0.bin" ; $41a0, 6 bytes
 GetDefaultMinigameRecordValue:
 	add a, a ; $41a6
 	add a, $b5 ; $41a7
@@ -258,17 +233,17 @@ GetDefaultMinigameRecordValue:
 	ret ; $41b4
 MinigameDefaultRecordValuePointers:
 	; $41b5, 22 bytes (records:2)
-	dw Data_0d_4158 ; record 0
-	dw Data_0d_4150 ; record 1
-	dw Data_0d_4160 ; record 2
-	dw Data_0d_4168 ; record 3
-	dw Data_0d_4170 ; record 4
-	dw Data_0d_4178 ; record 5
-	dw Data_0d_4180 ; record 6
-	dw Data_0d_4188 ; record 7
-	dw Data_0d_4190 ; record 8
-	dw Data_0d_4198 ; record 9
-	dw Data_0d_41a0 ; record 10
+	dw MinigameDefaultRecordValue01 ; record 0
+	dw MinigameDefaultRecordValue00 ; record 1
+	dw MinigameDefaultRecordValue02 ; record 2
+	dw MinigameDefaultRecordValue03 ; record 3
+	dw MinigameDefaultRecordValue04 ; record 4
+	dw MinigameDefaultRecordValue05 ; record 5
+	dw MinigameDefaultRecordValue06 ; record 6
+	dw MinigameDefaultRecordValue07 ; record 7
+	dw MinigameDefaultRecordValue08 ; record 8
+	dw MinigameDefaultRecordValue09 ; record 9
+	dw MinigameDefaultRecordValue10 ; record 10
 IncrementCappedCounter:
 	ld hl, $c789 ; $41cb
 	ld a, [hl] ; $41ce

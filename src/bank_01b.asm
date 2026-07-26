@@ -1106,7 +1106,7 @@ BuildRankingBoardScreen:
 	call HighlightSinglesRankingRows ; $4f4c
 .loadRankingBoardTiles:
 	call LoadRankingBoardTiles ; $4f4f
-	ld hl, Data_1b_4f76 ; $4f52
+	ld hl, RankingBoardScreenPalettes ; $4f52
 	ld de, $0806 ; $4f55
 	call LoadPaletteShadow ; $4f58
 	ld a, $01 ; $4f5b
@@ -1121,7 +1121,7 @@ BuildRankingBoardScreen:
 .queueWram3MapToVRAM:
 	farcall QueueWram3MapToVRAM ; $4f72
 	ret ; $4f75
-Data_1b_4f76:
+RankingBoardScreenPalettes:
 	INCLUDE "data/bank_01b/palettes_4f76.asm" ; $4f76, 48 bytes (palettes)
 LoadRankingBoardTiles:
 	ldh a, [hWramBank] ; $4fa6
@@ -2685,7 +2685,7 @@ LoadRankingMarkerCoords:
 	ld a, [$d802] ; $5c44
 	or a, a ; $5c47
 	jr z, .zero ; $5c48
-	ld hl, Data_1b_5d57 ; $5c4a
+	ld hl, RankingMarkerCoordsTable0 ; $5c4a
 .zero:
 	ld a, [$d801] ; $5c4d
 	add a, a ; $5c50
@@ -2710,7 +2710,7 @@ LoadRankingMarkerCoords:
 	ld a, [$d802] ; $5c6a
 	or a, a ; $5c6d
 	jr z, .zero2 ; $5c6e
-	ld hl, Data_1b_5eb9 ; $5c70
+	ld hl, RankingMarkerCoordsTable1 ; $5c70
 .zero2:
 	ld a, [$d801] ; $5c73
 	add a, a ; $5c76
@@ -2745,9 +2745,9 @@ RankingMarkerCoordSet2:
 	INCBIN "data/bank_01b/d_5cf7.bin" ; $5cf7, 48 bytes
 RankingMarkerCoordSet3:
 	INCBIN "data/bank_01b/d_5d27.bin" ; $5d27, 48 bytes
-Data_1b_5d57:
+RankingMarkerCoordsTable0:
 	INCBIN "data/bank_01b/d_5d57.bin" ; $5d57, 354 bytes
-Data_1b_5eb9:
+RankingMarkerCoordsTable1:
 	INCBIN "data/bank_01b/d_5eb9.bin" ; $5eb9, 152 bytes
 GetRankingMarkerSlot:
 	push af ; $5f51
@@ -4347,7 +4347,7 @@ LoadMinigameLevelSelectGfx:
 	pop de ; $6c7c
 	pop bc ; $6c7d
 	pop af ; $6c7e
-	ld hl, Data_1b_6d35 ; $6c7f
+	ld hl, MinigameLevelSelectTable ; $6c7f
 	ld a, c ; $6c82
 	add a, a ; $6c83
 	add a, l ; $6c84
@@ -4442,13 +4442,9 @@ MinigameLevelSelectGfxTable:
 	dw Label_1b_6d8a ; record 0
 	dw Label_1b_6d8c ; record 1
 	dw Label_1b_6d8e ; record 2
-	dw Data_1b_6d90 ; record 3
-Data_1b_6d35:
-	; $6d35, 8 bytes (records:2)
-	dw $a800 ; record 0
-	dw $a900 ; record 1
-	dw $aa00 ; record 2
-	dw $a900 ; record 3
+	dw MinigameLevelSelectGfxTable0 ; record 3
+MinigameLevelSelectTable:
+	INCBIN "data/bank_01b/d_6d35.bin" ; $6d35, 8 bytes
 DrawMinigameLevelDescription:
 	ldh a, [hWramBank] ; $6d3d
 	push af ; $6d3f
@@ -4498,7 +4494,7 @@ Label_1b_6d8e:
 MinigameLevelDescriptionTable:
 	; $6d8f, 1 bytes (bytes:6)
 	db $01 ; 0x00
-Data_1b_6d90:
+MinigameLevelSelectGfxTable0:
 	; $6d90, 5 bytes (bytes:6)
 	db $d2, $01, $d2, $01, $d2 ; 0x00
 LoadMinigameLevelSelectPalette:
@@ -4517,16 +4513,16 @@ LoadMinigameLevelSelectPalette:
 	ret ; $6da7
 MinigameLevelSelectPalettePtrs:
 	; $6da8, 6 bytes (records:2)
-	dw Data_1b_6dae ; record 0
-	dw Data_1b_6dbe ; record 1
-	dw Data_1b_6db6 ; record 2
-Data_1b_6dae:
+	dw MinigameLevelSelectPalette0 ; record 0
+	dw MinigameLevelSelectPalette2 ; record 1
+	dw MinigameLevelSelectPalette1 ; record 2
+MinigameLevelSelectPalette0:
 	; $6dae, 8 bytes (bytes:8)
 	db $34, $53, $ff, $6b, $40, $02, $00, $00 ; 0x00
-Data_1b_6db6:
+MinigameLevelSelectPalette1:
 	; $6db6, 8 bytes (bytes:8)
 	db $b7, $5e, $ff, $6b, $93, $7c, $00, $00 ; 0x00
-Data_1b_6dbe:
+MinigameLevelSelectPalette2:
 	; $6dbe, 8 bytes (bytes:8)
 	db $99, $52, $ff, $6b, $1f, $14, $00, $00 ; 0x00
 FlushLevelSelectTextRows:
@@ -5270,12 +5266,12 @@ LoadSavedDataTypePalette:
 	ret ; $73c8
 SavedDataTypePalettePtrs:
 	; $73c9, 4 bytes (records:2)
-	dw Data_1b_73cd ; record 0
-	dw Data_1b_73d5 ; record 1
-Data_1b_73cd:
+	dw SavedDataTypePalette0 ; record 0
+	dw SavedDataTypePalette1 ; record 1
+SavedDataTypePalette0:
 	; $73cd, 8 bytes (bytes:8)
 	db $34, $53, $ff, $6b, $40, $02, $00, $00 ; 0x00
-Data_1b_73d5:
+SavedDataTypePalette1:
 	; $73d5, 8 bytes (bytes:8)
 	db $bf, $02, $ff, $6b, $1b, $18, $00, $00 ; 0x00
 ShowMinigameDataScreen:

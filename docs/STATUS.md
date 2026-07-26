@@ -30,10 +30,9 @@ Everything below is **committed** (HEAD `e50467f`); the whole history
 rebuilds byte-perfect. Per-bank progress at any time: `python3
 tools/progress.py` (proven-code bytes, fill runs, label counts, human-named
 counts) and `tools/progress.py --unnamed <bank>` to list still-auto-named
-symbols. **19,462 of 21,519 labels are human-named** (see the caveat in the
+symbols. **19,823 of 21,517 labels are human-named** (see the caveat in the
 auto-split section below) (up from 4,816 on 2026-07-23); what is left is
-data blobs, 430 of them the pointer-target labels the section on relocatable
-pointers below adds.
+data blobs.
 
 ### Local labels inside functions (2026-07-26)
 
@@ -4443,7 +4442,7 @@ not: 316 `dw $xxxx` words and 445 `ld hl/de/bc, $xxxx` immediates whose target
 had no label, because it landed inside an `INCBIN` blob or inside a declared
 table. They assemble to the right bytes, but they are addresses frozen at
 their 2001 values -- insert one byte ahead of the target and the pointer
-quietly aims at the wrong place. **165 are left, and most of those are not
+quietly aims at the wrong place. **132 are left, and most of those are not
 pointers at all.**
 
 Three things were missing.
@@ -4496,19 +4495,79 @@ looking for a dereference, and gave up on:
   that across the pair, which is what unlocked bank `$3b`'s table lookups.
 
 Sizes are checked, not assumed: **`make compare` is still OK**, from clean.
-4,592 blobs became 4,800 (208 splits) and 430 new labels were emitted -- so the
-human-named share drops to 19,462 of 21,519 until these get real names, which
-is the intended trade: an auto name that the assembler resolves beats a
-hex literal that it cannot.
+4,592 blobs became 4,831 and 430 new labels were emitted; the naming pass
+below then gave 361 of them real names.
 
-What is left is mostly not fixable by naming: 118 of the remaining 123 `ld`
+What is left is mostly not fixable by naming: 118 of the remaining 122 `ld`
 immediates fail the use-gate because they are *not* pointers (`ld de, $4000`
-before an overflow check, QueueSprite coordinate pairs). Of the 42 `dw`, 32
-point into `$39`'s `tilemap_dispatch`, whose renderer already gives its
-interior targets `.l2_N`/`.rl_N` local names -- referencing a renderer's own
-locals from outside is the missing feature there, not a label. The rest are
-`records:4`/`records:16` object templates, where only some columns are
-pointers and the column layout is not modelled yet.
+before an overflow check, QueueSprite coordinate pairs). Only 10 `dw` words
+are still bare, in `records:4`/`records:16` object templates where just some
+columns are pointers and the column layout is not modelled yet.
+
+
+## Naming the pointer targets (2026-07-26)
+
+The 430 labels the pass above created were auto `Data_bb_aaaa` names. **361 now
+have real ones**, and none of them needed guesswork: a pointer target is
+defined by what reads it, so the *consumer* names the data.
+
+Two derivations cover everything:
+
+* **A row of a pointer table** takes the table's name minus `Ptrs`/`Pointers`,
+  numbered in address order -- `EquipRecordPtrs_02` gives `EquipRecord0`-`2`,
+  `CharDataScreen_DrawStatBarPtrs` (33 words) gives
+  `CharDataScreenStatBar00`-`32` over 33 five-byte rows.
+* **A `ld rr, imm` target** takes its routine's name minus the leading verb,
+  plus a suffix read off the helper the pointer is handed to:
+  `ApplyTilemapPatchList` -> `...TilemapPatch`, `LoadPaletteShadow` ->
+  `...Palettes`, `DecompressData` -> `...Gfx`, `PrintString` -> `...String`,
+  `CopyMemory*` -> `...Data`, and the split-base `add a, l` index idiom ->
+  `...Table`. Where several routines share a blob the common tail of their
+  names is used, which is why the char-data screen ends up with
+  `MainCharStatPageTilemapPatch*`, `PartnerStatPageTilemapPatch*` and a shared
+  `StatPageTilemapPatch*` set rather than one arbitrary owner's name.
+
+Where a derived name already existed the series continues past it
+(`ExpScreenGfx5`-`8`), which is itself a check: the rule independently
+reproduced names a human had already chosen for the siblings.
+
+Left auto (69): targets with no resolvable reference, targets whose referring
+table is itself auto-named, six whose derived name is already taken by a
+different offset, and two whose enclosing label is data rather than a routine.
+
+`Unused_1c_5679`'s 32 rows were the one group worth looking at directly.
+Rendering the 64-byte payloads as 2bpp shows one image redrawn a pixel further
+along in each -- a pre-shifted sprite set, so `UnusedShiftGfx00`-`31`.
+
+**Three emitter bugs surfaced, all from naming an offset that had only been an
+auto label before.** A curated name is not cosmetic; it changes how the bytes
+around it are classified.
+
+* A curated label on a short printable run made it *text*. The rule exists so
+  one label can split a string out of a pool, but `bbebb` -- five tile ids for
+  a stat bar -- is printable too, and 23 record rows became prose. It now also
+  requires a terminator and more than one letter, which the three real strings
+  in the batch (`EFFECT`, `LOADED `, `SAVED  `/`DELETED`) have and the records
+  do not.
+* A curated label *ends* a region, so the bytes after it lost the enclosing
+  table's spec: 95 payloads (2,172 bytes) fell out as anonymous blobs. Fixed by
+  declaring the 63 byte-table payloads in `data_tables.json` -- the label names
+  a structure, so the structure gets its own declaration. The `records:2`
+  payloads were deliberately *not* declared: that spec asserts every word is a
+  pointer, and bank `$1b`'s `RankingMarkerCoordSet*` arrays are coordinates,
+  which rendered as 71 bogus pointer words when the spec reached them.
+* Letting a spec carry across a cut is only safe for some kinds. `fill` and
+  `pattern` assert that one exact run is padding, and propagating one turned
+  1,472 bytes of bank `$28` tile graphics into `ds` runs -- wrong, and it would
+  have written ROM pixel values into the committed source. They are no longer
+  splittable, and a cut inside a `records:N`/`palettes` run must land on a
+  record boundary (`bytes:N` counts display columns, not records, so its rows
+  simply regroup).
+
+The last two are why the numbers moved twice: naming pushed the bare `dw` count
+from 42 down to **10** (the coordinate arrays stopped pretending to be pointer
+tables), while structured source settled at 413,371 bytes. `make compare` is OK
+from clean throughout.
 
 
 ## Repo state

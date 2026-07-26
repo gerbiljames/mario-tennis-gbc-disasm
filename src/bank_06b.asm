@@ -546,11 +546,11 @@ IntroCutsceneState04Init_6b:
 	call QueueVRAMCopy ; $44bc
 	pop af ; $44bf
 	wram_bank ; $44c0
-	ld hl, Data_6b_44d0 ; $44c4
+	ld hl, IntroCutsceneState04InitPalettes ; $44c4
 	ld de, $0008 ; $44c7
 	call LoadPalettesImmediate ; $44ca
 	jp DispatchCutsceneStateInit.loop ; $44cd
-Data_6b_44d0:
+IntroCutsceneState04InitPalettes:
 	INCLUDE "data/bank_06b/palettes_44d0.asm" ; $44d0, 64 bytes (palettes)
 IntroCutsceneState04Exit_6b:
 	ld c, $06 ; $4510
@@ -1877,7 +1877,7 @@ AdvanceSpriteAnimTimer:
 	ld [$cb4c], a ; $6122
 	ret ; $6125
 QueueIntroSpriteBlock:
-	ld hl, Data_6b_6139 ; $6126
+	ld hl, IntroSpriteBlockTable ; $6126
 	ld a, c ; $6129
 	add a, l ; $612a
 	ld l, a ; $612b
@@ -1889,7 +1889,7 @@ QueueIntroSpriteBlock:
 	ld b, $08 ; $6133
 	call QueueSpriteTemplate ; $6135
 	ret ; $6138
-Data_6b_6139:
+IntroSpriteBlockTable:
 	; $6139, 4 bytes (bytes:4)
 	db $00, $10, $20, $30 ; 0x00
 SpriteTemplate_6b_613d:

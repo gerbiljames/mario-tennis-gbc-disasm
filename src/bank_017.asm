@@ -1009,7 +1009,7 @@ CycleDiagramTargetPalette:
 	ldh a, [hWramBank] ; $4676
 	push af ; $4678
 	wram_bank $03 ; $4679
-	ld hl, Data_17_4ed2 ; $467f
+	ld hl, CycleDiagramTargetPaletteData ; $467f
 	ld de, $d830 ; $4682
 	ld bc, $0008 ; $4685
 	call CopyMemoryBC ; $4688
@@ -1631,8 +1631,8 @@ CourtDiagramAttrmap:
 	INCBIN "data/bank_017/lz_4e42.bin" ; $4e42, 128 bytes
 CourtDiagramPalettes:
 	INCLUDE "data/bank_017/palettes_4ec2.asm" ; $4ec2, 16 bytes (palettes)
-Data_17_4ed2:
-	INCLUDE "data/bank_017/palettes_4ed2.asm" ; $4ed2, 48 bytes (palettes)
+CycleDiagramTargetPaletteData:
+	INCBIN "data/bank_017/d_4ed2.bin" ; $4ed2, 48 bytes
 CourtDiagramGfx0:
 	INCBIN "data/bank_017/d_4f02.bin" ; $4f02, 59 bytes
 CourtDiagramGfx1:

@@ -680,17 +680,17 @@ ConfirmScreenGfx1:
 	INCBIN "data/bank_018/d_4f73.bin" ; $4f73, 347 bytes
 ConfirmScreenGfx2:
 	INCBIN "data/bank_018/d_50ce.bin" ; $50ce, 138 bytes
-Data_18_5158:
+ThreeOptionLabelsData0:
 	INCBIN "data/bank_018/d_5158.bin" ; $5158, 16 bytes
-Data_18_5168:
+ThreeOptionLabelsData1:
 	INCBIN "data/bank_018/d_5168.bin" ; $5168, 16 bytes
-Data_18_5178:
+ThreeOptionLabelsData2:
 	INCBIN "data/bank_018/d_5178.bin" ; $5178, 16 bytes
-Data_18_5188:
+ThreeOptionLabelsData3:
 	INCBIN "data/bank_018/d_5188.bin" ; $5188, 16 bytes
-Data_18_5198:
+ThreeOptionLabelsData4:
 	INCBIN "data/bank_018/d_5198.bin" ; $5198, 16 bytes
-Data_18_51a8:
+ThreeOptionLabelsData5:
 	INCBIN "data/bank_018/d_51a8.bin" ; $51a8, 16 bytes
 YesNoLabels0:
 	; $51b8, 16 bytes (bytes:16)
@@ -1012,22 +1012,22 @@ UnusedBobRamp_18:
 	INCBIN "data/bank_018/d_5507.bin" ; $5507, 32 bytes
 DrawThreeOptionLabels:
 	call DrawConfirmScreenBox ; $5527
-	ld hl, Data_18_5188 ; $552a
+	ld hl, ThreeOptionLabelsData3 ; $552a
 	ld de, $ddc1 ; $552d
 	call CopyBytes11 ; $5530
-	ld hl, Data_18_5198 ; $5533
+	ld hl, ThreeOptionLabelsData4 ; $5533
 	ld de, $dde1 ; $5536
 	call CopyBytes11 ; $5539
-	ld hl, Data_18_51a8 ; $553c
+	ld hl, ThreeOptionLabelsData5 ; $553c
 	ld de, $de01 ; $553f
 	call CopyBytes11 ; $5542
-	ld hl, Data_18_5158 ; $5545
+	ld hl, ThreeOptionLabelsData0 ; $5545
 	ld de, $d9c1 ; $5548
 	call CopyBytes11 ; $554b
-	ld hl, Data_18_5168 ; $554e
+	ld hl, ThreeOptionLabelsData1 ; $554e
 	ld de, $d9e1 ; $5551
 	call CopyBytes11 ; $5554
-	ld hl, Data_18_5178 ; $5557
+	ld hl, ThreeOptionLabelsData2 ; $5557
 	ld de, $da01 ; $555a
 	call CopyBytes11 ; $555d
 	ret ; $5560
@@ -1222,7 +1222,7 @@ DrawCharSelectCursor:
 CharSelectCursorAnimTable:
 	INCBIN "data/bank_018/d_59fe.bin" ; $59fe, 32 bytes
 CharSelectCursorTemplatePtrs:
-	INCLUDE "data/bank_018/text_5a1e.asm" ; $5a1e, 8 bytes
+	INCBIN "data/bank_018/d_5a1e.bin" ; $5a1e, 8 bytes
 CharSelectCursorTemplate0:
 	INCBIN "data/bank_018/d_5a26.bin" ; $5a26, 17 bytes
 CharSelectCursorTemplate1:
@@ -2002,11 +2002,11 @@ LoadObjectSceneATiles:
 	ld c, $10 ; $7bfd
 	ld de, $8200 ; $7bff
 	farcall LoadCompressedTileBlock ; $7c02
-	ld hl, Data_18_7c0f ; $7c05
+	ld hl, ObjectSceneATilesPalettes ; $7c05
 	ld de, $0903 ; $7c08
 	call LoadPaletteShadow ; $7c0b
 	ret ; $7c0e
-Data_18_7c0f:
+ObjectSceneATilesPalettes:
 	; $7c0f, 24 bytes (bytes:8)
 	db $ff, $6b, $df, $5a, $ff, $20, $00, $00 ; 0x00
 	db $ff, $6b, $b8, $3b, $80, $12, $00, $00 ; 0x08
