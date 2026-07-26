@@ -32,13 +32,13 @@ TennisMachineRoomEntryPoints_14:
 TennisMachineRoomArrival01_14:
 	ld a, [wStoryModeEntryPoint] ; $4063
 	cp a, $ff ; $4066
-	jp z, Label_14_4085 ; $4068
+	jp z, .done ; $4068
 	clear_flag FLAG_PRACTICE_ROOM_SESSION_ACTIVE ; $406b
 	test_flag FLAG_DOUBLES ; $406e
-	jr z, Label_14_4085 ; $4071
+	jr z, .done ; $4071
 	script_set_position ACTOR_PARTNER, $2b00, $3b00 ; $4073
 	script_face ACTOR_PARTNER, FACE_UP ; $407e
-Label_14_4085:
+.done:
 	ret ; $4085
 TennisMachineRoomExitTriggers_14:
 	; $4086, 9 bytes (map_scripts)
@@ -80,18 +80,18 @@ TennisMachineRoomNpc04_14:
 	farcall InitDialogueTextCursor ; $40c2
 	ld a, [$c2b0] ; $40c5
 	cp a, $01 ; $40c8
-	jr z, Label_14_40ce ; $40ca
-	jr Label_14_40e6 ; $40cc
-Label_14_40ce:
+	jr z, .step ; $40ca
+	jr .speak ; $40cc
+.step:
 	ld a, $04 ; $40ce
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $40d0
 	farcall RunDialogueYesNoPrompt ; $40d3
 	farcall ScriptCloseDialogueWindow ; $40d6
 	script_wait_frames $05 ; $40d9
 	and a, a ; $40e0
-	jr z, Label_14_40e6 ; $40e1
+	jr z, .speak ; $40e1
 	farcall AdvanceDialogueTextCursor ; $40e3
-Label_14_40e6:
+.speak:
 	script_speak $04 ; $40e6
 	ret ; $40eb
 	; $40ec, 14 bytes (records:2)
@@ -326,19 +326,19 @@ MachineCourtGameOverExitScene:
 ComputeMachineCourtProgress:
 	ld a, $00 ; $43a4
 	test_flag FLAG_CLEARED_MACHINE_LEVEL_1 ; $43a6
-	jp z, Label_14_4429 ; $43a9
+	jp z, .step ; $43a9
 	script_copy_scene_rect $1e, $2c, $30, $2c, $02, $02 ; $43ac
 	ld a, $01 ; $43bb
 	test_flag FLAG_CLEARED_MACHINE_LEVEL_2 ; $43bd
-	jp z, Label_14_4429 ; $43c0
+	jp z, .step ; $43c0
 	script_copy_scene_rect $1e, $30, $30, $30, $02, $02 ; $43c3
 	ld a, $02 ; $43d2
 	test_flag FLAG_CLEARED_MACHINE_LEVEL_3 ; $43d4
-	jr z, Label_14_4429 ; $43d7
+	jr z, .step ; $43d7
 	script_copy_scene_rect $1e, $34, $30, $34, $02, $02 ; $43d9
 	ld a, $03 ; $43e8
 	test_flag FLAG_CLEARED_MACHINE_LEVEL_4 ; $43ea
-	jr z, Label_14_4429 ; $43ed
+	jr z, .step ; $43ed
 	script_copy_scene_rect $1e, $38, $30, $38, $02, $02 ; $43ef
 	ld a, $04 ; $43fe
 	ld b, a ; $4400
@@ -355,12 +355,12 @@ ComputeMachineCourtProgress:
 	wram_bank ; $4416
 	ld a, b ; $441a
 	test_flag FLAG_CLEARED_MACHINE_MASTER ; $441b
-	jr z, Label_14_4429 ; $441e
+	jr z, .step ; $441e
 	ld a, $05 ; $4420
 	test_flag FLAG_CLEARED_MACHINE_EXPERT ; $4422
-	jr z, Label_14_4429 ; $4425
+	jr z, .step ; $4425
 	ld a, $06 ; $4427
-Label_14_4429:
+.step:
 	ld [$c2b0], a ; $4429
 	ret ; $442c
 TennisMachineRoomNpc05_14:
@@ -422,7 +422,7 @@ TennisMachineRoomNpc05_14:
 	farcall ScriptCloseDialogueWindow ; $44bc
 	script_wait_frames $05 ; $44bf
 	and a, a ; $44c6
-	jp z, Label_14_45a6 ; $44c7
+	jp z, MachineCourtStartLevelScene.speak ; $44c7
 .done:
 	ld a, [$c2b0] ; $44ca
 	add a, a ; $44cd
@@ -444,10 +444,10 @@ MachineCourtStartLevelScene:
 	script_wait_move $05 ; $44f4
 	script_face $05, FACE_DOWN ; $44f9
 	test_flag FLAG_DOUBLES ; $4500
-	jr z, Label_14_4515 ; $4503
+	jr z, .walkOff ; $4503
 	script_null_script ACTOR_PARTNER ; $4505
 	script_set_actor_script ACTOR_PARTNER, ActorScript_14_4808 ; $450a
-Label_14_4515:
+.walkOff:
 	script_set_speed ACTOR_PLAYER, $0020 ; $4515
 	script_move_player $3800, $3300 ; $451d
 	script_move_target ACTOR_PLAYER, $3300, $2b00 ; $4527
@@ -460,10 +460,10 @@ Label_14_4515:
 	script_wait_frames $0a ; $455e
 	ld a, [$c2b0] ; $4565
 	cp a, $04 ; $4568
-	jr c, Label_14_4577 ; $456a
+	jr c, .step ; $456a
 	script_set_text Text_6e_204 ; $456c
 	script_speak $05 ; $4572
-Label_14_4577:
+.step:
 	ld c, $06 ; $4577
 	call BeginFadeOut ; $4579
 	call WaitFadeEnd ; $457c
@@ -485,7 +485,7 @@ Label_14_4577:
 	farcall RunTrainingDrillByID ; $459f
 	farcall EndCutsceneScriptMode ; $45a2
 	ret ; $45a5
-Label_14_45a6:
+.speak:
 	script_speak $05 ; $45a6
 	set_flag FLAG_TEMP_SCENE_VARIANT_B ; $45ab
 	script_move_target $05, $2d00, $2900 ; $45ae
@@ -587,12 +587,12 @@ MachinePracticeResultScene:
 	ld [wStoryModeShowLocationName], a ; $46c6
 	set_flag FLAG_TEMP_SCENE_VARIANT_B ; $46c9
 	test_flag FLAG_DOUBLES ; $46cc
-	jr z, Label_14_46ef ; $46cf
+	jr z, .placeActors ; $46cf
 	script_null_script ACTOR_PARTNER ; $46d1
 	script_set_position ACTOR_PARTNER, $2900, $2b00 ; $46d6
 	script_face ACTOR_PARTNER, FACE_RIGHT ; $46e1
 	script_wait_frames $0a ; $46e8
-Label_14_46ef:
+.placeActors:
 	script_set_position $05, $2d00, $2900 ; $46ef
 	script_face $05, FACE_DOWN ; $46fa
 	script_fade_in $06 ; $4701
@@ -600,7 +600,7 @@ Label_14_46ef:
 	script_wait_frames $28 ; $4709
 	ld a, [wMatchExitRequest] ; $4710
 	and a, a ; $4713
-	jp nz, Label_14_474d ; $4714
+	jp nz, .done ; $4714
 	script_set_text Text_6e_219 ; $4717
 	ld hl, wMinigamesTargetScore ; $471d
 	ld a, [hl+] ; $4720
@@ -620,7 +620,7 @@ Label_14_46ef:
 	script_wait_frames $05 ; $4742
 	and a, a ; $4749
 	jp z, MachineCourtRestartLevel ; $474a
-Label_14_474d:
+.done:
 	ret ; $474d
 MachineCourtHandleRetryChoice:
 	ld a, $05 ; $474e
@@ -651,10 +651,10 @@ MachineCourtHandleRetryChoice:
 MachineCourtRestartLevel:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $47cd
 	cp a, $1a ; $47d0
-	jr z, Label_14_47ef ; $47d2
+	jr z, .step ; $47d2
 	sub a, $12 ; $47d4
 	call TestMachineLevelClearedFlag ; $47d6
-	jr z, Label_14_47ef ; $47d9
+	jr z, .step ; $47d9
 	ld a, $12 ; $47db
 	ld [wStoryModeCurrentLocation], a ; $47dd
 	ld a, $07 ; $47e0
@@ -662,8 +662,8 @@ MachineCourtRestartLevel:
 	ld a, $ff ; $47e5
 	ld [$c294], a ; $47e7
 	ld [wStoryModeExitLocationRequest], a ; $47ea
-	jr Label_14_4801 ; $47ed
-Label_14_47ef:
+	jr .step2 ; $47ed
+.step:
 	ld a, $12 ; $47ef
 	ld [wStoryModeCurrentLocation], a ; $47f1
 	ld a, $05 ; $47f4
@@ -671,7 +671,7 @@ Label_14_47ef:
 	ld a, $ff ; $47f9
 	ld [$c294], a ; $47fb
 	ld [wStoryModeExitLocationRequest], a ; $47fe
-Label_14_4801:
+.step2:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $4801
 	farcall RunTrainingDrillByID ; $4804
 	ret ; $4807
@@ -703,11 +703,11 @@ ActorScript_14_4808:
 	ret ; $4841
 MachineExpertResultScene:
 	test_flag FLAG_CLEARED_MACHINE_EXPERT ; $4842
-	jr z, Label_14_484f ; $4845
+	jr z, .step ; $4845
 	ld a, [wPointWinLoseFlag] ; $4847
 	cp a, $01 ; $484a
 	jp z, MachineExpertCounterMaxScene ; $484c
-Label_14_484f:
+.step:
 	ld bc, $0001 ; $484f
 	ldh a, [hWramBank] ; $4852
 	push af ; $4854
@@ -1011,16 +1011,16 @@ Court2Npc06_14:
 	dw $249e ; record 6
 Court2SpectatorChat_14:
 	test_flag FLAG_DOUBLES ; $4bdc
-	jr z, Label_14_4bec ; $4bdf
+	jr z, .checkFlag ; $4bdf
 	test_flag FLAG_COURT2_SPECTATORS_TALKED_DOUBLES ; $4be1
 	jp nz, Court2SpectatorsRepeatChat ; $4be4
 	set_flag FLAG_COURT2_SPECTATORS_TALKED_DOUBLES ; $4be7
-	jr Label_14_4bf5 ; $4bea
-Label_14_4bec:
+	jr .step ; $4bea
+.checkFlag:
 	test_flag FLAG_COURT2_SPECTATORS_TALKED_SINGLES ; $4bec
 	jp nz, Court2SpectatorsRepeatChat ; $4bef
 	set_flag FLAG_COURT2_SPECTATORS_TALKED_SINGLES ; $4bf2
-Label_14_4bf5:
+.step:
 	ld a, [$c2b0] ; $4bf5
 	add a, a ; $4bf8
 	add a, $5f ; $4bf9
@@ -1111,18 +1111,18 @@ Court2SpectatorsRepeatChat:
 Court2Npc0A_14:
 	script_set_text Text_1f_106 ; $4dcc
 	test_flag FLAG_DOUBLES ; $4dd2
-	jr nz, Label_14_4de6 ; $4dd5
+	jr nz, .step ; $4dd5
 	ld a, [$c2b0] ; $4dd7
 	cp a, $03 ; $4dda
-	jr nz, Label_14_4df3 ; $4ddc
+	jr nz, .speak ; $4ddc
 	script_set_text Text_1f_113 ; $4dde
-	jr Label_14_4df3 ; $4de4
-Label_14_4de6:
+	jr .speak ; $4de4
+.step:
 	ld a, [$c2b0] ; $4de6
 	cp a, $06 ; $4de9
-	jr nz, Label_14_4df3 ; $4deb
+	jr nz, .speak ; $4deb
 	script_set_text Text_1f_113 ; $4ded
-Label_14_4df3:
+.speak:
 	script_speak $0a ; $4df3
 	ret ; $4df8
 Court2NpcScripts_14:
@@ -1216,18 +1216,18 @@ Court2ActorsAlt_14:
 Court2EntryWalkIn:
 	ld a, [wStoryModeEntryPoint] ; $4f66
 	cp a, $ff ; $4f69
-	jp z, Label_14_4fab ; $4f6b
+	jp z, .done ; $4f6b
 	test_flag FLAG_DOUBLES ; $4f6e
-	jr z, Label_14_4f99 ; $4f71
+	jr z, .walkOff ; $4f71
 	script_set_speed ACTOR_PARTNER, $00ff ; $4f73
 	script_move_angle ACTOR_PARTNER, FACE_RIGHT, $0200 ; $4f7b
 	script_wait_move ACTOR_PARTNER ; $4f85
 	script_face ACTOR_PARTNER, FACE_LEFT ; $4f8a
 	script_set_speed ACTOR_PARTNER, $0010 ; $4f91
-Label_14_4f99:
+.walkOff:
 	script_set_speed ACTOR_PLAYER, $0010 ; $4f99
 	script_move_angle ACTOR_PLAYER, FACE_LEFT, $0200 ; $4fa1
-Label_14_4fab:
+.done:
 	ret ; $4fab
 Court1MapScripts_14:
 	; $4fac, 14 bytes (map_tree)
@@ -1393,22 +1393,22 @@ Court1ActorsAlt_14:
 Court1EntryWalkIn:
 	ld a, [wStoryModeEntryPoint] ; $51a4
 	cp a, $ff ; $51a7
-	jp z, Label_14_51e9 ; $51a9
+	jp z, .done ; $51a9
 	test_flag FLAG_DOUBLES ; $51ac
-	jr z, Label_14_51d7 ; $51af
+	jr z, .walkOff ; $51af
 	script_set_speed ACTOR_PARTNER, $00ff ; $51b1
 	script_move_angle ACTOR_PARTNER, FACE_LEFT, $0200 ; $51b9
 	script_wait_move ACTOR_PARTNER ; $51c3
 	script_face ACTOR_PARTNER, FACE_RIGHT ; $51c8
 	script_set_speed ACTOR_PARTNER, $0010 ; $51cf
-Label_14_51d7:
+.walkOff:
 	script_set_speed ACTOR_PLAYER, $0010 ; $51d7
 	script_move_angle ACTOR_PLAYER, FACE_RIGHT, $0200 ; $51df
-Label_14_51e9:
+.done:
 	ret ; $51e9
 LoadCourtPlayerPartnerObjDefs_14:
 	test_flag FLAG_DOUBLES ; $51ea
-	jp z, Label_14_5208 ; $51ed
+	jp z, .step ; $51ed
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $51f0
 	ld d, $58 ; $51f3
 	add a, d ; $51f5
@@ -1418,7 +1418,7 @@ LoadCourtPlayerPartnerObjDefs_14:
 	ld b, h ; $51fd
 	farcall LoadActorObjectDefIfValid ; $51fe
 	script_set_anim ACTOR_PARTNER, $01 ; $5201
-Label_14_5208:
+.step:
 	ld a, [wStoryModeGenderOfMainCharacter] ; $5208
 	ld d, $56 ; $520b
 	add a, d ; $520d
@@ -1476,7 +1476,7 @@ IslandSkyInitScript_14:
 	cp a, $02 ; $52e6
 	jp z, QueuePlaneSpriteByFrameCounter_14.loadScene ; $52e8
 	cp a, $08 ; $52eb
-	jp z, Label_14_64e1 ; $52ed
+	jp z, Table_14_64d5.step ; $52ed
 	cp a, $0e ; $52f0
 	jp z, QueueTwinkleSprite_14.queue ; $52f2
 	cp a, $0f ; $52f5
@@ -1945,21 +1945,21 @@ QueuePlaneSpriteByHeight_14:
 	ld a, [$c2b1] ; $5ea1
 	sub a, $88 ; $5ea4
 	cp a, $0a ; $5ea6
-	jr c, Label_14_5ec4 ; $5ea8
+	jr c, .step ; $5ea8
 	ld b, $10 ; $5eaa
 	cp a, $14 ; $5eac
-	jr c, Label_14_5ec4 ; $5eae
+	jr c, .step ; $5eae
 	ld b, $20 ; $5eb0
 	cp a, $1e ; $5eb2
-	jr c, Label_14_5ec4 ; $5eb4
+	jr c, .step ; $5eb4
 	ld b, $30 ; $5eb6
 	cp a, $50 ; $5eb8
-	jr c, Label_14_5ec4 ; $5eba
+	jr c, .step ; $5eba
 	ld b, $20 ; $5ebc
 	cp a, $78 ; $5ebe
-	jr c, Label_14_5ec4 ; $5ec0
+	jr c, .step ; $5ec0
 	ld b, $10 ; $5ec2
-Label_14_5ec4:
+.step:
 	ld c, b ; $5ec4
 	ld hl, SpriteTemplate_14_5e50 ; $5ec5
 	ld b, $08 ; $5ec8
@@ -2083,13 +2083,13 @@ UpdateWaterSplash0_14:
 AdvanceWaterSplash0Rise_14:
 	ld a, [$c2bc] ; $616b
 	and a, a ; $616e
-	jr z, Label_14_617d ; $616f
+	jr z, .done ; $616f
 	dec a ; $6171
 	ld [$c2bc], a ; $6172
 	ld a, [wWaterSpriteMinigameTimer] ; $6175
 	sub a, $02 ; $6178
 	ld [wWaterSpriteMinigameTimer], a ; $617a
-Label_14_617d:
+.done:
 	ret ; $617d
 UpdateWaterSplash1_14:
 	ldh a, [hScrollX] ; $617e
@@ -2182,13 +2182,13 @@ UpdateWaterSplash1_14:
 AdvanceWaterSplash1Rise_14:
 	ld a, [$c2bd] ; $6225
 	and a, a ; $6228
-	jr z, Label_14_6237 ; $6229
+	jr z, .done ; $6229
 	dec a ; $622b
 	ld [$c2bd], a ; $622c
 	ld a, [wWaterSpriteMinigameTimer + 1] ; $622f
 	sub a, $02 ; $6232
 	ld [wWaterSpriteMinigameTimer + 1], a ; $6234
-Label_14_6237:
+.done:
 	ret ; $6237
 LoadPlaneObjGfx2_14:
 	ldh a, [hWramBank] ; $6238
@@ -2465,12 +2465,12 @@ AdvanceFirework0Ascent_14:
 	ld b, $03 ; $64be
 	ld a, [$c2b8] ; $64c0
 	cp a, $14 ; $64c3
-	jr nc, Label_14_64cd ; $64c5
+	jr nc, .step ; $64c5
 	dec b ; $64c7
 	cp a, $0a ; $64c8
-	jr nc, Label_14_64cd ; $64ca
+	jr nc, .step ; $64ca
 	dec b ; $64cc
-Label_14_64cd:
+.step:
 	ld a, [wWaterSpriteMinigameTimer] ; $64cd
 	sub a, b ; $64d0
 	ld [wWaterSpriteMinigameTimer], a ; $64d1
@@ -2480,7 +2480,7 @@ Table_14_64d5:
 	db $00, $0c, $0e, $10 ; 0x00
 	db $00, $20, $30, $40 ; 0x04
 	db $00, $50, $60, $70 ; 0x08
-Label_14_64e1:
+.step:
 	ldh a, [hRomBank] ; $64e1
 	ld hl, FireworkMapActors_14 ; $64e3
 	farcall ScriptRespawnLocationActors ; $64e6
@@ -2489,10 +2489,10 @@ Label_14_64e1:
 	call LoadFireworkObjGfx_14 ; $64ef
 	call EnableLCD ; $64f2
 	test_flag FLAG_DOUBLES ; $64f5
-	jp z, Label_14_650b ; $64f8
+	jp z, .placeActors ; $64f8
 	script_null_script ACTOR_PARTNER ; $64fb
 	script_set_position ACTOR_PARTNER, $3f00, $3f00 ; $6500
-Label_14_650b:
+.placeActors:
 	script_set_position ACTOR_PLAYER, $3f00, $3f00 ; $650b
 	xor a, a ; $6516
 	ld [wStoryModeShowLocationName], a ; $6517
@@ -2594,7 +2594,7 @@ Label_14_650b:
 	call WaitFadeEnd ; $6644
 	call ClearFrameTasks ; $6647
 	test_flag FLAG_DOUBLES ; $664a
-	jr z, Label_14_6662 ; $664d
+	jr z, .step2 ; $664d
 	ld a, $1a ; $664f
 	ld [wStoryModeCurrentLocation], a ; $6651
 	ld a, $0b ; $6654
@@ -2603,7 +2603,7 @@ Label_14_650b:
 	ld [$c294], a ; $665b
 	ld [wStoryModeExitLocationRequest], a ; $665e
 	ret ; $6661
-Label_14_6662:
+.step2:
 	ld a, $1a ; $6662
 	ld [wStoryModeCurrentLocation], a ; $6664
 	ld a, $0a ; $6667
@@ -2981,19 +2981,19 @@ AnimateIslandSkyEffectSprites_14:
 	ld hl, IslandSkySpriteData_14 ; $73e8
 	ld a, [$c2be] ; $73eb
 	and a, a ; $73ee
-	jr nz, Label_14_73f8 ; $73ef
+	jr nz, .step ; $73ef
 	ld a, [wWaterSpriteMinigameFlag] ; $73f1
 	inc a ; $73f4
 	ld [wWaterSpriteMinigameFlag], a ; $73f5
-Label_14_73f8:
+.step:
 	ld a, [wWaterSpriteMinigameFlag] ; $73f8
 	swap a ; $73fb
 	and a, $03 ; $73fd
 	cp a, $03 ; $73ff
-	jr nz, Label_14_7408 ; $7401
+	jr nz, .step2 ; $7401
 	ld a, $00 ; $7403
 	ld [wWaterSpriteMinigameFlag], a ; $7405
-Label_14_7408:
+.step2:
 	inc a ; $7408
 	ld b, a ; $7409
 	call QueueSpriteTemplate ; $740a
@@ -3269,13 +3269,13 @@ PlayTwinkleAnimation_14:
 	call RegisterFrameTask ; $7887
 	sound $84 ; $788a
 	ld h, $04 ; $788c
-Label_14_788e:
+.loop:
 	script_wait_frames $04 ; $788e
 	ld a, [wWaterSpriteMinigameSwingCount] ; $7895
 	add a, $04 ; $7898
 	ld [wWaterSpriteMinigameSwingCount], a ; $789a
 	dec h ; $789d
-	jr nz, Label_14_788e ; $789e
+	jr nz, .loop ; $789e
 	ld hl, QueueTwinkleSprite_14 ; $78a0
 	call UnregisterFrameTask ; $78a3
 	ret ; $78a6
@@ -3505,62 +3505,62 @@ ActorScript_14_78e7:
 	as_anim $03
 	as_jump .L1a7
 	test_flag FLAG_DOUBLES ; $7a9d
-	jr nz, Label_14_7ac4 ; $7aa0
+	jr nz, .step ; $7aa0
 	ld a, $00 ; $7aa2
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7aa4
-	jr z, Label_14_7ac0 ; $7aa7
+	jr z, .loop ; $7aa7
 	ld a, $02 ; $7aa9
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $7aab
-	jr z, Label_14_7ac0 ; $7aae
+	jr z, .loop ; $7aae
 	ld a, $04 ; $7ab0
 	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $7ab2
-	jr z, Label_14_7ac0 ; $7ab5
+	jr z, .loop ; $7ab5
 	ld a, $06 ; $7ab7
 	test_flag FLAG_STORY_COMPLETE_SINGLES ; $7ab9
-	jr z, Label_14_7ac0 ; $7abc
+	jr z, .loop ; $7abc
 	ld a, $08 ; $7abe
-Label_14_7ac0:
+.loop:
 	ld [$c2b0], a ; $7ac0
 	ret ; $7ac3
-Label_14_7ac4:
+.step:
 	ld a, $01 ; $7ac4
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $7ac6
-	jr z, Label_14_7ac0 ; $7ac9
+	jr z, .loop ; $7ac9
 	ld a, $03 ; $7acb
 	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_1 ; $7acd
-	jr z, Label_14_7ac0 ; $7ad0
+	jr z, .loop ; $7ad0
 	ld a, $05 ; $7ad2
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $7ad4
-	jr z, Label_14_7ac0 ; $7ad7
+	jr z, .loop ; $7ad7
 	ld a, $07 ; $7ad9
 	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $7adb
-	jr z, Label_14_7ac0 ; $7ade
+	jr z, .loop ; $7ade
 	ld a, $09 ; $7ae0
-	jr Label_14_7ac0 ; $7ae2
+	jr .loop ; $7ae2
 	ld a, $00 ; $7ae4
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7ae6
-	jr z, Label_14_7b03 ; $7ae9
+	jr z, .loopB ; $7ae9
 	inc a ; $7aeb
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $7aec
-	jr z, Label_14_7b03 ; $7aef
+	jr z, .loopB ; $7aef
 	inc a ; $7af1
 	test_flag FLAG_DOUBLES ; $7af2
-	jr nz, Label_14_7b07 ; $7af5
+	jr nz, .checkFlag ; $7af5
 	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $7af7
-	jr z, Label_14_7b03 ; $7afa
+	jr z, .loopB ; $7afa
 	inc a ; $7afc
 	test_flag FLAG_STORY_COMPLETE_SINGLES ; $7afd
-	jr z, Label_14_7b03 ; $7b00
+	jr z, .loopB ; $7b00
 	inc a ; $7b02
-Label_14_7b03:
+.loopB:
 	ld [$c2b0], a ; $7b03
 	ret ; $7b06
-Label_14_7b07:
+.checkFlag:
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $7b07
-	jr z, Label_14_7b03 ; $7b0a
+	jr z, .loopB ; $7b0a
 	inc a ; $7b0c
 	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $7b0d
-	jr z, Label_14_7b03 ; $7b10
+	jr z, .loopB ; $7b10
 	inc a ; $7b12
-	jr Label_14_7b03 ; $7b13
+	jr .loopB ; $7b13
 	; $7b15, 1259 bytes fill to bank end (linker-padded)

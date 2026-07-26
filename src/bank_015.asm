@@ -107,9 +107,9 @@ TournamentCourtyardTile01_15:
 TournamentCourtyardInitScript_15:
 	ld a, [wStoryModeEntryPoint] ; $41a6
 	cp a, $0f ; $41a9
-	jr nz, Label_15_41b0 ; $41ab
+	jr nz, .step ; $41ab
 	jp TournamentSiteArrivalScene ; $41ad
-Label_15_41b0:
+.step:
 	call SetPlayerPartnerActorSprites ; $41b0
 	call InitTournamentSiteSceneVariant ; $41b3
 	call TournamentSiteEntryWalkIn ; $41b6
@@ -382,9 +382,9 @@ SetupTournamentSitePartnerActor:
 TournamentSiteEntryWalkIn:
 	ld a, [wStoryModeEntryPoint] ; $46f0
 	cp a, $ff ; $46f3
-	jp z, Label_15_4756 ; $46f5
+	jp z, .done ; $46f5
 	test_flag FLAG_DOUBLES ; $46f8
-	jr z, Label_15_4739 ; $46fb
+	jr z, .walkOff ; $46fb
 	script_set_speed ACTOR_PARTNER, $00ff ; $46fd
 	ld a, [wStoryModeEntryPoint] ; $4705
 	dec a ; $4708
@@ -411,7 +411,7 @@ TournamentSiteEntryWalkIn:
 	ld b, b ; $472d
 	farcall SetActorFacing ; $472e
 	script_set_speed ACTOR_PARTNER, $0010 ; $4731
-Label_15_4739:
+.walkOff:
 	script_set_speed ACTOR_PLAYER, $0010 ; $4739
 	ld a, [wStoryModeEntryPoint] ; $4741
 	dec a ; $4744
@@ -425,14 +425,14 @@ Label_15_4739:
 	ld b, b ; $474f
 	ld de, $0200 ; $4750
 	farcall MoveActorByAngle ; $4753
-Label_15_4756:
+.done:
 	ret ; $4756
 Facings_15_4757:
 	; $4757, 8 bytes (enum:FACE:8)
 	db FACE_LEFT, FACE_RIGHT, FACE_DOWN, FACE_UP, FACE_RIGHT, FACE_LEFT, FACE_UP, FACE_DOWN ; 0x00
 SetPlayerPartnerActorSprites:
 	test_flag FLAG_DOUBLES ; $475f
-	jp z, Label_15_477d ; $4762
+	jp z, .step ; $4762
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $4765
 	ld d, $58 ; $4768
 	add a, d ; $476a
@@ -442,7 +442,7 @@ SetPlayerPartnerActorSprites:
 	ld b, h ; $4772
 	farcall LoadActorObjectDefIfValid ; $4773
 	script_set_anim ACTOR_PARTNER, $01 ; $4776
-Label_15_477d:
+.step:
 	ld a, [wStoryModeGenderOfMainCharacter] ; $477d
 	ld d, $56 ; $4780
 	add a, d ; $4782
@@ -499,19 +499,19 @@ TrainingCourtEntryPoints_15:
 TrainingCourtArrival01_15:
 	ld a, [wStoryModeEntryPoint] ; $490d
 	cp a, $ff ; $4910
-	jp z, Label_15_4955 ; $4912
+	jp z, .done ; $4912
 	call ClearTrainingCourtNpcFlags ; $4915
 	test_flag FLAG_DOUBLES ; $4918
-	jr z, Label_15_4943 ; $491b
+	jr z, .walkOff ; $491b
 	script_set_speed ACTOR_PARTNER, $00ff ; $491d
 	script_move_angle ACTOR_PARTNER, FACE_LEFT, $0200 ; $4925
 	script_wait_move ACTOR_PARTNER ; $492f
 	script_face ACTOR_PARTNER, FACE_RIGHT ; $4934
 	script_set_speed ACTOR_PARTNER, $0010 ; $493b
-Label_15_4943:
+.walkOff:
 	script_set_speed ACTOR_PLAYER, $0010 ; $4943
 	script_move_angle ACTOR_PLAYER, FACE_RIGHT, $0200 ; $494b
-Label_15_4955:
+.done:
 	ret ; $4955
 TrainingCourtExitTriggers_15:
 	; $4956, 17 bytes (map_scripts)
@@ -661,16 +661,16 @@ TrainingCourtNpc0B_15:
 	farcall InitDialogueTextCursor ; $4a4e
 	ld a, [$c2b0] ; $4a51
 	cp a, $01 ; $4a54
-	jr z, Label_15_4a70 ; $4a56
+	jr z, .speak ; $4a56
 	ld a, $0b ; $4a58
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $4a5a
 	farcall RunDialogueYesNoPrompt ; $4a5d
 	farcall ScriptCloseDialogueWindow ; $4a60
 	script_wait_frames $05 ; $4a63
 	and a, a ; $4a6a
-	jr z, Label_15_4a70 ; $4a6b
+	jr z, .speak ; $4a6b
 	farcall AdvanceDialogueTextCursor ; $4a6d
-Label_15_4a70:
+.speak:
 	script_speak $0b ; $4a70
 	ret ; $4a75
 	; $4a76, 10 bytes (records:2)
@@ -713,16 +713,16 @@ TrainingCourtNpc0F_15:
 	farcall InitDialogueTextCursor ; $4aaf
 	ld a, [$c2b0] ; $4ab2
 	cp a, $01 ; $4ab5
-	jr nc, Label_15_4ad1 ; $4ab7
+	jr nc, .speak ; $4ab7
 	ld a, $0f ; $4ab9
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $4abb
 	farcall RunDialogueYesNoPrompt ; $4abe
 	farcall ScriptCloseDialogueWindow ; $4ac1
 	script_wait_frames $05 ; $4ac4
 	and a, a ; $4acb
-	jr z, Label_15_4ad1 ; $4acc
+	jr z, .speak ; $4acc
 	farcall AdvanceDialogueTextCursor ; $4ace
-Label_15_4ad1:
+.speak:
 	script_speak $0f ; $4ad1
 	ret ; $4ad6
 	; $4ad7, 10 bytes (records:2)
@@ -745,16 +745,16 @@ TrainingCourtNpc10_15:
 	farcall InitDialogueTextCursor ; $4aef
 	ld a, [$c2b0] ; $4af2
 	cp a, $02 ; $4af5
-	jr c, Label_15_4b11 ; $4af7
+	jr c, .speak ; $4af7
 	ld a, $10 ; $4af9
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $4afb
 	farcall RunDialogueYesNoPrompt ; $4afe
 	farcall ScriptCloseDialogueWindow ; $4b01
 	script_wait_frames $05 ; $4b04
 	and a, a ; $4b0b
-	jr z, Label_15_4b11 ; $4b0c
+	jr z, .speak ; $4b0c
 	farcall AdvanceDialogueTextCursor ; $4b0e
-Label_15_4b11:
+.speak:
 	script_speak $10 ; $4b11
 	ret ; $4b16
 TextIds_15_4b17:
@@ -781,13 +781,13 @@ TrainingCourtNpc13_15:
 	farcall ScriptCloseDialogueWindow ; $4b47
 	script_wait_frames $05 ; $4b4a
 	and a, a ; $4b51
-	jp nz, Label_15_4b6e ; $4b52
+	jp nz, .setFlag ; $4b52
 	script_set_anim ACTOR_PLAYER, $03 ; $4b55
 	script_wait_idle ACTOR_PLAYER ; $4b5c
 	script_speak $13 ; $4b61
 	script_wait_frames $0a ; $4b66
 	ret ; $4b6d
-Label_15_4b6e:
+.setFlag:
 	set_flag FLAG_SWING_PRACTICE_KID_PLACED ; $4b6e
 	script_set_anim ACTOR_PLAYER, $04 ; $4b71
 	script_wait_idle ACTOR_PLAYER ; $4b78
@@ -879,14 +879,14 @@ RunWaterSpriteSwingContestAndReward:
 	script_set_position $16, $3f00, $3f00 ; $4d37
 	call WaterSpriteSwingContestScene ; $4d42
 	test_flag FLAG_HAVE_SILVER_RACKET ; $4d45
-	jp nz, Label_15_4d5c ; $4d48
+	jp nz, .done ; $4d48
 	test_flag FLAG_HAVE_GOLD_RACKET ; $4d4b
-	jp nz, Label_15_4d5c ; $4d4e
+	jp nz, .done ; $4d4e
 	ld a, [wWaterSpriteMinigameSwingCount] ; $4d51
 	cp a, $64 ; $4d54
-	jp c, Label_15_4d5c ; $4d56
+	jp c, .done ; $4d56
 	call WaterSpriteRacketRewardScene ; $4d59
-Label_15_4d5c:
+.done:
 	ret ; $4d5c
 WaterSpriteRacketRewardScene:
 	script_wait_frames $3c ; $4d5d
@@ -1071,15 +1071,15 @@ TrainingCourtNpcScripts_15:
 	db $ff
 TrainingCourtNpc06_15:
 	test_flag FLAG_CLEARED_SERVICE_MATCH_1 ; $50fc
-	jr nz, Label_15_5105 ; $50ff
+	jr nz, .checkFlag ; $50ff
 	call ServiceAceMatchChallengeScene ; $5101
 	ret ; $5104
-Label_15_5105:
+.checkFlag:
 	test_flag FLAG_CLEARED_SERVICE_MATCH_2 ; $5105
-	jr nz, Label_15_510e ; $5108
+	jr nz, .step ; $5108
 	call CenterLineServeMatchChallengeScene ; $510a
 	ret ; $510d
-Label_15_510e:
+.step:
 	call AcademyRulesServeMatchChallengeScene ; $510e
 	ret ; $5111
 TrainingCourtNpc07FaceDown_15:
@@ -1134,15 +1134,15 @@ TrainingCourtNpc07_15:
 	ret ; $51a7
 TrainingCourtNpc11_15:
 	test_flag FLAG_CLEARED_NET_GAME_MATCH_1 ; $51a8
-	jr nz, Label_15_51b1 ; $51ab
+	jr nz, .checkFlag ; $51ab
 	call VolleyMatchChallengeScene ; $51ad
 	ret ; $51b0
-Label_15_51b1:
+.checkFlag:
 	test_flag FLAG_CLEARED_NET_GAME_MATCH_2 ; $51b1
-	jr nz, Label_15_51ba ; $51b4
+	jr nz, .step ; $51b4
 	call SmashMatchChallengeScene ; $51b6
 	ret ; $51b9
-Label_15_51ba:
+.step:
 	call DropShotMatchChallengeScene ; $51ba
 	ret ; $51bd
 TrainingCourtNpc12FaceUp_15:
@@ -1197,15 +1197,15 @@ TrainingCourtNpc12_15:
 	ret ; $5253
 TrainingCourtNpc0C_15:
 	test_flag FLAG_CLEARED_STROKE_MATCH_1 ; $5254
-	jr nz, Label_15_525d ; $5257
+	jr nz, .checkFlag ; $5257
 	call StrokeMatchChallengeScene ; $5259
 	ret ; $525c
-Label_15_525d:
+.checkFlag:
 	test_flag FLAG_CLEARED_STROKE_MATCH_2 ; $525d
-	jr nz, Label_15_5266 ; $5260
+	jr nz, .step ; $5260
 	call LobMatchChallengeScene ; $5262
 	ret ; $5265
-Label_15_5266:
+.step:
 	call ReturnMatchChallengeScene ; $5266
 	ret ; $5269
 TrainingCourtNpc0DFaceUp_15:
@@ -1307,36 +1307,36 @@ TrainingCourtInitScript_15:
 TrainingCourtResultDispatch:
 	ld a, [wMatchExitRequest] ; $536d
 	cp a, $01 ; $5370
-	jr nz, Label_15_5378 ; $5372
+	jr nz, .step ; $5372
 	call TrainingCourtReentryDispatch ; $5374
 	ret ; $5377
-Label_15_5378:
+.step:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $5378
 	cp a, $12 ; $537b
-	jr c, Label_15_5380 ; $537d
+	jr c, .step2 ; $537d
 	ret ; $537f
-Label_15_5380:
+.step2:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $5380
 	ld a, a ; $5383
 	rst Rst00 ; $5384
 	dw StrokeChallengerResultScene.celebrate ; $5385 jumptable
 	dw StrokeChallengerResultScene.speakWin ; $5387 jumptable
 	dw StrokeChallengerResultScene.partnerJoins ; $5389 jumptable
-	dw Label_15_7290 ; $538b jumptable
-	dw Label_15_729f ; $538d jumptable
-	dw Label_15_72b4 ; $538f jumptable
+	dw TestStrokeChallengerGameFlag.step ; $538b jumptable
+	dw TestStrokeChallengerGameFlag.step2 ; $538d jumptable
+	dw TestStrokeChallengerGameFlag.step3 ; $538f jumptable
 	dw MovePlayerToLessonCourtSpot.netResultText ; $5391 jumptable
 	dw MovePlayerToLessonCourtSpot.netResultDoubles ; $5393 jumptable
 	dw MovePlayerToLessonCourtSpot.serveResultText ; $5395 jumptable
-	dw Label_15_7539 ; $5397 jumptable
-	dw Label_15_754e ; $5399 jumptable
-	dw Label_15_7563 ; $539b jumptable
+	dw InitServeCoachScene.step ; $5397 jumptable
+	dw InitServeCoachScene.step2 ; $5399 jumptable
+	dw InitServeCoachScene.step3 ; $539b jumptable
 	dw MovePlayerToLessonCourtSpot.serveResultTextAlt ; $539d jumptable
 	dw MovePlayerToLessonCourtSpot.strokeResultText ; $539f jumptable
 	dw MovePlayerToLessonCourtSpot.strokeResult ; $53a1 jumptable
-	dw Label_15_77aa ; $53a3 jumptable
-	dw Label_15_77bd ; $53a5 jumptable
-	dw Label_15_77d0 ; $53a7 jumptable
+	dw InitNetCoachScene.step ; $53a3 jumptable
+	dw InitNetCoachScene.step2 ; $53a5 jumptable
+	dw InitNetCoachScene.step3 ; $53a7 jumptable
 TrainingCourtReentryDispatch:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $53a9
 	ld a, a ; $53ac
@@ -1677,7 +1677,7 @@ WaterSpriteSwingContestScene:
 TogglePlayerSpriteXFlip:
 	ld a, [wStoryModeMainCharacterLeftHanded] ; $5777
 	and a, a ; $577a
-	jr z, Label_15_578c ; $577b
+	jr z, .done ; $577b
 	script_get_actor_state ACTOR_PLAYER ; $577d
 	ld c, l ; $5782
 	ld b, h ; $5783
@@ -1686,7 +1686,7 @@ TogglePlayerSpriteXFlip:
 	ld a, [hl] ; $5788
 	xor a, $20 ; $5789
 	ld [hl], a ; $578b
-Label_15_578c:
+.done:
 	ret ; $578c
 DrawWaterSpriteMinigameCounters:
 	ld hl, wWaterSpriteMinigameTimer ; $578d
@@ -2654,7 +2654,7 @@ ServiceAceMatchChallengeScene:
 	farcall ScriptCloseDialogueWindow ; $63f7
 	script_wait_frames $05 ; $63fa
 	and a, a ; $6401
-	jp nz, Label_15_64a2 ; $6402
+	jp nz, .loop ; $6402
 	farcall AdvanceDialogueTextCursor ; $6405
 	ld a, $06 ; $6408
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $640a
@@ -2662,7 +2662,7 @@ ServiceAceMatchChallengeScene:
 	farcall ScriptCloseDialogueWindow ; $6410
 	script_wait_frames $05 ; $6413
 	and a, a ; $641a
-	jp nz, Label_15_64a2 ; $641b
+	jp nz, .loop ; $641b
 	farcall AdvanceDialogueTextCursor ; $641e
 	script_speak $06 ; $6421
 	script_set_anim $06, $03 ; $6426
@@ -2692,7 +2692,7 @@ ServiceAceMatchChallengeScene:
 	ld a, $00 ; $649c
 	farcall RunTrainingDrillByID ; $649e
 	ret ; $64a1
-Label_15_64a2:
+.loop:
 	script_speak $06 ; $64a2
 	ret ; $64a7
 CenterLineServeMatchChallengeScene:
@@ -2704,7 +2704,7 @@ CenterLineServeMatchChallengeScene:
 	farcall ScriptCloseDialogueWindow ; $64be
 	script_wait_frames $05 ; $64c1
 	and a, a ; $64c8
-	jp nz, Label_15_64a2 ; $64c9
+	jp nz, ServiceAceMatchChallengeScene.loop ; $64c9
 	farcall AdvanceDialogueTextCursor ; $64cc
 	ld a, $06 ; $64cf
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $64d1
@@ -2712,7 +2712,7 @@ CenterLineServeMatchChallengeScene:
 	farcall ScriptCloseDialogueWindow ; $64d7
 	script_wait_frames $05 ; $64da
 	and a, a ; $64e1
-	jp nz, Label_15_64a2 ; $64e2
+	jp nz, ServiceAceMatchChallengeScene.loop ; $64e2
 	farcall AdvanceDialogueTextCursor ; $64e5
 	script_speak $06 ; $64e8
 	script_set_anim $06, $03 ; $64ed
@@ -2756,7 +2756,7 @@ AcademyRulesServeMatchChallengeScene:
 	farcall ScriptCloseDialogueWindow ; $659c
 	script_wait_frames $05 ; $659f
 	and a, a ; $65a6
-	jp nz, Label_15_64a2 ; $65a7
+	jp nz, ServiceAceMatchChallengeScene.loop ; $65a7
 	farcall AdvanceDialogueTextCursor ; $65aa
 	ld a, $06 ; $65ad
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $65af
@@ -2764,7 +2764,7 @@ AcademyRulesServeMatchChallengeScene:
 	farcall ScriptCloseDialogueWindow ; $65b5
 	script_wait_frames $05 ; $65b8
 	and a, a ; $65bf
-	jp nz, Label_15_64a2 ; $65c0
+	jp nz, ServiceAceMatchChallengeScene.loop ; $65c0
 	farcall AdvanceDialogueTextCursor ; $65c3
 	script_speak $06 ; $65c6
 	script_set_anim $06, $03 ; $65cb
@@ -2839,25 +2839,25 @@ ActorScript_15_66e4:
 	as_wait_move
 	as_set_field $14, FACE_RIGHT
 	as_halt
-Label_15_66ef:
+.loop:
 	script_speak $07 ; $66ef
 	ret ; $66f4
 ServeCoachJuniorLessonScene:
 	script_face_toward $07, ACTOR_PARTNER ; $66f5
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $66fd
-	jr nz, Label_15_670a ; $6700
+	jr nz, .setText ; $6700
 	script_set_text Text_37_16 ; $6702
-	jr Label_15_6710 ; $6708
-Label_15_670a:
+	jr .step ; $6708
+.setText:
 	script_set_text Text_37_22 ; $670a
-Label_15_6710:
+.step:
 	ld a, $07 ; $6710
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $6712
 	farcall RunDialogueYesNoPrompt ; $6715
 	farcall ScriptCloseDialogueWindow ; $6718
 	script_wait_frames $05 ; $671b
 	and a, a ; $6722
-	jr nz, Label_15_66ef ; $6723
+	jr nz, ActorScript_15_66e4.loop ; $6723
 	farcall AdvanceDialogueTextCursor ; $6725
 	ld a, $07 ; $6728
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $672a
@@ -2865,7 +2865,7 @@ Label_15_6710:
 	farcall ScriptCloseDialogueWindow ; $6730
 	script_wait_frames $05 ; $6733
 	and a, a ; $673a
-	jr nz, Label_15_66ef ; $673b
+	jr nz, ActorScript_15_66e4.loop ; $673b
 	farcall AdvanceDialogueTextCursor ; $673d
 	script_speak $07 ; $6740
 	call MovePartyToServeCoachSpot ; $6745
@@ -2895,7 +2895,7 @@ ServeCoachSeniorLessonScene:
 	farcall ScriptCloseDialogueWindow ; $6794
 	script_wait_frames $05 ; $6797
 	and a, a ; $679e
-	jp nz, Label_15_66ef ; $679f
+	jp nz, ActorScript_15_66e4.loop ; $679f
 	farcall AdvanceDialogueTextCursor ; $67a2
 	ld a, $07 ; $67a5
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $67a7
@@ -2903,7 +2903,7 @@ ServeCoachSeniorLessonScene:
 	farcall ScriptCloseDialogueWindow ; $67ad
 	script_wait_frames $05 ; $67b0
 	and a, a ; $67b7
-	jp nz, Label_15_66ef ; $67b8
+	jp nz, ActorScript_15_66e4.loop ; $67b8
 	farcall AdvanceDialogueTextCursor ; $67bb
 	script_speak $07 ; $67be
 	call MovePartyToServeCoachSpot ; $67c3
@@ -2933,7 +2933,7 @@ ServeCoachVarsityLessonScene:
 	farcall ScriptCloseDialogueWindow ; $6812
 	script_wait_frames $05 ; $6815
 	and a, a ; $681c
-	jp nz, Label_15_66ef ; $681d
+	jp nz, ActorScript_15_66e4.loop ; $681d
 	farcall AdvanceDialogueTextCursor ; $6820
 	ld a, $07 ; $6823
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $6825
@@ -2941,7 +2941,7 @@ ServeCoachVarsityLessonScene:
 	farcall ScriptCloseDialogueWindow ; $682b
 	script_wait_frames $05 ; $682e
 	and a, a ; $6835
-	jp nz, Label_15_66ef ; $6836
+	jp nz, ActorScript_15_66e4.loop ; $6836
 	farcall AdvanceDialogueTextCursor ; $6839
 	script_speak $07 ; $683c
 	call MovePartyToServeCoachSpot ; $6841
@@ -3033,7 +3033,7 @@ SmashMatchChallengeScene:
 	farcall ScriptCloseDialogueWindow ; $6979
 	script_wait_frames $05 ; $697c
 	and a, a ; $6983
-	jp nz, Label_15_6a27 ; $6984
+	jp nz, .speak ; $6984
 	farcall AdvanceDialogueTextCursor ; $6987
 	script_speak $11 ; $698a
 	script_set_anim $11, $03 ; $698f
@@ -3059,7 +3059,7 @@ SmashMatchChallengeScene:
 	farcall ScriptCloseDialogueWindow ; $69fd
 	script_wait_frames $05 ; $6a00
 	and a, a ; $6a07
-	jr nz, Label_15_6a27 ; $6a08
+	jr nz, .speak ; $6a08
 	script_set_anim $11, $03 ; $6a0a
 	script_wait_idle $11 ; $6a11
 	farcall AdvanceDialogueTextCursor ; $6a16
@@ -3068,7 +3068,7 @@ SmashMatchChallengeScene:
 	ld a, $07 ; $6a21
 	farcall RunTrainingDrillByID ; $6a23
 	ret ; $6a26
-Label_15_6a27:
+.speak:
 	script_speak $11 ; $6a27
 	ret ; $6a2c
 DropShotMatchChallengeScene:
@@ -3080,7 +3080,7 @@ DropShotMatchChallengeScene:
 	farcall ScriptCloseDialogueWindow ; $6a43
 	script_wait_frames $05 ; $6a46
 	and a, a ; $6a4d
-	jp nz, Label_15_6af1 ; $6a4e
+	jp nz, .speak ; $6a4e
 	farcall AdvanceDialogueTextCursor ; $6a51
 	script_speak $11 ; $6a54
 	script_set_anim $11, $03 ; $6a59
@@ -3106,7 +3106,7 @@ DropShotMatchChallengeScene:
 	farcall ScriptCloseDialogueWindow ; $6ac7
 	script_wait_frames $05 ; $6aca
 	and a, a ; $6ad1
-	jr nz, Label_15_6af1 ; $6ad2
+	jr nz, .speak ; $6ad2
 	farcall AdvanceDialogueTextCursor ; $6ad4
 	script_set_anim $11, $03 ; $6ad7
 	script_wait_idle $11 ; $6ade
@@ -3115,7 +3115,7 @@ DropShotMatchChallengeScene:
 	ld a, $08 ; $6aeb
 	farcall RunTrainingDrillByID ; $6aed
 	ret ; $6af0
-Label_15_6af1:
+.speak:
 	script_speak $11 ; $6af1
 	ret ; $6af6
 WalkToNetChallengeCourtCutscene:
@@ -3165,7 +3165,7 @@ ActorScript_15_6b71:
 	as_wait_move
 	as_set_field $14, FACE_LEFT
 	as_halt
-Label_15_6b8e:
+.loop:
 	script_speak $0c ; $6b8e
 	ret ; $6b93
 StrokeMatchChallengeScene:
@@ -3177,7 +3177,7 @@ StrokeMatchChallengeScene:
 	farcall ScriptCloseDialogueWindow ; $6baa
 	script_wait_frames $05 ; $6bad
 	and a, a ; $6bb4
-	jp nz, Label_15_6b8e ; $6bb5
+	jp nz, ActorScript_15_6b71.loop ; $6bb5
 	farcall AdvanceDialogueTextCursor ; $6bb8
 	ld a, $0c ; $6bbb
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $6bbd
@@ -3185,7 +3185,7 @@ StrokeMatchChallengeScene:
 	farcall ScriptCloseDialogueWindow ; $6bc3
 	script_wait_frames $05 ; $6bc6
 	and a, a ; $6bcd
-	jp nz, Label_15_6b8e ; $6bce
+	jp nz, ActorScript_15_6b71.loop ; $6bce
 	farcall AdvanceDialogueTextCursor ; $6bd1
 	script_face $0c, FACE_RIGHT ; $6bd4
 	script_wait_frames $28 ; $6bdb
@@ -3216,7 +3216,7 @@ LobMatchChallengeScene:
 	farcall ScriptCloseDialogueWindow ; $6c52
 	script_wait_frames $05 ; $6c55
 	and a, a ; $6c5c
-	jp nz, Label_15_6b8e ; $6c5d
+	jp nz, ActorScript_15_6b71.loop ; $6c5d
 	farcall AdvanceDialogueTextCursor ; $6c60
 	ld a, $0c ; $6c63
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $6c65
@@ -3224,7 +3224,7 @@ LobMatchChallengeScene:
 	farcall ScriptCloseDialogueWindow ; $6c6b
 	script_wait_frames $05 ; $6c6e
 	and a, a ; $6c75
-	jp nz, Label_15_6b8e ; $6c76
+	jp nz, ActorScript_15_6b71.loop ; $6c76
 	farcall AdvanceDialogueTextCursor ; $6c79
 	script_speak $0c ; $6c7c
 	script_face $0c, FACE_RIGHT ; $6c81
@@ -3255,7 +3255,7 @@ ReturnMatchChallengeScene:
 	farcall ScriptCloseDialogueWindow ; $6cfa
 	script_wait_frames $05 ; $6cfd
 	and a, a ; $6d04
-	jp nz, Label_15_6b8e ; $6d05
+	jp nz, ActorScript_15_6b71.loop ; $6d05
 	farcall AdvanceDialogueTextCursor ; $6d08
 	script_speak $0c ; $6d0b
 	ld a, $0c ; $6d10
@@ -3264,7 +3264,7 @@ ReturnMatchChallengeScene:
 	farcall ScriptCloseDialogueWindow ; $6d18
 	script_wait_frames $05 ; $6d1b
 	and a, a ; $6d22
-	jp nz, Label_15_6b8e ; $6d23
+	jp nz, ActorScript_15_6b71.loop ; $6d23
 	farcall AdvanceDialogueTextCursor ; $6d26
 	script_set_anim $0c, $03 ; $6d29
 	script_wait_idle $0c ; $6d30
@@ -3291,15 +3291,15 @@ ReturnMatchChallengeScene:
 	ld a, $0e ; $6da8
 	farcall RunTrainingDrillByID ; $6daa
 	ret ; $6dad
-Label_15_6dae:
+.loop:
 	script_speak $0d ; $6dae
 	ret ; $6db3
 ReturnCoachReturnLessonScene:
 	script_set_text Text_37_196 ; $6db4
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $6dba
-	jr z, Label_15_6dc2 ; $6dbd
+	jr z, .face ; $6dbd
 	farcall AdvanceDialogueTextCursor ; $6dbf
-Label_15_6dc2:
+.face:
 	script_face_toward $0d, ACTOR_PARTNER ; $6dc2
 	ld a, $0d ; $6dca
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $6dcc
@@ -3308,7 +3308,7 @@ Label_15_6dc2:
 	farcall ScriptCloseDialogueWindow ; $6dd8
 	script_wait_frames $05 ; $6ddb
 	and a, a ; $6de2
-	jp nz, Label_15_6dae ; $6de3
+	jp nz, ReturnMatchChallengeScene.loop ; $6de3
 	farcall AdvanceDialogueTextCursor ; $6de6
 	ld a, $0d ; $6de9
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $6deb
@@ -3316,7 +3316,7 @@ Label_15_6dc2:
 	farcall ScriptCloseDialogueWindow ; $6df1
 	script_wait_frames $05 ; $6df4
 	and a, a ; $6dfb
-	jp nz, Label_15_6dae ; $6dfc
+	jp nz, ReturnMatchChallengeScene.loop ; $6dfc
 	farcall AdvanceDialogueTextCursor ; $6dff
 	script_speak $0d ; $6e02
 	call MovePartyToReturnCoachSpot ; $6e07
@@ -3348,7 +3348,7 @@ ReturnCoachLobLessonScene:
 	farcall ScriptCloseDialogueWindow ; $6e61
 	script_wait_frames $05 ; $6e64
 	and a, a ; $6e6b
-	jp nz, Label_15_6dae ; $6e6c
+	jp nz, ReturnMatchChallengeScene.loop ; $6e6c
 	farcall AdvanceDialogueTextCursor ; $6e6f
 	ld a, $0d ; $6e72
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $6e74
@@ -3356,7 +3356,7 @@ ReturnCoachLobLessonScene:
 	farcall ScriptCloseDialogueWindow ; $6e7a
 	script_wait_frames $05 ; $6e7d
 	and a, a ; $6e84
-	jp nz, Label_15_6dae ; $6e85
+	jp nz, ReturnMatchChallengeScene.loop ; $6e85
 	farcall AdvanceDialogueTextCursor ; $6e88
 	script_speak $0d ; $6e8b
 	call MovePartyToReturnCoachSpot ; $6e90
@@ -3387,7 +3387,7 @@ ReturnCoachPassingShotLessonScene:
 	farcall ScriptCloseDialogueWindow ; $6ee4
 	script_wait_frames $05 ; $6ee7
 	and a, a ; $6eee
-	jp nz, Label_15_6dae ; $6eef
+	jp nz, ReturnMatchChallengeScene.loop ; $6eef
 	farcall AdvanceDialogueTextCursor ; $6ef2
 	ld a, $0d ; $6ef5
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $6ef7
@@ -3395,7 +3395,7 @@ ReturnCoachPassingShotLessonScene:
 	farcall ScriptCloseDialogueWindow ; $6efd
 	script_wait_frames $05 ; $6f00
 	and a, a ; $6f07
-	jp nz, Label_15_6dae ; $6f08
+	jp nz, ReturnMatchChallengeScene.loop ; $6f08
 	farcall AdvanceDialogueTextCursor ; $6f0b
 	script_speak $0d ; $6f0e
 	call MovePartyToReturnCoachSpot ; $6f13
@@ -3460,19 +3460,19 @@ ActorScript_15_6fbe:
 NetCoachVolleyLessonScene:
 	script_face_toward $12, ACTOR_PARTNER ; $6fcf
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $6fd7
-	jr nz, Label_15_6fe4 ; $6fda
+	jr nz, .setText ; $6fda
 	script_set_text Text_37_93 ; $6fdc
-	jr Label_15_6fea ; $6fe2
-Label_15_6fe4:
+	jr .step ; $6fe2
+.setText:
 	script_set_text Text_37_100 ; $6fe4
-Label_15_6fea:
+.step:
 	ld a, $12 ; $6fea
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $6fec
 	farcall RunDialogueYesNoPrompt ; $6fef
 	farcall ScriptCloseDialogueWindow ; $6ff2
 	script_wait_frames $05 ; $6ff5
 	and a, a ; $6ffc
-	jr nz, Label_15_7068 ; $6ffd
+	jr nz, .loop ; $6ffd
 	farcall AdvanceDialogueTextCursor ; $6fff
 	ld a, $12 ; $7002
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $7004
@@ -3480,7 +3480,7 @@ Label_15_6fea:
 	farcall ScriptCloseDialogueWindow ; $700a
 	script_wait_frames $05 ; $700d
 	and a, a ; $7014
-	jr nz, Label_15_7068 ; $7015
+	jr nz, .loop ; $7015
 	farcall AdvanceDialogueTextCursor ; $7017
 	script_speak $12 ; $701a
 	call MovePartyToNetCoachSpot ; $701f
@@ -3504,7 +3504,7 @@ Label_15_6fea:
 	call WaitFadeEnd ; $7061
 	farcall ShowDrillBriefingScreen ; $7064
 	ret ; $7067
-Label_15_7068:
+.loop:
 	script_speak $12 ; $7068
 	ret ; $706d
 NetCoachSmashLessonScene:
@@ -3516,7 +3516,7 @@ NetCoachSmashLessonScene:
 	farcall ScriptCloseDialogueWindow ; $7084
 	script_wait_frames $05 ; $7087
 	and a, a ; $708e
-	jr nz, Label_15_7068 ; $708f
+	jr nz, NetCoachVolleyLessonScene.loop ; $708f
 	farcall AdvanceDialogueTextCursor ; $7091
 	ld a, $12 ; $7094
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $7096
@@ -3524,7 +3524,7 @@ NetCoachSmashLessonScene:
 	farcall ScriptCloseDialogueWindow ; $709c
 	script_wait_frames $05 ; $709f
 	and a, a ; $70a6
-	jr nz, Label_15_7068 ; $70a7
+	jr nz, NetCoachVolleyLessonScene.loop ; $70a7
 	farcall AdvanceDialogueTextCursor ; $70a9
 	ld a, $12 ; $70ac
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $70ae
@@ -3532,7 +3532,7 @@ NetCoachSmashLessonScene:
 	farcall ScriptCloseDialogueWindow ; $70b4
 	script_wait_frames $05 ; $70b7
 	and a, a ; $70be
-	jr nz, Label_15_7068 ; $70bf
+	jr nz, NetCoachVolleyLessonScene.loop ; $70bf
 	farcall AdvanceDialogueTextCursor ; $70c1
 	script_speak $12 ; $70c4
 	call MovePartyToNetCoachSpot ; $70c9
@@ -3567,7 +3567,7 @@ NetCoachDropShotLessonScene:
 	farcall ScriptCloseDialogueWindow ; $7133
 	script_wait_frames $05 ; $7136
 	and a, a ; $713d
-	jp nz, Label_15_7068 ; $713e
+	jp nz, NetCoachVolleyLessonScene.loop ; $713e
 	farcall AdvanceDialogueTextCursor ; $7141
 	ld a, $12 ; $7144
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $7146
@@ -3575,7 +3575,7 @@ NetCoachDropShotLessonScene:
 	farcall ScriptCloseDialogueWindow ; $714c
 	script_wait_frames $05 ; $714f
 	and a, a ; $7156
-	jp nz, Label_15_7068 ; $7157
+	jp nz, NetCoachVolleyLessonScene.loop ; $7157
 	farcall AdvanceDialogueTextCursor ; $715a
 	ld a, $12 ; $715d
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $715f
@@ -3583,7 +3583,7 @@ NetCoachDropShotLessonScene:
 	farcall ScriptCloseDialogueWindow ; $7165
 	script_wait_frames $05 ; $7168
 	and a, a ; $716f
-	jp nz, Label_15_7068 ; $7170
+	jp nz, NetCoachVolleyLessonScene.loop ; $7170
 	farcall AdvanceDialogueTextCursor ; $7173
 	script_speak $12 ; $7176
 	call MovePartyToNetCoachSpot ; $717b
@@ -3608,12 +3608,12 @@ NetCoachDropShotLessonScene:
 	ret ; $71bd
 HideServeChallengerActor:
 	test_flag FLAG_SERVE_CHALLENGER_DEFEATED ; $71be
-	jr nz, Label_15_71c8 ; $71c1
+	jr nz, .placeActors ; $71c1
 	call TestServeChallengerGameFlag ; $71c3
-	jr z, Label_15_71d3 ; $71c6
-Label_15_71c8:
+	jr z, .done ; $71c6
+.placeActors:
 	script_set_position $06, $3f00, $3f00 ; $71c8
-Label_15_71d3:
+.done:
 	ret ; $71d3
 TestServeChallengerGameFlag:
 	ld a, [$c2b0] ; $71d4
@@ -3649,12 +3649,12 @@ TestServeChallengerGameFlag:
 	dw $00c2 ; record 5
 HideNetChallengerActor:
 	test_flag FLAG_NET_CHALLENGER_DEFEATED ; $7204
-	jr nz, Label_15_720e ; $7207
+	jr nz, .placeActors ; $7207
 	call TestNetChallengerGameFlag ; $7209
-	jr z, Label_15_7219 ; $720c
-Label_15_720e:
+	jr z, .done ; $720c
+.placeActors:
 	script_set_position $11, $3f00, $3f00 ; $720e
-Label_15_7219:
+.done:
 	ret ; $7219
 TestNetChallengerGameFlag:
 	ld a, [$c2b0] ; $721a
@@ -3690,12 +3690,12 @@ TestNetChallengerGameFlag:
 	dw $00c8 ; record 5
 HideStrokeChallengerActor:
 	test_flag FLAG_STROKE_CHALLENGER_DEFEATED ; $724a
-	jr nz, Label_15_7254 ; $724d
+	jr nz, .placeActors ; $724d
 	call TestStrokeChallengerGameFlag ; $724f
-	jr z, Label_15_725f ; $7252
-Label_15_7254:
+	jr z, .done ; $7252
+.placeActors:
 	script_set_position $0c, $3f00, $3f00 ; $7254
-Label_15_725f:
+.done:
 	ret ; $725f
 TestStrokeChallengerGameFlag:
 	ld a, [$c2b0] ; $7260
@@ -3729,7 +3729,7 @@ TestStrokeChallengerGameFlag:
 	dw $00ce ; record 3
 	dw $00ce ; record 4
 	dw $00ce ; record 5
-Label_15_7290:
+.step:
 	ld a, [$c2e3] ; $7290
 	ld a, a ; $7293
 	rst Rst00 ; $7294
@@ -3738,7 +3738,7 @@ Label_15_7290:
 	dw ServeCoachIntroDialogue_15.lesson4 ; $7299 jumptable
 	dw ServeCoachIntroDialogue_15.lesson5 ; $729b jumptable
 	dw ServeCoachIntroDialogue_15.lesson3 ; $729d jumptable
-Label_15_729f:
+.step2:
 	ld a, [$c2e3] ; $729f
 	ld a, a ; $72a2
 	rst Rst00 ; $72a3
@@ -3750,7 +3750,7 @@ Label_15_729f:
 	dw ServeCoachIntroDialogue_15.lesson8 ; $72ae jumptable
 	dw ServeCoachIntroDialogue_15.lesson9 ; $72b0 jumptable
 	dw ServeCoachIntroDialogue_15.lesson3 ; $72b2 jumptable
-Label_15_72b4:
+.step3:
 	ld a, [$c2e3] ; $72b4
 	ld a, a ; $72b7
 	rst Rst00 ; $72b8
@@ -3879,7 +3879,7 @@ ServeCoachChainedRetryPrompt:
 	farcall ScriptCloseDialogueWindow ; $746d
 	script_wait_frames $05 ; $7470
 	and a, a ; $7477
-	jp nz, Label_15_752c ; $7478
+	jp nz, InitServeCoachScene.speak ; $7478
 	farcall AdvanceDialogueTextCursor ; $747b
 ServeCoachRetryPrompt:
 	ld a, $07 ; $747e
@@ -3888,9 +3888,9 @@ ServeCoachRetryPrompt:
 	farcall ScriptCloseDialogueWindow ; $7486
 	script_wait_frames $05 ; $7489
 	and a, a ; $7490
-	jp z, Label_15_74d2 ; $7491
+	jp z, ServeCoachTwoStageRetryPrompt.setText ; $7491
 	farcall AdvanceDialogueTextCursor ; $7494
-	jp Label_15_752c ; $7497
+	jp InitServeCoachScene.speak ; $7497
 ServeCoachTwoStageRetryPrompt:
 	ld a, $07 ; $749a
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $749c
@@ -3898,19 +3898,19 @@ ServeCoachTwoStageRetryPrompt:
 	farcall ScriptCloseDialogueWindow ; $74a2
 	script_wait_frames $05 ; $74a5
 	and a, a ; $74ac
-	jp nz, Label_15_74b3 ; $74ad
+	jp nz, .step ; $74ad
 	farcall AdvanceDialogueTextCursor ; $74b0
-Label_15_74b3:
+.step:
 	ld a, $07 ; $74b3
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $74b5
 	farcall RunDialogueYesNoPrompt ; $74b8
 	farcall ScriptCloseDialogueWindow ; $74bb
 	script_wait_frames $05 ; $74be
 	and a, a ; $74c5
-	jp z, Label_15_74d2 ; $74c6
+	jp z, .setText ; $74c6
 	script_set_text Text_37_71 ; $74c9
-	jp Label_15_752c ; $74cf
-Label_15_74d2:
+	jp InitServeCoachScene.speak ; $74cf
+.setText:
 	script_set_text Text_37_65 ; $74d2
 	script_speak $07 ; $74d8
 	call ServeCoachWalkToCourtAndStartLesson ; $74dd
@@ -3929,56 +3929,56 @@ InitServeCoachScene:
 	script_fade_in $04 ; $7523
 	call WaitFadeEnd ; $7528
 	ret ; $752b
-Label_15_752c:
+.speak:
 	script_speak $07 ; $752c
 	script_face $07, FACE_LEFT ; $7531
 	ret ; $7538
-Label_15_7539:
+.step:
 	ld a, [$c2e3] ; $7539
 	ld a, a ; $753c
 	rst Rst00 ; $753d
 	dw NetCoachIntroDialogue_15 ; $753e jumptable
-	dw Label_15_768c ; $7540 jumptable
-	dw Label_15_7699 ; $7542 jumptable
-	dw Label_15_76a6 ; $7544 jumptable
-	dw Label_15_76b3 ; $7546 jumptable
-	dw Label_15_76c0 ; $7548 jumptable
-	dw Label_15_768c ; $754a jumptable
-	dw Label_15_768c ; $754c jumptable
-Label_15_754e:
+	dw NetCoachIntroDialogue_15.step3 ; $7540 jumptable
+	dw NetCoachIntroDialogue_15.step4 ; $7542 jumptable
+	dw NetCoachIntroDialogue_15.step5 ; $7544 jumptable
+	dw NetCoachIntroDialogue_15.step6 ; $7546 jumptable
+	dw NetCoachIntroDialogue_15.step7 ; $7548 jumptable
+	dw NetCoachIntroDialogue_15.step3 ; $754a jumptable
+	dw NetCoachIntroDialogue_15.step3 ; $754c jumptable
+.step2:
 	ld a, [$c2e3] ; $754e
 	ld a, a ; $7551
 	rst Rst00 ; $7552
-	dw Label_15_75d9 ; $7553 jumptable
-	dw Label_15_768c ; $7555 jumptable
-	dw Label_15_7699 ; $7557 jumptable
-	dw Label_15_76cd ; $7559 jumptable
-	dw Label_15_770e ; $755b jumptable
-	dw Label_15_76da ; $755d jumptable
-	dw Label_15_76c0 ; $755f jumptable
-	dw Label_15_768c ; $7561 jumptable
-Label_15_7563:
+	dw NetCoachIntroDialogue_15.step ; $7553 jumptable
+	dw NetCoachIntroDialogue_15.step3 ; $7555 jumptable
+	dw NetCoachIntroDialogue_15.step4 ; $7557 jumptable
+	dw NetCoachIntroDialogue_15.step8 ; $7559 jumptable
+	dw NetCoachIntroDialogue_15.step13 ; $755b jumptable
+	dw NetCoachIntroDialogue_15.step9 ; $755d jumptable
+	dw NetCoachIntroDialogue_15.step7 ; $755f jumptable
+	dw NetCoachIntroDialogue_15.step3 ; $7561 jumptable
+.step3:
 	ld a, [$c2e3] ; $7563
 	ld a, a ; $7566
 	rst Rst00 ; $7567
-	dw Label_15_7638 ; $7568 jumptable
-	dw Label_15_768c ; $756a jumptable
-	dw Label_15_7699 ; $756c jumptable
-	dw Label_15_76e7 ; $756e jumptable
-	dw Label_15_76f4 ; $7570 jumptable
-	dw Label_15_771b ; $7572 jumptable
-	dw Label_15_7701 ; $7574 jumptable
-	dw Label_15_76c0 ; $7576 jumptable
-	dw Label_15_768c ; $7578 jumptable
+	dw NetCoachIntroDialogue_15.step2 ; $7568 jumptable
+	dw NetCoachIntroDialogue_15.step3 ; $756a jumptable
+	dw NetCoachIntroDialogue_15.step4 ; $756c jumptable
+	dw NetCoachIntroDialogue_15.step10 ; $756e jumptable
+	dw NetCoachIntroDialogue_15.step11 ; $7570 jumptable
+	dw NetCoachIntroDialogue_15.step14 ; $7572 jumptable
+	dw NetCoachIntroDialogue_15.step12 ; $7574 jumptable
+	dw NetCoachIntroDialogue_15.step7 ; $7576 jumptable
+	dw NetCoachIntroDialogue_15.step3 ; $7578 jumptable
 NetCoachIntroDialogue_15:
 	script_set_text Text_37_126 ; $757a
 	call InitNetCoachScene ; $7580
 	script_speak $12 ; $7583
 	script_face_toward ACTOR_PLAYER, $12 ; $7588
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7590
-	jr z, Label_15_759b ; $7593
+	jr z, .animate ; $7593
 	script_set_text Text_37_130 ; $7595
-Label_15_759b:
+.animate:
 	script_set_anim $12, $03 ; $759b
 	script_wait_idle $12 ; $75a2
 	script_speak $12 ; $75a7
@@ -3991,7 +3991,7 @@ Label_15_759b:
 	script_face $12, FACE_RIGHT ; $75ce
 	set_flag FLAG_NET_COACH_GREETED ; $75d5
 	ret ; $75d8
-Label_15_75d9:
+.step:
 	call InitNetCoachScene ; $75d9
 	script_set_text Text_37_151 ; $75dc
 	script_speak $12 ; $75e2
@@ -3999,9 +3999,9 @@ Label_15_75d9:
 	script_set_anim $12, $03 ; $75ef
 	script_wait_idle $12 ; $75f6
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $75fb
-	jr z, Label_15_7606 ; $75fe
+	jr z, .speak ; $75fe
 	script_set_text Text_37_155 ; $7600
-Label_15_7606:
+.speak:
 	script_speak $12 ; $7606
 	script_set_anim $12, $02 ; $760b
 	script_wait_idle $12 ; $7612
@@ -4012,7 +4012,7 @@ Label_15_7606:
 	script_face $12, FACE_RIGHT ; $762d
 	set_flag FLAG_NET_COACH_GREETED ; $7634
 	ret ; $7637
-Label_15_7638:
+.step2:
 	call InitNetCoachScene ; $7638
 	script_set_text Text_37_183 ; $763b
 	script_speak $12 ; $7641
@@ -4029,62 +4029,62 @@ Label_15_7638:
 	script_face $12, FACE_RIGHT ; $7681
 	set_flag FLAG_NET_COACH_GREETED ; $7688
 	ret ; $768b
-Label_15_768c:
+.step3:
 	call InitNetCoachScene ; $768c
 	script_set_text Text_37_107 ; $768f
 	call NetCoachResultRetryPrompt ; $7695
 	ret ; $7698
-Label_15_7699:
+.step4:
 	call InitNetCoachScene ; $7699
 	script_set_text Text_37_111 ; $769c
 	call NetCoachResultRetryPrompt ; $76a2
 	ret ; $76a5
-Label_15_76a6:
+.step5:
 	call InitNetCoachScene ; $76a6
 	script_set_text Text_37_115 ; $76a9
 	call NetCoachResultRetryPrompt ; $76af
 	ret ; $76b2
-Label_15_76b3:
+.step6:
 	call InitNetCoachScene ; $76b3
 	script_set_text Text_37_119 ; $76b6
 	call NetCoachResultRetryPrompt ; $76bc
 	ret ; $76bf
-Label_15_76c0:
+.step7:
 	call InitNetCoachScene ; $76c0
 	script_set_text Text_37_123 ; $76c3
 	call NetCoachRetryPrompt ; $76c9
 	ret ; $76cc
-Label_15_76cd:
+.step8:
 	call InitNetCoachScene ; $76cd
 	script_set_text Text_37_144 ; $76d0
 	call NetCoachResultRetryPrompt ; $76d6
 	ret ; $76d9
-Label_15_76da:
+.step9:
 	call InitNetCoachScene ; $76da
 	script_set_text Text_37_148 ; $76dd
 	call NetCoachRetryPrompt ; $76e3
 	ret ; $76e6
-Label_15_76e7:
+.step10:
 	call InitNetCoachScene ; $76e7
 	script_set_text Text_37_172 ; $76ea
 	call NetCoachResultRetryPrompt ; $76f0
 	ret ; $76f3
-Label_15_76f4:
+.step11:
 	call InitNetCoachScene ; $76f4
 	script_set_text Text_37_176 ; $76f7
 	call NetCoachResultRetryPrompt ; $76fd
 	ret ; $7700
-Label_15_7701:
+.step12:
 	call InitNetCoachScene ; $7701
 	script_set_text Text_37_180 ; $7704
 	call NetCoachRetryPrompt ; $770a
 	ret ; $770d
-Label_15_770e:
+.step13:
 	call InitNetCoachScene ; $770e
 	script_set_text Text_37_188 ; $7711
 	call NetCoachResultRetryPrompt ; $7717
 	ret ; $771a
-Label_15_771b:
+.step14:
 	call InitNetCoachScene ; $771b
 	script_set_text Text_37_192 ; $771e
 	call NetCoachResultRetryPrompt ; $7724
@@ -4100,7 +4100,7 @@ NetCoachRetryPrompt:
 	and a, a ; $773f
 	jp z, .retry ; $7740
 	farcall AdvanceDialogueTextCursor ; $7743
-	jp Label_15_779d ; $7746
+	jp InitNetCoachScene.speak ; $7746
 .retry:
 	script_speak $12 ; $7749
 	call NetCoachWalkToCourtAndStartLesson ; $774e
@@ -4119,43 +4119,43 @@ InitNetCoachScene:
 	script_fade_in $04 ; $7794
 	call WaitFadeEnd ; $7799
 	ret ; $779c
-Label_15_779d:
+.speak:
 	script_speak $12 ; $779d
 	script_face $12, FACE_RIGHT ; $77a2
 	ret ; $77a9
-Label_15_77aa:
+.step:
 	ld a, [$c2e3] ; $77aa
 	ld a, a ; $77ad
 	rst Rst00 ; $77ae
 	dw ReturnCoachIntroDialogue_15 ; $77af jumptable
-	dw Label_15_78f5 ; $77b1 jumptable
-	dw Label_15_7902 ; $77b3 jumptable
-	dw Label_15_790f ; $77b5 jumptable
-	dw Label_15_791c ; $77b7 jumptable
-	dw Label_15_7929 ; $77b9 jumptable
-	dw Label_15_7929 ; $77bb jumptable
-Label_15_77bd:
+	dw ReturnCoachIntroDialogue_15.step3 ; $77b1 jumptable
+	dw ReturnCoachIntroDialogue_15.step4 ; $77b3 jumptable
+	dw ReturnCoachIntroDialogue_15.step5 ; $77b5 jumptable
+	dw ReturnCoachIntroDialogue_15.step6 ; $77b7 jumptable
+	dw ReturnCoachIntroDialogue_15.step7 ; $77b9 jumptable
+	dw ReturnCoachIntroDialogue_15.step7 ; $77bb jumptable
+.step2:
 	ld a, [$c2e3] ; $77bd
 	ld a, a ; $77c0
 	rst Rst00 ; $77c1
-	dw Label_15_784d ; $77c2 jumptable
-	dw Label_15_7936 ; $77c4 jumptable
-	dw Label_15_7943 ; $77c6 jumptable
-	dw Label_15_7950 ; $77c8 jumptable
-	dw Label_15_795d ; $77ca jumptable
-	dw Label_15_7929 ; $77cc jumptable
-	dw Label_15_78f5 ; $77ce jumptable
-Label_15_77d0:
+	dw ReturnCoachIntroDialogue_15.step ; $77c2 jumptable
+	dw ReturnCoachIntroDialogue_15.step8 ; $77c4 jumptable
+	dw ReturnCoachIntroDialogue_15.step9 ; $77c6 jumptable
+	dw ReturnCoachIntroDialogue_15.step10 ; $77c8 jumptable
+	dw ReturnCoachIntroDialogue_15.step11 ; $77ca jumptable
+	dw ReturnCoachIntroDialogue_15.step7 ; $77cc jumptable
+	dw ReturnCoachIntroDialogue_15.step3 ; $77ce jumptable
+.step3:
 	ld a, [$c2e3] ; $77d0
 	ld a, a ; $77d3
 	rst Rst00 ; $77d4
-	dw Label_15_78a1 ; $77d5 jumptable
-	dw Label_15_796a ; $77d7 jumptable
-	dw Label_15_7977 ; $77d9 jumptable
-	dw Label_15_7984 ; $77db jumptable
-	dw Label_15_7991 ; $77dd jumptable
-	dw Label_15_7929 ; $77df jumptable
-	dw Label_15_78f5 ; $77e1 jumptable
+	dw ReturnCoachIntroDialogue_15.step2 ; $77d5 jumptable
+	dw ReturnCoachIntroDialogue_15.step12 ; $77d7 jumptable
+	dw ReturnCoachIntroDialogue_15.step13 ; $77d9 jumptable
+	dw ReturnCoachIntroDialogue_15.step14 ; $77db jumptable
+	dw ReturnCoachIntroDialogue_15.step15 ; $77dd jumptable
+	dw ReturnCoachIntroDialogue_15.step7 ; $77df jumptable
+	dw ReturnCoachIntroDialogue_15.step3 ; $77e1 jumptable
 ReturnCoachIntroDialogue_15:
 	call InitReturnCoachScene ; $77e3
 	script_set_text Text_37_221 ; $77e6
@@ -4167,22 +4167,22 @@ ReturnCoachIntroDialogue_15:
 	script_set_anim $0d, $02 ; $780a
 	script_wait_idle $0d ; $7811
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7816
-	jr z, Label_15_781e ; $7819
+	jr z, .speak ; $7819
 	farcall AdvanceDialogueTextCursor ; $781b
-Label_15_781e:
+.speak:
 	script_speak $0d ; $781e
 	script_set_text Text_37_225 ; $7823
 	script_set_anim $0d, $04 ; $7829
 	script_wait_idle $0d ; $7830
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7835
-	jr z, Label_15_783d ; $7838
+	jr z, .speak2 ; $7838
 	farcall AdvanceDialogueTextCursor ; $783a
-Label_15_783d:
+.speak2:
 	script_speak $0d ; $783d
 	script_face $0d, FACE_UP ; $7842
 	set_flag FLAG_RETURN_COACH_GREETED ; $7849
 	ret ; $784c
-Label_15_784d:
+.step:
 	call InitReturnCoachScene ; $784d
 	script_set_text Text_37_245 ; $7850
 	script_speak $0d ; $7856
@@ -4199,7 +4199,7 @@ Label_15_784d:
 	script_face $0d, FACE_UP ; $7896
 	set_flag FLAG_RETURN_COACH_GREETED ; $789d
 	ret ; $78a0
-Label_15_78a1:
+.step2:
 	call InitReturnCoachScene ; $78a1
 	script_set_text Text_6e_15 ; $78a4
 	script_speak $0d ; $78aa
@@ -4216,67 +4216,67 @@ Label_15_78a1:
 	script_face $0d, FACE_UP ; $78ea
 	set_flag FLAG_RETURN_COACH_GREETED ; $78f1
 	ret ; $78f4
-Label_15_78f5:
+.step3:
 	call InitReturnCoachScene ; $78f5
 	script_set_text Text_37_203 ; $78f8
 	call ReturnCoachResultRetryPrompt ; $78fe
 	ret ; $7901
-Label_15_7902:
+.step4:
 	call InitReturnCoachScene ; $7902
 	script_set_text Text_37_207 ; $7905
 	call ReturnCoachResultRetryPrompt ; $790b
 	ret ; $790e
-Label_15_790f:
+.step5:
 	call InitReturnCoachScene ; $790f
 	script_set_text Text_37_211 ; $7912
 	call ReturnCoachResultRetryPrompt ; $7918
 	ret ; $791b
-Label_15_791c:
+.step6:
 	call InitReturnCoachScene ; $791c
 	script_set_text Text_37_215 ; $791f
 	call ReturnCoachRetryPrompt ; $7925
 	ret ; $7928
-Label_15_7929:
+.step7:
 	call InitReturnCoachScene ; $7929
 	script_set_text Text_37_218 ; $792c
 	call ReturnCoachRetryPrompt ; $7932
 	ret ; $7935
-Label_15_7936:
+.step8:
 	call InitReturnCoachScene ; $7936
 	script_set_text Text_37_233 ; $7939
 	call ReturnCoachRetryPrompt ; $793f
 	ret ; $7942
-Label_15_7943:
+.step9:
 	call InitReturnCoachScene ; $7943
 	script_set_text Text_37_236 ; $7946
 	call ReturnCoachRetryPrompt ; $794c
 	ret ; $794f
-Label_15_7950:
+.step10:
 	call InitReturnCoachScene ; $7950
 	script_set_text Text_37_239 ; $7953
 	call ReturnCoachRetryPrompt ; $7959
 	ret ; $795c
-Label_15_795d:
+.step11:
 	call InitReturnCoachScene ; $795d
 	script_set_text Text_37_242 ; $7960
 	call ReturnCoachRetryPrompt ; $7966
 	ret ; $7969
-Label_15_796a:
+.step12:
 	call InitReturnCoachScene ; $796a
 	script_set_text Text_37_255 ; $796d
 	call ReturnCoachResultRetryPrompt ; $7973
 	ret ; $7976
-Label_15_7977:
+.step13:
 	call InitReturnCoachScene ; $7977
 	script_set_text Text_6e_3 ; $797a
 	call ReturnCoachResultRetryPrompt ; $7980
 	ret ; $7983
-Label_15_7984:
+.step14:
 	call InitReturnCoachScene ; $7984
 	script_set_text Text_6e_7 ; $7987
 	call ReturnCoachResultRetryPrompt ; $798d
 	ret ; $7990
-Label_15_7991:
+.step15:
 	call InitReturnCoachScene ; $7991
 	script_set_text Text_6e_11 ; $7994
 	call ReturnCoachResultRetryPrompt ; $799a
@@ -4291,7 +4291,7 @@ ReturnCoachRetryPrompt:
 	script_wait_frames $05 ; $79ae
 	and a, a ; $79b5
 	jp z, .retry ; $79b6
-	jp Label_15_7a16 ; $79b9
+	jp InitReturnCoachScene.speak ; $79b9
 .retry:
 	farcall AdvanceDialogueTextCursor ; $79bc
 	script_speak $0d ; $79bf
@@ -4312,7 +4312,7 @@ InitReturnCoachScene:
 	script_fade_in $04 ; $7a0d
 	call WaitFadeEnd ; $7a12
 	ret ; $7a15
-Label_15_7a16:
+.speak:
 	script_speak $0d ; $7a16
 	script_face $0d, FACE_UP ; $7a1b
 	ret ; $7a22
@@ -4322,15 +4322,15 @@ Table_15_7a23:
 	db $03, $00, $2f, $00, $01, $01, $05, $03, $00, $2f, $00, $07, $01, $05, $0c, $f1, $ff ; 0x11
 PlaceSwingPracticeKidActor:
 	test_flag FLAG_DOUBLES ; $7a45
-	jp nz, Label_15_7a66 ; $7a48
+	jp nz, .done ; $7a48
 	ld a, [wEquippedRacket] ; $7a4b
 	and a, $0f ; $7a4e
 	cp a, $03 ; $7a50
-	jp nz, Label_15_7a66 ; $7a52
+	jp nz, .done ; $7a52
 	test_flag FLAG_SWING_PRACTICE_KID_PLACED ; $7a55
-	jp nz, Label_15_7a66 ; $7a58
+	jp nz, .done ; $7a58
 	script_set_position $13, $3500, $0f00 ; $7a5b
-Label_15_7a66:
+.done:
 	ret ; $7a66
 StartPendingLessonScene:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $7a67
@@ -4512,11 +4512,11 @@ MovePartyToNetCoachSpot:
 	script_set_speed ACTOR_PARTNER, $0010 ; $7cc3
 	script_move_target ACTOR_PLAYER, $2d00, $2b00 ; $7ccb
 	test_flag FLAG_DOUBLES ; $7cd6
-	jr z, Label_15_7cf0 ; $7cd9
+	jr z, .wait ; $7cd9
 	script_null_script ACTOR_PARTNER ; $7cdb
 	script_move_target ACTOR_PARTNER, $2f00, $2b00 ; $7ce0
 	script_wait_move ACTOR_PARTNER ; $7ceb
-Label_15_7cf0:
+.wait:
 	script_wait_move ACTOR_PLAYER ; $7cf0
 	script_face ACTOR_PLAYER, FACE_LEFT ; $7cf5
 	script_face ACTOR_PARTNER, FACE_LEFT ; $7cfc
@@ -4528,11 +4528,11 @@ MovePartyToReturnCoachSpot:
 	script_set_speed ACTOR_PARTNER, $0010 ; $7d1c
 	script_move_target ACTOR_PLAYER, $1300, $2b00 ; $7d24
 	test_flag FLAG_DOUBLES ; $7d2f
-	jr z, Label_15_7d49 ; $7d32
+	jr z, .wait ; $7d32
 	script_null_script ACTOR_PARTNER ; $7d34
 	script_move_target ACTOR_PARTNER, $1100, $2b00 ; $7d39
 	script_wait_move ACTOR_PARTNER ; $7d44
-Label_15_7d49:
+.wait:
 	script_wait_move ACTOR_PLAYER ; $7d49
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $7d4e
 	script_face ACTOR_PARTNER, FACE_RIGHT ; $7d55
@@ -4755,63 +4755,63 @@ ActorScript_15_7f3d:
 	as_anim $03
 	as_jump .Ld
 	test_flag FLAG_DOUBLES ; $7f59
-	jr nz, Label_15_7f80 ; $7f5c
+	jr nz, .step ; $7f5c
 	ld a, $00 ; $7f5e
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7f60
-	jr z, Label_15_7f7c ; $7f63
+	jr z, .loop ; $7f63
 	ld a, $02 ; $7f65
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $7f67
-	jr z, Label_15_7f7c ; $7f6a
+	jr z, .loop ; $7f6a
 	ld a, $04 ; $7f6c
 	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $7f6e
-	jr z, Label_15_7f7c ; $7f71
+	jr z, .loop ; $7f71
 	ld a, $06 ; $7f73
 	test_flag FLAG_STORY_COMPLETE_SINGLES ; $7f75
-	jr z, Label_15_7f7c ; $7f78
+	jr z, .loop ; $7f78
 	ld a, $08 ; $7f7a
-Label_15_7f7c:
+.loop:
 	ld [$c2b0], a ; $7f7c
 	ret ; $7f7f
-Label_15_7f80:
+.step:
 	ld a, $01 ; $7f80
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $7f82
-	jr z, Label_15_7f7c ; $7f85
+	jr z, .loop ; $7f85
 	ld a, $03 ; $7f87
 	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_1 ; $7f89
-	jr z, Label_15_7f7c ; $7f8c
+	jr z, .loop ; $7f8c
 	ld a, $05 ; $7f8e
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $7f90
-	jr z, Label_15_7f7c ; $7f93
+	jr z, .loop ; $7f93
 	ld a, $07 ; $7f95
 	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $7f97
-	jr z, Label_15_7f7c ; $7f9a
+	jr z, .loop ; $7f9a
 	ld a, $09 ; $7f9c
-	jr Label_15_7f7c ; $7f9e
+	jr .loop ; $7f9e
 ComputeTrainingCourtProgressIndex:
 	ld a, $00 ; $7fa0
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7fa2
-	jr z, Label_15_7fbf ; $7fa5
+	jr z, .loop ; $7fa5
 	inc a ; $7fa7
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $7fa8
-	jr z, Label_15_7fbf ; $7fab
+	jr z, .loop ; $7fab
 	inc a ; $7fad
 	test_flag FLAG_DOUBLES ; $7fae
-	jr nz, Label_15_7fc3 ; $7fb1
+	jr nz, .checkFlag ; $7fb1
 	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $7fb3
-	jr z, Label_15_7fbf ; $7fb6
+	jr z, .loop ; $7fb6
 	inc a ; $7fb8
 	test_flag FLAG_STORY_COMPLETE_SINGLES ; $7fb9
-	jr z, Label_15_7fbf ; $7fbc
+	jr z, .loop ; $7fbc
 	inc a ; $7fbe
-Label_15_7fbf:
+.loop:
 	ld [$c2b0], a ; $7fbf
 	ret ; $7fc2
-Label_15_7fc3:
+.checkFlag:
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $7fc3
-	jr z, Label_15_7fbf ; $7fc6
+	jr z, .loop ; $7fc6
 	inc a ; $7fc8
 	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $7fc9
-	jr z, Label_15_7fbf ; $7fcc
+	jr z, .loop ; $7fcc
 	inc a ; $7fce
-	jr Label_15_7fbf ; $7fcf
+	jr .loop ; $7fcf
 	; $7fd1, 47 bytes fill to bank end (linker-padded)
