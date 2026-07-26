@@ -73,10 +73,10 @@ DispatchCutsceneStateInit:
 	ld h, [hl] ; $4079
 	ld l, a ; $407a
 	jp hl ; $407b
-Label_6b_407c:
+.loop:
 	ld a, [wIntroCutsceneCheck] ; $407c
 	or a, a ; $407f
-	jr nz, Label_6b_40bc ; $4080
+	jr nz, .done ; $4080
 	call AdvanceFrame ; $4082
 	ld a, [wCutsceneStep] ; $4085
 	ld l, a ; $4088
@@ -93,7 +93,7 @@ Label_6b_407c:
 	ld h, [hl] ; $4096
 	ld l, a ; $4097
 	jp hl ; $4098
-Label_6b_4099:
+.loopB:
 	ld a, [wCutsceneStep] ; $4099
 	ld l, a ; $409c
 	ld h, $00 ; $409d
@@ -111,14 +111,14 @@ Label_6b_4099:
 	ld h, [hl] ; $40ac
 	ld l, a ; $40ad
 	jp hl ; $40ae
-Label_6b_40af:
+.loopBB:
 	ld a, [wCutsceneStep] ; $40af
 	inc a ; $40b2
 	ld [wCutsceneStep], a ; $40b3
 	ld a, [wIntroCutsceneCheck] ; $40b6
 	or a, a ; $40b9
 	jr z, DispatchCutsceneStateInit ; $40ba
-Label_6b_40bc:
+.done:
 	ret ; $40bc
 IntroCutsceneStateTable_6b:
 	; $40bd, 36 bytes (records:2)
@@ -241,34 +241,34 @@ IntroCutsceneState19_6b:
 	dw IntroCutsceneState19Update_6b ; record 1
 	dw IntroCutsceneState19Exit_6b ; record 2
 Unused_6b_UpdateHandler_4159:
-	jp Label_6b_407c ; $4159
+	jp DispatchCutsceneStateInit.loop ; $4159
 IntroCutsceneState14Exit_6b:
-	jp Label_6b_40af ; $415c
+	jp DispatchCutsceneStateInit.loopBB ; $415c
 Unused_6b_ExitHandler_415f:
 	xor a, a ; $415f
 	ld [wCutsceneStepTimer], a ; $4160
-	jp Label_6b_40af ; $4163
+	jp DispatchCutsceneStateInit.loopBB ; $4163
 IntroCutsceneState14Init_6b:
 	ld a, $01 ; $4166
 	ld [wIntroCutsceneCheck], a ; $4168
-	jp Label_6b_407c ; $416b
+	jp DispatchCutsceneStateInit.loop ; $416b
 IntroCutsceneState14Update_6b:
-	jp Label_6b_407c ; $416e
+	jp DispatchCutsceneStateInit.loop ; $416e
 IntroCutsceneState15Init_6b:
 	xor a, a ; $4171
 	ld [wCutsceneStepTimer], a ; $4172
-	jp Label_6b_407c ; $4175
+	jp DispatchCutsceneStateInit.loop ; $4175
 IntroCutsceneState15Exit_6b:
 	xor a, a ; $4178
 	ld [wCutsceneStepTimer], a ; $4179
-	jp Label_6b_40af ; $417c
+	jp DispatchCutsceneStateInit.loopBB ; $417c
 IntroCutsceneState15Update_6b:
 	ld a, [wCutsceneStepTimer] ; $417f
 	inc a ; $4182
 	ld [wCutsceneStepTimer], a ; $4183
 	cp a, $0a ; $4186
-	jp z, Label_6b_4099 ; $4188
-	jp Label_6b_407c ; $418b
+	jp z, DispatchCutsceneStateInit.loopB ; $4188
+	jp DispatchCutsceneStateInit.loop ; $418b
 IntroCutsceneState00Init_6b:
 	call InitCutsceneSceneC ; $418e
 	call LoadIntroTilesAndPalette ; $4191
@@ -298,7 +298,7 @@ IntroCutsceneState00Init_6b:
 	call EnableLCD ; $41c5
 	script_fade_in $20 ; $41c8
 	call WaitFadeEnd ; $41cd
-	jp Label_6b_407c ; $41d0
+	jp DispatchCutsceneStateInit.loop ; $41d0
 IntroCutsceneState00Exit_6b:
 	ld c, $0a ; $41d3
 	call BeginFadeOut ; $41d5
@@ -314,23 +314,23 @@ IntroCutsceneState00Exit_6b:
 	ld [wCameraX + 1], a ; $41ee
 	ld [wCameraY], a ; $41f1
 	ld [wCameraY + 1], a ; $41f4
-	jp Label_6b_40af ; $41f7
+	jp DispatchCutsceneStateInit.loopBB ; $41f7
 IntroCutsceneState00Update_6b:
 	ld a, [wCutsceneStepTimer] ; $41fa
 	inc a ; $41fd
 	ld [wCutsceneStepTimer], a ; $41fe
 	cp a, $80 ; $4201
-	jp z, Label_6b_4099 ; $4203
+	jp z, DispatchCutsceneStateInit.loopB ; $4203
 	cp a, $64 ; $4206
-	jr nc, Label_6b_420d ; $4208
+	jr nc, .updateCutsceneScrollY ; $4208
 	call AdvanceSpriteAnimTimer ; $420a
-Label_6b_420d:
+.updateCutsceneScrollY:
 	call UpdateCutsceneScrollY ; $420d
 	call UpdateCutsceneScrollX ; $4210
 	call SetCameraYFromScrollPos ; $4213
 	call QueueScrollingSprite ; $4216
 	call QueueCutsceneAnimatedSprites ; $4219
-	jp Label_6b_407c ; $421c
+	jp DispatchCutsceneStateInit.loop ; $421c
 IntroCutsceneState01Init_6b:
 	call DisableLCDSafely ; $421f
 	xor a, a ; $4222
@@ -382,7 +382,7 @@ IntroCutsceneState01Init_6b:
 	call RegisterFrameTask ; $42a4
 	call EnableLCD ; $42a7
 	script_fade_in $40 ; $42aa
-	jp Label_6b_407c ; $42af
+	jp DispatchCutsceneStateInit.loop ; $42af
 Palettes_6b_42b2:
 	; $42b2, 64 bytes (palettes)
 ; GBC palettes (BGR555), 4 colors each
@@ -401,7 +401,7 @@ IntroCutsceneState01Exit_6b:
 	ld [wCutsceneStepTimer], a ; $42f9
 	ld [wCutsceneScrollX], a ; $42fc
 	ldh [hScrollX], a ; $42ff
-	jp Label_6b_40af ; $4301
+	jp DispatchCutsceneStateInit.loopBB ; $4301
 IntroCutsceneState01Update_6b:
 	ld a, [wCutsceneScrollX] ; $4304
 	add a, $03 ; $4307
@@ -411,13 +411,13 @@ IntroCutsceneState01Update_6b:
 	inc a ; $4311
 	ld [wCutsceneStepTimer], a ; $4312
 	cp a, $69 ; $4315
-	jr z, Label_6b_4323 ; $4317
+	jr z, .label_6b_4099 ; $4317
 	ld a, [$cb44] ; $4319
 	inc a ; $431c
 	ld [$cb44], a ; $431d
-	jp Label_6b_407c ; $4320
-Label_6b_4323:
-	jp Label_6b_4099 ; $4323
+	jp DispatchCutsceneStateInit.loop ; $4320
+.label_6b_4099:
+	jp DispatchCutsceneStateInit.loopB ; $4323
 IntroCutsceneState02Init_6b:
 	ldh a, [hWramBank] ; $4326
 	push af ; $4328
@@ -444,7 +444,7 @@ IntroCutsceneState02Init_6b:
 	ld hl, Palette_6b_436f ; $4363
 	ld de, $0008 ; $4366
 	call LoadPalettesImmediate ; $4369
-	jp Label_6b_407c ; $436c
+	jp DispatchCutsceneStateInit.loop ; $436c
 Palette_6b_436f:
 	; $436f, 64 bytes (palettes)
 ; GBC palettes (BGR555), 4 colors each
@@ -462,16 +462,16 @@ IntroCutsceneState02Exit_6b:
 	call WaitFadeEnd ; $43b4
 	xor a, a ; $43b7
 	ld [wCutsceneStepTimer], a ; $43b8
-	jp Label_6b_40af ; $43bb
+	jp DispatchCutsceneStateInit.loopBB ; $43bb
 IntroCutsceneState02Update_6b:
 	ld a, [wCutsceneStepTimer] ; $43be
 	inc a ; $43c1
 	ld [wCutsceneStepTimer], a ; $43c2
 	cp a, $1e ; $43c5
-	jr z, Label_6b_43cc ; $43c7
-	jp Label_6b_407c ; $43c9
-Label_6b_43cc:
-	jp Label_6b_4099 ; $43cc
+	jr z, .label_6b_4099 ; $43c7
+	jp DispatchCutsceneStateInit.loop ; $43c9
+.label_6b_4099:
+	jp DispatchCutsceneStateInit.loopB ; $43cc
 IntroCutsceneState03Init_6b:
 	call DisableLCDSafely ; $43cf
 	ld c, $17 ; $43d2
@@ -518,7 +518,7 @@ IntroCutsceneState03Init_6b:
 	call EnableLCD ; $4447
 	script_fade_in $7f ; $444a
 	call WaitFadeEnd ; $444f
-	jp Label_6b_407c ; $4452
+	jp DispatchCutsceneStateInit.loop ; $4452
 IntroCutsceneState03Exit_6b:
 	ld hl, QueueCutsceneSpriteGroupB ; $4455
 	call UnregisterFrameTask ; $4458
@@ -526,13 +526,13 @@ IntroCutsceneState03Exit_6b:
 	ld [wCutsceneStepTimer], a ; $445c
 	ld [$cb43], a ; $445f
 	ldh [hScrollX], a ; $4462
-	jp Label_6b_40af ; $4464
+	jp DispatchCutsceneStateInit.loopBB ; $4464
 IntroCutsceneState03Update_6b:
 	ld a, [wCutsceneStepTimer] ; $4467
 	inc a ; $446a
 	ld [wCutsceneStepTimer], a ; $446b
 	cp a, $7d ; $446e
-	jp z, Label_6b_4099 ; $4470
+	jp z, DispatchCutsceneStateInit.loopB ; $4470
 	ld a, [$cb43] ; $4473
 	sub a, $03 ; $4476
 	ld [$cb43], a ; $4478
@@ -540,7 +540,7 @@ IntroCutsceneState03Update_6b:
 	ld a, [$cb46] ; $447d
 	dec a ; $4480
 	ld [$cb46], a ; $4481
-	jp Label_6b_407c ; $4484
+	jp DispatchCutsceneStateInit.loop ; $4484
 IntroCutsceneState04Init_6b:
 	ldh a, [hWramBank] ; $4487
 	push af ; $4489
@@ -567,7 +567,7 @@ IntroCutsceneState04Init_6b:
 	ld hl, $44d0 ; $44c4
 	ld de, $0008 ; $44c7
 	call LoadPalettesImmediate ; $44ca
-	jp Label_6b_407c ; $44cd
+	jp DispatchCutsceneStateInit.loop ; $44cd
 	; $44d0, 64 bytes (palettes)
 ; GBC palettes (BGR555), 4 colors each
 	dw $2928, $7fff, $3e4d, $0000 ; pal 0: #414a52 #ffffff #6a947b #000000
@@ -584,14 +584,14 @@ IntroCutsceneState04Exit_6b:
 	call WaitFadeEnd ; $4515
 	xor a, a ; $4518
 	ld [wCutsceneStepTimer], a ; $4519
-	jp Label_6b_40af ; $451c
+	jp DispatchCutsceneStateInit.loopBB ; $451c
 IntroCutsceneState04Update_6b:
 	ld a, [wCutsceneStepTimer] ; $451f
 	inc a ; $4522
 	ld [wCutsceneStepTimer], a ; $4523
 	cp a, $1e ; $4526
-	jp z, Label_6b_4099 ; $4528
-	jp Label_6b_407c ; $452b
+	jp z, DispatchCutsceneStateInit.loopB ; $4528
+	jp DispatchCutsceneStateInit.loop ; $452b
 IntroCutsceneState05Init_6b:
 	call DisableLCDSafely ; $452e
 	ld c, $18 ; $4531
@@ -644,7 +644,7 @@ IntroCutsceneState05Init_6b:
 	call EnableLCD ; $45a7
 	script_fade_in $10 ; $45aa
 	call WaitFadeEnd ; $45af
-	jp Label_6b_407c ; $45b2
+	jp DispatchCutsceneStateInit.loop ; $45b2
 IntroCutsceneState05Exit_6b:
 	ld hl, rIE ; $45b5
 	res 1, [hl] ; $45b8
@@ -684,36 +684,36 @@ IntroCutsceneState05Exit_6b:
 	ld hl, QueueCutsceneSpriteGroupB ; $4614
 	call UnregisterFrameTask ; $4617
 	call AdvanceFrame ; $461a
-	jp Label_6b_40af ; $461d
+	jp DispatchCutsceneStateInit.loopBB ; $461d
 IntroCutsceneState05Update_6b:
 	ld a, [wCutsceneStepTimer] ; $4620
 	inc a ; $4623
 	ld [wCutsceneStepTimer], a ; $4624
 	cp a, $60 ; $4627
-	jp z, Label_6b_4099 ; $4629
+	jp z, DispatchCutsceneStateInit.loopB ; $4629
 	ld a, [$cb44] ; $462c
 	inc a ; $462f
 	ld [$cb44], a ; $4630
 	ld a, [$cb46] ; $4633
 	dec a ; $4636
 	ld [$cb46], a ; $4637
-	jp Label_6b_407c ; $463a
+	jp DispatchCutsceneStateInit.loop ; $463a
 IntroCutsceneState06Init_6b:
 	xor a, a ; $463d
 	ld [wCutsceneStepTimer], a ; $463e
-	jp Label_6b_407c ; $4641
+	jp DispatchCutsceneStateInit.loop ; $4641
 IntroCutsceneState06Exit_6b:
 	ld c, $10 ; $4644
 	call BeginFadeOut ; $4646
 	call WaitFadeEnd ; $4649
-	jp Label_6b_40af ; $464c
+	jp DispatchCutsceneStateInit.loopBB ; $464c
 IntroCutsceneState06Update_6b:
 	ld a, [wCutsceneStepTimer] ; $464f
 	inc a ; $4652
 	ld [wCutsceneStepTimer], a ; $4653
 	cp a, $64 ; $4656
-	jp z, Label_6b_4099 ; $4658
-	jp Label_6b_407c ; $465b
+	jp z, DispatchCutsceneStateInit.loopB ; $4658
+	jp DispatchCutsceneStateInit.loop ; $465b
 IntroCutsceneState07Init_6b:
 	call InitTitleSceneGraphics ; $465e
 	call DecompressIntroTitleTiles ; $4661
@@ -729,7 +729,7 @@ IntroCutsceneState07Init_6b:
 	ld a, $01 ; $467f
 	ld hl, IntroSequenceTimerTask ; $4681
 	call RegisterFrameTask ; $4684
-	jp Label_6b_407c ; $4687
+	jp DispatchCutsceneStateInit.loop ; $4687
 IntroCutsceneState07Exit_6b:
 	call ClearFrameTasks ; $468a
 	ld a, $01 ; $468d
@@ -742,25 +742,25 @@ IntroCutsceneState07Exit_6b:
 	ld [wCameraX + 1], a ; $469d
 	ld [wCameraY], a ; $46a0
 	ld [wCameraY + 1], a ; $46a3
-	jp Label_6b_40af ; $46a6
+	jp DispatchCutsceneStateInit.loopBB ; $46a6
 IntroCutsceneState07Update_6b:
 	ld a, [wCameraX + 1] ; $46a9
 	cp a, $40 ; $46ac
-	jp nz, Label_6b_46c0 ; $46ae
+	jp nz, .checkCutsceneStepTimer ; $46ae
 	ld a, [wCutsceneStepTimer] ; $46b1
 	inc a ; $46b4
 	ld [wCutsceneStepTimer], a ; $46b5
 	cp a, $29 ; $46b8
-	jp z, Label_6b_4099 ; $46ba
-	jp Label_6b_407c ; $46bd
-Label_6b_46c0:
+	jp z, DispatchCutsceneStateInit.loopB ; $46ba
+	jp DispatchCutsceneStateInit.loop ; $46bd
+.checkCutsceneStepTimer:
 	ld a, [wCutsceneStepTimer] ; $46c0
 	cp a, $01 ; $46c3
-	jr z, Label_6b_46ce ; $46c5
+	jr z, .step ; $46c5
 	inc a ; $46c7
 	ld [wCutsceneStepTimer], a ; $46c8
-	jp Label_6b_407c ; $46cb
-Label_6b_46ce:
+	jp DispatchCutsceneStateInit.loop ; $46cb
+.step:
 	ld a, [wCameraX + 1] ; $46ce
 	ld h, a ; $46d1
 	ld a, [wCameraX] ; $46d2
@@ -771,7 +771,7 @@ Label_6b_46ce:
 	ld [wCameraX + 1], a ; $46db
 	ld a, l ; $46de
 	ld [wCameraX], a ; $46df
-	jp Label_6b_407c ; $46e2
+	jp DispatchCutsceneStateInit.loop ; $46e2
 IntroCutsceneState13Init_6b:
 	xor a, a ; $46e5
 	ldh [hScrollY], a ; $46e6
@@ -803,7 +803,7 @@ IntroCutsceneState13Init_6b:
 	call AdvanceFrame ; $472e
 	pop af ; $4731
 	wram_bank ; $4732
-	jp Label_6b_407c ; $4736
+	jp DispatchCutsceneStateInit.loop ; $4736
 IntroCutsceneState13Exit_6b:
 	ld c, $10 ; $4739
 	call BeginFadeOut ; $473b
@@ -811,14 +811,14 @@ IntroCutsceneState13Exit_6b:
 	call DisableLCDSafely ; $4741
 	xor a, a ; $4744
 	ld [wCutsceneStepTimer], a ; $4745
-	jp Label_6b_40af ; $4748
+	jp DispatchCutsceneStateInit.loopBB ; $4748
 IntroCutsceneState13Update_6b:
 	ld a, [wCutsceneStepTimer] ; $474b
 	inc a ; $474e
 	ld [wCutsceneStepTimer], a ; $474f
 	cp a, $64 ; $4752
-	jp z, Label_6b_4099 ; $4754
-	jp Label_6b_407c ; $4757
+	jp z, DispatchCutsceneStateInit.loopB ; $4754
+	jp DispatchCutsceneStateInit.loop ; $4757
 Palettes_6b_475a:
 	; $475a, 64 bytes (palettes)
 ; GBC palettes (BGR555), 4 colors each
@@ -845,7 +845,7 @@ IntroCutsceneState08Init_6b:
 	call EnableLCD ; $47b6
 	script_fade_in $10 ; $47b9
 	call WaitFadeEnd ; $47be
-	jp Label_6b_407c ; $47c1
+	jp DispatchCutsceneStateInit.loop ; $47c1
 IntroCutsceneState08Exit_6b:
 	ld c, $0a ; $47c4
 	call BeginFadeOut ; $47c6
@@ -854,14 +854,14 @@ IntroCutsceneState08Exit_6b:
 	call UnregisterFrameTask ; $47cf
 	xor a, a ; $47d2
 	ldh [hScrollX], a ; $47d3
-	jp Label_6b_40af ; $47d5
+	jp DispatchCutsceneStateInit.loopBB ; $47d5
 IntroCutsceneState08Update_6b:
 	ld a, [wCutsceneStepTimer] ; $47d8
 	inc a ; $47db
 	ld [wCutsceneStepTimer], a ; $47dc
 	cp a, $2c ; $47df
-	jp z, Label_6b_4099 ; $47e1
-	jp Label_6b_407c ; $47e4
+	jp z, DispatchCutsceneStateInit.loopB ; $47e1
+	jp DispatchCutsceneStateInit.loop ; $47e4
 IntroCutsceneState09Init_6b:
 	call DisableLCDSafely ; $47e7
 	ld c, $1d ; $47ea
@@ -878,7 +878,7 @@ IntroCutsceneState09Init_6b:
 	call EnableLCD ; $4805
 	script_fade_in $10 ; $4808
 	call WaitFadeEnd ; $480d
-	jp Label_6b_407c ; $4810
+	jp DispatchCutsceneStateInit.loop ; $4810
 IntroCutsceneState09Exit_6b:
 	ld c, $0a ; $4813
 	call BeginFadeOut ; $4815
@@ -887,14 +887,14 @@ IntroCutsceneState09Exit_6b:
 	call UnregisterFrameTask ; $481e
 	xor a, a ; $4821
 	ldh [hScrollX], a ; $4822
-	jp Label_6b_40af ; $4824
+	jp DispatchCutsceneStateInit.loopBB ; $4824
 IntroCutsceneState09Update_6b:
 	ld a, [wCutsceneStepTimer] ; $4827
 	inc a ; $482a
 	ld [wCutsceneStepTimer], a ; $482b
 	cp a, $2b ; $482e
-	jp z, Label_6b_4099 ; $4830
-	jp Label_6b_407c ; $4833
+	jp z, DispatchCutsceneStateInit.loopB ; $4830
+	jp DispatchCutsceneStateInit.loop ; $4833
 IntroCutsceneState10Init_6b:
 	call DisableLCDSafely ; $4836
 	ld c, $1e ; $4839
@@ -911,7 +911,7 @@ IntroCutsceneState10Init_6b:
 	call EnableLCD ; $4854
 	script_fade_in $10 ; $4857
 	call WaitFadeEnd ; $485c
-	jp Label_6b_407c ; $485f
+	jp DispatchCutsceneStateInit.loop ; $485f
 IntroCutsceneState10Exit_6b:
 	ld c, $0a ; $4862
 	call BeginFadeOut ; $4864
@@ -920,14 +920,14 @@ IntroCutsceneState10Exit_6b:
 	call UnregisterFrameTask ; $486d
 	xor a, a ; $4870
 	ldh [hScrollX], a ; $4871
-	jp Label_6b_40af ; $4873
+	jp DispatchCutsceneStateInit.loopBB ; $4873
 IntroCutsceneState10Update_6b:
 	ld a, [wCutsceneStepTimer] ; $4876
 	inc a ; $4879
 	ld [wCutsceneStepTimer], a ; $487a
 	cp a, $2b ; $487d
-	jp z, Label_6b_4099 ; $487f
-	jp Label_6b_407c ; $4882
+	jp z, DispatchCutsceneStateInit.loopB ; $487f
+	jp DispatchCutsceneStateInit.loop ; $4882
 IntroCutsceneState11Init_6b:
 	call DisableLCDSafely ; $4885
 	ld c, $20 ; $4888
@@ -952,7 +952,7 @@ IntroCutsceneState11Init_6b:
 	call WaitFadeEnd ; $48c0
 	xor a, a ; $48c3
 	ld [wCutsceneStepTimer], a ; $48c4
-	jp Label_6b_407c ; $48c7
+	jp DispatchCutsceneStateInit.loop ; $48c7
 IntroCutsceneState11Exit_6b:
 	ld a, $00 ; $48ca
 	ldh [hShowDebugConsole], a ; $48cc
@@ -963,14 +963,14 @@ IntroCutsceneState11Exit_6b:
 	call LoadPaletteShadow ; $48d9
 	xor a, a ; $48dc
 	ld [wCutsceneStepTimer], a ; $48dd
-	jp Label_6b_40af ; $48e0
+	jp DispatchCutsceneStateInit.loopBB ; $48e0
 IntroCutsceneState11Update_6b:
 	ld a, [wCutsceneStepTimer] ; $48e3
 	inc a ; $48e6
 	ld [wCutsceneStepTimer], a ; $48e7
 	cp a, $70 ; $48ea
-	jp z, Label_6b_4099 ; $48ec
-	jp Label_6b_407c ; $48ef
+	jp z, DispatchCutsceneStateInit.loopB ; $48ec
+	jp DispatchCutsceneStateInit.loop ; $48ef
 IntroCutsceneState12Init_6b:
 	xor a, a ; $48f2
 	ld [wCutsceneStepTimer], a ; $48f3
@@ -992,36 +992,36 @@ IntroCutsceneState12Init_6b:
 	ld a, e ; $4919
 	ld [hl+], a ; $491a
 	ld [hl], d ; $491b
-	jp Label_6b_407c ; $491c
+	jp DispatchCutsceneStateInit.loop ; $491c
 IntroCutsceneState12Exit_6b:
 	ld c, $04 ; $491f
 	call BeginFadeOut ; $4921
 	call WaitFadeEnd ; $4924
-	jp Label_6b_40af ; $4927
+	jp DispatchCutsceneStateInit.loopBB ; $4927
 IntroCutsceneState12Update_6b:
 	ld a, [$cb45] ; $492a
 	cp a, $0a ; $492d
-	jr z, Label_6b_493b ; $492f
+	jr z, .checkCutsceneStepTimer ; $492f
 	inc a ; $4931
 	ld [$cb45], a ; $4932
 	call QueueScrollingSprite ; $4935
-	jp Label_6b_407c ; $4938
-Label_6b_493b:
+	jp DispatchCutsceneStateInit.loop ; $4938
+.checkCutsceneStepTimer:
 	ld a, [wCutsceneStepTimer] ; $493b
 	inc a ; $493e
 	ld [wCutsceneStepTimer], a ; $493f
 	cp a, $80 ; $4942
-	jp z, Label_6b_4099 ; $4944
+	jp z, DispatchCutsceneStateInit.loopB ; $4944
 	cp a, $64 ; $4947
-	jr nc, Label_6b_494e ; $4949
+	jr nc, .updateCutsceneScrollY ; $4949
 	call AdvanceSpriteAnimTimer ; $494b
-Label_6b_494e:
+.updateCutsceneScrollY:
 	call UpdateCutsceneScrollY ; $494e
 	call UpdateCutsceneScrollX ; $4951
 	call SetCameraYFromScrollPos ; $4954
 	call QueueScrollingSprite ; $4957
 	call QueueCutsceneAnimatedSprites ; $495a
-	jp Label_6b_407c ; $495d
+	jp DispatchCutsceneStateInit.loop ; $495d
 IntroCutsceneState16Init_6b:
 	call DisableLCDSafely ; $4960
 	call InitCutsceneSceneA ; $4963
@@ -1096,18 +1096,18 @@ IntroCutsceneState16Init_6b:
 	call EnableLCD ; $4a34
 	script_fade_in $08 ; $4a37
 	call WaitFadeEnd ; $4a3c
-	jp Label_6b_407c ; $4a3f
+	jp DispatchCutsceneStateInit.loop ; $4a3f
 IntroCutsceneState16Update_6b:
 	ld a, [wCutsceneStepTimer] ; $4a42
 	inc a ; $4a45
 	ld [wCutsceneStepTimer], a ; $4a46
 	cp a, $70 ; $4a49
-	jp z, Label_6b_4099 ; $4a4b
-	jp Label_6b_407c ; $4a4e
+	jp z, DispatchCutsceneStateInit.loopB ; $4a4b
+	jp DispatchCutsceneStateInit.loop ; $4a4e
 IntroCutsceneState16Exit_6b:
 	xor a, a ; $4a51
 	ld [wCutsceneStepTimer], a ; $4a52
-	jp Label_6b_40af ; $4a55
+	jp DispatchCutsceneStateInit.loopBB ; $4a55
 Palettes_6b_4a58:
 	; $4a58, 64 bytes (palettes)
 ; GBC palettes (BGR555), 4 colors each
@@ -1144,16 +1144,16 @@ IntroCutsceneState17Init_6b:
 	call LoadPaletteShadow ; $4ad6
 	xor a, a ; $4ad9
 	ld [wCutsceneStepTimer], a ; $4ada
-	jp Label_6b_407c ; $4add
+	jp DispatchCutsceneStateInit.loop ; $4add
 IntroCutsceneState17Update_6b:
 	ld a, [wCutsceneStepTimer] ; $4ae0
 	inc a ; $4ae3
 	ld [wCutsceneStepTimer], a ; $4ae4
 	cp a, $70 ; $4ae7
-	jp z, Label_6b_4099 ; $4ae9
-	jp Label_6b_407c ; $4aec
+	jp z, DispatchCutsceneStateInit.loopB ; $4ae9
+	jp DispatchCutsceneStateInit.loop ; $4aec
 IntroCutsceneState17Exit_6b:
-	jp Label_6b_40af ; $4aef
+	jp DispatchCutsceneStateInit.loopBB ; $4aef
 IntroCutsceneState18Init_6b:
 	ld hl, Palettes_6b_756f ; $4af2
 	ld de, $0008 ; $4af5
@@ -1232,28 +1232,28 @@ IntroCutsceneState18Init_6b:
 	call AdvanceFrame ; $4bc6
 	xor a, a ; $4bc9
 	ld [wCutsceneStepTimer], a ; $4bca
-	jp Label_6b_407c ; $4bcd
+	jp DispatchCutsceneStateInit.loop ; $4bcd
 IntroCutsceneState18Update_6b:
 	ld a, [$cb44] ; $4bd0
 	sub a, $04 ; $4bd3
 	ld [$cb44], a ; $4bd5
 	ldh [hScrollY], a ; $4bd8
-	jp z, Label_6b_4099 ; $4bda
+	jp z, DispatchCutsceneStateInit.loopB ; $4bda
 	ld a, [wCutsceneStepTimer] ; $4bdd
 	or a, a ; $4be0
-	jr nz, Label_6b_4be3 ; $4be1
-Label_6b_4be3:
+	jr nz, .checkCutsceneStepTimer ; $4be1
+.checkCutsceneStepTimer:
 	ld a, [wCutsceneStepTimer] ; $4be3
 	inc a ; $4be6
 	ld [wCutsceneStepTimer], a ; $4be7
-	jp Label_6b_407c ; $4bea
+	jp DispatchCutsceneStateInit.loop ; $4bea
 IntroCutsceneState18Exit_6b:
 	ld hl, ApplyScrollYFromWram ; $4bed
 	call UnregisterFrameTask ; $4bf0
 	wram_bank $03 ; $4bf3
 	ld a, $00 ; $4bf9
 	ldh [hShowDebugConsole], a ; $4bfb
-	jp Label_6b_40af ; $4bfd
+	jp DispatchCutsceneStateInit.loopBB ; $4bfd
 Palettes_6b_4c00:
 	; $4c00, 56 bytes (palettes)
 ; GBC palettes (BGR555), 4 colors each
@@ -1288,36 +1288,36 @@ IntroCutsceneState19Init_6b:
 	ld a, e ; $4c68
 	ld [hl+], a ; $4c69
 	ld [hl], d ; $4c6a
-	jp Label_6b_407c ; $4c6b
+	jp DispatchCutsceneStateInit.loop ; $4c6b
 IntroCutsceneState19Exit_6b:
 	ld c, $04 ; $4c6e
 	call BeginFadeOut ; $4c70
 	call WaitFadeEnd ; $4c73
-	jp Label_6b_40af ; $4c76
+	jp DispatchCutsceneStateInit.loopBB ; $4c76
 IntroCutsceneState19Update_6b:
 	ld a, [wCutsceneStepTimer] ; $4c79
 	inc a ; $4c7c
 	ld [wCutsceneStepTimer], a ; $4c7d
 	cp a, $80 ; $4c80
-	jp z, Label_6b_4099 ; $4c82
+	jp z, DispatchCutsceneStateInit.loopB ; $4c82
 	cp a, $64 ; $4c85
-	jr nc, Label_6b_4c8c ; $4c87
+	jr nc, .updateCutsceneScrollY ; $4c87
 	call AdvanceSpriteAnimTimer ; $4c89
-Label_6b_4c8c:
+.updateCutsceneScrollY:
 	call UpdateCutsceneScrollY ; $4c8c
 	call UpdateCutsceneScrollX ; $4c8f
 	call SetCameraYFromScrollPos ; $4c92
 	call QueueScrollingSprite ; $4c95
 	call QueueCutsceneAnimatedSprites ; $4c98
-	jp Label_6b_407c ; $4c9b
+	jp DispatchCutsceneStateInit.loop ; $4c9b
 UpdateCutsceneScrollX:
 	ld a, [wCutsceneStepTimer] ; $4c9e
 	ld hl, Data_6b_4cc1 ; $4ca1
 	add a, l ; $4ca4
 	ld l, a ; $4ca5
-	jr nc, Label_6b_4ca9 ; $4ca6
+	jr nc, .read ; $4ca6
 	inc h ; $4ca8
-Label_6b_4ca9:
+.read:
 	ld e, [hl] ; $4ca9
 	ld hl, wIntroCutsceneScrollY ; $4caa
 	ld a, [hl+] ; $4cad
@@ -1342,9 +1342,9 @@ UpdateCutsceneScrollY:
 	ld hl, Data_6b_4d84 ; $4d64
 	add a, l ; $4d67
 	ld l, a ; $4d68
-	jr nc, Label_6b_4d6c ; $4d69
+	jr nc, .read ; $4d69
 	inc h ; $4d6b
-Label_6b_4d6c:
+.read:
 	ld e, [hl] ; $4d6c
 	ld hl, $cb48 ; $4d6d
 	ld a, [hl+] ; $4d70
@@ -1374,9 +1374,9 @@ QueueCutsceneAnimatedSprites:
 	ld hl, Data_6b_506d ; $4e39
 	add a, l ; $4e3c
 	ld l, a ; $4e3d
-	jr nc, Label_6b_4e41 ; $4e3e
+	jr nc, .read ; $4e3e
 	inc h ; $4e40
-Label_6b_4e41:
+.read:
 	ld a, [hl+] ; $4e41
 	ld d, [hl] ; $4e42
 	ld e, a ; $4e43
@@ -1391,9 +1391,9 @@ Label_6b_4e41:
 	ld hl, Data_6b_4f95 ; $4e57
 	add a, l ; $4e5a
 	ld l, a ; $4e5b
-	jr nc, Label_6b_4e5f ; $4e5c
+	jr nc, .readB ; $4e5c
 	inc h ; $4e5e
-Label_6b_4e5f:
+.readB:
 	ld a, [hl+] ; $4e5f
 	ld d, [hl] ; $4e60
 	ld e, a ; $4e61
@@ -1408,9 +1408,9 @@ Label_6b_4e5f:
 	ld hl, Data_6b_4ea5 ; $4e75
 	add a, l ; $4e78
 	ld l, a ; $4e79
-	jr nc, Label_6b_4e7d ; $4e7a
+	jr nc, .readBB ; $4e7a
 	inc h ; $4e7c
-Label_6b_4e7d:
+.readBB:
 	ld a, [hl+] ; $4e7d
 	ld d, [hl] ; $4e7e
 	ld e, a ; $4e7f
@@ -1462,12 +1462,12 @@ ApplyCutsceneScrollToSpriteX:
 	pop hl ; $51a2
 	pop bc ; $51a3
 	ret ; $51a4
-Label_6b_51a5:
+.loop:
 	ldh a, [hInputRisingEdge] ; $51a5
 	bit PADB_A, a ; $51a7
-	jr nz, Label_6b_51ad ; $51a9
-	jr Label_6b_51a5 ; $51ab
-Label_6b_51ad:
+	jr nz, .done ; $51a9
+	jr .loop ; $51ab
+.done:
 	ret ; $51ad
 ShowIntroLogoScreen:
 	call DisableLCDSafely ; $51ae
@@ -1484,30 +1484,30 @@ ShowIntroLogoScreen:
 	call EnableLCD ; $51c7
 	script_fade_in $20 ; $51ca
 	call WaitFadeEnd ; $51cf
-Label_6b_51d2:
+.loop:
 	call AdvanceFrame ; $51d2
 	ld a, [wCutsceneStepTimer] ; $51d5
 	inc a ; $51d8
 	ld [wCutsceneStepTimer], a ; $51d9
 	cp a, $3c ; $51dc
-	jr z, Label_6b_51e2 ; $51de
-	jr Label_6b_51d2 ; $51e0
-Label_6b_51e2:
+	jr z, .clearCutsceneStepTimer ; $51de
+	jr .loop ; $51e0
+.clearCutsceneStepTimer:
 	xor a, a ; $51e2
 	ld [wCutsceneStepTimer], a ; $51e3
 	ret ; $51e6
 ScrollOutIntroLogo:
 	ld a, $40 ; $51e7
 	ldh [hScrollY], a ; $51e9
-Label_6b_51eb:
+.loop:
 	call AdvanceFrame ; $51eb
 	ld a, [wCutsceneStepTimer] ; $51ee
 	inc a ; $51f1
 	ld [wCutsceneStepTimer], a ; $51f2
 	cp a, $3e ; $51f5
-	jr z, Label_6b_51fb ; $51f7
-	jr Label_6b_51eb ; $51f9
-Label_6b_51fb:
+	jr z, .step ; $51f7
+	jr .loop ; $51f9
+.step:
 	ld c, $10 ; $51fb
 	call BeginFadeOut ; $51fd
 	call WaitFadeEnd ; $5200
@@ -1948,9 +1948,9 @@ QueueIntroSpriteBlock:
 	ld a, c ; $6129
 	add a, l ; $612a
 	ld l, a ; $612b
-	jr nc, Label_6b_612f ; $612c
+	jr nc, .read ; $612c
 	inc h ; $612e
-Label_6b_612f:
+.read:
 	ld c, [hl] ; $612f
 	ld hl, SpriteTemplate_6b_613d ; $6130
 	ld b, $08 ; $6133
@@ -2071,23 +2071,23 @@ IntroSequenceTimerTask:
 	inc a ; $7086
 	ld [$cb44], a ; $7087
 	cp a, $5a ; $708a
-	jr nz, Label_6b_7096 ; $708c
+	jr nz, .compare ; $708c
 	ld a, $01 ; $708e
 	ld hl, CycleBgPalettes4To7Task ; $7090
 	call RegisterFrameTask ; $7093
-Label_6b_7096:
+.compare:
 	cp a, $aa ; $7096
-	jr nz, Label_6b_70a2 ; $7098
+	jr nz, .compare2 ; $7098
 	ld a, $01 ; $709a
 	ld hl, AnimateBgPalette1Task ; $709c
 	call RegisterFrameTask ; $709f
-Label_6b_70a2:
+.compare2:
 	cp a, $01 ; $70a2
-	jr nz, Label_6b_70ae ; $70a4
+	jr nz, .done ; $70a4
 	ld a, $01 ; $70a6
 	ld hl, AnimateBgPalettes2And3Task ; $70a8
 	call RegisterFrameTask ; $70ab
-Label_6b_70ae:
+.done:
 	ret ; $70ae
 Palettes_6b_70af:
 	; $70af, 128 bytes (palettes)
@@ -2174,20 +2174,20 @@ AnimateBgPalette1Task:
 	inc a ; $72b9
 	ld [$cb45], a ; $72ba
 	cp a, $10 ; $72bd
-	jr nc, Label_6b_72d6 ; $72bf
+	jr nc, .step2 ; $72bf
 	sla a ; $72c1
 	sla a ; $72c3
 	sla a ; $72c5
 	ld hl, Palettes_6b_70af ; $72c7
 	add a, l ; $72ca
 	ld l, a ; $72cb
-	jr nc, Label_6b_72cf ; $72cc
+	jr nc, .step ; $72cc
 	inc h ; $72ce
-Label_6b_72cf:
+.step:
 	ld de, $0101 ; $72cf
 	call LoadPalettesImmediate ; $72d2
 	ret ; $72d5
-Label_6b_72d6:
+.step2:
 	ld hl, AnimateBgPalette1Task ; $72d6
 	call UnregisterFrameTask ; $72d9
 	ret ; $72dc
@@ -2200,7 +2200,7 @@ AnimateBgPalettes2And3Task:
 	inc a ; $72e7
 	ld [$cb46], a ; $72e8
 	cp a, $10 ; $72eb
-	jr nc, Label_6b_7314 ; $72ed
+	jr nc, .step3 ; $72ed
 	sla a ; $72ef
 	sla a ; $72f1
 	sla a ; $72f3
@@ -2208,22 +2208,22 @@ AnimateBgPalettes2And3Task:
 	ld hl, Palettes_6b_712f ; $72f6
 	add a, l ; $72f9
 	ld l, a ; $72fa
-	jr nc, Label_6b_72fe ; $72fb
+	jr nc, .step ; $72fb
 	inc h ; $72fd
-Label_6b_72fe:
+.step:
 	ld de, $0201 ; $72fe
 	call LoadPalettesImmediate ; $7301
 	pop af ; $7304
 	ld hl, Palettes_6b_71af ; $7305
 	add a, l ; $7308
 	ld l, a ; $7309
-	jr nc, Label_6b_730d ; $730a
+	jr nc, .step2 ; $730a
 	inc h ; $730c
-Label_6b_730d:
+.step2:
 	ld de, $0301 ; $730d
 	call LoadPalettesImmediate ; $7310
 	ret ; $7313
-Label_6b_7314:
+.step3:
 	ld hl, AnimateBgPalettes2And3Task ; $7314
 	call UnregisterFrameTask ; $7317
 	ret ; $731a
@@ -2236,22 +2236,22 @@ CycleBgPalettes4To7Task:
 	inc a ; $7325
 	ld [$cb47], a ; $7326
 	cp a, $10 ; $7329
-	jr nc, Label_6b_7342 ; $732b
+	jr nc, .compare ; $732b
 	sla a ; $732d
 	sla a ; $732f
 	sla a ; $7331
 	ld hl, Palettes_6b_722f ; $7333
 	add a, l ; $7336
 	ld l, a ; $7337
-	jr nc, Label_6b_733b ; $7338
+	jr nc, .step ; $7338
 	inc h ; $733a
-Label_6b_733b:
+.step:
 	ld de, $0404 ; $733b
 	call LoadPalettesImmediate ; $733e
 	ret ; $7341
-Label_6b_7342:
+.compare:
 	cp a, $20 ; $7342
-	jr c, Label_6b_735f ; $7344
+	jr c, .step3 ; $7344
 	ld b, a ; $7346
 	ld a, $20 ; $7347
 	sub a, b ; $7349
@@ -2261,33 +2261,33 @@ Label_6b_7342:
 	ld hl, Palettes_6b_722f ; $7350
 	add a, l ; $7353
 	ld l, a ; $7354
-	jr nc, Label_6b_7358 ; $7355
+	jr nc, .step2 ; $7355
 	inc h ; $7357
-Label_6b_7358:
+.step2:
 	ld de, $0404 ; $7358
 	call LoadPalettesImmediate ; $735b
 	ret ; $735e
-Label_6b_735f:
+.step3:
 	ld hl, CycleBgPalettes4To7Task ; $735f
 	call UnregisterFrameTask ; $7362
 	ret ; $7365
 ScrollCutsceneXRightTask:
 	ld a, [wCutsceneStepTimer] ; $7366
 	cp a, $10 ; $7369
-	jr nc, Label_6b_7380 ; $736b
+	jr nc, .done ; $736b
 	ld hl, Data_6b_7381 ; $736d
 	add a, l ; $7370
 	ld l, a ; $7371
-	jr nc, Label_6b_7375 ; $7372
+	jr nc, .read ; $7372
 	inc h ; $7374
-Label_6b_7375:
+.read:
 	ld a, [hl] ; $7375
 	ld b, a ; $7376
 	ld a, [wCutsceneScrollX] ; $7377
 	add a, b ; $737a
 	ld [wCutsceneScrollX], a ; $737b
 	ldh [hScrollX], a ; $737e
-Label_6b_7380:
+.done:
 	ret ; $7380
 Data_6b_7381:
 	; $7381, 20 bytes (bytes:16)
@@ -2296,20 +2296,20 @@ Data_6b_7381:
 ScrollCutsceneXLeftTask:
 	ld a, [wCutsceneStepTimer] ; $7395
 	cp a, $10 ; $7398
-	jr nc, Label_6b_73af ; $739a
+	jr nc, .done ; $739a
 	ld hl, Data_6b_73b0 ; $739c
 	add a, l ; $739f
 	ld l, a ; $73a0
-	jr nc, Label_6b_73a4 ; $73a1
+	jr nc, .read ; $73a1
 	inc h ; $73a3
-Label_6b_73a4:
+.read:
 	ld a, [hl] ; $73a4
 	ld b, a ; $73a5
 	ld a, [wCutsceneScrollX] ; $73a6
 	sub a, b ; $73a9
 	ld [wCutsceneScrollX], a ; $73aa
 	ldh [hScrollX], a ; $73ad
-Label_6b_73af:
+.done:
 	ret ; $73af
 Data_6b_73b0:
 	; $73b0, 20 bytes (bytes:16)
@@ -2318,20 +2318,20 @@ Data_6b_73b0:
 ScrollCutsceneLeftTask:
 	ld a, [wCutsceneStepTimer] ; $73c4
 	cp a, $10 ; $73c7
-	jr nc, Label_6b_73de ; $73c9
+	jr nc, .done ; $73c9
 	ld hl, Data_6b_73df ; $73cb
 	add a, l ; $73ce
 	ld l, a ; $73cf
-	jr nc, Label_6b_73d3 ; $73d0
+	jr nc, .read ; $73d0
 	inc h ; $73d2
-Label_6b_73d3:
+.read:
 	ld a, [hl] ; $73d3
 	ld b, a ; $73d4
 	ld a, [wCutsceneScrollX] ; $73d5
 	sub a, b ; $73d8
 	ld [wCutsceneScrollX], a ; $73d9
 	ldh [hScrollX], a ; $73dc
-Label_6b_73de:
+.done:
 	ret ; $73de
 Data_6b_73df:
 	; $73df, 19 bytes (bytes:16)
@@ -2447,23 +2447,23 @@ RunTitleScreen:
 	wram_bank $03 ; $7654
 	ld a, $9f ; $765a
 	ld [$d800], a ; $765c
-Label_6b_765f:
+.loop:
 	call StepTitleSpriteAnimation ; $765f
 	call AdvanceFrame ; $7662
 	ldh a, [hInputRisingEdge] ; $7665
 	bit PADB_A, a ; $7667
-	jr nz, Label_6b_7680 ; $7669
+	jr nz, .playSfx ; $7669
 	bit 3, a ; $766b
-	jr nz, Label_6b_7680 ; $766d
+	jr nz, .playSfx ; $766d
 	ldh a, [hVBlankCounter] ; $766f
 	and a, $07 ; $7671
-	jr nz, Label_6b_765f ; $7673
+	jr nz, .loop ; $7673
 	ld a, [$d800] ; $7675
 	inc a ; $7678
 	ld [$d800], a ; $7679
-	jr z, Label_6b_76a6 ; $767c
-	jr Label_6b_765f ; $767e
-Label_6b_7680:
+	jr z, .playSfx2 ; $767c
+	jr .loop ; $767e
+.playSfx:
 	sound $00 ; $7680
 	sound $60 ; $7682
 	call ClearFrameTasks ; $7684
@@ -2481,7 +2481,7 @@ Label_6b_7680:
 	res 1, [hl] ; $76a1
 	ld a, $01 ; $76a3
 	ret ; $76a5
-Label_6b_76a6:
+.playSfx2:
 	sound $00 ; $76a6
 	call ClearFrameTasks ; $76a8
 	ld c, $08 ; $76ab
@@ -2497,17 +2497,17 @@ QueueTitleSprite:
 	ld hl, Data_6b_76e6 ; $76c2
 	add a, l ; $76c5
 	ld l, a ; $76c6
-	jr nc, Label_6b_76ca ; $76c7
+	jr nc, .read ; $76c7
 	inc h ; $76c9
-Label_6b_76ca:
+.read:
 	ld c, [hl] ; $76ca
 	ld a, [$d801] ; $76cb
 	ld hl, Data_6b_76ee ; $76ce
 	add a, l ; $76d1
 	ld l, a ; $76d2
-	jr nc, Label_6b_76d6 ; $76d3
+	jr nc, .readB ; $76d3
 	inc h ; $76d5
-Label_6b_76d6:
+.readB:
 	ld b, [hl] ; $76d6
 	ld de, $2858 ; $76d7
 	ld hl, SpriteTemplate_6b_76f6 ; $76da
@@ -2537,28 +2537,28 @@ SpriteTemplate_6b_76f6:
 StepTitleSpriteAnimation:
 	ld a, [$d802] ; $771f
 	or a, a ; $7722
-	jr z, Label_6b_7732 ; $7723
+	jr z, .step ; $7723
 	inc a ; $7725
 	ld [$d802], a ; $7726
 	cp a, $10 ; $7729
-	jr nz, Label_6b_774c ; $772b
+	jr nz, .done ; $772b
 	xor a, a ; $772d
 	ld [$d802], a ; $772e
 	ret ; $7731
-Label_6b_7732:
+.step:
 	ldh a, [hVBlankCounter] ; $7732
 	and a, $07 ; $7734
 	cp a, $07 ; $7736
-	jr nz, Label_6b_774c ; $7738
+	jr nz, .done ; $7738
 	ld a, [$d801] ; $773a
 	inc a ; $773d
 	and a, $07 ; $773e
 	ld [$d801], a ; $7740
 	cp a, $07 ; $7743
-	jr nz, Label_6b_774c ; $7745
+	jr nz, .done ; $7745
 	ld a, $01 ; $7747
 	ld [$d802], a ; $7749
-Label_6b_774c:
+.done:
 	ret ; $774c
 	ret ; $774d
 TitleScreenTilemap:

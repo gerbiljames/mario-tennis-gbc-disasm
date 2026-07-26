@@ -3075,21 +3075,21 @@ FillMenuGridCellTile:
 	ld c, $03 ; $6dca
 	ld a, d ; $6dcc
 	or a, a ; $6dcd
-	jr z, Label_39_6dd4 ; $6dce
+	jr z, .step ; $6dce
 	ld h, $0c ; $6dd0
-	jr Label_39_6dd6 ; $6dd2
-Label_39_6dd4:
+	jr .step2 ; $6dd2
+.step:
 	ld h, $0d ; $6dd4
-Label_39_6dd6:
+.step2:
 	push hl ; $6dd6
 	ld hl, $6ded ; $6dd7
 	ld a, e ; $6dda
 	add a, a ; $6ddb
 	add a, l ; $6ddc
 	ld l, a ; $6ddd
-	jr nc, Label_39_6de1 ; $6dde
+	jr nc, .read ; $6dde
 	inc h ; $6de0
-Label_39_6de1:
+.read:
 	ld a, [hl+] ; $6de1
 	ld d, [hl] ; $6de2
 	ld e, a ; $6de3
@@ -3110,119 +3110,119 @@ Label_39_6de1:
 MoveMinigameGridCursor:
 	ld a, [wMenuCursorY] ; $6df9
 	or a, a ; $6dfc
-	jr nz, Label_39_6e64 ; $6dfd
+	jr nz, .checkMenuInputPressed ; $6dfd
 	ld a, [wMenuInputPressed] ; $6dff
 	bit PADB_RIGHT, a ; $6e02
-	jr nz, Label_39_6e16 ; $6e04
+	jr nz, .checkMenuCursorX ; $6e04
 	bit 5, a ; $6e06
-	jr nz, Label_39_6e30 ; $6e08
+	jr nz, .checkMenuCursorX2 ; $6e08
 	bit 6, a ; $6e0a
-	jr nz, Label_39_6e49 ; $6e0c
+	jr nz, .checkMenuCursorX3 ; $6e0c
 	bit 7, a ; $6e0e
-	jr nz, Label_39_6e49 ; $6e10
+	jr nz, .checkMenuCursorX3 ; $6e10
 	xor a, a ; $6e12
-	jp Label_39_6eb9 ; $6e13
-Label_39_6e16:
+	jp .done ; $6e13
+.checkMenuCursorX:
 	ld a, [wMenuCursorX] ; $6e16
 	inc a ; $6e19
 	add a, a ; $6e1a
-	jr nc, Label_39_6e22 ; $6e1b
+	jr nc, .step ; $6e1b
 	ld a, $03 ; $6e1d
 	dec a ; $6e1f
-	jr Label_39_6e28 ; $6e20
-Label_39_6e22:
+	jr .store ; $6e20
+.step:
 	rra ; $6e22
 	cp a, $03 ; $6e23
-	jr c, Label_39_6e28 ; $6e25
+	jr c, .store ; $6e25
 	xor a, a ; $6e27
-Label_39_6e28:
+.store:
 	ld [wMenuCursorX], a ; $6e28
 	ld a, $01 ; $6e2b
-	jp Label_39_6eb9 ; $6e2d
-Label_39_6e30:
+	jp .done ; $6e2d
+.checkMenuCursorX2:
 	ld a, [wMenuCursorX] ; $6e30
 	dec a ; $6e33
 	add a, a ; $6e34
-	jr nc, Label_39_6e3c ; $6e35
+	jr nc, .step2 ; $6e35
 	ld a, $03 ; $6e37
 	dec a ; $6e39
-	jr Label_39_6e42 ; $6e3a
-Label_39_6e3c:
+	jr .store2 ; $6e3a
+.step2:
 	rra ; $6e3c
 	cp a, $03 ; $6e3d
-	jr c, Label_39_6e42 ; $6e3f
+	jr c, .store2 ; $6e3f
 	xor a, a ; $6e41
-Label_39_6e42:
+.store2:
 	ld [wMenuCursorX], a ; $6e42
 	ld a, $01 ; $6e45
-	jr Label_39_6eb9 ; $6e47
-Label_39_6e49:
+	jr .done ; $6e47
+.checkMenuCursorX3:
 	ld a, [wMenuCursorX] ; $6e49
 	ld hl, Data_39_6eba ; $6e4c
 	add a, l ; $6e4f
 	ld l, a ; $6e50
-	jr nc, Label_39_6e54 ; $6e51
+	jr nc, .read ; $6e51
 	inc h ; $6e53
-Label_39_6e54:
+.read:
 	ld a, [hl] ; $6e54
 	ld [wMenuCursorX], a ; $6e55
 	ld a, [wMenuCursorY] ; $6e58
 	xor a, $01 ; $6e5b
 	ld [wMenuCursorY], a ; $6e5d
 	ld a, $01 ; $6e60
-	jr Label_39_6eb9 ; $6e62
-Label_39_6e64:
+	jr .done ; $6e62
+.checkMenuInputPressed:
 	ld a, [wMenuInputPressed] ; $6e64
 	bit PADB_RIGHT, a ; $6e67
-	jr nz, Label_39_6e7a ; $6e69
+	jr nz, .checkMenuCursorX4 ; $6e69
 	bit 5, a ; $6e6b
-	jr nz, Label_39_6e8c ; $6e6d
+	jr nz, .checkMenuCursorX5 ; $6e6d
 	bit 6, a ; $6e6f
-	jr nz, Label_39_6e9e ; $6e71
+	jr nz, .checkMenuCursorX6 ; $6e71
 	bit 7, a ; $6e73
-	jr nz, Label_39_6e9e ; $6e75
+	jr nz, .checkMenuCursorX6 ; $6e75
 	xor a, a ; $6e77
-	jr Label_39_6eb9 ; $6e78
-Label_39_6e7a:
+	jr .done ; $6e78
+.checkMenuCursorX4:
 	ld a, [wMenuCursorX] ; $6e7a
 	or a, a ; $6e7d
-	jr z, Label_39_6e83 ; $6e7e
+	jr z, .step3 ; $6e7e
 	xor a, a ; $6e80
-	jr Label_39_6e85 ; $6e81
-Label_39_6e83:
+	jr .store3 ; $6e81
+.step3:
 	ld a, $02 ; $6e83
-Label_39_6e85:
+.store3:
 	ld [wMenuCursorX], a ; $6e85
 	ld a, $01 ; $6e88
-	jr Label_39_6eb9 ; $6e8a
-Label_39_6e8c:
+	jr .done ; $6e8a
+.checkMenuCursorX5:
 	ld a, [wMenuCursorX] ; $6e8c
 	or a, a ; $6e8f
-	jr z, Label_39_6e95 ; $6e90
+	jr z, .step4 ; $6e90
 	xor a, a ; $6e92
-	jr Label_39_6e97 ; $6e93
-Label_39_6e95:
+	jr .store4 ; $6e93
+.step4:
 	ld a, $02 ; $6e95
-Label_39_6e97:
+.store4:
 	ld [wMenuCursorX], a ; $6e97
 	ld a, $01 ; $6e9a
-	jr Label_39_6eb9 ; $6e9c
-Label_39_6e9e:
+	jr .done ; $6e9c
+.checkMenuCursorX6:
 	ld a, [wMenuCursorX] ; $6e9e
 	ld hl, Data_39_6ebd ; $6ea1
 	add a, l ; $6ea4
 	ld l, a ; $6ea5
-	jr nc, Label_39_6ea9 ; $6ea6
+	jr nc, .readB ; $6ea6
 	inc h ; $6ea8
-Label_39_6ea9:
+.readB:
 	ld a, [hl] ; $6ea9
 	ld [wMenuCursorX], a ; $6eaa
 	ld a, [wMenuCursorY] ; $6ead
 	xor a, $01 ; $6eb0
 	ld [wMenuCursorY], a ; $6eb2
 	ld a, $01 ; $6eb5
-	jr Label_39_6eb9 ; $6eb7
-Label_39_6eb9:
+	jr .done ; $6eb7
+.done:
 	ret ; $6eb9
 Data_39_6eba:
 	; $6eba, 3 bytes (bytes:3)
@@ -3343,56 +3343,56 @@ UpdateCheatCodeEntry:
 	wram_bank $01 ; $6f6a
 	ld a, [$cb71] ; $6f70
 	or a, a ; $6f73
-	jr nz, Label_39_6fc0 ; $6f74
+	jr nz, .restore ; $6f74
 	ldh a, [hInputRisingEdge] ; $6f76
 	bit PADB_A, a ; $6f78
-	jr z, Label_39_6fa5 ; $6f7a
+	jr z, .step ; $6f7a
 	ld c, $00 ; $6f7c
-Label_39_6f7e:
+.loop:
 	ld hl, $d000 ; $6f7e
 	ld a, c ; $6f81
 	add a, l ; $6f82
 	ld l, a ; $6f83
-	jr nc, Label_39_6f87 ; $6f84
+	jr nc, .read ; $6f84
 	inc h ; $6f86
-Label_39_6f87:
+.read:
 	ld d, [hl] ; $6f87
 	ld a, c ; $6f88
 	ld hl, Data_39_6fc6 ; $6f89
 	add a, l ; $6f8c
 	ld l, a ; $6f8d
-	jr nc, Label_39_6f91 ; $6f8e
+	jr nc, .readB ; $6f8e
 	inc h ; $6f90
-Label_39_6f91:
+.readB:
 	ld a, [hl] ; $6f91
 	cp a, d ; $6f92
-	jr nz, Label_39_6fc0 ; $6f93
+	jr nz, .restore ; $6f93
 	inc c ; $6f95
 	ld a, c ; $6f96
 	cp a, $20 ; $6f97
-	jr nz, Label_39_6f7e ; $6f99
+	jr nz, .loop ; $6f99
 	call TriggerCheatUnlock ; $6f9b
 	ld a, $01 ; $6f9e
 	ld [$cb71], a ; $6fa0
-	jr Label_39_6fc0 ; $6fa3
-Label_39_6fa5:
+	jr .restore ; $6fa3
+.step:
 	ldh a, [hInputRisingEdge] ; $6fa5
 	or a, a ; $6fa7
-	jr z, Label_39_6fc0 ; $6fa8
+	jr z, .restore ; $6fa8
 	ld b, a ; $6faa
 	ld a, [$cb1a] ; $6fab
 	and a, $1f ; $6fae
 	ld hl, $d000 ; $6fb0
 	add a, l ; $6fb3
 	ld l, a ; $6fb4
-	jr nc, Label_39_6fb8 ; $6fb5
+	jr nc, .store ; $6fb5
 	inc h ; $6fb7
-Label_39_6fb8:
+.store:
 	ld [hl], b ; $6fb8
 	ld a, [$cb1a] ; $6fb9
 	inc a ; $6fbc
 	ld [$cb1a], a ; $6fbd
-Label_39_6fc0:
+.restore:
 	pop af ; $6fc0
 	wram_bank ; $6fc1
 	ret ; $6fc5

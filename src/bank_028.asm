@@ -80,38 +80,38 @@ LoadMatchGraphics:
 LoadMatchVariantGraphics:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $5efb
 	sub a, $12 ; $5efe
-	jr c, Label_28_5f2a ; $5f00
+	jr c, .step ; $5f00
 	ld a, a ; $5f02
 	rst Rst00 ; $5f03
-	dw Label_28_5f36 ; $5f04 jumptable
-	dw Label_28_5f36 ; $5f06 jumptable
-	dw Label_28_5f36 ; $5f08 jumptable
-	dw Label_28_5f36 ; $5f0a jumptable
-	dw Label_28_5f3a ; $5f0c jumptable
-	dw Label_28_5f3a ; $5f0e jumptable
-	dw Label_28_5f3a ; $5f10 jumptable
-	dw Label_28_5f3a ; $5f12 jumptable
-	dw Label_28_5f36 ; $5f14 jumptable
-	dw Label_28_5f3a ; $5f16 jumptable
-	dw Label_28_5f6a ; $5f18 jumptable
-	dw Label_28_5f82 ; $5f1a jumptable
-	dw Label_28_5f3a ; $5f1c jumptable
-	dw Label_28_5f5b ; $5f1e jumptable
-	dw Label_28_600c ; $5f20 jumptable
-	dw Label_28_5fe9 ; $5f22 jumptable
-	dw Label_28_5fbd ; $5f24 jumptable
-	dw Label_28_5f9a ; $5f26 jumptable
-	dw Label_28_5f2a ; $5f28 jumptable
-Label_28_5f2a:
+	dw LoadMatchVariantGraphics.loadMatchSharedTiles ; $5f04 jumptable
+	dw LoadMatchVariantGraphics.loadMatchSharedTiles ; $5f06 jumptable
+	dw LoadMatchVariantGraphics.loadMatchSharedTiles ; $5f08 jumptable
+	dw LoadMatchVariantGraphics.loadMatchSharedTiles ; $5f0a jumptable
+	dw LoadMatchVariantGraphics.step2 ; $5f0c jumptable
+	dw LoadMatchVariantGraphics.step2 ; $5f0e jumptable
+	dw LoadMatchVariantGraphics.step2 ; $5f10 jumptable
+	dw LoadMatchVariantGraphics.step2 ; $5f12 jumptable
+	dw LoadMatchVariantGraphics.loadMatchSharedTiles ; $5f14 jumptable
+	dw LoadMatchVariantGraphics.step2 ; $5f16 jumptable
+	dw LoadMatchVariantGraphics.step4 ; $5f18 jumptable
+	dw LoadMatchVariantGraphics.step5 ; $5f1a jumptable
+	dw LoadMatchVariantGraphics.step2 ; $5f1c jumptable
+	dw LoadMatchVariantGraphics.step3 ; $5f1e jumptable
+	dw LoadMatchVariantGraphics.step9 ; $5f20 jumptable
+	dw LoadMatchVariantGraphics.step8 ; $5f22 jumptable
+	dw LoadMatchVariantGraphics.step7 ; $5f24 jumptable
+	dw LoadMatchVariantGraphics.step6 ; $5f26 jumptable
+	dw LoadMatchVariantGraphics.step ; $5f28 jumptable
+.step:
 	ld hl, MatchGfxMapsA_28 ; $5f2a
 	ld de, $a200 ; $5f2d
 	ld c, $20 ; $5f30
 	call QueueVRAMCopy ; $5f32
 	ret ; $5f35
-Label_28_5f36:
+.loadMatchSharedTiles:
 	call LoadMatchSharedTiles_28 ; $5f36
 	ret ; $5f39
-Label_28_5f3a:
+.step2:
 	ld hl, MatchGfxPalettesB_28 ; $5f3a
 	ld de, $0b01 ; $5f3d
 	call LoadPaletteShadow ; $5f40
@@ -124,14 +124,14 @@ Label_28_5f3a:
 	call QueueVRAMCopy ; $5f54
 	call LoadMatchSharedTiles_28 ; $5f57
 	ret ; $5f5a
-Label_28_5f5b:
+.step3:
 	ld hl, MatchGfxMapsA_28 ; $5f5b
 	ld de, $a200 ; $5f5e
 	ld c, $08 ; $5f61
 	call QueueVRAMCopy ; $5f63
 	call LoadMatchSharedTiles_28 ; $5f66
 	ret ; $5f69
-Label_28_5f6a:
+.step4:
 	ld hl, $5ea0 ; $5f6a
 	ld de, $0e02 ; $5f6d
 	call LoadPaletteShadow ; $5f70
@@ -141,7 +141,7 @@ Label_28_5f6a:
 	call QueueVRAMCopy ; $5f7b
 	call LoadMatchSharedTiles_28 ; $5f7e
 	ret ; $5f81
-Label_28_5f82:
+.step5:
 	ld hl, $5e68 ; $5f82
 	ld de, $0e02 ; $5f85
 	call LoadPaletteShadow ; $5f88
@@ -151,7 +151,7 @@ Label_28_5f82:
 	call QueueVRAMCopy ; $5f93
 	call LoadMatchSharedTiles_28 ; $5f96
 	ret ; $5f99
-Label_28_5f9a:
+.step6:
 	ld hl, $5e78 ; $5f9a
 	ld de, $0f01 ; $5f9d
 	call LoadPaletteShadow ; $5fa0
@@ -165,7 +165,7 @@ Label_28_5f9a:
 	call QueueVRAMCopy ; $5fb6
 	call LoadMatchSharedTiles_28 ; $5fb9
 	ret ; $5fbc
-Label_28_5fbd:
+.step7:
 	ld hl, MatchGfxMapsA_28 ; $5fbd
 	ld de, $a200 ; $5fc0
 	ld c, $08 ; $5fc3
@@ -182,7 +182,7 @@ Label_28_5fbd:
 	call QueueVRAMCopy ; $5fe2
 	call LoadMatchSharedTiles_28 ; $5fe5
 	ret ; $5fe8
-Label_28_5fe9:
+.step8:
 	ld hl, $5e50 ; $5fe9
 	ld de, $0d03 ; $5fec
 	call LoadPaletteShadow ; $5fef
@@ -196,7 +196,7 @@ Label_28_5fe9:
 	call QueueVRAMCopy ; $6005
 	call LoadMatchSharedTiles_28 ; $6008
 	ret ; $600b
-Label_28_600c:
+.step9:
 	ld hl, $5e50 ; $600c
 	ld de, $0d03 ; $600f
 	call LoadPaletteShadow ; $6012
@@ -332,9 +332,9 @@ LoadMatchStoryGfx:
 	push af ; $60f5
 	ldh a, [rLCDC] ; $60f6
 	bit 7, a ; $60f8
-	jr z, Label_28_60ff ; $60fa
+	jr z, .restore ; $60fa
 	call AdvanceFrame ; $60fc
-Label_28_60ff:
+.restore:
 	pop af ; $60ff
 	ld hl, $d200 ; $6100
 	ld de, $9200 ; $6103
@@ -343,9 +343,9 @@ Label_28_60ff:
 	push af ; $610b
 	ldh a, [rLCDC] ; $610c
 	bit 7, a ; $610e
-	jr z, Label_28_6115 ; $6110
+	jr z, .restore2 ; $6110
 	call AdvanceFrame ; $6112
-Label_28_6115:
+.restore2:
 	pop af ; $6115
 	ld hl, $d400 ; $6116
 	ld de, $9400 ; $6119
@@ -354,9 +354,9 @@ Label_28_6115:
 	push af ; $6121
 	ldh a, [rLCDC] ; $6122
 	bit 7, a ; $6124
-	jr z, Label_28_612b ; $6126
+	jr z, .restore3 ; $6126
 	call AdvanceFrame ; $6128
-Label_28_612b:
+.restore3:
 	pop af ; $612b
 	ld hl, $d600 ; $612c
 	ld de, $9600 ; $612f
@@ -365,9 +365,9 @@ Label_28_612b:
 	push af ; $6137
 	ldh a, [rLCDC] ; $6138
 	bit 7, a ; $613a
-	jr z, Label_28_6141 ; $613c
+	jr z, .restore4 ; $613c
 	call AdvanceFrame ; $613e
-Label_28_6141:
+.restore4:
 	pop af ; $6141
 	ld hl, $d800 ; $6142
 	ld de, $8800 ; $6145
@@ -385,9 +385,9 @@ Label_28_6141:
 	push af ; $6165
 	ldh a, [rLCDC] ; $6166
 	bit 7, a ; $6168
-	jr z, Label_28_616f ; $616a
+	jr z, .restore5 ; $616a
 	call AdvanceFrame ; $616c
-Label_28_616f:
+.restore5:
 	pop af ; $616f
 	ret ; $6170
 Padding_28_6171:

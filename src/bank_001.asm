@@ -57,33 +57,33 @@ RunDebugTestMenu:
 	farcall InitDefaultMatchSettings ; $409a
 	call EnableLCD ; $409d
 	script_fade_in $7f ; $40a0
-Label_01_40a5:
+.loop:
 	ld hl, wStoryModeCurrentLocation ; $40a5
 	ld [hl], $00 ; $40a8
 	ld hl, wStoryModeEntryPoint ; $40aa
 	ld [hl], $0a ; $40ad
 	farcall RunStoryModeOverworld ; $40af
-Label_01_40b2:
+.loopB:
 	ld hl, BuildStamp ; $40b2
 	ld de, $0511 ; $40b5
 	call PrintString ; $40b8
 	ld a, $03 ; $40bb
 	ldh [hDebugStepMode], a ; $40bd
-Label_01_40bf:
+.loopBB:
 	ldh a, [hInputPressed] ; $40bf
 	bit PADB_A, a ; $40c1
-	jr z, Label_01_40cf ; $40c3
+	jr z, .step ; $40c3
 	push de ; $40c5
 	ld de, SAVEFLAG_DEBUG_TEST_MENU ; $40c6
 	farcall SetSaveFlag ; $40c9
 	pop de ; $40cc
-	jr Label_01_40d8 ; $40cd
-Label_01_40cf:
+	jr .step2 ; $40cd
+.step:
 	bit 3, a ; $40cf
-	jr nz, Label_01_40d8 ; $40d1
+	jr nz, .step2 ; $40d1
 	call AdvanceFrame ; $40d3
-	jr Label_01_40bf ; $40d6
-Label_01_40d8:
+	jr .loopBB ; $40d6
+.step2:
 	ld a, $00 ; $40d8
 	ldh [hDebugStepMode], a ; $40da
 	ld hl, wStoryModeCurrentLocation ; $40dc
@@ -91,17 +91,17 @@ Label_01_40d8:
 	ld hl, wStoryModeEntryPoint ; $40e1
 	ld [hl], $0a ; $40e4
 	farcall RunStoryModeOverworld ; $40e6
-	jp Label_01_40b2 ; $40e9
+	jp .loopB ; $40e9
 Unused_01_MenuRedraw:
 	ld hl, BuildStamp ; $40ec
 	ld de, $0511 ; $40ef
 	call PrintString ; $40f2
 	ld a, $03 ; $40f5
 	ldh [hDebugStepMode], a ; $40f7
-Label_01_40f9:
+.loop:
 	ldh a, [hInputPressed] ; $40f9
 	bit PADB_START, a ; $40fb
-	jr z, Label_01_4113 ; $40fd
+	jr z, .step ; $40fd
 	ld a, $01 ; $40ff
 	ldh [hDebugStepMode], a ; $4101
 	ld hl, wStoryModeCurrentLocation ; $4103
@@ -109,31 +109,31 @@ Label_01_40f9:
 	ld hl, wStoryModeEntryPoint ; $4108
 	ld [hl], $0a ; $410b
 	farcall RunStoryModeOverworld ; $410d
-	jp Label_01_40a5 ; $4110
-Label_01_4113:
+	jp RunDebugTestMenu.loop ; $4110
+.step:
 	bit 2, a ; $4113
-	jr z, Label_01_411a ; $4115
+	jr z, .step2 ; $4115
 	farcall RunSoundTest ; $4117
-Label_01_411a:
+.step2:
 	bit 0, a ; $411a
-	jr z, Label_01_4127 ; $411c
+	jr z, .step3 ; $411c
 	ld a, $01 ; $411e
 	ldh [hDebugStepMode], a ; $4120
-Label_01_4122:
+.loopB:
 	farcall RunDebugTestMatch ; $4122
-	jr Label_01_4122 ; $4125
-Label_01_4127:
+	jr .loopB ; $4125
+.step3:
 	bit 1, a ; $4127
-	jr z, Label_01_4138 ; $4129
+	jr z, .step4 ; $4129
 	ld a, $01 ; $412b
 	ldh [hDebugStepMode], a ; $412d
-Label_01_412f:
+.loopBB:
 	farcall StubNop_3b_44a9 ; $412f
 	farcall RunMatch ; $4132
-	jp Label_01_412f ; $4135
-Label_01_4138:
+	jp .loopBB ; $4135
+.step4:
 	bit 6, a ; $4138
-	jp z, Label_01_41c2 ; $413a
+	jp z, Unused_01_MatchSetup.step ; $413a
 	ld a, $01 ; $413d
 	ldh [hDebugStepMode], a ; $413f
 	ld a, $00 ; $4141
@@ -168,12 +168,12 @@ Label_01_4138:
 	call SetGameFlagByNumber ; $418a
 	ld a, $00 ; $418d
 	ld [wCurrentMinigameStoryMatch + 1], a ; $418f
-Label_01_4192:
+.loopBBB:
 	farcall RunMatchWinLoseScreen ; $4192
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $4195
 	inc a ; $4198
 	ld [wCurrentMinigameStoryMatch + 1], a ; $4199
-	jr Label_01_4192 ; $419c
+	jr .loopBBB ; $419c
 Unused_01_MatchSetup:
 	farcall ShowEquipmentStatusScreen ; $419e
 	ld de, $002f ; $41a1
@@ -188,24 +188,24 @@ Unused_01_MatchSetup:
 	ld a, $01 ; $41bb
 	ldh [hDebugStepMode], a ; $41bd
 	farcall RunDebugCharViewer ; $41bf
-Label_01_41c2:
+.step:
 	bit 7, a ; $41c2
-	jr z, Label_01_41db ; $41c4
+	jr z, Unused_01_41d6.step ; $41c4
 	ld a, $01 ; $41c6
 	ldh [hDebugStepMode], a ; $41c8
 	ld a, $00 ; $41ca
 	ldh [hDebugStepMode], a ; $41cc
-Label_01_41ce:
+.loop:
 	farcall RunIntroCutscene ; $41ce
 	farcall RunTitleScreen ; $41d1
-	jr Label_01_41ce ; $41d4
+	jr .loop ; $41d4
 Unused_01_41d6:
-	jp Label_01_40a5 ; $41d6
+	jp RunDebugTestMenu.loop ; $41d6
 	db $18 ; $41d9
 	db $ef ; $41da
-Label_01_41db:
+.step:
 	bit 4, a ; $41db
-	jr z, Label_01_41f5 ; $41dd
+	jr z, .step2 ; $41dd
 	ld a, $01 ; $41df
 	ldh [hDebugStepMode], a ; $41e1
 	ld hl, wStoryModeCurrentLocation ; $41e3
@@ -215,20 +215,20 @@ Label_01_41db:
 	ld a, $00 ; $41ed
 	ld [wStoryModeMainCharacterOverworldSprite], a ; $41ef
 	farcall RunStoryModeOverworld ; $41f2
-Label_01_41f5:
+.step2:
 	bit 5, a ; $41f5
-	jr z, Label_01_4209 ; $41f7
+	jr z, .advanceFrame ; $41f7
 	ld a, $01 ; $41f9
 	ldh [hDebugStepMode], a ; $41fb
 	farcall RunDebugCharViewer ; $41fd
 	ld a, $00 ; $4200
 	ldh [hDebugStepMode], a ; $4202
-Label_01_4204:
+.loop:
 	call AdvanceFrame ; $4204
-	jr Label_01_4204 ; $4207
-Label_01_4209:
+	jr .loop ; $4207
+.advanceFrame:
 	call AdvanceFrame ; $4209
-	jp Label_01_40f9 ; $420c
+	jp Unused_01_MenuRedraw.loop ; $420c
 	db $00 ; $420f
 MenuWindowTiles_01:
 	INCBIN "data/bank_001/d_4210.bin" ; $4210, 256 bytes
@@ -446,9 +446,9 @@ ShowDmgLockoutScreen:
 	ld a, $c1 ; $6072
 	ldh [rLCDC], a ; $6074
 	ei ; $6076
-Label_01_6077:
+.loop:
 	call AdvanceFrame ; $6077
-	jr Label_01_6077 ; $607a
+	jr .loop ; $607a
 DmgLockoutTilesLZ_01:
 	INCBIN "data/bank_001/d_607c.bin" ; $607c, 2183 bytes
 DmgLockoutTilemapLZ_01:
@@ -481,66 +481,66 @@ RunSoundTest:
 	call PrintString ; $6a85
 	pop de ; $6a88
 	pop hl ; $6a89
-Label_01_6a8a:
+.loop:
 	call AdvanceFrame ; $6a8a
 	ldh a, [hInputPressed] ; $6a8d
 	and a, PADF_UP | PADF_DOWN ; $6a8f
-	jr z, Label_01_6a97 ; $6a91
+	jr z, .step ; $6a91
 	ld a, b ; $6a93
 	xor a, $01 ; $6a94
 	ld b, a ; $6a96
-Label_01_6a97:
+.step:
 	ld a, b ; $6a97
 	or a, a ; $6a98
-	jr nz, Label_01_6abd ; $6a99
+	jr nz, .step5 ; $6a99
 	ldh a, [hInputPressed] ; $6a9b
 	bit PADB_RIGHT, a ; $6a9d
-	jr z, Label_01_6aa4 ; $6a9f
+	jr z, .step2 ; $6a9f
 	inc d ; $6aa1
-	jr Label_01_6aa9 ; $6aa2
-Label_01_6aa4:
+	jr .step3 ; $6aa2
+.step2:
 	bit 5, a ; $6aa4
-	jr z, Label_01_6add ; $6aa6
+	jr z, .step9 ; $6aa6
 	dec d ; $6aa8
-Label_01_6aa9:
+.step3:
 	ld a, d ; $6aa9
 	cp a, $ff ; $6aaa
-	jr nz, Label_01_6ab2 ; $6aac
+	jr nz, .step4 ; $6aac
 	ld d, $3e ; $6aae
-	jr Label_01_6add ; $6ab0
-Label_01_6ab2:
+	jr .step9 ; $6ab0
+.step4:
 	ld a, d ; $6ab2
 	cp a, $3e ; $6ab3
-	jr c, Label_01_6add ; $6ab5
-	jr z, Label_01_6add ; $6ab7
+	jr c, .step9 ; $6ab5
+	jr z, .step9 ; $6ab7
 	ld d, $00 ; $6ab9
-	jr Label_01_6add ; $6abb
-Label_01_6abd:
+	jr .step9 ; $6abb
+.step5:
 	ldh a, [hInputPressed] ; $6abd
 	bit PADB_RIGHT, a ; $6abf
-	jr z, Label_01_6ac6 ; $6ac1
+	jr z, .step6 ; $6ac1
 	inc e ; $6ac3
-	jr Label_01_6acb ; $6ac4
-Label_01_6ac6:
+	jr .step7 ; $6ac4
+.step6:
 	bit 5, a ; $6ac6
-	jr z, Label_01_6add ; $6ac8
+	jr z, .step9 ; $6ac8
 	dec e ; $6aca
-Label_01_6acb:
+.step7:
 	ld a, e ; $6acb
 	cp a, $ff ; $6acc
-	jr nz, Label_01_6ad4 ; $6ace
+	jr nz, .step8 ; $6ace
 	ld e, $71 ; $6ad0
-	jr Label_01_6add ; $6ad2
-Label_01_6ad4:
+	jr .step9 ; $6ad2
+.step8:
 	ld a, e ; $6ad4
 	cp a, $71 ; $6ad5
-	jr c, Label_01_6add ; $6ad7
-	jr z, Label_01_6add ; $6ad9
+	jr c, .step9 ; $6ad7
+	jr z, .step9 ; $6ad9
 	ld e, $00 ; $6adb
-Label_01_6add:
+.step9:
 	ld a, b ; $6add
 	or a, a ; $6ade
-	jr nz, Label_01_6afd ; $6adf
+	jr nz, .step10 ; $6adf
 	push hl ; $6ae1
 	push de ; $6ae2
 	ld hl, $6b71 ; $6ae3
@@ -555,8 +555,8 @@ Label_01_6add:
 	call PrintString ; $6af6
 	pop de ; $6af9
 	pop hl ; $6afa
-	jr Label_01_6b17 ; $6afb
-Label_01_6afd:
+	jr .step11 ; $6afb
+.step10:
 	push hl ; $6afd
 	push de ; $6afe
 	ld hl, $6b71 ; $6aff
@@ -571,7 +571,7 @@ Label_01_6afd:
 	call PrintString ; $6b12
 	pop de ; $6b15
 	pop hl ; $6b16
-Label_01_6b17:
+.step11:
 	push de ; $6b17
 	push af ; $6b18
 	ld a, d ; $6b19
@@ -588,9 +588,9 @@ Label_01_6b17:
 	pop de ; $6b2c
 	ldh a, [hInputPressed] ; $6b2d
 	bit PADB_A, a ; $6b2f
-	jr z, Label_01_6b61 ; $6b31
+	jr z, .label_01_6a8a ; $6b31
 	bit 0, b ; $6b33
-	jr nz, Label_01_6b4d ; $6b35
+	jr nz, .step12 ; $6b35
 	push af ; $6b37
 	push bc ; $6b38
 	push de ; $6b39
@@ -607,8 +607,8 @@ Label_01_6b17:
 	pop de ; $6b48
 	pop bc ; $6b49
 	pop af ; $6b4a
-	jr Label_01_6b61 ; $6b4b
-Label_01_6b4d:
+	jr .label_01_6a8a ; $6b4b
+.step12:
 	push af ; $6b4d
 	push bc ; $6b4e
 	push de ; $6b4f
@@ -625,8 +625,8 @@ Label_01_6b4d:
 	pop de ; $6b5e
 	pop bc ; $6b5f
 	pop af ; $6b60
-Label_01_6b61:
-	jp Label_01_6a8a ; $6b61
+.label_01_6a8a:
+	jp .loop ; $6b61
 SoundTestStrings_01:
 	; $6b64, 17 bytes (bytes:16)
 	db $4d, $55, $53, $49, $43, $00, $45, $46, $46, $45, $43, $54, $00, $3e, $00, $20 ; 0x00

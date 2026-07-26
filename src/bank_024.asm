@@ -40,52 +40,52 @@ BallTrajEntryPtr4_24:
 	ld d, a ; $402e
 	ld a, [wShotTrajRowMax] ; $402f
 	ld e, a ; $4032
-Label_24_4033:
+.loop:
 	push hl ; $4033
 	ld a, [hl+] ; $4034
 	ld h, [hl] ; $4035
 	ld l, a ; $4036
 	add hl, bc ; $4037
 	pop hl ; $4038
-	jr c, Label_24_4049 ; $4039
+	jr c, .done ; $4039
 	ld a, d ; $403b
 	cp a, e ; $403c
-	jr nc, Label_24_4049 ; $403d
+	jr nc, .done ; $403d
 	inc d ; $403f
 	ld a, $06 ; $4040
 	add a, l ; $4042
 	ld l, a ; $4043
-	jr nc, Label_24_4047 ; $4044
+	jr nc, .step ; $4044
 	inc h ; $4046
-Label_24_4047:
-	jr Label_24_4033 ; $4047
-Label_24_4049:
+.step:
+	jr .loop ; $4047
+.done:
 	ret ; $4049
 SeekBallTrajEntry4_24:
 	ld a, [wShotTrajRowMin] ; $404a
 	ld d, a ; $404d
 	ld a, [wShotTrajRowMax] ; $404e
 	ld e, a ; $4051
-Label_24_4052:
+.loop:
 	push hl ; $4052
 	ld a, [hl+] ; $4053
 	ld h, [hl] ; $4054
 	ld l, a ; $4055
 	add hl, bc ; $4056
 	pop hl ; $4057
-	jr c, Label_24_4068 ; $4058
+	jr c, .done ; $4058
 	ld a, d ; $405a
 	cp a, e ; $405b
-	jr nc, Label_24_4068 ; $405c
+	jr nc, .done ; $405c
 	inc d ; $405e
 	ld a, $04 ; $405f
 	add a, l ; $4061
 	ld l, a ; $4062
-	jr nc, Label_24_4066 ; $4063
+	jr nc, .step ; $4063
 	inc h ; $4065
-Label_24_4066:
-	jr Label_24_4052 ; $4066
-Label_24_4068:
+.step:
+	jr .loop ; $4066
+.done:
 	ret ; $4068
 SetBallVelocityFromEntry6_24:
 	ld a, [hl+] ; $4069
@@ -103,14 +103,14 @@ SetBallVelocityFromEntry6_24:
 	ld d, a ; $4075
 	ld a, [wShotAimMirror] ; $4076
 	and a, a ; $4079
-	jr z, Label_24_4082 ; $407a
+	jr z, .step ; $407a
 	xor a, a ; $407c
 	sub a, e ; $407d
 	ld e, a ; $407e
 	sbc a, a ; $407f
 	sub a, d ; $4080
 	ld d, a ; $4081
-Label_24_4082:
+.step:
 	ld hl, wShotAimAngle ; $4082
 	ld a, [hl+] ; $4085
 	ld h, [hl] ; $4086
@@ -152,14 +152,14 @@ SetBallVelocityFromEntry4_24:
 	ld h, [hl] ; $40b3
 	ld l, a ; $40b4
 	bit 7, h ; $40b5
-	jr z, Label_24_40bf ; $40b7
+	jr z, .offset ; $40b7
 	xor a, a ; $40b9
 	sub a, l ; $40ba
 	ld l, a ; $40bb
 	sbc a, a ; $40bc
 	sub a, h ; $40bd
 	ld h, a ; $40be
-Label_24_40bf:
+.offset:
 	add hl, hl ; $40bf
 	ld a, b ; $40c0
 	call MulHLByAFrac ; $40c1
@@ -180,14 +180,14 @@ Label_24_40bf:
 	ld d, a ; $40d2
 	ld a, [wShotAimMirror] ; $40d3
 	and a, a ; $40d6
-	jr z, Label_24_40df ; $40d7
+	jr z, .step ; $40d7
 	xor a, a ; $40d9
 	sub a, e ; $40da
 	ld e, a ; $40db
 	sbc a, a ; $40dc
 	sub a, d ; $40dd
 	ld d, a ; $40de
-Label_24_40df:
+.step:
 	ld hl, wShotAimAngle ; $40df
 	ld a, [hl+] ; $40e2
 	ld h, [hl] ; $40e3
@@ -200,14 +200,14 @@ Label_24_40df:
 	ld de, $fd40 ; $40ec
 	ld a, [$df0a] ; $40ef
 	and a, $02 ; $40f2
-	jr z, Label_24_40fc ; $40f4
+	jr z, .step2 ; $40f4
 	xor a, a ; $40f6
 	sub a, e ; $40f7
 	ld e, a ; $40f8
 	sbc a, a ; $40f9
 	sub a, d ; $40fa
 	ld d, a ; $40fb
-Label_24_40fc:
+.step2:
 	ld hl, wBallTargetDepth ; $40fc
 	ld a, e ; $40ff
 	ld [hl+], a ; $4100
@@ -249,12 +249,12 @@ ApplyBallTrajectoryCapped_24:
 	ld a, h ; $418a
 	sbc a, d ; $418b
 	ld h, a ; $418c
-	jr nc, Label_24_4195 ; $418d
+	jr nc, .restore ; $418d
 	ld hl, wShotDistMax ; $418f
 	ld a, [hl+] ; $4192
 	ld d, [hl] ; $4193
 	ld e, a ; $4194
-Label_24_4195:
+.restore:
 	pop hl ; $4195
 	push de ; $4196
 	call BallTrajEntryPtr6_24 ; $4197
@@ -282,7 +282,7 @@ ApplyBallTrajectory_24:
 	ld e, l ; $41b8
 	ld d, h ; $41b9
 	pop hl ; $41ba
-	jp c, Label_24_41fd ; $41bb
+	jp c, .applyFallbackBallTrajectory ; $41bb
 	call SeekBallTrajEntry4_24 ; $41be
 	push de ; $41c1
 	call SetBallVelocityFromEntry4_24 ; $41c2
@@ -318,7 +318,7 @@ ApplyBallTrajectory_24:
 	rr l ; $41f7
 	call SetBallTargetFromAim_24 ; $41f9
 	ret ; $41fc
-Label_24_41fd:
+.applyFallbackBallTrajectory:
 	farcall ApplyFallbackBallTrajectory_24 ; $41fd
 	ret ; $4200
 SetBallTargetFromAim_24:
@@ -377,9 +377,9 @@ LookupBallPosByAim_24:
 	pop de ; $424d
 	add a, l ; $424e
 	ld l, a ; $424f
-	jr nc, Label_24_4253 ; $4250
+	jr nc, .read ; $4250
 	inc h ; $4252
-Label_24_4253:
+.read:
 	ld a, [hl+] ; $4253
 	ld h, [hl] ; $4254
 	ld l, a ; $4255
@@ -409,9 +409,9 @@ LookupBallPosByHeight_24:
 	ld h, b ; $426f
 	add a, l ; $4270
 	ld l, a ; $4271
-	jr nc, Label_24_4275 ; $4272
+	jr nc, .read ; $4272
 	inc h ; $4274
-Label_24_4275:
+.read:
 	ld a, [hl+] ; $4275
 	ld h, [hl] ; $4276
 	ld l, a ; $4277
@@ -425,9 +425,9 @@ LookupBallPosByShotIndex_24:
 	ld h, b ; $427e
 	add a, l ; $427f
 	ld l, a ; $4280
-	jr nc, Label_24_4284 ; $4281
+	jr nc, .read ; $4281
 	inc h ; $4283
-Label_24_4284:
+.read:
 	ld a, [hl+] ; $4284
 	ld h, [hl] ; $4285
 	ld l, a ; $4286
@@ -469,7 +469,7 @@ BallPosDataDrop_24:
 	push af ; $4cc3
 	sbc a, b ; $4cc4
 	cp a, $20 ; $4cc5
-	jr z, Label_24_4d1f ; $4cc7
+	jr z, .compare ; $4cc7
 	push af ; $4cc9
 	sbc a, b ; $4cca
 	cp a, $c0 ; $4ccb
@@ -539,7 +539,7 @@ BallPosDataDrop_24:
 	ld d, [hl] ; $4d1c
 	push af ; $4d1d
 	ld [hl], h ; $4d1e
-Label_24_4d1f:
+.compare:
 	cp a, $a0 ; $4d1f
 	ld [$e002], sp ; $4d21
 	call z, $a0f1 ; $4d24
@@ -670,14 +670,14 @@ ShotBallPathSmash:
 	ld h, [hl] ; $66a4
 	ld l, a ; $66a5
 	bit 7, h ; $66a6
-	jr z, Label_24_66b0 ; $66a8
+	jr z, .offset ; $66a8
 	xor a, a ; $66aa
 	sub a, l ; $66ab
 	ld l, a ; $66ac
 	sbc a, a ; $66ad
 	sub a, h ; $66ae
 	ld h, a ; $66af
-Label_24_66b0:
+.offset:
 	add hl, de ; $66b0
 	ld e, l ; $66b1
 	ld d, h ; $66b2
