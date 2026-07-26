@@ -127,11 +127,11 @@ BeginCutsceneScriptMode:
 	call SetActorNullScript ; $40f0
 	ldh a, [hDebugStepMode] ; $40f3
 	or a, a ; $40f5
-	jr z, Label_0a_4100 ; $40f6
+	jr z, .done ; $40f6
 	ld a, $01 ; $40f8
 	ld hl, ToggleCutsceneFastForward ; $40fa
 	call RegisterFrameTask ; $40fd
-Label_0a_4100:
+.done:
 	pop hl ; $4100
 	pop de ; $4101
 	pop bc ; $4102
@@ -260,10 +260,10 @@ ScriptShowSpeakerDialogueRestoreBG:
 	ld a, [$d853] ; $41d4
 	ld h, a ; $41d7
 	test_flag FLAG_CUTSCENE_FAST_FORWARD ; $41d8
-	jr nz, Label_0a_41e1 ; $41db
+	jr nz, .advanceTextId ; $41db
 	ld a, b ; $41dd
 	farcall ShowSpeakerDialogueRestoreBG ; $41de
-Label_0a_41e1:
+.advanceTextId:
 	inc hl ; $41e1
 	ld a, l ; $41e2
 	ld [$d852], a ; $41e3
@@ -453,7 +453,7 @@ Label_0a_4301:
 GetActorStateAddr:
 	ld hl, $d000 ; $4312
 	cp a, $18 ; $4315
-	jr nc, Label_0a_4326 ; $4317
+	jr nc, .haveAddr ; $4317
 	ld h, a ; $4319
 	xor a, a ; $431a
 	srl h ; $431b
@@ -464,15 +464,15 @@ GetActorStateAddr:
 	ld a, $d0 ; $4322
 	add a, h ; $4324
 	ld h, a ; $4325
-Label_0a_4326:
+.haveAddr:
 	wram_bank $04 ; $4326
 	push hl ; $432c
 	ld a, $20 ; $432d
 	add a, l ; $432f
 	ld l, a ; $4330
-	jr nc, Label_0a_4334 ; $4331
+	jr nc, .readActive ; $4331
 	inc h ; $4333
-Label_0a_4334:
+.readActive:
 	ld a, [hl] ; $4334
 	cp a, $00 ; $4335
 	pop hl ; $4337
@@ -1467,18 +1467,18 @@ WaitPlayerMoveDone:
 	ld a, $05 ; $48a7
 	add a, l ; $48a9
 	ld l, a ; $48aa
-	jr nc, Label_0a_48ae ; $48ab
+	jr nc, .waitLoop ; $48ab
 	inc h ; $48ad
-Label_0a_48ae:
+.waitLoop:
 	ld a, $01 ; $48ae
 	call WaitScriptFrames ; $48b0
 	bit 7, [hl] ; $48b3
-	jr z, Label_0a_48bc ; $48b5
+	jr z, .done ; $48b5
 	dec bc ; $48b7
 	ld a, c ; $48b8
 	or a, b ; $48b9
-	jr nz, Label_0a_48ae ; $48ba
-Label_0a_48bc:
+	jr nz, .waitLoop ; $48ba
+.done:
 	pop hl ; $48bc
 	pop bc ; $48bd
 	pop af ; $48be
@@ -3443,33 +3443,33 @@ CopySceneTilemapChunk:
 	push de ; $5823
 	push hl ; $5824
 	ld c, $16 ; $5825
-Label_0a_5827:
+.copyLoop:
 	ld a, [hl+] ; $5827
 	ld [de], a ; $5828
 	inc de ; $5829
 	ld a, l ; $582a
 	and a, $3f ; $582b
-	jr nz, Label_0a_5838 ; $582d
+	jr nz, .checkDestWrap ; $582d
 	ld a, l ; $582f
 	sub a, $40 ; $5830
 	ld l, a ; $5832
-	jr nc, Label_0a_5836 ; $5833
+	jr nc, .srcWrapped ; $5833
 	dec h ; $5835
-Label_0a_5836:
-	jr Label_0a_583d ; $5836
-Label_0a_5838:
+.srcWrapped:
+	jr .wrapDest ; $5836
+.checkDestWrap:
 	ld a, e ; $5838
 	and a, $1f ; $5839
-	jr nz, Label_0a_5844 ; $583b
-Label_0a_583d:
+	jr nz, .next ; $583b
+.wrapDest:
 	ld a, e ; $583d
 	sub a, $20 ; $583e
 	ld e, a ; $5840
-	jr nc, Label_0a_5844 ; $5841
+	jr nc, .next ; $5841
 	dec d ; $5843
-Label_0a_5844:
+.next:
 	dec c ; $5844
-	jr nz, Label_0a_5827 ; $5845
+	jr nz, .copyLoop ; $5845
 	pop hl ; $5847
 	ld de, $0040 ; $5848
 	add hl, de ; $584b
@@ -3481,9 +3481,9 @@ Label_0a_5844:
 	ld a, $20 ; $5853
 	add a, e ; $5855
 	ld e, a ; $5856
-	jr nc, Label_0a_585a ; $5857
+	jr nc, .done ; $5857
 	inc d ; $5859
-Label_0a_585a:
+.done:
 	res 2, d ; $585a
 	ret ; $585c
 LoadStorySceneGraphics:
@@ -3729,17 +3729,17 @@ CopyScrolledSceneTilemapToVram:
 	push de ; $5c2b
 	push hl ; $5c2c
 	or a, a ; $5c2d
-	jr z, Label_0a_5c3b ; $5c2e
+	jr z, .fromPlayer ; $5c2e
 	ld a, [wCameraX + 1] ; $5c30
 	ld h, a ; $5c33
 	ld a, [wCameraY + 1] ; $5c34
 	ld l, a ; $5c37
-	jp Label_0a_5c40 ; $5c38
-Label_0a_5c3b:
+	jp .gotCamera ; $5c38
+.fromPlayer:
 	call UpdateCameraFromPlayer ; $5c3b
 	ld h, b ; $5c3e
 	ld l, d ; $5c3f
-Label_0a_5c40:
+.gotCamera:
 	push hl ; $5c40
 	ld a, l ; $5c41
 	and a, $1f ; $5c42
@@ -3779,118 +3779,118 @@ Label_0a_5c40:
 	ld a, $01 ; $5c71
 	ldh [rVBK], a ; $5c73
 	ld b, $15 ; $5c75
-Label_0a_5c77:
+.attrRowLoop:
 	ld c, $17 ; $5c77
 	push de ; $5c79
 	push hl ; $5c7a
-Label_0a_5c7b:
+.attrCellLoop:
 	ld a, [hl+] ; $5c7b
 	ld [de], a ; $5c7c
 	inc de ; $5c7d
 	ld a, l ; $5c7e
 	and a, $3f ; $5c7f
-	jr nz, Label_0a_5c8b ; $5c81
+	jr nz, .attrCheckDestWrap ; $5c81
 	push de ; $5c83
 	ld de, hLinkRxByte ; $5c84
 	add hl, de ; $5c87
 	pop de ; $5c88
-	jr Label_0a_5c90 ; $5c89
-Label_0a_5c8b:
+	jr .attrWrapDest ; $5c89
+.attrCheckDestWrap:
 	ld a, e ; $5c8b
 	and a, $1f ; $5c8c
-	jr nz, Label_0a_5c98 ; $5c8e
-Label_0a_5c90:
+	jr nz, .attrNextCell ; $5c8e
+.attrWrapDest:
 	push hl ; $5c90
 	ld hl, $ffe0 ; $5c91
 	add hl, de ; $5c94
 	ld e, l ; $5c95
 	ld d, h ; $5c96
 	pop hl ; $5c97
-Label_0a_5c98:
+.attrNextCell:
 	dec c ; $5c98
-	jr nz, Label_0a_5c7b ; $5c99
+	jr nz, .attrCellLoop ; $5c99
 	pop hl ; $5c9b
 	ld a, $40 ; $5c9c
 	add a, l ; $5c9e
 	ld l, a ; $5c9f
-	jr nc, Label_0a_5ca9 ; $5ca0
+	jr nc, .attrRowSrcOk ; $5ca0
 	ld a, h ; $5ca2
 	inc a ; $5ca3
 	and a, $0f ; $5ca4
 	or a, $d0 ; $5ca6
 	ld h, a ; $5ca8
-Label_0a_5ca9:
+.attrRowSrcOk:
 	pop de ; $5ca9
 	ld a, $20 ; $5caa
 	add a, e ; $5cac
 	ld e, a ; $5cad
-	jr nc, Label_0a_5cb5 ; $5cae
+	jr nc, .attrNextRow ; $5cae
 	ld a, d ; $5cb0
 	inc a ; $5cb1
 	res 2, a ; $5cb2
 	ld d, a ; $5cb4
-Label_0a_5cb5:
+.attrNextRow:
 	dec b ; $5cb5
-	jr nz, Label_0a_5c77 ; $5cb6
+	jr nz, .attrRowLoop ; $5cb6
 	pop de ; $5cb8
 	pop hl ; $5cb9
 	wram_bank $03 ; $5cba
 	xor a, a ; $5cc0
 	ldh [rVBK], a ; $5cc1
 	ld b, $15 ; $5cc3
-Label_0a_5cc5:
+.tileRowLoop:
 	ld c, $17 ; $5cc5
 	push de ; $5cc7
 	push hl ; $5cc8
-Label_0a_5cc9:
+.tileCellLoop:
 	ld a, [hl+] ; $5cc9
 	ld [de], a ; $5cca
 	inc de ; $5ccb
 	ld a, l ; $5ccc
 	and a, $3f ; $5ccd
-	jr nz, Label_0a_5cd9 ; $5ccf
+	jr nz, .tileCheckDestWrap ; $5ccf
 	push de ; $5cd1
 	ld de, hLinkRxByte ; $5cd2
 	add hl, de ; $5cd5
 	pop de ; $5cd6
-	jr Label_0a_5cde ; $5cd7
-Label_0a_5cd9:
+	jr .tileWrapDest ; $5cd7
+.tileCheckDestWrap:
 	ld a, e ; $5cd9
 	and a, $1f ; $5cda
-	jr nz, Label_0a_5ce6 ; $5cdc
-Label_0a_5cde:
+	jr nz, .tileNextCell ; $5cdc
+.tileWrapDest:
 	push hl ; $5cde
 	ld hl, $ffe0 ; $5cdf
 	add hl, de ; $5ce2
 	ld e, l ; $5ce3
 	ld d, h ; $5ce4
 	pop hl ; $5ce5
-Label_0a_5ce6:
+.tileNextCell:
 	dec c ; $5ce6
-	jr nz, Label_0a_5cc9 ; $5ce7
+	jr nz, .tileCellLoop ; $5ce7
 	pop hl ; $5ce9
 	ld a, $40 ; $5cea
 	add a, l ; $5cec
 	ld l, a ; $5ced
-	jr nc, Label_0a_5cf7 ; $5cee
+	jr nc, .tileRowSrcOk ; $5cee
 	ld a, h ; $5cf0
 	inc a ; $5cf1
 	and a, $0f ; $5cf2
 	or a, $d0 ; $5cf4
 	ld h, a ; $5cf6
-Label_0a_5cf7:
+.tileRowSrcOk:
 	pop de ; $5cf7
 	ld a, $20 ; $5cf8
 	add a, e ; $5cfa
 	ld e, a ; $5cfb
-	jr nc, Label_0a_5d03 ; $5cfc
+	jr nc, .tileNextRow ; $5cfc
 	ld a, d ; $5cfe
 	inc a ; $5cff
 	res 2, a ; $5d00
 	ld d, a ; $5d02
-Label_0a_5d03:
+.tileNextRow:
 	dec b ; $5d03
-	jr nz, Label_0a_5cc5 ; $5d04
+	jr nz, .tileRowLoop ; $5d04
 	pop hl ; $5d06
 	pop de ; $5d07
 	pop bc ; $5d08

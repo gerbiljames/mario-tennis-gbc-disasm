@@ -641,12 +641,12 @@ GetMenuCursorIndex:
 	ld b, a ; $43c4
 	xor a, a ; $43c5
 	inc b ; $43c6
-Label_1b_43c7:
+.mulLoop:
 	dec b ; $43c7
-	jr z, Label_1b_43cd ; $43c8
+	jr z, .addColumn ; $43c8
 	add a, c ; $43ca
-	jr Label_1b_43c7 ; $43cb
-Label_1b_43cd:
+	jr .mulLoop ; $43cb
+.addColumn:
 	ld b, a ; $43cd
 	ld a, [wMenuCursorX] ; $43ce
 	add a, b ; $43d1
@@ -3091,9 +3091,9 @@ GetRankingMarkerSlot:
 	ld hl, $d803 ; $5f55
 	add a, l ; $5f58
 	ld l, a ; $5f59
-	jr nc, Label_1b_5f5d ; $5f5a
+	jr nc, .done ; $5f5a
 	inc h ; $5f5c
-Label_1b_5f5d:
+.done:
 	pop af ; $5f5d
 	ret ; $5f5e
 	push af ; $5f5f

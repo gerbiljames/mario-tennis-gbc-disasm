@@ -630,12 +630,12 @@ GetMenuCursorCellIndex:
 	ld b, a ; $43bc
 	xor a, a ; $43bd
 	inc b ; $43be
-Label_3b_43bf:
+.mulLoop:
 	dec b ; $43bf
-	jr z, Label_3b_43c5 ; $43c0
+	jr z, .addColumn ; $43c0
 	add a, c ; $43c2
-	jr Label_3b_43bf ; $43c3
-Label_3b_43c5:
+	jr .mulLoop ; $43c3
+.addColumn:
 	ld b, a ; $43c5
 	ld a, [wMenuCursorX] ; $43c6
 	add a, b ; $43c9
@@ -3952,10 +3952,10 @@ Label_3b_5bfd:
 	dw $0082 ; record 17
 Print2DigitNumberRightAligned:
 	ld a, $02 ; $5c27
-	jr Label_3b_5c2d ; $5c29
+	jr PrintNumberRightAligned.format ; $5c29
 PrintNumberRightAligned:
 	ld a, $00 ; $5c2b
-Label_3b_5c2d:
+.format:
 	push af ; $5c2d
 	push bc ; $5c2e
 	push de ; $5c2f
@@ -3970,23 +3970,23 @@ Label_3b_5c2d:
 	ld h, b ; $5c3a
 	ld l, c ; $5c3b
 	ld c, $ff ; $5c3c
-Label_3b_5c3e:
+.lenLoop:
 	inc c ; $5c3e
 	ld a, [hl+] ; $5c3f
 	or a, a ; $5c40
-	jr nz, Label_3b_5c3e ; $5c41
+	jr nz, .lenLoop ; $5c41
 	dec hl ; $5c43
 	dec hl ; $5c44
-Label_3b_5c45:
+.copyLoop:
 	ld a, [hl-] ; $5c45
 	cp a, $20 ; $5c46
-	jr nz, Label_3b_5c4c ; $5c48
+	jr nz, .store ; $5c48
 	ld a, $30 ; $5c4a
-Label_3b_5c4c:
+.store:
 	ld [de], a ; $5c4c
 	dec de ; $5c4d
 	dec c ; $5c4e
-	jr nz, Label_3b_5c45 ; $5c4f
+	jr nz, .copyLoop ; $5c4f
 	ret ; $5c51
 	ret ; $5c52
 TryMainMenuLinkHandshake:

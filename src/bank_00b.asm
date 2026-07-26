@@ -82,34 +82,34 @@ RecordDrillPointResultBits:
 	ld hl, $40bc ; $408c
 	ld a, [$c7bb] ; $408f
 	or a, a ; $4092
-	jr nz, Label_0b_40ad ; $4093
+	jr nz, .storeBits ; $4093
 	ld a, b ; $4095
 	and a, $01 ; $4096
 	add a, a ; $4098
 	add a, l ; $4099
 	ld l, a ; $409a
-	jr nc, Label_0b_409e ; $409b
+	jr nc, .checkOddPoint ; $409b
 	inc h ; $409d
-Label_0b_409e:
+.checkOddPoint:
 	srl b ; $409e
 	ld a, [wTotalPointsScoredInCurrentGame] ; $40a0
 	and a, $01 ; $40a3
-	jr z, Label_0b_40ad ; $40a5
+	jr z, .storeBits ; $40a5
 	ld a, c ; $40a7
 	xor a, $80 ; $40a8
 	ld c, a ; $40aa
-	jr Label_0b_40ad ; $40ab
-Label_0b_40ad:
+	jr .storeBits ; $40ab
+.storeBits:
 	ld a, [hl+] ; $40ad
 	ld h, [hl] ; $40ae
 	ld l, a ; $40af
 	inc b ; $40b0
 	sla b ; $40b1
 	ld a, c ; $40b3
-Label_0b_40b4:
+.rotateLoop:
 	rlc a ; $40b4
 	dec b ; $40b6
-	jr nz, Label_0b_40b4 ; $40b7
+	jr nz, .rotateLoop ; $40b7
 	or a, [hl] ; $40b9
 	ld [hl], a ; $40ba
 	ret ; $40bb
@@ -122,41 +122,41 @@ CountDrillShotSuccesses:
 	ld hl, $c2fc ; $40c2
 	add a, l ; $40c5
 	ld l, a ; $40c6
-	jr nc, Label_0b_40ca ; $40c7
+	jr nc, .gotSlot ; $40c7
 	inc h ; $40c9
-Label_0b_40ca:
+.gotSlot:
 	ld c, $00 ; $40ca
 	ld a, [hl] ; $40cc
 	ld b, a ; $40cd
 	and a, $03 ; $40ce
 	cp a, $01 ; $40d0
-	jr nz, Label_0b_40d5 ; $40d2
+	jr nz, .checkShot2 ; $40d2
 	inc c ; $40d4
-Label_0b_40d5:
+.checkShot2:
 	ld a, b ; $40d5
 	srl a ; $40d6
 	srl a ; $40d8
 	and a, $03 ; $40da
 	cp a, $01 ; $40dc
-	jr nz, Label_0b_40e1 ; $40de
+	jr nz, .checkShot3 ; $40de
 	inc c ; $40e0
-Label_0b_40e1:
+.checkShot3:
 	ld a, b ; $40e1
 	swap a ; $40e2
 	and a, $03 ; $40e4
 	cp a, $01 ; $40e6
-	jr nz, Label_0b_40eb ; $40e8
+	jr nz, .checkShot4 ; $40e8
 	inc c ; $40ea
-Label_0b_40eb:
+.checkShot4:
 	ld a, b ; $40eb
 	swap a ; $40ec
 	srl a ; $40ee
 	srl a ; $40f0
 	and a, $03 ; $40f2
 	cp a, $01 ; $40f4
-	jr nz, Label_0b_40f9 ; $40f6
+	jr nz, .done ; $40f6
 	inc c ; $40f8
-Label_0b_40f9:
+.done:
 	ld a, c ; $40f9
 	pop hl ; $40fa
 	pop bc ; $40fb
@@ -744,15 +744,15 @@ Label_0b_452e:
 	ret ; $4533
 QueueDrillResultMessage:
 	cp a, $ff ; $4534
-	jr z, Label_0b_4541 ; $4536
+	jr z, .store ; $4536
 	ld c, a ; $4538
 	ld a, [wCurrentServingPlayer] ; $4539
 	or a, a ; $453c
-	jr z, Label_0b_4540 ; $453d
+	jr z, .addOffset ; $453d
 	ld a, b ; $453f
-Label_0b_4540:
+.addOffset:
 	add a, c ; $4540
-Label_0b_4541:
+.store:
 	ld [$c2e6], a ; $4541
 	ret ; $4544
 SetDrillMessageByServer:
@@ -1007,9 +1007,9 @@ RunTrainingDrillByID:
 	farcall InitMinigameMatchSettings ; $4706
 	pop af ; $4709
 	cp a, $24 ; $470a
-	jp z, Label_0b_47ae ; $470c
+	jp z, Label_0b_479a.doublesDrill ; $470c
 	cp a, $12 ; $470f
-	jr nc, Label_0b_4723 ; $4711
+	jr nc, .minigame ; $4711
 	ld l, a ; $4713
 	ld h, $00 ; $4714
 	add hl, hl ; $4716
@@ -1019,10 +1019,10 @@ RunTrainingDrillByID:
 	ld b, [hl] ; $471c
 	ld c, a ; $471d
 	call StartDrillFromDefinition ; $471e
-	jr Label_0b_4726 ; $4721
-Label_0b_4723:
+	jr .runMatch ; $4721
+.minigame:
 	farcall StartMinigameByID ; $4723
-Label_0b_4726:
+.runMatch:
 	ld hl, $c2e0 ; $4726
 	ld c, $02 ; $4729
 	call ClearMemory16 ; $472b
@@ -1034,7 +1034,7 @@ Label_0b_4726:
 	ld [hl], a ; $4738
 	ld [$c7a8], a ; $4739
 	farcall RunMinigameMatch ; $473c
-Label_0b_473f:
+.afterMatch:
 	xor a, a ; $473f
 	ldh [hScrollX], a ; $4740
 	ldh [hScrollY], a ; $4742
@@ -1051,12 +1051,12 @@ Label_0b_473f:
 	jp nz, RunTrainingDrillByID ; $4759
 	ld a, [wMatchExitRequest] ; $475c
 	or a, a ; $475f
-	jr z, Label_0b_4767 ; $4760
+	jr z, .checkMenuFlag ; $4760
 	ld a, $ff ; $4762
 	ld [wPointWinLoseFlag], a ; $4764
-Label_0b_4767:
+.checkMenuFlag:
 	test_flag FLAG_DRILL_FROM_MENU ; $4767
-	jr z, Label_0b_47a7 ; $476a
+	jr z, Label_0b_479a.finish ; $476a
 	call DisableLCDSafely ; $476c
 	farcall ResetTextWindowState ; $476f
 	call ClearBGForDrillResult ; $4772
@@ -1082,13 +1082,13 @@ Label_0b_479a:
 	ld c, $10 ; $479f
 	call BeginFadeOut ; $47a1
 	call WaitFadeEnd ; $47a4
-Label_0b_47a7:
+.finish:
 	clear_flag FLAG_DRILL_FROM_MENU ; $47a7
 	farcall ProcessMatchRewards ; $47aa
 	ret ; $47ad
-Label_0b_47ae:
+.doublesDrill:
 	call RunDoublesDrillMatch ; $47ae
-	jp Label_0b_473f ; $47b1
+	jp RunTrainingDrillByID.afterMatch ; $47b1
 DrillDefinitionPtrs:
 	; $47b4, 36 bytes (records:2)
 	dw ServiceMatch1Drill ; record 0

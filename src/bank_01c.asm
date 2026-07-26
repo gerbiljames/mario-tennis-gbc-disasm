@@ -20,15 +20,15 @@ CharDataScreen_Show:
 	push bc ; $4023
 	ld a, [$d0b6] ; $4024
 	or a, a ; $4027
-	jr nz, Label_1c_4038 ; $4028
+	jr nz, .show ; $4028
 	test_flag FLAG_CHAR_DATA_START_EXITS ; $402a
-	jr nz, Label_1c_4038 ; $402d
+	jr nz, .show ; $402d
 	push bc ; $402f
 	ld a, c ; $4030
 	farcall HasReachedNextLevelExp ; $4031
-	jp nz, Label_1c_40f1 ; $4034
+	jp nz, .levelUpPending ; $4034
 	pop bc ; $4037
-Label_1c_4038:
+.show:
 	call ClearFrameTasks ; $4038
 	call DisableLCDSafely ; $403b
 	xor a, a ; $403e
@@ -48,7 +48,7 @@ Label_1c_4038:
 	wram_bank $06 ; $4060
 	ld a, [$d0b6] ; $4066
 	or a, a ; $4069
-	jr nz, Label_1c_40af ; $406a
+	jr nz, .reentry ; $406a
 	call EnableLCD ; $406c
 	call AdvanceFrame ; $406f
 	ld a, $01 ; $4072
@@ -71,10 +71,10 @@ Label_1c_4038:
 	ld a, $01 ; $40a5
 	ld hl, DrawStatArrowIndicators ; $40a7
 	call RegisterFrameTask ; $40aa
-	jr Label_1c_40b2 ; $40ad
-Label_1c_40af:
+	jr .runInputLoop ; $40ad
+.reentry:
 	call SetupCharDataScreen ; $40af
-Label_1c_40b2:
+.runInputLoop:
 	call CharDataScreen_InputLoop ; $40b2
 	push af ; $40b5
 	ld c, $10 ; $40b6
@@ -100,7 +100,7 @@ Label_1c_40b2:
 	wram_bank ; $40eb
 	ld a, b ; $40ef
 	ret ; $40f0
-Label_1c_40f1:
+.levelUpPending:
 	pop bc ; $40f1
 	pop bc ; $40f2
 	pop af ; $40f3
@@ -1018,9 +1018,9 @@ BlitTilemapRunsFromTable:
 	ld l, c ; $4923
 	add a, l ; $4924
 	ld l, a ; $4925
-	jr nc, Label_1c_4929 ; $4926
+	jr nc, .gotSrc ; $4926
 	inc h ; $4928
-Label_1c_4929:
+.gotSrc:
 	wram_bank $06 ; $4929
 	ld a, l ; $492f
 	ld [$d08e], a ; $4930
@@ -1034,7 +1034,7 @@ Label_1c_4929:
 	ld a, [hl+] ; $493e
 	ld h, [hl] ; $493f
 	ld l, a ; $4940
-Label_1c_4941:
+.copyLoop:
 	wram_bank $03 ; $4941
 	ld a, [hl] ; $4947
 	ld [de], a ; $4948
@@ -1043,7 +1043,7 @@ Label_1c_4941:
 	ld [de], a ; $4950
 	inc de ; $4951
 	dec c ; $4952
-	jr nz, Label_1c_4941 ; $4953
+	jr nz, .copyLoop ; $4953
 	pop bc ; $4955
 	pop hl ; $4956
 	inc hl ; $4957

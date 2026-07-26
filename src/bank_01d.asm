@@ -1370,9 +1370,9 @@ ApplyTilemapPatchList:
 	ld l, c ; $4bca
 	add a, l ; $4bcb
 	ld l, a ; $4bcc
-	jr nc, Label_1d_4bd0 ; $4bcd
+	jr nc, .gotSrc ; $4bcd
 	inc h ; $4bcf
-Label_1d_4bd0:
+.gotSrc:
 	wram_bank $06 ; $4bd0
 	ld a, l ; $4bd6
 	ld [$d08e], a ; $4bd7
@@ -1386,7 +1386,7 @@ Label_1d_4bd0:
 	ld a, [hl+] ; $4be5
 	ld h, [hl] ; $4be6
 	ld l, a ; $4be7
-Label_1d_4be8:
+.copyLoop:
 	wram_bank $03 ; $4be8
 	ld a, [hl] ; $4bee
 	ld [de], a ; $4bef
@@ -1395,7 +1395,7 @@ Label_1d_4be8:
 	ld [de], a ; $4bf7
 	inc de ; $4bf8
 	dec c ; $4bf9
-	jr nz, Label_1d_4be8 ; $4bfa
+	jr nz, .copyLoop ; $4bfa
 	pop bc ; $4bfc
 	pop hl ; $4bfd
 	inc hl ; $4bfe
@@ -2933,14 +2933,14 @@ ApplySlideOffsetToSpriteX:
 	add hl, bc ; $59a4
 	ld a, h ; $59a5
 	or a, a ; $59a6
-	jr nz, Label_1d_59b1 ; $59a7
+	jr nz, .offscreen ; $59a7
 	ld a, l ; $59a9
 	cp a, $a0 ; $59aa
-	jr nc, Label_1d_59b1 ; $59ac
+	jr nc, .offscreen ; $59ac
 	ld d, l ; $59ae
 	pop bc ; $59af
 	ret ; $59b0
-Label_1d_59b1:
+.offscreen:
 	ld d, $a8 ; $59b1
 	pop bc ; $59b3
 	ret ; $59b4
@@ -4232,48 +4232,48 @@ RunExpDistributionLoop:
 	wram_bank $06 ; $6f3e
 	ld a, [$d0b6] ; $6f44
 	or a, a ; $6f47
-	jr z, Label_1d_6f51 ; $6f48
+	jr z, .tick ; $6f48
 	xor a, a ; $6f4a
 	ld [$d0b6], a ; $6f4b
 	jp Label_1d_7453 ; $6f4e
-Label_1d_6f51:
+.tick:
 	wram_bank $06 ; $6f51
 	ld a, [$d185] ; $6f57
 	and a, $08 ; $6f5a
 	or a, a ; $6f5c
-	jr z, Label_1d_6f6d ; $6f5d
+	jr z, .checkRepeat ; $6f5d
 	ld a, [$d183] ; $6f5f
 	or a, a ; $6f62
-	jr z, Label_1d_6f6d ; $6f63
+	jr z, .checkRepeat ; $6f63
 	dec a ; $6f65
 	ld [$d183], a ; $6f66
 	xor a, a ; $6f69
 	ld [$d185], a ; $6f6a
-Label_1d_6f6d:
+.checkRepeat:
 	ld a, [$d184] ; $6f6d
 	or a, a ; $6f70
-	jr z, Label_1d_6f77 ; $6f71
+	jr z, .frame ; $6f71
 	dec a ; $6f73
 	ld [$d184], a ; $6f74
-Label_1d_6f77:
+.frame:
 	call TickLevelUpJingle ; $6f77
 	call UploadExpScreenTilemapRows ; $6f7a
 	call AdvanceFrame ; $6f7d
 	ldh a, [hPlayerInputFlags] ; $6f80
 	bit PADB_B, a ; $6f82
-	jr z, Label_1d_6f92 ; $6f84
+	jr z, .checkButtons ; $6f84
 	push af ; $6f86
 	wram_bank $06 ; $6f87
 	xor a, a ; $6f8d
 	ld [$d184], a ; $6f8e
 	pop af ; $6f91
-Label_1d_6f92:
+.checkButtons:
 	bit 5, a ; $6f92
-	jp nz, Label_1d_7020 ; $6f94
+	jp nz, .decrease ; $6f94
 	bit 4, a ; $6f97
-	jp nz, Label_1d_7076 ; $6f99
+	jp nz, .increase ; $6f99
 	bit 0, a ; $6f9c
-	jp nz, Label_1d_7076 ; $6f9e
+	jp nz, .increase ; $6f9e
 	wram_bank $06 ; $6fa1
 	ld a, $a8 ; $6fa7
 	ld [$d181], a ; $6fa9
@@ -4285,11 +4285,11 @@ Label_1d_6f92:
 	res 1, [hl] ; $6fb8
 	ldh a, [hInputRisingEdge] ; $6fba
 	bit PADB_UP, a ; $6fbc
-	jr nz, Label_1d_6fc7 ; $6fbe
+	jr nz, .selectMainChar ; $6fbe
 	bit 7, a ; $6fc0
-	jr nz, Label_1d_6ff3 ; $6fc2
+	jr nz, .selectPartner ; $6fc2
 	jp RunExpDistributionLoop ; $6fc4
-Label_1d_6fc7:
+.selectMainChar:
 	wram_bank $06 ; $6fc7
 	ld a, [wStoryCharacterSlot] ; $6fcd
 	or a, a ; $6fd0
@@ -4306,7 +4306,7 @@ Label_1d_6fc7:
 	ld hl, $d17f ; $6feb
 	set 0, [hl] ; $6fee
 	jp RunExpDistributionLoop ; $6ff0
-Label_1d_6ff3:
+.selectPartner:
 	wram_bank $06 ; $6ff3
 	ld a, [wStoryCharacterSlot] ; $6ff9
 	or a, a ; $6ffc
@@ -4323,7 +4323,7 @@ Label_1d_6ff3:
 	ld hl, $d17f ; $7018
 	set 0, [hl] ; $701b
 	jp RunExpDistributionLoop ; $701d
-Label_1d_7020:
+.decrease:
 	wram_bank $06 ; $7020
 	ld a, [$d17f] ; $7026
 	bit 0, a ; $7029
@@ -4332,17 +4332,17 @@ Label_1d_7020:
 	inc [hl] ; $7031
 	ld a, [$d184] ; $7032
 	or a, a ; $7035
-	jr nz, Label_1d_7070 ; $7036
+	jr nz, .decreaseRepeat ; $7036
 	call UnassignExpPointFromChar ; $7038
 	or a, a ; $703b
-	jr z, Label_1d_7063 ; $703c
+	jr z, .decreaseFailed ; $703c
 	sound $62 ; $703e
 	wram_bank $06 ; $7040
 	ld a, [$d183] ; $7046
 	or a, a ; $7049
-	jr nz, Label_1d_704f ; $704a
+	jr nz, .applyDecrease ; $704a
 	call UnassignExpPointFromChar ; $704c
-Label_1d_704f:
+.applyDecrease:
 	ld hl, $d17f ; $704f
 	set 1, [hl] ; $7052
 	ld a, [$d183] ; $7054
@@ -4350,16 +4350,16 @@ Label_1d_704f:
 	call RefreshExpScreenReadouts ; $705a
 	call SweepExpBarMarkerLeft ; $705d
 	jp RunExpDistributionLoop ; $7060
-Label_1d_7063:
+.decreaseFailed:
 	ld hl, $d17f ; $7063
 	res 1, [hl] ; $7066
 	ld a, $a8 ; $7068
 	ld [$d181], a ; $706a
 	jp RunExpDistributionLoop ; $706d
-Label_1d_7070:
+.decreaseRepeat:
 	call SweepExpBarMarkerLeft ; $7070
 	jp RunExpDistributionLoop ; $7073
-Label_1d_7076:
+.increase:
 	wram_bank $06 ; $7076
 	ld a, [$d17f] ; $707c
 	bit 0, a ; $707f
@@ -4368,17 +4368,17 @@ Label_1d_7076:
 	inc [hl] ; $7087
 	ld a, [$d184] ; $7088
 	or a, a ; $708b
-	jr nz, Label_1d_70c6 ; $708c
+	jr nz, .increaseRepeat ; $708c
 	call AssignExpPointToChar ; $708e
 	or a, a ; $7091
-	jr z, Label_1d_70b9 ; $7092
+	jr z, .increaseFailed ; $7092
 	sound $5f ; $7094
 	wram_bank $06 ; $7096
 	ld a, [$d183] ; $709c
 	or a, a ; $709f
-	jr nz, Label_1d_70a5 ; $70a0
+	jr nz, .applyIncrease ; $70a0
 	call AssignExpPointToChar ; $70a2
-Label_1d_70a5:
+.applyIncrease:
 	ld hl, $d17f ; $70a5
 	set 1, [hl] ; $70a8
 	ld a, [$d183] ; $70aa
@@ -4386,13 +4386,13 @@ Label_1d_70a5:
 	call RefreshExpScreenReadouts ; $70b0
 	call SweepExpBarMarkerRight ; $70b3
 	jp RunExpDistributionLoop ; $70b6
-Label_1d_70b9:
+.increaseFailed:
 	ld hl, $d17f ; $70b9
 	res 1, [hl] ; $70bc
 	ld a, $a8 ; $70be
 	ld [$d181], a ; $70c0
 	jp Label_1d_7453 ; $70c3
-Label_1d_70c6:
+.increaseRepeat:
 	call SweepExpBarMarkerRight ; $70c6
 	jp RunExpDistributionLoop ; $70c9
 SlideExpCursorToMainCharTask:

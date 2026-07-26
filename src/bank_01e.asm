@@ -621,43 +621,43 @@ FetchAndDrawDialogueText:
 	pop bc ; $45c8
 WriteTextToTilemap:
 	ld hl, wTextBuffer ; $45c9
-Label_1e_45cc:
+.charLoop:
 	wram_bank $03 ; $45cc
 	ld a, [hl+] ; $45d2
 	or a, a ; $45d3
 	ret z ; $45d4
 	cp a, $de ; $45d5
-	jr z, Label_1e_45e9 ; $45d7
+	jr z, .markChar ; $45d7
 	cp a, $df ; $45d9
-	jr z, Label_1e_45e9 ; $45db
+	jr z, .markChar ; $45db
 	ld [de], a ; $45dd
 	wram_bank $02 ; $45de
 	ld a, b ; $45e4
 	ld [de], a ; $45e5
 	inc de ; $45e6
-	jr Label_1e_45cc ; $45e7
-Label_1e_45e9:
+	jr .charLoop ; $45e7
+.markChar:
 	push de ; $45e9
 	push bc ; $45ea
-Label_1e_45eb:
+.backLoop:
 	dec de ; $45eb
 	dec c ; $45ec
-	jr nz, Label_1e_45eb ; $45ed
+	jr nz, .backLoop ; $45ed
 	dec de ; $45ef
 	ld c, a ; $45f0
 	ld a, [de] ; $45f1
 	cp a, $03 ; $45f2
 	ld a, c ; $45f4
-	jr nz, Label_1e_45f9 ; $45f5
+	jr nz, .storeMark ; $45f5
 	sub a, $d0 ; $45f7
-Label_1e_45f9:
+.storeMark:
 	ld [de], a ; $45f9
 	wram_bank $02 ; $45fa
 	ld a, b ; $4600
 	ld [de], a ; $4601
 	pop bc ; $4602
 	pop de ; $4603
-	jr Label_1e_45cc ; $4604
+	jr .charLoop ; $4604
 DrawSinglesPlayerNames:
 	ld hl, $ca00 ; $4606
 	call CopyStringToTextBuffer ; $4609

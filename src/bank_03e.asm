@@ -603,12 +603,12 @@ GetMenuCursorIndex_3e:
 	ld b, a ; $43cc
 	xor a, a ; $43cd
 	inc b ; $43ce
-Label_3e_43cf:
+.mulLoop:
 	dec b ; $43cf
-	jr z, Label_3e_43d5 ; $43d0
+	jr z, .addColumn ; $43d0
 	add a, c ; $43d2
-	jr Label_3e_43cf ; $43d3
-Label_3e_43d5:
+	jr .mulLoop ; $43d3
+.addColumn:
 	ld b, a ; $43d5
 	ld a, [wMenuCursorX] ; $43d6
 	add a, b ; $43d9

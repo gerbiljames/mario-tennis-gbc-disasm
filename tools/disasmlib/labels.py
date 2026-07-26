@@ -124,3 +124,42 @@ def build_labels(dis, overrides=None, data_tables=None, ptr_sites=None):
         if not in_typed_run(target):
             ptr_data_targets.add(target)
     return labels, ptr_data_targets
+
+
+class LabelScopes:
+    """RGBDS local-label scoping for the `.name` labels curated in labels.json.
+
+    A `.name` definition binds to whatever global label precedes it, so it is
+    only spellable as `.name` from inside that function; every other reference
+    has to be written `Parent.name`. This resolves both forms and exposes the
+    qualified name table the emitter uses wherever a label is referenced
+    rather than defined."""
+
+    def __init__(self, labels):
+        self.labels = labels
+        self.globals = sorted(o for o, n in labels.items()
+                              if not n.startswith("."))
+        self.parent = {}
+        self.qualified = dict(labels)
+        for off, name in sorted(labels.items()):
+            if not name.startswith("."):
+                continue
+            owner = self.scope_of(off)
+            if owner is None or owner // BANK_SIZE != off // BANK_SIZE:
+                print(f"warning: local label {name} at ${off:06x} has no "
+                      f"enclosing global label", file=sys.stderr)
+                continue
+            self.parent[off] = owner
+            self.qualified[off] = labels[owner] + name
+
+    def scope_of(self, off):
+        """The offset of the global label a local label at `off` binds to."""
+        i = bisect.bisect_right(self.globals, off) - 1
+        return self.globals[i] if i >= 0 else None
+
+    def ref(self, target, site):
+        """How code at `site` spells a reference to the label at `target`."""
+        owner = self.parent.get(target)
+        if owner is None or owner == self.scope_of(site):
+            return self.labels[target]
+        return self.qualified[target]

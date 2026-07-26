@@ -1,4 +1,4 @@
-# Project status — 2026-07-25
+# Project status — 2026-07-26
 
 ## Where things stand
 
@@ -22,12 +22,100 @@ less "proven" by the counter, more correct in the source.)
 5,000-odd INCBINs finds no uncarved code; what stays binary is graphics,
 resource descriptors, record arrays, or fill.
 
-Everything below is **committed** (HEAD `8b3df3b`); the whole history rebuilds
-byte-perfect. Per-bank progress at any time: `python3 tools/progress.py`
-(proven-code bytes, fill runs, label counts, human-named counts) and
-`tools/progress.py --unnamed <bank>` to list still-auto-named symbols.
-**6,789 of 20,708 labels are human-named** (see the caveat in the
+Everything below is **committed** (HEAD `HEAD_PLACEHOLDER`); the whole history
+rebuilds byte-perfect. Per-bank progress at any time: `python3
+tools/progress.py` (proven-code bytes, fill runs, label counts, human-named
+counts) and `tools/progress.py --unnamed <bank>` to list still-auto-named
+symbols. **7,163 of 20,717 labels are human-named** (see the caveat in the
 auto-split section below) (up from 4,816 on 2026-07-23).
+
+### Local labels inside functions (2026-07-26)
+
+`Label_bb_aaaa` is the generator's name for a jump target it found by descent.
+Nothing distinguishes an intra-function loop head from a real entry point, so
+until now every one of them was a *global* symbol -- 7,800-odd of them, each
+one a wall the reader has to climb over mid-function.
+
+They are now expressible as RGBDS **local labels**. A `labels.json` value that
+starts with a dot (`"0x0492": ".queue"`) names a jump target inside the
+function it sits in:
+
+```
+QueueVRAMCopy:
+        ldh a, [rLCDC]
+        add a, a
+        jr c, .queue          ; LCD on -> queue the copy for VBlank
+        xor a, a
+        bit 5, d
+        jr z, .setVramBank
+        res 5, d
+        inc a
+.setVramBank:
+        ldh [rVBK], a
+        jp StartVRAMDMAFromHL
+.queue:
+        ...
+```
+
+**The scoping is resolved by the generator, not left to rgbasm.** A bare
+`.name` in RGBDS binds to whatever global label precedes it, so the same name
+in two functions is two different symbols -- which is the point (`.done` and
+`.loop` repeat freely) -- but it also means a reference from *outside* the
+owning function has to be spelled `Parent.name`. `LabelScopes` (in
+`disasmlib/labels.py`) computes each local's owning global label, and the
+emitter renders every *reference* through a qualified name table while
+*definitions* keep the short form. Where two functions share a tail this shows
+up directly in the source:
+
+```
+BeginFadeOut:
+        ...
+        jr nz, BeginFadeIn.done     ; the shared tail lives in the sibling
+        jr BeginFadeIn.setSpeed
+BeginFadeIn:
+        ...
+        jr z, .done                 ; same target, same-scope spelling
+```
+
+Getting a scope wrong is not silent: a bare `.name` that binds to the wrong
+parent either fails to assemble or assembles to a different address, so
+`make compare` is a real check on the whole scheme.
+
+**363 local labels across 60-odd of the most-called functions** were named in
+this pass, working down the ROM-wide call-frequency list (`QueueVRAMCopy` at
+613 call sites, `RegisterFrameTask` 435, `AdvanceFrame` 419, ...). What the
+names buy is mostly structure that was previously invisible:
+
+* **`DecompressData`** (220 callers) reads as the LZ decoder it is:
+  `.nextControlByte` / `.nextFlag` for the 8-flag control byte, then
+  `.match` -> `.match2` / `.match4` / `.match8` / `.match16` / `.matchTail`
+  for the unrolled copy, whose lengths come from the low 5 bits of the match
+  token being consumed one bit at a time.
+* **`MulHLByA`** (21 locals) is a shift-and-add multiply that *dispatches on
+  the highest set bit* of the multiplier: `.top7` ... `.top1` are the entry
+  points, `.step6` ... `.step1` the per-bit shift-adds, `.finish6` ...
+  `.finish1` the remaining doublings once the multiplier runs out, and
+  `.mul128` the `a == $80` special case. `MulHLByAFrac` is its mirror image,
+  scanning up from the *lowest* set bit (`.low0` ... `.low6`) and rotating
+  right into a fractional result.
+* **`AdvanceFrame`** (419 callers) splits cleanly into the normal frame wait
+  (`.waitFrame` / `.haltLoop` / `.linkLoop`) and the SELECT+START debug
+  single-step mode (`.stepLoop` / `.storeStepMode` / `.stepHaltLoop` /
+  `.stepLinkLoop`), which is otherwise hard to see is a *second* frame-wait
+  nested inside the first.
+* **`CopyScrolledSceneTilemapToVram`** turns out to be one copy loop written
+  twice -- once for the attribute plane (VBK 1, WRAM bank 2) and once for
+  tiles (VBK 0, WRAM bank 3) -- which the `.attr*` / `.tile*` prefixes make
+  obvious at a glance.
+
+`tools/progress.py` used to skip every symbol containing a `.` (the macro and
+text emitters generate their own `.L4`/`.s17` anchors). It now keeps the ones
+whose offset is curated in `labels.json`, so named locals count toward the
+naming metric -- hence 7,163 named, up from 6,800 with the same source.
+
+Still auto-named: **7,436 `Label_*`** (down from 7,804) and the `Data_*` runs.
+Naming the rest is the same one-function-at-a-time work; the machinery no
+longer has anything to do with it.
 
 ### No `Func_*` label is left in the ROM (2026-07-25)
 

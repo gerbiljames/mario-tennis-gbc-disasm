@@ -7,6 +7,7 @@ linker symbol file, splitting auto-generated names (Func_xx_xxxx,
 Label_xx_xxxx, FarPtr_xx_xx) from human-assigned ones.
 """
 import argparse
+import json
 import re
 import sys
 from pathlib import Path
@@ -23,6 +24,7 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--manifest", default="data.manifest")
     ap.add_argument("--sym", default="build/mariotennis.sym")
+    ap.add_argument("--labels", default="labels.json")
     ap.add_argument("--all", action="store_true",
                     help="include banks with no proven code")
     ap.add_argument("--unnamed", metavar="BANK",
@@ -50,6 +52,16 @@ def main():
 
     nbanks = len(list(Path("src").glob("bank_*.asm"))) or (max(data_bytes) + 1)
 
+    # Curated `.local` labels (leading-dot names in labels.json). The sym file
+    # spells them Parent.local, indistinguishable by shape from the ones the
+    # macro/text emitters generate, so match them by offset instead.
+    curated_locals = set()
+    labp = Path(args.labels)
+    if labp.exists():
+        for k, v in json.loads(labp.read_text()).items():
+            if v.startswith("."):
+                curated_locals.add(int(k, 0))
+
     syms = {b: [] for b in range(nbanks)}
     symp = Path(args.sym)
     if symp.exists():
@@ -58,12 +70,15 @@ def main():
             if not line or line.startswith(";"):
                 continue
             loc, name = line.split()[:2]
-            if "." in name:
-                continue  # generated local labels (text string anchors)
             bank_s, addr_s = loc.split(":")
             bank, addr = int(bank_s, 16), int(addr_s, 16)
             if addr >= 0x8000 or bank >= nbanks:
                 continue
+            if "." in name:
+                flat = addr if addr < 0x4000 else bank * BANK_SIZE + addr - 0x4000
+                if flat not in curated_locals:
+                    continue  # generated local labels (text string anchors)
+                name = name[name.index("."):]
             syms[bank].append((addr, name))
     else:
         print(f"note: {args.sym} not found (run make); "

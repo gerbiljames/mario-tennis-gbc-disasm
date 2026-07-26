@@ -1504,55 +1504,55 @@ DrawStringToTileBuffer:
 	push bc ; $4bd1
 	push de ; $4bd2
 	push hl ; $4bd3
-Label_1a_4bd4:
+.charLoop:
 	ld a, [hl] ; $4bd4
 	cp a, $00 ; $4bd5
-	jr z, Label_1a_4c1d ; $4bd7
+	jr z, .done ; $4bd7
 	cp a, $9e ; $4bd9
-	jr z, Label_1a_4bf1 ; $4bdb
+	jr z, .specialChar ; $4bdb
 	cp a, $9f ; $4bdd
-	jr z, Label_1a_4bf1 ; $4bdf
+	jr z, .specialChar ; $4bdf
 	cp a, $de ; $4be1
-	jr z, Label_1a_4bf1 ; $4be3
+	jr z, .specialChar ; $4be3
 	cp a, $df ; $4be5
-	jr z, Label_1a_4bf1 ; $4be7
+	jr z, .specialChar ; $4be7
 	ld d, a ; $4be9
 	call WriteTileBufferCell ; $4bea
 	inc b ; $4bed
 	inc hl ; $4bee
-	jr Label_1a_4bd4 ; $4bef
-Label_1a_4bf1:
+	jr .charLoop ; $4bef
+.specialChar:
 	push bc ; $4bf1
 	dec b ; $4bf2
 	dec c ; $4bf3
 	push af ; $4bf4
 	ld a, c ; $4bf5
 	cp a, $00 ; $4bf6
-	jr z, Label_1a_4c03 ; $4bf8
+	jr z, .noRoom ; $4bf8
 	pop af ; $4bfa
 	ld d, a ; $4bfb
 	call WriteTileBufferCell ; $4bfc
 	pop bc ; $4bff
 	inc hl ; $4c00
-	jr Label_1a_4bd4 ; $4c01
-Label_1a_4c03:
+	jr .charLoop ; $4c01
+.noRoom:
 	pop af ; $4c03
 	push de ; $4c04
 	cp a, $9e ; $4c05
-	jr z, Label_1a_4c12 ; $4c07
+	jr z, .altTile ; $4c07
 	cp a, $de ; $4c09
-	jr z, Label_1a_4c12 ; $4c0b
+	jr z, .altTile ; $4c0b
 	ld de, $040b ; $4c0d
-	jr Label_1a_4c15 ; $4c10
-Label_1a_4c12:
+	jr .writeTile ; $4c10
+.altTile:
 	ld de, $030b ; $4c12
-Label_1a_4c15:
+.writeTile:
 	call WriteTileBufferCell ; $4c15
 	pop de ; $4c18
 	pop bc ; $4c19
 	inc hl ; $4c1a
-	jr Label_1a_4bd4 ; $4c1b
-Label_1a_4c1d:
+	jr .charLoop ; $4c1b
+.done:
 	pop hl ; $4c1d
 	pop de ; $4c1e
 	pop bc ; $4c1f
@@ -2210,7 +2210,7 @@ LoadDialogueTextToBuffer:
 	farcall FetchDialogueText ; $5064
 	ld hl, wTextBuffer ; $5067
 	ld de, $d800 ; $506a
-Label_1a_506d:
+.copyLoop:
 	wram_bank $05 ; $506d
 	ld b, [hl] ; $5073
 	wram_bank $01 ; $5074
@@ -2219,7 +2219,7 @@ Label_1a_506d:
 	inc hl ; $507c
 	inc de ; $507d
 	and a, a ; $507e
-	jr nz, Label_1a_506d ; $507f
+	jr nz, .copyLoop ; $507f
 	ret ; $5081
 ResetCharDataScreenAnim:
 	push af ; $5082

@@ -18,7 +18,7 @@ IMM8_RE = re.compile(r"\$[0-9a-f]{1,2}$")
 
 
 def render_operand(ins, off, labels, hwregs, ramnames, data_labels=None,
-                   ramscoped=None, constants=None):
+                   ramscoped=None, constants=None, scopes=None):
     text = ins.text
     # A curated 8-bit immediate (constants.json maps the instruction offset to a
     # named constant, e.g. a wCurrentShotType code). Keyed by exact offset, so
@@ -83,6 +83,7 @@ def render_operand(ins, off, labels, hwregs, ramnames, data_labels=None,
         return text
     t = target_to_offset(ins.target, off)
     if t is not None and t in labels:
-        return text.replace("{target}", labels[t])
+        name = scopes.ref(t, off) if scopes else labels[t]
+        return text.replace("{target}", name)
     width = 2 if text.startswith("rst") else 4
     return text.replace("{target}", f"${ins.target:0{width}x}")

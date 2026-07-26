@@ -44,7 +44,12 @@ byte-for-byte.
 - `data.manifest` — offset/length list consumed by `tools/extract.py` to
   slice the base ROM into `data/` (gitignored).
 - `labels.json` — symbol name overrides (`{"0x1234": "SomeName"}`, keys are
-  flat ROM offsets) applied on regeneration.
+  flat ROM offsets) applied on regeneration. A name beginning with a dot
+  (`".copyLoop"`) is an RGBDS local label: it names a jump target *inside* a
+  function, scoped to the function it sits in. The emitter writes `.copyLoop:`
+  at the definition and spells references from other functions
+  `Parent.copyLoop`, so a local name only has to be unique within its own
+  function.
 - `data_tables.json` — render overrides for carved data tables
   (`{"0x1234": "palettes"}`, keys are flat ROM offsets); `disasm.py` renders
   the region inline as readable structured `db`/`dw` source (committed in the

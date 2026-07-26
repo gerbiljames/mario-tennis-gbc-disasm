@@ -915,7 +915,7 @@ SendByteGetReplyMaster:
 	push bc ; $45c1
 	ldh [hLinkTxByte], a ; $45c2
 	ld c, $64 ; $45c4
-Label_07_45c6:
+.sendLoop:
 	ei ; $45c6
 	nop ; $45c7
 	di ; $45c8
@@ -934,16 +934,16 @@ Label_07_45c6:
 	di ; $45e1
 	ldh a, [hLinkRxByte] ; $45e2
 	cp a, $00 ; $45e4
-	jr z, Label_07_45ee ; $45e6
+	jr z, .retry ; $45e6
 	cp a, $ff ; $45e8
-	jr z, Label_07_45ee ; $45ea
-	jr Label_07_45f5 ; $45ec
-Label_07_45ee:
+	jr z, .retry ; $45ea
+	jr .done ; $45ec
+.retry:
 	dec c ; $45ee
-	jr nz, Label_07_45c6 ; $45ef
+	jr nz, .sendLoop ; $45ef
 	ei ; $45f1
 	call LinkErrorReset ; $45f2
-Label_07_45f5:
+.done:
 	ei ; $45f5
 	pop bc ; $45f6
 	ret ; $45f7
@@ -1169,12 +1169,12 @@ SyncLinkFrame:
 	inc [hl] ; $474e
 	ldh a, [hLinkState] ; $474f
 	cp a, $02 ; $4751
-	jr z, Label_07_475a ; $4753
+	jr z, .slave ; $4753
 	call SyncLinkFrameMaster ; $4755
-	jr Label_07_475d ; $4758
-Label_07_475a:
+	jr .done ; $4758
+.slave:
 	call SyncLinkFrameSlave ; $475a
-Label_07_475d:
+.done:
 	pop hl ; $475d
 	pop de ; $475e
 	pop bc ; $475f
@@ -1318,12 +1318,12 @@ RunLinkInputFrame:
 	inc [hl] ; $4836
 	ldh a, [hLinkState] ; $4837
 	cp a, $02 ; $4839
-	jr z, Label_07_4842 ; $483b
+	jr z, .slave ; $483b
 	call RunLinkInputFrameMaster ; $483d
-	jr Label_07_4845 ; $4840
-Label_07_4842:
+	jr .done ; $4840
+.slave:
 	call RunLinkInputFrameSlave ; $4842
-Label_07_4845:
+.done:
 	ret ; $4845
 UpdateLinkSession:
 	push af ; $4846
@@ -2268,9 +2268,9 @@ LoadShotPlacementEntry:
 	add a, a ; $52a4
 	add a, l ; $52a5
 	ld l, a ; $52a6
-	jr nc, Label_07_52aa ; $52a7
+	jr nc, .gotEntry ; $52a7
 	inc h ; $52a9
-Label_07_52aa:
+.gotEntry:
 	ld a, [hl+] ; $52aa
 	ld [wBallTopspin], a ; $52ab
 	ld a, [hl+] ; $52ae
@@ -2280,14 +2280,14 @@ Label_07_52aa:
 	ld c, a ; $52b4
 	ld a, [wShotAimMirror] ; $52b5
 	and a, a ; $52b8
-	jr z, Label_07_52c1 ; $52b9
+	jr z, .storeSideSpin ; $52b9
 	xor a, a ; $52bb
 	sub a, c ; $52bc
 	ld c, a ; $52bd
 	sbc a, a ; $52be
 	sub a, b ; $52bf
 	ld b, a ; $52c0
-Label_07_52c1:
+.storeSideSpin:
 	ld hl, wBallSideSpin ; $52c1
 	ld a, c ; $52c4
 	ld [hl+], a ; $52c5
@@ -2300,9 +2300,9 @@ Label_07_52c1:
 	add a, $04 ; $52cc
 	add a, l ; $52ce
 	ld l, a ; $52cf
-	jr nc, Label_07_52d3 ; $52d0
+	jr nc, .readTarget ; $52d0
 	inc h ; $52d2
-Label_07_52d3:
+.readTarget:
 	ld a, [hl+] ; $52d3
 	ld b, [hl] ; $52d4
 	ld c, a ; $52d5
@@ -3007,14 +3007,14 @@ GetRandomAimJitter:
 ComputeShotTrajectory:
 	ld a, [wCharCourtPos] ; $571e
 	and a, $02 ; $5721
-	jr nz, Label_07_572b ; $5723
+	jr nz, .aimReady ; $5723
 	xor a, a ; $5725
 	sub a, c ; $5726
 	ld c, a ; $5727
 	sbc a, a ; $5728
 	sub a, b ; $5729
 	ld b, a ; $572a
-Label_07_572b:
+.aimReady:
 	ld hl, wShotAimTargetDepth ; $572b
 	ld a, c ; $572e
 	ld [hl+], a ; $572f
@@ -3070,26 +3070,26 @@ Label_07_572b:
 	ld h, [hl] ; $5777
 	ld l, a ; $5778
 	bit 7, h ; $5779
-	jr z, Label_07_5783 ; $577b
+	jr z, .absMinDepth ; $577b
 	xor a, a ; $577d
 	sub a, l ; $577e
 	ld l, a ; $577f
 	sbc a, a ; $5780
 	sub a, h ; $5781
 	ld h, a ; $5782
-Label_07_5783:
+.absMinDepth:
 	ld de, $0140 ; $5783
 	add hl, de ; $5786
 	call DivBySin ; $5787
 	bit 7, h ; $578a
-	jr z, Label_07_5794 ; $578c
+	jr z, .absMinDist ; $578c
 	xor a, a ; $578e
 	sub a, l ; $578f
 	ld l, a ; $5790
 	sbc a, a ; $5791
 	sub a, h ; $5792
 	ld h, a ; $5793
-Label_07_5794:
+.absMinDist:
 	ld e, l ; $5794
 	ld d, h ; $5795
 	add hl, hl ; $5796
@@ -3109,26 +3109,26 @@ Label_07_5794:
 	ld h, [hl] ; $57ac
 	ld l, a ; $57ad
 	bit 7, h ; $57ae
-	jr z, Label_07_57b8 ; $57b0
+	jr z, .absMaxDepth ; $57b0
 	xor a, a ; $57b2
 	sub a, l ; $57b3
 	ld l, a ; $57b4
 	sbc a, a ; $57b5
 	sub a, h ; $57b6
 	ld h, a ; $57b7
-Label_07_57b8:
+.absMaxDepth:
 	ld de, $0480 ; $57b8
 	add hl, de ; $57bb
 	call DivBySin ; $57bc
 	bit 7, h ; $57bf
-	jr z, Label_07_57c9 ; $57c1
+	jr z, .absMaxDist ; $57c1
 	xor a, a ; $57c3
 	sub a, l ; $57c4
 	ld l, a ; $57c5
 	sbc a, a ; $57c6
 	sub a, h ; $57c7
 	ld h, a ; $57c8
-Label_07_57c9:
+.absMaxDist:
 	ld e, l ; $57c9
 	ld d, h ; $57ca
 	add hl, hl ; $57cb
@@ -3147,19 +3147,19 @@ Label_07_57c9:
 	ld h, d ; $57de
 	call MulSinCos ; $57df
 	bit 7, h ; $57e2
-	jr z, Label_07_57ec ; $57e4
+	jr z, .absSideways ; $57e4
 	xor a, a ; $57e6
 	sub a, l ; $57e7
 	ld l, a ; $57e8
 	sbc a, a ; $57e9
 	sub a, h ; $57ea
 	ld h, a ; $57eb
-Label_07_57ec:
+.absSideways:
 	ld c, l ; $57ec
 	ld b, h ; $57ed
 	ld hl, $ffe0 ; $57ee
 	add hl, bc ; $57f1
-	jr nc, Label_07_5851 ; $57f2
+	jr nc, .solveHeight ; $57f2
 	ld hl, wCourtLimitX ; $57f4
 	ld a, [hl+] ; $57f7
 	ld h, [hl] ; $57f8
@@ -3171,28 +3171,28 @@ Label_07_57ec:
 	ld a, [wShotAimAngle + 1] ; $5800
 	add a, $40 ; $5803
 	bit 7, a ; $5805
-	jr z, Label_07_580f ; $5807
+	jr z, .absLimitX ; $5807
 	xor a, a ; $5809
 	sub a, e ; $580a
 	ld e, a ; $580b
 	sbc a, a ; $580c
 	sub a, d ; $580d
 	ld d, a ; $580e
-Label_07_580f:
+.absLimitX:
 	ld hl, wBallX ; $580f
 	ld a, [hl+] ; $5812
 	ld h, [hl] ; $5813
 	ld l, a ; $5814
 	add hl, de ; $5815
 	bit 7, h ; $5816
-	jr z, Label_07_5820 ; $5818
+	jr z, .absBallX ; $5818
 	xor a, a ; $581a
 	sub a, l ; $581b
 	ld l, a ; $581c
 	sbc a, a ; $581d
 	sub a, h ; $581e
 	ld h, a ; $581f
-Label_07_5820:
+.absBallX:
 	ld e, l ; $5820
 	ld d, h ; $5821
 	ld a, l ; $5822
@@ -3202,7 +3202,7 @@ Label_07_5820:
 	sbc a, b ; $5826
 	ld h, a ; $5827
 	bit 7, h ; $5828
-	jr z, Label_07_5851 ; $582a
+	jr z, .solveHeight ; $582a
 	push de ; $582c
 	ld l, $00 ; $582d
 	ld a, [wShotDistMax] ; $582f
@@ -3226,7 +3226,7 @@ Label_07_5820:
 	ld a, e ; $584e
 	ld [hl+], a ; $584f
 	ld [hl], d ; $5850
-Label_07_5851:
+.solveHeight:
 	ld hl, wBallHeight ; $5851
 	ld a, [hl+] ; $5854
 	ld d, [hl] ; $5855

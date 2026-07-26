@@ -513,31 +513,31 @@ ReadScriptedMatchInput:
 	ret ; $4427
 StepMatchFrames:
 	ld b, a ; $4428
-Label_08_4429:
+.loop:
 	ld a, [wMatchFramesAbort] ; $4429
 	and a, a ; $442c
-	jr nz, Label_08_4435 ; $442d
+	jr nz, .done ; $442d
 	call StepMatchFrame ; $442f
 	dec b ; $4432
-	jr nz, Label_08_4429 ; $4433
-Label_08_4435:
+	jr nz, .loop ; $4433
+.done:
 	ret ; $4435
 StepMatchFramesSkippable:
 	ld b, a ; $4436
-Label_08_4437:
+.loop:
 	ld a, [wMatchFramesAbort] ; $4437
 	and a, a ; $443a
-	jr nz, Label_08_4451 ; $443b
+	jr nz, .done ; $443b
 	call StepMatchFrame ; $443d
 	call ReadMatchInputHeld ; $4440
 	and a, $03 ; $4443
-	jr nz, Label_08_4451 ; $4445
+	jr nz, .done ; $4445
 	ld a, [wDebugMatchFlags] ; $4447
 	bit 0, a ; $444a
-	jr nz, Label_08_4437 ; $444c
+	jr nz, .loop ; $444c
 	dec b ; $444e
-	jr nz, Label_08_4437 ; $444f
-Label_08_4451:
+	jr nz, .loop ; $444f
+.done:
 	ret ; $4451
 RunMatchFramesUntilInput:
 	ld a, [wMatchFramesAbort] ; $4452
@@ -559,21 +559,21 @@ StepMatchFrame:
 	push af ; $446b
 	ldh a, [$ffd8] ; $446c
 	and a, a ; $446e
-	jr z, Label_08_4476 ; $446f
+	jr z, .localFrame ; $446f
 	farcall RunLinkMatchFrame ; $4471
-	jr Label_08_4480 ; $4474
-Label_08_4476:
+	jr .afterFrame ; $4474
+.localFrame:
 	call AdvanceFrame ; $4476
 	call UpdateMatchFrame ; $4479
 	ld hl, $ffe9 ; $447c
 	inc [hl] ; $447f
-Label_08_4480:
+.afterFrame:
 	ld a, [wMatchSimFrozen] ; $4480
 	and a, a ; $4483
-	jr nz, Label_08_448c ; $4484
+	jr nz, .done ; $4484
 	call HandlePauseMenu ; $4486
 	call CheckDebugStatsEditorHotkey ; $4489
-Label_08_448c:
+.done:
 	pop af ; $448c
 	wram_bank ; $448d
 	pop hl ; $4491
@@ -6021,7 +6021,7 @@ CharPointEndState:
 	dw CharWalkToTargetPhase ; $6d1c jumptable
 	dw CharPointReactionPhase ; $6d1e jumptable
 	dw Label_08_6a8f ; $6d20 jumptable
-	dw Label_00_1921 ; $6d22 jumptable
+	dw PrintString.markDirty ; $6d22 jumptable
 	dw Label_00_34df ; $6d24 jumptable
 	ret ; $6d26
 CharPointReactionPhase:

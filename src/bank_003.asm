@@ -1599,18 +1599,18 @@ WriteSaveBlock:
 	pop hl ; $4abd
 	push hl ; $4abe
 	push bc ; $4abf
-Label_03_4ac0:
+.copyLoop:
 	ld a, [hl+] ; $4ac0
 	ld [de], a ; $4ac1
 	inc de ; $4ac2
 	dec bc ; $4ac3
 	ld a, b ; $4ac4
 	or a, c ; $4ac5
-	jr nz, Label_03_4ac0 ; $4ac6
+	jr nz, .copyLoop ; $4ac6
 	pop bc ; $4ac8
 	pop hl ; $4ac9
 	ld de, $0000 ; $4aca
-Label_03_4acd:
+.checksumLoop:
 	ld a, [hl+] ; $4acd
 	add a, e ; $4ace
 	ld e, a ; $4acf
@@ -1620,7 +1620,7 @@ Label_03_4acd:
 	dec bc ; $4ad4
 	ld a, b ; $4ad5
 	or a, c ; $4ad6
-	jr nz, Label_03_4acd ; $4ad7
+	jr nz, .checksumLoop ; $4ad7
 	ld a, $00 ; $4ad9
 	ldh [hSramBank], a ; $4adb
 	ld [$4000], a ; $4add
@@ -1750,10 +1750,10 @@ ReadSaveBlock:
 	call GetSaveBlockDirEntry ; $4bab
 	ld a, [bc] ; $4bae
 	or a, a ; $4baf
-	jp nz, Label_03_4bb8 ; $4bb0
+	jp nz, .present ; $4bb0
 	ld a, $fe ; $4bb3
-	jp Label_03_4c0a ; $4bb5
-Label_03_4bb8:
+	jp .done ; $4bb5
+.present:
 	push bc ; $4bb8
 	push hl ; $4bb9
 	ld hl, $0001 ; $4bba
@@ -1779,18 +1779,18 @@ Label_03_4bb8:
 	pop hl ; $4bd5
 	push hl ; $4bd6
 	push bc ; $4bd7
-Label_03_4bd8:
+.copyLoop:
 	ld a, [de] ; $4bd8
 	ld [hl+], a ; $4bd9
 	inc de ; $4bda
 	dec bc ; $4bdb
 	ld a, b ; $4bdc
 	or a, c ; $4bdd
-	jr nz, Label_03_4bd8 ; $4bde
+	jr nz, .copyLoop ; $4bde
 	pop bc ; $4be0
 	pop hl ; $4be1
 	ld de, $0000 ; $4be2
-Label_03_4be5:
+.checksumLoop:
 	ld a, [hl+] ; $4be5
 	add a, e ; $4be6
 	ld e, a ; $4be7
@@ -1800,7 +1800,7 @@ Label_03_4be5:
 	dec bc ; $4bec
 	ld a, b ; $4bed
 	or a, c ; $4bee
-	jr nz, Label_03_4be5 ; $4bef
+	jr nz, .checksumLoop ; $4bef
 	ld a, $00 ; $4bf1
 	ldh [hSramBank], a ; $4bf3
 	ld [$4000], a ; $4bf5
@@ -1816,9 +1816,9 @@ Label_03_4be5:
 	ld a, l ; $4c03
 	xor a, e ; $4c04
 	or a, h ; $4c05
-	jr z, Label_03_4c0a ; $4c06
+	jr z, .done ; $4c06
 	ld a, $ff ; $4c08
-Label_03_4c0a:
+.done:
 	push af ; $4c0a
 	xor a, a ; $4c0b
 	ld [$0000], a ; $4c0c
@@ -1840,10 +1840,10 @@ VerifySaveBlock:
 	call GetSaveBlockDirEntry ; $4c24
 	ld a, [bc] ; $4c27
 	or a, a ; $4c28
-	jp nz, Label_03_4c31 ; $4c29
+	jp nz, .present ; $4c29
 	ld a, $fe ; $4c2c
-	jp Label_03_4c94 ; $4c2e
-Label_03_4c31:
+	jp .done ; $4c2e
+.present:
 	push bc ; $4c31
 	push hl ; $4c32
 	ld hl, $0001 ; $4c33
@@ -1869,27 +1869,27 @@ Label_03_4c31:
 	pop hl ; $4c4e
 	push de ; $4c4f
 	push bc ; $4c50
-Label_03_4c51:
+.compareLoop:
 	ld a, [de] ; $4c51
 	cp a, [hl] ; $4c52
-	jr z, Label_03_4c63 ; $4c53
+	jr z, .next ; $4c53
 	ld a, $00 ; $4c55
 	ldh [hSramBank], a ; $4c57
 	ld [$4000], a ; $4c59
 	add sp, 6 ; $4c5c
 	ld a, $fd ; $4c5e
-	jp Label_03_4c94 ; $4c60
-Label_03_4c63:
+	jp .done ; $4c60
+.next:
 	inc hl ; $4c63
 	inc de ; $4c64
 	dec bc ; $4c65
 	ld a, b ; $4c66
 	or a, c ; $4c67
-	jr nz, Label_03_4c51 ; $4c68
+	jr nz, .compareLoop ; $4c68
 	pop bc ; $4c6a
 	pop hl ; $4c6b
 	ld de, $0000 ; $4c6c
-Label_03_4c6f:
+.checksumLoop:
 	ld a, [hl+] ; $4c6f
 	add a, e ; $4c70
 	ld e, a ; $4c71
@@ -1899,7 +1899,7 @@ Label_03_4c6f:
 	dec bc ; $4c76
 	ld a, b ; $4c77
 	or a, c ; $4c78
-	jr nz, Label_03_4c6f ; $4c79
+	jr nz, .checksumLoop ; $4c79
 	ld a, $00 ; $4c7b
 	ldh [hSramBank], a ; $4c7d
 	ld [$4000], a ; $4c7f
@@ -1915,9 +1915,9 @@ Label_03_4c6f:
 	ld a, l ; $4c8d
 	xor a, e ; $4c8e
 	or a, h ; $4c8f
-	jr z, Label_03_4c94 ; $4c90
+	jr z, .done ; $4c90
 	ld a, $ff ; $4c92
-Label_03_4c94:
+.done:
 	push af ; $4c94
 	xor a, a ; $4c95
 	ld [$0000], a ; $4c96
@@ -2056,15 +2056,15 @@ CheckStorySlot:
 	push hl ; $4d66
 	ld a, [wCurrentStorySlot] ; $4d67
 	cp a, $03 ; $4d6a
-	jr nc, Label_03_4d78 ; $4d6c
+	jr nc, .noSlot ; $4d6c
 	add a, a ; $4d6e
 	ld b, a ; $4d6f
 	ld hl, wStorySlotData ; $4d70
 	call ReadSaveBlock ; $4d73
-	jr Label_03_4d7a ; $4d76
-Label_03_4d78:
+	jr .done ; $4d76
+.noSlot:
 	ld a, $fe ; $4d78
-Label_03_4d7a:
+.done:
 	pop hl ; $4d7a
 	pop de ; $4d7b
 	pop bc ; $4d7c
@@ -2122,9 +2122,9 @@ SetSaveFlag:
 	rlca ; $4dca
 	add a, l ; $4dcb
 	ld l, a ; $4dcc
-	jr nc, Label_03_4dd0 ; $4dcd
+	jr nc, .gotMask ; $4dcd
 	inc h ; $4dcf
-Label_03_4dd0:
+.gotMask:
 	ld a, [hl] ; $4dd0
 	ld hl, sSaveFlags ; $4dd1
 	ld e, d ; $4dd4
@@ -2523,11 +2523,11 @@ ReadMinigameRecord:
 	wram_bank $07 ; $501d
 	ld a, b ; $5023
 	sub a, $02 ; $5024
-	jr nc, Label_03_502f ; $5026
+	jr nc, .read ; $5026
 	ld a, [wCurrentStorySlot] ; $5028
 	cp a, $03 ; $502b
-	jr nc, Label_03_5068 ; $502d
-Label_03_502f:
+	jr nc, .done ; $502d
+.read:
 	push af ; $502f
 	push bc ; $5030
 	push de ; $5031
@@ -2542,12 +2542,12 @@ Label_03_502f:
 	pop af ; $503f
 	ld a, b ; $5040
 	sub a, $02 ; $5041
-	jr nc, Label_03_504a ; $5043
+	jr nc, .notStory ; $5043
 	ld a, [wCurrentStorySlot] ; $5045
-	jr Label_03_504b ; $5048
-Label_03_504a:
+	jr .gotBlockId ; $5048
+.notStory:
 	xor a, a ; $504a
-Label_03_504b:
+.gotBlockId:
 	add a, $38 ; $504b
 	push bc ; $504d
 	ld b, a ; $504e
@@ -2568,7 +2568,7 @@ Label_03_504b:
 	ld a, e ; $5065
 	ld [hl+], a ; $5066
 	ld [hl], d ; $5067
-Label_03_5068:
+.done:
 	pop af ; $5068
 	wram_bank ; $5069
 	pop hl ; $506d

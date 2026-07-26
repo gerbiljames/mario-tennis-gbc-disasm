@@ -1418,13 +1418,13 @@ AdvanceFrameCheckInput:
 	call AdvanceFrame ; $498d
 	ldh a, [hInputRisingEdge] ; $4990
 	and a, PADF_A | PADF_B ; $4992
-	jr nz, Label_17_499e ; $4994
+	jr nz, .done ; $4994
 	dec c ; $4996
-	jr z, Label_17_499c ; $4997
+	jr z, .noPrompt ; $4997
 	call DrawBlinkingPrompt ; $4999
-Label_17_499c:
+.noPrompt:
 	ld a, $00 ; $499c
-Label_17_499e:
+.done:
 	ret ; $499e
 InitCourtDiagramTextWindow:
 	farcall ResetTextWindowState ; $499f

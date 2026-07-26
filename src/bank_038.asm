@@ -613,12 +613,12 @@ GetMenuCursorLinearIndex:
 	ld b, a ; $439c
 	xor a, a ; $439d
 	inc b ; $439e
-Label_38_439f:
+.mulLoop:
 	dec b ; $439f
-	jr z, Label_38_43a5 ; $43a0
+	jr z, .addColumn ; $43a0
 	add a, c ; $43a2
-	jr Label_38_439f ; $43a3
-Label_38_43a5:
+	jr .mulLoop ; $43a3
+.addColumn:
 	ld b, a ; $43a5
 	ld a, [wMenuCursorX] ; $43a6
 	add a, b ; $43a9
@@ -2943,9 +2943,9 @@ RefreshCharInfoPanel:
 	farcall FillTilemapRect ; $5780
 	ld a, [$d814] ; $5783
 	cp a, $04 ; $5786
-	jr nz, Label_38_578c ; $5788
-	jr Label_38_57b7 ; $578a
-Label_38_578c:
+	jr nz, .haveSlot ; $5788
+	jr .done ; $578a
+.haveSlot:
 	call GetGridSlotFromCursor ; $578c
 	ld d, a ; $578f
 	ld c, a ; $5790
@@ -2954,28 +2954,28 @@ Label_38_578c:
 	ld hl, $da00 ; $5793
 	add a, l ; $5796
 	ld l, a ; $5797
-	jr nc, Label_38_579b ; $5798
+	jr nc, .readSlot ; $5798
 	inc h ; $579a
-Label_38_579b:
+.readSlot:
 	ld a, [hl] ; $579b
 	cp a, $04 ; $579c
-	jr nc, Label_38_57aa ; $579e
+	jr nc, .namedChar ; $579e
 	inc hl ; $57a0
 	inc hl ; $57a1
 	inc hl ; $57a2
 	ld a, [hl] ; $57a3
 	ld c, a ; $57a4
 	call DrawCreatedCharStats ; $57a5
-	jr Label_38_57b7 ; $57a8
-Label_38_57aa:
+	jr .done ; $57a8
+.namedChar:
 	cp a, $ff ; $57aa
-	jr z, Label_38_57b7 ; $57ac
+	jr z, .done ; $57ac
 	ld c, a ; $57ae
 	push bc ; $57af
 	call DrawCharNameAndType ; $57b0
 	pop bc ; $57b3
 	call DrawCharSelectSlotLabel ; $57b4
-Label_38_57b7:
+.done:
 	ld hl, $d180 ; $57b7
 	ld de, $9980 ; $57ba
 	ld c, $0a ; $57bd
@@ -3724,16 +3724,16 @@ BuildVisiblePageSpriteList:
 	ld hl, $da00 ; $5cf2
 	ld a, [$d811] ; $5cf5
 	ld bc, $000c ; $5cf8
-Label_38_5cfb:
+.seekPage:
 	or a, a ; $5cfb
-	jr z, Label_38_5d02 ; $5cfc
+	jr z, .copyStart ; $5cfc
 	add hl, bc ; $5cfe
 	dec a ; $5cff
-	jr Label_38_5cfb ; $5d00
-Label_38_5d02:
+	jr .seekPage ; $5d00
+.copyStart:
 	ld c, $00 ; $5d02
 	ld de, $d800 ; $5d04
-Label_38_5d07:
+.copyLoop:
 	ld a, [hl+] ; $5d07
 	ld [de], a ; $5d08
 	inc de ; $5d09
@@ -3741,17 +3741,17 @@ Label_38_5d07:
 	ld [de], a ; $5d0b
 	ld a, [hl+] ; $5d0c
 	or a, a ; $5d0d
-	jr z, Label_38_5d12 ; $5d0e
+	jr z, .nextSlot ; $5d0e
 	xor a, a ; $5d10
 	ld [de], a ; $5d11
-Label_38_5d12:
+.nextSlot:
 	inc de ; $5d12
 	inc hl ; $5d13
 	ld a, c ; $5d14
 	inc a ; $5d15
 	ld c, a ; $5d16
 	cp a, $06 ; $5d17
-	jr nz, Label_38_5d07 ; $5d19
+	jr nz, .copyLoop ; $5d19
 	pop af ; $5d1b
 	wram_bank ; $5d1c
 	pop hl ; $5d20

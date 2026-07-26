@@ -31,6 +31,7 @@ from .datatables import (render_actor_list, render_actor_script,
                          render_slot_records, render_story_locations,
                          render_tilemap_dispatch, render_tilemap_scripts)
 from .idioms import match_launcher_seq, script_cmd_seq, wram_bank_seq
+from .labels import LabelScopes
 from .macros import MACROS_INC
 from .operands import render_operand
 from .rom import BANK_SIZE, offset_to_cpu, target_to_offset
@@ -145,7 +146,12 @@ class Emitter:
                  flag_raw_sites=None):
         self.dis = dis
         self.rom = dis.rom
-        self.labels = labels
+        # Definitions keep the curated spelling (`.loop:`); every reference
+        # goes through the qualified table, which spells a local label
+        # `Parent.loop` for anything outside its function.
+        self.scopes = LabelScopes(labels)
+        self.def_labels = labels
+        self.labels = self.scopes.qualified
         self.hwregs = hwregs
         self.ramnames = ramnames
         self.srcdir = Path(srcdir)
@@ -251,8 +257,9 @@ class Emitter:
             groups.setdefault(entries[entry][2], []).append(entry)
         for target, ents in groups.items():
             label = label_of(target)
-            if not label or (len(ents) == 1 and label not in self.curated
-                             and not name_singletons):
+            if not label or "." in label or \
+                    (len(ents) == 1 and label not in self.curated
+                     and not name_singletons):
                 continue
             base = f"{prefix}_{label}"
             for i, entry in enumerate(ents):
@@ -394,8 +401,8 @@ class Emitter:
 
     def _emit_instruction(self, off):
         dis, rom = self.dis, self.rom
-        if off in self.labels:
-            self.lines.append(f"{self.labels[off]}:")
+        if off in self.def_labels:
+            self.lines.append(f"{self.def_labels[off]}:")
         ins = dis.instrs[off]
         cpu = offset_to_cpu(off)
         idiom = self._collapse_idiom(off)
@@ -446,7 +453,7 @@ class Emitter:
     def _operand(self, ins, off):
         return render_operand(ins, off, self.labels, self.hwregs, self.ramnames,
                               self.operand_labels, self.ramscoped,
-                              self.constants)
+                              self.constants, self.scopes)
 
     # ---- data runs ------------------------------------------------------
 

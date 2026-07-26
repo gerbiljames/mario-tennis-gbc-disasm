@@ -409,15 +409,15 @@ Label_00_0343:
 DisableLCDSafely:
 	ldh a, [rLCDC] ; $0346
 	bit 7, a ; $0348
-	jr z, Label_00_0367 ; $034a
+	jr z, .clearQueues ; $034a
 	ldh a, [rIE] ; $034c
 	ldh [$ff9f], a ; $034e
 	res 0, a ; $0350
 	ldh [rIE], a ; $0352
-Label_00_0354:
+.waitVBlank:
 	ldh a, [rLY] ; $0354
 	cp a, $91 ; $0356
-	jr nz, Label_00_0354 ; $0358
+	jr nz, .waitVBlank ; $0358
 	ldh a, [rLCDC] ; $035a
 	and a, $7f ; $035c
 	ldh [rLCDC], a ; $035e
@@ -425,7 +425,7 @@ Label_00_0354:
 	ldh [rIF], a ; $0361
 	ldh a, [$ff9f] ; $0363
 	ldh [rIE], a ; $0365
-Label_00_0367:
+.clearQueues:
 	push hl ; $0367
 	push bc ; $0368
 	call ClearVRAMCopyQueue ; $0369
@@ -477,7 +477,7 @@ RetStub:
 	ret ; $03ae
 ClearMemory16:
 	xor a, a ; $03af
-Label_00_03b0:
+.loop:
 	ld [hl+], a ; $03b0
 	ld [hl+], a ; $03b1
 	ld [hl+], a ; $03b2
@@ -495,7 +495,7 @@ Label_00_03b0:
 	ld [hl+], a ; $03be
 	ld [hl+], a ; $03bf
 	dec c ; $03c0
-	jr nz, Label_00_03b0 ; $03c1
+	jr nz, .loop ; $03c1
 	ret ; $03c3
 ClearMemoryBC16:
 	xor a, a ; $03c4
@@ -523,16 +523,16 @@ ClearMemoryBC16:
 CopyMemoryBC:
 	inc c ; $03db
 	dec c ; $03dc
-	jr z, Label_00_03e0 ; $03dd
+	jr z, .loop ; $03dd
 	inc b ; $03df
-Label_00_03e0:
+.loop:
 	ld a, [hl+] ; $03e0
 	ld [de], a ; $03e1
 	inc de ; $03e2
 	dec c ; $03e3
-	jr nz, Label_00_03e0 ; $03e4
+	jr nz, .loop ; $03e4
 	dec b ; $03e6
-	jr nz, Label_00_03e0 ; $03e7
+	jr nz, .loop ; $03e7
 	ret ; $03e9
 Label_00_03ea:
 	ld a, [hl-] ; $03ea
@@ -546,8 +546,8 @@ Label_00_03ea:
 CopyMemoryFast:
 	ld a, $0f ; $03f3
 	and a, e ; $03f5
-	jr z, Label_00_042c ; $03f6
-Label_00_03f8:
+	jr z, .copyAlignedLoop ; $03f6
+.copyLoop:
 	ld a, [hl+] ; $03f8
 	ld [de], a ; $03f9
 	inc de ; $03fa
@@ -597,9 +597,9 @@ Label_00_03f8:
 	ld [de], a ; $0426
 	inc de ; $0427
 	dec c ; $0428
-	jr nz, Label_00_03f8 ; $0429
+	jr nz, .copyLoop ; $0429
 	ret ; $042b
-Label_00_042c:
+.copyAlignedLoop:
 	ld a, [hl+] ; $042c
 	ld [de], a ; $042d
 	inc e ; $042e
@@ -649,7 +649,7 @@ Label_00_042c:
 	ld [de], a ; $045a
 	inc de ; $045b
 	dec c ; $045c
-	jr nz, Label_00_042c ; $045d
+	jr nz, .copyAlignedLoop ; $045d
 	ret ; $045f
 Label_00_0460:
 	ld [hl+], a ; $0460
@@ -674,16 +674,16 @@ QueueVRAMCopyFromBank:
 QueueVRAMCopy:
 	ldh a, [rLCDC] ; $0480
 	add a, a ; $0482
-	jr c, Label_00_0492 ; $0483
+	jr c, .queue ; $0483
 	xor a, a ; $0485
 	bit 5, d ; $0486
-	jr z, Label_00_048d ; $0488
+	jr z, .setVramBank ; $0488
 	res 5, d ; $048a
 	inc a ; $048c
-Label_00_048d:
+.setVramBank:
 	ldh [rVBK], a ; $048d
 	jp StartVRAMDMAFromHL ; $048f
-Label_00_0492:
+.queue:
 	xor a, a ; $0492
 	ldh [hVRAMQueueDirty], a ; $0493
 	ld a, c ; $0495
@@ -694,55 +694,55 @@ Label_00_0492:
 	ld l, $a0 ; $049c
 	ld a, [hl] ; $049e
 	or a, a ; $049f
-	jr z, Label_00_04e7 ; $04a0
+	jr z, .fillSlot ; $04a0
 	ld l, $a8 ; $04a2
 	ld a, [hl] ; $04a4
 	or a, a ; $04a5
-	jr z, Label_00_04e7 ; $04a6
+	jr z, .fillSlot ; $04a6
 	ld l, $b0 ; $04a8
 	ld a, [hl] ; $04aa
 	or a, a ; $04ab
-	jr z, Label_00_04e7 ; $04ac
+	jr z, .fillSlot ; $04ac
 	ld l, $b8 ; $04ae
 	ld a, [hl] ; $04b0
 	or a, a ; $04b1
-	jr z, Label_00_04e7 ; $04b2
+	jr z, .fillSlot ; $04b2
 	ld l, $c0 ; $04b4
 	ld a, [hl] ; $04b6
 	or a, a ; $04b7
-	jr z, Label_00_04e7 ; $04b8
+	jr z, .fillSlot ; $04b8
 	ld l, $c8 ; $04ba
 	ld a, [hl] ; $04bc
 	or a, a ; $04bd
-	jr z, Label_00_04e7 ; $04be
+	jr z, .fillSlot ; $04be
 	ld l, $d0 ; $04c0
 	ld a, [hl] ; $04c2
 	or a, a ; $04c3
-	jr z, Label_00_04e7 ; $04c4
+	jr z, .fillSlot ; $04c4
 	ld l, $d8 ; $04c6
 	ld a, [hl] ; $04c8
 	or a, a ; $04c9
-	jr z, Label_00_04e7 ; $04ca
+	jr z, .fillSlot ; $04ca
 	ld l, $e0 ; $04cc
 	ld a, [hl] ; $04ce
 	or a, a ; $04cf
-	jr z, Label_00_04e7 ; $04d0
+	jr z, .fillSlot ; $04d0
 	ld l, $e8 ; $04d2
 	ld a, [hl] ; $04d4
 	or a, a ; $04d5
-	jr z, Label_00_04e7 ; $04d6
+	jr z, .fillSlot ; $04d6
 	ld a, $01 ; $04d8
 	ldh [hVRAMQueueDirty], a ; $04da
 	ldh a, [hDebugStepMode] ; $04dc
 	or a, a ; $04de
-	jr z, Label_00_04e3 ; $04df
+	jr z, .queueFull ; $04df
 	sound $6f ; $04e1
-Label_00_04e3:
+.queueFull:
 	pop hl ; $04e3
 	pop af ; $04e4
 	xor a, a ; $04e5
 	ret ; $04e6
-Label_00_04e7:
+.fillSlot:
 	ldh a, [hRomBank] ; $04e7
 	ld [hl+], a ; $04e9
 	ldh a, [hWramBank] ; $04ea
@@ -754,9 +754,9 @@ Label_00_04e7:
 	inc l ; $04f1
 	ld a, $20 ; $04f2
 	and a, d ; $04f4
-	jr z, Label_00_04f9 ; $04f5
+	jr z, .storeVramBank ; $04f5
 	ld a, $01 ; $04f7
-Label_00_04f9:
+.storeVramBank:
 	ld [hl+], a ; $04f9
 	res 5, d ; $04fa
 	ld [hl], d ; $04fc
@@ -914,7 +914,7 @@ LoadPalettesImmediate:
 	add a, a ; $05bd
 	ld e, a ; $05be
 	ld d, $c1 ; $05bf
-Label_00_05c1:
+.copyLoop:
 	ld a, [hl+] ; $05c1
 	ld [de], a ; $05c2
 	inc d ; $05c3
@@ -926,19 +926,19 @@ Label_00_05c1:
 	ld [de], a ; $05c9
 	inc e ; $05ca
 	dec c ; $05cb
-	jr nz, Label_00_05c1 ; $05cc
+	jr nz, .copyLoop ; $05cc
 	ld hl, hPaletteDirtyFlags ; $05ce
 	pop de ; $05d1
 	bit 3, d ; $05d2
-	jr nz, Label_00_05d8 ; $05d4
+	jr nz, .checkRange ; $05d4
 	set 0, [hl] ; $05d6
-Label_00_05d8:
+.checkRange:
 	ld a, e ; $05d8
 	add a, d ; $05d9
 	cp a, $09 ; $05da
-	jr c, Label_00_05e0 ; $05dc
+	jr c, .done ; $05dc
 	set 1, [hl] ; $05de
-Label_00_05e0:
+.done:
 	ret ; $05e0
 LoadPalettesMasterOnly:
 	ld a, e ; $05e1
@@ -1545,89 +1545,89 @@ MulHLByA:
 	ld d, h ; $092b
 	ld e, l ; $092c
 	add a, a ; $092d
-	jr c, Label_00_0944 ; $092e
+	jr c, .top7 ; $092e
 	add a, a ; $0930
-	jr c, Label_00_094b ; $0931
+	jr c, .top6 ; $0931
 	add a, a ; $0933
-	jr c, Label_00_0952 ; $0934
+	jr c, .top5 ; $0934
 	add a, a ; $0936
-	jr c, Label_00_0959 ; $0937
+	jr c, .top4 ; $0937
 	add a, a ; $0939
-	jr c, Label_00_0960 ; $093a
+	jr c, .top3 ; $093a
 	add a, a ; $093c
-	jr c, Label_00_0967 ; $093d
+	jr c, .top2 ; $093d
 	add a, a ; $093f
-	jr c, Label_00_096e ; $0940
-	jr Label_00_0984 ; $0942
-Label_00_0944:
-	jr z, Label_00_0975 ; $0944
+	jr c, .top1 ; $0940
+	jr .done ; $0942
+.top7:
+	jr z, .mul128 ; $0944
 	add hl, hl ; $0946
 	add a, a ; $0947
-	jr nc, Label_00_094d ; $0948
+	jr nc, .step6 ; $0948
 	add hl, de ; $094a
-Label_00_094b:
-	jr z, Label_00_097e ; $094b
-Label_00_094d:
+.top6:
+	jr z, .finish6 ; $094b
+.step6:
 	add hl, hl ; $094d
 	add a, a ; $094e
-	jr nc, Label_00_0954 ; $094f
+	jr nc, .step5 ; $094f
 	add hl, de ; $0951
-Label_00_0952:
-	jr z, Label_00_097f ; $0952
-Label_00_0954:
+.top5:
+	jr z, .finish5 ; $0952
+.step5:
 	add hl, hl ; $0954
 	add a, a ; $0955
-	jr nc, Label_00_095b ; $0956
+	jr nc, .step4 ; $0956
 	add hl, de ; $0958
-Label_00_0959:
-	jr z, Label_00_0980 ; $0959
-Label_00_095b:
+.top4:
+	jr z, .finish4 ; $0959
+.step4:
 	add hl, hl ; $095b
 	add a, a ; $095c
-	jr nc, Label_00_0962 ; $095d
+	jr nc, .step3 ; $095d
 	add hl, de ; $095f
-Label_00_0960:
-	jr z, Label_00_0981 ; $0960
-Label_00_0962:
+.top3:
+	jr z, .finish3 ; $0960
+.step3:
 	add hl, hl ; $0962
 	add a, a ; $0963
-	jr nc, Label_00_0969 ; $0964
+	jr nc, .step2 ; $0964
 	add hl, de ; $0966
-Label_00_0967:
-	jr z, Label_00_0982 ; $0967
-Label_00_0969:
+.top2:
+	jr z, .finish2 ; $0967
+.step2:
 	add hl, hl ; $0969
 	add a, a ; $096a
-	jr nc, Label_00_0970 ; $096b
+	jr nc, .step1 ; $096b
 	add hl, de ; $096d
-Label_00_096e:
-	jr z, Label_00_0983 ; $096e
-Label_00_0970:
+.top1:
+	jr z, .finish1 ; $096e
+.step1:
 	add hl, hl ; $0970
 	add hl, de ; $0971
 	pop de ; $0972
 	pop af ; $0973
 	ret ; $0974
-Label_00_0975:
+.mul128:
 	srl h ; $0975
 	rr l ; $0977
 	rra ; $0979
 	ld h, l ; $097a
 	ld l, a ; $097b
-	jr Label_00_0984 ; $097c
-Label_00_097e:
+	jr .done ; $097c
+.finish6:
 	add hl, hl ; $097e
-Label_00_097f:
+.finish5:
 	add hl, hl ; $097f
-Label_00_0980:
+.finish4:
 	add hl, hl ; $0980
-Label_00_0981:
+.finish3:
 	add hl, hl ; $0981
-Label_00_0982:
+.finish2:
 	add hl, hl ; $0982
-Label_00_0983:
+.finish1:
 	add hl, hl ; $0983
-Label_00_0984:
+.done:
 	pop de ; $0984
 	pop af ; $0985
 	ret ; $0986
@@ -2059,87 +2059,87 @@ MulHLByAFrac:
 	ld e, l ; $0bd8
 	ld d, h ; $0bd9
 	rra ; $0bda
-	jr c, Label_00_0c09 ; $0bdb
+	jr c, .low0 ; $0bdb
 	rra ; $0bdd
-	jr c, Label_00_0bf1 ; $0bde
+	jr c, .low1 ; $0bde
 	rra ; $0be0
-	jr c, Label_00_0bf5 ; $0be1
+	jr c, .low2 ; $0be1
 	rra ; $0be3
-	jr c, Label_00_0bf9 ; $0be4
+	jr c, .low3 ; $0be4
 	rra ; $0be6
-	jr c, Label_00_0bfd ; $0be7
+	jr c, .low4 ; $0be7
 	rra ; $0be9
-	jr c, Label_00_0c01 ; $0bea
+	jr c, .low5 ; $0bea
 	rra ; $0bec
-	jr c, Label_00_0c05 ; $0bed
-	jr Label_00_0c41 ; $0bef
-Label_00_0bf1:
+	jr c, .low6 ; $0bed
+	jr .finish ; $0bef
+.low1:
 	srl h ; $0bf1
-	jr Label_00_0c13 ; $0bf3
-Label_00_0bf5:
+	jr .bit1 ; $0bf3
+.low2:
 	srl h ; $0bf5
-	jr Label_00_0c1b ; $0bf7
-Label_00_0bf9:
+	jr .bit2 ; $0bf7
+.low3:
 	srl h ; $0bf9
-	jr Label_00_0c23 ; $0bfb
-Label_00_0bfd:
+	jr .bit3 ; $0bfb
+.low4:
 	srl h ; $0bfd
-	jr Label_00_0c2b ; $0bff
-Label_00_0c01:
+	jr .bit4 ; $0bff
+.low5:
 	srl h ; $0c01
-	jr Label_00_0c33 ; $0c03
-Label_00_0c05:
+	jr .bit5 ; $0c03
+.low6:
 	srl h ; $0c05
-	jr Label_00_0c3b ; $0c07
-Label_00_0c09:
+	jr .bit6 ; $0c07
+.low0:
 	srl h ; $0c09
 	rr l ; $0c0b
 	rra ; $0c0d
-	jr nc, Label_00_0c11 ; $0c0e
+	jr nc, .rot1 ; $0c0e
 	add hl, de ; $0c10
-Label_00_0c11:
+.rot1:
 	rr h ; $0c11
-Label_00_0c13:
+.bit1:
 	rr l ; $0c13
 	rra ; $0c15
-	jr nc, Label_00_0c19 ; $0c16
+	jr nc, .rot2 ; $0c16
 	add hl, de ; $0c18
-Label_00_0c19:
+.rot2:
 	rr h ; $0c19
-Label_00_0c1b:
+.bit2:
 	rr l ; $0c1b
 	rra ; $0c1d
-	jr nc, Label_00_0c21 ; $0c1e
+	jr nc, .rot3 ; $0c1e
 	add hl, de ; $0c20
-Label_00_0c21:
+.rot3:
 	rr h ; $0c21
-Label_00_0c23:
+.bit3:
 	rr l ; $0c23
 	rra ; $0c25
-	jr nc, Label_00_0c29 ; $0c26
+	jr nc, .rot4 ; $0c26
 	add hl, de ; $0c28
-Label_00_0c29:
+.rot4:
 	rr h ; $0c29
-Label_00_0c2b:
+.bit4:
 	rr l ; $0c2b
 	rra ; $0c2d
-	jr nc, Label_00_0c31 ; $0c2e
+	jr nc, .rot5 ; $0c2e
 	add hl, de ; $0c30
-Label_00_0c31:
+.rot5:
 	rr h ; $0c31
-Label_00_0c33:
+.bit5:
 	rr l ; $0c33
 	rra ; $0c35
-	jr nc, Label_00_0c39 ; $0c36
+	jr nc, .rot6 ; $0c36
 	add hl, de ; $0c38
-Label_00_0c39:
+.rot6:
 	rr h ; $0c39
-Label_00_0c3b:
+.bit6:
 	rr l ; $0c3b
 	rra ; $0c3d
-	jr nc, Label_00_0c41 ; $0c3e
+	jr nc, .finish ; $0c3e
 	add hl, de ; $0c40
-Label_00_0c41:
+.finish:
 	rr h ; $0c41
 	rr l ; $0c43
 	rra ; $0c45
@@ -3297,49 +3297,49 @@ VectorLengthFromAngle:
 	and a, $7f ; $1390
 	sub a, $20 ; $1392
 	cp a, $40 ; $1394
-	jr c, Label_00_13b0 ; $1396
+	jr c, .viaSin ; $1396
 	bit 7, h ; $1398
-	jr z, Label_00_13a2 ; $139a
+	jr z, .absX ; $139a
 	xor a, a ; $139c
 	sub a, l ; $139d
 	ld l, a ; $139e
 	sbc a, a ; $139f
 	sub a, h ; $13a0
 	ld h, a ; $13a1
-Label_00_13a2:
+.absX:
 	call DivByCos ; $13a2
 	bit 7, h ; $13a5
-	jr z, Label_00_13af ; $13a7
+	jr z, .doneX ; $13a7
 	xor a, a ; $13a9
 	sub a, l ; $13aa
 	ld l, a ; $13ab
 	sbc a, a ; $13ac
 	sub a, h ; $13ad
 	ld h, a ; $13ae
-Label_00_13af:
+.doneX:
 	ret ; $13af
-Label_00_13b0:
+.viaSin:
 	ld l, e ; $13b0
 	ld h, d ; $13b1
 	bit 7, h ; $13b2
-	jr z, Label_00_13bc ; $13b4
+	jr z, .absY ; $13b4
 	xor a, a ; $13b6
 	sub a, l ; $13b7
 	ld l, a ; $13b8
 	sbc a, a ; $13b9
 	sub a, h ; $13ba
 	ld h, a ; $13bb
-Label_00_13bc:
+.absY:
 	call DivBySin ; $13bc
 	bit 7, h ; $13bf
-	jr z, Label_00_13c9 ; $13c1
+	jr z, .doneY ; $13c1
 	xor a, a ; $13c3
 	sub a, l ; $13c4
 	ld l, a ; $13c5
 	sbc a, a ; $13c6
 	sub a, h ; $13c7
 	ld h, a ; $13c8
-Label_00_13c9:
+.doneY:
 	ret ; $13c9
 DivByCos:
 	ld a, b ; $13ca
@@ -3979,60 +3979,60 @@ DecompressData:
 	push bc ; $1798
 	push de ; $1799
 	push de ; $179a
-Label_00_179b:
+.nextControlByte:
 	ld a, [hl+] ; $179b
 	scf ; $179c
 	rra ; $179d
 	ld c, a ; $179e
-	jr nc, Label_00_17f3 ; $179f
+	jr nc, .match ; $179f
 	ld a, [hl+] ; $17a1
 	ld [de], a ; $17a2
 	inc de ; $17a3
-Label_00_17a4:
+.nextFlag:
 	srl c ; $17a4
-	jr z, Label_00_179b ; $17a6
-	jr nc, Label_00_17f3 ; $17a8
+	jr z, .nextControlByte ; $17a6
+	jr nc, .match ; $17a8
 	ld a, [hl+] ; $17aa
 	ld [de], a ; $17ab
 	inc de ; $17ac
 	srl c ; $17ad
-	jr z, Label_00_179b ; $17af
-	jr nc, Label_00_17f3 ; $17b1
+	jr z, .nextControlByte ; $17af
+	jr nc, .match ; $17b1
 	ld a, [hl+] ; $17b3
 	ld [de], a ; $17b4
 	inc de ; $17b5
 	srl c ; $17b6
-	jr z, Label_00_179b ; $17b8
-	jr nc, Label_00_17f3 ; $17ba
+	jr z, .nextControlByte ; $17b8
+	jr nc, .match ; $17ba
 	ld a, [hl+] ; $17bc
 	ld [de], a ; $17bd
 	inc de ; $17be
 	srl c ; $17bf
-	jr z, Label_00_179b ; $17c1
-	jr nc, Label_00_17f3 ; $17c3
+	jr z, .nextControlByte ; $17c1
+	jr nc, .match ; $17c3
 	ld a, [hl+] ; $17c5
 	ld [de], a ; $17c6
 	inc de ; $17c7
 	srl c ; $17c8
-	jr z, Label_00_179b ; $17ca
-	jr nc, Label_00_17f3 ; $17cc
+	jr z, .nextControlByte ; $17ca
+	jr nc, .match ; $17cc
 	ld a, [hl+] ; $17ce
 	ld [de], a ; $17cf
 	inc de ; $17d0
 	srl c ; $17d1
-	jr z, Label_00_179b ; $17d3
-	jr nc, Label_00_17f3 ; $17d5
+	jr z, .nextControlByte ; $17d3
+	jr nc, .match ; $17d5
 	ld a, [hl+] ; $17d7
 	ld [de], a ; $17d8
 	inc de ; $17d9
 	srl c ; $17da
-	jr z, Label_00_179b ; $17dc
-	jr nc, Label_00_17f3 ; $17de
+	jr z, .nextControlByte ; $17dc
+	jr nc, .match ; $17de
 	ld a, [hl+] ; $17e0
 	ld [de], a ; $17e1
 	inc de ; $17e2
-	jr Label_00_179b ; $17e3
-Label_00_17e5:
+	jr .nextControlByte ; $17e3
+.done:
 	pop hl ; $17e5
 	ld h, d ; $17e6
 	ld l, e ; $17e7
@@ -4047,14 +4047,14 @@ Label_00_17e5:
 	pop bc ; $17f0
 	pop af ; $17f1
 	ret ; $17f2
-Label_00_17f3:
+.match:
 	ld a, [hl+] ; $17f3
 	ld b, [hl] ; $17f4
 	inc hl ; $17f5
 	push hl ; $17f6
 	ld l, a ; $17f7
 	or a, b ; $17f8
-	jr z, Label_00_17e5 ; $17f9
+	jr z, .done ; $17f9
 	ld a, b ; $17fb
 	rlca ; $17fc
 	rlca ; $17fd
@@ -4064,27 +4064,27 @@ Label_00_17f3:
 	add hl, de ; $1802
 	ld a, b ; $1803
 	and a, $1f ; $1804
-	jr z, Label_00_187e ; $1806
+	jr z, .matchTail ; $1806
 	ld b, a ; $1808
 	srl b ; $1809
-	jr nc, Label_00_1812 ; $180b
+	jr nc, .match2 ; $180b
 	ld a, [hl+] ; $180d
 	ld [de], a ; $180e
 	inc de ; $180f
-	jr z, Label_00_187e ; $1810
-Label_00_1812:
+	jr z, .matchTail ; $1810
+.match2:
 	srl b ; $1812
-	jr nc, Label_00_181e ; $1814
+	jr nc, .match4 ; $1814
 	ld a, [hl+] ; $1816
 	ld [de], a ; $1817
 	inc de ; $1818
 	ld a, [hl+] ; $1819
 	ld [de], a ; $181a
 	inc de ; $181b
-	jr z, Label_00_187e ; $181c
-Label_00_181e:
+	jr z, .matchTail ; $181c
+.match4:
 	srl b ; $181e
-	jr nc, Label_00_1830 ; $1820
+	jr nc, .match8 ; $1820
 	ld a, [hl+] ; $1822
 	ld [de], a ; $1823
 	inc de ; $1824
@@ -4097,10 +4097,10 @@ Label_00_181e:
 	ld a, [hl+] ; $182b
 	ld [de], a ; $182c
 	inc de ; $182d
-	jr z, Label_00_187e ; $182e
-Label_00_1830:
+	jr z, .matchTail ; $182e
+.match8:
 	srl b ; $1830
-	jr nc, Label_00_184e ; $1832
+	jr nc, .match16 ; $1832
 	ld a, [hl+] ; $1834
 	ld [de], a ; $1835
 	inc de ; $1836
@@ -4125,8 +4125,8 @@ Label_00_1830:
 	ld a, [hl+] ; $1849
 	ld [de], a ; $184a
 	inc de ; $184b
-	jr z, Label_00_187e ; $184c
-Label_00_184e:
+	jr z, .matchTail ; $184c
+.match16:
 	ld a, [hl+] ; $184e
 	ld [de], a ; $184f
 	inc de ; $1850
@@ -4175,7 +4175,7 @@ Label_00_184e:
 	ld a, [hl+] ; $187b
 	ld [de], a ; $187c
 	inc de ; $187d
-Label_00_187e:
+.matchTail:
 	ld a, [hl+] ; $187e
 	ld [de], a ; $187f
 	inc de ; $1880
@@ -4186,7 +4186,7 @@ Label_00_187e:
 	ld [de], a ; $1885
 	inc de ; $1886
 	pop hl ; $1887
-	jp Label_00_17a4 ; $1888
+	jp .nextFlag ; $1888
 ClearDebugTextBuffer:
 	ld hl, wDebugTextBuffer ; $188b
 	ld c, $24 ; $188e
@@ -4284,26 +4284,26 @@ GetDebugTextBufferAddr:
 PrintString:
 	push af ; $1906
 	call GetDebugTextBufferAddr ; $1907
-Label_00_190a:
+.charLoop:
 	ld a, [hl+] ; $190a
 	or a, a ; $190b
-	jr z, Label_00_191e ; $190c
+	jr z, .terminated ; $190c
 	ld [de], a ; $190e
 	inc de ; $190f
 	ld a, e ; $1910
 	and a, $1f ; $1911
-	jr nz, Label_00_190a ; $1913
+	jr nz, .charLoop ; $1913
 	ld a, e ; $1915
 	sub a, $20 ; $1916
 	ld e, a ; $1918
-	jr nc, Label_00_191c ; $1919
+	jr nc, .nextRow ; $1919
 	dec d ; $191b
-Label_00_191c:
-	jr Label_00_190a ; $191c
-Label_00_191e:
+.nextRow:
+	jr .charLoop ; $191c
+.terminated:
 	dec hl ; $191e
 	ld a, $01 ; $191f
-Label_00_1921:
+.markDirty:
 	ldh [hDebugTextDirty], a ; $1921
 	pop af ; $1923
 	ret ; $1924
@@ -4369,7 +4369,7 @@ FormatDecimalNumber:
 	ld l, e ; $1981
 	ld h, d ; $1982
 	bit 7, h ; $1983
-	jr z, Label_00_1995 ; $1985
+	jr z, .positive ; $1985
 	xor a, a ; $1987
 	sub a, l ; $1988
 	ld l, a ; $1989
@@ -4382,7 +4382,7 @@ FormatDecimalNumber:
 	set 0, [hl] ; $1991
 	ld l, e ; $1993
 	ld h, d ; $1994
-Label_00_1995:
+.positive:
 	ld c, l ; $1995
 	ld b, h ; $1996
 	ld hl, sp + 6 ; $1997
@@ -4420,59 +4420,59 @@ Label_00_1995:
 	pop bc ; $19d0
 	inc c ; $19d1
 	dec c ; $19d2
-	jr z, Label_00_19fb ; $19d3
+	jr z, .emitSign ; $19d3
 	ld b, $05 ; $19d5
 	ld hl, sp + 2 ; $19d7
-Label_00_19d9:
+.countDigitsLoop:
 	ld a, [hl] ; $19d9
 	or a, a ; $19da
-	jr nz, Label_00_19e4 ; $19db
+	jr nz, .checkPad ; $19db
 	dec b ; $19dd
 	inc hl ; $19de
 	bit 7, [hl] ; $19df
-	jr z, Label_00_19d9 ; $19e1
+	jr z, .countDigitsLoop ; $19e1
 	inc b ; $19e3
-Label_00_19e4:
+.checkPad:
 	ld a, c ; $19e4
 	sub a, b ; $19e5
-	jr c, Label_00_19fb ; $19e6
-	jr z, Label_00_19fb ; $19e8
+	jr c, .emitSign ; $19e6
+	jr z, .emitSign ; $19e8
 	ld b, a ; $19ea
 	ld a, $20 ; $19eb
 	ld hl, sp + 7 ; $19ed
 	bit 0, [hl] ; $19ef
-	jr z, Label_00_19f6 ; $19f1
+	jr z, .padLoop ; $19f1
 	dec b ; $19f3
-	jr z, Label_00_19fb ; $19f4
-Label_00_19f6:
+	jr z, .emitSign ; $19f4
+.padLoop:
 	ld [de], a ; $19f6
 	inc de ; $19f7
 	dec b ; $19f8
-	jr nz, Label_00_19f6 ; $19f9
-Label_00_19fb:
+	jr nz, .padLoop ; $19f9
+.emitSign:
 	ld hl, sp + 7 ; $19fb
 	bit 0, [hl] ; $19fd
-	jr z, Label_00_1a05 ; $19ff
+	jr z, .emitDigits ; $19ff
 	ld a, $2d ; $1a01
 	ld [de], a ; $1a03
 	inc de ; $1a04
-Label_00_1a05:
+.emitDigits:
 	ld b, $05 ; $1a05
 	ld c, $30 ; $1a07
 	ld hl, sp + 2 ; $1a09
-Label_00_1a0b:
+.skipZerosLoop:
 	ld a, [hl+] ; $1a0b
 	or a, a ; $1a0c
-	jr nz, Label_00_1a12 ; $1a0d
+	jr nz, .digitLoop ; $1a0d
 	dec b ; $1a0f
-	jr nz, Label_00_1a0b ; $1a10
-Label_00_1a12:
+	jr nz, .skipZerosLoop ; $1a10
+.digitLoop:
 	add a, c ; $1a12
 	ld [de], a ; $1a13
 	inc de ; $1a14
 	ld a, [hl+] ; $1a15
 	bit 7, a ; $1a16
-	jr z, Label_00_1a12 ; $1a18
+	jr z, .digitLoop ; $1a18
 	xor a, a ; $1a1a
 	ld [de], a ; $1a1b
 	pop bc ; $1a1c
@@ -4537,47 +4537,47 @@ FormatDecimalNumberUnsigned:
 	pop bc ; $1a73
 	inc c ; $1a74
 	dec c ; $1a75
-	jr z, Label_00_1a95 ; $1a76
+	jr z, .emitDigits ; $1a76
 	ld b, $05 ; $1a78
 	ld hl, sp + 2 ; $1a7a
-Label_00_1a7c:
+.countDigitsLoop:
 	ld a, [hl] ; $1a7c
 	or a, a ; $1a7d
-	jr nz, Label_00_1a87 ; $1a7e
+	jr nz, .checkPad ; $1a7e
 	dec b ; $1a80
 	inc hl ; $1a81
 	bit 7, [hl] ; $1a82
-	jr z, Label_00_1a7c ; $1a84
+	jr z, .countDigitsLoop ; $1a84
 	inc b ; $1a86
-Label_00_1a87:
+.checkPad:
 	ld a, c ; $1a87
 	sub a, b ; $1a88
-	jr c, Label_00_1a95 ; $1a89
-	jr z, Label_00_1a95 ; $1a8b
+	jr c, .emitDigits ; $1a89
+	jr z, .emitDigits ; $1a8b
 	ld b, a ; $1a8d
 	ld a, $20 ; $1a8e
-Label_00_1a90:
+.padLoop:
 	ld [de], a ; $1a90
 	inc de ; $1a91
 	dec b ; $1a92
-	jr nz, Label_00_1a90 ; $1a93
-Label_00_1a95:
+	jr nz, .padLoop ; $1a93
+.emitDigits:
 	ld b, $05 ; $1a95
 	ld c, $30 ; $1a97
 	ld hl, sp + 2 ; $1a99
-Label_00_1a9b:
+.skipZerosLoop:
 	ld a, [hl+] ; $1a9b
 	or a, a ; $1a9c
-	jr nz, Label_00_1aa2 ; $1a9d
+	jr nz, .digitLoop ; $1a9d
 	dec b ; $1a9f
-	jr nz, Label_00_1a9b ; $1aa0
-Label_00_1aa2:
+	jr nz, .skipZerosLoop ; $1aa0
+.digitLoop:
 	add a, c ; $1aa2
 	ld [de], a ; $1aa3
 	inc de ; $1aa4
 	ld a, [hl+] ; $1aa5
 	bit 7, a ; $1aa6
-	jr z, Label_00_1aa2 ; $1aa8
+	jr z, .digitLoop ; $1aa8
 	xor a, a ; $1aaa
 	ld [de], a ; $1aab
 	pop bc ; $1aac
@@ -4754,28 +4754,28 @@ RegisterFrameTask:
 	inc de ; $1b7f
 	ld bc, $0010 ; $1b80
 	ld hl, wFrameTasks ; $1b83
-Label_00_1b86:
+.searchLoop:
 	inc hl ; $1b86
 	call Compare3Bytes ; $1b87
-	jr nz, Label_00_1b90 ; $1b8a
+	jr nz, .searchNext ; $1b8a
 	ld b, $01 ; $1b8c
-	jr Label_00_1b96 ; $1b8e
-Label_00_1b90:
+	jr .searchDone ; $1b8e
+.searchNext:
 	inc hl ; $1b90
 	inc hl ; $1b91
 	inc hl ; $1b92
 	dec c ; $1b93
-	jr nz, Label_00_1b86 ; $1b94
-Label_00_1b96:
+	jr nz, .searchLoop ; $1b94
+.searchDone:
 	ld a, b ; $1b96
 	or a, a ; $1b97
-	jr nz, Label_00_1bc1 ; $1b98
+	jr nz, .done ; $1b98
 	ld c, $16 ; $1b9a
 	ld hl, wFrameTasks ; $1b9c
-Label_00_1b9f:
+.insertLoop:
 	inc hl ; $1b9f
 	call Check3BytesZero ; $1ba0
-	jr nz, Label_00_1bb7 ; $1ba3
+	jr nz, .insertNext ; $1ba3
 	dec hl ; $1ba5
 	dec de ; $1ba6
 	ld a, [de] ; $1ba7
@@ -4792,17 +4792,17 @@ Label_00_1b9f:
 	inc hl ; $1bb2
 	ld a, [de] ; $1bb3
 	ld [hl], a ; $1bb4
-	jr Label_00_1bc1 ; $1bb5
-Label_00_1bb7:
+	jr .done ; $1bb5
+.insertNext:
 	inc hl ; $1bb7
 	inc hl ; $1bb8
 	inc hl ; $1bb9
 	dec c ; $1bba
-	jr nz, Label_00_1b9f ; $1bbb
+	jr nz, .insertLoop ; $1bbb
 	ld a, b ; $1bbd
 	or a, a ; $1bbe
-	jr nz, Label_00_1bc1 ; $1bbf
-Label_00_1bc1:
+	jr nz, .done ; $1bbf
+.done:
 	call SortFrameTasks ; $1bc1
 	ld a, $01 ; $1bc4
 	ldh [hFrameTasksReady], a ; $1bc6
@@ -4827,24 +4827,24 @@ UnregisterFrameTask:
 	pop de ; $1bde
 	ld c, $10 ; $1bdf
 	ld hl, wFrameTasks ; $1be1
-Label_00_1be4:
+.searchLoop:
 	inc hl ; $1be4
 	call Compare3Bytes ; $1be5
-	jr nz, Label_00_1bf2 ; $1be8
+	jr nz, .next ; $1be8
 	dec hl ; $1bea
 	xor a, a ; $1beb
 	ld [hl+], a ; $1bec
 	ld [hl+], a ; $1bed
 	ld [hl+], a ; $1bee
 	ld [hl+], a ; $1bef
-	jr Label_00_1bf8 ; $1bf0
-Label_00_1bf2:
+	jr .done ; $1bf0
+.next:
 	inc hl ; $1bf2
 	inc hl ; $1bf3
 	inc hl ; $1bf4
 	dec c ; $1bf5
-	jr nz, Label_00_1be4 ; $1bf6
-Label_00_1bf8:
+	jr nz, .searchLoop ; $1bf6
+.done:
 	ld a, $01 ; $1bf8
 	ldh [hFrameTasksReady], a ; $1bfa
 	add sp, 3 ; $1bfc
@@ -5061,10 +5061,10 @@ Label_00_1cdd:
 	pop af ; $1d07
 	ret ; $1d08
 	push af ; $1d09
-	jr Label_00_1d26 ; $1d0a
+	jr BeginFadeOut.start ; $1d0a
 ForceFadeIn:
 	push af ; $1d0c
-	jr Label_00_1d34 ; $1d0d
+	jr BeginFadeIn.start ; $1d0d
 	di ; $1d0f
 	call BeginFadeOut ; $1d10
 	push af ; $1d13
@@ -5081,32 +5081,32 @@ BeginFadeOut:
 	push af ; $1d20
 	ldh a, [hFadedOut] ; $1d21
 	or a, a ; $1d23
-	jr nz, Label_00_1d46 ; $1d24
-Label_00_1d26:
+	jr nz, BeginFadeIn.done ; $1d24
+.start:
 	ld a, $01 ; $1d26
 	ldh [hFadeState], a ; $1d28
 	ldh [hFadedOut], a ; $1d2a
-	jr Label_00_1d3b ; $1d2c
+	jr BeginFadeIn.setSpeed ; $1d2c
 BeginFadeIn:
 	push af ; $1d2e
 	ldh a, [hFadedOut] ; $1d2f
 	or a, a ; $1d31
-	jr z, Label_00_1d46 ; $1d32
-Label_00_1d34:
+	jr z, .done ; $1d32
+.start:
 	ld a, $02 ; $1d34
 	ldh [hFadeState], a ; $1d36
 	xor a, a ; $1d38
 	ldh [hFadedOut], a ; $1d39
-Label_00_1d3b:
+.setSpeed:
 	ld a, c ; $1d3b
 	and a, a ; $1d3c
-	jr nz, Label_00_1d40 ; $1d3d
+	jr nz, .storeSpeed ; $1d3d
 	inc a ; $1d3f
-Label_00_1d40:
+.storeSpeed:
 	ldh [hFadeSpeed], a ; $1d40
 	ld a, $7c ; $1d42
 	ldh [hFadeCounter], a ; $1d44
-Label_00_1d46:
+.done:
 	pop af ; $1d46
 	ret ; $1d47
 UpdateFadeIn:
@@ -5179,22 +5179,22 @@ Label_00_1da2:
 	ret ; $1da3
 WaitFadeEnd:
 	push af ; $1da4
-Label_00_1da5:
+.loop:
 	ldh a, [hFadeState] ; $1da5
 	and a, a ; $1da7
-	jr z, Label_00_1dbb ; $1da8
+	jr z, .done ; $1da8
 	ldh a, [$ffd8] ; $1daa
 	or a, a ; $1dac
-	jr z, Label_00_1db6 ; $1dad
+	jr z, .waitLocalFrame ; $1dad
 	push af ; $1daf
 	farcall SyncLinkFrame ; $1db0
 	pop af ; $1db3
-	jr Label_00_1db9 ; $1db4
-Label_00_1db6:
+	jr .next ; $1db4
+.waitLocalFrame:
 	call AdvanceFrame ; $1db6
-Label_00_1db9:
-	jr Label_00_1da5 ; $1db9
-Label_00_1dbb:
+.next:
+	jr .loop ; $1db9
+.done:
 	pop af ; $1dbb
 	ret ; $1dbc
 	push af ; $1dbd
@@ -5319,7 +5319,7 @@ QueueSprite16:
 	ld a, [wSpriteBufferPage] ; $1e5b
 	ld h, a ; $1e5e
 	bit 5, b ; $1e5f
-	jr nz, Label_00_1e80 ; $1e61
+	jr nz, .mirrored ; $1e61
 	ld [hl], e ; $1e63
 	inc l ; $1e64
 	ld [hl], d ; $1e65
@@ -5332,7 +5332,7 @@ QueueSprite16:
 	inc c ; $1e6c
 	ld a, l ; $1e6d
 	cp a, $a0 ; $1e6e
-	jr z, Label_00_1e7d ; $1e70
+	jr z, .store ; $1e70
 	ld [hl], e ; $1e72
 	inc l ; $1e73
 	ld a, d ; $1e74
@@ -5343,10 +5343,10 @@ QueueSprite16:
 	ld [hl], b ; $1e7a
 	inc l ; $1e7b
 	ld a, l ; $1e7c
-Label_00_1e7d:
+.store:
 	ldh [hSpriteQueueIndex], a ; $1e7d
 	ret ; $1e7f
-Label_00_1e80:
+.mirrored:
 	ld [hl], e ; $1e80
 	inc l ; $1e81
 	ld a, d ; $1e82
@@ -5360,7 +5360,7 @@ Label_00_1e80:
 	inc c ; $1e8b
 	ld a, l ; $1e8c
 	cp a, $a0 ; $1e8d
-	jr z, Label_00_1e7d ; $1e8f
+	jr z, .store ; $1e8f
 	ld [hl], e ; $1e91
 	inc l ; $1e92
 	ld [hl], d ; $1e93
@@ -5385,18 +5385,18 @@ QueueSpriteTemplate:
 	ld [hl], b ; $1ea8
 	pop de ; $1ea9
 	bit 5, b ; $1eaa
-	jr nz, Label_00_1ed9 ; $1eac
+	jr nz, .mirrored ; $1eac
 	ld a, [wSpriteBufferPage] ; $1eae
 	ld b, a ; $1eb1
 	ldh a, [hSpriteQueueIndex] ; $1eb2
 	ld c, a ; $1eb4
-Label_00_1eb5:
+.copyLoop:
 	ld a, c ; $1eb5
 	cp a, $a0 ; $1eb6
-	jr z, Label_00_1f07 ; $1eb8
+	jr z, .done ; $1eb8
 	ld a, [de] ; $1eba
 	cp a, $80 ; $1ebb
-	jr z, Label_00_1f07 ; $1ebd
+	jr z, .done ; $1ebd
 	ld hl, sp + 0 ; $1ebf
 	add a, [hl] ; $1ec1
 	ld [bc], a ; $1ec2
@@ -5420,19 +5420,19 @@ Label_00_1eb5:
 	ld [bc], a ; $1ed4
 	inc c ; $1ed5
 	inc de ; $1ed6
-	jr Label_00_1eb5 ; $1ed7
-Label_00_1ed9:
+	jr .copyLoop ; $1ed7
+.mirrored:
 	ld a, [wSpriteBufferPage] ; $1ed9
 	ld b, a ; $1edc
 	ldh a, [hSpriteQueueIndex] ; $1edd
 	ld c, a ; $1edf
-Label_00_1ee0:
+.mirrorLoop:
 	ld a, c ; $1ee0
 	cp a, $a0 ; $1ee1
-	jr z, Label_00_1f07 ; $1ee3
+	jr z, .done ; $1ee3
 	ld a, [de] ; $1ee5
 	cp a, $80 ; $1ee6
-	jr z, Label_00_1f07 ; $1ee8
+	jr z, .done ; $1ee8
 	ld hl, sp + 0 ; $1eea
 	add a, [hl] ; $1eec
 	ld [bc], a ; $1eed
@@ -5458,8 +5458,8 @@ Label_00_1ee0:
 	ld [bc], a ; $1f02
 	inc c ; $1f03
 	inc de ; $1f04
-	jr Label_00_1ee0 ; $1f05
-Label_00_1f07:
+	jr .mirrorLoop ; $1f05
+.done:
 	ld a, c ; $1f07
 	ldh [hSpriteQueueIndex], a ; $1f08
 	add sp, 4 ; $1f0a
@@ -6708,11 +6708,11 @@ AdvanceFrame:
 	push hl ; $2634
 	ldh a, [hLinkCounter] ; $2635
 	or a, a ; $2637
-	jr z, Label_00_2641 ; $2638
+	jr z, .linkOk ; $2638
 	ldh a, [$ffc3] ; $263a
 	and a, $e0 ; $263c
 	jp nz, LinkErrorReset ; $263e
-Label_00_2641:
+.linkOk:
 	ldh a, [rVBK] ; $2641
 	push af ; $2643
 	xor a, a ; $2644
@@ -6734,79 +6734,79 @@ Label_00_2641:
 	ldh a, [hPeakLY] ; $2669
 	ld h, a ; $266b
 	cp a, l ; $266c
-	jr c, Label_00_2676 ; $266d
+	jr c, .newPeakLY ; $266d
 	ldh a, [hPeakLYFrames] ; $266f
 	dec a ; $2671
 	ldh [hPeakLYFrames], a ; $2672
-	jr nz, Label_00_267e ; $2674
-Label_00_2676:
+	jr nz, .peakDone ; $2674
+.newPeakLY:
 	ld a, l ; $2676
 	ld h, l ; $2677
 	ldh [hPeakLY], a ; $2678
 	ld a, $0f ; $267a
 	ldh [hPeakLYFrames], a ; $267c
-Label_00_267e:
+.peakDone:
 	ld de, $c0fb ; $267e
 	call FormatHexWord ; $2681
 	ldh a, [hDebugStepMode] ; $2684
 	or a, a ; $2686
-	jp z, Label_00_26f3 ; $2687
+	jp z, .waitFrame ; $2687
 	ldh a, [$ffd8] ; $268a
 	or a, a ; $268c
-	jr nz, Label_00_269d ; $268d
+	jr nz, .checkStepActive ; $268d
 	ldh a, [hPlayerInputFlags] ; $268f
 	and a, PADF_SELECT | PADF_START ; $2691
 	cp a, PADF_SELECT | PADF_START ; $2693
-	jr nz, Label_00_269d ; $2695
+	jr nz, .checkStepActive ; $2695
 	ld a, $01 ; $2697
 	ldh [$ff9a], a ; $2699
-	jr Label_00_26a2 ; $269b
-Label_00_269d:
+	jr .stepLoop ; $269b
+.checkStepActive:
 	ldh a, [$ff9a] ; $269d
 	or a, a ; $269f
-	jr z, Label_00_26f3 ; $26a0
-Label_00_26a2:
+	jr z, .waitFrame ; $26a0
+.stepLoop:
 	ldh a, [hInputRisingEdge] ; $26a2
 	bit PADB_SELECT, a ; $26a4
-	jr z, Label_00_26b5 ; $26a6
+	jr z, .checkStepExit ; $26a6
 	ldh a, [hDebugStepMode] ; $26a8
 	inc a ; $26aa
 	cp a, $04 ; $26ab
-	jr c, Label_00_26b1 ; $26ad
+	jr c, .storeStepMode ; $26ad
 	ld a, $01 ; $26af
-Label_00_26b1:
+.storeStepMode:
 	ldh [hDebugStepMode], a ; $26b1
-	jr Label_00_26c4 ; $26b3
-Label_00_26b5:
+	jr .stepWaitFrame ; $26b3
+.checkStepExit:
 	ldh a, [hPlayerInputFlags] ; $26b5
 	bit PADB_START, a ; $26b7
-	jr z, Label_00_26c4 ; $26b9
+	jr z, .stepWaitFrame ; $26b9
 	bit 2, a ; $26bb
-	jr nz, Label_00_26c4 ; $26bd
+	jr nz, .stepWaitFrame ; $26bd
 	xor a, a ; $26bf
 	ldh [$ff9a], a ; $26c0
-	jr Label_00_26f3 ; $26c2
-Label_00_26c4:
+	jr .waitFrame ; $26c2
+.stepWaitFrame:
 	ldh a, [hInputPressed] ; $26c4
 	and a, $f3 ; $26c6
-	jr nz, Label_00_26f3 ; $26c8
+	jr nz, .waitFrame ; $26c8
 	ldh a, [$ffd8] ; $26ca
 	or a, a ; $26cc
-	jr z, Label_00_26d7 ; $26cd
+	jr z, .stepHaltLoop ; $26cd
 	ldh a, [hLinkState] ; $26cf
 	cp a, $02 ; $26d1
-	jr z, Label_00_26f0 ; $26d3
-	jr Label_00_26e2 ; $26d5
-Label_00_26d7:
+	jr z, .stepFrameDone ; $26d3
+	jr .stepLinkLoop ; $26d5
+.stepHaltLoop:
 	ei ; $26d7
 	halt ; $26d8
 	nop ; $26d9
 	di ; $26da
 	ldh a, [hVBlankOccurred] ; $26db
 	and a, a ; $26dd
-	jr z, Label_00_26d7 ; $26de
-	jr Label_00_26f0 ; $26e0
-Label_00_26e2:
+	jr z, .stepHaltLoop ; $26de
+	jr .stepFrameDone ; $26e0
+.stepLinkLoop:
 	ei ; $26e2
 	nop ; $26e3
 	di ; $26e4
@@ -6814,30 +6814,30 @@ Label_00_26e2:
 	ld b, a ; $26e7
 	ldh a, [$ffd7] ; $26e8
 	and a, b ; $26ea
-	jr z, Label_00_26e2 ; $26eb
+	jr z, .stepLinkLoop ; $26eb
 	xor a, a ; $26ed
 	ldh [$ffd7], a ; $26ee
-Label_00_26f0:
+.stepFrameDone:
 	ei ; $26f0
-	jr Label_00_26a2 ; $26f1
-Label_00_26f3:
+	jr .stepLoop ; $26f1
+.waitFrame:
 	ldh a, [$ffd8] ; $26f3
 	or a, a ; $26f5
-	jr z, Label_00_2700 ; $26f6
+	jr z, .haltLoop ; $26f6
 	ldh a, [hLinkState] ; $26f8
 	cp a, $02 ; $26fa
-	jr z, Label_00_2719 ; $26fc
-	jr Label_00_270b ; $26fe
-Label_00_2700:
+	jr z, .done ; $26fc
+	jr .linkLoop ; $26fe
+.haltLoop:
 	halt ; $2700
 	nop ; $2701
 	di ; $2702
 	ldh a, [hVBlankOccurred] ; $2703
 	and a, a ; $2705
-	jr nz, Label_00_2719 ; $2706
+	jr nz, .done ; $2706
 	ei ; $2708
-	jr Label_00_2700 ; $2709
-Label_00_270b:
+	jr .haltLoop ; $2709
+.linkLoop:
 	ei ; $270b
 	nop ; $270c
 	di ; $270d
@@ -6845,10 +6845,10 @@ Label_00_270b:
 	ld b, a ; $2710
 	ldh a, [$ffd7] ; $2711
 	and a, b ; $2713
-	jr z, Label_00_270b ; $2714
+	jr z, .linkLoop ; $2714
 	xor a, a ; $2716
 	ldh [$ffd7], a ; $2717
-Label_00_2719:
+.done:
 	ei ; $2719
 	pop af ; $271a
 	ldh [rVBK], a ; $271b
@@ -7032,37 +7032,37 @@ ShortDelay:
 	push af ; $2821
 	push bc ; $2822
 	ld bc, $007d ; $2823
-Label_00_2826:
+.loop:
 	dec bc ; $2826
 	ld a, c ; $2827
 	or a, b ; $2828
-	jr nz, Label_00_2826 ; $2829
+	jr nz, .loop ; $2829
 	pop bc ; $282b
 	pop af ; $282c
 	ret ; $282d
 WaitSerialTransfer:
 	push bc ; $282e
 	ld bc, $c350 ; $282f
-Label_00_2832:
+.waitLoop:
 	ei ; $2832
 	nop ; $2833
 	di ; $2834
 	ldh a, [$ffd7] ; $2835
 	and a, a ; $2837
-	jr nz, Label_00_2843 ; $2838
+	jr nz, .received ; $2838
 	dec bc ; $283a
 	ld a, b ; $283b
 	or a, c ; $283c
-	jr nz, Label_00_2832 ; $283d
+	jr nz, .waitLoop ; $283d
 	ei ; $283f
 	scf ; $2840
-	jr Label_00_2848 ; $2841
-Label_00_2843:
+	jr .done ; $2841
+.received:
 	xor a, a ; $2843
 	ldh [$ffd7], a ; $2844
 	scf ; $2846
 	ccf ; $2847
-Label_00_2848:
+.done:
 	ei ; $2848
 	pop bc ; $2849
 	ret ; $284a
@@ -7578,21 +7578,21 @@ DrawHalvedWordDecimal:
 CopyTextRect:
 	push bc ; $2b46
 	push de ; $2b47
-Label_00_2b48:
+.cellLoop:
 	ld a, [hl+] ; $2b48
 	and a, a ; $2b49
 	ld [de], a ; $2b4a
 	inc de ; $2b4b
 	dec b ; $2b4c
-	jr nz, Label_00_2b48 ; $2b4d
+	jr nz, .cellLoop ; $2b4d
 	pop de ; $2b4f
 	pop bc ; $2b50
 	ld a, $20 ; $2b51
 	add a, e ; $2b53
 	ld e, a ; $2b54
-	jr nc, Label_00_2b58 ; $2b55
+	jr nc, .nextRow ; $2b55
 	inc d ; $2b57
-Label_00_2b58:
+.nextRow:
 	dec c ; $2b58
 	jr nz, CopyTextRect ; $2b59
 	ret ; $2b5b

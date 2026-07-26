@@ -70,15 +70,15 @@ InitCa00RecordFromCharId:
 	ld h, b ; $406d
 	pop af ; $406e
 	cp a, $ff ; $406f
-	jr z, Label_02_40b6 ; $4071
+	jr z, .emptySlot ; $4071
 	cp a, $90 ; $4073
-	jr z, Label_02_409f ; $4075
+	jr z, .mainCharacter ; $4075
 	bit 7, a ; $4077
-	jr z, Label_02_40c4 ; $4079
+	jr z, .fromRoster ; $4079
 	ld b, a ; $407b
 	ld a, [wCurrentStorySlot] ; $407c
 	cp a, $0f ; $407f
-	jr z, Label_02_409e ; $4081
+	jr z, .skip ; $4081
 	push hl ; $4083
 	ld c, $04 ; $4084
 	call ClearMemory16 ; $4086
@@ -96,9 +96,9 @@ InitCa00RecordFromCharId:
 	ld c, $04 ; $4098
 	call CopyMemoryFast ; $409a
 	ret ; $409d
-Label_02_409e:
+.skip:
 	ret ; $409e
-Label_02_409f:
+.mainCharacter:
 	push hl ; $409f
 	ld c, $04 ; $40a0
 	call ClearMemory16 ; $40a2
@@ -114,7 +114,7 @@ Label_02_409f:
 	ld [hl], $03 ; $40b2
 	ret ; $40b4
 	ret ; $40b5
-Label_02_40b6:
+.emptySlot:
 	push hl ; $40b6
 	ld c, $04 ; $40b7
 	call ClearMemory16 ; $40b9
@@ -123,7 +123,7 @@ Label_02_40b6:
 	add hl, de ; $40c0
 	ld [hl], $ff ; $40c1
 	ret ; $40c3
-Label_02_40c4:
+.fromRoster:
 	push af ; $40c4
 	push hl ; $40c5
 	ld c, $04 ; $40c6
@@ -138,16 +138,16 @@ Label_02_40c4:
 	ld a, $0f ; $40d4
 	add a, e ; $40d6
 	ld e, a ; $40d7
-	jr nc, Label_02_40db ; $40d8
+	jr nc, .gotDest ; $40d8
 	inc d ; $40da
-Label_02_40db:
+.gotDest:
 	ld c, $1d ; $40db
-Label_02_40dd:
+.copyLoop:
 	ld a, [hl+] ; $40dd
 	ld [de], a ; $40de
 	inc e ; $40df
 	dec c ; $40e0
-	jr nz, Label_02_40dd ; $40e1
+	jr nz, .copyLoop ; $40e1
 	pop de ; $40e3
 	ld a, b ; $40e4
 	call RemapExtendedCharId ; $40e5
@@ -165,9 +165,9 @@ Label_02_40dd:
 	ld hl, $001b ; $40fb
 	add a, l ; $40fe
 	ld l, a ; $40ff
-	jr nc, Label_02_4103 ; $4100
+	jr nc, .gotTextId ; $4100
 	inc h ; $4102
-Label_02_4103:
+.gotTextId:
 	push hl ; $4103
 	ld hl, $0000 ; $4104
 	add hl, de ; $4107

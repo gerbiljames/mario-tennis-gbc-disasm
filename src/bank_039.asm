@@ -491,11 +491,11 @@ CopyTilemapRect:
 	push bc ; $4531
 	push de ; $4532
 	push hl ; $4533
-Label_39_4534:
+.rowLoop:
 	push bc ; $4534
 	push hl ; $4535
 	push de ; $4536
-Label_39_4537:
+.colLoop:
 	ld a, [hl+] ; $4537
 	push hl ; $4538
 	ld h, d ; $4539
@@ -505,7 +505,7 @@ Label_39_4537:
 	ld e, l ; $453d
 	pop hl ; $453e
 	dec b ; $453f
-	jr nz, Label_39_4537 ; $4540
+	jr nz, .colLoop ; $4540
 	pop de ; $4542
 	pop hl ; $4543
 	ld bc, $0020 ; $4544
@@ -519,7 +519,7 @@ Label_39_4537:
 	pop hl ; $454e
 	pop bc ; $454f
 	dec c ; $4550
-	jr nz, Label_39_4534 ; $4551
+	jr nz, .rowLoop ; $4551
 	pop hl ; $4553
 	pop de ; $4554
 	pop bc ; $4555
@@ -530,11 +530,11 @@ FillTilemapRect:
 	push bc ; $4559
 	push de ; $455a
 	push hl ; $455b
-Label_39_455c:
+.rowLoop:
 	push bc ; $455c
 	push hl ; $455d
 	push de ; $455e
-Label_39_455f:
+.colLoop:
 	ld a, h ; $455f
 	push hl ; $4560
 	ld h, d ; $4561
@@ -544,7 +544,7 @@ Label_39_455f:
 	ld e, l ; $4565
 	pop hl ; $4566
 	dec b ; $4567
-	jr nz, Label_39_455f ; $4568
+	jr nz, .colLoop ; $4568
 	pop de ; $456a
 	pop hl ; $456b
 	ld bc, $0020 ; $456c
@@ -557,7 +557,7 @@ Label_39_455f:
 	pop hl ; $4575
 	pop bc ; $4576
 	dec c ; $4577
-	jr nz, Label_39_455c ; $4578
+	jr nz, .rowLoop ; $4578
 	pop hl ; $457a
 	pop de ; $457b
 	pop bc ; $457c
@@ -624,9 +624,9 @@ LoadCompressedTileBlock:
 	ld hl, TileBlockPtrs_39 ; $4690
 	add a, l ; $4693
 	ld l, a ; $4694
-	jr nc, Label_39_4698 ; $4695
+	jr nc, .readPtr ; $4695
 	inc h ; $4697
-Label_39_4698:
+.readPtr:
 	ld a, [hl+] ; $4698
 	ld h, [hl] ; $4699
 	ld l, a ; $469a
@@ -931,20 +931,20 @@ TickMenuBgScroll:
 	ld a, [$cb12] ; $4b6d
 	dec a ; $4b70
 	cp a, $b0 ; $4b71
-	jr nz, Label_39_4b77 ; $4b73
+	jr nz, .wrapped1 ; $4b73
 	ld a, $a0 ; $4b75
-Label_39_4b77:
+.wrapped1:
 	ld [$cb12], a ; $4b77
 	ld a, [$cb13] ; $4b7a
 	dec a ; $4b7d
 	cp a, $b0 ; $4b7e
-	jr nz, Label_39_4b84 ; $4b80
+	jr nz, .wrapped2 ; $4b80
 	ld a, $a0 ; $4b82
-Label_39_4b84:
+.wrapped2:
 	ld [$cb13], a ; $4b84
 	ld a, [$cb19] ; $4b87
 	or a, a ; $4b8a
-	jr nz, Label_39_4ba4 ; $4b8b
+	jr nz, .secondSprite ; $4b8b
 	ld a, [$cb12] ; $4b8d
 	ld d, a ; $4b90
 	ld a, [$cb15] ; $4b91
@@ -955,8 +955,8 @@ Label_39_4b84:
 	ld e, a ; $4b9c
 	ld a, $01 ; $4b9d
 	ld [$cb19], a ; $4b9f
-	jr Label_39_4bb8 ; $4ba2
-Label_39_4ba4:
+	jr .queueSprite ; $4ba2
+.secondSprite:
 	ld a, [$cb13] ; $4ba4
 	ld d, a ; $4ba7
 	ld a, [$cb16] ; $4ba8
@@ -967,7 +967,7 @@ Label_39_4ba4:
 	ld e, a ; $4bb3
 	xor a, a ; $4bb4
 	ld [$cb19], a ; $4bb5
-Label_39_4bb8:
+.queueSprite:
 	ld hl, SpriteTemplate_39_4bbf ; $4bb8
 	call QueueSpriteTemplate ; $4bbb
 	ret ; $4bbe
@@ -1066,7 +1066,7 @@ FlushWram3MapRows:
 	wram_bank $03 ; $4cb2
 	ld a, b ; $4cb8
 	or a, a ; $4cb9
-	jr nz, Label_39_4d1a ; $4cba
+	jr nz, .mode1 ; $4cba
 	ld c, $04 ; $4cbc
 	ld hl, $d000 ; $4cbe
 	ld de, $9800 ; $4cc1
@@ -1100,10 +1100,10 @@ FlushWram3MapRows:
 	ld hl, $d560 ; $4d0e
 	ld de, $b960 ; $4d11
 	call QueueVRAMCopy ; $4d14
-	jp Label_39_4de1 ; $4d17
-Label_39_4d1a:
+	jp .done ; $4d17
+.mode1:
 	cp a, $01 ; $4d1a
-	jr nz, Label_39_4d65 ; $4d1c
+	jr nz, .mode2 ; $4d1c
 	ld c, $04 ; $4d1e
 	ld hl, $d000 ; $4d20
 	ld de, $9800 ; $4d23
@@ -1129,10 +1129,10 @@ Label_39_4d1a:
 	ld hl, $d540 ; $4d5a
 	ld de, $b940 ; $4d5d
 	call QueueVRAMCopy ; $4d60
-	jr Label_39_4de1 ; $4d63
-Label_39_4d65:
+	jr .done ; $4d63
+.mode2:
 	cp a, $02 ; $4d65
-	jr nz, Label_39_4db0 ; $4d67
+	jr nz, .mode3 ; $4d67
 	ld c, $04 ; $4d69
 	ld hl, $d000 ; $4d6b
 	ld de, $9800 ; $4d6e
@@ -1158,8 +1158,8 @@ Label_39_4d65:
 	ld hl, $d520 ; $4da5
 	ld de, $b920 ; $4da8
 	call QueueVRAMCopy ; $4dab
-	jr Label_39_4de1 ; $4dae
-Label_39_4db0:
+	jr .done ; $4dae
+.mode3:
 	ld c, $04 ; $4db0
 	ld hl, $d000 ; $4db2
 	ld de, $9800 ; $4db5
@@ -1177,8 +1177,8 @@ Label_39_4db0:
 	ld hl, $d4e0 ; $4dd6
 	ld de, $b8e0 ; $4dd9
 	call QueueVRAMCopy ; $4ddc
-	jr Label_39_4de1 ; $4ddf
-Label_39_4de1:
+	jr .done ; $4ddf
+.done:
 	pop af ; $4de1
 	wram_bank ; $4de2
 	pop hl ; $4de6
@@ -1214,9 +1214,9 @@ RestoreMenuBgAndDrawPanel:
 	ld hl, TilemapAssemblyDispatch_39 ; $4e13
 	add a, l ; $4e16
 	ld l, a ; $4e17
-	jr nc, Label_39_4e1b ; $4e18
+	jr nc, .readTable ; $4e18
 	inc h ; $4e1a
-Label_39_4e1b:
+.readTable:
 	ld a, [hl+] ; $4e1b
 	ld h, [hl] ; $4e1c
 	ld l, a ; $4e1d
@@ -1224,13 +1224,13 @@ Label_39_4e1b:
 	add a, a ; $4e1f
 	add a, l ; $4e20
 	ld l, a ; $4e21
-	jr nc, Label_39_4e25 ; $4e22
+	jr nc, .readEntry ; $4e22
 	inc h ; $4e24
-Label_39_4e25:
+.readEntry:
 	ld a, [hl+] ; $4e25
 	ld h, [hl] ; $4e26
 	ld l, a ; $4e27
-Label_39_4e28:
+.rectLoop:
 	push hl ; $4e28
 	ld a, [hl+] ; $4e29
 	ld b, [hl] ; $4e2a
@@ -1243,7 +1243,7 @@ Label_39_4e28:
 	inc hl ; $4e31
 	ld a, [hl+] ; $4e32
 	or a, a ; $4e33
-	jr z, Label_39_4e59 ; $4e34
+	jr z, .done ; $4e34
 	ld c, [hl] ; $4e36
 	ld b, a ; $4e37
 	pop hl ; $4e38
@@ -1265,11 +1265,11 @@ Label_39_4e28:
 	ld a, $06 ; $4e50
 	add a, l ; $4e52
 	ld l, a ; $4e53
-	jr nc, Label_39_4e57 ; $4e54
+	jr nc, .nextRect ; $4e54
 	inc h ; $4e56
-Label_39_4e57:
-	jr Label_39_4e28 ; $4e57
-Label_39_4e59:
+.nextRect:
+	jr .rectLoop ; $4e57
+.done:
 	pop hl ; $4e59
 	pop hl ; $4e5a
 	pop hl ; $4e5b
