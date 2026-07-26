@@ -1283,24 +1283,24 @@ ServiceMatch1JudgePoint:
 	dec a ; $492b
 	ld a, a ; $492c
 	rst Rst00 ; $492d
-	dw Label_0b_4932 ; $492e jumptable
+	dw ServiceMatch1JudgePoint.rally1 ; $492e jumptable
 	dw Label_0b_496c ; $4930 jumptable
-Label_0b_4932:
+.rally1:
 	ld a, b ; $4932
 	ld a, a ; $4933
 	rst Rst00 ; $4934
-	dw Label_0b_493d ; $4935 jumptable
+	dw ServiceMatch1JudgePoint.result0 ; $4935 jumptable
 	dw Label_0b_4966 ; $4937 jumptable
 	dw Label_0b_4968 ; $4939 jumptable
 	dw Label_0b_496a ; $493b jumptable
-Label_0b_493d:
+.result0:
 	ld a, [wPointOutcome] ; $493d
 	ld hl, SignedTable_0b_495c ; $4940
 	add a, l ; $4943
 	ld l, a ; $4944
-	jr nc, Label_0b_4948 ; $4945
+	jr nc, .readEntry1 ; $4945
 	inc h ; $4947
-Label_0b_4948:
+.readEntry1:
 	ld a, [hl] ; $4948
 	ld a, a ; $4949
 	ld b, $06 ; $494a
@@ -1309,9 +1309,9 @@ Label_0b_4948:
 	ld hl, SignedTable_0b_46f1 ; $4952
 	add a, l ; $4955
 	ld l, a ; $4956
-	jr nc, Label_0b_495a ; $4957
+	jr nc, .readEntry2 ; $4957
 	inc h ; $4959
-Label_0b_495a:
+.readEntry2:
 	ld a, [hl] ; $495a
 	ret ; $495b
 SignedTable_0b_495c:
@@ -1594,24 +1594,24 @@ ServiceMatch2JudgePoint:
 	dec a ; $4b5c
 	ld a, a ; $4b5d
 	rst Rst00 ; $4b5e
-	dw Label_0b_4b63 ; $4b5f jumptable
+	dw ServiceMatch2JudgePoint.rally1 ; $4b5f jumptable
 	dw Label_0b_4bb8 ; $4b61 jumptable
-Label_0b_4b63:
+.rally1:
 	ld a, b ; $4b63
 	ld a, a ; $4b64
 	rst Rst00 ; $4b65
-	dw Label_0b_4b6e ; $4b66 jumptable
+	dw ServiceMatch2JudgePoint.result0 ; $4b66 jumptable
 	dw Label_0b_4b97 ; $4b68 jumptable
 	dw Label_0b_4b99 ; $4b6a jumptable
 	dw Label_0b_4b9b ; $4b6c jumptable
-Label_0b_4b6e:
+.result0:
 	ld a, [wPointOutcome] ; $4b6e
 	ld hl, DrillShotTable_0b_4b8d ; $4b71
 	add a, l ; $4b74
 	ld l, a ; $4b75
-	jr nc, Label_0b_4b79 ; $4b76
+	jr nc, .readEntry1 ; $4b76
 	inc h ; $4b78
-Label_0b_4b79:
+.readEntry1:
 	ld a, [hl] ; $4b79
 	ld a, a ; $4b7a
 	ld b, $06 ; $4b7b
@@ -1620,9 +1620,9 @@ Label_0b_4b79:
 	ld hl, SignedTable_0b_46f1 ; $4b83
 	add a, l ; $4b86
 	ld l, a ; $4b87
-	jr nc, Label_0b_4b8b ; $4b88
+	jr nc, .readEntry2 ; $4b88
 	inc h ; $4b8a
-Label_0b_4b8b:
+.readEntry2:
 	ld a, [hl] ; $4b8b
 	ret ; $4b8c
 DrillShotTable_0b_4b8d:
@@ -1876,24 +1876,24 @@ ServiceMatch3JudgePoint:
 	dec a ; $4d46
 	ld a, a ; $4d47
 	rst Rst00 ; $4d48
-	dw Label_0b_4d4d ; $4d49 jumptable
+	dw ServiceMatch3JudgePoint.rally1 ; $4d49 jumptable
 	dw Label_0b_4d87 ; $4d4b jumptable
-Label_0b_4d4d:
+.rally1:
 	ld a, b ; $4d4d
 	ld a, a ; $4d4e
 	rst Rst00 ; $4d4f
-	dw Label_0b_4d58 ; $4d50 jumptable
+	dw ServiceMatch3JudgePoint.result0 ; $4d50 jumptable
 	dw Label_0b_4d81 ; $4d52 jumptable
 	dw Label_0b_4d83 ; $4d54 jumptable
 	dw Label_0b_4d85 ; $4d56 jumptable
-Label_0b_4d58:
+.result0:
 	ld a, [wPointOutcome] ; $4d58
 	ld hl, DrillShotTable_0b_4d77 ; $4d5b
 	add a, l ; $4d5e
 	ld l, a ; $4d5f
-	jr nc, Label_0b_4d63 ; $4d60
+	jr nc, .readEntry1 ; $4d60
 	inc h ; $4d62
-Label_0b_4d63:
+.readEntry1:
 	ld a, [hl] ; $4d63
 	ld a, a ; $4d64
 	ld b, $06 ; $4d65
@@ -1902,9 +1902,9 @@ Label_0b_4d63:
 	ld hl, SignedTable_0b_46f1 ; $4d6d
 	add a, l ; $4d70
 	ld l, a ; $4d71
-	jr nc, Label_0b_4d75 ; $4d72
+	jr nc, .readEntry2 ; $4d72
 	inc h ; $4d74
-Label_0b_4d75:
+.readEntry2:
 	ld a, [hl] ; $4d75
 	ret ; $4d76
 DrillShotTable_0b_4d77:
@@ -2902,27 +2902,27 @@ NetGameMatch1JudgePoint:
 	dec a ; $5502
 	ld a, a ; $5503
 	rst Rst00 ; $5504
-	dw Label_0b_550f ; $5505 jumptable
+	dw NetGameMatch1JudgePoint.rally1 ; $5505 jumptable
 	dw Label_0b_5549 ; $5507 jumptable
 	dw Label_0b_5583 ; $5509 jumptable
 	dw Label_0b_55df ; $550b jumptable
 	dw Label_0b_5619 ; $550d jumptable
-Label_0b_550f:
+.rally1:
 	ld a, b ; $550f
 	ld a, a ; $5510
 	rst Rst00 ; $5511
-	dw Label_0b_551a ; $5512 jumptable
+	dw NetGameMatch1JudgePoint.result0 ; $5512 jumptable
 	dw Label_0b_5543 ; $5514 jumptable
 	dw Label_0b_5545 ; $5516 jumptable
 	dw Label_0b_5547 ; $5518 jumptable
-Label_0b_551a:
+.result0:
 	ld a, [wPointOutcome] ; $551a
 	ld hl, DrillShotTable_0b_5539 ; $551d
 	add a, l ; $5520
 	ld l, a ; $5521
-	jr nc, Label_0b_5525 ; $5522
+	jr nc, .readEntry1 ; $5522
 	inc h ; $5524
-Label_0b_5525:
+.readEntry1:
 	ld a, [hl] ; $5525
 	ld a, a ; $5526
 	ld b, $0d ; $5527
@@ -2931,9 +2931,9 @@ Label_0b_5525:
 	ld hl, SignedTable_0b_46f1 ; $552f
 	add a, l ; $5532
 	ld l, a ; $5533
-	jr nc, Label_0b_5537 ; $5534
+	jr nc, .readEntry2 ; $5534
 	inc h ; $5536
-Label_0b_5537:
+.readEntry2:
 	ld a, [hl] ; $5537
 	ret ; $5538
 DrillShotTable_0b_5539:
@@ -3287,27 +3287,27 @@ NetGameMatch2JudgePoint:
 	dec a ; $577c
 	ld a, a ; $577d
 	rst Rst00 ; $577e
-	dw Label_0b_5789 ; $577f jumptable
+	dw NetGameMatch2JudgePoint.rally1 ; $577f jumptable
 	dw Label_0b_57c3 ; $5781 jumptable
 	dw Label_0b_5811 ; $5783 jumptable
 	dw Label_0b_585a ; $5785 jumptable
 	dw Label_0b_5894 ; $5787 jumptable
-Label_0b_5789:
+.rally1:
 	ld a, b ; $5789
 	ld a, a ; $578a
 	rst Rst00 ; $578b
-	dw Label_0b_5794 ; $578c jumptable
+	dw NetGameMatch2JudgePoint.result0 ; $578c jumptable
 	dw Label_0b_57bd ; $578e jumptable
 	dw Label_0b_57bf ; $5790 jumptable
 	dw Label_0b_57c1 ; $5792 jumptable
-Label_0b_5794:
+.result0:
 	ld a, [wPointOutcome] ; $5794
 	ld hl, DrillShotTable_0b_57b3 ; $5797
 	add a, l ; $579a
 	ld l, a ; $579b
-	jr nc, Label_0b_579f ; $579c
+	jr nc, .readEntry1 ; $579c
 	inc h ; $579e
-Label_0b_579f:
+.readEntry1:
 	ld a, [hl] ; $579f
 	ld a, a ; $57a0
 	ld b, $0d ; $57a1
@@ -3316,9 +3316,9 @@ Label_0b_579f:
 	ld hl, SignedTable_0b_46f1 ; $57a9
 	add a, l ; $57ac
 	ld l, a ; $57ad
-	jr nc, Label_0b_57b1 ; $57ae
+	jr nc, .readEntry2 ; $57ae
 	inc h ; $57b0
-Label_0b_57b1:
+.readEntry2:
 	ld a, [hl] ; $57b1
 	ret ; $57b2
 DrillShotTable_0b_57b3:
@@ -3773,27 +3773,27 @@ NetGameMatch3JudgePoint:
 	dec a ; $5aa7
 	ld a, a ; $5aa8
 	rst Rst00 ; $5aa9
-	dw Label_0b_5ab4 ; $5aaa jumptable
+	dw NetGameMatch3JudgePoint.rally1 ; $5aaa jumptable
 	dw Label_0b_5aee ; $5aac jumptable
 	dw Label_0b_5b28 ; $5aae jumptable
 	dw Label_0b_5b75 ; $5ab0 jumptable
 	dw Label_0b_5baf ; $5ab2 jumptable
-Label_0b_5ab4:
+.rally1:
 	ld a, b ; $5ab4
 	ld a, a ; $5ab5
 	rst Rst00 ; $5ab6
-	dw Label_0b_5abf ; $5ab7 jumptable
+	dw NetGameMatch3JudgePoint.result0 ; $5ab7 jumptable
 	dw Label_0b_5ae8 ; $5ab9 jumptable
 	dw Label_0b_5aea ; $5abb jumptable
 	dw Label_0b_5aec ; $5abd jumptable
-Label_0b_5abf:
+.result0:
 	ld a, [wPointOutcome] ; $5abf
 	ld hl, DrillShotTable_0b_5ade ; $5ac2
 	add a, l ; $5ac5
 	ld l, a ; $5ac6
-	jr nc, Label_0b_5aca ; $5ac7
+	jr nc, .readEntry1 ; $5ac7
 	inc h ; $5ac9
-Label_0b_5aca:
+.readEntry1:
 	ld a, [hl] ; $5aca
 	ld a, a ; $5acb
 	ld b, $0d ; $5acc
@@ -3802,9 +3802,9 @@ Label_0b_5aca:
 	ld hl, SignedTable_0b_46f1 ; $5ad4
 	add a, l ; $5ad7
 	ld l, a ; $5ad8
-	jr nc, Label_0b_5adc ; $5ad9
+	jr nc, .readEntry2 ; $5ad9
 	inc h ; $5adb
-Label_0b_5adc:
+.readEntry2:
 	ld a, [hl] ; $5adc
 	ret ; $5add
 DrillShotTable_0b_5ade:
@@ -4198,25 +4198,25 @@ NetGamePractice1JudgePoint:
 	dec a ; $5d76
 	ld a, a ; $5d77
 	rst Rst00 ; $5d78
-	dw Label_0b_5d7f ; $5d79 jumptable
+	dw NetGamePractice1JudgePoint.rally1 ; $5d79 jumptable
 	dw Label_0b_5db9 ; $5d7b jumptable
 	dw Label_0b_5df3 ; $5d7d jumptable
-Label_0b_5d7f:
+.rally1:
 	ld a, b ; $5d7f
 	ld a, a ; $5d80
 	rst Rst00 ; $5d81
-	dw Label_0b_5d8a ; $5d82 jumptable
+	dw NetGamePractice1JudgePoint.result0 ; $5d82 jumptable
 	dw Label_0b_5db3 ; $5d84 jumptable
 	dw Label_0b_5db5 ; $5d86 jumptable
 	dw Label_0b_5db7 ; $5d88 jumptable
-Label_0b_5d8a:
+.result0:
 	ld a, [wPointOutcome] ; $5d8a
 	ld hl, SignedTable_0b_5da9 ; $5d8d
 	add a, l ; $5d90
 	ld l, a ; $5d91
-	jr nc, Label_0b_5d95 ; $5d92
+	jr nc, .readEntry1 ; $5d92
 	inc h ; $5d94
-Label_0b_5d95:
+.readEntry1:
 	ld a, [hl] ; $5d95
 	ld a, a ; $5d96
 	ld b, $00 ; $5d97
@@ -4225,9 +4225,9 @@ Label_0b_5d95:
 	ld hl, SignedTable_0b_46f1 ; $5d9f
 	add a, l ; $5da2
 	ld l, a ; $5da3
-	jr nc, Label_0b_5da7 ; $5da4
+	jr nc, .readEntry2 ; $5da4
 	inc h ; $5da6
-Label_0b_5da7:
+.readEntry2:
 	ld a, [hl] ; $5da7
 	ret ; $5da8
 SignedTable_0b_5da9:
@@ -4582,25 +4582,25 @@ NetGamePractice2JudgePoint:
 	dec a ; $6030
 	ld a, a ; $6031
 	rst Rst00 ; $6032
-	dw Label_0b_6039 ; $6033 jumptable
+	dw NetGamePractice2JudgePoint.rally1 ; $6033 jumptable
 	dw Label_0b_60a3 ; $6035 jumptable
 	dw Label_0b_60f1 ; $6037 jumptable
-Label_0b_6039:
+.rally1:
 	ld a, b ; $6039
 	ld a, a ; $603a
 	rst Rst00 ; $603b
-	dw Label_0b_6044 ; $603c jumptable
+	dw NetGamePractice2JudgePoint.result0 ; $603c jumptable
 	dw Label_0b_606d ; $603e jumptable
 	dw Label_0b_606f ; $6040 jumptable
 	dw Label_0b_60a1 ; $6042 jumptable
-Label_0b_6044:
+.result0:
 	ld a, [wPointOutcome] ; $6044
 	ld hl, DrillShotTable_0b_6063 ; $6047
 	add a, l ; $604a
 	ld l, a ; $604b
-	jr nc, Label_0b_604f ; $604c
+	jr nc, .readEntry1 ; $604c
 	inc h ; $604e
-Label_0b_604f:
+.readEntry1:
 	ld a, [hl] ; $604f
 	ld a, a ; $6050
 	ld b, $00 ; $6051
@@ -4609,9 +4609,9 @@ Label_0b_604f:
 	ld hl, SignedTable_0b_46f1 ; $6059
 	add a, l ; $605c
 	ld l, a ; $605d
-	jr nc, Label_0b_6061 ; $605e
+	jr nc, .readEntry2 ; $605e
 	inc h ; $6060
-Label_0b_6061:
+.readEntry2:
 	ld a, [hl] ; $6061
 	ret ; $6062
 DrillShotTable_0b_6063:
@@ -4970,25 +4970,25 @@ NetGamePractice3JudgePoint:
 	dec a ; $62ef
 	ld a, a ; $62f0
 	rst Rst00 ; $62f1
-	dw Label_0b_62f8 ; $62f2 jumptable
+	dw NetGamePractice3JudgePoint.rally1 ; $62f2 jumptable
 	dw Label_0b_635a ; $62f4 jumptable
 	dw Label_0b_6394 ; $62f6 jumptable
-Label_0b_62f8:
+.rally1:
 	ld a, b ; $62f8
 	ld a, a ; $62f9
 	rst Rst00 ; $62fa
-	dw Label_0b_6303 ; $62fb jumptable
+	dw NetGamePractice3JudgePoint.result0 ; $62fb jumptable
 	dw Label_0b_632c ; $62fd jumptable
 	dw Label_0b_632e ; $62ff jumptable
 	dw Label_0b_6358 ; $6301 jumptable
-Label_0b_6303:
+.result0:
 	ld a, [wPointOutcome] ; $6303
 	ld hl, DrillShotTable_0b_6322 ; $6306
 	add a, l ; $6309
 	ld l, a ; $630a
-	jr nc, Label_0b_630e ; $630b
+	jr nc, .readEntry1 ; $630b
 	inc h ; $630d
-Label_0b_630e:
+.readEntry1:
 	ld a, [hl] ; $630e
 	ld a, a ; $630f
 	ld b, $00 ; $6310
@@ -4997,9 +4997,9 @@ Label_0b_630e:
 	ld hl, SignedTable_0b_46f1 ; $6318
 	add a, l ; $631b
 	ld l, a ; $631c
-	jr nc, Label_0b_6320 ; $631d
+	jr nc, .readEntry2 ; $631d
 	inc h ; $631f
-Label_0b_6320:
+.readEntry2:
 	ld a, [hl] ; $6320
 	ret ; $6321
 DrillShotTable_0b_6322:
@@ -5290,28 +5290,28 @@ StrokeMatch1JudgePoint:
 	ret nz ; $650a
 	ld a, [wRallyLength] ; $650b
 	dec a ; $650e
-	jp z, Label_0b_651f ; $650f
+	jp z, .branch13 ; $650f
 	cp a, $01 ; $6512
 	jp z, Label_0b_6559 ; $6514
 	and a, $01 ; $6517
 	jp z, Label_0b_65bf ; $6519
 	jp Label_0b_661f ; $651c
-Label_0b_651f:
+.branch13:
 	ld a, b ; $651f
 	ld a, a ; $6520
 	rst Rst00 ; $6521
-	dw Label_0b_652a ; $6522 jumptable
+	dw StrokeMatch1JudgePoint.rally1 ; $6522 jumptable
 	dw Label_0b_6553 ; $6524 jumptable
 	dw Label_0b_6555 ; $6526 jumptable
 	dw Label_0b_6557 ; $6528 jumptable
-Label_0b_652a:
+.rally1:
 	ld a, [wPointOutcome] ; $652a
 	ld hl, DrillShotTable_0b_6549 ; $652d
 	add a, l ; $6530
 	ld l, a ; $6531
-	jr nc, Label_0b_6535 ; $6532
+	jr nc, .readEntry1 ; $6532
 	inc h ; $6534
-Label_0b_6535:
+.readEntry1:
 	ld a, [hl] ; $6535
 	ld a, a ; $6536
 	ld b, $07 ; $6537
@@ -5320,9 +5320,9 @@ Label_0b_6535:
 	ld a, [wPointOutcome] ; $653f
 	add a, l ; $6542
 	ld l, a ; $6543
-	jr nc, Label_0b_6547 ; $6544
+	jr nc, .readEntry2 ; $6544
 	inc h ; $6546
-Label_0b_6547:
+.readEntry2:
 	ld a, [hl] ; $6547
 	ret ; $6548
 DrillShotTable_0b_6549:
@@ -5748,26 +5748,26 @@ StrokeMatch2JudgePoint:
 	dec a ; $6819
 	ld a, a ; $681a
 	rst Rst00 ; $681b
-	dw Label_0b_6824 ; $681c jumptable
+	dw StrokeMatch2JudgePoint.rally1 ; $681c jumptable
 	dw Label_0b_685e ; $681e jumptable
 	dw Label_0b_68ac ; $6820 jumptable
 	dw Label_0b_68fb ; $6822 jumptable
-Label_0b_6824:
+.rally1:
 	ld a, b ; $6824
 	ld a, a ; $6825
 	rst Rst00 ; $6826
-	dw Label_0b_682f ; $6827 jumptable
+	dw StrokeMatch2JudgePoint.result0 ; $6827 jumptable
 	dw Label_0b_6858 ; $6829 jumptable
 	dw Label_0b_685a ; $682b jumptable
 	dw Label_0b_685c ; $682d jumptable
-Label_0b_682f:
+.result0:
 	ld a, [wPointOutcome] ; $682f
 	ld hl, DrillShotTable_0b_684e ; $6832
 	add a, l ; $6835
 	ld l, a ; $6836
-	jr nc, Label_0b_683a ; $6837
+	jr nc, .readEntry1 ; $6837
 	inc h ; $6839
-Label_0b_683a:
+.readEntry1:
 	ld a, [hl] ; $683a
 	ld a, a ; $683b
 	ld b, $0d ; $683c
@@ -5776,9 +5776,9 @@ Label_0b_683a:
 	ld hl, SignedTable_0b_46fb ; $6844
 	add a, l ; $6847
 	ld l, a ; $6848
-	jr nc, Label_0b_684c ; $6849
+	jr nc, .readEntry2 ; $6849
 	inc h ; $684b
-Label_0b_684c:
+.readEntry2:
 	ld a, [hl] ; $684c
 	ret ; $684d
 DrillShotTable_0b_684e:
@@ -6099,26 +6099,26 @@ StrokeMatch3JudgePoint:
 	dec a ; $6a64
 	ld a, a ; $6a65
 	rst Rst00 ; $6a66
-	dw Label_0b_6a6f ; $6a67 jumptable
+	dw StrokeMatch3JudgePoint.rally1 ; $6a67 jumptable
 	dw Label_0b_6aa9 ; $6a69 jumptable
 	dw Label_0b_6ae3 ; $6a6b jumptable
 	dw Label_0b_6b32 ; $6a6d jumptable
-Label_0b_6a6f:
+.rally1:
 	ld a, b ; $6a6f
 	ld a, a ; $6a70
 	rst Rst00 ; $6a71
-	dw Label_0b_6a7a ; $6a72 jumptable
+	dw StrokeMatch3JudgePoint.result0 ; $6a72 jumptable
 	dw Label_0b_6aa3 ; $6a74 jumptable
 	dw Label_0b_6aa5 ; $6a76 jumptable
 	dw Label_0b_6aa7 ; $6a78 jumptable
-Label_0b_6a7a:
+.result0:
 	ld a, [wPointOutcome] ; $6a7a
 	ld hl, DrillShotTable_0b_6a99 ; $6a7d
 	add a, l ; $6a80
 	ld l, a ; $6a81
-	jr nc, Label_0b_6a85 ; $6a82
+	jr nc, .readEntry1 ; $6a82
 	inc h ; $6a84
-Label_0b_6a85:
+.readEntry1:
 	ld a, [hl] ; $6a85
 	ld a, a ; $6a86
 	ld b, $0d ; $6a87
@@ -6127,9 +6127,9 @@ Label_0b_6a85:
 	ld hl, SignedTable_0b_46fb ; $6a8f
 	add a, l ; $6a92
 	ld l, a ; $6a93
-	jr nc, Label_0b_6a97 ; $6a94
+	jr nc, .readEntry2 ; $6a94
 	inc h ; $6a96
-Label_0b_6a97:
+.readEntry2:
 	ld a, [hl] ; $6a97
 	ret ; $6a98
 DrillShotTable_0b_6a99:
@@ -6487,24 +6487,24 @@ StrokePractice1JudgePoint:
 	dec a ; $6cfe
 	ld a, a ; $6cff
 	rst Rst00 ; $6d00
-	dw Label_0b_6d05 ; $6d01 jumptable
+	dw StrokePractice1JudgePoint.rally1 ; $6d01 jumptable
 	dw Label_0b_6d3f ; $6d03 jumptable
-Label_0b_6d05:
+.rally1:
 	ld a, b ; $6d05
 	ld a, a ; $6d06
 	rst Rst00 ; $6d07
-	dw Label_0b_6d10 ; $6d08 jumptable
+	dw StrokePractice1JudgePoint.result0 ; $6d08 jumptable
 	dw Label_0b_6d39 ; $6d0a jumptable
 	dw Label_0b_6d3b ; $6d0c jumptable
 	dw Label_0b_6d3d ; $6d0e jumptable
-Label_0b_6d10:
+.result0:
 	ld a, [wPointOutcome] ; $6d10
 	ld hl, SignedTable_0b_6d2f ; $6d13
 	add a, l ; $6d16
 	ld l, a ; $6d17
-	jr nc, Label_0b_6d1b ; $6d18
+	jr nc, .readEntry1 ; $6d18
 	inc h ; $6d1a
-Label_0b_6d1b:
+.readEntry1:
 	ld a, [hl] ; $6d1b
 	ld a, a ; $6d1c
 	ld b, $00 ; $6d1d
@@ -6513,9 +6513,9 @@ Label_0b_6d1b:
 	ld hl, SignedTable_0b_46fb ; $6d25
 	add a, l ; $6d28
 	ld l, a ; $6d29
-	jr nc, Label_0b_6d2d ; $6d2a
+	jr nc, .readEntry2 ; $6d2a
 	inc h ; $6d2c
-Label_0b_6d2d:
+.readEntry2:
 	ld a, [hl] ; $6d2d
 	ret ; $6d2e
 SignedTable_0b_6d2f:
@@ -6806,24 +6806,24 @@ StrokePractice2JudgePoint:
 	dec a ; $6f46
 	ld a, a ; $6f47
 	rst Rst00 ; $6f48
-	dw Label_0b_6f4d ; $6f49 jumptable
+	dw StrokePractice2JudgePoint.rally1 ; $6f49 jumptable
 	dw Label_0b_6f87 ; $6f4b jumptable
-Label_0b_6f4d:
+.rally1:
 	ld a, b ; $6f4d
 	ld a, a ; $6f4e
 	rst Rst00 ; $6f4f
-	dw Label_0b_6f58 ; $6f50 jumptable
+	dw StrokePractice2JudgePoint.result0 ; $6f50 jumptable
 	dw Label_0b_6f81 ; $6f52 jumptable
 	dw Label_0b_6f83 ; $6f54 jumptable
 	dw Label_0b_6f85 ; $6f56 jumptable
-Label_0b_6f58:
+.result0:
 	ld a, [wPointOutcome] ; $6f58
 	ld hl, DrillShotTable_0b_6f77 ; $6f5b
 	add a, l ; $6f5e
 	ld l, a ; $6f5f
-	jr nc, Label_0b_6f63 ; $6f60
+	jr nc, .readEntry1 ; $6f60
 	inc h ; $6f62
-Label_0b_6f63:
+.readEntry1:
 	ld a, [hl] ; $6f63
 	ld a, a ; $6f64
 	ld b, $00 ; $6f65
@@ -6832,9 +6832,9 @@ Label_0b_6f63:
 	ld hl, SignedTable_0b_46fb ; $6f6d
 	add a, l ; $6f70
 	ld l, a ; $6f71
-	jr nc, Label_0b_6f75 ; $6f72
+	jr nc, .readEntry2 ; $6f72
 	inc h ; $6f74
-Label_0b_6f75:
+.readEntry2:
 	ld a, [hl] ; $6f75
 	ret ; $6f76
 DrillShotTable_0b_6f77:
@@ -7135,24 +7135,24 @@ StrokePractice3JudgePoint:
 	dec a ; $71a8
 	ld a, a ; $71a9
 	rst Rst00 ; $71aa
-	dw Label_0b_71af ; $71ab jumptable
+	dw StrokePractice3JudgePoint.rally1 ; $71ab jumptable
 	dw Label_0b_71e9 ; $71ad jumptable
-Label_0b_71af:
+.rally1:
 	ld a, b ; $71af
 	ld a, a ; $71b0
 	rst Rst00 ; $71b1
-	dw Label_0b_71ba ; $71b2 jumptable
+	dw StrokePractice3JudgePoint.result0 ; $71b2 jumptable
 	dw Label_0b_71e3 ; $71b4 jumptable
 	dw Label_0b_71e5 ; $71b6 jumptable
 	dw Label_0b_71e7 ; $71b8 jumptable
-Label_0b_71ba:
+.result0:
 	ld a, [wPointOutcome] ; $71ba
 	ld hl, DrillShotTable_0b_71d9 ; $71bd
 	add a, l ; $71c0
 	ld l, a ; $71c1
-	jr nc, Label_0b_71c5 ; $71c2
+	jr nc, .readEntry1 ; $71c2
 	inc h ; $71c4
-Label_0b_71c5:
+.readEntry1:
 	ld a, [hl] ; $71c5
 	ld a, a ; $71c6
 	ld b, $00 ; $71c7
@@ -7161,9 +7161,9 @@ Label_0b_71c5:
 	ld hl, SignedTable_0b_46fb ; $71cf
 	add a, l ; $71d2
 	ld l, a ; $71d3
-	jr nc, Label_0b_71d7 ; $71d4
+	jr nc, .readEntry2 ; $71d4
 	inc h ; $71d6
-Label_0b_71d7:
+.readEntry2:
 	ld a, [hl] ; $71d7
 	ret ; $71d8
 DrillShotTable_0b_71d9:

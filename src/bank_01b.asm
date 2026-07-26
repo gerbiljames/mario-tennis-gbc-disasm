@@ -107,19 +107,19 @@ ApplyCursorBobOffsetX:
 	ld hl, CursorBobOffsetTableX ; $40a7
 	add a, l ; $40aa
 	ld l, a ; $40ab
-	jr nc, Label_1b_40af ; $40ac
+	jr nc, .readOffset ; $40ac
 	inc h ; $40ae
-Label_1b_40af:
+.readOffset:
 	ld a, [hl] ; $40af
 	ld b, a ; $40b0
 	ld a, c ; $40b1
 	or a, a ; $40b2
-	jr z, Label_1b_40b9 ; $40b3
+	jr z, .subtract ; $40b3
 	ld a, b ; $40b5
 	add a, d ; $40b6
 	ld d, a ; $40b7
 	ret ; $40b8
-Label_1b_40b9:
+.subtract:
 	ld a, d ; $40b9
 	sub a, b ; $40ba
 	ld d, a ; $40bb

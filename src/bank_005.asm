@@ -2220,10 +2220,10 @@ GetMenuCursorBlinkPhase:
 	ld a, [wTextArrowBlinkCounter] ; $4e16
 	and a, $10 ; $4e19
 	or a, a ; $4e1b
-	jr z, Label_05_4e20 ; $4e1c
+	jr z, .visible ; $4e1c
 	xor a, a ; $4e1e
 	ret ; $4e1f
-Label_05_4e20:
+.visible:
 	ld a, $01 ; $4e20
 	ret ; $4e22
 RenderTextString:

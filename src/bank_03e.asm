@@ -113,19 +113,19 @@ ApplySelectionBoxWobbleX:
 	ld hl, SelectionBoxWobbleXTable_3e ; $40af
 	add a, l ; $40b2
 	ld l, a ; $40b3
-	jr nc, Label_3e_40b7 ; $40b4
+	jr nc, .readOffset ; $40b4
 	inc h ; $40b6
-Label_3e_40b7:
+.readOffset:
 	ld a, [hl] ; $40b7
 	ld b, a ; $40b8
 	ld a, c ; $40b9
 	or a, a ; $40ba
-	jr z, Label_3e_40c1 ; $40bb
+	jr z, .subtract ; $40bb
 	ld a, b ; $40bd
 	add a, d ; $40be
 	ld d, a ; $40bf
 	ret ; $40c0
-Label_3e_40c1:
+.subtract:
 	ld a, d ; $40c1
 	sub a, b ; $40c2
 	ld d, a ; $40c3
@@ -139,19 +139,19 @@ ApplySelectionBoxWobbleY:
 	ld hl, SelectionBoxWobbleYTable_3e ; $40d9
 	add a, l ; $40dc
 	ld l, a ; $40dd
-	jr nc, Label_3e_40e1 ; $40de
+	jr nc, .readOffset ; $40de
 	inc h ; $40e0
-Label_3e_40e1:
+.readOffset:
 	ld a, [hl] ; $40e1
 	ld b, a ; $40e2
 	ld a, c ; $40e3
 	or a, a ; $40e4
-	jr z, Label_3e_40eb ; $40e5
+	jr z, .subtract ; $40e5
 	ld a, b ; $40e7
 	add a, e ; $40e8
 	ld e, a ; $40e9
 	ret ; $40ea
-Label_3e_40eb:
+.subtract:
 	ld a, e ; $40eb
 	sub a, b ; $40ec
 	ld e, a ; $40ed

@@ -84,19 +84,19 @@ ApplySpriteWobbleX_17:
 	ld hl, Data_17_4093 ; $407d
 	add a, l ; $4080
 	ld l, a ; $4081
-	jr nc, Label_17_4085 ; $4082
+	jr nc, .readOffset ; $4082
 	inc h ; $4084
-Label_17_4085:
+.readOffset:
 	ld a, [hl] ; $4085
 	ld b, a ; $4086
 	ld a, c ; $4087
 	or a, a ; $4088
-	jr z, Label_17_408f ; $4089
+	jr z, .subtract ; $4089
 	ld a, b ; $408b
 	add a, d ; $408c
 	ld d, a ; $408d
 	ret ; $408e
-Label_17_408f:
+.subtract:
 	ld a, d ; $408f
 	sub a, b ; $4090
 	ld d, a ; $4091

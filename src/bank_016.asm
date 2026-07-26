@@ -69,19 +69,19 @@ ApplySpriteWobbleX_16:
 	ld hl, Table_16_4083 ; $406d
 	add a, l ; $4070
 	ld l, a ; $4071
-	jr nc, Label_16_4075 ; $4072
+	jr nc, .readOffset ; $4072
 	inc h ; $4074
-Label_16_4075:
+.readOffset:
 	ld a, [hl] ; $4075
 	ld b, a ; $4076
 	ld a, c ; $4077
 	or a, a ; $4078
-	jr z, Label_16_407f ; $4079
+	jr z, .subtract ; $4079
 	ld a, b ; $407b
 	add a, d ; $407c
 	ld d, a ; $407d
 	ret ; $407e
-Label_16_407f:
+.subtract:
 	ld a, d ; $407f
 	sub a, b ; $4080
 	ld d, a ; $4081
@@ -95,19 +95,19 @@ ApplySpriteWobbleY_16:
 	ld hl, Table_16_40ad ; $4097
 	add a, l ; $409a
 	ld l, a ; $409b
-	jr nc, Label_16_409f ; $409c
+	jr nc, .readOffset ; $409c
 	inc h ; $409e
-Label_16_409f:
+.readOffset:
 	ld a, [hl] ; $409f
 	ld b, a ; $40a0
 	ld a, c ; $40a1
 	or a, a ; $40a2
-	jr z, Label_16_40a9 ; $40a3
+	jr z, .subtract ; $40a3
 	ld a, b ; $40a5
 	add a, e ; $40a6
 	ld e, a ; $40a7
 	ret ; $40a8
-Label_16_40a9:
+.subtract:
 	ld a, e ; $40a9
 	sub a, b ; $40aa
 	ld e, a ; $40ab
