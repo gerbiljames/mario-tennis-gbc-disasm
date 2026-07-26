@@ -706,22 +706,22 @@ GetNextMoveCurveValue:
 	ld a, [$ddfd] ; $4790
 	add a, l ; $4793
 	ld l, a ; $4794
-	jr nc, Label_09_4798 ; $4795
+	jr nc, .readValue ; $4795
 	inc h ; $4797
-Label_09_4798:
+.readValue:
 	ld a, [hl] ; $4798
 	cp a, $80 ; $4799
-	jr z, Label_09_47ac ; $479b
+	jr z, .done ; $479b
 	cp a, $81 ; $479d
-	jr z, Label_09_47a7 ; $479f
+	jr z, .markFinished ; $479f
 	ld [$ddfa], a ; $47a1
 	xor a, a ; $47a4
 	inc a ; $47a5
 	ret ; $47a6
-Label_09_47a7:
+.markFinished:
 	ld a, $ff ; $47a7
 	ld [$ddf0], a ; $47a9
-Label_09_47ac:
+.done:
 	xor a, a ; $47ac
 	ret ; $47ad
 MoveCurveTable_09:

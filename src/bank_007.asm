@@ -1191,12 +1191,12 @@ RunLinkMatchFrame:
 	inc [hl] ; $4769
 	ldh a, [hLinkState] ; $476a
 	cp a, $02 ; $476c
-	jr z, Label_07_4775 ; $476e
+	jr z, .asSlave ; $476e
 	call RunLinkMatchFrameMaster ; $4770
-	jr Label_07_4778 ; $4773
-Label_07_4775:
+	jr .done ; $4773
+.asSlave:
 	call RunLinkMatchFrameSlave ; $4775
-Label_07_4778:
+.done:
 	pop hl ; $4778
 	pop de ; $4779
 	pop bc ; $477a
@@ -1231,10 +1231,10 @@ ExchangeReadyTokenMaster:
 	and a, $7f ; $47a3
 	ldh [rSC], a ; $47a5
 	ld de, $2710 ; $47a7
-Label_07_47aa:
+.retry:
 	ldh a, [rSC] ; $47aa
 	bit 7, a ; $47ac
-	jr nz, Label_07_47aa ; $47ae
+	jr nz, .retry ; $47ae
 	di ; $47b0
 	ld a, $0b ; $47b1
 	or a, $40 ; $47b3
@@ -1250,13 +1250,13 @@ Label_07_47aa:
 	ldh a, [hLinkRxByte] ; $47c5
 	and a, $3f ; $47c7
 	cp a, $0a ; $47c9
-	jr z, Label_07_47d5 ; $47cb
+	jr z, .done ; $47cb
 	dec de ; $47cd
 	ld a, d ; $47ce
 	or a, e ; $47cf
-	jr nz, Label_07_47aa ; $47d0
+	jr nz, .retry ; $47d0
 	call LinkErrorReset ; $47d2
-Label_07_47d5:
+.done:
 	pop de ; $47d5
 	pop af ; $47d6
 	ret ; $47d7
@@ -1276,18 +1276,18 @@ ExchangeReadyTokenSlave:
 	ldh [rSC], a ; $47ed
 	pop af ; $47ef
 	ei ; $47f0
-Label_07_47f1:
+.retry:
 	call WaitSerialTransfer ; $47f1
 	ldh a, [hLinkRxByte] ; $47f4
 	and a, $3f ; $47f6
 	cp a, $0b ; $47f8
-	jr z, Label_07_4804 ; $47fa
+	jr z, .done ; $47fa
 	dec de ; $47fc
 	ld a, d ; $47fd
 	or a, e ; $47fe
-	jr nz, Label_07_47f1 ; $47ff
+	jr nz, .retry ; $47ff
 	call LinkErrorReset ; $4801
-Label_07_4804:
+.done:
 	pop de ; $4804
 	pop af ; $4805
 	ret ; $4806

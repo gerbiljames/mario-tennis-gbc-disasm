@@ -1795,9 +1795,9 @@ ComputeSpriteScrollOffset:
 	ld l, a ; $4a30
 	ld h, $00 ; $4a31
 	bit 7, l ; $4a33
-	jr z, Label_04_4a39 ; $4a35
+	jr z, .scale ; $4a35
 	ld h, $ff ; $4a37
-Label_04_4a39:
+.scale:
 	add hl, hl ; $4a39
 	add hl, hl ; $4a3a
 	add hl, hl ; $4a3b
@@ -1821,7 +1821,7 @@ Label_04_4a39:
 	ld d, [hl] ; $4a51
 	ld e, a ; $4a52
 	test_flag FLAG_ENDING_CREDITS_RUNNING ; $4a53
-	jr z, Label_04_4a61 ; $4a56
+	jr z, .clamp ; $4a56
 	ld hl, $cb02 ; $4a58
 	ld a, [hl+] ; $4a5b
 	ld h, [hl] ; $4a5c
@@ -1829,14 +1829,14 @@ Label_04_4a39:
 	add hl, de ; $4a5e
 	ld d, h ; $4a5f
 	ld e, l ; $4a60
-Label_04_4a61:
+.clamp:
 	ld a, [$c369] ; $4a61
 	ld l, a ; $4a64
 	ld h, $00 ; $4a65
 	bit 7, l ; $4a67
-	jr z, Label_04_4a6d ; $4a69
+	jr z, .done ; $4a69
 	ld h, $ff ; $4a6b
-Label_04_4a6d:
+.done:
 	add hl, hl ; $4a6d
 	add hl, hl ; $4a6e
 	add hl, hl ; $4a6f
@@ -3076,27 +3076,27 @@ TestPointInBox:
 	dec a ; $535d
 	sub a, h ; $535e
 	cp a, d ; $535f
-	jr nc, Label_04_5377 ; $5360
+	jr nc, .inside ; $5360
 	ld a, b ; $5362
 	dec a ; $5363
 	add a, h ; $5364
 	cp a, d ; $5365
-	jr c, Label_04_5377 ; $5366
+	jr c, .inside ; $5366
 	ld a, c ; $5368
 	dec a ; $5369
 	sub a, l ; $536a
 	cp a, e ; $536b
-	jr nc, Label_04_5377 ; $536c
+	jr nc, .inside ; $536c
 	ld a, c ; $536e
 	dec a ; $536f
 	add a, l ; $5370
 	cp a, e ; $5371
-	jr c, Label_04_5377 ; $5372
+	jr c, .inside ; $5372
 	xor a, a ; $5374
-	jr Label_04_5379 ; $5375
-Label_04_5377:
+	jr .done ; $5375
+.inside:
 	ld a, $ff ; $5377
-Label_04_5379:
+.done:
 	ret ; $5379
 IsPointNearPlayer:
 	push bc ; $537a
@@ -3383,29 +3383,29 @@ BuildActorQueryList:
 	ld hl, $da00 ; $54db
 	ld bc, $d000 ; $54de
 	ld a, $18 ; $54e1
-Label_04_54e3:
+.actorLoop:
 	push af ; $54e3
 	push hl ; $54e4
 	inc c ; $54e5
 	ld a, [bc] ; $54e6
 	dec c ; $54e7
 	or a, a ; $54e8
-	jr z, Label_04_5501 ; $54e9
+	jr z, .done ; $54e9
 	ld hl, $0030 ; $54eb
 	add hl, bc ; $54ee
 	bit 7, [hl] ; $54ef
-	jr z, Label_04_5501 ; $54f1
+	jr z, .done ; $54f1
 	ld hl, $0005 ; $54f3
 	add hl, bc ; $54f6
 	bit 4, [hl] ; $54f7
-	jr z, Label_04_5501 ; $54f9
+	jr z, .done ; $54f9
 	pop hl ; $54fb
 	ld a, c ; $54fc
 	ld [hl+], a ; $54fd
 	ld a, b ; $54fe
 	ld [hl+], a ; $54ff
 	push hl ; $5500
-Label_04_5501:
+.done:
 	ld hl, $0040 ; $5501
 	add hl, bc ; $5504
 	ld c, l ; $5505
@@ -3413,7 +3413,7 @@ Label_04_5501:
 	pop hl ; $5507
 	pop af ; $5508
 	dec a ; $5509
-	jr nz, Label_04_54e3 ; $550a
+	jr nz, .actorLoop ; $550a
 	xor a, a ; $550c
 	ld [hl+], a ; $550d
 	ld [hl+], a ; $550e
@@ -3467,7 +3467,7 @@ DrawActorSprite:
 	ld h, [hl] ; $5553
 	ld l, a ; $5554
 	bit 7, h ; $5555
-	jr z, Label_04_557b ; $5557
+	jr z, .offscreen ; $5557
 	xor a, a ; $5559
 	sub a, l ; $555a
 	ld l, a ; $555b
@@ -3496,20 +3496,20 @@ DrawActorSprite:
 	ld a, h ; $5576
 	sbc a, d ; $5577
 	ld h, a ; $5578
-	jr Label_04_5583 ; $5579
-Label_04_557b:
+	jr .queue ; $5579
+.offscreen:
 	ld hl, $000e ; $557b
 	add hl, bc ; $557e
 	ld a, [hl+] ; $557f
 	ld h, [hl] ; $5580
 	ld l, a ; $5581
 	add hl, de ; $5582
-Label_04_5583:
+.queue:
 	ld de, $0090 ; $5583
 	add hl, de ; $5586
 	ld a, h ; $5587
 	cp a, $14 ; $5588
-	jr nc, Label_04_55c0 ; $558a
+	jr nc, .done ; $558a
 	add hl, hl ; $558c
 	add hl, hl ; $558d
 	add hl, hl ; $558e
@@ -3531,7 +3531,7 @@ Label_04_5583:
 	ld a, h ; $55a4
 	inc a ; $55a5
 	cp a, $16 ; $55a6
-	jr nc, Label_04_55c0 ; $55a8
+	jr nc, .done ; $55a8
 	add hl, hl ; $55aa
 	add hl, hl ; $55ab
 	add hl, hl ; $55ac
@@ -3547,7 +3547,7 @@ Label_04_5583:
 	ld hl, $0030 ; $55ba
 	add hl, bc ; $55bd
 	set 7, [hl] ; $55be
-Label_04_55c0:
+.done:
 	ret ; $55c0
 AdvanceActorAnimation:
 	ld hl, $0030 ; $55c1
@@ -3739,9 +3739,9 @@ QueueActorFrameTileCopy:
 	add a, a ; $56d9
 	add a, l ; $56da
 	ld l, a ; $56db
-	jr nc, Label_04_56df ; $56dc
+	jr nc, .queue ; $56dc
 	inc h ; $56de
-Label_04_56df:
+.queue:
 	ld a, [$daf7] ; $56df
 	call FarReadWord ; $56e2
 	ld l, c ; $56e5
@@ -3749,9 +3749,9 @@ Label_04_56df:
 	ld a, d ; $56e7
 	add a, l ; $56e8
 	ld l, a ; $56e9
-	jr nc, Label_04_56ed ; $56ea
+	jr nc, .done ; $56ea
 	inc h ; $56ec
-Label_04_56ed:
+.done:
 	pop bc ; $56ed
 	push hl ; $56ee
 	ld hl, $0026 ; $56ef
