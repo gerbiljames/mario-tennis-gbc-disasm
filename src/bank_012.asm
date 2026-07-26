@@ -1006,41 +1006,41 @@ WallPracticeRoomInitScript_12:
 	call SetupWallPracticeLevelSigns ; $4f25
 	ld a, [wStoryModeEntryPoint] ; $4f28
 	cp a, $0a ; $4f2b
-	jp z, Label_12_4f39 ; $4f2d
+	jp z, .fromMatch ; $4f2d
 	cp a, $0b ; $4f30
-	jp z, Label_12_4f8a ; $4f32
+	jp z, .reentry ; $4f32
 	call RestoreWallPracticeRoomActors ; $4f35
 	ret ; $4f38
-Label_12_4f39:
+.fromMatch:
 	test_flag FLAG_DOUBLES ; $4f39
-	jr z, Label_12_4f55 ; $4f3c
+	jr z, .placeNpc ; $4f3c
 	script_null_script ACTOR_PARTNER ; $4f3e
 	script_set_position ACTOR_PARTNER, $0700, $3900 ; $4f43
 	script_face ACTOR_PARTNER, FACE_UP ; $4f4e
-Label_12_4f55:
+.placeNpc:
 	script_set_position $07, $0300, $3700 ; $4f55
 	script_face $07, FACE_RIGHT ; $4f60
 	ld a, [wMatchExitRequest] ; $4f67
 	cp a, $01 ; $4f6a
-	jp nz, Label_12_4f7e ; $4f6c
+	jp nz, .showResult ; $4f6c
 	script_fade_in $06 ; $4f6f
 	call WaitFadeEnd ; $4f74
 	xor a, a ; $4f77
 	ld [wStoryModeShowLocationName], a ; $4f78
 	jp WallPracticeExitCourtScript ; $4f7b
-Label_12_4f7e:
+.showResult:
 	ld a, [$c2b0] ; $4f7e
 	cp a, $05 ; $4f81
 	jp nc, WallPracticeMasterResultScript ; $4f83
 	jp WallPracticeLevelResultScript ; $4f86
 	ret ; $4f89
-Label_12_4f8a:
+.reentry:
 	test_flag FLAG_DOUBLES ; $4f8a
-	jr z, Label_12_4fa6 ; $4f8d
+	jr z, .reentryPlaceNpc ; $4f8d
 	script_null_script ACTOR_PARTNER ; $4f8f
 	script_set_position ACTOR_PARTNER, $0700, $3900 ; $4f94
 	script_face ACTOR_PARTNER, FACE_UP ; $4f9f
-Label_12_4fa6:
+.reentryPlaceNpc:
 	set_flag FLAG_TEMP_SCENE_VARIANT_A ; $4fa6
 	script_set_position $07, $0300, $3700 ; $4fa9
 	script_face $07, FACE_RIGHT ; $4fb4
@@ -1050,10 +1050,10 @@ Label_12_4fa6:
 	ld [wStoryModeShowLocationName], a ; $4fc4
 	ld a, [wMatchExitRequest] ; $4fc7
 	cp a, $01 ; $4fca
-	jp z, Label_12_505e ; $4fcc
+	jp z, .done ; $4fcc
 	ld a, [wPointWinLoseFlag] ; $4fcf
 	cp a, $01 ; $4fd2
-	jr nz, Label_12_4ff3 ; $4fd4
+	jr nz, .checkSession ; $4fd4
 	script_set_text Text_36_53 ; $4fd6
 	ld a, $07 ; $4fdc
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $4fde
@@ -1061,15 +1061,15 @@ Label_12_4fa6:
 	farcall ScriptCloseDialogueWindow ; $4fe4
 	script_wait_frames $05 ; $4fe7
 	and a, a ; $4fee
-	jr nz, Label_12_505e ; $4fef
-	jr Label_12_502b ; $4ff1
-Label_12_4ff3:
+	jr nz, .done ; $4fef
+	jr .placeActors ; $4ff1
+.checkSession:
 	ld a, [wPointOutcome] ; $4ff3
 	cp a, $09 ; $4ff6
-	jr nz, Label_12_5002 ; $4ff8
+	jr nz, .sessionActive ; $4ff8
 	script_set_text Text_35_246 ; $4ffa
-	jr Label_12_5015 ; $5000
-Label_12_5002:
+	jr .normalEntry ; $5000
+.sessionActive:
 	ld a, [wPointOutcome] ; $5002
 	and a, $03 ; $5005
 	add a, a ; $5007
@@ -1082,15 +1082,15 @@ Label_12_5002:
 	ld h, [hl] ; $5010
 	ld l, a ; $5011
 	farcall InitDialogueTextCursor ; $5012
-Label_12_5015:
+.normalEntry:
 	ld a, $07 ; $5015
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $5017
 	farcall RunDialogueYesNoPrompt ; $501a
 	farcall ScriptCloseDialogueWindow ; $501d
 	script_wait_frames $05 ; $5020
 	and a, a ; $5027
-	jp nz, Label_12_505e ; $5028
-Label_12_502b:
+	jp nz, .done ; $5028
+.placeActors:
 	script_face $07, FACE_UP ; $502b
 	script_set_anim $07, $02 ; $5032
 	script_wait_idle $07 ; $5039
@@ -1106,7 +1106,7 @@ Label_12_502b:
 	ld [wStoryModeExitLocationRequest], a ; $5055
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $5058
 	farcall RunTrainingDrillByID ; $505b
-Label_12_505e:
+.done:
 	ret ; $505e
 SetupWallPracticeLevelSigns:
 	ld a, $00 ; $505f
@@ -1137,11 +1137,11 @@ Label_12_50c8:
 	ret ; $50cb
 WallPracticeRoomNpc07_12:
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $50cc
-	jr z, Label_12_50dd ; $50cf
+	jr z, .scoreLine ; $50cf
 	script_set_text Text_35_264 ; $50d1
 	script_speak $07 ; $50d7
 	ret ; $50dc
-Label_12_50dd:
+.scoreLine:
 	ld a, [$c2b0] ; $50dd
 	add a, a ; $50e0
 	add a, $71 ; $50e1
@@ -1155,7 +1155,7 @@ Label_12_50dd:
 	farcall InitDialogueTextCursor ; $50eb
 	ld a, [$c2b0] ; $50ee
 	cp a, $05 ; $50f1
-	jr nz, Label_12_5111 ; $50f3
+	jr nz, .prompt ; $50f3
 	ldh a, [hWramBank] ; $50f5
 	push af ; $50f7
 	wram_bank $07 ; $50f8
@@ -1168,14 +1168,14 @@ Label_12_50dd:
 	pop af ; $5109
 	wram_bank ; $510a
 	farcall PushTextArgNumber ; $510e
-Label_12_5111:
+.prompt:
 	ld a, $07 ; $5111
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $5113
 	farcall RunDialogueYesNoPrompt ; $5116
 	farcall ScriptCloseDialogueWindow ; $5119
 	script_wait_frames $05 ; $511c
 	and a, a ; $5123
-	jp z, Label_12_51ba ; $5124
+	jp z, .doublesDeclined ; $5124
 	ld a, [$c2b0] ; $5127
 	add a, a ; $512a
 	add a, $7f ; $512b
@@ -1193,33 +1193,33 @@ Label_12_5111:
 	farcall ScriptCloseDialogueWindow ; $5140
 	script_wait_frames $05 ; $5143
 	and a, a ; $514a
-	jp nz, Label_12_51b1 ; $514b
+	jp nz, .declined ; $514b
 	ld a, [$c2b0] ; $514e
 	and a, a ; $5151
-	jp z, Label_12_51b4 ; $5152
+	jp z, .speakDeclined ; $5152
 	script_move_target $07, $0300, $3700 ; $5155
 	script_wait_move $07 ; $5160
 	script_face $07, FACE_RIGHT ; $5165
 	script_speak $07 ; $516c
 	test_flag FLAG_DOUBLES ; $5171
-	jr z, Label_12_5192 ; $5174
+	jr z, .walkToCourt ; $5174
 	script_null_script ACTOR_PARTNER ; $5176
 	script_move_target ACTOR_PARTNER, $0700, $3900 ; $517b
 	script_wait_move ACTOR_PARTNER ; $5186
 	script_face ACTOR_PARTNER, FACE_UP ; $518b
-Label_12_5192:
+.walkToCourt:
 	script_set_speed ACTOR_PLAYER, $0020 ; $5192
 	script_move_target ACTOR_PLAYER, $0500, $3500 ; $519a
 	script_wait_move ACTOR_PLAYER ; $51a5
 	set_flag FLAG_TEMP_SCENE_VARIANT_A ; $51aa
 	set_flag FLAG_PRACTICE_ROOM_SESSION_ACTIVE ; $51ad
 	ret ; $51b0
-Label_12_51b1:
+.declined:
 	farcall AdvanceDialogueTextCursor ; $51b1
-Label_12_51b4:
+.speakDeclined:
 	script_speak $07 ; $51b4
 	ret ; $51b9
-Label_12_51ba:
+.doublesDeclined:
 	script_set_anim $07, $03 ; $51ba
 	script_wait_idle $07 ; $51c1
 	script_speak $07 ; $51c6
@@ -1227,7 +1227,7 @@ Label_12_51ba:
 	script_wait_move $07 ; $51d6
 	script_face $07, FACE_RIGHT ; $51db
 	test_flag FLAG_DOUBLES ; $51e2
-	jr z, Label_12_522c ; $51e5
+	jr z, .done ; $51e5
 	script_wait_frames $14 ; $51e7
 	script_null_script ACTOR_PARTNER ; $51ee
 	script_move_target ACTOR_PARTNER, $0700, $3900 ; $51f3
@@ -1238,7 +1238,7 @@ Label_12_51ba:
 	script_set_anim ACTOR_PARTNER, $03 ; $5219
 	script_wait_idle ACTOR_PARTNER ; $5220
 	script_wait_frames $14 ; $5225
-Label_12_522c:
+.done:
 	script_set_speed ACTOR_PLAYER, $0020 ; $522c
 	script_move_target ACTOR_PLAYER, $0500, $3700 ; $5234
 	script_wait_move ACTOR_PLAYER ; $523f

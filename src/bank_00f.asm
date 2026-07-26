@@ -1641,15 +1641,15 @@ TournamentInitScript_0f:
 	call RegisterFrameTask ; $6214
 	ld a, [wStoryModeEntryPoint] ; $6217
 	cp a, $ff ; $621a
-	jr z, Label_0f_6221 ; $621c
+	jr z, .inProgress ; $621c
 	clear_flag FLAG_ISLAND_OPEN_IN_PROGRESS ; $621e
-Label_0f_6221:
+.inProgress:
 	test_flag FLAG_ISLAND_OPEN_IN_PROGRESS ; $6221
-	jp z, Label_0f_62eb ; $6224
+	jp z, .notInProgress ; $6224
 	call ComputeIslandOpenRound ; $6227
 	ld a, [$c2b0] ; $622a
 	and a, a ; $622d
-	jr nz, Label_0f_628e ; $622e
+	jr nz, .singles ; $622e
 	ldh a, [hRomBank] ; $6230
 	ld hl, IslandOpenRoundActors_0f ; $6232
 	farcall ScriptRespawnLocationActors ; $6235
@@ -1664,14 +1664,14 @@ Label_0f_6221:
 	script_face $04, FACE_DOWN ; $626c
 	script_face $05, FACE_LEFT ; $6273
 	test_flag FLAG_DOUBLES ; $627a
-	jr z, Label_0f_628a ; $627d
+	jr z, .setObjectDefs ; $627d
 	script_set_position $05, $3f00, $3f00 ; $627f
-Label_0f_628a:
+.setObjectDefs:
 	call SetPlayerAndPartnerObjectDefs ; $628a
 	ret ; $628d
-Label_0f_628e:
+.singles:
 	test_flag FLAG_DOUBLES ; $628e
-	jr nz, Label_0f_62c4 ; $6291
+	jr nz, .doubles ; $6291
 	ldh a, [hRomBank] ; $6293
 	ld hl, IslandOpenRoundActorsSingles_0f ; $6295
 	farcall ScriptRespawnLocationActors ; $6298
@@ -1684,7 +1684,7 @@ Label_0f_628e:
 	script_set_position $04, $2700, $1300 ; $62b1
 	script_face $04, FACE_LEFT ; $62bc
 	ret ; $62c3
-Label_0f_62c4:
+.doubles:
 	ldh a, [hRomBank] ; $62c4
 	ld hl, IslandOpenRoundActorsDoubles_0f ; $62c6
 	farcall ScriptRespawnLocationActors ; $62c9
@@ -1696,23 +1696,23 @@ Label_0f_62c4:
 	script_face_toward ACTOR_PLAYER, $04 ; $62db
 	script_face $03, FACE_RIGHT ; $62e3
 	ret ; $62ea
-Label_0f_62eb:
+.notInProgress:
 	ld a, [wStoryModeEntryPoint] ; $62eb
 	cp a, $0f ; $62ee
-	jr nz, Label_0f_62f6 ; $62f0
+	jr nz, .placeActors ; $62f0
 	call IslandOpenArrivalCutscene ; $62f2
 	ret ; $62f5
-Label_0f_62f6:
+.placeActors:
 	cp a, $0a ; $62f6
-	jr nz, Label_0f_62fe ; $62f8
+	jr nz, .placeActorsDoubles ; $62f8
 	call IslandOpenSinglesMatchReturn ; $62fa
 	ret ; $62fd
-Label_0f_62fe:
+.placeActorsDoubles:
 	cp a, $0b ; $62fe
-	jr nz, Label_0f_6306 ; $6300
+	jr nz, .done ; $6300
 	call $76a3 ; $6302
 	ret ; $6305
-Label_0f_6306:
+.done:
 	call LoadIslandOpenRoundNpcs ; $6306
 	call SetPlayerAndPartnerObjectDefs ; $6309
 	call WalkActorsInFromEntryPoint_0f ; $630c

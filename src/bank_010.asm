@@ -1187,33 +1187,33 @@ ApplyMatchTypeSettings:
 	ld a, [wMatchFormatSets] ; $4ed1
 	add a, l ; $4ed4
 	ld l, a ; $4ed5
-	jr nc, Label_10_4ed9 ; $4ed6
+	jr nc, .readSets ; $4ed6
 	inc h ; $4ed8
-Label_10_4ed9:
+.readSets:
 	ld a, [hl] ; $4ed9
 	ld [wMatchTypeNumberOfSets], a ; $4eda
 	ld hl, $4f0b ; $4edd
 	ld a, [wMatchFormatGames] ; $4ee0
 	add a, l ; $4ee3
 	ld l, a ; $4ee4
-	jr nc, Label_10_4ee8 ; $4ee5
+	jr nc, .readGames ; $4ee5
 	inc h ; $4ee7
-Label_10_4ee8:
+.readGames:
 	ld a, [hl] ; $4ee8
 	ld [wMatchTypeNumberOfGames], a ; $4ee9
 	ld a, [wMatchFormatDoubles] ; $4eec
 	ld [wMatchIsDoubles], a ; $4eef
 	or a, a ; $4ef2
-	jr z, Label_10_4eff ; $4ef3
+	jr z, .singles ; $4ef3
 	ld a, $04 ; $4ef5
 	ld [wOnCourtCharCount], a ; $4ef7
 	set_flag FLAG_DOUBLES ; $4efa
-	jr Label_10_4f07 ; $4efd
-Label_10_4eff:
+	jr .done ; $4efd
+.singles:
 	ld a, $02 ; $4eff
 	ld [wOnCourtCharCount], a ; $4f01
 	clear_flag FLAG_DOUBLES ; $4f04
-Label_10_4f07:
+.done:
 	ret ; $4f07
 	; $4f08, 5 bytes (bytes:16)
 	db $01, $03, $05, $02, $06 ; 0x00

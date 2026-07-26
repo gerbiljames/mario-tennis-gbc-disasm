@@ -1480,9 +1480,9 @@ IslandSkyInitScript_14:
 	cp a, $0e ; $52f0
 	jp z, Label_14_76c6 ; $52f2
 	cp a, $0f ; $52f5
-	jp z, Label_14_6f7b ; $52f7
+	jp z, AdvanceFirework1Ascent_14.loadScene ; $52f7
 	cp a, $0d ; $52fa
-	jp z, Label_14_6f7b ; $52fc
+	jp z, AdvanceFirework1Ascent_14.loadScene ; $52fc
 	jp Label_14_5303 ; $52ff
 	ret ; $5302
 Label_14_5303:
@@ -2000,9 +2000,9 @@ UpdateWaterSplash0_14:
 	ld d, a ; $60cb
 	ld a, [$c2be] ; $60cc
 	and a, a ; $60cf
-	jr nz, Label_14_60d5 ; $60d0
+	jr nz, .checkHit ; $60d0
 	call AdvanceWaterSplash0Rise_14 ; $60d2
-Label_14_60d5:
+.checkHit:
 	ldh a, [hScrollY] ; $60d5
 	ld b, a ; $60d7
 	ld a, [wWaterSpriteMinigameTimer] ; $60d8
@@ -2011,33 +2011,33 @@ Label_14_60d5:
 	ld e, a ; $60de
 	ld a, [$c2be] ; $60df
 	and a, a ; $60e2
-	jp z, Label_14_60f4 ; $60e3
+	jp z, .hit ; $60e3
 	ld a, [wWaterSpriteMinigameFlag] ; $60e6
 	ld b, a ; $60e9
 	ld a, [wWaterSpriteMinigameSwingCount] ; $60ea
 	cp a, $14 ; $60ed
-	jr c, Label_14_615c ; $60ef
+	jr c, .respawn ; $60ef
 	cp a, b ; $60f1
-	jr c, Label_14_616a ; $60f2
-Label_14_60f4:
+	jr c, .done ; $60f2
+.hit:
 	ld a, [$c2bc] ; $60f4
 	and a, a ; $60f7
-	jr z, Label_14_6107 ; $60f8
+	jr z, .scorePoint ; $60f8
 	ld a, $08 ; $60fa
 	ld [$c2b8], a ; $60fc
 	ld a, $00 ; $60ff
 	ld [wWaterSpriteMinigameSwingCount], a ; $6101
-	jp Label_14_615c ; $6104
-Label_14_6107:
+	jp .respawn ; $6104
+.scorePoint:
 	ld a, [$c2b8] ; $6107
 	inc a ; $610a
 	ld [$c2b8], a ; $610b
 	cp a, $08 ; $610e
-	jr c, Label_14_612b ; $6110
+	jr c, .advance ; $6110
 	cp a, $08 ; $6112
-	jr z, Label_14_6118 ; $6114
+	jr z, .playSfx ; $6114
 	sound $7e ; $6116
-Label_14_6118:
+.playSfx:
 	ld a, [$c2b2] ; $6118
 	inc a ; $611b
 	ld [$c2b2], a ; $611c
@@ -2046,14 +2046,14 @@ Label_14_6118:
 	ld a, [wWaterSpriteMinigameSwingCount] ; $6123
 	add a, $04 ; $6126
 	ld [wWaterSpriteMinigameSwingCount], a ; $6128
-Label_14_612b:
+.advance:
 	ld a, [wWaterSpriteMinigameFlag] ; $612b
 	ld b, a ; $612e
 	ld a, [wWaterSpriteMinigameSwingCount] ; $612f
 	cp a, $14 ; $6132
-	jr c, Label_14_615c ; $6134
+	jr c, .respawn ; $6134
 	cp a, b ; $6136
-	jr c, Label_14_616a ; $6137
+	jr c, .done ; $6137
 	xor a, a ; $6139
 	ld [wWaterSpriteMinigameSwingCount], a ; $613a
 	call AdvanceRandomSeed ; $613d
@@ -2070,15 +2070,15 @@ Label_14_612b:
 	ld [wWaterSpriteMinigameTimer], a ; $6152
 	ld a, $10 ; $6155
 	ld [$c2bc], a ; $6157
-	jr Label_14_616a ; $615a
-Label_14_615c:
+	jr .done ; $615a
+.respawn:
 	ld a, [wWaterSpriteMinigameSwingCount] ; $615c
 	add a, $20 ; $615f
 	ld c, a ; $6161
 	ld hl, SpriteTemplate_14_6090 ; $6162
 	ld b, $01 ; $6165
 	call QueueSpriteTemplate ; $6167
-Label_14_616a:
+.done:
 	ret ; $616a
 AdvanceWaterSplash0Rise_14:
 	ld a, [$c2bc] ; $616b
@@ -2099,9 +2099,9 @@ UpdateWaterSplash1_14:
 	ld d, a ; $6185
 	ld a, [$c2bf] ; $6186
 	and a, a ; $6189
-	jr nz, Label_14_618f ; $618a
+	jr nz, .checkHit ; $618a
 	call AdvanceWaterSplash1Rise_14 ; $618c
-Label_14_618f:
+.checkHit:
 	ldh a, [hScrollY] ; $618f
 	ld b, a ; $6191
 	ld a, [wWaterSpriteMinigameTimer + 1] ; $6192
@@ -2110,33 +2110,33 @@ Label_14_618f:
 	ld e, a ; $6198
 	ld a, [$c2bf] ; $6199
 	and a, a ; $619c
-	jp z, Label_14_61ae ; $619d
+	jp z, .hit ; $619d
 	ld a, [$c2bb] ; $61a0
 	ld b, a ; $61a3
 	ld a, [wWaterSpriteMinigameSwingCount + 1] ; $61a4
 	cp a, $14 ; $61a7
-	jr c, Label_14_6216 ; $61a9
+	jr c, .respawn ; $61a9
 	cp a, b ; $61ab
-	jr c, Label_14_6224 ; $61ac
-Label_14_61ae:
+	jr c, .done ; $61ac
+.hit:
 	ld a, [$c2bd] ; $61ae
 	and a, a ; $61b1
-	jr z, Label_14_61c1 ; $61b2
+	jr z, .scorePoint ; $61b2
 	ld a, $08 ; $61b4
 	ld [$c2b9], a ; $61b6
 	ld a, $00 ; $61b9
 	ld [wWaterSpriteMinigameSwingCount + 1], a ; $61bb
-	jp Label_14_6216 ; $61be
-Label_14_61c1:
+	jp .respawn ; $61be
+.scorePoint:
 	ld a, [$c2b9] ; $61c1
 	inc a ; $61c4
 	ld [$c2b9], a ; $61c5
 	cp a, $08 ; $61c8
-	jr c, Label_14_61e5 ; $61ca
+	jr c, .advance ; $61ca
 	cp a, $08 ; $61cc
-	jr z, Label_14_61d2 ; $61ce
+	jr z, .playSfx ; $61ce
 	sound $7e ; $61d0
-Label_14_61d2:
+.playSfx:
 	ld a, [$c2b3] ; $61d2
 	inc a ; $61d5
 	ld [$c2b3], a ; $61d6
@@ -2145,14 +2145,14 @@ Label_14_61d2:
 	ld a, [wWaterSpriteMinigameSwingCount + 1] ; $61dd
 	add a, $04 ; $61e0
 	ld [wWaterSpriteMinigameSwingCount + 1], a ; $61e2
-Label_14_61e5:
+.advance:
 	ld a, [$c2bb] ; $61e5
 	ld b, a ; $61e8
 	ld a, [wWaterSpriteMinigameSwingCount + 1] ; $61e9
 	cp a, $14 ; $61ec
-	jr c, Label_14_6216 ; $61ee
+	jr c, .respawn ; $61ee
 	cp a, b ; $61f0
-	jr c, Label_14_6224 ; $61f1
+	jr c, .done ; $61f1
 	xor a, a ; $61f3
 	ld [wWaterSpriteMinigameSwingCount + 1], a ; $61f4
 	call AdvanceRandomSeed ; $61f7
@@ -2169,15 +2169,15 @@ Label_14_61e5:
 	ld [wWaterSpriteMinigameTimer + 1], a ; $620c
 	ld a, $10 ; $620f
 	ld [$c2bd], a ; $6211
-	jr Label_14_6224 ; $6214
-Label_14_6216:
+	jr .done ; $6214
+.respawn:
 	ld a, [wWaterSpriteMinigameSwingCount + 1] ; $6216
 	add a, $20 ; $6219
 	ld c, a ; $621b
 	ld hl, SpriteTemplate_14_6090 ; $621c
 	ld b, $01 ; $621f
 	call QueueSpriteTemplate ; $6221
-Label_14_6224:
+.done:
 	ret ; $6224
 AdvanceWaterSplash1Rise_14:
 	ld a, [$c2bd] ; $6225
@@ -2709,17 +2709,17 @@ AdvanceFirework1Ascent_14:
 	ld b, $03 ; $6f64
 	ld a, [$c2b9] ; $6f66
 	cp a, $14 ; $6f69
-	jr nc, Label_14_6f73 ; $6f6b
+	jr nc, .store ; $6f6b
 	dec b ; $6f6d
 	cp a, $0a ; $6f6e
-	jr nc, Label_14_6f73 ; $6f70
+	jr nc, .store ; $6f70
 	dec b ; $6f72
-Label_14_6f73:
+.store:
 	ld a, [wWaterSpriteMinigameTimer + 1] ; $6f73
 	sub a, b ; $6f76
 	ld [wWaterSpriteMinigameTimer + 1], a ; $6f77
 	ret ; $6f7a
-Label_14_6f7b:
+.loadScene:
 	call DisableLCDSafely ; $6f7b
 	call LoadPlaneObjGfx_14 ; $6f7e
 	call LoadIslandSkyEffectObjGfx_14 ; $6f81
@@ -2740,10 +2740,10 @@ Label_14_6f7b:
 	call RegisterFrameTask ; $6fa9
 	script_set_position ACTOR_PLAYER, $3f00, $3f00 ; $6fac
 	test_flag FLAG_DOUBLES ; $6fb7
-	jp z, Label_14_6fcd ; $6fba
+	jp z, .fadeIn ; $6fba
 	script_null_script ACTOR_PARTNER ; $6fbd
 	script_set_position ACTOR_PARTNER, $3f00, $3f00 ; $6fc2
-Label_14_6fcd:
+.fadeIn:
 	xor a, a ; $6fcd
 	ld [wStoryModeShowLocationName], a ; $6fce
 	script_fade_in $06 ; $6fd1
@@ -2751,16 +2751,16 @@ Label_14_6fcd:
 	sound $7a ; $6fd9
 	script_wait_frames $3c ; $6fdb
 	ld h, $08 ; $6fe2
-Label_14_6fe4:
+.planeLoop:
 	script_wait_frames $06 ; $6fe4
 	call PlayPlaneMoveSfx_14 ; $6feb
 	ld a, [$c2b1] ; $6fee
 	inc a ; $6ff1
 	ld [$c2b1], a ; $6ff2
 	dec h ; $6ff5
-	jr nz, Label_14_6fe4 ; $6ff6
+	jr nz, .planeLoop ; $6ff6
 	ld h, $08 ; $6ff8
-Label_14_6ffa:
+.planeArrived:
 	script_wait_frames $04 ; $6ffa
 	call PlayPlaneMoveSfx_14 ; $7001
 	ld a, [$c2b1] ; $7004
@@ -2772,9 +2772,9 @@ Label_14_6ffa:
 	add a, b ; $7011
 	ld [$c2b0], a ; $7012
 	dec h ; $7015
-	jr nz, Label_14_6ffa ; $7016
+	jr nz, .planeArrived ; $7016
 	ld h, $18 ; $7018
-Label_14_701a:
+.descend:
 	script_wait_frames $03 ; $701a
 	call PlayPlaneMoveSfx_14 ; $7021
 	ld a, [$c2b1] ; $7024
@@ -2784,11 +2784,11 @@ Label_14_701a:
 	inc a ; $702e
 	ld [$c2b0], a ; $702f
 	dec h ; $7032
-	jr nz, Label_14_701a ; $7033
+	jr nz, .descend ; $7033
 	script_player_speed $0012 ; $7035
 	script_move_player $0b00, $1800 ; $703b
 	ld h, $18 ; $7045
-Label_14_7047:
+.land:
 	script_wait_frames $02 ; $7047
 	call PlayPlaneMoveSfx_14 ; $704e
 	ld a, [$c2b0] ; $7051
@@ -2800,9 +2800,9 @@ Label_14_7047:
 	add a, b ; $705e
 	ld [$c2b1], a ; $705f
 	dec h ; $7062
-	jr nz, Label_14_7047 ; $7063
+	jr nz, .land ; $7063
 	ld h, $20 ; $7065
-Label_14_7067:
+.disembark:
 	script_wait_frames $02 ; $7067
 	call PlayPlaneMoveSfx_14 ; $706e
 	ld a, [$c2b0] ; $7071
@@ -2810,21 +2810,21 @@ Label_14_7067:
 	ld [$c2b0], a ; $7075
 	and a, $03 ; $7078
 	cp a, $03 ; $707a
-	jr nz, Label_14_7085 ; $707c
+	jr nz, .walkOff ; $707c
 	ld a, [$c2b1] ; $707e
 	inc a ; $7081
 	ld [$c2b1], a ; $7082
-Label_14_7085:
+.walkOff:
 	dec h ; $7085
-	jr nz, Label_14_7067 ; $7086
+	jr nz, .disembark ; $7086
 	ld hl, QueuePlaneSpriteByHeight_14 ; $7088
 	call UnregisterFrameTask ; $708b
 	ld h, $1e ; $708e
-Label_14_7090:
+.doublesWalkOff:
 	script_wait_frames $02 ; $7090
 	call PlayPlaneMoveSfx_14 ; $7097
 	dec h ; $709a
-	jr nz, Label_14_7090 ; $709b
+	jr nz, .doublesWalkOff ; $709b
 	script_move_player $0b00, $0d00 ; $709d
 	call LoadDistantPlaneObjGfx_14 ; $70a7
 	ld a, $04 ; $70aa
@@ -2835,7 +2835,7 @@ Label_14_7090:
 	ld hl, QueueDistantPlaneSprite_14 ; $70b6
 	call RegisterFrameTask ; $70b9
 	ld h, $50 ; $70bc
-Label_14_70be:
+.speak:
 	script_wait_frames $02 ; $70be
 	call PlayPlaneMoveSfx_14 ; $70c5
 	ld a, [$c2b1] ; $70c8
@@ -2846,12 +2846,12 @@ Label_14_70be:
 	ld [$c2b0], a ; $70d3
 	ld a, h ; $70d6
 	cp a, $1e ; $70d7
-	jr nz, Label_14_70e0 ; $70d9
+	jr nz, .speakDoubles ; $70d9
 	ld a, $00 ; $70db
 	ld [wWaterSpriteMinigameSwingCount], a ; $70dd
-Label_14_70e0:
+.speakDoubles:
 	dec h ; $70e0
-	jr nz, Label_14_70be ; $70e1
+	jr nz, .speak ; $70e1
 	ld hl, QueueDistantPlaneSprite_14 ; $70e3
 	call UnregisterFrameTask ; $70e6
 	call LoadTwinkleObjGfx_14 ; $70e9
@@ -2859,25 +2859,25 @@ Label_14_70e0:
 	script_wait_frames $46 ; $70ef
 	ld a, [wStoryModeEntryPoint] ; $70f6
 	cp a, $0d ; $70f9
-	jp nz, Label_14_710c ; $70fb
+	jp nz, .fadeOut ; $70fb
 	ld a, $01 ; $70fe
 	ld [$c2be], a ; $7100
 	ld a, $01 ; $7103
 	ld [$c294], a ; $7105
 	ld [wStoryModeExitLocationRequest], a ; $7108
 	ret ; $710b
-Label_14_710c:
+.fadeOut:
 	test_flag FLAG_DOUBLES ; $710c
-	jp z, Label_14_711c ; $710f
+	jp z, .transition ; $710f
 	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $7112
-	jr nz, Label_14_7149 ; $7115
+	jr nz, .doublesLocation ; $7115
 	set_flag FLAG_STORY_COMPLETE_DOUBLES ; $7117
-	jr Label_14_7124 ; $711a
-Label_14_711c:
+	jr .setLocation ; $711a
+.transition:
 	test_flag FLAG_STORY_COMPLETE_SINGLES ; $711c
-	jr nz, Label_14_7150 ; $711f
+	jr nz, .storeLocation ; $711f
 	set_flag FLAG_STORY_COMPLETE_SINGLES ; $7121
-Label_14_7124:
+.setLocation:
 	ld b, $1d ; $7124
 	ld c, $0f ; $7126
 	farcall SaveStoryReturnPoint ; $7128
@@ -2893,14 +2893,14 @@ Label_14_7124:
 	ld [$c294], a ; $7142
 	ld [wStoryModeExitLocationRequest], a ; $7145
 	ret ; $7148
-Label_14_7149:
+.doublesLocation:
 	test_flag FLAG_REACHED_MARIO_WORLD_DOUBLES ; $7149
-	jr z, Label_14_7170 ; $714c
-	jr Label_14_7155 ; $714e
-Label_14_7150:
+	jr z, .done ; $714c
+	jr .finish ; $714e
+.storeLocation:
 	test_flag FLAG_REACHED_MARIO_WORLD_SINGLES ; $7150
-	jr z, Label_14_7170 ; $7153
-Label_14_7155:
+	jr z, .done ; $7153
+.finish:
 	ld c, $04 ; $7155
 	call BeginFadeOut ; $7157
 	call WaitFadeEnd ; $715a
@@ -2912,7 +2912,7 @@ Label_14_7155:
 	ld [$c294], a ; $7169
 	ld [wStoryModeExitLocationRequest], a ; $716c
 	ret ; $716f
-Label_14_7170:
+.done:
 	ld c, $04 ; $7170
 	call BeginFadeOut ; $7172
 	call WaitFadeEnd ; $7175

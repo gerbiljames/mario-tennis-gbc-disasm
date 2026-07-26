@@ -865,31 +865,31 @@ ForceFlushBgMapToVram:
 RunTwoOptionSelect:
 	ldh a, [hInputRisingEdge] ; $5421
 	and a, PADF_LEFT ; $5423
-	jr z, Label_18_542b ; $5425
+	jr z, .inputLoop ; $5425
 	ld b, $00 ; $5427
 	sound $5e ; $5429
-Label_18_542b:
+.inputLoop:
 	ldh a, [hInputRisingEdge] ; $542b
 	and a, PADF_RIGHT ; $542d
-	jr z, Label_18_5435 ; $542f
+	jr z, .checkUp ; $542f
 	ld b, $01 ; $5431
 	sound $5e ; $5433
-Label_18_5435:
+.checkUp:
 	ldh a, [hInputRisingEdge] ; $5435
 	and a, PADF_A ; $5437
-	jr nz, Label_18_545f ; $5439
+	jr nz, .confirm ; $5439
 	ldh a, [hInputRisingEdge] ; $543b
 	and a, PADF_B ; $543d
-	jr z, Label_18_5445 ; $543f
+	jr z, .checkDown ; $543f
 	ld b, $ff ; $5441
-	jr Label_18_545f ; $5443
-Label_18_5445:
+	jr .confirm ; $5443
+.checkDown:
 	ld de, $128e ; $5445
 	ld a, b ; $5448
 	and a, a ; $5449
-	jr z, Label_18_544f ; $544a
+	jr z, .redraw ; $544a
 	ld de, $3a8e ; $544c
-Label_18_544f:
+.redraw:
 	call AddBobbingOffsetXY ; $544f
 	push bc ; $5452
 	ld bc, $0650 ; $5453
@@ -897,13 +897,13 @@ Label_18_544f:
 	pop bc ; $5459
 	call AdvanceFrame ; $545a
 	jr RunTwoOptionSelect ; $545d
-Label_18_545f:
+.confirm:
 	ld a, b ; $545f
 	and a, a ; $5460
-	jr z, Label_18_5466 ; $5461
+	jr z, .done ; $5461
 	sound $62 ; $5463
 	ret ; $5465
-Label_18_5466:
+.done:
 	sound $5f ; $5466
 	ret ; $5468
 RunTwoOptionSelectB:

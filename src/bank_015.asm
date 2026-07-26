@@ -1091,44 +1091,44 @@ TrainingCourtNpc07FaceDown_15:
 	script_face ACTOR_PLAYER, FACE_DOWN ; $5138
 TrainingCourtNpc07_15:
 	test_flag FLAG_CLEARED_SERVICE_PRACTICE_1 ; $513f
-	jr nz, Label_15_5148 ; $5142
+	jr nz, .lesson2 ; $5142
 	call ServeCoachJuniorLessonScene ; $5144
 	ret ; $5147
-Label_15_5148:
+.lesson2:
 	test_flag FLAG_CLEARED_SERVICE_PRACTICE_2 ; $5148
-	jr nz, Label_15_5172 ; $514b
+	jr nz, .lesson3 ; $514b
 	test_flag FLAG_SERVE_COACH_GREETED ; $514d
-	jr nz, Label_15_515b ; $5150
+	jr nz, .lesson2Line ; $5150
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $5152
-	jr z, Label_15_515b ; $5155
+	jr z, .lesson2Line ; $5155
 	call ServeCoachSeniorLessonScene ; $5157
 	ret ; $515a
-Label_15_515b:
+.lesson2Line:
 	script_set_text Text_37_33 ; $515b
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $5161
-	jr z, Label_15_516c ; $5164
+	jr z, .speak ; $5164
 	script_set_text Text_37_34 ; $5166
-Label_15_516c:
+.speak:
 	script_speak $07 ; $516c
 	ret ; $5171
-Label_15_5172:
+.lesson3:
 	test_flag FLAG_CLEARED_SERVICE_PRACTICE_3 ; $5172
-	jr nz, Label_15_519c ; $5175
+	jr nz, .done ; $5175
 	test_flag FLAG_SERVE_COACH_GREETED ; $5177
-	jr nz, Label_15_5185 ; $517a
+	jr nz, .lesson3Line ; $517a
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $517c
-	jr z, Label_15_5185 ; $517f
+	jr z, .lesson3Line ; $517f
 	call ServeCoachVarsityLessonScene ; $5181
 	ret ; $5184
-Label_15_5185:
+.lesson3Line:
 	script_set_text Text_37_50 ; $5185
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $518b
-	jr z, Label_15_5196 ; $518e
+	jr z, .speakLesson3 ; $518e
 	script_set_text Text_37_34 ; $5190
-Label_15_5196:
+.speakLesson3:
 	script_speak $07 ; $5196
 	ret ; $519b
-Label_15_519c:
+.done:
 	script_set_text Text_37_61 ; $519c
 	script_speak $07 ; $51a2
 	ret ; $51a7
@@ -1154,44 +1154,44 @@ TrainingCourtNpc12FaceUp_15:
 	script_face ACTOR_PLAYER, FACE_UP ; $51e4
 TrainingCourtNpc12_15:
 	test_flag FLAG_CLEARED_NET_GAME_PRACTICE_1 ; $51eb
-	jr nz, Label_15_51f4 ; $51ee
+	jr nz, .lesson2 ; $51ee
 	call NetCoachVolleyLessonScene ; $51f0
 	ret ; $51f3
-Label_15_51f4:
+.lesson2:
 	test_flag FLAG_CLEARED_NET_GAME_PRACTICE_2 ; $51f4
-	jr nz, Label_15_521e ; $51f7
+	jr nz, .lesson3 ; $51f7
 	test_flag FLAG_NET_COACH_GREETED ; $51f9
-	jr nz, Label_15_5207 ; $51fc
+	jr nz, .lesson2Line ; $51fc
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $51fe
-	jr z, Label_15_5207 ; $5201
+	jr z, .lesson2Line ; $5201
 	call NetCoachSmashLessonScene ; $5203
 	ret ; $5206
-Label_15_5207:
+.lesson2Line:
 	script_set_text Text_37_128 ; $5207
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $520d
-	jr z, Label_15_5218 ; $5210
+	jr z, .speak ; $5210
 	script_set_text Text_37_131 ; $5212
-Label_15_5218:
+.speak:
 	script_speak $12 ; $5218
 	ret ; $521d
-Label_15_521e:
+.lesson3:
 	test_flag FLAG_CLEARED_NET_GAME_PRACTICE_3 ; $521e
-	jr nz, Label_15_5248 ; $5221
+	jr nz, .done ; $5221
 	test_flag FLAG_NET_COACH_GREETED ; $5223
-	jr nz, Label_15_5231 ; $5226
+	jr nz, .lesson3Line ; $5226
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $5228
-	jr z, Label_15_5231 ; $522b
+	jr z, .lesson3Line ; $522b
 	call NetCoachDropShotLessonScene ; $522d
 	ret ; $5230
-Label_15_5231:
+.lesson3Line:
 	script_set_text Text_37_158 ; $5231
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $5237
-	jr z, Label_15_5242 ; $523a
+	jr z, .speakLesson3 ; $523a
 	script_set_text Text_37_156 ; $523c
-Label_15_5242:
+.speakLesson3:
 	script_speak $12 ; $5242
 	ret ; $5247
-Label_15_5248:
+.done:
 	script_set_text Text_37_187 ; $5248
 	script_speak $12 ; $524e
 	ret ; $5253
@@ -1217,43 +1217,43 @@ TrainingCourtNpc0DFaceUp_15:
 	script_face ACTOR_PLAYER, FACE_UP ; $5290
 TrainingCourtNpc0D_15:
 	test_flag FLAG_CLEARED_STROKE_PRACTICE_1 ; $5297
-	jr nz, Label_15_52a0 ; $529a
+	jr nz, .lesson2 ; $529a
 	call ReturnCoachReturnLessonScene ; $529c
 	ret ; $529f
-Label_15_52a0:
+.lesson2:
 	test_flag FLAG_CLEARED_STROKE_PRACTICE_2 ; $52a0
-	jr nz, Label_15_52d5 ; $52a3
+	jr nz, .lesson3 ; $52a3
 	test_flag FLAG_RETURN_COACH_GREETED ; $52a5
-	jr nz, Label_15_52b3 ; $52a8
+	jr nz, .lesson2Line ; $52a8
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $52aa
-	jr z, Label_15_52b3 ; $52ad
+	jr z, .lesson2Line ; $52ad
 	call ReturnCoachLobLessonScene ; $52af
 	ret ; $52b2
-Label_15_52b3:
+.lesson2Line:
 	script_set_text Text_37_225 ; $52b3
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $52b9
-	jr z, Label_15_52cf ; $52bc
+	jr z, .speak ; $52bc
 	script_set_text Text_37_226 ; $52be
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $52c4
-	jr z, Label_15_52cf ; $52c7
+	jr z, .speak ; $52c7
 	script_set_text Text_37_226 ; $52c9
-Label_15_52cf:
+.speak:
 	script_speak $0d ; $52cf
 	ret ; $52d4
-Label_15_52d5:
+.lesson3:
 	test_flag FLAG_CLEARED_STROKE_PRACTICE_3 ; $52d5
-	jr nz, Label_15_52f4 ; $52d8
+	jr nz, .done ; $52d8
 	test_flag FLAG_RETURN_COACH_GREETED ; $52da
-	jr nz, Label_15_52e8 ; $52dd
+	jr nz, .lesson3Line ; $52dd
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $52df
-	jr z, Label_15_52e8 ; $52e2
+	jr z, .lesson3Line ; $52e2
 	call ReturnCoachPassingShotLessonScene ; $52e4
 	ret ; $52e7
-Label_15_52e8:
+.lesson3Line:
 	script_set_text Text_37_248 ; $52e8
 	script_speak $0d ; $52ee
 	ret ; $52f3
-Label_15_52f4:
+.done:
 	script_set_text Text_6e_18 ; $52f4
 	script_speak $0d ; $52fa
 	ret ; $52ff

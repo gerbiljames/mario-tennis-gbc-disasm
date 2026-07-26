@@ -806,7 +806,7 @@ RunMatchTypeMenu:
 	call EnableLCD ; $44a2
 	script_fade_in $10 ; $44a5
 	call WaitFadeEnd ; $44aa
-Label_38_44ad:
+.inputLoop:
 	ldh a, [hInputPressed] ; $44ad
 	ld [wMenuInputPressed], a ; $44af
 	call AdjustMatchTypeSetting ; $44b2
@@ -814,17 +814,17 @@ Label_38_44ad:
 	ld c, $03 ; $44b7
 	call MoveMenuCursorBox ; $44b9
 	or a, a ; $44bc
-	jr z, Label_38_44c2 ; $44bd
+	jr z, .adjust ; $44bd
 	call RefreshMatchTypeLabelRow ; $44bf
-Label_38_44c2:
+.adjust:
 	call AdvanceFrame ; $44c2
 	ld a, [wMenuInputPressed] ; $44c5
 	bit PADB_A, a ; $44c8
-	jr nz, Label_38_44d2 ; $44ca
+	jr nz, .confirm ; $44ca
 	bit 1, a ; $44cc
-	jr nz, Label_38_44e1 ; $44ce
-	jr Label_38_44ad ; $44d0
-Label_38_44d2:
+	jr nz, .done ; $44ce
+	jr .inputLoop ; $44d0
+.confirm:
 	sound $5f ; $44d2
 	ld c, $10 ; $44d4
 	call BeginFadeOut ; $44d6
@@ -832,7 +832,7 @@ Label_38_44d2:
 	call ClearFrameTasks ; $44dc
 	xor a, a ; $44df
 	ret ; $44e0
-Label_38_44e1:
+.done:
 	sound $62 ; $44e1
 	ld c, $10 ; $44e3
 	call BeginFadeOut ; $44e5
@@ -865,7 +865,7 @@ RunMatchTypeMenuLink:
 	farcall RunLinkInputFrame ; $4523
 	pop af ; $4526
 	sound $14 ; $4527
-Label_38_4529:
+.inputLoop:
 	ldh a, [hLinkInput] ; $4529
 	ld [wMenuInputPressed], a ; $452b
 	call AdjustMatchTypeSetting ; $452e
@@ -873,19 +873,19 @@ Label_38_4529:
 	ld c, $03 ; $4533
 	call MoveMenuCursorBoxLink ; $4535
 	or a, a ; $4538
-	jr z, Label_38_453e ; $4539
+	jr z, .adjust ; $4539
 	call RefreshMatchTypeLabelRow ; $453b
-Label_38_453e:
+.adjust:
 	push af ; $453e
 	farcall RunLinkInputFrame ; $453f
 	pop af ; $4542
 	ld a, [wMenuInputPressed] ; $4543
 	bit PADB_A, a ; $4546
-	jr nz, Label_38_4550 ; $4548
+	jr nz, .confirm ; $4548
 	bit 1, a ; $454a
-	jr nz, Label_38_456e ; $454c
-	jr Label_38_4529 ; $454e
-Label_38_4550:
+	jr nz, .done ; $454c
+	jr .inputLoop ; $454e
+.confirm:
 	sound $5f ; $4550
 	push af ; $4552
 	farcall SyncLinkFrame ; $4553
@@ -901,7 +901,7 @@ Label_38_4550:
 	call ClearFrameTasks ; $4569
 	xor a, a ; $456c
 	ret ; $456d
-Label_38_456e:
+.done:
 	sound $62 ; $456e
 	push af ; $4570
 	farcall SyncLinkFrame ; $4571
@@ -3526,10 +3526,10 @@ AddCreatedCharsToCharGrid:
 	ld c, $00 ; $5be2
 	ld b, $00 ; $5be4
 	ld hl, $d900 ; $5be6
-Label_38_5be9:
+.slotLoop:
 	ld a, [hl] ; $5be9
 	cp a, $ff ; $5bea
-	jr z, Label_38_5c36 ; $5bec
+	jr z, .storeCount ; $5bec
 	push hl ; $5bee
 	ld hl, $da24 ; $5bef
 	ld a, b ; $5bf2
@@ -3537,9 +3537,9 @@ Label_38_5be9:
 	add a, a ; $5bf4
 	add a, l ; $5bf5
 	ld l, a ; $5bf6
-	jr nc, Label_38_5bfa ; $5bf7
+	jr nc, .addEntry ; $5bf7
 	inc h ; $5bf9
-Label_38_5bfa:
+.addEntry:
 	ld d, h ; $5bfa
 	ld e, l ; $5bfb
 	pop hl ; $5bfc
@@ -3567,9 +3567,9 @@ Label_38_5bfa:
 	add a, a ; $5c17
 	add a, l ; $5c18
 	ld l, a ; $5c19
-	jr nc, Label_38_5c1d ; $5c1a
+	jr nc, .nextSlot ; $5c1a
 	inc h ; $5c1c
-Label_38_5c1d:
+.nextSlot:
 	ld d, h ; $5c1d
 	ld e, l ; $5c1e
 	pop hl ; $5c1f
@@ -3591,16 +3591,16 @@ Label_38_5c1d:
 	ld de, $0020 ; $5c2f
 	add hl, de ; $5c32
 	inc b ; $5c33
-	jr Label_38_5c3a ; $5c34
-Label_38_5c36:
+	jr .done ; $5c34
+.storeCount:
 	ld de, $0040 ; $5c36
 	add hl, de ; $5c39
-Label_38_5c3a:
+.done:
 	ld a, c ; $5c3a
 	inc a ; $5c3b
 	ld c, a ; $5c3c
 	cp a, $03 ; $5c3d
-	jr nz, Label_38_5be9 ; $5c3f
+	jr nz, .slotLoop ; $5c3f
 	pop af ; $5c41
 	wram_bank ; $5c42
 	ret ; $5c46
@@ -5110,85 +5110,85 @@ ApplyRemoteCharCancel:
 	call RetreatRemotePlayerSlot ; $6656
 	pop bc ; $6659
 	cp a, $ff ; $665a
-	jr z, Label_38_66c2 ; $665c
+	jr z, .refresh ; $665c
 	ld a, [$d81d] ; $665e
 	cp a, $00 ; $6661
-	jr nz, Label_38_666b ; $6663
+	jr nz, .slot2 ; $6663
 	ld a, [$d81f] ; $6665
 	ld c, a ; $6668
-	jr Label_38_666f ; $6669
-Label_38_666b:
+	jr .clearEntry ; $6669
+.slot2:
 	ld a, [$d820] ; $666b
 	ld c, a ; $666e
-Label_38_666f:
+.clearEntry:
 	ld d, c ; $666f
 	ld e, $00 ; $6670
 	call SetGridEntryTakenByCharId ; $6672
 	wram_bank $03 ; $6675
 	ld a, [$d813] ; $667b
 	cp a, $03 ; $667e
-	jr z, Label_38_66a2 ; $6680
+	jr z, .clearOwnSlot ; $6680
 	cp a, $05 ; $6682
-	jr z, Label_38_66a2 ; $6684
+	jr z, .clearOwnSlot ; $6684
 	ld a, [$d81d] ; $6686
 	ld hl, $d832 ; $6689
 	add a, l ; $668c
 	ld l, a ; $668d
-	jr nc, Label_38_6691 ; $668e
+	jr nc, .clearTaken ; $668e
 	inc h ; $6690
-Label_38_6691:
+.clearTaken:
 	xor a, a ; $6691
 	ld [hl], a ; $6692
 	ld a, [$d81d] ; $6693
 	ld hl, $d836 ; $6696
 	add a, l ; $6699
 	ld l, a ; $669a
-	jr nc, Label_38_669e ; $669b
+	jr nc, .clearStar ; $669b
 	inc h ; $669d
-Label_38_669e:
+.clearStar:
 	xor a, a ; $669e
 	ld [hl], a ; $669f
-	jr Label_38_66bc ; $66a0
-Label_38_66a2:
+	jr .retreatSlot ; $66a0
+.clearOwnSlot:
 	ld a, [$d81d] ; $66a2
 	ld hl, $d830 ; $66a5
 	add a, l ; $66a8
 	ld l, a ; $66a9
-	jr nc, Label_38_66ad ; $66aa
+	jr nc, .clearOwnTaken ; $66aa
 	inc h ; $66ac
-Label_38_66ad:
+.clearOwnTaken:
 	xor a, a ; $66ad
 	ld [hl], a ; $66ae
 	ld a, [$d81d] ; $66af
 	ld hl, $d834 ; $66b2
 	add a, l ; $66b5
 	ld l, a ; $66b6
-	jr nc, Label_38_66ba ; $66b7
+	jr nc, .clearOwnStar ; $66b7
 	inc h ; $66b9
-Label_38_66ba:
+.clearOwnStar:
 	xor a, a ; $66ba
 	ld [hl], a ; $66bb
-Label_38_66bc:
+.retreatSlot:
 	call ClearRemoteSlotPortrait ; $66bc
 	call BuildVisiblePageSpriteList ; $66bf
-Label_38_66c2:
+.refresh:
 	ret ; $66c2
 	ld a, [$d813] ; $66c3
 	cp a, $03 ; $66c6
-	jr z, Label_38_66dc ; $66c8
+	jr z, .redraw ; $66c8
 	cp a, $05 ; $66ca
-	jr z, Label_38_66dc ; $66cc
+	jr z, .redraw ; $66cc
 	ld a, [$d81f] ; $66ce
 	ld [$d818], a ; $66d1
 	ld a, [$d820] ; $66d4
 	ld [$d819], a ; $66d7
-	jr Label_38_66e8 ; $66da
-Label_38_66dc:
+	jr .done ; $66da
+.redraw:
 	ld a, [$d81f] ; $66dc
 	ld [$d816], a ; $66df
 	ld a, [$d820] ; $66e2
 	ld [$d817], a ; $66e5
-Label_38_66e8:
+.done:
 	ret ; $66e8
 CheckLinkSelectionComplete:
 	ldh a, [hWramBank] ; $66e9
@@ -6718,13 +6718,13 @@ AppendCharToName:
 	push af ; $72b5
 	wram_bank $03 ; $72b6
 	ld hl, $d800 ; $72bc
-Label_38_72bf:
+.findEnd:
 	ld a, [hl] ; $72bf
 	cp a, $00 ; $72c0
-	jr z, Label_38_72c7 ; $72c2
+	jr z, .lookupChar ; $72c2
 	inc hl ; $72c4
-	jr Label_38_72bf ; $72c5
-Label_38_72c7:
+	jr .findEnd ; $72c5
+.lookupChar:
 	push hl ; $72c7
 	ld c, $0f ; $72c8
 	call GetMenuCursorLinearIndex ; $72ca
@@ -6733,42 +6733,42 @@ Label_38_72c7:
 	wram_bank $02 ; $72d1
 	ld a, [$d000] ; $72d7
 	or a, a ; $72da
-	jr z, Label_38_72e0 ; $72db
+	jr z, .indexCharset ; $72db
 	ld hl, NameEntryCharset_38 ; $72dd
-Label_38_72e0:
+.indexCharset:
 	ld a, d ; $72e0
 	add a, l ; $72e1
 	ld l, a ; $72e2
-	jr nc, Label_38_72e6 ; $72e3
+	jr nc, .checkMark ; $72e3
 	inc h ; $72e5
-Label_38_72e6:
+.checkMark:
 	ld d, [hl] ; $72e6
 	ld a, d ; $72e7
 	cp a, $9e ; $72e8
-	jr z, Label_38_72f2 ; $72ea
+	jr z, .plainChar ; $72ea
 	cp a, $9f ; $72ec
-	jr z, Label_38_72f2 ; $72ee
-	jr Label_38_72f5 ; $72f0
-Label_38_72f2:
+	jr z, .plainChar ; $72ee
+	jr .store ; $72f0
+.plainChar:
 	add a, $40 ; $72f2
 	ld d, a ; $72f4
-Label_38_72f5:
+.store:
 	pop hl ; $72f5
 	wram_bank $03 ; $72f6
 	call IsNameBufferFull ; $72fc
 	or a, a ; $72ff
-	jr z, Label_38_7311 ; $7300
+	jr z, .queueVram ; $7300
 	dec hl ; $7302
 	ld a, [hl] ; $7303
 	cp a, $de ; $7304
-	jr z, Label_38_730e ; $7306
+	jr z, .redraw ; $7306
 	cp a, $df ; $7308
-	jr z, Label_38_730e ; $730a
-	jr Label_38_7311 ; $730c
-Label_38_730e:
+	jr z, .redraw ; $730a
+	jr .queueVram ; $730c
+.redraw:
 	ld [hl], $00 ; $730e
 	dec hl ; $7310
-Label_38_7311:
+.queueVram:
 	ld [hl], d ; $7311
 	call DrawEnteredName ; $7312
 	ld hl, $d0a0 ; $7315
@@ -6778,12 +6778,12 @@ Label_38_7311:
 	sound $5f ; $7320
 	call GetEnteredNameLength ; $7322
 	cp a, $07 ; $7325
-	jr nz, Label_38_7333 ; $7327
+	jr nz, .done ; $7327
 	ld a, $05 ; $7329
 	ld [wMenuCursorY], a ; $732b
 	ld a, $0a ; $732e
 	ld [wMenuCursorX], a ; $7330
-Label_38_7333:
+.done:
 	pop af ; $7333
 	wram_bank ; $7334
 	ret ; $7338

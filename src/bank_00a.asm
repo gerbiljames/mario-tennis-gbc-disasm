@@ -1974,22 +1974,22 @@ ApplyClearStatusFlags:
 	clear_flag FLAG_DOUBLES ; $4d85
 	ld a, [wCharPosX + 1] ; $4d88
 	or a, a ; $4d8b
-	jr z, Label_0a_4d91 ; $4d8c
+	jr z, .checkDoubles ; $4d8c
 	set_flag FLAG_DOUBLES ; $4d8e
-Label_0a_4d91:
+.checkDoubles:
 	call SetRankingMatchClearFlags ; $4d91
 	ld a, [wCharPosX + 1] ; $4d94
 	or a, a ; $4d97
-	jr nz, Label_0a_4d9f ; $4d98
-Label_0a_4d9a:
+	jr nz, .setFlags ; $4d98
+.doubles:
 	call SetMinigameClearFlags ; $4d9a
-	jr Label_0a_4da8 ; $4d9d
-Label_0a_4d9f:
+	jr .done ; $4d9d
+.setFlags:
 	ld a, [wCharPosX + 2] ; $4d9f
 	or a, a ; $4da2
-	jr z, Label_0a_4d9a ; $4da3
+	jr z, .doubles ; $4da3
 	call SetMinigameClearFlagsAlt ; $4da5
-Label_0a_4da8:
+.done:
 	ret ; $4da8
 SetRankingMatchClearFlags:
 	ld c, $1c ; $4da9
