@@ -787,13 +787,13 @@ DormRoomInitScript_13:
 	call SetDormRoomEventTriggerCells_13 ; $5049
 	ld a, [wStoryModeEntryPoint] ; $504c
 	cp a, $0f ; $504f
-	jp z, Label_13_53a1 ; $5051
+	jp z, DormRoomNpc03_13.walkToBed ; $5051
 	sound $1c ; $5054
 	ld a, [wStoryModeEntryPoint] ; $5056
 	cp a, $01 ; $5059
-	jp z, Label_13_52e7 ; $505b
+	jp z, DormRoomNpc03_13.byStage ; $505b
 	cp a, $02 ; $505e
-	jp z, Label_13_5593 ; $5060
+	jp z, DormRoomNpc03_13.morningDoubles ; $5060
 	farcall EndCutsceneScriptMode ; $5063
 	ret ; $5066
 SetDormRoomEventTriggerCells_13:
@@ -1024,34 +1024,34 @@ Label_13_527a:
 DormRoomNpc03_13:
 	script_face_toward ACTOR_PLAYER, $03 ; $52b0
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $52b8
-	jr z, Label_13_52c5 ; $52bb
+	jr z, .altGreeting ; $52bb
 	script_set_text Text_31_289 ; $52bd
-	jr Label_13_52cb ; $52c3
-Label_13_52c5:
+	jr .prompt ; $52c3
+.altGreeting:
 	script_set_text Text_31_255 ; $52c5
-Label_13_52cb:
+.prompt:
 	ld a, $03 ; $52cb
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $52cd
 	farcall RunDialogueYesNoPrompt ; $52d0
 	farcall ScriptCloseDialogueWindow ; $52d3
 	script_wait_frames $05 ; $52d6
 	and a, a ; $52dd
-	jr nz, Label_13_52e3 ; $52de
+	jr nz, .doublesPrompt ; $52de
 	call RunAcademyQuestionsMenu ; $52e0
-Label_13_52e3:
+.doublesPrompt:
 	call RunPlayDoublesTodayPrompt ; $52e3
 	ret ; $52e6
-Label_13_52e7:
+.byStage:
 	call GetDormRoomStoryStage_13 ; $52e7
 	cp a, $01 ; $52ea
 	jp z, DormRoomArrivalCutscene_13 ; $52ec
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $52ef
-	jr z, Label_13_52fc ; $52f2
+	jr z, .stage2Text ; $52f2
 	script_set_text Text_31_263 ; $52f4
-	jr Label_13_5302 ; $52fa
-Label_13_52fc:
+	jr .placeActors ; $52fa
+.stage2Text:
 	script_set_text Text_31_258 ; $52fc
-Label_13_5302:
+.placeActors:
 	script_null_script ACTOR_PARTNER ; $5302
 	script_set_position ACTOR_PARTNER, $0b00, $1e00 ; $5307
 	script_face ACTOR_PARTNER, FACE_DOWN ; $5312
@@ -1060,18 +1060,18 @@ Label_13_5302:
 	script_fade_in $04 ; $532b
 	call WaitFadeEnd ; $5330
 	test_flag FLAG_DOUBLES ; $5333
-	jr z, Label_13_538f ; $5336
+	jr z, .speakShort ; $5336
 	farcall AdvanceDialogueTextCursor ; $5338
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $533b
-	jr nz, Label_13_5355 ; $533e
+	jr nz, .speak ; $533e
 	script_speak $03 ; $5340
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $5345
-	jr z, Label_13_5355 ; $5348
+	jr z, .speak ; $5348
 	farcall AdvanceDialogueTextCursor ; $534a
 	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_1 ; $534d
-	jr z, Label_13_5355 ; $5350
+	jr z, .speak ; $5350
 	farcall AdvanceDialogueTextCursor ; $5352
-Label_13_5355:
+.speak:
 	script_speak $03 ; $5355
 	script_set_anim ACTOR_PLAYER, $03 ; $535a
 	script_wait_idle ACTOR_PLAYER ; $5361
@@ -1089,22 +1089,22 @@ Label_13_5355:
 	set 4, [hl] ; $5385
 	script_wait_frames $05 ; $5387
 	ret ; $538e
-Label_13_538f:
+.speakShort:
 	script_speak $03 ; $538f
 	script_set_anim ACTOR_PLAYER, $03 ; $5394
 	script_wait_idle ACTOR_PLAYER ; $539b
 	ret ; $53a0
-Label_13_53a1:
+.walkToBed:
 	sound $41 ; $53a1
 	script_set_speed ACTOR_PLAYER, $0010 ; $53a3
 	script_player_speed $0040 ; $53ab
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $53b1
-	jr z, Label_13_53be ; $53b4
+	jr z, .altBedText ; $53b4
 	script_set_text Text_31_278 ; $53b6
-	jr Label_13_53c4 ; $53bc
-Label_13_53be:
+	jr .bedScene ; $53bc
+.altBedText:
 	script_set_text Text_31_244 ; $53be
-Label_13_53c4:
+.bedScene:
 	script_set_position ACTOR_PLAYER, $0b00, $0e00 ; $53c4
 	script_set_position $03, $0b00, $0a00 ; $53cf
 	script_move_player $0b00, $0a00 ; $53da
@@ -1121,15 +1121,15 @@ Label_13_53c4:
 	farcall ScriptCloseDialogueWindow ; $540e
 	script_wait_frames $05 ; $5411
 	and a, a ; $5418
-	jr nz, Label_13_5425 ; $5419
+	jr nz, .variantB ; $5419
 	script_speak $03 ; $541b
 	farcall AdvanceDialogueTextCursor ; $5420
-	jr Label_13_5430 ; $5423
-Label_13_5425:
+	jr .roommateWalks ; $5423
+.variantB:
 	farcall AdvanceDialogueTextCursor ; $5425
 	script_speak $03 ; $5428
 	set_flag FLAG_TEMP_SCENE_VARIANT_B ; $542d
-Label_13_5430:
+.roommateWalks:
 	script_set_speed $03, $0010 ; $5430
 	script_set_anim $03, $03 ; $5438
 	script_wait_idle $03 ; $543f
@@ -1149,14 +1149,14 @@ Label_13_5430:
 	farcall ScriptCloseDialogueWindow ; $5493
 	script_wait_frames $05 ; $5496
 	and a, a ; $549d
-	jr nz, Label_13_54aa ; $549e
+	jr nz, .variantBAlt ; $549e
 	script_speak $03 ; $54a0
 	farcall AdvanceDialogueTextCursor ; $54a5
-	jr Label_13_54b2 ; $54a8
-Label_13_54aa:
+	jr .continueScene ; $54a8
+.variantBAlt:
 	farcall AdvanceDialogueTextCursor ; $54aa
 	script_speak $03 ; $54ad
-Label_13_54b2:
+.continueScene:
 	script_move_target $03, $0b00, $0b00 ; $54b2
 	script_wait_move $03 ; $54bd
 	script_set_anim $03, $02 ; $54c2
@@ -1173,67 +1173,67 @@ Label_13_54b2:
 	farcall ScriptCloseDialogueWindow ; $54f8
 	script_wait_frames $05 ; $54fb
 	and a, a ; $5502
-	jr nz, Label_13_5508 ; $5503
+	jr nz, .sleepScene ; $5503
 	call RunAcademyQuestionsMenu ; $5505
-Label_13_5508:
+.sleepScene:
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $5508
-	jr nz, Label_13_5550 ; $550b
+	jr nz, .morningText ; $550b
 	test_flag FLAG_TEMP_SCENE_VARIANT_B ; $550d
-	jr nz, Label_13_5531 ; $5510
+	jr nz, .wakeScene ; $5510
 	script_wait_frames $14 ; $5512
 	script_set_anim $03, $03 ; $5519
 	script_wait_idle $03 ; $5520
 	script_set_text Text_31_256 ; $5525
 	script_speak $03 ; $552b
 	ret ; $5530
-Label_13_5531:
+.wakeScene:
 	script_wait_frames $14 ; $5531
 	script_set_anim $03, $03 ; $5538
 	script_wait_idle $03 ; $553f
 	script_set_text Text_31_257 ; $5544
 	script_speak $03 ; $554a
 	ret ; $554f
-Label_13_5550:
+.morningText:
 	test_flag FLAG_TEMP_SCENE_VARIANT_B ; $5550
-	jr nz, Label_13_5574 ; $5553
+	jr nz, .morningSpeak ; $5553
 	script_wait_frames $14 ; $5555
 	script_set_anim $03, $03 ; $555c
 	script_wait_idle $03 ; $5563
 	script_set_text Text_31_291 ; $5568
 	script_speak $03 ; $556e
 	ret ; $5573
-Label_13_5574:
+.morningSpeak:
 	script_wait_frames $14 ; $5574
 	script_set_anim $03, $03 ; $557b
 	script_wait_idle $03 ; $5582
 	script_set_text Text_31_290 ; $5587
 	script_speak $03 ; $558d
 	ret ; $5592
-Label_13_5593:
+.morningDoubles:
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $5593
-	jr z, Label_13_55a3 ; $5596
+	jr z, .morningAlt ; $5596
 	ld hl, $c2b2 ; $5598
 	ld de, $052a ; $559b
 	ld a, e ; $559e
 	ld [hl+], a ; $559f
 	ld [hl], d ; $55a0
-	jr Label_13_55ac ; $55a1
-Label_13_55a3:
+	jr .morningEnd ; $55a1
+.morningAlt:
 	ld hl, $c2b2 ; $55a3
 	ld de, $0524 ; $55a6
 	ld a, e ; $55a9
 	ld [hl+], a ; $55aa
 	ld [hl], d ; $55ab
-Label_13_55ac:
+.morningEnd:
 	ld hl, $c2b2 ; $55ac
 	ld a, [hl+] ; $55af
 	ld h, [hl] ; $55b0
 	ld l, a ; $55b1
 	farcall InitDialogueTextCursor ; $55b2
 	test_flag FLAG_DOUBLES ; $55b5
-	jr z, Label_13_55bd ; $55b8
+	jr z, .dayStart ; $55b8
 	farcall AdvanceDialogueTextCursor ; $55ba
-Label_13_55bd:
+.dayStart:
 	script_wait_frames $1e ; $55bd
 	script_move_target ACTOR_PLAYER, $0b00, $0e00 ; $55c4
 	script_fade_in $04 ; $55cf
@@ -1246,25 +1246,25 @@ Label_13_55bd:
 	script_speak $03 ; $55f7
 	call GetDormRoomStoryStage_13 ; $55fc
 	and a, a ; $55ff
-	jp z, Label_13_560d ; $5600
+	jp z, .dayText ; $5600
 	ld hl, $c2b2 ; $5603
 	ld a, [hl+] ; $5606
 	ld h, [hl] ; $5607
 	ld l, a ; $5608
 	ld a, $05 ; $5609
-	jr Label_13_5615 ; $560b
-Label_13_560d:
+	jr .daySpeak ; $560b
+.dayText:
 	ld hl, $c2b2 ; $560d
 	ld a, [hl+] ; $5610
 	ld h, [hl] ; $5611
 	ld l, a ; $5612
 	ld a, $02 ; $5613
-Label_13_5615:
+.daySpeak:
 	add a, l ; $5615
 	ld l, a ; $5616
-	jr nc, Label_13_561a ; $5617
+	jr nc, .dayScene ; $5617
 	inc h ; $5619
-Label_13_561a:
+.dayScene:
 	farcall InitDialogueTextCursor ; $561a
 	script_set_anim $03, $04 ; $561d
 	script_wait_idle $03 ; $5624
@@ -1274,7 +1274,7 @@ Label_13_561a:
 	farcall ScriptCloseDialogueWindow ; $5631
 	script_wait_frames $05 ; $5634
 	and a, a ; $563b
-	jr nz, Label_13_568f ; $563c
+	jr nz, .finalText ; $563c
 	ld hl, $c2b2 ; $563e
 	ld a, [hl+] ; $5641
 	ld h, [hl] ; $5642
@@ -1282,9 +1282,9 @@ Label_13_561a:
 	ld a, $03 ; $5644
 	add a, l ; $5646
 	ld l, a ; $5647
-	jr nc, Label_13_564b ; $5648
+	jr nc, .dayEnd ; $5648
 	inc h ; $564a
-Label_13_564b:
+.dayEnd:
 	farcall InitDialogueTextCursor ; $564b
 	script_speak $03 ; $564e
 	sound $00 ; $5653
@@ -1305,7 +1305,7 @@ Label_13_564b:
 	farcall SaveStoryReturnPoint ; $5688
 	farcall SaveStorySlotWithTimer ; $568b
 	ret ; $568e
-Label_13_568f:
+.finalText:
 	ld hl, $c2b2 ; $568f
 	ld a, [hl+] ; $5692
 	ld h, [hl] ; $5693
@@ -1313,9 +1313,9 @@ Label_13_568f:
 	ld a, $04 ; $5695
 	add a, l ; $5697
 	ld l, a ; $5698
-	jr nc, Label_13_569c ; $5699
+	jr nc, .finalSpeak ; $5699
 	inc h ; $569b
-Label_13_569c:
+.finalSpeak:
 	farcall InitDialogueTextCursor ; $569c
 	ld a, $03 ; $569f
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $56a1
@@ -1323,9 +1323,9 @@ Label_13_569c:
 	farcall ScriptCloseDialogueWindow ; $56a7
 	script_wait_frames $05 ; $56aa
 	and a, a ; $56b1
-	jr nz, Label_13_56b7 ; $56b2
+	jr nz, .done ; $56b2
 	call RunAcademyQuestionsMenu ; $56b4
-Label_13_56b7:
+.done:
 	call RunPlayDoublesTodayPrompt ; $56b7
 	ret ; $56ba
 RunPlayDoublesTodayPrompt:

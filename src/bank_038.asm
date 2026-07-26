@@ -923,67 +923,67 @@ DrawMatchTypeOptionBoxes:
 	ld hl, Data_38_45ff ; $4591
 	add a, l ; $4594
 	ld l, a ; $4595
-	jr nc, Label_38_4599 ; $4596
+	jr nc, .doublesBox ; $4596
 	inc h ; $4598
-Label_38_4599:
+.doublesBox:
 	ld a, [hl+] ; $4599
 	ld d, [hl] ; $459a
 	ld e, a ; $459b
 	ld c, $01 ; $459c
 	call GetMenuCursorLinearIndex ; $459e
 	or a, a ; $45a1
-	jr z, Label_38_45ac ; $45a2
+	jr z, .drawDoubles ; $45a2
 	ld bc, $3010 ; $45a4
 	call DrawUnselectedOptionBox ; $45a7
-	jr Label_38_45b2 ; $45aa
-Label_38_45ac:
+	jr .gamesBox ; $45aa
+.drawDoubles:
 	ld bc, $3010 ; $45ac
 	call DrawSelectedOptionBox ; $45af
-Label_38_45b2:
+.gamesBox:
 	ld a, [wMatchFormatGames] ; $45b2
 	add a, a ; $45b5
 	ld hl, Data_38_4603 ; $45b6
 	add a, l ; $45b9
 	ld l, a ; $45ba
-	jr nc, Label_38_45be ; $45bb
+	jr nc, .gamesOption ; $45bb
 	inc h ; $45bd
-Label_38_45be:
+.gamesOption:
 	ld a, [hl+] ; $45be
 	ld d, [hl] ; $45bf
 	ld e, a ; $45c0
 	ld c, $01 ; $45c1
 	call GetMenuCursorLinearIndex ; $45c3
 	cp a, $01 ; $45c6
-	jr z, Label_38_45d2 ; $45c8
+	jr z, .drawGames ; $45c8
 	ld bc, $3010 ; $45ca
 	call DrawUnselectedOptionBox ; $45cd
-	jr Label_38_45d8 ; $45d0
-Label_38_45d2:
+	jr .setsBox ; $45d0
+.drawGames:
 	ld bc, $3010 ; $45d2
 	call DrawSelectedOptionBox ; $45d5
-Label_38_45d8:
+.setsBox:
 	ld a, [wMatchFormatSets] ; $45d8
 	add a, a ; $45db
 	ld hl, Data_38_4607 ; $45dc
 	add a, l ; $45df
 	ld l, a ; $45e0
-	jr nc, Label_38_45e4 ; $45e1
+	jr nc, .setsOption ; $45e1
 	inc h ; $45e3
-Label_38_45e4:
+.setsOption:
 	ld a, [hl+] ; $45e4
 	ld d, [hl] ; $45e5
 	ld e, a ; $45e6
 	ld c, $01 ; $45e7
 	call GetMenuCursorLinearIndex ; $45e9
 	cp a, $02 ; $45ec
-	jr z, Label_38_45f8 ; $45ee
+	jr z, .drawSets ; $45ee
 	ld bc, $3010 ; $45f0
 	call DrawUnselectedOptionBox ; $45f3
-	jr Label_38_45fe ; $45f6
-Label_38_45f8:
+	jr .done ; $45f6
+.drawSets:
 	ld bc, $3010 ; $45f8
 	call DrawSelectedOptionBox ; $45fb
-Label_38_45fe:
+.done:
 	ret ; $45fe
 Data_38_45ff:
 	; $45ff, 4 bytes (bytes:4)
@@ -6920,14 +6920,14 @@ RunLinkMatchSequence:
 	push bc ; $7408
 	push de ; $7409
 	push hl ; $740a
-Label_38_740b:
+.waitReady:
 	farcall RunLinkMatchRulesMenu ; $740b
 	cp a, $ff ; $740e
-	jp z, Label_38_74da ; $7410
+	jp z, .done ; $7410
 	ld c, $10 ; $7413
 	call BeginFadeOut ; $7415
 	call WaitFadeEnd ; $7418
-Label_38_741b:
+.startMatch:
 	ldh a, [hWramBank] ; $741b
 	push af ; $741d
 	wram_bank $03 ; $741e
@@ -6949,12 +6949,12 @@ Label_38_741b:
 	call StoreLinkMatchCharInfo ; $744d
 	pop af ; $7450
 	cp a, $ff ; $7451
-	jr nz, Label_38_745f ; $7453
+	jr nz, .afterMatch ; $7453
 	farcall RestoreMenuScreenAndFadeIn ; $7455
 	ld a, $00 ; $7458
 	ld [wMenuSlideDirection], a ; $745a
-	jr Label_38_740b ; $745d
-Label_38_745f:
+	jr .waitReady ; $745d
+.afterMatch:
 	farcall ComputeUnlockedCourtFlags ; $745f
 	ld c, $00 ; $7462
 	call ExchangeLinkCharSelection ; $7464
@@ -6974,16 +6974,16 @@ Label_38_745f:
 	ld d, a ; $748c
 	ld a, [wLinkPartnerCourtMask] ; $748d
 	or a, d ; $7490
-	jr nz, Label_38_749c ; $7491
+	jr nz, .rematch ; $7491
 	farcall RunLinkCourtSelect4Menu ; $7493
 	cp a, $ff ; $7496
-	jr z, Label_38_741b ; $7498
-	jr Label_38_74a4 ; $749a
-Label_38_749c:
+	jr z, .startMatch ; $7498
+	jr .exchangeResult ; $749a
+.rematch:
 	farcall RunLinkCourtSelect9Menu ; $749c
 	cp a, $ff ; $749f
-	jp z, Label_38_741b ; $74a1
-Label_38_74a4:
+	jp z, .startMatch ; $74a1
+.exchangeResult:
 	ld d, a ; $74a4
 	ld a, d ; $74a5
 	ld [wCurrentlyUsedCourt], a ; $74a6
@@ -6995,10 +6995,10 @@ Label_38_74a4:
 	ld [wMatchOpponentChar], a ; $74b6
 	ld a, [wMatchIsDoubles] ; $74b9
 	or a, a ; $74bc
-	jr z, Label_38_74c4 ; $74bd
+	jr z, .cleanup ; $74bd
 	ld c, $40 ; $74bf
 	call ExchangeLinkCharSelection ; $74c1
-Label_38_74c4:
+.cleanup:
 	call ClearFrameTasks ; $74c4
 	xor a, a ; $74c7
 	ldh [$ffd8], a ; $74c8
@@ -7008,7 +7008,7 @@ Label_38_74c4:
 	ld [$c33f], a ; $74d2
 	farcall RunMatch ; $74d5
 	ld a, $01 ; $74d8
-Label_38_74da:
+.done:
 	push af ; $74da
 	call InitSerialLink ; $74db
 	pop af ; $74de
