@@ -291,41 +291,95 @@ BrianSpriteAnims:
 	dw BrianSpriteAnim17 ; $7f46
 	dw BrianSpriteAnim18 ; $7f48
 BrianSpriteAnim00:
-	INCBIN "data/bank_04d/d_7f4a.bin" ; $7f4a, 3 bytes
+	; $7f4a, 3 bytes (sprite_anim)
+	db $00
+	db $ff, $fd
 BrianSpriteAnim01:
-	INCBIN "data/bank_04d/d_7f4d.bin" ; $7f4d, 10 bytes
+	; $7f4d, 10 bytes (sprite_anim)
+	anim_frame $02, $0c
+	anim_frame $04, $06
+	anim_frame $03, $0c
+	anim_frame $04, $07
+	anim_loop $00
 BrianSpriteAnim02:
-	INCBIN "data/bank_04d/d_7f57.bin" ; $7f57, 6 bytes
+	; $7f57, 6 bytes (sprite_anim)
+	anim_frame $00, $0a
+	anim_frame $01, $0a
+	anim_loop $00
 BrianSpriteAnim03:
-	INCBIN "data/bank_04d/d_7f5d.bin" ; $7f5d, 18 bytes
+	; $7f5d, 18 bytes (sprite_anim)
+	anim_frame $17, $0a
+	anim_frame $18, $0a
+	anim_frame $17, $0a
+	anim_frame $19, $0a
+	anim_frame $17, $0a
+	anim_frame $18, $0a
+	anim_frame $17, $0a
+	anim_frame $19, $0a
+	anim_loop $00
 BrianSpriteAnim04:
-	INCBIN "data/bank_04d/d_7f6f.bin" ; $7f6f, 8 bytes
+	; $7f6f, 8 bytes (sprite_anim)
+	anim_frame $1a, $14
+	anim_frame $1b, $0f
+	anim_frame $1c, $2d
+	anim_loop $00
 BrianSpriteAnim05:
-	INCBIN "data/bank_04d/d_7f77.bin" ; $7f77, 6 bytes
+	; $7f77, 6 bytes (sprite_anim)
+	anim_frame $06, $04
+	anim_frame $07, $17
+	anim_set $01
 BrianSpriteAnim06:
-	INCBIN "data/bank_04d/d_7f7d.bin" ; $7f7d, 6 bytes
+	; $7f7d, 6 bytes (sprite_anim)
+	anim_frame $09, $04
+	anim_frame $0a, $17
+	anim_set $01
 BrianSpriteAnim07:
-	INCBIN "data/bank_04d/d_7f83.bin" ; $7f83, 6 bytes
+	; $7f83, 6 bytes (sprite_anim)
+	anim_frame $0c, $04
+	anim_frame $0d, $14
+	anim_set $01
 BrianSpriteAnim08:
-	INCBIN "data/bank_04d/d_7f89.bin" ; $7f89, 5 bytes
+	; $7f89, 5 bytes (sprite_anim)
+	db $15, $04, $16, $14, $fd
 BrianSpriteAnim09:
-	INCBIN "data/bank_04d/d_7f8e.bin" ; $7f8e, 4 bytes
+	; $7f8e, 4 bytes (sprite_anim)
+	anim_frame $06, $19
+	anim_set $01
 BrianSpriteAnim10:
-	INCBIN "data/bank_04d/d_7f92.bin" ; $7f92, 4 bytes
+	; $7f92, 4 bytes (sprite_anim)
+	anim_frame $09, $19
+	anim_set $01
 BrianSpriteAnim11:
-	INCBIN "data/bank_04d/d_7f96.bin" ; $7f96, 4 bytes
+	; $7f96, 4 bytes (sprite_anim)
+	anim_frame $0c, $19
+	anim_set $01
 BrianSpriteAnim12:
-	INCBIN "data/bank_04d/d_7f9a.bin" ; $7f9a, 3 bytes
+	; $7f9a, 3 bytes (sprite_anim)
+	db $15, $18, $fd
 BrianSpriteAnim13:
-	INCBIN "data/bank_04d/d_7f9d.bin" ; $7f9d, 3 bytes
+	; $7f9d, 3 bytes (sprite_anim)
+	db $05, $ff, $fd
 BrianSpriteAnim14:
-	INCBIN "data/bank_04d/d_7fa0.bin" ; $7fa0, 3 bytes
+	; $7fa0, 3 bytes (sprite_anim)
+	db $08, $ff, $fd
 BrianSpriteAnim15:
-	INCBIN "data/bank_04d/d_7fa3.bin" ; $7fa3, 3 bytes
+	; $7fa3, 3 bytes (sprite_anim)
+	db $0b, $ff, $fd
 BrianSpriteAnim16:
-	INCBIN "data/bank_04d/d_7fa6.bin" ; $7fa6, 3 bytes
+	; $7fa6, 3 bytes (sprite_anim)
+	db $0e, $ff, $fd
 BrianSpriteAnim17:
-	INCBIN "data/bank_04d/d_7fa9.bin" ; $7fa9, 12 bytes
+	; $7fa9, 12 bytes (sprite_anim)
+	anim_frame $0f, $07
+	anim_frame $10, $07
+	anim_frame $0f, $07
+	anim_frame $10, $07
+	anim_frame $0f, $07
+	anim_set $10
 BrianSpriteAnim18:
-	INCBIN "data/bank_04d/d_7fb5.bin" ; $7fb5, 8 bytes
+	; $7fb5, 8 bytes (sprite_anim)
+	anim_frame $11, $12
+	anim_frame $12, $14
+	anim_frame $13, $16
+	anim_set $01
 	; $7fbd, 67 bytes fill to bank end (linker-padded)

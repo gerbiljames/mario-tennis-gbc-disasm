@@ -291,41 +291,110 @@ PeachSpriteAnims:
 	dw PeachSpriteAnim17 ; $7f46
 	dw PeachSpriteAnim18 ; $7f48
 PeachSpriteAnim00:
-	INCBIN "data/bank_054/d_7f4a.bin" ; $7f4a, 3 bytes
+	; $7f4a, 3 bytes (sprite_anim)
+	db $00
+	db $ff, $fd
 PeachSpriteAnim01:
-	INCBIN "data/bank_054/d_7f4d.bin" ; $7f4d, 10 bytes
+	; $7f4d, 10 bytes (sprite_anim)
+	anim_frame $02, $0c
+	anim_frame $04, $06
+	anim_frame $03, $0c
+	anim_frame $04, $07
+	anim_loop $00
 PeachSpriteAnim02:
-	INCBIN "data/bank_054/d_7f57.bin" ; $7f57, 6 bytes
+	; $7f57, 6 bytes (sprite_anim)
+	anim_frame $00, $0a
+	anim_frame $01, $0a
+	anim_loop $00
 PeachSpriteAnim03:
-	INCBIN "data/bank_054/d_7f5d.bin" ; $7f5d, 38 bytes
+	; $7f5d, 38 bytes (sprite_anim)
+	anim_flip $20
+	anim_frame $18, $0a
+	anim_frame $19, $0a
+	anim_frame $18, $0a
+	anim_frame $19, $0a
+	anim_frame $18, $0a
+	anim_frame $19, $0a
+	anim_frame $18, $0a
+	anim_frame $19, $0a
+	anim_flip $00
+	anim_frame $18, $0a
+	anim_frame $19, $0a
+	anim_frame $18, $0a
+	anim_frame $19, $0a
+	anim_frame $18, $0a
+	anim_frame $19, $0a
+	anim_frame $18, $0a
+	anim_frame $19, $0a
+	anim_loop $00
 PeachSpriteAnim04:
-	INCBIN "data/bank_054/d_7f83.bin" ; $7f83, 18 bytes
+	; $7f83, 18 bytes (sprite_anim)
+	anim_frame $1a, $14
+	anim_frame $1b, $14
+	anim_flip $20
+	anim_frame $1c, $0a
+	anim_frame $1b, $0a
+	anim_flip $00
+	anim_frame $1c, $0a
+	anim_frame $1b, $0a
+	anim_loop $04
 PeachSpriteAnim05:
-	INCBIN "data/bank_054/d_7f95.bin" ; $7f95, 6 bytes
+	; $7f95, 6 bytes (sprite_anim)
+	anim_frame $06, $04
+	anim_frame $07, $17
+	anim_set $01
 PeachSpriteAnim06:
-	INCBIN "data/bank_054/d_7f9b.bin" ; $7f9b, 6 bytes
+	; $7f9b, 6 bytes (sprite_anim)
+	anim_frame $09, $04
+	anim_frame $0a, $17
+	anim_set $01
 PeachSpriteAnim07:
-	INCBIN "data/bank_054/d_7fa1.bin" ; $7fa1, 6 bytes
+	; $7fa1, 6 bytes (sprite_anim)
+	anim_frame $0c, $04
+	anim_frame $0d, $14
+	anim_set $01
 PeachSpriteAnim08:
-	INCBIN "data/bank_054/d_7fa7.bin" ; $7fa7, 5 bytes
+	; $7fa7, 5 bytes (sprite_anim)
+	db $15, $04, $16, $14, $fd
 PeachSpriteAnim09:
-	INCBIN "data/bank_054/d_7fac.bin" ; $7fac, 4 bytes
+	; $7fac, 4 bytes (sprite_anim)
+	anim_frame $06, $19
+	anim_set $01
 PeachSpriteAnim10:
-	INCBIN "data/bank_054/d_7fb0.bin" ; $7fb0, 4 bytes
+	; $7fb0, 4 bytes (sprite_anim)
+	anim_frame $09, $19
+	anim_set $01
 PeachSpriteAnim11:
-	INCBIN "data/bank_054/d_7fb4.bin" ; $7fb4, 4 bytes
+	; $7fb4, 4 bytes (sprite_anim)
+	anim_frame $0c, $19
+	anim_set $01
 PeachSpriteAnim12:
-	INCBIN "data/bank_054/d_7fb8.bin" ; $7fb8, 3 bytes
+	; $7fb8, 3 bytes (sprite_anim)
+	db $15, $18, $fd
 PeachSpriteAnim13:
-	INCBIN "data/bank_054/d_7fbb.bin" ; $7fbb, 3 bytes
+	; $7fbb, 3 bytes (sprite_anim)
+	db $05, $ff, $fd
 PeachSpriteAnim14:
-	INCBIN "data/bank_054/d_7fbe.bin" ; $7fbe, 3 bytes
+	; $7fbe, 3 bytes (sprite_anim)
+	db $08, $ff, $fd
 PeachSpriteAnim15:
-	INCBIN "data/bank_054/d_7fc1.bin" ; $7fc1, 3 bytes
+	; $7fc1, 3 bytes (sprite_anim)
+	db $0b, $ff, $fd
 PeachSpriteAnim16:
-	INCBIN "data/bank_054/d_7fc4.bin" ; $7fc4, 3 bytes
+	; $7fc4, 3 bytes (sprite_anim)
+	db $0e, $ff, $fd
 PeachSpriteAnim17:
-	INCBIN "data/bank_054/d_7fc7.bin" ; $7fc7, 12 bytes
+	; $7fc7, 12 bytes (sprite_anim)
+	anim_frame $0f, $07
+	anim_frame $10, $07
+	anim_frame $0f, $07
+	anim_frame $10, $07
+	anim_frame $0f, $07
+	anim_set $10
 PeachSpriteAnim18:
-	INCBIN "data/bank_054/d_7fd3.bin" ; $7fd3, 8 bytes
+	; $7fd3, 8 bytes (sprite_anim)
+	anim_frame $11, $12
+	anim_frame $12, $14
+	anim_frame $13, $16
+	anim_set $01
 	; $7fdb, 37 bytes fill to bank end (linker-padded)

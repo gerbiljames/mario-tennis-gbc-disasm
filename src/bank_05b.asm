@@ -291,41 +291,92 @@ LuigiSpriteAnims:
 	dw LuigiSpriteAnim17 ; $7f46
 	dw LuigiSpriteAnim18 ; $7f48
 LuigiSpriteAnim00:
-	INCBIN "data/bank_05b/d_7f4a.bin" ; $7f4a, 3 bytes
+	; $7f4a, 3 bytes (sprite_anim)
+	db $00
+	db $ff, $fd
 LuigiSpriteAnim01:
-	INCBIN "data/bank_05b/d_7f4d.bin" ; $7f4d, 10 bytes
+	; $7f4d, 10 bytes (sprite_anim)
+	anim_frame $02, $0c
+	anim_frame $04, $06
+	anim_frame $03, $0c
+	anim_frame $04, $07
+	anim_loop $00
 LuigiSpriteAnim02:
-	INCBIN "data/bank_05b/d_7f57.bin" ; $7f57, 6 bytes
+	; $7f57, 6 bytes (sprite_anim)
+	anim_frame $00, $0a
+	anim_frame $01, $0a
+	anim_loop $00
 LuigiSpriteAnim03:
-	INCBIN "data/bank_05b/d_7f5d.bin" ; $7f5d, 12 bytes
+	; $7f5d, 12 bytes (sprite_anim)
+	anim_frame $17, $0a
+	anim_frame $18, $0a
+	anim_frame $17, $0a
+	anim_frame $18, $0a
+	anim_frame $19, $19
+	anim_loop $02
 LuigiSpriteAnim04:
-	INCBIN "data/bank_05b/d_7f69.bin" ; $7f69, 8 bytes
+	; $7f69, 8 bytes (sprite_anim)
+	anim_frame $1a, $14
+	anim_frame $1b, $0f
+	anim_frame $1c, $3c
+	anim_loop $00
 LuigiSpriteAnim05:
-	INCBIN "data/bank_05b/d_7f71.bin" ; $7f71, 6 bytes
+	; $7f71, 6 bytes (sprite_anim)
+	anim_frame $06, $04
+	anim_frame $07, $17
+	anim_set $01
 LuigiSpriteAnim06:
-	INCBIN "data/bank_05b/d_7f77.bin" ; $7f77, 6 bytes
+	; $7f77, 6 bytes (sprite_anim)
+	anim_frame $09, $04
+	anim_frame $0a, $17
+	anim_set $01
 LuigiSpriteAnim07:
-	INCBIN "data/bank_05b/d_7f7d.bin" ; $7f7d, 6 bytes
+	; $7f7d, 6 bytes (sprite_anim)
+	anim_frame $0c, $04
+	anim_frame $0d, $14
+	anim_set $01
 LuigiSpriteAnim08:
-	INCBIN "data/bank_05b/d_7f83.bin" ; $7f83, 5 bytes
+	; $7f83, 5 bytes (sprite_anim)
+	db $15, $04, $16, $14, $fd
 LuigiSpriteAnim09:
-	INCBIN "data/bank_05b/d_7f88.bin" ; $7f88, 4 bytes
+	; $7f88, 4 bytes (sprite_anim)
+	anim_frame $06, $19
+	anim_set $01
 LuigiSpriteAnim10:
-	INCBIN "data/bank_05b/d_7f8c.bin" ; $7f8c, 4 bytes
+	; $7f8c, 4 bytes (sprite_anim)
+	anim_frame $09, $19
+	anim_set $01
 LuigiSpriteAnim11:
-	INCBIN "data/bank_05b/d_7f90.bin" ; $7f90, 4 bytes
+	; $7f90, 4 bytes (sprite_anim)
+	anim_frame $0c, $19
+	anim_set $01
 LuigiSpriteAnim12:
-	INCBIN "data/bank_05b/d_7f94.bin" ; $7f94, 3 bytes
+	; $7f94, 3 bytes (sprite_anim)
+	db $15, $18, $fd
 LuigiSpriteAnim13:
-	INCBIN "data/bank_05b/d_7f97.bin" ; $7f97, 3 bytes
+	; $7f97, 3 bytes (sprite_anim)
+	db $05, $ff, $fd
 LuigiSpriteAnim14:
-	INCBIN "data/bank_05b/d_7f9a.bin" ; $7f9a, 3 bytes
+	; $7f9a, 3 bytes (sprite_anim)
+	db $08, $ff, $fd
 LuigiSpriteAnim15:
-	INCBIN "data/bank_05b/d_7f9d.bin" ; $7f9d, 3 bytes
+	; $7f9d, 3 bytes (sprite_anim)
+	db $0b, $ff, $fd
 LuigiSpriteAnim16:
-	INCBIN "data/bank_05b/d_7fa0.bin" ; $7fa0, 3 bytes
+	; $7fa0, 3 bytes (sprite_anim)
+	db $0e, $ff, $fd
 LuigiSpriteAnim17:
-	INCBIN "data/bank_05b/d_7fa3.bin" ; $7fa3, 12 bytes
+	; $7fa3, 12 bytes (sprite_anim)
+	anim_frame $0f, $07
+	anim_frame $10, $07
+	anim_frame $0f, $07
+	anim_frame $10, $07
+	anim_frame $0f, $07
+	anim_set $10
 LuigiSpriteAnim18:
-	INCBIN "data/bank_05b/d_7faf.bin" ; $7faf, 8 bytes
+	; $7faf, 8 bytes (sprite_anim)
+	anim_frame $11, $12
+	anim_frame $12, $14
+	anim_frame $13, $16
+	anim_set $01
 	; $7fb7, 73 bytes fill to bank end (linker-padded)

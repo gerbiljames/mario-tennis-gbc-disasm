@@ -291,41 +291,96 @@ BowserSpriteAnims:
 	dw BowserSpriteAnim17 ; $7f46
 	dw BowserSpriteAnim18 ; $7f48
 BowserSpriteAnim00:
-	INCBIN "data/bank_053/d_7f4a.bin" ; $7f4a, 3 bytes
+	; $7f4a, 3 bytes (sprite_anim)
+	db $00
+	db $ff, $fd
 BowserSpriteAnim01:
-	INCBIN "data/bank_053/d_7f4d.bin" ; $7f4d, 10 bytes
+	; $7f4d, 10 bytes (sprite_anim)
+	anim_frame $02, $0c
+	anim_frame $04, $06
+	anim_frame $03, $0c
+	anim_frame $04, $07
+	anim_loop $00
 BowserSpriteAnim02:
-	INCBIN "data/bank_053/d_7f57.bin" ; $7f57, 6 bytes
+	; $7f57, 6 bytes (sprite_anim)
+	anim_frame $00, $0a
+	anim_frame $01, $0a
+	anim_loop $00
 BowserSpriteAnim03:
-	INCBIN "data/bank_053/d_7f5d.bin" ; $7f5d, 18 bytes
+	; $7f5d, 18 bytes (sprite_anim)
+	anim_flip $00
+	anim_frame $18, $08
+	anim_frame $19, $0c
+	anim_frame $17, $24
+	anim_flip $20
+	anim_frame $18, $08
+	anim_frame $19, $0c
+	anim_frame $17, $24
+	anim_loop $00
 BowserSpriteAnim04:
-	INCBIN "data/bank_053/d_7f6f.bin" ; $7f6f, 10 bytes
+	; $7f6f, 10 bytes (sprite_anim)
+	anim_frame $1a, $06
+	anim_frame $1b, $06
+	anim_frame $1c, $06
+	anim_frame $1b, $06
+	anim_loop $00
 BowserSpriteAnim05:
-	INCBIN "data/bank_053/d_7f79.bin" ; $7f79, 6 bytes
+	; $7f79, 6 bytes (sprite_anim)
+	anim_frame $06, $04
+	anim_frame $07, $17
+	anim_set $01
 BowserSpriteAnim06:
-	INCBIN "data/bank_053/d_7f7f.bin" ; $7f7f, 6 bytes
+	; $7f7f, 6 bytes (sprite_anim)
+	anim_frame $09, $04
+	anim_frame $0a, $17
+	anim_set $01
 BowserSpriteAnim07:
-	INCBIN "data/bank_053/d_7f85.bin" ; $7f85, 6 bytes
+	; $7f85, 6 bytes (sprite_anim)
+	anim_frame $0c, $04
+	anim_frame $0d, $14
+	anim_set $01
 BowserSpriteAnim08:
-	INCBIN "data/bank_053/d_7f8b.bin" ; $7f8b, 5 bytes
+	; $7f8b, 5 bytes (sprite_anim)
+	db $15, $04, $16, $14, $fd
 BowserSpriteAnim09:
-	INCBIN "data/bank_053/d_7f90.bin" ; $7f90, 4 bytes
+	; $7f90, 4 bytes (sprite_anim)
+	anim_frame $06, $19
+	anim_set $01
 BowserSpriteAnim10:
-	INCBIN "data/bank_053/d_7f94.bin" ; $7f94, 4 bytes
+	; $7f94, 4 bytes (sprite_anim)
+	anim_frame $09, $19
+	anim_set $01
 BowserSpriteAnim11:
-	INCBIN "data/bank_053/d_7f98.bin" ; $7f98, 4 bytes
+	; $7f98, 4 bytes (sprite_anim)
+	anim_frame $0c, $19
+	anim_set $01
 BowserSpriteAnim12:
-	INCBIN "data/bank_053/d_7f9c.bin" ; $7f9c, 3 bytes
+	; $7f9c, 3 bytes (sprite_anim)
+	db $15, $18, $fd
 BowserSpriteAnim13:
-	INCBIN "data/bank_053/d_7f9f.bin" ; $7f9f, 3 bytes
+	; $7f9f, 3 bytes (sprite_anim)
+	db $05, $ff, $fd
 BowserSpriteAnim14:
-	INCBIN "data/bank_053/d_7fa2.bin" ; $7fa2, 3 bytes
+	; $7fa2, 3 bytes (sprite_anim)
+	db $08, $ff, $fd
 BowserSpriteAnim15:
-	INCBIN "data/bank_053/d_7fa5.bin" ; $7fa5, 3 bytes
+	; $7fa5, 3 bytes (sprite_anim)
+	db $0b, $ff, $fd
 BowserSpriteAnim16:
-	INCBIN "data/bank_053/d_7fa8.bin" ; $7fa8, 3 bytes
+	; $7fa8, 3 bytes (sprite_anim)
+	db $0e, $ff, $fd
 BowserSpriteAnim17:
-	INCBIN "data/bank_053/d_7fab.bin" ; $7fab, 12 bytes
+	; $7fab, 12 bytes (sprite_anim)
+	anim_frame $0f, $07
+	anim_frame $10, $07
+	anim_frame $0f, $07
+	anim_frame $10, $07
+	anim_frame $0f, $07
+	anim_set $10
 BowserSpriteAnim18:
-	INCBIN "data/bank_053/d_7fb7.bin" ; $7fb7, 8 bytes
+	; $7fb7, 8 bytes (sprite_anim)
+	anim_frame $11, $12
+	anim_frame $12, $14
+	anim_frame $13, $16
+	anim_set $01
 	; $7fbf, 65 bytes fill to bank end (linker-padded)

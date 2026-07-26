@@ -291,41 +291,85 @@ BallMachineSpriteAnims:
 	dw BallMachineSpriteAnim17 ; $7f46
 	dw BallMachineSpriteAnim18 ; $7f48
 BallMachineSpriteAnim00:
-	INCBIN "data/bank_05a/d_7f4a.bin" ; $7f4a, 3 bytes
+	; $7f4a, 3 bytes (sprite_anim)
+	db $00
+	db $ff, $fd
 BallMachineSpriteAnim01:
-	INCBIN "data/bank_05a/d_7f4d.bin" ; $7f4d, 10 bytes
+	; $7f4d, 10 bytes (sprite_anim)
+	anim_frame $02, $05
+	anim_frame $03, $05
+	anim_frame $04, $05
+	anim_frame $03, $05
+	anim_loop $00
 BallMachineSpriteAnim02:
-	INCBIN "data/bank_05a/d_7f57.bin" ; $7f57, 6 bytes
+	; $7f57, 6 bytes (sprite_anim)
+	anim_frame $00, $0a
+	anim_frame $01, $0a
+	anim_loop $00
 BallMachineSpriteAnim03:
-	INCBIN "data/bank_05a/d_7f5d.bin" ; $7f5d, 2 bytes
+	; $7f5d, 2 bytes (sprite_anim)
+	anim_set $01
 BallMachineSpriteAnim04:
-	INCBIN "data/bank_05a/d_7f5f.bin" ; $7f5f, 2 bytes
+	; $7f5f, 2 bytes (sprite_anim)
+	anim_set $01
 BallMachineSpriteAnim05:
-	INCBIN "data/bank_05a/d_7f61.bin" ; $7f61, 8 bytes
+	; $7f61, 8 bytes (sprite_anim)
+	anim_frame $05, $0a
+	anim_frame $06, $05
+	anim_frame $07, $0f
+	anim_set $01
 BallMachineSpriteAnim06:
-	INCBIN "data/bank_05a/d_7f69.bin" ; $7f69, 6 bytes
+	; $7f69, 6 bytes (sprite_anim)
+	anim_frame $09, $04
+	anim_frame $0a, $17
+	anim_set $01
 BallMachineSpriteAnim07:
-	INCBIN "data/bank_05a/d_7f6f.bin" ; $7f6f, 6 bytes
+	; $7f6f, 6 bytes (sprite_anim)
+	anim_frame $0c, $04
+	anim_frame $0d, $14
+	anim_set $01
 BallMachineSpriteAnim08:
-	INCBIN "data/bank_05a/d_7f75.bin" ; $7f75, 5 bytes
+	; $7f75, 5 bytes (sprite_anim)
+	db $15, $04, $16, $14, $fd
 BallMachineSpriteAnim09:
-	INCBIN "data/bank_05a/d_7f7a.bin" ; $7f7a, 4 bytes
+	; $7f7a, 4 bytes (sprite_anim)
+	anim_frame $06, $19
+	anim_set $01
 BallMachineSpriteAnim10:
-	INCBIN "data/bank_05a/d_7f7e.bin" ; $7f7e, 4 bytes
+	; $7f7e, 4 bytes (sprite_anim)
+	anim_frame $09, $19
+	anim_set $01
 BallMachineSpriteAnim11:
-	INCBIN "data/bank_05a/d_7f82.bin" ; $7f82, 4 bytes
+	; $7f82, 4 bytes (sprite_anim)
+	anim_frame $0c, $19
+	anim_set $01
 BallMachineSpriteAnim12:
-	INCBIN "data/bank_05a/d_7f86.bin" ; $7f86, 3 bytes
+	; $7f86, 3 bytes (sprite_anim)
+	db $15, $18, $fd
 BallMachineSpriteAnim13:
-	INCBIN "data/bank_05a/d_7f89.bin" ; $7f89, 3 bytes
+	; $7f89, 3 bytes (sprite_anim)
+	db $05, $ff, $fd
 BallMachineSpriteAnim14:
-	INCBIN "data/bank_05a/d_7f8c.bin" ; $7f8c, 3 bytes
+	; $7f8c, 3 bytes (sprite_anim)
+	db $08, $ff, $fd
 BallMachineSpriteAnim15:
-	INCBIN "data/bank_05a/d_7f8f.bin" ; $7f8f, 3 bytes
+	; $7f8f, 3 bytes (sprite_anim)
+	db $0b, $ff, $fd
 BallMachineSpriteAnim16:
-	INCBIN "data/bank_05a/d_7f92.bin" ; $7f92, 3 bytes
+	; $7f92, 3 bytes (sprite_anim)
+	db $0e, $ff, $fd
 BallMachineSpriteAnim17:
-	INCBIN "data/bank_05a/d_7f95.bin" ; $7f95, 12 bytes
+	; $7f95, 12 bytes (sprite_anim)
+	anim_frame $0f, $07
+	anim_frame $10, $07
+	anim_frame $0f, $07
+	anim_frame $10, $07
+	anim_frame $0f, $07
+	anim_set $10
 BallMachineSpriteAnim18:
-	INCBIN "data/bank_05a/d_7fa1.bin" ; $7fa1, 8 bytes
+	; $7fa1, 8 bytes (sprite_anim)
+	anim_frame $11, $12
+	anim_frame $12, $14
+	anim_frame $13, $16
+	anim_set $01
 	; $7fa9, 87 bytes fill to bank end (linker-padded)

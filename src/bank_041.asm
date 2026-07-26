@@ -291,41 +291,91 @@ NinaSpriteAnims:
 	dw NinaSpriteAnim17 ; $7f46
 	dw NinaSpriteAnim18 ; $7f48
 NinaSpriteAnim00:
-	INCBIN "data/bank_041/d_7f4a.bin" ; $7f4a, 3 bytes
+	; $7f4a, 3 bytes (sprite_anim)
+	db $00
+	db $ff, $fd
 NinaSpriteAnim01:
-	INCBIN "data/bank_041/d_7f4d.bin" ; $7f4d, 10 bytes
+	; $7f4d, 10 bytes (sprite_anim)
+	anim_frame $02, $0c
+	anim_frame $04, $06
+	anim_frame $03, $0c
+	anim_frame $04, $07
+	anim_loop $00
 NinaSpriteAnim02:
-	INCBIN "data/bank_041/d_7f57.bin" ; $7f57, 6 bytes
+	; $7f57, 6 bytes (sprite_anim)
+	anim_frame $00, $0a
+	anim_frame $01, $0a
+	anim_loop $00
 NinaSpriteAnim03:
-	INCBIN "data/bank_041/d_7f5d.bin" ; $7f5d, 8 bytes
+	; $7f5d, 8 bytes (sprite_anim)
+	anim_frame $17, $0f
+	anim_frame $18, $0f
+	anim_frame $19, $0f
+	anim_loop $02
 NinaSpriteAnim04:
-	INCBIN "data/bank_041/d_7f65.bin" ; $7f65, 10 bytes
+	; $7f65, 10 bytes (sprite_anim)
+	anim_frame $1a, $0c
+	anim_frame $1b, $0c
+	anim_frame $1c, $0c
+	anim_frame $1b, $0c
+	anim_loop $00
 NinaSpriteAnim05:
-	INCBIN "data/bank_041/d_7f6f.bin" ; $7f6f, 6 bytes
+	; $7f6f, 6 bytes (sprite_anim)
+	anim_frame $06, $04
+	anim_frame $07, $17
+	anim_set $01
 NinaSpriteAnim06:
-	INCBIN "data/bank_041/d_7f75.bin" ; $7f75, 6 bytes
+	; $7f75, 6 bytes (sprite_anim)
+	anim_frame $09, $04
+	anim_frame $0a, $17
+	anim_set $01
 NinaSpriteAnim07:
-	INCBIN "data/bank_041/d_7f7b.bin" ; $7f7b, 6 bytes
+	; $7f7b, 6 bytes (sprite_anim)
+	anim_frame $0c, $04
+	anim_frame $0d, $14
+	anim_set $01
 NinaSpriteAnim08:
-	INCBIN "data/bank_041/d_7f81.bin" ; $7f81, 5 bytes
+	; $7f81, 5 bytes (sprite_anim)
+	db $15, $04, $16, $14, $fd
 NinaSpriteAnim09:
-	INCBIN "data/bank_041/d_7f86.bin" ; $7f86, 4 bytes
+	; $7f86, 4 bytes (sprite_anim)
+	anim_frame $06, $19
+	anim_set $01
 NinaSpriteAnim10:
-	INCBIN "data/bank_041/d_7f8a.bin" ; $7f8a, 4 bytes
+	; $7f8a, 4 bytes (sprite_anim)
+	anim_frame $09, $19
+	anim_set $01
 NinaSpriteAnim11:
-	INCBIN "data/bank_041/d_7f8e.bin" ; $7f8e, 4 bytes
+	; $7f8e, 4 bytes (sprite_anim)
+	anim_frame $0c, $19
+	anim_set $01
 NinaSpriteAnim12:
-	INCBIN "data/bank_041/d_7f92.bin" ; $7f92, 3 bytes
+	; $7f92, 3 bytes (sprite_anim)
+	db $15, $18, $fd
 NinaSpriteAnim13:
-	INCBIN "data/bank_041/d_7f95.bin" ; $7f95, 3 bytes
+	; $7f95, 3 bytes (sprite_anim)
+	db $05, $ff, $fd
 NinaSpriteAnim14:
-	INCBIN "data/bank_041/d_7f98.bin" ; $7f98, 3 bytes
+	; $7f98, 3 bytes (sprite_anim)
+	db $08, $ff, $fd
 NinaSpriteAnim15:
-	INCBIN "data/bank_041/d_7f9b.bin" ; $7f9b, 3 bytes
+	; $7f9b, 3 bytes (sprite_anim)
+	db $0b, $ff, $fd
 NinaSpriteAnim16:
-	INCBIN "data/bank_041/d_7f9e.bin" ; $7f9e, 3 bytes
+	; $7f9e, 3 bytes (sprite_anim)
+	db $0e, $ff, $fd
 NinaSpriteAnim17:
-	INCBIN "data/bank_041/d_7fa1.bin" ; $7fa1, 12 bytes
+	; $7fa1, 12 bytes (sprite_anim)
+	anim_frame $0f, $07
+	anim_frame $10, $07
+	anim_frame $0f, $07
+	anim_frame $10, $07
+	anim_frame $0f, $07
+	anim_set $10
 NinaSpriteAnim18:
-	INCBIN "data/bank_041/d_7fad.bin" ; $7fad, 8 bytes
+	; $7fad, 8 bytes (sprite_anim)
+	anim_frame $11, $12
+	anim_frame $12, $14
+	anim_frame $13, $16
+	anim_set $01
 	; $7fb5, 75 bytes fill to bank end (linker-padded)

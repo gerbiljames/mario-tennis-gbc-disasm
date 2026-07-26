@@ -291,41 +291,101 @@ MarioSpriteAnims:
 	dw MarioSpriteAnim17 ; $7f46
 	dw MarioSpriteAnim18 ; $7f48
 MarioSpriteAnim00:
-	INCBIN "data/bank_050/d_7f4a.bin" ; $7f4a, 3 bytes
+	; $7f4a, 3 bytes (sprite_anim)
+	db $00
+	db $ff, $fd
 MarioSpriteAnim01:
-	INCBIN "data/bank_050/d_7f4d.bin" ; $7f4d, 10 bytes
+	; $7f4d, 10 bytes (sprite_anim)
+	anim_frame $02, $0c
+	anim_frame $04, $06
+	anim_frame $03, $0c
+	anim_frame $04, $07
+	anim_loop $00
 MarioSpriteAnim02:
-	INCBIN "data/bank_050/d_7f57.bin" ; $7f57, 6 bytes
+	; $7f57, 6 bytes (sprite_anim)
+	anim_frame $00, $0a
+	anim_frame $01, $0a
+	anim_loop $00
 MarioSpriteAnim03:
-	INCBIN "data/bank_050/d_7f5d.bin" ; $7f5d, 30 bytes
+	; $7f5d, 30 bytes (sprite_anim)
+	anim_flip $20
+	anim_frame $17, $0a
+	anim_frame $18, $0a
+	anim_frame $19, $0a
+	anim_frame $17, $0a
+	anim_frame $18, $0a
+	anim_frame $19, $0a
+	anim_flip $00
+	anim_frame $17, $0a
+	anim_frame $18, $0a
+	anim_frame $19, $0a
+	anim_frame $17, $0a
+	anim_frame $18, $0a
+	anim_frame $19, $0a
+	anim_loop $00
 MarioSpriteAnim04:
-	INCBIN "data/bank_050/d_7f7b.bin" ; $7f7b, 8 bytes
+	; $7f7b, 8 bytes (sprite_anim)
+	anim_frame $1a, $14
+	anim_frame $1b, $08
+	anim_frame $1c, $3c
+	anim_loop $00
 MarioSpriteAnim05:
-	INCBIN "data/bank_050/d_7f83.bin" ; $7f83, 6 bytes
+	; $7f83, 6 bytes (sprite_anim)
+	anim_frame $06, $04
+	anim_frame $07, $17
+	anim_set $01
 MarioSpriteAnim06:
-	INCBIN "data/bank_050/d_7f89.bin" ; $7f89, 6 bytes
+	; $7f89, 6 bytes (sprite_anim)
+	anim_frame $09, $04
+	anim_frame $0a, $17
+	anim_set $01
 MarioSpriteAnim07:
-	INCBIN "data/bank_050/d_7f8f.bin" ; $7f8f, 6 bytes
+	; $7f8f, 6 bytes (sprite_anim)
+	anim_frame $0c, $04
+	anim_frame $0d, $14
+	anim_set $01
 MarioSpriteAnim08:
-	INCBIN "data/bank_050/d_7f95.bin" ; $7f95, 5 bytes
+	; $7f95, 5 bytes (sprite_anim)
+	db $15, $04, $16, $14, $fd
 MarioSpriteAnim09:
-	INCBIN "data/bank_050/d_7f9a.bin" ; $7f9a, 4 bytes
+	; $7f9a, 4 bytes (sprite_anim)
+	anim_frame $06, $19
+	anim_set $01
 MarioSpriteAnim10:
-	INCBIN "data/bank_050/d_7f9e.bin" ; $7f9e, 4 bytes
+	; $7f9e, 4 bytes (sprite_anim)
+	anim_frame $09, $19
+	anim_set $01
 MarioSpriteAnim11:
-	INCBIN "data/bank_050/d_7fa2.bin" ; $7fa2, 4 bytes
+	; $7fa2, 4 bytes (sprite_anim)
+	anim_frame $0c, $19
+	anim_set $01
 MarioSpriteAnim12:
-	INCBIN "data/bank_050/d_7fa6.bin" ; $7fa6, 3 bytes
+	; $7fa6, 3 bytes (sprite_anim)
+	db $15, $18, $fd
 MarioSpriteAnim13:
-	INCBIN "data/bank_050/d_7fa9.bin" ; $7fa9, 3 bytes
+	; $7fa9, 3 bytes (sprite_anim)
+	db $05, $ff, $fd
 MarioSpriteAnim14:
-	INCBIN "data/bank_050/d_7fac.bin" ; $7fac, 3 bytes
+	; $7fac, 3 bytes (sprite_anim)
+	db $08, $ff, $fd
 MarioSpriteAnim15:
-	INCBIN "data/bank_050/d_7faf.bin" ; $7faf, 3 bytes
+	; $7faf, 3 bytes (sprite_anim)
+	db $0b, $ff, $fd
 MarioSpriteAnim16:
-	INCBIN "data/bank_050/d_7fb2.bin" ; $7fb2, 3 bytes
+	; $7fb2, 3 bytes (sprite_anim)
+	db $0e, $ff, $fd
 MarioSpriteAnim17:
-	INCBIN "data/bank_050/d_7fb5.bin" ; $7fb5, 12 bytes
+	; $7fb5, 12 bytes (sprite_anim)
+	anim_frame $0f, $07
+	anim_frame $10, $07
+	anim_frame $0f, $07
+	anim_frame $10, $07
+	anim_frame $0f, $07
+	anim_set $10
 MarioSpriteAnim18:
-	INCBIN "data/bank_050/d_7fc1.bin" ; $7fc1, 8 bytes
+	; $7fc1, 8 bytes (sprite_anim)
+	anim_frame $11, $12
+	anim_frame $12, $14
+	anim_frame $13, $16
+	anim_set $01
 	; $7fc9, 55 bytes fill to bank end (linker-padded)

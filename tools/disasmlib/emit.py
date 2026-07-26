@@ -28,6 +28,7 @@ from .datatables import (render_actor_list, render_actor_script,
                          render_mugshot_ptr_table, render_object_header,
                          render_pointer_words, render_rect_pair,
                          render_rect_ptrs, render_rules_pages,
+                         render_sprite_anim,
                          render_slot_records, render_story_locations,
                          render_tilemap_dispatch, render_tilemap_scripts)
 from .idioms import match_launcher_seq, script_cmd_seq, wram_bank_seq
@@ -733,6 +734,8 @@ class Emitter:
                                         self._save_flag_names())
         if spec == "tilemap_dispatch":
             return render_tilemap_dispatch(self.rom, start, end)
+        if spec == "sprite_anim":
+            return render_sprite_anim(self.rom, start, end)
         if spec == "gfx_ptr_table":
             return render_gfx_ptr_table(self.rom, start, end, bank,
                                         self.data_labels)

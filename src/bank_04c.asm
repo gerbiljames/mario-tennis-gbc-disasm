@@ -291,41 +291,98 @@ AllieSpriteAnims:
 	dw AllieSpriteAnim17 ; $7f46
 	dw AllieSpriteAnim18 ; $7f48
 AllieSpriteAnim00:
-	INCBIN "data/bank_04c/d_7f4a.bin" ; $7f4a, 3 bytes
+	; $7f4a, 3 bytes (sprite_anim)
+	db $00
+	db $ff, $fd
 AllieSpriteAnim01:
-	INCBIN "data/bank_04c/d_7f4d.bin" ; $7f4d, 10 bytes
+	; $7f4d, 10 bytes (sprite_anim)
+	anim_frame $02, $0c
+	anim_frame $04, $06
+	anim_frame $03, $0c
+	anim_frame $04, $07
+	anim_loop $00
 AllieSpriteAnim02:
-	INCBIN "data/bank_04c/d_7f57.bin" ; $7f57, 6 bytes
+	; $7f57, 6 bytes (sprite_anim)
+	anim_frame $00, $0a
+	anim_frame $01, $0a
+	anim_loop $00
 AllieSpriteAnim03:
-	INCBIN "data/bank_04c/d_7f5d.bin" ; $7f5d, 16 bytes
+	; $7f5d, 16 bytes (sprite_anim)
+	anim_frame $17, $08
+	anim_frame $18, $08
+	anim_frame $17, $08
+	anim_frame $18, $08
+	anim_frame $17, $08
+	anim_frame $18, $08
+	anim_frame $19, $19
+	anim_loop $00
 AllieSpriteAnim04:
-	INCBIN "data/bank_04c/d_7f6d.bin" ; $7f6d, 16 bytes
+	; $7f6d, 16 bytes (sprite_anim)
+	anim_frame $1a, $08
+	anim_frame $1b, $08
+	anim_frame $1a, $08
+	anim_frame $1b, $08
+	anim_frame $1a, $08
+	anim_frame $1b, $08
+	anim_frame $1c, $23
+	anim_loop $00
 AllieSpriteAnim05:
-	INCBIN "data/bank_04c/d_7f7d.bin" ; $7f7d, 6 bytes
+	; $7f7d, 6 bytes (sprite_anim)
+	anim_frame $06, $04
+	anim_frame $07, $17
+	anim_set $01
 AllieSpriteAnim06:
-	INCBIN "data/bank_04c/d_7f83.bin" ; $7f83, 6 bytes
+	; $7f83, 6 bytes (sprite_anim)
+	anim_frame $09, $04
+	anim_frame $0a, $17
+	anim_set $01
 AllieSpriteAnim07:
-	INCBIN "data/bank_04c/d_7f89.bin" ; $7f89, 6 bytes
+	; $7f89, 6 bytes (sprite_anim)
+	anim_frame $0c, $04
+	anim_frame $0d, $14
+	anim_set $01
 AllieSpriteAnim08:
-	INCBIN "data/bank_04c/d_7f8f.bin" ; $7f8f, 5 bytes
+	; $7f8f, 5 bytes (sprite_anim)
+	db $15, $04, $16, $14, $fd
 AllieSpriteAnim09:
-	INCBIN "data/bank_04c/d_7f94.bin" ; $7f94, 4 bytes
+	; $7f94, 4 bytes (sprite_anim)
+	anim_frame $06, $19
+	anim_set $01
 AllieSpriteAnim10:
-	INCBIN "data/bank_04c/d_7f98.bin" ; $7f98, 4 bytes
+	; $7f98, 4 bytes (sprite_anim)
+	anim_frame $09, $19
+	anim_set $01
 AllieSpriteAnim11:
-	INCBIN "data/bank_04c/d_7f9c.bin" ; $7f9c, 4 bytes
+	; $7f9c, 4 bytes (sprite_anim)
+	anim_frame $0c, $19
+	anim_set $01
 AllieSpriteAnim12:
-	INCBIN "data/bank_04c/d_7fa0.bin" ; $7fa0, 3 bytes
+	; $7fa0, 3 bytes (sprite_anim)
+	db $15, $18, $fd
 AllieSpriteAnim13:
-	INCBIN "data/bank_04c/d_7fa3.bin" ; $7fa3, 3 bytes
+	; $7fa3, 3 bytes (sprite_anim)
+	db $05, $ff, $fd
 AllieSpriteAnim14:
-	INCBIN "data/bank_04c/d_7fa6.bin" ; $7fa6, 3 bytes
+	; $7fa6, 3 bytes (sprite_anim)
+	db $08, $ff, $fd
 AllieSpriteAnim15:
-	INCBIN "data/bank_04c/d_7fa9.bin" ; $7fa9, 3 bytes
+	; $7fa9, 3 bytes (sprite_anim)
+	db $0b, $ff, $fd
 AllieSpriteAnim16:
-	INCBIN "data/bank_04c/d_7fac.bin" ; $7fac, 3 bytes
+	; $7fac, 3 bytes (sprite_anim)
+	db $0e, $ff, $fd
 AllieSpriteAnim17:
-	INCBIN "data/bank_04c/d_7faf.bin" ; $7faf, 12 bytes
+	; $7faf, 12 bytes (sprite_anim)
+	anim_frame $0f, $07
+	anim_frame $10, $07
+	anim_frame $0f, $07
+	anim_frame $10, $07
+	anim_frame $0f, $07
+	anim_set $10
 AllieSpriteAnim18:
-	INCBIN "data/bank_04c/d_7fbb.bin" ; $7fbb, 8 bytes
+	; $7fbb, 8 bytes (sprite_anim)
+	anim_frame $11, $12
+	anim_frame $12, $14
+	anim_frame $13, $16
+	anim_set $01
 	; $7fc3, 61 bytes fill to bank end (linker-padded)

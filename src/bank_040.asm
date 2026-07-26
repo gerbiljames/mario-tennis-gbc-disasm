@@ -291,41 +291,104 @@ AlexSpriteAnims:
 	dw AlexSpriteAnim17 ; $7f46
 	dw AlexSpriteAnim18 ; $7f48
 AlexSpriteAnim00:
-	INCBIN "data/bank_040/d_7f4a.bin" ; $7f4a, 3 bytes
+	; $7f4a, 3 bytes (sprite_anim)
+	db $00
+	db $ff, $fd
 AlexSpriteAnim01:
-	INCBIN "data/bank_040/d_7f4d.bin" ; $7f4d, 10 bytes
+	; $7f4d, 10 bytes (sprite_anim)
+	anim_frame $02, $0c
+	anim_frame $04, $06
+	anim_frame $03, $0c
+	anim_frame $04, $07
+	anim_loop $00
 AlexSpriteAnim02:
-	INCBIN "data/bank_040/d_7f57.bin" ; $7f57, 6 bytes
+	; $7f57, 6 bytes (sprite_anim)
+	anim_frame $00, $0a
+	anim_frame $01, $0a
+	anim_loop $00
 AlexSpriteAnim03:
-	INCBIN "data/bank_040/d_7f5d.bin" ; $7f5d, 34 bytes
+	; $7f5d, 34 bytes (sprite_anim)
+	anim_flip $20
+	anim_frame $17, $14
+	anim_frame $18, $0a
+	anim_frame $19, $08
+	anim_frame $18, $08
+	anim_frame $19, $08
+	anim_frame $19, $08
+	anim_frame $18, $08
+	anim_flip $00
+	anim_frame $17, $14
+	anim_frame $18, $0a
+	anim_frame $19, $08
+	anim_frame $18, $08
+	anim_frame $19, $08
+	anim_frame $19, $08
+	anim_frame $18, $08
+	anim_loop $00
 AlexSpriteAnim04:
-	INCBIN "data/bank_040/d_7f7f.bin" ; $7f7f, 10 bytes
+	; $7f7f, 10 bytes (sprite_anim)
+	anim_frame $1a, $0a
+	anim_frame $1b, $0a
+	anim_frame $1c, $0a
+	anim_frame $1b, $0a
+	anim_loop $00
 AlexSpriteAnim05:
-	INCBIN "data/bank_040/d_7f89.bin" ; $7f89, 6 bytes
+	; $7f89, 6 bytes (sprite_anim)
+	anim_frame $06, $04
+	anim_frame $07, $17
+	anim_set $01
 AlexSpriteAnim06:
-	INCBIN "data/bank_040/d_7f8f.bin" ; $7f8f, 6 bytes
+	; $7f8f, 6 bytes (sprite_anim)
+	anim_frame $09, $04
+	anim_frame $0a, $17
+	anim_set $01
 AlexSpriteAnim07:
-	INCBIN "data/bank_040/d_7f95.bin" ; $7f95, 6 bytes
+	; $7f95, 6 bytes (sprite_anim)
+	anim_frame $0c, $04
+	anim_frame $0d, $14
+	anim_set $01
 AlexSpriteAnim08:
-	INCBIN "data/bank_040/d_7f9b.bin" ; $7f9b, 5 bytes
+	; $7f9b, 5 bytes (sprite_anim)
+	db $15, $04, $16, $14, $fd
 AlexSpriteAnim09:
-	INCBIN "data/bank_040/d_7fa0.bin" ; $7fa0, 4 bytes
+	; $7fa0, 4 bytes (sprite_anim)
+	anim_frame $06, $19
+	anim_set $01
 AlexSpriteAnim10:
-	INCBIN "data/bank_040/d_7fa4.bin" ; $7fa4, 4 bytes
+	; $7fa4, 4 bytes (sprite_anim)
+	anim_frame $09, $19
+	anim_set $01
 AlexSpriteAnim11:
-	INCBIN "data/bank_040/d_7fa8.bin" ; $7fa8, 4 bytes
+	; $7fa8, 4 bytes (sprite_anim)
+	anim_frame $0c, $19
+	anim_set $01
 AlexSpriteAnim12:
-	INCBIN "data/bank_040/d_7fac.bin" ; $7fac, 3 bytes
+	; $7fac, 3 bytes (sprite_anim)
+	db $15, $18, $fd
 AlexSpriteAnim13:
-	INCBIN "data/bank_040/d_7faf.bin" ; $7faf, 3 bytes
+	; $7faf, 3 bytes (sprite_anim)
+	db $05, $ff, $fd
 AlexSpriteAnim14:
-	INCBIN "data/bank_040/d_7fb2.bin" ; $7fb2, 3 bytes
+	; $7fb2, 3 bytes (sprite_anim)
+	db $08, $ff, $fd
 AlexSpriteAnim15:
-	INCBIN "data/bank_040/d_7fb5.bin" ; $7fb5, 3 bytes
+	; $7fb5, 3 bytes (sprite_anim)
+	db $0b, $ff, $fd
 AlexSpriteAnim16:
-	INCBIN "data/bank_040/d_7fb8.bin" ; $7fb8, 3 bytes
+	; $7fb8, 3 bytes (sprite_anim)
+	db $0e, $ff, $fd
 AlexSpriteAnim17:
-	INCBIN "data/bank_040/d_7fbb.bin" ; $7fbb, 12 bytes
+	; $7fbb, 12 bytes (sprite_anim)
+	anim_frame $0f, $07
+	anim_frame $10, $07
+	anim_frame $0f, $07
+	anim_frame $10, $07
+	anim_frame $0f, $07
+	anim_set $10
 AlexSpriteAnim18:
-	INCBIN "data/bank_040/d_7fc7.bin" ; $7fc7, 8 bytes
+	; $7fc7, 8 bytes (sprite_anim)
+	anim_frame $11, $12
+	anim_frame $12, $14
+	anim_frame $13, $16
+	anim_set $01
 	; $7fcf, 49 bytes fill to bank end (linker-padded)

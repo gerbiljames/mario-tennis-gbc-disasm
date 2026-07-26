@@ -125,6 +125,30 @@ def render_actor_script(rom, start, end, bank, labels):
     return out, consumed
 
 
+def render_sprite_anim(rom, start, end):
+    """A character animation script: 2-byte entries, low byte a frame index or
+    a command ($ff loop, $fe switch animation, $fb flip), high byte its
+    operand. Returns None when the region is not an even number of entries or
+    holds a command the interpreters do not implement, so a mis-declared
+    region falls back to plain bytes rather than rendering a lie."""
+    if (end - start) % 2:
+        return None
+    out = []
+    for off in range(start, end, 2):
+        op, arg = rom[off], rom[off + 1]
+        if op < 0xF0:
+            out.append(f"\tanim_frame ${op:02x}, ${arg:02x}")
+        elif op == 0xFF:
+            out.append(f"\tanim_loop ${arg:02x}")
+        elif op == 0xFE:
+            out.append(f"\tanim_set ${arg:02x}")
+        elif op == 0xFB:
+            out.append(f"\tanim_flip ${arg:02x}")
+        else:
+            return None
+    return out
+
+
 def render_drill_definition(rom, seg, end, bank, labels):
     """A training-drill definition for `StartDrillFromDefinition` ($0b:$4002):
     8 setup bytes then three same-bank pointers (mode hooks, point table, and

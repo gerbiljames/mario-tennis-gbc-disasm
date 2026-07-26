@@ -291,41 +291,92 @@ BobSpriteAnims:
 	dw BobSpriteAnim17 ; $7f46
 	dw BobSpriteAnim18 ; $7f48
 BobSpriteAnim00:
-	INCBIN "data/bank_04f/d_7f4a.bin" ; $7f4a, 3 bytes
+	; $7f4a, 3 bytes (sprite_anim)
+	db $00
+	db $ff, $fd
 BobSpriteAnim01:
-	INCBIN "data/bank_04f/d_7f4d.bin" ; $7f4d, 10 bytes
+	; $7f4d, 10 bytes (sprite_anim)
+	anim_frame $02, $0c
+	anim_frame $04, $06
+	anim_frame $03, $0c
+	anim_frame $04, $07
+	anim_loop $00
 BobSpriteAnim02:
-	INCBIN "data/bank_04f/d_7f57.bin" ; $7f57, 6 bytes
+	; $7f57, 6 bytes (sprite_anim)
+	anim_frame $00, $0a
+	anim_frame $01, $0a
+	anim_loop $00
 BobSpriteAnim03:
-	INCBIN "data/bank_04f/d_7f5d.bin" ; $7f5d, 10 bytes
+	; $7f5d, 10 bytes (sprite_anim)
+	anim_frame $17, $0f
+	anim_frame $19, $0f
+	anim_frame $18, $0f
+	anim_frame $19, $0f
+	anim_loop $00
 BobSpriteAnim04:
-	INCBIN "data/bank_04f/d_7f67.bin" ; $7f67, 10 bytes
+	; $7f67, 10 bytes (sprite_anim)
+	anim_frame $1a, $0a
+	anim_frame $1c, $0a
+	anim_frame $1b, $0a
+	anim_frame $1c, $0a
+	anim_loop $00
 BobSpriteAnim05:
-	INCBIN "data/bank_04f/d_7f71.bin" ; $7f71, 6 bytes
+	; $7f71, 6 bytes (sprite_anim)
+	anim_frame $06, $04
+	anim_frame $07, $17
+	anim_set $01
 BobSpriteAnim06:
-	INCBIN "data/bank_04f/d_7f77.bin" ; $7f77, 6 bytes
+	; $7f77, 6 bytes (sprite_anim)
+	anim_frame $09, $04
+	anim_frame $0a, $17
+	anim_set $01
 BobSpriteAnim07:
-	INCBIN "data/bank_04f/d_7f7d.bin" ; $7f7d, 6 bytes
+	; $7f7d, 6 bytes (sprite_anim)
+	anim_frame $0c, $04
+	anim_frame $0d, $14
+	anim_set $01
 BobSpriteAnim08:
-	INCBIN "data/bank_04f/d_7f83.bin" ; $7f83, 5 bytes
+	; $7f83, 5 bytes (sprite_anim)
+	db $15, $04, $16, $14, $fd
 BobSpriteAnim09:
-	INCBIN "data/bank_04f/d_7f88.bin" ; $7f88, 4 bytes
+	; $7f88, 4 bytes (sprite_anim)
+	anim_frame $06, $19
+	anim_set $01
 BobSpriteAnim10:
-	INCBIN "data/bank_04f/d_7f8c.bin" ; $7f8c, 4 bytes
+	; $7f8c, 4 bytes (sprite_anim)
+	anim_frame $09, $19
+	anim_set $01
 BobSpriteAnim11:
-	INCBIN "data/bank_04f/d_7f90.bin" ; $7f90, 4 bytes
+	; $7f90, 4 bytes (sprite_anim)
+	anim_frame $0c, $19
+	anim_set $01
 BobSpriteAnim12:
-	INCBIN "data/bank_04f/d_7f94.bin" ; $7f94, 3 bytes
+	; $7f94, 3 bytes (sprite_anim)
+	db $15, $18, $fd
 BobSpriteAnim13:
-	INCBIN "data/bank_04f/d_7f97.bin" ; $7f97, 3 bytes
+	; $7f97, 3 bytes (sprite_anim)
+	db $05, $ff, $fd
 BobSpriteAnim14:
-	INCBIN "data/bank_04f/d_7f9a.bin" ; $7f9a, 3 bytes
+	; $7f9a, 3 bytes (sprite_anim)
+	db $08, $ff, $fd
 BobSpriteAnim15:
-	INCBIN "data/bank_04f/d_7f9d.bin" ; $7f9d, 3 bytes
+	; $7f9d, 3 bytes (sprite_anim)
+	db $0b, $ff, $fd
 BobSpriteAnim16:
-	INCBIN "data/bank_04f/d_7fa0.bin" ; $7fa0, 3 bytes
+	; $7fa0, 3 bytes (sprite_anim)
+	db $0e, $ff, $fd
 BobSpriteAnim17:
-	INCBIN "data/bank_04f/d_7fa3.bin" ; $7fa3, 12 bytes
+	; $7fa3, 12 bytes (sprite_anim)
+	anim_frame $0f, $07
+	anim_frame $10, $07
+	anim_frame $0f, $07
+	anim_frame $10, $07
+	anim_frame $0f, $07
+	anim_set $10
 BobSpriteAnim18:
-	INCBIN "data/bank_04f/d_7faf.bin" ; $7faf, 8 bytes
+	; $7faf, 8 bytes (sprite_anim)
+	anim_frame $11, $12
+	anim_frame $12, $14
+	anim_frame $13, $16
+	anim_set $01
 	; $7fb7, 73 bytes fill to bank end (linker-padded)
