@@ -570,14 +570,14 @@ DrawContinuePromptText:
 	push af ; $4574
 	wram_bank $03 ; $4575
 	ld a, $80 ; $457b
-Label_1e_457d:
+.loop:
 	cp a, $91 ; $457d
-	jr z, Label_1e_4586 ; $457f
+	jr z, .restore ; $457f
 	ld [hl], a ; $4581
 	inc hl ; $4582
 	inc a ; $4583
-	jr Label_1e_457d ; $4584
-Label_1e_4586:
+	jr .loop ; $4584
+.restore:
 	pop af ; $4586
 	wram_bank ; $4587
 	ret ; $458b
@@ -586,14 +586,14 @@ DrawSaveWarningTextLine1:
 	push af ; $458e
 	wram_bank $03 ; $458f
 	ld a, $92 ; $4595
-Label_1e_4597:
+.loop:
 	cp a, $9e ; $4597
-	jr z, Label_1e_45a0 ; $4599
+	jr z, .restore ; $4599
 	ld [hl], a ; $459b
 	inc hl ; $459c
 	inc a ; $459d
-	jr Label_1e_4597 ; $459e
-Label_1e_45a0:
+	jr .loop ; $459e
+.restore:
 	pop af ; $45a0
 	wram_bank ; $45a1
 	ret ; $45a5
@@ -602,14 +602,14 @@ DrawSaveWarningTextLine2:
 	push af ; $45a8
 	wram_bank $03 ; $45a9
 	ld a, $a4 ; $45af
-Label_1e_45b1:
+.loop:
 	cp a, $b5 ; $45b1
-	jr z, Label_1e_45ba ; $45b3
+	jr z, .restore ; $45b3
 	ld [hl], a ; $45b5
 	inc hl ; $45b6
 	inc a ; $45b7
-	jr Label_1e_45b1 ; $45b8
-Label_1e_45ba:
+	jr .loop ; $45b8
+.restore:
 	pop af ; $45ba
 	wram_bank ; $45bb
 	ret ; $45bf
@@ -706,27 +706,27 @@ DrawDoublesPlayerNames:
 ShiftDestForLongName:
 	ld c, $00 ; $4683
 	ld hl, wTextBuffer ; $4685
-Label_1e_4688:
+.loop:
 	ld a, [hl+] ; $4688
 	or a, a ; $4689
-	jr z, Label_1e_4697 ; $468a
+	jr z, .step ; $468a
 	cp a, $de ; $468c
-	jr z, Label_1e_4688 ; $468e
+	jr z, .loop ; $468e
 	cp a, $df ; $4690
-	jr z, Label_1e_4688 ; $4692
+	jr z, .loop ; $4692
 	inc c ; $4694
-	jr Label_1e_4688 ; $4695
-Label_1e_4697:
+	jr .loop ; $4695
+.step:
 	ld a, $05 ; $4697
 	cp a, c ; $4699
 	ret nc ; $469a
 	ld a, c ; $469b
 	sub a, $05 ; $469c
 	ld c, a ; $469e
-Label_1e_469f:
+.loopB:
 	dec de ; $469f
 	dec c ; $46a0
-	jr nz, Label_1e_469f ; $46a1
+	jr nz, .loopB ; $46a1
 	ret ; $46a3
 DrawSetsGamesScore:
 	ld hl, $04e1 ; $46a4
@@ -807,65 +807,65 @@ DrawClassNameLabel:
 DrawRankMatchLabel:
 	ld hl, wTextBuffer ; $4749
 	test_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $474c
-	jr nz, Label_1e_4790 ; $474f
+	jr nz, .step ; $474f
 	ld a, $34 ; $4751
 	ld [hl], a ; $4753
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $4754
-	jr nz, Label_1e_47d7 ; $4757
+	jr nz, .step2 ; $4757
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $4759
-	jr nz, Label_1e_4778 ; $475c
+	jr nz, .checkFlag ; $475c
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_4 ; $475e
-	jp z, Label_1e_47c1 ; $4761
+	jp z, .read ; $4761
 	dec [hl] ; $4764
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_3 ; $4765
-	jp z, Label_1e_47c1 ; $4768
+	jp z, .read ; $4768
 	dec [hl] ; $476b
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_2 ; $476c
-	jr z, Label_1e_47c1 ; $476f
+	jr z, .read ; $476f
 	dec [hl] ; $4771
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $4772
-	jr z, Label_1e_47c1 ; $4775
+	jr z, .read ; $4775
 	ret ; $4777
-Label_1e_4778:
+.checkFlag:
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_4 ; $4778
-	jr z, Label_1e_47c1 ; $477b
+	jr z, .read ; $477b
 	dec [hl] ; $477d
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_3 ; $477e
-	jr z, Label_1e_47c1 ; $4781
+	jr z, .read ; $4781
 	dec [hl] ; $4783
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_2 ; $4784
-	jr z, Label_1e_47c1 ; $4787
+	jr z, .read ; $4787
 	dec [hl] ; $4789
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $478a
-	jr z, Label_1e_47c1 ; $478d
+	jr z, .read ; $478d
 	ret ; $478f
-Label_1e_4790:
+.step:
 	ld a, $33 ; $4790
 	ld [hl], a ; $4792
 	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_1 ; $4793
-	jr nz, Label_1e_47d7 ; $4796
+	jr nz, .step2 ; $4796
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $4798
-	jr nz, Label_1e_47af ; $479b
+	jr nz, .checkFlag2 ; $479b
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_3 ; $479d
-	jr z, Label_1e_47c1 ; $47a0
+	jr z, .read ; $47a0
 	dec [hl] ; $47a2
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_2 ; $47a3
-	jr z, Label_1e_47c1 ; $47a6
+	jr z, .read ; $47a6
 	dec [hl] ; $47a8
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $47a9
-	jr z, Label_1e_47c1 ; $47ac
+	jr z, .read ; $47ac
 	ret ; $47ae
-Label_1e_47af:
+.checkFlag2:
 	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_3 ; $47af
-	jr z, Label_1e_47c1 ; $47b2
+	jr z, .read ; $47b2
 	dec [hl] ; $47b4
 	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_2 ; $47b5
-	jr z, Label_1e_47c1 ; $47b8
+	jr z, .read ; $47b8
 	dec [hl] ; $47ba
 	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_1 ; $47bb
-	jr z, Label_1e_47c1 ; $47be
+	jr z, .read ; $47be
 	ret ; $47c0
-Label_1e_47c1:
+.read:
 	ld a, [hl] ; $47c1
 	sub a, $30 ; $47c2
 	ld l, a ; $47c4
@@ -877,7 +877,7 @@ Label_1e_47c1:
 	ld bc, $0020 ; $47d0
 	call DrawProportionalTextLine ; $47d3
 	ret ; $47d6
-Label_1e_47d7:
+.step2:
 	ldh a, [hWramBank] ; $47d7
 	push af ; $47d9
 	wram_bank $03 ; $47da
@@ -904,26 +904,26 @@ DrawTournamentRoundLabel:
 	ld a, $31 ; $4803
 	ld [hl], a ; $4805
 	test_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $4806
-	jr nz, Label_1e_4821 ; $4809
+	jr nz, .checkFlag ; $4809
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_1 ; $480b
-	jr z, Label_1e_4831 ; $480e
+	jr z, .read ; $480e
 	inc [hl] ; $4810
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_2 ; $4811
-	jr z, Label_1e_4831 ; $4814
+	jr z, .read ; $4814
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_SEMIFINAL ; $4816
-	jr z, Label_1e_4847 ; $4819
+	jr z, .clearRoundLabelRow ; $4819
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_FINAL ; $481b
-	jr z, Label_1e_4857 ; $481e
+	jr z, .clearRoundLabelRow2 ; $481e
 	ret ; $4820
-Label_1e_4821:
+.checkFlag:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_ROUND_1 ; $4821
-	jr z, Label_1e_4831 ; $4824
+	jr z, .read ; $4824
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_SEMIFINAL ; $4826
-	jr z, Label_1e_4847 ; $4829
+	jr z, .clearRoundLabelRow ; $4829
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_FINAL ; $482b
-	jr z, Label_1e_4857 ; $482e
+	jr z, .clearRoundLabelRow2 ; $482e
 	ret ; $4830
-Label_1e_4831:
+.read:
 	ld a, [hl] ; $4831
 	sub a, $30 ; $4832
 	ld l, a ; $4834
@@ -935,14 +935,14 @@ Label_1e_4831:
 	ld bc, $0020 ; $4840
 	call DrawProportionalTextLine ; $4843
 	ret ; $4846
-Label_1e_4847:
+.clearRoundLabelRow:
 	call ClearRoundLabelRow ; $4847
 	ld hl, $04e6 ; $484a
 	ld de, $d1c9 ; $484d
 	ld bc, $0020 ; $4850
 	call DrawProportionalTextLine ; $4853
 	ret ; $4856
-Label_1e_4857:
+.clearRoundLabelRow2:
 	call ClearRoundLabelRow ; $4857
 	ld hl, $04e5 ; $485a
 	ld de, $d1ca ; $485d
@@ -1086,28 +1086,28 @@ InitResultsScreenCharacters:
 	ld bc, $df00 ; $499b
 	ld a, [wGameMode] ; $499e
 	or a, a ; $49a1
-	jr nz, Label_1e_49ae ; $49a2
+	jr nz, .step ; $49a2
 	ld a, [wStoryModeMainCharacterOverworldSprite] ; $49a4
 	ld d, a ; $49a7
 	ld a, [wStoryModeMainCharacterOverworldSpriteColor] ; $49a8
 	ld e, a ; $49ab
-	jr Label_1e_49c8 ; $49ac
-Label_1e_49ae:
+	jr .step2 ; $49ac
+.step:
 	ld a, [$c8b9] ; $49ae
 	srl a ; $49b1
 	or a, a ; $49b3
-	jr nz, Label_1e_49c0 ; $49b4
+	jr nz, .checkPlayer2CurrentMainCharacter ; $49b4
 	ld a, [wPlayer1CurrentMainCharacter] ; $49b6
 	ld d, a ; $49b9
 	ld a, [$ca0c] ; $49ba
 	ld e, a ; $49bd
-	jr Label_1e_49c8 ; $49be
-Label_1e_49c0:
+	jr .step2 ; $49be
+.checkPlayer2CurrentMainCharacter:
 	ld a, [wPlayer2CurrentMainCharacter] ; $49c0
 	ld d, a ; $49c3
 	ld a, [$ca8c] ; $49c4
 	ld e, a ; $49c7
-Label_1e_49c8:
+.step2:
 	ld a, d ; $49c8
 	push af ; $49c9
 	ld a, $00 ; $49ca
@@ -1131,11 +1131,11 @@ Label_1e_49c8:
 	wram_bank $06 ; $49f4
 	ld a, [$d000] ; $49fa
 	or a, a ; $49fd
-	jr nz, Label_1e_4a0a ; $49fe
+	jr nz, .step3 ; $49fe
 	wram_bank $04 ; $4a00
 	test_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $4a06
 	ret z ; $4a09
-Label_1e_4a0a:
+.step3:
 	ld a, [$c8b9] ; $4a0a
 	srl a ; $4a0d
 	add a, $06 ; $4a0f
@@ -1144,28 +1144,28 @@ Label_1e_4a0a:
 	ld bc, $df00 ; $4a16
 	ld a, [wGameMode] ; $4a19
 	or a, a ; $4a1c
-	jr nz, Label_1e_4a29 ; $4a1d
+	jr nz, .step4 ; $4a1d
 	ld a, [wStoryModePartnerCharacterOverworldSprite] ; $4a1f
 	ld d, a ; $4a22
 	ld a, [wStoryModePartnerCharacterOverworldSpriteColor] ; $4a23
 	ld e, a ; $4a26
-	jr Label_1e_4a43 ; $4a27
-Label_1e_4a29:
+	jr .step5 ; $4a27
+.step4:
 	ld a, [$c8b9] ; $4a29
 	srl a ; $4a2c
 	or a, a ; $4a2e
-	jr nz, Label_1e_4a3b ; $4a2f
+	jr nz, .checkPlayer2CurrentPartnerCharacter ; $4a2f
 	ld a, [wPlayer1CurrentPartnerCharacter] ; $4a31
 	ld d, a ; $4a34
 	ld a, [$ca4c] ; $4a35
 	ld e, a ; $4a38
-	jr Label_1e_4a43 ; $4a39
-Label_1e_4a3b:
+	jr .step5 ; $4a39
+.checkPlayer2CurrentPartnerCharacter:
 	ld a, [wPlayer2CurrentPartnerCharacter] ; $4a3b
 	ld d, a ; $4a3e
 	ld a, [$cacc] ; $4a3f
 	ld e, a ; $4a42
-Label_1e_4a43:
+.step5:
 	ld a, d ; $4a43
 	push af ; $4a44
 	ld a, $02 ; $4a45
@@ -1224,18 +1224,18 @@ UpdateResultsCharSprite:
 	pop af ; $4ac1
 	push af ; $4ac2
 	or a, a ; $4ac3
-	jr nz, Label_1e_4acb ; $4ac4
+	jr nz, .step ; $4ac4
 	ld a, [$ca0e] ; $4ac6
-	jr Label_1e_4ace ; $4ac9
-Label_1e_4acb:
+	jr .compare ; $4ac9
+.step:
 	ld a, [$ca8e] ; $4acb
-Label_1e_4ace:
+.compare:
 	or a, a ; $4ace
-	jr z, Label_1e_4ad5 ; $4acf
+	jr z, .step2 ; $4acf
 	ld a, $20 ; $4ad1
 	xor a, b ; $4ad3
 	ld b, a ; $4ad4
-Label_1e_4ad5:
+.step2:
 	ld hl, $df36 ; $4ad5
 	ld a, [hl+] ; $4ad8
 	ld c, a ; $4ad9
@@ -1247,20 +1247,20 @@ Label_1e_4ad5:
 	push bc ; $4adf
 	push de ; $4ae0
 	or a, a ; $4ae1
-	jr nz, Label_1e_4af5 ; $4ae2
+	jr nz, .step4 ; $4ae2
 	test_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $4ae4
-	jr z, Label_1e_4aef ; $4ae7
+	jr z, .step3 ; $4ae7
 	ld d, $48 ; $4ae9
 	ld e, $56 ; $4aeb
-	jr Label_1e_4af9 ; $4aed
-Label_1e_4aef:
+	jr .step5 ; $4aed
+.step3:
 	ld d, $54 ; $4aef
 	ld e, $56 ; $4af1
-	jr Label_1e_4af9 ; $4af3
-Label_1e_4af5:
+	jr .step5 ; $4af3
+.step4:
 	ld d, $60 ; $4af5
 	ld e, $56 ; $4af7
-Label_1e_4af9:
+.step5:
 	ld a, d ; $4af9
 	ld [$df53], a ; $4afa
 	ld a, e ; $4afd
@@ -1299,82 +1299,82 @@ RunContinuePrompt:
 	call AdvanceFrame ; $4b2f
 	ldh a, [hInputRisingEdge] ; $4b32
 	bit PADB_UP, a ; $4b34
-	jr nz, Label_1e_4b61 ; $4b36
+	jr nz, DrawContinuePromptCursor.playSfx ; $4b36
 	bit 7, a ; $4b38
-	jr nz, Label_1e_4b61 ; $4b3a
+	jr nz, DrawContinuePromptCursor.playSfx ; $4b3a
 	bit 0, a ; $4b3c
-	jr nz, Label_1e_4b73 ; $4b3e
+	jr nz, DrawContinuePromptCursor.playSfx2 ; $4b3e
 	bit 1, a ; $4b40
-	jr nz, Label_1e_4baf ; $4b42
+	jr nz, DrawContinuePromptCursor.playSfx3 ; $4b42
 	jr RunContinuePrompt ; $4b44
 DrawContinuePromptCursor:
 	wram_bank $06 ; $4b46
 	ld a, [$d001] ; $4b4c
 	or a, a ; $4b4f
-	jr nz, Label_1e_4b57 ; $4b50
+	jr nz, .step ; $4b50
 	ld de, $7a3c ; $4b52
-	jr Label_1e_4b5a ; $4b55
-Label_1e_4b57:
+	jr .step2 ; $4b55
+.step:
 	ld de, $7a44 ; $4b57
-Label_1e_4b5a:
+.step2:
 	ld bc, $088e ; $4b5a
 	call QueueSprite ; $4b5d
 	ret ; $4b60
-Label_1e_4b61:
+.playSfx:
 	sound $5e ; $4b61
 	wram_bank $06 ; $4b63
 	ld a, [$d001] ; $4b69
 	xor a, $01 ; $4b6c
 	ld [$d001], a ; $4b6e
 	jr RunContinuePrompt ; $4b71
-Label_1e_4b73:
+.playSfx2:
 	sound $5f ; $4b73
 	wram_bank $06 ; $4b75
 	ld a, [$d002] ; $4b7b
 	or a, a ; $4b7e
-	jr nz, Label_1e_4b91 ; $4b7f
+	jr nz, .step3 ; $4b7f
 	ld a, [$d001] ; $4b81
 	or a, a ; $4b84
-	jr z, Label_1e_4ba0 ; $4b85
+	jr z, .step4 ; $4b85
 	ld a, $01 ; $4b87
 	ld [$d002], a ; $4b89
 	call RefreshContinuePromptText ; $4b8c
 	jr RunContinuePrompt ; $4b8f
-Label_1e_4b91:
+.step3:
 	ld a, [$d001] ; $4b91
 	or a, a ; $4b94
-	jr z, Label_1e_4ba6 ; $4b95
-Label_1e_4b97:
+	jr z, .step5 ; $4b95
+.loop:
 	xor a, a ; $4b97
 	ld [$d002], a ; $4b98
 	call RefreshContinuePromptText ; $4b9b
 	jr RunContinuePrompt ; $4b9e
-Label_1e_4ba0:
+.step4:
 	ld a, $01 ; $4ba0
 	ld [$d003], a ; $4ba2
 	ret ; $4ba5
-Label_1e_4ba6:
+.step5:
 	ld a, [$d002] ; $4ba6
 	add a, $ff ; $4ba9
 	ld [$d003], a ; $4bab
 	ret ; $4bae
-Label_1e_4baf:
+.playSfx3:
 	sound $62 ; $4baf
 	wram_bank $06 ; $4bb1
 	ld a, [$d002] ; $4bb7
 	or a, a ; $4bba
-	jr nz, Label_1e_4bc8 ; $4bbb
+	jr nz, .step6 ; $4bbb
 	ld a, $ff ; $4bbd
 	ld [$d003], a ; $4bbf
 	ld a, $00 ; $4bc2
 	ld [wMenuSlideDirection], a ; $4bc4
 	ret ; $4bc7
-Label_1e_4bc8:
-	jr Label_1e_4b97 ; $4bc8
+.step6:
+	jr .loop ; $4bc8
 RefreshContinuePromptText:
 	ld a, [$d002] ; $4bca
 	or a, a ; $4bcd
-	jr nz, Label_1e_4bef ; $4bce
+	jr nz, .step ; $4bce
 	xor a, a ; $4bd0
 	ld [$d001], a ; $4bd1
 	call ClearContinuePromptRows ; $4bd4
@@ -1386,7 +1386,7 @@ RefreshContinuePromptText:
 	call QueueVRAMCopy ; $4be5
 	wram_bank $06 ; $4be8
 	ret ; $4bee
-Label_1e_4bef:
+.step:
 	ld a, $01 ; $4bef
 	ld [$d001], a ; $4bf1
 	call ClearContinuePromptRows ; $4bf4
@@ -1614,10 +1614,10 @@ DrawExpAwardScreenPanels:
 	call DrawNextExpAwardMessage ; $55e7
 	call DrawExpTotalPanel ; $55ea
 	test_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $55ed
-	jr nz, Label_1e_55f6 ; $55f0
+	jr nz, .drawExpDoublesPlayerPanel ; $55f0
 	call DrawExpSinglesPlayerPanel ; $55f2
 	ret ; $55f5
-Label_1e_55f6:
+.drawExpDoublesPlayerPanel:
 	call DrawExpDoublesPlayerPanel ; $55f6
 	call DrawExpDoublesPartnerPanel ; $55f9
 	ret ; $55fc
@@ -1655,11 +1655,11 @@ DrawExpSinglesPlayerPanel:
 	ld bc, $ca00 ; $5645
 	ld a, [$c8b9] ; $5648
 	cp a, $02 ; $564b
-	jr nz, Label_1e_5658 ; $564d
+	jr nz, .step ; $564d
 	ld bc, $ca80 ; $564f
 	ld a, [$c8ba] ; $5652
 	ld [$ca98], a ; $5655
-Label_1e_5658:
+.step:
 	push bc ; $5658
 	ld hl, $0000 ; $5659
 	add hl, bc ; $565c
@@ -1723,18 +1723,18 @@ DrawExpDoublesPlayerPanel:
 	call FillTilemapRun ; $56f9
 	ld a, [wGameMode] ; $56fc
 	or a, a ; $56ff
-	jr nz, Label_1e_5707 ; $5700
+	jr nz, .step ; $5700
 	ld bc, wStoryModeNameOfMainCharacter ; $5702
-	jr Label_1e_571a ; $5705
-Label_1e_5707:
+	jr .step2 ; $5705
+.step:
 	ld bc, $ca00 ; $5707
 	ld a, [$c8b9] ; $570a
 	cp a, $02 ; $570d
-	jr nz, Label_1e_571a ; $570f
+	jr nz, .step2 ; $570f
 	ld bc, $ca80 ; $5711
 	ld a, [$c8ba] ; $5714
 	ld [$ca98], a ; $5717
-Label_1e_571a:
+.step2:
 	push bc ; $571a
 	ld hl, $0000 ; $571b
 	add hl, bc ; $571e
@@ -1799,16 +1799,16 @@ DrawExpDoublesPartnerPanel:
 	call FillTilemapRun ; $57be
 	ld a, [wGameMode] ; $57c1
 	or a, a ; $57c4
-	jr nz, Label_1e_57cc ; $57c5
+	jr nz, .step ; $57c5
 	ld bc, wStoryModeNameOfPartnerCharacter ; $57c7
-	jr Label_1e_57d9 ; $57ca
-Label_1e_57cc:
+	jr .step2 ; $57ca
+.step:
 	ld bc, $ca40 ; $57cc
 	ld a, [$c8b9] ; $57cf
 	cp a, $02 ; $57d2
-	jr nz, Label_1e_57d9 ; $57d4
+	jr nz, .step2 ; $57d4
 	ld bc, $cac0 ; $57d6
-Label_1e_57d9:
+.step2:
 	push bc ; $57d9
 	ld hl, $0000 ; $57da
 	add hl, bc ; $57dd
@@ -1929,11 +1929,11 @@ DrawExpScreenCharSprites:
 	ld b, $04 ; $5914
 	ld a, [$c8b9] ; $5916
 	or a, a ; $5919
-	jr z, Label_1e_5920 ; $591a
+	jr z, .step ; $591a
 	srl a ; $591c
 	add a, b ; $591e
 	ld b, a ; $591f
-Label_1e_5920:
+.step:
 	push bc ; $5920
 	ld a, b ; $5921
 	wram_bank ; $5922
@@ -1978,36 +1978,36 @@ UpdateExpScreenCharSprite:
 	pop af ; $5977
 	push af ; $5978
 	or a, a ; $5979
-	jr nz, Label_1e_5981 ; $597a
+	jr nz, .step ; $597a
 	ld a, [$ca0e] ; $597c
-	jr Label_1e_5984 ; $597f
-Label_1e_5981:
+	jr .compare ; $597f
+.step:
 	ld a, [$ca8e] ; $5981
-Label_1e_5984:
+.compare:
 	or a, a ; $5984
-	jr z, Label_1e_598b ; $5985
+	jr z, .step2 ; $5985
 	ld a, $20 ; $5987
 	xor a, b ; $5989
 	ld b, a ; $598a
-Label_1e_598b:
+.step2:
 	ld a, [$df36] ; $598b
 	ld c, a ; $598e
 	pop af ; $598f
 	or a, a ; $5990
-	jr nz, Label_1e_59a4 ; $5991
+	jr nz, .step4 ; $5991
 	test_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $5993
-	jr z, Label_1e_599e ; $5996
+	jr z, .step3 ; $5996
 	ld d, $44 ; $5998
 	ld e, $66 ; $599a
-	jr Label_1e_59a8 ; $599c
-Label_1e_599e:
+	jr .step5 ; $599c
+.step3:
 	ld d, $50 ; $599e
 	ld e, $66 ; $59a0
-	jr Label_1e_59a8 ; $59a2
-Label_1e_59a4:
+	jr .step5 ; $59a2
+.step4:
 	ld d, $5c ; $59a4
 	ld e, $66 ; $59a6
-Label_1e_59a8:
+.step5:
 	ld hl, $df80 ; $59a8
 	ld a, c ; $59ab
 	ld [hl+], a ; $59ac
@@ -2024,7 +2024,7 @@ DrawNextExpAwardMessage:
 	wram_bank $06 ; $59bb
 	ld a, [$d024] ; $59c1
 	cp a, $05 ; $59c4
-	jr z, Label_1e_5a3f ; $59c6
+	jr z, .uploadGlyphBuffer ; $59c6
 	rlca ; $59c8
 	add a, $52 ; $59c9
 	ld l, a ; $59cb
@@ -2034,7 +2034,7 @@ DrawNextExpAwardMessage:
 	ld a, [hl+] ; $59d0
 	ld b, [hl] ; $59d1
 	or a, b ; $59d2
-	jr z, Label_1e_5a35 ; $59d3
+	jr z, .step3 ; $59d3
 	dec hl ; $59d5
 	ld c, [hl] ; $59d6
 	push bc ; $59d7
@@ -2059,9 +2059,9 @@ DrawNextExpAwardMessage:
 	ld a, d ; $59f2
 	add a, l ; $59f3
 	ld l, a ; $59f4
-	jr nc, Label_1e_59f8 ; $59f5
+	jr nc, .step ; $59f5
 	inc h ; $59f7
-Label_1e_59f8:
+.step:
 	push hl ; $59f8
 	call DrawExpMessageWindow ; $59f9
 	wram_bank $06 ; $59fc
@@ -2069,18 +2069,18 @@ Label_1e_59f8:
 	ld a, [hl+] ; $5a05
 	ld d, [hl] ; $5a06
 	or a, d ; $5a07
-	jr z, Label_1e_5a18 ; $5a08
+	jr z, .step2 ; $5a08
 	ld hl, $04c8 ; $5a0a
 	ld de, $d022 ; $5a0d
 	ld bc, $0020 ; $5a10
 	call DrawProportionalTextLine ; $5a13
-	jr Label_1e_5a24 ; $5a16
-Label_1e_5a18:
+	jr .restore ; $5a16
+.step2:
 	ld hl, $04c7 ; $5a18
 	ld de, $d022 ; $5a1b
 	ld bc, $0020 ; $5a1e
 	call DrawProportionalTextLine ; $5a21
-Label_1e_5a24:
+.restore:
 	pop hl ; $5a24
 	ld bc, $0020 ; $5a25
 	ld de, $d062 ; $5a28
@@ -2089,12 +2089,12 @@ Label_1e_5a24:
 	farcall UploadGlyphBuffer ; $5a2f
 	ld a, $01 ; $5a32
 	ret ; $5a34
-Label_1e_5a35:
+.step3:
 	ld a, [$d024] ; $5a35
 	inc a ; $5a38
 	ld [$d024], a ; $5a39
 	jp DrawNextExpAwardMessage ; $5a3c
-Label_1e_5a3f:
+.uploadGlyphBuffer:
 	farcall UploadGlyphBuffer ; $5a3f
 	xor a, a ; $5a42
 	ret ; $5a43
@@ -2112,72 +2112,72 @@ DrawExpTotalDigits:
 	call FormatDecimalNumberUnsigned ; $5a5f
 	ld a, [$c604] ; $5a62
 	or a, a ; $5a65
-	jr nz, Label_1e_5aa9 ; $5a66
+	jr nz, .checkTextBuffer ; $5a66
 	ld a, [wTextBuffer] ; $5a68
 	cp a, $20 ; $5a6b
-	jr z, Label_1e_5a78 ; $5a6d
+	jr z, .step ; $5a6d
 	call GetDigitSpriteTile ; $5a6f
 	ld de, $6b77 ; $5a72
 	call QueueSprite ; $5a75
-Label_1e_5a78:
+.step:
 	ld a, [$c601] ; $5a78
 	cp a, $20 ; $5a7b
-	jr z, Label_1e_5a88 ; $5a7d
+	jr z, .step2 ; $5a7d
 	call GetDigitSpriteTile ; $5a7f
 	ld de, $7377 ; $5a82
 	call QueueSprite ; $5a85
-Label_1e_5a88:
+.step2:
 	ld a, [$c602] ; $5a88
 	cp a, $20 ; $5a8b
-	jr z, Label_1e_5a98 ; $5a8d
+	jr z, .step3 ; $5a8d
 	call GetDigitSpriteTile ; $5a8f
 	ld de, $7b77 ; $5a92
 	call QueueSprite ; $5a95
-Label_1e_5a98:
+.step3:
 	ld a, [$c603] ; $5a98
 	cp a, $20 ; $5a9b
-	jr z, Label_1e_5aa8 ; $5a9d
+	jr z, .done ; $5a9d
 	call GetDigitSpriteTile ; $5a9f
 	ld de, $8377 ; $5aa2
 	call QueueSprite ; $5aa5
-Label_1e_5aa8:
+.done:
 	ret ; $5aa8
-Label_1e_5aa9:
+.checkTextBuffer:
 	ld a, [wTextBuffer] ; $5aa9
 	cp a, $20 ; $5aac
-	jr z, Label_1e_5ab9 ; $5aae
+	jr z, .step4 ; $5aae
 	call GetDigitSpriteTile ; $5ab0
 	ld de, $6777 ; $5ab3
 	call QueueSprite ; $5ab6
-Label_1e_5ab9:
+.step4:
 	ld a, [$c601] ; $5ab9
 	cp a, $20 ; $5abc
-	jr z, Label_1e_5ac9 ; $5abe
+	jr z, .step5 ; $5abe
 	call GetDigitSpriteTile ; $5ac0
 	ld de, $6f77 ; $5ac3
 	call QueueSprite ; $5ac6
-Label_1e_5ac9:
+.step5:
 	ld a, [$c602] ; $5ac9
 	cp a, $20 ; $5acc
-	jr z, Label_1e_5ad9 ; $5ace
+	jr z, .step6 ; $5ace
 	call GetDigitSpriteTile ; $5ad0
 	ld de, $7777 ; $5ad3
 	call QueueSprite ; $5ad6
-Label_1e_5ad9:
+.step6:
 	ld a, [$c603] ; $5ad9
 	cp a, $20 ; $5adc
-	jr z, Label_1e_5ae9 ; $5ade
+	jr z, .step7 ; $5ade
 	call GetDigitSpriteTile ; $5ae0
 	ld de, $7f77 ; $5ae3
 	call QueueSprite ; $5ae6
-Label_1e_5ae9:
+.step7:
 	ld a, [$c604] ; $5ae9
 	cp a, $20 ; $5aec
-	jr z, Label_1e_5af9 ; $5aee
+	jr z, .doneB ; $5aee
 	call GetDigitSpriteTile ; $5af0
 	ld de, $8777 ; $5af3
 	call QueueSprite ; $5af6
-Label_1e_5af9:
+.doneB:
 	ret ; $5af9
 GetDigitSpriteTile:
 	sub a, $30 ; $5afa
@@ -2198,7 +2198,7 @@ RunExpAwardSequence:
 BeginNextExpAward:
 	call DrawNextExpAwardMessage ; $5b19
 	or a, a ; $5b1c
-	jp z, Label_1e_5b60 ; $5b1d
+	jp z, .waitFramesCmd ; $5b1d
 	sound $00 ; $5b20
 	sound $0b ; $5b22
 	wram_bank $06 ; $5b24
@@ -2223,7 +2223,7 @@ BeginNextExpAward:
 	call QueueVRAMCopy ; $5b5a
 	ld a, $01 ; $5b5d
 	ret ; $5b5f
-Label_1e_5b60:
+.waitFramesCmd:
 	call WaitFramesCmd ; $5b60
 	db $0a ; $5b63 inline arg
 	xor a, a ; $5b64
@@ -2240,11 +2240,11 @@ CountUpExpTotal:
 	call AdvanceFrame ; $5b75
 	ldh a, [hInputRisingEdge] ; $5b78
 	and a, PADF_A | PADF_B ; $5b7a
-	jr nz, Label_1e_5b9b ; $5b7c
+	jr nz, .step ; $5b7c
 	call AdvanceFrame ; $5b7e
 	ldh a, [hInputRisingEdge] ; $5b81
 	and a, PADF_A | PADF_B ; $5b83
-	jr nz, Label_1e_5b9b ; $5b85
+	jr nz, .step ; $5b85
 	dec hl ; $5b87
 	dec de ; $5b88
 	ld a, e ; $5b89
@@ -2261,7 +2261,7 @@ CountUpExpTotal:
 	ld [hl], d ; $5b96
 	sound $5e ; $5b97
 	jr CountUpExpTotal ; $5b99
-Label_1e_5b9b:
+.step:
 	ld hl, $d005 ; $5b9b
 	ld a, [hl+] ; $5b9e
 	ld h, [hl] ; $5b9f
@@ -2277,13 +2277,13 @@ Label_1e_5b9b:
 	ret ; $5bac
 WaitForConfirmOrTimeout:
 	ld c, $b4 ; $5bad
-Label_1e_5baf:
+.loop:
 	call AdvanceFrame ; $5baf
 	ldh a, [hInputRisingEdge] ; $5bb2
 	and a, PADF_A | PADF_B ; $5bb4
 	ret nz ; $5bb6
 	dec c ; $5bb7
-	jr nz, Label_1e_5baf ; $5bb8
+	jr nz, .loop ; $5bb8
 	ret ; $5bba
 HasPendingExpAwards:
 	ld hl, $d152 ; $5bbb
@@ -2291,30 +2291,30 @@ HasPendingExpAwards:
 	ld d, [hl] ; $5bbf
 	inc hl ; $5bc0
 	or a, d ; $5bc1
-	jr nz, Label_1e_5bde ; $5bc2
+	jr nz, .step ; $5bc2
 	ld a, [hl+] ; $5bc4
 	ld d, [hl] ; $5bc5
 	inc hl ; $5bc6
 	or a, d ; $5bc7
-	jr nz, Label_1e_5bde ; $5bc8
+	jr nz, .step ; $5bc8
 	ld a, [hl+] ; $5bca
 	ld d, [hl] ; $5bcb
 	inc hl ; $5bcc
 	or a, d ; $5bcd
-	jr nz, Label_1e_5bde ; $5bce
+	jr nz, .step ; $5bce
 	ld a, [hl+] ; $5bd0
 	ld d, [hl] ; $5bd1
 	inc hl ; $5bd2
 	or a, d ; $5bd3
-	jr nz, Label_1e_5bde ; $5bd4
+	jr nz, .step ; $5bd4
 	ld a, [hl+] ; $5bd6
 	ld d, [hl] ; $5bd7
 	inc hl ; $5bd8
 	or a, d ; $5bd9
-	jr nz, Label_1e_5bde ; $5bda
+	jr nz, .step ; $5bda
 	xor a, a ; $5bdc
 	ret ; $5bdd
-Label_1e_5bde:
+.step:
 	ld a, $01 ; $5bde
 	ret ; $5be0
 Palettes_1e_5be1:
@@ -2350,31 +2350,31 @@ ProcessMatchRewards:
 	ld hl, $0000 ; $6547
 	ld a, [wGameMode] ; $654a
 	cp a, $08 ; $654d
-	jp z, Label_1e_6688 ; $654f
+	jp z, .updateMinigameBestScore ; $654f
 	cp a, $09 ; $6552
-	jp z, Label_1e_6644 ; $6554
+	jp z, .step4 ; $6554
 	cp a, $06 ; $6557
-	jp z, Label_1e_6584 ; $6559
+	jp z, .checkMatchExitRequest ; $6559
 	cp a, $07 ; $655c
-	jp z, Label_1e_6584 ; $655e
+	jp z, .checkMatchExitRequest ; $655e
 	cp a, $0a ; $6561
-	jp z, Label_1e_65f9 ; $6563
+	jp z, .step2 ; $6563
 	cp a, $04 ; $6566
-	jp z, Label_1e_6630 ; $6568
-	jp c, Label_1e_65f9 ; $656b
+	jp z, .step3 ; $6568
+	jp c, .step2 ; $656b
 	ld a, [wPointWinLoseFlag] ; $656e
 	cp a, $01 ; $6571
-	jp nz, Label_1e_6695 ; $6573
+	jp nz, .step7 ; $6573
 	call GetFirstClearRewardExp ; $6576
 	call ShowExpAwardForMinigame ; $6579
 	ld h, d ; $657c
 	ld l, e ; $657d
 	call SetRewardGameFlag ; $657e
-	jp Label_1e_6695 ; $6581
-Label_1e_6584:
+	jp .step7 ; $6581
+.checkMatchExitRequest:
 	ld a, [wMatchExitRequest] ; $6584
 	and a, a ; $6587
-	jp nz, Label_1e_6695 ; $6588
+	jp nz, .step7 ; $6588
 	push hl ; $658b
 	ld hl, wMinigamesCurrentScore ; $658c
 	ld a, [hl+] ; $658f
@@ -2383,9 +2383,9 @@ Label_1e_6584:
 	ld a, [wGameMode] ; $6592
 	cp a, $07 ; $6595
 	ld a, $0f ; $6597
-	jr nz, Label_1e_659d ; $6599
+	jr nz, .mulHLByAFracSigned ; $6599
 	add a, $0f ; $659b
-Label_1e_659d:
+.mulHLByAFracSigned:
 	call MulHLByAFracSigned ; $659d
 	ld e, a ; $65a0
 	ld a, h ; $65a1
@@ -2400,19 +2400,19 @@ Label_1e_659d:
 	call ApplyMatchSettingsExpBonus ; $65af
 	ld a, [wPointWinLoseFlag] ; $65b2
 	cp a, $01 ; $65b5
-	jp nz, Label_1e_65ed ; $65b7
+	jp nz, .getScoreBonus ; $65b7
 	ld a, [$c7bc] ; $65ba
 	or a, a ; $65bd
-	jr z, Label_1e_65e6 ; $65be
+	jr z, .getFirstClearRewardExp ; $65be
 	ld a, [wGameMode] ; $65c0
 	cp a, $06 ; $65c3
-	jr nz, Label_1e_65cc ; $65c5
+	jr nz, .checkFlag ; $65c5
 	test_flag FLAG_CLEARED_MACHINE_MASTER ; $65c7
-	jr Label_1e_65cf ; $65ca
-Label_1e_65cc:
+	jr .step ; $65ca
+.checkFlag:
 	test_flag FLAG_CLEARED_WALL_MASTER ; $65cc
-Label_1e_65cf:
-	jr z, Label_1e_65e6 ; $65cf
+.step:
+	jr z, .getFirstClearRewardExp ; $65cf
 	push hl ; $65d1
 	ld hl, wMinigamesCurrentScore ; $65d2
 	ld a, [hl+] ; $65d5
@@ -2428,19 +2428,19 @@ Label_1e_65cf:
 	ld a, h ; $65e1
 	or a, l ; $65e2
 	pop hl ; $65e3
-	jr nz, Label_1e_65ed ; $65e4
-Label_1e_65e6:
+	jr nz, .getScoreBonus ; $65e4
+.getFirstClearRewardExp:
 	call GetFirstClearRewardExp ; $65e6
 	add hl, de ; $65e9
 	call SetRewardGameFlag ; $65ea
-Label_1e_65ed:
+.getScoreBonus:
 	call GetScoreBonus ; $65ed
 	add hl, de ; $65f0
 	ld d, h ; $65f1
 	ld e, l ; $65f2
 	call ShowExpAwardForMinigame ; $65f3
-	jp Label_1e_6695 ; $65f6
-Label_1e_65f9:
+	jp .step7 ; $65f6
+.step2:
 	wram_bank $04 ; $65f9
 	call ComputeMatchStatsReward ; $65ff
 	ld a, [$ca3c] ; $6602
@@ -2449,23 +2449,23 @@ Label_1e_65f9:
 	ld de, $0000 ; $6609
 	ld a, [wMatchWinLoseFlag] ; $660c
 	cp a, $01 ; $660f
-	jr nz, Label_1e_6616 ; $6611
+	jr nz, .offset ; $6611
 	call GetFirstClearRewardExp ; $6613
-Label_1e_6616:
+.offset:
 	add hl, de ; $6616
 	ld d, h ; $6617
 	ld e, l ; $6618
 	call ShowExpAwardForMatch ; $6619
 	ld a, [wMatchWinLoseFlag] ; $661c
 	cp a, $01 ; $661f
-	jr nz, Label_1e_6695 ; $6621
+	jr nz, .step7 ; $6621
 	call SetRewardGameFlag ; $6623
 	push hl ; $6626
 	call ApplyRewardUnlockFlags ; $6627
 	pop hl ; $662a
 	call ApplyClassProgressFlags ; $662b
-	jr Label_1e_6695 ; $662e
-Label_1e_6630:
+	jr .step7 ; $662e
+.step3:
 	wram_bank $04 ; $6630
 	call ComputeMatchStatsReward ; $6636
 	ld a, [$ca3c] ; $6639
@@ -2473,10 +2473,10 @@ Label_1e_6630:
 	call ApplyMatchSettingsExpBonus ; $663d
 	call AwardExhibitionMatchExp ; $6640
 	ret ; $6643
-Label_1e_6644:
+.step4:
 	ld a, [$c8b9] ; $6644
 	cp a, $02 ; $6647
-	jr z, Label_1e_6664 ; $6649
+	jr z, .step5 ; $6649
 	wram_bank $04 ; $664b
 	call ComputeMatchStatsReward ; $6651
 	ld a, [$ca3c] ; $6654
@@ -2484,9 +2484,9 @@ Label_1e_6644:
 	call ApplyMatchSettingsExpBonus ; $6658
 	ld a, [wMatchWinLoseFlag] ; $665b
 	cp a, $01 ; $665e
-	jr z, Label_1e_667d ; $6660
-	jr Label_1e_6684 ; $6662
-Label_1e_6664:
+	jr z, .step6 ; $6660
+	jr .awardLinkedPlayMatchExp ; $6662
+.step5:
 	wram_bank $05 ; $6664
 	call ComputeMatchStatsReward ; $666a
 	ld a, [$cabc] ; $666d
@@ -2494,52 +2494,52 @@ Label_1e_6664:
 	call ApplyMatchSettingsExpBonus ; $6671
 	ld a, [wMatchWinLoseFlag] ; $6674
 	cp a, $ff ; $6677
-	jr z, Label_1e_667d ; $6679
-	jr Label_1e_6684 ; $667b
-Label_1e_667d:
+	jr z, .step6 ; $6679
+	jr .awardLinkedPlayMatchExp ; $667b
+.step6:
 	ld e, l ; $667d
 	ld d, h ; $667e
 	sra d ; $667f
 	rr e ; $6681
 	add hl, de ; $6683
-Label_1e_6684:
+.awardLinkedPlayMatchExp:
 	call AwardLinkedPlayMatchExp ; $6684
 	ret ; $6687
-Label_1e_6688:
+.updateMinigameBestScore:
 	call UpdateMinigameBestScore ; $6688
 	ld a, [wPointWinLoseFlag] ; $668b
 	cp a, $01 ; $668e
 	ret nz ; $6690
 	call SetMinigameClearFlag ; $6691
 	ret ; $6694
-Label_1e_6695:
+.step7:
 	ld a, h ; $6695
 	or a, l ; $6696
-	jr z, Label_1e_66a9 ; $6697
+	jr z, .showIslandOpenRankingBoard ; $6697
 	farcall RunExpDistributionFlow ; $6699
 	ld c, $00 ; $669c
 	farcall CharDataScreen_Show ; $669e
 	ld c, $01 ; $66a1
 	farcall CharDataScreen_Show ; $66a3
 	call ApplyStatGapProgressFlag ; $66a6
-Label_1e_66a9:
+.showIslandOpenRankingBoard:
 	call ShowIslandOpenRankingBoard ; $66a9
 	ld a, $00 ; $66ac
 	ld [wGameMode], a ; $66ae
 	test_flag FLAG_WON_DREAM_MATCH_SINGLES ; $66b1
-	jr z, Label_1e_66be ; $66b4
+	jr z, .checkFlag2 ; $66b4
 	push de ; $66b6
 	ld de, SAVEFLAG_UNLOCKED_SAMMI ; $66b7
 	farcall SetSaveFlag ; $66ba
 	pop de ; $66bd
-Label_1e_66be:
+.checkFlag2:
 	test_flag FLAG_WON_DREAM_MATCH_DOUBLES ; $66be
-	jr z, Label_1e_66cb ; $66c1
+	jr z, .checkAllProgressComplete ; $66c1
 	push de ; $66c3
 	ld de, SAVEFLAG_UNLOCKED_ELDEN ; $66c4
 	farcall SetSaveFlag ; $66c7
 	pop de ; $66ca
-Label_1e_66cb:
+.checkAllProgressComplete:
 	call CheckAllProgressComplete ; $66cb
 	farcall SaveStorySlotWithTimer ; $66ce
 	ret ; $66d1
@@ -2553,9 +2553,9 @@ GetFirstClearRewardExp:
 	add a, a ; $66e0
 	add a, l ; $66e1
 	ld l, a ; $66e2
-	jr nc, Label_1e_66e6 ; $66e3
+	jr nc, .read ; $66e3
 	inc h ; $66e5
-Label_1e_66e6:
+.read:
 	ld a, [hl+] ; $66e6
 	ld h, [hl] ; $66e7
 	ld l, a ; $66e8
@@ -2563,9 +2563,9 @@ Label_1e_66e6:
 	add a, a ; $66ec
 	add a, l ; $66ed
 	ld l, a ; $66ee
-	jr nc, Label_1e_66f2 ; $66ef
+	jr nc, .readB ; $66ef
 	inc h ; $66f1
-Label_1e_66f2:
+.readB:
 	ld a, [hl+] ; $66f2
 	ld d, [hl] ; $66f3
 	ld e, a ; $66f4
@@ -2708,10 +2708,10 @@ GetScoreBonus:
 	sbc a, d ; $681d
 	ld h, a ; $681e
 	bit 7, h ; $681f
-	jr z, Label_1e_6828 ; $6821
+	jr z, .step ; $6821
 	ld de, $01f4 ; $6823
-	jr Label_1e_684f ; $6826
-Label_1e_6828:
+	jr .restore ; $6826
+.step:
 	ld hl, $01f3 ; $6828
 	ld a, l ; $682b
 	sub a, e ; $682c
@@ -2720,10 +2720,10 @@ Label_1e_6828:
 	sbc a, d ; $682f
 	ld h, a ; $6830
 	bit 7, h ; $6831
-	jr z, Label_1e_683a ; $6833
+	jr z, .step2 ; $6833
 	ld de, $00fa ; $6835
-	jr Label_1e_684f ; $6838
-Label_1e_683a:
+	jr .restore ; $6838
+.step2:
 	ld hl, $0063 ; $683a
 	ld a, l ; $683d
 	sub a, e ; $683e
@@ -2732,12 +2732,12 @@ Label_1e_683a:
 	sbc a, d ; $6841
 	ld h, a ; $6842
 	bit 7, h ; $6843
-	jr z, Label_1e_684c ; $6845
+	jr z, .step3 ; $6845
 	ld de, $0032 ; $6847
-	jr Label_1e_684f ; $684a
-Label_1e_684c:
+	jr .restore ; $684a
+.step3:
 	ld de, $0000 ; $684c
-Label_1e_684f:
+.restore:
 	pop hl ; $684f
 	ret ; $6850
 ComputeMatchStatsReward:
@@ -2837,7 +2837,7 @@ GetOpponentExpTier:
 	call LookupExpTierForChar ; $690a
 	ld a, [wMatchIsDoubles] ; $690d
 	and a, a ; $6910
-	jr z, Label_1e_6924 ; $6911
+	jr z, .step ; $6911
 	push bc ; $6913
 	wram_bank $07 ; $6914
 	call LookupExpTierForChar ; $691a
@@ -2847,12 +2847,12 @@ GetOpponentExpTier:
 	inc a ; $6920
 	srl a ; $6921
 	ld c, a ; $6923
-Label_1e_6924:
+.step:
 	ld a, c ; $6924
 	cp a, $06 ; $6925
-	jr c, Label_1e_692b ; $6927
+	jr c, .step2 ; $6927
 	ld a, $06 ; $6929
-Label_1e_692b:
+.step2:
 	ld c, a ; $692b
 	pop af ; $692c
 	wram_bank ; $692d
@@ -2861,9 +2861,9 @@ GetPlayerExpTier:
 	call LookupExpTierForChar ; $6932
 	ld a, c ; $6935
 	cp a, $06 ; $6936
-	jr c, Label_1e_693c ; $6938
+	jr c, .step ; $6938
 	ld a, $06 ; $693a
-Label_1e_693c:
+.step:
 	ld c, a ; $693c
 	ret ; $693d
 LookupExpTierForChar:
@@ -2871,7 +2871,7 @@ LookupExpTierForChar:
 	ld c, a ; $6941
 	ld a, [$df78] ; $6942
 	cp a, $04 ; $6945
-	jr nc, Label_1e_6965 ; $6947
+	jr nc, Data_1e_695b.step ; $6947
 	ld l, c ; $6949
 	xor a, a ; $694a
 	ld h, a ; $694b
@@ -2888,7 +2888,7 @@ LookupExpTierForChar:
 Data_1e_695b:
 	; $695b, 10 bytes (bytes:10)
 	db $00, $01, $02, $03, $04, $04, $05, $05, $06, $06 ; 0x00
-Label_1e_6965:
+.step:
 	dec c ; $6965
 	ret ; $6966
 AwardExhibitionMatchExp:
@@ -2900,7 +2900,7 @@ AwardExhibitionMatchExp:
 	ld [hl], d ; $696e
 	ld a, [$c8b5] ; $696f
 	bit 7, a ; $6972
-	jr z, Label_1e_69ad ; $6974
+	jr z, .recordExhibitionVictory ; $6974
 	call ShowExpAwardForExhibition ; $6976
 	ld a, [wCurrentStorySlot] ; $6979
 	push af ; $697c
@@ -2920,9 +2920,9 @@ AwardExhibitionMatchExp:
 	ld h, [hl] ; $6996
 	ld l, a ; $6997
 	add hl, de ; $6998
-	jr nc, Label_1e_699e ; $6999
+	jr nc, .step ; $6999
 	ld hl, rIE ; $699b
-Label_1e_699e:
+.step:
 	ld d, h ; $699e
 	ld e, l ; $699f
 	ld hl, $c8b1 ; $69a0
@@ -2932,7 +2932,7 @@ Label_1e_699e:
 	farcall SaveStorySlot ; $69a6
 	pop af ; $69a9
 	ld [wCurrentStorySlot], a ; $69aa
-Label_1e_69ad:
+.recordExhibitionVictory:
 	farcall RecordExhibitionVictory ; $69ad
 	farcall ReadExhibitionSaveBlock ; $69b0
 	ret ; $69b3
@@ -2949,14 +2949,14 @@ AwardLinkedPlayMatchExp:
 	sla a ; $69c4
 	add a, l ; $69c6
 	ld l, a ; $69c7
-	jr nc, Label_1e_69cb ; $69c8
+	jr nc, .read ; $69c8
 	inc h ; $69ca
-Label_1e_69cb:
+.read:
 	ld a, [hl] ; $69cb
 	bit 7, a ; $69cc
-	jr z, Label_1e_6a12 ; $69ce
+	jr z, .done ; $69ce
 	cp a, $ff ; $69d0
-	jr z, Label_1e_6a12 ; $69d2
+	jr z, .done ; $69d2
 	call ShowExpAwardForLinkedPlay ; $69d4
 	ld a, [wCurrentStorySlot] ; $69d7
 	push af ; $69da
@@ -2967,9 +2967,9 @@ Label_1e_69cb:
 	sla a ; $69e5
 	add a, l ; $69e7
 	ld l, a ; $69e8
-	jr nc, Label_1e_69ec ; $69e9
+	jr nc, .readB ; $69e9
 	inc h ; $69eb
-Label_1e_69ec:
+.readB:
 	ld a, [hl] ; $69ec
 	srl a ; $69ed
 	and a, $03 ; $69ef
@@ -2980,9 +2980,9 @@ Label_1e_69ec:
 	ld h, [hl] ; $69fb
 	ld l, a ; $69fc
 	add hl, de ; $69fd
-	jr nc, Label_1e_6a03 ; $69fe
+	jr nc, .step ; $69fe
 	ld hl, rIE ; $6a00
-Label_1e_6a03:
+.step:
 	ld d, h ; $6a03
 	ld e, l ; $6a04
 	ld hl, $c8b3 ; $6a05
@@ -2992,7 +2992,7 @@ Label_1e_6a03:
 	farcall SaveStorySlot ; $6a0b
 	pop af ; $6a0e
 	ld [wCurrentStorySlot], a ; $6a0f
-Label_1e_6a12:
+.done:
 	ret ; $6a12
 ShowExpAwardForMinigame:
 	ld a, e ; $6a13
@@ -3032,17 +3032,17 @@ ShowExpAwardForMatch:
 	ld c, $00 ; $6a45
 	ld a, [wGameMode] ; $6a47
 	cp a, $02 ; $6a4a
-	jr nz, Label_1e_6a50 ; $6a4c
+	jr nz, .compare ; $6a4c
 	ld c, $02 ; $6a4e
-Label_1e_6a50:
+.compare:
 	cp a, $03 ; $6a50
-	jr nz, Label_1e_6a56 ; $6a52
+	jr nz, .compare2 ; $6a52
 	ld c, $03 ; $6a54
-Label_1e_6a56:
+.compare2:
 	cp a, $0a ; $6a56
-	jr nz, Label_1e_6a5c ; $6a58
+	jr nz, .recordDrillResult ; $6a58
 	ld c, $04 ; $6a5a
-Label_1e_6a5c:
+.recordDrillResult:
 	farcall RecordDrillResult ; $6a5c
 	ld c, $01 ; $6a5f
 	call ShowMatchResultsScreen ; $6a61
@@ -3069,18 +3069,18 @@ ShowExpAwardForExhibition:
 	farcall RecordDrillResult ; $6a7f
 	xor a, a ; $6a82
 	test_flag FLAG_DOUBLES ; $6a83
-	jr z, Label_1e_6a8a ; $6a86
+	jr z, .step ; $6a86
 	ld a, $01 ; $6a88
-Label_1e_6a8a:
+.step:
 	push af ; $6a8a
 	clear_flag FLAG_DOUBLES ; $6a8b
 	ld c, $01 ; $6a8e
 	call ShowMatchResultsScreen ; $6a90
 	pop af ; $6a93
 	or a, a ; $6a94
-	jr z, Label_1e_6a9a ; $6a95
+	jr z, .restore ; $6a95
 	set_flag FLAG_DOUBLES ; $6a97
-Label_1e_6a9a:
+.restore:
 	pop af ; $6a9a
 	wram_bank ; $6a9b
 	pop hl ; $6a9f
@@ -3104,18 +3104,18 @@ ShowExpAwardForLinkedPlay:
 	farcall RecordDrillResult ; $6ab5
 	xor a, a ; $6ab8
 	test_flag FLAG_DOUBLES ; $6ab9
-	jr z, Label_1e_6ac0 ; $6abc
+	jr z, .step ; $6abc
 	ld a, $01 ; $6abe
-Label_1e_6ac0:
+.step:
 	push af ; $6ac0
 	clear_flag FLAG_DOUBLES ; $6ac1
 	ld c, $01 ; $6ac4
 	call ShowMatchResultsScreen ; $6ac6
 	pop af ; $6ac9
 	or a, a ; $6aca
-	jr z, Label_1e_6ad0 ; $6acb
+	jr z, .restore ; $6acb
 	set_flag FLAG_DOUBLES ; $6acd
-Label_1e_6ad0:
+.restore:
 	pop af ; $6ad0
 	wram_bank ; $6ad1
 	pop hl ; $6ad5
@@ -3165,13 +3165,13 @@ ApplyPendingExpAwards:
 	ld h, [hl] ; $6b17
 	ld l, a ; $6b18
 	add hl, de ; $6b19
-	jr c, Label_1e_6b3d ; $6b1a
+	jr c, .step ; $6b1a
 	ld d, h ; $6b1c
 	ld e, l ; $6b1d
 	call ScaleExpByPlayerLevel ; $6b1e
 	call ComputeTrophyExpAwards ; $6b21
 	add hl, de ; $6b24
-	jr c, Label_1e_6b3d ; $6b25
+	jr c, .step ; $6b25
 	ld d, h ; $6b27
 	ld e, l ; $6b28
 	ld hl, $c8b1 ; $6b29
@@ -3179,7 +3179,7 @@ ApplyPendingExpAwards:
 	ld h, [hl] ; $6b2d
 	ld l, a ; $6b2e
 	add hl, de ; $6b2f
-	jr c, Label_1e_6b3d ; $6b30
+	jr c, .step ; $6b30
 	ld d, h ; $6b32
 	ld e, l ; $6b33
 	ld hl, $c8b3 ; $6b34
@@ -3187,13 +3187,13 @@ ApplyPendingExpAwards:
 	ld h, [hl] ; $6b38
 	ld l, a ; $6b39
 	add hl, de ; $6b3a
-	jr nc, Label_1e_6b40 ; $6b3b
-Label_1e_6b3d:
+	jr nc, .step2 ; $6b3b
+.step:
 	ld hl, rIE ; $6b3d
-Label_1e_6b40:
+.step2:
 	ld a, h ; $6b40
 	or a, l ; $6b41
-	jp z, Label_1e_6bfa ; $6b42
+	jp z, .restore2 ; $6b42
 	push hl ; $6b45
 	farcall ClearDrillResultBuffer ; $6b46
 	ld hl, $c9b0 ; $6b49
@@ -3207,42 +3207,42 @@ Label_1e_6b40:
 	add hl, de ; $6b55
 	ld d, h ; $6b56
 	ld e, l ; $6b57
-	jr nc, Label_1e_6b5d ; $6b58
+	jr nc, .scaleExpByPlayerLevel ; $6b58
 	ld de, rIE ; $6b5a
-Label_1e_6b5d:
+.scaleExpByPlayerLevel:
 	call ScaleExpByPlayerLevel ; $6b5d
-	jr nc, Label_1e_6b65 ; $6b60
+	jr nc, .step3 ; $6b60
 	ld de, rIE ; $6b62
-Label_1e_6b65:
+.step3:
 	ld a, d ; $6b65
 	or a, e ; $6b66
-	jr z, Label_1e_6b70 ; $6b67
+	jr z, .step4 ; $6b67
 	ld b, $00 ; $6b69
 	ld c, $00 ; $6b6b
 	farcall RecordDrillResult ; $6b6d
-Label_1e_6b70:
+.step4:
 	ld hl, $c8b1 ; $6b70
 	ld a, [hl+] ; $6b73
 	ld d, [hl] ; $6b74
 	ld e, a ; $6b75
 	ld a, d ; $6b76
 	or a, e ; $6b77
-	jr z, Label_1e_6b81 ; $6b78
+	jr z, .step5 ; $6b78
 	ld b, $01 ; $6b7a
 	ld c, $00 ; $6b7c
 	farcall RecordDrillResult ; $6b7e
-Label_1e_6b81:
+.step5:
 	ld hl, $c8b3 ; $6b81
 	ld a, [hl+] ; $6b84
 	ld d, [hl] ; $6b85
 	ld e, a ; $6b86
 	ld a, d ; $6b87
 	or a, e ; $6b88
-	jr z, Label_1e_6b92 ; $6b89
+	jr z, .step6 ; $6b89
 	ld b, $02 ; $6b8b
 	ld c, $00 ; $6b8d
 	farcall RecordDrillResult ; $6b8f
-Label_1e_6b92:
+.step6:
 	wram_bank $06 ; $6b92
 	ld hl, $d036 ; $6b98
 	ld a, [hl+] ; $6b9b
@@ -3250,25 +3250,25 @@ Label_1e_6b92:
 	ld e, a ; $6b9d
 	ld a, d ; $6b9e
 	or a, e ; $6b9f
-	jr z, Label_1e_6ba9 ; $6ba0
+	jr z, .step7 ; $6ba0
 	ld b, $04 ; $6ba2
 	ld c, $00 ; $6ba4
 	farcall RecordDrillResult ; $6ba6
-Label_1e_6ba9:
+.step7:
 	xor a, a ; $6ba9
 	test_flag FLAG_DOUBLES ; $6baa
-	jr nz, Label_1e_6bb1 ; $6bad
+	jr nz, .step8 ; $6bad
 	ld a, $01 ; $6baf
-Label_1e_6bb1:
+.step8:
 	push af ; $6bb1
 	set_flag FLAG_DOUBLES ; $6bb2
 	ld c, $01 ; $6bb5
 	call ShowMatchResultsScreen ; $6bb7
 	pop af ; $6bba
 	or a, a ; $6bbb
-	jr z, Label_1e_6bc1 ; $6bbc
+	jr z, .restore ; $6bbc
 	clear_flag FLAG_DOUBLES ; $6bbe
-Label_1e_6bc1:
+.restore:
 	pop hl ; $6bc1
 	farcall RunExpDistributionFlow ; $6bc2
 	ld c, $00 ; $6bc5
@@ -3300,7 +3300,7 @@ Label_1e_6bc1:
 	pop af ; $6bf6
 	ld a, $01 ; $6bf7
 	ret ; $6bf9
-Label_1e_6bfa:
+.restore2:
 	pop af ; $6bfa
 	ld [wGameMode], a ; $6bfb
 	pop af ; $6bfe
@@ -3318,12 +3318,12 @@ ScaleExpByPlayerLevel:
 	add a, b ; $6c10
 	srl a ; $6c11
 	cp a, $0a ; $6c13
-	jr nc, Label_1e_6c19 ; $6c15
+	jr nc, .compare ; $6c15
 	ccf ; $6c17
 	ret ; $6c18
-Label_1e_6c19:
+.compare:
 	cp a, $14 ; $6c19
-	jr nc, Label_1e_6c27 ; $6c1b
+	jr nc, .compare2 ; $6c1b
 	ld h, d ; $6c1d
 	ld l, e ; $6c1e
 	srl d ; $6c1f
@@ -3332,18 +3332,18 @@ Label_1e_6c19:
 	ld d, h ; $6c24
 	ld e, l ; $6c25
 	ret ; $6c26
-Label_1e_6c27:
+.compare2:
 	cp a, $1e ; $6c27
-	jr nc, Label_1e_6c31 ; $6c29
+	jr nc, .compare3 ; $6c29
 	ld h, d ; $6c2b
 	ld l, e ; $6c2c
 	add hl, de ; $6c2d
 	ld d, h ; $6c2e
 	ld e, l ; $6c2f
 	ret ; $6c30
-Label_1e_6c31:
+.compare3:
 	cp a, $28 ; $6c31
-	jr nc, Label_1e_6c40 ; $6c33
+	jr nc, .compare4 ; $6c33
 	ld h, d ; $6c35
 	ld l, e ; $6c36
 	srl d ; $6c37
@@ -3353,9 +3353,9 @@ Label_1e_6c31:
 	ld d, h ; $6c3d
 	ld e, l ; $6c3e
 	ret ; $6c3f
-Label_1e_6c40:
+.compare4:
 	cp a, $32 ; $6c40
-	jr nc, Label_1e_6c4b ; $6c42
+	jr nc, .compare5 ; $6c42
 	ld h, d ; $6c44
 	ld l, e ; $6c45
 	add hl, hl ; $6c46
@@ -3363,9 +3363,9 @@ Label_1e_6c40:
 	ld d, h ; $6c48
 	ld e, l ; $6c49
 	ret ; $6c4a
-Label_1e_6c4b:
+.compare5:
 	cp a, $3c ; $6c4b
-	jr nc, Label_1e_6c5b ; $6c4d
+	jr nc, .step ; $6c4d
 	ld h, d ; $6c4f
 	ld l, e ; $6c50
 	add hl, hl ; $6c51
@@ -3376,7 +3376,7 @@ Label_1e_6c4b:
 	ld d, h ; $6c58
 	ld e, l ; $6c59
 	ret ; $6c5a
-Label_1e_6c5b:
+.step:
 	ld h, d ; $6c5b
 	ld l, e ; $6c5c
 	add hl, hl ; $6c5d
@@ -3386,9 +3386,9 @@ Label_1e_6c5b:
 	ret ; $6c61
 ApplyStatGapProgressFlag:
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $6c62
-	jr nz, Label_1e_6c68 ; $6c65
+	jr nz, .step ; $6c65
 	ret ; $6c67
-Label_1e_6c68:
+.step:
 	ld a, [$c939] ; $6c68
 	ld b, a ; $6c6b
 	ld a, [$c938] ; $6c6c
@@ -3396,31 +3396,31 @@ Label_1e_6c68:
 	bit 7, a ; $6c70
 	ret nz ; $6c72
 	cp a, $05 ; $6c73
-	jr nc, Label_1e_6c78 ; $6c75
+	jr nc, .setFlag ; $6c75
 	ret ; $6c77
-Label_1e_6c78:
+.setFlag:
 	set_flag FLAG_HAVE_DRIVE_RACKET ; $6c78
 	ret ; $6c7b
 ApplyClassProgressRule1:
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $6c7c
-	jr nz, Label_1e_6c82 ; $6c7f
+	jr nz, .setFlag ; $6c7f
 	ret ; $6c81
-Label_1e_6c82:
+.setFlag:
 	set_flag FLAG_HAVE_LARGE_RACKET ; $6c82
 	ret ; $6c85
 ApplyClassProgressRule2:
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $6c86
-	jr nz, Label_1e_6c8c ; $6c89
+	jr nz, .setFlag ; $6c89
 	ret ; $6c8b
-Label_1e_6c8c:
+.setFlag:
 	set_flag FLAG_HAVE_SMALL_RACKET ; $6c8c
 	set_flag FLAG_HAVE_LIGHT_SHOES ; $6c8f
 	ret ; $6c92
 ApplyClassProgressRule3:
 	test_flag FLAG_WON_VARSITY_SINGLES_RANK_4 ; $6c93
-	jr nz, Label_1e_6c99 ; $6c96
+	jr nz, .setFlag ; $6c96
 	ret ; $6c98
-Label_1e_6c99:
+.setFlag:
 	set_flag FLAG_HAVE_IRON_RACKET ; $6c99
 	set_flag FLAG_HAVE_IRON_SHOES ; $6c9c
 	ret ; $6c9f
@@ -3439,9 +3439,9 @@ SetRewardGameFlag:
 	ld hl, RewardFlagListPtrs_1e ; $6cb2
 	add a, l ; $6cb5
 	ld l, a ; $6cb6
-	jr nc, Label_1e_6cba ; $6cb7
+	jr nc, .read ; $6cb7
 	inc h ; $6cb9
-Label_1e_6cba:
+.read:
 	ld a, [hl+] ; $6cba
 	ld h, [hl] ; $6cbb
 	ld l, a ; $6cbc
@@ -3449,9 +3449,9 @@ Label_1e_6cba:
 	add a, a ; $6cc0
 	add a, l ; $6cc1
 	ld l, a ; $6cc2
-	jr nc, Label_1e_6cc6 ; $6cc3
+	jr nc, .readB ; $6cc3
 	inc h ; $6cc5
-Label_1e_6cc6:
+.readB:
 	ld a, [hl+] ; $6cc6
 	ld d, [hl] ; $6cc7
 	ld e, a ; $6cc8
@@ -3470,9 +3470,9 @@ TestRewardGameFlag:
 	ld hl, RewardFlagListPtrs_1e ; $6cd8
 	add a, l ; $6cdb
 	ld l, a ; $6cdc
-	jr nc, Label_1e_6ce0 ; $6cdd
+	jr nc, .read ; $6cdd
 	inc h ; $6cdf
-Label_1e_6ce0:
+.read:
 	ld a, [hl+] ; $6ce0
 	ld h, [hl] ; $6ce1
 	ld l, a ; $6ce2
@@ -3480,9 +3480,9 @@ Label_1e_6ce0:
 	add a, a ; $6ce6
 	add a, l ; $6ce7
 	ld l, a ; $6ce8
-	jr nc, Label_1e_6cec ; $6ce9
+	jr nc, .readB ; $6ce9
 	inc h ; $6ceb
-Label_1e_6cec:
+.readB:
 	ld a, [hl+] ; $6cec
 	ld d, [hl] ; $6ced
 	ld e, a ; $6cee
@@ -3665,34 +3665,34 @@ ApplyRewardUnlockFlags:
 	ld hl, Data_1e_6e7d ; $6e23
 	add a, l ; $6e26
 	ld l, a ; $6e27
-	jr nc, Label_1e_6e2b ; $6e28
+	jr nc, .loop ; $6e28
 	inc h ; $6e2a
-Label_1e_6e2b:
+.loop:
 	ld a, [hl+] ; $6e2b
 	ld d, [hl] ; $6e2c
 	ld e, a ; $6e2d
 	inc hl ; $6e2e
 	ld a, d ; $6e2f
 	or a, e ; $6e30
-	jr z, Label_1e_6e3b ; $6e31
+	jr z, .read ; $6e31
 	call TestGameFlag ; $6e33
-	jr z, Label_1e_6e3b ; $6e36
+	jr z, .read ; $6e36
 	call SetRewardUnlockFlag ; $6e38
-Label_1e_6e3b:
+.read:
 	ld a, [hl+] ; $6e3b
 	ld d, [hl] ; $6e3c
 	ld e, a ; $6e3d
 	inc hl ; $6e3e
 	ld a, d ; $6e3f
 	or a, e ; $6e40
-	jr z, Label_1e_6e4b ; $6e41
+	jr z, .step ; $6e41
 	call TestGameFlag ; $6e43
-	jr z, Label_1e_6e4b ; $6e46
+	jr z, .step ; $6e46
 	call SetRewardUnlockFlag ; $6e48
-Label_1e_6e4b:
+.step:
 	inc c ; $6e4b
 	dec b ; $6e4c
-	jr nz, Label_1e_6e2b ; $6e4d
+	jr nz, .loop ; $6e4d
 	ret ; $6e4f
 SetRewardUnlockFlag:
 	push hl ; $6e50
@@ -3701,9 +3701,9 @@ SetRewardUnlockFlag:
 	ld hl, Data_1e_6e63 ; $6e53
 	add a, l ; $6e56
 	ld l, a ; $6e57
-	jr nc, Label_1e_6e5b ; $6e58
+	jr nc, .read ; $6e58
 	inc h ; $6e5a
-Label_1e_6e5b:
+.read:
 	ld a, [hl+] ; $6e5b
 	ld d, [hl] ; $6e5c
 	ld e, a ; $6e5d
@@ -3723,29 +3723,29 @@ Data_1e_6e7d:
 SetMinigameRecordSaveFlag:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $6eb1
 	cp a, $1d ; $6eb4
-	jr nz, Label_1e_6ec1 ; $6eb6
+	jr nz, .compare ; $6eb6
 	push de ; $6eb8
 	ld de, SAVEFLAG_COURT_CASTLE ; $6eb9
 	farcall SetSaveFlag ; $6ebc
 	pop de ; $6ebf
 	ret ; $6ec0
-Label_1e_6ec1:
+.compare:
 	cp a, $1f ; $6ec1
-	jr nz, Label_1e_6ece ; $6ec3
+	jr nz, .compare2 ; $6ec3
 	push de ; $6ec5
 	ld de, SAVEFLAG_COURT_TROPICS ; $6ec6
 	farcall SetSaveFlag ; $6ec9
 	pop de ; $6ecc
 	ret ; $6ecd
-Label_1e_6ece:
+.compare2:
 	cp a, $21 ; $6ece
-	jr nz, Label_1e_6edb ; $6ed0
+	jr nz, .done ; $6ed0
 	push de ; $6ed2
 	ld de, SAVEFLAG_COURT_JUNGLE ; $6ed3
 	farcall SetSaveFlag ; $6ed6
 	pop de ; $6ed9
 	ret ; $6eda
-Label_1e_6edb:
+.done:
 	ret ; $6edb
 SetMinigameClearFlag:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $6edc
@@ -3758,16 +3758,16 @@ SetMinigameClearFlag:
 	add hl, hl ; $6ee8
 	add a, l ; $6ee9
 	ld l, a ; $6eea
-	jr nc, Label_1e_6eee ; $6eeb
+	jr nc, .checkMinigameLevel ; $6eeb
 	inc h ; $6eed
-Label_1e_6eee:
+.checkMinigameLevel:
 	ld a, [wMinigameLevel] ; $6eee
 	add a, a ; $6ef1
 	add a, l ; $6ef2
 	ld l, a ; $6ef3
-	jr nc, Label_1e_6ef7 ; $6ef4
+	jr nc, .step ; $6ef4
 	inc h ; $6ef6
-Label_1e_6ef7:
+.step:
 	ld de, MinigameClearFlagTable_1e ; $6ef7
 	add hl, de ; $6efa
 	ld a, [hl+] ; $6efb
@@ -3809,13 +3809,13 @@ UpdateMinigameBestScore:
 	push af ; $6f3a
 	ld a, [wMinigameLevel] ; $6f3b
 	cp a, $02 ; $6f3e
-	jr nz, Label_1e_6f87 ; $6f40
+	jr nz, .restore ; $6f40
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $6f42
 	sub a, $1c ; $6f45
 	bit 7, a ; $6f47
-	jr nz, Label_1e_6f87 ; $6f49
+	jr nz, .restore ; $6f49
 	cp a, $09 ; $6f4b
-	jr nc, Label_1e_6f87 ; $6f4d
+	jr nc, .restore ; $6f4d
 	inc a ; $6f4f
 	inc a ; $6f50
 	farcall ReadMinigameRecord ; $6f51
@@ -3839,7 +3839,7 @@ UpdateMinigameBestScore:
 	sbc a, b ; $6f6e
 	ld h, a ; $6f6f
 	bit 7, h ; $6f70
-	jr z, Label_1e_6f87 ; $6f72
+	jr z, .restore ; $6f72
 	ld hl, $de00 ; $6f74
 	ld a, e ; $6f77
 	ld [hl+], a ; $6f78
@@ -3850,7 +3850,7 @@ UpdateMinigameBestScore:
 	inc a ; $6f80
 	farcall UpdateMinigameRecord ; $6f81
 	call SetMinigameRecordSaveFlag ; $6f84
-Label_1e_6f87:
+.restore:
 	pop af ; $6f87
 	wram_bank ; $6f88
 	ret ; $6f8c
@@ -3861,23 +3861,23 @@ CheckAllProgressComplete:
 	push hl ; $6f90
 	ld c, $24 ; $6f91
 	ld hl, AllProgressFlagList_1e ; $6f93
-Label_1e_6f96:
+.loop:
 	push hl ; $6f96
 	ld a, [hl+] ; $6f97
 	ld d, [hl] ; $6f98
 	ld e, a ; $6f99
 	call TestGameFlag ; $6f9a
 	pop hl ; $6f9d
-	jr z, Label_1e_6fad ; $6f9e
+	jr z, .restore ; $6f9e
 	inc hl ; $6fa0
 	inc hl ; $6fa1
 	dec c ; $6fa2
-	jr nz, Label_1e_6f96 ; $6fa3
+	jr nz, .loop ; $6fa3
 	push de ; $6fa5
 	ld de, SAVEFLAG_COURT_STAR ; $6fa6
 	farcall SetSaveFlag ; $6fa9
 	pop de ; $6fac
-Label_1e_6fad:
+.restore:
 	pop hl ; $6fad
 	pop de ; $6fae
 	pop bc ; $6faf
@@ -3895,26 +3895,26 @@ SetupRankingBoardArgs:
 	and a, $01 ; $6fc2
 	ld b, a ; $6fc4
 	or a, a ; $6fc5
-	jr nz, Label_1e_6fd4 ; $6fc6
+	jr nz, .step ; $6fc6
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $6fc8
 	sub a, $13 ; $6fcb
 	add a, $04 ; $6fcd
 	and a, $07 ; $6fcf
 	ld c, a ; $6fd1
-	jr Label_1e_6fde ; $6fd2
-Label_1e_6fd4:
+	jr .checkMatchWinLoseFlag ; $6fd2
+.step:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $6fd4
 	sub a, $13 ; $6fd7
 	add a, $03 ; $6fd9
 	and a, $03 ; $6fdb
 	ld c, a ; $6fdd
-Label_1e_6fde:
+.checkMatchWinLoseFlag:
 	ld a, [wMatchWinLoseFlag] ; $6fde
 	cp a, $01 ; $6fe1
-	jr nz, Label_1e_6fe8 ; $6fe3
+	jr nz, .step2 ; $6fe3
 	ld d, $01 ; $6fe5
 	ret ; $6fe7
-Label_1e_6fe8:
+.step2:
 	ld d, $02 ; $6fe8
 	ret ; $6fea
 GetTrophyExpValue:
@@ -4011,66 +4011,66 @@ ComputeTrophyExpAwards:
 	ld e, a ; $7073
 	ld a, d ; $7074
 	or a, e ; $7075
-	jr z, Label_1e_707f ; $7076
+	jr z, .step ; $7076
 	ld b, $04 ; $7078
 	ld c, $00 ; $707a
 	farcall RecordDrillResult ; $707c
-Label_1e_707f:
+.step:
 	ld hl, $d02a ; $707f
 	ld a, [hl+] ; $7082
 	ld d, [hl] ; $7083
 	ld e, a ; $7084
 	ld a, d ; $7085
 	or a, e ; $7086
-	jr z, Label_1e_7090 ; $7087
+	jr z, .step2 ; $7087
 	ld b, $04 ; $7089
 	ld c, $01 ; $708b
 	farcall RecordDrillResult ; $708d
-Label_1e_7090:
+.step2:
 	ld hl, $d02c ; $7090
 	ld a, [hl+] ; $7093
 	ld d, [hl] ; $7094
 	ld e, a ; $7095
 	ld a, d ; $7096
 	or a, e ; $7097
-	jr z, Label_1e_70a1 ; $7098
+	jr z, .step3 ; $7098
 	ld b, $04 ; $709a
 	ld c, $02 ; $709c
 	farcall RecordDrillResult ; $709e
-Label_1e_70a1:
+.step3:
 	ld hl, $d02e ; $70a1
 	ld a, [hl+] ; $70a4
 	ld d, [hl] ; $70a5
 	ld e, a ; $70a6
 	ld a, d ; $70a7
 	or a, e ; $70a8
-	jr z, Label_1e_70b2 ; $70a9
+	jr z, .step4 ; $70a9
 	ld b, $04 ; $70ab
 	ld c, $03 ; $70ad
 	farcall RecordDrillResult ; $70af
-Label_1e_70b2:
+.step4:
 	ld hl, $d030 ; $70b2
 	ld a, [hl+] ; $70b5
 	ld d, [hl] ; $70b6
 	ld e, a ; $70b7
 	ld a, d ; $70b8
 	or a, e ; $70b9
-	jr z, Label_1e_70c3 ; $70ba
+	jr z, .step5 ; $70ba
 	ld b, $04 ; $70bc
 	ld c, $04 ; $70be
 	farcall RecordDrillResult ; $70c0
-Label_1e_70c3:
+.step5:
 	ld hl, $d032 ; $70c3
 	ld a, [hl+] ; $70c6
 	ld d, [hl] ; $70c7
 	ld e, a ; $70c8
 	ld a, d ; $70c9
 	or a, e ; $70ca
-	jr z, Label_1e_70d4 ; $70cb
+	jr z, .restore ; $70cb
 	ld b, $04 ; $70cd
 	ld c, $05 ; $70cf
 	farcall RecordDrillResult ; $70d1
-Label_1e_70d4:
+.restore:
 	pop af ; $70d4
 	wram_bank ; $70d5
 	ret ; $70d9
@@ -4320,9 +4320,9 @@ ShowGameProgressScreen:
 	ld de, SAVEFLAG_COURT_STAR ; $7264
 	farcall TestSaveFlag ; $7267
 	pop de ; $726a
-	jr z, Label_1e_7270 ; $726b
+	jr z, .setFlag ; $726b
 	set_flag FLAG_TEMP_PROGRESS_SCREEN_OPEN ; $726d
-Label_1e_7270:
+.setFlag:
 	set_flag FLAG_TEMP_WIDE_GLYPH_STREAM ; $7270
 	call BuildGameProgressScreen ; $7273
 	clear_flag FLAG_TEMP_WIDE_GLYPH_STREAM ; $7276
@@ -4349,10 +4349,10 @@ InitGameProgressScreen:
 	ld a, $ff ; $72a3
 	ld c, $30 ; $72a5
 	ld hl, $df70 ; $72a7
-Label_1e_72aa:
+.loop:
 	ld [hl+], a ; $72aa
 	dec c ; $72ab
-	jr nz, Label_1e_72aa ; $72ac
+	jr nz, .loop ; $72ac
 	ret ; $72ae
 BuildGameProgressScreen:
 	ldh a, [hWramBank] ; $72af
@@ -4365,42 +4365,42 @@ BuildGameProgressScreen:
 	call InitGameProgressScreen ; $72c3
 	call LoadGameProgressScreenAssets ; $72c6
 	test_flag FLAG_TEMP_PROGRESS_SCREEN_OPEN ; $72c9
-	jr nz, Label_1e_72d0 ; $72cc
-	jr Label_1e_72d5 ; $72ce
-Label_1e_72d0:
+	jr nz, .step ; $72cc
+	jr .step2 ; $72ce
+.step:
 	ld a, $05 ; $72d0
 	call RunRewardCategoryList ; $72d2
-Label_1e_72d5:
+.step2:
 	ld a, $00 ; $72d5
 	call RunRewardCategoryList ; $72d7
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $72da
-	jr nz, Label_1e_72e1 ; $72dd
-	jr Label_1e_72e6 ; $72df
-Label_1e_72e1:
+	jr nz, .step3 ; $72dd
+	jr .checkFlag ; $72df
+.step3:
 	ld a, $01 ; $72e1
 	call RunRewardCategoryList ; $72e3
-Label_1e_72e6:
+.checkFlag:
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $72e6
-	jr nz, Label_1e_72ed ; $72e9
-	jr Label_1e_72f2 ; $72eb
-Label_1e_72ed:
+	jr nz, .step4 ; $72e9
+	jr .checkFlag2 ; $72eb
+.step4:
 	ld a, $02 ; $72ed
 	call RunRewardCategoryList ; $72ef
-Label_1e_72f2:
+.checkFlag2:
 	test_flag FLAG_WON_VARSITY_SINGLES_RANK_4 ; $72f2
-	jr nz, Label_1e_72f9 ; $72f5
-	jr Label_1e_72fe ; $72f7
-Label_1e_72f9:
+	jr nz, .step5 ; $72f5
+	jr .checkFlag3 ; $72f7
+.step5:
 	ld a, $03 ; $72f9
 	call RunRewardCategoryList ; $72fb
-Label_1e_72fe:
+.checkFlag3:
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_FINAL ; $72fe
-	jr nz, Label_1e_7305 ; $7301
-	jr Label_1e_730a ; $7303
-Label_1e_7305:
+	jr nz, .step6 ; $7301
+	jr .buildProgressEntryEarnedTable ; $7303
+.step6:
 	ld a, $04 ; $7305
 	call RunRewardCategoryList ; $7307
-Label_1e_730a:
+.buildProgressEntryEarnedTable:
 	call BuildProgressEntryEarnedTable ; $730a
 	call BuildVisibleProgressEntryList ; $730d
 	call CreateProgressListWindow ; $7310
@@ -4426,7 +4426,7 @@ Label_1e_730a:
 	call RegisterFrameTask ; $7348
 	script_fade_in $10 ; $734b
 	call WaitFadeEnd ; $7350
-Label_1e_7353:
+.loop:
 	call AdvanceFrame ; $7353
 	wram_bank $05 ; $7356
 	ldh a, [hInputPressed] ; $735c
@@ -4435,16 +4435,16 @@ Label_1e_7353:
 	bit 7, a ; $7363
 	call nz, ScrollProgressListDown ; $7365
 	bit 0, a ; $7368
-	jr nz, Label_1e_7376 ; $736a
+	jr nz, .playSfx2 ; $736a
 	bit 1, a ; $736c
-	jr nz, Label_1e_7372 ; $736e
-	jr Label_1e_7353 ; $7370
-Label_1e_7372:
+	jr nz, .playSfx ; $736e
+	jr .loop ; $7370
+.playSfx:
 	sound $62 ; $7372
-	jr Label_1e_7378 ; $7374
-Label_1e_7376:
+	jr .restore ; $7374
+.playSfx2:
 	sound $5f ; $7376
-Label_1e_7378:
+.restore:
 	pop af ; $7378
 	wram_bank ; $7379
 	ret ; $737d
@@ -4513,17 +4513,17 @@ TestProgressEntryFlag:
 	add a, a ; $73f4
 	add a, l ; $73f5
 	ld l, a ; $73f6
-	jr nc, Label_1e_73fa ; $73f7
+	jr nc, .read ; $73f7
 	inc h ; $73f9
-Label_1e_73fa:
+.read:
 	ld a, [hl+] ; $73fa
 	ld d, [hl] ; $73fb
 	ld e, a ; $73fc
 	call TestGameFlag ; $73fd
 	ld a, $01 ; $7400
-	jr nz, Label_1e_7405 ; $7402
+	jr nz, .restore ; $7402
 	xor a, a ; $7404
-Label_1e_7405:
+.restore:
 	pop de ; $7405
 	pop hl ; $7406
 	ret ; $7407
@@ -4643,9 +4643,9 @@ GetProgressEntryEarned:
 	ld hl, $df40 ; $74ab
 	add a, l ; $74ae
 	ld l, a ; $74af
-	jr nc, Label_1e_74b3 ; $74b0
+	jr nc, .read ; $74b0
 	inc h ; $74b2
-Label_1e_74b3:
+.read:
 	ld a, [hl] ; $74b3
 	pop hl ; $74b4
 	ret ; $74b5
@@ -4723,7 +4723,7 @@ LoadGameProgressScreenTiles:
 	ld hl, $d000 ; $753e
 	ld a, $09 ; $7541
 	ld c, $03 ; $7543
-Label_1e_7545:
+.loop:
 	ld [hl+], a ; $7545
 	ld [hl+], a ; $7546
 	ld [hl+], a ; $7547
@@ -4737,7 +4737,7 @@ Label_1e_7545:
 	ld de, $000c ; $7551
 	add hl, de ; $7554
 	dec c ; $7555
-	jr nz, Label_1e_7545 ; $7556
+	jr nz, .loop ; $7556
 	ld hl, $d000 ; $7558
 	ld de, $b800 ; $755b
 	ld c, $06 ; $755e
@@ -5003,17 +5003,17 @@ DrawProgressScreenSprites:
 	ld b, a ; $7a99
 	ld a, [$df05] ; $7a9a
 	or a, a ; $7a9d
-	jr z, Label_1e_7aa3 ; $7a9e
+	jr z, .compare ; $7a9e
 	ld [$df07], a ; $7aa0
-Label_1e_7aa3:
+.compare:
 	cp a, b ; $7aa3
-	jr nc, Label_1e_7aab ; $7aa4
+	jr nc, .step ; $7aa4
 	ld a, $01 ; $7aa6
 	ld [$df08], a ; $7aa8
-Label_1e_7aab:
+.step:
 	ld a, [$df07] ; $7aab
 	or a, a ; $7aae
-	jr z, Label_1e_7ac3 ; $7aaf
+	jr z, .step2 ; $7aaf
 	ld d, $0a ; $7ab1
 	ld e, $18 ; $7ab3
 	ld c, $00 ; $7ab5
@@ -5022,10 +5022,10 @@ Label_1e_7aab:
 	ld b, $00 ; $7abc
 	ld h, $02 ; $7abe
 	farcall QueueStackedSpritePair ; $7ac0
-Label_1e_7ac3:
+.step2:
 	ld a, [$df08] ; $7ac3
 	or a, a ; $7ac6
-	jr z, Label_1e_7adb ; $7ac7
+	jr z, .step3 ; $7ac7
 	ld d, $0a ; $7ac9
 	ld e, $86 ; $7acb
 	ld c, $01 ; $7acd
@@ -5034,78 +5034,78 @@ Label_1e_7ac3:
 	ld b, $00 ; $7ad4
 	ld h, $03 ; $7ad6
 	farcall QueueStackedSpritePair ; $7ad8
-Label_1e_7adb:
+.step3:
 	ld hl, $df70 ; $7adb
 	ld a, [$df05] ; $7ade
 	add a, l ; $7ae1
 	ld l, a ; $7ae2
-	jr nc, Label_1e_7ae6 ; $7ae3
+	jr nc, .step4 ; $7ae3
 	inc h ; $7ae5
-Label_1e_7ae6:
+.step4:
 	ld c, $07 ; $7ae6
 	ld b, $00 ; $7ae8
-Label_1e_7aea:
+.loop:
 	ld a, [hl+] ; $7aea
 	cp a, $ff ; $7aeb
-	jr z, Label_1e_7b47 ; $7aed
+	jr z, .step10 ; $7aed
 	ld d, a ; $7aef
 	call GetProgressEntryEarned ; $7af0
 	or a, a ; $7af3
-	jr z, Label_1e_7b47 ; $7af4
+	jr z, .step10 ; $7af4
 	ld a, d ; $7af6
 	cp a, $00 ; $7af7
-	jr z, Label_1e_7b1a ; $7af9
+	jr z, .step5 ; $7af9
 	cp a, $0b ; $7afb
-	jr nc, Label_1e_7b15 ; $7afd
+	jr nc, .drawProgressEntryDefaultIcon ; $7afd
 	dec a ; $7aff
 	srl a ; $7b00
 	or a, a ; $7b02
-	jr z, Label_1e_7b1a ; $7b03
+	jr z, .step5 ; $7b03
 	cp a, $01 ; $7b05
-	jr z, Label_1e_7b23 ; $7b07
+	jr z, .step6 ; $7b07
 	cp a, $02 ; $7b09
-	jr z, Label_1e_7b2c ; $7b0b
+	jr z, .step7 ; $7b0b
 	cp a, $03 ; $7b0d
-	jr z, Label_1e_7b35 ; $7b0f
+	jr z, .step8 ; $7b0f
 	cp a, $04 ; $7b11
-	jr z, Label_1e_7b3e ; $7b13
-Label_1e_7b15:
+	jr z, .step9 ; $7b13
+.drawProgressEntryDefaultIcon:
 	call DrawProgressEntryDefaultIcon ; $7b15
-	jr Label_1e_7b47 ; $7b18
-Label_1e_7b1a:
+	jr .step10 ; $7b18
+.step5:
 	push bc ; $7b1a
 	ld c, $00 ; $7b1b
 	call DrawProgressEntryTrophyIcon ; $7b1d
 	pop bc ; $7b20
-	jr Label_1e_7b47 ; $7b21
-Label_1e_7b23:
+	jr .step10 ; $7b21
+.step6:
 	push bc ; $7b23
 	ld c, $01 ; $7b24
 	call DrawProgressEntryTrophyIcon ; $7b26
 	pop bc ; $7b29
-	jr Label_1e_7b47 ; $7b2a
-Label_1e_7b2c:
+	jr .step10 ; $7b2a
+.step7:
 	push bc ; $7b2c
 	ld c, $02 ; $7b2d
 	call DrawProgressEntryTrophyIcon ; $7b2f
 	pop bc ; $7b32
-	jr Label_1e_7b47 ; $7b33
-Label_1e_7b35:
+	jr .step10 ; $7b33
+.step8:
 	push bc ; $7b35
 	ld c, $03 ; $7b36
 	call DrawProgressEntryTrophyIcon ; $7b38
 	pop bc ; $7b3b
-	jr Label_1e_7b47 ; $7b3c
-Label_1e_7b3e:
+	jr .step10 ; $7b3c
+.step9:
 	push bc ; $7b3e
 	ld c, $04 ; $7b3f
 	call DrawProgressEntryTrophyIcon ; $7b41
 	pop bc ; $7b44
-	jr Label_1e_7b47 ; $7b45
-Label_1e_7b47:
+	jr .step10 ; $7b45
+.step10:
 	inc b ; $7b47
 	dec c ; $7b48
-	jr nz, Label_1e_7aea ; $7b49
+	jr nz, .loop ; $7b49
 	ret ; $7b4b
 LoadProgressScreenIconTiles:
 	ld de, $8200 ; $7b4c

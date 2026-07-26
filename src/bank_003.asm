@@ -1189,14 +1189,14 @@ SaveSignature:
 	INCLUDE "data/bank_003/text_47e9.asm" ; $47e9, 16 bytes
 WipeAllSaveRam:
 	ld e, $00 ; $47f9
-Label_03_47fb:
+.loop:
 	ld a, e ; $47fb
 	ldh [hSramBank], a ; $47fc
 	ld [$4000], a ; $47fe
 	ld bc, $0200 ; $4801
 	ld hl, $a000 ; $4804
 	xor a, a ; $4807
-Label_03_4808:
+.loopB:
 	ld [hl+], a ; $4808
 	ld [hl+], a ; $4809
 	ld [hl+], a ; $480a
@@ -1214,13 +1214,13 @@ Label_03_4808:
 	ld [hl+], a ; $4816
 	ld [hl+], a ; $4817
 	dec c ; $4818
-	jr nz, Label_03_4808 ; $4819
+	jr nz, .loopB ; $4819
 	dec b ; $481b
-	jr nz, Label_03_4808 ; $481c
+	jr nz, .loopB ; $481c
 	inc e ; $481e
 	ld a, e ; $481f
 	cp a, $04 ; $4820
-	jr c, Label_03_47fb ; $4822
+	jr c, .loop ; $4822
 	ret ; $4824
 ClearSaveFlagsArea:
 	xor a, a ; $4825
@@ -1228,7 +1228,7 @@ ClearSaveFlagsArea:
 	ld [$4000], a ; $4828
 	ld c, $02 ; $482b
 	ld hl, sSaveFlags ; $482d
-Label_03_4830:
+.loop:
 	ld [hl+], a ; $4830
 	ld [hl+], a ; $4831
 	ld [hl+], a ; $4832
@@ -1246,7 +1246,7 @@ Label_03_4830:
 	ld [hl+], a ; $483e
 	ld [hl+], a ; $483f
 	dec c ; $4840
-	jr nz, Label_03_4830 ; $4841
+	jr nz, .loop ; $4841
 	ret ; $4843
 SumSaveHeaderRegion:
 	push af ; $4844
@@ -1259,18 +1259,18 @@ SumSaveHeaderRegion:
 	ld l, a ; $484e
 	ld de, sSaveFormatVersion ; $484f
 	ld bc, $0838 ; $4852
-Label_03_4855:
+.loop:
 	ld a, [de] ; $4855
 	inc de ; $4856
 	add a, l ; $4857
 	ld l, a ; $4858
-	jr nc, Label_03_485c ; $4859
+	jr nc, .step ; $4859
 	inc h ; $485b
-Label_03_485c:
+.step:
 	dec c ; $485c
-	jr nz, Label_03_4855 ; $485d
+	jr nz, .loop ; $485d
 	dec b ; $485f
-	jr nz, Label_03_4855 ; $4860
+	jr nz, .loop ; $4860
 	pop bc ; $4862
 	pop de ; $4863
 	pop af ; $4864
@@ -1414,12 +1414,12 @@ ValidateSaveRam:
 	ld hl, sSaveSignature ; $496c
 	ld de, SaveSignature ; $496f
 	call CompareSaveSignature ; $4972
-	jr nz, Label_03_4980 ; $4975
+	jr nz, .step ; $4975
 	call VerifySaveHeaderChecksum ; $4977
-	jr nz, Label_03_4980 ; $497a
+	jr nz, .step ; $497a
 	xor a, a ; $497c
-	jp Label_03_4a32 ; $497d
-Label_03_4980:
+	jp .step2 ; $497d
+.step:
 	ld a, $01 ; $4980
 	ldh [hSramBank], a ; $4982
 	ld [$4000], a ; $4984
@@ -1479,18 +1479,18 @@ Label_03_4980:
 	ld hl, $a000 ; $4a10
 	ld de, SaveSignature ; $4a13
 	call CompareSaveSignature ; $4a16
-	jr nz, Label_03_4a24 ; $4a19
+	jr nz, .wipeAllSaveRam ; $4a19
 	call VerifySaveHeaderChecksum ; $4a1b
-	jr nz, Label_03_4a24 ; $4a1e
+	jr nz, .wipeAllSaveRam ; $4a1e
 	ld a, $01 ; $4a20
-	jr Label_03_4a32 ; $4a22
-Label_03_4a24:
+	jr .step2 ; $4a22
+.wipeAllSaveRam:
 	call WipeAllSaveRam ; $4a24
 	call InitSaveHeader ; $4a27
 	call MirrorSaveHeaderToBank1 ; $4a2a
 	call InitAllMinigameRecordBlocks ; $4a2d
 	ld a, $ff ; $4a30
-Label_03_4a32:
+.step2:
 	push af ; $4a32
 	xor a, a ; $4a33
 	ld [$0000], a ; $4a34
@@ -1514,18 +1514,18 @@ EraseAndInitSaveRam:
 CompareSaveSignature:
 	push de ; $4a56
 	push hl ; $4a57
-Label_03_4a58:
+.loop:
 	ld a, [de] ; $4a58
 	cp a, [hl] ; $4a59
-	jr nz, Label_03_4a63 ; $4a5a
+	jr nz, .step ; $4a5a
 	or a, a ; $4a5c
-	jr z, Label_03_4a65 ; $4a5d
+	jr z, .restore ; $4a5d
 	inc de ; $4a5f
 	inc hl ; $4a60
-	jr Label_03_4a58 ; $4a61
-Label_03_4a63:
+	jr .loop ; $4a61
+.step:
 	ld a, $01 ; $4a63
-Label_03_4a65:
+.restore:
 	pop hl ; $4a65
 	pop de ; $4a66
 	or a, a ; $4a67
@@ -1534,15 +1534,15 @@ CopySaveSignature:
 	push af ; $4a69
 	push de ; $4a6a
 	push hl ; $4a6b
-Label_03_4a6c:
+.loop:
 	ld a, [hl] ; $4a6c
 	ld [de], a ; $4a6d
 	or a, a ; $4a6e
-	jr z, Label_03_4a75 ; $4a6f
+	jr z, .restore ; $4a6f
 	inc hl ; $4a71
 	inc de ; $4a72
-	jr Label_03_4a6c ; $4a73
-Label_03_4a75:
+	jr .loop ; $4a73
+.restore:
 	pop hl ; $4a75
 	pop de ; $4a76
 	pop af ; $4a77
@@ -1654,18 +1654,18 @@ InvalidateStorySlot:
 	push bc ; $4b01
 	ld a, b ; $4b02
 	cp a, $03 ; $4b03
-	jr nc, Label_03_4b16 ; $4b05
+	jr nc, .step ; $4b05
 	sla a ; $4b07
 	ld b, a ; $4b09
 	call InvalidateSaveBlock ; $4b0a
 	or a, a ; $4b0d
-	jr nz, Label_03_4b18 ; $4b0e
+	jr nz, .restore ; $4b0e
 	inc b ; $4b10
 	call InvalidateSaveBlock ; $4b11
-	jr Label_03_4b18 ; $4b14
-Label_03_4b16:
+	jr .restore ; $4b14
+.step:
 	ld a, $ff ; $4b16
-Label_03_4b18:
+.restore:
 	pop bc ; $4b18
 	pop de ; $4b19
 	pop hl ; $4b1a
@@ -1939,23 +1939,23 @@ ReadSaveBlockTag:
 	call GetSaveBlockDirEntry ; $4cae
 	ld a, [bc] ; $4cb1
 	or a, a ; $4cb2
-	jp nz, Label_03_4cbb ; $4cb3
+	jp nz, .step ; $4cb3
 	ld a, $fe ; $4cb6
-	jp Label_03_4cc9 ; $4cb8
-Label_03_4cbb:
+	jp .loopB ; $4cb8
+.step:
 	ld a, $08 ; $4cbb
 	add a, c ; $4cbd
 	ld e, a ; $4cbe
 	ld d, b ; $4cbf
 	ld c, $08 ; $4cc0
-Label_03_4cc2:
+.loop:
 	ld a, [de] ; $4cc2
 	ld [hl+], a ; $4cc3
 	inc de ; $4cc4
 	dec c ; $4cc5
-	jr nz, Label_03_4cc2 ; $4cc6
+	jr nz, .loop ; $4cc6
 	xor a, a ; $4cc8
-Label_03_4cc9:
+.loopB:
 	push af ; $4cc9
 	xor a, a ; $4cca
 	ld [$0000], a ; $4ccb
@@ -1976,21 +1976,21 @@ Label_03_4cc9:
 	call GetSaveBlockDirEntry ; $4ce3
 	ld a, [bc] ; $4ce6
 	or a, a ; $4ce7
-	jp nz, Label_03_4cf0 ; $4ce8
+	jp nz, .step2 ; $4ce8
 	ld a, $fe ; $4ceb
-	jp Label_03_4cc9 ; $4ced
-Label_03_4cf0:
+	jp .loopB ; $4ced
+.step2:
 	ld a, $08 ; $4cf0
 	add a, c ; $4cf2
 	ld e, a ; $4cf3
 	ld d, b ; $4cf4
 	ld c, $02 ; $4cf5
-Label_03_4cf7:
+.loopBB:
 	ld a, [de] ; $4cf7
 	ld [hl+], a ; $4cf8
 	inc de ; $4cf9
 	dec c ; $4cfa
-	jr nz, Label_03_4cf7 ; $4cfb
+	jr nz, .loopBB ; $4cfb
 	xor a, a ; $4cfd
 	push af ; $4cfe
 	xor a, a ; $4cff
@@ -2004,13 +2004,13 @@ SaveStorySlot:
 	ld a, [wCurrentStorySlot] ; $4d08
 	cp a, $03 ; $4d0b
 	ret nc ; $4d0d
-	jr Label_03_4d19 ; $4d0e
+	jr SaveStorySlotWithTimer.checkCurrentStorySlot ; $4d0e
 SaveStorySlotWithTimer:
 	ld a, [wCurrentStorySlot] ; $4d10
 	cp a, $03 ; $4d13
 	ret nc ; $4d15
 	call SaveGameTimer ; $4d16
-Label_03_4d19:
+.checkCurrentStorySlot:
 	ld a, [wCurrentStorySlot] ; $4d19
 	add a, a ; $4d1c
 	ld b, a ; $4d1d
@@ -2286,14 +2286,14 @@ ClearSaveBlockData:
 	pop hl ; $4ec8
 	push hl ; $4ec9
 	push bc ; $4eca
-Label_03_4ecb:
+.loop:
 	xor a, a ; $4ecb
 	ld [de], a ; $4ecc
 	inc de ; $4ecd
 	dec bc ; $4ece
 	ld a, b ; $4ecf
 	or a, c ; $4ed0
-	jr nz, Label_03_4ecb ; $4ed1
+	jr nz, .loop ; $4ed1
 	pop bc ; $4ed3
 	pop hl ; $4ed4
 	ld de, $0000 ; $4ed5
@@ -2310,11 +2310,11 @@ Label_03_4ecb:
 	ld [hl], d ; $4ee9
 	inc hl ; $4eea
 	ld c, $08 ; $4eeb
-Label_03_4eed:
+.loopB:
 	xor a, a ; $4eed
 	ld [hl+], a ; $4eee
 	dec c ; $4eef
-	jr nz, Label_03_4eed ; $4ef0
+	jr nz, .loopB ; $4ef0
 	xor a, a ; $4ef2
 	pop bc ; $4ef3
 	pop de ; $4ef4
@@ -2357,14 +2357,14 @@ Label_03_4eed:
 	pop hl ; $4f28
 	push hl ; $4f29
 	push bc ; $4f2a
-Label_03_4f2b:
+.loopBB:
 	xor a, a ; $4f2b
 	ld [de], a ; $4f2c
 	inc de ; $4f2d
 	dec bc ; $4f2e
 	ld a, b ; $4f2f
 	or a, c ; $4f30
-	jr nz, Label_03_4f2b ; $4f31
+	jr nz, .loopBB ; $4f31
 	pop bc ; $4f33
 	pop hl ; $4f34
 	ld de, $0000 ; $4f35
@@ -2381,11 +2381,11 @@ Label_03_4f2b:
 	ld [hl], d ; $4f49
 	inc hl ; $4f4a
 	ld c, $08 ; $4f4b
-Label_03_4f4d:
+.loopBBB:
 	xor a, a ; $4f4d
 	ld [hl+], a ; $4f4e
 	dec c ; $4f4f
-	jr nz, Label_03_4f4d ; $4f50
+	jr nz, .loopBBB ; $4f50
 	xor a, a ; $4f52
 	pop bc ; $4f53
 	pop de ; $4f54
@@ -2411,10 +2411,10 @@ ClearSaveBlockEntry:
 	inc hl ; $4f71
 	ld c, $08 ; $4f72
 	xor a, a ; $4f74
-Label_03_4f75:
+.loop:
 	ld [hl+], a ; $4f75
 	dec c ; $4f76
-	jr nz, Label_03_4f75 ; $4f77
+	jr nz, .loop ; $4f77
 	pop bc ; $4f79
 	pop de ; $4f7a
 	pop hl ; $4f7b
@@ -2435,10 +2435,10 @@ ReinitSaveRamPreservingBlock6:
 	pop bc ; $4f95
 	ld a, b ; $4f96
 	cp a, $fe ; $4f97
-	jr z, Label_03_4fa1 ; $4f99
+	jr z, .initAllMinigameRecordBlocks ; $4f99
 	ld hl, $d000 ; $4f9b
 	call WriteBlock6WithBackup ; $4f9e
-Label_03_4fa1:
+.initAllMinigameRecordBlocks:
 	call InitAllMinigameRecordBlocks ; $4fa1
 	pop af ; $4fa4
 	wram_bank ; $4fa5
@@ -2488,10 +2488,10 @@ ReadExhibitionSaveBlock:
 	ld b, a ; $4fef
 	ld hl, wStorySlotData ; $4ff0
 	call ReadSaveBlock ; $4ff3
-	jr Label_03_4ffa ; $4ff6
+	jr .restore ; $4ff6
 	db $3e ; $4ff8
 	db $fe ; $4ff9
-Label_03_4ffa:
+.restore:
 	pop hl ; $4ffa
 	pop de ; $4ffb
 	pop bc ; $4ffc
@@ -2780,9 +2780,9 @@ InitAllMinigameRecordBlocks:
 	pop af ; $51b7
 	ld hl, $d480 ; $51b8
 	xor a, a ; $51bb
-Label_03_51bc:
+.loop:
 	cp a, $0b ; $51bc
-	jr z, Label_03_51ce ; $51be
+	jr z, .step ; $51be
 	push af ; $51c0
 	push hl ; $51c1
 	farcall GetDefaultMinigameRecordValue ; $51c2
@@ -2793,15 +2793,15 @@ Label_03_51bc:
 	pop af ; $51c9
 	inc a ; $51ca
 	inc hl ; $51cb
-	jr Label_03_51bc ; $51cc
-Label_03_51ce:
+	jr .loop ; $51cc
+.step:
 	ld a, $38 ; $51ce
 	ld b, a ; $51d0
 	ld hl, $d480 ; $51d1
 	ld de, $0000 ; $51d4
 	call WriteSaveBlock ; $51d7
 	or a, a ; $51da
-	jr nz, Label_03_521f ; $51db
+	jr nz, .restore ; $51db
 	ld a, $3b ; $51dd
 	ld b, a ; $51df
 	ld hl, $d480 ; $51e0
@@ -2813,7 +2813,7 @@ Label_03_51ce:
 	ld de, $0000 ; $51ef
 	call WriteSaveBlock ; $51f2
 	or a, a ; $51f5
-	jr nz, Label_03_521f ; $51f6
+	jr nz, .restore ; $51f6
 	ld a, $3c ; $51f8
 	ld b, a ; $51fa
 	ld hl, $d480 ; $51fb
@@ -2825,13 +2825,13 @@ Label_03_51ce:
 	ld de, $0000 ; $520a
 	call WriteSaveBlock ; $520d
 	or a, a ; $5210
-	jr nz, Label_03_521f ; $5211
+	jr nz, .restore ; $5211
 	ld a, $3d ; $5213
 	ld b, a ; $5215
 	ld hl, $d480 ; $5216
 	ld de, $0000 ; $5219
 	call WriteSaveBlock ; $521c
-Label_03_521f:
+.restore:
 	pop af ; $521f
 	wram_bank ; $5220
 	pop hl ; $5224
@@ -2847,11 +2847,11 @@ ReadStarVictoryGrid:
 	ld b, $3e ; $522d
 	call ReadSaveBlock ; $522f
 	or a, a ; $5232
-	jr z, Label_03_523b ; $5233
+	jr z, .restore ; $5233
 	xor a, a ; $5235
 	ld c, $06 ; $5236
 	call FillMemory16 ; $5238
-Label_03_523b:
+.restore:
 	pop hl ; $523b
 	pop de ; $523c
 	pop bc ; $523d
@@ -2986,10 +2986,10 @@ SaveSlotDebugEditor:
 	script_fade_in $7f ; $5339
 	farcall InitStoryModeState ; $533e
 	ld de, $0000 ; $5341
-Label_03_5344:
+.loop:
 	call ReadCurrentSlotBlock ; $5344
 	or a, a ; $5347
-	jr z, Label_03_5360 ; $5348
+	jr z, .step ; $5348
 	push de ; $534a
 	ld hl, SaveResultFailedString_03 ; $534b
 	ld de, $0511 ; $534e
@@ -2998,12 +2998,12 @@ Label_03_5344:
 	ld hl, $d300 ; $5355
 	ld c, $30 ; $5358
 	call ClearMemory16 ; $535a
-	jp Label_03_5369 ; $535d
-Label_03_5360:
+	jp .loopB ; $535d
+.step:
 	ld hl, SaveResultLoadedString_03 ; $5360
 	ld de, $0511 ; $5363
 	call PrintString ; $5366
-Label_03_5369:
+.loopB:
 	wram_bank $07 ; $5369
 	push de ; $536f
 	ld hl, hSaveEditorCursor ; $5370
@@ -3017,7 +3017,7 @@ Label_03_5369:
 	ld l, a ; $537d
 	ld b, $10 ; $537e
 	ld e, $01 ; $5380
-Label_03_5382:
+.loopBB:
 	ld d, $00 ; $5382
 	push bc ; $5384
 	push de ; $5385
@@ -3033,7 +3033,7 @@ Label_03_5382:
 	inc d ; $5392
 	inc d ; $5393
 	ld c, $04 ; $5394
-Label_03_5396:
+.loopBBB:
 	push hl ; $5396
 	ld a, [hl+] ; $5397
 	ld l, [hl] ; $5398
@@ -3051,13 +3051,13 @@ Label_03_5396:
 	inc d ; $53a6
 	inc d ; $53a7
 	dec c ; $53a8
-	jr nz, Label_03_5396 ; $53a9
+	jr nz, .loopBBB ; $53a9
 	inc e ; $53ab
 	pop bc ; $53ac
 	dec b ; $53ad
-	jr nz, Label_03_5382 ; $53ae
+	jr nz, .loopBB ; $53ae
 	pop de ; $53b0
-Label_03_53b1:
+.loopBBBB:
 	push de ; $53b1
 	ld hl, hSaveEditorCursor ; $53b2
 	ld a, [hl+] ; $53b5
@@ -3069,14 +3069,14 @@ Label_03_53b1:
 	ld de, $0011 ; $53c1
 	call PrintDecimalByte ; $53c4
 	pop de ; $53c7
-Label_03_53c8:
+.loopBBBBB:
 	ldh a, [hPlayerInputFlags] ; $53c8
 	bit PADB_A, a ; $53ca
-	jr nz, Label_03_53d4 ; $53cc
+	jr nz, .step2 ; $53cc
 	ldh a, [hVBlankCounter] ; $53ce
 	bit 3, a ; $53d0
-	jr z, Label_03_53f8 ; $53d2
-Label_03_53d4:
+	jr z, .advanceFrame ; $53d2
+.step2:
 	push de ; $53d4
 	ldh a, [hSaveEditorCursor] ; $53d5
 	ld e, a ; $53d7
@@ -3098,50 +3098,50 @@ Label_03_53d4:
 	ld d, a ; $53f3
 	call QueueSprite ; $53f4
 	pop de ; $53f7
-Label_03_53f8:
+.advanceFrame:
 	call AdvanceFrame ; $53f8
 	ldh a, [hInputPressed] ; $53fb
 	bit PADB_UP, a ; $53fd
-	jr z, Label_03_540c ; $53ff
+	jr z, .step3 ; $53ff
 	ld bc, $f0f8 ; $5401
 	call MoveSaveEditorCursor ; $5404
-	jr z, Label_03_53b1 ; $5407
-	jp Label_03_5369 ; $5409
-Label_03_540c:
+	jr z, .loopBBBB ; $5407
+	jp .loopB ; $5409
+.step3:
 	bit 5, a ; $540c
-	jr z, Label_03_541b ; $540e
+	jr z, .step4 ; $540e
 	ld bc, rIE ; $5410
 	call MoveSaveEditorCursor ; $5413
-	jr z, Label_03_53b1 ; $5416
-	jp Label_03_5369 ; $5418
-Label_03_541b:
+	jr z, .loopBBBB ; $5416
+	jp .loopB ; $5418
+.step4:
 	bit 4, a ; $541b
-	jr z, Label_03_542a ; $541d
+	jr z, .step5 ; $541d
 	ld bc, $0101 ; $541f
 	call MoveSaveEditorCursor ; $5422
-	jr z, Label_03_53b1 ; $5425
-	jp Label_03_5369 ; $5427
-Label_03_542a:
+	jr z, .loopBBBB ; $5425
+	jp .loopB ; $5427
+.step5:
 	bit 7, a ; $542a
-	jr z, Label_03_543a ; $542c
+	jr z, .step6 ; $542c
 	ld bc, $1008 ; $542e
 	call MoveSaveEditorCursor ; $5431
-	jp z, Label_03_53b1 ; $5434
-	jp Label_03_5369 ; $5437
-Label_03_543a:
+	jp z, .loopBBBB ; $5434
+	jp .loopB ; $5437
+.step6:
 	bit 1, a ; $543a
-	jr z, Label_03_546d ; $543c
+	jr z, .step7 ; $543c
 	ld a, [wCurrentStorySlot] ; $543e
 	push af ; $5441
 	ld a, $03 ; $5442
 	ld [wCurrentStorySlot], a ; $5444
 	call ReadCurrentSlotBlock ; $5447
 	or a, a ; $544a
-	jr nz, Label_03_5466 ; $544b
+	jr nz, .restore ; $544b
 	ld hl, $d300 ; $544d
 	ld a, [hl+] ; $5450
 	or a, [hl] ; $5451
-	jr z, Label_03_5466 ; $5452
+	jr z, .restore ; $5452
 	inc hl ; $5454
 	ld a, $01 ; $5455
 	ld [hl+], a ; $5457
@@ -3153,44 +3153,44 @@ Label_03_543a:
 	call WriteCurrentSlotBlock ; $545d
 	pop af ; $5460
 	sound $41 ; $5461
-	jp Label_03_5344 ; $5463
-Label_03_5466:
+	jp .loop ; $5463
+.restore:
 	pop af ; $5466
 	ld [wCurrentStorySlot], a ; $5467
-	jp Label_03_5344 ; $546a
-Label_03_546d:
+	jp .loop ; $546a
+.step7:
 	bit 2, a ; $546d
-	jr z, Label_03_547f ; $546f
+	jr z, .step8 ; $546f
 	sound $5f ; $5471
 	ld a, [wCurrentStorySlot] ; $5473
 	inc a ; $5476
 	and a, $03 ; $5477
 	ld [wCurrentStorySlot], a ; $5479
-	jp Label_03_5344 ; $547c
-Label_03_547f:
+	jp .loop ; $547c
+.step8:
 	bit 3, a ; $547f
-	jr z, Label_03_54ad ; $5481
+	jr z, .label_03_53c8 ; $5481
 	sound $5f ; $5483
 	ldh a, [hPlayerInputFlags] ; $5485
 	bit PADB_A, a ; $5487
-	jr nz, Label_03_549c ; $5489
+	jr nz, .step9 ; $5489
 	push de ; $548b
 	ld hl, SaveResultSavedString_03 ; $548c
 	ld de, $0511 ; $548f
 	call PrintString ; $5492
 	call WriteCurrentSlotBlock ; $5495
 	pop de ; $5498
-	jp Label_03_53b1 ; $5499
-Label_03_549c:
+	jp .loopBBBB ; $5499
+.step9:
 	push de ; $549c
 	ld hl, SaveResultDeletedString_03 ; $549d
 	ld de, $0511 ; $54a0
 	call PrintString ; $54a3
 	call InvalidateCurrentSlotBlock ; $54a6
-	jp Label_03_53b1 ; $54a9
+	jp .loopBBBB ; $54a9
 	db $d1 ; $54ac
-Label_03_54ad:
-	jp Label_03_53c8 ; $54ad
+.label_03_53c8:
+	jp .loopBBBBB ; $54ad
 SaveResultFailedString_03:
 	; $54b0, 12 bytes (ascii)
 	db "FAILED     ", $00
@@ -3225,7 +3225,7 @@ RestoreStoryBlockFromBackup:
 	ld b, a ; $551a
 	call ReadSaveBlock ; $551b
 	or a, a ; $551e
-	jr nz, Label_03_5532 ; $551f
+	jr nz, .restore ; $551f
 	ld hl, $d400 ; $5521
 	call ReadSaveBlockTag ; $5524
 	pop bc ; $5527
@@ -3233,7 +3233,7 @@ RestoreStoryBlockFromBackup:
 	ld de, $d400 ; $552b
 	call WriteSaveBlock ; $552e
 	ret ; $5531
-Label_03_5532:
+.restore:
 	pop bc ; $5532
 	call InvalidateSaveBlock ; $5533
 	inc b ; $5536
@@ -3255,13 +3255,13 @@ Label_03_5532:
 	ld b, a ; $5555
 	call ReadSaveBlock ; $5556
 	or a, a ; $5559
-	jr nz, Label_03_5567 ; $555a
+	jr nz, .step ; $555a
 	pop bc ; $555c
 	ld hl, $d000 ; $555d
 	ld de, $0000 ; $5560
 	call WriteSaveBlock ; $5563
 	ret ; $5566
-Label_03_5567:
+.step:
 	push bc ; $5567
 	ld hl, $d000 ; $5568
 	ld c, $20 ; $556b
@@ -3279,13 +3279,13 @@ Label_03_5567:
 	ld b, $21 ; $5586
 	call ReadSaveBlock ; $5588
 	or a, a ; $558b
-	jr nz, Label_03_559a ; $558c
+	jr nz, .step2 ; $558c
 	ld b, $06 ; $558e
 	ld hl, $d000 ; $5590
 	ld de, $0000 ; $5593
 	call WriteSaveBlock ; $5596
 	ret ; $5599
-Label_03_559a:
+.step2:
 	ld b, $06 ; $559a
 	call InvalidateSaveBlock ; $559c
 	ld b, $21 ; $559f
@@ -3299,13 +3299,13 @@ Label_03_559a:
 	ld b, $22 ; $55b0
 	call ReadSaveBlock ; $55b2
 	or a, a ; $55b5
-	jr nz, Label_03_55c4 ; $55b6
+	jr nz, .step3 ; $55b6
 	ld b, $07 ; $55b8
 	ld hl, $d000 ; $55ba
 	ld de, $0000 ; $55bd
 	call WriteSaveBlock ; $55c0
 	ret ; $55c3
-Label_03_55c4:
+.step3:
 	ld b, $07 ; $55c4
 	call InvalidateSaveBlock ; $55c6
 	ld b, $22 ; $55c9
@@ -3319,13 +3319,13 @@ Label_03_55c4:
 	ld b, $23 ; $55da
 	call ReadSaveBlock ; $55dc
 	or a, a ; $55df
-	jr nz, Label_03_55ee ; $55e0
+	jr nz, .step4 ; $55e0
 	ld b, $08 ; $55e2
 	ld hl, $d000 ; $55e4
 	ld de, $0000 ; $55e7
 	call WriteSaveBlock ; $55ea
 	ret ; $55ed
-Label_03_55ee:
+.step4:
 	ld b, $08 ; $55ee
 	call InvalidateSaveBlock ; $55f0
 	ld b, $23 ; $55f3
@@ -3339,13 +3339,13 @@ Label_03_55ee:
 	ld b, $24 ; $5604
 	call ReadSaveBlock ; $5606
 	or a, a ; $5609
-	jr nz, Label_03_5618 ; $560a
+	jr nz, .step5 ; $560a
 	ld b, $09 ; $560c
 	ld hl, $d000 ; $560e
 	ld de, $0000 ; $5611
 	call WriteSaveBlock ; $5614
 	ret ; $5617
-Label_03_5618:
+.step5:
 	ld b, $09 ; $5618
 	call InvalidateSaveBlock ; $561a
 	ld b, $24 ; $561d
@@ -3359,13 +3359,13 @@ Label_03_5618:
 	ld b, $25 ; $562e
 	call ReadSaveBlock ; $5630
 	or a, a ; $5633
-	jr nz, Label_03_5642 ; $5634
+	jr nz, .step6 ; $5634
 	ld b, $0a ; $5636
 	ld hl, $d000 ; $5638
 	ld de, $0000 ; $563b
 	call WriteSaveBlock ; $563e
 	ret ; $5641
-Label_03_5642:
+.step6:
 	ld b, $0a ; $5642
 	call InvalidateSaveBlock ; $5644
 	ld b, $25 ; $5647
@@ -3406,13 +3406,13 @@ RestoreBlock36FromBackup:
 	ld b, a ; $5691
 	call ReadSaveBlock ; $5692
 	or a, a ; $5695
-	jr nz, Label_03_56a3 ; $5696
+	jr nz, .restore ; $5696
 	pop bc ; $5698
 	ld hl, $d000 ; $5699
 	ld de, $d400 ; $569c
 	call WriteSaveBlock ; $569f
 	ret ; $56a2
-Label_03_56a3:
+.restore:
 	pop bc ; $56a3
 	call InvalidateSaveBlock ; $56a4
 	ret ; $56a7
@@ -3475,66 +3475,66 @@ UpdateUnlockablesSaveBlock:
 	ld b, $0b ; $570b
 	call ReadSaveBlock ; $570d
 	or a, a ; $5710
-	jp nz, Label_03_577d ; $5711
+	jp nz, .restore ; $5711
 	ld hl, $d500 ; $5714
 	ld a, [hl] ; $5717
 	inc hl ; $5718
 	add a, [hl] ; $5719
 	or a, a ; $571a
-	jp z, Label_03_577d ; $571b
+	jp z, .restore ; $571b
 	ld a, $02 ; $571e
 	call CheckUnlockCondition ; $5720
 	or a, a ; $5723
-	jr z, Label_03_572c ; $5724
+	jr z, .step ; $5724
 	ld hl, $d502 ; $5726
 	ld a, $01 ; $5729
 	ld [hl], a ; $572b
-Label_03_572c:
+.step:
 	ld a, $04 ; $572c
 	call CheckUnlockCondition ; $572e
 	or a, a ; $5731
-	jr z, Label_03_573a ; $5732
+	jr z, .step2 ; $5732
 	ld hl, $d507 ; $5734
 	ld a, $01 ; $5737
 	ld [hl], a ; $5739
-Label_03_573a:
+.step2:
 	ld a, $06 ; $573a
 	call CheckUnlockCondition ; $573c
 	or a, a ; $573f
-	jr z, Label_03_5748 ; $5740
+	jr z, .step3 ; $5740
 	ld hl, $d504 ; $5742
 	ld a, $01 ; $5745
 	ld [hl], a ; $5747
-Label_03_5748:
+.step3:
 	ld a, $08 ; $5748
 	call CheckUnlockCondition ; $574a
 	or a, a ; $574d
-	jr z, Label_03_5756 ; $574e
+	jr z, .step4 ; $574e
 	ld hl, $d506 ; $5750
 	ld a, $01 ; $5753
 	ld [hl], a ; $5755
-Label_03_5756:
+.step4:
 	ld a, $09 ; $5756
 	call CheckUnlockCondition ; $5758
 	or a, a ; $575b
-	jr z, Label_03_5764 ; $575c
+	jr z, .step5 ; $575c
 	ld hl, $d503 ; $575e
 	ld a, $01 ; $5761
 	ld [hl], a ; $5763
-Label_03_5764:
+.step5:
 	ld a, $0a ; $5764
 	call CheckUnlockCondition ; $5766
 	or a, a ; $5769
-	jr z, Label_03_5772 ; $576a
+	jr z, .step6 ; $576a
 	ld hl, $d505 ; $576c
 	ld a, $01 ; $576f
 	ld [hl], a ; $5771
-Label_03_5772:
+.step6:
 	ld hl, $d500 ; $5772
 	ld b, $0b ; $5775
 	ld de, $0000 ; $5777
 	call WriteSaveBlock ; $577a
-Label_03_577d:
+.restore:
 	pop af ; $577d
 	wram_bank ; $577e
 	pop hl ; $5782
@@ -3554,7 +3554,7 @@ SetAllUnlockablesInSaveBlock:
 	ld b, $0b ; $5797
 	call ReadSaveBlock ; $5799
 	or a, a ; $579c
-	jp nz, Label_03_57cf ; $579d
+	jp nz, .restore ; $579d
 	ld hl, $d502 ; $57a0
 	ld a, $01 ; $57a3
 	ld [hl], a ; $57a5
@@ -3577,7 +3577,7 @@ SetAllUnlockablesInSaveBlock:
 	ld b, $0b ; $57c7
 	ld de, $0000 ; $57c9
 	call WriteSaveBlock ; $57cc
-Label_03_57cf:
+.restore:
 	pop af ; $57cf
 	wram_bank ; $57d0
 	pop hl ; $57d4
@@ -3668,22 +3668,22 @@ WriteBlock6WithBackup:
 	ld b, $06 ; $584a
 	call WriteSaveBlock ; $584c
 	or a, a ; $584f
-	jr nz, Label_03_5869 ; $5850
+	jr nz, .step ; $5850
 	call VerifySaveBlock ; $5852
 	or a, a ; $5855
-	jr nz, Label_03_5869 ; $5856
+	jr nz, .step ; $5856
 	ld b, $21 ; $5858
 	call WriteSaveBlock ; $585a
 	or a, a ; $585d
-	jr nz, Label_03_5869 ; $585e
+	jr nz, .step ; $585e
 	call VerifySaveBlock ; $5860
 	or a, a ; $5863
-	jr nz, Label_03_5869 ; $5864
+	jr nz, .step ; $5864
 	xor a, a ; $5866
-	jr Label_03_586b ; $5867
-Label_03_5869:
+	jr .restore ; $5867
+.step:
 	ld a, $ff ; $5869
-Label_03_586b:
+.restore:
 	pop hl ; $586b
 	pop de ; $586c
 	pop bc ; $586d
@@ -3706,22 +3706,22 @@ WriteBlock7WithBackup:
 	ld b, $07 ; $5881
 	call WriteSaveBlock ; $5883
 	or a, a ; $5886
-	jr nz, Label_03_58a0 ; $5887
+	jr nz, .step ; $5887
 	call VerifySaveBlock ; $5889
 	or a, a ; $588c
-	jr nz, Label_03_58a0 ; $588d
+	jr nz, .step ; $588d
 	ld b, $22 ; $588f
 	call WriteSaveBlock ; $5891
 	or a, a ; $5894
-	jr nz, Label_03_58a0 ; $5895
+	jr nz, .step ; $5895
 	call VerifySaveBlock ; $5897
 	or a, a ; $589a
-	jr nz, Label_03_58a0 ; $589b
+	jr nz, .step ; $589b
 	xor a, a ; $589d
-	jr Label_03_58a2 ; $589e
-Label_03_58a0:
+	jr .restore ; $589e
+.step:
 	ld a, $ff ; $58a0
-Label_03_58a2:
+.restore:
 	pop hl ; $58a2
 	pop de ; $58a3
 	pop bc ; $58a4
@@ -3744,22 +3744,22 @@ WriteBlock8WithBackup:
 	ld b, $08 ; $58b8
 	call WriteSaveBlock ; $58ba
 	or a, a ; $58bd
-	jr nz, Label_03_58d7 ; $58be
+	jr nz, .step ; $58be
 	call VerifySaveBlock ; $58c0
 	or a, a ; $58c3
-	jr nz, Label_03_58d7 ; $58c4
+	jr nz, .step ; $58c4
 	ld b, $23 ; $58c6
 	call WriteSaveBlock ; $58c8
 	or a, a ; $58cb
-	jr nz, Label_03_58d7 ; $58cc
+	jr nz, .step ; $58cc
 	call VerifySaveBlock ; $58ce
 	or a, a ; $58d1
-	jr nz, Label_03_58d7 ; $58d2
+	jr nz, .step ; $58d2
 	xor a, a ; $58d4
-	jr Label_03_58d9 ; $58d5
-Label_03_58d7:
+	jr .restore ; $58d5
+.step:
 	ld a, $ff ; $58d7
-Label_03_58d9:
+.restore:
 	pop hl ; $58d9
 	pop de ; $58da
 	pop bc ; $58db
@@ -3782,22 +3782,22 @@ WriteBlock9WithBackup:
 	ld b, $09 ; $58ef
 	call WriteSaveBlock ; $58f1
 	or a, a ; $58f4
-	jr nz, Label_03_590e ; $58f5
+	jr nz, .step ; $58f5
 	call VerifySaveBlock ; $58f7
 	or a, a ; $58fa
-	jr nz, Label_03_590e ; $58fb
+	jr nz, .step ; $58fb
 	ld b, $24 ; $58fd
 	call WriteSaveBlock ; $58ff
 	or a, a ; $5902
-	jr nz, Label_03_590e ; $5903
+	jr nz, .step ; $5903
 	call VerifySaveBlock ; $5905
 	or a, a ; $5908
-	jr nz, Label_03_590e ; $5909
+	jr nz, .step ; $5909
 	xor a, a ; $590b
-	jr Label_03_5910 ; $590c
-Label_03_590e:
+	jr .restore ; $590c
+.step:
 	ld a, $ff ; $590e
-Label_03_5910:
+.restore:
 	pop hl ; $5910
 	pop de ; $5911
 	pop bc ; $5912
@@ -3820,22 +3820,22 @@ WriteBlock10WithBackup:
 	ld b, $0a ; $5926
 	call WriteSaveBlock ; $5928
 	or a, a ; $592b
-	jr nz, Label_03_5945 ; $592c
+	jr nz, .step ; $592c
 	call VerifySaveBlock ; $592e
 	or a, a ; $5931
-	jr nz, Label_03_5945 ; $5932
+	jr nz, .step ; $5932
 	ld b, $25 ; $5934
 	call WriteSaveBlock ; $5936
 	or a, a ; $5939
-	jr nz, Label_03_5945 ; $593a
+	jr nz, .step ; $593a
 	call VerifySaveBlock ; $593c
 	or a, a ; $593f
-	jr nz, Label_03_5945 ; $5940
+	jr nz, .step ; $5940
 	xor a, a ; $5942
-	jr Label_03_5947 ; $5943
-Label_03_5945:
+	jr .restore ; $5943
+.step:
 	ld a, $ff ; $5945
-Label_03_5947:
+.restore:
 	pop hl ; $5947
 	pop de ; $5948
 	pop bc ; $5949
@@ -3930,22 +3930,22 @@ RunScrollingTextScreen:
 	ld c, $08 ; $59f7
 	call ForceFadeIn ; $59f9
 	call WaitFadeEnd ; $59fc
-Label_03_59ff:
+.loop:
 	wram_bank $06 ; $59ff
 	ld a, [$d230] ; $5a05
 	dec a ; $5a08
 	ld [$d230], a ; $5a09
-	jr nz, Label_03_5a73 ; $5a0c
+	jr nz, .step2 ; $5a0c
 	ld a, $02 ; $5a0e
 	ld [$d230], a ; $5a10
 	ld a, [$d234] ; $5a13
 	and a, a ; $5a16
-	jr nz, Label_03_5a73 ; $5a17
+	jr nz, .step2 ; $5a17
 	ldh a, [hScrollY] ; $5a19
 	inc a ; $5a1b
 	ldh [hScrollY], a ; $5a1c
 	and a, $07 ; $5a1e
-	jr nz, Label_03_5a73 ; $5a20
+	jr nz, .step2 ; $5a20
 	ld hl, $d232 ; $5a22
 	ld a, [hl+] ; $5a25
 	ld h, [hl] ; $5a26
@@ -3956,12 +3956,12 @@ Label_03_59ff:
 	farcall FetchAndDrawDialogueText ; $5a33
 	call TestTextEndMarker ; $5a36
 	and a, a ; $5a39
-	jr nz, Label_03_5a49 ; $5a3a
+	jr nz, .step ; $5a3a
 	wram_bank $06 ; $5a3c
 	ld a, $01 ; $5a42
 	ld [$d234], a ; $5a44
-	jr Label_03_5a73 ; $5a47
-Label_03_5a49:
+	jr .step2 ; $5a47
+.step:
 	ld de, $0090 ; $5a49
 	call GetScrollTextRowVramAddr ; $5a4c
 	push de ; $5a4f
@@ -3983,29 +3983,29 @@ Label_03_5a49:
 	ld a, e ; $5a70
 	ld [hl+], a ; $5a71
 	ld [hl], d ; $5a72
-Label_03_5a73:
+.step2:
 	ldh a, [hDebugStepMode] ; $5a73
 	or a, a ; $5a75
-	jr nz, Label_03_5a7e ; $5a76
+	jr nz, .step3 ; $5a76
 	ld a, [$d234] ; $5a78
 	and a, a ; $5a7b
-	jr z, Label_03_5a84 ; $5a7c
-Label_03_5a7e:
+	jr z, .advanceFrame ; $5a7c
+.step3:
 	ldh a, [hPlayerInputFlags] ; $5a7e
 	and a, $0b ; $5a80
-	jr nz, Label_03_5a9a ; $5a82
-Label_03_5a84:
+	jr nz, .step4 ; $5a82
+.advanceFrame:
 	call AdvanceFrame ; $5a84
 	wram_bank $03 ; $5a87
 	xor a, a ; $5a8d
 	ld b, $40 ; $5a8e
 	ld hl, $d000 ; $5a90
-Label_03_5a93:
+.loopB:
 	ld [hl+], a ; $5a93
 	inc b ; $5a94
-	jr nz, Label_03_5a93 ; $5a95
-	jp Label_03_59ff ; $5a97
-Label_03_5a9a:
+	jr nz, .loopB ; $5a95
+	jp .loop ; $5a97
+.step4:
 	ld c, $01 ; $5a9a
 	call BeginFadeOut ; $5a9c
 	call WaitFadeEnd ; $5a9f
@@ -4104,15 +4104,15 @@ UpdateSceneAnimation:
 	wram_bank $06 ; $5b68
 	ld a, [$cb60] ; $5b6e
 	and a, $03 ; $5b71
-	jr nz, Label_03_5b83 ; $5b73
+	jr nz, .restore ; $5b73
 	ld a, [$d000] ; $5b75
 	ld b, a ; $5b78
 	sub a, $36 ; $5b79
-	jp nc, Label_03_5b83 ; $5b7b
+	jp nc, .restore ; $5b7b
 	ld a, b ; $5b7e
 	inc a ; $5b7f
 	ld [$d000], a ; $5b80
-Label_03_5b83:
+.restore:
 	pop af ; $5b83
 	wram_bank ; $5b84
 	ret ; $5b88
@@ -5525,17 +5525,17 @@ PlayScrollingStoryCutscene:
 	ld a, $01 ; $703e
 	ld hl, AnimateWindowSlideUpTask ; $7040
 	call RegisterFrameTask ; $7043
-Label_03_7046:
+.loop:
 	call AdvanceFrame ; $7046
 	ld a, [$d000] ; $7049
 	or a, a ; $704c
-	jr z, Label_03_7046 ; $704d
+	jr z, .loop ; $704d
 	ld a, $20 ; $704f
-Label_03_7051:
+.loopB:
 	call AdvanceFrame ; $7051
 	dec a ; $7054
 	or a, a ; $7055
-	jr nz, Label_03_7051 ; $7056
+	jr nz, .loopB ; $7056
 	wram_bank $01 ; $7058
 	ld hl, $d000 ; $705e
 	ld b, $20 ; $7061
@@ -5578,9 +5578,9 @@ AnimateWindowSlideUpTask:
 	add a, a ; $72b1
 	add a, l ; $72b2
 	ld l, a ; $72b3
-	jr nc, Label_03_72b7 ; $72b4
+	jr nc, .read ; $72b4
 	inc h ; $72b6
-Label_03_72b7:
+.read:
 	ld a, [hl+] ; $72b7
 	ld c, a ; $72b8
 	ld e, [hl] ; $72b9
@@ -5589,7 +5589,7 @@ Label_03_72b7:
 	wram_bank ; $72bd
 	ldh a, [hVBlankCounter] ; $72c1
 	and a, $01 ; $72c3
-	jr nz, Label_03_72db ; $72c5
+	jr nz, .step ; $72c5
 	ldh a, [hScrollY] ; $72c7
 	add a, c ; $72c9
 	ldh [hScrollY], a ; $72ca
@@ -5604,7 +5604,7 @@ Label_03_72b7:
 	ld a, e ; $72d8
 	ld [hl+], a ; $72d9
 	ld [hl], d ; $72da
-Label_03_72db:
+.step:
 	ld a, [$cb60] ; $72db
 	inc a ; $72de
 	ld [$cb60], a ; $72df
@@ -5615,13 +5615,13 @@ Label_03_72db:
 	ldh [rWY], a ; $72e8
 	ld a, b ; $72ea
 	cp a, $3f ; $72eb
-	jr nz, Label_03_7300 ; $72ed
+	jr nz, .done ; $72ed
 	ld hl, AnimateWindowSlideUpTask ; $72ef
 	call UnregisterFrameTask ; $72f2
 	wram_bank $06 ; $72f5
 	ld a, $01 ; $72fb
 	ld [$d000], a ; $72fd
-Label_03_7300:
+.done:
 	ret ; $7300
 WindowSlideStepTable_03:
 	; $7301, 50 bytes (bytes:2)
@@ -5668,16 +5668,16 @@ DrawCutsceneTextPage:
 	ld hl, TextPageDescriptors_03 ; $7343
 	add a, l ; $7346
 	ld l, a ; $7347
-	jr nc, Label_03_734b ; $7348
+	jr nc, .step ; $7348
 	inc h ; $734a
-Label_03_734b:
+.step:
 	wram_bank $06 ; $734b
 	ld a, [hl] ; $7351
 	ld [$d001], a ; $7352
 	ld b, a ; $7355
 	inc hl ; $7356
 	ld c, $00 ; $7357
-Label_03_7359:
+.loop:
 	call DrawCutsceneTextLines ; $7359
 	call AdvanceFrame ; $735c
 	inc hl ; $735f
@@ -5685,7 +5685,7 @@ Label_03_7359:
 	inc c ; $7361
 	ld a, c ; $7362
 	cp a, b ; $7363
-	jr nz, Label_03_7359 ; $7364
+	jr nz, .loop ; $7364
 	pop af ; $7366
 	wram_bank ; $7367
 	pop hl ; $736b
@@ -5728,13 +5728,13 @@ DrawCutsceneTextLines:
 	ld hl, $0014 ; $740b
 	ld a, c ; $740e
 	or a, a ; $740f
-	jr nz, Label_03_7418 ; $7410
+	jr nz, .mulHLByA ; $7410
 	ld h, $00 ; $7412
 	ld l, $00 ; $7414
-	jr Label_03_741b ; $7416
-Label_03_7418:
+	jr .step ; $7416
+.mulHLByA:
 	call MulHLByA ; $7418
-Label_03_741b:
+.step:
 	ld de, $d063 ; $741b
 	add hl, de ; $741e
 	ld d, h ; $741f
@@ -5748,23 +5748,23 @@ Label_03_741b:
 	pop af ; $7429
 	add a, l ; $742a
 	ld l, a ; $742b
-	jr nc, Label_03_742f ; $742c
+	jr nc, .step2 ; $742c
 	inc h ; $742e
-Label_03_742f:
+.step2:
 	wram_bank $01 ; $742f
-Label_03_7435:
+.loop:
 	ld c, $50 ; $7435
 	call DrawDialogueLineToBuffer ; $7437
 	call AdvanceFrame ; $743a
 	ld a, $50 ; $743d
 	add a, e ; $743f
 	ld e, a ; $7440
-	jr nc, Label_03_7444 ; $7441
+	jr nc, .step3 ; $7441
 	inc d ; $7443
-Label_03_7444:
+.step3:
 	inc hl ; $7444
 	dec b ; $7445
-	jr nz, Label_03_7435 ; $7446
+	jr nz, .loop ; $7446
 	pop af ; $7448
 	wram_bank ; $7449
 	pop hl ; $744d
@@ -5782,29 +5782,29 @@ ScrollCutsceneTextWindow:
 	wram_bank $06 ; $7459
 	ld a, [$d001] ; $745f
 	and a, $03 ; $7462
-	jr nz, Label_03_7468 ; $7464
+	jr nz, .step ; $7464
 	ld a, $01 ; $7466
-Label_03_7468:
+.step:
 	ld b, a ; $7468
 	ld d, $00 ; $7469
 	ld c, $00 ; $746b
-Label_03_746d:
+.loop:
 	call AdvanceFrame ; $746d
 	ld e, $14 ; $7470
-Label_03_7472:
+.loopB:
 	call BlitCutsceneTextWindow ; $7472
 	inc c ; $7475
 	dec e ; $7476
-	jr nz, Label_03_7472 ; $7477
+	jr nz, .loopB ; $7477
 	ld e, $ff ; $7479
-Label_03_747b:
+.loopBB:
 	call AdvanceFrame ; $747b
 	dec e ; $747e
-	jr nz, Label_03_747b ; $747f
+	jr nz, .loopBB ; $747f
 	inc d ; $7481
 	ld a, d ; $7482
 	cp a, b ; $7483
-	jr nz, Label_03_746d ; $7484
+	jr nz, .loop ; $7484
 	pop af ; $7486
 	wram_bank ; $7487
 	pop hl ; $748b
@@ -5823,16 +5823,16 @@ BlitCutsceneTextWindow:
 	ld a, c ; $749a
 	add a, l ; $749b
 	ld l, a ; $749c
-	jr nc, Label_03_74a0 ; $749d
+	jr nc, .step ; $749d
 	inc h ; $749f
-Label_03_74a0:
+.step:
 	ld b, $08 ; $74a0
 	ld de, $d000 ; $74a2
-Label_03_74a5:
+.loop:
 	ld c, $14 ; $74a5
 	push hl ; $74a7
 	push de ; $74a8
-Label_03_74a9:
+.loopB:
 	wram_bank $01 ; $74a9
 	ld a, [hl+] ; $74af
 	push hl ; $74b0
@@ -5845,23 +5845,23 @@ Label_03_74a9:
 	inc de ; $74bc
 	pop hl ; $74bd
 	dec c ; $74be
-	jr nz, Label_03_74a9 ; $74bf
+	jr nz, .loopB ; $74bf
 	pop de ; $74c1
 	pop hl ; $74c2
 	ld a, $50 ; $74c3
 	add a, l ; $74c5
 	ld l, a ; $74c6
-	jr nc, Label_03_74ca ; $74c7
+	jr nc, .step2 ; $74c7
 	inc h ; $74c9
-Label_03_74ca:
+.step2:
 	ld a, $20 ; $74ca
 	add a, e ; $74cc
 	ld e, a ; $74cd
-	jr nc, Label_03_74d1 ; $74ce
+	jr nc, .step3 ; $74ce
 	inc d ; $74d0
-Label_03_74d1:
+.step3:
 	dec b ; $74d1
-	jr nz, Label_03_74a5 ; $74d2
+	jr nz, .loop ; $74d2
 	wram_bank $05 ; $74d4
 	ld hl, $d000 ; $74da
 	ld de, $9c00 ; $74dd
@@ -5886,10 +5886,10 @@ DrawDialogueLineToBuffer:
 	ld hl, wTextBuffer ; $74fc
 	wram_bank $01 ; $74ff
 	ld c, $14 ; $7505
-Label_03_7507:
+.loop:
 	ld a, [hl+] ; $7507
 	or a, a ; $7508
-	jr z, Label_03_7514 ; $7509
+	jr z, .restore ; $7509
 	push hl ; $750b
 	ld h, d ; $750c
 	ld l, e ; $750d
@@ -5897,8 +5897,8 @@ Label_03_7507:
 	pop hl ; $750f
 	inc de ; $7510
 	dec c ; $7511
-	jr nz, Label_03_7507 ; $7512
-Label_03_7514:
+	jr nz, .loop ; $7512
+.restore:
 	pop af ; $7514
 	wram_bank ; $7515
 	pop hl ; $7519
@@ -5967,10 +5967,10 @@ InitGrayscalePaletteFade:
 	xor a, a ; $75b4
 	ld hl, $d1e0 ; $75b5
 	ld b, $10 ; $75b8
-Label_03_75ba:
+.loop:
 	ld [hl+], a ; $75ba
 	dec b ; $75bb
-	jr nz, Label_03_75ba ; $75bc
+	jr nz, .loop ; $75bc
 	call BackupMasterPalettes ; $75be
 	call DesaturateWorkingPalettes ; $75c1
 	pop af ; $75c4
@@ -5982,10 +5982,10 @@ Label_03_75ba:
 	xor a, a ; $75d3
 	ld hl, $d1e0 ; $75d4
 	ld b, $10 ; $75d7
-Label_03_75d9:
+.loopB:
 	ld [hl+], a ; $75d9
 	dec b ; $75da
-	jr nz, Label_03_75d9 ; $75db
+	jr nz, .loopB ; $75db
 	call BackupMasterPalettes ; $75dd
 	call ClearWorkingPaletteBuffer ; $75e0
 	pop af ; $75e3
@@ -5995,39 +5995,39 @@ BackupMasterPalettes:
 	ld hl, wMasterPalettes ; $75e9
 	ld de, $d140 ; $75ec
 	ld b, $80 ; $75ef
-Label_03_75f1:
+.loop:
 	ld a, [hl+] ; $75f1
 	ld [de], a ; $75f2
 	inc de ; $75f3
 	dec b ; $75f4
-	jr nz, Label_03_75f1 ; $75f5
+	jr nz, .loop ; $75f5
 	ld hl, wMasterPalettes ; $75f7
 	ld de, $d0a0 ; $75fa
 	ld b, $80 ; $75fd
-Label_03_75ff:
+.loopB:
 	ld a, [hl+] ; $75ff
 	ld [de], a ; $7600
 	inc de ; $7601
 	dec b ; $7602
-	jr nz, Label_03_75ff ; $7603
+	jr nz, .loopB ; $7603
 	ret ; $7605
 ClearWorkingPaletteBuffer:
 	ld hl, $d0a0 ; $7606
 	ld b, $40 ; $7609
 	ld de, $0000 ; $760b
-Label_03_760e:
+.loop:
 	ld a, e ; $760e
 	ld [hl+], a ; $760f
 	ld [hl], d ; $7610
 	inc hl ; $7611
 	dec b ; $7612
-	jr nz, Label_03_760e ; $7613
+	jr nz, .loop ; $7613
 	ret ; $7615
 DesaturateWorkingPalettes:
 	ld hl, $d0a0 ; $7616
 	ld de, $d1f2 ; $7619
 	ld b, $40 ; $761c
-Label_03_761e:
+.loop:
 	push bc ; $761e
 	push hl ; $761f
 	ld a, [hl+] ; $7620
@@ -6061,7 +6061,7 @@ Label_03_761e:
 	inc hl ; $7642
 	pop bc ; $7643
 	dec b ; $7644
-	jr nz, Label_03_761e ; $7645
+	jr nz, .loop ; $7645
 	ret ; $7647
 ComputeGrayscaleColor:
 	ld a, [de] ; $7648
@@ -6104,9 +6104,9 @@ ComputeGrayscaleColor:
 	rr l ; $767c
 	ld a, l ; $767e
 	bit 5, a ; $767f
-	jr z, Label_03_7685 ; $7681
+	jr z, .store ; $7681
 	ld a, $1f ; $7683
-Label_03_7685:
+.store:
 	ld [de], a ; $7685
 	ret ; $7686
 SetupPaletteFadeMask:
@@ -6123,84 +6123,84 @@ SetupPaletteFadeMask:
 	ld [$d1f9], a ; $769e
 	ld hl, $d1e0 ; $76a1
 	bit 7, b ; $76a4
-	jr z, Label_03_76aa ; $76a6
+	jr z, .step ; $76a6
 	ld [hl], $01 ; $76a8
-Label_03_76aa:
+.step:
 	inc hl ; $76aa
 	bit 6, b ; $76ab
-	jr z, Label_03_76b1 ; $76ad
+	jr z, .step2 ; $76ad
 	ld [hl], $01 ; $76af
-Label_03_76b1:
+.step2:
 	inc hl ; $76b1
 	bit 5, b ; $76b2
-	jr z, Label_03_76b8 ; $76b4
+	jr z, .step3 ; $76b4
 	ld [hl], $01 ; $76b6
-Label_03_76b8:
+.step3:
 	inc hl ; $76b8
 	bit 4, b ; $76b9
-	jr z, Label_03_76bf ; $76bb
+	jr z, .step4 ; $76bb
 	ld [hl], $01 ; $76bd
-Label_03_76bf:
+.step4:
 	inc hl ; $76bf
 	bit 3, b ; $76c0
-	jr z, Label_03_76c6 ; $76c2
+	jr z, .step5 ; $76c2
 	ld [hl], $01 ; $76c4
-Label_03_76c6:
+.step5:
 	inc hl ; $76c6
 	bit 2, b ; $76c7
-	jr z, Label_03_76cd ; $76c9
+	jr z, .step6 ; $76c9
 	ld [hl], $01 ; $76cb
-Label_03_76cd:
+.step6:
 	inc hl ; $76cd
 	bit 1, b ; $76ce
-	jr z, Label_03_76d4 ; $76d0
+	jr z, .step7 ; $76d0
 	ld [hl], $01 ; $76d2
-Label_03_76d4:
+.step7:
 	inc hl ; $76d4
 	bit 0, b ; $76d5
-	jr z, Label_03_76db ; $76d7
+	jr z, .step8 ; $76d7
 	ld [hl], $01 ; $76d9
-Label_03_76db:
+.step8:
 	inc hl ; $76db
 	bit 7, c ; $76dc
-	jr z, Label_03_76e2 ; $76de
+	jr z, .step9 ; $76de
 	ld [hl], $01 ; $76e0
-Label_03_76e2:
+.step9:
 	inc hl ; $76e2
 	bit 6, c ; $76e3
-	jr z, Label_03_76e9 ; $76e5
+	jr z, .step10 ; $76e5
 	ld [hl], $01 ; $76e7
-Label_03_76e9:
+.step10:
 	inc hl ; $76e9
 	bit 5, c ; $76ea
-	jr z, Label_03_76f0 ; $76ec
+	jr z, .step11 ; $76ec
 	ld [hl], $01 ; $76ee
-Label_03_76f0:
+.step11:
 	inc hl ; $76f0
 	bit 4, c ; $76f1
-	jr z, Label_03_76f7 ; $76f3
+	jr z, .step12 ; $76f3
 	ld [hl], $01 ; $76f5
-Label_03_76f7:
+.step12:
 	inc hl ; $76f7
 	bit 3, c ; $76f8
-	jr z, Label_03_76fe ; $76fa
+	jr z, .step13 ; $76fa
 	ld [hl], $01 ; $76fc
-Label_03_76fe:
+.step13:
 	inc hl ; $76fe
 	bit 2, c ; $76ff
-	jr z, Label_03_7705 ; $7701
+	jr z, .step14 ; $7701
 	ld [hl], $01 ; $7703
-Label_03_7705:
+.step14:
 	inc hl ; $7705
 	bit 1, c ; $7706
-	jr z, Label_03_770c ; $7708
+	jr z, .step15 ; $7708
 	ld [hl], $01 ; $770a
-Label_03_770c:
+.step15:
 	inc hl ; $770c
 	bit 0, c ; $770d
-	jr z, Label_03_7713 ; $770f
+	jr z, .restore ; $770f
 	ld [hl], $01 ; $7711
-Label_03_7713:
+.restore:
 	pop af ; $7713
 	wram_bank ; $7714
 	ret ; $7718
@@ -6208,32 +6208,32 @@ AnimatePaletteFadeToTarget:
 	ldh a, [hWramBank] ; $7719
 	push af ; $771b
 	wram_bank $06 ; $771c
-Label_03_7722:
+.loop:
 	ld a, [$d1f9] ; $7722
-Label_03_7725:
+.loopB:
 	and a, a ; $7725
-	jr z, Label_03_772e ; $7726
+	jr z, .step ; $7726
 	call AdvanceFrame ; $7728
 	dec a ; $772b
-	jr Label_03_7725 ; $772c
-Label_03_772e:
+	jr .loopB ; $772c
+.step:
 	ld de, $d1e0 ; $772e
 	ld b, $00 ; $7731
-Label_03_7733:
+.loopBB:
 	push de ; $7733
 	push bc ; $7734
 	ld a, [de] ; $7735
 	and a, a ; $7736
-	jr z, Label_03_773c ; $7737
+	jr z, .restore ; $7737
 	call StepPaletteColorsTowardTarget ; $7739
-Label_03_773c:
+.restore:
 	pop bc ; $773c
 	pop de ; $773d
 	inc de ; $773e
 	inc b ; $773f
 	ld a, b ; $7740
 	cp a, $10 ; $7741
-	jr nz, Label_03_7733 ; $7743
+	jr nz, .loopBB ; $7743
 	ld hl, $d140 ; $7745
 	ld d, $00 ; $7748
 	ld e, $10 ; $774a
@@ -6244,7 +6244,7 @@ Label_03_773c:
 	dec a ; $7756
 	ld [hl], a ; $7757
 	and a, a ; $7758
-	jr nz, Label_03_7722 ; $7759
+	jr nz, .loop ; $7759
 	call SnapPalettesToTarget ; $775b
 	pop af ; $775e
 	wram_bank ; $775f
@@ -6261,7 +6261,7 @@ StepPaletteColorsTowardTarget:
 	ld b, a ; $7776
 	call AdvanceToPaletteEntry ; $7777
 	ld b, $04 ; $777a
-Label_03_777c:
+.loop:
 	push bc ; $777c
 	push de ; $777d
 	push hl ; $777e
@@ -6313,20 +6313,20 @@ Label_03_777c:
 	inc de ; $77ca
 	inc de ; $77cb
 	dec b ; $77cc
-	jr nz, Label_03_777c ; $77cd
+	jr nz, .loop ; $77cd
 	ret ; $77cf
 StepColorComponentTowardTarget:
 	ld a, [de] ; $77d0
 	ld b, [hl] ; $77d1
 	sub a, b ; $77d2
 	ret z ; $77d3
-	jr c, Label_03_77dc ; $77d4
+	jr c, .read ; $77d4
 	ld a, [hl] ; $77d6
 	inc a ; $77d7
 	and a, $1f ; $77d8
 	ld [hl], a ; $77da
 	ret ; $77db
-Label_03_77dc:
+.read:
 	ld a, [hl] ; $77dc
 	dec a ; $77dd
 	and a, $1f ; $77de
@@ -6335,12 +6335,12 @@ Label_03_77dc:
 SnapPalettesToTarget:
 	ld hl, $d1e0 ; $77e2
 	ld b, $00 ; $77e5
-Label_03_77e7:
+.loop:
 	push hl ; $77e7
 	push bc ; $77e8
 	ld a, [hl] ; $77e9
 	and a, a ; $77ea
-	jr z, Label_03_7815 ; $77eb
+	jr z, .restore ; $77eb
 	ld c, b ; $77ed
 	ld hl, $d0a0 ; $77ee
 	call AdvanceToPaletteEntry ; $77f1
@@ -6373,14 +6373,14 @@ Label_03_77e7:
 	ld a, [de] ; $7812
 	ld [hl+], a ; $7813
 	inc de ; $7814
-Label_03_7815:
+.restore:
 	pop bc ; $7815
 	pop hl ; $7816
 	inc hl ; $7817
 	inc b ; $7818
 	ld a, b ; $7819
 	cp a, $10 ; $781a
-	jr nz, Label_03_77e7 ; $781c
+	jr nz, .loop ; $781c
 	ld hl, $d140 ; $781e
 	ld d, $00 ; $7821
 	ld e, $10 ; $7823
