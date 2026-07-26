@@ -186,85 +186,85 @@ ApplySpriteWobbleY_17:
 	ld e, a ; $410f
 	ld a, [wMenuInputPressed] ; $4110
 	bit PADB_RIGHT, a ; $4113
-	jr z, Label_17_412c ; $4115
+	jr z, .step2 ; $4115
 	ld a, [wMenuCursorX] ; $4117
 	inc a ; $411a
 	add a, a ; $411b
-	jr nc, Label_17_4122 ; $411c
+	jr nc, .step ; $411c
 	ld a, b ; $411e
 	dec a ; $411f
-	jr Label_17_4127 ; $4120
-Label_17_4122:
+	jr .store ; $4120
+.step:
 	rra ; $4122
 	cp a, b ; $4123
-	jr c, Label_17_4127 ; $4124
+	jr c, .store ; $4124
 	xor a, a ; $4126
-Label_17_4127:
+.store:
 	ld [wMenuCursorX], a ; $4127
-	jr Label_17_4175 ; $412a
-Label_17_412c:
+	jr .checkMenuCursorX ; $412a
+.step2:
 	bit 5, a ; $412c
-	jr z, Label_17_4145 ; $412e
+	jr z, .step4 ; $412e
 	ld a, [wMenuCursorX] ; $4130
 	dec a ; $4133
 	add a, a ; $4134
-	jr nc, Label_17_413b ; $4135
+	jr nc, .step3 ; $4135
 	ld a, b ; $4137
 	dec a ; $4138
-	jr Label_17_4140 ; $4139
-Label_17_413b:
+	jr .store2 ; $4139
+.step3:
 	rra ; $413b
 	cp a, b ; $413c
-	jr c, Label_17_4140 ; $413d
+	jr c, .store2 ; $413d
 	xor a, a ; $413f
-Label_17_4140:
+.store2:
 	ld [wMenuCursorX], a ; $4140
-	jr Label_17_4175 ; $4143
-Label_17_4145:
+	jr .checkMenuCursorX ; $4143
+.step4:
 	bit 6, a ; $4145
-	jr z, Label_17_415e ; $4147
+	jr z, .step6 ; $4147
 	ld a, [wMenuCursorY] ; $4149
 	dec a ; $414c
 	add a, a ; $414d
-	jr nc, Label_17_4154 ; $414e
+	jr nc, .step5 ; $414e
 	ld a, c ; $4150
 	dec a ; $4151
-	jr Label_17_4159 ; $4152
-Label_17_4154:
+	jr .store3 ; $4152
+.step5:
 	rra ; $4154
 	cp a, c ; $4155
-	jr c, Label_17_4159 ; $4156
+	jr c, .store3 ; $4156
 	xor a, a ; $4158
-Label_17_4159:
+.store3:
 	ld [wMenuCursorY], a ; $4159
-	jr Label_17_4175 ; $415c
-Label_17_415e:
+	jr .checkMenuCursorX ; $415c
+.step6:
 	bit 7, a ; $415e
-	jr z, Label_17_4175 ; $4160
+	jr z, .checkMenuCursorX ; $4160
 	ld a, [wMenuCursorY] ; $4162
 	inc a ; $4165
 	add a, a ; $4166
-	jr nc, Label_17_416d ; $4167
+	jr nc, .step7 ; $4167
 	ld a, c ; $4169
 	dec a ; $416a
-	jr Label_17_4172 ; $416b
-Label_17_416d:
+	jr .store4 ; $416b
+.step7:
 	rra ; $416d
 	cp a, c ; $416e
-	jr c, Label_17_4172 ; $416f
+	jr c, .store4 ; $416f
 	xor a, a ; $4171
-Label_17_4172:
+.store4:
 	ld [wMenuCursorY], a ; $4172
-Label_17_4175:
+.checkMenuCursorX:
 	ld a, [wMenuCursorX] ; $4175
 	cp a, d ; $4178
-	jr nz, Label_17_4183 ; $4179
+	jr nz, .step8 ; $4179
 	ld a, [wMenuCursorY] ; $417b
 	cp a, e ; $417e
-	jr nz, Label_17_4183 ; $417f
+	jr nz, .step8 ; $417f
 	xor a, a ; $4181
 	ret ; $4182
-Label_17_4183:
+.step8:
 	ld a, $01 ; $4183
 	ret ; $4185
 	ld a, [wMenuCursorX] ; $4186
@@ -273,85 +273,85 @@ Label_17_4183:
 	ld e, a ; $418d
 	ldh a, [hLinkInput] ; $418e
 	bit 4, a ; $4190
-	jr z, Label_17_41a9 ; $4192
+	jr z, .step10 ; $4192
 	ld a, [wMenuCursorX] ; $4194
 	inc a ; $4197
 	add a, a ; $4198
-	jr nc, Label_17_419f ; $4199
+	jr nc, .step9 ; $4199
 	ld a, b ; $419b
 	dec a ; $419c
-	jr Label_17_41a4 ; $419d
-Label_17_419f:
+	jr .store5 ; $419d
+.step9:
 	rra ; $419f
 	cp a, b ; $41a0
-	jr c, Label_17_41a4 ; $41a1
+	jr c, .store5 ; $41a1
 	xor a, a ; $41a3
-Label_17_41a4:
+.store5:
 	ld [wMenuCursorX], a ; $41a4
-	jr Label_17_41f2 ; $41a7
-Label_17_41a9:
+	jr .checkMenuCursorX2 ; $41a7
+.step10:
 	bit 5, a ; $41a9
-	jr z, Label_17_41c2 ; $41ab
+	jr z, .step12 ; $41ab
 	ld a, [wMenuCursorX] ; $41ad
 	dec a ; $41b0
 	add a, a ; $41b1
-	jr nc, Label_17_41b8 ; $41b2
+	jr nc, .step11 ; $41b2
 	ld a, b ; $41b4
 	dec a ; $41b5
-	jr Label_17_41bd ; $41b6
-Label_17_41b8:
+	jr .store6 ; $41b6
+.step11:
 	rra ; $41b8
 	cp a, b ; $41b9
-	jr c, Label_17_41bd ; $41ba
+	jr c, .store6 ; $41ba
 	xor a, a ; $41bc
-Label_17_41bd:
+.store6:
 	ld [wMenuCursorX], a ; $41bd
-	jr Label_17_41f2 ; $41c0
-Label_17_41c2:
+	jr .checkMenuCursorX2 ; $41c0
+.step12:
 	bit 6, a ; $41c2
-	jr z, Label_17_41db ; $41c4
+	jr z, .step14 ; $41c4
 	ld a, [wMenuCursorY] ; $41c6
 	dec a ; $41c9
 	add a, a ; $41ca
-	jr nc, Label_17_41d1 ; $41cb
+	jr nc, .step13 ; $41cb
 	ld a, c ; $41cd
 	dec a ; $41ce
-	jr Label_17_41d6 ; $41cf
-Label_17_41d1:
+	jr .store7 ; $41cf
+.step13:
 	rra ; $41d1
 	cp a, c ; $41d2
-	jr c, Label_17_41d6 ; $41d3
+	jr c, .store7 ; $41d3
 	xor a, a ; $41d5
-Label_17_41d6:
+.store7:
 	ld [wMenuCursorY], a ; $41d6
-	jr Label_17_41f2 ; $41d9
-Label_17_41db:
+	jr .checkMenuCursorX2 ; $41d9
+.step14:
 	bit 7, a ; $41db
-	jr z, Label_17_41f2 ; $41dd
+	jr z, .checkMenuCursorX2 ; $41dd
 	ld a, [wMenuCursorY] ; $41df
 	inc a ; $41e2
 	add a, a ; $41e3
-	jr nc, Label_17_41ea ; $41e4
+	jr nc, .step15 ; $41e4
 	ld a, c ; $41e6
 	dec a ; $41e7
-	jr Label_17_41ef ; $41e8
-Label_17_41ea:
+	jr .store8 ; $41e8
+.step15:
 	rra ; $41ea
 	cp a, c ; $41eb
-	jr c, Label_17_41ef ; $41ec
+	jr c, .store8 ; $41ec
 	xor a, a ; $41ee
-Label_17_41ef:
+.store8:
 	ld [wMenuCursorY], a ; $41ef
-Label_17_41f2:
+.checkMenuCursorX2:
 	ld a, [wMenuCursorX] ; $41f2
 	cp a, d ; $41f5
-	jr nz, Label_17_4200 ; $41f6
+	jr nz, .step16 ; $41f6
 	ld a, [wMenuCursorY] ; $41f8
 	cp a, e ; $41fb
-	jr nz, Label_17_4200 ; $41fc
+	jr nz, .step16 ; $41fc
 	xor a, a ; $41fe
 	ret ; $41ff
-Label_17_4200:
+.step16:
 	ld a, $01 ; $4200
 	ret ; $4202
 	ld a, [wMenuCursorX] ; $4203
@@ -360,131 +360,131 @@ Label_17_4200:
 	ld e, a ; $420a
 	ldh a, [hLinkState] ; $420b
 	cp a, $02 ; $420d
-	jr z, Label_17_421c ; $420f
+	jr z, .step18 ; $420f
 	cp a, $01 ; $4211
-	jr z, Label_17_4218 ; $4213
+	jr z, .step17 ; $4213
 	call LinkErrorReset ; $4215
-Label_17_4218:
+.step17:
 	ldh a, [hLinkRemoteInputBuf] ; $4218
-	jr Label_17_421e ; $421a
-Label_17_421c:
+	jr .step19 ; $421a
+.step18:
 	ldh a, [hLinkRemoteInput] ; $421c
-Label_17_421e:
+.step19:
 	ld h, a ; $421e
 	ld a, [wMenuCursorLockFlags] ; $421f
 	and a, $01 ; $4222
 	ld a, h ; $4224
-	jr nz, Label_17_428b ; $4225
+	jr nz, .step27 ; $4225
 	bit 4, a ; $4227
-	jr z, Label_17_4240 ; $4229
+	jr z, .step21 ; $4229
 	ld a, [wMenuCursorX] ; $422b
 	inc a ; $422e
 	add a, a ; $422f
-	jr nc, Label_17_4236 ; $4230
+	jr nc, .step20 ; $4230
 	ld a, b ; $4232
 	dec a ; $4233
-	jr Label_17_423b ; $4234
-Label_17_4236:
+	jr .store9 ; $4234
+.step20:
 	rra ; $4236
 	cp a, b ; $4237
-	jr c, Label_17_423b ; $4238
+	jr c, .store9 ; $4238
 	xor a, a ; $423a
-Label_17_423b:
+.store9:
 	ld [wMenuCursorX], a ; $423b
-	jr Label_17_42bd ; $423e
-Label_17_4240:
+	jr .checkMenuCursorX3 ; $423e
+.step21:
 	bit 5, a ; $4240
-	jr z, Label_17_4259 ; $4242
+	jr z, .step23 ; $4242
 	ld a, [wMenuCursorX] ; $4244
 	dec a ; $4247
 	add a, a ; $4248
-	jr nc, Label_17_424f ; $4249
+	jr nc, .step22 ; $4249
 	ld a, b ; $424b
 	dec a ; $424c
-	jr Label_17_4254 ; $424d
-Label_17_424f:
+	jr .store10 ; $424d
+.step22:
 	rra ; $424f
 	cp a, b ; $4250
-	jr c, Label_17_4254 ; $4251
+	jr c, .store10 ; $4251
 	xor a, a ; $4253
-Label_17_4254:
+.store10:
 	ld [wMenuCursorX], a ; $4254
-	jr Label_17_42bd ; $4257
-Label_17_4259:
+	jr .checkMenuCursorX3 ; $4257
+.step23:
 	bit 6, a ; $4259
-	jr z, Label_17_4272 ; $425b
+	jr z, .step25 ; $425b
 	ld a, [wMenuCursorY] ; $425d
 	dec a ; $4260
 	add a, a ; $4261
-	jr nc, Label_17_4268 ; $4262
+	jr nc, .step24 ; $4262
 	ld a, c ; $4264
 	dec a ; $4265
-	jr Label_17_426d ; $4266
-Label_17_4268:
+	jr .store11 ; $4266
+.step24:
 	rra ; $4268
 	cp a, c ; $4269
-	jr c, Label_17_426d ; $426a
+	jr c, .store11 ; $426a
 	xor a, a ; $426c
-Label_17_426d:
+.store11:
 	ld [wMenuCursorY], a ; $426d
-	jr Label_17_42bd ; $4270
-Label_17_4272:
+	jr .checkMenuCursorX3 ; $4270
+.step25:
 	bit 7, a ; $4272
-	jr z, Label_17_428b ; $4274
+	jr z, .step27 ; $4274
 	ld a, [wMenuCursorY] ; $4276
 	inc a ; $4279
 	add a, a ; $427a
-	jr nc, Label_17_4281 ; $427b
+	jr nc, .step26 ; $427b
 	ld a, c ; $427d
 	dec a ; $427e
-	jr Label_17_4286 ; $427f
-Label_17_4281:
+	jr .store12 ; $427f
+.step26:
 	rra ; $4281
 	cp a, c ; $4282
-	jr c, Label_17_4286 ; $4283
+	jr c, .store12 ; $4283
 	xor a, a ; $4285
-Label_17_4286:
+.store12:
 	ld [wMenuCursorY], a ; $4286
-	jr Label_17_42bd ; $4289
-Label_17_428b:
+	jr .checkMenuCursorX3 ; $4289
+.step27:
 	bit 0, a ; $428b
-	jr z, Label_17_42a3 ; $428d
+	jr z, .step28 ; $428d
 	sound $5f ; $428f
 	ld a, [wMenuCursorLockFlags] ; $4291
 	ld b, a ; $4294
 	and a, $01 ; $4295
-	jr nz, Label_17_42bd ; $4297
+	jr nz, .checkMenuCursorX3 ; $4297
 	sound $5f ; $4299
 	ld a, b ; $429b
 	or a, $01 ; $429c
 	ld [wMenuCursorLockFlags], a ; $429e
-	jr Label_17_42bd ; $42a1
-Label_17_42a3:
+	jr .checkMenuCursorX3 ; $42a1
+.step28:
 	bit 1, a ; $42a3
-	jr z, Label_17_42bd ; $42a5
+	jr z, .checkMenuCursorX3 ; $42a5
 	sound $62 ; $42a7
 	ld a, [wMenuCursorLockFlags] ; $42a9
 	ld b, a ; $42ac
 	and a, $03 ; $42ad
 	ld a, b ; $42af
-	jr nz, Label_17_42b8 ; $42b0
+	jr nz, .step29 ; $42b0
 	and a, $fa ; $42b2
 	or a, $04 ; $42b4
-	jr Label_17_42ba ; $42b6
-Label_17_42b8:
+	jr .store13 ; $42b6
+.step29:
 	and a, $fe ; $42b8
-Label_17_42ba:
+.store13:
 	ld [wMenuCursorLockFlags], a ; $42ba
-Label_17_42bd:
+.checkMenuCursorX3:
 	ld a, [wMenuCursorX] ; $42bd
 	cp a, d ; $42c0
-	jr nz, Label_17_42cb ; $42c1
+	jr nz, .step30 ; $42c1
 	ld a, [wMenuCursorY] ; $42c3
 	cp a, e ; $42c6
-	jr nz, Label_17_42cb ; $42c7
+	jr nz, .step30 ; $42c7
 	xor a, a ; $42c9
 	ret ; $42ca
-Label_17_42cb:
+.step30:
 	ld a, $01 ; $42cb
 	ret ; $42cd
 	ld a, [wMenuCursor2X] ; $42ce
@@ -493,142 +493,142 @@ Label_17_42cb:
 	ld e, a ; $42d5
 	ldh a, [hLinkState] ; $42d6
 	cp a, $02 ; $42d8
-	jr z, Label_17_42e7 ; $42da
+	jr z, .step32 ; $42da
 	cp a, $01 ; $42dc
-	jr z, Label_17_42e3 ; $42de
+	jr z, .step31 ; $42de
 	call LinkErrorReset ; $42e0
-Label_17_42e3:
+.step31:
 	ldh a, [hLinkRemoteInput] ; $42e3
-	jr Label_17_42e9 ; $42e5
-Label_17_42e7:
+	jr .step33 ; $42e5
+.step32:
 	ldh a, [hLinkRemoteInputBuf] ; $42e7
-Label_17_42e9:
+.step33:
 	ld h, a ; $42e9
 	ld a, [wMenuCursorLockFlags] ; $42ea
 	and a, $02 ; $42ed
 	ld a, h ; $42ef
-	jr nz, Label_17_4356 ; $42f0
+	jr nz, .step41 ; $42f0
 	bit 4, a ; $42f2
-	jr z, Label_17_430b ; $42f4
+	jr z, .step35 ; $42f4
 	ld a, [wMenuCursor2X] ; $42f6
 	inc a ; $42f9
 	add a, a ; $42fa
-	jr nc, Label_17_4301 ; $42fb
+	jr nc, .step34 ; $42fb
 	ld a, b ; $42fd
 	dec a ; $42fe
-	jr Label_17_4306 ; $42ff
-Label_17_4301:
+	jr .store14 ; $42ff
+.step34:
 	rra ; $4301
 	cp a, b ; $4302
-	jr c, Label_17_4306 ; $4303
+	jr c, .store14 ; $4303
 	xor a, a ; $4305
-Label_17_4306:
+.store14:
 	ld [wMenuCursor2X], a ; $4306
-	jr Label_17_4386 ; $4309
-Label_17_430b:
+	jr .checkMenuCursor2X ; $4309
+.step35:
 	bit 5, a ; $430b
-	jr z, Label_17_4324 ; $430d
+	jr z, .step37 ; $430d
 	ld a, [wMenuCursor2X] ; $430f
 	dec a ; $4312
 	add a, a ; $4313
-	jr nc, Label_17_431a ; $4314
+	jr nc, .step36 ; $4314
 	ld a, b ; $4316
 	dec a ; $4317
-	jr Label_17_431f ; $4318
-Label_17_431a:
+	jr .store15 ; $4318
+.step36:
 	rra ; $431a
 	cp a, b ; $431b
-	jr c, Label_17_431f ; $431c
+	jr c, .store15 ; $431c
 	xor a, a ; $431e
-Label_17_431f:
+.store15:
 	ld [wMenuCursor2X], a ; $431f
-	jr Label_17_4386 ; $4322
-Label_17_4324:
+	jr .checkMenuCursor2X ; $4322
+.step37:
 	bit 6, a ; $4324
-	jr z, Label_17_433d ; $4326
+	jr z, .step39 ; $4326
 	ld a, [wMenuCursor2Y] ; $4328
 	dec a ; $432b
 	add a, a ; $432c
-	jr nc, Label_17_4333 ; $432d
+	jr nc, .step38 ; $432d
 	ld a, c ; $432f
 	dec a ; $4330
-	jr Label_17_4338 ; $4331
-Label_17_4333:
+	jr .store16 ; $4331
+.step38:
 	rra ; $4333
 	cp a, c ; $4334
-	jr c, Label_17_4338 ; $4335
+	jr c, .store16 ; $4335
 	xor a, a ; $4337
-Label_17_4338:
+.store16:
 	ld [wMenuCursor2Y], a ; $4338
-	jr Label_17_4386 ; $433b
-Label_17_433d:
+	jr .checkMenuCursor2X ; $433b
+.step39:
 	bit 7, a ; $433d
-	jr z, Label_17_4356 ; $433f
+	jr z, .step41 ; $433f
 	ld a, [wMenuCursor2Y] ; $4341
 	inc a ; $4344
 	add a, a ; $4345
-	jr nc, Label_17_434c ; $4346
+	jr nc, .step40 ; $4346
 	ld a, c ; $4348
 	dec a ; $4349
-	jr Label_17_4351 ; $434a
-Label_17_434c:
+	jr .store17 ; $434a
+.step40:
 	rra ; $434c
 	cp a, c ; $434d
-	jr c, Label_17_4351 ; $434e
+	jr c, .store17 ; $434e
 	xor a, a ; $4350
-Label_17_4351:
+.store17:
 	ld [wMenuCursor2Y], a ; $4351
-	jr Label_17_4386 ; $4354
-Label_17_4356:
+	jr .checkMenuCursor2X ; $4354
+.step41:
 	bit 0, a ; $4356
-	jr z, Label_17_436c ; $4358
+	jr z, .step42 ; $4358
 	ld a, [wMenuCursorLockFlags] ; $435a
 	ld b, a ; $435d
 	and a, $02 ; $435e
-	jr nz, Label_17_4386 ; $4360
+	jr nz, .checkMenuCursor2X ; $4360
 	sound $5f ; $4362
 	ld a, b ; $4364
 	or a, $02 ; $4365
 	ld [wMenuCursorLockFlags], a ; $4367
-	jr Label_17_4386 ; $436a
-Label_17_436c:
+	jr .checkMenuCursor2X ; $436a
+.step42:
 	bit 1, a ; $436c
-	jr z, Label_17_4386 ; $436e
+	jr z, .checkMenuCursor2X ; $436e
 	sound $62 ; $4370
 	ld a, [wMenuCursorLockFlags] ; $4372
 	ld b, a ; $4375
 	and a, $03 ; $4376
 	ld a, b ; $4378
-	jr nz, Label_17_4381 ; $4379
+	jr nz, .step43 ; $4379
 	and a, $f5 ; $437b
 	or a, $08 ; $437d
-	jr Label_17_4383 ; $437f
-Label_17_4381:
+	jr .store18 ; $437f
+.step43:
 	and a, $fd ; $4381
-Label_17_4383:
+.store18:
 	ld [wMenuCursorLockFlags], a ; $4383
-Label_17_4386:
+.checkMenuCursor2X:
 	ld a, [wMenuCursor2X] ; $4386
 	cp a, d ; $4389
-	jr nz, Label_17_4394 ; $438a
+	jr nz, .step44 ; $438a
 	ld a, [wMenuCursor2Y] ; $438c
 	cp a, e ; $438f
-	jr nz, Label_17_4394 ; $4390
+	jr nz, .step44 ; $4390
 	xor a, a ; $4392
 	ret ; $4393
-Label_17_4394:
+.step44:
 	ld a, $01 ; $4394
 	ret ; $4396
 	ld a, [wMenuCursorY] ; $4397
 	ld b, a ; $439a
 	xor a, a ; $439b
 	inc b ; $439c
-Label_17_439d:
+.loop:
 	dec b ; $439d
-	jr z, Label_17_43a3 ; $439e
+	jr z, .step45 ; $439e
 	add a, c ; $43a0
-	jr Label_17_439d ; $43a1
-Label_17_43a3:
+	jr .loop ; $43a1
+.step45:
 	ld b, a ; $43a3
 	ld a, [wMenuCursorX] ; $43a4
 	add a, b ; $43a7
@@ -638,12 +638,12 @@ Label_17_43a3:
 	ld b, a ; $43ab
 	xor a, a ; $43ac
 	inc b ; $43ad
-Label_17_43ae:
+.loopB:
 	dec b ; $43ae
-	jr z, Label_17_43b4 ; $43af
+	jr z, .step46 ; $43af
 	add a, c ; $43b1
-	jr Label_17_43ae ; $43b2
-Label_17_43b4:
+	jr .loopB ; $43b2
+.step46:
 	ld b, a ; $43b4
 	ld a, [hl] ; $43b5
 	add a, b ; $43b6
@@ -652,13 +652,13 @@ Label_17_43b4:
 Data_17_43b9:
 	; $43b9, 3 bytes (bytes:3)
 	db $16, $00, $79 ; 0x00
-Label_17_43bc:
+.loopBB:
 	cp a, b ; $43bc
-	jr c, Label_17_43c3 ; $43bd
+	jr c, .store19 ; $43bd
 	inc d ; $43bf
 	sub a, b ; $43c0
-	jr Label_17_43bc ; $43c1
-Label_17_43c3:
+	jr .loopBB ; $43c1
+.store19:
 	ld [wMenuCursorX], a ; $43c3
 	ld a, d ; $43c6
 	ld [wMenuCursorY], a ; $43c7
@@ -666,13 +666,13 @@ Label_17_43c3:
 Data_17_43cb:
 	; $43cb, 3 bytes (bytes:3)
 	db $16, $00, $79 ; 0x00
-Label_17_43ce:
+.loopBBB:
 	cp a, b ; $43ce
-	jr c, Label_17_43d5 ; $43cf
+	jr c, .store20 ; $43cf
 	inc d ; $43d1
 	sub a, b ; $43d2
-	jr Label_17_43ce ; $43d3
-Label_17_43d5:
+	jr .loopBBB ; $43d3
+.store20:
 	ld [hl+], a ; $43d5
 	ld a, d ; $43d6
 	ld [hl], a ; $43d7
@@ -682,10 +682,10 @@ Label_17_43d5:
 	wram_bank $03 ; $43dc
 	xor a, a ; $43e2
 	ld c, $40 ; $43e3
-Label_17_43e5:
+.loopBBBB:
 	ld [hl+], a ; $43e5
 	dec c ; $43e6
-	jr nz, Label_17_43e5 ; $43e7
+	jr nz, .loopBBBB ; $43e7
 	pop af ; $43e9
 	wram_bank ; $43ea
 	ret ; $43ee
@@ -694,10 +694,10 @@ Label_17_43e5:
 	wram_bank $03 ; $43f2
 	ld a, $00 ; $43f8
 	ld c, $40 ; $43fa
-Label_17_43fc:
+.loopBBBBB:
 	ld [hl+], a ; $43fc
 	dec c ; $43fd
-	jr nz, Label_17_43fc ; $43fe
+	jr nz, .loopBBBBB ; $43fe
 	pop af ; $4400
 	wram_bank ; $4401
 	ret ; $4405
@@ -706,18 +706,18 @@ UpdateAnimatedTilesTask_17:
 	ret ; $4409
 	push af ; $440a
 	push bc ; $440b
-Label_17_440c:
+.loop:
 	ld a, [hl] ; $440c
 	cp a, $00 ; $440d
-	jr z, Label_17_4440 ; $440f
+	jr z, .restore ; $440f
 	ld [de], a ; $4411
 	inc hl ; $4412
 	ld a, [hl] ; $4413
 	cp a, $de ; $4414
-	jr z, Label_17_441c ; $4416
+	jr z, .step ; $4416
 	cp a, $df ; $4418
-	jr nz, Label_17_4431 ; $441a
-Label_17_441c:
+	jr nz, .step2 ; $441a
+.step:
 	push hl ; $441c
 	push bc ; $441d
 	ld h, d ; $441e
@@ -728,18 +728,18 @@ Label_17_441c:
 	ld a, [hl] ; $4425
 	cp a, $03 ; $4426
 	ld a, b ; $4428
-	jr nz, Label_17_442d ; $4429
+	jr nz, .store ; $4429
 	sub a, $d0 ; $442b
-Label_17_442d:
+.store:
 	ld [hl], a ; $442d
 	pop bc ; $442e
 	pop hl ; $442f
 	inc hl ; $4430
-Label_17_4431:
+.step2:
 	inc de ; $4431
 	ld a, e ; $4432
 	and a, $1f ; $4433
-	jr nz, Label_17_440c ; $4435
+	jr nz, .loop ; $4435
 	push hl ; $4437
 	ld h, d ; $4438
 	ld l, e ; $4439
@@ -747,8 +747,8 @@ Label_17_4431:
 	ld d, h ; $443b
 	ld e, l ; $443c
 	pop hl ; $443d
-	jr Label_17_440c ; $443e
-Label_17_4440:
+	jr .loop ; $443e
+.restore:
 	pop bc ; $4440
 	pop af ; $4441
 	ret ; $4442
@@ -781,16 +781,16 @@ Label_17_4440:
 DrawAsciiDigitString_17:
 	ld a, [hl+] ; $4464
 	and a, a ; $4465
-	jr z, Label_17_446d ; $4466
+	jr z, .done ; $4466
 	call DrawAsciiDigitChar_17 ; $4468
 	jr DrawAsciiDigitString_17 ; $446b
-Label_17_446d:
+.done:
 	ret ; $446d
 DrawAsciiDigitChar_17:
 	push hl ; $446e
 	ld hl, $d240 ; $446f
 	sub a, $30 ; $4472
-	jr c, Label_17_4484 ; $4474
+	jr c, .step ; $4474
 	add a, $30 ; $4476
 	ld b, a ; $4478
 	wram_bank $03 ; $4479
@@ -799,7 +799,7 @@ DrawAsciiDigitChar_17:
 	inc de ; $4481
 	pop hl ; $4482
 	ret ; $4483
-Label_17_4484:
+.step:
 	inc de ; $4484
 	pop hl ; $4485
 	ret ; $4486
@@ -1017,23 +1017,23 @@ CycleDiagramTargetPalette:
 	srl a ; $468f
 	srl a ; $4691
 	add a, a ; $4693
-	jr nc, Label_17_469b ; $4694
+	jr nc, .step ; $4694
 	ld a, $0c ; $4696
 	dec a ; $4698
-	jr Label_17_46a1 ; $4699
-Label_17_469b:
+	jr .step2 ; $4699
+.step:
 	rra ; $469b
 	cp a, $0c ; $469c
-	jr c, Label_17_46a1 ; $469e
+	jr c, .step2 ; $469e
 	xor a, a ; $46a0
-Label_17_46a1:
+.step2:
 	add a, a ; $46a1
 	ld hl, $46ca ; $46a2
 	add a, l ; $46a5
 	ld l, a ; $46a6
-	jr nc, Label_17_46aa ; $46a7
+	jr nc, .read ; $46a7
 	inc h ; $46a9
-Label_17_46aa:
+.read:
 	ld a, [hl+] ; $46aa
 	ld d, [hl] ; $46ab
 	ld e, a ; $46ac
@@ -1136,16 +1136,16 @@ DrawBriefingMarkerHFlip:
 	ld b, $09 ; $475d
 	ld a, [$d82d] ; $475f
 	cp a, $01 ; $4762
-	jr z, Label_17_4768 ; $4764
+	jr z, .step ; $4764
 	ld b, $29 ; $4766
-Label_17_4768:
+.step:
 	ld a, [$d81c] ; $4768
 	ld d, a ; $476b
 	ldh a, [hVBlankCounter] ; $476c
 	and a, $10 ; $476e
-	jr z, Label_17_4773 ; $4770
+	jr z, .step2 ; $4770
 	inc d ; $4772
-Label_17_4773:
+.step2:
 	ld a, [$d81d] ; $4773
 	ld e, a ; $4776
 	ld c, $60 ; $4777
@@ -1167,16 +1167,16 @@ DrawBriefingSwingAnim:
 	ld hl, Data_17_47c3 ; $479a
 	add a, l ; $479d
 	ld l, a ; $479e
-	jr nc, Label_17_47a2 ; $479f
+	jr nc, .read ; $479f
 	inc h ; $47a1
-Label_17_47a2:
+.read:
 	ld c, [hl] ; $47a2
 	ld hl, Data_17_47e2 ; $47a3
 	ld a, [$d822] ; $47a6
 	cp a, $06 ; $47a9
-	jr nc, Label_17_47b0 ; $47ab
+	jr nc, .step ; $47ab
 	ld hl, SpriteTemplate_17_47cd ; $47ad
-Label_17_47b0:
+.step:
 	ld a, [$d814] ; $47b0
 	ld d, a ; $47b3
 	ld a, [$d815] ; $47b4
@@ -1229,9 +1229,9 @@ DrawBriefingMarkerVFlip:
 	ld b, $09 ; $4827
 	ld a, [$d825] ; $4829
 	cp a, $01 ; $482c
-	jr z, Label_17_4832 ; $482e
+	jr z, .step ; $482e
 	ld b, $49 ; $4830
-Label_17_4832:
+.step:
 	ld a, [$d823] ; $4832
 	ld d, a ; $4835
 	ld a, [$d824] ; $4836
@@ -1248,9 +1248,9 @@ DrawSpinServeBriefingMarker:
 	ld b, $09 ; $484e
 	ld a, [$d826] ; $4850
 	cp a, $01 ; $4853
-	jr z, Label_17_4859 ; $4855
+	jr z, .step ; $4855
 	ld b, $29 ; $4857
-Label_17_4859:
+.step:
 	ld a, [$d816] ; $4859
 	ld d, a ; $485c
 	ld a, [$d817] ; $485d
@@ -1273,9 +1273,9 @@ DrawBriefingMarkerRotated:
 	ld a, [$d827] ; $4882
 	add a, l ; $4885
 	ld l, a ; $4886
-	jr nc, Label_17_488a ; $4887
+	jr nc, .read ; $4887
 	inc h ; $4889
-Label_17_488a:
+.read:
 	ld b, [hl] ; $488a
 	ld c, $68 ; $488b
 	ld a, [$d818] ; $488d
@@ -1295,12 +1295,12 @@ DrawBlinkingPrompt:
 	wram_bank $03 ; $48a5
 	ldh a, [hVBlankCounter] ; $48ab
 	and a, $10 ; $48ad
-	jr z, Label_17_48bb ; $48af
+	jr z, .restore ; $48af
 	ld c, $72 ; $48b1
 	ld b, $09 ; $48b3
 	ld de, $508c ; $48b5
 	call QueueSprite ; $48b8
-Label_17_48bb:
+.restore:
 	pop af ; $48bb
 	wram_bank ; $48bc
 	ret ; $48c0
@@ -1312,16 +1312,16 @@ DrawBriefingTargetBrackets:
 	ld d, a ; $48cd
 	ldh a, [hVBlankCounter] ; $48ce
 	and a, $10 ; $48d0
-	jr z, Label_17_48d5 ; $48d2
+	jr z, .step ; $48d2
 	inc d ; $48d4
-Label_17_48d5:
+.step:
 	ld a, [$d829] ; $48d5
 	ld e, a ; $48d8
 	ldh a, [hVBlankCounter] ; $48d9
 	and a, $10 ; $48db
-	jr z, Label_17_48e0 ; $48dd
+	jr z, .step2 ; $48dd
 	inc e ; $48df
-Label_17_48e0:
+.step2:
 	ld c, $6c ; $48e0
 	ld b, $0a ; $48e2
 	call QueueSprite ; $48e4
@@ -1333,16 +1333,16 @@ Label_17_48e0:
 	ld d, a ; $48f1
 	ldh a, [hVBlankCounter] ; $48f2
 	and a, $10 ; $48f4
-	jr z, Label_17_48f9 ; $48f6
+	jr z, .step3 ; $48f6
 	dec d ; $48f8
-Label_17_48f9:
+.step3:
 	ld a, [$d829] ; $48f9
 	ld e, a ; $48fc
 	ldh a, [hVBlankCounter] ; $48fd
 	and a, $10 ; $48ff
-	jr z, Label_17_4904 ; $4901
+	jr z, .step4 ; $4901
 	inc e ; $4903
-Label_17_4904:
+.step4:
 	ld c, $6c ; $4904
 	ld b, $2a ; $4906
 	call QueueSprite ; $4908
@@ -1354,9 +1354,9 @@ Label_17_4904:
 	ld d, a ; $4915
 	ldh a, [hVBlankCounter] ; $4916
 	and a, $10 ; $4918
-	jr z, Label_17_491d ; $491a
+	jr z, .step5 ; $491a
 	dec d ; $491c
-Label_17_491d:
+.step5:
 	ld a, [$d82b] ; $491d
 	sub a, $05 ; $4920
 	ld b, a ; $4922
@@ -1365,9 +1365,9 @@ Label_17_491d:
 	ld e, a ; $4927
 	ldh a, [hVBlankCounter] ; $4928
 	and a, $10 ; $492a
-	jr z, Label_17_492f ; $492c
+	jr z, .step6 ; $492c
 	dec e ; $492e
-Label_17_492f:
+.step6:
 	ld c, $6c ; $492f
 	ld b, $6a ; $4931
 	call QueueSprite ; $4933
@@ -1375,9 +1375,9 @@ Label_17_492f:
 	ld d, a ; $4939
 	ldh a, [hVBlankCounter] ; $493a
 	and a, $10 ; $493c
-	jr z, Label_17_4941 ; $493e
+	jr z, .step7 ; $493e
 	inc d ; $4940
-Label_17_4941:
+.step7:
 	ld a, [$d82b] ; $4941
 	sub a, $05 ; $4944
 	ld b, a ; $4946
@@ -1386,9 +1386,9 @@ Label_17_4941:
 	ld e, a ; $494b
 	ldh a, [hVBlankCounter] ; $494c
 	and a, $10 ; $494e
-	jr z, Label_17_4953 ; $4950
+	jr z, .step8 ; $4950
 	dec e ; $4952
-Label_17_4953:
+.step8:
 	ld c, $6c ; $4953
 	ld b, $4a ; $4955
 	call QueueSprite ; $4957
@@ -1521,9 +1521,9 @@ DrawDiagramTargetPatch:
 	ld hl, $4a75 ; $4a5c
 	add a, l ; $4a5f
 	ld l, a ; $4a60
-	jr nc, Label_17_4a64 ; $4a61
+	jr nc, .read ; $4a61
 	inc h ; $4a63
-Label_17_4a64:
+.read:
 	ld a, [hl+] ; $4a64
 	ld b, [hl] ; $4a65
 	ld c, a ; $4a66
@@ -1985,12 +1985,12 @@ DrillBriefing_SpinServe:
 	xor a, a ; $584d
 	ld [$d82c], a ; $584e
 	ld [$d82e], a ; $5851
-Label_17_5854:
+.loop:
 	call SpinServeBriefing_TickAnim ; $5854
 	ld c, $00 ; $5857
 	call AdvanceFrameCheckInput ; $5859
 	and a, a ; $585c
-	jp z, Label_17_5854 ; $585d
+	jp z, .loop ; $585d
 	call ClearFrameTasks ; $5860
 	ld a, $01 ; $5863
 	ld hl, UpdateAnimatedTilesTask_17 ; $5865
@@ -2019,12 +2019,12 @@ Label_17_5854:
 	xor a, a ; $58a3
 	ld [$d82c], a ; $58a4
 	ld [$d82e], a ; $58a7
-Label_17_58aa:
+.loopB:
 	call SpinServeBriefing_TickAnim ; $58aa
 	ld c, $00 ; $58ad
 	call AdvanceFrameCheckInput ; $58af
 	and a, a ; $58b2
-	jp z, Label_17_58aa ; $58b3
+	jp z, .loopB ; $58b3
 	call ClearFrameTasks ; $58b6
 	ld a, $01 ; $58b9
 	ld hl, UpdateAnimatedTilesTask_17 ; $58bb
@@ -2152,19 +2152,19 @@ Label_17_58aa:
 	ld hl, $1ab8 ; $59fb
 	ld a, [wStoryModeMainCharacterLeftHanded] ; $59fe
 	and a, a ; $5a01
-	jr z, Label_17_5a07 ; $5a02
+	jr z, .drawBriefingCaption ; $5a02
 	ld hl, $1ab9 ; $5a04
-Label_17_5a07:
+.drawBriefingCaption:
 	call DrawBriefingCaption ; $5a07
 	xor a, a ; $5a0a
 	ld [$d82c], a ; $5a0b
 	ld [$d82e], a ; $5a0e
-Label_17_5a11:
+.loopBB:
 	call SpinServeBriefing_TickAnim2 ; $5a11
 	ld c, $00 ; $5a14
 	call AdvanceFrameCheckInput ; $5a16
 	and a, a ; $5a19
-	jp z, Label_17_5a11 ; $5a1a
+	jp z, .loopBB ; $5a1a
 	call ClearFrameTasks ; $5a1d
 	ld a, $01 ; $5a20
 	ld hl, UpdateAnimatedTilesTask_17 ; $5a22
@@ -2192,12 +2192,12 @@ Label_17_5a11:
 	xor a, a ; $5a5e
 	ld [$d82c], a ; $5a5f
 	ld [$d82e], a ; $5a62
-Label_17_5a65:
+.loopBBB:
 	call SpinServeBriefing_TickAnim ; $5a65
 	ld c, $01 ; $5a68
 	call AdvanceFrameCheckInput ; $5a6a
 	and a, a ; $5a6d
-	jp z, Label_17_5a65 ; $5a6e
+	jp z, .loopBBB ; $5a6e
 	call ClearFrameTasks ; $5a71
 	ret ; $5a74
 SpinServeBriefing_TickAnim:
@@ -2401,9 +2401,9 @@ SpinServeBriefing_AdvanceAnim2:
 	ld b, $00 ; $5ba9
 	ld a, [wStoryModeMainCharacterLeftHanded] ; $5bab
 	and a, a ; $5bae
-	jr z, Label_17_5bb3 ; $5baf
+	jr z, .step ; $5baf
 	ld b, $02 ; $5bb1
-Label_17_5bb3:
+.step:
 	ld a, [$d82e] ; $5bb3
 	add a, b ; $5bb6
 	add a, $5b ; $5bb7
@@ -2526,12 +2526,12 @@ DrillBriefing_ServeThroughPoles:
 	xor a, a ; $5c9d
 	ld [$d82c], a ; $5c9e
 	ld [$d82e], a ; $5ca1
-Label_17_5ca4:
+.loop:
 	call PoleServeBriefing_TickAnim ; $5ca4
 	ld c, $00 ; $5ca7
 	call AdvanceFrameCheckInput ; $5ca9
 	and a, a ; $5cac
-	jp z, Label_17_5ca4 ; $5cad
+	jp z, .loop ; $5cad
 	call ClearFrameTasks ; $5cb0
 	ld a, $01 ; $5cb3
 	ld hl, UpdateAnimatedTilesTask_17 ; $5cb5
@@ -2560,7 +2560,7 @@ Label_17_5ca4:
 	xor a, a ; $5cf3
 	ld [$d82c], a ; $5cf4
 	ld [$d82e], a ; $5cf7
-Label_17_5cfa:
+.loopB:
 	call PoleServeBriefing_TickAnim2 ; $5cfa
 	ld a, [$d82e] ; $5cfd
 	sla a ; $5d00
@@ -2581,7 +2581,7 @@ Label_17_5cfa:
 	ld c, $00 ; $5d17
 	call AdvanceFrameCheckInput ; $5d19
 	and a, a ; $5d1c
-	jp z, Label_17_5cfa ; $5d1d
+	jp z, .loopB ; $5d1d
 	call ClearFrameTasks ; $5d20
 	ld a, $01 ; $5d23
 	ld hl, UpdateAnimatedTilesTask_17 ; $5d25
@@ -2642,12 +2642,12 @@ Label_17_5cfa:
 	call RegisterFrameTask ; $5db7
 	ld hl, $1abe ; $5dba
 	call DrawBriefingCaption ; $5dbd
-Label_17_5dc0:
+.loopBB:
 	call PoleServeBriefing_TickAnim2 ; $5dc0
 	ld c, $01 ; $5dc3
 	call AdvanceFrameCheckInput ; $5dc5
 	and a, a ; $5dc8
-	jp z, Label_17_5dc0 ; $5dc9
+	jp z, .loopBB ; $5dc9
 	call ClearFrameTasks ; $5dcc
 	ret ; $5dcf
 PoleServeBriefing_TickAnim:
@@ -3039,12 +3039,12 @@ DrillBriefing_ServeAndVolley:
 	xor a, a ; $60c8
 	ld [$d82c], a ; $60c9
 	ld [$d82e], a ; $60cc
-Label_17_60cf:
+.loop:
 	call ServeAndVolleyBriefing_TickAnim ; $60cf
 	ld c, $01 ; $60d2
 	call AdvanceFrameCheckInput ; $60d4
 	and a, a ; $60d7
-	jp z, Label_17_60cf ; $60d8
+	jp z, .loop ; $60d8
 	call ClearFrameTasks ; $60db
 	ret ; $60de
 ServeAndVolleyBriefing_TickAnim:
@@ -3441,12 +3441,12 @@ DrillBriefing_ServeAndSmash:
 	call RegisterFrameTask ; $6418
 	ld hl, $1ac5 ; $641b
 	call DrawBriefingCaption ; $641e
-Label_17_6421:
+.loop:
 	ld a, [$d82c] ; $6421
 	inc a ; $6424
 	ld [$d82c], a ; $6425
 	cp a, $78 ; $6428
-	jp c, Label_17_64b0 ; $642a
+	jp c, .step ; $642a
 	xor a, a ; $642d
 	ld [$d82c], a ; $642e
 	ld a, [$d82e] ; $6431
@@ -3533,11 +3533,11 @@ Label_17_6421:
 	ld [$d818], a ; $64a9
 	ld a, b ; $64ac
 	ld [$d819], a ; $64ad
-Label_17_64b0:
+.step:
 	ld c, $01 ; $64b0
 	call AdvanceFrameCheckInput ; $64b2
 	and a, a ; $64b5
-	jp z, Label_17_6421 ; $64b6
+	jp z, .loop ; $64b6
 	call ClearFrameTasks ; $64b9
 	ret ; $64bc
 	; $64bd, 124 bytes (records:2)
@@ -3795,12 +3795,12 @@ DrillBriefing_ServeAndSmash2:
 	call RegisterFrameTask ; $6721
 	ld hl, $1ac9 ; $6724
 	call DrawBriefingCaption ; $6727
-Label_17_672a:
+.loop:
 	ld a, [$d82c] ; $672a
 	inc a ; $672d
 	ld [$d82c], a ; $672e
 	cp a, $78 ; $6731
-	jp c, Label_17_67b9 ; $6733
+	jp c, .step ; $6733
 	xor a, a ; $6736
 	ld [$d82c], a ; $6737
 	ld a, [$d82e] ; $673a
@@ -3887,11 +3887,11 @@ Label_17_672a:
 	ld [$d818], a ; $67b2
 	ld a, b ; $67b5
 	ld [$d819], a ; $67b6
-Label_17_67b9:
+.step:
 	ld c, $01 ; $67b9
 	call AdvanceFrameCheckInput ; $67bb
 	and a, a ; $67be
-	jp z, Label_17_672a ; $67bf
+	jp z, .loop ; $67bf
 	call ClearFrameTasks ; $67c2
 	ret ; $67c5
 	; $67c6, 124 bytes (records:2)
@@ -4057,12 +4057,12 @@ DrillBriefing_ReturnToTarget:
 	xor a, a ; $6941
 	ld [$d82c], a ; $6942
 	ld [$d82e], a ; $6945
-Label_17_6948:
+.loop:
 	call ReturnToTargetBriefing_TickAnim ; $6948
 	ld c, $01 ; $694b
 	call AdvanceFrameCheckInput ; $694d
 	and a, a ; $6950
-	jp z, Label_17_6948 ; $6951
+	jp z, .loop ; $6951
 	call ClearFrameTasks ; $6954
 	ret ; $6957
 ReturnToTargetBriefing_TickAnim:
@@ -4341,12 +4341,12 @@ DrillBriefing_ReturnLob:
 	xor a, a ; $6b82
 	ld [$d82c], a ; $6b83
 	ld [$d82e], a ; $6b86
-Label_17_6b89:
+.loop:
 	call ReturnLobBriefing_TickAnim ; $6b89
 	ld c, $01 ; $6b8c
 	call AdvanceFrameCheckInput ; $6b8e
 	and a, a ; $6b91
-	jp z, Label_17_6b89 ; $6b92
+	jp z, .loop ; $6b92
 	call ClearFrameTasks ; $6b95
 	ret ; $6b98
 ReturnLobBriefing_TickAnim:
@@ -4651,12 +4651,12 @@ DrillBriefing_ReturnDownLine:
 	xor a, a ; $6de9
 	ld [$d82c], a ; $6dea
 	ld [$d82e], a ; $6ded
-Label_17_6df0:
+.loop:
 	call ReturnDownLineBriefing_TickAnim ; $6df0
 	ld c, $01 ; $6df3
 	call AdvanceFrameCheckInput ; $6df5
 	and a, a ; $6df8
-	jp z, Label_17_6df0 ; $6df9
+	jp z, .loop ; $6df9
 	call ClearFrameTasks ; $6dfc
 	ret ; $6dff
 ReturnDownLineBriefing_TickAnim:
@@ -4893,9 +4893,9 @@ RunMinigameRulesPages:
 	add a, a ; $6fbd
 	add a, l ; $6fbe
 	ld l, a ; $6fbf
-	jr nc, Label_17_6fc3 ; $6fc0
+	jr nc, .read ; $6fc0
 	inc h ; $6fc2
-Label_17_6fc3:
+.read:
 	ld a, [hl+] ; $6fc3
 	ld d, [hl] ; $6fc4
 	ld e, a ; $6fc5
@@ -4959,15 +4959,15 @@ MinigameRulesPageLoop:
 	add a, b ; $709e
 	add a, l ; $709f
 	ld l, a ; $70a0
-	jr nc, Label_17_70a4 ; $70a1
+	jr nc, .loop ; $70a1
 	inc h ; $70a3
-Label_17_70a4:
+.loop:
 	ld a, [hl+] ; $70a4
 	cp a, $ff ; $70a5
-	jp z, Label_17_7150 ; $70a7
+	jp z, .playSfx3 ; $70a7
 	push hl ; $70aa
 	bit 7, a ; $70ab
-	jr z, Label_17_70d3 ; $70ad
+	jr z, .step ; $70ad
 	push af ; $70af
 	ld d, a ; $70b0
 	wram_bank $07 ; $70b1
@@ -4978,28 +4978,28 @@ Label_17_70a4:
 	wram_bank $03 ; $70bd
 	ld a, h ; $70c3
 	cp a, $27 ; $70c4
-	jr nz, Label_17_70d2 ; $70c6
+	jr nz, .restore ; $70c6
 	ld a, l ; $70c8
 	cp a, $0f ; $70c9
-	jr nz, Label_17_70d2 ; $70cb
+	jr nz, .restore ; $70cb
 	pop bc ; $70cd
 	ld a, d ; $70ce
 	inc a ; $70cf
-	jr Label_17_70d3 ; $70d0
-Label_17_70d2:
+	jr .step ; $70d0
+.restore:
 	pop af ; $70d2
-Label_17_70d3:
+.step:
 	and a, $7f ; $70d3
 	pop hl ; $70d5
 	push hl ; $70d6
 	push af ; $70d7
 	ld a, [hl] ; $70d8
 	cp a, $ff ; $70d9
-	jr z, Label_17_70e5 ; $70db
+	jr z, .prepareRulesPageTilemap ; $70db
 	ld a, $01 ; $70dd
 	ld hl, DrawRulesNextPageArrow ; $70df
 	call RegisterFrameTask ; $70e2
-Label_17_70e5:
+.prepareRulesPageTilemap:
 	call PrepareRulesPageTilemap ; $70e5
 	ld hl, wRulesPageTextIdBase ; $70e8
 	ld a, [hl+] ; $70eb
@@ -5008,9 +5008,9 @@ Label_17_70e5:
 	pop af ; $70ee
 	add a, l ; $70ef
 	ld l, a ; $70f0
-	jr nc, Label_17_70f4 ; $70f1
+	jr nc, .step2 ; $70f1
 	inc h ; $70f3
-Label_17_70f4:
+.step2:
 	ld de, $d082 ; $70f4
 	ld c, $20 ; $70f7
 	farcall PrepareGlyphBuffer ; $70f9
@@ -5018,19 +5018,19 @@ Label_17_70f4:
 	farcall RenderProportionalTextAt ; $70fe
 	farcall UploadGlyphBuffer ; $7101
 	call QueueRulesPageToVRAM ; $7104
-Label_17_7107:
+.loopB:
 	call AdvanceFrame ; $7107
 	ldh a, [hInputRisingEdge] ; $710a
 	bit PADB_A, a ; $710c
-	jr nz, Label_17_711e ; $710e
+	jr nz, .playSfx ; $710e
 	bit 7, a ; $7110
-	jr nz, Label_17_711e ; $7112
+	jr nz, .playSfx ; $7112
 	bit 1, a ; $7114
-	jr nz, Label_17_713c ; $7116
+	jr nz, .playSfx2 ; $7116
 	bit 3, a ; $7118
-	jr nz, Label_17_7153 ; $711a
-	jr Label_17_7107 ; $711c
-Label_17_711e:
+	jr nz, .restore2 ; $711a
+	jr .loopB ; $711c
+.playSfx:
 	sound $5f ; $711e
 	ld hl, DrawRulesNextPageArrow ; $7120
 	call UnregisterFrameTask ; $7123
@@ -5042,8 +5042,8 @@ Label_17_711e:
 	xor a, a ; $7134
 	ld [$dc04], a ; $7135
 	pop hl ; $7138
-	jp Label_17_70a4 ; $7139
-Label_17_713c:
+	jp .loop ; $7139
+.playSfx2:
 	sound $62 ; $713c
 	ld hl, DrawRulesNextPageArrow ; $713e
 	call UnregisterFrameTask ; $7141
@@ -5052,10 +5052,10 @@ Label_17_713c:
 	ld a, $ff ; $714a
 	ld [$dc02], a ; $714c
 	pop hl ; $714f
-Label_17_7150:
+.playSfx3:
 	sound $60 ; $7150
 	ret ; $7152
-Label_17_7153:
+.restore2:
 	pop hl ; $7153
 	sound $60 ; $7154
 	ret ; $7156
@@ -5146,7 +5146,7 @@ PrepareRulesPageTilemap:
 	farcall FillTilemapRect ; $7220
 	ld a, [$dc05] ; $7223
 	or a, a ; $7226
-	jr nz, Label_17_723b ; $7227
+	jr nz, .step ; $7227
 	ld a, [$dc06] ; $7229
 	add a, $03 ; $722c
 	ld h, a ; $722e
@@ -5154,32 +5154,32 @@ PrepareRulesPageTilemap:
 	ld b, $10 ; $7232
 	ld c, $01 ; $7234
 	farcall FillTilemapRect ; $7236
-	jr Label_17_7247 ; $7239
-Label_17_723b:
+	jr .restore ; $7239
+.step:
 	ld de, $d482 ; $723b
 	ld b, $10 ; $723e
 	ld c, $01 ; $7240
 	ld h, $00 ; $7242
 	farcall FillTilemapRect ; $7244
-Label_17_7247:
+.restore:
 	pop af ; $7247
 	wram_bank ; $7248
 	ret ; $724c
 QueueRulesPageToVRAM:
 	ld a, [$dc05] ; $724d
 	or a, a ; $7250
-	jr nz, Label_17_7260 ; $7251
+	jr nz, .step ; $7251
 	ld hl, $d080 ; $7253
 	ld de, $9880 ; $7256
 	ld c, $0a ; $7259
 	call QueueVRAMCopy ; $725b
-	jr Label_17_726b ; $725e
-Label_17_7260:
+	jr .step2 ; $725e
+.step:
 	ld hl, $d060 ; $7260
 	ld de, $9860 ; $7263
 	ld c, $0a ; $7266
 	call QueueVRAMCopy ; $7268
-Label_17_726b:
+.step2:
 	ld hl, $d480 ; $726b
 	ld de, $b880 ; $726e
 	ld c, $02 ; $7271
@@ -5337,7 +5337,7 @@ AdvanceRulesScreenAnimFrame:
 	ld [$dc04], a ; $742d
 	ld a, [$dc03] ; $7430
 	or a, a ; $7433
-	jr z, Label_17_744e ; $7434
+	jr z, .step ; $7434
 	ldh a, [hVBlankCounter] ; $7436
 	srl a ; $7438
 	srl a ; $743a
@@ -5346,13 +5346,13 @@ AdvanceRulesScreenAnimFrame:
 	ld hl, $749f ; $7440
 	add a, l ; $7443
 	ld l, a ; $7444
-	jr nc, Label_17_7448 ; $7445
+	jr nc, .read ; $7445
 	inc h ; $7447
-Label_17_7448:
+.read:
 	ld a, [hl] ; $7448
 	ld [$dc00], a ; $7449
-	jr Label_17_7468 ; $744c
-Label_17_744e:
+	jr .step2 ; $744c
+.step:
 	ldh a, [hVBlankCounter] ; $744e
 	srl a ; $7450
 	srl a ; $7452
@@ -5362,22 +5362,22 @@ Label_17_744e:
 	ld hl, $747f ; $745a
 	add a, l ; $745d
 	ld l, a ; $745e
-	jr nc, Label_17_7462 ; $745f
+	jr nc, .readB ; $745f
 	inc h ; $7461
-Label_17_7462:
+.readB:
 	ld a, [hl] ; $7462
 	ld [$dc00], a ; $7463
-	jr Label_17_7468 ; $7466
-Label_17_7468:
+	jr .step2 ; $7466
+.step2:
 	ld a, [$dc03] ; $7468
 	or a, a ; $746b
-	jr z, Label_17_7479 ; $746c
+	jr z, .restore ; $746c
 	ld a, [$dc04] ; $746e
 	cp a, $ff ; $7471
-	jr nz, Label_17_7479 ; $7473
+	jr nz, .restore ; $7473
 	xor a, a ; $7475
 	ld [$dc03], a ; $7476
-Label_17_7479:
+.restore:
 	pop af ; $7479
 	wram_bank ; $747a
 	ret ; $747e
@@ -5436,9 +5436,9 @@ DrawRulesScreenCharacters:
 	ld hl, Data_17_754c ; $74e7
 	add a, l ; $74ea
 	ld l, a ; $74eb
-	jr nc, Label_17_74ef ; $74ec
+	jr nc, .read ; $74ec
 	inc h ; $74ee
-Label_17_74ef:
+.read:
 	ld a, [hl] ; $74ef
 	ld c, a ; $74f0
 	push bc ; $74f1
@@ -5446,9 +5446,9 @@ Label_17_74ef:
 	ld hl, Data_17_7552 ; $74f5
 	add a, l ; $74f8
 	ld l, a ; $74f9
-	jr nc, Label_17_74fd ; $74fa
+	jr nc, .readB ; $74fa
 	inc h ; $74fc
-Label_17_74fd:
+.readB:
 	ld b, [hl] ; $74fd
 	ld de, $7e68 ; $74fe
 	ld hl, SpriteTemplate_17_7527 ; $7501
@@ -5461,9 +5461,9 @@ Label_17_74fd:
 	ld hl, Data_17_7558 ; $750f
 	add a, l ; $7512
 	ld l, a ; $7513
-	jr nc, Label_17_7517 ; $7514
+	jr nc, .readBB ; $7514
 	inc h ; $7516
-Label_17_7517:
+.readBB:
 	ld b, [hl] ; $7517
 	ld de, $7e68 ; $7518
 	ld hl, SpriteTemplate_17_7527 ; $751b
