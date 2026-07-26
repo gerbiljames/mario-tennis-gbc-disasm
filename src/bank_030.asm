@@ -30,33 +30,33 @@ FetchText_30:
 	ld hl, $4464 ; $7da0
 	add hl, de ; $7da3
 	or a, a ; $7da4
-	jr nz, Label_30_7dae ; $7da5
+	jr nz, .step ; $7da5
 	ld de, wTextBuffer ; $7da7
 	ld c, $a0 ; $7daa
-	jr Label_30_7db3 ; $7dac
-Label_30_7dae:
+	jr .loop ; $7dac
+.step:
 	ld de, wShortTextBuffer ; $7dae
 	ld c, $10 ; $7db1
-Label_30_7db3:
+.loop:
 	dec c ; $7db3
-	jr z, Label_30_7dc0 ; $7db4
+	jr z, .step2 ; $7db4
 	ld a, [hl+] ; $7db6
 	ld [de], a ; $7db7
 	inc de ; $7db8
 	or a, a ; $7db9
-	jr nz, Label_30_7db3 ; $7dba
+	jr nz, .loop ; $7dba
 	pop hl ; $7dbc
 	pop de ; $7dbd
 	pop bc ; $7dbe
 	ret ; $7dbf
-Label_30_7dc0:
+.step2:
 	xor a, a ; $7dc0
 	ld [de], a ; $7dc1
 	ldh a, [hDebugStepMode] ; $7dc2
 	or a, a ; $7dc4
-	jr z, Label_30_7dc9 ; $7dc5
+	jr z, .restore ; $7dc5
 	sound $2c ; $7dc7
-Label_30_7dc9:
+.restore:
 	pop hl ; $7dc9
 	pop de ; $7dca
 	pop bc ; $7dcb
