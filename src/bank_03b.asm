@@ -2203,7 +2203,7 @@ CheckN64TnmtSecondPage:
 .loopB:
 	ld a, [hl] ; $4eff
 	or a, a ; $4f00
-	jr nz, .step2 ; $4f01
+	jr nz, .returnOne ; $4f01
 	add hl, de ; $4f03
 	ld a, c ; $4f04
 	inc a ; $4f05
@@ -2230,14 +2230,14 @@ CheckN64TnmtSecondPage:
 .loopBBB:
 	ld a, [hl] ; $4f27
 	or a, a ; $4f28
-	jr nz, .step2 ; $4f29
+	jr nz, .returnOne ; $4f29
 	add hl, de ; $4f2b
 	ld a, c ; $4f2c
 	inc a ; $4f2d
 	ld c, a ; $4f2e
 	cp a, $10 ; $4f2f
 	jr nz, .loopBBB ; $4f31
-.step2:
+.returnOne:
 	ld a, $01 ; $4f33
 	ret ; $4f35
 .zero2:

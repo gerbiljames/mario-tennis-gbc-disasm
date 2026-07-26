@@ -37,7 +37,7 @@ SECTION "ROM Bank $02", ROMX[$4000], BANK[$02]
 ValidateN64TransferRecord:
 	ld a, [$c9b4] ; $4044
 	cp a, $64 ; $4047
-	jr nz, .step ; $4049
+	jr nz, .returnZero ; $4049
 	ld hl, $c9b0 ; $404b
 	ld a, [hl+] ; $404e
 	add a, [hl] ; $404f
@@ -55,10 +55,10 @@ ValidateN64TransferRecord:
 	rlca ; $405b
 	xor a, $fe ; $405c
 	cp a, [hl] ; $405e
-	jr nz, .step ; $405f
+	jr nz, .returnZero ; $405f
 	ld a, $ff ; $4061
 	ret ; $4063
-.step:
+.returnZero:
 	xor a, a ; $4064
 	ret ; $4065
 InitCa00RecordFromCharId:

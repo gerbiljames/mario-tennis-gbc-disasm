@@ -275,7 +275,7 @@ IsMinigameScoreLimitReached:
 	add hl, de ; $41f7
 	ld a, h ; $41f8
 	or a, l ; $41f9
-	jr z, .step ; $41fa
+	jr z, .returnOne ; $41fa
 	ld hl, wMinigameHighScore ; $41fc
 	ld a, [hl+] ; $41ff
 	ld h, [hl] ; $4200
@@ -287,10 +287,10 @@ IsMinigameScoreLimitReached:
 	sbc a, d ; $4206
 	ld h, a ; $4207
 	bit 7, h ; $4208
-	jr nz, .step ; $420a
+	jr nz, .returnOne ; $420a
 	xor a, a ; $420c
 	ret ; $420d
-.step:
+.returnOne:
 	ld a, $01 ; $420e
 	ret ; $4210
 StartScorePopup:
@@ -2335,7 +2335,7 @@ AdvanceTargetActorState:
 IsBallInHitZone:
 	ld a, [wLastShotCharIndex] ; $5292
 	and a, $01 ; $5295
-	jp nz, .step4 ; $5297
+	jp nz, .returnZero ; $5297
 	ld hl, $dc76 ; $529a
 	ld a, [hl+] ; $529d
 	ld d, [hl] ; $529e
@@ -2361,7 +2361,7 @@ IsBallInHitZone:
 .positive:
 	ld de, $ff80 ; $52b6
 	add hl, de ; $52b9
-	jr c, .step4 ; $52ba
+	jr c, .returnZero ; $52ba
 	ld hl, $dc78 ; $52bc
 	ld a, [hl+] ; $52bf
 	ld d, [hl] ; $52c0
@@ -2387,7 +2387,7 @@ IsBallInHitZone:
 .positive2:
 	ld de, rJOYP ; $52d8
 	add hl, de ; $52db
-	jr c, .step4 ; $52dc
+	jr c, .returnZero ; $52dc
 	ld hl, wBallHeight ; $52de
 	ld a, [hl+] ; $52e1
 	ld h, [hl] ; $52e2
@@ -2403,10 +2403,10 @@ IsBallInHitZone:
 .positive3:
 	ld de, rLCDC ; $52ee
 	add hl, de ; $52f1
-	jr c, .step4 ; $52f2
+	jr c, .returnZero ; $52f2
 	ld a, $01 ; $52f4
 	ret ; $52f6
-.step4:
+.returnZero:
 	xor a, a ; $52f7
 	ret ; $52f8
 AwardHitScore:
@@ -2939,7 +2939,7 @@ IsBallWithinTargetZone:
 .positive:
 	ld de, $ff80 ; $577b
 	add hl, de ; $577e
-	jr c, .step4 ; $577f
+	jr c, .returnZero ; $577f
 	ld hl, $dc78 ; $5781
 	ld a, [hl+] ; $5784
 	ld d, [hl] ; $5785
@@ -2965,7 +2965,7 @@ IsBallWithinTargetZone:
 .positive2:
 	ld de, $fec0 ; $579d
 	add hl, de ; $57a0
-	jr c, .step4 ; $57a1
+	jr c, .returnZero ; $57a1
 	ld hl, wBallHeight ; $57a3
 	ld a, [hl+] ; $57a6
 	ld h, [hl] ; $57a7
@@ -2981,10 +2981,10 @@ IsBallWithinTargetZone:
 .positive3:
 	ld de, rJOYP ; $57b3
 	add hl, de ; $57b6
-	jr c, .step4 ; $57b7
+	jr c, .returnZero ; $57b7
 	ld a, $01 ; $57b9
 	ret ; $57bb
-.step4:
+.returnZero:
 	xor a, a ; $57bc
 	ret ; $57bd
 ScoreBallHit:
@@ -3525,7 +3525,7 @@ TreasureBoxSpawnPoints4:
 IsBallInTreasureBoxHitZone:
 	ld a, [wLastShotCharIndex] ; $5bc5
 	and a, $01 ; $5bc8
-	jp nz, .step4 ; $5bca
+	jp nz, .returnZero ; $5bca
 	ld hl, $dc76 ; $5bcd
 	ld a, [hl+] ; $5bd0
 	ld d, [hl] ; $5bd1
@@ -3551,7 +3551,7 @@ IsBallInTreasureBoxHitZone:
 .positive:
 	ld de, hPeakLY ; $5be9
 	add hl, de ; $5bec
-	jr c, .step4 ; $5bed
+	jr c, .returnZero ; $5bed
 	ld hl, $dc78 ; $5bef
 	ld a, [hl+] ; $5bf2
 	ld d, [hl] ; $5bf3
@@ -3577,7 +3577,7 @@ IsBallInTreasureBoxHitZone:
 .positive2:
 	ld de, $ff80 ; $5c0b
 	add hl, de ; $5c0e
-	jr c, .step4 ; $5c0f
+	jr c, .returnZero ; $5c0f
 	ld hl, wBallHeight ; $5c11
 	ld a, [hl+] ; $5c14
 	ld h, [hl] ; $5c15
@@ -3593,10 +3593,10 @@ IsBallInTreasureBoxHitZone:
 .positive3:
 	ld de, rLCDC ; $5c21
 	add hl, de ; $5c24
-	jr c, .step4 ; $5c25
+	jr c, .returnZero ; $5c25
 	ld a, $01 ; $5c27
 	ret ; $5c29
-.step4:
+.returnZero:
 	xor a, a ; $5c2a
 	ret ; $5c2b
 AwardTreasureBoxHitScore:
@@ -3876,7 +3876,7 @@ AdvanceMedallionMatchActorState:
 IsBallInMedallionMatchHitZone:
 	ld a, [wLastShotCharIndex] ; $5e37
 	and a, $01 ; $5e3a
-	jp nz, .step4 ; $5e3c
+	jp nz, .returnZero ; $5e3c
 	ld hl, $dc76 ; $5e3f
 	ld a, [hl+] ; $5e42
 	ld d, [hl] ; $5e43
@@ -3902,7 +3902,7 @@ IsBallInMedallionMatchHitZone:
 .positive:
 	ld de, hPeakLY ; $5e5b
 	add hl, de ; $5e5e
-	jr c, .step4 ; $5e5f
+	jr c, .returnZero ; $5e5f
 	ld hl, $dc78 ; $5e61
 	ld a, [hl+] ; $5e64
 	ld d, [hl] ; $5e65
@@ -3928,7 +3928,7 @@ IsBallInMedallionMatchHitZone:
 .positive2:
 	ld de, $ff80 ; $5e7d
 	add hl, de ; $5e80
-	jr c, .step4 ; $5e81
+	jr c, .returnZero ; $5e81
 	ld hl, wBallHeight ; $5e83
 	ld a, [hl+] ; $5e86
 	ld h, [hl] ; $5e87
@@ -3944,10 +3944,10 @@ IsBallInMedallionMatchHitZone:
 .positive3:
 	ld de, rLCDC ; $5e93
 	add hl, de ; $5e96
-	jr c, .step4 ; $5e97
+	jr c, .returnZero ; $5e97
 	ld a, $01 ; $5e99
 	ret ; $5e9b
-.step4:
+.returnZero:
 	xor a, a ; $5e9c
 	ret ; $5e9d
 AwardMedallionMatchHitScore:

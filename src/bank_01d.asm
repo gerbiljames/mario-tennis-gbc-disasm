@@ -2956,7 +2956,7 @@ ComputeExpProgressBar:
 	farcall GetExpRemainingToNextLevel ; $59c1
 	ld a, h ; $59c4
 	or a, l ; $59c5
-	jp z, .step ; $59c6
+	jp z, .returnZero ; $59c6
 	push hl ; $59c9
 	ld a, [wStoryCharacterSlot] ; $59ca
 	farcall GetExpProgressInCurrentLevel ; $59cd
@@ -2967,7 +2967,7 @@ ComputeExpProgressBar:
 	ld b, $40 ; $59d4
 	call ScaleValueToBar ; $59d6
 	ret ; $59d9
-.step:
+.returnZero:
 	xor a, a ; $59da
 	ret ; $59db
 ScaleValueToBar:
@@ -4695,7 +4695,7 @@ UnassignExpPointFromChar:
 	ld e, a ; $72ee
 	ld a, d ; $72ef
 	or a, e ; $72f0
-	jr z, .step3 ; $72f1
+	jr z, .returnZero ; $72f1
 	dec de ; $72f3
 	dec hl ; $72f4
 	ld a, e ; $72f5
@@ -4728,7 +4728,7 @@ UnassignExpPointFromChar:
 	ld e, a ; $7318
 	ld a, d ; $7319
 	or a, e ; $731a
-	jr z, .step3 ; $731b
+	jr z, .returnZero ; $731b
 	dec de ; $731d
 	dec hl ; $731e
 	ld a, e ; $731f
@@ -4765,7 +4765,7 @@ UnassignExpPointFromChar:
 	ld [hl], d ; $7345
 	ld a, $01 ; $7346
 	ret ; $7348
-.step3:
+.returnZero:
 	xor a, a ; $7349
 	ret ; $734a
 UploadExpScreenTilemapRows:

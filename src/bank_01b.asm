@@ -503,13 +503,13 @@ MoveMenuCursorGrid:
 .checkMenuCursorX3:
 	ld a, [wMenuCursorX] ; $42e7
 	cp a, d ; $42ea
-	jr nz, .step30 ; $42eb
+	jr nz, .returnOne ; $42eb
 	ld a, [wMenuCursorY] ; $42ed
 	cp a, e ; $42f0
-	jr nz, .step30 ; $42f1
+	jr nz, .returnOne ; $42f1
 	xor a, a ; $42f3
 	ret ; $42f4
-.step30:
+.returnOne:
 	ld a, $01 ; $42f5
 	ret ; $42f7
 Data_1b_42f8:

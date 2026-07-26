@@ -2291,30 +2291,30 @@ HasPendingExpAwards:
 	ld d, [hl] ; $5bbf
 	inc hl ; $5bc0
 	or a, d ; $5bc1
-	jr nz, .step ; $5bc2
+	jr nz, .returnOne ; $5bc2
 	ld a, [hl+] ; $5bc4
 	ld d, [hl] ; $5bc5
 	inc hl ; $5bc6
 	or a, d ; $5bc7
-	jr nz, .step ; $5bc8
+	jr nz, .returnOne ; $5bc8
 	ld a, [hl+] ; $5bca
 	ld d, [hl] ; $5bcb
 	inc hl ; $5bcc
 	or a, d ; $5bcd
-	jr nz, .step ; $5bce
+	jr nz, .returnOne ; $5bce
 	ld a, [hl+] ; $5bd0
 	ld d, [hl] ; $5bd1
 	inc hl ; $5bd2
 	or a, d ; $5bd3
-	jr nz, .step ; $5bd4
+	jr nz, .returnOne ; $5bd4
 	ld a, [hl+] ; $5bd6
 	ld d, [hl] ; $5bd7
 	inc hl ; $5bd8
 	or a, d ; $5bd9
-	jr nz, .step ; $5bda
+	jr nz, .returnOne ; $5bda
 	xor a, a ; $5bdc
 	ret ; $5bdd
-.step:
+.returnOne:
 	ld a, $01 ; $5bde
 	ret ; $5be0
 Palettes_1e_5be1:
