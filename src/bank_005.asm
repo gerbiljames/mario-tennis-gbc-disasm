@@ -8150,17 +8150,17 @@ UploadGlyphBufferFull:
 	push af ; $7436
 	ldh a, [rLCDC] ; $7437
 	bit 7, a ; $7439
-	jr z, Label_05_7440 ; $743b
+	jr z, .lcdSettled ; $743b
 	call AdvanceFrame ; $743d
-Label_05_7440:
+.lcdSettled:
 	pop af ; $7440
 	ld hl, $8c00 ; $7441
 	wram_bank $05 ; $7444
 	ld a, [wWindowTileAttr] ; $744a
 	bit 3, a ; $744d
-	jr z, Label_05_7454 ; $744f
+	jr z, .pushPageDests ; $744f
 	ld hl, $ac00 ; $7451
-Label_05_7454:
+.pushPageDests:
 	push hl ; $7454
 	ld de, rJOYP ; $7455
 	add hl, de ; $7458
@@ -8179,9 +8179,9 @@ Label_05_7454:
 	push af ; $746f
 	ldh a, [rLCDC] ; $7470
 	bit 7, a ; $7472
-	jr z, Label_05_7479 ; $7474
+	jr z, .page2 ; $7474
 	call AdvanceFrame ; $7476
-Label_05_7479:
+.page2:
 	pop af ; $7479
 	ld hl, $d400 ; $747a
 	pop de ; $747d
@@ -8190,9 +8190,9 @@ Label_05_7479:
 	push af ; $7483
 	ldh a, [rLCDC] ; $7484
 	bit 7, a ; $7486
-	jr z, Label_05_748d ; $7488
+	jr z, .page3 ; $7488
 	call AdvanceFrame ; $748a
-Label_05_748d:
+.page3:
 	pop af ; $748d
 	ld hl, $d500 ; $748e
 	pop de ; $7491
@@ -8201,9 +8201,9 @@ Label_05_748d:
 	push af ; $7497
 	ldh a, [rLCDC] ; $7498
 	bit 7, a ; $749a
-	jr z, Label_05_74a1 ; $749c
+	jr z, .page4 ; $749c
 	call AdvanceFrame ; $749e
-Label_05_74a1:
+.page4:
 	pop af ; $74a1
 	ld hl, $d600 ; $74a2
 	pop de ; $74a5
@@ -8212,24 +8212,24 @@ Label_05_74a1:
 	push af ; $74ab
 	ldh a, [rLCDC] ; $74ac
 	bit 7, a ; $74ae
-	jr z, Label_05_74b5 ; $74b0
+	jr z, .page5 ; $74b0
 	call AdvanceFrame ; $74b2
-Label_05_74b5:
+.page5:
 	pop af ; $74b5
 	ld c, $10 ; $74b6
 	test_flag FLAG_DEBUG_SHORT_GLYPH_UPLOAD ; $74b8
-	jr z, Label_05_74bf ; $74bb
+	jr z, .uploadPage5 ; $74bb
 	ld c, $07 ; $74bd
-Label_05_74bf:
+.uploadPage5:
 	ld hl, $d700 ; $74bf
 	pop de ; $74c2
 	call QueueVRAMCopy ; $74c3
 	push af ; $74c6
 	ldh a, [rLCDC] ; $74c7
 	bit 7, a ; $74c9
-	jr z, Label_05_74d0 ; $74cb
+	jr z, .done ; $74cb
 	call AdvanceFrame ; $74cd
-Label_05_74d0:
+.done:
 	pop af ; $74d0
 	clear_flag FLAG_VRAM_UPDATE_BUSY ; $74d1
 	pop af ; $74d4
@@ -8239,6 +8239,7 @@ Label_05_74d0:
 	pop bc ; $74db
 	pop af ; $74dc
 	ret ; $74dd
+DrawWindowGlyphRun:
 	push af ; $74de
 	push bc ; $74df
 	push de ; $74e0
@@ -8259,14 +8260,14 @@ Label_05_74d0:
 	wram_bank $07 ; $74f9
 	call ClearGlyphBuffer ; $74ff
 	ld de, $0000 ; $7502
-Label_05_7505:
+.glyphLoop:
 	ld a, [hl+] ; $7505
 	cp a, $02 ; $7506
-	jr z, Label_05_7523 ; $7508
+	jr z, .done ; $7508
 	cp a, $03 ; $750a
-	jr z, Label_05_7523 ; $750c
+	jr z, .done ; $750c
 	cp a, $01 ; $750e
-	jr nz, Label_05_751e ; $7510
+	jr nz, .drawGlyph ; $7510
 	ld e, $00 ; $7512
 	ld d, c ; $7514
 	sra d ; $7515
@@ -8274,11 +8275,11 @@ Label_05_7505:
 	ld a, c ; $7519
 	add a, b ; $751a
 	ld c, a ; $751b
-	jr Label_05_7505 ; $751c
-Label_05_751e:
+	jr .glyphLoop ; $751c
+.drawGlyph:
 	call DrawGlyph ; $751e
-	jr Label_05_7505 ; $7521
-Label_05_7523:
+	jr .glyphLoop ; $7521
+.done:
 	pop af ; $7523
 	wram_bank ; $7524
 	pop hl ; $7528

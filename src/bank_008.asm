@@ -3454,6 +3454,7 @@ NegateADE:
 	ld d, a ; $5a74
 	pop af ; $5a75
 	ret ; $5a76
+AddSignedDEToMem24:
 	ld a, e ; $5a77
 	add a, [hl] ; $5a78
 	ld [hl+], a ; $5a79

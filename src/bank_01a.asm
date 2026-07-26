@@ -1598,6 +1598,7 @@ WriteTileBufferCell:
 	pop bc ; $4c59
 	pop af ; $4c5a
 	ret ; $4c5b
+WriteStatModifierToTileBuffer:
 	push af ; $4c5c
 	push bc ; $4c5d
 	push de ; $4c5e

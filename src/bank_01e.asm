@@ -4111,17 +4111,17 @@ ComputeTrophyExpForGroup:
 	ld hl, Data_1e_7257 ; $710f
 	add a, l ; $7112
 	ld l, a ; $7113
-	jr nc, Label_1e_7117 ; $7114
+	jr nc, .readThreshold ; $7114
 	inc h ; $7116
-Label_1e_7117:
+.readThreshold:
 	ld b, [hl] ; $7117
 	ld a, c ; $7118
 	ld hl, Data_1e_725d ; $7119
 	add a, l ; $711c
 	ld l, a ; $711d
-	jr nc, Label_1e_7121 ; $711e
+	jr nc, .readMask ; $711e
 	inc h ; $7120
-Label_1e_7121:
+.readMask:
 	ld c, [hl] ; $7121
 	xor a, a ; $7122
 	ld hl, $d034 ; $7123
@@ -4130,7 +4130,7 @@ Label_1e_7121:
 	ld a, [$c9b5] ; $7128
 	and a, c ; $712b
 	cp a, b ; $712c
-	jr c, Label_1e_7163 ; $712d
+	jr c, .tier2 ; $712d
 	ld a, [$d038] ; $712f
 	add a, a ; $7132
 	add a, a ; $7133
@@ -4138,16 +4138,16 @@ Label_1e_7121:
 	ld hl, Data_1e_7227 ; $7135
 	add a, l ; $7138
 	ld l, a ; $7139
-	jr nc, Label_1e_713d ; $713a
+	jr nc, .readFlag1 ; $713a
 	inc h ; $713c
-Label_1e_713d:
+.readFlag1:
 	ld a, [hl+] ; $713d
 	ld d, [hl] ; $713e
 	ld e, a ; $713f
 	push de ; $7140
 	call TestGameFlag ; $7141
 	pop de ; $7144
-	jr nz, Label_1e_7163 ; $7145
+	jr nz, .tier2 ; $7145
 	call SetGameFlag ; $7147
 	push bc ; $714a
 	ld b, $00 ; $714b
@@ -4165,12 +4165,12 @@ Label_1e_713d:
 	ld [hl+], a ; $7160
 	ld [hl], b ; $7161
 	pop bc ; $7162
-Label_1e_7163:
+.tier2:
 	ld a, [$c9b5] ; $7163
 	swap a ; $7166
 	and a, c ; $7168
 	cp a, b ; $7169
-	jr c, Label_1e_71a0 ; $716a
+	jr c, .tier3 ; $716a
 	ld a, [$d038] ; $716c
 	add a, a ; $716f
 	add a, a ; $7170
@@ -4178,16 +4178,16 @@ Label_1e_7163:
 	ld hl, Data_1e_7229 ; $7172
 	add a, l ; $7175
 	ld l, a ; $7176
-	jr nc, Label_1e_717a ; $7177
+	jr nc, .readFlag2 ; $7177
 	inc h ; $7179
-Label_1e_717a:
+.readFlag2:
 	ld a, [hl+] ; $717a
 	ld d, [hl] ; $717b
 	ld e, a ; $717c
 	push de ; $717d
 	call TestGameFlag ; $717e
 	pop de ; $7181
-	jr nz, Label_1e_71a0 ; $7182
+	jr nz, .tier3 ; $7182
 	call SetGameFlag ; $7184
 	push bc ; $7187
 	ld b, $04 ; $7188
@@ -4205,11 +4205,11 @@ Label_1e_717a:
 	ld [hl+], a ; $719d
 	ld [hl], b ; $719e
 	pop bc ; $719f
-Label_1e_71a0:
+.tier3:
 	ld a, [$c9b6] ; $71a0
 	and a, c ; $71a3
 	cp a, b ; $71a4
-	jr c, Label_1e_71db ; $71a5
+	jr c, .tier4 ; $71a5
 	ld a, [$d038] ; $71a7
 	add a, a ; $71aa
 	add a, a ; $71ab
@@ -4217,16 +4217,16 @@ Label_1e_71a0:
 	ld hl, Data_1e_722b ; $71ad
 	add a, l ; $71b0
 	ld l, a ; $71b1
-	jr nc, Label_1e_71b5 ; $71b2
+	jr nc, .readFlag3 ; $71b2
 	inc h ; $71b4
-Label_1e_71b5:
+.readFlag3:
 	ld a, [hl+] ; $71b5
 	ld d, [hl] ; $71b6
 	ld e, a ; $71b7
 	push de ; $71b8
 	call TestGameFlag ; $71b9
 	pop de ; $71bc
-	jr nz, Label_1e_71db ; $71bd
+	jr nz, .tier4 ; $71bd
 	call SetGameFlag ; $71bf
 	push bc ; $71c2
 	ld b, $02 ; $71c3
@@ -4244,12 +4244,12 @@ Label_1e_71b5:
 	ld [hl+], a ; $71d8
 	ld [hl], b ; $71d9
 	pop bc ; $71da
-Label_1e_71db:
+.tier4:
 	ld a, [$c9b6] ; $71db
 	swap a ; $71de
 	and a, c ; $71e0
 	cp a, b ; $71e1
-	jr c, Label_1e_7218 ; $71e2
+	jr c, .done ; $71e2
 	ld a, [$d038] ; $71e4
 	add a, a ; $71e7
 	add a, a ; $71e8
@@ -4257,16 +4257,16 @@ Label_1e_71db:
 	ld hl, Data_1e_722d ; $71ea
 	add a, l ; $71ed
 	ld l, a ; $71ee
-	jr nc, Label_1e_71f2 ; $71ef
+	jr nc, .readFlag4 ; $71ef
 	inc h ; $71f1
-Label_1e_71f2:
+.readFlag4:
 	ld a, [hl+] ; $71f2
 	ld d, [hl] ; $71f3
 	ld e, a ; $71f4
 	push de ; $71f5
 	call TestGameFlag ; $71f6
 	pop de ; $71f9
-	jr nz, Label_1e_7218 ; $71fa
+	jr nz, .done ; $71fa
 	call SetGameFlag ; $71fc
 	push bc ; $71ff
 	ld b, $06 ; $7200
@@ -4284,7 +4284,7 @@ Label_1e_71f2:
 	ld [hl+], a ; $7215
 	ld [hl], b ; $7216
 	pop bc ; $7217
-Label_1e_7218:
+.done:
 	ld hl, $d034 ; $7218
 	ld a, [hl+] ; $721b
 	ld b, [hl] ; $721c
