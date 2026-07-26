@@ -1770,23 +1770,23 @@ CharDataScreen_DrawPageColumns:
 	ld a, [hl+] ; $4df8
 	ld h, [hl] ; $4df9
 	ld l, a ; $4dfa
-Label_1c_4dfb:
+.rowLoop:
 	push bc ; $4dfb
-Label_1c_4dfc:
+.cellLoop:
 	wram_bank $02 ; $4dfc
 	ld a, [hl+] ; $4e02
 	ld [de], a ; $4e03
 	inc de ; $4e04
 	dec b ; $4e05
-	jr nz, Label_1c_4dfc ; $4e06
+	jr nz, .cellLoop ; $4e06
 	pop bc ; $4e08
 	ld a, c ; $4e09
 	and a, $01 ; $4e0a
-	jr nz, Label_1c_4e2b ; $4e0c
+	jr nz, .nextRow ; $4e0c
 	wram_bank $06 ; $4e0e
 	ld a, [$d024] ; $4e14
 	cp a, $04 ; $4e17
-	jr z, Label_1c_4e2b ; $4e19
+	jr z, .nextRow ; $4e19
 	dec de ; $4e1b
 	dec de ; $4e1c
 	dec de ; $4e1d
@@ -1797,15 +1797,15 @@ Label_1c_4dfc:
 	ld [de], a ; $4e28
 	inc de ; $4e29
 	inc de ; $4e2a
-Label_1c_4e2b:
+.nextRow:
 	ld a, $16 ; $4e2b
 	add a, e ; $4e2d
 	ld e, a ; $4e2e
-	jr nc, Label_1c_4e32 ; $4e2f
+	jr nc, .rowDone ; $4e2f
 	inc d ; $4e31
-Label_1c_4e32:
+.rowDone:
 	dec c ; $4e32
-	jr nz, Label_1c_4dfb ; $4e33
+	jr nz, .rowLoop ; $4e33
 	ret ; $4e35
 	; $4e36, 30 bytes (bytes:4)
 	db $60, $d0, $05, $0a ; 0x00

@@ -2958,15 +2958,15 @@ RunStoryScriptOrDialogue:
 	ld [$c2da], a ; $5427
 	ld a, h ; $542a
 	or a, l ; $542b
-	jr z, Label_0a_545c ; $542c
+	jr z, .done ; $542c
 	ld a, h ; $542e
 	and a, $c0 ; $542f
-	jr nz, Label_0a_543c ; $5431
+	jr nz, .runScript ; $5431
 	call WaitPlayerMoveDone ; $5433
 	ld a, b ; $5436
 	farcall ShowSpeakerDialogue ; $5437
-	jr Label_0a_545c ; $543a
-Label_0a_543c:
+	jr .done ; $543a
+.runScript:
 	farcall BeginCutsceneScriptMode ; $543c
 	push hl ; $543f
 	wram_bank $04 ; $5440
@@ -2979,7 +2979,7 @@ Label_0a_543c:
 	ld a, [$c29b] ; $5453
 	call CallHLInBankA ; $5456
 	farcall EndCutsceneScriptMode ; $5459
-Label_0a_545c:
+.done:
 	pop af ; $545c
 	wram_bank ; $545d
 	pop hl ; $5461
@@ -4934,9 +4934,9 @@ InitSceneTileAnimations:
 	ld hl, $da88 ; $63cd
 	ld a, [hl] ; $63d0
 	cp a, $fe ; $63d1
-	jr nz, Label_0a_63d8 ; $63d3
-	jp Label_0a_644c ; $63d5
-Label_0a_63d8:
+	jr nz, .buildSlots ; $63d3
+	jp .done ; $63d5
+.buildSlots:
 	add sp, -2 ; $63d8
 	ld de, $c332 ; $63da
 	push hl ; $63dd
@@ -4955,14 +4955,14 @@ Label_0a_63d8:
 	ld hl, $c338 ; $63ef
 	ld [hl], a ; $63f2
 	inc hl ; $63f3
-Label_0a_63f4:
+.scanLoop:
 	inc b ; $63f4
 	ld a, [de] ; $63f5
 	inc de ; $63f6
 	cp a, $fe ; $63f7
-	jr z, Label_0a_6430 ; $63f9
+	jr z, .listEnd ; $63f9
 	cp a, $ff ; $63fb
-	jr nz, Label_0a_63f4 ; $63fd
+	jr nz, .scanLoop ; $63fd
 	inc b ; $63ff
 	ld a, b ; $6400
 	inc a ; $6401
@@ -5004,11 +5004,11 @@ Label_0a_63f4:
 	pop hl ; $642b
 	inc hl ; $642c
 	dec c ; $642d
-	jr nz, Label_0a_63f4 ; $642e
-Label_0a_6430:
+	jr nz, .scanLoop ; $642e
+.listEnd:
 	ld a, c ; $6430
 	or a, a ; $6431
-	jr z, Label_0a_6442 ; $6432
+	jr z, .install ; $6432
 	ld a, $ff ; $6434
 	dec hl ; $6436
 	ld [hl], a ; $6437
@@ -5021,12 +5021,12 @@ Label_0a_6430:
 	dec de ; $643f
 	dec de ; $6440
 	ld [de], a ; $6441
-Label_0a_6442:
+.install:
 	ld a, $01 ; $6442
 	ld hl, UpdateSceneTileAnimations ; $6444
 	call RegisterFrameTask ; $6447
 	add sp, 2 ; $644a
-Label_0a_644c:
+.done:
 	pop af ; $644c
 	wram_bank ; $644d
 	pop hl ; $6451

@@ -2373,13 +2373,13 @@ Label_15_60f6:
 WalkChallengerOntoCourt:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $6179
 	sub a, $0a ; $617c
-	jr nc, Label_15_618b ; $617e
+	jr nc, .northCourt ; $617e
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $6180
 	sub a, $04 ; $6183
-	jr c, Label_15_61d5 ; $6185
-	jp Label_15_6214 ; $6187
+	jr c, .southCourt ; $6185
+	jp .eastCourt ; $6187
 	ret ; $618a
-Label_15_618b:
+.northCourt:
 	ld a, [$c2b1] ; $618b
 	ld bc, $1300 ; $618e
 	ld de, $2500 ; $6191
@@ -2403,7 +2403,7 @@ Label_15_618b:
 	ld b, $40 ; $61cf
 	farcall SetActorFacing ; $61d1
 	ret ; $61d4
-Label_15_61d5:
+.southCourt:
 	ld a, [$c2b1] ; $61d5
 	ld bc, $1300 ; $61d8
 	ld de, $0b00 ; $61db
@@ -2422,7 +2422,7 @@ Label_15_61d5:
 	ld b, $00 ; $620e
 	farcall SetActorFacing ; $6210
 	ret ; $6213
-Label_15_6214:
+.eastCourt:
 	ld a, [$c2b1] ; $6214
 	ld bc, $2d00 ; $6217
 	ld de, $2100 ; $621a

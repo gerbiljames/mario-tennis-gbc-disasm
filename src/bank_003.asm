@@ -2180,7 +2180,7 @@ EraseStorySlotSaveData:
 	call InitSaveHeader ; $4e1c
 	ld a, [wCurrentStorySlot] ; $4e1f
 	cp a, $03 ; $4e22
-	jp nc, Label_03_4e8a ; $4e24
+	jp nc, .badSlot ; $4e24
 	add a, a ; $4e27
 	ld c, a ; $4e28
 	ld a, $00 ; $4e29
@@ -2201,9 +2201,9 @@ EraseStorySlotSaveData:
 	call InitCurrentSlotMinigameRecords ; $4e46
 	ld a, [wCurrentStorySlot] ; $4e49
 	or a, a ; $4e4c
-	jr z, Label_03_4e65 ; $4e4d
+	jr z, .slot0 ; $4e4d
 	cp a, $01 ; $4e4f
-	jr z, Label_03_4e77 ; $4e51
+	jr z, .slot1 ; $4e51
 	push de ; $4e53
 	ld de, SAVEFLAG_STORY_SLOT2_A ; $4e54
 	farcall ClearSaveFlag ; $4e57
@@ -2212,8 +2212,8 @@ EraseStorySlotSaveData:
 	ld de, SAVEFLAG_STORY_SLOT2_B ; $4e5c
 	farcall ClearSaveFlag ; $4e5f
 	pop de ; $4e62
-	jr Label_03_4e87 ; $4e63
-Label_03_4e65:
+	jr .ok ; $4e63
+.slot0:
 	push de ; $4e65
 	ld de, SAVEFLAG_STORY_SLOT0_A ; $4e66
 	farcall ClearSaveFlag ; $4e69
@@ -2222,8 +2222,8 @@ Label_03_4e65:
 	ld de, SAVEFLAG_STORY_SLOT0_B ; $4e6e
 	farcall ClearSaveFlag ; $4e71
 	pop de ; $4e74
-	jr Label_03_4e87 ; $4e75
-Label_03_4e77:
+	jr .ok ; $4e75
+.slot1:
 	push de ; $4e77
 	ld de, SAVEFLAG_STORY_SLOT1_A ; $4e78
 	farcall ClearSaveFlag ; $4e7b
@@ -2232,12 +2232,12 @@ Label_03_4e77:
 	ld de, SAVEFLAG_STORY_SLOT1_B ; $4e80
 	farcall ClearSaveFlag ; $4e83
 	pop de ; $4e86
-Label_03_4e87:
+.ok:
 	xor a, a ; $4e87
-	jr Label_03_4e8c ; $4e88
-Label_03_4e8a:
+	jr .done ; $4e88
+.badSlot:
 	ld a, $01 ; $4e8a
-Label_03_4e8c:
+.done:
 	pop hl ; $4e8c
 	pop de ; $4e8d
 	pop bc ; $4e8e

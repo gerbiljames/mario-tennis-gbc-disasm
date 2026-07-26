@@ -1367,15 +1367,15 @@ RunStorySceneByMode:
 	call FadeOutAndResetScreen ; $761b
 	ld a, b ; $761e
 	or a, a ; $761f
-	jr nz, Label_18_7626 ; $7620
+	jr nz, .checkMode1 ; $7620
 	call PlayScreenSequence0 ; $7622
 	ret ; $7625
-Label_18_7626:
+.checkMode1:
 	cp a, $01 ; $7626
-	jr nz, Label_18_762e ; $7628
+	jr nz, .mode2 ; $7628
 	call PlayScreenSequence1 ; $762a
 	ret ; $762d
-Label_18_762e:
+.mode2:
 	call PlayScreenSequence2 ; $762e
 	ret ; $7631
 FadeOutAndResetScreen:

@@ -88,12 +88,12 @@ FetchShortTextToBuffer:
 	wram_bank $05 ; $40a1
 	call FetchShortText ; $40a7
 	ld hl, wShortTextBuffer ; $40aa
-Label_05_40ad:
+.copyLoop:
 	ld a, [hl+] ; $40ad
 	ld [de], a ; $40ae
 	inc de ; $40af
 	cp a, $00 ; $40b0
-	jr nz, Label_05_40ad ; $40b2
+	jr nz, .copyLoop ; $40b2
 	pop af ; $40b4
 	wram_bank ; $40b5
 	pop hl ; $40b9

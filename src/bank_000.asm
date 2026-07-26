@@ -7289,31 +7289,31 @@ SerialDecodeInput:
 	ld b, a ; $2998
 	and a, $c0 ; $2999
 	cp a, $80 ; $299b
-	jr z, Label_00_29aa ; $299d
+	jr z, .decode ; $299d
 	cp a, $40 ; $299f
-	jr z, Label_00_29aa ; $29a1
+	jr z, .decode ; $29a1
 	sound $72 ; $29a3
 	xor a, a ; $29a5
 	ldh [hLinkInput], a ; $29a6
-	jr Label_00_29f3 ; $29a8
-Label_00_29aa:
+	jr .done ; $29a8
+.decode:
 	ld a, b ; $29aa
 	and a, $3f ; $29ab
 	cp a, $3f ; $29ad
-	jr nz, Label_00_29b5 ; $29af
+	jr nz, .checkLeftRight ; $29af
 	ld a, $0f ; $29b1
-	jr Label_00_29cf ; $29b3
-Label_00_29b5:
+	jr .storeRemote ; $29b3
+.checkLeftRight:
 	cp a, $30 ; $29b5
-	jr nz, Label_00_29bd ; $29b7
+	jr nz, .checkUpDown ; $29b7
 	ld a, $08 ; $29b9
-	jr Label_00_29cf ; $29bb
-Label_00_29bd:
+	jr .storeRemote ; $29bb
+.checkUpDown:
 	cp a, $0c ; $29bd
-	jr nz, Label_00_29c5 ; $29bf
+	jr nz, .unpackPair ; $29bf
 	ld a, $04 ; $29c1
-	jr Label_00_29cf ; $29c3
-Label_00_29c5:
+	jr .storeRemote ; $29c3
+.unpackPair:
 	ld c, a ; $29c5
 	and a, $03 ; $29c6
 	ld b, a ; $29c8
@@ -7322,17 +7322,17 @@ Label_00_29c5:
 	rla ; $29cb
 	and a, $f0 ; $29cc
 	or a, b ; $29ce
-Label_00_29cf:
+.storeRemote:
 	ldh [hLinkRemoteInput], a ; $29cf
 	ldh a, [hLinkState] ; $29d1
 	cp a, $01 ; $29d3
-	jr nz, Label_00_29e0 ; $29d5
+	jr nz, .asSlave ; $29d5
 	ldh a, [hLinkRemoteInputBuf] ; $29d7
 	or a, a ; $29d9
-	jr nz, Label_00_29f1 ; $29da
+	jr nz, .storeInput ; $29da
 	ldh a, [hLinkRemoteInput] ; $29dc
-	jr Label_00_29f1 ; $29de
-Label_00_29e0:
+	jr .storeInput ; $29de
+.asSlave:
 	ldh a, [hLinkRemoteInputBuf] ; $29e0
 	ld b, a ; $29e2
 	ldh a, [$ffde] ; $29e3
@@ -7341,11 +7341,11 @@ Label_00_29e0:
 	ldh [$ffde], a ; $29e8
 	ldh a, [hLinkRemoteInput] ; $29ea
 	or a, a ; $29ec
-	jr nz, Label_00_29f1 ; $29ed
+	jr nz, .storeInput ; $29ed
 	ldh a, [hLinkRemoteInputBuf] ; $29ef
-Label_00_29f1:
+.storeInput:
 	ldh [hLinkInput], a ; $29f1
-Label_00_29f3:
+.done:
 	pop bc ; $29f3
 	pop af ; $29f4
 	ret ; $29f5

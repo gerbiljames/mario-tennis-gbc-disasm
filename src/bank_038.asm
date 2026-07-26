@@ -2455,28 +2455,28 @@ DrawCharGridSlotPrompt:
 	farcall FillTilemapRect ; $544b
 	ld a, [$d824] ; $544e
 	or a, a ; $5451
-	jr z, Label_38_5460 ; $5452
+	jr z, .promptFromTable ; $5452
 	ld hl, $0095 ; $5454
 	ld de, $d061 ; $5457
 	ld c, $20 ; $545a
 	farcall RenderTextToBuffer64 ; $545c
 	ret ; $545f
-Label_38_5460:
+.promptFromTable:
 	ld hl, Data_38_5490 ; $5460
 	ld a, [$d813] ; $5463
 	cp a, $03 ; $5466
-	jr z, Label_38_5471 ; $5468
+	jr z, .readEntry ; $5468
 	cp a, $05 ; $546a
-	jr z, Label_38_5471 ; $546c
+	jr z, .readEntry ; $546c
 	ld hl, Data_38_5486 ; $546e
-Label_38_5471:
+.readEntry:
 	ld a, [$d814] ; $5471
 	add a, a ; $5474
 	add a, l ; $5475
 	ld l, a ; $5476
-	jr nc, Label_38_547a ; $5477
+	jr nc, .draw ; $5477
 	inc h ; $5479
-Label_38_547a:
+.draw:
 	ld a, [hl+] ; $547a
 	ld h, [hl] ; $547b
 	ld l, a ; $547c
