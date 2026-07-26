@@ -3623,100 +3623,100 @@ FitWindowToText:
 	ld hl, wTextBuffer ; $5658
 	ld a, [$d84f] ; $565b
 	or a, a ; $565e
-	jr z, Label_05_5667 ; $565f
+	jr z, .measure ; $565f
 	ld hl, $d84e ; $5661
 	ld a, [hl+] ; $5664
 	ld h, [hl] ; $5665
 	ld l, a ; $5666
-Label_05_5667:
+.measure:
 	xor a, a ; $5667
 	ld b, a ; $5668
 	ld d, a ; $5669
 	ld e, a ; $566a
-Label_05_566b:
+.charLoop:
 	ld a, [hl+] ; $566b
 	cp a, $00 ; $566c
-	jp z, Label_05_56e0 ; $566e
+	jp z, .lastLine ; $566e
 	cp a, $02 ; $5671
-	jp z, Label_05_56e0 ; $5673
+	jp z, .lastLine ; $5673
 	cp a, $01 ; $5676
-	jr z, Label_05_567c ; $5678
-	jr Label_05_5687 ; $567a
-Label_05_567c:
+	jr z, .newline ; $5678
+	jr .checkArgShortText ; $567a
+.newline:
 	inc e ; $567c
 	ld a, d ; $567d
 	cp a, b ; $567e
 	ld a, b ; $567f
 	ld b, $00 ; $5680
-	jr nc, Label_05_566b ; $5682
+	jr nc, .charLoop ; $5682
 	ld d, a ; $5684
-	jr Label_05_566b ; $5685
-Label_05_5687:
+	jr .charLoop ; $5685
+.checkArgShortText:
 	cp a, $08 ; $5687
-	jr nz, Label_05_5692 ; $5689
+	jr nz, .checkArgNumber ; $5689
 	call GetNextArgShortTextLength ; $568b
 	add a, b ; $568e
 	ld b, a ; $568f
-	jr Label_05_566b ; $5690
-Label_05_5692:
+	jr .charLoop ; $5690
+.checkArgNumber:
 	cp a, $09 ; $5692
-	jr nz, Label_05_569d ; $5694
+	jr nz, .checkMainCharName ; $5694
 	call MeasureNextArgNumberWidth ; $5696
 	add a, b ; $5699
 	ld b, a ; $569a
-	jr Label_05_566b ; $569b
-Label_05_569d:
+	jr .charLoop ; $569b
+.checkMainCharName:
 	cp a, $07 ; $569d
-	jr nz, Label_05_56a8 ; $569f
+	jr nz, .checkArgString ; $569f
 	call MeasureMainCharacterNameWidth ; $56a1
 	add a, b ; $56a4
 	ld b, a ; $56a5
-	jr Label_05_566b ; $56a6
-Label_05_56a8:
+	jr .charLoop ; $56a6
+.checkArgString:
 	cp a, $04 ; $56a8
-	jr nz, Label_05_56b3 ; $56aa
+	jr nz, .checkPartnerName ; $56aa
 	call MeasureNextArgStringWidth ; $56ac
 	add a, b ; $56af
 	ld b, a ; $56b0
-	jr Label_05_566b ; $56b1
-Label_05_56b3:
+	jr .charLoop ; $56b1
+.checkPartnerName:
 	cp a, $0b ; $56b3
-	jr nz, Label_05_56be ; $56b5
+	jr nz, .checkIndexedShortText ; $56b5
 	call MeasurePartnerCharacterNameWidth ; $56b7
 	add a, b ; $56ba
 	ld b, a ; $56bb
-	jr Label_05_566b ; $56bc
-Label_05_56be:
+	jr .charLoop ; $56bc
+.checkIndexedShortText:
 	cp a, $0e ; $56be
-	jr nz, Label_05_56cd ; $56c0
+	jr nz, .glyph ; $56c0
 	ld a, [hl+] ; $56c2
 	ld [$c361], a ; $56c3
 	call MeasureIndexedShortTextWidth ; $56c6
 	add a, b ; $56c9
 	ld b, a ; $56ca
-	jr Label_05_566b ; $56cb
-Label_05_56cd:
+	jr .charLoop ; $56cb
+.glyph:
 	cp a, $20 ; $56cd
-	jp c, Label_05_566b ; $56cf
+	jp c, .charLoop ; $56cf
 	cp a, $7b ; $56d2
-	jp nc, Label_05_566b ; $56d4
+	jp nc, .charLoop ; $56d4
 	call GetGlyphWidth ; $56d7
 	ld a, c ; $56da
 	add a, b ; $56db
 	ld b, a ; $56dc
-	jp Label_05_566b ; $56dd
-Label_05_56e0:
+	jp .charLoop ; $56dd
+.lastLine:
 	inc e ; $56e0
 	ld a, d ; $56e1
 	cp a, b ; $56e2
-	jr nc, Label_05_56e6 ; $56e3
+	jr nc, .toCells ; $56e3
 	ld d, b ; $56e5
-Label_05_56e6:
+.toCells:
 	ld a, d ; $56e6
 	and a, $07 ; $56e7
-	jr z, Label_05_56ed ; $56e9
+	jr z, .roundedWidth ; $56e9
 	ld a, $01 ; $56eb
-Label_05_56ed:
+.roundedWidth:
 	srl d ; $56ed
 	srl d ; $56ef
 	srl d ; $56f1
@@ -3733,9 +3733,9 @@ Label_05_56ed:
 	push de ; $5702
 	ld a, [$d824] ; $5703
 	cp a, $ff ; $5706
-	jr nz, Label_05_570b ; $5708
+	jr nz, .placeWindow ; $5708
 	xor a, a ; $570a
-Label_05_570b:
+.placeWindow:
 	sla a ; $570b
 	sla a ; $570d
 	ld b, $00 ; $570f
