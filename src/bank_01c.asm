@@ -1488,9 +1488,9 @@ LoadCharStats:
 	ld hl, wStoryModeNameOfMainCharacter ; $4c4a
 	ld a, [wStoryCharacterSlot] ; $4c4d
 	or a, a ; $4c50
-	jr z, Label_1c_4c55 ; $4c51
+	jr z, .field38 ; $4c51
 	ld l, $40 ; $4c53
-Label_1c_4c55:
+.field38:
 	ld a, l ; $4c55
 	add a, $38 ; $4c56
 	ld l, a ; $4c58
@@ -1504,9 +1504,9 @@ Label_1c_4c55:
 	ld hl, wStoryModeNameOfMainCharacter ; $4c63
 	ld a, [wStoryCharacterSlot] ; $4c66
 	or a, a ; $4c69
-	jr z, Label_1c_4c6e ; $4c6a
+	jr z, .field20 ; $4c6a
 	ld l, $40 ; $4c6c
-Label_1c_4c6e:
+.field20:
 	ld a, l ; $4c6e
 	add a, $20 ; $4c6f
 	ld l, a ; $4c71
@@ -1521,9 +1521,9 @@ Label_1c_4c6e:
 	ld hl, wStoryModeNameOfMainCharacter ; $4c7d
 	ld a, [wStoryCharacterSlot] ; $4c80
 	or a, a ; $4c83
-	jr z, Label_1c_4c88 ; $4c84
+	jr z, .field21 ; $4c84
 	ld l, $40 ; $4c86
-Label_1c_4c88:
+.field21:
 	ld a, l ; $4c88
 	add a, $21 ; $4c89
 	ld l, a ; $4c8b
@@ -1538,9 +1538,9 @@ Label_1c_4c88:
 	ld hl, wStoryModeNameOfMainCharacter ; $4c97
 	ld a, [wStoryCharacterSlot] ; $4c9a
 	or a, a ; $4c9d
-	jr z, Label_1c_4ca2 ; $4c9e
+	jr z, .field39 ; $4c9e
 	ld l, $40 ; $4ca0
-Label_1c_4ca2:
+.field39:
 	ld a, l ; $4ca2
 	add a, $39 ; $4ca3
 	ld l, a ; $4ca5
@@ -1554,9 +1554,9 @@ Label_1c_4ca2:
 	ld hl, wStoryModeNameOfMainCharacter ; $4cb0
 	ld a, [wStoryCharacterSlot] ; $4cb3
 	or a, a ; $4cb6
-	jr z, Label_1c_4cbb ; $4cb7
+	jr z, .field22 ; $4cb7
 	ld l, $40 ; $4cb9
-Label_1c_4cbb:
+.field22:
 	ld a, l ; $4cbb
 	add a, $22 ; $4cbc
 	ld l, a ; $4cbe
@@ -1571,9 +1571,9 @@ Label_1c_4cbb:
 	ld hl, wStoryModeNameOfMainCharacter ; $4cca
 	ld a, [wStoryCharacterSlot] ; $4ccd
 	or a, a ; $4cd0
-	jr z, Label_1c_4cd5 ; $4cd1
+	jr z, .field23 ; $4cd1
 	ld l, $40 ; $4cd3
-Label_1c_4cd5:
+.field23:
 	ld a, l ; $4cd5
 	add a, $23 ; $4cd6
 	ld l, a ; $4cd8
@@ -1588,9 +1588,9 @@ Label_1c_4cd5:
 	ld hl, wStoryModeNameOfMainCharacter ; $4ce4
 	ld a, [wStoryCharacterSlot] ; $4ce7
 	or a, a ; $4cea
-	jr z, Label_1c_4cef ; $4ceb
+	jr z, .field24 ; $4ceb
 	ld l, $40 ; $4ced
-Label_1c_4cef:
+.field24:
 	ld a, l ; $4cef
 	add a, $24 ; $4cf0
 	ld l, a ; $4cf2
@@ -1605,9 +1605,9 @@ Label_1c_4cef:
 	ld hl, wStoryModeNameOfMainCharacter ; $4cfe
 	ld a, [wStoryCharacterSlot] ; $4d01
 	or a, a ; $4d04
-	jr z, Label_1c_4d09 ; $4d05
+	jr z, .field3a ; $4d05
 	ld l, $40 ; $4d07
-Label_1c_4d09:
+.field3a:
 	ld a, l ; $4d09
 	add a, $3a ; $4d0a
 	ld l, a ; $4d0c
@@ -1621,9 +1621,9 @@ Label_1c_4d09:
 	ld hl, wStoryModeNameOfMainCharacter ; $4d17
 	ld a, [wStoryCharacterSlot] ; $4d1a
 	or a, a ; $4d1d
-	jr z, Label_1c_4d22 ; $4d1e
+	jr z, .field25 ; $4d1e
 	ld l, $40 ; $4d20
-Label_1c_4d22:
+.field25:
 	ld a, l ; $4d22
 	add a, $25 ; $4d23
 	ld l, a ; $4d25
@@ -1638,9 +1638,9 @@ Label_1c_4d22:
 	ld hl, wStoryModeNameOfMainCharacter ; $4d31
 	ld a, [wStoryCharacterSlot] ; $4d34
 	or a, a ; $4d37
-	jr z, Label_1c_4d3c ; $4d38
+	jr z, .field26 ; $4d38
 	ld l, $40 ; $4d3a
-Label_1c_4d3c:
+.field26:
 	ld a, l ; $4d3c
 	add a, $26 ; $4d3d
 	ld l, a ; $4d3f
@@ -1655,9 +1655,9 @@ Label_1c_4d3c:
 	ld hl, wStoryModeNameOfMainCharacter ; $4d4b
 	ld a, [wStoryCharacterSlot] ; $4d4e
 	or a, a ; $4d51
-	jr z, Label_1c_4d56 ; $4d52
+	jr z, .field3b ; $4d52
 	ld l, $40 ; $4d54
-Label_1c_4d56:
+.field3b:
 	ld a, l ; $4d56
 	add a, $3b ; $4d57
 	ld l, a ; $4d59
@@ -1671,9 +1671,9 @@ Label_1c_4d56:
 	ld hl, wStoryModeNameOfMainCharacter ; $4d64
 	ld a, [wStoryCharacterSlot] ; $4d67
 	or a, a ; $4d6a
-	jr z, Label_1c_4d6f ; $4d6b
+	jr z, .field27 ; $4d6b
 	ld l, $40 ; $4d6d
-Label_1c_4d6f:
+.field27:
 	ld a, l ; $4d6f
 	add a, $27 ; $4d70
 	ld l, a ; $4d72
@@ -1688,9 +1688,9 @@ Label_1c_4d6f:
 	ld hl, wStoryModeNameOfMainCharacter ; $4d7e
 	ld a, [wStoryCharacterSlot] ; $4d81
 	or a, a ; $4d84
-	jr z, Label_1c_4d89 ; $4d85
+	jr z, .field28 ; $4d85
 	ld l, $40 ; $4d87
-Label_1c_4d89:
+.field28:
 	ld a, l ; $4d89
 	add a, $28 ; $4d8a
 	ld l, a ; $4d8c
@@ -1705,9 +1705,9 @@ Label_1c_4d89:
 	ld hl, wStoryModeNameOfMainCharacter ; $4d98
 	ld a, [wStoryCharacterSlot] ; $4d9b
 	or a, a ; $4d9e
-	jr z, Label_1c_4da3 ; $4d9f
+	jr z, .field29 ; $4d9f
 	ld l, $40 ; $4da1
-Label_1c_4da3:
+.field29:
 	ld a, l ; $4da3
 	add a, $29 ; $4da4
 	ld l, a ; $4da6
@@ -1722,9 +1722,9 @@ Label_1c_4da3:
 	ld hl, wStoryModeNameOfMainCharacter ; $4db2
 	ld a, [wStoryCharacterSlot] ; $4db5
 	or a, a ; $4db8
-	jr z, Label_1c_4dbd ; $4db9
+	jr z, .field2a ; $4db9
 	ld l, $40 ; $4dbb
-Label_1c_4dbd:
+.field2a:
 	ld a, l ; $4dbd
 	add a, $2a ; $4dbe
 	ld l, a ; $4dc0
@@ -1738,10 +1738,10 @@ Label_1c_4dbd:
 	ld hl, $d019 ; $4dcb
 	ld b, $0b ; $4dce
 	xor a, a ; $4dd0
-Label_1c_4dd1:
+.clearLoop:
 	ld [hl+], a ; $4dd1
 	dec b ; $4dd2
-	jr nz, Label_1c_4dd1 ; $4dd3
+	jr nz, .clearLoop ; $4dd3
 	ret ; $4dd5
 CharDataScreen_DrawPageColumns:
 	wram_bank $06 ; $4dd6
@@ -2089,58 +2089,58 @@ CharDataScreen_InputLoop:
 	wram_bank $06 ; $509d
 	ld a, [$d0b6] ; $50a3
 	or a, a ; $50a6
-	jp nz, Label_1c_51a3 ; $50a7
+	jp nz, .finish ; $50a7
 	call AdvanceFrame ; $50aa
 	ldh a, [hInputRisingEdge] ; $50ad
 	push af ; $50af
 	test_flag FLAG_CHAR_DATA_START_EXITS ; $50b0
-	jr z, Label_1c_50bd ; $50b3
+	jr z, .readInput ; $50b3
 	bit 3, a ; $50b5
-	jr z, Label_1c_50bd ; $50b7
+	jr z, .readInput ; $50b7
 	pop af ; $50b9
-	jp Label_1c_51a3 ; $50ba
-Label_1c_50bd:
+	jp .finish ; $50ba
+.readInput:
 	pop af ; $50bd
 	bit 0, a ; $50be
-	jr nz, Label_1c_512a ; $50c0
+	jr nz, .pressA ; $50c0
 	bit 1, a ; $50c2
-	jr nz, Label_1c_50f9 ; $50c4
+	jr nz, .pressB ; $50c4
 	bit 4, a ; $50c6
-	jr nz, Label_1c_50f0 ; $50c8
+	jr nz, .moveRight ; $50c8
 	bit 5, a ; $50ca
-	jr nz, Label_1c_50e8 ; $50cc
+	jr nz, .moveLeft ; $50cc
 	bit 7, a ; $50ce
-	jr nz, Label_1c_50e0 ; $50d0
+	jr nz, .moveDown ; $50d0
 	bit 6, a ; $50d2
-	jr nz, Label_1c_50d8 ; $50d4
+	jr nz, .moveUp ; $50d4
 	jr CharDataScreen_InputLoop ; $50d6
-Label_1c_50d8:
+.moveUp:
 	ld hl, CharDataPageUpTargets_1c ; $50d8
 	call MoveCharDataScreenSelection ; $50db
 	jr CharDataScreen_InputLoop ; $50de
-Label_1c_50e0:
+.moveDown:
 	ld hl, CharDataPageDownTargets_1c ; $50e0
 	call MoveCharDataScreenSelection ; $50e3
 	jr CharDataScreen_InputLoop ; $50e6
-Label_1c_50e8:
+.moveLeft:
 	ld hl, CharDataPageLeftTargets_1c ; $50e8
 	call MoveCharDataScreenSelection ; $50eb
 	jr CharDataScreen_InputLoop ; $50ee
-Label_1c_50f0:
+.moveRight:
 	ld hl, CharDataPageRightTargets_1c ; $50f0
 	call MoveCharDataScreenSelection ; $50f3
 	jp CharDataScreen_InputLoop ; $50f6
-Label_1c_50f9:
+.pressB:
 	wram_bank $06 ; $50f9
 	ld a, [$d024] ; $50ff
 	cp a, $04 ; $5102
-	jr nz, Label_1c_5110 ; $5104
+	jr nz, .selectConfirmCell ; $5104
 	call ApplyCharStatLevelUp ; $5106
 	or a, a ; $5109
 	jp nz, CharDataScreen_InputLoop ; $510a
 	ld a, $01 ; $510d
 	ret ; $510f
-Label_1c_5110:
+.selectConfirmCell:
 	ld a, $04 ; $5110
 	ld [$d024], a ; $5112
 	call RestoreCharDataScreenRow ; $5115
@@ -2150,7 +2150,7 @@ Label_1c_5110:
 	call CharDataScreen_DrawPageColumns ; $5121
 	call FlushCharDataTilemaps ; $5124
 	jp nz, CharDataScreen_InputLoop ; $5127
-Label_1c_512a:
+.pressA:
 	wram_bank $06 ; $512a
 	ld a, [$d024] ; $5130
 	cp a, $04 ; $5133
@@ -2175,20 +2175,20 @@ Label_1c_512a:
 	ld a, $04 ; $515d
 	ld [$d024], a ; $515f
 	test_flag FLAG_CHAR_DATA_START_EXITS ; $5162
-	jr nz, Label_1c_5171 ; $5165
+	jr nz, .checkStatCap ; $5165
 	ld a, [wStoryCharacterSlot] ; $5167
 	farcall HasReachedNextLevelExp ; $516a
-	jr nz, Label_1c_51a3 ; $516d
-	jr Label_1c_518e ; $516f
-Label_1c_5171:
+	jr nz, .finish ; $516d
+	jr .redraw ; $516f
+.checkStatCap:
 	ld a, [wStoryCharacterSlot] ; $5171
 	push af ; $5174
 	ld hl, wStoryModeNameOfMainCharacter ; $5175
 	ld a, [wStoryCharacterSlot] ; $5178
 	or a, a ; $517b
-	jr z, Label_1c_5180 ; $517c
+	jr z, .readStatCap ; $517c
 	ld l, $40 ; $517e
-Label_1c_5180:
+.readStatCap:
 	ld a, l ; $5180
 	add a, $18 ; $5181
 	ld l, a ; $5183
@@ -2198,8 +2198,8 @@ Label_1c_5180:
 	pop af ; $5188
 	ld a, [hl] ; $5189
 	cp a, $63 ; $518a
-	jr z, Label_1c_51a3 ; $518c
-Label_1c_518e:
+	jr z, .finish ; $518c
+.redraw:
 	call RestoreCharDataScreenRow ; $518e
 	call LoadCharStats ; $5191
 	call CharDataScreen_DrawStats ; $5194
@@ -2207,11 +2207,11 @@ Label_1c_518e:
 	call CharDataScreen_DrawPageColumns ; $519a
 	call FlushCharDataTilemaps ; $519d
 	jp CharDataScreen_InputLoop ; $51a0
-Label_1c_51a3:
+.finish:
 	wram_bank $06 ; $51a3
 	ld a, [$d0b6] ; $51a9
 	or a, a ; $51ac
-	jp nz, Label_1c_528d ; $51ad
+	jp nz, .skipWipe ; $51ad
 	ld hl, DrawStatArrowIndicators ; $51b0
 	call UnregisterFrameTask ; $51b3
 	call LoadCharStats ; $51b6
@@ -2283,34 +2283,34 @@ Label_1c_51a3:
 	ld bc, $d410 ; $5282
 	call BlitTilemapRunsFromTable ; $5285
 	call FlushCharDataTilemaps ; $5288
-	jr Label_1c_5291 ; $528b
-Label_1c_528d:
+	jr .confirmLoop ; $528b
+.skipWipe:
 	xor a, a ; $528d
 	ld [$d0b6], a ; $528e
-Label_1c_5291:
+.confirmLoop:
 	call DrawConfirmSelectionCursor ; $5291
 	call AdvanceFrame ; $5294
 	ldh a, [hInputRisingEdge] ; $5297
 	bit PADB_A, a ; $5299
-	jr nz, Label_1c_52b1 ; $529b
+	jr nz, .confirmA ; $529b
 	bit 1, a ; $529d
-	jr nz, Label_1c_52c1 ; $529f
+	jr nz, .cancel ; $529f
 	and a, $c0 ; $52a1
-	jr z, Label_1c_5291 ; $52a3
+	jr z, .confirmLoop ; $52a3
 	sound $5e ; $52a5
 	ld a, [$d025] ; $52a7
 	xor a, $01 ; $52aa
 	ld [$d025], a ; $52ac
-	jr Label_1c_5291 ; $52af
-Label_1c_52b1:
+	jr .confirmLoop ; $52af
+.confirmA:
 	wram_bank $06 ; $52b1
 	ld a, [$d025] ; $52b7
 	or a, a ; $52ba
-	jr nz, Label_1c_52c1 ; $52bb
+	jr nz, .cancel ; $52bb
 	sound $5f ; $52bd
 	xor a, a ; $52bf
 	ret ; $52c0
-Label_1c_52c1:
+.cancel:
 	sound $62 ; $52c1
 	call SelectCharDataConfirmSlot ; $52c3
 	call RestoreCharDataScreenRow ; $52c6
