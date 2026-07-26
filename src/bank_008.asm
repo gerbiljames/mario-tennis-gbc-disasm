@@ -290,9 +290,9 @@ HandleBallHitEvent:
 	ld hl, wRallyLength ; $427f
 	ld a, [hl] ; $4282
 	cp a, $64 ; $4283
-	jr nc, Label_08_4288 ; $4285
+	jr nc, .clearEvent ; $4285
 	inc [hl] ; $4287
-Label_08_4288:
+.clearEvent:
 	xor a, a ; $4288
 	ld [wBallHitEvent], a ; $4289
 	ld [wBallHasBouncedFlag], a ; $428c
@@ -314,27 +314,27 @@ Label_08_4288:
 	ld [wBallBounceCount], a ; $42c5
 	ld a, [wRallyLength] ; $42c8
 	cp a, $01 ; $42cb
-	jr z, Label_08_42d4 ; $42cd
+	jr z, .specialShot ; $42cd
 	cp a, $02 ; $42cf
-	jr z, Label_08_42f3 ; $42d1
+	jr z, .resetCourtLimits ; $42d1
 	ret ; $42d3
-Label_08_42d4:
+.specialShot:
 	ld a, [wSpecialShotFlag] ; $42d4
 	and a, a ; $42d7
-	jr z, Label_08_42f2 ; $42d8
+	jr z, .done ; $42d8
 	ld a, $0e ; $42da
 	farcall ShowCourtBanner ; $42dc
 	ld a, [wServingCharCourtPos] ; $42df
 	and a, $02 ; $42e2
 	ld de, $f0d8 ; $42e4
-	jr z, Label_08_42ec ; $42e7
+	jr z, .placeEffect ; $42e7
 	ld de, $f000 ; $42e9
-Label_08_42ec:
+.placeEffect:
 	ld bc, $ddb0 ; $42ec
 	farcall SetObjPosition ; $42ef
-Label_08_42f2:
+.done:
 	ret ; $42f2
-Label_08_42f3:
+.resetCourtLimits:
 	ld de, $fb20 ; $42f3
 	ld hl, wCourtLimitDepth ; $42f6
 	ld a, e ; $42f9
@@ -343,9 +343,9 @@ Label_08_42f3:
 	ld a, [wMatchIsDoubles] ; $42fc
 	and a, a ; $42ff
 	ld de, $fe50 ; $4300
-	jr z, Label_08_4308 ; $4303
+	jr z, .doneLimits ; $4303
 	ld de, $fdc0 ; $4305
-Label_08_4308:
+.doneLimits:
 	ld hl, wCourtLimitX ; $4308
 	ld a, e ; $430b
 	ld [hl+], a ; $430c
@@ -837,18 +837,18 @@ CheckBallOutOfBounds:
 	ld h, [hl] ; $4646
 	ld l, a ; $4647
 	bit 7, h ; $4648
-	jr z, Label_08_4652 ; $464a
+	jr z, .checkDepth ; $464a
 	xor a, a ; $464c
 	sub a, l ; $464d
 	ld l, a ; $464e
 	sbc a, a ; $464f
 	sub a, h ; $4650
 	ld h, a ; $4651
-Label_08_4652:
+.checkDepth:
 	add hl, bc ; $4652
-	jr nc, Label_08_4657 ; $4653
+	jr nc, .outOfBounds ; $4653
 	set 0, d ; $4655
-Label_08_4657:
+.outOfBounds:
 	ld hl, wCourtLimitDepth ; $4657
 	ld a, [hl+] ; $465a
 	ld b, [hl] ; $465b
@@ -858,18 +858,18 @@ Label_08_4657:
 	ld h, [hl] ; $4661
 	ld l, a ; $4662
 	bit 7, h ; $4663
-	jr z, Label_08_466d ; $4665
+	jr z, .inBounds ; $4665
 	xor a, a ; $4667
 	sub a, l ; $4668
 	ld l, a ; $4669
 	sbc a, a ; $466a
 	sub a, h ; $466b
 	ld h, a ; $466c
-Label_08_466d:
+.inBounds:
 	add hl, bc ; $466d
-	jr nc, Label_08_4672 ; $466e
+	jr nc, .done ; $466e
 	set 1, d ; $4670
-Label_08_4672:
+.done:
 	ld a, d ; $4672
 	ld [$c4b1], a ; $4673
 	ret ; $4676
@@ -2717,7 +2717,7 @@ ApplyBallSpin:
 	ld hl, wBallSideSpin ; $5613
 	ld a, [hl+] ; $5616
 	or a, [hl] ; $5617
-	jp z, Label_08_56a9 ; $5618
+	jp z, .checkTopspin ; $5618
 	ld hl, wBallVelocityDepth ; $561b
 	ld a, [hl+] ; $561e
 	ld d, [hl] ; $561f
@@ -2744,9 +2744,9 @@ ApplyBallSpin:
 	rra ; $5641
 	ld hl, hMathSign ; $5642
 	bit 7, [hl] ; $5645
-	jr nz, Label_08_564c ; $5647
+	jr nz, .applySide ; $5647
 	call NegateADE ; $5649
-Label_08_564c:
+.applySide:
 	push af ; $564c
 	push de ; $564d
 	ld hl, wBallVelocityX ; $564e
@@ -2775,9 +2775,9 @@ Label_08_564c:
 	rra ; $5674
 	ld hl, hMathSign ; $5675
 	bit 7, [hl] ; $5678
-	jr z, Label_08_567f ; $567a
+	jr z, .accumulateX ; $567a
 	call NegateADE ; $567c
-Label_08_567f:
+.accumulateX:
 	ld hl, $c423 ; $567f
 	call Add24ToMem24 ; $5682
 	pop de ; $5685
@@ -2806,11 +2806,11 @@ Label_08_567f:
 	ld [wBallSideSpin], a ; $56a2
 	ld a, h ; $56a5
 	ld [wBallSideSpin + 1], a ; $56a6
-Label_08_56a9:
+.checkTopspin:
 	ld hl, wBallTopspin ; $56a9
 	ld a, [hl+] ; $56ac
 	or a, [hl] ; $56ad
-	jp z, Label_08_5766 ; $56ae
+	jp z, .done ; $56ae
 	ld hl, wBallVelocityHeight ; $56b1
 	ld a, [hl+] ; $56b4
 	ld d, [hl] ; $56b5
@@ -2842,14 +2842,14 @@ Label_08_56a9:
 	ld e, a ; $56de
 	ld hl, hMathSign ; $56df
 	bit 7, [hl] ; $56e2
-	jr nz, Label_08_56ec ; $56e4
+	jr nz, .applyTopspin ; $56e4
 	xor a, a ; $56e6
 	sub a, e ; $56e7
 	ld e, a ; $56e8
 	sbc a, a ; $56e9
 	sub a, d ; $56ea
 	ld d, a ; $56eb
-Label_08_56ec:
+.applyTopspin:
 	push de ; $56ec
 	ld hl, wBallSpeedHorizontal ; $56ed
 	ld a, [hl+] ; $56f0
@@ -2877,9 +2877,9 @@ Label_08_56ec:
 	rra ; $5713
 	ld hl, hMathSign ; $5714
 	bit 7, [hl] ; $5717
-	jr z, Label_08_571e ; $5719
+	jr z, .accumulateDepth ; $5719
 	call NegateADE ; $571b
-Label_08_571e:
+.accumulateDepth:
 	ld hl, $c426 ; $571e
 	call Add24ToMem24 ; $5721
 	ld hl, wBallHeadingAngle ; $5724
@@ -2930,7 +2930,7 @@ Label_08_571e:
 	ld [wBallTopspin], a ; $575f
 	ld a, h ; $5762
 	ld [wBallTopspin + 1], a ; $5763
-Label_08_5766:
+.done:
 	ret ; $5766
 StepBallPhysics:
 	xor a, a ; $5767
@@ -3033,12 +3033,12 @@ HandleBallNetCrossing:
 	ld hl, wBallPrevDepth + 1 ; $581c
 	xor a, [hl] ; $581f
 	bit 7, a ; $5820
-	jp z, Label_08_58a2 ; $5822
+	jp z, .done ; $5822
 	ld a, $01 ; $5825
 	ld [wBallCrossedNetFlag], a ; $5827
 	ld a, [$c7b9] ; $582a
 	and a, a ; $582d
-	jr nz, Label_08_58a2 ; $582e
+	jr nz, .done ; $582e
 	ld hl, wNetHeight ; $5830
 	ld a, [hl+] ; $5833
 	ld d, [hl] ; $5834
@@ -3049,7 +3049,7 @@ HandleBallNetCrossing:
 	ld l, a ; $583b
 	add hl, de ; $583c
 	bit 7, h ; $583d
-	jr nz, Label_08_58a2 ; $583f
+	jr nz, .done ; $583f
 	sound $5a ; $5841
 	call StartBounceEffect ; $5843
 	ld a, $01 ; $5846
@@ -3086,11 +3086,11 @@ HandleBallNetCrossing:
 	ld hl, $005a ; $5874
 	add hl, de ; $5877
 	bit 7, h ; $5878
-	jr nz, Label_08_58f5 ; $587a
+	jr nz, .clearSpin ; $587a
 	ld hl, $0058 ; $587c
 	add hl, de ; $587f
 	bit 7, h ; $5880
-	jr nz, Label_08_58a3 ; $5882
+	jr nz, .crossed ; $5882
 	ld hl, wBallVelocityDepth ; $5884
 	ld a, [hl+] ; $5887
 	ld d, [hl] ; $5888
@@ -3111,9 +3111,9 @@ HandleBallNetCrossing:
 	ld a, e ; $589f
 	ld [hl+], a ; $58a0
 	ld [hl], d ; $58a1
-Label_08_58a2:
+.done:
 	ret ; $58a2
-Label_08_58a3:
+.crossed:
 	ld hl, wBallVelocityDepth ; $58a3
 	ld a, [hl+] ; $58a6
 	ld d, [hl] ; $58a7
@@ -3125,14 +3125,14 @@ Label_08_58a3:
 	sra d ; $58b1
 	rr e ; $58b3
 	bit 7, d ; $58b5
-	jr z, Label_08_58bf ; $58b7
+	jr z, .jitter ; $58b7
 	xor a, a ; $58b9
 	sub a, e ; $58ba
 	ld e, a ; $58bb
 	sbc a, a ; $58bc
 	sub a, d ; $58bd
 	ld d, a ; $58be
-Label_08_58bf:
+.jitter:
 	call AdvanceMatchRng ; $58bf
 	ld h, $00 ; $58c2
 	ld l, a ; $58c4
@@ -3172,7 +3172,7 @@ Label_08_58bf:
 	ld [hl+], a ; $58f2
 	ld [hl], d ; $58f3
 	ret ; $58f4
-Label_08_58f5:
+.clearSpin:
 	ld hl, $c408 ; $58f5
 	xor a, a ; $58f8
 	ld [hl+], a ; $58f9
@@ -3192,14 +3192,14 @@ Label_08_58f5:
 	sra d ; $590f
 	rr e ; $5911
 	bit 7, d ; $5913
-	jr z, Label_08_591d ; $5915
+	jr z, .store ; $5915
 	xor a, a ; $5917
 	sub a, e ; $5918
 	ld e, a ; $5919
 	sbc a, a ; $591a
 	sub a, d ; $591b
 	ld d, a ; $591c
-Label_08_591d:
+.store:
 	call AdvanceMatchRng ; $591d
 	ld h, $00 ; $5920
 	ld l, a ; $5922
@@ -3237,16 +3237,16 @@ BounceBallOffCourtFences:
 	ld h, [hl] ; $594d
 	ld l, a ; $594e
 	bit 7, h ; $594f
-	jr nz, Label_08_595b ; $5951
+	jr nz, .checkFarFence ; $5951
 	ld de, $f920 ; $5953
 	add hl, de ; $5956
-	jr nc, Label_08_5981 ; $5957
-	jr Label_08_5961 ; $5959
-Label_08_595b:
+	jr nc, .checkSideFences ; $5957
+	jr .bounceDepth ; $5959
+.checkFarFence:
 	ld de, $0700 ; $595b
 	add hl, de ; $595e
-	jr c, Label_08_5981 ; $595f
-Label_08_5961:
+	jr c, .checkSideFences ; $595f
+.bounceDepth:
 	ld hl, $c423 ; $5961
 	ld a, [hl] ; $5964
 	cpl ; $5965
@@ -3264,23 +3264,23 @@ Label_08_5961:
 	call ApplyCourtBounceDamping ; $5979
 	ld a, $02 ; $597c
 	ld [wBallBounceEvent], a ; $597e
-Label_08_5981:
+.checkSideFences:
 	ld hl, wBallX ; $5981
 	ld a, [hl+] ; $5984
 	ld h, [hl] ; $5985
 	ld l, a ; $5986
 	bit 7, h ; $5987
-	jr z, Label_08_5991 ; $5989
+	jr z, .checkFarSide ; $5989
 	xor a, a ; $598b
 	sub a, l ; $598c
 	ld l, a ; $598d
 	sbc a, a ; $598e
 	sub a, h ; $598f
 	ld h, a ; $5990
-Label_08_5991:
+.checkFarSide:
 	ld de, $fc60 ; $5991
 	add hl, de ; $5994
-	jr nc, Label_08_59b7 ; $5995
+	jr nc, .done ; $5995
 	ld hl, $c420 ; $5997
 	ld a, [hl] ; $599a
 	cpl ; $599b
@@ -3298,7 +3298,7 @@ Label_08_5991:
 	call ApplyCourtBounceDamping ; $59af
 	ld a, $02 ; $59b2
 	ld [wBallBounceEvent], a ; $59b4
-Label_08_59b7:
+.done:
 	ret ; $59b7
 ProjectWorldToScreen_08:
 	jp ProjectWorldToScreen ; $59b8
@@ -4811,40 +4811,40 @@ DrawBallAndEffects:
 DrawActorsByDepth:
 	ld a, [$c7b8] ; $6429
 	and a, a ; $642c
-	jr nz, Label_08_6477 ; $642d
+	jr nz, .done ; $642d
 	ld hl, wCharDepthKey ; $642f
 	wram_bank $05 ; $6432
 	ld b, [hl] ; $6438
 	wram_bank $04 ; $6439
 	ld a, [hl] ; $643f
 	cp a, b ; $6440
-	jr nc, Label_08_645d ; $6441
+	jr nc, .drawLoop ; $6441
 	ld a, [wPointOutcome] ; $6443
 	and a, a ; $6446
-	jr z, Label_08_6453 ; $6447
+	jr z, .sortLoop ; $6447
 	call DrawFarTeamChars ; $6449
 	call DrawNearTeamChars ; $644c
 	call DrawBallAndEffects ; $644f
 	ret ; $6452
-Label_08_6453:
+.sortLoop:
 	call DrawFarTeamChars ; $6453
 	call DrawBallAndEffects ; $6456
 	call DrawNearTeamChars ; $6459
 	ret ; $645c
-Label_08_645d:
+.drawLoop:
 	ld a, [wPointOutcome] ; $645d
 	and a, a ; $6460
-	jr z, Label_08_646d ; $6461
+	jr z, .next ; $6461
 	call DrawNearTeamChars ; $6463
 	call DrawFarTeamChars ; $6466
 	call DrawBallAndEffects ; $6469
 	ret ; $646c
-Label_08_646d:
+.next:
 	call DrawNearTeamChars ; $646d
 	call DrawBallAndEffects ; $6470
 	call DrawFarTeamChars ; $6473
 	ret ; $6476
-Label_08_6477:
+.done:
 	call DrawNearTeamChars ; $6477
 	call DrawBallAndEffects ; $647a
 	call DrawFarTeamChars ; $647d
@@ -6445,14 +6445,14 @@ CheckBallContactWindow:
 	ld h, [hl] ; $6fab
 	ld l, a ; $6fac
 	bit 7, h ; $6fad
-	jr z, Label_08_6fb7 ; $6faf
+	jr z, .checkHeight ; $6faf
 	xor a, a ; $6fb1
 	sub a, l ; $6fb2
 	ld l, a ; $6fb3
 	sbc a, a ; $6fb4
 	sub a, h ; $6fb5
 	ld h, a ; $6fb6
-Label_08_6fb7:
+.checkHeight:
 	ld de, hPeakLY ; $6fb7
 	add hl, de ; $6fba
 	ret c ; $6fbb
@@ -6464,7 +6464,7 @@ Label_08_6fb7:
 	ld d, h ; $6fc3
 	ld a, [wCharFlags] ; $6fc4
 	bit 1, a ; $6fc7
-	jr z, Label_08_6fda ; $6fc9
+	jr z, .checkState ; $6fc9
 	ld l, e ; $6fcb
 	ld h, d ; $6fcc
 	sra d ; $6fcd
@@ -6474,31 +6474,31 @@ Label_08_6fb7:
 	add hl, de ; $6fd5
 	ld e, l ; $6fd6
 	ld d, h ; $6fd7
-	jr Label_08_6fed ; $6fd8
-Label_08_6fda:
+	jr .checkX ; $6fd8
+.checkState:
 	ld a, [$df2e] ; $6fda
 	cp a, $05 ; $6fdd
-	jr z, Label_08_6fed ; $6fdf
+	jr z, .checkX ; $6fdf
 	cp a, $06 ; $6fe1
-	jr z, Label_08_6fed ; $6fe3
+	jr z, .checkX ; $6fe3
 	cp a, $09 ; $6fe5
-	jr z, Label_08_6fed ; $6fe7
+	jr z, .checkX ; $6fe7
 	cp a, $0a ; $6fe9
-	jr z, Label_08_6fed ; $6feb
-Label_08_6fed:
+	jr z, .checkX ; $6feb
+.checkX:
 	ld hl, wBallRelCharX ; $6fed
 	ld a, [hl+] ; $6ff0
 	ld h, [hl] ; $6ff1
 	ld l, a ; $6ff2
 	bit 7, h ; $6ff3
-	jr z, Label_08_6ffd ; $6ff5
+	jr z, .compare ; $6ff5
 	xor a, a ; $6ff7
 	sub a, l ; $6ff8
 	ld l, a ; $6ff9
 	sbc a, a ; $6ffa
 	sub a, h ; $6ffb
 	ld h, a ; $6ffc
-Label_08_6ffd:
+.compare:
 	ld a, l ; $6ffd
 	sub a, e ; $6ffe
 	ld l, a ; $6fff
@@ -6518,14 +6518,14 @@ Label_08_6ffd:
 	ld h, [hl] ; $7011
 	ld l, a ; $7012
 	bit 7, h ; $7013
-	jr z, Label_08_701d ; $7015
+	jr z, .done ; $7015
 	xor a, a ; $7017
 	sub a, l ; $7018
 	ld l, a ; $7019
 	sbc a, a ; $701a
 	sub a, h ; $701b
 	ld h, a ; $701c
-Label_08_701d:
+.done:
 	ld a, l ; $701d
 	sub a, e ; $701e
 	ld l, a ; $701f
@@ -6738,31 +6738,31 @@ Label_08_7162:
 CaptureShotAim:
 	ld a, [$df1f] ; $7167
 	cp a, PADF_LEFT ; $716a
-	jr z, Label_08_717c ; $716c
+	jr z, .aimFarLeft ; $716c
 	bit PADB_LEFT, a ; $716e
-	jr nz, Label_08_7182 ; $7170
+	jr nz, .aimLeft ; $7170
 	cp a, PADF_RIGHT ; $7172
-	jr z, Label_08_7194 ; $7174
+	jr z, .aimFarRight ; $7174
 	bit PADB_RIGHT, a ; $7176
-	jr nz, Label_08_718e ; $7178
-	jr Label_08_7188 ; $717a
-Label_08_717c:
+	jr nz, .aimRight ; $7178
+	jr .aimCentre ; $717a
+.aimFarLeft:
 	ld a, $fe ; $717c
 	ld [$df4a], a ; $717e
 	ret ; $7181
-Label_08_7182:
+.aimLeft:
 	ld a, $ff ; $7182
 	ld [$df4a], a ; $7184
 	ret ; $7187
-Label_08_7188:
+.aimCentre:
 	ld a, $00 ; $7188
 	ld [$df4a], a ; $718a
 	ret ; $718d
-Label_08_718e:
+.aimRight:
 	ld a, $01 ; $718e
 	ld [$df4a], a ; $7190
 	ret ; $7193
-Label_08_7194:
+.aimFarRight:
 	ld a, $02 ; $7194
 	ld [$df4a], a ; $7196
 	ret ; $7199
@@ -6806,10 +6806,10 @@ ApplyCharMovementInput:
 HandleServePositioning:
 	ld a, [$c7b9] ; $71dd
 	and a, a ; $71e0
-	jr nz, Label_08_7229 ; $71e1
+	jr nz, .receiver ; $71e1
 	ld a, [$df1f] ; $71e3
 	and a, PADF_RIGHT | PADF_LEFT ; $71e6
-	jr z, Label_08_7228 ; $71e8
+	jr z, .done ; $71e8
 	swap a ; $71ea
 	add a, $86 ; $71ec
 	ld l, a ; $71ee
@@ -6818,7 +6818,7 @@ HandleServePositioning:
 	ld h, a ; $71f2
 	ld a, [hl] ; $71f3
 	cp a, $ff ; $71f4
-	jr z, Label_08_7228 ; $71f6
+	jr z, .done ; $71f6
 	ld hl, $000a ; $71f8
 	call VectorFromLengthAndAngleRaw ; $71fb
 	ld c, l ; $71fe
@@ -6829,22 +6829,22 @@ HandleServePositioning:
 	ld l, a ; $7205
 	add hl, bc ; $7206
 	bit 7, h ; $7207
-	jr z, Label_08_7211 ; $7209
+	jr z, .stepToward ; $7209
 	xor a, a ; $720b
 	sub a, l ; $720c
 	ld l, a ; $720d
 	sbc a, a ; $720e
 	sub a, h ; $720f
 	ld h, a ; $7210
-Label_08_7211:
+.stepToward:
 	push hl ; $7211
 	ld de, $ffe0 ; $7212
 	add hl, de ; $7215
 	pop hl ; $7216
-	jr nc, Label_08_7228 ; $7217
+	jr nc, .done ; $7217
 	ld de, $fe80 ; $7219
 	add hl, de ; $721c
-	jr c, Label_08_7228 ; $721d
+	jr c, .done ; $721d
 	ld hl, wCharPosX + 1 ; $721f
 	ld a, [hl] ; $7222
 	add a, c ; $7223
@@ -6852,12 +6852,12 @@ Label_08_7211:
 	ld a, [hl] ; $7225
 	adc a, b ; $7226
 	ld [hl+], a ; $7227
-Label_08_7228:
+.done:
 	ret ; $7228
-Label_08_7229:
+.receiver:
 	ld a, [$df1f] ; $7229
 	and a, PADF_RIGHT | PADF_LEFT ; $722c
-	jr z, Label_08_7266 ; $722e
+	jr z, .receiverDone ; $722e
 	swap a ; $7230
 	add a, $86 ; $7232
 	ld l, a ; $7234
@@ -6866,7 +6866,7 @@ Label_08_7229:
 	ld h, a ; $7238
 	ld a, [hl] ; $7239
 	cp a, $ff ; $723a
-	jr z, Label_08_7266 ; $723c
+	jr z, .receiverDone ; $723c
 	ld hl, $000a ; $723e
 	call VectorFromLengthAndAngleRaw ; $7241
 	ld c, l ; $7244
@@ -6877,17 +6877,17 @@ Label_08_7229:
 	ld l, a ; $724b
 	add hl, bc ; $724c
 	bit 7, h ; $724d
-	jr z, Label_08_7257 ; $724f
+	jr z, .receiverStep ; $724f
 	xor a, a ; $7251
 	sub a, l ; $7252
 	ld l, a ; $7253
 	sbc a, a ; $7254
 	sub a, h ; $7255
 	ld h, a ; $7256
-Label_08_7257:
+.receiverStep:
 	ld de, $fe80 ; $7257
 	add hl, de ; $725a
-	jr c, Label_08_7266 ; $725b
+	jr c, .receiverDone ; $725b
 	ld hl, wCharPosX + 1 ; $725d
 	ld a, [hl] ; $7260
 	add a, c ; $7261
@@ -6895,7 +6895,7 @@ Label_08_7257:
 	ld a, [hl] ; $7263
 	adc a, b ; $7264
 	ld [hl+], a ; $7265
-Label_08_7266:
+.receiverDone:
 	ret ; $7266
 CheckSwingRelease:
 	ld a, [$df1f] ; $7267
@@ -8320,49 +8320,49 @@ AiPickServeButtons:
 AiPickShotButtons:
 	ld a, [wLandingMarkerActive] ; $7b7b
 	and a, a ; $7b7e
-	jr z, Label_08_7b92 ; $7b7f
+	jr z, .maybeCharge ; $7b7f
 	ld b, $30 ; $7b81
 	ld a, [$df7d] ; $7b83
 	farcall DoesCharGroupRowContain ; $7b86
 	and a, a ; $7b89
-	jr z, Label_08_7b92 ; $7b8a
+	jr z, .maybeCharge ; $7b8a
 	ld a, $30 ; $7b8c
 	ld [$df58], a ; $7b8e
 	ret ; $7b91
-Label_08_7b92:
+.maybeCharge:
 	call AdvanceMatchRng ; $7b92
 	and a, $01 ; $7b95
-	jr nz, Label_08_7c00 ; $7b97
+	jr nz, .done ; $7b97
 	ld hl, wBallRelCharDepth ; $7b99
 	ld a, [hl+] ; $7b9c
 	ld h, [hl] ; $7b9d
 	ld l, a ; $7b9e
 	bit 7, h ; $7b9f
-	jr z, Label_08_7ba9 ; $7ba1
+	jr z, .checkReachX ; $7ba1
 	xor a, a ; $7ba3
 	sub a, l ; $7ba4
 	ld l, a ; $7ba5
 	sbc a, a ; $7ba6
 	sub a, h ; $7ba7
 	ld h, a ; $7ba8
-Label_08_7ba9:
+.checkReachX:
 	ld de, $fec0 ; $7ba9
 	add hl, de ; $7bac
 	bit 7, h ; $7bad
-	jr nz, Label_08_7c00 ; $7baf
+	jr nz, .done ; $7baf
 	ld b, $12 ; $7bb1
 	ld a, [$df7d] ; $7bb3
 	farcall DoesCharGroupRowContain ; $7bb6
 	and a, a ; $7bb9
-	jr z, Label_08_7c00 ; $7bba
+	jr z, .done ; $7bba
 	ld a, [wMatchIsDoubles] ; $7bbc
 	and a, a ; $7bbf
-	jr z, Label_08_7bcb ; $7bc0
+	jr z, .checkPartner ; $7bc0
 	call AdvanceMatchRng ; $7bc2
 	and a, $03 ; $7bc5
-	jr nz, Label_08_7c00 ; $7bc7
-	jr Label_08_7bfa ; $7bc9
-Label_08_7bcb:
+	jr nz, .done ; $7bc7
+	jr .pressShot ; $7bc9
+.checkPartner:
 	ldh a, [hWramBank] ; $7bcb
 	push af ; $7bcd
 	ld a, [wCharIndex] ; $7bce
@@ -8378,23 +8378,23 @@ Label_08_7bcb:
 	pop af ; $7be3
 	wram_bank ; $7be4
 	bit 7, h ; $7be8
-	jr z, Label_08_7bf2 ; $7bea
+	jr z, .checkReachDepth ; $7bea
 	xor a, a ; $7bec
 	sub a, l ; $7bed
 	ld l, a ; $7bee
 	sbc a, a ; $7bef
 	sub a, h ; $7bf0
 	ld h, a ; $7bf1
-Label_08_7bf2:
+.checkReachDepth:
 	ld de, $fe20 ; $7bf2
 	add hl, de ; $7bf5
 	bit 7, h ; $7bf6
-	jr z, Label_08_7c00 ; $7bf8
-Label_08_7bfa:
+	jr z, .done ; $7bf8
+.pressShot:
 	ld a, $12 ; $7bfa
 	ld [$df58], a ; $7bfc
 	ret ; $7bff
-Label_08_7c00:
+.done:
 	call AdvanceMatchRng ; $7c00
 	and a, $0f ; $7c03
 	ld b, a ; $7c05

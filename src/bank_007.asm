@@ -507,9 +507,9 @@ ExchangeChecksumMaster:
 	ld b, a ; $4336
 	and a, $c0 ; $4337
 	cp a, $80 ; $4339
-	jr z, Label_07_4340 ; $433b
+	jr z, .nibble1 ; $433b
 	call LinkErrorReset ; $433d
-Label_07_4340:
+.nibble1:
 	call ShiftNibbleIntoChecksum ; $4340
 	ld a, d ; $4343
 	and a, $0f ; $4344
@@ -518,9 +518,9 @@ Label_07_4340:
 	ld b, a ; $434b
 	and a, $c0 ; $434c
 	cp a, $80 ; $434e
-	jr z, Label_07_4355 ; $4350
+	jr z, .nibble2 ; $4350
 	call LinkErrorReset ; $4352
-Label_07_4355:
+.nibble2:
 	call ShiftNibbleIntoChecksum ; $4355
 	ld a, e ; $4358
 	swap a ; $4359
@@ -530,9 +530,9 @@ Label_07_4355:
 	ld b, a ; $4362
 	and a, $c0 ; $4363
 	cp a, $80 ; $4365
-	jr z, Label_07_436c ; $4367
+	jr z, .nibble3 ; $4367
 	call LinkErrorReset ; $4369
-Label_07_436c:
+.nibble3:
 	call ShiftNibbleIntoChecksum ; $436c
 	ld a, e ; $436f
 	and a, $0f ; $4370
@@ -541,9 +541,9 @@ Label_07_436c:
 	ld b, a ; $4377
 	and a, $c0 ; $4378
 	cp a, $80 ; $437a
-	jr z, Label_07_4381 ; $437c
+	jr z, .done ; $437c
 	call LinkErrorReset ; $437e
-Label_07_4381:
+.done:
 	call ShiftNibbleIntoChecksum ; $4381
 	call ShortDelay ; $4384
 	call ShortDelay ; $4387
@@ -558,9 +558,9 @@ ExchangeChecksumSlave:
 	or a, $80 ; $4395
 	call SendByteGetReplySlave ; $4397
 	cp a, $cc ; $439a
-	jr z, Label_07_43a1 ; $439c
+	jr z, .nibble1 ; $439c
 	call LinkErrorReset ; $439e
-Label_07_43a1:
+.nibble1:
 	ld a, d ; $43a1
 	and a, $0f ; $43a2
 	or a, $80 ; $43a4
@@ -568,9 +568,9 @@ Label_07_43a1:
 	ld b, a ; $43a9
 	and a, $c0 ; $43aa
 	cp a, $40 ; $43ac
-	jr z, Label_07_43b3 ; $43ae
+	jr z, .nibble2 ; $43ae
 	call LinkErrorReset ; $43b0
-Label_07_43b3:
+.nibble2:
 	call ShiftNibbleIntoChecksum ; $43b3
 	ld a, e ; $43b6
 	swap a ; $43b7
@@ -580,9 +580,9 @@ Label_07_43b3:
 	ld b, a ; $43c0
 	and a, $c0 ; $43c1
 	cp a, $40 ; $43c3
-	jr z, Label_07_43ca ; $43c5
+	jr z, .nibble3 ; $43c5
 	call LinkErrorReset ; $43c7
-Label_07_43ca:
+.nibble3:
 	call ShiftNibbleIntoChecksum ; $43ca
 	ld a, e ; $43cd
 	and a, $0f ; $43ce
@@ -591,18 +591,18 @@ Label_07_43ca:
 	ld b, a ; $43d5
 	and a, $c0 ; $43d6
 	cp a, $40 ; $43d8
-	jr z, Label_07_43df ; $43da
+	jr z, .nibble4 ; $43da
 	call LinkErrorReset ; $43dc
-Label_07_43df:
+.nibble4:
 	call ShiftNibbleIntoChecksum ; $43df
 	ld a, $cd ; $43e2
 	call SendByteGetReplySlave ; $43e4
 	ld b, a ; $43e7
 	and a, $c0 ; $43e8
 	cp a, $40 ; $43ea
-	jr z, Label_07_43f1 ; $43ec
+	jr z, .done ; $43ec
 	call LinkErrorReset ; $43ee
-Label_07_43f1:
+.done:
 	call ShiftNibbleIntoChecksum ; $43f1
 	pop bc ; $43f4
 	ret ; $43f5
@@ -2860,18 +2860,18 @@ ComputeShotTargetX:
 	and a, $07 ; $5654
 	ld a, a ; $5656
 	rst Rst00 ; $5657
-	dw Label_07_566c ; $5658 jumptable
-	dw Label_07_5668 ; $565a jumptable
-	dw Label_07_5696 ; $565c jumptable
-	dw Label_07_5685 ; $565e jumptable
-	dw Label_07_5689 ; $5660 jumptable
-	dw Label_07_5696 ; $5662 jumptable
-	dw Label_07_5696 ; $5664 jumptable
-	dw Label_07_5696 ; $5666 jumptable
-Label_07_5668:
+	dw ComputeShotTargetX.fromBallX ; $5658 jumptable
+	dw ComputeShotTargetX.halveShort ; $565a jumptable
+	dw ComputeShotTargetX.straight ; $565c jumptable
+	dw ComputeShotTargetX.halveLong ; $565e jumptable
+	dw ComputeShotTargetX.fromBallXLong ; $5660 jumptable
+	dw ComputeShotTargetX.straight ; $5662 jumptable
+	dw ComputeShotTargetX.straight ; $5664 jumptable
+	dw ComputeShotTargetX.straight ; $5666 jumptable
+.halveShort:
 	sra d ; $5668
 	rr e ; $566a
-Label_07_566c:
+.fromBallX:
 	ld hl, wBallX ; $566c
 	ld a, [hl+] ; $566f
 	ld h, [hl] ; $5670
@@ -2893,10 +2893,10 @@ Label_07_566c:
 	sub a, d ; $5682
 	ld d, a ; $5683
 	ret ; $5684
-Label_07_5685:
+.halveLong:
 	sra d ; $5685
 	rr e ; $5687
-Label_07_5689:
+.fromBallXLong:
 	ld hl, wBallX ; $5689
 	ld a, [hl+] ; $568c
 	ld h, [hl] ; $568d
@@ -2906,7 +2906,7 @@ Label_07_5689:
 	ld d, h ; $5691
 	call ClampShotTargetX ; $5692
 	ret ; $5695
-Label_07_5696:
+.straight:
 	ld hl, wBallX ; $5696
 	ld a, [hl+] ; $5699
 	ld d, [hl] ; $569a
@@ -2919,16 +2919,16 @@ Label_07_5696:
 	ld a, e ; $56a7
 	sub a, h ; $56a8
 	ld e, a ; $56a9
-	jr nc, Label_07_56ad ; $56aa
+	jr nc, .absTarget ; $56aa
 	dec d ; $56ac
-Label_07_56ad:
+.absTarget:
 	call GetRandomAimJitter ; $56ad
 	ld a, h ; $56b0
 	add a, e ; $56b1
 	ld e, a ; $56b2
-	jr nc, Label_07_56b6 ; $56b3
+	jr nc, .store ; $56b3
 	inc d ; $56b5
-Label_07_56b6:
+.store:
 	ret ; $56b6
 ComputeAimBaseOffset:
 	ld hl, wAimSpreadBase ; $56b7

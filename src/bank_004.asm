@@ -3282,22 +3282,22 @@ BuildNearbyActorList:
 	ld hl, $da00 ; $545a
 	ld bc, $d000 ; $545d
 	ld a, $18 ; $5460
-Label_04_5462:
+.actorLoop:
 	push af ; $5462
 	push hl ; $5463
 	inc c ; $5464
 	ld a, [bc] ; $5465
 	dec c ; $5466
 	or a, a ; $5467
-	jr z, Label_04_54c4 ; $5468
+	jr z, .done ; $5468
 	ld hl, $0030 ; $546a
 	add hl, bc ; $546d
 	bit 7, [hl] ; $546e
-	jr z, Label_04_54c4 ; $5470
+	jr z, .done ; $5470
 	ld hl, $0005 ; $5472
 	add hl, bc ; $5475
 	bit 3, [hl] ; $5476
-	jr z, Label_04_54c4 ; $5478
+	jr z, .done ; $5478
 	ld hl, $d00e ; $547a
 	ld a, [hl+] ; $547d
 	ld d, [hl] ; $547e
@@ -3314,17 +3314,17 @@ Label_04_5462:
 	sbc a, d ; $548b
 	ld h, a ; $548c
 	bit 7, h ; $548d
-	jr z, Label_04_5497 ; $548f
+	jr z, .withinRange ; $548f
 	xor a, a ; $5491
 	sub a, l ; $5492
 	ld l, a ; $5493
 	sbc a, a ; $5494
 	sub a, h ; $5495
 	ld h, a ; $5496
-Label_04_5497:
+.withinRange:
 	ld a, h ; $5497
 	and a, $fe ; $5498
-	jr nz, Label_04_54c4 ; $549a
+	jr nz, .done ; $549a
 	ld hl, $d00c ; $549c
 	ld a, [hl+] ; $549f
 	ld d, [hl] ; $54a0
@@ -3341,24 +3341,24 @@ Label_04_5497:
 	sbc a, d ; $54ad
 	ld h, a ; $54ae
 	bit 7, h ; $54af
-	jr z, Label_04_54b9 ; $54b1
+	jr z, .next ; $54b1
 	xor a, a ; $54b3
 	sub a, l ; $54b4
 	ld l, a ; $54b5
 	sbc a, a ; $54b6
 	sub a, h ; $54b7
 	ld h, a ; $54b8
-Label_04_54b9:
+.next:
 	ld a, h ; $54b9
 	and a, $fe ; $54ba
-	jr nz, Label_04_54c4 ; $54bc
+	jr nz, .done ; $54bc
 	pop hl ; $54be
 	ld a, c ; $54bf
 	ld [hl+], a ; $54c0
 	ld a, b ; $54c1
 	ld [hl+], a ; $54c2
 	push hl ; $54c3
-Label_04_54c4:
+.done:
 	ld hl, $0040 ; $54c4
 	add hl, bc ; $54c7
 	ld c, l ; $54c8
@@ -3366,7 +3366,7 @@ Label_04_54c4:
 	pop hl ; $54ca
 	pop af ; $54cb
 	dec a ; $54cc
-	jr nz, Label_04_5462 ; $54cd
+	jr nz, .actorLoop ; $54cd
 	xor a, a ; $54cf
 	ld [hl+], a ; $54d0
 	ld [hl+], a ; $54d1
