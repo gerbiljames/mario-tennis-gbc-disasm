@@ -106,18 +106,18 @@ ExchangeNibbleBlockMaster:
 	push de ; $40b5
 	push hl ; $40b6
 	call UnpackBytesToNibbles ; $40b7
-	jr nc, Label_07_40bf ; $40ba
+	jr nc, .haveLength ; $40ba
 	call LinkErrorReset ; $40bc
-Label_07_40bf:
+.haveLength:
 	ld c, a ; $40bf
 	call ComputeNibbleBufferChecksum ; $40c0
-Label_07_40c3:
+.startBlock:
 	call ShortDelay ; $40c3
 	call ShortDelay ; $40c6
 	call ShortDelay ; $40c9
 	call ShortDelay ; $40cc
 	ld e, $64 ; $40cf
-Label_07_40d1:
+.syncLoop:
 	di ; $40d1
 	ld a, $c3 ; $40d2
 	ldh [rSB], a ; $40d4
@@ -135,27 +135,27 @@ Label_07_40d1:
 	ldh a, [hLinkRxByte] ; $40eb
 	ei ; $40ed
 	cp a, $c4 ; $40ee
-	jr z, Label_07_40f8 ; $40f0
+	jr z, .synced ; $40f0
 	dec e ; $40f2
-	jr nz, Label_07_40d1 ; $40f3
+	jr nz, .syncLoop ; $40f3
 	call LinkErrorReset ; $40f5
-Label_07_40f8:
+.synced:
 	xor a, a ; $40f8
 	ldh [$ffc6], a ; $40f9
 	ldh [$ffc7], a ; $40fb
 	ld de, $0000 ; $40fd
 	ld b, c ; $4100
-Label_07_4101:
+.nibbleLoop:
 	ld hl, $ce40 ; $4101
 	ldh a, [$ffc7] ; $4104
 	add a, l ; $4106
 	ld l, a ; $4107
-	jr nc, Label_07_410b ; $4108
+	jr nc, .loadTxNibble ; $4108
 	inc h ; $410a
-Label_07_410b:
+.loadTxNibble:
 	ld a, [hl] ; $410b
 	ldh [hLinkTxByte], a ; $410c
-Label_07_410e:
+.sendRetry:
 	ldh a, [hLinkTxByte] ; $410e
 	or a, $40 ; $4110
 	ldh [rSB], a ; $4112
@@ -169,30 +169,30 @@ Label_07_410e:
 	call ShortDelay ; $4121
 	call ShortDelay ; $4124
 	call PollSerialResponse ; $4127
-	jr c, Label_07_410e ; $412a
+	jr c, .sendRetry ; $412a
 	ld h, a ; $412c
 	and a, $c0 ; $412d
 	cp a, $80 ; $412f
-	jr z, Label_07_4136 ; $4131
+	jr z, .storeRxNibble ; $4131
 	call LinkErrorReset ; $4133
-Label_07_4136:
+.storeRxNibble:
 	ld a, h ; $4136
 	push af ; $4137
 	ld hl, $cea0 ; $4138
 	ldh a, [$ffc6] ; $413b
 	add a, l ; $413d
 	ld l, a ; $413e
-	jr nc, Label_07_4142 ; $413f
+	jr nc, .accumulate ; $413f
 	inc h ; $4141
-Label_07_4142:
+.accumulate:
 	pop af ; $4142
 	and a, $3f ; $4143
 	ld [hl], a ; $4145
 	add a, e ; $4146
 	ld e, a ; $4147
-	jr nc, Label_07_414b ; $4148
+	jr nc, .nextNibble ; $4148
 	inc d ; $414a
-Label_07_414b:
+.nextNibble:
 	xor a, a ; $414b
 	ldh [hLinkCounter], a ; $414c
 	ld hl, $ffc7 ; $414e
@@ -200,19 +200,19 @@ Label_07_414b:
 	ld hl, $ffc6 ; $4152
 	inc [hl] ; $4155
 	dec b ; $4156
-	jr nz, Label_07_4101 ; $4157
+	jr nz, .nibbleLoop ; $4157
 	ld a, $c5 ; $4159
 	ld b, $c6 ; $415b
 	call SendByteAwaitEchoMaster ; $415d
-	jr nc, Label_07_4165 ; $4160
+	jr nc, .sendBlockEnd ; $4160
 	call LinkErrorReset ; $4162
-Label_07_4165:
+.sendBlockEnd:
 	ld a, $cc ; $4165
 	call SendByteGetReplyMaster ; $4167
 	cp a, $cc ; $416a
-	jr z, Label_07_4171 ; $416c
+	jr z, .compareChecksum ; $416c
 	call LinkErrorReset ; $416e
-Label_07_4171:
+.compareChecksum:
 	call ExchangeChecksumMaster ; $4171
 	ldh a, [$ffe5] ; $4174
 	ld e, a ; $4176
@@ -230,40 +230,41 @@ Label_07_4171:
 	or a, l ; $4183
 	pop de ; $4184
 	pop hl ; $4185
-	jp z, Label_07_419b ; $4186
+	jp z, .checksumOk ; $4186
 	ld a, $cb ; $4189
 	call SendByteGetReplyMaster ; $418b
 	cp a, $cd ; $418e
-	jp z, Label_07_40c3 ; $4190
+	jp z, .startBlock ; $4190
 	cp a, $cb ; $4193
-	jp z, Label_07_40c3 ; $4195
+	jp z, .startBlock ; $4195
 	call LinkErrorReset ; $4198
-Label_07_419b:
+.checksumOk:
 	ld a, $cd ; $419b
 	call SendByteGetReplyMaster ; $419d
 	cp a, $cd ; $41a0
-	jr z, Label_07_41ac ; $41a2
+	jr z, .done ; $41a2
 	cp a, $cb ; $41a4
-	jp z, Label_07_40c3 ; $41a6
+	jp z, .startBlock ; $41a6
 	call LinkErrorReset ; $41a9
-Label_07_41ac:
+.done:
 	pop hl ; $41ac
 	pop de ; $41ad
 	pop bc ; $41ae
 	pop af ; $41af
 	ret ; $41b0
+DelayByLinkPhase:
 	push af ; $41b1
 	push bc ; $41b2
 	ld bc, $007d ; $41b3
-Label_07_41b6:
+.spinLoop:
 	dec bc ; $41b6
 	ld a, c ; $41b7
 	or a, b ; $41b8
-	jr nz, Label_07_41b6 ; $41b9
+	jr nz, .spinLoop ; $41b9
 	ldh a, [$ffe8] ; $41bb
 	dec a ; $41bd
 	bit 7, a ; $41be
-	jr z, Label_07_41ea ; $41c0
+	jr z, .done ; $41c0
 	push af ; $41c2
 	push bc ; $41c3
 	push de ; $41c4
@@ -291,7 +292,7 @@ Label_07_41b6:
 	pop bc ; $41e6
 	pop af ; $41e7
 	ld a, $0f ; $41e8
-Label_07_41ea:
+.done:
 	ldh [$ffe8], a ; $41ea
 	pop bc ; $41ec
 	pop af ; $41ed
@@ -302,12 +303,12 @@ ExchangeNibbleBlockSlave:
 	push de ; $41f1
 	push hl ; $41f2
 	call UnpackBytesToNibbles ; $41f3
-	jr nc, Label_07_41fb ; $41f6
+	jr nc, .haveLength ; $41f6
 	call LinkErrorReset ; $41f8
-Label_07_41fb:
+.haveLength:
 	ld c, a ; $41fb
 	call ComputeNibbleBufferChecksum ; $41fc
-Label_07_41ff:
+.startBlock:
 	di ; $41ff
 	ld a, $c4 ; $4200
 	ldh [rSB], a ; $4202
@@ -326,19 +327,19 @@ Label_07_41ff:
 	ldh [hLinkTxByte], a ; $4217
 	ei ; $4219
 	ld e, $64 ; $421a
-Label_07_421c:
+.syncLoop:
 	call WaitSerialTransfer ; $421c
-	jr c, Label_07_422c ; $421f
+	jr c, .syncFailed ; $421f
 	di ; $4221
 	ldh a, [hLinkRxByte] ; $4222
 	ei ; $4224
 	cp a, $c3 ; $4225
-	jr z, Label_07_422f ; $4227
+	jr z, .synced ; $4227
 	dec e ; $4229
-	jr nz, Label_07_421c ; $422a
-Label_07_422c:
+	jr nz, .syncLoop ; $422a
+.syncFailed:
 	call LinkErrorReset ; $422c
-Label_07_422f:
+.synced:
 	ld a, $01 ; $422f
 	ldh [$ffc7], a ; $4231
 	xor a, a ; $4233
@@ -346,7 +347,7 @@ Label_07_422f:
 	ld de, $0000 ; $4236
 	ld b, c ; $4239
 	dec b ; $423a
-Label_07_423b:
+.nibbleLoop:
 	di ; $423b
 	ldh a, [rIF] ; $423c
 	and a, $f7 ; $423e
@@ -357,42 +358,42 @@ Label_07_423b:
 	ldh a, [$ffc7] ; $4248
 	add a, l ; $424a
 	ld l, a ; $424b
-	jr nc, Label_07_424f ; $424c
+	jr nc, .loadTxNibble ; $424c
 	inc h ; $424e
-Label_07_424f:
+.loadTxNibble:
 	ld a, [hl] ; $424f
 	or a, $80 ; $4250
 	ldh [hLinkTxByte], a ; $4252
 	ei ; $4254
 	call WaitSerialTransfer ; $4255
-	jr nc, Label_07_425d ; $4258
+	jr nc, .pollReply ; $4258
 	call LinkErrorReset ; $425a
-Label_07_425d:
+.pollReply:
 	call PollSerialResponse ; $425d
-	jr nc, Label_07_4265 ; $4260
+	jr nc, .checkTag ; $4260
 	call LinkErrorReset ; $4262
-Label_07_4265:
+.checkTag:
 	ld c, a ; $4265
 	and a, $c0 ; $4266
 	cp a, $40 ; $4268
-	jr z, Label_07_426f ; $426a
+	jr z, .storeRxNibble ; $426a
 	call LinkErrorReset ; $426c
-Label_07_426f:
+.storeRxNibble:
 	ld hl, $cea0 ; $426f
 	ldh a, [$ffc6] ; $4272
 	add a, l ; $4274
 	ld l, a ; $4275
-	jr nc, Label_07_4279 ; $4276
+	jr nc, .accumulate ; $4276
 	inc h ; $4278
-Label_07_4279:
+.accumulate:
 	ld a, c ; $4279
 	and a, $3f ; $427a
 	ld [hl], a ; $427c
 	add a, e ; $427d
 	ld e, a ; $427e
-	jr nc, Label_07_4282 ; $427f
+	jr nc, .nextNibble ; $427f
 	inc d ; $4281
-Label_07_4282:
+.nextNibble:
 	xor a, a ; $4282
 	ldh [hLinkCounter], a ; $4283
 	ld hl, $ffc7 ; $4285
@@ -400,7 +401,7 @@ Label_07_4282:
 	ld hl, $ffc6 ; $4289
 	inc [hl] ; $428c
 	dec b ; $428d
-	jr nz, Label_07_423b ; $428e
+	jr nz, .nibbleLoop ; $428e
 	di ; $4290
 	ldh a, [rIF] ; $4291
 	and a, $f7 ; $4293
@@ -417,30 +418,30 @@ Label_07_4282:
 	ld b, a ; $42a6
 	and a, $c0 ; $42a7
 	cp a, $40 ; $42a9
-	jr z, Label_07_42b0 ; $42ab
+	jr z, .storeLastNibble ; $42ab
 	call LinkErrorReset ; $42ad
-Label_07_42b0:
+.storeLastNibble:
 	ld hl, $cea0 ; $42b0
 	ldh a, [$ffc6] ; $42b3
 	add a, l ; $42b5
 	ld l, a ; $42b6
-	jr nc, Label_07_42ba ; $42b7
+	jr nc, .accumulateLast ; $42b7
 	inc h ; $42b9
-Label_07_42ba:
+.accumulateLast:
 	ld a, b ; $42ba
 	and a, $3f ; $42bb
 	ld [hl], a ; $42bd
 	add a, e ; $42be
 	ld e, a ; $42bf
-	jr nc, Label_07_42c3 ; $42c0
+	jr nc, .sendBlockEnd ; $42c0
 	inc d ; $42c2
-Label_07_42c3:
+.sendBlockEnd:
 	ld a, $cc ; $42c3
 	call SendByteGetReplySlave ; $42c5
 	cp a, $c5 ; $42c8
-	jr z, Label_07_42cf ; $42ca
+	jr z, .compareChecksum ; $42ca
 	call LinkErrorReset ; $42cc
-Label_07_42cf:
+.compareChecksum:
 	call ExchangeChecksumSlave ; $42cf
 	ldh a, [$ffe5] ; $42d2
 	ld e, a ; $42d4
@@ -458,7 +459,7 @@ Label_07_42cf:
 	or a, l ; $42e1
 	pop de ; $42e2
 	pop hl ; $42e3
-	jp z, Label_07_4312 ; $42e4
+	jp z, .checksumOk ; $42e4
 	di ; $42e7
 	ldh a, [rIF] ; $42e8
 	and a, $f7 ; $42ea
@@ -477,19 +478,19 @@ Label_07_42cf:
 	ld a, $cb ; $4300
 	call SendByteGetReplySlave ; $4302
 	cp a, $cb ; $4305
-	jp z, Label_07_41ff ; $4307
+	jp z, .startBlock ; $4307
 	cp a, $cd ; $430a
-	jp z, Label_07_41ff ; $430c
+	jp z, .startBlock ; $430c
 	call LinkErrorReset ; $430f
-Label_07_4312:
+.checksumOk:
 	ld a, $cd ; $4312
 	call SendByteGetReplySlave ; $4314
 	cp a, $cb ; $4317
-	jp z, Label_07_41ff ; $4319
+	jp z, .startBlock ; $4319
 	cp a, $cd ; $431c
-	jr z, Label_07_4323 ; $431e
+	jr z, .done ; $431e
 	call LinkErrorReset ; $4320
-Label_07_4323:
+.done:
 	pop hl ; $4323
 	pop de ; $4324
 	pop bc ; $4325
