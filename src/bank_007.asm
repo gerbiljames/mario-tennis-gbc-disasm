@@ -1015,33 +1015,33 @@ UnpackBytesToNibbles:
 	ld a, c ; $4659
 	add a, a ; $465a
 	cp a, $5f ; $465b
-	jr c, Label_07_4664 ; $465d
+	jr c, .unpack ; $465d
 	xor a, a ; $465f
 	scf ; $4660
-	jp Label_07_467e ; $4661
-Label_07_4664:
+	jp .done ; $4661
+.unpack:
 	ld c, a ; $4664
 	ld b, $00 ; $4665
-Label_07_4667:
+.nibbleLoop:
 	ld a, [de] ; $4667
 	bit 0, b ; $4668
-	jr nz, Label_07_4672 ; $466a
+	jr nz, .lowNibble ; $466a
 	swap a ; $466c
 	and a, $0f ; $466e
-	jr Label_07_4675 ; $4670
-Label_07_4672:
+	jr .store ; $4670
+.lowNibble:
 	and a, $0f ; $4672
 	inc de ; $4674
-Label_07_4675:
+.store:
 	ld [hl+], a ; $4675
 	inc b ; $4676
 	ld a, b ; $4677
 	cp a, c ; $4678
-	jr nz, Label_07_4667 ; $4679
+	jr nz, .nibbleLoop ; $4679
 	ld a, c ; $467b
 	scf ; $467c
 	ccf ; $467d
-Label_07_467e:
+.done:
 	ret ; $467e
 ExchangeLinkFrameByteMaster:
 	di ; $467f
@@ -1517,21 +1517,21 @@ PackNibblesToBytes:
 	ld a, c ; $49b0
 	add a, a ; $49b1
 	cp a, $5f ; $49b2
-	jr c, Label_07_49b9 ; $49b4
+	jr c, .pack ; $49b4
 	call LinkErrorReset ; $49b6
-Label_07_49b9:
+.pack:
 	ld c, a ; $49b9
 	ld b, $00 ; $49ba
 	ld de, $cea0 ; $49bc
-Label_07_49bf:
+.nibbleLoop:
 	ld a, b ; $49bf
 	and a, $01 ; $49c0
-	jr nz, Label_07_49cb ; $49c2
+	jr nz, .lowNibble ; $49c2
 	ld a, [de] ; $49c4
 	swap a ; $49c5
 	and a, $f0 ; $49c7
-	jr Label_07_49d5 ; $49c9
-Label_07_49cb:
+	jr .store ; $49c9
+.lowNibble:
 	ld a, [de] ; $49cb
 	and a, $0f ; $49cc
 	push bc ; $49ce
@@ -1540,17 +1540,17 @@ Label_07_49cb:
 	and a, $f0 ; $49d1
 	or a, b ; $49d3
 	pop bc ; $49d4
-Label_07_49d5:
+.store:
 	ld [hl], a ; $49d5
 	inc b ; $49d6
 	inc de ; $49d7
 	bit 0, b ; $49d8
-	jr nz, Label_07_49dd ; $49da
+	jr nz, .next ; $49da
 	inc hl ; $49dc
-Label_07_49dd:
+.next:
 	ld a, b ; $49dd
 	cp a, c ; $49de
-	jr c, Label_07_49bf ; $49df
+	jr c, .nibbleLoop ; $49df
 	ret ; $49e1
 PrimeSlaveSerialReply:
 	ldh a, [hLinkState] ; $49e2
@@ -2331,7 +2331,7 @@ AddBallSpeedQuarter:
 	rr l ; $52f9
 	sra h ; $52fb
 	rr l ; $52fd
-	jr Label_07_532f ; $52ff
+	jr AddBallSpeedEighth.absSpeed ; $52ff
 AddBallSpeed3Sixteenths:
 	ld hl, wBallVelocityDepth ; $5301
 	ld a, [hl+] ; $5304
@@ -2349,7 +2349,7 @@ AddBallSpeed3Sixteenths:
 	ld d, h ; $5318
 	add hl, de ; $5319
 	add hl, de ; $531a
-	jr Label_07_532f ; $531b
+	jr AddBallSpeedEighth.absSpeed ; $531b
 AddBallSpeedEighth:
 	ld hl, wBallVelocityDepth ; $531d
 	ld a, [hl+] ; $5320
@@ -2361,16 +2361,16 @@ AddBallSpeedEighth:
 	rr l ; $5329
 	sra h ; $532b
 	rr l ; $532d
-Label_07_532f:
+.absSpeed:
 	bit 7, h ; $532f
-	jr nz, Label_07_5339 ; $5331
+	jr nz, .store ; $5331
 	xor a, a ; $5333
 	sub a, l ; $5334
 	ld l, a ; $5335
 	sbc a, a ; $5336
 	sub a, h ; $5337
 	ld h, a ; $5338
-Label_07_5339:
+.store:
 	ld a, l ; $5339
 	ld [$c45a], a ; $533a
 	ld a, h ; $533d
@@ -2478,31 +2478,31 @@ ExecuteShot:
 	ld b, $00 ; $53ef
 	ld a, [$df15] ; $53f1
 	cp a, $06 ; $53f4
-	jr nz, Label_07_53f9 ; $53f6
+	jr nz, .checkShot0a ; $53f6
 	inc b ; $53f8
-Label_07_53f9:
+.checkShot0a:
 	cp a, $0a ; $53f9
-	jr nz, Label_07_53fe ; $53fb
+	jr nz, .checkLeftHanded ; $53fb
 	inc b ; $53fd
-Label_07_53fe:
+.checkLeftHanded:
 	ld a, [$df94] ; $53fe
 	and a, a ; $5401
-	jr z, Label_07_5405 ; $5402
+	jr z, .checkServe ; $5402
 	inc b ; $5404
-Label_07_5405:
+.checkServe:
 	ld a, [wRallyLength] ; $5405
 	cp a, $00 ; $5408
-	jr nz, Label_07_540d ; $540a
+	jr nz, .storeMirror ; $540a
 	inc b ; $540c
-Label_07_540d:
+.storeMirror:
 	ld a, b ; $540d
 	and a, $01 ; $540e
 	ld [wShotAimMirror], a ; $5410
 	ld a, [$df4b] ; $5413
 	cp a, $3f ; $5416
-	jr c, Label_07_541c ; $5418
+	jr c, .storeCharge ; $5418
 	ld a, $3f ; $541a
-Label_07_541c:
+.storeCharge:
 	ld [wShotChargeLevel], a ; $541c
 	ld a, [$df4c] ; $541f
 	ld [$c4a3], a ; $5422
@@ -3290,14 +3290,14 @@ RaiseBallHeightForLob:
 	ld hl, $0080 ; $589f
 	add hl, de ; $58a2
 	bit 7, h ; $58a3
-	jr nz, Label_07_58b1 ; $58a5
+	jr nz, .raise ; $58a5
 	ld de, hPeakLY ; $58a7
 	ld hl, wBallHeight ; $58aa
 	ld a, e ; $58ad
 	ld [hl+], a ; $58ae
 	ld [hl], d ; $58af
 	ret ; $58b0
-Label_07_58b1:
+.raise:
 	ld hl, $0020 ; $58b1
 	add hl, de ; $58b4
 	ld e, l ; $58b5
@@ -3611,9 +3611,9 @@ LoadCharacterAttributes:
 	add hl, de ; $5b1b
 	ld a, [hl] ; $5b1c
 	and a, a ; $5b1d
-	jr z, Label_07_5b22 ; $5b1e
+	jr z, .storeHandedness ; $5b1e
 	ld b, $20 ; $5b20
-Label_07_5b22:
+.storeHandedness:
 	ld a, b ; $5b22
 	ld [$df94], a ; $5b23
 	ld hl, $0027 ; $5b26
@@ -3639,16 +3639,16 @@ Label_07_5b22:
 	add hl, de ; $5b44
 	add a, [hl] ; $5b45
 	add a, a ; $5b46
-	jr nc, Label_07_5b4c ; $5b47
+	jr nc, .clampSpin ; $5b47
 	xor a, a ; $5b49
-	jr Label_07_5b54 ; $5b4a
-Label_07_5b4c:
+	jr .readPlacementTable ; $5b4a
+.clampSpin:
 	rra ; $5b4c
 	cp a, $0a ; $5b4d
-	jr c, Label_07_5b54 ; $5b4f
+	jr c, .readPlacementTable ; $5b4f
 	ld a, $0a ; $5b51
 	dec a ; $5b53
-Label_07_5b54:
+.readPlacementTable:
 	add a, a ; $5b54
 	add a, $4a ; $5b55
 	ld l, a ; $5b57
@@ -3771,16 +3771,16 @@ Label_07_5b54:
 	ld a, $00 ; $5c19
 	ld hl, $df91 ; $5c1b
 	bit 0, [hl] ; $5c1e
-	jr z, Label_07_5c24 ; $5c20
+	jr z, .storeLobIndex ; $5c20
 	ld a, $01 ; $5c22
-Label_07_5c24:
+.storeLobIndex:
 	ld [wLobPlacementIndex], a ; $5c24
 	ld a, $00 ; $5c27
 	ld hl, $df91 ; $5c29
 	bit 1, [hl] ; $5c2c
-	jr z, Label_07_5c32 ; $5c2e
+	jr z, .storeDropIndex ; $5c2e
 	ld a, $01 ; $5c30
-Label_07_5c32:
+.storeDropIndex:
 	ld [wDropPlacementIndex], a ; $5c32
 	ld a, [wDebugMatchFlags] ; $5c35
 	bit 1, a ; $5c38

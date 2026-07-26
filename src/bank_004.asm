@@ -1330,25 +1330,25 @@ IsActorAtTarget:
 	ld d, b ; $4762
 	ld a, [de] ; $4763
 	cp a, [hl] ; $4764
-	jr nz, Label_04_477b ; $4765
+	jr nz, .notThere ; $4765
 	inc hl ; $4767
 	inc de ; $4768
 	ld a, [de] ; $4769
 	cp a, [hl] ; $476a
-	jr nz, Label_04_477b ; $476b
+	jr nz, .notThere ; $476b
 	inc hl ; $476d
 	inc de ; $476e
 	ld a, [de] ; $476f
 	cp a, [hl] ; $4770
-	jr nz, Label_04_477b ; $4771
+	jr nz, .notThere ; $4771
 	inc hl ; $4773
 	inc de ; $4774
 	ld a, [de] ; $4775
 	cp a, [hl] ; $4776
-	jr nz, Label_04_477b ; $4777
+	jr nz, .notThere ; $4777
 	xor a, a ; $4779
 	ret ; $477a
-Label_04_477b:
+.notThere:
 	ld a, $01 ; $477b
 	or a, a ; $477d
 	ret ; $477e
@@ -2048,7 +2048,7 @@ SetActorAnimation:
 	add hl, bc ; $4bca
 	ld a, [hl] ; $4bcb
 	cp a, d ; $4bcc
-	jr z, Label_04_4c07 ; $4bcd
+	jr z, .done ; $4bcd
 	ld [hl], d ; $4bcf
 	ld hl, $002f ; $4bd0
 	add hl, bc ; $4bd3
@@ -2067,9 +2067,9 @@ SetActorAnimation:
 	add a, a ; $4be6
 	add a, l ; $4be7
 	ld l, a ; $4be8
-	jr nc, Label_04_4bec ; $4be9
+	jr nc, .readEntry ; $4be9
 	inc h ; $4beb
-Label_04_4bec:
+.readEntry:
 	push hl ; $4bec
 	ld hl, $0022 ; $4bed
 	add hl, bc ; $4bf0
@@ -2089,7 +2089,7 @@ Label_04_4bec:
 	ld a, e ; $4c04
 	ld [hl+], a ; $4c05
 	ld [hl], d ; $4c06
-Label_04_4c07:
+.done:
 	pop hl ; $4c07
 	pop de ; $4c08
 	pop af ; $4c09
@@ -2132,16 +2132,16 @@ EvalFlagCondition:
 	or a, d ; $4c4a
 	ret z ; $4c4b
 	bit 7, d ; $4c4c
-	jr nz, Label_04_4c54 ; $4c4e
+	jr nz, .negated ; $4c4e
 	call TestGameFlag ; $4c50
 	ret ; $4c53
-Label_04_4c54:
+.negated:
 	res 7, d ; $4c54
 	call TestGameFlag ; $4c56
-	jr z, Label_04_4c5d ; $4c59
+	jr z, .true ; $4c59
 	xor a, a ; $4c5b
 	ret ; $4c5c
-Label_04_4c5d:
+.true:
 	xor a, a ; $4c5d
 	inc a ; $4c5e
 	ret ; $4c5f
@@ -2273,21 +2273,21 @@ SpawnActorsFromList:
 	push af ; $4cfe
 	wram_bank $04 ; $4cff
 	ld a, b ; $4d05
-Label_04_4d06:
+.spawnLoop:
 	push af ; $4d06
 	ld de, $dac0 ; $4d07
 	ld bc, $000e ; $4d0a
 	call FarCopyBytes ; $4d0d
 	ld a, [$dac9] ; $4d10
 	inc a ; $4d13
-	jr z, Label_04_4d21 ; $4d14
+	jr z, .done ; $4d14
 	pop af ; $4d16
 	push hl ; $4d17
 	ld hl, $dac0 ; $4d18
 	call SpawnActorFromTemplate ; $4d1b
 	pop hl ; $4d1e
-	jr Label_04_4d06 ; $4d1f
-Label_04_4d21:
+	jr .spawnLoop ; $4d1f
+.done:
 	pop af ; $4d21
 	pop af ; $4d22
 	wram_bank ; $4d23
