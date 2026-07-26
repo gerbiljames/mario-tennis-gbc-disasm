@@ -277,85 +277,85 @@ MoveMenuCursorRepeat:
 	ld e, a ; $41af
 	ldh a, [hLinkInput] ; $41b0
 	bit 4, a ; $41b2
-	jr z, Label_3b_41cb ; $41b4
+	jr z, .step2 ; $41b4
 	ld a, [wMenuCursorX] ; $41b6
 	inc a ; $41b9
 	add a, a ; $41ba
-	jr nc, Label_3b_41c1 ; $41bb
+	jr nc, .step ; $41bb
 	ld a, b ; $41bd
 	dec a ; $41be
-	jr Label_3b_41c6 ; $41bf
-Label_3b_41c1:
+	jr .store ; $41bf
+.step:
 	rra ; $41c1
 	cp a, b ; $41c2
-	jr c, Label_3b_41c6 ; $41c3
+	jr c, .store ; $41c3
 	xor a, a ; $41c5
-Label_3b_41c6:
+.store:
 	ld [wMenuCursorX], a ; $41c6
-	jr Label_3b_4214 ; $41c9
-Label_3b_41cb:
+	jr .checkMenuCursorX ; $41c9
+.step2:
 	bit 5, a ; $41cb
-	jr z, Label_3b_41e4 ; $41cd
+	jr z, .step4 ; $41cd
 	ld a, [wMenuCursorX] ; $41cf
 	dec a ; $41d2
 	add a, a ; $41d3
-	jr nc, Label_3b_41da ; $41d4
+	jr nc, .step3 ; $41d4
 	ld a, b ; $41d6
 	dec a ; $41d7
-	jr Label_3b_41df ; $41d8
-Label_3b_41da:
+	jr .store2 ; $41d8
+.step3:
 	rra ; $41da
 	cp a, b ; $41db
-	jr c, Label_3b_41df ; $41dc
+	jr c, .store2 ; $41dc
 	xor a, a ; $41de
-Label_3b_41df:
+.store2:
 	ld [wMenuCursorX], a ; $41df
-	jr Label_3b_4214 ; $41e2
-Label_3b_41e4:
+	jr .checkMenuCursorX ; $41e2
+.step4:
 	bit 6, a ; $41e4
-	jr z, Label_3b_41fd ; $41e6
+	jr z, .step6 ; $41e6
 	ld a, [wMenuCursorY] ; $41e8
 	dec a ; $41eb
 	add a, a ; $41ec
-	jr nc, Label_3b_41f3 ; $41ed
+	jr nc, .step5 ; $41ed
 	ld a, c ; $41ef
 	dec a ; $41f0
-	jr Label_3b_41f8 ; $41f1
-Label_3b_41f3:
+	jr .store3 ; $41f1
+.step5:
 	rra ; $41f3
 	cp a, c ; $41f4
-	jr c, Label_3b_41f8 ; $41f5
+	jr c, .store3 ; $41f5
 	xor a, a ; $41f7
-Label_3b_41f8:
+.store3:
 	ld [wMenuCursorY], a ; $41f8
-	jr Label_3b_4214 ; $41fb
-Label_3b_41fd:
+	jr .checkMenuCursorX ; $41fb
+.step6:
 	bit 7, a ; $41fd
-	jr z, Label_3b_4214 ; $41ff
+	jr z, .checkMenuCursorX ; $41ff
 	ld a, [wMenuCursorY] ; $4201
 	inc a ; $4204
 	add a, a ; $4205
-	jr nc, Label_3b_420c ; $4206
+	jr nc, .step7 ; $4206
 	ld a, c ; $4208
 	dec a ; $4209
-	jr Label_3b_4211 ; $420a
-Label_3b_420c:
+	jr .store4 ; $420a
+.step7:
 	rra ; $420c
 	cp a, c ; $420d
-	jr c, Label_3b_4211 ; $420e
+	jr c, .store4 ; $420e
 	xor a, a ; $4210
-Label_3b_4211:
+.store4:
 	ld [wMenuCursorY], a ; $4211
-Label_3b_4214:
+.checkMenuCursorX:
 	ld a, [wMenuCursorX] ; $4214
 	cp a, d ; $4217
-	jr nz, Label_3b_4222 ; $4218
+	jr nz, .step8 ; $4218
 	ld a, [wMenuCursorY] ; $421a
 	cp a, e ; $421d
-	jr nz, Label_3b_4222 ; $421e
+	jr nz, .step8 ; $421e
 	xor a, a ; $4220
 	ret ; $4221
-Label_3b_4222:
+.step8:
 	ld a, $01 ; $4222
 	ret ; $4224
 MoveMenuCursorLinkLocal:
@@ -365,131 +365,131 @@ MoveMenuCursorLinkLocal:
 	ld e, a ; $422c
 	ldh a, [hLinkState] ; $422d
 	cp a, $02 ; $422f
-	jr z, Label_3b_423e ; $4231
+	jr z, .step2 ; $4231
 	cp a, $01 ; $4233
-	jr z, Label_3b_423a ; $4235
+	jr z, .step ; $4235
 	call LinkErrorReset ; $4237
-Label_3b_423a:
+.step:
 	ldh a, [hLinkRemoteInputBuf] ; $423a
-	jr Label_3b_4240 ; $423c
-Label_3b_423e:
+	jr .step3 ; $423c
+.step2:
 	ldh a, [hLinkRemoteInput] ; $423e
-Label_3b_4240:
+.step3:
 	ld h, a ; $4240
 	ld a, [wMenuCursorLockFlags] ; $4241
 	and a, $01 ; $4244
 	ld a, h ; $4246
-	jr nz, Label_3b_42ad ; $4247
+	jr nz, .step11 ; $4247
 	bit 4, a ; $4249
-	jr z, Label_3b_4262 ; $424b
+	jr z, .step5 ; $424b
 	ld a, [wMenuCursorX] ; $424d
 	inc a ; $4250
 	add a, a ; $4251
-	jr nc, Label_3b_4258 ; $4252
+	jr nc, .step4 ; $4252
 	ld a, b ; $4254
 	dec a ; $4255
-	jr Label_3b_425d ; $4256
-Label_3b_4258:
+	jr .store ; $4256
+.step4:
 	rra ; $4258
 	cp a, b ; $4259
-	jr c, Label_3b_425d ; $425a
+	jr c, .store ; $425a
 	xor a, a ; $425c
-Label_3b_425d:
+.store:
 	ld [wMenuCursorX], a ; $425d
-	jr Label_3b_42df ; $4260
-Label_3b_4262:
+	jr .checkMenuCursorX ; $4260
+.step5:
 	bit 5, a ; $4262
-	jr z, Label_3b_427b ; $4264
+	jr z, .step7 ; $4264
 	ld a, [wMenuCursorX] ; $4266
 	dec a ; $4269
 	add a, a ; $426a
-	jr nc, Label_3b_4271 ; $426b
+	jr nc, .step6 ; $426b
 	ld a, b ; $426d
 	dec a ; $426e
-	jr Label_3b_4276 ; $426f
-Label_3b_4271:
+	jr .store2 ; $426f
+.step6:
 	rra ; $4271
 	cp a, b ; $4272
-	jr c, Label_3b_4276 ; $4273
+	jr c, .store2 ; $4273
 	xor a, a ; $4275
-Label_3b_4276:
+.store2:
 	ld [wMenuCursorX], a ; $4276
-	jr Label_3b_42df ; $4279
-Label_3b_427b:
+	jr .checkMenuCursorX ; $4279
+.step7:
 	bit 6, a ; $427b
-	jr z, Label_3b_4294 ; $427d
+	jr z, .step9 ; $427d
 	ld a, [wMenuCursorY] ; $427f
 	dec a ; $4282
 	add a, a ; $4283
-	jr nc, Label_3b_428a ; $4284
+	jr nc, .step8 ; $4284
 	ld a, c ; $4286
 	dec a ; $4287
-	jr Label_3b_428f ; $4288
-Label_3b_428a:
+	jr .store3 ; $4288
+.step8:
 	rra ; $428a
 	cp a, c ; $428b
-	jr c, Label_3b_428f ; $428c
+	jr c, .store3 ; $428c
 	xor a, a ; $428e
-Label_3b_428f:
+.store3:
 	ld [wMenuCursorY], a ; $428f
-	jr Label_3b_42df ; $4292
-Label_3b_4294:
+	jr .checkMenuCursorX ; $4292
+.step9:
 	bit 7, a ; $4294
-	jr z, Label_3b_42ad ; $4296
+	jr z, .step11 ; $4296
 	ld a, [wMenuCursorY] ; $4298
 	inc a ; $429b
 	add a, a ; $429c
-	jr nc, Label_3b_42a3 ; $429d
+	jr nc, .step10 ; $429d
 	ld a, c ; $429f
 	dec a ; $42a0
-	jr Label_3b_42a8 ; $42a1
-Label_3b_42a3:
+	jr .store4 ; $42a1
+.step10:
 	rra ; $42a3
 	cp a, c ; $42a4
-	jr c, Label_3b_42a8 ; $42a5
+	jr c, .store4 ; $42a5
 	xor a, a ; $42a7
-Label_3b_42a8:
+.store4:
 	ld [wMenuCursorY], a ; $42a8
-	jr Label_3b_42df ; $42ab
-Label_3b_42ad:
+	jr .checkMenuCursorX ; $42ab
+.step11:
 	bit 0, a ; $42ad
-	jr z, Label_3b_42c5 ; $42af
+	jr z, .step12 ; $42af
 	sound $5f ; $42b1
 	ld a, [wMenuCursorLockFlags] ; $42b3
 	ld b, a ; $42b6
 	and a, $01 ; $42b7
-	jr nz, Label_3b_42df ; $42b9
+	jr nz, .checkMenuCursorX ; $42b9
 	sound $5f ; $42bb
 	ld a, b ; $42bd
 	or a, $01 ; $42be
 	ld [wMenuCursorLockFlags], a ; $42c0
-	jr Label_3b_42df ; $42c3
-Label_3b_42c5:
+	jr .checkMenuCursorX ; $42c3
+.step12:
 	bit 1, a ; $42c5
-	jr z, Label_3b_42df ; $42c7
+	jr z, .checkMenuCursorX ; $42c7
 	sound $62 ; $42c9
 	ld a, [wMenuCursorLockFlags] ; $42cb
 	ld b, a ; $42ce
 	and a, $03 ; $42cf
 	ld a, b ; $42d1
-	jr nz, Label_3b_42da ; $42d2
+	jr nz, .step13 ; $42d2
 	and a, $fa ; $42d4
 	or a, $04 ; $42d6
-	jr Label_3b_42dc ; $42d8
-Label_3b_42da:
+	jr .store5 ; $42d8
+.step13:
 	and a, $fe ; $42da
-Label_3b_42dc:
+.store5:
 	ld [wMenuCursorLockFlags], a ; $42dc
-Label_3b_42df:
+.checkMenuCursorX:
 	ld a, [wMenuCursorX] ; $42df
 	cp a, d ; $42e2
-	jr nz, Label_3b_42ed ; $42e3
+	jr nz, .step14 ; $42e3
 	ld a, [wMenuCursorY] ; $42e5
 	cp a, e ; $42e8
-	jr nz, Label_3b_42ed ; $42e9
+	jr nz, .step14 ; $42e9
 	xor a, a ; $42eb
 	ret ; $42ec
-Label_3b_42ed:
+.step14:
 	ld a, $01 ; $42ed
 	ret ; $42ef
 MoveMenuCursorLinkRemote:
@@ -499,130 +499,130 @@ MoveMenuCursorLinkRemote:
 	ld e, a ; $42f7
 	ldh a, [hLinkState] ; $42f8
 	cp a, $02 ; $42fa
-	jr z, Label_3b_4309 ; $42fc
+	jr z, .step2 ; $42fc
 	cp a, $01 ; $42fe
-	jr z, Label_3b_4305 ; $4300
+	jr z, .step ; $4300
 	call LinkErrorReset ; $4302
-Label_3b_4305:
+.step:
 	ldh a, [hLinkRemoteInput] ; $4305
-	jr Label_3b_430b ; $4307
-Label_3b_4309:
+	jr .step3 ; $4307
+.step2:
 	ldh a, [hLinkRemoteInputBuf] ; $4309
-Label_3b_430b:
+.step3:
 	ld h, a ; $430b
 	ld a, [wMenuCursorLockFlags] ; $430c
 	and a, $02 ; $430f
 	ld a, h ; $4311
-	jr nz, Label_3b_4378 ; $4312
+	jr nz, .step11 ; $4312
 	bit 4, a ; $4314
-	jr z, Label_3b_432d ; $4316
+	jr z, .step5 ; $4316
 	ld a, [wMenuCursor2X] ; $4318
 	inc a ; $431b
 	add a, a ; $431c
-	jr nc, Label_3b_4323 ; $431d
+	jr nc, .step4 ; $431d
 	ld a, b ; $431f
 	dec a ; $4320
-	jr Label_3b_4328 ; $4321
-Label_3b_4323:
+	jr .store ; $4321
+.step4:
 	rra ; $4323
 	cp a, b ; $4324
-	jr c, Label_3b_4328 ; $4325
+	jr c, .store ; $4325
 	xor a, a ; $4327
-Label_3b_4328:
+.store:
 	ld [wMenuCursor2X], a ; $4328
-	jr Label_3b_43a8 ; $432b
-Label_3b_432d:
+	jr .checkMenuCursor2X ; $432b
+.step5:
 	bit 5, a ; $432d
-	jr z, Label_3b_4346 ; $432f
+	jr z, .step7 ; $432f
 	ld a, [wMenuCursor2X] ; $4331
 	dec a ; $4334
 	add a, a ; $4335
-	jr nc, Label_3b_433c ; $4336
+	jr nc, .step6 ; $4336
 	ld a, b ; $4338
 	dec a ; $4339
-	jr Label_3b_4341 ; $433a
-Label_3b_433c:
+	jr .store2 ; $433a
+.step6:
 	rra ; $433c
 	cp a, b ; $433d
-	jr c, Label_3b_4341 ; $433e
+	jr c, .store2 ; $433e
 	xor a, a ; $4340
-Label_3b_4341:
+.store2:
 	ld [wMenuCursor2X], a ; $4341
-	jr Label_3b_43a8 ; $4344
-Label_3b_4346:
+	jr .checkMenuCursor2X ; $4344
+.step7:
 	bit 6, a ; $4346
-	jr z, Label_3b_435f ; $4348
+	jr z, .step9 ; $4348
 	ld a, [wMenuCursor2Y] ; $434a
 	dec a ; $434d
 	add a, a ; $434e
-	jr nc, Label_3b_4355 ; $434f
+	jr nc, .step8 ; $434f
 	ld a, c ; $4351
 	dec a ; $4352
-	jr Label_3b_435a ; $4353
-Label_3b_4355:
+	jr .store3 ; $4353
+.step8:
 	rra ; $4355
 	cp a, c ; $4356
-	jr c, Label_3b_435a ; $4357
+	jr c, .store3 ; $4357
 	xor a, a ; $4359
-Label_3b_435a:
+.store3:
 	ld [wMenuCursor2Y], a ; $435a
-	jr Label_3b_43a8 ; $435d
-Label_3b_435f:
+	jr .checkMenuCursor2X ; $435d
+.step9:
 	bit 7, a ; $435f
-	jr z, Label_3b_4378 ; $4361
+	jr z, .step11 ; $4361
 	ld a, [wMenuCursor2Y] ; $4363
 	inc a ; $4366
 	add a, a ; $4367
-	jr nc, Label_3b_436e ; $4368
+	jr nc, .step10 ; $4368
 	ld a, c ; $436a
 	dec a ; $436b
-	jr Label_3b_4373 ; $436c
-Label_3b_436e:
+	jr .store4 ; $436c
+.step10:
 	rra ; $436e
 	cp a, c ; $436f
-	jr c, Label_3b_4373 ; $4370
+	jr c, .store4 ; $4370
 	xor a, a ; $4372
-Label_3b_4373:
+.store4:
 	ld [wMenuCursor2Y], a ; $4373
-	jr Label_3b_43a8 ; $4376
-Label_3b_4378:
+	jr .checkMenuCursor2X ; $4376
+.step11:
 	bit 0, a ; $4378
-	jr z, Label_3b_438e ; $437a
+	jr z, .step12 ; $437a
 	ld a, [wMenuCursorLockFlags] ; $437c
 	ld b, a ; $437f
 	and a, $02 ; $4380
-	jr nz, Label_3b_43a8 ; $4382
+	jr nz, .checkMenuCursor2X ; $4382
 	sound $5f ; $4384
 	ld a, b ; $4386
 	or a, $02 ; $4387
 	ld [wMenuCursorLockFlags], a ; $4389
-	jr Label_3b_43a8 ; $438c
-Label_3b_438e:
+	jr .checkMenuCursor2X ; $438c
+.step12:
 	bit 1, a ; $438e
-	jr z, Label_3b_43a8 ; $4390
+	jr z, .checkMenuCursor2X ; $4390
 	sound $62 ; $4392
 	ld a, [wMenuCursorLockFlags] ; $4394
 	ld b, a ; $4397
 	and a, $03 ; $4398
 	ld a, b ; $439a
-	jr nz, Label_3b_43a3 ; $439b
+	jr nz, .step13 ; $439b
 	and a, $f5 ; $439d
 	or a, $08 ; $439f
-	jr Label_3b_43a5 ; $43a1
-Label_3b_43a3:
+	jr .store5 ; $43a1
+.step13:
 	and a, $fd ; $43a3
-Label_3b_43a5:
+.store5:
 	ld [wMenuCursorLockFlags], a ; $43a5
-Label_3b_43a8:
+.checkMenuCursor2X:
 	ld a, [wMenuCursor2X] ; $43a8
 	cp a, d ; $43ab
-	jr nz, Label_3b_43b6 ; $43ac
+	jr nz, .step14 ; $43ac
 	ld a, [wMenuCursor2Y] ; $43ae
 	cp a, e ; $43b1
-	jr nz, Label_3b_43b6 ; $43b2
+	jr nz, .step14 ; $43b2
 	xor a, a ; $43b4
 	ret ; $43b5
-Label_3b_43b6:
+.step14:
 	ld a, $01 ; $43b6
 	ret ; $43b8
 GetMenuCursorCellIndex:
@@ -646,12 +646,12 @@ GetCellIndexFromCursorPtr:
 	ld b, a ; $43cd
 	xor a, a ; $43ce
 	inc b ; $43cf
-Label_3b_43d0:
+.loop:
 	dec b ; $43d0
-	jr z, Label_3b_43d6 ; $43d1
+	jr z, .step ; $43d1
 	add a, c ; $43d3
-	jr Label_3b_43d0 ; $43d4
-Label_3b_43d6:
+	jr .loop ; $43d4
+.step:
 	ld b, a ; $43d6
 	ld a, [hl] ; $43d7
 	add a, b ; $43d8
@@ -674,13 +674,13 @@ SetMenuCursorFromCellIndex:
 StoreCellIndexToCursorPtr:
 	ld d, $00 ; $43ed
 	ld a, c ; $43ef
-Label_3b_43f0:
+.loop:
 	cp a, b ; $43f0
-	jr c, Label_3b_43f7 ; $43f1
+	jr c, .store ; $43f1
 	inc d ; $43f3
 	sub a, b ; $43f4
-	jr Label_3b_43f0 ; $43f5
-Label_3b_43f7:
+	jr .loop ; $43f5
+.store:
 	ld [hl+], a ; $43f7
 	ld a, d ; $43f8
 	ld [hl], a ; $43f9
@@ -691,10 +691,10 @@ ClearWram3Row64:
 	wram_bank $03 ; $43fe
 	xor a, a ; $4404
 	ld c, $40 ; $4405
-Label_3b_4407:
+.loop:
 	ld [hl+], a ; $4407
 	dec c ; $4408
-	jr nz, Label_3b_4407 ; $4409
+	jr nz, .loop ; $4409
 	pop af ; $440b
 	wram_bank ; $440c
 	ret ; $4410
@@ -703,10 +703,10 @@ Label_3b_4407:
 	wram_bank $03 ; $4414
 	ld a, $00 ; $441a
 	ld c, $40 ; $441c
-Label_3b_441e:
+.loopB:
 	ld [hl+], a ; $441e
 	dec c ; $441f
-	jr nz, Label_3b_441e ; $4420
+	jr nz, .loopB ; $4420
 	pop af ; $4422
 	wram_bank ; $4423
 	ret ; $4427
@@ -792,16 +792,16 @@ PrintNumberString_3b:
 DrawAsciiDigitString_3b:
 	ld a, [hl+] ; $4486
 	and a, a ; $4487
-	jr z, Label_3b_448f ; $4488
+	jr z, .done ; $4488
 	call DrawAsciiDigitChar_3b ; $448a
 	jr DrawAsciiDigitString_3b ; $448d
-Label_3b_448f:
+.done:
 	ret ; $448f
 DrawAsciiDigitChar_3b:
 	push hl ; $4490
 	ld hl, $d240 ; $4491
 	sub a, $30 ; $4494
-	jr c, Label_3b_44a6 ; $4496
+	jr c, .step ; $4496
 	add a, $30 ; $4498
 	ld b, a ; $449a
 	wram_bank $03 ; $449b
@@ -810,7 +810,7 @@ DrawAsciiDigitChar_3b:
 	inc de ; $44a3
 	pop hl ; $44a4
 	ret ; $44a5
-Label_3b_44a6:
+.step:
 	inc de ; $44a6
 	pop hl ; $44a7
 	ret ; $44a8
@@ -832,25 +832,25 @@ RunN64ExhibData:
 	script_fade_in $10 ; $44c9
 	call WaitFadeEnd ; $44ce
 	wram_bank $03 ; $44d1
-Label_3b_44d7:
+.loop:
 	ldh a, [hInputPressed] ; $44d7
 	ld [wMenuInputPressed], a ; $44d9
 	call ScrollN64ExhibDataCursor ; $44dc
 	call AdvanceFrame ; $44df
 	ld a, [wMenuInputPressed] ; $44e2
 	bit PADB_A, a ; $44e5
-	jr nz, Label_3b_44ef ; $44e7
+	jr nz, .playSfx ; $44e7
 	bit 1, a ; $44e9
-	jr nz, Label_3b_44fd ; $44eb
-	jr Label_3b_44d7 ; $44ed
-Label_3b_44ef:
+	jr nz, .playSfx2 ; $44eb
+	jr .loop ; $44ed
+.playSfx:
 	sound $5f ; $44ef
 	ld c, $10 ; $44f1
 	call BeginFadeOut ; $44f3
 	call WaitFadeEnd ; $44f6
 	call ClearFrameTasks ; $44f9
 	ret ; $44fc
-Label_3b_44fd:
+.playSfx2:
 	sound $62 ; $44fd
 	ld c, $10 ; $44ff
 	call BeginFadeOut ; $4501
@@ -861,49 +861,49 @@ Label_3b_44fd:
 ScrollN64ExhibDataCursor:
 	ld a, [wMenuInputPressed] ; $450d
 	bit PADB_LEFT, a ; $4510
-	jr z, Label_3b_4525 ; $4512
+	jr z, .step ; $4512
 	ld a, [$dc12] ; $4514
 	or a, a ; $4517
-	jr z, Label_3b_4566 ; $4518
+	jr z, .done ; $4518
 	dec a ; $451a
 	ld [$dc12], a ; $451b
 	sound $5e ; $451e
 	call RedrawN64ExhibDataWindow ; $4520
-	jr Label_3b_4566 ; $4523
-Label_3b_4525:
+	jr .done ; $4523
+.step:
 	bit 4, a ; $4525
-	jr z, Label_3b_453b ; $4527
+	jr z, .step2 ; $4527
 	ld a, [$dc12] ; $4529
 	cp a, $09 ; $452c
-	jr z, Label_3b_4566 ; $452e
+	jr z, .done ; $452e
 	inc a ; $4530
 	ld [$dc12], a ; $4531
 	sound $5e ; $4534
 	call RedrawN64ExhibDataWindow ; $4536
-	jr Label_3b_4566 ; $4539
-Label_3b_453b:
+	jr .done ; $4539
+.step2:
 	bit 6, a ; $453b
-	jr z, Label_3b_4550 ; $453d
+	jr z, .step3 ; $453d
 	ld a, [$dc13] ; $453f
 	or a, a ; $4542
-	jr z, Label_3b_4566 ; $4543
+	jr z, .done ; $4543
 	dec a ; $4545
 	ld [$dc13], a ; $4546
 	sound $5e ; $4549
 	call RedrawN64ExhibDataWindow ; $454b
-	jr Label_3b_4566 ; $454e
-Label_3b_4550:
+	jr .done ; $454e
+.step3:
 	bit 7, a ; $4550
-	jr z, Label_3b_4566 ; $4552
+	jr z, .done ; $4552
 	ld a, [$dc13] ; $4554
 	cp a, $0c ; $4557
-	jr z, Label_3b_4566 ; $4559
+	jr z, .done ; $4559
 	inc a ; $455b
 	ld [$dc13], a ; $455c
 	sound $5e ; $455f
 	call RedrawN64ExhibDataWindow ; $4561
-	jr Label_3b_4566 ; $4564
-Label_3b_4566:
+	jr .done ; $4564
+.done:
 	ret ; $4566
 N64ExhibScrollArrowsTask:
 	ldh a, [hWramBank] ; $4567
@@ -911,7 +911,7 @@ N64ExhibScrollArrowsTask:
 	wram_bank $03 ; $456a
 	ld a, [$dc12] ; $4570
 	cp a, $09 ; $4573
-	jr z, Label_3b_4588 ; $4575
+	jr z, .step ; $4575
 	ld de, $932f ; $4577
 	ld c, $01 ; $457a
 	call ApplyCursorBounceX ; $457c
@@ -919,10 +919,10 @@ N64ExhibScrollArrowsTask:
 	ld c, $00 ; $4581
 	ld h, $00 ; $4583
 	farcall QueueStackedSpritePair ; $4585
-Label_3b_4588:
+.step:
 	ld a, [$dc12] ; $4588
 	or a, a ; $458b
-	jr z, Label_3b_459f ; $458c
+	jr z, .step2 ; $458c
 	ld de, $082f ; $458e
 	ld c, $00 ; $4591
 	call ApplyCursorBounceX ; $4593
@@ -930,10 +930,10 @@ Label_3b_4588:
 	ld c, $00 ; $4598
 	ld h, $01 ; $459a
 	farcall QueueStackedSpritePair ; $459c
-Label_3b_459f:
+.step2:
 	ld a, [$dc13] ; $459f
 	or a, a ; $45a2
-	jr z, Label_3b_45b6 ; $45a3
+	jr z, .step3 ; $45a3
 	ld de, $0a20 ; $45a5
 	ld c, $01 ; $45a8
 	call ApplyCursorBounceY ; $45aa
@@ -941,10 +941,10 @@ Label_3b_459f:
 	ld c, $00 ; $45af
 	ld h, $02 ; $45b1
 	farcall QueueStackedSpritePair ; $45b3
-Label_3b_45b6:
+.step3:
 	ld a, [$dc13] ; $45b6
 	cp a, $0c ; $45b9
-	jr z, Label_3b_45ce ; $45bb
+	jr z, .restore ; $45bb
 	ld de, $0a78 ; $45bd
 	ld c, $00 ; $45c0
 	call ApplyCursorBounceY ; $45c2
@@ -952,7 +952,7 @@ Label_3b_45b6:
 	ld c, $00 ; $45c7
 	ld h, $03 ; $45c9
 	farcall QueueStackedSpritePair ; $45cb
-Label_3b_45ce:
+.restore:
 	pop af ; $45ce
 	wram_bank ; $45cf
 	ret ; $45d3
@@ -972,8 +972,8 @@ BuildN64ExhibDataScreen:
 	farcall LoadIndexedPalette ; $45f6
 	wram_bank $03 ; $45f9
 	call ReadN64RecordsSaveBlock ; $45ff
-Label_3b_4602:
-	jr nz, Label_3b_4602 ; $4602
+.step:
+	jr nz, .step ; $4602
 	call BuildN64ExhibColumnList ; $4604
 	call InitChartRowFlags ; $4607
 	ld hl, $dc01 ; $460a
@@ -1140,9 +1140,9 @@ DrawChartCellMark:
 	ld a, b ; $471f
 	add a, l ; $4720
 	ld l, a ; $4721
-	jr nc, Label_3b_4725 ; $4722
+	jr nc, .read ; $4722
 	inc h ; $4724
-Label_3b_4725:
+.read:
 	ld a, [hl] ; $4725
 	ld h, d ; $4726
 	ld l, e ; $4727
@@ -1193,33 +1193,33 @@ Label_3b_476d:
 InitChartRowFlags:
 	ld hl, $db00 ; $4783
 	ld c, $00 ; $4786
-Label_3b_4788:
+.loop:
 	ld a, $01 ; $4788
 	ld [hl], a ; $478a
 	ld a, $11 ; $478b
 	add a, l ; $478d
 	ld l, a ; $478e
-	jr nc, Label_3b_4792 ; $478f
+	jr nc, .step ; $478f
 	inc h ; $4791
-Label_3b_4792:
+.step:
 	ld a, c ; $4792
 	inc a ; $4793
 	ld c, a ; $4794
 	cp a, $10 ; $4795
-	jr nz, Label_3b_4788 ; $4797
+	jr nz, .loop ; $4797
 	ret ; $4799
 BuildN64ExhibResultsGrid:
 	ld de, $db00 ; $479a
 	ld b, $00 ; $479d
-Label_3b_479f:
+.loop:
 	push bc ; $479f
 	ld hl, $47bc ; $47a0
 	ld a, b ; $47a3
 	add a, l ; $47a4
 	ld l, a ; $47a5
-	jr nc, Label_3b_47a9 ; $47a6
+	jr nc, .read ; $47a6
 	inc h ; $47a8
-Label_3b_47a9:
+.read:
 	ld b, [hl] ; $47a9
 	call DecodeN64ExhibResultsRow ; $47aa
 	pop bc ; $47ad
@@ -1231,7 +1231,7 @@ Label_3b_47a9:
 	inc a ; $47b5
 	ld b, a ; $47b6
 	cp a, $10 ; $47b7
-	jr nz, Label_3b_479f ; $47b9
+	jr nz, .loop ; $47b9
 	ret ; $47bb
 	; $47bc, 16 bytes (bytes:16)
 	db $02, $0a, $01, $06, $00, $05, $0f, $09, $08, $0b, $07, $0c, $03, $04, $0e, $0d ; 0x00
@@ -1248,9 +1248,9 @@ DecodeN64ExhibResultsRow:
 	add a, a ; $47d7
 	add a, l ; $47d8
 	ld l, a ; $47d9
-	jr nc, Label_3b_47dd ; $47da
+	jr nc, .step ; $47da
 	inc h ; $47dc
-Label_3b_47dd:
+.step:
 	ld d, h ; $47dd
 	ld e, l ; $47de
 	call ExpandRowBytesToBits ; $47df
@@ -1258,16 +1258,16 @@ Label_3b_47dd:
 	ld h, d ; $47e3
 	ld l, e ; $47e4
 	ld b, $00 ; $47e5
-Label_3b_47e7:
+.loop:
 	push bc ; $47e7
 	push hl ; $47e8
 	ld hl, $4808 ; $47e9
 	ld a, b ; $47ec
 	add a, l ; $47ed
 	ld l, a ; $47ee
-	jr nc, Label_3b_47f2 ; $47ef
+	jr nc, .read ; $47ef
 	inc h ; $47f1
-Label_3b_47f2:
+.read:
 	ld b, [hl] ; $47f2
 	call CombineExhibCellBits ; $47f3
 	pop hl ; $47f6
@@ -1278,7 +1278,7 @@ Label_3b_47f2:
 	inc a ; $47fd
 	ld b, a ; $47fe
 	cp a, $10 ; $47ff
-	jr nz, Label_3b_47e7 ; $4801
+	jr nz, .loop ; $4801
 	pop hl ; $4803
 	pop de ; $4804
 	pop bc ; $4805
@@ -1291,9 +1291,9 @@ MapExhibCellValueToGlyph:
 	ld hl, $4824 ; $4819
 	add a, l ; $481c
 	ld l, a ; $481d
-	jr nc, Label_3b_4821 ; $481e
+	jr nc, .read ; $481e
 	inc h ; $4820
-Label_3b_4821:
+.read:
 	ld a, [hl] ; $4821
 	pop hl ; $4822
 	ret ; $4823
@@ -1309,25 +1309,25 @@ CombineExhibCellBits:
 	ld hl, $dc20 ; $483a
 	add a, l ; $483d
 	ld l, a ; $483e
-	jr nc, Label_3b_4842 ; $483f
+	jr nc, .read ; $483f
 	inc h ; $4841
-Label_3b_4842:
+.read:
 	ld c, [hl] ; $4842
 	ld a, $10 ; $4843
 	add a, l ; $4845
 	ld l, a ; $4846
-	jr nc, Label_3b_484a ; $4847
+	jr nc, .readB ; $4847
 	inc h ; $4849
-Label_3b_484a:
+.readB:
 	ld a, [hl] ; $484a
 	sla a ; $484b
 	ld d, a ; $484d
 	ld a, $10 ; $484e
 	add a, l ; $4850
 	ld l, a ; $4851
-	jr nc, Label_3b_4855 ; $4852
+	jr nc, .readBB ; $4852
 	inc h ; $4854
-Label_3b_4855:
+.readBB:
 	ld a, [hl] ; $4855
 	sla a ; $4856
 	sla a ; $4858
@@ -1335,9 +1335,9 @@ Label_3b_4855:
 	ld a, $10 ; $485b
 	add a, l ; $485d
 	ld l, a ; $485e
-	jr nc, Label_3b_4862 ; $485f
+	jr nc, .readBBB ; $485f
 	inc h ; $4861
-Label_3b_4862:
+.readBBB:
 	ld a, [hl] ; $4862
 	sla a ; $4863
 	sla a ; $4865
@@ -1361,7 +1361,7 @@ ExpandRowBytesToBits:
 	pop de ; $487e
 	ld hl, $dc20 ; $487f
 	ld c, $00 ; $4882
-Label_3b_4884:
+.loop:
 	ld a, [de] ; $4884
 	inc de ; $4885
 	ld b, a ; $4886
@@ -1369,14 +1369,14 @@ Label_3b_4884:
 	ld a, $08 ; $488a
 	add a, l ; $488c
 	ld l, a ; $488d
-	jr nc, Label_3b_4891 ; $488e
+	jr nc, .step ; $488e
 	inc h ; $4890
-Label_3b_4891:
+.step:
 	ld a, c ; $4891
 	inc a ; $4892
 	ld c, a ; $4893
 	cp a, $08 ; $4894
-	jr nz, Label_3b_4884 ; $4896
+	jr nz, .loop ; $4896
 	pop hl ; $4898
 	pop de ; $4899
 	pop bc ; $489a
@@ -1388,11 +1388,11 @@ ExpandByteToBitArray:
 	ld a, $07 ; $489f
 	add a, l ; $48a1
 	ld l, a ; $48a2
-	jr nc, Label_3b_48a6 ; $48a3
+	jr nc, .step ; $48a3
 	inc h ; $48a5
-Label_3b_48a6:
+.step:
 	ld c, $00 ; $48a6
-Label_3b_48a8:
+.loop:
 	ld a, b ; $48a8
 	and a, $01 ; $48a9
 	ld [hl-], a ; $48ab
@@ -1401,14 +1401,14 @@ Label_3b_48a8:
 	inc a ; $48af
 	ld c, a ; $48b0
 	cp a, $08 ; $48b1
-	jr nz, Label_3b_48a8 ; $48b3
+	jr nz, .loop ; $48b3
 	pop bc ; $48b5
 	pop hl ; $48b6
 	ret ; $48b7
 	wram_bank $03 ; $48b8
 	ld hl, $d9d8 ; $48be
 	ld c, $00 ; $48c1
-Label_3b_48c3:
+.loopB:
 	ld a, $2c ; $48c3
 	ld a, $ff ; $48c5
 	ld [hl+], a ; $48c7
@@ -1436,7 +1436,7 @@ Label_3b_48c3:
 	inc c ; $48eb
 	ld a, c ; $48ec
 	cp a, $08 ; $48ed
-	jr nz, Label_3b_48c3 ; $48ef
+	jr nz, .loopB ; $48ef
 	ret ; $48f1
 LoadChartWindowTiles:
 	ld b, $16 ; $48f2
@@ -1524,42 +1524,42 @@ RunTrophiesScreen:
 	script_fade_in $10 ; $4982
 	call WaitFadeEnd ; $4987
 	wram_bank $03 ; $498a
-Label_3b_4990:
+.loop:
 	ldh a, [hInputPressed] ; $4990
 	ld [wMenuInputPressed], a ; $4992
 	call AdvanceFrame ; $4995
 	ld a, [wMenuInputPressed] ; $4998
 	bit PADB_A, a ; $499b
-	jr nz, Label_3b_49bf ; $499d
+	jr nz, .step3 ; $499d
 	bit 1, a ; $499f
-	jr nz, Label_3b_49d4 ; $49a1
+	jr nz, .playSfx2 ; $49a1
 	bit 5, a ; $49a3
-	jr nz, Label_3b_49ad ; $49a5
+	jr nz, .step ; $49a5
 	bit 4, a ; $49a7
-	jr nz, Label_3b_49b6 ; $49a9
-	jr Label_3b_4990 ; $49ab
-Label_3b_49ad:
+	jr nz, .step2 ; $49a9
+	jr .loop ; $49ab
+.step:
 	ld a, [$d901] ; $49ad
 	inc a ; $49b0
 	ld [$d901], a ; $49b1
-	jr Label_3b_4990 ; $49b4
-Label_3b_49b6:
+	jr .loop ; $49b4
+.step2:
 	ld a, [$d900] ; $49b6
 	inc a ; $49b9
 	ld [$d900], a ; $49ba
-	jr Label_3b_4990 ; $49bd
-Label_3b_49bf:
+	jr .loop ; $49bd
+.step3:
 	bit 2, a ; $49bf
-	jr z, Label_3b_49c6 ; $49c1
+	jr z, .playSfx ; $49c1
 	call CheckTrophiesCheatCode ; $49c3
-Label_3b_49c6:
+.playSfx:
 	sound $5f ; $49c6
 	ld c, $10 ; $49c8
 	call BeginFadeOut ; $49ca
 	call WaitFadeEnd ; $49cd
 	call ClearFrameTasks ; $49d0
 	ret ; $49d3
-Label_3b_49d4:
+.playSfx2:
 	sound $62 ; $49d4
 	ld c, $10 ; $49d6
 	call BeginFadeOut ; $49d8
@@ -1573,19 +1573,19 @@ BuildTrophiesScreen:
 	call DecodeTrophyCounts ; $49eb
 	ld a, [$d819] ; $49ee
 	or a, a ; $49f1
-	jr nz, Label_3b_49fb ; $49f2
+	jr nz, .step ; $49f2
 	ld c, $0e ; $49f4
 	farcall LoadScreenAssetRecord ; $49f6
-	jr Label_3b_4a00 ; $49f9
-Label_3b_49fb:
+	jr .step2 ; $49f9
+.step:
 	ld c, $0d ; $49fb
 	farcall LoadScreenAssetRecord ; $49fd
-Label_3b_4a00:
+.step2:
 	wram_bank $03 ; $4a00
 	call DrawTrophiesWonRows ; $4a06
 	ld a, [$d819] ; $4a09
 	or a, a ; $4a0c
-	jr nz, Label_3b_4a25 ; $4a0d
+	jr nz, .step3 ; $4a0d
 	ld a, [wStoryModeMainCharacterOverworldSprite] ; $4a0f
 	ld c, a ; $4a12
 	ld de, $d102 ; $4a13
@@ -1594,8 +1594,8 @@ Label_3b_4a00:
 	ld c, a ; $4a1c
 	ld de, $d142 ; $4a1d
 	call DrawTrophiesCharSprite ; $4a20
-	jr Label_3b_4a6d ; $4a23
-Label_3b_4a25:
+	jr .queueWram3MapToVRAM ; $4a23
+.step3:
 	ld c, $00 ; $4a25
 	ld de, $d0c2 ; $4a27
 	call DrawTrophiesCharSprite ; $4a2a
@@ -1624,20 +1624,20 @@ Label_3b_4a25:
 	ld c, a ; $4a66
 	ld de, $d1e2 ; $4a67
 	call DrawTrophiesCharSprite ; $4a6a
-Label_3b_4a6d:
+.queueWram3MapToVRAM:
 	farcall QueueWram3MapToVRAM ; $4a6d
 	ret ; $4a70
 DrawTrophiesWonRows:
 	ld a, [$d819] ; $4a71
 	or a, a ; $4a74
-	jr nz, Label_3b_4a87 ; $4a75
+	jr nz, .step ; $4a75
 	ld hl, $d800 ; $4a77
 	ld de, $d105 ; $4a7a
 	call DrawTrophyRowPair ; $4a7d
 	ld de, $d145 ; $4a80
 	call DrawTrophyRowPair ; $4a83
 	ret ; $4a86
-Label_3b_4a87:
+.step:
 	ld hl, $d800 ; $4a87
 	ld de, $d0c5 ; $4a8a
 	call DrawTrophyRowPair ; $4a8d
@@ -1745,12 +1745,12 @@ CheckTrophiesCheatCode:
 	sound $22 ; $4b19
 	ld a, [$d900] ; $4b1b
 	cp a, $0c ; $4b1e
-	jp nz, Label_3b_4b2e ; $4b20
+	jp nz, .saveStorySlot ; $4b20
 	ld a, [$d901] ; $4b23
 	cp a, $22 ; $4b26
-	jp nz, Label_3b_4b2e ; $4b28
+	jp nz, .saveStorySlot ; $4b28
 	call ApplyUnlockEverythingCheat ; $4b2b
-Label_3b_4b2e:
+.saveStorySlot:
 	farcall SaveStorySlot ; $4b2e
 	xor a, a ; $4b31
 	ret ; $4b32
@@ -1816,13 +1816,13 @@ ApplyUnlockEverythingCheat:
 	ld a, [wCurrentStorySlot] ; $4be1
 	push af ; $4be4
 	ld c, $00 ; $4be5
-Label_3b_4be7:
+.loop:
 	push bc ; $4be7
 	ld a, c ; $4be8
 	ld [wCurrentStorySlot], a ; $4be9
 	farcall CheckStorySlot ; $4bec
 	cp a, $fe ; $4bef
-	jr z, Label_3b_4c44 ; $4bf1
+	jr z, .restore ; $4bf1
 	ld de, $1400 ; $4bf3
 	call SetGameFlag ; $4bf6
 	ld de, $1420 ; $4bf9
@@ -1850,12 +1850,12 @@ Label_3b_4be7:
 	ld de, $1540 ; $4c3b
 	call SetGameFlag ; $4c3e
 	farcall SaveStorySlot ; $4c41
-Label_3b_4c44:
+.restore:
 	pop bc ; $4c44
 	inc c ; $4c45
 	ld a, c ; $4c46
 	cp a, $03 ; $4c47
-	jr nz, Label_3b_4be7 ; $4c49
+	jr nz, .loop ; $4c49
 	pop af ; $4c4b
 	ld [wCurrentStorySlot], a ; $4c4c
 	farcall SetAllUnlockablesInSaveBlock ; $4c4f
@@ -1919,21 +1919,21 @@ DecodeTrophyCounts:
 	call FillTrophyCountCells ; $4cd7
 	ld a, [$d80c] ; $4cda
 	or a, a ; $4cdd
-	jr nz, Label_3b_4cf4 ; $4cde
+	jr nz, .step ; $4cde
 	ld a, [$d80f] ; $4ce0
 	or a, a ; $4ce3
-	jr nz, Label_3b_4cf4 ; $4ce4
+	jr nz, .step ; $4ce4
 	ld a, [$d812] ; $4ce6
 	or a, a ; $4ce9
-	jr nz, Label_3b_4cf4 ; $4cea
+	jr nz, .step ; $4cea
 	ld a, [$d815] ; $4cec
 	or a, a ; $4cef
-	jr nz, Label_3b_4cf4 ; $4cf0
-	jr Label_3b_4cf9 ; $4cf2
-Label_3b_4cf4:
+	jr nz, .step ; $4cf0
+	jr .done ; $4cf2
+.step:
 	ld a, $01 ; $4cf4
 	ld [$d819], a ; $4cf6
-Label_3b_4cf9:
+.done:
 	ret ; $4cf9
 RunN64TnmtData:
 	sound $04 ; $4cfa
@@ -1951,25 +1951,25 @@ RunN64TnmtData:
 	script_fade_in $10 ; $4d19
 	call WaitFadeEnd ; $4d1e
 	wram_bank $03 ; $4d21
-Label_3b_4d27:
+.loop:
 	ldh a, [hInputPressed] ; $4d27
 	ld [wMenuInputPressed], a ; $4d29
 	call ScrollN64TnmtDataCursor ; $4d2c
 	call AdvanceFrame ; $4d2f
 	ld a, [wMenuInputPressed] ; $4d32
 	bit PADB_A, a ; $4d35
-	jr nz, Label_3b_4d3f ; $4d37
+	jr nz, .playSfx ; $4d37
 	bit 1, a ; $4d39
-	jr nz, Label_3b_4d4d ; $4d3b
-	jr Label_3b_4d27 ; $4d3d
-Label_3b_4d3f:
+	jr nz, .playSfx2 ; $4d3b
+	jr .loop ; $4d3d
+.playSfx:
 	sound $5f ; $4d3f
 	ld c, $10 ; $4d41
 	call BeginFadeOut ; $4d43
 	call WaitFadeEnd ; $4d46
 	call ClearFrameTasks ; $4d49
 	ret ; $4d4c
-Label_3b_4d4d:
+.playSfx2:
 	sound $62 ; $4d4d
 	ld c, $10 ; $4d4f
 	call BeginFadeOut ; $4d51
@@ -1980,52 +1980,52 @@ Label_3b_4d4d:
 ScrollN64TnmtDataCursor:
 	ld a, [wMenuInputPressed] ; $4d5d
 	bit PADB_LEFT, a ; $4d60
-	jr z, Label_3b_4d75 ; $4d62
+	jr z, .step ; $4d62
 	ld a, [$d801] ; $4d64
 	or a, a ; $4d67
-	jr z, Label_3b_4dbc ; $4d68
+	jr z, .done ; $4d68
 	xor a, a ; $4d6a
 	ld [$d801], a ; $4d6b
 	sound $5e ; $4d6e
 	call RedrawN64TnmtDataWindow ; $4d70
-	jr Label_3b_4dbc ; $4d73
-Label_3b_4d75:
+	jr .done ; $4d73
+.step:
 	bit 4, a ; $4d75
-	jr z, Label_3b_4d91 ; $4d77
+	jr z, .step2 ; $4d77
 	ld a, [$d800] ; $4d79
 	or a, a ; $4d7c
-	jr z, Label_3b_4dbc ; $4d7d
+	jr z, .done ; $4d7d
 	ld a, [$d801] ; $4d7f
 	or a, a ; $4d82
-	jr nz, Label_3b_4dbc ; $4d83
+	jr nz, .done ; $4d83
 	ld a, $01 ; $4d85
 	ld [$d801], a ; $4d87
 	sound $5e ; $4d8a
 	call RedrawN64TnmtDataWindow ; $4d8c
-	jr Label_3b_4dbc ; $4d8f
-Label_3b_4d91:
+	jr .done ; $4d8f
+.step2:
 	bit 6, a ; $4d91
-	jr z, Label_3b_4da6 ; $4d93
+	jr z, .step3 ; $4d93
 	ld a, [$d802] ; $4d95
 	or a, a ; $4d98
-	jr z, Label_3b_4dbc ; $4d99
+	jr z, .done ; $4d99
 	dec a ; $4d9b
 	ld [$d802], a ; $4d9c
 	sound $5e ; $4d9f
 	call RedrawN64TnmtDataWindow ; $4da1
-	jr Label_3b_4dbc ; $4da4
-Label_3b_4da6:
+	jr .done ; $4da4
+.step3:
 	bit 7, a ; $4da6
-	jr z, Label_3b_4dbc ; $4da8
+	jr z, .done ; $4da8
 	ld a, [$d802] ; $4daa
 	cp a, $0b ; $4dad
-	jr z, Label_3b_4dbc ; $4daf
+	jr z, .done ; $4daf
 	inc a ; $4db1
 	ld [$d802], a ; $4db2
 	sound $5e ; $4db5
 	call RedrawN64TnmtDataWindow ; $4db7
-	jr Label_3b_4dbc ; $4dba
-Label_3b_4dbc:
+	jr .done ; $4dba
+.done:
 	ret ; $4dbc
 BuildN64TnmtDataScreen:
 	ld c, $0f ; $4dbd
@@ -2089,7 +2089,7 @@ BuildN64TnmtTrophyGrid:
 	ld de, $d830 ; $4e54
 	ld hl, $d908 ; $4e57
 	ld c, $00 ; $4e5a
-Label_3b_4e5c:
+.loop:
 	ld b, c ; $4e5c
 	call GetN64CharTrophyRowPtr ; $4e5d
 	call DecodeN64CharTrophyCounts ; $4e60
@@ -2104,23 +2104,23 @@ Label_3b_4e5c:
 	inc a ; $4e6d
 	ld c, a ; $4e6e
 	cp a, $10 ; $4e6f
-	jr nz, Label_3b_4e5c ; $4e71
+	jr nz, .loop ; $4e71
 	ret ; $4e73
 GetN64CharTrophyRowPtr:
 	ld a, b ; $4e74
 	ld hl, $4e87 ; $4e75
 	add a, l ; $4e78
 	ld l, a ; $4e79
-	jr nc, Label_3b_4e7d ; $4e7a
+	jr nc, .read ; $4e7a
 	inc h ; $4e7c
-Label_3b_4e7d:
+.read:
 	ld a, [hl] ; $4e7d
 	ld hl, $d908 ; $4e7e
 	add a, l ; $4e81
 	ld l, a ; $4e82
-	jr nc, Label_3b_4e86 ; $4e83
+	jr nc, .done ; $4e83
 	inc h ; $4e85
-Label_3b_4e86:
+.done:
 	ret ; $4e86
 	; $4e87, 16 bytes (bytes:16)
 	db $02, $0a, $01, $06, $00, $05, $0f, $09, $08, $0b, $07, $0c, $03, $04, $0e, $0d ; 0x00
@@ -2187,60 +2187,60 @@ CheckN64TnmtSecondPage:
 	ld hl, $d832 ; $4ee3
 	ld c, $00 ; $4ee6
 	ld de, $000c ; $4ee8
-Label_3b_4eeb:
+.loop:
 	ld a, [hl] ; $4eeb
 	or a, a ; $4eec
-	jr z, Label_3b_4f0b ; $4eed
+	jr z, .step ; $4eed
 	add hl, de ; $4eef
 	ld a, c ; $4ef0
 	inc a ; $4ef1
 	ld c, a ; $4ef2
 	cp a, $0e ; $4ef3
-	jr nz, Label_3b_4eeb ; $4ef5
+	jr nz, .loop ; $4ef5
 	ld hl, $d835 ; $4ef7
 	ld c, $00 ; $4efa
 	ld de, $000c ; $4efc
-Label_3b_4eff:
+.loopB:
 	ld a, [hl] ; $4eff
 	or a, a ; $4f00
-	jr nz, Label_3b_4f33 ; $4f01
+	jr nz, .step2 ; $4f01
 	add hl, de ; $4f03
 	ld a, c ; $4f04
 	inc a ; $4f05
 	ld c, a ; $4f06
 	cp a, $10 ; $4f07
-	jr nz, Label_3b_4eff ; $4f09
-Label_3b_4f0b:
+	jr nz, .loopB ; $4f09
+.step:
 	ld hl, $d835 ; $4f0b
 	ld c, $00 ; $4f0e
 	ld de, $000c ; $4f10
-Label_3b_4f13:
+.loopBB:
 	ld a, [hl] ; $4f13
 	or a, a ; $4f14
-	jr z, Label_3b_4f36 ; $4f15
+	jr z, .step3 ; $4f15
 	add hl, de ; $4f17
 	ld a, c ; $4f18
 	inc a ; $4f19
 	ld c, a ; $4f1a
 	cp a, $0e ; $4f1b
-	jr nz, Label_3b_4f13 ; $4f1d
+	jr nz, .loopBB ; $4f1d
 	ld hl, $d832 ; $4f1f
 	ld c, $00 ; $4f22
 	ld de, $000c ; $4f24
-Label_3b_4f27:
+.loopBBB:
 	ld a, [hl] ; $4f27
 	or a, a ; $4f28
-	jr nz, Label_3b_4f33 ; $4f29
+	jr nz, .step2 ; $4f29
 	add hl, de ; $4f2b
 	ld a, c ; $4f2c
 	inc a ; $4f2d
 	ld c, a ; $4f2e
 	cp a, $10 ; $4f2f
-	jr nz, Label_3b_4f27 ; $4f31
-Label_3b_4f33:
+	jr nz, .loopBBB ; $4f31
+.step2:
 	ld a, $01 ; $4f33
 	ret ; $4f35
-Label_3b_4f36:
+.step3:
 	xor a, a ; $4f36
 	ret ; $4f37
 RedrawN64TnmtDataWindow:
@@ -2261,14 +2261,14 @@ DrawN64TnmtRowIcons:
 	ld a, [$d802] ; $4f55
 	add a, l ; $4f58
 	ld l, a ; $4f59
-	jr nc, Label_3b_4f5d ; $4f5a
+	jr nc, .step ; $4f5a
 	inc h ; $4f5c
-Label_3b_4f5d:
+.step:
 	ld d, h ; $4f5d
 	ld e, l ; $4f5e
 	ld c, $00 ; $4f5f
 	ld hl, $d0e2 ; $4f61
-Label_3b_4f64:
+.loop:
 	ld a, [de] ; $4f64
 	inc de ; $4f65
 	ld b, a ; $4f66
@@ -2281,7 +2281,7 @@ Label_3b_4f64:
 	inc a ; $4f71
 	ld c, a ; $4f72
 	cp a, $05 ; $4f73
-	jr nz, Label_3b_4f64 ; $4f75
+	jr nz, .loop ; $4f75
 	pop af ; $4f77
 	wram_bank ; $4f78
 	pop hl ; $4f7c
@@ -2295,7 +2295,7 @@ DrawN64TnmtPageLabels:
 	wram_bank $03 ; $4f84
 	ld a, [$d801] ; $4f8a
 	or a, a ; $4f8d
-	jr nz, Label_3b_4fc6 ; $4f8e
+	jr nz, .step ; $4f8e
 	ld hl, $d240 ; $4f90
 	ld de, $d0a5 ; $4f93
 	ld b, $06 ; $4f96
@@ -2316,8 +2316,8 @@ DrawN64TnmtPageLabels:
 	ld b, $06 ; $4fbd
 	ld c, $02 ; $4fbf
 	farcall CopyTilemapRect ; $4fc1
-	jr Label_3b_4ffa ; $4fc4
-Label_3b_4fc6:
+	jr .restore ; $4fc4
+.step:
 	ld hl, $d246 ; $4fc6
 	ld de, $d0a5 ; $4fc9
 	ld b, $06 ; $4fcc
@@ -2338,7 +2338,7 @@ Label_3b_4fc6:
 	ld b, $06 ; $4ff3
 	ld c, $02 ; $4ff5
 	farcall CopyTilemapRect ; $4ff7
-Label_3b_4ffa:
+.restore:
 	pop af ; $4ffa
 	wram_bank ; $4ffb
 	ret ; $4fff
@@ -2353,21 +2353,21 @@ DrawN64TnmtTrophyRows:
 	ld hl, $d830 ; $500e
 	add a, l ; $5011
 	ld l, a ; $5012
-	jr nc, Label_3b_5016 ; $5013
+	jr nc, .step ; $5013
 	inc h ; $5015
-Label_3b_5016:
+.step:
 	ld a, [$d801] ; $5016
 	or a, a ; $5019
-	jr z, Label_3b_5023 ; $501a
+	jr z, .step2 ; $501a
 	ld a, $06 ; $501c
 	add a, l ; $501e
 	ld l, a ; $501f
-	jr nc, Label_3b_5023 ; $5020
+	jr nc, .step2 ; $5020
 	inc h ; $5022
-Label_3b_5023:
+.step2:
 	ld de, $d0e5 ; $5023
 	ld c, $00 ; $5026
-Label_3b_5028:
+.loop:
 	call DrawN64TnmtTrophyRow ; $5028
 	push hl ; $502b
 	ld hl, $0040 ; $502c
@@ -2378,14 +2378,14 @@ Label_3b_5028:
 	ld a, $0c ; $5033
 	add a, l ; $5035
 	ld l, a ; $5036
-	jr nc, Label_3b_503a ; $5037
+	jr nc, .step3 ; $5037
 	inc h ; $5039
-Label_3b_503a:
+.step3:
 	ld a, c ; $503a
 	inc a ; $503b
 	ld c, a ; $503c
 	cp a, $05 ; $503d
-	jr nz, Label_3b_5028 ; $503f
+	jr nz, .loop ; $503f
 	ret ; $5041
 DrawN64TnmtTrophyRow:
 	push af ; $5042
@@ -2393,40 +2393,40 @@ DrawN64TnmtTrophyRow:
 	push de ; $5044
 	push hl ; $5045
 	ld c, $00 ; $5046
-Label_3b_5048:
+.loop:
 	ld a, [hl+] ; $5048
 	or a, a ; $5049
-	jr z, Label_3b_5051 ; $504a
+	jr z, .drawEmptyTrophyCell ; $504a
 	call DrawWonTrophyIcon ; $504c
-	jr Label_3b_5054 ; $504f
-Label_3b_5051:
+	jr .step ; $504f
+.drawEmptyTrophyCell:
 	call DrawEmptyTrophyCell ; $5051
-Label_3b_5054:
+.step:
 	inc de ; $5054
 	inc de ; $5055
 	ld a, c ; $5056
 	inc a ; $5057
 	ld c, a ; $5058
 	cp a, $03 ; $5059
-	jr nz, Label_3b_5048 ; $505b
+	jr nz, .loop ; $505b
 	inc de ; $505d
 	ld c, $00 ; $505e
-Label_3b_5060:
+.loopB:
 	ld a, [hl+] ; $5060
 	or a, a ; $5061
-	jr z, Label_3b_5069 ; $5062
+	jr z, .drawEmptyTrophyCell2 ; $5062
 	call DrawWonTrophyIcon ; $5064
-	jr Label_3b_506c ; $5067
-Label_3b_5069:
+	jr .step2 ; $5067
+.drawEmptyTrophyCell2:
 	call DrawEmptyTrophyCell ; $5069
-Label_3b_506c:
+.step2:
 	inc de ; $506c
 	inc de ; $506d
 	ld a, c ; $506e
 	inc a ; $506f
 	ld c, a ; $5070
 	cp a, $03 ; $5071
-	jr nz, Label_3b_5060 ; $5073
+	jr nz, .loopB ; $5073
 	pop hl ; $5075
 	pop de ; $5076
 	pop bc ; $5077
@@ -2480,10 +2480,10 @@ N64TnmtScrollArrowsTask:
 	wram_bank $03 ; $50d9
 	ld a, [$d800] ; $50df
 	or a, a ; $50e2
-	jr z, Label_3b_50fc ; $50e3
+	jr z, .step ; $50e3
 	ld a, [$d801] ; $50e5
 	or a, a ; $50e8
-	jr nz, Label_3b_50fc ; $50e9
+	jr nz, .step ; $50e9
 	ld de, $932f ; $50eb
 	ld c, $01 ; $50ee
 	call ApplyCursorBounceX ; $50f0
@@ -2491,10 +2491,10 @@ N64TnmtScrollArrowsTask:
 	ld c, $00 ; $50f5
 	ld h, $00 ; $50f7
 	farcall QueueStackedSpritePair ; $50f9
-Label_3b_50fc:
+.step:
 	ld a, [$d801] ; $50fc
 	or a, a ; $50ff
-	jr z, Label_3b_5113 ; $5100
+	jr z, .step2 ; $5100
 	ld de, $202f ; $5102
 	ld c, $00 ; $5105
 	call ApplyCursorBounceX ; $5107
@@ -2502,10 +2502,10 @@ Label_3b_50fc:
 	ld c, $00 ; $510c
 	ld h, $01 ; $510e
 	farcall QueueStackedSpritePair ; $5110
-Label_3b_5113:
+.step2:
 	ld a, [$d802] ; $5113
 	or a, a ; $5116
-	jr z, Label_3b_512a ; $5117
+	jr z, .step3 ; $5117
 	ld de, $0c32 ; $5119
 	ld c, $01 ; $511c
 	call ApplyCursorBounceY ; $511e
@@ -2513,10 +2513,10 @@ Label_3b_5113:
 	ld c, $00 ; $5123
 	ld h, $02 ; $5125
 	farcall QueueStackedSpritePair ; $5127
-Label_3b_512a:
+.step3:
 	ld a, [$d802] ; $512a
 	cp a, $0b ; $512d
-	jr z, Label_3b_5142 ; $512f
+	jr z, .restore ; $512f
 	ld de, $0c88 ; $5131
 	ld c, $00 ; $5134
 	call ApplyCursorBounceY ; $5136
@@ -2524,7 +2524,7 @@ Label_3b_512a:
 	ld c, $00 ; $513b
 	ld h, $03 ; $513d
 	farcall QueueStackedSpritePair ; $513f
-Label_3b_5142:
+.restore:
 	pop af ; $5142
 	wram_bank ; $5143
 	ret ; $5147
@@ -2547,25 +2547,25 @@ RunN64RingShotData:
 	script_fade_in $10 ; $516f
 	call WaitFadeEnd ; $5174
 	wram_bank $03 ; $5177
-Label_3b_517d:
+.loop:
 	ldh a, [hInputPressed] ; $517d
 	ld [wMenuInputPressed], a ; $517f
 	call ScrollRingShotCursor ; $5182
 	call AdvanceFrame ; $5185
 	ld a, [wMenuInputPressed] ; $5188
 	bit PADB_A, a ; $518b
-	jr nz, Label_3b_5195 ; $518d
+	jr nz, .playSfx ; $518d
 	bit 1, a ; $518f
-	jr nz, Label_3b_51a3 ; $5191
-	jr Label_3b_517d ; $5193
-Label_3b_5195:
+	jr nz, .playSfx2 ; $5191
+	jr .loop ; $5193
+.playSfx:
 	sound $5f ; $5195
 	ld c, $10 ; $5197
 	call BeginFadeOut ; $5199
 	call WaitFadeEnd ; $519c
 	call ClearFrameTasks ; $519f
 	ret ; $51a2
-Label_3b_51a3:
+.playSfx2:
 	sound $62 ; $51a3
 	ld c, $10 ; $51a5
 	call BeginFadeOut ; $51a7
@@ -2614,14 +2614,14 @@ DrawRingShotRowIcons:
 	ld a, [wMenuCursorY] ; $5212
 	add a, l ; $5215
 	ld l, a ; $5216
-	jr nc, Label_3b_521a ; $5217
+	jr nc, .step ; $5217
 	inc h ; $5219
-Label_3b_521a:
+.step:
 	ld d, h ; $521a
 	ld e, l ; $521b
 	ld c, $00 ; $521c
 	ld hl, $d0c2 ; $521e
-Label_3b_5221:
+.loop:
 	ld a, [de] ; $5221
 	inc de ; $5222
 	ld b, a ; $5223
@@ -2634,7 +2634,7 @@ Label_3b_5221:
 	inc a ; $522e
 	ld c, a ; $522f
 	cp a, $05 ; $5230
-	jr nz, Label_3b_5221 ; $5232
+	jr nz, .loop ; $5232
 	pop af ; $5234
 	wram_bank ; $5235
 	pop hl ; $5239
@@ -2711,14 +2711,14 @@ SeedDefaultRingShotRecords:
 BuildRingShotResultsGrid:
 	ld de, $db00 ; $5319
 	ld c, $00 ; $531c
-Label_3b_531e:
+.loop:
 	ld hl, $5358 ; $531e
 	ld a, c ; $5321
 	add a, l ; $5322
 	ld l, a ; $5323
-	jr nc, Label_3b_5327 ; $5324
+	jr nc, .read ; $5324
 	inc h ; $5326
-Label_3b_5327:
+.read:
 	ld b, [hl] ; $5327
 	call DecodeRingShotCharClears ; $5328
 	ld hl, $000c ; $532b
@@ -2729,17 +2729,17 @@ Label_3b_5327:
 	inc a ; $5332
 	ld c, a ; $5333
 	cp a, $10 ; $5334
-	jr nz, Label_3b_531e ; $5336
+	jr nz, .loop ; $5336
 	ld de, $db04 ; $5338
 	ld c, $00 ; $533b
-Label_3b_533d:
+.loopB:
 	ld hl, $5358 ; $533d
 	ld a, c ; $5340
 	add a, l ; $5341
 	ld l, a ; $5342
-	jr nc, Label_3b_5346 ; $5343
+	jr nc, .readB ; $5343
 	inc h ; $5345
-Label_3b_5346:
+.readB:
 	ld b, [hl] ; $5346
 	call CopyRingShotCharScores ; $5347
 	ld hl, $000c ; $534a
@@ -2750,7 +2750,7 @@ Label_3b_5346:
 	inc a ; $5351
 	ld c, a ; $5352
 	cp a, $10 ; $5353
-	jr nz, Label_3b_533d ; $5355
+	jr nz, .loopB ; $5355
 	ret ; $5357
 	; $5358, 16 bytes (bytes:16)
 	db $02, $0a, $01, $06, $00, $05, $0f, $09, $08, $0b, $07, $0c, $03, $04, $0e, $0d ; 0x00
@@ -2766,11 +2766,11 @@ CopyRingShotCharScores:
 	ld hl, $d958 ; $5370
 	add a, l ; $5373
 	ld l, a ; $5374
-	jr nc, Label_3b_5378 ; $5375
+	jr nc, .step ; $5375
 	inc h ; $5377
-Label_3b_5378:
+.step:
 	ld c, $00 ; $5378
-Label_3b_537a:
+.loop:
 	ld a, [hl+] ; $537a
 	ld b, a ; $537b
 	ld a, [hl+] ; $537c
@@ -2783,7 +2783,7 @@ Label_3b_537a:
 	inc a ; $5383
 	ld c, a ; $5384
 	cp a, $04 ; $5385
-	jr nz, Label_3b_537a ; $5387
+	jr nz, .loop ; $5387
 	pop hl ; $5389
 	pop de ; $538a
 	pop bc ; $538b
@@ -2800,11 +2800,11 @@ DecodeRingShotCharClears:
 	ld hl, $d918 ; $5395
 	add a, l ; $5398
 	ld l, a ; $5399
-	jr nc, Label_3b_539d ; $539a
+	jr nc, .step ; $539a
 	inc h ; $539c
-Label_3b_539d:
+.step:
 	ld c, $00 ; $539d
-Label_3b_539f:
+.loop:
 	ld b, [hl] ; $539f
 	call CountConsecutiveSetBits ; $53a0
 	ld [de], a ; $53a3
@@ -2814,7 +2814,7 @@ Label_3b_539f:
 	inc a ; $53a7
 	ld c, a ; $53a8
 	cp a, $04 ; $53a9
-	jr nz, Label_3b_539f ; $53ab
+	jr nz, .loop ; $53ab
 	pop hl ; $53ad
 	pop de ; $53ae
 	pop bc ; $53af
@@ -2823,63 +2823,63 @@ Label_3b_539f:
 CountConsecutiveSetBits:
 	push bc ; $53b2
 	ld c, $00 ; $53b3
-Label_3b_53b5:
+.loop:
 	ld a, b ; $53b5
 	and a, $01 ; $53b6
-	jr z, Label_3b_53c3 ; $53b8
+	jr z, .step ; $53b8
 	srl b ; $53ba
 	ld a, c ; $53bc
 	inc a ; $53bd
 	ld c, a ; $53be
 	cp a, $06 ; $53bf
-	jr nz, Label_3b_53b5 ; $53c1
-Label_3b_53c3:
+	jr nz, .loop ; $53c1
+.step:
 	ld a, c ; $53c3
 	pop bc ; $53c4
 	ret ; $53c5
 ScrollRingShotCursor:
 	ld a, [wMenuInputPressed] ; $53c6
 	bit PADB_RIGHT, a ; $53c9
-	jr nz, Label_3b_53da ; $53cb
+	jr nz, .checkMenuCursorX ; $53cb
 	bit 5, a ; $53cd
-	jr nz, Label_3b_53ea ; $53cf
+	jr nz, .checkMenuCursorX2 ; $53cf
 	bit 6, a ; $53d1
-	jr nz, Label_3b_53f9 ; $53d3
+	jr nz, .checkMenuCursorY ; $53d3
 	bit 7, a ; $53d5
-	jr nz, Label_3b_5408 ; $53d7
+	jr nz, .checkMenuCursorY2 ; $53d7
 	ret ; $53d9
-Label_3b_53da:
+.checkMenuCursorX:
 	ld a, [wMenuCursorX] ; $53da
 	cp a, $03 ; $53dd
-	jr z, Label_3b_5416 ; $53df
+	jr z, .done ; $53df
 	inc a ; $53e1
 	ld [wMenuCursorX], a ; $53e2
 	call RedrawRingShotWindow ; $53e5
-	jr Label_3b_5416 ; $53e8
-Label_3b_53ea:
+	jr .done ; $53e8
+.checkMenuCursorX2:
 	ld a, [wMenuCursorX] ; $53ea
 	or a, a ; $53ed
-	jr z, Label_3b_5416 ; $53ee
+	jr z, .done ; $53ee
 	dec a ; $53f0
 	ld [wMenuCursorX], a ; $53f1
 	call RedrawRingShotWindow ; $53f4
-	jr Label_3b_5416 ; $53f7
-Label_3b_53f9:
+	jr .done ; $53f7
+.checkMenuCursorY:
 	ld a, [wMenuCursorY] ; $53f9
 	or a, a ; $53fc
-	jr z, Label_3b_5416 ; $53fd
+	jr z, .done ; $53fd
 	dec a ; $53ff
 	ld [wMenuCursorY], a ; $5400
 	call RedrawRingShotWindow ; $5403
-	jr Label_3b_5416 ; $5406
-Label_3b_5408:
+	jr .done ; $5406
+.checkMenuCursorY2:
 	ld a, [wMenuCursorY] ; $5408
 	cp a, $0b ; $540b
-	jr z, Label_3b_5416 ; $540d
+	jr z, .done ; $540d
 	inc a ; $540f
 	ld [wMenuCursorY], a ; $5410
 	call RedrawRingShotWindow ; $5413
-Label_3b_5416:
+.done:
 	ret ; $5416
 RedrawRingShotWindow:
 	sound $5e ; $5417
@@ -2897,9 +2897,9 @@ DrawRingShotModeTab:
 	ld hl, $544e ; $5433
 	add a, l ; $5436
 	ld l, a ; $5437
-	jr nc, Label_3b_543b ; $5438
+	jr nc, .read ; $5438
 	inc h ; $543a
-Label_3b_543b:
+.read:
 	ld a, [hl+] ; $543b
 	ld h, [hl] ; $543c
 	ld l, a ; $543d
@@ -2944,7 +2944,7 @@ RingShotScrollArrowsTask:
 	wram_bank $03 ; $5494
 	ld a, [wMenuCursorX] ; $549a
 	cp a, $03 ; $549d
-	jr z, Label_3b_54b2 ; $549f
+	jr z, .checkMenuCursorX ; $549f
 	ld de, $7812 ; $54a1
 	ld c, $01 ; $54a4
 	call ApplyCursorBounceX ; $54a6
@@ -2952,10 +2952,10 @@ RingShotScrollArrowsTask:
 	ld c, $00 ; $54ab
 	ld h, $00 ; $54ad
 	farcall QueueStackedSpritePair ; $54af
-Label_3b_54b2:
+.checkMenuCursorX:
 	ld a, [wMenuCursorX] ; $54b2
 	or a, a ; $54b5
-	jr z, Label_3b_54c9 ; $54b6
+	jr z, .checkMenuCursorY ; $54b6
 	ld de, $2312 ; $54b8
 	ld c, $00 ; $54bb
 	call ApplyCursorBounceX ; $54bd
@@ -2963,10 +2963,10 @@ Label_3b_54b2:
 	ld c, $00 ; $54c2
 	ld h, $01 ; $54c4
 	farcall QueueStackedSpritePair ; $54c6
-Label_3b_54c9:
+.checkMenuCursorY:
 	ld a, [wMenuCursorY] ; $54c9
 	or a, a ; $54cc
-	jr z, Label_3b_54e0 ; $54cd
+	jr z, .checkMenuCursorY2 ; $54cd
 	ld de, $0c26 ; $54cf
 	ld c, $01 ; $54d2
 	call ApplyCursorBounceY ; $54d4
@@ -2974,10 +2974,10 @@ Label_3b_54c9:
 	ld c, $00 ; $54d9
 	ld h, $02 ; $54db
 	farcall QueueStackedSpritePair ; $54dd
-Label_3b_54e0:
+.checkMenuCursorY2:
 	ld a, [wMenuCursorY] ; $54e0
 	cp a, $0b ; $54e3
-	jr z, Label_3b_54f8 ; $54e5
+	jr z, .restore ; $54e5
 	ld de, $0c82 ; $54e7
 	ld c, $00 ; $54ea
 	call ApplyCursorBounceY ; $54ec
@@ -2985,7 +2985,7 @@ Label_3b_54e0:
 	ld c, $00 ; $54f1
 	ld h, $03 ; $54f3
 	farcall QueueStackedSpritePair ; $54f5
-Label_3b_54f8:
+.restore:
 	pop af ; $54f8
 	wram_bank ; $54f9
 	ret ; $54fd
@@ -2993,21 +2993,21 @@ DrawRingShotClearMarks:
 	ld a, [wMenuCursorY] ; $54fe
 	ld hl, $db00 ; $5501
 	ld bc, $000c ; $5504
-Label_3b_5507:
+.loop:
 	or a, a ; $5507
-	jr z, Label_3b_550e ; $5508
+	jr z, .checkMenuCursorX ; $5508
 	add hl, bc ; $550a
 	dec a ; $550b
-	jr Label_3b_5507 ; $550c
-Label_3b_550e:
+	jr .loop ; $550c
+.checkMenuCursorX:
 	ld a, [wMenuCursorX] ; $550e
 	add a, l ; $5511
 	ld l, a ; $5512
-	jr nc, Label_3b_5516 ; $5513
+	jr nc, .step ; $5513
 	inc h ; $5515
-Label_3b_5516:
+.step:
 	ld b, $00 ; $5516
-Label_3b_5518:
+.loopB:
 	ld a, [hl] ; $5518
 	ld c, a ; $5519
 	call DrawRingShotClearMarkRow ; $551a
@@ -3017,7 +3017,7 @@ Label_3b_5518:
 	inc a ; $5522
 	ld b, a ; $5523
 	cp a, $05 ; $5524
-	jr nz, Label_3b_5518 ; $5526
+	jr nz, .loopB ; $5526
 	ret ; $5528
 DrawRingShotClearMarkRow:
 	push af ; $5529
@@ -3029,17 +3029,17 @@ DrawRingShotClearMarkRow:
 	ld hl, $5564 ; $552f
 	add a, l ; $5532
 	ld l, a ; $5533
-	jr nc, Label_3b_5537 ; $5534
+	jr nc, .read ; $5534
 	inc h ; $5536
-Label_3b_5537:
+.read:
 	ld a, [hl+] ; $5537
 	ld d, [hl] ; $5538
 	ld e, a ; $5539
 	ld b, c ; $553a
-Label_3b_553b:
+.loop:
 	ld a, b ; $553b
 	or a, a ; $553c
-	jr z, Label_3b_554b ; $553d
+	jr z, .step ; $553d
 	ld h, b ; $553f
 	ld b, $00 ; $5540
 	call DrawRingShotMarkCell ; $5542
@@ -3047,15 +3047,15 @@ Label_3b_553b:
 	inc de ; $5546
 	ld b, h ; $5547
 	dec b ; $5548
-	jr Label_3b_553b ; $5549
-Label_3b_554b:
+	jr .loop ; $5549
+.step:
 	ld a, $05 ; $554b
 	sub a, c ; $554d
 	ld b, a ; $554e
-Label_3b_554f:
+.loopB:
 	ld a, b ; $554f
 	or a, a ; $5550
-	jr z, Label_3b_555f ; $5551
+	jr z, .restore ; $5551
 	ld h, b ; $5553
 	ld b, $01 ; $5554
 	call DrawRingShotMarkCell ; $5556
@@ -3063,8 +3063,8 @@ Label_3b_554f:
 	inc de ; $555a
 	ld b, h ; $555b
 	dec b ; $555c
-	jr Label_3b_554f ; $555d
-Label_3b_555f:
+	jr .loopB ; $555d
+.restore:
 	pop hl ; $555f
 	pop de ; $5560
 	pop bc ; $5561
@@ -3086,9 +3086,9 @@ DrawRingShotMarkCell:
 	ld hl, $558b ; $5574
 	add a, l ; $5577
 	ld l, a ; $5578
-	jr nc, Label_3b_557c ; $5579
+	jr nc, .read ; $5579
 	inc h ; $557b
-Label_3b_557c:
+.read:
 	ld a, [hl+] ; $557c
 	ld h, [hl] ; $557d
 	ld l, a ; $557e
@@ -3107,29 +3107,29 @@ RingShotScoreDrawTask:
 	ld a, [wMenuCursorY] ; $558f
 	ld hl, $db00 ; $5592
 	ld bc, $000c ; $5595
-Label_3b_5598:
+.loop:
 	or a, a ; $5598
-	jr z, Label_3b_559f ; $5599
+	jr z, .step ; $5599
 	add hl, bc ; $559b
 	dec a ; $559c
-	jr Label_3b_5598 ; $559d
-Label_3b_559f:
+	jr .loop ; $559d
+.step:
 	ld a, $04 ; $559f
 	add a, l ; $55a1
 	ld l, a ; $55a2
-	jr nc, Label_3b_55a6 ; $55a3
+	jr nc, .checkMenuCursorX ; $55a3
 	inc h ; $55a5
-Label_3b_55a6:
+.checkMenuCursorX:
 	ld a, [wMenuCursorX] ; $55a6
 	add a, a ; $55a9
 	add a, l ; $55aa
 	ld l, a ; $55ab
-	jr nc, Label_3b_55af ; $55ac
+	jr nc, .step2 ; $55ac
 	inc h ; $55ae
-Label_3b_55af:
+.step2:
 	ld de, $8a35 ; $55af
 	ld c, $00 ; $55b2
-Label_3b_55b4:
+.loopB:
 	push hl ; $55b4
 	ld a, [hl+] ; $55b5
 	ld h, [hl] ; $55b6
@@ -3143,14 +3143,14 @@ Label_3b_55b4:
 	ld a, $0c ; $55c2
 	add a, l ; $55c4
 	ld l, a ; $55c5
-	jr nc, Label_3b_55c9 ; $55c6
+	jr nc, .step3 ; $55c6
 	inc h ; $55c8
-Label_3b_55c9:
+.step3:
 	ld a, c ; $55c9
 	inc a ; $55ca
 	ld c, a ; $55cb
 	cp a, $05 ; $55cc
-	jr nz, Label_3b_55b4 ; $55ce
+	jr nz, .loopB ; $55ce
 	ret ; $55d0
 RunMainMenu:
 	call InitSerialLink ; $55d1
@@ -3184,7 +3184,7 @@ RunMainMenu:
 	call ResetSerialState ; $561a
 	farcall ResetCheatCodeBuffer ; $561d
 	wram_bank $03 ; $5620
-Label_3b_5626:
+.loop:
 	call AdvanceFrame ; $5626
 	farcall UpdateCheatCodeEntry ; $5629
 	ldh a, [hInputPressed] ; $562c
@@ -3193,23 +3193,23 @@ Label_3b_5626:
 	ld c, $03 ; $5633
 	call MoveMenuCursor ; $5635
 	or a, a ; $5638
-	jr nz, Label_3b_563d ; $5639
-	jr Label_3b_5642 ; $563b
-Label_3b_563d:
+	jr nz, .playSfx ; $5639
+	jr .checkMenuInputPressed ; $563b
+.playSfx:
 	sound $5e ; $563d
 	call DrawMainMenuSelection ; $563f
-Label_3b_5642:
+.checkMenuInputPressed:
 	ld a, [wMenuInputPressed] ; $5642
 	bit PADB_A, a ; $5645
-	jr nz, Label_3b_5655 ; $5647
+	jr nz, .step2 ; $5647
 	bit 1, a ; $5649
-	jr nz, Label_3b_5696 ; $564b
+	jr nz, .playSfx2 ; $564b
 	bit 2, a ; $564d
-	jr nz, Label_3b_5653 ; $564f
-	jr Label_3b_5626 ; $5651
-Label_3b_5653:
-	jr Label_3b_5626 ; $5653
-Label_3b_5655:
+	jr nz, .step ; $564f
+	jr .loop ; $5651
+.step:
+	jr .loop ; $5653
+.step2:
 	ld a, $01 ; $5655
 	ld [$cb71], a ; $5657
 	sound $5f ; $565a
@@ -3220,16 +3220,16 @@ Label_3b_5655:
 	call MainMenuSlideOut ; $5666
 	ld a, [wMenuCursorX] ; $5669
 	cp a, $02 ; $566c
-	jr nz, Label_3b_5685 ; $566e
+	jr nz, .step3 ; $566e
 	ld a, [wMenuCursorY] ; $5670
 	cp a, $00 ; $5673
-	jr nz, Label_3b_5685 ; $5675
+	jr nz, .step3 ; $5675
 	ld c, $03 ; $5677
 	call GetMenuCursorCellIndex ; $5679
 	ld [$cb1b], a ; $567c
 	call TryMainMenuLinkHandshake ; $567f
 	jp c, RunMainMenu ; $5682
-Label_3b_5685:
+.step3:
 	ld a, $01 ; $5685
 	ld [wMenuSlideDirection], a ; $5687
 	ld c, $03 ; $568a
@@ -3237,7 +3237,7 @@ Label_3b_5685:
 	ld [$cb1b], a ; $568f
 	call MapMainMenuCursorToItemId ; $5692
 	ret ; $5695
-Label_3b_5696:
+.playSfx2:
 	sound $62 ; $5696
 	call ResetSerialState ; $5698
 	call ClearFrameTasks ; $569b
@@ -3253,9 +3253,9 @@ MapMainMenuCursorToItemId:
 	ld hl, $56ba ; $56b0
 	add a, l ; $56b3
 	ld l, a ; $56b4
-	jr nc, Label_3b_56b8 ; $56b5
+	jr nc, .read ; $56b5
 	inc h ; $56b7
-Label_3b_56b8:
+.read:
 	ld a, [hl] ; $56b8
 	ret ; $56b9
 	; $56ba, 9 bytes (bytes:3)
@@ -3268,15 +3268,15 @@ LoadMainMenuGfx:
 	push af ; $56c6
 	wram_bank $01 ; $56c7
 	ld c, $00 ; $56cd
-Label_3b_56cf:
+.loop:
 	ld a, c ; $56cf
 	add a, a ; $56d0
 	ld hl, $57e0 ; $56d1
 	add a, l ; $56d4
 	ld l, a ; $56d5
-	jr nc, Label_3b_56d9 ; $56d6
+	jr nc, .read ; $56d6
 	inc h ; $56d8
-Label_3b_56d9:
+.read:
 	ld a, [hl+] ; $56d9
 	ld h, [hl] ; $56da
 	ld l, a ; $56db
@@ -3295,9 +3295,9 @@ Label_3b_56d9:
 	add a, a ; $56ee
 	add a, l ; $56ef
 	ld l, a ; $56f0
-	jr nc, Label_3b_56f4 ; $56f1
+	jr nc, .readB ; $56f1
 	inc h ; $56f3
-Label_3b_56f4:
+.readB:
 	ld a, [hl+] ; $56f4
 	ld d, [hl] ; $56f5
 	ld e, a ; $56f6
@@ -3318,7 +3318,7 @@ Label_3b_56f4:
 	call AdvanceFrame ; $570b
 	ld a, c ; $570e
 	cp a, $06 ; $570f
-	jr nz, Label_3b_56cf ; $5711
+	jr nz, .loop ; $5711
 	wram_bank $03 ; $5713
 	ld a, $00 ; $5719
 	ld [wCurrentStorySlot], a ; $571b
@@ -3413,9 +3413,9 @@ Label_3b_56f4:
 MainMenuSlideIn:
 	ld a, b ; $5800
 	or a, a ; $5801
-	jr z, Label_3b_581b ; $5802
+	jr z, .step ; $5802
 	ld c, $00 ; $5804
-Label_3b_5806:
+.loop:
 	call AdvanceFrame ; $5806
 	ld b, $00 ; $5809
 	farcall RestoreMenuBgAndDrawPanel ; $580b
@@ -3425,11 +3425,11 @@ Label_3b_5806:
 	inc a ; $5814
 	ld c, a ; $5815
 	cp a, $10 ; $5816
-	jr nz, Label_3b_5806 ; $5818
+	jr nz, .loop ; $5818
 	ret ; $581a
-Label_3b_581b:
+.step:
 	ld c, $09 ; $581b
-Label_3b_581d:
+.loopB:
 	call AdvanceFrame ; $581d
 	ld b, $01 ; $5820
 	farcall RestoreMenuBgAndDrawPanel ; $5822
@@ -3439,14 +3439,14 @@ Label_3b_581d:
 	dec a ; $582b
 	ld c, a ; $582c
 	cp a, $ff ; $582d
-	jr nz, Label_3b_581d ; $582f
+	jr nz, .loopB ; $582f
 	ret ; $5831
 MainMenuSlideOut:
 	ld a, b ; $5832
 	or a, a ; $5833
-	jr z, Label_3b_584d ; $5834
+	jr z, .step ; $5834
 	ld c, $00 ; $5836
-Label_3b_5838:
+.loop:
 	call AdvanceFrame ; $5838
 	ld b, $01 ; $583b
 	farcall RestoreMenuBgAndDrawPanel ; $583d
@@ -3456,11 +3456,11 @@ Label_3b_5838:
 	inc a ; $5846
 	ld c, a ; $5847
 	cp a, $0c ; $5848
-	jr nz, Label_3b_5838 ; $584a
+	jr nz, .loop ; $584a
 	ret ; $584c
-Label_3b_584d:
+.step:
 	ld c, $0f ; $584d
-Label_3b_584f:
+.loopB:
 	call AdvanceFrame ; $584f
 	ld b, $00 ; $5852
 	farcall RestoreMenuBgAndDrawPanel ; $5854
@@ -3470,7 +3470,7 @@ Label_3b_584f:
 	dec a ; $585d
 	ld c, a ; $585e
 	or a, a ; $585f
-	jr nz, Label_3b_584f ; $5860
+	jr nz, .loopB ; $5860
 	ret ; $5862
 MainMenuCursorSpriteTask:
 	farcall TickMenuBgScroll ; $5863
@@ -3480,9 +3480,9 @@ MainMenuCursorSpriteTask:
 	ld hl, Data_3b_592d ; $586c
 	add a, l ; $586f
 	ld l, a ; $5870
-	jr nc, Label_3b_5874 ; $5871
+	jr nc, .read ; $5871
 	inc h ; $5873
-Label_3b_5874:
+.read:
 	ld c, [hl] ; $5874
 	ld hl, Data_3b_591b ; $5875
 	pop af ; $5878
@@ -3490,9 +3490,9 @@ Label_3b_5874:
 	push af ; $587a
 	add a, l ; $587b
 	ld l, a ; $587c
-	jr nc, Label_3b_5880 ; $587d
+	jr nc, .readB ; $587d
 	inc h ; $587f
-Label_3b_5880:
+.readB:
 	ld a, [hl+] ; $5880
 	ld d, [hl] ; $5881
 	ld e, a ; $5882
@@ -3501,9 +3501,9 @@ Label_3b_5880:
 	ld hl, $58ba ; $5887
 	add a, l ; $588a
 	ld l, a ; $588b
-	jr nc, Label_3b_588f ; $588c
+	jr nc, .readBB ; $588c
 	inc h ; $588e
-Label_3b_588f:
+.readBB:
 	ld a, [hl+] ; $588f
 	ld h, [hl] ; $5890
 	ld l, a ; $5891
@@ -3515,9 +3515,9 @@ Label_3b_588f:
 	ld hl, Data_3b_5936 ; $589d
 	add a, l ; $58a0
 	ld l, a ; $58a1
-	jr nc, Label_3b_58a5 ; $58a2
+	jr nc, .readBBB ; $58a2
 	inc h ; $58a4
-Label_3b_58a5:
+.readBBB:
 	ld a, [hl] ; $58a5
 	pop de ; $58a6
 	ld hl, $17f8 ; $58a7
@@ -3582,13 +3582,13 @@ DrawMainMenuSelection:
 	wram_bank $03 ; $5968
 	ld b, $00 ; $596e
 	ld c, $00 ; $5970
-Label_3b_5972:
+.loop:
 	call FillMainMenuCellHighlight ; $5972
 	ld a, b ; $5975
 	inc a ; $5976
 	ld b, a ; $5977
 	cp a, $09 ; $5978
-	jr nz, Label_3b_5972 ; $597a
+	jr nz, .loop ; $597a
 	ld c, $03 ; $597c
 	call GetMenuCursorCellIndex ; $597e
 	ld b, a ; $5981
@@ -3597,9 +3597,9 @@ Label_3b_5972:
 	ld c, $03 ; $5987
 	call GetMenuCursorCellIndex ; $5989
 	cp a, $06 ; $598c
-	jr nc, Label_3b_59ae ; $598e
+	jr nc, .loadMainMenuItemPalette ; $598e
 	cp a, $03 ; $5990
-	jr c, Label_3b_59ae ; $5992
+	jr c, .loadMainMenuItemPalette ; $5992
 	sub a, $03 ; $5994
 	add a, a ; $5996
 	add a, a ; $5997
@@ -3608,18 +3608,18 @@ Label_3b_5972:
 	ld bc, $d300 ; $599a
 	add a, c ; $599d
 	ld c, a ; $599e
-	jr nc, Label_3b_59a2 ; $599f
+	jr nc, .step ; $599f
 	inc b ; $59a1
-Label_3b_59a2:
+.step:
 	ld hl, $0001 ; $59a2
 	add hl, bc ; $59a5
 	ld a, [hl] ; $59a6
 	ld d, $04 ; $59a7
 	farcall LoadIndexedPalette_18 ; $59a9
-	jr Label_3b_59b1 ; $59ac
-Label_3b_59ae:
+	jr .step2 ; $59ac
+.loadMainMenuItemPalette:
 	call LoadMainMenuItemPalette ; $59ae
-Label_3b_59b1:
+.step2:
 	wram_bank $03 ; $59b1
 	ld de, $d1e0 ; $59b7
 	ld b, $14 ; $59ba
@@ -3662,33 +3662,33 @@ FillMainMenuCellHighlight:
 	ld e, b ; $5a0e
 	ld a, b ; $5a0f
 	cp a, $06 ; $5a10
-	jr nc, Label_3b_5a1e ; $5a12
+	jr nc, .step ; $5a12
 	cp a, $03 ; $5a14
-	jr c, Label_3b_5a1e ; $5a16
+	jr c, .step ; $5a16
 	ld b, $03 ; $5a18
 	ld c, $03 ; $5a1a
-	jr Label_3b_5a22 ; $5a1c
-Label_3b_5a1e:
+	jr .step2 ; $5a1c
+.step:
 	ld b, $05 ; $5a1e
 	ld c, $03 ; $5a20
-Label_3b_5a22:
+.step2:
 	ld a, d ; $5a22
 	or a, a ; $5a23
-	jr z, Label_3b_5a2a ; $5a24
+	jr z, .step3 ; $5a24
 	ld h, $0c ; $5a26
-	jr Label_3b_5a2c ; $5a28
-Label_3b_5a2a:
+	jr .step4 ; $5a28
+.step3:
 	ld h, $0d ; $5a2a
-Label_3b_5a2c:
+.step4:
 	push hl ; $5a2c
 	ld hl, $5a43 ; $5a2d
 	ld a, e ; $5a30
 	add a, a ; $5a31
 	add a, l ; $5a32
 	ld l, a ; $5a33
-	jr nc, Label_3b_5a37 ; $5a34
+	jr nc, .read ; $5a34
 	inc h ; $5a36
-Label_3b_5a37:
+.read:
 	ld a, [hl+] ; $5a37
 	ld d, [hl] ; $5a38
 	ld e, a ; $5a39
@@ -3715,9 +3715,9 @@ LoadMainMenuItemPalette:
 	add a, a ; $5a5a
 	add a, l ; $5a5b
 	ld l, a ; $5a5c
-	jr nc, Label_3b_5a60 ; $5a5d
+	jr nc, .read ; $5a5d
 	inc h ; $5a5f
-Label_3b_5a60:
+.read:
 	ld a, [hl+] ; $5a60
 	ld h, [hl] ; $5a61
 	ld l, a ; $5a62
@@ -3750,7 +3750,7 @@ BuildSaveSlotSummaries:
 	call ClearMemory16 ; $5abb
 	ld bc, $d300 ; $5abe
 	ld a, $80 ; $5ac1
-Label_3b_5ac3:
+.loop:
 	push af ; $5ac3
 	push af ; $5ac4
 	wram_bank $02 ; $5ac5
@@ -3765,7 +3765,7 @@ Label_3b_5ac3:
 	wram_bank $03 ; $5ae0
 	pop af ; $5ae6
 	cp a, $04 ; $5ae7
-	jr c, Label_3b_5af8 ; $5ae9
+	jr c, .checkStoryModeMainCharacterOverworldSprite ; $5ae9
 	ld [hl], a ; $5aeb
 	inc hl ; $5aec
 	ld a, $03 ; $5aed
@@ -3774,8 +3774,8 @@ Label_3b_5ac3:
 	add hl, bc ; $5af3
 	ld b, h ; $5af4
 	ld c, l ; $5af5
-	jr Label_3b_5b32 ; $5af6
-Label_3b_5af8:
+	jr .restore ; $5af6
+.checkStoryModeMainCharacterOverworldSprite:
 	ld a, [wStoryModeMainCharacterOverworldSprite] ; $5af8
 	ld [hl], a ; $5afb
 	ld hl, $0001 ; $5afc
@@ -3807,11 +3807,11 @@ Label_3b_5af8:
 	add hl, bc ; $5b2f
 	ld b, h ; $5b30
 	ld c, l ; $5b31
-Label_3b_5b32:
+.restore:
 	pop af ; $5b32
 	inc a ; $5b33
 	cp a, $83 ; $5b34
-	jr nz, Label_3b_5ac3 ; $5b36
+	jr nz, .loop ; $5b36
 	pop af ; $5b38
 	wram_bank ; $5b39
 	ret ; $5b3d
@@ -3823,9 +3823,9 @@ DrawMainMenuCaption:
 	call GetMenuCursorCellIndex ; $5b49
 	ld b, a ; $5b4c
 	cp a, $06 ; $5b4d
-	jp nc, Label_3b_5bdd ; $5b4f
+	jp nc, .step3 ; $5b4f
 	cp a, $03 ; $5b52
-	jp c, Label_3b_5bdd ; $5b54
+	jp c, .step3 ; $5b54
 	sub a, $03 ; $5b57
 	add a, a ; $5b59
 	add a, a ; $5b5a
@@ -3834,14 +3834,14 @@ DrawMainMenuCaption:
 	ld bc, $d300 ; $5b5d
 	add a, c ; $5b60
 	ld c, a ; $5b61
-	jr nc, Label_3b_5b65 ; $5b62
+	jr nc, .step ; $5b62
 	inc b ; $5b64
-Label_3b_5b65:
+.step:
 	ld hl, $0000 ; $5b65
 	add hl, bc ; $5b68
 	ld a, [hl] ; $5b69
 	cp a, $3f ; $5b6a
-	jr z, Label_3b_5bd0 ; $5b6c
+	jr z, .step2 ; $5b6c
 	ld hl, $0003 ; $5b6e
 	add hl, bc ; $5b71
 	ld de, $d201 ; $5b72
@@ -3895,22 +3895,22 @@ Label_3b_5b65:
 	ld a, $3a ; $5bca
 	ld [$d210], a ; $5bcc
 	ret ; $5bcf
-Label_3b_5bd0:
+.step2:
 	ld hl, $007c ; $5bd0
 	ld de, $d201 ; $5bd3
 	ld c, $20 ; $5bd6
 	farcall RenderTextToBuffer64 ; $5bd8
-	jr Label_3b_5bfd ; $5bdb
-Label_3b_5bdd:
+	jr .restore ; $5bdb
+.step3:
 	ld b, a ; $5bdd
 	ld a, b ; $5bde
 	add a, a ; $5bdf
 	ld hl, $5c03 ; $5be0
 	add a, l ; $5be3
 	ld l, a ; $5be4
-	jr nc, Label_3b_5be8 ; $5be5
+	jr nc, .read ; $5be5
 	inc h ; $5be7
-Label_3b_5be8:
+.read:
 	ld a, [hl+] ; $5be8
 	ld d, [hl] ; $5be9
 	ld e, a ; $5bea
@@ -3919,15 +3919,15 @@ Label_3b_5be8:
 	add a, a ; $5bef
 	add a, l ; $5bf0
 	ld l, a ; $5bf1
-	jr nc, Label_3b_5bf5 ; $5bf2
+	jr nc, .readB ; $5bf2
 	inc h ; $5bf4
-Label_3b_5bf5:
+.readB:
 	ld a, [hl+] ; $5bf5
 	ld h, [hl] ; $5bf6
 	ld l, a ; $5bf7
 	ld c, $20 ; $5bf8
 	farcall RenderTextToBuffer64 ; $5bfa
-Label_3b_5bfd:
+.restore:
 	pop af ; $5bfd
 	wram_bank ; $5bfe
 	ret ; $5c02
@@ -3999,57 +3999,57 @@ TryMainMenuLinkHandshake:
 	ei ; $5c5d
 	ld a, [wMenuCursorX] ; $5c5e
 	cp a, $02 ; $5c61
-	jr nz, Label_3b_5c6c ; $5c63
+	jr nz, .step ; $5c63
 	ld a, [wMenuCursorY] ; $5c65
 	cp a, $00 ; $5c68
-	jr z, Label_3b_5c70 ; $5c6a
-Label_3b_5c6c:
+	jr z, .step2 ; $5c6a
+.step:
 	scf ; $5c6c
 	ccf ; $5c6d
-	jr Label_3b_5ce0 ; $5c6e
-Label_3b_5c70:
+	jr .done ; $5c6e
+.step2:
 	di ; $5c70
 	ldh a, [hLinkRxByte] ; $5c71
 	ei ; $5c73
 	cp a, $c1 ; $5c74
-	jr z, Label_3b_5cd7 ; $5c76
-Label_3b_5c78:
+	jr z, .waitFramesCmd ; $5c76
+.loop:
 	farcall ShowLinkMessageScreen ; $5c78
 	farcall TryEstablishLink ; $5c7b
 	push af ; $5c7e
-	jr nc, Label_3b_5cbb ; $5c7f
+	jr nc, .step5 ; $5c7f
 	or a, a ; $5c81
-	jr nz, Label_3b_5c93 ; $5c82
+	jr nz, .step3 ; $5c82
 	ldh a, [hWramBank] ; $5c84
 	push af ; $5c86
 	ld c, $00 ; $5c87
 	farcall ShowLinkStatusMessage ; $5c89
 	pop af ; $5c8c
 	wram_bank ; $5c8d
-	jr Label_3b_5ca0 ; $5c91
-Label_3b_5c93:
+	jr .step4 ; $5c91
+.step3:
 	ldh a, [hWramBank] ; $5c93
 	push af ; $5c95
 	ld c, $01 ; $5c96
 	farcall ShowLinkStatusMessage ; $5c98
 	pop af ; $5c9b
 	wram_bank ; $5c9c
-Label_3b_5ca0:
+.step4:
 	ld de, $01f4 ; $5ca0
-Label_3b_5ca3:
+.loopB:
 	farcall AnimateLinkStatusPalette ; $5ca3
 	farcall UpdateAnimatedTiles ; $5ca6
 	call AdvanceFrame ; $5ca9
 	ldh a, [hInputPressed] ; $5cac
 	bit PADB_A, a ; $5cae
-	jr nz, Label_3b_5cbb ; $5cb0
+	jr nz, .step5 ; $5cb0
 	bit 1, a ; $5cb2
-	jr nz, Label_3b_5cbb ; $5cb4
+	jr nz, .step5 ; $5cb4
 	dec de ; $5cb6
 	ld a, d ; $5cb7
 	or a, e ; $5cb8
-	jr nz, Label_3b_5ca3 ; $5cb9
-Label_3b_5cbb:
+	jr nz, .loopB ; $5cb9
+.step5:
 	ld c, $40 ; $5cbb
 	call BeginFadeOut ; $5cbd
 	call WaitFadeEnd ; $5cc0
@@ -4059,13 +4059,13 @@ Label_3b_5cbb:
 	script_fade_in $40 ; $5ccc
 	call WaitFadeEnd ; $5cd1
 	pop af ; $5cd4
-	jr Label_3b_5ce0 ; $5cd5
-Label_3b_5cd7:
+	jr .done ; $5cd5
+.waitFramesCmd:
 	call WaitFramesCmd ; $5cd7
 	db $06 ; $5cda inline arg
 	farcall TryEstablishLink ; $5cdb
-	jr c, Label_3b_5c78 ; $5cde
-Label_3b_5ce0:
+	jr c, .loop ; $5cde
+.done:
 	ret ; $5ce0
 RestoreScreenAfterLinkAttempt:
 	call DisableLCDSafely ; $5ce1
@@ -4093,7 +4093,7 @@ RunMatchFormatSelect:
 	call RegisterFrameTask ; $5d1c
 	call DrawMatchFormatCaption ; $5d1f
 	wram_bank $03 ; $5d22
-Label_3b_5d28:
+.loop:
 	call AdvanceFrame ; $5d28
 	ldh a, [hInputPressed] ; $5d2b
 	ld [wMenuInputPressed], a ; $5d2d
@@ -4102,17 +4102,17 @@ Label_3b_5d28:
 	ld c, $03 ; $5d35
 	call MoveMenuCursor ; $5d37
 	or a, a ; $5d3a
-	jr z, Label_3b_5d42 ; $5d3b
+	jr z, .checkMenuInputPressed ; $5d3b
 	sound $5e ; $5d3d
 	call DrawMatchFormatCaption ; $5d3f
-Label_3b_5d42:
+.checkMenuInputPressed:
 	ld a, [wMenuInputPressed] ; $5d42
 	bit PADB_A, a ; $5d45
-	jr nz, Label_3b_5d4f ; $5d47
+	jr nz, .playSfx ; $5d47
 	bit 1, a ; $5d49
-	jr nz, Label_3b_5d69 ; $5d4b
-	jr Label_3b_5d28 ; $5d4d
-Label_3b_5d4f:
+	jr nz, .playSfx2 ; $5d4b
+	jr .loop ; $5d4d
+.playSfx:
 	sound $5f ; $5d4f
 	ld hl, rIE ; $5d51
 	set 2, [hl] ; $5d54
@@ -4124,7 +4124,7 @@ Label_3b_5d4f:
 	ld c, $03 ; $5d63
 	call GetMenuCursorCellIndex ; $5d65
 	ret ; $5d68
-Label_3b_5d69:
+.playSfx2:
 	sound $62 ; $5d69
 	ld hl, rIE ; $5d6b
 	set 2, [hl] ; $5d6e
@@ -4181,15 +4181,15 @@ LoadMatchFormatGfx:
 	push af ; $5dee
 	wram_bank $01 ; $5def
 	ld c, $00 ; $5df5
-Label_3b_5df7:
+.loop:
 	ld a, c ; $5df7
 	add a, a ; $5df8
 	ld hl, $5ebd ; $5df9
 	add a, l ; $5dfc
 	ld l, a ; $5dfd
-	jr nc, Label_3b_5e01 ; $5dfe
+	jr nc, .read ; $5dfe
 	inc h ; $5e00
-Label_3b_5e01:
+.read:
 	ld a, [hl+] ; $5e01
 	ld h, [hl] ; $5e02
 	ld l, a ; $5e03
@@ -4208,9 +4208,9 @@ Label_3b_5e01:
 	add a, a ; $5e16
 	add a, l ; $5e17
 	ld l, a ; $5e18
-	jr nc, Label_3b_5e1c ; $5e19
+	jr nc, .readB ; $5e19
 	inc h ; $5e1b
-Label_3b_5e1c:
+.readB:
 	ld a, [hl+] ; $5e1c
 	ld d, [hl] ; $5e1d
 	ld e, a ; $5e1e
@@ -4231,7 +4231,7 @@ Label_3b_5e1c:
 	call AdvanceFrame ; $5e33
 	ld a, c ; $5e36
 	cp a, $07 ; $5e37
-	jr nz, Label_3b_5df7 ; $5e39
+	jr nz, .loop ; $5e39
 	ld b, $23 ; $5e3b
 	ld c, $10 ; $5e3d
 	ld de, $a000 ; $5e3f
@@ -4301,9 +4301,9 @@ Label_3b_5e1c:
 MatchFormatSlideIn:
 	ld a, b ; $5ed9
 	or a, a ; $5eda
-	jr z, Label_3b_5ef4 ; $5edb
+	jr z, .step ; $5edb
 	ld c, $00 ; $5edd
-Label_3b_5edf:
+.loop:
 	call AdvanceFrame ; $5edf
 	ld b, $02 ; $5ee2
 	farcall RestoreMenuBgAndDrawPanel ; $5ee4
@@ -4313,11 +4313,11 @@ Label_3b_5edf:
 	inc a ; $5eed
 	ld c, a ; $5eee
 	cp a, $0e ; $5eef
-	jr nz, Label_3b_5edf ; $5ef1
+	jr nz, .loop ; $5ef1
 	ret ; $5ef3
-Label_3b_5ef4:
+.step:
 	ld c, $0a ; $5ef4
-Label_3b_5ef6:
+.loopB:
 	call AdvanceFrame ; $5ef6
 	ld b, $03 ; $5ef9
 	farcall RestoreMenuBgAndDrawPanel ; $5efb
@@ -4327,14 +4327,14 @@ Label_3b_5ef6:
 	dec a ; $5f04
 	ld c, a ; $5f05
 	cp a, $ff ; $5f06
-	jr nz, Label_3b_5ef6 ; $5f08
+	jr nz, .loopB ; $5f08
 	ret ; $5f0a
 MatchFormatSlideOut:
 	ld a, b ; $5f0b
 	or a, a ; $5f0c
-	jr z, Label_3b_5f26 ; $5f0d
+	jr z, .step ; $5f0d
 	ld c, $00 ; $5f0f
-Label_3b_5f11:
+.loop:
 	call AdvanceFrame ; $5f11
 	ld b, $03 ; $5f14
 	farcall RestoreMenuBgAndDrawPanel ; $5f16
@@ -4344,11 +4344,11 @@ Label_3b_5f11:
 	inc a ; $5f1f
 	ld c, a ; $5f20
 	cp a, $0b ; $5f21
-	jr nz, Label_3b_5f11 ; $5f23
+	jr nz, .loop ; $5f23
 	ret ; $5f25
-Label_3b_5f26:
+.step:
 	ld c, $0d ; $5f26
-Label_3b_5f28:
+.loopB:
 	call AdvanceFrame ; $5f28
 	ld b, $02 ; $5f2b
 	farcall RestoreMenuBgAndDrawPanel ; $5f2d
@@ -4358,21 +4358,21 @@ Label_3b_5f28:
 	dec a ; $5f36
 	ld c, a ; $5f37
 	or a, a ; $5f38
-	jr nz, Label_3b_5f28 ; $5f39
+	jr nz, .loopB ; $5f39
 	ret ; $5f3b
 HandleMatchFormatInput:
 	ld a, [wMenuInputPressed] ; $5f3c
 	bit PADB_LEFT, a ; $5f3f
-	jr nz, Label_3b_5f48 ; $5f41
+	jr nz, .playSfx ; $5f41
 	bit 4, a ; $5f43
-	jr nz, Label_3b_5f9f ; $5f45
+	jr nz, .playSfx2 ; $5f45
 	ret ; $5f47
-Label_3b_5f48:
+.playSfx:
 	sound $5e ; $5f48
 	ld c, $01 ; $5f4a
 	call GetMenuCursorCellIndex ; $5f4c
 	or a, a ; $5f4f
-	jr nz, Label_3b_5f66 ; $5f50
+	jr nz, .compare ; $5f50
 	ld a, [wMatchFormatDoubles] ; $5f52
 	xor a, $01 ; $5f55
 	ld [wMatchFormatDoubles], a ; $5f57
@@ -4381,9 +4381,9 @@ Label_3b_5f48:
 	call RedrawMatchFormatModeRow ; $5f5f
 	call DrawMatchFormatCaption ; $5f62
 	ret ; $5f65
-Label_3b_5f66:
+.compare:
 	cp a, $01 ; $5f66
-	jr nz, Label_3b_5f7e ; $5f68
+	jr nz, .checkMatchFormatSets ; $5f68
 	ld a, [wMatchFormatGames] ; $5f6a
 	xor a, $01 ; $5f6d
 	ld [wMatchFormatGames], a ; $5f6f
@@ -4392,32 +4392,32 @@ Label_3b_5f66:
 	call RedrawMatchFormatGamesRow ; $5f77
 	call DrawMatchFormatCaption ; $5f7a
 	ret ; $5f7d
-Label_3b_5f7e:
+.checkMatchFormatSets:
 	ld a, [wMatchFormatSets] ; $5f7e
 	dec a ; $5f81
 	add a, a ; $5f82
-	jr nc, Label_3b_5f8a ; $5f83
+	jr nc, .step ; $5f83
 	ld a, $03 ; $5f85
 	dec a ; $5f87
-	jr Label_3b_5f90 ; $5f88
-Label_3b_5f8a:
+	jr .store ; $5f88
+.step:
 	rra ; $5f8a
 	cp a, $03 ; $5f8b
-	jr c, Label_3b_5f90 ; $5f8d
+	jr c, .store ; $5f8d
 	xor a, a ; $5f8f
-Label_3b_5f90:
+.store:
 	ld [wMatchFormatSets], a ; $5f90
 	ld b, $02 ; $5f93
 	call FlushMatchFormatRowToVram ; $5f95
 	call RedrawMatchFormatSetsRow ; $5f98
 	call DrawMatchFormatCaption ; $5f9b
 	ret ; $5f9e
-Label_3b_5f9f:
+.playSfx2:
 	sound $5e ; $5f9f
 	ld c, $01 ; $5fa1
 	call GetMenuCursorCellIndex ; $5fa3
 	or a, a ; $5fa6
-	jr nz, Label_3b_5fbd ; $5fa7
+	jr nz, .compare2 ; $5fa7
 	ld a, [wMatchFormatDoubles] ; $5fa9
 	xor a, $01 ; $5fac
 	ld [wMatchFormatDoubles], a ; $5fae
@@ -4426,9 +4426,9 @@ Label_3b_5f9f:
 	call RedrawMatchFormatModeRow ; $5fb6
 	call DrawMatchFormatCaption ; $5fb9
 	ret ; $5fbc
-Label_3b_5fbd:
+.compare2:
 	cp a, $01 ; $5fbd
-	jr nz, Label_3b_5fd5 ; $5fbf
+	jr nz, .checkMatchFormatSets2 ; $5fbf
 	ld a, [wMatchFormatGames] ; $5fc1
 	xor a, $01 ; $5fc4
 	ld [wMatchFormatGames], a ; $5fc6
@@ -4437,20 +4437,20 @@ Label_3b_5fbd:
 	call RedrawMatchFormatGamesRow ; $5fce
 	call DrawMatchFormatCaption ; $5fd1
 	ret ; $5fd4
-Label_3b_5fd5:
+.checkMatchFormatSets2:
 	ld a, [wMatchFormatSets] ; $5fd5
 	inc a ; $5fd8
 	add a, a ; $5fd9
-	jr nc, Label_3b_5fe1 ; $5fda
+	jr nc, .step2 ; $5fda
 	ld a, $03 ; $5fdc
 	dec a ; $5fde
-	jr Label_3b_5fe7 ; $5fdf
-Label_3b_5fe1:
+	jr .store2 ; $5fdf
+.step2:
 	rra ; $5fe1
 	cp a, $03 ; $5fe2
-	jr c, Label_3b_5fe7 ; $5fe4
+	jr c, .store2 ; $5fe4
 	xor a, a ; $5fe6
-Label_3b_5fe7:
+.store2:
 	ld [wMatchFormatSets], a ; $5fe7
 	ld b, $02 ; $5fea
 	call FlushMatchFormatRowToVram ; $5fec
@@ -4588,35 +4588,35 @@ MatchFormatCursorSpriteTask:
 	ld c, $01 ; $60d3
 	call GetMenuCursorCellIndex ; $60d5
 	or a, a ; $60d8
-	jr nz, Label_3b_60e0 ; $60d9
+	jr nz, .compare ; $60d9
 	ld a, [wMatchFormatDoubles] ; $60db
-	jr Label_3b_60f0 ; $60de
-Label_3b_60e0:
+	jr .step ; $60de
+.compare:
 	cp a, $01 ; $60e0
-	jr nz, Label_3b_60eb ; $60e2
+	jr nz, .checkMatchFormatSets ; $60e2
 	ld a, [wMatchFormatGames] ; $60e4
 	add a, $02 ; $60e7
-	jr Label_3b_60f0 ; $60e9
-Label_3b_60eb:
+	jr .step ; $60e9
+.checkMatchFormatSets:
 	ld a, [wMatchFormatSets] ; $60eb
 	add a, $04 ; $60ee
-Label_3b_60f0:
+.step:
 	push af ; $60f0
 	ld hl, Data_3b_615d ; $60f1
 	add a, l ; $60f4
 	ld l, a ; $60f5
-	jr nc, Label_3b_60f9 ; $60f6
+	jr nc, .read ; $60f6
 	inc h ; $60f8
-Label_3b_60f9:
+.read:
 	ld c, [hl] ; $60f9
 	pop af ; $60fa
 	ld hl, Data_3b_614f ; $60fb
 	add a, a ; $60fe
 	add a, l ; $60ff
 	ld l, a ; $6100
-	jr nc, Label_3b_6104 ; $6101
+	jr nc, .readB ; $6101
 	inc h ; $6103
-Label_3b_6104:
+.readB:
 	ld a, [hl+] ; $6104
 	ld d, [hl] ; $6105
 	ld e, a ; $6106
@@ -4684,40 +4684,40 @@ RenderMatchFormatOptionText:
 	ld c, $01 ; $61a1
 	call GetMenuCursorCellIndex ; $61a3
 	or a, a ; $61a6
-	jr nz, Label_3b_61bd ; $61a7
+	jr nz, .compare ; $61a7
 	ld a, [wMatchFormatDoubles] ; $61a9
 	ld hl, $0087 ; $61ac
 	add a, l ; $61af
 	ld l, a ; $61b0
-	jr nc, Label_3b_61b4 ; $61b1
+	jr nc, .step ; $61b1
 	inc h ; $61b3
-Label_3b_61b4:
+.step:
 	ld de, $d201 ; $61b4
 	ld c, $20 ; $61b7
 	farcall RenderTextToBuffer64 ; $61b9
 	ret ; $61bc
-Label_3b_61bd:
+.compare:
 	cp a, $01 ; $61bd
-	jr nz, Label_3b_61d5 ; $61bf
+	jr nz, .checkMatchFormatSets ; $61bf
 	ld a, [wMatchFormatGames] ; $61c1
 	ld hl, $0089 ; $61c4
 	add a, l ; $61c7
 	ld l, a ; $61c8
-	jr nc, Label_3b_61cc ; $61c9
+	jr nc, .step2 ; $61c9
 	inc h ; $61cb
-Label_3b_61cc:
+.step2:
 	ld de, $d201 ; $61cc
 	ld c, $20 ; $61cf
 	farcall RenderTextToBuffer64 ; $61d1
 	ret ; $61d4
-Label_3b_61d5:
+.checkMatchFormatSets:
 	ld a, [wMatchFormatSets] ; $61d5
 	ld hl, $008b ; $61d8
 	add a, l ; $61db
 	ld l, a ; $61dc
-	jr nc, Label_3b_61e0 ; $61dd
+	jr nc, .step3 ; $61dd
 	inc h ; $61df
-Label_3b_61e0:
+.step3:
 	ld de, $d201 ; $61e0
 	ld c, $20 ; $61e3
 	farcall RenderTextToBuffer64 ; $61e5
@@ -4738,16 +4738,16 @@ RunMinigameSelect:
 	wram_bank $03 ; $6201
 	call CheckMinigameGridExpanded ; $6207
 	or a, a ; $620a
-	jr nz, Label_3b_6216 ; $620b
+	jr nz, .checkMenuSlideDirection ; $620b
 	ld a, [wMenuSlideDirection] ; $620d
 	ld b, a ; $6210
 	call MinigameSelectSlideIn6 ; $6211
-	jr Label_3b_621d ; $6214
-Label_3b_6216:
+	jr .initMenuBgScroll ; $6214
+.checkMenuSlideDirection:
 	ld a, [wMenuSlideDirection] ; $6216
 	ld b, a ; $6219
 	call MinigameSelectSlideIn9 ; $621a
-Label_3b_621d:
+.initMenuBgScroll:
 	farcall InitMenuBgScroll ; $621d
 	ld b, $01 ; $6220
 	ld c, $01 ; $6222
@@ -4762,67 +4762,67 @@ Label_3b_621d:
 	call DrawMinigameSelectCaption ; $6238
 	call CheckMinigameGridExpanded ; $623b
 	or a, a ; $623e
-	jr nz, Label_3b_6246 ; $623f
+	jr nz, .drawMinigameSelectGrid9 ; $623f
 	call DrawMinigameSelectGrid6 ; $6241
-	jr Label_3b_6249 ; $6244
-Label_3b_6246:
+	jr .step ; $6244
+.drawMinigameSelectGrid9:
 	call DrawMinigameSelectGrid9 ; $6246
-Label_3b_6249:
+.step:
 	wram_bank $03 ; $6249
-Label_3b_624f:
+.loop:
 	ldh a, [hInputPressed] ; $624f
 	ld [wMenuInputPressed], a ; $6251
 	call CheckMinigameGridExpanded ; $6254
 	or a, a ; $6257
-	jr nz, Label_3b_626a ; $6258
+	jr nz, .step2 ; $6258
 	farcall MoveMinigameGridCursor ; $625a
 	or a, a ; $625d
-	jr z, Label_3b_627c ; $625e
+	jr z, .advanceFrame ; $625e
 	sound $5e ; $6260
 	call DrawMinigameSelectCaption ; $6262
 	call DrawMinigameSelectGrid6 ; $6265
-	jr Label_3b_627c ; $6268
-Label_3b_626a:
+	jr .advanceFrame ; $6268
+.step2:
 	ld b, $03 ; $626a
 	ld c, $03 ; $626c
 	call MoveMenuCursor ; $626e
 	or a, a ; $6271
-	jr z, Label_3b_627c ; $6272
+	jr z, .advanceFrame ; $6272
 	sound $5e ; $6274
 	call DrawMinigameSelectCaption ; $6276
 	call DrawMinigameSelectGrid9 ; $6279
-Label_3b_627c:
+.advanceFrame:
 	call AdvanceFrame ; $627c
 	ld a, [wMenuInputPressed] ; $627f
 	bit PADB_A, a ; $6282
-	jr nz, Label_3b_628c ; $6284
+	jr nz, .step3 ; $6284
 	bit 1, a ; $6286
-	jr nz, Label_3b_62cb ; $6288
-	jr Label_3b_624f ; $628a
-Label_3b_628c:
+	jr nz, .playSfx2 ; $6288
+	jr .loop ; $628a
+.step3:
 	ld c, $03 ; $628c
 	call GetMenuCursorCellIndex ; $628e
 	ld c, a ; $6291
 	call GetUnlockedStarCharAtGridSlot ; $6292
 	cp a, $15 ; $6295
-	jr nz, Label_3b_629d ; $6297
+	jr nz, .playSfx ; $6297
 	sound $61 ; $6299
-	jr Label_3b_624f ; $629b
-Label_3b_629d:
+	jr .loop ; $629b
+.playSfx:
 	sound $5f ; $629d
 	call ClearFrameTasks ; $629f
 	ld hl, rIE ; $62a2
 	set 2, [hl] ; $62a5
 	call CheckMinigameGridExpanded ; $62a7
 	or a, a ; $62aa
-	jr nz, Label_3b_62b4 ; $62ab
+	jr nz, .step4 ; $62ab
 	ld b, $01 ; $62ad
 	call MinigameSelectSlideOut6 ; $62af
-	jr Label_3b_62b9 ; $62b2
-Label_3b_62b4:
+	jr .step5 ; $62b2
+.step4:
 	ld b, $01 ; $62b4
 	call MinigameSelectSlideOut9 ; $62b6
-Label_3b_62b9:
+.step5:
 	ld a, $01 ; $62b9
 	ld [wMenuSlideDirection], a ; $62bb
 	xor a, a ; $62be
@@ -4831,21 +4831,21 @@ Label_3b_62b9:
 	call GetMenuCursorCellIndex ; $62c4
 	ld [$cb20], a ; $62c7
 	ret ; $62ca
-Label_3b_62cb:
+.playSfx2:
 	sound $62 ; $62cb
 	call ClearFrameTasks ; $62cd
 	ld hl, rIE ; $62d0
 	set 2, [hl] ; $62d3
 	call CheckMinigameGridExpanded ; $62d5
 	or a, a ; $62d8
-	jr nz, Label_3b_62e2 ; $62d9
+	jr nz, .step6 ; $62d9
 	ld b, $00 ; $62db
 	call MinigameSelectSlideOut6 ; $62dd
-	jr Label_3b_62e7 ; $62e0
-Label_3b_62e2:
+	jr .step7 ; $62e0
+.step6:
 	ld b, $00 ; $62e2
 	call MinigameSelectSlideOut9 ; $62e4
-Label_3b_62e7:
+.step7:
 	ld a, $00 ; $62e7
 	ld [wMenuSlideDirection], a ; $62e9
 	ld a, $ff ; $62ec
@@ -4855,7 +4855,7 @@ LoadMinigameSelectGfx:
 	push af ; $62f1
 	wram_bank $01 ; $62f2
 	ld c, $00 ; $62f8
-Label_3b_62fa:
+.loop:
 	push bc ; $62fa
 	call GetUnlockedStarCharAtGridSlot ; $62fb
 	ld b, a ; $62fe
@@ -4868,9 +4868,9 @@ Label_3b_62fa:
 	ld hl, $63f6 ; $6309
 	add a, l ; $630c
 	ld l, a ; $630d
-	jr nc, Label_3b_6311 ; $630e
+	jr nc, .read ; $630e
 	inc h ; $6310
-Label_3b_6311:
+.read:
 	ld a, [hl+] ; $6311
 	ld d, [hl] ; $6312
 	ld e, a ; $6313
@@ -4883,7 +4883,7 @@ Label_3b_6311:
 	inc a ; $6321
 	ld c, a ; $6322
 	cp a, $09 ; $6323
-	jr nz, Label_3b_62fa ; $6325
+	jr nz, .loop ; $6325
 	ld b, $33 ; $6327
 	ld c, $10 ; $6329
 	ld de, $a000 ; $632b
@@ -4978,9 +4978,9 @@ Label_3b_6311:
 MinigameSelectSlideIn9:
 	ld a, b ; $640a
 	or a, a ; $640b
-	jr z, Label_3b_6425 ; $640c
+	jr z, .step ; $640c
 	ld c, $00 ; $640e
-Label_3b_6410:
+.loop:
 	call AdvanceFrame ; $6410
 	ld b, $04 ; $6413
 	farcall RestoreMenuBgAndDrawPanel ; $6415
@@ -4990,11 +4990,11 @@ Label_3b_6410:
 	inc a ; $641e
 	ld c, a ; $641f
 	cp a, $0e ; $6420
-	jr nz, Label_3b_6410 ; $6422
+	jr nz, .loop ; $6422
 	ret ; $6424
-Label_3b_6425:
+.step:
 	ld c, $0c ; $6425
-Label_3b_6427:
+.loopB:
 	call AdvanceFrame ; $6427
 	ld b, $05 ; $642a
 	farcall RestoreMenuBgAndDrawPanel ; $642c
@@ -5004,14 +5004,14 @@ Label_3b_6427:
 	dec a ; $6435
 	ld c, a ; $6436
 	cp a, $ff ; $6437
-	jr nz, Label_3b_6427 ; $6439
+	jr nz, .loopB ; $6439
 	ret ; $643b
 MinigameSelectSlideOut9:
 	ld a, b ; $643c
 	or a, a ; $643d
-	jr z, Label_3b_6457 ; $643e
+	jr z, .step ; $643e
 	ld c, $00 ; $6440
-Label_3b_6442:
+.loop:
 	call AdvanceFrame ; $6442
 	ld b, $05 ; $6445
 	farcall RestoreMenuBgAndDrawPanel ; $6447
@@ -5021,11 +5021,11 @@ Label_3b_6442:
 	inc a ; $6450
 	ld c, a ; $6451
 	cp a, $0b ; $6452
-	jr nz, Label_3b_6442 ; $6454
+	jr nz, .loop ; $6454
 	ret ; $6456
-Label_3b_6457:
+.step:
 	ld c, $0d ; $6457
-Label_3b_6459:
+.loopB:
 	call AdvanceFrame ; $6459
 	ld b, $04 ; $645c
 	farcall RestoreMenuBgAndDrawPanel ; $645e
@@ -5035,7 +5035,7 @@ Label_3b_6459:
 	dec a ; $6467
 	ld c, a ; $6468
 	or a, a ; $6469
-	jr nz, Label_3b_6459 ; $646a
+	jr nz, .loopB ; $646a
 	ret ; $646c
 MinigameSelectCursorSpriteTask:
 	farcall TickMenuBgScroll ; $646d
@@ -5045,9 +5045,9 @@ MinigameSelectCursorSpriteTask:
 	ld hl, Data_3b_651b ; $6476
 	add a, l ; $6479
 	ld l, a ; $647a
-	jr nc, Label_3b_647e ; $647b
+	jr nc, .read ; $647b
 	inc h ; $647d
-Label_3b_647e:
+.read:
 	ld c, [hl] ; $647e
 	pop af ; $647f
 	push af ; $6480
@@ -5055,9 +5055,9 @@ Label_3b_647e:
 	add a, a ; $6484
 	add a, l ; $6485
 	ld l, a ; $6486
-	jr nc, Label_3b_648a ; $6487
+	jr nc, .readB ; $6487
 	inc h ; $6489
-Label_3b_648a:
+.readB:
 	ld a, [hl+] ; $648a
 	ld d, [hl] ; $648b
 	ld e, a ; $648c
@@ -5066,9 +5066,9 @@ Label_3b_648a:
 	ld hl, Data_3b_64f4 ; $6491
 	add a, l ; $6494
 	ld l, a ; $6495
-	jr nc, Label_3b_6499 ; $6496
+	jr nc, .readBB ; $6496
 	inc h ; $6498
-Label_3b_6499:
+.readBB:
 	ld b, [hl] ; $6499
 	call OverrideMinigameCursorIfLocked ; $649a
 	ld hl, SpriteTemplate_3b_64ca ; $649d
@@ -5140,12 +5140,12 @@ OverrideMinigameCursorIfLocked:
 	ld c, a ; $6555
 	call GetUnlockedStarCharAtGridSlot ; $6556
 	cp a, $15 ; $6559
-	jr z, Label_3b_6561 ; $655b
+	jr z, .step ; $655b
 	pop de ; $655d
 	pop hl ; $655e
 	pop bc ; $655f
 	ret ; $6560
-Label_3b_6561:
+.step:
 	ld c, $50 ; $6561
 	ld b, $00 ; $6563
 	pop de ; $6565
@@ -5182,21 +5182,21 @@ RenderMinigameNameText:
 	ld c, a ; $65ac
 	call GetUnlockedStarCharAtGridSlot ; $65ad
 	cp a, $15 ; $65b0
-	jr nz, Label_3b_65bd ; $65b2
+	jr nz, .restore ; $65b2
 	pop af ; $65b4
 	ld hl, $00bb ; $65b5
 	ld de, $d201 ; $65b8
-	jr Label_3b_65d4 ; $65bb
-Label_3b_65bd:
+	jr .step ; $65bb
+.restore:
 	pop af ; $65bd
 	ld b, a ; $65be
 	add a, a ; $65bf
 	ld hl, $65da ; $65c0
 	add a, l ; $65c3
 	ld l, a ; $65c4
-	jr nc, Label_3b_65c8 ; $65c5
+	jr nc, .read ; $65c5
 	inc h ; $65c7
-Label_3b_65c8:
+.read:
 	ld a, [hl+] ; $65c8
 	ld d, [hl] ; $65c9
 	ld e, a ; $65ca
@@ -5204,9 +5204,9 @@ Label_3b_65c8:
 	ld hl, $00b2 ; $65cc
 	add a, l ; $65cf
 	ld l, a ; $65d0
-	jr nc, Label_3b_65d4 ; $65d1
+	jr nc, .step ; $65d1
 	inc h ; $65d3
-Label_3b_65d4:
+.step:
 	ld c, $20 ; $65d4
 	farcall RenderTextToBuffer64 ; $65d6
 	ret ; $65d9
@@ -5224,13 +5224,13 @@ DrawMinigameSelectGrid9:
 	wram_bank $03 ; $65ec
 	ld b, $00 ; $65f2
 	ld c, $00 ; $65f4
-Label_3b_65f6:
+.loop:
 	call FillMinigameSelectCell ; $65f6
 	ld a, b ; $65f9
 	inc a ; $65fa
 	ld b, a ; $65fb
 	cp a, $09 ; $65fc
-	jr nz, Label_3b_65f6 ; $65fe
+	jr nz, .loop ; $65fe
 	ld c, $03 ; $6600
 	call GetMenuCursorCellIndex ; $6602
 	ld b, a ; $6605
@@ -5263,21 +5263,21 @@ FillMinigameSelectCell:
 	ld c, $03 ; $663d
 	ld a, d ; $663f
 	or a, a ; $6640
-	jr z, Label_3b_6647 ; $6641
+	jr z, .step ; $6641
 	ld h, $0c ; $6643
-	jr Label_3b_6649 ; $6645
-Label_3b_6647:
+	jr .step2 ; $6645
+.step:
 	ld h, $0d ; $6647
-Label_3b_6649:
+.step2:
 	push hl ; $6649
 	ld hl, $6660 ; $664a
 	ld a, e ; $664d
 	add a, a ; $664e
 	add a, l ; $664f
 	ld l, a ; $6650
-	jr nc, Label_3b_6654 ; $6651
+	jr nc, .read ; $6651
 	inc h ; $6653
-Label_3b_6654:
+.read:
 	ld a, [hl+] ; $6654
 	ld d, [hl] ; $6655
 	ld e, a ; $6656
@@ -5308,32 +5308,32 @@ LoadMinigameCharPalette:
 BuildStarCharUnlockMask:
 	ld c, $00 ; $667f
 	ld b, $00 ; $6681
-Label_3b_6683:
+.loop:
 	ld a, c ; $6683
 	add a, a ; $6684
 	ld hl, $66a9 ; $6685
 	add a, l ; $6688
 	ld l, a ; $6689
-	jr nc, Label_3b_668d ; $668a
+	jr nc, .read ; $668a
 	inc h ; $668c
-Label_3b_668d:
+.read:
 	ld a, [hl+] ; $668d
 	ld d, [hl] ; $668e
 	ld e, a ; $668f
 	farcall TestSaveFlag ; $6690
-	jr z, Label_3b_6699 ; $6693
+	jr z, .step ; $6693
 	ld a, $01 ; $6695
 	or a, b ; $6697
 	ld b, a ; $6698
-Label_3b_6699:
+.step:
 	ld a, c ; $6699
 	inc a ; $669a
 	ld c, a ; $669b
 	cp a, $06 ; $669c
-	jr z, Label_3b_66a4 ; $669e
+	jr z, .step2 ; $669e
 	sla b ; $66a0
-	jr Label_3b_6683 ; $66a2
-Label_3b_66a4:
+	jr .loop ; $66a2
+.step2:
 	ld a, b ; $66a4
 	ld [$cb5d], a ; $66a5
 	ret ; $66a8
@@ -5376,9 +5376,9 @@ GetStarCharAtGridSlot:
 	ld a, c ; $66e1
 	add a, l ; $66e2
 	ld l, a ; $66e3
-	jr nc, Label_3b_66e7 ; $66e4
+	jr nc, .read ; $66e4
 	inc h ; $66e6
-Label_3b_66e7:
+.read:
 	ld a, [hl] ; $66e7
 	ret ; $66e8
 	; $66e9, 9 bytes (bytes:3)
@@ -5398,9 +5398,9 @@ CheckMinigameGridExpanded:
 MinigameSelectSlideIn6:
 	ld a, b ; $6700
 	or a, a ; $6701
-	jr z, Label_3b_671b ; $6702
+	jr z, .step ; $6702
 	ld c, $00 ; $6704
-Label_3b_6706:
+.loop:
 	call AdvanceFrame ; $6706
 	ld b, $16 ; $6709
 	farcall RestoreMenuBgAndDrawPanel ; $670b
@@ -5410,11 +5410,11 @@ Label_3b_6706:
 	inc a ; $6714
 	ld c, a ; $6715
 	cp a, $0e ; $6716
-	jr nz, Label_3b_6706 ; $6718
+	jr nz, .loop ; $6718
 	ret ; $671a
-Label_3b_671b:
+.step:
 	ld c, $0c ; $671b
-Label_3b_671d:
+.loopB:
 	call AdvanceFrame ; $671d
 	ld b, $17 ; $6720
 	farcall RestoreMenuBgAndDrawPanel ; $6722
@@ -5424,14 +5424,14 @@ Label_3b_671d:
 	dec a ; $672b
 	ld c, a ; $672c
 	cp a, $ff ; $672d
-	jr nz, Label_3b_671d ; $672f
+	jr nz, .loopB ; $672f
 	ret ; $6731
 MinigameSelectSlideOut6:
 	ld a, b ; $6732
 	or a, a ; $6733
-	jr z, Label_3b_674d ; $6734
+	jr z, .step ; $6734
 	ld c, $00 ; $6736
-Label_3b_6738:
+.loop:
 	call AdvanceFrame ; $6738
 	ld b, $17 ; $673b
 	farcall RestoreMenuBgAndDrawPanel ; $673d
@@ -5441,11 +5441,11 @@ Label_3b_6738:
 	inc a ; $6746
 	ld c, a ; $6747
 	cp a, $0b ; $6748
-	jr nz, Label_3b_6738 ; $674a
+	jr nz, .loop ; $674a
 	ret ; $674c
-Label_3b_674d:
+.step:
 	ld c, $0d ; $674d
-Label_3b_674f:
+.loopB:
 	call AdvanceFrame ; $674f
 	ld b, $16 ; $6752
 	farcall RestoreMenuBgAndDrawPanel ; $6754
@@ -5455,19 +5455,19 @@ Label_3b_674f:
 	dec a ; $675d
 	ld c, a ; $675e
 	or a, a ; $675f
-	jr nz, Label_3b_674f ; $6760
+	jr nz, .loopB ; $6760
 	ret ; $6762
 DrawMinigameSelectGrid6:
 	wram_bank $03 ; $6763
 	ld b, $00 ; $6769
 	ld c, $00 ; $676b
-Label_3b_676d:
+.loop:
 	farcall FillMenuGridCellTile ; $676d
 	ld a, b ; $6770
 	inc a ; $6771
 	ld b, a ; $6772
 	cp a, $06 ; $6773
-	jr nz, Label_3b_676d ; $6775
+	jr nz, .loop ; $6775
 	ld c, $03 ; $6777
 	call GetMenuCursorCellIndex ; $6779
 	ld b, a ; $677c
@@ -5509,37 +5509,37 @@ RunSavedDataSourceSelect:
 	call RegisterFrameTask ; $67d6
 	call DrawSavedDataSourceGrid ; $67d9
 	wram_bank $03 ; $67dc
-Label_3b_67e2:
+.loop:
 	call AdvanceFrame ; $67e2
 	ldh a, [hInputPressed] ; $67e5
 	ld [wMenuInputPressed], a ; $67e7
 	farcall MoveSavedDataPickerCursor ; $67ea
 	or a, a ; $67ed
-	jr z, Label_3b_67f5 ; $67ee
+	jr z, .checkMenuInputPressed ; $67ee
 	sound $5e ; $67f0
 	call DrawSavedDataSourceGrid ; $67f2
-Label_3b_67f5:
+.checkMenuInputPressed:
 	ld a, [wMenuInputPressed] ; $67f5
 	bit PADB_A, a ; $67f8
-	jr nz, Label_3b_6802 ; $67fa
+	jr nz, .step ; $67fa
 	bit 1, a ; $67fc
-	jr nz, Label_3b_6857 ; $67fe
-	jr Label_3b_67e2 ; $6800
-Label_3b_6802:
+	jr nz, .playSfx3 ; $67fe
+	jr .loop ; $6800
+.step:
 	ld c, $03 ; $6802
 	call GetMenuCursorCellIndex ; $6804
 	cp a, $04 ; $6807
-	jr nz, Label_3b_6815 ; $6809
+	jr nz, .step2 ; $6809
 	call CheckN64DataPresent ; $680b
 	or a, a ; $680e
-	jr nz, Label_3b_683a ; $680f
+	jr nz, .playSfx2 ; $680f
 	sound $61 ; $6811
-	jr Label_3b_67e2 ; $6813
-Label_3b_6815:
+	jr .loop ; $6813
+.step2:
 	ld c, $03 ; $6815
 	call GetMenuCursorCellIndex ; $6817
 	cp a, $03 ; $681a
-	jp nc, Label_3b_683a ; $681c
+	jp nc, .playSfx2 ; $681c
 	add a, a ; $681f
 	add a, a ; $6820
 	add a, a ; $6821
@@ -5547,19 +5547,19 @@ Label_3b_6815:
 	ld bc, $d300 ; $6823
 	add a, c ; $6826
 	ld c, a ; $6827
-	jr nc, Label_3b_682b ; $6828
+	jr nc, .step3 ; $6828
 	inc b ; $682a
-Label_3b_682b:
+.step3:
 	ld hl, $0000 ; $682b
 	add hl, bc ; $682e
 	ld a, [hl] ; $682f
 	cp a, $3f ; $6830
-	jr z, Label_3b_6836 ; $6832
-	jr Label_3b_683a ; $6834
-Label_3b_6836:
+	jr z, .playSfx ; $6832
+	jr .playSfx2 ; $6834
+.playSfx:
 	sound $61 ; $6836
-	jr Label_3b_67e2 ; $6838
-Label_3b_683a:
+	jr .loop ; $6838
+.playSfx2:
 	sound $5f ; $683a
 	call ClearFrameTasks ; $683c
 	ld hl, rIE ; $683f
@@ -5572,7 +5572,7 @@ Label_3b_683a:
 	call GetMenuCursorCellIndex ; $6850
 	ld [$cb1c], a ; $6853
 	ret ; $6856
-Label_3b_6857:
+.playSfx3:
 	sound $62 ; $6857
 	call ClearFrameTasks ; $6859
 	ld hl, rIE ; $685c
@@ -5686,9 +5686,9 @@ LoadSavedDataSourceGfx:
 	xor a, [hl] ; $6978
 	ld a, b ; $6979
 	or a, a ; $697a
-	jr z, Label_3b_6994 ; $697b
+	jr z, .step ; $697b
 	ld c, $00 ; $697d
-Label_3b_697f:
+.loop:
 	call AdvanceFrame ; $697f
 	ld b, $06 ; $6982
 	farcall RestoreMenuBgAndDrawPanel ; $6984
@@ -5698,11 +5698,11 @@ Label_3b_697f:
 	inc a ; $698d
 	ld c, a ; $698e
 	cp a, $0c ; $698f
-	jr nz, Label_3b_697f ; $6991
+	jr nz, .loop ; $6991
 	ret ; $6993
-Label_3b_6994:
+.step:
 	ld c, $0a ; $6994
-Label_3b_6996:
+.loopB:
 	call AdvanceFrame ; $6996
 	ld b, $07 ; $6999
 	farcall RestoreMenuBgAndDrawPanel ; $699b
@@ -5712,13 +5712,13 @@ Label_3b_6996:
 	dec a ; $69a4
 	ld c, a ; $69a5
 	cp a, $ff ; $69a6
-	jr nz, Label_3b_6996 ; $69a8
+	jr nz, .loopB ; $69a8
 	ret ; $69aa
 	ld a, b ; $69ab
 	or a, a ; $69ac
-	jr z, Label_3b_69c6 ; $69ad
+	jr z, .step2 ; $69ad
 	ld c, $00 ; $69af
-Label_3b_69b1:
+.loopBB:
 	call AdvanceFrame ; $69b1
 	ld b, $07 ; $69b4
 	farcall RestoreMenuBgAndDrawPanel ; $69b6
@@ -5728,11 +5728,11 @@ Label_3b_69b1:
 	inc a ; $69bf
 	ld c, a ; $69c0
 	cp a, $0d ; $69c1
-	jr nz, Label_3b_69b1 ; $69c3
+	jr nz, .loopBB ; $69c3
 	ret ; $69c5
-Label_3b_69c6:
+.step2:
 	ld c, $0c ; $69c6
-Label_3b_69c8:
+.loopBBB:
 	call AdvanceFrame ; $69c8
 	ld b, $06 ; $69cb
 	farcall RestoreMenuBgAndDrawPanel ; $69cd
@@ -5742,7 +5742,7 @@ Label_3b_69c8:
 	dec a ; $69d6
 	ld c, a ; $69d7
 	or a, a ; $69d8
-	jr nz, Label_3b_69c8 ; $69d9
+	jr nz, .loopBBB ; $69d9
 	ret ; $69db
 SavedDataSourceCursorSpriteTask:
 	farcall TickMenuBgScroll ; $69dc
@@ -5752,18 +5752,18 @@ SavedDataSourceCursorSpriteTask:
 	ld hl, Data_3b_6a4f ; $69e5
 	add a, l ; $69e8
 	ld l, a ; $69e9
-	jr nc, Label_3b_69ed ; $69ea
+	jr nc, .read ; $69ea
 	inc h ; $69ec
-Label_3b_69ed:
+.read:
 	ld c, [hl] ; $69ed
 	pop af ; $69ee
 	ld hl, Data_3b_6a43 ; $69ef
 	add a, a ; $69f2
 	add a, l ; $69f3
 	ld l, a ; $69f4
-	jr nc, Label_3b_69f8 ; $69f5
+	jr nc, .readB ; $69f5
 	inc h ; $69f7
-Label_3b_69f8:
+.readB:
 	ld a, [hl+] ; $69f8
 	ld d, [hl] ; $69f9
 	ld e, a ; $69fa
@@ -5810,13 +5810,13 @@ DrawSavedDataSourceGrid:
 	wram_bank $03 ; $6a7e
 	ld b, $00 ; $6a84
 	ld c, $00 ; $6a86
-Label_3b_6a88:
+.loop:
 	call FillSavedDataSourceCell ; $6a88
 	ld a, b ; $6a8b
 	inc a ; $6a8c
 	ld b, a ; $6a8d
 	cp a, $05 ; $6a8e
-	jr nz, Label_3b_6a88 ; $6a90
+	jr nz, .loop ; $6a90
 	ld c, $03 ; $6a92
 	call GetMenuCursorCellIndex ; $6a94
 	ld b, a ; $6a97
@@ -5825,7 +5825,7 @@ Label_3b_6a88:
 	ld c, $03 ; $6a9d
 	call GetMenuCursorCellIndex ; $6a9f
 	cp a, $03 ; $6aa2
-	jr nc, Label_3b_6abe ; $6aa4
+	jr nc, .loadSavedDataSourceCellPalette ; $6aa4
 	add a, a ; $6aa6
 	add a, a ; $6aa7
 	add a, a ; $6aa8
@@ -5833,18 +5833,18 @@ Label_3b_6a88:
 	ld bc, $d300 ; $6aaa
 	add a, c ; $6aad
 	ld c, a ; $6aae
-	jr nc, Label_3b_6ab2 ; $6aaf
+	jr nc, .step ; $6aaf
 	inc b ; $6ab1
-Label_3b_6ab2:
+.step:
 	ld hl, $0001 ; $6ab2
 	add hl, bc ; $6ab5
 	ld a, [hl] ; $6ab6
 	ld d, $04 ; $6ab7
 	farcall LoadIndexedPalette_18 ; $6ab9
-	jr Label_3b_6ac1 ; $6abc
-Label_3b_6abe:
+	jr .step2 ; $6abc
+.loadSavedDataSourceCellPalette:
 	call LoadSavedDataSourceCellPalette ; $6abe
-Label_3b_6ac1:
+.step2:
 	wram_bank $03 ; $6ac1
 	ld de, $d1e0 ; $6ac7
 	ld b, $14 ; $6aca
@@ -5883,31 +5883,31 @@ FillSavedDataSourceCell:
 	ld e, b ; $6b13
 	ld a, b ; $6b14
 	cp a, $03 ; $6b15
-	jr nc, Label_3b_6b1f ; $6b17
+	jr nc, .step ; $6b17
 	ld b, $03 ; $6b19
 	ld c, $03 ; $6b1b
-	jr Label_3b_6b23 ; $6b1d
-Label_3b_6b1f:
+	jr .step2 ; $6b1d
+.step:
 	ld b, $05 ; $6b1f
 	ld c, $03 ; $6b21
-Label_3b_6b23:
+.step2:
 	ld a, d ; $6b23
 	or a, a ; $6b24
-	jr z, Label_3b_6b2b ; $6b25
+	jr z, .step3 ; $6b25
 	ld h, $0c ; $6b27
-	jr Label_3b_6b2d ; $6b29
-Label_3b_6b2b:
+	jr .step4 ; $6b29
+.step3:
 	ld h, $0d ; $6b2b
-Label_3b_6b2d:
+.step4:
 	push hl ; $6b2d
 	ld hl, $6b44 ; $6b2e
 	ld a, e ; $6b31
 	add a, a ; $6b32
 	add a, l ; $6b33
 	ld l, a ; $6b34
-	jr nc, Label_3b_6b38 ; $6b35
+	jr nc, .read ; $6b35
 	inc h ; $6b37
-Label_3b_6b38:
+.read:
 	ld a, [hl+] ; $6b38
 	ld d, [hl] ; $6b39
 	ld e, a ; $6b3a
@@ -5929,9 +5929,9 @@ LoadSavedDataSourceCellPalette:
 	add a, a ; $6b51
 	add a, l ; $6b52
 	ld l, a ; $6b53
-	jr nc, Label_3b_6b57 ; $6b54
+	jr nc, .read ; $6b54
 	inc h ; $6b56
-Label_3b_6b57:
+.read:
 	ld a, [hl+] ; $6b57
 	ld h, [hl] ; $6b58
 	ld l, a ; $6b59
@@ -5959,7 +5959,7 @@ DrawSavedDataSourceCaption:
 	call GetMenuCursorCellIndex ; $6b8e
 	ld b, a ; $6b91
 	cp a, $03 ; $6b92
-	jp nc, Label_3b_6c1b ; $6b94
+	jp nc, .compare ; $6b94
 	add a, a ; $6b97
 	add a, a ; $6b98
 	add a, a ; $6b99
@@ -5967,14 +5967,14 @@ DrawSavedDataSourceCaption:
 	ld bc, $d300 ; $6b9b
 	add a, c ; $6b9e
 	ld c, a ; $6b9f
-	jr nc, Label_3b_6ba3 ; $6ba0
+	jr nc, .step ; $6ba0
 	inc b ; $6ba2
-Label_3b_6ba3:
+.step:
 	ld hl, $0000 ; $6ba3
 	add hl, bc ; $6ba6
 	ld a, [hl] ; $6ba7
 	cp a, $3f ; $6ba8
-	jr z, Label_3b_6c0e ; $6baa
+	jr z, .step2 ; $6baa
 	ld hl, $0003 ; $6bac
 	add hl, bc ; $6baf
 	ld de, $d201 ; $6bb0
@@ -6028,26 +6028,26 @@ Label_3b_6ba3:
 	pop af ; $6c08
 	wram_bank ; $6c09
 	ret ; $6c0d
-Label_3b_6c0e:
+.step2:
 	ld hl, $00c8 ; $6c0e
 	ld de, $d201 ; $6c11
 	ld c, $20 ; $6c14
 	farcall RenderTextToBuffer64 ; $6c16
-	jr Label_3b_6c37 ; $6c19
-Label_3b_6c1b:
+	jr .restore ; $6c19
+.compare:
 	cp a, $04 ; $6c1b
-	jr nz, Label_3b_6c2c ; $6c1d
+	jr nz, .step3 ; $6c1d
 	ld hl, $00c7 ; $6c1f
 	ld de, $d201 ; $6c22
 	ld c, $20 ; $6c25
 	farcall RenderTextToBuffer64 ; $6c27
-	jr Label_3b_6c37 ; $6c2a
-Label_3b_6c2c:
+	jr .restore ; $6c2a
+.step3:
 	ld hl, $00c9 ; $6c2c
 	ld de, $d201 ; $6c2f
 	ld c, $20 ; $6c32
 	farcall RenderTextToBuffer64 ; $6c34
-Label_3b_6c37:
+.restore:
 	pop af ; $6c37
 	wram_bank ; $6c38
 	ret ; $6c3c
@@ -6072,12 +6072,12 @@ CheckN64DataPresent:
 	ld b, a ; $6c69
 	ld a, [$d001] ; $6c6a
 	or a, b ; $6c6d
-	jr z, Label_3b_6c78 ; $6c6e
+	jr z, .restore ; $6c6e
 	pop af ; $6c70
 	wram_bank ; $6c71
 	ld a, $01 ; $6c75
 	ret ; $6c77
-Label_3b_6c78:
+.restore:
 	pop af ; $6c78
 	wram_bank ; $6c79
 	xor a, a ; $6c7d
@@ -6104,27 +6104,27 @@ RunEraseSavedDataSelect:
 	call RegisterFrameTask ; $6caf
 	call DrawEraseSavedDataGrid ; $6cb2
 	wram_bank $03 ; $6cb5
-Label_3b_6cbb:
+.loop:
 	ldh a, [hInputPressed] ; $6cbb
 	ld [wMenuInputPressed], a ; $6cbd
 	call MoveSavedDataPickerCursor ; $6cc0
 	or a, a ; $6cc3
-	jr z, Label_3b_6ccb ; $6cc4
+	jr z, .advanceFrame ; $6cc4
 	sound $5e ; $6cc6
 	call DrawEraseSavedDataGrid ; $6cc8
-Label_3b_6ccb:
+.advanceFrame:
 	call AdvanceFrame ; $6ccb
 	ld a, [wMenuInputPressed] ; $6cce
 	bit PADB_A, a ; $6cd1
-	jr nz, Label_3b_6cdb ; $6cd3
+	jr nz, .step ; $6cd3
 	bit 1, a ; $6cd5
-	jr nz, Label_3b_6d1a ; $6cd7
-	jr Label_3b_6cbb ; $6cd9
-Label_3b_6cdb:
+	jr nz, .playSfx3 ; $6cd7
+	jr .loop ; $6cd9
+.step:
 	ld c, $03 ; $6cdb
 	call GetMenuCursorCellIndex ; $6cdd
 	cp a, $03 ; $6ce0
-	jp nc, Label_3b_6d00 ; $6ce2
+	jp nc, .playSfx2 ; $6ce2
 	add a, a ; $6ce5
 	add a, a ; $6ce6
 	add a, a ; $6ce7
@@ -6132,19 +6132,19 @@ Label_3b_6cdb:
 	ld bc, $d300 ; $6ce9
 	add a, c ; $6cec
 	ld c, a ; $6ced
-	jr nc, Label_3b_6cf1 ; $6cee
+	jr nc, .step2 ; $6cee
 	inc b ; $6cf0
-Label_3b_6cf1:
+.step2:
 	ld hl, $0000 ; $6cf1
 	add hl, bc ; $6cf4
 	ld a, [hl] ; $6cf5
 	cp a, $3f ; $6cf6
-	jr z, Label_3b_6cfc ; $6cf8
-	jr Label_3b_6d00 ; $6cfa
-Label_3b_6cfc:
+	jr z, .playSfx ; $6cf8
+	jr .playSfx2 ; $6cfa
+.playSfx:
 	sound $62 ; $6cfc
-	jr Label_3b_6cbb ; $6cfe
-Label_3b_6d00:
+	jr .loop ; $6cfe
+.playSfx2:
 	sound $5f ; $6d00
 	call ClearFrameTasks ; $6d02
 	ld hl, rIE ; $6d05
@@ -6156,7 +6156,7 @@ Label_3b_6d00:
 	ld c, $03 ; $6d14
 	call GetMenuCursorCellIndex ; $6d16
 	ret ; $6d19
-Label_3b_6d1a:
+.playSfx3:
 	sound $62 ; $6d1a
 	call ClearFrameTasks ; $6d1c
 	ld hl, rIE ; $6d1f
@@ -6256,9 +6256,9 @@ LoadEraseSavedDataGfx:
 SavedDataPickerSlideIn:
 	ld a, b ; $6e24
 	or a, a ; $6e25
-	jr z, Label_3b_6e3f ; $6e26
+	jr z, .step ; $6e26
 	ld c, $00 ; $6e28
-Label_3b_6e2a:
+.loop:
 	call AdvanceFrame ; $6e2a
 	ld b, $08 ; $6e2d
 	farcall RestoreMenuBgAndDrawPanel ; $6e2f
@@ -6268,11 +6268,11 @@ Label_3b_6e2a:
 	inc a ; $6e38
 	ld c, a ; $6e39
 	cp a, $0f ; $6e3a
-	jr nz, Label_3b_6e2a ; $6e3c
+	jr nz, .loop ; $6e3c
 	ret ; $6e3e
-Label_3b_6e3f:
+.step:
 	ld c, $0b ; $6e3f
-Label_3b_6e41:
+.loopB:
 	call AdvanceFrame ; $6e41
 	ld b, $09 ; $6e44
 	farcall RestoreMenuBgAndDrawPanel ; $6e46
@@ -6282,7 +6282,7 @@ Label_3b_6e41:
 	dec a ; $6e4f
 	ld c, a ; $6e50
 	cp a, $ff ; $6e51
-	jr nz, Label_3b_6e41 ; $6e53
+	jr nz, .loopB ; $6e53
 	ret ; $6e55
 SavedDataPickerSlideOut:
 	ld a, b ; $6e56
@@ -6318,129 +6318,129 @@ SavedDataPickerSlideOut:
 MoveSavedDataPickerCursor:
 	ld a, [wMenuCursorY] ; $6e87
 	or a, a ; $6e8a
-	jr nz, Label_3b_6ef2 ; $6e8b
+	jr nz, .checkMenuInputPressed ; $6e8b
 	ld a, [wMenuInputPressed] ; $6e8d
 	bit PADB_RIGHT, a ; $6e90
-	jr nz, Label_3b_6ea4 ; $6e92
+	jr nz, .checkMenuCursorX ; $6e92
 	bit 5, a ; $6e94
-	jr nz, Label_3b_6ebe ; $6e96
+	jr nz, .checkMenuCursorX2 ; $6e96
 	bit 6, a ; $6e98
-	jr nz, Label_3b_6ed7 ; $6e9a
+	jr nz, .checkMenuCursorX3 ; $6e9a
 	bit 7, a ; $6e9c
-	jr nz, Label_3b_6ed7 ; $6e9e
+	jr nz, .checkMenuCursorX3 ; $6e9e
 	xor a, a ; $6ea0
-	jp Label_3b_6f55 ; $6ea1
-Label_3b_6ea4:
+	jp .done ; $6ea1
+.checkMenuCursorX:
 	ld a, [wMenuCursorX] ; $6ea4
 	inc a ; $6ea7
 	add a, a ; $6ea8
-	jr nc, Label_3b_6eb0 ; $6ea9
+	jr nc, .step ; $6ea9
 	ld a, $03 ; $6eab
 	dec a ; $6ead
-	jr Label_3b_6eb6 ; $6eae
-Label_3b_6eb0:
+	jr .store ; $6eae
+.step:
 	rra ; $6eb0
 	cp a, $03 ; $6eb1
-	jr c, Label_3b_6eb6 ; $6eb3
+	jr c, .store ; $6eb3
 	xor a, a ; $6eb5
-Label_3b_6eb6:
+.store:
 	ld [wMenuCursorX], a ; $6eb6
 	ld a, $01 ; $6eb9
-	jp Label_3b_6f55 ; $6ebb
-Label_3b_6ebe:
+	jp .done ; $6ebb
+.checkMenuCursorX2:
 	ld a, [wMenuCursorX] ; $6ebe
 	dec a ; $6ec1
 	add a, a ; $6ec2
-	jr nc, Label_3b_6eca ; $6ec3
+	jr nc, .step2 ; $6ec3
 	ld a, $03 ; $6ec5
 	dec a ; $6ec7
-	jr Label_3b_6ed0 ; $6ec8
-Label_3b_6eca:
+	jr .store2 ; $6ec8
+.step2:
 	rra ; $6eca
 	cp a, $03 ; $6ecb
-	jr c, Label_3b_6ed0 ; $6ecd
+	jr c, .store2 ; $6ecd
 	xor a, a ; $6ecf
-Label_3b_6ed0:
+.store2:
 	ld [wMenuCursorX], a ; $6ed0
 	ld a, $01 ; $6ed3
-	jr Label_3b_6f55 ; $6ed5
-Label_3b_6ed7:
+	jr .done ; $6ed5
+.checkMenuCursorX3:
 	ld a, [wMenuCursorX] ; $6ed7
 	ld hl, $6f56 ; $6eda
 	add a, l ; $6edd
 	ld l, a ; $6ede
-	jr nc, Label_3b_6ee2 ; $6edf
+	jr nc, .read ; $6edf
 	inc h ; $6ee1
-Label_3b_6ee2:
+.read:
 	ld a, [hl] ; $6ee2
 	ld [wMenuCursorX], a ; $6ee3
 	ld a, [wMenuCursorY] ; $6ee6
 	xor a, $01 ; $6ee9
 	ld [wMenuCursorY], a ; $6eeb
 	ld a, $01 ; $6eee
-	jr Label_3b_6f55 ; $6ef0
-Label_3b_6ef2:
+	jr .done ; $6ef0
+.checkMenuInputPressed:
 	ld a, [wMenuInputPressed] ; $6ef2
 	bit PADB_RIGHT, a ; $6ef5
-	jr nz, Label_3b_6f08 ; $6ef7
+	jr nz, .checkMenuCursorX4 ; $6ef7
 	bit 5, a ; $6ef9
-	jr nz, Label_3b_6f21 ; $6efb
+	jr nz, .checkMenuCursorX5 ; $6efb
 	bit 6, a ; $6efd
-	jr nz, Label_3b_6f3a ; $6eff
+	jr nz, .checkMenuCursorX6 ; $6eff
 	bit 7, a ; $6f01
-	jr nz, Label_3b_6f3a ; $6f03
+	jr nz, .checkMenuCursorX6 ; $6f03
 	xor a, a ; $6f05
-	jr Label_3b_6f55 ; $6f06
-Label_3b_6f08:
+	jr .done ; $6f06
+.checkMenuCursorX4:
 	ld a, [wMenuCursorX] ; $6f08
 	inc a ; $6f0b
 	add a, a ; $6f0c
-	jr nc, Label_3b_6f14 ; $6f0d
+	jr nc, .step3 ; $6f0d
 	ld a, $02 ; $6f0f
 	dec a ; $6f11
-	jr Label_3b_6f1a ; $6f12
-Label_3b_6f14:
+	jr .store3 ; $6f12
+.step3:
 	rra ; $6f14
 	cp a, $02 ; $6f15
-	jr c, Label_3b_6f1a ; $6f17
+	jr c, .store3 ; $6f17
 	xor a, a ; $6f19
-Label_3b_6f1a:
+.store3:
 	ld [wMenuCursorX], a ; $6f1a
 	ld a, $01 ; $6f1d
-	jr Label_3b_6f55 ; $6f1f
-Label_3b_6f21:
+	jr .done ; $6f1f
+.checkMenuCursorX5:
 	ld a, [wMenuCursorX] ; $6f21
 	dec a ; $6f24
 	add a, a ; $6f25
-	jr nc, Label_3b_6f2d ; $6f26
+	jr nc, .step4 ; $6f26
 	ld a, $02 ; $6f28
 	dec a ; $6f2a
-	jr Label_3b_6f33 ; $6f2b
-Label_3b_6f2d:
+	jr .store4 ; $6f2b
+.step4:
 	rra ; $6f2d
 	cp a, $02 ; $6f2e
-	jr c, Label_3b_6f33 ; $6f30
+	jr c, .store4 ; $6f30
 	xor a, a ; $6f32
-Label_3b_6f33:
+.store4:
 	ld [wMenuCursorX], a ; $6f33
 	ld a, $01 ; $6f36
-	jr Label_3b_6f55 ; $6f38
-Label_3b_6f3a:
+	jr .done ; $6f38
+.checkMenuCursorX6:
 	ld a, [wMenuCursorX] ; $6f3a
 	ld hl, $6f59 ; $6f3d
 	add a, l ; $6f40
 	ld l, a ; $6f41
-	jr nc, Label_3b_6f45 ; $6f42
+	jr nc, .readB ; $6f42
 	inc h ; $6f44
-Label_3b_6f45:
+.readB:
 	ld a, [hl] ; $6f45
 	ld [wMenuCursorX], a ; $6f46
 	ld a, [wMenuCursorY] ; $6f49
 	xor a, $01 ; $6f4c
 	ld [wMenuCursorY], a ; $6f4e
 	ld a, $01 ; $6f51
-	jr Label_3b_6f55 ; $6f53
-Label_3b_6f55:
+	jr .done ; $6f53
+.done:
 	ret ; $6f55
 	; $6f56, 5 bytes (bytes:8)
 	db $00, $01, $01, $00, $02 ; 0x00
@@ -6452,18 +6452,18 @@ EraseSavedDataCursorSpriteTask:
 	ld hl, Data_3b_6fcc ; $6f64
 	add a, l ; $6f67
 	ld l, a ; $6f68
-	jr nc, Label_3b_6f6c ; $6f69
+	jr nc, .read ; $6f69
 	inc h ; $6f6b
-Label_3b_6f6c:
+.read:
 	ld c, [hl] ; $6f6c
 	pop af ; $6f6d
 	ld hl, Data_3b_6fc2 ; $6f6e
 	add a, a ; $6f71
 	add a, l ; $6f72
 	ld l, a ; $6f73
-	jr nc, Label_3b_6f77 ; $6f74
+	jr nc, .readB ; $6f74
 	inc h ; $6f76
-Label_3b_6f77:
+.readB:
 	ld a, [hl+] ; $6f77
 	ld d, [hl] ; $6f78
 	ld e, a ; $6f79
@@ -6510,13 +6510,13 @@ DrawEraseSavedDataGrid:
 	wram_bank $03 ; $6ffb
 	ld b, $00 ; $7001
 	ld c, $00 ; $7003
-Label_3b_7005:
+.loop:
 	call FillEraseSavedDataCell ; $7005
 	ld a, b ; $7008
 	inc a ; $7009
 	ld b, a ; $700a
 	cp a, $05 ; $700b
-	jr nz, Label_3b_7005 ; $700d
+	jr nz, .loop ; $700d
 	ld c, $03 ; $700f
 	call GetMenuCursorCellIndex ; $7011
 	ld b, a ; $7014
@@ -6525,7 +6525,7 @@ Label_3b_7005:
 	ld c, $03 ; $701a
 	call GetMenuCursorCellIndex ; $701c
 	cp a, $03 ; $701f
-	jr nc, Label_3b_703b ; $7021
+	jr nc, .loadEraseSavedDataCellPalette ; $7021
 	add a, a ; $7023
 	add a, a ; $7024
 	add a, a ; $7025
@@ -6533,18 +6533,18 @@ Label_3b_7005:
 	ld bc, $d300 ; $7027
 	add a, c ; $702a
 	ld c, a ; $702b
-	jr nc, Label_3b_702f ; $702c
+	jr nc, .step ; $702c
 	inc b ; $702e
-Label_3b_702f:
+.step:
 	ld hl, $0001 ; $702f
 	add hl, bc ; $7032
 	ld a, [hl] ; $7033
 	ld d, $04 ; $7034
 	farcall LoadIndexedPalette_18 ; $7036
-	jr Label_3b_703e ; $7039
-Label_3b_703b:
+	jr .step2 ; $7039
+.loadEraseSavedDataCellPalette:
 	call LoadEraseSavedDataCellPalette ; $703b
-Label_3b_703e:
+.step2:
 	wram_bank $03 ; $703e
 	ld de, $d1e0 ; $7044
 	ld b, $14 ; $7047
@@ -6583,31 +6583,31 @@ FillEraseSavedDataCell:
 	ld e, b ; $7090
 	ld a, b ; $7091
 	cp a, $03 ; $7092
-	jr nc, Label_3b_709c ; $7094
+	jr nc, .step ; $7094
 	ld b, $03 ; $7096
 	ld c, $03 ; $7098
-	jr Label_3b_70a0 ; $709a
-Label_3b_709c:
+	jr .step2 ; $709a
+.step:
 	ld b, $05 ; $709c
 	ld c, $03 ; $709e
-Label_3b_70a0:
+.step2:
 	ld a, d ; $70a0
 	or a, a ; $70a1
-	jr z, Label_3b_70a8 ; $70a2
+	jr z, .step3 ; $70a2
 	ld h, $0c ; $70a4
-	jr Label_3b_70aa ; $70a6
-Label_3b_70a8:
+	jr .step4 ; $70a6
+.step3:
 	ld h, $0d ; $70a8
-Label_3b_70aa:
+.step4:
 	push hl ; $70aa
 	ld hl, $70c1 ; $70ab
 	ld a, e ; $70ae
 	add a, a ; $70af
 	add a, l ; $70b0
 	ld l, a ; $70b1
-	jr nc, Label_3b_70b5 ; $70b2
+	jr nc, .read ; $70b2
 	inc h ; $70b4
-Label_3b_70b5:
+.read:
 	ld a, [hl+] ; $70b5
 	ld d, [hl] ; $70b6
 	ld e, a ; $70b7
@@ -6629,9 +6629,9 @@ LoadEraseSavedDataCellPalette:
 	add a, a ; $70ce
 	add a, l ; $70cf
 	ld l, a ; $70d0
-	jr nc, Label_3b_70d4 ; $70d1
+	jr nc, .read ; $70d1
 	inc h ; $70d3
-Label_3b_70d4:
+.read:
 	ld a, [hl+] ; $70d4
 	ld h, [hl] ; $70d5
 	ld l, a ; $70d6
@@ -6659,7 +6659,7 @@ DrawEraseSavedDataCaption:
 	call GetMenuCursorCellIndex ; $710b
 	ld b, a ; $710e
 	cp a, $03 ; $710f
-	jp nc, Label_3b_7198 ; $7111
+	jp nc, .step3 ; $7111
 	add a, a ; $7114
 	add a, a ; $7115
 	add a, a ; $7116
@@ -6667,14 +6667,14 @@ DrawEraseSavedDataCaption:
 	ld bc, $d300 ; $7118
 	add a, c ; $711b
 	ld c, a ; $711c
-	jr nc, Label_3b_7120 ; $711d
+	jr nc, .step ; $711d
 	inc b ; $711f
-Label_3b_7120:
+.step:
 	ld hl, $0000 ; $7120
 	add hl, bc ; $7123
 	ld a, [hl] ; $7124
 	cp a, $3f ; $7125
-	jr z, Label_3b_718b ; $7127
+	jr z, .step2 ; $7127
 	ld hl, $0003 ; $7129
 	add hl, bc ; $712c
 	ld de, $d201 ; $712d
@@ -6728,24 +6728,24 @@ Label_3b_7120:
 	pop af ; $7185
 	wram_bank ; $7186
 	ret ; $718a
-Label_3b_718b:
+.step2:
 	ld hl, $00ce ; $718b
 	ld de, $d201 ; $718e
 	ld c, $20 ; $7191
 	farcall RenderTextToBuffer64 ; $7193
-	jr Label_3b_71aa ; $7196
-Label_3b_7198:
+	jr .restore ; $7196
+.step3:
 	ld hl, $00cc ; $7198
 	sub a, $03 ; $719b
 	add a, l ; $719d
 	ld l, a ; $719e
-	jr nc, Label_3b_71a2 ; $719f
+	jr nc, .step4 ; $719f
 	inc h ; $71a1
-Label_3b_71a2:
+.step4:
 	ld de, $d201 ; $71a2
 	ld c, $20 ; $71a5
 	farcall RenderTextToBuffer64 ; $71a7
-Label_3b_71aa:
+.restore:
 	pop af ; $71aa
 	wram_bank ; $71ab
 	ret ; $71af
@@ -6771,7 +6771,7 @@ RunN64RecordTypeSelect:
 	call RegisterFrameTask ; $71df
 	call DrawN64RecordTypeGrid ; $71e2
 	wram_bank $03 ; $71e5
-Label_3b_71eb:
+.loop:
 	call AdvanceFrame ; $71eb
 	ldh a, [hInputPressed] ; $71ee
 	ld [wMenuInputPressed], a ; $71f0
@@ -6779,17 +6779,17 @@ Label_3b_71eb:
 	ld c, $01 ; $71f5
 	call MoveMenuCursor ; $71f7
 	or a, a ; $71fa
-	jr z, Label_3b_7202 ; $71fb
+	jr z, .checkMenuInputPressed ; $71fb
 	sound $5e ; $71fd
 	call DrawN64RecordTypeGrid ; $71ff
-Label_3b_7202:
+.checkMenuInputPressed:
 	ld a, [wMenuInputPressed] ; $7202
 	bit PADB_A, a ; $7205
-	jr nz, Label_3b_720f ; $7207
+	jr nz, .playSfx ; $7207
 	bit 1, a ; $7209
-	jr nz, Label_3b_722c ; $720b
-	jr Label_3b_71eb ; $720d
-Label_3b_720f:
+	jr nz, .playSfx2 ; $720b
+	jr .loop ; $720d
+.playSfx:
 	sound $5f ; $720f
 	call ClearFrameTasks ; $7211
 	ld hl, rIE ; $7214
@@ -6802,7 +6802,7 @@ Label_3b_720f:
 	call GetMenuCursorCellIndex ; $7225
 	ld [$cb1e], a ; $7228
 	ret ; $722b
-Label_3b_722c:
+.playSfx2:
 	sound $62 ; $722c
 	call ClearFrameTasks ; $722e
 	ld hl, rIE ; $7231
@@ -6818,15 +6818,15 @@ LoadN64RecordTypeGfx:
 	push af ; $7245
 	wram_bank $01 ; $7246
 	ld c, $00 ; $724c
-Label_3b_724e:
+.loop:
 	ld a, c ; $724e
 	add a, a ; $724f
 	ld hl, $72e0 ; $7250
 	add a, l ; $7253
 	ld l, a ; $7254
-	jr nc, Label_3b_7258 ; $7255
+	jr nc, .read ; $7255
 	inc h ; $7257
-Label_3b_7258:
+.read:
 	ld a, [hl+] ; $7258
 	ld h, [hl] ; $7259
 	ld l, a ; $725a
@@ -6845,9 +6845,9 @@ Label_3b_7258:
 	add a, a ; $726d
 	add a, l ; $726e
 	ld l, a ; $726f
-	jr nc, Label_3b_7273 ; $7270
+	jr nc, .readB ; $7270
 	inc h ; $7272
-Label_3b_7273:
+.readB:
 	ld a, [hl+] ; $7273
 	ld d, [hl] ; $7274
 	ld e, a ; $7275
@@ -6868,7 +6868,7 @@ Label_3b_7273:
 	call AdvanceFrame ; $728a
 	ld a, c ; $728d
 	cp a, $03 ; $728e
-	jr nz, Label_3b_724e ; $7290
+	jr nz, .loop ; $7290
 	ld b, $39 ; $7292
 	ld c, $10 ; $7294
 	ld de, $a000 ; $7296
@@ -6910,9 +6910,9 @@ Label_3b_7273:
 N64RecordTypeSlideIn:
 	ld a, b ; $72ec
 	or a, a ; $72ed
-	jr z, Label_3b_7307 ; $72ee
+	jr z, .step ; $72ee
 	ld c, $00 ; $72f0
-Label_3b_72f2:
+.loop:
 	call AdvanceFrame ; $72f2
 	ld b, $0a ; $72f5
 	farcall RestoreMenuBgAndDrawPanel ; $72f7
@@ -6922,11 +6922,11 @@ Label_3b_72f2:
 	inc a ; $7300
 	ld c, a ; $7301
 	cp a, $0d ; $7302
-	jr nz, Label_3b_72f2 ; $7304
+	jr nz, .loop ; $7304
 	ret ; $7306
-Label_3b_7307:
+.step:
 	ld c, $0a ; $7307
-Label_3b_7309:
+.loopB:
 	call AdvanceFrame ; $7309
 	ld b, $0b ; $730c
 	farcall RestoreMenuBgAndDrawPanel ; $730e
@@ -6936,7 +6936,7 @@ Label_3b_7309:
 	dec a ; $7317
 	ld c, a ; $7318
 	cp a, $ff ; $7319
-	jr nz, Label_3b_7309 ; $731b
+	jr nz, .loopB ; $731b
 	ret ; $731d
 N64RecordTypeSlideOut:
 	ld a, b ; $731e
@@ -6977,18 +6977,18 @@ N64RecordTypeCursorSpriteTask:
 	ld hl, Data_3b_73bc ; $7358
 	add a, l ; $735b
 	ld l, a ; $735c
-	jr nc, Label_3b_7360 ; $735d
+	jr nc, .read ; $735d
 	inc h ; $735f
-Label_3b_7360:
+.read:
 	ld c, [hl] ; $7360
 	pop af ; $7361
 	ld hl, Data_3b_73b6 ; $7362
 	add a, a ; $7365
 	add a, l ; $7366
 	ld l, a ; $7367
-	jr nc, Label_3b_736b ; $7368
+	jr nc, .readB ; $7368
 	inc h ; $736a
-Label_3b_736b:
+.readB:
 	ld a, [hl+] ; $736b
 	ld d, [hl] ; $736c
 	ld e, a ; $736d
@@ -7033,13 +7033,13 @@ DrawN64RecordTypeGrid:
 	wram_bank $03 ; $73bf
 	ld b, $00 ; $73c5
 	ld c, $00 ; $73c7
-Label_3b_73c9:
+.loop:
 	call FillN64RecordTypeCell ; $73c9
 	ld a, b ; $73cc
 	inc a ; $73cd
 	ld b, a ; $73ce
 	cp a, $03 ; $73cf
-	jr nz, Label_3b_73c9 ; $73d1
+	jr nz, .loop ; $73d1
 	ld c, $03 ; $73d3
 	call GetMenuCursorCellIndex ; $73d5
 	ld b, a ; $73d8
@@ -7080,21 +7080,21 @@ FillN64RecordTypeCell:
 	push hl ; $742b
 	ld a, c ; $742c
 	or a, a ; $742d
-	jr z, Label_3b_7434 ; $742e
+	jr z, .step ; $742e
 	ld h, $0c ; $7430
-	jr Label_3b_7436 ; $7432
-Label_3b_7434:
+	jr .step2 ; $7432
+.step:
 	ld h, $0d ; $7434
-Label_3b_7436:
+.step2:
 	push hl ; $7436
 	ld hl, $7451 ; $7437
 	ld a, b ; $743a
 	add a, a ; $743b
 	add a, l ; $743c
 	ld l, a ; $743d
-	jr nc, Label_3b_7441 ; $743e
+	jr nc, .read ; $743e
 	inc h ; $7440
-Label_3b_7441:
+.read:
 	ld a, [hl+] ; $7441
 	ld d, [hl] ; $7442
 	ld e, a ; $7443
@@ -7119,9 +7119,9 @@ LoadN64RecordTypeCellPalette:
 	add a, a ; $7460
 	add a, l ; $7461
 	ld l, a ; $7462
-	jr nc, Label_3b_7466 ; $7463
+	jr nc, .read ; $7463
 	inc h ; $7465
-Label_3b_7466:
+.read:
 	ld a, [hl+] ; $7466
 	ld h, [hl] ; $7467
 	ld l, a ; $7468
@@ -7152,9 +7152,9 @@ DrawN64RecordTypeCaption:
 	ld hl, $00cf ; $74a9
 	add a, l ; $74ac
 	ld l, a ; $74ad
-	jr nc, Label_3b_74b1 ; $74ae
+	jr nc, .step ; $74ae
 	inc h ; $74b0
-Label_3b_74b1:
+.step:
 	ld de, $d201 ; $74b1
 	ld c, $20 ; $74b4
 	farcall RenderTextToBuffer64 ; $74b6
@@ -7183,7 +7183,7 @@ RunN64TransferItemSelect:
 	call RegisterFrameTask ; $74ee
 	call DrawN64TransferItemGrid ; $74f1
 	wram_bank $03 ; $74f4
-Label_3b_74fa:
+.loop:
 	call AdvanceFrame ; $74fa
 	ldh a, [hInputPressed] ; $74fd
 	ld [wMenuInputPressed], a ; $74ff
@@ -7191,17 +7191,17 @@ Label_3b_74fa:
 	ld c, $02 ; $7504
 	call MoveMenuCursor ; $7506
 	or a, a ; $7509
-	jr z, Label_3b_7511 ; $750a
+	jr z, .checkMenuInputPressed ; $750a
 	sound $5e ; $750c
 	call DrawN64TransferItemGrid ; $750e
-Label_3b_7511:
+.checkMenuInputPressed:
 	ld a, [wMenuInputPressed] ; $7511
 	bit PADB_A, a ; $7514
-	jr nz, Label_3b_751e ; $7516
+	jr nz, .playSfx ; $7516
 	bit 1, a ; $7518
-	jr nz, Label_3b_753b ; $751a
-	jr Label_3b_74fa ; $751c
-Label_3b_751e:
+	jr nz, .playSfx2 ; $751a
+	jr .loop ; $751c
+.playSfx:
 	sound $5f ; $751e
 	call ClearFrameTasks ; $7520
 	ld hl, rIE ; $7523
@@ -7214,7 +7214,7 @@ Label_3b_751e:
 	call GetMenuCursorCellIndex ; $7534
 	ld [$cb1d], a ; $7537
 	ret ; $753a
-Label_3b_753b:
+.playSfx2:
 	sound $62 ; $753b
 	call ClearFrameTasks ; $753d
 	ld hl, rIE ; $7540
@@ -7230,15 +7230,15 @@ LoadN64TransferItemGfx:
 	push af ; $7554
 	wram_bank $01 ; $7555
 	ld c, $00 ; $755b
-Label_3b_755d:
+.loop:
 	ld a, c ; $755d
 	add a, a ; $755e
 	ld hl, $75fc ; $755f
 	add a, l ; $7562
 	ld l, a ; $7563
-	jr nc, Label_3b_7567 ; $7564
+	jr nc, .read ; $7564
 	inc h ; $7566
-Label_3b_7567:
+.read:
 	ld a, [hl+] ; $7567
 	ld h, [hl] ; $7568
 	ld l, a ; $7569
@@ -7257,9 +7257,9 @@ Label_3b_7567:
 	add a, a ; $757c
 	add a, l ; $757d
 	ld l, a ; $757e
-	jr nc, Label_3b_7582 ; $757f
+	jr nc, .readB ; $757f
 	inc h ; $7581
-Label_3b_7582:
+.readB:
 	ld a, [hl+] ; $7582
 	ld d, [hl] ; $7583
 	ld e, a ; $7584
@@ -7280,7 +7280,7 @@ Label_3b_7582:
 	call AdvanceFrame ; $7599
 	ld a, c ; $759c
 	cp a, $04 ; $759d
-	jr nz, Label_3b_755d ; $759f
+	jr nz, .loop ; $759f
 	ld b, $3b ; $75a1
 	ld c, $10 ; $75a3
 	ld de, $a000 ; $75a5
@@ -7330,13 +7330,13 @@ DrawN64TransferItemGrid:
 	wram_bank $03 ; $760c
 	ld b, $00 ; $7612
 	ld c, $00 ; $7614
-Label_3b_7616:
+.loop:
 	farcall SetCourtSelect4TabAttrRect ; $7616
 	ld a, b ; $7619
 	inc a ; $761a
 	ld b, a ; $761b
 	cp a, $04 ; $761c
-	jr nz, Label_3b_7616 ; $761e
+	jr nz, .loop ; $761e
 	ld c, $02 ; $7620
 	call GetMenuCursorCellIndex ; $7622
 	ld b, a ; $7625
@@ -7379,9 +7379,9 @@ LoadN64TransferItemCellPalette:
 	add a, a ; $7683
 	add a, l ; $7684
 	ld l, a ; $7685
-	jr nc, Label_3b_7689 ; $7686
+	jr nc, .read ; $7686
 	inc h ; $7688
-Label_3b_7689:
+.read:
 	ld a, [hl+] ; $7689
 	ld h, [hl] ; $768a
 	ld l, a ; $768b
@@ -7413,9 +7413,9 @@ DrawN64TransferItemCaption:
 	ld hl, $00d2 ; $76d4
 	add a, l ; $76d7
 	ld l, a ; $76d8
-	jr nc, Label_3b_76dc ; $76d9
+	jr nc, .step ; $76d9
 	inc h ; $76db
-Label_3b_76dc:
+.step:
 	ld de, $d201 ; $76dc
 	ld c, $20 ; $76df
 	farcall RenderTextToBuffer64 ; $76e1
@@ -7430,18 +7430,18 @@ N64TransferItemCursorSpriteTask:
 	ld hl, Data_3b_7759 ; $76f3
 	add a, l ; $76f6
 	ld l, a ; $76f7
-	jr nc, Label_3b_76fb ; $76f8
+	jr nc, .read ; $76f8
 	inc h ; $76fa
-Label_3b_76fb:
+.read:
 	ld c, [hl] ; $76fb
 	pop af ; $76fc
 	ld hl, Data_3b_7751 ; $76fd
 	add a, a ; $7700
 	add a, l ; $7701
 	ld l, a ; $7702
-	jr nc, Label_3b_7706 ; $7703
+	jr nc, .readB ; $7703
 	inc h ; $7705
-Label_3b_7706:
+.readB:
 	ld a, [hl+] ; $7706
 	ld d, [hl] ; $7707
 	ld e, a ; $7708
@@ -7499,15 +7499,15 @@ ShowTournamentBracket:
 	sound $78 ; $7784
 	call WaitFramesCmd ; $7786
 	db $78 ; $7789 inline arg
-Label_3b_778a:
+.loop:
 	ldh a, [hInputPressed] ; $778a
 	bit PADB_A, a ; $778c
-	jr nz, Label_3b_7799 ; $778e
+	jr nz, .playSfx ; $778e
 	bit 1, a ; $7790
-	jr nz, Label_3b_7799 ; $7792
+	jr nz, .playSfx ; $7792
 	call AdvanceFrame ; $7794
-	jr Label_3b_778a ; $7797
-Label_3b_7799:
+	jr .loop ; $7797
+.playSfx:
 	sound $5f ; $7799
 	call ClearFrameTasks ; $779b
 	ld c, $10 ; $779e
@@ -7517,7 +7517,7 @@ Label_3b_7799:
 BuildTournamentBracketScreen:
 	ld a, [$d800] ; $77a7
 	or a, a ; $77aa
-	jr nz, Label_3b_77d2 ; $77ab
+	jr nz, .step ; $77ab
 	ld c, $25 ; $77ad
 	farcall LoadScreenAssetRecord ; $77af
 	ld b, $69 ; $77b2
@@ -7531,7 +7531,7 @@ BuildTournamentBracketScreen:
 	call HighlightBracketPlayerRow ; $77cb
 	farcall QueueWram3MapToVRAM ; $77ce
 	ret ; $77d1
-Label_3b_77d2:
+.step:
 	ld c, $26 ; $77d2
 	farcall LoadScreenAssetRecord ; $77d4
 	ld b, $69 ; $77d7
@@ -7555,7 +7555,7 @@ ClearTournamentBracketAttrs:
 DrawTournamentBracketNameBoxes:
 	ld a, [$d800] ; $7804
 	or a, a ; $7807
-	jr nz, Label_3b_7847 ; $7808
+	jr nz, .step ; $7808
 	ld de, $d109 ; $780a
 	ld b, $07 ; $780d
 	ld c, $08 ; $780f
@@ -7582,7 +7582,7 @@ DrawTournamentBracketNameBoxes:
 	ld h, $03 ; $7841
 	farcall FillTilemapRect ; $7843
 	ret ; $7846
-Label_3b_7847:
+.step:
 	ld de, $d109 ; $7847
 	ld b, $07 ; $784a
 	ld c, $08 ; $784c
@@ -7605,21 +7605,21 @@ WriteBracketSinglesNames:
 	add a, a ; $7872
 	add a, l ; $7873
 	ld l, a ; $7874
-	jr nc, Label_3b_7878 ; $7875
+	jr nc, .read ; $7875
 	inc h ; $7877
-Label_3b_7878:
+.read:
 	ld a, [hl+] ; $7878
 	ld h, [hl] ; $7879
 	ld l, a ; $787a
 	ld b, $00 ; $787b
-Label_3b_787d:
+.loop:
 	ld a, [hl+] ; $787d
 	call WriteBracketEntrantName ; $787e
 	ld a, b ; $7881
 	inc a ; $7882
 	ld b, a ; $7883
 	cp a, $04 ; $7884
-	jr nz, Label_3b_787d ; $7886
+	jr nz, .loop ; $7886
 	ret ; $7888
 	; $7889, 10 bytes (records:2)
 	dw $7893 ; record 0
@@ -7638,23 +7638,23 @@ WriteBracketEntrantName:
 	push de ; $78a5
 	push hl ; $78a6
 	or a, a ; $78a7
-	jr z, Label_3b_78cc ; $78a8
+	jr z, .step2 ; $78a8
 	ld hl, $004b ; $78aa
 	dec a ; $78ad
 	add a, l ; $78ae
 	ld l, a ; $78af
-	jr nc, Label_3b_78b3 ; $78b0
+	jr nc, .step ; $78b0
 	inc h ; $78b2
-Label_3b_78b3:
+.step:
 	push hl ; $78b3
 	ld hl, $78e4 ; $78b4
 	ld a, b ; $78b7
 	add a, a ; $78b8
 	add a, l ; $78b9
 	ld l, a ; $78ba
-	jr nc, Label_3b_78be ; $78bb
+	jr nc, .read ; $78bb
 	inc h ; $78bd
-Label_3b_78be:
+.read:
 	ld a, [hl+] ; $78be
 	ld d, [hl] ; $78bf
 	ld e, a ; $78c0
@@ -7666,15 +7666,15 @@ Label_3b_78be:
 	pop bc ; $78c9
 	pop af ; $78ca
 	ret ; $78cb
-Label_3b_78cc:
+.step2:
 	ld hl, $78e4 ; $78cc
 	ld a, b ; $78cf
 	add a, a ; $78d0
 	add a, l ; $78d1
 	ld l, a ; $78d2
-	jr nc, Label_3b_78d6 ; $78d3
+	jr nc, .readB ; $78d3
 	inc h ; $78d5
-Label_3b_78d6:
+.readB:
 	ld a, [hl+] ; $78d6
 	ld d, [hl] ; $78d7
 	ld e, a ; $78d8
@@ -7693,7 +7693,7 @@ Label_3b_78d6:
 WriteBracketDoublesNames:
 	ld a, [$d801] ; $78ec
 	cp a, $01 ; $78ef
-	jr nz, Label_3b_791c ; $78f1
+	jr nz, .step ; $78f1
 	ld hl, wStoryModeNameOfMainCharacter ; $78f3
 	ld de, $d129 ; $78f6
 	call DrawNameWithDiacritics_3b ; $78f9
@@ -7709,7 +7709,7 @@ WriteBracketDoublesNames:
 	ld c, $20 ; $7916
 	farcall RenderTextToBuffer64 ; $7918
 	ret ; $791b
-Label_3b_791c:
+.step:
 	ld hl, wStoryModeNameOfMainCharacter ; $791c
 	ld de, $d1a9 ; $791f
 	call DrawNameWithDiacritics_3b ; $7922
@@ -7728,15 +7728,15 @@ Label_3b_791c:
 HighlightBracketPlayerRow:
 	ld a, [$d800] ; $7945
 	or a, a ; $7948
-	jr nz, Label_3b_7985 ; $7949
+	jr nz, .step2 ; $7949
 	ld a, [$d801] ; $794b
 	ld hl, $79b6 ; $794e
 	add a, a ; $7951
 	add a, l ; $7952
 	ld l, a ; $7953
-	jr nc, Label_3b_7957 ; $7954
+	jr nc, .read ; $7954
 	inc h ; $7956
-Label_3b_7957:
+.read:
 	ld a, [hl+] ; $7957
 	ld d, [hl] ; $7958
 	ld e, a ; $7959
@@ -7749,9 +7749,9 @@ Label_3b_7957:
 	add a, a ; $7969
 	add a, l ; $796a
 	ld l, a ; $796b
-	jr nc, Label_3b_796f ; $796c
+	jr nc, .readB ; $796c
 	inc h ; $796e
-Label_3b_796f:
+.readB:
 	ld a, [hl+] ; $796f
 	ld d, [hl] ; $7970
 	ld e, a ; $7971
@@ -7759,21 +7759,21 @@ Label_3b_796f:
 	ld c, $02 ; $7974
 	ld a, [$d801] ; $7976
 	cp a, $04 ; $7979
-	jr nz, Label_3b_797f ; $797b
+	jr nz, .step ; $797b
 	ld c, $01 ; $797d
-Label_3b_797f:
+.step:
 	ld h, $0d ; $797f
 	farcall FillTilemapRect ; $7981
 	ret ; $7984
-Label_3b_7985:
+.step2:
 	ld a, [$d801] ; $7985
 	ld hl, $79ca ; $7988
 	add a, a ; $798b
 	add a, l ; $798c
 	ld l, a ; $798d
-	jr nc, Label_3b_7991 ; $798e
+	jr nc, .readBB ; $798e
 	inc h ; $7990
-Label_3b_7991:
+.readBB:
 	ld a, [hl+] ; $7991
 	ld d, [hl] ; $7992
 	ld e, a ; $7993
@@ -7786,9 +7786,9 @@ Label_3b_7991:
 	add a, a ; $79a3
 	add a, l ; $79a4
 	ld l, a ; $79a5
-	jr nc, Label_3b_79a9 ; $79a6
+	jr nc, .readBBB ; $79a6
 	inc h ; $79a8
-Label_3b_79a9:
+.readBBB:
 	ld a, [hl+] ; $79a9
 	ld d, [hl] ; $79aa
 	ld e, a ; $79ab
@@ -7818,9 +7818,9 @@ BracketHighlightBlinkTask:
 	ld hl, $79e9 ; $79d6
 	ldh a, [hVBlankCounter] ; $79d9
 	and a, $10 ; $79db
-	jr z, Label_3b_79e2 ; $79dd
+	jr z, .step ; $79dd
 	ld hl, $79f1 ; $79df
-Label_3b_79e2:
+.step:
 	ld de, $0501 ; $79e2
 	call LoadPalettesImmediate ; $79e5
 	ret ; $79e8
@@ -7845,32 +7845,32 @@ RunStarCharExhibResults:
 	script_fade_in $10 ; $7a1e
 	call WaitFadeEnd ; $7a23
 	wram_bank $03 ; $7a26
-Label_3b_7a2c:
+.loop:
 	call AdvanceFrame ; $7a2c
 	ldh a, [hInputPressed] ; $7a2f
 	ld [wMenuInputPressed], a ; $7a31
 	call CheckStarChartExpanded ; $7a34
 	or a, a ; $7a37
-	jr z, Label_3b_7a3f ; $7a38
+	jr z, .scrollStarChartCursorSmall ; $7a38
 	call ScrollStarChartCursorFull ; $7a3a
-	jr Label_3b_7a42 ; $7a3d
-Label_3b_7a3f:
+	jr .checkMenuInputPressed ; $7a3d
+.scrollStarChartCursorSmall:
 	call ScrollStarChartCursorSmall ; $7a3f
-Label_3b_7a42:
+.checkMenuInputPressed:
 	ld a, [wMenuInputPressed] ; $7a42
 	bit PADB_A, a ; $7a45
-	jr nz, Label_3b_7a4f ; $7a47
+	jr nz, .playSfx ; $7a47
 	bit 1, a ; $7a49
-	jr nz, Label_3b_7a5d ; $7a4b
-	jr Label_3b_7a2c ; $7a4d
-Label_3b_7a4f:
+	jr nz, .playSfx2 ; $7a4b
+	jr .loop ; $7a4d
+.playSfx:
 	sound $5f ; $7a4f
 	ld c, $10 ; $7a51
 	call BeginFadeOut ; $7a53
 	call WaitFadeEnd ; $7a56
 	call ClearFrameTasks ; $7a59
 	ret ; $7a5c
-Label_3b_7a5d:
+.playSfx2:
 	sound $62 ; $7a5d
 	ld c, $10 ; $7a5f
 	call BeginFadeOut ; $7a61
@@ -7884,10 +7884,10 @@ StarChartScrollArrowsTask:
 	wram_bank $03 ; $7a70
 	call CheckStarChartExpanded ; $7a76
 	or a, a ; $7a79
-	jr z, Label_3b_7adc ; $7a7a
+	jr z, .checkMenuCursorY3 ; $7a7a
 	ld a, [wMenuCursorX] ; $7a7c
 	cp a, $02 ; $7a7f
-	jr z, Label_3b_7a94 ; $7a81
+	jr z, .checkMenuCursorX ; $7a81
 	ld de, $932f ; $7a83
 	ld c, $01 ; $7a86
 	call ApplyCursorBounceX ; $7a88
@@ -7895,10 +7895,10 @@ StarChartScrollArrowsTask:
 	ld c, $00 ; $7a8d
 	ld h, $00 ; $7a8f
 	farcall QueueStackedSpritePair ; $7a91
-Label_3b_7a94:
+.checkMenuCursorX:
 	ld a, [wMenuCursorX] ; $7a94
 	or a, a ; $7a97
-	jr z, Label_3b_7aab ; $7a98
+	jr z, .checkMenuCursorY ; $7a98
 	ld de, $082f ; $7a9a
 	ld c, $00 ; $7a9d
 	call ApplyCursorBounceX ; $7a9f
@@ -7906,10 +7906,10 @@ Label_3b_7a94:
 	ld c, $00 ; $7aa4
 	ld h, $01 ; $7aa6
 	farcall QueueStackedSpritePair ; $7aa8
-Label_3b_7aab:
+.checkMenuCursorY:
 	ld a, [wMenuCursorY] ; $7aab
 	or a, a ; $7aae
-	jr z, Label_3b_7ac2 ; $7aaf
+	jr z, .checkMenuCursorY2 ; $7aaf
 	ld de, $0a20 ; $7ab1
 	ld c, $01 ; $7ab4
 	call ApplyCursorBounceY ; $7ab6
@@ -7917,10 +7917,10 @@ Label_3b_7aab:
 	ld c, $00 ; $7abb
 	ld h, $02 ; $7abd
 	farcall QueueStackedSpritePair ; $7abf
-Label_3b_7ac2:
+.checkMenuCursorY2:
 	ld a, [wMenuCursorY] ; $7ac2
 	cp a, $05 ; $7ac5
-	jr z, Label_3b_7ada ; $7ac7
+	jr z, .step ; $7ac7
 	ld de, $0a78 ; $7ac9
 	ld c, $00 ; $7acc
 	call ApplyCursorBounceY ; $7ace
@@ -7928,12 +7928,12 @@ Label_3b_7ac2:
 	ld c, $00 ; $7ad3
 	ld h, $03 ; $7ad5
 	farcall QueueStackedSpritePair ; $7ad7
-Label_3b_7ada:
-	jr Label_3b_7b0b ; $7ada
-Label_3b_7adc:
+.step:
+	jr .restore ; $7ada
+.checkMenuCursorY3:
 	ld a, [wMenuCursorY] ; $7adc
 	or a, a ; $7adf
-	jr z, Label_3b_7af3 ; $7ae0
+	jr z, .checkMenuCursorY4 ; $7ae0
 	ld de, $1a20 ; $7ae2
 	ld c, $01 ; $7ae5
 	call ApplyCursorBounceY ; $7ae7
@@ -7941,10 +7941,10 @@ Label_3b_7adc:
 	ld c, $00 ; $7aec
 	ld h, $02 ; $7aee
 	farcall QueueStackedSpritePair ; $7af0
-Label_3b_7af3:
+.checkMenuCursorY4:
 	ld a, [wMenuCursorY] ; $7af3
 	cp a, $01 ; $7af6
-	jr z, Label_3b_7b0b ; $7af8
+	jr z, .restore ; $7af8
 	ld de, $1a78 ; $7afa
 	ld c, $00 ; $7afd
 	call ApplyCursorBounceY ; $7aff
@@ -7952,7 +7952,7 @@ Label_3b_7af3:
 	ld c, $00 ; $7b04
 	ld h, $03 ; $7b06
 	farcall QueueStackedSpritePair ; $7b08
-Label_3b_7b0b:
+.restore:
 	pop af ; $7b0b
 	wram_bank ; $7b0c
 	ret ; $7b10
@@ -7981,80 +7981,80 @@ BuildStarCharExhibScreen:
 ScrollStarChartCursorFull:
 	ld a, [wMenuInputPressed] ; $7b4f
 	bit PADB_LEFT, a ; $7b52
-	jr z, Label_3b_7b6a ; $7b54
+	jr z, .step ; $7b54
 	ld a, [wMenuCursorX] ; $7b56
 	or a, a ; $7b59
-	jr z, Label_3b_7bb4 ; $7b5a
+	jr z, .done ; $7b5a
 	dec a ; $7b5c
 	ld [wMenuCursorX], a ; $7b5d
 	sound $5e ; $7b60
 	call RedrawStarChartWindow ; $7b62
 	call FlushStarChartWindowToVram ; $7b65
-	jr Label_3b_7bb4 ; $7b68
-Label_3b_7b6a:
+	jr .done ; $7b68
+.step:
 	bit 4, a ; $7b6a
-	jr z, Label_3b_7b83 ; $7b6c
+	jr z, .step2 ; $7b6c
 	ld a, [wMenuCursorX] ; $7b6e
 	cp a, $02 ; $7b71
-	jr z, Label_3b_7bb4 ; $7b73
+	jr z, .done ; $7b73
 	inc a ; $7b75
 	ld [wMenuCursorX], a ; $7b76
 	sound $5e ; $7b79
 	call RedrawStarChartWindow ; $7b7b
 	call FlushStarChartWindowToVram ; $7b7e
-	jr Label_3b_7bb4 ; $7b81
-Label_3b_7b83:
+	jr .done ; $7b81
+.step2:
 	bit 6, a ; $7b83
-	jr z, Label_3b_7b9b ; $7b85
+	jr z, .step3 ; $7b85
 	ld a, [wMenuCursorY] ; $7b87
 	or a, a ; $7b8a
-	jr z, Label_3b_7bb4 ; $7b8b
+	jr z, .done ; $7b8b
 	dec a ; $7b8d
 	ld [wMenuCursorY], a ; $7b8e
 	sound $5e ; $7b91
 	call RedrawStarChartWindow ; $7b93
 	call FlushStarChartWindowToVram ; $7b96
-	jr Label_3b_7bb4 ; $7b99
-Label_3b_7b9b:
+	jr .done ; $7b99
+.step3:
 	bit 7, a ; $7b9b
-	jr z, Label_3b_7bb4 ; $7b9d
+	jr z, .done ; $7b9d
 	ld a, [wMenuCursorY] ; $7b9f
 	cp a, $05 ; $7ba2
-	jr z, Label_3b_7bb4 ; $7ba4
+	jr z, .done ; $7ba4
 	inc a ; $7ba6
 	ld [wMenuCursorY], a ; $7ba7
 	sound $5e ; $7baa
 	call RedrawStarChartWindow ; $7bac
 	call FlushStarChartWindowToVram ; $7baf
-	jr Label_3b_7bb4 ; $7bb2
-Label_3b_7bb4:
+	jr .done ; $7bb2
+.done:
 	ret ; $7bb4
 ScrollStarChartCursorSmall:
 	ld a, [wMenuInputPressed] ; $7bb5
 	bit PADB_UP, a ; $7bb8
-	jr z, Label_3b_7bd0 ; $7bba
+	jr z, .step ; $7bba
 	ld a, [wMenuCursorY] ; $7bbc
 	or a, a ; $7bbf
-	jr z, Label_3b_7be9 ; $7bc0
+	jr z, .done ; $7bc0
 	dec a ; $7bc2
 	ld [wMenuCursorY], a ; $7bc3
 	sound $5e ; $7bc6
 	call RedrawStarChartWindow ; $7bc8
 	call FlushStarChartWindowToVram ; $7bcb
-	jr Label_3b_7be9 ; $7bce
-Label_3b_7bd0:
+	jr .done ; $7bce
+.step:
 	bit 7, a ; $7bd0
-	jr z, Label_3b_7be9 ; $7bd2
+	jr z, .done ; $7bd2
 	ld a, [wMenuCursorY] ; $7bd4
 	cp a, $01 ; $7bd7
-	jr z, Label_3b_7be9 ; $7bd9
+	jr z, .done ; $7bd9
 	inc a ; $7bdb
 	ld [wMenuCursorY], a ; $7bdc
 	sound $5e ; $7bdf
 	call RedrawStarChartWindow ; $7be1
 	call FlushStarChartWindowToVram ; $7be4
-	jr Label_3b_7be9 ; $7be7
-Label_3b_7be9:
+	jr .done ; $7be7
+.done:
 	ret ; $7be9
 RedrawStarChartWindow:
 	wram_bank $03 ; $7bea
@@ -8237,7 +8237,7 @@ LoadStarCharExhibGrid:
 	ld hl, $d900 ; $7d2d
 	ld de, $db00 ; $7d30
 	ld c, $00 ; $7d33
-Label_3b_7d35:
+.loop:
 	push bc ; $7d35
 	push hl ; $7d36
 	push de ; $7d37
@@ -8255,7 +8255,7 @@ Label_3b_7d35:
 	inc c ; $7d4b
 	ld a, c ; $7d4c
 	cp a, $09 ; $7d4d
-	jr nz, Label_3b_7d35 ; $7d4f
+	jr nz, .loop ; $7d4f
 	pop af ; $7d51
 	wram_bank ; $7d52
 	ret ; $7d56
@@ -8265,20 +8265,20 @@ RecordExhibitionVictory:
 	wram_bank $03 ; $7d5a
 	ld a, [wMatchWinLoseFlag] ; $7d60
 	cp a, $ff ; $7d63
-	jr z, Label_3b_7dbd ; $7d65
+	jr z, .restore ; $7d65
 	ld de, $002f ; $7d67
 	call TestGameFlagByNumber ; $7d6a
-	jr nz, Label_3b_7dbd ; $7d6d
+	jr nz, .restore ; $7d6d
 	ld a, [wPlayer1CurrentMainCharacter] ; $7d6f
 	ld c, a ; $7d72
 	farcall IsStarCharacter ; $7d73
 	or a, a ; $7d76
-	jr z, Label_3b_7dbd ; $7d77
+	jr z, .restore ; $7d77
 	ld a, [wPlayer2CurrentMainCharacter] ; $7d79
 	ld c, a ; $7d7c
 	farcall IsStarCharacter ; $7d7d
 	or a, a ; $7d80
-	jr z, Label_3b_7dbd ; $7d81
+	jr z, .restore ; $7d81
 	ld a, [wPlayer1CurrentMainCharacter] ; $7d83
 	call GetStarCharIndex ; $7d86
 	ld d, a ; $7d89
@@ -8296,23 +8296,23 @@ RecordExhibitionVictory:
 	ld hl, $d900 ; $7d9d
 	add a, l ; $7da0
 	ld l, a ; $7da1
-	jr nc, Label_3b_7da5 ; $7da2
+	jr nc, .step ; $7da2
 	inc h ; $7da4
-Label_3b_7da5:
+.step:
 	push hl ; $7da5
 	ld d, [hl] ; $7da6
 	ld a, [wExhibitionModeCPUMainCharacterDifficulty] ; $7da7
 	call GetVictoryScore ; $7daa
 	pop hl ; $7dad
 	cp a, d ; $7dae
-	jr c, Label_3b_7dbd ; $7daf
+	jr c, .restore ; $7daf
 	ld [hl], a ; $7db1
 	call UpdateStarUnlocks ; $7db2
 	ld hl, $d900 ; $7db5
 	farcall WriteStarVictoryGrid ; $7db8
-Label_3b_7dbb:
-	jr nz, Label_3b_7dbb ; $7dbb
-Label_3b_7dbd:
+.step2:
+	jr nz, .step2 ; $7dbb
+.restore:
 	pop af ; $7dbd
 	wram_bank ; $7dbe
 	ret ; $7dc2
@@ -8322,15 +8322,15 @@ GetVictoryScore:
 	ld hl, VictoryScoreTable ; $7dc5
 	ld a, [$c8a8] ; $7dc8
 	or a, a ; $7dcb
-	jr z, Label_3b_7dd1 ; $7dcc
+	jr z, .step ; $7dcc
 	ld hl, $7ddd ; $7dce
-Label_3b_7dd1:
+.step:
 	ld a, b ; $7dd1
 	add a, l ; $7dd2
 	ld l, a ; $7dd3
-	jr nc, Label_3b_7dd7 ; $7dd4
+	jr nc, .read ; $7dd4
 	inc h ; $7dd6
-Label_3b_7dd7:
+.read:
 	ld a, [hl] ; $7dd7
 	ret ; $7dd8
 VictoryScoreTable:
@@ -8342,9 +8342,9 @@ GetStarCharIndex:
 	ld hl, StarCharOrderTable ; $7de3
 	add a, l ; $7de6
 	ld l, a ; $7de7
-	jr nc, Label_3b_7deb ; $7de8
+	jr nc, .read ; $7de8
 	inc h ; $7dea
-Label_3b_7deb:
+.read:
 	ld a, [hl] ; $7deb
 	ret ; $7dec
 StarCharOrderTable:
@@ -8354,7 +8354,7 @@ StarCharOrderTable:
 	db $08, $06, $02 ; 0x06
 UpdateStarUnlocks:
 	ld c, $00 ; $7df6
-Label_3b_7df8:
+.loop:
 	ld hl, $d900 ; $7df8
 	ld a, c ; $7dfb
 	add a, a ; $7dfc
@@ -8363,32 +8363,32 @@ Label_3b_7df8:
 	add a, c ; $7dff
 	add a, l ; $7e00
 	ld l, a ; $7e01
-	jr nc, Label_3b_7e05 ; $7e02
+	jr nc, .step ; $7e02
 	inc h ; $7e04
-Label_3b_7e05:
+.step:
 	ld b, $00 ; $7e05
-Label_3b_7e07:
+.loopB:
 	ld a, c ; $7e07
 	cp a, b ; $7e08
-	jr z, Label_3b_7e0f ; $7e09
+	jr z, .step2 ; $7e09
 	ld a, [hl] ; $7e0b
 	or a, a ; $7e0c
-	jr z, Label_3b_7e1e ; $7e0d
-Label_3b_7e0f:
+	jr z, .step3 ; $7e0d
+.step2:
 	inc hl ; $7e0f
 	inc b ; $7e10
 	ld a, b ; $7e11
 	cp a, $09 ; $7e12
-	jr nz, Label_3b_7e07 ; $7e14
+	jr nz, .loopB ; $7e14
 	ld de, SAVEFLAG_COURT_WAREHOUSE ; $7e16
 	farcall SetSaveFlag ; $7e19
-	jr Label_3b_7e24 ; $7e1c
-Label_3b_7e1e:
+	jr .done ; $7e1c
+.step3:
 	inc c ; $7e1e
 	ld a, c ; $7e1f
 	cp a, $09 ; $7e20
-	jr nz, Label_3b_7df8 ; $7e22
-Label_3b_7e24:
+	jr nz, .loop ; $7e22
+.done:
 	ret ; $7e24
 CheckStarChartExpanded:
 	ldh a, [hWramBank] ; $7e25
@@ -8419,11 +8419,11 @@ ApplyStarChartReducedLayout:
 	wram_bank $03 ; $7e4a
 	call CheckStarChartExpanded ; $7e50
 	or a, a ; $7e53
-	jr nz, Label_3b_7e5f ; $7e54
+	jr nz, .restore ; $7e54
 	call CopyStarChartReducedTilemap ; $7e56
 	call FixupStarChartHeaderRow ; $7e59
 	call CompactStarChartRows ; $7e5c
-Label_3b_7e5f:
+.restore:
 	pop af ; $7e5f
 	wram_bank ; $7e60
 	pop hl ; $7e64
@@ -8455,7 +8455,7 @@ CompactStarChartRows:
 	ld hl, $db05 ; $7e97
 	ld de, $db04 ; $7e9a
 	ld c, $00 ; $7e9d
-Label_3b_7e9f:
+.loop:
 	ld a, [hl] ; $7e9f
 	ld [de], a ; $7ea0
 	push bc ; $7ea1
@@ -8471,6 +8471,6 @@ Label_3b_7e9f:
 	inc c ; $7eaf
 	ld a, c ; $7eb0
 	cp a, $06 ; $7eb1
-	jr nz, Label_3b_7e9f ; $7eb3
+	jr nz, .loop ; $7eb3
 	ret ; $7eb5
 	; $7eb6, 330 bytes fill to bank end (linker-padded)
