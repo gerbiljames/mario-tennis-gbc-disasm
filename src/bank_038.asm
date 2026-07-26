@@ -2119,49 +2119,49 @@ HandleCharGridDpad:
 MoveCharGridCursorUp:
 	ld a, [wMenuCursorY] ; $51f4
 	or a, a ; $51f7
-	jr z, Label_38_5202 ; $51f8
+	jr z, .prevPage ; $51f8
 	dec a ; $51fa
 	ld [wMenuCursorY], a ; $51fb
 	sound $5e ; $51fe
-	jr Label_38_5218 ; $5200
-Label_38_5202:
+	jr .refresh ; $5200
+.prevPage:
 	ld a, [$d811] ; $5202
 	or a, a ; $5205
 	ret z ; $5206
 	dec a ; $5207
 	cp a, $02 ; $5208
-	jr nz, Label_38_5210 ; $520a
+	jr nz, .beep ; $520a
 	ld a, $03 ; $520c
-	jr Label_38_5212 ; $520e
-Label_38_5210:
+	jr .storePage ; $520e
+.beep:
 	sound $5e ; $5210
-Label_38_5212:
+.storePage:
 	ld [$d811], a ; $5212
 	call BuildVisiblePageSpriteList ; $5215
-Label_38_5218:
+.refresh:
 	call RefreshCharInfoPanel ; $5218
 	ret ; $521b
 MoveCharGridCursorDown:
 	ld a, [wMenuCursorY] ; $521c
 	inc a ; $521f
 	cp a, $02 ; $5220
-	jr z, Label_38_522b ; $5222
+	jr z, .nextPage ; $5222
 	ld [wMenuCursorY], a ; $5224
 	sound $5e ; $5227
-	jr Label_38_525a ; $5229
-Label_38_522b:
+	jr .refresh ; $5229
+.nextPage:
 	ld a, [$d811] ; $522b
 	cp a, $02 ; $522e
-	jr nc, Label_38_5243 ; $5230
+	jr nc, .checkLastPage ; $5230
 	cp a, $01 ; $5232
 	ret z ; $5234
 	ld a, [$d823] ; $5235
 	cp a, $07 ; $5238
-	jr c, Label_38_525a ; $523a
+	jr c, .refresh ; $523a
 	ld a, $01 ; $523c
 	ld [$d811], a ; $523e
-	jr Label_38_5252 ; $5241
-Label_38_5243:
+	jr .storePage ; $5241
+.checkLastPage:
 	inc a ; $5243
 	ld e, a ; $5244
 	ld a, [$d812] ; $5245
@@ -2169,16 +2169,16 @@ Label_38_5243:
 	ld b, a ; $5249
 	ld a, e ; $524a
 	cp a, b ; $524b
-	jr nz, Label_38_5252 ; $524c
+	jr nz, .storePage ; $524c
 	ld a, b ; $524e
 	dec a ; $524f
-	jr Label_38_5254 ; $5250
-Label_38_5252:
+	jr .beep ; $5250
+.storePage:
 	sound $5e ; $5252
-Label_38_5254:
+.beep:
 	ld [$d811], a ; $5254
 	call BuildVisiblePageSpriteList ; $5257
-Label_38_525a:
+.refresh:
 	call RefreshCharInfoPanel ; $525a
 	ret ; $525d
 MoveCharGridCursorRight:
@@ -2232,19 +2232,19 @@ Label_38_52b0:
 HandleCharGridButtons:
 	ld a, [wMenuInputPressed] ; $52b9
 	bit PADB_A, a ; $52bc
-	jr nz, Label_38_52c9 ; $52be
+	jr nz, .confirm ; $52be
 	bit 1, a ; $52c0
-	jr nz, Label_38_52cd ; $52c2
+	jr nz, .cancel ; $52c2
 	bit 3, a ; $52c4
-	jr nz, Label_38_52d1 ; $52c6
+	jr nz, .checkStar ; $52c6
 	ret ; $52c8
-Label_38_52c9:
+.confirm:
 	call ConfirmCharGridSelection ; $52c9
 	ret ; $52cc
-Label_38_52cd:
+.cancel:
 	call CancelCharGridSelection ; $52cd
 	ret ; $52d0
-Label_38_52d1:
+.checkStar:
 	call GetGridSlotFromCursor ; $52d1
 	ld b, a ; $52d4
 	ld hl, $da00 ; $52d5
@@ -2252,27 +2252,27 @@ Label_38_52d1:
 	add a, a ; $52d9
 	add a, l ; $52da
 	ld l, a ; $52db
-	jr nc, Label_38_52df ; $52dc
+	jr nc, .readCharId ; $52dc
 	inc h ; $52de
-Label_38_52df:
+.readCharId:
 	ld a, [hl] ; $52df
 	ld c, a ; $52e0
 	call IsStarCharacter ; $52e1
 	or a, a ; $52e4
-	jr z, Label_38_5301 ; $52e5
+	jr z, .done ; $52e5
 	sound $5e ; $52e7
 	ld a, [$df00] ; $52e9
 	cp a, $02 ; $52ec
-	jr z, Label_38_52f9 ; $52ee
+	jr z, .starChar ; $52ee
 	xor a, $01 ; $52f0
 	ld [$df00], a ; $52f2
 	call RefreshCharInfoPanel ; $52f5
 	ret ; $52f8
-Label_38_52f9:
+.starChar:
 	ld a, $01 ; $52f9
 	ld [$df00], a ; $52fb
 	call RefreshCharInfoPanel ; $52fe
-Label_38_5301:
+.done:
 	ret ; $5301
 ConfirmCharGridSelection:
 	ldh a, [hWramBank] ; $5302
@@ -4003,9 +4003,9 @@ InitMatchCharsFromSelection:
 	call CacheStorySlotNames ; $5eaf
 	ld a, [$d816] ; $5eb2
 	cp a, $ff ; $5eb5
-	jr z, Label_38_5ed7 ; $5eb7
+	jr z, .slot2 ; $5eb7
 	cp a, $80 ; $5eb9
-	jr c, Label_38_5ed1 ; $5ebb
+	jr c, .slot1Created ; $5ebb
 	ld c, a ; $5ebd
 	and a, $07 ; $5ebe
 	srl a ; $5ec0
@@ -4016,17 +4016,17 @@ InitMatchCharsFromSelection:
 	ld b, a ; $5ec9
 	ld c, $00 ; $5eca
 	farcall InitCa00RecordFromCharId ; $5ecc
-	jr Label_38_5ed7 ; $5ecf
-Label_38_5ed1:
+	jr .slot2 ; $5ecf
+.slot1Created:
 	ld b, a ; $5ed1
 	ld c, $00 ; $5ed2
 	farcall InitCa00RecordFromCharId ; $5ed4
-Label_38_5ed7:
+.slot2:
 	ld a, [$d817] ; $5ed7
 	cp a, $ff ; $5eda
-	jr z, Label_38_5efc ; $5edc
+	jr z, .slot3 ; $5edc
 	cp a, $80 ; $5ede
-	jr c, Label_38_5ef6 ; $5ee0
+	jr c, .slot2Created ; $5ee0
 	ld c, a ; $5ee2
 	and a, $07 ; $5ee3
 	srl a ; $5ee5
@@ -4037,17 +4037,17 @@ Label_38_5ed7:
 	ld b, a ; $5eee
 	ld c, $01 ; $5eef
 	farcall InitCa00RecordFromCharId ; $5ef1
-	jr Label_38_5efc ; $5ef4
-Label_38_5ef6:
+	jr .slot3 ; $5ef4
+.slot2Created:
 	ld b, a ; $5ef6
 	ld c, $01 ; $5ef7
 	farcall InitCa00RecordFromCharId ; $5ef9
-Label_38_5efc:
+.slot3:
 	ld a, [$d818] ; $5efc
 	cp a, $ff ; $5eff
-	jr z, Label_38_5f21 ; $5f01
+	jr z, .slot4 ; $5f01
 	cp a, $80 ; $5f03
-	jr c, Label_38_5f1b ; $5f05
+	jr c, .slot3Created ; $5f05
 	ld c, a ; $5f07
 	and a, $07 ; $5f08
 	srl a ; $5f0a
@@ -4058,17 +4058,17 @@ Label_38_5efc:
 	ld b, a ; $5f13
 	ld c, $02 ; $5f14
 	farcall InitCa00RecordFromCharId ; $5f16
-	jr Label_38_5f21 ; $5f19
-Label_38_5f1b:
+	jr .slot4 ; $5f19
+.slot3Created:
 	ld b, a ; $5f1b
 	ld c, $02 ; $5f1c
 	farcall InitCa00RecordFromCharId ; $5f1e
-Label_38_5f21:
+.slot4:
 	ld a, [$d819] ; $5f21
 	cp a, $ff ; $5f24
-	jr z, Label_38_5f46 ; $5f26
+	jr z, .done ; $5f26
 	cp a, $80 ; $5f28
-	jr c, Label_38_5f40 ; $5f2a
+	jr c, .slot4Created ; $5f2a
 	ld c, a ; $5f2c
 	and a, $07 ; $5f2d
 	srl a ; $5f2f
@@ -4079,12 +4079,12 @@ Label_38_5f21:
 	ld b, a ; $5f38
 	ld c, $03 ; $5f39
 	farcall InitCa00RecordFromCharId ; $5f3b
-	jr Label_38_5f46 ; $5f3e
-Label_38_5f40:
+	jr .done ; $5f3e
+.slot4Created:
 	ld b, a ; $5f40
 	ld c, $03 ; $5f41
 	farcall InitCa00RecordFromCharId ; $5f43
-Label_38_5f46:
+.done:
 	pop af ; $5f46
 	wram_bank ; $5f47
 	ret ; $5f4b
@@ -4478,12 +4478,12 @@ CountCharGridEntries:
 	ld hl, $da24 ; $6192
 	ld c, $00 ; $6195
 	ld b, $00 ; $6197
-Label_38_6199:
+.countLoop:
 	ld a, [hl] ; $6199
 	cp a, $ff ; $619a
-	jr z, Label_38_619f ; $619c
+	jr z, .next ; $619c
 	inc b ; $619e
-Label_38_619f:
+.next:
 	inc hl ; $619f
 	inc hl ; $61a0
 	inc hl ; $61a1
@@ -4492,18 +4492,18 @@ Label_38_619f:
 	inc a ; $61a4
 	ld c, a ; $61a5
 	cp a, $16 ; $61a6
-	jr nz, Label_38_6199 ; $61a8
+	jr nz, .countLoop ; $61a8
 	ld a, b ; $61aa
 	ld [$d81a], a ; $61ab
 	ld hl, $da00 ; $61ae
 	ld c, $00 ; $61b1
 	ld b, $00 ; $61b3
-Label_38_61b5:
+.countPageLoop:
 	ld a, [hl] ; $61b5
 	cp a, $ff ; $61b6
-	jr z, Label_38_61bb ; $61b8
+	jr z, .nextPage ; $61b8
 	inc b ; $61ba
-Label_38_61bb:
+.nextPage:
 	inc hl ; $61bb
 	inc hl ; $61bc
 	inc hl ; $61bd
@@ -4512,7 +4512,7 @@ Label_38_61bb:
 	inc a ; $61c0
 	ld c, a ; $61c1
 	cp a, $09 ; $61c2
-	jr nz, Label_38_61b5 ; $61c4
+	jr nz, .countPageLoop ; $61c4
 	ld a, b ; $61c6
 	ld [$d823], a ; $61c7
 	ret ; $61ca
@@ -5222,19 +5222,19 @@ HandleLinkGridButtons:
 	ret nz ; $6725
 	ld a, [wMenuInputPressed] ; $6726
 	bit PADB_A, a ; $6729
-	jr nz, Label_38_6736 ; $672b
+	jr nz, .confirm ; $672b
 	bit 1, a ; $672d
-	jr nz, Label_38_673a ; $672f
+	jr nz, .cancel ; $672f
 	bit 3, a ; $6731
-	jr nz, Label_38_673e ; $6733
+	jr nz, .checkStar ; $6733
 	ret ; $6735
-Label_38_6736:
+.confirm:
 	call ConfirmLinkGridSelection ; $6736
 	ret ; $6739
-Label_38_673a:
+.cancel:
 	call CancelLinkGridSelection ; $673a
 	ret ; $673d
-Label_38_673e:
+.checkStar:
 	call GetGridSlotFromCursor ; $673e
 	ld b, a ; $6741
 	ld hl, $da00 ; $6742
@@ -5242,27 +5242,27 @@ Label_38_673e:
 	add a, a ; $6746
 	add a, l ; $6747
 	ld l, a ; $6748
-	jr nc, Label_38_674c ; $6749
+	jr nc, .readCharId ; $6749
 	inc h ; $674b
-Label_38_674c:
+.readCharId:
 	ld a, [hl] ; $674c
 	ld c, a ; $674d
 	call IsStarCharacter ; $674e
 	or a, a ; $6751
-	jr z, Label_38_676e ; $6752
+	jr z, .done ; $6752
 	sound $5e ; $6754
 	ld a, [$df00] ; $6756
 	cp a, $02 ; $6759
-	jr z, Label_38_6766 ; $675b
+	jr z, .starChar ; $675b
 	xor a, $01 ; $675d
 	ld [$df00], a ; $675f
 	call RefreshCharInfoPanel ; $6762
 	ret ; $6765
-Label_38_6766:
+.starChar:
 	ld a, $01 ; $6766
 	ld [$df00], a ; $6768
 	call RefreshCharInfoPanel ; $676b
-Label_38_676e:
+.done:
 	ret ; $676e
 ConfirmLinkGridSelection:
 	ldh a, [hWramBank] ; $676f
@@ -5470,32 +5470,32 @@ DrawRemoteSlotPortrait:
 DrawRemoteSlotStarMark:
 	ld a, [$d813] ; $68ec
 	cp a, $03 ; $68ef
-	jr z, Label_38_6907 ; $68f1
+	jr z, .checkOwnSlot ; $68f1
 	cp a, $05 ; $68f3
-	jr z, Label_38_6907 ; $68f5
+	jr z, .checkOwnSlot ; $68f5
 	ld a, [$d81d] ; $68f7
 	ld hl, $d836 ; $68fa
 	add a, l ; $68fd
 	ld l, a ; $68fe
-	jr nc, Label_38_6902 ; $68ff
+	jr nc, .checkStar ; $68ff
 	inc h ; $6901
-Label_38_6902:
+.checkStar:
 	ld a, [hl] ; $6902
 	or a, a ; $6903
 	ret z ; $6904
-	jr Label_38_6915 ; $6905
-Label_38_6907:
+	jr .draw ; $6905
+.checkOwnSlot:
 	ld a, [$d81d] ; $6907
 	ld hl, $d834 ; $690a
 	add a, l ; $690d
 	ld l, a ; $690e
-	jr nc, Label_38_6912 ; $690f
+	jr nc, .checkOwnStar ; $690f
 	inc h ; $6911
-Label_38_6912:
+.checkOwnStar:
 	ld a, [hl] ; $6912
 	or a, a ; $6913
 	ret z ; $6914
-Label_38_6915:
+.draw:
 	call GetRemoteSlotBoxAddress ; $6915
 	ld hl, $001f ; $6918
 	add hl, bc ; $691b
@@ -5504,22 +5504,22 @@ Label_38_6915:
 	ret ; $691f
 	ld a, [$d813] ; $6920
 	cp a, $03 ; $6923
-	jr z, Label_38_6937 ; $6925
+	jr z, .queueVram ; $6925
 	cp a, $05 ; $6927
-	jr z, Label_38_6937 ; $6929
+	jr z, .queueVram ; $6929
 	ld a, [$d833] ; $692b
 	ld c, $33 ; $692e
 	add a, c ; $6930
 	ld hl, $d14f ; $6931
 	ld [hl], a ; $6934
-	jr Label_38_6941 ; $6935
-Label_38_6937:
+	jr .done ; $6935
+.queueVram:
 	ld a, [$d831] ; $6937
 	ld c, $33 ; $693a
 	add a, c ; $693c
 	ld hl, $d0ef ; $693d
 	ld [hl], a ; $6940
-Label_38_6941:
+.done:
 	ret ; $6941
 ClearRemoteSlotPortrait:
 	call GetRemoteSlotBoxAddress ; $6942
@@ -5756,14 +5756,14 @@ InitLinkMatchCharsFromSelection:
 	call CacheStorySlotNames ; $6a88
 	ld a, [$d813] ; $6a8b
 	cp a, $03 ; $6a8e
-	jr z, Label_38_6ae2 ; $6a90
+	jr z, .slot3Entry ; $6a90
 	cp a, $05 ; $6a92
-	jr z, Label_38_6ae2 ; $6a94
+	jr z, .slot3Entry ; $6a94
 	ld a, [$d816] ; $6a96
 	cp a, $ff ; $6a99
-	jr z, Label_38_6abb ; $6a9b
+	jr z, .slot2 ; $6a9b
 	cp a, $80 ; $6a9d
-	jr c, Label_38_6ab5 ; $6a9f
+	jr c, .slot1Created ; $6a9f
 	ld c, a ; $6aa1
 	and a, $07 ; $6aa2
 	srl a ; $6aa4
@@ -5774,17 +5774,17 @@ InitLinkMatchCharsFromSelection:
 	ld b, a ; $6aad
 	ld c, $00 ; $6aae
 	farcall InitCa00RecordFromCharId ; $6ab0
-	jr Label_38_6abb ; $6ab3
-Label_38_6ab5:
+	jr .slot2 ; $6ab3
+.slot1Created:
 	ld b, a ; $6ab5
 	ld c, $00 ; $6ab6
 	farcall InitCa00RecordFromCharId ; $6ab8
-Label_38_6abb:
+.slot2:
 	ld a, [$d817] ; $6abb
 	cp a, $ff ; $6abe
-	jr z, Label_38_6ae0 ; $6ac0
+	jr z, .slot3 ; $6ac0
 	cp a, $80 ; $6ac2
-	jr c, Label_38_6ada ; $6ac4
+	jr c, .slot2Created ; $6ac4
 	ld c, a ; $6ac6
 	and a, $07 ; $6ac7
 	srl a ; $6ac9
@@ -5795,19 +5795,19 @@ Label_38_6abb:
 	ld b, a ; $6ad2
 	ld c, $01 ; $6ad3
 	farcall InitCa00RecordFromCharId ; $6ad5
-	jr Label_38_6ae0 ; $6ad8
-Label_38_6ada:
+	jr .slot3 ; $6ad8
+.slot2Created:
 	ld b, a ; $6ada
 	ld c, $01 ; $6adb
 	farcall InitCa00RecordFromCharId ; $6add
-Label_38_6ae0:
-	jr Label_38_6b2c ; $6ae0
-Label_38_6ae2:
+.slot3:
+	jr .applySettings ; $6ae0
+.slot3Entry:
 	ld a, [$d818] ; $6ae2
 	cp a, $ff ; $6ae5
-	jr z, Label_38_6b07 ; $6ae7
+	jr z, .slot4 ; $6ae7
 	cp a, $80 ; $6ae9
-	jr c, Label_38_6b01 ; $6aeb
+	jr c, .slot3Created ; $6aeb
 	ld c, a ; $6aed
 	and a, $07 ; $6aee
 	srl a ; $6af0
@@ -5818,17 +5818,17 @@ Label_38_6ae2:
 	ld b, a ; $6af9
 	ld c, $02 ; $6afa
 	farcall InitCa00RecordFromCharId ; $6afc
-	jr Label_38_6b07 ; $6aff
-Label_38_6b01:
+	jr .slot4 ; $6aff
+.slot3Created:
 	ld b, a ; $6b01
 	ld c, $02 ; $6b02
 	farcall InitCa00RecordFromCharId ; $6b04
-Label_38_6b07:
+.slot4:
 	ld a, [$d819] ; $6b07
 	cp a, $ff ; $6b0a
-	jr z, Label_38_6b2c ; $6b0c
+	jr z, .applySettings ; $6b0c
 	cp a, $80 ; $6b0e
-	jr c, Label_38_6b26 ; $6b10
+	jr c, .slot4Created ; $6b10
 	ld c, a ; $6b12
 	and a, $07 ; $6b13
 	srl a ; $6b15
@@ -5839,12 +5839,12 @@ Label_38_6b07:
 	ld b, a ; $6b1e
 	ld c, $03 ; $6b1f
 	farcall InitCa00RecordFromCharId ; $6b21
-	jr Label_38_6b2c ; $6b24
-Label_38_6b26:
+	jr .applySettings ; $6b24
+.slot4Created:
 	ld b, a ; $6b26
 	ld c, $03 ; $6b27
 	farcall InitCa00RecordFromCharId ; $6b29
-Label_38_6b2c:
+.applySettings:
 	pop af ; $6b2c
 	wram_bank ; $6b2d
 	ret ; $6b31
@@ -5856,7 +5856,7 @@ Label_38_6b2c:
 	xor a, a ; $6b3b
 	ld [$d839], a ; $6b3c
 	ld [$d826], a ; $6b3f
-Label_38_6b42:
+.doubles:
 	push af ; $6b42
 	farcall RunLinkInputFrame ; $6b43
 	pop af ; $6b46
@@ -5864,9 +5864,9 @@ Label_38_6b42:
 	ld [wMenuInputPressed], a ; $6b49
 	ld a, [wMenuInputPressed] ; $6b4c
 	xor a, $0f ; $6b4f
-	jr nz, Label_38_6b56 ; $6b51
+	jr nz, .done ; $6b51
 	call JumpSoftReset ; $6b53
-Label_38_6b56:
+.done:
 	push de ; $6b56
 	push af ; $6b57
 	ld a, [$d839] ; $6b58
@@ -5883,55 +5883,55 @@ Label_38_6b56:
 	pop de ; $6b6f
 	call RunLinkCpuDifficultySubmenu ; $6b70
 	call HandleLinkCpuDifficultyInput ; $6b73
-	jr Label_38_6b42 ; $6b76
+	jr .doubles ; $6b76
 	ret ; $6b78
 HandleLinkCpuDifficultyInput:
 	ldh a, [hLinkRemoteInput] ; $6b79
 	bit 5, a ; $6b7b
-	jr nz, Label_38_6b8c ; $6b7d
+	jr nz, .decrease ; $6b7d
 	bit 4, a ; $6b7f
-	jr nz, Label_38_6ba2 ; $6b81
+	jr nz, .increase ; $6b81
 	bit 0, a ; $6b83
-	jr nz, Label_38_6bb8 ; $6b85
+	jr nz, .confirm ; $6b85
 	bit 1, a ; $6b87
-	jr nz, Label_38_6bbc ; $6b89
+	jr nz, .cancel ; $6b89
 	ret ; $6b8b
-Label_38_6b8c:
+.decrease:
 	ld a, [$d839] ; $6b8c
 	dec a ; $6b8f
 	add a, a ; $6b90
-	jr nc, Label_38_6b98 ; $6b91
+	jr nc, .decCheckMax ; $6b91
 	ld a, $04 ; $6b93
 	dec a ; $6b95
-	jr Label_38_6b9e ; $6b96
-Label_38_6b98:
+	jr .storeDecrease ; $6b96
+.decCheckMax:
 	rra ; $6b98
 	cp a, $04 ; $6b99
-	jr c, Label_38_6b9e ; $6b9b
+	jr c, .storeDecrease ; $6b9b
 	xor a, a ; $6b9d
-Label_38_6b9e:
+.storeDecrease:
 	ld [$d839], a ; $6b9e
 	ret ; $6ba1
-Label_38_6ba2:
+.increase:
 	ld a, [$d839] ; $6ba2
 	inc a ; $6ba5
 	add a, a ; $6ba6
-	jr nc, Label_38_6bae ; $6ba7
+	jr nc, .incCheckMax ; $6ba7
 	ld a, $04 ; $6ba9
 	dec a ; $6bab
-	jr Label_38_6bb4 ; $6bac
-Label_38_6bae:
+	jr .storeIncrease ; $6bac
+.incCheckMax:
 	rra ; $6bae
 	cp a, $04 ; $6baf
-	jr c, Label_38_6bb4 ; $6bb1
+	jr c, .storeIncrease ; $6bb1
 	xor a, a ; $6bb3
-Label_38_6bb4:
+.storeIncrease:
 	ld [$d839], a ; $6bb4
 	ret ; $6bb7
-Label_38_6bb8:
+.confirm:
 	call StubNop_38_6bc0 ; $6bb8
 	ret ; $6bbb
-Label_38_6bbc:
+.cancel:
 	call StubNop_38_6bc1 ; $6bbc
 	ret ; $6bbf
 StubNop_38_6bc0:
@@ -6024,15 +6024,15 @@ GetLinkCursorSelectionCode:
 	add a, a ; $6c6b
 	add a, l ; $6c6c
 	ld l, a ; $6c6d
-	jr nc, Label_38_6c71 ; $6c6e
+	jr nc, .readEntry ; $6c6e
 	inc h ; $6c70
-Label_38_6c71:
+.readEntry:
 	ld a, [hl] ; $6c71
 	cp a, $ff ; $6c72
-	jr nz, Label_38_6c7a ; $6c74
+	jr nz, .checkTaken ; $6c74
 	ld a, $22 ; $6c76
-	jr Label_38_6c89 ; $6c78
-Label_38_6c7a:
+	jr .done ; $6c78
+.checkTaken:
 	inc hl ; $6c7a
 	inc hl ; $6c7b
 	ld b, [hl] ; $6c7c
@@ -6041,12 +6041,12 @@ Label_38_6c7a:
 	ld c, a ; $6c7f
 	ld a, b ; $6c80
 	or a, a ; $6c81
-	jr z, Label_38_6c88 ; $6c82
+	jr z, .useCode ; $6c82
 	ld a, $22 ; $6c84
-	jr Label_38_6c89 ; $6c86
-Label_38_6c88:
+	jr .done ; $6c86
+.useCode:
 	ld a, c ; $6c88
-Label_38_6c89:
+.done:
 	ret ; $6c89
 UpdateMenuCursorFromLinkInput:
 	ld b, a ; $6c8a
@@ -6145,22 +6145,22 @@ MoveLinkCursorDown:
 	ld a, [wMenuCursor2Y] ; $6d25
 	inc a ; $6d28
 	cp a, $02 ; $6d29
-	jr z, Label_38_6d32 ; $6d2b
+	jr z, .wrapPage ; $6d2b
 	ld [wMenuCursor2Y], a ; $6d2d
-	jr Label_38_6d57 ; $6d30
-Label_38_6d32:
+	jr .done ; $6d30
+.wrapPage:
 	ldh a, [$ffe3] ; $6d32
 	cp a, $02 ; $6d34
-	jr nc, Label_38_6d48 ; $6d36
+	jr nc, .nextPage ; $6d36
 	cp a, $01 ; $6d38
 	ret z ; $6d3a
 	ld a, [$d823] ; $6d3b
 	cp a, $07 ; $6d3e
-	jr c, Label_38_6d57 ; $6d40
+	jr c, .done ; $6d40
 	ld a, $01 ; $6d42
 	ldh [$ffe3], a ; $6d44
-	jr Label_38_6d55 ; $6d46
-Label_38_6d48:
+	jr .storeRow ; $6d46
+.nextPage:
 	inc a ; $6d48
 	ld e, a ; $6d49
 	ld a, [$d812] ; $6d4a
@@ -6168,12 +6168,12 @@ Label_38_6d48:
 	ld b, a ; $6d4e
 	ld a, e ; $6d4f
 	cp a, b ; $6d50
-	jr nz, Label_38_6d55 ; $6d51
+	jr nz, .storeRow ; $6d51
 	ld a, b ; $6d53
 	dec a ; $6d54
-Label_38_6d55:
+.storeRow:
 	ldh [$ffe3], a ; $6d55
-Label_38_6d57:
+.done:
 	ret ; $6d57
 MoveLinkCursorRight:
 	ld a, [wMenuCursor2X] ; $6d58
@@ -6200,36 +6200,37 @@ MoveLinkCursorLeft:
 	ld a, [wMenuCursor2X] ; $6d77
 	dec a ; $6d7a
 	cp a, $ff ; $6d7b
-	jr nz, Label_38_6d93 ; $6d7d
+	jr nz, .store ; $6d7d
 	ldh a, [$ffe3] ; $6d7f
 	or a, a ; $6d81
-	jr z, Label_38_6d8d ; $6d82
+	jr z, .wrapToLast ; $6d82
 	cp a, $01 ; $6d84
-	jr z, Label_38_6d8d ; $6d86
+	jr z, .wrapToLast ; $6d86
 	xor a, a ; $6d88
 	ldh [$ffe3], a ; $6d89
-	jr Label_38_6d91 ; $6d8b
-Label_38_6d8d:
+	jr .lastColumn ; $6d8b
+.wrapToLast:
 	ld a, $03 ; $6d8d
 	ldh [$ffe3], a ; $6d8f
-Label_38_6d91:
+.lastColumn:
 	ld a, $02 ; $6d91
-Label_38_6d93:
+.store:
 	ld [wMenuCursor2X], a ; $6d93
 	ret ; $6d96
+RetreatLinkGridSelection:
 	call RetreatToPreviousPlayerSlot ; $6d97
 	cp a, $ff ; $6d9a
-	jr nz, Label_38_6d9f ; $6d9c
+	jr nz, .clearSlot ; $6d9c
 	ret ; $6d9e
-Label_38_6d9f:
+.clearSlot:
 	sound $62 ; $6d9f
 	ld hl, $d816 ; $6da1
 	ld a, [$d814] ; $6da4
 	add a, l ; $6da7
 	ld l, a ; $6da8
-	jr nc, Label_38_6dac ; $6da9
+	jr nc, .clearTaken ; $6da9
 	inc h ; $6dab
-Label_38_6dac:
+.clearTaken:
 	ld a, [hl] ; $6dac
 	ld b, $00 ; $6dad
 	ld [hl], b ; $6daf
@@ -6238,9 +6239,9 @@ Label_38_6dac:
 	add a, a ; $6db4
 	add a, l ; $6db5
 	ld l, a ; $6db6
-	jr nc, Label_38_6dba ; $6db7
+	jr nc, .clearRecord ; $6db7
 	inc h ; $6db9
-Label_38_6dba:
+.clearRecord:
 	inc hl ; $6dba
 	inc hl ; $6dbb
 	xor a, a ; $6dbc
@@ -6257,7 +6258,7 @@ Label_38_6dba:
 	ld e, a ; $6dd2
 	call TestAndSetGridEntryTaken ; $6dd3
 	or a, a ; $6dd6
-	jr nz, Label_38_6dff ; $6dd7
+	jr nz, .done ; $6dd7
 	call GetGridSlotFromCursor ; $6dd9
 	ld b, a ; $6ddc
 	ld hl, $da00 ; $6ddd
@@ -6265,27 +6266,27 @@ Label_38_6dba:
 	add a, a ; $6de1
 	add a, l ; $6de2
 	ld l, a ; $6de3
-	jr nc, Label_38_6de7 ; $6de4
+	jr nc, .refresh ; $6de4
 	inc h ; $6de6
-Label_38_6de7:
+.refresh:
 	ld a, [hl] ; $6de7
 	cp a, $ff ; $6de8
-	jr z, Label_38_6dff ; $6dea
+	jr z, .done ; $6dea
 	ld a, [$d814] ; $6dec
 	ld hl, $d816 ; $6def
 	add a, l ; $6df2
 	ld l, a ; $6df3
-	jr nc, Label_38_6df7 ; $6df4
+	jr nc, .redraw ; $6df4
 	inc h ; $6df6
-Label_38_6df7:
+.redraw:
 	ld [hl], b ; $6df7
 	ld a, $01 ; $6df8
 	ld [$d822], a ; $6dfa
-	jr Label_38_6e01 ; $6dfd
-Label_38_6dff:
+	jr .noSelection ; $6dfd
+.done:
 	xor a, a ; $6dff
 	ret ; $6e00
-Label_38_6e01:
+.noSelection:
 	ld a, $01 ; $6e01
 	ret ; $6e03
 WaitLinkSelectStartupFrames:
