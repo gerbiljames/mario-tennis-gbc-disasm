@@ -3918,12 +3918,12 @@ TangentTable:
 	dw $0a5e ; record 240
 	dw $0b14 ; record 241
 	dw $0be5 ; record 242
-	dw MulHLByDE.loBit2 ; record 243
+	dw $0cd7 ; record 243
 	dw $0df3 ; record 244
 	dw $0f43 ; record 245
 	dw $10d9 ; record 246
 	dw $12cd ; record 247
-	dw AngleFromVector16.packAngle ; record 248
+	dw $1544 ; record 248
 	dw $1878 ; record 249
 	dw $1cce ; record 250
 	dw $2302 ; record 251

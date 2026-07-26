@@ -30,9 +30,10 @@ Everything below is **committed** (HEAD `081dd24`); the whole history
 rebuilds byte-perfect. Per-bank progress at any time: `python3
 tools/progress.py` (proven-code bytes, fill runs, label counts, human-named
 counts) and `tools/progress.py --unnamed <bank>` to list still-auto-named
-symbols. **19,226 of 20,861 labels are human-named** (see the caveat in the
+symbols. **19,462 of 21,519 labels are human-named** (see the caveat in the
 auto-split section below) (up from 4,816 on 2026-07-23); what is left is
-2,191 data blobs.
+data blobs, 430 of them the pointer-target labels the section on relocatable
+pointers below adds.
 
 ### Local labels inside functions (2026-07-26)
 
@@ -4433,6 +4434,81 @@ the real length, turning `$1b:$5c8d` from a 708-byte blur into a 10-byte
 5-entry table addressing 48-byte `RankingMarkerCoordSet` blocks.
 
 **291 of 297 tables named**; 4 unlabeled, 155 bytes.
+
+
+## Pointers that survive an edit (2026-07-26)
+
+A disassembly you can *change* needs every pointer to be a symbol. 770 were
+not: 316 `dw $xxxx` words and 445 `ld hl/de/bc, $xxxx` immediates whose target
+had no label, because it landed inside an `INCBIN` blob or inside a declared
+table. They assemble to the right bytes, but they are addresses frozen at
+their 2001 values -- insert one byte ahead of the target and the pointer
+quietly aims at the wrong place. **165 are left, and most of those are not
+pointers at all.**
+
+Three things were missing.
+
+**Labels could only be placed between structures, not inside one.** The
+existing `ptr_data_targets` mechanism splits an anonymous run at a pointer
+target, but a target *interior* to a declared table was deliberately skipped
+-- cutting the run there would have truncated the table and left the remainder
+without its spec. Now a region is rendered in *pieces*: `_emit_spec_pieces`
+cuts `[start, end)` at every interior target and renders each piece under the
+same spec, with the auto `Data_bb_aaaa` label between them. Splitting is
+allowed only for specs whose rendering is a run of independent rows
+(`is_splittable`: `bytes:N`, `records:N`, `tilemap:N`, `palettes`,
+`sound_data`, `fill`, `pattern`, `text_ids`, `flag_ids`); bytecode, a decoded
+header or a table whose rows reference their own base stays whole and its
+pointer stays numeric. `INCBIN` blobs split the same way, into one file per
+piece. So does a generated spec -- a palette array cut in two becomes two
+`INCLUDE`s of two generated files, which keeps the rule that no ROM values
+land in the repository:
+
+    CourtDiagramPalettes:
+        INCLUDE "data/bank_017/palettes_4ec2.asm" ; $4ec2, 16 bytes (palettes)
+    Data_17_4ed2:
+        INCLUDE "data/bank_017/palettes_4ed2.asm" ; $4ed2, 48 bytes (palettes)
+
+**Pointer *tables* were never a source of targets.** Only `ld rr, imm` sites
+were. `pointer_table_targets` now walks every all-pointer word table
+(`records:2`, `mode_hooks`, `minigame_configs`) and yields its words, so the
+rows name what they point at. The table's extent is not known until emit lays
+the bank out, so the walk stops at the first word that is not an in-bank
+address or at whatever claims the next offset -- over-running only costs a
+label nothing points at. One case needed its own rule: record 0 of a pointer
+table nearly always aims at the row array immediately *after* it, which is a
+declared table in its own right and so never a cut point; those are named
+where they are declared instead. `EquipRecordPtrs_02` now reads as its four
+records rather than `dw $486b`.
+
+**The `ld rr, imm` use-gate rejected two whole idioms.** It walks forward
+looking for a dereference, and gave up on:
+
+* *Argument passing.* `ld hl, table; call LoadPaletteShadow` -- the deref is in
+  the callee. `callee_pointer_regs` now scans every call target to see which of
+  hl/de/bc *it* dereferences, and a call to such a routine counts as a use.
+  Iterated twice so a helper that forwards its argument counts too. This is
+  also what keeps the false positives out: `ld de, $964a; call QueueSprite`
+  stays numeric, because QueueSprite reads d and e as a y/x pair and never
+  dereferences them.
+* *Split-base indexing.* `add a, l; ld l, a; jr nc, .x; inc h` reads as a
+  clobber of `l` unless you know the `add` came first; the scan now carries
+  that across the pair, which is what unlocked bank `$3b`'s table lookups.
+
+Sizes are checked, not assumed: **`make compare` is still OK**, from clean.
+4,592 blobs became 4,800 (208 splits) and 430 new labels were emitted -- so the
+human-named share drops to 19,462 of 21,519 until these get real names, which
+is the intended trade: an auto name that the assembler resolves beats a
+hex literal that it cannot.
+
+What is left is mostly not fixable by naming: 118 of the remaining 123 `ld`
+immediates fail the use-gate because they are *not* pointers (`ld de, $4000`
+before an overflow check, QueueSprite coordinate pairs). Of the 42 `dw`, 32
+point into `$39`'s `tilemap_dispatch`, whose renderer already gives its
+interior targets `.l2_N`/`.rl_N` local names -- referencing a renderer's own
+locals from outside is the missing feature there, not a label. The rest are
+`records:4`/`records:16` object templates, where only some columns are
+pointers and the column layout is not modelled yet.
 
 
 ## Repo state

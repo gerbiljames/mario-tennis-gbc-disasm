@@ -274,12 +274,13 @@ TickRallyTimers:
 	ld a, [wBallHasBouncedFlag] ; $4262
 	and a, a ; $4265
 	jr z, .modeHook ; $4266
-	ld hl, $4274 ; $4268
+	ld hl, Func_08_4274 ; $4268
 	call ForEachCharBank ; $426b
 .modeHook:
 	ld d, $06 ; $426e
 	call CallModeHook ; $4270
 	ret ; $4273
+Func_08_4274:
 	ld a, $05 ; $4274
 	call SetCharState ; $4276
 	ret ; $4279
@@ -611,7 +612,7 @@ ReinitPointAfterPause:
 	call RefreshCourtAfterEndChange ; $44ca
 	call ResetCameraForServe ; $44cd
 	call UpdateMatchCamera ; $44d0
-	ld hl, $4cb2 ; $44d3
+	ld hl, Func_08_4cb2 ; $44d3
 	call ForEachCharBank ; $44d6
 	farcall LoadServeGfx ; $44d9
 	ld a, [wServingCharWramBank] ; $44dc
@@ -1092,7 +1093,7 @@ FinalizeServeSideOrientation:
 	call UpdateViewFlipState ; $47f2
 	call FlipAllCharPositions ; $47f5
 	call IdentifyServingPlayer ; $47f8
-	ld hl, $4c99 ; $47fb
+	ld hl, Func_08_4c99 ; $47fb
 	call ForEachCharBank ; $47fe
 	wram_bank $04 ; $4801
 	ret ; $4807
@@ -1132,8 +1133,8 @@ GamePositionPtrs:
 	; $483f, 8 bytes (records:2)
 	dw GamePositionTables ; record 0
 	dw GamePositionTables ; record 1
-	dw $49b9 ; record 2
-	dw $4999 ; record 3
+	dw Data_08_49b9 ; record 2
+	dw Data_08_4999 ; record 3
 FlipNearCharPosition:
 	ld b, $01 ; $4847
 	wram_bank $04 ; $4849
@@ -1198,8 +1199,8 @@ TiebreakPositionPtrs:
 	; $48e5, 8 bytes (records:2)
 	dw TiebreakPositionTables ; record 0
 	dw TiebreakPositionTables ; record 1
-	dw $4b59 ; record 2
-	dw $4a99 ; record 3
+	dw Data_08_4b59 ; record 2
+	dw Data_08_4a99 ; record 3
 LoadPositionRecord:
 	add a, a ; $48ed
 	add a, a ; $48ee
@@ -1271,21 +1272,25 @@ ToggleCharCourtRow:
 	ld [hl], a ; $4977
 	ret ; $4978
 GamePositionTables:
-	; $4979, 96 bytes (bytes:8)
+	; $4979, 32 bytes (bytes:8)
 	db $00, $03, $09, $09, $00, $01, $09, $09 ; 0x00
 	db $03, $00, $09, $09, $01, $00, $09, $09 ; 0x08
 	db $03, $00, $09, $09, $00, $01, $09, $09 ; 0x10
 	db $00, $03, $09, $09, $01, $00, $09, $09 ; 0x18
-	db $00, $03, $01, $02, $00, $01, $02, $03 ; 0x20
-	db $03, $00, $02, $01, $01, $00, $03, $02 ; 0x28
-	db $02, $00, $03, $01, $02, $01, $00, $03 ; 0x30
-	db $00, $02, $01, $03, $01, $02, $03, $00 ; 0x38
-	db $00, $03, $09, $02, $00, $01, $09, $03 ; 0x40
-	db $03, $00, $09, $01, $01, $00, $09, $02 ; 0x48
-	db $03, $00, $09, $01, $00, $01, $09, $03 ; 0x50
-	db $00, $02, $09, $03, $01, $02, $09, $00 ; 0x58
+Data_08_4999:
+	; $4999, 32 bytes (bytes:8)
+	db $00, $03, $01, $02, $00, $01, $02, $03 ; 0x00
+	db $03, $00, $02, $01, $01, $00, $03, $02 ; 0x08
+	db $02, $00, $03, $01, $02, $01, $00, $03 ; 0x10
+	db $00, $02, $01, $03, $01, $02, $03, $00 ; 0x18
+Data_08_49b9:
+	; $49b9, 32 bytes (bytes:8)
+	db $00, $03, $09, $02, $00, $01, $09, $03 ; 0x00
+	db $03, $00, $09, $01, $01, $00, $09, $02 ; 0x08
+	db $03, $00, $09, $01, $00, $01, $09, $03 ; 0x10
+	db $00, $02, $09, $03, $01, $02, $09, $00 ; 0x18
 TiebreakPositionTables:
-	; $49d9, 576 bytes (bytes:8)
+	; $49d9, 192 bytes (bytes:8)
 	db $00, $03, $09, $09, $00, $01, $09, $09 ; 0x00
 	db $01, $02, $09, $09, $01, $00, $09, $09 ; 0x08
 	db $00, $03, $09, $09, $01, $00, $09, $09 ; 0x10
@@ -1310,54 +1315,58 @@ TiebreakPositionTables:
 	db $02, $01, $09, $09, $01, $00, $09, $09 ; 0xa8
 	db $03, $00, $09, $09, $01, $00, $09, $09 ; 0xb0
 	db $02, $01, $09, $09, $00, $01, $09, $09 ; 0xb8
-	db $00, $03, $01, $02, $00, $01, $02, $03 ; 0xc0
-	db $00, $02, $01, $03, $03, $00, $01, $02 ; 0xc8
-	db $00, $03, $01, $02, $01, $00, $03, $02 ; 0xd0
-	db $00, $03, $01, $02, $02, $03, $00, $01 ; 0xd8
-	db $01, $03, $00, $02, $02, $01, $00, $03 ; 0xe0
-	db $00, $03, $01, $02, $03, $02, $01, $00 ; 0xe8
-	db $03, $01, $02, $00, $01, $02, $03, $00 ; 0xf0
-	db $02, $00, $03, $01, $00, $03, $02, $01 ; 0xf8
-	db $03, $00, $02, $01, $00, $01, $02, $03 ; 0x100
-	db $03, $01, $02, $00, $03, $00, $01, $02 ; 0x108
-	db $03, $00, $02, $01, $01, $00, $03, $02 ; 0x110
-	db $03, $00, $02, $01, $02, $03, $00, $01 ; 0x118
-	db $01, $03, $00, $02, $02, $01, $00, $03 ; 0x120
-	db $00, $03, $01, $02, $03, $02, $01, $00 ; 0x128
-	db $00, $02, $01, $03, $01, $02, $03, $00 ; 0x130
-	db $01, $03, $00, $02, $00, $03, $02, $01 ; 0x138
-	db $00, $03, $01, $02, $00, $01, $02, $03 ; 0x140
-	db $00, $02, $01, $03, $03, $00, $01, $02 ; 0x148
-	db $03, $00, $02, $01, $01, $00, $03, $02 ; 0x150
-	db $03, $00, $02, $01, $02, $03, $00, $01 ; 0x158
-	db $02, $00, $03, $01, $02, $01, $00, $03 ; 0x160
-	db $03, $00, $02, $01, $03, $02, $01, $00 ; 0x168
-	db $03, $01, $02, $00, $01, $02, $03, $00 ; 0x170
-	db $02, $00, $03, $01, $00, $03, $02, $01 ; 0x178
-	db $00, $03, $09, $02, $00, $01, $09, $03 ; 0x180
-	db $01, $02, $09, $03, $01, $00, $09, $02 ; 0x188
-	db $00, $03, $09, $02, $01, $00, $09, $02 ; 0x190
-	db $01, $03, $09, $02, $00, $03, $09, $01 ; 0x198
-	db $00, $03, $09, $02, $00, $01, $09, $03 ; 0x1a0
-	db $01, $03, $09, $02, $01, $02, $09, $00 ; 0x1a8
-	db $03, $01, $09, $00, $01, $02, $09, $00 ; 0x1b0
-	db $02, $00, $09, $01, $00, $03, $09, $01 ; 0x1b8
-	db $03, $00, $09, $01, $00, $01, $09, $03 ; 0x1c0
-	db $02, $01, $09, $00, $01, $00, $09, $02 ; 0x1c8
-	db $03, $00, $09, $01, $01, $00, $09, $02 ; 0x1d0
-	db $02, $00, $09, $01, $00, $03, $09, $01 ; 0x1d8
-	db $00, $03, $09, $02, $00, $01, $09, $03 ; 0x1e0
-	db $01, $03, $09, $02, $01, $02, $09, $00 ; 0x1e8
-	db $00, $02, $09, $03, $01, $02, $09, $00 ; 0x1f0
-	db $01, $03, $09, $02, $00, $03, $09, $01 ; 0x1f8
-	db $00, $03, $09, $02, $00, $01, $09, $03 ; 0x200
-	db $01, $02, $09, $03, $01, $00, $09, $02 ; 0x208
-	db $03, $00, $09, $01, $01, $00, $09, $02 ; 0x210
-	db $02, $00, $09, $01, $00, $03, $09, $01 ; 0x218
-	db $03, $00, $09, $01, $00, $01, $09, $03 ; 0x220
-	db $02, $00, $09, $01, $01, $02, $09, $00 ; 0x228
-	db $03, $01, $09, $00, $01, $02, $09, $00 ; 0x230
-	db $02, $00, $09, $01, $00, $03, $09, $01 ; 0x238
+Data_08_4a99:
+	; $4a99, 192 bytes (bytes:8)
+	db $00, $03, $01, $02, $00, $01, $02, $03 ; 0x00
+	db $00, $02, $01, $03, $03, $00, $01, $02 ; 0x08
+	db $00, $03, $01, $02, $01, $00, $03, $02 ; 0x10
+	db $00, $03, $01, $02, $02, $03, $00, $01 ; 0x18
+	db $01, $03, $00, $02, $02, $01, $00, $03 ; 0x20
+	db $00, $03, $01, $02, $03, $02, $01, $00 ; 0x28
+	db $03, $01, $02, $00, $01, $02, $03, $00 ; 0x30
+	db $02, $00, $03, $01, $00, $03, $02, $01 ; 0x38
+	db $03, $00, $02, $01, $00, $01, $02, $03 ; 0x40
+	db $03, $01, $02, $00, $03, $00, $01, $02 ; 0x48
+	db $03, $00, $02, $01, $01, $00, $03, $02 ; 0x50
+	db $03, $00, $02, $01, $02, $03, $00, $01 ; 0x58
+	db $01, $03, $00, $02, $02, $01, $00, $03 ; 0x60
+	db $00, $03, $01, $02, $03, $02, $01, $00 ; 0x68
+	db $00, $02, $01, $03, $01, $02, $03, $00 ; 0x70
+	db $01, $03, $00, $02, $00, $03, $02, $01 ; 0x78
+	db $00, $03, $01, $02, $00, $01, $02, $03 ; 0x80
+	db $00, $02, $01, $03, $03, $00, $01, $02 ; 0x88
+	db $03, $00, $02, $01, $01, $00, $03, $02 ; 0x90
+	db $03, $00, $02, $01, $02, $03, $00, $01 ; 0x98
+	db $02, $00, $03, $01, $02, $01, $00, $03 ; 0xa0
+	db $03, $00, $02, $01, $03, $02, $01, $00 ; 0xa8
+	db $03, $01, $02, $00, $01, $02, $03, $00 ; 0xb0
+	db $02, $00, $03, $01, $00, $03, $02, $01 ; 0xb8
+Data_08_4b59:
+	; $4b59, 192 bytes (bytes:8)
+	db $00, $03, $09, $02, $00, $01, $09, $03 ; 0x00
+	db $01, $02, $09, $03, $01, $00, $09, $02 ; 0x08
+	db $00, $03, $09, $02, $01, $00, $09, $02 ; 0x10
+	db $01, $03, $09, $02, $00, $03, $09, $01 ; 0x18
+	db $00, $03, $09, $02, $00, $01, $09, $03 ; 0x20
+	db $01, $03, $09, $02, $01, $02, $09, $00 ; 0x28
+	db $03, $01, $09, $00, $01, $02, $09, $00 ; 0x30
+	db $02, $00, $09, $01, $00, $03, $09, $01 ; 0x38
+	db $03, $00, $09, $01, $00, $01, $09, $03 ; 0x40
+	db $02, $01, $09, $00, $01, $00, $09, $02 ; 0x48
+	db $03, $00, $09, $01, $01, $00, $09, $02 ; 0x50
+	db $02, $00, $09, $01, $00, $03, $09, $01 ; 0x58
+	db $00, $03, $09, $02, $00, $01, $09, $03 ; 0x60
+	db $01, $03, $09, $02, $01, $02, $09, $00 ; 0x68
+	db $00, $02, $09, $03, $01, $02, $09, $00 ; 0x70
+	db $01, $03, $09, $02, $00, $03, $09, $01 ; 0x78
+	db $00, $03, $09, $02, $00, $01, $09, $03 ; 0x80
+	db $01, $02, $09, $03, $01, $00, $09, $02 ; 0x88
+	db $03, $00, $09, $01, $01, $00, $09, $02 ; 0x90
+	db $02, $00, $09, $01, $00, $03, $09, $01 ; 0x98
+	db $03, $00, $09, $01, $00, $01, $09, $03 ; 0xa0
+	db $02, $00, $09, $01, $01, $02, $09, $00 ; 0xa8
+	db $03, $01, $09, $00, $01, $02, $09, $00 ; 0xb0
+	db $02, $00, $09, $01, $00, $03, $09, $01 ; 0xb8
 CheckServerEndChanged:
 	wram_bank $04 ; $4c19
 	ld a, [wCharCourtPos] ; $4c1f
@@ -1414,6 +1423,7 @@ IdentifyServingPlayer:
 	ld [wServingCharCourtPos], a ; $4c8f
 	wram_bank $04 ; $4c92
 	ret ; $4c98
+Func_08_4c99:
 	ld a, [wCharCourtPos] ; $4c99
 	add a, $ae ; $4c9c
 	ld l, a ; $4c9e
@@ -1427,6 +1437,7 @@ IdentifyServingPlayer:
 	ret ; $4cad
 	; $4cae, 4 bytes (bytes:4)
 	db $c0, $c0, $40, $40 ; 0x00
+Func_08_4cb2:
 	call GetCharBaseCourtPosition ; $4cb2
 	call SetCharPosAndTarget ; $4cb5
 	ret ; $4cb8
@@ -1464,7 +1475,7 @@ ResetPointState:
 	ld a, e ; $4d05
 	ld [hl+], a ; $4d06
 	ld [hl], d ; $4d07
-	ld hl, $4f6f ; $4d08
+	ld hl, Func_08_4f6f ; $4d08
 	call ForEachCharBank ; $4d0b
 	ret ; $4d0e
 PlayPoint:
@@ -1474,7 +1485,7 @@ PlayPoint:
 	farcall LoadServeGfx ; $4d17
 	call StepMatchFrame ; $4d1a
 	call AnnouncePointSituation ; $4d1d
-	ld hl, $4f91 ; $4d20
+	ld hl, Func_08_4f91 ; $4d20
 	call ForEachCharBank ; $4d23
 .rallyLoop:
 	call StepMatchFrame ; $4d26
@@ -1757,6 +1768,7 @@ DelayAfterPointResolution:
 	farcall DismissGameResultObj ; $4f68
 	farcall HideCourtBanner ; $4f6b
 	ret ; $4f6e
+Func_08_4f6f:
 	ld a, $00 ; $4f6f
 	call SetCharState ; $4f71
 	call GetCharBaseCourtPosition ; $4f74
@@ -1775,6 +1787,7 @@ DelayAfterPointResolution:
 	ld [hl+], a ; $4f8e
 	ld [hl+], a ; $4f8f
 	ret ; $4f90
+Func_08_4f91:
 	ld a, [wCharServeRole] ; $4f91
 	add a, $a0 ; $4f94
 	ld l, a ; $4f96
@@ -1799,7 +1812,7 @@ EndPointBallEffects:
 	ld [hl], a ; $4fb6
 	ret ; $4fb7
 StartPointEndReactions:
-	ld hl, $4fc7 ; $4fb8
+	ld hl, CharPointEndReaction ; $4fb8
 	call ForEachCharBank ; $4fbb
 	call SpreadTeammateTargets ; $4fbe
 	ld a, $0a ; $4fc1
@@ -4198,7 +4211,7 @@ WalkCharsToNewEnds:
 	call ResetBallState ; $5fc0
 	call GetServeCameraTarget ; $5fc3
 	call SnapCameraTo ; $5fc6
-	ld hl, $5fe5 ; $5fc9
+	ld hl, Func_08_5fe5 ; $5fc9
 	call ForEachCharBank ; $5fcc
 .waitLoop:
 	call StepMatchFrame ; $5fcf
@@ -4208,9 +4221,10 @@ WalkCharsToNewEnds:
 	call CheckAllCharsPhaseDone ; $5fd9
 	jr z, .waitLoop ; $5fdc
 .settle:
-	ld hl, $6003 ; $5fde
+	ld hl, Func_08_6003 ; $5fde
 	call ForEachCharBank ; $5fe1
 	ret ; $5fe4
+Func_08_5fe5:
 	ld a, $06 ; $5fe5
 	call SetCharState ; $5fe7
 	ld a, $80 ; $5fea
@@ -4223,6 +4237,7 @@ WalkCharsToNewEnds:
 	res 1, [hl] ; $5ffe
 	res 0, [hl] ; $6000
 	ret ; $6002
+Func_08_6003:
 	call GetCharBaseCourtPosition ; $6003
 	call SetCharPosAndTarget ; $6006
 	ld a, [$df0c] ; $6009
@@ -4235,7 +4250,7 @@ WalkCharsOffCourt:
 	ld [wOffscreenArrowsEnabled], a ; $6016
 	call GetServeCameraTarget ; $6019
 	call SetCameraTarget ; $601c
-	ld hl, $6046 ; $601f
+	ld hl, Func_08_6046 ; $601f
 	call ForEachCharBank ; $6022
 .waitLoop:
 	call StepMatchFrame ; $6025
@@ -4249,9 +4264,10 @@ WalkCharsOffCourt:
 	call StepMatchFrames ; $6036
 	call GetServeCameraTarget ; $6039
 	call SnapCameraTo ; $603c
-	ld hl, $6059 ; $603f
+	ld hl, Func_08_6059 ; $603f
 	call ForEachCharBank ; $6042
 	ret ; $6045
+Func_08_6046:
 	ld a, $06 ; $6046
 	call SetCharState ; $6048
 	call GetCharChangeoverPosition ; $604b
@@ -4260,6 +4276,7 @@ WalkCharsOffCourt:
 	res 1, [hl] ; $6054
 	res 0, [hl] ; $6056
 	ret ; $6058
+Func_08_6059:
 	ld hl, $0fe0 ; $6059
 	ld de, $0fe0 ; $605c
 	call SetCharPosAndTarget ; $605f
@@ -5015,7 +5032,7 @@ RunMinigamePointLoop:
 	ld a, [$c7b8] ; $65f3
 	and a, a ; $65f6
 	jr nz, .playPoint ; $65f7
-	ld hl, $4f91 ; $65f9
+	ld hl, Func_08_4f91 ; $65f9
 	call ForEachCharBank ; $65fc
 .playPoint:
 	call PlayMinigamePoint ; $65ff
@@ -5132,7 +5149,7 @@ LoadMinigamePointLayout:
 	ld [de], a ; $66de
 	wram_bank $04 ; $66df
 	call IdentifyServingPlayer ; $66e5
-	ld hl, $4c99 ; $66e8
+	ld hl, Func_08_4c99 ; $66e8
 	call ForEachCharBank ; $66eb
 	add sp, 8 ; $66ee
 	ret ; $66f0
@@ -7805,21 +7822,24 @@ ReadCharInput:
 CharInputPtrs:
 	; $781f, 14 bytes (records:2)
 	dw ReadCharPadInput ; record 0
-	dw $7863 ; record 1
+	dw Label_08_7863 ; record 1
 	dw ReadCharPadInput ; record 2
 	dw ReadCharPadInput ; record 3
-	dw $782d ; record 4
-	dw $7833 ; record 5
-	dw $783f ; record 6
+	dw Label_08_782d ; record 4
+	dw Label_08_7833 ; record 5
+	dw Label_08_783f ; record 6
+Label_08_782d:
 	ldh a, [hLinkInput] ; $782d
 	ld [$df1f], a ; $782f
 	ret ; $7832
+Label_08_7833:
 	ldh a, [hLinkState] ; $7833
 	cp a, $02 ; $7835
-	jr z, .remoteLive ; $7837
+	jr z, Label_08_783f.remoteLive ; $7837
 	cp a, $01 ; $7839
-	jr z, .remoteBuffered ; $783b
+	jr z, Label_08_783f.remoteBuffered ; $783b
 	jr ReadCharPadInput ; $783d
+Label_08_783f:
 	ldh a, [hLinkState] ; $783f
 	cp a, $02 ; $7841
 	jr z, .remoteBuffered ; $7843
@@ -7843,6 +7863,7 @@ ReadCharPadInput:
 	or a, c ; $785e
 	ld [$df1f], a ; $785f
 	ret ; $7862
+Label_08_7863:
 	ld hl, $df12 ; $7863
 	ld a, [hl] ; $7866
 	and a, a ; $7867
@@ -8204,27 +8225,34 @@ AiServePressToss:
 	jp AiAdvancePhase ; $7a9a
 ServePressTossPtrs:
 	; $7a9d, 32 bytes (records:2)
-	dw $7abd ; record 0
-	dw $7ac5 ; record 1
-	dw $7acd ; record 2
-	dw $7ad5 ; record 3
-	dw $7acd ; record 4
-	dw $7acd ; record 5
-	dw $7acd ; record 6
-	dw $7acd ; record 7
-	dw $7acd ; record 8
-	dw $7acd ; record 9
-	dw $7acd ; record 10
-	dw $7acd ; record 11
-	dw $7acd ; record 12
-	dw $7acd ; record 13
-	dw $7acd ; record 14
-	dw $7acd ; record 15
-	; $7abd, 32 bytes (bytes:8)
+	dw Data_08_7abd ; record 0
+	dw Data_08_7ac5 ; record 1
+	dw Data_08_7acd ; record 2
+	dw Data_08_7ad5 ; record 3
+	dw Data_08_7acd ; record 4
+	dw Data_08_7acd ; record 5
+	dw Data_08_7acd ; record 6
+	dw Data_08_7acd ; record 7
+	dw Data_08_7acd ; record 8
+	dw Data_08_7acd ; record 9
+	dw Data_08_7acd ; record 10
+	dw Data_08_7acd ; record 11
+	dw Data_08_7acd ; record 12
+	dw Data_08_7acd ; record 13
+	dw Data_08_7acd ; record 14
+	dw Data_08_7acd ; record 15
+Data_08_7abd:
+	; $7abd, 8 bytes (bytes:8)
 	db $00, $00, $00, $00, $00, $00, $00, $00 ; 0x00
-	db $00, $00, $00, $00, $00, $01, $01, $01 ; 0x08
-	db $00, $00, $01, $01, $01, $01, $01, $01 ; 0x10
-	db $01, $01, $01, $01, $01, $01, $01, $01 ; 0x18
+Data_08_7ac5:
+	; $7ac5, 8 bytes (bytes:8)
+	db $00, $00, $00, $00, $00, $01, $01, $01 ; 0x00
+Data_08_7acd:
+	; $7acd, 8 bytes (bytes:8)
+	db $00, $00, $01, $01, $01, $01, $01, $01 ; 0x00
+Data_08_7ad5:
+	; $7ad5, 8 bytes (bytes:8)
+	db $01, $01, $01, $01, $01, $01, $01, $01 ; 0x00
 AiServeStrike:
 	call AiPickServeButtons ; $7add
 	call AiPressFirstShotButton ; $7ae0

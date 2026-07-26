@@ -287,7 +287,7 @@ AwardsCeremonyTile01_0f:
 	ld a, $78 ; $45a3
 	call DelayFrames ; $45a5
 	script_set_position $14, $3f00, $3f00 ; $45a8
-	jp .ceremony ; $45b3
+	jp Label_0f_4628.ceremony ; $45b3
 .doubles:
 	set_flag FLAG_AWARDS_CEREMONY_SEEN_SINGLES ; $45b6
 	script_null_script $03 ; $45b9
@@ -307,6 +307,7 @@ AwardsCeremonyTile01_0f:
 	script_set_position $13, $0c80, $1b00 ; $4616
 	sound $99 ; $4621
 	script_speak $08 ; $4623
+Label_0f_4628:
 	script_set_position $13, $3f00, $3f00 ; $4628
 	script_set_anim $08, $02 ; $4633
 	script_wait_idle $08 ; $463a
@@ -361,7 +362,7 @@ AwardsCeremonyTile01_0f:
 	ret ; $4724
 AwardsCeremonyTile02_0f:
 	test_flag FLAG_DOUBLES ; $4725
-	jp nz, .doubles ; $4728
+	jp nz, Label_0f_4e28.doubles ; $4728
 	script_null_script $03 ; $472b
 	script_move_target ACTOR_PLAYER, $0c00, $1900 ; $4730
 	script_move_target $03, $0c00, $1b00 ; $473b
@@ -491,7 +492,10 @@ AwardsCeremonyTile02_0f:
 	ld a, $14 ; $4a13
 	call DelayFrames ; $4a15
 	script_set_objdef $74, $10 ; $4a18
-	script_set_anim $10, $01 ; $4a24
+	ld a, $10 ; $4a24
+	ld d, $01 ; $4a26
+Label_0f_4a28:
+	farcall ScriptSetActorAnimation ; $4a28
 	script_set_objdef $25, $0e ; $4a2b
 	script_set_anim $0e, $01 ; $4a37
 	script_set_position $0e, $1000, $1600 ; $4a3e
@@ -520,7 +524,12 @@ AwardsCeremonyTile02_0f:
 	script_move_target $10, $1000, $1600 ; $4b08
 	script_wait_move $10 ; $4b13
 	script_face $10, FACE_UP ; $4b18
-	script_set_objdef $61, $12 ; $4b1f
+	ld d, $61 ; $4b1f
+	script_get_actor_state $12 ; $4b21
+	ld c, l ; $4b26
+	ld b, h ; $4b27
+Label_0f_4b28:
+	farcall LoadActorObjectDefIfValid ; $4b28
 	script_set_anim $12, $01 ; $4b2b
 	script_set_position $04, $3f00, $3f00 ; $4b32
 	script_set_position $12, $0a00, $0dc0 ; $4b3d
@@ -628,7 +637,9 @@ AwardsCeremonyTile02_0f:
 	script_face $0c, FACE_UP ; $4e13
 	script_set_anim $0b, $02 ; $4e1a
 	script_wait_idle $0b ; $4e21
-	script_speak $16 ; $4e26
+	ld a, $16 ; $4e26
+Label_0f_4e28:
+	farcall ScriptShowSpeakerDialogue ; $4e28
 	script_face $11, FACE_LEFT ; $4e2b
 	script_face $12, FACE_RIGHT ; $4e32
 	ld a, $3c ; $4e39
@@ -2868,13 +2879,13 @@ IslandOpenRoundSinglesNpc05_0f:
 	ret ; $7690
 	db $47 ; $7691
 	; $7692, 18 bytes (records:2)
-	dw $4b28 ; record 0
+	dw Label_0f_4b28 ; record 0
 	dw $4f28 ; record 1
 	dw $4f28 ; record 2
-	dw $4628 ; record 3
-	dw $4628 ; record 4
-	dw $4a28 ; record 5
-	dw $4e28 ; record 6
+	dw Label_0f_4628 ; record 3
+	dw Label_0f_4628 ; record 4
+	dw Label_0f_4a28 ; record 5
+	dw Label_0f_4e28 ; record 6
 	dw $5228 ; record 7
 	dw $3e28 ; record 8
 	inc b ; $76a4

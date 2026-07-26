@@ -4787,11 +4787,11 @@ RenderProportionalTextAt:
 .charLoop:
 	ld a, [hl] ; $5e24
 	cp a, $20 ; $5e25
-	jr nc, .glyph ; $5e27
+	jr nc, Func_05_5e39.glyph ; $5e27
 	push hl ; $5e29
 	push af ; $5e2a
 	add a, a ; $5e2b
-	ld hl, $5e39 ; $5e2c
+	ld hl, Func_05_5e39 ; $5e2c
 	add a, l ; $5e2f
 	ld l, a ; $5e30
 	jr nc, .readVector ; $5e31
@@ -4802,6 +4802,7 @@ RenderProportionalTextAt:
 	ld l, a ; $5e36
 	pop af ; $5e37
 	jp hl ; $5e38
+Func_05_5e39:
 	call RenderTextAtWindowCell ; $5e39
 	ld e, [hl] ; $5e3c
 	call $cd5e ; $5e3d
@@ -4841,16 +4842,16 @@ RenderProportionalTextAt:
 	pop af ; $5e6b
 	call DispatchControlCode ; $5e6c
 	inc hl ; $5e6f
-	jr .charLoop ; $5e70
+	jr RenderProportionalTextAt.charLoop ; $5e70
 	pop hl ; $5e72
 	ld a, $0d ; $5e73
 	call DispatchControlCode ; $5e75
 	inc hl ; $5e78
-	jr .charLoop ; $5e79
+	jr RenderProportionalTextAt.charLoop ; $5e79
 	pop hl ; $5e7b
 	call DispatchControlCode ; $5e7c
 	inc hl ; $5e7f
-	jr .charLoop ; $5e80
+	jr RenderProportionalTextAt.charLoop ; $5e80
 	db $e1 ; $5e82
 .glyph:
 	push af ; $5e83
@@ -4894,7 +4895,7 @@ RenderProportionalTextAt:
 	inc de ; $5ebc
 	ld a, e ; $5ebd
 	and a, $1f ; $5ebe
-	jp nz, .charLoop ; $5ec0
+	jp nz, RenderProportionalTextAt.charLoop ; $5ec0
 	push hl ; $5ec3
 	ld h, d ; $5ec4
 	ld l, e ; $5ec5
@@ -4902,7 +4903,7 @@ RenderProportionalTextAt:
 	ld d, h ; $5ec7
 	ld e, l ; $5ec8
 	pop hl ; $5ec9
-	jp .charLoop ; $5eca
+	jp RenderProportionalTextAt.charLoop ; $5eca
 	pop hl ; $5ecd
 	ldh a, [hWramBank] ; $5ece
 	push af ; $5ed0

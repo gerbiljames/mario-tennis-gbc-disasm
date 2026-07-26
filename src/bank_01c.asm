@@ -617,39 +617,39 @@ CharDataScreen_DrawStatBar:
 	ret ; $4557
 CharDataScreen_DrawStatBarPtrs:
 	; $4558, 66 bytes (records:2)
-	dw $64a4 ; record 0
-	dw $64a9 ; record 1
-	dw $64ae ; record 2
-	dw $64b3 ; record 3
-	dw $64b8 ; record 4
-	dw $64bd ; record 5
-	dw $64c2 ; record 6
-	dw $64c7 ; record 7
-	dw $64cc ; record 8
-	dw $64d1 ; record 9
-	dw $64d6 ; record 10
-	dw $64db ; record 11
-	dw $64e0 ; record 12
-	dw $64e5 ; record 13
-	dw $64ea ; record 14
-	dw $64ef ; record 15
-	dw $64f4 ; record 16
-	dw $64f9 ; record 17
-	dw $64fe ; record 18
-	dw $6503 ; record 19
-	dw $6508 ; record 20
-	dw $650d ; record 21
-	dw $6512 ; record 22
-	dw $6517 ; record 23
-	dw $651c ; record 24
-	dw $6521 ; record 25
-	dw $6526 ; record 26
-	dw $652b ; record 27
-	dw $6530 ; record 28
-	dw $6535 ; record 29
-	dw $653a ; record 30
-	dw $653f ; record 31
-	dw $6544 ; record 32
+	dw Data_1c_64a4 ; record 0
+	dw Data_1c_64a9 ; record 1
+	dw Data_1c_64ae ; record 2
+	dw Data_1c_64b3 ; record 3
+	dw Data_1c_64b8 ; record 4
+	dw Data_1c_64bd ; record 5
+	dw Data_1c_64c2 ; record 6
+	dw Data_1c_64c7 ; record 7
+	dw Data_1c_64cc ; record 8
+	dw Data_1c_64d1 ; record 9
+	dw Data_1c_64d6 ; record 10
+	dw Data_1c_64db ; record 11
+	dw Data_1c_64e0 ; record 12
+	dw Data_1c_64e5 ; record 13
+	dw Data_1c_64ea ; record 14
+	dw Data_1c_64ef ; record 15
+	dw Data_1c_64f4 ; record 16
+	dw Data_1c_64f9 ; record 17
+	dw Data_1c_64fe ; record 18
+	dw Data_1c_6503 ; record 19
+	dw Data_1c_6508 ; record 20
+	dw Data_1c_650d ; record 21
+	dw Data_1c_6512 ; record 22
+	dw Data_1c_6517 ; record 23
+	dw Data_1c_651c ; record 24
+	dw Data_1c_6521 ; record 25
+	dw Data_1c_6526 ; record 26
+	dw Data_1c_652b ; record 27
+	dw Data_1c_6530 ; record 28
+	dw Data_1c_6535 ; record 29
+	dw Data_1c_653a ; record 30
+	dw Data_1c_653f ; record 31
+	dw Data_1c_6544 ; record 32
 CharDataScreen_DrawPortrait:
 	push af ; $459a
 	ld hl, wStoryModeNameOfMainCharacter ; $459b
@@ -2708,38 +2708,38 @@ CharDataPageRightTargets_1c:
 	INCBIN "data/bank_01c/d_5674.bin" ; $5674, 5 bytes
 Unused_1c_5679:
 	; $5679, 64 bytes (records:2)
-	dw $6880 ; record 0
-	dw $68c0 ; record 1
-	dw $6900 ; record 2
-	dw $6940 ; record 3
-	dw $6980 ; record 4
-	dw $69c0 ; record 5
-	dw $6a00 ; record 6
-	dw $6a40 ; record 7
-	dw $6a80 ; record 8
-	dw $6ac0 ; record 9
-	dw $6b00 ; record 10
-	dw $6b40 ; record 11
-	dw $6b80 ; record 12
-	dw $6bc0 ; record 13
-	dw $6c00 ; record 14
-	dw $6c40 ; record 15
-	dw $6c80 ; record 16
-	dw $6cc0 ; record 17
-	dw $6d00 ; record 18
-	dw $6d40 ; record 19
-	dw $6d80 ; record 20
-	dw $6dc0 ; record 21
-	dw $6e00 ; record 22
-	dw $6e40 ; record 23
-	dw $6e80 ; record 24
-	dw $6ec0 ; record 25
-	dw $6f00 ; record 26
-	dw $6f40 ; record 27
-	dw $6f80 ; record 28
-	dw $6fc0 ; record 29
-	dw $7000 ; record 30
-	dw $7040 ; record 31
+	dw Data_1c_6880 ; record 0
+	dw Data_1c_68c0 ; record 1
+	dw Data_1c_6900 ; record 2
+	dw Data_1c_6940 ; record 3
+	dw Data_1c_6980 ; record 4
+	dw Data_1c_69c0 ; record 5
+	dw Data_1c_6a00 ; record 6
+	dw Data_1c_6a40 ; record 7
+	dw Data_1c_6a80 ; record 8
+	dw Data_1c_6ac0 ; record 9
+	dw Data_1c_6b00 ; record 10
+	dw Data_1c_6b40 ; record 11
+	dw Data_1c_6b80 ; record 12
+	dw Data_1c_6bc0 ; record 13
+	dw Data_1c_6c00 ; record 14
+	dw Data_1c_6c40 ; record 15
+	dw Data_1c_6c80 ; record 16
+	dw Data_1c_6cc0 ; record 17
+	dw Data_1c_6d00 ; record 18
+	dw Data_1c_6d40 ; record 19
+	dw Data_1c_6d80 ; record 20
+	dw Data_1c_6dc0 ; record 21
+	dw Data_1c_6e00 ; record 22
+	dw Data_1c_6e40 ; record 23
+	dw Data_1c_6e80 ; record 24
+	dw Data_1c_6ec0 ; record 25
+	dw Data_1c_6f00 ; record 26
+	dw Data_1c_6f40 ; record 27
+	dw Data_1c_6f80 ; record 28
+	dw Data_1c_6fc0 ; record 29
+	dw Data_1c_7000 ; record 30
+	dw Data_1c_7040 ; record 31
 CharDataBand0RunsStep7_1c:
 	; $56b9, 22 bytes (bytes:16)
 	db $00, $60, $00, $0a, $00, $80, $0a, $0a, $00, $a0, $14, $0a, $00, $c0, $1e, $0a ; 0x00
@@ -2903,7 +2903,73 @@ CharDataScreenGfx0_1c:
 CharDataScreenGfx1_1c:
 	INCBIN "data/bank_01c/d_6406.bin" ; $6406, 99 bytes
 CharDataScreenGfx2_1c:
-	INCBIN "data/bank_01c/d_6469.bin" ; $6469, 224 bytes
+	INCBIN "data/bank_01c/d_6469.bin" ; $6469, 59 bytes
+Data_1c_64a4:
+	INCBIN "data/bank_01c/d_64a4.bin" ; $64a4, 5 bytes
+Data_1c_64a9:
+	INCBIN "data/bank_01c/d_64a9.bin" ; $64a9, 5 bytes
+Data_1c_64ae:
+	INCBIN "data/bank_01c/d_64ae.bin" ; $64ae, 5 bytes
+Data_1c_64b3:
+	INCBIN "data/bank_01c/d_64b3.bin" ; $64b3, 5 bytes
+Data_1c_64b8:
+	INCBIN "data/bank_01c/d_64b8.bin" ; $64b8, 5 bytes
+Data_1c_64bd:
+	INCBIN "data/bank_01c/d_64bd.bin" ; $64bd, 5 bytes
+Data_1c_64c2:
+	INCBIN "data/bank_01c/d_64c2.bin" ; $64c2, 5 bytes
+Data_1c_64c7:
+	INCBIN "data/bank_01c/d_64c7.bin" ; $64c7, 5 bytes
+Data_1c_64cc:
+	INCBIN "data/bank_01c/d_64cc.bin" ; $64cc, 5 bytes
+Data_1c_64d1:
+	INCBIN "data/bank_01c/d_64d1.bin" ; $64d1, 5 bytes
+Data_1c_64d6:
+	INCBIN "data/bank_01c/d_64d6.bin" ; $64d6, 5 bytes
+Data_1c_64db:
+	INCBIN "data/bank_01c/d_64db.bin" ; $64db, 5 bytes
+Data_1c_64e0:
+	INCBIN "data/bank_01c/d_64e0.bin" ; $64e0, 5 bytes
+Data_1c_64e5:
+	INCBIN "data/bank_01c/d_64e5.bin" ; $64e5, 5 bytes
+Data_1c_64ea:
+	INCBIN "data/bank_01c/d_64ea.bin" ; $64ea, 5 bytes
+Data_1c_64ef:
+	INCBIN "data/bank_01c/d_64ef.bin" ; $64ef, 5 bytes
+Data_1c_64f4:
+	INCBIN "data/bank_01c/d_64f4.bin" ; $64f4, 5 bytes
+Data_1c_64f9:
+	INCBIN "data/bank_01c/d_64f9.bin" ; $64f9, 5 bytes
+Data_1c_64fe:
+	INCBIN "data/bank_01c/d_64fe.bin" ; $64fe, 5 bytes
+Data_1c_6503:
+	INCBIN "data/bank_01c/d_6503.bin" ; $6503, 5 bytes
+Data_1c_6508:
+	INCBIN "data/bank_01c/d_6508.bin" ; $6508, 5 bytes
+Data_1c_650d:
+	INCBIN "data/bank_01c/d_650d.bin" ; $650d, 5 bytes
+Data_1c_6512:
+	INCBIN "data/bank_01c/d_6512.bin" ; $6512, 5 bytes
+Data_1c_6517:
+	INCBIN "data/bank_01c/d_6517.bin" ; $6517, 5 bytes
+Data_1c_651c:
+	INCBIN "data/bank_01c/d_651c.bin" ; $651c, 5 bytes
+Data_1c_6521:
+	INCBIN "data/bank_01c/d_6521.bin" ; $6521, 5 bytes
+Data_1c_6526:
+	INCBIN "data/bank_01c/d_6526.bin" ; $6526, 5 bytes
+Data_1c_652b:
+	INCBIN "data/bank_01c/d_652b.bin" ; $652b, 5 bytes
+Data_1c_6530:
+	INCBIN "data/bank_01c/d_6530.bin" ; $6530, 5 bytes
+Data_1c_6535:
+	INCBIN "data/bank_01c/d_6535.bin" ; $6535, 5 bytes
+Data_1c_653a:
+	INCBIN "data/bank_01c/d_653a.bin" ; $653a, 5 bytes
+Data_1c_653f:
+	INCBIN "data/bank_01c/d_653f.bin" ; $653f, 5 bytes
+Data_1c_6544:
+	INCBIN "data/bank_01c/d_6544.bin" ; $6544, 5 bytes
 CharDataScreenGfx3_1c:
 	INCBIN "data/bank_01c/d_6549.bin" ; $6549, 54 bytes
 CharDataScreenGfx4:
@@ -2939,15 +3005,80 @@ CharDataScreenUIGraphicsGfx5:
 CharDataScreenUIGraphicsGfx6:
 	INCBIN "data/bank_01c/d_684f.bin" ; $684f, 28 bytes
 CharDataScreenUIGraphicsGfx7:
-	INCBIN "data/bank_01c/d_686b.bin" ; $686b, 1668 bytes
+	INCBIN "data/bank_01c/d_686b.bin" ; $686b, 21 bytes
+Data_1c_6880:
+	INCBIN "data/bank_01c/d_6880.bin" ; $6880, 64 bytes
+Data_1c_68c0:
+	INCBIN "data/bank_01c/d_68c0.bin" ; $68c0, 64 bytes
+Data_1c_6900:
+	INCBIN "data/bank_01c/d_6900.bin" ; $6900, 64 bytes
+Data_1c_6940:
+	INCBIN "data/bank_01c/d_6940.bin" ; $6940, 64 bytes
+Data_1c_6980:
+	INCBIN "data/bank_01c/d_6980.bin" ; $6980, 64 bytes
+Data_1c_69c0:
+	INCBIN "data/bank_01c/d_69c0.bin" ; $69c0, 64 bytes
+Data_1c_6a00:
+	INCBIN "data/bank_01c/d_6a00.bin" ; $6a00, 64 bytes
+Data_1c_6a40:
+	INCBIN "data/bank_01c/d_6a40.bin" ; $6a40, 64 bytes
+Data_1c_6a80:
+	INCBIN "data/bank_01c/d_6a80.bin" ; $6a80, 64 bytes
+Data_1c_6ac0:
+	INCBIN "data/bank_01c/d_6ac0.bin" ; $6ac0, 64 bytes
+Data_1c_6b00:
+	INCBIN "data/bank_01c/d_6b00.bin" ; $6b00, 64 bytes
+Data_1c_6b40:
+	INCBIN "data/bank_01c/d_6b40.bin" ; $6b40, 64 bytes
+Data_1c_6b80:
+	INCBIN "data/bank_01c/d_6b80.bin" ; $6b80, 64 bytes
+Data_1c_6bc0:
+	INCBIN "data/bank_01c/d_6bc0.bin" ; $6bc0, 64 bytes
+Data_1c_6c00:
+	INCBIN "data/bank_01c/d_6c00.bin" ; $6c00, 64 bytes
+Data_1c_6c40:
+	INCBIN "data/bank_01c/d_6c40.bin" ; $6c40, 64 bytes
+Data_1c_6c80:
+	INCBIN "data/bank_01c/d_6c80.bin" ; $6c80, 64 bytes
+Data_1c_6cc0:
+	INCBIN "data/bank_01c/d_6cc0.bin" ; $6cc0, 64 bytes
+Data_1c_6d00:
+	INCBIN "data/bank_01c/d_6d00.bin" ; $6d00, 64 bytes
+Data_1c_6d40:
+	INCBIN "data/bank_01c/d_6d40.bin" ; $6d40, 64 bytes
+Data_1c_6d80:
+	INCBIN "data/bank_01c/d_6d80.bin" ; $6d80, 64 bytes
+Data_1c_6dc0:
+	INCBIN "data/bank_01c/d_6dc0.bin" ; $6dc0, 64 bytes
+Data_1c_6e00:
+	INCBIN "data/bank_01c/d_6e00.bin" ; $6e00, 64 bytes
+Data_1c_6e40:
+	INCBIN "data/bank_01c/d_6e40.bin" ; $6e40, 64 bytes
+Data_1c_6e80:
+	INCBIN "data/bank_01c/d_6e80.bin" ; $6e80, 64 bytes
+Data_1c_6ec0:
+	INCBIN "data/bank_01c/d_6ec0.bin" ; $6ec0, 47 bytes
 Unused_1c_6eef:
-	; $6eef, 59 bytes (bytes:16)
+	; $6eef, 17 bytes (bytes:16)
 	db $ec, $00, $00, $00, $00, $08, $07, $20, $1f, $44, $38, $0a, $71, $84, $73, $10 ; 0x00
-	db $e7, $00, $d9, $00, $d9, $40, $99, $a0, $19, $49, $30, $00, $f0, $10, $e0, $20 ; 0x10
-	db $c0, $20, $cf, $10, $cf, $40, $9f, $a0, $1f, $42, $3c, $09, $f0, $94, $63, $48 ; 0x20
-	db $27, $80, $00, $00, $00, $00, $00, $80, $00, $20, $c0 ; 0x30
+	db $e7 ; 0x10
+Data_1c_6f00:
+	; $6f00, 42 bytes (bytes:16)
+	db $00, $d9, $00, $d9, $40, $99, $a0, $19, $49, $30, $00, $f0, $10, $e0, $20, $c0 ; 0x00
+	db $20, $cf, $10, $cf, $40, $9f, $a0, $1f, $42, $3c, $09, $f0, $94, $63, $48, $27 ; 0x10
+	db $80, $00, $00, $00, $00, $00, $80, $00, $20, $c0 ; 0x20
 CharDataScreenTiles_1c:
-	INCBIN "data/bank_01c/d_6f2a.bin" ; $6f2a, 342 bytes
+	INCBIN "data/bank_01c/d_6f2a.bin" ; $6f2a, 22 bytes
+Data_1c_6f40:
+	INCBIN "data/bank_01c/d_6f40.bin" ; $6f40, 64 bytes
+Data_1c_6f80:
+	INCBIN "data/bank_01c/d_6f80.bin" ; $6f80, 64 bytes
+Data_1c_6fc0:
+	INCBIN "data/bank_01c/d_6fc0.bin" ; $6fc0, 64 bytes
+Data_1c_7000:
+	INCBIN "data/bank_01c/d_7000.bin" ; $7000, 64 bytes
+Data_1c_7040:
+	INCBIN "data/bank_01c/d_7040.bin" ; $7040, 64 bytes
 CharDataScreenGfx13:
 	INCBIN "data/bank_01c/d_7080.bin" ; $7080, 150 bytes
 CharDataScreen_LoadScreen:

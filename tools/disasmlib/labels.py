@@ -7,10 +7,12 @@ Data_ names derived from how the offset is reached.
 import bisect
 import sys
 
+from .constants import is_splittable
 from .rom import BANK_SIZE, offset_to_cpu, target_to_offset
 from .seeds import (ACTOR_HANDLER_INSTALL, FRAME_TASK_REGISTER,
                     actor_handler_targets, frame_task_targets,
-                    map_script_code_targets, minigame_config_init_targets)
+                    map_script_code_targets, minigame_config_init_targets,
+                    pointer_table_targets)
 
 
 VECTOR_LABELS = {
@@ -96,16 +98,34 @@ def build_labels(dis, overrides=None, data_tables=None, ptr_sites=None):
             labels[target] = f"Func_{target // BANK_SIZE:02x}_{offset_to_cpu(target):04x}"
         elif target in dt:
             labels[target] = f"Data_{target // BANK_SIZE:02x}_{offset_to_cpu(target):04x}"
-    # Pointers into unlabeled raw data: emit splits the enclosing blob at these
-    # and names them Data_* (see emit's seg-loop). Skip any target interior to a
-    # typed run (data_tables spec or slot-record table) so its structured
-    # rendering isn't truncated; text/special regions that never reach the raw
-    # seg-loop simply stay unnamed (the load is left raw, never undefined).
+    # Words of the all-pointer tables. Their code targets get a label the same
+    # way a pointer load's does; the data targets join the set below, which is
+    # what turns `dw $64a4` into `dw StatBarRow3`.
+    table_ptrs = {t for t in pointer_table_targets(dis.rom, dt, dis.instrs,
+                                                   labels)
+                  if t in dis.instrs or t not in dis.code_bytes}
+    for target in table_ptrs:
+        if target in labels:
+            continue
+        if target in dis.instrs:
+            labels[target] = \
+                f"Label_{target // BANK_SIZE:02x}_{offset_to_cpu(target):04x}"
+        elif target in dt:
+            # The first record of a pointer table usually aims at the row array
+            # directly after it, which is a declared table of its own and so is
+            # never a cut point -- name it where it is declared instead.
+            labels[target] = \
+                f"Data_{target // BANK_SIZE:02x}_{offset_to_cpu(target):04x}"
+    # Pointers into unlabeled data: emit splits the enclosing region at these
+    # and names them Data_* (see emit's seg-loop and _emit_pieces). A target
+    # interior to a typed run is only usable if that run's rendering survives
+    # being cut in two (see is_splittable); inside anything else -- bytecode, a
+    # decoded header, a slot-record table -- the pointer stays numeric.
     typed = sorted(set(dt) | set(dis.slot_record_tables))
     instr_keys = sorted(dis.instrs)
     label_keys = sorted(labels)
 
-    def in_typed_run(target):
+    def in_unsplittable_run(target):
         i = bisect.bisect_right(typed, target) - 1
         if i < 0 or typed[i] == target:
             return False
@@ -115,13 +135,13 @@ def build_labels(dis, overrides=None, data_tables=None, ptr_sites=None):
             j = bisect.bisect_right(arr, k)
             if j < len(arr):
                 end = min(end, arr[j])
-        return target < end
+        return target < end and not is_splittable(dt.get(k))
 
     ptr_data_targets = set()
-    for target in set((ptr_sites or {}).values()):
+    for target in set((ptr_sites or {}).values()) | table_ptrs:
         if target in labels or target in dis.instrs or target in dt:
             continue
-        if not in_typed_run(target):
+        if not in_unsplittable_run(target):
             ptr_data_targets.add(target)
     return labels, ptr_data_targets
 

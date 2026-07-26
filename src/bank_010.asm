@@ -544,7 +544,7 @@ RunMinigameSelectMenu:
 	farcall RunPagedTextMenu ; $4645
 	cp a, $ff ; $4648
 	jp z, RunDoublesMatchListMenu.done ; $464a
-	ld de, $4684 ; $464d
+	ld de, Data_10_4684 ; $464d
 	add a, e ; $4650
 	ld e, a ; $4651
 	jr nc, .runPagedTextMenu ; $4652
@@ -568,6 +568,7 @@ RunMinigameSelectMenu:
 	ld [$c294], a ; $467d
 	ld [wStoryModeExitLocationRequest], a ; $4680
 	ret ; $4683
+Data_10_4684:
 	; $4684, 9 bytes (bytes:16)
 	db $1c, $1d, $1e, $1f, $20, $21, $22, $23, $24 ; 0x00
 Test2MapScripts_10:
@@ -945,14 +946,15 @@ Test2InitScript_10:
 	ret ; $4bd7
 WaterSpriteModeHooks_10:
 	; $4bd8, 16 bytes (mode_hooks)
-	dw $4be8 ; record 0
-	dw $4bfc ; record 1
-	dw $4bfd ; record 2
+	dw Label_10_4be8 ; record 0
+	dw Label_10_4bfc ; record 1
+	dw Label_10_4bfd ; record 2
 	dw RetStub ; record 3
 	dw $4beb ; record 4
 	dw $4bea ; record 5
 	dw $4be9 ; record 6
 	dw RetStub ; record 7
+Label_10_4be8:
 	ret ; $4be8
 	ret ; $4be9
 	ret ; $4bea
@@ -965,7 +967,9 @@ WaterSpriteModeHooks_10:
 	inc [hl] ; $4bfa
 .done:
 	ret ; $4bfb
+Label_10_4bfc:
 	ret ; $4bfc
+Label_10_4bfd:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $4bfd
 	bit 0, a ; $4c00
 	ret nz ; $4c02
@@ -1183,7 +1187,7 @@ MainMenuInitScript_10:
 	call SetMusicMuted ; $4eca
 	ret ; $4ecd
 ApplyMatchTypeSettings:
-	ld hl, $4f08 ; $4ece
+	ld hl, Data_10_4f08 ; $4ece
 	ld a, [wMatchFormatSets] ; $4ed1
 	add a, l ; $4ed4
 	ld l, a ; $4ed5
@@ -1192,7 +1196,7 @@ ApplyMatchTypeSettings:
 .readSets:
 	ld a, [hl] ; $4ed9
 	ld [wMatchTypeNumberOfSets], a ; $4eda
-	ld hl, $4f0b ; $4edd
+	ld hl, Data_10_4f0b ; $4edd
 	ld a, [wMatchFormatGames] ; $4ee0
 	add a, l ; $4ee3
 	ld l, a ; $4ee4
@@ -1215,8 +1219,12 @@ ApplyMatchTypeSettings:
 	clear_flag FLAG_DOUBLES ; $4f04
 .done:
 	ret ; $4f07
-	; $4f08, 5 bytes (bytes:16)
-	db $01, $03, $05, $02, $06 ; 0x00
+Data_10_4f08:
+	; $4f08, 3 bytes (bytes:16)
+	db $01, $03, $05 ; 0x00
+Data_10_4f0b:
+	; $4f0b, 2 bytes (bytes:16)
+	db $02, $06 ; 0x00
 RunTitleAndMainMenuLoop:
 	call ClearFrameTasks ; $4f0d
 	sound $00 ; $4f10
@@ -1348,7 +1356,7 @@ MatchSelectHandlersBHandler0:
 	ld a, [wKeepMatchStatsFlag] ; $5027
 	or a, a ; $502a
 	jr z, .restoreReturnPoint ; $502b
-	jp RunEraseSavedDataFlow.runMatch ; $502d
+	jp Func_10_54ec.runMatch ; $502d
 .restoreReturnPoint:
 	farcall RestoreStoryReturnPoint ; $5030
 	ld b, $0a ; $5033
@@ -1836,7 +1844,7 @@ RunEraseSavedDataFlow:
 	jp z, RunTitleAndMainMenuLoop.menuLoop ; $54db
 	ld b, a ; $54de
 	add a, a ; $54df
-	ld hl, $54ec ; $54e0
+	ld hl, Func_10_54ec ; $54e0
 	add a, l ; $54e3
 	ld l, a ; $54e4
 	jr nc, .readHandler ; $54e5
@@ -1846,6 +1854,7 @@ RunEraseSavedDataFlow:
 	ld h, [hl] ; $54e9
 	ld l, a ; $54ea
 	jp hl ; $54eb
+Func_10_54ec:
 	or a, $54 ; $54ec
 	or a, $54 ; $54ee
 	or a, $54 ; $54f0
@@ -2075,7 +2084,7 @@ RunEraseSavedDataFlow:
 	ld [wStoryModeExitLocationRequest], a ; $56e5
 	ret ; $56e8
 GetMinigameDrillId:
-	ld hl, $56f3 ; $56e9
+	ld hl, Data_10_56f3 ; $56e9
 	add a, l ; $56ec
 	ld l, a ; $56ed
 	jr nc, .read ; $56ee
@@ -2083,6 +2092,7 @@ GetMinigameDrillId:
 .read:
 	ld a, [hl] ; $56f1
 	ret ; $56f2
+Data_10_56f3:
 	; $56f3, 9 bytes (bytes:16)
 	db $1c, $1d, $1e, $1f, $20, $21, $22, $23, $24 ; 0x00
 CopyExhibitionCharSlotIds:

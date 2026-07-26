@@ -107,7 +107,7 @@ SpriteWobbleXTable:
 ApplySpriteWobbleY_17:
 	ldh a, [hVBlankCounter] ; $40a3
 	and a, $0f ; $40a5
-	ld hl, $40bd ; $40a7
+	ld hl, Func_17_40bd ; $40a7
 	add a, l ; $40aa
 	ld l, a ; $40ab
 	jr nc, .readOffset ; $40ac
@@ -127,6 +127,7 @@ ApplySpriteWobbleY_17:
 	sub a, b ; $40ba
 	ld e, a ; $40bb
 	ret ; $40bc
+Func_17_40bd:
 	nop ; $40bd
 	nop ; $40be
 	nop ; $40bf
@@ -1008,7 +1009,7 @@ CycleDiagramTargetPalette:
 	ldh a, [hWramBank] ; $4676
 	push af ; $4678
 	wram_bank $03 ; $4679
-	ld hl, $4ed2 ; $467f
+	ld hl, Data_17_4ed2 ; $467f
 	ld de, $d830 ; $4682
 	ld bc, $0008 ; $4685
 	call CopyMemoryBC ; $4688
@@ -1028,7 +1029,7 @@ CycleDiagramTargetPalette:
 	xor a, a ; $46a0
 .step2:
 	add a, a ; $46a1
-	ld hl, $46ca ; $46a2
+	ld hl, Func_17_46ca ; $46a2
 	add a, l ; $46a5
 	ld l, a ; $46a6
 	jr nc, .read ; $46a7
@@ -1055,6 +1056,7 @@ CycleDiagramTargetPalette:
 	nop ; $46c7
 	rra ; $46c8
 	inc bc ; $46c9
+Func_17_46ca:
 	rra ; $46ca
 	nop ; $46cb
 	rst Rst18 ; $46cc
@@ -1518,7 +1520,7 @@ DrawDiagramTargetPatch:
 	ld c, a ; $4a59
 	add a, a ; $4a5a
 	add a, c ; $4a5b
-	ld hl, $4a75 ; $4a5c
+	ld hl, Func_17_4a75 ; $4a5c
 	add a, l ; $4a5f
 	ld l, a ; $4a60
 	jr nc, .read ; $4a61
@@ -1539,6 +1541,7 @@ DrawDiagramTargetPatch:
 	pop hl ; $4a70
 	farcall CopyTilemapRect ; $4a71
 	ret ; $4a74
+Func_17_4a75:
 	ld b, e ; $4a75
 	jp nc, $d08a ; $4a76
 	inc bc ; $4a79
@@ -1627,7 +1630,9 @@ CourtDiagramTilemap:
 CourtDiagramAttrmap:
 	INCBIN "data/bank_017/lz_4e42.bin" ; $4e42, 128 bytes
 CourtDiagramPalettes:
-	INCLUDE "data/bank_017/palettes_4ec2.asm" ; $4ec2, 64 bytes (palettes)
+	INCLUDE "data/bank_017/palettes_4ec2.asm" ; $4ec2, 16 bytes (palettes)
+Data_17_4ed2:
+	INCLUDE "data/bank_017/palettes_4ed2.asm" ; $4ed2, 48 bytes (palettes)
 CourtDiagramGfx0:
 	INCBIN "data/bank_017/d_4f02.bin" ; $4f02, 59 bytes
 CourtDiagramGfx1:
@@ -5377,7 +5382,7 @@ AdvanceRulesScreenAnimFrame:
 	srl a ; $743a
 	srl a ; $743c
 	and a, $3f ; $743e
-	ld hl, $749f ; $7440
+	ld hl, Data_17_749f ; $7440
 	add a, l ; $7443
 	ld l, a ; $7444
 	jr nc, .read ; $7445
@@ -5416,7 +5421,7 @@ AdvanceRulesScreenAnimFrame:
 	wram_bank ; $747a
 	ret ; $747e
 RulesScreenAnimFrameTable:
-	; $747f, 92 bytes (records:2)
+	; $747f, 32 bytes (records:2)
 	dw $0100 ; record 0
 	dw $0000 ; record 1
 	dw $0000 ; record 2
@@ -5433,36 +5438,38 @@ RulesScreenAnimFrameTable:
 	dw $0000 ; record 13
 	dw $0001 ; record 14
 	dw $0000 ; record 15
+Data_17_749f:
+	; $749f, 60 bytes (records:2)
+	dw $0402 ; record 0
+	dw $0404 ; record 1
+	dw $0502 ; record 2
+	dw $0402 ; record 3
+	dw $0202 ; record 4
+	dw $0302 ; record 5
+	dw $0402 ; record 6
+	dw $0402 ; record 7
+	dw $0304 ; record 8
+	dw $0204 ; record 9
+	dw $0204 ; record 10
+	dw $0404 ; record 11
+	dw $0402 ; record 12
+	dw $0402 ; record 13
+	dw $0402 ; record 14
+	dw $0402 ; record 15
 	dw $0402 ; record 16
-	dw $0404 ; record 17
-	dw $0502 ; record 18
-	dw $0402 ; record 19
-	dw $0202 ; record 20
-	dw $0302 ; record 21
-	dw $0402 ; record 22
-	dw $0402 ; record 23
-	dw $0304 ; record 24
-	dw $0204 ; record 25
-	dw $0204 ; record 26
-	dw $0404 ; record 27
-	dw $0402 ; record 28
+	dw $0402 ; record 17
+	dw $0402 ; record 18
+	dw $0202 ; record 19
+	dw $0304 ; record 20
+	dw $0204 ; record 21
+	dw $0204 ; record 22
+	dw $0204 ; record 23
+	dw $0402 ; record 24
+	dw $0402 ; record 25
+	dw $0402 ; record 26
+	dw $0202 ; record 27
+	dw $0302 ; record 28
 	dw $0402 ; record 29
-	dw $0402 ; record 30
-	dw $0402 ; record 31
-	dw $0402 ; record 32
-	dw $0402 ; record 33
-	dw $0402 ; record 34
-	dw $0202 ; record 35
-	dw $0304 ; record 36
-	dw $0204 ; record 37
-	dw $0204 ; record 38
-	dw $0204 ; record 39
-	dw $0402 ; record 40
-	dw $0402 ; record 41
-	dw $0402 ; record 42
-	dw $0202 ; record 43
-	dw $0302 ; record 44
-	dw $0402 ; record 45
 DrawRulesScreenCharacters:
 	ldh a, [hWramBank] ; $74db
 	push af ; $74dd

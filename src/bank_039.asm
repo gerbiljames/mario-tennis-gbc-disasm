@@ -310,7 +310,7 @@ UpdateAnimatedTiles:
 	ld a, [wAnimatedTileSet] ; $43bb
 	and a, $03 ; $43be
 	add a, a ; $43c0
-	ld hl, $440b ; $43c1
+	ld hl, Data_39_440b ; $43c1
 	add a, l ; $43c4
 	ld l, a ; $43c5
 	jr nc, .readFrameTableB ; $43c6
@@ -353,111 +353,121 @@ UpdateAnimatedTiles:
 	pop af ; $4401
 	ret ; $4402
 UpdateAnimatedTilesTable:
-	; $4403, 208 bytes (records:2)
-	dw $4413 ; record 0
-	dw $4453 ; record 1
-	dw $4493 ; record 2
-	dw $44b3 ; record 3
-	dw $ffff ; record 4
-	dw $ffff ; record 5
-	dw $44b3 ; record 6
-	dw $4493 ; record 7
-	dw $6d32 ; record 8
-	dw $6d34 ; record 9
-	dw $6d36 ; record 10
-	dw $6d38 ; record 11
-	dw $6d3a ; record 12
-	dw $6d3c ; record 13
-	dw $6d3e ; record 14
-	dw $6d40 ; record 15
-	dw $6d42 ; record 16
-	dw $6d44 ; record 17
-	dw $6d46 ; record 18
-	dw $6d48 ; record 19
-	dw $6d4a ; record 20
-	dw $6d4c ; record 21
-	dw $6d4e ; record 22
-	dw $6d50 ; record 23
-	dw $6d52 ; record 24
-	dw $6d54 ; record 25
-	dw $6d56 ; record 26
-	dw $6d58 ; record 27
-	dw $6d5a ; record 28
-	dw $6d5c ; record 29
-	dw $6d5e ; record 30
-	dw $6d60 ; record 31
-	dw $6d62 ; record 32
-	dw $6d64 ; record 33
-	dw $6d66 ; record 34
-	dw $6d68 ; record 35
-	dw $6d6a ; record 36
-	dw $6d6c ; record 37
-	dw $6d6e ; record 38
-	dw $6d70 ; record 39
-	dw $3f36 ; record 40
-	dw $3f38 ; record 41
-	dw $3f3a ; record 42
-	dw $3f3c ; record 43
-	dw $3f3e ; record 44
-	dw $3f40 ; record 45
-	dw $3f42 ; record 46
-	dw $3f44 ; record 47
-	dw $3f46 ; record 48
-	dw $3f48 ; record 49
-	dw $3f4a ; record 50
-	dw $3f4c ; record 51
-	dw $3f4e ; record 52
-	dw $3f50 ; record 53
-	dw $3f52 ; record 54
-	dw $3f54 ; record 55
-	dw $3f56 ; record 56
-	dw $3f58 ; record 57
-	dw $3f5a ; record 58
-	dw $3f5c ; record 59
-	dw $3f5e ; record 60
-	dw $3f60 ; record 61
-	dw $3f62 ; record 62
-	dw $3f64 ; record 63
-	dw $3f66 ; record 64
-	dw $3f68 ; record 65
-	dw $3f6a ; record 66
-	dw $3f6c ; record 67
-	dw $3f6e ; record 68
-	dw $3f70 ; record 69
-	dw $3f72 ; record 70
-	dw $3f74 ; record 71
-	dw $1848 ; record 72
-	dw $184a ; record 73
-	dw $184c ; record 74
-	dw $184e ; record 75
-	dw $1850 ; record 76
-	dw $1852 ; record 77
-	dw $1854 ; record 78
-	dw $1856 ; record 79
-	dw $1858 ; record 80
-	dw $185a ; record 81
-	dw $185c ; record 82
-	dw $185e ; record 83
-	dw $1860 ; record 84
-	dw $1862 ; record 85
-	dw $1864 ; record 86
-	dw $1866 ; record 87
-	dw $1868 ; record 88
-	dw $186a ; record 89
-	dw $186c ; record 90
-	dw $186e ; record 91
-	dw $1870 ; record 92
-	dw $1872 ; record 93
-	dw $1874 ; record 94
-	dw $1876 ; record 95
-	dw $1878 ; record 96
-	dw $187a ; record 97
-	dw $187c ; record 98
-	dw $187e ; record 99
-	dw $1880 ; record 100
-	dw $1882 ; record 101
-	dw $1884 ; record 102
-	dw $1886 ; record 103
+	; $4403, 8 bytes (records:2)
+	dw Data_39_4413 ; record 0
+	dw Data_39_4453 ; record 1
+	dw Data_39_4493 ; record 2
+	dw Data_39_44b3 ; record 3
+Data_39_440b:
+	; $440b, 8 bytes (records:2)
+	dw $ffff ; record 0
+	dw $ffff ; record 1
+	dw Data_39_44b3 ; record 2
+	dw Data_39_4493 ; record 3
+Data_39_4413:
+	; $4413, 64 bytes (records:2)
+	dw $6d32 ; record 0
+	dw $6d34 ; record 1
+	dw $6d36 ; record 2
+	dw $6d38 ; record 3
+	dw $6d3a ; record 4
+	dw $6d3c ; record 5
+	dw $6d3e ; record 6
+	dw $6d40 ; record 7
+	dw $6d42 ; record 8
+	dw $6d44 ; record 9
+	dw $6d46 ; record 10
+	dw $6d48 ; record 11
+	dw $6d4a ; record 12
+	dw $6d4c ; record 13
+	dw $6d4e ; record 14
+	dw $6d50 ; record 15
+	dw $6d52 ; record 16
+	dw $6d54 ; record 17
+	dw $6d56 ; record 18
+	dw $6d58 ; record 19
+	dw $6d5a ; record 20
+	dw $6d5c ; record 21
+	dw $6d5e ; record 22
+	dw $6d60 ; record 23
+	dw $6d62 ; record 24
+	dw $6d64 ; record 25
+	dw $6d66 ; record 26
+	dw $6d68 ; record 27
+	dw $6d6a ; record 28
+	dw $6d6c ; record 29
+	dw $6d6e ; record 30
+	dw $6d70 ; record 31
+Data_39_4453:
+	; $4453, 64 bytes (records:2)
+	dw $3f36 ; record 0
+	dw $3f38 ; record 1
+	dw $3f3a ; record 2
+	dw $3f3c ; record 3
+	dw $3f3e ; record 4
+	dw $3f40 ; record 5
+	dw $3f42 ; record 6
+	dw $3f44 ; record 7
+	dw $3f46 ; record 8
+	dw $3f48 ; record 9
+	dw $3f4a ; record 10
+	dw $3f4c ; record 11
+	dw $3f4e ; record 12
+	dw $3f50 ; record 13
+	dw $3f52 ; record 14
+	dw $3f54 ; record 15
+	dw $3f56 ; record 16
+	dw $3f58 ; record 17
+	dw $3f5a ; record 18
+	dw $3f5c ; record 19
+	dw $3f5e ; record 20
+	dw $3f60 ; record 21
+	dw $3f62 ; record 22
+	dw $3f64 ; record 23
+	dw $3f66 ; record 24
+	dw $3f68 ; record 25
+	dw $3f6a ; record 26
+	dw $3f6c ; record 27
+	dw $3f6e ; record 28
+	dw $3f70 ; record 29
+	dw $3f72 ; record 30
+	dw $3f74 ; record 31
+Data_39_4493:
+	; $4493, 32 bytes (records:2)
+	dw $1848 ; record 0
+	dw $184a ; record 1
+	dw $184c ; record 2
+	dw $184e ; record 3
+	dw $1850 ; record 4
+	dw $1852 ; record 5
+	dw $1854 ; record 6
+	dw $1856 ; record 7
+	dw $1858 ; record 8
+	dw $185a ; record 9
+	dw $185c ; record 10
+	dw $185e ; record 11
+	dw $1860 ; record 12
+	dw $1862 ; record 13
+	dw $1864 ; record 14
+	dw $1866 ; record 15
+Data_39_44b3:
+	; $44b3, 32 bytes (records:2)
+	dw $1868 ; record 0
+	dw $186a ; record 1
+	dw $186c ; record 2
+	dw $186e ; record 3
+	dw $1870 ; record 4
+	dw $1872 ; record 5
+	dw $1874 ; record 6
+	dw $1876 ; record 7
+	dw $1878 ; record 8
+	dw $187a ; record 9
+	dw $187c ; record 10
+	dw $187e ; record 11
+	dw $1880 ; record 12
+	dw $1882 ; record 13
+	dw $1884 ; record 14
+	dw $1886 ; record 15
 LoadFixedTileBlockAndPalette:
 	push de ; $44d3
 	wram_bank $01 ; $44d4
@@ -569,18 +579,20 @@ LoadIndexedPalette:
 	rl d ; $4588
 	sla e ; $458a
 	rl d ; $458c
-	ld hl, $4599 ; $458e
+	ld hl, Data_39_4599 ; $458e
 	add hl, de ; $4591
 	ld d, b ; $4592
 	ld e, $01 ; $4593
 	call LoadPaletteShadow ; $4595
 	ret ; $4598
+Data_39_4599:
 	INCLUDE "data/bank_039/palettes_4599.asm" ; $4599, 200 bytes (palettes)
 LoadFixedPaletteSet:
-	ld hl, $466b ; $4661
+	ld hl, Data_39_466b ; $4661
 	ld de, $0904 ; $4664
 	call LoadPaletteShadow ; $4667
 	ret ; $466a
+Data_39_466b:
 	INCLUDE "data/bank_039/palettes_466b.asm" ; $466b, 32 bytes (palettes)
 LoadCompressedTileBlock:
 	ldh a, [hWramBank] ; $468b
@@ -870,17 +882,17 @@ LoadMenuSpritePalettePair:
 	add a, $08 ; $4b3c
 	ld d, a ; $4b3e
 	ld e, $01 ; $4b3f
-	ld hl, $4b65 ; $4b41
+	ld hl, Data_39_4b65 ; $4b41
 	call LoadPaletteShadow ; $4b44
 	pop bc ; $4b47
 	ld a, b ; $4b48
 	add a, $08 ; $4b49
 	ld d, a ; $4b4b
 	ld e, $01 ; $4b4c
-	ld hl, $4b65 ; $4b4e
+	ld hl, Data_39_4b65 ; $4b4e
 	call LoadPaletteShadow ; $4b51
 	ret ; $4b54
-	; $4b55, 24 bytes (records:2)
+	; $4b55, 16 bytes (records:2)
 	dw $0004 ; record 0
 	dw $00af ; record 1
 	dw $015f ; record 2
@@ -889,10 +901,12 @@ LoadMenuSpritePalettePair:
 	dw $1133 ; record 5
 	dw $11df ; record 6
 	dw $139f ; record 7
-	dw $0000 ; record 8
-	dw $018f ; record 9
-	dw $031f ; record 10
-	dw $031f ; record 11
+Data_39_4b65:
+	; $4b65, 8 bytes (records:2)
+	dw $0000 ; record 0
+	dw $018f ; record 1
+	dw $031f ; record 2
+	dw $031f ; record 3
 TickMenuBgScroll:
 	ld a, [$cb12] ; $4b6d
 	dec a ; $4b70

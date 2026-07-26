@@ -14,12 +14,13 @@ turn -- structured table, text, inline `db`, or an INCBIN of an extracted blob.
 Nothing here decides *what* the bytes are; it only renders decisions the
 analysis already made, so every path must reproduce the original bytes.
 """
+import bisect
 import re
 from pathlib import Path
 
 from extract import render_spec
 
-from .constants import CHAR_ROSTER
+from .constants import CHAR_ROSTER, is_splittable
 from .datatables import (render_actor_list, render_actor_script,
                          render_drill_definition, render_enum_table,
                          render_flag_ids, render_save_flag_ids,
@@ -171,6 +172,7 @@ class Emitter:
         self.const_defs = const_defs or {}
         self.ptr_sites = ptr_sites
         self.ptr_data_targets = ptr_data_targets or set()
+        self.ptr_cuts = sorted(self.ptr_data_targets)
         self.flag_names = flag_names or {}
         self.flag_raw_sites = flag_raw_sites or set()
         self.manifest = []   # (blob path, rom offset, length, render spec)
@@ -185,6 +187,11 @@ class Emitter:
         # immediate pointer load may reference by name.
         self.operand_labels = {o: n for o, n in labels.items()
                                if o not in dis.instrs}
+        # Every name a pointer word can resolve to, including the auto names
+        # the cut points below are about to define.
+        self.ptr_names = dict(self.labels)
+        self.ptr_names.update((t, self._auto_name(t))
+                              for t in self.ptr_data_targets)
 
     # ---- setup ----------------------------------------------------------
 
@@ -342,6 +349,20 @@ class Emitter:
         nbanks = len(self.rom) // BANK_SIZE
         for bank in range(nbanks):
             self._emit_bank(bank)
+        # A pointer word renders as a name; whether that name gets *defined*
+        # depends on where its target lands, which is only known once the bank
+        # is laid out. Drop the ones nothing defined and lay the ROM out again
+        # -- those words fall back to numeric. Dropping a name never changes
+        # which labels are emitted, so one extra pass always settles it.
+        undefined = {o for o, n in self.ptr_names.items()
+                     if n not in self.emitted_labels}
+        if undefined:
+            for o in undefined:
+                self.ptr_names.pop(o, None)
+            self.manifest = []
+            self.emitted_labels = set()
+            for bank in range(nbanks):
+                self._emit_bank(bank)
         self._check_local_scopes()
         self._write_text_ids()
         self._write_flag_constants()
@@ -549,18 +570,7 @@ class Emitter:
         cpu = offset_to_cpu(start)
         length = end - start
         if start in self.data_tables:
-            spec = self.data_tables[start]
-            if spec in GENERATED_SPECS:
-                self._emit_generated_spec(start, length, bank, spec)
-                return
-            self.lines.append(f"\t; ${cpu:04x}, {length} bytes ({spec})")
-            if spec == "actor_script" and self._emit_actor_script(start, end, bank):
-                return
-            rows = self._render_table_spec(spec, start, end, bank)
-            if rows is None:
-                self._extend_spec(self.rom[start:end], spec)
-            else:
-                self.lines.extend(rows)
+            self._emit_spec_pieces(start, end, bank, self.data_tables[start])
             return
         if all(b == 0xFF for b in self.rom[start:end]):
             # Pointer-targeted but pure mastering fill (unused trailing
@@ -572,7 +582,10 @@ class Emitter:
             else:
                 self.lines.append(bank_end_fill(cpu, length))
             return
-        self.lines.append(self._incbin(start, length, bank, prefix))
+        for a, b in self._pieces(start, end):
+            if a != start:
+                self.lines.append(f"{self._auto_name(a)}:")
+            self.lines.append(self._incbin(a, b - a, bank, prefix))
 
     def _emit_unclassified(self, run_start, run_end, bank_end, bank):
         """Split an unclassified run into constant-byte fills ($ff is the
@@ -617,11 +630,9 @@ class Emitter:
                 and seg not in self.ptr_data_targets:
             self.lines.append(bank_end_fill(cpu, j - seg))
             return False
-        if seg in self.labels and self.lines[-1] != f"{self.labels[seg]}:":
-            self.lines.append(f"{self.labels[seg]}:")
-        elif seg in self.ptr_data_targets \
-                and self.lines[-1] != f"Data_{bank:02x}_{cpu:04x}:":
-            self.lines.append(f"Data_{bank:02x}_{cpu:04x}:")
+        if (seg in self.labels or seg in self.ptr_data_targets) \
+                and self.lines[-1] != f"{self._auto_name(seg)}:":
+            self.lines.append(f"{self._auto_name(seg)}:")
         self.lines.append(f"\tds {j - seg}, ${b:02x} ; ${cpu:04x}, fill")
         return True
 
@@ -654,9 +665,14 @@ class Emitter:
                     or (b == 0x00 and k - j >= 256):
                 break
             j = k
+        # A declared table cuts itself at its interior pointer targets (see
+        # _emit_spec_pieces), so ending the segment at one would truncate the
+        # table and leave the remainder without its spec.
+        sources = [self.data_tables, self.labels]
+        if seg not in self.data_tables:
+            sources.append(self.ptr_data_targets)
         stops = [min((t for t in src if seg < t < j), default=0)
-                 for src in (self.data_tables, self.labels,
-                             self.ptr_data_targets)]
+                 for src in sources]
         stops = [s for s in stops if s]
         return min(stops) if stops else j
 
@@ -672,22 +688,42 @@ class Emitter:
     def _emit_declared_table(self, seg, j, bank):
         """A declared data table renders as structured source inline, using the
         same renderers extract.py applies to blobs."""
-        spec = self.data_tables[seg]
         self._label_line(seg)
+        self._emit_spec_pieces(seg, j, bank, self.data_tables[seg],
+                               records=True)
+
+    def _emit_spec_pieces(self, start, end, bank, spec, records=False):
+        """Render [start, end) under `spec`, one piece per cut point, so a
+        pointer into the middle of a table anchors a label there instead of
+        staying a bare address."""
+        for a, b in self._pieces(start, end, spec):
+            if a != start:
+                self.lines.append(f"{self._auto_name(a)}:")
+            self._emit_spec_piece(a, b, bank, spec, records)
+
+    def _emit_spec_piece(self, start, end, bank, spec, records):
+        """One piece of a declared table. `records` selects the record-table
+        renderers, which apply to a table declared in an unclassified run but
+        not to a proven blob of the same shape (that keeps extract.py's plain
+        rendering)."""
         if spec in GENERATED_SPECS:
-            self._emit_generated_spec(seg, j - seg, bank, spec)
+            self._emit_generated_spec(start, end - start, bank, spec)
             return
-        self.lines.append(f"\t; ${offset_to_cpu(seg):04x}, {j - seg} bytes ({spec})")
+        self.lines.append(
+            f"\t; ${offset_to_cpu(start):04x}, {end - start} bytes ({spec})")
         if spec == "actor_script":
-            if not self._emit_actor_script(seg, j, bank):
+            if self._emit_actor_script(start, end, bank):
+                return
+            if records:
                 self.lines.append("\tdb " + ", ".join(
-                    f"${x:02x}" for x in self.rom[seg:j]))
-            return
-        rows = self._render_record_spec(spec, seg, j, bank)
+                    f"${x:02x}" for x in self.rom[start:end]))
+                return
+        rows = self._render_record_spec(spec, start, end, bank) \
+            if records else None
         if rows is None:
-            rows = self._render_table_spec(spec, seg, j, bank)
+            rows = self._render_table_spec(spec, start, end, bank)
         if rows is None:
-            self._extend_spec(self.rom[seg:j], spec)
+            self._extend_spec(self.rom[start:end], spec)
         else:
             self.lines.extend(rows)
 
@@ -705,10 +741,8 @@ class Emitter:
             self.lines.append(f'\tINCLUDE "data/{blob}" ; ${cpu:04x}, {n} bytes')
             self.manifest.append((blob, seg, n, None))
             return
-        if seg in self.labels:
-            self.lines.append(f"{self.labels[seg]}:")
-        elif seg in self.ptr_data_targets:
-            self.lines.append(f"Data_{bank:02x}_{cpu:04x}:")
+        if seg in self.labels or seg in self.ptr_data_targets:
+            self.lines.append(f"{self._auto_name(seg)}:")
         if n <= INLINE_DB_MAX:
             # A tiny inter-code run (alignment padding, a stray constant, or a
             # stranded ret) renders inline rather than as a standalone one/two-
@@ -793,7 +827,7 @@ class Emitter:
         plain rendering). Returns lines, or None if `spec` is not one."""
         if spec in ("records:2", "mode_hooks", "minigame_configs"):
             return render_pointer_words(self.rom, start, end, bank,
-                                        self.labels, spec)
+                                        self.ptr_names, spec)
         if spec == "story_locations":
             return render_story_locations(self.rom, start, end, self._slot_ref)
         if spec.startswith("rules_pages:"):
@@ -842,6 +876,30 @@ class Emitter:
         """The offset's label, unless the previous line already declared it."""
         if off in self.labels and self.lines[-1] != f"{self.labels[off]}:":
             self.lines.append(f"{self.labels[off]}:")
+
+    def _auto_name(self, off):
+        """The name a pointer target carries: its curated label if it has one,
+        otherwise the generated Data_ name every cut point gets."""
+        return self.labels.get(
+            off, f"Data_{off // BANK_SIZE:02x}_{offset_to_cpu(off):04x}")
+
+    def _cuts(self, start, end):
+        """The pointer targets strictly inside [start, end)."""
+        i = bisect.bisect_right(self.ptr_cuts, start)
+        out = []
+        while i < len(self.ptr_cuts) and self.ptr_cuts[i] < end:
+            out.append(self.ptr_cuts[i])
+            i += 1
+        return out
+
+    def _pieces(self, start, end, spec=None):
+        """[start, end) as (from, to) pairs cut at every interior pointer
+        target, so each one can anchor a label. A region whose rendering does
+        not survive being cut (see is_splittable) stays in one piece."""
+        cuts = self._cuts(start, end) if (spec is None or is_splittable(spec)) \
+            else []
+        bounds = [start] + cuts + [end]
+        return list(zip(bounds, bounds[1:]))
 
     def _incbin(self, start, length, bank, prefix="d", note=""):
         """Register a blob in the manifest and return its INCBIN line."""

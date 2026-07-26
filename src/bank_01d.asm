@@ -23,11 +23,11 @@ ShowCharDataScreen:
 	call BeginFadeOut ; $402b
 	call WaitFadeEnd ; $402e
 	call InitCharDataScreenVideo ; $4031
-	ld hl, $6334 ; $4034
+	ld hl, Data_1d_6334 ; $4034
 	ld de, $0d01 ; $4037
 	call LoadPaletteShadow ; $403a
 	wram_bank $01 ; $403d
-	ld hl, $633c ; $4043
+	ld hl, Data_1d_633c ; $4043
 	ld de, $d000 ; $4046
 	call DecompressData ; $4049
 	ld hl, $d000 ; $404c
@@ -145,7 +145,7 @@ BuildCharDataScreenPages:
 	ret ; $4174
 LoadCharDataScreenPageGraphics:
 	wram_bank $01 ; $4175
-	ld hl, $65e4 ; $417b
+	ld hl, Data_1d_65e4 ; $417b
 	ld de, $d000 ; $417e
 	call DecompressData ; $4181
 	ld hl, $d000 ; $4184
@@ -177,98 +177,98 @@ LoadCharDataScreenPageGraphics:
 	ld c, $08 ; $41d8
 	call QueueVRAMCopy ; $41da
 	wram_bank $01 ; $41dd
-	ld hl, $6485 ; $41e3
+	ld hl, Data_1d_6485 ; $41e3
 	ld de, $d380 ; $41e6
 	call DecompressData ; $41e9
 	ld hl, $d380 ; $41ec
 	ld bc, $0009 ; $41ef
 	call CopyWram1ToWram3CharData ; $41f2
 	wram_bank $01 ; $41f5
-	ld hl, $6493 ; $41fb
+	ld hl, Data_1d_6493 ; $41fb
 	ld de, $d380 ; $41fe
 	call DecompressData ; $4201
 	ld hl, $d380 ; $4204
 	ld bc, $0009 ; $4207
 	call CopyWram1ToWram2CharData ; $420a
 	wram_bank $01 ; $420d
-	ld hl, $6321 ; $4213
+	ld hl, Data_1d_6321 ; $4213
 	ld de, $d390 ; $4216
 	call DecompressData ; $4219
 	ld hl, $d390 ; $421c
 	ld bc, $0028 ; $421f
 	call CopyWram1ToWram3CharData ; $4222
 	wram_bank $01 ; $4225
-	ld hl, $632b ; $422b
+	ld hl, Data_1d_632b ; $422b
 	ld de, $d390 ; $422e
 	call DecompressData ; $4231
 	ld hl, $d390 ; $4234
 	ld bc, $0028 ; $4237
 	call CopyWram1ToWram2CharData ; $423a
 	wram_bank $01 ; $423d
-	ld hl, $63f4 ; $4243
+	ld hl, Data_1d_63f4 ; $4243
 	ld de, $d3c0 ; $4246
 	call DecompressData ; $4249
 	ld hl, $d3c0 ; $424c
 	ld bc, $0082 ; $424f
 	call CopyWram1ToWram3CharData ; $4252
 	wram_bank $01 ; $4255
-	ld hl, $6449 ; $425b
+	ld hl, Data_1d_6449 ; $425b
 	ld de, $d3c0 ; $425e
 	call DecompressData ; $4261
 	ld hl, $d3c0 ; $4264
 	ld bc, $0082 ; $4267
 	call CopyWram1ToWram2CharData ; $426a
 	wram_bank $01 ; $426d
-	ld hl, $63f4 ; $4273
+	ld hl, Data_1d_63f4 ; $4273
 	ld de, $d450 ; $4276
 	call DecompressData ; $4279
 	ld hl, $d450 ; $427c
 	ld bc, $0082 ; $427f
 	call CopyWram1ToWram3CharData ; $4282
 	wram_bank $01 ; $4285
-	ld hl, $6449 ; $428b
+	ld hl, Data_1d_6449 ; $428b
 	ld de, $d450 ; $428e
 	call DecompressData ; $4291
 	ld hl, $d450 ; $4294
 	ld bc, $0082 ; $4297
 	call CopyWram1ToWram2CharData ; $429a
 	wram_bank $01 ; $429d
-	ld hl, $645b ; $42a3
+	ld hl, Data_1d_645b ; $42a3
 	ld de, $d4e0 ; $42a6
 	call DecompressData ; $42a9
 	ld hl, $d4e0 ; $42ac
 	ld bc, $001c ; $42af
 	call CopyWram1ToWram3CharData ; $42b2
 	wram_bank $01 ; $42b5
-	ld hl, $647e ; $42bb
+	ld hl, Data_1d_647e ; $42bb
 	ld de, $d4e0 ; $42be
 	call DecompressData ; $42c1
 	ld hl, $d4e0 ; $42c4
 	ld bc, $001c ; $42c7
 	call CopyWram1ToWram2CharData ; $42ca
 	wram_bank $01 ; $42cd
-	ld hl, $649a ; $42d3
+	ld hl, Data_1d_649a ; $42d3
 	ld de, $d500 ; $42d6
 	call DecompressData ; $42d9
 	ld hl, $d500 ; $42dc
 	ld bc, $002a ; $42df
 	call CopyWram1ToWram3CharData ; $42e2
 	wram_bank $01 ; $42e5
-	ld hl, $64b2 ; $42eb
+	ld hl, Data_1d_64b2 ; $42eb
 	ld de, $d500 ; $42ee
 	call DecompressData ; $42f1
 	ld hl, $d500 ; $42f4
 	ld bc, $002a ; $42f7
 	call CopyWram1ToWram2CharData ; $42fa
 	wram_bank $01 ; $42fd
-	ld hl, $64bb ; $4303
+	ld hl, Data_1d_64bb ; $4303
 	ld de, $d000 ; $4306
 	call DecompressData ; $4309
 	ld hl, $d000 ; $430c
 	ld de, $a380 ; $430f
 	ld c, $14 ; $4312
 	call QueueVRAMCopy ; $4314
-	ld hl, $656f ; $4317
+	ld hl, Data_1d_656f ; $4317
 	ld de, $d000 ; $431a
 	call DecompressData ; $431d
 	ld hl, $d000 ; $4320
@@ -276,14 +276,14 @@ LoadCharDataScreenPageGraphics:
 	ld c, $14 ; $4326
 	call QueueVRAMCopy ; $4328
 	wram_bank $01 ; $432b
-	ld hl, $6550 ; $4331
+	ld hl, Data_1d_6550 ; $4331
 	ld de, $d530 ; $4334
 	call DecompressData ; $4337
 	ld hl, $d530 ; $433a
 	ld bc, $001e ; $433d
 	call CopyWram1ToWram3CharData ; $4340
 	wram_bank $01 ; $4343
-	ld hl, $6568 ; $4349
+	ld hl, Data_1d_6568 ; $4349
 	ld de, $d530 ; $434c
 	call DecompressData ; $434f
 	ld hl, $d530 ; $4352
@@ -430,7 +430,7 @@ BuildCharDataSummaryFields:
 	ld de, $d3cb ; $4466
 	ld c, $0a ; $4469
 	call WriteNameStringTiles ; $446b
-	ld hl, $5d7e ; $446e
+	ld hl, Data_1d_5d7e ; $446e
 	ld de, $d3c0 ; $4471
 	ld b, $0c ; $4474
 	call PlotTilesAtOffsets ; $4476
@@ -641,7 +641,7 @@ BuildCharDataSummaryFields:
 	ld c, $0a ; $45f8
 	call WriteNameStringTiles ; $45fa
 	wram_bank $03 ; $45fd
-	ld hl, $5d91 ; $4603
+	ld hl, Data_1d_5d91 ; $4603
 	ld de, $d450 ; $4606
 	ld b, $09 ; $4609
 	call PlotTilesAtOffsets ; $460b
@@ -1269,13 +1269,13 @@ LoadBasePageIntoWorkTilemap:
 	ret ; $4acb
 BuildCharDataSummaryPage:
 	call BuildCharDataSummaryFields ; $4acc
-	ld hl, $5c33 ; $4acf
+	ld hl, Data_1d_5c33 ; $4acf
 	ld bc, $d3c0 ; $4ad2
 	call ApplyTilemapPatchList ; $4ad5
-	ld hl, $5c68 ; $4ad8
+	ld hl, Data_1d_5c68 ; $4ad8
 	ld bc, $d450 ; $4adb
 	call ApplyTilemapPatchList ; $4ade
-	ld hl, $5c9d ; $4ae1
+	ld hl, Data_1d_5c9d ; $4ae1
 	ld bc, $d4e0 ; $4ae4
 	call ApplyTilemapPatchList ; $4ae7
 	ret ; $4aea
@@ -1292,25 +1292,25 @@ BuildMainCharStatPage:
 	ld [$d124], a ; $4b07
 	ld a, [$d00d] ; $4b0a
 	ld [$d125], a ; $4b0d
-	ld hl, $5da4 ; $4b10
+	ld hl, Data_1d_5da4 ; $4b10
 	ld bc, $d370 ; $4b13
 	call ApplyTilemapPatchList ; $4b16
-	ld hl, $5dcb ; $4b19
+	ld hl, Data_1d_5dcb ; $4b19
 	ld bc, $d500 ; $4b1c
 	call ApplyTilemapPatchList ; $4b1f
-	ld hl, $5ca6 ; $4b22
+	ld hl, Data_1d_5ca6 ; $4b22
 	ld bc, $d240 ; $4b25
 	call ApplyTilemapPatchList ; $4b28
-	ld hl, $5cd0 ; $4b2b
+	ld hl, Data_1d_5cd0 ; $4b2b
 	ld bc, $d280 ; $4b2e
 	call ApplyTilemapPatchList ; $4b31
-	ld hl, $5d0a ; $4b34
+	ld hl, Data_1d_5d0a ; $4b34
 	ld bc, $d2d0 ; $4b37
 	call ApplyTilemapPatchList ; $4b3a
-	ld hl, $5d34 ; $4b3d
+	ld hl, Data_1d_5d34 ; $4b3d
 	ld bc, $d310 ; $4b40
 	call ApplyTilemapPatchList ; $4b43
-	ld hl, $5de5 ; $4b46
+	ld hl, Data_1d_5de5 ; $4b46
 	ld bc, $d530 ; $4b49
 	call ApplyTilemapPatchList ; $4b4c
 	ret ; $4b4f
@@ -1327,25 +1327,25 @@ BuildPartnerStatPage:
 	ld [$d131], a ; $4b6d
 	ld a, [$d00d] ; $4b70
 	ld [$d132], a ; $4b73
-	ld hl, $5dd8 ; $4b76
+	ld hl, Data_1d_5dd8 ; $4b76
 	ld bc, $d500 ; $4b79
 	call ApplyTilemapPatchList ; $4b7c
-	ld hl, $5db1 ; $4b7f
+	ld hl, Data_1d_5db1 ; $4b7f
 	ld bc, $d380 ; $4b82
 	call ApplyTilemapPatchList ; $4b85
-	ld hl, $5ca6 ; $4b88
+	ld hl, Data_1d_5ca6 ; $4b88
 	ld bc, $d240 ; $4b8b
 	call ApplyTilemapPatchList ; $4b8e
-	ld hl, $5cd0 ; $4b91
+	ld hl, Data_1d_5cd0 ; $4b91
 	ld bc, $d280 ; $4b94
 	call ApplyTilemapPatchList ; $4b97
-	ld hl, $5d0a ; $4b9a
+	ld hl, Data_1d_5d0a ; $4b9a
 	ld bc, $d2d0 ; $4b9d
 	call ApplyTilemapPatchList ; $4ba0
-	ld hl, $5d34 ; $4ba3
+	ld hl, Data_1d_5d34 ; $4ba3
 	ld bc, $d310 ; $4ba6
 	call ApplyTilemapPatchList ; $4ba9
-	ld hl, $5de5 ; $4bac
+	ld hl, Data_1d_5de5 ; $4bac
 	ld bc, $d530 ; $4baf
 	call ApplyTilemapPatchList ; $4bb2
 	ret ; $4bb5
@@ -2020,13 +2020,13 @@ SlideToMainCharStatPage:
 	or a, a ; $50a2
 	jr nz, SlideToMainCharStatPage ; $50a3
 	call LoadBasePageIntoWorkTilemap ; $50a5
-	ld hl, $5e3d ; $50a8
+	ld hl, Data_1d_5e3d ; $50a8
 	ld bc, $d7e0 ; $50ab
 	call ApplyTilemapPatchList ; $50ae
-	ld hl, $5e52 ; $50b1
+	ld hl, Data_1d_5e52 ; $50b1
 	ld bc, wTextArgNumberQueue + 16 ; $50b4
 	call ApplyTilemapPatchList ; $50b7
-	ld hl, $5e73 ; $50ba
+	ld hl, Data_1d_5e73 ; $50ba
 	ld bc, $d9e0 ; $50bd
 	call ApplyTilemapPatchList ; $50c0
 	ld hl, DrillDisplayData_1d ; $50c3
@@ -2040,16 +2040,16 @@ SlideToMainCharStatPage:
 	ld [hl+], a ; $50dc
 	ld [hl], d ; $50dd
 	call LoadBasePageIntoWorkTilemap ; $50de
-	ld hl, $5e7c ; $50e1
+	ld hl, Data_1d_5e7c ; $50e1
 	ld bc, $d7e0 ; $50e4
 	call ApplyTilemapPatchList ; $50e7
-	ld hl, $5e91 ; $50ea
+	ld hl, Data_1d_5e91 ; $50ea
 	ld bc, wTextArgNumberQueue + 16 ; $50ed
 	call ApplyTilemapPatchList ; $50f0
-	ld hl, $5eb2 ; $50f3
+	ld hl, Data_1d_5eb2 ; $50f3
 	ld bc, $d9e0 ; $50f6
 	call ApplyTilemapPatchList ; $50f9
-	ld hl, $5c2e ; $50fc
+	ld hl, Data_1d_5c2e ; $50fc
 	ld bc, $d390 ; $50ff
 	call ApplyTilemapPatchList ; $5102
 	farcall FlushCharDataTilemapsFar ; $5105
@@ -2065,22 +2065,22 @@ SlideToMainCharStatPage:
 	ld [hl+], a ; $511e
 	ld [hl], d ; $511f
 	call LoadBasePageIntoWorkTilemap ; $5120
-	ld hl, $5ebb ; $5123
+	ld hl, Data_1d_5ebb ; $5123
 	ld bc, $d7e0 ; $5126
 	call ApplyTilemapPatchList ; $5129
-	ld hl, $5ed0 ; $512c
+	ld hl, Data_1d_5ed0 ; $512c
 	ld bc, wTextArgNumberQueue + 16 ; $512f
 	call ApplyTilemapPatchList ; $5132
-	ld hl, $5ef1 ; $5135
+	ld hl, Data_1d_5ef1 ; $5135
 	ld bc, $d9e0 ; $5138
 	call ApplyTilemapPatchList ; $513b
-	ld hl, $615d ; $513e
+	ld hl, Data_1d_615d ; $513e
 	ld bc, $da20 ; $5141
 	call ApplyTilemapPatchList ; $5144
-	ld hl, $6172 ; $5147
+	ld hl, Data_1d_6172 ; $5147
 	ld bc, $db20 ; $514a
 	call ApplyTilemapPatchList ; $514d
-	ld hl, $6193 ; $5150
+	ld hl, Data_1d_6193 ; $5150
 	ld bc, $dc20 ; $5153
 	call ApplyTilemapPatchList ; $5156
 	farcall FlushCharDataTilemapsFar ; $5159
@@ -2096,22 +2096,22 @@ SlideToMainCharStatPage:
 	ld [hl+], a ; $5172
 	ld [hl], d ; $5173
 	call LoadBasePageIntoWorkTilemap ; $5174
-	ld hl, $5efa ; $5177
+	ld hl, Data_1d_5efa ; $5177
 	ld bc, $d7e0 ; $517a
 	call ApplyTilemapPatchList ; $517d
-	ld hl, $5f0f ; $5180
+	ld hl, Data_1d_5f0f ; $5180
 	ld bc, wTextArgNumberQueue + 16 ; $5183
 	call ApplyTilemapPatchList ; $5186
-	ld hl, $5f30 ; $5189
+	ld hl, Data_1d_5f30 ; $5189
 	ld bc, $d9e0 ; $518c
 	call ApplyTilemapPatchList ; $518f
-	ld hl, $6116 ; $5192
+	ld hl, Data_1d_6116 ; $5192
 	ld bc, $da20 ; $5195
 	call ApplyTilemapPatchList ; $5198
-	ld hl, $6137 ; $519b
+	ld hl, Data_1d_6137 ; $519b
 	ld bc, $db20 ; $519e
 	call ApplyTilemapPatchList ; $51a1
-	ld hl, $6158 ; $51a4
+	ld hl, Data_1d_6158 ; $51a4
 	ld bc, $dc20 ; $51a7
 	call ApplyTilemapPatchList ; $51aa
 	farcall FlushCharDataTilemapsFar ; $51ad
@@ -2127,13 +2127,13 @@ SlideToMainCharStatPage:
 	ld [hl+], a ; $51c6
 	ld [hl], d ; $51c7
 	call LoadBasePageIntoWorkTilemap ; $51c8
-	ld hl, $60cb ; $51cb
+	ld hl, Data_1d_60cb ; $51cb
 	ld bc, $da20 ; $51ce
 	call ApplyTilemapPatchList ; $51d1
-	ld hl, $60ec ; $51d4
+	ld hl, Data_1d_60ec ; $51d4
 	ld bc, $db20 ; $51d7
 	call ApplyTilemapPatchList ; $51da
-	ld hl, $610d ; $51dd
+	ld hl, Data_1d_610d ; $51dd
 	ld bc, $dc20 ; $51e0
 	call ApplyTilemapPatchList ; $51e3
 	farcall FlushCharDataTilemapsFar ; $51e6
@@ -2149,13 +2149,13 @@ SlideToMainCharStatPage:
 	ld [hl+], a ; $51ff
 	ld [hl], d ; $5200
 	call LoadBasePageIntoWorkTilemap ; $5201
-	ld hl, $6080 ; $5204
+	ld hl, Data_1d_6080 ; $5204
 	ld bc, $da20 ; $5207
 	call ApplyTilemapPatchList ; $520a
-	ld hl, $60a1 ; $520d
+	ld hl, Data_1d_60a1 ; $520d
 	ld bc, $db20 ; $5210
 	call ApplyTilemapPatchList ; $5213
-	ld hl, $60c2 ; $5216
+	ld hl, Data_1d_60c2 ; $5216
 	ld bc, $dc20 ; $5219
 	call ApplyTilemapPatchList ; $521c
 	farcall FlushCharDataTilemapsFar ; $521f
@@ -2171,13 +2171,13 @@ SlideToMainCharStatPage:
 	ld [hl+], a ; $5238
 	ld [hl], d ; $5239
 	call LoadBasePageIntoWorkTilemap ; $523a
-	ld hl, $6035 ; $523d
+	ld hl, Data_1d_6035 ; $523d
 	ld bc, $da20 ; $5240
 	call ApplyTilemapPatchList ; $5243
-	ld hl, $6056 ; $5246
+	ld hl, Data_1d_6056 ; $5246
 	ld bc, $db20 ; $5249
 	call ApplyTilemapPatchList ; $524c
-	ld hl, $6077 ; $524f
+	ld hl, Data_1d_6077 ; $524f
 	ld bc, $dc20 ; $5252
 	call ApplyTilemapPatchList ; $5255
 	farcall FlushCharDataTilemapsFar ; $5258
@@ -2199,13 +2199,13 @@ SlideFromMainCharStatPage:
 	ld [hl+], a ; $527e
 	ld [hl], d ; $527f
 	call LoadBasePageIntoWorkTilemap ; $5280
-	ld hl, $6080 ; $5283
+	ld hl, Data_1d_6080 ; $5283
 	ld bc, $da20 ; $5286
 	call ApplyTilemapPatchList ; $5289
-	ld hl, $60a1 ; $528c
+	ld hl, Data_1d_60a1 ; $528c
 	ld bc, $db20 ; $528f
 	call ApplyTilemapPatchList ; $5292
-	ld hl, $60c2 ; $5295
+	ld hl, Data_1d_60c2 ; $5295
 	ld bc, $dc20 ; $5298
 	call ApplyTilemapPatchList ; $529b
 	farcall FlushCharDataTilemapsFar ; $529e
@@ -2221,13 +2221,13 @@ SlideFromMainCharStatPage:
 	ld [hl+], a ; $52b7
 	ld [hl], d ; $52b8
 	call LoadBasePageIntoWorkTilemap ; $52b9
-	ld hl, $60cb ; $52bc
+	ld hl, Data_1d_60cb ; $52bc
 	ld bc, $da20 ; $52bf
 	call ApplyTilemapPatchList ; $52c2
-	ld hl, $60ec ; $52c5
+	ld hl, Data_1d_60ec ; $52c5
 	ld bc, $db20 ; $52c8
 	call ApplyTilemapPatchList ; $52cb
-	ld hl, $610d ; $52ce
+	ld hl, Data_1d_610d ; $52ce
 	ld bc, $dc20 ; $52d1
 	call ApplyTilemapPatchList ; $52d4
 	farcall FlushCharDataTilemapsFar ; $52d7
@@ -2243,22 +2243,22 @@ SlideFromMainCharStatPage:
 	ld [hl+], a ; $52f0
 	ld [hl], d ; $52f1
 	call LoadBasePageIntoWorkTilemap ; $52f2
-	ld hl, $5efa ; $52f5
+	ld hl, Data_1d_5efa ; $52f5
 	ld bc, $d7e0 ; $52f8
 	call ApplyTilemapPatchList ; $52fb
-	ld hl, $5f0f ; $52fe
+	ld hl, Data_1d_5f0f ; $52fe
 	ld bc, wTextArgNumberQueue + 16 ; $5301
 	call ApplyTilemapPatchList ; $5304
-	ld hl, $5f30 ; $5307
+	ld hl, Data_1d_5f30 ; $5307
 	ld bc, $d9e0 ; $530a
 	call ApplyTilemapPatchList ; $530d
-	ld hl, $6116 ; $5310
+	ld hl, Data_1d_6116 ; $5310
 	ld bc, $da20 ; $5313
 	call ApplyTilemapPatchList ; $5316
-	ld hl, $6137 ; $5319
+	ld hl, Data_1d_6137 ; $5319
 	ld bc, $db20 ; $531c
 	call ApplyTilemapPatchList ; $531f
-	ld hl, $6158 ; $5322
+	ld hl, Data_1d_6158 ; $5322
 	ld bc, $dc20 ; $5325
 	call ApplyTilemapPatchList ; $5328
 	farcall FlushCharDataTilemapsFar ; $532b
@@ -2274,22 +2274,22 @@ SlideFromMainCharStatPage:
 	ld [hl+], a ; $5344
 	ld [hl], d ; $5345
 	call LoadBasePageIntoWorkTilemap ; $5346
-	ld hl, $5ebb ; $5349
+	ld hl, Data_1d_5ebb ; $5349
 	ld bc, $d7e0 ; $534c
 	call ApplyTilemapPatchList ; $534f
-	ld hl, $5ed0 ; $5352
+	ld hl, Data_1d_5ed0 ; $5352
 	ld bc, wTextArgNumberQueue + 16 ; $5355
 	call ApplyTilemapPatchList ; $5358
-	ld hl, $5ef1 ; $535b
+	ld hl, Data_1d_5ef1 ; $535b
 	ld bc, $d9e0 ; $535e
 	call ApplyTilemapPatchList ; $5361
-	ld hl, $615d ; $5364
+	ld hl, Data_1d_615d ; $5364
 	ld bc, $da20 ; $5367
 	call ApplyTilemapPatchList ; $536a
-	ld hl, $6172 ; $536d
+	ld hl, Data_1d_6172 ; $536d
 	ld bc, $db20 ; $5370
 	call ApplyTilemapPatchList ; $5373
-	ld hl, $6193 ; $5376
+	ld hl, Data_1d_6193 ; $5376
 	ld bc, $dc20 ; $5379
 	call ApplyTilemapPatchList ; $537c
 	farcall FlushCharDataTilemapsFar ; $537f
@@ -2305,16 +2305,16 @@ SlideFromMainCharStatPage:
 	ld [hl+], a ; $5398
 	ld [hl], d ; $5399
 	call LoadBasePageIntoWorkTilemap ; $539a
-	ld hl, $5e7c ; $539d
+	ld hl, Data_1d_5e7c ; $539d
 	ld bc, $d7e0 ; $53a0
 	call ApplyTilemapPatchList ; $53a3
-	ld hl, $5e91 ; $53a6
+	ld hl, Data_1d_5e91 ; $53a6
 	ld bc, wTextArgNumberQueue + 16 ; $53a9
 	call ApplyTilemapPatchList ; $53ac
-	ld hl, $5eb2 ; $53af
+	ld hl, Data_1d_5eb2 ; $53af
 	ld bc, $d9e0 ; $53b2
 	call ApplyTilemapPatchList ; $53b5
-	ld hl, $5c2e ; $53b8
+	ld hl, Data_1d_5c2e ; $53b8
 	ld bc, $d390 ; $53bb
 	call ApplyTilemapPatchList ; $53be
 	farcall FlushCharDataTilemapsFar ; $53c1
@@ -2330,13 +2330,13 @@ SlideFromMainCharStatPage:
 	ld [hl+], a ; $53da
 	ld [hl], d ; $53db
 	call LoadBasePageIntoWorkTilemap ; $53dc
-	ld hl, $5e3d ; $53df
+	ld hl, Data_1d_5e3d ; $53df
 	ld bc, $d7e0 ; $53e2
 	call ApplyTilemapPatchList ; $53e5
-	ld hl, $5e52 ; $53e8
+	ld hl, Data_1d_5e52 ; $53e8
 	ld bc, wTextArgNumberQueue + 16 ; $53eb
 	call ApplyTilemapPatchList ; $53ee
-	ld hl, $5e73 ; $53f1
+	ld hl, Data_1d_5e73 ; $53f1
 	ld bc, $d9e0 ; $53f4
 	call ApplyTilemapPatchList ; $53f7
 	ld hl, DrillDisplayData_1d ; $53fa
@@ -2349,13 +2349,13 @@ SlideFromMainCharStatPage:
 	ld [hl+], a ; $5410
 	ld [hl], a ; $5411
 	call LoadBasePageIntoWorkTilemap ; $5412
-	ld hl, $5df2 ; $5415
+	ld hl, Data_1d_5df2 ; $5415
 	ld bc, $d7e0 ; $5418
 	call ApplyTilemapPatchList ; $541b
-	ld hl, $5e13 ; $541e
+	ld hl, Data_1d_5e13 ; $541e
 	ld bc, wTextArgNumberQueue + 16 ; $5421
 	call ApplyTilemapPatchList ; $5424
-	ld hl, $5e34 ; $5427
+	ld hl, Data_1d_5e34 ; $5427
 	ld bc, $d9e0 ; $542a
 	call ApplyTilemapPatchList ; $542d
 	ld hl, DrillDisplayData_1d ; $5430
@@ -2375,13 +2375,13 @@ SlideToPartnerStatPage:
 	ld [hl+], a ; $5453
 	ld [hl], d ; $5454
 	call LoadBasePageIntoWorkTilemap ; $5455
-	ld hl, $5f39 ; $5458
+	ld hl, Data_1d_5f39 ; $5458
 	ld bc, $d7e0 ; $545b
 	call ApplyTilemapPatchList ; $545e
-	ld hl, $5f4e ; $5461
+	ld hl, Data_1d_5f4e ; $5461
 	ld bc, wTextArgNumberQueue + 16 ; $5464
 	call ApplyTilemapPatchList ; $5467
-	ld hl, $5f6f ; $546a
+	ld hl, Data_1d_5f6f ; $546a
 	ld bc, $d9e0 ; $546d
 	call ApplyTilemapPatchList ; $5470
 	ld hl, DrillDisplayData_1d ; $5473
@@ -2400,25 +2400,25 @@ SlideToPartnerStatPage:
 	ld [hl+], a ; $5495
 	ld [hl], d ; $5496
 	call LoadBasePageIntoWorkTilemap ; $5497
-	ld hl, $5f78 ; $549a
+	ld hl, Data_1d_5f78 ; $549a
 	ld bc, $d7e0 ; $549d
 	call ApplyTilemapPatchList ; $54a0
-	ld hl, $5f8d ; $54a3
+	ld hl, Data_1d_5f8d ; $54a3
 	ld bc, wTextArgNumberQueue + 16 ; $54a6
 	call ApplyTilemapPatchList ; $54a9
-	ld hl, $5fae ; $54ac
+	ld hl, Data_1d_5fae ; $54ac
 	ld bc, $d9e0 ; $54af
 	call ApplyTilemapPatchList ; $54b2
-	ld hl, $62c4 ; $54b5
+	ld hl, Data_1d_62c4 ; $54b5
 	ld bc, $dc60 ; $54b8
 	call ApplyTilemapPatchList ; $54bb
-	ld hl, $62d9 ; $54be
+	ld hl, Data_1d_62d9 ; $54be
 	ld bc, $dd60 ; $54c1
 	call ApplyTilemapPatchList ; $54c4
-	ld hl, $62fa ; $54c7
+	ld hl, Data_1d_62fa ; $54c7
 	ld bc, $de60 ; $54ca
 	call ApplyTilemapPatchList ; $54cd
-	ld hl, $5c2e ; $54d0
+	ld hl, Data_1d_5c2e ; $54d0
 	ld bc, $d390 ; $54d3
 	call ApplyTilemapPatchList ; $54d6
 	farcall FlushCharDataTilemapsFar ; $54d9
@@ -2434,22 +2434,22 @@ SlideToPartnerStatPage:
 	ld [hl+], a ; $54f2
 	ld [hl], d ; $54f3
 	call LoadBasePageIntoWorkTilemap ; $54f4
-	ld hl, $5fb7 ; $54f7
+	ld hl, Data_1d_5fb7 ; $54f7
 	ld bc, $d7e0 ; $54fa
 	call ApplyTilemapPatchList ; $54fd
-	ld hl, $5fcc ; $5500
+	ld hl, Data_1d_5fcc ; $5500
 	ld bc, wTextArgNumberQueue + 16 ; $5503
 	call ApplyTilemapPatchList ; $5506
-	ld hl, $5fed ; $5509
+	ld hl, Data_1d_5fed ; $5509
 	ld bc, $d9e0 ; $550c
 	call ApplyTilemapPatchList ; $550f
-	ld hl, $6279 ; $5512
+	ld hl, Data_1d_6279 ; $5512
 	ld bc, $dc60 ; $5515
 	call ApplyTilemapPatchList ; $5518
-	ld hl, $629a ; $551b
+	ld hl, Data_1d_629a ; $551b
 	ld bc, $dd60 ; $551e
 	call ApplyTilemapPatchList ; $5521
-	ld hl, $62bb ; $5524
+	ld hl, Data_1d_62bb ; $5524
 	ld bc, $de60 ; $5527
 	call ApplyTilemapPatchList ; $552a
 	farcall FlushCharDataTilemapsFar ; $552d
@@ -2465,22 +2465,22 @@ SlideToPartnerStatPage:
 	ld [hl+], a ; $5546
 	ld [hl], d ; $5547
 	call LoadBasePageIntoWorkTilemap ; $5548
-	ld hl, $5ff6 ; $554b
+	ld hl, Data_1d_5ff6 ; $554b
 	ld bc, $d7e0 ; $554e
 	call ApplyTilemapPatchList ; $5551
-	ld hl, $600b ; $5554
+	ld hl, Data_1d_600b ; $5554
 	ld bc, wTextArgNumberQueue + 16 ; $5557
 	call ApplyTilemapPatchList ; $555a
-	ld hl, $602c ; $555d
+	ld hl, Data_1d_602c ; $555d
 	ld bc, $d9e0 ; $5560
 	call ApplyTilemapPatchList ; $5563
-	ld hl, $622e ; $5566
+	ld hl, Data_1d_622e ; $5566
 	ld bc, $dc60 ; $5569
 	call ApplyTilemapPatchList ; $556c
-	ld hl, $624f ; $556f
+	ld hl, Data_1d_624f ; $556f
 	ld bc, $dd60 ; $5572
 	call ApplyTilemapPatchList ; $5575
-	ld hl, $6270 ; $5578
+	ld hl, Data_1d_6270 ; $5578
 	ld bc, $de60 ; $557b
 	call ApplyTilemapPatchList ; $557e
 	farcall FlushCharDataTilemapsFar ; $5581
@@ -2496,13 +2496,13 @@ SlideToPartnerStatPage:
 	ld [hl+], a ; $559a
 	ld [hl], d ; $559b
 	call LoadBasePageIntoWorkTilemap ; $559c
-	ld hl, $61e3 ; $559f
+	ld hl, Data_1d_61e3 ; $559f
 	ld bc, $dc60 ; $55a2
 	call ApplyTilemapPatchList ; $55a5
-	ld hl, $6204 ; $55a8
+	ld hl, Data_1d_6204 ; $55a8
 	ld bc, $dd60 ; $55ab
 	call ApplyTilemapPatchList ; $55ae
-	ld hl, $6225 ; $55b1
+	ld hl, Data_1d_6225 ; $55b1
 	ld bc, $de60 ; $55b4
 	call ApplyTilemapPatchList ; $55b7
 	farcall FlushCharDataTilemapsFar ; $55ba
@@ -2518,13 +2518,13 @@ SlideToPartnerStatPage:
 	ld [hl+], a ; $55d3
 	ld [hl], d ; $55d4
 	call LoadBasePageIntoWorkTilemap ; $55d5
-	ld hl, $6198 ; $55d8
+	ld hl, Data_1d_6198 ; $55d8
 	ld bc, $dc60 ; $55db
 	call ApplyTilemapPatchList ; $55de
-	ld hl, $61b9 ; $55e1
+	ld hl, Data_1d_61b9 ; $55e1
 	ld bc, $dd60 ; $55e4
 	call ApplyTilemapPatchList ; $55e7
-	ld hl, $61da ; $55ea
+	ld hl, Data_1d_61da ; $55ea
 	ld bc, $de60 ; $55ed
 	call ApplyTilemapPatchList ; $55f0
 	farcall FlushCharDataTilemapsFar ; $55f3
@@ -2546,13 +2546,13 @@ SlideFromPartnerStatPage:
 	ld [hl+], a ; $5619
 	ld [hl], d ; $561a
 	call LoadBasePageIntoWorkTilemap ; $561b
-	ld hl, $61e3 ; $561e
+	ld hl, Data_1d_61e3 ; $561e
 	ld bc, $dc60 ; $5621
 	call ApplyTilemapPatchList ; $5624
-	ld hl, $6204 ; $5627
+	ld hl, Data_1d_6204 ; $5627
 	ld bc, $dd60 ; $562a
 	call ApplyTilemapPatchList ; $562d
-	ld hl, $6225 ; $5630
+	ld hl, Data_1d_6225 ; $5630
 	ld bc, $de60 ; $5633
 	call ApplyTilemapPatchList ; $5636
 	farcall FlushCharDataTilemapsFar ; $5639
@@ -2568,22 +2568,22 @@ SlideFromPartnerStatPage:
 	ld [hl+], a ; $5652
 	ld [hl], d ; $5653
 	call LoadBasePageIntoWorkTilemap ; $5654
-	ld hl, $5ff6 ; $5657
+	ld hl, Data_1d_5ff6 ; $5657
 	ld bc, $d7e0 ; $565a
 	call ApplyTilemapPatchList ; $565d
-	ld hl, $600b ; $5660
+	ld hl, Data_1d_600b ; $5660
 	ld bc, wTextArgNumberQueue + 16 ; $5663
 	call ApplyTilemapPatchList ; $5666
-	ld hl, $602c ; $5669
+	ld hl, Data_1d_602c ; $5669
 	ld bc, $d9e0 ; $566c
 	call ApplyTilemapPatchList ; $566f
-	ld hl, $622e ; $5672
+	ld hl, Data_1d_622e ; $5672
 	ld bc, $dc60 ; $5675
 	call ApplyTilemapPatchList ; $5678
-	ld hl, $624f ; $567b
+	ld hl, Data_1d_624f ; $567b
 	ld bc, $dd60 ; $567e
 	call ApplyTilemapPatchList ; $5681
-	ld hl, $6270 ; $5684
+	ld hl, Data_1d_6270 ; $5684
 	ld bc, $de60 ; $5687
 	call ApplyTilemapPatchList ; $568a
 	farcall FlushCharDataTilemapsFar ; $568d
@@ -2599,22 +2599,22 @@ SlideFromPartnerStatPage:
 	ld [hl+], a ; $56a6
 	ld [hl], d ; $56a7
 	call LoadBasePageIntoWorkTilemap ; $56a8
-	ld hl, $5fb7 ; $56ab
+	ld hl, Data_1d_5fb7 ; $56ab
 	ld bc, $d7e0 ; $56ae
 	call ApplyTilemapPatchList ; $56b1
-	ld hl, $5fcc ; $56b4
+	ld hl, Data_1d_5fcc ; $56b4
 	ld bc, wTextArgNumberQueue + 16 ; $56b7
 	call ApplyTilemapPatchList ; $56ba
-	ld hl, $5fed ; $56bd
+	ld hl, Data_1d_5fed ; $56bd
 	ld bc, $d9e0 ; $56c0
 	call ApplyTilemapPatchList ; $56c3
-	ld hl, $6279 ; $56c6
+	ld hl, Data_1d_6279 ; $56c6
 	ld bc, $dc60 ; $56c9
 	call ApplyTilemapPatchList ; $56cc
-	ld hl, $629a ; $56cf
+	ld hl, Data_1d_629a ; $56cf
 	ld bc, $dd60 ; $56d2
 	call ApplyTilemapPatchList ; $56d5
-	ld hl, $62bb ; $56d8
+	ld hl, Data_1d_62bb ; $56d8
 	ld bc, $de60 ; $56db
 	call ApplyTilemapPatchList ; $56de
 	farcall FlushCharDataTilemapsFar ; $56e1
@@ -2630,25 +2630,25 @@ SlideFromPartnerStatPage:
 	ld [hl+], a ; $56fa
 	ld [hl], d ; $56fb
 	call LoadBasePageIntoWorkTilemap ; $56fc
-	ld hl, $5f78 ; $56ff
+	ld hl, Data_1d_5f78 ; $56ff
 	ld bc, $d7e0 ; $5702
 	call ApplyTilemapPatchList ; $5705
-	ld hl, $5f8d ; $5708
+	ld hl, Data_1d_5f8d ; $5708
 	ld bc, wTextArgNumberQueue + 16 ; $570b
 	call ApplyTilemapPatchList ; $570e
-	ld hl, $5fae ; $5711
+	ld hl, Data_1d_5fae ; $5711
 	ld bc, $d9e0 ; $5714
 	call ApplyTilemapPatchList ; $5717
-	ld hl, $62c4 ; $571a
+	ld hl, Data_1d_62c4 ; $571a
 	ld bc, $dc60 ; $571d
 	call ApplyTilemapPatchList ; $5720
-	ld hl, $62d9 ; $5723
+	ld hl, Data_1d_62d9 ; $5723
 	ld bc, $dd60 ; $5726
 	call ApplyTilemapPatchList ; $5729
-	ld hl, $62fa ; $572c
+	ld hl, Data_1d_62fa ; $572c
 	ld bc, $de60 ; $572f
 	call ApplyTilemapPatchList ; $5732
-	ld hl, $5c2e ; $5735
+	ld hl, Data_1d_5c2e ; $5735
 	ld bc, $d390 ; $5738
 	call ApplyTilemapPatchList ; $573b
 	farcall FlushCharDataTilemapsFar ; $573e
@@ -2664,13 +2664,13 @@ SlideFromPartnerStatPage:
 	ld [hl+], a ; $5757
 	ld [hl], d ; $5758
 	call LoadBasePageIntoWorkTilemap ; $5759
-	ld hl, $5f39 ; $575c
+	ld hl, Data_1d_5f39 ; $575c
 	ld bc, $d7e0 ; $575f
 	call ApplyTilemapPatchList ; $5762
-	ld hl, $5f4e ; $5765
+	ld hl, Data_1d_5f4e ; $5765
 	ld bc, wTextArgNumberQueue + 16 ; $5768
 	call ApplyTilemapPatchList ; $576b
-	ld hl, $5f6f ; $576e
+	ld hl, Data_1d_5f6f ; $576e
 	ld bc, $d9e0 ; $5771
 	call ApplyTilemapPatchList ; $5774
 	ld hl, DrillDisplayData_1d ; $5777
@@ -2689,13 +2689,13 @@ SlideFromPartnerStatPage:
 	ld [hl+], a ; $5799
 	ld [hl], d ; $579a
 	call LoadBasePageIntoWorkTilemap ; $579b
-	ld hl, $5df2 ; $579e
+	ld hl, Data_1d_5df2 ; $579e
 	ld bc, $d7e0 ; $57a1
 	call ApplyTilemapPatchList ; $57a4
-	ld hl, $5e13 ; $57a7
+	ld hl, Data_1d_5e13 ; $57a7
 	ld bc, wTextArgNumberQueue + 16 ; $57aa
 	call ApplyTilemapPatchList ; $57ad
-	ld hl, $5e34 ; $57b0
+	ld hl, Data_1d_5e34 ; $57b0
 	ld bc, $d9e0 ; $57b3
 	call ApplyTilemapPatchList ; $57b6
 	ld hl, DrillDisplayData_1d ; $57b9
@@ -3196,22 +3196,22 @@ BuildCharDataConfirmScreen:
 	ld c, $03 ; $5b7f
 	call QueueVRAMCopy ; $5b81
 	call BuildCharStatDisplay ; $5b84
-	ld hl, $5cbb ; $5b87
+	ld hl, Data_1d_5cbb ; $5b87
 	ld bc, $d240 ; $5b8a
 	call ApplyTilemapPatchList ; $5b8d
-	ld hl, $5ced ; $5b90
+	ld hl, Data_1d_5ced ; $5b90
 	ld bc, $d280 ; $5b93
 	call ApplyTilemapPatchList ; $5b96
-	ld hl, $5d1f ; $5b99
+	ld hl, Data_1d_5d1f ; $5b99
 	ld bc, $d2d0 ; $5b9c
 	call ApplyTilemapPatchList ; $5b9f
-	ld hl, $5d59 ; $5ba2
+	ld hl, Data_1d_5d59 ; $5ba2
 	ld bc, $d310 ; $5ba5
 	call ApplyTilemapPatchList ; $5ba8
-	ld hl, $5dbe ; $5bab
+	ld hl, Data_1d_5dbe ; $5bab
 	ld bc, $d370 ; $5bae
 	call ApplyTilemapPatchList ; $5bb1
-	ld hl, $6303 ; $5bb4
+	ld hl, Data_1d_6303 ; $5bb4
 	ld bc, $d550 ; $5bb7
 	call ApplyTilemapPatchList ; $5bba
 	call DrawCharDataConfirmPrompt ; $5bbd
@@ -3244,7 +3244,7 @@ InitCharDataScreenVideo:
 	call BuildCharDataScreenPages ; $5c07
 	ret ; $5c0a
 DrawCharDataConfirmPrompt:
-	ld hl, $6310 ; $5c0b
+	ld hl, Data_1d_6310 ; $5c0b
 	ld bc, $d580 ; $5c0e
 	call ApplyTilemapPatchList ; $5c11
 	ret ; $5c14
@@ -3258,7 +3258,199 @@ StopCharDataValuesSyncTask:
 	call UnregisterFrameTask ; $5c21
 	ret ; $5c24
 DrillDisplayData_1d:
-	INCBIN "data/bank_01d/d_5c25.bin" ; $5c25, 2629 bytes
+	INCBIN "data/bank_01d/d_5c25.bin" ; $5c25, 9 bytes
+Data_1d_5c2e:
+	INCBIN "data/bank_01d/d_5c2e.bin" ; $5c2e, 5 bytes
+Data_1d_5c33:
+	INCBIN "data/bank_01d/d_5c33.bin" ; $5c33, 53 bytes
+Data_1d_5c68:
+	INCBIN "data/bank_01d/d_5c68.bin" ; $5c68, 53 bytes
+Data_1d_5c9d:
+	INCBIN "data/bank_01d/d_5c9d.bin" ; $5c9d, 9 bytes
+Data_1d_5ca6:
+	INCBIN "data/bank_01d/d_5ca6.bin" ; $5ca6, 21 bytes
+Data_1d_5cbb:
+	INCBIN "data/bank_01d/d_5cbb.bin" ; $5cbb, 21 bytes
+Data_1d_5cd0:
+	INCBIN "data/bank_01d/d_5cd0.bin" ; $5cd0, 29 bytes
+Data_1d_5ced:
+	INCBIN "data/bank_01d/d_5ced.bin" ; $5ced, 29 bytes
+Data_1d_5d0a:
+	INCBIN "data/bank_01d/d_5d0a.bin" ; $5d0a, 21 bytes
+Data_1d_5d1f:
+	INCBIN "data/bank_01d/d_5d1f.bin" ; $5d1f, 21 bytes
+Data_1d_5d34:
+	INCBIN "data/bank_01d/d_5d34.bin" ; $5d34, 37 bytes
+Data_1d_5d59:
+	INCBIN "data/bank_01d/d_5d59.bin" ; $5d59, 37 bytes
+Data_1d_5d7e:
+	INCBIN "data/bank_01d/d_5d7e.bin" ; $5d7e, 19 bytes
+Data_1d_5d91:
+	INCBIN "data/bank_01d/d_5d91.bin" ; $5d91, 19 bytes
+Data_1d_5da4:
+	INCBIN "data/bank_01d/d_5da4.bin" ; $5da4, 13 bytes
+Data_1d_5db1:
+	INCBIN "data/bank_01d/d_5db1.bin" ; $5db1, 13 bytes
+Data_1d_5dbe:
+	INCBIN "data/bank_01d/d_5dbe.bin" ; $5dbe, 13 bytes
+Data_1d_5dcb:
+	INCBIN "data/bank_01d/d_5dcb.bin" ; $5dcb, 13 bytes
+Data_1d_5dd8:
+	INCBIN "data/bank_01d/d_5dd8.bin" ; $5dd8, 13 bytes
+Data_1d_5de5:
+	INCBIN "data/bank_01d/d_5de5.bin" ; $5de5, 13 bytes
+Data_1d_5df2:
+	INCBIN "data/bank_01d/d_5df2.bin" ; $5df2, 33 bytes
+Data_1d_5e13:
+	INCBIN "data/bank_01d/d_5e13.bin" ; $5e13, 33 bytes
+Data_1d_5e34:
+	INCBIN "data/bank_01d/d_5e34.bin" ; $5e34, 9 bytes
+Data_1d_5e3d:
+	INCBIN "data/bank_01d/d_5e3d.bin" ; $5e3d, 21 bytes
+Data_1d_5e52:
+	INCBIN "data/bank_01d/d_5e52.bin" ; $5e52, 33 bytes
+Data_1d_5e73:
+	INCBIN "data/bank_01d/d_5e73.bin" ; $5e73, 9 bytes
+Data_1d_5e7c:
+	INCBIN "data/bank_01d/d_5e7c.bin" ; $5e7c, 21 bytes
+Data_1d_5e91:
+	INCBIN "data/bank_01d/d_5e91.bin" ; $5e91, 33 bytes
+Data_1d_5eb2:
+	INCBIN "data/bank_01d/d_5eb2.bin" ; $5eb2, 9 bytes
+Data_1d_5ebb:
+	INCBIN "data/bank_01d/d_5ebb.bin" ; $5ebb, 21 bytes
+Data_1d_5ed0:
+	INCBIN "data/bank_01d/d_5ed0.bin" ; $5ed0, 33 bytes
+Data_1d_5ef1:
+	INCBIN "data/bank_01d/d_5ef1.bin" ; $5ef1, 9 bytes
+Data_1d_5efa:
+	INCBIN "data/bank_01d/d_5efa.bin" ; $5efa, 21 bytes
+Data_1d_5f0f:
+	INCBIN "data/bank_01d/d_5f0f.bin" ; $5f0f, 33 bytes
+Data_1d_5f30:
+	INCBIN "data/bank_01d/d_5f30.bin" ; $5f30, 9 bytes
+Data_1d_5f39:
+	INCBIN "data/bank_01d/d_5f39.bin" ; $5f39, 21 bytes
+Data_1d_5f4e:
+	INCBIN "data/bank_01d/d_5f4e.bin" ; $5f4e, 33 bytes
+Data_1d_5f6f:
+	INCBIN "data/bank_01d/d_5f6f.bin" ; $5f6f, 9 bytes
+Data_1d_5f78:
+	INCBIN "data/bank_01d/d_5f78.bin" ; $5f78, 21 bytes
+Data_1d_5f8d:
+	INCBIN "data/bank_01d/d_5f8d.bin" ; $5f8d, 33 bytes
+Data_1d_5fae:
+	INCBIN "data/bank_01d/d_5fae.bin" ; $5fae, 9 bytes
+Data_1d_5fb7:
+	INCBIN "data/bank_01d/d_5fb7.bin" ; $5fb7, 21 bytes
+Data_1d_5fcc:
+	INCBIN "data/bank_01d/d_5fcc.bin" ; $5fcc, 33 bytes
+Data_1d_5fed:
+	INCBIN "data/bank_01d/d_5fed.bin" ; $5fed, 9 bytes
+Data_1d_5ff6:
+	INCBIN "data/bank_01d/d_5ff6.bin" ; $5ff6, 21 bytes
+Data_1d_600b:
+	INCBIN "data/bank_01d/d_600b.bin" ; $600b, 33 bytes
+Data_1d_602c:
+	INCBIN "data/bank_01d/d_602c.bin" ; $602c, 9 bytes
+Data_1d_6035:
+	INCBIN "data/bank_01d/d_6035.bin" ; $6035, 33 bytes
+Data_1d_6056:
+	INCBIN "data/bank_01d/d_6056.bin" ; $6056, 33 bytes
+Data_1d_6077:
+	INCBIN "data/bank_01d/d_6077.bin" ; $6077, 9 bytes
+Data_1d_6080:
+	INCBIN "data/bank_01d/d_6080.bin" ; $6080, 33 bytes
+Data_1d_60a1:
+	INCBIN "data/bank_01d/d_60a1.bin" ; $60a1, 33 bytes
+Data_1d_60c2:
+	INCBIN "data/bank_01d/d_60c2.bin" ; $60c2, 9 bytes
+Data_1d_60cb:
+	INCBIN "data/bank_01d/d_60cb.bin" ; $60cb, 33 bytes
+Data_1d_60ec:
+	INCBIN "data/bank_01d/d_60ec.bin" ; $60ec, 33 bytes
+Data_1d_610d:
+	INCBIN "data/bank_01d/d_610d.bin" ; $610d, 9 bytes
+Data_1d_6116:
+	INCBIN "data/bank_01d/d_6116.bin" ; $6116, 33 bytes
+Data_1d_6137:
+	INCBIN "data/bank_01d/d_6137.bin" ; $6137, 33 bytes
+Data_1d_6158:
+	INCBIN "data/bank_01d/d_6158.bin" ; $6158, 5 bytes
+Data_1d_615d:
+	INCBIN "data/bank_01d/d_615d.bin" ; $615d, 21 bytes
+Data_1d_6172:
+	INCBIN "data/bank_01d/d_6172.bin" ; $6172, 33 bytes
+Data_1d_6193:
+	INCBIN "data/bank_01d/d_6193.bin" ; $6193, 5 bytes
+Data_1d_6198:
+	INCBIN "data/bank_01d/d_6198.bin" ; $6198, 33 bytes
+Data_1d_61b9:
+	INCBIN "data/bank_01d/d_61b9.bin" ; $61b9, 33 bytes
+Data_1d_61da:
+	INCBIN "data/bank_01d/d_61da.bin" ; $61da, 9 bytes
+Data_1d_61e3:
+	INCBIN "data/bank_01d/d_61e3.bin" ; $61e3, 33 bytes
+Data_1d_6204:
+	INCBIN "data/bank_01d/d_6204.bin" ; $6204, 33 bytes
+Data_1d_6225:
+	INCBIN "data/bank_01d/d_6225.bin" ; $6225, 9 bytes
+Data_1d_622e:
+	INCBIN "data/bank_01d/d_622e.bin" ; $622e, 33 bytes
+Data_1d_624f:
+	INCBIN "data/bank_01d/d_624f.bin" ; $624f, 33 bytes
+Data_1d_6270:
+	INCBIN "data/bank_01d/d_6270.bin" ; $6270, 9 bytes
+Data_1d_6279:
+	INCBIN "data/bank_01d/d_6279.bin" ; $6279, 33 bytes
+Data_1d_629a:
+	INCBIN "data/bank_01d/d_629a.bin" ; $629a, 33 bytes
+Data_1d_62bb:
+	INCBIN "data/bank_01d/d_62bb.bin" ; $62bb, 9 bytes
+Data_1d_62c4:
+	INCBIN "data/bank_01d/d_62c4.bin" ; $62c4, 21 bytes
+Data_1d_62d9:
+	INCBIN "data/bank_01d/d_62d9.bin" ; $62d9, 33 bytes
+Data_1d_62fa:
+	INCBIN "data/bank_01d/d_62fa.bin" ; $62fa, 9 bytes
+Data_1d_6303:
+	INCBIN "data/bank_01d/d_6303.bin" ; $6303, 13 bytes
+Data_1d_6310:
+	INCBIN "data/bank_01d/d_6310.bin" ; $6310, 17 bytes
+Data_1d_6321:
+	INCBIN "data/bank_01d/d_6321.bin" ; $6321, 10 bytes
+Data_1d_632b:
+	INCBIN "data/bank_01d/d_632b.bin" ; $632b, 9 bytes
+Data_1d_6334:
+	INCBIN "data/bank_01d/d_6334.bin" ; $6334, 8 bytes
+Data_1d_633c:
+	INCBIN "data/bank_01d/d_633c.bin" ; $633c, 184 bytes
+Data_1d_63f4:
+	INCBIN "data/bank_01d/d_63f4.bin" ; $63f4, 85 bytes
+Data_1d_6449:
+	INCBIN "data/bank_01d/d_6449.bin" ; $6449, 18 bytes
+Data_1d_645b:
+	INCBIN "data/bank_01d/d_645b.bin" ; $645b, 35 bytes
+Data_1d_647e:
+	INCBIN "data/bank_01d/d_647e.bin" ; $647e, 7 bytes
+Data_1d_6485:
+	INCBIN "data/bank_01d/d_6485.bin" ; $6485, 14 bytes
+Data_1d_6493:
+	INCBIN "data/bank_01d/d_6493.bin" ; $6493, 7 bytes
+Data_1d_649a:
+	INCBIN "data/bank_01d/d_649a.bin" ; $649a, 24 bytes
+Data_1d_64b2:
+	INCBIN "data/bank_01d/d_64b2.bin" ; $64b2, 9 bytes
+Data_1d_64bb:
+	INCBIN "data/bank_01d/d_64bb.bin" ; $64bb, 149 bytes
+Data_1d_6550:
+	INCBIN "data/bank_01d/d_6550.bin" ; $6550, 24 bytes
+Data_1d_6568:
+	INCBIN "data/bank_01d/d_6568.bin" ; $6568, 7 bytes
+Data_1d_656f:
+	INCBIN "data/bank_01d/d_656f.bin" ; $656f, 117 bytes
+Data_1d_65e4:
+	INCBIN "data/bank_01d/d_65e4.bin" ; $65e4, 134 bytes
 SpriteTemplate_1d_666a:
 	; $666a, 21 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
@@ -3468,21 +3660,21 @@ BuildExpDistributionScreen:
 	call DrawExpScreenLevelNumber ; $698c
 	call DrawExpScreenLevelBar ; $698f
 	wram_bank $01 ; $6992
-	ld hl, $7822 ; $6998
+	ld hl, Data_1d_7822 ; $6998
 	ld de, $d240 ; $699b
 	call DecompressData ; $699e
 	ld hl, $d240 ; $69a1
 	ld bc, $0030 ; $69a4
 	call CopyWram1ToWram3ExpScreen ; $69a7
 	wram_bank $01 ; $69aa
-	ld hl, $7851 ; $69b0
+	ld hl, Data_1d_7851 ; $69b0
 	ld de, $d240 ; $69b3
 	call DecompressData ; $69b6
 	ld hl, $d240 ; $69b9
 	ld bc, $0030 ; $69bc
 	call CopyWram1ToWram2ExpScreen ; $69bf
 	wram_bank $01 ; $69c2
-	ld hl, $7876 ; $69c8
+	ld hl, Data_1d_7876 ; $69c8
 	ld de, $d000 ; $69cb
 	call DecompressData ; $69ce
 	ld hl, $d000 ; $69d1
@@ -3513,11 +3705,11 @@ BuildExpDistributionScreen:
 	ld de, $a440 ; $6a22
 	ld c, $18 ; $6a25
 	call QueueVRAMCopy ; $6a27
-	ld hl, $788f ; $6a2a
+	ld hl, Data_1d_788f ; $6a2a
 	ld de, $0e02 ; $6a2d
 	call LoadPaletteShadow ; $6a30
 	wram_bank $01 ; $6a33
-	ld hl, $78a7 ; $6a39
+	ld hl, Data_1d_78a7 ; $6a39
 	ld de, $d000 ; $6a3c
 	call DecompressData ; $6a3f
 	ld hl, $d000 ; $6a42
@@ -4925,31 +5117,31 @@ CheckExpLevelDown:
 	set 0, [hl] ; $7491
 	sound $5f ; $7493
 	farcall BackupCharDataScreenRow ; $7495
-	ld hl, $781d ; $7498
+	ld hl, Data_1d_781d ; $7498
 	ld bc, $d240 ; $749b
 	call ApplyTilemapPatchListExpScreen ; $749e
 	call UploadExpPromptWindowRows ; $74a1
 	call WaitFramesCmd ; $74a4
 	db $02 ; $74a7 inline arg
-	ld hl, $7814 ; $74a8
+	ld hl, Data_1d_7814 ; $74a8
 	ld bc, $d240 ; $74ab
 	call ApplyTilemapPatchListExpScreen ; $74ae
 	call UploadExpPromptWindowRows ; $74b1
 	call WaitFramesCmd ; $74b4
 	db $02 ; $74b7 inline arg
-	ld hl, $7807 ; $74b8
+	ld hl, Data_1d_7807 ; $74b8
 	ld bc, $d240 ; $74bb
 	call ApplyTilemapPatchListExpScreen ; $74be
 	call UploadExpPromptWindowRows ; $74c1
 	call WaitFramesCmd ; $74c4
 	db $02 ; $74c7 inline arg
-	ld hl, $77f6 ; $74c8
+	ld hl, Data_1d_77f6 ; $74c8
 	ld bc, $d240 ; $74cb
 	call ApplyTilemapPatchListExpScreen ; $74ce
 	call UploadExpPromptWindowRows ; $74d1
 	call WaitFramesCmd ; $74d4
 	db $02 ; $74d7 inline arg
-	ld hl, $77e1 ; $74d8
+	ld hl, Data_1d_77e1 ; $74d8
 	ld bc, $d240 ; $74db
 	call ApplyTilemapPatchListExpScreen ; $74de
 	call UploadExpPromptWindowRows ; $74e1
@@ -5031,35 +5223,35 @@ DrawExpPromptCursor:
 .playSfx2:
 	sound $62 ; $7594
 	farcall RestoreCharDataScreenRow ; $7596
-	ld hl, $77e1 ; $7599
+	ld hl, Data_1d_77e1 ; $7599
 	ld bc, $d240 ; $759c
 	call ApplyTilemapPatchListExpScreen ; $759f
 	call UploadExpPromptWindowRowsClosing ; $75a2
 	call WaitFramesCmd ; $75a5
 	db $02 ; $75a8 inline arg
 	farcall RestoreCharDataScreenRow ; $75a9
-	ld hl, $77f6 ; $75ac
+	ld hl, Data_1d_77f6 ; $75ac
 	ld bc, $d240 ; $75af
 	call ApplyTilemapPatchListExpScreen ; $75b2
 	call UploadExpPromptWindowRowsClosing ; $75b5
 	call WaitFramesCmd ; $75b8
 	db $02 ; $75bb inline arg
 	farcall RestoreCharDataScreenRow ; $75bc
-	ld hl, $7807 ; $75bf
+	ld hl, Data_1d_7807 ; $75bf
 	ld bc, $d240 ; $75c2
 	call ApplyTilemapPatchListExpScreen ; $75c5
 	call UploadExpPromptWindowRowsClosing ; $75c8
 	call WaitFramesCmd ; $75cb
 	db $02 ; $75ce inline arg
 	farcall RestoreCharDataScreenRow ; $75cf
-	ld hl, $7814 ; $75d2
+	ld hl, Data_1d_7814 ; $75d2
 	ld bc, $d240 ; $75d5
 	call ApplyTilemapPatchListExpScreen ; $75d8
 	call UploadExpPromptWindowRowsClosing ; $75db
 	call WaitFramesCmd ; $75de
 	db $02 ; $75e1 inline arg
 	farcall RestoreCharDataScreenRow ; $75e2
-	ld hl, $781d ; $75e5
+	ld hl, Data_1d_781d ; $75e5
 	ld bc, $d240 ; $75e8
 	call ApplyTilemapPatchListExpScreen ; $75eb
 	call UploadExpPromptWindowRowsClosing ; $75ee
@@ -5287,7 +5479,27 @@ TickLevelUpJingle:
 	sound $2f ; $77c5
 	ret ; $77c7
 ExpPromptWindowFrame_1d:
-	INCBIN "data/bank_01d/d_77c8.bin" ; $77c8, 360 bytes
+	INCBIN "data/bank_01d/d_77c8.bin" ; $77c8, 25 bytes
+Data_1d_77e1:
+	INCBIN "data/bank_01d/d_77e1.bin" ; $77e1, 21 bytes
+Data_1d_77f6:
+	INCBIN "data/bank_01d/d_77f6.bin" ; $77f6, 17 bytes
+Data_1d_7807:
+	INCBIN "data/bank_01d/d_7807.bin" ; $7807, 13 bytes
+Data_1d_7814:
+	INCBIN "data/bank_01d/d_7814.bin" ; $7814, 9 bytes
+Data_1d_781d:
+	INCBIN "data/bank_01d/d_781d.bin" ; $781d, 5 bytes
+Data_1d_7822:
+	INCBIN "data/bank_01d/d_7822.bin" ; $7822, 47 bytes
+Data_1d_7851:
+	INCBIN "data/bank_01d/d_7851.bin" ; $7851, 37 bytes
+Data_1d_7876:
+	INCBIN "data/bank_01d/d_7876.bin" ; $7876, 25 bytes
+Data_1d_788f:
+	INCBIN "data/bank_01d/d_788f.bin" ; $788f, 24 bytes
+Data_1d_78a7:
+	INCBIN "data/bank_01d/d_78a7.bin" ; $78a7, 137 bytes
 SpriteTemplate_1d_7930:
 	; $7930, 25 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00

@@ -101,7 +101,7 @@ SpriteBobOffsetXTable:
 ApplySpriteBobOffsetY:
 	ldh a, [hVBlankCounter] ; $40a5
 	and a, $0f ; $40a7
-	ld hl, $40bf ; $40a9
+	ld hl, Func_38_40bf ; $40a9
 	add a, l ; $40ac
 	ld l, a ; $40ad
 	jr nc, .readOffset ; $40ae
@@ -121,6 +121,7 @@ ApplySpriteBobOffsetY:
 	sub a, b ; $40bc
 	ld e, a ; $40bd
 	ret ; $40be
+Func_38_40bf:
 	nop ; $40bf
 	nop ; $40c0
 	nop ; $40c1
@@ -2813,6 +2814,7 @@ SubHandlers_38_56c9:
 Data_38_56ce:
 	; $56ce, 7 bytes (bytes:7)
 	db $56, $f3, $56, $fd, $56, $07, $57 ; 0x00
+Label_38_56d5:
 	ret nc ; $56d5
 	ret nc ; $56d6
 	nop ; $56d7
@@ -5647,7 +5649,7 @@ SubHandler42:
 	nop ; $69ec
 AdvanceRemotePlayerSlot:
 	ld a, [$d813] ; $69ed
-	ld hl, $6a27 ; $69f0
+	ld hl, Func_38_6a27 ; $69f0
 	add a, a ; $69f3
 	add a, l ; $69f4
 	ld l, a ; $69f5
@@ -5668,7 +5670,7 @@ AdvanceRemotePlayerSlot:
 	ret ; $6a08
 RetreatRemotePlayerSlot:
 	ld a, [$d813] ; $6a09
-	ld hl, $6a27 ; $6a0c
+	ld hl, Func_38_6a27 ; $6a0c
 	add a, a ; $6a0f
 	add a, l ; $6a10
 	ld l, a ; $6a11
@@ -5689,6 +5691,7 @@ RetreatRemotePlayerSlot:
 	ld a, [hl] ; $6a22
 	ld [$d81d], a ; $6a23
 	ret ; $6a26
+Func_38_6a27:
 	inc sp ; $6a27
 	ld l, d ; $6a28
 	inc sp ; $6a29

@@ -187,29 +187,61 @@ GetMinigameTargetScore:
 	ld e, a ; $4148
 	ret ; $4149
 MinigamePracticeTargetScores:
-	; $414a, 20 bytes (records:2)
+	; $414a, 6 bytes (records:2)
 	dw $000f ; record 0
 	dw $001e ; record 1
 	dw $003c ; record 2
-	dw $0064 ; record 3
-	dw $0032 ; record 4
-	dw $0032 ; record 5
-	dw $0032 ; record 6
-	dw $0032 ; record 7
-	dw $270f ; record 8
-	dw $270f ; record 9
+Data_0d_4150:
+	; $4150, 8 bytes (records:2)
+	dw $0064 ; record 0
+	dw $0032 ; record 1
+	dw $0032 ; record 2
+	dw $0032 ; record 3
+Data_0d_4158:
+	; $4158, 6 bytes (records:2)
+	dw $0032 ; record 0
+	dw $270f ; record 1
+	dw $270f ; record 2
 MinigameTargetScores:
-	; $415e, 72 bytes (records:8)
-; 9 records x 8 bytes
-	dw $001e, $003c, $270f, $0000 ; record 0
-	dw $001e, $003c, $270f, $0000 ; record 1
-	dw $0015, $0015, $270f, $0000 ; record 2
-	dw $001e, $003c, $270f, $0000 ; record 3
-	dw $0032, $0064, $270f, $0000 ; record 4
-	dw $001e, $003c, $270f, $0000 ; record 5
-	dw $00c8, $012c, $270f, $0000 ; record 6
-	dw $0064, $012c, $270f, $0000 ; record 7
-	dw $0001, $0001, $270f, $0000 ; record 8
+	; $415e, 2 bytes (records:8)
+; 0 records x 8 bytes
+	db $1e, $00
+Data_0d_4160:
+	; $4160, 8 bytes (records:8)
+; 1 records x 8 bytes
+	dw $003c, $270f, $0000, $001e ; record 0
+Data_0d_4168:
+	; $4168, 8 bytes (records:8)
+; 1 records x 8 bytes
+	dw $003c, $270f, $0000, $0015 ; record 0
+Data_0d_4170:
+	; $4170, 8 bytes (records:8)
+; 1 records x 8 bytes
+	dw $0015, $270f, $0000, $001e ; record 0
+Data_0d_4178:
+	; $4178, 8 bytes (records:8)
+; 1 records x 8 bytes
+	dw $003c, $270f, $0000, $0032 ; record 0
+Data_0d_4180:
+	; $4180, 8 bytes (records:8)
+; 1 records x 8 bytes
+	dw $0064, $270f, $0000, $001e ; record 0
+Data_0d_4188:
+	; $4188, 8 bytes (records:8)
+; 1 records x 8 bytes
+	dw $003c, $270f, $0000, $00c8 ; record 0
+Data_0d_4190:
+	; $4190, 8 bytes (records:8)
+; 1 records x 8 bytes
+	dw $012c, $270f, $0000, $0064 ; record 0
+Data_0d_4198:
+	; $4198, 8 bytes (records:8)
+; 1 records x 8 bytes
+	dw $012c, $270f, $0000, $0001 ; record 0
+Data_0d_41a0:
+	; $41a0, 6 bytes (records:8)
+; 0 records x 8 bytes
+	db $01, $00, $0f, $27, $00, $00
 GetDefaultMinigameRecordValue:
 	add a, a ; $41a6
 	add a, $b5 ; $41a7
@@ -226,17 +258,17 @@ GetDefaultMinigameRecordValue:
 	ret ; $41b4
 MinigameDefaultRecordValuePointers:
 	; $41b5, 22 bytes (records:2)
-	dw $4158 ; record 0
-	dw $4150 ; record 1
-	dw $4160 ; record 2
-	dw $4168 ; record 3
-	dw $4170 ; record 4
-	dw $4178 ; record 5
-	dw $4180 ; record 6
-	dw $4188 ; record 7
-	dw $4190 ; record 8
-	dw $4198 ; record 9
-	dw $41a0 ; record 10
+	dw Data_0d_4158 ; record 0
+	dw Data_0d_4150 ; record 1
+	dw Data_0d_4160 ; record 2
+	dw Data_0d_4168 ; record 3
+	dw Data_0d_4170 ; record 4
+	dw Data_0d_4178 ; record 5
+	dw Data_0d_4180 ; record 6
+	dw Data_0d_4188 ; record 7
+	dw Data_0d_4190 ; record 8
+	dw Data_0d_4198 ; record 9
+	dw Data_0d_41a0 ; record 10
 IncrementCappedCounter:
 	ld hl, $c789 ; $41cb
 	ld a, [hl] ; $41ce

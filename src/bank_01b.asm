@@ -130,7 +130,7 @@ CursorBobOffsetTableX:
 ApplyArrowBobOffset:
 	ldh a, [hVBlankCounter] ; $40cd
 	and a, $0f ; $40cf
-	ld hl, $40e7 ; $40d1
+	ld hl, Func_1b_40e7 ; $40d1
 	add a, l ; $40d4
 	ld l, a ; $40d5
 	jr nc, .readOffset ; $40d6
@@ -150,6 +150,7 @@ ApplyArrowBobOffset:
 	sub a, b ; $40e4
 	ld e, a ; $40e5
 	ret ; $40e6
+Func_1b_40e7:
 	nop ; $40e7
 	nop ; $40e8
 	nop ; $40e9
@@ -1105,7 +1106,7 @@ BuildRankingBoardScreen:
 	call HighlightSinglesRankingRows ; $4f4c
 .loadRankingBoardTiles:
 	call LoadRankingBoardTiles ; $4f4f
-	ld hl, $4f76 ; $4f52
+	ld hl, Data_1b_4f76 ; $4f52
 	ld de, $0806 ; $4f55
 	call LoadPaletteShadow ; $4f58
 	ld a, $01 ; $4f5b
@@ -1120,6 +1121,7 @@ BuildRankingBoardScreen:
 .queueWram3MapToVRAM:
 	farcall QueueWram3MapToVRAM ; $4f72
 	ret ; $4f75
+Data_1b_4f76:
 	INCLUDE "data/bank_01b/palettes_4f76.asm" ; $4f76, 48 bytes (palettes)
 LoadRankingBoardTiles:
 	ldh a, [hWramBank] ; $4fa6
@@ -1751,7 +1753,7 @@ DrawSinglesRankingEntry:
 	push hl ; $5539
 	ld a, b ; $553a
 	add a, a ; $553b
-	ld hl, $5576 ; $553c
+	ld hl, Data_1b_5576 ; $553c
 	add a, l ; $553f
 	ld l, a ; $5540
 	jr nc, .read ; $5541
@@ -1779,7 +1781,7 @@ DrawSinglesRankingEntry:
 	pop af ; $555c
 	ret ; $555d
 SinglesRankingEntryTable:
-	; $555e, 48 bytes (records:2)
+	; $555e, 24 bytes (records:2)
 	dw $0000 ; record 0
 	dw $0029 ; record 1
 	dw $002b ; record 2
@@ -1792,18 +1794,20 @@ SinglesRankingEntryTable:
 	dw $002e ; record 9
 	dw $002a ; record 10
 	dw $0027 ; record 11
-	dw $d021 ; record 12
-	dw $d081 ; record 13
-	dw $d0e1 ; record 14
-	dw $d141 ; record 15
-	dw $d1a1 ; record 16
-	dw $d201 ; record 17
-	dw $d02e ; record 18
-	dw $d08e ; record 19
-	dw $d0ee ; record 20
-	dw $d14e ; record 21
-	dw $d1ae ; record 22
-	dw $d20e ; record 23
+Data_1b_5576:
+	; $5576, 24 bytes (records:2)
+	dw $d021 ; record 0
+	dw $d081 ; record 1
+	dw $d0e1 ; record 2
+	dw $d141 ; record 3
+	dw $d1a1 ; record 4
+	dw $d201 ; record 5
+	dw $d02e ; record 6
+	dw $d08e ; record 7
+	dw $d0ee ; record 8
+	dw $d14e ; record 9
+	dw $d1ae ; record 10
+	dw $d20e ; record 11
 ClearSinglesRankingNameRects:
 	push af ; $558e
 	push bc ; $558f
@@ -1877,7 +1881,7 @@ DrawDoublesRankingEntry:
 	push hl ; $5602
 	ld a, b ; $5603
 	add a, a ; $5604
-	ld hl, $5641 ; $5605
+	ld hl, Data_1b_5641 ; $5605
 	add a, l ; $5608
 	ld l, a ; $5609
 	jr nc, .read ; $560a
@@ -1905,7 +1909,7 @@ DrawDoublesRankingEntry:
 	pop af ; $5625
 	ret ; $5626
 DoublesRankingEntryTable:
-	; $5627, 50 bytes (records:2)
+	; $5627, 26 bytes (records:2)
 	dw $0000 ; record 0
 	dw $0000 ; record 1
 	dw $0029 ; record 2
@@ -1919,18 +1923,20 @@ DoublesRankingEntryTable:
 	dw $004b ; record 10
 	dw $004c ; record 11
 	dw $002b ; record 12
-	dw $d041 ; record 13
-	dw $d081 ; record 14
-	dw $d0e1 ; record 15
-	dw $d121 ; record 16
-	dw $d181 ; record 17
-	dw $d1c1 ; record 18
-	dw $d04e ; record 19
-	dw $d08e ; record 20
-	dw $d0ee ; record 21
-	dw $d12e ; record 22
-	dw $d18e ; record 23
-	dw $d1ce ; record 24
+Data_1b_5641:
+	; $5641, 24 bytes (records:2)
+	dw $d041 ; record 0
+	dw $d081 ; record 1
+	dw $d0e1 ; record 2
+	dw $d121 ; record 3
+	dw $d181 ; record 4
+	dw $d1c1 ; record 5
+	dw $d04e ; record 6
+	dw $d08e ; record 7
+	dw $d0ee ; record 8
+	dw $d12e ; record 9
+	dw $d18e ; record 10
+	dw $d1ce ; record 11
 ClearDoublesRankingNameRects:
 	push af ; $5659
 	push bc ; $565a
@@ -2679,7 +2685,7 @@ LoadRankingMarkerCoords:
 	ld a, [$d802] ; $5c44
 	or a, a ; $5c47
 	jr z, .zero ; $5c48
-	ld hl, $5d57 ; $5c4a
+	ld hl, Data_1b_5d57 ; $5c4a
 .zero:
 	ld a, [$d801] ; $5c4d
 	add a, a ; $5c50
@@ -2704,7 +2710,7 @@ LoadRankingMarkerCoords:
 	ld a, [$d802] ; $5c6a
 	or a, a ; $5c6d
 	jr z, .zero2 ; $5c6e
-	ld hl, $5eb9 ; $5c70
+	ld hl, Data_1b_5eb9 ; $5c70
 .zero2:
 	ld a, [$d801] ; $5c73
 	add a, a ; $5c76
@@ -2738,7 +2744,11 @@ RankingMarkerCoordSet1:
 RankingMarkerCoordSet2:
 	INCBIN "data/bank_01b/d_5cf7.bin" ; $5cf7, 48 bytes
 RankingMarkerCoordSet3:
-	INCBIN "data/bank_01b/d_5d27.bin" ; $5d27, 554 bytes
+	INCBIN "data/bank_01b/d_5d27.bin" ; $5d27, 48 bytes
+Data_1b_5d57:
+	INCBIN "data/bank_01b/d_5d57.bin" ; $5d57, 354 bytes
+Data_1b_5eb9:
+	INCBIN "data/bank_01b/d_5eb9.bin" ; $5eb9, 152 bytes
 GetRankingMarkerSlot:
 	push af ; $5f51
 	ld a, c ; $5f52
@@ -4337,7 +4347,7 @@ LoadMinigameLevelSelectGfx:
 	pop de ; $6c7c
 	pop bc ; $6c7d
 	pop af ; $6c7e
-	ld hl, $6d35 ; $6c7f
+	ld hl, Data_1b_6d35 ; $6c7f
 	ld a, c ; $6c82
 	add a, a ; $6c83
 	add a, l ; $6c84
@@ -4428,15 +4438,17 @@ LoadMinigameLevelSelectGfx:
 	wram_bank ; $6d28
 	ret ; $6d2c
 MinigameLevelSelectGfxTable:
-	; $6d2d, 16 bytes (records:2)
-	dw $6d8a ; record 0
-	dw $6d8c ; record 1
-	dw $6d8e ; record 2
-	dw $6d90 ; record 3
-	dw $a800 ; record 4
-	dw $a900 ; record 5
-	dw $aa00 ; record 6
-	dw $a900 ; record 7
+	; $6d2d, 8 bytes (records:2)
+	dw Label_1b_6d8a ; record 0
+	dw Label_1b_6d8c ; record 1
+	dw Label_1b_6d8e ; record 2
+	dw Data_1b_6d90 ; record 3
+Data_1b_6d35:
+	; $6d35, 8 bytes (records:2)
+	dw $a800 ; record 0
+	dw $a900 ; record 1
+	dw $aa00 ; record 2
+	dw $a900 ; record 3
 DrawMinigameLevelDescription:
 	ldh a, [hWramBank] ; $6d3d
 	push af ; $6d3f
@@ -4477,11 +4489,18 @@ DrawMinigameLevelDescription:
 	ld c, $20 ; $6d84
 	farcall RenderTextToBuffer64 ; $6d86
 	pop af ; $6d89
-	wram_bank ; $6d8a
+Label_1b_6d8a:
+	ldh [hWramBank], a ; $6d8a
+Label_1b_6d8c:
+	ldh [rWBK], a ; $6d8c
+Label_1b_6d8e:
 	ret ; $6d8e
 MinigameLevelDescriptionTable:
-	; $6d8f, 6 bytes (bytes:6)
-	db $01, $d2, $01, $d2, $01, $d2 ; 0x00
+	; $6d8f, 1 bytes (bytes:6)
+	db $01 ; 0x00
+Data_1b_6d90:
+	; $6d90, 5 bytes (bytes:6)
+	db $d2, $01, $d2, $01, $d2 ; 0x00
 LoadMinigameLevelSelectPalette:
 	ld hl, MinigameLevelSelectPalettePtrs ; $6d95
 	add a, a ; $6d98
@@ -4498,13 +4517,18 @@ LoadMinigameLevelSelectPalette:
 	ret ; $6da7
 MinigameLevelSelectPalettePtrs:
 	; $6da8, 6 bytes (records:2)
-	dw $6dae ; record 0
-	dw $6dbe ; record 1
-	dw $6db6 ; record 2
-	; $6dae, 24 bytes (bytes:8)
+	dw Data_1b_6dae ; record 0
+	dw Data_1b_6dbe ; record 1
+	dw Data_1b_6db6 ; record 2
+Data_1b_6dae:
+	; $6dae, 8 bytes (bytes:8)
 	db $34, $53, $ff, $6b, $40, $02, $00, $00 ; 0x00
-	db $b7, $5e, $ff, $6b, $93, $7c, $00, $00 ; 0x08
-	db $99, $52, $ff, $6b, $1f, $14, $00, $00 ; 0x10
+Data_1b_6db6:
+	; $6db6, 8 bytes (bytes:8)
+	db $b7, $5e, $ff, $6b, $93, $7c, $00, $00 ; 0x00
+Data_1b_6dbe:
+	; $6dbe, 8 bytes (bytes:8)
+	db $99, $52, $ff, $6b, $1f, $14, $00, $00 ; 0x00
 FlushLevelSelectTextRows:
 	ldh a, [hWramBank] ; $6dc6
 	push af ; $6dc8
@@ -5246,11 +5270,14 @@ LoadSavedDataTypePalette:
 	ret ; $73c8
 SavedDataTypePalettePtrs:
 	; $73c9, 4 bytes (records:2)
-	dw $73cd ; record 0
-	dw $73d5 ; record 1
-	; $73cd, 16 bytes (bytes:8)
+	dw Data_1b_73cd ; record 0
+	dw Data_1b_73d5 ; record 1
+Data_1b_73cd:
+	; $73cd, 8 bytes (bytes:8)
 	db $34, $53, $ff, $6b, $40, $02, $00, $00 ; 0x00
-	db $bf, $02, $ff, $6b, $1b, $18, $00, $00 ; 0x08
+Data_1b_73d5:
+	; $73d5, 8 bytes (bytes:8)
+	db $bf, $02, $ff, $6b, $1b, $18, $00, $00 ; 0x00
 ShowMinigameDataScreen:
 	sound $04 ; $73dd
 	call DisableLCDSafely ; $73df

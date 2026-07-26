@@ -1,6 +1,21 @@
 """Game constant tables shared by the source renderers."""
 
 
+# Spec kinds whose rendering is a run of independent rows, so a region can be
+# cut at any offset and rendered as two pieces without changing a byte. A
+# pointer into the middle of one of these anchors a label there; every other
+# kind (bytecode, a table whose rows reference their own base, a decoded
+# header) has to stay whole, and a pointer into it stays numeric.
+SPLITTABLE_SPEC_KINDS = frozenset((
+    "bytes", "records", "tilemap", "palettes", "sound_data", "fill",
+    "pattern", "text_ids", "flag_ids",
+))
+
+
+def is_splittable(spec):
+    return bool(spec) and spec.partition(":")[0] in SPLITTABLE_SPEC_KINDS
+
+
 MAP_TREE_SLOTS = ("EntryPoints", "ExitTriggers", "Actors", "NpcScripts",
                   "FacingScripts", "TileTriggers", "InitScript")
 

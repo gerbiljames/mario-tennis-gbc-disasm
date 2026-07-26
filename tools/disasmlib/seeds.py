@@ -90,17 +90,21 @@ def actor_handler_sites(dis, call_targets):
 LD_IMM16_REG = {0x01: "bc", 0x11: "de", 0x21: "hl"}
 
 
-def _pointer_load_used(dis, order, idx, o, reg):
+def _pointer_load_used(dis, order, idx, o, reg, callees=None):
     """Straight-line forward scan from a `ld reg, imm` at offset `o`: True if the
     loaded value is used as a pointer -- dereferenced (`[hl`/`[de]`/`[bc]`),
-    dispatched through (`jp hl`), pushed for a computed-jump dispatch, or used as
-    a table base (`add hl, de/bc` then the resulting hl is dereferenced). A
+    dispatched through (`jp hl`), pushed for a computed-jump dispatch, used as
+    a table base (`add hl, de/bc` then the resulting hl is dereferenced), or
+    handed to a routine that dereferences that register itself (`callees`). A
     coincidental numeric constant (e.g. `ld de, $4000` before `add hl, de; jr c`,
     an overflow check) is rejected because hl is never dereferenced."""
-    ptr = {reg}
-    i = idx[o] + 1
-    prev_end = o + dis.instrs[o].size
-    for _ in range(12):
+    return _scan_ptr_use(dis, order, idx[o] + 1,
+                         o + dis.instrs[o].size, {reg}, callees or {})
+
+
+def _scan_ptr_use(dis, order, i, prev_end, ptr, callees, limit=12):
+    added = None   # the pair whose low byte an `add a, <low>` just indexed
+    for _ in range(limit):
         if i >= len(order):
             break
         no = order[i]
@@ -114,20 +118,61 @@ def _pointer_load_used(dis, order, idx, o, reg):
             return True
         if t in ("push hl", "push de", "push bc") and t.split()[1] in ptr:
             return True
+        if ins.is_call and callees and ins.target is not None:
+            tgt = dis.farcalls[no][3] if no in dis.farcalls \
+                else target_to_offset(ins.target, no)
+            if ptr & callees.get(tgt, frozenset()):
+                return True
         if t in ("add hl, de", "add hl, bc") and t.split(", ")[1] in ptr:
             ptr = ptr | {"hl"}
         else:
+            # `add a, l; ld l, a; jr nc, .x; inc h` adds an index to the pair
+            # rather than clobbering it -- the split-base indexing the game
+            # uses everywhere for table lookups.
+            indexed = added if added and t == f"ld {added[1]}, a" else None
+            added = next((r for r in ptr if t == f"add a, {r[1]}"), None)
             for r in ("hl", "de", "bc"):
-                if r in ptr and (t.startswith(f"ld {r},")
-                                 or t.startswith(f"ld {r[0]},")
-                                 or t.startswith(f"ld {r[1]},")
-                                 or t == f"pop {r}"):
+                if r in ptr and not (indexed and r == indexed) \
+                        and (t.startswith(f"ld {r},")
+                             or t.startswith(f"ld {r[0]},")
+                             or t.startswith(f"ld {r[1]},")
+                             or t == f"pop {r}"):
                     ptr = ptr - {r}
         if not ptr or ins.ends_flow:
             break
         prev_end = no + ins.size
         i += 1
     return False
+
+
+def callee_pointer_regs(dis, rounds=2):
+    """{entry offset: the registers that routine dereferences on entry}. A
+    `ld hl, table; call Helper` only reads as a pointer setup if the helper
+    treats hl as one, so this is what lets the argument-passing sites resolve.
+    Iterating lets a helper that forwards its argument to another helper count
+    too."""
+    order = sorted(dis.instrs)
+    idx = {o: i for i, o in enumerate(order)}
+    entries = set()
+    for o, ins in dis.instrs.items():
+        if ins.is_call and ins.target is not None:
+            tgt = dis.farcalls[o][3] if o in dis.farcalls \
+                else target_to_offset(ins.target, o)
+            if tgt in dis.instrs:
+                entries.add(tgt)
+    out = {}
+    for _ in range(rounds):
+        prev, out = out, {}
+        for e in entries:
+            # A helper often unpacks its other arguments before touching the
+            # pointer, so give the entry scan a longer run than a call site's.
+            regs = {r for r in ("hl", "de", "bc")
+                    if _scan_ptr_use(dis, order, idx[e], e, {r}, prev, 24)}
+            if regs:
+                out[e] = frozenset(regs)
+        if out == prev:
+            break
+    return out
 
 
 def pointer_load_targets(dis):
@@ -139,6 +184,7 @@ def pointer_load_targets(dis):
     rom = dis.rom
     order = sorted(dis.instrs)
     idx = {o: i for i, o in enumerate(order)}
+    callees = callee_pointer_regs(dis)
     out = {}
     for o in order:
         reg = LD_IMM16_REG.get(rom[o])
@@ -151,10 +197,40 @@ def pointer_load_targets(dis):
         flat = base + (imm - 0x4000)
         if flat not in dis.instrs and flat in dis.code_bytes:
             continue  # points mid-instruction -- not a real code pointer
-        if not _pointer_load_used(dis, order, idx, o, reg):
+        if not _pointer_load_used(dis, order, idx, o, reg, callees):
             continue
         out[o] = flat
     return out
+
+
+# Specs whose every word is a same-bank pointer (render_pointer_words renders
+# them). Their targets are proven pointers, so each one can anchor a label.
+POINTER_WORD_SPECS = ("records:2", "mode_hooks", "minigame_configs")
+
+
+def pointer_table_targets(rom, data_tables, instrs=(), labels=()):
+    """Yield the in-bank targets of every all-pointer word table. The table's
+    extent is not known until emit lays the bank out, so the walk stops at the
+    first word that is not an in-bank address, or at whatever claims the next
+    offset (another declared table, decoded code, a curated label) -- the same
+    boundaries emit's segment scan uses. Over-running would only cost a label
+    at an offset nothing points at; under-running leaves the word numeric."""
+    stops = set(data_tables) | set(instrs) | set(labels)
+    for start, spec in data_tables.items():
+        if spec not in POINTER_WORD_SPECS:
+            continue
+        base = (start // BANK_SIZE) * BANK_SIZE
+        if not base:
+            continue  # ROM0 has no bank window to resolve against
+        p = start
+        while p + 1 < base + BANK_SIZE:
+            if p != start and p in stops:
+                break
+            w = rom[p] | (rom[p + 1] << 8)
+            if not (BANK_SIZE <= w < 0x8000):
+                break
+            yield base + w - BANK_SIZE
+            p += 2
 
 
 def map_script_code_targets(rom, data_tables):

@@ -234,7 +234,11 @@ MenuWindowTiles_01:
 	INCBIN "data/bank_001/d_4210.bin" ; $4210, 256 bytes
 	ds 256, $00 ; $4310, fill
 MenuFontTiles_01:
-	INCBIN "data/bank_001/d_4410.bin" ; $4410, 1536 bytes
+	INCBIN "data/bank_001/d_4410.bin" ; $4410, 512 bytes
+Data_01_4610:
+	INCBIN "data/bank_001/d_4610.bin" ; $4610, 512 bytes
+Data_01_4810:
+	INCBIN "data/bank_001/d_4810.bin" ; $4810, 512 bytes
 MenuFontFillTiles_01:
 	; $4a10, 1536 bytes (pattern)
 	ds 1536, $ff, $00
@@ -295,12 +299,12 @@ LoadMenuTilesBStaged:
 	ld c, $20 ; $509f
 	call QueueVRAMCopy ; $50a1
 	call AdvanceFrame ; $50a4
-	ld hl, $4610 ; $50a7
+	ld hl, Data_01_4610 ; $50a7
 	ld de, $9400 ; $50aa
 	ld c, $20 ; $50ad
 	call QueueVRAMCopy ; $50af
 	call AdvanceFrame ; $50b2
-	ld hl, $4810 ; $50b5
+	ld hl, Data_01_4810 ; $50b5
 	ld de, $9600 ; $50b8
 	ld c, $20 ; $50bb
 	call QueueVRAMCopy ; $50bd
@@ -441,7 +445,7 @@ RunSoundTest:
 	pop hl ; $6a7c
 	push hl ; $6a7d
 	push de ; $6a7e
-	ld hl, $6b6a ; $6a7f
+	ld hl, Data_01_6b6a ; $6a7f
 	ld de, $0d0b ; $6a82
 	call PrintString ; $6a85
 	pop de ; $6a88
@@ -508,14 +512,14 @@ RunSoundTest:
 	jr nz, .nonZero2 ; $6adf
 	push hl ; $6ae1
 	push de ; $6ae2
-	ld hl, $6b71 ; $6ae3
+	ld hl, Data_01_6b71 ; $6ae3
 	ld de, $0c09 ; $6ae6
 	call PrintString ; $6ae9
 	pop de ; $6aec
 	pop hl ; $6aed
 	push hl ; $6aee
 	push de ; $6aef
-	ld hl, $6b73 ; $6af0
+	ld hl, Data_01_6b73 ; $6af0
 	ld de, $0c0b ; $6af3
 	call PrintString ; $6af6
 	pop de ; $6af9
@@ -524,14 +528,14 @@ RunSoundTest:
 .nonZero2:
 	push hl ; $6afd
 	push de ; $6afe
-	ld hl, $6b71 ; $6aff
+	ld hl, Data_01_6b71 ; $6aff
 	ld de, $0c0b ; $6b02
 	call PrintString ; $6b05
 	pop de ; $6b08
 	pop hl ; $6b09
 	push hl ; $6b0a
 	push de ; $6b0b
-	ld hl, $6b73 ; $6b0c
+	ld hl, Data_01_6b73 ; $6b0c
 	ld de, $0c09 ; $6b0f
 	call PrintString ; $6b12
 	pop de ; $6b15
@@ -593,7 +597,13 @@ RunSoundTest:
 .label_01_6a8a:
 	jp .loop ; $6b61
 SoundTestStrings_01:
-	INCLUDE "data/bank_001/sound_data_6b64.asm" ; $6b64, 17 bytes (sound_data)
+	INCLUDE "data/bank_001/sound_data_6b64.asm" ; $6b64, 6 bytes (sound_data)
+Data_01_6b6a:
+	INCLUDE "data/bank_001/sound_data_6b6a.asm" ; $6b6a, 7 bytes (sound_data)
+Data_01_6b71:
+	INCLUDE "data/bank_001/sound_data_6b71.asm" ; $6b71, 2 bytes (sound_data)
+Data_01_6b73:
+	INCLUDE "data/bank_001/sound_data_6b73.asm" ; $6b73, 2 bytes (sound_data)
 SoundTestSoundsA_01:
 	INCLUDE "data/bank_001/sound_data_6b75.asm" ; $6b75, 63 bytes (sound_data)
 SoundTestSoundsB_01:

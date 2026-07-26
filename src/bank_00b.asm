@@ -2387,7 +2387,7 @@ ServicePractice2SetupShotTarget:
 	jr nz, .checkTotalPointsScoredInCurrentGame ; $5109
 	ld a, [wTotalPointsScoredInCurrentGame] ; $510b
 	add a, a ; $510e
-	ld hl, $5135 ; $510f
+	ld hl, Data_0b_5135 ; $510f
 	add a, l ; $5112
 	ld l, a ; $5113
 	jr nc, .checkStoryModeMainCharacterLeftHanded2 ; $5114
@@ -2412,8 +2412,11 @@ ServicePractice2SetupShotTarget:
 	ld [$c2e6], a ; $512c
 	ret ; $512f
 Table_0b_5130:
-	; $5130, 15 bytes (bytes:15)
-	db $0d, $0c, $0d, $0c, $0d, $e9, $c2, $e8, $c2, $e9, $c2, $e8, $c2, $e9, $c2 ; 0x00
+	; $5130, 5 bytes (bytes:15)
+	db $0d, $0c, $0d, $0c, $0d ; 0x00
+Data_0b_5135:
+	; $5135, 10 bytes (bytes:15)
+	db $e9, $c2, $e8, $c2, $e9, $c2, $e8, $c2, $e9, $c2 ; 0x00
 ServicePractice2QueueOutcomeMessage:
 	ld a, [wPointOutcome] ; $513f
 	cp a, $01 ; $5142
@@ -2765,7 +2768,7 @@ NetGameMatch1Hook_PointStart:
 	ld [$c2e1], a ; $5402
 	ld a, $0a ; $5405
 	ld [$c2e0], a ; $5407
-	ld hl, $542c ; $540a
+	ld hl, Data_0b_542c ; $540a
 	call LoadDrillOpponentBySide ; $540d
 	xor a, a ; $5410
 	ld [$c2e6], a ; $5411
@@ -2780,6 +2783,7 @@ NetGameMatch1Hook_PointStart:
 	ld [$c2ea], a ; $5425
 	ld [$c2eb], a ; $5428
 	ret ; $542b
+Data_0b_542c:
 	db $3d ; $542c
 	db $54 ; $542d
 NetGameMatch1Hook_PointEnd:
@@ -3140,7 +3144,7 @@ NetGameMatch2Hook_PointStart:
 	ld [$c2e1], a ; $5669
 	ld a, $0a ; $566c
 	ld [$c2e0], a ; $566e
-	ld hl, $5699 ; $5671
+	ld hl, Data_0b_5699 ; $5671
 	call LoadDrillOpponentBySide ; $5674
 	xor a, a ; $5677
 	ld [$c2e6], a ; $5678
@@ -3157,6 +3161,7 @@ NetGameMatch2Hook_PointStart:
 	ld [$c2ec], a ; $5692
 	ld [$c2ed], a ; $5695
 	ret ; $5698
+Data_0b_5699:
 	db $3e ; $5699
 	db $55 ; $569a
 NetGameMatch2Hook_PointEnd:
@@ -3543,7 +3548,7 @@ NetGameMatch3Hook_PointStart:
 NetGameMatch3Hook_PointEnd:
 	call NetGameMatch3JudgeShot0 ; $5908
 	call NetGameMatch3HandlePointEnd ; $590b
-	ld hl, $594c ; $590e
+	ld hl, Data_0b_594c ; $590e
 	call LoadDrillOpponentBySide ; $5911
 	ld a, [wTotalPointsScoredInCurrentGame] ; $5914
 	bit 0, a ; $5917
@@ -3578,6 +3583,7 @@ NetGameMatch3Hook_PointEnd:
 	ld a, $00 ; $5946
 	ld [wPointWinLoseFlag], a ; $5948
 	ret ; $594b
+Data_0b_594c:
 	db $3f ; $594c
 	db $56 ; $594d
 NetGameMatch3Hook_RallyTick:
@@ -5601,7 +5607,7 @@ StrokeMatch2Hook_PointStart:
 	ld [$c2e1], a ; $6701
 	ld a, $0a ; $6704
 	ld [$c2e0], a ; $6706
-	ld hl, $6737 ; $6709
+	ld hl, Data_0b_6737 ; $6709
 	call LoadDrillOpponentBySide ; $670c
 	xor a, a ; $670f
 	ld [$c2e6], a ; $6710
@@ -5620,6 +5626,7 @@ StrokeMatch2Hook_PointStart:
 	ld [$c2ee], a ; $6730
 	ld [$c2ef], a ; $6733
 	ret ; $6736
+Data_0b_6737:
 	db $58 ; $6737
 	db $44 ; $6738
 StrokeMatch2Hook_PointEnd:
@@ -5952,7 +5959,7 @@ StrokeMatch3Hook_PointStart:
 	ld [$c2e1], a ; $694c
 	ld a, $0a ; $694f
 	ld [$c2e0], a ; $6951
-	ld hl, $6982 ; $6954
+	ld hl, Data_0b_6982 ; $6954
 	call LoadDrillOpponentBySide ; $6957
 	xor a, a ; $695a
 	ld [$c2e6], a ; $695b
@@ -5971,6 +5978,7 @@ StrokeMatch3Hook_PointStart:
 	ld [$c2ee], a ; $697b
 	ld [$c2ef], a ; $697e
 	ret ; $6981
+Data_0b_6982:
 	db $59 ; $6982
 	db $45 ; $6983
 StrokeMatch3Hook_PointEnd:

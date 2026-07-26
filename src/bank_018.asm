@@ -283,13 +283,14 @@ DrawBox:
 .bottomRow:
 	call DrawBoxSideRow ; $43ff
 	ld a, $20 ; $4402
+Func_18_4404:
 	add a, l ; $4404
 	ld l, a ; $4405
 	jr nc, .done ; $4406
 	inc h ; $4408
 .done:
 	dec c ; $4409
-	jr nz, .bottomRow ; $440a
+	jr nz, DrawBox.bottomRow ; $440a
 	call DrawBoxBottomRow ; $440c
 	pop hl ; $440f
 	pop de ; $4410
@@ -352,6 +353,7 @@ AddBobbingOffsetXY:
 	ld a, [hl] ; $4451
 	add a, d ; $4452
 	ld d, a ; $4453
+Func_18_4454:
 	ldh a, [hVBlankCounter] ; $4454
 	add a, $04 ; $4456
 	and a, $0f ; $4458
@@ -677,7 +679,19 @@ Palette_18_4f33:
 ConfirmScreenGfx1:
 	INCBIN "data/bank_018/d_4f73.bin" ; $4f73, 347 bytes
 ConfirmScreenGfx2:
-	INCBIN "data/bank_018/d_50ce.bin" ; $50ce, 234 bytes
+	INCBIN "data/bank_018/d_50ce.bin" ; $50ce, 138 bytes
+Data_18_5158:
+	INCBIN "data/bank_018/d_5158.bin" ; $5158, 16 bytes
+Data_18_5168:
+	INCBIN "data/bank_018/d_5168.bin" ; $5168, 16 bytes
+Data_18_5178:
+	INCBIN "data/bank_018/d_5178.bin" ; $5178, 16 bytes
+Data_18_5188:
+	INCBIN "data/bank_018/d_5188.bin" ; $5188, 16 bytes
+Data_18_5198:
+	INCBIN "data/bank_018/d_5198.bin" ; $5198, 16 bytes
+Data_18_51a8:
+	INCBIN "data/bank_018/d_51a8.bin" ; $51a8, 16 bytes
 YesNoLabels0:
 	; $51b8, 16 bytes (bytes:16)
 	db $8b, $8b, $dd, $de, $df, $8b, $8b, $bd, $be, $bf, $8b, $8b, $ff, $ff, $ff, $ff ; 0x00
@@ -780,7 +794,7 @@ DrawScoreNumbersTask:
 	ld a, [$c78a] ; $53b3
 	ld h, $00 ; $53b6
 	ld l, a ; $53b8
-	ld de, $4404 ; $53b9
+	ld de, Func_18_4404 ; $53b9
 	ld b, $03 ; $53bc
 	ld a, $02 ; $53be
 	call DrawDecimalNumberSprites ; $53c0
@@ -794,7 +808,7 @@ DrawScoreNumbersTask:
 	ld a, [hl+] ; $53d2
 	ld h, [hl] ; $53d3
 	ld l, a ; $53d4
-	ld de, $4454 ; $53d5
+	ld de, Func_18_4454 ; $53d5
 	ld b, $01 ; $53d8
 	ld a, $03 ; $53da
 	call DrawDecimalNumberSprites ; $53dc
@@ -998,22 +1012,22 @@ UnusedBobRamp_18:
 	INCBIN "data/bank_018/d_5507.bin" ; $5507, 32 bytes
 DrawThreeOptionLabels:
 	call DrawConfirmScreenBox ; $5527
-	ld hl, $5188 ; $552a
+	ld hl, Data_18_5188 ; $552a
 	ld de, $ddc1 ; $552d
 	call CopyBytes11 ; $5530
-	ld hl, $5198 ; $5533
+	ld hl, Data_18_5198 ; $5533
 	ld de, $dde1 ; $5536
 	call CopyBytes11 ; $5539
-	ld hl, $51a8 ; $553c
+	ld hl, Data_18_51a8 ; $553c
 	ld de, $de01 ; $553f
 	call CopyBytes11 ; $5542
-	ld hl, $5158 ; $5545
+	ld hl, Data_18_5158 ; $5545
 	ld de, $d9c1 ; $5548
 	call CopyBytes11 ; $554b
-	ld hl, $5168 ; $554e
+	ld hl, Data_18_5168 ; $554e
 	ld de, $d9e1 ; $5551
 	call CopyBytes11 ; $5554
-	ld hl, $5178 ; $5557
+	ld hl, Data_18_5178 ; $5557
 	ld de, $da01 ; $555a
 	call CopyBytes11 ; $555d
 	ret ; $5560
@@ -1988,10 +2002,11 @@ LoadObjectSceneATiles:
 	ld c, $10 ; $7bfd
 	ld de, $8200 ; $7bff
 	farcall LoadCompressedTileBlock ; $7c02
-	ld hl, $7c0f ; $7c05
+	ld hl, Data_18_7c0f ; $7c05
 	ld de, $0903 ; $7c08
 	call LoadPaletteShadow ; $7c0b
 	ret ; $7c0e
+Data_18_7c0f:
 	; $7c0f, 24 bytes (bytes:8)
 	db $ff, $6b, $df, $5a, $ff, $20, $00, $00 ; 0x00
 	db $ff, $6b, $b8, $3b, $80, $12, $00, $00 ; 0x08
