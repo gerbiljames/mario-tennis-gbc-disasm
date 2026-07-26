@@ -2447,27 +2447,27 @@ SpawnCompanionActor:
 	wram_bank $04 ; $4f14
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $4f1a
 	or a, a ; $4f1d
-	jr nz, Label_04_4f2c ; $4f1e
+	jr nz, .partnerSlot ; $4f1e
 	ld hl, PartnerActorList_04_4ec8 ; $4f20
 	ld a, $02 ; $4f23
 	test_flag FLAG_DOUBLES ; $4f25
-	jr nz, Label_04_4f3b ; $4f28
-	jr Label_04_4f36 ; $4f2a
-Label_04_4f2c:
+	jr nz, .spawn ; $4f28
+	jr .singlesList ; $4f2a
+.partnerSlot:
 	ld hl, PartnerActorList_04_4ee0 ; $4f2c
 	ld a, $03 ; $4f2f
 	test_flag FLAG_DOUBLES ; $4f31
-	jr nz, Label_04_4f3b ; $4f34
-Label_04_4f36:
+	jr nz, .spawn ; $4f34
+.singlesList:
 	ld hl, PartnerActorList_04_4ef8 ; $4f36
 	ld a, $ff ; $4f39
-Label_04_4f3b:
+.spawn:
 	ld [$cb5e], a ; $4f3b
 	ldh a, [hRomBank] ; $4f3e
 	call SpawnActorFromTemplate ; $4f40
 	ld a, [$cb5e] ; $4f43
 	cp a, $ff ; $4f46
-	jr z, Label_04_4f70 ; $4f48
+	jr z, .done ; $4f48
 	ld de, $d000 ; $4f4a
 	call AttachActorStepMover ; $4f4d
 	ld de, $d000 ; $4f50
@@ -2490,7 +2490,7 @@ Label_04_4f3b:
 	ld h, [hl] ; $4f6b
 	ld l, a ; $4f6c
 	call SetActorPosition ; $4f6d
-Label_04_4f70:
+.done:
 	pop hl ; $4f70
 	pop de ; $4f71
 	pop bc ; $4f72
@@ -2762,23 +2762,23 @@ CheckTileTriggerAtPoint:
 	ld d, a ; $5148
 	and a, $0f ; $5149
 	cp a, $01 ; $514b
-	jr z, Label_04_5156 ; $514d
+	jr z, .scriptTrigger ; $514d
 	cp a, $03 ; $514f
-	jr z, Label_04_5160 ; $5151
+	jr z, .exitTrigger ; $5151
 	xor a, a ; $5153
-	jr Label_04_5168 ; $5154
-Label_04_5156:
+	jr .done ; $5154
+.scriptTrigger:
 	ld a, d ; $5156
 	swap a ; $5157
 	and a, $0f ; $5159
 	ld [wStoryModeTriggerScript], a ; $515b
-	jr Label_04_5168 ; $515e
-Label_04_5160:
+	jr .done ; $515e
+.exitTrigger:
 	ld a, d ; $5160
 	swap a ; $5161
 	and a, $0f ; $5163
 	ld [wStoryModeExitLocationRequest], a ; $5165
-Label_04_5168:
+.done:
 	pop de ; $5168
 	pop af ; $5169
 	ret ; $516a
@@ -3115,19 +3115,19 @@ IsPointNearPlayer:
 	sbc a, d ; $5389
 	ld h, a ; $538a
 	bit 7, h ; $538b
-	jr z, Label_04_5395 ; $538d
+	jr z, .absX ; $538d
 	xor a, a ; $538f
 	sub a, l ; $5390
 	ld l, a ; $5391
 	sbc a, a ; $5392
 	sub a, h ; $5393
 	ld h, a ; $5394
-Label_04_5395:
+.absX:
 	srl h ; $5395
 	rr l ; $5397
 	ld a, h ; $5399
 	and a, a ; $539a
-	jr nz, Label_04_53d2 ; $539b
+	jr nz, .tooFar ; $539b
 	ld a, l ; $539d
 	call GetSquareOfByte ; $539e
 	ld e, l ; $53a1
@@ -3143,31 +3143,31 @@ Label_04_5395:
 	sbc a, b ; $53ad
 	ld h, a ; $53ae
 	bit 7, h ; $53af
-	jr z, Label_04_53b9 ; $53b1
+	jr z, .absDepth ; $53b1
 	xor a, a ; $53b3
 	sub a, l ; $53b4
 	ld l, a ; $53b5
 	sbc a, a ; $53b6
 	sub a, h ; $53b7
 	ld h, a ; $53b8
-Label_04_53b9:
+.absDepth:
 	srl h ; $53b9
 	rr l ; $53bb
 	ld a, h ; $53bd
 	and a, a ; $53be
-	jr nz, Label_04_53d2 ; $53bf
+	jr nz, .tooFar ; $53bf
 	ld a, l ; $53c1
 	call GetSquareOfByte ; $53c2
 	add hl, de ; $53c5
-	jr c, Label_04_53d2 ; $53c6
+	jr c, .tooFar ; $53c6
 	ld de, $4000 ; $53c8
 	add hl, de ; $53cb
-	jr c, Label_04_53d2 ; $53cc
+	jr c, .tooFar ; $53cc
 	ld a, $01 ; $53ce
-	jr Label_04_53d3 ; $53d0
-Label_04_53d2:
+	jr .done ; $53d0
+.tooFar:
 	xor a, a ; $53d2
-Label_04_53d3:
+.done:
 	pop hl ; $53d3
 	pop de ; $53d4
 	pop bc ; $53d5
@@ -3553,13 +3553,13 @@ AdvanceActorAnimation:
 	ld hl, $0030 ; $55c1
 	add hl, bc ; $55c4
 	bit 1, [hl] ; $55c5
-	jr nz, Label_04_562b ; $55c7
+	jr nz, .frameReady ; $55c7
 	ld hl, $002f ; $55c9
 	add hl, bc ; $55cc
 	ld a, [hl] ; $55cd
 	and a, a ; $55ce
-	jr nz, Label_04_562b ; $55cf
-Label_04_55d1:
+	jr nz, .frameReady ; $55cf
+.nextCommand:
 	push bc ; $55d1
 	ld hl, $0022 ; $55d2
 	add hl, bc ; $55d5
@@ -3577,16 +3577,16 @@ Label_04_55d1:
 	pop bc ; $55e5
 	ld a, e ; $55e6
 	cp a, $f0 ; $55e7
-	jr c, Label_04_5616 ; $55e9
+	jr c, .setFrameDelay ; $55e9
 	cp a, $ff ; $55eb
-	jr z, Label_04_55fb ; $55ed
+	jr z, .jumpToFrames ; $55ed
 	cp a, $fe ; $55ef
-	jr z, Label_04_5611 ; $55f1
+	jr z, .setAnimation ; $55f1
 	ld hl, $002f ; $55f3
 	add hl, bc ; $55f6
 	ld [hl], $ff ; $55f7
-	jr Label_04_562b ; $55f9
-Label_04_55fb:
+	jr .frameReady ; $55f9
+.jumpToFrames:
 	ld hl, $002a ; $55fb
 	add hl, bc ; $55fe
 	ld a, [hl+] ; $55ff
@@ -3602,11 +3602,11 @@ Label_04_55fb:
 	ld a, e ; $560c
 	ld [hl+], a ; $560d
 	ld [hl], d ; $560e
-	jr Label_04_55d1 ; $560f
-Label_04_5611:
+	jr .nextCommand ; $560f
+.setAnimation:
 	call SetActorAnimation ; $5611
-	jr Label_04_55d1 ; $5614
-Label_04_5616:
+	jr .nextCommand ; $5614
+.setFrameDelay:
 	ld hl, $002f ; $5616
 	add hl, bc ; $5619
 	ld [hl], d ; $561a
@@ -3622,17 +3622,17 @@ Label_04_5616:
 	ld [hl-], a ; $5626
 	ld [hl], e ; $5627
 	pop de ; $5628
-	jr Label_04_5630 ; $5629
-Label_04_562b:
+	jr .checkFlip ; $5629
+.frameReady:
 	ld hl, $0033 ; $562b
 	add hl, bc ; $562e
 	ld e, [hl] ; $562f
-Label_04_5630:
+.checkFlip:
 	push bc ; $5630
 	ld hl, $0005 ; $5631
 	add hl, bc ; $5634
 	bit 7, [hl] ; $5635
-	jr z, Label_04_564c ; $5637
+	jr z, .noFlip ; $5637
 	ld hl, $0019 ; $5639
 	add hl, bc ; $563c
 	push hl ; $563d
@@ -3643,10 +3643,10 @@ Label_04_5630:
 	ld b, [hl] ; $5644
 	ld a, c ; $5645
 	sub a, b ; $5646
-	jr nc, Label_04_565d ; $5647
+	jr nc, .storeFrame ; $5647
 	xor a, a ; $5649
-	jr Label_04_565d ; $564a
-Label_04_564c:
+	jr .storeFrame ; $564a
+.noFlip:
 	ld hl, $0018 ; $564c
 	add hl, bc ; $564f
 	push hl ; $5650
@@ -3657,9 +3657,9 @@ Label_04_564c:
 	ld b, [hl] ; $5657
 	ld a, c ; $5658
 	sub a, b ; $5659
-	jr nc, Label_04_565d ; $565a
+	jr nc, .storeFrame ; $565a
 	xor a, a ; $565c
-Label_04_565d:
+.storeFrame:
 	pop bc ; $565d
 	ld hl, $002f ; $565e
 	add hl, bc ; $5661
@@ -3668,31 +3668,31 @@ Label_04_565d:
 	add hl, bc ; $5666
 	ld a, [hl] ; $5667
 	cp a, e ; $5668
-	jr z, Label_04_5672 ; $5669
+	jr z, .done ; $5669
 	ld [hl], e ; $566b
 	ld hl, $0030 ; $566c
 	add hl, bc ; $566f
 	set 6, [hl] ; $5670
-Label_04_5672:
+.done:
 	ret ; $5672
 UpdateActorFacingFromHeading:
 	ld hl, $0030 ; $5673
 	add hl, bc ; $5676
 	bit 0, [hl] ; $5677
-	jr nz, Label_04_5685 ; $5679
+	jr nz, .fromTable ; $5679
 	ld hl, $0014 ; $567b
 	add hl, bc ; $567e
 	ld a, [hl] ; $567f
 	ld hl, $0034 ; $5680
 	add hl, bc ; $5683
 	ld [hl], a ; $5684
-Label_04_5685:
+.fromTable:
 	ld d, $00 ; $5685
 	ld hl, $0035 ; $5687
 	add hl, bc ; $568a
 	ld a, [hl] ; $568b
 	cp a, $01 ; $568c
-	jr z, Label_04_56a3 ; $568e
+	jr z, .store ; $568e
 	ld hl, $0034 ; $5690
 	add hl, bc ; $5693
 	ld a, [hl] ; $5694
@@ -3705,7 +3705,7 @@ Label_04_5685:
 	sub a, l ; $56a0
 	ld h, a ; $56a1
 	ld d, [hl] ; $56a2
-Label_04_56a3:
+.store:
 	ld hl, $0032 ; $56a3
 	add hl, bc ; $56a6
 	ld a, [hl] ; $56a7
@@ -3817,16 +3817,16 @@ IsActorMoving:
 	ld a, $05 ; $5742
 	add a, l ; $5744
 	ld l, a ; $5745
-	jr nc, Label_04_5749 ; $5746
+	jr nc, .readFlag ; $5746
 	inc h ; $5748
-Label_04_5749:
+.readFlag:
 	bit 7, [hl] ; $5749
-	jr z, Label_04_5751 ; $574b
+	jr z, .idle ; $574b
 	ld a, $01 ; $574d
-	jr Label_04_5753 ; $574f
-Label_04_5751:
+	jr .done ; $574f
+.idle:
 	ld a, $00 ; $5751
-Label_04_5753:
+.done:
 	pop hl ; $5753
 	ret ; $5754
 WaitActorMoveDone:

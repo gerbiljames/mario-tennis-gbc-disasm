@@ -1334,10 +1334,10 @@ UpdateLinkSession:
 	push hl ; $4849
 	ld a, [$c33f] ; $484a
 	or a, a ; $484d
-	jp z, Label_07_48f1 ; $484e
+	jp z, .done ; $484e
 	ldh a, [$ffd8] ; $4851
 	or a, a ; $4853
-	jp nz, Label_07_48df ; $4854
+	jp nz, .frameLoop ; $4854
 	sound $00 ; $4857
 	call DisableLCDSafely ; $4859
 	ld a, $01 ; $485c
@@ -1345,11 +1345,11 @@ UpdateLinkSession:
 	farcall ExchangeLinkReadySignal ; $4860
 	ldh a, [hLinkState] ; $4863
 	cp a, $02 ; $4865
-	jp z, Label_07_48a7 ; $4867
+	jp z, .asSlave ; $4867
 	cp a, $01 ; $486a
-	jr z, Label_07_4871 ; $486c
+	jr z, .asMaster ; $486c
 	call LinkErrorReset ; $486e
-Label_07_4871:
+.asMaster:
 	ld a, $40 ; $4871
 	ldh [$ffdc], a ; $4873
 	call ShortDelay ; $4875
@@ -1368,13 +1368,13 @@ Label_07_4871:
 	call ShortDelay ; $489c
 	call ShortDelay ; $489f
 	call ShortDelay ; $48a2
-	jr Label_07_48ae ; $48a5
-Label_07_48a7:
+	jr .encode ; $48a5
+.asSlave:
 	xor a, a ; $48a7
 	ldh [$ffd7], a ; $48a8
 	ld a, $80 ; $48aa
 	ldh [$ffdc], a ; $48ac
-Label_07_48ae:
+.encode:
 	xor a, a ; $48ae
 	ldh [$ffe2], a ; $48af
 	call SerialEncodeInput ; $48b1
@@ -1393,7 +1393,7 @@ Label_07_48ae:
 	ld a, $01 ; $48d8
 	ldh [$ffdf], a ; $48da
 	call EnableLCD ; $48dc
-Label_07_48df:
+.frameLoop:
 	xor a, a ; $48df
 	ldh [$ffe9], a ; $48e0
 	push af ; $48e2
@@ -1405,7 +1405,7 @@ Label_07_48df:
 	push af ; $48ec
 	farcall SyncLinkFrame ; $48ed
 	pop af ; $48f0
-Label_07_48f1:
+.done:
 	pop hl ; $48f1
 	pop de ; $48f2
 	pop bc ; $48f3
@@ -1736,25 +1736,25 @@ TryLinkHandshakeSlave:
 	ldh [$ffe0], a ; $4b12
 	ei ; $4b14
 	call AwaitSerialByte ; $4b15
-	jr c, Label_07_4b2e ; $4b18
+	jr c, .failed ; $4b18
 	di ; $4b1a
 	ldh a, [hLinkRxByte] ; $4b1b
 	cp a, $c2 ; $4b1d
-	jr z, Label_07_4b2e ; $4b1f
+	jr z, .failed ; $4b1f
 	cp a, $00 ; $4b21
-	jr z, Label_07_4b2e ; $4b23
+	jr z, .failed ; $4b23
 	cp a, $ff ; $4b25
-	jr z, Label_07_4b2e ; $4b27
+	jr z, .failed ; $4b27
 	cp a, $c1 ; $4b29
-	jr z, Label_07_4b31 ; $4b2b
+	jr z, .success ; $4b2b
 	ei ; $4b2d
-Label_07_4b2e:
+.failed:
 	scf ; $4b2e
-	jr Label_07_4b33 ; $4b2f
-Label_07_4b31:
+	jr .done ; $4b2f
+.success:
 	scf ; $4b31
 	ccf ; $4b32
-Label_07_4b33:
+.done:
 	ei ; $4b33
 	pop bc ; $4b34
 	pop de ; $4b35
@@ -1774,13 +1774,13 @@ TryLinkHandshakeMaster:
 	ldh [hLinkTxByte], a ; $4b48
 	ld hl, $03e8 ; $4b4a
 	ld de, $03e8 ; $4b4d
-Label_07_4b50:
+.pollLoop:
 	ldh a, [rLY] ; $4b50
 	cp a, $8c ; $4b52
-	jr nz, Label_07_4b50 ; $4b54
+	jr nz, .pollLoop ; $4b54
 	ldh a, [rSC] ; $4b56
 	bit 7, a ; $4b58
-	jr nz, Label_07_4b50 ; $4b5a
+	jr nz, .pollLoop ; $4b5a
 	di ; $4b5c
 	ldh a, [hLinkTxByte] ; $4b5d
 	ldh [rSB], a ; $4b5f
@@ -1796,19 +1796,19 @@ Label_07_4b50:
 	call AwaitSerialByte ; $4b6f
 	farcall AnimateLinkStatusPalette ; $4b72
 	farcall UpdateAnimatedTiles ; $4b75
-	jr c, Label_07_4ba2 ; $4b78
+	jr c, .sendReady ; $4b78
 	cp a, $c1 ; $4b7a
-	jr z, Label_07_4ba2 ; $4b7c
+	jr z, .sendReady ; $4b7c
 	cp a, $ff ; $4b7e
-	jr z, Label_07_4ba2 ; $4b80
+	jr z, .sendReady ; $4b80
 	cp a, $c2 ; $4b82
-	jr z, Label_07_4bbc ; $4b84
+	jr z, .failed ; $4b84
 	ld a, d ; $4b86
 	cp a, $03 ; $4b87
-	jr nz, Label_07_4b9b ; $4b89
+	jr nz, .retry ; $4b89
 	ld a, e ; $4b8b
 	cp a, $e8 ; $4b8c
-	jr nz, Label_07_4b9b ; $4b8e
+	jr nz, .retry ; $4b8e
 	push bc ; $4b90
 	push de ; $4b91
 	push hl ; $4b92
@@ -1817,13 +1817,13 @@ Label_07_4b50:
 	pop hl ; $4b98
 	pop de ; $4b99
 	pop bc ; $4b9a
-Label_07_4b9b:
+.retry:
 	dec de ; $4b9b
 	ld a, d ; $4b9c
 	or a, e ; $4b9d
-	jr nz, Label_07_4b50 ; $4b9e
-	jr Label_07_4ba2 ; $4ba0
-Label_07_4ba2:
+	jr nz, .pollLoop ; $4b9e
+	jr .sendReady ; $4ba0
+.sendReady:
 	di ; $4ba2
 	ld a, $c0 ; $4ba3
 	ldh [rSB], a ; $4ba5
@@ -1839,11 +1839,11 @@ Label_07_4ba2:
 	call AwaitSerialByte ; $4bb5
 	ld a, e ; $4bb8
 	scf ; $4bb9
-	jr Label_07_4bbe ; $4bba
-Label_07_4bbc:
+	jr .done ; $4bba
+.failed:
 	scf ; $4bbc
 	ccf ; $4bbd
-Label_07_4bbe:
+.done:
 	pop bc ; $4bbe
 	pop de ; $4bbf
 	pop hl ; $4bc0
