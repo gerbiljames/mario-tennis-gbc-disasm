@@ -41,21 +41,21 @@ SmallCharTestExitTriggers_0f:
 	dec a ; $40d4
 	ld hl, $c2b1 ; $40d5
 	add a, a ; $40d8
-	jr nc, Label_0f_40df ; $40d9
+	jr nc, .checkMax ; $40d9
 	ld a, [hl] ; $40db
 	dec a ; $40dc
-	jr Label_0f_40e4 ; $40dd
-Label_0f_40df:
+	jr .compare ; $40dd
+.checkMax:
 	rra ; $40df
 	cp a, [hl] ; $40e0
-	jr c, Label_0f_40e4 ; $40e1
+	jr c, .compare ; $40e1
 	xor a, a ; $40e3
-Label_0f_40e4:
+.compare:
 	cp a, $29 ; $40e4
-	jr nc, Label_0f_40ec ; $40e6
+	jr nc, .loop ; $40e6
 	ld hl, $c2b1 ; $40e8
 	ld a, [hl] ; $40eb
-Label_0f_40ec:
+.loop:
 	ld hl, $c2b0 ; $40ec
 	ld [hl], a ; $40ef
 	call SetPlayerActorObjectDef ; $40f0
@@ -74,21 +74,21 @@ SmallCharTestNpc04_0f:
 	inc a ; $4105
 	ld hl, $c2b1 ; $4106
 	add a, a ; $4109
-	jr nc, Label_0f_4110 ; $410a
+	jr nc, .checkMax ; $410a
 	ld a, [hl] ; $410c
 	dec a ; $410d
-	jr Label_0f_4115 ; $410e
-Label_0f_4110:
+	jr .compare ; $410e
+.checkMax:
 	rra ; $4110
 	cp a, [hl] ; $4111
-	jr c, Label_0f_4115 ; $4112
+	jr c, .compare ; $4112
 	xor a, a ; $4114
-Label_0f_4115:
+.compare:
 	cp a, $2a ; $4115
-	jr nc, Label_0f_40ec ; $4117
+	jr nc, SmallCharTestExitTriggers_0f.loop ; $4117
 	ld hl, $002a ; $4119
 	ld a, l ; $411c
-	jr Label_0f_40ec ; $411d
+	jr SmallCharTestExitTriggers_0f.loop ; $411d
 	ld hl, $c2b0 ; $411f
 	ld [hl], a ; $4122
 	call SetPlayerActorObjectDef ; $4123
@@ -136,9 +136,9 @@ SmallCharTestInitScript_0f:
 SmallCharTestButtonTask_0f:
 	ldh a, [hInputRisingEdge] ; $41b7
 	and a, $f0 ; $41b9
-	jr z, Label_0f_41c4 ; $41bb
+	jr z, .done ; $41bb
 	script_set_anim ACTOR_PLAYER, $01 ; $41bd
-Label_0f_41c4:
+.done:
 	ret ; $41c4
 SetPlayerActorObjectDef:
 	ld d, a ; $41c5
@@ -361,7 +361,7 @@ AwardsCeremonyTile01_0f:
 	ret ; $4724
 AwardsCeremonyTile02_0f:
 	test_flag FLAG_DOUBLES ; $4725
-	jp nz, Label_0f_4ea7 ; $4728
+	jp nz, .doubles ; $4728
 	script_null_script $03 ; $472b
 	script_move_target ACTOR_PLAYER, $0c00, $1900 ; $4730
 	script_move_target $03, $0c00, $1b00 ; $473b
@@ -665,7 +665,7 @@ AwardsCeremonyTile02_0f:
 	ld [$c294], a ; $4ea0
 	ld [wStoryModeExitLocationRequest], a ; $4ea3
 	ret ; $4ea6
-Label_0f_4ea7:
+.doubles:
 	script_null_script ACTOR_PARTNER ; $4ea7
 	script_move_target ACTOR_PLAYER, $0c00, $1900 ; $4eac
 	script_move_target ACTOR_PARTNER, $0c00, $1b00 ; $4eb7
@@ -976,9 +976,9 @@ AwardsCeremonyInitScript_0f:
 	call SetPlayerAndPartnerObjectDefs ; $55c3
 	ld a, [wStoryModeEntryPoint] ; $55c6
 	cp a, $0a ; $55c9
-	jp z, Label_0f_56a8 ; $55cb
+	jp z, CutsceneStompScreenShake.arrival ; $55cb
 	cp a, $0b ; $55ce
-	jp z, Label_0f_5889 ; $55d0
+	jp z, CutsceneStompScreenShake.doubles ; $55d0
 	call CheckAwardsCeremonyRivalSceneDone ; $55d3
 	and a, $01 ; $55d6
 	jr z, .checkDoubles ; $55d8
@@ -1017,9 +1017,9 @@ AwardsCeremonyNpc08_0f:
 	script_set_text Text_25_125 ; $5628
 	call CheckAwardsCeremonyRivalSceneDone ; $562e
 	and a, $01 ; $5631
-	jr z, Label_0f_563b ; $5633
+	jr z, .speak ; $5633
 	script_set_text Text_25_129 ; $5635
-Label_0f_563b:
+.speak:
 	script_speak $08 ; $563b
 	ret ; $5640
 ReplacePlayerWithStandInActor:
@@ -1065,7 +1065,7 @@ CutsceneStompScreenShake:
 	ld a, $00 ; $56a2
 	farcall SetScreenShake ; $56a4
 	ret ; $56a7
-Label_0f_56a8:
+.arrival:
 	call AwardsCeremonyArrivalIntro ; $56a8
 	script_set_anim $03, $02 ; $56ab
 	script_wait_idle $03 ; $56b2
@@ -1160,7 +1160,7 @@ Label_0f_56a8:
 	ld de, $d000 ; $5882
 	farcall AttachActorStepMover ; $5885
 	ret ; $5888
-Label_0f_5889:
+.doubles:
 	script_null_script ACTOR_PARTNER ; $5889
 	script_set_position ACTOR_PARTNER, $0b00, $2700 ; $588e
 	script_face ACTOR_PARTNER, FACE_UP ; $5899
@@ -1487,18 +1487,18 @@ SavePlayerActorPosition:
 	ret ; $5f79
 CheckAwardsCeremonyRivalSceneDone:
 	test_flag FLAG_DOUBLES ; $5f7a
-	jr z, Label_0f_5f8a ; $5f7d
+	jr z, .zero ; $5f7d
 	ld a, $00 ; $5f7f
 	test_flag FLAG_AWARDS_CEREMONY_SEEN_DOUBLES ; $5f81
-	jr z, Label_0f_5f93 ; $5f84
+	jr z, .done ; $5f84
 	ld a, $01 ; $5f86
-	jr Label_0f_5f93 ; $5f88
-Label_0f_5f8a:
+	jr .done ; $5f88
+.zero:
 	ld a, $00 ; $5f8a
 	test_flag FLAG_AWARDS_CEREMONY_SEEN_SINGLES ; $5f8c
-	jr z, Label_0f_5f93 ; $5f8f
+	jr z, .done ; $5f8f
 	ld a, $01 ; $5f91
-Label_0f_5f93:
+.done:
 	ret ; $5f93
 TournamentMapScripts_0f:
 	; $5f94, 14 bytes (map_tree)
@@ -1556,9 +1556,9 @@ TournamentNpc0A_0f:
 	farcall ScriptCloseDialogueWindow ; $60ec
 	script_wait_frames $05 ; $60ef
 	and a, a ; $60f6
-	jr z, Label_0f_60fc ; $60f7
+	jr z, .speak ; $60f7
 	farcall AdvanceDialogueTextCursor ; $60f9
-Label_0f_60fc:
+.speak:
 	script_speak $0b ; $60fc
 	ret ; $6101
 TournamentNpcScripts_0f:
@@ -1930,14 +1930,14 @@ IslandOpenArrivalCutscene:
 	script_set_anim ACTOR_PLAYER, $02 ; $655a
 	script_wait_idle ACTOR_PLAYER ; $6561
 	test_flag FLAG_DOUBLES ; $6566
-	jr nz, Label_0f_6582 ; $6569
+	jr nz, .doubles ; $6569
 	script_set_anim $05, $03 ; $656b
 	script_wait_idle $05 ; $6572
 	script_speak $05 ; $6577
 	set_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $657c
-	jr Label_0f_65a6 ; $657f
+	jr .walkOn ; $657f
 	ret ; $6581
-Label_0f_6582:
+.doubles:
 	farcall AdvanceDialogueTextCursor ; $6582
 	script_set_anim $04, $03 ; $6585
 	script_wait_idle $04 ; $658c
@@ -1948,7 +1948,7 @@ Label_0f_6582:
 	ld de, $d000 ; $659d
 	farcall AttachActorStepMover ; $65a0
 	set_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $65a3
-Label_0f_65a6:
+.walkOn:
 	script_player_speed $0018 ; $65a6
 	script_move_player $1c00, $1d00 ; $65ac
 	farcall WaitPlayerMoveDone ; $65b6
@@ -2227,9 +2227,9 @@ IslandOpenRound1DoublesNpc0A_0f:
 	farcall ScriptCloseDialogueWindow ; $6be8
 	script_wait_frames $05 ; $6beb
 	and a, a ; $6bf2
-	jr z, Label_0f_6bf8 ; $6bf3
+	jr z, .speak ; $6bf3
 	farcall AdvanceDialogueTextCursor ; $6bf5
-Label_0f_6bf8:
+.speak:
 	script_speak $0a ; $6bf8
 	ret ; $6bfd
 IslandOpenRound1DoublesNpc0B_0f:
@@ -2240,9 +2240,9 @@ IslandOpenRound1DoublesNpc0B_0f:
 	farcall ScriptCloseDialogueWindow ; $6c0c
 	script_wait_frames $05 ; $6c0f
 	and a, a ; $6c16
-	jr z, Label_0f_6c1c ; $6c17
+	jr z, .speak ; $6c17
 	farcall AdvanceDialogueTextCursor ; $6c19
-Label_0f_6c1c:
+.speak:
 	script_speak $0b ; $6c1c
 	ret ; $6c21
 IslandOpenRound1DoublesNpc0D_0f:
@@ -2253,9 +2253,9 @@ IslandOpenRound1DoublesNpc0D_0f:
 	farcall ScriptCloseDialogueWindow ; $6c30
 	script_wait_frames $05 ; $6c33
 	and a, a ; $6c3a
-	jr z, Label_0f_6c40 ; $6c3b
+	jr z, .speak ; $6c3b
 	farcall AdvanceDialogueTextCursor ; $6c3d
-Label_0f_6c40:
+.speak:
 	script_speak $0d ; $6c40
 	ret ; $6c45
 IslandOpenRound2ActorsDoubles_0f:
@@ -2297,9 +2297,9 @@ IslandOpenRound2DoublesNpc08_0f:
 	farcall ScriptCloseDialogueWindow ; $6d75
 	script_wait_frames $05 ; $6d78
 	and a, a ; $6d7f
-	jr z, Label_0f_6d85 ; $6d80
+	jr z, .speak ; $6d80
 	farcall AdvanceDialogueTextCursor ; $6d82
-Label_0f_6d85:
+.speak:
 	script_speak $08 ; $6d85
 	ret ; $6d8a
 IslandOpenRound2DoublesNpc0D_0f:
@@ -2310,9 +2310,9 @@ IslandOpenRound2DoublesNpc0D_0f:
 	farcall ScriptCloseDialogueWindow ; $6d99
 	script_wait_frames $05 ; $6d9c
 	and a, a ; $6da3
-	jr z, Label_0f_6da9 ; $6da4
+	jr z, .speak ; $6da4
 	farcall AdvanceDialogueTextCursor ; $6da6
-Label_0f_6da9:
+.speak:
 	script_speak $0d ; $6da9
 	ret ; $6dae
 IslandOpenRound3ActorsDoubles_0f:
@@ -2354,9 +2354,9 @@ IslandOpenRound3DoublesNpc0C_0f:
 	farcall ScriptCloseDialogueWindow ; $6ede
 	script_wait_frames $05 ; $6ee1
 	and a, a ; $6ee8
-	jr z, Label_0f_6eee ; $6ee9
+	jr z, .speak ; $6ee9
 	farcall AdvanceDialogueTextCursor ; $6eeb
-Label_0f_6eee:
+.speak:
 	script_speak $0c ; $6eee
 	ret ; $6ef3
 IslandOpenRound3DoublesNpc0B_0f:
@@ -2367,9 +2367,9 @@ IslandOpenRound3DoublesNpc0B_0f:
 	farcall ScriptCloseDialogueWindow ; $6f02
 	script_wait_frames $05 ; $6f05
 	and a, a ; $6f0c
-	jr z, Label_0f_6f12 ; $6f0d
+	jr z, .speak ; $6f0d
 	farcall AdvanceDialogueTextCursor ; $6f0f
-Label_0f_6f12:
+.speak:
 	script_speak $0b ; $6f12
 	ret ; $6f17
 	script_set_text Text_1f_163 ; $6f18
@@ -2379,9 +2379,9 @@ Label_0f_6f12:
 	farcall ScriptCloseDialogueWindow ; $6f26
 	script_wait_frames $05 ; $6f29
 	and a, a ; $6f30
-	jr z, Label_0f_6f36 ; $6f31
+	jr z, .speakAlt ; $6f31
 	farcall AdvanceDialogueTextCursor ; $6f33
-Label_0f_6f36:
+.speakAlt:
 	script_speak $0b ; $6f36
 	ret ; $6f3b
 TournamentNpc03_0f:
@@ -2392,17 +2392,17 @@ TournamentNpc03_0f:
 	farcall ScriptCloseDialogueWindow ; $6f4a
 	script_wait_frames $05 ; $6f4d
 	and a, a ; $6f54
-	jr nz, Label_0f_6f5d ; $6f55
+	jr nz, .altLine ; $6f55
 	script_speak $03 ; $6f57
 	ret ; $6f5c
-Label_0f_6f5d:
+.altLine:
 	ld hl, $24ae ; $6f5d
 	ld a, [$c2b0] ; $6f60
 	add a, l ; $6f63
 	ld l, a ; $6f64
-	jr nc, Label_0f_6f68 ; $6f65
+	jr nc, .setCursor ; $6f65
 	inc h ; $6f67
-Label_0f_6f68:
+.setCursor:
 	farcall InitDialogueTextCursor ; $6f68
 	script_speak $03 ; $6f6b
 	ret ; $6f70
@@ -2411,17 +2411,17 @@ TournamentNpc04_0f:
 	ld a, [$c2b0] ; $6f74
 	add a, l ; $6f77
 	ld l, a ; $6f78
-	jr nc, Label_0f_6f7c ; $6f79
+	jr nc, .setCursor ; $6f79
 	inc h ; $6f7b
-Label_0f_6f7c:
+.setCursor:
 	farcall InitDialogueTextCursor ; $6f7c
 	script_speak $04 ; $6f7f
 	ret ; $6f84
 MovePartnerForRoundCall_0f:
 	test_flag FLAG_DOUBLES ; $6f85
-	jr z, Label_0f_6fc2 ; $6f88
+	jr z, .done ; $6f88
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_SEMIFINAL ; $6f8a
-	jr nz, Label_0f_6fc2 ; $6f8d
+	jr nz, .done ; $6f8d
 	script_null_script $0d ; $6f8f
 	script_move_target $0d, $1900, $1100 ; $6f94
 	script_wait_move $0d ; $6f9f
@@ -2429,7 +2429,7 @@ MovePartnerForRoundCall_0f:
 	script_wait_move $0d ; $6faf
 	script_face $0c, FACE_DOWN ; $6fb4
 	script_face $0d, FACE_DOWN ; $6fbb
-Label_0f_6fc2:
+.done:
 	ret ; $6fc2
 IslandOpenRoundCallCutscene:
 	script_set_text Text_25_94 ; $6fc3
@@ -2653,21 +2653,21 @@ ActorScript_0f_73fd:
 	as_halt
 GetIslandOpenRoundParams:
 	test_flag FLAG_DOUBLES ; $7416
-	jr nz, Label_0f_7425 ; $7419
+	jr nz, .doubles ; $7419
 	ld b, $00 ; $741b
 	ld a, [$c2b0] ; $741d
 	inc a ; $7420
 	ld c, a ; $7421
 	ld d, $00 ; $7422
 	ret ; $7424
-Label_0f_7425:
+.doubles:
 	ld b, $01 ; $7425
 	ld a, [$c2b0] ; $7427
 	inc a ; $742a
 	cp a, $03 ; $742b
-	jr c, Label_0f_7430 ; $742d
+	jr c, .store ; $742d
 	dec a ; $742f
-Label_0f_7430:
+.store:
 	ld c, a ; $7430
 	ld d, $00 ; $7431
 	ret ; $7433
@@ -2688,9 +2688,9 @@ QueueUpcomingRoundNameText:
 	ld hl, $2861 ; $7450
 	add a, l ; $7453
 	ld l, a ; $7454
-	jr nc, Label_0f_7458 ; $7455
+	jr nc, .queue ; $7455
 	inc h ; $7457
-Label_0f_7458:
+.queue:
 	call QueueShortText ; $7458
 	ret ; $745b
 CheckIslandOpenVictoryTransition:
@@ -2826,9 +2826,9 @@ IslandOpenRoundSinglesNpc04_0f:
 	ld hl, $2862 ; $7638
 	add a, l ; $763b
 	ld l, a ; $763c
-	jr nc, Label_0f_7640 ; $763d
+	jr nc, .queue ; $763d
 	inc h ; $763f
-Label_0f_7640:
+.queue:
 	call QueueShortText ; $7640
 	script_speak $04 ; $7643
 	ret ; $7648
@@ -3015,9 +3015,9 @@ IslandOpenRoundDoublesNpc04_0f:
 	ld hl, $2862 ; $78bb
 	add a, l ; $78be
 	ld l, a ; $78bf
-	jr nc, Label_0f_78c3 ; $78c0
+	jr nc, .queue ; $78c0
 	inc h ; $78c2
-Label_0f_78c3:
+.queue:
 	call QueueShortText ; $78c3
 	script_speak $04 ; $78c6
 	ret ; $78cb
@@ -3091,9 +3091,9 @@ IslandOpenBreakCutscene:
 	ld hl, $2861 ; $79a9
 	add a, l ; $79ac
 	ld l, a ; $79ad
-	jr nc, Label_0f_79b1 ; $79ae
+	jr nc, .queue ; $79ae
 	inc h ; $79b0
-Label_0f_79b1:
+.queue:
 	call QueueShortText ; $79b1
 	script_speak $06 ; $79b4
 	script_face_pair $07, $06 ; $79b9
@@ -3173,9 +3173,9 @@ QueueShortText:
 WalkActorsInFromEntryPoint_0f:
 	ld a, [wStoryModeEntryPoint] ; $7aaf
 	cp a, $ff ; $7ab2
-	jp z, Label_0f_7b15 ; $7ab4
+	jp z, .done ; $7ab4
 	test_flag FLAG_DOUBLES ; $7ab7
-	jr z, Label_0f_7af8 ; $7aba
+	jr z, .walkOff ; $7aba
 	script_set_speed ACTOR_PARTNER, $00ff ; $7abc
 	ld a, [wStoryModeEntryPoint] ; $7ac4
 	dec a ; $7ac7
@@ -3202,7 +3202,7 @@ WalkActorsInFromEntryPoint_0f:
 	ld b, b ; $7aec
 	farcall SetActorFacing ; $7aed
 	script_set_speed ACTOR_PARTNER, $0010 ; $7af0
-Label_0f_7af8:
+.walkOff:
 	script_set_speed ACTOR_PLAYER, $0010 ; $7af8
 	ld a, [wStoryModeEntryPoint] ; $7b00
 	dec a ; $7b03
@@ -3216,7 +3216,7 @@ Label_0f_7af8:
 	ld b, b ; $7b0e
 	ld de, $0200 ; $7b0f
 	farcall MoveActorByAngle ; $7b12
-Label_0f_7b15:
+.done:
 	ret ; $7b15
 Facings_0f_7b16:
 	; $7b16, 10 bytes (enum:FACE:10)
@@ -3460,62 +3460,62 @@ ActorScript_0f_7b8d:
 	as_anim $03
 	as_jump .L1a7
 	test_flag FLAG_DOUBLES ; $7d43
-	jr nz, Label_0f_7d6a ; $7d46
+	jr nz, .doubles ; $7d46
 	ld a, $00 ; $7d48
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7d4a
-	jr z, Label_0f_7d66 ; $7d4d
+	jr z, .loop ; $7d4d
 	ld a, $02 ; $7d4f
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $7d51
-	jr z, Label_0f_7d66 ; $7d54
+	jr z, .loop ; $7d54
 	ld a, $04 ; $7d56
 	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $7d58
-	jr z, Label_0f_7d66 ; $7d5b
+	jr z, .loop ; $7d5b
 	ld a, $06 ; $7d5d
 	test_flag FLAG_STORY_COMPLETE_SINGLES ; $7d5f
-	jr z, Label_0f_7d66 ; $7d62
+	jr z, .loop ; $7d62
 	ld a, $08 ; $7d64
-Label_0f_7d66:
+.loop:
 	ld [$c2b0], a ; $7d66
 	ret ; $7d69
-Label_0f_7d6a:
+.doubles:
 	ld a, $01 ; $7d6a
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $7d6c
-	jr z, Label_0f_7d66 ; $7d6f
+	jr z, .loop ; $7d6f
 	ld a, $03 ; $7d71
 	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_1 ; $7d73
-	jr z, Label_0f_7d66 ; $7d76
+	jr z, .loop ; $7d76
 	ld a, $05 ; $7d78
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $7d7a
-	jr z, Label_0f_7d66 ; $7d7d
+	jr z, .loop ; $7d7d
 	ld a, $07 ; $7d7f
 	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $7d81
-	jr z, Label_0f_7d66 ; $7d84
+	jr z, .loop ; $7d84
 	ld a, $09 ; $7d86
-	jr Label_0f_7d66 ; $7d88
+	jr .loop ; $7d88
 	ld a, $00 ; $7d8a
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7d8c
-	jr z, Label_0f_7da9 ; $7d8f
+	jr z, .loopB ; $7d8f
 	inc a ; $7d91
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $7d92
-	jr z, Label_0f_7da9 ; $7d95
+	jr z, .loopB ; $7d95
 	inc a ; $7d97
 	test_flag FLAG_DOUBLES ; $7d98
-	jr nz, Label_0f_7dad ; $7d9b
+	jr nz, .doublesIsland ; $7d9b
 	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $7d9d
-	jr z, Label_0f_7da9 ; $7da0
+	jr z, .loopB ; $7da0
 	inc a ; $7da2
 	test_flag FLAG_STORY_COMPLETE_SINGLES ; $7da3
-	jr z, Label_0f_7da9 ; $7da6
+	jr z, .loopB ; $7da6
 	inc a ; $7da8
-Label_0f_7da9:
+.loopB:
 	ld [$c2b0], a ; $7da9
 	ret ; $7dac
-Label_0f_7dad:
+.doublesIsland:
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $7dad
-	jr z, Label_0f_7da9 ; $7db0
+	jr z, .loopB ; $7db0
 	inc a ; $7db2
 	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $7db3
-	jr z, Label_0f_7da9 ; $7db6
+	jr z, .loopB ; $7db6
 	inc a ; $7db8
-	jr Label_0f_7da9 ; $7db9
+	jr .loopB ; $7db9
 	; $7dbb, 581 bytes fill to bank end (linker-padded)

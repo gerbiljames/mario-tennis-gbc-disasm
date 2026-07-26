@@ -43,23 +43,23 @@ TrainingGymEntryPoints_0e:
 TrainingGymArrival01_0e:
 	ld a, [wStoryModeEntryPoint] ; $40ff
 	cp a, $ff ; $4102
-	jp z, Label_0e_4144 ; $4104
+	jp z, .done ; $4104
 	test_flag FLAG_DOUBLES ; $4107
-	jr z, Label_0e_4132 ; $410a
+	jr z, .walkUp ; $410a
 	script_set_speed ACTOR_PARTNER, $00ff ; $410c
 	script_move_angle ACTOR_PARTNER, FACE_DOWN, $0200 ; $4114
 	script_wait_move ACTOR_PARTNER ; $411e
 	script_face ACTOR_PARTNER, FACE_UP ; $4123
 	script_set_speed ACTOR_PARTNER, $0010 ; $412a
-Label_0e_4132:
+.walkUp:
 	script_set_speed ACTOR_PLAYER, $0010 ; $4132
 	script_move_angle ACTOR_PLAYER, FACE_UP, $0200 ; $413a
-Label_0e_4144:
+.done:
 	ret ; $4144
 TrainingGymArrival02_0e:
 	ld a, [wStoryModeEntryPoint] ; $4145
 	cp a, $ff ; $4148
-	jp z, Label_0e_41e1 ; $414a
+	jp z, .done ; $414a
 	script_set_speed ACTOR_PLAYER, $0010 ; $414d
 	script_set_speed ACTOR_PARTNER, $0010 ; $4155
 	farcall WaitPlayerMoveDone ; $415d
@@ -77,12 +77,12 @@ TrainingGymArrival02_0e:
 	script_copy_scene_rect $37, $0a, $0a, $0a, $02, $02 ; $41bc
 	script_wait_frames $02 ; $41cb
 	script_copy_scene_rect $3d, $0c, $0a, $0a, $02, $02 ; $41d2
-Label_0e_41e1:
+.done:
 	ret ; $41e1
 TrainingGymArrival03_0e:
 	ld a, [wStoryModeEntryPoint] ; $41e2
 	cp a, $ff ; $41e5
-	jr z, Label_0e_41e1 ; $41e7
+	jr z, TrainingGymArrival02_0e.done ; $41e7
 	script_set_speed ACTOR_PLAYER, $0010 ; $41e9
 	script_set_speed ACTOR_PARTNER, $0010 ; $41f1
 	farcall WaitPlayerMoveDone ; $41f9
@@ -246,7 +246,7 @@ TrainingGymNpc07_0e:
 	ld a, [$c2b0] ; $444a
 	sra a ; $444d
 	cp a, $03 ; $444f
-	jr z, Label_0e_4471 ; $4451
+	jr z, .speak ; $4451
 	add a, a ; $4453
 	add a, $67 ; $4454
 	ld l, a ; $4456
@@ -265,7 +265,7 @@ TrainingGymNpc07_0e:
 	dw $14c3 ; record 2
 	dw $14d2 ; record 3
 	dw $14df ; record 4
-Label_0e_4471:
+.speak:
 	script_set_text Text_35_210 ; $4471
 	ld a, $07 ; $4477
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $4479
@@ -273,9 +273,9 @@ Label_0e_4471:
 	farcall ScriptCloseDialogueWindow ; $447f
 	script_wait_frames $05 ; $4482
 	and a, a ; $4489
-	jr z, Label_0e_448f ; $448a
+	jr z, .speakLine ; $448a
 	farcall AdvanceDialogueTextCursor ; $448c
-Label_0e_448f:
+.speakLine:
 	script_speak $07 ; $448f
 	ret ; $4494
 TrainingGymNpc08_0e:
@@ -1009,7 +1009,7 @@ ActorScript_0e_4a80:
 	ld a, e ; $4c76
 	ld [hl+], a ; $4c77
 	ld [hl], d ; $4c78
-	jp Label_0e_4d3c ; $4c79
+	jp .checkTimer ; $4c79
 	script_get_actor_state $0a ; $4c7c
 	ld c, l ; $4c81
 	ld b, h ; $4c82
@@ -1061,7 +1061,7 @@ ActorScript_0e_4a80:
 	ld a, e ; $4ccd
 	ld [hl+], a ; $4cce
 	ld [hl], d ; $4ccf
-	jp Label_0e_4d3c ; $4cd0
+	jp .checkTimer ; $4cd0
 	script_get_actor_state $0b ; $4cd3
 	ld c, l ; $4cd8
 	ld b, h ; $4cd9
@@ -1113,7 +1113,7 @@ ActorScript_0e_4a80:
 	ld a, e ; $4d24
 	ld [hl+], a ; $4d25
 	ld [hl], d ; $4d26
-	jp Label_0e_4d3c ; $4d27
+	jp .checkTimer ; $4d27
 	script_get_actor_state $0c ; $4d2a
 	ld c, l ; $4d2f
 	ld b, h ; $4d30
@@ -1123,7 +1123,7 @@ ActorScript_0e_4a80:
 	ld b, $00 ; $4d37
 	ld a, $00 ; $4d39
 	ret ; $4d3b
-Label_0e_4d3c:
+.checkTimer:
 	ld hl, wWaterSpriteMinigameTimer ; $4d3c
 	ld a, [hl+] ; $4d3f
 	ld d, [hl] ; $4d40
@@ -1139,17 +1139,17 @@ Label_0e_4d3c:
 	sbc a, d ; $4d4c
 	ld h, a ; $4d4d
 	bit 7, h ; $4d4e
-	jr z, Label_0e_4d58 ; $4d50
+	jr z, .checkX ; $4d50
 	xor a, a ; $4d52
 	sub a, l ; $4d53
 	ld l, a ; $4d54
 	sbc a, a ; $4d55
 	sub a, h ; $4d56
 	ld h, a ; $4d57
-Label_0e_4d58:
+.checkX:
 	ld a, h ; $4d58
 	cp a, $05 ; $4d59
-	jr nc, Label_0e_4d83 ; $4d5b
+	jr nc, .outOfRange ; $4d5b
 	ld hl, $c2b2 ; $4d5d
 	ld a, [hl+] ; $4d60
 	ld d, [hl] ; $4d61
@@ -1165,21 +1165,21 @@ Label_0e_4d58:
 	sbc a, d ; $4d6d
 	ld h, a ; $4d6e
 	bit 7, h ; $4d6f
-	jr z, Label_0e_4d79 ; $4d71
+	jr z, .checkDepth ; $4d71
 	xor a, a ; $4d73
 	sub a, l ; $4d74
 	ld l, a ; $4d75
 	sbc a, a ; $4d76
 	sub a, h ; $4d77
 	ld h, a ; $4d78
-Label_0e_4d79:
+.checkDepth:
 	ld a, h ; $4d79
 	cp a, $05 ; $4d7a
-	jr nc, Label_0e_4d83 ; $4d7c
+	jr nc, .outOfRange ; $4d7c
 	ld b, $01 ; $4d7e
 	ld a, $01 ; $4d80
 	ret ; $4d82
-Label_0e_4d83:
+.outOfRange:
 	ld b, $00 ; $4d83
 	ld a, $00 ; $4d85
 	ret ; $4d87
@@ -1245,12 +1245,12 @@ RunRepairCounterDialogue:
 	farcall ScriptCloseDialogueWindow ; $4e36
 	script_wait_frames $05 ; $4e39
 	and a, a ; $4e40
-	jr z, Label_0e_4e4f ; $4e41
+	jr z, RepairCounterFarewell.altLine ; $4e41
 RepairCounterFarewell:
 	script_set_text Text_6e_234 ; $4e43
 	script_speak $0e ; $4e49
 	ret ; $4e4e
-Label_0e_4e4f:
+.altLine:
 	script_set_text Text_6e_235 ; $4e4f
 	script_speak $0e ; $4e55
 	script_wait_frames $05 ; $4e5a
@@ -1258,7 +1258,7 @@ RepairCounterServiceMenu:
 	ld hl, $20ec ; $4e61
 	ld de, $0101 ; $4e64
 	farcall RunMenuFromText ; $4e67
-Label_0e_4e6a:
+.loop:
 	ld [$c2bc], a ; $4e6a
 	cp a, $ff ; $4e6d
 	jp z, RepairCounterFarewell ; $4e6f
@@ -1310,7 +1310,7 @@ RepairCounterChangeRackets:
 	call PrepareEquipmentSelectScreen ; $4ef4
 	farcall RunRacketSelectScreen ; $4ef7
 	and a, a ; $4efa
-	jr nz, Label_0e_4f1d ; $4efb
+	jr nz, RestoreScreenAfterEquipSelect.advanceStage ; $4efb
 	jr RestoreScreenAfterEquipSelect ; $4efd
 RepairCounterChangeShoes:
 	script_set_text Text_6e_238 ; $4eff
@@ -1318,13 +1318,13 @@ RepairCounterChangeShoes:
 	call PrepareEquipmentSelectScreen ; $4f0a
 	farcall RunShoesSelectScreen ; $4f0d
 	and a, a ; $4f10
-	jr nz, Label_0e_4f1d ; $4f11
+	jr nz, RestoreScreenAfterEquipSelect.advanceStage ; $4f11
 RestoreScreenAfterEquipSelect:
 	call DisableLCDSafely ; $4f13
 	farcall LoadMenuFontGfx ; $4f16
 	call EnableLCD ; $4f19
 	ret ; $4f1c
-Label_0e_4f1d:
+.advanceStage:
 	ld a, [$c2b1] ; $4f1d
 	add a, $02 ; $4f20
 	ld [$c2b1], a ; $4f22
@@ -1435,10 +1435,10 @@ CompareEquippedRacketToMinigameFlag:
 	ld b, a ; $5008
 	ld a, [wEquippedRacket] ; $5009
 	cp a, b ; $500c
-	jr z, Label_0e_5012 ; $500d
+	jr z, .failed ; $500d
 	ld a, $00 ; $500f
 	ret ; $5011
-Label_0e_5012:
+.failed:
 	ld a, $ff ; $5012
 	ret ; $5014
 RepairCounterCheckEquipChanged:
@@ -1464,9 +1464,9 @@ RepairCounterCheckEquipChanged:
 	farcall ScriptCloseDialogueWindow ; $5042
 	script_wait_frames $05 ; $5045
 	and a, a ; $504c
-	jp nz, Label_0e_5080 ; $504d
+	jp nz, .noChange ; $504d
 	ld a, [$c2bc] ; $5050
-	jp Label_0e_4e6a ; $5053
+	jp RepairCounterServiceMenu.loop ; $5053
 .repairRacket:
 	ld a, [wEquippedRacket] ; $5056
 	ld [wWaterSpriteMinigameFlag], a ; $5059
@@ -1478,7 +1478,7 @@ RepairCounterCheckEquipChanged:
 	script_set_text Text_6e_241 ; $5072
 	call PushEquipmentNameTextArg ; $5078
 	script_speak $0e ; $507b
-Label_0e_5080:
+.noChange:
 	script_set_text Text_6e_242 ; $5080
 	ld a, $0e ; $5086
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $5088
@@ -1544,14 +1544,14 @@ ShowEquipChangeConfirmation:
 	ld hl, $20ef ; $5156
 	add a, l ; $5159
 	ld l, a ; $515a
-	jr nc, Label_0e_515e ; $515b
+	jr nc, .speak ; $515b
 	inc h ; $515d
-Label_0e_515e:
+.speak:
 	farcall InitDialogueTextCursor ; $515e
 	call PushEquipmentNameTextArg ; $5161
 	ld a, [$c2bc] ; $5164
 	and a, a ; $5167
-	jr nz, Label_0e_51a3 ; $5168
+	jr nz, .handOver ; $5168
 	call MirrorPlayerSpriteIfLeftHanded ; $516a
 	script_set_anim ACTOR_PLAYER, $09 ; $516d
 	script_face ACTOR_PLAYER, FACE_DOWN ; $5174
@@ -1562,7 +1562,7 @@ Label_0e_515e:
 	script_face_toward $0e, ACTOR_PLAYER ; $5197
 	call MirrorPlayerSpriteIfLeftHanded ; $519f
 	ret ; $51a2
-Label_0e_51a3:
+.handOver:
 	script_face ACTOR_PLAYER, FACE_DOWN ; $51a3
 	script_set_actor_script ACTOR_PLAYER, ActorScript_0e_51e4 ; $51aa
 	script_speak $8c ; $51b5
@@ -1601,7 +1601,7 @@ ActorScript_0e_51e4:
 MirrorPlayerSpriteIfLeftHanded:
 	ld a, [wStoryModeMainCharacterLeftHanded] ; $520f
 	and a, a ; $5212
-	jr z, Label_0e_5224 ; $5213
+	jr z, .done ; $5213
 	script_get_actor_state ACTOR_PLAYER ; $5215
 	ld c, l ; $521a
 	ld b, h ; $521b
@@ -1610,7 +1610,7 @@ MirrorPlayerSpriteIfLeftHanded:
 	ld a, [hl] ; $5220
 	xor a, $20 ; $5221
 	ld [hl], a ; $5223
-Label_0e_5224:
+.done:
 	ret ; $5224
 ActorScript_0e_5225:
 	; $5225, 35 bytes (actor_script)
@@ -1677,9 +1677,9 @@ MarioWorldNpc11_0e:
 	ld a, [$c2b0] ; $539d
 	add a, l ; $53a0
 	ld l, a ; $53a1
-	jr nc, Label_0e_53a5 ; $53a2
+	jr nc, .speak ; $53a2
 	inc h ; $53a4
-Label_0e_53a5:
+.speak:
 	farcall InitDialogueTextCursor ; $53a5
 	script_speak $11 ; $53a8
 	ret ; $53ad
@@ -1688,9 +1688,9 @@ MarioWorldNpc0BLuigi_0e:
 	ld a, [$c2b0] ; $53b1
 	add a, l ; $53b4
 	ld l, a ; $53b5
-	jr nc, Label_0e_53b9 ; $53b6
+	jr nc, .speak ; $53b6
 	inc h ; $53b8
-Label_0e_53b9:
+.speak:
 	farcall InitDialogueTextCursor ; $53b9
 	script_speak $0b ; $53bc
 	ret ; $53c1
@@ -1719,9 +1719,9 @@ MarioWorldNpc0FBowser_0e:
 	ld a, [$c2b0] ; $53fd
 	add a, l ; $5400
 	ld l, a ; $5401
-	jr nc, Label_0e_5405 ; $5402
+	jr nc, .speak ; $5402
 	inc h ; $5404
-Label_0e_5405:
+.speak:
 	farcall InitDialogueTextCursor ; $5405
 	script_speak $0f ; $5408
 	ret ; $540d
@@ -1730,9 +1730,9 @@ MarioWorldNpc10Wario_0e:
 	ld a, [$c2b0] ; $5411
 	add a, l ; $5414
 	ld l, a ; $5415
-	jr nc, Label_0e_5419 ; $5416
+	jr nc, .speak ; $5416
 	inc h ; $5418
-Label_0e_5419:
+.speak:
 	farcall InitDialogueTextCursor ; $5419
 	script_speak $10 ; $541c
 	ret ; $5421
@@ -1741,9 +1741,9 @@ MarioWorldNpc0EWaluigi_0e:
 	ld a, [$c2b0] ; $5425
 	add a, l ; $5428
 	ld l, a ; $5429
-	jr nc, Label_0e_542d ; $542a
+	jr nc, .speak ; $542a
 	inc h ; $542c
-Label_0e_542d:
+.speak:
 	farcall InitDialogueTextCursor ; $542d
 	script_speak $0e ; $5430
 	ret ; $5435
@@ -1785,7 +1785,7 @@ MarioWorldInitScript_0e:
 	cp a, $0a ; $54d8
 	jp z, MarioWorldArrivalSingles ; $54da
 	cp a, $0e ; $54dd
-	jp z, Label_0e_69ad ; $54df
+	jp z, MoveDoublesPartnerToPlayer.checkDoubles ; $54df
 	cp a, $0f ; $54e2
 	jp z, MarioWorldArrivalSingles ; $54e4
 	test_flag FLAG_DOUBLES ; $54e7
@@ -1798,7 +1798,7 @@ MarioWorldInitScript_0e:
 	script_set_speed ACTOR_PLAYER, $0014 ; $54f6
 	script_move_target ACTOR_PLAYER, $1200, $1d00 ; $54fe
 .doubles:
-	jp Label_0e_69fb ; $5509
+	jp MoveDoublesPartnerToPlayer.placeActors ; $5509
 .placeActors:
 	test_flag FLAG_REACHED_MARIO_WORLD_DOUBLES ; $550c
 	ret z ; $550f
@@ -1808,7 +1808,7 @@ MarioWorldInitScript_0e:
 	script_set_speed ACTOR_PLAYER, $0014 ; $5516
 	script_move_target ACTOR_PLAYER, $1200, $1d00 ; $551e
 .done:
-	jp Label_0e_69fb ; $5529
+	jp MoveDoublesPartnerToPlayer.placeActors ; $5529
 	ret ; $552c
 ActorScript_0e_552d:
 	; $552d, 24 bytes (actor_script)
@@ -1832,20 +1832,20 @@ ActorScript_0e_5545:
 	as_halt
 ComputeMarioWorldProgressIndex:
 	test_flag FLAG_DOUBLES ; $555d
-	jr nz, Label_0e_556e ; $5560
+	jr nz, .doublesStage ; $5560
 	ld a, $00 ; $5562
 	test_flag FLAG_WON_DREAM_MATCH_SINGLES ; $5564
-	jr z, Label_0e_556a ; $5567
+	jr z, .loop ; $5567
 	inc a ; $5569
-Label_0e_556a:
+.loop:
 	ld [$c2b0], a ; $556a
 	ret ; $556d
-Label_0e_556e:
+.doublesStage:
 	ld a, $02 ; $556e
 	test_flag FLAG_WON_DREAM_MATCH_DOUBLES ; $5570
-	jr z, Label_0e_556a ; $5573
+	jr z, .loop ; $5573
 	inc a ; $5575
-	jr Label_0e_556a ; $5576
+	jr .loop ; $5576
 	ret ; $5578
 MarioWorldArrivalSingles:
 	test_flag FLAG_DOUBLES ; $5579
@@ -1853,7 +1853,7 @@ MarioWorldArrivalSingles:
 	test_flag FLAG_ENDING_CREDITS_RUNNING ; $557f
 	jr nz, .arrive ; $5582
 	test_flag FLAG_REACHED_MARIO_WORLD_SINGLES ; $5584
-	jp nz, Label_0e_69b3 ; $5587
+	jp nz, MoveDoublesPartnerToPlayer.singles ; $5587
 .arrive:
 	script_set_position ACTOR_PLAYER, $3f00, $3f00 ; $558a
 	script_fade_in $04 ; $5595
@@ -2095,7 +2095,7 @@ MarioWorldArrivalDoubles:
 	test_flag FLAG_ENDING_CREDITS_RUNNING ; $5bba
 	jr nz, .arrive ; $5bbd
 	test_flag FLAG_REACHED_MARIO_WORLD_DOUBLES ; $5bbf
-	jp nz, Label_0e_69c5 ; $5bc2
+	jp nz, MoveDoublesPartnerToPlayer.doubles ; $5bc2
 .arrive:
 	script_set_actor_script ACTOR_PARTNER, ActorScript_0e_7c6e ; $5bc5
 	script_set_position ACTOR_PLAYER, $3f00, $3f00 ; $5bd0
@@ -2397,7 +2397,7 @@ MarioWorldNpc08FaceDown_0e:
 	script_set_speed ACTOR_PLAYER, $0018 ; $633d
 	script_set_speed ACTOR_PARTNER, $0018 ; $6345
 	test_flag FLAG_DOUBLES ; $634d
-	jr nz, Label_0e_639b ; $6350
+	jr nz, .doubles ; $6350
 	script_move_target ACTOR_PLAYER, $1000, $0900 ; $6352
 	script_wait_move ACTOR_PLAYER ; $635d
 	script_move_target ACTOR_PLAYER, $1000, $0d00 ; $6362
@@ -2408,7 +2408,7 @@ MarioWorldNpc08FaceDown_0e:
 	script_face $08, FACE_DOWN ; $6389
 	script_set_speed ACTOR_PLAYER, $0010 ; $6390
 	jp PromptExhibitionMatch ; $6398
-Label_0e_639b:
+.doubles:
 	script_set_actor_script ACTOR_PARTNER, ActorScript_0e_7c6e ; $639b
 	call MoveDoublesPartnerToPlayer ; $63a6
 	script_face $08, FACE_DOWN ; $63a9
@@ -2436,7 +2436,7 @@ MarioWorldNpc08FaceUp_0e:
 	script_set_speed ACTOR_PLAYER, $0018 ; $63f4
 	script_set_speed ACTOR_PARTNER, $0018 ; $63fc
 	test_flag FLAG_DOUBLES ; $6404
-	jr nz, Label_0e_643f ; $6407
+	jr nz, .doubles ; $6407
 	script_facing_lock ACTOR_PLAYER, $01 ; $6409
 	script_move_target ACTOR_PLAYER, $1200, $0d00 ; $6410
 	script_wait_move ACTOR_PLAYER ; $641b
@@ -2445,7 +2445,7 @@ MarioWorldNpc08FaceUp_0e:
 	script_face ACTOR_PLAYER, FACE_UP ; $642e
 	script_face $08, FACE_DOWN ; $6435
 	jp PromptExhibitionMatch ; $643c
-Label_0e_643f:
+.doubles:
 	script_set_actor_script ACTOR_PARTNER, ActorScript_0e_7c6e ; $643f
 	call MoveDoublesPartnerToPlayer ; $644a
 	script_face $08, FACE_DOWN ; $644d
@@ -2477,7 +2477,7 @@ MarioWorldNpc08FaceRight_0e:
 	script_set_speed ACTOR_PLAYER, $0018 ; $64a4
 	script_set_speed ACTOR_PARTNER, $0018 ; $64ac
 	test_flag FLAG_DOUBLES ; $64b4
-	jr nz, Label_0e_64ea ; $64b7
+	jr nz, .doubles ; $64b7
 	script_move_target ACTOR_PLAYER, $1000, $0d00 ; $64b9
 	script_wait_move ACTOR_PLAYER ; $64c4
 	script_move_target ACTOR_PLAYER, $1200, $0d00 ; $64c9
@@ -2485,7 +2485,7 @@ MarioWorldNpc08FaceRight_0e:
 	script_face ACTOR_PLAYER, FACE_UP ; $64d9
 	script_face $08, FACE_DOWN ; $64e0
 	jp PromptExhibitionMatch ; $64e7
-Label_0e_64ea:
+.doubles:
 	script_set_actor_script ACTOR_PARTNER, ActorScript_0e_7c6e ; $64ea
 	call MoveDoublesPartnerToPlayer ; $64f5
 	script_face $08, FACE_DOWN ; $64f8
@@ -2517,7 +2517,7 @@ MarioWorldNpc08FaceLeft_0e:
 	script_set_speed ACTOR_PLAYER, $0018 ; $654f
 	script_set_speed ACTOR_PARTNER, $0018 ; $6557
 	test_flag FLAG_DOUBLES ; $655f
-	jr nz, Label_0e_6595 ; $6562
+	jr nz, .doubles ; $6562
 	script_move_target ACTOR_PLAYER, $1400, $0d00 ; $6564
 	script_wait_move ACTOR_PLAYER ; $656f
 	script_move_target ACTOR_PLAYER, $1200, $0d00 ; $6574
@@ -2525,7 +2525,7 @@ MarioWorldNpc08FaceLeft_0e:
 	script_face ACTOR_PLAYER, FACE_UP ; $6584
 	script_face $08, FACE_DOWN ; $658b
 	jp PromptExhibitionMatch ; $6592
-Label_0e_6595:
+.doubles:
 	script_set_actor_script ACTOR_PARTNER, ActorScript_0e_7c6e ; $6595
 	call MoveDoublesPartnerToPlayer ; $65a0
 	script_face $08, FACE_DOWN ; $65a3
@@ -2748,15 +2748,15 @@ MoveDoublesPartnerToPlayer:
 	farcall ScriptSetActorMoveTarget ; $69a4
 	script_wait_move ACTOR_PARTNER ; $69a7
 	ret ; $69ac
-Label_0e_69ad:
+.checkDoubles:
 	test_flag FLAG_DOUBLES ; $69ad
-	jp nz, Label_0e_69c5 ; $69b0
-Label_0e_69b3:
+	jp nz, .doubles ; $69b0
+.singles:
 	test_flag FLAG_REACHED_MARIO_WORLD_SINGLES ; $69b3
 	ret z ; $69b6
 	script_set_position ACTOR_PLAYER, $1200, $0f00 ; $69b7
-	jp Label_0e_69fb ; $69c2
-Label_0e_69c5:
+	jp .placeActors ; $69c2
+.doubles:
 	test_flag FLAG_REACHED_MARIO_WORLD_DOUBLES ; $69c5
 	ret z ; $69c8
 	farcall BeginCutsceneScriptMode ; $69c9
@@ -2766,8 +2766,8 @@ Label_0e_69c5:
 	script_set_position ACTOR_PLAYER, $1100, $0f00 ; $69df
 	script_set_position ACTOR_PARTNER, $1300, $0f00 ; $69ea
 	farcall EndCutsceneScriptMode ; $69f5
-	jp Label_0e_69fb ; $69f8
-Label_0e_69fb:
+	jp .placeActors ; $69f8
+.placeActors:
 	script_set_position $08, $1200, $0b00 ; $69fb
 	script_face $10, FACE_RIGHT ; $6a06
 	script_face $0f, FACE_RIGHT ; $6a0d
@@ -3114,16 +3114,16 @@ UpdateStarWarpSprite:
 	wram_bank $06 ; $71e9
 	ldh a, [hVBlankCounter] ; $71ef
 	and a, $01 ; $71f1
-	jr nz, Label_0e_7200 ; $71f3
+	jr nz, .draw ; $71f3
 	ld hl, $d000 ; $71f5
 	ld a, [hl] ; $71f8
 	inc a ; $71f9
 	cp a, $06 ; $71fa
-	jr nz, Label_0e_71ff ; $71fc
+	jr nz, .store ; $71fc
 	xor a, a ; $71fe
-Label_0e_71ff:
+.store:
 	ld [hl], a ; $71ff
-Label_0e_7200:
+.draw:
 	ld a, [$d000] ; $7200
 	rlca ; $7203
 	add a, $80 ; $7204
@@ -3357,14 +3357,14 @@ SpecialCourtTileTriggers_0e:
 SpecialCourtInitScript_0e:
 	ld a, [wStoryModeEntryPoint] ; $76e7
 	cp a, $07 ; $76ea
-	jr c, Label_0e_76f7 ; $76ec
+	jr c, .intro ; $76ec
 	cp a, $0a ; $76ee
-	jr z, Label_0e_76f3 ; $76f0
+	jr z, .result ; $76f0
 	ret ; $76f2
-Label_0e_76f3:
+.result:
 	call HandleExhibitionMatchResult ; $76f3
 	ret ; $76f6
-Label_0e_76f7:
+.intro:
 	call ExhibitionMatchIntroCutscene ; $76f7
 	ret ; $76fa
 ExhibitionMatchIntroCutscene:
