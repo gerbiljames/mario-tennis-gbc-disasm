@@ -2896,16 +2896,7 @@ CharDataBand8RunsStep1_1c:
 	db $00, $14, $00, $01, $00, $34, $06, $01, $00, $54, $0c, $01, $00, $74, $12, $01 ; 0x00
 	db $ff ; 0x10
 Palette_1c_598c:
-	; $598c, 64 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $5ad6, $015f, $0000, $7fff ; pal 0: #b4b4b4 #ff5200 #000000 #ffffff
-	dw $dad6, $6280, $0000, $63ff ; pal 1: #b4b4b4 #00a4c5 #000000 #ffffc5
-	dw $0004, $014a, $1100, $3324 ; pal 2: #200000 #525200 #004120 #20cd62
-	dw $0300, $0240, $0180, $0100 ; pal 3: #00c500 #009400 #006200 #004100
-	dw $0000, $294a, $5294, $7fff ; pal 4: #000000 #525252 #a4a4a4 #ffffff
-	dw $0180, $0100, $0100, $7fff ; pal 5: #006200 #004100 #004100 #ffffff
-	dw $015f, $001f, $0000, $7fff ; pal 6: #ff5200 #ff0000 #000000 #ffffff
-	dw $6280, $7c00, $0000, $63ff ; pal 7: #00a4c5 #0000ff #000000 #ffffc5
+	INCLUDE "data/bank_01c/palettes_598c.asm" ; $598c, 64 bytes (palettes)
 CharDataScreenGfx0_1c:
 	INCBIN "data/bank_01c/d_59cc.bin" ; $59cc, 2618 bytes
 CharDataScreenGfx1_1c:
@@ -3386,16 +3377,7 @@ LoadCharDataScreenMugshots:
 	farcall GrayscalePaletteColorInPlace ; $753d
 	ret ; $7540
 Palette_1c_7541:
-	; $7541, 64 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $5816, $0246, $0000, $7fff ; pal 0: #b400b4 #319400 #000000 #ffffff
-	dw $7c00, $03e0, $7fe0, $001f ; pal 1: #0000ff #00ff00 #00ffff #ff0000
-	dw $7c1f, $03ff, $7fff, $4210 ; pal 2: #ff00ff #ffff00 #ffffff #838383
-	dw $7fff, $0180, $0246, $0000 ; pal 3: #ffffff #006200 #319400 #000000
-	dw $7fff, $7e88, $0246, $0000 ; pal 4: #ffffff #41a4ff #319400 #000000
-	dw $7fff, $0092, $0380, $0000 ; pal 5: #ffffff #942000 #00e600 #000000
-	dw $7fff, $0198, $031f, $0000 ; pal 6: #ffffff #c56200 #ffc500 #000000
-	dw $7fff, $195f, $0246, $0000 ; pal 7: #ffffff #ff5231 #319400 #000000
+	INCLUDE "data/bank_01c/palettes_7541.asm" ; $7541, 64 bytes (palettes)
 CharDataScreenBgAndPalettes0:
 	INCBIN "data/bank_01c/d_7581.bin" ; $7581, 1886 bytes
 CharDataScreenBgAndPalettes1:

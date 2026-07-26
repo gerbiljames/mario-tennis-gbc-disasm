@@ -51,16 +51,7 @@ DataPtr_AcademyGroundsTiles:
 DormBedroomSceneConfig:
 	INCBIN "data/bank_064/d_4030.bin" ; $4030, 42 bytes
 DormBedroomPalettes:
-	; $405a, 64 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $0160, $5520, $7ea0, $781f ; pal 0: #005a00 #004aac #00acff #ff00f6
-	dw $2508, $2508, $2508, $2508 ; pal 1: #41414a #41414a #41414a #41414a
-	dw $7fff, $311a, $6988, $1882 ; pal 2: #ffffff #d54162 #4162d5 #102031
-	dw $7fff, $5a70, $3547, $1882 ; pal 3: #ffffff #839cb4 #39526a #102031
-	dw $285d, $7fff, $1ee4, $10c1 ; pal 4: #ee1052 #ffffff #20bd39 #083120
-	dw $7f35, $6e0c, $5525, $2c81 ; pal 5: #accdff #6283de #294aac #08205a
-	dw $629f, $419b, $24b5, $102b ; pal 6: #ffa4c5 #de6283 #ac294a #5a0820
-	dw $679f, $4276, $216e, $0487 ; pal 7: #ffe6cd #b49c83 #735a41 #392008
+	INCLUDE "data/bank_064/palettes_405a.asm" ; $405a, 64 bytes (palettes)
 DormBedroomTiles:
 	INCBIN "data/bank_064/lz_409a.bin" ; $409a, 2307 bytes
 DormBedroomTilemap:
@@ -74,16 +65,7 @@ DormBedroomAuxAttrmap:
 CountrysideSceneConfig:
 	INCBIN "data/bank_064/d_4f1c.bin" ; $4f1c, 42 bytes
 CountrysidePalettes:
-	; $4f46, 64 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $09ea, $5520, $7ea0, $7fff ; pal 0: #527b10 #004aac #00acff #ffffff
-	dw $2508, $2508, $2508, $2508 ; pal 1: #41414a #41414a #41414a #41414a
-	dw $0300, $0118, $039f, $3088 ; pal 2: #00c500 #c54100 #ffe600 #412062
-	dw $3bf2, $7fe8, $0300, $3088 ; pal 3: #94ff73 #41ffff #00c500 #412062
-	dw $039f, $0118, $025f, $3088 ; pal 4: #ffe600 #c54100 #ff9400 #412062
-	dw $7fff, $3088, $4631, $0300 ; pal 5: #ffffff #412062 #8b8b8b #00c500
-	dw $7fe8, $7fff, $011f, $3088 ; pal 6: #41ffff #ffffff #ff4100 #412062
-	dw $2508, $2508, $2508, $2508 ; pal 7: #41414a #41414a #41414a #41414a
+	INCLUDE "data/bank_064/palettes_4f46.asm" ; $4f46, 64 bytes (palettes)
 CountrysideTiles:
 	INCBIN "data/bank_064/lz_4f86.bin" ; $4f86, 3238 bytes
 CountrysideTilemap:
@@ -97,16 +79,7 @@ CountrysideAuxAttrmap:
 AcademyGroundsSceneConfig:
 	INCBIN "data/bank_064/d_6193.bin" ; $6193, 27 bytes
 AcademyGroundsPalettes:
-	; $61ae, 64 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $7c00, $6bff, $1e58, $294a ; pal 0: #0000ff #ffffd5 #c59439 #525252
-	dw $0120, $7fff, $0154, $0000 ; pal 1: #004a00 #ffffff #a45200 #000000
-	dw $3240, $4b80, $7fff, $1006 ; pal 2: #009462 #00e694 #ffffff #310020
-	dw $0220, $02d0, $7fff, $1006 ; pal 3: #008b00 #83b400 #ffffff #310020
-	dw $021a, $02d0, $0220, $1006 ; pal 4: #d58300 #83b400 #008b00 #310020
-	dw $0220, $7fff, $4210, $1006 ; pal 5: #008b00 #ffffff #838383 #310020
-	dw $0220, $7c1f, $7fff, $1006 ; pal 6: #008b00 #ff00ff #ffffff #310020
-	dw $7ec0, $3def, $7fff, $1006 ; pal 7: #00b4ff #7b7b7b #ffffff #310020
+	INCLUDE "data/bank_064/palettes_61ae.asm" ; $61ae, 64 bytes (palettes)
 AcademyGroundsTiles:
 	INCBIN "data/bank_064/lz_61ee.bin" ; $61ee, 3100 bytes
 AcademyGroundsTilemap:

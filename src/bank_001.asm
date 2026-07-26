@@ -239,16 +239,7 @@ MenuFontFillTiles_01:
 	; $4a10, 1536 bytes (pattern)
 	ds 1536, $ff, $00
 MenuFontPalettes_01:
-	; $5010, 64 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $7fff, $6bff, $1e58, $0000 ; pal 0: #ffffff #ffffd5 #c59439 #000000
-	dw $0160, $7fff, $3def, $0000 ; pal 1: #005a00 #ffffff #7b7b7b #000000
-	dw $6587, $7fff, $5294, $0000 ; pal 2: #3962cd #ffffff #a4a4a4 #000000
-	dw $4a5f, $5fbf, $28df, $0000 ; pal 3: #ff9494 #ffeebd #ff3152 #000000
-	dw $03f2, $034b, $12c8, $19e0 ; pal 4: #94ff00 #5ad500 #41b420 #007b31
-	dw $0120, $0210, $2318, $53ff ; pal 5: #004a00 #838300 #c5c541 #ffffa4
-	dw $0120, $000f, $2118, $529f ; pal 6: #004a00 #7b0000 #c54141 #ffa4a4
-	dw $0120, $4000, $5184, $7ff4 ; pal 7: #004a00 #000083 #2062a4 #a4ffff
+	INCLUDE "data/bank_001/palettes_5010.asm" ; $5010, 64 bytes (palettes)
 LoadMenuFontPalette:
 	push af ; $5050
 	push bc ; $5051
@@ -341,24 +332,7 @@ LoadMenuFontGfxStaged:
 	call LoadMenuTilesBStaged ; $50f2
 	ret ; $50f5
 DebugMenuPalettes_01:
-	; $50f6, 128 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $2928, $7fff, $39ce, $0000 ; pal 0: #414a52 #ffffff #737373 #000000
-	dw $294a, $294a, $294a, $294a ; pal 1: #525252 #525252 #525252 #525252
-	dw $294a, $294a, $294a, $294a ; pal 2: #525252 #525252 #525252 #525252
-	dw $1adc, $6bff, $1e40, $0000 ; pal 3: #e6b431 #ffffd5 #009439 #000000
-	dw $225f, $6bff, $505c, $0000 ; pal 4: #ff9441 #ffffd5 #e610a4 #000000
-	dw $331f, $6bff, $01df, $0000 ; pal 5: #ffc562 #ffffd5 #ff7300 #000000
-	dw $5a9f, $6bff, $001f, $0000 ; pal 6: #ffa4b4 #ffffd5 #ff0000 #000000
-	dw $3acc, $6bff, $7d4a, $0000 ; pal 7: #62b473 #ffffd5 #5252ff #000000
-	dw $6e43, $679f, $258f, $0000 ; pal 8: #1894de #ffe6cd #7b624a #000000
-	dw $294a, $294a, $294a, $294a ; pal 9: #525252 #525252 #525252 #525252
-	dw $294a, $294a, $294a, $294a ; pal 10: #525252 #525252 #525252 #525252
-	dw $01ff, $011f, $7fff, $0000 ; pal 11: #ff7b00 #ff4100 #ffffff #000000
-	dw $01ff, $011f, $7fff, $0000 ; pal 12: #ff7b00 #ff4100 #ffffff #000000
-	dw $01ff, $011f, $7fff, $0000 ; pal 13: #ff7b00 #ff4100 #ffffff #000000
-	dw $01ff, $011f, $7fff, $0000 ; pal 14: #ff7b00 #ff4100 #ffffff #000000
-	dw $01ff, $011f, $7fff, $0000 ; pal 15: #ff7b00 #ff4100 #ffffff #000000
+	INCLUDE "data/bank_001/palettes_50f6.asm" ; $50f6, 128 bytes (palettes)
 LoadMenuBgPalettes3To7:
 	push af ; $5176
 	push bc ; $5177
@@ -406,16 +380,7 @@ UnusedJpWindowTiles_01:
 UnusedJpFontTiles_01:
 	INCBIN "data/bank_001/d_53b0.bin" ; $53b0, 3136 bytes
 UnusedJpFontPalettes_01:
-	; $5ff0, 64 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $0180, $7fff, $3def, $0000 ; pal 0: #006200 #ffffff #7b7b7b #000000
-	dw $1d2f, $7c00, $001f, $0000 ; pal 1: #7b4a39 #0000ff #ff0000 #000000
-	dw $1d2f, $7fff, $001f, $0000 ; pal 2: #7b4a39 #ffffff #ff0000 #000000
-	dw $01e0, $2508, $2508, $2508 ; pal 3: #007b00 #41414a #41414a #41414a
-	dw $01e0, $2508, $2508, $2508 ; pal 4: #007b00 #41414a #41414a #41414a
-	dw $0180, $0210, $235a, $63ff ; pal 5: #006200 #838300 #d5d541 #ffffc5
-	dw $0180, $085f, $39df, $631f ; pal 6: #006200 #ff1010 #ff7373 #ffc5c5
-	dw $0180, $0a82, $43f0, $63f8 ; pal 7: #006200 #10a410 #83ff83 #c5ffc5
+	INCLUDE "data/bank_001/palettes_5ff0.asm" ; $5ff0, 64 bytes (palettes)
 ShowDmgLockoutScreen:
 	ld a, $00 ; $6030
 	ldh [rLCDC], a ; $6032

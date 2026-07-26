@@ -1120,14 +1120,7 @@ BuildRankingBoardScreen:
 .queueWram3MapToVRAM:
 	farcall QueueWram3MapToVRAM ; $4f72
 	ret ; $4f75
-	; $4f76, 48 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $00ab, $01dc, $039f, $7fff ; pal 0: #5a2900 #e67300 #ffe600 #ffffff
-	dw $5900, $7a00, $7bc5, $7fff ; pal 1: #0041b4 #0083f6 #29f6f6 #ffffff
-	dw $002f, $011d, $225f, $7fff ; pal 2: #7b0800 #ee4100 #ff9441 #ffffff
-	dw $484c, $7c91, $7e38, $7fff ; pal 3: #621094 #8b20ff #c58bff #ffffff
-	dw $0260, $00ff, $27ff, $0000 ; pal 4: #009c00 #ff3900 #ffff4a #000000
-	dw $0260, $68af, $6e1f, $0000 ; pal 5: #009c00 #7b29d5 #ff83de #000000
+	INCLUDE "data/bank_01b/palettes_4f76.asm" ; $4f76, 48 bytes (palettes)
 LoadRankingBoardTiles:
 	ldh a, [hWramBank] ; $4fa6
 	push af ; $4fa8
@@ -4267,9 +4260,7 @@ LoadUnlockDebugCursorGfx:
 UnlockDebugCursorGfx:
 	INCBIN "data/bank_01b/d_690a.bin" ; $690a, 38 bytes
 Palette_1b_6930:
-	; $6930, 8 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $7e80, $53df, $0a9f, $0000 ; pal 0: #00a4ff #fff6a4 #ffa410 #000000
+	INCLUDE "data/bank_01b/palettes_6930.asm" ; $6930, 8 bytes (palettes)
 DrawUnlockDebugFlagSprites:
 	ldh a, [hWramBank] ; $6938
 	push af ; $693a

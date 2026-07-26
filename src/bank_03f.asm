@@ -585,29 +585,9 @@ TennisDictionaryListData:
 TennisDictionaryListDataAlt:
 	INCBIN "data/bank_03f/d_470b.bin" ; $470b, 163 bytes
 TennisDictionaryPalettesChar6:
-	; $47ae, 72 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $42d6, $5b9c, $2252, $0884 ; pal 0: #b4b483 #e6e6b4 #949441 #202010
-	dw $0880, $0884, $2252, $5b9c ; pal 1: #002010 #202010 #949441 #e6e6b4
-	dw $59c2, $035f, $02df, $4250 ; pal 2: #1073b4 #ffd500 #ffb400 #839483
-	dw $6bdf, $3a92, $2902, $0000 ; pal 3: #fff6d5 #94a473 #104152 #000000
-	dw $6244, $59c2, $4940, $3900 ; pal 4: #2094c5 #1073b4 #005294 #004173
-	dw $5982, $4940, $0880, $0880 ; pal 5: #1062b4 #005294 #002010 #002010
-	dw $5b9c, $3a94, $0884, $03ff ; pal 6: #e6e6b4 #a4a473 #202010 #ffff00
-	dw $435c, $0db7, $3296, $110c ; pal 7: #e6d583 #bd6a18 #b4a462 #624120
-	dw $0000, $0db7, $3296, $110c ; pal 8: #000000 #bd6a18 #b4a462 #624120
+	INCLUDE "data/bank_03f/palettes_47ae.asm" ; $47ae, 72 bytes (palettes)
 TennisDictionaryPalettesDefault:
-	; $47f6, 72 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $42d6, $5b9c, $2252, $0884 ; pal 0: #b4b483 #e6e6b4 #949441 #202010
-	dw $0880, $0884, $2252, $435c ; pal 1: #002010 #202010 #949441 #e6d583
-	dw $435c, $0db7, $0046, $03ff ; pal 2: #e6d583 #bd6a18 #311000 #ffff00
-	dw $1173, $0dc9, $165f, $0a14 ; pal 3: #9c5a20 #4a7318 #ff9429 #a48310
-	dw $21d1, $5b9c, $42d6, $0000 ; pal 4: #8b7341 #e6e6b4 #b4b483 #000000
-	dw $165f, $03ff, $0154, $0000 ; pal 5: #ff9429 #ffff00 #a45200 #000000
-	dw $5b9c, $42d6, $228a, $11c0 ; pal 6: #e6e6b4 #b4b483 #52a441 #007320
-	dw $001f, $0884, $2a1f, $03f3 ; pal 7: #ff0000 #202010 #ff8352 #9cff00
-	dw $165f, $0884, $2a1f, $03f3 ; pal 8: #ff9429 #202010 #ff8352 #9cff00
+	INCLUDE "data/bank_03f/palettes_47f6.asm" ; $47f6, 72 bytes (palettes)
 TennisDictionaryTiles8000:
 	INCBIN "data/bank_03f/lz_483e.bin" ; $483e, 287 bytes
 TennisDictionaryTiles8200:
@@ -621,14 +601,7 @@ TennisDictionaryTilesA200:
 TennisDictionaryTilesA400:
 	INCBIN "data/bank_03f/lz_4d8b.bin" ; $4d8b, 174 bytes
 TennisDictionaryPalettes:
-	; $4e39, 48 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $014b, $7fff, $121f, $0000 ; pal 0: #5a5200 #ffffff #ff8320 #000000
-	dw $014b, $7e5f, $7ec0, $281c ; pal 1: #5a5200 #ff94ff #00b4ff #e60052
-	dw $7fe0, $00ff, $7d80, $0000 ; pal 2: #00ffff #ff3900 #0062ff #000000
-	dw $7fe0, $6bff, $7ece, $0000 ; pal 3: #00ffff #ffffd5 #73b4ff #000000
-	dw $7fe0, $00ff, $67ff, $0000 ; pal 4: #00ffff #ff3900 #ffffcd #000000
-	dw $7fe0, $165f, $03ff, $0000 ; pal 5: #00ffff #ff9429 #ffff00 #000000
+	INCLUDE "data/bank_03f/palettes_4e39.asm" ; $4e39, 48 bytes (palettes)
 EndTennisDictionaryAnim:
 	ld a, [$cb38] ; $4e69
 	cp a, $03 ; $4e6c
@@ -1877,16 +1850,7 @@ VarsityTeamChartTilemap:
 VarsityTeamChartAttrmap:
 	INCBIN "data/bank_03f/lz_6944.bin" ; $6944, 141 bytes
 VarsityTeamChartPalettes:
-	; $69d1, 64 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $67f9, $0000, $0098, $031f ; pal 0: #cdffcd #000000 #c52000 #ffc500
-	dw $0000, $0000, $0000, $0000 ; pal 1: #000000 #000000 #000000 #000000
-	dw $0c63, $0220, $5294, $7ffd ; pal 2: #181818 #008b00 #a4a4a4 #eeffff
-	dw $0000, $67f9, $0098, $031f ; pal 3: #000000 #cdffcd #c52000 #ffc500
-	dw $0c63, $7e80, $5294, $7ffd ; pal 4: #181818 #00a4ff #a4a4a4 #eeffff
-	dw $67f9, $0000, $0098, $031f ; pal 5: #cdffcd #000000 #c52000 #ffc500
-	dw $0000, $4e16, $73ff, $67f9 ; pal 6: #000000 #b4839c #ffffe6 #cdffcd
-	dw $0000, $3140, $7ff6, $7e80 ; pal 7: #000000 #005262 #b4ffff #00a4ff
+	INCLUDE "data/bank_03f/palettes_69d1.asm" ; $69d1, 64 bytes (palettes)
 VarsityTeamChartTilemap2:
 	INCBIN "data/bank_03f/lz_6a11.bin" ; $6a11, 317 bytes
 VarsityTeamChartAttrmap2:

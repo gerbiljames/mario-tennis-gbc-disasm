@@ -3659,16 +3659,7 @@ ApplyCharViewerPalette:
 	farcall LoadIndexedPaletteThunk ; $70d5
 	ret ; $70d8
 Palette_1a_70d9:
-	; $70d9, 64 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $5ad6, $1100, $0000, $7fff ; pal 0: #b4b4b4 #004120 #000000 #ffffff
-	dw $5ad6, $1100, $0000, $2529 ; pal 1: #b4b4b4 #004120 #000000 #4a4a4a
-	dw $19d8, $36ff, $0061, $7fff ; pal 2: #c57331 #ffbd6a #081800 #ffffff
-	dw $0061, $7e00, $36ff, $7fff ; pal 3: #081800 #0083ff #ffbd6a #ffffff
-	dw $0061, $7c1f, $36ff, $7fff ; pal 4: #081800 #ff00ff #ffbd6a #ffffff
-	dw $0260, $7e80, $0061, $7fff ; pal 5: #009c00 #00a4ff #081800 #ffffff
-	dw $1100, $19d8, $0061, $7fff ; pal 6: #004120 #c57331 #081800 #ffffff
-	dw $7fff, $03ee, $0340, $0204 ; pal 7: #ffffff #73ff00 #00d500 #208300
+	INCLUDE "data/bank_01a/palettes_70d9.asm" ; $70d9, 64 bytes (palettes)
 CharViewerScreenGfx0:
 	INCBIN "data/bank_01a/d_7119.bin" ; $7119, 1636 bytes
 CharViewerScreenGfx1:
@@ -4344,10 +4335,7 @@ CharDataConfirmScreenGfx1:
 CharDataConfirmScreenGfx2:
 	INCBIN "data/bank_01a/d_7e75.bin" ; $7e75, 9 bytes
 Palette_1a_7e7e:
-	; $7e7e, 16 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $7e00, $7fff, $192c, $63f8 ; pal 0: #0083ff #ffffff #624a31 #c5ffc5
-	dw $7e00, $190a, $0000, $7fff ; pal 1: #0083ff #524131 #000000 #ffffff
+	INCLUDE "data/bank_01a/palettes_7e7e.asm" ; $7e7e, 16 bytes (palettes)
 CharDataScreenGfx0:
 	INCBIN "data/bank_01a/d_7e8e.bin" ; $7e8e, 11 bytes
 CharDataScreenGfx1:

@@ -115,16 +115,7 @@ CompanyLogosTilemap:
 CompanyLogosAttrmap:
 	INCBIN "data/bank_06c/lz_48af.bin" ; $48af, 87 bytes
 CompanyLogosPalettes:
-	; $4906, 64 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $0000, $294a, $5294, $7fff ; pal 0: #000000 #525252 #a4a4a4 #ffffff
-	dw $0000, $7fff, $396b, $62f6 ; pal 1: #000000 #ffffff #5a5a73 #b4bdc5
-	dw $0000, $7fff, $354a, $035e ; pal 2: #000000 #ffffff #52526a #f6d500
-	dw $0000, $0000, $0000, $0000 ; pal 3: #000000 #000000 #000000 #000000
-	dw $0000, $0000, $0000, $0000 ; pal 4: #000000 #000000 #000000 #000000
-	dw $0000, $0000, $0000, $0000 ; pal 5: #000000 #000000 #000000 #000000
-	dw $0000, $0000, $0000, $0000 ; pal 6: #000000 #000000 #000000 #000000
-	dw $0000, $0000, $0000, $0000 ; pal 7: #000000 #000000 #000000 #000000
+	INCLUDE "data/bank_06c/palettes_4906.asm" ; $4906, 64 bytes (palettes)
 IntroRalliesTiles:
 	INCBIN "data/bank_06c/lz_4946.bin" ; $4946, 1813 bytes
 IntroRalliesTilemap:
@@ -144,16 +135,7 @@ IntroRalliesTilemap4:
 IntroRalliesAttrmap4:
 	INCBIN "data/bank_06c/lz_539e.bin" ; $539e, 70 bytes
 IntroRalliesPalettes:
-	; $53e4, 64 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $18c6, $294a, $294a, $294a ; pal 0: #313131 #525252 #525252 #525252
-	dw $7e08, $7d84, $6940, $5100 ; pal 1: #4183ff #2062ff #0052d5 #0041a4
-	dw $7fff, $4252, $214a, $0000 ; pal 2: #ffffff #949483 #525241 #000000
-	dw $294a, $294a, $294a, $294a ; pal 3: #525252 #525252 #525252 #525252
-	dw $294a, $294a, $294a, $294a ; pal 4: #525252 #525252 #525252 #525252
-	dw $294a, $294a, $294a, $294a ; pal 5: #525252 #525252 #525252 #525252
-	dw $294a, $294a, $294a, $294a ; pal 6: #525252 #525252 #525252 #525252
-	dw $294a, $294a, $294a, $294a ; pal 7: #525252 #525252 #525252 #525252
+	INCLUDE "data/bank_06c/palettes_53e4.asm" ; $53e4, 64 bytes (palettes)
 CutsceneGfx0:
 	INCBIN "data/bank_06c/lz_5424.bin" ; $5424, 45 bytes
 CutsceneGfx1:
@@ -175,16 +157,7 @@ IntroSwingTilemap:
 IntroSwingAttrmap:
 	INCBIN "data/bank_06c/lz_5d0f.bin" ; $5d0f, 70 bytes
 IntroSwingPalettes:
-	; $5d55, 64 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $2108, $294a, $294a, $294a ; pal 0: #414141 #525252 #525252 #525252
-	dw $3a96, $73ff, $115f, $0000 ; pal 1: #b4a473 #ffffe6 #ff5220 #000000
-	dw $294a, $294a, $294a, $0000 ; pal 2: #525252 #525252 #525252 #000000
-	dw $294a, $294a, $294a, $294a ; pal 3: #525252 #525252 #525252 #525252
-	dw $294a, $294a, $294a, $294a ; pal 4: #525252 #525252 #525252 #525252
-	dw $294a, $294a, $294a, $294a ; pal 5: #525252 #525252 #525252 #525252
-	dw $294a, $294a, $294a, $294a ; pal 6: #525252 #525252 #525252 #525252
-	dw $294a, $294a, $294a, $294a ; pal 7: #525252 #525252 #525252 #525252
+	INCLUDE "data/bank_06c/palettes_5d55.asm" ; $5d55, 64 bytes (palettes)
 IntroCloseupTiles:
 	INCBIN "data/bank_06c/lz_5d95.bin" ; $5d95, 1061 bytes
 IntroCloseupTilemap:
@@ -192,16 +165,7 @@ IntroCloseupTilemap:
 IntroCloseupAttrmap:
 	INCBIN "data/bank_06c/lz_6264.bin" ; $6264, 74 bytes
 IntroCloseupPalettes:
-	; $62ae, 64 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $2928, $7fff, $3e4d, $0000 ; pal 0: #414a52 #ffffff #6a947b #000000
-	dw $294a, $294a, $294a, $294a ; pal 1: #525252 #525252 #525252 #525252
-	dw $294a, $294a, $294a, $0000 ; pal 2: #525252 #525252 #525252 #000000
-	dw $1adc, $73ff, $1e40, $0000 ; pal 3: #e6b431 #ffffe6 #009439 #000000
-	dw $225f, $73ff, $505c, $0000 ; pal 4: #ff9441 #ffffe6 #e610a4 #000000
-	dw $42dc, $73ff, $021f, $0000 ; pal 5: #e6b483 #ffffe6 #ff8300 #000000
-	dw $5a9f, $73ff, $001f, $0000 ; pal 6: #ffa4b4 #ffffe6 #ff0000 #000000
-	dw $3acc, $73ff, $7d4a, $0000 ; pal 7: #62b473 #ffffe6 #5252ff #000000
+	INCLUDE "data/bank_06c/palettes_62ae.asm" ; $62ae, 64 bytes (palettes)
 IntroWaveTiles:
 	INCBIN "data/bank_06c/lz_62ee.bin" ; $62ee, 1266 bytes
 IntroWaveTilemap:
@@ -209,16 +173,7 @@ IntroWaveTilemap:
 IntroWaveAttrmap:
 	INCBIN "data/bank_06c/lz_68c2.bin" ; $68c2, 72 bytes
 IntroWavePalettes:
-	; $690a, 64 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $2928, $7fff, $3e4d, $0000 ; pal 0: #414a52 #ffffff #6a947b #000000
-	dw $294a, $294a, $294a, $294a ; pal 1: #525252 #525252 #525252 #525252
-	dw $294a, $294a, $294a, $294a ; pal 2: #525252 #525252 #525252 #525252
-	dw $1adc, $73ff, $1e40, $0000 ; pal 3: #e6b431 #ffffe6 #009439 #000000
-	dw $225f, $73ff, $505c, $0000 ; pal 4: #ff9441 #ffffe6 #e610a4 #000000
-	dw $4b5a, $73ff, $01df, $0000 ; pal 5: #d5d594 #ffffe6 #ff7300 #000000
-	dw $5a9f, $73ff, $001f, $0000 ; pal 6: #ffa4b4 #ffffe6 #ff0000 #000000
-	dw $3acc, $73ff, $7d4a, $0000 ; pal 7: #62b473 #ffffe6 #5252ff #000000
+	INCLUDE "data/bank_06c/palettes_690a.asm" ; $690a, 64 bytes (palettes)
 IntroDiveTiles:
 	INCBIN "data/bank_06c/lz_694a.bin" ; $694a, 1188 bytes
 IntroDiveTilemap:
@@ -226,16 +181,7 @@ IntroDiveTilemap:
 IntroDiveAttrmap:
 	INCBIN "data/bank_06c/lz_6eab.bin" ; $6eab, 72 bytes
 IntroDivePalettes:
-	; $6ef3, 64 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $2928, $7fff, $3e4d, $0000 ; pal 0: #414a52 #ffffff #6a947b #000000
-	dw $294a, $294a, $294a, $294a ; pal 1: #525252 #525252 #525252 #525252
-	dw $294a, $294a, $294a, $294a ; pal 2: #525252 #525252 #525252 #525252
-	dw $1adc, $73ff, $1e40, $0000 ; pal 3: #e6b431 #ffffe6 #009439 #000000
-	dw $42dd, $73ff, $505f, $0000 ; pal 4: #eeb483 #ffffe6 #ff10a4 #000000
-	dw $331f, $73ff, $01df, $0000 ; pal 5: #ffc562 #ffffe6 #ff7300 #000000
-	dw $5a9f, $73ff, $001f, $0000 ; pal 6: #ffa4b4 #ffffe6 #ff0000 #000000
-	dw $3acc, $73ff, $7d4a, $0000 ; pal 7: #62b473 #ffffe6 #5252ff #000000
+	INCLUDE "data/bank_06c/palettes_6ef3.asm" ; $6ef3, 64 bytes (palettes)
 IntroGirlSwingTiles:
 	INCBIN "data/bank_06c/lz_6f33.bin" ; $6f33, 1131 bytes
 IntroGirlSwingTilemap:
@@ -243,16 +189,7 @@ IntroGirlSwingTilemap:
 IntroGirlSwingAttrmap:
 	INCBIN "data/bank_06c/lz_7453.bin" ; $7453, 72 bytes
 IntroGirlSwingPalettes:
-	; $749b, 64 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $2928, $7fff, $3e4d, $0000 ; pal 0: #414a52 #ffffff #6a947b #000000
-	dw $294a, $294a, $294a, $294a ; pal 1: #525252 #525252 #525252 #525252
-	dw $294a, $294a, $294a, $294a ; pal 2: #525252 #525252 #525252 #525252
-	dw $1adc, $73ff, $1e40, $0000 ; pal 3: #e6b431 #ffffe6 #009439 #000000
-	dw $225f, $73ff, $505c, $0000 ; pal 4: #ff9441 #ffffe6 #e610a4 #000000
-	dw $5ade, $73ff, $219f, $0000 ; pal 5: #f6b4b4 #ffffe6 #ff6241 #000000
-	dw $5a9f, $73ff, $001f, $0000 ; pal 6: #ffa4b4 #ffffe6 #ff0000 #000000
-	dw $3acc, $73ff, $7d4a, $0000 ; pal 7: #62b473 #ffffe6 #5252ff #000000
+	INCLUDE "data/bank_06c/palettes_749b.asm" ; $749b, 64 bytes (palettes)
 IntroGfx0:
 	INCBIN "data/bank_06c/lz_74db.bin" ; $74db, 204 bytes
 IntroGfx1:

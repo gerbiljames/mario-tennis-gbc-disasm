@@ -3269,9 +3269,7 @@ UpdateStarWarpTrailSparkles:
 	jr nz, .drawLoop ; $72cb
 	ret ; $72cd
 StarWarpPalette:
-	; $72ce, 8 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $7e1f, $7fff, $021f, $008d ; pal 0: #ff83ff #ffffff #ff8300 #6a2000
+	INCLUDE "data/bank_00e/palettes_72ce.asm" ; $72ce, 8 bytes (palettes)
 	; $72d6, 10 bytes (fill)
 	ds 10, $00
 StarWarpTiles:

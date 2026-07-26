@@ -1111,10 +1111,7 @@ LoadMatchResultPalettes:
 	ld de, $0101 ; $4a3f
 	call LoadPaletteShadow ; $4a42
 	ret ; $4a45
-	; $4a46, 16 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $7de0, $5160, $2900, $2900 ; pal 0: #007bff #005aa4 #004152 #004152
-	dw $5a9f, $39bf, $009f, $001f ; pal 1: #ffa4b4 #ff6a73 #ff2000 #ff0000
+	INCLUDE "data/bank_016/palettes_4a46.asm" ; $4a46, 16 bytes (palettes)
 AdjustResultTilemapForLoss:
 	ld a, [wMatchWinLoseFlag] ; $4a56
 	cp a, $ff ; $4a59

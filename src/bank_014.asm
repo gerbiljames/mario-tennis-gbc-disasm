@@ -1773,9 +1773,7 @@ SpriteTemplate_14_5e50:
 	oam_sprite $20, $20, $0e, $00
 	oam_sprite_end
 IslandObjPalette_14:
-	; $5e71, 8 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $3808, $7ffc, $294a, $001f ; pal 0: #410073 #e6ffff #525252 #ff0000
+	INCLUDE "data/bank_014/palettes_5e71.asm" ; $5e71, 8 bytes (palettes)
 LoadPlaneObjGfx_14:
 	ldh a, [hWramBank] ; $5e79
 	push af ; $5e7b
@@ -1826,9 +1824,7 @@ SpriteTemplate_14_6090:
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
 Palette_14_6099:
-	; $6099, 8 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $3808, $7ffc, $294a, $001f ; pal 0: #410073 #e6ffff #525252 #ff0000
+	INCLUDE "data/bank_014/palettes_6099.asm" ; $6099, 8 bytes (palettes)
 LoadWaterSplashObjGfx_14:
 	ldh a, [hWramBank] ; $60a1
 	push af ; $60a3
@@ -2481,18 +2477,7 @@ SpriteTemplate_14_6e80:
 	oam_sprite $20, $20, $0e, $00
 	oam_sprite_end
 FireworkObjPalettes_14:
-	; $6ea1, 79 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $0000, $7fe0, $03ff, $7c1f ; pal 0: #000000 #00ffff #ffff00 #ff00ff
-	dw $0000, $7c1f, $7fe0, $03ff ; pal 1: #000000 #ff00ff #00ffff #ffff00
-	dw $0000, $03ff, $7c1f, $7fe0 ; pal 2: #000000 #ffff00 #ff00ff #00ffff
-	dw $0000, $7c1f, $7fe0, $03ff ; pal 3: #000000 #ff00ff #00ffff #ffff00
-	dw $94f0, $02e6, $2828, $403e ; pal 4: #833929 #31bd00 #410852 #f60883
-	dw $b2ea, $3ec2, $ea30, $c2b4 ; pal 5: #52bd62 #10b47b #838bd5 #a4ac83
-	dw $003e, $b6ea, $3ec2, $ea1e ; pal 6: #f60800 #52bd6a #10b47b #f683d5
-	dw $c2b8, $683e, $b3ea, $3ec2 ; pal 7: #c5ac83 #f608d5 #52ff62 #10b47b
-	dw $ea38, $c2b5, $003e, $b7ea ; pal 8: #c58bd5 #acac83 #f60800 #52ff6a
-	db $c2, $3e, $1e, $ea, $b9, $c2, $c9
+	INCLUDE "data/bank_014/palettes_6ea1.asm" ; $6ea1, 79 bytes (palettes)
 UpdateFirework1_14:
 	ld a, [wWaterSpriteMinigameSwingCount + 1] ; $6ef0
 	cp a, $04 ; $6ef3
@@ -2793,12 +2778,7 @@ SpriteTemplate_14_7371:
 	oam_sprite $20, $18, $0a, $00
 	oam_sprite_end
 IslandSkyPalettes_14:
-	; $738a, 32 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $2008, $201f, $035f, $1306 ; pal 0: #410041 #ff0041 #ffd500 #31c520
-	dw $2008, $035f, $1306, $201f ; pal 1: #410041 #ffd500 #31c520 #ff0041
-	dw $2008, $1306, $201f, $035f ; pal 2: #410041 #31c520 #ff0041 #ffd500
-	dw $2008, $035f, $1306, $201f ; pal 3: #410041 #ffd500 #31c520 #ff0041
+	INCLUDE "data/bank_014/palettes_738a.asm" ; $738a, 32 bytes (palettes)
 LoadIslandSkyEffectObjGfx_14:
 	ldh a, [hWramBank] ; $73aa
 	push af ; $73ac
@@ -2916,9 +2896,7 @@ GetSceneObjectScreenPos_14:
 TwinkleObjGfx:
 	INCBIN "data/bank_014/d_7580.bin" ; $7580, 256 bytes
 Palette_14_7680:
-	; $7680, 8 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $0000, $03ff, $7fe0, $001f ; pal 0: #000000 #ffff00 #00ffff #ff0000
+	INCLUDE "data/bank_014/palettes_7680.asm" ; $7680, 8 bytes (palettes)
 LoadTwinkleObjGfx_14:
 	ldh a, [hWramBank] ; $7688
 	push af ; $768a

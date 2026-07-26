@@ -17,39 +17,11 @@ MatchGraphicsGfx:
 MatchGfxTilesA_28:
 	INCBIN "data/bank_028/d_45e0.bin" ; $45e0, 1472 bytes
 MatchGfxPalettesA_28:
-	; $4ba0, 80 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $0180, $031f, $2a94, $0000 ; pal 0: #006200 #ffc500 #a4a452 #000000
-	dw $0260, $00ff, $27ff, $0000 ; pal 1: #009c00 #ff3900 #ffff4a #000000
-	dw $7e60, $00ff, $7fff, $0000 ; pal 2: #009cff #ff3900 #ffffff #000000
-	dw $7f18, $7f18, $7f18, $7f18 ; pal 3: #c5c5ff #c5c5ff #c5c5ff #c5c5ff
-	dw $7f18, $7f18, $7f18, $7f18 ; pal 4: #c5c5ff #c5c5ff #c5c5ff #c5c5ff
-	dw $7f18, $7f18, $7f18, $7f18 ; pal 5: #c5c5ff #c5c5ff #c5c5ff #c5c5ff
-	dw $7f18, $7f18, $7f18, $7f18 ; pal 6: #c5c5ff #c5c5ff #c5c5ff #c5c5ff
-	dw $7f18, $7f18, $7f18, $7f18 ; pal 7: #c5c5ff #c5c5ff #c5c5ff #c5c5ff
-	dw $0600, $9e40, $0000, $7fff ; pal 8: #008308 #009439 #000000 #ffffff
-	dw $a7ff, $015f, $0000, $7fff ; pal 9: #ffff4a #ff5200 #000000 #ffffff
+	INCLUDE "data/bank_028/palettes_4ba0.asm" ; $4ba0, 80 bytes (palettes)
 MatchGfxMapsA_28:
 	INCBIN "data/bank_028/d_4bf0.bin" ; $4bf0, 4672 bytes
 MatchGfxPalettesB_28:
-	; $5e30, 128 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $294a, $7e00, $7fff, $0000 ; pal 0: #525252 #0083ff #ffffff #000000
-	dw $294a, $02c0, $7fff, $0000 ; pal 1: #525252 #00b400 #ffffff #000000
-	dw $294a, $009f, $7fff, $0000 ; pal 2: #525252 #ff2000 #ffffff #000000
-	dw $294a, $023f, $7fff, $0000 ; pal 3: #525252 #ff8b00 #ffffff #000000
-	dw $294a, $02c0, $7fff, $0000 ; pal 4: #525252 #00b400 #ffffff #000000
-	dw $294a, $009f, $7fff, $0000 ; pal 5: #525252 #ff2000 #ffffff #000000
-	dw $294a, $023f, $7fff, $0000 ; pal 6: #525252 #ff8b00 #ffffff #000000
-	dw $294a, $009f, $4bff, $000c ; pal 7: #525252 #ff2000 #ffff94 #620000
-	dw $294a, $021f, $4bff, $00cc ; pal 8: #525252 #ff8300 #ffff94 #623100
-	dw $294a, $02c0, $4bff, $0140 ; pal 9: #525252 #00b400 #ffff94 #005200
-	dw $294a, $7e00, $4bff, $3880 ; pal 10: #525252 #0083ff #ffff94 #002073
-	dw $294a, $02c0, $4bff, $0140 ; pal 11: #525252 #00b400 #ffff94 #005200
-	dw $294a, $009f, $4bff, $000c ; pal 12: #525252 #ff2000 #ffff94 #620000
-	dw $294a, $021f, $4bff, $00cc ; pal 13: #525252 #ff8300 #ffff94 #623100
-	dw $294a, $001f, $7fff, $0000 ; pal 14: #525252 #ff0000 #ffffff #000000
-	dw $0260, $00ff, $27ff, $0000 ; pal 15: #009c00 #ff3900 #ffff4a #000000
+	INCLUDE "data/bank_028/palettes_5e30.asm" ; $5e30, 128 bytes (palettes)
 LoadMatchGraphics:
 	wram_bank $01 ; $5eb0
 	ld hl, MatchGfxPalettesA_28 ; $5eb6
@@ -396,15 +368,5 @@ Padding_28_6171:
 MatchGfxTilesB_28:
 	INCBIN "data/bank_028/d_6180.bin" ; $6180, 2972 bytes
 MatchGfxPalettesC_28:
-	; $6d1c, 72 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $0260, $00ff, $27ff, $0000 ; pal 0: #009c00 #ff3900 #ffff4a #000000
-	dw $7e60, $00ff, $7fff, $0000 ; pal 1: #009cff #ff3900 #ffffff #000000
-	dw $7f18, $7f18, $7f18, $7f18 ; pal 2: #c5c5ff #c5c5ff #c5c5ff #c5c5ff
-	dw $7f18, $7f18, $7f18, $7f18 ; pal 3: #c5c5ff #c5c5ff #c5c5ff #c5c5ff
-	dw $7f18, $7f18, $7f18, $7f18 ; pal 4: #c5c5ff #c5c5ff #c5c5ff #c5c5ff
-	dw $7f18, $7f18, $7f18, $7f18 ; pal 5: #c5c5ff #c5c5ff #c5c5ff #c5c5ff
-	dw $7f18, $7f18, $7f18, $7f18 ; pal 6: #c5c5ff #c5c5ff #c5c5ff #c5c5ff
-	dw $0600, $9e40, $0000, $7fff ; pal 7: #008308 #009439 #000000 #ffffff
-	dw $a7ff, $015f, $0000, $7fff ; pal 8: #ffff4a #ff5200 #000000 #ffffff
+	INCLUDE "data/bank_028/palettes_6d1c.asm" ; $6d1c, 72 bytes (palettes)
 	; $6d64, 4764 bytes fill to bank end (linker-padded)

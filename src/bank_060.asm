@@ -65,16 +65,7 @@ DataPtr_CompositionCourtSceneUnusedSlot:
 DataPtr_CompositionCourtTiles:
 	dw CompositionCourtTiles ; $403e
 GrassCourtPalettes:
-	; $4040, 64 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $7c00, $6bff, $1e58, $294a ; pal 0: #0000ff #ffffd5 #c59439 #525252
-	dw $0120, $000f, $2118, $0000 ; pal 1: #004a00 #7b0000 #c54141 #000000
-	dw $0706, $03ea, $7fff, $36be ; pal 2: #31c508 #52ff00 #ffffff #f6ac6a
-	dw $0706, $11da, $7fff, $0000 ; pal 3: #31c508 #d57320 #ffffff #000000
-	dw $0706, $0a44, $7fff, $2a5b ; pal 4: #31c508 #209410 #ffffff #de9452
-	dw $0706, $0a44, $7fff, $28e3 ; pal 5: #31c508 #209410 #ffffff #183952
-	dw $0da2, $0a44, $7fff, $1df8 ; pal 6: #106a18 #209410 #ffffff #c57b39
-	dw $7d80, $7fff, $5251, $2d27 ; pal 7: #0062ff #ffffff #8b94a4 #394a5a
+	INCLUDE "data/bank_060/palettes_4040.asm" ; $4040, 64 bytes (palettes)
 GrassCourtTiles:
 	INCBIN "data/bank_060/lz_4080.bin" ; $4080, 3233 bytes
 GrassCourtTilemap:
@@ -86,16 +77,7 @@ GrassCourtSceneConfig:
 GrassCourtSceneConfigB:
 	INCBIN "data/bank_060/d_50b1.bin" ; $50b1, 40 bytes
 HardCourtPalettes:
-	; $50d9, 64 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $7c00, $6bff, $1e58, $294a ; pal 0: #0000ff #ffffd5 #c59439 #525252
-	dw $7c1f, $7c1f, $7c1f, $7c1f ; pal 1: #ff00ff #ff00ff #ff00ff #ff00ff
-	dw $1c7d, $02e0, $7fff, $1902 ; pal 2: #ee1839 #00bd00 #ffffff #104131
-	dw $1c7d, $029f, $7fff, $1902 ; pal 3: #ee1839 #ffa400 #ffffff #104131
-	dw $3be0, $1c7d, $7fff, $029f ; pal 4: #00ff73 #ee1839 #ffffff #ffa400
-	dw $7f00, $029f, $7fff, $1902 ; pal 5: #00c5ff #ffa400 #ffffff #104131
-	dw $0220, $7d80, $7fff, $015f ; pal 6: #008b00 #0062ff #ffffff #ff5200
-	dw $0220, $1c7d, $7fff, $015f ; pal 7: #008b00 #ee1839 #ffffff #ff5200
+	INCLUDE "data/bank_060/palettes_50d9.asm" ; $50d9, 64 bytes (palettes)
 HardCourtTiles:
 	INCBIN "data/bank_060/lz_5119.bin" ; $5119, 2352 bytes
 HardCourtTilemap:
@@ -107,16 +89,7 @@ HardCourtSceneConfig:
 HardCourtSceneConfigB:
 	INCBIN "data/bank_060/d_5d89.bin" ; $5d89, 40 bytes
 ClayCourtPalettes:
-	; $5db1, 64 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $7c00, $6bff, $1e58, $294a ; pal 0: #0000ff #ffffd5 #c59439 #525252
-	dw $0120, $000f, $0154, $0000 ; pal 1: #004a00 #7b0000 #a45200 #000000
-	dw $7e80, $02c0, $7fff, $24c2 ; pal 2: #00a4ff #00b400 #ffffff #10314a
-	dw $421f, $319b, $2138, $7fff ; pal 3: #ff8383 #de6262 #c54a41 #ffffff
-	dw $319b, $1c80, $4b5f, $7dc0 ; pal 4: #de6262 #002039 #ffd594 #0073ff
-	dw $2138, $319b, $7fff, $24c2 ; pal 5: #c54a41 #de6262 #ffffff #10314a
-	dw $0051, $10b4, $2138, $7fff ; pal 6: #8b1000 #a42920 #c54a41 #ffffff
-	dw $7d1f, $02c0, $7fff, $24c2 ; pal 7: #ff41ff #00b400 #ffffff #10314a
+	INCLUDE "data/bank_060/palettes_5db1.asm" ; $5db1, 64 bytes (palettes)
 ClayCourtTiles:
 	INCBIN "data/bank_060/lz_5df1.bin" ; $5df1, 2993 bytes
 ClayCourtTilemap:
@@ -128,16 +101,7 @@ ClayCourtSceneConfig:
 ClayCourtSceneConfigB:
 	INCBIN "data/bank_060/d_6cb6.bin" ; $6cb6, 40 bytes
 CompositionCourtPalettes:
-	; $6cde, 64 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $7c00, $6bff, $1e58, $294a ; pal 0: #0000ff #ffffd5 #c59439 #525252
-	dw $0120, $000f, $0154, $0000 ; pal 1: #004a00 #7b0000 #a45200 #000000
-	dw $7d1f, $02c0, $7fff, $24c2 ; pal 2: #ff41ff #00b400 #ffffff #10314a
-	dw $7f2c, $6aa9, $5a26, $7fff ; pal 3: #62cdff #4aacd5 #318bb4 #ffffff
-	dw $6aa9, $24c2, $4b1f, $609f ; pal 4: #4aacd5 #10314a #ffc594 #ff20c5
-	dw $5a26, $6aa9, $7fff, $24c2 ; pal 5: #318bb4 #4aacd5 #ffffff #10314a
-	dw $3940, $49a3, $5a26, $7fff ; pal 6: #005273 #186a94 #318bb4 #ffffff
-	dw $7e80, $02c0, $7fff, $24c2 ; pal 7: #00a4ff #00b400 #ffffff #10314a
+	INCLUDE "data/bank_060/palettes_6cde.asm" ; $6cde, 64 bytes (palettes)
 CompositionCourtTiles:
 	INCBIN "data/bank_060/lz_6d1e.bin" ; $6d1e, 2994 bytes
 CompositionCourtTilemap:

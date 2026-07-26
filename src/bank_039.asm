@@ -474,18 +474,14 @@ LoadFixedTileBlockAndPalette:
 FixedTileBlockAndPalette:
 	INCBIN "data/bank_039/d_44f6.bin" ; $44f6, 32 bytes
 Palette_39_4516:
-	; $4516, 8 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $2bff, $518a, $5f2a, $0000 ; pal 0: #ffff52 #5262a4 #52cdbd #000000
+	INCLUDE "data/bank_039/palettes_4516.asm" ; $4516, 8 bytes (palettes)
 LoadFixedBgPalette0:
 	ld de, $0001 ; $451e
 	ld hl, Palette_39_4528 ; $4521
 	call LoadPaletteShadow ; $4524
 	ret ; $4527
 Palette_39_4528:
-	; $4528, 8 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $739c, $739c, $39cf, $0000 ; pal 0: #e6e6e6 #e6e6e6 #7b7373 #000000
+	INCLUDE "data/bank_039/palettes_4528.asm" ; $4528, 8 bytes (palettes)
 CopyTilemapRect:
 	push af ; $4530
 	push bc ; $4531
@@ -578,44 +574,13 @@ LoadIndexedPalette:
 	ld e, $01 ; $4593
 	call LoadPaletteShadow ; $4595
 	ret ; $4598
-	; $4599, 200 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $0000, $294a, $5294, $7fff ; pal 0: #000000 #525252 #a4a4a4 #ffffff
-	dw $0000, $00c8, $00f2, $7fff ; pal 1: #000000 #413100 #943900 #ffffff
-	dw $0000, $2940, $5280, $7fff ; pal 2: #000000 #005252 #00a4a4 #ffffff
-	dw $0000, $05c0, $16a6, $77bf ; pal 3: #000000 #007308 #31ac29 #ffeeee
-	dw $0100, $7fff, $011f, $1018 ; pal 4: #004100 #ffffff #ff4100 #c50020
-	dw $0000, $016f, $02ff, $7fff ; pal 5: #000000 #7b5a00 #ffbd00 #ffffff
-	dw $0000, $01e7, $07ce, $7fff ; pal 6: #000000 #397b00 #73f608 #ffffff
-	dw $0000, $3563, $6aa6, $7fff ; pal 7: #000000 #185a6a #31acd5 #ffffff
-	dw $0000, $00f0, $01df, $7fff ; pal 8: #000000 #833900 #ff7300 #ffffff
-	dw $0000, $1c16, $349f, $7fff ; pal 9: #000000 #b40039 #ff206a #ffffff
-	dw $0000, $4160, $7ec0, $7fff ; pal 10: #000000 #005a83 #00b4ff #ffffff
-	dw $7bde, $6318, $4a52, $318c ; pal 11: #f6f6f6 #c5c5c5 #949494 #626262
-	dw $5ad6, $0880, $0000, $7fff ; pal 12: #b4b4b4 #002010 #000000 #ffffff
-	dw $2bff, $0ef7, $03ff, $0000 ; pal 13: #ffff52 #bdbd18 #ffff00 #000000
-	dw $2bff, $0108, $0210, $0000 ; pal 14: #ffff52 #414100 #838300 #000000
-	dw $5ad6, $9e40, $0000, $7fff ; pal 15: #b4b4b4 #009439 #000000 #ffffff
-	dw $3def, $00df, $0000, $7fff ; pal 16: #7b7b7b #ff3100 #000000 #ffffff
-	dw $0000, $0000, $0000, $0000 ; pal 17: #000000 #000000 #000000 #000000
-	dw $0000, $0000, $0000, $0000 ; pal 18: #000000 #000000 #000000 #000000
-	dw $0000, $0000, $0000, $0000 ; pal 19: #000000 #000000 #000000 #000000
-	dw $0000, $0000, $0000, $0000 ; pal 20: #000000 #000000 #000000 #000000
-	dw $0000, $0000, $0000, $0000 ; pal 21: #000000 #000000 #000000 #000000
-	dw $0000, $0000, $0000, $0000 ; pal 22: #000000 #000000 #000000 #000000
-	dw $0000, $0000, $0000, $0000 ; pal 23: #000000 #000000 #000000 #000000
-	dw $6280, $0000, $001f, $02df ; pal 24: #00a4c5 #000000 #ff0000 #ffb400
+	INCLUDE "data/bank_039/palettes_4599.asm" ; $4599, 200 bytes (palettes)
 LoadFixedPaletteSet:
 	ld hl, $466b ; $4661
 	ld de, $0904 ; $4664
 	call LoadPaletteShadow ; $4667
 	ret ; $466a
-	; $466b, 32 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $0100, $7fff, $011f, $1018 ; pal 0: #004100 #ffffff #ff4100 #c50020
-	dw $0100, $7fff, $011f, $7d40 ; pal 1: #004100 #ffffff #ff4100 #0052ff
-	dw $0100, $7fff, $011f, $0200 ; pal 2: #004100 #ffffff #ff4100 #008300
-	dw $0100, $7fff, $011f, $4010 ; pal 3: #004100 #ffffff #ff4100 #830083
+	INCLUDE "data/bank_039/palettes_466b.asm" ; $466b, 32 bytes (palettes)
 LoadCompressedTileBlock:
 	ldh a, [hWramBank] ; $468b
 	push af ; $468d
@@ -3272,9 +3237,7 @@ InitNumberSpriteGfxWide:
 	farcall LoadIndexedPalette ; $6f04
 	ret ; $6f07
 Palette_39_6f08:
-	; $6f08, 8 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $6280, $0000, $001f, $02df ; pal 0: #00a4c5 #000000 #ff0000 #ffb400
+	INCLUDE "data/bank_039/palettes_6f08.asm" ; $6f08, 8 bytes (palettes)
 DrawDecimalNumberSprites_39:
 	push af ; $6f10
 	push bc ; $6f11

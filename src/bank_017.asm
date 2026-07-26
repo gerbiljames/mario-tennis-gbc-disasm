@@ -1627,16 +1627,7 @@ CourtDiagramTilemap:
 CourtDiagramAttrmap:
 	INCBIN "data/bank_017/lz_4e42.bin" ; $4e42, 128 bytes
 CourtDiagramPalettes:
-	; $4ec2, 64 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $5ad6, $01bf, $0000, $7fff ; pal 0: #b4b4b4 #ff6a00 #000000 #ffffff
-	dw $7e40, $3fc1, $7fe1, $7fe0 ; pal 1: #0094ff #08f67b #08ffff #00ffff
-	dw $0e40, $01bf, $035f, $7fff ; pal 2: #009418 #ff6a00 #ffd500 #ffffff
-	dw $0300, $0240, $0180, $0100 ; pal 3: #00c500 #009400 #006200 #004100
-	dw $0000, $0000, $0000, $0000 ; pal 4: #000000 #000000 #000000 #000000
-	dw $035f, $01bf, $0e40, $7fff ; pal 5: #ffd500 #ff6a00 #009418 #ffffff
-	dw $0000, $0000, $0000, $0000 ; pal 6: #000000 #000000 #000000 #000000
-	dw $0000, $0000, $0000, $0000 ; pal 7: #000000 #000000 #000000 #000000
+	INCLUDE "data/bank_017/palettes_4ec2.asm" ; $4ec2, 64 bytes (palettes)
 CourtDiagramGfx0:
 	INCBIN "data/bank_017/d_4f02.bin" ; $4f02, 59 bytes
 CourtDiagramGfx1:
@@ -1678,11 +1669,7 @@ CourtDiagramGfx18:
 CourtDiagramGfx19:
 	INCBIN "data/bank_017/d_554e.bin" ; $554e, 25 bytes
 Palette_17_5567:
-	; $5567, 24 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $03e0, $7ee9, $0000, $7fff ; pal 0: #00ff00 #4abdff #000000 #ffffff
-	dw $0012, $4210, $0000, $7fff ; pal 1: #940000 #838383 #000000 #ffffff
-	dw $7c00, $7c1f, $0000, $03fd ; pal 2: #0000ff #ff00ff #000000 #eeff00
+	INCLUDE "data/bank_017/palettes_5567.asm" ; $5567, 24 bytes (palettes)
 DrillBriefing_ServeToTargets:
 	ld a, $03 ; $557f
 	ld [$d82e], a ; $5581
@@ -5546,16 +5533,7 @@ RulesScreenTilemap:
 RulesScreenAttrmap:
 	INCBIN "data/bank_017/lz_78a5.bin" ; $78a5, 87 bytes
 RulesScreenPalettes:
-	; $78fc, 64 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $1cc4, $015f, $0000, $7fff ; pal 0: #203139 #ff5200 #000000 #ffffff
-	dw $0300, $0240, $0180, $0100 ; pal 1: #00c500 #009400 #006200 #004100
-	dw $03e0, $3316, $1e4c, $2508 ; pal 2: #00ff00 #b4c562 #629439 #41414a
-	dw $5334, $015f, $0000, $1b06 ; pal 3: #a4cda4 #ff5200 #000000 #31c531
-	dw $5299, $015f, $0000, $141f ; pal 4: #cda4a4 #ff5200 #000000 #ff0029
-	dw $5eb7, $015f, $0000, $7d59 ; pal 5: #bdacbd #ff5200 #000000 #cd52ff
-	dw $2508, $2508, $2508, $2508 ; pal 6: #41414a #41414a #41414a #41414a
-	dw $2508, $2508, $2508, $2508 ; pal 7: #41414a #41414a #41414a #41414a
+	INCLUDE "data/bank_017/palettes_78fc.asm" ; $78fc, 64 bytes (palettes)
 RulesBorderAnimTiles0:
 	INCBIN "data/bank_017/d_793c.bin" ; $793c, 204 bytes
 RulesBorderAnimTiles1:
@@ -5569,14 +5547,5 @@ RulesBorderAnimTiles4:
 RulesBorderAnimTiles5:
 	INCBIN "data/bank_017/d_7b18.bin" ; $7b18, 33 bytes
 Palette_17_7b39:
-	; $7b39, 64 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $0224, $3eff, $7fff, $0000 ; pal 0: #208b00 #ffbd7b #ffffff #000000
-	dw $0460, $3214, $7d60, $001f ; pal 1: #001808 #a48362 #005aff #ff0000
-	dw $00fd, $e6ff, $0f0a, $0f0a ; pal 2: #ee3900 #ffbdcd #52c518 #52c518
-	dw $0f00, $f014, $f6e7, $0eeb ; pal 3: #00c518 #a400e6 #39bdee #5abd18
-	dw $e0e2, $e00e, $00f0, $0000 ; pal 4: #1039c5 #7300c5 #833900 #000000
-	dw $5334, $015f, $0000, $1b06 ; pal 5: #a4cda4 #ff5200 #000000 #31c531
-	dw $5299, $015f, $0000, $141f ; pal 6: #cda4a4 #ff5200 #000000 #ff0029
-	dw $5eb7, $015f, $0000, $7d59 ; pal 7: #bdacbd #ff5200 #000000 #cd52ff
+	INCLUDE "data/bank_017/palettes_7b39.asm" ; $7b39, 64 bytes (palettes)
 	; $7b79, 1159 bytes fill to bank end (linker-padded)

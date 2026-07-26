@@ -2817,13 +2817,7 @@ LoadStoryObjPalettes:
 	call LoadPaletteShadow ; $533d
 	ret ; $5340
 Palettes_0a_5341:
-	; $5341, 40 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $1adc, $6bff, $1e40, $0000 ; pal 0: #e6b431 #ffffd5 #009439 #000000
-	dw $225f, $6bff, $505c, $0000 ; pal 1: #ff9441 #ffffd5 #e610a4 #000000
-	dw $331f, $6bff, $01df, $0000 ; pal 2: #ffc562 #ffffd5 #ff7300 #000000
-	dw $5a9f, $6bff, $001f, $0000 ; pal 3: #ffa4b4 #ffffd5 #ff0000 #000000
-	dw $3acc, $6bff, $7d4a, $0000 ; pal 4: #62b473 #ffffd5 #5252ff #000000
+	INCLUDE "data/bank_00a/palettes_5341.asm" ; $5341, 40 bytes (palettes)
 GetTileTriggerAtPlayer:
 	push bc ; $5369
 	push de ; $536a
@@ -6249,9 +6243,7 @@ TileList_0a_6e40:
 	dw $011c ; record 20
 	dw $ffff ; record 21
 Palette_0a_6e6c:
-	; $6e6c, 8 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $1880, $1880, $10ee, $7fff ; pal 0: #002031 #002031 #733920 #ffffff
+	INCLUDE "data/bank_00a/palettes_6e6c.asm" ; $6e6c, 8 bytes (palettes)
 RunEndingCreditsSequence:
 	ld c, $04 ; $6e74
 	call BeginFadeOut ; $6e76

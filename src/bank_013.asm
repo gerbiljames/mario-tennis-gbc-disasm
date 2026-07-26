@@ -617,9 +617,7 @@ SpriteTemplate_13_4d20:
 TourPointerTiles_13:
 	INCBIN "data/bank_013/d_4d30.bin" ; $4d30, 64 bytes
 TourPointerPalette_13:
-	; $4d70, 8 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $7fe0, $0024, $035f, $007b ; pal 0: #00ffff #200800 #ffd500 #de1800
+	INCLUDE "data/bank_013/palettes_4d70.asm" ; $4d70, 8 bytes (palettes)
 AnimateDoorOpen_13:
 	sound $71 ; $4d78
 	script_copy_scene_rect $14, $08, $06, $15, $02, $02 ; $4d7a

@@ -65,16 +65,7 @@ DataPtr_DormInteriorSceneUnusedSlot:
 DataPtr_DormInteriorTiles:
 	dw DormInteriorTiles ; $403e
 IslandOpenCourtPalettes:
-	; $4040, 64 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $7c00, $6bff, $1e58, $294a ; pal 0: #0000ff #ffffd5 #c59439 #525252
-	dw $0120, $000f, $0154, $0000 ; pal 1: #004a00 #7b0000 #a45200 #000000
-	dw $7fff, $00df, $7ea8, $28a0 ; pal 2: #ffffff #ff3100 #41acff #002952
-	dw $7fff, $3b60, $49d2, $2088 ; pal 3: #ffffff #00de73 #947394 #412041
-	dw $7fff, $021f, $49d2, $2088 ; pal 4: #ffffff #ff8300 #947394 #412041
-	dw $7fff, $7ea8, $5da2, $28a0 ; pal 5: #ffffff #41acff #106abd #002952
-	dw $3b60, $2240, $7fff, $0046 ; pal 6: #00de73 #009441 #ffffff #311000
-	dw $7fff, $3b60, $2240, $1580 ; pal 7: #ffffff #00de73 #009441 #006229
+	INCLUDE "data/bank_063/palettes_4040.asm" ; $4040, 64 bytes (palettes)
 IslandOpenCourtTiles:
 	INCBIN "data/bank_063/lz_4080.bin" ; $4080, 2042 bytes
 IslandOpenCourtTilemap:
@@ -86,16 +77,7 @@ IslandOpenCourtSceneConfig:
 IslandOpenCourtSceneConfigB:
 	INCBIN "data/bank_063/d_4bd6.bin" ; $4bd6, 40 bytes
 DKCourtPalettes:
-	; $4bfe, 64 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $7c00, $6bff, $1e58, $294a ; pal 0: #0000ff #ffffd5 #c59439 #525252
-	dw $01a0, $000f, $2118, $0000 ; pal 1: #006a00 #7b0000 #c54141 #000000
-	dw $0360, $021f, $00d3, $0066 ; pal 2: #00de00 #ff8300 #9c3100 #311800
-	dw $21e0, $43f6, $0360, $10a0 ; pal 3: #007b41 #b4ff83 #00de00 #002920
-	dw $0360, $7d1f, $7fff, $0066 ; pal 4: #00de00 #ff41ff #ffffff #311800
-	dw $0336, $0360, $7fff, $0066 ; pal 5: #b4cd00 #00de00 #ffffff #311800
-	dw $7fff, $0360, $0336, $03fc ; pal 6: #ffffff #00de00 #b4cd00 #e6ff00
-	dw $7fff, $0360, $0336, $0292 ; pal 7: #ffffff #00de00 #b4cd00 #94a400
+	INCLUDE "data/bank_063/palettes_4bfe.asm" ; $4bfe, 64 bytes (palettes)
 DKCourtTiles:
 	INCBIN "data/bank_063/lz_4c3e.bin" ; $4c3e, 3291 bytes
 DKCourtTilemap:
@@ -109,16 +91,7 @@ DKCourtSceneConfigB:
 StarPatternBgSceneConfig:
 	INCBIN "data/bank_063/d_5d75.bin" ; $5d75, 42 bytes
 StarPatternBgPalettes:
-	; $5d9f, 64 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $7fe0, $6bff, $1e58, $0000 ; pal 0: #00ffff #ffffd5 #c59439 #000000
-	dw $0000, $7800, $001e, $03c0 ; pal 1: #000000 #0000f6 #f60000 #00f600
-	dw $7e5e, $7dd8, $7d92, $7d0e ; pal 2: #f694ff #c573ff #9462ff #7341ff
-	dw $7e9c, $4bff, $375c, $7df7 ; pal 3: #e6a4ff #ffff94 #e6d56a #bd7bff
-	dw $2508, $2508, $2508, $2508 ; pal 4: #41414a #41414a #41414a #41414a
-	dw $2508, $2508, $2508, $2508 ; pal 5: #41414a #41414a #41414a #41414a
-	dw $4a3f, $6bff, $20ff, $0000 ; pal 6: #ff8b94 #ffffd5 #ff3941 #000000
-	dw $5e1f, $6bff, $7cd8, $0000 ; pal 7: #ff83bd #ffffd5 #c531ff #000000
+	INCLUDE "data/bank_063/palettes_5d9f.asm" ; $5d9f, 64 bytes (palettes)
 StarPatternBgTiles:
 	INCBIN "data/bank_063/lz_5ddf.bin" ; $5ddf, 685 bytes
 StarPatternBgTilemap:
@@ -132,16 +105,7 @@ StarPatternBgAuxAttrmap:
 DormInteriorSceneConfig:
 	INCBIN "data/bank_063/d_6331.bin" ; $6331, 42 bytes
 DormInteriorPalettes:
-	; $635b, 64 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $7c00, $6bff, $1e58, $294a ; pal 0: #0000ff #ffffd5 #c59439 #525252
-	dw $0120, $7fff, $0154, $0000 ; pal 1: #004a00 #ffffff #a45200 #000000
-	dw $781f, $781f, $781f, $781f ; pal 2: #ff00f6 #ff00f6 #ff00f6 #ff00f6
-	dw $1ca2, $45ed, $62f6, $7fff ; pal 3: #102939 #6a7b8b #b4bdc5 #ffffff
-	dw $19c5, $57f1, $36eb, $00c0 ; pal 4: #297331 #8bffac #5abd6a #003100
-	dw $102b, $2cf7, $49dd, $66bf ; pal 5: #5a0820 #bd395a #ee7394 #ffaccd
-	dw $7f14, $6e4e, $5d88, $50e3 ; pal 6: #a4c5ff #7394de #4162bd #1839a4
-	dw $5f9f, $4297, $25af, $04a7 ; pal 7: #ffe6bd #bda483 #7b6a4a #392908
+	INCLUDE "data/bank_063/palettes_635b.asm" ; $635b, 64 bytes (palettes)
 DormInteriorTiles:
 	INCBIN "data/bank_063/d_639b.bin" ; $639b, 3510 bytes
 DormInteriorTilemap:

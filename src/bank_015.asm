@@ -1722,9 +1722,7 @@ SpriteTemplate_15_57ba:
 WaterSpriteHudTiles_15:
 	INCBIN "data/bank_015/d_57d0.bin" ; $57d0, 192 bytes
 WaterSpriteHudPalette_15:
-	; $5890, 8 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $0000, $0005, $7fff, $0000 ; pal 0: #000000 #290000 #ffffff #000000
+	INCLUDE "data/bank_015/palettes_5890.asm" ; $5890, 8 bytes (palettes)
 LoadWaterSpriteMinigameHudGfx:
 	ldh a, [hWramBank] ; $5898
 	push af ; $589a
@@ -1774,41 +1772,13 @@ InitWaterSpriteMinigameHud:
 	; $58fa, 6 bytes (fill)
 	ds 6, $00
 Palettes_15_5900:
-	; $5900, 16 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $0080, $5520, $7ea0, $4460 ; pal 0: #002000 #004aac #00acff #00188b
-	dw $2508, $2508, $2508, $2508 ; pal 1: #41414a #41414a #41414a #41414a
+	INCLUDE "data/bank_015/palettes_5900.asm" ; $5900, 16 bytes (palettes)
 Palettes_15_5910:
-	; $5910, 64 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $195c, $0330, $7fff, $1006 ; pal 0: #e65231 #83cd00 #ffffff #310020
-	dw $0260, $0330, $7fff, $1006 ; pal 1: #009c00 #83cd00 #ffffff #310020
-	dw $025d, $0330, $0260, $1006 ; pal 2: #ee9400 #83cd00 #009c00 #310020
-	dw $7f60, $0260, $7fff, $1006 ; pal 3: #00deff #009c00 #ffffff #310020
-	dw $025d, $7fff, $3def, $1006 ; pal 4: #ee9400 #ffffff #7b7b7b #310020
-	dw $7e20, $01bf, $0260, $7fff ; pal 5: #008bff #ff6a00 #009c00 #ffffff
-	dw $0080, $5520, $7ea0, $4460 ; pal 6: #002000 #004aac #00acff #00188b
-	dw $2508, $2508, $2508, $2508 ; pal 7: #41414a #41414a #41414a #41414a
+	INCLUDE "data/bank_015/palettes_5910.asm" ; $5910, 64 bytes (palettes)
 Palettes_15_5950:
-	; $5950, 64 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $1d3d, $0310, $7fff, $1006 ; pal 0: #ee4a39 #83c500 #ffffff #310020
-	dw $0140, $024c, $6739, $1006 ; pal 1: #005200 #629400 #cdcdcd #310020
-	dw $1d38, $024c, $0140, $1006 ; pal 2: #c54a39 #629400 #005200 #310020
-	dw $6e40, $0140, $6f7b, $1006 ; pal 3: #0094de #005200 #dedede #310020
-	dw $1d38, $7fff, $3def, $1006 ; pal 4: #c54a39 #ffffff #7b7b7b #310020
-	dw $6140, $0116, $0140, $7e10 ; pal 5: #0052c5 #b44100 #005200 #8383ff
-	dw $0080, $5520, $7ea0, $4460 ; pal 6: #002000 #004aac #00acff #00188b
-	dw $2508, $2508, $2508, $2508 ; pal 7: #41414a #41414a #41414a #41414a
+	INCLUDE "data/bank_015/palettes_5950.asm" ; $5950, 64 bytes (palettes)
 Palettes_15_5990:
-	; $5990, 48 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $1d3d, $0310, $7fff, $1006 ; pal 0: #ee4a39 #83c500 #ffffff #310020
-	dw $00c0, $0186, $29ea, $1006 ; pal 1: #003100 #316200 #527b52 #310020
-	dw $00ac, $0186, $00c0, $1006 ; pal 2: #622900 #316200 #003100 #310020
-	dw $65c0, $00c0, $5b39, $1006 ; pal 3: #0073cd #003100 #cdcdb4 #310020
-	dw $1d34, $7ffc, $3def, $1006 ; pal 4: #a44a39 #e6ffff #7b7b7b #310020
-	dw $48a0, $00ac, $00c0, $5dad ; pal 5: #002994 #622900 #003100 #6a6abd
+	INCLUDE "data/bank_015/palettes_5990.asm" ; $5990, 48 bytes (palettes)
 TrainingCourtIntroTourScene:
 	xor a, a ; $59c0
 	ld [wStoryModeShowLocationName], a ; $59c1

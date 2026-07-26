@@ -161,16 +161,7 @@ LinkingScreenTilemap:
 LinkingScreenAttrmap:
 	INCBIN "data/bank_03d/lz_576e.bin" ; $576e, 115 bytes
 LinkingScreenPalettes:
-	; $57e1, 64 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $4c80, $01bf, $0000, $7fff ; pal 0: #00209c #ff6a00 #000000 #ffffff
-	dw $0300, $0240, $0180, $0100 ; pal 1: #00c500 #009400 #006200 #004100
-	dw $0000, $01bf, $000e, $001f ; pal 2: #000000 #ff6a00 #730000 #ff0000
-	dw $429d, $01bf, $000e, $001f ; pal 3: #eea483 #ff6a00 #730000 #ff0000
-	dw $000e, $001f, $0000, $6e20 ; pal 4: #730000 #ff0000 #000000 #008bde
-	dw $01bf, $0bff, $1f67, $6cc8 ; pal 5: #ff6a00 #ffff10 #39de39 #4131de
-	dw $32a0, $2da0, $7fff, $01bf ; pal 6: #00ac62 #006a5a #ffffff #ff6a00
-	dw $0000, $0000, $0000, $0000 ; pal 7: #000000 #000000 #000000 #000000
+	INCLUDE "data/bank_03d/palettes_57e1.asm" ; $57e1, 64 bytes (palettes)
 RingShotHudTiles:
 	INCBIN "data/bank_03d/lz_5821.bin" ; $5821, 1216 bytes
 RingShotHudTilemap:
@@ -178,16 +169,7 @@ RingShotHudTilemap:
 RingShotHudAttrmap:
 	INCBIN "data/bank_03d/lz_5e25.bin" ; $5e25, 133 bytes
 RingShotHudPalettes:
-	; $5eaa, 64 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $5ad6, $01bf, $0000, $6bff ; pal 0: #b4b4b4 #ff6a00 #000000 #ffffd5
-	dw $0300, $0240, $0180, $0100 ; pal 1: #00c500 #009400 #006200 #004100
-	dw $0000, $0000, $0000, $0000 ; pal 2: #000000 #000000 #000000 #000000
-	dw $7fff, $6bff, $1e40, $0000 ; pal 3: #ffffff #ffffd5 #009439 #000000
-	dw $225f, $6bff, $505c, $0000 ; pal 4: #ff9441 #ffffd5 #e610a4 #000000
-	dw $331f, $6bff, $01df, $0000 ; pal 5: #ffc562 #ffffd5 #ff7300 #000000
-	dw $029f, $6bff, $001f, $0000 ; pal 6: #ffa400 #ffffd5 #ff0000 #000000
-	dw $318c, $6bff, $7d4a, $0000 ; pal 7: #626262 #ffffd5 #5252ff #000000
+	INCLUDE "data/bank_03d/palettes_5eaa.asm" ; $5eaa, 64 bytes (palettes)
 NumberSpriteGfx:
 	INCBIN "data/bank_03d/lz_5eea.bin" ; $5eea, 175 bytes
 MatchStatsTiles:
@@ -197,16 +179,7 @@ MatchStatsTilemap:
 MatchStatsAttrmap:
 	INCBIN "data/bank_03d/lz_6966.bin" ; $6966, 98 bytes
 MatchStatsPalettes:
-	; $69c8, 64 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $5ad6, $015f, $0000, $7fff ; pal 0: #b4b4b4 #ff5200 #000000 #ffffff
-	dw $02c0, $0280, $0200, $0180 ; pal 1: #00b400 #00a400 #008300 #006200
-	dw $5a06, $51c4, $3982, $2900 ; pal 2: #3183b4 #2073a4 #106273 #004152
-	dw $031f, $011e, $00af, $0004 ; pal 3: #ffc500 #f64100 #7b2900 #200000
-	dw $7ed6, $7ed6, $7ed6, $7ed6 ; pal 4: #b4b4ff #b4b4ff #b4b4ff #b4b4ff
-	dw $7ed6, $7ed6, $7ed6, $7ed6 ; pal 5: #b4b4ff #b4b4ff #b4b4ff #b4b4ff
-	dw $7ed6, $7ed6, $7ed6, $7ed6 ; pal 6: #b4b4ff #b4b4ff #b4b4ff #b4b4ff
-	dw $7ed6, $7ed6, $7ed6, $7ed6 ; pal 7: #b4b4ff #b4b4ff #b4b4ff #b4b4ff
+	INCLUDE "data/bank_03d/palettes_69c8.asm" ; $69c8, 64 bytes (palettes)
 MatchStatsTilemap3:
 	INCBIN "data/bank_03d/lz_6a08.bin" ; $6a08, 289 bytes
 MatchStatsAttrmap3:
@@ -226,16 +199,7 @@ EquipmentSelectTilemap:
 EquipmentSelectAttrmap:
 	INCBIN "data/bank_03d/lz_77c6.bin" ; $77c6, 106 bytes
 EquipmentSelectPalettes:
-	; $7830, 64 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $5ad6, $015f, $0000, $7fff ; pal 0: #b4b4b4 #ff5200 #000000 #ffffff
-	dw $7fff, $3dcf, $1485, $015f ; pal 1: #ffffff #7b737b #292029 #ff5200
-	dw $6318, $354a, $1064, $015f ; pal 2: #c5c5c5 #52526a #201820 #ff5200
-	dw $031f, $01d4, $008a, $015f ; pal 3: #ffc500 #a47300 #522000 #ff5200
-	dw $02c0, $01a0, $00a0, $015f ; pal 4: #00b400 #006a00 #002900 #ff5200
-	dw $0000, $294a, $7fff, $015f ; pal 5: #000000 #525252 #ffffff #ff5200
-	dw $7fff, $7dcf, $4483, $015f ; pal 6: #ffffff #7b73ff #18208b #ff5200
-	dw $0000, $1884, $04d1, $015f ; pal 7: #000000 #202031 #8b3108 #ff5200
+	INCLUDE "data/bank_03d/palettes_7830.asm" ; $7830, 64 bytes (palettes)
 SharedMenuGfx99:
 	INCBIN "data/bank_03d/lz_7870.bin" ; $7870, 26 bytes
 TournamentBracketSinglesTilemap:
@@ -243,16 +207,7 @@ TournamentBracketSinglesTilemap:
 TournamentBracketSinglesAttrmap:
 	INCBIN "data/bank_03d/lz_7a5b.bin" ; $7a5b, 115 bytes
 TournamentBracketPalettes:
-	; $7ace, 64 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $5284, $5284, $0000, $7fff ; pal 0: #20a4a4 #20a4a4 #000000 #ffffff
-	dw $0e40, $0e40, $0000, $7fff ; pal 1: #009418 #009418 #000000 #ffffff
-	dw $2d60, $5284, $0000, $7fff ; pal 2: #005a5a #20a4a4 #000000 #ffffff
-	dw $0540, $0e40, $0000, $7fff ; pal 3: #005208 #009418 #000000 #ffffff
-	dw $5284, $01dc, $0e40, $7fff ; pal 4: #20a4a4 #e67300 #009418 #ffffff
-	dw $5284, $7a00, $0e40, $7fff ; pal 5: #20a4a4 #0083f6 #009418 #ffffff
-	dw $5284, $011d, $0e40, $7fff ; pal 6: #20a4a4 #ee4100 #009418 #ffffff
-	dw $5284, $7c91, $0e40, $7fff ; pal 7: #20a4a4 #8b20ff #009418 #ffffff
+	INCLUDE "data/bank_03d/palettes_7ace.asm" ; $7ace, 64 bytes (palettes)
 TournamentBracketDoublesTilemap:
 	INCBIN "data/bank_03d/lz_7b0e.bin" ; $7b0e, 331 bytes
 TournamentBracketDoublesAttrmap:

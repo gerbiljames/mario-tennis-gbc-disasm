@@ -120,20 +120,9 @@ FontTiles:
 MenuHandCursorGfx:
 	INCBIN "data/bank_018/d_42a0.bin" ; $42a0, 64 bytes
 Palette_18_42e0:
-	; $42e0, 32 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $0260, $7e80, $0061, $7fff ; pal 0: #009c00 #00a4ff #081800 #ffffff
-	dw $0260, $7c1f, $0061, $7fff ; pal 1: #009c00 #ff00ff #081800 #ffffff
-	dw $0260, $03e0, $0061, $7fff ; pal 2: #009c00 #00ff00 #081800 #ffffff
-	dw $0260, $03ff, $0061, $7fff ; pal 3: #009c00 #ffff00 #081800 #ffffff
+	INCLUDE "data/bank_018/palettes_42e0.asm" ; $42e0, 32 bytes (palettes)
 Palette_18_4300:
-	; $4300, 40 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $1adc, $6bff, $1e40, $0000 ; pal 0: #e6b431 #ffffd5 #009439 #000000
-	dw $225f, $6bff, $505c, $0000 ; pal 1: #ff9441 #ffffd5 #e610a4 #000000
-	dw $331f, $6bff, $01df, $0000 ; pal 2: #ffc562 #ffffd5 #ff7300 #000000
-	dw $5a9f, $6bff, $001f, $0000 ; pal 3: #ffa4b4 #ffffd5 #ff0000 #000000
-	dw $3acc, $6bff, $7d4a, $0000 ; pal 4: #62b473 #ffffd5 #5252ff #000000
+	INCLUDE "data/bank_018/palettes_4300.asm" ; $4300, 40 bytes (palettes)
 LoadAllIndexedPalettes_18:
 	push af ; $4328
 	push bc ; $4329
@@ -684,16 +673,7 @@ InitPlayerRecordForCharacter:
 ConfirmScreenGfx0:
 	INCBIN "data/bank_018/d_467a.bin" ; $467a, 2233 bytes
 Palette_18_4f33:
-	; $4f33, 64 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $5ad6, $1100, $0000, $7fff ; pal 0: #b4b4b4 #004120 #000000 #ffffff
-	dw $1806, $7c1f, $7c1f, $7c1f ; pal 1: #310031 #ff00ff #ff00ff #ff00ff
-	dw $19d8, $36ff, $0045, $7fff ; pal 2: #c57331 #ffbd6a #291000 #ffffff
-	dw $0045, $6100, $36ff, $7fff ; pal 3: #291000 #0041c5 #ffbd6a #ffffff
-	dw $0045, $301c, $36ff, $7fff ; pal 4: #291000 #e60062 #ffbd6a #ffffff
-	dw $0045, $01c0, $36ff, $7fff ; pal 5: #291000 #007300 #ffbd6a #ffffff
-	dw $1100, $021f, $0000, $7fff ; pal 6: #004120 #ff8300 #000000 #ffffff
-	dw $5014, $5014, $5014, $5014 ; pal 7: #a400a4 #a400a4 #a400a4 #a400a4
+	INCLUDE "data/bank_018/palettes_4f33.asm" ; $4f33, 64 bytes (palettes)
 ConfirmScreenGfx1:
 	INCBIN "data/bank_018/d_4f73.bin" ; $4f73, 347 bytes
 ConfirmScreenGfx2:
@@ -713,11 +693,7 @@ YesNoLabels3:
 ConfirmScreenGfx3:
 	INCBIN "data/bank_018/d_51f8.bin" ; $51f8, 206 bytes
 Palette_18_52c6:
-	; $52c6, 24 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $0260, $7e00, $0045, $7fff ; pal 0: #009c00 #0083ff #291000 #ffffff
-	dw $0260, $03e0, $0045, $7fff ; pal 1: #009c00 #00ff00 #291000 #ffffff
-	dw $0260, $7c1f, $0045, $7fff ; pal 2: #009c00 #ff00ff #291000 #ffffff
+	INCLUDE "data/bank_018/palettes_52c6.asm" ; $52c6, 24 bytes (palettes)
 InitConfirmScreen:
 	call ClearFrameTasks ; $52de
 	call ClearSpriteQueue ; $52e1
@@ -1178,11 +1154,7 @@ LoadConfirmScreenSpriteGfx:
 ConfirmScreenSpriteGfx0:
 	INCBIN "data/bank_018/d_5633.bin" ; $5633, 506 bytes
 Palette_18_582d:
-	; $582d, 24 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $0008, $0000, $009f, $7fff ; pal 0: #410000 #000000 #ff2000 #ffffff
-	dw $0100, $0000, $02c0, $7fff ; pal 1: #004100 #000000 #00b400 #ffffff
-	dw $2000, $0000, $7d80, $7fff ; pal 2: #000041 #000000 #0062ff #ffffff
+	INCLUDE "data/bank_018/palettes_582d.asm" ; $582d, 24 bytes (palettes)
 ConfirmScreenSpriteGfx1:
 	INCBIN "data/bank_018/d_5845.bin" ; $5845, 77 bytes
 TwoOptionSelectBTable:
@@ -1190,21 +1162,11 @@ TwoOptionSelectBTable:
 	db $92, $ec, $e1, $10, $6c, $7c, $d5, $e2, $92, $e8, $e7, $00, $de, $e5, $b4, $e3 ; 0x00
 	db $88, $e3, $c8, $e9, $da, $ef, $ff, $eb, $00, $00, $00 ; 0x10
 Palette_18_58ad:
-	; $58ad, 51 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $2108, $7fff, $031f, $01df ; pal 0: #414141 #ffffff #ffc500 #ff7300
-	dw $00af, $11d6, $0000, $4e73 ; pal 1: #7b2900 #b47320 #000000 #9c9c9c
-	dw $0000, $3c00, $11d6, $4e73 ; pal 2: #000000 #00007b #b47320 #9c9c9c
-	dw $0000, $0c13, $11d6, $4e73 ; pal 3: #000000 #9c0018 #b47320 #9c9c9c
-	dw $0000, $0040, $11d6, $4e73 ; pal 4: #000000 #001000 #b47320 #9c9c9c
-	dw $0000, $0000, $0000, $0000 ; pal 5: #000000 #000000 #000000 #000000
-	db $00, $00, $00
+	INCLUDE "data/bank_018/palettes_58ad.asm" ; $58ad, 51 bytes (palettes)
 CharSelectCursorGfx:
 	INCBIN "data/bank_018/d_58e0.bin" ; $58e0, 217 bytes
 Palette_18_59b9:
-	; $59b9, 8 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $7c1f, $1405, $034c, $7fff ; pal 0: #ff00ff #290029 #62d500 #ffffff
+	INCLUDE "data/bank_018/palettes_59b9.asm" ; $59b9, 8 bytes (palettes)
 LoadCharSelectCursorGfx:
 	ld hl, CharSelectCursorGfx ; $59c1
 	ld de, $8400 ; $59c4
@@ -1378,16 +1340,7 @@ MarioMiniGamesTilemap:
 MarioMiniGamesAttrmap:
 	INCBIN "data/bank_018/lz_740b.bin" ; $740b, 214 bytes
 MarioMiniGamesPalettes:
-	; $74e1, 64 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $5ad6, $01bf, $0000, $6bff ; pal 0: #b4b4b4 #ff6a00 #000000 #ffffd5
-	dw $0300, $0240, $0180, $0100 ; pal 1: #00c500 #009400 #006200 #004100
-	dw $0000, $0000, $0000, $0000 ; pal 2: #000000 #000000 #000000 #000000
-	dw $7fff, $6bff, $1e40, $0000 ; pal 3: #ffffff #ffffd5 #009439 #000000
-	dw $225f, $6bff, $505c, $0000 ; pal 4: #ff9441 #ffffd5 #e610a4 #000000
-	dw $331f, $6bff, $01df, $0000 ; pal 5: #ffc562 #ffffd5 #ff7300 #000000
-	dw $029f, $6bff, $001f, $0000 ; pal 6: #ffa400 #ffffd5 #ff0000 #000000
-	dw $318c, $6bff, $7d4a, $0000 ; pal 7: #626262 #ffffd5 #5252ff #000000
+	INCLUDE "data/bank_018/palettes_74e1.asm" ; $74e1, 64 bytes (palettes)
 MatchWinLoseGfx:
 	INCBIN "data/bank_018/lz_7521.bin" ; $7521, 71 bytes
 CharSelectMiscGfx:
@@ -1542,9 +1495,7 @@ LoadScreen0TilesAndPalette:
 	call LoadPaletteShadow ; $7750
 	ret ; $7753
 Palette_18_7754:
-	; $7754, 8 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $7c00, $7f8a, $3dc5, $0000 ; pal 0: #0000ff #52e6ff #29737b #000000
+	INCLUDE "data/bank_018/palettes_7754.asm" ; $7754, 8 bytes (palettes)
 QueueScreen0Sprites:
 	ld hl, SpriteTemplate_18_776a ; $775c
 	ld de, $283a ; $775f
@@ -1673,9 +1624,7 @@ FillAllBgPalettes:
 	farcall QueueWram3MapToVRAM ; $78a5
 	ret ; $78a8
 Palette_18_78a9:
-	; $78a9, 8 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $0000, $0000, $0000, $0000 ; pal 0: #000000 #000000 #000000 #000000
+	INCLUDE "data/bank_018/palettes_78a9.asm" ; $78a9, 8 bytes (palettes)
 LoadScreen1ObjTiles:
 	ld b, $07 ; $78b1
 	ld c, $28 ; $78b3
@@ -1686,9 +1635,7 @@ LoadScreen1ObjTiles:
 	call LoadPaletteShadow ; $78c1
 	ret ; $78c4
 Palette_18_78c5:
-	; $78c5, 8 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $0000, $6bff, $3a52, $0000 ; pal 0: #000000 #ffffd5 #949473 #000000
+	INCLUDE "data/bank_018/palettes_78c5.asm" ; $78c5, 8 bytes (palettes)
 QueueScreen1Sprites:
 	ld hl, SpriteTemplate_18_78db ; $78cd
 	ld de, $283a ; $78d0
@@ -1844,9 +1791,7 @@ LoadScreen2ObjTiles:
 	call LoadPaletteShadow ; $7a3d
 	ret ; $7a40
 Palette_18_7a41:
-	; $7a41, 8 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $0280, $77de, $49fe, $201f ; pal 0: #00a400 #f6f6ee #f67b94 #ff0041
+	INCLUDE "data/bank_018/palettes_7a41.asm" ; $7a41, 8 bytes (palettes)
 QueueScreen2Sprites:
 	ld hl, SpriteTemplate_18_7a57 ; $7a49
 	ld de, $2840 ; $7a4c
@@ -1897,25 +1842,7 @@ TaskFadeInPalette_18:
 	wram_bank ; $7ab0
 	ret ; $7ab4
 PaletteFadeTable_18:
-	; $7ab5, 129 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $0280, $3add, $533e, $6fbf ; pal 0: #00a400 #eeb473 #f6cda4 #ffeede
-	dw $0280, $3edd, $4efe, $633f ; pal 1: #00a400 #eeb47b #f6bd9c #ffcdc5
-	dw $0280, $46fd, $4ede, $5adf ; pal 2: #00a400 #eebd8b #f6b49c #ffb4b4
-	dw $0280, $4f1d, $4ebe, $527f ; pal 3: #00a400 #eec59c #f6ac9c #ff9ca4
-	dw $0280, $533d, $4e9e, $4a1f ; pal 4: #00a400 #eecda4 #f6a49c #ff8394
-	dw $0280, $5b5d, $4a7e, $419f ; pal 5: #00a400 #eed5b4 #f69c94 #ff6283
-	dw $0280, $637d, $4a5e, $393f ; pal 6: #00a400 #eedec5 #f69494 #ff4a73
-	dw $0280, $679d, $4a3e, $30df ; pal 7: #00a400 #eee6cd #f68b94 #ff3162
-	dw $0280, $6fbd, $4a1e, $287f ; pal 8: #00a400 #eeeede #f68394 #ff1852
-	dw $0280, $77de, $49fe, $201f ; pal 9: #00a400 #f6f6ee #f67b94 #ff0041
-	dw $0280, $77de, $49fb, $2019 ; pal 10: #00a400 #f6f6ee #de7b94 #cd0041
-	dw $0280, $77de, $49f9, $2014 ; pal 11: #00a400 #f6f6ee #cd7b94 #a40041
-	dw $0280, $7bde, $4df6, $240f ; pal 12: #00a400 #f6f6f6 #b47b9c #7b004a
-	dw $0280, $7bde, $4df4, $240a ; pal 13: #00a400 #f6f6f6 #a47b9c #52004a
-	dw $0280, $7bde, $4df1, $2405 ; pal 14: #00a400 #f6f6f6 #8b7b9c #29004a
-	dw $0280, $7fff, $51ef, $2800 ; pal 15: #00a400 #ffffff #7b7ba4 #000052
-	db $c9
+	INCLUDE "data/bank_018/palettes_7ab5.asm" ; $7ab5, 129 bytes (palettes)
 TaskDrawObjectSprites_18:
 	ld c, $00 ; $7b36
 .objectLoop:
@@ -2147,11 +2074,7 @@ LoadObjectSceneBTiles:
 	call LoadPaletteShadow ; $7d40
 	ret ; $7d43
 Palette_18_7d44:
-	; $7d44, 24 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $6bff, $5adf, $20ff, $0000 ; pal 0: #ffffd5 #ffb4b4 #ff3941 #000000
-	dw $6bff, $3bb8, $1280, $0000 ; pal 1: #ffffd5 #c5ee73 #00a420 #000000
-	dw $6bff, $53bf, $029f, $0000 ; pal 2: #ffffd5 #ffeea4 #ffa400 #000000
+	INCLUDE "data/bank_018/palettes_7d44.asm" ; $7d44, 24 bytes (palettes)
 PopulateObjectArrayB:
 	ld c, $00 ; $7d5c
 	ld hl, ObjectSpawnTable_18_7d88 ; $7d5e

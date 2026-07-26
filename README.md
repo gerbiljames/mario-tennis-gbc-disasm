@@ -52,9 +52,14 @@ byte-for-byte.
   function.
 - `data_tables.json` — render overrides for carved data tables
   (`{"0x1234": "palettes"}`, keys are flat ROM offsets); `disasm.py` renders
-  the region inline as readable structured `db`/`dw` source (committed in the
-  bank `.asm`) instead of a raw INCBIN blob. Kinds: `palettes` (BGR555 `dw`
-  colors), `records:N` (fixed N-byte records), `bytes:C` (byte table, C per
+  the region as readable structured `db`/`dw` source instead of a raw INCBIN
+  blob. Most kinds render inline in the bank `.asm`, because their rows are
+  layout the assembler recomputes (label arithmetic, pointer symbols, record
+  structure). Kinds listed in `GENERATED_SPECS` are different: their rows are
+  ROM *values*, so — like game text — they are generated into the gitignored
+  `data/` tree at setup and `INCLUDE`d, keeping that content out of the
+  repository. `palettes` (BGR555 `dw` colors) is generated this way. Inline
+  kinds: `records:N` (fixed N-byte records), `bytes:C` (byte table, C per
   row), `ascii` (a quoted string), `font_glyph` (a `db width, height` glyph
   record, drawn as pixel art in the comments), `cart_header` (the header
   fields after the Nintendo logo), `pattern` (a repeated byte pattern, as one

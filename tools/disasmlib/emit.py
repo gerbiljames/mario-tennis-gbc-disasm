@@ -43,6 +43,13 @@ from .textids import TEXT_IDS_USED
 # between code) render as inline `db` instead of a standalone blob file.
 INLINE_DB_MAX = 2
 
+# Declared specs that render ROM *values* rather than derived structure. These
+# are generated into the gitignored data/ tree at setup and INCLUDEd, exactly
+# like game text, so no such content is committed. Anything whose rows are
+# label arithmetic or pointer symbols stays inline -- rgbasm recomputes those
+# from the layout, so they reproduce nothing.
+GENERATED_SPECS = {"palettes"}
+
 _LABEL_LINE_RE = re.compile(r"^([A-Za-z_][\w.]*):$")
 _CPU_COMMENT_RE = re.compile(r"; \$([0-9a-f]{4})\b")
 _FLAG_OP_RE = re.compile(
@@ -538,6 +545,9 @@ class Emitter:
         length = end - start
         if start in self.data_tables:
             spec = self.data_tables[start]
+            if spec in GENERATED_SPECS:
+                self._emit_generated_spec(start, length, bank, spec)
+                return
             self.lines.append(f"\t; ${cpu:04x}, {length} bytes ({spec})")
             if spec == "actor_script" and self._emit_actor_script(start, end, bank):
                 return
@@ -659,6 +669,9 @@ class Emitter:
         same renderers extract.py applies to blobs."""
         spec = self.data_tables[seg]
         self._label_line(seg)
+        if spec in GENERATED_SPECS:
+            self._emit_generated_spec(seg, j - seg, bank, spec)
+            return
         self.lines.append(f"\t; ${offset_to_cpu(seg):04x}, {j - seg} bytes ({spec})")
         if spec == "actor_script":
             if not self._emit_actor_script(seg, j, bank):
@@ -829,6 +842,16 @@ class Emitter:
         blob = f"bank_{bank:03x}/{prefix}_{cpu:04x}.bin"
         self.manifest.append((blob, start, length, None))
         return f'\tINCBIN "data/{blob}" ; ${cpu:04x}, {length} bytes{note}'
+
+    def _emit_generated_spec(self, start, length, bank, spec):
+        """A spec whose rows are ROM values rather than derived structure:
+        generate it into gitignored data/ at setup and INCLUDE it, the same way
+        game text is handled, so the repository carries no such content."""
+        cpu = offset_to_cpu(start)
+        blob = f"bank_{bank:03x}/{spec}_{cpu:04x}.asm"
+        self.manifest.append((blob, start, length, spec))
+        self.lines.append(
+            f'\tINCLUDE "data/{blob}" ; ${cpu:04x}, {length} bytes ({spec})')
 
     def _extend_spec(self, data, spec):
         """Render bytes with extract.py's renderer for `spec`."""

@@ -384,16 +384,7 @@ IntroCutsceneState01Init_6b:
 	script_fade_in $40 ; $42aa
 	jp DispatchCutsceneStateInit.loop ; $42af
 Palettes_6b_42b2:
-	; $42b2, 64 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $18c6, $294a, $294a, $294a ; pal 0: #313131 #525252 #525252 #525252
-	dw $7e08, $7d84, $6940, $5100 ; pal 1: #4183ff #2062ff #0052d5 #0041a4
-	dw $7fff, $4252, $214a, $0000 ; pal 2: #ffffff #949483 #525241 #000000
-	dw $294a, $294a, $294a, $294a ; pal 3: #525252 #525252 #525252 #525252
-	dw $294a, $294a, $294a, $294a ; pal 4: #525252 #525252 #525252 #525252
-	dw $294a, $294a, $294a, $294a ; pal 5: #525252 #525252 #525252 #525252
-	dw $294a, $294a, $294a, $294a ; pal 6: #525252 #525252 #525252 #525252
-	dw $294a, $294a, $294a, $294a ; pal 7: #525252 #525252 #525252 #525252
+	INCLUDE "data/bank_06b/palettes_42b2.asm" ; $42b2, 64 bytes (palettes)
 IntroCutsceneState01Exit_6b:
 	ld hl, QueueCutsceneSpriteGroupA ; $42f2
 	call UnregisterFrameTask ; $42f5
@@ -446,16 +437,7 @@ IntroCutsceneState02Init_6b:
 	call LoadPalettesImmediate ; $4369
 	jp DispatchCutsceneStateInit.loop ; $436c
 Palette_6b_436f:
-	; $436f, 64 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $2108, $294a, $294a, $294a ; pal 0: #414141 #525252 #525252 #525252
-	dw $3a96, $73ff, $115f, $0000 ; pal 1: #b4a473 #ffffe6 #ff5220 #000000
-	dw $294a, $294a, $294a, $0000 ; pal 2: #525252 #525252 #525252 #000000
-	dw $294a, $294a, $294a, $294a ; pal 3: #525252 #525252 #525252 #525252
-	dw $294a, $294a, $294a, $294a ; pal 4: #525252 #525252 #525252 #525252
-	dw $294a, $294a, $294a, $294a ; pal 5: #525252 #525252 #525252 #525252
-	dw $294a, $294a, $294a, $294a ; pal 6: #525252 #525252 #525252 #525252
-	dw $294a, $294a, $294a, $294a ; pal 7: #525252 #525252 #525252 #525252
+	INCLUDE "data/bank_06b/palettes_436f.asm" ; $436f, 64 bytes (palettes)
 IntroCutsceneState02Exit_6b:
 	ld c, $06 ; $43af
 	call BeginFadeOut ; $43b1
@@ -568,16 +550,7 @@ IntroCutsceneState04Init_6b:
 	ld de, $0008 ; $44c7
 	call LoadPalettesImmediate ; $44ca
 	jp DispatchCutsceneStateInit.loop ; $44cd
-	; $44d0, 64 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $2928, $7fff, $3e4d, $0000 ; pal 0: #414a52 #ffffff #6a947b #000000
-	dw $294a, $294a, $294a, $294a ; pal 1: #525252 #525252 #525252 #525252
-	dw $294a, $294a, $294a, $0000 ; pal 2: #525252 #525252 #525252 #000000
-	dw $1adc, $73ff, $1e40, $0000 ; pal 3: #e6b431 #ffffe6 #009439 #000000
-	dw $225f, $73ff, $505c, $0000 ; pal 4: #ff9441 #ffffe6 #e610a4 #000000
-	dw $42dc, $73ff, $021f, $0000 ; pal 5: #e6b483 #ffffe6 #ff8300 #000000
-	dw $5a9f, $73ff, $001f, $0000 ; pal 6: #ffa4b4 #ffffe6 #ff0000 #000000
-	dw $3acc, $73ff, $7d4a, $0000 ; pal 7: #62b473 #ffffe6 #5252ff #000000
+	INCLUDE "data/bank_06b/palettes_44d0.asm" ; $44d0, 64 bytes (palettes)
 IntroCutsceneState04Exit_6b:
 	ld c, $06 ; $4510
 	call BeginFadeOut ; $4512
@@ -820,16 +793,7 @@ IntroCutsceneState13Update_6b:
 	jp z, DispatchCutsceneStateInit.loopB ; $4754
 	jp DispatchCutsceneStateInit.loop ; $4757
 Palettes_6b_475a:
-	; $475a, 64 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $7f00, $7f60, $7fe0, $0000 ; pal 0: #00c5ff #00deff #00ffff #000000
-	dw $7f00, $6bff, $7d8a, $0000 ; pal 1: #00c5ff #ffffd5 #5262ff #000000
-	dw $0240, $7e9f, $7f00, $0000 ; pal 2: #009400 #ffa4ff #00c5ff #000000
-	dw $6bff, $0280, $7f00, $0000 ; pal 3: #ffffd5 #00a400 #00c5ff #000000
-	dw $025f, $6bff, $7f00, $0000 ; pal 4: #ff9400 #ffffd5 #00c5ff #000000
-	dw $294a, $294a, $294a, $294a ; pal 5: #525252 #525252 #525252 #525252
-	dw $7fff, $4252, $214a, $0000 ; pal 6: #ffffff #949483 #525241 #000000
-	dw $294a, $294a, $294a, $294a ; pal 7: #525252 #525252 #525252 #525252
+	INCLUDE "data/bank_06b/palettes_475a.asm" ; $475a, 64 bytes (palettes)
 IntroCutsceneState08Init_6b:
 	call DisableLCDSafely ; $479a
 	ld c, $1c ; $479d
@@ -1109,16 +1073,7 @@ IntroCutsceneState16Exit_6b:
 	ld [wCutsceneStepTimer], a ; $4a52
 	jp DispatchCutsceneStateInit.loop2 ; $4a55
 Palettes_6b_4a58:
-	; $4a58, 64 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $7fff, $4252, $214a, $0000 ; pal 0: #ffffff #949483 #525241 #000000
-	dw $214a, $4252, $214a, $0000 ; pal 1: #525241 #949483 #525241 #000000
-	dw $214a, $4252, $214a, $0000 ; pal 2: #525241 #949483 #525241 #000000
-	dw $214a, $4252, $4252, $0000 ; pal 3: #525241 #949483 #949483 #000000
-	dw $214a, $4252, $4252, $0000 ; pal 4: #525241 #949483 #949483 #000000
-	dw $214a, $214a, $4252, $0000 ; pal 5: #525241 #525241 #949483 #000000
-	dw $294a, $294a, $294a, $294a ; pal 6: #525252 #525252 #525252 #525252
-	dw $294a, $294a, $294a, $294a ; pal 7: #525252 #525252 #525252 #525252
+	INCLUDE "data/bank_06b/palettes_4a58.asm" ; $4a58, 64 bytes (palettes)
 IntroCutsceneState17Init_6b:
 	wram_bank $04 ; $4a98
 	ld hl, wTextArgStringQueue + 16 ; $4a9e
@@ -1255,15 +1210,7 @@ IntroCutsceneState18Exit_6b:
 	ldh [hShowDebugConsole], a ; $4bfb
 	jp DispatchCutsceneStateInit.loop2 ; $4bfd
 Palettes_6b_4c00:
-	; $4c00, 56 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $5902, $7fff, $0090, $0000 ; pal 0: #1041b4 #ffffff #832000 #000000
-	dw $191f, $035f, $5902, $0000 ; pal 1: #ff4131 #ffd500 #1041b4 #000000
-	dw $5902, $7fff, $331f, $0000 ; pal 2: #1041b4 #ffffff #ffc562 #000000
-	dw $191f, $7fff, $331f, $0000 ; pal 3: #ff4131 #ffffff #ffc562 #000000
-	dw $191f, $0090, $331f, $0000 ; pal 4: #ff4131 #832000 #ffc562 #000000
-	dw $294a, $294a, $294a, $294a ; pal 5: #525252 #525252 #525252 #525252
-	dw $294a, $294a, $294a, $294a ; pal 6: #525252 #525252 #525252 #525252
+	INCLUDE "data/bank_06b/palettes_4c00.asm" ; $4c00, 56 bytes (palettes)
 IntroCutsceneState19Init_6b:
 	ld hl, Palette_6b_5d25 ; $4c38
 	ld de, $0008 ; $4c3b
@@ -1549,10 +1496,7 @@ LoadCutsceneTileset:
 	call LoadPaletteShadow ; $5256
 	ret ; $5259
 Palettes_6b_525a:
-	; $525a, 16 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $569f, $73ff, $115f, $0000 ; pal 0: #ffa4ac #ffffe6 #ff5220 #000000
-	dw $331f, $77ff, $025f, $0000 ; pal 1: #ffc562 #ffffee #ff9400 #000000
+	INCLUDE "data/bank_06b/palettes_525a.asm" ; $525a, 16 bytes (palettes)
 QueueCutsceneSpriteGroupA:
 	ld hl, SpriteTemplate_6b_52b6 ; $526a
 	ld a, [$cb44] ; $526d
@@ -1839,16 +1783,7 @@ CutsceneSceneBGfx0:
 CutsceneSceneBGfx1:
 	INCBIN "data/bank_06b/d_5bd7.bin" ; $5bd7, 334 bytes
 Palette_6b_5d25:
-	; $5d25, 64 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $294a, $0000, $0000, $0000 ; pal 0: #525252 #000000 #000000 #000000
-	dw $7dc0, $7dc0, $7de1, $7e02 ; pal 1: #0073ff #0073ff #087bff #1083ff
-	dw $7e23, $7e44, $7e45, $7e66 ; pal 2: #188bff #2094ff #2994ff #319cff
-	dw $7e87, $7ea8, $7ec9, $7eca ; pal 3: #39a4ff #41acff #4ab4ff #52b4ff
-	dw $7eeb, $7f0c, $7f2d, $7f4e ; pal 4: #5abdff #62c5ff #6acdff #73d5ff
-	dw $7dc0, $32df, $0000, $0db9 ; pal 5: #0073ff #ffb462 #000000 #cd6a18
-	dw $7dc0, $7fff, $6294, $0000 ; pal 6: #0073ff #ffffff #a4a4c5 #000000
-	dw $7f4e, $7f73, $7fb9, $7fff ; pal 7: #73d5ff #9cdeff #cdeeff #ffffff
+	INCLUDE "data/bank_06b/palettes_5d25.asm" ; $5d25, 64 bytes (palettes)
 CutsceneSceneAGfx1:
 	INCBIN "data/bank_06b/d_5d65.bin" ; $5d65, 323 bytes
 CutsceneSceneAGfx2:
@@ -1887,10 +1822,7 @@ LoadIntroTilesAndPalette:
 	call LoadPaletteShadow ; $60c1
 	ret ; $60c4
 Palettes_6b_60c5:
-	; $60c5, 16 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $7c1f, $033f, $01af, $0000 ; pal 0: #ff00ff #ffcd00 #7b6a00 #000000
-	dw $7f4e, $7f73, $7fb9, $7fff ; pal 1: #73d5ff #9cdeff #cdeeff #ffffff
+	INCLUDE "data/bank_06b/palettes_60c5.asm" ; $60c5, 16 bytes (palettes)
 SetCameraYFromScrollPos:
 	ld hl, wIntroCutsceneScrollY ; $60d5
 	ld a, [hl+] ; $60d8
@@ -2056,16 +1988,7 @@ IntroCutsceneState16InitGfx7:
 TitleSceneGraphicsGfx2:
 	INCBIN "data/bank_06b/d_6f0f.bin" ; $6f0f, 308 bytes
 Palette_6b_7043:
-	; $7043, 64 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $7f00, $7f60, $7fe0, $0000 ; pal 0: #00c5ff #00deff #00ffff #000000
-	dw $7f00, $7f00, $7f00, $7f00 ; pal 1: #00c5ff #00c5ff #00c5ff #00c5ff
-	dw $7f00, $7f00, $7f00, $7f00 ; pal 2: #00c5ff #00c5ff #00c5ff #00c5ff
-	dw $7f00, $7f00, $7f00, $7f00 ; pal 3: #00c5ff #00c5ff #00c5ff #00c5ff
-	dw $7f00, $7f00, $7f00, $7f00 ; pal 4: #00c5ff #00c5ff #00c5ff #00c5ff
-	dw $7f00, $7f00, $7f00, $7f00 ; pal 5: #00c5ff #00c5ff #00c5ff #00c5ff
-	dw $7f00, $7f00, $7f00, $7f00 ; pal 6: #00c5ff #00c5ff #00c5ff #00c5ff
-	dw $7f00, $7f00, $7f00, $7f00 ; pal 7: #00c5ff #00c5ff #00c5ff #00c5ff
+	INCLUDE "data/bank_06b/palettes_7043.asm" ; $7043, 64 bytes (palettes)
 IntroSequenceTimerTask:
 	ld a, [$cb44] ; $7083
 	inc a ; $7086
@@ -2090,81 +2013,13 @@ IntroSequenceTimerTask:
 .done:
 	ret ; $70ae
 Palettes_6b_70af:
-	; $70af, 128 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $7f00, $7f00, $7f00, $7f00 ; pal 0: #00c5ff #00c5ff #00c5ff #00c5ff
-	dw $7f00, $7ee2, $7f00, $76e0 ; pal 1: #00c5ff #10bdff #00c5ff #00bdee
-	dw $7f00, $7f04, $7ee1, $6ea0 ; pal 2: #00c5ff #20c5ff #08bdff #00acde
-	dw $7f00, $7b26, $7ec2, $6680 ; pal 3: #00c5ff #31cdf6 #10b4ff #00a4cd
-	dw $7f00, $7b28, $7ea2, $5e40 ; pal 4: #00c5ff #41cdf6 #10acff #0094bd
-	dw $7f00, $7b4a, $7e83, $5600 ; pal 5: #00c5ff #52d5f6 #18a4ff #0083ac
-	dw $7f00, $774c, $7e84, $4de0 ; pal 6: #00c5ff #62d5ee #20a4ff #007b9c
-	dw $7f00, $776e, $7e64, $45a0 ; pal 7: #00c5ff #73deee #209cff #006a8b
-	dw $7f00, $7770, $7e45, $3d80 ; pal 8: #00c5ff #83deee #2994ff #00627b
-	dw $7f00, $7392, $7e26, $3540 ; pal 9: #00c5ff #94e6e6 #318bff #00526a
-	dw $7f00, $7394, $7e06, $2d00 ; pal 10: #00c5ff #a4e6e6 #3183ff #00415a
-	dw $7f00, $73b6, $7e07, $24e0 ; pal 11: #00c5ff #b4eee6 #3983ff #00394a
-	dw $7f00, $6fb8, $7de8, $1ca0 ; pal 12: #00c5ff #c5eede #417bff #002939
-	dw $7f00, $6fda, $7dc8, $1480 ; pal 13: #00c5ff #d5f6de #4173ff #002029
-	dw $7f00, $6fdc, $7da9, $0c40 ; pal 14: #00c5ff #e6f6de #4a6aff #001018
-	dw $7f00, $6bff, $7d8a, $0000 ; pal 15: #00c5ff #ffffd5 #5262ff #000000
+	INCLUDE "data/bank_06b/palettes_70af.asm" ; $70af, 128 bytes (palettes)
 Palettes_6b_712f:
-	; $712f, 128 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $7f00, $7f00, $7f00, $7f00 ; pal 0: #00c5ff #00c5ff #00c5ff #00c5ff
-	dw $7700, $7f02, $7f00, $76e0 ; pal 1: #00c5ee #10c5ff #00c5ff #00bdee
-	dw $6b00, $7f04, $7f00, $6ea0 ; pal 2: #00c5d5 #20c5ff #00c5ff #00acde
-	dw $66e0, $7f06, $7f00, $6680 ; pal 3: #00bdcd #31c5ff #00c5ff #00a4cd
-	dw $5ee0, $7ee8, $7f00, $5e40 ; pal 4: #00bdbd #41bdff #00c5ff #0094bd
-	dw $56c0, $7eea, $7f00, $5600 ; pal 5: #00b4ac #52bdff #00c5ff #0083ac
-	dw $4ec0, $7eec, $7f00, $4de0 ; pal 6: #00b49c #62bdff #00c5ff #007b9c
-	dw $46a0, $7eee, $7f00, $45a0 ; pal 7: #00ac8b #73bdff #00c5ff #006a8b
-	dw $3ea0, $7ed0, $7f00, $3d80 ; pal 8: #00ac7b #83b4ff #00c5ff #00627b
-	dw $36a0, $7ed2, $7f00, $3540 ; pal 9: #00ac6a #94b4ff #00c5ff #00526a
-	dw $2e80, $7ed4, $7f00, $2d00 ; pal 10: #00a45a #a4b4ff #00c5ff #00415a
-	dw $2680, $7ed6, $7f00, $24e0 ; pal 11: #00a44a #b4b4ff #00c5ff #00394a
-	dw $1e80, $7eb8, $7f00, $1ca0 ; pal 12: #00a439 #c5acff #00c5ff #002939
-	dw $1660, $7eba, $7f00, $1480 ; pal 13: #009c29 #d5acff #00c5ff #002029
-	dw $0e60, $7ebc, $7f00, $0c40 ; pal 14: #009c18 #e6acff #00c5ff #001018
-	dw $0240, $7e9f, $7f00, $0000 ; pal 15: #009400 #ffa4ff #00c5ff #000000
+	INCLUDE "data/bank_06b/palettes_712f.asm" ; $712f, 128 bytes (palettes)
 Palettes_6b_71af:
-	; $71af, 128 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $7f00, $7f00, $7f00, $7f00 ; pal 0: #00c5ff #00c5ff #00c5ff #00c5ff
-	dw $7ee2, $7700, $7f00, $76e0 ; pal 1: #10bdff #00c5ee #00c5ff #00bdee
-	dw $7f04, $6b00, $7f00, $6ea0 ; pal 2: #20c5ff #00c5d5 #00c5ff #00acde
-	dw $7b26, $66e0, $7f00, $6680 ; pal 3: #31cdf6 #00bdcd #00c5ff #00a4cd
-	dw $7b28, $5ee0, $7f00, $5e40 ; pal 4: #41cdf6 #00bdbd #00c5ff #0094bd
-	dw $7b4a, $56c0, $7f00, $5600 ; pal 5: #52d5f6 #00b4ac #00c5ff #0083ac
-	dw $774c, $4ec0, $7f00, $4de0 ; pal 6: #62d5ee #00b49c #00c5ff #007b9c
-	dw $776e, $46a0, $7f00, $45a0 ; pal 7: #73deee #00ac8b #00c5ff #006a8b
-	dw $7770, $3ea0, $7f00, $3d80 ; pal 8: #83deee #00ac7b #00c5ff #00627b
-	dw $7392, $36a0, $7f00, $3540 ; pal 9: #94e6e6 #00ac6a #00c5ff #00526a
-	dw $7394, $2e80, $7f00, $2d00 ; pal 10: #a4e6e6 #00a45a #00c5ff #00415a
-	dw $73b6, $2680, $7f00, $24e0 ; pal 11: #b4eee6 #00a44a #00c5ff #00394a
-	dw $6fb8, $1e80, $7f00, $1ca0 ; pal 12: #c5eede #00a439 #00c5ff #002939
-	dw $6fda, $1660, $7f00, $1480 ; pal 13: #d5f6de #009c29 #00c5ff #002029
-	dw $6fdc, $0e60, $7f00, $0c40 ; pal 14: #e6f6de #009c18 #00c5ff #001018
-	dw $6bff, $0240, $7f00, $0000 ; pal 15: #ffffd5 #009400 #00c5ff #000000
+	INCLUDE "data/bank_06b/palettes_71af.asm" ; $71af, 128 bytes (palettes)
 Palettes_6b_722f:
-	; $722f, 128 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $7f00, $7f00, $7f00, $7f00 ; pal 0: #00c5ff #00c5ff #00c5ff #00c5ff
-	dw $7702, $7ee2, $7f00, $76e0 ; pal 1: #10c5ee #10bdff #00c5ff #00bdee
-	dw $6f04, $7f04, $7f00, $6ea0 ; pal 2: #20c5de #20c5ff #00c5ff #00acde
-	dw $66e6, $7b26, $7f00, $6680 ; pal 3: #31bdcd #31cdf6 #00c5ff #00a4cd
-	dw $5ee8, $7b28, $7f00, $5e40 ; pal 4: #41bdbd #41cdf6 #00c5ff #0094bd
-	dw $56ca, $7b4a, $7f00, $5600 ; pal 5: #52b4ac #52d5f6 #00c5ff #0083ac
-	dw $4ecc, $774c, $7f00, $4de0 ; pal 6: #62b49c #62d5ee #00c5ff #007b9c
-	dw $46ce, $776e, $7f00, $45a0 ; pal 7: #73b48b #73deee #00c5ff #006a8b
-	dw $3eb0, $7770, $7f00, $3d80 ; pal 8: #83ac7b #83deee #00c5ff #00627b
-	dw $36b2, $7392, $7f00, $3540 ; pal 9: #94ac6a #94e6e6 #00c5ff #00526a
-	dw $2e94, $7394, $7f00, $2d00 ; pal 10: #a4a45a #a4e6e6 #00c5ff #00415a
-	dw $2696, $73b6, $7f00, $24e0 ; pal 11: #b4a44a #b4eee6 #00c5ff #00394a
-	dw $1e98, $6fb8, $7f00, $1ca0 ; pal 12: #c5a439 #c5eede #00c5ff #002939
-	dw $167a, $6fda, $7f00, $1480 ; pal 13: #d59c29 #d5f6de #00c5ff #002029
-	dw $0e7c, $6fdc, $7f00, $0c40 ; pal 14: #e69c18 #e6f6de #00c5ff #001018
-	dw $025f, $6bff, $7f00, $0000 ; pal 15: #ff9400 #ffffd5 #00c5ff #000000
+	INCLUDE "data/bank_06b/palettes_722f.asm" ; $722f, 128 bytes (palettes)
 AnimateBgPalette1Task:
 	ldh a, [hVBlankCounter] ; $72af
 	and a, $03 ; $72b1
@@ -2371,16 +2226,7 @@ ApplyScrollYFromWram:
 	ldh [hScrollY], a ; $756c
 	ret ; $756e
 Palettes_6b_756f:
-	; $756f, 64 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $0000, $0000, $0000, $0000 ; pal 0: #000000 #000000 #000000 #000000
-	dw $0000, $0000, $0000, $0000 ; pal 1: #000000 #000000 #000000 #000000
-	dw $0000, $0000, $0000, $0000 ; pal 2: #000000 #000000 #000000 #000000
-	dw $0000, $0000, $0000, $0000 ; pal 3: #000000 #000000 #000000 #000000
-	dw $0000, $0000, $0000, $0000 ; pal 4: #000000 #000000 #000000 #000000
-	dw $0000, $0000, $0000, $0000 ; pal 5: #000000 #000000 #000000 #000000
-	dw $0000, $0000, $0000, $0000 ; pal 6: #000000 #000000 #000000 #000000
-	dw $0000, $0000, $0000, $0000 ; pal 7: #000000 #000000 #000000 #000000
+	INCLUDE "data/bank_06b/palettes_756f.asm" ; $756f, 64 bytes (palettes)
 RunTitleScreen:
 	call ClearFrameTasks ; $75af
 	wram_bank $03 ; $75b2
@@ -2566,20 +2412,9 @@ TitleScreenTilemap:
 TitleScreenAttrmap:
 	INCBIN "data/bank_06b/lz_7872.bin" ; $7872, 157 bytes
 TitleScreenPalettes:
-	; $790f, 64 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $0242, $0000, $7fff, $021f ; pal 0: #109400 #000000 #ffffff #ff8300
-	dw $0242, $0000, $7fff, $20df ; pal 1: #109400 #000000 #ffffff #ff3141
-	dw $0242, $0000, $021f, $20df ; pal 2: #109400 #000000 #ff8300 #ff3141
-	dw $0242, $0000, $68c8, $20df ; pal 3: #109400 #000000 #4131d5 #ff3141
-	dw $0242, $0000, $7fff, $68c8 ; pal 4: #109400 #000000 #ffffff #4131d5
-	dw $0242, $0000, $7fff, $035f ; pal 5: #109400 #000000 #ffffff #ffd500
-	dw $0242, $0000, $035f, $68c8 ; pal 6: #109400 #000000 #ffd500 #4131d5
-	dw $7fff, $7f0c, $68c8, $0000 ; pal 7: #ffffff #62c5ff #4131d5 #000000
+	INCLUDE "data/bank_06b/palettes_790f.asm" ; $790f, 64 bytes (palettes)
 Palettes_6b_794f:
-	; $794f, 8 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $7fff, $025f, $015f, $001f ; pal 0: #ffffff #ff9400 #ff5200 #ff0000
+	INCLUDE "data/bank_06b/palettes_794f.asm" ; $794f, 8 bytes (palettes)
 AwardCeremonyTilemap:
 	INCBIN "data/bank_06b/lz_7957.bin" ; $7957, 293 bytes
 AwardCeremonyAttrmap:

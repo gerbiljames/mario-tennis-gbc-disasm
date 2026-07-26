@@ -2877,9 +2877,7 @@ LoadRacketSelectScreen:
 	farcall QueueWram3MapToVRAM ; $5557
 	ret ; $555a
 Palette_3e_555b:
-	; $555b, 8 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $01df, $1bbf, $0298, $0421 ; pal 0: #ff7300 #ffee31 #c5a400 #080808
+	INCLUDE "data/bank_03e/palettes_555b.asm" ; $555b, 8 bytes (palettes)
 DrawOwnedItemIcons:
 	ld hl, $d800 ; $5563
 	ld a, [$d810] ; $5566
@@ -5061,16 +5059,7 @@ StubNop_3e:
 AwardCeremonyTiles:
 	INCBIN "data/bank_03e/lz_69d5.bin" ; $69d5, 2641 bytes
 AwardCeremonyPalettes:
-	; $7426, 64 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $3230, $294a, $294a, $294a ; pal 0: #838b62 #525252 #525252 #525252
-	dw $0003, $261f, $1913, $1412 ; pal 1: #180000 #ff834a #9c4131 #940029
-	dw $0000, $001f, $7e93, $69cc ; pal 2: #000000 #ff0000 #9ca4ff #6273d5
-	dw $6bff, $001f, $021f, $0000 ; pal 3: #ffffd5 #ff0000 #ff8300 #000000
-	dw $7e93, $69cc, $021f, $0000 ; pal 4: #9ca4ff #6273d5 #ff8300 #000000
-	dw $7e93, $6bff, $021f, $0000 ; pal 5: #9ca4ff #ffffd5 #ff8300 #000000
-	dw $7e93, $6bff, $001f, $0000 ; pal 6: #9ca4ff #ffffd5 #ff0000 #000000
-	dw $7e93, $6bff, $505c, $0000 ; pal 7: #9ca4ff #ffffd5 #e610a4 #000000
+	INCLUDE "data/bank_03e/palettes_7426.asm" ; $7426, 64 bytes (palettes)
 AwardCeremonyTilemap5:
 	INCBIN "data/bank_03e/lz_7466.bin" ; $7466, 279 bytes
 AwardCeremonyAttrmap5:

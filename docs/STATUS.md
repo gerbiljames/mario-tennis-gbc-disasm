@@ -4337,6 +4337,41 @@ labels on structures already rendered inline in the source (mostly
 human-named.
 
 
+## Palettes moved out of the repository (2026-07-26)
+
+The project's rule is that no copyrighted ROM content is committed: graphics,
+audio and text all live in the gitignored `data/` tree, extracted from the
+user's ROM by `./setup.sh`. Game text already had a middle path -- it is fully
+*decoded*, but the decoded source is generated into `data/*/text_*.asm` and
+`INCLUDE`d, so the repository carries the structure without the strings.
+
+Palettes now get the same treatment. 146 palette tables, **8,619 bytes of
+literal BGR555 colour values**, used to be committed as inline `dw` rows in
+`src/*.asm`; they are colour choices, which is graphics by any plain reading,
+and they were the largest thing in the source that reproduced ROM bytes
+verbatim. `emit.py` gained a `GENERATED_SPECS` set: a declared spec listed
+there is emitted as
+`INCLUDE "data/bank_XXX/palettes_XXXX.asm"` plus a manifest entry carrying the
+spec, and `tools/extract.py` renders it at setup with the same
+`render_palettes` used before -- so the source reads identically, the build is
+still byte-perfect, and nothing changes except where the values live.
+
+The distinction the set encodes: a spec stays **inline** when its rows are
+layout the assembler recomputes -- label arithmetic, pointer symbols, record
+structure -- and moves **out** when its rows are ROM values. Literal bytes
+committed in `src/` dropped from 38,380 to **29,761** (1.4% of the ROM). What
+is left under that measure is mostly `map_actors` (11.6K), `actor_script`
+(9.8K), `records:2` (8.5K) and `tilemap_dispatch` (8.0K) -- decoded game logic
+rather than assets, which is the side of the line the README's wording
+("graphics, audio, text, and any code not yet analyzed") puts them on.
+
+The **sound data stays an INCBIN on purpose**. All 315 channel scripts are
+named and the engine's dispatch is documented above, but decoding them into
+`snd_*` macros would put ~130 KB of music sequence data into the repository as
+committed source -- the same category as text and graphics. The identification
+is the deliverable; the bytes stay with the user's ROM.
+
+
 ## Repo state
 
 All work is committed (HEAD `258e3d3`); every commit rebuilds byte-perfect.

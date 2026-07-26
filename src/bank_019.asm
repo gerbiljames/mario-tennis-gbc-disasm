@@ -79,16 +79,7 @@ DataPtr_ChampionMedalAttrmap4:
 VictoryCutsceneTiles:
 	INCBIN "data/bank_019/lz_404c.bin" ; $404c, 3118 bytes
 VictoryCutscenePalettes:
-	; $4c7a, 64 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $2928, $7fff, $3e4d, $0000 ; pal 0: #414a52 #ffffff #6a947b #000000
-	dw $294a, $294a, $294a, $294a ; pal 1: #525252 #525252 #525252 #525252
-	dw $294a, $294a, $294a, $294a ; pal 2: #525252 #525252 #525252 #525252
-	dw $294a, $294a, $294a, $294a ; pal 3: #525252 #525252 #525252 #525252
-	dw $7e80, $6bff, $505c, $0000 ; pal 4: #00a4ff #ffffd5 #e610a4 #000000
-	dw $7e80, $6bff, $01df, $0000 ; pal 5: #00a4ff #ffffd5 #ff7300 #000000
-	dw $7e80, $6bff, $011f, $0000 ; pal 6: #00a4ff #ffffd5 #ff4100 #000000
-	dw $294a, $294a, $294a, $294a ; pal 7: #525252 #525252 #525252 #525252
+	INCLUDE "data/bank_019/palettes_4c7a.asm" ; $4c7a, 64 bytes (palettes)
 VictoryCutsceneTilemap:
 	INCBIN "data/bank_019/lz_4cba.bin" ; $4cba, 265 bytes
 VictoryCutsceneAttrmap:
@@ -116,16 +107,7 @@ VictoryCutsceneAttrmap6:
 ShopCutsceneTiles:
 	INCBIN "data/bank_019/lz_551f.bin" ; $551f, 3077 bytes
 ShopCutscenePalettes:
-	; $6124, 64 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $5ad6, $0000, $0000, $0000 ; pal 0: #b4b4b4 #000000 #000000 #000000
-	dw $79ea, $6bff, $7f2a, $0000 ; pal 1: #527bf6 #ffffd5 #52cdff #000000
-	dw $79ea, $6bff, $011f, $0000 ; pal 2: #527bf6 #ffffd5 #ff4100 #000000
-	dw $79ea, $6bff, $01df, $0000 ; pal 3: #527bf6 #ffffd5 #ff7300 #000000
-	dw $79ea, $6bff, $505c, $0000 ; pal 4: #527bf6 #ffffd5 #e610a4 #000000
-	dw $7ed6, $7ed6, $7ed6, $7ed6 ; pal 5: #b4b4ff #b4b4ff #b4b4ff #b4b4ff
-	dw $281f, $6bff, $2a00, $0000 ; pal 6: #ff0052 #ffffd5 #008352 #000000
-	dw $7ed6, $7ed6, $7ed6, $7ed6 ; pal 7: #b4b4ff #b4b4ff #b4b4ff #b4b4ff
+	INCLUDE "data/bank_019/palettes_6124.asm" ; $6124, 64 bytes (palettes)
 ShopCutsceneTilemap:
 	INCBIN "data/bank_019/lz_6164.bin" ; $6164, 257 bytes
 ShopCutsceneAttrmap:
@@ -153,16 +135,7 @@ ShopCutsceneAttrmap6:
 ChampionMedalTiles:
 	INCBIN "data/bank_019/lz_6a10.bin" ; $6a10, 3355 bytes
 ChampionMedalPalettes:
-	; $772b, 64 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $2928, $7fff, $3e4d, $0000 ; pal 0: #414a52 #ffffff #6a947b #000000
-	dw $294a, $294a, $294a, $294a ; pal 1: #525252 #525252 #525252 #525252
-	dw $3a9f, $77ff, $01d6, $0000 ; pal 2: #ffa473 #ffffee #b47300 #000000
-	dw $3a9f, $6154, $01d6, $0000 ; pal 3: #ffa473 #a452c5 #b47300 #000000
-	dw $6154, $77ff, $505c, $0000 ; pal 4: #a452c5 #ffffee #e610a4 #000000
-	dw $3a9f, $77ff, $6154, $0000 ; pal 5: #ffa473 #ffffee #a452c5 #000000
-	dw $6154, $77ff, $011f, $0000 ; pal 6: #a452c5 #ffffee #ff4100 #000000
-	dw $6154, $77ff, $01df, $0000 ; pal 7: #a452c5 #ffffee #ff7300 #000000
+	INCLUDE "data/bank_019/palettes_772b.asm" ; $772b, 64 bytes (palettes)
 ChampionMedalTilemap:
 	INCBIN "data/bank_019/lz_776b.bin" ; $776b, 275 bytes
 ChampionMedalAttrmap:

@@ -4073,9 +4073,7 @@ TestTextEndMarker:
 	sub a, $23 ; $5b1d
 	ret ; $5b1f
 ScrollTextPalette_03:
-	; $5b20, 8 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $1880, $1880, $10ee, $7fff ; pal 0: #002031 #002031 #733920 #ffffff
+	INCLUDE "data/bank_003/palettes_5b20.asm" ; $5b20, 8 bytes (palettes)
 SetupSceneAnimationPalettes:
 	ldh a, [hWramBank] ; $5b28
 	push af ; $5b2a
@@ -5121,13 +5119,9 @@ LoadCutsceneAnimFrameGfx_2D_35:
 	call QueueSpriteTemplate ; $65b8
 	ret ; $65bb
 SceneAnimObjPalette0_03:
-	; $65bc, 8 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $7fff, $03fe, $01dd, $0046 ; pal 0: #ffffff #f6ff00 #ee7300 #311000
+	INCLUDE "data/bank_003/palettes_65bc.asm" ; $65bc, 8 bytes (palettes)
 SceneAnimObjPalette1_03:
-	; $65c4, 8 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $7fff, $0200, $03e6, $0046 ; pal 0: #ffffff #008300 #31ff00 #311000
+	INCLUDE "data/bank_003/palettes_65c4.asm" ; $65c4, 8 bytes (palettes)
 	; $65cc, 4 bytes (fill)
 	ds 4, $00
 CutsceneAnimFrameLZ_00:

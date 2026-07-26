@@ -1004,25 +1004,9 @@ Data_27_5570:
 	; $5570, 16 bytes (bytes:16)
 	db $80, $00, $20, $55, $a0, $7e, $60, $44, $08, $25, $08, $25, $08, $25, $08, $25 ; 0x00
 Palette_27_5580:
-	; $5580, 64 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $1d3d, $0310, $7fff, $1006 ; pal 0: #ee4a39 #83c500 #ffffff #310020
-	dw $0140, $024c, $6739, $1006 ; pal 1: #005200 #629400 #cdcdcd #310020
-	dw $1d38, $024c, $0140, $1006 ; pal 2: #c54a39 #629400 #005200 #310020
-	dw $6e40, $0140, $6f7b, $1006 ; pal 3: #0094de #005200 #dedede #310020
-	dw $1d38, $7fff, $3def, $1006 ; pal 4: #c54a39 #ffffff #7b7b7b #310020
-	dw $6140, $0116, $0140, $7e10 ; pal 5: #0052c5 #b44100 #005200 #8383ff
-	dw $0080, $5520, $7ea0, $4460 ; pal 6: #002000 #004aac #00acff #00188b
-	dw $2508, $2508, $2508, $2508 ; pal 7: #41414a #41414a #41414a #41414a
+	INCLUDE "data/bank_027/palettes_5580.asm" ; $5580, 64 bytes (palettes)
 Palette_27_55c0:
-	; $55c0, 48 bytes (palettes)
-; GBC palettes (BGR555), 4 colors each
-	dw $1d3d, $0310, $7fff, $1006 ; pal 0: #ee4a39 #83c500 #ffffff #310020
-	dw $00c0, $0186, $29ea, $1006 ; pal 1: #003100 #316200 #527b52 #310020
-	dw $00ac, $0186, $00c0, $1006 ; pal 2: #622900 #316200 #003100 #310020
-	dw $65c0, $00c0, $5b39, $1006 ; pal 3: #0073cd #003100 #cdcdb4 #310020
-	dw $1d34, $7ffc, $3def, $1006 ; pal 4: #a44a39 #e6ffff #7b7b7b #310020
-	dw $48a0, $00ac, $00c0, $5dad ; pal 5: #002994 #622900 #003100 #6a6abd
+	INCLUDE "data/bank_027/palettes_55c0.asm" ; $55c0, 48 bytes (palettes)
 End10VarsityCourtMapScripts_27:
 	; $55f0, 14 bytes (map_tree)
 	dw End10VarsityCourtEntryPoints_27 ; slot 0 EntryPoints
