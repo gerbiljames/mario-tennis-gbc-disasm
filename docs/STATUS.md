@@ -26,8 +26,9 @@ Everything below is **committed** (HEAD `6c48962`); the whole history
 rebuilds byte-perfect. Per-bank progress at any time: `python3
 tools/progress.py` (proven-code bytes, fill runs, label counts, human-named
 counts) and `tools/progress.py --unnamed <bank>` to list still-auto-named
-symbols. **10,815 of 20,746 labels are human-named** (see the caveat in the
-auto-split section below) (up from 4,816 on 2026-07-23).
+symbols. **14,628 of 20,746 labels are human-named** (see the caveat in the
+auto-split section below) (up from 4,816 on 2026-07-23); what is left is
+`Data_*` runs.
 
 ### Local labels inside functions (2026-07-26)
 
@@ -140,7 +141,32 @@ text emitters generate their own `.L4`/`.s17` anchors). It now keeps the ones
 whose offset is curated in `labels.json`, so named locals count toward the
 naming metric -- hence 8,319 named, up from 6,800 with the same source.
 
-### The match engine and story mode have no `Label_*` left (2026-07-26)
+### No `Label_*` is left in the ROM (2026-07-26)
+
+`grep -c '^Label_' src/*.asm` is **zero**. Every jump target the disassembler
+found by descent now has a curated name: **7,700 are local labels** scoped to
+the function they sit in, and the rest became functions -- code that was only
+ever reached by a `jr`/`jp` and so never got a `Func_` name of its own. Only
+`Data_*` (4,178 data runs) remains auto-named, which is the next frontier.
+
+The last two thirds went bank by bank with a generator rather than by hand:
+`auto.py` proposes a name per label (followed only by `ret` -> `.done`; jumped
+to from a *later* address -> `.loop`; block opens with `call Foo` -> `.foo`;
+opens by reading `wFoo` -> `.checkFoo`; `xor a` + store -> `.clearFoo`), and
+roughly a fifth then needed a hand name. Two structural rules mattered:
+
+* **Never name a label whose enclosing global is a data symbol.** It would
+  render `DrillShotTable_0b_4b8d.rally1` -- worse than the auto name. Bank
+  `$0b`'s 296 stragglers were all of this shape: each drill `*JudgePoint`
+  routine has its per-result case blocks *after* the table it indexes. Naming
+  the block (`ServiceMatch2Cases1`, from the routine that references the
+  table) turned them into ordinary functions, and their labels into locals.
+* **The filter for "is this owner a data symbol" has to be anchored.** A
+  substring test skipped `HandleTennisDictionaryListInput`,
+  `LoadCutsceneAnimFrameGfx_00_08` and every `FetchText_*` -- all real
+  functions -- because their names merely contain `List`/`Gfx_`/`Text_`.
+
+### The match engine and story mode (2026-07-26)
 
 **Fifteen banks are now completely free of auto-named labels**: the match
 engine (`$04` actors/AI, `$07` shot physics and the serial link, `$08` the
@@ -184,10 +210,9 @@ named from the first instruction of their block (`script_speak` -> `.speak`,
 name afterwards. Collisions inside one scope get a numeric suffix, which is
 why a few `.placeActors2`/`.applySlot2` names appear.
 
-Still auto-named: **3,813 `Label_*`** (down from 7,804) and the `Data_*` runs.
-What is left lives in the menu/UI banks (`$05`, `$1a`-`$1e`, `$39`-`$3f`), the
-minigame banks (`$0b`, `$0d`, `$17`) and ROM0 -- the same one-function-at-a-time
-work, on subsystems this pass did not reach.
+At the time of this pass 3,813 `Label_*` were still left, in the menu/UI banks
+(`$05`, `$1a`-`$1e`, `$39`-`$3f`), the minigame banks (`$0b`, `$0d`, `$17`) and
+ROM0; the generator pass above finished those off.
 
 Process notes worth keeping:
 
@@ -201,6 +226,12 @@ Process notes worth keeping:
   to make target". Put the label on the routine's first code byte. Related:
   `make compare 2>&1 | grep OK | tail -1` **cannot fail** -- `tail` always
   exits 0 -- so a verification wrapper has to test the grep itself.
+* A curated name at an offset that never emits (a wrong bank in `labels.json`)
+  used to break silently *and* corrupt scoping: `LoadActorObjectDefChecked`
+  sat at `$14ac3` when it meant `$10ac3`, so locals scoped to it emitted
+  `Parent.local` references rgbasm could not resolve. The emitter now checks
+  every local's owning global was actually written, and fails naming the
+  offending offset.
 * Two locals with the same name under one global label are an rgbasm
   redefinition error. This bites where a function is followed by *unnamed*
   sibling routines, because their `Label_` heads sit in the same scope; the
