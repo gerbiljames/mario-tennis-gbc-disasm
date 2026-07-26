@@ -274,13 +274,13 @@ TickRallyTimers:
 	ld a, [wBallHasBouncedFlag] ; $4262
 	and a, a ; $4265
 	jr z, .modeHook ; $4266
-	ld hl, Func_08_4274 ; $4268
+	ld hl, SetCharStateForRallyTick ; $4268
 	call ForEachCharBank ; $426b
 .modeHook:
 	ld d, $06 ; $426e
 	call CallModeHook ; $4270
 	ret ; $4273
-Func_08_4274:
+SetCharStateForRallyTick:
 	ld a, $05 ; $4274
 	call SetCharState ; $4276
 	ret ; $4279
@@ -612,7 +612,7 @@ ReinitPointAfterPause:
 	call RefreshCourtAfterEndChange ; $44ca
 	call ResetCameraForServe ; $44cd
 	call UpdateMatchCamera ; $44d0
-	ld hl, Func_08_4cb2 ; $44d3
+	ld hl, MoveCharToBaseCourtPosition ; $44d3
 	call ForEachCharBank ; $44d6
 	farcall LoadServeGfx ; $44d9
 	ld a, [wServingCharWramBank] ; $44dc
@@ -1093,7 +1093,7 @@ FinalizeServeSideOrientation:
 	call UpdateViewFlipState ; $47f2
 	call FlipAllCharPositions ; $47f5
 	call IdentifyServingPlayer ; $47f8
-	ld hl, Func_08_4c99 ; $47fb
+	ld hl, SetCharFacingFromCourtPos ; $47fb
 	call ForEachCharBank ; $47fe
 	wram_bank $04 ; $4801
 	ret ; $4807
@@ -1423,7 +1423,7 @@ IdentifyServingPlayer:
 	ld [wServingCharCourtPos], a ; $4c8f
 	wram_bank $04 ; $4c92
 	ret ; $4c98
-Func_08_4c99:
+SetCharFacingFromCourtPos:
 	ld a, [wCharCourtPos] ; $4c99
 	add a, $ae ; $4c9c
 	ld l, a ; $4c9e
@@ -1435,9 +1435,10 @@ Func_08_4c99:
 	ld [wCharFacingDesired], a ; $4ca7
 	ld [wCharFacingShown], a ; $4caa
 	ret ; $4cad
+CourtPosFacingTable_08:
 	; $4cae, 4 bytes (bytes:4)
 	db $c0, $c0, $40, $40 ; 0x00
-Func_08_4cb2:
+MoveCharToBaseCourtPosition:
 	call GetCharBaseCourtPosition ; $4cb2
 	call SetCharPosAndTarget ; $4cb5
 	ret ; $4cb8
@@ -1475,7 +1476,7 @@ ResetPointState:
 	ld a, e ; $4d05
 	ld [hl+], a ; $4d06
 	ld [hl], d ; $4d07
-	ld hl, Func_08_4f6f ; $4d08
+	ld hl, ResetCharForPoint ; $4d08
 	call ForEachCharBank ; $4d0b
 	ret ; $4d0e
 PlayPoint:
@@ -1485,7 +1486,7 @@ PlayPoint:
 	farcall LoadServeGfx ; $4d17
 	call StepMatchFrame ; $4d1a
 	call AnnouncePointSituation ; $4d1d
-	ld hl, Func_08_4f91 ; $4d20
+	ld hl, SetCharStateFromServeRole ; $4d20
 	call ForEachCharBank ; $4d23
 .rallyLoop:
 	call StepMatchFrame ; $4d26
@@ -1768,7 +1769,7 @@ DelayAfterPointResolution:
 	farcall DismissGameResultObj ; $4f68
 	farcall HideCourtBanner ; $4f6b
 	ret ; $4f6e
-Func_08_4f6f:
+ResetCharForPoint:
 	ld a, $00 ; $4f6f
 	call SetCharState ; $4f71
 	call GetCharBaseCourtPosition ; $4f74
@@ -1787,7 +1788,7 @@ Func_08_4f6f:
 	ld [hl+], a ; $4f8e
 	ld [hl+], a ; $4f8f
 	ret ; $4f90
-Func_08_4f91:
+SetCharStateFromServeRole:
 	ld a, [wCharServeRole] ; $4f91
 	add a, $a0 ; $4f94
 	ld l, a ; $4f96
@@ -1797,6 +1798,7 @@ Func_08_4f91:
 	ld a, [hl] ; $4f9b
 	call SetCharState ; $4f9c
 	ret ; $4f9f
+ServeRoleCharStateTable_08:
 	; $4fa0, 4 bytes (bytes:4)
 	db $03, $05, $04, $05 ; 0x00
 EndPointBallEffects:
@@ -4211,7 +4213,7 @@ WalkCharsToNewEnds:
 	call ResetBallState ; $5fc0
 	call GetServeCameraTarget ; $5fc3
 	call SnapCameraTo ; $5fc6
-	ld hl, Func_08_5fe5 ; $5fc9
+	ld hl, StartCharChangeoverWalk ; $5fc9
 	call ForEachCharBank ; $5fcc
 .waitLoop:
 	call StepMatchFrame ; $5fcf
@@ -4221,10 +4223,10 @@ WalkCharsToNewEnds:
 	call CheckAllCharsPhaseDone ; $5fd9
 	jr z, .waitLoop ; $5fdc
 .settle:
-	ld hl, Func_08_6003 ; $5fde
+	ld hl, PlaceCharAtBasePosition ; $5fde
 	call ForEachCharBank ; $5fe1
 	ret ; $5fe4
-Func_08_5fe5:
+StartCharChangeoverWalk:
 	ld a, $06 ; $5fe5
 	call SetCharState ; $5fe7
 	ld a, $80 ; $5fea
@@ -4237,7 +4239,7 @@ Func_08_5fe5:
 	res 1, [hl] ; $5ffe
 	res 0, [hl] ; $6000
 	ret ; $6002
-Func_08_6003:
+PlaceCharAtBasePosition:
 	call GetCharBaseCourtPosition ; $6003
 	call SetCharPosAndTarget ; $6006
 	ld a, [$df0c] ; $6009
@@ -4250,7 +4252,7 @@ WalkCharsOffCourt:
 	ld [wOffscreenArrowsEnabled], a ; $6016
 	call GetServeCameraTarget ; $6019
 	call SetCameraTarget ; $601c
-	ld hl, Func_08_6046 ; $601f
+	ld hl, StartCharWalkOffCourt ; $601f
 	call ForEachCharBank ; $6022
 .waitLoop:
 	call StepMatchFrame ; $6025
@@ -4264,10 +4266,10 @@ WalkCharsOffCourt:
 	call StepMatchFrames ; $6036
 	call GetServeCameraTarget ; $6039
 	call SnapCameraTo ; $603c
-	ld hl, Func_08_6059 ; $603f
+	ld hl, ParkCharOffCourt ; $603f
 	call ForEachCharBank ; $6042
 	ret ; $6045
-Func_08_6046:
+StartCharWalkOffCourt:
 	ld a, $06 ; $6046
 	call SetCharState ; $6048
 	call GetCharChangeoverPosition ; $604b
@@ -4276,7 +4278,7 @@ Func_08_6046:
 	res 1, [hl] ; $6054
 	res 0, [hl] ; $6056
 	ret ; $6058
-Func_08_6059:
+ParkCharOffCourt:
 	ld hl, $0fe0 ; $6059
 	ld de, $0fe0 ; $605c
 	call SetCharPosAndTarget ; $605f
@@ -5032,7 +5034,7 @@ RunMinigamePointLoop:
 	ld a, [$c7b8] ; $65f3
 	and a, a ; $65f6
 	jr nz, .playPoint ; $65f7
-	ld hl, Func_08_4f91 ; $65f9
+	ld hl, SetCharStateFromServeRole ; $65f9
 	call ForEachCharBank ; $65fc
 .playPoint:
 	call PlayMinigamePoint ; $65ff
@@ -5149,7 +5151,7 @@ LoadMinigamePointLayout:
 	ld [de], a ; $66de
 	wram_bank $04 ; $66df
 	call IdentifyServingPlayer ; $66e5
-	ld hl, Func_08_4c99 ; $66e8
+	ld hl, SetCharFacingFromCourtPos ; $66e8
 	call ForEachCharBank ; $66eb
 	add sp, 8 ; $66ee
 	ret ; $66f0

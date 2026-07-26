@@ -114,9 +114,11 @@ def _call_target(dis, off, ins):
     return target_to_offset(ins.target, off)
 
 
-def _scan_ptr_use(dis, order, i, prev_end, ptr, callees, limit=12):
+def _scan_ptr_use(dis, order, i, prev_end, ptr, callees, limit=12,
+                  push_is_use=True):
     added = None   # the pair whose low byte an `add a, <low>` just indexed
     copy = None    # a `ld <dst hi>, <src hi>` awaiting its low half
+    depth, saved = 0, {}   # stack depth, and {depth: reg} for saved pointers
     for _ in range(limit):
         if i >= len(order):
             break
@@ -129,8 +131,24 @@ def _scan_ptr_use(dis, order, i, prev_end, ptr, callees, limit=12):
                 or ("de" in ptr and "[de]" in t)
                 or ("bc" in ptr and "[bc]" in t)):
             return True
-        if t in ("push hl", "push de", "push bc") and t.split()[1] in ptr:
-            return True
+        if t.startswith("push "):
+            reg = t.split()[1]
+            if push_is_use and reg in ptr:
+                return True
+            if reg in ptr:
+                saved[depth] = reg
+            depth += 1
+        elif t.startswith("pop "):
+            depth -= 1
+            # A prologue saves the argument and restores it before using it;
+            # `pop` normally clobbers, but a pop matching this push restores the
+            # very value we are tracking (InitLocationActors holds the actor
+            # list across its setup this way).
+            if saved.pop(depth, None) == t.split()[1]:
+                ptr = ptr | {t.split()[1]}
+                prev_end = no + ins.size
+                i += 1
+                continue
         # Handing the value on: a call, or a tail call (`jp`/`jr` out of the
         # routine), which is how the VRAM DMA helpers pass their source
         # address down -- QueueVRAMCopy never touches hl itself, it
@@ -211,9 +229,14 @@ def callee_pointer_regs(dis, overrides=None, rounds=3):
         for e in entries:
             # A helper often unpacks its other arguments before touching the
             # pointer, so give the entry scan a longer run than a call site's.
+            # `push` does not count here: at a call site pushing the value is a
+            # dispatch, but at an entry it is just a prologue saving a register
+            # -- counting it made DrawDecimalNumberSprites look like it takes a
+            # pointer in de, when de is a y/x pair.
             regs = set(seed.get(e, ())) | {
                 r for r in ("hl", "de", "bc")
-                if _scan_ptr_use(dis, order, idx[e], e, {r}, prev, 24)}
+                if _scan_ptr_use(dis, order, idx[e], e, {r}, prev, 32,
+                                 push_is_use=False)}
             if regs:
                 out[e] = frozenset(regs)
         if out == prev:

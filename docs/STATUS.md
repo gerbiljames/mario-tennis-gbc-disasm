@@ -30,7 +30,7 @@ Everything below is **committed** (HEAD `3c00a3b`); the whole history
 rebuilds byte-perfect. Per-bank progress at any time: `python3
 tools/progress.py` (proven-code bytes, fill runs, label counts, human-named
 counts) and `tools/progress.py --unnamed <bank>` to list still-auto-named
-symbols. **19,850 of 21,550 labels are human-named** (see the caveat in the
+symbols. **19,861 of 21,550 labels are human-named** (see the caveat in the
 auto-split section below) (up from 4,816 on 2026-07-23); what is left is
 data blobs.
 
@@ -4678,3 +4678,58 @@ Nine more targets named from the script that respawns them
 `TangentTable`'s tangent value: 17 QueueSprite coordinate pairs, 15
 `ApplySlideOffsetToSpriteX` byte pairs, 17 with no pointer use at all, and
 singletons of the same kind.
+
+## The unnamed functions, and what they turned out to be (2026-07-27)
+
+19 `Func_*` labels were left after the pointer passes -- notable because the
+2026-07-26 naming pass had got that count to zero, so every one of them was
+created by the pointer work itself. Reading them splits three ways.
+
+**Nine are real, and all nine are the same thing**: per-character callbacks run
+through `ForEachCharBank`, which iterates the four on-court character WRAM
+banks. Each is installed as `ld hl, fn; call ForEachCharBank`, so the routine
+that installs it names the moment and the body names the action:
+
+| offset | name | body |
+| --- | --- | --- |
+| `$4274` | `SetCharStateForRallyTick` | state $05, from `TickRallyTimers` |
+| `$4c99` | `SetCharFacingFromCourtPos` | indexes `CourtPosFacingTable_08` |
+| `$4cb2` | `MoveCharToBaseCourtPosition` | base position -> pos and target |
+| `$4f6f` | `ResetCharForPoint` | state 0, base pos, anim 1, zero velocity |
+| `$4f91` | `SetCharStateFromServeRole` | indexes `ServeRoleCharStateTable_08` |
+| `$5fe5` | `StartCharChangeoverWalk` | state 6, face left, walk to base |
+| `$6003` | `PlaceCharAtBasePosition` | base pos + the facing saved at `$df0c` |
+| `$6046` | `StartCharWalkOffCourt` | state 6, target the changeover spot |
+| `$6059` | `ParkCharOffCourt` | pos and target to the fixed `$0fe0` spot |
+
+The two 4-byte tables they index are named with them:
+`CourtPosFacingTable_08` (`$c0 $c0 $40 $40` -- up, up, down, down by court
+position) and `ServeRoleCharStateTable_08` (`$03 $05 $04 $05`).
+
+**Two were a false positive I had introduced.** `ld de, $4404; call
+DrawDecimalNumberSprites` was reading as a pointer setup because
+`callee_pointer_regs` counts a `push` of the tracked register as pointer use --
+and `DrawDecimalNumberSprites` opens `push af; push bc; push hl; ... push de`.
+At a *call site* pushing the value is a dispatch and the rule is right; at a
+routine *entry* it is a prologue saving a register, so the entry scan no longer
+counts it. `$4404` is a y/x pair, and now renders as one.
+
+Dropping that rule would have cost the actor-list chain, which depends on
+`InitLocationActors` holding its argument across its setup -- so the scan now
+also tracks **push/pop symmetry**: a `pop` matching an earlier `push` of a
+tracked register restores it rather than clobbering it, which is how
+`InitLocationActors` carries the list from its prologue to
+`farcall SpawnActorsFromList` 20 instructions later. The entry window went from
+24 to 32 instructions to reach it.
+
+**Eight are not functions at all.** Every one is the base of a split-base
+lookup table -- the consumer does `add a, l; ld l, a; jr nc, .read` and
+dereferences -- and the bytes say the same: `$17:$40bd` and `$1b:$40e7` are the
+identical 16-byte table `00 00 00 01 01 01 01 01 01 01 01 00 00 00 00 00` with
+the real routine (`push de; push bc; ld c, $00; ld b, $09`) starting right
+after it, and `$38:$6a27` is six pointer words (`$6a33` x4, `$6a37` x2) read
+with `ld a, [hl+]; ld h, [hl]`. They carry a `Func_` name only because an
+offset inside them is decoded as code: five of the eight are *trace-seeded*,
+which on this evidence means phantom trace lines of the kind `BAD_SEEDS`
+already documents, not executed code. Left alone for now -- each needs its own
+entry and reasoning there, and getting it wrong un-proves real code.

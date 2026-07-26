@@ -283,14 +283,13 @@ DrawBox:
 .bottomRow:
 	call DrawBoxSideRow ; $43ff
 	ld a, $20 ; $4402
-Func_18_4404:
 	add a, l ; $4404
 	ld l, a ; $4405
 	jr nc, .done ; $4406
 	inc h ; $4408
 .done:
 	dec c ; $4409
-	jr nz, DrawBox.bottomRow ; $440a
+	jr nz, .bottomRow ; $440a
 	call DrawBoxBottomRow ; $440c
 	pop hl ; $440f
 	pop de ; $4410
@@ -353,7 +352,6 @@ AddBobbingOffsetXY:
 	ld a, [hl] ; $4451
 	add a, d ; $4452
 	ld d, a ; $4453
-Func_18_4454:
 	ldh a, [hVBlankCounter] ; $4454
 	add a, $04 ; $4456
 	and a, $0f ; $4458
@@ -794,7 +792,7 @@ DrawScoreNumbersTask:
 	ld a, [$c78a] ; $53b3
 	ld h, $00 ; $53b6
 	ld l, a ; $53b8
-	ld de, Func_18_4404 ; $53b9
+	ld de, $4404 ; $53b9
 	ld b, $03 ; $53bc
 	ld a, $02 ; $53be
 	call DrawDecimalNumberSprites ; $53c0
@@ -808,7 +806,7 @@ DrawScoreNumbersTask:
 	ld a, [hl+] ; $53d2
 	ld h, [hl] ; $53d3
 	ld l, a ; $53d4
-	ld de, Func_18_4454 ; $53d5
+	ld de, $4454 ; $53d5
 	ld b, $01 ; $53d8
 	ld a, $03 ; $53da
 	call DrawDecimalNumberSprites ; $53dc
