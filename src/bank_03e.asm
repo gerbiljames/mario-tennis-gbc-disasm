@@ -3438,19 +3438,19 @@ DrawItemStatModList:
 	ld b, a ; $5a15
 	call GetItemStatModListPtr ; $5a16
 	ld b, $00 ; $5a19
-Label_3e_5a1b:
+.loop:
 	ld d, [hl] ; $5a1b
 	inc hl ; $5a1c
 	ld c, [hl] ; $5a1d
 	inc hl ; $5a1e
 	call DrawStatModEntry ; $5a1f
 	cp a, $ff ; $5a22
-	jr z, Label_3e_5a2c ; $5a24
+	jr z, .done ; $5a24
 	inc b ; $5a26
 	ld a, b ; $5a27
 	cp a, $06 ; $5a28
-	jr nz, Label_3e_5a1b ; $5a2a
-Label_3e_5a2c:
+	jr nz, .loop ; $5a2a
+.done:
 	ret ; $5a2c
 DrawStatModEntry:
 	push hl ; $5a2d

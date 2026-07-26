@@ -4609,19 +4609,19 @@ BuildVisibleProgressEntryList:
 	ld b, $00 ; $747e
 	ld hl, $df10 ; $7480
 	ld de, $df70 ; $7483
-Label_1e_7486:
+.loop:
 	ld a, [hl+] ; $7486
 	or a, a ; $7487
-	jr z, Label_1e_748e ; $7488
+	jr z, .step ; $7488
 	inc b ; $748a
 	ld a, c ; $748b
 	ld [de], a ; $748c
 	inc de ; $748d
-Label_1e_748e:
+.step:
 	inc c ; $748e
 	ld a, c ; $748f
 	cp a, $30 ; $7490
-	jr c, Label_1e_7486 ; $7492
+	jr c, .loop ; $7492
 	ld a, b ; $7494
 	ld [wCharPosDepth], a ; $7495
 	ret ; $7498

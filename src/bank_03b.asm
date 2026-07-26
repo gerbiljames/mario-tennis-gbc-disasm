@@ -1173,16 +1173,16 @@ BuildN64ExhibColumnList:
 	ld a, [hl] ; $4758
 	ld b, a ; $4759
 	and a, $01 ; $475a
-	jr nz, Label_3b_4763 ; $475c
+	jr nz, .step ; $475c
 	ld a, $10 ; $475e
 	ld [$dc0f], a ; $4760
-Label_3b_4763:
+.step:
 	ld a, b ; $4763
 	and a, $02 ; $4764
-	jr nz, Label_3b_476d ; $4766
+	jr nz, .buildN64ExhibResultsGrid ; $4766
 	ld a, $10 ; $4768
 	ld [$dc10], a ; $476a
-Label_3b_476d:
+.buildN64ExhibResultsGrid:
 	call BuildN64ExhibResultsGrid ; $476d
 	ret ; $4770
 	ret ; $4771
@@ -2065,23 +2065,23 @@ LoadN64TnmtDataRecords:
 	ld a, [hl] ; $4e20
 	ld b, a ; $4e21
 	and a, $01 ; $4e22
-	jr nz, Label_3b_4e2b ; $4e24
+	jr nz, .step ; $4e24
 	ld a, $10 ; $4e26
 	ld [$d81e], a ; $4e28
-Label_3b_4e2b:
+.step:
 	ld a, b ; $4e2b
 	and a, $02 ; $4e2c
-	jr nz, Label_3b_4e35 ; $4e2e
+	jr nz, .buildN64TnmtTrophyGrid ; $4e2e
 	ld a, $10 ; $4e30
 	ld [$d81f], a ; $4e32
-Label_3b_4e35:
+.buildN64TnmtTrophyGrid:
 	call BuildN64TnmtTrophyGrid ; $4e35
 	call CheckN64TnmtSecondPage ; $4e38
 	or a, a ; $4e3b
-	jr z, Label_3b_4e43 ; $4e3c
+	jr z, .done ; $4e3c
 	ld a, $01 ; $4e3e
 	ld [$d800], a ; $4e40
-Label_3b_4e43:
+.done:
 	ret ; $4e43
 	; $4e44, 16 bytes (bytes:16)
 	db $00, $01, $02, $03, $04, $05, $06, $07, $08, $09, $0a, $0b, $0c, $0d, $0e, $0f ; 0x00
@@ -2653,16 +2653,16 @@ LoadN64RingShotRecords:
 	ld a, [hl] ; $5256
 	ld b, a ; $5257
 	and a, $01 ; $5258
-	jr nz, Label_3b_5261 ; $525a
+	jr nz, .step ; $525a
 	ld a, $10 ; $525c
 	ld [$dc4e], a ; $525e
-Label_3b_5261:
+.step:
 	ld a, b ; $5261
 	and a, $02 ; $5262
-	jr nz, Label_3b_526b ; $5264
+	jr nz, .step2 ; $5264
 	ld a, $10 ; $5266
 	ld [$dc4f], a ; $5268
-Label_3b_526b:
+.step2:
 	ld hl, $db00 ; $526b
 	ld bc, $0140 ; $526e
 	call ClearBytes ; $5271
@@ -8171,48 +8171,48 @@ FlushStarChartWindowToVram:
 	ret ; $7cc9
 BuildStarChartColumnList:
 	ld c, $00 ; $7cca
-Label_3b_7ccc:
+.loop:
 	ld hl, $7d03 ; $7ccc
 	ld a, c ; $7ccf
 	add a, a ; $7cd0
 	add a, l ; $7cd1
 	ld l, a ; $7cd2
-	jr nc, Label_3b_7cd6 ; $7cd3
+	jr nc, .read ; $7cd3
 	inc h ; $7cd5
-Label_3b_7cd6:
+.read:
 	ld a, [hl+] ; $7cd6
 	ld d, [hl] ; $7cd7
 	ld e, a ; $7cd8
 	ld a, d ; $7cd9
 	or a, e ; $7cda
 	cp a, $ff ; $7cdb
-	jr z, Label_3b_7ce8 ; $7cdd
+	jr z, .step ; $7cdd
 	farcall TestSaveFlag ; $7cdf
-	jr nz, Label_3b_7ce8 ; $7ce2
+	jr nz, .step ; $7ce2
 	ld b, $10 ; $7ce4
-	jr Label_3b_7cf2 ; $7ce6
-Label_3b_7ce8:
+	jr .step2 ; $7ce6
+.step:
 	ld hl, $7d15 ; $7ce8
 	ld a, c ; $7ceb
 	add a, l ; $7cec
 	ld l, a ; $7ced
-	jr nc, Label_3b_7cf1 ; $7cee
+	jr nc, .readB ; $7cee
 	inc h ; $7cf0
-Label_3b_7cf1:
+.readB:
 	ld b, [hl] ; $7cf1
-Label_3b_7cf2:
+.step2:
 	ld hl, $dc01 ; $7cf2
 	ld a, c ; $7cf5
 	add a, l ; $7cf6
 	ld l, a ; $7cf7
-	jr nc, Label_3b_7cfb ; $7cf8
+	jr nc, .store ; $7cf8
 	inc h ; $7cfa
-Label_3b_7cfb:
+.store:
 	ld [hl], b ; $7cfb
 	inc c ; $7cfc
 	ld a, c ; $7cfd
 	cp a, $09 ; $7cfe
-	jr nz, Label_3b_7ccc ; $7d00
+	jr nz, .loop ; $7d00
 	ret ; $7d02
 	; $7d03, 18 bytes (records:2)
 	dw $01c0 ; record 0

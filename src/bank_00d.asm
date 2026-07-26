@@ -3253,15 +3253,15 @@ AreAllTargetsHit:
 	ld hl, $c7c0 ; $59b7
 	ld c, $18 ; $59ba
 	xor a, a ; $59bc
-Label_0d_59bd:
+.loop:
 	ld a, [hl+] ; $59bd
 	cp a, $01 ; $59be
-	jr nz, Label_0d_59c8 ; $59c0
+	jr nz, .step ; $59c0
 	dec c ; $59c2
-	jr nz, Label_0d_59bd ; $59c3
+	jr nz, .loop ; $59c3
 	ld a, $01 ; $59c5
 	ret ; $59c7
-Label_0d_59c8:
+.step:
 	ld a, $00 ; $59c8
 	ret ; $59ca
 MinigameConfig_TreasureBox:

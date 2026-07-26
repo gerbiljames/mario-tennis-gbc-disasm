@@ -1106,9 +1106,9 @@ JumpTableDispatch:
 	pop hl ; $06c5
 	add a, l ; $06c6
 	ld l, a ; $06c7
-	jr nc, Label_00_06cb ; $06c8
+	jr nc, .read ; $06c8
 	inc h ; $06ca
-Label_00_06cb:
+.read:
 	ld a, [hl+] ; $06cb
 	ld h, [hl] ; $06cc
 	ld l, a ; $06cd

@@ -907,17 +907,17 @@ CountTennisDictionaryEntries:
 	ld c, $00 ; $5100
 	ld a, [wTennisDictCategoryMask] ; $5102
 	ld d, a ; $5105
-Label_3f_5106:
+.loop:
 	ld a, [hl+] ; $5106
 	cp a, $00 ; $5107
-	jr z, Label_3f_5106 ; $5109
+	jr z, .loop ; $5109
 	cp a, $40 ; $510b
-	jr z, Label_3f_5115 ; $510d
+	jr z, .step ; $510d
 	and a, d ; $510f
-	jr z, Label_3f_5106 ; $5110
+	jr z, .loop ; $5110
 	inc c ; $5112
-	jr Label_3f_5106 ; $5113
-Label_3f_5115:
+	jr .loop ; $5113
+.step:
 	ld a, c ; $5115
 	ld [wTennisDictEntryCount], a ; $5116
 	ret ; $5119
@@ -1400,25 +1400,25 @@ SetTennisDictionaryIndexRowFromList:
 	ld hl, SelectionMaskGrid_3f_539e ; $5479
 	ld a, [wTennisDictCategoryMask] ; $547c
 	ld e, a ; $547f
-Label_3f_5480:
+.loop:
 	ld a, [hl+] ; $5480
 	and a, e ; $5481
-	jr z, Label_3f_5489 ; $5482
+	jr z, .compare ; $5482
 	dec b ; $5484
-	jr nz, Label_3f_5480 ; $5485
-	jr Label_3f_5499 ; $5487
-Label_3f_5489:
+	jr nz, .loop ; $5485
+	jr .step ; $5487
+.compare:
 	cp a, $40 ; $5489
-	jr z, Label_3f_5494 ; $548b
+	jr z, .clearTennisDictCursorRow ; $548b
 	cp a, $00 ; $548d
-	jr nz, Label_3f_5480 ; $548f
+	jr nz, .loop ; $548f
 	inc c ; $5491
-	jr Label_3f_5480 ; $5492
-Label_3f_5494:
+	jr .loop ; $5492
+.clearTennisDictCursorRow:
 	xor a, a ; $5494
 	ld [wTennisDictCursorRow], a ; $5495
 	ret ; $5498
-Label_3f_5499:
+.step:
 	ld a, c ; $5499
 	call GetTennisDictionaryLetterRow ; $549a
 	ld [wTennisDictCursorRow], a ; $549d

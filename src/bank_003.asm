@@ -2743,14 +2743,14 @@ InitCurrentSlotMinigameRecords:
 	ld de, $0000 ; $5178
 	call WriteSaveBlock ; $517b
 	or a, a ; $517e
-	jr nz, Label_03_5190 ; $517f
+	jr nz, .restore ; $517f
 	ld a, [wCurrentStorySlot] ; $5181
 	add a, $3b ; $5184
 	ld b, a ; $5186
 	ld hl, $d480 ; $5187
 	ld de, $0000 ; $518a
 	call WriteSaveBlock ; $518d
-Label_03_5190:
+.restore:
 	pop af ; $5190
 	wram_bank ; $5191
 	pop hl ; $5195

@@ -222,11 +222,11 @@ ShowIntroCharacterScreen:
 	call EnableLCD ; $6a9f
 	script_fade_in $10 ; $6aa2
 	call WaitFadeEnd ; $6aa7
-Label_6d_6aaa:
+.loop:
 	call AdvanceFrame ; $6aaa
 	ldh a, [hInputPressed] ; $6aad
 	and a, PADF_A | PADF_B ; $6aaf
-	jr z, Label_6d_6aaa ; $6ab1
+	jr z, .loop ; $6ab1
 	ld c, $01 ; $6ab3
 	call BeginFadeOut ; $6ab5
 	call WaitFadeEnd ; $6ab8

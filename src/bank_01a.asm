@@ -3816,9 +3816,9 @@ ApplyTilemapPatchList_1a:
 	ld l, c ; $7a7b
 	add a, l ; $7a7c
 	ld l, a ; $7a7d
-	jr nc, Label_1a_7a81 ; $7a7e
+	jr nc, .step ; $7a7e
 	inc h ; $7a80
-Label_1a_7a81:
+.step:
 	wram_bank $06 ; $7a81
 	ld a, l ; $7a87
 	ld [$d08e], a ; $7a88
@@ -3832,7 +3832,7 @@ Label_1a_7a81:
 	ld a, [hl+] ; $7a96
 	ld h, [hl] ; $7a97
 	ld l, a ; $7a98
-Label_1a_7a99:
+.loop:
 	wram_bank $03 ; $7a99
 	ld a, [hl] ; $7a9f
 	ld [de], a ; $7aa0
@@ -3841,7 +3841,7 @@ Label_1a_7a99:
 	ld [de], a ; $7aa8
 	inc de ; $7aa9
 	dec c ; $7aaa
-	jr nz, Label_1a_7a99 ; $7aab
+	jr nz, .loop ; $7aab
 	pop bc ; $7aad
 	pop hl ; $7aae
 	inc hl ; $7aaf

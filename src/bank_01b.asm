@@ -5689,24 +5689,24 @@ ScrollMinigameDataList:
 	ret z ; $74a1
 	ld a, [wMenuInputPressed] ; $74a2
 	bit PADB_DOWN, a ; $74a5
-	jr nz, Label_1b_74ae ; $74a7
+	jr nz, .checkMenuCursorY ; $74a7
 	bit 6, a ; $74a9
-	jr nz, Label_1b_74ba ; $74ab
+	jr nz, .checkMenuCursorY2 ; $74ab
 	ret ; $74ad
-Label_1b_74ae:
+.checkMenuCursorY:
 	ld a, [wMenuCursorY] ; $74ae
 	inc a ; $74b1
 	cp a, $05 ; $74b2
 	ret z ; $74b4
 	ld [wMenuCursorY], a ; $74b5
-	jr Label_1b_74c4 ; $74b8
-Label_1b_74ba:
+	jr .playSfx ; $74b8
+.checkMenuCursorY2:
 	ld a, [wMenuCursorY] ; $74ba
 	dec a ; $74bd
 	cp a, $ff ; $74be
 	ret z ; $74c0
 	ld [wMenuCursorY], a ; $74c1
-Label_1b_74c4:
+.playSfx:
 	sound $5e ; $74c4
 	call RedrawMinigameDataRows ; $74c6
 	ret ; $74c9

@@ -1564,12 +1564,12 @@ Data_17_4a94:
 	db $d3, $e7, $d0, $06, $02 ; 0x00
 DecompressGraphicsList:
 	ld hl, CourtDiagramGraphicsList ; $4a99
-Label_17_4a9c:
+.loop:
 	ld a, [hl+] ; $4a9c
 	ld b, [hl] ; $4a9d
 	dec hl ; $4a9e
 	or a, b ; $4a9f
-	jr z, Label_17_4aba ; $4aa0
+	jr z, .done ; $4aa0
 	push hl ; $4aa2
 	push hl ; $4aa3
 	inc hl ; $4aa4
@@ -1586,11 +1586,11 @@ Label_17_4a9c:
 	ld a, $04 ; $4ab1
 	add a, l ; $4ab3
 	ld l, a ; $4ab4
-	jr nc, Label_17_4ab8 ; $4ab5
+	jr nc, .step ; $4ab5
 	inc h ; $4ab7
-Label_17_4ab8:
-	jr Label_17_4a9c ; $4ab8
-Label_17_4aba:
+.step:
+	jr .loop ; $4ab8
+.done:
 	ret ; $4aba
 CourtDiagramGraphicsList:
 	; $4abb, 82 bytes (bytes:4)
@@ -1669,12 +1669,12 @@ DrillBriefing_ServeToTargets:
 	xor a, a ; $55b5
 	ld [$d82c], a ; $55b6
 	ld [$d82e], a ; $55b9
-Label_17_55bc:
+.loop:
 	call ServeToTargetsBriefing_TickAnim ; $55bc
 	ld c, $00 ; $55bf
 	call AdvanceFrameCheckInput ; $55c1
 	and a, a ; $55c4
-	jp z, Label_17_55bc ; $55c5
+	jp z, .loop ; $55c5
 	call ClearFrameTasks ; $55c8
 	ld a, $01 ; $55cb
 	ld hl, UpdateAnimatedTilesTask_17 ; $55cd
@@ -1703,12 +1703,12 @@ Label_17_55bc:
 	xor a, a ; $560b
 	ld [$d82c], a ; $560c
 	ld [$d82e], a ; $560f
-Label_17_5612:
+.loopB:
 	call ServeToTargetsBriefing_TickAnim ; $5612
 	ld c, $00 ; $5615
 	call AdvanceFrameCheckInput ; $5617
 	and a, a ; $561a
-	jp z, Label_17_5612 ; $561b
+	jp z, .loopB ; $561b
 	call ClearFrameTasks ; $561e
 	ld a, $01 ; $5621
 	ld hl, UpdateAnimatedTilesTask_17 ; $5623
@@ -1795,12 +1795,12 @@ Label_17_5612:
 	xor a, a ; $56f8
 	ld [$d82c], a ; $56f9
 	ld [$d82e], a ; $56fc
-Label_17_56ff:
+.loopBB:
 	call ServeToTargetsBriefing_TickAnim ; $56ff
 	ld c, $01 ; $5702
 	call AdvanceFrameCheckInput ; $5704
 	and a, a ; $5707
-	jp z, Label_17_56ff ; $5708
+	jp z, .loopBB ; $5708
 	call ClearFrameTasks ; $570b
 	ret ; $570e
 ServeToTargetsBriefing_TickAnim:
