@@ -128,7 +128,17 @@ class DisassemblyBase:
     # ($488a table -> $4900-$60ff tiles, copied by Func_09_4873): trace
     # data-reads during the copy, not execution -- they split the one blob
     # into three and decode graphics bytes as rst/inc.
-    BAD_SEEDS = {0x19617F, 0x67682, 0x24F99, 0x252B5, 0xE619}
+    # $72182 and $72f11 are lone seeds inside bank $1c's character-data
+    # screen graphics. $72182 sits 1974 bytes into the LZ stream at $59cc,
+    # which tools/lz.py proves runs 2618 bytes to $6406 (where the next
+    # referenced stream starts), so it cannot be code; $72f11 is inside the
+    # raw tile block before CharDataScreenGfx13 and its descent runs back to
+    # $6eea via a `jr nz`, fabricating a 64-byte function out of tile bytes.
+    # $90cab is a lone seed 1803 bytes into BallPosDataDrop_24, the 6-byte
+    # ball-position table that ShotBallPathDrop passes to LookupBallPosByAim;
+    # it decodes as nonsense (`call z, $a0f1` on repeat) and split the table.
+    BAD_SEEDS = {0x19617F, 0x67682, 0x24F99, 0x252B5, 0xE619, 0x72182, 0x72F11,
+                 0x90CAB}
 
     # ROM0 helpers that consume one inline byte after the `call` (they read
     # the byte at the return address and step the return past it). The byte

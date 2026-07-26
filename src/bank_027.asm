@@ -2058,8 +2058,50 @@ End4JrCourtDepartureDoubles_27:
 	ld [$c294], a ; $6b8d
 	ld [wStoryModeExitLocationRequest], a ; $6b90
 	ret ; $6b93
-Gfx_27_6b94:
-	INCBIN "data/bank_027/d_6b94.bin" ; $6b94, 92 bytes
+ActorScript_27_6b94:
+	; $6b94, 20 bytes (actor_script)
+	as_anim $01
+	as_wait_move
+	as_set_target $1b00, $1300
+	as_wait_move
+	as_set_target $1b00, $1300
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_halt
+ActorScript_27_6ba8:
+	; $6ba8, 26 bytes (actor_script)
+	as_anim $01
+	as_wait_move
+	as_set_target $2700, $0d00
+	as_wait_move
+	as_set_target $2700, $0900
+	as_wait_move
+	as_set_target $2500, $0900
+	as_wait_move
+	as_set_field $14, FACE_RIGHT
+	as_halt
+ActorScript_27_6bc2:
+	; $6bc2, 20 bytes (actor_script)
+	as_anim $01
+	as_wait_move
+	as_set_target $1b00, $1500
+	as_wait_move
+	as_set_target $1b00, $1500
+	as_wait_move
+	as_set_field $14, FACE_UP
+	as_halt
+ActorScript_27_6bd6:
+	; $6bd6, 26 bytes (actor_script)
+	as_anim $01
+	as_wait_move
+	as_set_target $2700, $0d00
+	as_wait_move
+	as_set_target $2700, $0b00
+	as_wait_move
+	as_set_target $2500, $0b00
+	as_wait_move
+	as_set_field $14, FACE_RIGHT
+	as_halt
 ActorScript_27_6bf0:
 	; $6bf0, 20 bytes (actor_script)
 	as_anim $01
@@ -2840,6 +2882,65 @@ ActorScript_27_79c4:
 	as_wait $8c
 	as_anim $03
 	as_jump .L76
-Gfx_27_7a49:
-	INCBIN "data/bank_027/d_7a49.bin" ; $7a49, 120 bytes
+SetStoryRankSceneIndex:
+	test_flag FLAG_DOUBLES ; $7a49
+	jr nz, .doubles ; $7a4c
+	ld a, $00 ; $7a4e
+	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7a50
+	jr z, .store ; $7a53
+	ld a, $02 ; $7a55
+	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $7a57
+	jr z, .store ; $7a5a
+	ld a, $04 ; $7a5c
+	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $7a5e
+	jr z, .store ; $7a61
+	ld a, $06 ; $7a63
+	test_flag FLAG_STORY_COMPLETE_SINGLES ; $7a65
+	jr z, .store ; $7a68
+	ld a, $08 ; $7a6a
+.store:
+	ld [$c2b0], a ; $7a6c
+	ret ; $7a6f
+.doubles:
+	ld a, $01 ; $7a70
+	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $7a72
+	jr z, .store ; $7a75
+	ld a, $03 ; $7a77
+	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_1 ; $7a79
+	jr z, .store ; $7a7c
+	ld a, $05 ; $7a7e
+	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $7a80
+	jr z, .store ; $7a83
+	ld a, $07 ; $7a85
+	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $7a87
+	jr z, .store ; $7a8a
+	ld a, $09 ; $7a8c
+	jr .store ; $7a8e
+SetStoryRankTier:
+	ld a, $00 ; $7a90
+	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7a92
+	jr z, .store ; $7a95
+	inc a ; $7a97
+	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $7a98
+	jr z, .store ; $7a9b
+	inc a ; $7a9d
+	test_flag FLAG_DOUBLES ; $7a9e
+	jr nz, .doubles ; $7aa1
+	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $7aa3
+	jr z, .store ; $7aa6
+	inc a ; $7aa8
+	test_flag FLAG_STORY_COMPLETE_SINGLES ; $7aa9
+	jr z, .store ; $7aac
+	inc a ; $7aae
+.store:
+	ld [$c2b0], a ; $7aaf
+	ret ; $7ab2
+.doubles:
+	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $7ab3
+	jr z, .store ; $7ab6
+	inc a ; $7ab8
+	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $7ab9
+	jr z, .store ; $7abc
+	inc a ; $7abe
+	jr .store ; $7abf
 	; $7ac1, 1343 bytes fill to bank end (linker-padded)

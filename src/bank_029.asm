@@ -17,9 +17,19 @@ BallTrajEntryPtr6_29:
 	pop de ; $400f
 	add hl, de ; $4010
 	ret ; $4011
-Data_29_4012:
-	; $4012, 13 bytes (bytes:13)
-	db $e5, $6b, $62, $29, $29, $6c, $26, $00, $29, $29, $d1, $19, $c9 ; 0x00
+BallTrajEntryPtr4_29:
+	push hl ; $4012
+	ld l, e ; $4013
+	ld h, d ; $4014
+	add hl, hl ; $4015
+	add hl, hl ; $4016
+	ld l, h ; $4017
+	ld h, $00 ; $4018
+	add hl, hl ; $401a
+	add hl, hl ; $401b
+	pop de ; $401c
+	add hl, de ; $401d
+	ret ; $401e
 SeekBallTrajEntry6_29:
 	ld a, [wShotTrajRowMin] ; $401f
 	ld d, a ; $4022
@@ -46,10 +56,32 @@ SeekBallTrajEntry6_29:
 	jr .loop ; $403b
 .done:
 	ret ; $403d
-Data_29_403e:
-	; $403e, 31 bytes (bytes:16)
-	db $fa, $8e, $c4, $57, $fa, $8f, $c4, $5f, $e5, $2a, $66, $6f, $09, $e1, $38, $0e ; 0x00
-	db $7a, $bb, $30, $0a, $14, $3e, $04, $85, $6f, $30, $01, $24, $18, $ea, $c9 ; 0x10
+SeekBallTrajEntry4_29:
+	ld a, [wShotTrajRowMin] ; $403e
+	ld d, a ; $4041
+	ld a, [wShotTrajRowMax] ; $4042
+	ld e, a ; $4045
+.loop:
+	push hl ; $4046
+	ld a, [hl+] ; $4047
+	ld h, [hl] ; $4048
+	ld l, a ; $4049
+	add hl, bc ; $404a
+	pop hl ; $404b
+	jr c, .done ; $404c
+	ld a, d ; $404e
+	cp a, e ; $404f
+	jr nc, .done ; $4050
+	inc d ; $4052
+	ld a, $04 ; $4053
+	add a, l ; $4055
+	ld l, a ; $4056
+	jr nc, .gotPtr ; $4057
+	inc h ; $4059
+.gotPtr:
+	jr .loop ; $405a
+.done:
+	ret ; $405c
 SetBallVelocityFromEntry6_29:
 	ld a, [hl+] ; $405d
 	ld c, a ; $405e
@@ -84,10 +116,23 @@ SetBallVelocityFromEntry6_29:
 	pop hl ; $407f
 	farcall SetBallVelocityPolar ; $4080
 	ret ; $4083
-Data_29_4084:
-	; $4084, 20 bytes (bytes:16)
-	db $2a, $4f, $2a, $47, $c5, $2a, $4f, $2a, $47, $21, $3a, $c4, $2a, $56, $5f, $e1 ; 0x00
-	db $df, $26, $08, $c9 ; 0x10
+SetBallVelocityFromEntry4_29:
+	ld a, [hl+] ; $4084
+	ld c, a ; $4085
+	ld a, [hl+] ; $4086
+	ld b, a ; $4087
+	push bc ; $4088
+	ld a, [hl+] ; $4089
+	ld c, a ; $408a
+	ld a, [hl+] ; $408b
+	ld b, a ; $408c
+	ld hl, wShotAimAngle ; $408d
+	ld a, [hl+] ; $4090
+	ld d, [hl] ; $4091
+	ld e, a ; $4092
+	pop hl ; $4093
+	farcall SetBallVelocityPolar ; $4094
+	ret ; $4097
 SetBallTargetByPrediction_29:
 	ld a, [hl+] ; $4098
 	ld c, a ; $4099
@@ -171,6 +216,7 @@ SetBallTargetByPrediction_29:
 	ld [hl+], a ; $40ff
 	ld [hl], d ; $4100
 	ret ; $4101
+ApplyBallTrajectory6Capped_29:
 	xor a, a ; $4102
 	sub a, c ; $4103
 	ld c, a ; $4104
@@ -190,7 +236,7 @@ SetBallTargetByPrediction_29:
 	ld e, l ; $4118
 	ld d, h ; $4119
 	pop hl ; $411a
-	jp c, Gfx_29_4135.applyFallbackBallTrajectory ; $411b
+	jp c, ApplyBallTrajectory4_29.applyFallbackBallTrajectory ; $411b
 	call SeekBallTrajEntry6_29 ; $411e
 	push de ; $4121
 	call SetBallVelocityFromEntry6_29 ; $4122
@@ -203,8 +249,127 @@ SetBallTargetByPrediction_29:
 	rr l ; $412f
 	call SetBallTargetFromAim_29 ; $4131
 	ret ; $4134
-Gfx_29_4135:
-	INCBIN "data/bank_029/d_4135.bin" ; $4135, 188 bytes
+ApplyBallTrajectory6_29:
+	xor a, a ; $4135
+	sub a, c ; $4136
+	ld c, a ; $4137
+	sbc a, a ; $4138
+	sub a, b ; $4139
+	ld b, a ; $413a
+	ld a, [wShotDistMin] ; $413b
+	ld e, a ; $413e
+	ld a, [wShotDistMin + 1] ; $413f
+	ld d, a ; $4142
+	call BallTrajEntryPtr6_29 ; $4143
+	call SeekBallTrajEntry6_29 ; $4146
+	push de ; $4149
+	call SetBallVelocityFromEntry6_29 ; $414a
+	pop de ; $414d
+	ld h, d ; $414e
+	ld l, $00 ; $414f
+	sra h ; $4151
+	rr l ; $4153
+	sra h ; $4155
+	rr l ; $4157
+	call SetBallTargetFromAim_29 ; $4159
+	ret ; $415c
+ApplyBallTrajectoryCapped_29:
+	push hl ; $415d
+	ld hl, wShotAimAngle ; $415e
+	ld a, [hl+] ; $4161
+	ld b, [hl] ; $4162
+	ld c, a ; $4163
+	ld hl, wShotAimDeltaDepth ; $4164
+	ld a, [hl+] ; $4167
+	ld d, [hl] ; $4168
+	ld e, a ; $4169
+	ld hl, wShotAimDeltaX ; $416a
+	ld a, [hl+] ; $416d
+	ld h, [hl] ; $416e
+	ld l, a ; $416f
+	call VectorLengthFromAngle ; $4170
+	ld e, l ; $4173
+	ld d, h ; $4174
+	ld hl, wShotDistMax ; $4175
+	ld a, [hl+] ; $4178
+	ld h, [hl] ; $4179
+	ld l, a ; $417a
+	ld a, l ; $417b
+	sub a, e ; $417c
+	ld l, a ; $417d
+	ld a, h ; $417e
+	sbc a, d ; $417f
+	ld h, a ; $4180
+	jr nc, .clampDist ; $4181
+	ld hl, wShotDistMax ; $4183
+	ld a, [hl+] ; $4186
+	ld d, [hl] ; $4187
+	ld e, a ; $4188
+.clampDist:
+	pop hl ; $4189
+	push de ; $418a
+	call BallTrajEntryPtr6_29 ; $418b
+	call SetBallVelocityFromEntry6_29 ; $418e
+	pop hl ; $4191
+	call SetBallTargetFromAim_29 ; $4192
+	ret ; $4195
+ApplyBallTrajectory4Capped_29:
+	xor a, a ; $4196
+	sub a, c ; $4197
+	ld c, a ; $4198
+	sbc a, a ; $4199
+	sub a, b ; $419a
+	ld b, a ; $419b
+	ld a, [wShotDistMin] ; $419c
+	ld e, a ; $419f
+	ld a, [wShotDistMin + 1] ; $41a0
+	ld d, a ; $41a3
+	call BallTrajEntryPtr4_29 ; $41a4
+	push hl ; $41a7
+	ld a, [hl+] ; $41a8
+	ld h, [hl] ; $41a9
+	ld l, a ; $41aa
+	add hl, bc ; $41ab
+	ld e, l ; $41ac
+	ld d, h ; $41ad
+	pop hl ; $41ae
+	jp c, ApplyBallTrajectory4_29.applyFallbackBallTrajectory ; $41af
+	call SeekBallTrajEntry4_29 ; $41b2
+	push de ; $41b5
+	call SetBallVelocityFromEntry4_29 ; $41b6
+	pop de ; $41b9
+	ld h, d ; $41ba
+	ld l, $00 ; $41bb
+	sra h ; $41bd
+	rr l ; $41bf
+	sra h ; $41c1
+	rr l ; $41c3
+	call SetBallTargetFromAim_29 ; $41c5
+	ret ; $41c8
+ApplyBallTrajectory4_29:
+	xor a, a ; $41c9
+	sub a, c ; $41ca
+	ld c, a ; $41cb
+	sbc a, a ; $41cc
+	sub a, b ; $41cd
+	ld b, a ; $41ce
+	ld a, [wShotDistMin] ; $41cf
+	ld e, a ; $41d2
+	ld a, [wShotDistMin + 1] ; $41d3
+	ld d, a ; $41d6
+	call BallTrajEntryPtr4_29 ; $41d7
+	call SeekBallTrajEntry4_29 ; $41da
+	push de ; $41dd
+	call SetBallVelocityFromEntry4_29 ; $41de
+	pop de ; $41e1
+	ld h, d ; $41e2
+	ld l, $00 ; $41e3
+	sra h ; $41e5
+	rr l ; $41e7
+	sra h ; $41e9
+	rr l ; $41eb
+	call SetBallTargetFromAim_29 ; $41ed
+	ret ; $41f0
 .applyFallbackBallTrajectory:
 	farcall ApplyFallbackBallTrajectory_24 ; $41f1
 	ret ; $41f4

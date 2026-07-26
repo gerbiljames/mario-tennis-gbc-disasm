@@ -5,10 +5,7 @@ Rst00:
 	ds 5, $ff ; $0003, fill
 Rst08:
 	jp PlaySoundCmd ; $0008
-	ds 5, $ff ; $000b, fill
-Rst10:
-	jp FarCall ; $0010
-	ds 5, $ff ; $0013, fill
+	INCBIN "data/bank_000/d_000b.bin" ; $000b, 13 bytes
 Rst18:
 	jp FarCall ; $0018
 	ds 5, $ff ; $001b, fill

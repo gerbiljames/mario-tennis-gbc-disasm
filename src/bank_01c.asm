@@ -2040,7 +2040,7 @@ GetStatDigitSpritePos:
 	add a, e ; $4fe6
 	ld e, a ; $4fe7
 	ret ; $4fe8
-Gfx_1c_4fe9:
+RadialOffsetRamps_1c:
 	INCBIN "data/bank_01c/d_4fe9.bin" ; $4fe9, 96 bytes
 DrawRemainingPointsSprite:
 	wram_bank $06 ; $5049
@@ -2907,16 +2907,7 @@ Palette_1c_598c:
 	dw $015f, $001f, $0000, $7fff ; pal 6: #ff5200 #ff0000 #000000 #ffffff
 	dw $6280, $7c00, $0000, $63ff ; pal 7: #00a4c5 #0000ff #000000 #ffffc5
 CharDataScreenGfx0_1c:
-	INCBIN "data/bank_01c/d_59cc.bin" ; $59cc, 1974 bytes
-	rst Rst18 ; $6182
-	and a, a ; $6183
-	rst Rst38 ; $6184
-	ld sp, hl ; $6185
-	rst Rst10 ; $6186
-	ld sp, hl ; $6187
-	adc a, e ; $6188
-Gfx_1c_6189:
-	INCBIN "data/bank_01c/d_6189.bin" ; $6189, 637 bytes
+	INCBIN "data/bank_01c/d_59cc.bin" ; $59cc, 2618 bytes
 CharDataScreenGfx1_1c:
 	INCBIN "data/bank_01c/d_6406.bin" ; $6406, 99 bytes
 CharDataScreenGfx2_1c:
@@ -2956,40 +2947,14 @@ CharDataScreenUIGraphicsGfx5:
 CharDataScreenUIGraphicsGfx6:
 	INCBIN "data/bank_01c/d_684f.bin" ; $684f, 28 bytes
 CharDataScreenUIGraphicsGfx7:
-	INCBIN "data/bank_01c/d_686b.bin" ; $686b, 1663 bytes
-.loop:
-	ld b, b ; $6eea
-	sbc a, b ; $6eeb
-	inc h ; $6eec
-	ret z ; $6eed
-	nop ; $6eee
+	INCBIN "data/bank_01c/d_686b.bin" ; $686b, 1668 bytes
 Unused_1c_6eef:
-	; $6eef, 34 bytes (bytes:16)
+	; $6eef, 59 bytes (bytes:16)
 	db $ec, $00, $00, $00, $00, $08, $07, $20, $1f, $44, $38, $0a, $71, $84, $73, $10 ; 0x00
 	db $e7, $00, $d9, $00, $d9, $40, $99, $a0, $19, $49, $30, $00, $f0, $10, $e0, $20 ; 0x10
-	db $c0, $20 ; 0x20
-	sound $10 ; $6f11
-	sound $40 ; $6f13
-	sbc a, a ; $6f15
-	and a, b ; $6f16
-	rra ; $6f17
-	ld b, d ; $6f18
-	inc a ; $6f19
-	add hl, bc ; $6f1a
-	ldh a, [hInputRisingEdge] ; $6f1b
-	ld h, e ; $6f1d
-	ld c, b ; $6f1e
-	daa ; $6f1f
-	add a, b ; $6f20
-	nop ; $6f21
-	nop ; $6f22
-	nop ; $6f23
-	nop ; $6f24
-	nop ; $6f25
-	add a, b ; $6f26
-	nop ; $6f27
-	jr nz, CharDataScreenUIGraphicsGfx7.loop ; $6f28
-Gfx_1c_6f2a:
+	db $c0, $20, $cf, $10, $cf, $40, $9f, $a0, $1f, $42, $3c, $09, $f0, $94, $63, $48 ; 0x20
+	db $27, $80, $00, $00, $00, $00, $00, $80, $00, $20, $c0 ; 0x30
+CharDataScreenTiles_1c:
 	INCBIN "data/bank_01c/d_6f2a.bin" ; $6f2a, 342 bytes
 CharDataScreenGfx13:
 	INCBIN "data/bank_01c/d_7080.bin" ; $7080, 150 bytes

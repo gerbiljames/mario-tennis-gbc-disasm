@@ -1017,8 +1017,29 @@ DrawGlyphSprite:
 	add a, $08 ; $5503
 	ld d, a ; $5505
 	ret ; $5506
-Gfx_18_5507:
-	INCBIN "data/bank_018/d_5507.bin" ; $5507, 90 bytes
+Unused_18_5507:
+	INCBIN "data/bank_018/d_5507.bin" ; $5507, 32 bytes
+DrawThreeOptionLabels:
+	call DrawConfirmScreenBox ; $5527
+	ld hl, $5188 ; $552a
+	ld de, $ddc1 ; $552d
+	call CopyBytes11 ; $5530
+	ld hl, $5198 ; $5533
+	ld de, $dde1 ; $5536
+	call CopyBytes11 ; $5539
+	ld hl, $51a8 ; $553c
+	ld de, $de01 ; $553f
+	call CopyBytes11 ; $5542
+	ld hl, $5158 ; $5545
+	ld de, $d9c1 ; $5548
+	call CopyBytes11 ; $554b
+	ld hl, $5168 ; $554e
+	ld de, $d9e1 ; $5551
+	call CopyBytes11 ; $5554
+	ld hl, $5178 ; $5557
+	ld de, $da01 ; $555a
+	call CopyBytes11 ; $555d
+	ret ; $5560
 DrawYesNoLabels:
 	ld hl, YesNoLabels2 ; $5561
 	ld de, $dde1 ; $5564
@@ -1221,7 +1242,7 @@ DrawCharSelectCursor:
 	ld bc, $0240 ; $59f7
 	call QueueSpriteTemplate ; $59fa
 	ret ; $59fd
-Gfx_18_59fe:
+Data_18_59fe:
 	INCBIN "data/bank_018/d_59fe.bin" ; $59fe, 108 bytes
 ApplySpriteBobOffset_18:
 	ldh a, [hVBlankCounter] ; $5a6a

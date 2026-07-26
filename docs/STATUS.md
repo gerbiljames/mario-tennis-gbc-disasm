@@ -2,8 +2,8 @@
 
 ## Where things stand
 
-**~160.3K instructions / 420,096 bytes of proven code+structured source
-(20.0% of the 2 MiB ROM) disassembled; everything rebuilds byte-perfect**
+**~160.5K instructions / 423,878 bytes of proven code+structured source
+(20.2% of the 2 MiB ROM) disassembled; everything rebuilds byte-perfect**
 (`make compare` → OK against SHA-1
 `414ba58340a27fc27b127bc01455b32764151ff0`). 59 of 128 banks contain
 code; the other 69 are data (graphics/audio/tilemaps/text) — but most of that
@@ -20,15 +20,19 @@ less "proven" by the counter, more correct in the source.)
 **Every remaining anonymous blob has been classified as code, table, or data**
 (see "Blob classification pass" below): a ROM-wide code-shape screen of all
 5,000-odd INCBINs finds no uncarved code; what stays binary is graphics,
-resource descriptors, record arrays, or fill.
+resource descriptors, record arrays, or fill. That screen missed eight
+routines, all found later by the graphics-blob pass below -- it flagged
+shape, not *twins*, and the shot banks are near-identical copies of each
+other, so a routine only one bank failed to execute reads as ordinary data
+until you diff it against its siblings.
 
 Everything below is **committed** (HEAD `90652b0`); the whole history
 rebuilds byte-perfect. Per-bank progress at any time: `python3
 tools/progress.py` (proven-code bytes, fill runs, label counts, human-named
 counts) and `tools/progress.py --unnamed <bank>` to list still-auto-named
-symbols. **17,128 of 20,746 labels are human-named** (see the caveat in the
+symbols. **17,146 of 20,761 labels are human-named** (see the caveat in the
 auto-split section below) (up from 4,816 on 2026-07-23); what is left is
-2,204 data blobs.
+2,191 data blobs.
 
 ### Local labels inside functions (2026-07-26)
 
@@ -4029,6 +4033,87 @@ $3b's screen-specific pause-menu builders, bank $0a story-overworld engine,
 bank $03's remaining save farcall slots (FarPtr_03_18/24/26/2a/2c/...), bank
 $1a EXP-screen internals, bank $13/$15's scene-scripting beats, sound-command
 enum for the 451 `sound $xx` sites, WRAM map expansion from ram_map gaps.
+
+## The 13 `Gfx_*` blobs (2026-07-26)
+
+The last auto-named symbols carrying a `Gfx_` prefix were 13 blobs the
+generator had labelled as graphics on position alone. Only three of them
+actually were graphics; the prefix was wrong on the other ten.
+
+**Eight were undisassembled code.** The shot banks `$20`-`$2c` hold five
+near-identical trajectory routines each, at `$4102`/`$4135`/`$415d`/`$4196`/
+`$41c9` (plus a small per-bank shift). Banks `$20`-`$23`, `$2a` and `$2b` have
+all five proven by trace coverage; `$24`, `$29` and `$2c` do not, and their
+unexecuted copies sat as blobs. Grepping the ROM for the shared opening
+`af 91 4f 9f 90 47 fa 8a c4 5f` (`xor a / sub c / ld c,a / sbc a / sub b /
+ld b,a / ld a,[wShotDistMin] / ld e,a`) locates every copy in every bank and
+turns "is this code?" into "does the twin bank disassemble it?". Static seeds
+in `coverage/bank02{4,9,c}_static_code.json` decode all of them:
+
+| bank | seeded | name |
+| --- | --- | --- |
+| `$24` | `$410e`, `$4141` | `ApplyBallTrajectory6Capped_24`, `ApplyBallTrajectory6_24` |
+| `$29` | `$4135`, `$415d`, `$4196`, `$41c9` | `ApplyBallTrajectory6_29`, `ApplyBallTrajectoryCapped_29`, `ApplyBallTrajectory4Capped_29`, `ApplyBallTrajectory4_29` |
+| `$2c` | `$4106`, `$419a` | `ApplyBallTrajectory6Capped_2c`, `ApplyBallTrajectory4Capped_2c` |
+
+The naming now separates the two axes the five routines vary on: entry stride
+(`...6` = the 6-byte `BallTrajEntryPtr6` table, `...4` = the 4-byte one) and
+whether the carry from the table walk falls back to
+`ApplyFallbackBallTrajectory_24` (`...Capped`).
+
+Two more were code outside the shot banks:
+
+* `$18:$5527` `DrawThreeOptionLabels` -- the three-option sibling of
+  `DrawYesNoLabels`, six 11-byte tile labels into `$d9c1`/`$d9e1`/`$da01` and
+  `$ddc1`/`$dde1`/`$de01` after `DrawConfirmScreenBox`. Only the 32 bytes
+  before it (`$5507`, a `ff fe fd fc fd fe ff` ramp + zero padding) are data,
+  now `Unused_18_5507`.
+* `$27:$7a49` `SetStoryRankSceneIndex` and `$27:$7a90` `SetStoryRankTier` --
+  two `rst Rst30` (`TestGameFlagCmd`) ladders that walk the story-completion
+  flags and store a progress index in `$c2b0` (0-9 with singles even /
+  doubles odd; 0-4 as a plain tier). `rst $30` takes a two-byte inline
+  argument, which is why the region decoded as noise until seeded.
+
+**Two were mis-split by bad trace seeds**, both single misattributed coverage
+points sitting inside proven data (added to `Core.BAD_SEEDS`):
+
+* `$1c:$6182` sits 1,974 bytes into the LZ stream at `$59cc`, which
+  `tools/lz.py` proves runs 2,618 bytes to `$6406` -- exactly where the next
+  referenced stream starts. `CharDataScreenGfx0_1c` is now one 2,618-byte
+  blob instead of three pieces with a 7-byte "function" wedged in.
+* `$1c:$6f11` decoded forwards to a `jr nz` that jumped *backwards*, so
+  descent fabricated a 64-byte routine out of raw tile bytes at `$6eea`.
+
+A third of the same kind turned up while checking the result: `$24:$4cab`,
+1,803 bytes into `BallPosDataDrop_24`, decoding as `call z, $a0f1` on repeat.
+Removing it merges that table back into one 3,072-byte (512 x 6-byte) run.
+The lesson generalises -- a lone trace seed with no caller, landing mid-blob
+and decoding as nonsense, is a bank-misattributed trace line, not code.
+
+**One was actor bytecode.** `$27:$6b94` is four `actor_script` blobs
+(20/26/20/26 bytes) that the carver had not been told about; they now decode
+as ordinary `as_*` walk-and-face scripts alongside `ActorScript_27_6bf0`.
+
+**Three were genuinely graphics or data**, renamed off the misleading prefix:
+
+| offset | name | what it is |
+| --- | --- | --- |
+| `$17:$4f02` | `CourtDiagramGfxStreams` | 20 back-to-back LZ streams filling all 1,637 bytes, exactly the 20 source pointers in `CourtDiagramGraphicsList` that `DecompressGraphicsList` walks into VRAM `$8000`+ |
+| `$1c:$6f2a` | `CharDataScreenTiles_1c` | raw 2bpp tiles (they render as legible glyphs) between the char-data screen's compressed streams |
+| `$1c:$4fe9` | `RadialOffsetRamps_1c` | a 4-entry pointer table into four 22-byte ramps of `(+-8, +-8)` steps -- one diagonal each, consumed by the `add a,d / ld d,a / ld a,[hl] / add a,e` helper just above it |
+
+Two resisted identification and keep neutral auto-style names rather than a
+wrong one: `Data_14_56ea` (870 bytes of sparse binary before
+`IslandObjTiles_14`; not a whole number of tiles, renders as nothing legible)
+and `Data_18_59fe` (a 4-entry pointer table into four 17-byte records, shape
+clear, role not). `$38:$4695` is named `MatchTypeLabelSpriteLayouts` from its
+neighbours -- four `db y, x, tile, attr` strips terminated by `$80`, sitting
+directly before `DrawMatchTypeOptionLabel` -- which fits the bytes but has no
+call site to confirm it.
+
+Net: zero `Gfx_*`, zero `Label_*`, zero `Func_*` and zero locals scoped under
+a data symbol anywhere in the ROM; 17,146 of 20,761 labels human-named.
+
 
 ## Repo state
 

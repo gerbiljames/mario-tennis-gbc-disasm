@@ -36,6 +36,7 @@ BallTrajEntryPtr4_24:
 	pop de ; $4028
 	add hl, de ; $4029
 	ret ; $402a
+SeekBallTrajEntry6_24:
 	ld a, [wShotTrajRowMin] ; $402b
 	ld d, a ; $402e
 	ld a, [wShotTrajRowMax] ; $402f
@@ -220,8 +221,63 @@ SetBallVelocityFromEntry4_24:
 	ld [hl+], a ; $410b
 	ld [hl], d ; $410c
 	ret ; $410d
-Gfx_24_410e:
-	INCBIN "data/bank_024/d_410e.bin" ; $410e, 91 bytes
+ApplyBallTrajectory6Capped_24:
+	xor a, a ; $410e
+	sub a, c ; $410f
+	ld c, a ; $4110
+	sbc a, a ; $4111
+	sub a, b ; $4112
+	ld b, a ; $4113
+	ld a, [wShotDistMin] ; $4114
+	ld e, a ; $4117
+	ld a, [wShotDistMin + 1] ; $4118
+	ld d, a ; $411b
+	call BallTrajEntryPtr6_24 ; $411c
+	push hl ; $411f
+	ld a, [hl+] ; $4120
+	ld h, [hl] ; $4121
+	ld l, a ; $4122
+	add hl, bc ; $4123
+	ld e, l ; $4124
+	ld d, h ; $4125
+	pop hl ; $4126
+	jp c, ApplyBallTrajectory_24.applyFallbackBallTrajectory ; $4127
+	call SeekBallTrajEntry6_24 ; $412a
+	push de ; $412d
+	call SetBallVelocityFromEntry6_24 ; $412e
+	pop de ; $4131
+	ld h, d ; $4132
+	ld l, $00 ; $4133
+	sra h ; $4135
+	rr l ; $4137
+	sra h ; $4139
+	rr l ; $413b
+	call SetBallTargetFromAim_24 ; $413d
+	ret ; $4140
+ApplyBallTrajectory6_24:
+	xor a, a ; $4141
+	sub a, c ; $4142
+	ld c, a ; $4143
+	sbc a, a ; $4144
+	sub a, b ; $4145
+	ld b, a ; $4146
+	ld a, [wShotDistMin] ; $4147
+	ld e, a ; $414a
+	ld a, [wShotDistMin + 1] ; $414b
+	ld d, a ; $414e
+	call BallTrajEntryPtr6_24 ; $414f
+	call SeekBallTrajEntry6_24 ; $4152
+	push de ; $4155
+	call SetBallVelocityFromEntry6_24 ; $4156
+	pop de ; $4159
+	ld h, d ; $415a
+	ld l, $00 ; $415b
+	sra h ; $415d
+	rr l ; $415f
+	sra h ; $4161
+	rr l ; $4163
+	call SetBallTargetFromAim_24 ; $4165
+	ret ; $4168
 ApplyBallTrajectoryCapped_24:
 	push hl ; $4169
 	ld hl, wShotAimAngle ; $416a
@@ -446,117 +502,7 @@ ShotBallPathLob:
 BallPosBlockOffsetsLob_24:
 	INCBIN "data/bank_024/d_459c.bin" ; $459c, 4 bytes
 BallPosDataDrop_24:
-	INCBIN "data/bank_024/d_45a0.bin" ; $45a0, 1803 bytes
-	push af ; $4cab
-	sbc a, b ; $4cac
-	cp a, $e0 ; $4cad
-	dec h ; $4caf
-	ld d, [hl] ; $4cb0
-	push af ; $4cb1
-	sbc a, b ; $4cb2
-	cp a, $80 ; $4cb3
-	ld h, $56 ; $4cb5
-	push af ; $4cb7
-	sbc a, b ; $4cb8
-	cp a, $00 ; $4cb9
-	daa ; $4cbb
-	ld d, [hl] ; $4cbc
-	push af ; $4cbd
-	sbc a, b ; $4cbe
-	cp a, $80 ; $4cbf
-	daa ; $4cc1
-	ld d, [hl] ; $4cc2
-	push af ; $4cc3
-	sbc a, b ; $4cc4
-	cp a, $20 ; $4cc5
-	jr z, .compare ; $4cc7
-	push af ; $4cc9
-	sbc a, b ; $4cca
-	cp a, $c0 ; $4ccb
-	jr z, $4d25 ; $4ccd
-	push af ; $4ccf
-	sbc a, b ; $4cd0
-	cp a, $40 ; $4cd1
-	add hl, hl ; $4cd3
-	ld d, [hl] ; $4cd4
-	push af ; $4cd5
-	sbc a, b ; $4cd6
-	cp a, $c0 ; $4cd7
-	add hl, hl ; $4cd9
-	ld d, [hl] ; $4cda
-	push af ; $4cdb
-	ld [hl], h ; $4cdc
-	cp a, $60 ; $4cdd
-	ld a, [hl+] ; $4cdf
-	ld d, [hl] ; $4ce0
-	push af ; $4ce1
-	ld [hl], h ; $4ce2
-	cp a, $e0 ; $4ce3
-	ld a, [hl+] ; $4ce5
-	ld d, [hl] ; $4ce6
-	push af ; $4ce7
-	ld [hl], h ; $4ce8
-	cp a, $60 ; $4ce9
-	dec hl ; $4ceb
-	ld d, [hl] ; $4cec
-	push af ; $4ced
-	ld [hl], h ; $4cee
-	cp a, $c0 ; $4cef
-	dec hl ; $4cf1
-	ld d, [hl] ; $4cf2
-	push af ; $4cf3
-	ld [hl], h ; $4cf4
-	cp a, $60 ; $4cf5
-	inc l ; $4cf7
-	ld d, [hl] ; $4cf8
-	push af ; $4cf9
-	ld [hl], h ; $4cfa
-	cp a, $e0 ; $4cfb
-	inc l ; $4cfd
-	ld d, [hl] ; $4cfe
-	push af ; $4cff
-	ld [hl], h ; $4d00
-	cp a, $80 ; $4d01
-	dec l ; $4d03
-	ld d, [hl] ; $4d04
-	push af ; $4d05
-	ld [hl], h ; $4d06
-	cp a, $e0 ; $4d07
-	dec l ; $4d09
-	ld d, [hl] ; $4d0a
-	push af ; $4d0b
-	ld [hl], h ; $4d0c
-	cp a, $40 ; $4d0d
-	ld l, $56 ; $4d0f
-	push af ; $4d11
-	ld [hl], h ; $4d12
-	cp a, $e0 ; $4d13
-	ld l, $56 ; $4d15
-	push af ; $4d17
-	ld [hl], h ; $4d18
-	cp a, $80 ; $4d19
-	cpl ; $4d1b
-	ld d, [hl] ; $4d1c
-	push af ; $4d1d
-	ld [hl], h ; $4d1e
-.compare:
-	cp a, $a0 ; $4d1f
-	ld [$e002], sp ; $4d21
-	call z, $a0f1 ; $4d24
-	ld [$e002], sp ; $4d27
-	call z, $a0f1 ; $4d2a
-	ld [$e002], sp ; $4d2d
-	call z, $a0f1 ; $4d30
-	ld [$e002], sp ; $4d33
-	call z, $a0f1 ; $4d36
-	ld [$e002], sp ; $4d39
-	call z, $a0f1 ; $4d3c
-	ld [$e002], sp ; $4d3f
-	call z, $80f1 ; $4d42
-	add hl, bc ; $4d45
-	sub a, b ; $4d46
-Gfx_24_4d47:
-	INCBIN "data/bank_024/d_4d47.bin" ; $4d47, 1113 bytes
+	INCBIN "data/bank_024/d_45a0.bin" ; $45a0, 3072 bytes
 ShotBallPathDrop:
 	farcall ComputeShotPlacement ; $51a0
 	ld hl, BallPosDataDrop_24 ; $51a3

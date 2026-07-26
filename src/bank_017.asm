@@ -1637,7 +1637,7 @@ CourtDiagramPalettes:
 	dw $035f, $01bf, $0e40, $7fff ; pal 5: #ffd500 #ff6a00 #009418 #ffffff
 	dw $0000, $0000, $0000, $0000 ; pal 6: #000000 #000000 #000000 #000000
 	dw $0000, $0000, $0000, $0000 ; pal 7: #000000 #000000 #000000 #000000
-Gfx_17_4f02:
+CourtDiagramGfxStreams:
 	INCBIN "data/bank_017/d_4f02.bin" ; $4f02, 1637 bytes
 Palette_17_5567:
 	; $5567, 24 bytes (palettes)

@@ -1906,7 +1906,7 @@ ActorScript_14_563b:
 	as_halt
 	as_halt
 	as_halt
-Gfx_14_56ea:
+Data_14_56ea:
 	INCBIN "data/bank_014/d_56ea.bin" ; $56ea, 870 bytes
 IslandObjTiles_14:
 	INCBIN "data/bank_014/d_5a50.bin" ; $5a50, 1024 bytes

@@ -1048,7 +1048,7 @@ RefreshMatchTypeLabelRow:
 	ld c, $04 ; $468f
 	call QueueVRAMCopy ; $4691
 	ret ; $4694
-Gfx_38_4695:
+MatchTypeLabelSpriteLayouts:
 	INCBIN "data/bank_038/d_4695.bin" ; $4695, 141 bytes
 DrawMatchTypeOptionLabel:
 	wram_bank $03 ; $4722

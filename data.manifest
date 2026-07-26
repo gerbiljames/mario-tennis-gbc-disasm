@@ -1,4 +1,5 @@
 # path  rom_offset(hex)  length(hex)  [render-spec] — consumed by tools/extract.py
+bank_000/d_000b.bin 00000b d
 bank_000/d_0104.bin 000104 30
 bank_001/d_4210.bin 004210 100
 bank_001/d_4410.bin 004410 600
@@ -356,7 +357,7 @@ bank_018/d_467a.bin 06067a 8b9
 bank_018/d_4f73.bin 060f73 15b
 bank_018/d_50ce.bin 0610ce ea
 bank_018/d_51f8.bin 0611f8 ce
-bank_018/d_5507.bin 061507 5a
+bank_018/d_5507.bin 061507 20
 bank_018/d_5633.bin 061633 1fa
 bank_018/d_5845.bin 061845 4d
 bank_018/d_58e0.bin 0618e0 d9
@@ -488,8 +489,7 @@ bank_01b/lz_7d2e.bin 06fd2e 141
 bank_01b/lz_7e6f.bin 06fe6f 143
 bank_01c/d_4fe9.bin 070fe9 60
 bank_01c/d_5674.bin 071674 5
-bank_01c/d_59cc.bin 0719cc 7b6
-bank_01c/d_6189.bin 072189 27d
+bank_01c/d_59cc.bin 0719cc a3a
 bank_01c/d_6406.bin 072406 63
 bank_01c/d_6469.bin 072469 e0
 bank_01c/d_6549.bin 072549 36
@@ -509,7 +509,7 @@ bank_01c/d_6825.bin 072825 9
 bank_01c/d_682e.bin 07282e 1a
 bank_01c/d_6848.bin 072848 7
 bank_01c/d_684f.bin 07284f 1c
-bank_01c/d_686b.bin 07286b 67f
+bank_01c/d_686b.bin 07286b 684
 bank_01c/d_6f2a.bin 072f2a 156
 bank_01c/d_7080.bin 073080 96
 bank_01c/d_7581.bin 073581 75e
@@ -545,11 +545,9 @@ bank_020/d_427d.bin 08027d 3c00
 bank_021/d_427d.bin 08427d 3c00
 bank_022/d_427d.bin 08827d 3c00
 bank_023/d_427d.bin 08c27d 3c00
-bank_024/d_410e.bin 09010e 5b
 bank_024/d_4289.bin 090289 300
 bank_024/d_459c.bin 09059c 4
-bank_024/d_45a0.bin 0905a0 70b
-bank_024/d_4d47.bin 090d47 459
+bank_024/d_45a0.bin 0905a0 c00
 bank_024/d_51b9.bin 0911b9 40
 bank_024/d_51f9.bin 0911f9 4
 bank_024/d_51fd.bin 0911fd 600
@@ -559,13 +557,10 @@ bank_024/d_6707.bin 092707 1000
 bank_024/d_7719.bin 093719 40
 bank_025/text_4004.asm 094004 3b34
 bank_026/text_4004.asm 098004 3b13
-bank_027/d_6b94.bin 09eb94 5c
-bank_027/d_7a49.bin 09fa49 78
 bank_028/d_4020.bin 0a0020 5c0
 bank_028/d_45e0.bin 0a05e0 5c0
 bank_028/d_4bf0.bin 0a0bf0 1240
 bank_028/d_6180.bin 0a2180 b9c
-bank_029/d_4135.bin 0a4135 bc
 bank_029/d_427d.bin 0a427d 1c20
 bank_02a/d_427d.bin 0a827d 1c20
 bank_02b/d_427d.bin 0ac27d 1c20

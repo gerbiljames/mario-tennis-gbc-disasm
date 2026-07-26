@@ -2,7 +2,11 @@
  "_comment": "Static code-entry seeds for bank $29 (ball-position data bank local helpers $4002/$4102). Flat = 0x29*0x4000 + (cpu-0x4000).",
  "rom": [
   671746,
-  672002
+  672002,
+  672053,
+  672093,
+  672150,
+  672201
  ],
  "other": []
 }
