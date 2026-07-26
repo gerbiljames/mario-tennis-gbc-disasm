@@ -4011,11 +4011,11 @@ AcademyWingCloseDoor_10:
 	map_actor_end
 SpeakNpc03SinglesOrDoublesLine_10:
 	test_flag FLAG_DOUBLES ; $73ee
-	jr z, Label_10_73fc ; $73f1
+	jr z, .doubles ; $73f1
 	farcall AdvanceDialogueTextCursor ; $73f3
 	script_speak $03 ; $73f6
 	ret ; $73fb
-Label_10_73fc:
+.doubles:
 	script_speak $03 ; $73fc
 	farcall AdvanceDialogueTextCursor ; $7401
 	ret ; $7404
@@ -4864,62 +4864,62 @@ ActorScript_10_7c07:
 	as_jump .L1a7
 SetStoryDialogueStage_10:
 	test_flag FLAG_DOUBLES ; $7dbd
-	jr nz, Label_10_7de4 ; $7dc0
+	jr nz, .doublesStage ; $7dc0
 	ld a, $00 ; $7dc2
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7dc4
-	jr z, Label_10_7de0 ; $7dc7
+	jr z, .store ; $7dc7
 	ld a, $02 ; $7dc9
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $7dcb
-	jr z, Label_10_7de0 ; $7dce
+	jr z, .store ; $7dce
 	ld a, $04 ; $7dd0
 	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $7dd2
-	jr z, Label_10_7de0 ; $7dd5
+	jr z, .store ; $7dd5
 	ld a, $06 ; $7dd7
 	test_flag FLAG_STORY_COMPLETE_SINGLES ; $7dd9
-	jr z, Label_10_7de0 ; $7ddc
+	jr z, .store ; $7ddc
 	ld a, $08 ; $7dde
-Label_10_7de0:
+.store:
 	ld [$c2b0], a ; $7de0
 	ret ; $7de3
-Label_10_7de4:
+.doublesStage:
 	ld a, $01 ; $7de4
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $7de6
-	jr z, Label_10_7de0 ; $7de9
+	jr z, .store ; $7de9
 	ld a, $03 ; $7deb
 	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_1 ; $7ded
-	jr z, Label_10_7de0 ; $7df0
+	jr z, .store ; $7df0
 	ld a, $05 ; $7df2
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $7df4
-	jr z, Label_10_7de0 ; $7df7
+	jr z, .store ; $7df7
 	ld a, $07 ; $7df9
 	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $7dfb
-	jr z, Label_10_7de0 ; $7dfe
+	jr z, .store ; $7dfe
 	ld a, $09 ; $7e00
-	jr Label_10_7de0 ; $7e02
+	jr .store ; $7e02
 	ld a, $00 ; $7e04
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7e06
-	jr z, Label_10_7e23 ; $7e09
+	jr z, .storeIsland ; $7e09
 	inc a ; $7e0b
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $7e0c
-	jr z, Label_10_7e23 ; $7e0f
+	jr z, .storeIsland ; $7e0f
 	inc a ; $7e11
 	test_flag FLAG_DOUBLES ; $7e12
-	jr nz, Label_10_7e27 ; $7e15
+	jr nz, .doublesIsland ; $7e15
 	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $7e17
-	jr z, Label_10_7e23 ; $7e1a
+	jr z, .storeIsland ; $7e1a
 	inc a ; $7e1c
 	test_flag FLAG_STORY_COMPLETE_SINGLES ; $7e1d
-	jr z, Label_10_7e23 ; $7e20
+	jr z, .storeIsland ; $7e20
 	inc a ; $7e22
-Label_10_7e23:
+.storeIsland:
 	ld [$c2b0], a ; $7e23
 	ret ; $7e26
-Label_10_7e27:
+.doublesIsland:
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $7e27
-	jr z, Label_10_7e23 ; $7e2a
+	jr z, .storeIsland ; $7e2a
 	inc a ; $7e2c
 	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $7e2d
-	jr z, Label_10_7e23 ; $7e30
+	jr z, .storeIsland ; $7e30
 	inc a ; $7e32
-	jr Label_10_7e23 ; $7e33
+	jr .storeIsland ; $7e33
 	; $7e35, 459 bytes fill to bank end (linker-padded)

@@ -229,7 +229,7 @@ RestaurantPlazaTile06_13:
 	ret ; $4424
 StoryActorsWalkOffAndFadeOut_13:
 	test_flag FLAG_DOUBLES ; $4425
-	jr nz, Label_13_446a ; $4428
+	jr nz, StoryActorsWalkOffAndFadeOutDoubles_13 ; $4428
 	script_face ACTOR_PLAYER, FACE_UP ; $442a
 	script_move_angle ACTOR_PLAYER, $c8, $0400 ; $4431
 	script_set_speed ACTOR_PLAYER, $0010 ; $443b
@@ -241,7 +241,7 @@ StoryActorsWalkOffAndFadeOut_13:
 	script_set_active ACTOR_PLAYER, $00 ; $445b
 	script_wait_frames $0a ; $4462
 	ret ; $4469
-Label_13_446a:
+StoryActorsWalkOffAndFadeOutDoubles_13:
 	script_wait_move ACTOR_PARTNER ; $446a
 	script_move_angle ACTOR_PLAYER, $c8, $0280 ; $446f
 	script_set_speed ACTOR_PLAYER, $0010 ; $4479
@@ -3533,29 +3533,29 @@ ShowStoryTournamentBracket_13:
 	ld [wCameraY + 1], a ; $7af4
 	call ClearFrameTasks ; $7af7
 	test_flag FLAG_DOUBLES ; $7afa
-	jr nz, Label_13_7b10 ; $7afd
+	jr nz, .doublesBracket ; $7afd
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_FINAL ; $7aff
-	jr nz, Label_13_7b0a ; $7b02
+	jr nz, .juniorBracket ; $7b02
 	ld b, $00 ; $7b04
 	ld c, $04 ; $7b06
-	jr Label_13_7b1b ; $7b08
-Label_13_7b0a:
+	jr .show ; $7b08
+.juniorBracket:
 	ld b, $00 ; $7b0a
 	ld c, $01 ; $7b0c
-	jr Label_13_7b1b ; $7b0e
-Label_13_7b10:
+	jr .show ; $7b0e
+.doublesBracket:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_FINAL ; $7b10
-	jr nz, Label_13_7b1f ; $7b13
+	jr nz, .doublesFinal ; $7b13
 	ld b, $01 ; $7b15
 	ld c, $02 ; $7b17
-	jr Label_13_7b1b ; $7b19
-Label_13_7b1b:
+	jr .show ; $7b19
+.show:
 	farcall ShowTournamentBracket ; $7b1b
 	ret ; $7b1e
-Label_13_7b1f:
+.doublesFinal:
 	ld b, $01 ; $7b1f
 	ld c, $01 ; $7b21
-	jr Label_13_7b1b ; $7b23
+	jr .show ; $7b23
 ActorScript_13_7b25:
 	; $7b25, 10 bytes (actor_script)
 	as_halt

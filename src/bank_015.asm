@@ -1319,9 +1319,9 @@ Label_15_5380:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $5380
 	ld a, a ; $5383
 	rst Rst00 ; $5384
-	dw Label_15_5e85 ; $5385 jumptable
-	dw Label_15_5eb7 ; $5387 jumptable
-	dw Label_15_5edf ; $5389 jumptable
+	dw StrokeChallengerResultScene.celebrate ; $5385 jumptable
+	dw StrokeChallengerResultScene.speakWin ; $5387 jumptable
+	dw StrokeChallengerResultScene.partnerJoins ; $5389 jumptable
 	dw Label_15_7290 ; $538b jumptable
 	dw Label_15_729f ; $538d jumptable
 	dw Label_15_72b4 ; $538f jumptable
@@ -1949,7 +1949,7 @@ ServeChallengerResultScene:
 	ld a, [wPointWinLoseFlag] ; $5d54
 	inc a ; $5d57
 	cp a, $01 ; $5d58
-	jr nz, Label_15_5d69 ; $5d5a
+	jr nz, .dispatch ; $5d5a
 	ld hl, $c2b2 ; $5d5c
 	ld de, $201d ; $5d5f
 	ld a, e ; $5d62
@@ -1957,13 +1957,13 @@ ServeChallengerResultScene:
 	ld [hl], d ; $5d64
 	ld a, [wPointWinLoseFlag] ; $5d65
 	inc a ; $5d68
-Label_15_5d69:
+.dispatch:
 	ld a, a ; $5d69
 	rst Rst00 ; $5d6a
-	dw Label_15_5f58 ; $5d6b jumptable
-	dw Label_15_5f07 ; $5d6d jumptable
-	dw Label_15_5fc2 ; $5d6f jumptable
-	dw Label_15_5e74 ; $5d71 jumptable
+	dw StrokeChallengerResultScene.finish ; $5d6b jumptable
+	dw StrokeChallengerResultScene.lose ; $5d6d jumptable
+	dw StrokeChallengerResultScene.draw ; $5d6f jumptable
+	dw StrokeChallengerResultScene.jumpForJoy ; $5d71 jumptable
 	ret ; $5d73
 NetChallengerResultScene:
 	xor a, a ; $5d74
@@ -1990,7 +1990,7 @@ NetChallengerResultScene:
 	ld a, [wPointWinLoseFlag] ; $5dd5
 	inc a ; $5dd8
 	cp a, $01 ; $5dd9
-	jr nz, Label_15_5dea ; $5ddb
+	jr nz, .dispatch ; $5ddb
 	ld hl, $c2b2 ; $5ddd
 	ld de, $204a ; $5de0
 	ld a, e ; $5de3
@@ -1998,12 +1998,12 @@ NetChallengerResultScene:
 	ld [hl], d ; $5de5
 	ld a, [wPointWinLoseFlag] ; $5de6
 	inc a ; $5de9
-Label_15_5dea:
+.dispatch:
 	ld a, a ; $5dea
 	rst Rst00 ; $5deb
-	dw Label_15_5f58 ; $5dec jumptable
-	dw Label_15_5f07 ; $5dee jumptable
-	dw Label_15_5fc2 ; $5df0 jumptable
+	dw StrokeChallengerResultScene.finish ; $5dec jumptable
+	dw StrokeChallengerResultScene.lose ; $5dee jumptable
+	dw StrokeChallengerResultScene.draw ; $5df0 jumptable
 	ret ; $5df2
 StrokeChallengerResultScene:
 	xor a, a ; $5df3
@@ -2030,7 +2030,7 @@ StrokeChallengerResultScene:
 	ld a, [wPointWinLoseFlag] ; $5e54
 	inc a ; $5e57
 	cp a, $01 ; $5e58
-	jr nz, Label_15_5e69 ; $5e5a
+	jr nz, .dispatch ; $5e5a
 	ld hl, $c2b2 ; $5e5c
 	ld de, $2078 ; $5e5f
 	ld a, e ; $5e62
@@ -2038,21 +2038,21 @@ StrokeChallengerResultScene:
 	ld [hl], d ; $5e64
 	ld a, [wPointWinLoseFlag] ; $5e65
 	inc a ; $5e68
-Label_15_5e69:
+.dispatch:
 	ld a, a ; $5e69
 	rst Rst00 ; $5e6a
-	dw Label_15_5f58 ; $5e6b jumptable
-	dw Label_15_5f07 ; $5e6d jumptable
-	dw Label_15_5fc2 ; $5e6f jumptable
-	dw Label_15_5e74 ; $5e71 jumptable
+	dw StrokeChallengerResultScene.finish ; $5e6b jumptable
+	dw StrokeChallengerResultScene.lose ; $5e6d jumptable
+	dw StrokeChallengerResultScene.draw ; $5e6f jumptable
+	dw StrokeChallengerResultScene.jumpForJoy ; $5e71 jumptable
 	ret ; $5e73
-Label_15_5e74:
+.jumpForJoy:
 	script_jump_velocity ACTOR_PLAYER, $ff40 ; $5e74
 	ld a, $00 ; $5e7c
 	farcall ScriptWaitActorJumpDone ; $5e7e
-	jp Label_15_5f58 ; $5e81
+	jp .finish ; $5e81
 	ret ; $5e84
-Label_15_5e85:
+.celebrate:
 	ld hl, wWaterSpriteMinigameFlag ; $5e85
 	ld de, $2020 ; $5e88
 	ld a, e ; $5e8b
@@ -2065,12 +2065,12 @@ Label_15_5e85:
 	ld [hl], d ; $5e96
 	ld hl, wWaterSpriteMinigameSwingCount ; $5e97
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $5e9a
-	jr z, Label_15_5ea4 ; $5e9d
+	jr z, .celebrateWait ; $5e9d
 	ld de, $2023 ; $5e9f
-	jr Label_15_5ea7 ; $5ea2
-Label_15_5ea4:
+	jr .celebrateLoop ; $5ea2
+.celebrateWait:
 	ld de, $2022 ; $5ea4
-Label_15_5ea7:
+.celebrateLoop:
 	ld a, e ; $5ea7
 	ld [hl+], a ; $5ea8
 	ld [hl], d ; $5ea9
@@ -2081,7 +2081,7 @@ Label_15_5ea7:
 	ld [hl], d ; $5eb2
 	call ServeChallengerResultScene ; $5eb3
 	ret ; $5eb6
-Label_15_5eb7:
+.speakWin:
 	ld hl, wWaterSpriteMinigameFlag ; $5eb7
 	ld de, $2020 ; $5eba
 	ld a, e ; $5ebd
@@ -2104,7 +2104,7 @@ Label_15_5eb7:
 	ld [hl], d ; $5eda
 	call ServeChallengerResultScene ; $5edb
 	ret ; $5ede
-Label_15_5edf:
+.partnerJoins:
 	ld hl, wWaterSpriteMinigameFlag ; $5edf
 	ld de, $2020 ; $5ee2
 	ld a, e ; $5ee5
@@ -2127,7 +2127,7 @@ Label_15_5edf:
 	ld [hl], d ; $5f02
 	call ServeChallengerResultScene ; $5f03
 	ret ; $5f06
-Label_15_5f07:
+.lose:
 	ld hl, wWaterSpriteMinigameTimer ; $5f07
 	ld a, [hl+] ; $5f0a
 	ld h, [hl] ; $5f0b
@@ -2139,7 +2139,7 @@ Label_15_5f07:
 	farcall ScriptCloseDialogueWindow ; $5f19
 	script_wait_frames $05 ; $5f1c
 	and a, a ; $5f23
-	jr nz, Label_15_5f48 ; $5f24
+	jr nz, .loseSpeak ; $5f24
 	ld a, [$c2b1] ; $5f26
 	farcall ScriptShowSpeakerDialogue ; $5f29
 	ld a, $0f ; $5f2c
@@ -2153,14 +2153,14 @@ Label_15_5f07:
 	farcall RunTrainingDrillByID ; $5f41
 	farcall EndCutsceneScriptMode ; $5f44
 	ret ; $5f47
-Label_15_5f48:
+.loseSpeak:
 	farcall AdvanceDialogueTextCursor ; $5f48
 	ld a, [$c2b1] ; $5f4b
 	farcall ScriptShowSpeakerDialogue ; $5f4e
 	call WalkChallengerOntoCourt ; $5f51
 	farcall EndCutsceneScriptMode ; $5f54
 	ret ; $5f57
-Label_15_5f58:
+.finish:
 	ld hl, wWaterSpriteMinigameSwingCount ; $5f58
 	ld a, [hl+] ; $5f5b
 	ld h, [hl] ; $5f5c
@@ -2172,7 +2172,7 @@ Label_15_5f58:
 	farcall ScriptCloseDialogueWindow ; $5f6a
 	script_wait_frames $05 ; $5f6d
 	and a, a ; $5f74
-	jr nz, Label_15_5fa2 ; $5f75
+	jr nz, .finishDoubles ; $5f75
 	ld hl, wWaterSpriteMinigameFlag ; $5f77
 	ld a, [hl+] ; $5f7a
 	ld h, [hl] ; $5f7b
@@ -2191,7 +2191,7 @@ Label_15_5f58:
 	farcall RunTrainingDrillByID ; $5f9b
 	farcall EndCutsceneScriptMode ; $5f9e
 	ret ; $5fa1
-Label_15_5fa2:
+.finishDoubles:
 	ld hl, wWaterSpriteMinigameFlag ; $5fa2
 	ld a, [hl+] ; $5fa5
 	ld h, [hl] ; $5fa6
@@ -2206,7 +2206,7 @@ Label_15_5fa2:
 	call WalkChallengerOntoCourt ; $5fbb
 	farcall EndCutsceneScriptMode ; $5fbe
 	ret ; $5fc1
-Label_15_5fc2:
+.draw:
 	ld a, [$c2b1] ; $5fc2
 	ld d, $02 ; $5fc5
 	farcall ScriptSetActorAnimation ; $5fc7
@@ -4098,10 +4098,10 @@ NetCoachRetryPrompt:
 	farcall ScriptCloseDialogueWindow ; $7735
 	script_wait_frames $05 ; $7738
 	and a, a ; $773f
-	jp z, Label_15_7749 ; $7740
+	jp z, .retry ; $7740
 	farcall AdvanceDialogueTextCursor ; $7743
 	jp Label_15_779d ; $7746
-Label_15_7749:
+.retry:
 	script_speak $12 ; $7749
 	call NetCoachWalkToCourtAndStartLesson ; $774e
 	ret ; $7751
@@ -4496,11 +4496,11 @@ MovePartyToServeCoachSpot:
 	script_set_speed ACTOR_PARTNER, $0010 ; $7c6a
 	script_move_target ACTOR_PLAYER, $1300, $1300 ; $7c72
 	test_flag FLAG_DOUBLES ; $7c7d
-	jr z, Label_15_7c97 ; $7c80
+	jr z, .waitPlayer ; $7c80
 	script_null_script ACTOR_PARTNER ; $7c82
 	script_move_target ACTOR_PARTNER, $1300, $1100 ; $7c87
 	script_wait_move ACTOR_PARTNER ; $7c92
-Label_15_7c97:
+.waitPlayer:
 	script_wait_move ACTOR_PLAYER ; $7c97
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $7c9c
 	script_face ACTOR_PARTNER, FACE_RIGHT ; $7ca3

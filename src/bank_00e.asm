@@ -1366,26 +1366,26 @@ GetEquippedRacketNibble:
 PushEquipmentNameTextArg:
 	ld a, [$c2bc] ; $4f73
 	and a, a ; $4f76
-	jr z, Label_0e_4f7b ; $4f77
-	jr Label_0e_4f8a ; $4f79
-Label_0e_4f7b:
+	jr z, .racket ; $4f77
+	jr .shoes ; $4f79
+.racket:
 	call GetEquippedRacketNibble ; $4f7b
 	ld hl, $00e5 ; $4f7e
 	add a, l ; $4f81
 	ld l, a ; $4f82
-	jr nc, Label_0e_4f86 ; $4f83
+	jr nc, .pushRacket ; $4f83
 	inc h ; $4f85
-Label_0e_4f86:
+.pushRacket:
 	call FetchAndPushShortTextArg ; $4f86
 	ret ; $4f89
-Label_0e_4f8a:
+.shoes:
 	call GetEquippedRacketNibble ; $4f8a
 	ld hl, $00f4 ; $4f8d
 	add a, l ; $4f90
 	ld l, a ; $4f91
-	jr nc, Label_0e_4f95 ; $4f92
+	jr nc, .pushShoes ; $4f92
 	inc h ; $4f94
-Label_0e_4f95:
+.pushShoes:
 	call FetchAndPushShortTextArg ; $4f95
 	ret ; $4f98
 InitEquipmentHandoutDialogue:
@@ -3096,20 +3096,20 @@ PlayStarWarpTransition:
 	ld hl, UpdateStarWarpSprite ; $71c3
 	call RegisterFrameTask ; $71c6
 	wram_bank $06 ; $71c9
-Label_0e_71cf:
+.waitLoop:
 	call AdvanceFrame ; $71cf
 	ld a, [$d002] ; $71d2
 	cp a, $1e ; $71d5
-	jr z, Label_0e_71e2 ; $71d7
+	jr z, .startFade ; $71d7
 	or a, a ; $71d9
-	jr nz, Label_0e_71cf ; $71da
+	jr nz, .waitLoop ; $71da
 	pop af ; $71dc
 	wram_bank ; $71dd
 	ret ; $71e1
-Label_0e_71e2:
+.startFade:
 	ld c, $03 ; $71e2
 	call BeginFadeOut ; $71e4
-	jr Label_0e_71cf ; $71e7
+	jr .waitLoop ; $71e7
 UpdateStarWarpSprite:
 	wram_bank $06 ; $71e9
 	ldh a, [hVBlankCounter] ; $71ef

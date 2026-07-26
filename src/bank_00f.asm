@@ -2014,7 +2014,7 @@ LoadIslandOpenRoundNpcs:
 	ld e, $14 ; $665f
 	farcall WriteBehaviorMapCell ; $6661
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_SEMIFINAL ; $6664
-	jr z, Label_0f_6680 ; $6667
+	jr z, .round2 ; $6667
 	ldh a, [hRomBank] ; $6669
 	ld hl, IslandOpenRound3Actors_0f ; $666b
 	farcall ScriptRespawnLocationActors ; $666e
@@ -2024,9 +2024,9 @@ LoadIslandOpenRoundNpcs:
 	ld a, $03 ; $667a
 	ld [$c2b0], a ; $667c
 	ret ; $667f
-Label_0f_6680:
+.round2:
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_2 ; $6680
-	jr z, Label_0f_669c ; $6683
+	jr z, .round1 ; $6683
 	ldh a, [hRomBank] ; $6685
 	ld hl, IslandOpenRound2Actors_0f ; $6687
 	farcall ScriptRespawnLocationActors ; $668a
@@ -2036,9 +2036,9 @@ Label_0f_6680:
 	ld a, $02 ; $6696
 	ld [$c2b0], a ; $6698
 	ret ; $669b
-Label_0f_669c:
+.round1:
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_1 ; $669c
-	jr z, Label_0f_66b7 ; $669f
+	jr z, .done ; $669f
 	ldh a, [hRomBank] ; $66a1
 	ld hl, IslandOpenRound1Actors_0f ; $66a3
 	farcall ScriptRespawnLocationActors ; $66a6
@@ -2047,7 +2047,7 @@ Label_0f_669c:
 	farcall WriteStoryStateWord ; $66af
 	ld a, $01 ; $66b2
 	ld [$c2b0], a ; $66b4
-Label_0f_66b7:
+.done:
 	ret ; $66b7
 Label_0f_66b8:
 	ld a, $e1 ; $66b8

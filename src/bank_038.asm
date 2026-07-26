@@ -1198,26 +1198,26 @@ RunCharacterSelectScreen:
 	ld a, $01 ; $484f
 	ld hl, TickMenuBgScrollTask_38 ; $4851
 	call RegisterFrameTask ; $4854
-Label_38_4857:
+.redraw:
 	ldh a, [hInputPressed] ; $4857
 	ld [wMenuInputPressed], a ; $4859
 	ld b, $02 ; $485c
 	ld c, $01 ; $485e
 	call MoveMenuCursorBox ; $4860
 	or a, a ; $4863
-	jr z, Label_38_4869 ; $4864
+	jr z, .inputLoop ; $4864
 	call RefreshCharacterSelectHighlight ; $4866
-Label_38_4869:
+.inputLoop:
 	call AdvanceFrame ; $4869
 	ldh a, [hInputPressed] ; $486c
 	bit PADB_A, a ; $486e
-	jr nz, Label_38_487c ; $4870
+	jr nz, .confirm ; $4870
 	bit 1, a ; $4872
-	jr nz, Label_38_48d3 ; $4874
+	jr nz, .cancel ; $4874
 	bit 3, a ; $4876
-	jr nz, Label_38_48f1 ; $4878
-	jr Label_38_4857 ; $487a
-Label_38_487c:
+	jr nz, .viewStats ; $4878
+	jr .redraw ; $487a
+.confirm:
 	sound $5f ; $487c
 	ld c, $10 ; $487e
 	call BeginFadeOut ; $4880
@@ -1241,9 +1241,9 @@ Label_38_487c:
 	ld hl, wStoryModeNameOfMainCharacter ; $48a6
 	ld a, [wStoryCharacterSlot] ; $48a9
 	or a, a ; $48ac
-	jr z, Label_38_48b1 ; $48ad
+	jr z, .finish ; $48ad
 	ld l, $40 ; $48af
-Label_38_48b1:
+.finish:
 	ld a, l ; $48b1
 	add a, $0e ; $48b2
 	ld l, a ; $48b4
@@ -1263,7 +1263,7 @@ Label_38_48b1:
 	call EnableLCD ; $48ce
 	pop af ; $48d1
 	ret ; $48d2
-Label_38_48d3:
+.cancel:
 	sound $62 ; $48d3
 	ld c, $10 ; $48d5
 	call BeginFadeOut ; $48d7
@@ -1276,7 +1276,7 @@ Label_38_48d3:
 	call EnableLCD ; $48eb
 	ld a, $ff ; $48ee
 	ret ; $48f0
-Label_38_48f1:
+.viewStats:
 	sound $5e ; $48f1
 	ldh a, [hWramBank] ; $48f3
 	push af ; $48f5
@@ -1286,16 +1286,16 @@ Label_38_48f1:
 	ld [wCharSelectHandedness], a ; $4901
 	pop af ; $4904
 	wram_bank ; $4905
-	jp Label_38_4857 ; $4909
+	jp .redraw ; $4909
 	ld c, $02 ; $490c
 	call GetMenuCursorLinearIndex ; $490e
 	add a, a ; $4911
 	ld hl, Data_38_4924 ; $4912
 	add a, l ; $4915
 	ld l, a ; $4916
-	jr nc, Label_38_491a ; $4917
+	jr nc, .done ; $4917
 	inc h ; $4919
-Label_38_491a:
+.done:
 	ld a, [hl+] ; $491a
 	ld d, [hl] ; $491b
 	ld e, a ; $491c
@@ -2573,16 +2573,16 @@ DrawCharGridCharSprites:
 	wram_bank $03 ; $5548
 	ld hl, $d800 ; $554e
 	ld c, $00 ; $5551
-Label_38_5553:
+.slotLoop:
 	push hl ; $5553
 	ld a, c ; $5554
 	add a, a ; $5555
 	ld hl, Data_38_557d ; $5556
 	add a, l ; $5559
 	ld l, a ; $555a
-	jr nc, Label_38_555e ; $555b
+	jr nc, .readOffset ; $555b
 	inc h ; $555d
-Label_38_555e:
+.readOffset:
 	ld a, [hl+] ; $555e
 	ld d, [hl] ; $555f
 	ld e, a ; $5560
@@ -2594,15 +2594,15 @@ Label_38_555e:
 	inc hl ; $5566
 	ld a, b ; $5567
 	cp a, $ff ; $5568
-	jr z, Label_38_556f ; $556a
+	jr z, .nextSlot ; $556a
 	call QueueCharGridCharSprite ; $556c
-Label_38_556f:
+.nextSlot:
 	pop bc ; $556f
 	ld a, c ; $5570
 	inc a ; $5571
 	ld c, a ; $5572
 	cp a, $06 ; $5573
-	jr nz, Label_38_5553 ; $5575
+	jr nz, .slotLoop ; $5575
 	pop af ; $5577
 	wram_bank ; $5578
 	ret ; $557c
@@ -3630,33 +3630,33 @@ RetreatToPreviousPlayerSlot:
 	add a, a ; $5c69
 	add a, l ; $5c6a
 	ld l, a ; $5c6b
-	jr nc, Label_38_5c6f ; $5c6c
+	jr nc, .readList ; $5c6c
 	inc h ; $5c6e
-Label_38_5c6f:
+.readList:
 	ld a, [hl+] ; $5c6f
 	ld h, [hl] ; $5c70
 	ld l, a ; $5c71
 	ld a, [$d814] ; $5c72
 	ld b, a ; $5c75
-Label_38_5c76:
+.findCurrent:
 	ld a, [hl+] ; $5c76
 	cp a, b ; $5c77
-	jr nz, Label_38_5c76 ; $5c78
+	jr nz, .findCurrent ; $5c78
 	dec hl ; $5c7a
 	dec hl ; $5c7b
 	ld a, [hl] ; $5c7c
 	ld [$d814], a ; $5c7d
 	cp a, $ff ; $5c80
-	jr z, Label_38_5c8e ; $5c82
+	jr z, .done ; $5c82
 	ld c, a ; $5c84
 	ld a, b ; $5c85
 	cp a, $04 ; $5c86
-	jr z, Label_38_5c8c ; $5c88
+	jr z, .noPrevious ; $5c88
 	ld a, c ; $5c8a
 	ret ; $5c8b
-Label_38_5c8c:
+.noPrevious:
 	ld a, $fe ; $5c8c
-Label_38_5c8e:
+.done:
 	ret ; $5c8e
 CharSelectSlotRingTable:
 	; $5c8f, 12 bytes (records:2)
@@ -4216,10 +4216,10 @@ Label_38_600a:
 	rlca ; $6012
 IsCreatedCharId:
 	cp a, $04 ; $6013
-	jr nc, Label_38_601a ; $6015
+	jr nc, .no ; $6015
 	ld a, $01 ; $6017
 	ret ; $6019
-Label_38_601a:
+.no:
 	xor a, a ; $601a
 	ret ; $601b
 ApplyStarFlagsToCharRecords:

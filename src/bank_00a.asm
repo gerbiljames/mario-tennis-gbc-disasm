@@ -486,9 +486,9 @@ ScriptSetActorMoveSpeed:
 	ld a, $06 ; $4345
 	add a, l ; $4347
 	ld l, a ; $4348
-	jr nc, Label_0a_434c ; $4349
+	jr nc, .store ; $4349
 	inc h ; $434b
-Label_0a_434c:
+.store:
 	ld a, c ; $434c
 	ld [hl+], a ; $434d
 	ld [hl], b ; $434e
