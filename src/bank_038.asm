@@ -270,85 +270,85 @@ MoveMenuCursorBoxLink:
 	ld e, a ; $418f
 	ldh a, [hLinkInput] ; $4190
 	bit 4, a ; $4192
-	jr z, Label_38_41ab ; $4194
+	jr z, .checkLeft ; $4194
 	ld a, [wMenuCursorX] ; $4196
 	inc a ; $4199
 	add a, a ; $419a
-	jr nc, Label_38_41a1 ; $419b
+	jr nc, .wrapRight ; $419b
 	ld a, b ; $419d
 	dec a ; $419e
-	jr Label_38_41a6 ; $419f
-Label_38_41a1:
+	jr .storeRight ; $419f
+.wrapRight:
 	rra ; $41a1
 	cp a, b ; $41a2
-	jr c, Label_38_41a6 ; $41a3
+	jr c, .storeRight ; $41a3
 	xor a, a ; $41a5
-Label_38_41a6:
+.storeRight:
 	ld [wMenuCursorX], a ; $41a6
-	jr Label_38_41f4 ; $41a9
-Label_38_41ab:
+	jr .compare ; $41a9
+.checkLeft:
 	bit 5, a ; $41ab
-	jr z, Label_38_41c4 ; $41ad
+	jr z, .checkUp ; $41ad
 	ld a, [wMenuCursorX] ; $41af
 	dec a ; $41b2
 	add a, a ; $41b3
-	jr nc, Label_38_41ba ; $41b4
+	jr nc, .wrapLeft ; $41b4
 	ld a, b ; $41b6
 	dec a ; $41b7
-	jr Label_38_41bf ; $41b8
-Label_38_41ba:
+	jr .storeLeft ; $41b8
+.wrapLeft:
 	rra ; $41ba
 	cp a, b ; $41bb
-	jr c, Label_38_41bf ; $41bc
+	jr c, .storeLeft ; $41bc
 	xor a, a ; $41be
-Label_38_41bf:
+.storeLeft:
 	ld [wMenuCursorX], a ; $41bf
-	jr Label_38_41f4 ; $41c2
-Label_38_41c4:
+	jr .compare ; $41c2
+.checkUp:
 	bit 6, a ; $41c4
-	jr z, Label_38_41dd ; $41c6
+	jr z, .checkDown ; $41c6
 	ld a, [wMenuCursorY] ; $41c8
 	dec a ; $41cb
 	add a, a ; $41cc
-	jr nc, Label_38_41d3 ; $41cd
+	jr nc, .wrapUp ; $41cd
 	ld a, c ; $41cf
 	dec a ; $41d0
-	jr Label_38_41d8 ; $41d1
-Label_38_41d3:
+	jr .storeUp ; $41d1
+.wrapUp:
 	rra ; $41d3
 	cp a, c ; $41d4
-	jr c, Label_38_41d8 ; $41d5
+	jr c, .storeUp ; $41d5
 	xor a, a ; $41d7
-Label_38_41d8:
+.storeUp:
 	ld [wMenuCursorY], a ; $41d8
-	jr Label_38_41f4 ; $41db
-Label_38_41dd:
+	jr .compare ; $41db
+.checkDown:
 	bit 7, a ; $41dd
-	jr z, Label_38_41f4 ; $41df
+	jr z, .compare ; $41df
 	ld a, [wMenuCursorY] ; $41e1
 	inc a ; $41e4
 	add a, a ; $41e5
-	jr nc, Label_38_41ec ; $41e6
+	jr nc, .wrapDown ; $41e6
 	ld a, c ; $41e8
 	dec a ; $41e9
-	jr Label_38_41f1 ; $41ea
-Label_38_41ec:
+	jr .storeDown ; $41ea
+.wrapDown:
 	rra ; $41ec
 	cp a, c ; $41ed
-	jr c, Label_38_41f1 ; $41ee
+	jr c, .storeDown ; $41ee
 	xor a, a ; $41f0
-Label_38_41f1:
+.storeDown:
 	ld [wMenuCursorY], a ; $41f1
-Label_38_41f4:
+.compare:
 	ld a, [wMenuCursorX] ; $41f4
 	cp a, d ; $41f7
-	jr nz, Label_38_4202 ; $41f8
+	jr nz, .moved ; $41f8
 	ld a, [wMenuCursorY] ; $41fa
 	cp a, e ; $41fd
-	jr nz, Label_38_4202 ; $41fe
+	jr nz, .moved ; $41fe
 	xor a, a ; $4200
 	ret ; $4201
-Label_38_4202:
+.moved:
 	ld a, $01 ; $4202
 	ret ; $4204
 	ld a, [wMenuCursorX] ; $4205

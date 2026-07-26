@@ -1325,15 +1325,15 @@ Label_15_5380:
 	dw Label_15_7290 ; $538b jumptable
 	dw Label_15_729f ; $538d jumptable
 	dw Label_15_72b4 ; $538f jumptable
-	dw Label_15_62bf ; $5391 jumptable
-	dw Label_15_6300 ; $5393 jumptable
-	dw Label_15_6328 ; $5395 jumptable
+	dw MovePlayerToLessonCourtSpot.netResultText ; $5391 jumptable
+	dw MovePlayerToLessonCourtSpot.netResultDoubles ; $5393 jumptable
+	dw MovePlayerToLessonCourtSpot.serveResultText ; $5395 jumptable
 	dw Label_15_7539 ; $5397 jumptable
 	dw Label_15_754e ; $5399 jumptable
 	dw Label_15_7563 ; $539b jumptable
-	dw Label_15_6350 ; $539d jumptable
-	dw Label_15_6391 ; $539f jumptable
-	dw Label_15_63b9 ; $53a1 jumptable
+	dw MovePlayerToLessonCourtSpot.serveResultTextAlt ; $539d jumptable
+	dw MovePlayerToLessonCourtSpot.strokeResultText ; $539f jumptable
+	dw MovePlayerToLessonCourtSpot.strokeResult ; $53a1 jumptable
 	dw Label_15_77aa ; $53a3 jumptable
 	dw Label_15_77bd ; $53a5 jumptable
 	dw Label_15_77d0 ; $53a7 jumptable
@@ -2444,13 +2444,13 @@ WalkChallengerOntoCourt:
 MovePlayerToLessonCourtSpot:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $6253
 	sub a, $0a ; $6256
-	jr nc, Label_15_6265 ; $6258
+	jr nc, .netCourtSpot ; $6258
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $625a
 	sub a, $04 ; $625d
-	jr c, Label_15_6283 ; $625f
-	jp Label_15_62a1 ; $6261
+	jr c, .serveCourtSpot ; $625f
+	jp .strokeCourtSpot ; $6261
 	ret ; $6264
-Label_15_6265:
+.netCourtSpot:
 	script_move_target ACTOR_PLAYER, $1300, $2b00 ; $6265
 	script_wait_move ACTOR_PLAYER ; $6270
 	script_get_actor_state ACTOR_PARTNER ; $6275
@@ -2459,7 +2459,7 @@ Label_15_6265:
 	ld de, $d000 ; $627c
 	farcall AttachActorStepMover ; $627f
 	ret ; $6282
-Label_15_6283:
+.serveCourtSpot:
 	script_move_target ACTOR_PLAYER, $1300, $1300 ; $6283
 	script_wait_move ACTOR_PLAYER ; $628e
 	script_get_actor_state ACTOR_PARTNER ; $6293
@@ -2468,7 +2468,7 @@ Label_15_6283:
 	ld de, $d000 ; $629a
 	farcall AttachActorStepMover ; $629d
 	ret ; $62a0
-Label_15_62a1:
+.strokeCourtSpot:
 	script_move_target ACTOR_PLAYER, $2d00, $2b00 ; $62a1
 	script_wait_move ACTOR_PLAYER ; $62ac
 	script_get_actor_state ACTOR_PARTNER ; $62b1
@@ -2477,7 +2477,7 @@ Label_15_62a1:
 	ld de, $d000 ; $62b8
 	farcall AttachActorStepMover ; $62bb
 	ret ; $62be
-Label_15_62bf:
+.netResultText:
 	ld hl, wWaterSpriteMinigameFlag ; $62bf
 	ld de, $204d ; $62c2
 	ld a, e ; $62c5
@@ -2489,7 +2489,7 @@ Label_15_62bf:
 	ld [hl+], a ; $62cf
 	ld [hl], d ; $62d0
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $62d1
-	jr z, Label_15_62ea ; $62d4
+	jr z, .netResultTextAlt ; $62d4
 	ld hl, wWaterSpriteMinigameSwingCount ; $62d6
 	ld de, $2050 ; $62d9
 	ld a, e ; $62dc
@@ -2500,8 +2500,8 @@ Label_15_62bf:
 	ld a, e ; $62e5
 	ld [hl+], a ; $62e6
 	ld [hl], d ; $62e7
-	jr Label_15_62fc ; $62e8
-Label_15_62ea:
+	jr .netResult ; $62e8
+.netResultTextAlt:
 	ld hl, wWaterSpriteMinigameSwingCount ; $62ea
 	ld de, $204f ; $62ed
 	ld a, e ; $62f0
@@ -2512,10 +2512,10 @@ Label_15_62ea:
 	ld a, e ; $62f9
 	ld [hl+], a ; $62fa
 	ld [hl], d ; $62fb
-Label_15_62fc:
+.netResult:
 	call NetChallengerResultScene ; $62fc
 	ret ; $62ff
-Label_15_6300:
+.netResultDoubles:
 	ld hl, wWaterSpriteMinigameFlag ; $6300
 	ld de, $204d ; $6303
 	ld a, e ; $6306
@@ -2538,7 +2538,7 @@ Label_15_6300:
 	ld [hl], d ; $6323
 	call NetChallengerResultScene ; $6324
 	ret ; $6327
-Label_15_6328:
+.serveResultText:
 	ld hl, wWaterSpriteMinigameFlag ; $6328
 	ld de, $204d ; $632b
 	ld a, e ; $632e
@@ -2561,7 +2561,7 @@ Label_15_6328:
 	ld [hl], d ; $634b
 	call NetChallengerResultScene ; $634c
 	ret ; $634f
-Label_15_6350:
+.serveResultTextAlt:
 	ld hl, wWaterSpriteMinigameFlag ; $6350
 	ld de, $207b ; $6353
 	ld a, e ; $6356
@@ -2573,7 +2573,7 @@ Label_15_6350:
 	ld [hl+], a ; $6360
 	ld [hl], d ; $6361
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $6362
-	jr z, Label_15_637b ; $6365
+	jr z, .serveResult ; $6365
 	ld hl, wWaterSpriteMinigameSwingCount ; $6367
 	ld de, $207e ; $636a
 	ld a, e ; $636d
@@ -2584,8 +2584,8 @@ Label_15_6350:
 	ld a, e ; $6376
 	ld [hl+], a ; $6377
 	ld [hl], d ; $6378
-	jr Label_15_638d ; $6379
-Label_15_637b:
+	jr .serveResultDoubles ; $6379
+.serveResult:
 	ld hl, wWaterSpriteMinigameSwingCount ; $637b
 	ld de, $207d ; $637e
 	ld a, e ; $6381
@@ -2596,10 +2596,10 @@ Label_15_637b:
 	ld a, e ; $638a
 	ld [hl+], a ; $638b
 	ld [hl], d ; $638c
-Label_15_638d:
+.serveResultDoubles:
 	call StrokeChallengerResultScene ; $638d
 	ret ; $6390
-Label_15_6391:
+.strokeResultText:
 	ld hl, wWaterSpriteMinigameFlag ; $6391
 	ld de, $207b ; $6394
 	ld a, e ; $6397
@@ -2622,7 +2622,7 @@ Label_15_6391:
 	ld [hl], d ; $63b4
 	call StrokeChallengerResultScene ; $63b5
 	ret ; $63b8
-Label_15_63b9:
+.strokeResult:
 	ld hl, wWaterSpriteMinigameFlag ; $63b9
 	ld de, $207b ; $63bc
 	ld a, e ; $63bf

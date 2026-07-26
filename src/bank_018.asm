@@ -550,49 +550,49 @@ UnlockFlagIds_18:
 	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; 0x30
 MoveGridCursor:
 	bit 5, b ; $45ca
-	jr z, Label_18_45d1 ; $45cc
+	jr z, .checkRight ; $45cc
 	dec d ; $45ce
-	jr Label_18_45e4 ; $45cf
-Label_18_45d1:
+	jr .wrapX ; $45cf
+.checkRight:
 	bit 4, b ; $45d1
-	jr z, Label_18_45d8 ; $45d3
+	jr z, .checkUp ; $45d3
 	inc d ; $45d5
-	jr Label_18_45e4 ; $45d6
-Label_18_45d8:
+	jr .wrapX ; $45d6
+.checkUp:
 	bit 6, b ; $45d8
-	jr z, Label_18_45df ; $45da
+	jr z, .checkDown ; $45da
 	dec e ; $45dc
-	jr Label_18_45e4 ; $45dd
-Label_18_45df:
+	jr .wrapX ; $45dd
+.checkDown:
 	bit 7, b ; $45df
-	jr z, Label_18_45e4 ; $45e1
+	jr z, .wrapX ; $45e1
 	inc e ; $45e3
-Label_18_45e4:
+.wrapX:
 	ld a, d ; $45e4
 	add a, a ; $45e5
-	jr nc, Label_18_45ed ; $45e6
+	jr nc, .checkMaxX ; $45e6
 	ld a, $08 ; $45e8
 	dec a ; $45ea
-	jr Label_18_45f3 ; $45eb
-Label_18_45ed:
+	jr .wrapY ; $45eb
+.checkMaxX:
 	rra ; $45ed
 	cp a, $08 ; $45ee
-	jr c, Label_18_45f3 ; $45f0
+	jr c, .wrapY ; $45f0
 	xor a, a ; $45f2
-Label_18_45f3:
+.wrapY:
 	ld d, a ; $45f3
 	ld a, e ; $45f4
 	add a, a ; $45f5
-	jr nc, Label_18_45fd ; $45f6
+	jr nc, .checkMaxY ; $45f6
 	ld a, $04 ; $45f8
 	dec a ; $45fa
-	jr Label_18_4603 ; $45fb
-Label_18_45fd:
+	jr .readCell ; $45fb
+.checkMaxY:
 	rra ; $45fd
 	cp a, $04 ; $45fe
-	jr c, Label_18_4603 ; $4600
+	jr c, .readCell ; $4600
 	xor a, a ; $4602
-Label_18_4603:
+.readCell:
 	ld e, a ; $4603
 	ld a, e ; $4604
 	add a, a ; $4605
@@ -602,39 +602,39 @@ Label_18_4603:
 	push hl ; $4609
 	add a, l ; $460a
 	ld l, a ; $460b
-	jr nc, Label_18_460f ; $460c
+	jr nc, .haveCell ; $460c
 	inc h ; $460e
-Label_18_460f:
+.haveCell:
 	ld a, [hl] ; $460f
 	pop hl ; $4610
 	cp a, $ff ; $4611
 	jr z, MoveGridCursor ; $4613
 	cp a, $fe ; $4615
-	jr nz, Label_18_461d ; $4617
+	jr nz, .occupied ; $4617
 	inc d ; $4619
 	inc e ; $461a
 	jr MoveGridCursor ; $461b
-Label_18_461d:
+.occupied:
 	cp a, $fd ; $461d
-	jr nz, Label_18_4625 ; $461f
+	jr nz, .store ; $461f
 	dec d ; $4621
 	dec e ; $4622
 	jr MoveGridCursor ; $4623
-Label_18_4625:
+.store:
 	cp a, $fc ; $4625
-	jr nz, Label_18_462c ; $4627
+	jr nz, .retry ; $4627
 	dec d ; $4629
 	jr MoveGridCursor ; $462a
-Label_18_462c:
+.retry:
 	cp a, $fb ; $462c
-	jr nz, Label_18_463a ; $462e
+	jr nz, .done ; $462e
 	ld a, b ; $4630
 	and a, $20 ; $4631
 	bit 5, a ; $4633
-	jr nz, Label_18_463a ; $4635
+	jr nz, .done ; $4635
 	inc d ; $4637
 	jr MoveGridCursor ; $4638
-Label_18_463a:
+.done:
 	ret ; $463a
 InitPlayerRecordForCharacter:
 	push af ; $463b
