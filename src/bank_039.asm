@@ -3346,7 +3346,7 @@ UpdateCheatCodeEntry:
 	jr nz, .restore ; $6f74
 	ldh a, [hInputRisingEdge] ; $6f76
 	bit PADB_A, a ; $6f78
-	jr z, .step ; $6f7a
+	jr z, .zero ; $6f7a
 	ld c, $00 ; $6f7c
 .loop:
 	ld hl, $d000 ; $6f7e
@@ -3375,7 +3375,7 @@ UpdateCheatCodeEntry:
 	ld a, $01 ; $6f9e
 	ld [$cb71], a ; $6fa0
 	jr .restore ; $6fa3
-.step:
+.zero:
 	ldh a, [hInputRisingEdge] ; $6fa5
 	or a, a ; $6fa7
 	jr z, .restore ; $6fa8

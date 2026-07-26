@@ -40,9 +40,9 @@ SeekBallTrajEntry6_29:
 	ld a, $06 ; $4034
 	add a, l ; $4036
 	ld l, a ; $4037
-	jr nc, .step ; $4038
+	jr nc, .gotPtr ; $4038
 	inc h ; $403a
-.step:
+.gotPtr:
 	jr .loop ; $403b
 .done:
 	ret ; $403d

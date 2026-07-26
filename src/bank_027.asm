@@ -1605,7 +1605,7 @@ End7TrainingCtrTileTriggers_27:
 End7TrainingCtrInitScript_27:
 	ld a, [wStoryModeEntryPoint] ; $6202
 	cp a, $01 ; $6205
-	jr z, ComputeMachineCourtProgress_27.step ; $6207
+	jr z, ComputeMachineCourtProgress_27.eq01 ; $6207
 	cp a, $02 ; $6209
 	jp z, ComputeMachineCourtProgress_27.placeActors ; $620b
 	ret ; $620e
@@ -1631,7 +1631,7 @@ ComputeMachineCourtProgress_27:
 .store:
 	ld [$c2b0], a ; $626c
 	ret ; $626f
-.step:
+.eq01:
 	ld a, $26 ; $6270
 	ld [$c329], a ; $6272
 	ld a, $23 ; $6275

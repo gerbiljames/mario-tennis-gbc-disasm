@@ -2910,9 +2910,9 @@ LoadCharViewerGridTilemap:
 	ld a, $20 ; $6a2f
 	add a, l ; $6a31
 	ld l, a ; $6a32
-	jr nc, .step ; $6a33
+	jr nc, .gotPtr ; $6a33
 	inc h ; $6a35
-.step:
+.gotPtr:
 	dec c ; $6a36
 	jr nz, .loop ; $6a37
 	ret ; $6a39
@@ -3816,9 +3816,9 @@ ApplyTilemapPatchList_1a:
 	ld l, c ; $7a7b
 	add a, l ; $7a7c
 	ld l, a ; $7a7d
-	jr nc, .step ; $7a7e
+	jr nc, .gotPtr ; $7a7e
 	inc h ; $7a80
-.step:
+.gotPtr:
 	wram_bank $06 ; $7a81
 	ld a, l ; $7a87
 	ld [$d08e], a ; $7a88

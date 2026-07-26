@@ -2034,7 +2034,7 @@ DrawNextExpAwardMessage:
 	ld a, [hl+] ; $59d0
 	ld b, [hl] ; $59d1
 	or a, b ; $59d2
-	jr z, .step3 ; $59d3
+	jr z, .zero ; $59d3
 	dec hl ; $59d5
 	ld c, [hl] ; $59d6
 	push bc ; $59d7
@@ -2089,7 +2089,7 @@ DrawNextExpAwardMessage:
 	farcall UploadGlyphBuffer ; $5a2f
 	ld a, $01 ; $5a32
 	ret ; $5a34
-.step3:
+.zero:
 	ld a, [$d024] ; $5a35
 	inc a ; $5a38
 	ld [$d024], a ; $5a39
@@ -2871,7 +2871,7 @@ LookupExpTierForChar:
 	ld c, a ; $6941
 	ld a, [$df78] ; $6942
 	cp a, $04 ; $6945
-	jr nc, Data_1e_695b.step ; $6947
+	jr nc, Data_1e_695b.ge04 ; $6947
 	ld l, c ; $6949
 	xor a, a ; $694a
 	ld h, a ; $694b
@@ -2888,7 +2888,7 @@ LookupExpTierForChar:
 Data_1e_695b:
 	; $695b, 10 bytes (bytes:10)
 	db $00, $01, $02, $03, $04, $04, $05, $05, $06, $06 ; 0x00
-.step:
+.ge04:
 	dec c ; $6965
 	ret ; $6966
 AwardExhibitionMatchExp:
@@ -3685,11 +3685,11 @@ ApplyRewardUnlockFlags:
 	inc hl ; $6e3e
 	ld a, d ; $6e3f
 	or a, e ; $6e40
-	jr z, .step ; $6e41
+	jr z, .next ; $6e41
 	call TestGameFlag ; $6e43
-	jr z, .step ; $6e46
+	jr z, .next ; $6e46
 	call SetRewardUnlockFlag ; $6e48
-.step:
+.next:
 	inc c ; $6e4b
 	dec b ; $6e4c
 	jr nz, .loop ; $6e4d
@@ -3765,9 +3765,9 @@ SetMinigameClearFlag:
 	add a, a ; $6ef1
 	add a, l ; $6ef2
 	ld l, a ; $6ef3
-	jr nc, .step ; $6ef4
+	jr nc, .gotPtr ; $6ef4
 	inc h ; $6ef6
-.step:
+.gotPtr:
 	ld de, MinigameClearFlagTable_1e ; $6ef7
 	add hl, de ; $6efa
 	ld a, [hl+] ; $6efb
@@ -4663,9 +4663,9 @@ DrawProgressListRows:
 	ld hl, $df70 ; $74c8
 	add a, l ; $74cb
 	ld l, a ; $74cc
-	jr nc, .step ; $74cd
+	jr nc, .gotPtr ; $74cd
 	inc h ; $74cf
-.step:
+.gotPtr:
 	ld c, $07 ; $74d0
 .loop:
 	ld a, [hl+] ; $74d2
@@ -5007,10 +5007,10 @@ DrawProgressScreenSprites:
 	ld [$df07], a ; $7aa0
 .compare:
 	cp a, b ; $7aa3
-	jr nc, .step ; $7aa4
+	jr nc, .nonZero ; $7aa4
 	ld a, $01 ; $7aa6
 	ld [$df08], a ; $7aa8
-.step:
+.nonZero:
 	ld a, [$df07] ; $7aab
 	or a, a ; $7aae
 	jr z, .zero ; $7aaf
@@ -5039,19 +5039,19 @@ DrawProgressScreenSprites:
 	ld a, [$df05] ; $7ade
 	add a, l ; $7ae1
 	ld l, a ; $7ae2
-	jr nc, .step4 ; $7ae3
+	jr nc, .gotPtr ; $7ae3
 	inc h ; $7ae5
-.step4:
+.gotPtr:
 	ld c, $07 ; $7ae6
 	ld b, $00 ; $7ae8
 .loop:
 	ld a, [hl+] ; $7aea
 	cp a, $ff ; $7aeb
-	jr z, .step10 ; $7aed
+	jr z, .next ; $7aed
 	ld d, a ; $7aef
 	call GetProgressEntryEarned ; $7af0
 	or a, a ; $7af3
-	jr z, .step10 ; $7af4
+	jr z, .next ; $7af4
 	ld a, d ; $7af6
 	cp a, $00 ; $7af7
 	jr z, .drawProgressEntryTrophyIcon ; $7af9
@@ -5071,38 +5071,38 @@ DrawProgressScreenSprites:
 	jr z, .eq04 ; $7b13
 .drawProgressEntryDefaultIcon:
 	call DrawProgressEntryDefaultIcon ; $7b15
-	jr .step10 ; $7b18
+	jr .next ; $7b18
 .drawProgressEntryTrophyIcon:
 	push bc ; $7b1a
 	ld c, $00 ; $7b1b
 	call DrawProgressEntryTrophyIcon ; $7b1d
 	pop bc ; $7b20
-	jr .step10 ; $7b21
+	jr .next ; $7b21
 .eq01:
 	push bc ; $7b23
 	ld c, $01 ; $7b24
 	call DrawProgressEntryTrophyIcon ; $7b26
 	pop bc ; $7b29
-	jr .step10 ; $7b2a
+	jr .next ; $7b2a
 .eq02:
 	push bc ; $7b2c
 	ld c, $02 ; $7b2d
 	call DrawProgressEntryTrophyIcon ; $7b2f
 	pop bc ; $7b32
-	jr .step10 ; $7b33
+	jr .next ; $7b33
 .eq03:
 	push bc ; $7b35
 	ld c, $03 ; $7b36
 	call DrawProgressEntryTrophyIcon ; $7b38
 	pop bc ; $7b3b
-	jr .step10 ; $7b3c
+	jr .next ; $7b3c
 .eq04:
 	push bc ; $7b3e
 	ld c, $04 ; $7b3f
 	call DrawProgressEntryTrophyIcon ; $7b41
 	pop bc ; $7b44
-	jr .step10 ; $7b45
-.step10:
+	jr .next ; $7b45
+.next:
 	inc b ; $7b47
 	dec c ; $7b48
 	jr nz, .loop ; $7b49

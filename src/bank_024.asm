@@ -55,9 +55,9 @@ BallTrajEntryPtr4_24:
 	ld a, $06 ; $4040
 	add a, l ; $4042
 	ld l, a ; $4043
-	jr nc, .step ; $4044
+	jr nc, .gotPtr ; $4044
 	inc h ; $4046
-.step:
+.gotPtr:
 	jr .loop ; $4047
 .done:
 	ret ; $4049
@@ -81,9 +81,9 @@ SeekBallTrajEntry4_24:
 	ld a, $04 ; $405f
 	add a, l ; $4061
 	ld l, a ; $4062
-	jr nc, .step ; $4063
+	jr nc, .gotPtr ; $4063
 	inc h ; $4065
-.step:
+.gotPtr:
 	jr .loop ; $4066
 .done:
 	ret ; $4068

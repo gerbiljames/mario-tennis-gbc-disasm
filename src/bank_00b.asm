@@ -229,9 +229,9 @@ IndexDrillTableByPoint:
 	add a, a ; $4164
 	add a, l ; $4165
 	ld l, a ; $4166
-	jr nc, .step ; $4167
+	jr nc, .gotPtr ; $4167
 	inc h ; $4169
-.step:
+.gotPtr:
 	ld b, h ; $416a
 	ld c, l ; $416b
 	ld hl, $0002 ; $416c
@@ -2034,22 +2034,22 @@ ServicePractice1EvaluateResult:
 	jr nz, .checkCharacter1DoubleFaults ; $4e49
 	ld a, $01 ; $4e4b
 	ld [$c2e3], a ; $4e4d
-	jr .step2 ; $4e50
+	jr .notFound ; $4e50
 .checkCharacter1DoubleFaults:
 	ld a, [wCharacter1DoubleFaults] ; $4e52
 	or a, a ; $4e55
 	jr z, .zero ; $4e56
 	ld a, $02 ; $4e58
 	ld [$c2e3], a ; $4e5a
-	jr .step2 ; $4e5d
+	jr .notFound ; $4e5d
 .zero:
 	ld a, b ; $4e5f
 	or a, a ; $4e60
 	jr z, .zero2 ; $4e61
 	ld a, $03 ; $4e63
 	ld [$c2e3], a ; $4e65
-	jr .step2 ; $4e68
-.step2:
+	jr .notFound ; $4e68
+.notFound:
 	ld a, $ff ; $4e6a
 	ret ; $4e6c
 .zero2:
@@ -2231,21 +2231,21 @@ ServicePractice2EvaluateResult:
 	jr nz, .checkCharacter1DoubleFaults ; $4fd3
 	ld a, $01 ; $4fd5
 	ld [$c2e3], a ; $4fd7
-	jr .step4 ; $4fda
+	jr .notFound ; $4fda
 .checkCharacter1DoubleFaults:
 	ld a, [wCharacter1DoubleFaults] ; $4fdc
 	or a, a ; $4fdf
 	jr z, .countDrillResultBitsSet ; $4fe0
 	ld a, $02 ; $4fe2
 	ld [$c2e3], a ; $4fe4
-	jr .step4 ; $4fe7
+	jr .notFound ; $4fe7
 .countDrillResultBitsSet:
 	call CountDrillResultBitsSet ; $4fe9
 	or a, a ; $4fec
 	jr z, .zero ; $4fed
 	ld a, $03 ; $4fef
 	ld [$c2e3], a ; $4ff1
-	jr .step4 ; $4ff4
+	jr .notFound ; $4ff4
 .zero:
 	ld a, [$c2e9] ; $4ff6
 	or a, a ; $4ff9
@@ -2255,7 +2255,7 @@ ServicePractice2EvaluateResult:
 	jr z, .zero2 ; $5000
 	ld a, $04 ; $5002
 	ld [$c2e3], a ; $5004
-	jr .step4 ; $5007
+	jr .notFound ; $5007
 .zero2:
 	ld b, $06 ; $5009
 	ld a, [wStoryModeMainCharacterLeftHanded] ; $500b
@@ -2263,7 +2263,7 @@ ServicePractice2EvaluateResult:
 	inc a ; $500f
 	add a, b ; $5010
 	ld [$c2e3], a ; $5011
-	jr .step4 ; $5014
+	jr .notFound ; $5014
 .zero3:
 	ld a, [$c2e8] ; $5016
 	or a, a ; $5019
@@ -2272,8 +2272,8 @@ ServicePractice2EvaluateResult:
 	ld a, [wStoryModeMainCharacterLeftHanded] ; $501e
 	add a, b ; $5021
 	ld [$c2e3], a ; $5022
-	jr .step4 ; $5025
-.step4:
+	jr .notFound ; $5025
+.notFound:
 	ld a, $ff ; $5027
 	ret ; $5029
 .zero4:
@@ -2425,7 +2425,7 @@ ServicePractice2QueueOutcomeMessage:
 	ld a, $0e ; $5153
 	ld b, $00 ; $5155
 	call QueueDrillResultMessage ; $5157
-	jr .step3 ; $515a
+	jr .notFound ; $515a
 .ne02:
 	ld a, $11 ; $515c
 	ld b, $00 ; $515e
@@ -2457,13 +2457,13 @@ ServicePractice2QueueOutcomeMessage:
 	ld b, [hl] ; $518c
 	ld a, [$c2ea] ; $518d
 	cp a, b ; $5190
-	jr nz, .step3 ; $5191
+	jr nz, .notFound ; $5191
 	ld a, $10 ; $5193
 	ld b, $00 ; $5195
 	call QueueDrillResultMessage ; $5197
 	call CheckDrillTargetZoneMissed ; $519a
 	or a, a ; $519d
-	jr z, .step3 ; $519e
+	jr z, .notFound ; $519e
 	ld a, $0d ; $51a0
 	ld b, $00 ; $51a2
 	call QueueDrillResultMessage ; $51a4
@@ -2473,13 +2473,13 @@ ServicePractice2QueueOutcomeMessage:
 	ld a, $0e ; $51ae
 	ld b, $00 ; $51b0
 	call QueueDrillResultMessage ; $51b2
-	jr .step3 ; $51b5
+	jr .notFound ; $51b5
 .eq06:
 	ld hl, $c2e7 ; $51b7
 	inc [hl] ; $51ba
 	ld a, $01 ; $51bb
 	ret ; $51bd
-.step3:
+.notFound:
 	ld a, $ff ; $51be
 	ret ; $51c0
 .step4:
@@ -2566,36 +2566,36 @@ ServicePractice3EvaluateResult:
 	jr nz, .checkCharacter1DoubleFaults ; $525d
 	ld a, $01 ; $525f
 	ld [$c2e3], a ; $5261
-	jr .step2 ; $5264
+	jr .notFound ; $5264
 .checkCharacter1DoubleFaults:
 	ld a, [wCharacter1DoubleFaults] ; $5266
 	or a, a ; $5269
 	jr z, .countDrillResultBitsSet ; $526a
 	ld a, $02 ; $526c
 	ld [$c2e3], a ; $526e
-	jr .step2 ; $5271
+	jr .notFound ; $5271
 .countDrillResultBitsSet:
 	call CountDrillResultBitsSet ; $5273
 	or a, a ; $5276
 	jr z, .zero ; $5277
 	ld a, $03 ; $5279
 	ld [$c2e3], a ; $527b
-	jr .step2 ; $527e
+	jr .notFound ; $527e
 .zero:
 	ld a, [$c2e8] ; $5280
 	or a, a ; $5283
 	jr z, .countDrillResultBitsSetAlt ; $5284
 	ld a, $04 ; $5286
 	ld [$c2e3], a ; $5288
-	jr .step2 ; $528b
+	jr .notFound ; $528b
 .countDrillResultBitsSetAlt:
 	call CountDrillResultBitsSetAlt ; $528d
 	cp a, $04 ; $5290
 	jr z, .eq04 ; $5292
 	ld a, $05 ; $5294
 	ld [$c2e3], a ; $5296
-	jr .step2 ; $5299
-.step2:
+	jr .notFound ; $5299
+.notFound:
 	ld a, $ff ; $529b
 	ret ; $529d
 .eq04:
@@ -2705,18 +2705,18 @@ ServicePractice3QueueOutcomeMessage:
 	call QueueDrillResultMessage ; $5393
 	ld a, [wSpecialShotFlag] ; $5396
 	or a, a ; $5399
-	jr z, .step3 ; $539a
+	jr z, .notFound ; $539a
 	ld a, $0f ; $539c
 	ld b, $00 ; $539e
 	call QueueDrillResultMessage ; $53a0
 	call CountDrillResultBitsThisGame ; $53a3
-	jr z, .step3 ; $53a6
+	jr z, .notFound ; $53a6
 	ld a, $10 ; $53a8
 	ld b, $00 ; $53aa
 	call QueueDrillResultMessage ; $53ac
 	call CheckDrillTargetZoneMissed ; $53af
 	or a, a ; $53b2
-	jr z, .step3 ; $53b3
+	jr z, .notFound ; $53b3
 	ld a, $0d ; $53b5
 	ld b, $00 ; $53b7
 	call QueueDrillResultMessage ; $53b9
@@ -2727,13 +2727,13 @@ ServicePractice3QueueOutcomeMessage:
 	ld a, $0e ; $53c3
 	ld b, $00 ; $53c5
 	call QueueDrillResultMessage ; $53c7
-	jr .step3 ; $53ca
+	jr .notFound ; $53ca
 .eq06:
 	ld hl, $c2e7 ; $53cc
 	inc [hl] ; $53cf
 	ld a, $01 ; $53d0
 	ret ; $53d2
-.step3:
+.notFound:
 	ld a, $ff ; $53d3
 	ret ; $53d5
 .step4:
@@ -4076,32 +4076,32 @@ NetGamePractice1EvaluateResult:
 	jr nz, .compare ; $5c89
 	ld a, $01 ; $5c8b
 	ld [$c2e3], a ; $5c8d
-	jr .step4 ; $5c90
+	jr .notFound ; $5c90
 .compare:
 	or a, a ; $5c92
 	jr z, .zero ; $5c93
 	ld a, $02 ; $5c95
 	ld [$c2e3], a ; $5c97
-	jr .step4 ; $5c9a
+	jr .notFound ; $5c9a
 .zero:
 	ld a, [$c2eb] ; $5c9c
 	cp a, $03 ; $5c9f
 	jr nz, .ne03 ; $5ca1
 	ld a, $05 ; $5ca3
 	ld [$c2e3], a ; $5ca5
-	jr .step4 ; $5ca8
+	jr .notFound ; $5ca8
 .ne03:
 	ld a, [$c2ec] ; $5caa
 	or a, a ; $5cad
 	jr nz, .nonZero ; $5cae
 	ld a, $04 ; $5cb0
 	ld [$c2e3], a ; $5cb2
-	jr .step4 ; $5cb5
+	jr .notFound ; $5cb5
 .nonZero:
 	ld a, $03 ; $5cb7
 	ld [$c2e3], a ; $5cb9
-	jr .step4 ; $5cbc
-.step4:
+	jr .notFound ; $5cbc
+.notFound:
 	ld a, $ff ; $5cbe
 	ret ; $5cc0
 NetGamePractice1Hook_RallyTick:
@@ -4457,27 +4457,27 @@ NetGamePractice2EvaluateResult:
 	jr nz, .compare ; $5f31
 	ld a, $01 ; $5f33
 	ld [$c2e3], a ; $5f35
-	jr .step5 ; $5f38
+	jr .notFound ; $5f38
 .compare:
 	or a, a ; $5f3a
 	jr z, .zero ; $5f3b
 	ld a, $02 ; $5f3d
 	ld [$c2e3], a ; $5f3f
-	jr .step5 ; $5f42
+	jr .notFound ; $5f42
 .zero:
 	ld a, [$c2eb] ; $5f44
 	cp a, $03 ; $5f47
 	jr nz, .ne03 ; $5f49
 	ld a, $06 ; $5f4b
 	ld [$c2e3], a ; $5f4d
-	jr .step5 ; $5f50
+	jr .notFound ; $5f50
 .ne03:
 	ld a, [$c2ec] ; $5f52
 	or a, a ; $5f55
 	jr nz, .nonZero ; $5f56
 	ld a, $05 ; $5f58
 	ld [$c2e3], a ; $5f5a
-	jr .step5 ; $5f5d
+	jr .notFound ; $5f5d
 .nonZero:
 	ld a, [$c2eb] ; $5f5f
 	cp a, $01 ; $5f62
@@ -4486,12 +4486,12 @@ NetGamePractice2EvaluateResult:
 	jr nc, .step4 ; $5f68
 	ld a, $04 ; $5f6a
 	ld [$c2e3], a ; $5f6c
-	jr .step5 ; $5f6f
+	jr .notFound ; $5f6f
 .step4:
 	ld a, $03 ; $5f71
 	ld [$c2e3], a ; $5f73
-	jr .step5 ; $5f76
-.step5:
+	jr .notFound ; $5f76
+.notFound:
 	ld a, $ff ; $5f78
 	ret ; $5f7a
 NetGamePractice2Hook_RallyTick:
@@ -4838,34 +4838,34 @@ NetGamePractice3EvaluateResult:
 	jr nz, .compare ; $61e3
 	ld a, $01 ; $61e5
 	ld [$c2e3], a ; $61e7
-	jr .step5 ; $61ea
+	jr .notFound ; $61ea
 .compare:
 	or a, a ; $61ec
 	jr z, .zero ; $61ed
 	ld a, $02 ; $61ef
 	ld [$c2e3], a ; $61f1
-	jr .step5 ; $61f4
+	jr .notFound ; $61f4
 .zero:
 	ld a, [$c2eb] ; $61f6
 	cp a, $03 ; $61f9
 	jr nz, .countDrillResultBitsSet ; $61fb
 	ld a, $07 ; $61fd
 	ld [$c2e3], a ; $61ff
-	jr .step5 ; $6202
+	jr .notFound ; $6202
 .countDrillResultBitsSet:
 	call CountDrillResultBitsSet ; $6204
 	or a, a ; $6207
 	jr z, .zero2 ; $6208
 	ld a, $03 ; $620a
 	ld [$c2e3], a ; $620c
-	jr .step5 ; $620f
+	jr .notFound ; $620f
 .zero2:
 	ld a, [$c2ec] ; $6211
 	or a, a ; $6214
 	jr nz, .nonZero ; $6215
 	ld a, $06 ; $6217
 	ld [$c2e3], a ; $6219
-	jr .step5 ; $621c
+	jr .notFound ; $621c
 .nonZero:
 	ld a, [$c2eb] ; $621e
 	cp a, $01 ; $6221
@@ -4874,12 +4874,12 @@ NetGamePractice3EvaluateResult:
 	jr nc, .step4 ; $6227
 	ld a, $05 ; $6229
 	ld [$c2e3], a ; $622b
-	jr .step5 ; $622e
+	jr .notFound ; $622e
 .step4:
 	ld a, $04 ; $6230
 	ld [$c2e3], a ; $6232
-	jr .step5 ; $6235
-.step5:
+	jr .notFound ; $6235
+.notFound:
 	ld a, $ff ; $6237
 	ret ; $6239
 NetGamePractice3Hook_RallyTick:
@@ -5292,9 +5292,9 @@ StrokeMatch1JudgePoint:
 	dec a ; $650e
 	jp z, .branch13 ; $650f
 	cp a, $01 ; $6512
-	jp z, StrokeMatch1Cases1.step3 ; $6514
+	jp z, StrokeMatch1Cases1.eq01 ; $6514
 	and a, $01 ; $6517
-	jp z, StrokeMatch1Cases2.step2 ; $6519
+	jp z, StrokeMatch1Cases2.maskClear ; $6519
 	jp StrokeMatch1Cases3.step2 ; $651c
 .branch13:
 	ld a, b ; $651f
@@ -5337,7 +5337,7 @@ StrokeMatch1Cases1:
 .step2:
 	xor a, a ; $6557
 	ret ; $6558
-.step3:
+.eq01:
 	ld a, b ; $6559
 	ld a, a ; $655a
 	rst Rst00 ; $655b
@@ -5397,7 +5397,7 @@ StrokeMatch1Cases2:
 .step:
 	xor a, a ; $65bd
 	ret ; $65be
-.step2:
+.maskClear:
 	ld a, b ; $65bf
 	ld a, a ; $65c0
 	rst Rst00 ; $65c1
@@ -6367,31 +6367,31 @@ StrokePractice1EvaluateResult:
 	jr c, .compare ; $6c14
 	ld a, $01 ; $6c16
 	ld [$c2e3], a ; $6c18
-	jr .step4 ; $6c1b
+	jr .notFound ; $6c1b
 .compare:
 	cp a, $02 ; $6c1d
 	jr c, .lt02 ; $6c1f
 	ld a, $02 ; $6c21
 	ld [$c2e3], a ; $6c23
-	jr .step4 ; $6c26
+	jr .notFound ; $6c26
 .lt02:
 	ld a, [$c2e9] ; $6c28
 	or a, a ; $6c2b
 	jr nz, .compare2 ; $6c2c
 	ld a, $03 ; $6c2e
 	ld [$c2e3], a ; $6c30
-	jr .step4 ; $6c33
+	jr .notFound ; $6c33
 .compare2:
 	cp a, $03 ; $6c35
 	jr nz, .ne03 ; $6c37
 	ld a, $05 ; $6c39
 	ld [$c2e3], a ; $6c3b
-	jr .step4 ; $6c3e
+	jr .notFound ; $6c3e
 .ne03:
 	ld a, $04 ; $6c40
 	ld [$c2e3], a ; $6c42
-	jr .step4 ; $6c45
-.step4:
+	jr .notFound ; $6c45
+.notFound:
 	ld a, $ff ; $6c47
 	ret ; $6c49
 StrokePractice1Hook_RallyTick:
@@ -6689,14 +6689,14 @@ StrokePractice2EvaluateResult:
 	jr c, .lt03 ; $6e53
 	ld a, $05 ; $6e55
 	ld [$c2e3], a ; $6e57
-	jr .step4 ; $6e5a
+	jr .notFound ; $6e5a
 .lt03:
 	ld a, [$c2e9] ; $6e5c
 	cp a, $04 ; $6e5f
 	jr nc, .checkRallyLength ; $6e61
 	ld a, $01 ; $6e63
 	ld [$c2e3], a ; $6e65
-	jr .step4 ; $6e68
+	jr .notFound ; $6e68
 .checkRallyLength:
 	ld a, [wRallyLength] ; $6e6a
 	cp a, $03 ; $6e6d
@@ -6706,17 +6706,17 @@ StrokePractice2EvaluateResult:
 	jr nz, .compare ; $6e76
 	ld a, $02 ; $6e78
 	ld [$c2e3], a ; $6e7a
-	jr .step4 ; $6e7d
+	jr .notFound ; $6e7d
 .compare:
 	cp a, $02 ; $6e7f
 	jr nz, .step3 ; $6e81
 	ld a, $03 ; $6e83
 	ld [$c2e3], a ; $6e85
-	jr .step4 ; $6e88
+	jr .notFound ; $6e88
 .step3:
 	ld a, $04 ; $6e8a
 	ld [$c2e3], a ; $6e8c
-.step4:
+.notFound:
 	ld a, $ff ; $6e8f
 	ret ; $6e91
 StrokePractice2Hook_RallyTick:
@@ -7018,31 +7018,31 @@ StrokePractice3EvaluateResult:
 	jr c, .compare ; $70b8
 	ld a, $01 ; $70ba
 	ld [$c2e3], a ; $70bc
-	jr .step4 ; $70bf
+	jr .notFound ; $70bf
 .compare:
 	cp a, $02 ; $70c1
 	jr c, .lt02 ; $70c3
 	ld a, $02 ; $70c5
 	ld [$c2e3], a ; $70c7
-	jr .step4 ; $70ca
+	jr .notFound ; $70ca
 .lt02:
 	ld a, [$c2e9] ; $70cc
 	or a, a ; $70cf
 	jr nz, .compare2 ; $70d0
 	ld a, $03 ; $70d2
 	ld [$c2e3], a ; $70d4
-	jr .step4 ; $70d7
+	jr .notFound ; $70d7
 .compare2:
 	cp a, $03 ; $70d9
 	jr nz, .ne03 ; $70db
 	ld a, $05 ; $70dd
 	ld [$c2e3], a ; $70df
-	jr .step4 ; $70e2
+	jr .notFound ; $70e2
 .ne03:
 	ld a, $04 ; $70e4
 	ld [$c2e3], a ; $70e6
-	jr .step4 ; $70e9
-.step4:
+	jr .notFound ; $70e9
+.notFound:
 	ld a, $ff ; $70eb
 	ret ; $70ed
 StrokePractice3Hook_RallyTick:

@@ -408,20 +408,20 @@ GetMinigameGridCellIndex:
 	srl a ; $42e8
 	ld b, a ; $42ea
 	cp a, $07 ; $42eb
-	jr nc, .step ; $42ed
+	jr nc, .notFound ; $42ed
 	ld a, e ; $42ef
 	sub a, $08 ; $42f0
 	srl a ; $42f2
 	ld c, a ; $42f4
 	cp a, $03 ; $42f5
-	jr nc, .step ; $42f7
+	jr nc, .notFound ; $42f7
 	ld a, c ; $42f9
 	add a, a ; $42fa
 	add a, a ; $42fb
 	add a, a ; $42fc
 	add a, b ; $42fd
 	ret ; $42fe
-.step:
+.notFound:
 	ld a, $ff ; $42ff
 	ret ; $4301
 DrawMinigameGrid:
@@ -2698,7 +2698,7 @@ ScoreMinigameTargetHitOrDeflectBall:
 	ld [hl], $00 ; $55d0
 	ld a, [$c78d] ; $55d2
 	cp a, $ff ; $55d5
-	jr z, MinigameTargetTypeScores.step ; $55d7
+	jr z, MinigameTargetTypeScores.eqff ; $55d7
 	ld a, [$c78d] ; $55d9
 	add a, $f9 ; $55dc
 	ld l, a ; $55de
@@ -2719,7 +2719,7 @@ ScoreMinigameTargetHitOrDeflectBall:
 MinigameTargetTypeScores:
 	; $55f9, 4 bytes (bytes:4)
 	db $01, $03, $05, $03 ; 0x00
-.step:
+.eqff:
 	ld a, [$c7bf] ; $55fd
 	cp a, $ff ; $5600
 	ret z ; $5602

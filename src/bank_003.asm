@@ -1264,9 +1264,9 @@ SumSaveHeaderRegion:
 	inc de ; $4856
 	add a, l ; $4857
 	ld l, a ; $4858
-	jr nc, .step ; $4859
+	jr nc, .gotPtr ; $4859
 	inc h ; $485b
-.step:
+.gotPtr:
 	dec c ; $485c
 	jr nz, .loop ; $485d
 	dec b ; $485f
@@ -3173,7 +3173,7 @@ SaveSlotDebugEditor:
 	sound $5f ; $5483
 	ldh a, [hPlayerInputFlags] ; $5485
 	bit PADB_A, a ; $5487
-	jr nz, .step9 ; $5489
+	jr nz, .bit3Set ; $5489
 	push de ; $548b
 	ld hl, SaveResultSavedString_03 ; $548c
 	ld de, $0511 ; $548f
@@ -3181,7 +3181,7 @@ SaveSlotDebugEditor:
 	call WriteCurrentSlotBlock ; $5495
 	pop de ; $5498
 	jp .loopBBBB ; $5499
-.step9:
+.bit3Set:
 	push de ; $549c
 	ld hl, SaveResultDeletedString_03 ; $549d
 	ld de, $0511 ; $54a0
@@ -5668,9 +5668,9 @@ DrawCutsceneTextPage:
 	ld hl, TextPageDescriptors_03 ; $7343
 	add a, l ; $7346
 	ld l, a ; $7347
-	jr nc, .step ; $7348
+	jr nc, .gotPtr ; $7348
 	inc h ; $734a
-.step:
+.gotPtr:
 	wram_bank $06 ; $734b
 	ld a, [hl] ; $7351
 	ld [$d001], a ; $7352
@@ -5748,9 +5748,9 @@ DrawCutsceneTextLines:
 	pop af ; $7429
 	add a, l ; $742a
 	ld l, a ; $742b
-	jr nc, .step2 ; $742c
+	jr nc, .gotPtr ; $742c
 	inc h ; $742e
-.step2:
+.gotPtr:
 	wram_bank $01 ; $742f
 .loop:
 	ld c, $50 ; $7435
@@ -5759,9 +5759,9 @@ DrawCutsceneTextLines:
 	ld a, $50 ; $743d
 	add a, e ; $743f
 	ld e, a ; $7440
-	jr nc, .step3 ; $7441
+	jr nc, .gotPtr2 ; $7441
 	inc d ; $7443
-.step3:
+.gotPtr2:
 	inc hl ; $7444
 	dec b ; $7445
 	jr nz, .loop ; $7446
@@ -5823,9 +5823,9 @@ BlitCutsceneTextWindow:
 	ld a, c ; $749a
 	add a, l ; $749b
 	ld l, a ; $749c
-	jr nc, .step ; $749d
+	jr nc, .gotPtr ; $749d
 	inc h ; $749f
-.step:
+.gotPtr:
 	ld b, $08 ; $74a0
 	ld de, $d000 ; $74a2
 .loop:
@@ -5851,15 +5851,15 @@ BlitCutsceneTextWindow:
 	ld a, $50 ; $74c3
 	add a, l ; $74c5
 	ld l, a ; $74c6
-	jr nc, .step2 ; $74c7
+	jr nc, .gotPtr2 ; $74c7
 	inc h ; $74c9
-.step2:
+.gotPtr2:
 	ld a, $20 ; $74ca
 	add a, e ; $74cc
 	ld e, a ; $74cd
-	jr nc, .step3 ; $74ce
+	jr nc, .gotPtr3 ; $74ce
 	inc d ; $74d0
-.step3:
+.gotPtr3:
 	dec b ; $74d1
 	jr nz, .loop ; $74d2
 	wram_bank $05 ; $74d4

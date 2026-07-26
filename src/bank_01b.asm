@@ -4601,18 +4601,18 @@ CountClearedMinigameLevels:
 	ld e, a ; $6be7
 	farcall TestSaveFlag ; $6be8
 	pop hl ; $6beb
-	jr z, .step ; $6bec
+	jr z, .next ; $6bec
 	inc c ; $6bee
-.step:
+.next:
 	inc hl ; $6bef
 	inc hl ; $6bf0
 	ld a, [hl+] ; $6bf1
 	ld d, [hl] ; $6bf2
 	ld e, a ; $6bf3
 	farcall TestSaveFlag ; $6bf4
-	jr z, .step2 ; $6bf7
+	jr z, .countDone ; $6bf7
 	inc c ; $6bf9
-.step2:
+.countDone:
 	ld a, c ; $6bfa
 	ld [$d001], a ; $6bfb
 	ld a, [$d001] ; $6bfe
@@ -5741,10 +5741,10 @@ LoadMinigameClearFlags:
 	ld e, a ; $74fa
 	pop hl ; $74fb
 	farcall TestSaveFlag ; $74fc
-	jr z, .step ; $74ff
+	jr z, .next ; $74ff
 	ld a, $01 ; $7501
 	ld [hl], a ; $7503
-.step:
+.next:
 	inc hl ; $7504
 	ld a, c ; $7505
 	inc a ; $7506
@@ -5783,10 +5783,10 @@ LoadMinigameStarFlags:
 	ld e, a ; $753a
 	pop hl ; $753b
 	farcall TestSaveFlag ; $753c
-	jr z, .step ; $753f
+	jr z, .next ; $753f
 	ld a, $01 ; $7541
 	ld [hl], a ; $7543
-.step:
+.next:
 	inc hl ; $7544
 	ld a, c ; $7545
 	inc a ; $7546
@@ -5836,9 +5836,9 @@ LoadMinigameHighScores:
 	add a, a ; $7599
 	add a, l ; $759a
 	ld l, a ; $759b
-	jr nc, .step2 ; $759c
+	jr nc, .gotPtr ; $759c
 	inc h ; $759e
-.step2:
+.gotPtr:
 	ld a, e ; $759f
 	ld [hl+], a ; $75a0
 	ld [hl], d ; $75a1
@@ -6033,9 +6033,9 @@ DrawMinigameClearMarks:
 	ld a, [wMenuCursorY] ; $76fe
 	add a, l ; $7701
 	ld l, a ; $7702
-	jr nc, .step ; $7703
+	jr nc, .gotPtr ; $7703
 	inc h ; $7705
-.step:
+.gotPtr:
 	ld c, $00 ; $7706
 .loop:
 	ld b, $00 ; $7708
@@ -6055,9 +6055,9 @@ DrawMinigameStarMarks:
 	ld a, [wMenuCursorY] ; $771c
 	add a, l ; $771f
 	ld l, a ; $7720
-	jr nc, .step ; $7721
+	jr nc, .gotPtr ; $7721
 	inc h ; $7723
-.step:
+.gotPtr:
 	ld c, $00 ; $7724
 .loop:
 	ld b, $01 ; $7726

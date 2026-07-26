@@ -500,9 +500,9 @@ GetWindowCellOffset:
 	ld a, d ; $4314
 	add a, l ; $4315
 	ld l, a ; $4316
-	jr nc, .step ; $4317
+	jr nc, .gotPtr ; $4317
 	inc h ; $4319
-.step:
+.gotPtr:
 	ld d, h ; $431a
 	ld e, l ; $431b
 	ret ; $431c
@@ -667,9 +667,9 @@ RestoreShadowTilemapRow:
 	and a, $1f ; $4401
 	add a, l ; $4403
 	ld l, a ; $4404
-	jr nc, .step2 ; $4405
+	jr nc, .gotPtr ; $4405
 	inc h ; $4407
-.step2:
+.gotPtr:
 	ld d, $20 ; $4408
 .loopB:
 	ld a, [bc] ; $440a
@@ -677,16 +677,16 @@ RestoreShadowTilemapRow:
 	inc bc ; $440c
 	ld a, c ; $440d
 	and a, $1f ; $440e
-	jr nz, .step3 ; $4410
+	jr nz, .next ; $4410
 	ld hl, $c6a0 ; $4412
 	ld a, c ; $4415
 	and a, $3f ; $4416
-	jr nz, .step3 ; $4418
+	jr nz, .next ; $4418
 	dec bc ; $441a
 	ld a, c ; $441b
 	and a, $c0 ; $441c
 	ld c, a ; $441e
-.step3:
+.next:
 	dec d ; $441f
 	jr nz, .loopB ; $4420
 	ld hl, $d000 ; $4422
@@ -719,9 +719,9 @@ RestoreShadowTilemapRow:
 	and a, $1f ; $4458
 	add a, l ; $445a
 	ld l, a ; $445b
-	jr nc, .step5 ; $445c
+	jr nc, .gotPtr2 ; $445c
 	inc h ; $445e
-.step5:
+.gotPtr2:
 	ld d, $20 ; $445f
 .loopBBB:
 	ld a, [bc] ; $4461
@@ -729,16 +729,16 @@ RestoreShadowTilemapRow:
 	inc bc ; $4463
 	ld a, c ; $4464
 	and a, $1f ; $4465
-	jr nz, .step6 ; $4467
+	jr nz, .next2 ; $4467
 	ld hl, $c6a0 ; $4469
 	ld a, c ; $446c
 	and a, $3f ; $446d
-	jr nz, .step6 ; $446f
+	jr nz, .next2 ; $446f
 	dec bc ; $4471
 	ld a, c ; $4472
 	and a, $c0 ; $4473
 	ld c, a ; $4475
-.step6:
+.next2:
 	dec d ; $4476
 	jr nz, .loopBBB ; $4477
 	ld hl, $d400 ; $4479
@@ -985,9 +985,9 @@ DrawTileAttrRect:
 	ld a, $04 ; $45ca
 	add a, l ; $45cc
 	ld l, a ; $45cd
-	jr nc, .step3 ; $45ce
+	jr nc, .gotPtr ; $45ce
 	inc h ; $45d0
-.step3:
+.gotPtr:
 	ld d, h ; $45d1
 	ld e, l ; $45d2
 	ld a, [$d822] ; $45d3
@@ -1921,13 +1921,13 @@ LoadOverworldSpriteDef:
 	jr z, .restore ; $4bd9
 	ldh a, [hInputPressed] ; $4bdb
 	and a, PADF_LEFT ; $4bdd
-	jp z, .step4 ; $4bdf
+	jp z, .zero ; $4bdf
 	ld a, [$cb2a] ; $4be2
 	and a, $f0 ; $4be5
 	or a, $01 ; $4be7
 	ld [$cb2a], a ; $4be9
 	jr .restore2 ; $4bec
-.step4:
+.zero:
 	ldh a, [hInputPressed] ; $4bee
 	and a, PADF_RIGHT ; $4bf0
 	jr z, .restore ; $4bf2
@@ -2358,9 +2358,9 @@ TextCmdNextGlyphStreamRow:
 	ld a, $40 ; $4ef2
 	add a, l ; $4ef4
 	ld l, a ; $4ef5
-	jr nc, .step ; $4ef6
+	jr nc, .gotPtr ; $4ef6
 	inc h ; $4ef8
-.step:
+.gotPtr:
 	ld b, h ; $4ef9
 	ld c, l ; $4efa
 	ld hl, wGlyphTileWritePtr ; $4efb
@@ -3823,9 +3823,9 @@ MeasureTextDimensions:
 	inc e ; $5789
 	ld a, d ; $578a
 	cp a, b ; $578b
-	jr nc, .step2 ; $578c
+	jr nc, .countLeft ; $578c
 	ld d, b ; $578e
-.step2:
+.countLeft:
 	inc d ; $578f
 	inc d ; $5790
 	inc d ; $5791
@@ -3941,10 +3941,10 @@ ShowSpeakerDialogue:
 	call ApplyMessageSpeed ; $584c
 	bit 7, a ; $584f
 	ld b, $08 ; $5851
-	jr nz, .step ; $5853
+	jr nz, .negative ; $5853
 	call GetSpeakerVoice ; $5855
 	ld b, a ; $5858
-.step:
+.negative:
 	ld a, b ; $5859
 	ld [$d862], a ; $585a
 	ld a, [$d824] ; $585d
@@ -4031,10 +4031,10 @@ ShowSpeakerDialogueRestoreBG:
 	call ApplyMessageSpeed ; $591d
 	bit 7, a ; $5920
 	ld b, $08 ; $5922
-	jr nz, .step ; $5924
+	jr nz, .negative ; $5924
 	call GetSpeakerVoice ; $5926
 	ld b, a ; $5929
-.step:
+.negative:
 	ld a, b ; $592a
 	ld [$d862], a ; $592b
 	ld a, [$d824] ; $592e
@@ -4311,12 +4311,12 @@ OpenSpeechBubble:
 	and a, $1f ; $5b69
 	ld d, a ; $5b6b
 .step4:
-	jr .step5 ; $5b6c
+	jr .next ; $5b6c
 	dec d ; $5b6e
 	bit 7, d ; $5b6f
-	jr z, .step5 ; $5b71
+	jr z, .next ; $5b71
 	ld d, $00 ; $5b73
-.step5:
+.next:
 	inc hl ; $5b75
 	dec e ; $5b76
 	ld a, e ; $5b77
@@ -4331,16 +4331,16 @@ OpenSpeechBubble:
 	inc b ; $5b81
 	ld a, [hl] ; $5b82
 	cp a, b ; $5b83
-	jr nc, .step7 ; $5b84
+	jr nc, .countLeft ; $5b84
 	ld b, a ; $5b86
-.step7:
+.countLeft:
 	inc hl ; $5b87
 	inc c ; $5b88
 	ld a, [hl] ; $5b89
 	cp a, c ; $5b8a
-	jr nc, .step8 ; $5b8b
+	jr nc, .countLeft2 ; $5b8b
 	ld c, a ; $5b8d
-.step8:
+.countLeft2:
 	dec hl ; $5b8e
 	dec hl ; $5b8f
 	dec hl ; $5b90
@@ -5888,7 +5888,7 @@ DebugMoveFlagCursor:
 	ld e, a ; $6551
 	ldh a, [hPlayerInputFlags] ; $6552
 	bit PADB_LEFT, a ; $6554
-	jr nz, .step ; $6556
+	jr nz, .next ; $6556
 	bit 4, a ; $6558
 	jr nz, .bit4Set ; $655a
 	bit 6, a ; $655c
@@ -5896,7 +5896,7 @@ DebugMoveFlagCursor:
 	bit 7, a ; $6560
 	jr nz, .negative ; $6562
 	jr .step5 ; $6564
-.step:
+.next:
 	dec d ; $6566
 	jr .step5 ; $6567
 .bit4Set:
@@ -6249,13 +6249,13 @@ DebugStepValueWithDpad:
 	ld b, a ; $6863
 	ldh a, [hInputPressed] ; $6864
 	bit PADB_RIGHT, a ; $6866
-	jr nz, .step ; $6868
+	jr nz, .next ; $6868
 	bit 5, a ; $686a
 	jr nz, .bit5Set ; $686c
 	ld a, b ; $686e
 	pop bc ; $686f
 	ret ; $6870
-.step:
+.next:
 	inc b ; $6871
 	jr .step3 ; $6872
 .bit5Set:
@@ -7507,9 +7507,9 @@ SetRowDirtyFlags:
 	ld d, a ; $70ba
 	add a, l ; $70bb
 	ld l, a ; $70bc
-	jr nc, .step ; $70bd
+	jr nc, .gotPtr ; $70bd
 	inc h ; $70bf
-.step:
+.gotPtr:
 	ld a, $01 ; $70c0
 .loopB:
 	ld [hl+], a ; $70c2
@@ -7559,9 +7559,9 @@ MarkWindowRowsDirtyMin7:
 	ld d, a ; $70ff
 	add a, l ; $7100
 	ld l, a ; $7101
-	jr nc, .step2 ; $7102
+	jr nc, .gotPtr ; $7102
 	inc h ; $7104
-.step2:
+.gotPtr:
 	ld a, $01 ; $7105
 .loopB:
 	ld [hl+], a ; $7107
@@ -7833,9 +7833,9 @@ RenderTextAtWindowCell:
 	ld a, d ; $726e
 	add a, l ; $726f
 	ld l, a ; $7270
-	jr nc, .step ; $7271
+	jr nc, .gotPtr ; $7271
 	inc h ; $7273
-.step:
+.gotPtr:
 	ld d, h ; $7274
 	ld e, l ; $7275
 	ld hl, wShadowTilemapPtr ; $7276
@@ -8042,13 +8042,13 @@ PlotGlyphRow:
 	ld c, a ; $7397
 	or a, a ; $7398
 	ld a, b ; $7399
-	jr z, .step ; $739a
+	jr z, .zero ; $739a
 .loopB:
 	sla a ; $739c
 	sla d ; $739e
 	dec c ; $73a0
 	jr nz, .loopB ; $73a1
-.step:
+.zero:
 	ld c, a ; $73a3
 	ld b, h ; $73a4
 	ld h, d ; $73a5
@@ -8760,9 +8760,9 @@ UploadGlyphBufferQueued:
 	ld a, [$c3bb] ; $77f9
 	inc a ; $77fc
 	cp a, b ; $77fd
-	jr c, .step3 ; $77fe
+	jr c, .countLeft ; $77fe
 	ld a, b ; $7800
-.step3:
+.countLeft:
 	ld b, $00 ; $7801
 .loop:
 	inc b ; $7803
@@ -8812,10 +8812,10 @@ UploadGlyphBufferQueued:
 	or a, a ; $784b
 	jr nz, .stepMatchFrame ; $784c
 	call AdvanceFrame ; $784e
-	jr .step5 ; $7851
+	jr .next ; $7851
 .stepMatchFrame:
 	farcall StepMatchFrame ; $7853
-.step5:
+.next:
 	dec b ; $7856
 	jr nz, .loopB ; $7857
 	clear_flag FLAG_VRAM_UPDATE_BUSY ; $7859

@@ -133,7 +133,7 @@ Unused_01_MenuRedraw:
 	jp .loopBB ; $4135
 .bit1Clear:
 	bit 6, a ; $4138
-	jp z, Unused_01_MatchSetup.step ; $413a
+	jp z, Unused_01_MatchSetup.bit6Clear ; $413a
 	ld a, $01 ; $413d
 	ldh [hDebugStepMode], a ; $413f
 	ld a, $00 ; $4141
@@ -188,9 +188,9 @@ Unused_01_MatchSetup:
 	ld a, $01 ; $41bb
 	ldh [hDebugStepMode], a ; $41bd
 	farcall RunDebugCharViewer ; $41bf
-.step:
+.bit6Clear:
 	bit 7, a ; $41c2
-	jr z, Unused_01_41d6.step ; $41c4
+	jr z, Unused_01_41d6.positive ; $41c4
 	ld a, $01 ; $41c6
 	ldh [hDebugStepMode], a ; $41c8
 	ld a, $00 ; $41ca
@@ -203,7 +203,7 @@ Unused_01_41d6:
 	jp RunDebugTestMenu.loop ; $41d6
 	db $18 ; $41d9
 	db $ef ; $41da
-.step:
+.positive:
 	bit 4, a ; $41db
 	jr z, .bit4Clear ; $41dd
 	ld a, $01 ; $41df
@@ -495,10 +495,10 @@ RunSoundTest:
 	jr nz, .nonZero ; $6a99
 	ldh a, [hInputPressed] ; $6a9b
 	bit PADB_RIGHT, a ; $6a9d
-	jr z, .step2 ; $6a9f
+	jr z, .zero ; $6a9f
 	inc d ; $6aa1
 	jr .step3 ; $6aa2
-.step2:
+.zero:
 	bit 5, a ; $6aa4
 	jr z, .step9 ; $6aa6
 	dec d ; $6aa8

@@ -3662,9 +3662,9 @@ CopyTileRectToShadowTilemap:
 	ld a, $20 ; $789c
 	add a, e ; $789e
 	ld e, a ; $789f
-	jr nc, .step ; $78a0
+	jr nc, .gotPtr ; $78a0
 	inc d ; $78a2
-.step:
+.gotPtr:
 	ld a, d ; $78a3
 	and a, $f3 ; $78a4
 	ld d, a ; $78a6
@@ -3698,9 +3698,9 @@ CopyTileRectToShadowAttrmap:
 	ld a, $20 ; $78c5
 	add a, e ; $78c7
 	ld e, a ; $78c8
-	jr nc, .step ; $78c9
+	jr nc, .gotPtr ; $78c9
 	inc d ; $78cb
-.step:
+.gotPtr:
 	ld a, d ; $78cc
 	cp a, $d8 ; $78cd
 	jr c, .ltd8 ; $78cf

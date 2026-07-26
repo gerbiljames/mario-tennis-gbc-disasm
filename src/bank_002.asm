@@ -604,9 +604,9 @@ LoadMainCharacterFromRoster:
 	ld a, [hl] ; $446b
 	add a, l ; $446c
 	ld l, a ; $446d
-	jr nc, .step ; $446e
+	jr nc, .gotPtr ; $446e
 	inc h ; $4470
-.step:
+.gotPtr:
 	ldh a, [hWramBank] ; $4471
 	push af ; $4473
 	pop af ; $4474
@@ -1544,9 +1544,9 @@ Unused_02_ListForEach:
 	add a, d ; $4c03
 	add a, l ; $4c04
 	ld l, a ; $4c05
-	jr nc, .step3 ; $4c06
+	jr nc, .gotPtr ; $4c06
 	inc h ; $4c08
-.step3:
+.gotPtr:
 	ld d, h ; $4c09
 	ld e, l ; $4c0a
 	ld hl, $002c ; $4c0b
@@ -1626,10 +1626,10 @@ TestStorySlotFlagB:
 	ld d, [hl] ; $4ce0
 	ld e, a ; $4ce1
 	farcall TestSaveFlag ; $4ce2
-	jr z, .step ; $4ce5
+	jr z, .zero ; $4ce5
 	ld a, $01 ; $4ce7
 	ret ; $4ce9
-.step:
+.zero:
 	ld a, $00 ; $4cea
 	ret ; $4cec
 SetStorySlotFlagA:
@@ -1670,10 +1670,10 @@ TestStorySlotFlagA:
 	ld d, [hl] ; $4d1c
 	ld e, a ; $4d1d
 	farcall TestSaveFlag ; $4d1e
-	jr z, .step ; $4d21
+	jr z, .zero ; $4d21
 	ld a, $01 ; $4d23
 	ret ; $4d25
-.step:
+.zero:
 	ld a, $00 ; $4d26
 	ret ; $4d28
 StubAlwaysNotZero:
@@ -2528,12 +2528,12 @@ DoesCharGroupRowContain:
 .loop:
 	ld a, [hl+] ; $5eef
 	cp a, b ; $5ef0
-	jr z, .step ; $5ef1
+	jr z, .zero ; $5ef1
 	dec c ; $5ef3
 	jr nz, .loop ; $5ef4
 	xor a, a ; $5ef6
 	ret ; $5ef7
-.step:
+.zero:
 	ld a, $01 ; $5ef8
 	ret ; $5efa
 	; $5efb, 8453 bytes fill to bank end (linker-padded)

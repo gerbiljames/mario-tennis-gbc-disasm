@@ -3112,17 +3112,17 @@ MarkOwnedRackets:
 	ld hl, RacketItemTiles_3e ; $576d
 	add a, l ; $5770
 	ld l, a ; $5771
-	jr nc, .step ; $5772
+	jr nc, .gotPtr ; $5772
 	inc h ; $5774
-.step:
+.gotPtr:
 	ld d, $00 ; $5775
 	ld e, [hl] ; $5777
 	pop hl ; $5778
 	call TestGameFlagByNumber ; $5779
-	jr z, .step2 ; $577c
+	jr z, .countDone ; $577c
 	ld a, $01 ; $577e
 	ld [hl], a ; $5780
-.step2:
+.countDone:
 	inc hl ; $5781
 	ld a, c ; $5782
 	inc a ; $5783
@@ -3134,9 +3134,9 @@ MarkOwnedRackets:
 	ld hl, $d808 ; $578e
 	add a, l ; $5791
 	ld l, a ; $5792
-	jr nc, .step3 ; $5793
+	jr nc, .gotPtr2 ; $5793
 	inc h ; $5795
-.step3:
+.gotPtr2:
 	ld a, $02 ; $5796
 	ld [hl], a ; $5798
 	ret ; $5799
@@ -3160,17 +3160,17 @@ MarkOwnedShoes:
 	ld hl, ShoeItemTiles_3e ; $57bb
 	add a, l ; $57be
 	ld l, a ; $57bf
-	jr nc, .step ; $57c0
+	jr nc, .gotPtr ; $57c0
 	inc h ; $57c2
-.step:
+.gotPtr:
 	ld d, $00 ; $57c3
 	ld e, [hl] ; $57c5
 	pop hl ; $57c6
 	call TestGameFlagByNumber ; $57c7
-	jr z, .step2 ; $57ca
+	jr z, .countDone ; $57ca
 	ld a, $01 ; $57cc
 	ld [hl], a ; $57ce
-.step2:
+.countDone:
 	inc hl ; $57cf
 	ld a, c ; $57d0
 	inc a ; $57d1
@@ -3183,9 +3183,9 @@ MarkOwnedShoes:
 	ld hl, $d808 ; $57de
 	add a, l ; $57e1
 	ld l, a ; $57e2
-	jr nc, .step3 ; $57e3
+	jr nc, .gotPtr2 ; $57e3
 	inc h ; $57e5
-.step3:
+.gotPtr2:
 	ld a, $02 ; $57e6
 	ld [hl], a ; $57e8
 	ret ; $57e9
@@ -3370,9 +3370,9 @@ RenderRacketDescText:
 	ld a, c ; $59a7
 	add a, l ; $59a8
 	ld l, a ; $59a9
-	jr nc, .step2 ; $59aa
+	jr nc, .gotPtr ; $59aa
 	inc h ; $59ac
-.step2:
+.gotPtr:
 	ld de, $d1c1 ; $59ad
 	ld c, $12 ; $59b0
 	push hl ; $59b2
@@ -4989,11 +4989,11 @@ ComputeUnlockedCourtFlags:
 	ld d, [hl] ; $69af
 	ld e, a ; $69b0
 	farcall TestSaveFlag ; $69b1
-	jr z, .step ; $69b4
+	jr z, .countDone ; $69b4
 	ld a, $01 ; $69b6
 	or a, b ; $69b8
 	ld b, a ; $69b9
-.step:
+.countDone:
 	ld a, c ; $69ba
 	inc a ; $69bb
 	ld c, a ; $69bc

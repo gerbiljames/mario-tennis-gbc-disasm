@@ -3002,7 +3002,7 @@ DrawExpProgressBarTiles:
 	ld a, b ; $5a03
 	sub a, $08 ; $5a04
 	jr c, .carry ; $5a06
-	jr z, .step2 ; $5a08
+	jr z, .zero ; $5a08
 	ld b, a ; $5a0a
 	ld a, $08 ; $5a0b
 	rlca ; $5a0d
@@ -3044,7 +3044,7 @@ DrawExpProgressBarTiles:
 	ld a, [hl] ; $5a38
 	ld [de], a ; $5a39
 	ret ; $5a3a
-.step2:
+.zero:
 	ld a, $08 ; $5a3b
 	rlca ; $5a3d
 	add a, $51 ; $5a3e
@@ -4070,9 +4070,9 @@ DrawExpScreenLevelNumber:
 	ld a, $1d ; $6e3a
 	add a, l ; $6e3c
 	ld l, a ; $6e3d
-	jr nc, .step4 ; $6e3e
+	jr nc, .gotPtr ; $6e3e
 	inc h ; $6e40
-.step4:
+.gotPtr:
 	ld a, $ac ; $6e41
 	ld [hl+], a ; $6e43
 	inc a ; $6e44
@@ -4097,9 +4097,9 @@ DrawExpScreenLevelDigit:
 	ld a, $20 ; $6e63
 	add a, e ; $6e65
 	ld e, a ; $6e66
-	jr nc, .step ; $6e67
+	jr nc, .gotPtr ; $6e67
 	inc d ; $6e69
-.step:
+.gotPtr:
 	ld a, b ; $6e6a
 	ld [de], a ; $6e6b
 	pop de ; $6e6c
@@ -4123,9 +4123,9 @@ ClearExpScreenLevelDigits:
 	ld a, $1d ; $6e89
 	add a, l ; $6e8b
 	ld l, a ; $6e8c
-	jr nc, .step ; $6e8d
+	jr nc, .gotPtr ; $6e8d
 	inc h ; $6e8f
-.step:
+.gotPtr:
 	ld a, $74 ; $6e90
 	ld [hl+], a ; $6e92
 	inc a ; $6e93
@@ -4987,7 +4987,7 @@ UploadExpPromptWindowRows:
 	bit 7, a ; $7537
 	jr nz, DrawExpPromptCursor.playSfx ; $7539
 	bit 0, a ; $753b
-	jr nz, DrawExpPromptCursor.step ; $753d
+	jr nz, DrawExpPromptCursor.bit0Set ; $753d
 	bit 1, a ; $753f
 	jr nz, DrawExpPromptCursor.playSfx2 ; $7541
 	jr .loop ; $7543
@@ -5022,7 +5022,7 @@ DrawExpPromptCursor:
 	xor a, $01 ; $7584
 	ld [$d182], a ; $7586
 	jr UploadExpPromptWindowRows.loop ; $7589
-.step:
+.bit0Set:
 	ld a, [$d182] ; $758b
 	or a, a ; $758e
 	jr nz, .playSfx2 ; $758f

@@ -1199,9 +1199,9 @@ InitChartRowFlags:
 	ld a, $11 ; $478b
 	add a, l ; $478d
 	ld l, a ; $478e
-	jr nc, .step ; $478f
+	jr nc, .gotPtr ; $478f
 	inc h ; $4791
-.step:
+.gotPtr:
 	ld a, c ; $4792
 	inc a ; $4793
 	ld c, a ; $4794
@@ -1369,9 +1369,9 @@ ExpandRowBytesToBits:
 	ld a, $08 ; $488a
 	add a, l ; $488c
 	ld l, a ; $488d
-	jr nc, .step ; $488e
+	jr nc, .gotPtr ; $488e
 	inc h ; $4890
-.step:
+.gotPtr:
 	ld a, c ; $4891
 	inc a ; $4892
 	ld c, a ; $4893
@@ -1388,9 +1388,9 @@ ExpandByteToBitArray:
 	ld a, $07 ; $489f
 	add a, l ; $48a1
 	ld l, a ; $48a2
-	jr nc, .step ; $48a3
+	jr nc, .gotPtr ; $48a3
 	inc h ; $48a5
-.step:
+.gotPtr:
 	ld c, $00 ; $48a6
 .loop:
 	ld a, b ; $48a8
@@ -2261,9 +2261,9 @@ DrawN64TnmtRowIcons:
 	ld a, [$d802] ; $4f55
 	add a, l ; $4f58
 	ld l, a ; $4f59
-	jr nc, .step ; $4f5a
+	jr nc, .gotPtr ; $4f5a
 	inc h ; $4f5c
-.step:
+.gotPtr:
 	ld d, h ; $4f5d
 	ld e, l ; $4f5e
 	ld c, $00 ; $4f5f
@@ -2353,9 +2353,9 @@ DrawN64TnmtTrophyRows:
 	ld hl, $d830 ; $500e
 	add a, l ; $5011
 	ld l, a ; $5012
-	jr nc, .step ; $5013
+	jr nc, .gotPtr ; $5013
 	inc h ; $5015
-.step:
+.gotPtr:
 	ld a, [$d801] ; $5016
 	or a, a ; $5019
 	jr z, .step2 ; $501a
@@ -2378,9 +2378,9 @@ DrawN64TnmtTrophyRows:
 	ld a, $0c ; $5033
 	add a, l ; $5035
 	ld l, a ; $5036
-	jr nc, .step3 ; $5037
+	jr nc, .gotPtr2 ; $5037
 	inc h ; $5039
-.step3:
+.gotPtr2:
 	ld a, c ; $503a
 	inc a ; $503b
 	ld c, a ; $503c
@@ -2398,10 +2398,10 @@ DrawN64TnmtTrophyRow:
 	or a, a ; $5049
 	jr z, .drawEmptyTrophyCell ; $504a
 	call DrawWonTrophyIcon ; $504c
-	jr .step ; $504f
+	jr .next ; $504f
 .drawEmptyTrophyCell:
 	call DrawEmptyTrophyCell ; $5051
-.step:
+.next:
 	inc de ; $5054
 	inc de ; $5055
 	ld a, c ; $5056
@@ -2416,10 +2416,10 @@ DrawN64TnmtTrophyRow:
 	or a, a ; $5061
 	jr z, .drawEmptyTrophyCell2 ; $5062
 	call DrawWonTrophyIcon ; $5064
-	jr .step2 ; $5067
+	jr .next2 ; $5067
 .drawEmptyTrophyCell2:
 	call DrawEmptyTrophyCell ; $5069
-.step2:
+.next2:
 	inc de ; $506c
 	inc de ; $506d
 	ld a, c ; $506e
@@ -2614,9 +2614,9 @@ DrawRingShotRowIcons:
 	ld a, [wMenuCursorY] ; $5212
 	add a, l ; $5215
 	ld l, a ; $5216
-	jr nc, .step ; $5217
+	jr nc, .gotPtr ; $5217
 	inc h ; $5219
-.step:
+.gotPtr:
 	ld d, h ; $521a
 	ld e, l ; $521b
 	ld c, $00 ; $521c
@@ -2766,9 +2766,9 @@ CopyRingShotCharScores:
 	ld hl, $d958 ; $5370
 	add a, l ; $5373
 	ld l, a ; $5374
-	jr nc, .step ; $5375
+	jr nc, .gotPtr ; $5375
 	inc h ; $5377
-.step:
+.gotPtr:
 	ld c, $00 ; $5378
 .loop:
 	ld a, [hl+] ; $537a
@@ -2800,9 +2800,9 @@ DecodeRingShotCharClears:
 	ld hl, $d918 ; $5395
 	add a, l ; $5398
 	ld l, a ; $5399
-	jr nc, .step ; $539a
+	jr nc, .gotPtr ; $539a
 	inc h ; $539c
-.step:
+.gotPtr:
 	ld c, $00 ; $539d
 .loop:
 	ld b, [hl] ; $539f
@@ -3003,9 +3003,9 @@ DrawRingShotClearMarks:
 	ld a, [wMenuCursorX] ; $550e
 	add a, l ; $5511
 	ld l, a ; $5512
-	jr nc, .step ; $5513
+	jr nc, .gotPtr ; $5513
 	inc h ; $5515
-.step:
+.gotPtr:
 	ld b, $00 ; $5516
 .loopB:
 	ld a, [hl] ; $5518
@@ -3124,9 +3124,9 @@ RingShotScoreDrawTask:
 	add a, a ; $55a9
 	add a, l ; $55aa
 	ld l, a ; $55ab
-	jr nc, .step2 ; $55ac
+	jr nc, .gotPtr ; $55ac
 	inc h ; $55ae
-.step2:
+.gotPtr:
 	ld de, $8a35 ; $55af
 	ld c, $00 ; $55b2
 .loopB:
@@ -3143,9 +3143,9 @@ RingShotScoreDrawTask:
 	ld a, $0c ; $55c2
 	add a, l ; $55c4
 	ld l, a ; $55c5
-	jr nc, .step3 ; $55c6
+	jr nc, .gotPtr2 ; $55c6
 	inc h ; $55c8
-.step3:
+.gotPtr2:
 	ld a, c ; $55c9
 	inc a ; $55ca
 	ld c, a ; $55cb
@@ -3608,9 +3608,9 @@ DrawMainMenuSelection:
 	ld bc, $d300 ; $599a
 	add a, c ; $599d
 	ld c, a ; $599e
-	jr nc, .step ; $599f
+	jr nc, .gotPtr ; $599f
 	inc b ; $59a1
-.step:
+.gotPtr:
 	ld hl, $0001 ; $59a2
 	add hl, bc ; $59a5
 	ld a, [hl] ; $59a6
@@ -3834,9 +3834,9 @@ DrawMainMenuCaption:
 	ld bc, $d300 ; $5b5d
 	add a, c ; $5b60
 	ld c, a ; $5b61
-	jr nc, .step ; $5b62
+	jr nc, .gotPtr ; $5b62
 	inc b ; $5b64
-.step:
+.gotPtr:
 	ld hl, $0000 ; $5b65
 	add hl, bc ; $5b68
 	ld a, [hl] ; $5b69
@@ -5321,11 +5321,11 @@ BuildStarCharUnlockMask:
 	ld d, [hl] ; $668e
 	ld e, a ; $668f
 	farcall TestSaveFlag ; $6690
-	jr z, .step ; $6693
+	jr z, .countDone ; $6693
 	ld a, $01 ; $6695
 	or a, b ; $6697
 	ld b, a ; $6698
-.step:
+.countDone:
 	ld a, c ; $6699
 	inc a ; $669a
 	ld c, a ; $669b
@@ -5547,9 +5547,9 @@ RunSavedDataSourceSelect:
 	ld bc, $d300 ; $6823
 	add a, c ; $6826
 	ld c, a ; $6827
-	jr nc, .step3 ; $6828
+	jr nc, .gotPtr ; $6828
 	inc b ; $682a
-.step3:
+.gotPtr:
 	ld hl, $0000 ; $682b
 	add hl, bc ; $682e
 	ld a, [hl] ; $682f
@@ -5833,9 +5833,9 @@ DrawSavedDataSourceGrid:
 	ld bc, $d300 ; $6aaa
 	add a, c ; $6aad
 	ld c, a ; $6aae
-	jr nc, .step ; $6aaf
+	jr nc, .gotPtr ; $6aaf
 	inc b ; $6ab1
-.step:
+.gotPtr:
 	ld hl, $0001 ; $6ab2
 	add hl, bc ; $6ab5
 	ld a, [hl] ; $6ab6
@@ -5967,9 +5967,9 @@ DrawSavedDataSourceCaption:
 	ld bc, $d300 ; $6b9b
 	add a, c ; $6b9e
 	ld c, a ; $6b9f
-	jr nc, .step ; $6ba0
+	jr nc, .gotPtr ; $6ba0
 	inc b ; $6ba2
-.step:
+.gotPtr:
 	ld hl, $0000 ; $6ba3
 	add hl, bc ; $6ba6
 	ld a, [hl] ; $6ba7
@@ -6132,9 +6132,9 @@ RunEraseSavedDataSelect:
 	ld bc, $d300 ; $6ce9
 	add a, c ; $6cec
 	ld c, a ; $6ced
-	jr nc, .step2 ; $6cee
+	jr nc, .gotPtr ; $6cee
 	inc b ; $6cf0
-.step2:
+.gotPtr:
 	ld hl, $0000 ; $6cf1
 	add hl, bc ; $6cf4
 	ld a, [hl] ; $6cf5
@@ -6533,9 +6533,9 @@ DrawEraseSavedDataGrid:
 	ld bc, $d300 ; $7027
 	add a, c ; $702a
 	ld c, a ; $702b
-	jr nc, .step ; $702c
+	jr nc, .gotPtr ; $702c
 	inc b ; $702e
-.step:
+.gotPtr:
 	ld hl, $0001 ; $702f
 	add hl, bc ; $7032
 	ld a, [hl] ; $7033
@@ -6667,9 +6667,9 @@ DrawEraseSavedDataCaption:
 	ld bc, $d300 ; $7118
 	add a, c ; $711b
 	ld c, a ; $711c
-	jr nc, .step ; $711d
+	jr nc, .gotPtr ; $711d
 	inc b ; $711f
-.step:
+.gotPtr:
 	ld hl, $0000 ; $7120
 	add hl, bc ; $7123
 	ld a, [hl] ; $7124
@@ -7643,9 +7643,9 @@ WriteBracketEntrantName:
 	dec a ; $78ad
 	add a, l ; $78ae
 	ld l, a ; $78af
-	jr nc, .step ; $78b0
+	jr nc, .gotPtr ; $78b0
 	inc h ; $78b2
-.step:
+.gotPtr:
 	push hl ; $78b3
 	ld hl, $78e4 ; $78b4
 	ld a, b ; $78b7
@@ -8363,18 +8363,18 @@ UpdateStarUnlocks:
 	add a, c ; $7dff
 	add a, l ; $7e00
 	ld l, a ; $7e01
-	jr nc, .step ; $7e02
+	jr nc, .gotPtr ; $7e02
 	inc h ; $7e04
-.step:
+.gotPtr:
 	ld b, $00 ; $7e05
 .loopB:
 	ld a, c ; $7e07
 	cp a, b ; $7e08
-	jr z, .step2 ; $7e09
+	jr z, .countDone ; $7e09
 	ld a, [hl] ; $7e0b
 	or a, a ; $7e0c
 	jr z, .zero ; $7e0d
-.step2:
+.countDone:
 	inc hl ; $7e0f
 	inc b ; $7e10
 	ld a, b ; $7e11

@@ -150,10 +150,10 @@ UpdateResultScreenAnimatedTilesTask:
 	ld a, [hl] ; $4403
 	cp a, $de ; $4404
 CourtDiagramBaseTask:
-	jr z, .step ; $4406
+	jr z, .eqde ; $4406
 	cp a, $df ; $4408
 	jr nz, .nedf ; $440a
-.step:
+.eqde:
 	push hl ; $440c
 	push bc ; $440d
 	ld h, d ; $440e
@@ -474,7 +474,7 @@ SetWinLosePortraitPaletteAttrs:
 	jr nz, .nonZero ; $4967
 	ld de, $002f ; $4969
 	call TestGameFlagByNumber ; $496c
-	jr z, .step ; $496f
+	jr z, .zero ; $496f
 	ld de, $d48b ; $4971
 	ld b, $04 ; $4974
 	ld c, $04 ; $4976
@@ -496,7 +496,7 @@ SetWinLosePortraitPaletteAttrs:
 	ld h, $0f ; $499c
 	farcall FillTilemapRect ; $499e
 	jr .done ; $49a1
-.step:
+.zero:
 	ld de, $d48d ; $49a3
 	ld b, $04 ; $49a6
 	ld c, $04 ; $49a8
@@ -1693,9 +1693,9 @@ DecompressWinLosePortraitVariant:
 	ld a, c ; $60da
 	cp a, $01 ; $60db
 	ld a, b ; $60dd
-	jr z, .step ; $60de
+	jr z, .eq01 ; $60de
 	inc a ; $60e0
-.step:
+.eq01:
 	ld hl, WinLosePortraitVariantTable_16 ; $60e1
 	add a, a ; $60e4
 	add a, l ; $60e5

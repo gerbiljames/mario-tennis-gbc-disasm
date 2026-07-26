@@ -605,7 +605,7 @@ WallPracticeMaxScoreScript:
 	ld a, h ; $4960
 	sbc a, d ; $4961
 	ld h, a ; $4962
-	jp c, RelaunchWallPracticeMasterLevel.step ; $4963
+	jp c, RelaunchWallPracticeMasterLevel.carry ; $4963
 	script_set_text Text_36_43 ; $4966
 	ld a, $07 ; $496c
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $496e
@@ -635,7 +635,7 @@ RelaunchWallPracticeMasterLevel:
 	ld a, $1b ; $49df
 	farcall RunTrainingDrillByID ; $49e1
 	ret ; $49e4
-.step:
+.carry:
 	ldh a, [hWramBank] ; $49e5
 	push af ; $49e7
 	wram_bank $07 ; $49e8

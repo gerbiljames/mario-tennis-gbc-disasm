@@ -691,7 +691,7 @@ UpdateTennisDictionarySprites:
 	ld a, [$cb39] ; $4edc
 	dec a ; $4edf
 	ld [$cb39], a ; $4ee0
-	jr nz, .step3 ; $4ee3
+	jr nz, .countLeft ; $4ee3
 	ld a, $08 ; $4ee5
 	ld [$cb39], a ; $4ee7
 	ld a, [$cb3a] ; $4eea
@@ -701,7 +701,7 @@ UpdateTennisDictionarySprites:
 	xor a, a ; $4ef2
 .store:
 	ld [$cb3a], a ; $4ef3
-.step3:
+.countLeft:
 	ld hl, Data_3f_5028 ; $4ef6
 	ld a, [$cb38] ; $4ef9
 	add a, a ; $4efc
@@ -710,9 +710,9 @@ UpdateTennisDictionarySprites:
 	add a, a ; $4eff
 	add a, l ; $4f00
 	ld l, a ; $4f01
-	jr nc, .step4 ; $4f02
+	jr nc, .gotPtr ; $4f02
 	inc h ; $4f04
-.step4:
+.gotPtr:
 	ld a, [$cb3a] ; $4f05
 	add a, l ; $4f08
 	ld l, a ; $4f09
@@ -1036,9 +1036,9 @@ WrapTennisDictionaryScanToEnd:
 	ld a, [hl-] ; $51c4
 	ld d, a ; $51c5
 	and a, e ; $51c6
-	jr z, .step ; $51c7
+	jr z, .countDone ; $51c7
 	dec c ; $51c9
-.step:
+.countDone:
 	ld a, d ; $51ca
 	cp a, $40 ; $51cb
 	jr z, .wrapTennisDictionaryScanToEnd ; $51cd
@@ -1060,9 +1060,9 @@ WrapTennisDictionaryScanToEnd:
 	ld a, [hl-] ; $51e4
 	ld d, a ; $51e5
 	and a, e ; $51e6
-	jr z, .step3 ; $51e7
+	jr z, .countDone2 ; $51e7
 	dec c ; $51e9
-.step3:
+.countDone2:
 	ld a, d ; $51ea
 	cp a, $40 ; $51eb
 	jr z, .wrapTennisDictionaryScanToEnd2 ; $51ed
@@ -1097,9 +1097,9 @@ ScrollTennisDictionaryToNextLetter:
 	ld a, [wTennisDictScrollTop] ; $5220
 	add a, c ; $5223
 	cp a, b ; $5224
-	jr c, .step ; $5225
+	jr c, .carry ; $5225
 	sub a, b ; $5227
-.step:
+.carry:
 	ld b, a ; $5228
 	ld d, a ; $5229
 	inc b ; $522a
@@ -1119,9 +1119,9 @@ ScrollTennisDictionaryToNextLetter:
 	jr z, .eq00 ; $523d
 	ld c, a ; $523f
 	and a, e ; $5240
-	jr z, .step2 ; $5241
+	jr z, .eq002 ; $5241
 	inc d ; $5243
-.step2:
+.eq002:
 	ld a, c ; $5244
 	cp a, $40 ; $5245
 	jr nz, .loopB ; $5247
@@ -1303,9 +1303,9 @@ DrawTennisDictionaryLetterLabels:
 	ld hl, $148f ; $535e
 	add a, l ; $5361
 	ld l, a ; $5362
-	jr nc, .step3 ; $5363
+	jr nc, .gotPtr ; $5363
 	inc h ; $5365
-.step3:
+.gotPtr:
 	push de ; $5366
 	ld c, $40 ; $5367
 	ld de, $d050 ; $5369

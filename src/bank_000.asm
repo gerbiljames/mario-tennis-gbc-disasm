@@ -382,11 +382,11 @@ ReadJoypad:
 	jr z, .step2 ; $031f
 	ldh a, [hInputRepeatButtons] ; $0321
 	and a, b ; $0323
-	jr nz, .step ; $0324
+	jr nz, .nonZero ; $0324
 	ldh a, [hInputRepeatButtons] ; $0326
 	cp a, b ; $0328
 	jr nz, .step2 ; $0329
-.step:
+.nonZero:
 	ldh a, [hInputRepeatTimer] ; $032b
 	dec a ; $032d
 	jr nz, .store ; $032e
@@ -2374,7 +2374,7 @@ MulHLByDE32:
 	push hl ; $0d50
 	add a, a ; $0d51
 	jr c, .carry ; $0d52
-	jr z, .step ; $0d54
+	jr z, .zero ; $0d54
 	ld e, l ; $0d56
 	ld d, h ; $0d57
 	add a, a ; $0d58
@@ -2391,7 +2391,7 @@ MulHLByDE32:
 	jr c, .offset6 ; $0d68
 	xor a, a ; $0d6a
 	jr .step3 ; $0d6b
-.step:
+.zero:
 	ld hl, $0000 ; $0d6d
 	jr .step3 ; $0d70
 .carry:
@@ -2447,7 +2447,7 @@ MulHLByDE32:
 	push de ; $0da3
 	add a, a ; $0da4
 	jr c, .carry2 ; $0da5
-	jr z, .step4 ; $0da7
+	jr z, .zero2 ; $0da7
 	ld e, l ; $0da9
 	ld d, h ; $0daa
 	add a, a ; $0dab
@@ -2464,7 +2464,7 @@ MulHLByDE32:
 	jr c, .offset12 ; $0dbb
 	xor a, a ; $0dbd
 	jr .restore ; $0dbe
-.step4:
+.zero2:
 	ld hl, $0000 ; $0dc0
 	jr .restore ; $0dc3
 .carry2:
@@ -2548,7 +2548,7 @@ MulPosHLByA:
 .step:
 	add a, a ; $0e14
 	jr c, .carry ; $0e15
-	jr z, .step2 ; $0e17
+	jr z, .zero ; $0e17
 	ld e, l ; $0e19
 	ld d, h ; $0e1a
 	add a, a ; $0e1b
@@ -2565,7 +2565,7 @@ MulPosHLByA:
 	jr c, .offset6 ; $0e2b
 	xor a, a ; $0e2d
 	jr .step4 ; $0e2e
-.step2:
+.zero:
 	ld hl, $0000 ; $0e30
 	jr .step4 ; $0e33
 .carry:
@@ -4866,8 +4866,8 @@ RunFrameTasks:
 	ld a, [hl+] ; $1c12
 	xor a, b ; $1c13
 	add a, a ; $1c14
-	jr z, .step ; $1c15
-	jr c, .step ; $1c17
+	jr z, .next ; $1c15
+	jr c, .next ; $1c17
 	push bc ; $1c19
 	push hl ; $1c1a
 	ld a, [hl+] ; $1c1b
@@ -4882,7 +4882,7 @@ RunFrameTasks:
 	call JumpToHL ; $1c27
 	pop hl ; $1c2a
 	pop bc ; $1c2b
-.step:
+.next:
 	inc hl ; $1c2c
 	inc hl ; $1c2d
 	inc hl ; $1c2e
@@ -4904,7 +4904,7 @@ SortFrameTasks:
 .loopB:
 	ld a, [de] ; $1c48
 	cp a, [hl] ; $1c49
-	jr c, .step ; $1c4a
+	jr c, .next ; $1c4a
 	push bc ; $1c4c
 	ld c, $04 ; $1c4d
 .loopBB:
@@ -4917,8 +4917,8 @@ SortFrameTasks:
 	dec c ; $1c55
 	jr nz, .loopBB ; $1c56
 	pop bc ; $1c58
-	jr .step2 ; $1c59
-.step:
+	jr .next2 ; $1c59
+.next:
 	inc hl ; $1c5b
 	inc de ; $1c5c
 	inc hl ; $1c5d
@@ -4927,7 +4927,7 @@ SortFrameTasks:
 	inc de ; $1c60
 	inc hl ; $1c61
 	inc de ; $1c62
-.step2:
+.next2:
 	dec b ; $1c63
 	jr nz, .loopB ; $1c64
 	dec c ; $1c66
@@ -7637,15 +7637,15 @@ DrawWindowFrame:
 	ld a, $20 ; $2b86
 	add a, l ; $2b88
 	ld l, a ; $2b89
-	jr nc, .step ; $2b8a
+	jr nc, .gotPtr ; $2b8a
 	inc h ; $2b8c
-.step:
+.gotPtr:
 	ld a, $20 ; $2b8d
 	add a, e ; $2b8f
 	ld e, a ; $2b90
-	jr nc, .step2 ; $2b91
+	jr nc, .gotPtr2 ; $2b91
 	inc d ; $2b93
-.step2:
+.gotPtr2:
 	dec c ; $2b94
 	jr nz, .loop ; $2b95
 	pop hl ; $2b97
@@ -7655,9 +7655,9 @@ DrawWindowFrame:
 	ld a, $20 ; $2b9d
 	add a, l ; $2b9f
 	ld l, a ; $2ba0
-	jr nc, .step3 ; $2ba1
+	jr nc, .gotPtr3 ; $2ba1
 	inc h ; $2ba3
-.step3:
+.gotPtr3:
 	dec c ; $2ba4
 	dec c ; $2ba5
 .loopBB:
@@ -8434,9 +8434,9 @@ PlaySoundCmd:
 	ld [hl], d ; $2fc1
 .loop:
 	cp a, $50 ; $2fc2
-	jr nc, JingleSoundIds.step4 ; $2fc4
+	jr nc, JingleSoundIds.ge50 ; $2fc4
 	cp a, $40 ; $2fc6
-	jr c, JingleSoundIds.step ; $2fc8
+	jr c, JingleSoundIds.lt40 ; $2fc8
 	ld hl, hMusic ; $2fca
 	bit 0, [hl] ; $2fcd
 	jr nz, JingleSoundIds.restore ; $2fcf
@@ -8453,16 +8453,16 @@ PlaySoundCmd:
 JingleSoundIds:
 	; $2fe0, 6 bytes (bytes:6)
 	db $00, $2e, $2f, $30, $31, $32 ; 0x00
-.step:
+.lt40:
 	ld d, a ; $2fe6
 	ldh a, [hActiveJingle] ; $2fe7
 	or a, a ; $2fe9
 	ld a, d ; $2fea
-	jr z, .step2 ; $2feb
+	jr z, .zero ; $2feb
 	ld hl, wCurrentBGM ; $2fed
 	ld [hl], a ; $2ff0
 	jr .restore ; $2ff1
-.step2:
+.zero:
 	ld hl, wCurrentBGM ; $2ff3
 	cp a, [hl] ; $2ff6
 	jr z, .restore ; $2ff7
@@ -8479,7 +8479,7 @@ JingleSoundIds:
 	pop af ; $3009
 	wram_bank ; $300a
 	jr .restore ; $300e
-.step4:
+.ge50:
 	ld h, a ; $3010
 	ldh a, [hWramBank] ; $3011
 	push af ; $3013
@@ -8620,12 +8620,12 @@ ApplyChannelUpdateRequest:
 .loop:
 	srl a ; $30ed
 	ld [wSndUpdateReqAck], a ; $30ef
-	jr nc, .step ; $30f2
+	jr nc, .noCarry ; $30f2
 	ld a, [hl] ; $30f4
 	and a, $f0 ; $30f5
 	or a, b ; $30f7
 	ld [hl], a ; $30f8
-.step:
+.noCarry:
 	ld a, l ; $30f9
 	add a, $20 ; $30fa
 	ld l, a ; $30fc
@@ -10081,9 +10081,9 @@ TickInstrumentEnvelope:
 .loop:
 	add a, a ; $3a60
 	cp a, c ; $3a61
-	jr c, .step2 ; $3a62
+	jr c, .carry ; $3a62
 	sub a, c ; $3a64
-.step2:
+.carry:
 	ccf ; $3a65
 	rl e ; $3a66
 	dec b ; $3a68

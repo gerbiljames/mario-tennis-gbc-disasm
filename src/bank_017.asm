@@ -1586,9 +1586,9 @@ DecompressGraphicsList:
 	ld a, $04 ; $4ab1
 	add a, l ; $4ab3
 	ld l, a ; $4ab4
-	jr nc, .step ; $4ab5
+	jr nc, .gotPtr ; $4ab5
 	inc h ; $4ab7
-.step:
+.gotPtr:
 	jr .loop ; $4ab8
 .done:
 	ret ; $4aba
