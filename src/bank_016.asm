@@ -152,7 +152,7 @@ UpdateResultScreenAnimatedTilesTask:
 CourtDiagramBaseTask:
 	jr z, .step ; $4406
 	cp a, $df ; $4408
-	jr nz, .step2 ; $440a
+	jr nz, .nedf ; $440a
 .step:
 	push hl ; $440c
 	push bc ; $440d
@@ -171,7 +171,7 @@ CourtDiagramBaseTask:
 	pop bc ; $441e
 	pop hl ; $441f
 	inc hl ; $4420
-.step2:
+.nedf:
 	inc de ; $4421
 	ld a, e ; $4422
 	and a, $1f ; $4423
@@ -227,7 +227,7 @@ PrintNumberStringChar_16:
 	push hl ; $445e
 	ld hl, $d240 ; $445f
 	sub a, $30 ; $4462
-	jr c, .step ; $4464
+	jr c, .carry ; $4464
 	add a, $30 ; $4466
 	ld b, a ; $4468
 	wram_bank $03 ; $4469
@@ -236,7 +236,7 @@ PrintNumberStringChar_16:
 	inc de ; $4471
 	pop hl ; $4472
 	ret ; $4473
-.step:
+.carry:
 	inc de ; $4474
 	pop hl ; $4475
 	ret ; $4476
@@ -314,7 +314,7 @@ RunMatchWinLoseScreen:
 	bit 1, a ; $4513
 	jr nz, .playSfx2 ; $4515
 	bit 4, a ; $4517
-	jr nz, .step3 ; $4519
+	jr nz, .bit4Set ; $4519
 	jr .loop ; $451b
 .playSfx2:
 	sound $5f ; $451d
@@ -329,7 +329,7 @@ RunMatchWinLoseScreen:
 	ld a, [$cb73] ; $4534
 	ld [wMatchWinLoseFlag], a ; $4537
 	ret ; $453a
-.step3:
+.bit4Set:
 	ld c, $40 ; $453b
 	call BeginFadeOut ; $453d
 	call WaitFadeEnd ; $4540
@@ -433,15 +433,15 @@ DiagramTargetBracketsSpriteTask:
 LoadWinLoseScreenAssets:
 	ld a, [$d800] ; $490c
 	or a, a ; $490f
-	jr z, .step ; $4910
+	jr z, .zero ; $4910
 	ld c, $14 ; $4912
 	farcall LoadScreenAssetRecord ; $4914
-	jr .step2 ; $4917
-.step:
+	jr .testGameFlagByNumber ; $4917
+.zero:
 	ld c, $13 ; $4919
 	farcall LoadScreenAssetRecord ; $491b
-	jr .step2 ; $491e
-.step2:
+	jr .testGameFlagByNumber ; $491e
+.testGameFlagByNumber:
 	ld de, $002f ; $4920
 	call TestGameFlagByNumber ; $4923
 	jr nz, .done ; $4926
@@ -471,7 +471,7 @@ LoadWinLoseScreenAssets:
 SetWinLosePortraitPaletteAttrs:
 	ld a, [$d801] ; $4963
 	or a, a ; $4966
-	jr nz, .step2 ; $4967
+	jr nz, .nonZero ; $4967
 	ld de, $002f ; $4969
 	call TestGameFlagByNumber ; $496c
 	jr z, .step ; $496f
@@ -509,7 +509,7 @@ SetWinLosePortraitPaletteAttrs:
 	farcall FillTilemapRect ; $49b8
 .done:
 	ret ; $49bb
-.step2:
+.nonZero:
 	ld de, $002f ; $49bc
 	call TestGameFlagByNumber ; $49bf
 	jr z, .step3 ; $49c2
@@ -550,7 +550,7 @@ SetWinLosePortraitPaletteAttrs:
 LoadMatchResultPalettes:
 	ld a, [wMatchWinLoseFlag] ; $4a0f
 	cp a, $ff ; $4a12
-	jr z, .step ; $4a14
+	jr z, .eqff ; $4a14
 	ld a, $02 ; $4a16
 	ld [wAnimatedTileSet], a ; $4a18
 	ld hl, $4a4e ; $4a1b
@@ -560,7 +560,7 @@ LoadMatchResultPalettes:
 	ld de, $0201 ; $4a27
 	call LoadPaletteShadow ; $4a2a
 	ret ; $4a2d
-.step:
+.eqff:
 	ld a, $03 ; $4a2e
 	ld [wAnimatedTileSet], a ; $4a30
 	ld hl, $4a4e ; $4a33
@@ -624,14 +624,14 @@ BuildMatchResultTilemap:
 .checkCurrentMinigameStoryMatch:
 	ld a, [wCurrentMinigameStoryMatch] ; $4a99
 	cp a, $01 ; $4a9c
-	jr nz, .step ; $4a9e
+	jr nz, .ne01 ; $4a9e
 	ld hl, $d3c7 ; $4aa0
 	ld de, $d200 ; $4aa3
 	ld b, $06 ; $4aa6
 	ld c, $02 ; $4aa8
 	farcall CopyTilemapRect ; $4aaa
 	jr .done ; $4aad
-.step:
+.ne01:
 	ld hl, $d3c0 ; $4aaf
 	ld de, $d200 ; $4ab2
 	ld b, $07 ; $4ab5
@@ -772,11 +772,11 @@ MatchResultTilemapScripts_16:
 AdvanceResultScreenTimer:
 	ld a, [wMatchWinLoseFlag] ; $4c9d
 	cp a, $ff ; $4ca0
-	jr nz, .step ; $4ca2
+	jr nz, .neff ; $4ca2
 	ldh a, [hVBlankCounter] ; $4ca4
 	and a, $01 ; $4ca6
 	ret z ; $4ca8
-.step:
+.neff:
 	ld a, [$cb01] ; $4ca9
 	inc a ; $4cac
 	ld [$cb01], a ; $4cad
@@ -784,7 +784,7 @@ AdvanceResultScreenTimer:
 QueueResultScreenSprites:
 	ld a, [wMatchWinLoseFlag] ; $4cb1
 	cp a, $ff ; $4cb4
-	jr z, .step ; $4cb6
+	jr z, .eqff ; $4cb6
 	ld de, $0824 ; $4cb8
 	call QueueResultPortraitTop ; $4cbb
 	ld de, $502c ; $4cbe
@@ -794,7 +794,7 @@ QueueResultScreenSprites:
 	ld de, $4e68 ; $4cca
 	call QueueLoserMarkerForOpponent ; $4ccd
 	ret ; $4cd0
-.step:
+.eqff:
 	ld de, $5860 ; $4cd1
 	call QueueResultPortraitTop ; $4cd4
 	ld de, $5068 ; $4cd7
@@ -814,9 +814,9 @@ QueueResultPortraitTop:
 	ld b, $08 ; $4cf3
 	ldh a, [hVBlankCounter] ; $4cf5
 	and a, $10 ; $4cf7
-	jr z, .step ; $4cf9
+	jr z, .maskClear ; $4cf9
 	ld b, $0a ; $4cfb
-.step:
+.maskClear:
 	ld hl, ResultSpriteTemplateLeft_16 ; $4cfd
 	call QueueSpriteTemplate ; $4d00
 	ret ; $4d03
@@ -941,16 +941,16 @@ LoadResultScreenTileGraphics:
 	farcall FillTilemapRect ; $4e13
 	ld de, $002f ; $4e16
 	call TestGameFlagByNumber ; $4e19
-	jr nz, .step ; $4e1c
+	jr nz, .decompressData ; $4e1c
 	ld hl, $542e ; $4e1e
 	ld de, $9000 ; $4e21
 	call DecompressData ; $4e24
-	jr .step2 ; $4e27
-.step:
+	jr .loadMatchResultGfxSet ; $4e27
+.decompressData:
 	ld hl, $54bd ; $4e29
 	ld de, $9000 ; $4e2c
 	call DecompressData ; $4e2f
-.step2:
+.loadMatchResultGfxSet:
 	ld a, [$d800] ; $4e32
 	or a, a ; $4e35
 	jr z, LoadMatchResultGfxSet ; $4e36
@@ -1138,10 +1138,10 @@ MaybeInvertMatchWinLoseFlag:
 	jr nz, .done ; $5c21
 	ld a, [wMatchWinLoseFlag] ; $5c23
 	cp a, $ff ; $5c26
-	jr z, .step ; $5c28
+	jr z, .eqff ; $5c28
 	ld a, $ff ; $5c2a
 	jr .store ; $5c2c
-.step:
+.eqff:
 	ld a, $01 ; $5c2e
 .store:
 	ld [wMatchWinLoseFlag], a ; $5c30
@@ -1166,20 +1166,20 @@ RunMatchStatsScreen:
 	call PrintMatchSetScores ; $5c5f
 	ldh a, [hInputPressed] ; $5c62
 	bit PADB_LEFT, a ; $5c64
-	jr nz, .step ; $5c66
+	jr nz, .beginFadeOut ; $5c66
 	bit 0, a ; $5c68
-	jr nz, .step2 ; $5c6a
+	jr nz, .beginFadeOut2 ; $5c6a
 	bit 1, a ; $5c6c
-	jr nz, .step2 ; $5c6e
+	jr nz, .beginFadeOut2 ; $5c6e
 	call AdvanceFrame ; $5c70
 	jr .loop ; $5c73
-.step:
+.beginFadeOut:
 	ld c, $40 ; $5c75
 	call BeginFadeOut ; $5c77
 	call WaitFadeEnd ; $5c7a
 	xor a, a ; $5c7d
 	ret ; $5c7e
-.step2:
+.beginFadeOut2:
 	ld c, $20 ; $5c7f
 	call BeginFadeOut ; $5c81
 	call WaitFadeEnd ; $5c84

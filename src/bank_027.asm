@@ -100,7 +100,7 @@ End17AwardCeremonyInitScript_27:
 	script_fade_in $04 ; $41e7
 	call WaitFadeEnd ; $41ec
 	test_flag FLAG_DOUBLES ; $41ef
-	jp nz, .step ; $41f2
+	jp nz, .isDoubles ; $41f2
 	script_set_speed $03, $0010 ; $41f5
 	script_set_speed $04, $0010 ; $41fd
 	script_set_speed $05, $0010 ; $4205
@@ -169,7 +169,7 @@ End17AwardCeremonyInitScript_27:
 	ld [$c294], a ; $43bb
 	ld [wStoryModeExitLocationRequest], a ; $43be
 	ret ; $43c1
-.step:
+.isDoubles:
 	script_set_speed $03, $0010 ; $43c2
 	script_set_speed $04, $0010 ; $43ca
 	script_set_speed $05, $0010 ; $43d2
@@ -306,13 +306,13 @@ End16BeforeFinalsTileTriggers_27:
 	ds 1, $ff ; $46fc, fill
 End16BeforeFinalsInitScript_27:
 	test_flag FLAG_DOUBLES ; $46fd
-	jr nz, .step ; $4700
+	jr nz, .isDoubles ; $4700
 	ldh a, [hRomBank] ; $4702
 	ld hl, End16BeforeFinalsActorsAlt_27 ; $4704
 	farcall ScriptRespawnLocationActors ; $4707
 	call End16BeforeFinalsCutscene_27 ; $470a
 	ret ; $470d
-.step:
+.isDoubles:
 	ldh a, [hRomBank] ; $470e
 	ld hl, End16BeforeFinalsActorsAltB_27 ; $4710
 	farcall ScriptRespawnLocationActors ; $4713
@@ -554,7 +554,7 @@ End12PrincipalsOfficeInitScript_27:
 	call EnableLCD ; $4c7d
 	ld a, [wStoryModeEntryPoint] ; $4c80
 	cp a, $02 ; $4c83
-	jp z, .step2 ; $4c85
+	jp z, .eq02 ; $4c85
 	jp .clearStoryModeShowLocationName ; $4c88
 	ret ; $4c8b
 .clearStoryModeShowLocationName:
@@ -667,7 +667,7 @@ End12PrincipalsOfficeInitScript_27:
 	script_move_target ACTOR_PLAYER, $1f00, $3200 ; $4f44
 	script_move_target ACTOR_PARTNER, $2100, $3200 ; $4f4f
 	script_wait_move ACTOR_PARTNER ; $4f5a
-	jp .step ; $4f5f
+	jp .storeStoryModeExitLocationRequest ; $4f5f
 .playSfx:
 	sound $96 ; $4f62
 	script_set_position $04, $2180, $3380 ; $4f64
@@ -689,12 +689,12 @@ End12PrincipalsOfficeInitScript_27:
 	script_set_anim ACTOR_PLAYER, $03 ; $4fd0
 	script_move_target ACTOR_PLAYER, $2000, $3200 ; $4fd7
 	script_wait_move ACTOR_PLAYER ; $4fe2
-.step:
+.storeStoryModeExitLocationRequest:
 	ld a, $01 ; $4fe7
 	ld [$c294], a ; $4fe9
 	ld [wStoryModeExitLocationRequest], a ; $4fec
 	ret ; $4fef
-.step2:
+.eq02:
 	ldh a, [hRomBank] ; $4ff0
 	ld hl, End12PrincipalsOfficeActorsAlt_27 ; $4ff2
 	farcall ScriptRespawnLocationActors ; $4ff5
@@ -831,7 +831,7 @@ End11TrainingCourtInitScript_27:
 	cp a, $01 ; $5273
 	jp z, .checkDoubles ; $5275
 	cp a, $02 ; $5278
-	jp z, .step ; $527a
+	jp z, .eq02 ; $527a
 	ret ; $527d
 .checkDoubles:
 	test_flag FLAG_DOUBLES ; $527e
@@ -923,7 +923,7 @@ End11TrainingCourtInitScript_27:
 	ld [$c294], a ; $53f2
 	ld [wStoryModeExitLocationRequest], a ; $53f5
 	ret ; $53f8
-.step:
+.eq02:
 	ldh a, [hRomBank] ; $53f9
 	ld hl, End11TrainingCourtActorsAlt_27 ; $53fb
 	farcall ScriptRespawnLocationActors ; $53fe
@@ -1065,9 +1065,9 @@ SetPartnerObjDefByGender_27:
 	ret ; $5642
 .checkDoubles:
 	test_flag FLAG_DOUBLES ; $5643
-	jr z, .step ; $5646
-	jp .step2 ; $5648
-.step:
+	jr z, .notDoubles ; $5646
+	jp .scriptRespawnLocationActors ; $5648
+.notDoubles:
 	wram_bank $06 ; $564b
 	ldh a, [hRomBank] ; $5651
 	ld hl, End10VarsityCourtActorsAlt_27 ; $5653
@@ -1146,7 +1146,7 @@ SetPartnerObjDefByGender_27:
 	ld [$c294], a ; $5825
 	ld [wStoryModeExitLocationRequest], a ; $5828
 	ret ; $582b
-.step2:
+.scriptRespawnLocationActors:
 	ldh a, [hRomBank] ; $582c
 	ld hl, End10VarsityCourtActorsAltB_27 ; $582e
 	farcall ScriptRespawnLocationActors ; $5831
@@ -1456,7 +1456,7 @@ End8SrCourtTileTriggers_27:
 	ds 1, $ff ; $5ed7, fill
 End8SrCourtInitScript_27:
 	test_flag FLAG_DOUBLES ; $5ed8
-	jp z, .step2 ; $5edb
+	jp z, .notDoubles ; $5edb
 	ldh a, [hRomBank] ; $5ede
 	ld hl, End8SrCourtActorsAlt_27 ; $5ee0
 	farcall ScriptRespawnLocationActors ; $5ee3
@@ -1525,7 +1525,7 @@ End8SrCourtInitScript_27:
 	ld [$c294], a ; $606e
 	ld [wStoryModeExitLocationRequest], a ; $6071
 	ret ; $6074
-.step2:
+.notDoubles:
 	script_set_speed $04, $0018 ; $6075
 	script_set_position ACTOR_PLAYER, $2400, $1b00 ; $607d
 	script_face ACTOR_PLAYER, FACE_UP ; $6088
@@ -2119,10 +2119,10 @@ End3DormEntInitScript_27:
 	ret ; $6c93
 End3DormEntCutscene_27:
 	test_flag FLAG_DOUBLES ; $6c94
-	jr z, .step ; $6c97
+	jr z, .notDoubles ; $6c97
 	script_set_actor_script ACTOR_PARTNER, ActorScript_27_785d ; $6c99
 	script_set_position ACTOR_PARTNER, $3f00, $3f00 ; $6ca4
-.step:
+.notDoubles:
 	script_set_speed $03, $0010 ; $6caf
 	script_set_speed $04, $0010 ; $6cb7
 	script_set_speed ACTOR_PLAYER, $0010 ; $6cbf
@@ -2400,10 +2400,10 @@ End1MainBldgInitScript_27:
 	script_set_position $08, $3f00, $3f00 ; $734d
 	script_set_position $0c, $3f00, $3f00 ; $7358
 	test_flag FLAG_DOUBLES ; $7363
-	jr z, .step ; $7366
+	jr z, .notDoubles ; $7366
 	script_set_actor_script ACTOR_PARTNER, ActorScript_27_785d ; $7368
 	script_set_position ACTOR_PARTNER, $3f00, $3f00 ; $7373
-.step:
+.notDoubles:
 	script_player_speed $0040 ; $737e
 	script_move_player $1800, $1200 ; $7384
 	farcall WaitPlayerMoveDone ; $738e

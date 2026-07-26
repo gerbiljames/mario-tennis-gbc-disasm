@@ -1654,7 +1654,7 @@ InvalidateStorySlot:
 	push bc ; $4b01
 	ld a, b ; $4b02
 	cp a, $03 ; $4b03
-	jr nc, .step ; $4b05
+	jr nc, .ge03 ; $4b05
 	sla a ; $4b07
 	ld b, a ; $4b09
 	call InvalidateSaveBlock ; $4b0a
@@ -1663,7 +1663,7 @@ InvalidateStorySlot:
 	inc b ; $4b10
 	call InvalidateSaveBlock ; $4b11
 	jr .restore ; $4b14
-.step:
+.ge03:
 	ld a, $ff ; $4b16
 .restore:
 	pop bc ; $4b18
@@ -1939,10 +1939,10 @@ ReadSaveBlockTag:
 	call GetSaveBlockDirEntry ; $4cae
 	ld a, [bc] ; $4cb1
 	or a, a ; $4cb2
-	jp nz, .step ; $4cb3
+	jp nz, .nonZero ; $4cb3
 	ld a, $fe ; $4cb6
 	jp .loopB ; $4cb8
-.step:
+.nonZero:
 	ld a, $08 ; $4cbb
 	add a, c ; $4cbd
 	ld e, a ; $4cbe
@@ -1976,10 +1976,10 @@ ReadSaveBlockTag:
 	call GetSaveBlockDirEntry ; $4ce3
 	ld a, [bc] ; $4ce6
 	or a, a ; $4ce7
-	jp nz, .step2 ; $4ce8
+	jp nz, .nonZero2 ; $4ce8
 	ld a, $fe ; $4ceb
 	jp .loopB ; $4ced
-.step2:
+.nonZero2:
 	ld a, $08 ; $4cf0
 	add a, c ; $4cf2
 	ld e, a ; $4cf3
@@ -2782,7 +2782,7 @@ InitAllMinigameRecordBlocks:
 	xor a, a ; $51bb
 .loop:
 	cp a, $0b ; $51bc
-	jr z, .step ; $51be
+	jr z, .eq0b ; $51be
 	push af ; $51c0
 	push hl ; $51c1
 	farcall GetDefaultMinigameRecordValue ; $51c2
@@ -2794,7 +2794,7 @@ InitAllMinigameRecordBlocks:
 	inc a ; $51ca
 	inc hl ; $51cb
 	jr .loop ; $51cc
-.step:
+.eq0b:
 	ld a, $38 ; $51ce
 	ld b, a ; $51d0
 	ld hl, $d480 ; $51d1
@@ -2989,7 +2989,7 @@ SaveSlotDebugEditor:
 .loop:
 	call ReadCurrentSlotBlock ; $5344
 	or a, a ; $5347
-	jr z, .step ; $5348
+	jr z, .zero ; $5348
 	push de ; $534a
 	ld hl, SaveResultFailedString_03 ; $534b
 	ld de, $0511 ; $534e
@@ -2999,7 +2999,7 @@ SaveSlotDebugEditor:
 	ld c, $30 ; $5358
 	call ClearMemory16 ; $535a
 	jp .loopB ; $535d
-.step:
+.zero:
 	ld hl, SaveResultLoadedString_03 ; $5360
 	ld de, $0511 ; $5363
 	call PrintString ; $5366
@@ -3109,28 +3109,28 @@ SaveSlotDebugEditor:
 	jp .loopB ; $5409
 .step3:
 	bit 5, a ; $540c
-	jr z, .step4 ; $540e
+	jr z, .bit5Clear ; $540e
 	ld bc, rIE ; $5410
 	call MoveSaveEditorCursor ; $5413
 	jr z, .loopBBBB ; $5416
 	jp .loopB ; $5418
-.step4:
+.bit5Clear:
 	bit 4, a ; $541b
-	jr z, .step5 ; $541d
+	jr z, .bit4Clear ; $541d
 	ld bc, $0101 ; $541f
 	call MoveSaveEditorCursor ; $5422
 	jr z, .loopBBBB ; $5425
 	jp .loopB ; $5427
-.step5:
+.bit4Clear:
 	bit 7, a ; $542a
-	jr z, .step6 ; $542c
+	jr z, .positive ; $542c
 	ld bc, $1008 ; $542e
 	call MoveSaveEditorCursor ; $5431
 	jp z, .loopBBBB ; $5434
 	jp .loopB ; $5437
-.step6:
+.positive:
 	bit 1, a ; $543a
-	jr z, .step7 ; $543c
+	jr z, .bit1Clear ; $543c
 	ld a, [wCurrentStorySlot] ; $543e
 	push af ; $5441
 	ld a, $03 ; $5442
@@ -3158,16 +3158,16 @@ SaveSlotDebugEditor:
 	pop af ; $5466
 	ld [wCurrentStorySlot], a ; $5467
 	jp .loop ; $546a
-.step7:
+.bit1Clear:
 	bit 2, a ; $546d
-	jr z, .step8 ; $546f
+	jr z, .bit2Clear ; $546f
 	sound $5f ; $5471
 	ld a, [wCurrentStorySlot] ; $5473
 	inc a ; $5476
 	and a, $03 ; $5477
 	ld [wCurrentStorySlot], a ; $5479
 	jp .loop ; $547c
-.step8:
+.bit2Clear:
 	bit 3, a ; $547f
 	jr z, .label_03_53c8 ; $5481
 	sound $5f ; $5483
@@ -3255,13 +3255,13 @@ RestoreStoryBlockFromBackup:
 	ld b, a ; $5555
 	call ReadSaveBlock ; $5556
 	or a, a ; $5559
-	jr nz, .step ; $555a
+	jr nz, .nonZero ; $555a
 	pop bc ; $555c
 	ld hl, $d000 ; $555d
 	ld de, $0000 ; $5560
 	call WriteSaveBlock ; $5563
 	ret ; $5566
-.step:
+.nonZero:
 	push bc ; $5567
 	ld hl, $d000 ; $5568
 	ld c, $20 ; $556b
@@ -3279,13 +3279,13 @@ RestoreStoryBlockFromBackup:
 	ld b, $21 ; $5586
 	call ReadSaveBlock ; $5588
 	or a, a ; $558b
-	jr nz, .step2 ; $558c
+	jr nz, .nonZero2 ; $558c
 	ld b, $06 ; $558e
 	ld hl, $d000 ; $5590
 	ld de, $0000 ; $5593
 	call WriteSaveBlock ; $5596
 	ret ; $5599
-.step2:
+.nonZero2:
 	ld b, $06 ; $559a
 	call InvalidateSaveBlock ; $559c
 	ld b, $21 ; $559f
@@ -3299,13 +3299,13 @@ RestoreStoryBlockFromBackup:
 	ld b, $22 ; $55b0
 	call ReadSaveBlock ; $55b2
 	or a, a ; $55b5
-	jr nz, .step3 ; $55b6
+	jr nz, .nonZero3 ; $55b6
 	ld b, $07 ; $55b8
 	ld hl, $d000 ; $55ba
 	ld de, $0000 ; $55bd
 	call WriteSaveBlock ; $55c0
 	ret ; $55c3
-.step3:
+.nonZero3:
 	ld b, $07 ; $55c4
 	call InvalidateSaveBlock ; $55c6
 	ld b, $22 ; $55c9
@@ -3319,13 +3319,13 @@ RestoreStoryBlockFromBackup:
 	ld b, $23 ; $55da
 	call ReadSaveBlock ; $55dc
 	or a, a ; $55df
-	jr nz, .step4 ; $55e0
+	jr nz, .nonZero4 ; $55e0
 	ld b, $08 ; $55e2
 	ld hl, $d000 ; $55e4
 	ld de, $0000 ; $55e7
 	call WriteSaveBlock ; $55ea
 	ret ; $55ed
-.step4:
+.nonZero4:
 	ld b, $08 ; $55ee
 	call InvalidateSaveBlock ; $55f0
 	ld b, $23 ; $55f3
@@ -3339,13 +3339,13 @@ RestoreStoryBlockFromBackup:
 	ld b, $24 ; $5604
 	call ReadSaveBlock ; $5606
 	or a, a ; $5609
-	jr nz, .step5 ; $560a
+	jr nz, .nonZero5 ; $560a
 	ld b, $09 ; $560c
 	ld hl, $d000 ; $560e
 	ld de, $0000 ; $5611
 	call WriteSaveBlock ; $5614
 	ret ; $5617
-.step5:
+.nonZero5:
 	ld b, $09 ; $5618
 	call InvalidateSaveBlock ; $561a
 	ld b, $24 ; $561d
@@ -3359,13 +3359,13 @@ RestoreStoryBlockFromBackup:
 	ld b, $25 ; $562e
 	call ReadSaveBlock ; $5630
 	or a, a ; $5633
-	jr nz, .step6 ; $5634
+	jr nz, .nonZero6 ; $5634
 	ld b, $0a ; $5636
 	ld hl, $d000 ; $5638
 	ld de, $0000 ; $563b
 	call WriteSaveBlock ; $563e
 	ret ; $5641
-.step6:
+.nonZero6:
 	ld b, $0a ; $5642
 	call InvalidateSaveBlock ; $5644
 	ld b, $25 ; $5647
@@ -3485,51 +3485,51 @@ UpdateUnlockablesSaveBlock:
 	ld a, $02 ; $571e
 	call CheckUnlockCondition ; $5720
 	or a, a ; $5723
-	jr z, .step ; $5724
+	jr z, .zero ; $5724
 	ld hl, $d502 ; $5726
 	ld a, $01 ; $5729
 	ld [hl], a ; $572b
-.step:
+.zero:
 	ld a, $04 ; $572c
 	call CheckUnlockCondition ; $572e
 	or a, a ; $5731
-	jr z, .step2 ; $5732
+	jr z, .zero2 ; $5732
 	ld hl, $d507 ; $5734
 	ld a, $01 ; $5737
 	ld [hl], a ; $5739
-.step2:
+.zero2:
 	ld a, $06 ; $573a
 	call CheckUnlockCondition ; $573c
 	or a, a ; $573f
-	jr z, .step3 ; $5740
+	jr z, .zero3 ; $5740
 	ld hl, $d504 ; $5742
 	ld a, $01 ; $5745
 	ld [hl], a ; $5747
-.step3:
+.zero3:
 	ld a, $08 ; $5748
 	call CheckUnlockCondition ; $574a
 	or a, a ; $574d
-	jr z, .step4 ; $574e
+	jr z, .zero4 ; $574e
 	ld hl, $d506 ; $5750
 	ld a, $01 ; $5753
 	ld [hl], a ; $5755
-.step4:
+.zero4:
 	ld a, $09 ; $5756
 	call CheckUnlockCondition ; $5758
 	or a, a ; $575b
-	jr z, .step5 ; $575c
+	jr z, .zero5 ; $575c
 	ld hl, $d503 ; $575e
 	ld a, $01 ; $5761
 	ld [hl], a ; $5763
-.step5:
+.zero5:
 	ld a, $0a ; $5764
 	call CheckUnlockCondition ; $5766
 	or a, a ; $5769
-	jr z, .step6 ; $576a
+	jr z, .zero6 ; $576a
 	ld hl, $d505 ; $576c
 	ld a, $01 ; $576f
 	ld [hl], a ; $5771
-.step6:
+.zero6:
 	ld hl, $d500 ; $5772
 	ld b, $0b ; $5775
 	ld de, $0000 ; $5777
@@ -3956,12 +3956,12 @@ RunScrollingTextScreen:
 	farcall FetchAndDrawDialogueText ; $5a33
 	call TestTextEndMarker ; $5a36
 	and a, a ; $5a39
-	jr nz, .step ; $5a3a
+	jr nz, .nonZero ; $5a3a
 	wram_bank $06 ; $5a3c
 	ld a, $01 ; $5a42
 	ld [$d234], a ; $5a44
 	jr .step2 ; $5a47
-.step:
+.nonZero:
 	ld de, $0090 ; $5a49
 	call GetScrollTextRowVramAddr ; $5a4c
 	push de ; $5a4f
@@ -3986,14 +3986,14 @@ RunScrollingTextScreen:
 .step2:
 	ldh a, [hDebugStepMode] ; $5a73
 	or a, a ; $5a75
-	jr nz, .step3 ; $5a76
+	jr nz, .nonZero2 ; $5a76
 	ld a, [$d234] ; $5a78
 	and a, a ; $5a7b
 	jr z, .advanceFrame ; $5a7c
-.step3:
+.nonZero2:
 	ldh a, [hPlayerInputFlags] ; $5a7e
 	and a, $0b ; $5a80
-	jr nz, .step4 ; $5a82
+	jr nz, .maskSet ; $5a82
 .advanceFrame:
 	call AdvanceFrame ; $5a84
 	wram_bank $03 ; $5a87
@@ -4005,7 +4005,7 @@ RunScrollingTextScreen:
 	inc b ; $5a94
 	jr nz, .loopB ; $5a95
 	jp .loop ; $5a97
-.step4:
+.maskSet:
 	ld c, $01 ; $5a9a
 	call BeginFadeOut ; $5a9c
 	call WaitFadeEnd ; $5a9f
@@ -4120,25 +4120,25 @@ LoadCutsceneAnimFrameGfx_00_08:
 	wram_bank $06 ; $5b89
 	ld a, [$d000] ; $5b8f
 	cp a, $00 ; $5b92
-	jp z, .step ; $5b94
+	jp z, .eq00 ; $5b94
 	cp a, $01 ; $5b97
-	jp z, .step2 ; $5b99
+	jp z, .eq01 ; $5b99
 	cp a, $02 ; $5b9c
-	jp z, .step3 ; $5b9e
+	jp z, .eq02 ; $5b9e
 	cp a, $03 ; $5ba1
-	jp z, .step4 ; $5ba3
+	jp z, .eq03 ; $5ba3
 	cp a, $04 ; $5ba6
-	jp z, .step5 ; $5ba8
+	jp z, .eq04 ; $5ba8
 	cp a, $05 ; $5bab
-	jp z, .step6 ; $5bad
+	jp z, .eq05 ; $5bad
 	cp a, $06 ; $5bb0
-	jp z, .step7 ; $5bb2
+	jp z, .eq06 ; $5bb2
 	cp a, $07 ; $5bb5
-	jp z, .step8 ; $5bb7
+	jp z, .eq07 ; $5bb7
 	cp a, $08 ; $5bba
-	jp z, .step9 ; $5bbc
+	jp z, .eq08 ; $5bbc
 	jp .step10 ; $5bbf
-.step:
+.eq00:
 	wram_bank $01 ; $5bc2
 	ld hl, CutsceneAnimFrameLZ_00 ; $5bc8
 	ld de, $d000 ; $5bcb
@@ -4153,7 +4153,7 @@ LoadCutsceneAnimFrameGfx_00_08:
 	ld bc, $0300 ; $5be3
 	call QueueSpriteTemplate ; $5be6
 	ret ; $5be9
-.step2:
+.eq01:
 	wram_bank $01 ; $5bea
 	ld hl, CutsceneAnimFrameLZ_01 ; $5bf0
 	ld de, $d000 ; $5bf3
@@ -4168,7 +4168,7 @@ LoadCutsceneAnimFrameGfx_00_08:
 	ld bc, $0300 ; $5c0b
 	call QueueSpriteTemplate ; $5c0e
 	ret ; $5c11
-.step3:
+.eq02:
 	wram_bank $01 ; $5c12
 	ld hl, CutsceneAnimFrameLZ_02 ; $5c18
 	ld de, $d000 ; $5c1b
@@ -4183,7 +4183,7 @@ LoadCutsceneAnimFrameGfx_00_08:
 	ld bc, $0300 ; $5c33
 	call QueueSpriteTemplate ; $5c36
 	ret ; $5c39
-.step4:
+.eq03:
 	wram_bank $01 ; $5c3a
 	ld hl, CutsceneAnimFrameLZ_03 ; $5c40
 	ld de, $d000 ; $5c43
@@ -4198,7 +4198,7 @@ LoadCutsceneAnimFrameGfx_00_08:
 	ld bc, $0300 ; $5c5b
 	call QueueSpriteTemplate ; $5c5e
 	ret ; $5c61
-.step5:
+.eq04:
 	wram_bank $01 ; $5c62
 	ld hl, CutsceneAnimFrameLZ_04 ; $5c68
 	ld de, $d000 ; $5c6b
@@ -4213,7 +4213,7 @@ LoadCutsceneAnimFrameGfx_00_08:
 	ld bc, $0300 ; $5c83
 	call QueueSpriteTemplate ; $5c86
 	ret ; $5c89
-.step6:
+.eq05:
 	wram_bank $01 ; $5c8a
 	ld hl, CutsceneAnimFrameLZ_05 ; $5c90
 	ld de, $d000 ; $5c93
@@ -4228,7 +4228,7 @@ LoadCutsceneAnimFrameGfx_00_08:
 	ld bc, $0300 ; $5cab
 	call QueueSpriteTemplate ; $5cae
 	ret ; $5cb1
-.step7:
+.eq06:
 	wram_bank $01 ; $5cb2
 	ld hl, CutsceneAnimFrameLZ_06 ; $5cb8
 	ld de, $d000 ; $5cbb
@@ -4243,7 +4243,7 @@ LoadCutsceneAnimFrameGfx_00_08:
 	ld bc, $0300 ; $5cd3
 	call QueueSpriteTemplate ; $5cd6
 	ret ; $5cd9
-.step8:
+.eq07:
 	wram_bank $01 ; $5cda
 	ld hl, CutsceneAnimFrameLZ_07 ; $5ce0
 	ld de, $d000 ; $5ce3
@@ -4258,7 +4258,7 @@ LoadCutsceneAnimFrameGfx_00_08:
 	ld bc, $0300 ; $5cfb
 	call QueueSpriteTemplate ; $5cfe
 	ret ; $5d01
-.step9:
+.eq08:
 	wram_bank $01 ; $5d02
 	ld hl, CutsceneAnimFrameLZ_08 ; $5d08
 	ld de, $d000 ; $5d0b
@@ -4288,25 +4288,25 @@ LoadCutsceneAnimFrameGfx_09_11:
 	ret c ; $5d44
 	ld a, b ; $5d45
 	cp a, $09 ; $5d46
-	jp z, .step ; $5d48
+	jp z, .eq09 ; $5d48
 	cp a, $0a ; $5d4b
-	jp z, .step2 ; $5d4d
+	jp z, .eq0a ; $5d4d
 	cp a, $0b ; $5d50
-	jp z, .step3 ; $5d52
+	jp z, .eq0b ; $5d52
 	cp a, $0c ; $5d55
-	jp z, .step4 ; $5d57
+	jp z, .eq0c ; $5d57
 	cp a, $0d ; $5d5a
-	jp z, .step5 ; $5d5c
+	jp z, .eq0d ; $5d5c
 	cp a, $0e ; $5d5f
-	jp z, .step6 ; $5d61
+	jp z, .eq0e ; $5d61
 	cp a, $0f ; $5d64
-	jp z, .step7 ; $5d66
+	jp z, .eq0f ; $5d66
 	cp a, $10 ; $5d69
-	jp z, .step8 ; $5d6b
+	jp z, .eq10 ; $5d6b
 	cp a, $11 ; $5d6e
-	jp z, .step9 ; $5d70
+	jp z, .eq11 ; $5d70
 	jp .step10 ; $5d73
-.step:
+.eq09:
 	wram_bank $01 ; $5d76
 	ld hl, CutsceneAnimFrameLZ_09 ; $5d7c
 	ld de, $d040 ; $5d7f
@@ -4321,7 +4321,7 @@ LoadCutsceneAnimFrameGfx_09_11:
 	ld bc, $0204 ; $5d97
 	call QueueSpriteTemplate ; $5d9a
 	ret ; $5d9d
-.step2:
+.eq0a:
 	wram_bank $01 ; $5d9e
 	ld hl, CutsceneAnimFrameLZ_0a ; $5da4
 	ld de, $d040 ; $5da7
@@ -4336,7 +4336,7 @@ LoadCutsceneAnimFrameGfx_09_11:
 	ld bc, $0204 ; $5dbf
 	call QueueSpriteTemplate ; $5dc2
 	ret ; $5dc5
-.step3:
+.eq0b:
 	wram_bank $01 ; $5dc6
 	ld hl, CutsceneAnimFrameLZ_0b ; $5dcc
 	ld de, $d040 ; $5dcf
@@ -4351,7 +4351,7 @@ LoadCutsceneAnimFrameGfx_09_11:
 	ld bc, $0204 ; $5de7
 	call QueueSpriteTemplate ; $5dea
 	ret ; $5ded
-.step4:
+.eq0c:
 	wram_bank $01 ; $5dee
 	ld hl, CutsceneAnimFrameLZ_0c ; $5df4
 	ld de, $d040 ; $5df7
@@ -4366,7 +4366,7 @@ LoadCutsceneAnimFrameGfx_09_11:
 	ld bc, $0204 ; $5e0f
 	call QueueSpriteTemplate ; $5e12
 	ret ; $5e15
-.step5:
+.eq0d:
 	wram_bank $01 ; $5e16
 	ld hl, CutsceneAnimFrameLZ_0d ; $5e1c
 	ld de, $d040 ; $5e1f
@@ -4381,7 +4381,7 @@ LoadCutsceneAnimFrameGfx_09_11:
 	ld bc, $0204 ; $5e37
 	call QueueSpriteTemplate ; $5e3a
 	ret ; $5e3d
-.step6:
+.eq0e:
 	wram_bank $01 ; $5e3e
 	ld hl, CutsceneAnimFrameLZ_0e ; $5e44
 	ld de, $d040 ; $5e47
@@ -4396,7 +4396,7 @@ LoadCutsceneAnimFrameGfx_09_11:
 	ld bc, $0204 ; $5e5f
 	call QueueSpriteTemplate ; $5e62
 	ret ; $5e65
-.step7:
+.eq0f:
 	wram_bank $01 ; $5e66
 	ld hl, CutsceneAnimFrameLZ_0f ; $5e6c
 	ld de, $d040 ; $5e6f
@@ -4411,7 +4411,7 @@ LoadCutsceneAnimFrameGfx_09_11:
 	ld bc, $0204 ; $5e87
 	call QueueSpriteTemplate ; $5e8a
 	ret ; $5e8d
-.step8:
+.eq10:
 	wram_bank $01 ; $5e8e
 	ld hl, CutsceneAnimFrameLZ_10 ; $5e94
 	ld de, $d040 ; $5e97
@@ -4426,7 +4426,7 @@ LoadCutsceneAnimFrameGfx_09_11:
 	ld bc, $0204 ; $5eaf
 	call QueueSpriteTemplate ; $5eb2
 	ret ; $5eb5
-.step9:
+.eq11:
 	wram_bank $01 ; $5eb6
 	ld hl, CutsceneAnimFrameLZ_11 ; $5ebc
 	ld de, $d040 ; $5ebf
@@ -4456,25 +4456,25 @@ LoadCutsceneAnimFrameGfx_12_1A:
 	ret c ; $5ef8
 	ld a, b ; $5ef9
 	cp a, $12 ; $5efa
-	jp z, .step ; $5efc
+	jp z, .eq12 ; $5efc
 	cp a, $13 ; $5eff
-	jp z, .step2 ; $5f01
+	jp z, .eq13 ; $5f01
 	cp a, $14 ; $5f04
-	jp z, .step3 ; $5f06
+	jp z, .eq14 ; $5f06
 	cp a, $15 ; $5f09
-	jp z, .step4 ; $5f0b
+	jp z, .eq15 ; $5f0b
 	cp a, $16 ; $5f0e
-	jp z, .step5 ; $5f10
+	jp z, .eq16 ; $5f10
 	cp a, $17 ; $5f13
-	jp z, .step6 ; $5f15
+	jp z, .eq17 ; $5f15
 	cp a, $18 ; $5f18
-	jp z, .step7 ; $5f1a
+	jp z, .eq18 ; $5f1a
 	cp a, $19 ; $5f1d
-	jp z, .step8 ; $5f1f
+	jp z, .eq19 ; $5f1f
 	cp a, $1a ; $5f22
-	jp z, .step9 ; $5f24
+	jp z, .eq1a ; $5f24
 	jp .step10 ; $5f27
-.step:
+.eq12:
 	wram_bank $01 ; $5f2a
 	ld hl, CutsceneAnimFrameLZ_12 ; $5f30
 	ld de, $d080 ; $5f33
@@ -4489,7 +4489,7 @@ LoadCutsceneAnimFrameGfx_12_1A:
 	ld bc, $0308 ; $5f4b
 	call QueueSpriteTemplate ; $5f4e
 	ret ; $5f51
-.step2:
+.eq13:
 	wram_bank $01 ; $5f52
 	ld hl, CutsceneAnimFrameLZ_13 ; $5f58
 	ld de, $d080 ; $5f5b
@@ -4504,7 +4504,7 @@ LoadCutsceneAnimFrameGfx_12_1A:
 	ld bc, $0308 ; $5f73
 	call QueueSpriteTemplate ; $5f76
 	ret ; $5f79
-.step3:
+.eq14:
 	wram_bank $01 ; $5f7a
 	ld hl, CutsceneAnimFrameLZ_14 ; $5f80
 	ld de, $d080 ; $5f83
@@ -4519,7 +4519,7 @@ LoadCutsceneAnimFrameGfx_12_1A:
 	ld bc, $0308 ; $5f9b
 	call QueueSpriteTemplate ; $5f9e
 	ret ; $5fa1
-.step4:
+.eq15:
 	wram_bank $01 ; $5fa2
 	ld hl, CutsceneAnimFrameLZ_15 ; $5fa8
 	ld de, $d080 ; $5fab
@@ -4534,7 +4534,7 @@ LoadCutsceneAnimFrameGfx_12_1A:
 	ld bc, $0308 ; $5fc3
 	call QueueSpriteTemplate ; $5fc6
 	ret ; $5fc9
-.step5:
+.eq16:
 	wram_bank $01 ; $5fca
 	ld hl, CutsceneAnimFrameLZ_16 ; $5fd0
 	ld de, $d080 ; $5fd3
@@ -4549,7 +4549,7 @@ LoadCutsceneAnimFrameGfx_12_1A:
 	ld bc, $0308 ; $5feb
 	call QueueSpriteTemplate ; $5fee
 	ret ; $5ff1
-.step6:
+.eq17:
 	wram_bank $01 ; $5ff2
 	ld hl, CutsceneAnimFrameLZ_17 ; $5ff8
 	ld de, $d080 ; $5ffb
@@ -4564,7 +4564,7 @@ LoadCutsceneAnimFrameGfx_12_1A:
 	ld bc, $0308 ; $6013
 	call QueueSpriteTemplate ; $6016
 	ret ; $6019
-.step7:
+.eq18:
 	wram_bank $01 ; $601a
 	ld hl, CutsceneAnimFrameLZ_18 ; $6020
 	ld de, $d080 ; $6023
@@ -4579,7 +4579,7 @@ LoadCutsceneAnimFrameGfx_12_1A:
 	ld bc, $0308 ; $603b
 	call QueueSpriteTemplate ; $603e
 	ret ; $6041
-.step8:
+.eq19:
 	wram_bank $01 ; $6042
 	ld hl, CutsceneAnimFrameLZ_19 ; $6048
 	ld de, $d080 ; $604b
@@ -4594,7 +4594,7 @@ LoadCutsceneAnimFrameGfx_12_1A:
 	ld bc, $0308 ; $6063
 	call QueueSpriteTemplate ; $6066
 	ret ; $6069
-.step9:
+.eq1a:
 	wram_bank $01 ; $606a
 	ld hl, CutsceneAnimFrameLZ_1a ; $6070
 	ld de, $d080 ; $6073
@@ -4624,25 +4624,25 @@ LoadCutsceneAnimFrameGfx_1B_23:
 	ret c ; $60ac
 	ld a, b ; $60ad
 	cp a, $1b ; $60ae
-	jp z, .step ; $60b0
+	jp z, .eq1b ; $60b0
 	cp a, $1c ; $60b3
-	jp z, .step2 ; $60b5
+	jp z, .eq1c ; $60b5
 	cp a, $1d ; $60b8
-	jp z, .step3 ; $60ba
+	jp z, .eq1d ; $60ba
 	cp a, $1e ; $60bd
-	jp z, .step4 ; $60bf
+	jp z, .eq1e ; $60bf
 	cp a, $1f ; $60c2
-	jp z, .step5 ; $60c4
+	jp z, .eq1f ; $60c4
 	cp a, $20 ; $60c7
-	jp z, .step6 ; $60c9
+	jp z, .eq20 ; $60c9
 	cp a, $21 ; $60cc
-	jp z, .step7 ; $60ce
+	jp z, .eq21 ; $60ce
 	cp a, $22 ; $60d1
-	jp z, .step8 ; $60d3
+	jp z, .eq22 ; $60d3
 	cp a, $23 ; $60d6
-	jp z, .step9 ; $60d8
+	jp z, .eq23 ; $60d8
 	jp .step10 ; $60db
-.step:
+.eq1b:
 	wram_bank $01 ; $60de
 	ld hl, CutsceneAnimFrameLZ_1b ; $60e4
 	ld de, $d0c0 ; $60e7
@@ -4657,7 +4657,7 @@ LoadCutsceneAnimFrameGfx_1B_23:
 	ld bc, $030c ; $60ff
 	call QueueSpriteTemplate ; $6102
 	ret ; $6105
-.step2:
+.eq1c:
 	wram_bank $01 ; $6106
 	ld hl, CutsceneAnimFrameLZ_1c ; $610c
 	ld de, $d0c0 ; $610f
@@ -4672,7 +4672,7 @@ LoadCutsceneAnimFrameGfx_1B_23:
 	ld bc, $030c ; $6127
 	call QueueSpriteTemplate ; $612a
 	ret ; $612d
-.step3:
+.eq1d:
 	wram_bank $01 ; $612e
 	ld hl, CutsceneAnimFrameLZ_1d ; $6134
 	ld de, $d0c0 ; $6137
@@ -4687,7 +4687,7 @@ LoadCutsceneAnimFrameGfx_1B_23:
 	ld bc, $030c ; $614f
 	call QueueSpriteTemplate ; $6152
 	ret ; $6155
-.step4:
+.eq1e:
 	wram_bank $01 ; $6156
 	ld hl, CutsceneAnimFrameLZ_1e ; $615c
 	ld de, $d0c0 ; $615f
@@ -4702,7 +4702,7 @@ LoadCutsceneAnimFrameGfx_1B_23:
 	ld bc, $030c ; $6177
 	call QueueSpriteTemplate ; $617a
 	ret ; $617d
-.step5:
+.eq1f:
 	wram_bank $01 ; $617e
 	ld hl, CutsceneAnimFrameLZ_1f ; $6184
 	ld de, $d0c0 ; $6187
@@ -4717,7 +4717,7 @@ LoadCutsceneAnimFrameGfx_1B_23:
 	ld bc, $030c ; $619f
 	call QueueSpriteTemplate ; $61a2
 	ret ; $61a5
-.step6:
+.eq20:
 	wram_bank $01 ; $61a6
 	ld hl, CutsceneAnimFrameLZ_20 ; $61ac
 	ld de, $d0c0 ; $61af
@@ -4732,7 +4732,7 @@ LoadCutsceneAnimFrameGfx_1B_23:
 	ld bc, $030c ; $61c7
 	call QueueSpriteTemplate ; $61ca
 	ret ; $61cd
-.step7:
+.eq21:
 	wram_bank $01 ; $61ce
 	ld hl, CutsceneAnimFrameLZ_21 ; $61d4
 	ld de, $d0c0 ; $61d7
@@ -4747,7 +4747,7 @@ LoadCutsceneAnimFrameGfx_1B_23:
 	ld bc, $030c ; $61ef
 	call QueueSpriteTemplate ; $61f2
 	ret ; $61f5
-.step8:
+.eq22:
 	wram_bank $01 ; $61f6
 	ld hl, CutsceneAnimFrameLZ_22 ; $61fc
 	ld de, $d0c0 ; $61ff
@@ -4762,7 +4762,7 @@ LoadCutsceneAnimFrameGfx_1B_23:
 	ld bc, $030c ; $6217
 	call QueueSpriteTemplate ; $621a
 	ret ; $621d
-.step9:
+.eq23:
 	wram_bank $01 ; $621e
 	ld hl, CutsceneAnimFrameLZ_23 ; $6224
 	ld de, $d0c0 ; $6227
@@ -4792,25 +4792,25 @@ LoadCutsceneAnimFrameGfx_24_2C:
 	ret c ; $6260
 	ld a, b ; $6261
 	cp a, $24 ; $6262
-	jp z, .step ; $6264
+	jp z, .eq24 ; $6264
 	cp a, $25 ; $6267
-	jp z, .step2 ; $6269
+	jp z, .eq25 ; $6269
 	cp a, $26 ; $626c
-	jp z, .step3 ; $626e
+	jp z, .eq26 ; $626e
 	cp a, $27 ; $6271
-	jp z, .step4 ; $6273
+	jp z, .eq27 ; $6273
 	cp a, $28 ; $6276
-	jp z, .step5 ; $6278
+	jp z, .eq28 ; $6278
 	cp a, $29 ; $627b
-	jp z, .step6 ; $627d
+	jp z, .eq29 ; $627d
 	cp a, $2a ; $6280
-	jp z, .step7 ; $6282
+	jp z, .eq2a ; $6282
 	cp a, $2b ; $6285
-	jp z, .step8 ; $6287
+	jp z, .eq2b ; $6287
 	cp a, $2c ; $628a
-	jp z, .step9 ; $628c
+	jp z, .eq2c ; $628c
 	jp .step10 ; $628f
-.step:
+.eq24:
 	wram_bank $01 ; $6292
 	ld hl, CutsceneAnimFrameLZ_24 ; $6298
 	ld de, $d0e0 ; $629b
@@ -4825,7 +4825,7 @@ LoadCutsceneAnimFrameGfx_24_2C:
 	ld bc, $020e ; $62b3
 	call QueueSpriteTemplate ; $62b6
 	ret ; $62b9
-.step2:
+.eq25:
 	wram_bank $01 ; $62ba
 	ld hl, CutsceneAnimFrameLZ_25 ; $62c0
 	ld de, $d0e0 ; $62c3
@@ -4840,7 +4840,7 @@ LoadCutsceneAnimFrameGfx_24_2C:
 	ld bc, $020e ; $62db
 	call QueueSpriteTemplate ; $62de
 	ret ; $62e1
-.step3:
+.eq26:
 	wram_bank $01 ; $62e2
 	ld hl, CutsceneAnimFrameLZ_26 ; $62e8
 	ld de, $d0e0 ; $62eb
@@ -4855,7 +4855,7 @@ LoadCutsceneAnimFrameGfx_24_2C:
 	ld bc, $020e ; $6303
 	call QueueSpriteTemplate ; $6306
 	ret ; $6309
-.step4:
+.eq27:
 	wram_bank $01 ; $630a
 	ld hl, CutsceneAnimFrameLZ_27 ; $6310
 	ld de, $d0e0 ; $6313
@@ -4870,7 +4870,7 @@ LoadCutsceneAnimFrameGfx_24_2C:
 	ld bc, $020e ; $632b
 	call QueueSpriteTemplate ; $632e
 	ret ; $6331
-.step5:
+.eq28:
 	wram_bank $01 ; $6332
 	ld hl, CutsceneAnimFrameLZ_28 ; $6338
 	ld de, $d0e0 ; $633b
@@ -4885,7 +4885,7 @@ LoadCutsceneAnimFrameGfx_24_2C:
 	ld bc, $020e ; $6353
 	call QueueSpriteTemplate ; $6356
 	ret ; $6359
-.step6:
+.eq29:
 	wram_bank $01 ; $635a
 	ld hl, CutsceneAnimFrameLZ_29 ; $6360
 	ld de, $d0e0 ; $6363
@@ -4900,7 +4900,7 @@ LoadCutsceneAnimFrameGfx_24_2C:
 	ld bc, $020e ; $637b
 	call QueueSpriteTemplate ; $637e
 	ret ; $6381
-.step7:
+.eq2a:
 	wram_bank $01 ; $6382
 	ld hl, CutsceneAnimFrameLZ_2a ; $6388
 	ld de, $d0e0 ; $638b
@@ -4915,7 +4915,7 @@ LoadCutsceneAnimFrameGfx_24_2C:
 	ld bc, $020e ; $63a3
 	call QueueSpriteTemplate ; $63a6
 	ret ; $63a9
-.step8:
+.eq2b:
 	wram_bank $01 ; $63aa
 	ld hl, CutsceneAnimFrameLZ_2b ; $63b0
 	ld de, $d0e0 ; $63b3
@@ -4930,7 +4930,7 @@ LoadCutsceneAnimFrameGfx_24_2C:
 	ld bc, $020e ; $63cb
 	call QueueSpriteTemplate ; $63ce
 	ret ; $63d1
-.step9:
+.eq2c:
 	wram_bank $01 ; $63d2
 	ld hl, CutsceneAnimFrameLZ_2c ; $63d8
 	ld de, $d0e0 ; $63db
@@ -4960,25 +4960,25 @@ LoadCutsceneAnimFrameGfx_2D_35:
 	ret c ; $6414
 	ld a, b ; $6415
 	cp a, $2d ; $6416
-	jp z, .step ; $6418
+	jp z, .eq2d ; $6418
 	cp a, $2e ; $641b
-	jp z, .step2 ; $641d
+	jp z, .eq2e ; $641d
 	cp a, $2f ; $6420
-	jp z, .step3 ; $6422
+	jp z, .eq2f ; $6422
 	cp a, $30 ; $6425
-	jp z, .step4 ; $6427
+	jp z, .eq30 ; $6427
 	cp a, $31 ; $642a
-	jp z, .step5 ; $642c
+	jp z, .eq31 ; $642c
 	cp a, $32 ; $642f
-	jp z, .step6 ; $6431
+	jp z, .eq32 ; $6431
 	cp a, $33 ; $6434
-	jp z, .step7 ; $6436
+	jp z, .eq33 ; $6436
 	cp a, $34 ; $6439
-	jp z, .step8 ; $643b
+	jp z, .eq34 ; $643b
 	cp a, $35 ; $643e
-	jp z, .step9 ; $6440
+	jp z, .eq35 ; $6440
 	jp .step10 ; $6443
-.step:
+.eq2d:
 	wram_bank $01 ; $6446
 	ld hl, CutsceneAnimFrameLZ_2d ; $644c
 	ld de, $d100 ; $644f
@@ -4993,7 +4993,7 @@ LoadCutsceneAnimFrameGfx_2D_35:
 	ld bc, $0310 ; $6467
 	call QueueSpriteTemplate ; $646a
 	ret ; $646d
-.step2:
+.eq2e:
 	wram_bank $01 ; $646e
 	ld hl, CutsceneAnimFrameLZ_2e ; $6474
 	ld de, $d100 ; $6477
@@ -5008,7 +5008,7 @@ LoadCutsceneAnimFrameGfx_2D_35:
 	ld bc, $0310 ; $648f
 	call QueueSpriteTemplate ; $6492
 	ret ; $6495
-.step3:
+.eq2f:
 	wram_bank $01 ; $6496
 	ld hl, CutsceneAnimFrameLZ_2f ; $649c
 	ld de, $d100 ; $649f
@@ -5023,7 +5023,7 @@ LoadCutsceneAnimFrameGfx_2D_35:
 	ld bc, $0310 ; $64b7
 	call QueueSpriteTemplate ; $64ba
 	ret ; $64bd
-.step4:
+.eq30:
 	wram_bank $01 ; $64be
 	ld hl, CutsceneAnimFrameLZ_30 ; $64c4
 	ld de, $d100 ; $64c7
@@ -5038,7 +5038,7 @@ LoadCutsceneAnimFrameGfx_2D_35:
 	ld bc, $0310 ; $64df
 	call QueueSpriteTemplate ; $64e2
 	ret ; $64e5
-.step5:
+.eq31:
 	wram_bank $01 ; $64e6
 	ld hl, CutsceneAnimFrameLZ_31 ; $64ec
 	ld de, $d100 ; $64ef
@@ -5053,7 +5053,7 @@ LoadCutsceneAnimFrameGfx_2D_35:
 	ld bc, $0310 ; $6507
 	call QueueSpriteTemplate ; $650a
 	ret ; $650d
-.step6:
+.eq32:
 	wram_bank $01 ; $650e
 	ld hl, CutsceneAnimFrameLZ_32 ; $6514
 	ld de, $d100 ; $6517
@@ -5068,7 +5068,7 @@ LoadCutsceneAnimFrameGfx_2D_35:
 	ld bc, $0310 ; $652f
 	call QueueSpriteTemplate ; $6532
 	ret ; $6535
-.step7:
+.eq33:
 	wram_bank $01 ; $6536
 	ld hl, CutsceneAnimFrameLZ_33 ; $653c
 	ld de, $d100 ; $653f
@@ -5083,7 +5083,7 @@ LoadCutsceneAnimFrameGfx_2D_35:
 	ld bc, $0310 ; $6557
 	call QueueSpriteTemplate ; $655a
 	ret ; $655d
-.step8:
+.eq34:
 	wram_bank $01 ; $655e
 	ld hl, CutsceneAnimFrameLZ_34 ; $6564
 	ld de, $d100 ; $6567
@@ -5098,7 +5098,7 @@ LoadCutsceneAnimFrameGfx_2D_35:
 	ld bc, $0310 ; $657f
 	call QueueSpriteTemplate ; $6582
 	ret ; $6585
-.step9:
+.eq35:
 	wram_bank $01 ; $6586
 	ld hl, CutsceneAnimFrameLZ_35 ; $658c
 	ld de, $d100 ; $658f
@@ -5589,7 +5589,7 @@ AnimateWindowSlideUpTask:
 	wram_bank ; $72bd
 	ldh a, [hVBlankCounter] ; $72c1
 	and a, $01 ; $72c3
-	jr nz, .step ; $72c5
+	jr nz, .maskSet ; $72c5
 	ldh a, [hScrollY] ; $72c7
 	add a, c ; $72c9
 	ldh [hScrollY], a ; $72ca
@@ -5604,7 +5604,7 @@ AnimateWindowSlideUpTask:
 	ld a, e ; $72d8
 	ld [hl+], a ; $72d9
 	ld [hl], d ; $72da
-.step:
+.maskSet:
 	ld a, [$cb60] ; $72db
 	inc a ; $72de
 	ld [$cb60], a ; $72df
@@ -5782,9 +5782,9 @@ ScrollCutsceneTextWindow:
 	wram_bank $06 ; $7459
 	ld a, [$d001] ; $745f
 	and a, $03 ; $7462
-	jr nz, .step ; $7464
+	jr nz, .maskSet ; $7464
 	ld a, $01 ; $7466
-.step:
+.maskSet:
 	ld b, a ; $7468
 	ld d, $00 ; $7469
 	ld c, $00 ; $746b
@@ -6123,79 +6123,79 @@ SetupPaletteFadeMask:
 	ld [$d1f9], a ; $769e
 	ld hl, $d1e0 ; $76a1
 	bit 7, b ; $76a4
-	jr z, .step ; $76a6
+	jr z, .positive ; $76a6
 	ld [hl], $01 ; $76a8
-.step:
+.positive:
 	inc hl ; $76aa
 	bit 6, b ; $76ab
-	jr z, .step2 ; $76ad
+	jr z, .bit6Clear ; $76ad
 	ld [hl], $01 ; $76af
-.step2:
+.bit6Clear:
 	inc hl ; $76b1
 	bit 5, b ; $76b2
-	jr z, .step3 ; $76b4
+	jr z, .bit5Clear ; $76b4
 	ld [hl], $01 ; $76b6
-.step3:
+.bit5Clear:
 	inc hl ; $76b8
 	bit 4, b ; $76b9
-	jr z, .step4 ; $76bb
+	jr z, .bit4Clear ; $76bb
 	ld [hl], $01 ; $76bd
-.step4:
+.bit4Clear:
 	inc hl ; $76bf
 	bit 3, b ; $76c0
-	jr z, .step5 ; $76c2
+	jr z, .bit3Clear ; $76c2
 	ld [hl], $01 ; $76c4
-.step5:
+.bit3Clear:
 	inc hl ; $76c6
 	bit 2, b ; $76c7
-	jr z, .step6 ; $76c9
+	jr z, .bit2Clear ; $76c9
 	ld [hl], $01 ; $76cb
-.step6:
+.bit2Clear:
 	inc hl ; $76cd
 	bit 1, b ; $76ce
-	jr z, .step7 ; $76d0
+	jr z, .bit1Clear ; $76d0
 	ld [hl], $01 ; $76d2
-.step7:
+.bit1Clear:
 	inc hl ; $76d4
 	bit 0, b ; $76d5
-	jr z, .step8 ; $76d7
+	jr z, .bit0Clear ; $76d7
 	ld [hl], $01 ; $76d9
-.step8:
+.bit0Clear:
 	inc hl ; $76db
 	bit 7, c ; $76dc
-	jr z, .step9 ; $76de
+	jr z, .positive2 ; $76de
 	ld [hl], $01 ; $76e0
-.step9:
+.positive2:
 	inc hl ; $76e2
 	bit 6, c ; $76e3
-	jr z, .step10 ; $76e5
+	jr z, .bit6Clear2 ; $76e5
 	ld [hl], $01 ; $76e7
-.step10:
+.bit6Clear2:
 	inc hl ; $76e9
 	bit 5, c ; $76ea
-	jr z, .step11 ; $76ec
+	jr z, .bit5Clear2 ; $76ec
 	ld [hl], $01 ; $76ee
-.step11:
+.bit5Clear2:
 	inc hl ; $76f0
 	bit 4, c ; $76f1
-	jr z, .step12 ; $76f3
+	jr z, .bit4Clear2 ; $76f3
 	ld [hl], $01 ; $76f5
-.step12:
+.bit4Clear2:
 	inc hl ; $76f7
 	bit 3, c ; $76f8
-	jr z, .step13 ; $76fa
+	jr z, .bit3Clear2 ; $76fa
 	ld [hl], $01 ; $76fc
-.step13:
+.bit3Clear2:
 	inc hl ; $76fe
 	bit 2, c ; $76ff
-	jr z, .step14 ; $7701
+	jr z, .bit2Clear2 ; $7701
 	ld [hl], $01 ; $7703
-.step14:
+.bit2Clear2:
 	inc hl ; $7705
 	bit 1, c ; $7706
-	jr z, .step15 ; $7708
+	jr z, .bit1Clear2 ; $7708
 	ld [hl], $01 ; $770a
-.step15:
+.bit1Clear2:
 	inc hl ; $770c
 	bit 0, c ; $770d
 	jr z, .restore ; $770f
@@ -6212,11 +6212,11 @@ AnimatePaletteFadeToTarget:
 	ld a, [$d1f9] ; $7722
 .loopB:
 	and a, a ; $7725
-	jr z, .step ; $7726
+	jr z, .zero ; $7726
 	call AdvanceFrame ; $7728
 	dec a ; $772b
 	jr .loopB ; $772c
-.step:
+.zero:
 	ld de, $d1e0 ; $772e
 	ld b, $00 ; $7731
 .loopBB:

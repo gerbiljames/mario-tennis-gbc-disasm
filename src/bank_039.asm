@@ -3075,10 +3075,10 @@ FillMenuGridCellTile:
 	ld c, $03 ; $6dca
 	ld a, d ; $6dcc
 	or a, a ; $6dcd
-	jr z, .step ; $6dce
+	jr z, .zero ; $6dce
 	ld h, $0c ; $6dd0
 	jr .step2 ; $6dd2
-.step:
+.zero:
 	ld h, $0d ; $6dd4
 .step2:
 	push hl ; $6dd6
@@ -3126,11 +3126,11 @@ MoveMinigameGridCursor:
 	ld a, [wMenuCursorX] ; $6e16
 	inc a ; $6e19
 	add a, a ; $6e1a
-	jr nc, .step ; $6e1b
+	jr nc, .noCarry ; $6e1b
 	ld a, $03 ; $6e1d
 	dec a ; $6e1f
 	jr .store ; $6e20
-.step:
+.noCarry:
 	rra ; $6e22
 	cp a, $03 ; $6e23
 	jr c, .store ; $6e25
@@ -3143,11 +3143,11 @@ MoveMinigameGridCursor:
 	ld a, [wMenuCursorX] ; $6e30
 	dec a ; $6e33
 	add a, a ; $6e34
-	jr nc, .step2 ; $6e35
+	jr nc, .noCarry2 ; $6e35
 	ld a, $03 ; $6e37
 	dec a ; $6e39
 	jr .store2 ; $6e3a
-.step2:
+.noCarry2:
 	rra ; $6e3c
 	cp a, $03 ; $6e3d
 	jr c, .store2 ; $6e3f
@@ -3186,10 +3186,10 @@ MoveMinigameGridCursor:
 .checkMenuCursorX4:
 	ld a, [wMenuCursorX] ; $6e7a
 	or a, a ; $6e7d
-	jr z, .step3 ; $6e7e
+	jr z, .zero ; $6e7e
 	xor a, a ; $6e80
 	jr .store3 ; $6e81
-.step3:
+.zero:
 	ld a, $02 ; $6e83
 .store3:
 	ld [wMenuCursorX], a ; $6e85
@@ -3198,10 +3198,10 @@ MoveMinigameGridCursor:
 .checkMenuCursorX5:
 	ld a, [wMenuCursorX] ; $6e8c
 	or a, a ; $6e8f
-	jr z, .step4 ; $6e90
+	jr z, .zero2 ; $6e90
 	xor a, a ; $6e92
 	jr .store4 ; $6e93
-.step4:
+.zero2:
 	ld a, $02 ; $6e95
 .store4:
 	ld [wMenuCursorX], a ; $6e97

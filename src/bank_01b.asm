@@ -211,15 +211,15 @@ MoveMenuCursorGrid:
 	ld e, a ; $4139
 	ld a, [wMenuInputPressed] ; $413a
 	bit PADB_RIGHT, a ; $413d
-	jr z, .step2 ; $413f
+	jr z, .checkMenuCursorX4 ; $413f
 	ld a, [wMenuCursorX] ; $4141
 	inc a ; $4144
 	add a, a ; $4145
-	jr nc, .step ; $4146
+	jr nc, .noCarry ; $4146
 	ld a, b ; $4148
 	dec a ; $4149
 	jr .store ; $414a
-.step:
+.noCarry:
 	rra ; $414c
 	cp a, b ; $414d
 	jr c, .store ; $414e
@@ -227,17 +227,17 @@ MoveMenuCursorGrid:
 .store:
 	ld [wMenuCursorX], a ; $4151
 	jr .checkMenuCursorX ; $4154
-.step2:
+.checkMenuCursorX4:
 	bit 5, a ; $4156
-	jr z, .step4 ; $4158
+	jr z, .bit5Clear ; $4158
 	ld a, [wMenuCursorX] ; $415a
 	dec a ; $415d
 	add a, a ; $415e
-	jr nc, .step3 ; $415f
+	jr nc, .noCarry2 ; $415f
 	ld a, b ; $4161
 	dec a ; $4162
 	jr .store2 ; $4163
-.step3:
+.noCarry2:
 	rra ; $4165
 	cp a, b ; $4166
 	jr c, .store2 ; $4167
@@ -245,17 +245,17 @@ MoveMenuCursorGrid:
 .store2:
 	ld [wMenuCursorX], a ; $416a
 	jr .checkMenuCursorX ; $416d
-.step4:
+.bit5Clear:
 	bit 6, a ; $416f
-	jr z, .step6 ; $4171
+	jr z, .bit6Clear ; $4171
 	ld a, [wMenuCursorY] ; $4173
 	dec a ; $4176
 	add a, a ; $4177
-	jr nc, .step5 ; $4178
+	jr nc, .noCarry3 ; $4178
 	ld a, c ; $417a
 	dec a ; $417b
 	jr .store3 ; $417c
-.step5:
+.noCarry3:
 	rra ; $417e
 	cp a, c ; $417f
 	jr c, .store3 ; $4180
@@ -263,17 +263,17 @@ MoveMenuCursorGrid:
 .store3:
 	ld [wMenuCursorY], a ; $4183
 	jr .checkMenuCursorX ; $4186
-.step6:
+.bit6Clear:
 	bit 7, a ; $4188
 	jr z, .checkMenuCursorX ; $418a
 	ld a, [wMenuCursorY] ; $418c
 	inc a ; $418f
 	add a, a ; $4190
-	jr nc, .step7 ; $4191
+	jr nc, .noCarry4 ; $4191
 	ld a, c ; $4193
 	dec a ; $4194
 	jr .store4 ; $4195
-.step7:
+.noCarry4:
 	rra ; $4197
 	cp a, c ; $4198
 	jr c, .store4 ; $4199
@@ -283,13 +283,13 @@ MoveMenuCursorGrid:
 .checkMenuCursorX:
 	ld a, [wMenuCursorX] ; $419f
 	cp a, d ; $41a2
-	jr nz, .step8 ; $41a3
+	jr nz, .checkMenuCursorX5 ; $41a3
 	ld a, [wMenuCursorY] ; $41a5
 	cp a, e ; $41a8
-	jr nz, .step8 ; $41a9
+	jr nz, .checkMenuCursorX5 ; $41a9
 	xor a, a ; $41ab
 	ret ; $41ac
-.step8:
+.checkMenuCursorX5:
 	ld a, $01 ; $41ad
 	ret ; $41af
 	ld a, [wMenuCursorX] ; $41b0
@@ -298,15 +298,15 @@ MoveMenuCursorGrid:
 	ld e, a ; $41b7
 	ldh a, [hLinkInput] ; $41b8
 	bit 4, a ; $41ba
-	jr z, .step10 ; $41bc
+	jr z, .bit4Clear ; $41bc
 	ld a, [wMenuCursorX] ; $41be
 	inc a ; $41c1
 	add a, a ; $41c2
-	jr nc, .step9 ; $41c3
+	jr nc, .noCarry5 ; $41c3
 	ld a, b ; $41c5
 	dec a ; $41c6
 	jr .store5 ; $41c7
-.step9:
+.noCarry5:
 	rra ; $41c9
 	cp a, b ; $41ca
 	jr c, .store5 ; $41cb
@@ -314,17 +314,17 @@ MoveMenuCursorGrid:
 .store5:
 	ld [wMenuCursorX], a ; $41ce
 	jr .checkMenuCursorX2 ; $41d1
-.step10:
+.bit4Clear:
 	bit 5, a ; $41d3
-	jr z, .step12 ; $41d5
+	jr z, .bit5Clear2 ; $41d5
 	ld a, [wMenuCursorX] ; $41d7
 	dec a ; $41da
 	add a, a ; $41db
-	jr nc, .step11 ; $41dc
+	jr nc, .noCarry6 ; $41dc
 	ld a, b ; $41de
 	dec a ; $41df
 	jr .store6 ; $41e0
-.step11:
+.noCarry6:
 	rra ; $41e2
 	cp a, b ; $41e3
 	jr c, .store6 ; $41e4
@@ -332,17 +332,17 @@ MoveMenuCursorGrid:
 .store6:
 	ld [wMenuCursorX], a ; $41e7
 	jr .checkMenuCursorX2 ; $41ea
-.step12:
+.bit5Clear2:
 	bit 6, a ; $41ec
-	jr z, .step14 ; $41ee
+	jr z, .bit6Clear2 ; $41ee
 	ld a, [wMenuCursorY] ; $41f0
 	dec a ; $41f3
 	add a, a ; $41f4
-	jr nc, .step13 ; $41f5
+	jr nc, .noCarry7 ; $41f5
 	ld a, c ; $41f7
 	dec a ; $41f8
 	jr .store7 ; $41f9
-.step13:
+.noCarry7:
 	rra ; $41fb
 	cp a, c ; $41fc
 	jr c, .store7 ; $41fd
@@ -350,17 +350,17 @@ MoveMenuCursorGrid:
 .store7:
 	ld [wMenuCursorY], a ; $4200
 	jr .checkMenuCursorX2 ; $4203
-.step14:
+.bit6Clear2:
 	bit 7, a ; $4205
 	jr z, .checkMenuCursorX2 ; $4207
 	ld a, [wMenuCursorY] ; $4209
 	inc a ; $420c
 	add a, a ; $420d
-	jr nc, .step15 ; $420e
+	jr nc, .noCarry8 ; $420e
 	ld a, c ; $4210
 	dec a ; $4211
 	jr .store8 ; $4212
-.step15:
+.noCarry8:
 	rra ; $4214
 	cp a, c ; $4215
 	jr c, .store8 ; $4216
@@ -370,13 +370,13 @@ MoveMenuCursorGrid:
 .checkMenuCursorX2:
 	ld a, [wMenuCursorX] ; $421c
 	cp a, d ; $421f
-	jr nz, .step16 ; $4220
+	jr nz, .checkMenuCursorX6 ; $4220
 	ld a, [wMenuCursorY] ; $4222
 	cp a, e ; $4225
-	jr nz, .step16 ; $4226
+	jr nz, .checkMenuCursorX6 ; $4226
 	xor a, a ; $4228
 	ret ; $4229
-.step16:
+.checkMenuCursorX6:
 	ld a, $01 ; $422a
 	ret ; $422c
 	ld a, [wMenuCursorX] ; $422d
@@ -385,31 +385,31 @@ MoveMenuCursorGrid:
 	ld e, a ; $4234
 	ldh a, [hLinkState] ; $4235
 	cp a, $02 ; $4237
-	jr z, .step18 ; $4239
+	jr z, .eq02 ; $4239
 	cp a, $01 ; $423b
-	jr z, .step17 ; $423d
+	jr z, .eq01 ; $423d
 	call LinkErrorReset ; $423f
-.step17:
+.eq01:
 	ldh a, [hLinkRemoteInputBuf] ; $4242
-	jr .step19 ; $4244
-.step18:
+	jr .checkMenuCursorLockFlags ; $4244
+.eq02:
 	ldh a, [hLinkRemoteInput] ; $4246
-.step19:
+.checkMenuCursorLockFlags:
 	ld h, a ; $4248
 	ld a, [wMenuCursorLockFlags] ; $4249
 	and a, $01 ; $424c
 	ld a, h ; $424e
 	jr nz, .step27 ; $424f
 	bit 4, a ; $4251
-	jr z, .step21 ; $4253
+	jr z, .bit4Clear2 ; $4253
 	ld a, [wMenuCursorX] ; $4255
 	inc a ; $4258
 	add a, a ; $4259
-	jr nc, .step20 ; $425a
+	jr nc, .noCarry9 ; $425a
 	ld a, b ; $425c
 	dec a ; $425d
 	jr .store9 ; $425e
-.step20:
+.noCarry9:
 	rra ; $4260
 	cp a, b ; $4261
 	jr c, .store9 ; $4262
@@ -417,17 +417,17 @@ MoveMenuCursorGrid:
 .store9:
 	ld [wMenuCursorX], a ; $4265
 	jr .checkMenuCursorX3 ; $4268
-.step21:
+.bit4Clear2:
 	bit 5, a ; $426a
-	jr z, .step23 ; $426c
+	jr z, .bit5Clear3 ; $426c
 	ld a, [wMenuCursorX] ; $426e
 	dec a ; $4271
 	add a, a ; $4272
-	jr nc, .step22 ; $4273
+	jr nc, .noCarry10 ; $4273
 	ld a, b ; $4275
 	dec a ; $4276
 	jr .store10 ; $4277
-.step22:
+.noCarry10:
 	rra ; $4279
 	cp a, b ; $427a
 	jr c, .store10 ; $427b
@@ -435,17 +435,17 @@ MoveMenuCursorGrid:
 .store10:
 	ld [wMenuCursorX], a ; $427e
 	jr .checkMenuCursorX3 ; $4281
-.step23:
+.bit5Clear3:
 	bit 6, a ; $4283
-	jr z, .step25 ; $4285
+	jr z, .bit6Clear3 ; $4285
 	ld a, [wMenuCursorY] ; $4287
 	dec a ; $428a
 	add a, a ; $428b
-	jr nc, .step24 ; $428c
+	jr nc, .noCarry11 ; $428c
 	ld a, c ; $428e
 	dec a ; $428f
 	jr .store11 ; $4290
-.step24:
+.noCarry11:
 	rra ; $4292
 	cp a, c ; $4293
 	jr c, .store11 ; $4294
@@ -453,17 +453,17 @@ MoveMenuCursorGrid:
 .store11:
 	ld [wMenuCursorY], a ; $4297
 	jr .checkMenuCursorX3 ; $429a
-.step25:
+.bit6Clear3:
 	bit 7, a ; $429c
 	jr z, .step27 ; $429e
 	ld a, [wMenuCursorY] ; $42a0
 	inc a ; $42a3
 	add a, a ; $42a4
-	jr nc, .step26 ; $42a5
+	jr nc, .noCarry12 ; $42a5
 	ld a, c ; $42a7
 	dec a ; $42a8
 	jr .store12 ; $42a9
-.step26:
+.noCarry12:
 	rra ; $42ab
 	cp a, c ; $42ac
 	jr c, .store12 ; $42ad
@@ -473,7 +473,7 @@ MoveMenuCursorGrid:
 	jr .checkMenuCursorX3 ; $42b3
 .step27:
 	bit 0, a ; $42b5
-	jr z, .step28 ; $42b7
+	jr z, .bit0Clear ; $42b7
 	sound $5f ; $42b9
 	ld a, [wMenuCursorLockFlags] ; $42bb
 	ld b, a ; $42be
@@ -484,7 +484,7 @@ MoveMenuCursorGrid:
 	or a, $01 ; $42c6
 	ld [wMenuCursorLockFlags], a ; $42c8
 	jr .checkMenuCursorX3 ; $42cb
-.step28:
+.bit0Clear:
 	bit 1, a ; $42cd
 	jr z, .checkMenuCursorX3 ; $42cf
 	sound $62 ; $42d1
@@ -492,11 +492,11 @@ MoveMenuCursorGrid:
 	ld b, a ; $42d6
 	and a, $03 ; $42d7
 	ld a, b ; $42d9
-	jr nz, .step29 ; $42da
+	jr nz, .storeMenuCursorLockFlags ; $42da
 	and a, $fa ; $42dc
 	or a, $04 ; $42de
 	jr .store13 ; $42e0
-.step29:
+.storeMenuCursorLockFlags:
 	and a, $fe ; $42e2
 .store13:
 	ld [wMenuCursorLockFlags], a ; $42e4
@@ -517,24 +517,24 @@ Data_1b_42f8:
 	db $fa, $06, $cb, $57, $fa, $07, $cb, $5f, $f0, $c2, $fe, $02, $28, $0b, $fe, $01 ; 0x00
 	db $28, $03, $cd, $4b, $28 ; 0x10
 	ldh a, [hLinkRemoteInput] ; $430d
-	jr .step31 ; $430f
+	jr .checkMenuCursorLockFlags ; $430f
 	ldh a, [hLinkRemoteInputBuf] ; $4311
-.step31:
+.checkMenuCursorLockFlags:
 	ld h, a ; $4313
 	ld a, [wMenuCursorLockFlags] ; $4314
 	and a, $02 ; $4317
 	ld a, h ; $4319
-	jr nz, .step39 ; $431a
+	jr nz, .checkMenuCursorLockFlags2 ; $431a
 	bit 4, a ; $431c
-	jr z, .step33 ; $431e
+	jr z, .bit4Clear ; $431e
 	ld a, [wMenuCursor2X] ; $4320
 	inc a ; $4323
 	add a, a ; $4324
-	jr nc, .step32 ; $4325
+	jr nc, .noCarry ; $4325
 	ld a, b ; $4327
 	dec a ; $4328
 	jr .store14 ; $4329
-.step32:
+.noCarry:
 	rra ; $432b
 	cp a, b ; $432c
 	jr c, .store14 ; $432d
@@ -542,17 +542,17 @@ Data_1b_42f8:
 .store14:
 	ld [wMenuCursor2X], a ; $4330
 	jr .checkMenuCursor2X ; $4333
-.step33:
+.bit4Clear:
 	bit 5, a ; $4335
-	jr z, .step35 ; $4337
+	jr z, .bit5Clear ; $4337
 	ld a, [wMenuCursor2X] ; $4339
 	dec a ; $433c
 	add a, a ; $433d
-	jr nc, .step34 ; $433e
+	jr nc, .noCarry2 ; $433e
 	ld a, b ; $4340
 	dec a ; $4341
 	jr .store15 ; $4342
-.step34:
+.noCarry2:
 	rra ; $4344
 	cp a, b ; $4345
 	jr c, .store15 ; $4346
@@ -560,17 +560,17 @@ Data_1b_42f8:
 .store15:
 	ld [wMenuCursor2X], a ; $4349
 	jr .checkMenuCursor2X ; $434c
-.step35:
+.bit5Clear:
 	bit 6, a ; $434e
-	jr z, .step37 ; $4350
+	jr z, .bit6Clear ; $4350
 	ld a, [wMenuCursor2Y] ; $4352
 	dec a ; $4355
 	add a, a ; $4356
-	jr nc, .step36 ; $4357
+	jr nc, .noCarry3 ; $4357
 	ld a, c ; $4359
 	dec a ; $435a
 	jr .store16 ; $435b
-.step36:
+.noCarry3:
 	rra ; $435d
 	cp a, c ; $435e
 	jr c, .store16 ; $435f
@@ -578,17 +578,17 @@ Data_1b_42f8:
 .store16:
 	ld [wMenuCursor2Y], a ; $4362
 	jr .checkMenuCursor2X ; $4365
-.step37:
+.bit6Clear:
 	bit 7, a ; $4367
-	jr z, .step39 ; $4369
+	jr z, .checkMenuCursorLockFlags2 ; $4369
 	ld a, [wMenuCursor2Y] ; $436b
 	inc a ; $436e
 	add a, a ; $436f
-	jr nc, .step38 ; $4370
+	jr nc, .noCarry4 ; $4370
 	ld a, c ; $4372
 	dec a ; $4373
 	jr .store17 ; $4374
-.step38:
+.noCarry4:
 	rra ; $4376
 	cp a, c ; $4377
 	jr c, .store17 ; $4378
@@ -596,9 +596,9 @@ Data_1b_42f8:
 .store17:
 	ld [wMenuCursor2Y], a ; $437b
 	jr .checkMenuCursor2X ; $437e
-.step39:
+.checkMenuCursorLockFlags2:
 	bit 0, a ; $4380
-	jr z, .step40 ; $4382
+	jr z, .bit0Clear ; $4382
 	ld a, [wMenuCursorLockFlags] ; $4384
 	ld b, a ; $4387
 	and a, $02 ; $4388
@@ -608,7 +608,7 @@ Data_1b_42f8:
 	or a, $02 ; $438f
 	ld [wMenuCursorLockFlags], a ; $4391
 	jr .checkMenuCursor2X ; $4394
-.step40:
+.bit0Clear:
 	bit 1, a ; $4396
 	jr z, .checkMenuCursor2X ; $4398
 	sound $62 ; $439a
@@ -616,11 +616,11 @@ Data_1b_42f8:
 	ld b, a ; $439f
 	and a, $03 ; $43a0
 	ld a, b ; $43a2
-	jr nz, .step41 ; $43a3
+	jr nz, .storeMenuCursorLockFlags ; $43a3
 	and a, $f5 ; $43a5
 	or a, $08 ; $43a7
 	jr .store18 ; $43a9
-.step41:
+.storeMenuCursorLockFlags:
 	and a, $fd ; $43ab
 .store18:
 	ld [wMenuCursorLockFlags], a ; $43ad
@@ -731,10 +731,10 @@ DrawNameWithDiacritics:
 	inc hl ; $443c
 	ld a, [hl] ; $443d
 	cp a, $de ; $443e
-	jr z, .step ; $4440
+	jr z, .eqde ; $4440
 	cp a, $df ; $4442
-	jr nz, .step2 ; $4444
-.step:
+	jr nz, .nedf ; $4444
+.eqde:
 	push hl ; $4446
 	push bc ; $4447
 	ld h, d ; $4448
@@ -752,7 +752,7 @@ DrawNameWithDiacritics:
 	pop bc ; $4458
 	pop hl ; $4459
 	inc hl ; $445a
-.step2:
+.nedf:
 	inc de ; $445b
 	ld a, e ; $445c
 	and a, $1f ; $445d
@@ -807,7 +807,7 @@ DrawAsciiDigitChar:
 	push hl ; $4498
 	ld hl, $d240 ; $4499
 	sub a, $30 ; $449c
-	jr c, .step ; $449e
+	jr c, .carry ; $449e
 	add a, $30 ; $44a0
 	ld b, a ; $44a2
 	wram_bank $03 ; $44a3
@@ -816,7 +816,7 @@ DrawAsciiDigitChar:
 	inc de ; $44ab
 	pop hl ; $44ac
 	ret ; $44ad
-.step:
+.carry:
 	inc de ; $44ae
 	pop hl ; $44af
 	ret ; $44b0
@@ -1090,14 +1090,14 @@ BuildRankingBoardScreen:
 	call LoadRankingMarkerCoords ; $4f22
 	ld a, [$d800] ; $4f25
 	or a, a ; $4f28
-	jr z, .step ; $4f29
+	jr z, .zero ; $4f29
 	ld c, $2a ; $4f2b
 	farcall LoadScreenAssetRecord ; $4f2d
 	wram_bank $03 ; $4f30
 	call DrawDoublesRankingNames ; $4f36
 	call HighlightDoublesRankingRows ; $4f39
 	jr .loadRankingBoardTiles ; $4f3c
-.step:
+.zero:
 	ld c, $29 ; $4f3e
 	farcall LoadScreenAssetRecord ; $4f40
 	wram_bank $03 ; $4f43
@@ -1165,10 +1165,10 @@ DispatchRankingBoardAnim:
 	ret z ; $4ffb
 	ld a, [$d800] ; $4ffc
 	or a, a ; $4fff
-	jr nz, .step2 ; $5000
+	jr nz, .nonZero2 ; $5000
 	ld a, [$d802] ; $5002
 	or a, a ; $5005
-	jr nz, .step ; $5006
+	jr nz, .nonZero ; $5006
 	ld a, [$d801] ; $5008
 	add a, a ; $500b
 	ld hl, RankingBoardAnimHandlers2_1b ; $500c
@@ -1181,7 +1181,7 @@ DispatchRankingBoardAnim:
 	ld h, [hl] ; $5015
 	ld l, a ; $5016
 	jp hl ; $5017
-.step:
+.nonZero:
 	ld a, [$d801] ; $5018
 	add a, a ; $501b
 	ld hl, RankingBoardAnimHandlers1_1b ; $501c
@@ -1194,10 +1194,10 @@ DispatchRankingBoardAnim:
 	ld h, [hl] ; $5025
 	ld l, a ; $5026
 	jp hl ; $5027
-.step2:
+.nonZero2:
 	ld a, [$d802] ; $5028
 	or a, a ; $502b
-	jr nz, .step3 ; $502c
+	jr nz, .nonZero3 ; $502c
 	ld a, [$d801] ; $502e
 	add a, a ; $5031
 	ld hl, RankingBoardAnimHandlers4_1b ; $5032
@@ -1210,7 +1210,7 @@ DispatchRankingBoardAnim:
 	ld h, [hl] ; $503b
 	ld l, a ; $503c
 	jp hl ; $503d
-.step3:
+.nonZero3:
 	ld a, [$d801] ; $503e
 	add a, a ; $5041
 	ld hl, RankingBoardAnimHandlers3_1b ; $5042
@@ -2071,7 +2071,7 @@ HighlightSinglesRankingRows:
 	ret ; $5730
 .compare:
 	cp a, $03 ; $5731
-	jr nz, .step ; $5733
+	jr nz, .ne03 ; $5733
 	ld b, $05 ; $5735
 	call HighlightRankingRow ; $5737
 	ld b, $06 ; $573a
@@ -2081,7 +2081,7 @@ HighlightSinglesRankingRows:
 	ld b, $08 ; $5744
 	call HighlightRankingRow ; $5746
 	ret ; $5749
-.step:
+.ne03:
 	ld b, $0b ; $574a
 	call HighlightRankingRow ; $574c
 	ret ; $574f
@@ -2199,13 +2199,13 @@ HighlightDoublesRankingRows:
 	cp a, $01 ; $582e
 	ret z ; $5830
 	cp a, $02 ; $5831
-	jr nz, .step ; $5833
+	jr nz, .ne02 ; $5833
 	ld b, $01 ; $5835
 	call HighlightDoublesRankingRow ; $5837
 	ld b, $02 ; $583a
 	call HighlightDoublesRankingRow ; $583c
 	ret ; $583f
-.step:
+.ne02:
 	ld b, $05 ; $5840
 	call HighlightDoublesRankingRow ; $5842
 	ret ; $5845
@@ -2309,10 +2309,10 @@ PushRankingBoardTilemapRows:
 RankingBoardAnimTask_1b:
 	ld a, [$d855] ; $5912
 	or a, a ; $5915
-	jr nz, .step ; $5916
+	jr nz, .nonZero ; $5916
 	ld a, $a0 ; $5918
 	ld [$d856], a ; $591a
-.step:
+.nonZero:
 	ld a, [$d855] ; $591d
 	ld hl, Data_1b_597b ; $5920
 	add a, l ; $5923
@@ -2328,9 +2328,9 @@ RankingBoardAnimTask_1b:
 	ld e, $40 ; $5933
 	ld a, [$d800] ; $5935
 	or a, a ; $5938
-	jr z, .step2 ; $5939
+	jr z, .zero ; $5939
 	ld e, $50 ; $593b
-.step2:
+.zero:
 	ld a, [$d856] ; $593d
 	ld d, a ; $5940
 	ld c, $10 ; $5941
@@ -2361,8 +2361,8 @@ Data_1b_597b:
 RankingCursorBobTask:
 	ld a, [$d855] ; $5a04
 	or a, a ; $5a07
-	jr nz, .step ; $5a08
-.step:
+	jr nz, .nonZero ; $5a08
+.nonZero:
 	ld de, $3040 ; $5a0a
 	ld a, [$d800] ; $5a0d
 	or a, a ; $5a10
@@ -2392,14 +2392,14 @@ DrawRankingMarkersTask:
 	call GetRankingMarkerSlot ; $5a47
 	ld a, [hl+] ; $5a4a
 	cp a, $ff ; $5a4b
-	jr z, .step ; $5a4d
+	jr z, .eqff ; $5a4d
 	ld b, a ; $5a4f
 	ld a, [hl+] ; $5a50
 	ld d, a ; $5a51
 	ld a, [hl+] ; $5a52
 	ld e, a ; $5a53
 	call QueueRankingMarkerSprite ; $5a54
-.step:
+.eqff:
 	ld a, c ; $5a57
 	inc a ; $5a58
 	ld c, a ; $5a59
@@ -2498,7 +2498,7 @@ UpdateScriptedOffsetChannel0:
 	add hl, de ; $5ae6
 	ld a, [hl] ; $5ae7
 	cp a, $40 ; $5ae8
-	jr z, .step ; $5aea
+	jr z, .eq40 ; $5aea
 	ld c, a ; $5aec
 	ld hl, $d840 ; $5aed
 	ld a, [hl+] ; $5af0
@@ -2509,7 +2509,7 @@ UpdateScriptedOffsetChannel0:
 	add a, c ; $5af5
 	ld [hl], a ; $5af6
 	jr .checkTextPageBreakRequest ; $5af7
-.step:
+.eq40:
 	ld hl, UpdateScriptedOffsetChannel0 ; $5af9
 	call UnregisterFrameTask ; $5afc
 	ret ; $5aff
@@ -2529,7 +2529,7 @@ UpdateScriptedOffsetChannel1:
 	add hl, de ; $5b14
 	ld a, [hl] ; $5b15
 	cp a, $40 ; $5b16
-	jr z, .step ; $5b18
+	jr z, .eq40 ; $5b18
 	ld c, a ; $5b1a
 	ld hl, $d842 ; $5b1b
 	ld a, [hl+] ; $5b1e
@@ -2540,7 +2540,7 @@ UpdateScriptedOffsetChannel1:
 	add a, c ; $5b23
 	ld [hl], a ; $5b24
 	jr .step2 ; $5b25
-.step:
+.eq40:
 	ld hl, UpdateScriptedOffsetChannel1 ; $5b27
 	call UnregisterFrameTask ; $5b2a
 	ret ; $5b2d
@@ -2560,7 +2560,7 @@ UpdateScriptedOffsetChannel2:
 	add hl, de ; $5b42
 	ld a, [hl] ; $5b43
 	cp a, $40 ; $5b44
-	jr z, .step ; $5b46
+	jr z, .eq40 ; $5b46
 	ld c, a ; $5b48
 	ld hl, $d844 ; $5b49
 	ld a, [hl+] ; $5b4c
@@ -2572,7 +2572,7 @@ UpdateScriptedOffsetChannel2:
 	add a, c ; $5b52
 	ld [hl], a ; $5b53
 	jr .step2 ; $5b54
-.step:
+.eq40:
 	ld hl, UpdateScriptedOffsetChannel2 ; $5b56
 	call UnregisterFrameTask ; $5b59
 	ret ; $5b5c
@@ -2592,7 +2592,7 @@ UpdateScriptedOffsetChannel3:
 	add hl, de ; $5b71
 	ld a, [hl] ; $5b72
 	cp a, $40 ; $5b73
-	jr z, .step ; $5b75
+	jr z, .eq40 ; $5b75
 	ld c, a ; $5b77
 	ld hl, $d846 ; $5b78
 	ld a, [hl+] ; $5b7b
@@ -2604,7 +2604,7 @@ UpdateScriptedOffsetChannel3:
 	add a, c ; $5b81
 	ld [hl], a ; $5b82
 	jr .step2 ; $5b83
-.step:
+.eq40:
 	ld hl, UpdateScriptedOffsetChannel3 ; $5b85
 	call UnregisterFrameTask ; $5b88
 	ret ; $5b8b
@@ -2679,13 +2679,13 @@ ClearRankingMarkerSlots:
 LoadRankingMarkerCoords:
 	ld a, [$d800] ; $5c3b
 	or a, a ; $5c3e
-	jr nz, .step2 ; $5c3f
+	jr nz, .nonZero ; $5c3f
 	ld hl, $5c8d ; $5c41
 	ld a, [$d802] ; $5c44
 	or a, a ; $5c47
-	jr z, .step ; $5c48
+	jr z, .zero ; $5c48
 	ld hl, $5d57 ; $5c4a
-.step:
+.zero:
 	ld a, [$d801] ; $5c4d
 	add a, a ; $5c50
 	add a, l ; $5c51
@@ -2704,13 +2704,13 @@ LoadRankingMarkerCoords:
 	ld bc, $0030 ; $5c60
 	call CopyMemoryBC ; $5c63
 	ret ; $5c66
-.step2:
+.nonZero:
 	ld hl, $5e21 ; $5c67
 	ld a, [$d802] ; $5c6a
 	or a, a ; $5c6d
-	jr z, .step3 ; $5c6e
+	jr z, .zero2 ; $5c6e
 	ld hl, $5eb9 ; $5c70
-.step3:
+.zero2:
 	ld a, [$d801] ; $5c73
 	add a, a ; $5c76
 	add a, l ; $5c77
@@ -3208,9 +3208,9 @@ DrawCharSelectPrompt:
 	ld hl, $0470 ; $605c
 	ld a, [wStoryCharacterSlot] ; $605f
 	or a, a ; $6062
-	jr z, .step ; $6063
+	jr z, .zero ; $6063
 	ld hl, $047b ; $6065
-.step:
+.zero:
 	ld de, $da01 ; $6068
 	farcall RenderProportionalTextAt32 ; $606b
 	ret ; $606e
@@ -3348,8 +3348,8 @@ UpdateCharSelectSelection:
 	ld h, a ; $6188
 	ld a, [hl] ; $6189
 	cp a, $ff ; $618a
-.step:
-	jr z, .step ; $618c
+.storeCharSelectChar:
+	jr z, .storeCharSelectChar ; $618c
 	ld [wCharSelectChar], a ; $618e
 	ret ; $6191
 MoveCharSelectCursor:
@@ -3417,7 +3417,7 @@ RunNewGameSetup:
 	pop af ; $620b
 	ld [wStoryCharacterSlot], a ; $620c
 	ld a, $ff ; $620f
-	jp .step4 ; $6211
+	jp .beginFadeOut ; $6211
 .compare:
 	cp a, $fe ; $6214
 	jr nz, .loopBB ; $6216
@@ -3438,9 +3438,9 @@ RunNewGameSetup:
 	ld hl, wStoryModeNameOfMainCharacter ; $6231
 	ld a, [wStoryCharacterSlot] ; $6234
 	or a, a ; $6237
-	jr z, .step ; $6238
+	jr z, .zero ; $6238
 	ld l, $40 ; $623a
-.step:
+.zero:
 	ld a, l ; $623c
 	add a, $0b ; $623d
 	ld l, a ; $623f
@@ -3473,9 +3473,9 @@ RunNewGameSetup:
 	ld hl, wStoryModeNameOfMainCharacter ; $6271
 	ld a, [wStoryCharacterSlot] ; $6274
 	or a, a ; $6277
-	jr z, .step2 ; $6278
+	jr z, .zero2 ; $6278
 	ld l, $40 ; $627a
-.step2:
+.zero2:
 	ld a, l ; $627c
 	add a, $0b ; $627d
 	ld l, a ; $627f
@@ -3521,9 +3521,9 @@ RunNewGameSetup:
 	ld hl, wStoryModeNameOfMainCharacter ; $62c2
 	ld a, [wStoryCharacterSlot] ; $62c5
 	or a, a ; $62c8
-	jr z, .step3 ; $62c9
+	jr z, .zero3 ; $62c9
 	ld l, $40 ; $62cb
-.step3:
+.zero3:
 	ld a, l ; $62cd
 	add a, $0b ; $62ce
 	ld l, a ; $62d0
@@ -3544,7 +3544,7 @@ RunNewGameSetup:
 	ld c, $08 ; $62e9
 	call CopyMemoryFast ; $62eb
 	xor a, a ; $62ee
-.step4:
+.beginFadeOut:
 	ld c, $20 ; $62ef
 	call BeginFadeOut ; $62f1
 	call WaitFadeEnd ; $62f4
@@ -3579,27 +3579,27 @@ RunDebugSaveDataFlow:
 	cp a, $ff ; $6332
 	jr z, RunDebugSaveDataFlow ; $6334
 	cp a, $01 ; $6336
-	jp z, .step3 ; $6338
+	jp z, .eq01 ; $6338
 	cp a, $ff ; $633b
 	jr z, .loop ; $633d
 	or a, a ; $633f
-	jr nz, .step ; $6340
+	jr nz, .nonZero ; $6340
 	or a, a ; $6342
 	jr nz, .loop ; $6343
 	farcall ReinitSaveRamPreservingBlock6 ; $6345
 	ld b, $01 ; $6348
 	jr .loop ; $634a
-.step:
+.nonZero:
 	and a, $3f ; $634c
 	ld b, a ; $634e
 	ld hl, $ca00 ; $634f
 	ld [wCurrentStorySlot], a ; $6352
 	farcall CheckStorySlot ; $6355
 	or a, a ; $6358
-	jr z, .step2 ; $6359
+	jr z, .zero ; $6359
 	sound $62 ; $635b
 	jr .loop ; $635d
-.step2:
+.zero:
 	push bc ; $635f
 	call StubNop_1b_69d6 ; $6360
 	pop bc ; $6363
@@ -3626,7 +3626,7 @@ RunDebugSaveDataFlow:
 	farcall EraseStorySlotSaveData ; $6386
 	ld b, $01 ; $6389
 	jp .loop ; $638b
-.step3:
+.eq01:
 	ld a, $00 ; $638e
 	ld [$cb1f], a ; $6390
 	farcall RunMinigameFlagsDebugScreen ; $6393
@@ -3951,11 +3951,11 @@ UpdateUnlockDebugSelectedMugshot:
 	ld a, b ; $66ae
 	jr z, .step ; $66af
 	farcall LoadCharacterRecordToBuffer ; $66b1
-	jr .step2 ; $66b4
+	jr .registerFrameTask ; $66b4
 .step:
 	ld a, $20 ; $66b6
 	ld [$d58b], a ; $66b8
-.step2:
+.registerFrameTask:
 	ld a, $0a ; $66bb
 	ld hl, UpdateUnlockDebugStatOnChange ; $66bd
 	call RegisterFrameTask ; $66c0
@@ -4054,7 +4054,7 @@ RunMinigameFlagsDebugScreen:
 .playSfx2:
 	sound $5f ; $6796
 	ld hl, $cb1f ; $6798
-	jr .step3 ; $679b
+	jr .beginFadeOut ; $679b
 .step:
 	ldh a, [hInputRisingEdge] ; $679d
 	and a, PADF_B ; $679f
@@ -4064,7 +4064,7 @@ RunMinigameFlagsDebugScreen:
 	ld a, $00 ; $67a8
 	ld [hl], a ; $67aa
 	ld a, $ff ; $67ab
-	jr .step3 ; $67ad
+	jr .beginFadeOut ; $67ad
 .step2:
 	ldh a, [hInputRisingEdge] ; $67af
 	and a, PADF_START ; $67b1
@@ -4076,7 +4076,7 @@ RunMinigameFlagsDebugScreen:
 	ld a, [wCharSelectChar] ; $67be
 	call AdvanceFrame ; $67c1
 	jr .loop ; $67c4
-.step3:
+.beginFadeOut:
 	ld c, $08 ; $67c6
 	call BeginFadeOut ; $67c8
 	call WaitFadeEnd ; $67cb
@@ -4120,11 +4120,11 @@ MoveUnlockDebugCursor:
 	ld a, b ; $6811
 	jr z, .step ; $6812
 	farcall LoadCharacterRecordToBuffer ; $6814
-	jr .step2 ; $6817
+	jr .storeCharSelectCol ; $6817
 .step:
 	ld a, $20 ; $6819
 	ld [$d58b], a ; $681b
-.step2:
+.storeCharSelectCol:
 	ld a, d ; $681e
 	ld [wCharSelectCol], a ; $681f
 	ld a, e ; $6822
@@ -4133,31 +4133,31 @@ MoveUnlockDebugCursor:
 	ret ; $6826
 StepUnlockDebugCursor:
 	bit 5, b ; $6827
-	jr z, .step ; $6829
+	jr z, .bit5Clear ; $6829
 	dec d ; $682b
 	jr .step4 ; $682c
-.step:
+.bit5Clear:
 	bit 4, b ; $682e
-	jr z, .step2 ; $6830
+	jr z, .bit4Clear ; $6830
 	inc d ; $6832
 	jr .step4 ; $6833
-.step2:
+.bit4Clear:
 	bit 6, b ; $6835
-	jr z, .step3 ; $6837
+	jr z, .bit6Clear ; $6837
 	dec e ; $6839
 	jr .step4 ; $683a
-.step3:
+.bit6Clear:
 	bit 7, b ; $683c
 	jr z, .step4 ; $683e
 	inc e ; $6840
 .step4:
 	ld a, d ; $6841
 	add a, a ; $6842
-	jr nc, .step5 ; $6843
+	jr nc, .noCarry ; $6843
 	ld a, $05 ; $6845
 	dec a ; $6847
 	jr .step6 ; $6848
-.step5:
+.noCarry:
 	rra ; $684a
 	cp a, $05 ; $684b
 	jr c, .step6 ; $684d
@@ -4166,11 +4166,11 @@ StepUnlockDebugCursor:
 	ld d, a ; $6850
 	ld a, e ; $6851
 	add a, a ; $6852
-	jr nc, .step7 ; $6853
+	jr nc, .noCarry2 ; $6853
 	ld a, $02 ; $6855
 	dec a ; $6857
 	jr .step8 ; $6858
-.step7:
+.noCarry2:
 	rra ; $685a
 	cp a, $02 ; $685b
 	jr c, .step8 ; $685d
@@ -4444,15 +4444,15 @@ CopyMainCharNameWithDiacritics:
 	and a, a ; $6ab4
 	jr z, .done ; $6ab5
 	cp a, $de ; $6ab7
-	jr z, .step ; $6ab9
+	jr z, .eqde ; $6ab9
 	cp a, $df ; $6abb
-	jr z, .step2 ; $6abd
+	jr z, .eqdf ; $6abd
 	ld b, a ; $6abf
 	ld a, b ; $6ac0
 	ld [de], a ; $6ac1
 	inc de ; $6ac2
 	jr .loop ; $6ac3
-.step:
+.eqde:
 	push de ; $6ac5
 	push hl ; $6ac6
 	ld hl, $ffdf ; $6ac7
@@ -4461,7 +4461,7 @@ CopyMainCharNameWithDiacritics:
 	pop hl ; $6acd
 	pop de ; $6ace
 	jr .loop ; $6acf
-.step2:
+.eqdf:
 	push de ; $6ad1
 	push hl ; $6ad2
 	ld hl, $ffdf ; $6ad3
@@ -4727,12 +4727,12 @@ LoadMinigameLevelSelectGfx:
 	wram_bank ; $6cb1
 	ld a, b ; $6cb5
 	or a, a ; $6cb6
-	jr z, .step ; $6cb7
+	jr z, .zero ; $6cb7
 	ld a, c ; $6cb9
 	cp a, $03 ; $6cba
 	jr nz, .loop ; $6cbc
 	jr .step2 ; $6cbe
-.step:
+.zero:
 	ld a, c ; $6cc0
 	cp a, $04 ; $6cc1
 	jr nz, .loop ; $6cc3
@@ -4751,12 +4751,12 @@ LoadMinigameLevelSelectGfx:
 	wram_bank ; $6ce0
 	ld a, b ; $6ce4
 	or a, a ; $6ce5
-	jr z, .step3 ; $6ce6
+	jr z, .zero2 ; $6ce6
 	ld b, $71 ; $6ce8
-	jr .step4 ; $6cea
-.step3:
+	jr .loadCompressedTileBlock ; $6cea
+.zero2:
 	ld b, $6f ; $6cec
-.step4:
+.loadCompressedTileBlock:
 	ld c, $10 ; $6cee
 	ld de, $a100 ; $6cf0
 	farcall LoadCompressedTileBlock ; $6cf3
@@ -4797,16 +4797,16 @@ DrawMinigameLevelDescription:
 	wram_bank $02 ; $6d40
 	ld a, [$d001] ; $6d46
 	or a, a ; $6d49
-	jr nz, .step ; $6d4a
+	jr nz, .getMenuCursorIndex ; $6d4a
 	ld c, $03 ; $6d4c
 	call GetMenuCursorIndex ; $6d4e
 	cp a, $01 ; $6d51
-	jr nz, .step ; $6d53
+	jr nz, .getMenuCursorIndex ; $6d53
 	wram_bank $03 ; $6d55
 	ld hl, $00c5 ; $6d5b
 	ld de, $d201 ; $6d5e
-	jr .step2 ; $6d61
-.step:
+	jr .renderTextToBuffer64 ; $6d61
+.getMenuCursorIndex:
 	wram_bank $03 ; $6d63
 	ld c, $03 ; $6d69
 	call GetMenuCursorIndex ; $6d6b
@@ -4825,9 +4825,9 @@ DrawMinigameLevelDescription:
 	ld hl, $00c2 ; $6d7c
 	add a, l ; $6d7f
 	ld l, a ; $6d80
-	jr nc, .step2 ; $6d81
+	jr nc, .renderTextToBuffer64 ; $6d81
 	inc h ; $6d83
-.step2:
+.renderTextToBuffer64:
 	ld c, $20 ; $6d84
 	farcall RenderTextToBuffer64 ; $6d86
 	pop af ; $6d89
@@ -4943,11 +4943,11 @@ RunMinigameLevelSelect2:
 .checkMenuInputPressed:
 	ld a, [wMenuInputPressed] ; $6e90
 	bit PADB_A, a ; $6e93
-	jr nz, .step ; $6e95
+	jr nz, .getMenuCursorIndex ; $6e95
 	bit 1, a ; $6e97
 	jr nz, .playSfx2 ; $6e99
 	jr .loop ; $6e9b
-.step:
+.getMenuCursorIndex:
 	ld c, $03 ; $6e9d
 	call GetMenuCursorIndex ; $6e9f
 	or a, a ; $6ea2
@@ -5208,10 +5208,10 @@ SetSelectPanelAttrRect3:
 	push hl ; $70c1
 	ld a, c ; $70c2
 	or a, a ; $70c3
-	jr z, .step ; $70c4
+	jr z, .zero ; $70c4
 	ld h, $0c ; $70c6
 	jr .step2 ; $70c8
-.step:
+.zero:
 	ld h, $0d ; $70ca
 .step2:
 	push hl ; $70cc
@@ -5572,9 +5572,9 @@ DrawSavedDataTypeDescription:
 	ld hl, $00ca ; $739f
 	add a, l ; $73a2
 	ld l, a ; $73a3
-	jr nc, .step ; $73a4
+	jr nc, .renderTextToBuffer64 ; $73a4
 	inc h ; $73a6
-.step:
+.renderTextToBuffer64:
 	ld c, $20 ; $73a7
 	farcall RenderTextToBuffer64 ; $73a9
 	pop af ; $73ac
@@ -5895,11 +5895,11 @@ DrawMinigameDataMugshotsScrolled:
 	farcall GetUnlockedStarCharAtGridSlot ; $7614
 	pop bc ; $7617
 	cp a, $15 ; $7618
-	jr nz, .step ; $761a
+	jr nz, .ne15 ; $761a
 	push bc ; $761c
 	ld c, $09 ; $761d
 	jr .drawMinigameDataMugshot ; $761f
-.step:
+.ne15:
 	push bc ; $7621
 .drawMinigameDataMugshot:
 	call DrawMinigameDataMugshot ; $7622
@@ -5924,11 +5924,11 @@ DrawMinigameDataMugshotsStatic:
 	farcall GetUnlockedStarCharAtGridSlot ; $7642
 	pop bc ; $7645
 	cp a, $15 ; $7646
-	jr nz, .step ; $7648
+	jr nz, .ne15 ; $7648
 	push bc ; $764a
 	ld c, $09 ; $764b
 	jr .drawMinigameDataMugshot ; $764d
-.step:
+.ne15:
 	push bc ; $764f
 .drawMinigameDataMugshot:
 	call DrawMinigameDataMugshot ; $7650
@@ -6041,9 +6041,9 @@ DrawMinigameClearMarks:
 	ld b, $00 ; $7708
 	ld a, [hl+] ; $770a
 	or a, a ; $770b
-	jr z, .step2 ; $770c
+	jr z, .zero ; $770c
 	call DrawMinigameMarkTile ; $770e
-.step2:
+.zero:
 	ld a, c ; $7711
 	inc a ; $7712
 	ld c, a ; $7713
@@ -6063,9 +6063,9 @@ DrawMinigameStarMarks:
 	ld b, $01 ; $7726
 	ld a, [hl+] ; $7728
 	or a, a ; $7729
-	jr z, .step2 ; $772a
+	jr z, .zero ; $772a
 	call DrawMinigameMarkTile ; $772c
-.step2:
+.zero:
 	ld a, c ; $772f
 	inc a ; $7730
 	ld c, a ; $7731
@@ -6187,14 +6187,14 @@ DrawStarLegendMark:
 .loop:
 	ld a, [hl+] ; $7800
 	or a, a ; $7801
-	jr nz, .step ; $7802
+	jr nz, .nonZero ; $7802
 	ld a, c ; $7804
 	inc a ; $7805
 	ld c, a ; $7806
 	cp a, $09 ; $7807
 	jr nz, .loop ; $7809
 	ret ; $780b
-.step:
+.nonZero:
 	ld hl, $d016 ; $780c
 	ld de, $d08e ; $780f
 	ld b, $02 ; $7812

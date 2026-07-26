@@ -159,7 +159,7 @@ GetMinigameTargetScore:
 	cp a, $12 ; $4124
 	ret c ; $4126
 	cp a, $1c ; $4127
-	jr nc, .step ; $4129
+	jr nc, .ge1c ; $4129
 	sub a, $12 ; $412b
 	add a, a ; $412d
 	add a, $4a ; $412e
@@ -171,7 +171,7 @@ GetMinigameTargetScore:
 	ld d, [hl] ; $4136
 	ld e, a ; $4137
 	ret ; $4138
-.step:
+.ge1c:
 	sub a, $1c ; $4139
 	add a, a ; $413b
 	add a, a ; $413c
@@ -431,7 +431,7 @@ DrawMinigameGrid:
 .loop:
 	ld a, [hl+] ; $4309
 	and a, a ; $430a
-	jr z, .step ; $430b
+	jr z, .zero ; $430b
 	push bc ; $430d
 	push hl ; $430e
 	ld b, a ; $430f
@@ -439,7 +439,7 @@ DrawMinigameGrid:
 	call DrawMinigameGridCell ; $4311
 	pop hl ; $4314
 	pop bc ; $4315
-.step:
+.zero:
 	inc c ; $4316
 	dec b ; $4317
 	jr nz, .loop ; $4318
@@ -567,26 +567,26 @@ DetermineMinigamePointResult:
 	jr nz, .isMinigameScoreLimitReached ; $43e3
 	ld a, [wPointOutcome] ; $43e5
 	cp a, $0b ; $43e8
-	jr z, .step ; $43ea
-	jr .step3 ; $43ec
+	jr z, .eq0b ; $43ea
+	jr .storePointWinLoseFlag ; $43ec
 .isMinigameScoreLimitReached:
 	call IsMinigameScoreLimitReached ; $43ee
 	and a, a ; $43f1
-	jr nz, .step2 ; $43f2
-	jr .step3 ; $43f4
-.step:
+	jr nz, .nonZero ; $43f2
+	jr .storePointWinLoseFlag ; $43f4
+.eq0b:
 	ld a, $01 ; $43f6
 	ld [wPointWinLoseFlag], a ; $43f8
 	ld a, [wMinigameLevel] ; $43fb
 	add a, $12 ; $43fe
 	ld d, a ; $4400
 	ret ; $4401
-.step2:
+.nonZero:
 	ld a, $01 ; $4402
 	ld [wPointWinLoseFlag], a ; $4404
 	ld d, $16 ; $4407
 	ret ; $4409
-.step3:
+.storePointWinLoseFlag:
 	ld a, $ff ; $440a
 	ld [wPointWinLoseFlag], a ; $440c
 	ld d, $17 ; $440f
@@ -1158,9 +1158,9 @@ PlayMinigameCountdown:
 	farcall LoadScoreDigitGfx ; $48eb
 	ld a, [wMatchFramesAbort] ; $48ee
 	and a, a ; $48f1
-	jr nz, .step ; $48f2
+	jr nz, .nonZero ; $48f2
 	sound $74 ; $48f4
-.step:
+.nonZero:
 	ld a, $11 ; $48f6
 	farcall SpawnCourtBannerObj ; $48f8
 	ld a, $28 ; $48fb
@@ -1170,9 +1170,9 @@ PlayMinigameCountdown:
 	jr nz, .loop ; $4902
 	ld a, [wMatchFramesAbort] ; $4904
 	and a, a ; $4907
-	jr nz, .step2 ; $4908
+	jr nz, .nonZero2 ; $4908
 	sound $75 ; $490a
-.step2:
+.nonZero2:
 	ld a, $10 ; $490c
 	farcall ShowCourtBanner ; $490e
 	ld a, $28 ; $4911
@@ -2028,7 +2028,7 @@ LookupMinigameShotResult:
 .loop:
 	ld a, [hl+] ; $4e99
 	cp a, $ff ; $4e9a
-	jr z, .step2 ; $4e9c
+	jr z, .eqff2 ; $4e9c
 	ld e, a ; $4e9e
 	ld a, [hl+] ; $4e9f
 	ld d, a ; $4ea0
@@ -2044,14 +2044,14 @@ LookupMinigameShotResult:
 	jr nz, .loop ; $4eaf
 	ld a, c ; $4eb1
 	cp a, $ff ; $4eb2
-	jr z, .step ; $4eb4
+	jr z, .eqff ; $4eb4
 	ld a, [wCurrentShotType] ; $4eb6
 	cp a, c ; $4eb9
 	jr nz, .loop ; $4eba
-.step:
+.eqff:
 	ld a, b ; $4ebc
 	ret ; $4ebd
-.step2:
+.eqff2:
 	ld a, $01 ; $4ebe
 	ret ; $4ec0
 TargetShotScoreRules:
@@ -2269,10 +2269,10 @@ InitBallTargetActor:
 ResetTargetHitState:
 	ld a, [$c788] ; $521e
 	and a, a ; $5221
-	jr nz, .step ; $5222
+	jr nz, .nonZero ; $5222
 	xor a, a ; $5224
 	ld [$c789], a ; $5225
-.step:
+.nonZero:
 	xor a, a ; $5228
 	ld [$c788], a ; $5229
 	xor a, a ; $522c
@@ -2293,7 +2293,7 @@ AdvanceTargetActorState:
 .step:
 	ld a, [$dc73] ; $5244
 	and a, a ; $5247
-	jr z, .step2 ; $5248
+	jr z, .zero ; $5248
 	farcall AdvanceMatchRng ; $524a
 	ld h, $00 ; $524d
 	ld l, a ; $524f
@@ -2302,7 +2302,7 @@ AdvanceTargetActorState:
 	add hl, de ; $5254
 	ld de, $fdc0 ; $5255
 	call SetMinigameActorWorldPos ; $5258
-.step2:
+.zero:
 	xor a, a ; $525b
 	ld [$dc73], a ; $525c
 	call AdvanceTargetActorState ; $525f
@@ -2351,14 +2351,14 @@ IsBallInHitZone:
 	sbc a, d ; $52aa
 	ld h, a ; $52ab
 	bit 7, h ; $52ac
-	jr z, .step ; $52ae
+	jr z, .positive ; $52ae
 	xor a, a ; $52b0
 	sub a, l ; $52b1
 	ld l, a ; $52b2
 	sbc a, a ; $52b3
 	sub a, h ; $52b4
 	ld h, a ; $52b5
-.step:
+.positive:
 	ld de, $ff80 ; $52b6
 	add hl, de ; $52b9
 	jr c, .step4 ; $52ba
@@ -2377,14 +2377,14 @@ IsBallInHitZone:
 	sbc a, d ; $52cc
 	ld h, a ; $52cd
 	bit 7, h ; $52ce
-	jr z, .step2 ; $52d0
+	jr z, .positive2 ; $52d0
 	xor a, a ; $52d2
 	sub a, l ; $52d3
 	ld l, a ; $52d4
 	sbc a, a ; $52d5
 	sub a, h ; $52d6
 	ld h, a ; $52d7
-.step2:
+.positive2:
 	ld de, rJOYP ; $52d8
 	add hl, de ; $52db
 	jr c, .step4 ; $52dc
@@ -2393,14 +2393,14 @@ IsBallInHitZone:
 	ld h, [hl] ; $52e2
 	ld l, a ; $52e3
 	bit 7, h ; $52e4
-	jr z, .step3 ; $52e6
+	jr z, .positive3 ; $52e6
 	xor a, a ; $52e8
 	sub a, l ; $52e9
 	ld l, a ; $52ea
 	sbc a, a ; $52eb
 	sub a, h ; $52ec
 	ld h, a ; $52ed
-.step3:
+.positive3:
 	ld de, rLCDC ; $52ee
 	add hl, de ; $52f1
 	jr c, .step4 ; $52f2
@@ -2743,10 +2743,10 @@ InitMinigame_BooBlast:
 	ld [$c7ba], a ; $5627
 	ld a, [wMinigameLevel] ; $562a
 	cp a, $02 ; $562d
-	jr nz, .step ; $562f
+	jr nz, .ne02 ; $562f
 	ld a, $01 ; $5631
 	ld [$c7bc], a ; $5633
-.step:
+.ne02:
 	ld hl, BooBlastInitParams ; $5636
 	ld a, [hl+] ; $5639
 	ld [$ca9b], a ; $563a
@@ -2852,19 +2852,19 @@ StubNop_0d_56ef:
 UpdateBooBlastHitStreak:
 	ld a, [wLastShotCharIndex] ; $56f0
 	and a, $01 ; $56f3
-	jr nz, .step ; $56f5
+	jr nz, .maskSet ; $56f5
 	ld a, [$c788] ; $56f7
 	and a, a ; $56fa
 	jr z, .step3 ; $56fb
-	jr .step2 ; $56fd
-.step:
+	jr .incrementCappedCounter ; $56fd
+.maskSet:
 	ld a, [$c788] ; $56ff
 	and a, a ; $5702
-	jr nz, .step2 ; $5703
+	jr nz, .incrementCappedCounter ; $5703
 	xor a, a ; $5705
 	ld [$c789], a ; $5706
 	jr .step3 ; $5709
-.step2:
+.incrementCappedCounter:
 	ld b, $07 ; $570b
 	call IncrementCappedCounter ; $570d
 .step3:
@@ -2929,14 +2929,14 @@ IsBallWithinTargetZone:
 	sbc a, d ; $576f
 	ld h, a ; $5770
 	bit 7, h ; $5771
-	jr z, .step ; $5773
+	jr z, .positive ; $5773
 	xor a, a ; $5775
 	sub a, l ; $5776
 	ld l, a ; $5777
 	sbc a, a ; $5778
 	sub a, h ; $5779
 	ld h, a ; $577a
-.step:
+.positive:
 	ld de, $ff80 ; $577b
 	add hl, de ; $577e
 	jr c, .step4 ; $577f
@@ -2955,14 +2955,14 @@ IsBallWithinTargetZone:
 	sbc a, d ; $5791
 	ld h, a ; $5792
 	bit 7, h ; $5793
-	jr z, .step2 ; $5795
+	jr z, .positive2 ; $5795
 	xor a, a ; $5797
 	sub a, l ; $5798
 	ld l, a ; $5799
 	sbc a, a ; $579a
 	sub a, h ; $579b
 	ld h, a ; $579c
-.step2:
+.positive2:
 	ld de, $fec0 ; $579d
 	add hl, de ; $57a0
 	jr c, .step4 ; $57a1
@@ -2971,14 +2971,14 @@ IsBallWithinTargetZone:
 	ld h, [hl] ; $57a7
 	ld l, a ; $57a8
 	bit 7, h ; $57a9
-	jr z, .step3 ; $57ab
+	jr z, .positive3 ; $57ab
 	xor a, a ; $57ad
 	sub a, l ; $57ae
 	ld l, a ; $57af
 	sbc a, a ; $57b0
 	sub a, h ; $57b1
 	ld h, a ; $57b2
-.step3:
+.positive3:
 	ld de, rJOYP ; $57b3
 	add hl, de ; $57b6
 	jr c, .step4 ; $57b7
@@ -3190,9 +3190,9 @@ ProcessTargetTileHit:
 	ld hl, $c7a6 ; $591d
 	ld a, [hl] ; $5920
 	cp a, $09 ; $5921
-	jr nc, .step ; $5923
+	jr nc, .ge09 ; $5923
 	inc [hl] ; $5925
-.step:
+.ge09:
 	ldh a, [hWramBank] ; $5926
 	push af ; $5928
 	wram_bank $02 ; $5929
@@ -3231,7 +3231,7 @@ AnimateTargetGridClear:
 .loop:
 	ld a, [hl+] ; $5997
 	cp a, $00 ; $5998
-	jr z, .step ; $599a
+	jr z, .eq00 ; $599a
 	push bc ; $599c
 	push hl ; $599d
 	ld b, a ; $599e
@@ -3243,7 +3243,7 @@ AnimateTargetGridClear:
 	farcall StepMatchFrames ; $59aa
 	pop hl ; $59ad
 	pop bc ; $59ae
-.step:
+.eq00:
 	inc c ; $59af
 	dec b ; $59b0
 	jr nz, .loop ; $59b1
@@ -3256,12 +3256,12 @@ AreAllTargetsHit:
 .loop:
 	ld a, [hl+] ; $59bd
 	cp a, $01 ; $59be
-	jr nz, .step ; $59c0
+	jr nz, .ne01 ; $59c0
 	dec c ; $59c2
 	jr nz, .loop ; $59c3
 	ld a, $01 ; $59c5
 	ret ; $59c7
-.step:
+.ne01:
 	ld a, $00 ; $59c8
 	ret ; $59ca
 MinigameConfig_TreasureBox:
@@ -3374,10 +3374,10 @@ SelectRandomTreasureBoxTargetZone:
 	call LoadTargetZoneConfig ; $5a8f
 	ld a, [$c788] ; $5a92
 	and a, a ; $5a95
-	jr nz, .step ; $5a96
+	jr nz, .nonZero ; $5a96
 	xor a, a ; $5a98
 	ld [$c789], a ; $5a99
-.step:
+.nonZero:
 	xor a, a ; $5a9c
 	ld [$c788], a ; $5a9d
 	xor a, a ; $5aa0
@@ -3541,14 +3541,14 @@ IsBallInTreasureBoxHitZone:
 	sbc a, d ; $5bdd
 	ld h, a ; $5bde
 	bit 7, h ; $5bdf
-	jr z, .step ; $5be1
+	jr z, .positive ; $5be1
 	xor a, a ; $5be3
 	sub a, l ; $5be4
 	ld l, a ; $5be5
 	sbc a, a ; $5be6
 	sub a, h ; $5be7
 	ld h, a ; $5be8
-.step:
+.positive:
 	ld de, hPeakLY ; $5be9
 	add hl, de ; $5bec
 	jr c, .step4 ; $5bed
@@ -3567,14 +3567,14 @@ IsBallInTreasureBoxHitZone:
 	sbc a, d ; $5bff
 	ld h, a ; $5c00
 	bit 7, h ; $5c01
-	jr z, .step2 ; $5c03
+	jr z, .positive2 ; $5c03
 	xor a, a ; $5c05
 	sub a, l ; $5c06
 	ld l, a ; $5c07
 	sbc a, a ; $5c08
 	sub a, h ; $5c09
 	ld h, a ; $5c0a
-.step2:
+.positive2:
 	ld de, $ff80 ; $5c0b
 	add hl, de ; $5c0e
 	jr c, .step4 ; $5c0f
@@ -3583,14 +3583,14 @@ IsBallInTreasureBoxHitZone:
 	ld h, [hl] ; $5c15
 	ld l, a ; $5c16
 	bit 7, h ; $5c17
-	jr z, .step3 ; $5c19
+	jr z, .positive3 ; $5c19
 	xor a, a ; $5c1b
 	sub a, l ; $5c1c
 	ld l, a ; $5c1d
 	sbc a, a ; $5c1e
 	sub a, h ; $5c1f
 	ld h, a ; $5c20
-.step3:
+.positive3:
 	ld de, rLCDC ; $5c21
 	add hl, de ; $5c24
 	jr c, .step4 ; $5c25
@@ -3892,14 +3892,14 @@ IsBallInMedallionMatchHitZone:
 	sbc a, d ; $5e4f
 	ld h, a ; $5e50
 	bit 7, h ; $5e51
-	jr z, .step ; $5e53
+	jr z, .positive ; $5e53
 	xor a, a ; $5e55
 	sub a, l ; $5e56
 	ld l, a ; $5e57
 	sbc a, a ; $5e58
 	sub a, h ; $5e59
 	ld h, a ; $5e5a
-.step:
+.positive:
 	ld de, hPeakLY ; $5e5b
 	add hl, de ; $5e5e
 	jr c, .step4 ; $5e5f
@@ -3918,14 +3918,14 @@ IsBallInMedallionMatchHitZone:
 	sbc a, d ; $5e71
 	ld h, a ; $5e72
 	bit 7, h ; $5e73
-	jr z, .step2 ; $5e75
+	jr z, .positive2 ; $5e75
 	xor a, a ; $5e77
 	sub a, l ; $5e78
 	ld l, a ; $5e79
 	sbc a, a ; $5e7a
 	sub a, h ; $5e7b
 	ld h, a ; $5e7c
-.step2:
+.positive2:
 	ld de, $ff80 ; $5e7d
 	add hl, de ; $5e80
 	jr c, .step4 ; $5e81
@@ -3934,14 +3934,14 @@ IsBallInMedallionMatchHitZone:
 	ld h, [hl] ; $5e87
 	ld l, a ; $5e88
 	bit 7, h ; $5e89
-	jr z, .step3 ; $5e8b
+	jr z, .positive3 ; $5e8b
 	xor a, a ; $5e8d
 	sub a, l ; $5e8e
 	ld l, a ; $5e8f
 	sbc a, a ; $5e90
 	sub a, h ; $5e91
 	ld h, a ; $5e92
-.step3:
+.positive3:
 	ld de, rLCDC ; $5e93
 	add hl, de ; $5e96
 	jr c, .step4 ; $5e97

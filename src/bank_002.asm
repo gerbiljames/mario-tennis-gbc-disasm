@@ -291,10 +291,10 @@ InitStoryModeState:
 	ret ; $4256
 Unused_02_SignExtendL:
 	bit 7, l ; $4257
-	jr nz, .step ; $4259
+	jr nz, .negative ; $4259
 	ld h, $00 ; $425b
 	ret ; $425d
-.step:
+.negative:
 	ld h, $ff ; $425e
 	ret ; $4260
 CacheStorySlotSummaries:
@@ -318,20 +318,20 @@ CacheStorySlotSummaries:
 	ld [wCurrentStorySlot], a ; $427e
 	farcall CheckStorySlot ; $4281
 	cp a, $fe ; $4284
-	jr z, .step ; $4286
+	jr z, .eqfe ; $4286
 	ld hl, $c880 ; $4288
 	ld de, $d400 ; $428b
 	call Copy4Bytes ; $428e
-.step:
+.eqfe:
 	ld a, $01 ; $4291
 	ld [wCurrentStorySlot], a ; $4293
 	farcall CheckStorySlot ; $4296
 	cp a, $fe ; $4299
-	jr z, .step2 ; $429b
+	jr z, .eqfe2 ; $429b
 	ld hl, $c880 ; $429d
 	ld de, $d404 ; $42a0
 	call Copy4Bytes ; $42a3
-.step2:
+.eqfe2:
 	ld a, $02 ; $42a6
 	ld [wCurrentStorySlot], a ; $42a8
 	farcall CheckStorySlot ; $42ab
@@ -1463,9 +1463,9 @@ Unused_02_ListForEach:
 	ld hl, Unused_02_4b99_Table ; $4b9b
 	add a, l ; $4b9e
 	ld l, a ; $4b9f
-	jr nc, .step ; $4ba0
+	jr nc, .levelUpPlayer ; $4ba0
 	inc h ; $4ba2
-.step:
+.levelUpPlayer:
 	push hl ; $4ba3
 	ld d, $ff ; $4ba4
 	call LevelUpPlayer ; $4ba6
@@ -1512,7 +1512,7 @@ Unused_02_ListForEach:
 	ld a, [hl+] ; $4bda
 .loopBBB:
 	or a, a ; $4bdb
-	jr z, .step2 ; $4bdc
+	jr z, .zero ; $4bdc
 	push af ; $4bde
 	push hl ; $4bdf
 	ld d, $03 ; $4be0
@@ -1521,7 +1521,7 @@ Unused_02_ListForEach:
 	pop af ; $4be6
 	dec a ; $4be7
 	jr .loopBBB ; $4be8
-.step2:
+.zero:
 	xor a, a ; $4bea
 	ld hl, CharDataPtr_02 ; $4beb
 	add a, l ; $4bee
@@ -1763,7 +1763,7 @@ HasReachedNextLevelExp:
 	add hl, bc ; $4d9f
 	ld a, [hl] ; $4da0
 	cp a, $63 ; $4da1
-	jp nc, .step ; $4da3
+	jp nc, .ge63 ; $4da3
 	ld h, $00 ; $4da6
 	ld l, a ; $4da8
 	ld d, h ; $4da9
@@ -1788,7 +1788,7 @@ HasReachedNextLevelExp:
 	ld e, a ; $4dbf
 	ld d, b ; $4dc0
 	jp Compare24Bit ; $4dc1
-.step:
+.ge63:
 	ld a, $80 ; $4dc4
 	or a, a ; $4dc6
 	ret ; $4dc7
@@ -1844,7 +1844,7 @@ GetExpProgressInCurrentLevel:
 	add hl, bc ; $4e08
 	ld a, [hl] ; $4e09
 	cp a, $63 ; $4e0a
-	jr nc, .step ; $4e0c
+	jr nc, .ge63 ; $4e0c
 	dec a ; $4e0e
 	ld h, $00 ; $4e0f
 	ld l, a ; $4e11
@@ -1880,7 +1880,7 @@ GetExpProgressInCurrentLevel:
 	sbc a, d ; $4e33
 	ld h, a ; $4e34
 	ret ; $4e35
-.step:
+.ge63:
 	ld hl, $0000 ; $4e36
 	ret ; $4e39
 GetExpRequiredForLevel:
@@ -1981,14 +1981,14 @@ DebugStoryStatsScreen:
 .loop:
 	farcall CheckStorySlot ; $4fcb
 	or a, a ; $4fce
-	jr z, .step ; $4fcf
+	jr z, .zero ; $4fcf
 	push de ; $4fd1
 	ld hl, MenuTilemaps_02 ; $4fd2
 	ld de, $0802 ; $4fd5
 	call PrintString ; $4fd8
 	pop de ; $4fdb
 	jp .step2 ; $4fdc
-.step:
+.zero:
 	ld hl, $5202 ; $4fdf
 	ld de, $0802 ; $4fe2
 	call PrintString ; $4fe5
@@ -2176,7 +2176,7 @@ DebugStoryStatsScreen:
 	jp .loopB ; $5156
 .step3:
 	bit 5, a ; $5159
-	jr z, .step4 ; $515b
+	jr z, .bit5Clear ; $515b
 	push de ; $515d
 	ld a, $00 ; $515e
 	ld d, $01 ; $5160
@@ -2184,9 +2184,9 @@ DebugStoryStatsScreen:
 	pop de ; $5165
 	sound $5e ; $5166
 	jp .loopB ; $5168
-.step4:
+.bit5Clear:
 	bit 4, a ; $516b
-	jr z, .step5 ; $516d
+	jr z, .bit4Clear ; $516d
 	push de ; $516f
 	ld a, $00 ; $5170
 	ld d, $02 ; $5172
@@ -2194,9 +2194,9 @@ DebugStoryStatsScreen:
 	pop de ; $5177
 	sound $5e ; $5178
 	jp .loopB ; $517a
-.step5:
+.bit4Clear:
 	bit 7, a ; $517d
-	jr z, .step6 ; $517f
+	jr z, .positive ; $517f
 	push de ; $5181
 	ld a, $00 ; $5182
 	ld d, $03 ; $5184
@@ -2204,9 +2204,9 @@ DebugStoryStatsScreen:
 	pop de ; $5189
 	sound $5e ; $518a
 	jp .loopB ; $518c
-.step6:
+.positive:
 	bit 1, a ; $518f
-	jr z, .step7 ; $5191
+	jr z, .bit1Clear ; $5191
 	push de ; $5193
 	ld a, $01 ; $5194
 	ldh [hDebugStepMode], a ; $5196
@@ -2215,9 +2215,9 @@ DebugStoryStatsScreen:
 	ldh [hDebugStepMode], a ; $519c
 	pop de ; $519e
 	jp .loopB ; $519f
-.step7:
+.bit1Clear:
 	bit 0, a ; $51a2
-	jr z, .step8 ; $51a4
+	jr z, .bit0Clear ; $51a4
 	push af ; $51a6
 	push bc ; $51a7
 	push de ; $51a8
@@ -2241,9 +2241,9 @@ DebugStoryStatsScreen:
 	ld a, $01 ; $51c3
 	ld [wStoryModeMainCharacterLeftHanded], a ; $51c5
 	jp .loopB ; $51c8
-.step8:
+.bit0Clear:
 	bit 2, a ; $51cb
-	jr z, .step9 ; $51cd
+	jr z, .bit2Clear ; $51cd
 	sound $5f ; $51cf
 	ld a, [wCurrentStorySlot] ; $51d1
 	inc a ; $51d4
@@ -2253,7 +2253,7 @@ DebugStoryStatsScreen:
 .store:
 	ld [wCurrentStorySlot], a ; $51da
 	jp .loop ; $51dd
-.step9:
+.bit2Clear:
 	bit 3, a ; $51e0
 	jr z, .label_02_513f ; $51e2
 	sound $5f ; $51e4
@@ -2284,11 +2284,11 @@ LoadStorySlot:
 	pop bc ; $5254
 	pop de ; $5255
 	or a, a ; $5256
-	jr z, .step2 ; $5257
+	jr z, .zero ; $5257
 	ld a, [$c33f] ; $5259
 	or a, a ; $525c
 	ld a, h ; $525d
-	jr nz, .step ; $525e
+	jr nz, .storePlayer1CurrentMainCharacter ; $525e
 	ld a, $3f ; $5260
 	ld [wPlayer1CurrentMainCharacter], a ; $5262
 	ld a, $03 ; $5265
@@ -2296,11 +2296,11 @@ LoadStorySlot:
 	ld a, b ; $526a
 	ld [wCurrentStorySlot], a ; $526b
 	ret ; $526e
-.step:
+.storePlayer1CurrentMainCharacter:
 	ld a, $ff ; $526f
 	ld [wPlayer1CurrentMainCharacter], a ; $5271
 	ret ; $5274
-.step2:
+.zero:
 	push bc ; $5275
 	push de ; $5276
 	xor a, a ; $5277
@@ -2321,12 +2321,12 @@ Unused_02_StorySlotVariant:
 	pop bc ; $5291
 	pop de ; $5292
 	or a, a ; $5293
-	jr z, .step ; $5294
+	jr z, .zero ; $5294
 	ld a, $ff ; $5296
 	ld [wPlayer1CurrentMainCharacter], a ; $5298
 	ld a, $ff ; $529b
 	ret ; $529d
-.step:
+.zero:
 	push bc ; $529e
 	push de ; $529f
 	ld bc, $8000 ; $52a0
@@ -2341,7 +2341,7 @@ LoadCharacterRecordToCa80:
 	push de ; $52ac
 	push hl ; $52ad
 	bit 7, a ; $52ae
-	jr z, .step ; $52b0
+	jr z, .positive ; $52b0
 	res 7, a ; $52b2
 	call LoadStorySlot ; $52b4
 	ld hl, $ca00 ; $52b7
@@ -2349,7 +2349,7 @@ LoadCharacterRecordToCa80:
 	ld c, $08 ; $52bd
 	call CopyMemoryFast ; $52bf
 	jr .restore ; $52c2
-.step:
+.positive:
 	ld b, a ; $52c4
 	ld c, $02 ; $52c5
 	call InitCa00RecordFromCharId ; $52c7
@@ -2506,12 +2506,12 @@ Unused_02_CharGroupFind:
 .loop:
 	ld a, [hl+] ; $5ed5
 	cp a, $30 ; $5ed6
-	jr z, .step ; $5ed8
+	jr z, .eq30 ; $5ed8
 	dec b ; $5eda
 	jr nz, .loop ; $5edb
 	xor a, a ; $5edd
 	ret ; $5ede
-.step:
+.eq30:
 	ld a, $01 ; $5edf
 	ret ; $5ee1
 DoesCharGroupRowContain:

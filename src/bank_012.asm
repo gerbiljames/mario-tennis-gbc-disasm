@@ -87,12 +87,12 @@ DormEntranceTile01_12:
 	call WaitFadeEnd ; $4155
 	ld a, [wStoryModeGenderOfMainCharacter] ; $4158
 	or a, a ; $415b
-	jr nz, .step ; $415c
+	jr nz, .nonZero ; $415c
 	ld a, $01 ; $415e
 	ld [$c294], a ; $4160
 	ld [wStoryModeExitLocationRequest], a ; $4163
 	ret ; $4166
-.step:
+.nonZero:
 	ld a, $01 ; $4167
 	ld [$c294], a ; $4169
 	ld [wStoryModeExitLocationRequest], a ; $416c
@@ -518,10 +518,10 @@ WallPracticeScoreRetryPrompt:
 	jp nc, WallPracticeNewRecordScript ; $4890
 	ld a, [wPointOutcome] ; $4893
 	cp a, $09 ; $4896
-	jr nz, .step ; $4898
+	jr nz, .ne09 ; $4898
 	script_set_text Text_35_250 ; $489a
 	jr .step2 ; $48a0
-.step:
+.ne09:
 	ld a, [wPointOutcome] ; $48a2
 	and a, $03 ; $48a5
 	add a, a ; $48a7
@@ -1396,9 +1396,9 @@ SeniorCourtExit01_12:
 	ld hl, $001d ; $55cb
 	add a, l ; $55ce
 	ld l, a ; $55cf
-	jr nc, .step ; $55d0
+	jr nc, .pushTextArgFetchedString ; $55d0
 	inc h ; $55d2
-.step:
+.pushTextArgFetchedString:
 	call PushTextArgFetchedString ; $55d3
 	script_speak $03 ; $55d6
 	ret ; $55db
@@ -1544,9 +1544,9 @@ SeniorCourtNpc04_12:
 	script_speak $04 ; $5831
 	ld a, [$c2b1] ; $5836
 	cp a, $02 ; $5839
-	jr nc, .step ; $583b
+	jr nc, .ge02 ; $583b
 	jr .done ; $583d
-.step:
+.ge02:
 	ld a, [$c2b1] ; $583f
 	cp a, $06 ; $5842
 	jr c, .done ; $5844
@@ -1576,10 +1576,10 @@ SeniorCourtNpc05_12:
 	farcall InitDialogueTextCursor ; $5867
 	ld a, [$c2b1] ; $586a
 	cp a, $04 ; $586d
-	jr z, .step ; $586f
+	jr z, .eq04 ; $586f
 	script_speak $05 ; $5871
 	ret ; $5876
-.step:
+.eq04:
 	ld a, $05 ; $5877
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $5879
 	farcall RunDialogueYesNoPrompt ; $587c
@@ -1622,10 +1622,10 @@ SeniorCourtNpc06_12:
 	farcall InitDialogueTextCursor ; $58c1
 	ld a, [$c2b1] ; $58c4
 	cp a, $06 ; $58c7
-	jr z, .step ; $58c9
+	jr z, .eq06 ; $58c9
 	script_speak $06 ; $58cb
 	ret ; $58d0
-.step:
+.eq06:
 	ld a, $06 ; $58d1
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $58d3
 	farcall RunDialogueYesNoPrompt ; $58d6
@@ -1933,7 +1933,7 @@ SeniorCourtNpc0B_12:
 SeniorCourtNpc0C_12:
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $5bdd
 	or a, a ; $5be0
-	jr nz, .step ; $5be1
+	jr nz, .nonZero ; $5be1
 	ld a, [$c2b1] ; $5be3
 	add a, a ; $5be6
 	add a, $2f ; $5be7
@@ -1947,7 +1947,7 @@ SeniorCourtNpc0C_12:
 	farcall InitDialogueTextCursor ; $5bf1
 	script_speak $0c ; $5bf4
 	ret ; $5bf9
-.step:
+.nonZero:
 	ld a, [$c2b1] ; $5bfa
 	add a, a ; $5bfd
 	add a, $11 ; $5bfe
@@ -2067,7 +2067,7 @@ SeniorCourtInitScript_12:
 	cp a, $0f ; $5d96
 	jp z, SeniorCourtPostMatchReturn ; $5d98
 	cp a, $0e ; $5d9b
-	jp z, ActorScript_12_6d5d.step ; $5d9d
+	jp z, ActorScript_12_6d5d.storeStoryModeCurrentLocation ; $5d9d
 	cp a, $0d ; $5da0
 	jp z, SeniorMatchVictorySceneDispatch ; $5da2
 	call SeniorCourtPositionActorsByProgressB ; $5da5
@@ -2111,7 +2111,7 @@ SeniorCourtPositionActorsByProgressB:
 	ret ; $5e11
 SeniorCourtPositionActorsByProgressA:
 	test_flag FLAG_DOUBLES ; $5e12
-	jr nz, .step ; $5e15
+	jr nz, .isDoubles ; $5e15
 	ld a, [$c2b1] ; $5e17
 	cp a, $03 ; $5e1a
 	jr c, .checkStage9 ; $5e1c
@@ -2123,7 +2123,7 @@ SeniorCourtPositionActorsByProgressA:
 	jr c, .done ; $5e35
 .done:
 	ret ; $5e37
-.step:
+.isDoubles:
 	ld a, [$c2b1] ; $5e38
 	cp a, $07 ; $5e3b
 	jr c, .checkStage10 ; $5e3d
@@ -3034,7 +3034,7 @@ ActorScript_12_6d5d:
 	as_wait_move
 	as_set_field $14, FACE_RIGHT
 	as_halt
-.step:
+.storeStoryModeCurrentLocation:
 	ld a, $10 ; $6d8a
 	ld [wStoryModeCurrentLocation], a ; $6d8c
 	ld a, $0d ; $6d8f
@@ -3048,11 +3048,11 @@ SeniorCourtPostMatchReturn:
 	wram_bank $04 ; $6da0
 	ld a, [wMatchExitRequest] ; $6da6
 	cp a, $01 ; $6da9
-	jr z, .step ; $6dab
+	jr z, .eq01 ; $6dab
 	ld a, [wMatchWinLoseFlag] ; $6dad
 	cp a, $01 ; $6db0
 	jp z, SeniorMatchVictorySceneDispatch ; $6db2
-.step:
+.eq01:
 	script_player_speed $0040 ; $6db5
 	script_move_player $2d00, $1b00 ; $6dbb
 	script_set_position ACTOR_PLAYER, $2d00, $1b00 ; $6dc5
@@ -3464,7 +3464,7 @@ SeniorMatchVictorySceneDispatch:
 	ret ; $7755
 ComputeSeniorCourtStage:
 	test_flag FLAG_DOUBLES ; $7756
-	jp nz, .step ; $7759
+	jp nz, .isDoubles ; $7759
 	ld a, $00 ; $775c
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $775e
 	jr z, .loop ; $7761
@@ -3490,7 +3490,7 @@ ComputeSeniorCourtStage:
 .loop:
 	ld [$c2b1], a ; $778f
 	ret ; $7792
-.step:
+.isDoubles:
 	ld a, $01 ; $7793
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $7795
 	jr z, .loop ; $7798

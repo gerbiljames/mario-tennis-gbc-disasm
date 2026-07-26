@@ -107,9 +107,9 @@ TournamentCourtyardTile01_15:
 TournamentCourtyardInitScript_15:
 	ld a, [wStoryModeEntryPoint] ; $41a6
 	cp a, $0f ; $41a9
-	jr nz, .step ; $41ab
+	jr nz, .ne0f ; $41ab
 	jp TournamentSiteArrivalScene ; $41ad
-.step:
+.ne0f:
 	call SetPlayerPartnerActorSprites ; $41b0
 	call InitTournamentSiteSceneVariant ; $41b3
 	call TournamentSiteEntryWalkIn ; $41b6
@@ -432,7 +432,7 @@ Facings_15_4757:
 	db FACE_LEFT, FACE_RIGHT, FACE_DOWN, FACE_UP, FACE_RIGHT, FACE_LEFT, FACE_UP, FACE_DOWN ; 0x00
 SetPlayerPartnerActorSprites:
 	test_flag FLAG_DOUBLES ; $475f
-	jp z, .step ; $4762
+	jp z, .notDoubles ; $4762
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $4765
 	ld d, $58 ; $4768
 	add a, d ; $476a
@@ -442,7 +442,7 @@ SetPlayerPartnerActorSprites:
 	ld b, h ; $4772
 	farcall LoadActorObjectDefIfValid ; $4773
 	script_set_anim ACTOR_PARTNER, $01 ; $4776
-.step:
+.notDoubles:
 	ld a, [wStoryModeGenderOfMainCharacter] ; $477d
 	ld d, $56 ; $4780
 	add a, d ; $4782
@@ -1076,10 +1076,10 @@ TrainingCourtNpc06_15:
 	ret ; $5104
 .checkFlag:
 	test_flag FLAG_CLEARED_SERVICE_MATCH_2 ; $5105
-	jr nz, .step ; $5108
+	jr nz, .isClearedServiceMatch2 ; $5108
 	call CenterLineServeMatchChallengeScene ; $510a
 	ret ; $510d
-.step:
+.isClearedServiceMatch2:
 	call AcademyRulesServeMatchChallengeScene ; $510e
 	ret ; $5111
 TrainingCourtNpc07FaceDown_15:
@@ -1139,10 +1139,10 @@ TrainingCourtNpc11_15:
 	ret ; $51b0
 .checkFlag:
 	test_flag FLAG_CLEARED_NET_GAME_MATCH_2 ; $51b1
-	jr nz, .step ; $51b4
+	jr nz, .isClearedNetGameMatch2 ; $51b4
 	call SmashMatchChallengeScene ; $51b6
 	ret ; $51b9
-.step:
+.isClearedNetGameMatch2:
 	call DropShotMatchChallengeScene ; $51ba
 	ret ; $51bd
 TrainingCourtNpc12FaceUp_15:
@@ -1202,10 +1202,10 @@ TrainingCourtNpc0C_15:
 	ret ; $525c
 .checkFlag:
 	test_flag FLAG_CLEARED_STROKE_MATCH_2 ; $525d
-	jr nz, .step ; $5260
+	jr nz, .isClearedStrokeMatch2 ; $5260
 	call LobMatchChallengeScene ; $5262
 	ret ; $5265
-.step:
+.isClearedStrokeMatch2:
 	call ReturnMatchChallengeScene ; $5266
 	ret ; $5269
 TrainingCourtNpc0DFaceUp_15:
@@ -1307,15 +1307,15 @@ TrainingCourtInitScript_15:
 TrainingCourtResultDispatch:
 	ld a, [wMatchExitRequest] ; $536d
 	cp a, $01 ; $5370
-	jr nz, .step ; $5372
+	jr nz, .ne01 ; $5372
 	call TrainingCourtReentryDispatch ; $5374
 	ret ; $5377
-.step:
+.ne01:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $5378
 	cp a, $12 ; $537b
-	jr c, .step2 ; $537d
+	jr c, .lt12 ; $537d
 	ret ; $537f
-.step2:
+.lt12:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $5380
 	ld a, a ; $5383
 	rst Rst00 ; $5384
@@ -2847,10 +2847,10 @@ ServeCoachJuniorLessonScene:
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $66fd
 	jr nz, .setText ; $6700
 	script_set_text Text_37_16 ; $6702
-	jr .step ; $6708
+	jr .scriptShowSpeakerDialogueRestoreBG ; $6708
 .setText:
 	script_set_text Text_37_22 ; $670a
-.step:
+.scriptShowSpeakerDialogueRestoreBG:
 	ld a, $07 ; $6710
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $6712
 	farcall RunDialogueYesNoPrompt ; $6715
@@ -3462,10 +3462,10 @@ NetCoachVolleyLessonScene:
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $6fd7
 	jr nz, .setText ; $6fda
 	script_set_text Text_37_93 ; $6fdc
-	jr .step ; $6fe2
+	jr .scriptShowSpeakerDialogueRestoreBG ; $6fe2
 .setText:
 	script_set_text Text_37_100 ; $6fe4
-.step:
+.scriptShowSpeakerDialogueRestoreBG:
 	ld a, $12 ; $6fea
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $6fec
 	farcall RunDialogueYesNoPrompt ; $6fef
@@ -3898,9 +3898,9 @@ ServeCoachTwoStageRetryPrompt:
 	farcall ScriptCloseDialogueWindow ; $74a2
 	script_wait_frames $05 ; $74a5
 	and a, a ; $74ac
-	jp nz, .step ; $74ad
+	jp nz, .nonZero ; $74ad
 	farcall AdvanceDialogueTextCursor ; $74b0
-.step:
+.nonZero:
 	ld a, $07 ; $74b3
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $74b5
 	farcall RunDialogueYesNoPrompt ; $74b8
@@ -3938,38 +3938,38 @@ InitServeCoachScene:
 	ld a, a ; $753c
 	rst Rst00 ; $753d
 	dw NetCoachIntroDialogue_15 ; $753e jumptable
-	dw NetCoachIntroDialogue_15.step3 ; $7540 jumptable
-	dw NetCoachIntroDialogue_15.step4 ; $7542 jumptable
-	dw NetCoachIntroDialogue_15.step5 ; $7544 jumptable
-	dw NetCoachIntroDialogue_15.step6 ; $7546 jumptable
-	dw NetCoachIntroDialogue_15.step7 ; $7548 jumptable
-	dw NetCoachIntroDialogue_15.step3 ; $754a jumptable
-	dw NetCoachIntroDialogue_15.step3 ; $754c jumptable
+	dw NetCoachIntroDialogue_15.initNetCoachScene3 ; $7540 jumptable
+	dw NetCoachIntroDialogue_15.initNetCoachScene4 ; $7542 jumptable
+	dw NetCoachIntroDialogue_15.initNetCoachScene5 ; $7544 jumptable
+	dw NetCoachIntroDialogue_15.initNetCoachScene6 ; $7546 jumptable
+	dw NetCoachIntroDialogue_15.initNetCoachScene7 ; $7548 jumptable
+	dw NetCoachIntroDialogue_15.initNetCoachScene3 ; $754a jumptable
+	dw NetCoachIntroDialogue_15.initNetCoachScene3 ; $754c jumptable
 .step2:
 	ld a, [$c2e3] ; $754e
 	ld a, a ; $7551
 	rst Rst00 ; $7552
-	dw NetCoachIntroDialogue_15.step ; $7553 jumptable
-	dw NetCoachIntroDialogue_15.step3 ; $7555 jumptable
-	dw NetCoachIntroDialogue_15.step4 ; $7557 jumptable
-	dw NetCoachIntroDialogue_15.step8 ; $7559 jumptable
-	dw NetCoachIntroDialogue_15.step13 ; $755b jumptable
-	dw NetCoachIntroDialogue_15.step9 ; $755d jumptable
-	dw NetCoachIntroDialogue_15.step7 ; $755f jumptable
-	dw NetCoachIntroDialogue_15.step3 ; $7561 jumptable
+	dw NetCoachIntroDialogue_15.initNetCoachScene ; $7553 jumptable
+	dw NetCoachIntroDialogue_15.initNetCoachScene3 ; $7555 jumptable
+	dw NetCoachIntroDialogue_15.initNetCoachScene4 ; $7557 jumptable
+	dw NetCoachIntroDialogue_15.initNetCoachScene8 ; $7559 jumptable
+	dw NetCoachIntroDialogue_15.initNetCoachScene13 ; $755b jumptable
+	dw NetCoachIntroDialogue_15.initNetCoachScene9 ; $755d jumptable
+	dw NetCoachIntroDialogue_15.initNetCoachScene7 ; $755f jumptable
+	dw NetCoachIntroDialogue_15.initNetCoachScene3 ; $7561 jumptable
 .step3:
 	ld a, [$c2e3] ; $7563
 	ld a, a ; $7566
 	rst Rst00 ; $7567
-	dw NetCoachIntroDialogue_15.step2 ; $7568 jumptable
-	dw NetCoachIntroDialogue_15.step3 ; $756a jumptable
-	dw NetCoachIntroDialogue_15.step4 ; $756c jumptable
-	dw NetCoachIntroDialogue_15.step10 ; $756e jumptable
-	dw NetCoachIntroDialogue_15.step11 ; $7570 jumptable
-	dw NetCoachIntroDialogue_15.step14 ; $7572 jumptable
-	dw NetCoachIntroDialogue_15.step12 ; $7574 jumptable
-	dw NetCoachIntroDialogue_15.step7 ; $7576 jumptable
-	dw NetCoachIntroDialogue_15.step3 ; $7578 jumptable
+	dw NetCoachIntroDialogue_15.initNetCoachScene2 ; $7568 jumptable
+	dw NetCoachIntroDialogue_15.initNetCoachScene3 ; $756a jumptable
+	dw NetCoachIntroDialogue_15.initNetCoachScene4 ; $756c jumptable
+	dw NetCoachIntroDialogue_15.initNetCoachScene10 ; $756e jumptable
+	dw NetCoachIntroDialogue_15.initNetCoachScene11 ; $7570 jumptable
+	dw NetCoachIntroDialogue_15.initNetCoachScene14 ; $7572 jumptable
+	dw NetCoachIntroDialogue_15.initNetCoachScene12 ; $7574 jumptable
+	dw NetCoachIntroDialogue_15.initNetCoachScene7 ; $7576 jumptable
+	dw NetCoachIntroDialogue_15.initNetCoachScene3 ; $7578 jumptable
 NetCoachIntroDialogue_15:
 	script_set_text Text_37_126 ; $757a
 	call InitNetCoachScene ; $7580
@@ -3991,7 +3991,7 @@ NetCoachIntroDialogue_15:
 	script_face $12, FACE_RIGHT ; $75ce
 	set_flag FLAG_NET_COACH_GREETED ; $75d5
 	ret ; $75d8
-.step:
+.initNetCoachScene:
 	call InitNetCoachScene ; $75d9
 	script_set_text Text_37_151 ; $75dc
 	script_speak $12 ; $75e2
@@ -4012,7 +4012,7 @@ NetCoachIntroDialogue_15:
 	script_face $12, FACE_RIGHT ; $762d
 	set_flag FLAG_NET_COACH_GREETED ; $7634
 	ret ; $7637
-.step2:
+.initNetCoachScene2:
 	call InitNetCoachScene ; $7638
 	script_set_text Text_37_183 ; $763b
 	script_speak $12 ; $7641
@@ -4029,62 +4029,62 @@ NetCoachIntroDialogue_15:
 	script_face $12, FACE_RIGHT ; $7681
 	set_flag FLAG_NET_COACH_GREETED ; $7688
 	ret ; $768b
-.step3:
+.initNetCoachScene3:
 	call InitNetCoachScene ; $768c
 	script_set_text Text_37_107 ; $768f
 	call NetCoachResultRetryPrompt ; $7695
 	ret ; $7698
-.step4:
+.initNetCoachScene4:
 	call InitNetCoachScene ; $7699
 	script_set_text Text_37_111 ; $769c
 	call NetCoachResultRetryPrompt ; $76a2
 	ret ; $76a5
-.step5:
+.initNetCoachScene5:
 	call InitNetCoachScene ; $76a6
 	script_set_text Text_37_115 ; $76a9
 	call NetCoachResultRetryPrompt ; $76af
 	ret ; $76b2
-.step6:
+.initNetCoachScene6:
 	call InitNetCoachScene ; $76b3
 	script_set_text Text_37_119 ; $76b6
 	call NetCoachResultRetryPrompt ; $76bc
 	ret ; $76bf
-.step7:
+.initNetCoachScene7:
 	call InitNetCoachScene ; $76c0
 	script_set_text Text_37_123 ; $76c3
 	call NetCoachRetryPrompt ; $76c9
 	ret ; $76cc
-.step8:
+.initNetCoachScene8:
 	call InitNetCoachScene ; $76cd
 	script_set_text Text_37_144 ; $76d0
 	call NetCoachResultRetryPrompt ; $76d6
 	ret ; $76d9
-.step9:
+.initNetCoachScene9:
 	call InitNetCoachScene ; $76da
 	script_set_text Text_37_148 ; $76dd
 	call NetCoachRetryPrompt ; $76e3
 	ret ; $76e6
-.step10:
+.initNetCoachScene10:
 	call InitNetCoachScene ; $76e7
 	script_set_text Text_37_172 ; $76ea
 	call NetCoachResultRetryPrompt ; $76f0
 	ret ; $76f3
-.step11:
+.initNetCoachScene11:
 	call InitNetCoachScene ; $76f4
 	script_set_text Text_37_176 ; $76f7
 	call NetCoachResultRetryPrompt ; $76fd
 	ret ; $7700
-.step12:
+.initNetCoachScene12:
 	call InitNetCoachScene ; $7701
 	script_set_text Text_37_180 ; $7704
 	call NetCoachRetryPrompt ; $770a
 	ret ; $770d
-.step13:
+.initNetCoachScene13:
 	call InitNetCoachScene ; $770e
 	script_set_text Text_37_188 ; $7711
 	call NetCoachResultRetryPrompt ; $7717
 	ret ; $771a
-.step14:
+.initNetCoachScene14:
 	call InitNetCoachScene ; $771b
 	script_set_text Text_37_192 ; $771e
 	call NetCoachResultRetryPrompt ; $7724
@@ -4128,34 +4128,34 @@ InitNetCoachScene:
 	ld a, a ; $77ad
 	rst Rst00 ; $77ae
 	dw ReturnCoachIntroDialogue_15 ; $77af jumptable
-	dw ReturnCoachIntroDialogue_15.step3 ; $77b1 jumptable
-	dw ReturnCoachIntroDialogue_15.step4 ; $77b3 jumptable
-	dw ReturnCoachIntroDialogue_15.step5 ; $77b5 jumptable
-	dw ReturnCoachIntroDialogue_15.step6 ; $77b7 jumptable
-	dw ReturnCoachIntroDialogue_15.step7 ; $77b9 jumptable
-	dw ReturnCoachIntroDialogue_15.step7 ; $77bb jumptable
+	dw ReturnCoachIntroDialogue_15.initReturnCoachScene3 ; $77b1 jumptable
+	dw ReturnCoachIntroDialogue_15.initReturnCoachScene4 ; $77b3 jumptable
+	dw ReturnCoachIntroDialogue_15.initReturnCoachScene5 ; $77b5 jumptable
+	dw ReturnCoachIntroDialogue_15.initReturnCoachScene6 ; $77b7 jumptable
+	dw ReturnCoachIntroDialogue_15.initReturnCoachScene7 ; $77b9 jumptable
+	dw ReturnCoachIntroDialogue_15.initReturnCoachScene7 ; $77bb jumptable
 .step2:
 	ld a, [$c2e3] ; $77bd
 	ld a, a ; $77c0
 	rst Rst00 ; $77c1
-	dw ReturnCoachIntroDialogue_15.step ; $77c2 jumptable
-	dw ReturnCoachIntroDialogue_15.step8 ; $77c4 jumptable
-	dw ReturnCoachIntroDialogue_15.step9 ; $77c6 jumptable
-	dw ReturnCoachIntroDialogue_15.step10 ; $77c8 jumptable
-	dw ReturnCoachIntroDialogue_15.step11 ; $77ca jumptable
-	dw ReturnCoachIntroDialogue_15.step7 ; $77cc jumptable
-	dw ReturnCoachIntroDialogue_15.step3 ; $77ce jumptable
+	dw ReturnCoachIntroDialogue_15.initReturnCoachScene ; $77c2 jumptable
+	dw ReturnCoachIntroDialogue_15.initReturnCoachScene8 ; $77c4 jumptable
+	dw ReturnCoachIntroDialogue_15.initReturnCoachScene9 ; $77c6 jumptable
+	dw ReturnCoachIntroDialogue_15.initReturnCoachScene10 ; $77c8 jumptable
+	dw ReturnCoachIntroDialogue_15.initReturnCoachScene11 ; $77ca jumptable
+	dw ReturnCoachIntroDialogue_15.initReturnCoachScene7 ; $77cc jumptable
+	dw ReturnCoachIntroDialogue_15.initReturnCoachScene3 ; $77ce jumptable
 .step3:
 	ld a, [$c2e3] ; $77d0
 	ld a, a ; $77d3
 	rst Rst00 ; $77d4
-	dw ReturnCoachIntroDialogue_15.step2 ; $77d5 jumptable
-	dw ReturnCoachIntroDialogue_15.step12 ; $77d7 jumptable
-	dw ReturnCoachIntroDialogue_15.step13 ; $77d9 jumptable
-	dw ReturnCoachIntroDialogue_15.step14 ; $77db jumptable
-	dw ReturnCoachIntroDialogue_15.step15 ; $77dd jumptable
-	dw ReturnCoachIntroDialogue_15.step7 ; $77df jumptable
-	dw ReturnCoachIntroDialogue_15.step3 ; $77e1 jumptable
+	dw ReturnCoachIntroDialogue_15.initReturnCoachScene2 ; $77d5 jumptable
+	dw ReturnCoachIntroDialogue_15.initReturnCoachScene12 ; $77d7 jumptable
+	dw ReturnCoachIntroDialogue_15.initReturnCoachScene13 ; $77d9 jumptable
+	dw ReturnCoachIntroDialogue_15.initReturnCoachScene14 ; $77db jumptable
+	dw ReturnCoachIntroDialogue_15.initReturnCoachScene15 ; $77dd jumptable
+	dw ReturnCoachIntroDialogue_15.initReturnCoachScene7 ; $77df jumptable
+	dw ReturnCoachIntroDialogue_15.initReturnCoachScene3 ; $77e1 jumptable
 ReturnCoachIntroDialogue_15:
 	call InitReturnCoachScene ; $77e3
 	script_set_text Text_37_221 ; $77e6
@@ -4182,7 +4182,7 @@ ReturnCoachIntroDialogue_15:
 	script_face $0d, FACE_UP ; $7842
 	set_flag FLAG_RETURN_COACH_GREETED ; $7849
 	ret ; $784c
-.step:
+.initReturnCoachScene:
 	call InitReturnCoachScene ; $784d
 	script_set_text Text_37_245 ; $7850
 	script_speak $0d ; $7856
@@ -4199,7 +4199,7 @@ ReturnCoachIntroDialogue_15:
 	script_face $0d, FACE_UP ; $7896
 	set_flag FLAG_RETURN_COACH_GREETED ; $789d
 	ret ; $78a0
-.step2:
+.initReturnCoachScene2:
 	call InitReturnCoachScene ; $78a1
 	script_set_text Text_6e_15 ; $78a4
 	script_speak $0d ; $78aa
@@ -4216,67 +4216,67 @@ ReturnCoachIntroDialogue_15:
 	script_face $0d, FACE_UP ; $78ea
 	set_flag FLAG_RETURN_COACH_GREETED ; $78f1
 	ret ; $78f4
-.step3:
+.initReturnCoachScene3:
 	call InitReturnCoachScene ; $78f5
 	script_set_text Text_37_203 ; $78f8
 	call ReturnCoachResultRetryPrompt ; $78fe
 	ret ; $7901
-.step4:
+.initReturnCoachScene4:
 	call InitReturnCoachScene ; $7902
 	script_set_text Text_37_207 ; $7905
 	call ReturnCoachResultRetryPrompt ; $790b
 	ret ; $790e
-.step5:
+.initReturnCoachScene5:
 	call InitReturnCoachScene ; $790f
 	script_set_text Text_37_211 ; $7912
 	call ReturnCoachResultRetryPrompt ; $7918
 	ret ; $791b
-.step6:
+.initReturnCoachScene6:
 	call InitReturnCoachScene ; $791c
 	script_set_text Text_37_215 ; $791f
 	call ReturnCoachRetryPrompt ; $7925
 	ret ; $7928
-.step7:
+.initReturnCoachScene7:
 	call InitReturnCoachScene ; $7929
 	script_set_text Text_37_218 ; $792c
 	call ReturnCoachRetryPrompt ; $7932
 	ret ; $7935
-.step8:
+.initReturnCoachScene8:
 	call InitReturnCoachScene ; $7936
 	script_set_text Text_37_233 ; $7939
 	call ReturnCoachRetryPrompt ; $793f
 	ret ; $7942
-.step9:
+.initReturnCoachScene9:
 	call InitReturnCoachScene ; $7943
 	script_set_text Text_37_236 ; $7946
 	call ReturnCoachRetryPrompt ; $794c
 	ret ; $794f
-.step10:
+.initReturnCoachScene10:
 	call InitReturnCoachScene ; $7950
 	script_set_text Text_37_239 ; $7953
 	call ReturnCoachRetryPrompt ; $7959
 	ret ; $795c
-.step11:
+.initReturnCoachScene11:
 	call InitReturnCoachScene ; $795d
 	script_set_text Text_37_242 ; $7960
 	call ReturnCoachRetryPrompt ; $7966
 	ret ; $7969
-.step12:
+.initReturnCoachScene12:
 	call InitReturnCoachScene ; $796a
 	script_set_text Text_37_255 ; $796d
 	call ReturnCoachResultRetryPrompt ; $7973
 	ret ; $7976
-.step13:
+.initReturnCoachScene13:
 	call InitReturnCoachScene ; $7977
 	script_set_text Text_6e_3 ; $797a
 	call ReturnCoachResultRetryPrompt ; $7980
 	ret ; $7983
-.step14:
+.initReturnCoachScene14:
 	call InitReturnCoachScene ; $7984
 	script_set_text Text_6e_7 ; $7987
 	call ReturnCoachResultRetryPrompt ; $798d
 	ret ; $7990
-.step15:
+.initReturnCoachScene15:
 	call InitReturnCoachScene ; $7991
 	script_set_text Text_6e_11 ; $7994
 	call ReturnCoachResultRetryPrompt ; $799a
@@ -4755,7 +4755,7 @@ ActorScript_15_7f3d:
 	as_anim $03
 	as_jump .Ld
 	test_flag FLAG_DOUBLES ; $7f59
-	jr nz, .step ; $7f5c
+	jr nz, .isDoubles ; $7f5c
 	ld a, $00 ; $7f5e
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7f60
 	jr z, .loop ; $7f63
@@ -4772,7 +4772,7 @@ ActorScript_15_7f3d:
 .loop:
 	ld [$c2b0], a ; $7f7c
 	ret ; $7f7f
-.step:
+.isDoubles:
 	ld a, $01 ; $7f80
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $7f82
 	jr z, .loop ; $7f85

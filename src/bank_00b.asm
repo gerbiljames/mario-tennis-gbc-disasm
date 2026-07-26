@@ -647,7 +647,7 @@ SyncPointWinLoseFlagTask:
 	jr z, .step4 ; $448d
 	cp a, $09 ; $448f
 	ld a, $01 ; $4491
-	jr z, .step2 ; $4493
+	jr z, .checkCurrentServingPlayer ; $4493
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $4495
 	cp a, $01 ; $4498
 	jr nz, .checkRallyLength ; $449a
@@ -662,41 +662,41 @@ SyncPointWinLoseFlagTask:
 	or a, a ; $44a8
 	jr nz, .checkRallyLength ; $44a9
 	ld a, $03 ; $44ab
-	jr .step2 ; $44ad
+	jr .checkCurrentServingPlayer ; $44ad
 .checkRallyLength:
 	ld a, [wRallyLength] ; $44af
 	cp a, $01 ; $44b2
 	jr nz, .checkPointOutcome ; $44b4
 	ld a, [wServiceAceFlag] ; $44b6
 	or a, a ; $44b9
-	jr z, .step ; $44ba
+	jr z, .zero ; $44ba
 	ld a, $01 ; $44bc
-	jr .step2 ; $44be
-.step:
+	jr .checkCurrentServingPlayer ; $44be
+.zero:
 	ld a, $02 ; $44c0
-	jr .step2 ; $44c2
+	jr .checkCurrentServingPlayer ; $44c2
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $44c4
 	or a, a ; $44c7
 	jr nz, .compare ; $44c8
 	ld a, $04 ; $44ca
-	jr .step2 ; $44cc
+	jr .checkCurrentServingPlayer ; $44cc
 .compare:
 	cp a, $07 ; $44ce
 	ld a, $06 ; $44d0
-	jr z, .step2 ; $44d2
+	jr z, .checkCurrentServingPlayer ; $44d2
 	cp a, $09 ; $44d4
 	ld a, $01 ; $44d6
-	jr z, .step2 ; $44d8
+	jr z, .checkCurrentServingPlayer ; $44d8
 	ld a, $05 ; $44da
-	jr .step2 ; $44dc
-.step2:
+	jr .checkCurrentServingPlayer ; $44dc
+.checkCurrentServingPlayer:
 	ld b, a ; $44de
 	ld a, [wCurrentServingPlayer] ; $44df
 	or a, a ; $44e2
-	jr z, .step3 ; $44e3
+	jr z, .zero2 ; $44e3
 	ld a, $06 ; $44e5
-.step3:
+.zero2:
 	add a, b ; $44e7
 	ld [$c2e6], a ; $44e8
 	ret ; $44eb
@@ -721,19 +721,19 @@ QueueDrillOutcomeMessage:
 	jr nz, .checkPointOutcome ; $450c
 	ld a, [wServiceAceFlag] ; $450e
 	or a, a ; $4511
-	jr z, .step ; $4512
+	jr z, .zero ; $4512
 	ld a, $0d ; $4514
 	jr .store ; $4516
-.step:
+.zero:
 	ld a, $0e ; $4518
 	jr .store ; $451a
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $451c
 	or a, a ; $451f
-	jr nz, .step2 ; $4520
+	jr nz, .nonZero ; $4520
 	ld a, $10 ; $4522
 	jr .store ; $4524
-.step2:
+.nonZero:
 	ld a, $10 ; $4526
 	jr .store ; $4528
 .store:
@@ -1075,9 +1075,9 @@ RunTrainingDrillByID:
 	ld hl, $015f ; $4792
 	add a, l ; $4795
 	ld l, a ; $4796
-	jr nc, .step ; $4797
+	jr nc, .showSpeakerDialogue ; $4797
 	inc h ; $4799
-.step:
+.showSpeakerDialogue:
 	ld a, $80 ; $479a
 	farcall ShowSpeakerDialogue ; $479c
 	ld c, $10 ; $479f
@@ -1181,7 +1181,7 @@ ServiceMatch1Hook_PointEnd:
 	bit 0, a ; $486c
 	ret nz ; $486e
 	cp a, $08 ; $486f
-	jr z, .step ; $4871
+	jr z, .eq08 ; $4871
 	ld hl, $c2e8 ; $4873
 	ld a, [hl+] ; $4876
 	ld b, [hl] ; $4877
@@ -1190,12 +1190,12 @@ ServiceMatch1Hook_PointEnd:
 	ld a, $80 ; $487a
 	ld [wMatchAbortFlag], a ; $487c
 	ret ; $487f
-.step:
+.eq08:
 	ld hl, $c2e9 ; $4880
 	ld a, [hl-] ; $4883
 	sub a, [hl] ; $4884
 	jr z, .clearPointWinLoseFlag ; $4885
-	jr nc, .step2 ; $4887
+	jr nc, .storePointWinLoseFlag ; $4887
 	ld a, $01 ; $4889
 	ld [wPointWinLoseFlag], a ; $488b
 	ret ; $488e
@@ -1203,7 +1203,7 @@ ServiceMatch1Hook_PointEnd:
 	xor a, a ; $488f
 	ld [wPointWinLoseFlag], a ; $4890
 	ret ; $4893
-.step2:
+.storePointWinLoseFlag:
 	ld a, $ff ; $4894
 	ld [wPointWinLoseFlag], a ; $4896
 	ret ; $4899
@@ -1366,7 +1366,7 @@ ServiceMatch1Cases2:
 	ld a, $04 ; $49a8
 	ld b, $06 ; $49aa
 	call QueueDrillResultMessage ; $49ac
-	jr .step3 ; $49af
+	jr .storeMatchAbortFlag ; $49af
 	db $af ; $49b1
 	ret ; $49b2
 .step:
@@ -1379,7 +1379,7 @@ ServiceMatch1Cases2:
 	ld [wMatchAbortFlag], a ; $49b9
 	ld a, $01 ; $49bc
 	ret ; $49be
-.step3:
+.storeMatchAbortFlag:
 	ld a, $01 ; $49bf
 	ld [wMatchAbortFlag], a ; $49c1
 	ld a, $ff ; $49c4
@@ -1441,7 +1441,7 @@ ServiceMatch2Hook_PointEnd:
 	bit 0, a ; $4a30
 	ret nz ; $4a32
 	cp a, $08 ; $4a33
-	jr z, .step ; $4a35
+	jr z, .eq08 ; $4a35
 	ld hl, $c2e8 ; $4a37
 	ld a, [hl+] ; $4a3a
 	ld b, [hl] ; $4a3b
@@ -1450,12 +1450,12 @@ ServiceMatch2Hook_PointEnd:
 	ld a, $80 ; $4a3e
 	ld [wMatchAbortFlag], a ; $4a40
 	ret ; $4a43
-.step:
+.eq08:
 	ld hl, $c2e9 ; $4a44
 	ld a, [hl-] ; $4a47
 	sub a, [hl] ; $4a48
 	jr z, .clearPointWinLoseFlag ; $4a49
-	jr nc, .step2 ; $4a4b
+	jr nc, .storePointWinLoseFlag ; $4a4b
 	ld a, $01 ; $4a4d
 	ld [wPointWinLoseFlag], a ; $4a4f
 	ret ; $4a52
@@ -1463,7 +1463,7 @@ ServiceMatch2Hook_PointEnd:
 	xor a, a ; $4a53
 	ld [wPointWinLoseFlag], a ; $4a54
 	ret ; $4a57
-.step2:
+.storePointWinLoseFlag:
 	ld a, $ff ; $4a58
 	ld [wPointWinLoseFlag], a ; $4a5a
 	ret ; $4a5d
@@ -1643,7 +1643,7 @@ ServiceMatch2Cases1:
 	ld b, $06 ; $4ba4
 	call QueueDrillResultMessage ; $4ba6
 	farcall DidBallCrossGate ; $4ba9
-	jr z, ServiceMatch2Cases2.step3 ; $4bac
+	jr z, ServiceMatch2Cases2.storeMatchAbortFlag ; $4bac
 	xor a, a ; $4bae
 	ld [$c78b], a ; $4baf
 	xor a, a ; $4bb2
@@ -1690,7 +1690,7 @@ ServiceMatch2Cases2:
 	ld a, $04 ; $4bf4
 	ld b, $06 ; $4bf6
 	call QueueDrillResultMessage ; $4bf8
-	jr .step3 ; $4bfb
+	jr .storeMatchAbortFlag ; $4bfb
 	db $af ; $4bfd
 	ret ; $4bfe
 .step:
@@ -1703,7 +1703,7 @@ ServiceMatch2Cases2:
 	ld [wMatchAbortFlag], a ; $4c05
 	ld a, $01 ; $4c08
 	ret ; $4c0a
-.step3:
+.storeMatchAbortFlag:
 	ld a, $01 ; $4c0b
 	ld [wMatchAbortFlag], a ; $4c0d
 	ld a, $ff ; $4c10
@@ -1959,7 +1959,7 @@ ServiceMatch3Cases2:
 	ld a, $04 ; $4dc3
 	ld b, $06 ; $4dc5
 	call QueueDrillResultMessage ; $4dc7
-	jr .step3 ; $4dca
+	jr .storeMatchAbortFlag ; $4dca
 	db $af ; $4dcc
 	ret ; $4dcd
 .step:
@@ -1972,7 +1972,7 @@ ServiceMatch3Cases2:
 	ld [wMatchAbortFlag], a ; $4dd4
 	ld a, $01 ; $4dd7
 	ret ; $4dd9
-.step3:
+.storeMatchAbortFlag:
 	ld a, $01 ; $4dda
 	ld [wMatchAbortFlag], a ; $4ddc
 	ld a, $ff ; $4ddf
@@ -2038,21 +2038,21 @@ ServicePractice1EvaluateResult:
 .checkCharacter1DoubleFaults:
 	ld a, [wCharacter1DoubleFaults] ; $4e52
 	or a, a ; $4e55
-	jr z, .step ; $4e56
+	jr z, .zero ; $4e56
 	ld a, $02 ; $4e58
 	ld [$c2e3], a ; $4e5a
 	jr .step2 ; $4e5d
-.step:
+.zero:
 	ld a, b ; $4e5f
 	or a, a ; $4e60
-	jr z, .step3 ; $4e61
+	jr z, .zero2 ; $4e61
 	ld a, $03 ; $4e63
 	ld [$c2e3], a ; $4e65
 	jr .step2 ; $4e68
 .step2:
 	ld a, $ff ; $4e6a
 	ret ; $4e6c
-.step3:
+.zero2:
 	xor a, a ; $4e6d
 	ld [$c2e3], a ; $4e6e
 	ld a, $01 ; $4e71
@@ -2141,18 +2141,18 @@ ServicePractice1QueueOutcomeMessage:
 	jp z, .step4 ; $4f2c
 	ld a, [wPointOutcome] ; $4f2f
 	cp a, $02 ; $4f32
-	jr z, .step ; $4f34
+	jr z, .eq02 ; $4f34
 	ld a, $10 ; $4f36
 	ld b, $00 ; $4f38
 	call QueueDrillResultMessage ; $4f3a
 	call CheckDrillTargetZoneMissed ; $4f3d
 	or a, a ; $4f40
-	jr z, .step3 ; $4f41
+	jr z, .zero ; $4f41
 	ld a, $0d ; $4f43
 	ld b, $00 ; $4f45
 	call QueueDrillResultMessage ; $4f47
 	jr .step2 ; $4f4a
-.step:
+.eq02:
 	ld a, $0e ; $4f4c
 	ld b, $00 ; $4f4e
 	call QueueDrillResultMessage ; $4f50
@@ -2165,7 +2165,7 @@ ServicePractice1QueueOutcomeMessage:
 	inc [hl] ; $4f5b
 	ld a, $01 ; $4f5c
 	ret ; $4f5e
-.step3:
+.zero:
 	ld a, $ff ; $4f5f
 	ret ; $4f61
 .step4:
@@ -2242,21 +2242,21 @@ ServicePractice2EvaluateResult:
 .countDrillResultBitsSet:
 	call CountDrillResultBitsSet ; $4fe9
 	or a, a ; $4fec
-	jr z, .step ; $4fed
+	jr z, .zero ; $4fed
 	ld a, $03 ; $4fef
 	ld [$c2e3], a ; $4ff1
 	jr .step4 ; $4ff4
-.step:
+.zero:
 	ld a, [$c2e9] ; $4ff6
 	or a, a ; $4ff9
-	jr z, .step3 ; $4ffa
+	jr z, .zero3 ; $4ffa
 	ld a, [$c2e8] ; $4ffc
 	or a, a ; $4fff
-	jr z, .step2 ; $5000
+	jr z, .zero2 ; $5000
 	ld a, $04 ; $5002
 	ld [$c2e3], a ; $5004
 	jr .step4 ; $5007
-.step2:
+.zero2:
 	ld b, $06 ; $5009
 	ld a, [wStoryModeMainCharacterLeftHanded] ; $500b
 	cpl ; $500e
@@ -2264,10 +2264,10 @@ ServicePractice2EvaluateResult:
 	add a, b ; $5010
 	ld [$c2e3], a ; $5011
 	jr .step4 ; $5014
-.step3:
+.zero3:
 	ld a, [$c2e8] ; $5016
 	or a, a ; $5019
-	jr z, .step5 ; $501a
+	jr z, .zero4 ; $501a
 	ld b, $05 ; $501c
 	ld a, [wStoryModeMainCharacterLeftHanded] ; $501e
 	add a, b ; $5021
@@ -2276,7 +2276,7 @@ ServicePractice2EvaluateResult:
 .step4:
 	ld a, $ff ; $5027
 	ret ; $5029
-.step5:
+.zero4:
 	xor a, a ; $502a
 	ld [$c2e3], a ; $502b
 	ld a, $01 ; $502e
@@ -2421,12 +2421,12 @@ ServicePractice2QueueOutcomeMessage:
 	jp z, .step4 ; $5149
 	ld a, [wPointOutcome] ; $514c
 	cp a, $02 ; $514f
-	jr nz, .step ; $5151
+	jr nz, .ne02 ; $5151
 	ld a, $0e ; $5153
 	ld b, $00 ; $5155
 	call QueueDrillResultMessage ; $5157
 	jr .step3 ; $515a
-.step:
+.ne02:
 	ld a, $11 ; $515c
 	ld b, $00 ; $515e
 	call QueueDrillResultMessage ; $5160
@@ -2469,12 +2469,12 @@ ServicePractice2QueueOutcomeMessage:
 	call QueueDrillResultMessage ; $51a4
 	ld a, [wPointOutcome] ; $51a7
 	cp a, $06 ; $51aa
-	jr z, .step2 ; $51ac
+	jr z, .eq06 ; $51ac
 	ld a, $0e ; $51ae
 	ld b, $00 ; $51b0
 	call QueueDrillResultMessage ; $51b2
 	jr .step3 ; $51b5
-.step2:
+.eq06:
 	ld hl, $c2e7 ; $51b7
 	inc [hl] ; $51ba
 	ld a, $01 ; $51bb
@@ -2577,11 +2577,11 @@ ServicePractice3EvaluateResult:
 .countDrillResultBitsSet:
 	call CountDrillResultBitsSet ; $5273
 	or a, a ; $5276
-	jr z, .step ; $5277
+	jr z, .zero ; $5277
 	ld a, $03 ; $5279
 	ld [$c2e3], a ; $527b
 	jr .step2 ; $527e
-.step:
+.zero:
 	ld a, [$c2e8] ; $5280
 	or a, a ; $5283
 	jr z, .countDrillResultBitsSetAlt ; $5284
@@ -2591,14 +2591,14 @@ ServicePractice3EvaluateResult:
 .countDrillResultBitsSetAlt:
 	call CountDrillResultBitsSetAlt ; $528d
 	cp a, $04 ; $5290
-	jr z, .step3 ; $5292
+	jr z, .eq04 ; $5292
 	ld a, $05 ; $5294
 	ld [$c2e3], a ; $5296
 	jr .step2 ; $5299
 .step2:
 	ld a, $ff ; $529b
 	ret ; $529d
-.step3:
+.eq04:
 	xor a, a ; $529e
 	ld [$c2e3], a ; $529f
 	ld a, $01 ; $52a2
@@ -2630,11 +2630,11 @@ ServicePractice3SetupShotTarget:
 	ret nc ; $52ce
 	ld a, [wSpecialShotFlag] ; $52cf
 	or a, a ; $52d2
-	jr nz, .step ; $52d3
+	jr nz, .nonZero ; $52d3
 	ld a, $13 ; $52d5
 	ld [$c2e6], a ; $52d7
 	ret ; $52da
-.step:
+.nonZero:
 	ld hl, $c2e8 ; $52db
 	dec [hl] ; $52de
 	ret ; $52df
@@ -2699,7 +2699,7 @@ ServicePractice3QueueOutcomeMessage:
 	jp z, .step4 ; $5385
 	ld a, [wPointOutcome] ; $5388
 	cp a, $02 ; $538b
-	jr z, .step ; $538d
+	jr z, .eq02 ; $538d
 	ld a, $13 ; $538f
 	ld b, $00 ; $5391
 	call QueueDrillResultMessage ; $5393
@@ -2722,13 +2722,13 @@ ServicePractice3QueueOutcomeMessage:
 	call QueueDrillResultMessage ; $53b9
 	ld a, [wPointOutcome] ; $53bc
 	cp a, $06 ; $53bf
-	jr z, .step2 ; $53c1
-.step:
+	jr z, .eq06 ; $53c1
+.eq02:
 	ld a, $0e ; $53c3
 	ld b, $00 ; $53c5
 	call QueueDrillResultMessage ; $53c7
 	jr .step3 ; $53ca
-.step2:
+.eq06:
 	ld hl, $c2e7 ; $53cc
 	inc [hl] ; $53cf
 	ld a, $01 ; $53d0
@@ -3029,13 +3029,13 @@ NetGameMatch1Cases3:
 	and a, $01 ; $55c1
 	call TestCharStateBit4 ; $55c3
 	or a, a ; $55c6
-	jp z, NetGameMatch1Cases4.step8 ; $55c7
+	jp z, NetGameMatch1Cases4.storeMatchAbortFlag ; $55c7
 	ld a, $1f ; $55ca
 	ld b, $0d ; $55cc
 	call QueueDrillResultMessage ; $55ce
 	ld a, [$c4a1] ; $55d1
 	cp a, $01 ; $55d4
-	jp nz, NetGameMatch1Cases4.step8 ; $55d6
+	jp nz, NetGameMatch1Cases4.storeMatchAbortFlag ; $55d6
 	xor a, a ; $55d9
 	ret ; $55da
 .step:
@@ -3090,17 +3090,17 @@ NetGameMatch1Cases4:
 	ld a, a ; $561a
 	rst Rst00 ; $561b
 	dw NetGameMatch1Cases4.step4 ; $561c jumptable
-	dw NetGameMatch1Cases4.step5 ; $561e jumptable
+	dw NetGameMatch1Cases4.queueDrillResultMessage ; $561e jumptable
 	dw NetGameMatch1Cases4.step6 ; $5620 jumptable
 	dw NetGameMatch1Cases4.step7 ; $5622 jumptable
 .step4:
 	xor a, a ; $5624
 	ret ; $5625
-.step5:
+.queueDrillResultMessage:
 	ld a, $1d ; $5626
 	ld b, $0d ; $5628
 	call QueueDrillResultMessage ; $562a
-	jp .step8 ; $562d
+	jp .storeMatchAbortFlag ; $562d
 .step6:
 	xor a, a ; $5630
 	ret ; $5631
@@ -3111,7 +3111,7 @@ NetGameMatch1Cases4:
 	ld [wMatchAbortFlag], a ; $5636
 	ld a, $01 ; $5639
 	ret ; $563b
-.step8:
+.storeMatchAbortFlag:
 	ld a, $01 ; $563c
 	ld [wMatchAbortFlag], a ; $563e
 	ld a, $ff ; $5641
@@ -3374,7 +3374,7 @@ NetGameMatch2Cases2:
 	call QueueDrillResultMessage ; $5800
 	ld a, [wCurrentShotType] ; $5803
 	cp a, $0a ; $5806
-	jp nz, NetGameMatch2Cases4.step8 ; $5808
+	jp nz, NetGameMatch2Cases4.storeMatchAbortFlag ; $5808
 	xor a, a ; $580b
 	ret ; $580c
 .step:
@@ -3421,7 +3421,7 @@ NetGameMatch2Cases3:
 	call QueueDrillResultMessage ; $5849
 	ld a, [$c4a1] ; $584c
 	cp a, $02 ; $584f
-	jp nz, NetGameMatch2Cases4.step9 ; $5851
+	jp nz, NetGameMatch2Cases4.storeMatchAbortFlag2 ; $5851
 	xor a, a ; $5854
 	ret ; $5855
 .step:
@@ -3476,29 +3476,29 @@ NetGameMatch2Cases4:
 	ld a, a ; $5895
 	rst Rst00 ; $5896
 	dw NetGameMatch2Cases4.step4 ; $5897 jumptable
-	dw NetGameMatch2Cases4.step5 ; $5899 jumptable
+	dw NetGameMatch2Cases4.queueDrillResultMessage ; $5899 jumptable
 	dw NetGameMatch2Cases4.step6 ; $589b jumptable
 	dw NetGameMatch2Cases4.step7 ; $589d jumptable
 .step4:
 	xor a, a ; $589f
 	ret ; $58a0
-.step5:
+.queueDrillResultMessage:
 	ld a, $1d ; $58a1
 	ld b, $0d ; $58a3
 	call QueueDrillResultMessage ; $58a5
-	jp .step9 ; $58a8
+	jp .storeMatchAbortFlag2 ; $58a8
 .step6:
 	xor a, a ; $58ab
 	ret ; $58ac
 .step7:
 	xor a, a ; $58ad
 	ret ; $58ae
-.step8:
+.storeMatchAbortFlag:
 	ld a, $01 ; $58af
 	ld [wMatchAbortFlag], a ; $58b1
 	ld a, $01 ; $58b4
 	ret ; $58b6
-.step9:
+.storeMatchAbortFlag2:
 	ld a, $01 ; $58b7
 	ld [wMatchAbortFlag], a ; $58b9
 	ld a, $ff ; $58bc
@@ -3633,11 +3633,11 @@ NetGameMatch3HandlePointEnd:
 	ld h, [hl] ; $59b1
 	ld l, a ; $59b2
 	jp hl ; $59b3
-	dw NetGameMatch3HandlePointEnd.step ; $59b4 jumptable
-	dw NetGameMatch3HandlePointEnd.step3 ; $59b6 jumptable
-	dw NetGameMatch3HandlePointEnd.step2 ; $59b8 jumptable
-	dw NetGameMatch3HandlePointEnd.step4 ; $59ba jumptable
-.step:
+	dw NetGameMatch3HandlePointEnd.queueDrillResultMessage ; $59b4 jumptable
+	dw NetGameMatch3HandlePointEnd.queueDrillResultMessage3 ; $59b6 jumptable
+	dw NetGameMatch3HandlePointEnd.queueDrillResultMessage2 ; $59b8 jumptable
+	dw NetGameMatch3HandlePointEnd.queueDrillResultMessage4 ; $59ba jumptable
+.queueDrillResultMessage:
 	ld a, $17 ; $59bc
 	ld b, $0d ; $59be
 	call QueueDrillResultMessage ; $59c0
@@ -3648,7 +3648,7 @@ NetGameMatch3HandlePointEnd:
 	ld b, $0d ; $59cc
 	call QueueDrillResultMessage ; $59ce
 	jp .checkTotalPointsScoredInCurrentGame2 ; $59d1
-.step2:
+.queueDrillResultMessage2:
 	ld a, $1b ; $59d4
 	ld b, $0d ; $59d6
 	call QueueDrillResultMessage ; $59d8
@@ -3670,7 +3670,7 @@ NetGameMatch3HandlePointEnd:
 	cp a, $06 ; $59f6
 	jr z, .checkTotalPointsScoredInCurrentGame ; $59f8
 	jr .checkTotalPointsScoredInCurrentGame2 ; $59fa
-.step3:
+.queueDrillResultMessage3:
 	ld a, $1d ; $59fc
 	ld b, $0d ; $59fe
 	call QueueDrillResultMessage ; $5a00
@@ -3688,7 +3688,7 @@ NetGameMatch3HandlePointEnd:
 	ld b, $0d ; $5a19
 	call QueueDrillResultMessage ; $5a1b
 	jr .checkTotalPointsScoredInCurrentGame ; $5a1e
-.step4:
+.queueDrillResultMessage4:
 	ld a, $17 ; $5a20
 	ld b, $0d ; $5a22
 	call QueueDrillResultMessage ; $5a24
@@ -3900,7 +3900,7 @@ NetGameMatch3Cases3:
 	and a, $01 ; $5b66
 	call TestCharStateBit4 ; $5b68
 	or a, a ; $5b6b
-	jp z, NetGameMatch3Cases4.step8 ; $5b6c
+	jp z, NetGameMatch3Cases4.storeMatchAbortFlag ; $5b6c
 	xor a, a ; $5b6f
 	ret ; $5b70
 .step:
@@ -3955,17 +3955,17 @@ NetGameMatch3Cases4:
 	ld a, a ; $5bb0
 	rst Rst00 ; $5bb1
 	dw NetGameMatch3Cases4.step4 ; $5bb2 jumptable
-	dw NetGameMatch3Cases4.step5 ; $5bb4 jumptable
+	dw NetGameMatch3Cases4.queueDrillResultMessage ; $5bb4 jumptable
 	dw NetGameMatch3Cases4.step6 ; $5bb6 jumptable
 	dw NetGameMatch3Cases4.step7 ; $5bb8 jumptable
 .step4:
 	xor a, a ; $5bba
 	ret ; $5bbb
-.step5:
+.queueDrillResultMessage:
 	ld a, $1d ; $5bbc
 	ld b, $0d ; $5bbe
 	call QueueDrillResultMessage ; $5bc0
-	jp .step8 ; $5bc3
+	jp .storeMatchAbortFlag ; $5bc3
 .step6:
 	xor a, a ; $5bc6
 	ret ; $5bc7
@@ -3976,7 +3976,7 @@ NetGameMatch3Cases4:
 	ld [wMatchAbortFlag], a ; $5bcc
 	ld a, $01 ; $5bcf
 	ret ; $5bd1
-.step8:
+.storeMatchAbortFlag:
 	ld a, $01 ; $5bd2
 	ld [wMatchAbortFlag], a ; $5bd4
 	ld a, $ff ; $5bd7
@@ -4079,25 +4079,25 @@ NetGamePractice1EvaluateResult:
 	jr .step4 ; $5c90
 .compare:
 	or a, a ; $5c92
-	jr z, .step ; $5c93
+	jr z, .zero ; $5c93
 	ld a, $02 ; $5c95
 	ld [$c2e3], a ; $5c97
 	jr .step4 ; $5c9a
-.step:
+.zero:
 	ld a, [$c2eb] ; $5c9c
 	cp a, $03 ; $5c9f
-	jr nz, .step2 ; $5ca1
+	jr nz, .ne03 ; $5ca1
 	ld a, $05 ; $5ca3
 	ld [$c2e3], a ; $5ca5
 	jr .step4 ; $5ca8
-.step2:
+.ne03:
 	ld a, [$c2ec] ; $5caa
 	or a, a ; $5cad
-	jr nz, .step3 ; $5cae
+	jr nz, .nonZero ; $5cae
 	ld a, $04 ; $5cb0
 	ld [$c2e3], a ; $5cb2
 	jr .step4 ; $5cb5
-.step3:
+.nonZero:
 	ld a, $03 ; $5cb7
 	ld [$c2e3], a ; $5cb9
 	jr .step4 ; $5cbc
@@ -4325,13 +4325,13 @@ NetGamePractice1Cases3:
 	xor a, a ; $5e38
 	call TestCharStateBit4 ; $5e39
 	or a, a ; $5e3c
-	jp z, .step4 ; $5e3d
+	jp z, .storeMatchAbortFlag ; $5e3d
 	ld a, $3a ; $5e40
 	ld b, $00 ; $5e42
 	call QueueDrillResultMessage ; $5e44
 	ld a, [$c4a1] ; $5e47
 	cp a, $01 ; $5e4a
-	jp nz, .step4 ; $5e4c
+	jp nz, .storeMatchAbortFlag ; $5e4c
 	ld hl, $c2ec ; $5e4f
 	dec [hl] ; $5e52
 	xor a, a ; $5e53
@@ -4343,30 +4343,30 @@ NetGamePractice1Cases3:
 	ret nz ; $5e5c
 	ld a, [wPointOutcome] ; $5e5d
 	cp a, $04 ; $5e60
-	jr z, .step ; $5e62
+	jr z, .eq04 ; $5e62
 	ld a, $2e ; $5e64
 	ld b, $00 ; $5e66
 	call QueueDrillResultMessage ; $5e68
 	call RecordDrillTargetZoneHit ; $5e6b
 	call CheckDrillTargetZoneMissed ; $5e6e
 	or a, a ; $5e71
-	jp nz, .step3 ; $5e72
-.step:
+	jp nz, .nonZero ; $5e72
+.eq04:
 	ld a, $38 ; $5e75
 	ld b, $00 ; $5e77
 	call QueueDrillResultMessage ; $5e79
 	ld hl, $c2ea ; $5e7c
 	inc [hl] ; $5e7f
-	jp .step4 ; $5e80
+	jp .storeMatchAbortFlag ; $5e80
 .step2:
 	xor a, a ; $5e83
 	ret ; $5e84
-.step3:
+.nonZero:
 	ld a, $01 ; $5e85
 	ld [wMatchAbortFlag], a ; $5e87
 	ld a, $01 ; $5e8a
 	ret ; $5e8c
-.step4:
+.storeMatchAbortFlag:
 	ld a, $01 ; $5e8d
 	ld [wMatchAbortFlag], a ; $5e8f
 	ld a, $ff ; $5e92
@@ -4460,25 +4460,25 @@ NetGamePractice2EvaluateResult:
 	jr .step5 ; $5f38
 .compare:
 	or a, a ; $5f3a
-	jr z, .step ; $5f3b
+	jr z, .zero ; $5f3b
 	ld a, $02 ; $5f3d
 	ld [$c2e3], a ; $5f3f
 	jr .step5 ; $5f42
-.step:
+.zero:
 	ld a, [$c2eb] ; $5f44
 	cp a, $03 ; $5f47
-	jr nz, .step2 ; $5f49
+	jr nz, .ne03 ; $5f49
 	ld a, $06 ; $5f4b
 	ld [$c2e3], a ; $5f4d
 	jr .step5 ; $5f50
-.step2:
+.ne03:
 	ld a, [$c2ec] ; $5f52
 	or a, a ; $5f55
-	jr nz, .step3 ; $5f56
+	jr nz, .nonZero ; $5f56
 	ld a, $05 ; $5f58
 	ld [$c2e3], a ; $5f5a
 	jr .step5 ; $5f5d
-.step3:
+.nonZero:
 	ld a, [$c2eb] ; $5f5f
 	cp a, $01 ; $5f62
 	jr c, .step4 ; $5f64
@@ -4643,7 +4643,7 @@ NetGamePractice2Cases1:
 	call RecordDrillTargetZoneHit ; $6095
 	call CheckDrillTargetZoneMissed ; $6098
 	or a, a ; $609b
-	jp z, NetGamePractice2Cases3.step4 ; $609c
+	jp z, NetGamePractice2Cases3.ne09 ; $609c
 	xor a, a ; $609f
 	ret ; $60a0
 .step:
@@ -4690,7 +4690,7 @@ NetGamePractice2Cases2:
 	call QueueDrillResultMessage ; $60e0
 	ld a, [wCurrentShotType] ; $60e3
 	cp a, $0a ; $60e6
-	jp nz, NetGamePractice2Cases3.step3 ; $60e8
+	jp nz, NetGamePractice2Cases3.storeMatchAbortFlag ; $60e8
 	xor a, a ; $60eb
 	ret ; $60ec
 .step:
@@ -4737,7 +4737,7 @@ NetGamePractice2Cases3:
 	call QueueDrillResultMessage ; $6129
 	ld a, [wCurrentShotType] ; $612c
 	cp a, $09 ; $612f
-	jp nz, .step4 ; $6131
+	jp nz, .ne09 ; $6131
 	ld hl, $c2ec ; $6134
 	dec [hl] ; $6137
 	xor a, a ; $6138
@@ -4748,12 +4748,12 @@ NetGamePractice2Cases3:
 .step2:
 	xor a, a ; $613c
 	ret ; $613d
-.step3:
+.storeMatchAbortFlag:
 	ld a, $01 ; $613e
 	ld [wMatchAbortFlag], a ; $6140
 	ld a, $01 ; $6143
 	ret ; $6145
-.step4:
+.ne09:
 	ld a, $01 ; $6146
 	ld [wMatchAbortFlag], a ; $6148
 	ld a, $ff ; $614b
@@ -4841,11 +4841,11 @@ NetGamePractice3EvaluateResult:
 	jr .step5 ; $61ea
 .compare:
 	or a, a ; $61ec
-	jr z, .step ; $61ed
+	jr z, .zero ; $61ed
 	ld a, $02 ; $61ef
 	ld [$c2e3], a ; $61f1
 	jr .step5 ; $61f4
-.step:
+.zero:
 	ld a, [$c2eb] ; $61f6
 	cp a, $03 ; $61f9
 	jr nz, .countDrillResultBitsSet ; $61fb
@@ -4855,18 +4855,18 @@ NetGamePractice3EvaluateResult:
 .countDrillResultBitsSet:
 	call CountDrillResultBitsSet ; $6204
 	or a, a ; $6207
-	jr z, .step2 ; $6208
+	jr z, .zero2 ; $6208
 	ld a, $03 ; $620a
 	ld [$c2e3], a ; $620c
 	jr .step5 ; $620f
-.step2:
+.zero2:
 	ld a, [$c2ec] ; $6211
 	or a, a ; $6214
-	jr nz, .step3 ; $6215
+	jr nz, .nonZero ; $6215
 	ld a, $06 ; $6217
 	ld [$c2e3], a ; $6219
 	jr .step5 ; $621c
-.step3:
+.nonZero:
 	ld a, [$c2eb] ; $621e
 	cp a, $01 ; $6221
 	jr c, .step4 ; $6223
@@ -5027,7 +5027,7 @@ NetGamePractice3Cases1:
 	call RecordDrillTargetZoneHit ; $634c
 	call CheckDrillTargetZoneMissed ; $634f
 	or a, a ; $6352
-	jp z, NetGamePractice3Cases3.step3 ; $6353
+	jp z, NetGamePractice3Cases3.storeMatchAbortFlag ; $6353
 	xor a, a ; $6356
 	ret ; $6357
 .step:
@@ -5113,13 +5113,13 @@ NetGamePractice3Cases3:
 	xor a, a ; $63cf
 	call TestCharStateBit4 ; $63d0
 	or a, a ; $63d3
-	jp z, .step3 ; $63d4
+	jp z, .storeMatchAbortFlag ; $63d4
 	ld a, $39 ; $63d7
 	ld b, $00 ; $63d9
 	call QueueDrillResultMessage ; $63db
 	ld a, [wCurrentShotType] ; $63de
 	cp a, $0b ; $63e1
-	jp nz, .step3 ; $63e3
+	jp nz, .storeMatchAbortFlag ; $63e3
 	ld hl, $c2ec ; $63e6
 	dec [hl] ; $63e9
 	xor a, a ; $63ea
@@ -5134,7 +5134,7 @@ NetGamePractice3Cases3:
 	ld [wMatchAbortFlag], a ; $63f2
 	ld a, $01 ; $63f5
 	ret ; $63f7
-.step3:
+.storeMatchAbortFlag:
 	ld a, $01 ; $63f8
 	ld [wMatchAbortFlag], a ; $63fa
 	ld a, $ff ; $63fd
@@ -5250,10 +5250,10 @@ StrokeMatch1AwardPointToSide:
 	inc a ; $64c8
 	srl a ; $64c9
 	or a, a ; $64cb
-	jr nz, .step ; $64cc
+	jr nz, .nonZero ; $64cc
 	ld hl, wPlayer2PointsWon ; $64ce
 	jr .bump ; $64d1
-.step:
+.nonZero:
 	ld hl, wPlayer1PointsWon ; $64d3
 .bump:
 	inc [hl] ; $64d6
@@ -5378,7 +5378,7 @@ StrokeMatch1Cases2:
 	call SetDrillMessageByRallyParity ; $6597
 	ld a, [wLastShotCharIndex] ; $659a
 	call TestCharStateBit4 ; $659d
-	jp nz, StrokeMatch1Cases4.step3 ; $65a0
+	jp nz, StrokeMatch1Cases4.storeMatchAbortFlag2 ; $65a0
 	xor a, a ; $65a3
 	ret ; $65a4
 .checkPointOutcome:
@@ -5391,7 +5391,7 @@ StrokeMatch1Cases2:
 	call SetDrillMessageByRallyParity ; $65b1
 	call TestBallBounceDepth ; $65b4
 	or a, a ; $65b7
-	jp z, StrokeMatch1Cases4.step3 ; $65b8
+	jp z, StrokeMatch1Cases4.storeMatchAbortFlag2 ; $65b8
 	xor a, a ; $65bb
 	ret ; $65bc
 .step:
@@ -5435,7 +5435,7 @@ StrokeMatch1Cases3:
 	call SetDrillMessageByRallyParity ; $65f7
 	ld a, [wLastShotCharIndex] ; $65fa
 	call TestCharStateBit4 ; $65fd
-	jp nz, StrokeMatch1Cases4.step2 ; $6600
+	jp nz, StrokeMatch1Cases4.storeMatchAbortFlag ; $6600
 	xor a, a ; $6603
 	ret ; $6604
 .checkPointOutcome:
@@ -5448,7 +5448,7 @@ StrokeMatch1Cases3:
 	call SetDrillMessageByRallyParity ; $6611
 	call TestBallBounceDepth ; $6614
 	or a, a ; $6617
-	jp z, StrokeMatch1Cases4.step2 ; $6618
+	jp z, StrokeMatch1Cases4.storeMatchAbortFlag ; $6618
 	xor a, a ; $661b
 	ret ; $661c
 .step:
@@ -5492,7 +5492,7 @@ StrokeMatch1Cases4:
 	call SetDrillMessageByRallyParity ; $6657
 	ld a, [wLastShotCharIndex] ; $665a
 	call TestCharStateBit4 ; $665d
-	jp nz, .step3 ; $6660
+	jp nz, .storeMatchAbortFlag2 ; $6660
 	xor a, a ; $6663
 	ret ; $6664
 .checkPointOutcome:
@@ -5505,18 +5505,18 @@ StrokeMatch1Cases4:
 	call SetDrillMessageByRallyParity ; $6671
 	call TestBallBounceDepth ; $6674
 	or a, a ; $6677
-	jp z, .step3 ; $6678
+	jp z, .storeMatchAbortFlag2 ; $6678
 	xor a, a ; $667b
 	ret ; $667c
 .step:
 	xor a, a ; $667d
 	ret ; $667e
-.step2:
+.storeMatchAbortFlag:
 	ld a, $01 ; $667f
 	ld [wMatchAbortFlag], a ; $6681
 	ld a, $01 ; $6684
 	ret ; $6686
-.step3:
+.storeMatchAbortFlag2:
 	ld a, $01 ; $6687
 	ld [wMatchAbortFlag], a ; $6689
 	ld a, $ff ; $668c
@@ -5526,10 +5526,10 @@ SelectStrokeTargetTableByPoint:
 	and a, $01 ; $6692
 	ld a, $00 ; $6694
 	or a, a ; $6696
-	jr nz, .step ; $6697
+	jr nz, .nonZero ; $6697
 	ld hl, SignedTable_0b_46fb ; $6699
 	jr .done ; $669c
-.step:
+.nonZero:
 	ld hl, SignedTable_0b_46f1 ; $669e
 .done:
 	ret ; $66a1
@@ -5538,10 +5538,10 @@ SelectStrokeTargetTableByPointAlt:
 	and a, $01 ; $66a5
 	ld a, $00 ; $66a7
 	or a, a ; $66a9
-	jr nz, .step ; $66aa
+	jr nz, .nonZero ; $66aa
 	ld hl, SignedTable_0b_46f1 ; $66ac
 	jr .done ; $66af
-.step:
+.nonZero:
 	ld hl, SignedTable_0b_46fb ; $66b1
 .done:
 	ret ; $66b4
@@ -5554,14 +5554,14 @@ TestBallBounceDepth:
 	ld h, [hl] ; $66bf
 	ld l, a ; $66c0
 	bit 7, h ; $66c1
-	jr z, .step ; $66c3
+	jr z, .positive ; $66c3
 	xor a, a ; $66c5
 	sub a, l ; $66c6
 	ld l, a ; $66c7
 	sbc a, a ; $66c8
 	sub a, h ; $66c9
 	ld h, a ; $66ca
-.step:
+.positive:
 	ld de, $02a0 ; $66cb
 	ld a, l ; $66ce
 	sub a, e ; $66cf
@@ -5834,7 +5834,7 @@ StrokeMatch2Cases2:
 	call SetDrillMessageByServer ; $689b
 	ld a, [wCurrentShotType] ; $689e
 	cp a, $0a ; $68a1
-	jp nz, StrokeMatch2Cases3.step9 ; $68a3
+	jp nz, StrokeMatch2Cases3.storeMatchAbortFlag ; $68a3
 	xor a, a ; $68a6
 	ret ; $68a7
 .step:
@@ -5884,7 +5884,7 @@ StrokeMatch2Cases3:
 	xor a, $01 ; $68ec
 	call TestCharStateBit4 ; $68ee
 	or a, a ; $68f1
-	jp z, .step8 ; $68f2
+	jp z, .zero ; $68f2
 	xor a, a ; $68f5
 	ret ; $68f6
 .step:
@@ -5898,29 +5898,29 @@ StrokeMatch2Cases3:
 	ld a, a ; $68fc
 	rst Rst00 ; $68fd
 	dw StrokeMatch2Cases3.step4 ; $68fe jumptable
-	dw StrokeMatch2Cases3.step5 ; $6900 jumptable
+	dw StrokeMatch2Cases3.setDrillMessageByServer ; $6900 jumptable
 	dw StrokeMatch2Cases3.step6 ; $6902 jumptable
 	dw StrokeMatch2Cases3.step7 ; $6904 jumptable
 .step4:
 	xor a, a ; $6906
 	ret ; $6907
-.step5:
+.setDrillMessageByServer:
 	ld a, $43 ; $6908
 	ld b, $0d ; $690a
 	call SetDrillMessageByServer ; $690c
-	jp .step9 ; $690f
+	jp .storeMatchAbortFlag ; $690f
 .step6:
 	xor a, a ; $6912
 	ret ; $6913
 .step7:
 	xor a, a ; $6914
 	ret ; $6915
-.step8:
+.zero:
 	ld a, $01 ; $6916
 	ld [wMatchAbortFlag], a ; $6918
 	ld a, $01 ; $691b
 	ret ; $691d
-.step9:
+.storeMatchAbortFlag:
 	ld a, $01 ; $691e
 	ld [wMatchAbortFlag], a ; $6920
 	ld a, $ff ; $6923
@@ -6226,7 +6226,7 @@ StrokeMatch3Cases3:
 	xor a, $01 ; $6b23
 	call TestCharStateBit4 ; $6b25
 	or a, a ; $6b28
-	jp z, .step8 ; $6b29
+	jp z, .zero ; $6b29
 	xor a, a ; $6b2c
 	ret ; $6b2d
 .step:
@@ -6240,29 +6240,29 @@ StrokeMatch3Cases3:
 	ld a, a ; $6b33
 	rst Rst00 ; $6b34
 	dw StrokeMatch3Cases3.step4 ; $6b35 jumptable
-	dw StrokeMatch3Cases3.step5 ; $6b37 jumptable
+	dw StrokeMatch3Cases3.setDrillMessageByServer ; $6b37 jumptable
 	dw StrokeMatch3Cases3.step6 ; $6b39 jumptable
 	dw StrokeMatch3Cases3.step7 ; $6b3b jumptable
 .step4:
 	xor a, a ; $6b3d
 	ret ; $6b3e
-.step5:
+.setDrillMessageByServer:
 	ld a, $43 ; $6b3f
 	ld b, $0d ; $6b41
 	call SetDrillMessageByServer ; $6b43
-	jp .step9 ; $6b46
+	jp .storeMatchAbortFlag ; $6b46
 .step6:
 	xor a, a ; $6b49
 	ret ; $6b4a
 .step7:
 	xor a, a ; $6b4b
 	ret ; $6b4c
-.step8:
+.zero:
 	ld a, $01 ; $6b4d
 	ld [wMatchAbortFlag], a ; $6b4f
 	ld a, $01 ; $6b52
 	ret ; $6b54
-.step9:
+.storeMatchAbortFlag:
 	ld a, $01 ; $6b55
 	ld [wMatchAbortFlag], a ; $6b57
 	ld a, $ff ; $6b5a
@@ -6340,9 +6340,9 @@ StrokePractice1Hook_PointEnd:
 	call Drill15JudgePointMode0 ; $6be1
 	ld a, [wPointOutcome] ; $6be4
 	cp a, $05 ; $6be7
-	jr z, .step ; $6be9
+	jr z, .eq05 ; $6be9
 	jr .strokePractice1HandlePointEnd ; $6beb
-.step:
+.eq05:
 	ld hl, $c2e8 ; $6bed
 	inc [hl] ; $6bf0
 .strokePractice1HandlePointEnd:
@@ -6356,12 +6356,12 @@ StrokePractice1Hook_PointEnd:
 StrokePractice1EvaluateResult:
 	ld a, [$c2e9] ; $6c01
 	cp a, $04 ; $6c04
-	jr nz, .step ; $6c06
+	jr nz, .ne04 ; $6c06
 	xor a, a ; $6c08
 	ld [$c2e3], a ; $6c09
 	ld a, $01 ; $6c0c
 	ret ; $6c0e
-.step:
+.ne04:
 	ld a, [$c2e8] ; $6c0f
 	cp a, $04 ; $6c12
 	jr c, .compare ; $6c14
@@ -6370,11 +6370,11 @@ StrokePractice1EvaluateResult:
 	jr .step4 ; $6c1b
 .compare:
 	cp a, $02 ; $6c1d
-	jr c, .step2 ; $6c1f
+	jr c, .lt02 ; $6c1f
 	ld a, $02 ; $6c21
 	ld [$c2e3], a ; $6c23
 	jr .step4 ; $6c26
-.step2:
+.lt02:
 	ld a, [$c2e9] ; $6c28
 	or a, a ; $6c2b
 	jr nz, .compare2 ; $6c2c
@@ -6383,11 +6383,11 @@ StrokePractice1EvaluateResult:
 	jr .step4 ; $6c33
 .compare2:
 	cp a, $03 ; $6c35
-	jr nz, .step3 ; $6c37
+	jr nz, .ne03 ; $6c37
 	ld a, $05 ; $6c39
 	ld [$c2e3], a ; $6c3b
 	jr .step4 ; $6c3e
-.step3:
+.ne03:
 	ld a, $04 ; $6c40
 	ld [$c2e3], a ; $6c42
 	jr .step4 ; $6c45
@@ -6576,22 +6576,22 @@ StrokePractice1Cases2:
 	call RecordDrillTargetZoneHit ; $6d84
 	call CheckDrillTargetZoneMissed ; $6d87
 	or a, a ; $6d8a
-	jp nz, .step2 ; $6d8b
+	jp nz, .nonZero ; $6d8b
 	ld a, $5a ; $6d8e
 	ld b, $00 ; $6d90
 	call QueueDrillResultMessage ; $6d92
 	ld hl, $c2ea ; $6d95
 	inc [hl] ; $6d98
-	jp .step3 ; $6d99
+	jp .storeMatchAbortFlag ; $6d99
 .step:
 	xor a, a ; $6d9c
 	ret ; $6d9d
-.step2:
+.nonZero:
 	ld a, $01 ; $6d9e
 	ld [wMatchAbortFlag], a ; $6da0
 	ld a, $01 ; $6da3
 	ret ; $6da5
-.step3:
+.storeMatchAbortFlag:
 	ld a, $01 ; $6da6
 	ld [wMatchAbortFlag], a ; $6da8
 	ld a, $ff ; $6dab
@@ -6678,19 +6678,19 @@ StrokePractice2Hook_PointEnd:
 StrokePractice2EvaluateResult:
 	ld a, [$c2ee] ; $6e40
 	cp a, $04 ; $6e43
-	jr nz, .step ; $6e45
+	jr nz, .ne04 ; $6e45
 	xor a, a ; $6e47
 	ld [$c2e3], a ; $6e48
 	ld a, $01 ; $6e4b
 	ret ; $6e4d
-.step:
+.ne04:
 	ld a, [$c2ee] ; $6e4e
 	cp a, $03 ; $6e51
-	jr c, .step2 ; $6e53
+	jr c, .lt03 ; $6e53
 	ld a, $05 ; $6e55
 	ld [$c2e3], a ; $6e57
 	jr .step4 ; $6e5a
-.step2:
+.lt03:
 	ld a, [$c2e9] ; $6e5c
 	cp a, $04 ; $6e5f
 	jr nc, .checkRallyLength ; $6e61
@@ -6890,7 +6890,7 @@ StrokePractice2Cases2:
 	call QueueDrillResultMessage ; $6fc4
 	ld a, [wCurrentShotType] ; $6fc7
 	cp a, $0a ; $6fca
-	jp nz, .step3 ; $6fcc
+	jp nz, .storeMatchAbortFlag ; $6fcc
 	ld hl, $c2e9 ; $6fcf
 	inc [hl] ; $6fd2
 	xor a, a ; $6fd3
@@ -6906,22 +6906,22 @@ StrokePractice2Cases2:
 	call RecordDrillTargetZoneHit ; $6fe4
 	call CheckDrillTargetZoneMissed ; $6fe7
 	or a, a ; $6fea
-	jp nz, .step2 ; $6feb
+	jp nz, .nonZero ; $6feb
 	ld a, $5a ; $6fee
 	ld b, $00 ; $6ff0
 	call QueueDrillResultMessage ; $6ff2
 	ld hl, $c2ea ; $6ff5
 	inc [hl] ; $6ff8
-	jp .step3 ; $6ff9
+	jp .storeMatchAbortFlag ; $6ff9
 .step:
 	xor a, a ; $6ffc
 	ret ; $6ffd
-.step2:
+.nonZero:
 	ld a, $01 ; $6ffe
 	ld [wMatchAbortFlag], a ; $7000
 	ld a, $01 ; $7003
 	ret ; $7005
-.step3:
+.storeMatchAbortFlag:
 	ld a, $01 ; $7006
 	ld [wMatchAbortFlag], a ; $7008
 	ld a, $ff ; $700b
@@ -7007,12 +7007,12 @@ StrokePractice3Hook_PointEnd:
 StrokePractice3EvaluateResult:
 	ld a, [$c2e9] ; $70a5
 	cp a, $04 ; $70a8
-	jr nz, .step ; $70aa
+	jr nz, .ne04 ; $70aa
 	xor a, a ; $70ac
 	ld [$c2e3], a ; $70ad
 	ld a, $01 ; $70b0
 	ret ; $70b2
-.step:
+.ne04:
 	ld a, [$c2e8] ; $70b3
 	cp a, $04 ; $70b6
 	jr c, .compare ; $70b8
@@ -7021,11 +7021,11 @@ StrokePractice3EvaluateResult:
 	jr .step4 ; $70bf
 .compare:
 	cp a, $02 ; $70c1
-	jr c, .step2 ; $70c3
+	jr c, .lt02 ; $70c3
 	ld a, $02 ; $70c5
 	ld [$c2e3], a ; $70c7
 	jr .step4 ; $70ca
-.step2:
+.lt02:
 	ld a, [$c2e9] ; $70cc
 	or a, a ; $70cf
 	jr nz, .compare2 ; $70d0
@@ -7034,11 +7034,11 @@ StrokePractice3EvaluateResult:
 	jr .step4 ; $70d7
 .compare2:
 	cp a, $03 ; $70d9
-	jr nz, .step3 ; $70db
+	jr nz, .ne03 ; $70db
 	ld a, $05 ; $70dd
 	ld [$c2e3], a ; $70df
 	jr .step4 ; $70e2
-.step3:
+.ne03:
 	ld a, $04 ; $70e4
 	ld [$c2e3], a ; $70e6
 	jr .step4 ; $70e9
@@ -7224,22 +7224,22 @@ StrokePractice3Cases2:
 	call RecordDrillTargetZoneHit ; $722e
 	call CheckDrillTargetZoneMissed ; $7231
 	or a, a ; $7234
-	jp nz, .step2 ; $7235
+	jp nz, .nonZero ; $7235
 	ld a, $5a ; $7238
 	ld b, $00 ; $723a
 	call QueueDrillResultMessage ; $723c
 	ld hl, $c2ea ; $723f
 	inc [hl] ; $7242
-	jp .step3 ; $7243
+	jp .storeMatchAbortFlag ; $7243
 .step:
 	xor a, a ; $7246
 	ret ; $7247
-.step2:
+.nonZero:
 	ld a, $01 ; $7248
 	ld [wMatchAbortFlag], a ; $724a
 	ld a, $01 ; $724d
 	ret ; $724f
-.step3:
+.storeMatchAbortFlag:
 	ld a, $01 ; $7250
 	ld [wMatchAbortFlag], a ; $7252
 	ld a, $ff ; $7255

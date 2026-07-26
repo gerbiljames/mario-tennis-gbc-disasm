@@ -96,9 +96,9 @@ RestaurantPlazaArrival02_13:
 	script_move_target ACTOR_PLAYER, $1500, $0d00 ; $41a9
 	script_move_target ACTOR_PARTNER, $1500, $0b00 ; $41b4
 	test_flag FLAG_DOUBLES ; $41bf
-	jr z, .step ; $41c2
+	jr z, .notDoubles ; $41c2
 	script_wait_frames $0c ; $41c4
-.step:
+.notDoubles:
 	call AnimateDoorClose_13 ; $41cb
 	ret ; $41ce
 RestaurantPlazaArrivalWalkIn_13:
@@ -263,9 +263,9 @@ StoryActorsWalkOffAndFadeOutDoubles_13:
 RestaurantPlazaInitScript_13:
 	ld a, [wStoryModeEntryPoint] ; $44df
 	cp a, $0f ; $44e2
-	jr nz, .step ; $44e4
+	jr nz, .ne0f ; $44e4
 	call AcademyCourtsTourCutscene ; $44e6
-.step:
+.ne0f:
 	cp a, $0e ; $44e9
 	jr nz, .done ; $44eb
 	call ServiceAceCoachIntroCutscene ; $44ed
@@ -706,9 +706,9 @@ DormRoomTile0F_13:
 	ld a, $03 ; $4ef9
 	script_set_text Text_31_324 ; $4efb
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $4f01
-	jr z, .step ; $4f04
+	jr z, .notTempSceneVariantA ; $4f04
 	script_set_text Text_31_328 ; $4f06
-.step:
+.notTempSceneVariantA:
 	script_jump_velocity $03, $ff80 ; $4f0c
 	ld a, $03 ; $4f14
 	call ComputeEmoteActorPosition_13 ; $4f16
@@ -897,7 +897,7 @@ SetDormRoomEventTriggerCells_13:
 SetupDormRoomSceneVariant:
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $5130
 	or a, a ; $5133
-	jr nz, .step ; $5134
+	jr nz, .nonZero ; $5134
 	farcall WaitPlayerMoveDone ; $5136
 	ld b, $20 ; $5139
 	ld c, $00 ; $513b
@@ -932,7 +932,7 @@ SetupDormRoomSceneVariant:
 	farcall CopyScrolledSceneTilemapToVram ; $51a5
 	call EnableLCD ; $51a8
 	ret ; $51ab
-.step:
+.nonZero:
 	call SetRandomDormRoomNpc04Script_13 ; $51ac
 	ret ; $51af
 PlaceDormRoomArrivalActors_13:
@@ -2031,9 +2031,9 @@ CourtyardExitTriggers_13:
 CourtyardNpc03_13:
 	script_set_text Text_30_527 ; $5eaa
 	test_flag FLAG_DOUBLES ; $5eb0
-	jr z, .step ; $5eb3
+	jr z, .notDoubles ; $5eb3
 	script_set_text Text_30_529 ; $5eb5
-.step:
+.notDoubles:
 	ld a, $03 ; $5ebb
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $5ebd
 	farcall RunDialogueYesNoPrompt ; $5ec0
@@ -3401,19 +3401,19 @@ DoublesTravelingTeamInitScript_13:
 	ret ; $7987
 RunTravelingTeamVictoryCutscene_13:
 	test_flag FLAG_DOUBLES ; $7988
-	jr z, .step ; $798b
+	jr z, .notDoubles ; $798b
 	call DoublesTravelingTeamVictoryCutscene ; $798d
 	ret ; $7990
-.step:
+.notDoubles:
 	call SinglesTravelingTeamVictoryCutscene ; $7991
 	ret ; $7994
 RunTravelingTeamBracketIfWon_13:
 	wram_bank $04 ; $7995
 	ld a, [wMatchWinLoseFlag] ; $799b
 	cp a, $01 ; $799e
-	jp z, .step ; $79a0
+	jp z, .eq01 ; $79a0
 	ret ; $79a3
-.step:
+.eq01:
 	ld a, $07 ; $79a4
 	ld [wStoryModeCurrentLocation], a ; $79a6
 	ld a, $0e ; $79a9
@@ -3422,7 +3422,7 @@ RunTravelingTeamBracketIfWon_13:
 	ld [$c294], a ; $79b0
 	ld [wStoryModeExitLocationRequest], a ; $79b3
 	test_flag FLAG_DOUBLES ; $79b6
-	jr nz, .step2 ; $79b9
+	jr nz, .isDoubles ; $79b9
 	ldh a, [hRomBank] ; $79bb
 	ld hl, SinglesTravelingTeamActors_13 ; $79bd
 	farcall ScriptRespawnLocationActors ; $79c0
@@ -3434,7 +3434,7 @@ RunTravelingTeamBracketIfWon_13:
 	farcall WaitPlayerMoveDone ; $79de
 	call ShowStoryTournamentBracket_13 ; $79e1
 	ret ; $79e4
-.step2:
+.isDoubles:
 	ldh a, [hRomBank] ; $79e5
 	ld hl, DoublesTravelingTeamActors_13 ; $79e7
 	farcall ScriptRespawnLocationActors ; $79ea
@@ -3775,7 +3775,7 @@ ActorScript_13_7cf5:
 	as_anim $03
 	as_jump .Ld
 	test_flag FLAG_DOUBLES ; $7d11
-	jr nz, .step ; $7d14
+	jr nz, .isDoubles ; $7d14
 	ld a, $00 ; $7d16
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7d18
 	jr z, .loop ; $7d1b
@@ -3792,7 +3792,7 @@ ActorScript_13_7cf5:
 .loop:
 	ld [$c2b0], a ; $7d34
 	ret ; $7d37
-.step:
+.isDoubles:
 	ld a, $01 ; $7d38
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $7d3a
 	jr z, .loop ; $7d3d

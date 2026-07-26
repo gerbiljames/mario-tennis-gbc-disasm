@@ -756,11 +756,11 @@ IntroCutsceneState07Update_6b:
 .checkCutsceneStepTimer:
 	ld a, [wCutsceneStepTimer] ; $46c0
 	cp a, $01 ; $46c3
-	jr z, .step ; $46c5
+	jr z, .eq01 ; $46c5
 	inc a ; $46c7
 	ld [wCutsceneStepTimer], a ; $46c8
 	jp DispatchCutsceneStateInit.loop ; $46cb
-.step:
+.eq01:
 	ld a, [wCameraX + 1] ; $46ce
 	ld h, a ; $46d1
 	ld a, [wCameraX] ; $46d2
@@ -1505,9 +1505,9 @@ ScrollOutIntroLogo:
 	inc a ; $51f1
 	ld [wCutsceneStepTimer], a ; $51f2
 	cp a, $3e ; $51f5
-	jr z, .step ; $51f7
+	jr z, .eq3e ; $51f7
 	jr .loop ; $51f9
-.step:
+.eq3e:
 	ld c, $10 ; $51fb
 	call BeginFadeOut ; $51fd
 	call WaitFadeEnd ; $5200
@@ -2174,20 +2174,20 @@ AnimateBgPalette1Task:
 	inc a ; $72b9
 	ld [$cb45], a ; $72ba
 	cp a, $10 ; $72bd
-	jr nc, .step2 ; $72bf
+	jr nc, .ge10 ; $72bf
 	sla a ; $72c1
 	sla a ; $72c3
 	sla a ; $72c5
 	ld hl, Palettes_6b_70af ; $72c7
 	add a, l ; $72ca
 	ld l, a ; $72cb
-	jr nc, .step ; $72cc
+	jr nc, .loadPalettesImmediate ; $72cc
 	inc h ; $72ce
-.step:
+.loadPalettesImmediate:
 	ld de, $0101 ; $72cf
 	call LoadPalettesImmediate ; $72d2
 	ret ; $72d5
-.step2:
+.ge10:
 	ld hl, AnimateBgPalette1Task ; $72d6
 	call UnregisterFrameTask ; $72d9
 	ret ; $72dc
@@ -2200,7 +2200,7 @@ AnimateBgPalettes2And3Task:
 	inc a ; $72e7
 	ld [$cb46], a ; $72e8
 	cp a, $10 ; $72eb
-	jr nc, .step3 ; $72ed
+	jr nc, .ge10 ; $72ed
 	sla a ; $72ef
 	sla a ; $72f1
 	sla a ; $72f3
@@ -2208,22 +2208,22 @@ AnimateBgPalettes2And3Task:
 	ld hl, Palettes_6b_712f ; $72f6
 	add a, l ; $72f9
 	ld l, a ; $72fa
-	jr nc, .step ; $72fb
+	jr nc, .loadPalettesImmediate ; $72fb
 	inc h ; $72fd
-.step:
+.loadPalettesImmediate:
 	ld de, $0201 ; $72fe
 	call LoadPalettesImmediate ; $7301
 	pop af ; $7304
 	ld hl, Palettes_6b_71af ; $7305
 	add a, l ; $7308
 	ld l, a ; $7309
-	jr nc, .step2 ; $730a
+	jr nc, .loadPalettesImmediate2 ; $730a
 	inc h ; $730c
-.step2:
+.loadPalettesImmediate2:
 	ld de, $0301 ; $730d
 	call LoadPalettesImmediate ; $7310
 	ret ; $7313
-.step3:
+.ge10:
 	ld hl, AnimateBgPalettes2And3Task ; $7314
 	call UnregisterFrameTask ; $7317
 	ret ; $731a
@@ -2243,15 +2243,15 @@ CycleBgPalettes4To7Task:
 	ld hl, Palettes_6b_722f ; $7333
 	add a, l ; $7336
 	ld l, a ; $7337
-	jr nc, .step ; $7338
+	jr nc, .loadPalettesImmediate ; $7338
 	inc h ; $733a
-.step:
+.loadPalettesImmediate:
 	ld de, $0404 ; $733b
 	call LoadPalettesImmediate ; $733e
 	ret ; $7341
 .compare:
 	cp a, $20 ; $7342
-	jr c, .step3 ; $7344
+	jr c, .lt20 ; $7344
 	ld b, a ; $7346
 	ld a, $20 ; $7347
 	sub a, b ; $7349
@@ -2261,13 +2261,13 @@ CycleBgPalettes4To7Task:
 	ld hl, Palettes_6b_722f ; $7350
 	add a, l ; $7353
 	ld l, a ; $7354
-	jr nc, .step2 ; $7355
+	jr nc, .loadPalettesImmediate2 ; $7355
 	inc h ; $7357
-.step2:
+.loadPalettesImmediate2:
 	ld de, $0404 ; $7358
 	call LoadPalettesImmediate ; $735b
 	ret ; $735e
-.step3:
+.lt20:
 	ld hl, CycleBgPalettes4To7Task ; $735f
 	call UnregisterFrameTask ; $7362
 	ret ; $7365
@@ -2537,7 +2537,7 @@ SpriteTemplate_6b_76f6:
 StepTitleSpriteAnimation:
 	ld a, [$d802] ; $771f
 	or a, a ; $7722
-	jr z, .step ; $7723
+	jr z, .zero ; $7723
 	inc a ; $7725
 	ld [$d802], a ; $7726
 	cp a, $10 ; $7729
@@ -2545,7 +2545,7 @@ StepTitleSpriteAnimation:
 	xor a, a ; $772d
 	ld [$d802], a ; $772e
 	ret ; $7731
-.step:
+.zero:
 	ldh a, [hVBlankCounter] ; $7732
 	and a, $07 ; $7734
 	cp a, $07 ; $7736

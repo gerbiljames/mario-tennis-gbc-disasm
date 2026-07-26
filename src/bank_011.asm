@@ -38,13 +38,13 @@ CenterCourtExitTriggers_11:
 CenterCourtNpc03_11:
 	script_set_text Text_1f_80 ; $4082
 	test_flag FLAG_DOUBLES ; $4088
-	jr nz, .step ; $408b
+	jr nz, .isDoubles ; $408b
 	ld a, [$c2b0] ; $408d
 	cp a, $03 ; $4090
 	jr nz, .speak ; $4092
 	script_set_text Text_1f_91 ; $4094
 	jr .speak ; $409a
-.step:
+.isDoubles:
 	ld a, [$c2b0] ; $409c
 	cp a, $06 ; $409f
 	jr nz, .speak ; $40a1
@@ -96,10 +96,10 @@ CenterCourtNpc05_11:
 	farcall InitDialogueTextCursor ; $410e
 	ld a, [$c2b0] ; $4111
 	cp a, $03 ; $4114
-	jr z, .step ; $4116
+	jr z, .eq03 ; $4116
 	script_speak $05 ; $4118
 	ret ; $411d
-.step:
+.eq03:
 	ld a, $05 ; $411e
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $4120
 	farcall RunDialogueYesNoPrompt ; $4123
@@ -251,7 +251,7 @@ MapArrivalWalk_11:
 	ret ; $4342
 SetPlayerAndPartnerObjectDefs_11:
 	test_flag FLAG_DOUBLES ; $4343
-	jp z, .step ; $4346
+	jp z, .notDoubles ; $4346
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $4349
 	ld d, $58 ; $434c
 	add a, d ; $434e
@@ -261,7 +261,7 @@ SetPlayerAndPartnerObjectDefs_11:
 	ld b, h ; $4356
 	farcall LoadActorObjectDefIfValid ; $4357
 	script_set_anim ACTOR_PARTNER, $01 ; $435a
-.step:
+.notDoubles:
 	ld a, [wStoryModeGenderOfMainCharacter] ; $4361
 	ld d, $56 ; $4364
 	add a, d ; $4366
@@ -275,9 +275,9 @@ SetPlayerAndPartnerObjectDefs_11:
 .placeActors:
 	script_set_position $0a, $2500, $2400 ; $437a
 	test_flag FLAG_DOUBLES ; $4385
-	jr z, .step2 ; $4388
+	jr z, .notDoubles2 ; $4388
 	script_set_position ACTOR_PARTNER, $0c00, $3300 ; $438a
-.step2:
+.notDoubles2:
 	xor a, a ; $4395
 	ld [wStoryModeShowLocationName], a ; $4396
 	script_fade_in $04 ; $4399
@@ -502,9 +502,9 @@ AcademyArrivalInitScript_11:
 	call MoveCampusGateGuardAside ; $46b7
 	ld a, [wStoryModeEntryPoint] ; $46ba
 	cp a, $0a ; $46bd
-	jp z, ActorListEnd_11_4fc5.step ; $46bf
+	jp z, ActorListEnd_11_4fc5.scriptRespawnLocationActors ; $46bf
 	cp a, $0c ; $46c2
-	jp z, ActorListEnd_11_4fc5.step3 ; $46c4
+	jp z, ActorListEnd_11_4fc5.scriptRespawnLocationActors2 ; $46c4
 	cp a, $0f ; $46c7
 	jr nz, .done ; $46c9
 	call LateStudentCrashCutscene ; $46cb
@@ -915,13 +915,13 @@ FollowGuideIntoAcademy:
 ActorListEnd_11_4fc5:
 	; $4fc5, 10 bytes (bytes:10)
 	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; 0x00
-.step:
+.scriptRespawnLocationActors:
 	ldh a, [hRomBank] ; $4fcf
 	ld hl, $537d ; $4fd1
 	farcall ScriptRespawnLocationActors ; $4fd4
 	farcall BeginCutsceneScriptMode ; $4fd7
 	test_flag FLAG_DOUBLES ; $4fda
-	jp z, .step2 ; $4fdd
+	jp z, .notDoubles ; $4fdd
 	script_null_script ACTOR_PARTNER ; $4fe0
 	script_set_position ACTOR_PARTNER, $3f00, $3f00 ; $4fe5
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $4ff0
@@ -935,7 +935,7 @@ ActorListEnd_11_4fc5:
 	script_set_anim $05, $01 ; $5001
 	script_set_position $07, $1a00, $1100 ; $5008
 	script_face $07, FACE_DOWN ; $5013
-.step2:
+.notDoubles:
 	ld a, [wStoryModeGenderOfMainCharacter] ; $501a
 	ld d, $56 ; $501d
 	add a, d ; $501f
@@ -1079,7 +1079,7 @@ ActorListEnd_11_4fc5:
 	map_actor $0000, ActorScript_11_7ba9, $0100, $1900, FACE_UP, $4a, $01, $00
 	map_actor $0000, ActorScript_11_7ba9, $1500, $2f00, FACE_RIGHT, $30, $01, $03
 	map_actor_end
-.step3:
+.scriptRespawnLocationActors2:
 	ldh a, [hRomBank] ; $53db
 	ld hl, $546a ; $53dd
 	farcall ScriptRespawnLocationActors ; $53e0
@@ -1471,11 +1471,11 @@ JuniorClassCourtDoublesInitScript_11:
 .stage2:
 	ld a, [wStoryModeEntryPoint] ; $5a66
 	cp a, $0f ; $5a69
-	jp z, ActorScript_11_5d27.step ; $5a6b
+	jp z, ActorScript_11_5d27.checkMatchExitRequest ; $5a6b
 	cp a, $0e ; $5a6e
-	jp z, ActorScript_11_5d27.step3 ; $5a70
+	jp z, ActorScript_11_5d27.eq012 ; $5a70
 	cp a, $0d ; $5a73
-	jp z, ActorScript_11_5d27.step4 ; $5a75
+	jp z, ActorScript_11_5d27.storeStoryModeShowLocationName ; $5a75
 	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $5a78
 	jr nz, .stage3 ; $5a7b
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $5a7d
@@ -1760,15 +1760,15 @@ ActorScript_11_5d27:
 	as_wait_move
 	as_set_field $14, FACE_UP
 	as_halt
-.step:
+.checkMatchExitRequest:
 	wram_bank $04 ; $5d38
 	ld a, [wMatchExitRequest] ; $5d3e
 	cp a, $01 ; $5d41
-	jr z, .step2 ; $5d43
+	jr z, .eq01 ; $5d43
 	ld a, [wMatchWinLoseFlag] ; $5d45
 	cp a, $01 ; $5d48
-	jp z, .step3 ; $5d4a
-.step2:
+	jp z, .eq012 ; $5d4a
+.eq01:
 	script_player_speed $0040 ; $5d4d
 	script_move_player $1300, $1500 ; $5d53
 	script_set_position ACTOR_PLAYER, $1300, $1500 ; $5d5d
@@ -1777,7 +1777,7 @@ ActorScript_11_5d27:
 	script_face ACTOR_PARTNER, FACE_UP ; $5d7a
 	farcall WaitPlayerMoveDone ; $5d81
 	ret ; $5d84
-.step3:
+.eq012:
 	ld a, $0c ; $5d85
 	ld [wStoryModeCurrentLocation], a ; $5d87
 	ld a, $0d ; $5d8a
@@ -1787,7 +1787,7 @@ ActorScript_11_5d27:
 	ld [wStoryModeExitLocationRequest], a ; $5d94
 	farcall StubNop_1e ; $5d97
 	ret ; $5d9a
-.step4:
+.storeStoryModeShowLocationName:
 	xor a, a ; $5d9b
 	ld [wStoryModeShowLocationName], a ; $5d9c
 	script_null_script ACTOR_PARTNER ; $5d9f
@@ -2548,11 +2548,11 @@ JuniorClassCourtSinglesInitScript_11:
 .stage2:
 	ld a, [wStoryModeEntryPoint] ; $6d15
 	cp a, $0f ; $6d18
-	jp z, ActorScript_11_6e16.step ; $6d1a
+	jp z, ActorScript_11_6e16.checkMatchExitRequest ; $6d1a
 	cp a, $0e ; $6d1d
-	jp z, ActorScript_11_6e16.step3 ; $6d1f
+	jp z, ActorScript_11_6e16.eq012 ; $6d1f
 	cp a, $0d ; $6d22
-	jp z, ActorScript_11_6e16.step4 ; $6d24
+	jp z, ActorScript_11_6e16.storeStoryModeShowLocationName ; $6d24
 	test_flag FLAG_STORY_COMPLETE_SINGLES ; $6d27
 	jr nz, .stage3 ; $6d2a
 	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $6d2c
@@ -2660,22 +2660,22 @@ ActorScript_11_6e16:
 	as_wait $f0
 	as_wait $f0
 	as_jump .L8
-.step:
+.checkMatchExitRequest:
 	wram_bank $04 ; $6e4d
 	ld a, [wMatchExitRequest] ; $6e53
 	cp a, $01 ; $6e56
-	jr z, .step2 ; $6e58
+	jr z, .eq01 ; $6e58
 	ld a, [wMatchWinLoseFlag] ; $6e5a
 	cp a, $01 ; $6e5d
-	jp z, .step3 ; $6e5f
-.step2:
+	jp z, .eq012 ; $6e5f
+.eq01:
 	script_player_speed $0040 ; $6e62
 	script_move_player $1300, $1500 ; $6e68
 	script_set_position ACTOR_PLAYER, $1300, $1500 ; $6e72
 	script_face ACTOR_PLAYER, FACE_UP ; $6e7d
 	farcall WaitPlayerMoveDone ; $6e84
 	ret ; $6e87
-.step3:
+.eq012:
 	ld a, $0b ; $6e88
 	ld [wStoryModeCurrentLocation], a ; $6e8a
 	ld a, $0d ; $6e8d
@@ -2685,18 +2685,18 @@ ActorScript_11_6e16:
 	ld [wStoryModeExitLocationRequest], a ; $6e97
 	farcall StubNop_1e ; $6e9a
 	ret ; $6e9d
-.step4:
+.storeStoryModeShowLocationName:
 	xor a, a ; $6e9e
 	ld [wStoryModeShowLocationName], a ; $6e9f
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $6ea2
 	sub a, $01 ; $6ea5
 	ld a, a ; $6ea7
 	rst Rst00 ; $6ea8
-	dw ActorScript_11_6e16.step5 ; $6ea9 jumptable
-	dw ActorScript_11_6e16.step6 ; $6eab jumptable
-	dw ActorScript_11_6e16.step7 ; $6ead jumptable
+	dw ActorScript_11_6e16.parkMiddleCourtPracticePair ; $6ea9 jumptable
+	dw ActorScript_11_6e16.parkLeftCourtPracticePairRightSide ; $6eab jumptable
+	dw ActorScript_11_6e16.parkLeftCourtPracticePairRightSide2 ; $6ead jumptable
 	dw ActorScript_11_6e16.step8 ; $6eaf jumptable
-.step5:
+.parkMiddleCourtPracticePair:
 	call ParkMiddleCourtPracticePair ; $6eb1
 	script_player_speed $0040 ; $6eb4
 	script_set_position $07, $1a00, $0900 ; $6eba
@@ -2721,7 +2721,7 @@ ActorScript_11_6e16:
 	call ResumeMiddleCourtPractice ; $6f39
 	script_face $03, FACE_DOWN ; $6f3c
 	ret ; $6f43
-.step6:
+.parkLeftCourtPracticePairRightSide:
 	call ParkLeftCourtPracticePairRightSide ; $6f44
 	script_player_speed $0040 ; $6f47
 	script_set_position $06, $0900, $0900 ; $6f4d
@@ -2747,7 +2747,7 @@ ActorScript_11_6e16:
 	call ResumeLeftCourtPractice ; $6fd2
 	script_face $03, FACE_DOWN ; $6fd5
 	ret ; $6fdc
-.step7:
+.parkLeftCourtPracticePairRightSide2:
 	call ParkLeftCourtPracticePairRightSide ; $6fdd
 	script_player_speed $0040 ; $6fe0
 	script_set_position $05, $0900, $0900 ; $6fe6

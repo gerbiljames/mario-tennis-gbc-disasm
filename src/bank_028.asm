@@ -80,29 +80,29 @@ LoadMatchGraphics:
 LoadMatchVariantGraphics:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $5efb
 	sub a, $12 ; $5efe
-	jr c, .step ; $5f00
+	jr c, .carry ; $5f00
 	ld a, a ; $5f02
 	rst Rst00 ; $5f03
 	dw LoadMatchVariantGraphics.loadMatchSharedTiles ; $5f04 jumptable
 	dw LoadMatchVariantGraphics.loadMatchSharedTiles ; $5f06 jumptable
 	dw LoadMatchVariantGraphics.loadMatchSharedTiles ; $5f08 jumptable
 	dw LoadMatchVariantGraphics.loadMatchSharedTiles ; $5f0a jumptable
-	dw LoadMatchVariantGraphics.step2 ; $5f0c jumptable
-	dw LoadMatchVariantGraphics.step2 ; $5f0e jumptable
-	dw LoadMatchVariantGraphics.step2 ; $5f10 jumptable
-	dw LoadMatchVariantGraphics.step2 ; $5f12 jumptable
+	dw LoadMatchVariantGraphics.loadPaletteShadow ; $5f0c jumptable
+	dw LoadMatchVariantGraphics.loadPaletteShadow ; $5f0e jumptable
+	dw LoadMatchVariantGraphics.loadPaletteShadow ; $5f10 jumptable
+	dw LoadMatchVariantGraphics.loadPaletteShadow ; $5f12 jumptable
 	dw LoadMatchVariantGraphics.loadMatchSharedTiles ; $5f14 jumptable
-	dw LoadMatchVariantGraphics.step2 ; $5f16 jumptable
-	dw LoadMatchVariantGraphics.step4 ; $5f18 jumptable
-	dw LoadMatchVariantGraphics.step5 ; $5f1a jumptable
-	dw LoadMatchVariantGraphics.step2 ; $5f1c jumptable
+	dw LoadMatchVariantGraphics.loadPaletteShadow ; $5f16 jumptable
+	dw LoadMatchVariantGraphics.loadPaletteShadow2 ; $5f18 jumptable
+	dw LoadMatchVariantGraphics.loadPaletteShadow3 ; $5f1a jumptable
+	dw LoadMatchVariantGraphics.loadPaletteShadow ; $5f1c jumptable
 	dw LoadMatchVariantGraphics.step3 ; $5f1e jumptable
-	dw LoadMatchVariantGraphics.step9 ; $5f20 jumptable
-	dw LoadMatchVariantGraphics.step8 ; $5f22 jumptable
+	dw LoadMatchVariantGraphics.loadPaletteShadow6 ; $5f20 jumptable
+	dw LoadMatchVariantGraphics.loadPaletteShadow5 ; $5f22 jumptable
 	dw LoadMatchVariantGraphics.step7 ; $5f24 jumptable
-	dw LoadMatchVariantGraphics.step6 ; $5f26 jumptable
-	dw LoadMatchVariantGraphics.step ; $5f28 jumptable
-.step:
+	dw LoadMatchVariantGraphics.loadPaletteShadow4 ; $5f26 jumptable
+	dw LoadMatchVariantGraphics.carry ; $5f28 jumptable
+.carry:
 	ld hl, MatchGfxMapsA_28 ; $5f2a
 	ld de, $a200 ; $5f2d
 	ld c, $20 ; $5f30
@@ -111,7 +111,7 @@ LoadMatchVariantGraphics:
 .loadMatchSharedTiles:
 	call LoadMatchSharedTiles_28 ; $5f36
 	ret ; $5f39
-.step2:
+.loadPaletteShadow:
 	ld hl, MatchGfxPalettesB_28 ; $5f3a
 	ld de, $0b01 ; $5f3d
 	call LoadPaletteShadow ; $5f40
@@ -131,7 +131,7 @@ LoadMatchVariantGraphics:
 	call QueueVRAMCopy ; $5f63
 	call LoadMatchSharedTiles_28 ; $5f66
 	ret ; $5f69
-.step4:
+.loadPaletteShadow2:
 	ld hl, $5ea0 ; $5f6a
 	ld de, $0e02 ; $5f6d
 	call LoadPaletteShadow ; $5f70
@@ -141,7 +141,7 @@ LoadMatchVariantGraphics:
 	call QueueVRAMCopy ; $5f7b
 	call LoadMatchSharedTiles_28 ; $5f7e
 	ret ; $5f81
-.step5:
+.loadPaletteShadow3:
 	ld hl, $5e68 ; $5f82
 	ld de, $0e02 ; $5f85
 	call LoadPaletteShadow ; $5f88
@@ -151,7 +151,7 @@ LoadMatchVariantGraphics:
 	call QueueVRAMCopy ; $5f93
 	call LoadMatchSharedTiles_28 ; $5f96
 	ret ; $5f99
-.step6:
+.loadPaletteShadow4:
 	ld hl, $5e78 ; $5f9a
 	ld de, $0f01 ; $5f9d
 	call LoadPaletteShadow ; $5fa0
@@ -182,7 +182,7 @@ LoadMatchVariantGraphics:
 	call QueueVRAMCopy ; $5fe2
 	call LoadMatchSharedTiles_28 ; $5fe5
 	ret ; $5fe8
-.step8:
+.loadPaletteShadow5:
 	ld hl, $5e50 ; $5fe9
 	ld de, $0d03 ; $5fec
 	call LoadPaletteShadow ; $5fef
@@ -196,7 +196,7 @@ LoadMatchVariantGraphics:
 	call QueueVRAMCopy ; $6005
 	call LoadMatchSharedTiles_28 ; $6008
 	ret ; $600b
-.step9:
+.loadPaletteShadow6:
 	ld hl, $5e50 ; $600c
 	ld de, $0d03 ; $600f
 	call LoadPaletteShadow ; $6012

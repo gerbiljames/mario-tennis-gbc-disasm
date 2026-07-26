@@ -30,16 +30,16 @@ FetchText_36:
 	ld hl, $4592 ; $7edc
 	add hl, de ; $7edf
 	or a, a ; $7ee0
-	jr nz, .step ; $7ee1
+	jr nz, .nonZero ; $7ee1
 	ld de, wTextBuffer ; $7ee3
 	ld c, $a0 ; $7ee6
 	jr .loop ; $7ee8
-.step:
+.nonZero:
 	ld de, wShortTextBuffer ; $7eea
 	ld c, $10 ; $7eed
 .loop:
 	dec c ; $7eef
-	jr z, .step2 ; $7ef0
+	jr z, .countDone ; $7ef0
 	ld a, [hl+] ; $7ef2
 	ld [de], a ; $7ef3
 	inc de ; $7ef4
@@ -49,7 +49,7 @@ FetchText_36:
 	pop de ; $7ef9
 	pop bc ; $7efa
 	ret ; $7efb
-.step2:
+.countDone:
 	xor a, a ; $7efc
 	ld [de], a ; $7efd
 	ldh a, [hDebugStepMode] ; $7efe

@@ -72,13 +72,13 @@ RunDebugTestMenu:
 .loopBB:
 	ldh a, [hInputPressed] ; $40bf
 	bit PADB_A, a ; $40c1
-	jr z, .step ; $40c3
+	jr z, .advanceFrame ; $40c3
 	push de ; $40c5
 	ld de, SAVEFLAG_DEBUG_TEST_MENU ; $40c6
 	farcall SetSaveFlag ; $40c9
 	pop de ; $40cc
 	jr .step2 ; $40cd
-.step:
+.advanceFrame:
 	bit 3, a ; $40cf
 	jr nz, .step2 ; $40d1
 	call AdvanceFrame ; $40d3
@@ -101,7 +101,7 @@ Unused_01_MenuRedraw:
 .loop:
 	ldh a, [hInputPressed] ; $40f9
 	bit PADB_START, a ; $40fb
-	jr z, .step ; $40fd
+	jr z, .runSoundTest ; $40fd
 	ld a, $01 ; $40ff
 	ldh [hDebugStepMode], a ; $4101
 	ld hl, wStoryModeCurrentLocation ; $4103
@@ -110,28 +110,28 @@ Unused_01_MenuRedraw:
 	ld [hl], $0a ; $410b
 	farcall RunStoryModeOverworld ; $410d
 	jp RunDebugTestMenu.loop ; $4110
-.step:
+.runSoundTest:
 	bit 2, a ; $4113
-	jr z, .step2 ; $4115
+	jr z, .bit2Clear ; $4115
 	farcall RunSoundTest ; $4117
-.step2:
+.bit2Clear:
 	bit 0, a ; $411a
-	jr z, .step3 ; $411c
+	jr z, .bit0Clear ; $411c
 	ld a, $01 ; $411e
 	ldh [hDebugStepMode], a ; $4120
 .loopB:
 	farcall RunDebugTestMatch ; $4122
 	jr .loopB ; $4125
-.step3:
+.bit0Clear:
 	bit 1, a ; $4127
-	jr z, .step4 ; $4129
+	jr z, .bit1Clear ; $4129
 	ld a, $01 ; $412b
 	ldh [hDebugStepMode], a ; $412d
 .loopBB:
 	farcall StubNop_3b_44a9 ; $412f
 	farcall RunMatch ; $4132
 	jp .loopBB ; $4135
-.step4:
+.bit1Clear:
 	bit 6, a ; $4138
 	jp z, Unused_01_MatchSetup.step ; $413a
 	ld a, $01 ; $413d
@@ -205,7 +205,7 @@ Unused_01_41d6:
 	db $ef ; $41da
 .step:
 	bit 4, a ; $41db
-	jr z, .step2 ; $41dd
+	jr z, .bit4Clear ; $41dd
 	ld a, $01 ; $41df
 	ldh [hDebugStepMode], a ; $41e1
 	ld hl, wStoryModeCurrentLocation ; $41e3
@@ -215,7 +215,7 @@ Unused_01_41d6:
 	ld a, $00 ; $41ed
 	ld [wStoryModeMainCharacterOverworldSprite], a ; $41ef
 	farcall RunStoryModeOverworld ; $41f2
-.step2:
+.bit4Clear:
 	bit 5, a ; $41f5
 	jr z, .advanceFrame ; $41f7
 	ld a, $01 ; $41f9
@@ -492,7 +492,7 @@ RunSoundTest:
 .step:
 	ld a, b ; $6a97
 	or a, a ; $6a98
-	jr nz, .step5 ; $6a99
+	jr nz, .nonZero ; $6a99
 	ldh a, [hInputPressed] ; $6a9b
 	bit PADB_RIGHT, a ; $6a9d
 	jr z, .step2 ; $6a9f
@@ -505,17 +505,17 @@ RunSoundTest:
 .step3:
 	ld a, d ; $6aa9
 	cp a, $ff ; $6aaa
-	jr nz, .step4 ; $6aac
+	jr nz, .neff ; $6aac
 	ld d, $3e ; $6aae
 	jr .step9 ; $6ab0
-.step4:
+.neff:
 	ld a, d ; $6ab2
 	cp a, $3e ; $6ab3
 	jr c, .step9 ; $6ab5
 	jr z, .step9 ; $6ab7
 	ld d, $00 ; $6ab9
 	jr .step9 ; $6abb
-.step5:
+.nonZero:
 	ldh a, [hInputPressed] ; $6abd
 	bit PADB_RIGHT, a ; $6abf
 	jr z, .step6 ; $6ac1
@@ -528,10 +528,10 @@ RunSoundTest:
 .step7:
 	ld a, e ; $6acb
 	cp a, $ff ; $6acc
-	jr nz, .step8 ; $6ace
+	jr nz, .neff2 ; $6ace
 	ld e, $71 ; $6ad0
 	jr .step9 ; $6ad2
-.step8:
+.neff2:
 	ld a, e ; $6ad4
 	cp a, $71 ; $6ad5
 	jr c, .step9 ; $6ad7
@@ -540,7 +540,7 @@ RunSoundTest:
 .step9:
 	ld a, b ; $6add
 	or a, a ; $6ade
-	jr nz, .step10 ; $6adf
+	jr nz, .nonZero2 ; $6adf
 	push hl ; $6ae1
 	push de ; $6ae2
 	ld hl, $6b71 ; $6ae3
@@ -556,7 +556,7 @@ RunSoundTest:
 	pop de ; $6af9
 	pop hl ; $6afa
 	jr .step11 ; $6afb
-.step10:
+.nonZero2:
 	push hl ; $6afd
 	push de ; $6afe
 	ld hl, $6b71 ; $6aff
@@ -590,7 +590,7 @@ RunSoundTest:
 	bit PADB_A, a ; $6b2f
 	jr z, .label_01_6a8a ; $6b31
 	bit 0, b ; $6b33
-	jr nz, .step12 ; $6b35
+	jr nz, .bit0Set ; $6b35
 	push af ; $6b37
 	push bc ; $6b38
 	push de ; $6b39
@@ -608,7 +608,7 @@ RunSoundTest:
 	pop bc ; $6b49
 	pop af ; $6b4a
 	jr .label_01_6a8a ; $6b4b
-.step12:
+.bit0Set:
 	push af ; $6b4d
 	push bc ; $6b4e
 	push de ; $6b4f

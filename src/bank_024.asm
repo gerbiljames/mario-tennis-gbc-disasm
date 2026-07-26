@@ -103,14 +103,14 @@ SetBallVelocityFromEntry6_24:
 	ld d, a ; $4075
 	ld a, [wShotAimMirror] ; $4076
 	and a, a ; $4079
-	jr z, .step ; $407a
+	jr z, .zero ; $407a
 	xor a, a ; $407c
 	sub a, e ; $407d
 	ld e, a ; $407e
 	sbc a, a ; $407f
 	sub a, d ; $4080
 	ld d, a ; $4081
-.step:
+.zero:
 	ld hl, wShotAimAngle ; $4082
 	ld a, [hl+] ; $4085
 	ld h, [hl] ; $4086
@@ -180,14 +180,14 @@ SetBallVelocityFromEntry4_24:
 	ld d, a ; $40d2
 	ld a, [wShotAimMirror] ; $40d3
 	and a, a ; $40d6
-	jr z, .step ; $40d7
+	jr z, .zero ; $40d7
 	xor a, a ; $40d9
 	sub a, e ; $40da
 	ld e, a ; $40db
 	sbc a, a ; $40dc
 	sub a, d ; $40dd
 	ld d, a ; $40de
-.step:
+.zero:
 	ld hl, wShotAimAngle ; $40df
 	ld a, [hl+] ; $40e2
 	ld h, [hl] ; $40e3
@@ -200,14 +200,14 @@ SetBallVelocityFromEntry4_24:
 	ld de, $fd40 ; $40ec
 	ld a, [$df0a] ; $40ef
 	and a, $02 ; $40f2
-	jr z, .step2 ; $40f4
+	jr z, .maskClear ; $40f4
 	xor a, a ; $40f6
 	sub a, e ; $40f7
 	ld e, a ; $40f8
 	sbc a, a ; $40f9
 	sub a, d ; $40fa
 	ld d, a ; $40fb
-.step2:
+.maskClear:
 	ld hl, wBallTargetDepth ; $40fc
 	ld a, e ; $40ff
 	ld [hl+], a ; $4100

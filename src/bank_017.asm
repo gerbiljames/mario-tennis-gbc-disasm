@@ -186,15 +186,15 @@ ApplySpriteWobbleY_17:
 	ld e, a ; $410f
 	ld a, [wMenuInputPressed] ; $4110
 	bit PADB_RIGHT, a ; $4113
-	jr z, .step2 ; $4115
+	jr z, .checkMenuCursorX4 ; $4115
 	ld a, [wMenuCursorX] ; $4117
 	inc a ; $411a
 	add a, a ; $411b
-	jr nc, .step ; $411c
+	jr nc, .noCarry ; $411c
 	ld a, b ; $411e
 	dec a ; $411f
 	jr .store ; $4120
-.step:
+.noCarry:
 	rra ; $4122
 	cp a, b ; $4123
 	jr c, .store ; $4124
@@ -202,17 +202,17 @@ ApplySpriteWobbleY_17:
 .store:
 	ld [wMenuCursorX], a ; $4127
 	jr .checkMenuCursorX ; $412a
-.step2:
+.checkMenuCursorX4:
 	bit 5, a ; $412c
-	jr z, .step4 ; $412e
+	jr z, .bit5Clear ; $412e
 	ld a, [wMenuCursorX] ; $4130
 	dec a ; $4133
 	add a, a ; $4134
-	jr nc, .step3 ; $4135
+	jr nc, .noCarry2 ; $4135
 	ld a, b ; $4137
 	dec a ; $4138
 	jr .store2 ; $4139
-.step3:
+.noCarry2:
 	rra ; $413b
 	cp a, b ; $413c
 	jr c, .store2 ; $413d
@@ -220,17 +220,17 @@ ApplySpriteWobbleY_17:
 .store2:
 	ld [wMenuCursorX], a ; $4140
 	jr .checkMenuCursorX ; $4143
-.step4:
+.bit5Clear:
 	bit 6, a ; $4145
-	jr z, .step6 ; $4147
+	jr z, .bit6Clear ; $4147
 	ld a, [wMenuCursorY] ; $4149
 	dec a ; $414c
 	add a, a ; $414d
-	jr nc, .step5 ; $414e
+	jr nc, .noCarry3 ; $414e
 	ld a, c ; $4150
 	dec a ; $4151
 	jr .store3 ; $4152
-.step5:
+.noCarry3:
 	rra ; $4154
 	cp a, c ; $4155
 	jr c, .store3 ; $4156
@@ -238,17 +238,17 @@ ApplySpriteWobbleY_17:
 .store3:
 	ld [wMenuCursorY], a ; $4159
 	jr .checkMenuCursorX ; $415c
-.step6:
+.bit6Clear:
 	bit 7, a ; $415e
 	jr z, .checkMenuCursorX ; $4160
 	ld a, [wMenuCursorY] ; $4162
 	inc a ; $4165
 	add a, a ; $4166
-	jr nc, .step7 ; $4167
+	jr nc, .noCarry4 ; $4167
 	ld a, c ; $4169
 	dec a ; $416a
 	jr .store4 ; $416b
-.step7:
+.noCarry4:
 	rra ; $416d
 	cp a, c ; $416e
 	jr c, .store4 ; $416f
@@ -258,13 +258,13 @@ ApplySpriteWobbleY_17:
 .checkMenuCursorX:
 	ld a, [wMenuCursorX] ; $4175
 	cp a, d ; $4178
-	jr nz, .step8 ; $4179
+	jr nz, .checkMenuCursorX5 ; $4179
 	ld a, [wMenuCursorY] ; $417b
 	cp a, e ; $417e
-	jr nz, .step8 ; $417f
+	jr nz, .checkMenuCursorX5 ; $417f
 	xor a, a ; $4181
 	ret ; $4182
-.step8:
+.checkMenuCursorX5:
 	ld a, $01 ; $4183
 	ret ; $4185
 	ld a, [wMenuCursorX] ; $4186
@@ -273,15 +273,15 @@ ApplySpriteWobbleY_17:
 	ld e, a ; $418d
 	ldh a, [hLinkInput] ; $418e
 	bit 4, a ; $4190
-	jr z, .step10 ; $4192
+	jr z, .bit4Clear ; $4192
 	ld a, [wMenuCursorX] ; $4194
 	inc a ; $4197
 	add a, a ; $4198
-	jr nc, .step9 ; $4199
+	jr nc, .noCarry5 ; $4199
 	ld a, b ; $419b
 	dec a ; $419c
 	jr .store5 ; $419d
-.step9:
+.noCarry5:
 	rra ; $419f
 	cp a, b ; $41a0
 	jr c, .store5 ; $41a1
@@ -289,17 +289,17 @@ ApplySpriteWobbleY_17:
 .store5:
 	ld [wMenuCursorX], a ; $41a4
 	jr .checkMenuCursorX2 ; $41a7
-.step10:
+.bit4Clear:
 	bit 5, a ; $41a9
-	jr z, .step12 ; $41ab
+	jr z, .bit5Clear2 ; $41ab
 	ld a, [wMenuCursorX] ; $41ad
 	dec a ; $41b0
 	add a, a ; $41b1
-	jr nc, .step11 ; $41b2
+	jr nc, .noCarry6 ; $41b2
 	ld a, b ; $41b4
 	dec a ; $41b5
 	jr .store6 ; $41b6
-.step11:
+.noCarry6:
 	rra ; $41b8
 	cp a, b ; $41b9
 	jr c, .store6 ; $41ba
@@ -307,17 +307,17 @@ ApplySpriteWobbleY_17:
 .store6:
 	ld [wMenuCursorX], a ; $41bd
 	jr .checkMenuCursorX2 ; $41c0
-.step12:
+.bit5Clear2:
 	bit 6, a ; $41c2
-	jr z, .step14 ; $41c4
+	jr z, .bit6Clear2 ; $41c4
 	ld a, [wMenuCursorY] ; $41c6
 	dec a ; $41c9
 	add a, a ; $41ca
-	jr nc, .step13 ; $41cb
+	jr nc, .noCarry7 ; $41cb
 	ld a, c ; $41cd
 	dec a ; $41ce
 	jr .store7 ; $41cf
-.step13:
+.noCarry7:
 	rra ; $41d1
 	cp a, c ; $41d2
 	jr c, .store7 ; $41d3
@@ -325,17 +325,17 @@ ApplySpriteWobbleY_17:
 .store7:
 	ld [wMenuCursorY], a ; $41d6
 	jr .checkMenuCursorX2 ; $41d9
-.step14:
+.bit6Clear2:
 	bit 7, a ; $41db
 	jr z, .checkMenuCursorX2 ; $41dd
 	ld a, [wMenuCursorY] ; $41df
 	inc a ; $41e2
 	add a, a ; $41e3
-	jr nc, .step15 ; $41e4
+	jr nc, .noCarry8 ; $41e4
 	ld a, c ; $41e6
 	dec a ; $41e7
 	jr .store8 ; $41e8
-.step15:
+.noCarry8:
 	rra ; $41ea
 	cp a, c ; $41eb
 	jr c, .store8 ; $41ec
@@ -345,13 +345,13 @@ ApplySpriteWobbleY_17:
 .checkMenuCursorX2:
 	ld a, [wMenuCursorX] ; $41f2
 	cp a, d ; $41f5
-	jr nz, .step16 ; $41f6
+	jr nz, .checkMenuCursorX6 ; $41f6
 	ld a, [wMenuCursorY] ; $41f8
 	cp a, e ; $41fb
-	jr nz, .step16 ; $41fc
+	jr nz, .checkMenuCursorX6 ; $41fc
 	xor a, a ; $41fe
 	ret ; $41ff
-.step16:
+.checkMenuCursorX6:
 	ld a, $01 ; $4200
 	ret ; $4202
 	ld a, [wMenuCursorX] ; $4203
@@ -360,31 +360,31 @@ ApplySpriteWobbleY_17:
 	ld e, a ; $420a
 	ldh a, [hLinkState] ; $420b
 	cp a, $02 ; $420d
-	jr z, .step18 ; $420f
+	jr z, .eq02 ; $420f
 	cp a, $01 ; $4211
-	jr z, .step17 ; $4213
+	jr z, .eq01 ; $4213
 	call LinkErrorReset ; $4215
-.step17:
+.eq01:
 	ldh a, [hLinkRemoteInputBuf] ; $4218
-	jr .step19 ; $421a
-.step18:
+	jr .checkMenuCursorLockFlags ; $421a
+.eq02:
 	ldh a, [hLinkRemoteInput] ; $421c
-.step19:
+.checkMenuCursorLockFlags:
 	ld h, a ; $421e
 	ld a, [wMenuCursorLockFlags] ; $421f
 	and a, $01 ; $4222
 	ld a, h ; $4224
 	jr nz, .step27 ; $4225
 	bit 4, a ; $4227
-	jr z, .step21 ; $4229
+	jr z, .bit4Clear2 ; $4229
 	ld a, [wMenuCursorX] ; $422b
 	inc a ; $422e
 	add a, a ; $422f
-	jr nc, .step20 ; $4230
+	jr nc, .noCarry9 ; $4230
 	ld a, b ; $4232
 	dec a ; $4233
 	jr .store9 ; $4234
-.step20:
+.noCarry9:
 	rra ; $4236
 	cp a, b ; $4237
 	jr c, .store9 ; $4238
@@ -392,17 +392,17 @@ ApplySpriteWobbleY_17:
 .store9:
 	ld [wMenuCursorX], a ; $423b
 	jr .checkMenuCursorX3 ; $423e
-.step21:
+.bit4Clear2:
 	bit 5, a ; $4240
-	jr z, .step23 ; $4242
+	jr z, .bit5Clear3 ; $4242
 	ld a, [wMenuCursorX] ; $4244
 	dec a ; $4247
 	add a, a ; $4248
-	jr nc, .step22 ; $4249
+	jr nc, .noCarry10 ; $4249
 	ld a, b ; $424b
 	dec a ; $424c
 	jr .store10 ; $424d
-.step22:
+.noCarry10:
 	rra ; $424f
 	cp a, b ; $4250
 	jr c, .store10 ; $4251
@@ -410,17 +410,17 @@ ApplySpriteWobbleY_17:
 .store10:
 	ld [wMenuCursorX], a ; $4254
 	jr .checkMenuCursorX3 ; $4257
-.step23:
+.bit5Clear3:
 	bit 6, a ; $4259
-	jr z, .step25 ; $425b
+	jr z, .bit6Clear3 ; $425b
 	ld a, [wMenuCursorY] ; $425d
 	dec a ; $4260
 	add a, a ; $4261
-	jr nc, .step24 ; $4262
+	jr nc, .noCarry11 ; $4262
 	ld a, c ; $4264
 	dec a ; $4265
 	jr .store11 ; $4266
-.step24:
+.noCarry11:
 	rra ; $4268
 	cp a, c ; $4269
 	jr c, .store11 ; $426a
@@ -428,17 +428,17 @@ ApplySpriteWobbleY_17:
 .store11:
 	ld [wMenuCursorY], a ; $426d
 	jr .checkMenuCursorX3 ; $4270
-.step25:
+.bit6Clear3:
 	bit 7, a ; $4272
 	jr z, .step27 ; $4274
 	ld a, [wMenuCursorY] ; $4276
 	inc a ; $4279
 	add a, a ; $427a
-	jr nc, .step26 ; $427b
+	jr nc, .noCarry12 ; $427b
 	ld a, c ; $427d
 	dec a ; $427e
 	jr .store12 ; $427f
-.step26:
+.noCarry12:
 	rra ; $4281
 	cp a, c ; $4282
 	jr c, .store12 ; $4283
@@ -448,7 +448,7 @@ ApplySpriteWobbleY_17:
 	jr .checkMenuCursorX3 ; $4289
 .step27:
 	bit 0, a ; $428b
-	jr z, .step28 ; $428d
+	jr z, .bit0Clear ; $428d
 	sound $5f ; $428f
 	ld a, [wMenuCursorLockFlags] ; $4291
 	ld b, a ; $4294
@@ -459,7 +459,7 @@ ApplySpriteWobbleY_17:
 	or a, $01 ; $429c
 	ld [wMenuCursorLockFlags], a ; $429e
 	jr .checkMenuCursorX3 ; $42a1
-.step28:
+.bit0Clear:
 	bit 1, a ; $42a3
 	jr z, .checkMenuCursorX3 ; $42a5
 	sound $62 ; $42a7
@@ -467,24 +467,24 @@ ApplySpriteWobbleY_17:
 	ld b, a ; $42ac
 	and a, $03 ; $42ad
 	ld a, b ; $42af
-	jr nz, .step29 ; $42b0
+	jr nz, .storeMenuCursorLockFlags ; $42b0
 	and a, $fa ; $42b2
 	or a, $04 ; $42b4
 	jr .store13 ; $42b6
-.step29:
+.storeMenuCursorLockFlags:
 	and a, $fe ; $42b8
 .store13:
 	ld [wMenuCursorLockFlags], a ; $42ba
 .checkMenuCursorX3:
 	ld a, [wMenuCursorX] ; $42bd
 	cp a, d ; $42c0
-	jr nz, .step30 ; $42c1
+	jr nz, .checkMenuCursor2X2 ; $42c1
 	ld a, [wMenuCursorY] ; $42c3
 	cp a, e ; $42c6
-	jr nz, .step30 ; $42c7
+	jr nz, .checkMenuCursor2X2 ; $42c7
 	xor a, a ; $42c9
 	ret ; $42ca
-.step30:
+.checkMenuCursor2X2:
 	ld a, $01 ; $42cb
 	ret ; $42cd
 	ld a, [wMenuCursor2X] ; $42ce
@@ -493,31 +493,31 @@ ApplySpriteWobbleY_17:
 	ld e, a ; $42d5
 	ldh a, [hLinkState] ; $42d6
 	cp a, $02 ; $42d8
-	jr z, .step32 ; $42da
+	jr z, .eq022 ; $42da
 	cp a, $01 ; $42dc
-	jr z, .step31 ; $42de
+	jr z, .eq012 ; $42de
 	call LinkErrorReset ; $42e0
-.step31:
+.eq012:
 	ldh a, [hLinkRemoteInput] ; $42e3
-	jr .step33 ; $42e5
-.step32:
+	jr .checkMenuCursorLockFlags2 ; $42e5
+.eq022:
 	ldh a, [hLinkRemoteInputBuf] ; $42e7
-.step33:
+.checkMenuCursorLockFlags2:
 	ld h, a ; $42e9
 	ld a, [wMenuCursorLockFlags] ; $42ea
 	and a, $02 ; $42ed
 	ld a, h ; $42ef
-	jr nz, .step41 ; $42f0
+	jr nz, .checkMenuCursorLockFlags3 ; $42f0
 	bit 4, a ; $42f2
-	jr z, .step35 ; $42f4
+	jr z, .bit4Clear3 ; $42f4
 	ld a, [wMenuCursor2X] ; $42f6
 	inc a ; $42f9
 	add a, a ; $42fa
-	jr nc, .step34 ; $42fb
+	jr nc, .noCarry13 ; $42fb
 	ld a, b ; $42fd
 	dec a ; $42fe
 	jr .store14 ; $42ff
-.step34:
+.noCarry13:
 	rra ; $4301
 	cp a, b ; $4302
 	jr c, .store14 ; $4303
@@ -525,17 +525,17 @@ ApplySpriteWobbleY_17:
 .store14:
 	ld [wMenuCursor2X], a ; $4306
 	jr .checkMenuCursor2X ; $4309
-.step35:
+.bit4Clear3:
 	bit 5, a ; $430b
-	jr z, .step37 ; $430d
+	jr z, .bit5Clear4 ; $430d
 	ld a, [wMenuCursor2X] ; $430f
 	dec a ; $4312
 	add a, a ; $4313
-	jr nc, .step36 ; $4314
+	jr nc, .noCarry14 ; $4314
 	ld a, b ; $4316
 	dec a ; $4317
 	jr .store15 ; $4318
-.step36:
+.noCarry14:
 	rra ; $431a
 	cp a, b ; $431b
 	jr c, .store15 ; $431c
@@ -543,17 +543,17 @@ ApplySpriteWobbleY_17:
 .store15:
 	ld [wMenuCursor2X], a ; $431f
 	jr .checkMenuCursor2X ; $4322
-.step37:
+.bit5Clear4:
 	bit 6, a ; $4324
-	jr z, .step39 ; $4326
+	jr z, .bit6Clear4 ; $4326
 	ld a, [wMenuCursor2Y] ; $4328
 	dec a ; $432b
 	add a, a ; $432c
-	jr nc, .step38 ; $432d
+	jr nc, .noCarry15 ; $432d
 	ld a, c ; $432f
 	dec a ; $4330
 	jr .store16 ; $4331
-.step38:
+.noCarry15:
 	rra ; $4333
 	cp a, c ; $4334
 	jr c, .store16 ; $4335
@@ -561,17 +561,17 @@ ApplySpriteWobbleY_17:
 .store16:
 	ld [wMenuCursor2Y], a ; $4338
 	jr .checkMenuCursor2X ; $433b
-.step39:
+.bit6Clear4:
 	bit 7, a ; $433d
-	jr z, .step41 ; $433f
+	jr z, .checkMenuCursorLockFlags3 ; $433f
 	ld a, [wMenuCursor2Y] ; $4341
 	inc a ; $4344
 	add a, a ; $4345
-	jr nc, .step40 ; $4346
+	jr nc, .noCarry16 ; $4346
 	ld a, c ; $4348
 	dec a ; $4349
 	jr .store17 ; $434a
-.step40:
+.noCarry16:
 	rra ; $434c
 	cp a, c ; $434d
 	jr c, .store17 ; $434e
@@ -579,9 +579,9 @@ ApplySpriteWobbleY_17:
 .store17:
 	ld [wMenuCursor2Y], a ; $4351
 	jr .checkMenuCursor2X ; $4354
-.step41:
+.checkMenuCursorLockFlags3:
 	bit 0, a ; $4356
-	jr z, .step42 ; $4358
+	jr z, .bit0Clear2 ; $4358
 	ld a, [wMenuCursorLockFlags] ; $435a
 	ld b, a ; $435d
 	and a, $02 ; $435e
@@ -591,7 +591,7 @@ ApplySpriteWobbleY_17:
 	or a, $02 ; $4365
 	ld [wMenuCursorLockFlags], a ; $4367
 	jr .checkMenuCursor2X ; $436a
-.step42:
+.bit0Clear2:
 	bit 1, a ; $436c
 	jr z, .checkMenuCursor2X ; $436e
 	sound $62 ; $4370
@@ -599,24 +599,24 @@ ApplySpriteWobbleY_17:
 	ld b, a ; $4375
 	and a, $03 ; $4376
 	ld a, b ; $4378
-	jr nz, .step43 ; $4379
+	jr nz, .storeMenuCursorLockFlags2 ; $4379
 	and a, $f5 ; $437b
 	or a, $08 ; $437d
 	jr .store18 ; $437f
-.step43:
+.storeMenuCursorLockFlags2:
 	and a, $fd ; $4381
 .store18:
 	ld [wMenuCursorLockFlags], a ; $4383
 .checkMenuCursor2X:
 	ld a, [wMenuCursor2X] ; $4386
 	cp a, d ; $4389
-	jr nz, .step44 ; $438a
+	jr nz, .checkMenuCursorY ; $438a
 	ld a, [wMenuCursor2Y] ; $438c
 	cp a, e ; $438f
-	jr nz, .step44 ; $4390
+	jr nz, .checkMenuCursorY ; $4390
 	xor a, a ; $4392
 	ret ; $4393
-.step44:
+.checkMenuCursorY:
 	ld a, $01 ; $4394
 	ret ; $4396
 	ld a, [wMenuCursorY] ; $4397
@@ -625,10 +625,10 @@ ApplySpriteWobbleY_17:
 	inc b ; $439c
 .loop:
 	dec b ; $439d
-	jr z, .step45 ; $439e
+	jr z, .countDone ; $439e
 	add a, c ; $43a0
 	jr .loop ; $43a1
-.step45:
+.countDone:
 	ld b, a ; $43a3
 	ld a, [wMenuCursorX] ; $43a4
 	add a, b ; $43a7
@@ -640,10 +640,10 @@ ApplySpriteWobbleY_17:
 	inc b ; $43ad
 .loopB:
 	dec b ; $43ae
-	jr z, .step46 ; $43af
+	jr z, .countDone2 ; $43af
 	add a, c ; $43b1
 	jr .loopB ; $43b2
-.step46:
+.countDone2:
 	ld b, a ; $43b4
 	ld a, [hl] ; $43b5
 	add a, b ; $43b6
@@ -714,10 +714,10 @@ UpdateAnimatedTilesTask_17:
 	inc hl ; $4412
 	ld a, [hl] ; $4413
 	cp a, $de ; $4414
-	jr z, .step ; $4416
+	jr z, .eqde ; $4416
 	cp a, $df ; $4418
-	jr nz, .step2 ; $441a
-.step:
+	jr nz, .nedf ; $441a
+.eqde:
 	push hl ; $441c
 	push bc ; $441d
 	ld h, d ; $441e
@@ -735,7 +735,7 @@ UpdateAnimatedTilesTask_17:
 	pop bc ; $442e
 	pop hl ; $442f
 	inc hl ; $4430
-.step2:
+.nedf:
 	inc de ; $4431
 	ld a, e ; $4432
 	and a, $1f ; $4433
@@ -790,7 +790,7 @@ DrawAsciiDigitChar_17:
 	push hl ; $446e
 	ld hl, $d240 ; $446f
 	sub a, $30 ; $4472
-	jr c, .step ; $4474
+	jr c, .carry ; $4474
 	add a, $30 ; $4476
 	ld b, a ; $4478
 	wram_bank $03 ; $4479
@@ -799,7 +799,7 @@ DrawAsciiDigitChar_17:
 	inc de ; $4481
 	pop hl ; $4482
 	ret ; $4483
-.step:
+.carry:
 	inc de ; $4484
 	pop hl ; $4485
 	ret ; $4486
@@ -1017,11 +1017,11 @@ CycleDiagramTargetPalette:
 	srl a ; $468f
 	srl a ; $4691
 	add a, a ; $4693
-	jr nc, .step ; $4694
+	jr nc, .noCarry ; $4694
 	ld a, $0c ; $4696
 	dec a ; $4698
 	jr .step2 ; $4699
-.step:
+.noCarry:
 	rra ; $469b
 	cp a, $0c ; $469c
 	jr c, .step2 ; $469e
@@ -1136,16 +1136,16 @@ DrawBriefingMarkerHFlip:
 	ld b, $09 ; $475d
 	ld a, [$d82d] ; $475f
 	cp a, $01 ; $4762
-	jr z, .step ; $4764
+	jr z, .eq01 ; $4764
 	ld b, $29 ; $4766
-.step:
+.eq01:
 	ld a, [$d81c] ; $4768
 	ld d, a ; $476b
 	ldh a, [hVBlankCounter] ; $476c
 	and a, $10 ; $476e
-	jr z, .step2 ; $4770
+	jr z, .maskClear ; $4770
 	inc d ; $4772
-.step2:
+.maskClear:
 	ld a, [$d81d] ; $4773
 	ld e, a ; $4776
 	ld c, $60 ; $4777
@@ -1174,9 +1174,9 @@ DrawBriefingSwingAnim:
 	ld hl, Data_17_47e2 ; $47a3
 	ld a, [$d822] ; $47a6
 	cp a, $06 ; $47a9
-	jr nc, .step ; $47ab
+	jr nc, .ge06 ; $47ab
 	ld hl, SpriteTemplate_17_47cd ; $47ad
-.step:
+.ge06:
 	ld a, [$d814] ; $47b0
 	ld d, a ; $47b3
 	ld a, [$d815] ; $47b4
@@ -1229,9 +1229,9 @@ DrawBriefingMarkerVFlip:
 	ld b, $09 ; $4827
 	ld a, [$d825] ; $4829
 	cp a, $01 ; $482c
-	jr z, .step ; $482e
+	jr z, .eq01 ; $482e
 	ld b, $49 ; $4830
-.step:
+.eq01:
 	ld a, [$d823] ; $4832
 	ld d, a ; $4835
 	ld a, [$d824] ; $4836
@@ -1248,9 +1248,9 @@ DrawSpinServeBriefingMarker:
 	ld b, $09 ; $484e
 	ld a, [$d826] ; $4850
 	cp a, $01 ; $4853
-	jr z, .step ; $4855
+	jr z, .eq01 ; $4855
 	ld b, $29 ; $4857
-.step:
+.eq01:
 	ld a, [$d816] ; $4859
 	ld d, a ; $485c
 	ld a, [$d817] ; $485d
@@ -1312,16 +1312,16 @@ DrawBriefingTargetBrackets:
 	ld d, a ; $48cd
 	ldh a, [hVBlankCounter] ; $48ce
 	and a, $10 ; $48d0
-	jr z, .step ; $48d2
+	jr z, .maskClear ; $48d2
 	inc d ; $48d4
-.step:
+.maskClear:
 	ld a, [$d829] ; $48d5
 	ld e, a ; $48d8
 	ldh a, [hVBlankCounter] ; $48d9
 	and a, $10 ; $48db
-	jr z, .step2 ; $48dd
+	jr z, .maskClear2 ; $48dd
 	inc e ; $48df
-.step2:
+.maskClear2:
 	ld c, $6c ; $48e0
 	ld b, $0a ; $48e2
 	call QueueSprite ; $48e4
@@ -1333,16 +1333,16 @@ DrawBriefingTargetBrackets:
 	ld d, a ; $48f1
 	ldh a, [hVBlankCounter] ; $48f2
 	and a, $10 ; $48f4
-	jr z, .step3 ; $48f6
+	jr z, .maskClear3 ; $48f6
 	dec d ; $48f8
-.step3:
+.maskClear3:
 	ld a, [$d829] ; $48f9
 	ld e, a ; $48fc
 	ldh a, [hVBlankCounter] ; $48fd
 	and a, $10 ; $48ff
-	jr z, .step4 ; $4901
+	jr z, .maskClear4 ; $4901
 	inc e ; $4903
-.step4:
+.maskClear4:
 	ld c, $6c ; $4904
 	ld b, $2a ; $4906
 	call QueueSprite ; $4908
@@ -1354,9 +1354,9 @@ DrawBriefingTargetBrackets:
 	ld d, a ; $4915
 	ldh a, [hVBlankCounter] ; $4916
 	and a, $10 ; $4918
-	jr z, .step5 ; $491a
+	jr z, .maskClear5 ; $491a
 	dec d ; $491c
-.step5:
+.maskClear5:
 	ld a, [$d82b] ; $491d
 	sub a, $05 ; $4920
 	ld b, a ; $4922
@@ -1365,9 +1365,9 @@ DrawBriefingTargetBrackets:
 	ld e, a ; $4927
 	ldh a, [hVBlankCounter] ; $4928
 	and a, $10 ; $492a
-	jr z, .step6 ; $492c
+	jr z, .maskClear6 ; $492c
 	dec e ; $492e
-.step6:
+.maskClear6:
 	ld c, $6c ; $492f
 	ld b, $6a ; $4931
 	call QueueSprite ; $4933
@@ -1375,9 +1375,9 @@ DrawBriefingTargetBrackets:
 	ld d, a ; $4939
 	ldh a, [hVBlankCounter] ; $493a
 	and a, $10 ; $493c
-	jr z, .step7 ; $493e
+	jr z, .maskClear7 ; $493e
 	inc d ; $4940
-.step7:
+.maskClear7:
 	ld a, [$d82b] ; $4941
 	sub a, $05 ; $4944
 	ld b, a ; $4946
@@ -1386,9 +1386,9 @@ DrawBriefingTargetBrackets:
 	ld e, a ; $494b
 	ldh a, [hVBlankCounter] ; $494c
 	and a, $10 ; $494e
-	jr z, .step8 ; $4950
+	jr z, .maskClear8 ; $4950
 	dec e ; $4952
-.step8:
+.maskClear8:
 	ld c, $6c ; $4953
 	ld b, $4a ; $4955
 	call QueueSprite ; $4957
@@ -2401,9 +2401,9 @@ SpinServeBriefing_AdvanceAnim2:
 	ld b, $00 ; $5ba9
 	ld a, [wStoryModeMainCharacterLeftHanded] ; $5bab
 	and a, a ; $5bae
-	jr z, .step ; $5baf
+	jr z, .zero ; $5baf
 	ld b, $02 ; $5bb1
-.step:
+.zero:
 	ld a, [$d82e] ; $5bb3
 	add a, b ; $5bb6
 	add a, $5b ; $5bb7
@@ -3446,7 +3446,7 @@ DrillBriefing_ServeAndSmash:
 	inc a ; $6424
 	ld [$d82c], a ; $6425
 	cp a, $78 ; $6428
-	jp c, .step ; $642a
+	jp c, .lt78 ; $642a
 	xor a, a ; $642d
 	ld [$d82c], a ; $642e
 	ld a, [$d82e] ; $6431
@@ -3533,7 +3533,7 @@ DrillBriefing_ServeAndSmash:
 	ld [$d818], a ; $64a9
 	ld a, b ; $64ac
 	ld [$d819], a ; $64ad
-.step:
+.lt78:
 	ld c, $01 ; $64b0
 	call AdvanceFrameCheckInput ; $64b2
 	and a, a ; $64b5
@@ -3800,7 +3800,7 @@ DrillBriefing_ServeAndSmash2:
 	inc a ; $672d
 	ld [$d82c], a ; $672e
 	cp a, $78 ; $6731
-	jp c, .step ; $6733
+	jp c, .lt78 ; $6733
 	xor a, a ; $6736
 	ld [$d82c], a ; $6737
 	ld a, [$d82e] ; $673a
@@ -3887,7 +3887,7 @@ DrillBriefing_ServeAndSmash2:
 	ld [$d818], a ; $67b2
 	ld a, b ; $67b5
 	ld [$d819], a ; $67b6
-.step:
+.lt78:
 	ld c, $01 ; $67b9
 	call AdvanceFrameCheckInput ; $67bb
 	and a, a ; $67be
@@ -5008,9 +5008,9 @@ MinigameRulesPageLoop:
 	pop af ; $70ee
 	add a, l ; $70ef
 	ld l, a ; $70f0
-	jr nc, .step2 ; $70f1
+	jr nc, .prepareGlyphBuffer ; $70f1
 	inc h ; $70f3
-.step2:
+.prepareGlyphBuffer:
 	ld de, $d082 ; $70f4
 	ld c, $20 ; $70f7
 	farcall PrepareGlyphBuffer ; $70f9
@@ -5146,7 +5146,7 @@ PrepareRulesPageTilemap:
 	farcall FillTilemapRect ; $7220
 	ld a, [$dc05] ; $7223
 	or a, a ; $7226
-	jr nz, .step ; $7227
+	jr nz, .nonZero ; $7227
 	ld a, [$dc06] ; $7229
 	add a, $03 ; $722c
 	ld h, a ; $722e
@@ -5155,7 +5155,7 @@ PrepareRulesPageTilemap:
 	ld c, $01 ; $7234
 	farcall FillTilemapRect ; $7236
 	jr .restore ; $7239
-.step:
+.nonZero:
 	ld de, $d482 ; $723b
 	ld b, $10 ; $723e
 	ld c, $01 ; $7240
@@ -5168,13 +5168,13 @@ PrepareRulesPageTilemap:
 QueueRulesPageToVRAM:
 	ld a, [$dc05] ; $724d
 	or a, a ; $7250
-	jr nz, .step ; $7251
+	jr nz, .nonZero ; $7251
 	ld hl, $d080 ; $7253
 	ld de, $9880 ; $7256
 	ld c, $0a ; $7259
 	call QueueVRAMCopy ; $725b
 	jr .step2 ; $725e
-.step:
+.nonZero:
 	ld hl, $d060 ; $7260
 	ld de, $9860 ; $7263
 	ld c, $0a ; $7266
@@ -5337,7 +5337,7 @@ AdvanceRulesScreenAnimFrame:
 	ld [$dc04], a ; $742d
 	ld a, [$dc03] ; $7430
 	or a, a ; $7433
-	jr z, .step ; $7434
+	jr z, .zero ; $7434
 	ldh a, [hVBlankCounter] ; $7436
 	srl a ; $7438
 	srl a ; $743a
@@ -5352,7 +5352,7 @@ AdvanceRulesScreenAnimFrame:
 	ld a, [hl] ; $7448
 	ld [$dc00], a ; $7449
 	jr .step2 ; $744c
-.step:
+.zero:
 	ldh a, [hVBlankCounter] ; $744e
 	srl a ; $7450
 	srl a ; $7452

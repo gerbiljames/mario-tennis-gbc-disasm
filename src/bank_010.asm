@@ -547,9 +547,9 @@ RunMinigameSelectMenu:
 	ld de, $4684 ; $464d
 	add a, e ; $4650
 	ld e, a ; $4651
-	jr nc, .step ; $4652
+	jr nc, .runPagedTextMenu ; $4652
 	inc d ; $4654
-.step:
+.runPagedTextMenu:
 	ld hl, $0499 ; $4655
 	ld a, $01 ; $4658
 	farcall RunPagedTextMenu ; $465a
@@ -972,9 +972,9 @@ WaterSpriteModeHooks_10:
 	ld a, [wCharacter1ServiceAces] ; $4c03
 	ld hl, wCharacter2ServiceAces ; $4c06
 	cp a, [hl] ; $4c09
-	jr nz, .step ; $4c0a
+	jr nz, .storeMatchAbortFlag ; $4c0a
 	ret ; $4c0c
-.step:
+.storeMatchAbortFlag:
 	ld a, $80 ; $4c0d
 	ld [wMatchAbortFlag], a ; $4c0f
 	ret ; $4c12
@@ -2935,7 +2935,7 @@ RestaurantNpc0C_10:
 	cp a, $00 ; $5f83
 	jr z, .speak ; $5f85
 	cp a, $03 ; $5f87
-	jr nc, .step ; $5f89
+	jr nc, .ge03 ; $5f89
 	ld a, $0c ; $5f8b
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $5f8d
 	farcall RunDialogueYesNoPrompt ; $5f90
@@ -2949,7 +2949,7 @@ RestaurantNpc0C_10:
 	jr nz, .speak ; $5fa8
 	farcall AdvanceDialogueTextCursor ; $5faa
 	jr .speak ; $5fad
-.step:
+.ge03:
 	ld a, [$c2b0] ; $5faf
 	and a, $01 ; $5fb2
 	jr z, .speak ; $5fb4
@@ -3380,7 +3380,7 @@ AcademyWingInitScript_10:
 	cp a, $0d ; $64d2
 	jp z, .stage6 ; $64d4
 	cp a, $0f ; $64d7
-	jp z, .step2 ; $64d9
+	jp z, .eq0f ; $64d9
 	call AcademyWingInstallDoorTriggers_10 ; $64dc
 	ret ; $64df
 .stage6:
@@ -3569,7 +3569,7 @@ AcademyWingInitScript_10:
 	script_face ACTOR_PLAYER, FACE_UP ; $69a9
 	script_face ACTOR_PARTNER, FACE_UP ; $69b0
 	script_wait_frames $01 ; $69b7
-	jr .step ; $69be
+	jr .academyWingCloseDoor ; $69be
 .walkPlayer:
 	script_move_target ACTOR_PLAYER, $2100, $3b00 ; $69c0
 	script_wait_move ACTOR_PLAYER ; $69cb
@@ -3581,7 +3581,7 @@ AcademyWingInitScript_10:
 	script_wait_move ACTOR_PLAYER ; $69f5
 	script_face ACTOR_PLAYER, FACE_UP ; $69fa
 	script_wait_frames $01 ; $6a01
-.step:
+.academyWingCloseDoor:
 	call AcademyWingCloseDoor_10 ; $6a08
 	script_set_position $03, $3f00, $3f00 ; $6a0b
 	script_set_position $05, $3f00, $3f00 ; $6a16
@@ -3817,7 +3817,7 @@ AcademyWingInitScript_10:
 	map_actor $0000, ActorScript_10_7bd1, $2700, $3240, FACE_DOWN, $74, $01, $00
 	map_actor $0000, ActorScript_10_7bd1, $2700, $30c0, FACE_DOWN, $74, $01, $00
 	map_actor_end
-.step2:
+.eq0f:
 	ldh a, [hRomBank] ; $6fcd
 	ld hl, $739e ; $6fcf
 	farcall ScriptRespawnLocationActors ; $6fd2
@@ -3955,7 +3955,7 @@ AcademyWingInitScript_10:
 	script_set_actor_script ACTOR_PLAYER, ActorScript_10_741c ; $728a
 	script_set_actor_script ACTOR_PARTNER, ActorScript_10_741c ; $7295
 	script_wait_frames $28 ; $72a0
-	jr .step3 ; $72a7
+	jr .academyWingCloseDoor2 ; $72a7
 .animate5:
 	script_set_anim ACTOR_PLAYER, $03 ; $72a9
 	script_wait_idle ACTOR_PLAYER ; $72b0
@@ -3973,7 +3973,7 @@ AcademyWingInitScript_10:
 	call AcademyWingOpenDoor_10 ; $72ff
 	script_set_actor_script ACTOR_PLAYER, ActorScript_10_741c ; $7302
 	script_wait_frames $14 ; $730d
-.step3:
+.academyWingCloseDoor2:
 	call AcademyWingCloseDoor_10 ; $7314
 	script_wait_frames $3c ; $7317
 	ld c, $02 ; $731e
@@ -4021,12 +4021,12 @@ SpeakNpc03SinglesOrDoublesLine_10:
 	ret ; $7404
 ShowNpc03SinglesOrDoublesPrompt_10:
 	test_flag FLAG_DOUBLES ; $7405
-	jr z, .step ; $7408
+	jr z, .notDoubles ; $7408
 	farcall AdvanceDialogueTextCursor ; $740a
 	ld a, $03 ; $740d
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $740f
 	ret ; $7412
-.step:
+.notDoubles:
 	ld a, $03 ; $7413
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $7415
 	farcall AdvanceDialogueTextCursor ; $7418
@@ -4175,10 +4175,10 @@ AcademyMainBldgNpc03_10:
 	ld a, [$c2b0] ; $75fa
 	sra a ; $75fd
 	cp a, $03 ; $75ff
-	jr z, .step ; $7601
+	jr z, .eq03 ; $7601
 	script_speak $03 ; $7603
 	ret ; $7608
-.step:
+.eq03:
 	ld a, $03 ; $7609
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $760b
 	farcall RunDialogueYesNoPrompt ; $760e
@@ -4306,9 +4306,9 @@ AcademyMainBldgInitScript_10:
 	ld a, [$c2b0] ; $771a
 	sra a ; $771d
 	cp a, $02 ; $771f
-	jr nz, .step ; $7721
+	jr nz, .ne02 ; $7721
 	script_set_actor_script $03, ActorScript_10_7b8b ; $7723
-.step:
+.ne02:
 	ld a, $01 ; $772e
 	ld hl, UpdatePlayerPairTileAnimState_10 ; $7730
 	call RegisterFrameTask ; $7733

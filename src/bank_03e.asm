@@ -624,10 +624,10 @@ GetCellIndexFromCursorPtr_3e:
 	inc b ; $43df
 .loop:
 	dec b ; $43e0
-	jr z, .step ; $43e1
+	jr z, .countDone ; $43e1
 	add a, c ; $43e3
 	jr .loop ; $43e4
-.step:
+.countDone:
 	ld b, a ; $43e6
 	ld a, [hl] ; $43e7
 	add a, b ; $43e8
@@ -700,10 +700,10 @@ UpdateAnimatedTiles_3e:
 	inc hl ; $4444
 	ld a, [hl] ; $4445
 	cp a, $de ; $4446
-	jr z, .step ; $4448
+	jr z, .eqde ; $4448
 	cp a, $df ; $444a
-	jr nz, .step2 ; $444c
-.step:
+	jr nz, .nedf ; $444c
+.eqde:
 	push hl ; $444e
 	push bc ; $444f
 	ld h, d ; $4450
@@ -721,7 +721,7 @@ UpdateAnimatedTiles_3e:
 	pop bc ; $4460
 	pop hl ; $4461
 	inc hl ; $4462
-.step2:
+.nedf:
 	inc de ; $4463
 	ld a, e ; $4464
 	and a, $1f ; $4465
@@ -776,7 +776,7 @@ DrawAsciiDigitChar_3e:
 	push hl ; $44a0
 	ld hl, $d240 ; $44a1
 	sub a, $30 ; $44a4
-	jr c, .step ; $44a6
+	jr c, .carry ; $44a6
 	add a, $30 ; $44a8
 	ld b, a ; $44aa
 	wram_bank $03 ; $44ab
@@ -785,7 +785,7 @@ DrawAsciiDigitChar_3e:
 	inc de ; $44b3
 	pop hl ; $44b4
 	ret ; $44b5
-.step:
+.carry:
 	inc de ; $44b6
 	pop hl ; $44b7
 	ret ; $44b8
@@ -842,10 +842,10 @@ RunLinkMatchRulesMenu:
 	ld c, $03 ; $4532
 	call MoveMenuCursorGrid_3e ; $4534
 	or a, a ; $4537
-	jr z, .step ; $4538
+	jr z, .zero ; $4538
 	sound $5e ; $453a
 	call DrawMatchRulesCaption ; $453c
-.step:
+.zero:
 	push af ; $453f
 	farcall RunLinkInputFrame ; $4540
 	pop af ; $4543
@@ -1057,7 +1057,7 @@ LoadMatchRulesMenuGraphics:
 OpenMatchRulesPanel:
 	ld a, b ; $46f4
 	or a, a ; $46f5
-	jr z, .step ; $46f6
+	jr z, .zero ; $46f6
 	ld c, $00 ; $46f8
 .loop:
 	call AdvanceFrame ; $46fa
@@ -1072,7 +1072,7 @@ OpenMatchRulesPanel:
 	jr nz, .loop ; $470c
 	call AdvanceFrame ; $470e
 	ret ; $4711
-.step:
+.zero:
 	ld c, $0a ; $4712
 .loopB:
 	call AdvanceFrame ; $4714
@@ -1090,7 +1090,7 @@ OpenMatchRulesPanel:
 CloseMatchRulesPanel:
 	ld a, b ; $472c
 	or a, a ; $472d
-	jr z, .step ; $472e
+	jr z, .zero ; $472e
 	ld c, $00 ; $4730
 .loop:
 	call AdvanceFrame ; $4732
@@ -1104,7 +1104,7 @@ CloseMatchRulesPanel:
 	cp a, $0b ; $4742
 	jr nz, .loop ; $4744
 	ret ; $4746
-.step:
+.zero:
 	ld c, $0d ; $4747
 .loopB:
 	call AdvanceFrame ; $4749
@@ -1154,11 +1154,11 @@ HandleMatchRulesToggleInput:
 	ld a, [wMatchFormatSets] ; $479f
 	dec a ; $47a2
 	add a, a ; $47a3
-	jr nc, .step ; $47a4
+	jr nc, .noCarry ; $47a4
 	ld a, $03 ; $47a6
 	dec a ; $47a8
 	jr .store ; $47a9
-.step:
+.noCarry:
 	rra ; $47ab
 	cp a, $03 ; $47ac
 	jr c, .store ; $47ae
@@ -1199,11 +1199,11 @@ HandleMatchRulesToggleInput:
 	ld a, [wMatchFormatSets] ; $47f6
 	inc a ; $47f9
 	add a, a ; $47fa
-	jr nc, .step2 ; $47fb
+	jr nc, .noCarry2 ; $47fb
 	ld a, $03 ; $47fd
 	dec a ; $47ff
 	jr .store2 ; $4800
-.step2:
+.noCarry2:
 	rra ; $4802
 	cp a, $03 ; $4803
 	jr c, .store2 ; $4805
@@ -1451,9 +1451,9 @@ DrawMatchRulesCaptionText:
 	ld hl, $0084 ; $49d2
 	add a, l ; $49d5
 	ld l, a ; $49d6
-	jr nc, .step ; $49d7
+	jr nc, .renderTextToBuffer64 ; $49d7
 	inc h ; $49d9
-.step:
+.renderTextToBuffer64:
 	ld c, $20 ; $49da
 	farcall RenderTextToBuffer64 ; $49dc
 	ret ; $49df
@@ -1618,11 +1618,11 @@ AnimateLinkErrorPalette:
 	srl a ; $4b50
 	srl a ; $4b52
 	add a, a ; $4b54
-	jr nc, .step ; $4b55
+	jr nc, .noCarry ; $4b55
 	ld a, $0c ; $4b57
 	dec a ; $4b59
 	jr .step2 ; $4b5a
-.step:
+.noCarry:
 	rra ; $4b5c
 	cp a, $0c ; $4b5d
 	jr c, .step2 ; $4b5f
@@ -1664,17 +1664,17 @@ ShowLinkStatusMessage:
 	pop bc ; $4bb6
 	ld a, c ; $4bb7
 	or a, a ; $4bb8
-	jr z, .step ; $4bb9
+	jr z, .zero ; $4bb9
 	cp a, $01 ; $4bbb
-	jr z, .step2 ; $4bbd
+	jr z, .eq01 ; $4bbd
 	jr .step3 ; $4bbf
-.step:
+.zero:
 	ld hl, $0129 ; $4bc1
 	ld de, $d181 ; $4bc4
 	ld c, $12 ; $4bc7
 	farcall RenderProportionalTextAt ; $4bc9
 	jr .uploadGlyphBuffer ; $4bcc
-.step2:
+.eq01:
 	ld hl, $012a ; $4bce
 	ld de, $d181 ; $4bd1
 	ld c, $12 ; $4bd4
@@ -1854,7 +1854,7 @@ LoadEraseDataConfirmScreen:
 	jp .step2 ; $4d7b
 .compare:
 	or a, a ; $4d7e
-	jr z, .step ; $4d7f
+	jr z, .zero ; $4d7f
 	ld hl, $00d8 ; $4d81
 	ld de, $d0c3 ; $4d84
 	ld c, $0e ; $4d87
@@ -1876,7 +1876,7 @@ LoadEraseDataConfirmScreen:
 	ld de, $8000 ; $4db1
 	farcall LoadCompressedTileBlock ; $4db4
 	jr .step2 ; $4db7
-.step:
+.zero:
 	ld hl, $00d6 ; $4db9
 	ld de, $d0c3 ; $4dbc
 	ld c, $0e ; $4dbf
@@ -1945,11 +1945,11 @@ AnimateEraseConfirmPalette:
 	srl a ; $4e4d
 	srl a ; $4e4f
 	add a, a ; $4e51
-	jr nc, .step ; $4e52
+	jr nc, .noCarry ; $4e52
 	ld a, $0c ; $4e54
 	dec a ; $4e56
 	jr .step2 ; $4e57
-.step:
+.noCarry:
 	rra ; $4e59
 	cp a, $0c ; $4e5a
 	jr c, .step2 ; $4e5c
@@ -2215,9 +2215,9 @@ DrawRacketShoesChoiceCaption:
 	ld hl, $00e0 ; $507c
 	add a, l ; $507f
 	ld l, a ; $5080
-	jr nc, .step ; $5081
+	jr nc, .renderTextToBuffer64 ; $5081
 	inc h ; $5083
-.step:
+.renderTextToBuffer64:
 	ld de, $d201 ; $5084
 	ld c, $20 ; $5087
 	farcall RenderTextToBuffer64 ; $5089
@@ -2627,9 +2627,9 @@ DrawPlayAlonePartnerCaption:
 	ld hl, $00e2 ; $5371
 	add a, l ; $5374
 	ld l, a ; $5375
-	jr nc, .step ; $5376
+	jr nc, .renderTextToBuffer64 ; $5376
 	inc h ; $5378
-.step:
+.renderTextToBuffer64:
 	ld c, $20 ; $5379
 	farcall RenderTextToBuffer64 ; $537b
 	pop af ; $537e
@@ -2784,11 +2784,11 @@ RunRacketSelectScreen:
 	inc a ; $54e7
 	ld [$d812], a ; $54e8
 	cp a, $14 ; $54eb
-	jr nc, .step ; $54ed
+	jr nc, .ge14 ; $54ed
 .advanceFrame:
 	call AdvanceFrame ; $54ef
 	jr .loop ; $54f2
-.step:
+.ge14:
 	push af ; $54f4
 	ld c, $10 ; $54f5
 	call BeginFadeOut ; $54f7
@@ -2914,7 +2914,7 @@ HandleEquipSelectInput:
 	ld a, [$d813] ; $55d9
 	cp a, $00 ; $55dc
 	ld a, b ; $55de
-	jr z, .step2 ; $55df
+	jr z, .checkEquippedRacket ; $55df
 	swap a ; $55e1
 	ld b, a ; $55e3
 	ld a, [wEquippedRacket] ; $55e4
@@ -2922,7 +2922,7 @@ HandleEquipSelectInput:
 	or a, b ; $55e9
 	ld [wEquippedRacket], a ; $55ea
 	ret ; $55ed
-.step2:
+.checkEquippedRacket:
 	ld b, a ; $55ee
 	ld a, [wEquippedRacket] ; $55ef
 	and a, $f0 ; $55f2
@@ -2990,11 +2990,11 @@ RunShoesSelectScreen:
 	inc a ; $566f
 	ld [$d812], a ; $5670
 	cp a, $14 ; $5673
-	jr nc, .step ; $5675
+	jr nc, .ge14 ; $5675
 .advanceFrame:
 	call AdvanceFrame ; $5677
 	jr .loop ; $567a
-.step:
+.ge14:
 	push af ; $567c
 	ld c, $10 ; $567d
 	call BeginFadeOut ; $567f
@@ -3284,9 +3284,9 @@ FlushEquipSelectTextRows:
 	ld hl, EquipSelectTextRowPtrs_3e ; $58bd
 	ld a, [$d813] ; $58c0
 	or a, a ; $58c3
-	jr z, .step ; $58c4
+	jr z, .zero ; $58c4
 	ld hl, EquipSelectTextRows_3e ; $58c6
-.step:
+.zero:
 	ld a, b ; $58c9
 	add a, a ; $58ca
 	add a, l ; $58cb
@@ -3388,9 +3388,9 @@ RenderRacketNameText:
 	ld a, c ; $59c1
 	add a, l ; $59c2
 	ld l, a ; $59c3
-	jr nc, .step2 ; $59c4
+	jr nc, .renderProportionalTextAt ; $59c4
 	inc h ; $59c6
-.step2:
+.renderProportionalTextAt:
 	ld c, $12 ; $59c7
 	farcall RenderProportionalTextAt ; $59c9
 	ret ; $59cc
@@ -3474,9 +3474,9 @@ GetItemStatModListPtr:
 	ld hl, $5a5f ; $5a46
 	ld a, [$d813] ; $5a49
 	or a, a ; $5a4c
-	jr z, .step ; $5a4d
+	jr z, .zero ; $5a4d
 	ld hl, $5a6d ; $5a4f
-.step:
+.zero:
 	ld a, b ; $5a52
 	add a, a ; $5a53
 	add a, l ; $5a54
@@ -3963,7 +3963,7 @@ GetCourtThumbnailPtr:
 OpenCourtSelect4Panel:
 	ld a, b ; $5e2a
 	or a, a ; $5e2b
-	jr z, .step ; $5e2c
+	jr z, .zero ; $5e2c
 	ld c, $00 ; $5e2e
 .loop:
 	call AdvanceFrame ; $5e30
@@ -3978,7 +3978,7 @@ OpenCourtSelect4Panel:
 	jr nz, .loop ; $5e42
 	call AdvanceFrame ; $5e44
 	ret ; $5e47
-.step:
+.zero:
 	ld c, $0a ; $5e48
 .loopB:
 	call AdvanceFrame ; $5e4a
@@ -4383,10 +4383,10 @@ DrawCourtNameTiles:
 DrawCourtNameLeft:
 	ld a, b ; $64a6
 	cp a, $ff ; $64a7
-	jr nz, .step ; $64a9
+	jr nz, .neff ; $64a9
 	ld b, $ac ; $64ab
-	jr .step2 ; $64ad
-.step:
+	jr .fillIncrementingBytes ; $64ad
+.neff:
 	ld hl, CourtNameLeftIndices_3e ; $64af
 	ld a, b ; $64b2
 	add a, l ; $64b3
@@ -4398,7 +4398,7 @@ DrawCourtNameLeft:
 	ld b, $80 ; $64b9
 	add a, b ; $64bb
 	ld b, a ; $64bc
-.step2:
+.fillIncrementingBytes:
 	ld hl, $d204 ; $64bd
 	ld c, $05 ; $64c0
 	farcall FillIncrementingBytes ; $64c2
@@ -4409,10 +4409,10 @@ CourtNameLeftIndices_3e:
 DrawCourtNameRight:
 	ld a, b ; $64cf
 	cp a, $ff ; $64d0
-	jr nz, .step ; $64d2
+	jr nz, .neff ; $64d2
 	ld b, $b1 ; $64d4
-	jr .step2 ; $64d6
-.step:
+	jr .fillIncrementingBytes ; $64d6
+.neff:
 	ld hl, CourtNameRightIndices_3e ; $64d8
 	ld a, b ; $64db
 	add a, l ; $64dc
@@ -4424,7 +4424,7 @@ DrawCourtNameRight:
 	ld b, $80 ; $64e2
 	add a, b ; $64e4
 	ld b, a ; $64e5
-.step2:
+.fillIncrementingBytes:
 	ld hl, $d20e ; $64e6
 	ld c, $06 ; $64e9
 	farcall FillIncrementingBytes ; $64eb
@@ -4485,11 +4485,11 @@ RunCourtSelect9Menu:
 .checkMenuInputPressed:
 	ld a, [wMenuInputPressed] ; $6572
 	bit PADB_A, a ; $6575
-	jr nz, .step ; $6577
+	jr nz, .getMenuCursorIndex ; $6577
 	bit 1, a ; $6579
 	jr nz, .playSfx2 ; $657b
 	jr .loop ; $657d
-.step:
+.getMenuCursorIndex:
 	ld c, $03 ; $657f
 	call GetMenuCursorIndex_3e ; $6581
 	ld b, a ; $6584
@@ -4583,11 +4583,11 @@ RunLinkCourtSelect9Menu:
 .checkMenuInputPressed:
 	ld a, [wMenuInputPressed] ; $6642
 	bit PADB_A, a ; $6645
-	jr nz, .step ; $6647
+	jr nz, .getMenuCursorIndex ; $6647
 	bit 1, a ; $6649
 	jr nz, .playSfx2 ; $664b
 	jr .loop ; $664d
-.step:
+.getMenuCursorIndex:
 	ld c, $03 ; $664f
 	call GetMenuCursorIndex_3e ; $6651
 	ld b, a ; $6654
@@ -4637,7 +4637,7 @@ RunLinkCourtSelect9Menu:
 OpenCourtSelect9Panel:
 	ld a, b ; $66ab
 	or a, a ; $66ac
-	jr z, .step ; $66ad
+	jr z, .zero ; $66ad
 	ld c, $00 ; $66af
 .loop:
 	call AdvanceFrame ; $66b1
@@ -4652,7 +4652,7 @@ OpenCourtSelect9Panel:
 	jr nz, .loop ; $66c3
 	call AdvanceFrame ; $66c5
 	ret ; $66c8
-.step:
+.zero:
 	ld c, $09 ; $66c9
 .loopB:
 	call AdvanceFrame ; $66cb
@@ -4670,7 +4670,7 @@ OpenCourtSelect9Panel:
 CloseCourtSelect9Panel:
 	ld a, b ; $66e3
 	or a, a ; $66e4
-	jr z, .step ; $66e5
+	jr z, .zero ; $66e5
 	ld c, $00 ; $66e7
 .loop:
 	call AdvanceFrame ; $66e9
@@ -4684,7 +4684,7 @@ CloseCourtSelect9Panel:
 	cp a, $0b ; $66f9
 	jr nz, .loop ; $66fb
 	ret ; $66fd
-.step:
+.zero:
 	ld c, $0e ; $66fe
 .loopB:
 	call AdvanceFrame ; $6700
@@ -4796,11 +4796,11 @@ AdjustCursorForLockedCourt:
 	ld b, a ; $6813
 	call IsCourtUnlocked ; $6814
 	or a, a ; $6817
-	jr z, .step ; $6818
+	jr z, .zero ; $6818
 	pop hl ; $681a
 	pop bc ; $681b
 	ret ; $681c
-.step:
+.zero:
 	ld c, $40 ; $681d
 	ld b, $00 ; $681f
 	pop hl ; $6821
@@ -4860,10 +4860,10 @@ SetCourtSelect9TabAttrRect:
 	push hl ; $688e
 	ld a, c ; $688f
 	or a, a ; $6890
-	jr z, .step ; $6891
+	jr z, .zero ; $6891
 	ld h, $0c ; $6893
 	jr .step2 ; $6895
-.step:
+.zero:
 	ld h, $0d ; $6897
 .step2:
 	push hl ; $6899
@@ -4998,10 +4998,10 @@ ComputeUnlockedCourtFlags:
 	inc a ; $69bb
 	ld c, a ; $69bc
 	cp a, $05 ; $69bd
-	jr z, .step2 ; $69bf
+	jr z, .eq05 ; $69bf
 	sla b ; $69c1
 	jr .loop ; $69c3
-.step2:
+.eq05:
 	ld a, b ; $69c5
 	ld [wUnlockedCourtMask], a ; $69c6
 	ret ; $69c9

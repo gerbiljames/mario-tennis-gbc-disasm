@@ -80,15 +80,15 @@ RunMatchPauseMenu:
 	ld b, $00 ; $40bc
 	ld a, [$c4c8] ; $40be
 	and a, a ; $40c1
-	jr z, .step ; $40c2
+	jr z, .zero ; $40c2
 	ld b, $01 ; $40c4
-.step:
+.zero:
 	ld a, b ; $40c6
 	ld [wPauseMenuId], a ; $40c7
 	call RunMatchMenu ; $40ca
 	ld a, [wMatchMenuSelection] ; $40cd
 	cp a, $ff ; $40d0
-	jr z, MatchPauseMenu_AfterItem.step ; $40d2
+	jr z, MatchPauseMenu_AfterItem.unregisterFrameTask ; $40d2
 	push af ; $40d4
 	ld hl, MatchPauseMenu_AfterItem ; $40d5
 	push hl ; $40d8
@@ -104,7 +104,7 @@ MatchPauseMenu_AfterItem:
 	ld a, [wMatchAbortFlag] ; $40e9
 	and a, a ; $40ec
 	jr z, RunMatchPauseMenu.loop ; $40ed
-.step:
+.unregisterFrameTask:
 	ld hl, DrawScoreboardSprites ; $40ef
 	call UnregisterFrameTask ; $40f2
 	ld hl, DrawScoreboardModeTitle ; $40f5
@@ -350,9 +350,9 @@ ShowRulesPageSequence:
 	pop af ; $4348
 	add a, l ; $4349
 	ld l, a ; $434a
-	jr nc, .step ; $434b
+	jr nc, .drawMenuTextLine ; $434b
 	inc h ; $434d
-.step:
+.drawMenuTextLine:
 	ld de, $0106 ; $434e
 	call DrawMenuTextLine ; $4351
 	farcall StepMatchFrame ; $4354
@@ -1132,10 +1132,10 @@ ShowMatchScoreboardScreen:
 .loop:
 	farcall ReadMatchInputPressed ; $48ee
 	and a, $0f ; $48f1
-	jr nz, .step ; $48f3
+	jr nz, .maskSet ; $48f3
 	farcall StepMatchFrame ; $48f5
 	jr .loop ; $48f8
-.step:
+.maskSet:
 	ld hl, DrawScoreboardSprites ; $48fa
 	call UnregisterFrameTask ; $48fd
 	ld hl, DrawScoreboardModeTitle ; $4900
@@ -1165,26 +1165,26 @@ PrepareScoreboardGfx:
 .checkOnCourtCharCountMinus1:
 	ld a, [wOnCourtCharCountMinus1] ; $4937
 	rst Rst00 ; $493a
-	dw PrepareScoreboardGfx.step4 ; $493b jumptable
-	dw PrepareScoreboardGfx.step3 ; $493d jumptable
-	dw PrepareScoreboardGfx.step2 ; $493f jumptable
-	dw PrepareScoreboardGfx.step ; $4941 jumptable
-.step:
+	dw PrepareScoreboardGfx.reloadCharFrameGfx4 ; $493b jumptable
+	dw PrepareScoreboardGfx.reloadCharFrameGfx3 ; $493d jumptable
+	dw PrepareScoreboardGfx.reloadCharFrameGfx2 ; $493f jumptable
+	dw PrepareScoreboardGfx.reloadCharFrameGfx ; $4941 jumptable
+.reloadCharFrameGfx:
 	wram_bank $06 ; $4943
 	farcall ReloadCharFrameGfx ; $4949
-.step2:
+.reloadCharFrameGfx2:
 	wram_bank $07 ; $494c
 	farcall ReloadCharFrameGfx ; $4952
-.step3:
+.reloadCharFrameGfx3:
 	wram_bank $05 ; $4955
 	farcall ReloadCharFrameGfx ; $495b
-.step4:
+.reloadCharFrameGfx4:
 	wram_bank $04 ; $495e
 	farcall ReloadCharFrameGfx ; $4964
 	farcall StepMatchFrame ; $4967
 	ld a, [$c8f5] ; $496a
 	cp a, $02 ; $496d
-	jr z, .step5 ; $496f
+	jr z, .eq02 ; $496f
 	ld a, [wPlayer1GamesWon] ; $4971
 	ld b, $01 ; $4974
 	ld de, $8700 ; $4976
@@ -1202,7 +1202,7 @@ PrepareScoreboardGfx:
 	ld de, $86c0 ; $4997
 	farcall LoadScoreDigitGfx ; $499a
 	farcall StepMatchFrame ; $499d
-.step5:
+.eq02:
 	wram_bank $02 ; $49a0
 	ret ; $49a6
 DrawScoreboard:
@@ -1841,7 +1841,7 @@ MatchMenuItemGfx_QuitMinigame:
 LoadScoreboardModeGfx:
 	ld a, [wGameMode] ; $5c8a
 	cp a, $05 ; $5c8d
-	jr z, .step ; $5c8f
+	jr z, .eq05 ; $5c8f
 	add a, a ; $5c91
 	add a, $c9 ; $5c92
 	ld l, a ; $5c94
@@ -1849,7 +1849,7 @@ LoadScoreboardModeGfx:
 	sub a, l ; $5c97
 	ld h, a ; $5c98
 	jr .step2 ; $5c99
-.step:
+.eq05:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $5c9b
 	add a, a ; $5c9e
 	add a, $df ; $5c9f
@@ -2483,12 +2483,12 @@ RunDebugStatsEditor:
 .loop:
 	farcall ReadMatchInputPressed ; $6bb7
 	and a, $0d ; $6bba
-	jr nz, .step ; $6bbc
+	jr nz, .maskSet ; $6bbc
 	call HandleDebugStatsInput ; $6bbe
 	call FlushTilemapToVramIfDirty ; $6bc1
 	farcall StepMatchFrame ; $6bc4
 	jr .loop ; $6bc7
-.step:
+.maskSet:
 	and a, $08 ; $6bc9
 	jr z, .restoreBgTilemap ; $6bcb
 	ld de, $270b ; $6bcd
@@ -2541,54 +2541,54 @@ QueueDebugStatsCursorSprites:
 AdjustSelectedDebugStat:
 	ld a, [wMatchMenuSelection] ; $6c32
 	rst Rst00 ; $6c35
-	dw AdjustSelectedDebugStat.step ; $6c36 jumptable
-	dw AdjustSelectedDebugStat.step2 ; $6c38 jumptable
-	dw AdjustSelectedDebugStat.step3 ; $6c3a jumptable
-	dw AdjustSelectedDebugStat.step4 ; $6c3c jumptable
-	dw AdjustSelectedDebugStat.step5 ; $6c3e jumptable
-	dw AdjustSelectedDebugStat.step6 ; $6c40 jumptable
-	dw AdjustSelectedDebugStat.step7 ; $6c42 jumptable
-	dw AdjustSelectedDebugStat.step8 ; $6c44 jumptable
-	dw AdjustSelectedDebugStat.step9 ; $6c46 jumptable
-	dw AdjustSelectedDebugStat.step10 ; $6c48 jumptable
-	dw AdjustSelectedDebugStat.step11 ; $6c4a jumptable
-.step:
+	dw AdjustSelectedDebugStat.adjustDebugStatWord ; $6c36 jumptable
+	dw AdjustSelectedDebugStat.adjustDebugStatWord2 ; $6c38 jumptable
+	dw AdjustSelectedDebugStat.adjustDebugStatWord3 ; $6c3a jumptable
+	dw AdjustSelectedDebugStat.adjustDebugStatByte ; $6c3c jumptable
+	dw AdjustSelectedDebugStat.adjustDebugStatByte2 ; $6c3e jumptable
+	dw AdjustSelectedDebugStat.adjustDebugStatByte3 ; $6c40 jumptable
+	dw AdjustSelectedDebugStat.adjustDebugStatDigit ; $6c42 jumptable
+	dw AdjustSelectedDebugStat.adjustDebugStatDigit2 ; $6c44 jumptable
+	dw AdjustSelectedDebugStat.adjustDebugStatDigit3 ; $6c46 jumptable
+	dw AdjustSelectedDebugStat.adjustDebugStatDigit4 ; $6c48 jumptable
+	dw AdjustSelectedDebugStat.adjustDebugStatDigit5 ; $6c4a jumptable
+.adjustDebugStatWord:
 	ld hl, $c760 ; $6c4c
 	ld bc, $0010 ; $6c4f
 	jp AdjustDebugStatWord ; $6c52
-.step2:
+.adjustDebugStatWord2:
 	ld hl, $c764 ; $6c55
 	ld bc, $0010 ; $6c58
 	jp AdjustDebugStatWord ; $6c5b
-.step3:
+.adjustDebugStatWord3:
 	ld hl, $c766 ; $6c5e
 	ld bc, $0010 ; $6c61
 	jp AdjustDebugStatWord ; $6c64
-.step4:
+.adjustDebugStatByte:
 	ld hl, $c768 ; $6c67
 	ld b, $02 ; $6c6a
 	jp AdjustDebugStatByte ; $6c6c
-.step5:
+.adjustDebugStatByte2:
 	ld hl, $c769 ; $6c6f
 	ld b, $08 ; $6c72
 	jp AdjustDebugStatByte ; $6c74
-.step6:
+.adjustDebugStatByte3:
 	ld hl, $c76a ; $6c77
 	ld b, $02 ; $6c7a
 	jp AdjustDebugStatByte ; $6c7c
-.step7:
+.adjustDebugStatDigit:
 	ld hl, $c76b ; $6c7f
 	jp AdjustDebugStatDigit ; $6c82
-.step8:
+.adjustDebugStatDigit2:
 	ld hl, $c76c ; $6c85
 	jp AdjustDebugStatDigit ; $6c88
-.step9:
+.adjustDebugStatDigit3:
 	ld hl, $c76d ; $6c8b
 	jp AdjustDebugStatDigit ; $6c8e
-.step10:
+.adjustDebugStatDigit4:
 	ld hl, $c76e ; $6c91
 	jp AdjustDebugStatDigit ; $6c94
-.step11:
+.adjustDebugStatDigit5:
 	ld hl, $c76f ; $6c97
 	jp AdjustDebugStatDigit ; $6c9a
 AdjustDebugStatDigit:
@@ -2888,12 +2888,12 @@ StoryPauseMenu_AfterItem:
 	pop af ; $6e7e
 	ld [wMatchMenuSelection], a ; $6e7f
 	cp a, $02 ; $6e82
-	jr c, .step ; $6e84
+	jr c, .runStoryModeMenu ; $6e84
 	cp a, $03 ; $6e86
 	jr nz, .checkMatchAbortFlag ; $6e88
 	ld a, b ; $6e8a
 	or a, a ; $6e8b
-	jr nz, .step ; $6e8c
+	jr nz, .runStoryModeMenu ; $6e8c
 .checkMatchAbortFlag:
 	ld a, [wMatchAbortFlag] ; $6e8e
 	and a, a ; $6e91
@@ -2911,7 +2911,7 @@ StoryPauseMenu_AfterItem:
 	pop af ; $6eac
 	wram_bank ; $6ead
 	ret ; $6eb1
-.step:
+.runStoryModeMenu:
 	ld a, b ; $6eb2
 	cp a, $ff ; $6eb3
 	jp z, RunStoryModeMenu.loop ; $6eb5
@@ -3188,9 +3188,9 @@ RunStoryTwoOptionMenu:
 	ld hl, $0162 ; $70ea
 	add a, l ; $70ed
 	ld l, a ; $70ee
-	jr nc, .step ; $70ef
+	jr nc, .drawStoryMenuCaption ; $70ef
 	inc h ; $70f1
-.step:
+.drawStoryMenuCaption:
 	ld de, $000e ; $70f2
 	call DrawStoryMenuCaption ; $70f5
 .redrawStoryTilemapRows:
@@ -3231,9 +3231,9 @@ RunStoryTwoOptionMenu:
 	ld hl, $0162 ; $7140
 	add a, l ; $7143
 	ld l, a ; $7144
-	jr nc, .step2 ; $7145
+	jr nc, .drawStoryMenuCaption2 ; $7145
 	inc h ; $7147
-.step2:
+.drawStoryMenuCaption2:
 	ld de, $000e ; $7148
 	call DrawStoryMenuCaption ; $714b
 	call RedrawStoryTilemapRows ; $714e
@@ -3284,9 +3284,9 @@ RunStoryThreeOptionMenu:
 	ld hl, $0162 ; $71a4
 	add a, l ; $71a7
 	ld l, a ; $71a8
-	jr nc, .step ; $71a9
+	jr nc, .drawStoryMenuCaption ; $71a9
 	inc h ; $71ab
-.step:
+.drawStoryMenuCaption:
 	ld de, $000e ; $71ac
 	call DrawStoryMenuCaption ; $71af
 	call RedrawStoryTilemapRows ; $71b2
@@ -3325,9 +3325,9 @@ RunStoryThreeOptionMenu:
 	ld hl, $0162 ; $71f8
 	add a, l ; $71fb
 	ld l, a ; $71fc
-	jr nc, .step2 ; $71fd
+	jr nc, .drawStoryMenuCaption2 ; $71fd
 	inc h ; $71ff
-.step2:
+.drawStoryMenuCaption2:
 	ld de, $000e ; $7200
 	call DrawStoryMenuCaption ; $7203
 	call RedrawStoryTilemapRows ; $7206
@@ -3703,9 +3703,9 @@ CopyTileRectToShadowAttrmap:
 .step:
 	ld a, d ; $78cc
 	cp a, $d8 ; $78cd
-	jr c, .step2 ; $78cf
+	jr c, .ltd8 ; $78cf
 	ld d, $d4 ; $78d1
-.step2:
+.ltd8:
 	dec c ; $78d3
 	jr nz, CopyTileRectToShadowAttrmap ; $78d4
 	ret ; $78d6

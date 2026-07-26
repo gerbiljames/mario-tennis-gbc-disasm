@@ -80,9 +80,9 @@ TennisMachineRoomNpc04_14:
 	farcall InitDialogueTextCursor ; $40c2
 	ld a, [$c2b0] ; $40c5
 	cp a, $01 ; $40c8
-	jr z, .step ; $40ca
+	jr z, .eq01 ; $40ca
 	jr .speak ; $40cc
-.step:
+.eq01:
 	ld a, $04 ; $40ce
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $40d0
 	farcall RunDialogueYesNoPrompt ; $40d3
@@ -460,10 +460,10 @@ MachineCourtStartLevelScene:
 	script_wait_frames $0a ; $455e
 	ld a, [$c2b0] ; $4565
 	cp a, $04 ; $4568
-	jr c, .step ; $456a
+	jr c, .lt04 ; $456a
 	script_set_text Text_6e_204 ; $456c
 	script_speak $05 ; $4572
-.step:
+.lt04:
 	ld c, $06 ; $4577
 	call BeginFadeOut ; $4579
 	call WaitFadeEnd ; $457c
@@ -651,10 +651,10 @@ MachineCourtHandleRetryChoice:
 MachineCourtRestartLevel:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $47cd
 	cp a, $1a ; $47d0
-	jr z, .step ; $47d2
+	jr z, .storeStoryModeCurrentLocation ; $47d2
 	sub a, $12 ; $47d4
 	call TestMachineLevelClearedFlag ; $47d6
-	jr z, .step ; $47d9
+	jr z, .storeStoryModeCurrentLocation ; $47d9
 	ld a, $12 ; $47db
 	ld [wStoryModeCurrentLocation], a ; $47dd
 	ld a, $07 ; $47e0
@@ -662,8 +662,8 @@ MachineCourtRestartLevel:
 	ld a, $ff ; $47e5
 	ld [$c294], a ; $47e7
 	ld [wStoryModeExitLocationRequest], a ; $47ea
-	jr .step2 ; $47ed
-.step:
+	jr .runTrainingDrillByID ; $47ed
+.storeStoryModeCurrentLocation:
 	ld a, $12 ; $47ef
 	ld [wStoryModeCurrentLocation], a ; $47f1
 	ld a, $05 ; $47f4
@@ -671,7 +671,7 @@ MachineCourtRestartLevel:
 	ld a, $ff ; $47f9
 	ld [$c294], a ; $47fb
 	ld [wStoryModeExitLocationRequest], a ; $47fe
-.step2:
+.runTrainingDrillByID:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $4801
 	farcall RunTrainingDrillByID ; $4804
 	ret ; $4807
@@ -703,11 +703,11 @@ ActorScript_14_4808:
 	ret ; $4841
 MachineExpertResultScene:
 	test_flag FLAG_CLEARED_MACHINE_EXPERT ; $4842
-	jr z, .step ; $4845
+	jr z, .notClearedMachineExpert ; $4845
 	ld a, [wPointWinLoseFlag] ; $4847
 	cp a, $01 ; $484a
 	jp z, MachineExpertCounterMaxScene ; $484c
-.step:
+.notClearedMachineExpert:
 	ld bc, $0001 ; $484f
 	ldh a, [hWramBank] ; $4852
 	push af ; $4854
@@ -1111,13 +1111,13 @@ Court2SpectatorsRepeatChat:
 Court2Npc0A_14:
 	script_set_text Text_1f_106 ; $4dcc
 	test_flag FLAG_DOUBLES ; $4dd2
-	jr nz, .step ; $4dd5
+	jr nz, .isDoubles ; $4dd5
 	ld a, [$c2b0] ; $4dd7
 	cp a, $03 ; $4dda
 	jr nz, .speak ; $4ddc
 	script_set_text Text_1f_113 ; $4dde
 	jr .speak ; $4de4
-.step:
+.isDoubles:
 	ld a, [$c2b0] ; $4de6
 	cp a, $06 ; $4de9
 	jr nz, .speak ; $4deb
@@ -1408,7 +1408,7 @@ Court1EntryWalkIn:
 	ret ; $51e9
 LoadCourtPlayerPartnerObjDefs_14:
 	test_flag FLAG_DOUBLES ; $51ea
-	jp z, .step ; $51ed
+	jp z, .notDoubles ; $51ed
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $51f0
 	ld d, $58 ; $51f3
 	add a, d ; $51f5
@@ -1418,7 +1418,7 @@ LoadCourtPlayerPartnerObjDefs_14:
 	ld b, h ; $51fd
 	farcall LoadActorObjectDefIfValid ; $51fe
 	script_set_anim ACTOR_PARTNER, $01 ; $5201
-.step:
+.notDoubles:
 	ld a, [wStoryModeGenderOfMainCharacter] ; $5208
 	ld d, $56 ; $520b
 	add a, d ; $520d
@@ -1476,7 +1476,7 @@ IslandSkyInitScript_14:
 	cp a, $02 ; $52e6
 	jp z, QueuePlaneSpriteByFrameCounter_14.loadScene ; $52e8
 	cp a, $08 ; $52eb
-	jp z, Table_14_64d5.step ; $52ed
+	jp z, Table_14_64d5.scriptRespawnLocationActors ; $52ed
 	cp a, $0e ; $52f0
 	jp z, QueueTwinkleSprite_14.queue ; $52f2
 	cp a, $0f ; $52f5
@@ -2465,12 +2465,12 @@ AdvanceFirework0Ascent_14:
 	ld b, $03 ; $64be
 	ld a, [$c2b8] ; $64c0
 	cp a, $14 ; $64c3
-	jr nc, .step ; $64c5
+	jr nc, .checkWaterSpriteMinigameTimer ; $64c5
 	dec b ; $64c7
 	cp a, $0a ; $64c8
-	jr nc, .step ; $64ca
+	jr nc, .checkWaterSpriteMinigameTimer ; $64ca
 	dec b ; $64cc
-.step:
+.checkWaterSpriteMinigameTimer:
 	ld a, [wWaterSpriteMinigameTimer] ; $64cd
 	sub a, b ; $64d0
 	ld [wWaterSpriteMinigameTimer], a ; $64d1
@@ -2480,7 +2480,7 @@ Table_14_64d5:
 	db $00, $0c, $0e, $10 ; 0x00
 	db $00, $20, $30, $40 ; 0x04
 	db $00, $50, $60, $70 ; 0x08
-.step:
+.scriptRespawnLocationActors:
 	ldh a, [hRomBank] ; $64e1
 	ld hl, FireworkMapActors_14 ; $64e3
 	farcall ScriptRespawnLocationActors ; $64e6
@@ -2594,7 +2594,7 @@ Table_14_64d5:
 	call WaitFadeEnd ; $6644
 	call ClearFrameTasks ; $6647
 	test_flag FLAG_DOUBLES ; $664a
-	jr z, .step2 ; $664d
+	jr z, .notDoubles ; $664d
 	ld a, $1a ; $664f
 	ld [wStoryModeCurrentLocation], a ; $6651
 	ld a, $0b ; $6654
@@ -2603,7 +2603,7 @@ Table_14_64d5:
 	ld [$c294], a ; $665b
 	ld [wStoryModeExitLocationRequest], a ; $665e
 	ret ; $6661
-.step2:
+.notDoubles:
 	ld a, $1a ; $6662
 	ld [wStoryModeCurrentLocation], a ; $6664
 	ld a, $0a ; $6667
@@ -2981,19 +2981,19 @@ AnimateIslandSkyEffectSprites_14:
 	ld hl, IslandSkySpriteData_14 ; $73e8
 	ld a, [$c2be] ; $73eb
 	and a, a ; $73ee
-	jr nz, .step ; $73ef
+	jr nz, .nonZero ; $73ef
 	ld a, [wWaterSpriteMinigameFlag] ; $73f1
 	inc a ; $73f4
 	ld [wWaterSpriteMinigameFlag], a ; $73f5
-.step:
+.nonZero:
 	ld a, [wWaterSpriteMinigameFlag] ; $73f8
 	swap a ; $73fb
 	and a, $03 ; $73fd
 	cp a, $03 ; $73ff
-	jr nz, .step2 ; $7401
+	jr nz, .ne03 ; $7401
 	ld a, $00 ; $7403
 	ld [wWaterSpriteMinigameFlag], a ; $7405
-.step2:
+.ne03:
 	inc a ; $7408
 	ld b, a ; $7409
 	call QueueSpriteTemplate ; $740a
@@ -3505,7 +3505,7 @@ ActorScript_14_78e7:
 	as_anim $03
 	as_jump .L1a7
 	test_flag FLAG_DOUBLES ; $7a9d
-	jr nz, .step ; $7aa0
+	jr nz, .isDoubles ; $7aa0
 	ld a, $00 ; $7aa2
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7aa4
 	jr z, .loop ; $7aa7
@@ -3522,7 +3522,7 @@ ActorScript_14_78e7:
 .loop:
 	ld [$c2b0], a ; $7ac0
 	ret ; $7ac3
-.step:
+.isDoubles:
 	ld a, $01 ; $7ac4
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $7ac6
 	jr z, .loop ; $7ac9

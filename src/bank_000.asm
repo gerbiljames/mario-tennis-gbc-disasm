@@ -1563,46 +1563,46 @@ MulHLByA:
 	jr z, .mul128 ; $0944
 	add hl, hl ; $0946
 	add a, a ; $0947
-	jr nc, .step6 ; $0948
+	jr nc, .noCarry ; $0948
 	add hl, de ; $094a
 .top6:
 	jr z, .finish6 ; $094b
-.step6:
+.noCarry:
 	add hl, hl ; $094d
 	add a, a ; $094e
-	jr nc, .step5 ; $094f
+	jr nc, .noCarry2 ; $094f
 	add hl, de ; $0951
 .top5:
 	jr z, .finish5 ; $0952
-.step5:
+.noCarry2:
 	add hl, hl ; $0954
 	add a, a ; $0955
-	jr nc, .step4 ; $0956
+	jr nc, .noCarry3 ; $0956
 	add hl, de ; $0958
 .top4:
 	jr z, .finish4 ; $0959
-.step4:
+.noCarry3:
 	add hl, hl ; $095b
 	add a, a ; $095c
-	jr nc, .step3 ; $095d
+	jr nc, .noCarry4 ; $095d
 	add hl, de ; $095f
 .top3:
 	jr z, .finish3 ; $0960
-.step3:
+.noCarry4:
 	add hl, hl ; $0962
 	add a, a ; $0963
-	jr nc, .step2 ; $0964
+	jr nc, .noCarry5 ; $0964
 	add hl, de ; $0966
 .top2:
 	jr z, .finish2 ; $0967
-.step2:
+.noCarry5:
 	add hl, hl ; $0969
 	add a, a ; $096a
-	jr nc, .step1 ; $096b
+	jr nc, .noCarry6 ; $096b
 	add hl, de ; $096d
 .top1:
 	jr z, .finish1 ; $096e
-.step1:
+.noCarry6:
 	add hl, hl ; $0970
 	add hl, de ; $0971
 	pop de ; $0972
@@ -1945,10 +1945,10 @@ MulHLBySin:
 	ret ; $0b12
 MulHLBySinHalf:
 	bit 6, a ; $0b13
-	jr z, .step ; $0b15
+	jr z, .bit6Clear ; $0b15
 	cpl ; $0b17
 	add a, $81 ; $0b18
-.step:
+.bit6Clear:
 	push bc ; $0b1a
 	add a, $5c ; $0b1b
 	ld c, a ; $0b1d
@@ -1981,10 +1981,10 @@ MulHLBySinSigned:
 	ret ; $0b41
 MulHLBySinSignedHalf:
 	bit 6, a ; $0b42
-	jr z, .step ; $0b44
+	jr z, .bit6Clear ; $0b44
 	cpl ; $0b46
 	add a, $81 ; $0b47
-.step:
+.bit6Clear:
 	push bc ; $0b49
 	add a, $5c ; $0b4a
 	ld c, a ; $0b4c
@@ -2174,14 +2174,14 @@ MulHLByDESigned:
 	xor a, d ; $0c69
 	ldh [hMathSign], a ; $0c6a
 	bit 7, h ; $0c6c
-	jr z, .step ; $0c6e
+	jr z, .positive ; $0c6e
 	xor a, a ; $0c70
 	sub a, l ; $0c71
 	ld l, a ; $0c72
 	sbc a, a ; $0c73
 	sub a, h ; $0c74
 	ld h, a ; $0c75
-.step:
+.positive:
 	bit 7, d ; $0c76
 	jr z, .mulHLByDE ; $0c78
 	xor a, a ; $0c7a
@@ -2373,7 +2373,7 @@ MulHLByDE32:
 	ld b, $00 ; $0d4e
 	push hl ; $0d50
 	add a, a ; $0d51
-	jr c, .step2 ; $0d52
+	jr c, .carry ; $0d52
 	jr z, .step ; $0d54
 	ld e, l ; $0d56
 	ld d, h ; $0d57
@@ -2394,7 +2394,7 @@ MulHLByDE32:
 .step:
 	ld hl, $0000 ; $0d6d
 	jr .step3 ; $0d70
-.step2:
+.carry:
 	ld e, l ; $0d72
 	ld d, h ; $0d73
 	add hl, hl ; $0d74
@@ -2446,7 +2446,7 @@ MulHLByDE32:
 	pop hl ; $0da2
 	push de ; $0da3
 	add a, a ; $0da4
-	jr c, .step5 ; $0da5
+	jr c, .carry2 ; $0da5
 	jr z, .step4 ; $0da7
 	ld e, l ; $0da9
 	ld d, h ; $0daa
@@ -2467,7 +2467,7 @@ MulHLByDE32:
 .step4:
 	ld hl, $0000 ; $0dc0
 	jr .restore ; $0dc3
-.step5:
+.carry2:
 	ld e, l ; $0dc5
 	ld d, h ; $0dc6
 	add hl, hl ; $0dc7
@@ -2547,7 +2547,7 @@ MulPosHLByA:
 	push de ; $0e13
 .step:
 	add a, a ; $0e14
-	jr c, .step3 ; $0e15
+	jr c, .carry ; $0e15
 	jr z, .step2 ; $0e17
 	ld e, l ; $0e19
 	ld d, h ; $0e1a
@@ -2568,7 +2568,7 @@ MulPosHLByA:
 .step2:
 	ld hl, $0000 ; $0e30
 	jr .step4 ; $0e33
-.step3:
+.carry:
 	ld e, l ; $0e35
 	ld d, h ; $0e36
 	add hl, hl ; $0e37
@@ -2622,14 +2622,14 @@ DivAHLByDESigned:
 	xor a, d ; $0e6d
 	ldh [hMathSign], a ; $0e6e
 	bit 7, d ; $0e70
-	jr z, .step ; $0e72
+	jr z, .positive ; $0e72
 	xor a, a ; $0e74
 	sub a, e ; $0e75
 	ld e, a ; $0e76
 	sbc a, a ; $0e77
 	sub a, d ; $0e78
 	ld d, a ; $0e79
-.step:
+.positive:
 	ld a, b ; $0e7a
 	bit 7, b ; $0e7b
 	jr z, .divAHLByDE ; $0e7d
@@ -3110,36 +3110,36 @@ AngleFromVector:
 	ld h, e ; $109b
 	ld a, d ; $109c
 	add a, b ; $109d
-	jr c, .step ; $109e
+	jr c, .carry ; $109e
 	ld b, a ; $10a0
 	set 7, h ; $10a1
 	ld a, $60 ; $10a3
 	jr .step2 ; $10a5
-.step:
+.carry:
 	ld a, $e0 ; $10a7
 .step2:
 	add a, d ; $10a9
 	srl a ; $10aa
 	ld d, a ; $10ac
 	add a, b ; $10ad
-	jr c, .step3 ; $10ae
+	jr c, .carry2 ; $10ae
 	ld b, a ; $10b0
 	set 6, h ; $10b1
 	ld a, $18 ; $10b3
 	jr .step4 ; $10b5
-.step3:
+.carry2:
 	ld a, $f8 ; $10b7
 .step4:
 	add a, d ; $10b9
 	srl a ; $10ba
 	ld d, a ; $10bc
 	add a, b ; $10bd
-	jr c, .step5 ; $10be
+	jr c, .carry3 ; $10be
 	ld b, a ; $10c0
 	set 5, h ; $10c1
 	ld a, $06 ; $10c3
 	jr .step6 ; $10c5
-.step5:
+.carry3:
 	ld a, $fe ; $10c7
 .step6:
 	add a, d ; $10c9
@@ -3149,13 +3149,13 @@ AngleFromVector:
 	ld l, e ; $10ce
 	ld h, d ; $10cf
 	add hl, bc ; $10d0
-	jr c, .step7 ; $10d1
+	jr c, .carry4 ; $10d1
 	ld c, l ; $10d3
 	ld b, h ; $10d4
 	set 4, a ; $10d5
 	ld hl, $0180 ; $10d7
 	jr .offset ; $10da
-.step7:
+.carry4:
 	ld hl, $ff80 ; $10dc
 .offset:
 	add hl, de ; $10df
@@ -3164,13 +3164,13 @@ AngleFromVector:
 	ld e, l ; $10e4
 	ld d, h ; $10e5
 	add hl, bc ; $10e6
-	jr c, .step8 ; $10e7
+	jr c, .carry5 ; $10e7
 	ld c, l ; $10e9
 	ld b, h ; $10ea
 	set 3, a ; $10eb
 	ld hl, $0060 ; $10ed
 	jr .offset2 ; $10f0
-.step8:
+.carry5:
 	ld hl, $ffe0 ; $10f2
 .offset2:
 	add hl, de ; $10f5
@@ -3179,13 +3179,13 @@ AngleFromVector:
 	ld e, l ; $10fa
 	ld d, h ; $10fb
 	add hl, bc ; $10fc
-	jr c, .step9 ; $10fd
+	jr c, .carry6 ; $10fd
 	ld c, l ; $10ff
 	ld b, h ; $1100
 	set 2, a ; $1101
 	ld hl, $0018 ; $1103
 	jr .offset3 ; $1106
-.step9:
+.carry6:
 	ld hl, $fff8 ; $1108
 .offset3:
 	add hl, de ; $110b
@@ -3194,13 +3194,13 @@ AngleFromVector:
 	ld e, l ; $1110
 	ld d, h ; $1111
 	add hl, bc ; $1112
-	jr c, .step10 ; $1113
+	jr c, .carry7 ; $1113
 	ld c, l ; $1115
 	ld b, h ; $1116
 	set 1, a ; $1117
 	ld hl, $0006 ; $1119
 	jr .offset4 ; $111c
-.step10:
+.carry7:
 	ld hl, hIsCGB ; $111e
 .offset4:
 	add hl, de ; $1121
@@ -3938,7 +3938,7 @@ TangentTable:
 GetTangent:
 	add hl, hl ; $1767
 	add hl, hl ; $1768
-	jr c, .step ; $1769
+	jr c, .carry ; $1769
 	ld a, h ; $176b
 	cpl ; $176c
 	ld l, a ; $176d
@@ -3953,7 +3953,7 @@ GetTangent:
 	ret nc ; $1779
 	ld hl, $7fff ; $177a
 	ret ; $177d
-.step:
+.carry:
 	ld l, h ; $177e
 	ld h, $00 ; $177f
 	inc l ; $1781
@@ -4212,12 +4212,12 @@ UpdateDebugOverlay:
 	cp a, $03 ; $18aa
 	jr z, .step3 ; $18ac
 	cp a, $01 ; $18ae
-	jr z, .step ; $18b0
+	jr z, .eq01 ; $18b0
 	ldh a, [hVBlankCounter] ; $18b2
 	and a, $01 ; $18b4
 	jr z, .step3 ; $18b6
 	jr .step2 ; $18b8
-.step:
+.eq01:
 	ldh a, [hPlayerInputFlags] ; $18ba
 	bit PADB_SELECT, a ; $18bc
 .step2:
@@ -5121,9 +5121,9 @@ UpdateFadeIn:
 	ld c, a ; $1d54
 	ldh a, [hFadeCounter] ; $1d55
 	sub a, c ; $1d57
-	jr nc, .step ; $1d58
+	jr nc, .noCarry ; $1d58
 	xor a, a ; $1d5a
-.step:
+.noCarry:
 	ld c, a ; $1d5b
 	jr UpdateFadeOut.step2 ; $1d5c
 UpdateFadeOut:
@@ -5138,9 +5138,9 @@ UpdateFadeOut:
 	ld c, a ; $1d69
 	ldh a, [hFadeCounter] ; $1d6a
 	sub a, c ; $1d6c
-	jr nc, .step ; $1d6d
+	jr nc, .noCarry ; $1d6d
 	xor a, a ; $1d6f
-.step:
+.noCarry:
 	ld b, a ; $1d70
 	ld a, $7c ; $1d71
 	sub a, b ; $1d73
@@ -5150,12 +5150,12 @@ UpdateFadeOut:
 	push af ; $1d76
 	ldh a, [hFadeState] ; $1d77
 	add a, a ; $1d79
-	jr nc, .step3 ; $1d7a
+	jr nc, .noCarry2 ; $1d7a
 	ld a, c ; $1d7c
 	and a, $04 ; $1d7d
 	call z, ApplyWhiteFade ; $1d7f
 	jr .restore ; $1d82
-.step3:
+.noCarry2:
 	ld hl, wMasterPalettes ; $1d84
 	ld de, wBGPalettes ; $1d87
 	ld b, $40 ; $1d8a
@@ -5243,16 +5243,16 @@ ApplyWhiteFade:
 	adc a, d ; $1df2
 	ld b, a ; $1df3
 	bit 7, a ; $1df4
-	jr z, .step ; $1df6
+	jr z, .positive ; $1df6
 	or a, $78 ; $1df8
-.step:
+.positive:
 	bit 2, a ; $1dfa
-	jr z, .step2 ; $1dfc
+	jr z, .bit2Clear ; $1dfc
 	and a, $fc ; $1dfe
 	dec a ; $1e00
 	set 7, c ; $1e01
 	set 6, c ; $1e03
-.step2:
+.bit2Clear:
 	ld b, a ; $1e05
 	ld a, c ; $1e06
 	bit 5, a ; $1e07
@@ -5803,12 +5803,12 @@ RenderTextToTiles:
 	and a, a ; $20ea
 	jr z, .restore ; $20eb
 	sub a, $30 ; $20ed
-	jr nc, .step ; $20ef
+	jr nc, .noCarry ; $20ef
 	ld a, b ; $20f1
 	add a, $06 ; $20f2
 	ld b, a ; $20f4
 	jr .loop ; $20f5
-.step:
+.noCarry:
 	push hl ; $20f7
 	and a, $1f ; $20f8
 	add a, a ; $20fa
@@ -5929,7 +5929,7 @@ ProcessBGBlitQueue:
 	ldh [hBGColumnBlitDone], a ; $218e
 	ldh a, [hBGRowBlitPending] ; $2190
 	or a, a ; $2192
-	jr z, .step ; $2193
+	jr z, .zero ; $2193
 	ld a, $01 ; $2195
 	ldh [rVBK], a ; $2197
 	ld bc, $c300 ; $2199
@@ -5966,10 +5966,10 @@ ProcessBGBlitQueue:
 	ld [hl], e ; $21c7
 	inc hl ; $21c8
 	ld [hl], a ; $21c9
-.step:
+.zero:
 	ldh a, [hBGColumnBlitPending] ; $21ca
 	or a, a ; $21cc
-	jr z, .step2 ; $21cd
+	jr z, .zero2 ; $21cd
 	ld a, $01 ; $21cf
 	ldh [hBGColumnBlitDone], a ; $21d1
 	ldh [rVBK], a ; $21d3
@@ -6005,7 +6005,7 @@ ProcessBGBlitQueue:
 	ld b, a ; $2202
 	dec b ; $2203
 	jr nz, .loopB ; $2204
-.step2:
+.zero2:
 	xor a, a ; $2206
 	ldh [hBGRowBlitPending], a ; $2207
 	ldh [hBGColumnBlitPending], a ; $2209
@@ -6211,12 +6211,12 @@ BlitBGStrip:
 	ld [de], a ; $2349
 	ld a, l ; $234a
 	and a, $1f ; $234b
-	jr nz, .step ; $234d
+	jr nz, .maskSet ; $234d
 	ld a, c ; $234f
 	ld bc, $ffe0 ; $2350
 	add hl, bc ; $2353
 	ld c, a ; $2354
-.step:
+.maskSet:
 	inc e ; $2355
 	res 5, e ; $2356
 	dec c ; $2358
@@ -6232,12 +6232,12 @@ BlitBGStrip:
 	ld [de], a ; $2369
 	ld a, l ; $236a
 	and a, $1f ; $236b
-	jr nz, .step2 ; $236d
+	jr nz, .maskSet2 ; $236d
 	ld a, c ; $236f
 	ld bc, $ffe0 ; $2370
 	add hl, bc ; $2373
 	ld c, a ; $2374
-.step2:
+.maskSet2:
 	inc e ; $2375
 	res 5, e ; $2376
 	dec c ; $2378
@@ -6906,7 +6906,7 @@ VBlankHandler:
 	call ApplyPendingPaletteUpdates ; $2756
 	ldh a, [hVBlankOccurred] ; $2759
 	or a, a ; $275b
-	jr nz, .step4 ; $275c
+	jr nz, .nonZero2 ; $275c
 	ldh a, [hShowDebugConsole] ; $275e
 	or a, a ; $2760
 	jr nz, .compare ; $2761
@@ -6920,7 +6920,7 @@ VBlankHandler:
 	jr .checkSpriteBufferPage ; $2771
 .compare:
 	cp a, $01 ; $2773
-	jr nz, .step ; $2775
+	jr nz, .ne01 ; $2775
 	xor a, a ; $2777
 	ldh [rSCX], a ; $2778
 	ld a, $40 ; $277a
@@ -6929,7 +6929,7 @@ VBlankHandler:
 	or a, $08 ; $2780
 	ldh [rLCDC], a ; $2782
 	jr .checkSpriteBufferPage ; $2784
-.step:
+.ne01:
 	ldh a, [hScrollX] ; $2786
 	ldh [rSCX], a ; $2788
 	ldh a, [hScrollY] ; $278a
@@ -6941,19 +6941,19 @@ VBlankHandler:
 	call $ff80 ; $2795
 	call ProcessBGBlitQueue ; $2798
 	or a, a ; $279b
-	jr nz, .step2 ; $279c
+	jr nz, .nonZero ; $279c
 	call ProcessVRAMCopyQueues ; $279e
-.step2:
+.nonZero:
 	ldh a, [hDebugStepMode] ; $27a1
 	or a, a ; $27a3
-	jr z, .step3 ; $27a4
+	jr z, .zero ; $27a4
 	call UpdateDebugOverlay ; $27a6
-.step3:
+.zero:
 	ld a, $01 ; $27a9
 	ldh [hVBlankOccurred], a ; $27ab
 	ld hl, hVBlankCounter ; $27ad
 	inc [hl] ; $27b0
-.step4:
+.nonZero2:
 	ldh a, [$ffd8] ; $27b1
 	or a, a ; $27b3
 	jr nz, .updateGameTimer ; $27b4
@@ -6979,11 +6979,11 @@ TimerHandler:
 	push af ; $27d7
 	ldh a, [hLinkState] ; $27d8
 	cp a, $02 ; $27da
-	jr nz, .step ; $27dc
+	jr nz, .ne02 ; $27dc
 	ldh a, [rIF] ; $27de
 	and a, $08 ; $27e0
 	jr nz, .restore ; $27e2
-.step:
+.ne02:
 	ldh a, [rLCDC] ; $27e4
 	bit 7, a ; $27e6
 	jr nz, .restore ; $27e8
@@ -7090,31 +7090,31 @@ SerialHandler:
 	push hl ; $2864
 	ldh a, [$ffe1] ; $2865
 	add a, a ; $2867
-	jr c, .step ; $2868
+	jr c, .carry ; $2868
 	ldh a, [rSB] ; $286a
 	ld b, a ; $286c
 	ldh [hLinkRxByte], a ; $286d
-.step:
+.carry:
 	ldh a, [hLinkState] ; $286f
 	cp a, $01 ; $2871
-	jr nz, .step2 ; $2873
+	jr nz, .ne01 ; $2873
 	ldh [$ffd7], a ; $2875
 	pop hl ; $2877
 	pop de ; $2878
 	pop bc ; $2879
 	pop af ; $287a
 	reti ; $287b
-.step2:
+.ne01:
 	ldh a, [$ffdf] ; $287c
 	or a, a ; $287e
 	jr z, .step4 ; $287f
 	ldh a, [$ffe0] ; $2881
 	or a, a ; $2883
-	jr z, .step3 ; $2884
+	jr z, .zero ; $2884
 	xor a, a ; $2886
 	ldh [$ffe0], a ; $2887
 	jr .step4 ; $2889
-.step3:
+.zero:
 	ldh a, [$ffe1] ; $288b
 	ld a, $40 ; $288d
 	ldh [$ffe1], a ; $288f
@@ -7419,7 +7419,7 @@ VBlankDeferredTilemapCopyTask:
 	wram_bank ; $2a5e
 	ld a, [$c3a6] ; $2a62
 	and a, $0f ; $2a65
-	jr z, .step ; $2a67
+	jr z, .maskClear ; $2a67
 	ld hl, $c3a0 ; $2a69
 	ld a, [hl+] ; $2a6c
 	ld h, [hl] ; $2a6d
@@ -7428,10 +7428,10 @@ VBlankDeferredTilemapCopyTask:
 	ld a, [$c3a5] ; $2a72
 	ld c, a ; $2a75
 	call QueueVRAMCopy ; $2a76
-.step:
+.maskClear:
 	ld a, [$c3a6] ; $2a79
 	and a, $f0 ; $2a7c
-	jr z, .step2 ; $2a7e
+	jr z, .maskClear2 ; $2a7e
 	ld hl, $c3a2 ; $2a80
 	ld a, [hl+] ; $2a83
 	ld h, [hl] ; $2a84
@@ -7440,7 +7440,7 @@ VBlankDeferredTilemapCopyTask:
 	ld a, [$c3a5] ; $2a89
 	ld c, a ; $2a8c
 	call QueueVRAMCopy ; $2a8d
-.step2:
+.maskClear2:
 	xor a, a ; $2a90
 	ld [$c3a6], a ; $2a91
 	pop af ; $2a94
@@ -7665,9 +7665,9 @@ DrawWindowFrame:
 	ld a, $20 ; $2ba9
 	add a, l ; $2bab
 	ld l, a ; $2bac
-	jr nc, .step4 ; $2bad
+	jr nc, .drawWindowFrameBottom ; $2bad
 	inc h ; $2baf
-.step4:
+.drawWindowFrameBottom:
 	dec c ; $2bb0
 	jr nz, .loopBB ; $2bb1
 	call DrawWindowFrameBottom ; $2bb3
@@ -7720,20 +7720,20 @@ DrawWindowFrameBottom:
 	ld [hl+], a ; $2be9
 	ret ; $2bea
 	bit 5, a ; $2beb
-	jr z, .step ; $2bed
+	jr z, .bit5Clear ; $2bed
 	dec d ; $2bef
 	ret ; $2bf0
-.step:
+.bit5Clear:
 	bit 4, a ; $2bf1
-	jr z, .step2 ; $2bf3
+	jr z, .bit4Clear ; $2bf3
 	inc d ; $2bf5
 	ret ; $2bf6
-.step2:
+.bit4Clear:
 	bit 6, a ; $2bf7
-	jr z, .step3 ; $2bf9
+	jr z, .bit6Clear ; $2bf9
 	dec e ; $2bfb
 	ret ; $2bfc
-.step3:
+.bit6Clear:
 	bit 7, a ; $2bfd
 	jr z, .done ; $2bff
 	inc e ; $2c01
@@ -7777,7 +7777,7 @@ TickTimer:
 	ret ; $2c2a
 QueueSprite24x32:
 	bit 5, b ; $2c2b
-	jr nz, .step ; $2c2d
+	jr nz, .bit5Set ; $2c2d
 	ld a, h ; $2c2f
 	add a, d ; $2c30
 	ld d, a ; $2c31
@@ -7860,7 +7860,7 @@ QueueSprite24x32:
 	ld a, l ; $2c89
 	ldh [hSpriteQueueIndex], a ; $2c8a
 	ret ; $2c8c
-.step:
+.bit5Set:
 	ld a, d ; $2c8d
 	sub a, h ; $2c8e
 	add a, $08 ; $2c8f
@@ -7946,7 +7946,7 @@ QueueSprite24x32:
 	ret ; $2cec
 QueueSprite32x32:
 	bit 5, b ; $2ced
-	jr nz, .step ; $2cef
+	jr nz, .bit5Set ; $2cef
 	ld a, h ; $2cf1
 	add a, d ; $2cf2
 	ldh [hSpriteBlitY], a ; $2cf3
@@ -7976,7 +7976,7 @@ QueueSprite32x32:
 	ld a, l ; $2d30
 	ldh [hSpriteQueueIndex], a ; $2d31
 	ret ; $2d33
-.step:
+.bit5Set:
 	ld a, d ; $2d34
 	sub a, h ; $2d35
 	add a, $08 ; $2d36
@@ -8090,7 +8090,7 @@ ProjectWorldToScreen:
 	ret ; $2de8
 MulViewScaleA:
 	bit 7, h ; $2de9
-	jr nz, .step ; $2deb
+	jr nz, .negative ; $2deb
 	res 0, l ; $2ded
 	ld a, h ; $2def
 	and a, $1f ; $2df0
@@ -8100,7 +8100,7 @@ MulViewScaleA:
 	ld h, [hl] ; $2df6
 	ld l, a ; $2df7
 	ret ; $2df8
-.step:
+.negative:
 	xor a, a ; $2df9
 	sub a, l ; $2dfa
 	ld l, a ; $2dfb
@@ -8124,7 +8124,7 @@ MulViewScaleA:
 	ret ; $2e10
 MulViewScaleANeg:
 	bit 7, h ; $2e11
-	jr nz, .step ; $2e13
+	jr nz, .negative ; $2e13
 	res 0, l ; $2e15
 	ld a, h ; $2e17
 	and a, $1f ; $2e18
@@ -8140,7 +8140,7 @@ MulViewScaleANeg:
 	sub a, h ; $2e24
 	ld h, a ; $2e25
 	ret ; $2e26
-.step:
+.negative:
 	xor a, a ; $2e27
 	sub a, l ; $2e28
 	ld l, a ; $2e29
@@ -8158,7 +8158,7 @@ MulViewScaleANeg:
 	ret ; $2e38
 MulViewScaleB:
 	bit 7, h ; $2e39
-	jr nz, .step ; $2e3b
+	jr nz, .negative ; $2e3b
 	res 0, l ; $2e3d
 	ld a, h ; $2e3f
 	and a, $1f ; $2e40
@@ -8168,7 +8168,7 @@ MulViewScaleB:
 	ld h, [hl] ; $2e46
 	ld l, a ; $2e47
 	ret ; $2e48
-.step:
+.negative:
 	xor a, a ; $2e49
 	sub a, l ; $2e4a
 	ld l, a ; $2e4b
@@ -8231,14 +8231,14 @@ GetPerspectiveScale:
 	ld d, a ; $2e9c
 	ld a, [wStandingShadowsEnabled] ; $2e9d
 	and a, a ; $2ea0
-	jr nz, .step2 ; $2ea1
+	jr nz, .nonZero ; $2ea1
 	call QueueVRAMCopy ; $2ea3
 .loop:
 	pop af ; $2ea6
 	ldh [hRomBank], a ; $2ea7
 	ld [$2000], a ; $2ea9
 	ret ; $2eac
-.step2:
+.nonZero:
 	push de ; $2ead
 	push hl ; $2eae
 	call QueueVRAMCopy ; $2eaf
@@ -8246,7 +8246,7 @@ GetPerspectiveScale:
 	pop de ; $2eb3
 	ld a, [$df1d] ; $2eb4
 	and a, a ; $2eb7
-	jr z, .step3 ; $2eb8
+	jr z, .zero ; $2eb8
 	ld bc, $0100 ; $2eba
 	add hl, bc ; $2ebd
 	ld a, $30 ; $2ebe
@@ -8278,7 +8278,7 @@ GetPerspectiveScale:
 .queueTileCopyAdvance4:
 	call QueueTileCopyAdvance ; $2ee3
 	jr .loop ; $2ee6
-.step3:
+.zero:
 	ld bc, $00c0 ; $2ee8
 	add hl, bc ; $2eeb
 	ld a, $30 ; $2eec
@@ -8512,11 +8512,11 @@ WaitJingleEnd:
 	call AdvanceFrame ; $3033
 	ldh a, [hPlayerInputFlags] ; $3036
 	or a, a ; $3038
-	jr nz, .step ; $3039
+	jr nz, .nonZero ; $3039
 	ldh a, [hActiveJingle] ; $303b
 	or a, a ; $303d
 	jr nz, .loop ; $303e
-.step:
+.nonZero:
 	xor a, a ; $3040
 	ldh [hActiveJingle], a ; $3041
 	ld hl, hMusic ; $3043
@@ -8597,10 +8597,10 @@ MarkCurrentChannelUpdated:
 	ld a, $01 ; $30c6
 .loop:
 	dec b ; $30c8
-	jr z, .step ; $30c9
+	jr z, .countDone ; $30c9
 	add a, a ; $30cb
 	jr .loop ; $30cc
-.step:
+.countDone:
 	ld b, a ; $30ce
 	ld a, [wSndUpdateReqAck] ; $30cf
 	or a, b ; $30d2
@@ -8940,7 +8940,7 @@ StartSoundChannel:
 	add hl, bc ; $331c
 	ld a, [hl] ; $331d
 	cp a, $ff ; $331e
-	jr z, .step ; $3320
+	jr z, .eqff ; $3320
 	inc hl ; $3322
 	ld a, [hl-] ; $3323
 	ld b, $ee ; $3324
@@ -8957,7 +8957,7 @@ StartSoundChannel:
 	ld a, [wSndPanShadow] ; $3338
 	and a, b ; $333b
 	ld [wSndPanShadow], a ; $333c
-.step:
+.eqff:
 	xor a, a ; $333f
 	ld [hl+], a ; $3340
 	ld [hl+], a ; $3341
@@ -9032,7 +9032,7 @@ UpdateSoundChannels:
 	ld a, [hl-] ; $33a8
 	and a, b ; $33a9
 	inc a ; $33aa
-	jp z, .step4 ; $33ab
+	jp z, .countDone ; $33ab
 	push hl ; $33ae
 	ld de, hSndScriptPtr ; $33af
 	ld c, $02 ; $33b2
@@ -9061,7 +9061,7 @@ UpdateSoundChannels:
 	ldh a, [hSndScriptPtr + 1] ; $33dc
 	or a, b ; $33de
 	and a, a ; $33df
-	jp z, .step5 ; $33e0
+	jp z, .zero2 ; $33e0
 	call TickVibrato ; $33e3
 	call TickInstrumentEnvelope ; $33e6
 	ldh a, [hSndEnvLength] ; $33e9
@@ -9087,19 +9087,19 @@ UpdateSoundChannels:
 	call TickVolumeSlide ; $3407
 	ldh a, [hSndNoteLenTimer] ; $340a
 	and a, a ; $340c
-	jr z, .step ; $340d
+	jr z, .zero ; $340d
 	dec a ; $340f
 	ldh [hSndNoteLenTimer], a ; $3410
-.step:
+.zero:
 	ldh a, [hSndPortamentoTimer] ; $3412
 	and a, a ; $3414
-	jr nz, .step3 ; $3415
+	jr nz, .nonZero ; $3415
 	ldh a, [hSndEchoCtrl] ; $3417
 	and a, $f0 ; $3419
 	jr z, .loopBB ; $341b
 	ld hl, hSndEchoTimer ; $341d
 	dec [hl] ; $3420
-	jr nz, .step2 ; $3421
+	jr nz, .countLeft ; $3421
 	ldh a, [hSndEcho] ; $3423
 	and a, $f0 ; $3425
 	ld c, a ; $3427
@@ -9114,7 +9114,7 @@ UpdateSoundChannels:
 	ldh [hSndNoteLenTimer], a ; $3434
 	call RunSoundChannelScript ; $3436
 	jr .checkSndWaveReloadPending ; $3439
-.step2:
+.countLeft:
 	ldh a, [hSndEchoCtrl] ; $343b
 	and a, $0f ; $343d
 	dec a ; $343f
@@ -9124,7 +9124,7 @@ UpdateSoundChannels:
 	ldh a, [hSndVolume] ; $3446
 	call ApplyChannelEnvelope ; $3448
 	jr .checkSndWaveReloadPending ; $344b
-.step3:
+.nonZero:
 	dec a ; $344d
 	ldh [hSndPortamentoTimer], a ; $344e
 	push af ; $3450
@@ -9184,7 +9184,7 @@ UpdateSoundChannels:
 	ld hl, hSndScriptPtr ; $34b0
 	call CopyMemoryFast ; $34b3
 	pop hl ; $34b6
-.step4:
+.countDone:
 	ld de, $0020 ; $34b7
 	add hl, de ; $34ba
 	ld a, [wSndChannelIndex] ; $34bb
@@ -9202,7 +9202,7 @@ UpdateSoundChannels:
 	ldh [hRomBank], a ; $34d5
 	ld [$2000], a ; $34d7
 	jp ApplyChannelUpdateRequest ; $34da
-.step5:
+.zero2:
 	ldh a, [hSndDataPtr] ; $34dd
 .step6:
 	ld l, a ; $34df
@@ -9227,7 +9227,7 @@ UpdateSoundChannels:
 	ldh [hSndVolume], a ; $34fb
 	ld a, [wSndChannelType] ; $34fd
 	cp a, $02 ; $3500
-	jr z, .step7 ; $3502
+	jr z, .eq02 ; $3502
 	ld a, [hl+] ; $3504
 	ldh [hSndWaveId], a ; $3505
 .loopBBBBB:
@@ -9248,7 +9248,7 @@ UpdateSoundChannels:
 	ldh [hSndEnvLength], a ; $351f
 	ld a, d ; $3521
 	jr .loopBBBB ; $3522
-.step7:
+.eq02:
 	xor a, a ; $3524
 	ldh [rAUD3ENA], a ; $3525
 	ld d, a ; $3527
@@ -9779,21 +9779,21 @@ SndTriggerNote:
 	bit 7, a ; $3881
 	jr z, .restore ; $3883
 	add a, c ; $3885
-	jr z, .step2 ; $3886
+	jr z, .zero ; $3886
 	jr c, .restore ; $3888
-.step2:
+.zero:
 	ld a, $01 ; $388a
 .restore:
 	pop bc ; $388c
 	ldh [hSndRestFlag], a ; $388d
 	ld a, [wSndChannelType] ; $388f
 	cp a, $03 ; $3892
-	jr nz, .step4 ; $3894
+	jr nz, .ne03 ; $3894
 	ld a, b ; $3896
 	cp a, $1f ; $3897
 	jr z, SndTriggerNoteBody ; $3899
 	cp a, $10 ; $389b
-	jr nc, .step3 ; $389d
+	jr nc, .ge10 ; $389d
 	ld hl, NoiseNoteTable ; $389f
 	add a, l ; $38a2
 	ld l, a ; $38a3
@@ -9802,12 +9802,12 @@ SndTriggerNote:
 	ld h, a ; $38a7
 	ld l, [hl] ; $38a8
 	ld h, $00 ; $38a9
-	jr .step7 ; $38ab
-.step3:
+	jr .abortIfChannelTriggered ; $38ab
+.ge10:
 	ld l, a ; $38ad
 	ld h, $00 ; $38ae
-	jr .step7 ; $38b0
-.step4:
+	jr .abortIfChannelTriggered ; $38b0
+.ne03:
 	ld a, b ; $38b2
 	and a, $0f ; $38b3
 	cp a, $0c ; $38b5
@@ -9816,11 +9816,11 @@ SndTriggerNote:
 	ld e, a ; $38ba
 	ldh a, [hSndToneCtrl] ; $38bb
 	and a, $10 ; $38bd
-	jr z, .step5 ; $38bf
+	jr z, .maskClear ; $38bf
 	ld a, e ; $38c1
 	add a, $18 ; $38c2
 	ld e, a ; $38c4
-.step5:
+.maskClear:
 	ld d, $00 ; $38c5
 	ld hl, NotePeriodTable ; $38c7
 	add hl, de ; $38ca
@@ -9830,31 +9830,31 @@ SndTriggerNote:
 	ld a, b ; $38ce
 	swap a ; $38cf
 	and a, $0f ; $38d1
-	jr z, .step6 ; $38d3
+	jr z, .maskClear2 ; $38d3
 	ld b, a ; $38d5
 .loop:
 	srl h ; $38d6
 	rr l ; $38d8
 	dec b ; $38da
 	jr nz, .loop ; $38db
-.step6:
+.maskClear2:
 	ld a, $00 ; $38dd
 	sub a, l ; $38df
 	ld l, a ; $38e0
 	ld a, $08 ; $38e1
 	sbc a, h ; $38e3
 	ld h, a ; $38e4
-.step7:
+.abortIfChannelTriggered:
 	xor a, a ; $38e5
 	ldh [hSndEnvPos], a ; $38e6
 	call AbortIfChannelTriggered ; $38e8
 	ld a, [wSndChannelType] ; $38eb
 	cp a, $02 ; $38ee
-	jr nz, .step8 ; $38f0
+	jr nz, .ne02 ; $38f0
 	call LoadWavePatternIfChanged ; $38f2
 	ld a, $80 ; $38f5
 	ldh [rAUD3ENA], a ; $38f7
-.step8:
+.ne02:
 	push hl ; $38f9
 	call ApplyChannelVolumeEnvelope ; $38fa
 	pop hl ; $38fd
@@ -9868,18 +9868,18 @@ SndTriggerNote:
 	call WriteChannelReg ; $390c
 	ld a, l ; $390f
 	cp a, $02 ; $3910
-	jr c, .step9 ; $3912
+	jr c, .lt02 ; $3912
 	cp a, $fe ; $3914
 	jr c, .store ; $3916
 	ld a, $fd ; $3918
 	jr .store ; $391a
-.step9:
+.lt02:
 	ld a, $02 ; $391c
 .store:
 	ldh [hSndPeriodLo], a ; $391e
 	ld a, [wSndChannelType] ; $3920
 	cp a, $02 ; $3923
-	jr z, .step10 ; $3925
+	jr z, .eq02 ; $3925
 	cp a, $02 ; $3927
 	jr nc, .loopB ; $3929
 	ldh a, [hSndToneCtrl] ; $392b
@@ -9910,7 +9910,7 @@ SndTriggerNote:
 	or a, b ; $3955
 	ld [wSndPanShadow], a ; $3956
 	ret ; $3959
-.step10:
+.eq02:
 	xor a, a ; $395a
 	ldh [rAUD3LEN], a ; $395b
 	ldh a, [rAUDENA] ; $395d
@@ -9985,10 +9985,10 @@ TickVibrato:
 ApplyChannelVolumeEnvelope:
 	ld a, [wSndChannelType] ; $39d0
 	cp a, $02 ; $39d3
-	jr z, WriteChannelReg.step ; $39d5
+	jr z, WriteChannelReg.writeChannelReg ; $39d5
 	ldh a, [hSndEnvRate] ; $39d7
 	and a, a ; $39d9
-	jp nz, TickInstrumentEnvelope.step ; $39da
+	jp nz, TickInstrumentEnvelope.eq02 ; $39da
 	ldh a, [hSndVolume] ; $39dd
 ApplyChannelEnvelope:
 	ld b, a ; $39df
@@ -10035,7 +10035,7 @@ WriteChannelReg:
 	ld a, b ; $3a1a
 	ldh [c], a ; $3a1b
 	ret ; $3a1c
-.step:
+.writeChannelReg:
 	ldh a, [hSndVolume] ; $3a1d
 	ld c, $12 ; $3a1f
 	jr WriteChannelReg ; $3a21
@@ -10066,11 +10066,11 @@ TickInstrumentEnvelope:
 	jp z, SndSilenceChannel ; $3a47
 	ld a, [wSndChannelType] ; $3a4a
 	cp a, $02 ; $3a4d
-	jr z, .step ; $3a4f
+	jr z, .eq02 ; $3a4f
 	ldh a, [hSndEnvRate] ; $3a51
 	and a, a ; $3a53
 	ret z ; $3a54
-.step:
+.eq02:
 	ldh a, [hSndEnvLength] ; $3a55
 	and a, a ; $3a57
 	ret z ; $3a58
@@ -10141,12 +10141,12 @@ TickInstrumentEnvelope:
 	jr nz, .step3 ; $3ab7
 	sla b ; $3ab9
 	bit 1, e ; $3abb
-	jr z, .step4 ; $3abd
+	jr z, .bit1Clear ; $3abd
 .step3:
 	ld a, b ; $3abf
 	cp a, $08 ; $3ac0
 	jr c, .step5 ; $3ac2
-.step4:
+.bit1Clear:
 	ld b, $00 ; $3ac4
 .step5:
 	bit 1, h ; $3ac6
@@ -10160,13 +10160,13 @@ TickInstrumentEnvelope:
 	or a, b ; $3ad2
 	ld b, a ; $3ad3
 	bit 0, h ; $3ad4
-	jr z, .step7 ; $3ad6
+	jr z, .bit0Clear ; $3ad6
 	ld hl, SoundChannelMaskTable ; $3ad8
 	add hl, de ; $3adb
 	ld a, [hl] ; $3adc
 	or a, b ; $3add
 	jp ApplyChannelEnvelope ; $3ade
-.step7:
+.bit0Clear:
 	ld c, $12 ; $3ae1
 	ld a, [wSndRegBase] ; $3ae3
 	add a, c ; $3ae6
@@ -10354,9 +10354,9 @@ ScaleEchoVolume:
 	rr c ; $3db4
 	ld a, c ; $3db6
 	and a, a ; $3db7
-	jr nz, .step ; $3db8
+	jr nz, .nonZero ; $3db8
 	ld c, $01 ; $3dba
-.step:
+.nonZero:
 	swap c ; $3dbc
 	ldh a, [hSndVolume] ; $3dbe
 	ld d, a ; $3dc0
