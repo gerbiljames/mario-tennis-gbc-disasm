@@ -846,14 +846,14 @@ ActorScriptOp_Call:
 	call CallHLInBankA ; $44be
 	pop de ; $44c1
 	and a, a ; $44c2
-	jr z, Label_04_44cd ; $44c3
+	jr z, .skipOperand ; $44c3
 	inc b ; $44c5
 	dec b ; $44c6
-	jr z, Label_04_44cd ; $44c7
+	jr z, .skipOperand ; $44c7
 	dec de ; $44c9
 	ld a, $00 ; $44ca
 	ret ; $44cc
-Label_04_44cd:
+.skipOperand:
 	inc de ; $44cd
 	inc de ; $44ce
 	ret ; $44cf

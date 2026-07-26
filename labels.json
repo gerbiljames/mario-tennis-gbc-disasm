@@ -1044,6 +1044,7 @@
  "0x1046f": ".done",
  "0x1047d": "ActorScriptOpHandlers_04",
  "0x104a9": "ActorScriptOp_Call",
+ "0x104cd": ".skipOperand",
  "0x104d0": "ActorScriptOp_Jump",
  "0x104df": "ActorScriptOp_Move",
  "0x104eb": "ActorScriptOp_MoveRel",
