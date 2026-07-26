@@ -5089,12 +5089,12 @@ GetMinigameCursorPosTable:
 	push bc ; $64b7
 	push af ; $64b8
 	call CheckMinigameGridExpanded ; $64b9
-	jr nz, Label_3b_64c3 ; $64bc
+	jr nz, .altTable ; $64bc
 	ld hl, Data_3b_650f ; $64be
-	jr Label_3b_64c6 ; $64c1
-Label_3b_64c3:
+	jr .done ; $64c1
+.altTable:
 	ld hl, Data_3b_64fd ; $64c3
-Label_3b_64c6:
+.done:
 	pop af ; $64c6
 	pop bc ; $64c7
 	pop de ; $64c8

@@ -4629,14 +4629,14 @@ BuildProgressEntryEarnedTable:
 	ld hl, wCharVelX ; $7499
 	ld c, $25 ; $749c
 	xor a, a ; $749e
-Label_1e_749f:
+.entryLoop:
 	push af ; $749f
 	call TestProgressEntryFlag ; $74a0
 	ld [hl+], a ; $74a3
 	pop af ; $74a4
 	inc a ; $74a5
 	dec c ; $74a6
-	jr nz, Label_1e_749f ; $74a7
+	jr nz, .entryLoop ; $74a7
 	ret ; $74a9
 GetProgressEntryEarned:
 	push hl ; $74aa

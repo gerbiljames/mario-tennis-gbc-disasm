@@ -1184,7 +1184,7 @@ SceneSharedData_27:
 	script_set_anim ACTOR_PARTNER, $03 ; $58e8
 	script_wait_idle ACTOR_PARTNER ; $58ef
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $58f4
-	jp z, Label_27_5a25 ; $58f7
+	jp z, CeremonyDoublesReaction_27 ; $58f7
 	script_face_toward ACTOR_PARTNER, ACTOR_PLAYER ; $58fa
 	script_set_anim ACTOR_PARTNER, $02 ; $5902
 	script_wait_idle ACTOR_PARTNER ; $5909
@@ -1234,8 +1234,8 @@ SceneSharedData_27:
 	script_wait_frames $14 ; $5a0f
 	script_set_anim ACTOR_PLAYER, $03 ; $5a16
 	script_wait_idle ACTOR_PLAYER ; $5a1d
-	jp Label_27_5b0c ; $5a22
-Label_27_5a25:
+	jp CeremonyDoublesReaction_27.continue ; $5a22
+CeremonyDoublesReaction_27:
 	script_set_anim ACTOR_PARTNER, $02 ; $5a25
 	script_wait_idle ACTOR_PARTNER ; $5a2c
 	script_face_toward ACTOR_PARTNER, ACTOR_PLAYER ; $5a31
@@ -1275,7 +1275,7 @@ Label_27_5a25:
 	script_wait_frames $14 ; $5af9
 	script_set_anim ACTOR_PLAYER, $03 ; $5b00
 	script_wait_idle ACTOR_PLAYER ; $5b07
-Label_27_5b0c:
+.continue:
 	script_wait_frames $14 ; $5b0c
 	script_facing_lock ACTOR_PLAYER, FACE_RIGHT ; $5b13
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $5b1a
@@ -1306,8 +1306,8 @@ Label_27_5b0c:
 	script_set_anim ACTOR_PARTNER, $03 ; $5bd6
 	script_wait_idle ACTOR_PARTNER ; $5bdd
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $5be2
-	jr z, Label_27_5be7 ; $5be5
-Label_27_5be7:
+	jr z, .variantB ; $5be5
+.variantB:
 	script_face_toward ACTOR_PARTNER, ACTOR_PLAYER ; $5be7
 	script_set_anim ACTOR_PLAYER, $03 ; $5bef
 	script_wait_idle ACTOR_PLAYER ; $5bf6

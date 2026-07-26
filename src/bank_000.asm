@@ -9736,17 +9736,17 @@ RunSoundChannelScript:
 NoiseNoteTable:
 	; $3836, 16 bytes (bytes:16)
 	db $00, $01, $11, $12, $14, $23, $07, $15, $17, $32, $33, $60, $61, $45, $53, $62 ; 0x00
-Label_00_3846:
+SndTriggerNoteBody:
 	xor a, a ; $3846
 	ldh [hSndRestFlag], a ; $3847
 	ld a, [wSndChannelType] ; $3849
 	cp a, $02 ; $384c
-	jr z, Label_00_3858 ; $384e
+	jr z, .checkPeriod ; $384e
 	ldh a, [hSndPeriodHi] ; $3850
 	and a, $7f ; $3852
 	jp z, SndSilenceChannel ; $3854
 	ret ; $3857
-Label_00_3858:
+.checkPeriod:
 	ldh a, [hSndPeriodHi] ; $3858
 	and a, $7f ; $385a
 	ret nz ; $385c
@@ -9791,7 +9791,7 @@ SndTriggerNote:
 	jr nz, .step4 ; $3894
 	ld a, b ; $3896
 	cp a, $1f ; $3897
-	jr z, Label_00_3846 ; $3899
+	jr z, SndTriggerNoteBody ; $3899
 	cp a, $10 ; $389b
 	jr nc, .step3 ; $389d
 	ld hl, NoiseNoteTable ; $389f
@@ -9811,7 +9811,7 @@ SndTriggerNote:
 	ld a, b ; $38b2
 	and a, $0f ; $38b3
 	cp a, $0c ; $38b5
-	jr nc, Label_00_3846 ; $38b7
+	jr nc, SndTriggerNoteBody ; $38b7
 	add a, a ; $38b9
 	ld e, a ; $38ba
 	ldh a, [hSndToneCtrl] ; $38bb
