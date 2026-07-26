@@ -38,11 +38,11 @@ StartDrillFromDefinition:
 	ld [wMatchPlayerChar], a ; $4045
 	ld a, [wMatchOpponentChar] ; $4048
 	cp a, $ff ; $404b
-	jr z, Label_0b_4055 ; $404d
+	jr z, .restore ; $404d
 	ld b, a ; $404f
 	ld c, $02 ; $4050
 	farcall InitCa00RecordFromCharId ; $4052
-Label_0b_4055:
+.restore:
 	pop bc ; $4055
 	ld hl, $0008 ; $4056
 	add hl, bc ; $4059
@@ -64,9 +64,9 @@ Label_0b_4055:
 	ld l, a ; $4072
 	ld a, h ; $4073
 	or a, l ; $4074
-	jr z, Label_0b_407a ; $4075
+	jr z, .done ; $4075
 	call JumpToHL ; $4077
-Label_0b_407a:
+.done:
 	ret ; $407a
 RecordDrillPointResultBits:
 	ld a, [wPointWinLoseFlag] ; $407b
@@ -390,10 +390,10 @@ RecordGateCrossOnServe:
 	inc b ; $424a
 	xor a, a ; $424b
 	scf ; $424c
-Label_0b_424d:
+.loop:
 	rla ; $424d
 	dec b ; $424e
-	jr nz, Label_0b_424d ; $424f
+	jr nz, .loop ; $424f
 	ld hl, $c2e5 ; $4251
 	or a, [hl] ; $4254
 	ld [hl], a ; $4255
@@ -404,11 +404,11 @@ CountDrillResultBitsSetAlt:
 	ld b, a ; $425b
 	xor a, a ; $425c
 	ld c, $08 ; $425d
-Label_0b_425f:
+.loop:
 	rr b ; $425f
 	adc a, $00 ; $4261
 	dec c ; $4263
-	jr nz, Label_0b_425f ; $4264
+	jr nz, .loop ; $4264
 	pop bc ; $4266
 	ret ; $4267
 CountDrillResultBitsThisGame:
@@ -418,12 +418,12 @@ CountDrillResultBitsThisGame:
 	inc c ; $426d
 	ld a, [$c2e5] ; $426e
 	ld b, a ; $4271
-Label_0b_4272:
+.loop:
 	ld a, $00 ; $4272
 	rr b ; $4274
 	adc a, $00 ; $4276
 	dec c ; $4278
-	jr nz, Label_0b_4272 ; $4279
+	jr nz, .loop ; $4279
 	or a, a ; $427b
 	pop bc ; $427c
 	ret ; $427d
@@ -642,104 +642,104 @@ SyncPointWinLoseFlagTask:
 	ret ; $4483
 	ld a, [wPointOutcome] ; $4484
 	cp a, $01 ; $4487
-	jr z, Label_0b_44ec ; $4489
+	jr z, .step4 ; $4489
 	cp a, $03 ; $448b
-	jr z, Label_0b_44ec ; $448d
+	jr z, .step4 ; $448d
 	cp a, $09 ; $448f
 	ld a, $01 ; $4491
-	jr z, Label_0b_44de ; $4493
+	jr z, .step2 ; $4493
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $4495
 	cp a, $01 ; $4498
-	jr nz, Label_0b_44af ; $449a
+	jr nz, .checkRallyLength ; $449a
 	ld hl, $c2f8 ; $449c
 	ld a, [wCurrentServingPlayer] ; $449f
 	add a, l ; $44a2
 	ld l, a ; $44a3
-	jr nc, Label_0b_44a7 ; $44a4
+	jr nc, .read ; $44a4
 	inc h ; $44a6
-Label_0b_44a7:
+.read:
 	ld a, [hl] ; $44a7
 	or a, a ; $44a8
-	jr nz, Label_0b_44af ; $44a9
+	jr nz, .checkRallyLength ; $44a9
 	ld a, $03 ; $44ab
-	jr Label_0b_44de ; $44ad
-Label_0b_44af:
+	jr .step2 ; $44ad
+.checkRallyLength:
 	ld a, [wRallyLength] ; $44af
 	cp a, $01 ; $44b2
-	jr nz, Label_0b_44c4 ; $44b4
+	jr nz, .checkPointOutcome ; $44b4
 	ld a, [wServiceAceFlag] ; $44b6
 	or a, a ; $44b9
-	jr z, Label_0b_44c0 ; $44ba
+	jr z, .step ; $44ba
 	ld a, $01 ; $44bc
-	jr Label_0b_44de ; $44be
-Label_0b_44c0:
+	jr .step2 ; $44be
+.step:
 	ld a, $02 ; $44c0
-	jr Label_0b_44de ; $44c2
-Label_0b_44c4:
+	jr .step2 ; $44c2
+.checkPointOutcome:
 	ld a, [wPointOutcome] ; $44c4
 	or a, a ; $44c7
-	jr nz, Label_0b_44ce ; $44c8
+	jr nz, .compare ; $44c8
 	ld a, $04 ; $44ca
-	jr Label_0b_44de ; $44cc
-Label_0b_44ce:
+	jr .step2 ; $44cc
+.compare:
 	cp a, $07 ; $44ce
 	ld a, $06 ; $44d0
-	jr z, Label_0b_44de ; $44d2
+	jr z, .step2 ; $44d2
 	cp a, $09 ; $44d4
 	ld a, $01 ; $44d6
-	jr z, Label_0b_44de ; $44d8
+	jr z, .step2 ; $44d8
 	ld a, $05 ; $44da
-	jr Label_0b_44de ; $44dc
-Label_0b_44de:
+	jr .step2 ; $44dc
+.step2:
 	ld b, a ; $44de
 	ld a, [wCurrentServingPlayer] ; $44df
 	or a, a ; $44e2
-	jr z, Label_0b_44e7 ; $44e3
+	jr z, .step3 ; $44e3
 	ld a, $06 ; $44e5
-Label_0b_44e7:
+.step3:
 	add a, b ; $44e7
 	ld [$c2e6], a ; $44e8
 	ret ; $44eb
-Label_0b_44ec:
+.step4:
 	ld a, $ff ; $44ec
 	ld [$c2e6], a ; $44ee
 	ret ; $44f1
 QueueDrillOutcomeMessage:
 	ld a, [wPointOutcome] ; $44f2
 	cp a, $01 ; $44f5
-	jr z, Label_0b_452e ; $44f7
+	jr z, .step3 ; $44f7
 	cp a, $03 ; $44f9
-	jr z, Label_0b_452e ; $44fb
+	jr z, .step3 ; $44fb
 	call CheckDrillTargetZoneMissed ; $44fd
 	or a, a ; $4500
-	jr nz, Label_0b_4507 ; $4501
+	jr nz, .checkRallyLength ; $4501
 	ld a, $10 ; $4503
-	jr Label_0b_452a ; $4505
-Label_0b_4507:
+	jr .store ; $4505
+.checkRallyLength:
 	ld a, [wRallyLength] ; $4507
 	cp a, $01 ; $450a
-	jr nz, Label_0b_451c ; $450c
+	jr nz, .checkPointOutcome ; $450c
 	ld a, [wServiceAceFlag] ; $450e
 	or a, a ; $4511
-	jr z, Label_0b_4518 ; $4512
+	jr z, .step ; $4512
 	ld a, $0d ; $4514
-	jr Label_0b_452a ; $4516
-Label_0b_4518:
+	jr .store ; $4516
+.step:
 	ld a, $0e ; $4518
-	jr Label_0b_452a ; $451a
-Label_0b_451c:
+	jr .store ; $451a
+.checkPointOutcome:
 	ld a, [wPointOutcome] ; $451c
 	or a, a ; $451f
-	jr nz, Label_0b_4526 ; $4520
+	jr nz, .step2 ; $4520
 	ld a, $10 ; $4522
-	jr Label_0b_452a ; $4524
-Label_0b_4526:
+	jr .store ; $4524
+.step2:
 	ld a, $10 ; $4526
-	jr Label_0b_452a ; $4528
-Label_0b_452a:
+	jr .store ; $4528
+.store:
 	ld [$c2e6], a ; $452a
 	ret ; $452d
-Label_0b_452e:
+.step3:
 	ld a, $ff ; $452e
 	ld [$c2e6], a ; $4530
 	ret ; $4533
@@ -1008,7 +1008,7 @@ RunTrainingDrillByID:
 	farcall InitMinigameMatchSettings ; $4706
 	pop af ; $4709
 	cp a, $24 ; $470a
-	jp z, Label_0b_479a.doublesDrill ; $470c
+	jp z, .doublesDrill ; $470c
 	cp a, $12 ; $470f
 	jr nc, .minigame ; $4711
 	ld l, a ; $4713
@@ -1057,7 +1057,7 @@ RunTrainingDrillByID:
 	ld [wPointWinLoseFlag], a ; $4764
 .checkMenuFlag:
 	test_flag FLAG_DRILL_FROM_MENU ; $4767
-	jr z, Label_0b_479a.finish ; $476a
+	jr z, .finish ; $476a
 	call DisableLCDSafely ; $476c
 	farcall ResetTextWindowState ; $476f
 	call ClearBGForDrillResult ; $4772
@@ -1075,9 +1075,9 @@ RunTrainingDrillByID:
 	ld hl, $015f ; $4792
 	add a, l ; $4795
 	ld l, a ; $4796
-	jr nc, Label_0b_479a ; $4797
+	jr nc, .step ; $4797
 	inc h ; $4799
-Label_0b_479a:
+.step:
 	ld a, $80 ; $479a
 	farcall ShowSpeakerDialogue ; $479c
 	ld c, $10 ; $479f
@@ -1089,7 +1089,7 @@ Label_0b_479a:
 	ret ; $47ad
 .doublesDrill:
 	call RunDoublesDrillMatch ; $47ae
-	jp RunTrainingDrillByID.afterMatch ; $47b1
+	jp .afterMatch ; $47b1
 DrillDefinitionPtrs:
 	; $47b4, 36 bytes (records:2)
 	dw ServiceMatch1Drill ; record 0
@@ -1136,13 +1136,13 @@ ClearBGForDrillResult:
 	ret ; $4822
 FillMemoryBC_0b:
 	ld e, a ; $4823
-Label_0b_4824:
+.loop:
 	ld [hl], e ; $4824
 	inc hl ; $4825
 	dec bc ; $4826
 	ld a, c ; $4827
 	or a, b ; $4828
-	jr nz, Label_0b_4824 ; $4829
+	jr nz, .loop ; $4829
 	ret ; $482b
 ServiceMatch1Drill:
 	; $482c, 16 bytes (drill_definition)
@@ -1181,7 +1181,7 @@ ServiceMatch1Hook_PointEnd:
 	bit 0, a ; $486c
 	ret nz ; $486e
 	cp a, $08 ; $486f
-	jr z, Label_0b_4880 ; $4871
+	jr z, .step ; $4871
 	ld hl, $c2e8 ; $4873
 	ld a, [hl+] ; $4876
 	ld b, [hl] ; $4877
@@ -1190,20 +1190,20 @@ ServiceMatch1Hook_PointEnd:
 	ld a, $80 ; $487a
 	ld [wMatchAbortFlag], a ; $487c
 	ret ; $487f
-Label_0b_4880:
+.step:
 	ld hl, $c2e9 ; $4880
 	ld a, [hl-] ; $4883
 	sub a, [hl] ; $4884
-	jr z, Label_0b_488f ; $4885
-	jr nc, Label_0b_4894 ; $4887
+	jr z, .clearPointWinLoseFlag ; $4885
+	jr nc, .step2 ; $4887
 	ld a, $01 ; $4889
 	ld [wPointWinLoseFlag], a ; $488b
 	ret ; $488e
-Label_0b_488f:
+.clearPointWinLoseFlag:
 	xor a, a ; $488f
 	ld [wPointWinLoseFlag], a ; $4890
 	ret ; $4893
-Label_0b_4894:
+.step2:
 	ld a, $ff ; $4894
 	ld [wPointWinLoseFlag], a ; $4896
 	ret ; $4899
@@ -1223,10 +1223,10 @@ ServiceMatch1HandlePointEnd:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $48ad
 	bit 0, a ; $48b0
 	ld a, b ; $48b2
-	jr z, Label_0b_48b7 ; $48b3
+	jr z, .store ; $48b3
 	cpl ; $48b5
 	inc a ; $48b6
-Label_0b_48b7:
+.store:
 	ld [wPointWinLoseFlag], a ; $48b7
 	call RecordDrillPointResultBits ; $48ba
 	ld a, $00 ; $48bd
@@ -1421,9 +1421,9 @@ ServiceMatch2Hook_PointStart:
 	ld hl, Table_0b_4a23 ; $4a0e
 	add a, l ; $4a11
 	ld l, a ; $4a12
-	jr nc, Label_0b_4a16 ; $4a13
+	jr nc, .read ; $4a13
 	inc h ; $4a15
-Label_0b_4a16:
+.read:
 	ld a, [hl] ; $4a16
 	ld [$c7b5], a ; $4a17
 	xor a, a ; $4a1a
@@ -1441,7 +1441,7 @@ ServiceMatch2Hook_PointEnd:
 	bit 0, a ; $4a30
 	ret nz ; $4a32
 	cp a, $08 ; $4a33
-	jr z, Label_0b_4a44 ; $4a35
+	jr z, .step ; $4a35
 	ld hl, $c2e8 ; $4a37
 	ld a, [hl+] ; $4a3a
 	ld b, [hl] ; $4a3b
@@ -1450,20 +1450,20 @@ ServiceMatch2Hook_PointEnd:
 	ld a, $80 ; $4a3e
 	ld [wMatchAbortFlag], a ; $4a40
 	ret ; $4a43
-Label_0b_4a44:
+.step:
 	ld hl, $c2e9 ; $4a44
 	ld a, [hl-] ; $4a47
 	sub a, [hl] ; $4a48
-	jr z, Label_0b_4a53 ; $4a49
-	jr nc, Label_0b_4a58 ; $4a4b
+	jr z, .clearPointWinLoseFlag ; $4a49
+	jr nc, .step2 ; $4a4b
 	ld a, $01 ; $4a4d
 	ld [wPointWinLoseFlag], a ; $4a4f
 	ret ; $4a52
-Label_0b_4a53:
+.clearPointWinLoseFlag:
 	xor a, a ; $4a53
 	ld [wPointWinLoseFlag], a ; $4a54
 	ret ; $4a57
-Label_0b_4a58:
+.step2:
 	ld a, $ff ; $4a58
 	ld [wPointWinLoseFlag], a ; $4a5a
 	ret ; $4a5d
@@ -1503,10 +1503,10 @@ ServiceMatch2HandlePointEnd:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $4ab3
 	bit 0, a ; $4ab6
 	ld a, b ; $4ab8
-	jr z, Label_0b_4abd ; $4ab9
+	jr z, .store ; $4ab9
 	cpl ; $4abb
 	inc a ; $4abc
-Label_0b_4abd:
+.store:
 	ld [wPointWinLoseFlag], a ; $4abd
 	call RecordDrillPointResultBits ; $4ac0
 	ld a, $00 ; $4ac3
@@ -1520,14 +1520,14 @@ Label_0b_4abd:
 	ld a, [wCurrentServingPlayer] ; $4ad9
 	add a, l ; $4adc
 	ld l, a ; $4add
-	jr nc, Label_0b_4ae1 ; $4ade
+	jr nc, .read ; $4ade
 	inc h ; $4ae0
-Label_0b_4ae1:
+.read:
 	ld a, [hl] ; $4ae1
 	or a, a ; $4ae2
-	jr z, Label_0b_4ae8 ; $4ae3
+	jr z, .serviceMatch2AwardPointToSide ; $4ae3
 	farcall UpdatePointStats ; $4ae5
-Label_0b_4ae8:
+.serviceMatch2AwardPointToSide:
 	call ServiceMatch2AwardPointToSide ; $4ae8
 	ld a, [wPlayer1PointsWon] ; $4aeb
 	ld b, $01 ; $4aee
@@ -1551,14 +1551,14 @@ ServiceMatch2AwardPointToSide:
 	xor a, $01 ; $4b13
 	add a, b ; $4b15
 	bit 0, a ; $4b16
-	jr nz, Label_0b_4b25 ; $4b18
+	jr nz, .clearServeFaultFlag ; $4b18
 	ld hl, wPlayer2PointsWon ; $4b1a
 	bit 1, a ; $4b1d
-	jr z, Label_0b_4b24 ; $4b1f
+	jr z, .bump ; $4b1f
 	ld hl, wPlayer1PointsWon ; $4b21
-Label_0b_4b24:
+.bump:
 	inc [hl] ; $4b24
-Label_0b_4b25:
+.clearServeFaultFlag:
 	xor a, a ; $4b25
 	ld [wServeFaultFlag], a ; $4b26
 	ld hl, wTotalPointsScoredInCurrentGame ; $4b29
@@ -1751,24 +1751,24 @@ ServiceMatch3Hook_PointEnd:
 	sub a, b ; $4c61
 	ld b, a ; $4c62
 	bit 7, a ; $4c63
-	jr z, Label_0b_4c69 ; $4c65
+	jr z, .compare ; $4c65
 	cpl ; $4c67
 	inc a ; $4c68
-Label_0b_4c69:
+.compare:
 	cp a, $02 ; $4c69
-	jr c, Label_0b_4c80 ; $4c6b
+	jr c, .checkTotalPointsScoredInCurrentGame ; $4c6b
 	xor a, a ; $4c6d
 	rl b ; $4c6e
 	rl a ; $4c70
 	or a, a ; $4c72
-	jr nz, Label_0b_4c77 ; $4c73
+	jr nz, .store ; $4c73
 	ld a, $ff ; $4c75
-Label_0b_4c77:
+.store:
 	ld [wPointWinLoseFlag], a ; $4c77
 	ld a, $80 ; $4c7a
 	ld [wMatchAbortFlag], a ; $4c7c
 	ret ; $4c7f
-Label_0b_4c80:
+.checkTotalPointsScoredInCurrentGame:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $4c80
 	cp a, $08 ; $4c83
 	ret c ; $4c85
@@ -1791,10 +1791,10 @@ ServiceMatch3HandlePointEnd:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $4c9f
 	bit 0, a ; $4ca2
 	ld a, b ; $4ca4
-	jr z, Label_0b_4ca9 ; $4ca5
+	jr z, .store ; $4ca5
 	cpl ; $4ca7
 	inc a ; $4ca8
-Label_0b_4ca9:
+.store:
 	ld [wPointWinLoseFlag], a ; $4ca9
 	call RecordDrillPointResultBits ; $4cac
 	ld a, $00 ; $4caf
@@ -1832,14 +1832,14 @@ ServiceMatch3AwardPointToSide:
 	xor a, $01 ; $4cfc
 	add a, b ; $4cfe
 	bit 0, a ; $4cff
-	jr nz, Label_0b_4d0e ; $4d01
+	jr nz, .clearServeFaultFlag ; $4d01
 	ld hl, wPlayer2PointsWon ; $4d03
 	bit 1, a ; $4d06
-	jr z, Label_0b_4d0d ; $4d08
+	jr z, .bump ; $4d08
 	ld hl, wPlayer1PointsWon ; $4d0a
-Label_0b_4d0d:
+.bump:
 	inc [hl] ; $4d0d
-Label_0b_4d0e:
+.clearServeFaultFlag:
 	xor a, a ; $4d0e
 	ld [wServeFaultFlag], a ; $4d0f
 	ld hl, wTotalPointsScoredInCurrentGame ; $4d12
@@ -2031,28 +2031,28 @@ ServicePractice1EvaluateResult:
 	sub a, b ; $4e45
 	ld b, a ; $4e46
 	cp a, $04 ; $4e47
-	jr nz, Label_0b_4e52 ; $4e49
+	jr nz, .checkCharacter1DoubleFaults ; $4e49
 	ld a, $01 ; $4e4b
 	ld [$c2e3], a ; $4e4d
-	jr Label_0b_4e6a ; $4e50
-Label_0b_4e52:
+	jr .step2 ; $4e50
+.checkCharacter1DoubleFaults:
 	ld a, [wCharacter1DoubleFaults] ; $4e52
 	or a, a ; $4e55
-	jr z, Label_0b_4e5f ; $4e56
+	jr z, .step ; $4e56
 	ld a, $02 ; $4e58
 	ld [$c2e3], a ; $4e5a
-	jr Label_0b_4e6a ; $4e5d
-Label_0b_4e5f:
+	jr .step2 ; $4e5d
+.step:
 	ld a, b ; $4e5f
 	or a, a ; $4e60
-	jr z, Label_0b_4e6d ; $4e61
+	jr z, .step3 ; $4e61
 	ld a, $03 ; $4e63
 	ld [$c2e3], a ; $4e65
-	jr Label_0b_4e6a ; $4e68
-Label_0b_4e6a:
+	jr .step2 ; $4e68
+.step2:
 	ld a, $ff ; $4e6a
 	ret ; $4e6c
-Label_0b_4e6d:
+.step3:
 	xor a, a ; $4e6d
 	ld [$c2e3], a ; $4e6e
 	ld a, $01 ; $4e71
@@ -2076,12 +2076,12 @@ ServicePractice1Hook_Bounce:
 ServicePractice1Hook_BallHit:
 	ld a, [wRallyLength] ; $4e8e
 	cp a, $02 ; $4e91
-	jr c, Label_0b_4e9f ; $4e93
+	jr c, .done ; $4e93
 	ld a, $01 ; $4e95
 	ld [$c2e1], a ; $4e97
 	call ResetActiveCharState ; $4e9a
 	sound $5f ; $4e9d
-Label_0b_4e9f:
+.done:
 	ret ; $4e9f
 DrillPositions_0b_4ea0:
 	; $4ea0, 34 bytes (records:4)
@@ -2136,23 +2136,23 @@ ServicePractice1HandlePointEnd:
 ServicePractice1QueueOutcomeMessage:
 	ld a, [wPointOutcome] ; $4f22
 	cp a, $01 ; $4f25
-	jp z, Label_0b_4f62 ; $4f27
+	jp z, .step4 ; $4f27
 	cp a, $03 ; $4f2a
-	jp z, Label_0b_4f62 ; $4f2c
+	jp z, .step4 ; $4f2c
 	ld a, [wPointOutcome] ; $4f2f
 	cp a, $02 ; $4f32
-	jr z, Label_0b_4f4c ; $4f34
+	jr z, .step ; $4f34
 	ld a, $10 ; $4f36
 	ld b, $00 ; $4f38
 	call QueueDrillResultMessage ; $4f3a
 	call CheckDrillTargetZoneMissed ; $4f3d
 	or a, a ; $4f40
-	jr z, Label_0b_4f5f ; $4f41
+	jr z, .step3 ; $4f41
 	ld a, $0d ; $4f43
 	ld b, $00 ; $4f45
 	call QueueDrillResultMessage ; $4f47
-	jr Label_0b_4f58 ; $4f4a
-Label_0b_4f4c:
+	jr .step2 ; $4f4a
+.step:
 	ld a, $0e ; $4f4c
 	ld b, $00 ; $4f4e
 	call QueueDrillResultMessage ; $4f50
@@ -2160,15 +2160,15 @@ Label_0b_4f4c:
 	ret ; $4f55
 	db $18 ; $4f56
 	db $07 ; $4f57
-Label_0b_4f58:
+.step2:
 	ld hl, $c2e7 ; $4f58
 	inc [hl] ; $4f5b
 	ld a, $01 ; $4f5c
 	ret ; $4f5e
-Label_0b_4f5f:
+.step3:
 	ld a, $ff ; $4f5f
 	ret ; $4f61
-Label_0b_4f62:
+.step4:
 	ld a, $ff ; $4f62
 	ld [$c2e6], a ; $4f64
 	xor a, a ; $4f67
@@ -2228,55 +2228,55 @@ ServicePractice2Hook_PointEnd:
 ServicePractice2EvaluateResult:
 	ld a, [wPlayer1PointsWon] ; $4fcf
 	or a, a ; $4fd2
-	jr nz, Label_0b_4fdc ; $4fd3
+	jr nz, .checkCharacter1DoubleFaults ; $4fd3
 	ld a, $01 ; $4fd5
 	ld [$c2e3], a ; $4fd7
-	jr Label_0b_5027 ; $4fda
-Label_0b_4fdc:
+	jr .step4 ; $4fda
+.checkCharacter1DoubleFaults:
 	ld a, [wCharacter1DoubleFaults] ; $4fdc
 	or a, a ; $4fdf
-	jr z, Label_0b_4fe9 ; $4fe0
+	jr z, .countDrillResultBitsSet ; $4fe0
 	ld a, $02 ; $4fe2
 	ld [$c2e3], a ; $4fe4
-	jr Label_0b_5027 ; $4fe7
-Label_0b_4fe9:
+	jr .step4 ; $4fe7
+.countDrillResultBitsSet:
 	call CountDrillResultBitsSet ; $4fe9
 	or a, a ; $4fec
-	jr z, Label_0b_4ff6 ; $4fed
+	jr z, .step ; $4fed
 	ld a, $03 ; $4fef
 	ld [$c2e3], a ; $4ff1
-	jr Label_0b_5027 ; $4ff4
-Label_0b_4ff6:
+	jr .step4 ; $4ff4
+.step:
 	ld a, [$c2e9] ; $4ff6
 	or a, a ; $4ff9
-	jr z, Label_0b_5016 ; $4ffa
+	jr z, .step3 ; $4ffa
 	ld a, [$c2e8] ; $4ffc
 	or a, a ; $4fff
-	jr z, Label_0b_5009 ; $5000
+	jr z, .step2 ; $5000
 	ld a, $04 ; $5002
 	ld [$c2e3], a ; $5004
-	jr Label_0b_5027 ; $5007
-Label_0b_5009:
+	jr .step4 ; $5007
+.step2:
 	ld b, $06 ; $5009
 	ld a, [wStoryModeMainCharacterLeftHanded] ; $500b
 	cpl ; $500e
 	inc a ; $500f
 	add a, b ; $5010
 	ld [$c2e3], a ; $5011
-	jr Label_0b_5027 ; $5014
-Label_0b_5016:
+	jr .step4 ; $5014
+.step3:
 	ld a, [$c2e8] ; $5016
 	or a, a ; $5019
-	jr z, Label_0b_502a ; $501a
+	jr z, .step5 ; $501a
 	ld b, $05 ; $501c
 	ld a, [wStoryModeMainCharacterLeftHanded] ; $501e
 	add a, b ; $5021
 	ld [$c2e3], a ; $5022
-	jr Label_0b_5027 ; $5025
-Label_0b_5027:
+	jr .step4 ; $5025
+.step4:
 	ld a, $ff ; $5027
 	ret ; $5029
-Label_0b_502a:
+.step5:
 	xor a, a ; $502a
 	ld [$c2e3], a ; $502b
 	ld a, $01 ; $502e
@@ -2303,11 +2303,11 @@ ServicePractice2Hook_Bounce:
 ServicePractice2Hook_BallHit:
 	ld a, [wRallyLength] ; $5050
 	cp a, $02 ; $5053
-	jr c, Label_0b_505f ; $5055
+	jr c, .done ; $5055
 	ld a, $01 ; $5057
 	ld [$c2e1], a ; $5059
 	call ResetActiveCharState ; $505c
-Label_0b_505f:
+.done:
 	ret ; $505f
 DrillPositions_0b_5060:
 	; $5060, 34 bytes (records:4)
@@ -2335,9 +2335,9 @@ ServicePractice2HandlePointEnd:
 	ld [$c2ed], a ; $509e
 	ld a, [$c2e6] ; $50a1
 	or a, a ; $50a4
-	jr nz, Label_0b_50aa ; $50a5
+	jr nz, .showDrillMessageByIndex ; $50a5
 	call QueueDrillOutcomeMessage ; $50a7
-Label_0b_50aa:
+.showDrillMessageByIndex:
 	call ShowDrillMessageByIndex ; $50aa
 	farcall UpdatePointStats ; $50ad
 	farcall AwardPoint ; $50b0
@@ -2370,41 +2370,41 @@ ServicePractice2SetupShotTarget:
 	ld hl, Table_0b_5130 ; $50f1
 	add a, l ; $50f4
 	ld l, a ; $50f5
-	jr nc, Label_0b_50f9 ; $50f6
+	jr nc, .checkStoryModeMainCharacterLeftHanded ; $50f6
 	inc h ; $50f8
-Label_0b_50f9:
+.checkStoryModeMainCharacterLeftHanded:
 	ld a, [wStoryModeMainCharacterLeftHanded] ; $50f9
 	add a, l ; $50fc
 	ld l, a ; $50fd
-	jr nc, Label_0b_5101 ; $50fe
+	jr nc, .read ; $50fe
 	inc h ; $5100
-Label_0b_5101:
+.read:
 	ld b, [hl] ; $5101
 	ld a, [wCurrentShotType] ; $5102
 	ld [$c2ea], a ; $5105
 	cp a, b ; $5108
-	jr nz, Label_0b_5125 ; $5109
+	jr nz, .checkTotalPointsScoredInCurrentGame ; $5109
 	ld a, [wTotalPointsScoredInCurrentGame] ; $510b
 	add a, a ; $510e
 	ld hl, $5135 ; $510f
 	add a, l ; $5112
 	ld l, a ; $5113
-	jr nc, Label_0b_5117 ; $5114
+	jr nc, .checkStoryModeMainCharacterLeftHanded2 ; $5114
 	inc h ; $5116
-Label_0b_5117:
+.checkStoryModeMainCharacterLeftHanded2:
 	ld a, [wStoryModeMainCharacterLeftHanded] ; $5117
 	add a, a ; $511a
 	add a, l ; $511b
 	ld l, a ; $511c
-	jr nc, Label_0b_5120 ; $511d
+	jr nc, .readB ; $511d
 	inc h ; $511f
-Label_0b_5120:
+.readB:
 	ld a, [hl+] ; $5120
 	ld h, [hl] ; $5121
 	ld l, a ; $5122
 	dec [hl] ; $5123
 	ret ; $5124
-Label_0b_5125:
+.checkTotalPointsScoredInCurrentGame:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $5125
 	and a, $01 ; $5128
 	add a, $11 ; $512a
@@ -2416,17 +2416,17 @@ Table_0b_5130:
 ServicePractice2QueueOutcomeMessage:
 	ld a, [wPointOutcome] ; $513f
 	cp a, $01 ; $5142
-	jp z, Label_0b_51c1 ; $5144
+	jp z, .step4 ; $5144
 	cp a, $03 ; $5147
-	jp z, Label_0b_51c1 ; $5149
+	jp z, .step4 ; $5149
 	ld a, [wPointOutcome] ; $514c
 	cp a, $02 ; $514f
-	jr nz, Label_0b_515c ; $5151
+	jr nz, .step ; $5151
 	ld a, $0e ; $5153
 	ld b, $00 ; $5155
 	call QueueDrillResultMessage ; $5157
-	jr Label_0b_51be ; $515a
-Label_0b_515c:
+	jr .step3 ; $515a
+.step:
 	ld a, $11 ; $515c
 	ld b, $00 ; $515e
 	call QueueDrillResultMessage ; $5160
@@ -2445,44 +2445,44 @@ Label_0b_515c:
 	ld hl, DrillShotTable_0b_51c8 ; $517c
 	add a, l ; $517f
 	ld l, a ; $5180
-	jr nc, Label_0b_5184 ; $5181
+	jr nc, .checkTotalPointsScoredInCurrentGame ; $5181
 	inc h ; $5183
-Label_0b_5184:
+.checkTotalPointsScoredInCurrentGame:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $5184
 	add a, l ; $5187
 	ld l, a ; $5188
-	jr nc, Label_0b_518c ; $5189
+	jr nc, .read ; $5189
 	inc h ; $518b
-Label_0b_518c:
+.read:
 	ld b, [hl] ; $518c
 	ld a, [$c2ea] ; $518d
 	cp a, b ; $5190
-	jr nz, Label_0b_51be ; $5191
+	jr nz, .step3 ; $5191
 	ld a, $10 ; $5193
 	ld b, $00 ; $5195
 	call QueueDrillResultMessage ; $5197
 	call CheckDrillTargetZoneMissed ; $519a
 	or a, a ; $519d
-	jr z, Label_0b_51be ; $519e
+	jr z, .step3 ; $519e
 	ld a, $0d ; $51a0
 	ld b, $00 ; $51a2
 	call QueueDrillResultMessage ; $51a4
 	ld a, [wPointOutcome] ; $51a7
 	cp a, $06 ; $51aa
-	jr z, Label_0b_51b7 ; $51ac
+	jr z, .step2 ; $51ac
 	ld a, $0e ; $51ae
 	ld b, $00 ; $51b0
 	call QueueDrillResultMessage ; $51b2
-	jr Label_0b_51be ; $51b5
-Label_0b_51b7:
+	jr .step3 ; $51b5
+.step2:
 	ld hl, $c2e7 ; $51b7
 	inc [hl] ; $51ba
 	ld a, $01 ; $51bb
 	ret ; $51bd
-Label_0b_51be:
+.step3:
 	ld a, $ff ; $51be
 	ret ; $51c0
-Label_0b_51c1:
+.step4:
 	ld a, $ff ; $51c1
 	ld [$c2e6], a ; $51c3
 	xor a, a ; $51c6
@@ -2519,9 +2519,9 @@ ServicePractice3Hook_PerFrame:
 	call UpdateDrillAbortCountdown ; $51fe
 	ld a, [wRallyLength] ; $5201
 	cp a, $01 ; $5204
-	jr nz, Label_0b_520b ; $5206
+	jr nz, .done ; $5206
 	call RecordGateCrossOnServe ; $5208
-Label_0b_520b:
+.done:
 	ret ; $520b
 ServicePractice3Hook_Draw:
 	call QueueDrillMarker1_0b ; $520c
@@ -2563,42 +2563,42 @@ ServicePractice3EvaluateResult:
 	ld c, a ; $5258
 	ld a, [$c2e7] ; $5259
 	or a, a ; $525c
-	jr nz, Label_0b_5266 ; $525d
+	jr nz, .checkCharacter1DoubleFaults ; $525d
 	ld a, $01 ; $525f
 	ld [$c2e3], a ; $5261
-	jr Label_0b_529b ; $5264
-Label_0b_5266:
+	jr .step2 ; $5264
+.checkCharacter1DoubleFaults:
 	ld a, [wCharacter1DoubleFaults] ; $5266
 	or a, a ; $5269
-	jr z, Label_0b_5273 ; $526a
+	jr z, .countDrillResultBitsSet ; $526a
 	ld a, $02 ; $526c
 	ld [$c2e3], a ; $526e
-	jr Label_0b_529b ; $5271
-Label_0b_5273:
+	jr .step2 ; $5271
+.countDrillResultBitsSet:
 	call CountDrillResultBitsSet ; $5273
 	or a, a ; $5276
-	jr z, Label_0b_5280 ; $5277
+	jr z, .step ; $5277
 	ld a, $03 ; $5279
 	ld [$c2e3], a ; $527b
-	jr Label_0b_529b ; $527e
-Label_0b_5280:
+	jr .step2 ; $527e
+.step:
 	ld a, [$c2e8] ; $5280
 	or a, a ; $5283
-	jr z, Label_0b_528d ; $5284
+	jr z, .countDrillResultBitsSetAlt ; $5284
 	ld a, $04 ; $5286
 	ld [$c2e3], a ; $5288
-	jr Label_0b_529b ; $528b
-Label_0b_528d:
+	jr .step2 ; $528b
+.countDrillResultBitsSetAlt:
 	call CountDrillResultBitsSetAlt ; $528d
 	cp a, $04 ; $5290
-	jr z, Label_0b_529e ; $5292
+	jr z, .step3 ; $5292
 	ld a, $05 ; $5294
 	ld [$c2e3], a ; $5296
-	jr Label_0b_529b ; $5299
-Label_0b_529b:
+	jr .step2 ; $5299
+.step2:
 	ld a, $ff ; $529b
 	ret ; $529d
-Label_0b_529e:
+.step3:
 	xor a, a ; $529e
 	ld [$c2e3], a ; $529f
 	ld a, $01 ; $52a2
@@ -2615,11 +2615,11 @@ ServicePractice3Hook_BallHit:
 	call ServicePractice3SetupShotTarget ; $52b0
 	ld a, [wRallyLength] ; $52b3
 	cp a, $02 ; $52b6
-	jr c, Label_0b_52c2 ; $52b8
+	jr c, .done ; $52b8
 	ld a, $01 ; $52ba
 	ld [$c2e1], a ; $52bc
 	call ResetActiveCharState ; $52bf
-Label_0b_52c2:
+.done:
 	ret ; $52c2
 ServicePractice3SetupShotTarget:
 	ld a, [wRallyLength] ; $52c3
@@ -2630,11 +2630,11 @@ ServicePractice3SetupShotTarget:
 	ret nc ; $52ce
 	ld a, [wSpecialShotFlag] ; $52cf
 	or a, a ; $52d2
-	jr nz, Label_0b_52db ; $52d3
+	jr nz, .step ; $52d3
 	ld a, $13 ; $52d5
 	ld [$c2e6], a ; $52d7
 	ret ; $52da
-Label_0b_52db:
+.step:
 	ld hl, $c2e8 ; $52db
 	dec [hl] ; $52de
 	ret ; $52df
@@ -2694,49 +2694,49 @@ ServicePractice3HandlePointEnd:
 ServicePractice3QueueOutcomeMessage:
 	ld a, [wPointOutcome] ; $537b
 	cp a, $01 ; $537e
-	jp z, Label_0b_53d6 ; $5380
+	jp z, .step4 ; $5380
 	cp a, $03 ; $5383
-	jp z, Label_0b_53d6 ; $5385
+	jp z, .step4 ; $5385
 	ld a, [wPointOutcome] ; $5388
 	cp a, $02 ; $538b
-	jr z, Label_0b_53c3 ; $538d
+	jr z, .step ; $538d
 	ld a, $13 ; $538f
 	ld b, $00 ; $5391
 	call QueueDrillResultMessage ; $5393
 	ld a, [wSpecialShotFlag] ; $5396
 	or a, a ; $5399
-	jr z, Label_0b_53d3 ; $539a
+	jr z, .step3 ; $539a
 	ld a, $0f ; $539c
 	ld b, $00 ; $539e
 	call QueueDrillResultMessage ; $53a0
 	call CountDrillResultBitsThisGame ; $53a3
-	jr z, Label_0b_53d3 ; $53a6
+	jr z, .step3 ; $53a6
 	ld a, $10 ; $53a8
 	ld b, $00 ; $53aa
 	call QueueDrillResultMessage ; $53ac
 	call CheckDrillTargetZoneMissed ; $53af
 	or a, a ; $53b2
-	jr z, Label_0b_53d3 ; $53b3
+	jr z, .step3 ; $53b3
 	ld a, $0d ; $53b5
 	ld b, $00 ; $53b7
 	call QueueDrillResultMessage ; $53b9
 	ld a, [wPointOutcome] ; $53bc
 	cp a, $06 ; $53bf
-	jr z, Label_0b_53cc ; $53c1
-Label_0b_53c3:
+	jr z, .step2 ; $53c1
+.step:
 	ld a, $0e ; $53c3
 	ld b, $00 ; $53c5
 	call QueueDrillResultMessage ; $53c7
-	jr Label_0b_53d3 ; $53ca
-Label_0b_53cc:
+	jr .step3 ; $53ca
+.step2:
 	ld hl, $c2e7 ; $53cc
 	inc [hl] ; $53cf
 	ld a, $01 ; $53d0
 	ret ; $53d2
-Label_0b_53d3:
+.step3:
 	ld a, $ff ; $53d3
 	ret ; $53d5
-Label_0b_53d6:
+.step4:
 	ld a, $ff ; $53d6
 	ld [$c2e6], a ; $53d8
 	xor a, a ; $53db
@@ -2811,10 +2811,10 @@ NetGameMatch1HandlePointEnd:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $545e
 	bit 0, a ; $5461
 	ld a, b ; $5463
-	jr z, Label_0b_5468 ; $5464
+	jr z, .store ; $5464
 	cpl ; $5466
 	inc a ; $5467
-Label_0b_5468:
+.store:
 	ld [wPointWinLoseFlag], a ; $5468
 	call RecordDrillPointResultBits ; $546b
 	call ShowQueuedDrillMessage ; $546e
@@ -2842,14 +2842,14 @@ NetGameMatch1AwardPointToSide:
 	xor a, $01 ; $549f
 	add a, b ; $54a1
 	bit 0, a ; $54a2
-	jr nz, Label_0b_54b1 ; $54a4
+	jr nz, .clearServeFaultFlag ; $54a4
 	ld hl, wPlayer2PointsWon ; $54a6
 	bit 1, a ; $54a9
-	jr z, Label_0b_54b0 ; $54ab
+	jr z, .bump ; $54ab
 	ld hl, wPlayer1PointsWon ; $54ad
-Label_0b_54b0:
+.bump:
 	inc [hl] ; $54b0
-Label_0b_54b1:
+.clearServeFaultFlag:
 	xor a, a ; $54b1
 	ld [wServeFaultFlag], a ; $54b2
 	ld hl, wTotalPointsScoredInCurrentGame ; $54b5
@@ -2860,15 +2860,15 @@ NetGameMatch1DecideWinner:
 	ld b, a ; $54bd
 	ld a, [wPlayer2PointsWon] ; $54be
 	sub a, b ; $54c1
-	jr nc, Label_0b_54ca ; $54c2
+	jr nc, .compare ; $54c2
 	ld a, $01 ; $54c4
 	ld [wPointWinLoseFlag], a ; $54c6
 	ret ; $54c9
-Label_0b_54ca:
+.compare:
 	or a, a ; $54ca
-	jr z, Label_0b_54cf ; $54cb
+	jr z, .store ; $54cb
 	ld a, $ff ; $54cd
-Label_0b_54cf:
+.store:
 	ld [wPointWinLoseFlag], a ; $54cf
 	ret ; $54d2
 NetGameMatch1JudgeShot0:
@@ -3170,24 +3170,24 @@ NetGameMatch2Hook_PointEnd:
 	sub a, b ; $56ae
 	ld b, a ; $56af
 	bit 7, a ; $56b0
-	jr z, Label_0b_56b6 ; $56b2
+	jr z, .compare ; $56b2
 	cpl ; $56b4
 	inc a ; $56b5
-Label_0b_56b6:
+.compare:
 	cp a, $02 ; $56b6
-	jr c, Label_0b_56cd ; $56b8
+	jr c, .checkTotalPointsScoredInCurrentGame ; $56b8
 	xor a, a ; $56ba
 	rl b ; $56bb
 	rl a ; $56bd
 	or a, a ; $56bf
-	jr nz, Label_0b_56c4 ; $56c0
+	jr nz, .store ; $56c0
 	ld a, $ff ; $56c2
-Label_0b_56c4:
+.store:
 	ld [wPointWinLoseFlag], a ; $56c4
 	ld a, $80 ; $56c7
 	ld [wMatchAbortFlag], a ; $56c9
 	ret ; $56cc
-Label_0b_56cd:
+.checkTotalPointsScoredInCurrentGame:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $56cd
 	cp a, $08 ; $56d0
 	ret nz ; $56d2
@@ -3212,10 +3212,10 @@ NetGameMatch2HandlePointEnd:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $56f1
 	bit 0, a ; $56f4
 	ld a, b ; $56f6
-	jr z, Label_0b_56fb ; $56f7
+	jr z, .store ; $56f7
 	cpl ; $56f9
 	inc a ; $56fa
-Label_0b_56fb:
+.store:
 	ld [wPointWinLoseFlag], a ; $56fb
 	call RecordDrillPointResultBits ; $56fe
 	call ShowQueuedDrillMessage ; $5701
@@ -3243,14 +3243,14 @@ NetGameMatch2AwardPointToSide:
 	xor a, $01 ; $5732
 	add a, b ; $5734
 	bit 0, a ; $5735
-	jr nz, Label_0b_5744 ; $5737
+	jr nz, .clearServeFaultFlag ; $5737
 	ld hl, wPlayer2PointsWon ; $5739
 	bit 1, a ; $573c
-	jr z, Label_0b_5743 ; $573e
+	jr z, .bump ; $573e
 	ld hl, wPlayer1PointsWon ; $5740
-Label_0b_5743:
+.bump:
 	inc [hl] ; $5743
-Label_0b_5744:
+.clearServeFaultFlag:
 	xor a, a ; $5744
 	ld [wServeFaultFlag], a ; $5745
 	ld hl, wTotalPointsScoredInCurrentGame ; $5748
@@ -3553,24 +3553,24 @@ NetGameMatch3Hook_PointEnd:
 	sub a, b ; $5921
 	ld b, a ; $5922
 	bit 7, a ; $5923
-	jr z, Label_0b_5929 ; $5925
+	jr z, .compare ; $5925
 	cpl ; $5927
 	inc a ; $5928
-Label_0b_5929:
+.compare:
 	cp a, $02 ; $5929
-	jr c, Label_0b_5940 ; $592b
+	jr c, .checkTotalPointsScoredInCurrentGame ; $592b
 	xor a, a ; $592d
 	rl b ; $592e
 	rl a ; $5930
 	or a, a ; $5932
-	jr nz, Label_0b_5937 ; $5933
+	jr nz, .store ; $5933
 	ld a, $ff ; $5935
-Label_0b_5937:
+.store:
 	ld [wPointWinLoseFlag], a ; $5937
 	ld a, $80 ; $593a
 	ld [wMatchAbortFlag], a ; $593c
 	ret ; $593f
-Label_0b_5940:
+.checkTotalPointsScoredInCurrentGame:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $5940
 	cp a, $08 ; $5943
 	ret c ; $5945
@@ -3595,10 +3595,10 @@ NetGameMatch3HandlePointEnd:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $5961
 	bit 0, a ; $5964
 	ld a, b ; $5966
-	jr z, Label_0b_596b ; $5967
+	jr z, .store ; $5967
 	cpl ; $5969
 	inc a ; $596a
-Label_0b_596b:
+.store:
 	ld [wPointWinLoseFlag], a ; $596b
 	call RecordDrillPointResultBits ; $596e
 	call ShowQueuedDrillMessage ; $5971
@@ -3616,9 +3616,9 @@ Label_0b_596b:
 	ret ; $5993
 	ld a, [wPointOutcome] ; $5994
 	cp a, $01 ; $5997
-	jp z, Label_0b_5a48 ; $5999
+	jp z, .step5 ; $5999
 	cp a, $03 ; $599c
-	jp z, Label_0b_5a48 ; $599e
+	jp z, .step5 ; $599e
 	ld a, [wRallyLength] ; $59a1
 	dec a ; $59a4
 	and a, $03 ; $59a5
@@ -3626,29 +3626,29 @@ Label_0b_596b:
 	ld hl, $59b4 ; $59a8
 	add a, l ; $59ab
 	ld l, a ; $59ac
-	jr nc, Label_0b_59b0 ; $59ad
+	jr nc, .read ; $59ad
 	inc h ; $59af
-Label_0b_59b0:
+.read:
 	ld a, [hl+] ; $59b0
 	ld h, [hl] ; $59b1
 	ld l, a ; $59b2
 	jp hl ; $59b3
-	dw Label_0b_59bc ; $59b4 jumptable
-	dw Label_0b_59fc ; $59b6 jumptable
-	dw Label_0b_59d4 ; $59b8 jumptable
-	dw Label_0b_5a20 ; $59ba jumptable
-Label_0b_59bc:
+	dw NetGameMatch3HandlePointEnd.step ; $59b4 jumptable
+	dw NetGameMatch3HandlePointEnd.step3 ; $59b6 jumptable
+	dw NetGameMatch3HandlePointEnd.step2 ; $59b8 jumptable
+	dw NetGameMatch3HandlePointEnd.step4 ; $59ba jumptable
+.step:
 	ld a, $17 ; $59bc
 	ld b, $0d ; $59be
 	call QueueDrillResultMessage ; $59c0
 	ld a, [wPointOutcome] ; $59c3
 	cp a, $06 ; $59c6
-	jr z, Label_0b_5a36 ; $59c8
+	jr z, .checkTotalPointsScoredInCurrentGame ; $59c8
 	ld a, $19 ; $59ca
 	ld b, $0d ; $59cc
 	call QueueDrillResultMessage ; $59ce
-	jp Label_0b_5a40 ; $59d1
-Label_0b_59d4:
+	jp .checkTotalPointsScoredInCurrentGame2 ; $59d1
+.step2:
 	ld a, $1b ; $59d4
 	ld b, $0d ; $59d6
 	call QueueDrillResultMessage ; $59d8
@@ -3657,62 +3657,62 @@ Label_0b_59d4:
 	ld hl, $c2ec ; $59e0
 	add a, l ; $59e3
 	ld l, a ; $59e4
-	jr nc, Label_0b_59e8 ; $59e5
+	jr nc, .readB ; $59e5
 	inc h ; $59e7
-Label_0b_59e8:
+.readB:
 	ld a, [hl] ; $59e8
 	or a, a ; $59e9
-	jr z, Label_0b_5a40 ; $59ea
+	jr z, .checkTotalPointsScoredInCurrentGame2 ; $59ea
 	ld a, $16 ; $59ec
 	ld b, $0d ; $59ee
 	call QueueDrillResultMessage ; $59f0
 	ld a, [wPointOutcome] ; $59f3
 	cp a, $06 ; $59f6
-	jr z, Label_0b_5a36 ; $59f8
-	jr Label_0b_5a40 ; $59fa
-Label_0b_59fc:
+	jr z, .checkTotalPointsScoredInCurrentGame ; $59f8
+	jr .checkTotalPointsScoredInCurrentGame2 ; $59fa
+.step3:
 	ld a, $1d ; $59fc
 	ld b, $0d ; $59fe
 	call QueueDrillResultMessage ; $5a00
 	ld a, [wPointOutcome] ; $5a03
 	cp a, $06 ; $5a06
-	jr z, Label_0b_5a40 ; $5a08
+	jr z, .checkTotalPointsScoredInCurrentGame2 ; $5a08
 	push af ; $5a0a
 	ld a, $1e ; $5a0b
 	ld b, $0d ; $5a0d
 	call QueueDrillResultMessage ; $5a0f
 	pop af ; $5a12
 	cp a, $07 ; $5a13
-	jr z, Label_0b_5a36 ; $5a15
+	jr z, .checkTotalPointsScoredInCurrentGame ; $5a15
 	ld a, $17 ; $5a17
 	ld b, $0d ; $5a19
 	call QueueDrillResultMessage ; $5a1b
-	jr Label_0b_5a36 ; $5a1e
-Label_0b_5a20:
+	jr .checkTotalPointsScoredInCurrentGame ; $5a1e
+.step4:
 	ld a, $17 ; $5a20
 	ld b, $0d ; $5a22
 	call QueueDrillResultMessage ; $5a24
 	ld a, [wPointOutcome] ; $5a27
 	or a, a ; $5a2a
-	jr nz, Label_0b_5a36 ; $5a2b
+	jr nz, .checkTotalPointsScoredInCurrentGame ; $5a2b
 	ld a, $1d ; $5a2d
 	ld b, $0d ; $5a2f
 	call QueueDrillResultMessage ; $5a31
-	jr Label_0b_5a40 ; $5a34
-Label_0b_5a36:
+	jr .checkTotalPointsScoredInCurrentGame2 ; $5a34
+.checkTotalPointsScoredInCurrentGame:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $5a36
 	and a, $01 ; $5a39
 	xor a, $01 ; $5a3b
 	add a, a ; $5a3d
 	dec a ; $5a3e
 	ret ; $5a3f
-Label_0b_5a40:
+.checkTotalPointsScoredInCurrentGame2:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $5a40
 	and a, $01 ; $5a43
 	add a, a ; $5a45
 	dec a ; $5a46
 	ret ; $5a47
-Label_0b_5a48:
+.step5:
 	ld a, $ff ; $5a48
 	ld [$c2e6], a ; $5a4a
 	xor a, a ; $5a4d
@@ -3729,14 +3729,14 @@ NetGameMatch3AwardPointToSide:
 	xor a, $01 ; $5a5d
 	add a, b ; $5a5f
 	bit 0, a ; $5a60
-	jr nz, Label_0b_5a6f ; $5a62
+	jr nz, .clearServeFaultFlag ; $5a62
 	ld hl, wPlayer2PointsWon ; $5a64
 	bit 1, a ; $5a67
-	jr z, Label_0b_5a6e ; $5a69
+	jr z, .bump ; $5a69
 	ld hl, wPlayer1PointsWon ; $5a6b
-Label_0b_5a6e:
+.bump:
 	inc [hl] ; $5a6e
-Label_0b_5a6f:
+.clearServeFaultFlag:
 	xor a, a ; $5a6f
 	ld [wServeFaultFlag], a ; $5a70
 	ld hl, wTotalPointsScoredInCurrentGame ; $5a73
@@ -4034,9 +4034,9 @@ NetGamePractice1Hook_PointStart:
 	ld hl, Table_0b_5c4e ; $5c41
 	add a, l ; $5c44
 	ld l, a ; $5c45
-	jr nc, Label_0b_5c49 ; $5c46
+	jr nc, .read ; $5c46
 	inc h ; $5c48
-Label_0b_5c49:
+.read:
 	ld a, [hl] ; $5c49
 	ld [$c7b5], a ; $5c4a
 	ret ; $5c4d
@@ -4047,14 +4047,14 @@ NetGamePractice1Hook_PointEnd:
 	call Drill09JudgePointMode0 ; $5c52
 	ld a, [wPointOutcome] ; $5c55
 	cp a, $04 ; $5c58
-	jr z, Label_0b_5c62 ; $5c5a
+	jr z, .step ; $5c5a
 	cp a, $05 ; $5c5c
-	jr z, Label_0b_5c62 ; $5c5e
-	jr Label_0b_5c66 ; $5c60
-Label_0b_5c62:
+	jr z, .step ; $5c5e
+	jr .netGamePractice1HandlePointEnd ; $5c60
+.step:
 	ld hl, $c2e9 ; $5c62
 	inc [hl] ; $5c65
-Label_0b_5c66:
+.netGamePractice1HandlePointEnd:
 	call NetGamePractice1HandlePointEnd ; $5c66
 	ld a, [wTotalPointsScoredInCurrentGame] ; $5c69
 	cp a, $04 ; $5c6c
@@ -4065,43 +4065,43 @@ Label_0b_5c66:
 NetGamePractice1EvaluateResult:
 	ld a, [$c2eb] ; $5c76
 	cp a, $04 ; $5c79
-	jr nz, Label_0b_5c84 ; $5c7b
+	jr nz, .checkCharacter1DoubleFaults ; $5c7b
 	xor a, a ; $5c7d
 	ld [$c2e3], a ; $5c7e
 	ld a, $01 ; $5c81
 	ret ; $5c83
-Label_0b_5c84:
+.checkCharacter1DoubleFaults:
 	ld a, [wCharacter1DoubleFaults] ; $5c84
 	cp a, $04 ; $5c87
-	jr nz, Label_0b_5c92 ; $5c89
+	jr nz, .compare ; $5c89
 	ld a, $01 ; $5c8b
 	ld [$c2e3], a ; $5c8d
-	jr Label_0b_5cbe ; $5c90
-Label_0b_5c92:
+	jr .step4 ; $5c90
+.compare:
 	or a, a ; $5c92
-	jr z, Label_0b_5c9c ; $5c93
+	jr z, .step ; $5c93
 	ld a, $02 ; $5c95
 	ld [$c2e3], a ; $5c97
-	jr Label_0b_5cbe ; $5c9a
-Label_0b_5c9c:
+	jr .step4 ; $5c9a
+.step:
 	ld a, [$c2eb] ; $5c9c
 	cp a, $03 ; $5c9f
-	jr nz, Label_0b_5caa ; $5ca1
+	jr nz, .step2 ; $5ca1
 	ld a, $05 ; $5ca3
 	ld [$c2e3], a ; $5ca5
-	jr Label_0b_5cbe ; $5ca8
-Label_0b_5caa:
+	jr .step4 ; $5ca8
+.step2:
 	ld a, [$c2ec] ; $5caa
 	or a, a ; $5cad
-	jr nz, Label_0b_5cb7 ; $5cae
+	jr nz, .step3 ; $5cae
 	ld a, $04 ; $5cb0
 	ld [$c2e3], a ; $5cb2
-	jr Label_0b_5cbe ; $5cb5
-Label_0b_5cb7:
+	jr .step4 ; $5cb5
+.step3:
 	ld a, $03 ; $5cb7
 	ld [$c2e3], a ; $5cb9
-	jr Label_0b_5cbe ; $5cbc
-Label_0b_5cbe:
+	jr .step4 ; $5cbc
+.step4:
 	ld a, $ff ; $5cbe
 	ret ; $5cc0
 NetGamePractice1Hook_RallyTick:
@@ -4114,9 +4114,9 @@ NetGamePractice1Hook_BallHit:
 	call Drill09JudgePointMode1 ; $5cc9
 	ld a, [wLastShotCharIndex] ; $5ccc
 	cp a, $01 ; $5ccf
-	jr nz, Label_0b_5cd6 ; $5cd1
+	jr nz, .done ; $5cd1
 	call ResetActiveCharState ; $5cd3
-Label_0b_5cd6:
+.done:
 	ret ; $5cd6
 	; $5cd7, 34 bytes (records:2)
 	dw $0000 ; record 0
@@ -4141,10 +4141,10 @@ NetGamePractice1HandlePointEnd:
 	ld a, [$c2ff] ; $5cfc
 	ld [wPointWinLoseFlag], a ; $5cff
 	cp a, $01 ; $5d02
-	jr nz, Label_0b_5d0a ; $5d04
+	jr nz, .recordDrillPointResultBits ; $5d04
 	ld hl, $c2eb ; $5d06
 	inc [hl] ; $5d09
-Label_0b_5d0a:
+.recordDrillPointResultBits:
 	call RecordDrillPointResultBits ; $5d0a
 	call ShowQueuedDrillMessage ; $5d0d
 	farcall UpdatePointStats ; $5d10
@@ -4428,14 +4428,14 @@ NetGamePractice2Hook_PointEnd:
 	call NetGamePractice2JudgeShot0 ; $5efa
 	ld a, [wPointOutcome] ; $5efd
 	cp a, $04 ; $5f00
-	jr z, Label_0b_5f0a ; $5f02
+	jr z, .step ; $5f02
 	cp a, $05 ; $5f04
-	jr z, Label_0b_5f0a ; $5f06
-	jr Label_0b_5f0e ; $5f08
-Label_0b_5f0a:
+	jr z, .step ; $5f06
+	jr .netGamePractice2HandlePointEnd ; $5f08
+.step:
 	ld hl, $c2ea ; $5f0a
 	inc [hl] ; $5f0d
-Label_0b_5f0e:
+.netGamePractice2HandlePointEnd:
 	call NetGamePractice2HandlePointEnd ; $5f0e
 	ld a, [wTotalPointsScoredInCurrentGame] ; $5f11
 	cp a, $04 ; $5f14
@@ -4446,52 +4446,52 @@ Label_0b_5f0e:
 NetGamePractice2EvaluateResult:
 	ld a, [$c2eb] ; $5f1e
 	cp a, $04 ; $5f21
-	jr nz, Label_0b_5f2c ; $5f23
+	jr nz, .checkCharacter1DoubleFaults ; $5f23
 	xor a, a ; $5f25
 	ld [$c2e3], a ; $5f26
 	ld a, $01 ; $5f29
 	ret ; $5f2b
-Label_0b_5f2c:
+.checkCharacter1DoubleFaults:
 	ld a, [wCharacter1DoubleFaults] ; $5f2c
 	cp a, $04 ; $5f2f
-	jr nz, Label_0b_5f3a ; $5f31
+	jr nz, .compare ; $5f31
 	ld a, $01 ; $5f33
 	ld [$c2e3], a ; $5f35
-	jr Label_0b_5f78 ; $5f38
-Label_0b_5f3a:
+	jr .step5 ; $5f38
+.compare:
 	or a, a ; $5f3a
-	jr z, Label_0b_5f44 ; $5f3b
+	jr z, .step ; $5f3b
 	ld a, $02 ; $5f3d
 	ld [$c2e3], a ; $5f3f
-	jr Label_0b_5f78 ; $5f42
-Label_0b_5f44:
+	jr .step5 ; $5f42
+.step:
 	ld a, [$c2eb] ; $5f44
 	cp a, $03 ; $5f47
-	jr nz, Label_0b_5f52 ; $5f49
+	jr nz, .step2 ; $5f49
 	ld a, $06 ; $5f4b
 	ld [$c2e3], a ; $5f4d
-	jr Label_0b_5f78 ; $5f50
-Label_0b_5f52:
+	jr .step5 ; $5f50
+.step2:
 	ld a, [$c2ec] ; $5f52
 	or a, a ; $5f55
-	jr nz, Label_0b_5f5f ; $5f56
+	jr nz, .step3 ; $5f56
 	ld a, $05 ; $5f58
 	ld [$c2e3], a ; $5f5a
-	jr Label_0b_5f78 ; $5f5d
-Label_0b_5f5f:
+	jr .step5 ; $5f5d
+.step3:
 	ld a, [$c2eb] ; $5f5f
 	cp a, $01 ; $5f62
-	jr c, Label_0b_5f71 ; $5f64
+	jr c, .step4 ; $5f64
 	cp a, $03 ; $5f66
-	jr nc, Label_0b_5f71 ; $5f68
+	jr nc, .step4 ; $5f68
 	ld a, $04 ; $5f6a
 	ld [$c2e3], a ; $5f6c
-	jr Label_0b_5f78 ; $5f6f
-Label_0b_5f71:
+	jr .step5 ; $5f6f
+.step4:
 	ld a, $03 ; $5f71
 	ld [$c2e3], a ; $5f73
-	jr Label_0b_5f78 ; $5f76
-Label_0b_5f78:
+	jr .step5 ; $5f76
+.step5:
 	ld a, $ff ; $5f78
 	ret ; $5f7a
 NetGamePractice2Hook_RallyTick:
@@ -4504,9 +4504,9 @@ NetGamePractice2Hook_BallHit:
 	call NetGamePractice2JudgeShot1 ; $5f83
 	ld a, [wLastShotCharIndex] ; $5f86
 	cp a, $01 ; $5f89
-	jr nz, Label_0b_5f90 ; $5f8b
+	jr nz, .done ; $5f8b
 	call ResetActiveCharState ; $5f8d
-Label_0b_5f90:
+.done:
 	ret ; $5f90
 DrillPositions_0b_5f91:
 	; $5f91, 34 bytes (records:4)
@@ -4525,10 +4525,10 @@ NetGamePractice2HandlePointEnd:
 	ld a, [$c2ff] ; $5fb6
 	ld [wPointWinLoseFlag], a ; $5fb9
 	cp a, $01 ; $5fbc
-	jr nz, Label_0b_5fc4 ; $5fbe
+	jr nz, .recordDrillPointResultBits ; $5fbe
 	ld hl, $c2eb ; $5fc0
 	inc [hl] ; $5fc3
-Label_0b_5fc4:
+.recordDrillPointResultBits:
 	call RecordDrillPointResultBits ; $5fc4
 	call ShowQueuedDrillMessage ; $5fc7
 	farcall UpdatePointStats ; $5fca
@@ -4809,14 +4809,14 @@ NetGamePractice3Hook_PointEnd:
 	call NetGamePractice3JudgeShot0 ; $61ac
 	ld a, [wPointOutcome] ; $61af
 	cp a, $04 ; $61b2
-	jr z, Label_0b_61bc ; $61b4
+	jr z, .step ; $61b4
 	cp a, $05 ; $61b6
-	jr z, Label_0b_61bc ; $61b8
-	jr Label_0b_61c0 ; $61ba
-Label_0b_61bc:
+	jr z, .step ; $61b8
+	jr .netGamePractice3HandlePointEnd ; $61ba
+.step:
 	ld hl, $c2ea ; $61bc
 	inc [hl] ; $61bf
-Label_0b_61c0:
+.netGamePractice3HandlePointEnd:
 	call NetGamePractice3HandlePointEnd ; $61c0
 	ld a, [wTotalPointsScoredInCurrentGame] ; $61c3
 	cp a, $04 ; $61c6
@@ -4827,59 +4827,59 @@ Label_0b_61c0:
 NetGamePractice3EvaluateResult:
 	ld a, [$c2eb] ; $61d0
 	cp a, $04 ; $61d3
-	jr nz, Label_0b_61de ; $61d5
+	jr nz, .checkCharacter1DoubleFaults ; $61d5
 	xor a, a ; $61d7
 	ld [$c2e3], a ; $61d8
 	ld a, $01 ; $61db
 	ret ; $61dd
-Label_0b_61de:
+.checkCharacter1DoubleFaults:
 	ld a, [wCharacter1DoubleFaults] ; $61de
 	cp a, $04 ; $61e1
-	jr nz, Label_0b_61ec ; $61e3
+	jr nz, .compare ; $61e3
 	ld a, $01 ; $61e5
 	ld [$c2e3], a ; $61e7
-	jr Label_0b_6237 ; $61ea
-Label_0b_61ec:
+	jr .step5 ; $61ea
+.compare:
 	or a, a ; $61ec
-	jr z, Label_0b_61f6 ; $61ed
+	jr z, .step ; $61ed
 	ld a, $02 ; $61ef
 	ld [$c2e3], a ; $61f1
-	jr Label_0b_6237 ; $61f4
-Label_0b_61f6:
+	jr .step5 ; $61f4
+.step:
 	ld a, [$c2eb] ; $61f6
 	cp a, $03 ; $61f9
-	jr nz, Label_0b_6204 ; $61fb
+	jr nz, .countDrillResultBitsSet ; $61fb
 	ld a, $07 ; $61fd
 	ld [$c2e3], a ; $61ff
-	jr Label_0b_6237 ; $6202
-Label_0b_6204:
+	jr .step5 ; $6202
+.countDrillResultBitsSet:
 	call CountDrillResultBitsSet ; $6204
 	or a, a ; $6207
-	jr z, Label_0b_6211 ; $6208
+	jr z, .step2 ; $6208
 	ld a, $03 ; $620a
 	ld [$c2e3], a ; $620c
-	jr Label_0b_6237 ; $620f
-Label_0b_6211:
+	jr .step5 ; $620f
+.step2:
 	ld a, [$c2ec] ; $6211
 	or a, a ; $6214
-	jr nz, Label_0b_621e ; $6215
+	jr nz, .step3 ; $6215
 	ld a, $06 ; $6217
 	ld [$c2e3], a ; $6219
-	jr Label_0b_6237 ; $621c
-Label_0b_621e:
+	jr .step5 ; $621c
+.step3:
 	ld a, [$c2eb] ; $621e
 	cp a, $01 ; $6221
-	jr c, Label_0b_6230 ; $6223
+	jr c, .step4 ; $6223
 	cp a, $03 ; $6225
-	jr nc, Label_0b_6230 ; $6227
+	jr nc, .step4 ; $6227
 	ld a, $05 ; $6229
 	ld [$c2e3], a ; $622b
-	jr Label_0b_6237 ; $622e
-Label_0b_6230:
+	jr .step5 ; $622e
+.step4:
 	ld a, $04 ; $6230
 	ld [$c2e3], a ; $6232
-	jr Label_0b_6237 ; $6235
-Label_0b_6237:
+	jr .step5 ; $6235
+.step5:
 	ld a, $ff ; $6237
 	ret ; $6239
 NetGamePractice3Hook_RallyTick:
@@ -4892,9 +4892,9 @@ NetGamePractice3Hook_BallHit:
 	call NetGamePractice3JudgeShot1 ; $6242
 	ld a, [wLastShotCharIndex] ; $6245
 	cp a, $01 ; $6248
-	jr nz, Label_0b_624f ; $624a
+	jr nz, .done ; $624a
 	call ResetActiveCharState ; $624c
-Label_0b_624f:
+.done:
 	ret ; $624f
 DrillPositions_0b_6250:
 	; $6250, 34 bytes (records:4)
@@ -4913,10 +4913,10 @@ NetGamePractice3HandlePointEnd:
 	ld a, [$c2ff] ; $6275
 	ld [wPointWinLoseFlag], a ; $6278
 	cp a, $01 ; $627b
-	jr nz, Label_0b_6283 ; $627d
+	jr nz, .recordDrillPointResultBits ; $627d
 	ld hl, $c2eb ; $627f
 	inc [hl] ; $6282
-Label_0b_6283:
+.recordDrillPointResultBits:
 	call RecordDrillPointResultBits ; $6283
 	call ShowQueuedDrillMessage ; $6286
 	farcall UpdatePointStats ; $6289
@@ -5182,24 +5182,24 @@ StrokeMatch1Hook_PointEnd:
 	sub a, b ; $644e
 	ld b, a ; $644f
 	bit 7, a ; $6450
-	jr z, Label_0b_6456 ; $6452
+	jr z, .compare ; $6452
 	cpl ; $6454
 	inc a ; $6455
-Label_0b_6456:
+.compare:
 	cp a, $02 ; $6456
-	jr c, Label_0b_646d ; $6458
+	jr c, .checkTotalPointsScoredInCurrentGame ; $6458
 	xor a, a ; $645a
 	rl b ; $645b
 	rl a ; $645d
 	or a, a ; $645f
-	jr nz, Label_0b_6464 ; $6460
+	jr nz, .store ; $6460
 	ld a, $ff ; $6462
-Label_0b_6464:
+.store:
 	ld [wPointWinLoseFlag], a ; $6464
 	ld a, $80 ; $6467
 	ld [wMatchAbortFlag], a ; $6469
 	ret ; $646c
-Label_0b_646d:
+.checkTotalPointsScoredInCurrentGame:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $646d
 	cp a, $08 ; $6470
 	ret nz ; $6472
@@ -5224,10 +5224,10 @@ StrokeMatch1HandlePointEnd:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $6490
 	bit 0, a ; $6493
 	ld a, b ; $6495
-	jr z, Label_0b_649a ; $6496
+	jr z, .store ; $6496
 	cpl ; $6498
 	inc a ; $6499
-Label_0b_649a:
+.store:
 	ld [wPointWinLoseFlag], a ; $649a
 	call RecordDrillPointResultBits ; $649d
 	call ShowQueuedDrillMessage ; $64a0
@@ -5250,12 +5250,12 @@ StrokeMatch1AwardPointToSide:
 	inc a ; $64c8
 	srl a ; $64c9
 	or a, a ; $64cb
-	jr nz, Label_0b_64d3 ; $64cc
+	jr nz, .step ; $64cc
 	ld hl, wPlayer2PointsWon ; $64ce
-	jr Label_0b_64d6 ; $64d1
-Label_0b_64d3:
+	jr .bump ; $64d1
+.step:
 	ld hl, wPlayer1PointsWon ; $64d3
-Label_0b_64d6:
+.bump:
 	inc [hl] ; $64d6
 	xor a, a ; $64d7
 	ld [wServeFaultFlag], a ; $64d8
@@ -5554,14 +5554,14 @@ TestBallBounceDepth:
 	ld h, [hl] ; $66bf
 	ld l, a ; $66c0
 	bit 7, h ; $66c1
-	jr z, Label_0b_66cb ; $66c3
+	jr z, .step ; $66c3
 	xor a, a ; $66c5
 	sub a, l ; $66c6
 	ld l, a ; $66c7
 	sbc a, a ; $66c8
 	sub a, h ; $66c9
 	ld h, a ; $66ca
-Label_0b_66cb:
+.step:
 	ld de, $02a0 ; $66cb
 	ld a, l ; $66ce
 	sub a, e ; $66cf
@@ -5632,24 +5632,24 @@ StrokeMatch2Hook_PointEnd:
 	sub a, b ; $674c
 	ld b, a ; $674d
 	bit 7, a ; $674e
-	jr z, Label_0b_6754 ; $6750
+	jr z, .compare ; $6750
 	cpl ; $6752
 	inc a ; $6753
-Label_0b_6754:
+.compare:
 	cp a, $02 ; $6754
-	jr c, Label_0b_676b ; $6756
+	jr c, .checkTotalPointsScoredInCurrentGame ; $6756
 	xor a, a ; $6758
 	rl b ; $6759
 	rl a ; $675b
 	or a, a ; $675d
-	jr nz, Label_0b_6762 ; $675e
+	jr nz, .store ; $675e
 	ld a, $ff ; $6760
-Label_0b_6762:
+.store:
 	ld [wPointWinLoseFlag], a ; $6762
 	ld a, $80 ; $6765
 	ld [wMatchAbortFlag], a ; $6767
 	ret ; $676a
-Label_0b_676b:
+.checkTotalPointsScoredInCurrentGame:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $676b
 	cp a, $08 ; $676e
 	ret nz ; $6770
@@ -5674,10 +5674,10 @@ StrokeMatch2HandlePointEnd:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $678f
 	bit 0, a ; $6792
 	ld a, b ; $6794
-	jr z, Label_0b_6799 ; $6795
+	jr z, .store ; $6795
 	cpl ; $6797
 	inc a ; $6798
-Label_0b_6799:
+.store:
 	ld [wPointWinLoseFlag], a ; $6799
 	call RecordDrillPointResultBits ; $679c
 	call ShowQueuedDrillMessage ; $679f
@@ -5705,14 +5705,14 @@ StrokeMatch2AwardPointToSide:
 	xor a, $01 ; $67d0
 	add a, b ; $67d2
 	bit 0, a ; $67d3
-	jr nz, Label_0b_67e2 ; $67d5
+	jr nz, .clearServeFaultFlag ; $67d5
 	ld hl, wPlayer2PointsWon ; $67d7
 	bit 1, a ; $67da
-	jr z, Label_0b_67e1 ; $67dc
+	jr z, .bump ; $67dc
 	ld hl, wPlayer1PointsWon ; $67de
-Label_0b_67e1:
+.bump:
 	inc [hl] ; $67e1
-Label_0b_67e2:
+.clearServeFaultFlag:
 	xor a, a ; $67e2
 	ld [wServeFaultFlag], a ; $67e3
 	ld hl, wTotalPointsScoredInCurrentGame ; $67e6
@@ -5983,24 +5983,24 @@ StrokeMatch3Hook_PointEnd:
 	sub a, b ; $6997
 	ld b, a ; $6998
 	bit 7, a ; $6999
-	jr z, Label_0b_699f ; $699b
+	jr z, .compare ; $699b
 	cpl ; $699d
 	inc a ; $699e
-Label_0b_699f:
+.compare:
 	cp a, $02 ; $699f
-	jr c, Label_0b_69b6 ; $69a1
+	jr c, .checkTotalPointsScoredInCurrentGame ; $69a1
 	xor a, a ; $69a3
 	rl b ; $69a4
 	rl a ; $69a6
 	or a, a ; $69a8
-	jr nz, Label_0b_69ad ; $69a9
+	jr nz, .store ; $69a9
 	ld a, $ff ; $69ab
-Label_0b_69ad:
+.store:
 	ld [wPointWinLoseFlag], a ; $69ad
 	ld a, $80 ; $69b0
 	ld [wMatchAbortFlag], a ; $69b2
 	ret ; $69b5
-Label_0b_69b6:
+.checkTotalPointsScoredInCurrentGame:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $69b6
 	cp a, $08 ; $69b9
 	ret nz ; $69bb
@@ -6025,10 +6025,10 @@ StrokeMatch3HandlePointEnd:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $69da
 	bit 0, a ; $69dd
 	ld a, b ; $69df
-	jr z, Label_0b_69e4 ; $69e0
+	jr z, .store ; $69e0
 	cpl ; $69e2
 	inc a ; $69e3
-Label_0b_69e4:
+.store:
 	ld [wPointWinLoseFlag], a ; $69e4
 	call RecordDrillPointResultBits ; $69e7
 	call ShowQueuedDrillMessage ; $69ea
@@ -6056,14 +6056,14 @@ StrokeMatch3AwardPointToSide:
 	xor a, $01 ; $6a1b
 	add a, b ; $6a1d
 	bit 0, a ; $6a1e
-	jr nz, Label_0b_6a2d ; $6a20
+	jr nz, .clearServeFaultFlag ; $6a20
 	ld hl, wPlayer2PointsWon ; $6a22
 	bit 1, a ; $6a25
-	jr z, Label_0b_6a2c ; $6a27
+	jr z, .bump ; $6a27
 	ld hl, wPlayer1PointsWon ; $6a29
-Label_0b_6a2c:
+.bump:
 	inc [hl] ; $6a2c
-Label_0b_6a2d:
+.clearServeFaultFlag:
 	xor a, a ; $6a2d
 	ld [wServeFaultFlag], a ; $6a2e
 	ld hl, wTotalPointsScoredInCurrentGame ; $6a31
@@ -6318,9 +6318,9 @@ StrokePractice1Hook_PointStart:
 	ld hl, Table_0b_6bcc ; $6bbf
 	add a, l ; $6bc2
 	ld l, a ; $6bc3
-	jr nc, Label_0b_6bc7 ; $6bc4
+	jr nc, .read ; $6bc4
 	inc h ; $6bc6
-Label_0b_6bc7:
+.read:
 	ld a, [hl] ; $6bc7
 	ld [$c7b5], a ; $6bc8
 	ret ; $6bcb
@@ -6340,12 +6340,12 @@ StrokePractice1Hook_PointEnd:
 	call Drill15JudgePointMode0 ; $6be1
 	ld a, [wPointOutcome] ; $6be4
 	cp a, $05 ; $6be7
-	jr z, Label_0b_6bed ; $6be9
-	jr Label_0b_6bf1 ; $6beb
-Label_0b_6bed:
+	jr z, .step ; $6be9
+	jr .strokePractice1HandlePointEnd ; $6beb
+.step:
 	ld hl, $c2e8 ; $6bed
 	inc [hl] ; $6bf0
-Label_0b_6bf1:
+.strokePractice1HandlePointEnd:
 	call StrokePractice1HandlePointEnd ; $6bf1
 	ld a, [wTotalPointsScoredInCurrentGame] ; $6bf4
 	cp a, $04 ; $6bf7
@@ -6356,42 +6356,42 @@ Label_0b_6bf1:
 StrokePractice1EvaluateResult:
 	ld a, [$c2e9] ; $6c01
 	cp a, $04 ; $6c04
-	jr nz, Label_0b_6c0f ; $6c06
+	jr nz, .step ; $6c06
 	xor a, a ; $6c08
 	ld [$c2e3], a ; $6c09
 	ld a, $01 ; $6c0c
 	ret ; $6c0e
-Label_0b_6c0f:
+.step:
 	ld a, [$c2e8] ; $6c0f
 	cp a, $04 ; $6c12
-	jr c, Label_0b_6c1d ; $6c14
+	jr c, .compare ; $6c14
 	ld a, $01 ; $6c16
 	ld [$c2e3], a ; $6c18
-	jr Label_0b_6c47 ; $6c1b
-Label_0b_6c1d:
+	jr .step4 ; $6c1b
+.compare:
 	cp a, $02 ; $6c1d
-	jr c, Label_0b_6c28 ; $6c1f
+	jr c, .step2 ; $6c1f
 	ld a, $02 ; $6c21
 	ld [$c2e3], a ; $6c23
-	jr Label_0b_6c47 ; $6c26
-Label_0b_6c28:
+	jr .step4 ; $6c26
+.step2:
 	ld a, [$c2e9] ; $6c28
 	or a, a ; $6c2b
-	jr nz, Label_0b_6c35 ; $6c2c
+	jr nz, .compare2 ; $6c2c
 	ld a, $03 ; $6c2e
 	ld [$c2e3], a ; $6c30
-	jr Label_0b_6c47 ; $6c33
-Label_0b_6c35:
+	jr .step4 ; $6c33
+.compare2:
 	cp a, $03 ; $6c35
-	jr nz, Label_0b_6c40 ; $6c37
+	jr nz, .step3 ; $6c37
 	ld a, $05 ; $6c39
 	ld [$c2e3], a ; $6c3b
-	jr Label_0b_6c47 ; $6c3e
-Label_0b_6c40:
+	jr .step4 ; $6c3e
+.step3:
 	ld a, $04 ; $6c40
 	ld [$c2e3], a ; $6c42
-	jr Label_0b_6c47 ; $6c45
-Label_0b_6c47:
+	jr .step4 ; $6c45
+.step4:
 	ld a, $ff ; $6c47
 	ret ; $6c49
 StrokePractice1Hook_RallyTick:
@@ -6430,10 +6430,10 @@ StrokePractice1HandlePointEnd:
 	ld a, [$c2ff] ; $6c84
 	ld [wPointWinLoseFlag], a ; $6c87
 	cp a, $01 ; $6c8a
-	jr nz, Label_0b_6c92 ; $6c8c
+	jr nz, .recordDrillPointResultBits ; $6c8c
 	ld hl, $c2e9 ; $6c8e
 	inc [hl] ; $6c91
-Label_0b_6c92:
+.recordDrillPointResultBits:
 	call RecordDrillPointResultBits ; $6c92
 	call ShowQueuedDrillMessage ; $6c95
 	farcall UpdatePointStats ; $6c98
@@ -6648,9 +6648,9 @@ StrokePractice2Hook_PointStart:
 	ld hl, Table_0b_6e18 ; $6e0b
 	add a, l ; $6e0e
 	ld l, a ; $6e0f
-	jr nc, Label_0b_6e13 ; $6e10
+	jr nc, .read ; $6e10
 	inc h ; $6e12
-Label_0b_6e13:
+.read:
 	ld a, [hl] ; $6e13
 	ld [$c7b5], a ; $6e14
 	ret ; $6e17
@@ -6678,45 +6678,45 @@ StrokePractice2Hook_PointEnd:
 StrokePractice2EvaluateResult:
 	ld a, [$c2ee] ; $6e40
 	cp a, $04 ; $6e43
-	jr nz, Label_0b_6e4e ; $6e45
+	jr nz, .step ; $6e45
 	xor a, a ; $6e47
 	ld [$c2e3], a ; $6e48
 	ld a, $01 ; $6e4b
 	ret ; $6e4d
-Label_0b_6e4e:
+.step:
 	ld a, [$c2ee] ; $6e4e
 	cp a, $03 ; $6e51
-	jr c, Label_0b_6e5c ; $6e53
+	jr c, .step2 ; $6e53
 	ld a, $05 ; $6e55
 	ld [$c2e3], a ; $6e57
-	jr Label_0b_6e8f ; $6e5a
-Label_0b_6e5c:
+	jr .step4 ; $6e5a
+.step2:
 	ld a, [$c2e9] ; $6e5c
 	cp a, $04 ; $6e5f
-	jr nc, Label_0b_6e6a ; $6e61
+	jr nc, .checkRallyLength ; $6e61
 	ld a, $01 ; $6e63
 	ld [$c2e3], a ; $6e65
-	jr Label_0b_6e8f ; $6e68
-Label_0b_6e6a:
+	jr .step4 ; $6e68
+.checkRallyLength:
 	ld a, [wRallyLength] ; $6e6a
 	cp a, $03 ; $6e6d
-	jr nc, Label_0b_6e8a ; $6e6f
+	jr nc, .step3 ; $6e6f
 	ld a, [$c4a1] ; $6e71
 	cp a, $01 ; $6e74
-	jr nz, Label_0b_6e7f ; $6e76
+	jr nz, .compare ; $6e76
 	ld a, $02 ; $6e78
 	ld [$c2e3], a ; $6e7a
-	jr Label_0b_6e8f ; $6e7d
-Label_0b_6e7f:
+	jr .step4 ; $6e7d
+.compare:
 	cp a, $02 ; $6e7f
-	jr nz, Label_0b_6e8a ; $6e81
+	jr nz, .step3 ; $6e81
 	ld a, $03 ; $6e83
 	ld [$c2e3], a ; $6e85
-	jr Label_0b_6e8f ; $6e88
-Label_0b_6e8a:
+	jr .step4 ; $6e88
+.step3:
 	ld a, $04 ; $6e8a
 	ld [$c2e3], a ; $6e8c
-Label_0b_6e8f:
+.step4:
 	ld a, $ff ; $6e8f
 	ret ; $6e91
 StrokePractice2Hook_RallyTick:
@@ -6749,10 +6749,10 @@ StrokePractice2HandlePointEnd:
 	ld a, [$c2ff] ; $6ecc
 	ld [wPointWinLoseFlag], a ; $6ecf
 	cp a, $01 ; $6ed2
-	jr nz, Label_0b_6eda ; $6ed4
+	jr nz, .recordDrillPointResultBits ; $6ed4
 	ld hl, $c2ee ; $6ed6
 	inc [hl] ; $6ed9
-Label_0b_6eda:
+.recordDrillPointResultBits:
 	call RecordDrillPointResultBits ; $6eda
 	call ShowQueuedDrillMessage ; $6edd
 	farcall UpdatePointStats ; $6ee0
@@ -6977,9 +6977,9 @@ StrokePractice3Hook_PointStart:
 	ld hl, Table_0b_707d ; $7070
 	add a, l ; $7073
 	ld l, a ; $7074
-	jr nc, Label_0b_7078 ; $7075
+	jr nc, .read ; $7075
 	inc h ; $7077
-Label_0b_7078:
+.read:
 	ld a, [hl] ; $7078
 	ld [$c7b5], a ; $7079
 	ret ; $707c
@@ -7007,42 +7007,42 @@ StrokePractice3Hook_PointEnd:
 StrokePractice3EvaluateResult:
 	ld a, [$c2e9] ; $70a5
 	cp a, $04 ; $70a8
-	jr nz, Label_0b_70b3 ; $70aa
+	jr nz, .step ; $70aa
 	xor a, a ; $70ac
 	ld [$c2e3], a ; $70ad
 	ld a, $01 ; $70b0
 	ret ; $70b2
-Label_0b_70b3:
+.step:
 	ld a, [$c2e8] ; $70b3
 	cp a, $04 ; $70b6
-	jr c, Label_0b_70c1 ; $70b8
+	jr c, .compare ; $70b8
 	ld a, $01 ; $70ba
 	ld [$c2e3], a ; $70bc
-	jr Label_0b_70eb ; $70bf
-Label_0b_70c1:
+	jr .step4 ; $70bf
+.compare:
 	cp a, $02 ; $70c1
-	jr c, Label_0b_70cc ; $70c3
+	jr c, .step2 ; $70c3
 	ld a, $02 ; $70c5
 	ld [$c2e3], a ; $70c7
-	jr Label_0b_70eb ; $70ca
-Label_0b_70cc:
+	jr .step4 ; $70ca
+.step2:
 	ld a, [$c2e9] ; $70cc
 	or a, a ; $70cf
-	jr nz, Label_0b_70d9 ; $70d0
+	jr nz, .compare2 ; $70d0
 	ld a, $03 ; $70d2
 	ld [$c2e3], a ; $70d4
-	jr Label_0b_70eb ; $70d7
-Label_0b_70d9:
+	jr .step4 ; $70d7
+.compare2:
 	cp a, $03 ; $70d9
-	jr nz, Label_0b_70e4 ; $70db
+	jr nz, .step3 ; $70db
 	ld a, $05 ; $70dd
 	ld [$c2e3], a ; $70df
-	jr Label_0b_70eb ; $70e2
-Label_0b_70e4:
+	jr .step4 ; $70e2
+.step3:
 	ld a, $04 ; $70e4
 	ld [$c2e3], a ; $70e6
-	jr Label_0b_70eb ; $70e9
-Label_0b_70eb:
+	jr .step4 ; $70e9
+.step4:
 	ld a, $ff ; $70eb
 	ret ; $70ed
 StrokePractice3Hook_RallyTick:
@@ -7078,10 +7078,10 @@ StrokePractice3HandlePointEnd:
 	ld a, [$c2ff] ; $712e
 	ld [wPointWinLoseFlag], a ; $7131
 	cp a, $01 ; $7134
-	jr nz, Label_0b_713c ; $7136
+	jr nz, .recordDrillPointResultBits ; $7136
 	ld hl, $c2e9 ; $7138
 	inc [hl] ; $713b
-Label_0b_713c:
+.recordDrillPointResultBits:
 	call RecordDrillPointResultBits ; $713c
 	call ShowQueuedDrillMessage ; $713f
 	farcall UpdatePointStats ; $7142

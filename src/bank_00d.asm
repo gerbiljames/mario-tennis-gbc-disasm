@@ -40,11 +40,11 @@ InitMinigameFromConfig:
 	ld [wMatchPlayerChar], a ; $4049
 	ld a, [wMatchOpponentChar] ; $404c
 	cp a, $ff ; $404f
-	jr z, Label_0d_4059 ; $4051
+	jr z, .restore ; $4051
 	ld b, a ; $4053
 	ld c, $02 ; $4054
 	farcall InitCa00RecordFromCharId ; $4056
-Label_0d_4059:
+.restore:
 	pop bc ; $4059
 	ld hl, $0008 ; $405a
 	add hl, bc ; $405d
@@ -66,9 +66,9 @@ Label_0d_4059:
 	ld l, a ; $4076
 	ld a, h ; $4077
 	or a, l ; $4078
-	jr z, Label_0d_407e ; $4079
+	jr z, .done ; $4079
 	call JumpToHL ; $407b
-Label_0d_407e:
+.done:
 	ret ; $407e
 StartMinigameByID:
 	sub a, $12 ; $407f
@@ -159,7 +159,7 @@ GetMinigameTargetScore:
 	cp a, $12 ; $4124
 	ret c ; $4126
 	cp a, $1c ; $4127
-	jr nc, Label_0d_4139 ; $4129
+	jr nc, .step ; $4129
 	sub a, $12 ; $412b
 	add a, a ; $412d
 	add a, $4a ; $412e
@@ -171,7 +171,7 @@ GetMinigameTargetScore:
 	ld d, [hl] ; $4136
 	ld e, a ; $4137
 	ret ; $4138
-Label_0d_4139:
+.step:
 	sub a, $1c ; $4139
 	add a, a ; $413b
 	add a, a ; $413c
@@ -275,7 +275,7 @@ IsMinigameScoreLimitReached:
 	add hl, de ; $41f7
 	ld a, h ; $41f8
 	or a, l ; $41f9
-	jr z, Label_0d_420e ; $41fa
+	jr z, .step ; $41fa
 	ld hl, wMinigameHighScore ; $41fc
 	ld a, [hl+] ; $41ff
 	ld h, [hl] ; $4200
@@ -287,10 +287,10 @@ IsMinigameScoreLimitReached:
 	sbc a, d ; $4206
 	ld h, a ; $4207
 	bit 7, h ; $4208
-	jr nz, Label_0d_420e ; $420a
+	jr nz, .step ; $420a
 	xor a, a ; $420c
 	ret ; $420d
-Label_0d_420e:
+.step:
 	ld a, $01 ; $420e
 	ret ; $4210
 StartScorePopup:
@@ -408,30 +408,30 @@ GetMinigameGridCellIndex:
 	srl a ; $42e8
 	ld b, a ; $42ea
 	cp a, $07 ; $42eb
-	jr nc, Label_0d_42ff ; $42ed
+	jr nc, .step ; $42ed
 	ld a, e ; $42ef
 	sub a, $08 ; $42f0
 	srl a ; $42f2
 	ld c, a ; $42f4
 	cp a, $03 ; $42f5
-	jr nc, Label_0d_42ff ; $42f7
+	jr nc, .step ; $42f7
 	ld a, c ; $42f9
 	add a, a ; $42fa
 	add a, a ; $42fb
 	add a, a ; $42fc
 	add a, b ; $42fd
 	ret ; $42fe
-Label_0d_42ff:
+.step:
 	ld a, $ff ; $42ff
 	ret ; $4301
 DrawMinigameGrid:
 	ld hl, $c7c0 ; $4302
 	ld c, $00 ; $4305
 	ld b, $18 ; $4307
-Label_0d_4309:
+.loop:
 	ld a, [hl+] ; $4309
 	and a, a ; $430a
-	jr z, Label_0d_4316 ; $430b
+	jr z, .step ; $430b
 	push bc ; $430d
 	push hl ; $430e
 	ld b, a ; $430f
@@ -439,10 +439,10 @@ Label_0d_4309:
 	call DrawMinigameGridCell ; $4311
 	pop hl ; $4314
 	pop bc ; $4315
-Label_0d_4316:
+.step:
 	inc c ; $4316
 	dec b ; $4317
-	jr nz, Label_0d_4309 ; $4318
+	jr nz, .loop ; $4318
 	ret ; $431a
 DrawMinigameGridCell:
 	add a, a ; $431b
@@ -546,11 +546,11 @@ QueueMinigameHudVRAMCopy:
 ShowPointOutcomeBanner:
 	ld a, [wPointOutcome] ; $43ba
 	cp a, $06 ; $43bd
-	jr z, Label_0d_43de ; $43bf
+	jr z, .done ; $43bf
 	cp a, $09 ; $43c1
-	jr z, Label_0d_43de ; $43c3
+	jr z, .done ; $43c3
 	cp a, $0b ; $43c5
-	jr z, Label_0d_43de ; $43c7
+	jr z, .done ; $43c7
 	ld a, [wPointOutcome] ; $43c9
 	add a, $00 ; $43cc
 	farcall ShowCourtBanner ; $43ce
@@ -559,34 +559,34 @@ ShowPointOutcomeBanner:
 	farcall HideCourtBanner ; $43d6
 	ld a, $0a ; $43d9
 	farcall StepMatchFrames ; $43db
-Label_0d_43de:
+.done:
 	ret ; $43de
 DetermineMinigamePointResult:
 	ld a, [$c7bc] ; $43df
 	and a, a ; $43e2
-	jr nz, Label_0d_43ee ; $43e3
+	jr nz, .isMinigameScoreLimitReached ; $43e3
 	ld a, [wPointOutcome] ; $43e5
 	cp a, $0b ; $43e8
-	jr z, Label_0d_43f6 ; $43ea
-	jr Label_0d_440a ; $43ec
-Label_0d_43ee:
+	jr z, .step ; $43ea
+	jr .step3 ; $43ec
+.isMinigameScoreLimitReached:
 	call IsMinigameScoreLimitReached ; $43ee
 	and a, a ; $43f1
-	jr nz, Label_0d_4402 ; $43f2
-	jr Label_0d_440a ; $43f4
-Label_0d_43f6:
+	jr nz, .step2 ; $43f2
+	jr .step3 ; $43f4
+.step:
 	ld a, $01 ; $43f6
 	ld [wPointWinLoseFlag], a ; $43f8
 	ld a, [wMinigameLevel] ; $43fb
 	add a, $12 ; $43fe
 	ld d, a ; $4400
 	ret ; $4401
-Label_0d_4402:
+.step2:
 	ld a, $01 ; $4402
 	ld [wPointWinLoseFlag], a ; $4404
 	ld d, $16 ; $4407
 	ret ; $4409
-Label_0d_440a:
+.step3:
 	ld a, $ff ; $440a
 	ld [wPointWinLoseFlag], a ; $440c
 	ld d, $17 ; $440f
@@ -1078,9 +1078,9 @@ LaunchBall:
 	and a, $0f ; $4855
 	add a, l ; $4857
 	ld l, a ; $4858
-	jr nc, Label_0d_485c ; $4859
+	jr nc, .read ; $4859
 	inc h ; $485b
-Label_0d_485c:
+.read:
 	ld a, [hl] ; $485c
 	swap a ; $485d
 	and a, $0f ; $485f
@@ -1151,28 +1151,28 @@ PlayMinigameCountdown:
 	ld a, $14 ; $48de
 	farcall StepMatchFrames ; $48e0
 	ld a, $03 ; $48e3
-Label_0d_48e5:
+.loop:
 	push af ; $48e5
 	ld b, $01 ; $48e6
 	ld de, $8200 ; $48e8
 	farcall LoadScoreDigitGfx ; $48eb
 	ld a, [wMatchFramesAbort] ; $48ee
 	and a, a ; $48f1
-	jr nz, Label_0d_48f6 ; $48f2
+	jr nz, .step ; $48f2
 	sound $74 ; $48f4
-Label_0d_48f6:
+.step:
 	ld a, $11 ; $48f6
 	farcall SpawnCourtBannerObj ; $48f8
 	ld a, $28 ; $48fb
 	farcall StepMatchFrames ; $48fd
 	pop af ; $4900
 	dec a ; $4901
-	jr nz, Label_0d_48e5 ; $4902
+	jr nz, .loop ; $4902
 	ld a, [wMatchFramesAbort] ; $4904
 	and a, a ; $4907
-	jr nz, Label_0d_490c ; $4908
+	jr nz, .step2 ; $4908
 	sound $75 ; $490a
-Label_0d_490c:
+.step2:
 	ld a, $10 ; $490c
 	farcall ShowCourtBanner ; $490e
 	ld a, $28 ; $4911
@@ -1182,10 +1182,10 @@ Label_0d_490c:
 	ld b, a ; $491a
 	ld a, [wMatchFramesAbort] ; $491b
 	and a, a ; $491e
-	jr nz, Label_0d_4925 ; $491f
+	jr nz, .done ; $491f
 	ld a, b ; $4921
 	call PlaySoundManaged ; $4922
-Label_0d_4925:
+.done:
 	ret ; $4925
 GetMinigameCharCoordsEntry:
 	add a, a ; $4926
@@ -1262,9 +1262,9 @@ TennisMachine2Hook_PointStart:
 	ld hl, $c785 ; $4997
 	add a, [hl] ; $499a
 	cp a, $03 ; $499b
-	jr c, Label_0d_49a1 ; $499d
+	jr c, .store ; $499d
 	sub a, $03 ; $499f
-Label_0d_49a1:
+.store:
 	ld [hl], a ; $49a1
 	call LaunchMinigameServe ; $49a2
 	ret ; $49a5
@@ -1325,9 +1325,9 @@ TennisMachine3Hook_PointStart:
 	ld hl, $c785 ; $49f4
 	add a, [hl] ; $49f7
 	cp a, $06 ; $49f8
-	jr c, Label_0d_49fe ; $49fa
+	jr c, .store ; $49fa
 	sub a, $06 ; $49fc
-Label_0d_49fe:
+.store:
 	ld [hl], a ; $49fe
 	call LaunchMinigameServe ; $49ff
 	ret ; $4a02
@@ -1388,9 +1388,9 @@ TennisMachine4Hook_PointStart:
 	ld hl, $c785 ; $4a51
 	add a, [hl] ; $4a54
 	cp a, $09 ; $4a55
-	jr c, Label_0d_4a5b ; $4a57
+	jr c, .store ; $4a57
 	sub a, $09 ; $4a59
-Label_0d_4a5b:
+.store:
 	ld [hl], a ; $4a5b
 	call LaunchMinigameServe ; $4a5c
 	ret ; $4a5f
@@ -1805,9 +1805,9 @@ TennisMachineHighScoreHook_PointStart:
 	ld hl, $c785 ; $4d1c
 	add a, [hl] ; $4d1f
 	cp a, $09 ; $4d20
-	jr c, Label_0d_4d26 ; $4d22
+	jr c, .store ; $4d22
 	sub a, $09 ; $4d24
-Label_0d_4d26:
+.store:
 	ld [hl], a ; $4d26
 	call LaunchMinigameServe ; $4d27
 	ret ; $4d2a
@@ -1897,10 +1897,10 @@ InitMinigame_TargetShot:
 	ld [$c7b8], a ; $4d9d
 	ld a, [wMinigameLevel] ; $4da0
 	cp a, $02 ; $4da3
-	jr nz, Label_0d_4dac ; $4da5
+	jr nz, .done ; $4da5
 	ld a, $01 ; $4da7
 	ld [$c7bc], a ; $4da9
-Label_0d_4dac:
+.done:
 	ret ; $4dac
 MinigameHooks_TargetShot:
 	; $4dad, 16 bytes (mode_hooks)
@@ -1931,9 +1931,9 @@ TargetShotHook_PointStart:
 	ld hl, $c785 ; $4ddb
 	add a, [hl] ; $4dde
 	cp a, $03 ; $4ddf
-	jr c, Label_0d_4de5 ; $4de1
+	jr c, .store ; $4de1
 	sub a, $03 ; $4de3
-Label_0d_4de5:
+.store:
 	ld [hl], a ; $4de5
 	call LaunchMinigameServe ; $4de6
 	ret ; $4de9
@@ -1987,9 +1987,9 @@ SelectRandomMinigameShot:
 	and a, $0f ; $4e3a
 	add a, l ; $4e3c
 	ld l, a ; $4e3d
-	jr nc, Label_0d_4e41 ; $4e3e
+	jr nc, .read ; $4e3e
 	inc h ; $4e40
-Label_0d_4e41:
+.read:
 	ld a, [hl] ; $4e41
 	ld [$c7a5], a ; $4e42
 	ld a, [$c7a5] ; $4e45
@@ -2025,10 +2025,10 @@ CheckBallLandedOut:
 	ret ; $4e95
 LookupMinigameShotResult:
 	ld hl, TargetShotScoreRules ; $4e96
-Label_0d_4e99:
+.loop:
 	ld a, [hl+] ; $4e99
 	cp a, $ff ; $4e9a
-	jr z, Label_0d_4ebe ; $4e9c
+	jr z, .step2 ; $4e9c
 	ld e, a ; $4e9e
 	ld a, [hl+] ; $4e9f
 	ld d, a ; $4ea0
@@ -2038,20 +2038,20 @@ Label_0d_4e99:
 	ld b, a ; $4ea4
 	ld a, [$c7a5] ; $4ea5
 	cp a, e ; $4ea8
-	jr nz, Label_0d_4e99 ; $4ea9
+	jr nz, .loop ; $4ea9
 	ld a, [$c490] ; $4eab
 	cp a, d ; $4eae
-	jr nz, Label_0d_4e99 ; $4eaf
+	jr nz, .loop ; $4eaf
 	ld a, c ; $4eb1
 	cp a, $ff ; $4eb2
-	jr z, Label_0d_4ebc ; $4eb4
+	jr z, .step ; $4eb4
 	ld a, [wCurrentShotType] ; $4eb6
 	cp a, c ; $4eb9
-	jr nz, Label_0d_4e99 ; $4eba
-Label_0d_4ebc:
+	jr nz, .loop ; $4eba
+.step:
 	ld a, b ; $4ebc
 	ret ; $4ebd
-Label_0d_4ebe:
+.step2:
 	ld a, $01 ; $4ebe
 	ret ; $4ec0
 TargetShotScoreRules:
@@ -2202,10 +2202,10 @@ InitMinigame_ShootingStar:
 	ld [$c7b8], a ; $51a6
 	ld a, [wMinigameLevel] ; $51a9
 	cp a, $02 ; $51ac
-	jr nz, Label_0d_51b5 ; $51ae
+	jr nz, .done ; $51ae
 	ld a, $01 ; $51b0
 	ld [$c7bc], a ; $51b2
-Label_0d_51b5:
+.done:
 	ret ; $51b5
 MinigameHooks_ShootingStar:
 	; $51b6, 16 bytes (mode_hooks)
@@ -2238,9 +2238,9 @@ ShootingStarHook_PointStart:
 	ld hl, $c785 ; $51e6
 	add a, [hl] ; $51e9
 	cp a, $03 ; $51ea
-	jr c, Label_0d_51f0 ; $51ec
+	jr c, .store ; $51ec
 	sub a, $03 ; $51ee
-Label_0d_51f0:
+.store:
 	ld [hl], a ; $51f0
 	call LaunchMinigameServe ; $51f1
 	ret ; $51f4
@@ -2269,10 +2269,10 @@ InitBallTargetActor:
 ResetTargetHitState:
 	ld a, [$c788] ; $521e
 	and a, a ; $5221
-	jr nz, Label_0d_5228 ; $5222
+	jr nz, .step ; $5222
 	xor a, a ; $5224
 	ld [$c789], a ; $5225
-Label_0d_5228:
+.step:
 	xor a, a ; $5228
 	ld [$c788], a ; $5229
 	xor a, a ; $522c
@@ -2281,19 +2281,19 @@ Label_0d_5228:
 ShootingStarTargetActorHandler:
 	ld a, [$dc72] ; $5231
 	rst Rst00 ; $5234
-	dw Label_0d_5244 ; $5235 jumptable
-	dw Label_0d_5262 ; $5237 jumptable
-	dw Label_0d_5270 ; $5239 jumptable
-	dw Label_0d_528e ; $523b jumptable
+	dw AdvanceTargetActorState.step ; $5235 jumptable
+	dw AdvanceTargetActorState.drawTargetReticleSprite ; $5237 jumptable
+	dw AdvanceTargetActorState.drawTargetHitCountdown ; $5239 jumptable
+	dw AdvanceTargetActorState.drawTargetReticleSprite2 ; $523b jumptable
 	dw RetStub ; $523d jumptable
 AdvanceTargetActorState:
 	ld hl, $dc72 ; $523f
 	inc [hl] ; $5242
 	ret ; $5243
-Label_0d_5244:
+.step:
 	ld a, [$dc73] ; $5244
 	and a, a ; $5247
-	jr z, Label_0d_525b ; $5248
+	jr z, .step2 ; $5248
 	farcall AdvanceMatchRng ; $524a
 	ld h, $00 ; $524d
 	ld l, a ; $524f
@@ -2302,18 +2302,18 @@ Label_0d_5244:
 	add hl, de ; $5254
 	ld de, $fdc0 ; $5255
 	call SetMinigameActorWorldPos ; $5258
-Label_0d_525b:
+.step2:
 	xor a, a ; $525b
 	ld [$dc73], a ; $525c
 	call AdvanceTargetActorState ; $525f
-Label_0d_5262:
+.drawTargetReticleSprite:
 	call DrawTargetReticleSprite ; $5262
 	call IsBallInHitZone ; $5265
 	and a, a ; $5268
 	ret z ; $5269
 	call AwardHitScore ; $526a
 	jp AdvanceTargetActorState ; $526d
-Label_0d_5270:
+.drawTargetHitCountdown:
 	call DrawTargetHitCountdown ; $5270
 	ld hl, $dc73 ; $5273
 	dec [hl] ; $5276
@@ -2329,13 +2329,13 @@ Label_0d_5270:
 	ld de, $fdc0 ; $5285
 	call SetMinigameActorWorldPos ; $5288
 	jp AdvanceTargetActorState ; $528b
-Label_0d_528e:
+.drawTargetReticleSprite2:
 	call DrawTargetReticleSprite ; $528e
 	ret ; $5291
 IsBallInHitZone:
 	ld a, [wLastShotCharIndex] ; $5292
 	and a, $01 ; $5295
-	jp nz, Label_0d_52f7 ; $5297
+	jp nz, .step4 ; $5297
 	ld hl, $dc76 ; $529a
 	ld a, [hl+] ; $529d
 	ld d, [hl] ; $529e
@@ -2351,17 +2351,17 @@ IsBallInHitZone:
 	sbc a, d ; $52aa
 	ld h, a ; $52ab
 	bit 7, h ; $52ac
-	jr z, Label_0d_52b6 ; $52ae
+	jr z, .step ; $52ae
 	xor a, a ; $52b0
 	sub a, l ; $52b1
 	ld l, a ; $52b2
 	sbc a, a ; $52b3
 	sub a, h ; $52b4
 	ld h, a ; $52b5
-Label_0d_52b6:
+.step:
 	ld de, $ff80 ; $52b6
 	add hl, de ; $52b9
-	jr c, Label_0d_52f7 ; $52ba
+	jr c, .step4 ; $52ba
 	ld hl, $dc78 ; $52bc
 	ld a, [hl+] ; $52bf
 	ld d, [hl] ; $52c0
@@ -2377,36 +2377,36 @@ Label_0d_52b6:
 	sbc a, d ; $52cc
 	ld h, a ; $52cd
 	bit 7, h ; $52ce
-	jr z, Label_0d_52d8 ; $52d0
+	jr z, .step2 ; $52d0
 	xor a, a ; $52d2
 	sub a, l ; $52d3
 	ld l, a ; $52d4
 	sbc a, a ; $52d5
 	sub a, h ; $52d6
 	ld h, a ; $52d7
-Label_0d_52d8:
+.step2:
 	ld de, rJOYP ; $52d8
 	add hl, de ; $52db
-	jr c, Label_0d_52f7 ; $52dc
+	jr c, .step4 ; $52dc
 	ld hl, wBallHeight ; $52de
 	ld a, [hl+] ; $52e1
 	ld h, [hl] ; $52e2
 	ld l, a ; $52e3
 	bit 7, h ; $52e4
-	jr z, Label_0d_52ee ; $52e6
+	jr z, .step3 ; $52e6
 	xor a, a ; $52e8
 	sub a, l ; $52e9
 	ld l, a ; $52ea
 	sbc a, a ; $52eb
 	sub a, h ; $52ec
 	ld h, a ; $52ed
-Label_0d_52ee:
+.step3:
 	ld de, rLCDC ; $52ee
 	add hl, de ; $52f1
-	jr c, Label_0d_52f7 ; $52f2
+	jr c, .step4 ; $52f2
 	ld a, $01 ; $52f4
 	ret ; $52f6
-Label_0d_52f7:
+.step4:
 	xor a, a ; $52f7
 	ret ; $52f8
 AwardHitScore:
@@ -2415,11 +2415,11 @@ AwardHitScore:
 	ld hl, $0001 ; $52fe
 	ld a, [wCurrentShotType] ; $5301
 	cp a, SHOTTYPE_SMASH ; $5304
-	jr nz, Label_0d_5310 ; $5306
+	jr nz, .step ; $5306
 	ld a, $20 ; $5308
 	ld [$dc73], a ; $530a
 	ld hl, $0007 ; $530d
-Label_0d_5310:
+.step:
 	ld a, $01 ; $5310
 	ld [$c788], a ; $5312
 	ld a, [$c789] ; $5315
@@ -2607,10 +2607,10 @@ InitMinigame_BananaBunch:
 	ld [$c7b9], a ; $550b
 	ld a, [wMinigameLevel] ; $550e
 	cp a, $02 ; $5511
-	jr nz, Label_0d_551a ; $5513
+	jr nz, .done ; $5513
 	ld a, $01 ; $5515
 	ld [$c7bc], a ; $5517
-Label_0d_551a:
+.done:
 	ret ; $551a
 MinigameHooks_BananaBunch:
 	; $551b, 16 bytes (mode_hooks)
@@ -2698,7 +2698,7 @@ ScoreMinigameTargetHitOrDeflectBall:
 	ld [hl], $00 ; $55d0
 	ld a, [$c78d] ; $55d2
 	cp a, $ff ; $55d5
-	jr z, Label_0d_55fd ; $55d7
+	jr z, MinigameTargetTypeScores.step ; $55d7
 	ld a, [$c78d] ; $55d9
 	add a, $f9 ; $55dc
 	ld l, a ; $55de
@@ -2719,7 +2719,7 @@ ScoreMinigameTargetHitOrDeflectBall:
 MinigameTargetTypeScores:
 	; $55f9, 4 bytes (bytes:4)
 	db $01, $03, $05, $03 ; 0x00
-Label_0d_55fd:
+.step:
 	ld a, [$c7bf] ; $55fd
 	cp a, $ff ; $5600
 	ret z ; $5602
@@ -2743,10 +2743,10 @@ InitMinigame_BooBlast:
 	ld [$c7ba], a ; $5627
 	ld a, [wMinigameLevel] ; $562a
 	cp a, $02 ; $562d
-	jr nz, Label_0d_5636 ; $562f
+	jr nz, .step ; $562f
 	ld a, $01 ; $5631
 	ld [$c7bc], a ; $5633
-Label_0d_5636:
+.step:
 	ld hl, BooBlastInitParams ; $5636
 	ld a, [hl+] ; $5639
 	ld [$ca9b], a ; $563a
@@ -2852,22 +2852,22 @@ StubNop_0d_56ef:
 UpdateBooBlastHitStreak:
 	ld a, [wLastShotCharIndex] ; $56f0
 	and a, $01 ; $56f3
-	jr nz, Label_0d_56ff ; $56f5
+	jr nz, .step ; $56f5
 	ld a, [$c788] ; $56f7
 	and a, a ; $56fa
-	jr z, Label_0d_5710 ; $56fb
-	jr Label_0d_570b ; $56fd
-Label_0d_56ff:
+	jr z, .step3 ; $56fb
+	jr .step2 ; $56fd
+.step:
 	ld a, [$c788] ; $56ff
 	and a, a ; $5702
-	jr nz, Label_0d_570b ; $5703
+	jr nz, .step2 ; $5703
 	xor a, a ; $5705
 	ld [$c789], a ; $5706
-	jr Label_0d_5710 ; $5709
-Label_0d_570b:
+	jr .step3 ; $5709
+.step2:
 	ld b, $07 ; $570b
 	call IncrementCappedCounter ; $570d
-Label_0d_5710:
+.step3:
 	xor a, a ; $5710
 	ld [$c788], a ; $5711
 	xor a, a ; $5714
@@ -2876,25 +2876,25 @@ Label_0d_5710:
 BooBlastControllerActorHandler:
 	ld a, [$dc72] ; $5719
 	rst Rst00 ; $571c
-	dw Label_0d_572c ; $571d jumptable
-	dw Label_0d_572f ; $571f jumptable
-	dw Label_0d_573d ; $5721 jumptable
-	dw Label_0d_575b ; $5723 jumptable
+	dw AdvanceMinigameScriptState.advanceMinigameScriptState ; $571d jumptable
+	dw AdvanceMinigameScriptState.drawBooBlastTargetSprite ; $571f jumptable
+	dw AdvanceMinigameScriptState.drawBooBlastHitBurst ; $5721 jumptable
+	dw AdvanceMinigameScriptState.drawBooBlastTargetSprite2 ; $5723 jumptable
 	dw RetStub ; $5725 jumptable
 AdvanceMinigameScriptState:
 	ld hl, $dc72 ; $5727
 	inc [hl] ; $572a
 	ret ; $572b
-Label_0d_572c:
+.advanceMinigameScriptState:
 	call AdvanceMinigameScriptState ; $572c
-Label_0d_572f:
+.drawBooBlastTargetSprite:
 	call DrawBooBlastTargetSprite ; $572f
 	call IsBallWithinTargetZone ; $5732
 	and a, a ; $5735
 	ret z ; $5736
 	call ScoreBallHit ; $5737
 	jp AdvanceMinigameScriptState ; $573a
-Label_0d_573d:
+.drawBooBlastHitBurst:
 	call DrawBooBlastHitBurst ; $573d
 	ld hl, $dc73 ; $5740
 	dec [hl] ; $5743
@@ -2910,7 +2910,7 @@ Label_0d_573d:
 	ld de, $0000 ; $5752
 	call SetMinigameActorWorldPos ; $5755
 	jp AdvanceMinigameScriptState ; $5758
-Label_0d_575b:
+.drawBooBlastTargetSprite2:
 	call DrawBooBlastTargetSprite ; $575b
 	ret ; $575e
 IsBallWithinTargetZone:
@@ -2929,17 +2929,17 @@ IsBallWithinTargetZone:
 	sbc a, d ; $576f
 	ld h, a ; $5770
 	bit 7, h ; $5771
-	jr z, Label_0d_577b ; $5773
+	jr z, .step ; $5773
 	xor a, a ; $5775
 	sub a, l ; $5776
 	ld l, a ; $5777
 	sbc a, a ; $5778
 	sub a, h ; $5779
 	ld h, a ; $577a
-Label_0d_577b:
+.step:
 	ld de, $ff80 ; $577b
 	add hl, de ; $577e
-	jr c, Label_0d_57bc ; $577f
+	jr c, .step4 ; $577f
 	ld hl, $dc78 ; $5781
 	ld a, [hl+] ; $5784
 	ld d, [hl] ; $5785
@@ -2955,36 +2955,36 @@ Label_0d_577b:
 	sbc a, d ; $5791
 	ld h, a ; $5792
 	bit 7, h ; $5793
-	jr z, Label_0d_579d ; $5795
+	jr z, .step2 ; $5795
 	xor a, a ; $5797
 	sub a, l ; $5798
 	ld l, a ; $5799
 	sbc a, a ; $579a
 	sub a, h ; $579b
 	ld h, a ; $579c
-Label_0d_579d:
+.step2:
 	ld de, $fec0 ; $579d
 	add hl, de ; $57a0
-	jr c, Label_0d_57bc ; $57a1
+	jr c, .step4 ; $57a1
 	ld hl, wBallHeight ; $57a3
 	ld a, [hl+] ; $57a6
 	ld h, [hl] ; $57a7
 	ld l, a ; $57a8
 	bit 7, h ; $57a9
-	jr z, Label_0d_57b3 ; $57ab
+	jr z, .step3 ; $57ab
 	xor a, a ; $57ad
 	sub a, l ; $57ae
 	ld l, a ; $57af
 	sbc a, a ; $57b0
 	sub a, h ; $57b1
 	ld h, a ; $57b2
-Label_0d_57b3:
+.step3:
 	ld de, rJOYP ; $57b3
 	add hl, de ; $57b6
-	jr c, Label_0d_57bc ; $57b7
+	jr c, .step4 ; $57b7
 	ld a, $01 ; $57b9
 	ret ; $57bb
-Label_0d_57bc:
+.step4:
 	xor a, a ; $57bc
 	ret ; $57bd
 ScoreBallHit:
@@ -3012,10 +3012,10 @@ ScoreBallHit:
 	call StartScorePopup ; $57e6
 	call IsMinigameTargetReached ; $57e9
 	and a, a ; $57ec
-	jr z, Label_0d_57f4 ; $57ed
+	jr z, .done ; $57ed
 	ld a, $0b ; $57ef
 	ld [wPointOutcome], a ; $57f1
-Label_0d_57f4:
+.done:
 	ret ; $57f4
 	ld bc, $0402 ; $57f5
 	ld [$2010], sp ; $57f8
@@ -3098,10 +3098,10 @@ InitMinigame_PerfectShot:
 	ld [$c7b9], a ; $5880
 	ld a, [wMinigameLevel] ; $5883
 	cp a, $02 ; $5886
-	jr nz, Label_0d_588f ; $5888
+	jr nz, .initMinigameTargets ; $5888
 	ld a, $01 ; $588a
 	ld [$c7bc], a ; $588c
-Label_0d_588f:
+.initMinigameTargets:
 	farcall InitMinigameTargets ; $588f
 	ld a, [wMinigameLevel] ; $5892
 	add a, $a3 ; $5895
@@ -3179,20 +3179,20 @@ ProcessTargetTileHit:
 	call AddToMinigameScore ; $5909
 	call IsMinigameTargetReached ; $590c
 	and a, a ; $590f
-	jr z, Label_0d_5918 ; $5910
+	jr z, .areAllTargetsHit ; $5910
 	ld a, $0b ; $5912
 	ld [wPointOutcome], a ; $5914
 	ret ; $5917
-Label_0d_5918:
+.areAllTargetsHit:
 	call AreAllTargetsHit ; $5918
 	and a, a ; $591b
 	ret z ; $591c
 	ld hl, $c7a6 ; $591d
 	ld a, [hl] ; $5920
 	cp a, $09 ; $5921
-	jr nc, Label_0d_5926 ; $5923
+	jr nc, .step ; $5923
 	inc [hl] ; $5925
-Label_0d_5926:
+.step:
 	ldh a, [hWramBank] ; $5926
 	push af ; $5928
 	wram_bank $02 ; $5929
@@ -3228,10 +3228,10 @@ AnimateTargetGridClear:
 	ld hl, PerfectShotTargetGridLayout ; $5990
 	ld b, $18 ; $5993
 	ld c, $00 ; $5995
-Label_0d_5997:
+.loop:
 	ld a, [hl+] ; $5997
 	cp a, $00 ; $5998
-	jr z, Label_0d_59af ; $599a
+	jr z, .step ; $599a
 	push bc ; $599c
 	push hl ; $599d
 	ld b, a ; $599e
@@ -3243,10 +3243,10 @@ Label_0d_5997:
 	farcall StepMatchFrames ; $59aa
 	pop hl ; $59ad
 	pop bc ; $59ae
-Label_0d_59af:
+.step:
 	inc c ; $59af
 	dec b ; $59b0
-	jr nz, Label_0d_5997 ; $59b1
+	jr nz, .loop ; $59b1
 	call ResetTargetGrid ; $59b3
 	ret ; $59b6
 AreAllTargetsHit:
@@ -3272,10 +3272,10 @@ InitMinigame_TreasureBox:
 	ld [$c7b8], a ; $59dd
 	ld a, [wMinigameLevel] ; $59e0
 	cp a, $02 ; $59e3
-	jr nz, Label_0d_59ec ; $59e5
+	jr nz, .done ; $59e5
 	ld a, $01 ; $59e7
 	ld [$c7bc], a ; $59e9
-Label_0d_59ec:
+.done:
 	ret ; $59ec
 MinigameHooks_TreasureBox:
 	; $59ed, 16 bytes (mode_hooks)
@@ -3313,9 +3313,9 @@ TreasureBoxHook_PointStart:
 	ld hl, $c785 ; $5a2b
 	add a, [hl] ; $5a2e
 	cp a, $03 ; $5a2f
-	jr c, Label_0d_5a35 ; $5a31
+	jr c, .store ; $5a31
 	sub a, $03 ; $5a33
-Label_0d_5a35:
+.store:
 	ld [hl], a ; $5a35
 	call LaunchMinigameServe ; $5a36
 	ret ; $5a39
@@ -3365,19 +3365,19 @@ SelectRandomTreasureBoxTargetZone:
 	and a, $0f ; $5a81
 	add a, l ; $5a83
 	ld l, a ; $5a84
-	jr nc, Label_0d_5a88 ; $5a85
+	jr nc, .read ; $5a85
 	inc h ; $5a87
-Label_0d_5a88:
+.read:
 	ld a, [hl] ; $5a88
 	ld [$c7a5], a ; $5a89
 	ld a, [$c7a5] ; $5a8c
 	call LoadTargetZoneConfig ; $5a8f
 	ld a, [$c788] ; $5a92
 	and a, a ; $5a95
-	jr nz, Label_0d_5a9c ; $5a96
+	jr nz, .step ; $5a96
 	xor a, a ; $5a98
 	ld [$c789], a ; $5a99
-Label_0d_5a9c:
+.step:
 	xor a, a ; $5a9c
 	ld [$c788], a ; $5a9d
 	xor a, a ; $5aa0
@@ -3399,16 +3399,16 @@ StubNop_0d_5acb:
 TreasureBoxTargetActorHandler:
 	ld a, [$dc72] ; $5acc
 	rst Rst00 ; $5acf
-	dw Label_0d_5adf ; $5ad0 jumptable
-	dw Label_0d_5b2f ; $5ad2 jumptable
-	dw Label_0d_5b3d ; $5ad4 jumptable
-	dw Label_0d_5b4a ; $5ad6 jumptable
+	dw AdvanceTreasureBoxActorState.step ; $5ad0 jumptable
+	dw AdvanceTreasureBoxActorState.drawTreasureBoxSprite ; $5ad2 jumptable
+	dw AdvanceTreasureBoxActorState.drawTreasureBoxHitCountdown ; $5ad4 jumptable
+	dw AdvanceTreasureBoxActorState.done ; $5ad6 jumptable
 	dw RetStub ; $5ad8 jumptable
 AdvanceTreasureBoxActorState:
 	ld hl, $dc72 ; $5ada
 	inc [hl] ; $5add
 	ret ; $5ade
-Label_0d_5adf:
+.step:
 	xor a, a ; $5adf
 	ld [$c78a], a ; $5ae0
 	ld hl, $c780 ; $5ae3
@@ -3419,16 +3419,16 @@ Label_0d_5adf:
 	add hl, de ; $5aec
 	bit 7, h ; $5aed
 	ld hl, TreasureBoxTypePoolLate ; $5aef
-	jr z, Label_0d_5af7 ; $5af2
+	jr z, .advanceMatchRng ; $5af2
 	ld hl, TreasureBoxTypePoolEarly ; $5af4
-Label_0d_5af7:
+.advanceMatchRng:
 	farcall AdvanceMatchRng ; $5af7
 	and a, $0f ; $5afa
 	add a, l ; $5afc
 	ld l, a ; $5afd
-	jr nc, Label_0d_5b01 ; $5afe
+	jr nc, .read ; $5afe
 	inc h ; $5b00
-Label_0d_5b01:
+.read:
 	ld a, [hl] ; $5b01
 	ld [$dc71], a ; $5b02
 	ld a, [$c7a5] ; $5b05
@@ -3447,9 +3447,9 @@ Label_0d_5b01:
 	add a, a ; $5b19
 	add a, l ; $5b1a
 	ld l, a ; $5b1b
-	jr nc, Label_0d_5b1f ; $5b1c
+	jr nc, .readB ; $5b1c
 	inc h ; $5b1e
-Label_0d_5b1f:
+.readB:
 	ld a, [hl+] ; $5b1f
 	ld c, a ; $5b20
 	ld a, [hl+] ; $5b21
@@ -3462,14 +3462,14 @@ Label_0d_5b1f:
 	ld h, b ; $5b28
 	call SetMinigameActorWorldPos ; $5b29
 	call AdvanceTreasureBoxActorState ; $5b2c
-Label_0d_5b2f:
+.drawTreasureBoxSprite:
 	call DrawTreasureBoxSprite ; $5b2f
 	call IsBallInTreasureBoxHitZone ; $5b32
 	and a, a ; $5b35
 	ret z ; $5b36
 	call AwardTreasureBoxHitScore ; $5b37
 	jp AdvanceTreasureBoxActorState ; $5b3a
-Label_0d_5b3d:
+.drawTreasureBoxHitCountdown:
 	call DrawTreasureBoxHitCountdown ; $5b3d
 	ld hl, $dc73 ; $5b40
 	dec [hl] ; $5b43
@@ -3477,7 +3477,7 @@ Label_0d_5b3d:
 	and a, a ; $5b45
 	ret nz ; $5b46
 	jp AdvanceTreasureBoxActorState ; $5b47
-Label_0d_5b4a:
+.done:
 	ret ; $5b4a
 TreasureBoxTypePoolLate:
 	; $5b4b, 16 bytes (bytes:16)
@@ -3525,7 +3525,7 @@ TreasureBoxSpawnPoints4:
 IsBallInTreasureBoxHitZone:
 	ld a, [wLastShotCharIndex] ; $5bc5
 	and a, $01 ; $5bc8
-	jp nz, Label_0d_5c2a ; $5bca
+	jp nz, .step4 ; $5bca
 	ld hl, $dc76 ; $5bcd
 	ld a, [hl+] ; $5bd0
 	ld d, [hl] ; $5bd1
@@ -3541,17 +3541,17 @@ IsBallInTreasureBoxHitZone:
 	sbc a, d ; $5bdd
 	ld h, a ; $5bde
 	bit 7, h ; $5bdf
-	jr z, Label_0d_5be9 ; $5be1
+	jr z, .step ; $5be1
 	xor a, a ; $5be3
 	sub a, l ; $5be4
 	ld l, a ; $5be5
 	sbc a, a ; $5be6
 	sub a, h ; $5be7
 	ld h, a ; $5be8
-Label_0d_5be9:
+.step:
 	ld de, hPeakLY ; $5be9
 	add hl, de ; $5bec
-	jr c, Label_0d_5c2a ; $5bed
+	jr c, .step4 ; $5bed
 	ld hl, $dc78 ; $5bef
 	ld a, [hl+] ; $5bf2
 	ld d, [hl] ; $5bf3
@@ -3567,36 +3567,36 @@ Label_0d_5be9:
 	sbc a, d ; $5bff
 	ld h, a ; $5c00
 	bit 7, h ; $5c01
-	jr z, Label_0d_5c0b ; $5c03
+	jr z, .step2 ; $5c03
 	xor a, a ; $5c05
 	sub a, l ; $5c06
 	ld l, a ; $5c07
 	sbc a, a ; $5c08
 	sub a, h ; $5c09
 	ld h, a ; $5c0a
-Label_0d_5c0b:
+.step2:
 	ld de, $ff80 ; $5c0b
 	add hl, de ; $5c0e
-	jr c, Label_0d_5c2a ; $5c0f
+	jr c, .step4 ; $5c0f
 	ld hl, wBallHeight ; $5c11
 	ld a, [hl+] ; $5c14
 	ld h, [hl] ; $5c15
 	ld l, a ; $5c16
 	bit 7, h ; $5c17
-	jr z, Label_0d_5c21 ; $5c19
+	jr z, .step3 ; $5c19
 	xor a, a ; $5c1b
 	sub a, l ; $5c1c
 	ld l, a ; $5c1d
 	sbc a, a ; $5c1e
 	sub a, h ; $5c1f
 	ld h, a ; $5c20
-Label_0d_5c21:
+.step3:
 	ld de, rLCDC ; $5c21
 	add hl, de ; $5c24
-	jr c, Label_0d_5c2a ; $5c25
+	jr c, .step4 ; $5c25
 	ld a, $01 ; $5c27
 	ret ; $5c29
-Label_0d_5c2a:
+.step4:
 	xor a, a ; $5c2a
 	ret ; $5c2b
 AwardTreasureBoxHitScore:
@@ -3707,10 +3707,10 @@ InitMinigame_MedallionMatch:
 	ld [$c7b8], a ; $5cfc
 	ld a, [wMinigameLevel] ; $5cff
 	cp a, $02 ; $5d02
-	jr nz, Label_0d_5d0b ; $5d04
+	jr nz, .done ; $5d04
 	ld a, $01 ; $5d06
 	ld [$c7bc], a ; $5d08
-Label_0d_5d0b:
+.done:
 	ret ; $5d0b
 MinigameHooks_MedallionMatch:
 	; $5d0c, 16 bytes (mode_hooks)
@@ -3749,9 +3749,9 @@ MedallionMatchHook_PointStart:
 	ld hl, $c785 ; $5d43
 	add a, [hl] ; $5d46
 	cp a, $03 ; $5d47
-	jr c, Label_0d_5d4d ; $5d49
+	jr c, .store ; $5d49
 	sub a, $03 ; $5d4b
-Label_0d_5d4d:
+.store:
 	ld [hl], a ; $5d4d
 	call LaunchMinigameServe ; $5d4e
 	call ResetMedallionMatchHitState ; $5d51
@@ -3833,25 +3833,25 @@ ResetMedallionMatchHitState:
 MedallionMatchTargetActorHandler:
 	ld a, [$dc72] ; $5dee
 	rst Rst00 ; $5df1
-	dw Label_0d_5e01 ; $5df2 jumptable
-	dw Label_0d_5e04 ; $5df4 jumptable
-	dw Label_0d_5e12 ; $5df6 jumptable
-	dw Label_0d_5e33 ; $5df8 jumptable
+	dw AdvanceMedallionMatchActorState.advanceMedallionMatchActorState ; $5df2 jumptable
+	dw AdvanceMedallionMatchActorState.drawMedallionMatchSprite ; $5df4 jumptable
+	dw AdvanceMedallionMatchActorState.drawMedallionMatchHitCountdown ; $5df6 jumptable
+	dw AdvanceMedallionMatchActorState.drawMedallionMatchSprite2 ; $5df8 jumptable
 	dw RetStub ; $5dfa jumptable
 AdvanceMedallionMatchActorState:
 	ld hl, $dc72 ; $5dfc
 	inc [hl] ; $5dff
 	ret ; $5e00
-Label_0d_5e01:
+.advanceMedallionMatchActorState:
 	call AdvanceMedallionMatchActorState ; $5e01
-Label_0d_5e04:
+.drawMedallionMatchSprite:
 	call DrawMedallionMatchSprite ; $5e04
 	call IsBallInMedallionMatchHitZone ; $5e07
 	and a, a ; $5e0a
 	ret z ; $5e0b
 	call AwardMedallionMatchHitScore ; $5e0c
 	jp AdvanceMedallionMatchActorState ; $5e0f
-Label_0d_5e12:
+.drawMedallionMatchHitCountdown:
 	call DrawMedallionMatchHitCountdown ; $5e12
 	ld hl, $dc73 ; $5e15
 	dec [hl] ; $5e18
@@ -3870,13 +3870,13 @@ Label_0d_5e12:
 	add hl, bc ; $5e2c
 	call SetMinigameActorWorldPos ; $5e2d
 	jp AdvanceMedallionMatchActorState ; $5e30
-Label_0d_5e33:
+.drawMedallionMatchSprite2:
 	call DrawMedallionMatchSprite ; $5e33
 	ret ; $5e36
 IsBallInMedallionMatchHitZone:
 	ld a, [wLastShotCharIndex] ; $5e37
 	and a, $01 ; $5e3a
-	jp nz, Label_0d_5e9c ; $5e3c
+	jp nz, .step4 ; $5e3c
 	ld hl, $dc76 ; $5e3f
 	ld a, [hl+] ; $5e42
 	ld d, [hl] ; $5e43
@@ -3892,17 +3892,17 @@ IsBallInMedallionMatchHitZone:
 	sbc a, d ; $5e4f
 	ld h, a ; $5e50
 	bit 7, h ; $5e51
-	jr z, Label_0d_5e5b ; $5e53
+	jr z, .step ; $5e53
 	xor a, a ; $5e55
 	sub a, l ; $5e56
 	ld l, a ; $5e57
 	sbc a, a ; $5e58
 	sub a, h ; $5e59
 	ld h, a ; $5e5a
-Label_0d_5e5b:
+.step:
 	ld de, hPeakLY ; $5e5b
 	add hl, de ; $5e5e
-	jr c, Label_0d_5e9c ; $5e5f
+	jr c, .step4 ; $5e5f
 	ld hl, $dc78 ; $5e61
 	ld a, [hl+] ; $5e64
 	ld d, [hl] ; $5e65
@@ -3918,36 +3918,36 @@ Label_0d_5e5b:
 	sbc a, d ; $5e71
 	ld h, a ; $5e72
 	bit 7, h ; $5e73
-	jr z, Label_0d_5e7d ; $5e75
+	jr z, .step2 ; $5e75
 	xor a, a ; $5e77
 	sub a, l ; $5e78
 	ld l, a ; $5e79
 	sbc a, a ; $5e7a
 	sub a, h ; $5e7b
 	ld h, a ; $5e7c
-Label_0d_5e7d:
+.step2:
 	ld de, $ff80 ; $5e7d
 	add hl, de ; $5e80
-	jr c, Label_0d_5e9c ; $5e81
+	jr c, .step4 ; $5e81
 	ld hl, wBallHeight ; $5e83
 	ld a, [hl+] ; $5e86
 	ld h, [hl] ; $5e87
 	ld l, a ; $5e88
 	bit 7, h ; $5e89
-	jr z, Label_0d_5e93 ; $5e8b
+	jr z, .step3 ; $5e8b
 	xor a, a ; $5e8d
 	sub a, l ; $5e8e
 	ld l, a ; $5e8f
 	sbc a, a ; $5e90
 	sub a, h ; $5e91
 	ld h, a ; $5e92
-Label_0d_5e93:
+.step3:
 	ld de, rLCDC ; $5e93
 	add hl, de ; $5e96
-	jr c, Label_0d_5e9c ; $5e97
+	jr c, .step4 ; $5e97
 	ld a, $01 ; $5e99
 	ret ; $5e9b
-Label_0d_5e9c:
+.step4:
 	xor a, a ; $5e9c
 	ret ; $5e9d
 AwardMedallionMatchHitScore:
@@ -3956,11 +3956,11 @@ AwardMedallionMatchHitScore:
 	ld hl, $0001 ; $5ea3
 	ld a, [wCurrentShotType] ; $5ea6
 	cp a, SHOTTYPE_SMASH ; $5ea9
-	jr nz, Label_0d_5eb5 ; $5eab
+	jr nz, .step ; $5eab
 	ld a, $20 ; $5ead
 	ld [$dc73], a ; $5eaf
 	ld hl, $0002 ; $5eb2
-Label_0d_5eb5:
+.step:
 	ld a, [$c789] ; $5eb5
 	add a, $e4 ; $5eb8
 	ld e, a ; $5eba
@@ -4048,10 +4048,10 @@ InitMinigame_FruitFantasy:
 	ld [$c7b9], a ; $5f51
 	ld a, [wMinigameLevel] ; $5f54
 	cp a, $02 ; $5f57
-	jr nz, Label_0d_5f60 ; $5f59
+	jr nz, .done ; $5f59
 	ld a, $01 ; $5f5b
 	ld [$c7bc], a ; $5f5d
-Label_0d_5f60:
+.done:
 	ret ; $5f60
 MinigameHooks_FruitFantasy:
 	; $5f61, 16 bytes (mode_hooks)
