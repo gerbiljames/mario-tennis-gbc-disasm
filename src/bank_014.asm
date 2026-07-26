@@ -1474,11 +1474,11 @@ IslandSkyInitScript_14:
 	script_set_position $06, $3f00, $3f00 ; $52d8
 	ld a, [wStoryModeEntryPoint] ; $52e3
 	cp a, $02 ; $52e6
-	jp z, Label_14_628b ; $52e8
+	jp z, QueuePlaneSpriteByFrameCounter_14.loadScene ; $52e8
 	cp a, $08 ; $52eb
 	jp z, Label_14_64e1 ; $52ed
 	cp a, $0e ; $52f0
-	jp z, Label_14_76c6 ; $52f2
+	jp z, QueueTwinkleSprite_14.queue ; $52f2
 	cp a, $0f ; $52f5
 	jp z, AdvanceFirework1Ascent_14.loadScene ; $52f7
 	cp a, $0d ; $52fa
@@ -2209,27 +2209,27 @@ QueuePlaneSpriteByFrameCounter_14:
 	ld b, $10 ; $625e
 	ld a, [$c2b2] ; $6260
 	cp a, $14 ; $6263
-	jr c, Label_14_6281 ; $6265
+	jr c, .queue ; $6265
 	ld b, $20 ; $6267
 	cp a, $1e ; $6269
-	jr c, Label_14_6281 ; $626b
+	jr c, .queue ; $626b
 	ld b, $30 ; $626d
 	cp a, $5a ; $626f
-	jr c, Label_14_6281 ; $6271
+	jr c, .queue ; $6271
 	ld b, $20 ; $6273
 	cp a, $78 ; $6275
-	jr c, Label_14_6281 ; $6277
+	jr c, .queue ; $6277
 	ld b, $10 ; $6279
 	cp a, $8c ; $627b
-	jr c, Label_14_6281 ; $627d
+	jr c, .queue ; $627d
 	ld b, $00 ; $627f
-Label_14_6281:
+.queue:
 	ld c, b ; $6281
 	ld hl, SpriteTemplate_14_5e50 ; $6282
 	ld b, $08 ; $6285
 	call QueueSpriteTemplate ; $6287
 	ret ; $628a
-Label_14_628b:
+.loadScene:
 	clear_flag FLAG_ISLAND_SKY_SCENE_ACTIVE ; $628b
 	call DisableLCDSafely ; $628e
 	call LoadPlaneObjGfx2_14 ; $6291
@@ -2246,10 +2246,10 @@ Label_14_628b:
 	script_set_active ACTOR_PLAYER, $00 ; $62ae
 	script_set_active $03, $00 ; $62b5
 	test_flag FLAG_DOUBLES ; $62bc
-	jp z, Label_14_62d2 ; $62bf
+	jp z, .fadeIn ; $62bf
 	script_null_script ACTOR_PARTNER ; $62c2
 	script_set_position ACTOR_PARTNER, $3f00, $3f00 ; $62c7
-Label_14_62d2:
+.fadeIn:
 	xor a, a ; $62d2
 	ld [wStoryModeShowLocationName], a ; $62d3
 	script_fade_in $06 ; $62d6
@@ -2258,7 +2258,7 @@ Label_14_62d2:
 	script_wait_frames $3c ; $62e0
 	script_set_position ACTOR_PLAYER, $0c00, $1300 ; $62e7
 	ld h, $08 ; $62f2
-Label_14_62f4:
+.planeLoop:
 	script_wait_frames $06 ; $62f4
 	call PlayPlaneMoveSfx_14 ; $62fb
 	ld a, [$c2b1] ; $62fe
@@ -2266,26 +2266,26 @@ Label_14_62f4:
 	ld [$c2b1], a ; $6302
 	call AdvancePlaneFrameCounter_14 ; $6305
 	dec h ; $6308
-	jr nz, Label_14_62f4 ; $6309
+	jr nz, .planeLoop ; $6309
 	ld h, $08 ; $630b
-Label_14_630d:
+.planeLoop2:
 	script_wait_frames $05 ; $630d
 	call PlayPlaneMoveSfx_14 ; $6314
 	ld a, h ; $6317
 	and a, $01 ; $6318
-	jr z, Label_14_6323 ; $631a
+	jr z, .planeArrived ; $631a
 	ld a, [$c2b0] ; $631c
 	inc a ; $631f
 	ld [$c2b0], a ; $6320
-Label_14_6323:
+.planeArrived:
 	ld a, [$c2b1] ; $6323
 	dec a ; $6326
 	ld [$c2b1], a ; $6327
 	call AdvancePlaneFrameCounter_14 ; $632a
 	dec h ; $632d
-	jr nz, Label_14_630d ; $632e
+	jr nz, .planeLoop2 ; $632e
 	ld h, $08 ; $6330
-Label_14_6332:
+.descend:
 	script_wait_frames $04 ; $6332
 	call PlayPlaneMoveSfx_14 ; $6339
 	ld a, [$c2b0] ; $633c
@@ -2296,28 +2296,28 @@ Label_14_6332:
 	ld [$c2b1], a ; $6347
 	call AdvancePlaneFrameCounter_14 ; $634a
 	dec h ; $634d
-	jr nz, Label_14_6332 ; $634e
+	jr nz, .descend ; $634e
 	script_player_speed $0012 ; $6350
 	script_move_player_to_actor ACTOR_PLAYER ; $6356
 	ld h, $1c ; $635d
-Label_14_635f:
+.land:
 	script_wait_frames $03 ; $635f
 	call PlayPlaneMoveSfx_14 ; $6366
 	ld a, h ; $6369
 	and a, $01 ; $636a
-	jr z, Label_14_6375 ; $636c
+	jr z, .disembark ; $636c
 	ld a, [$c2b0] ; $636e
 	inc a ; $6371
 	ld [$c2b0], a ; $6372
-Label_14_6375:
+.disembark:
 	ld a, [$c2b1] ; $6375
 	dec a ; $6378
 	ld [$c2b1], a ; $6379
 	call AdvancePlaneFrameCounter_14 ; $637c
 	dec h ; $637f
-	jr nz, Label_14_635f ; $6380
+	jr nz, .land ; $6380
 	ld h, $00 ; $6382
-Label_14_6384:
+.walkOff:
 	script_wait_frames $03 ; $6384
 	inc h ; $638b
 	call PlayPlaneMoveSfx_14 ; $638c
@@ -2326,17 +2326,17 @@ Label_14_6384:
 	ld [$c2b1], a ; $6393
 	and a, $03 ; $6396
 	cp a, $03 ; $6398
-	jr nz, Label_14_63a3 ; $639a
+	jr nz, .speak ; $639a
 	ld a, [$c2b0] ; $639c
 	inc a ; $639f
 	ld [$c2b0], a ; $63a0
-Label_14_63a3:
+.speak:
 	call AdvancePlaneFrameCounter_14 ; $63a3
 	ld a, [$c2b0] ; $63a6
 	cp a, $50 ; $63a9
-	jr nz, Label_14_6384 ; $63ab
+	jr nz, .walkOff ; $63ab
 	ld h, $08 ; $63ad
-Label_14_63af:
+.speakDoubles:
 	script_wait_frames $04 ; $63af
 	call PlayPlaneMoveSfx_14 ; $63b6
 	ld a, [$c2b1] ; $63b9
@@ -2344,9 +2344,9 @@ Label_14_63af:
 	ld [$c2b1], a ; $63bd
 	call AdvancePlaneFrameCounter_14 ; $63c0
 	dec h ; $63c3
-	jr nz, Label_14_63af ; $63c4
+	jr nz, .speakDoubles ; $63c4
 	ld h, $08 ; $63c6
-Label_14_63c8:
+.fadeOut:
 	script_wait_frames $06 ; $63c8
 	call PlayPlaneMoveSfx_14 ; $63cf
 	ld a, [$c2b1] ; $63d2
@@ -2354,9 +2354,9 @@ Label_14_63c8:
 	ld [$c2b1], a ; $63d6
 	call AdvancePlaneFrameCounter_14 ; $63d9
 	dec h ; $63dc
-	jr nz, Label_14_63c8 ; $63dd
+	jr nz, .fadeOut ; $63dd
 	ld h, $08 ; $63df
-Label_14_63e1:
+.done:
 	script_wait_frames $08 ; $63e1
 	call PlayPlaneMoveSfx_14 ; $63e8
 	ld a, [$c2b1] ; $63eb
@@ -2364,7 +2364,7 @@ Label_14_63e1:
 	ld [$c2b1], a ; $63ef
 	call AdvancePlaneFrameCounter_14 ; $63f2
 	dec h ; $63f5
-	jr nz, Label_14_63e1 ; $63f6
+	jr nz, .done ; $63f6
 	sound $7d ; $63f8
 	script_wait_frames $32 ; $63fa
 	ld c, $04 ; $6401
@@ -3099,7 +3099,7 @@ QueueTwinkleSprite_14:
 	ld b, $08 ; $76c0
 	call QueueSpriteTemplate ; $76c2
 	ret ; $76c5
-Label_14_76c6:
+.queue:
 	call DisableLCDSafely ; $76c6
 	call LoadIslandSkyEffectObjGfx_14 ; $76c9
 	call LoadTwinkleObjGfx_14 ; $76cc
@@ -3112,10 +3112,10 @@ Label_14_76c6:
 	call RegisterFrameTask ; $76df
 	script_set_position ACTOR_PLAYER, $3f00, $3f00 ; $76e2
 	test_flag FLAG_DOUBLES ; $76ed
-	jp z, Label_14_7703 ; $76f0
+	jp z, .loadScene ; $76f0
 	script_null_script ACTOR_PARTNER ; $76f3
 	script_set_position ACTOR_PARTNER, $3f00, $3f00 ; $76f8
-Label_14_7703:
+.loadScene:
 	xor a, a ; $7703
 	ld [wStoryModeShowLocationName], a ; $7704
 	script_fade_in $06 ; $7707
@@ -3134,7 +3134,7 @@ Label_14_7703:
 	ld hl, QueueDistantPlaneSprite_14 ; $7734
 	call RegisterFrameTask ; $7737
 	ld h, $4b ; $773a
-Label_14_773c:
+.fadeIn:
 	script_wait_frames $02 ; $773c
 	call PlayPlaneMoveSfx_14 ; $7743
 	ld a, [$c2b1] ; $7746
@@ -3145,22 +3145,22 @@ Label_14_773c:
 	ld [$c2b0], a ; $7751
 	ld a, h ; $7754
 	cp a, $2d ; $7755
-	jr nz, Label_14_775e ; $7757
+	jr nz, .fireworkLoop ; $7757
 	ld a, $0c ; $7759
 	ld [wWaterSpriteMinigameSwingCount], a ; $775b
-Label_14_775e:
+.fireworkLoop:
 	dec h ; $775e
-	jr nz, Label_14_773c ; $775f
+	jr nz, .fadeIn ; $775f
 	ld hl, QueueDistantPlaneSprite_14 ; $7761
 	call UnregisterFrameTask ; $7764
 	script_player_speed $0012 ; $7767
 	script_move_player $0b00, $1800 ; $776d
 	ld h, $3c ; $7777
-Label_14_7779:
+.burst:
 	script_wait_frames $02 ; $7779
 	call PlayPlaneMoveSfx_14 ; $7780
 	dec h ; $7783
-	jr nz, Label_14_7779 ; $7784
+	jr nz, .burst ; $7784
 	call LoadPlaneObjGfx2_14 ; $7786
 	ld a, $a4 ; $7789
 	ld [$c2b0], a ; $778b
@@ -3172,7 +3172,7 @@ Label_14_7779:
 	ld hl, QueuePlaneSpriteByFrameCounter_14 ; $779a
 	call RegisterFrameTask ; $779d
 	ld h, $20 ; $77a0
-Label_14_77a2:
+.nextBurst:
 	script_wait_frames $02 ; $77a2
 	call PlayPlaneMoveSfx_14 ; $77a9
 	ld a, [$c2b0] ; $77ac
@@ -3180,16 +3180,16 @@ Label_14_77a2:
 	ld [$c2b0], a ; $77b0
 	and a, $03 ; $77b3
 	cp a, $03 ; $77b5
-	jr nz, Label_14_77c0 ; $77b7
+	jr nz, .finale ; $77b7
 	ld a, [$c2b1] ; $77b9
 	dec a ; $77bc
 	ld [$c2b1], a ; $77bd
-Label_14_77c0:
+.finale:
 	call AdvancePlaneFrameCounter2_14 ; $77c0
 	dec h ; $77c3
-	jr nz, Label_14_77a2 ; $77c4
+	jr nz, .nextBurst ; $77c4
 	ld h, $18 ; $77c6
-Label_14_77c8:
+.finaleLoop:
 	script_wait_frames $02 ; $77c8
 	call PlayPlaneMoveSfx_14 ; $77cf
 	ld a, [$c2b0] ; $77d2
@@ -3202,10 +3202,10 @@ Label_14_77c8:
 	ld [$c2b1], a ; $77e0
 	call AdvancePlaneFrameCounter2_14 ; $77e3
 	dec h ; $77e6
-	jr nz, Label_14_77c8 ; $77e7
+	jr nz, .finaleLoop ; $77e7
 	script_move_player $0b00, $1200 ; $77e9
 	ld h, $18 ; $77f3
-Label_14_77f5:
+.speak:
 	script_wait_frames $03 ; $77f5
 	call PlayPlaneMoveSfx_14 ; $77fc
 	ld a, [$c2b1] ; $77ff
@@ -3216,9 +3216,9 @@ Label_14_77f5:
 	ld [$c2b0], a ; $780a
 	call AdvancePlaneFrameCounter2_14 ; $780d
 	dec h ; $7810
-	jr nz, Label_14_77f5 ; $7811
+	jr nz, .speak ; $7811
 	ld h, $08 ; $7813
-Label_14_7815:
+.fadeOut:
 	script_wait_frames $04 ; $7815
 	call PlayPlaneMoveSfx_14 ; $781c
 	ld a, [$c2b1] ; $781f
@@ -3231,9 +3231,9 @@ Label_14_7815:
 	ld [$c2b0], a ; $782d
 	call AdvancePlaneFrameCounter2_14 ; $7830
 	dec h ; $7833
-	jr nz, Label_14_7815 ; $7834
+	jr nz, .fadeOut ; $7834
 	ld h, $0c ; $7836
-Label_14_7838:
+.done:
 	script_wait_frames $06 ; $7838
 	call PlayPlaneMoveSfx_14 ; $783f
 	ld a, [$c2b1] ; $7842
@@ -3241,7 +3241,7 @@ Label_14_7838:
 	ld [$c2b1], a ; $7846
 	call AdvancePlaneFrameCounter2_14 ; $7849
 	dec h ; $784c
-	jr nz, Label_14_7838 ; $784d
+	jr nz, .done ; $784d
 	sound $7d ; $784f
 	script_wait_frames $46 ; $7851
 	ld c, $04 ; $7858
