@@ -4947,75 +4947,75 @@ Label_38_6505:
 ProcessLinkSelectCommand:
 	ldh a, [hLinkRemoteInput] ; $6528
 	cp a, $20 ; $652a
-	jr nz, Label_38_6534 ; $652c
+	jr nz, .cmd21 ; $652c
 	call JumpSoftReset ; $652e
-	jp Label_38_6608 ; $6531
-Label_38_6534:
+	jp .done ; $6531
+.cmd21:
 	cp a, $21 ; $6534
-	jr nz, Label_38_654f ; $6536
+	jr nz, .cmd23 ; $6536
 	ld a, [$d81d] ; $6538
 	cp a, $02 ; $653b
-	jp z, Label_38_6608 ; $653d
+	jp z, .done ; $653d
 	ld a, [$d821] ; $6540
 	cp a, $22 ; $6543
-	jp z, Label_38_6608 ; $6545
+	jp z, .done ; $6545
 	ld c, a ; $6548
 	call ApplyRemoteCharSelection ; $6549
-	jp Label_38_6608 ; $654c
-Label_38_654f:
+	jp .done ; $654c
+.cmd23:
 	cp a, $23 ; $654f
-	jr nz, Label_38_6559 ; $6551
+	jr nz, .cmd28 ; $6551
 	call ApplyRemoteCharCancel ; $6553
-	jp Label_38_6608 ; $6556
-Label_38_6559:
+	jp .done ; $6556
+.cmd28:
 	cp a, $28 ; $6559
-	jr nz, Label_38_65a7 ; $655b
+	jr nz, .cmd29 ; $655b
 	ld a, [$d81d] ; $655d
 	cp a, $02 ; $6560
-	jp z, Label_38_6608 ; $6562
+	jp z, .done ; $6562
 	ld a, [$d821] ; $6565
 	cp a, $22 ; $6568
-	jp z, Label_38_6608 ; $656a
+	jp z, .done ; $656a
 	ld a, [$d821] ; $656d
 	ld c, a ; $6570
 	call IsStarCharacter ; $6571
 	or a, a ; $6574
-	jr z, Label_38_659e ; $6575
+	jr z, .applySelection ; $6575
 	ld a, [$d813] ; $6577
 	cp a, $03 ; $657a
-	jr z, Label_38_6591 ; $657c
+	jr z, .markOwnSlot ; $657c
 	cp a, $05 ; $657e
-	jr z, Label_38_6591 ; $6580
+	jr z, .markOwnSlot ; $6580
 	ld a, [$d81d] ; $6582
 	ld hl, $d836 ; $6585
 	add a, l ; $6588
 	ld l, a ; $6589
-	jr nc, Label_38_658d ; $658a
+	jr nc, .markSlotTaken ; $658a
 	inc h ; $658c
-Label_38_658d:
+.markSlotTaken:
 	ld [hl], $01 ; $658d
-	jr Label_38_659e ; $658f
-Label_38_6591:
+	jr .applySelection ; $658f
+.markOwnSlot:
 	ld a, [$d81d] ; $6591
 	ld hl, $d834 ; $6594
 	add a, l ; $6597
 	ld l, a ; $6598
-	jr nc, Label_38_659c ; $6599
+	jr nc, .markOwnSlotTaken ; $6599
 	inc h ; $659b
-Label_38_659c:
+.markOwnSlotTaken:
 	ld [hl], $01 ; $659c
-Label_38_659e:
+.applySelection:
 	ld a, [$d821] ; $659e
 	ld c, a ; $65a1
 	call ApplyRemoteCharSelection ; $65a2
-	jr Label_38_6608 ; $65a5
-Label_38_65a7:
+	jr .done ; $65a5
+.cmd29:
 	cp a, $29 ; $65a7
-	jr nz, Label_38_65ad ; $65a9
-	jr Label_38_6608 ; $65ab
-Label_38_65ad:
+	jr nz, .cmd24 ; $65a9
+	jr .done ; $65ab
+.cmd24:
 	cp a, $24 ; $65ad
-	jr nz, Label_38_65c3 ; $65af
+	jr nz, .cmd25 ; $65af
 	ld c, $01 ; $65b1
 	call StoreRemoteCpuDifficulty ; $65b3
 	ld a, [$d820] ; $65b6
@@ -5023,10 +5023,10 @@ Label_38_65ad:
 	call DrawRemoteSlotPortrait ; $65ba
 	xor a, a ; $65bd
 	ld [$d838], a ; $65be
-	jr Label_38_6608 ; $65c1
-Label_38_65c3:
+	jr .done ; $65c1
+.cmd25:
 	cp a, $25 ; $65c3
-	jr nz, Label_38_65d9 ; $65c5
+	jr nz, .cmd26 ; $65c5
 	ld c, $02 ; $65c7
 	call StoreRemoteCpuDifficulty ; $65c9
 	ld a, [$d820] ; $65cc
@@ -5034,10 +5034,10 @@ Label_38_65c3:
 	call DrawRemoteSlotPortrait ; $65d0
 	xor a, a ; $65d3
 	ld [$d838], a ; $65d4
-	jr Label_38_6608 ; $65d7
-Label_38_65d9:
+	jr .done ; $65d7
+.cmd26:
 	cp a, $26 ; $65d9
-	jr nz, Label_38_65ef ; $65db
+	jr nz, .cmd27 ; $65db
 	ld c, $03 ; $65dd
 	call StoreRemoteCpuDifficulty ; $65df
 	ld a, [$d820] ; $65e2
@@ -5045,10 +5045,10 @@ Label_38_65d9:
 	call DrawRemoteSlotPortrait ; $65e6
 	xor a, a ; $65e9
 	ld [$d838], a ; $65ea
-	jr Label_38_6608 ; $65ed
-Label_38_65ef:
+	jr .done ; $65ed
+.cmd27:
 	cp a, $27 ; $65ef
-	jr nz, Label_38_6605 ; $65f1
+	jr nz, .unknownCmd ; $65f1
 	ld c, $04 ; $65f3
 	call StoreRemoteCpuDifficulty ; $65f5
 	ld a, [$d820] ; $65f8
@@ -5056,10 +5056,10 @@ Label_38_65ef:
 	call DrawRemoteSlotPortrait ; $65fc
 	xor a, a ; $65ff
 	ld [$d838], a ; $6600
-	jr Label_38_6608 ; $6603
-Label_38_6605:
+	jr .done ; $6603
+.unknownCmd:
 	ld [$d821], a ; $6605
-Label_38_6608:
+.done:
 	ret ; $6608
 StoreRemoteCpuDifficulty:
 	ld a, [$d813] ; $6609
@@ -7073,35 +7073,35 @@ ExchangeLinkCharSelection:
 	call ResetSerialState ; $7540
 	ldh a, [hLinkState] ; $7543
 	cp a, $01 ; $7545
-	jr nz, Label_38_754c ; $7547
+	jr nz, .checkTag ; $7547
 	call WaitVBlank ; $7549
-Label_38_754c:
+.checkTag:
 	pop bc ; $754c
 	push bc ; $754d
 	ld a, c ; $754e
 	or a, a ; $754f
-	jr z, Label_38_7559 ; $7550
+	jr z, .pickBuffers ; $7550
 	cp a, $40 ; $7552
-	jr z, Label_38_7559 ; $7554
+	jr z, .pickBuffers ; $7554
 	call LinkErrorReset ; $7556
-Label_38_7559:
+.pickBuffers:
 	ldh a, [hLinkState] ; $7559
 	cp a, $02 ; $755b
-	jr z, Label_38_756e ; $755d
+	jr z, .asSlave ; $755d
 	cp a, $01 ; $755f
-	jr z, Label_38_7566 ; $7561
+	jr z, .asMaster ; $7561
 	call LinkErrorReset ; $7563
-Label_38_7566:
+.asMaster:
 	ld hl, wPlayer2CurrentMainCharacter ; $7566
 	ld de, wPlayer1CurrentMainCharacter ; $7569
-	jr Label_38_7574 ; $756c
-Label_38_756e:
+	jr .checkCancel ; $756c
+.asSlave:
 	ld hl, wPlayer1CurrentMainCharacter ; $756e
 	ld de, wPlayer2CurrentMainCharacter ; $7571
-Label_38_7574:
+.checkCancel:
 	ld a, c ; $7574
 	or a, a ; $7575
-	jr nz, Label_38_75a4 ; $7576
+	jr nz, .sendSelection ; $7576
 	dec hl ; $7578
 	dec de ; $7579
 	push af ; $757a
@@ -7129,8 +7129,8 @@ Label_38_7574:
 	ld a, [wUnlockedCourtMask] ; $759c
 	ld [de], a ; $759f
 	ld b, $26 ; $75a0
-	jr Label_38_75c8 ; $75a2
-Label_38_75a4:
+	jr .storeCommand ; $75a2
+.sendSelection:
 	push af ; $75a4
 	push bc ; $75a5
 	push de ; $75a6
@@ -7154,44 +7154,44 @@ Label_38_75a4:
 	pop bc ; $75c4
 	pop af ; $75c5
 	ld b, $25 ; $75c6
-Label_38_75c8:
+.storeCommand:
 	ld a, c ; $75c8
 	add a, l ; $75c9
 	ld l, a ; $75ca
-	jr nc, Label_38_75ce ; $75cb
+	jr nc, .writeSlot ; $75cb
 	inc h ; $75cd
-Label_38_75ce:
+.writeSlot:
 	ld a, c ; $75ce
 	add a, e ; $75cf
 	ld e, a ; $75d0
-	jr nc, Label_38_75d4 ; $75d1
+	jr nc, .send ; $75d1
 	inc d ; $75d3
-Label_38_75d4:
+.send:
 	push bc ; $75d4
 	ld c, b ; $75d5
 	farcall ExchangeLinkDataBlock ; $75d6
 	pop bc ; $75d9
 	ld a, b ; $75da
 	cp a, $26 ; $75db
-	jr nz, Label_38_7601 ; $75dd
+	jr nz, .done ; $75dd
 	ldh a, [hLinkState] ; $75df
 	cp a, $02 ; $75e1
-	jr z, Label_38_75f4 ; $75e3
+	jr z, .replyOk ; $75e3
 	cp a, $01 ; $75e5
-	jr z, Label_38_75ec ; $75e7
+	jr z, .checkReply ; $75e7
 	call LinkErrorReset ; $75e9
-Label_38_75ec:
+.checkReply:
 	ld a, [$ca8a] ; $75ec
 	ld [wLinkPartnerCourtMask], a ; $75ef
-	jr Label_38_75fa ; $75f2
-Label_38_75f4:
+	jr .retry ; $75f2
+.replyOk:
 	ld a, [$ca0a] ; $75f4
 	ld [wLinkPartnerCourtMask], a ; $75f7
-Label_38_75fa:
+.retry:
 	xor a, a ; $75fa
 	ld [$ca0a], a ; $75fb
 	ld [$ca8a], a ; $75fe
-Label_38_7601:
+.done:
 	pop bc ; $7601
 	ret ; $7602
 ExchangeLinkUnlockFlags:

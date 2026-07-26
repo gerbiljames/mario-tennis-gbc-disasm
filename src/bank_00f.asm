@@ -2466,16 +2466,16 @@ IslandOpenRoundCallCutscene:
 	script_move_target $05, $1000, $1700 ; $7092
 	ld a, [$c2b0] ; $709d
 	cp a, $03 ; $70a0
-	jr z, Label_0f_70bb ; $70a2
+	jr z, .partnerReady ; $70a2
 	script_move_target $04, $1800, $1700 ; $70a4
 	script_wait_move $04 ; $70af
 	script_face $04, FACE_UP ; $70b4
-Label_0f_70bb:
+.partnerReady:
 	script_wait_move $05 ; $70bb
 	script_face $05, FACE_UP ; $70c0
 	script_speak $04 ; $70c7
 	test_flag FLAG_DOUBLES ; $70cc
-	jp nz, Label_0f_722f ; $70cf
+	jp nz, .afterMatch ; $70cf
 	script_set_speed ACTOR_PLAYER, $0020 ; $70d2
 	script_face_pair $0a, ACTOR_PLAYER ; $70da
 	script_wait_frames $1e ; $70e2
@@ -2485,7 +2485,7 @@ Label_0f_70bb:
 	script_set_anim ACTOR_PLAYER, $03 ; $70fe
 	script_wait_idle ACTOR_PLAYER ; $7105
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_SEMIFINAL ; $710a
-	jr z, Label_0f_716c ; $710d
+	jr z, .doublesWalk ; $710d
 	script_move_target $05, $1300, $1700 ; $710f
 	script_wait_move $05 ; $711a
 	script_set_actor_script $05, ActorScript_0f_73e4 ; $711f
@@ -2497,8 +2497,8 @@ Label_0f_70bb:
 	script_move_player $1100, $0d00 ; $7155
 	farcall WaitPlayerMoveDone ; $715f
 	script_wait_frames $1e ; $7162
-	jp Label_0f_71bf ; $7169
-Label_0f_716c:
+	jp .startMatch ; $7169
+.doublesWalk:
 	script_move_target $05, $1300, $1700 ; $716c
 	script_wait_move $05 ; $7177
 	script_set_actor_script $05, ActorScript_0f_73be ; $717c
@@ -2509,7 +2509,7 @@ Label_0f_716c:
 	script_move_player $1100, $0d00 ; $71ab
 	farcall WaitPlayerMoveDone ; $71b5
 	script_wait_frames $3c ; $71b8
-Label_0f_71bf:
+.startMatch:
 	ld c, $10 ; $71bf
 	call BeginFadeOut ; $71c1
 	call WaitFadeEnd ; $71c4
@@ -2523,26 +2523,26 @@ Label_0f_71bf:
 	ld [wStoryModeExitLocationRequest], a ; $71d9
 	farcall InitStoryMatchSettings ; $71dc
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_SEMIFINAL ; $71df
-	jr z, Label_0f_71f3 ; $71e2
+	jr z, .checkRound2 ; $71e2
 	load_match_settings $0013 ; $71e4
-	jr Label_0f_7228 ; $71f1
-Label_0f_71f3:
+	jr .runMatch ; $71f1
+.checkRound2:
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_2 ; $71f3
-	jr z, Label_0f_7207 ; $71f6
+	jr z, .checkRound1 ; $71f6
 	load_match_settings $0012 ; $71f8
-	jr Label_0f_7228 ; $7205
-Label_0f_7207:
+	jr .runMatch ; $7205
+.checkRound1:
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_1 ; $7207
-	jr z, Label_0f_721b ; $720a
+	jr z, .round1Settings ; $720a
 	load_match_settings $0011 ; $720c
-	jr Label_0f_7228 ; $7219
-Label_0f_721b:
+	jr .runMatch ; $7219
+.round1Settings:
 	load_match_settings $0010 ; $721b
-Label_0f_7228:
+.runMatch:
 	farcall RunStoryMatch ; $7228
 	farcall RestoreOverworldAfterMatch ; $722b
 	ret ; $722e
-Label_0f_722f:
+.afterMatch:
 	script_face_pair ACTOR_PARTNER, ACTOR_PLAYER ; $722f
 	script_set_speed ACTOR_PLAYER, $0020 ; $7237
 	script_set_speed ACTOR_PARTNER, $0020 ; $723f
@@ -2553,7 +2553,7 @@ Label_0f_722f:
 	script_face ACTOR_PLAYER, FACE_DOWN ; $7261
 	script_face ACTOR_PARTNER, FACE_DOWN ; $7268
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_SEMIFINAL ; $726f
-	jp z, Label_0f_72e8 ; $7272
+	jp z, .afterMatchDoubles ; $7272
 	script_move_target $05, $1300, $1700 ; $7275
 	script_wait_move $05 ; $7280
 	script_set_actor_script $05, ActorScript_0f_73e4 ; $7285
@@ -2567,8 +2567,8 @@ Label_0f_722f:
 	script_set_actor_script $0a, ActorScript_0f_73fd ; $72cd
 	script_move_player $1100, $0d00 ; $72d8
 	farcall WaitPlayerMoveDone ; $72e2
-	jp Label_0f_735f ; $72e5
-Label_0f_72e8:
+	jp .walkOff ; $72e5
+.afterMatchDoubles:
 	script_move_target $05, $1300, $1700 ; $72e8
 	script_wait_move $05 ; $72f3
 	script_set_actor_script $05, ActorScript_0f_73be ; $72f8
@@ -2583,7 +2583,7 @@ Label_0f_72e8:
 	script_move_player $1100, $0d00 ; $734b
 	farcall WaitPlayerMoveDone ; $7355
 	script_wait_frames $3c ; $7358
-Label_0f_735f:
+.walkOff:
 	ld c, $10 ; $735f
 	call BeginFadeOut ; $7361
 	call WaitFadeEnd ; $7364
@@ -2597,17 +2597,17 @@ Label_0f_735f:
 	ld [wStoryModeExitLocationRequest], a ; $7379
 	farcall InitStoryMatchSettings ; $737c
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_SEMIFINAL ; $737f
-	jp z, Label_0f_7394 ; $7382
+	jp z, .walkOffDoubles ; $7382
 	load_match_settings $0113 ; $7385
-	jr Label_0f_73b7 ; $7392
-Label_0f_7394:
+	jr .done ; $7392
+.walkOffDoubles:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_ROUND_1 ; $7394
-	jp z, Label_0f_73aa ; $7397
+	jp z, .fadeOut ; $7397
 	load_match_settings $0112 ; $739a
-	jp Label_0f_73b7 ; $73a7
-Label_0f_73aa:
+	jp .done ; $73a7
+.fadeOut:
 	load_match_settings $0111 ; $73aa
-Label_0f_73b7:
+.done:
 	farcall RunStoryMatch ; $73b7
 	farcall RestoreOverworldAfterMatch ; $73ba
 	ret ; $73bd

@@ -1186,58 +1186,58 @@ Label_0e_4d83:
 RunRepairCounterDialogue:
 	script_face_toward ACTOR_PLAYER, $0e ; $4d88
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $4d90
-	jp z, Label_0e_4da5 ; $4d93
+	jp z, .greeting ; $4d93
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $4d96
-	jp z, Label_0e_4e0d ; $4d99
+	jp z, .noRepair ; $4d99
 	test_flag FLAG_WON_VARSITY_SINGLES_RANK_4 ; $4d9c
-	jp z, Label_0e_4de5 ; $4d9f
-	jp Label_0e_4de5 ; $4da2
-Label_0e_4da5:
+	jp z, .repairMenu ; $4d9f
+	jp .repairMenu ; $4da2
+.greeting:
 	test_flag FLAG_DOUBLES ; $4da5
-	jr nz, Label_0e_4dcd ; $4da8
+	jr nz, .doublesGreeting ; $4da8
 	test_flag FLAG_REPAIR_COUNTER_GREETED ; $4daa
-	jr z, Label_0e_4db7 ; $4dad
+	jr z, .firstGreeting ; $4dad
 	script_set_text Text_6e_228 ; $4daf
-	jr Label_0e_4dc0 ; $4db5
-Label_0e_4db7:
+	jr .speak ; $4db5
+.firstGreeting:
 	script_set_text Text_6e_227 ; $4db7
 	set_flag FLAG_REPAIR_COUNTER_GREETED ; $4dbd
-Label_0e_4dc0:
+.speak:
 	script_speak $0e ; $4dc0
 	script_face $0e, FACE_RIGHT ; $4dc5
 	ret ; $4dcc
-Label_0e_4dcd:
+.doublesGreeting:
 	test_flag FLAG_REPAIR_COUNTER_GREETED ; $4dcd
-	jr z, Label_0e_4dda ; $4dd0
+	jr z, .firstDoublesGreeting ; $4dd0
 	script_set_text Text_6e_230 ; $4dd2
-	jr Label_0e_4dc0 ; $4dd8
-Label_0e_4dda:
+	jr .speak ; $4dd8
+.firstDoublesGreeting:
 	script_set_text Text_6e_229 ; $4dda
 	set_flag FLAG_REPAIR_COUNTER_GREETED ; $4de0
-	jr Label_0e_4dc0 ; $4de3
-Label_0e_4de5:
+	jr .speak ; $4de3
+.repairMenu:
 	set_flag FLAG_HAVE_LARGE_RACKET ; $4de5
 	set_flag FLAG_HAVE_SMALL_RACKET ; $4de8
 	set_flag FLAG_HAVE_LIGHT_SHOES ; $4deb
 	script_set_text Text_6e_233 ; $4dee
-	jr Label_0e_4e26 ; $4df4
+	jr .done ; $4df4
 	set_flag FLAG_HAVE_LARGE_RACKET ; $4df6
 	set_flag FLAG_HAVE_SMALL_RACKET ; $4df9
 	set_flag FLAG_HAVE_LIGHT_SHOES ; $4dfc
 	set_flag FLAG_HAVE_IRON_RACKET ; $4dff
 	set_flag FLAG_HAVE_IRON_SHOES ; $4e02
 	script_set_text Text_6e_233 ; $4e05
-	jr Label_0e_4e26 ; $4e0b
-Label_0e_4e0d:
+	jr .done ; $4e0b
+.noRepair:
 	set_flag FLAG_HAVE_LARGE_RACKET ; $4e0d
 	test_flag FLAG_REPAIR_COUNTER_EQUIP_CHANGED ; $4e10
-	jr z, Label_0e_4e1d ; $4e13
+	jr z, .repaired ; $4e13
 	script_set_text Text_6e_233 ; $4e15
-	jr Label_0e_4e26 ; $4e1b
-Label_0e_4e1d:
+	jr .done ; $4e1b
+.repaired:
 	script_set_text Text_6e_231 ; $4e1d
 	set_flag FLAG_REPAIR_COUNTER_EQUIP_CHANGED ; $4e23
-Label_0e_4e26:
+.done:
 	script_face_toward ACTOR_PLAYER, $0e ; $4e26
 	ld a, $0e ; $4e2e
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $4e30

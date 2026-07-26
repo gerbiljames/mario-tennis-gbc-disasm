@@ -2268,13 +2268,13 @@ RunStoryLocation:
 	ld [wGameMode], a ; $4f57
 	call AdvanceFrame ; $4f5a
 	test_flag FLAG_ENDING_CREDITS_RUNNING ; $4f5d
-	jr nz, Label_0a_4f6f ; $4f60
+	jr nz, .loadLocation ; $4f60
 	ld a, [$c284] ; $4f62
 	cp a, $ff ; $4f65
-	jr z, Label_0a_4f6f ; $4f67
+	jr z, .loadLocation ; $4f67
 	ld a, [$c284] ; $4f69
 	call PlaySoundManaged ; $4f6c
-Label_0a_4f6f:
+.loadLocation:
 	farcall ResetTextWindowState ; $4f6f
 	ld hl, $c28a ; $4f72
 	ld a, [hl+] ; $4f75
@@ -2298,9 +2298,9 @@ Label_0a_4f6f:
 	ld a, $00 ; $4fa2
 	farcall CopyScrolledSceneTilemapToVram ; $4fa4
 	test_flag FLAG_ENDING_CREDITS_RUNNING ; $4fa7
-	jr nz, Label_0a_4faf ; $4faa
+	jr nz, .enableLcd ; $4faa
 	farcall LoadMenuFontGfx ; $4fac
-Label_0a_4faf:
+.enableLcd:
 	call EnableLCD ; $4faf
 	ld a, [$c29c] ; $4fb2
 	ld l, a ; $4fb5
@@ -2308,38 +2308,38 @@ Label_0a_4faf:
 	ld h, a ; $4fb9
 	ld a, h ; $4fba
 	or a, l ; $4fbb
-	jr z, Label_0a_4fc4 ; $4fbc
+	jr z, .runInitScript ; $4fbc
 	ld a, [$c29b] ; $4fbe
 	call CallHLInBankA ; $4fc1
-Label_0a_4fc4:
+.runInitScript:
 	call RunLocationInitScript ; $4fc4
 	ld hl, wStoryModeExitLocationRequest ; $4fc7
 	ld a, [hl] ; $4fca
 	and a, a ; $4fcb
-	jr z, Label_0a_4fd6 ; $4fcc
+	jr z, .fadeIn ; $4fcc
 	ld [hl], $00 ; $4fce
 	call RunLocationExit ; $4fd0
-	jp Label_0a_50df ; $4fd3
-Label_0a_4fd6:
+	jp .done ; $4fd3
+.fadeIn:
 	script_fade_in $08 ; $4fd6
 	call WaitFadeEnd ; $4fdb
 	ld a, [wStoryModeShowLocationName] ; $4fde
 	and a, a ; $4fe1
-	jr z, Label_0a_4ff1 ; $4fe2
+	jr z, .noNamePopup ; $4fe2
 	ld a, [wStoryModeLocationNameTextId] ; $4fe4
 	ld l, a ; $4fe7
 	ld a, [wStoryModeLocationNameTextId + 1] ; $4fe8
 	ld h, a ; $4feb
 	call ShowLocationNamePopup ; $4fec
-	jr Label_0a_4ff5 ; $4fef
-Label_0a_4ff1:
+	jr .frameLoop ; $4fef
+.noNamePopup:
 	call WaitFramesCmd ; $4ff1
 	db $04 ; $4ff4 inline arg
-Label_0a_4ff5:
+.frameLoop:
 	wram_bank $04 ; $4ff5
 	call CheckStoryEventRequests ; $4ffb
 	and a, a ; $4ffe
-	jp z, Label_0a_50ca ; $4fff
+	jp z, .waitForEvent ; $4fff
 	ld bc, $d000 ; $5002
 	ld hl, ActorScript_0a_4766 ; $5005
 	ldh a, [hRomBank] ; $5008
@@ -2351,105 +2351,105 @@ Label_0a_4ff5:
 	ld hl, wStoryModeTriggerScript ; $5016
 	ld a, [hl] ; $5019
 	and a, a ; $501a
-	jr z, Label_0a_5022 ; $501b
+	jr z, .checkExit ; $501b
 	ld [hl], $00 ; $501d
 	call RunQueuedTriggerScript ; $501f
-Label_0a_5022:
+.checkExit:
 	ld hl, wStoryModeExitLocationRequest ; $5022
 	ld a, [hl] ; $5025
 	and a, a ; $5026
-	jr z, Label_0a_5031 ; $5027
+	jr z, .checkMenu ; $5027
 	ld [hl], $00 ; $5029
 	call RunLocationExit ; $502b
-	jp Label_0a_50df ; $502e
-Label_0a_5031:
+	jp .done ; $502e
+.checkMenu:
 	ld hl, wStoryModeMenuRequest ; $5031
 	ld a, [hl] ; $5034
 	and a, a ; $5035
-	jr z, Label_0a_5048 ; $5036
+	jr z, .checkInteract ; $5036
 	ld [hl], $00 ; $5038
 	call WaitPlayerMoveDone ; $503a
 	test_flag FLAG_STORY_MENU_LOCKED ; $503d
-	jr nz, Label_0a_5048 ; $5040
+	jr nz, .checkInteract ; $5040
 	farcall RunStoryModeMenu ; $5042
-	jp Label_0a_4ff5 ; $5045
-Label_0a_5048:
+	jp .frameLoop ; $5045
+.checkInteract:
 	xor a, a ; $5048
 	ld [$c2a3], a ; $5049
 	ld hl, $c2a2 ; $504c
 	ld a, [hl] ; $504f
 	and a, a ; $5050
-	jr z, Label_0a_507e ; $5051
+	jr z, .runInteract ; $5051
 	ld [hl], $00 ; $5053
 	wram_bank $04 ; $5055
 	ld a, [$daec] ; $505b
 	and a, a ; $505e
-	jr z, Label_0a_507e ; $505f
+	jr z, .runInteract ; $505f
 	ld hl, $daed ; $5061
 	ld a, [$daec] ; $5064
 	cp a, [hl] ; $5067
-	jr nz, Label_0a_507e ; $5068
+	jr nz, .runInteract ; $5068
 	ld hl, $daee ; $506a
 	ld a, [hl] ; $506d
 	cp a, $1e ; $506e
-	jr c, Label_0a_507e ; $5070
+	jr c, .runInteract ; $5070
 	ld [hl], $00 ; $5072
 	ld hl, $c2a3 ; $5074
 	ld [hl], $ff ; $5077
 	ld hl, wStoryModeInteractRequest ; $5079
 	ld [hl], $01 ; $507c
-Label_0a_507e:
+.runInteract:
 	xor a, a ; $507e
 	ld [$c2da], a ; $507f
 	ld hl, wStoryModeInteractRequest ; $5082
 	ld a, [hl] ; $5085
 	and a, a ; $5086
-	jr z, Label_0a_50c7 ; $5087
+	jr z, .nextFrame ; $5087
 	ld [hl], $00 ; $5089
 	call FindActorFacingPlayer ; $508b
 	and a, a ; $508e
-	jr z, Label_0a_509a ; $508f
+	jr z, .checkFacingTile ; $508f
 	call RunNpcInteraction ; $5091
 	ld a, [$c2da] ; $5094
 	and a, a ; $5097
-	jr nz, Label_0a_50c7 ; $5098
-Label_0a_509a:
+	jr nz, .nextFrame ; $5098
+.checkFacingTile:
 	call GetFacingTileInteractionId ; $509a
 	and a, a ; $509d
-	jr z, Label_0a_50a9 ; $509e
+	jr z, .checkTileTrigger ; $509e
 	call RunFacingTileScript ; $50a0
 	ld a, [$c2da] ; $50a3
 	and a, a ; $50a6
-	jr nz, Label_0a_50c7 ; $50a7
-Label_0a_50a9:
+	jr nz, .nextFrame ; $50a7
+.checkTileTrigger:
 	call GetTileTriggerAtPlayer ; $50a9
 	and a, a ; $50ac
-	jr z, Label_0a_50b4 ; $50ad
+	jr z, .checkDebugMenu ; $50ad
 	call RunTileTriggerScript ; $50af
-	jr Label_0a_50c7 ; $50b2
-Label_0a_50b4:
+	jr .nextFrame ; $50b2
+.checkDebugMenu:
 	ld a, [$c2a3] ; $50b4
 	and a, a ; $50b7
-	jr nz, Label_0a_50c7 ; $50b8
+	jr nz, .nextFrame ; $50b8
 	ldh a, [hDebugStepMode] ; $50ba
 	and a, a ; $50bc
-	jr z, Label_0a_50c7 ; $50bd
+	jr z, .nextFrame ; $50bd
 	call WaitPlayerMoveDone ; $50bf
 	farcall RunDebugMenu ; $50c2
-	jr Label_0a_50c7 ; $50c5
-Label_0a_50c7:
-	jp Label_0a_4ff5 ; $50c7
-Label_0a_50ca:
+	jr .nextFrame ; $50c5
+.nextFrame:
+	jp .frameLoop ; $50c7
+.waitForEvent:
 	call WaitFadeEnd ; $50ca
 	ld bc, $d000 ; $50cd
 	farcall AttachActorControllerScript ; $50d0
-Label_0a_50d3:
+.eventWaitLoop:
 	call AdvanceFrame ; $50d3
 	call CheckStoryEventRequests ; $50d6
 	and a, a ; $50d9
-	jr z, Label_0a_50d3 ; $50da
-	jp Label_0a_4ff5 ; $50dc
-Label_0a_50df:
+	jr z, .eventWaitLoop ; $50da
+	jp .frameLoop ; $50dc
+.done:
 	pop hl ; $50df
 	pop de ; $50e0
 	pop bc ; $50e1
