@@ -7802,6 +7802,7 @@ ReadCharInput:
 	ld h, [hl] ; $781c
 	ld l, a ; $781d
 	jp hl ; $781e
+CharInputPtrs:
 	; $781f, 14 bytes (records:2)
 	dw ReadCharPadInput ; record 0
 	dw $7863 ; record 1
@@ -8143,6 +8144,7 @@ AiServeWalkToSpot:
 	ld h, b ; $7a36
 	call SetCharTarget ; $7a37
 	jp AiAdvancePhase ; $7a3a
+ServeWalkToSpotTable:
 	; $7a3d, 16 bytes (records:2)
 	dw $0020 ; record 0
 	dw $0020 ; record 1
@@ -8200,6 +8202,7 @@ AiServePressToss:
 	ld [$df12], a ; $7a97
 .done:
 	jp AiAdvancePhase ; $7a9a
+ServePressTossPtrs:
 	; $7a9d, 32 bytes (records:2)
 	dw $7abd ; record 0
 	dw $7ac5 ; record 1

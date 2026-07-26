@@ -615,6 +615,7 @@ CharDataScreen_DrawStatBar:
 	ld a, [hl] ; $4555
 	ld [de], a ; $4556
 	ret ; $4557
+CharDataScreen_DrawStatBarPtrs:
 	; $4558, 66 bytes (records:2)
 	dw $64a4 ; record 0
 	dw $64a9 ; record 1

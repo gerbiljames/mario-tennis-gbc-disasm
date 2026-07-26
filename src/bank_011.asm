@@ -111,14 +111,15 @@ CenterCourtNpc05_11:
 .speak:
 	script_speak $05 ; $4136
 	ret ; $413b
-	; $413c, 14 bytes (records:2)
-	dw $2455 ; record 0
-	dw $2457 ; record 1
-	dw $2459 ; record 2
-	dw $245c ; record 3
-	dw $2461 ; record 4
-	dw $2463 ; record 5
-	dw $2466 ; record 6
+CenterCourtNpc05TextIds:
+	; $413c, 14 bytes (text_ids)
+	dw Text_1f_85 ; record 0
+	dw Text_1f_87 ; record 1
+	dw Text_1f_89 ; record 2
+	dw Text_1f_92 ; record 3
+	dw Text_1f_97 ; record 4
+	dw Text_1f_99 ; record 5
+	dw Text_1f_102 ; record 6
 CenterCourtNpc06_11:
 	ld a, [$c2b0] ; $414a
 	add a, a ; $414d
@@ -133,14 +134,15 @@ CenterCourtNpc06_11:
 	farcall InitDialogueTextCursor ; $4158
 	script_speak $05 ; $415b
 	ret ; $4160
-	; $4161, 14 bytes (records:2)
-	dw $2456 ; record 0
-	dw $2458 ; record 1
-	dw $245a ; record 2
-	dw $245f ; record 3
-	dw $2462 ; record 4
-	dw $2464 ; record 5
-	dw $2467 ; record 6
+CenterCourtNpc06TextIds:
+	; $4161, 14 bytes (text_ids)
+	dw Text_1f_86 ; record 0
+	dw Text_1f_88 ; record 1
+	dw Text_1f_90 ; record 2
+	dw Text_1f_95 ; record 3
+	dw Text_1f_98 ; record 4
+	dw Text_1f_100 ; record 5
+	dw Text_1f_103 ; record 6
 CenterCourtNpcScripts_11:
 	; $416f, 33 bytes (map_scripts)
 	map_script $03, FACEMASK_ANY, $0000, CenterCourtNpc03_11, $03, $00
@@ -400,17 +402,18 @@ AcademyArrivalNpc03_11:
 .done:
 	script_speak $03 ; $45db
 	ret ; $45e0
-	; $45e1, 20 bytes (records:2)
-	dw $1836 ; record 0
-	dw $1839 ; record 1
-	dw $183f ; record 2
-	dw $183f ; record 3
-	dw $1842 ; record 4
-	dw $1842 ; record 5
-	dw $1847 ; record 6
-	dw $1847 ; record 7
-	dw $184c ; record 8
-	dw $184c ; record 9
+AcademyArrivalNpc03TextIds:
+	; $45e1, 20 bytes (text_ids)
+	dw Text_36_54 ; record 0
+	dw Text_36_57 ; record 1
+	dw Text_36_63 ; record 2
+	dw Text_36_63 ; record 3
+	dw Text_36_66 ; record 4
+	dw Text_36_66 ; record 5
+	dw Text_36_71 ; record 6
+	dw Text_36_71 ; record 7
+	dw Text_36_76 ; record 8
+	dw Text_36_76 ; record 9
 AcademyArrivalNpc04_11:
 	ld a, [$c2b0] ; $45f5
 	add a, a ; $45f8
@@ -425,17 +428,18 @@ AcademyArrivalNpc04_11:
 	farcall InitDialogueTextCursor ; $4603
 	script_speak $04 ; $4606
 	ret ; $460b
-	; $460c, 20 bytes (records:2)
-	dw $183c ; record 0
-	dw $183d ; record 1
-	dw $1840 ; record 2
-	dw $1840 ; record 3
-	dw $1845 ; record 4
-	dw $1845 ; record 5
-	dw $184a ; record 6
-	dw $184a ; record 7
-	dw $184d ; record 8
-	dw $184d ; record 9
+AcademyArrivalNpc04TextIds:
+	; $460c, 20 bytes (text_ids)
+	dw Text_36_60 ; record 0
+	dw Text_36_61 ; record 1
+	dw Text_36_64 ; record 2
+	dw Text_36_64 ; record 3
+	dw Text_36_69 ; record 4
+	dw Text_36_69 ; record 5
+	dw Text_36_74 ; record 6
+	dw Text_36_74 ; record 7
+	dw Text_36_77 ; record 8
+	dw Text_36_77 ; record 9
 AcademyArrivalNpc05_11:
 	ld a, [$c2b0] ; $4620
 	sra a ; $4623
@@ -451,12 +455,13 @@ AcademyArrivalNpc05_11:
 	farcall InitDialogueTextCursor ; $4630
 	script_speak $05 ; $4633
 	ret ; $4638
-	; $4639, 10 bytes (records:2)
-	dw $183e ; record 0
-	dw $1841 ; record 1
-	dw $1846 ; record 2
-	dw $184b ; record 3
-	dw $184e ; record 4
+AcademyArrivalNpc05TextIds:
+	; $4639, 10 bytes (text_ids)
+	dw Text_36_62 ; record 0
+	dw Text_36_65 ; record 1
+	dw Text_36_70 ; record 2
+	dw Text_36_75 ; record 3
+	dw Text_36_78 ; record 4
 AcademyArrivalNpc14_11:
 	script_set_text Text_36_96 ; $4643
 	test_flag FLAG_DOUBLES ; $4649

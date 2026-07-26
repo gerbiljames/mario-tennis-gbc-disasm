@@ -1939,6 +1939,7 @@ ServeToTargetsBriefing_AdvanceAnim:
 	ld b, [hl] ; $57b6
 	call DrawDiagramTargetOverlay ; $57b7
 	ret ; $57ba
+ServeToTargetsBriefing_AdvanceAnimTable:
 	; $57bb, 92 bytes (records:2)
 	dw $0054 ; record 0
 	dw $0044 ; record 1
@@ -2461,6 +2462,7 @@ SpinServeBriefing_AdvanceAnim2:
 	ld b, [hl] ; $5be0
 	call DrawDiagramTargetOverlay ; $5be1
 	ret ; $5be4
+SpinServeBriefing_AdvanceAnimTable:
 	; $5be5, 130 bytes (records:2)
 	dw $0052 ; record 0
 	dw $0044 ; record 1
@@ -2872,6 +2874,7 @@ PoleServeBriefing_AdvanceAnim2:
 	ld b, [hl] ; $5f01
 	call DrawDiagramTargetOverlay ; $5f02
 	ret ; $5f05
+DrillBriefing_ServeThroughPolesTable:
 	; $5f06, 140 bytes (records:2)
 	dw $0055 ; record 0
 	dw $0044 ; record 1
@@ -3211,6 +3214,7 @@ ServeAndVolleyBriefing_AdvanceAnim:
 	ld a, b ; $61af
 	ld [$d824], a ; $61b0
 	ret ; $61b3
+ServeAndVolleyBriefing_AdvanceAnimTable:
 	; $61b4, 124 bytes (records:2)
 	dw $0052 ; record 0
 	dw $0030 ; record 1
@@ -3565,6 +3569,7 @@ DrillBriefing_ServeAndSmash:
 	jp z, .loop ; $64b6
 	call ClearFrameTasks ; $64b9
 	ret ; $64bc
+DrillBriefing_ServeAndSmashTable:
 	; $64bd, 124 bytes (records:2)
 	dw $0055 ; record 0
 	dw $0044 ; record 1
@@ -3919,6 +3924,7 @@ DrillBriefing_ServeAndSmash2:
 	jp z, .loop ; $67bf
 	call ClearFrameTasks ; $67c2
 	ret ; $67c5
+DrillBriefing_ServeAndSmash2Table:
 	; $67c6, 124 bytes (records:2)
 	dw $0055 ; record 0
 	dw $0044 ; record 1
@@ -4207,6 +4213,7 @@ ReturnToTargetBriefing_AdvanceAnim:
 	ld a, b ; $6a06
 	ld [$d819], a ; $6a07
 	ret ; $6a0a
+ReturnToTargetBriefing_AdvanceAnimTable:
 	; $6a0b, 104 bytes (records:2)
 	dw $0055 ; record 0
 	dw $0044 ; record 1
@@ -4513,6 +4520,7 @@ ReturnLobBriefing_AdvanceAnim:
 	ld a, b ; $6c69
 	ld [$d815], a ; $6c6a
 	ret ; $6c6d
+ReturnLobBriefing_AdvanceAnimTable:
 	; $6c6e, 124 bytes (records:2)
 	dw $0055 ; record 0
 	dw $0044 ; record 1
@@ -4801,6 +4809,7 @@ ReturnDownLineBriefing_AdvanceAnim:
 	ld a, b ; $6eae
 	ld [$d824], a ; $6eaf
 	ret ; $6eb2
+ReturnDownLineBriefing_AdvanceAnimTable:
 	; $6eb3, 104 bytes (records:2)
 	dw $0055 ; record 0
 	dw $0044 ; record 1

@@ -816,6 +816,7 @@ GetTextSlotPointer:
 	ld de, $d800 ; $53f3
 	add hl, de ; $53f6
 	ret ; $53f7
+TextSlotPointerTable:
 	; $53f8, 32 bytes (records:2)
 	dw $0016 ; record 0
 	dw $0056 ; record 1

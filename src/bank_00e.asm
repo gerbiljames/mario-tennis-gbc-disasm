@@ -160,17 +160,18 @@ TrainingGymNpc03_0e:
 	farcall InitDialogueTextCursor ; $43b4
 	script_speak $03 ; $43b7
 	ret ; $43bc
-	; $43bd, 20 bytes (records:2)
-	dw $14a9 ; record 0
-	dw $14a9 ; record 1
-	dw $14b3 ; record 2
-	dw $14b3 ; record 3
-	dw $14bd ; record 4
-	dw $14be ; record 5
-	dw $14cb ; record 6
-	dw $14cc ; record 7
-	dw $14db ; record 8
-	dw $14db ; record 9
+TrainingGymNpc03TextIds:
+	; $43bd, 20 bytes (text_ids)
+	dw Text_35_169 ; record 0
+	dw Text_35_169 ; record 1
+	dw Text_35_179 ; record 2
+	dw Text_35_179 ; record 3
+	dw Text_35_189 ; record 4
+	dw Text_35_190 ; record 5
+	dw Text_35_203 ; record 6
+	dw Text_35_204 ; record 7
+	dw Text_35_219 ; record 8
+	dw Text_35_219 ; record 9
 TrainingGymNpc04_0e:
 	ld a, [$c2b0] ; $43d1
 	sra a ; $43d4
@@ -186,12 +187,13 @@ TrainingGymNpc04_0e:
 	farcall InitDialogueTextCursor ; $43e1
 	script_speak $04 ; $43e4
 	ret ; $43e9
-	; $43ea, 10 bytes (records:2)
-	dw $14aa ; record 0
-	dw $14b4 ; record 1
-	dw $14bf ; record 2
-	dw $14cd ; record 3
-	dw $14dc ; record 4
+TrainingGymNpc04TextIds:
+	; $43ea, 10 bytes (text_ids)
+	dw Text_35_170 ; record 0
+	dw Text_35_180 ; record 1
+	dw Text_35_191 ; record 2
+	dw Text_35_205 ; record 3
+	dw Text_35_220 ; record 4
 TrainingGymNpc05_0e:
 	ld a, [$c2b0] ; $43f4
 	add a, a ; $43f7
@@ -206,17 +208,18 @@ TrainingGymNpc05_0e:
 	farcall InitDialogueTextCursor ; $4402
 	script_speak $05 ; $4405
 	ret ; $440a
-	; $440b, 20 bytes (records:2)
-	dw $14ab ; record 0
-	dw $14ab ; record 1
-	dw $14b5 ; record 2
-	dw $14b5 ; record 3
-	dw $14c0 ; record 4
-	dw $14c1 ; record 5
-	dw $14ce ; record 6
-	dw $14cf ; record 7
-	dw $14dd ; record 8
-	dw $14dd ; record 9
+TrainingGymNpc05TextIds:
+	; $440b, 20 bytes (text_ids)
+	dw Text_35_171 ; record 0
+	dw Text_35_171 ; record 1
+	dw Text_35_181 ; record 2
+	dw Text_35_181 ; record 3
+	dw Text_35_192 ; record 4
+	dw Text_35_193 ; record 5
+	dw Text_35_206 ; record 6
+	dw Text_35_207 ; record 7
+	dw Text_35_221 ; record 8
+	dw Text_35_221 ; record 9
 TrainingGymNpc06_0e:
 	ld a, [$c2b0] ; $441f
 	add a, a ; $4422
@@ -231,22 +234,23 @@ TrainingGymNpc06_0e:
 	farcall InitDialogueTextCursor ; $442d
 	script_speak $06 ; $4430
 	ret ; $4435
-	; $4436, 20 bytes (records:2)
-	dw $14ac ; record 0
-	dw $14ac ; record 1
-	dw $14b6 ; record 2
-	dw $14b6 ; record 3
-	dw $14c2 ; record 4
-	dw $14c2 ; record 5
-	dw $14d0 ; record 6
-	dw $14d1 ; record 7
-	dw $14de ; record 8
-	dw $14de ; record 9
+TrainingGymNpc06TextIds:
+	; $4436, 20 bytes (text_ids)
+	dw Text_35_172 ; record 0
+	dw Text_35_172 ; record 1
+	dw Text_35_182 ; record 2
+	dw Text_35_182 ; record 3
+	dw Text_35_194 ; record 4
+	dw Text_35_194 ; record 5
+	dw Text_35_208 ; record 6
+	dw Text_35_209 ; record 7
+	dw Text_35_222 ; record 8
+	dw Text_35_222 ; record 9
 TrainingGymNpc07_0e:
 	ld a, [$c2b0] ; $444a
 	sra a ; $444d
 	cp a, $03 ; $444f
-	jr z, .speak ; $4451
+	jr z, TrainingGymNpc07TextIds.speak ; $4451
 	add a, a ; $4453
 	add a, $67 ; $4454
 	ld l, a ; $4456
@@ -259,12 +263,13 @@ TrainingGymNpc07_0e:
 	farcall InitDialogueTextCursor ; $445e
 	script_speak $07 ; $4461
 	ret ; $4466
-	; $4467, 10 bytes (records:2)
-	dw $14ad ; record 0
-	dw $14b7 ; record 1
-	dw $14c3 ; record 2
-	dw $14d2 ; record 3
-	dw $14df ; record 4
+TrainingGymNpc07TextIds:
+	; $4467, 10 bytes (text_ids)
+	dw Text_35_173 ; record 0
+	dw Text_35_183 ; record 1
+	dw Text_35_195 ; record 2
+	dw Text_35_210 ; record 3
+	dw Text_35_223 ; record 4
 .speak:
 	script_set_text Text_35_210 ; $4471
 	ld a, $07 ; $4477
@@ -293,12 +298,13 @@ TrainingGymNpc08_0e:
 	farcall InitDialogueTextCursor ; $44a5
 	script_speak $08 ; $44a8
 	ret ; $44ad
-	; $44ae, 10 bytes (records:2)
-	dw $14ae ; record 0
-	dw $14b8 ; record 1
-	dw $14c4 ; record 2
-	dw $14d5 ; record 3
-	dw $14e0 ; record 4
+TrainingGymNpc08TextIds:
+	; $44ae, 10 bytes (text_ids)
+	dw Text_35_174 ; record 0
+	dw Text_35_184 ; record 1
+	dw Text_35_196 ; record 2
+	dw Text_35_213 ; record 3
+	dw Text_35_224 ; record 4
 TrainingGymNpc09_0e:
 	ld a, [$c2b0] ; $44b8
 	sra a ; $44bb
@@ -314,12 +320,13 @@ TrainingGymNpc09_0e:
 	farcall InitDialogueTextCursor ; $44c8
 	script_speak $09 ; $44cb
 	ret ; $44d0
-	; $44d1, 10 bytes (records:2)
-	dw $14af ; record 0
-	dw $14b9 ; record 1
-	dw $14c5 ; record 2
-	dw $14d6 ; record 3
-	dw $14e1 ; record 4
+TrainingGymNpc09TextIds:
+	; $44d1, 10 bytes (text_ids)
+	dw Text_35_175 ; record 0
+	dw Text_35_185 ; record 1
+	dw Text_35_197 ; record 2
+	dw Text_35_214 ; record 3
+	dw Text_35_225 ; record 4
 TrainingGymNpc0A_0e:
 	ld a, [$c2b0] ; $44db
 	add a, a ; $44de
@@ -334,17 +341,18 @@ TrainingGymNpc0A_0e:
 	farcall InitDialogueTextCursor ; $44e9
 	script_speak $0a ; $44ec
 	ret ; $44f1
-	; $44f2, 20 bytes (records:2)
-	dw $14b0 ; record 0
-	dw $14b0 ; record 1
-	dw $14ba ; record 2
-	dw $14ba ; record 3
-	dw $14c6 ; record 4
-	dw $14c7 ; record 5
-	dw $14d7 ; record 6
-	dw $14d7 ; record 7
-	dw $14e2 ; record 8
-	dw $14e3 ; record 9
+TrainingGymNpc0ATextIds:
+	; $44f2, 20 bytes (text_ids)
+	dw Text_35_176 ; record 0
+	dw Text_35_176 ; record 1
+	dw Text_35_186 ; record 2
+	dw Text_35_186 ; record 3
+	dw Text_35_198 ; record 4
+	dw Text_35_199 ; record 5
+	dw Text_35_215 ; record 6
+	dw Text_35_215 ; record 7
+	dw Text_35_226 ; record 8
+	dw Text_35_227 ; record 9
 TrainingGymNpc0B_0e:
 	ld a, [$c2b0] ; $4506
 	add a, a ; $4509
@@ -359,17 +367,18 @@ TrainingGymNpc0B_0e:
 	farcall InitDialogueTextCursor ; $4514
 	script_speak $0b ; $4517
 	ret ; $451c
-	; $451d, 20 bytes (records:2)
-	dw $14b1 ; record 0
-	dw $14b1 ; record 1
-	dw $14bb ; record 2
-	dw $14bb ; record 3
-	dw $14c8 ; record 4
-	dw $14c8 ; record 5
-	dw $14d8 ; record 6
-	dw $14d9 ; record 7
-	dw $14e4 ; record 8
-	dw $14e5 ; record 9
+TrainingGymNpc0BTextIds:
+	; $451d, 20 bytes (text_ids)
+	dw Text_35_177 ; record 0
+	dw Text_35_177 ; record 1
+	dw Text_35_187 ; record 2
+	dw Text_35_187 ; record 3
+	dw Text_35_200 ; record 4
+	dw Text_35_200 ; record 5
+	dw Text_35_216 ; record 6
+	dw Text_35_217 ; record 7
+	dw Text_35_228 ; record 8
+	dw Text_35_229 ; record 9
 TrainingGymNpc0C_0e:
 	ld a, [$c2b0] ; $4531
 	sra a ; $4534
@@ -385,12 +394,13 @@ TrainingGymNpc0C_0e:
 	farcall InitDialogueTextCursor ; $4541
 	script_speak $0c ; $4544
 	ret ; $4549
-	; $454a, 10 bytes (records:2)
-	dw $14b2 ; record 0
-	dw $14bc ; record 1
-	dw $14c9 ; record 2
-	dw $14da ; record 3
-	dw $14e6 ; record 4
+TrainingGymNpc0CTextIds:
+	; $454a, 10 bytes (text_ids)
+	dw Text_35_178 ; record 0
+	dw Text_35_188 ; record 1
+	dw Text_35_201 ; record 2
+	dw Text_35_218 ; record 3
+	dw Text_35_230 ; record 4
 TrainingGymNpcScripts_0e:
 	; $4554, 89 bytes (map_scripts)
 	map_script $03, FACEMASK_ANY, $0000, TrainingGymNpc03_0e, $03, $00

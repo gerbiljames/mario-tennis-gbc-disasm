@@ -7315,6 +7315,7 @@ RunDoublesDrillMatch:
 	ld [wExhibitionModeCPUPartnerCharacterDifficulty], a ; $72d9
 	farcall RunMatch ; $72dc
 	ret ; $72df
+DoublesDrillMatchPtrs:
 	; $72e0, 6 bytes (records:2)
 	dw DrillResultBitsRow0 ; record 0
 	dw DrillResultBitsRow1 ; record 1

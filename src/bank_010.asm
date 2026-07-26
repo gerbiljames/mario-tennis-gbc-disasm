@@ -2268,17 +2268,18 @@ CafeteriaNpc03_10:
 	farcall InitDialogueTextCursor ; $5890
 	script_speak $03 ; $5893
 	ret ; $5898
-	; $5899, 20 bytes (records:2)
-	dw $0c3b ; record 0
-	dw $0c3c ; record 1
-	dw $0c62 ; record 2
-	dw $0c63 ; record 3
-	dw $0c8f ; record 4
-	dw $0c8f ; record 5
-	dw $0cb7 ; record 6
-	dw $0cb7 ; record 7
-	dw $0cda ; record 8
-	dw $0cda ; record 9
+CafeteriaNpc03TextIds:
+	; $5899, 20 bytes (text_ids)
+	dw Text_33_59 ; record 0
+	dw Text_33_60 ; record 1
+	dw Text_33_98 ; record 2
+	dw Text_33_99 ; record 3
+	dw Text_33_143 ; record 4
+	dw Text_33_143 ; record 5
+	dw Text_33_183 ; record 6
+	dw Text_33_183 ; record 7
+	dw Text_33_218 ; record 8
+	dw Text_33_218 ; record 9
 CafeteriaNpc04_10:
 	ld a, [$c2b1] ; $58ad
 	add a, a ; $58b0
@@ -2328,12 +2329,13 @@ CafeteriaNpc04_10:
 	script_set_text Text_33_221 ; $5915
 	script_speak $04 ; $591b
 	ret ; $5920
-	; $5921, 10 bytes (records:2)
-	dw $0c3d ; record 0
-	dw $0c64 ; record 1
-	dw $0c90 ; record 2
-	dw $0cb8 ; record 3
-	dw $0cdb ; record 4
+CafeteriaNpc04TextIds:
+	; $5921, 10 bytes (text_ids)
+	dw Text_33_61 ; record 0
+	dw Text_33_100 ; record 1
+	dw Text_33_144 ; record 2
+	dw Text_33_184 ; record 3
+	dw Text_33_219 ; record 4
 CafeteriaNpc05_10:
 	ld a, [$c2b1] ; $592b
 	add a, a ; $592e
@@ -2360,12 +2362,13 @@ CafeteriaNpc05_10:
 .speak:
 	script_speak $05 ; $595b
 	ret ; $5960
-	; $5961, 10 bytes (records:2)
-	dw $0c3e ; record 0
-	dw $0c65 ; record 1
-	dw $0c91 ; record 2
-	dw $0cbb ; record 3
-	dw $0cdf ; record 4
+CafeteriaNpc05TextIds:
+	; $5961, 10 bytes (text_ids)
+	dw Text_33_62 ; record 0
+	dw Text_33_101 ; record 1
+	dw Text_33_145 ; record 2
+	dw Text_33_187 ; record 3
+	dw Text_33_223 ; record 4
 CafeteriaNpc06_10:
 	ld a, [$c2b0] ; $596b
 	add a, a ; $596e
@@ -2380,17 +2383,18 @@ CafeteriaNpc06_10:
 	farcall InitDialogueTextCursor ; $5979
 	script_speak $06 ; $597c
 	ret ; $5981
-	; $5982, 20 bytes (records:2)
-	dw $0c3f ; record 0
-	dw $0c3f ; record 1
-	dw $0c68 ; record 2
-	dw $0c69 ; record 3
-	dw $0c92 ; record 4
-	dw $0c93 ; record 5
-	dw $0cbc ; record 6
-	dw $0cbd ; record 7
-	dw $0cbc ; record 8
-	dw $0cbd ; record 9
+CafeteriaNpc06TextIds:
+	; $5982, 20 bytes (text_ids)
+	dw Text_33_63 ; record 0
+	dw Text_33_63 ; record 1
+	dw Text_33_104 ; record 2
+	dw Text_33_105 ; record 3
+	dw Text_33_146 ; record 4
+	dw Text_33_147 ; record 5
+	dw Text_33_188 ; record 6
+	dw Text_33_189 ; record 7
+	dw Text_33_188 ; record 8
+	dw Text_33_189 ; record 9
 CafeteriaNpc07_10:
 	ld a, [$c2b0] ; $5996
 	add a, a ; $5999
@@ -2405,17 +2409,18 @@ CafeteriaNpc07_10:
 	farcall InitDialogueTextCursor ; $59a4
 	script_speak $07 ; $59a7
 	ret ; $59ac
-	; $59ad, 20 bytes (records:2)
-	dw $0c40 ; record 0
-	dw $0c40 ; record 1
-	dw $0c6a ; record 2
-	dw $0c6b ; record 3
-	dw $0c94 ; record 4
-	dw $0c95 ; record 5
-	dw $0cbe ; record 6
-	dw $0cbf ; record 7
-	dw $0cbe ; record 8
-	dw $0cbf ; record 9
+CafeteriaNpc07TextIds:
+	; $59ad, 20 bytes (text_ids)
+	dw Text_33_64 ; record 0
+	dw Text_33_64 ; record 1
+	dw Text_33_106 ; record 2
+	dw Text_33_107 ; record 3
+	dw Text_33_148 ; record 4
+	dw Text_33_149 ; record 5
+	dw Text_33_190 ; record 6
+	dw Text_33_191 ; record 7
+	dw Text_33_190 ; record 8
+	dw Text_33_191 ; record 9
 CafeteriaNpc08_10:
 	ld a, [$c2b0] ; $59c1
 	add a, a ; $59c4
@@ -2430,17 +2435,18 @@ CafeteriaNpc08_10:
 	farcall InitDialogueTextCursor ; $59cf
 	script_speak $08 ; $59d2
 	ret ; $59d7
-	; $59d8, 20 bytes (records:2)
-	dw $0c41 ; record 0
-	dw $0c41 ; record 1
-	dw $0c6c ; record 2
-	dw $0c6c ; record 3
-	dw $0c96 ; record 4
-	dw $0c97 ; record 5
-	dw $0cc0 ; record 6
-	dw $0cc1 ; record 7
-	dw $0ce0 ; record 8
-	dw $0cc1 ; record 9
+CafeteriaNpc08TextIds:
+	; $59d8, 20 bytes (text_ids)
+	dw Text_33_65 ; record 0
+	dw Text_33_65 ; record 1
+	dw Text_33_108 ; record 2
+	dw Text_33_108 ; record 3
+	dw Text_33_150 ; record 4
+	dw Text_33_151 ; record 5
+	dw Text_33_192 ; record 6
+	dw Text_33_193 ; record 7
+	dw Text_33_224 ; record 8
+	dw Text_33_193 ; record 9
 CafeteriaNpc09_10:
 	ld a, [$c2b0] ; $59ec
 	add a, a ; $59ef
@@ -2455,17 +2461,18 @@ CafeteriaNpc09_10:
 	farcall InitDialogueTextCursor ; $59fa
 	script_speak $09 ; $59fd
 	ret ; $5a02
-	; $5a03, 20 bytes (records:2)
-	dw $0c42 ; record 0
-	dw $0c42 ; record 1
-	dw $0c6d ; record 2
-	dw $0c6d ; record 3
-	dw $0c98 ; record 4
-	dw $0c98 ; record 5
-	dw $0cc2 ; record 6
-	dw $0cc3 ; record 7
-	dw $0cc2 ; record 8
-	dw $0cc3 ; record 9
+CafeteriaNpc09TextIds:
+	; $5a03, 20 bytes (text_ids)
+	dw Text_33_66 ; record 0
+	dw Text_33_66 ; record 1
+	dw Text_33_109 ; record 2
+	dw Text_33_109 ; record 3
+	dw Text_33_152 ; record 4
+	dw Text_33_152 ; record 5
+	dw Text_33_194 ; record 6
+	dw Text_33_195 ; record 7
+	dw Text_33_194 ; record 8
+	dw Text_33_195 ; record 9
 CafeteriaNpcScripts_10:
 	; $5a17, 57 bytes (map_scripts)
 	map_script $03, FACEMASK_ANY, $0000, CafeteriaNpc03_10, $03, $00
@@ -2576,12 +2583,13 @@ RestaurantNpc03_10:
 .speak:
 	script_speak $03 ; $5c0d
 	ret ; $5c12
-	; $5c13, 10 bytes (records:2)
-	dw $0c21 ; record 0
-	dw $0c44 ; record 1
-	dw $0c6f ; record 2
-	dw $0c99 ; record 3
-	dw $0cc4 ; record 4
+RestaurantNpc03TextIds:
+	; $5c13, 10 bytes (text_ids)
+	dw Text_33_33 ; record 0
+	dw Text_33_68 ; record 1
+	dw Text_33_111 ; record 2
+	dw Text_33_153 ; record 3
+	dw Text_33_196 ; record 4
 RestaurantNpc04_10:
 	ld a, [$c2b1] ; $5c1d
 	add a, a ; $5c20
@@ -2596,12 +2604,13 @@ RestaurantNpc04_10:
 	farcall InitDialogueTextCursor ; $5c2b
 	script_speak $04 ; $5c2e
 	ret ; $5c33
-	; $5c34, 10 bytes (records:2)
-	dw $0c22 ; record 0
-	dw $0c46 ; record 1
-	dw $0c70 ; record 2
-	dw $0c9a ; record 3
-	dw $0cc5 ; record 4
+RestaurantNpc04TextIds:
+	; $5c34, 10 bytes (text_ids)
+	dw Text_33_34 ; record 0
+	dw Text_33_70 ; record 1
+	dw Text_33_112 ; record 2
+	dw Text_33_154 ; record 3
+	dw Text_33_197 ; record 4
 RestaurantNpc05_10:
 	script_face_toward ACTOR_PLAYER, $05 ; $5c3e
 	ld a, [$c2b0] ; $5c46
@@ -2627,17 +2636,18 @@ RestaurantNpc05_10:
 	script_wait_frames $14 ; $5c8d
 	script_face $05, FACE_DOWN ; $5c94
 	ret ; $5c9b
-	; $5c9c, 20 bytes (records:2)
-	dw $0c23 ; record 0
-	dw $0c23 ; record 1
-	dw $0c47 ; record 2
-	dw $0c47 ; record 3
-	dw $0c71 ; record 4
-	dw $0c74 ; record 5
-	dw $0c9b ; record 6
-	dw $0c9e ; record 7
-	dw $0cc6 ; record 8
-	dw $0cc6 ; record 9
+RestaurantNpc05TextIds:
+	; $5c9c, 20 bytes (text_ids)
+	dw Text_33_35 ; record 0
+	dw Text_33_35 ; record 1
+	dw Text_33_71 ; record 2
+	dw Text_33_71 ; record 3
+	dw Text_33_113 ; record 4
+	dw Text_33_116 ; record 5
+	dw Text_33_155 ; record 6
+	dw Text_33_158 ; record 7
+	dw Text_33_198 ; record 8
+	dw Text_33_198 ; record 9
 RestaurantNpc06_10:
 	script_set_anim $06, $04 ; $5cb0
 	script_wait_idle $06 ; $5cb7
@@ -2669,12 +2679,12 @@ RestaurantNpc06_10:
 	script_speak $06 ; $5cf5
 	ret ; $5cfa
 TextIds_10_5cfb:
-	; $5cfb, 10 bytes (records:2)
-	dw $0c26 ; record 0
-	dw $0c4a ; record 1
-	dw $0c77 ; record 2
-	dw $0ca1 ; record 3
-	dw $0cc9 ; record 4
+	; $5cfb, 10 bytes (text_ids)
+	dw Text_33_38 ; record 0
+	dw Text_33_74 ; record 1
+	dw Text_33_119 ; record 2
+	dw Text_33_161 ; record 3
+	dw Text_33_201 ; record 4
 RestaurantNpc12_10:
 	call TestRestaurantNpc12StageFlag_10 ; $5d05
 	jp nz, .speak ; $5d08
@@ -2747,12 +2757,13 @@ RestaurantNpc12_10:
 	farcall InitDialogueTextCursor ; $5dd3
 	script_speak $12 ; $5dd6
 	ret ; $5ddb
-	; $5ddc, 10 bytes (records:2)
-	dw $0c28 ; record 0
-	dw $0c4c ; record 1
-	dw $0c7b ; record 2
-	dw $0ca3 ; record 3
-	dw $0ccb ; record 4
+RestaurantNpc12TextIds:
+	; $5ddc, 10 bytes (text_ids)
+	dw Text_33_40 ; record 0
+	dw Text_33_76 ; record 1
+	dw Text_33_123 ; record 2
+	dw Text_33_163 ; record 3
+	dw Text_33_203 ; record 4
 RestaurantNpc08FaceDown_10:
 	set_flag FLAG_TEMP_SCENE_VARIANT_B ; $5de6
 RestaurantNpc08_10:
@@ -2807,12 +2818,13 @@ RestaurantNpc08_10:
 	script_speak $08 ; $5e74
 	script_face $08, FACE_RIGHT ; $5e79
 	ret ; $5e80
-	; $5e81, 10 bytes (records:2)
-	dw $0c2b ; record 0
-	dw $0c4f ; record 1
-	dw $0c7e ; record 2
-	dw $0ca6 ; record 3
-	dw $0cce ; record 4
+RestaurantNpc08TextIds:
+	; $5e81, 10 bytes (text_ids)
+	dw Text_33_43 ; record 0
+	dw Text_33_79 ; record 1
+	dw Text_33_126 ; record 2
+	dw Text_33_166 ; record 3
+	dw Text_33_206 ; record 4
 RestaurantNpc09_10:
 	ld a, [$c2b0] ; $5e8b
 	add a, a ; $5e8e
@@ -2849,17 +2861,18 @@ RestaurantNpc09_10:
 	script_set_text Text_33_171 ; $5ed2
 	script_speak $09 ; $5ed8
 	ret ; $5edd
-	; $5ede, 20 bytes (records:2)
-	dw $0c2d ; record 0
-	dw $0c2d ; record 1
-	dw $0c51 ; record 2
-	dw $0c52 ; record 3
-	dw $0c80 ; record 4
-	dw $0c81 ; record 5
-	dw $0ca8 ; record 6
-	dw $0ca8 ; record 7
-	dw $0cd0 ; record 8
-	dw $0cd0 ; record 9
+RestaurantNpc09TextIds:
+	; $5ede, 20 bytes (text_ids)
+	dw Text_33_45 ; record 0
+	dw Text_33_45 ; record 1
+	dw Text_33_81 ; record 2
+	dw Text_33_82 ; record 3
+	dw Text_33_128 ; record 4
+	dw Text_33_129 ; record 5
+	dw Text_33_168 ; record 6
+	dw Text_33_168 ; record 7
+	dw Text_33_208 ; record 8
+	dw Text_33_208 ; record 9
 RestaurantNpc0A_10:
 	script_face_toward ACTOR_PLAYER, $0a ; $5ef2
 	ld a, [$c2b0] ; $5efa
@@ -2887,17 +2900,18 @@ RestaurantNpc0A_10:
 .speak:
 	script_speak $0a ; $5f2a
 	ret ; $5f2f
-	; $5f30, 20 bytes (records:2)
-	dw $0c2e ; record 0
-	dw $0c31 ; record 1
-	dw $0c53 ; record 2
-	dw $0c56 ; record 3
-	dw $0c82 ; record 4
-	dw $0c82 ; record 5
-	dw $0cac ; record 6
-	dw $0cac ; record 7
-	dw $0cd1 ; record 8
-	dw $0cd1 ; record 9
+RestaurantNpc0ATextIds:
+	; $5f30, 20 bytes (text_ids)
+	dw Text_33_46 ; record 0
+	dw Text_33_49 ; record 1
+	dw Text_33_83 ; record 2
+	dw Text_33_86 ; record 3
+	dw Text_33_130 ; record 4
+	dw Text_33_130 ; record 5
+	dw Text_33_172 ; record 6
+	dw Text_33_172 ; record 7
+	dw Text_33_209 ; record 8
+	dw Text_33_209 ; record 9
 RestaurantNpc0B_10:
 	ld a, [$c2b1] ; $5f44
 	add a, a ; $5f47
@@ -2917,12 +2931,13 @@ RestaurantNpc0B_10:
 .speak:
 	script_speak $0b ; $5f5f
 	ret ; $5f64
-	; $5f65, 10 bytes (records:2)
-	dw $0c34 ; record 0
-	dw $0c59 ; record 1
-	dw $0c85 ; record 2
-	dw $0cad ; record 3
-	dw $0cd2 ; record 4
+RestaurantNpc0BTextIds:
+	; $5f65, 10 bytes (text_ids)
+	dw Text_33_52 ; record 0
+	dw Text_33_89 ; record 1
+	dw Text_33_133 ; record 2
+	dw Text_33_173 ; record 3
+	dw Text_33_210 ; record 4
 RestaurantNpc0C_10:
 	ld a, [$c2b1] ; $5f6f
 	add a, a ; $5f72
@@ -2961,12 +2976,13 @@ RestaurantNpc0C_10:
 .speak:
 	script_speak $0c ; $5fb9
 	ret ; $5fbe
-	; $5fbf, 10 bytes (records:2)
-	dw $0c36 ; record 0
-	dw $0c5a ; record 1
-	dw $0c86 ; record 2
-	dw $0cae ; record 3
-	dw $0cd3 ; record 4
+RestaurantNpc0CTextIds:
+	; $5fbf, 10 bytes (text_ids)
+	dw Text_33_54 ; record 0
+	dw Text_33_90 ; record 1
+	dw Text_33_134 ; record 2
+	dw Text_33_174 ; record 3
+	dw Text_33_211 ; record 4
 RestaurantNpc0D_10:
 	ld a, [$c2b1] ; $5fc9
 	add a, a ; $5fcc
@@ -2998,12 +3014,13 @@ RestaurantNpc0D_10:
 .speak:
 	script_speak $0d ; $6003
 	ret ; $6008
-	; $6009, 10 bytes (records:2)
-	dw $0c37 ; record 0
-	dw $0c5d ; record 1
-	dw $0c8a ; record 2
-	dw $0cb0 ; record 3
-	dw $0cd5 ; record 4
+RestaurantNpc0DTextIds:
+	; $6009, 10 bytes (text_ids)
+	dw Text_33_55 ; record 0
+	dw Text_33_93 ; record 1
+	dw Text_33_138 ; record 2
+	dw Text_33_176 ; record 3
+	dw Text_33_213 ; record 4
 RestaurantNpc0E_10:
 	ld a, [$c2b1] ; $6013
 	add a, a ; $6016
@@ -3018,12 +3035,13 @@ RestaurantNpc0E_10:
 	farcall InitDialogueTextCursor ; $6021
 	script_speak $0e ; $6024
 	ret ; $6029
-	; $602a, 10 bytes (records:2)
-	dw $0c38 ; record 0
-	dw $0c5f ; record 1
-	dw $0c8b ; record 2
-	dw $0cb3 ; record 3
-	dw $0cd6 ; record 4
+RestaurantNpc0ETextIds:
+	; $602a, 10 bytes (text_ids)
+	dw Text_33_56 ; record 0
+	dw Text_33_95 ; record 1
+	dw Text_33_139 ; record 2
+	dw Text_33_179 ; record 3
+	dw Text_33_214 ; record 4
 RestaurantNpc0F_10:
 	ld a, [$c2b1] ; $6034
 	add a, a ; $6037
@@ -3038,12 +3056,13 @@ RestaurantNpc0F_10:
 	farcall InitDialogueTextCursor ; $6042
 	script_speak $0f ; $6045
 	ret ; $604a
-	; $604b, 10 bytes (records:2)
-	dw $0c39 ; record 0
-	dw $0c60 ; record 1
-	dw $0c8c ; record 2
-	dw $0cb4 ; record 3
-	dw $0cd7 ; record 4
+RestaurantNpc0FTextIds:
+	; $604b, 10 bytes (text_ids)
+	dw Text_33_57 ; record 0
+	dw Text_33_96 ; record 1
+	dw Text_33_140 ; record 2
+	dw Text_33_180 ; record 3
+	dw Text_33_215 ; record 4
 RestaurantNpc10_10:
 	ld a, [$c2b1] ; $6055
 	add a, a ; $6058
@@ -3058,12 +3077,13 @@ RestaurantNpc10_10:
 	farcall InitDialogueTextCursor ; $6063
 	script_speak $10 ; $6066
 	ret ; $606b
-	; $606c, 10 bytes (records:2)
-	dw $0c3a ; record 0
-	dw $0c61 ; record 1
-	dw $0c8e ; record 2
-	dw $0cb6 ; record 3
-	dw $0cd9 ; record 4
+RestaurantNpc10TextIds:
+	; $606c, 10 bytes (text_ids)
+	dw Text_33_58 ; record 0
+	dw Text_33_97 ; record 1
+	dw Text_33_142 ; record 2
+	dw Text_33_182 ; record 3
+	dw Text_33_217 ; record 4
 RestaurantNpcScripts_10:
 	; $6076, 121 bytes (map_scripts)
 	map_script $03, FACEMASK_ANY, $0000, RestaurantNpc03_10, $03, $00
@@ -4194,12 +4214,13 @@ AcademyMainBldgNpc03_10:
 .speak:
 	script_speak $03 ; $7621
 	ret ; $7626
-	; $7627, 10 bytes (records:2)
-	dw $01b8 ; record 0
-	dw $01bb ; record 1
-	dw $01be ; record 2
-	dw $01c4 ; record 3
-	dw $01c9 ; record 4
+AcademyMainBldgNpc03TextIds:
+	; $7627, 10 bytes (text_ids)
+	dw Text_30_440 ; record 0
+	dw Text_30_443 ; record 1
+	dw Text_30_446 ; record 2
+	dw Text_30_452 ; record 3
+	dw Text_30_457 ; record 4
 AcademyMainBldgNpc04_10:
 	ld a, [$c2b0] ; $7631
 	sra a ; $7634
@@ -4215,18 +4236,19 @@ AcademyMainBldgNpc04_10:
 	farcall InitDialogueTextCursor ; $7641
 	script_speak $04 ; $7644
 	ret ; $7649
-	; $764a, 10 bytes (records:2)
-	dw $01b9 ; record 0
-	dw $01bc ; record 1
-	dw $01bf ; record 2
-	dw $01c7 ; record 3
-	dw $01ca ; record 4
+AcademyMainBldgNpc04TextIds:
+	; $764a, 10 bytes (text_ids)
+	dw Text_30_441 ; record 0
+	dw Text_30_444 ; record 1
+	dw Text_30_447 ; record 2
+	dw Text_30_455 ; record 3
+	dw Text_30_458 ; record 4
 AcademyMainBldgNpc05_10:
 	script_set_text Text_30_462 ; $7654
 	script_speak $05 ; $765a
 	script_face $05, FACE_DOWN ; $765f
 	test_flag FLAG_DOUBLES ; $7666
-	jr nz, .setText ; $7669
+	jr nz, AcademyMainBldgNpc05TextIds.setText ; $7669
 	script_speak $05 ; $766b
 	ld a, [$c2b0] ; $7670
 	sra a ; $7673
@@ -4245,12 +4267,13 @@ AcademyMainBldgNpc05_10:
 	script_face_toward ACTOR_PLAYER, $05 ; $768a
 	script_speak $05 ; $7692
 	ret ; $7697
-	; $7698, 10 bytes (records:2)
-	dw $01d0 ; record 0
-	dw $01d1 ; record 1
-	dw $01d2 ; record 2
-	dw $01d3 ; record 3
-	dw $01d4 ; record 4
+AcademyMainBldgNpc05TextIds:
+	; $7698, 10 bytes (text_ids)
+	dw Text_30_464 ; record 0
+	dw Text_30_465 ; record 1
+	dw Text_30_466 ; record 2
+	dw Text_30_467 ; record 3
+	dw Text_30_468 ; record 4
 .setText:
 	script_set_text Text_30_469 ; $76a2
 	script_wait_frames $14 ; $76a8
@@ -4266,13 +4289,14 @@ AcademyMainBldgNpc05_10:
 	ld h, [hl] ; $76c0
 	ld l, a ; $76c1
 	farcall InitDialogueTextCursor ; $76c2
-	jr .loop ; $76c5
-	; $76c7, 10 bytes (records:2)
-	dw $01d6 ; record 0
-	dw $01d7 ; record 1
-	dw $01d8 ; record 2
-	dw $01d9 ; record 3
-	dw $01da ; record 4
+	jr AcademyMainBldgNpc05_10.loop ; $76c5
+AcademyMainBldgNpc05TextIds2:
+	; $76c7, 10 bytes (text_ids)
+	dw Text_30_470 ; record 0
+	dw Text_30_471 ; record 1
+	dw Text_30_472 ; record 2
+	dw Text_30_473 ; record 3
+	dw Text_30_474 ; record 4
 AcademyMainBldgNpc06_10:
 	ld a, [$c2b0] ; $76d1
 	sra a ; $76d4
@@ -4288,12 +4312,13 @@ AcademyMainBldgNpc06_10:
 	farcall InitDialogueTextCursor ; $76e1
 	script_speak $06 ; $76e4
 	ret ; $76e9
-	; $76ea, 10 bytes (records:2)
-	dw $01ba ; record 0
-	dw $01bd ; record 1
-	dw $01c0 ; record 2
-	dw $01c8 ; record 3
-	dw $01cb ; record 4
+AcademyMainBldgNpc06TextIds:
+	; $76ea, 10 bytes (text_ids)
+	dw Text_30_442 ; record 0
+	dw Text_30_445 ; record 1
+	dw Text_30_448 ; record 2
+	dw Text_30_456 ; record 3
+	dw Text_30_459 ; record 4
 AcademyMainBldgNpcScripts_10:
 	; $76f4, 33 bytes (map_scripts)
 	map_script $03, FACEMASK_ANY, $0000, AcademyMainBldgNpc03_10, $13, $00

@@ -383,14 +383,15 @@ WallPracticeRoomNpc03_12:
 	script_wait_idle $03 ; $4768
 	script_speak $03 ; $476d
 	ret ; $4772
-	; $4773, 14 bytes (records:2)
-	dw $14e7 ; record 0
-	dw $1500 ; record 1
-	dw $150a ; record 2
-	dw $1808 ; record 3
-	dw $1815 ; record 4
-	dw $1815 ; record 5
-	dw $182c ; record 6
+WallPracticeRoomNpc03TextIds:
+	; $4773, 14 bytes (text_ids)
+	dw Text_35_231 ; record 0
+	dw Text_35_256 ; record 1
+	dw Text_35_266 ; record 2
+	dw Text_36_8 ; record 3
+	dw Text_36_21 ; record 4
+	dw Text_36_21 ; record 5
+	dw Text_36_44 ; record 6
 WallPracticeRoomNpc04_12:
 	ld a, [$c2b0] ; $4781
 	add a, a ; $4784
@@ -405,14 +406,15 @@ WallPracticeRoomNpc04_12:
 	farcall InitDialogueTextCursor ; $478f
 	script_speak $04 ; $4792
 	ret ; $4797
-	; $4798, 14 bytes (records:2)
-	dw $14ea ; record 0
-	dw $1501 ; record 1
-	dw $150d ; record 2
-	dw $180b ; record 3
-	dw $1816 ; record 4
-	dw $1816 ; record 5
-	dw $182d ; record 6
+WallPracticeRoomNpc04TextIds:
+	; $4798, 14 bytes (text_ids)
+	dw Text_35_234 ; record 0
+	dw Text_35_257 ; record 1
+	dw Text_35_269 ; record 2
+	dw Text_36_11 ; record 3
+	dw Text_36_22 ; record 4
+	dw Text_36_22 ; record 5
+	dw Text_36_45 ; record 6
 WallPracticeRoomNpc05_12:
 	ld a, [$c2b0] ; $47a6
 	add a, a ; $47a9
@@ -437,14 +439,15 @@ WallPracticeRoomNpc05_12:
 	script_speak $05 ; $47d8
 	script_face $05, FACE_UP ; $47dd
 	ret ; $47e4
-	; $47e5, 14 bytes (records:2)
-	dw $14eb ; record 0
-	dw $1502 ; record 1
-	dw $150e ; record 2
-	dw $180c ; record 3
-	dw $1817 ; record 4
-	dw $1817 ; record 5
-	dw $182e ; record 6
+WallPracticeRoomNpc05TextIds:
+	; $47e5, 14 bytes (text_ids)
+	dw Text_35_235 ; record 0
+	dw Text_35_258 ; record 1
+	dw Text_35_270 ; record 2
+	dw Text_36_12 ; record 3
+	dw Text_36_23 ; record 4
+	dw Text_36_23 ; record 5
+	dw Text_36_46 ; record 6
 WallPracticeRoomNpc06_12:
 	ld a, [$c2b0] ; $47f3
 	add a, a ; $47f6
@@ -459,14 +462,15 @@ WallPracticeRoomNpc06_12:
 	farcall InitDialogueTextCursor ; $4801
 	script_speak $06 ; $4804
 	ret ; $4809
-	; $480a, 14 bytes (records:2)
-	dw $14ed ; record 0
-	dw $1504 ; record 1
-	dw $1510 ; record 2
-	dw $180e ; record 3
-	dw $1818 ; record 4
-	dw $1818 ; record 5
-	dw $182f ; record 6
+WallPracticeRoomNpc06TextIds:
+	; $480a, 14 bytes (text_ids)
+	dw Text_35_237 ; record 0
+	dw Text_35_260 ; record 1
+	dw Text_35_272 ; record 2
+	dw Text_36_14 ; record 3
+	dw Text_36_24 ; record 4
+	dw Text_36_24 ; record 5
+	dw Text_36_47 ; record 6
 WallPracticeRoomNpcScripts_12:
 	; $4818, 41 bytes (map_scripts)
 	map_script $03, FACEMASK_ANY, $0000, WallPracticeRoomNpc03_12, $01, $00
@@ -682,10 +686,11 @@ RelaunchWallPracticeMasterLevel:
 	script_wait_frames $28 ; $4aa7
 .done:
 	ret ; $4aae
-	; $4aaf, 6 bytes (records:2)
-	dw $14f7 ; record 0
-	dw $14f8 ; record 1
-	dw $14f9 ; record 2
+WallPracticeScoreRetryPromptTextIds:
+	; $4aaf, 6 bytes (text_ids)
+	dw Text_35_247 ; record 0
+	dw Text_35_248 ; record 1
+	dw Text_35_249 ; record 2
 WallPracticeLevelResultScript:
 	xor a, a ; $4ab5
 	ld [wStoryModeShowLocationName], a ; $4ab6
@@ -696,10 +701,10 @@ WallPracticeLevelResultScript:
 	sub a, $01 ; $4ac4
 	ld a, a ; $4ac6
 	rst Rst00 ; $4ac7
-	dw WallPracticeExitCourtScript.variant4 ; $4ac8 jumptable
-	dw WallPracticeExitCourtScript.variant3 ; $4aca jumptable
-	dw WallPracticeExitCourtScript.variant2 ; $4acc jumptable
-	dw WallPracticeExitCourtScript.variant1 ; $4ace jumptable
+	dw WallPracticeLevelResultScriptTextIds.variant4 ; $4ac8 jumptable
+	dw WallPracticeLevelResultScriptTextIds.variant3 ; $4aca jumptable
+	dw WallPracticeLevelResultScriptTextIds.variant2 ; $4acc jumptable
+	dw WallPracticeLevelResultScriptTextIds.variant1 ; $4ace jumptable
 .checkLevel:
 	ld a, [$c2b0] ; $4ad0
 	cp a, $04 ; $4ad3
@@ -758,10 +763,11 @@ WallPracticeExitCourtScript:
 .done:
 	script_wait_frames $0a ; $4b94
 	ret ; $4b9b
-	; $4b9c, 6 bytes (records:2)
-	dw $14f3 ; record 0
-	dw $14f4 ; record 1
-	dw $14f5 ; record 2
+WallPracticeLevelResultScriptTextIds:
+	; $4b9c, 6 bytes (text_ids)
+	dw Text_35_243 ; record 0
+	dw Text_35_244 ; record 1
+	dw Text_35_245 ; record 2
 .variant1:
 	script_set_text Text_35_255 ; $4ba2
 	script_fade_in $06 ; $4ba8
@@ -1249,22 +1255,24 @@ WallPracticeRoomNpc07_12:
 	script_move_target ACTOR_PLAYER, $0c00, $3100 ; $5262
 	jp LaunchWallPracticeMinigame ; $526d
 	ret ; $5270
-	; $5271, 14 bytes (records:2)
-	dw $14ee ; record 0
-	dw $1505 ; record 1
-	dw $1803 ; record 2
-	dw $180f ; record 3
-	dw $1819 ; record 4
-	dw $181e ; record 5
-	dw $1823 ; record 6
-	; $527f, 14 bytes (records:2)
-	dw $14f0 ; record 0
-	dw $1507 ; record 1
-	dw $1805 ; record 2
-	dw $1811 ; record 3
-	dw $181b ; record 4
-	dw $1820 ; record 5
-	dw $1825 ; record 6
+WallPracticeRoomNpc07TextIds:
+	; $5271, 14 bytes (text_ids)
+	dw Text_35_238 ; record 0
+	dw Text_35_261 ; record 1
+	dw Text_36_3 ; record 2
+	dw Text_36_15 ; record 3
+	dw Text_36_25 ; record 4
+	dw Text_36_30 ; record 5
+	dw Text_36_35 ; record 6
+WallPracticeRoomNpc07TextIds2:
+	; $527f, 14 bytes (text_ids)
+	dw Text_35_240 ; record 0
+	dw Text_35_263 ; record 1
+	dw Text_36_5 ; record 2
+	dw Text_36_17 ; record 3
+	dw Text_36_27 ; record 4
+	dw Text_36_32 ; record 5
+	dw Text_36_37 ; record 6
 LaunchWallPracticeMinigame:
 	ld c, $04 ; $528d
 	call BeginFadeOut ; $528f
@@ -1402,13 +1410,14 @@ SeniorCourtExit01_12:
 	call PushTextArgFetchedString ; $55d3
 	script_speak $03 ; $55d6
 	ret ; $55db
-	; $55dc, 12 bytes (records:2)
-	dw $108d ; record 0
-	dw $1097 ; record 1
-	dw $109e ; record 2
-	dw $10a8 ; record 3
-	dw $10b0 ; record 4
-	dw $10ba ; record 5
+SeniorCourtExit01TextIds:
+	; $55dc, 12 bytes (text_ids)
+	dw Text_34_141 ; record 0
+	dw Text_34_151 ; record 1
+	dw Text_34_158 ; record 2
+	dw Text_34_168 ; record 3
+	dw Text_34_176 ; record 4
+	dw Text_34_186 ; record 5
 SeniorCourtNpc03_12:
 	ld a, [$c2b1] ; $55e8
 	cp a, $02 ; $55eb
@@ -1552,16 +1561,17 @@ SeniorCourtNpc04_12:
 	jr c, .done ; $5844
 .done:
 	ret ; $5846
-	; $5847, 18 bytes (records:2)
-	dw $100e ; record 0
-	dw $100e ; record 1
-	dw $101a ; record 2
-	dw $101a ; record 3
-	dw $101a ; record 4
-	dw $101b ; record 5
-	dw $1055 ; record 6
-	dw $1055 ; record 7
-	dw $1056 ; record 8
+SeniorCourtNpc04TextIds:
+	; $5847, 18 bytes (text_ids)
+	dw Text_34_14 ; record 0
+	dw Text_34_14 ; record 1
+	dw Text_34_26 ; record 2
+	dw Text_34_26 ; record 3
+	dw Text_34_26 ; record 4
+	dw Text_34_27 ; record 5
+	dw Text_34_85 ; record 6
+	dw Text_34_85 ; record 7
+	dw Text_34_86 ; record 8
 SeniorCourtNpc05_12:
 	ld a, [$c2b1] ; $5859
 	add a, a ; $585c
@@ -1592,22 +1602,22 @@ SeniorCourtNpc05_12:
 	script_speak $05 ; $588f
 	ret ; $5894
 TextIds_12_5895:
-	; $5895, 30 bytes (records:2)
-	dw $100f ; record 0
-	dw $1018 ; record 1
-	dw $101c ; record 2
-	dw $101c ; record 3
-	dw $101d ; record 4
-	dw $1020 ; record 5
-	dw $1057 ; record 6
-	dw $1057 ; record 7
-	dw $1058 ; record 8
-	dw $108e ; record 9
-	dw $1097 ; record 10
-	dw $109f ; record 11
-	dw $10a8 ; record 12
-	dw $10b1 ; record 13
-	dw $10ba ; record 14
+	; $5895, 30 bytes (text_ids)
+	dw Text_34_15 ; record 0
+	dw Text_34_24 ; record 1
+	dw Text_34_28 ; record 2
+	dw Text_34_28 ; record 3
+	dw Text_34_29 ; record 4
+	dw Text_34_32 ; record 5
+	dw Text_34_87 ; record 6
+	dw Text_34_87 ; record 7
+	dw Text_34_88 ; record 8
+	dw Text_34_142 ; record 9
+	dw Text_34_151 ; record 10
+	dw Text_34_159 ; record 11
+	dw Text_34_168 ; record 12
+	dw Text_34_177 ; record 13
+	dw Text_34_186 ; record 14
 SeniorCourtNpc06_12:
 	ld a, [$c2b1] ; $58b3
 	add a, a ; $58b6
@@ -1642,22 +1652,22 @@ SeniorCourtNpc06_12:
 	script_speak $06 ; $58f2
 	ret ; $58f7
 TextIds_12_58f8:
-	; $58f8, 30 bytes (records:2)
-	dw $1010 ; record 0
-	dw $1010 ; record 1
-	dw $1021 ; record 2
-	dw $1022 ; record 3
-	dw $1023 ; record 4
-	dw $1024 ; record 5
-	dw $1059 ; record 6
-	dw $105e ; record 7
-	dw $1060 ; record 8
-	dw $108f ; record 9
-	dw $1098 ; record 10
-	dw $10a0 ; record 11
-	dw $10a9 ; record 12
-	dw $10b2 ; record 13
-	dw $10bb ; record 14
+	; $58f8, 30 bytes (text_ids)
+	dw Text_34_16 ; record 0
+	dw Text_34_16 ; record 1
+	dw Text_34_33 ; record 2
+	dw Text_34_34 ; record 3
+	dw Text_34_35 ; record 4
+	dw Text_34_36 ; record 5
+	dw Text_34_89 ; record 6
+	dw Text_34_94 ; record 7
+	dw Text_34_96 ; record 8
+	dw Text_34_143 ; record 9
+	dw Text_34_152 ; record 10
+	dw Text_34_160 ; record 11
+	dw Text_34_169 ; record 12
+	dw Text_34_178 ; record 13
+	dw Text_34_187 ; record 14
 SeniorCourtNpc07_12:
 	ld a, [$c2b1] ; $5916
 	add a, a ; $5919
@@ -1672,22 +1682,23 @@ SeniorCourtNpc07_12:
 	farcall InitDialogueTextCursor ; $5924
 	script_speak $07 ; $5927
 	ret ; $592c
-	; $592d, 30 bytes (records:2)
-	dw $1011 ; record 0
-	dw $1019 ; record 1
-	dw $1025 ; record 2
-	dw $1026 ; record 3
-	dw $1026 ; record 4
-	dw $1026 ; record 5
-	dw $105d ; record 6
-	dw $105f ; record 7
-	dw $1061 ; record 8
-	dw $1090 ; record 9
-	dw $1099 ; record 10
-	dw $10a1 ; record 11
-	dw $10aa ; record 12
-	dw $10b3 ; record 13
-	dw $10bc ; record 14
+SeniorCourtNpc07TextIds:
+	; $592d, 30 bytes (text_ids)
+	dw Text_34_17 ; record 0
+	dw Text_34_25 ; record 1
+	dw Text_34_37 ; record 2
+	dw Text_34_38 ; record 3
+	dw Text_34_38 ; record 4
+	dw Text_34_38 ; record 5
+	dw Text_34_93 ; record 6
+	dw Text_34_95 ; record 7
+	dw Text_34_97 ; record 8
+	dw Text_34_144 ; record 9
+	dw Text_34_153 ; record 10
+	dw Text_34_161 ; record 11
+	dw Text_34_170 ; record 12
+	dw Text_34_179 ; record 13
+	dw Text_34_188 ; record 14
 SeniorCourtNpc08_12:
 	ld a, [$c2b1] ; $594b
 	add a, a ; $594e
@@ -1754,22 +1765,23 @@ SeniorCourtNpc08_12:
 	farcall RunStoryMatch ; $5a24
 	farcall RestoreOverworldAfterMatch ; $5a27
 	ret ; $5a2a
-	; $5a2b, 30 bytes (records:2)
-	dw $1012 ; record 0
-	dw $1012 ; record 1
-	dw $1027 ; record 2
-	dw $1030 ; record 3
-	dw $1030 ; record 4
-	dw $1030 ; record 5
-	dw $1062 ; record 6
-	dw $1063 ; record 7
-	dw $1063 ; record 8
-	dw $1091 ; record 9
-	dw $109a ; record 10
-	dw $10a2 ; record 11
-	dw $10ab ; record 12
-	dw $10b4 ; record 13
-	dw $10bd ; record 14
+SeniorCourtNpc08TextIds:
+	; $5a2b, 30 bytes (text_ids)
+	dw Text_34_18 ; record 0
+	dw Text_34_18 ; record 1
+	dw Text_34_39 ; record 2
+	dw Text_34_48 ; record 3
+	dw Text_34_48 ; record 4
+	dw Text_34_48 ; record 5
+	dw Text_34_98 ; record 6
+	dw Text_34_99 ; record 7
+	dw Text_34_99 ; record 8
+	dw Text_34_145 ; record 9
+	dw Text_34_154 ; record 10
+	dw Text_34_162 ; record 11
+	dw Text_34_171 ; record 12
+	dw Text_34_180 ; record 13
+	dw Text_34_189 ; record 14
 SeniorCourtNpc09_12:
 	ld a, [$c2b1] ; $5a49
 	add a, a ; $5a4c
@@ -1789,22 +1801,23 @@ SeniorCourtNpc09_12:
 .speak:
 	script_speak $09 ; $5a68
 	ret ; $5a6d
-	; $5a6e, 30 bytes (records:2)
-	dw $1013 ; record 0
-	dw $1013 ; record 1
-	dw $102b ; record 2
-	dw $1031 ; record 3
-	dw $1031 ; record 4
-	dw $1031 ; record 5
-	dw $1064 ; record 6
-	dw $1065 ; record 7
-	dw $1065 ; record 8
-	dw $1092 ; record 9
-	dw $109b ; record 10
-	dw $10a3 ; record 11
-	dw $10ac ; record 12
-	dw $10b5 ; record 13
-	dw $10be ; record 14
+SeniorCourtNpc09TextIds:
+	; $5a6e, 30 bytes (text_ids)
+	dw Text_34_19 ; record 0
+	dw Text_34_19 ; record 1
+	dw Text_34_43 ; record 2
+	dw Text_34_49 ; record 3
+	dw Text_34_49 ; record 4
+	dw Text_34_49 ; record 5
+	dw Text_34_100 ; record 6
+	dw Text_34_101 ; record 7
+	dw Text_34_101 ; record 8
+	dw Text_34_146 ; record 9
+	dw Text_34_155 ; record 10
+	dw Text_34_163 ; record 11
+	dw Text_34_172 ; record 12
+	dw Text_34_181 ; record 13
+	dw Text_34_190 ; record 14
 SeniorCourtNpc0A_12:
 	ld a, [$c2b1] ; $5a8c
 	add a, a ; $5a8f
@@ -1874,22 +1887,23 @@ SeniorCourtNpc0A_12:
 	farcall RunStoryMatch ; $5b6e
 	farcall RestoreOverworldAfterMatch ; $5b71
 	ret ; $5b74
-	; $5b75, 30 bytes (records:2)
-	dw $1014 ; record 0
-	dw $1014 ; record 1
-	dw $102c ; record 2
-	dw $1032 ; record 3
-	dw $1032 ; record 4
-	dw $1032 ; record 5
-	dw $1066 ; record 6
-	dw $106c ; record 7
-	dw $106c ; record 8
-	dw $1093 ; record 9
-	dw $109c ; record 10
-	dw $10a4 ; record 11
-	dw $10ad ; record 12
-	dw $10b6 ; record 13
-	dw $10bf ; record 14
+SeniorCourtNpc0ATextIds:
+	; $5b75, 30 bytes (text_ids)
+	dw Text_34_20 ; record 0
+	dw Text_34_20 ; record 1
+	dw Text_34_44 ; record 2
+	dw Text_34_50 ; record 3
+	dw Text_34_50 ; record 4
+	dw Text_34_50 ; record 5
+	dw Text_34_102 ; record 6
+	dw Text_34_108 ; record 7
+	dw Text_34_108 ; record 8
+	dw Text_34_147 ; record 9
+	dw Text_34_156 ; record 10
+	dw Text_34_164 ; record 11
+	dw Text_34_173 ; record 12
+	dw Text_34_182 ; record 13
+	dw Text_34_191 ; record 14
 SeniorCourtNpc0B_12:
 	ld a, [$c2b1] ; $5b93
 	add a, a ; $5b96
@@ -1914,22 +1928,23 @@ SeniorCourtNpc0B_12:
 .speak:
 	script_speak $0b ; $5bb9
 	ret ; $5bbe
-	; $5bbf, 30 bytes (records:2)
-	dw $1015 ; record 0
-	dw $1015 ; record 1
-	dw $102d ; record 2
-	dw $1033 ; record 3
-	dw $1033 ; record 4
-	dw $1033 ; record 5
-	dw $106b ; record 6
-	dw $106d ; record 7
-	dw $106d ; record 8
-	dw $1094 ; record 9
-	dw $109d ; record 10
-	dw $10a5 ; record 11
-	dw $10ae ; record 12
-	dw $10b7 ; record 13
-	dw $10ae ; record 14
+SeniorCourtNpc0BTextIds:
+	; $5bbf, 30 bytes (text_ids)
+	dw Text_34_21 ; record 0
+	dw Text_34_21 ; record 1
+	dw Text_34_45 ; record 2
+	dw Text_34_51 ; record 3
+	dw Text_34_51 ; record 4
+	dw Text_34_51 ; record 5
+	dw Text_34_107 ; record 6
+	dw Text_34_109 ; record 7
+	dw Text_34_109 ; record 8
+	dw Text_34_148 ; record 9
+	dw Text_34_157 ; record 10
+	dw Text_34_165 ; record 11
+	dw Text_34_174 ; record 12
+	dw Text_34_183 ; record 13
+	dw Text_34_174 ; record 14
 SeniorCourtNpc0C_12:
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $5bdd
 	or a, a ; $5be0
@@ -1961,37 +1976,38 @@ SeniorCourtNpc0C_12:
 	farcall InitDialogueTextCursor ; $5c08
 	script_speak $0c ; $5c0b
 	ret ; $5c10
-	; $5c11, 60 bytes (records:2)
-	dw $1016 ; record 0
-	dw $1016 ; record 1
-	dw $102e ; record 2
-	dw $1034 ; record 3
-	dw $1034 ; record 4
-	dw $1034 ; record 5
-	dw $106c ; record 6
-	dw $106e ; record 7
-	dw $106e ; record 8
-	dw $1095 ; record 9
-	dw $109e ; record 10
-	dw $10a6 ; record 11
-	dw $10af ; record 12
-	dw $10b8 ; record 13
-	dw $10ba ; record 14
-	dw $1017 ; record 15
-	dw $1017 ; record 16
-	dw $102f ; record 17
-	dw $1035 ; record 18
-	dw $1035 ; record 19
-	dw $1035 ; record 20
-	dw $106c ; record 21
-	dw $106e ; record 22
-	dw $106e ; record 23
-	dw $1096 ; record 24
-	dw $109e ; record 25
-	dw $10a7 ; record 26
-	dw $10af ; record 27
-	dw $10b9 ; record 28
-	dw $10ba ; record 29
+SeniorCourtNpc0CTextIds:
+	; $5c11, 60 bytes (text_ids)
+	dw Text_34_22 ; record 0
+	dw Text_34_22 ; record 1
+	dw Text_34_46 ; record 2
+	dw Text_34_52 ; record 3
+	dw Text_34_52 ; record 4
+	dw Text_34_52 ; record 5
+	dw Text_34_108 ; record 6
+	dw Text_34_110 ; record 7
+	dw Text_34_110 ; record 8
+	dw Text_34_149 ; record 9
+	dw Text_34_158 ; record 10
+	dw Text_34_166 ; record 11
+	dw Text_34_175 ; record 12
+	dw Text_34_184 ; record 13
+	dw Text_34_186 ; record 14
+	dw Text_34_23 ; record 15
+	dw Text_34_23 ; record 16
+	dw Text_34_47 ; record 17
+	dw Text_34_53 ; record 18
+	dw Text_34_53 ; record 19
+	dw Text_34_53 ; record 20
+	dw Text_34_108 ; record 21
+	dw Text_34_110 ; record 22
+	dw Text_34_110 ; record 23
+	dw Text_34_150 ; record 24
+	dw Text_34_158 ; record 25
+	dw Text_34_167 ; record 26
+	dw Text_34_175 ; record 27
+	dw Text_34_185 ; record 28
+	dw Text_34_186 ; record 29
 SeniorCourtNpcScripts_12:
 	; $5c4d, 121 bytes (map_scripts)
 	map_script $03, FACEMASK_RIGHT, $0840, SeniorCourtNpc03FaceRight_12, $01, $00
@@ -2489,6 +2505,7 @@ RunSeniorRankingMatchIntro:
 	ld l, a ; $64ed
 	call JumpToHL ; $64ee
 	ret ; $64f1
+SeniorRankingMatchIntroPtrs:
 	; $64f2, 14 bytes (records:2)
 	dw $67a1 ; record 0
 	dw $683b ; record 1
@@ -2735,6 +2752,7 @@ ResumeSeniorOpponentScripts:
 	ld l, a ; $6a50
 	call JumpToHL ; $6a51
 	ret ; $6a54
+ResumeSeniorOpponentScriptsPtrs:
 	; $6a55, 14 bytes (records:2)
 	dw $6ab8 ; record 0
 	dw $6ac4 ; record 1
@@ -3079,6 +3097,7 @@ SeniorMatchVictorySceneDispatch:
 	call JumpToHL ; $6e06
 	call ComputeSeniorCourtStage ; $6e09
 	ret ; $6e0c
+SeniorMatchVictorySceneDispatchPtrs:
 	; $6e0d, 18 bytes (records:2)
 	dw $73b2 ; record 0
 	dw $73b2 ; record 1

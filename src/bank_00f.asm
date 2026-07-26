@@ -2989,11 +2989,12 @@ IslandOpenRoundSinglesNpc05_0f:
 	ld de, $d000 ; $7833
 	farcall AttachActorStepMover ; $7836
 	ret ; $7839
-	; $783a, 8 bytes (records:2)
-	dw $2852 ; record 0
-	dw $2852 ; record 1
-	dw $2858 ; record 2
-	dw $284e ; record 3
+IslandOpenRoundSinglesNpc05TextIds:
+	; $783a, 8 bytes (text_ids)
+	dw Text_25_82 ; record 0
+	dw Text_25_82 ; record 1
+	dw Text_25_88 ; record 2
+	dw Text_25_78 ; record 3
 IslandOpenRoundActorsDoubles_0f:
 	; $7842, 94 bytes (map_actors)
 	map_actor $0000, ActorScript_0f_7b57, $2100, $1100, FACE_RIGHT, $5c, $01, $00
@@ -3036,11 +3037,12 @@ IslandOpenRoundDoublesNpc03_0f:
 	farcall InitDialogueTextCursor ; $78db
 	script_speak $03 ; $78de
 	ret ; $78e3
-	; $78e4, 8 bytes (records:2)
-	dw $2853 ; record 0
-	dw $2853 ; record 1
-	dw $2859 ; record 2
-	dw $284f ; record 3
+IslandOpenRoundDoublesNpc03TextIds:
+	; $78e4, 8 bytes (text_ids)
+	dw Text_25_83 ; record 0
+	dw Text_25_83 ; record 1
+	dw Text_25_89 ; record 2
+	dw Text_25_79 ; record 3
 QueueFinishedRoundNameText:
 	test_flag FLAG_DOUBLES ; $78ec
 	jr nz, .doubles ; $78ef

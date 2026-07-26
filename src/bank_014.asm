@@ -58,14 +58,15 @@ TennisMachineRoomNpc03_14:
 	farcall InitDialogueTextCursor ; $409d
 	script_speak $03 ; $40a0
 	ret ; $40a5
-	; $40a6, 14 bytes (records:2)
-	dw $20a7 ; record 0
-	dw $20b0 ; record 1
-	dw $20b9 ; record 2
-	dw $20c0 ; record 3
-	dw $20c7 ; record 4
-	dw $20cf ; record 5
-	dw $20d6 ; record 6
+TennisMachineRoomNpc03TextIds:
+	; $40a6, 14 bytes (text_ids)
+	dw Text_6e_167 ; record 0
+	dw Text_6e_176 ; record 1
+	dw Text_6e_185 ; record 2
+	dw Text_6e_192 ; record 3
+	dw Text_6e_199 ; record 4
+	dw Text_6e_207 ; record 5
+	dw Text_6e_214 ; record 6
 TennisMachineRoomNpc04_14:
 	ld a, [$c2b0] ; $40b4
 	add a, a ; $40b7
@@ -94,14 +95,15 @@ TennisMachineRoomNpc04_14:
 .speak:
 	script_speak $04 ; $40e6
 	ret ; $40eb
-	; $40ec, 14 bytes (records:2)
-	dw $20a8 ; record 0
-	dw $20b1 ; record 1
-	dw $20ba ; record 2
-	dw $20c1 ; record 3
-	dw $20c8 ; record 4
-	dw $20d0 ; record 5
-	dw $20d7 ; record 6
+TennisMachineRoomNpc04TextIds:
+	; $40ec, 14 bytes (text_ids)
+	dw Text_6e_168 ; record 0
+	dw Text_6e_177 ; record 1
+	dw Text_6e_186 ; record 2
+	dw Text_6e_193 ; record 3
+	dw Text_6e_200 ; record 4
+	dw Text_6e_208 ; record 5
+	dw Text_6e_215 ; record 6
 TennisMachineRoomNpcScripts_14:
 	; $40fa, 25 bytes (map_scripts)
 	map_script $03, FACEMASK_ANY, $0000, TennisMachineRoomNpc03_14, $03, $00
@@ -501,16 +503,17 @@ MachineCourtStartLevelScene:
 	ret ; $45f7
 	; $45f8, 8 bytes (bytes:16)
 	db $12, $13, $14, $15, $1a, $1a, $1a, $c9 ; 0x00
-	; $4600, 18 bytes (records:2)
-	dw $20a9 ; record 0
-	dw $20b4 ; record 1
-	dw $20bb ; record 2
-	dw $20c2 ; record 3
-	dw $20c9 ; record 4
-	dw $20d1 ; record 5
-	dw $20d8 ; record 6
-	dw $20d1 ; record 7
-	dw $20d8 ; record 8
+TennisMachineRoomNpc05TextIds:
+	; $4600, 18 bytes (text_ids)
+	dw Text_6e_169 ; record 0
+	dw Text_6e_180 ; record 1
+	dw Text_6e_187 ; record 2
+	dw Text_6e_194 ; record 3
+	dw Text_6e_201 ; record 4
+	dw Text_6e_209 ; record 5
+	dw Text_6e_216 ; record 6
+	dw Text_6e_209 ; record 7
+	dw Text_6e_216 ; record 8
 MachinePracticeLevelPrompt:
 	ld [$c2b8], a ; $4612
 	call TestMachineLevelClearedFlag ; $4615
@@ -577,6 +580,7 @@ TestMachineLevelClearedFlag:
 	ld e, a ; $46b8
 	call SetGameFlagByNumber ; $46b9
 	ret ; $46bc
+TestMachineLevelClearedFlagTable:
 	; $46bd, 8 bytes (records:2)
 	dw $00d2 ; record 0
 	dw $00d3 ; record 1
@@ -957,14 +961,15 @@ Court2Npc04_14:
 	farcall InitDialogueTextCursor ; $4b7b
 	script_speak $04 ; $4b7e
 	ret ; $4b83
-	; $4b84, 14 bytes (records:2)
-	dw $2492 ; record 0
-	dw $2492 ; record 1
-	dw $2492 ; record 2
-	dw $2497 ; record 3
-	dw $2492 ; record 4
-	dw $2492 ; record 5
-	dw $2497 ; record 6
+Court2Npc04TextIds:
+	; $4b84, 14 bytes (text_ids)
+	dw Text_1f_146 ; record 0
+	dw Text_1f_146 ; record 1
+	dw Text_1f_146 ; record 2
+	dw Text_1f_151 ; record 3
+	dw Text_1f_146 ; record 4
+	dw Text_1f_146 ; record 5
+	dw Text_1f_151 ; record 6
 Court2Npc05_14:
 	ld a, [$c2b0] ; $4b92
 	add a, a ; $4b95
@@ -979,14 +984,15 @@ Court2Npc05_14:
 	farcall InitDialogueTextCursor ; $4ba0
 	script_speak $05 ; $4ba3
 	ret ; $4ba8
-	; $4ba9, 14 bytes (records:2)
-	dw $2493 ; record 0
-	dw $2493 ; record 1
-	dw $2495 ; record 2
-	dw $2498 ; record 3
-	dw $2499 ; record 4
-	dw $249b ; record 5
-	dw $249d ; record 6
+Court2Npc05TextIds:
+	; $4ba9, 14 bytes (text_ids)
+	dw Text_1f_147 ; record 0
+	dw Text_1f_147 ; record 1
+	dw Text_1f_149 ; record 2
+	dw Text_1f_152 ; record 3
+	dw Text_1f_153 ; record 4
+	dw Text_1f_155 ; record 5
+	dw Text_1f_157 ; record 6
 Court2Npc06_14:
 	ld a, [$c2b0] ; $4bb7
 	add a, a ; $4bba
@@ -1001,14 +1007,15 @@ Court2Npc06_14:
 	farcall InitDialogueTextCursor ; $4bc5
 	script_speak $06 ; $4bc8
 	ret ; $4bcd
-	; $4bce, 14 bytes (records:2)
-	dw $2494 ; record 0
-	dw $2494 ; record 1
-	dw $2496 ; record 2
-	dw $2496 ; record 3
-	dw $249a ; record 4
-	dw $249c ; record 5
-	dw $249e ; record 6
+Court2Npc06TextIds:
+	; $4bce, 14 bytes (text_ids)
+	dw Text_1f_148 ; record 0
+	dw Text_1f_148 ; record 1
+	dw Text_1f_150 ; record 2
+	dw Text_1f_150 ; record 3
+	dw Text_1f_154 ; record 4
+	dw Text_1f_156 ; record 5
+	dw Text_1f_158 ; record 6
 Court2SpectatorChat_14:
 	test_flag FLAG_DOUBLES ; $4bdc
 	jr z, .checkFlag ; $4bdf
@@ -1083,14 +1090,15 @@ Court2SpectatorChat_14:
 	script_set_anim $09, $03 ; $4d52
 	script_wait_idle $09 ; $4d59
 	ret ; $4d5e
-	; $4d5f, 14 bytes (records:2)
-	dw $246b ; record 0
-	dw $246b ; record 1
-	dw $246b ; record 2
-	dw $2472 ; record 3
-	dw $2478 ; record 4
-	dw $2478 ; record 5
-	dw $247e ; record 6
+Court2SpectatorChatTextIds:
+	; $4d5f, 14 bytes (text_ids)
+	dw Text_1f_107 ; record 0
+	dw Text_1f_107 ; record 1
+	dw Text_1f_107 ; record 2
+	dw Text_1f_114 ; record 3
+	dw Text_1f_120 ; record 4
+	dw Text_1f_120 ; record 5
+	dw Text_1f_126 ; record 6
 Court2SpectatorsRepeatChat:
 	script_set_anim $08, $02 ; $4d6d
 	script_wait_idle $08 ; $4d74
@@ -1282,14 +1290,15 @@ Court1Npc05_14:
 	farcall InitDialogueTextCursor ; $508a
 	script_speak $05 ; $508d
 	ret ; $5092
-	; $5093, 14 bytes (records:2)
-	dw $2486 ; record 0
-	dw $2486 ; record 1
-	dw $2489 ; record 2
-	dw $248b ; record 3
-	dw $2486 ; record 4
-	dw $248d ; record 5
-	dw $248f ; record 6
+Court1Npc05TextIds:
+	; $5093, 14 bytes (text_ids)
+	dw Text_1f_134 ; record 0
+	dw Text_1f_134 ; record 1
+	dw Text_1f_137 ; record 2
+	dw Text_1f_139 ; record 3
+	dw Text_1f_134 ; record 4
+	dw Text_1f_141 ; record 5
+	dw Text_1f_143 ; record 6
 Court1Npc06_14:
 	ld a, [$c2b0] ; $50a1
 	add a, a ; $50a4
@@ -1304,14 +1313,15 @@ Court1Npc06_14:
 	farcall InitDialogueTextCursor ; $50af
 	script_speak $06 ; $50b2
 	ret ; $50b7
-	; $50b8, 14 bytes (records:2)
-	dw $2487 ; record 0
-	dw $2488 ; record 1
-	dw $248a ; record 2
-	dw $248c ; record 3
-	dw $2487 ; record 4
-	dw $248e ; record 5
-	dw $2490 ; record 6
+Court1Npc06TextIds:
+	; $50b8, 14 bytes (text_ids)
+	dw Text_1f_135 ; record 0
+	dw Text_1f_136 ; record 1
+	dw Text_1f_138 ; record 2
+	dw Text_1f_140 ; record 3
+	dw Text_1f_135 ; record 4
+	dw Text_1f_142 ; record 5
+	dw Text_1f_144 ; record 6
 Court1NpcScripts_14:
 	; $50c6, 33 bytes (map_scripts)
 	map_script $03, FACEMASK_ANY, $0000, Court1Npc03_14, $03, $00

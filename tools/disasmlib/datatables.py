@@ -524,6 +524,18 @@ def render_save_flag_ids(rom, start, end, save_flag_names=None):
     return out
 
 
+def render_text_ids(rom, start, end):
+    """A dw table of dialogue text ids, one per story-progress step. Renders
+    each as its `Text_<bank>_<index>` constant (an EQU of the same value), so
+    the row says which string it selects; $0000 is the no-text sentinel."""
+    out = []
+    for r in range((end - start) // 2):
+        w = rom[start + r * 2] | (rom[start + r * 2 + 1] << 8)
+        name = text_id_name(w)
+        out.append(f"\tdw {name or f'${w:04x}'} ; record {r}")
+    return out
+
+
 def render_pointer_words(rom, start, end, bank, labels, spec):
     """A dw table of same-bank pointers (records:2 tables are usually pointer
     tables; mode_hooks and minigame_configs always are). Words that hit a

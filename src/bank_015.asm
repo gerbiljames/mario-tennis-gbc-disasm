@@ -74,14 +74,15 @@ TournamentCourtyardNpc05_15:
 	script_set_text Text_1f_32 ; $413f
 	script_speak $05 ; $4145
 	ret ; $414a
-	; $414b, 14 bytes (records:2)
-	dw $241e ; record 0
-	dw $2427 ; record 1
-	dw $2427 ; record 2
-	dw $2427 ; record 3
-	dw $243a ; record 4
-	dw $2442 ; record 5
-	dw $244a ; record 6
+TournamentCourtyardNpc05TextIds:
+	; $414b, 14 bytes (text_ids)
+	dw Text_1f_30 ; record 0
+	dw Text_1f_39 ; record 1
+	dw Text_1f_39 ; record 2
+	dw Text_1f_39 ; record 3
+	dw Text_1f_58 ; record 4
+	dw Text_1f_66 ; record 5
+	dw Text_1f_74 ; record 6
 TournamentCourtyardNpcScripts_15:
 	; $4159, 57 bytes (map_scripts)
 	map_script $03, FACEMASK_ANY, $0000, Text_1f_28, $13, $00
@@ -540,12 +541,13 @@ TrainingCourtNpc03_15:
 	farcall InitDialogueTextCursor ; $4988
 	script_speak $03 ; $498b
 	ret ; $4990
-	; $4991, 10 bytes (records:2)
-	dw $1a79 ; record 0
-	dw $1a7c ; record 1
-	dw $1a7f ; record 2
-	dw $1a7f ; record 3
-	dw $1a7f ; record 4
+TrainingCourtNpc03TextIds:
+	; $4991, 10 bytes (text_ids)
+	dw Text_36_633 ; record 0
+	dw Text_36_636 ; record 1
+	dw Text_36_639 ; record 2
+	dw Text_36_639 ; record 3
+	dw Text_36_639 ; record 4
 TrainingCourtNpc04_15:
 	ld a, [$c2b0] ; $499b
 	add a, a ; $499e
@@ -560,12 +562,13 @@ TrainingCourtNpc04_15:
 	farcall InitDialogueTextCursor ; $49a9
 	script_speak $04 ; $49ac
 	ret ; $49b1
-	; $49b2, 10 bytes (records:2)
-	dw $1a7a ; record 0
-	dw $1a7d ; record 1
-	dw $1a80 ; record 2
-	dw $1a80 ; record 3
-	dw $1a80 ; record 4
+TrainingCourtNpc04TextIds:
+	; $49b2, 10 bytes (text_ids)
+	dw Text_36_634 ; record 0
+	dw Text_36_637 ; record 1
+	dw Text_36_640 ; record 2
+	dw Text_36_640 ; record 3
+	dw Text_36_640 ; record 4
 TrainingCourtNpc05_15:
 	ld a, [$c2b0] ; $49bc
 	add a, a ; $49bf
@@ -580,12 +583,13 @@ TrainingCourtNpc05_15:
 	farcall InitDialogueTextCursor ; $49ca
 	script_speak $05 ; $49cd
 	ret ; $49d2
-	; $49d3, 10 bytes (records:2)
-	dw $1a7b ; record 0
-	dw $1a7e ; record 1
-	dw $1a81 ; record 2
-	dw $1a81 ; record 3
-	dw $1a81 ; record 4
+TrainingCourtNpc05TextIds:
+	; $49d3, 10 bytes (text_ids)
+	dw Text_36_635 ; record 0
+	dw Text_36_638 ; record 1
+	dw Text_36_641 ; record 2
+	dw Text_36_641 ; record 3
+	dw Text_36_641 ; record 4
 TrainingCourtNpc08_15:
 	ld a, [$c2b0] ; $49dd
 	add a, a ; $49e0
@@ -600,12 +604,13 @@ TrainingCourtNpc08_15:
 	farcall InitDialogueTextCursor ; $49eb
 	script_speak $08 ; $49ee
 	ret ; $49f3
-	; $49f4, 10 bytes (records:2)
-	dw $1a8f ; record 0
-	dw $1a95 ; record 1
-	dw $1a99 ; record 2
-	dw $1a99 ; record 3
-	dw $1a99 ; record 4
+TrainingCourtNpc08TextIds:
+	; $49f4, 10 bytes (text_ids)
+	dw Text_36_655 ; record 0
+	dw Text_36_661 ; record 1
+	dw Text_36_665 ; record 2
+	dw Text_36_665 ; record 3
+	dw Text_36_665 ; record 4
 TrainingCourtNpc09_15:
 	ld a, [$c2b0] ; $49fe
 	add a, a ; $4a01
@@ -621,12 +626,12 @@ TrainingCourtNpc09_15:
 	script_speak $09 ; $4a0f
 	ret ; $4a14
 TextIds_15_4a15:
-	; $4a15, 10 bytes (records:2)
-	dw $1a90 ; record 0
-	dw $1a96 ; record 1
-	dw $1a9a ; record 2
-	dw $1a9a ; record 3
-	dw $1a9a ; record 4
+	; $4a15, 10 bytes (text_ids)
+	dw Text_36_656 ; record 0
+	dw Text_36_662 ; record 1
+	dw Text_36_666 ; record 2
+	dw Text_36_666 ; record 3
+	dw Text_36_666 ; record 4
 TrainingCourtNpc0A_15:
 	ld a, [$c2b0] ; $4a1f
 	add a, a ; $4a22
@@ -641,12 +646,13 @@ TrainingCourtNpc0A_15:
 	farcall InitDialogueTextCursor ; $4a2d
 	script_speak $0a ; $4a30
 	ret ; $4a35
-	; $4a36, 10 bytes (records:2)
-	dw $1a91 ; record 0
-	dw $1a97 ; record 1
-	dw $1a9b ; record 2
-	dw $1a9b ; record 3
-	dw $1a9b ; record 4
+TrainingCourtNpc0ATextIds:
+	; $4a36, 10 bytes (text_ids)
+	dw Text_36_657 ; record 0
+	dw Text_36_663 ; record 1
+	dw Text_36_667 ; record 2
+	dw Text_36_667 ; record 3
+	dw Text_36_667 ; record 4
 TrainingCourtNpc0B_15:
 	ld a, [$c2b0] ; $4a40
 	add a, a ; $4a43
@@ -673,12 +679,13 @@ TrainingCourtNpc0B_15:
 .speak:
 	script_speak $0b ; $4a70
 	ret ; $4a75
-	; $4a76, 10 bytes (records:2)
-	dw $1a92 ; record 0
-	dw $1a98 ; record 1
-	dw $1a9c ; record 2
-	dw $1a9c ; record 3
-	dw $1a9c ; record 4
+TrainingCourtNpc0BTextIds:
+	; $4a76, 10 bytes (text_ids)
+	dw Text_36_658 ; record 0
+	dw Text_36_664 ; record 1
+	dw Text_36_668 ; record 2
+	dw Text_36_668 ; record 3
+	dw Text_36_668 ; record 4
 TrainingCourtNpc0E_15:
 	ld a, [$c2b0] ; $4a80
 	add a, a ; $4a83
@@ -693,12 +700,13 @@ TrainingCourtNpc0E_15:
 	farcall InitDialogueTextCursor ; $4a8e
 	script_speak $0f ; $4a91
 	ret ; $4a96
-	; $4a97, 10 bytes (records:2)
-	dw $1a82 ; record 0
-	dw $1a87 ; record 1
-	dw $1a8a ; record 2
-	dw $1a8a ; record 3
-	dw $1a8a ; record 4
+TrainingCourtNpc0ETextIds:
+	; $4a97, 10 bytes (text_ids)
+	dw Text_36_642 ; record 0
+	dw Text_36_647 ; record 1
+	dw Text_36_650 ; record 2
+	dw Text_36_650 ; record 3
+	dw Text_36_650 ; record 4
 TrainingCourtNpc0F_15:
 	ld a, [$c2b0] ; $4aa1
 	add a, a ; $4aa4
@@ -725,12 +733,13 @@ TrainingCourtNpc0F_15:
 .speak:
 	script_speak $0f ; $4ad1
 	ret ; $4ad6
-	; $4ad7, 10 bytes (records:2)
-	dw $1a83 ; record 0
-	dw $1a88 ; record 1
-	dw $1a8b ; record 2
-	dw $1a8b ; record 3
-	dw $1a8b ; record 4
+TrainingCourtNpc0FTextIds:
+	; $4ad7, 10 bytes (text_ids)
+	dw Text_36_643 ; record 0
+	dw Text_36_648 ; record 1
+	dw Text_36_651 ; record 2
+	dw Text_36_651 ; record 3
+	dw Text_36_651 ; record 4
 TrainingCourtNpc10_15:
 	ld a, [$c2b0] ; $4ae1
 	add a, a ; $4ae4
@@ -758,12 +767,12 @@ TrainingCourtNpc10_15:
 	script_speak $10 ; $4b11
 	ret ; $4b16
 TextIds_15_4b17:
-	; $4b17, 10 bytes (records:2)
-	dw $1a86 ; record 0
-	dw $1a89 ; record 1
-	dw $1a8c ; record 2
-	dw $1a8c ; record 3
-	dw $1a8c ; record 4
+	; $4b17, 10 bytes (text_ids)
+	dw Text_36_646 ; record 0
+	dw Text_36_649 ; record 1
+	dw Text_36_652 ; record 2
+	dw Text_36_652 ; record 3
+	dw Text_36_652 ; record 4
 TrainingCourtNpc13_15:
 	script_move_player_to_actor $13 ; $4b21
 	farcall WaitPlayerMoveDone ; $4b28
@@ -1322,9 +1331,9 @@ TrainingCourtResultDispatch:
 	dw StrokeChallengerResultScene.celebrate ; $5385 jumptable
 	dw StrokeChallengerResultScene.speakWin ; $5387 jumptable
 	dw StrokeChallengerResultScene.partnerJoins ; $5389 jumptable
-	dw TestStrokeChallengerGameFlag.dispatchStage ; $538b jumptable
-	dw TestStrokeChallengerGameFlag.dispatchStage2 ; $538d jumptable
-	dw TestStrokeChallengerGameFlag.dispatchStage3 ; $538f jumptable
+	dw TestStrokeChallengerGameFlagTable.dispatchStage ; $538b jumptable
+	dw TestStrokeChallengerGameFlagTable.dispatchStage2 ; $538d jumptable
+	dw TestStrokeChallengerGameFlagTable.dispatchStage3 ; $538f jumptable
 	dw MovePlayerToLessonCourtSpot.netResultText ; $5391 jumptable
 	dw MovePlayerToLessonCourtSpot.netResultDoubles ; $5393 jumptable
 	dw MovePlayerToLessonCourtSpot.serveResultText ; $5395 jumptable
@@ -3610,6 +3619,7 @@ TestServeChallengerGameFlag:
 	ld e, a ; $71f3
 	call SetGameFlagByNumber ; $71f4
 	ret ; $71f7
+TestServeChallengerGameFlagTable:
 	; $71f8, 12 bytes (records:2)
 	dw $00c0 ; record 0
 	dw $00c1 ; record 1
@@ -3651,6 +3661,7 @@ TestNetChallengerGameFlag:
 	ld e, a ; $7239
 	call SetGameFlagByNumber ; $723a
 	ret ; $723d
+TestNetChallengerGameFlagTable:
 	; $723e, 12 bytes (records:2)
 	dw $00c6 ; record 0
 	dw $00c7 ; record 1
@@ -3692,6 +3703,7 @@ TestStrokeChallengerGameFlag:
 	ld e, a ; $727f
 	call SetGameFlagByNumber ; $7280
 	ret ; $7283
+TestStrokeChallengerGameFlagTable:
 	; $7284, 12 bytes (records:2)
 	dw $00cc ; record 0
 	dw $00cd ; record 1
