@@ -89,20 +89,20 @@ ToggleCutsceneFastForward:
 	push hl ; $40a7
 	ldh a, [hInputRisingEdge] ; $40a8
 	and a, PADF_START ; $40aa
-	jr z, Label_0a_40cb ; $40ac
+	jr z, .done ; $40ac
 	test_flag FLAG_CUTSCENE_FAST_FORWARD ; $40ae
-	jr z, Label_0a_40c0 ; $40b1
+	jr z, .enableFastForward ; $40b1
 	clear_flag FLAG_CUTSCENE_FAST_FORWARD ; $40b3
 	ld a, [wMessageSpeed] ; $40b6
 	or a, $80 ; $40b9
 	ld [wMessageSpeed], a ; $40bb
-	jr Label_0a_40cb ; $40be
-Label_0a_40c0:
+	jr .done ; $40be
+.enableFastForward:
 	set_flag FLAG_CUTSCENE_FAST_FORWARD ; $40c0
 	ld a, [wMessageSpeed] ; $40c3
 	and a, $7f ; $40c6
 	ld [wMessageSpeed], a ; $40c8
-Label_0a_40cb:
+.done:
 	pop hl ; $40cb
 	pop de ; $40cc
 	pop bc ; $40cd
@@ -438,8 +438,8 @@ ScriptSkipSpeakerDialogue:
 	ld a, [$d853] ; $42f8
 	ld h, a ; $42fb
 	test_flag FLAG_CUTSCENE_FAST_FORWARD ; $42fc
-	jr nz, Label_0a_4301 ; $42ff
-Label_0a_4301:
+	jr nz, .advanceTextId ; $42ff
+.advanceTextId:
 	inc hl ; $4301
 	ld a, l ; $4302
 	ld [$d852], a ; $4303
@@ -518,15 +518,15 @@ WaitActorScriptDone:
 	push af ; $4375
 	push bc ; $4376
 	ld bc, $0258 ; $4377
-Label_0a_437a:
+.waitLoop:
 	call CheckActorScriptEnd ; $437a
-	jr z, Label_0a_4387 ; $437d
+	jr z, .done ; $437d
 	call AdvanceFrame ; $437f
 	dec bc ; $4382
 	ld a, c ; $4383
 	or a, b ; $4384
-	jr nz, Label_0a_437a ; $4385
-Label_0a_4387:
+	jr nz, .waitLoop ; $4385
+.done:
 	pop bc ; $4387
 	pop af ; $4388
 	ret ; $4389
@@ -670,13 +670,13 @@ MoveActorTowardPoint:
 	ld c, l ; $4452
 	ld b, h ; $4453
 	call GetActorStateAddr ; $4454
-	jr z, Label_0a_4462 ; $4457
+	jr z, .done ; $4457
 	ld a, l ; $4459
 	ldh [hActorPtr], a ; $445a
 	ld a, h ; $445c
 	ldh [hActorPtr + 1], a ; $445d
 	call MoveActorTowardPointRaw ; $445f
-Label_0a_4462:
+.done:
 	add sp, 5 ; $4462
 	ret ; $4464
 MoveActorTowardPointRaw:
@@ -776,14 +776,14 @@ MoveActorByDelta:
 	ld c, l ; $44d8
 	ld b, h ; $44d9
 	call GetActorStateAddr ; $44da
-	jr z, Label_0a_44ee ; $44dd
+	jr z, .done ; $44dd
 	ld a, l ; $44df
 	ldh [hActorPtr], a ; $44e0
 	ld a, h ; $44e2
 	ldh [hActorPtr + 1], a ; $44e3
 	wram_bank $04 ; $44e5
 	call MoveActorByDeltaRaw ; $44eb
-Label_0a_44ee:
+.done:
 	add sp, 4 ; $44ee
 	ret ; $44f0
 MoveActorByDeltaRaw:
@@ -954,7 +954,7 @@ ScriptSetActorFacingLock:
 	and a, a ; $45c5
 	ld c, l ; $45c6
 	ld b, h ; $45c7
-	jr nz, Label_0a_45db ; $45c8
+	jr nz, .setBit ; $45c8
 	ld hl, $0014 ; $45ca
 	add hl, bc ; $45cd
 	ld a, [hl] ; $45ce
@@ -965,7 +965,7 @@ ScriptSetActorFacingLock:
 	add hl, bc ; $45d7
 	res 0, [hl] ; $45d8
 	ret ; $45da
-Label_0a_45db:
+.setBit:
 	ld hl, $0030 ; $45db
 	add hl, bc ; $45de
 	set 0, [hl] ; $45df
@@ -989,12 +989,12 @@ FaceActorTowardActor:
 	push hl ; $45f8
 	ld d, a ; $45f9
 	call GetActorStateAddr ; $45fa
-	jr z, Label_0a_466a ; $45fd
+	jr z, .done ; $45fd
 	ld a, b ; $45ff
 	call GetActorStateAddr ; $4600
 	inc h ; $4603
 	dec h ; $4604
-	jr z, Label_0a_466a ; $4605
+	jr z, .done ; $4605
 	ld a, l ; $4607
 	ldh [hActorPtr], a ; $4608
 	ld a, h ; $460a
@@ -1069,7 +1069,7 @@ FaceActorTowardActor:
 	ld l, a ; $4667
 	pop af ; $4668
 	ld [hl], a ; $4669
-Label_0a_466a:
+.done:
 	pop hl ; $466a
 	pop de ; $466b
 	pop bc ; $466c
@@ -1084,12 +1084,12 @@ FaceActorsTowardEachOther:
 	call GetActorStateAddr ; $4674
 	inc h ; $4677
 	dec h ; $4678
-	jp z, Label_0a_46fd ; $4679
+	jp z, .done ; $4679
 	ld a, b ; $467c
 	call GetActorStateAddr ; $467d
 	inc h ; $4680
 	dec h ; $4681
-	jp z, Label_0a_46fd ; $4682
+	jp z, .done ; $4682
 	push hl ; $4685
 	ld a, l ; $4686
 	ldh [hActorPtr], a ; $4687
@@ -1179,7 +1179,7 @@ FaceActorsTowardEachOther:
 	ld l, a ; $46fa
 	ld a, d ; $46fb
 	ld [hl], a ; $46fc
-Label_0a_46fd:
+.done:
 	pop hl ; $46fd
 	pop de ; $46fe
 	pop bc ; $46ff
@@ -1207,9 +1207,9 @@ ScriptSetActorJumpVelocity:
 	ld a, $12 ; $4723
 	add a, l ; $4725
 	ld l, a ; $4726
-	jr nc, Label_0a_472a ; $4727
+	jr nc, .read ; $4727
 	inc h ; $4729
-Label_0a_472a:
+.read:
 	ld a, e ; $472a
 	ld [hl+], a ; $472b
 	ld [hl], d ; $472c
@@ -1221,9 +1221,9 @@ SetActorActive:
 	ld a, $20 ; $4738
 	add a, l ; $473a
 	ld l, a ; $473b
-	jr nc, Label_0a_473f ; $473c
+	jr nc, .read ; $473c
 	inc h ; $473e
-Label_0a_473f:
+.read:
 	ld [hl], b ; $473f
 	ret ; $4740
 	ld a, d ; $4741
@@ -1273,14 +1273,14 @@ IsActorBusy:
 	add hl, de ; $477b
 	ld a, [hl] ; $477c
 	cp a, $00 ; $477d
-	jr z, Label_0a_4789 ; $477f
+	jr z, .busy ; $477f
 	cp a, $01 ; $4781
-	jr z, Label_0a_4789 ; $4783
+	jr z, .busy ; $4783
 	ld a, $01 ; $4785
-	jr Label_0a_478a ; $4787
-Label_0a_4789:
+	jr .done ; $4787
+.busy:
 	xor a, a ; $4789
-Label_0a_478a:
+.done:
 	pop hl ; $478a
 	pop de ; $478b
 	ret ; $478c
@@ -1288,16 +1288,16 @@ WaitActorIdle:
 	push af ; $478d
 	push bc ; $478e
 	ld bc, $00f0 ; $478f
-Label_0a_4792:
+.waitLoop:
 	call IsActorBusy ; $4792
 	and a, a ; $4795
-	jr z, Label_0a_47a0 ; $4796
+	jr z, .done ; $4796
 	call AdvanceFrame ; $4798
 	dec bc ; $479b
 	ld a, b ; $479c
 	or a, c ; $479d
-	jr nz, Label_0a_4792 ; $479e
-Label_0a_47a0:
+	jr nz, .waitLoop ; $479e
+.done:
 	pop bc ; $47a0
 	pop af ; $47a1
 	ret ; $47a2
@@ -1338,10 +1338,10 @@ MovePlayerToPosition:
 	wram_bank $04 ; $47d1
 	ld a, d ; $47d7
 	or a, a ; $47d8
-	jr nz, Label_0a_47e0 ; $47d9
+	jr nz, .waitLoop ; $47d9
 	call SetActorMoveTargetRaw ; $47db
-	jr Label_0a_480c ; $47de
-Label_0a_47e0:
+	jr .done ; $47de
+.waitLoop:
 	push af ; $47e0
 	push bc ; $47e1
 	push de ; $47e2
@@ -1364,7 +1364,7 @@ Label_0a_47e0:
 	call AdvanceFrame ; $4801
 	script_fade_in $7f ; $4804
 	call WaitFadeEnd ; $4809
-Label_0a_480c:
+.done:
 	add sp, 4 ; $480c
 	pop hl ; $480e
 	pop de ; $480f
@@ -1420,10 +1420,10 @@ MovePlayerToActor:
 	ldh [hActorPtr + 1], a ; $4854
 	ld a, d ; $4856
 	or a, a ; $4857
-	jr nz, Label_0a_485f ; $4858
+	jr nz, .waitLoop ; $4858
 	call SetActorMoveTargetRaw ; $485a
-	jr Label_0a_488b ; $485d
-Label_0a_485f:
+	jr .done ; $485d
+.waitLoop:
 	push af ; $485f
 	push bc ; $4860
 	push de ; $4861
@@ -1446,7 +1446,7 @@ Label_0a_485f:
 	call AdvanceFrame ; $4880
 	script_fade_in $7f ; $4883
 	call WaitFadeEnd ; $4888
-Label_0a_488b:
+.done:
 	add sp, 4 ; $488b
 	pop hl ; $488d
 	pop de ; $488e
@@ -1623,7 +1623,7 @@ AssignStoryMatchCharacters:
 	farcall InitCa00RecordFromCharId ; $49b7
 	ld a, [wMatchIsDoubles] ; $49ba
 	or a, a ; $49bd
-	jr z, Label_0a_49d8 ; $49be
+	jr z, .done ; $49be
 	ld b, $81 ; $49c0
 	ld c, $01 ; $49c2
 	farcall InitCa00RecordFromCharId ; $49c4
@@ -1631,13 +1631,13 @@ AssignStoryMatchCharacters:
 	ld hl, PairSwapIndexTable_0a ; $49ca
 	add a, l ; $49cd
 	ld l, a ; $49ce
-	jr nc, Label_0a_49d2 ; $49cf
+	jr nc, .read ; $49cf
 	inc h ; $49d1
-Label_0a_49d2:
+.read:
 	ld b, [hl] ; $49d2
 	ld c, $03 ; $49d3
 	farcall InitCa00RecordFromCharId ; $49d5
-Label_0a_49d8:
+.done:
 	ret ; $49d8
 PairSwapIndexTable_0a:
 	; $49d9, 104 bytes (bytes:16)
@@ -1959,13 +1959,13 @@ ClearBgTilemaps:
 	ret ; $4d76
 FillMemoryFast:
 	ld e, a ; $4d77
-Label_0a_4d78:
+.fillLoop:
 	ld [hl], e ; $4d78
 	inc hl ; $4d79
 	dec bc ; $4d7a
 	ld a, c ; $4d7b
 	or a, b ; $4d7c
-	jr nz, Label_0a_4d78 ; $4d7d
+	jr nz, .fillLoop ; $4d7d
 	ret ; $4d7f
 ApplyClearStatusFlags:
 	ld a, [wCharPosX] ; $4d80
@@ -2215,7 +2215,7 @@ ClearStatusSetupMenuEntry:
 	ret ; $4efb
 DrawPlayerPositionDebugOverlay:
 	test_flag FLAG_DEBUG_SHOW_PLAYER_POS ; $4efc
-	jr z, Label_0a_4f2b ; $4eff
+	jr z, .done ; $4eff
 	wram_bank $04 ; $4f01
 	ld hl, wStoryModePlayersXPosition ; $4f07
 	ld a, [hl+] ; $4f0a
@@ -2241,7 +2241,7 @@ DrawPlayerPositionDebugOverlay:
 	call PrintHexWord ; $4f26
 	pop de ; $4f29
 	pop hl ; $4f2a
-Label_0a_4f2b:
+.done:
 	ret ; $4f2b
 RunStoryModeOverworld:
 	xor a, a ; $4f2c
@@ -2475,10 +2475,10 @@ ClearStoryEventRequests:
 	ld hl, wStoryModeTriggerScript ; $50f5
 	ld b, $06 ; $50f8
 	xor a, a ; $50fa
-Label_0a_50fb:
+.clearLoop:
 	ld [hl+], a ; $50fb
 	dec b ; $50fc
-	jr nz, Label_0a_50fb ; $50fd
+	jr nz, .clearLoop ; $50fd
 	pop hl ; $50ff
 	pop de ; $5100
 	pop bc ; $5101
@@ -2490,11 +2490,11 @@ CheckStoryEventRequests:
 	ld hl, wStoryModeTriggerScript ; $5106
 	ld b, $06 ; $5109
 	xor a, a ; $510b
-Label_0a_510c:
+.orLoop:
 	or a, [hl] ; $510c
 	inc hl ; $510d
 	dec b ; $510e
-	jr nz, Label_0a_510c ; $510f
+	jr nz, .orLoop ; $510f
 	pop hl ; $5111
 	pop bc ; $5112
 	ret ; $5113
@@ -2505,8 +2505,8 @@ LoadStoryLocationHeader:
 	push hl ; $5117
 	ld a, [wStoryModeCurrentLocation] ; $5118
 	call GetStoryLocationRecordPtr ; $511b
-	jr Label_0a_5120 ; $511e
-Label_0a_5120:
+	jr .readHeader ; $511e
+.readHeader:
 	ld de, wStoryModeCurrentLocation ; $5120
 	ld bc, $0006 ; $5123
 	call CopyMemoryBC ; $5126
@@ -2660,12 +2660,12 @@ GetFacingTileInteractionId:
 	ld e, $00 ; $5214
 	and a, $0f ; $5216
 	cp a, $08 ; $5218
-	jr nz, Label_0a_5222 ; $521a
+	jr nz, .done ; $521a
 	ld a, d ; $521c
 	swap a ; $521d
 	and a, $0f ; $521f
 	ld e, a ; $5221
-Label_0a_5222:
+.done:
 	ld a, e ; $5222
 	pop hl ; $5223
 	pop de ; $5224
@@ -2688,28 +2688,28 @@ FindActorFacingPlayer:
 	and a, $0f ; $5244
 	pop de ; $5246
 	cp a, $0c ; $5247
-	jr nz, Label_0a_5256 ; $5249
+	jr nz, .query ; $5249
 	ld hl, $d000 ; $524b
 	ld de, $03c0 ; $524e
 	ld a, $00 ; $5251
 	call GetPointAheadOfActor ; $5253
-Label_0a_5256:
+.query:
 	farcall FindActorAtPoint ; $5256
 	and a, a ; $5259
-	jr nz, Label_0a_527b ; $525a
+	jr nz, .done ; $525a
 	ld hl, $d000 ; $525c
 	ld de, $0180 ; $525f
 	ld a, $f0 ; $5262
 	call GetPointAheadOfActor ; $5264
 	farcall FindActorAtPoint ; $5267
 	and a, a ; $526a
-	jr nz, Label_0a_527b ; $526b
+	jr nz, .done ; $526b
 	ld hl, $d000 ; $526d
 	ld de, $0180 ; $5270
 	ld a, $10 ; $5273
 	call GetPointAheadOfActor ; $5275
 	farcall FindActorAtPoint ; $5278
-Label_0a_527b:
+.done:
 	pop hl ; $527b
 	pop de ; $527c
 	pop bc ; $527d
@@ -2749,7 +2749,7 @@ RestoreStoryReturnPoint:
 	push hl ; $52b1
 	ld a, [$c8aa] ; $52b2
 	cp a, $ff ; $52b5
-	jr z, Label_0a_52cf ; $52b7
+	jr z, .restorePosition ; $52b7
 	ld a, [$c8a9] ; $52b9
 	ld [wStoryModeCurrentLocation], a ; $52bc
 	ld a, [$c8aa] ; $52bf
@@ -2757,8 +2757,8 @@ RestoreStoryReturnPoint:
 	ld a, $ff ; $52c5
 	ld [$c294], a ; $52c7
 	ld [wStoryModeExitLocationRequest], a ; $52ca
-	jr Label_0a_52f0 ; $52cd
-Label_0a_52cf:
+	jr .done ; $52cd
+.restorePosition:
 	ld hl, $c8ab ; $52cf
 	ld de, wStoryModeSpawnPosition ; $52d2
 	ld bc, $0005 ; $52d5
@@ -2771,7 +2771,7 @@ Label_0a_52cf:
 	ld [$c294], a ; $52e8
 	ld a, $ff ; $52eb
 	ld [wStoryModeExitLocationRequest], a ; $52ed
-Label_0a_52f0:
+.done:
 	pop hl ; $52f0
 	pop de ; $52f1
 	pop bc ; $52f2
@@ -2792,14 +2792,14 @@ ShowLocationNamePopup:
 	ld a, $83 ; $530d
 	farcall ShowSpeakerDialogueRestoreBG ; $530f
 	ld b, $50 ; $5312
-Label_0a_5314:
+.waitLoop:
 	call AdvanceFrame ; $5314
 	ldh a, [hPlayerInputFlags] ; $5317
 	and a, a ; $5319
-	jr nz, Label_0a_531f ; $531a
+	jr nz, .close ; $531a
 	dec b ; $531c
-	jr nz, Label_0a_5314 ; $531d
-Label_0a_531f:
+	jr nz, .waitLoop ; $531d
+.close:
 	farcall CloseActiveDialogueWindow ; $531f
 	wram_bank $05 ; $5322
 	ld hl, wMessageSpeed ; $5328
@@ -2888,7 +2888,7 @@ CheckTriggerFacingMask:
 	ld c, $01 ; $53c5
 	ld a, b ; $53c7
 	cp a, $ff ; $53c8
-	jr z, Label_0a_53e0 ; $53ca
+	jr z, .done ; $53ca
 	ld a, [$daea] ; $53cc
 	rlca ; $53cf
 	rlca ; $53d0
@@ -2900,9 +2900,9 @@ CheckTriggerFacingMask:
 	ld h, a ; $53d9
 	ld a, [hl] ; $53da
 	and a, b ; $53db
-	jr nz, Label_0a_53e0 ; $53dc
+	jr nz, .done ; $53dc
 	ld c, $00 ; $53de
-Label_0a_53e0:
+.done:
 	ld a, c ; $53e0
 	pop hl ; $53e1
 	pop bc ; $53e2
@@ -3168,7 +3168,7 @@ RunFacingTileScript:
 	call FindStoryScriptEntry ; $5582
 	ld a, h ; $5585
 	or a, l ; $5586
-	jr z, Label_0a_55a0 ; $5587
+	jr z, .done ; $5587
 	ld a, [$c29b] ; $5589
 	ld de, $c2c0 ; $558c
 	ld bc, $0008 ; $558f
@@ -3179,7 +3179,7 @@ RunFacingTileScript:
 	ld l, a ; $559a
 	ld a, $00 ; $559b
 	call RunStoryScriptOrDialogue ; $559d
-Label_0a_55a0:
+.done:
 	pop hl ; $55a0
 	pop de ; $55a1
 	pop bc ; $55a2
@@ -3199,21 +3199,21 @@ RunQueuedTriggerScript:
 	call FindStoryScriptEntry ; $55b3
 	ld a, h ; $55b6
 	or a, l ; $55b7
-	jr z, Label_0a_55d8 ; $55b8
+	jr z, .done ; $55b8
 	ld a, [$c29b] ; $55ba
 	ld de, $c2c0 ; $55bd
 	ld bc, $0008 ; $55c0
 	call FarCopyBytes ; $55c3
 	ld a, [$c2c6] ; $55c6
 	cp a, $01 ; $55c9
-	jr z, Label_0a_55d8 ; $55cb
+	jr z, .done ; $55cb
 	ld hl, $c2c4 ; $55cd
 	ld a, [hl+] ; $55d0
 	ld h, [hl] ; $55d1
 	ld l, a ; $55d2
 	ld a, $00 ; $55d3
 	call RunStoryScriptOrDialogue ; $55d5
-Label_0a_55d8:
+.done:
 	pop hl ; $55d8
 	pop de ; $55d9
 	pop bc ; $55da
@@ -3232,7 +3232,7 @@ RunTileTriggerScript:
 	call FindStoryScriptEntry ; $55e8
 	ld a, h ; $55eb
 	or a, l ; $55ec
-	jr z, Label_0a_5606 ; $55ed
+	jr z, .done ; $55ed
 	ld a, [$c29b] ; $55ef
 	ld de, $c2c0 ; $55f2
 	ld bc, $0008 ; $55f5
@@ -3243,7 +3243,7 @@ RunTileTriggerScript:
 	ld l, a ; $5600
 	ld a, $00 ; $5601
 	call RunStoryScriptOrDialogue ; $5603
-Label_0a_5606:
+.done:
 	pop hl ; $5606
 	pop de ; $5607
 	pop bc ; $5608
@@ -3263,7 +3263,7 @@ RunLocationExit:
 	call FindStoryScriptEntry ; $5619
 	ld a, h ; $561c
 	or a, l ; $561d
-	jr z, Label_0a_5643 ; $561e
+	jr z, .saveSlot ; $561e
 	ld a, [$c29b] ; $5620
 	ld de, $c2c0 ; $5623
 	ld bc, $0008 ; $5626
@@ -3278,7 +3278,7 @@ RunLocationExit:
 	ld [wStoryModeCurrentLocation], a ; $563a
 	ld a, [$c2c7] ; $563d
 	ld [wStoryModeEntryPoint], a ; $5640
-Label_0a_5643:
+.saveSlot:
 	xor a, a ; $5643
 	ld a, a ; $5644
 	ldh [hSramBank], a ; $5645
@@ -4124,7 +4124,7 @@ RunSceneSelectDebugMenu:
 	farcall RunPagedTextMenu ; $5eae
 	ld [wCurrentScene], a ; $5eb1
 	cp a, $ff ; $5eb4
-	jp z, Label_0a_5ed8 ; $5eb6
+	jp z, .done ; $5eb6
 	ld b, $01 ; $5eb9
 	farcall ResetTextWindowState ; $5ebb
 	call DisableLCDSafely ; $5ebe
@@ -4136,7 +4136,7 @@ RunSceneSelectDebugMenu:
 	call EnableLCD ; $5ecf
 	ld a, [wCurrentScene] ; $5ed2
 	call InitSceneTileAnimations ; $5ed5
-Label_0a_5ed8:
+.done:
 	pop hl ; $5ed8
 	pop de ; $5ed9
 	pop bc ; $5eda
@@ -4282,7 +4282,7 @@ CopyCollisionMapRect:
 	ld a, c ; $5fad
 	ld c, b ; $5fae
 	ld b, $00 ; $5faf
-Label_0a_5fb1:
+.rowLoop:
 	push af ; $5fb1
 	push bc ; $5fb2
 	push de ; $5fb3
@@ -4304,7 +4304,7 @@ Label_0a_5fb1:
 	add hl, bc ; $5fc7
 	pop bc ; $5fc8
 	dec a ; $5fc9
-	jr nz, Label_0a_5fb1 ; $5fca
+	jr nz, .rowLoop ; $5fca
 	pop af ; $5fcc
 	wram_bank ; $5fcd
 	pop hl ; $5fd1
@@ -4378,13 +4378,13 @@ InitSceneViewer:
 	ld [$c33d], a ; $602c
 	ld hl, SceneGfxSlotTable ; $602f
 	ld bc, rIE ; $6032
-Label_0a_6035:
+.slotLoop:
 	inc bc ; $6035
 	ld a, [hl+] ; $6036
 	ld d, a ; $6037
 	ld a, [hl+] ; $6038
 	or a, d ; $6039
-	jr nz, Label_0a_6035 ; $603a
+	jr nz, .slotLoop ; $603a
 	ld h, b ; $603c
 	ld l, c ; $603d
 	ld de, $0009 ; $603e
@@ -4393,11 +4393,11 @@ Label_0a_6035:
 	ld [$c32d], a ; $6045
 	pop af ; $6048
 	bit 7, a ; $6049
-	jr nz, Label_0a_6054 ; $604b
+	jr nz, .clearScroll ; $604b
 	and a, $7f ; $604d
 	ld b, $00 ; $604f
 	call LoadAndDisplayScene ; $6051
-Label_0a_6054:
+.clearScroll:
 	xor a, a ; $6054
 	ldh [hBGColumnBlitPending], a ; $6055
 	ldh [hBGRowBlitPending], a ; $6057
@@ -4425,13 +4425,13 @@ InitSceneViewerDefault:
 	ldh [hScrollX], a ; $607d
 	ld hl, SceneGfxSlotTable ; $607f
 	ld bc, rIE ; $6082
-Label_0a_6085:
+.slotLoop:
 	inc c ; $6085
 	ld a, [hl+] ; $6086
 	ld d, a ; $6087
 	ld a, [hl+] ; $6088
 	or a, d ; $6089
-	jr nz, Label_0a_6085 ; $608a
+	jr nz, .slotLoop ; $608a
 	ld h, b ; $608c
 	ld l, c ; $608d
 	ld de, $0009 ; $608e
@@ -4452,11 +4452,11 @@ Label_0a_6085:
 	pop af ; $60b1
 	ret ; $60b2
 	call InitSceneViewerDefault ; $60b3
-Label_0a_60b6:
+.clearScroll:
 	call UpdateSceneViewerScroll ; $60b6
 	call SceneViewerSelectScene ; $60b9
 	call AdvanceFrame ; $60bc
-	jr Label_0a_60b6 ; $60bf
+	jr .clearScroll ; $60bf
 StubNop_0a_60c1:
 	ret ; $60c1
 UpdateSceneViewerScroll:
@@ -4597,7 +4597,7 @@ CopySceneTilemapRect:
 	ld a, c ; $61be
 	ld c, b ; $61bf
 	ld b, $00 ; $61c0
-Label_0a_61c2:
+.rowLoop:
 	push af ; $61c2
 	push bc ; $61c3
 	push de ; $61c4
@@ -4619,7 +4619,7 @@ Label_0a_61c2:
 	add hl, bc ; $61d8
 	pop bc ; $61d9
 	dec a ; $61da
-	jr nz, Label_0a_61c2 ; $61db
+	jr nz, .rowLoop ; $61db
 	pop bc ; $61dd
 	pop de ; $61de
 	pop hl ; $61df
@@ -4627,7 +4627,7 @@ Label_0a_61c2:
 	ld a, c ; $61e6
 	ld c, b ; $61e7
 	ld b, $00 ; $61e8
-Label_0a_61ea:
+.rowLoop2:
 	push af ; $61ea
 	push bc ; $61eb
 	push de ; $61ec
@@ -4649,7 +4649,7 @@ Label_0a_61ea:
 	add hl, bc ; $6200
 	pop bc ; $6201
 	dec a ; $6202
-	jr nz, Label_0a_61ea ; $6203
+	jr nz, .rowLoop2 ; $6203
 	pop hl ; $6205
 	pop de ; $6206
 	wram_bank $05 ; $6207
@@ -5065,10 +5065,10 @@ UpdateSceneTileAnimations:
 	ld [hl], d ; $6482
 	ld c, $00 ; $6483
 	ld hl, $c338 ; $6485
-Label_0a_6488:
+.read:
 	ld a, [hl] ; $6488
 	cp a, $ff ; $6489
-	jr z, Label_0a_64b1 ; $648b
+	jr z, .done ; $648b
 	push hl ; $648d
 	ld l, c ; $648e
 	ld h, $00 ; $648f
@@ -5086,16 +5086,16 @@ Label_0a_6488:
 	ld d, a ; $649e
 	ld a, c ; $649f
 	cp a, $04 ; $64a0
-	jr z, Label_0a_64b1 ; $64a2
+	jr z, .done ; $64a2
 	ld a, d ; $64a4
 	or a, a ; $64a5
-	jr nz, Label_0a_6488 ; $64a6
+	jr nz, .read ; $64a6
 	ld a, b ; $64a8
 	call AdvanceSceneTileAnimation ; $64a9
 	ld a, c ; $64ac
 	cp a, $04 ; $64ad
-	jr nz, Label_0a_6488 ; $64af
-Label_0a_64b1:
+	jr nz, .read ; $64af
+.done:
 	pop af ; $64b1
 	wram_bank ; $64b2
 	pop hl ; $64b6
@@ -5119,7 +5119,7 @@ AdvanceSceneTileAnimation:
 	add hl, bc ; $64cc
 	ld a, [hl] ; $64cd
 	ld [$c33c], a ; $64ce
-Label_0a_64d1:
+.applyFrame:
 	ld hl, $da88 ; $64d1
 	ld a, [$c33c] ; $64d4
 	ld c, a ; $64d7
@@ -5127,7 +5127,7 @@ Label_0a_64d1:
 	add hl, bc ; $64da
 	ld a, [hl] ; $64db
 	cp a, $ff ; $64dc
-	jr nz, Label_0a_64ef ; $64de
+	jr nz, .nextEntry ; $64de
 	ld hl, sp + 0 ; $64e0
 	ld c, [hl] ; $64e2
 	ld b, $00 ; $64e3
@@ -5135,8 +5135,8 @@ Label_0a_64d1:
 	add hl, bc ; $64e8
 	ld a, [hl] ; $64e9
 	ld [$c33c], a ; $64ea
-	jr Label_0a_64d1 ; $64ed
-Label_0a_64ef:
+	jr .applyFrame ; $64ed
+.nextEntry:
 	ld b, a ; $64ef
 	inc hl ; $64f0
 	ld c, [hl] ; $64f1
@@ -5277,12 +5277,12 @@ UpdateMinigameTargets:
 	ret z ; $65c7
 	ld hl, $dc00 ; $65c8
 	ld c, $0f ; $65cb
-Label_0a_65cd:
+.targetLoop:
 	call UpdateMinigameTarget ; $65cd
 	ld de, $000e ; $65d0
 	add hl, de ; $65d3
 	dec c ; $65d4
-	jr nz, Label_0a_65cd ; $65d5
+	jr nz, .targetLoop ; $65d5
 	ret ; $65d7
 UpdateMinigameTarget:
 	bit 0, [hl] ; $65d8
@@ -5450,7 +5450,7 @@ DrawMinigameTarget:
 	ld b, d ; $66be
 	ld a, [$dcf2] ; $66bf
 	and a, $0f ; $66c2
-	jr z, Label_0a_66e1 ; $66c4
+	jr z, .readSprite ; $66c4
 	add a, $fe ; $66c6
 	ld l, a ; $66c8
 	adc a, $66 ; $66c9
@@ -5470,7 +5470,7 @@ DrawMinigameTarget:
 	ld a, b ; $66de
 	add a, l ; $66df
 	ld d, a ; $66e0
-Label_0a_66e1:
+.readSprite:
 	ld a, [$dcf1] ; $66e1
 	add a, a ; $66e4
 	add a, $f6 ; $66e5
@@ -5524,11 +5524,11 @@ CheckBallHitsMinigameTarget:
 	sbc a, d ; $6742
 	ld h, a ; $6743
 	bit 7, h ; $6744
-	jr z, Label_0a_6773 ; $6746
+	jr z, .done ; $6746
 	ld de, $0200 ; $6748
 	add hl, de ; $674b
 	bit 7, h ; $674c
-	jr nz, Label_0a_6773 ; $674e
+	jr nz, .done ; $674e
 	ld hl, wBallHistory + 32 ; $6750
 	ld a, [hl+] ; $6753
 	ld d, [hl] ; $6754
@@ -5544,14 +5544,14 @@ CheckBallHitsMinigameTarget:
 	sbc a, d ; $6760
 	ld h, a ; $6761
 	bit 7, h ; $6762
-	jr z, Label_0a_6773 ; $6764
+	jr z, .done ; $6764
 	ld de, $0200 ; $6766
 	add hl, de ; $6769
 	bit 7, h ; $676a
-	jr nz, Label_0a_6773 ; $676c
+	jr nz, .done ; $676c
 	ld hl, $dcf0 ; $676e
 	set 2, [hl] ; $6771
-Label_0a_6773:
+.done:
 	ret ; $6773
 DeflectBallOffMinigameTarget:
 	and a, $03 ; $6774
@@ -5645,14 +5645,14 @@ DrawNumberWithSprites:
 DrawDigitSpritesString:
 	ld a, [hl+] ; $67eb
 	and a, a ; $67ec
-	jr z, Label_0a_67f4 ; $67ed
+	jr z, .done ; $67ed
 	call DrawDigitSprite_0a ; $67ef
 	jr DrawDigitSpritesString ; $67f2
-Label_0a_67f4:
+.done:
 	ret ; $67f4
 DrawDigitSprite_0a:
 	sub a, $30 ; $67f5
-	jr c, Label_0a_6804 ; $67f7
+	jr c, .advance ; $67f7
 	push de ; $67f9
 	push hl ; $67fa
 	add a, a ; $67fb
@@ -5661,7 +5661,7 @@ DrawDigitSprite_0a:
 	call QueueSprite ; $67ff
 	pop hl ; $6802
 	pop de ; $6803
-Label_0a_6804:
+.advance:
 	ld a, d ; $6804
 	add a, $08 ; $6805
 	ld d, a ; $6807
@@ -5716,11 +5716,11 @@ MinigameTargetOp_03:
 MinigameTargetOp_04:
 	ld hl, $dcf0 ; $6840
 	bit 1, [hl] ; $6843
-	jr nz, Label_0a_684b ; $6845
+	jr nz, .apply ; $6845
 	inc de ; $6847
 	ld a, $01 ; $6848
 	ret ; $684a
-Label_0a_684b:
+.apply:
 	xor a, a ; $684b
 	ret ; $684c
 MinigameTargetOp_05:
@@ -5810,15 +5810,15 @@ RunMinigameTargetScript:
 	ld hl, $dcf3 ; $68b7
 	ld a, [hl] ; $68ba
 	and a, a ; $68bb
-	jr z, Label_0a_68c0 ; $68bc
+	jr z, .runScript ; $68bc
 	dec [hl] ; $68be
 	ret ; $68bf
-Label_0a_68c0:
+.runScript:
 	ld hl, $dcf4 ; $68c0
 	ld a, [hl+] ; $68c3
 	ld d, [hl] ; $68c4
 	ld e, a ; $68c5
-Label_0a_68c6:
+.dispatchOp:
 	ld hl, MinigameTargetScriptOpReturn ; $68c6
 	push hl ; $68c9
 	ld a, [de] ; $68ca
@@ -5838,7 +5838,7 @@ MinigameTargetScriptOpReturn:
 	inc hl ; $68db
 	ld [hl], d ; $68dc
 	and a, a ; $68dd
-	jr nz, Label_0a_68c6 ; $68de
+	jr nz, RunMinigameTargetScript.dispatchOp ; $68de
 	ret ; $68e0
 MinigameTargetScript_0a_68e1:
 	INCBIN "data/bank_00a/d_68e1.bin" ; $68e1, 10 bytes
@@ -6124,7 +6124,7 @@ DrawMinigameTargetAlt:
 	ld b, d ; $6d7e
 	ld a, [$dcf2] ; $6d7f
 	and a, $0f ; $6d82
-	jr z, Label_0a_6d90 ; $6d84
+	jr z, .readSprite ; $6d84
 	add a, $ad ; $6d86
 	ld l, a ; $6d88
 	adc a, $6d ; $6d89
@@ -6133,7 +6133,7 @@ DrawMinigameTargetAlt:
 	ld a, [hl] ; $6d8d
 	add a, d ; $6d8e
 	ld d, a ; $6d8f
-Label_0a_6d90:
+.readSprite:
 	ld a, [$dcf1] ; $6d90
 	add a, a ; $6d93
 	add a, $a5 ; $6d94
@@ -6195,11 +6195,11 @@ CheckBallHitsMinigameTargetAlt:
 	sbc a, d ; $6e0e
 	ld h, a ; $6e0f
 	bit 7, h ; $6e10
-	jr z, Label_0a_6e3f ; $6e12
+	jr z, .done ; $6e12
 	ld de, $0400 ; $6e14
 	add hl, de ; $6e17
 	bit 7, h ; $6e18
-	jr nz, Label_0a_6e3f ; $6e1a
+	jr nz, .done ; $6e1a
 	ld hl, wBallHistory + 32 ; $6e1c
 	ld a, [hl+] ; $6e1f
 	ld d, [hl] ; $6e20
@@ -6215,14 +6215,14 @@ CheckBallHitsMinigameTargetAlt:
 	sbc a, d ; $6e2c
 	ld h, a ; $6e2d
 	bit 7, h ; $6e2e
-	jr z, Label_0a_6e3f ; $6e30
+	jr z, .done ; $6e30
 	ld de, $0400 ; $6e32
 	add hl, de ; $6e35
 	bit 7, h ; $6e36
-	jr nz, Label_0a_6e3f ; $6e38
+	jr nz, .done ; $6e38
 	ld hl, $dcf0 ; $6e3a
 	set 2, [hl] ; $6e3d
-Label_0a_6e3f:
+.done:
 	ret ; $6e3f
 TileList_0a_6e40:
 	; $6e40, 44 bytes (records:2)
@@ -6336,23 +6336,23 @@ FreezeAllActors:
 	wram_bank $04 ; $6f1d
 	ld de, $d000 ; $6f23
 	ld c, $18 ; $6f26
-Label_0a_6f28:
+.actorLoop:
 	inc e ; $6f28
 	ld a, [de] ; $6f29
 	dec e ; $6f2a
 	or a, a ; $6f2b
-	jp z, Label_0a_6f37 ; $6f2c
+	jp z, .next ; $6f2c
 	ld hl, $0005 ; $6f2f
 	add hl, de ; $6f32
 	set 0, [hl] ; $6f33
 	set 1, [hl] ; $6f35
-Label_0a_6f37:
+.next:
 	ld hl, $0040 ; $6f37
 	add hl, de ; $6f3a
 	ld e, l ; $6f3b
 	ld d, h ; $6f3c
 	dec c ; $6f3d
-	jp nz, Label_0a_6f28 ; $6f3e
+	jp nz, .actorLoop ; $6f3e
 	set_flag FLAG_ACTORS_FROZEN ; $6f41
 	ret ; $6f44
 Unused_0a_6f45:
