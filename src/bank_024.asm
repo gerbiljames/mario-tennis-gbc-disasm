@@ -588,13 +588,13 @@ ApplyFallbackBallTrajectory_24:
 	srl a ; $580f
 	ld bc, $0280 ; $5811
 	cp a, $04 ; $5814
-	jr c, Label_24_5824 ; $5816
+	jr c, .solve ; $5816
 	ld a, $03 ; $5818
 	ld bc, $0140 ; $581a
-	jr z, Label_24_5824 ; $581d
+	jr z, .solve ; $581d
 	ld a, $00 ; $581f
 	ld bc, $00e0 ; $5821
-Label_24_5824:
+.solve:
 	push af ; $5824
 	farcall ComputeShotTrajectory ; $5825
 	pop af ; $5828

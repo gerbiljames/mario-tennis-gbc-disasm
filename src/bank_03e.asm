@@ -1308,26 +1308,26 @@ FlushMatchRuleRowAttrs:
 	push hl ; $48be
 	ld a, b ; $48bf
 	or a, a ; $48c0
-	jr nz, Label_3e_48d0 ; $48c1
+	jr nz, .row1 ; $48c1
 	ld hl, $d460 ; $48c3
 	ld de, $b860 ; $48c6
 	ld c, $06 ; $48c9
 	call QueueVRAMCopy ; $48cb
-	jr Label_3e_48ec ; $48ce
-Label_3e_48d0:
+	jr .done ; $48ce
+.row1:
 	cp a, $01 ; $48d0
-	jr nz, Label_3e_48e1 ; $48d2
+	jr nz, .row2 ; $48d2
 	ld hl, $d4e0 ; $48d4
 	ld de, $b8e0 ; $48d7
 	ld c, $06 ; $48da
 	call QueueVRAMCopy ; $48dc
-	jr Label_3e_48ec ; $48df
-Label_3e_48e1:
+	jr .done ; $48df
+.row2:
 	ld hl, $d560 ; $48e1
 	ld de, $b960 ; $48e4
 	ld c, $06 ; $48e7
 	call QueueVRAMCopy ; $48e9
-Label_3e_48ec:
+.done:
 	pop hl ; $48ec
 	pop de ; $48ed
 	pop bc ; $48ee

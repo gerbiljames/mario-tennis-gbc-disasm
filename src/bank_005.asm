@@ -8083,12 +8083,12 @@ ClearGlyphBuffer:
 	push hl ; $73ce
 	ld de, $d300 ; $73cf
 	ld b, $80 ; $73d2
-Label_05_73d4:
+.glyphLoop:
 	ld hl, FontGlyphs ; $73d4
 	ld c, $01 ; $73d7
 	call CopyMemoryFast ; $73d9
 	dec b ; $73dc
-	jr nz, Label_05_73d4 ; $73dd
+	jr nz, .glyphLoop ; $73dd
 	pop hl ; $73df
 	pop de ; $73e0
 	pop bc ; $73e1

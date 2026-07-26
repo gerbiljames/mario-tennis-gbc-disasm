@@ -353,9 +353,9 @@ AddToMinigameScore:
 	ld d, h ; $426e
 	ld hl, $d8f1 ; $426f
 	add hl, de ; $4272
-	jr nc, Label_0d_4278 ; $4273
+	jr nc, .store ; $4273
 	ld de, $270f ; $4275
-Label_0d_4278:
+.store:
 	ld hl, wMinigamesCurrentScore ; $4278
 	ld a, e ; $427b
 	ld [hl+], a ; $427c
@@ -872,10 +872,10 @@ StartMinigameMatch:
 	ld [$c7a7], a ; $46c4
 	ld a, [$df78] ; $46c7
 	cp a, $15 ; $46ca
-	jr nz, Label_0d_46d3 ; $46cc
+	jr nz, .countdown ; $46cc
 	ld a, $01 ; $46ce
 	ld [$c7a7], a ; $46d0
-Label_0d_46d3:
+.countdown:
 	call PlayMinigameCountdown ; $46d3
 	ret ; $46d6
 DrawMinigameScoreHud:
@@ -883,7 +883,7 @@ DrawMinigameScoreHud:
 	call DrawMinigameScore ; $46da
 	ld a, [$c7a7] ; $46dd
 	and a, a ; $46e0
-	jr z, Label_0d_46f6 ; $46e1
+	jr z, .done ; $46e1
 	ldh a, [hWramBank] ; $46e3
 	push af ; $46e5
 	wram_bank $05 ; $46e6
@@ -891,7 +891,7 @@ DrawMinigameScoreHud:
 	res 5, [hl] ; $46ef
 	pop af ; $46f1
 	wram_bank ; $46f2
-Label_0d_46f6:
+.done:
 	ret ; $46f6
 LaunchMinigameServe:
 	ld b, $19 ; $46f7
@@ -901,13 +901,13 @@ LaunchMinigameServe:
 	ld l, a ; $46fe
 	ld a, h ; $46ff
 	and a, a ; $4700
-	jr nz, Label_0d_470b ; $4701
+	jr nz, .gotSpeed ; $4701
 	xor a, a ; $4703
 	ld h, a ; $4704
 	ld e, $0a ; $4705
 	call DivAHLByE ; $4707
 	ld b, l ; $470a
-Label_0d_470b:
+.gotSpeed:
 	ld a, b ; $470b
 	ld [$c784], a ; $470c
 	ldh a, [hWramBank] ; $470f
@@ -919,10 +919,10 @@ Label_0d_470b:
 	wram_bank ; $471e
 	ld a, [$c7a7] ; $4722
 	and a, a ; $4725
-	jr z, Label_0d_472d ; $4726
+	jr z, .launch ; $4726
 	ld a, $0f ; $4728
 	farcall StepMatchFrames ; $472a
-Label_0d_472d:
+.launch:
 	ld hl, $c780 ; $472d
 	ld a, [hl+] ; $4730
 	ld d, [hl] ; $4731
@@ -1002,23 +1002,23 @@ KeepMinigameCameraFixed:
 CheckMinigameStartBannerTrigger:
 	ld a, [wPointOutcome] ; $47c3
 	and a, a ; $47c6
-	jr nz, Label_0d_47e1 ; $47c7
+	jr nz, .done ; $47c7
 	ld a, [wRallyLength] ; $47c9
 	cp a, $04 ; $47cc
-	jr nz, Label_0d_47e1 ; $47ce
+	jr nz, .done ; $47ce
 	ld a, [wBallBounceCount] ; $47d0
 	cp a, $01 ; $47d3
-	jr nz, Label_0d_47e1 ; $47d5
+	jr nz, .done ; $47d5
 	ld a, $06 ; $47d7
 	ld [wPointOutcome], a ; $47d9
 	ld a, $01 ; $47dc
 	ld [wPointOutcomeSide], a ; $47de
-Label_0d_47e1:
+.done:
 	ret ; $47e1
 FreezeMinigameOpponentOnReturn:
 	ld a, [wRallyLength] ; $47e2
 	cp a, $03 ; $47e5
-	jr nz, Label_0d_47fc ; $47e7
+	jr nz, .done ; $47e7
 	ldh a, [hWramBank] ; $47e9
 	push af ; $47eb
 	wram_bank $05 ; $47ec
@@ -1026,7 +1026,7 @@ FreezeMinigameOpponentOnReturn:
 	ld [$df10], a ; $47f4
 	pop af ; $47f7
 	wram_bank ; $47f8
-Label_0d_47fc:
+.done:
 	ret ; $47fc
 LaunchBall:
 	ld a, $01 ; $47fd

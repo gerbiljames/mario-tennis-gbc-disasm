@@ -2153,9 +2153,9 @@ ClearSaveFlag:
 	rlca ; $4df8
 	add a, l ; $4df9
 	ld l, a ; $4dfa
-	jr nc, Label_03_4dfe ; $4dfb
+	jr nc, .gotMask ; $4dfb
 	inc h ; $4dfd
-Label_03_4dfe:
+.gotMask:
 	ld a, [hl] ; $4dfe
 	ld hl, sSaveFlags ; $4dff
 	ld e, d ; $4e02
@@ -2586,14 +2586,14 @@ UpdateMinigameRecord:
 	wram_bank $07 ; $5079
 	ld a, b ; $507f
 	sub a, $02 ; $5080
-	jr nc, Label_03_508e ; $5082
+	jr nc, .readSlot0 ; $5082
 	ld a, [wCurrentStorySlot] ; $5084
 	cp a, $03 ; $5087
-	jp nc, Label_03_512c ; $5089
-	jr Label_03_5090 ; $508c
-Label_03_508e:
+	jp nc, .failed ; $5089
+	jr .read ; $508c
+.readSlot0:
 	ld a, $00 ; $508e
-Label_03_5090:
+.read:
 	push af ; $5090
 	push bc ; $5091
 	push de ; $5092
@@ -2630,12 +2630,12 @@ Label_03_5090:
 	ld [hl], d ; $50bf
 	ld a, b ; $50c0
 	sub a, $02 ; $50c1
-	jr nc, Label_03_50ca ; $50c3
+	jr nc, .writeSlot0 ; $50c3
 	ld a, [wCurrentStorySlot] ; $50c5
-	jr Label_03_50cb ; $50c8
-Label_03_50ca:
+	jr .write ; $50c8
+.writeSlot0:
 	xor a, a ; $50ca
-Label_03_50cb:
+.write:
 	push bc ; $50cb
 	add a, $38 ; $50cc
 	ld b, a ; $50ce
@@ -2644,15 +2644,15 @@ Label_03_50cb:
 	call WriteSaveBlock ; $50d5
 	pop bc ; $50d8
 	or a, a ; $50d9
-	jr nz, Label_03_512c ; $50da
+	jr nz, .failed ; $50da
 	ld a, b ; $50dc
 	sub a, $02 ; $50dd
-	jr nc, Label_03_50e6 ; $50df
+	jr nc, .verifySlot0 ; $50df
 	ld a, [wCurrentStorySlot] ; $50e1
-	jr Label_03_50e7 ; $50e4
-Label_03_50e6:
+	jr .verify ; $50e4
+.verifySlot0:
 	xor a, a ; $50e6
-Label_03_50e7:
+.verify:
 	push bc ; $50e7
 	add a, $38 ; $50e8
 	ld b, a ; $50ea
@@ -2660,15 +2660,15 @@ Label_03_50e7:
 	call VerifySaveBlock ; $50ee
 	pop bc ; $50f1
 	or a, a ; $50f2
-	jr nz, Label_03_512c ; $50f3
+	jr nz, .failed ; $50f3
 	ld a, b ; $50f5
 	sub a, $02 ; $50f6
-	jr nc, Label_03_50ff ; $50f8
+	jr nc, .backupSlot0 ; $50f8
 	ld a, [wCurrentStorySlot] ; $50fa
-	jr Label_03_5100 ; $50fd
-Label_03_50ff:
+	jr .writeBackup ; $50fd
+.backupSlot0:
 	xor a, a ; $50ff
-Label_03_5100:
+.writeBackup:
 	push bc ; $5100
 	add a, $3b ; $5101
 	ld b, a ; $5103
@@ -2677,15 +2677,15 @@ Label_03_5100:
 	call WriteSaveBlock ; $510a
 	pop bc ; $510d
 	or a, a ; $510e
-	jr nz, Label_03_512c ; $510f
+	jr nz, .failed ; $510f
 	ld a, b ; $5111
 	sub a, $02 ; $5112
-	jr nc, Label_03_511b ; $5114
+	jr nc, .backupVerifySlot0 ; $5114
 	ld a, [wCurrentStorySlot] ; $5116
-	jr Label_03_511c ; $5119
-Label_03_511b:
+	jr .verifyBackup ; $5119
+.backupVerifySlot0:
 	xor a, a ; $511b
-Label_03_511c:
+.verifyBackup:
 	push bc ; $511c
 	add a, $3b ; $511d
 	ld b, a ; $511f
@@ -2693,9 +2693,9 @@ Label_03_511c:
 	call VerifySaveBlock ; $5123
 	pop bc ; $5126
 	or a, a ; $5127
-	jr nz, Label_03_512c ; $5128
-	jr Label_03_5137 ; $512a
-Label_03_512c:
+	jr nz, .failed ; $5128
+	jr .done ; $512a
+.failed:
 	pop af ; $512c
 	wram_bank ; $512d
 	ld a, $01 ; $5131
@@ -2703,7 +2703,7 @@ Label_03_512c:
 	pop de ; $5134
 	pop bc ; $5135
 	ret ; $5136
-Label_03_5137:
+.done:
 	pop af ; $5137
 	wram_bank ; $5138
 	xor a, a ; $513c

@@ -1493,32 +1493,32 @@ SetScreenShake:
 	push af ; $48c7
 	ld a, b ; $48c8
 	or a, a ; $48c9
-	jr z, Label_0a_48e4 ; $48ca
+	jr z, .stop ; $48ca
 	push af ; $48cc
 	ld a, [$c363] ; $48cd
 	inc a ; $48d0
-	jr nz, Label_0a_48db ; $48d1
+	jr nz, .clampMagnitude ; $48d1
 	ld a, $01 ; $48d3
 	ld hl, UpdateScreenShake ; $48d5
 	call RegisterFrameTask ; $48d8
-Label_0a_48db:
+.clampMagnitude:
 	pop af ; $48db
 	cp a, $04 ; $48dc
-	jr c, Label_0a_48fb ; $48de
+	jr c, .store ; $48de
 	ld a, $03 ; $48e0
-	jr Label_0a_48fb ; $48e2
-Label_0a_48e4:
+	jr .store ; $48e2
+.stop:
 	ld a, [$c363] ; $48e4
 	inc a ; $48e7
 	ld a, $00 ; $48e8
-	jr z, Label_0a_48fb ; $48ea
+	jr z, .store ; $48ea
 	xor a, a ; $48ec
 	ld [$c368], a ; $48ed
 	ld [$c369], a ; $48f0
 	ld hl, UpdateScreenShake ; $48f3
 	call UnregisterFrameTask ; $48f6
 	ld a, $ff ; $48f9
-Label_0a_48fb:
+.store:
 	ld [$c363], a ; $48fb
 	pop af ; $48fe
 	wram_bank ; $48ff
@@ -6088,14 +6088,14 @@ MinigameTargetScriptPtrs_0a_6d48:
 	dw $0000 ; record 4
 SpawnMinigameTargetsFromList:
 	ld bc, $dc00 ; $6d52
-Label_0a_6d55:
+.spawnLoop:
 	ld a, [hl+] ; $6d55
 	ld e, a ; $6d56
 	ld a, [hl+] ; $6d57
 	ld d, a ; $6d58
 	ld a, d ; $6d59
 	or a, e ; $6d5a
-	jr z, Label_0a_6d6d ; $6d5b
+	jr z, .done ; $6d5b
 	push bc ; $6d5d
 	push hl ; $6d5e
 	call ActivateMinigameTarget ; $6d5f
@@ -6104,11 +6104,11 @@ Label_0a_6d55:
 	ld a, $0e ; $6d64
 	add a, c ; $6d66
 	ld c, a ; $6d67
-	jr nc, Label_0a_6d6b ; $6d68
+	jr nc, .next ; $6d68
 	inc b ; $6d6a
-Label_0a_6d6b:
-	jr Label_0a_6d55 ; $6d6b
-Label_0a_6d6d:
+.next:
+	jr .spawnLoop ; $6d6b
+.done:
 	ret ; $6d6d
 DrawMinigameTargetAlt:
 	ld hl, $dcf8 ; $6d6e

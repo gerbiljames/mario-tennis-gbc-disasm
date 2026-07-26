@@ -265,9 +265,9 @@ SetDrillTargetZoneForPoint:
 	add a, a ; $4196
 	add a, l ; $4197
 	ld l, a ; $4198
-	jr nc, Label_0b_419c ; $4199
+	jr nc, .gotEntry ; $4199
 	inc h ; $419b
-Label_0b_419c:
+.gotEntry:
 	ld b, h ; $419c
 	ld c, l ; $419d
 	ld hl, $0002 ; $419e
@@ -619,12 +619,12 @@ TestCharStateBit4:
 	add hl, de ; $4459
 	ld a, [hl] ; $445a
 	bit 4, a ; $445b
-	jr z, Label_0b_4467 ; $445d
+	jr z, .clear ; $445d
 	pop af ; $445f
 	wram_bank ; $4460
 	ld a, $01 ; $4464
 	ret ; $4466
-Label_0b_4467:
+.clear:
 	pop af ; $4467
 	wram_bank ; $4468
 	xor a, a ; $446c

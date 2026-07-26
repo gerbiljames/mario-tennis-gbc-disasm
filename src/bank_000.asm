@@ -1808,77 +1808,77 @@ AngleFromVectorCoarse:
 	ld c, $00 ; $0a55
 	ld a, h ; $0a57
 	or a, l ; $0a58
-	jr z, Label_00_0aa2 ; $0a59
+	jr z, .toAngle ; $0a59
 	ld c, $10 ; $0a5b
 	ld a, d ; $0a5d
 	or a, e ; $0a5e
-	jr z, Label_00_0aa2 ; $0a5f
+	jr z, .toAngle ; $0a5f
 	push hl ; $0a61
 	push de ; $0a62
 	bit 7, d ; $0a63
-	jr z, Label_00_0a6d ; $0a65
+	jr z, .absY ; $0a65
 	xor a, a ; $0a67
 	sub a, e ; $0a68
 	ld e, a ; $0a69
 	sbc a, a ; $0a6a
 	sub a, d ; $0a6b
 	ld d, a ; $0a6c
-Label_00_0a6d:
+.absY:
 	bit 7, h ; $0a6d
-	jr z, Label_00_0a77 ; $0a6f
+	jr z, .absX ; $0a6f
 	xor a, a ; $0a71
 	sub a, l ; $0a72
 	ld l, a ; $0a73
 	sbc a, a ; $0a74
 	sub a, h ; $0a75
 	ld h, a ; $0a76
-Label_00_0a77:
+.absX:
 	ld a, h ; $0a77
 	cp a, $10 ; $0a78
-	jr c, Label_00_0a88 ; $0a7a
+	jr c, .scaleUp ; $0a7a
 	sra d ; $0a7c
 	rr e ; $0a7e
 	sra d ; $0a80
 	rr e ; $0a82
 	add hl, hl ; $0a84
 	add hl, hl ; $0a85
-	jr Label_00_0a8c ; $0a86
-Label_00_0a88:
+	jr .divide ; $0a86
+.scaleUp:
 	add hl, hl ; $0a88
 	add hl, hl ; $0a89
 	add hl, hl ; $0a8a
 	add hl, hl ; $0a8b
-Label_00_0a8c:
+.divide:
 	call DivHLByDE ; $0a8c
 	ld c, $0f ; $0a8f
 	ld a, h ; $0a91
 	or a, a ; $0a92
-	jr nz, Label_00_0aa0 ; $0a93
+	jr nz, .restore ; $0a93
 	ld b, l ; $0a95
 	ld hl, ArcTanTable ; $0a96
 	ld c, $ff ; $0a99
-Label_00_0a9b:
+.searchLoop:
 	inc c ; $0a9b
 	ld a, [hl+] ; $0a9c
 	cp a, b ; $0a9d
-	jr c, Label_00_0a9b ; $0a9e
-Label_00_0aa0:
+	jr c, .searchLoop ; $0a9e
+.restore:
 	pop de ; $0aa0
 	pop hl ; $0aa1
-Label_00_0aa2:
+.toAngle:
 	ld a, c ; $0aa2
 	add a, a ; $0aa3
 	add a, a ; $0aa4
 	bit 7, d ; $0aa5
-	jr z, Label_00_0aac ; $0aa7
+	jr z, .mirrorY ; $0aa7
 	cpl ; $0aa9
 	add a, $81 ; $0aaa
-Label_00_0aac:
+.mirrorY:
 	bit 7, h ; $0aac
-	jr z, Label_00_0ab2 ; $0aae
+	jr z, .done ; $0aae
 	cpl ; $0ab0
 	inc a ; $0ab1
-Label_00_0ab2:
+.done:
 	pop bc ; $0ab2
 	ret ; $0ab3
 ArcTanTable:
@@ -7212,23 +7212,23 @@ SerialEncodeInput:
 	ld b, a ; $2928
 	and a, $0f ; $2929
 	cp a, $0f ; $292b
-	jr nz, Label_00_2935 ; $292d
+	jr nz, .checkBit3 ; $292d
 	ld a, $3f ; $292f
 	ld b, $0f ; $2931
-	jr Label_00_2958 ; $2933
-Label_00_2935:
+	jr .storeQueue ; $2933
+.checkBit3:
 	bit 3, a ; $2935
-	jr z, Label_00_293f ; $2937
+	jr z, .checkBit2 ; $2937
 	ld a, $30 ; $2939
 	ld b, $08 ; $293b
-	jr Label_00_2958 ; $293d
-Label_00_293f:
+	jr .storeQueue ; $293d
+.checkBit2:
 	bit 2, a ; $293f
-	jr z, Label_00_2949 ; $2941
+	jr z, .pairBits ; $2941
 	ld a, $0c ; $2943
 	ld b, $04 ; $2945
-	jr Label_00_2958 ; $2947
-Label_00_2949:
+	jr .storeQueue ; $2947
+.pairBits:
 	and a, $03 ; $2949
 	ld c, a ; $294b
 	ld a, b ; $294c
@@ -7241,15 +7241,15 @@ Label_00_2949:
 	and a, $f3 ; $2954
 	ld b, a ; $2956
 	pop af ; $2957
-Label_00_2958:
+.storeQueue:
 	ld c, a ; $2958
 	ld a, b ; $2959
 	ldh [$ffd6], a ; $295a
 	ldh a, [hLinkState] ; $295c
 	cp a, $01 ; $295e
-	jr z, Label_00_2974 ; $2960
+	jr z, .checkSlaveWait ; $2960
 	cp a, $02 ; $2962
-	jr z, Label_00_2974 ; $2964
+	jr z, .checkSlaveWait ; $2964
 	sound $72 ; $2966
 	xor a, a ; $2968
 	ldh [hLinkRemoteInputBuf], a ; $2969
@@ -7257,22 +7257,22 @@ Label_00_2958:
 	ld a, $c0 ; $296d
 	ldh [hLinkTxByte], a ; $296f
 	call LinkErrorReset ; $2971
-Label_00_2974:
+.checkSlaveWait:
 	ldh a, [$ffdf] ; $2974
 	or a, a ; $2976
-	jr z, Label_00_2988 ; $2977
+	jr z, .send ; $2977
 	ldh a, [hLinkState] ; $2979
 	cp a, $02 ; $297b
-	jr nz, Label_00_2988 ; $297d
-Label_00_297f:
+	jr nz, .send ; $297d
+.waitAck:
 	ei ; $297f
 	nop ; $2980
 	nop ; $2981
 	di ; $2982
 	ldh a, [$ffe0] ; $2983
 	or a, a ; $2985
-	jr nz, Label_00_297f ; $2986
-Label_00_2988:
+	jr nz, .waitAck ; $2986
+.send:
 	ldh a, [$ffdc] ; $2988
 	or a, c ; $298a
 	di ; $298b

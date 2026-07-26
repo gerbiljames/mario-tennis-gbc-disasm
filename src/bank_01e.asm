@@ -11,21 +11,21 @@ ShowMatchResultsScreen:
 	clear_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $400e
 	ld a, [wGameMode] ; $4011
 	cp a, $05 ; $4014
-	jr z, Label_1e_402a ; $4016
+	jr z, .checkExpScreen ; $4016
 	cp a, $06 ; $4018
-	jr z, Label_1e_402a ; $401a
+	jr z, .checkExpScreen ; $401a
 	cp a, $07 ; $401c
-	jr z, Label_1e_402a ; $401e
+	jr z, .checkExpScreen ; $401e
 	cp a, $08 ; $4020
 	test_flag FLAG_DOUBLES ; $4022
-	jr z, Label_1e_402a ; $4025
+	jr z, .checkExpScreen ; $4025
 	set_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $4027
-Label_1e_402a:
+.checkExpScreen:
 	ld a, c ; $402a
 	or a, a ; $402b
-	jr z, Label_1e_4031 ; $402c
+	jr z, .showResults ; $402c
 	jp ShowExpAwardScreen ; $402e
-Label_1e_4031:
+.showResults:
 	ld c, $10 ; $4031
 	call BeginFadeOut ; $4033
 	call WaitFadeEnd ; $4036
@@ -334,7 +334,7 @@ LoadDoublesLabelTiles:
 	ret ; $4359
 DrawResultsNameLabelRows:
 	or a, a ; $435a
-	jr nz, Label_1e_4396 ; $435b
+	jr nz, .doublesLayout ; $435b
 	ld hl, $d000 ; $435d
 	ld de, $d160 ; $4360
 	ld c, $07 ; $4363
@@ -355,7 +355,7 @@ DrawResultsNameLabelRows:
 	ld a, $08 ; $4390
 	ld [$d1a6], a ; $4392
 	ret ; $4395
-Label_1e_4396:
+.doublesLayout:
 	ld hl, $d000 ; $4396
 	ld de, $d120 ; $4399
 	ld c, $07 ; $439c
@@ -771,13 +771,13 @@ FormatAndDrawNumber:
 	ret ; $470c
 CopyStringToTextBuffer:
 	ld de, wTextBuffer ; $470d
-Label_1e_4710:
+.copyLoop:
 	ld a, [hl+] ; $4710
 	ld [de], a ; $4711
 	or a, a ; $4712
 	ret z ; $4713
 	inc de ; $4714
-	jr Label_1e_4710 ; $4715
+	jr .copyLoop ; $4715
 DrawClassNameLabel:
 	test_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $4717
 	jr nz, Label_1e_4728 ; $471a

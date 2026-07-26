@@ -3436,7 +3436,7 @@ MulHLByTangent:
 NegateADE:
 	cpl ; $5a63
 	inc a ; $5a64
-	jr nz, Label_08_5a6e ; $5a65
+	jr nz, .notZero ; $5a65
 	sub a, e ; $5a67
 	ld e, a ; $5a68
 	sbc a, a ; $5a69
@@ -3444,7 +3444,7 @@ NegateADE:
 	ld d, a ; $5a6b
 	xor a, a ; $5a6c
 	ret ; $5a6d
-Label_08_5a6e:
+.notZero:
 	push af ; $5a6e
 	ld a, e ; $5a6f
 	cpl ; $5a70
@@ -3461,11 +3461,11 @@ Label_08_5a6e:
 	adc a, [hl] ; $5a7b
 	ld [hl+], a ; $5a7c
 	bit 7, d ; $5a7d
-	jr nz, Label_08_5a84 ; $5a7f
+	jr nz, .negative ; $5a7f
 	ret nc ; $5a81
 	inc [hl] ; $5a82
 	ret ; $5a83
-Label_08_5a84:
+.negative:
 	ret c ; $5a84
 	dec [hl] ; $5a85
 	ret ; $5a86

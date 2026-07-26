@@ -1718,9 +1718,9 @@ DrawTrophiesCharSprite:
 	add a, a ; $4af5
 	add a, l ; $4af6
 	ld l, a ; $4af7
-	jr nc, Label_3b_4afb ; $4af8
+	jr nc, .copyRect ; $4af8
 	inc h ; $4afa
-Label_3b_4afb:
+.copyRect:
 	ld b, $02 ; $4afb
 	ld c, $02 ; $4afd
 	push hl ; $4aff
@@ -4558,26 +4558,26 @@ FlushMatchFormatRowToVram:
 	push hl ; $609d
 	ld a, b ; $609e
 	or a, a ; $609f
-	jr nz, Label_3b_60af ; $60a0
+	jr nz, .row1 ; $60a0
 	ld hl, $d460 ; $60a2
 	ld de, $b860 ; $60a5
 	ld c, $06 ; $60a8
 	call QueueVRAMCopy ; $60aa
-	jr Label_3b_60cb ; $60ad
-Label_3b_60af:
+	jr .done ; $60ad
+.row1:
 	cp a, $01 ; $60af
-	jr nz, Label_3b_60c0 ; $60b1
+	jr nz, .row2 ; $60b1
 	ld hl, $d4e0 ; $60b3
 	ld de, $b8e0 ; $60b6
 	ld c, $06 ; $60b9
 	call QueueVRAMCopy ; $60bb
-	jr Label_3b_60cb ; $60be
-Label_3b_60c0:
+	jr .done ; $60be
+.row2:
 	ld hl, $d560 ; $60c0
 	ld de, $b960 ; $60c3
 	ld c, $06 ; $60c6
 	call QueueVRAMCopy ; $60c8
-Label_3b_60cb:
+.done:
 	pop hl ; $60cb
 	pop de ; $60cc
 	pop bc ; $60cd

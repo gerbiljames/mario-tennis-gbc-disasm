@@ -248,19 +248,19 @@ UpdateAnimatedTiles:
 	ld b, a ; $4351
 	ld a, c ; $4352
 	add a, a ; $4353
-	jr nc, Label_39_435a ; $4354
+	jr nc, .countUp ; $4354
 	ld a, b ; $4356
 	dec a ; $4357
-	jr Label_39_435f ; $4358
-Label_39_435a:
+	jr .storeCounter ; $4358
+.countUp:
 	rra ; $435a
 	cp a, b ; $435b
-	jr c, Label_39_435f ; $435c
+	jr c, .storeCounter ; $435c
 	xor a, a ; $435e
-Label_39_435f:
+.storeCounter:
 	ld [$cb0a], a ; $435f
 	or a, a ; $4362
-	jp nz, Label_39_43f9 ; $4363
+	jp nz, .done ; $4363
 	wram_bank $02 ; $4366
 	ld a, [$cb09] ; $436c
 	inc a ; $436f
@@ -274,9 +274,9 @@ Label_39_435f:
 	ld hl, $4403 ; $437d
 	add a, l ; $4380
 	ld l, a ; $4381
-	jr nc, Label_39_4385 ; $4382
+	jr nc, .readFrameTableA ; $4382
 	inc h ; $4384
-Label_39_4385:
+.readFrameTableA:
 	ld a, [hl+] ; $4385
 	ld h, [hl] ; $4386
 	ld l, a ; $4387
@@ -284,14 +284,14 @@ Label_39_4385:
 	ld b, l ; $4389
 	and a, b ; $438a
 	cp a, $ff ; $438b
-	jr z, Label_39_43bb ; $438d
+	jr z, .frameB ; $438d
 	pop af ; $438f
 	push af ; $4390
 	add a, l ; $4391
 	ld l, a ; $4392
-	jr nc, Label_39_4396 ; $4393
+	jr nc, .readFrameA ; $4393
 	inc h ; $4395
-Label_39_4396:
+.readFrameA:
 	ld a, [hl+] ; $4396
 	ld h, [hl] ; $4397
 	ld l, a ; $4398
@@ -306,16 +306,16 @@ Label_39_4396:
 	ld de, $b3e0 ; $43b3
 	ld c, $02 ; $43b6
 	call QueueVRAMCopy ; $43b8
-Label_39_43bb:
+.frameB:
 	ld a, [wAnimatedTileSet] ; $43bb
 	and a, $03 ; $43be
 	add a, a ; $43c0
 	ld hl, $440b ; $43c1
 	add a, l ; $43c4
 	ld l, a ; $43c5
-	jr nc, Label_39_43c9 ; $43c6
+	jr nc, .readFrameTableB ; $43c6
 	inc h ; $43c8
-Label_39_43c9:
+.readFrameTableB:
 	ld a, [hl+] ; $43c9
 	ld h, [hl] ; $43ca
 	ld l, a ; $43cb
@@ -324,13 +324,13 @@ Label_39_43c9:
 	ld a, h ; $43ce
 	and a, l ; $43cf
 	cp a, $ff ; $43d0
-	jr z, Label_39_43f9 ; $43d2
+	jr z, .done ; $43d2
 	ld a, c ; $43d4
 	add a, l ; $43d5
 	ld l, a ; $43d6
-	jr nc, Label_39_43da ; $43d7
+	jr nc, .readFrameB ; $43d7
 	inc h ; $43d9
-Label_39_43da:
+.readFrameB:
 	ld a, [hl+] ; $43da
 	ld h, [hl] ; $43db
 	ld l, a ; $43dc
@@ -344,7 +344,7 @@ Label_39_43da:
 	ld de, $b5e0 ; $43f1
 	ld c, $02 ; $43f4
 	call QueueVRAMCopy ; $43f6
-Label_39_43f9:
+.done:
 	pop af ; $43f9
 	wram_bank ; $43fa
 	pop hl ; $43fe

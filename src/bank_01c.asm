@@ -331,9 +331,9 @@ CharDataScreen_DrawStats:
 	wram_bank $06 ; $42f6
 	ld a, [$d0b6] ; $42fc
 	or a, a ; $42ff
-	jr z, Label_1c_4305 ; $4300
+	jr z, .statsReady ; $4300
 	call LoadCharStats ; $4302
-Label_1c_4305:
+.statsReady:
 	farcall CharDataScreen_BuildStats ; $4305
 	wram_bank $06 ; $4308
 	ld a, [$d00e] ; $430e
