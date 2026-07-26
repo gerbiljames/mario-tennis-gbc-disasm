@@ -1789,25 +1789,25 @@ MarioWorldInitScript_0e:
 	cp a, $0f ; $54e2
 	jp z, MarioWorldArrivalSingles ; $54e4
 	test_flag FLAG_DOUBLES ; $54e7
-	jr nz, Label_0e_550c ; $54ea
+	jr nz, .placeActors ; $54ea
 	test_flag FLAG_REACHED_MARIO_WORLD_SINGLES ; $54ec
 	ret z ; $54ef
 	ld a, [wStoryModeEntryPoint] ; $54f0
 	inc a ; $54f3
-	jr z, Label_0e_5509 ; $54f4
+	jr z, .doubles ; $54f4
 	script_set_speed ACTOR_PLAYER, $0014 ; $54f6
 	script_move_target ACTOR_PLAYER, $1200, $1d00 ; $54fe
-Label_0e_5509:
+.doubles:
 	jp Label_0e_69fb ; $5509
-Label_0e_550c:
+.placeActors:
 	test_flag FLAG_REACHED_MARIO_WORLD_DOUBLES ; $550c
 	ret z ; $550f
 	ld a, [wStoryModeEntryPoint] ; $5510
 	inc a ; $5513
-	jr z, Label_0e_5529 ; $5514
+	jr z, .done ; $5514
 	script_set_speed ACTOR_PLAYER, $0014 ; $5516
 	script_move_target ACTOR_PLAYER, $1200, $1d00 ; $551e
-Label_0e_5529:
+.done:
 	jp Label_0e_69fb ; $5529
 	ret ; $552c
 ActorScript_0e_552d:

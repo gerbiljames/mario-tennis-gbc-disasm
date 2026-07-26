@@ -1399,15 +1399,15 @@ ResetScrollAndCamera:
 DebugScreenAssetViewer:
 	call FadeOutAndResetScreen ; $7659
 	ld c, $00 ; $765c
-Label_18_765e:
+.screenLoop:
 	push bc ; $765e
 	ld a, c ; $765f
 	ld hl, DebugScreenAssetViewerRecords ; $7660
 	add a, l ; $7663
 	ld l, a ; $7664
-	jr nc, Label_18_7668 ; $7665
+	jr nc, .loadScreen ; $7665
 	inc h ; $7667
-Label_18_7668:
+.loadScreen:
 	ld c, [hl] ; $7668
 	push bc ; $7669
 	ld c, $10 ; $766a
@@ -1420,19 +1420,19 @@ Label_18_7668:
 	call EnableLCD ; $767c
 	script_fade_in $10 ; $767f
 	call WaitFadeEnd ; $7684
-Label_18_7687:
+.inputLoop:
 	call AdvanceFrame ; $7687
 	ldh a, [hInputPressed] ; $768a
 	or a, a ; $768c
-	jr z, Label_18_7687 ; $768d
+	jr z, .inputLoop ; $768d
 	pop bc ; $768f
 	ld a, c ; $7690
 	inc a ; $7691
 	ld c, a ; $7692
 	cp a, $18 ; $7693
-	jr nz, Label_18_765e ; $7695
+	jr nz, .screenLoop ; $7695
 	ld c, $00 ; $7697
-	jr Label_18_765e ; $7699
+	jr .screenLoop ; $7699
 	ret ; $769b
 DebugScreenAssetViewerRecords:
 	; $769c, 24 bytes (bytes:12)

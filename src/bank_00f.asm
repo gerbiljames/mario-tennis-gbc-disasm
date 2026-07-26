@@ -249,7 +249,7 @@ AwardsCeremonyTile01_0f:
 	script_set_text Text_25_126 ; $44c8
 	script_speak $08 ; $44ce
 	test_flag FLAG_DOUBLES ; $44d3
-	jp z, Label_0f_45b6 ; $44d6
+	jp z, .doubles ; $44d6
 	set_flag FLAG_AWARDS_CEREMONY_SEEN_DOUBLES ; $44d9
 	script_set_text Text_25_180 ; $44dc
 	script_null_script ACTOR_PARTNER ; $44e2
@@ -287,8 +287,8 @@ AwardsCeremonyTile01_0f:
 	ld a, $78 ; $45a3
 	call DelayFrames ; $45a5
 	script_set_position $14, $3f00, $3f00 ; $45a8
-	jp Label_0f_4661 ; $45b3
-Label_0f_45b6:
+	jp .ceremony ; $45b3
+.doubles:
 	set_flag FLAG_AWARDS_CEREMONY_SEEN_SINGLES ; $45b6
 	script_null_script $03 ; $45b9
 	script_move_target ACTOR_PLAYER, $0b80, $1b00 ; $45be
@@ -316,7 +316,7 @@ Label_0f_45b6:
 	ld a, $78 ; $4651
 	call DelayFrames ; $4653
 	script_set_position $14, $3f00, $3f00 ; $4656
-Label_0f_4661:
+.ceremony:
 	call CutsceneStompScreenShake ; $4661
 	call CutsceneStompScreenShake ; $4664
 	script_speak $08 ; $4667
@@ -329,7 +329,7 @@ Label_0f_4661:
 	call DelayFrames ; $468b
 	script_set_position $16, $3f00, $3f00 ; $468e
 	test_flag FLAG_DOUBLES ; $4699
-	jp z, Label_0f_4700 ; $469c
+	jp z, .done ; $469c
 	script_set_position $15, $3f00, $3f00 ; $469f
 	script_set_objdef $4d, $15 ; $46aa
 	script_set_anim $15, $01 ; $46b6
@@ -348,7 +348,7 @@ Label_0f_4661:
 	ld de, $d000 ; $46f9
 	farcall AttachActorStepMover ; $46fc
 	ret ; $46ff
-Label_0f_4700:
+.done:
 	script_set_position ACTOR_PLAYER, $0b80, $1b00 ; $4700
 	script_face ACTOR_PLAYER, FACE_DOWN ; $470b
 	ld a, $01 ; $4712
@@ -957,7 +957,7 @@ Label_0f_4ea7:
 	ret ; $5580
 AwardsCeremonyInitScript_0f:
 	test_flag FLAG_DOUBLES ; $5581
-	jr z, Label_0f_55a9 ; $5584
+	jr z, .setAnims ; $5584
 	ldh a, [hRomBank] ; $5586
 	ld hl, AwardsCeremonyActorsDoubles_0f ; $5588
 	farcall ScriptRespawnLocationActors ; $558b
@@ -966,13 +966,13 @@ AwardsCeremonyInitScript_0f:
 	farcall WriteStoryStateWord ; $5594
 	script_copy_scene_rect $1a, $0d, $08, $0d, $08, $03 ; $5597
 	farcall BeginCutsceneScriptMode ; $55a6
-Label_0f_55a9:
+.setAnims:
 	script_set_anim $0e, $08 ; $55a9
 	script_set_anim $0f, $08 ; $55b0
 	test_flag FLAG_DOUBLES ; $55b7
-	jr nz, Label_0f_55c3 ; $55ba
+	jr nz, .setObjectDefs ; $55ba
 	script_set_anim $0d, $06 ; $55bc
-Label_0f_55c3:
+.setObjectDefs:
 	call SetPlayerAndPartnerObjectDefs ; $55c3
 	ld a, [wStoryModeEntryPoint] ; $55c6
 	cp a, $0a ; $55c9
@@ -981,7 +981,7 @@ Label_0f_55c3:
 	jp z, Label_0f_5889 ; $55d0
 	call CheckAwardsCeremonyRivalSceneDone ; $55d3
 	and a, $01 ; $55d6
-	jr z, Label_0f_5600 ; $55d8
+	jr z, .checkDoubles ; $55d8
 	script_move_target $08, $0900, $1d00 ; $55da
 	script_wait_move $08 ; $55e5
 	script_face $08, FACE_RIGHT ; $55ea
@@ -992,9 +992,9 @@ Label_0f_55c3:
 	ld h, $04 ; $55f9
 	ld l, $02 ; $55fb
 	farcall CopyBehaviorMapRect ; $55fd
-Label_0f_5600:
+.checkDoubles:
 	test_flag FLAG_DOUBLES ; $5600
-	jp nz, Label_0f_5627 ; $5603
+	jp nz, .done ; $5603
 	call SavePlayerActorPosition ; $5606
 	ld hl, $c2b2 ; $5609
 	ld a, [hl+] ; $560c
@@ -1011,7 +1011,7 @@ Label_0f_5600:
 	ld b, h ; $5620
 	ld de, $d000 ; $5621
 	farcall AttachActorStepMover ; $5624
-Label_0f_5627:
+.done:
 	ret ; $5627
 AwardsCeremonyNpc08_0f:
 	script_set_text Text_25_125 ; $5628
@@ -2881,11 +2881,11 @@ IslandOpenRoundSinglesNpc05_0f:
 	wram_bank ; $76a5
 	ld a, [wMatchExitRequest] ; $76a9
 	cp a, $01 ; $76ac
-	jr z, Label_0f_76b8 ; $76ae
+	jr z, .prompt ; $76ae
 	ld a, [wMatchWinLoseFlag] ; $76b0
 	cp a, $01 ; $76b3
 	jp z, $76e9 ; $76b5
-Label_0f_76b8:
+.prompt:
 	call LoadIslandOpenRoundNpcs ; $76b8
 	call SetPlayerAndPartnerObjectDefs ; $76bb
 	script_set_position ACTOR_PLAYER, $2500, $1100 ; $76be
@@ -2899,9 +2899,9 @@ Label_0f_76b8:
 	clear_flag FLAG_COURT2_SPECTATORS_TALKED_DOUBLES ; $76ec
 	call CheckIslandOpenVictoryTransition ; $76ef
 	and a, a ; $76f2
-	jr z, Label_0f_76f6 ; $76f3
+	jr z, .accepted ; $76f3
 	ret ; $76f5
-Label_0f_76f6:
+.accepted:
 	ldh a, [hRomBank] ; $76f6
 	ld hl, IslandOpenRoundActorsDoubles_0f ; $76f8
 	farcall ScriptRespawnLocationActors ; $76fb
@@ -2934,11 +2934,11 @@ Label_0f_76f6:
 	farcall InitDialogueTextCursor ; $7751
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $7754
 	or a, a ; $7757
-	jr nz, Label_0f_7763 ; $7758
+	jr nz, .declined ; $7758
 	farcall AdvanceDialogueTextCursor ; $775a
 	farcall AdvanceDialogueTextCursor ; $775d
 	farcall AdvanceDialogueTextCursor ; $7760
-Label_0f_7763:
+.declined:
 	script_get_actor_state $08 ; $7763
 	ld c, l ; $7768
 	ld b, h ; $7769
@@ -2975,9 +2975,9 @@ Label_0f_7763:
 	ld hl, $2862 ; $7809
 	add a, l ; $780c
 	ld l, a ; $780d
-	jr nc, Label_0f_7811 ; $780e
+	jr nc, .done ; $780e
 	inc h ; $7810
-Label_0f_7811:
+.done:
 	call QueueShortText ; $7811
 	script_face_toward $04, ACTOR_PLAYER ; $7814
 	script_face_toward $04, ACTOR_PARTNER ; $781c

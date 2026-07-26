@@ -1671,10 +1671,10 @@ LoadMatchSettingsFromTable:
 	ld a, [wCurrentMinigameStoryMatch] ; $4a5f
 	cp a, $01 ; $4a62
 	ld a, $00 ; $4a64
-	jr nz, Label_0a_4a6c ; $4a66
+	jr nz, .haveTable ; $4a66
 	inc a ; $4a68
 	ld de, DoublesMatchSettingsTable_0a ; $4a69
-Label_0a_4a6c:
+.haveTable:
 	call SetMatchDoublesMode ; $4a6c
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $4a6f
 	ld l, a ; $4a72
@@ -1683,9 +1683,9 @@ Label_0a_4a6c:
 	add hl, hl ; $4a76
 	add a, l ; $4a77
 	ld l, a ; $4a78
-	jr nc, Label_0a_4a7c ; $4a79
+	jr nc, .readEntry ; $4a79
 	inc h ; $4a7b
-Label_0a_4a7c:
+.readEntry:
 	add hl, de ; $4a7c
 	ld a, [hl+] ; $4a7d
 	ld [wGameMode], a ; $4a7e
@@ -1694,7 +1694,7 @@ Label_0a_4a7c:
 	ld a, [hl+] ; $4a85
 	ld [wCurrentlyUsedCourt], a ; $4a86
 	test_flag FLAG_DEBUG_KEEP_MATCH_SETTINGS ; $4a89
-	jr nz, Label_0a_4aa2 ; $4a8c
+	jr nz, .minigameDefaults ; $4a8c
 	ld a, [hl+] ; $4a8e
 	ld e, a ; $4a8f
 	and a, $0f ; $4a90
@@ -1706,7 +1706,7 @@ Label_0a_4a7c:
 	ld a, [hl] ; $4a9d
 	ld [wMatchBGM], a ; $4a9e
 	ret ; $4aa1
-Label_0a_4aa2:
+.minigameDefaults:
 	ld a, $02 ; $4aa2
 	ld [wMatchTypeNumberOfGames], a ; $4aa4
 	ld a, $01 ; $4aa7

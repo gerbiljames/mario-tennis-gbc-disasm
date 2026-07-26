@@ -6835,21 +6835,21 @@ DrawNameEntryUnderlineSprites:
 	ld de, $3c38 ; $7387
 	call GetEnteredNameLength ; $738a
 	ld b, a ; $738d
-Label_38_738e:
+.cellLoop:
 	push bc ; $738e
 	ld a, b ; $738f
 	cp a, c ; $7390
-	jr nz, Label_38_7399 ; $7391
+	jr nz, .drawCursor ; $7391
 	ldh a, [hVBlankCounter] ; $7393
 	and a, $10 ; $7395
-	jr z, Label_38_73a2 ; $7397
-Label_38_7399:
+	jr z, .next ; $7397
+.drawCursor:
 	ld c, $10 ; $7399
 	ld b, $0a ; $739b
 	push de ; $739d
 	call QueueSprite ; $739e
 	pop de ; $73a1
-Label_38_73a2:
+.next:
 	pop bc ; $73a2
 	ld a, $08 ; $73a3
 	add a, d ; $73a5
@@ -6857,7 +6857,7 @@ Label_38_73a2:
 	inc c ; $73a7
 	ld a, c ; $73a8
 	cp a, $07 ; $73a9
-	jr nz, Label_38_738e ; $73ab
+	jr nz, .cellLoop ; $73ab
 	ret ; $73ad
 TrimTrailingSpacesFromName:
 	ldh a, [hWramBank] ; $73ae

@@ -1650,6 +1650,7 @@ AcademyTopicRules:
 .setCursor:
 	farcall InitDialogueTextCursor ; $59bc
 	ret ; $59bf
+AcademyTopicClassRank:
 	ld de, $000c ; $59c0
 	ld hl, $c2b2 ; $59c3
 	ld a, [hl+] ; $59c6
@@ -1657,23 +1658,24 @@ AcademyTopicRules:
 	ld l, a ; $59c8
 	add hl, de ; $59c9
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $59ca
-	jr z, Label_13_59e2 ; $59cd
+	jr z, .setCursor ; $59cd
 	ld a, $01 ; $59cf
 	add a, l ; $59d1
 	ld l, a ; $59d2
-	jr nc, Label_13_59d6 ; $59d3
+	jr nc, .rank2 ; $59d3
 	inc h ; $59d5
-Label_13_59d6:
+.rank2:
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $59d6
-	jr z, Label_13_59e2 ; $59d9
+	jr z, .setCursor ; $59d9
 	ld a, $01 ; $59db
 	add a, l ; $59dd
 	ld l, a ; $59de
-	jr nc, Label_13_59e2 ; $59df
+	jr nc, .setCursor ; $59df
 	inc h ; $59e1
-Label_13_59e2:
+.setCursor:
 	farcall InitDialogueTextCursor ; $59e2
 	ret ; $59e5
+AcademyTopicVarsity:
 	ld de, $000f ; $59e6
 	ld hl, $c2b2 ; $59e9
 	ld a, [hl+] ; $59ec
@@ -1681,15 +1683,16 @@ Label_13_59e2:
 	ld l, a ; $59ee
 	add hl, de ; $59ef
 	test_flag FLAG_WON_VARSITY_SINGLES_RANK_4 ; $59f0
-	jr z, Label_13_59fc ; $59f3
+	jr z, .setCursor ; $59f3
 	ld a, $01 ; $59f5
 	add a, l ; $59f7
 	ld l, a ; $59f8
-	jr nc, Label_13_59fc ; $59f9
+	jr nc, .setCursor ; $59f9
 	inc h ; $59fb
-Label_13_59fc:
+.setCursor:
 	farcall InitDialogueTextCursor ; $59fc
 	ret ; $59ff
+AcademyTopicIslandOpen:
 	ld de, $0011 ; $5a00
 	ld hl, $c2b2 ; $5a03
 	ld a, [hl+] ; $5a06
@@ -1697,13 +1700,13 @@ Label_13_59fc:
 	ld l, a ; $5a08
 	add hl, de ; $5a09
 	test_flag FLAG_WON_VARSITY_SINGLES_RANK_4 ; $5a0a
-	jr z, Label_13_5a16 ; $5a0d
+	jr z, .setCursor ; $5a0d
 	ld a, $01 ; $5a0f
 	add a, l ; $5a11
 	ld l, a ; $5a12
-	jr nc, Label_13_5a16 ; $5a13
+	jr nc, .setCursor ; $5a13
 	inc h ; $5a15
-Label_13_5a16:
+.setCursor:
 	farcall InitDialogueTextCursor ; $5a16
 	ret ; $5a19
 	ld de, $0013 ; $5a1a
@@ -2217,18 +2220,18 @@ CourtyardInitScript_13:
 	call SetupVarsityCourtSceneVariant ; $6189
 	ld a, [wStoryModeEntryPoint] ; $618c
 	cp a, $0f ; $618f
-	jr nz, Label_13_6196 ; $6191
+	jr nz, .doubles ; $6191
 	jp VarsityCourtTourCutscene ; $6193
-Label_13_6196:
+.doubles:
 	cp a, $0d ; $6196
-	jr nz, Label_13_619e ; $6198
+	jr nz, .placeActors ; $6198
 	call RunTravelingTeamBracketIfWon_13 ; $619a
 	ret ; $619d
-Label_13_619e:
+.placeActors:
 	cp a, $0e ; $619e
-	jr nz, Label_13_61a5 ; $61a0
+	jr nz, .done ; $61a0
 	jp RunTravelingTeamVictoryCutscene_13 ; $61a2
-Label_13_61a5:
+.done:
 	call CourtyardEntryWalkIn_13 ; $61a5
 	ret ; $61a8
 SetupVarsityCourtSceneVariant:

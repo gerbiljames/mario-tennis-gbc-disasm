@@ -2289,38 +2289,38 @@ CafeteriaNpc04_10:
 	farcall InitDialogueTextCursor ; $58bb
 	ld a, [$c2b1] ; $58be
 	cp a, $03 ; $58c1
-	jr c, Label_10_58e4 ; $58c3
+	jr c, .speak ; $58c3
 	ld a, [$c2b1] ; $58c5
 	cp a, $04 ; $58c8
-	jr z, Label_10_58ea ; $58ca
+	jr z, .prompt ; $58ca
 	ld a, $04 ; $58cc
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $58ce
 	farcall RunDialogueYesNoPrompt ; $58d1
 	farcall ScriptCloseDialogueWindow ; $58d4
 	script_wait_frames $05 ; $58d7
 	and a, a ; $58de
-	jr z, Label_10_58e4 ; $58df
+	jr z, .speak ; $58df
 	farcall AdvanceDialogueTextCursor ; $58e1
-Label_10_58e4:
+.speak:
 	script_speak $04 ; $58e4
 	ret ; $58e9
-Label_10_58ea:
+.prompt:
 	ld a, [$c2b0] ; $58ea
 	cp a, $09 ; $58ed
-	jr nz, Label_10_58f4 ; $58ef
+	jr nz, .askQuestion ; $58ef
 	farcall AdvanceDialogueTextCursor ; $58f1
-Label_10_58f4:
+.askQuestion:
 	ld a, $04 ; $58f4
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $58f6
 	farcall RunDialogueYesNoPrompt ; $58f9
 	farcall ScriptCloseDialogueWindow ; $58fc
 	script_wait_frames $05 ; $58ff
 	and a, a ; $5906
-	jr z, Label_10_5915 ; $5907
+	jr z, .declined ; $5907
 	script_set_text Text_33_222 ; $5909
 	script_speak $04 ; $590f
 	ret ; $5914
-Label_10_5915:
+.declined:
 	script_set_text Text_33_221 ; $5915
 	script_speak $04 ; $591b
 	ret ; $5920
@@ -2673,7 +2673,7 @@ TextIds_10_5cfb:
 	dw $0cc9 ; record 4
 RestaurantNpc12_10:
 	call TestRestaurantNpc12StageFlag_10 ; $5d05
-	jp nz, Label_10_5db6 ; $5d08
+	jp nz, .speak ; $5d08
 	script_set_anim $12, $03 ; $5d0b
 	script_wait_idle $12 ; $5d12
 	ld a, [$c2b1] ; $5d17
@@ -2714,15 +2714,15 @@ RestaurantNpc12_10:
 	ld a, $02 ; $5d98
 	add a, l ; $5d9a
 	ld l, a ; $5d9b
-	jr nc, Label_10_5d9f ; $5d9c
+	jr nc, .altText ; $5d9c
 	inc h ; $5d9e
-Label_10_5d9f:
+.altText:
 	farcall InitDialogueTextCursor ; $5d9f
 	script_speak $12 ; $5da2
 	script_facing_lock $12, FACE_RIGHT ; $5da7
 	script_face $12, FACE_DOWN ; $5dae
 	ret ; $5db5
-Label_10_5db6:
+.speak:
 	script_face_toward ACTOR_PLAYER, $12 ; $5db6
 	ld a, [$c2b1] ; $5dbe
 	add a, a ; $5dc1
@@ -2737,9 +2737,9 @@ Label_10_5db6:
 	ld a, $02 ; $5dcc
 	add a, l ; $5dce
 	ld l, a ; $5dcf
-	jr nc, Label_10_5dd3 ; $5dd0
+	jr nc, .done ; $5dd0
 	inc h ; $5dd2
-Label_10_5dd3:
+.done:
 	farcall InitDialogueTextCursor ; $5dd3
 	script_speak $12 ; $5dd6
 	ret ; $5ddb
@@ -2753,7 +2753,7 @@ RestaurantNpc08FaceDown_10:
 	set_flag FLAG_TEMP_SCENE_VARIANT_B ; $5de6
 RestaurantNpc08_10:
 	test_flag FLAG_RESTAURANT_NPC08_MOVED ; $5de9
-	jr nz, Label_10_5e5c ; $5dec
+	jr nz, .speak ; $5dec
 	ld a, [$c2b1] ; $5dee
 	add a, a ; $5df1
 	add a, $81 ; $5df2
@@ -2768,12 +2768,12 @@ RestaurantNpc08_10:
 	script_speak $08 ; $5dff
 	script_set_speed $08, $0010 ; $5e04
 	test_flag FLAG_TEMP_SCENE_VARIANT_B ; $5e0c
-	jr z, Label_10_5e30 ; $5e0f
+	jr z, .altText ; $5e0f
 	script_jump_velocity ACTOR_PLAYER, $ff80 ; $5e11
 	script_move_target ACTOR_PLAYER, $1f00, $0f00 ; $5e19
 	script_wait_move ACTOR_PLAYER ; $5e24
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $5e29
-Label_10_5e30:
+.altText:
 	script_move_target $08, $2140, $0f00 ; $5e30
 	script_wait_move $08 ; $5e3b
 	script_wait_frames $0a ; $5e40
@@ -2782,7 +2782,7 @@ Label_10_5e30:
 	set_flag FLAG_RESTAURANT_NPC08_MOVED ; $5e55
 	clear_flag FLAG_TEMP_SCENE_VARIANT_B ; $5e58
 	ret ; $5e5b
-Label_10_5e5c:
+.speak:
 	ld a, [$c2b1] ; $5e5c
 	add a, a ; $5e5f
 	add a, $81 ; $5e60
@@ -2796,9 +2796,9 @@ Label_10_5e5c:
 	ld a, $01 ; $5e6a
 	add a, l ; $5e6c
 	ld l, a ; $5e6d
-	jr nc, Label_10_5e71 ; $5e6e
+	jr nc, .done ; $5e6e
 	inc h ; $5e70
-Label_10_5e71:
+.done:
 	farcall InitDialogueTextCursor ; $5e71
 	script_speak $08 ; $5e74
 	script_face $08, FACE_RIGHT ; $5e79
@@ -2823,25 +2823,25 @@ RestaurantNpc09_10:
 	farcall InitDialogueTextCursor ; $5e99
 	ld a, [$c2b0] ; $5e9c
 	cp a, $06 ; $5e9f
-	jr nc, Label_10_5ea9 ; $5ea1
+	jr nc, .altText ; $5ea1
 	script_speak $09 ; $5ea3
 	ret ; $5ea8
-Label_10_5ea9:
+.altText:
 	ld a, $09 ; $5ea9
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $5eab
 	farcall RunDialogueYesNoPrompt ; $5eae
 	farcall ScriptCloseDialogueWindow ; $5eb1
 	script_wait_frames $05 ; $5eb4
 	and a, a ; $5ebb
-	jr nz, Label_10_5ed2 ; $5ebc
+	jr nz, .done ; $5ebc
 	script_set_text Text_33_169 ; $5ebe
 	test_flag FLAG_DOUBLES ; $5ec4
-	jr z, Label_10_5ecc ; $5ec7
+	jr z, .speak ; $5ec7
 	farcall AdvanceDialogueTextCursor ; $5ec9
-Label_10_5ecc:
+.speak:
 	script_speak $09 ; $5ecc
 	ret ; $5ed1
-Label_10_5ed2:
+.done:
 	script_set_text Text_33_171 ; $5ed2
 	script_speak $09 ; $5ed8
 	ret ; $5edd
@@ -3215,10 +3215,10 @@ AcademyWingExitTriggers_10:
 AcademyWingNpc03_10:
 	script_face_toward ACTOR_PLAYER, $03 ; $623b
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $6243
-	jr z, Label_10_6250 ; $6246
+	jr z, .altText ; $6246
 	script_set_text Text_30_517 ; $6248
-	jr Label_10_62b0 ; $624e
-Label_10_6250:
+	jr .done ; $624e
+.altText:
 	script_get_actor_state $06 ; $6250
 	ld c, l ; $6255
 	ld b, h ; $6256
@@ -3233,9 +3233,9 @@ Label_10_6250:
 	script_set_position $06, $0100, $0100 ; $6273
 	script_set_text Text_30_513 ; $627e
 	test_flag FLAG_DOUBLES ; $6284
-	jr z, Label_10_628c ; $6287
+	jr z, .speak ; $6287
 	farcall AdvanceDialogueTextCursor ; $6289
-Label_10_628c:
+.speak:
 	ld a, $03 ; $628c
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $628e
 	script_set_text Text_30_515 ; $6291
@@ -3243,10 +3243,10 @@ Label_10_628c:
 	farcall ScriptCloseDialogueWindow ; $629a
 	script_wait_frames $05 ; $629d
 	and a, a ; $62a4
-	jr nz, Label_10_62b0 ; $62a5
+	jr nz, .done ; $62a5
 	script_set_text Text_30_516 ; $62a7
 	set_flag FLAG_TEMP_SCENE_VARIANT_A ; $62ad
-Label_10_62b0:
+.done:
 	script_speak $03 ; $62b0
 	ret ; $62b5
 AcademyWingNpcScripts_10:

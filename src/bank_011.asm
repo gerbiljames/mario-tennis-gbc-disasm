@@ -54,14 +54,14 @@ Label_11_40a9:
 	ret ; $40ae
 CenterCourtNpc04_11:
 	test_flag FLAG_DOUBLES ; $40af
-	jr z, Label_11_40c9 ; $40b2
+	jr z, .altText ; $40b2
 	script_set_text Text_1f_96 ; $40b4
 	ld a, [$c2b0] ; $40ba
 	cp a, $06 ; $40bd
-	jr nz, Label_11_40fa ; $40bf
+	jr nz, .done ; $40bf
 	script_set_text Text_1f_101 ; $40c1
-	jr Label_11_40fa ; $40c7
-Label_11_40c9:
+	jr .done ; $40c7
+.altText:
 	script_set_text Text_1f_81 ; $40c9
 	ld a, $04 ; $40cf
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $40d1
@@ -69,17 +69,17 @@ Label_11_40c9:
 	farcall ScriptCloseDialogueWindow ; $40d7
 	script_wait_frames $05 ; $40da
 	and a, a ; $40e1
-	jr z, Label_11_40ed ; $40e2
+	jr z, .speak ; $40e2
 	farcall AdvanceDialogueTextCursor ; $40e4
 	script_speak $04 ; $40e7
 	ret ; $40ec
-Label_11_40ed:
+.speak:
 	ld a, [$c2b0] ; $40ed
 	cp a, $03 ; $40f0
-	jr nz, Label_11_40fa ; $40f2
+	jr nz, .done ; $40f2
 	farcall AdvanceDialogueTextCursor ; $40f4
 	farcall AdvanceDialogueTextCursor ; $40f7
-Label_11_40fa:
+.done:
 	script_speak $04 ; $40fa
 	ret ; $40ff
 CenterCourtNpc05_11:
@@ -380,24 +380,24 @@ AcademyArrivalNpc03_11:
 	farcall InitDialogueTextCursor ; $45ab
 	ld a, [$c2b0] ; $45ae
 	cp a, $08 ; $45b1
-	jr nc, Label_11_45bd ; $45b3
+	jr nc, .altText ; $45b3
 	cp a, $04 ; $45b5
-	jr nc, Label_11_45c3 ; $45b7
+	jr nc, .speak ; $45b7
 	cp a, $02 ; $45b9
-	jr c, Label_11_45c3 ; $45bb
-Label_11_45bd:
+	jr c, .speak ; $45bb
+.altText:
 	script_speak $03 ; $45bd
 	ret ; $45c2
-Label_11_45c3:
+.speak:
 	ld a, $03 ; $45c3
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $45c5
 	farcall RunDialogueYesNoPrompt ; $45c8
 	farcall ScriptCloseDialogueWindow ; $45cb
 	script_wait_frames $05 ; $45ce
 	and a, a ; $45d5
-	jr z, Label_11_45db ; $45d6
+	jr z, .done ; $45d6
 	farcall AdvanceDialogueTextCursor ; $45d8
-Label_11_45db:
+.done:
 	script_speak $03 ; $45db
 	ret ; $45e0
 	; $45e1, 20 bytes (records:2)
@@ -1459,16 +1459,16 @@ JuniorClassCourtDoublesTileTriggers_11:
 	db $ff, $c9
 JuniorClassCourtDoublesInitScript_11:
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $5a22
-	jr nz, Label_11_5a66 ; $5a25
+	jr nz, .stage2 ; $5a25
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_3 ; $5a27
-	jr z, Label_11_5a66 ; $5a2a
+	jr z, .stage2 ; $5a2a
 	script_set_position $08, $2500, $0900 ; $5a2c
 	script_face $08, FACE_RIGHT ; $5a37
 	script_set_actor_script $08, ActorScript_11_7ba9 ; $5a3e
 	script_set_position $09, $2500, $0b00 ; $5a49
 	script_face $09, FACE_RIGHT ; $5a54
 	script_set_actor_script $09, ActorScript_11_7ba9 ; $5a5b
-Label_11_5a66:
+.stage2:
 	ld a, [wStoryModeEntryPoint] ; $5a66
 	cp a, $0f ; $5a69
 	jp z, Label_11_5d38 ; $5a6b
@@ -1477,36 +1477,36 @@ Label_11_5a66:
 	cp a, $0d ; $5a73
 	jp z, Label_11_5d9b ; $5a75
 	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $5a78
-	jr nz, Label_11_5a8d ; $5a7b
+	jr nz, .stage3 ; $5a7b
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $5a7d
-	jr nz, Label_11_5aad ; $5a80
+	jr nz, .stage4 ; $5a80
 	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_1 ; $5a82
-	jr nz, Label_11_5acd ; $5a85
+	jr nz, .placeActors ; $5a85
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $5a87
-	jr nz, Label_11_5aed ; $5a8a
+	jr nz, .done ; $5a8a
 	ret ; $5a8c
-Label_11_5a8d:
+.stage3:
 	ld hl, JuniorClassCourtDoublesNpcScriptsD_11 ; $5a8d
 	ld de, $000c ; $5a90
 	farcall WriteStoryStateWord ; $5a93
 	script_set_position $06, $2000, $1900 ; $5a96
 	script_set_actor_script $06, ActorScript_11_7bb3 ; $5aa1
 	ret ; $5aac
-Label_11_5aad:
+.stage4:
 	ld hl, JuniorClassCourtDoublesNpcScriptsC_11 ; $5aad
 	ld de, $000c ; $5ab0
 	farcall WriteStoryStateWord ; $5ab3
 	script_set_position $06, $2000, $1900 ; $5ab6
 	script_set_actor_script $06, ActorScript_11_7bb3 ; $5ac1
 	ret ; $5acc
-Label_11_5acd:
+.placeActors:
 	ld hl, JuniorClassCourtDoublesNpcScriptsB_11 ; $5acd
 	ld de, $000c ; $5ad0
 	farcall WriteStoryStateWord ; $5ad3
 	script_set_position $06, $2000, $1900 ; $5ad6
 	script_set_actor_script $06, ActorScript_11_7bb3 ; $5ae1
 	ret ; $5aec
-Label_11_5aed:
+.done:
 	ld hl, JuniorClassCourtDoublesNpcScriptsA_11 ; $5aed
 	ld de, $000c ; $5af0
 	farcall WriteStoryStateWord ; $5af3
@@ -2316,24 +2316,24 @@ Label_11_6984:
 JuniorClassCourtSinglesNpc05_11:
 	script_set_text Text_32_65 ; $698a
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_2 ; $6990
-	jr nz, Label_11_69a3 ; $6993
+	jr nz, .altText ; $6993
 	farcall AdvanceDialogueTextCursor ; $6995
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_3 ; $6998
-	jr nz, Label_11_69a9 ; $699b
+	jr nz, .speak ; $699b
 	script_set_text Text_32_69 ; $699d
-Label_11_69a3:
+.altText:
 	script_speak $05 ; $69a3
 	ret ; $69a8
-Label_11_69a9:
+.speak:
 	ld a, $05 ; $69a9
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $69ab
 	farcall RunDialogueYesNoPrompt ; $69ae
 	farcall ScriptCloseDialogueWindow ; $69b1
 	script_wait_frames $05 ; $69b4
 	and a, a ; $69bb
-	jr z, Label_11_69c1 ; $69bc
+	jr z, .done ; $69bc
 	farcall AdvanceDialogueTextCursor ; $69be
-Label_11_69c1:
+.done:
 	script_speak $05 ; $69c1
 	ret ; $69c6
 JuniorClassCourtSinglesNpc06_11:
@@ -2365,11 +2365,11 @@ Label_11_6a09:
 	ret ; $6a0e
 JuniorClassCourtSinglesNpc08_11:
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_4 ; $6a0f
-	jr z, Label_11_6a20 ; $6a12
+	jr z, .altText ; $6a12
 	script_set_text Text_32_86 ; $6a14
 	script_speak $08 ; $6a1a
 	ret ; $6a1f
-Label_11_6a20:
+.altText:
 	script_set_text Text_32_77 ; $6a20
 	ld a, $08 ; $6a26
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $6a28
@@ -2377,11 +2377,11 @@ Label_11_6a20:
 	farcall ScriptCloseDialogueWindow ; $6a2e
 	script_wait_frames $05 ; $6a31
 	and a, a ; $6a38
-	jr z, Label_11_6a41 ; $6a39
-Label_11_6a3b:
+	jr z, .done ; $6a39
+.speak:
 	script_speak $08 ; $6a3b
 	ret ; $6a40
-Label_11_6a41:
+.done:
 	farcall AdvanceDialogueTextCursor ; $6a41
 	ld a, $08 ; $6a44
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $6a46
@@ -2389,7 +2389,7 @@ Label_11_6a41:
 	farcall ScriptCloseDialogueWindow ; $6a4c
 	script_wait_frames $05 ; $6a4f
 	and a, a ; $6a56
-	jr nz, Label_11_6a3b ; $6a57
+	jr nz, .speak ; $6a57
 	script_set_anim ACTOR_PLAYER, $03 ; $6a59
 	script_wait_idle ACTOR_PLAYER ; $6a60
 	script_move_player $2b00, $1100 ; $6a65
@@ -2511,11 +2511,11 @@ JuniorClassCourtSinglesNpcScriptsD_11:
 	db $ff
 JuniorClassCourtSinglesDNpc0A_11:
 	test_flag FLAG_JUNIOR_COURT_NPC0A_TALKED ; $6ca9
-	jr nz, Label_11_6cba ; $6cac
+	jr nz, .altText ; $6cac
 	script_set_text Text_33_15 ; $6cae
 	script_speak $0a ; $6cb4
 	ret ; $6cb9
-Label_11_6cba:
+.altText:
 	script_set_text Text_33_16 ; $6cba
 	ld a, $0a ; $6cc0
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $6cc2
@@ -2523,14 +2523,14 @@ Label_11_6cba:
 	farcall ScriptCloseDialogueWindow ; $6cc8
 	script_wait_frames $05 ; $6ccb
 	and a, a ; $6cd2
-	jp z, Label_11_6cd9 ; $6cd3
+	jp z, .speak ; $6cd3
 	farcall AdvanceDialogueTextCursor ; $6cd6
-Label_11_6cd9:
+.speak:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_FINAL ; $6cd9
-	jr nz, Label_11_6ce4 ; $6cdc
+	jr nz, .done ; $6cdc
 	script_speak $0a ; $6cde
 	ret ; $6ce3
-Label_11_6ce4:
+.done:
 	script_set_anim $0a, $03 ; $6ce4
 	script_wait_idle $0a ; $6ceb
 	script_set_text Text_33_31 ; $6cf0
@@ -2542,10 +2542,10 @@ JuniorClassCourtSinglesTileTriggers_11:
 	ds 1, $ff ; $6cfd, fill
 JuniorClassCourtSinglesInitScript_11:
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_4 ; $6cfe
-	jr z, Label_11_6d15 ; $6d01
+	jr z, .stage2 ; $6d01
 	script_set_position $07, $2500, $0b00 ; $6d03
 	script_face $07, FACE_RIGHT ; $6d0e
-Label_11_6d15:
+.stage2:
 	ld a, [wStoryModeEntryPoint] ; $6d15
 	cp a, $0f ; $6d18
 	jp z, Label_11_6e4d ; $6d1a
@@ -2554,27 +2554,27 @@ Label_11_6d15:
 	cp a, $0d ; $6d22
 	jp z, Label_11_6e9e ; $6d24
 	test_flag FLAG_STORY_COMPLETE_SINGLES ; $6d27
-	jr nz, Label_11_6d3c ; $6d2a
+	jr nz, .stage3 ; $6d2a
 	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $6d2c
-	jr nz, Label_11_6d51 ; $6d2f
+	jr nz, .stage4 ; $6d2f
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $6d31
-	jr nz, Label_11_6d66 ; $6d34
+	jr nz, .placeActors ; $6d34
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $6d36
-	jr nz, Label_11_6d91 ; $6d39
+	jr nz, .done ; $6d39
 	ret ; $6d3b
-Label_11_6d3c:
+.stage3:
 	ld hl, JuniorClassCourtSinglesNpcScriptsD_11 ; $6d3c
 	ld de, $000c ; $6d3f
 	farcall WriteStoryStateWord ; $6d42
 	script_set_position $04, $3f00, $2900 ; $6d45
 	ret ; $6d50
-Label_11_6d51:
+.stage4:
 	ld hl, JuniorClassCourtSinglesNpcScriptsC_11 ; $6d51
 	ld de, $000c ; $6d54
 	farcall WriteStoryStateWord ; $6d57
 	script_set_position $04, $3f00, $2900 ; $6d5a
 	ret ; $6d65
-Label_11_6d66:
+.placeActors:
 	ld hl, JuniorClassCourtSinglesNpcScriptsB_11 ; $6d66
 	ld de, $000c ; $6d69
 	farcall WriteStoryStateWord ; $6d6c
@@ -2582,7 +2582,7 @@ Label_11_6d66:
 	script_set_actor_script $0a, ActorScript_11_7bbd ; $6d7a
 	script_set_position $04, $3f00, $2900 ; $6d85
 	ret ; $6d90
-Label_11_6d91:
+.done:
 	ld hl, JuniorClassCourtSinglesNpcScriptsA_11 ; $6d91
 	ld de, $000c ; $6d94
 	farcall WriteStoryStateWord ; $6d97
