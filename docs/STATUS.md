@@ -185,9 +185,9 @@ name afterwards. Collisions inside one scope get a numeric suffix, which is
 why a few `.placeActors2`/`.applySlot2` names appear.
 
 Still auto-named: **3,813 `Label_*`** (down from 7,804) and the `Data_*` runs.
-and the `Data_*` runs. What is left lives in the menu/UI banks (`$05`, `$1a`-`$1e`,
-`$39`-`$3f`), the minigame banks (`$0b`, `$0d`, `$17`) and ROM0 -- the same
-one-function-at-a-time work, on subsystems this pass did not reach.
+What is left lives in the menu/UI banks (`$05`, `$1a`-`$1e`, `$39`-`$3f`), the
+minigame banks (`$0b`, `$0d`, `$17`) and ROM0 -- the same one-function-at-a-time
+work, on subsystems this pass did not reach.
 
 Two process notes worth keeping:
 
@@ -196,6 +196,11 @@ Two process notes worth keeping:
   past the end of the ROM and were **silently dropped** -- the build stayed
   byte-perfect because the label simply never emitted. The apply path now
   rejects offsets past 2 MiB and accepts a `bb:aaaa` form instead.
+* A curated *global* label placed inside a data blob splits that blob, so the
+  manifest grows a file `data/` does not have and the build dies with "No rule
+  to make target". Put the label on the routine's first code byte. Related:
+  `make compare 2>&1 | grep OK | tail -1` **cannot fail** -- `tail` always
+  exits 0 -- so a verification wrapper has to test the grep itself.
 * Two locals with the same name under one global label are an rgbasm
   redefinition error. This bites where a function is followed by *unnamed*
   sibling routines, because their `Label_` heads sit in the same scope; the
