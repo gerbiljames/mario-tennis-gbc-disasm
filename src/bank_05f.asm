@@ -28,8 +28,8 @@ DataPtr_CourtyardSceneAuxTilemapAlias1:
 	dw CourtyardSceneAuxTilemap ; $4018
 DataPtr_CourtyardSceneAuxAttrmap:
 	dw CourtyardSceneAuxAttrmap ; $401a
-DataPtr_5f_1c:
-	dw Data_5f_5954 ; $401c
+DataPtr_CourtyardSceneUnusedSlot:
+	dw CourtyardSceneUnusedSlot ; $401c
 DataPtr_CourtyardSceneTiles:
 	dw CourtyardSceneTiles ; $401e
 Data_5f_4020:
@@ -74,5 +74,5 @@ CourtyardSceneAuxTilemap:
 	INCBIN "data/bank_05f/d_5904.bin" ; $5904, 40 bytes
 CourtyardSceneAuxAttrmap:
 	INCBIN "data/bank_05f/d_592c.bin" ; $592c, 40 bytes
-Data_5f_5954:
-	; $5954, 9900 bytes fill to bank end (linker-padded)
+CourtyardSceneUnusedSlot:
+	ds 9900, $ff ; $5954, fill

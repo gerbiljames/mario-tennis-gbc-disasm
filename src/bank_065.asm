@@ -44,8 +44,8 @@ DataPtr_ClayCourtGroundsAuxTilemap:
 	dw ClayCourtGroundsAuxTilemap ; $4028
 DataPtr_ClayCourtGroundsAuxAttrmap:
 	dw ClayCourtGroundsAuxAttrmap ; $402a
-DataPtr_65_2c:
-	dw Data_65_7d56 ; $402c
+DataPtr_ClayCourtGroundsSceneUnusedSlot:
+	dw ClayCourtGroundsSceneUnusedSlot ; $402c
 DataPtr_ClayCourtGroundsTiles:
 	dw ClayCourtGroundsTiles ; $402e
 SeasideSceneConfig:
@@ -116,5 +116,5 @@ ClayCourtGroundsAuxTilemap:
 	INCBIN "data/bank_065/lz_7c97.bin" ; $7c97, 110 bytes
 ClayCourtGroundsAuxAttrmap:
 	INCBIN "data/bank_065/lz_7d05.bin" ; $7d05, 81 bytes
-Data_65_7d56:
+ClayCourtGroundsSceneUnusedSlot:
 	; $7d56, 682 bytes fill to bank end (linker-padded)

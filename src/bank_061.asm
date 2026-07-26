@@ -60,8 +60,8 @@ DataPtr_YoshiCourtSceneConfigAlias1:
 	dw YoshiCourtSceneConfig ; $4038
 DataPtr_YoshiCourtSceneConfigB:
 	dw YoshiCourtSceneConfigB ; $403a
-DataPtr_61_3c:
-	dw Data_61_7a97 ; $403c
+DataPtr_YoshiCourtSceneUnusedSlot:
+	dw YoshiCourtSceneUnusedSlot ; $403c
 DataPtr_YoshiCourtTiles:
 	dw YoshiCourtTiles ; $403e
 MachineCourtPalettes:
@@ -148,5 +148,5 @@ YoshiCourtSceneConfig:
 	INCBIN "data/bank_061/d_7a47.bin" ; $7a47, 40 bytes
 YoshiCourtSceneConfigB:
 	INCBIN "data/bank_061/d_7a6f.bin" ; $7a6f, 40 bytes
-Data_61_7a97:
+YoshiCourtSceneUnusedSlot:
 	; $7a97, 1385 bytes fill to bank end (linker-padded)

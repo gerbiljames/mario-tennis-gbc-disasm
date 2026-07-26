@@ -60,8 +60,8 @@ DataPtr_CompositionCourtSceneConfigAlias1:
 	dw CompositionCourtSceneConfig ; $4038
 DataPtr_CompositionCourtSceneConfigB:
 	dw CompositionCourtSceneConfigB ; $403a
-DataPtr_60_3c:
-	dw Data_60_7bfd ; $403c
+DataPtr_CompositionCourtSceneUnusedSlot:
+	dw CompositionCourtSceneUnusedSlot ; $403c
 DataPtr_CompositionCourtTiles:
 	dw CompositionCourtTiles ; $403e
 GrassCourtPalettes:
@@ -148,5 +148,5 @@ CompositionCourtSceneConfig:
 	INCBIN "data/bank_060/d_7bad.bin" ; $7bad, 40 bytes
 CompositionCourtSceneConfigB:
 	INCBIN "data/bank_060/d_7bd5.bin" ; $7bd5, 40 bytes
-Data_60_7bfd:
+CompositionCourtSceneUnusedSlot:
 	; $7bfd, 1027 bytes fill to bank end (linker-padded)

@@ -44,8 +44,8 @@ DataPtr_CourtComplexAuxTilemap:
 	dw CourtComplexAuxTilemap ; $4028
 DataPtr_CourtComplexAuxAttrmap:
 	dw CourtComplexAuxAttrmap ; $402a
-DataPtr_67_2c:
-	dw Data_67_7c9e ; $402c
+DataPtr_CourtComplexSceneUnusedSlot:
+	dw CourtComplexSceneUnusedSlot ; $402c
 DataPtr_CourtComplexTiles:
 	dw CourtComplexTiles ; $402e
 FountainCourtSceneConfig:
@@ -121,5 +121,5 @@ CourtComplexAuxTilemap:
 	INCBIN "data/bank_067/lz_7bd2.bin" ; $7bd2, 128 bytes
 CourtComplexAuxAttrmap:
 	INCBIN "data/bank_067/lz_7c52.bin" ; $7c52, 76 bytes
-Data_67_7c9e:
+CourtComplexSceneUnusedSlot:
 	; $7c9e, 866 bytes fill to bank end (linker-padded)

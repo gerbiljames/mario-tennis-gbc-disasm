@@ -60,8 +60,8 @@ DataPtr_DormInteriorAuxTilemap:
 	dw DormInteriorAuxTilemap ; $4038
 DataPtr_DormInteriorAuxAttrmap:
 	dw DormInteriorAuxAttrmap ; $403a
-DataPtr_63_3c:
-	dw Data_63_7b01 ; $403c
+DataPtr_DormInteriorSceneUnusedSlot:
+	dw DormInteriorSceneUnusedSlot ; $403c
 DataPtr_DormInteriorTiles:
 	dw DormInteriorTiles ; $403e
 IslandOpenCourtPalettes:
@@ -152,5 +152,5 @@ DormInteriorAuxTilemap:
 	INCBIN "data/bank_063/d_7a10.bin" ; $7a10, 147 bytes
 DormInteriorAuxAttrmap:
 	INCBIN "data/bank_063/d_7aa3.bin" ; $7aa3, 94 bytes
-Data_63_7b01:
+DormInteriorSceneUnusedSlot:
 	; $7b01, 1279 bytes fill to bank end (linker-padded)

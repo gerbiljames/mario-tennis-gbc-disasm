@@ -60,8 +60,8 @@ DataPtr_PeachCourtSceneConfigAlias1:
 	dw PeachCourtSceneConfig ; $4038
 DataPtr_PeachCourtSceneConfigB:
 	dw PeachCourtSceneConfigB ; $403a
-DataPtr_62_3c:
-	dw Data_62_6f7e ; $403c
+DataPtr_PeachCourtSceneUnusedSlot:
+	dw PeachCourtSceneUnusedSlot ; $403c
 DataPtr_PeachCourtTiles:
 	dw PeachCourtTiles ; $403e
 StarCourtPalettes:
@@ -148,5 +148,5 @@ PeachCourtSceneConfig:
 	INCBIN "data/bank_062/d_6f2e.bin" ; $6f2e, 40 bytes
 PeachCourtSceneConfigB:
 	INCBIN "data/bank_062/d_6f56.bin" ; $6f56, 40 bytes
-Data_62_6f7e:
+PeachCourtSceneUnusedSlot:
 	; $6f7e, 4226 bytes fill to bank end (linker-padded)

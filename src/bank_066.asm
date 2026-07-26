@@ -60,8 +60,8 @@ DataPtr_GardenPavilionAuxTilemap:
 	dw GardenPavilionAuxTilemap ; $4038
 DataPtr_GardenPavilionAuxAttrmap:
 	dw GardenPavilionAuxAttrmap ; $403a
-DataPtr_66_3c:
-	dw Data_66_7c2d ; $403c
+DataPtr_GardenPavilionSceneUnusedSlot:
+	dw GardenPavilionSceneUnusedSlot ; $403c
 DataPtr_GardenPavilionTiles:
 	dw GardenPavilionTiles ; $403e
 HardCourtGroundsSceneConfig:
@@ -156,5 +156,5 @@ GardenPavilionAuxTilemap:
 	INCBIN "data/bank_066/lz_7b83.bin" ; $7b83, 95 bytes
 GardenPavilionAuxAttrmap:
 	INCBIN "data/bank_066/lz_7be2.bin" ; $7be2, 75 bytes
-Data_66_7c2d:
+GardenPavilionSceneUnusedSlot:
 	; $7c2d, 979 bytes fill to bank end (linker-padded)

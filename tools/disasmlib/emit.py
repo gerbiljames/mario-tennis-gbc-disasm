@@ -229,6 +229,13 @@ class Emitter:
                     or src in self.jt_entries or src in dis.ptr_words):
                 continue
             stem = {"lz": "Lz", "sprite": "SpriteTemplate"}.get(kind, "Data")
+            # A pointer target that is $ff all the way to the bank end is an
+            # unused table slot aimed at the mastering padding, not data. It
+            # still needs a label for the dw to resolve, but calling it Data_
+            # reads like content the disassembly has not got to yet.
+            bank_end = (src // BANK_SIZE + 1) * BANK_SIZE
+            if stem == "Data" and all(b == 0xFF for b in self.rom[src:bank_end]):
+                stem = "Fill"
             label = self.labels.get(src) or \
                 f"{stem}_{src // BANK_SIZE:02x}_{offset_to_cpu(src):04x}"
             self.data_marks[src] = (length, label, kind)
