@@ -26,7 +26,7 @@ shape, not *twins*, and the shot banks are near-identical copies of each
 other, so a routine only one bank failed to execute reads as ordinary data
 until you diff it against its siblings.
 
-Everything below is **committed** (HEAD `50ec973`); the whole history
+Everything below is **committed** (HEAD `081dd24`); the whole history
 rebuilds byte-perfect. Per-bank progress at any time: `python3
 tools/progress.py` (proven-code bytes, fill runs, label counts, human-named
 counts) and `tools/progress.py --unnamed <bank>` to list still-auto-named
@@ -4387,7 +4387,55 @@ Literal ROM bytes committed in `src/`: 38,380 before the palette move, 29,761
 after it, **28,123** now.
 
 
+## The `records:2` tables (2026-07-26)
+
+`records:2` was the generator's catch-all for 2-byte-record tables -- 297 of
+them, 8,513 bytes -- and it was covering three different things. 141 were
+named; the other 156 are now resolved too.
+
+**The addressing idiom was the blocker.** A first pass backtracked
+`ld hl, $xxxx` and found loaders for only 52 of the 154 anonymous tables. The
+rest are reached with a split base:
+
+    add a, $bd    ; LOW(table)
+    ld l, a
+    adc a, $43    ; HIGH(table)
+    sub a, l
+    ld h, a
+
+so the table's address never appears as a word anywhere in the source.
+Searching for the **byte pair** instead found the loader for 98 of the
+remaining 102.
+
+**81 of those are dialogue tables.** The loader derefs the entry and calls
+`InitDialogueTextCursor` or `script_speak`, and the index is `$c2b0` -- the
+story-rank value `SetStoryRankSceneIndex` writes. A new `text_ids` spec
+renders each word through the existing `Text_<bank>_<index>` mechanism, so a
+row now names the string it selects:
+
+    TrainingGymNpc03TextIds:
+        dw Text_35_169 ; record 0
+
+Checked against `tools/strings.py`: 35:169/179/189 are that NPC's
+weight-training lines, which is what a training-gym NPC should say as the
+player ranks up -- and it confirms the `$c2b0` rank index independently.
+
+**Note on a test that did not work.** Deciding "is this a text-id table?" from
+the *values* is useless: `text_id_name` accepts any word whose fetcher nibble
+is 0-12, so 243 of the 297 tables "decode", including `PowersOfTen_05` and
+`NotePeriodTable`. The consumer is the only reliable discriminator.
+
+The other groups: 59 jump-table targets named (32 from the single
+`farcall`/`jp` they contain, so `DialogueTextFetchers_05` now reads
+`dw FetchDialogueTextBank30`), and four tables whose extent swallowed their
+own targets -- scanning words in order and stopping at the lowest target gives
+the real length, turning `$1b:$5c8d` from a 708-byte blur into a 10-byte
+5-entry table addressing 48-byte `RankingMarkerCoordSet` blocks.
+
+**291 of 297 tables named**; 4 unlabeled, 155 bytes.
+
+
 ## Repo state
 
-All work is committed (HEAD `50ec973`); every commit rebuilds byte-perfect.
+All work is committed (HEAD `081dd24`); every commit rebuilds byte-perfect.
 Gitignored: baserom.gbc, data/, build/, tools/rgbds/, *.o, *.gbc, *.sav.
