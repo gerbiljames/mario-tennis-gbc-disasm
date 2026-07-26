@@ -132,7 +132,7 @@ RunSinglesMatchListMenu:
 	ld a, $05 ; $419b
 	farcall RunPagedTextMenu ; $419d
 	cp a, $ff ; $41a0
-	jp z, Label_10_421f ; $41a2
+	jp z, RunDoublesMatchListMenu.done ; $41a2
 	ld [$c2b0], a ; $41a5
 	ld hl, wStoryModePlayersXPosition ; $41a8
 	ld de, wStoryModeSpawnPosition ; $41ab
@@ -163,7 +163,7 @@ RunDoublesMatchListMenu:
 	ld a, $04 ; $41e0
 	farcall RunPagedTextMenu ; $41e2
 	cp a, $ff ; $41e5
-	jp z, Label_10_421f ; $41e7
+	jp z, .done ; $41e7
 	ld [$c2b0], a ; $41ea
 	ld hl, wStoryModePlayersXPosition ; $41ed
 	ld de, wStoryModeSpawnPosition ; $41f0
@@ -188,7 +188,7 @@ RunDoublesMatchListMenu:
 	farcall RunStoryMatch ; $4218
 	farcall RestoreOverworldAfterMatch ; $421b
 	ret ; $421e
-Label_10_421f:
+.done:
 	ret ; $421f
 	dw LoadMatchSinglesJunior4 ; $4220
 	dw LoadMatchSinglesJunior3 ; $4222
@@ -335,7 +335,7 @@ RunDrillMatchListMenu:
 	ld a, $09 ; $4453
 	farcall RunPagedTextMenu ; $4455
 	cp a, $ff ; $4458
-	jp z, Label_10_421f ; $445a
+	jp z, RunDoublesMatchListMenu.done ; $445a
 	push af ; $445d
 	ld hl, wStoryModePlayersXPosition ; $445e
 	ld de, wStoryModeSpawnPosition ; $4461
@@ -415,7 +415,7 @@ RunLessonSelectMenu:
 	ld a, $01 ; $4510
 	farcall RunPagedTextMenu ; $4512
 	cp a, $ff ; $4515
-	jp z, Label_10_421f ; $4517
+	jp z, RunDoublesMatchListMenu.done ; $4517
 	ld a, a ; $451a
 	rst Rst00 ; $451b
 	dw RunServiceLessonMenu ; $451c jumptable
@@ -428,7 +428,7 @@ RunServiceLessonMenu:
 	ld a, $01 ; $452a
 	farcall RunPagedTextMenu ; $452c
 	cp a, $ff ; $452f
-	jp z, Label_10_421f ; $4531
+	jp z, RunDoublesMatchListMenu.done ; $4531
 	add a, $03 ; $4534
 	ld [wCurrentMinigameStoryMatch + 1], a ; $4536
 	ld hl, wStoryModePlayersXPosition ; $4539
@@ -450,7 +450,7 @@ RunNetLessonMenu:
 	ld a, $01 ; $4562
 	farcall RunPagedTextMenu ; $4564
 	cp a, $ff ; $4567
-	jp z, Label_10_421f ; $4569
+	jp z, RunDoublesMatchListMenu.done ; $4569
 	add a, $09 ; $456c
 	ld [wCurrentMinigameStoryMatch + 1], a ; $456e
 	ld hl, wStoryModePlayersXPosition ; $4571
@@ -472,7 +472,7 @@ RunStrokeLessonMenu:
 	ld a, $01 ; $459a
 	farcall RunPagedTextMenu ; $459c
 	cp a, $ff ; $459f
-	jp z, Label_10_421f ; $45a1
+	jp z, RunDoublesMatchListMenu.done ; $45a1
 	add a, $0f ; $45a4
 	ld [wCurrentMinigameStoryMatch + 1], a ; $45a6
 	ld hl, wStoryModePlayersXPosition ; $45a9
@@ -543,13 +543,13 @@ RunMinigameSelectMenu:
 	ld a, $03 ; $4643
 	farcall RunPagedTextMenu ; $4645
 	cp a, $ff ; $4648
-	jp z, Label_10_421f ; $464a
+	jp z, RunDoublesMatchListMenu.done ; $464a
 	ld de, $4684 ; $464d
 	add a, e ; $4650
 	ld e, a ; $4651
-	jr nc, Label_10_4655 ; $4652
+	jr nc, .step ; $4652
 	inc d ; $4654
-Label_10_4655:
+.step:
 	ld hl, $0499 ; $4655
 	ld a, $01 ; $4658
 	farcall RunPagedTextMenu ; $465a
@@ -958,12 +958,12 @@ WaterSpriteModeHooks_10:
 	ret ; $4bea
 	ld a, [wRallyLength] ; $4beb
 	cp a, $02 ; $4bee
-	jr c, Label_10_4bfb ; $4bf0
+	jr c, .done ; $4bf0
 	ld a, $01 ; $4bf2
 	ld [wMatchAbortFlag], a ; $4bf4
 	ld hl, wTotalPointsScoredInCurrentGame ; $4bf7
 	inc [hl] ; $4bfa
-Label_10_4bfb:
+.done:
 	ret ; $4bfb
 	ret ; $4bfc
 	ld a, [wTotalPointsScoredInCurrentGame] ; $4bfd
@@ -972,9 +972,9 @@ Label_10_4bfb:
 	ld a, [wCharacter1ServiceAces] ; $4c03
 	ld hl, wCharacter2ServiceAces ; $4c06
 	cp a, [hl] ; $4c09
-	jr nz, Label_10_4c0d ; $4c0a
+	jr nz, .step ; $4c0a
 	ret ; $4c0c
-Label_10_4c0d:
+.step:
 	ld a, $80 ; $4c0d
 	ld [wMatchAbortFlag], a ; $4c0f
 	ret ; $4c12
@@ -2074,9 +2074,9 @@ GetMinigameDrillId:
 	ld hl, $56f3 ; $56e9
 	add a, l ; $56ec
 	ld l, a ; $56ed
-	jr nc, Label_10_56f1 ; $56ee
+	jr nc, .read ; $56ee
 	inc h ; $56f0
-Label_10_56f1:
+.read:
 	ld a, [hl] ; $56f1
 	ret ; $56f2
 	; $56f3, 9 bytes (bytes:16)
@@ -2109,53 +2109,53 @@ CopyExhibitionCharSlotIds:
 	ld [wCurrentStorySlot], a ; $5723
 	farcall CheckStorySlot ; $5726
 	cp a, $fe ; $5729
-	jr nz, Label_10_574b ; $572b
+	jr nz, .restore ; $572b
 	ld a, $01 ; $572d
 	ld [wCurrentStorySlot], a ; $572f
 	farcall CheckStorySlot ; $5732
 	cp a, $fe ; $5735
-	jr nz, Label_10_574b ; $5737
+	jr nz, .restore ; $5737
 	ld a, $02 ; $5739
 	ld [wCurrentStorySlot], a ; $573b
 	farcall CheckStorySlot ; $573e
 	cp a, $fe ; $5741
-	jr nz, Label_10_574b ; $5743
+	jr nz, .restore ; $5743
 	pop af ; $5745
 	xor a, a ; $5746
 	ld [wCurrentStorySlot], a ; $5747
 	ret ; $574a
-Label_10_574b:
+.restore:
 	pop af ; $574b
 	ld [wCurrentStorySlot], a ; $574c
 	ld a, $01 ; $574f
 	ret ; $5751
 GetStoryContinueDestination:
 	test_flag FLAG_DOUBLES ; $5752
-	jr nz, Label_10_5770 ; $5755
+	jr nz, .checkFlag ; $5755
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_FINAL ; $5757
 	ld a, $02 ; $575a
-	jr z, Label_10_5789 ; $575c
+	jr z, .done ; $575c
 	test_flag FLAG_STORY_COMPLETE_SINGLES ; $575e
 	ld a, $04 ; $5761
-	jr z, Label_10_5789 ; $5763
+	jr z, .done ; $5763
 	test_flag FLAG_REACHED_MARIO_WORLD_SINGLES ; $5765
 	ld a, $05 ; $5768
-	jr z, Label_10_5789 ; $576a
+	jr z, .done ; $576a
 	ld a, $02 ; $576c
-	jr Label_10_5789 ; $576e
-Label_10_5770:
+	jr .done ; $576e
+.checkFlag:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_FINAL ; $5770
 	ld a, $02 ; $5773
-	jr z, Label_10_5789 ; $5775
+	jr z, .done ; $5775
 	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $5777
 	ld a, $04 ; $577a
-	jr z, Label_10_5789 ; $577c
+	jr z, .done ; $577c
 	test_flag FLAG_REACHED_MARIO_WORLD_DOUBLES ; $577e
 	ld a, $05 ; $5781
-	jr z, Label_10_5789 ; $5783
+	jr z, .done ; $5783
 	ld a, $02 ; $5785
-	jr Label_10_5789 ; $5787
-Label_10_5789:
+	jr .done ; $5787
+.done:
 	ret ; $5789
 ConfirmDiscardSuspendedExhibMatch:
 	push af ; $578a
@@ -2344,16 +2344,16 @@ CafeteriaNpc05_10:
 	farcall InitDialogueTextCursor ; $5939
 	ld a, [$c2b1] ; $593c
 	cp a, $01 ; $593f
-	jr nz, Label_10_595b ; $5941
+	jr nz, .speak ; $5941
 	ld a, $05 ; $5943
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $5945
 	farcall RunDialogueYesNoPrompt ; $5948
 	farcall ScriptCloseDialogueWindow ; $594b
 	script_wait_frames $05 ; $594e
 	and a, a ; $5955
-	jr z, Label_10_595b ; $5956
+	jr z, .speak ; $5956
 	farcall AdvanceDialogueTextCursor ; $5958
-Label_10_595b:
+.speak:
 	script_speak $05 ; $595b
 	ret ; $5960
 	; $5961, 10 bytes (records:2)
@@ -2532,18 +2532,18 @@ RestaurantEntryPoints_10:
 RestaurantArrival01_10:
 	ld a, [wStoryModeEntryPoint] ; $5b97
 	cp a, $ff ; $5b9a
-	jp z, Label_10_5bdc ; $5b9c
+	jp z, .done ; $5b9c
 	test_flag FLAG_DOUBLES ; $5b9f
-	jr z, Label_10_5bca ; $5ba2
+	jr z, .walkOff ; $5ba2
 	script_set_speed ACTOR_PARTNER, $00ff ; $5ba4
 	script_move_angle ACTOR_PARTNER, FACE_DOWN, $0200 ; $5bac
 	script_wait_move ACTOR_PARTNER ; $5bb6
 	script_face ACTOR_PARTNER, FACE_UP ; $5bbb
 	script_set_speed ACTOR_PARTNER, $0010 ; $5bc2
-Label_10_5bca:
+.walkOff:
 	script_set_speed ACTOR_PLAYER, $0010 ; $5bca
 	script_move_angle ACTOR_PLAYER, FACE_UP, $0200 ; $5bd2
-Label_10_5bdc:
+.done:
 	ret ; $5bdc
 RestaurantExitTriggers_10:
 	; $5bdd, 17 bytes (map_scripts)
@@ -2567,9 +2567,9 @@ RestaurantNpc03_10:
 	farcall InitDialogueTextCursor ; $5c00
 	ld a, [$c2b0] ; $5c03
 	cp a, $03 ; $5c06
-	jr nz, Label_10_5c0d ; $5c08
+	jr nz, .speak ; $5c08
 	farcall AdvanceDialogueTextCursor ; $5c0a
-Label_10_5c0d:
+.speak:
 	script_speak $03 ; $5c0d
 	ret ; $5c12
 	; $5c13, 10 bytes (records:2)
@@ -2650,16 +2650,16 @@ RestaurantNpc06_10:
 	farcall InitDialogueTextCursor ; $5cca
 	ld a, [$c2b0] ; $5ccd
 	cp a, $05 ; $5cd0
-	jr nz, Label_10_5cda ; $5cd2
+	jr nz, .speak ; $5cd2
 	farcall AdvanceDialogueTextCursor ; $5cd4
 	farcall AdvanceDialogueTextCursor ; $5cd7
-Label_10_5cda:
+.speak:
 	script_speak $06 ; $5cda
 	ld a, [$c2b1] ; $5cdf
 	cp a, $00 ; $5ce2
-	jr nz, Label_10_5ce9 ; $5ce4
+	jr nz, .animate ; $5ce4
 	call RestaurantShowActor11NearPlayer_10 ; $5ce6
-Label_10_5ce9:
+.animate:
 	script_set_anim $06, $03 ; $5ce9
 	script_wait_idle $06 ; $5cf0
 	script_speak $06 ; $5cf5
@@ -2871,16 +2871,16 @@ RestaurantNpc0A_10:
 	farcall InitDialogueTextCursor ; $5f08
 	ld a, [$c2b0] ; $5f0b
 	cp a, $06 ; $5f0e
-	jr nc, Label_10_5f2a ; $5f10
+	jr nc, .speak ; $5f10
 	ld a, $0a ; $5f12
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $5f14
 	farcall RunDialogueYesNoPrompt ; $5f17
 	farcall ScriptCloseDialogueWindow ; $5f1a
 	script_wait_frames $05 ; $5f1d
 	and a, a ; $5f24
-	jr z, Label_10_5f2a ; $5f25
+	jr z, .speak ; $5f25
 	farcall AdvanceDialogueTextCursor ; $5f27
-Label_10_5f2a:
+.speak:
 	script_speak $0a ; $5f2a
 	ret ; $5f2f
 	; $5f30, 20 bytes (records:2)
@@ -2908,9 +2908,9 @@ RestaurantNpc0B_10:
 	farcall InitDialogueTextCursor ; $5f52
 	ld a, [$c2b0] ; $5f55
 	cp a, $01 ; $5f58
-	jr nz, Label_10_5f5f ; $5f5a
+	jr nz, .speak ; $5f5a
 	farcall AdvanceDialogueTextCursor ; $5f5c
-Label_10_5f5f:
+.speak:
 	script_speak $0b ; $5f5f
 	ret ; $5f64
 	; $5f65, 10 bytes (records:2)
@@ -2933,28 +2933,28 @@ RestaurantNpc0C_10:
 	farcall InitDialogueTextCursor ; $5f7d
 	ld a, [$c2b1] ; $5f80
 	cp a, $00 ; $5f83
-	jr z, Label_10_5fb9 ; $5f85
+	jr z, .speak ; $5f85
 	cp a, $03 ; $5f87
-	jr nc, Label_10_5faf ; $5f89
+	jr nc, .step ; $5f89
 	ld a, $0c ; $5f8b
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $5f8d
 	farcall RunDialogueYesNoPrompt ; $5f90
 	farcall ScriptCloseDialogueWindow ; $5f93
 	script_wait_frames $05 ; $5f96
 	and a, a ; $5f9d
-	jr z, Label_10_5fb9 ; $5f9e
+	jr z, .speak ; $5f9e
 	farcall AdvanceDialogueTextCursor ; $5fa0
 	ld a, [$c2b0] ; $5fa3
 	cp a, $05 ; $5fa6
-	jr nz, Label_10_5fb9 ; $5fa8
+	jr nz, .speak ; $5fa8
 	farcall AdvanceDialogueTextCursor ; $5faa
-	jr Label_10_5fb9 ; $5fad
-Label_10_5faf:
+	jr .speak ; $5fad
+.step:
 	ld a, [$c2b0] ; $5faf
 	and a, $01 ; $5fb2
-	jr z, Label_10_5fb9 ; $5fb4
+	jr z, .speak ; $5fb4
 	farcall AdvanceDialogueTextCursor ; $5fb6
-Label_10_5fb9:
+.speak:
 	script_speak $0c ; $5fb9
 	ret ; $5fbe
 	; $5fbf, 10 bytes (records:2)
@@ -2977,21 +2977,21 @@ RestaurantNpc0D_10:
 	farcall InitDialogueTextCursor ; $5fd7
 	ld a, [$c2b1] ; $5fda
 	cp a, $03 ; $5fdd
-	jr nz, Label_10_5ff9 ; $5fdf
+	jr nz, .step ; $5fdf
 	ld a, $0d ; $5fe1
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $5fe3
 	farcall RunDialogueYesNoPrompt ; $5fe6
 	farcall ScriptCloseDialogueWindow ; $5fe9
 	script_wait_frames $05 ; $5fec
 	and a, a ; $5ff3
-	jr z, Label_10_5ff9 ; $5ff4
+	jr z, .step ; $5ff4
 	farcall AdvanceDialogueTextCursor ; $5ff6
-Label_10_5ff9:
+.step:
 	ld a, [$c2b0] ; $5ff9
 	cp a, $03 ; $5ffc
-	jr nz, Label_10_6003 ; $5ffe
+	jr nz, .speak ; $5ffe
 	farcall AdvanceDialogueTextCursor ; $6000
-Label_10_6003:
+.speak:
 	script_speak $0d ; $6003
 	ret ; $6008
 	; $6009, 10 bytes (records:2)
@@ -3092,16 +3092,16 @@ RestaurantInitScript_10:
 	ret ; $6102
 RestaurantRestoreNpc08Position_10:
 	test_flag FLAG_RESTAURANT_NPC08_MOVED ; $6103
-	jr z, Label_10_611a ; $6106
+	jr z, .done ; $6106
 	script_set_position $08, $2140, $0f00 ; $6108
 	script_face $08, FACE_RIGHT ; $6113
-Label_10_611a:
+.done:
 	ret ; $611a
 RestaurantRestoreNpc12Position_10:
 	call TestRestaurantNpc12StageFlag_10 ; $611b
-	jr z, Label_10_612b ; $611e
+	jr z, .done ; $611e
 	script_set_position $12, $1b00, $1100 ; $6120
-Label_10_612b:
+.done:
 	ret ; $612b
 TestRestaurantNpc12StageFlag_10:
 	ld a, [$c2b1] ; $612c
@@ -3297,10 +3297,10 @@ AcademyWingTile01_10:
 	script_face ACTOR_PLAYER, FACE_UP ; $637a
 	call AcademyWingOpenDoor_10 ; $6381
 	test_flag FLAG_DOUBLES ; $6384
-	jr z, Label_10_6399 ; $6387
+	jr z, .walkPlayer ; $6387
 	script_move_target ACTOR_PARTNER, $2100, $3d00 ; $6389
 	script_wait_move ACTOR_PARTNER ; $6394
-Label_10_6399:
+.walkPlayer:
 	script_move_target ACTOR_PLAYER, $2100, $3900 ; $6399
 	script_wait_move ACTOR_PLAYER ; $63a4
 	script_wait_frames $02 ; $63a9
@@ -3318,8 +3318,8 @@ AcademyWingTile02_10:
 	call AcademyWingOpenDoor_10 ; $63ef
 	script_move_target ACTOR_PARTNER, $2100, $3500 ; $63f2
 	test_flag FLAG_DOUBLES ; $63fd
-	jr z, Label_10_6402 ; $6400
-Label_10_6402:
+	jr z, .walkPlayer ; $6400
+.walkPlayer:
 	script_move_target ACTOR_PLAYER, $2100, $3900 ; $6402
 	script_wait_move ACTOR_PLAYER ; $640d
 	script_move_angle ACTOR_PLAYER, FACE_DOWN, $0200 ; $6412
@@ -3380,7 +3380,7 @@ AcademyWingInitScript_10:
 	cp a, $0d ; $64d2
 	jp z, .stage6 ; $64d4
 	cp a, $0f ; $64d7
-	jp z, Label_10_6fcd ; $64d9
+	jp z, .step2 ; $64d9
 	call AcademyWingInstallDoorTriggers_10 ; $64dc
 	ret ; $64df
 .stage6:
@@ -3428,7 +3428,7 @@ AcademyWingInitScript_10:
 	script_wait_idle $06 ; $65c7
 	script_speak $06 ; $65cc
 	test_flag FLAG_DOUBLES ; $65d1
-	jp z, Label_10_66a2 ; $65d4
+	jp z, .placeActors2 ; $65d4
 	script_set_position $03, $2180, $3100 ; $65d7
 	sound $99 ; $65e2
 	script_wait_frames $0a ; $65e4
@@ -3457,14 +3457,14 @@ AcademyWingInitScript_10:
 	script_facing_lock $09, FACE_RIGHT ; $668c
 	script_face_pair $08, $09 ; $6693
 	script_speak $09 ; $669b
-	jr Label_10_66c6 ; $66a0
-Label_10_66a2:
+	jr .face ; $66a0
+.placeActors2:
 	script_set_position $05, $2180, $3100 ; $66a2
 	sound $97 ; $66ad
 	script_wait_frames $1e ; $66af
 	script_speak $08 ; $66b6
 	script_set_position $05, $3f00, $3f00 ; $66bb
-Label_10_66c6:
+.face:
 	script_face_toward $08, $07 ; $66c6
 	script_wait_frames $01 ; $66ce
 	script_facing_lock $07, $01 ; $66d5
@@ -3549,7 +3549,7 @@ Label_10_66c6:
 	sound $96 ; $6918
 	script_wait_frames $3c ; $691a
 	test_flag FLAG_DOUBLES ; $6921
-	jp z, Label_10_69c0 ; $6924
+	jp z, .walkPlayer ; $6924
 	script_null_script ACTOR_PARTNER ; $6927
 	script_set_position ACTOR_PARTNER, $2d00, $3b00 ; $692c
 	script_move_target ACTOR_PLAYER, $2100, $3b00 ; $6937
@@ -3569,8 +3569,8 @@ Label_10_66c6:
 	script_face ACTOR_PLAYER, FACE_UP ; $69a9
 	script_face ACTOR_PARTNER, FACE_UP ; $69b0
 	script_wait_frames $01 ; $69b7
-	jr Label_10_6a08 ; $69be
-Label_10_69c0:
+	jr .step ; $69be
+.walkPlayer:
 	script_move_target ACTOR_PLAYER, $2100, $3b00 ; $69c0
 	script_wait_move ACTOR_PLAYER ; $69cb
 	script_face ACTOR_PLAYER, FACE_UP ; $69d0
@@ -3581,7 +3581,7 @@ Label_10_69c0:
 	script_wait_move ACTOR_PLAYER ; $69f5
 	script_face ACTOR_PLAYER, FACE_UP ; $69fa
 	script_wait_frames $01 ; $6a01
-Label_10_6a08:
+.step:
 	call AcademyWingCloseDoor_10 ; $6a08
 	script_set_position $03, $3f00, $3f00 ; $6a0b
 	script_set_position $05, $3f00, $3f00 ; $6a16
@@ -3608,7 +3608,7 @@ Label_10_6a08:
 	script_face $07, FACE_LEFT ; $6abb
 	script_wait_frames $0a ; $6ac2
 	test_flag FLAG_DOUBLES ; $6ac9
-	jp z, Label_10_6b73 ; $6acc
+	jp z, .placeActors3 ; $6acc
 	script_wait_frames $3c ; $6acf
 	script_face_toward ACTOR_PARTNER, ACTOR_PLAYER ; $6ad6
 	script_set_anim ACTOR_PLAYER, $02 ; $6ade
@@ -3632,8 +3632,8 @@ Label_10_6a08:
 	script_move_target ACTOR_PLAYER, $1f00, $3200 ; $6b55
 	script_move_target ACTOR_PARTNER, $2100, $3200 ; $6b60
 	script_wait_move ACTOR_PARTNER ; $6b6b
-	jp Label_10_6c02 ; $6b70
-Label_10_6b73:
+	jp .wait ; $6b70
+.placeActors3:
 	script_set_position $04, $2180, $3300 ; $6b73
 	sound $96 ; $6b7e
 	script_wait_frames $50 ; $6b80
@@ -3654,7 +3654,7 @@ Label_10_6b73:
 	script_set_anim ACTOR_PLAYER, $03 ; $6beb
 	script_move_target ACTOR_PLAYER, $2000, $3200 ; $6bf2
 	script_wait_move ACTOR_PLAYER ; $6bfd
-Label_10_6c02:
+.wait:
 	script_wait_frames $01 ; $6c02
 	script_move_target $09, $1e00, $3500 ; $6c09
 	script_move_target $08, $2000, $3500 ; $6c14
@@ -3668,13 +3668,13 @@ Label_10_6c02:
 	ld h, $00 ; $6c50
 	ld l, $02 ; $6c52
 	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $6c54
-	jr z, Label_10_6c5a ; $6c57
+	jr z, .checkFlag ; $6c57
 	inc l ; $6c59
-Label_10_6c5a:
+.checkFlag:
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $6c5a
-	jr z, Label_10_6c60 ; $6c5d
+	jr z, .pushArg ; $6c5d
 	inc l ; $6c5f
-Label_10_6c60:
+.pushArg:
 	farcall PushTextArgNumber ; $6c60
 	script_speak $06 ; $6c63
 	script_set_anim ACTOR_PLAYER, $02 ; $6c68
@@ -3723,12 +3723,12 @@ Label_10_6c60:
 	farcall ScriptCloseDialogueWindow ; $6d88
 	script_wait_frames $05 ; $6d8b
 	and a, a ; $6d92
-	jp z, Label_10_6eae ; $6d93
+	jp z, .animate ; $6d93
 	script_set_anim $06, $02 ; $6d96
 	script_wait_idle $06 ; $6d9d
 	script_speak $06 ; $6da2
 	test_flag FLAG_DOUBLES ; $6da7
-	jp z, Label_10_6e27 ; $6daa
+	jp z, .walk ; $6daa
 	script_move_target $08, $2000, $3400 ; $6dad
 	script_wait_move $08 ; $6db8
 	script_face_toward $08, ACTOR_PLAYER ; $6dbd
@@ -3745,8 +3745,8 @@ Label_10_6c60:
 	script_wait_move $09 ; $6e10
 	script_face_pair $09, ACTOR_PLAYER ; $6e15
 	script_face_toward $09, ACTOR_PARTNER ; $6e1d
-	jr Label_10_6e87 ; $6e25
-Label_10_6e27:
+	jr .loop ; $6e25
+.walk:
 	script_move_target $08, $2000, $3400 ; $6e27
 	script_wait_move $08 ; $6e32
 	script_face_toward $08, ACTOR_PLAYER ; $6e37
@@ -3760,7 +3760,7 @@ Label_10_6e27:
 	script_move_target $09, $1e00, $3200 ; $6e6f
 	script_wait_move $09 ; $6e7a
 	script_face_pair $09, ACTOR_PLAYER ; $6e7f
-Label_10_6e87:
+.loop:
 	script_set_anim $09, $04 ; $6e87
 	script_wait_idle $09 ; $6e8e
 	script_set_text Text_30_491 ; $6e93
@@ -3770,8 +3770,8 @@ Label_10_6e87:
 	farcall ScriptCloseDialogueWindow ; $6ea1
 	script_wait_frames $05 ; $6ea4
 	and a, a ; $6eab
-	jr nz, Label_10_6e87 ; $6eac
-Label_10_6eae:
+	jr nz, .loop ; $6eac
+.animate:
 	script_set_anim $06, $03 ; $6eae
 	script_wait_idle $06 ; $6eb5
 	script_face $07, FACE_UP ; $6eba
@@ -3779,17 +3779,17 @@ Label_10_6eae:
 	script_face $09, FACE_UP ; $6ec8
 	script_face ACTOR_PLAYER, FACE_UP ; $6ecf
 	test_flag FLAG_DOUBLES ; $6ed6
-	jp z, Label_10_6ee3 ; $6ed9
+	jp z, .wait2 ; $6ed9
 	script_face ACTOR_PARTNER, FACE_UP ; $6edc
-Label_10_6ee3:
+.wait2:
 	script_wait_frames $14 ; $6ee3
 	script_set_anim $07, $03 ; $6eea
 	script_set_anim $08, $03 ; $6ef1
 	script_set_anim $09, $03 ; $6ef8
 	test_flag FLAG_DOUBLES ; $6eff
-	jp z, Label_10_6f0c ; $6f02
+	jp z, .animate2 ; $6f02
 	script_set_anim ACTOR_PARTNER, $03 ; $6f05
-Label_10_6f0c:
+.animate2:
 	script_set_anim ACTOR_PLAYER, $03 ; $6f0c
 	script_wait_idle ACTOR_PLAYER ; $6f13
 	script_set_text Text_30_492 ; $6f18
@@ -3817,27 +3817,27 @@ Label_10_6f0c:
 	map_actor $0000, ActorScript_10_7bd1, $2700, $3240, FACE_DOWN, $74, $01, $00
 	map_actor $0000, ActorScript_10_7bd1, $2700, $30c0, FACE_DOWN, $74, $01, $00
 	map_actor_end
-Label_10_6fcd:
+.step2:
 	ldh a, [hRomBank] ; $6fcd
 	ld hl, $739e ; $6fcf
 	farcall ScriptRespawnLocationActors ; $6fd2
 	farcall BeginCutsceneScriptMode ; $6fd5
 	script_set_anim $04, $06 ; $6fd8
 	test_flag FLAG_DOUBLES ; $6fdf
-	jp z, Label_10_7019 ; $6fe2
+	jp z, .checkFlag2 ; $6fe2
 	script_null_script ACTOR_PARTNER ; $6fe5
 	script_set_position ACTOR_PLAYER, $1f00, $3400 ; $6fea
 	script_set_position ACTOR_PARTNER, $2100, $3400 ; $6ff5
 	script_face ACTOR_PARTNER, FACE_UP ; $7000
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_FINAL ; $7007
-	jr nz, Label_10_7029 ; $700a
+	jr nz, .face2 ; $700a
 	script_set_position $04, $3f00, $3f00 ; $700c
-	jr Label_10_7029 ; $7017
-Label_10_7019:
+	jr .face2 ; $7017
+.checkFlag2:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_FINAL ; $7019
-	jr nz, Label_10_7029 ; $701c
+	jr nz, .face2 ; $701c
 	script_set_position $05, $3f00, $3f00 ; $701e
-Label_10_7029:
+.face2:
 	script_face ACTOR_PLAYER, FACE_UP ; $7029
 	xor a, a ; $7030
 	ld [wStoryModeShowLocationName], a ; $7031
@@ -3847,9 +3847,9 @@ Label_10_7029:
 	script_set_text Text_30_498 ; $7043
 	call SpeakNpc03SinglesOrDoublesLine_10 ; $7049
 	test_flag FLAG_DOUBLES ; $704c
-	jp z, Label_10_7059 ; $704f
+	jp z, .animate3 ; $704f
 	script_set_anim ACTOR_PARTNER, $02 ; $7052
-Label_10_7059:
+.animate3:
 	script_set_anim ACTOR_PLAYER, $02 ; $7059
 	script_wait_idle ACTOR_PLAYER ; $7060
 	call ShowNpc03SinglesOrDoublesPrompt_10 ; $7065
@@ -3857,15 +3857,15 @@ Label_10_7059:
 	farcall ScriptCloseDialogueWindow ; $706b
 	script_wait_frames $05 ; $706e
 	and a, a ; $7075
-	jr nz, Label_10_7089 ; $7076
+	jr nz, .animate4 ; $7076
 	script_set_anim ACTOR_PLAYER, $03 ; $7078
 	script_wait_idle ACTOR_PLAYER ; $707f
 	farcall AdvanceDialogueTextCursor ; $7084
-	jr Label_10_7095 ; $7087
-Label_10_7089:
+	jr .wait3 ; $7087
+.animate4:
 	script_set_anim ACTOR_PLAYER, $04 ; $7089
 	script_wait_idle ACTOR_PLAYER ; $7090
-Label_10_7095:
+.wait3:
 	script_wait_frames $0a ; $7095
 	script_set_anim $03, $03 ; $709c
 	script_wait_idle $03 ; $70a3
@@ -3875,20 +3875,20 @@ Label_10_7095:
 	script_set_text Text_30_504 ; $70bb
 	call SpeakNpc03SinglesOrDoublesLine_10 ; $70c1
 	test_flag FLAG_DOUBLES ; $70c4
-	jp z, Label_10_7101 ; $70c7
+	jp z, .placeActors4 ; $70c7
 	script_set_position $06, $2080, $3200 ; $70ca
 	script_set_position $07, $2280, $3200 ; $70d5
 	sound $97 ; $70e0
 	script_wait_frames $50 ; $70e2
 	script_set_position $06, $3f00, $3f00 ; $70e9
 	script_set_position $07, $3f00, $3f00 ; $70f4
-	jr Label_10_7120 ; $70ff
-Label_10_7101:
+	jr .face3 ; $70ff
+.placeActors4:
 	script_set_position $06, $2180, $3200 ; $7101
 	sound $97 ; $710c
 	script_wait_frames $50 ; $710e
 	script_set_position $06, $3f00, $3f00 ; $7115
-Label_10_7120:
+.face3:
 	script_face $03, FACE_DOWN ; $7120
 	script_wait_frames $01 ; $7127
 	call SpeakNpc03SinglesOrDoublesLine_10 ; $712e
@@ -3913,23 +3913,23 @@ Label_10_7120:
 	script_wait_idle ACTOR_PLAYER ; $71aa
 	script_set_anim $03, $03 ; $71af
 	script_wait_idle $03 ; $71b6
-Label_10_71bb:
+.loopB:
 	ld a, $03 ; $71bb
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $71bd
 	farcall RunDialogueYesNoPrompt ; $71c0
 	farcall ScriptCloseDialogueWindow ; $71c3
 	script_wait_frames $05 ; $71c6
 	and a, a ; $71cd
-	jr z, Label_10_71f0 ; $71ce
+	jr z, .checkDoubles ; $71ce
 	script_set_anim ACTOR_PLAYER, $04 ; $71d0
 	script_wait_idle ACTOR_PLAYER ; $71d7
 	script_set_anim $03, $02 ; $71dc
 	script_wait_idle $03 ; $71e3
 	script_set_text Text_30_511 ; $71e8
-	jr Label_10_71bb ; $71ee
-Label_10_71f0:
+	jr .loopB ; $71ee
+.checkDoubles:
 	test_flag FLAG_DOUBLES ; $71f0
-	jp z, Label_10_72a9 ; $71f3
+	jp z, .animate5 ; $71f3
 	script_set_anim ACTOR_PLAYER, $03 ; $71f6
 	script_wait_idle ACTOR_PLAYER ; $71fd
 	script_set_anim $03, $03 ; $7202
@@ -3955,8 +3955,8 @@ Label_10_71f0:
 	script_set_actor_script ACTOR_PLAYER, ActorScript_10_741c ; $728a
 	script_set_actor_script ACTOR_PARTNER, ActorScript_10_741c ; $7295
 	script_wait_frames $28 ; $72a0
-	jr Label_10_7314 ; $72a7
-Label_10_72a9:
+	jr .step3 ; $72a7
+.animate5:
 	script_set_anim ACTOR_PLAYER, $03 ; $72a9
 	script_wait_idle ACTOR_PLAYER ; $72b0
 	script_set_anim $03, $03 ; $72b5
@@ -3973,7 +3973,7 @@ Label_10_72a9:
 	call AcademyWingOpenDoor_10 ; $72ff
 	script_set_actor_script ACTOR_PLAYER, ActorScript_10_741c ; $7302
 	script_wait_frames $14 ; $730d
-Label_10_7314:
+.step3:
 	call AcademyWingCloseDoor_10 ; $7314
 	script_wait_frames $3c ; $7317
 	ld c, $02 ; $731e
@@ -4021,12 +4021,12 @@ SpeakNpc03SinglesOrDoublesLine_10:
 	ret ; $7404
 ShowNpc03SinglesOrDoublesPrompt_10:
 	test_flag FLAG_DOUBLES ; $7405
-	jr z, Label_10_7413 ; $7408
+	jr z, .step ; $7408
 	farcall AdvanceDialogueTextCursor ; $740a
 	ld a, $03 ; $740d
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $740f
 	ret ; $7412
-Label_10_7413:
+.step:
 	ld a, $03 ; $7413
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $7415
 	farcall AdvanceDialogueTextCursor ; $7418
@@ -4041,7 +4041,7 @@ ActorScript_10_741c:
 AcademyWingInstallDoorTriggers_10:
 	ld a, [$c2b0] ; $7429
 	cp a, $03 ; $742c
-	jr nz, Label_10_7442 ; $742e
+	jr nz, .done ; $742e
 	ld a, $11 ; $7430
 	ld d, $20 ; $7432
 	ld e, $3a ; $7434
@@ -4050,47 +4050,47 @@ AcademyWingInstallDoorTriggers_10:
 	ld d, $20 ; $743b
 	ld e, $36 ; $743d
 	farcall WriteBehaviorMapCell ; $743f
-Label_10_7442:
+.done:
 	ret ; $7442
 AcademyWingHideActorByProgressFlag_10:
 	script_set_anim $04, $06 ; $7443
 	test_flag FLAG_DOUBLES ; $744a
-	jr z, Label_10_7461 ; $744d
+	jr z, .checkFlag ; $744d
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_FINAL ; $744f
-	jr nz, Label_10_7471 ; $7452
+	jr nz, .done ; $7452
 	script_set_position $04, $0100, $0100 ; $7454
-	jr Label_10_7471 ; $745f
-Label_10_7461:
+	jr .done ; $745f
+.checkFlag:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_FINAL ; $7461
-	jr nz, Label_10_7471 ; $7464
+	jr nz, .done ; $7464
 	script_set_position $05, $0100, $0100 ; $7466
-Label_10_7471:
+.done:
 	ret ; $7471
 SetAcademyWingDialogueStage_10:
 	ld a, $00 ; $7472
 	test_flag FLAG_DOUBLES ; $7474
-	jr z, Label_10_7490 ; $7477
+	jr z, .checkFlag ; $7477
 	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_1 ; $7479
-	jr z, Label_10_74a5 ; $747c
+	jr z, .step ; $747c
 	ld a, $01 ; $747e
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $7480
-	jr z, Label_10_74a5 ; $7483
+	jr z, .step ; $7483
 	ld a, $02 ; $7485
 	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $7487
-	jr z, Label_10_74a5 ; $748a
+	jr z, .step ; $748a
 	ld a, $03 ; $748c
-	jr Label_10_74a5 ; $748e
-Label_10_7490:
+	jr .step ; $748e
+.checkFlag:
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $7490
-	jr z, Label_10_74a5 ; $7493
+	jr z, .step ; $7493
 	ld a, $01 ; $7495
 	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $7497
-	jr z, Label_10_74a5 ; $749a
+	jr z, .step ; $749a
 	ld a, $02 ; $749c
 	test_flag FLAG_STORY_COMPLETE_SINGLES ; $749e
-	jr z, Label_10_74a5 ; $74a1
+	jr z, .step ; $74a1
 	ld a, $03 ; $74a3
-Label_10_74a5:
+.step:
 	ld [$c2b0], a ; $74a5
 	ret ; $74a8
 AcademyMainBldgMapScripts_10:
@@ -4122,34 +4122,34 @@ AcademyMainBldgEntryPoints_10:
 AcademyMainBldgArrival02_10:
 	ld a, [wStoryModeEntryPoint] ; $7532
 	cp a, $ff ; $7535
-	jp z, Label_10_7577 ; $7537
+	jp z, .done ; $7537
 	test_flag FLAG_DOUBLES ; $753a
-	jr z, Label_10_7565 ; $753d
+	jr z, .walkOff ; $753d
 	script_set_speed ACTOR_PARTNER, $00ff ; $753f
 	script_move_angle ACTOR_PARTNER, FACE_UP, $0200 ; $7547
 	script_wait_move ACTOR_PARTNER ; $7551
 	script_face ACTOR_PARTNER, FACE_DOWN ; $7556
 	script_set_speed ACTOR_PARTNER, $0010 ; $755d
-Label_10_7565:
+.walkOff:
 	script_set_speed ACTOR_PLAYER, $0010 ; $7565
 	script_move_angle ACTOR_PLAYER, FACE_DOWN, $0200 ; $756d
-Label_10_7577:
+.done:
 	ret ; $7577
 AcademyMainBldgArrival01_10:
 	ld a, [wStoryModeEntryPoint] ; $7578
 	cp a, $ff ; $757b
-	jp z, Label_10_75bd ; $757d
+	jp z, .done ; $757d
 	test_flag FLAG_DOUBLES ; $7580
-	jr z, Label_10_75ab ; $7583
+	jr z, .walkOff ; $7583
 	script_set_speed ACTOR_PARTNER, $00ff ; $7585
 	script_move_angle ACTOR_PARTNER, FACE_DOWN, $0200 ; $758d
 	script_wait_move ACTOR_PARTNER ; $7597
 	script_face ACTOR_PARTNER, FACE_UP ; $759c
 	script_set_speed ACTOR_PARTNER, $0010 ; $75a3
-Label_10_75ab:
+.walkOff:
 	script_set_speed ACTOR_PLAYER, $0010 ; $75ab
 	script_move_angle ACTOR_PLAYER, FACE_UP, $0200 ; $75b3
-Label_10_75bd:
+.done:
 	ret ; $75bd
 AcademyMainBldgExitTriggers_10:
 	; $75be, 41 bytes (map_scripts)
@@ -4175,19 +4175,19 @@ AcademyMainBldgNpc03_10:
 	ld a, [$c2b0] ; $75fa
 	sra a ; $75fd
 	cp a, $03 ; $75ff
-	jr z, Label_10_7609 ; $7601
+	jr z, .step ; $7601
 	script_speak $03 ; $7603
 	ret ; $7608
-Label_10_7609:
+.step:
 	ld a, $03 ; $7609
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $760b
 	farcall RunDialogueYesNoPrompt ; $760e
 	farcall ScriptCloseDialogueWindow ; $7611
 	script_wait_frames $05 ; $7614
 	and a, a ; $761b
-	jr z, Label_10_7621 ; $761c
+	jr z, .speak ; $761c
 	farcall AdvanceDialogueTextCursor ; $761e
-Label_10_7621:
+.speak:
 	script_speak $03 ; $7621
 	ret ; $7626
 	; $7627, 10 bytes (records:2)
@@ -4222,7 +4222,7 @@ AcademyMainBldgNpc05_10:
 	script_speak $05 ; $765a
 	script_face $05, FACE_DOWN ; $765f
 	test_flag FLAG_DOUBLES ; $7666
-	jr nz, Label_10_76a2 ; $7669
+	jr nz, .setText ; $7669
 	script_speak $05 ; $766b
 	ld a, [$c2b0] ; $7670
 	sra a ; $7673
@@ -4236,7 +4236,7 @@ AcademyMainBldgNpc05_10:
 	ld h, [hl] ; $767e
 	ld l, a ; $767f
 	farcall InitDialogueTextCursor ; $7680
-Label_10_7683:
+.loop:
 	script_wait_frames $14 ; $7683
 	script_face_toward ACTOR_PLAYER, $05 ; $768a
 	script_speak $05 ; $7692
@@ -4247,7 +4247,7 @@ Label_10_7683:
 	dw $01d2 ; record 2
 	dw $01d3 ; record 3
 	dw $01d4 ; record 4
-Label_10_76a2:
+.setText:
 	script_set_text Text_30_469 ; $76a2
 	script_wait_frames $14 ; $76a8
 	script_speak $05 ; $76af
@@ -4262,7 +4262,7 @@ Label_10_76a2:
 	ld h, [hl] ; $76c0
 	ld l, a ; $76c1
 	farcall InitDialogueTextCursor ; $76c2
-	jr Label_10_7683 ; $76c5
+	jr .loop ; $76c5
 	; $76c7, 10 bytes (records:2)
 	dw $01d6 ; record 0
 	dw $01d7 ; record 1
@@ -4306,17 +4306,17 @@ AcademyMainBldgInitScript_10:
 	ld a, [$c2b0] ; $771a
 	sra a ; $771d
 	cp a, $02 ; $771f
-	jr nz, Label_10_772e ; $7721
+	jr nz, .step ; $7721
 	script_set_actor_script $03, ActorScript_10_7b8b ; $7723
-Label_10_772e:
+.step:
 	ld a, $01 ; $772e
 	ld hl, UpdatePlayerPairTileAnimState_10 ; $7730
 	call RegisterFrameTask ; $7733
 	ld a, [wStoryModeEntryPoint] ; $7736
 	cp a, $0f ; $7739
-	jr nz, Label_10_7740 ; $773b
+	jr nz, .done ; $773b
 	call AcademyMainBldgNewStudentCutscene_10 ; $773d
-Label_10_7740:
+.done:
 	ret ; $7740
 AcademyMainBldgNewStudentCutscene_10:
 	ldh a, [hRomBank] ; $7741
@@ -4360,15 +4360,15 @@ AcademyMainBldgNewStudentCutscene_10:
 	script_wait_frames $1e ; $783d
 	ld a, [wStoryModeGenderOfMainCharacter] ; $7844
 	or a, a ; $7847
-	jr z, Label_10_784d ; $7848
+	jr z, .speak ; $7848
 	farcall AdvanceDialogueTextCursor ; $784a
-Label_10_784d:
+.speak:
 	script_speak $03 ; $784d
 	ld a, [wStoryModeGenderOfMainCharacter] ; $7852
 	or a, a ; $7855
-	jr nz, Label_10_785b ; $7856
+	jr nz, .wait ; $7856
 	farcall AdvanceDialogueTextCursor ; $7858
-Label_10_785b:
+.wait:
 	script_wait_frames $0f ; $785b
 	script_set_anim $04, $03 ; $7862
 	script_wait_idle $04 ; $7869
@@ -4593,7 +4593,7 @@ MapExitWalkCurveRight_10:
 MapExitWalkCurveLeft_10:
 	ld a, [wStoryModeEntryPoint] ; $7b1f
 	cp a, $ff ; $7b22
-	jr z, Label_10_7b5e ; $7b24
+	jr z, .done ; $7b24
 	script_set_speed ACTOR_PARTNER, $0010 ; $7b26
 	script_set_speed ACTOR_PLAYER, $0010 ; $7b2e
 	script_move_angle ACTOR_PLAYER, FACE_UP, $00c0 ; $7b36
@@ -4601,17 +4601,17 @@ MapExitWalkCurveLeft_10:
 	script_move_angle ACTOR_PLAYER, $a0, $0080 ; $7b45
 	script_wait_move ACTOR_PLAYER ; $7b4f
 	script_move_angle ACTOR_PLAYER, FACE_LEFT, $0080 ; $7b54
-Label_10_7b5e:
+.done:
 	ret ; $7b5e
 MapArrivalWalkPair_10:
 	ld a, [wStoryModeEntryPoint] ; $7b5f
 	cp a, $ff ; $7b62
-	jr z, Label_10_7b8a ; $7b64
+	jr z, .done ; $7b64
 	script_set_speed ACTOR_PLAYER, $0010 ; $7b66
 	script_set_speed ACTOR_PARTNER, $0010 ; $7b6e
 	script_move_angle ACTOR_PLAYER, FACE_DOWN, $0280 ; $7b76
 	script_move_angle ACTOR_PARTNER, FACE_DOWN, $0200 ; $7b80
-Label_10_7b8a:
+.done:
 	ret ; $7b8a
 ActorScript_10_7b8b:
 	; $7b8b, 43 bytes (actor_script)
@@ -4634,18 +4634,18 @@ ActorScript_10_7b8b:
 GetDoublesProgressStage_10:
 	ld a, $00 ; $7bb6
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $7bb8
-	jr z, Label_10_7bd0 ; $7bbb
+	jr z, .done ; $7bbb
 	inc a ; $7bbd
 	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_1 ; $7bbe
-	jr z, Label_10_7bd0 ; $7bc1
+	jr z, .done ; $7bc1
 	inc a ; $7bc3
 	test_flag FLAG_WON_VARSITY_DOUBLES_RANK_2 ; $7bc4
-	jr z, Label_10_7bd0 ; $7bc7
+	jr z, .done ; $7bc7
 	inc a ; $7bc9
 	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $7bca
-	jr z, Label_10_7bd0 ; $7bcd
+	jr z, .done ; $7bcd
 	inc a ; $7bcf
-Label_10_7bd0:
+.done:
 	ret ; $7bd0
 ActorScript_10_7bd1:
 	; $7bd1, 10 bytes (actor_script)
