@@ -30,39 +30,39 @@ SECTION "ROM Bank $09", ROMX[$4000], BANK[$09]
 UpdatePointDigitsDisplay:
 	ld a, [wTiebreakerIndicator] ; $4036
 	and a, a ; $4039
-	jr nz, Label_09_405f ; $403a
+	jr nz, .drawPlayer2 ; $403a
 	ld a, [wPlayer2PointsWon] ; $403c
 	cp a, $04 ; $403f
 	ld a, [wPlayer1PointsWon] ; $4041
-	jr nz, Label_09_4048 ; $4044
+	jr nz, .drawPlayer1 ; $4044
 	ld a, $05 ; $4046
-Label_09_4048:
+.drawPlayer1:
 	ld b, $00 ; $4048
 	call LoadPlayer1PointsDigitGfx ; $404a
 	ld a, [wPlayer1PointsWon] ; $404d
 	cp a, $04 ; $4050
 	ld a, [wPlayer2PointsWon] ; $4052
-	jr nz, Label_09_4059 ; $4055
+	jr nz, .checkPlayer2 ; $4055
 	ld a, $05 ; $4057
-Label_09_4059:
+.checkPlayer2:
 	ld b, $00 ; $4059
 	call LoadPlayer2PointsDigitGfx ; $405b
 	ret ; $405e
-Label_09_405f:
+.drawPlayer2:
 	ld a, [wPlayer2PointsWon] ; $405f
 	cp a, $07 ; $4062
 	ld a, [wPlayer1PointsWon] ; $4064
-	jr nz, Label_09_406b ; $4067
+	jr nz, .checkAdvantage ; $4067
 	ld a, $08 ; $4069
-Label_09_406b:
+.checkAdvantage:
 	ld b, $01 ; $406b
 	call LoadPlayer1PointsDigitGfx ; $406d
 	ld a, [wPlayer1PointsWon] ; $4070
 	cp a, $07 ; $4073
 	ld a, [wPlayer2PointsWon] ; $4075
-	jr nz, Label_09_407c ; $4078
+	jr nz, .done ; $4078
 	ld a, $08 ; $407a
-Label_09_407c:
+.done:
 	ld b, $01 ; $407c
 	call LoadPlayer2PointsDigitGfx ; $407e
 	ret ; $4081
@@ -104,11 +104,11 @@ LoadOnCourtCharacterGfx:
 	farcall LoadOnCourtCharTilesB ; $40ba
 	ld a, [wOnCourtCharCountMinus1] ; $40bd
 	rst Rst00 ; $40c0
-	dw Label_09_4111 ; $40c1 jumptable
-	dw Label_09_40f9 ; $40c3 jumptable
-	dw Label_09_40e1 ; $40c5 jumptable
-	dw Label_09_40c9 ; $40c7 jumptable
-Label_09_40c9:
+	dw LoadOnCourtCharacterGfx.done ; $40c1 jumptable
+	dw LoadOnCourtCharacterGfx.char4 ; $40c3 jumptable
+	dw LoadOnCourtCharacterGfx.char3 ; $40c5 jumptable
+	dw LoadOnCourtCharacterGfx.char2 ; $40c7 jumptable
+.char2:
 	wram_bank $06 ; $40c9
 	ld a, [$df7e] ; $40cf
 	ld de, $8100 ; $40d2
@@ -116,7 +116,7 @@ Label_09_40c9:
 	ld a, [$df7e] ; $40d8
 	ld de, $8140 ; $40db
 	farcall LoadOnCourtCharTilesB ; $40de
-Label_09_40e1:
+.char3:
 	wram_bank $07 ; $40e1
 	ld a, [$df7e] ; $40e7
 	ld de, $8180 ; $40ea
@@ -124,7 +124,7 @@ Label_09_40e1:
 	ld a, [$df7e] ; $40f0
 	ld de, $81c0 ; $40f3
 	farcall LoadOnCourtCharTilesB ; $40f6
-Label_09_40f9:
+.char4:
 	wram_bank $05 ; $40f9
 	ld a, [$df7e] ; $40ff
 	ld de, $8080 ; $4102
@@ -132,7 +132,7 @@ Label_09_40f9:
 	ld a, [$df7e] ; $4108
 	ld de, $80c0 ; $410b
 	farcall LoadOnCourtCharTilesB ; $410e
-Label_09_4111:
+.done:
 	wram_bank $04 ; $4111
 	ld a, [$df7e] ; $4117
 	ld de, $8000 ; $411a

@@ -259,24 +259,24 @@ TickRallyTimers:
 	ld hl, $c4b5 ; $4247
 	ld a, [hl] ; $424a
 	cp a, $64 ; $424b
-	jr nc, Label_08_4250 ; $424d
+	jr nc, .checkFirstShot ; $424d
 	inc [hl] ; $424f
-Label_08_4250:
+.checkFirstShot:
 	ld a, [wRallyLength] ; $4250
 	cp a, $01 ; $4253
-	jr nz, Label_08_426e ; $4255
+	jr nz, .modeHook ; $4255
 	ld a, [wPointOutcome] ; $4257
 	and a, a ; $425a
-	jr nz, Label_08_4262 ; $425b
+	jr nz, .checkBounce ; $425b
 	ld a, $01 ; $425d
 	ld [wCameraFollowBall], a ; $425f
-Label_08_4262:
+.checkBounce:
 	ld a, [wBallHasBouncedFlag] ; $4262
 	and a, a ; $4265
-	jr z, Label_08_426e ; $4266
+	jr z, .modeHook ; $4266
 	ld hl, $4274 ; $4268
 	call ForEachCharBank ; $426b
-Label_08_426e:
+.modeHook:
 	ld d, $06 ; $426e
 	call CallModeHook ; $4270
 	ret ; $4273
@@ -976,22 +976,22 @@ FindServerCharBank:
 RunMatchPlayLoop:
 	ld a, [wGameMode] ; $4714
 	cp a, $02 ; $4717
-	jr z, Label_08_4721 ; $4719
+	jr z, .markChangeEnds ; $4719
 	ld a, [$c8f5] ; $471b
 	and a, a ; $471e
-	jr nz, Label_08_4726 ; $471f
-Label_08_4721:
+	jr nz, .setLoop ; $471f
+.markChangeEnds:
 	ld hl, $c4cc ; $4721
 	ld [hl], $01 ; $4724
-Label_08_4726:
+.setLoop:
 	call PlaySet ; $4726
 	ld a, [wMatchAbortFlag] ; $4729
 	and a, $80 ; $472c
-	jr nz, Label_08_4736 ; $472e
+	jr nz, .done ; $472e
 	ld a, [wMatchWinLoseFlag] ; $4730
 	and a, a ; $4733
-	jr z, Label_08_4726 ; $4734
-Label_08_4736:
+	jr z, .setLoop ; $4734
+.done:
 	ret ; $4736
 PlaySet:
 	ld hl, CheckSetComplete ; $4737
@@ -1896,25 +1896,25 @@ ComputePairSpread:
 	sbc a, d ; $5073
 	ld h, a ; $5074
 	bit 7, h ; $5075
-	jr z, Label_08_507f ; $5077
+	jr z, .checkRange ; $5077
 	xor a, a ; $5079
 	sub a, l ; $507a
 	ld l, a ; $507b
 	sbc a, a ; $507c
 	sub a, h ; $507d
 	ld h, a ; $507e
-Label_08_507f:
+.checkRange:
 	ld bc, $fe00 ; $507f
 	add hl, bc ; $5082
 	pop hl ; $5083
-	jr nc, Label_08_5089 ; $5084
+	jr nc, .absFirst ; $5084
 	ld c, l ; $5086
 	ld b, h ; $5087
 	ret ; $5088
-Label_08_5089:
+.absFirst:
 	push hl ; $5089
 	bit 7, h ; $508a
-	jr z, Label_08_509a ; $508c
+	jr z, .absSecond ; $508c
 	xor a, a ; $508e
 	sub a, l ; $508f
 	ld l, a ; $5090
@@ -1927,7 +1927,7 @@ Label_08_5089:
 	sbc a, a ; $5097
 	sub a, d ; $5098
 	ld d, a ; $5099
-Label_08_509a:
+.absSecond:
 	push hl ; $509a
 	add hl, de ; $509b
 	sra h ; $509c
@@ -1939,9 +1939,9 @@ Label_08_509a:
 	ld hl, rJOYP ; $50a6
 	add hl, bc ; $50a9
 	bit 7, h ; $50aa
-	jr z, Label_08_50b1 ; $50ac
+	jr z, .compare ; $50ac
 	ld bc, $0100 ; $50ae
-Label_08_50b1:
+.compare:
 	pop hl ; $50b1
 	ld a, l ; $50b2
 	sub a, e ; $50b3
@@ -1949,23 +1949,23 @@ Label_08_50b1:
 	ld a, h ; $50b5
 	sbc a, d ; $50b6
 	ld h, a ; $50b7
-	jr nc, Label_08_50c2 ; $50b8
+	jr nc, .useFirst ; $50b8
 	ld hl, $0200 ; $50ba
 	add hl, bc ; $50bd
 	ld e, l ; $50be
 	ld d, h ; $50bf
-	jr Label_08_50ca ; $50c0
-Label_08_50c2:
+	jr .useSecond ; $50c0
+.useFirst:
 	ld e, c ; $50c2
 	ld d, b ; $50c3
 	ld hl, $0200 ; $50c4
 	add hl, de ; $50c7
 	ld c, l ; $50c8
 	ld b, h ; $50c9
-Label_08_50ca:
+.useSecond:
 	pop hl ; $50ca
 	bit 7, h ; $50cb
-	jr z, Label_08_50db ; $50cd
+	jr z, .done ; $50cd
 	xor a, a ; $50cf
 	sub a, c ; $50d0
 	ld c, a ; $50d1
@@ -1978,7 +1978,7 @@ Label_08_50ca:
 	sbc a, a ; $50d8
 	sub a, d ; $50d9
 	ld d, a ; $50da
-Label_08_50db:
+.done:
 	ret ; $50db
 BallTrailPalettes:
 	; $50dc, 64 bytes (records:8)
@@ -2268,26 +2268,26 @@ Label_08_52b1:
 StartLandingMarker:
 	ld a, [wCurrentShotType] ; $52da
 	cp a, SHOTTYPE_LOB ; $52dd
-	jr z, Label_08_52e8 ; $52df
+	jr z, .place ; $52df
 	ld a, [wFallbackTrajectoryFlag] ; $52e1
 	and a, a ; $52e4
-	jr nz, Label_08_52e8 ; $52e5
+	jr nz, .place ; $52e5
 	ret ; $52e7
-Label_08_52e8:
+.place:
 	ld hl, $fec0 ; $52e8
 	call OffsetFromBallLanding ; $52eb
 	push hl ; $52ee
 	ld l, e ; $52ef
 	ld h, d ; $52f0
 	bit 7, h ; $52f1
-	jr z, Label_08_52fb ; $52f3
+	jr z, .checkX ; $52f3
 	xor a, a ; $52f5
 	sub a, l ; $52f6
 	ld l, a ; $52f7
 	sbc a, a ; $52f8
 	sub a, h ; $52f9
 	ld h, a ; $52fa
-Label_08_52fb:
+.checkX:
 	ld bc, $ff80 ; $52fb
 	add hl, bc ; $52fe
 	bit 7, h ; $52ff
@@ -2297,25 +2297,25 @@ Label_08_52fb:
 	ld l, e ; $5304
 	ld h, d ; $5305
 	bit 7, h ; $5306
-	jr z, Label_08_5310 ; $5308
+	jr z, .checkDepth ; $5308
 	xor a, a ; $530a
 	sub a, l ; $530b
 	ld l, a ; $530c
 	sbc a, a ; $530d
 	sub a, h ; $530e
 	ld h, a ; $530f
-Label_08_5310:
+.checkDepth:
 	ld bc, rJOYP ; $5310
 	add hl, bc ; $5313
 	bit 7, h ; $5314
 	pop hl ; $5316
-	jr z, Label_08_5326 ; $5317
+	jr z, .done ; $5317
 	ld a, [wBallTargetDepth + 1] ; $5319
 	bit 7, a ; $531c
 	ld de, $0100 ; $531e
-	jr z, Label_08_5326 ; $5321
+	jr z, .done ; $5321
 	ld de, rJOYP ; $5323
-Label_08_5326:
+.done:
 	ld bc, $0000 ; $5326
 	call ProjectWorldToScreen_08 ; $5329
 	ld e, l ; $532c
@@ -2964,14 +2964,14 @@ StepBallPhysics:
 	call ApplyBallSpin ; $57b0
 	call GetBallHeightSign ; $57b3
 	cp a, $ff ; $57b6
-	jr z, Label_08_57bc ; $57b8
-	jr Label_08_57c6 ; $57ba
-Label_08_57bc:
+	jr z, .rising ; $57b8
+	jr .falling ; $57ba
+.rising:
 	ld de, $4a00 ; $57bc
 	ld hl, $c426 ; $57bf
 	call AddDEToMem24 ; $57c2
 	ret ; $57c5
-Label_08_57c6:
+.falling:
 	call ApplyCourtBounceDamping ; $57c6
 	ld hl, $c408 ; $57c9
 	ld a, [hl] ; $57cc
@@ -2992,7 +2992,7 @@ Label_08_57c6:
 	ld [hl+], a ; $57df
 	call GetBallHeightSign ; $57e0
 	and a, a ; $57e3
-	jr z, Label_08_5813 ; $57e4
+	jr z, .done ; $57e4
 	ld a, $01 ; $57e6
 	ld [wBallBounceEvent], a ; $57e8
 	ld hl, $c426 ; $57eb
@@ -3012,7 +3012,7 @@ Label_08_57c6:
 	ld de, $0250 ; $57fd
 	add hl, de ; $5800
 	bit 7, h ; $5801
-	jr nz, Label_08_5813 ; $5803
+	jr nz, .done ; $5803
 	xor a, a ; $5805
 	ld hl, $c408 ; $5806
 	ld [hl+], a ; $5809
@@ -3023,7 +3023,7 @@ Label_08_57c6:
 	ld [hl+], a ; $5810
 	ld [hl+], a ; $5811
 	ld [hl+], a ; $5812
-Label_08_5813:
+.done:
 	ret ; $5813
 HandleBallNetCrossing:
 	xor a, a ; $5814
@@ -3829,19 +3829,19 @@ Label_08_5ce7:
 CheckSetWon:
 	ld a, [wMatchTypeNumberOfGames] ; $5ce9
 	cp a, $02 ; $5cec
-	jp z, Label_08_5d14 ; $5cee
+	jp z, .checkTiebreak ; $5cee
 	ld a, [wPlayer1GamesWon] ; $5cf1
 	ld d, a ; $5cf4
 	cp a, $07 ; $5cf5
-	jr nz, Label_08_5cfa ; $5cf7
+	jr nz, .readPlayer2 ; $5cf7
 	inc d ; $5cf9
-Label_08_5cfa:
+.readPlayer2:
 	ld a, [wPlayer2GamesWon] ; $5cfa
 	ld e, a ; $5cfd
 	cp a, $07 ; $5cfe
-	jr nz, Label_08_5d03 ; $5d00
+	jr nz, .winByTwo ; $5d00
 	inc e ; $5d02
-Label_08_5d03:
+.winByTwo:
 	ld b, $06 ; $5d03
 	ld c, $06 ; $5d05
 	call EvalWinByTwo ; $5d07
@@ -3851,19 +3851,19 @@ Label_08_5d03:
 	ld [wTiebreakerIndicator], a ; $5d0f
 	xor a, a ; $5d12
 	ret ; $5d13
-Label_08_5d14:
+.checkTiebreak:
 	ld a, [wPlayer1GamesWon] ; $5d14
 	ld d, a ; $5d17
 	cp a, $03 ; $5d18
-	jr nz, Label_08_5d1d ; $5d1a
+	jr nz, .setWon ; $5d1a
 	inc d ; $5d1c
-Label_08_5d1d:
+.setWon:
 	ld a, [wPlayer2GamesWon] ; $5d1d
 	ld e, a ; $5d20
 	cp a, $03 ; $5d21
-	jr nz, Label_08_5d26 ; $5d23
+	jr nz, .done ; $5d23
 	inc e ; $5d25
-Label_08_5d26:
+.done:
 	ld b, $02 ; $5d26
 	ld c, $02 ; $5d28
 	call EvalWinByTwo ; $5d2a
@@ -4269,26 +4269,26 @@ CheckAllCharsPhaseDone:
 	ld b, $ff ; $6066
 	ld a, [wOnCourtCharCountMinus1] ; $6068
 	rst Rst00 ; $606b
-	dw Label_08_608f ; $606c jumptable
-	dw Label_08_6086 ; $606e jumptable
-	dw Label_08_607d ; $6070 jumptable
-	dw Label_08_6074 ; $6072 jumptable
-Label_08_6074:
+	dw CheckAllCharsPhaseDone.char1 ; $606c jumptable
+	dw CheckAllCharsPhaseDone.char2 ; $606e jumptable
+	dw CheckAllCharsPhaseDone.char3 ; $6070 jumptable
+	dw CheckAllCharsPhaseDone.char4 ; $6072 jumptable
+.char4:
 	wram_bank $06 ; $6074
 	ld a, [de] ; $607a
 	and a, b ; $607b
 	ld b, a ; $607c
-Label_08_607d:
+.char3:
 	wram_bank $07 ; $607d
 	ld a, [de] ; $6083
 	and a, b ; $6084
 	ld b, a ; $6085
-Label_08_6086:
+.char2:
 	wram_bank $05 ; $6086
 	ld a, [de] ; $608c
 	and a, b ; $608d
 	ld b, a ; $608e
-Label_08_608f:
+.char1:
 	wram_bank $04 ; $608f
 	ld a, [de] ; $6095
 	and a, b ; $6096
@@ -4387,18 +4387,18 @@ PlayCourtIntro:
 	ld b, $44 ; $6117
 	ld a, [$c8f5] ; $6119
 	and a, a ; $611c
-	jr z, Label_08_6121 ; $611d
+	jr z, .playFanfare ; $611d
 	ld b, $45 ; $611f
-Label_08_6121:
+.playFanfare:
 	ld a, b ; $6121
 	call PlaySoundManaged ; $6122
 	ld a, [wGameMode] ; $6125
 	cp a, $02 ; $6128
-	jr z, Label_08_6132 ; $612a
+	jr z, .panCamera ; $612a
 	ld a, [$c8f5] ; $612c
 	and a, a ; $612f
-	jr nz, Label_08_6171 ; $6130
-Label_08_6132:
+	jr nz, .done ; $6130
+.panCamera:
 	ld d, $00 ; $6132
 	ld e, $00 ; $6134
 	ld a, d ; $6136
@@ -4410,23 +4410,23 @@ Label_08_6132:
 	ld b, $30 ; $6141
 	ld hl, $0200 ; $6143
 	call PanCamera ; $6146
-	jr nz, Label_08_6171 ; $6149
+	jr nz, .done ; $6149
 	ld b, $38 ; $614b
 	ld hl, $0002 ; $614d
 	call PanCamera ; $6150
-	jr nz, Label_08_6171 ; $6153
+	jr nz, .done ; $6153
 	ld b, $30 ; $6155
 	ld hl, $fe00 ; $6157
 	call PanCamera ; $615a
-	jr nz, Label_08_6171 ; $615d
+	jr nz, .done ; $615d
 	ld b, $1e ; $615f
 	ld hl, $00fe ; $6161
 	call PanCamera ; $6164
-	jr nz, Label_08_6171 ; $6167
+	jr nz, .done ; $6167
 	ld b, $1a ; $6169
 	ld hl, $0200 ; $616b
 	call PanCamera ; $616e
-Label_08_6171:
+.done:
 	call ResetCameraForServe ; $6171
 	call UpdateMatchCamera ; $6174
 	ret ; $6177
@@ -5003,30 +5003,30 @@ RunMinigamePointLoop:
 	call CallModeHook ; $65d7
 	ld a, [wMatchAbortFlag] ; $65da
 	and a, $80 ; $65dd
-	jr nz, Label_08_6630 ; $65df
-Label_08_65e1:
+	jr nz, .done ; $65df
+.pointLoop:
 	call LoadMinigamePointLayout ; $65e1
 	call ResetPointState ; $65e4
 	ld d, $01 ; $65e7
 	call CallModeHook ; $65e9
 	ld a, [wMatchAbortFlag] ; $65ec
 	and a, $80 ; $65ef
-	jr nz, Label_08_6630 ; $65f1
+	jr nz, .done ; $65f1
 	ld a, [$c7b8] ; $65f3
 	and a, a ; $65f6
-	jr nz, Label_08_65ff ; $65f7
+	jr nz, .playPoint ; $65f7
 	ld hl, $4f91 ; $65f9
 	call ForEachCharBank ; $65fc
-Label_08_65ff:
+.playPoint:
 	call PlayMinigamePoint ; $65ff
 	ld a, [wMatchAbortFlag] ; $6602
 	and a, $80 ; $6605
-	jr nz, Label_08_6630 ; $6607
+	jr nz, .done ; $6607
 	ld d, $02 ; $6609
 	call CallModeHook ; $660b
 	ld a, [wMatchAbortFlag] ; $660e
 	and a, $80 ; $6611
-	jr nz, Label_08_6630 ; $6613
+	jr nz, .done ; $6613
 	ld hl, $c7b0 ; $6615
 	ld a, [hl+] ; $6618
 	ld h, [hl] ; $6619
@@ -5037,35 +5037,35 @@ Label_08_65ff:
 	add a, a ; $6620
 	add a, l ; $6621
 	ld l, a ; $6622
-	jr nc, Label_08_6626 ; $6623
+	jr nc, .nextPoint ; $6623
 	inc h ; $6625
-Label_08_6626:
+.nextPoint:
 	ld a, [wModeHookBank] ; $6626
 	call FarReadByte ; $6629
 	cp a, $ff ; $662c
-	jr nz, Label_08_65e1 ; $662e
-Label_08_6630:
+	jr nz, .pointLoop ; $662e
+.done:
 	ret ; $6630
 PlayMinigamePoint:
 	farcall LoadServeGfx ; $6631
 	call StepMatchFrame ; $6634
 	ld a, $01 ; $6637
 	ld [$c4c5], a ; $6639
-Label_08_663c:
+.rallyLoop:
 	call StepMatchFrame ; $663c
 	ld a, [wMatchAbortFlag] ; $663f
 	and a, $01 ; $6642
-	jr nz, Label_08_664c ; $6644
+	jr nz, .pointOver ; $6644
 	ld a, [wPointOutcome] ; $6646
 	and a, a ; $6649
-	jr z, Label_08_663c ; $664a
-Label_08_664c:
+	jr z, .rallyLoop ; $664a
+.pointOver:
 	ld a, [wPointOutcome] ; $664c
 	cp a, $09 ; $664f
-	jr nz, Label_08_6658 ; $6651
+	jr nz, .settle ; $6651
 	ld a, $28 ; $6653
 	call StepMatchFrames ; $6655
-Label_08_6658:
+.settle:
 	call EndPointBallEffects ; $6658
 	call HandleServeFault ; $665b
 	call FlagServiceReturnAce ; $665e
@@ -5437,21 +5437,21 @@ InitAllChars:
 	ld b, $00 ; $68b7
 	ld a, [wMatchIsDoubles] ; $68b9
 	and a, a ; $68bc
-	jr nz, Label_08_68c7 ; $68bd
+	jr nz, .storeShadowFlag ; $68bd
 	ld a, [$c33f] ; $68bf
 	and a, a ; $68c2
-	jr nz, Label_08_68c7 ; $68c3
+	jr nz, .storeShadowFlag ; $68c3
 	ld b, $01 ; $68c5
-Label_08_68c7:
+.storeShadowFlag:
 	ld a, b ; $68c7
 	ld [wStandingShadowsEnabled], a ; $68c8
 	ld a, [wOnCourtCharCountMinus1] ; $68cb
 	rst Rst00 ; $68ce
-	dw Label_08_6910 ; $68cf jumptable
-	dw Label_08_68fd ; $68d1 jumptable
-	dw Label_08_68ea ; $68d3 jumptable
-	dw Label_08_68d7 ; $68d5 jumptable
-Label_08_68d7:
+	dw InitAllChars.char1 ; $68cf jumptable
+	dw InitAllChars.char2 ; $68d1 jumptable
+	dw InitAllChars.char3 ; $68d3 jumptable
+	dw InitAllChars.char4 ; $68d5 jumptable
+.char4:
 	wram_bank $06 ; $68d7
 	ld a, [wPlayer1CurrentPartnerCharacter] ; $68dd
 	ld d, a ; $68e0
@@ -5459,7 +5459,7 @@ Label_08_68d7:
 	ld e, a ; $68e4
 	ld a, $02 ; $68e5
 	call InitChar ; $68e7
-Label_08_68ea:
+.char3:
 	wram_bank $07 ; $68ea
 	ld a, [wPlayer2CurrentPartnerCharacter] ; $68f0
 	ld d, a ; $68f3
@@ -5467,7 +5467,7 @@ Label_08_68ea:
 	ld e, a ; $68f7
 	ld a, $03 ; $68f8
 	call InitChar ; $68fa
-Label_08_68fd:
+.char2:
 	wram_bank $05 ; $68fd
 	ld a, [wPlayer2CurrentMainCharacter] ; $6903
 	ld d, a ; $6906
@@ -5475,7 +5475,7 @@ Label_08_68fd:
 	ld e, a ; $690a
 	ld a, $01 ; $690b
 	call InitChar ; $690d
-Label_08_6910:
+.char1:
 	wram_bank $04 ; $6910
 	ld a, [wPlayer1CurrentMainCharacter] ; $6916
 	ld d, a ; $6919
@@ -5946,23 +5946,23 @@ Label_08_6c98:
 ResetSwingAnimation:
 	ld a, [$df2e] ; $6c99
 	cp a, $08 ; $6c9c
-	jr z, Label_08_6ca6 ; $6c9e
+	jr z, .toIdle ; $6c9e
 	cp a, $0c ; $6ca0
-	jr z, Label_08_6ca6 ; $6ca2
-	jr Label_08_6cb2 ; $6ca4
-Label_08_6ca6:
+	jr z, .toIdle ; $6ca2
+	jr .checkAnim ; $6ca4
+.toIdle:
 	ld hl, wCharFlags ; $6ca6
 	bit 2, [hl] ; $6ca9
-	jr nz, Label_08_6cb2 ; $6cab
+	jr nz, .checkAnim ; $6cab
 	ld d, $01 ; $6cad
 	call SetCharAnimation ; $6caf
-Label_08_6cb2:
+.checkAnim:
 	ld a, [$df2e] ; $6cb2
 	cp a, $01 ; $6cb5
-	jr nz, Label_08_6cbd ; $6cb7
+	jr nz, .done ; $6cb7
 	xor a, a ; $6cb9
 	ld [$df19], a ; $6cba
-Label_08_6cbd:
+.done:
 	ret ; $6cbd
 CharStandbyState:
 	ld a, [$df19] ; $6cbe
@@ -7429,21 +7429,21 @@ EaseCharFacing:
 	sub a, [hl] ; $75d0
 	ret z ; $75d1
 	bit 7, a ; $75d2
-	jr nz, Label_08_75dd ; $75d4
+	jr nz, .negative ; $75d4
 	cp a, b ; $75d6
-	jr c, Label_08_75da ; $75d7
+	jr c, .stepUp ; $75d7
 	ld a, b ; $75d9
-Label_08_75da:
+.stepUp:
 	add a, [hl] ; $75da
 	ld [hl], a ; $75db
 	ret ; $75dc
-Label_08_75dd:
+.negative:
 	cpl ; $75dd
 	inc a ; $75de
 	cp a, b ; $75df
-	jr c, Label_08_75e3 ; $75e0
+	jr c, .stepDown ; $75e0
 	ld a, b ; $75e2
-Label_08_75e3:
+.stepDown:
 	cpl ; $75e3
 	inc a ; $75e4
 	add a, [hl] ; $75e5
@@ -7452,24 +7452,24 @@ Label_08_75e3:
 UpdateCharFacingOctant:
 	ld a, [$df2e] ; $75e8
 	cp a, $02 ; $75eb
-	jr z, Label_08_7608 ; $75ed
+	jr z, .mirrored ; $75ed
 	cp a, $01 ; $75ef
-	jr z, Label_08_7608 ; $75f1
+	jr z, .mirrored ; $75f1
 	cp a, $12 ; $75f3
-	jr z, Label_08_75fc ; $75f5
+	jr z, .easeToShown ; $75f5
 	ld a, [$df0c] ; $75f7
-	jr Label_08_760d ; $75fa
-Label_08_75fc:
+	jr .toOctant ; $75fa
+.easeToShown:
 	ld a, [wCharFacingShown] ; $75fc
 	ld hl, $df0c ; $75ff
 	sub a, [hl] ; $7602
 	sra a ; $7603
 	add a, [hl] ; $7605
-	jr Label_08_760d ; $7606
-Label_08_7608:
+	jr .toOctant ; $7606
+.mirrored:
 	ld a, [wCharFacingShown] ; $7608
 	add a, $10 ; $760b
-Label_08_760d:
+.toOctant:
 	rlca ; $760d
 	rlca ; $760e
 	rlca ; $760f
@@ -7478,11 +7478,11 @@ Label_08_760d:
 	ld hl, $df32 ; $7613
 	ld a, [hl] ; $7616
 	cp a, d ; $7617
-	jr z, Label_08_7620 ; $7618
+	jr z, .store ; $7618
 	ld [hl], d ; $761a
 	ld hl, $df30 ; $761b
 	set 6, [hl] ; $761e
-Label_08_7620:
+.store:
 	ret ; $7620
 ReloadCharFacingTiles:
 	ld hl, $df30 ; $7621
@@ -7815,22 +7815,22 @@ ReadCharInput:
 	ret ; $7832
 	ldh a, [hLinkState] ; $7833
 	cp a, $02 ; $7835
-	jr z, Label_08_784f ; $7837
+	jr z, .remoteLive ; $7837
 	cp a, $01 ; $7839
-	jr z, Label_08_784b ; $783b
+	jr z, .remoteBuffered ; $783b
 	jr ReadCharPadInput ; $783d
 	ldh a, [hLinkState] ; $783f
 	cp a, $02 ; $7841
-	jr z, Label_08_784b ; $7843
+	jr z, .remoteBuffered ; $7843
 	cp a, $01 ; $7845
-	jr z, Label_08_784f ; $7847
+	jr z, .remoteLive ; $7847
 	jr ReadCharPadInput ; $7849
-Label_08_784b:
+.remoteBuffered:
 	ldh a, [hLinkRemoteInputBuf] ; $784b
-	jr Label_08_7851 ; $784d
-Label_08_784f:
+	jr .store ; $784d
+.remoteLive:
 	ldh a, [hLinkRemoteInput] ; $784f
-Label_08_7851:
+.store:
 	ld [$df1f], a ; $7851
 	ret ; $7854
 ReadCharPadInput:

@@ -2028,22 +2028,22 @@ AdvanceLinkPlayerCount:
 	ret ; $4ce3
 DecodeLinkCommandCode:
 	cp a, $14 ; $4ce4
-	jr nz, Label_07_4cec ; $4ce6
+	jr nz, .code15 ; $4ce6
 	ld a, $0f ; $4ce8
-	jr Label_07_4cfd ; $4cea
-Label_07_4cec:
+	jr .store ; $4cea
+.code15:
 	cp a, $15 ; $4cec
-	jr nz, Label_07_4cf4 ; $4cee
+	jr nz, .code19 ; $4cee
 	ld a, $01 ; $4cf0
-	jr Label_07_4cfd ; $4cf2
-Label_07_4cf4:
+	jr .store ; $4cf2
+.code19:
 	cp a, $19 ; $4cf4
-	jr nz, Label_07_4cfc ; $4cf6
+	jr nz, .passthrough ; $4cf6
 	ld a, $02 ; $4cf8
-	jr Label_07_4cfd ; $4cfa
-Label_07_4cfc:
+	jr .store ; $4cfa
+.passthrough:
 	xor a, a ; $4cfc
-Label_07_4cfd:
+.store:
 	ret ; $4cfd
 ComposeLinkStateByte:
 	push bc ; $4cfe
