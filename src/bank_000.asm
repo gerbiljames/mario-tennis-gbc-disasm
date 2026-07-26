@@ -2666,10 +2666,10 @@ Label_00_0e8d:
 DivAHLByDE:
 	inc d ; $0ea6
 	dec d ; $0ea7
-	jr nz, Label_00_0eaf ; $0ea8
+	jr nz, .wideDivisor ; $0ea8
 	bit 7, e ; $0eaa
 	jp z, DivAHLByE ; $0eac
-Label_00_0eaf:
+.wideDivisor:
 	push bc ; $0eaf
 	ldh [$ffac], a ; $0eb0
 	xor a, a ; $0eb2
@@ -2679,13 +2679,13 @@ Label_00_0eaf:
 	sub a, d ; $0eb6
 	ld b, a ; $0eb7
 	or a, c ; $0eb8
-	jr nz, Label_00_0ec1 ; $0eb9
+	jr nz, .divide ; $0eb9
 	ld a, $ff ; $0ebb
 	ld h, a ; $0ebd
 	ld l, a ; $0ebe
 	pop bc ; $0ebf
 	ret ; $0ec0
-Label_00_0ec1:
+.divide:
 	ld a, l ; $0ec1
 	push af ; $0ec2
 	ldh a, [$ffac] ; $0ec3
@@ -2695,59 +2695,59 @@ Label_00_0ec1:
 	adc a, a ; $0eca
 	rl l ; $0ecb
 	add hl, bc ; $0ecd
-	jr c, Label_00_0ed2 ; $0ece
+	jr c, .bit22 ; $0ece
 	dec a ; $0ed0
 	add hl, de ; $0ed1
-Label_00_0ed2:
+.bit22:
 	adc a, a ; $0ed2
 	rl l ; $0ed3
 	add hl, bc ; $0ed5
-	jr c, Label_00_0eda ; $0ed6
+	jr c, .bit21 ; $0ed6
 	dec a ; $0ed8
 	add hl, de ; $0ed9
-Label_00_0eda:
+.bit21:
 	adc a, a ; $0eda
 	rl l ; $0edb
 	add hl, bc ; $0edd
-	jr c, Label_00_0ee2 ; $0ede
+	jr c, .bit20 ; $0ede
 	dec a ; $0ee0
 	add hl, de ; $0ee1
-Label_00_0ee2:
+.bit20:
 	adc a, a ; $0ee2
 	rl l ; $0ee3
 	add hl, bc ; $0ee5
-	jr c, Label_00_0eea ; $0ee6
+	jr c, .bit19 ; $0ee6
 	dec a ; $0ee8
 	add hl, de ; $0ee9
-Label_00_0eea:
+.bit19:
 	adc a, a ; $0eea
 	rl l ; $0eeb
 	add hl, bc ; $0eed
-	jr c, Label_00_0ef2 ; $0eee
+	jr c, .bit18 ; $0eee
 	dec a ; $0ef0
 	add hl, de ; $0ef1
-Label_00_0ef2:
+.bit18:
 	adc a, a ; $0ef2
 	rl l ; $0ef3
 	add hl, bc ; $0ef5
-	jr c, Label_00_0efa ; $0ef6
+	jr c, .bit17 ; $0ef6
 	dec a ; $0ef8
 	add hl, de ; $0ef9
-Label_00_0efa:
+.bit17:
 	adc a, a ; $0efa
 	rl l ; $0efb
 	add hl, bc ; $0efd
-	jr c, Label_00_0f02 ; $0efe
+	jr c, .bit16 ; $0efe
 	dec a ; $0f00
 	add hl, de ; $0f01
-Label_00_0f02:
+.bit16:
 	adc a, a ; $0f02
 	rl l ; $0f03
 	add hl, bc ; $0f05
-	jr c, Label_00_0f0a ; $0f06
+	jr c, .bit15 ; $0f06
 	dec a ; $0f08
 	add hl, de ; $0f09
-Label_00_0f0a:
+.bit15:
 	ldh [$ffae], a ; $0f0a
 	pop af ; $0f0c
 	ld h, $00 ; $0f0d
@@ -2756,66 +2756,66 @@ Label_00_0f0a:
 	rl l ; $0f11
 	rl h ; $0f13
 	add hl, bc ; $0f15
-	jr c, Label_00_0f1a ; $0f16
+	jr c, .bit14 ; $0f16
 	dec a ; $0f18
 	add hl, de ; $0f19
-Label_00_0f1a:
+.bit14:
 	adc a, a ; $0f1a
 	rl l ; $0f1b
 	rl h ; $0f1d
 	add hl, bc ; $0f1f
-	jr c, Label_00_0f24 ; $0f20
+	jr c, .bit13 ; $0f20
 	dec a ; $0f22
 	add hl, de ; $0f23
-Label_00_0f24:
+.bit13:
 	adc a, a ; $0f24
 	rl l ; $0f25
 	rl h ; $0f27
 	add hl, bc ; $0f29
-	jr c, Label_00_0f2e ; $0f2a
+	jr c, .bit12 ; $0f2a
 	dec a ; $0f2c
 	add hl, de ; $0f2d
-Label_00_0f2e:
+.bit12:
 	adc a, a ; $0f2e
 	rl l ; $0f2f
 	rl h ; $0f31
 	add hl, bc ; $0f33
-	jr c, Label_00_0f38 ; $0f34
+	jr c, .bit11 ; $0f34
 	dec a ; $0f36
 	add hl, de ; $0f37
-Label_00_0f38:
+.bit11:
 	adc a, a ; $0f38
 	rl l ; $0f39
 	rl h ; $0f3b
 	add hl, bc ; $0f3d
-	jr c, Label_00_0f42 ; $0f3e
+	jr c, .bit10 ; $0f3e
 	dec a ; $0f40
 	add hl, de ; $0f41
-Label_00_0f42:
+.bit10:
 	adc a, a ; $0f42
 	rl l ; $0f43
 	rl h ; $0f45
 	add hl, bc ; $0f47
-	jr c, Label_00_0f4c ; $0f48
+	jr c, .bit9 ; $0f48
 	dec a ; $0f4a
 	add hl, de ; $0f4b
-Label_00_0f4c:
+.bit9:
 	adc a, a ; $0f4c
 	rl l ; $0f4d
 	rl h ; $0f4f
 	add hl, bc ; $0f51
-	jr c, Label_00_0f56 ; $0f52
+	jr c, .bit8 ; $0f52
 	dec a ; $0f54
 	add hl, de ; $0f55
-Label_00_0f56:
+.bit8:
 	adc a, a ; $0f56
 	rl l ; $0f57
 	rl h ; $0f59
 	add hl, bc ; $0f5b
-	jr c, Label_00_0f60 ; $0f5c
+	jr c, .bit7 ; $0f5c
 	dec a ; $0f5e
 	add hl, de ; $0f5f
-Label_00_0f60:
+.bit7:
 	ldh [$ffad], a ; $0f60
 	pop af ; $0f62
 	scf ; $0f63
@@ -2823,66 +2823,66 @@ Label_00_0f60:
 	rl l ; $0f65
 	rl h ; $0f67
 	add hl, bc ; $0f69
-	jr c, Label_00_0f6e ; $0f6a
+	jr c, .bit6 ; $0f6a
 	dec a ; $0f6c
 	add hl, de ; $0f6d
-Label_00_0f6e:
+.bit6:
 	adc a, a ; $0f6e
 	rl l ; $0f6f
 	rl h ; $0f71
 	add hl, bc ; $0f73
-	jr c, Label_00_0f78 ; $0f74
+	jr c, .bit5 ; $0f74
 	dec a ; $0f76
 	add hl, de ; $0f77
-Label_00_0f78:
+.bit5:
 	adc a, a ; $0f78
 	rl l ; $0f79
 	rl h ; $0f7b
 	add hl, bc ; $0f7d
-	jr c, Label_00_0f82 ; $0f7e
+	jr c, .bit4 ; $0f7e
 	dec a ; $0f80
 	add hl, de ; $0f81
-Label_00_0f82:
+.bit4:
 	adc a, a ; $0f82
 	rl l ; $0f83
 	rl h ; $0f85
 	add hl, bc ; $0f87
-	jr c, Label_00_0f8c ; $0f88
+	jr c, .bit3 ; $0f88
 	dec a ; $0f8a
 	add hl, de ; $0f8b
-Label_00_0f8c:
+.bit3:
 	adc a, a ; $0f8c
 	rl l ; $0f8d
 	rl h ; $0f8f
 	add hl, bc ; $0f91
-	jr c, Label_00_0f96 ; $0f92
+	jr c, .bit2 ; $0f92
 	dec a ; $0f94
 	add hl, de ; $0f95
-Label_00_0f96:
+.bit2:
 	adc a, a ; $0f96
 	rl l ; $0f97
 	rl h ; $0f99
 	add hl, bc ; $0f9b
-	jr c, Label_00_0fa0 ; $0f9c
+	jr c, .bit1 ; $0f9c
 	dec a ; $0f9e
 	add hl, de ; $0f9f
-Label_00_0fa0:
+.bit1:
 	adc a, a ; $0fa0
 	rl l ; $0fa1
 	rl h ; $0fa3
 	add hl, bc ; $0fa5
-	jr c, Label_00_0faa ; $0fa6
+	jr c, .bit0 ; $0fa6
 	dec a ; $0fa8
 	add hl, de ; $0fa9
-Label_00_0faa:
+.bit0:
 	adc a, a ; $0faa
 	rl l ; $0fab
 	rl h ; $0fad
 	add hl, bc ; $0faf
-	jr c, Label_00_0fb4 ; $0fb0
+	jr c, .done ; $0fb0
 	dec a ; $0fb2
 	add hl, de ; $0fb3
-Label_00_0fb4:
+.done:
 	ld l, a ; $0fb4
 	ldh a, [$ffad] ; $0fb5
 	ld h, a ; $0fb7
@@ -2898,173 +2898,173 @@ DivAHLByE:
 	add hl, hl ; $0fc1
 	adc a, a ; $0fc2
 	cp a, e ; $0fc3
-	jr c, Label_00_0fc8 ; $0fc4
+	jr c, .bit22 ; $0fc4
 	inc l ; $0fc6
 	sub a, e ; $0fc7
-Label_00_0fc8:
+.bit22:
 	add hl, hl ; $0fc8
 	adc a, a ; $0fc9
 	cp a, e ; $0fca
-	jr c, Label_00_0fcf ; $0fcb
+	jr c, .bit21 ; $0fcb
 	inc l ; $0fcd
 	sub a, e ; $0fce
-Label_00_0fcf:
+.bit21:
 	add hl, hl ; $0fcf
 	adc a, a ; $0fd0
 	cp a, e ; $0fd1
-	jr c, Label_00_0fd6 ; $0fd2
+	jr c, .bit20 ; $0fd2
 	inc l ; $0fd4
 	sub a, e ; $0fd5
-Label_00_0fd6:
+.bit20:
 	add hl, hl ; $0fd6
 	adc a, a ; $0fd7
 	cp a, e ; $0fd8
-	jr c, Label_00_0fdd ; $0fd9
+	jr c, .bit19 ; $0fd9
 	inc l ; $0fdb
 	sub a, e ; $0fdc
-Label_00_0fdd:
+.bit19:
 	add hl, hl ; $0fdd
 	adc a, a ; $0fde
 	cp a, e ; $0fdf
-	jr c, Label_00_0fe4 ; $0fe0
+	jr c, .bit18 ; $0fe0
 	inc l ; $0fe2
 	sub a, e ; $0fe3
-Label_00_0fe4:
+.bit18:
 	add hl, hl ; $0fe4
 	adc a, a ; $0fe5
 	cp a, e ; $0fe6
-	jr c, Label_00_0feb ; $0fe7
+	jr c, .bit17 ; $0fe7
 	inc l ; $0fe9
 	sub a, e ; $0fea
-Label_00_0feb:
+.bit17:
 	add hl, hl ; $0feb
 	adc a, a ; $0fec
 	cp a, e ; $0fed
-	jr c, Label_00_0ff2 ; $0fee
+	jr c, .bit16 ; $0fee
 	inc l ; $0ff0
 	sub a, e ; $0ff1
-Label_00_0ff2:
+.bit16:
 	add hl, hl ; $0ff2
 	adc a, a ; $0ff3
 	cp a, e ; $0ff4
-	jr c, Label_00_0ff9 ; $0ff5
+	jr c, .bit15 ; $0ff5
 	inc l ; $0ff7
 	sub a, e ; $0ff8
-Label_00_0ff9:
+.bit15:
 	ld b, l ; $0ff9
 	add hl, hl ; $0ffa
 	adc a, a ; $0ffb
 	cp a, e ; $0ffc
-	jr c, Label_00_1001 ; $0ffd
+	jr c, .bit14 ; $0ffd
 	inc l ; $0fff
 	sub a, e ; $1000
-Label_00_1001:
+.bit14:
 	add hl, hl ; $1001
 	adc a, a ; $1002
 	cp a, e ; $1003
-	jr c, Label_00_1008 ; $1004
+	jr c, .bit13 ; $1004
 	inc l ; $1006
 	sub a, e ; $1007
-Label_00_1008:
+.bit13:
 	add hl, hl ; $1008
 	adc a, a ; $1009
 	cp a, e ; $100a
-	jr c, Label_00_100f ; $100b
+	jr c, .bit12 ; $100b
 	inc l ; $100d
 	sub a, e ; $100e
-Label_00_100f:
+.bit12:
 	add hl, hl ; $100f
 	adc a, a ; $1010
 	cp a, e ; $1011
-	jr c, Label_00_1016 ; $1012
+	jr c, .bit11 ; $1012
 	inc l ; $1014
 	sub a, e ; $1015
-Label_00_1016:
+.bit11:
 	add hl, hl ; $1016
 	adc a, a ; $1017
 	cp a, e ; $1018
-	jr c, Label_00_101d ; $1019
+	jr c, .bit10 ; $1019
 	inc l ; $101b
 	sub a, e ; $101c
-Label_00_101d:
+.bit10:
 	add hl, hl ; $101d
 	adc a, a ; $101e
 	cp a, e ; $101f
-	jr c, Label_00_1024 ; $1020
+	jr c, .bit9 ; $1020
 	inc l ; $1022
 	sub a, e ; $1023
-Label_00_1024:
+.bit9:
 	add hl, hl ; $1024
 	adc a, a ; $1025
 	cp a, e ; $1026
-	jr c, Label_00_102b ; $1027
+	jr c, .bit8 ; $1027
 	inc l ; $1029
 	sub a, e ; $102a
-Label_00_102b:
+.bit8:
 	add hl, hl ; $102b
 	adc a, a ; $102c
 	cp a, e ; $102d
-	jr c, Label_00_1032 ; $102e
+	jr c, .bit7 ; $102e
 	inc l ; $1030
 	sub a, e ; $1031
-Label_00_1032:
+.bit7:
 	ld h, c ; $1032
 	add hl, hl ; $1033
 	adc a, a ; $1034
 	cp a, e ; $1035
-	jr c, Label_00_103a ; $1036
+	jr c, .bit6 ; $1036
 	inc l ; $1038
 	sub a, e ; $1039
-Label_00_103a:
+.bit6:
 	add hl, hl ; $103a
 	adc a, a ; $103b
 	cp a, e ; $103c
-	jr c, Label_00_1041 ; $103d
+	jr c, .bit5 ; $103d
 	inc l ; $103f
 	sub a, e ; $1040
-Label_00_1041:
+.bit5:
 	add hl, hl ; $1041
 	adc a, a ; $1042
 	cp a, e ; $1043
-	jr c, Label_00_1048 ; $1044
+	jr c, .bit4 ; $1044
 	inc l ; $1046
 	sub a, e ; $1047
-Label_00_1048:
+.bit4:
 	add hl, hl ; $1048
 	adc a, a ; $1049
 	cp a, e ; $104a
-	jr c, Label_00_104f ; $104b
+	jr c, .bit3 ; $104b
 	inc l ; $104d
 	sub a, e ; $104e
-Label_00_104f:
+.bit3:
 	add hl, hl ; $104f
 	adc a, a ; $1050
 	cp a, e ; $1051
-	jr c, Label_00_1056 ; $1052
+	jr c, .bit2 ; $1052
 	inc l ; $1054
 	sub a, e ; $1055
-Label_00_1056:
+.bit2:
 	add hl, hl ; $1056
 	adc a, a ; $1057
 	cp a, e ; $1058
-	jr c, Label_00_105d ; $1059
+	jr c, .bit1 ; $1059
 	inc l ; $105b
 	sub a, e ; $105c
-Label_00_105d:
+.bit1:
 	add hl, hl ; $105d
 	adc a, a ; $105e
 	cp a, e ; $105f
-	jr c, Label_00_1064 ; $1060
+	jr c, .bit0 ; $1060
 	inc l ; $1062
 	sub a, e ; $1063
-Label_00_1064:
+.bit0:
 	add hl, hl ; $1064
 	adc a, a ; $1065
 	cp a, e ; $1066
-	jr c, Label_00_106b ; $1067
+	jr c, .done ; $1067
 	inc l ; $1069
 	sub a, e ; $106a
-Label_00_106b:
+.done:
 	ld a, b ; $106b
 	pop bc ; $106c
 	ret ; $106d
