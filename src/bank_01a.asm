@@ -3517,7 +3517,7 @@ SetupCharViewerScene:
 	ld d, a ; $6f4c
 	wram_bank $04 ; $6f4d
 	ldh a, [hRomBank] ; $6f53
-	ld hl, $6fcf ; $6f55
+	ld hl, CharViewerSceneActors_1a ; $6f55
 	farcall SpawnActorsFromList ; $6f58
 	ld bc, $d000 ; $6f5b
 	farcall LoadActorObjectDefIfValid ; $6f5e
@@ -3561,6 +3561,7 @@ SetupCharViewerScene:
 	ld hl, $df36 ; $6fc9
 	ld [hl], $60 ; $6fcc
 	ret ; $6fce
+CharViewerSceneActors_1a:
 	; $6fcf, 67 bytes (map_actors)
 	map_actor $0000, $7011, $0f00, $0400, FACE_DOWN, $26, $01, $00
 	map_actor $0000, $7011, $1180, $0400, FACE_LEFT, $26, $01, $00

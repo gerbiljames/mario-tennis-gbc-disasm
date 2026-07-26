@@ -1043,9 +1043,10 @@ DevelopmentMapScripts_10:
 	dw DevelopmentTileTriggers_10 ; slot 5 TileTriggers
 	dw DevelopmentInitScript_10 ; slot 6 InitScript
 DevelopmentActors_10:
-	; $4cd9, 20 bytes (map_actors)
+	; $4cd9, 10 bytes (map_actors)
 	map_actor_end
-	map_actor_end
+DevelopmentRespawnActorList_10:
+	INCBIN "data/bank_010/d_4ce3.bin" ; $4ce3, 10 bytes
 DevelopmentEntryPoints_10:
 	; $4ced, 9 bytes (map_entries)
 	map_entry $01, FACE_DOWN, $0900, $0900, $0000
@@ -1059,7 +1060,7 @@ DevelopmentRespawnActors_10:
 	call BeginFadeOut ; $4d01
 	call WaitFadeEnd ; $4d04
 	ldh a, [hRomBank] ; $4d07
-	ld hl, $4ce3 ; $4d09
+	ld hl, DevelopmentRespawnActorList_10 ; $4d09
 	farcall ScriptRespawnLocationActors ; $4d0c
 	script_fade_in $10 ; $4d0f
 	call WaitFadeEnd ; $4d14
@@ -3381,7 +3382,7 @@ AcademyWingInitScript_10:
 	cp a, $03 ; $6468
 	jr nz, .stage4 ; $646a
 	ldh a, [hRomBank] ; $646c
-	ld hl, $739e ; $646e
+	ld hl, AcademyWingInitActors1_10 ; $646e
 	farcall ScriptRespawnLocationActors ; $6471
 	farcall BeginCutsceneScriptMode ; $6474
 	ld b, $1e ; $6477
@@ -3417,12 +3418,12 @@ AcademyWingInitScript_10:
 	cp a, $0d ; $64d2
 	jp z, .stage6 ; $64d4
 	cp a, $0f ; $64d7
-	jp z, .eq0f ; $64d9
+	jp z, AcademyWingInitActors0_10.eq0f ; $64d9
 	call AcademyWingInstallDoorTriggers_10 ; $64dc
 	ret ; $64df
 .stage6:
 	ldh a, [hRomBank] ; $64e0
-	ld hl, $6f45 ; $64e2
+	ld hl, AcademyWingInitActors0_10 ; $64e2
 	farcall ScriptRespawnLocationActors ; $64e5
 	farcall BeginCutsceneScriptMode ; $64e8
 	script_set_anim $0a, $06 ; $64eb
@@ -3843,6 +3844,7 @@ AcademyWingInitScript_10:
 	ld [$c294], a ; $6f3e
 	ld [wStoryModeExitLocationRequest], a ; $6f41
 	ret ; $6f44
+AcademyWingInitActors0_10:
 	; $6f45, 136 bytes (map_actors)
 	map_actor $0000, ActorScript_10_7bd1, $fd00, $0100, FACE_DOWN, $4e, $01, $00
 	map_actor $0000, ActorScript_10_7bd1, $fd00, $0100, FACE_DOWN, $53, $01, $00
@@ -3856,7 +3858,7 @@ AcademyWingInitScript_10:
 	map_actor_end
 .eq0f:
 	ldh a, [hRomBank] ; $6fcd
-	ld hl, $739e ; $6fcf
+	ld hl, AcademyWingInitActors1_10 ; $6fcf
 	farcall ScriptRespawnLocationActors ; $6fd2
 	farcall BeginCutsceneScriptMode ; $6fd5
 	script_set_anim $04, $06 ; $6fd8
@@ -4039,6 +4041,7 @@ AcademyWingCloseDoor_10:
 	script_copy_scene_rect $03, $38, $20, $38, $02, $02 ; $7387
 	script_wait_frames $04 ; $7396
 	ret ; $739d
+AcademyWingInitActors1_10:
 	; $739e, 80 bytes (map_actors)
 	map_actor $0000, ActorScript_10_7bd1, $2000, $3000, FACE_DOWN, $63, $01, $00
 	map_actor $0000, ActorScript_10_7bd1, $2700, $3240, FACE_DOWN, $74, $01, $00
@@ -4362,7 +4365,7 @@ AcademyMainBldgInitScript_10:
 	ret ; $7740
 AcademyMainBldgNewStudentCutscene_10:
 	ldh a, [hRomBank] ; $7741
-	ld hl, $7980 ; $7743
+	ld hl, AcademyMainBldgNewStudentActors_10 ; $7743
 	farcall ScriptRespawnLocationActors ; $7746
 	farcall BeginCutsceneScriptMode ; $7749
 	script_set_position ACTOR_PLAYER, $2200, $2580 ; $774c
@@ -4457,6 +4460,7 @@ AcademyMainBldgNewStudentCutscene_10:
 	ld [wStoryModeExitLocationRequest], a ; $7979
 	farcall EndCutsceneScriptMode ; $797c
 	ret ; $797f
+AcademyMainBldgNewStudentActors_10:
 	; $7980, 80 bytes (map_actors)
 	map_actor $0000, ActorScript_10_7bd1, $2b00, $0b00, FACE_DOWN, $49, $01, $00
 	map_actor $0000, ActorScript_10_7bd1, $1d00, $1700, FACE_DOWN, $3f, $01, $04

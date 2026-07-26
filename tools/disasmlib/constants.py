@@ -13,7 +13,7 @@
 # `ds` runs -- wrong, and it would have inlined ROM content into the repo.
 SPLITTABLE_SPEC_KINDS = frozenset((
     "bytes", "records", "tilemap", "palettes", "sound_data",
-    "text_ids", "flag_ids",
+    "text_ids", "flag_ids", "map_actors",
 ))
 
 

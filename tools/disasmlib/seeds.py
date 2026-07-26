@@ -105,6 +105,15 @@ def _pointer_load_used(dis, order, idx, o, reg, callees=None):
 REG_PAIRS = {"hl": ("h", "l"), "de": ("d", "e"), "bc": ("b", "c")}
 
 
+def _call_target(dis, off, ins):
+    """Where a call/jump at `off` goes, resolving the farcall convention."""
+    if off in dis.farcalls:
+        return dis.farcalls[off][3]
+    if ins.target is None:
+        return None
+    return target_to_offset(ins.target, off)
+
+
 def _scan_ptr_use(dis, order, i, prev_end, ptr, callees, limit=12):
     added = None   # the pair whose low byte an `add a, <low>` just indexed
     copy = None    # a `ld <dst hi>, <src hi>` awaiting its low half
@@ -126,11 +135,13 @@ def _scan_ptr_use(dis, order, i, prev_end, ptr, callees, limit=12):
         # routine), which is how the VRAM DMA helpers pass their source
         # address down -- QueueVRAMCopy never touches hl itself, it
         # `jp`s to StartVRAMDMAFromHL.
-        if callees and ins.target is not None and (
-                ins.is_call or (ins.is_jump and not ins.is_cond)):
-            tgt = dis.farcalls[no][3] if no in dis.farcalls \
-                else target_to_offset(ins.target, no)
-            if ptr & callees.get(tgt, frozenset()):
+        if callees and (ins.is_call or (ins.is_jump and not ins.is_cond)):
+            # A farcall is `rst $18` and carries no target of its own -- the
+            # bank/entry it resolves to lives in dis.farcalls, so it has to be
+            # checked before the target test or every cross-bank argument is
+            # invisible here.
+            tgt = _call_target(dis, no, ins)
+            if tgt is not None and ptr & callees.get(tgt, frozenset()):
                 return True
         # `ld b, h; ld c, l` moves the pointer to another pair; the value is
         # the same address, so keep tracking it.
@@ -186,11 +197,8 @@ def callee_pointer_regs(dis, overrides=None, rounds=3):
     idx = {o: i for i, o in enumerate(order)}
     entries = set()
     for o, ins in dis.instrs.items():
-        if ins.target is None:
-            continue
         if ins.is_call or (ins.is_jump and not ins.is_cond):
-            tgt = dis.farcalls[o][3] if o in dis.farcalls \
-                else target_to_offset(ins.target, o)
+            tgt = _call_target(dis, o, ins)
             if tgt in dis.instrs:
                 entries.add(tgt)
     seed = {}

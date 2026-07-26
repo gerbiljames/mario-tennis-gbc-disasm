@@ -30,7 +30,7 @@ Everything below is **committed** (HEAD `459357a`); the whole history
 rebuilds byte-perfect. Per-bank progress at any time: `python3
 tools/progress.py` (proven-code bytes, fill runs, label counts, human-named
 counts) and `tools/progress.py --unnamed <bank>` to list still-auto-named
-symbols. **19,841 of 21,541 labels are human-named** (see the caveat in the
+symbols. **19,850 of 21,550 labels are human-named** (see the caveat in the
 auto-split section below) (up from 4,816 on 2026-07-23); what is left is
 data blobs.
 
@@ -4442,7 +4442,7 @@ not: 316 `dw $xxxx` words and 445 `ld hl/de/bc, $xxxx` immediates whose target
 had no label, because it landed inside an `INCBIN` blob or inside a declared
 table. They assemble to the right bytes, but they are addresses frozen at
 their 2001 values -- insert one byte ahead of the target and the pointer
-quietly aims at the wrong place. **95 are left, and all but a handful are
+quietly aims at the wrong place. **84 are left, and all but a handful are
 not pointers at all.**
 
 Three things were missing.
@@ -4631,3 +4631,50 @@ Left: 94 `ld` immediates, of which 17 QueueSprite coordinate pairs, 15
 rest of the same shape are simply not pointers. The genuine ones left are 9
 `ScriptRespawnLocationActors` actor lists (targets interior to a `map_actors`
 run, which cannot be cut) and a dozen singletons.
+
+## Targeting the interior of an actor list (2026-07-26)
+
+Nine `ld hl, list; farcall ScriptRespawnLocationActors` sites were the last
+sizeable group of unresolved pointers, and the diagnosis that they were all
+interior to a `map_actors` run was wrong -- eight of them were something
+simpler, and only one needed the interior work.
+
+**The farcall path was dead code.** A `farcall` is `rst $18`, and
+`Disassembly.decode_at` gives it `target=None` because the bank and entry it
+resolves to live in `dis.farcalls`, not in the operand. The use-gate's callee
+check was written `if ins.target is not None and (ins.is_call or ...)`, so it
+skipped every farcall in the ROM -- no cross-bank argument could ever resolve.
+Both the check and the entry collection now go through a `_call_target` helper
+that consults `dis.farcalls` first. That alone resolved eight of the nine (the
+targets are declared `map_actors` tables, which get a `Data_` label the moment
+the load is vetted), plus the `ApplySpriteBobOffset` and `SpawnActorsFromList`
+sites.
+
+**Cut validity is now structural, not arithmetic.** The ninth target,
+`$10:4ce3`, really is inside a `map_actors` run: a slot can hold several
+back-to-back actor lists (runtime-selected variants), each a run of 14-byte
+records ended by the 9x$00 + $ff sentinel `SpawnActorsFromList` stops on, and a
+pointer into the run selects one of them. A stride check cannot express that,
+so `_valid_cuts` replaced `_stride` as the gatekeeper: for `map_actors` it
+walks the records exactly as `render_map_table` does and allows a cut only
+where a new list begins. The Development map's slot holds two empty lists, and
+the second one now reads:
+
+```
+DevelopmentActors_10:
+        ; $4cd9, 10 bytes (map_actors)
+        map_actor_end
+DevelopmentRespawnActorList_10:
+        ; $4ce3, 10 bytes (map_actors)
+        map_actor_end
+```
+
+Nine more targets named from the script that respawns them
+(`AcademyWingInitActors0`/`1_10`, `CenterCourtSceneVariantActors_11`,
+`CharViewerSceneActors_1a`), so a story script now reads
+`ld hl, AcademyWingInitActors1_10` instead of a bare address.
+
+**84 bare operands left**, none of them a `dw` pointer row except
+`TangentTable`'s tangent value: 17 QueueSprite coordinate pairs, 15
+`ApplySlideOffsetToSpriteX` byte pairs, 17 with no pointer use at all, and
+singletons of the same kind.

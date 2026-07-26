@@ -914,11 +914,9 @@ class Emitter:
             return [(start, end)]
         cuts = set(self._between(self.ptr_cuts, start, end))
         if spec is not None:
-            stride = self._stride(spec)
-            if stride:
-                # Mid-row cuts are not row boundaries; the pointer they came
-                # from falls back to a numeric operand (see run()).
-                cuts = {o for o in cuts if (o - start) % stride == 0}
+            # A cut that is not on a row boundary means the pointer it came
+            # from falls back to a numeric operand (see run()).
+            cuts = self._valid_cuts(spec, start, end, cuts)
         bounds = [start] + sorted(cuts) + [end]
         return list(zip(bounds, bounds[1:]))
 
@@ -936,6 +934,32 @@ class Emitter:
             return int(param)
         return self._STRIDES.get(kind)
 
+    def _actor_list_starts(self, start, end):
+        """Where a new actor list begins inside a `map_actors` run. A slot can
+        hold several back-to-back lists (runtime-selected variants), each 14-byte
+        record run ended by the 9x$00 + $ff sentinel SpawnActorsFromList stops
+        on, and a pointer into the run selects one of them. Mirrors
+        render_map_table's walk so a cut always lands where it starts a list."""
+        rom, out, p = self.rom, set(), start
+        while True:
+            while p + 14 <= end and rom[p + 9] != 0xFF:
+                p += 14
+            if p + 10 > end or rom[p:p + 10] != b"\x00" * 9 + b"\xff":
+                return out
+            p += 10
+            if p >= end:
+                return out
+            out.add(p)
+
+    def _valid_cuts(self, spec, start, end, cuts):
+        """The subset of `cuts` a piece boundary may land on for this spec."""
+        if spec.partition(":")[0] == "map_actors":
+            return cuts & self._actor_list_starts(start, end)
+        stride = self._stride(spec)
+        if not stride:
+            return set(cuts)
+        return {o for o in cuts if (o - start) % stride == 0}
+
     def _splits_itself(self, start, end):
         """True if the region [start, end) renders in pieces, so the run and
         segment scans must not end at a label or pointer target inside it.
@@ -947,11 +971,8 @@ class Emitter:
         spec = self.data_tables.get(start)
         if not is_splittable(spec):
             return False
-        stride = self._stride(spec)
-        if not stride:
-            return True
-        return all((o - start) % stride == 0
-                   for o in self._between(self.ptr_cuts, start, end))
+        cuts = set(self._between(self.ptr_cuts, start, end))
+        return self._valid_cuts(spec, start, end, cuts) == cuts
 
     def _incbin(self, start, length, bank, prefix="d", note=""):
         """Register a blob in the manifest and return its INCBIN line."""

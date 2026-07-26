@@ -5505,7 +5505,7 @@ RulesScreenCharactersTable2:
 	; $7558, 6 bytes (bytes:6)
 	db $02, $02, $02, $0a, $0a, $0a ; 0x00
 DrawRulesNextPageArrow:
-	ld de, $7888 ; $755e
+	ld de, RulesNextPageArrowSprite_17 ; $755e
 	ld c, $00 ; $7561
 	call ApplySpriteWobbleY_17 ; $7563
 	ld b, $08 ; $7566
@@ -5516,7 +5516,9 @@ DrawRulesNextPageArrow:
 RulesScreenTiles:
 	INCBIN "data/bank_017/lz_7570.bin" ; $7570, 512 bytes
 RulesScreenTilemap:
-	INCBIN "data/bank_017/lz_7770.bin" ; $7770, 309 bytes
+	INCBIN "data/bank_017/lz_7770.bin" ; $7770, 280 bytes
+RulesNextPageArrowSprite_17:
+	INCBIN "data/bank_017/d_7888.bin" ; $7888, 29 bytes
 RulesScreenAttrmap:
 	INCBIN "data/bank_017/lz_78a5.bin" ; $78a5, 87 bytes
 RulesScreenPalettes:

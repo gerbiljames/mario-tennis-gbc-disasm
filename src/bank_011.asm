@@ -180,7 +180,7 @@ SetupCenterCourtSceneVariant:
 	ld a, $03 ; $41c5
 	ld [$c2b0], a ; $41c7
 	ldh a, [hRomBank] ; $41ca
-	ld hl, $4213 ; $41cc
+	ld hl, CenterCourtSceneVariantActors_11 ; $41cc
 	farcall ScriptRespawnLocationActors ; $41cf
 	farcall BeginCutsceneScriptMode ; $41d2
 	ret ; $41d5
@@ -203,7 +203,7 @@ SetupCenterCourtSceneVariant:
 	ld a, $06 ; $41f1
 	ld [$c2b0], a ; $41f3
 	ldh a, [hRomBank] ; $41f6
-	ld hl, $4213 ; $41f8
+	ld hl, CenterCourtSceneVariantActors_11 ; $41f8
 	farcall ScriptRespawnLocationActors ; $41fb
 	farcall BeginCutsceneScriptMode ; $41fe
 	ret ; $4201
@@ -217,6 +217,7 @@ SetupCenterCourtSceneVariant:
 	ld a, $04 ; $420d
 	ld [$c2b0], a ; $420f
 	ret ; $4212
+CenterCourtSceneVariantActors_11:
 	; $4213, 234 bytes (map_actors)
 	map_actor $0000, ActorScript_11_7ba9, $0f00, $2e00, FACE_LEFT, $25, $01, $00
 	map_actor $0000, ActorScript_11_7ba9, $0d00, $2700, FACE_DOWN, $25, $01, $00
@@ -509,7 +510,7 @@ AcademyArrivalInitScript_11:
 	cp a, $0a ; $46bd
 	jp z, ActorListEnd_11_4fc5.scriptRespawnLocationActors ; $46bf
 	cp a, $0c ; $46c2
-	jp z, ActorListEnd_11_4fc5.scriptRespawnLocationActors2 ; $46c4
+	jp z, ActorList_11_537d.scriptRespawnLocationActors2 ; $46c4
 	cp a, $0f ; $46c7
 	jr nz, .done ; $46c9
 	call LateStudentCrashCutscene ; $46cb
@@ -922,7 +923,7 @@ ActorListEnd_11_4fc5:
 	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; 0x00
 .scriptRespawnLocationActors:
 	ldh a, [hRomBank] ; $4fcf
-	ld hl, $537d ; $4fd1
+	ld hl, ActorList_11_537d ; $4fd1
 	farcall ScriptRespawnLocationActors ; $4fd4
 	farcall BeginCutsceneScriptMode ; $4fd7
 	test_flag FLAG_DOUBLES ; $4fda
@@ -1076,6 +1077,7 @@ ActorListEnd_11_4fc5:
 	ld [$c294], a ; $5376
 	ld [wStoryModeExitLocationRequest], a ; $5379
 	ret ; $537c
+ActorList_11_537d:
 	; $537d, 94 bytes (map_actors)
 	map_actor $0000, ActorScript_11_7ba9, $1800, $1100, FACE_DOWN, $63, $01, $00
 	map_actor $0000, ActorScript_11_7ba9, $1a00, $1500, FACE_UP, $5c, $01, $00
@@ -1086,7 +1088,7 @@ ActorListEnd_11_4fc5:
 	map_actor_end
 .scriptRespawnLocationActors2:
 	ldh a, [hRomBank] ; $53db
-	ld hl, $546a ; $53dd
+	ld hl, ActorList_11_546a ; $53dd
 	farcall ScriptRespawnLocationActors ; $53e0
 	farcall BeginCutsceneScriptMode ; $53e3
 	script_player_speed $00ff ; $53e6
@@ -1118,6 +1120,7 @@ ActorListEnd_11_4fc5:
 	ld [$c294], a ; $5463
 	ld [wStoryModeExitLocationRequest], a ; $5466
 	ret ; $5469
+ActorList_11_546a:
 	; $546a, 24 bytes (map_actors)
 	map_actor $0000, ActorScript_11_7ba9, $1500, $2f00, FACE_RIGHT, $30, $01, $03
 	map_actor_end
