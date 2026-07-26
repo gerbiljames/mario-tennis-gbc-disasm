@@ -110,19 +110,19 @@ ApplySpriteWobbleY_17:
 	ld hl, $40bd ; $40a7
 	add a, l ; $40aa
 	ld l, a ; $40ab
-	jr nc, Label_17_40af ; $40ac
+	jr nc, .readOffset ; $40ac
 	inc h ; $40ae
-Label_17_40af:
+.readOffset:
 	ld a, [hl] ; $40af
 	ld b, a ; $40b0
 	ld a, c ; $40b1
 	or a, a ; $40b2
-	jr z, Label_17_40b9 ; $40b3
+	jr z, .subtract ; $40b3
 	ld a, b ; $40b5
 	add a, e ; $40b6
 	ld e, a ; $40b7
 	ret ; $40b8
-Label_17_40b9:
+.subtract:
 	ld a, e ; $40b9
 	sub a, b ; $40ba
 	ld e, a ; $40bb

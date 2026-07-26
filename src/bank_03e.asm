@@ -3996,9 +3996,9 @@ Label_3e_5e4a:
 CloseCourtSelect4Panel:
 	ld a, b ; $5e62
 	or a, a ; $5e63
-	jr z, Label_3e_5e7d ; $5e64
+	jr z, .close ; $5e64
 	ld c, $00 ; $5e66
-Label_3e_5e68:
+.openLoop:
 	call AdvanceFrame ; $5e68
 	ld b, $13 ; $5e6b
 	farcall RestoreMenuBgAndDrawPanel ; $5e6d
@@ -4008,11 +4008,11 @@ Label_3e_5e68:
 	inc a ; $5e76
 	ld c, a ; $5e77
 	cp a, $0b ; $5e78
-	jr nz, Label_3e_5e68 ; $5e7a
+	jr nz, .openLoop ; $5e7a
 	ret ; $5e7c
-Label_3e_5e7d:
+.close:
 	ld c, $0c ; $5e7d
-Label_3e_5e7f:
+.closeLoop:
 	call AdvanceFrame ; $5e7f
 	ld b, $12 ; $5e82
 	farcall RestoreMenuBgAndDrawPanel ; $5e84
@@ -4022,7 +4022,7 @@ Label_3e_5e7f:
 	dec a ; $5e8d
 	ld c, a ; $5e8e
 	or a, a ; $5e8f
-	jr nz, Label_3e_5e7f ; $5e90
+	jr nz, .closeLoop ; $5e90
 	ret ; $5e92
 CourtSelect4CursorSpriteTask:
 	farcall TickMenuBgScroll ; $5e93

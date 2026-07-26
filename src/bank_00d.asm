@@ -701,12 +701,12 @@ UpdateMinigameActors:
 	wram_bank $04 ; $44bd
 	ld hl, $dc00 ; $44c3
 	ld c, $07 ; $44c6
-Label_0d_44c8:
+.actorLoop:
 	call UpdateMinigameActor ; $44c8
 	ld de, $0010 ; $44cb
 	add hl, de ; $44ce
 	dec c ; $44cf
-	jr nz, Label_0d_44c8 ; $44d0
+	jr nz, .actorLoop ; $44d0
 	ret ; $44d2
 UpdateMinigameActor:
 	bit 0, [hl] ; $44d3

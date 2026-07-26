@@ -1064,9 +1064,9 @@ CopyTilesAndAttrsRun:
 	ld a, $c8 ; $4978
 	add a, l ; $497a
 	ld l, a ; $497b
-	jr nc, Label_1e_497f ; $497c
+	jr nc, .readAttr ; $497c
 	inc h ; $497e
-Label_1e_497f:
+.readAttr:
 	ld b, [hl] ; $497f
 	wram_bank $02 ; $4980
 	ld a, b ; $4986
@@ -2806,28 +2806,28 @@ ApplyMatchSettingsExpBonus:
 	ld a, d ; $68de
 	and a, $0f ; $68df
 	cp a, $03 ; $68e1
-	jr nz, Label_1e_68e6 ; $68e3
+	jr nz, .checkSets ; $68e3
 	inc b ; $68e5
-Label_1e_68e6:
+.checkSets:
 	ld a, d ; $68e6
 	swap a ; $68e7
 	and a, $0f ; $68e9
 	cp a, $01 ; $68eb
-	jr nz, Label_1e_68f0 ; $68ed
+	jr nz, .applyBonus ; $68ed
 	inc b ; $68ef
-Label_1e_68f0:
+.applyBonus:
 	ld a, b ; $68f0
 	and a, a ; $68f1
 	ret z ; $68f2
 	cp a, $02 ; $68f3
-	jr z, Label_1e_68ff ; $68f5
+	jr z, .doubleExp ; $68f5
 	ld e, l ; $68f7
 	ld d, h ; $68f8
 	sra d ; $68f9
 	rr e ; $68fb
 	add hl, de ; $68fd
 	ret ; $68fe
-Label_1e_68ff:
+.doubleExp:
 	add hl, hl ; $68ff
 	ret ; $6900
 GetOpponentExpTier:

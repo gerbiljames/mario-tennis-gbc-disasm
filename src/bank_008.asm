@@ -1809,10 +1809,10 @@ CharPointEndReaction:
 	ld a, [wPointWinLoseFlag] ; $4fc7
 	ld hl, wCharIndex ; $4fca
 	bit 0, [hl] ; $4fcd
-	jr z, Label_08_4fd3 ; $4fcf
+	jr z, .storeResult ; $4fcf
 	cpl ; $4fd1
 	inc a ; $4fd2
-Label_08_4fd3:
+.storeResult:
 	ld [wCharPointResult], a ; $4fd3
 	ld a, $07 ; $4fd6
 	call SetCharState ; $4fd8
@@ -7909,17 +7909,17 @@ CheckCharNearTarget:
 	sbc a, b ; $78ce
 	ld h, a ; $78cf
 	bit 7, h ; $78d0
-	jr z, Label_08_78da ; $78d2
+	jr z, .absX ; $78d2
 	xor a, a ; $78d4
 	sub a, l ; $78d5
 	ld l, a ; $78d6
 	sbc a, a ; $78d7
 	sub a, h ; $78d8
 	ld h, a ; $78d9
-Label_08_78da:
+.absX:
 	ld de, $ffe8 ; $78da
 	add hl, de ; $78dd
-	jr c, Label_08_7906 ; $78de
+	jr c, .tooFar ; $78de
 	ld hl, wCharPosDepth + 1 ; $78e0
 	ld a, [hl+] ; $78e3
 	ld b, [hl] ; $78e4
@@ -7935,21 +7935,21 @@ Label_08_78da:
 	sbc a, b ; $78f0
 	ld h, a ; $78f1
 	bit 7, h ; $78f2
-	jr z, Label_08_78fc ; $78f4
+	jr z, .absDepth ; $78f4
 	xor a, a ; $78f6
 	sub a, l ; $78f7
 	ld l, a ; $78f8
 	sbc a, a ; $78f9
 	sub a, h ; $78fa
 	ld h, a ; $78fb
-Label_08_78fc:
+.absDepth:
 	ld de, $ffe8 ; $78fc
 	add hl, de ; $78ff
-	jr c, Label_08_7906 ; $7900
+	jr c, .tooFar ; $7900
 	ld a, $01 ; $7902
 	and a, a ; $7904
 	ret ; $7905
-Label_08_7906:
+.tooFar:
 	xor a, a ; $7906
 	ret ; $7907
 AiSteerTowardTarget:
@@ -8025,23 +8025,23 @@ AiRushToBallLanding:
 	ld hl, $fea0 ; $796d
 	call OffsetFromBallLanding ; $7970
 	bit 7, d ; $7973
-	jr z, Label_08_797d ; $7975
+	jr z, .clampTarget ; $7975
 	xor a, a ; $7977
 	sub a, e ; $7978
 	ld e, a ; $7979
 	sbc a, a ; $797a
 	sub a, d ; $797b
 	ld d, a ; $797c
-Label_08_797d:
+.clampTarget:
 	push hl ; $797d
 	ld l, e ; $797e
 	ld h, d ; $797f
 	ld bc, rJOYP ; $7980
 	add hl, bc ; $7983
 	bit 7, h ; $7984
-	jr z, Label_08_798b ; $7986
+	jr z, .setTarget ; $7986
 	ld de, $0100 ; $7988
-Label_08_798b:
+.setTarget:
 	pop hl ; $798b
 	call SetCharTargetMirrored ; $798c
 	jp AiAdvancePhase ; $798f

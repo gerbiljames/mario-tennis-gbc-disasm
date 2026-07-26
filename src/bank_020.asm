@@ -423,9 +423,9 @@ SetBallTargetFromAim_20:
 	pop de ; $4241
 	add a, l ; $4242
 	ld l, a ; $4243
-	jr nc, Label_20_4247 ; $4244
+	jr nc, .readEntry ; $4244
 	inc h ; $4246
-Label_20_4247:
+.readEntry:
 	ld a, [hl+] ; $4247
 	ld h, [hl] ; $4248
 	ld l, a ; $4249

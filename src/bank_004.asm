@@ -1583,7 +1583,7 @@ TryPickRandomReachableTarget:
 	pop hl ; $48ef
 	pop de ; $48f0
 	and a, a ; $48f1
-	jr nz, Label_04_4946 ; $48f2
+	jr nz, .failed ; $48f2
 	push de ; $48f4
 	push hl ; $48f5
 	ld a, [$daf4] ; $48f6
@@ -1593,7 +1593,7 @@ TryPickRandomReachableTarget:
 	pop hl ; $4902
 	pop de ; $4903
 	and a, a ; $4904
-	jr nz, Label_04_4946 ; $4905
+	jr nz, .failed ; $4905
 	push de ; $4907
 	push hl ; $4908
 	ld a, [$daf4] ; $4909
@@ -1604,7 +1604,7 @@ TryPickRandomReachableTarget:
 	pop hl ; $4917
 	pop de ; $4918
 	and a, a ; $4919
-	jr nz, Label_04_4946 ; $491a
+	jr nz, .failed ; $491a
 	push de ; $491c
 	push hl ; $491d
 	ld a, [$daf4] ; $491e
@@ -1615,7 +1615,7 @@ TryPickRandomReachableTarget:
 	pop hl ; $492c
 	pop de ; $492d
 	and a, a ; $492e
-	jr nz, Label_04_4946 ; $492f
+	jr nz, .failed ; $492f
 	push hl ; $4931
 	ld hl, hActorPtr ; $4932
 	ld a, [hl+] ; $4935
@@ -1627,10 +1627,10 @@ TryPickRandomReachableTarget:
 	add hl, bc ; $493f
 	set 7, [hl] ; $4940
 	ld a, $01 ; $4942
-	jr Label_04_4947 ; $4944
-Label_04_4946:
+	jr .done ; $4944
+.failed:
 	xor a, a ; $4946
-Label_04_4947:
+.done:
 	pop bc ; $4947
 	ret ; $4948
 ActorScriptOp_WaitMove2:

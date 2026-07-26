@@ -4333,7 +4333,7 @@ CopyBehaviorMapRect:
 	ld a, c ; $5ff3
 	ld c, b ; $5ff4
 	ld b, $00 ; $5ff5
-Label_0a_5ff7:
+.rowLoop:
 	push af ; $5ff7
 	push bc ; $5ff8
 	push de ; $5ff9
@@ -4355,7 +4355,7 @@ Label_0a_5ff7:
 	add hl, bc ; $600d
 	pop bc ; $600e
 	dec a ; $600f
-	jr nz, Label_0a_5ff7 ; $6010
+	jr nz, .rowLoop ; $6010
 	pop af ; $6012
 	wram_bank ; $6013
 	pop hl ; $6017

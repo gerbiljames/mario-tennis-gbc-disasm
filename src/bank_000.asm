@@ -116,9 +116,9 @@ CallHLInBankA:
 	add a, a ; $019b
 	add a, l ; $019c
 	ld l, a ; $019d
-	jr nc, Label_00_01a1 ; $019e
+	jr nc, .readSlot ; $019e
 	inc h ; $01a0
-Label_00_01a1:
+.readSlot:
 	ld a, [hl+] ; $01a1
 	ld h, [hl] ; $01a2
 	ld l, a ; $01a3

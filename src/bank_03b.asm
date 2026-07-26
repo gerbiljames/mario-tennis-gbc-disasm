@@ -1471,9 +1471,9 @@ DrawChartCharIcon:
 	ld hl, $492e ; $4917
 	add a, l ; $491a
 	ld l, a ; $491b
-	jr nc, Label_3b_491f ; $491c
+	jr nc, .readTile ; $491c
 	inc h ; $491e
-Label_3b_491f:
+.readTile:
 	ld a, [hl] ; $491f
 	pop hl ; $4920
 	ld [hl+], a ; $4921

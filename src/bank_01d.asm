@@ -4508,7 +4508,7 @@ UpdateExpScreenSelectionPalettes:
 	ld [wBGPalettes + 35], a ; $71b6
 	ld a, [wStoryCharacterSlot] ; $71b9
 	or a, a ; $71bc
-	jr nz, Label_1d_71e2 ; $71bd
+	jr nz, .grayOut ; $71bd
 	ld hl, wBGPalettes + 16 ; $71bf
 	call GrayscalePaletteColorInPlace ; $71c2
 	ld hl, wBGPalettes + 18 ; $71c5
@@ -4522,7 +4522,7 @@ UpdateExpScreenSelectionPalettes:
 	ld a, $21 ; $71dc
 	ld [wBGPalettes + 35], a ; $71de
 	ret ; $71e1
-Label_1d_71e2:
+.grayOut:
 	ld hl, wBGPalettes + 8 ; $71e2
 	call GrayscalePaletteColorInPlace ; $71e5
 	ld hl, wBGPalettes + 10 ; $71e8
