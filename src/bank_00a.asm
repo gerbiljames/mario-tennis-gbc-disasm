@@ -1797,7 +1797,7 @@ RunClearStatusSetupMenu:
 	script_fade_in $10 ; $4be3
 	call WaitFadeEnd ; $4be8
 	wram_bank $05 ; $4beb
-Label_0a_4bf1:
+.modeMenu:
 	ld a, [wCharPosDepth + 2] ; $4bf1
 	farcall DrawTextWindowFrame ; $4bf4
 	ld hl, $10e8 ; $4bf7
@@ -1817,26 +1817,26 @@ Label_0a_4bf1:
 	farcall CloseWindow ; $4c1f
 	ld a, [wCharPosX] ; $4c22
 	cp a, $ff ; $4c25
-	jr nz, Label_0a_4c31 ; $4c27
+	jr nz, .checkMode ; $4c27
 	ld a, $08 ; $4c29
 	ld [wCharPosHeight], a ; $4c2b
-	jp Label_0a_4d1e ; $4c2e
-Label_0a_4c31:
+	jp .done ; $4c2e
+.checkMode:
 	or a, a ; $4c31
-	jp z, Label_0a_4c3d ; $4c32
+	jp z, .defaultDoubles ; $4c32
 	ld a, $01 ; $4c35
 	ld [wCharPosHeight], a ; $4c37
-	jp Label_0a_4d1e ; $4c3a
-Label_0a_4c3d:
+	jp .done ; $4c3a
+.defaultDoubles:
 	test_flag FLAG_DOUBLES ; $4c3d
-	jr nz, Label_0a_4c45 ; $4c40
+	jr nz, .doubles ; $4c40
 	xor a, a ; $4c42
-	jr Label_0a_4c47 ; $4c43
-Label_0a_4c45:
+	jr .storeDoubles ; $4c43
+.doubles:
 	ld a, $01 ; $4c45
-Label_0a_4c47:
+.storeDoubles:
 	ld [wCharPosX + 1], a ; $4c47
-Label_0a_4c4a:
+.formatMenu:
 	ld a, [wCharPosDepth + 2] ; $4c4a
 	farcall DrawTextWindowFrame ; $4c4d
 	ld hl, $10e4 ; $4c50
@@ -1856,8 +1856,8 @@ Label_0a_4c4a:
 	farcall CloseWindow ; $4c78
 	ld a, [wCharPosX + 2] ; $4c7b
 	cp a, $ff ; $4c7e
-	jp z, Label_0a_4bf1 ; $4c80
-Label_0a_4c83:
+	jp z, .modeMenu ; $4c80
+.setsMenu:
 	ld a, [wCharPosDepth + 2] ; $4c83
 	farcall DrawTextWindowFrame ; $4c86
 	ld hl, $10e5 ; $4c89
@@ -1877,38 +1877,38 @@ Label_0a_4c83:
 	farcall CloseWindow ; $4cb1
 	ld a, [wCharPosDepth] ; $4cb4
 	cp a, $ff ; $4cb7
-	jp z, Label_0a_4c4a ; $4cb9
+	jp z, .formatMenu ; $4cb9
 	ld a, [wCharPosDepth + 2] ; $4cbc
 	farcall DrawTextWindowFrame ; $4cbf
 	ld hl, $10e6 ; $4cc2
 	ld a, [wCharPosX + 2] ; $4cc5
 	add a, l ; $4cc8
 	ld l, a ; $4cc9
-	jr nc, Label_0a_4ccd ; $4cca
+	jr nc, .drawSetsOption ; $4cca
 	inc h ; $4ccc
-Label_0a_4ccd:
+.drawSetsOption:
 	ld de, $d181 ; $4ccd
 	farcall RenderProportionalTextAt ; $4cd0
 	ld a, [wCharPosDepth + 2] ; $4cd3
 	farcall RedrawWindowRows ; $4cd6
 	ld a, [wCharPosX + 1] ; $4cd9
 	or a, a ; $4cdc
-	jp nz, Label_0a_4ce5 ; $4cdd
+	jp nz, .setsCancel ; $4cdd
 	ld hl, $10db ; $4ce0
-	jr Label_0a_4ce8 ; $4ce3
-Label_0a_4ce5:
+	jr .checkSets ; $4ce3
+.setsCancel:
 	ld hl, $10df ; $4ce5
-Label_0a_4ce8:
+.checkSets:
 	ld a, [wCharPosX + 2] ; $4ce8
 	or a, a ; $4ceb
-	jr z, Label_0a_4cf7 ; $4cec
+	jr z, .storeSets ; $4cec
 	ld a, [wCharPosDepth] ; $4cee
 	inc a ; $4cf1
 	add a, l ; $4cf2
 	ld l, a ; $4cf3
-	jr nc, Label_0a_4cf7 ; $4cf4
+	jr nc, .storeSets ; $4cf4
 	inc h ; $4cf6
-Label_0a_4cf7:
+.storeSets:
 	ld d, $07 ; $4cf7
 	ld e, $00 ; $4cf9
 	farcall CreateMenuWindowFromText ; $4cfb
@@ -1920,10 +1920,10 @@ Label_0a_4cf7:
 	farcall CloseWindow ; $4d0d
 	ld a, [wCharPosDepth + 1] ; $4d10
 	cp a, $ff ; $4d13
-	jp z, Label_0a_4c83 ; $4d15
+	jp z, .setsMenu ; $4d15
 	call ApplyClearStatusFlags ; $4d18
 	call GetClearStatusResultCode ; $4d1b
-Label_0a_4d1e:
+.done:
 	ld hl, wCharPosHeight ; $4d1e
 	ld b, [hl] ; $4d21
 	pop af ; $4d22
@@ -3041,7 +3041,7 @@ RunLocationInitScript:
 RunNpcInteraction:
 	ld [$c2db], a ; $54b5
 	cp a, $02 ; $54b8
-	jp z, Label_0a_5573 ; $54ba
+	jp z, .done ; $54ba
 	push af ; $54bd
 	push bc ; $54be
 	push de ; $54bf
@@ -3054,7 +3054,7 @@ RunNpcInteraction:
 	call FindStoryScriptEntry ; $54c8
 	ld a, h ; $54cb
 	or a, l ; $54cc
-	jp z, Label_0a_556e ; $54cd
+	jp z, .checkRespawn ; $54cd
 	ld a, [$c29b] ; $54d0
 	ld de, $c2c0 ; $54d3
 	ld bc, $0008 ; $54d6
@@ -3075,7 +3075,7 @@ RunNpcInteraction:
 	ld [hl], a ; $54f9
 	ld a, b ; $54fa
 	and a, $08 ; $54fb
-	jr z, Label_0a_5514 ; $54fd
+	jr z, .applyFlags ; $54fd
 	ld hl, $002e ; $54ff
 	add hl, de ; $5502
 	ld a, [hl] ; $5503
@@ -3089,24 +3089,24 @@ RunNpcInteraction:
 	farcall SetActorAnimationChecked ; $550f
 	pop de ; $5512
 	pop bc ; $5513
-Label_0a_5514:
+.applyFlags:
 	ld a, b ; $5514
 	and a, $10 ; $5515
-	jr z, Label_0a_5521 ; $5517
+	jr z, .faceThePlayer ; $5517
 	ld hl, $0005 ; $5519
 	add hl, de ; $551c
 	set 0, [hl] ; $551d
 	set 1, [hl] ; $551f
-Label_0a_5521:
+.faceThePlayer:
 	bit 0, b ; $5521
-	jr z, Label_0a_5530 ; $5523
+	jr z, .runScript ; $5523
 	ld hl, $0014 ; $5525
 	add hl, de ; $5528
 	ld c, [hl] ; $5529
 	ld a, [$daea] ; $552a
 	add a, $80 ; $552d
 	ld [hl], a ; $552f
-Label_0a_5530:
+.runScript:
 	push de ; $5530
 	ld hl, $c2c4 ; $5531
 	ld a, [hl+] ; $5534
@@ -3116,22 +3116,22 @@ Label_0a_5530:
 	call RunStoryScriptOrDialogue ; $553a
 	pop de ; $553d
 	bit 1, b ; $553e
-	jr z, Label_0a_5547 ; $5540
+	jr z, .restoreFlags ; $5540
 	ld hl, $0014 ; $5542
 	add hl, de ; $5545
 	ld [hl], c ; $5546
-Label_0a_5547:
+.restoreFlags:
 	ld a, b ; $5547
 	and a, $10 ; $5548
-	jr z, Label_0a_5554 ; $554a
+	jr z, .restoreAnim ; $554a
 	ld hl, $0005 ; $554c
 	add hl, de ; $554f
 	res 0, [hl] ; $5550
 	res 1, [hl] ; $5552
-Label_0a_5554:
+.restoreAnim:
 	ld a, b ; $5554
 	and a, $08 ; $5555
-	jr z, Label_0a_5566 ; $5557
+	jr z, .clearBusy ; $5557
 	push bc ; $5559
 	push de ; $555a
 	ld c, e ; $555b
@@ -3141,18 +3141,18 @@ Label_0a_5554:
 	farcall SetActorAnimationChecked ; $5561
 	pop de ; $5564
 	pop bc ; $5565
-Label_0a_5566:
+.clearBusy:
 	ld hl, $0019 ; $5566
 	add hl, de ; $5569
 	ld a, [$c2d8] ; $556a
 	ld [hl], a ; $556d
-Label_0a_556e:
+.checkRespawn:
 	pop hl ; $556e
 	pop de ; $556f
 	pop bc ; $5570
 	pop af ; $5571
 	ret ; $5572
-Label_0a_5573:
+.done:
 	ret ; $5573
 RunFacingTileScript:
 	push af ; $5574

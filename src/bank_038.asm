@@ -1865,7 +1865,7 @@ RunExhibitionCharSelectScreen:
 	ld hl, TickMenuBgScrollTask_38 ; $4ea1
 	call RegisterFrameTask ; $4ea4
 	call RefreshCharInfoPanel ; $4ea7
-Label_38_4eaa:
+.frameLoop:
 	call AdvanceFrame ; $4eaa
 	ldh a, [hInputPressed] ; $4ead
 	ld [wMenuInputPressed], a ; $4eaf
@@ -1880,13 +1880,13 @@ Label_38_4eaa:
 	pop de ; $4ec5
 	ld a, [$d824] ; $4ec6
 	or a, a ; $4ec9
-	jr z, Label_38_4ed7 ; $4eca
+	jr z, .confirm ; $4eca
 	call DrawCharGridCharSprites ; $4ecc
 	call RunCpuDifficultySubmenu ; $4ecf
 	ldh a, [hWramBank] ; $4ed2
 	push af ; $4ed4
-	jr Label_38_4f01 ; $4ed5
-Label_38_4ed7:
+	jr .redraw ; $4ed5
+.confirm:
 	call HandleCharGridDpad ; $4ed7
 	call HandleCharGridButtons ; $4eda
 	xor a, a ; $4edd
@@ -1897,25 +1897,25 @@ Label_38_4ed7:
 	wram_bank $03 ; $4ee6
 	ld a, [$d814] ; $4eec
 	cp a, $04 ; $4eef
-	jr z, Label_38_4efe ; $4ef1
+	jr z, .cancel ; $4ef1
 	call DrawCharGridCursorBox ; $4ef3
 	call DrawCharGridCharSprites ; $4ef6
 	call DrawCharGridScrollArrows ; $4ef9
-	jr Label_38_4f01 ; $4efc
-Label_38_4efe:
+	jr .redraw ; $4efc
+.cancel:
 	call DrawCharGridWaitBanner ; $4efe
-Label_38_4f01:
+.redraw:
 	ld a, [$d815] ; $4f01
 	ld b, a ; $4f04
 	pop af ; $4f05
 	wram_bank ; $4f06
 	ld a, b ; $4f0a
 	cp a, $01 ; $4f0b
-	jr z, Label_38_4f15 ; $4f0d
+	jr z, .finish ; $4f0d
 	cp a, $02 ; $4f0f
-	jr z, Label_38_4f36 ; $4f11
-	jr Label_38_4eaa ; $4f13
-Label_38_4f15:
+	jr z, .done ; $4f11
+	jr .frameLoop ; $4f13
+.finish:
 	ld c, $08 ; $4f15
 	call BeginFadeOut ; $4f17
 	call WaitFadeEnd ; $4f1a
@@ -1929,7 +1929,7 @@ Label_38_4f15:
 	set 2, [hl] ; $4f32
 	xor a, a ; $4f34
 	ret ; $4f35
-Label_38_4f36:
+.done:
 	sound $62 ; $4f36
 	ld c, $10 ; $4f38
 	call BeginFadeOut ; $4f3a
@@ -4560,21 +4560,21 @@ RunCpuDifficultySubmenu:
 	wram_bank $03 ; $6219
 	ld a, [$d825] ; $621f
 	or a, a ; $6222
-	jr nz, Label_38_6230 ; $6223
+	jr nz, .inputLoop ; $6223
 	call OpenCpuDifficultyPanel ; $6225
 	call QueueCpuDifficultyPanelToVram ; $6228
 	ld a, $01 ; $622b
 	ld [$d825], a ; $622d
-Label_38_6230:
+.inputLoop:
 	call HandleCpuDifficultyInput ; $6230
 	call DrawCpuDifficultyCursorBox ; $6233
 	ld a, [wMenuInputPressed] ; $6236
 	bit PADB_A, a ; $6239
-	jr nz, Label_38_628d ; $623b
+	jr nz, .confirm ; $623b
 	bit 1, a ; $623d
-	jr nz, Label_38_6243 ; $623f
-	jr Label_38_62c2 ; $6241
-Label_38_6243:
+	jr nz, .cancel ; $623f
+	jr .done ; $6241
+.cancel:
 	call CloseCpuDifficultyPanel ; $6243
 	sound $62 ; $6246
 	wram_bank $03 ; $6248
@@ -4582,27 +4582,27 @@ Label_38_6243:
 	ld a, [$d814] ; $6251
 	add a, l ; $6254
 	ld l, a ; $6255
-	jr nc, Label_38_6259 ; $6256
+	jr nc, .clearDifficulty ; $6256
 	inc h ; $6258
-Label_38_6259:
+.clearDifficulty:
 	xor a, a ; $6259
 	ld [hl], a ; $625a
 	ld hl, $d834 ; $625b
 	ld a, [$d814] ; $625e
 	add a, l ; $6261
 	ld l, a ; $6262
-	jr nc, Label_38_6266 ; $6263
+	jr nc, .clearTaken ; $6263
 	inc h ; $6265
-Label_38_6266:
+.clearTaken:
 	xor a, a ; $6266
 	ld [hl], a ; $6267
 	ld hl, $d816 ; $6268
 	ld a, [$d814] ; $626b
 	add a, l ; $626e
 	ld l, a ; $626f
-	jr nc, Label_38_6273 ; $6270
+	jr nc, .readSlotChar ; $6270
 	inc h ; $6272
-Label_38_6273:
+.readSlotChar:
 	ld a, [hl] ; $6273
 	ld b, $00 ; $6274
 	ld [hl], b ; $6276
@@ -4611,26 +4611,26 @@ Label_38_6273:
 	add a, a ; $627b
 	add a, l ; $627c
 	ld l, a ; $627d
-	jr nc, Label_38_6281 ; $627e
+	jr nc, .clearGridEntry ; $627e
 	inc h ; $6280
-Label_38_6281:
+.clearGridEntry:
 	inc hl ; $6281
 	inc hl ; $6282
 	xor a, a ; $6283
 	ld [hl], a ; $6284
 	call ClearPlayerSlotPortrait ; $6285
 	call BuildVisiblePageSpriteList ; $6288
-	jr Label_38_62b4 ; $628b
-Label_38_628d:
+	jr .advanceSlot ; $628b
+.confirm:
 	sound $5f ; $628d
 	call CloseCpuDifficultyPanel ; $628f
 	ld hl, $d830 ; $6292
 	ld a, [$d814] ; $6295
 	add a, l ; $6298
 	ld l, a ; $6299
-	jr nc, Label_38_629d ; $629a
+	jr nc, .storeDifficulty ; $629a
 	inc h ; $629c
-Label_38_629d:
+.storeDifficulty:
 	ld a, [$d826] ; $629d
 	inc a ; $62a0
 	ld [hl], a ; $62a1
@@ -4638,16 +4638,16 @@ Label_38_629d:
 	call DrawPlayerSlotPortrait ; $62a5
 	call AdvanceToNextPlayerSlot ; $62a8
 	cp a, $ff ; $62ab
-	jr nz, Label_38_62b4 ; $62ad
+	jr nz, .advanceSlot ; $62ad
 	ld a, $01 ; $62af
 	ld [$d815], a ; $62b1
-Label_38_62b4:
+.advanceSlot:
 	call DrawCharGridSlotPrompt ; $62b4
 	ld hl, $d040 ; $62b7
 	ld de, $9840 ; $62ba
 	ld c, $04 ; $62bd
 	call QueueVRAMCopy ; $62bf
-Label_38_62c2:
+.done:
 	pop af ; $62c2
 	wram_bank ; $62c3
 	ret ; $62c7
@@ -4790,24 +4790,24 @@ RunLinkCharSelectScreen:
 	ld [$df00], a ; $63da
 	ld a, [wMatchIsDoubles] ; $63dd
 	or a, a ; $63e0
-	jr nz, Label_38_63f1 ; $63e1
+	jr nz, .singles ; $63e1
 	ldh a, [hLinkState] ; $63e3
 	cp a, $01 ; $63e5
-	jr nz, Label_38_63ed ; $63e7
+	jr nz, .slave4 ; $63e7
 	ld a, $02 ; $63e9
-	jr Label_38_63fd ; $63eb
-Label_38_63ed:
+	jr .storeMode ; $63eb
+.slave4:
 	ld a, $03 ; $63ed
-	jr Label_38_63fd ; $63ef
-Label_38_63f1:
+	jr .storeMode ; $63ef
+.singles:
 	ldh a, [hLinkState] ; $63f1
 	cp a, $01 ; $63f3
-	jr nz, Label_38_63fb ; $63f5
+	jr nz, .slave2 ; $63f5
 	ld a, $04 ; $63f7
-	jr Label_38_63fd ; $63f9
-Label_38_63fb:
+	jr .storeMode ; $63f9
+.slave2:
 	ld a, $05 ; $63fb
-Label_38_63fd:
+.storeMode:
 	ld [$d813], a ; $63fd
 	call DisableLCDSafely ; $6400
 	farcall LoadMenuFontGfx ; $6403
@@ -4857,7 +4857,7 @@ Label_38_63fd:
 	call RegisterFrameTask ; $6462
 	wram_bank $03 ; $6465
 	call RefreshCharInfoPanel ; $646b
-Label_38_646e:
+.frameLoop:
 	push af ; $646e
 	farcall RunLinkCommandFrame ; $646f
 	pop af ; $6472
@@ -4865,12 +4865,12 @@ Label_38_646e:
 	ld [wMenuInputPressed], a ; $6475
 	ld a, [wMenuInputPressed] ; $6478
 	xor a, $0f ; $647b
-	jr nz, Label_38_6482 ; $647d
+	jr nz, .afterStartup ; $647d
 	call JumpSoftReset ; $647f
-Label_38_6482:
+.afterStartup:
 	call WaitLinkSelectStartupFrames ; $6482
 	or a, a ; $6485
-	jr z, Label_38_646e ; $6486
+	jr z, .frameLoop ; $6486
 	ld b, $03 ; $6488
 	ld c, $02 ; $648a
 	call HandleCharGridDpad ; $648c
@@ -4882,25 +4882,25 @@ Label_38_6482:
 	call CheckLinkSelectionComplete ; $649e
 	ld a, [$d814] ; $64a1
 	cp a, $04 ; $64a4
-	jr z, Label_38_64b3 ; $64a6
+	jr z, .waitBanner ; $64a6
 	call DrawCharGridCursorBox ; $64a8
 	call DrawCharGridCharSprites ; $64ab
 	call DrawCharGridScrollArrows ; $64ae
-	jr Label_38_64b6 ; $64b1
-Label_38_64b3:
+	jr .refresh ; $64b1
+.waitBanner:
 	call DrawCharGridWaitBanner ; $64b3
-Label_38_64b6:
+.refresh:
 	ld a, [$d815] ; $64b6
 	ld b, a ; $64b9
 	pop af ; $64ba
 	wram_bank ; $64bb
 	ld a, b ; $64bf
 	cp a, $01 ; $64c0
-	jr z, Label_38_64cb ; $64c2
+	jr z, .checkDone ; $64c2
 	cp a, $02 ; $64c4
-	jr z, Label_38_6505 ; $64c6
-	jp Label_38_646e ; $64c8
-Label_38_64cb:
+	jr z, .done ; $64c6
+	jp .frameLoop ; $64c8
+.checkDone:
 	call ClearFrameTasks ; $64cb
 	call ProcessLinkSelectCommand ; $64ce
 	sound $5f ; $64d1
@@ -4917,9 +4917,9 @@ Label_38_64cb:
 	call ApplyCpuDifficultyToCharRecords ; $64ea
 	ldh a, [hLinkState] ; $64ed
 	cp a, $01 ; $64ef
-	jr nz, Label_38_64f6 ; $64f1
+	jr nz, .finish ; $64f1
 	call WaitVBlank ; $64f3
-Label_38_64f6:
+.finish:
 	ld c, $08 ; $64f6
 	call BeginFadeOut ; $64f8
 	call WaitFadeEnd ; $64fb
@@ -4927,7 +4927,7 @@ Label_38_64f6:
 	set 2, [hl] ; $6501
 	xor a, a ; $6503
 	ret ; $6504
-Label_38_6505:
+.done:
 	call ClearFrameTasks ; $6505
 	sound $62 ; $6508
 	push af ; $650a
@@ -5950,39 +5950,39 @@ RunLinkCpuDifficultySubmenu:
 	wram_bank $03 ; $6bda
 	ld a, [$d825] ; $6be0
 	or a, a ; $6be3
-	jr nz, Label_38_6bf1 ; $6be4
+	jr nz, .inputLoop ; $6be4
 	call OpenCpuDifficultyPanel ; $6be6
 	call QueueCpuDifficultyPanelToVram ; $6be9
 	ld a, $01 ; $6bec
 	ld [$d825], a ; $6bee
-Label_38_6bf1:
+.inputLoop:
 	call HandleCpuDifficultyInput ; $6bf1
 	call DrawCpuDifficultyCursorBox ; $6bf4
 	ld a, [wMenuInputPressed] ; $6bf7
 	bit PADB_A, a ; $6bfa
-	jr nz, Label_38_6c17 ; $6bfc
+	jr nz, .confirm ; $6bfc
 	bit 1, a ; $6bfe
-	jr nz, Label_38_6c04 ; $6c00
-	jr Label_38_6c31 ; $6c02
-Label_38_6c04:
+	jr nz, .cancel ; $6c00
+	jr .done ; $6c02
+.cancel:
 	call CloseCpuDifficultyPanel ; $6c04
 	sound $62 ; $6c07
 	wram_bank $03 ; $6c09
 	call ClearPlayerSlotPortrait ; $6c0f
 	call BuildVisiblePageSpriteList ; $6c12
-	jr Label_38_6c23 ; $6c15
-Label_38_6c17:
+	jr .storeDifficulty ; $6c15
+.confirm:
 	ld hl, $d830 ; $6c17
 	ld a, [$d826] ; $6c1a
 	call GetGridSlotFromCursor ; $6c1d
 	call DrawPlayerSlotPortrait ; $6c20
-Label_38_6c23:
+.storeDifficulty:
 	call DrawCharGridSlotPrompt ; $6c23
 	ld hl, $d040 ; $6c26
 	ld de, $9840 ; $6c29
 	ld c, $04 ; $6c2c
 	call QueueVRAMCopy ; $6c2e
-Label_38_6c31:
+.done:
 	pop af ; $6c31
 	wram_bank ; $6c32
 	ret ; $6c36
@@ -7283,65 +7283,65 @@ PackUnlockFlagsForLink:
 	ld b, $01 ; $769a
 	ld hl, $d840 ; $769c
 	ld d, $00 ; $769f
-Label_38_76a1:
+.charLoop:
 	ld a, [hl+] ; $76a1
 	or a, a ; $76a2
-	jr z, Label_38_76a8 ; $76a3
+	jr z, .nextChar ; $76a3
 	ld a, b ; $76a5
 	or a, d ; $76a6
 	ld d, a ; $76a7
-Label_38_76a8:
+.nextChar:
 	sla b ; $76a8
 	inc c ; $76aa
 	ld a, c ; $76ab
 	cp a, $08 ; $76ac
-	jr nz, Label_38_76a1 ; $76ae
+	jr nz, .charLoop ; $76ae
 	ld hl, $cb59 ; $76b0
 	ld [hl], d ; $76b3
 	ld hl, $d848 ; $76b4
 	ld a, [hl] ; $76b7
 	or a, a ; $76b8
-	jr z, Label_38_76bd ; $76b9
+	jr z, .storeCharFlags ; $76b9
 	ld a, $01 ; $76bb
-Label_38_76bd:
+.storeCharFlags:
 	ld hl, $cb5a ; $76bd
 	ld [hl], a ; $76c0
 	ld c, $00 ; $76c1
 	ld b, $01 ; $76c3
 	ld hl, $d84f ; $76c5
 	ld d, $00 ; $76c8
-Label_38_76ca:
+.courtLoop:
 	ld a, [hl+] ; $76ca
 	or a, a ; $76cb
-	jr z, Label_38_76d1 ; $76cc
+	jr z, .nextCourt ; $76cc
 	ld a, b ; $76ce
 	or a, d ; $76cf
 	ld d, a ; $76d0
-Label_38_76d1:
+.nextCourt:
 	sla b ; $76d1
 	inc c ; $76d3
 	ld a, c ; $76d4
 	cp a, $08 ; $76d5
-	jr nz, Label_38_76ca ; $76d7
+	jr nz, .courtLoop ; $76d7
 	ld hl, $cb5b ; $76d9
 	ld [hl], d ; $76dc
 	ld c, $00 ; $76dd
 	ld b, $01 ; $76df
 	ld hl, $d857 ; $76e1
 	ld d, $00 ; $76e4
-Label_38_76e6:
+.itemLoop:
 	ld a, [hl+] ; $76e6
 	or a, a ; $76e7
-	jr z, Label_38_76ed ; $76e8
+	jr z, .nextItem ; $76e8
 	ld a, b ; $76ea
 	or a, d ; $76eb
 	ld d, a ; $76ec
-Label_38_76ed:
+.nextItem:
 	sla b ; $76ed
 	inc c ; $76ef
 	ld a, c ; $76f0
 	cp a, $08 ; $76f1
-	jr nz, Label_38_76e6 ; $76f3
+	jr nz, .itemLoop ; $76f3
 	ld hl, $cb5c ; $76f5
 	ld [hl], d ; $76f8
 	ret ; $76f9

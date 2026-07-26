@@ -909,31 +909,31 @@ Label_18_5466:
 RunTwoOptionSelectB:
 	ldh a, [hInputRisingEdge] ; $5469
 	and a, PADF_LEFT ; $546b
-	jr z, Label_18_5473 ; $546d
+	jr z, .inputLoop ; $546d
 	ld b, $00 ; $546f
 	sound $5e ; $5471
-Label_18_5473:
+.inputLoop:
 	ldh a, [hInputRisingEdge] ; $5473
 	and a, PADF_RIGHT ; $5475
-	jr z, Label_18_547d ; $5477
+	jr z, .checkUp ; $5477
 	ld b, $01 ; $5479
 	sound $5e ; $547b
-Label_18_547d:
+.checkUp:
 	ldh a, [hInputRisingEdge] ; $547d
 	and a, PADF_A ; $547f
-	jr nz, Label_18_54a7 ; $5481
+	jr nz, .confirm ; $5481
 	ldh a, [hInputRisingEdge] ; $5483
 	and a, PADF_B ; $5485
-	jr z, Label_18_548d ; $5487
+	jr z, .checkDown ; $5487
 	ld b, $ff ; $5489
-	jr Label_18_54a7 ; $548b
-Label_18_548d:
+	jr .confirm ; $548b
+.checkDown:
 	ld de, $2892 ; $548d
 	ld a, b ; $5490
 	and a, a ; $5491
-	jr z, Label_18_5497 ; $5492
+	jr z, .redraw ; $5492
 	ld de, Data_18_5892 ; $5494
-Label_18_5497:
+.redraw:
 	call AddBobbingOffsetXY ; $5497
 	push bc ; $549a
 	ld bc, $0650 ; $549b
@@ -941,13 +941,13 @@ Label_18_5497:
 	pop bc ; $54a1
 	call AdvanceFrame ; $54a2
 	jr RunTwoOptionSelectB ; $54a5
-Label_18_54a7:
+.confirm:
 	ld a, b ; $54a7
 	and a, a ; $54a8
-	jr z, Label_18_54ae ; $54a9
+	jr z, .done ; $54a9
 	sound $62 ; $54ab
 	ret ; $54ad
-Label_18_54ae:
+.done:
 	sound $5f ; $54ae
 	ret ; $54b0
 DrawDecimalNumberSprites:
@@ -1704,30 +1704,30 @@ PlayScreenSequence2:
 	call EnableLCD ; $794d
 	script_fade_in $01 ; $7950
 	call WaitFadeEnd ; $7955
-Label_18_7958:
+.scene1:
 	call AdvanceFrame ; $7958
 	ldh a, [hInputPressed] ; $795b
 	and a, PADF_A | PADF_B ; $795d
-	jr z, Label_18_7958 ; $795f
+	jr z, .scene1 ; $795f
 	ld c, $02 ; $7961
 	call BeginFadeOut ; $7963
 	call WaitFadeEnd ; $7966
 	ld de, $05e0 ; $7969
 	call TestGameFlag ; $796c
-	jr z, Label_18_797b ; $796f
+	jr z, .scene2 ; $796f
 	ld de, $1700 ; $7971
 	call TestGameFlag ; $7974
-	jr z, Label_18_7985 ; $7977
-	jr Label_18_798a ; $7979
-Label_18_797b:
+	jr z, .scene2Wait ; $7977
+	jr .scene3 ; $7979
+.scene2:
 	ld de, $16e0 ; $797b
 	call TestGameFlag ; $797e
-	jr z, Label_18_7985 ; $7981
-	jr Label_18_798a ; $7983
-Label_18_7985:
+	jr z, .scene2Wait ; $7981
+	jr .scene3 ; $7983
+.scene2Wait:
 	sound $2c ; $7985
 	farcall RunEndingCreditsSequence ; $7987
-Label_18_798a:
+.scene3:
 	wram_bank $03 ; $798a
 	xor a, a ; $7990
 	ld [$da00], a ; $7991
@@ -1744,13 +1744,13 @@ Label_18_798a:
 	wram_bank $03 ; $79b4
 	xor a, a ; $79ba
 	ld [$da01], a ; $79bb
-Label_18_79be:
+.scene4:
 	call AdvanceFrame ; $79be
 	ld a, [$da01] ; $79c1
 	inc a ; $79c4
 	ld [$da01], a ; $79c5
 	cp a, $b4 ; $79c8
-	jr nz, Label_18_79be ; $79ca
+	jr nz, .scene4 ; $79ca
 	ld a, $01 ; $79cc
 	ld hl, TaskFadeInPalette_18 ; $79ce
 	call RegisterFrameTask ; $79d1
@@ -1758,23 +1758,23 @@ Label_18_79be:
 	ld hl, QueueScreen2Sprites ; $79d6
 	call RegisterFrameTask ; $79d9
 	sound $2d ; $79dc
-Label_18_79de:
+.scene5:
 	call AdvanceFrame ; $79de
 	ldh a, [hInputPressed] ; $79e1
 	and a, PADF_A | PADF_B ; $79e3
-	jr z, Label_18_79de ; $79e5
+	jr z, .scene5 ; $79e5
 	ld de, SAVEFLAG_OPENING_SEEN ; $79e7
 	farcall SetSaveFlag ; $79ea
 	ld de, $05e0 ; $79ed
 	call TestGameFlag ; $79f0
-	jr z, Label_18_79fd ; $79f3
+	jr z, .fadeOut ; $79f3
 	ld de, $1700 ; $79f5
 	call SetGameFlag ; $79f8
-	jr Label_18_7a03 ; $79fb
-Label_18_79fd:
+	jr .done ; $79fb
+.fadeOut:
 	ld de, $16e0 ; $79fd
 	call SetGameFlag ; $7a00
-Label_18_7a03:
+.done:
 	farcall SaveStorySlotWithTimer ; $7a03
 	ret ; $7a06
 LookupScreen2AssetIdA:
