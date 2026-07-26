@@ -6061,16 +6061,16 @@ StartCharSwing:
 	bit 7, a ; $6d5d
 	call PredictBallLateralOffset ; $6d5f
 	bit 7, h ; $6d62
-	jr nz, Label_08_6d6f ; $6d64
+	jr nz, .facingLeft ; $6d64
 	ld a, [$df1f] ; $6d66
 	bit PADB_RIGHT, a ; $6d69
-	jr z, Label_08_6da0 ; $6d6b
-	jr Label_08_6d76 ; $6d6d
-Label_08_6d6f:
+	jr z, .checkHeight ; $6d6b
+	jr .checkReach ; $6d6d
+.facingLeft:
 	ld a, [$df1f] ; $6d6f
 	bit PADB_LEFT, a ; $6d72
-	jr z, Label_08_6da0 ; $6d74
-Label_08_6d76:
+	jr z, .checkHeight ; $6d74
+.checkReach:
 	ld a, [$df72] ; $6d76
 	ld e, a ; $6d79
 	ld a, [$df73] ; $6d7a
@@ -6078,18 +6078,18 @@ Label_08_6d76:
 	ld a, [$df50] ; $6d7e
 	bit 4, a ; $6d81
 	ld bc, $fff0 ; $6d83
-	jr nz, Label_08_6d8b ; $6d86
+	jr nz, .absOffset ; $6d86
 	ld bc, $0000 ; $6d88
-Label_08_6d8b:
+.absOffset:
 	bit 7, h ; $6d8b
-	jr z, Label_08_6d95 ; $6d8d
+	jr z, .compareReach ; $6d8d
 	xor a, a ; $6d8f
 	sub a, l ; $6d90
 	ld l, a ; $6d91
 	sbc a, a ; $6d92
 	sub a, h ; $6d93
 	ld h, a ; $6d94
-Label_08_6d95:
+.compareReach:
 	add hl, bc ; $6d95
 	ld a, l ; $6d96
 	sub a, e ; $6d97
@@ -6098,8 +6098,8 @@ Label_08_6d95:
 	sbc a, d ; $6d9a
 	ld h, a ; $6d9b
 	bit 7, h ; $6d9c
-	jr z, Label_08_6df4 ; $6d9e
-Label_08_6da0:
+	jr z, .dive ; $6d9e
+.checkHeight:
 	ld a, [wBallVelocityHeight + 1] ; $6da0
 	ld l, a ; $6da3
 	add a, a ; $6da4
@@ -6120,7 +6120,7 @@ Label_08_6da0:
 	add hl, de ; $6db7
 	add hl, bc ; $6db8
 	bit 7, h ; $6db9
-	jr nz, Label_08_6dd5 ; $6dbb
+	jr nz, .jumpSmash ; $6dbb
 	ld hl, wBallHeight ; $6dbd
 	ld a, [hl+] ; $6dc0
 	ld h, [hl] ; $6dc1
@@ -6131,12 +6131,12 @@ Label_08_6da0:
 	add hl, de ; $6dc8
 	add hl, bc ; $6dc9
 	bit 7, h ; $6dca
-	jr z, Label_08_6dd3 ; $6dcc
+	jr z, .swingGround ; $6dcc
 	ld hl, $df15 ; $6dce
 	ld [hl], $07 ; $6dd1
-Label_08_6dd3:
-	jr Label_08_6e2c ; $6dd3
-Label_08_6dd5:
+.swingGround:
+	jr .startSwing ; $6dd3
+.jumpSmash:
 	ld hl, wCharFlags ; $6dd5
 	set 2, [hl] ; $6dd8
 	ld hl, $df74 ; $6dda
@@ -6157,15 +6157,15 @@ Label_08_6dd5:
 	ld [hl], $08 ; $6def
 	sound $5c ; $6df1
 	ret ; $6df3
-Label_08_6df4:
+.dive:
 	ld hl, $df15 ; $6df4
 	ld [hl], $12 ; $6df7
 	ld d, $00 ; $6df9
 	ld a, [$df1f] ; $6dfb
 	bit PADB_RIGHT, a ; $6dfe
-	jr nz, Label_08_6e04 ; $6e00
+	jr nz, .storeFacing ; $6e00
 	ld d, $80 ; $6e02
-Label_08_6e04:
+.storeFacing:
 	ld hl, wCharFacingShown ; $6e04
 	ld [hl], d ; $6e07
 	ld hl, wCharFlags ; $6e08
@@ -6189,19 +6189,19 @@ Label_08_6e04:
 	ld [hl], e ; $6e28
 	sound $5c ; $6e29
 	ret ; $6e2b
-Label_08_6e2c:
+.startSwing:
 	xor a, a ; $6e2c
 	ld [$df4c], a ; $6e2d
 	ld a, [$df4b] ; $6e30
 	cp a, $05 ; $6e33
-	jr nc, Label_08_6e43 ; $6e35
+	jr nc, .chargedSwing ; $6e35
 	ld hl, $df15 ; $6e37
 	ld a, $04 ; $6e3a
 	add a, [hl] ; $6e3c
 	ld [hl], a ; $6e3d
 	ld a, $01 ; $6e3e
 	ld [$df4c], a ; $6e40
-Label_08_6e43:
+.chargedSwing:
 	ret ; $6e43
 SelectForehandBackhand:
 	call PredictBallLateralOffset ; $6e44
@@ -6965,7 +6965,7 @@ StepCharMovement:
 	ld e, a ; $72e9
 	ld hl, wCharFlags ; $72ea
 	bit 5, [hl] ; $72ed
-	jr z, Label_08_7309 ; $72ef
+	jr z, .move ; $72ef
 	sra b ; $72f1
 	rr c ; $72f3
 	sra b ; $72f5
@@ -6978,12 +6978,12 @@ StepCharMovement:
 	rr e ; $7303
 	sra d ; $7305
 	rr e ; $7307
-Label_08_7309:
+.move:
 	ld hl, wCharFlags ; $7309
 	res 6, [hl] ; $730c
 	ld a, [$df1e] ; $730e
 	cp a, $01 ; $7311
-	jp z, Label_08_739f ; $7313
+	jp z, .unclamped ; $7313
 	push de ; $7316
 	ld e, c ; $7317
 	ld d, b ; $7318
@@ -6992,56 +6992,56 @@ Label_08_7309:
 	ld hl, $fc60 ; $731f
 	add hl, bc ; $7322
 	bit 7, h ; $7323
-	jr z, Label_08_7349 ; $7325
+	jr z, .blockX ; $7325
 	ld hl, $03a0 ; $7327
 	add hl, bc ; $732a
 	bit 7, h ; $732b
-	jr nz, Label_08_7349 ; $732d
+	jr nz, .blockX ; $732d
 	ld hl, $fdc0 ; $732f
 	add hl, bc ; $7332
 	bit 7, h ; $7333
-	jr nz, Label_08_7350 ; $7335
+	jr nz, .applyX ; $7335
 	ld hl, wCharPosDepth + 1 ; $7337
 	ld a, [hl+] ; $733a
 	ld b, [hl] ; $733b
 	ld c, a ; $733c
 	bit 7, b ; $733d
-	jr z, Label_08_7350 ; $733f
+	jr z, .applyX ; $733f
 	ld hl, $02a0 ; $7341
 	add hl, bc ; $7344
 	bit 7, h ; $7345
-	jr nz, Label_08_7350 ; $7347
-Label_08_7349:
+	jr nz, .applyX ; $7347
+.blockX:
 	ld hl, wCharFlags ; $7349
 	set 6, [hl] ; $734c
-	jr Label_08_7356 ; $734e
-Label_08_7350:
+	jr .stepDepth ; $734e
+.applyX:
 	ld hl, wCharPosX ; $7350
 	call AddDEToMem24 ; $7353
-Label_08_7356:
+.stepDepth:
 	pop de ; $7356
 	ld hl, wCharPosDepth ; $7357
 	call AddDEToMem24IntoBC ; $735a
 	bit 7, b ; $735d
-	jr nz, Label_08_736f ; $735f
+	jr nz, .farSide ; $735f
 	ld hl, rWBK ; $7361
 	add hl, bc ; $7364
-	jr nc, Label_08_7391 ; $7365
+	jr nc, .blockDepth ; $7365
 	ld hl, $f920 ; $7367
 	add hl, bc ; $736a
-	jr c, Label_08_7391 ; $736b
-	jr Label_08_7398 ; $736d
-Label_08_736f:
+	jr c, .blockDepth ; $736b
+	jr .applyDepth ; $736d
+.farSide:
 	ld hl, $0100 ; $736f
 	add hl, bc ; $7372
-	jr c, Label_08_7391 ; $7373
+	jr c, .blockDepth ; $7373
 	ld hl, $0700 ; $7375
 	add hl, bc ; $7378
-	jr nc, Label_08_7391 ; $7379
+	jr nc, .blockDepth ; $7379
 	ld hl, $02a0 ; $737b
 	add hl, bc ; $737e
 	bit 7, h ; $737f
-	jr nz, Label_08_7398 ; $7381
+	jr nz, .applyDepth ; $7381
 	ld hl, wCharPosX + 1 ; $7383
 	ld a, [hl+] ; $7386
 	ld b, [hl] ; $7387
@@ -7049,36 +7049,36 @@ Label_08_736f:
 	ld hl, $fdc0 ; $7389
 	add hl, bc ; $738c
 	bit 7, h ; $738d
-	jr nz, Label_08_7398 ; $738f
-Label_08_7391:
+	jr nz, .applyDepth ; $738f
+.blockDepth:
 	ld hl, wCharFlags ; $7391
 	set 6, [hl] ; $7394
-	jr Label_08_739e ; $7396
-Label_08_7398:
+	jr .done ; $7396
+.applyDepth:
 	ld hl, wCharPosDepth ; $7398
 	call AddDEToMem24 ; $739b
-Label_08_739e:
+.done:
 	ret ; $739e
-Label_08_739f:
+.unclamped:
 	ld hl, wCharPosX ; $739f
 	call AddBCToMem24 ; $73a2
 	ld hl, wCharPosDepth ; $73a5
 	call AddDEToMem24IntoBC ; $73a8
 	bit 7, b ; $73ab
-	jr nz, Label_08_73b7 ; $73ad
+	jr nz, .unclampedFarSide ; $73ad
 	ld hl, rWBK ; $73af
 	add hl, bc ; $73b2
-	jr nc, Label_08_73c4 ; $73b3
-	jr Label_08_73bd ; $73b5
-Label_08_73b7:
+	jr nc, .doneUnclamped ; $73b3
+	jr .applyDepthUnclamped ; $73b5
+.unclampedFarSide:
 	ld hl, $0100 ; $73b7
 	add hl, bc ; $73ba
-	jr c, Label_08_73c4 ; $73bb
-Label_08_73bd:
+	jr c, .doneUnclamped ; $73bb
+.applyDepthUnclamped:
 	ld hl, wCharPosDepth ; $73bd
 	call AddDEToMem24 ; $73c0
 	ret ; $73c3
-Label_08_73c4:
+.doneUnclamped:
 	ld hl, wCharFlags ; $73c4
 	set 6, [hl] ; $73c7
 	ret ; $73c9
@@ -7088,41 +7088,41 @@ UpdateCharVelocityFromInput:
 	ret nz ; $73ce
 	ld hl, wCharFlags ; $73cf
 	bit 1, [hl] ; $73d2
-	jp nz, Label_08_73de ; $73d4
+	jp nz, .clearAxisFlags ; $73d4
 	bit 0, [hl] ; $73d7
-	jp nz, Label_08_73de ; $73d9
-	jr Label_08_73e5 ; $73dc
-Label_08_73de:
+	jp nz, .clearAxisFlags ; $73d9
+	jr .stepX ; $73dc
+.clearAxisFlags:
 	ld hl, $df50 ; $73de
 	res 6, [hl] ; $73e1
 	res 7, [hl] ; $73e3
-Label_08_73e5:
+.stepX:
 	ld hl, $df50 ; $73e5
 	bit 6, [hl] ; $73e8
-	jr z, Label_08_73f1 ; $73ea
+	jr z, .decelX ; $73ea
 	call AccelerateCharX ; $73ec
-	jr Label_08_73f4 ; $73ef
-Label_08_73f1:
+	jr .stepDepth ; $73ef
+.decelX:
 	call DecelerateCharX ; $73f1
-Label_08_73f4:
+.stepDepth:
 	ld hl, $df50 ; $73f4
 	bit 7, [hl] ; $73f7
-	jr z, Label_08_7400 ; $73f9
+	jr z, .decelDepth ; $73f9
 	call AccelerateCharDepth ; $73fb
-	jr Label_08_7403 ; $73fe
-Label_08_7400:
+	jr .clampX ; $73fe
+.decelDepth:
 	call DecelerateCharDepth ; $7400
-Label_08_7403:
+.clampX:
 	ld hl, $df50 ; $7403
 	bit 6, [hl] ; $7406
-	jr z, Label_08_740d ; $7408
+	jr z, .clampDepth ; $7408
 	call ClampCharXSpeed ; $740a
-Label_08_740d:
+.clampDepth:
 	ld hl, $df50 ; $740d
 	bit 7, [hl] ; $7410
-	jr z, Label_08_7417 ; $7412
+	jr z, .markMoving ; $7412
 	call ClampCharDepthSpeed ; $7414
-Label_08_7417:
+.markMoving:
 	ld hl, $df50 ; $7417
 	res 6, [hl] ; $741a
 	res 7, [hl] ; $741c
@@ -7135,15 +7135,15 @@ Label_08_7417:
 	or a, [hl] ; $7429
 	inc hl ; $742a
 	or a, [hl] ; $742b
-	jr nz, Label_08_7440 ; $742c
+	jr nz, .done ; $742c
 	ld hl, wCharFlags ; $742e
 	res 4, [hl] ; $7431
 	ld a, [$df1f] ; $7433
 	and a, $f0 ; $7436
-	jr nz, Label_08_7440 ; $7438
+	jr nz, .done ; $7438
 	ld a, [$df0c] ; $743a
 	ld [wCharFacingDesired], a ; $743d
-Label_08_7440:
+.done:
 	ret ; $7440
 AccelerateCharDepth:
 	ld hl, $df64 ; $7441
