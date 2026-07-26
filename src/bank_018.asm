@@ -171,20 +171,20 @@ LoadIndexedPalette_18:
 FlushBgMapShadowToVram:
 	ld a, [wBgMapShadowDirty] ; $4353
 	and a, $0f ; $4356
-	jr z, Label_18_4365 ; $4358
+	jr z, .attrPlane ; $4358
 	ld hl, $d800 ; $435a
 	ld de, $9800 ; $435d
 	ld c, $24 ; $4360
 	call QueueVRAMCopy ; $4362
-Label_18_4365:
+.attrPlane:
 	ld a, [wBgMapShadowDirty] ; $4365
 	and a, $f0 ; $4368
-	jr z, Label_18_4377 ; $436a
+	jr z, .done ; $436a
 	ld hl, $dc00 ; $436c
 	ld de, $b800 ; $436f
 	ld c, $24 ; $4372
 	call QueueVRAMCopy ; $4374
-Label_18_4377:
+.done:
 	xor a, a ; $4377
 	ld [wBgMapShadowDirty], a ; $4378
 	ret ; $437b
@@ -314,11 +314,11 @@ DrawBoxTopRow:
 	ld [hl+], a ; $4418
 	dec b ; $4419
 	dec b ; $441a
-Label_18_441b:
+.fillLoop:
 	ld a, $03 ; $441b
 	ld [hl+], a ; $441d
 	dec b ; $441e
-	jr nz, Label_18_441b ; $441f
+	jr nz, .fillLoop ; $441f
 	ld a, $04 ; $4421
 	ld [hl+], a ; $4423
 	pop hl ; $4424
@@ -331,9 +331,9 @@ DrawBoxSideRow:
 	dec a ; $442b
 	add a, l ; $442c
 	ld l, a ; $442d
-	jr nc, Label_18_4431 ; $442e
+	jr nc, .read ; $442e
 	inc h ; $4430
-Label_18_4431:
+.read:
 	ld [hl], $06 ; $4431
 	pop hl ; $4433
 	ret ; $4434
@@ -342,11 +342,11 @@ DrawBoxBottomRow:
 	ld [hl+], a ; $4437
 	dec b ; $4438
 	dec b ; $4439
-Label_18_443a:
+.fillLoop:
 	ld a, $08 ; $443a
 	ld [hl+], a ; $443c
 	dec b ; $443d
-	jr nz, Label_18_443a ; $443e
+	jr nz, .fillLoop ; $443e
 	ld a, $09 ; $4440
 	ld [hl+], a ; $4442
 	ret ; $4443
@@ -810,10 +810,10 @@ DrawScoreNumbersTask:
 	call DrawDecimalNumberSprites ; $53c0
 	ld a, [$c780] ; $53c3
 	cp a, $03 ; $53c6
-	jr nz, Label_18_53cf ; $53c8
+	jr nz, .draw ; $53c8
 	ld a, $01 ; $53ca
 	ld [$c783], a ; $53cc
-Label_18_53cf:
+.draw:
 	ld hl, $c78b ; $53cf
 	ld a, [hl+] ; $53d2
 	ld h, [hl] ; $53d3
@@ -980,14 +980,14 @@ DrawDecimalNumberSprites:
 DrawStringSprites:
 	ld a, [hl+] ; $54d2
 	and a, a ; $54d3
-	jr z, Label_18_54db ; $54d4
+	jr z, .done ; $54d4
 	call DrawGlyphSprite ; $54d6
 	jr DrawStringSprites ; $54d9
-Label_18_54db:
+.done:
 	ret ; $54db
 DrawGlyphSprite:
 	sub a, $30 ; $54dc
-	jr c, Label_18_5502 ; $54de
+	jr c, .advance ; $54de
 	push de ; $54e0
 	push hl ; $54e1
 	add a, a ; $54e2
@@ -995,7 +995,7 @@ DrawGlyphSprite:
 	ld c, a ; $54e5
 	ld a, [$c783] ; $54e6
 	and a, a ; $54e9
-	jr z, Label_18_54fd ; $54ea
+	jr z, .queue ; $54ea
 	ld a, d ; $54ec
 	ld hl, hVBlankCounter ; $54ed
 	sub a, [hl] ; $54f0
@@ -1008,11 +1008,11 @@ DrawGlyphSprite:
 	ld a, [hl] ; $54fa
 	add a, e ; $54fb
 	ld e, a ; $54fc
-Label_18_54fd:
+.queue:
 	call QueueSprite ; $54fd
 	pop hl ; $5500
 	pop de ; $5501
-Label_18_5502:
+.advance:
 	ld a, d ; $5502
 	add a, $08 ; $5503
 	ld d, a ; $5505
@@ -1196,9 +1196,9 @@ LoadCharSelectCursorGfx:
 DrawCharSelectCursor:
 	ld c, $00 ; $59d6
 	cp a, $84 ; $59d8
-	jr nz, Label_18_59de ; $59da
+	jr nz, .animate ; $59da
 	ld c, $01 ; $59dc
-Label_18_59de:
+.animate:
 	ldh a, [hVBlankCounter] ; $59de
 	and a, $1f ; $59e0
 	add a, $fe ; $59e2
@@ -1493,9 +1493,9 @@ LookupScreen0AssetId:
 	ld hl, Data_18_773a ; $7730
 	add a, l ; $7733
 	ld l, a ; $7734
-	jr nc, Label_18_7738 ; $7735
+	jr nc, .read ; $7735
 	inc h ; $7737
-Label_18_7738:
+.read:
 	ld c, [hl] ; $7738
 	ret ; $7739
 Data_18_773a:
@@ -1560,16 +1560,16 @@ PlayScreenSequence1:
 	wram_bank $03 ; $77de
 	xor a, a ; $77e4
 	ld [$da01], a ; $77e5
-Label_18_77e8:
+.scrollLoop:
 	call AdvanceFrame ; $77e8
 	ldh a, [hVBlankCounter] ; $77eb
 	and a, $03 ; $77ed
-	jr nz, Label_18_77e8 ; $77ef
+	jr nz, .scrollLoop ; $77ef
 	ld a, [$da01] ; $77f1
 	inc a ; $77f4
 	ld [$da01], a ; $77f5
 	cp a, $af ; $77f8
-	jr nz, Label_18_77e8 ; $77fa
+	jr nz, .scrollLoop ; $77fa
 	ld c, $01 ; $77fc
 	call BeginFadeOut ; $77fe
 	call WaitFadeEnd ; $7801
@@ -1586,11 +1586,11 @@ Label_18_77e8:
 	script_fade_in $40 ; $7821
 	call WaitFadeEnd ; $7826
 	sound $2d ; $7829
-Label_18_782b:
+.waitInput:
 	call AdvanceFrame ; $782b
 	ldh a, [hInputPressed] ; $782e
 	and a, PADF_A | PADF_B ; $7830
-	jr z, Label_18_782b ; $7832
+	jr z, .waitInput ; $7832
 	ret ; $7834
 SetupScreen1Assets:
 	call ResetScrollAndCamera ; $7835
@@ -1603,9 +1603,9 @@ LookupScreen1AssetId:
 	ld hl, Data_18_784f ; $7845
 	add a, l ; $7848
 	ld l, a ; $7849
-	jr nc, Label_18_784d ; $784a
+	jr nc, .read ; $784a
 	inc h ; $784c
-Label_18_784d:
+.read:
 	ld c, [hl] ; $784d
 	ret ; $784e
 Data_18_784f:
@@ -1782,9 +1782,9 @@ LookupScreen2AssetIdA:
 	ld hl, Data_18_7a14 ; $7a0a
 	add a, l ; $7a0d
 	ld l, a ; $7a0e
-	jr nc, Label_18_7a12 ; $7a0f
+	jr nc, .read ; $7a0f
 	inc h ; $7a11
-Label_18_7a12:
+.read:
 	ld c, [hl] ; $7a12
 	ret ; $7a13
 Data_18_7a14:
@@ -1795,9 +1795,9 @@ LookupScreen2AssetIdB:
 	ld hl, Data_18_7a27 ; $7a1d
 	add a, l ; $7a20
 	ld l, a ; $7a21
-	jr nc, Label_18_7a25 ; $7a22
+	jr nc, .read ; $7a22
 	inc h ; $7a24
-Label_18_7a25:
+.read:
 	ld c, [hl] ; $7a25
 	ret ; $7a26
 Data_18_7a27:
@@ -1843,25 +1843,25 @@ TaskFadeInPalette_18:
 	wram_bank $03 ; $7a84
 	ld a, [$da00] ; $7a8a
 	cp a, $10 ; $7a8d
-	jr z, Label_18_7aaf ; $7a8f
+	jr z, .alt2 ; $7a8f
 	add a, a ; $7a91
 	add a, a ; $7a92
 	add a, a ; $7a93
 	ld hl, PaletteFadeTable_18 ; $7a94
 	add a, l ; $7a97
 	ld l, a ; $7a98
-	jr nc, Label_18_7a9c ; $7a99
+	jr nc, .read ; $7a99
 	inc h ; $7a9b
-Label_18_7a9c:
+.read:
 	ld de, $0801 ; $7a9c
 	call LoadPalettesImmediate ; $7a9f
 	ldh a, [hVBlankCounter] ; $7aa2
 	and a, $03 ; $7aa4
-	jr nz, Label_18_7aaf ; $7aa6
+	jr nz, .alt2 ; $7aa6
 	ld a, [$da00] ; $7aa8
 	inc a ; $7aab
 	ld [$da00], a ; $7aac
-Label_18_7aaf:
+.alt2:
 	pop af ; $7aaf
 	wram_bank ; $7ab0
 	ret ; $7ab4
@@ -1887,7 +1887,7 @@ PaletteFadeTable_18:
 	db $c9
 TaskDrawObjectSprites_18:
 	ld c, $00 ; $7b36
-Label_18_7b38:
+.objectLoop:
 	push bc ; $7b38
 	ld hl, $d800 ; $7b39
 	ld a, c ; $7b3c
@@ -1897,9 +1897,9 @@ Label_18_7b38:
 	add a, a ; $7b40
 	add a, l ; $7b41
 	ld l, a ; $7b42
-	jr nc, Label_18_7b46 ; $7b43
+	jr nc, .read ; $7b43
 	inc h ; $7b45
-Label_18_7b46:
+.read:
 	ld a, [hl+] ; $7b46
 	ld b, a ; $7b47
 	inc hl ; $7b48
@@ -1931,7 +1931,7 @@ Label_18_7b46:
 	inc c ; $7b67
 	ld a, c ; $7b68
 	cp a, $10 ; $7b69
-	jr nz, Label_18_7b38 ; $7b6b
+	jr nz, .objectLoop ; $7b6b
 	ret ; $7b6d
 TaskUpdateObjects_18:
 	ld c, $00 ; $7b6e
@@ -2041,7 +2041,7 @@ PopulateObjectArrayA:
 	ld c, $00 ; $7c27
 	ld hl, ObjectSpawnTable_18_7c53 ; $7c29
 	ld de, $d800 ; $7c2c
-Label_18_7c2f:
+.spawnLoop:
 	push af ; $7c2f
 	push bc ; $7c30
 	push de ; $7c31
@@ -2061,13 +2061,13 @@ Label_18_7c2f:
 	ld a, $0b ; $7c45
 	add a, l ; $7c47
 	ld l, a ; $7c48
-	jr nc, Label_18_7c4c ; $7c49
+	jr nc, .read ; $7c49
 	inc h ; $7c4b
-Label_18_7c4c:
+.read:
 	inc c ; $7c4c
 	ld a, c ; $7c4d
 	cp a, $10 ; $7c4e
-	jr nz, Label_18_7c2f ; $7c50
+	jr nz, .spawnLoop ; $7c50
 	ret ; $7c52
 ObjectSpawnTable_18_7c53:
 	; $7c53, 176 bytes (records:11)
@@ -2125,7 +2125,7 @@ PopulateObjectArrayB:
 	ld c, $00 ; $7d5c
 	ld hl, ObjectSpawnTable_18_7d88 ; $7d5e
 	ld de, $d800 ; $7d61
-Label_18_7d64:
+.spawnLoop:
 	push af ; $7d64
 	push bc ; $7d65
 	push de ; $7d66
@@ -2145,13 +2145,13 @@ Label_18_7d64:
 	ld a, $0b ; $7d7a
 	add a, l ; $7d7c
 	ld l, a ; $7d7d
-	jr nc, Label_18_7d81 ; $7d7e
+	jr nc, .read ; $7d7e
 	inc h ; $7d80
-Label_18_7d81:
+.read:
 	inc c ; $7d81
 	ld a, c ; $7d82
 	cp a, $10 ; $7d83
-	jr nz, Label_18_7d64 ; $7d85
+	jr nz, .spawnLoop ; $7d85
 	ret ; $7d87
 ObjectSpawnTable_18_7d88:
 	INCBIN "data/bank_018/d_7d88.bin" ; $7d88, 365 bytes
