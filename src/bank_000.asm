@@ -6626,11 +6626,11 @@ SoftReset:
 	xor a, a ; $2591
 	ld c, $80 ; $2592
 	ld b, $70 ; $2594
-Label_00_2596:
+.clearHramLoop:
 	ldh [c], a ; $2596
 	inc c ; $2597
 	dec b ; $2598
-	jr nz, Label_00_2596 ; $2599
+	jr nz, .clearHramLoop ; $2599
 	ldh [rIF], a ; $259b
 	ldh [rIE], a ; $259d
 	ldh [rSCY], a ; $259f
@@ -6638,9 +6638,9 @@ Label_00_2596:
 	ldh [rSTAT], a ; $25a3
 	ldh a, [hIsCGB] ; $25a5
 	or a, a ; $25a7
-	jr nz, Label_00_25ad ; $25a8
+	jr nz, .cgbOk ; $25a8
 	farcall ShowDmgLockoutScreen ; $25aa
-Label_00_25ad:
+.cgbOk:
 	xor a, a ; $25ad
 	ldh [rVBK], a ; $25ae
 	ldh [rWBK], a ; $25b0
@@ -7076,9 +7076,9 @@ ReadJoypadThunk:
 	ret ; $2854
 SoftResetIfABStartSelect:
 	xor a, $0f ; $2855
-	jr nz, Label_00_285c ; $2857
+	jr nz, .done ; $2857
 	jp SoftReset ; $2859
-Label_00_285c:
+.done:
 	ret ; $285c
 JumpSoftReset:
 	jp SoftReset ; $285d
@@ -7143,9 +7143,9 @@ IncrementLinkFrameCounter:
 	ldh a, [hLinkCounter] ; $28af
 	inc a ; $28b1
 	cp a, $08 ; $28b2
-	jr z, Label_00_28b8 ; $28b4
+	jr z, .done ; $28b4
 	ldh [hLinkCounter], a ; $28b6
-Label_00_28b8:
+.done:
 	ret ; $28b8
 InitSerialLink:
 	ld a, $c0 ; $28b9
@@ -8403,12 +8403,12 @@ SetMusicMuted:
 	or a, c ; $2f99
 	ldh [hMusic], a ; $2f9a
 	bit 0, a ; $2f9c
-	jr nz, Label_00_2fa5 ; $2f9e
+	jr nz, .mute ; $2f9e
 	ld a, [wCurrentBGM] ; $2fa0
-	jr Label_00_2fa6 ; $2fa3
-Label_00_2fa5:
+	jr .apply ; $2fa3
+.mute:
 	xor a, a ; $2fa5
-Label_00_2fa6:
+.apply:
 	call PlaySound ; $2fa6
 	pop af ; $2fa9
 	wram_bank ; $2faa

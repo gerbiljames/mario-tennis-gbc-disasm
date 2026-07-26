@@ -4930,21 +4930,21 @@ StampGlyphTileAtPen:
 	ld h, e ; $5f2e
 	add a, e ; $5f2f
 	ld e, a ; $5f30
-	jr nc, Label_05_5f34 ; $5f31
+	jr nc, .cellPtrOk ; $5f31
 	inc d ; $5f33
-Label_05_5f34:
+.cellPtrOk:
 	ld a, e ; $5f34
 	and a, $20 ; $5f35
 	ld l, a ; $5f37
 	ld a, h ; $5f38
 	and a, $20 ; $5f39
 	xor a, l ; $5f3b
-	jr z, Label_05_5f44 ; $5f3c
+	jr z, .checkCell ; $5f3c
 	ld hl, $ffe0 ; $5f3e
 	add hl, de ; $5f41
 	ld d, h ; $5f42
 	ld e, l ; $5f43
-Label_05_5f44:
+.checkCell:
 	ld a, [de] ; $5f44
 	cp a, $06 ; $5f45
 	jr z, Label_05_5f4d ; $5f47
@@ -5186,7 +5186,7 @@ GetSpeakerVoice:
 	ld a, h ; $6090
 	ld b, $08 ; $6091
 	or a, l ; $6093
-	jr z, Label_05_60c6 ; $6094
+	jr z, .done ; $6094
 	ldh a, [hWramBank] ; $6096
 	push af ; $6098
 	wram_bank $04 ; $6099
@@ -5204,7 +5204,7 @@ GetSpeakerVoice:
 	sub a, $1e ; $60af
 	bit 7, a ; $60b1
 	ld b, $08 ; $60b3
-	jr nz, Label_05_60c6 ; $60b5
+	jr nz, .done ; $60b5
 	ld l, a ; $60b7
 	ld h, $00 ; $60b8
 	add hl, hl ; $60ba
@@ -5214,7 +5214,7 @@ GetSpeakerVoice:
 	ld b, [hl] ; $60c0
 	pop af ; $60c1
 	wram_bank ; $60c2
-Label_05_60c6:
+.done:
 	ld a, b ; $60c6
 	pop hl ; $60c7
 	pop de ; $60c8
@@ -7140,19 +7140,19 @@ FreeWindow:
 	call GetWindowStructPtr ; $6ebd
 	xor a, a ; $6ec0
 	ld c, $08 ; $6ec1
-Label_05_6ec3:
+.clearLoop:
 	ld [hl+], a ; $6ec3
 	dec c ; $6ec4
-	jr nz, Label_05_6ec3 ; $6ec5
+	jr nz, .clearLoop ; $6ec5
 	ld c, d ; $6ec7
 	inc c ; $6ec8
 	ld a, $01 ; $6ec9
-Label_05_6ecb:
+.maskLoop:
 	dec c ; $6ecb
-	jr z, Label_05_6ed2 ; $6ecc
+	jr z, .clearBit ; $6ecc
 	sla a ; $6ece
-	jr Label_05_6ecb ; $6ed0
-Label_05_6ed2:
+	jr .maskLoop ; $6ed0
+.clearBit:
 	ld b, a ; $6ed2
 	ld a, [$dc70] ; $6ed3
 	and a, b ; $6ed6

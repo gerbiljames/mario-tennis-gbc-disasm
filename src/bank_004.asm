@@ -47,21 +47,21 @@ SpawnActor:
 	wram_bank $04 ; $4058
 	ld hl, $d000 ; $405e
 	ld c, $18 ; $4061
-Label_04_4063:
+.findSlot:
 	inc hl ; $4063
 	ld a, [hl-] ; $4064
 	or a, a ; $4065
-	jr z, Label_04_4076 ; $4066
+	jr z, .initSlot ; $4066
 	ld de, $0040 ; $4068
 	add hl, de ; $406b
 	dec c ; $406c
-	jr nz, Label_04_4063 ; $406d
+	jr nz, .findSlot ; $406d
 	ld bc, $0000 ; $406f
 	pop hl ; $4072
 	pop de ; $4073
 	pop af ; $4074
 	ret ; $4075
-Label_04_4076:
+.initSlot:
 	ld c, l ; $4076
 	ld b, h ; $4077
 	ld de, $b000 ; $4078

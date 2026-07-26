@@ -3908,33 +3908,33 @@ CheckTiebreakGameWon:
 EvalWinByTwo:
 	ld a, d ; $5d71
 	sub a, e ; $5d72
-	jr z, Label_08_5d91 ; $5d73
+	jr z, .checkTie ; $5d73
 	bit 7, a ; $5d75
-	jr nz, Label_08_5d84 ; $5d77
+	jr nz, .negativeLead ; $5d77
 	cp a, $02 ; $5d79
-	jr c, Label_08_5d98 ; $5d7b
+	jr c, .undecided ; $5d7b
 	ld a, d ; $5d7d
 	cp a, c ; $5d7e
-	jr c, Label_08_5d98 ; $5d7f
+	jr c, .undecided ; $5d7f
 	ld a, $01 ; $5d81
 	ret ; $5d83
-Label_08_5d84:
+.negativeLead:
 	cpl ; $5d84
 	inc a ; $5d85
 	cp a, $02 ; $5d86
-	jr c, Label_08_5d98 ; $5d88
+	jr c, .undecided ; $5d88
 	ld a, e ; $5d8a
 	cp a, c ; $5d8b
-	jr c, Label_08_5d98 ; $5d8c
+	jr c, .undecided ; $5d8c
 	ld a, $ff ; $5d8e
 	ret ; $5d90
-Label_08_5d91:
+.checkTie:
 	ld a, e ; $5d91
 	cp a, b ; $5d92
-	jr nz, Label_08_5d98 ; $5d93
+	jr nz, .undecided ; $5d93
 	ld a, $80 ; $5d95
 	ret ; $5d97
-Label_08_5d98:
+.undecided:
 	xor a, a ; $5d98
 	ret ; $5d99
 ResolvePointWinner:

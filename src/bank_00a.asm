@@ -1193,12 +1193,12 @@ ScriptSetActorAnimation:
 	ret ; $470a
 ScriptWaitActorIdle:
 	test_flag FLAG_CUTSCENE_FAST_FORWARD ; $470b
-	jr nz, Label_0a_4718 ; $470e
+	jr nz, .done ; $470e
 	call GetActorStateAddr ; $4710
 	ld c, l ; $4713
 	ld b, h ; $4714
 	call WaitActorIdle ; $4715
-Label_0a_4718:
+.done:
 	ret ; $4718
 ScriptSetActorJumpVelocity:
 	call GetActorStateAddr ; $4719

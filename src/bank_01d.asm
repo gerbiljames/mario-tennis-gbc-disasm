@@ -2985,13 +2985,13 @@ ScaleValueToBar:
 	call DivAHLByDE ; $59ed
 	ld a, h ; $59f0
 	or a, a ; $59f1
-	jr nz, Label_1d_59f9 ; $59f2
+	jr nz, .done ; $59f2
 	pop bc ; $59f4
 	inc b ; $59f5
 	ld a, l ; $59f6
 	cp a, b ; $59f7
 	ret c ; $59f8
-Label_1d_59f9:
+.done:
 	pop bc ; $59f9
 	ld a, b ; $59fa
 	ret ; $59fb

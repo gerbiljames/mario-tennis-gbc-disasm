@@ -1835,15 +1835,15 @@ SignExtendModifierByte:
 	sbc a, d ; $4d96
 	ld h, a ; $4d97
 	bit 7, h ; $4d98
-	jr nz, Label_1a_4da2 ; $4d9a
+	jr nz, .positive ; $4d9a
 	push bc ; $4d9c
 	pop hl ; $4d9d
 	ld h, $ff ; $4d9e
-	jr Label_1a_4da4 ; $4da0
-Label_1a_4da2:
+	jr .done ; $4da0
+.positive:
 	push bc ; $4da2
 	pop hl ; $4da3
-Label_1a_4da4:
+.done:
 	pop de ; $4da4
 	pop bc ; $4da5
 	pop af ; $4da6

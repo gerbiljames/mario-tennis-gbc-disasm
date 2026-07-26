@@ -3800,9 +3800,9 @@ CourtSelectIndexToCourtId:
 	ld hl, CourtSelectCourtIds_3e ; $5cfe
 	add a, l ; $5d01
 	ld l, a ; $5d02
-	jr nc, Label_3e_5d06 ; $5d03
+	jr nc, .read ; $5d03
 	inc h ; $5d05
-Label_3e_5d06:
+.read:
 	ld a, [hl] ; $5d06
 	ret ; $5d07
 CourtSelectCourtIds_3e:

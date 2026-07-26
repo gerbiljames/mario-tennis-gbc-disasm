@@ -643,25 +643,26 @@ GetMenuCursorLinearIndexFromPtr:
 SetMenuCursorFromLinearIndex:
 	ld d, $00 ; $43bb
 	ld a, c ; $43bd
-Label_38_43be:
+.divLoop:
 	cp a, b ; $43be
-	jr c, Label_38_43c5 ; $43bf
+	jr c, .store ; $43bf
 	inc d ; $43c1
 	sub a, b ; $43c2
-	jr Label_38_43be ; $43c3
-Label_38_43c5:
+	jr .divLoop ; $43c3
+.store:
 	ld [wMenuCursorX], a ; $43c5
 	ld a, d ; $43c8
 	ld [wMenuCursorY], a ; $43c9
 	ret ; $43cc
+SetMenuCursorFromLinearIndexToPtr:
 	ld d, $00 ; $43cd
 	ld a, c ; $43cf
-Label_38_43d0:
+.divLoop:
 	cp a, b ; $43d0
 	jr c, Label_38_43d7 ; $43d1
 	inc d ; $43d3
 	sub a, b ; $43d4
-	jr Label_38_43d0 ; $43d5
+	jr .divLoop ; $43d5
 Label_38_43d7:
 	ld [hl+], a ; $43d7
 	ld a, d ; $43d8
@@ -1796,9 +1797,9 @@ GetSelectedCharWramBank:
 	ld hl, Data_38_4e1f ; $4e15
 	add a, l ; $4e18
 	ld l, a ; $4e19
-	jr nc, Label_38_4e1d ; $4e1a
+	jr nc, .read ; $4e1a
 	inc h ; $4e1c
-Label_38_4e1d:
+.read:
 	ld b, [hl] ; $4e1d
 	ret ; $4e1e
 Data_38_4e1f:
@@ -5063,13 +5064,13 @@ Label_38_6608:
 StoreRemoteCpuDifficulty:
 	ld a, [$d813] ; $6609
 	cp a, $03 ; $660c
-	jr z, Label_38_6619 ; $660e
+	jr z, .slot0 ; $660e
 	cp a, $05 ; $6610
-	jr z, Label_38_6619 ; $6612
+	jr z, .slot0 ; $6612
 	ld a, c ; $6614
 	ld [$d833], a ; $6615
 	ret ; $6618
-Label_38_6619:
+.slot0:
 	ld a, c ; $6619
 	ld [$d831], a ; $661a
 	ret ; $661d
@@ -5573,14 +5574,14 @@ GetRemoteSlotBoxAddress:
 	ld a, [$d813] ; $69a5
 	add a, a ; $69a8
 	db $21 ; $69a9
-Label_38_69aa:
+.fromCallerPtr:
 	pop bc ; $69aa
 	ld l, c ; $69ab
 	add a, l ; $69ac
 	ld l, a ; $69ad
-	jr nc, Label_38_69b1 ; $69ae
+	jr nc, .readTable ; $69ae
 	inc h ; $69b0
-Label_38_69b1:
+.readTable:
 	ld a, [hl+] ; $69b1
 	ld h, [hl] ; $69b2
 	ld l, a ; $69b3
@@ -5613,7 +5614,7 @@ SubHandlers_38_69c1:
 	nop ; $69d4
 	nop ; $69d5
 	nop ; $69d6
-	jr nc, Label_38_69aa ; $69d7
+	jr nc, GetRemoteSlotBoxAddress.fromCallerPtr ; $69d7
 	nop ; $69d9
 	nop ; $69da
 	nop ; $69db
@@ -6885,17 +6886,17 @@ GetEnteredNameLength:
 	wram_bank $03 ; $73d4
 	ld hl, $d800 ; $73da
 	ld c, $00 ; $73dd
-Label_38_73df:
+.charLoop:
 	ld a, [hl+] ; $73df
 	cp a, $00 ; $73e0
-	jr z, Label_38_73ef ; $73e2
+	jr z, .done ; $73e2
 	cp a, $de ; $73e4
-	jr z, Label_38_73df ; $73e6
+	jr z, .charLoop ; $73e6
 	cp a, $df ; $73e8
-	jr z, Label_38_73df ; $73ea
+	jr z, .charLoop ; $73ea
 	inc c ; $73ec
-	jr Label_38_73df ; $73ed
-Label_38_73ef:
+	jr .charLoop ; $73ed
+.done:
 	ld a, c ; $73ef
 	ld b, a ; $73f0
 	pop af ; $73f1

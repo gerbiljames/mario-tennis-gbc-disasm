@@ -3925,9 +3925,9 @@ GetTrophyExpValue:
 	ld hl, Data_1e_67a7 ; $6fef
 	add a, l ; $6ff2
 	ld l, a ; $6ff3
-	jr nc, Label_1e_6ff7 ; $6ff4
+	jr nc, .read ; $6ff4
 	inc h ; $6ff6
-Label_1e_6ff7:
+.read:
 	ld a, [hl+] ; $6ff7
 	ld b, [hl] ; $6ff8
 	ld c, a ; $6ff9

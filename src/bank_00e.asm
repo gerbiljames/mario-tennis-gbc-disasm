@@ -1352,13 +1352,13 @@ FetchAndPushShortTextArg:
 GetEquippedRacketNibble:
 	ld a, [$c2bc] ; $4f5d
 	and a, a ; $4f60
-	jr z, Label_0e_4f65 ; $4f61
-	jr Label_0e_4f6b ; $4f63
-Label_0e_4f65:
+	jr z, .lowNibble ; $4f61
+	jr .highNibble ; $4f63
+.lowNibble:
 	ld a, [wEquippedRacket] ; $4f65
 	and a, $0f ; $4f68
 	ret ; $4f6a
-Label_0e_4f6b:
+.highNibble:
 	ld a, [wEquippedRacket] ; $4f6b
 	and a, $f0 ; $4f6e
 	swap a ; $4f70
