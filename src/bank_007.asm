@@ -2766,8 +2766,8 @@ ApplyShotTypePresets:
 	ld c, a ; $559c
 	ret ; $559d
 ShotTypePresets_07:
-	; $559e, 75 bytes (records:5)
-; 15 records x 5 bytes
+	; $559e, 66 bytes (records:5)
+; 13 records x 5 bytes
 	db $51, $00, $00, $80, $02 ; record 0
 	db $51, $00, $01, $c0, $03 ; record 1
 	db $57, $00, $00, $80, $02 ; record 2
@@ -2781,13 +2781,14 @@ ShotTypePresets_07:
 	db $53, $03, $00, $00, $02 ; record 10
 	db $52, $03, $00, $00, $02 ; record 11
 	db $54, $04, $01, $a0, $02 ; record 12
-	db $54, $04, $02, $a0, $02 ; record 13
-	db $54, $04, $03, $a0, $02 ; record 14
-Label_07_55e9:
+	db $54
+GetShotAimOffsetForSide:
+	INCBIN "data/bank_007/d_55e0.bin" ; $55e0, 9 bytes
+.fromTable:
 	ld hl, CourtSideOffsets_07_563e ; $55e9
 	ld a, [$c7b9] ; $55ec
 	and a, a ; $55ef
-	jr nz, Label_07_5601 ; $55f0
+	jr nz, .readAim ; $55f0
 	ld a, [wCharCourtPos] ; $55f2
 	and a, $01 ; $55f5
 	add a, a ; $55f7
@@ -2798,15 +2799,15 @@ Label_07_55e9:
 	adc a, $56 ; $55fd
 	sub a, l ; $55ff
 	ld h, a ; $5600
-Label_07_5601:
+.readAim:
 	ld a, [$df4a] ; $5601
 	inc a ; $5604
 	add a, a ; $5605
 	add a, l ; $5606
 	ld l, a ; $5607
-	jr nc, Label_07_560b ; $5608
+	jr nc, .done ; $5608
 	inc h ; $560a
-Label_07_560b:
+.done:
 	ld a, [hl+] ; $560b
 	ld d, [hl] ; $560c
 	ld e, a ; $560d
@@ -2853,7 +2854,7 @@ CourtSideOffsets_07_563e:
 ComputeShotTargetX:
 	ld a, [wRallyLength] ; $5646
 	and a, a ; $5649
-	jr z, Label_07_55e9 ; $564a
+	jr z, GetShotAimOffsetForSide.fromTable ; $564a
 	call ComputeAimBaseOffset ; $564c
 	ld a, [$df4a] ; $564f
 	add a, $02 ; $5652

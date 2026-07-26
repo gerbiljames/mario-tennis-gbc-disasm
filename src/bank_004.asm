@@ -330,11 +330,11 @@ UpdateActors:
 	wram_bank $04 ; $41e7
 	ld hl, $d000 ; $41ed
 	ld c, $18 ; $41f0
-Label_04_41f2:
+.actorLoop:
 	inc hl ; $41f2
 	ld a, [hl-] ; $41f3
 	or a, a ; $41f4
-	jr z, Label_04_420f ; $41f5
+	jr z, .next ; $41f5
 	push bc ; $41f7
 	push hl ; $41f8
 	ld a, l ; $41f9
@@ -349,11 +349,11 @@ Label_04_41f2:
 	call UpdateCameraIfActorIsCameraTarget ; $420a
 	pop hl ; $420d
 	pop bc ; $420e
-Label_04_420f:
+.next:
 	ld de, $0040 ; $420f
 	add hl, de ; $4212
 	dec c ; $4213
-	jr nz, Label_04_41f2 ; $4214
+	jr nz, .actorLoop ; $4214
 	ld hl, $d00c ; $4216
 	ld de, wStoryModePlayersXPosition ; $4219
 	ld bc, $0004 ; $421c
@@ -1383,16 +1383,16 @@ ActorScriptOp_SetField:
 	ld a, [hl] ; $47a7
 	pop hl ; $47a8
 	cp a, $02 ; $47a9
-	jr nz, Label_04_47b2 ; $47ab
+	jr nz, .wordField ; $47ab
 	ld a, c ; $47ad
 	ld [hl+], a ; $47ae
 	ld [hl], b ; $47af
-	jr Label_04_47b7 ; $47b0
-Label_04_47b2:
+	jr .done ; $47b0
+.wordField:
 	cp a, $01 ; $47b2
-	jr nz, Label_04_47b7 ; $47b4
+	jr nz, .done ; $47b4
 	ld [hl], c ; $47b6
-Label_04_47b7:
+.done:
 	ld a, $01 ; $47b7
 	ret ; $47b9
 ActorScriptOp_AddField:
@@ -1424,7 +1424,7 @@ ActorScriptOp_AddField:
 	ld a, [hl] ; $47e0
 	pop hl ; $47e1
 	cp a, $02 ; $47e2
-	jr nz, Label_04_47f3 ; $47e4
+	jr nz, .wordField ; $47e4
 	push hl ; $47e6
 	ld a, [hl+] ; $47e7
 	ld h, [hl] ; $47e8
@@ -1436,14 +1436,14 @@ ActorScriptOp_AddField:
 	ld a, c ; $47ee
 	ld [hl+], a ; $47ef
 	ld [hl], b ; $47f0
-	jr Label_04_47fa ; $47f1
-Label_04_47f3:
+	jr .done ; $47f1
+.wordField:
 	cp a, $01 ; $47f3
-	jr nz, Label_04_47fa ; $47f5
+	jr nz, .done ; $47f5
 	ld a, [hl] ; $47f7
 	add a, c ; $47f8
 	ld [hl], a ; $47f9
-Label_04_47fa:
+.done:
 	ld a, $01 ; $47fa
 	ret ; $47fc
 ActorFieldTypeTable_04:
@@ -1523,7 +1523,7 @@ ActorScriptOp_RandBox:
 	add a, $30 ; $488b
 	ld l, a ; $488d
 	bit 7, [hl] ; $488e
-	jr z, Label_04_48bf ; $4890
+	jr z, .advance ; $4890
 	push de ; $4892
 	inc de ; $4893
 	ld a, [$daf7] ; $4894
@@ -1536,20 +1536,20 @@ ActorScriptOp_RandBox:
 	ld [$daf6], a ; $48a1
 	call TryPickRandomReachableTarget ; $48a4
 	and a, a ; $48a7
-	jr nz, Label_04_48be ; $48a8
+	jr nz, .skipOperands ; $48a8
 	call TryPickRandomReachableTarget ; $48aa
 	and a, a ; $48ad
-	jr nz, Label_04_48be ; $48ae
+	jr nz, .skipOperands ; $48ae
 	call TryPickRandomReachableTarget ; $48b0
 	and a, a ; $48b3
-	jr nz, Label_04_48be ; $48b4
+	jr nz, .skipOperands ; $48b4
 	call TryPickRandomReachableTarget ; $48b6
 	and a, a ; $48b9
-	jr nz, Label_04_48be ; $48ba
-	jr Label_04_48be ; $48bc
-Label_04_48be:
+	jr nz, .skipOperands ; $48ba
+	jr .skipOperands ; $48bc
+.skipOperands:
 	pop de ; $48be
-Label_04_48bf:
+.advance:
 	inc de ; $48bf
 	inc de ; $48c0
 	inc de ; $48c1
@@ -1640,7 +1640,7 @@ ActorScriptOp_WaitMove2:
 	add a, $05 ; $494e
 	ld l, a ; $4950
 	bit 7, [hl] ; $4951
-	jr nz, Label_04_4962 ; $4953
+	jr nz, .setWait ; $4953
 	ld hl, hActorPtr ; $4955
 	ld a, [hl+] ; $4958
 	ld h, [hl] ; $4959
@@ -1648,15 +1648,15 @@ ActorScriptOp_WaitMove2:
 	ld l, a ; $495c
 	ld [hl], $28 ; $495d
 	inc de ; $495f
-	jr Label_04_4979 ; $4960
-Label_04_4962:
+	jr .done ; $4960
+.setWait:
 	ld hl, hActorPtr ; $4962
 	ld a, [hl+] ; $4965
 	ld h, [hl] ; $4966
 	add a, $05 ; $4967
 	ld l, a ; $4969
 	bit 6, [hl] ; $496a
-	jr z, Label_04_4979 ; $496c
+	jr z, .done ; $496c
 	ld hl, hActorPtr ; $496e
 	ld a, [hl+] ; $4971
 	ld h, [hl] ; $4972
@@ -1664,7 +1664,7 @@ Label_04_4962:
 	ld l, a ; $4975
 	ld [hl], $0a ; $4976
 	inc de ; $4978
-Label_04_4979:
+.done:
 	xor a, a ; $4979
 	ret ; $497a
 	inc de ; $497b
@@ -1770,15 +1770,15 @@ ActorScriptOp_Flag:
 	ld l, a ; $4a0c
 	pop af ; $4a0d
 	cp a, $01 ; $4a0e
-	jr z, Label_04_4a18 ; $4a10
+	jr z, .setBits ; $4a10
 	ld a, c ; $4a12
 	xor a, $ff ; $4a13
 	and a, [hl] ; $4a15
-	jr Label_04_4a1a ; $4a16
-Label_04_4a18:
+	jr .store ; $4a16
+.setBits:
 	ld a, c ; $4a18
 	or a, [hl] ; $4a19
-Label_04_4a1a:
+.store:
 	ld [hl], a ; $4a1a
 	pop bc ; $4a1b
 	ld a, $01 ; $4a1c
