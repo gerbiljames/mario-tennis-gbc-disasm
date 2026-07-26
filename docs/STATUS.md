@@ -26,11 +26,11 @@ shape, not *twins*, and the shot banks are near-identical copies of each
 other, so a routine only one bank failed to execute reads as ordinary data
 until you diff it against its siblings.
 
-Everything below is **committed** (HEAD `b251c6b`); the whole history
+Everything below is **committed** (HEAD `2a19188`); the whole history
 rebuilds byte-perfect. Per-bank progress at any time: `python3
 tools/progress.py` (proven-code bytes, fill runs, label counts, human-named
 counts) and `tools/progress.py --unnamed <bank>` to list still-auto-named
-symbols. **17,241 of 20,856 labels are human-named** (see the caveat in the
+symbols. **18,949 of 20,856 labels are human-named** (see the caveat in the
 auto-split section below) (up from 4,816 on 2026-07-23); what is left is
 2,191 data blobs.
 
@@ -4188,7 +4188,85 @@ adjacent `INCBIN` pairs without a label between them, and 0 `Gfx_`/`Label_`/
 `Func_` symbols. 17,241 of 20,856 labels human-named.
 
 
+## Identifying the remaining data (2026-07-26)
+
+Started at 387,569 bytes of blob under an auto `Data_`/`Lz_` name (18.5% of
+the ROM); ended at 51,668 (2.5%). Three structures accounted for nearly all
+of it, and all three were resolvable statically once the indexing code was
+read -- the emulator's contribution was confirming behaviour, not finding it.
+
+### Sound (banks `$78`-`$7f`, ~130 KB)
+
+`PlaySound` (`$3297`) takes a sound id, splits it at `$50` (below = SFX,
+above = music), and indexes `SfxIndexTable` (`$3151`) or `MusicIndexTable`
+(`$31b5`) at `(id - base - 1) * 2`. Each 2-byte entry is
+`db (channelCount << 4) | (bank & $0f), tableIndex`, and the bank is
+reconstituted as **`$70 | low nibble`** -- which is why all the music lives in
+`$78`-`$7f`. `tableIndex * 4` then indexes the bank's `SoundTable_bb` at
+`$4000`; `StartSoundChannel` consumes 4 bytes per channel (channel-struct
+offset, a flag, and a pointer to that channel's script).
+
+Resolving all 163 ids lands on **315 blob starts exactly, with zero malformed
+entries** -- the check that the decode is right. Every channel script is now
+`Music<id>_Trk<n>` / `Sfx<id>_Trk<n>`.
+
+Two things fall out of the table layout:
+
+* **The two index tables overlap.** `SfxIndexTable` + `$45 * 2` runs past
+  `$31b5`, so SFX ids `$41`-`$45` resolve to music entries `$5f`-`$63`. The
+  sound test's own list confirms it -- it offers SFX `$00`-`$32` and then
+  jumps to `$41`-`$45`, skipping the range that would collide. Driving the
+  game showed `Sfx $41` firing on every menu confirm, so the aliases are live,
+  not vestigial.
+* **Bank `$0c` is a leftover sound bank.** It has the same 36-entry table
+  shape and all 36 of its pointers land on blob starts, but `or a, $70` means
+  no id can ever select it. 17 of its 36 scripts appear byte-identically in
+  the live banks. Named `UnusedSnd0c_*`.
+
+### Overworld walk sprites (banks `$6a`, `$6f`, `$70`-`$77`, ~117 KB)
+
+Banks `$6a`/`$6f`/`$77` already carried a `WalkSprites_*` slot table; `$70`-`$76`
+have the identical object headers behind per-slot `DataPtr_` labels. Each
+header is `db count, flags` + `dw .frames, OamPtrs_*, .frames`. Walking that
+structure names all **1,297** blobs `WalkSprite_<bank>_<slot>_Gfx<n>` /
+`_Oam<n>`. Rendering a frame as 8x16 GB objects (not as a 4x4 tile grid --
+that reading is unreadable noise) shows four 16x16 character poses per
+256-byte blob, which is what makes them walk sprites rather than tilesets.
+
+Worth noting for future hook work: these banks never appear in a
+`CopyDataFromBank`/`DecompressDataFromBank` capture from the menus. They are
+read in place during play, so a hook-based sweep of the menus will not see
+them however long you drive.
+
+### Character banks `$40`-`$5d` (~68 KB)
+
+All thirty share one descriptor at `$4002`; its sixth word (`$400c`) is
+`$7ce0` in every bank and the emitted header already annotates it "per-slot
+OAM data" -- so those 580-byte blobs are `<Char>SpriteOam`.
+
+The 1,680-byte run at `$7650` is unreferenced: the frame table's 145 entries
+resolve to exactly 56 distinct frames ending at `$7650`, and nothing in the
+ROM points into it. It is 7 x 240 bytes and **all seven chunks are
+byte-identical to frames the table already references** -- unreferenced
+duplicates, named `<Char>SpriteFramesUnused`.
+
+### Generator fix
+
+Several emitters declare a label for the same offset (the fill/segment path
+that runs up to a blob, and the blob's own mark). Most guard on `lines[-1]`;
+a curated name at such an offset slipped through both and emitted the label
+twice, which rgbasm rejects as a redefinition. Identical consecutive label
+lines are now collapsed in `_emit_bank`.
+
+### What is left
+
+51,668 bytes in 270 blobs, no longer dominated by any one structure: bank
+`$3c` (8.9K, mode-select/stadium screens), `$6d` (5.9K), `$16` (5.4K), `$3d`
+(5.0K), `$3f` (4.0K), and single large blobs in `$64`/`$65`/`$68`/`$69`.
+18,949 of 20,856 labels human-named.
+
+
 ## Repo state
 
-All work is committed (HEAD `b251c6b`); every commit rebuilds byte-perfect.
+All work is committed (HEAD `2a19188`); every commit rebuilds byte-perfect.
 Gitignored: baserom.gbc, data/, build/, tools/rgbds/, *.o, *.gbc, *.sav.
