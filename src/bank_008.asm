@@ -6023,7 +6023,7 @@ CharPointEndState:
 	dw CharPointReactionPhase ; $6d1e jumptable
 	dw AdvanceCharStatePhase.done ; $6d20 jumptable
 	dw PrintString.markDirty ; $6d22 jumptable
-	dw Label_00_34df ; $6d24 jumptable
+	dw UpdateSoundChannels.step6 ; $6d24 jumptable
 	ret ; $6d26
 CharPointReactionPhase:
 	call ReloadCharFrameGfx ; $6d27
@@ -7507,7 +7507,7 @@ ReloadCharFacingTiles:
 	add hl, hl ; $763d
 	ld e, l ; $763e
 	ld d, h ; $763f
-	jp Label_00_2e6b ; $7640
+	jp GetPerspectiveScale.step ; $7640
 	; $7643, 8 bytes (bytes:8)
 	db $02, $03, $04, $03, $02, $01, $00, $01 ; 0x00
 UpdateChargeFlash:
