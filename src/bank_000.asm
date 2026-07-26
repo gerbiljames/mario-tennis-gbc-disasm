@@ -3399,38 +3399,38 @@ AngleFromVector16:
 	ld bc, $0000 ; $1416
 	ld a, h ; $1419
 	or a, l ; $141a
-	jp z, Label_00_154f ; $141b
+	jp z, .applySignY ; $141b
 	ld b, $40 ; $141e
 	ld a, d ; $1420
 	or a, e ; $1421
-	jp z, Label_00_154f ; $1422
+	jp z, .applySignY ; $1422
 	push hl ; $1425
 	push de ; $1426
 	bit 7, d ; $1427
-	jr z, Label_00_1431 ; $1429
+	jr z, .absY ; $1429
 	xor a, a ; $142b
 	sub a, e ; $142c
 	ld e, a ; $142d
 	sbc a, a ; $142e
 	sub a, d ; $142f
 	ld d, a ; $1430
-Label_00_1431:
+.absY:
 	bit 7, h ; $1431
-	jr z, Label_00_143b ; $1433
+	jr z, .absX ; $1433
 	xor a, a ; $1435
 	sub a, l ; $1436
 	ld l, a ; $1437
 	sbc a, a ; $1438
 	sub a, h ; $1439
 	ld h, a ; $143a
-Label_00_143b:
+.absX:
 	ld a, h ; $143b
 	ld h, l ; $143c
 	ld l, $00 ; $143d
 	call DivAHLByDE ; $143f
 	ld bc, $3fc0 ; $1442
 	or a, a ; $1445
-	jp nz, Label_00_154d ; $1446
+	jp nz, .restore ; $1446
 	ld e, l ; $1449
 	ld d, h ; $144a
 	ld hl, $1663 ; $144b
@@ -3439,212 +3439,212 @@ Label_00_143b:
 	ld c, a ; $1451
 	ld a, [hl-] ; $1452
 	cp a, d ; $1453
-	jr c, Label_00_1465 ; $1454
-	jr nz, Label_00_145c ; $1456
+	jr c, .add7 ; $1454
+	jr nz, .sub7 ; $1456
 	ld a, c ; $1458
 	cp a, e ; $1459
-	jr c, Label_00_1465 ; $145a
-Label_00_145c:
+	jr c, .add7 ; $145a
+.sub7:
 	ld a, l ; $145c
 	sub a, $80 ; $145d
 	ld l, a ; $145f
-	jr nc, Label_00_1463 ; $1460
+	jr nc, .sub7Done ; $1460
 	dec h ; $1462
-Label_00_1463:
-	jr Label_00_146e ; $1463
-Label_00_1465:
+.sub7Done:
+	jr .step6 ; $1463
+.add7:
 	ld a, $80 ; $1465
 	add a, l ; $1467
 	ld l, a ; $1468
-	jr nc, Label_00_146c ; $1469
+	jr nc, .setBit7 ; $1469
 	inc h ; $146b
-Label_00_146c:
+.setBit7:
 	set 7, b ; $146c
-Label_00_146e:
+.step6:
 	ld a, [hl+] ; $146e
 	ld c, a ; $146f
 	ld a, [hl-] ; $1470
 	cp a, d ; $1471
-	jr c, Label_00_1483 ; $1472
-	jr nz, Label_00_147a ; $1474
+	jr c, .add6 ; $1472
+	jr nz, .sub6 ; $1474
 	ld a, c ; $1476
 	cp a, e ; $1477
-	jr c, Label_00_1483 ; $1478
-Label_00_147a:
+	jr c, .add6 ; $1478
+.sub6:
 	ld a, l ; $147a
 	sub a, $40 ; $147b
 	ld l, a ; $147d
-	jr nc, Label_00_1481 ; $147e
+	jr nc, .sub6Done ; $147e
 	dec h ; $1480
-Label_00_1481:
-	jr Label_00_148c ; $1481
-Label_00_1483:
+.sub6Done:
+	jr .step5 ; $1481
+.add6:
 	ld a, $40 ; $1483
 	add a, l ; $1485
 	ld l, a ; $1486
-	jr nc, Label_00_148a ; $1487
+	jr nc, .setBit6 ; $1487
 	inc h ; $1489
-Label_00_148a:
+.setBit6:
 	set 6, b ; $148a
-Label_00_148c:
+.step5:
 	ld a, [hl+] ; $148c
 	ld c, a ; $148d
 	ld a, [hl-] ; $148e
 	cp a, d ; $148f
-	jr c, Label_00_14a1 ; $1490
-	jr nz, Label_00_1498 ; $1492
+	jr c, .add5 ; $1490
+	jr nz, .sub5 ; $1492
 	ld a, c ; $1494
 	cp a, e ; $1495
-	jr c, Label_00_14a1 ; $1496
-Label_00_1498:
+	jr c, .add5 ; $1496
+.sub5:
 	ld a, l ; $1498
 	sub a, $20 ; $1499
 	ld l, a ; $149b
-	jr nc, Label_00_149f ; $149c
+	jr nc, .sub5Done ; $149c
 	dec h ; $149e
-Label_00_149f:
-	jr Label_00_14aa ; $149f
-Label_00_14a1:
+.sub5Done:
+	jr .step4 ; $149f
+.add5:
 	ld a, $20 ; $14a1
 	add a, l ; $14a3
 	ld l, a ; $14a4
-	jr nc, Label_00_14a8 ; $14a5
+	jr nc, .setBit5 ; $14a5
 	inc h ; $14a7
-Label_00_14a8:
+.setBit5:
 	set 5, b ; $14a8
-Label_00_14aa:
+.step4:
 	ld a, [hl+] ; $14aa
 	ld c, a ; $14ab
 	ld a, [hl-] ; $14ac
 	cp a, d ; $14ad
-	jr c, Label_00_14bf ; $14ae
-	jr nz, Label_00_14b6 ; $14b0
+	jr c, .add4 ; $14ae
+	jr nz, .sub4 ; $14b0
 	ld a, c ; $14b2
 	cp a, e ; $14b3
-	jr c, Label_00_14bf ; $14b4
-Label_00_14b6:
+	jr c, .add4 ; $14b4
+.sub4:
 	ld a, l ; $14b6
 	sub a, $10 ; $14b7
 	ld l, a ; $14b9
-	jr nc, Label_00_14bd ; $14ba
+	jr nc, .sub4Done ; $14ba
 	dec h ; $14bc
-Label_00_14bd:
-	jr Label_00_14c8 ; $14bd
-Label_00_14bf:
+.sub4Done:
+	jr .step3 ; $14bd
+.add4:
 	ld a, $10 ; $14bf
 	add a, l ; $14c1
 	ld l, a ; $14c2
-	jr nc, Label_00_14c6 ; $14c3
+	jr nc, .setBit4 ; $14c3
 	inc h ; $14c5
-Label_00_14c6:
+.setBit4:
 	set 4, b ; $14c6
-Label_00_14c8:
+.step3:
 	ld a, [hl+] ; $14c8
 	ld c, a ; $14c9
 	ld a, [hl-] ; $14ca
 	cp a, d ; $14cb
-	jr c, Label_00_14dd ; $14cc
-	jr nz, Label_00_14d4 ; $14ce
+	jr c, .add3 ; $14cc
+	jr nz, .sub3 ; $14ce
 	ld a, c ; $14d0
 	cp a, e ; $14d1
-	jr c, Label_00_14dd ; $14d2
-Label_00_14d4:
+	jr c, .add3 ; $14d2
+.sub3:
 	ld a, l ; $14d4
 	sub a, $08 ; $14d5
 	ld l, a ; $14d7
-	jr nc, Label_00_14db ; $14d8
+	jr nc, .sub3Done ; $14d8
 	dec h ; $14da
-Label_00_14db:
-	jr Label_00_14e6 ; $14db
-Label_00_14dd:
+.sub3Done:
+	jr .step2 ; $14db
+.add3:
 	ld a, $08 ; $14dd
 	add a, l ; $14df
 	ld l, a ; $14e0
-	jr nc, Label_00_14e4 ; $14e1
+	jr nc, .setBit3 ; $14e1
 	inc h ; $14e3
-Label_00_14e4:
+.setBit3:
 	set 3, b ; $14e4
-Label_00_14e6:
+.step2:
 	ld a, [hl+] ; $14e6
 	ld c, a ; $14e7
 	ld a, [hl-] ; $14e8
 	cp a, d ; $14e9
-	jr c, Label_00_14fb ; $14ea
-	jr nz, Label_00_14f2 ; $14ec
+	jr c, .add2 ; $14ea
+	jr nz, .sub2 ; $14ec
 	ld a, c ; $14ee
 	cp a, e ; $14ef
-	jr c, Label_00_14fb ; $14f0
-Label_00_14f2:
+	jr c, .add2 ; $14f0
+.sub2:
 	ld a, l ; $14f2
 	sub a, $04 ; $14f3
 	ld l, a ; $14f5
-	jr nc, Label_00_14f9 ; $14f6
+	jr nc, .sub2Done ; $14f6
 	dec h ; $14f8
-Label_00_14f9:
-	jr Label_00_1504 ; $14f9
-Label_00_14fb:
+.sub2Done:
+	jr .step1 ; $14f9
+.add2:
 	ld a, $04 ; $14fb
 	add a, l ; $14fd
 	ld l, a ; $14fe
-	jr nc, Label_00_1502 ; $14ff
+	jr nc, .setBit2 ; $14ff
 	inc h ; $1501
-Label_00_1502:
+.setBit2:
 	set 2, b ; $1502
-Label_00_1504:
+.step1:
 	ld a, [hl+] ; $1504
 	ld c, a ; $1505
 	ld a, [hl-] ; $1506
 	cp a, d ; $1507
-	jr c, Label_00_1519 ; $1508
-	jr nz, Label_00_1510 ; $150a
+	jr c, .add1 ; $1508
+	jr nz, .sub1 ; $150a
 	ld a, c ; $150c
 	cp a, e ; $150d
-	jr c, Label_00_1519 ; $150e
-Label_00_1510:
+	jr c, .add1 ; $150e
+.sub1:
 	ld a, l ; $1510
 	sub a, $02 ; $1511
 	ld l, a ; $1513
-	jr nc, Label_00_1517 ; $1514
+	jr nc, .sub1Done ; $1514
 	dec h ; $1516
-Label_00_1517:
-	jr Label_00_1522 ; $1517
-Label_00_1519:
+.sub1Done:
+	jr .lastStep ; $1517
+.add1:
 	ld a, $02 ; $1519
 	add a, l ; $151b
 	ld l, a ; $151c
-	jr nc, Label_00_1520 ; $151d
+	jr nc, .setBit1 ; $151d
 	inc h ; $151f
-Label_00_1520:
+.setBit1:
 	set 1, b ; $1520
-Label_00_1522:
+.lastStep:
 	ld a, [hl+] ; $1522
 	ld c, a ; $1523
 	ld a, [hl+] ; $1524
 	cp a, d ; $1525
-	jr c, Label_00_152e ; $1526
-	jr nz, Label_00_152f ; $1528
+	jr c, .roundUp ; $1526
+	jr nz, .checkOverflow ; $1528
 	ld a, c ; $152a
 	cp a, e ; $152b
-	jr nc, Label_00_152f ; $152c
-Label_00_152e:
+	jr nc, .checkOverflow ; $152c
+.roundUp:
 	inc b ; $152e
-Label_00_152f:
+.checkOverflow:
 	ld a, b ; $152f
 	inc a ; $1530
-	jr nz, Label_00_1544 ; $1531
+	jr nz, .packAngle ; $1531
 	ld a, [hl+] ; $1533
 	ld c, a ; $1534
 	ld a, [hl+] ; $1535
 	cp a, d ; $1536
-	jr c, Label_00_153f ; $1537
-	jr nz, Label_00_1544 ; $1539
+	jr c, .quarterTurn ; $1537
+	jr nz, .packAngle ; $1539
 	ld a, c ; $153b
 	cp a, e ; $153c
-	jr nc, Label_00_1544 ; $153d
-Label_00_153f:
+	jr nc, .packAngle ; $153d
+.quarterTurn:
 	ld bc, $4000 ; $153f
-	jr Label_00_154d ; $1542
-Label_00_1544:
+	jr .restore ; $1542
+.packAngle:
 	ld a, b ; $1544
 	rrca ; $1545
 	rrca ; $1546
@@ -3653,28 +3653,28 @@ Label_00_1544:
 	ld c, a ; $154a
 	xor a, b ; $154b
 	ld b, a ; $154c
-Label_00_154d:
+.restore:
 	pop de ; $154d
 	pop hl ; $154e
-Label_00_154f:
+.applySignY:
 	bit 7, d ; $154f
-	jr z, Label_00_155a ; $1551
+	jr z, .signYDone ; $1551
 	xor a, a ; $1553
 	sub a, c ; $1554
 	ld c, a ; $1555
 	ld a, $80 ; $1556
 	sbc a, b ; $1558
 	ld b, a ; $1559
-Label_00_155a:
+.signYDone:
 	bit 7, h ; $155a
-	jr z, Label_00_1564 ; $155c
+	jr z, .done ; $155c
 	xor a, a ; $155e
 	sub a, c ; $155f
 	ld c, a ; $1560
 	sbc a, a ; $1561
 	sub a, b ; $1562
 	ld b, a ; $1563
-Label_00_1564:
+.done:
 	ret ; $1564
 TangentTable:
 	; $1565, 514 bytes (records:2)
@@ -3926,7 +3926,7 @@ TangentTable:
 	dw $0f43 ; record 245
 	dw $10d9 ; record 246
 	dw $12cd ; record 247
-	dw Label_00_1544 ; record 248
+	dw AngleFromVector16.packAngle ; record 248
 	dw $1878 ; record 249
 	dw $1cce ; record 250
 	dw $2302 ; record 251
