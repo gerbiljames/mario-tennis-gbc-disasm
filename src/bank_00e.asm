@@ -470,24 +470,24 @@ TrainingGymInitScript_0e:
 	call SetupGymActorsForProgress ; $465b
 	ld a, [wStoryModeEntryPoint] ; $465e
 	cp a, $0b ; $4661
-	jr nz, Label_0e_4669 ; $4663
+	jr nz, .entry0c ; $4663
 	call RepairCounterReturnA ; $4665
 	ret ; $4668
-Label_0e_4669:
+.entry0c:
 	cp a, $0c ; $4669
-	jr nz, Label_0e_4671 ; $466b
+	jr nz, .entry0d ; $466b
 	call RepairCounterReturnB ; $466d
 	ret ; $4670
-Label_0e_4671:
+.entry0d:
 	cp a, $0d ; $4671
-	jr nz, Label_0e_4679 ; $4673
+	jr nz, .entry0e ; $4673
 	call RepairCounterChangedReturnA ; $4675
 	ret ; $4678
-Label_0e_4679:
+.entry0e:
 	cp a, $0e ; $4679
-	jr nz, Label_0e_4680 ; $467b
+	jr nz, .done ; $467b
 	call RepairCounterChangedReturnB ; $467d
-Label_0e_4680:
+.done:
 	ret ; $4680
 SetupGymActorsForProgress:
 	ld a, [$c2b0] ; $4681
@@ -3374,7 +3374,7 @@ ExhibitionMatchIntroCutscene:
 	dec a ; $7702
 	ld [wWaterSpriteMinigameTimer], a ; $7703
 	test_flag FLAG_DOUBLES ; $7706
-	jp nz, Label_0e_7927 ; $7709
+	jp nz, .startMatch ; $7709
 	script_set_speed $0e, $0014 ; $770c
 	script_set_speed ACTOR_PLAYER, $0014 ; $7714
 	script_set_position $0e, $0500, $2300 ; $771c
@@ -3404,12 +3404,12 @@ ExhibitionMatchIntroCutscene:
 	script_wait_idle ACTOR_PLAYER ; $77e4
 	script_wait_frames $14 ; $77e9
 	test_flag FLAG_ENDING_CREDITS_RUNNING ; $77f0
-	jr z, Label_0e_77fe ; $77f3
+	jr z, .doubles ; $77f3
 	ld a, $01 ; $77f5
 	ld [$c294], a ; $77f7
 	ld [wStoryModeExitLocationRequest], a ; $77fa
 	ret ; $77fd
-Label_0e_77fe:
+.doubles:
 	script_move_target ACTOR_PLAYER, $0f00, $1a00 ; $77fe
 	script_wait_move ACTOR_PLAYER ; $7809
 	script_move_target ACTOR_PLAYER, $0f00, $1700 ; $780e
@@ -3453,7 +3453,7 @@ Label_0e_77fe:
 	script_wait_frames $28 ; $791c
 	call PrepareStoryMatch ; $7923
 	ret ; $7926
-Label_0e_7927:
+.startMatch:
 	script_set_speed $0e, $0014 ; $7927
 	script_set_speed ACTOR_PLAYER, $0014 ; $792f
 	script_set_speed ACTOR_PARTNER, $0014 ; $7937
@@ -3491,12 +3491,12 @@ Label_0e_7927:
 	script_wait_idle $03 ; $7a4c
 	script_wait_frames $14 ; $7a51
 	test_flag FLAG_ENDING_CREDITS_RUNNING ; $7a58
-	jr z, Label_0e_7a66 ; $7a5b
+	jr z, .done ; $7a5b
 	ld a, $01 ; $7a5d
 	ld [$c294], a ; $7a5f
 	ld [wStoryModeExitLocationRequest], a ; $7a62
 	ret ; $7a65
-Label_0e_7a66:
+.done:
 	script_set_text Text_5e_170 ; $7a66
 	script_speak $03 ; $7a6c
 	script_wait_frames $14 ; $7a71

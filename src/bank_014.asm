@@ -259,12 +259,12 @@ TennisMachineRoomInitScript_14:
 	ret ; $42af
 MachineCourtResultScene:
 	test_flag FLAG_DOUBLES ; $42b0
-	jr z, Label_14_42d3 ; $42b3
+	jr z, .win ; $42b3
 	script_null_script ACTOR_PARTNER ; $42b5
 	script_wait_frames $0a ; $42ba
 	script_set_position ACTOR_PARTNER, $2900, $2b00 ; $42c1
 	script_face ACTOR_PARTNER, FACE_RIGHT ; $42cc
-Label_14_42d3:
+.win:
 	script_set_position $05, $2d00, $2900 ; $42d3
 	script_face $05, FACE_DOWN ; $42de
 	script_fade_in $06 ; $42e5
@@ -272,8 +272,8 @@ Label_14_42d3:
 	script_wait_frames $28 ; $42ed
 	script_set_speed ACTOR_PLAYER, $0020 ; $42f4
 	test_flag FLAG_DOUBLES ; $42fc
-	jr z, Label_14_4301 ; $42ff
-Label_14_4301:
+	jr z, .lose ; $42ff
+.lose:
 	xor a, a ; $4301
 	ld [wStoryModeShowLocationName], a ; $4302
 	ld a, [wMatchExitRequest] ; $4305
@@ -281,7 +281,7 @@ Label_14_4301:
 	jp nz, MachineCourtGameOverExitScene ; $4309
 	ld a, [wPointWinLoseFlag] ; $430c
 	cp a, $01 ; $430f
-	jr z, Label_14_4326 ; $4311
+	jr z, .done ; $4311
 	ld a, [$c2b0] ; $4313
 	ld a, a ; $4316
 	rst Rst00 ; $4317
@@ -292,7 +292,7 @@ Label_14_4301:
 	dw MachineExpertResultScene ; $4320 jumptable
 	dw MachineExpertResultScene ; $4322 jumptable
 	dw MachineExpertResultScene ; $4324 jumptable
-Label_14_4326:
+.done:
 	ld a, [$c2b0] ; $4326
 	dec a ; $4329
 	ld a, a ; $432a
@@ -379,7 +379,7 @@ TennisMachineRoomNpc05_14:
 	farcall InitDialogueTextCursor ; $4441
 	ld a, [$c2b0] ; $4444
 	cp a, $05 ; $4447
-	jr c, Label_14_4467 ; $4449
+	jr c, .prompt ; $4449
 	ldh a, [hWramBank] ; $444b
 	push af ; $444d
 	wram_bank $07 ; $444e
@@ -392,7 +392,7 @@ TennisMachineRoomNpc05_14:
 	pop af ; $445f
 	wram_bank ; $4460
 	farcall PushTextArgNumber ; $4464
-Label_14_4467:
+.prompt:
 	script_face ACTOR_PARTNER, FACE_RIGHT ; $4467
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $446e
 	ld a, $05 ; $4475
@@ -401,20 +401,20 @@ Label_14_4467:
 	farcall ScriptCloseDialogueWindow ; $447d
 	script_wait_frames $05 ; $4480
 	and a, a ; $4487
-	jr nz, Label_14_44a9 ; $4488
+	jr nz, .accepted ; $4488
 	set_flag FLAG_TEMP_SCENE_VARIANT_A ; $448a
 	farcall AdvanceDialogueTextCursor ; $448d
 	ld a, [$c2b0] ; $4490
 	and a, a ; $4493
-	jr nz, Label_14_449b ; $4494
+	jr nz, .declined ; $4494
 	script_speak $05 ; $4496
-Label_14_449b:
+.declined:
 	script_set_anim $05, $03 ; $449b
 	script_wait_idle $05 ; $44a2
 	jr nz, MachineCourtStartLevelScene ; $44a7
-Label_14_44a9:
+.accepted:
 	test_flag FLAG_CLEARED_MACHINE_LEVEL_1 ; $44a9
-	jr z, Label_14_44ca ; $44ac
+	jr z, .done ; $44ac
 	script_set_text Text_6e_222 ; $44ae
 	ld a, $05 ; $44b4
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $44b6
@@ -423,7 +423,7 @@ Label_14_44a9:
 	script_wait_frames $05 ; $44bf
 	and a, a ; $44c6
 	jp z, Label_14_45a6 ; $44c7
-Label_14_44ca:
+.done:
 	ld a, [$c2b0] ; $44ca
 	add a, a ; $44cd
 	add a, $00 ; $44ce
@@ -2401,12 +2401,12 @@ LoadFireworkObjGfx_14:
 UpdateFirework0_14:
 	ld a, [wWaterSpriteMinigameSwingCount] ; $644a
 	cp a, $04 ; $644d
-	jp nc, Label_14_64bd ; $644f
+	jp nc, .done ; $644f
 	ld a, [wWaterSpriteMinigameSwingCount] ; $6452
 	and a, a ; $6455
-	jr nz, Label_14_645b ; $6456
+	jr nz, .draw ; $6456
 	call AdvanceFirework0Ascent_14 ; $6458
-Label_14_645b:
+.draw:
 	ldh a, [hScrollX] ; $645b
 	ld b, a ; $645d
 	ld a, [$c2b2] ; $645e
@@ -2421,12 +2421,12 @@ Label_14_645b:
 	dec a ; $646e
 	ld [$c2b8], a ; $646f
 	and a, a ; $6472
-	jp nz, Label_14_64a0 ; $6473
+	jp nz, .burstSprite ; $6473
 	ld a, [wWaterSpriteMinigameSwingCount] ; $6476
 	inc a ; $6479
 	ld [wWaterSpriteMinigameSwingCount], a ; $647a
 	cp a, $04 ; $647d
-	jp nc, Label_14_64bd ; $647f
+	jp nc, .done ; $647f
 	ld a, [wWaterSpriteMinigameSwingCount] ; $6482
 	add a, $d5 ; $6485
 	ld l, a ; $6487
@@ -2437,12 +2437,12 @@ Label_14_645b:
 	ld [$c2b8], a ; $648d
 	ld a, [wWaterSpriteMinigameSwingCount] ; $6490
 	cp a, $01 ; $6493
-	jr nz, Label_14_64a0 ; $6495
+	jr nz, .burstSprite ; $6495
 	ld a, [$c2b8] ; $6497
 	cp a, $0c ; $649a
-	jr nz, Label_14_64a0 ; $649c
+	jr nz, .burstSprite ; $649c
 	sound $81 ; $649e
-Label_14_64a0:
+.burstSprite:
 	ld a, [wWaterSpriteMinigameSwingCount] ; $64a0
 	add a, $d9 ; $64a3
 	ld l, a ; $64a5
@@ -2459,7 +2459,7 @@ Label_14_64a0:
 	ld b, a ; $64b6
 	ld hl, SpriteTemplate_14_6e80 ; $64b7
 	call QueueSpriteTemplate ; $64ba
-Label_14_64bd:
+.done:
 	ret ; $64bd
 AdvanceFirework0Ascent_14:
 	ld b, $03 ; $64be
@@ -2645,12 +2645,12 @@ FireworkObjPalettes_14:
 UpdateFirework1_14:
 	ld a, [wWaterSpriteMinigameSwingCount + 1] ; $6ef0
 	cp a, $04 ; $6ef3
-	jp nc, Label_14_6f63 ; $6ef5
+	jp nc, .done ; $6ef5
 	ld a, [wWaterSpriteMinigameSwingCount + 1] ; $6ef8
 	and a, a ; $6efb
-	jr nz, Label_14_6f01 ; $6efc
+	jr nz, .draw ; $6efc
 	call AdvanceFirework1Ascent_14 ; $6efe
-Label_14_6f01:
+.draw:
 	ldh a, [hScrollX] ; $6f01
 	ld b, a ; $6f03
 	ld a, [$c2b3] ; $6f04
@@ -2665,12 +2665,12 @@ Label_14_6f01:
 	dec a ; $6f14
 	ld [$c2b9], a ; $6f15
 	and a, a ; $6f18
-	jp nz, Label_14_6f46 ; $6f19
+	jp nz, .burstSprite ; $6f19
 	ld a, [wWaterSpriteMinigameSwingCount + 1] ; $6f1c
 	inc a ; $6f1f
 	ld [wWaterSpriteMinigameSwingCount + 1], a ; $6f20
 	cp a, $04 ; $6f23
-	jp nc, Label_14_6f63 ; $6f25
+	jp nc, .done ; $6f25
 	ld a, [wWaterSpriteMinigameSwingCount + 1] ; $6f28
 	add a, $d5 ; $6f2b
 	ld l, a ; $6f2d
@@ -2681,12 +2681,12 @@ Label_14_6f01:
 	ld [$c2b9], a ; $6f33
 	ld a, [wWaterSpriteMinigameSwingCount + 1] ; $6f36
 	cp a, $01 ; $6f39
-	jr nz, Label_14_6f46 ; $6f3b
+	jr nz, .burstSprite ; $6f3b
 	ld a, [$c2b9] ; $6f3d
 	cp a, $0c ; $6f40
-	jr nz, Label_14_6f46 ; $6f42
+	jr nz, .burstSprite ; $6f42
 	sound $81 ; $6f44
-Label_14_6f46:
+.burstSprite:
 	ld a, [wWaterSpriteMinigameSwingCount + 1] ; $6f46
 	add a, $dd ; $6f49
 	ld l, a ; $6f4b
@@ -2703,7 +2703,7 @@ Label_14_6f46:
 	ld b, a ; $6f5c
 	ld hl, SpriteTemplate_14_6e80 ; $6f5d
 	call QueueSpriteTemplate ; $6f60
-Label_14_6f63:
+.done:
 	ret ; $6f63
 AdvanceFirework1Ascent_14:
 	ld b, $03 ; $6f64

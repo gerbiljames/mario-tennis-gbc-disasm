@@ -55,22 +55,22 @@ TournamentCourtyardNpc05_15:
 	ld l, a ; $410d
 	farcall InitDialogueTextCursor ; $410e
 	test_flag FLAG_DOUBLES ; $4111
-	jr z, Label_15_4120 ; $4114
+	jr z, .altText ; $4114
 	test_flag FLAG_TOURNAMENT_NPC05_TALKED_DOUBLES ; $4116
-	jr nz, Label_15_413f ; $4119
+	jr nz, .done ; $4119
 	set_flag FLAG_TOURNAMENT_NPC05_TALKED_DOUBLES ; $411b
-	jr Label_15_4128 ; $411e
-Label_15_4120:
+	jr .speak ; $411e
+.altText:
 	test_flag FLAG_TOURNAMENT_NPC05_TALKED_SINGLES ; $4120
-	jr nz, Label_15_413f ; $4123
+	jr nz, .done ; $4123
 	set_flag FLAG_TOURNAMENT_NPC05_TALKED_SINGLES ; $4125
-Label_15_4128:
+.speak:
 	script_speak $05 ; $4128
 	script_set_anim $05, $02 ; $412d
 	script_wait_idle $05 ; $4134
 	script_speak $05 ; $4139
 	ret ; $413e
-Label_15_413f:
+.done:
 	script_set_text Text_1f_32 ; $413f
 	script_speak $05 ; $4145
 	ret ; $414a
@@ -1277,32 +1277,32 @@ TrainingCourtInitScript_15:
 	call ComputeTrainingCourtProgressIndex ; $532e
 	ld a, [$c2b0] ; $5331
 	cp a, $05 ; $5334
-	jr c, Label_15_5340 ; $5336
+	jr c, .fromLesson ; $5336
 	ld a, [$c2b0] ; $5338
 	sub a, $06 ; $533b
 	ld [$c2b0], a ; $533d
-Label_15_5340:
+.fromLesson:
 	ld a, [wStoryModeEntryPoint] ; $5340
 	cp a, $0f ; $5343
-	jr nz, Label_15_534b ; $5345
+	jr nz, .fromMatch ; $5345
 	call TrainingCourtIntroTourScene ; $5347
 	ret ; $534a
-Label_15_534b:
+.fromMatch:
 	call HideServeChallengerActor ; $534b
 	call HideStrokeChallengerActor ; $534e
 	call HideNetChallengerActor ; $5351
 	call PlaceSwingPracticeKidActor ; $5354
 	ld a, [wStoryModeEntryPoint] ; $5357
 	cp a, $0a ; $535a
-	jr nz, Label_15_5362 ; $535c
+	jr nz, .placeActors ; $535c
 	call TrainingCourtResultDispatch ; $535e
 	ret ; $5361
-Label_15_5362:
+.placeActors:
 	ld a, [wStoryModeEntryPoint] ; $5362
 	cp a, $09 ; $5365
-	jr nz, Label_15_536c ; $5367
+	jr nz, .done ; $5367
 	call StartPendingLessonScene ; $5369
-Label_15_536c:
+.done:
 	ret ; $536c
 TrainingCourtResultDispatch:
 	ld a, [wMatchExitRequest] ; $536d
@@ -1493,10 +1493,10 @@ WaterSpriteSwingCountTask:
 	ld a, [hl] ; $55f8
 	or a, a ; $55f9
 	ld [hl], d ; $55fa
-	jr nz, Label_15_562d ; $55fb
+	jr nz, .tick ; $55fb
 	ld a, d ; $55fd
 	or a, a ; $55fe
-	jr z, Label_15_562d ; $55ff
+	jr z, .tick ; $55ff
 	ld hl, wWaterSpriteMinigameSwingCount ; $5601
 	ld a, [hl+] ; $5604
 	ld d, [hl] ; $5605
@@ -1516,14 +1516,14 @@ WaterSpriteSwingCountTask:
 	pop hl ; $5619
 	ld a, [$c2b9] ; $561a
 	cp a, $02 ; $561d
-	jr z, Label_15_5628 ; $561f
+	jr z, .firstSwing ; $561f
 	ld a, $02 ; $5621
 	ld [$c2b9], a ; $5623
-	jr Label_15_562d ; $5626
-Label_15_5628:
+	jr .tick ; $5626
+.firstSwing:
 	ld a, $01 ; $5628
 	ld [$c2b9], a ; $562a
-Label_15_562d:
+.tick:
 	ld hl, wWaterSpriteMinigameTimer ; $562d
 	ld a, [hl+] ; $5630
 	ld d, [hl] ; $5631
@@ -1531,13 +1531,13 @@ Label_15_562d:
 	dec de ; $5633
 	ld a, d ; $5634
 	or a, e ; $5635
-	jr z, Label_15_563f ; $5636
+	jr z, .finish ; $5636
 	ld hl, wWaterSpriteMinigameTimer ; $5638
 	ld a, e ; $563b
 	ld [hl+], a ; $563c
 	ld [hl], d ; $563d
 	ret ; $563e
-Label_15_563f:
+.finish:
 	ld hl, WaterSpriteSwingCountTask ; $563f
 	call UnregisterFrameTask ; $5642
 	xor a, a ; $5645
@@ -3734,41 +3734,41 @@ Label_15_7290:
 	ld a, a ; $7293
 	rst Rst00 ; $7294
 	dw ServeCoachIntroDialogue_15 ; $7295 jumptable
-	dw Label_15_73f0 ; $7297 jumptable
-	dw Label_15_73fd ; $7299 jumptable
-	dw Label_15_740a ; $729b jumptable
-	dw Label_15_73f0 ; $729d jumptable
+	dw ServeCoachIntroDialogue_15.lesson3 ; $7297 jumptable
+	dw ServeCoachIntroDialogue_15.lesson4 ; $7299 jumptable
+	dw ServeCoachIntroDialogue_15.lesson5 ; $729b jumptable
+	dw ServeCoachIntroDialogue_15.lesson3 ; $729d jumptable
 Label_15_729f:
 	ld a, [$c2e3] ; $729f
 	ld a, a ; $72a2
 	rst Rst00 ; $72a3
-	dw Label_15_7336 ; $72a4 jumptable
-	dw Label_15_73f0 ; $72a6 jumptable
-	dw Label_15_73fd ; $72a8 jumptable
-	dw Label_15_7417 ; $72aa jumptable
-	dw Label_15_7424 ; $72ac jumptable
-	dw Label_15_7431 ; $72ae jumptable
-	dw Label_15_743e ; $72b0 jumptable
-	dw Label_15_73f0 ; $72b2 jumptable
+	dw ServeCoachIntroDialogue_15.lesson1 ; $72a4 jumptable
+	dw ServeCoachIntroDialogue_15.lesson3 ; $72a6 jumptable
+	dw ServeCoachIntroDialogue_15.lesson4 ; $72a8 jumptable
+	dw ServeCoachIntroDialogue_15.lesson6 ; $72aa jumptable
+	dw ServeCoachIntroDialogue_15.lesson7 ; $72ac jumptable
+	dw ServeCoachIntroDialogue_15.lesson8 ; $72ae jumptable
+	dw ServeCoachIntroDialogue_15.lesson9 ; $72b0 jumptable
+	dw ServeCoachIntroDialogue_15.lesson3 ; $72b2 jumptable
 Label_15_72b4:
 	ld a, [$c2e3] ; $72b4
 	ld a, a ; $72b7
 	rst Rst00 ; $72b8
-	dw Label_15_739c ; $72b9 jumptable
-	dw Label_15_73f0 ; $72bb jumptable
-	dw Label_15_73fd ; $72bd jumptable
-	dw Label_15_7417 ; $72bf jumptable
-	dw Label_15_744b ; $72c1 jumptable
-	dw Label_15_7458 ; $72c3 jumptable
-	dw Label_15_73f0 ; $72c5 jumptable
+	dw ServeCoachIntroDialogue_15.lesson2 ; $72b9 jumptable
+	dw ServeCoachIntroDialogue_15.lesson3 ; $72bb jumptable
+	dw ServeCoachIntroDialogue_15.lesson4 ; $72bd jumptable
+	dw ServeCoachIntroDialogue_15.lesson6 ; $72bf jumptable
+	dw ServeCoachIntroDialogue_15.lesson10 ; $72c1 jumptable
+	dw ServeCoachIntroDialogue_15.done ; $72c3 jumptable
+	dw ServeCoachIntroDialogue_15.lesson3 ; $72c5 jumptable
 ServeCoachIntroDialogue_15:
 	call InitServeCoachScene ; $72c7
 	script_set_text Text_37_28 ; $72ca
 	script_speak $07 ; $72d0
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $72d5
-	jr z, Label_15_72dd ; $72d8
+	jr z, .greet ; $72d8
 	farcall AdvanceDialogueTextCursor ; $72da
-Label_15_72dd:
+.greet:
 	script_face_toward ACTOR_PLAYER, $07 ; $72dd
 	script_set_anim $07, $03 ; $72e5
 	script_wait_idle $07 ; $72ec
@@ -3781,20 +3781,20 @@ Label_15_72dd:
 	script_wait_idle $07 ; $7314
 	script_speak $07 ; $7319
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $731e
-	jr z, Label_15_7326 ; $7321
+	jr z, .speakGreeting ; $7321
 	farcall AdvanceDialogueTextCursor ; $7323
-Label_15_7326:
+.speakGreeting:
 	script_speak $07 ; $7326
 	script_face $07, FACE_LEFT ; $732b
 	set_flag FLAG_SERVE_COACH_GREETED ; $7332
 	ret ; $7335
-Label_15_7336:
+.lesson1:
 	call InitServeCoachScene ; $7336
 	script_set_text Text_37_42 ; $7339
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $733f
-	jr z, Label_15_734a ; $7342
+	jr z, .lesson1Speak ; $7342
 	script_set_text Text_37_46 ; $7344
-Label_15_734a:
+.lesson1Speak:
 	script_speak $07 ; $734a
 	script_face_toward ACTOR_PLAYER, $07 ; $734f
 	script_set_anim $07, $03 ; $7357
@@ -3810,7 +3810,7 @@ Label_15_734a:
 	script_wait_frames $05 ; $7391
 	set_flag FLAG_SERVE_COACH_GREETED ; $7398
 	ret ; $739b
-Label_15_739c:
+.lesson2:
 	call InitServeCoachScene ; $739c
 	script_set_text Text_37_57 ; $739f
 	script_speak $07 ; $73a5
@@ -3827,47 +3827,47 @@ Label_15_739c:
 	script_face $07, FACE_LEFT ; $73e5
 	set_flag FLAG_SERVE_COACH_GREETED ; $73ec
 	ret ; $73ef
-Label_15_73f0:
+.lesson3:
 	call InitServeCoachScene ; $73f0
 	script_set_text Text_37_62 ; $73f3
 	call ServeCoachChainedRetryPrompt ; $73f9
 	ret ; $73fc
-Label_15_73fd:
+.lesson4:
 	call InitServeCoachScene ; $73fd
 	script_set_text Text_37_67 ; $7400
 	call ServeCoachTwoStageRetryPrompt ; $7406
 	ret ; $7409
-Label_15_740a:
+.lesson5:
 	call InitServeCoachScene ; $740a
 	script_set_text Text_37_72 ; $740d
 	call ServeCoachRetryPrompt ; $7413
 	ret ; $7416
-Label_15_7417:
+.lesson6:
 	call InitServeCoachScene ; $7417
 	script_set_text Text_37_75 ; $741a
 	call ServeCoachRetryPrompt ; $7420
 	ret ; $7423
-Label_15_7424:
+.lesson7:
 	call InitServeCoachScene ; $7424
 	script_set_text Text_37_78 ; $7427
 	call ServeCoachRetryPrompt ; $742d
 	ret ; $7430
-Label_15_7431:
+.lesson8:
 	call InitServeCoachScene ; $7431
 	script_set_text Text_37_81 ; $7434
 	call ServeCoachRetryPrompt ; $743a
 	ret ; $743d
-Label_15_743e:
+.lesson9:
 	call InitServeCoachScene ; $743e
 	script_set_text Text_37_84 ; $7441
 	call ServeCoachRetryPrompt ; $7447
 	ret ; $744a
-Label_15_744b:
+.lesson10:
 	call InitServeCoachScene ; $744b
 	script_set_text Text_37_87 ; $744e
 	call ServeCoachRetryPrompt ; $7454
 	ret ; $7457
-Label_15_7458:
+.done:
 	call InitServeCoachScene ; $7458
 	script_set_text Text_37_90 ; $745b
 	call ServeCoachRetryPrompt ; $7461

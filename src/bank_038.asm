@@ -660,11 +660,11 @@ SetMenuCursorFromLinearIndexToPtr:
 	ld a, c ; $43cf
 .divLoop:
 	cp a, b ; $43d0
-	jr c, Label_38_43d7 ; $43d1
+	jr c, .store ; $43d1
 	inc d ; $43d3
 	sub a, b ; $43d4
 	jr .divLoop ; $43d5
-Label_38_43d7:
+.store:
 	ld [hl+], a ; $43d7
 	ld a, d ; $43d8
 	ld [hl], a ; $43d9

@@ -2799,7 +2799,7 @@ VarsityCourtANpc03_13:
 	farcall ScriptCloseDialogueWindow ; $6c4e
 	script_wait_frames $05 ; $6c51
 	and a, a ; $6c58
-	jp nz, Label_13_6df5 ; $6c59
+	jp nz, .stage3 ; $6c59
 	farcall AdvanceDialogueTextCursor ; $6c5c
 	script_set_speed ACTOR_PLAYER, $0010 ; $6c5f
 	script_move_target ACTOR_PLAYER, $0d00, $1f00 ; $6c67
@@ -2835,10 +2835,10 @@ VarsityCourtANpc03_13:
 	farcall ScriptCloseDialogueWindow ; $6d2a
 	script_wait_frames $05 ; $6d2d
 	and a, a ; $6d34
-	jp nz, Label_13_6dfb ; $6d35
+	jp nz, .speak ; $6d35
 	script_set_anim $03, $03 ; $6d38
 	script_wait_idle $03 ; $6d3f
-Label_13_6d44:
+.stage2:
 	script_set_text Text_30_548 ; $6d44
 	script_set_anim $03, $03 ; $6d4a
 	script_wait_idle $03 ; $6d51
@@ -2868,10 +2868,10 @@ Label_13_6d44:
 	farcall RunStoryMatch ; $6dee
 	farcall RestoreOverworldAfterMatch ; $6df1
 	ret ; $6df4
-Label_13_6df5:
+.stage3:
 	script_speak $03 ; $6df5
 	ret ; $6dfa
-Label_13_6dfb:
+.speak:
 	farcall AdvanceDialogueTextCursor ; $6dfb
 	ld a, $03 ; $6dfe
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $6e00
@@ -2879,10 +2879,10 @@ Label_13_6dfb:
 	farcall ScriptCloseDialogueWindow ; $6e06
 	script_wait_frames $05 ; $6e09
 	and a, a ; $6e10
-	jr z, Label_13_6e17 ; $6e11
-	jp Label_13_6d44 ; $6e13
+	jr z, .done ; $6e11
+	jp .stage2 ; $6e13
 	ret ; $6e16
-Label_13_6e17:
+.done:
 	script_speak $03 ; $6e17
 	call ReturnVarsityCourtANpc04ToSpawn_13 ; $6e1c
 	ret ; $6e1f
@@ -2902,7 +2902,7 @@ VarsityCourtBNpc03_13:
 	farcall ScriptCloseDialogueWindow ; $6e60
 	script_wait_frames $05 ; $6e63
 	and a, a ; $6e6a
-	jp nz, Label_13_707d ; $6e6b
+	jp nz, .stage3 ; $6e6b
 	farcall AdvanceDialogueTextCursor ; $6e6e
 	script_set_speed ACTOR_PLAYER, $0010 ; $6e71
 	script_set_speed ACTOR_PARTNER, $0010 ; $6e79
@@ -2950,10 +2950,10 @@ VarsityCourtBNpc03_13:
 	farcall ScriptCloseDialogueWindow ; $6f9c
 	script_wait_frames $05 ; $6f9f
 	and a, a ; $6fa6
-	jp nz, Label_13_7090 ; $6fa7
+	jp nz, .speak ; $6fa7
 	script_set_anim $03, $03 ; $6faa
 	script_wait_idle $03 ; $6fb1
-Label_13_6fb6:
+.stage2:
 	script_set_text Text_31_16 ; $6fb6
 	script_set_anim $03, $03 ; $6fbc
 	script_wait_idle $03 ; $6fc3
@@ -2985,7 +2985,7 @@ Label_13_6fb6:
 	farcall RunStoryMatch ; $7076
 	farcall RestoreOverworldAfterMatch ; $7079
 	ret ; $707c
-Label_13_707d:
+.stage3:
 	script_speak $03 ; $707d
 	script_get_actor_state ACTOR_PARTNER ; $7082
 	ld c, l ; $7087
@@ -2993,7 +2993,7 @@ Label_13_707d:
 	ld de, $d000 ; $7089
 	farcall AttachActorStepMover ; $708c
 	ret ; $708f
-Label_13_7090:
+.speak:
 	farcall AdvanceDialogueTextCursor ; $7090
 	ld a, $03 ; $7093
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $7095
@@ -3001,10 +3001,10 @@ Label_13_7090:
 	farcall ScriptCloseDialogueWindow ; $709b
 	script_wait_frames $05 ; $709e
 	and a, a ; $70a5
-	jr z, Label_13_70ac ; $70a6
-	jp Label_13_6fb6 ; $70a8
+	jr z, .done ; $70a6
+	jp .stage2 ; $70a8
 	ret ; $70ab
-Label_13_70ac:
+.done:
 	script_speak $03 ; $70ac
 	call ReturnVarsityCourtBNpcsToSpawn_13 ; $70b1
 	script_wait_frames $3c ; $70b4

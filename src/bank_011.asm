@@ -805,9 +805,9 @@ AcademyArrivalGreetingScene:
 	script_wait_move ACTOR_PLAYER ; $4de7
 	ld a, [wStoryModeGenderOfMainCharacter] ; $4dec
 	or a, a ; $4def
-	jr z, Label_11_4df5 ; $4df0
+	jr z, .doubles ; $4df0
 	farcall AdvanceDialogueTextCursor ; $4df2
-Label_11_4df5:
+.doubles:
 	script_speak $12 ; $4df5
 	script_set_position $0f, $1940, $11c0 ; $4dfa
 	sound $97 ; $4e05
@@ -845,16 +845,16 @@ Label_11_4df5:
 	farcall ScriptCloseDialogueWindow ; $4ed1
 	script_wait_frames $05 ; $4ed4
 	and a, a ; $4edb
-	jr z, Label_11_4ee1 ; $4edc
+	jr z, .finish ; $4edc
 	farcall AdvanceDialogueTextCursor ; $4ede
-Label_11_4ee1:
+.finish:
 	ld a, $12 ; $4ee1
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $4ee3
 	farcall RunDialogueYesNoPrompt ; $4ee6
 	farcall ScriptCloseDialogueWindow ; $4ee9
 	script_wait_frames $05 ; $4eec
 	and a, a ; $4ef3
-	jr z, Label_11_4f0c ; $4ef4
+	jr z, .done ; $4ef4
 	xor a, a ; $4ef6
 	ld [wStoryModeShowLocationName], a ; $4ef7
 	script_set_text Text_30_427 ; $4efa
@@ -862,7 +862,7 @@ Label_11_4ee1:
 	set_flag FLAG_STORY_MENU_LOCKED ; $4f05
 	call ArmAcademyEntranceTileTrigger ; $4f08
 	ret ; $4f0b
-Label_11_4f0c:
+.done:
 	script_set_text Text_30_426 ; $4f0c
 	script_speak $12 ; $4f12
 	call FollowGuideIntoAcademy ; $4f17
@@ -2042,13 +2042,13 @@ Label_11_634b:
 	ret ; $6350
 DrawDoublesRankingOpponentInfo:
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_3 ; $6351
-	jp z, Label_11_6364 ; $6354
+	jp z, .rank2 ; $6354
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_2 ; $6357
-	jp z, Label_11_6432 ; $635a
+	jp z, .rank3 ; $635a
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $635d
-	jp z, Label_11_64db ; $6360
+	jp z, .done ; $6360
 	ret ; $6363
-Label_11_6364:
+.rank2:
 	script_player_speed $0020 ; $6364
 	script_face $03, FACE_RIGHT ; $636a
 	script_move_player_to_actor $08 ; $6371
@@ -2081,7 +2081,7 @@ Label_11_6364:
 	script_face $08, FACE_UP ; $6423
 	script_face $09, FACE_UP ; $642a
 	ret ; $6431
-Label_11_6432:
+.rank3:
 	script_player_speed $0020 ; $6432
 	script_face $03, FACE_LEFT ; $6438
 	script_move_player_to_actor $05 ; $643f
@@ -2108,7 +2108,7 @@ Label_11_6432:
 	script_face $05, FACE_UP ; $64cc
 	script_face $07, FACE_UP ; $64d3
 	ret ; $64da
-Label_11_64db:
+.done:
 	script_player_speed $0020 ; $64db
 	script_face $03, FACE_RIGHT ; $64e1
 	script_wait_frames $14 ; $64e8
@@ -2226,13 +2226,13 @@ StartNextDoublesRankingMatch:
 	ret ; $679f
 LoadDoublesRankingOpponentGraphics:
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_3 ; $67a0
-	jr z, Label_11_67b0 ; $67a3
+	jr z, .rank2 ; $67a3
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_2 ; $67a5
-	jr z, Label_11_67e7 ; $67a8
+	jr z, .rank3 ; $67a8
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $67aa
-	jr z, Label_11_6803 ; $67ad
+	jr z, .done ; $67ad
 	ret ; $67af
-Label_11_67b0:
+.rank2:
 	script_set_actor_script $08, ActorScript_11_5b14 ; $67b0
 	script_set_actor_script $09, ActorScript_11_5b42 ; $67bb
 	script_wait_actor_script $09 ; $67c6
@@ -2240,12 +2240,12 @@ Label_11_67b0:
 	script_wait_actor_script $08 ; $67d6
 	script_set_actor_script $08, ActorScript_11_7d86 ; $67db
 	ret ; $67e6
-Label_11_67e7:
+.rank3:
 	script_set_actor_script $05, ActorScript_11_5bfa ; $67e7
 	script_set_actor_script $07, ActorScript_11_5c45 ; $67f2
 	script_wait_actor_script $05 ; $67fd
 	ret ; $6802
-Label_11_6803:
+.done:
 	script_set_actor_script $04, ActorScript_11_5c7f ; $6803
 	script_set_actor_script $06, ActorScript_11_5cbf ; $680e
 	script_wait_actor_script $04 ; $6819

@@ -1935,7 +1935,7 @@ Label_18_7b46:
 	ret ; $7b6d
 TaskUpdateObjects_18:
 	ld c, $00 ; $7b6e
-Label_18_7b70:
+.objectLoop:
 	push bc ; $7b70
 	ld hl, $d800 ; $7b71
 	ld a, c ; $7b74
@@ -1945,9 +1945,9 @@ Label_18_7b70:
 	add a, a ; $7b78
 	add a, l ; $7b79
 	ld l, a ; $7b7a
-	jr nc, Label_18_7b7e ; $7b7b
+	jr nc, .updateObject ; $7b7b
 	inc h ; $7b7d
-Label_18_7b7e:
+.updateObject:
 	ld b, h ; $7b7e
 	ld c, l ; $7b7f
 	ld hl, $0005 ; $7b80
@@ -1996,15 +1996,15 @@ Label_18_7b7e:
 	add hl, bc ; $7bbd
 	ld a, [hl] ; $7bbe
 	cp a, $c0 ; $7bbf
-	jr c, Label_18_7bc6 ; $7bc1
+	jr c, .next ; $7bc1
 	ld a, $10 ; $7bc3
 	ld [hl], a ; $7bc5
-Label_18_7bc6:
+.next:
 	pop bc ; $7bc6
 	inc c ; $7bc7
 	ld a, c ; $7bc8
 	cp a, $10 ; $7bc9
-	jr nz, Label_18_7b70 ; $7bcb
+	jr nz, .objectLoop ; $7bcb
 	ret ; $7bcd
 InitObjectSceneA:
 	ldh a, [hWramBank] ; $7bce
