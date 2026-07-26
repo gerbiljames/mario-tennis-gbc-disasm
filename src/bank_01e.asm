@@ -4532,50 +4532,50 @@ RunRewardCategoryList:
 	add a, a ; $740b
 	add a, l ; $740c
 	ld l, a ; $740d
-	jr nc, Label_1e_7411 ; $740e
+	jr nc, .readList ; $740e
 	inc h ; $7410
-Label_1e_7411:
+.readList:
 	ld a, [hl+] ; $7411
 	ld d, [hl] ; $7412
 	ld e, a ; $7413
-Label_1e_7414:
+.entryLoop:
 	ld a, [de] ; $7414
 	cp a, $ff ; $7415
-	jr z, Label_1e_7444 ; $7417
+	jr z, .done ; $7417
 	push de ; $7419
 	push af ; $741a
 	ld hl, RewardCategoryFlagTable_1e ; $741b
 	add a, a ; $741e
 	add a, l ; $741f
 	ld l, a ; $7420
-	jr nc, Label_1e_7424 ; $7421
+	jr nc, .readFlagId ; $7421
 	inc h ; $7423
-Label_1e_7424:
+.readFlagId:
 	ld a, [hl+] ; $7424
 	ld d, [hl] ; $7425
 	ld e, a ; $7426
 	ld a, d ; $7427
 	or a, e ; $7428
 	ld a, $01 ; $7429
-	jr z, Label_1e_7435 ; $742b
+	jr z, .storeState ; $742b
 	call TestGameFlag ; $742d
 	ld a, $01 ; $7430
-	jr nz, Label_1e_7435 ; $7432
+	jr nz, .storeState ; $7432
 	xor a, a ; $7434
-Label_1e_7435:
+.storeState:
 	ld e, a ; $7435
 	pop af ; $7436
 	ld hl, $df10 ; $7437
 	add a, l ; $743a
 	ld l, a ; $743b
-	jr nc, Label_1e_743f ; $743c
+	jr nc, .writeSlot ; $743c
 	inc h ; $743e
-Label_1e_743f:
+.writeSlot:
 	ld [hl], e ; $743f
 	pop de ; $7440
 	inc de ; $7441
-	jr Label_1e_7414 ; $7442
-Label_1e_7444:
+	jr .entryLoop ; $7442
+.done:
 	ret ; $7444
 RewardCategoryEntryListPtrs_1e:
 	; $7445, 12 bytes (records:2)

@@ -3051,12 +3051,12 @@ DpadMaskToAngleTable_04:
 IsPointBlocked:
 	call IsTerrainBlockedAtPoint ; $533d
 	and a, a ; $5340
-	jr nz, Label_04_5348 ; $5341
+	jr nz, .terrain ; $5341
 	call FindActorAtPoint ; $5343
-	jr Label_04_534a ; $5346
-Label_04_5348:
+	jr .done ; $5346
+.terrain:
 	or a, $80 ; $5348
-Label_04_534a:
+.done:
 	ret ; $534a
 IsTerrainBlockedAtPoint:
 	push de ; $534b

@@ -324,20 +324,20 @@ RecordDrillTargetZoneHit:
 	cp a, $02 ; $41e9
 	ret nc ; $41eb
 	farcall IsBallInTargetZone ; $41ec
-	jr z, Label_0b_41f6 ; $41ef
+	jr z, .setBit ; $41ef
 	xor a, a ; $41f1
 	ld [wTargetZoneEnabled], a ; $41f2
 	ret ; $41f5
-Label_0b_41f6:
+.setBit:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $41f6
 	ld b, a ; $41f9
 	inc b ; $41fa
 	xor a, a ; $41fb
 	scf ; $41fc
-Label_0b_41fd:
+.shiftLoop:
 	rla ; $41fd
 	dec b ; $41fe
-	jr nz, Label_0b_41fd ; $41ff
+	jr nz, .shiftLoop ; $41ff
 	ld hl, $c2e4 ; $4201
 	or a, [hl] ; $4204
 	ld [hl], a ; $4205

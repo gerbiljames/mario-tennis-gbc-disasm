@@ -894,12 +894,12 @@ RecomputeCharacterStats:
 	ld hl, $0070 ; $462a
 	add hl, de ; $462d
 	ld d, a ; $462e
-Label_02_462f:
+.modifierLoop:
 	ld a, [hl+] ; $462f
 	cp a, $ff ; $4630
-	jr z, Label_02_4654 ; $4632
+	jr z, .copyStats ; $4632
 	cp a, d ; $4634
-	jr nz, Label_02_4651 ; $4635
+	jr nz, .nextModifier ; $4635
 	ld a, [hl] ; $4637
 	push hl ; $4638
 	and a, $0f ; $4639
@@ -922,10 +922,10 @@ Label_02_462f:
 	or a, [hl] ; $464e
 	ld [de], a ; $464f
 	pop hl ; $4650
-Label_02_4651:
+.nextModifier:
 	inc hl ; $4651
-	jr Label_02_462f ; $4652
-Label_02_4654:
+	jr .modifierLoop ; $4652
+.copyStats:
 	ld hl, $0030 ; $4654
 	add hl, bc ; $4657
 	ld a, $10 ; $4658
@@ -933,12 +933,12 @@ Label_02_4654:
 	ld e, a ; $465b
 	ld d, b ; $465c
 	ld c, $08 ; $465d
-Label_02_465f:
+.copyLoop:
 	ld a, [hl+] ; $465f
 	ld [de], a ; $4660
 	inc e ; $4661
 	dec c ; $4662
-	jr nz, Label_02_465f ; $4663
+	jr nz, .copyLoop ; $4663
 	pop bc ; $4665
 	push bc ; $4666
 	ld a, c ; $4667
@@ -1798,7 +1798,7 @@ GetExpRemainingToNextLevel:
 	add hl, bc ; $4dce
 	ld a, [hl] ; $4dcf
 	cp a, $63 ; $4dd0
-	jp nc, Label_02_4dfe ; $4dd2
+	jp nc, .maxLevel ; $4dd2
 	ld h, $00 ; $4dd5
 	ld l, a ; $4dd7
 	ld d, h ; $4dd8
@@ -1810,9 +1810,9 @@ GetExpRemainingToNextLevel:
 	ld hl, CharDataPtr_02 ; $4dde
 	add a, l ; $4de1
 	ld l, a ; $4de2
-	jr nc, Label_02_4de6 ; $4de3
+	jr nc, .readTable ; $4de3
 	inc h ; $4de5
-Label_02_4de6:
+.readTable:
 	ld a, [hl+] ; $4de6
 	ld h, [hl] ; $4de7
 	ld l, a ; $4de8
@@ -1835,7 +1835,7 @@ Label_02_4de6:
 	sbc a, d ; $4dfb
 	ld h, a ; $4dfc
 	ret ; $4dfd
-Label_02_4dfe:
+.maxLevel:
 	ld hl, $0000 ; $4dfe
 	ret ; $4e01
 GetExpProgressInCurrentLevel:
@@ -1897,9 +1897,9 @@ GetExpRequiredForLevel:
 	ld hl, CharDataPtr_02 ; $4e45
 	add a, l ; $4e48
 	ld l, a ; $4e49
-	jr nc, Label_02_4e4d ; $4e4a
+	jr nc, .readPrevTable ; $4e4a
 	inc h ; $4e4c
-Label_02_4e4d:
+.readPrevTable:
 	ld a, [hl+] ; $4e4d
 	ld h, [hl] ; $4e4e
 	ld l, a ; $4e4f
@@ -1921,9 +1921,9 @@ Label_02_4e4d:
 	ld hl, CharDataPtr_02 ; $4e60
 	add a, l ; $4e63
 	ld l, a ; $4e64
-	jr nc, Label_02_4e68 ; $4e65
+	jr nc, .readTable ; $4e65
 	inc h ; $4e67
-Label_02_4e68:
+.readTable:
 	ld a, [hl+] ; $4e68
 	ld h, [hl] ; $4e69
 	ld l, a ; $4e6a

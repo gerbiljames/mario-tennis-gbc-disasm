@@ -1146,7 +1146,7 @@ DrawTennisDictionaryList:
 	wram_bank $03 ; $5264
 	ld c, $0e ; $526a
 	ld hl, TennisDictionaryClearList2 ; $526c
-Label_3f_526f:
+.clearLoop:
 	push bc ; $526f
 	ld a, [hl+] ; $5270
 	ld e, a ; $5271
@@ -1164,7 +1164,7 @@ Label_3f_526f:
 	pop hl ; $5280
 	pop bc ; $5281
 	dec c ; $5282
-	jr nz, Label_3f_526f ; $5283
+	jr nz, .clearLoop ; $5283
 	wram_bank $06 ; $5285
 	ld c, $00 ; $528b
 	ld a, [wTennisDictScrollTop] ; $528d
@@ -1173,16 +1173,16 @@ Label_3f_526f:
 	ld hl, SelectionMaskGrid_3f_539e ; $5292
 	ld a, [wTennisDictCategoryMask] ; $5295
 	ld e, a ; $5298
-Label_3f_5299:
+.skipEntry:
 	inc c ; $5299
-Label_3f_529a:
+.scanTopLoop:
 	ld a, [hl+] ; $529a
 	cp a, $00 ; $529b
-	jr z, Label_3f_529a ; $529d
+	jr z, .scanTopLoop ; $529d
 	and a, e ; $529f
-	jr z, Label_3f_5299 ; $52a0
+	jr z, .skipEntry ; $52a0
 	dec b ; $52a2
-	jr nz, Label_3f_5299 ; $52a3
+	jr nz, .skipEntry ; $52a3
 	dec c ; $52a5
 	dec hl ; $52a6
 	ld b, $00 ; $52a7
@@ -1215,43 +1215,43 @@ Label_3f_529a:
 	pop de ; $52d2
 	pop bc ; $52d3
 	pop af ; $52d4
-Label_3f_52d5:
+.nextEntry:
 	inc c ; $52d5
-Label_3f_52d6:
+.scanLoop:
 	ld a, [hl+] ; $52d6
 	cp a, $00 ; $52d7
-	jr z, Label_3f_52d6 ; $52d9
+	jr z, .scanLoop ; $52d9
 	cp a, $40 ; $52db
-	jr nz, Label_3f_52e6 ; $52dd
+	jr nz, .checkMask ; $52dd
 	ld hl, SelectionMaskGrid_3f_539e ; $52df
 	ld c, $00 ; $52e2
-	jr Label_3f_52d5 ; $52e4
-Label_3f_52e6:
+	jr .nextEntry ; $52e4
+.checkMask:
 	and a, e ; $52e6
-	jr z, Label_3f_52d5 ; $52e7
+	jr z, .nextEntry ; $52e7
 	dec c ; $52e9
 	push hl ; $52ea
 	ld hl, $10f0 ; $52eb
 	ld a, c ; $52ee
 	add a, l ; $52ef
 	ld l, a ; $52f0
-	jr nc, Label_3f_52f4 ; $52f1
+	jr nc, .haveEntry ; $52f1
 	inc h ; $52f3
-Label_3f_52f4:
+.haveEntry:
 	inc c ; $52f4
 	inc b ; $52f5
 	push de ; $52f6
 	push bc ; $52f7
 	ld de, $d0d0 ; $52f8
-Label_3f_52fb:
+.rowLoop:
 	ld a, $80 ; $52fb
 	add a, e ; $52fd
 	ld e, a ; $52fe
-	jr nc, Label_3f_5302 ; $52ff
+	jr nc, .nextRow ; $52ff
 	inc d ; $5301
-Label_3f_5302:
+.nextRow:
 	dec b ; $5302
-	jr nz, Label_3f_52fb ; $5303
+	jr nz, .rowLoop ; $5303
 	pop bc ; $5305
 	ld a, [wShadowTilemapBank] ; $5306
 	push af ; $5309
@@ -1267,7 +1267,7 @@ Label_3f_5302:
 	pop hl ; $531b
 	ld a, b ; $531c
 	cp a, $06 ; $531d
-	jr nz, Label_3f_52d5 ; $531f
+	jr nz, .nextEntry ; $531f
 	farcall RestoreShadowTilemap ; $5321
 	call DrawTennisDictionaryLetterLabels ; $5324
 	call QueueTennisDictionaryGlyphTiles ; $5327
@@ -1440,34 +1440,34 @@ Data_3f_54ad:
 	db $05, $05, $06, $06, $06, $07, $07, $07, $08, $08, $08 ; 0x10
 DrawTennisDictionaryIndexCursor:
 	or a, a ; $54c8
-	jr z, Label_3f_54d0 ; $54c9
+	jr z, .compactTiles ; $54c9
 	ld hl, Data_3f_5540 ; $54cb
-	jr Label_3f_54d3 ; $54ce
-Label_3f_54d0:
+	jr .gotTiles ; $54ce
+.compactTiles:
 	ld hl, Data_3f_5564 ; $54d0
-Label_3f_54d3:
+.gotTiles:
 	wram_bank $03 ; $54d3
 	ld de, $cfb3 ; $54d9
 	ld c, b ; $54dc
 	inc b ; $54dd
-Label_3f_54de:
+.rowLoop:
 	ld a, $80 ; $54de
 	add a, e ; $54e0
 	ld e, a ; $54e1
-	jr nc, Label_3f_54e5 ; $54e2
+	jr nc, .nextRow ; $54e2
 	inc d ; $54e4
-Label_3f_54e5:
+.nextRow:
 	dec b ; $54e5
-	jr nz, Label_3f_54de ; $54e6
+	jr nz, .rowLoop ; $54e6
 	ld a, c ; $54e8
 	push af ; $54e9
 	add a, a ; $54ea
 	add a, a ; $54eb
 	add a, l ; $54ec
 	ld l, a ; $54ed
-	jr nc, Label_3f_54f1 ; $54ee
+	jr nc, .readEntry ; $54ee
 	inc h ; $54f0
-Label_3f_54f1:
+.readEntry:
 	ld a, [hl+] ; $54f1
 	ld [de], a ; $54f2
 	inc de ; $54f3
@@ -1476,9 +1476,9 @@ Label_3f_54f1:
 	ld a, $3f ; $54f6
 	add a, e ; $54f8
 	ld e, a ; $54f9
-	jr nc, Label_3f_54fd ; $54fa
+	jr nc, .secondRow ; $54fa
 	inc d ; $54fc
-Label_3f_54fd:
+.secondRow:
 	ld a, [hl+] ; $54fd
 	ld [de], a ; $54fe
 	inc de ; $54ff
@@ -1490,21 +1490,21 @@ Label_3f_54fd:
 	add a, a ; $5509
 	ld b, a ; $550a
 	inc b ; $550b
-Label_3f_550c:
+.vramRowLoop:
 	ld a, $40 ; $550c
 	add a, l ; $550e
 	ld l, a ; $550f
-	jr nc, Label_3f_5513 ; $5510
+	jr nc, .advanceDest ; $5510
 	inc h ; $5512
-Label_3f_5513:
+.advanceDest:
 	ld a, $20 ; $5513
 	add a, e ; $5515
 	ld e, a ; $5516
-	jr nc, Label_3f_551a ; $5517
+	jr nc, .nextVramRow ; $5517
 	inc d ; $5519
-Label_3f_551a:
+.nextVramRow:
 	dec b ; $551a
-	jr nz, Label_3f_550c ; $551b
+	jr nz, .vramRowLoop ; $551b
 	ld c, $01 ; $551d
 	push de ; $551f
 	push hl ; $5520
@@ -1514,15 +1514,15 @@ Label_3f_551a:
 	ld a, $40 ; $5526
 	add a, l ; $5528
 	ld l, a ; $5529
-	jr nc, Label_3f_552d ; $552a
+	jr nc, .secondQueueDest ; $552a
 	inc h ; $552c
-Label_3f_552d:
+.secondQueueDest:
 	ld a, $20 ; $552d
 	add a, e ; $552f
 	ld e, a ; $5530
-	jr nc, Label_3f_5534 ; $5531
+	jr nc, .queueSecond ; $5531
 	inc d ; $5533
-Label_3f_5534:
+.queueSecond:
 	ld c, $01 ; $5534
 	call QueueVRAMCopy ; $5536
 	wram_bank $06 ; $5539

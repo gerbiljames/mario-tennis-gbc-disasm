@@ -4316,18 +4316,18 @@ FormatHexWord:
 	swap a ; $1937
 	and a, $0f ; $1939
 	cp a, $0a ; $193b
-	jr c, Label_00_1941 ; $193d
+	jr c, .nibble0 ; $193d
 	add a, $07 ; $193f
-Label_00_1941:
+.nibble0:
 	add a, $30 ; $1941
 	ld [de], a ; $1943
 	inc de ; $1944
 	ld a, h ; $1945
 	and a, $0f ; $1946
 	cp a, $0a ; $1948
-	jr c, Label_00_194e ; $194a
+	jr c, .nibble1 ; $194a
 	add a, $07 ; $194c
-Label_00_194e:
+.nibble1:
 	add a, $30 ; $194e
 	ld [de], a ; $1950
 	inc de ; $1951
@@ -4335,18 +4335,18 @@ Label_00_194e:
 	swap a ; $1953
 	and a, $0f ; $1955
 	cp a, $0a ; $1957
-	jr c, Label_00_195d ; $1959
+	jr c, .nibble2 ; $1959
 	add a, $07 ; $195b
-Label_00_195d:
+.nibble2:
 	add a, $30 ; $195d
 	ld [de], a ; $195f
 	inc de ; $1960
 	ld a, l ; $1961
 	and a, $0f ; $1962
 	cp a, $0a ; $1964
-	jr c, Label_00_196a ; $1966
+	jr c, .nibble3 ; $1966
 	add a, $07 ; $1968
-Label_00_196a:
+.nibble3:
 	add a, $30 ; $196a
 	ld [de], a ; $196c
 	inc de ; $196d
@@ -7742,32 +7742,32 @@ Label_00_2c03:
 	ret ; $2c03
 MoveCursorVertical:
 	bit 6, b ; $2c04
-	jr nz, Label_00_2c18 ; $2c06
+	jr nz, MoveCursorHorizontal.wrap ; $2c06
 	bit 7, b ; $2c08
-	jr nz, Label_00_2c16 ; $2c0a
+	jr nz, MoveCursorHorizontal.right ; $2c0a
 	ret ; $2c0c
 MoveCursorHorizontal:
 	bit 5, b ; $2c0d
-	jr nz, Label_00_2c18 ; $2c0f
+	jr nz, .wrap ; $2c0f
 	bit 4, b ; $2c11
-	jr nz, Label_00_2c16 ; $2c13
+	jr nz, .right ; $2c13
 	ret ; $2c15
-Label_00_2c16:
+.right:
 	inc a ; $2c16
 	inc a ; $2c17
-Label_00_2c18:
+.wrap:
 	dec a ; $2c18
 	add a, a ; $2c19
-	jr nc, Label_00_2c20 ; $2c1a
+	jr nc, .checkMax ; $2c1a
 	ld a, c ; $2c1c
 	dec a ; $2c1d
-	jr Label_00_2c25 ; $2c1e
-Label_00_2c20:
+	jr .done ; $2c1e
+.checkMax:
 	rra ; $2c20
 	cp a, c ; $2c21
-	jr c, Label_00_2c25 ; $2c22
+	jr c, .done ; $2c22
 	xor a, a ; $2c24
-Label_00_2c25:
+.done:
 	ret ; $2c25
 TickTimer:
 	ld a, [hl] ; $2c26
@@ -8335,7 +8335,7 @@ ResumeBGM:
 	push hl ; $2f35
 	ld hl, hMusic ; $2f36
 	bit 0, [hl] ; $2f39
-	jr z, Label_00_2f4d ; $2f3b
+	jr z, .done ; $2f3b
 	res 0, [hl] ; $2f3d
 	ldh a, [hWramBank] ; $2f3f
 	push af ; $2f41
@@ -8343,21 +8343,23 @@ ResumeBGM:
 	call PlaySound ; $2f45
 	pop af ; $2f48
 	wram_bank ; $2f49
-Label_00_2f4d:
+.done:
 	pop hl ; $2f4d
 	pop de ; $2f4e
 	pop bc ; $2f4f
 	pop af ; $2f50
 	ret ; $2f51
+StopBGMIfPlaying:
 	push hl ; $2f52
 	ld hl, hMusic ; $2f53
 	bit 0, [hl] ; $2f56
-	jr z, Label_00_2f5e ; $2f58
+	jr z, .done ; $2f58
 	res 0, [hl] ; $2f5a
 	sound $00 ; $2f5c
-Label_00_2f5e:
+.done:
 	pop hl ; $2f5e
 	ret ; $2f5f
+SyncBGMEnableFlag:
 	push af ; $2f60
 	push bc ; $2f61
 	push de ; $2f62
@@ -8370,14 +8372,14 @@ Label_00_2f5e:
 	or a, c ; $2f6e
 	ldh [hMusic], a ; $2f6f
 	bit 0, a ; $2f71
-	jr z, Label_00_2f81 ; $2f73
+	jr z, .done ; $2f73
 	ldh a, [hWramBank] ; $2f75
 	push af ; $2f77
 	xor a, a ; $2f78
 	call PlaySound ; $2f79
 	pop af ; $2f7c
 	wram_bank ; $2f7d
-Label_00_2f81:
+.done:
 	pop hl ; $2f81
 	pop de ; $2f82
 	pop bc ; $2f83

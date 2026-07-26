@@ -4952,10 +4952,10 @@ Label_3e_6968:
 IsCourtUnlocked:
 	ld a, b ; $697b
 	cp a, $04 ; $697c
-	jr nc, Label_3e_6983 ; $697e
+	jr nc, .lookup ; $697e
 	ld a, $01 ; $6980
 	ret ; $6982
-Label_3e_6983:
+.lookup:
 	ldh a, [hWramBank] ; $6983
 	push af ; $6985
 	wram_bank $02 ; $6986
@@ -4964,9 +4964,9 @@ Label_3e_6983:
 	ld hl, $d000 ; $698f
 	add a, l ; $6992
 	ld l, a ; $6993
-	jr nc, Label_3e_6997 ; $6994
+	jr nc, .read ; $6994
 	inc h ; $6996
-Label_3e_6997:
+.read:
 	ld a, [hl] ; $6997
 	ld b, a ; $6998
 	pop af ; $6999
