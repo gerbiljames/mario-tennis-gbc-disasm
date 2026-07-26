@@ -5595,7 +5595,7 @@ LoadSavedDataSourceGfx:
 	ld bc, $0010 ; $6886
 	call QueueVRAMCopy ; $6889
 	call AdvanceFrame ; $688c
-	ld hl, $3c20 ; $688f -> DataPtr_3c_20
+	ld hl, $3c20 ; $688f -> DataPtr_ModeSelectLabelTiles7
 	ld de, $d000 ; $6892
 	call DecompressDataFromBank ; $6895
 	ld hl, $d000 ; $6898
@@ -6196,7 +6196,7 @@ LoadEraseSavedDataGfx:
 	farcall CopyMugshotBufferToVram ; $6d82
 	call AdvanceFrame ; $6d85
 	wram_bank $01 ; $6d88
-	ld hl, $3d0e ; $6d8e -> DataPtr_3d_0e
+	ld hl, $3d0e ; $6d8e -> DataPtr_N64TransferLabelTiles0
 	ld de, $d000 ; $6d91
 	call DecompressDataFromBank ; $6d94
 	ld hl, $d000 ; $6d97
@@ -6204,7 +6204,7 @@ LoadEraseSavedDataGfx:
 	ld c, $10 ; $6d9d
 	call QueueVRAMCopy ; $6d9f
 	call AdvanceFrame ; $6da2
-	ld hl, $3d10 ; $6da5 -> DataPtr_3d_10
+	ld hl, $3d10 ; $6da5 -> DataPtr_N64TransferLabelTiles1
 	ld de, $d000 ; $6da8
 	call DecompressDataFromBank ; $6dab
 	ld hl, $d000 ; $6dae

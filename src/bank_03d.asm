@@ -14,10 +14,10 @@ DataPtr_N64TransferItemGfx1:
 	dw N64TransferItemGfx1 ; $400a
 DataPtr_N64TransferItemGfx2:
 	dw N64TransferItemGfx2 ; $400c
-DataPtr_3d_0e:
-	dw Lz_3d_4682 ; $400e
-DataPtr_3d_10:
-	dw Lz_3d_475c ; $4010
+DataPtr_N64TransferLabelTiles0:
+	dw N64TransferLabelTiles0 ; $400e
+DataPtr_N64TransferLabelTiles1:
+	dw N64TransferLabelTiles1 ; $4010
 DataPtr_MainMenuGfx5:
 	dw MainMenuGfx5 ; $4012
 DataPtr_MainMenuGfx5Alias1:
@@ -84,10 +84,10 @@ DataPtr_MatchStatsTilemap3:
 	dw MatchStatsTilemap3 ; $4050
 DataPtr_MatchStatsAttrmap3:
 	dw MatchStatsAttrmap3 ; $4052
-DataPtr_3d_54:
-	dw Lz_3d_6d39 ; $4054
-DataPtr_3d_56:
-	dw Lz_3d_6e2e ; $4056
+DataPtr_MatchStatsLabelTiles0:
+	dw MatchStatsLabelTiles0 ; $4054
+DataPtr_MatchStatsLabelTiles1:
+	dw MatchStatsLabelTiles1 ; $4056
 DataPtr_RacketShoesChoiceGfx2:
 	dw RacketShoesChoiceGfx2 ; $4058
 DataPtr_EquipmentSelectTiles:
@@ -124,9 +124,9 @@ N64TransferItemGfx1:
 	INCBIN "data/bank_03d/lz_451b.bin" ; $451b, 195 bytes
 N64TransferItemGfx2:
 	INCBIN "data/bank_03d/lz_45de.bin" ; $45de, 164 bytes
-Lz_3d_4682:
+N64TransferLabelTiles0:
 	INCBIN "data/bank_03d/lz_4682.bin" ; $4682, 218 bytes
-Lz_3d_475c:
+N64TransferLabelTiles1:
 	INCBIN "data/bank_03d/lz_475c.bin" ; $475c, 212 bytes
 MainMenuGfx5:
 	INCBIN "data/bank_03d/lz_4830.bin" ; $4830, 179 bytes
@@ -215,9 +215,9 @@ MatchStatsTilemap2:
 	INCBIN "data/bank_03d/lz_6b92.bin" ; $6b92, 332 bytes
 MatchStatsAttrmap2:
 	INCBIN "data/bank_03d/lz_6cde.bin" ; $6cde, 91 bytes
-Lz_3d_6d39:
+MatchStatsLabelTiles0:
 	INCBIN "data/bank_03d/lz_6d39.bin" ; $6d39, 245 bytes
-Lz_3d_6e2e:
+MatchStatsLabelTiles1:
 	INCBIN "data/bank_03d/lz_6e2e.bin" ; $6e2e, 250 bytes
 EquipmentSelectTiles:
 	INCBIN "data/bank_03d/lz_6f28.bin" ; $6f28, 2045 bytes

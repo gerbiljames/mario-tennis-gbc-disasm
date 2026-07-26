@@ -1747,7 +1747,7 @@ IslandSkyInitScript_14:
 	ld [wStoryModeExitLocationRequest], a ; $5637
 	ret ; $563a
 ActorScript_14_563b:
-	; $563b, 175 bytes (actor_script)
+	; $563b, 21 bytes (actor_script)
 	as_set_target $0b00, $2900
 	as_wait_move
 	as_set_target $0b00, $2700
@@ -1757,157 +1757,8 @@ ActorScript_14_563b:
 	as_halt
 	as_halt
 	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_wait $01
-	as_target_rel $0205, $0100
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-	as_halt
-Data_14_56ea:
-	INCBIN "data/bank_014/d_56ea.bin" ; $56ea, 870 bytes
+PlaneObjTiles_14:
+	INCBIN "data/bank_014/d_5650.bin" ; $5650, 1024 bytes
 IslandObjTiles_14:
 	INCBIN "data/bank_014/d_5a50.bin" ; $5a50, 1024 bytes
 SpriteTemplate_14_5e50:
@@ -1929,7 +1780,7 @@ LoadPlaneObjGfx_14:
 	ldh a, [hWramBank] ; $5e79
 	push af ; $5e7b
 	wram_bank $01 ; $5e7c
-	ld hl, $5650 ; $5e82
+	ld hl, PlaneObjTiles_14 ; $5e82
 	ld de, $a000 ; $5e85
 	ld c, $60 ; $5e88
 	call QueueVRAMCopy ; $5e8a

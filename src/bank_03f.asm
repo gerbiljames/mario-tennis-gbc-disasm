@@ -79,12 +79,12 @@ DataPtr_BracketCharIcon14:
 	dw BracketCharIcon14 ; $404c
 DataPtr_BracketCharIcon15:
 	dw BracketCharIcon15 ; $404e
-DataPtr_3f_50:
-	dw Lz_3f_7a1d ; $4050
-DataPtr_3f_52:
-	dw Lz_3f_7a63 ; $4052
-DataPtr_3f_54:
-	dw Lz_3f_7aad ; $4054
+DataPtr_BracketExtraIcon0:
+	dw BracketExtraIcon0 ; $4050
+DataPtr_BracketExtraIcon1:
+	dw BracketExtraIcon1 ; $4052
+DataPtr_BracketExtraIcon2:
+	dw BracketExtraIcon2 ; $4054
 DataPtr_MinigameLevelSelectGfx2:
 	dw MinigameLevelSelectGfx2 ; $4056
 DataPtr_MinigameLevelSelectGfx2Alias1:
@@ -1929,11 +1929,11 @@ BracketCharIcon14:
 	INCBIN "data/bank_03f/lz_7998.bin" ; $7998, 67 bytes
 BracketCharIcon15:
 	INCBIN "data/bank_03f/lz_79db.bin" ; $79db, 66 bytes
-Lz_3f_7a1d:
+BracketExtraIcon0:
 	INCBIN "data/bank_03f/lz_7a1d.bin" ; $7a1d, 70 bytes
-Lz_3f_7a63:
+BracketExtraIcon1:
 	INCBIN "data/bank_03f/lz_7a63.bin" ; $7a63, 74 bytes
-Lz_3f_7aad:
+BracketExtraIcon2:
 	INCBIN "data/bank_03f/lz_7aad.bin" ; $7aad, 74 bytes
 MinigameLevelSelectGfx2:
 	INCBIN "data/bank_03f/lz_7af7.bin" ; $7af7, 153 bytes

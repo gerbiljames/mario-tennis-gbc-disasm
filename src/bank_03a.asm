@@ -4,38 +4,38 @@ DataPtr_TennisDictionaryTiles:
 	dw TennisDictionaryTiles ; $4000
 DataPtr_TennisDictionaryListTiles:
 	dw TennisDictionaryListTiles ; $4002
-DataPtr_Lz_3a_53fb:
-	dw Lz_3a_53fb ; $4004
-DataPtr_Lz_3a_53fbAlias1:
-	dw Lz_3a_53fb ; $4006
-DataPtr_Lz_3a_53fbAlias2:
-	dw Lz_3a_53fb ; $4008
-DataPtr_Lz_3a_53fbAlias3:
-	dw Lz_3a_53fb ; $400a
-DataPtr_Lz_3a_53fbAlias4:
-	dw Lz_3a_53fb ; $400c
-DataPtr_Lz_3a_53fbAlias5:
-	dw Lz_3a_53fb ; $400e
-DataPtr_Lz_3a_53fbAlias6:
-	dw Lz_3a_53fb ; $4010
-DataPtr_Lz_3a_53fbAlias7:
-	dw Lz_3a_53fb ; $4012
-DataPtr_Lz_3a_53fbAlias8:
-	dw Lz_3a_53fb ; $4014
-DataPtr_3a_16:
-	dw Lz_3a_5468 ; $4016
-DataPtr_3a_18:
-	dw Lz_3a_54d8 ; $4018
-DataPtr_3a_1a:
-	dw Lz_3a_5545 ; $401a
-DataPtr_Lz_3a_53fbAlias9:
-	dw Lz_3a_53fb ; $401c
-DataPtr_Lz_3a_53fbAlias10:
-	dw Lz_3a_53fb ; $401e
-DataPtr_Lz_3a_53fbAlias11:
-	dw Lz_3a_53fb ; $4020
-DataPtr_Lz_3a_53fbAlias12:
-	dw Lz_3a_53fb ; $4022
+DataPtr_NameEntryTilemap:
+	dw NameEntryTilemap ; $4004
+DataPtr_NameEntryTilemapAlias1:
+	dw NameEntryTilemap ; $4006
+DataPtr_NameEntryTilemapAlias2:
+	dw NameEntryTilemap ; $4008
+DataPtr_NameEntryTilemapAlias3:
+	dw NameEntryTilemap ; $400a
+DataPtr_NameEntryTilemapAlias4:
+	dw NameEntryTilemap ; $400c
+DataPtr_NameEntryTilemapAlias5:
+	dw NameEntryTilemap ; $400e
+DataPtr_NameEntryTilemapAlias6:
+	dw NameEntryTilemap ; $4010
+DataPtr_NameEntryTilemapAlias7:
+	dw NameEntryTilemap ; $4012
+DataPtr_NameEntryTilemapAlias8:
+	dw NameEntryTilemap ; $4014
+DataPtr_NameEntryAttrmap:
+	dw NameEntryAttrmap ; $4016
+DataPtr_CharSelectAltTilemap:
+	dw CharSelectAltTilemap ; $4018
+DataPtr_CharSelectAltAttrmap:
+	dw CharSelectAltAttrmap ; $401a
+DataPtr_NameEntryTilemapAlias9:
+	dw NameEntryTilemap ; $401c
+DataPtr_NameEntryTilemapAlias10:
+	dw NameEntryTilemap ; $401e
+DataPtr_NameEntryTilemapAlias11:
+	dw NameEntryTilemap ; $4020
+DataPtr_NameEntryTilemapAlias12:
+	dw NameEntryTilemap ; $4022
 DataPtr_ExhibitionSetupTiles:
 	dw ExhibitionSetupTiles ; $4024
 DataPtr_ExhibitionSetupTilemap:
@@ -88,19 +88,19 @@ DataPtr_LinkErrorAttrmap:
 	dw LinkErrorAttrmap ; $4054
 DataPtr_LinkErrorPalettes:
 	dw LinkErrorPalettes ; $4056
-DataPtr_3a_58:
-	dw Lz_3a_7dfa ; $4058
+DataPtr_LinkErrorLabelTiles:
+	dw LinkErrorLabelTiles ; $4058
 TennisDictionaryTiles:
 	INCBIN "data/bank_03a/lz_405a.bin" ; $405a, 2621 bytes
 TennisDictionaryListTiles:
 	INCBIN "data/bank_03a/lz_4a97.bin" ; $4a97, 2404 bytes
-Lz_3a_53fb:
+NameEntryTilemap:
 	INCBIN "data/bank_03a/lz_53fb.bin" ; $53fb, 109 bytes
-Lz_3a_5468:
+NameEntryAttrmap:
 	INCBIN "data/bank_03a/lz_5468.bin" ; $5468, 112 bytes
-Lz_3a_54d8:
+CharSelectAltTilemap:
 	INCBIN "data/bank_03a/lz_54d8.bin" ; $54d8, 109 bytes
-Lz_3a_5545:
+CharSelectAltAttrmap:
 	INCBIN "data/bank_03a/lz_5545.bin" ; $5545, 106 bytes
 ExhibitionSetupTiles:
 	INCBIN "data/bank_03a/lz_55af.bin" ; $55af, 1138 bytes
@@ -208,6 +208,6 @@ LinkErrorPalettes:
 	dw $01bf, $0bf3, $61df, $6cc0 ; pal 5: #ff6a00 #9cff10 #ff73c5 #0031de
 	dw $7fff, $4300, $1e40, $01bf ; pal 6: #ffffff #00c583 #009439 #ff6a00
 	dw $0000, $0000, $0000, $0000 ; pal 7: #000000 #000000 #000000 #000000
-Lz_3a_7dfa:
+LinkErrorLabelTiles:
 	INCBIN "data/bank_03a/lz_7dfa.bin" ; $7dfa, 227 bytes
 	; $7edd, 291 bytes fill to bank end (linker-padded)

@@ -30,14 +30,14 @@ DataPtr_IntroCharactersTiles:
 	dw IntroCharactersTiles ; $401a
 DataPtr_IntroCharactersTilemap:
 	dw IntroCharactersTilemap ; $401c
-DataPtr_6d_1e:
-	dw Lz_6d_6061 ; $401e
+DataPtr_IntroCharactersAttrmap:
+	dw IntroCharactersAttrmap ; $401e
 DataPtr_6d_20:
 	dw Data_6d_6104 ; $4020
 DataPtr_IntroCharactersTilemap2:
 	dw IntroCharactersTilemap2 ; $4022
-DataPtr_6d_24:
-	dw Lz_6d_6250 ; $4024
+DataPtr_IntroCharactersAttrmap2:
+	dw IntroCharactersAttrmap2 ; $4024
 	farptr ShowIntroCharacterScreen ; $4026
 DataPtr_IntroCharacterIcon00:
 	dw IntroCharacterIcon00 ; $4028
@@ -133,8 +133,8 @@ DataPtr_MinigameSelectIconGfx2:
 	dw MinigameSelectIconGfx2 ; $4082
 DataPtr_MinigameLevelSelectGfx0:
 	dw MinigameLevelSelectGfx0 ; $4084
-DataPtr_6d_86:
-	dw Lz_6d_758a ; $4086
+DataPtr_MinigameLevelSelectIconGfx:
+	dw MinigameLevelSelectIconGfx ; $4086
 DataPtr_MinigameLevelSelectGfx1:
 	dw MinigameLevelSelectGfx1 ; $4088
 DataPtr_MinigameLabelTiles0:
@@ -186,7 +186,7 @@ IntroCharactersTiles:
 	INCBIN "data/bank_06d/lz_54f3.bin" ; $54f3, 2597 bytes
 IntroCharactersTilemap:
 	INCBIN "data/bank_06d/lz_5f18.bin" ; $5f18, 329 bytes
-Lz_6d_6061:
+IntroCharactersAttrmap:
 	INCBIN "data/bank_06d/lz_6061.bin" ; $6061, 163 bytes
 Data_6d_6104:
 	; $6104, 64 bytes (palettes)
@@ -201,7 +201,7 @@ Data_6d_6104:
 	dw $294a, $294a, $294a, $294a ; pal 7: #525252 #525252 #525252 #525252
 IntroCharactersTilemap2:
 	INCBIN "data/bank_06d/lz_6144.bin" ; $6144, 268 bytes
-Lz_6d_6250:
+IntroCharactersAttrmap2:
 	INCBIN "data/bank_06d/lz_6250.bin" ; $6250, 133 bytes
 TitleScreenTiles:
 	INCBIN "data/bank_06d/lz_62d5.bin" ; $62d5, 1962 bytes
@@ -289,7 +289,7 @@ MinigameSelectIconGfx2:
 	INCBIN "data/bank_06d/lz_745b.bin" ; $745b, 172 bytes
 MinigameLevelSelectGfx0:
 	INCBIN "data/bank_06d/lz_7507.bin" ; $7507, 131 bytes
-Lz_6d_758a:
+MinigameLevelSelectIconGfx:
 	INCBIN "data/bank_06d/lz_758a.bin" ; $758a, 144 bytes
 MinigameLevelSelectGfx1:
 	INCBIN "data/bank_06d/lz_761a.bin" ; $761a, 152 bytes

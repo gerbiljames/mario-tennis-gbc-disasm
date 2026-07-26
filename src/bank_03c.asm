@@ -16,8 +16,8 @@ DataPtr_StadiumAttrmap:
 	dw StadiumAttrmap ; $400c
 DataPtr_StadiumPalettes:
 	dw StadiumPalettes ; $400e
-DataPtr_3c_10:
-	dw Lz_3c_5391 ; $4010
+DataPtr_ModeSelectIconGfx:
+	dw ModeSelectIconGfx ; $4010
 DataPtr_ModeSelectLabelTiles0:
 	dw ModeSelectLabelTiles0 ; $4012
 DataPtr_ModeSelectLabelTiles1:
@@ -32,8 +32,8 @@ DataPtr_ModeSelectLabelTiles5:
 	dw ModeSelectLabelTiles5 ; $401c
 DataPtr_ModeSelectLabelTiles6:
 	dw ModeSelectLabelTiles6 ; $401e
-DataPtr_3c_20:
-	dw Lz_3c_599a ; $4020
+DataPtr_ModeSelectLabelTiles7:
+	dw ModeSelectLabelTiles7 ; $4020
 DataPtr_SharedMenuGfx27:
 	dw SharedMenuGfx27 ; $4022
 DataPtr_MainMenuGfx0:
@@ -98,10 +98,10 @@ DataPtr_N64RecordTypeGfx0:
 	dw N64RecordTypeGfx0 ; $405e
 DataPtr_N64RecordTypeGfx1:
 	dw N64RecordTypeGfx1 ; $4060
-DataPtr_3c_62:
-	dw Lz_3c_6eb9 ; $4062
-DataPtr_3c_64:
-	dw Lz_3c_6f68 ; $4064
+DataPtr_N64RecordTypeLabelTiles0:
+	dw N64RecordTypeLabelTiles0 ; $4062
+DataPtr_N64RecordTypeLabelTiles1:
+	dw N64RecordTypeLabelTiles1 ; $4064
 DataPtr_GamesLabelTiles:
 	dw GamesLabelTiles ; $4066
 DataPtr_GamesLabelTiles2:
@@ -160,7 +160,7 @@ StadiumPalettes:
 	dw $5294, $7fff, $294a, $0000 ; pal 5: #a4a4a4 #ffffff #525252 #000000
 	dw $5a9f, $6bff, $001f, $0000 ; pal 6: #ffa4b4 #ffffd5 #ff0000 #000000
 	dw $3acc, $6bff, $7d4a, $0000 ; pal 7: #62b473 #ffffd5 #5252ff #000000
-Lz_3c_5391:
+ModeSelectIconGfx:
 	INCBIN "data/bank_03c/lz_5391.bin" ; $5391, 71 bytes
 ModeSelectLabelTiles0:
 	INCBIN "data/bank_03c/lz_53d8.bin" ; $53d8, 228 bytes
@@ -176,7 +176,7 @@ ModeSelectLabelTiles5:
 	INCBIN "data/bank_03c/lz_5879.bin" ; $5879, 238 bytes
 ModeSelectLabelTiles6:
 	INCBIN "data/bank_03c/lz_5967.bin" ; $5967, 51 bytes
-Lz_3c_599a:
+ModeSelectLabelTiles7:
 	INCBIN "data/bank_03c/lz_599a.bin" ; $599a, 268 bytes
 SharedMenuGfx27:
 	INCBIN "data/bank_03c/lz_5aa6.bin" ; $5aa6, 29 bytes
@@ -242,9 +242,9 @@ N64RecordTypeGfx0:
 	INCBIN "data/bank_03c/lz_6d5c.bin" ; $6d5c, 177 bytes
 N64RecordTypeGfx1:
 	INCBIN "data/bank_03c/lz_6e0d.bin" ; $6e0d, 172 bytes
-Lz_3c_6eb9:
+N64RecordTypeLabelTiles0:
 	INCBIN "data/bank_03c/lz_6eb9.bin" ; $6eb9, 175 bytes
-Lz_3c_6f68:
+N64RecordTypeLabelTiles1:
 	INCBIN "data/bank_03c/lz_6f68.bin" ; $6f68, 233 bytes
 GamesLabelTiles:
 	INCBIN "data/bank_03c/lz_7051.bin" ; $7051, 178 bytes

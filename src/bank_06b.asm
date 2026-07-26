@@ -1075,14 +1075,14 @@ IntroCutsceneState16Init_6b:
 	ld hl, IntroCutsceneState16InitGfx4 ; $49f3 -> DataPtr_IntroCharactersTilemap
 	ld de, $d800 ; $49f6
 	call DecompressDataFromBank ; $49f9
-	ld hl, IntroCutsceneState16InitGfx5 ; $49fc -> DataPtr_6d_1e
+	ld hl, IntroCutsceneState16InitGfx5 ; $49fc -> DataPtr_IntroCharactersAttrmap
 	ld de, $dc00 ; $49ff
 	call DecompressDataFromBank ; $4a02
 	wram_bank $05 ; $4a05
 	ld hl, IntroCutsceneState16InitGfx6 ; $4a0b -> DataPtr_IntroCharactersTilemap2
 	ld de, $d000 ; $4a0e
 	call DecompressDataFromBank ; $4a11
-	ld hl, IntroCutsceneState16InitGfx7 ; $4a14 -> DataPtr_6d_24
+	ld hl, IntroCutsceneState16InitGfx7 ; $4a14 -> DataPtr_IntroCharactersAttrmap2
 	ld de, $d400 ; $4a17
 	call DecompressDataFromBank ; $4a1a
 	wram_bank $01 ; $4a1d

@@ -110,8 +110,8 @@ DataPtr_MarioMiniGamesPalettes:
 	farptr DebugScreenAssetViewer ; $4090
 DataPtr_MatchWinLoseGfx:
 	dw MatchWinLoseGfx ; $4092
-DataPtr_18_94:
-	dw Lz_18_7568 ; $4094
+DataPtr_CharSelectMiscGfx:
+	dw CharSelectMiscGfx ; $4094
 Padding_18_4096:
 	; $4096, 10 bytes (fill)
 	ds 10, $00
@@ -1017,7 +1017,7 @@ DrawGlyphSprite:
 	add a, $08 ; $5503
 	ld d, a ; $5505
 	ret ; $5506
-Unused_18_5507:
+UnusedBobRamp_18:
 	INCBIN "data/bank_018/d_5507.bin" ; $5507, 32 bytes
 DrawThreeOptionLabels:
 	call DrawConfirmScreenBox ; $5527
@@ -1242,8 +1242,18 @@ DrawCharSelectCursor:
 	ld bc, $0240 ; $59f7
 	call QueueSpriteTemplate ; $59fa
 	ret ; $59fd
-Data_18_59fe:
-	INCBIN "data/bank_018/d_59fe.bin" ; $59fe, 108 bytes
+CharSelectCursorAnimTable:
+	INCBIN "data/bank_018/d_59fe.bin" ; $59fe, 32 bytes
+CharSelectCursorTemplatePtrs:
+	INCLUDE "data/bank_018/text_5a1e.asm" ; $5a1e, 8 bytes
+CharSelectCursorTemplate0:
+	INCBIN "data/bank_018/d_5a26.bin" ; $5a26, 17 bytes
+CharSelectCursorTemplate1:
+	INCBIN "data/bank_018/d_5a37.bin" ; $5a37, 17 bytes
+CharSelectCursorTemplate2:
+	INCBIN "data/bank_018/d_5a48.bin" ; $5a48, 17 bytes
+CharSelectCursorTemplate3:
+	INCBIN "data/bank_018/d_5a59.bin" ; $5a59, 17 bytes
 ApplySpriteBobOffset_18:
 	ldh a, [hVBlankCounter] ; $5a6a
 	and a, $3f ; $5a6c
@@ -1256,7 +1266,7 @@ ApplySpriteBobOffset_18:
 	add a, e ; $5a76
 	ld e, a ; $5a77
 	ret ; $5a78
-Data_18_5a79:
+SpriteBobRamp_18:
 	; $5a79, 64 bytes (bytes:16)
 	db $00, $00, $00, $01, $01, $01, $02, $02, $02, $03, $03, $03, $03, $03, $03, $03 ; 0x00
 	db $03, $03, $03, $03, $03, $03, $03, $03, $02, $02, $02, $01, $01, $01, $00, $00 ; 0x10
@@ -1380,7 +1390,7 @@ MarioMiniGamesPalettes:
 	dw $318c, $6bff, $7d4a, $0000 ; pal 7: #626262 #ffffd5 #5252ff #000000
 MatchWinLoseGfx:
 	INCBIN "data/bank_018/lz_7521.bin" ; $7521, 71 bytes
-Lz_18_7568:
+CharSelectMiscGfx:
 	INCBIN "data/bank_018/lz_7568.bin" ; $7568, 175 bytes
 RunStorySceneByMode:
 	ld a, c ; $7617

@@ -1662,7 +1662,7 @@ MatchResultGfxC7:
 	INCBIN "data/bank_016/lz_59a6.bin" ; $59a6, 169 bytes
 MatchResultGfxC8:
 	INCBIN "data/bank_016/lz_5a4f.bin" ; $5a4f, 192 bytes
-Lz_16_5b0f:
+MatchResultGfxCUnused:
 	INCBIN "data/bank_016/lz_5b0f.bin" ; $5b0f, 230 bytes
 MatchResultGfxC9:
 	INCBIN "data/bank_016/lz_5bf5.bin" ; $5bf5, 28 bytes

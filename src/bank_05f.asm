@@ -1,33 +1,33 @@
 SECTION "ROM Bank $5f", ROMX[$4000], BANK[$5f]
 
-DataPtr_Data_5f_4c13:
-	dw Data_5f_4c13 ; $4000
+DataPtr_ClubhouseSceneAuxTilemap:
+	dw ClubhouseSceneAuxTilemap ; $4000
 DataPtr_5f_02:
 	dw Data_5f_4020 ; $4002
 DataPtr_ClubhouseSceneTilemap:
 	dw ClubhouseSceneTilemap ; $4004
-DataPtr_5f_06:
-	dw Lz_5f_4ac6 ; $4006
-DataPtr_Data_5f_4c13Alias1:
-	dw Data_5f_4c13 ; $4008
-DataPtr_5f_0a:
-	dw Data_5f_4c3b ; $400a
+DataPtr_ClubhouseSceneAttrmap:
+	dw ClubhouseSceneAttrmap ; $4006
+DataPtr_ClubhouseSceneAuxTilemapAlias1:
+	dw ClubhouseSceneAuxTilemap ; $4008
+DataPtr_ClubhouseSceneAuxAttrmap:
+	dw ClubhouseSceneAuxAttrmap ; $400a
 DataPtr_Data_5f_4c63:
 	dw Data_5f_4c63 ; $400c
 DataPtr_ClubhouseSceneTiles:
 	dw ClubhouseSceneTiles ; $400e
-DataPtr_Data_5f_5904:
-	dw Data_5f_5904 ; $4010
+DataPtr_CourtyardSceneAuxTilemap:
+	dw CourtyardSceneAuxTilemap ; $4010
 DataPtr_Data_5f_4c63Alias1:
 	dw Data_5f_4c63 ; $4012
 DataPtr_CourtyardSceneTilemap:
 	dw CourtyardSceneTilemap ; $4014
-DataPtr_5f_16:
-	dw Lz_5f_57de ; $4016
-DataPtr_Data_5f_5904Alias1:
-	dw Data_5f_5904 ; $4018
-DataPtr_5f_1a:
-	dw Data_5f_592c ; $401a
+DataPtr_CourtyardSceneAttrmap:
+	dw CourtyardSceneAttrmap ; $4016
+DataPtr_CourtyardSceneAuxTilemapAlias1:
+	dw CourtyardSceneAuxTilemap ; $4018
+DataPtr_CourtyardSceneAuxAttrmap:
+	dw CourtyardSceneAuxAttrmap ; $401a
 DataPtr_5f_1c:
 	dw Data_5f_5954 ; $401c
 DataPtr_CourtyardSceneTiles:
@@ -47,11 +47,11 @@ ClubhouseSceneTiles:
 	INCBIN "data/bank_05f/lz_4060.bin" ; $4060, 2037 bytes
 ClubhouseSceneTilemap:
 	INCBIN "data/bank_05f/lz_4855.bin" ; $4855, 625 bytes
-Lz_5f_4ac6:
+ClubhouseSceneAttrmap:
 	INCBIN "data/bank_05f/lz_4ac6.bin" ; $4ac6, 333 bytes
-Data_5f_4c13:
+ClubhouseSceneAuxTilemap:
 	INCBIN "data/bank_05f/d_4c13.bin" ; $4c13, 40 bytes
-Data_5f_4c3b:
+ClubhouseSceneAuxAttrmap:
 	INCBIN "data/bank_05f/d_4c3b.bin" ; $4c3b, 40 bytes
 Data_5f_4c63:
 	; $4c63, 64 bytes (palettes)
@@ -68,11 +68,11 @@ CourtyardSceneTiles:
 	INCBIN "data/bank_05f/lz_4ca3.bin" ; $4ca3, 2384 bytes
 CourtyardSceneTilemap:
 	INCBIN "data/bank_05f/lz_55f3.bin" ; $55f3, 491 bytes
-Lz_5f_57de:
+CourtyardSceneAttrmap:
 	INCBIN "data/bank_05f/lz_57de.bin" ; $57de, 294 bytes
-Data_5f_5904:
+CourtyardSceneAuxTilemap:
 	INCBIN "data/bank_05f/d_5904.bin" ; $5904, 40 bytes
-Data_5f_592c:
+CourtyardSceneAuxAttrmap:
 	INCBIN "data/bank_05f/d_592c.bin" ; $592c, 40 bytes
 Data_5f_5954:
 	; $5954, 9900 bytes fill to bank end (linker-padded)

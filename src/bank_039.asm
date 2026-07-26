@@ -153,18 +153,18 @@ LoadScreenAssetRecord:
 	ret ; $40f4
 ScreenAssetRecordTable:
 	; $40f5, 560 bytes (70 records x 4 slot words)
-	dslot DataPtr_Lz_3a_53fbAlias9, DataPtr_Lz_3a_53fbAlias10, DataPtr_Lz_3a_53fbAlias11, DataPtr_Lz_3a_53fbAlias12 ; record 0
+	dslot DataPtr_NameEntryTilemapAlias9, DataPtr_NameEntryTilemapAlias10, DataPtr_NameEntryTilemapAlias11, DataPtr_NameEntryTilemapAlias12 ; record 0
 	dslot DataPtr_ExhibitionSetupTiles, DataPtr_ExhibitionSetupTilemap, DataPtr_ExhibitionSetupAttrmap, DataPtr_ExhibitionSetupPalettes ; record 1
 	dslot DataPtr_MainMenuGfx5, DataPtr_MainMenuGfx5Alias1, DataPtr_MainMenuGfx5Alias2, DataPtr_MainMenuGfx5Alias3 ; record 2
-	dslot DataPtr_Lz_3a_53fbAlias9, DataPtr_Lz_3a_53fbAlias10, DataPtr_Lz_3a_53fbAlias11, DataPtr_Lz_3a_53fbAlias12 ; record 3
+	dslot DataPtr_NameEntryTilemapAlias9, DataPtr_NameEntryTilemapAlias10, DataPtr_NameEntryTilemapAlias11, DataPtr_NameEntryTilemapAlias12 ; record 3
 	dslot DataPtr_JapanesePlayModeTiles, DataPtr_JapanesePlayModeTilemap, DataPtr_JapanesePlayModeAttrmap, DataPtr_JapanesePlayModePalettes ; record 4
 	dslot DataPtr_CharacterSelectTiles, DataPtr_CharacterSelectTilemap, DataPtr_CharacterSelectAttrmap, DataPtr_CharacterSelectPalettes ; record 5
-	dslot DataPtr_CharacterSelectTiles, DataPtr_Lz_3a_53fbAlias8, DataPtr_3a_16, DataPtr_CharacterSelectPalettes ; record 6
-	dslot DataPtr_CharacterSelectTiles, DataPtr_3a_18, DataPtr_3a_1a, DataPtr_CharacterSelectPalettes ; record 7
-	dslot DataPtr_Lz_3a_53fb, DataPtr_Lz_3a_53fbAlias1, DataPtr_Lz_3a_53fbAlias2, DataPtr_Lz_3a_53fbAlias3 ; record 8
+	dslot DataPtr_CharacterSelectTiles, DataPtr_NameEntryTilemapAlias8, DataPtr_NameEntryAttrmap, DataPtr_CharacterSelectPalettes ; record 6
+	dslot DataPtr_CharacterSelectTiles, DataPtr_CharSelectAltTilemap, DataPtr_CharSelectAltAttrmap, DataPtr_CharacterSelectPalettes ; record 7
+	dslot DataPtr_NameEntryTilemap, DataPtr_NameEntryTilemapAlias1, DataPtr_NameEntryTilemapAlias2, DataPtr_NameEntryTilemapAlias3 ; record 8
 	dslot FarPtr_QueueWram3MapToVRAMAlias1, FarPtr_QueueWram3MapToVRAMAlias2, FarPtr_QueueWram3MapToVRAMAlias3, FarPtr_QueueWram3MapToVRAMAlias4 ; record 9
-	dslot DataPtr_Lz_3a_53fb, DataPtr_Lz_3a_53fbAlias4, DataPtr_Lz_3a_53fbAlias5, DataPtr_Lz_3a_53fbAlias3 ; record 10
-	dslot DataPtr_Lz_3a_53fb, DataPtr_Lz_3a_53fbAlias6, DataPtr_Lz_3a_53fbAlias7, DataPtr_Lz_3a_53fbAlias3 ; record 11
+	dslot DataPtr_NameEntryTilemap, DataPtr_NameEntryTilemapAlias4, DataPtr_NameEntryTilemapAlias5, DataPtr_NameEntryTilemapAlias3 ; record 10
+	dslot DataPtr_NameEntryTilemap, DataPtr_NameEntryTilemapAlias6, DataPtr_NameEntryTilemapAlias7, DataPtr_NameEntryTilemapAlias3 ; record 11
 	dslot DataPtr_ExhibitionMenuTiles, DataPtr_ExhibitionMenuTilemap, DataPtr_ExhibitionMenuAttrmap, DataPtr_ExhibitionMenuPalettes ; record 12
 	dslot DataPtr_N64TournamentTiles, DataPtr_N64TournamentTilemap, DataPtr_N64TournamentAttrmap, DataPtr_N64TournamentPalettes ; record 13
 	dslot DataPtr_N64TournamentTiles, DataPtr_N64TournamentTilemap2, DataPtr_N64TournamentAttrmap2, DataPtr_N64TournamentPalettes ; record 14
@@ -654,7 +654,7 @@ TileBlockPtrs_39:
 	dslot DataPtr_Screen1ObjGfx ; record 7
 	dslot DataPtr_Screen2ObjGfx ; record 8
 	dslot DataPtr_MatchWinLoseGfx ; record 9
-	dslot DataPtr_18_94 ; record 10
+	dslot DataPtr_CharSelectMiscGfx ; record 10
 	dslot DataPtr_SharedMenuGfx17Alias11 ; record 11
 	dslot DataPtr_SharedMenuGfx17Alias12 ; record 12
 	dslot DataPtr_SharedMenuGfx17Alias13 ; record 13
@@ -757,10 +757,10 @@ TileBlockPtrs_39:
 	dslot DataPtr_CourtSelectGfx9 ; record 110
 	dslot DataPtr_SharedMenuGfx111 ; record 111
 	dslot DataPtr_MinigameLevelSelectGfx0 ; record 112
-	dslot DataPtr_6d_86 ; record 113
+	dslot DataPtr_MinigameLevelSelectIconGfx ; record 113
 	dslot DataPtr_MinigameLevelSelectGfx1 ; record 114
 	dslot DataPtr_N64TransferItemGfx4 ; record 115
-	dslot DataPtr_3e_44 ; record 116
+	dslot DataPtr_N64TransferItemGfx5 ; record 116
 	dslot DataPtr_CharGridGfx2 ; record 117
 	dslot DataPtr_SavedDataSourceGfx5 ; record 118
 	dslot DataPtr_MinigameLevelSelectGfx2Alias16 ; record 119

@@ -3686,8 +3686,8 @@ UpdateSceneScroll:
 	ret ; $59d8
 SceneGfxSlotTable:
 	; $59d9, 592 bytes (37 records x 8 slot words)
-	dslot DataPtr_Data_5f_4c13, DataPtr_5f_02, DataPtr_ClubhouseSceneTilemap, DataPtr_5f_06, DataPtr_Data_5f_4c13Alias1, DataPtr_5f_0a, DataPtr_Data_5f_4c63, DataPtr_ClubhouseSceneTiles ; record 0
-	dslot DataPtr_Data_5f_5904, DataPtr_Data_5f_4c63Alias1, DataPtr_CourtyardSceneTilemap, DataPtr_5f_16, DataPtr_Data_5f_5904Alias1, DataPtr_5f_1a, DataPtr_5f_1c, DataPtr_CourtyardSceneTiles ; record 1
+	dslot DataPtr_ClubhouseSceneAuxTilemap, DataPtr_5f_02, DataPtr_ClubhouseSceneTilemap, DataPtr_ClubhouseSceneAttrmap, DataPtr_ClubhouseSceneAuxTilemapAlias1, DataPtr_ClubhouseSceneAuxAttrmap, DataPtr_Data_5f_4c63, DataPtr_ClubhouseSceneTiles ; record 0
+	dslot DataPtr_CourtyardSceneAuxTilemap, DataPtr_Data_5f_4c63Alias1, DataPtr_CourtyardSceneTilemap, DataPtr_CourtyardSceneAttrmap, DataPtr_CourtyardSceneAuxTilemapAlias1, DataPtr_CourtyardSceneAuxAttrmap, DataPtr_5f_1c, DataPtr_CourtyardSceneTiles ; record 1
 	dslot DataPtr_GrassCourtSceneConfig, DataPtr_GrassCourtPalettes, DataPtr_GrassCourtTilemap, DataPtr_GrassCourtAttrmap, DataPtr_GrassCourtSceneConfigAlias1, DataPtr_GrassCourtSceneConfigB, DataPtr_HardCourtPalettes, DataPtr_GrassCourtTiles ; record 2
 	dslot DataPtr_HardCourtSceneConfig, DataPtr_HardCourtPalettesAlias1, DataPtr_HardCourtTilemap, DataPtr_HardCourtAttrmap, DataPtr_HardCourtSceneConfigAlias1, DataPtr_HardCourtSceneConfigB, DataPtr_ClayCourtPalettes, DataPtr_HardCourtTiles ; record 3
 	dslot DataPtr_ClayCourtSceneConfig, DataPtr_ClayCourtPalettesAlias1, DataPtr_ClayCourtTilemap, DataPtr_ClayCourtAttrmap, DataPtr_ClayCourtSceneConfigAlias1, DataPtr_ClayCourtSceneConfigB, DataPtr_CompositionCourtPalettes, DataPtr_ClayCourtTiles ; record 4
