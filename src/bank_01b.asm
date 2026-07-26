@@ -1762,7 +1762,7 @@ DrawSinglesRankingEntry:
 	ld e, a ; $5546
 	ld a, b ; $5547
 	add a, a ; $5548
-	ld hl, $555e ; $5549
+	ld hl, SinglesRankingEntryTable ; $5549
 	add a, l ; $554c
 	ld l, a ; $554d
 	jr nc, .readB ; $554e
@@ -1778,6 +1778,7 @@ DrawSinglesRankingEntry:
 	pop bc ; $555b
 	pop af ; $555c
 	ret ; $555d
+SinglesRankingEntryTable:
 	; $555e, 48 bytes (records:2)
 	dw $0000 ; record 0
 	dw $0029 ; record 1
@@ -1887,7 +1888,7 @@ DrawDoublesRankingEntry:
 	ld e, a ; $560f
 	ld a, b ; $5610
 	add a, a ; $5611
-	ld hl, $5627 ; $5612
+	ld hl, DoublesRankingEntryTable ; $5612
 	add a, l ; $5615
 	ld l, a ; $5616
 	jr nc, .readB ; $5617
@@ -1903,6 +1904,7 @@ DrawDoublesRankingEntry:
 	pop bc ; $5624
 	pop af ; $5625
 	ret ; $5626
+DoublesRankingEntryTable:
 	; $5627, 50 bytes (records:2)
 	dw $0000 ; record 0
 	dw $0000 ; record 1
@@ -2673,7 +2675,7 @@ LoadRankingMarkerCoords:
 	ld a, [$d800] ; $5c3b
 	or a, a ; $5c3e
 	jr nz, .nonZero ; $5c3f
-	ld hl, $5c8d ; $5c41
+	ld hl, RankingMarkerCoordsTable ; $5c41
 	ld a, [$d802] ; $5c44
 	or a, a ; $5c47
 	jr z, .zero ; $5c48
@@ -2722,361 +2724,21 @@ LoadRankingMarkerCoords:
 	ld bc, $0030 ; $5c86
 	call CopyMemoryBC ; $5c89
 	ret ; $5c8c
-	; $5c8d, 708 bytes (records:2)
-	dw $5c97 ; record 0
-	dw $5c97 ; record 1
-	dw $5cc7 ; record 2
-	dw $5cf7 ; record 3
-	dw $5d27 ; record 4
-	dw $3400 ; record 5
-	dw $000c ; record 6
-	dw $3401 ; record 7
-	dw $0024 ; record 8
-	dw $3403 ; record 9
-	dw $0038 ; record 10
-	dw $3402 ; record 11
-	dw $0054 ; record 12
-	dw $3403 ; record 13
-	dw $006c ; record 14
-	dw $3400 ; record 15
-	dw $0080 ; record 16
-	dw $6b02 ; record 17
-	dw $000c ; record 18
-	dw $6b01 ; record 19
-	dw $0024 ; record 20
-	dw $6b00 ; record 21
-	dw $0038 ; record 22
-	dw $6b02 ; record 23
-	dw $0054 ; record 24
-	dw $6b03 ; record 25
-	dw $006c ; record 26
-	dw $6b00 ; record 27
-	dw $0080 ; record 28
-	dw $3c00 ; record 29
-	dw $0018 ; record 30
-	dw $3401 ; record 31
-	dw $0024 ; record 32
-	dw $3403 ; record 33
-	dw $0038 ; record 34
-	dw $3c02 ; record 35
-	dw $0060 ; record 36
-	dw $3403 ; record 37
-	dw $006c ; record 38
-	dw $3400 ; record 39
-	dw $0080 ; record 40
-	dw $6402 ; record 41
-	dw $0018 ; record 42
-	dw $6b01 ; record 43
-	dw $0024 ; record 44
-	dw $6b00 ; record 45
-	dw $0038 ; record 46
-	dw $6402 ; record 47
-	dw $0060 ; record 48
-	dw $6b03 ; record 49
-	dw $006c ; record 50
-	dw $6b00 ; record 51
-	dw $0080 ; record 52
-	dw $4400 ; record 53
-	dw $0028 ; record 54
-	dw $3401 ; record 55
-	dw $0024 ; record 56
-	dw $3403 ; record 57
-	dw $0038 ; record 58
-	dw $3c02 ; record 59
-	dw $0060 ; record 60
-	dw $3403 ; record 61
-	dw $006c ; record 62
-	dw $4400 ; record 63
-	dw $0070 ; record 64
-	dw $6402 ; record 65
-	dw $0018 ; record 66
-	dw $6b01 ; record 67
-	dw $0024 ; record 68
-	dw $5c00 ; record 69
-	dw $0028 ; record 70
-	dw $5c02 ; record 71
-	dw $0070 ; record 72
-	dw $6b03 ; record 73
-	dw $006c ; record 74
-	dw $6b00 ; record 75
-	dw $0080 ; record 76
-	dw $4c00 ; record 77
-	dw $004c ; record 78
-	dw $3401 ; record 79
-	dw $0024 ; record 80
-	dw $3403 ; record 81
-	dw $0038 ; record 82
-	dw $3c02 ; record 83
-	dw $0060 ; record 84
-	dw $3403 ; record 85
-	dw $006c ; record 86
-	dw $4400 ; record 87
-	dw $0070 ; record 88
-	dw $6402 ; record 89
-	dw $0018 ; record 90
-	dw $6b01 ; record 91
-	dw $0024 ; record 92
-	dw $5c00 ; record 93
-	dw $0028 ; record 94
-	dw $5402 ; record 95
-	dw $004c ; record 96
-	dw $6b03 ; record 97
-	dw $006c ; record 98
-	dw $6b00 ; record 99
-	dw $0080 ; record 100
-	dw $5d61 ; record 101
-	dw $5d61 ; record 102
-	dw $5d91 ; record 103
-	dw $5dc1 ; record 104
-	dw $5df1 ; record 105
-	dw $3c00 ; record 106
-	dw $000c ; record 107
-	dw $3c01 ; record 108
-	dw $0024 ; record 109
-	dw $3403 ; record 110
-	dw $0038 ; record 111
-	dw $3402 ; record 112
-	dw $0054 ; record 113
-	dw $3403 ; record 114
-	dw $006c ; record 115
-	dw $3400 ; record 116
-	dw $0080 ; record 117
-	dw $6b02 ; record 118
-	dw $000c ; record 119
-	dw $6b01 ; record 120
-	dw $0024 ; record 121
-	dw $6b00 ; record 122
-	dw $0038 ; record 123
-	dw $6b02 ; record 124
-	dw $0054 ; record 125
-	dw $6b03 ; record 126
-	dw $006c ; record 127
-	dw $6b00 ; record 128
-	dw $0080 ; record 129
-	dw $4400 ; record 130
-	dw $0018 ; record 131
-	dw $3401 ; record 132
-	dw $0024 ; record 133
-	dw $4403 ; record 134
-	dw $0038 ; record 135
-	dw $3c02 ; record 136
-	dw $0060 ; record 137
-	dw $3403 ; record 138
-	dw $006c ; record 139
-	dw $3400 ; record 140
-	dw $0080 ; record 141
-	dw $6402 ; record 142
-	dw $0018 ; record 143
-	dw $6b01 ; record 144
-	dw $0024 ; record 145
-	dw $6b00 ; record 146
-	dw $0038 ; record 147
-	dw $6402 ; record 148
-	dw $0060 ; record 149
-	dw $6b03 ; record 150
-	dw $006c ; record 151
-	dw $6b00 ; record 152
-	dw $0080 ; record 153
-	dw $4c00 ; record 154
-	dw $0028 ; record 155
-	dw $3401 ; record 156
-	dw $0024 ; record 157
-	dw $3403 ; record 158
-	dw $0038 ; record 159
-	dw $3c02 ; record 160
-	dw $0060 ; record 161
-	dw $3403 ; record 162
-	dw $006c ; record 163
-	dw $4c00 ; record 164
-	dw $0070 ; record 165
-	dw $6402 ; record 166
-	dw $0018 ; record 167
-	dw $6b01 ; record 168
-	dw $0024 ; record 169
-	dw $5c00 ; record 170
-	dw $0028 ; record 171
-	dw $5c02 ; record 172
-	dw $0070 ; record 173
-	dw $6b03 ; record 174
-	dw $006c ; record 175
-	dw $6b00 ; record 176
-	dw $0080 ; record 177
-	dw $5000 ; record 178
-	dw $004c ; record 179
-	dw $3401 ; record 180
-	dw $0024 ; record 181
-	dw $3403 ; record 182
-	dw $0038 ; record 183
-	dw $3c02 ; record 184
-	dw $0060 ; record 185
-	dw $3403 ; record 186
-	dw $006c ; record 187
-	dw $4c00 ; record 188
-	dw $0070 ; record 189
-	dw $6402 ; record 190
-	dw $0018 ; record 191
-	dw $6b01 ; record 192
-	dw $0024 ; record 193
-	dw $5c00 ; record 194
-	dw $0028 ; record 195
-	dw $5002 ; record 196
-	dw $004c ; record 197
-	dw $6b03 ; record 198
-	dw $006c ; record 199
-	dw $6b00 ; record 200
-	dw $0080 ; record 201
-	dw $5e29 ; record 202
-	dw $5e29 ; record 203
-	dw $5e59 ; record 204
-	dw $5e89 ; record 205
-	dw $3400 ; record 206
-	dw $001c ; record 207
-	dw $3401 ; record 208
-	dw $0044 ; record 209
-	dw $3403 ; record 210
-	dw $0070 ; record 211
-	dw $6c02 ; record 212
-	dw $001c ; record 213
-	dw $6c03 ; record 214
-	dw $0044 ; record 215
-	dw $6c00 ; record 216
-	dw $0070 ; record 217
-	dw $ffff ; record 218
-	dw $ffff ; record 219
-	dw $ffff ; record 220
-	dw $ffff ; record 221
-	dw $ffff ; record 222
-	dw $ffff ; record 223
-	dw $ffff ; record 224
-	dw $ffff ; record 225
-	dw $ffff ; record 226
-	dw $ffff ; record 227
-	dw $ffff ; record 228
-	dw $ffff ; record 229
-	dw $3c00 ; record 230
-	dw $0030 ; record 231
-	dw $3401 ; record 232
-	dw $0044 ; record 233
-	dw $3403 ; record 234
-	dw $0070 ; record 235
-	dw $6402 ; record 236
-	dw $0030 ; record 237
-	dw $6c03 ; record 238
-	dw $0044 ; record 239
-	dw $6c00 ; record 240
-	dw $0070 ; record 241
-	dw $ffff ; record 242
-	dw $ffff ; record 243
-	dw $ffff ; record 244
-	dw $ffff ; record 245
-	dw $ffff ; record 246
-	dw $ffff ; record 247
-	dw $ffff ; record 248
-	dw $ffff ; record 249
-	dw $ffff ; record 250
-	dw $ffff ; record 251
-	dw $ffff ; record 252
-	dw $ffff ; record 253
-	dw $4400 ; record 254
-	dw $004c ; record 255
-	dw $3401 ; record 256
-	dw $0044 ; record 257
-	dw $3403 ; record 258
-	dw $0070 ; record 259
-	dw $5c02 ; record 260
-	dw $004c ; record 261
-	dw $6c03 ; record 262
-	dw $0044 ; record 263
-	dw $6c00 ; record 264
-	dw $0070 ; record 265
-	dw $ffff ; record 266
-	dw $ffff ; record 267
-	dw $ffff ; record 268
-	dw $ffff ; record 269
-	dw $ffff ; record 270
-	dw $ffff ; record 271
-	dw $ffff ; record 272
-	dw $ffff ; record 273
-	dw $ffff ; record 274
-	dw $ffff ; record 275
-	dw $ffff ; record 276
-	dw $ffff ; record 277
-	dw $5ec1 ; record 278
-	dw $5ec1 ; record 279
-	dw $5ef1 ; record 280
-	dw $5f21 ; record 281
-	dw $3c00 ; record 282
-	dw $001c ; record 283
-	dw $3c01 ; record 284
-	dw $0044 ; record 285
-	dw $3403 ; record 286
-	dw $0070 ; record 287
-	dw $6c02 ; record 288
-	dw $001c ; record 289
-	dw $6c03 ; record 290
-	dw $0044 ; record 291
-	dw $6c00 ; record 292
-	dw $0070 ; record 293
-	dw $ffff ; record 294
-	dw $ffff ; record 295
-	dw $ffff ; record 296
-	dw $ffff ; record 297
-	dw $ffff ; record 298
-	dw $ffff ; record 299
-	dw $ffff ; record 300
-	dw $ffff ; record 301
-	dw $ffff ; record 302
-	dw $ffff ; record 303
-	dw $ffff ; record 304
-	dw $ffff ; record 305
-	dw $4400 ; record 306
-	dw $0030 ; record 307
-	dw $3401 ; record 308
-	dw $0044 ; record 309
-	dw $4403 ; record 310
-	dw $0070 ; record 311
-	dw $6402 ; record 312
-	dw $0030 ; record 313
-	dw $6c03 ; record 314
-	dw $0044 ; record 315
-	dw $6c00 ; record 316
-	dw $0070 ; record 317
-	dw $ffff ; record 318
-	dw $ffff ; record 319
-	dw $ffff ; record 320
-	dw $ffff ; record 321
-	dw $ffff ; record 322
-	dw $ffff ; record 323
-	dw $ffff ; record 324
-	dw $ffff ; record 325
-	dw $ffff ; record 326
-	dw $ffff ; record 327
-	dw $ffff ; record 328
-	dw $ffff ; record 329
-	dw $4c00 ; record 330
-	dw $004c ; record 331
-	dw $3401 ; record 332
-	dw $0044 ; record 333
-	dw $3403 ; record 334
-	dw $0070 ; record 335
-	dw $5402 ; record 336
-	dw $004c ; record 337
-	dw $6c03 ; record 338
-	dw $0044 ; record 339
-	dw $6c00 ; record 340
-	dw $0070 ; record 341
-	dw $ffff ; record 342
-	dw $ffff ; record 343
-	dw $ffff ; record 344
-	dw $ffff ; record 345
-	dw $ffff ; record 346
-	dw $ffff ; record 347
-	dw $ffff ; record 348
-	dw $ffff ; record 349
-	dw $ffff ; record 350
-	dw $ffff ; record 351
-	dw $ffff ; record 352
-	dw $ffff ; record 353
+RankingMarkerCoordsTable:
+	; $5c8d, 10 bytes (records:2)
+	dw RankingMarkerCoordSet0 ; record 0
+	dw RankingMarkerCoordSet0 ; record 1
+	dw RankingMarkerCoordSet1 ; record 2
+	dw RankingMarkerCoordSet2 ; record 3
+	dw RankingMarkerCoordSet3 ; record 4
+RankingMarkerCoordSet0:
+	INCBIN "data/bank_01b/d_5c97.bin" ; $5c97, 48 bytes
+RankingMarkerCoordSet1:
+	INCBIN "data/bank_01b/d_5cc7.bin" ; $5cc7, 48 bytes
+RankingMarkerCoordSet2:
+	INCBIN "data/bank_01b/d_5cf7.bin" ; $5cf7, 48 bytes
+RankingMarkerCoordSet3:
+	INCBIN "data/bank_01b/d_5d27.bin" ; $5d27, 554 bytes
 GetRankingMarkerSlot:
 	push af ; $5f51
 	ld a, c ; $5f52
@@ -4577,7 +4239,7 @@ CountClearedMinigameLevels:
 	ld c, $00 ; $6bd3
 	ld a, [$d000] ; $6bd5
 	add a, a ; $6bd8
-	ld hl, $6c11 ; $6bd9
+	ld hl, ClearedMinigameLevelsTable ; $6bd9
 	add a, l ; $6bdc
 	ld l, a ; $6bdd
 	jr nc, .read ; $6bde
@@ -4619,43 +4281,35 @@ CountClearedMinigameLevels:
 CountClearedMinigameLevelsTable:
 	; $6c0e, 3 bytes (bytes:3)
 	db $02, $02, $03 ; 0x00
-	; $6c11, 72 bytes (records:2)
-	dw $6c23 ; record 0
-	dw $6c29 ; record 1
-	dw $6c2f ; record 2
-	dw $6c35 ; record 3
-	dw $6c3b ; record 4
-	dw $6c41 ; record 5
-	dw $6c47 ; record 6
-	dw $6c4d ; record 7
-	dw $6c53 ; record 8
-	dw $0280 ; record 9
-	dw $02a0 ; record 10
-	dw $02c0 ; record 11
-	dw $02e0 ; record 12
-	dw $0300 ; record 13
-	dw $0320 ; record 14
-	dw $0340 ; record 15
-	dw $0360 ; record 16
-	dw $0380 ; record 17
-	dw $03a0 ; record 18
-	dw $03c0 ; record 19
-	dw $03e0 ; record 20
-	dw $0500 ; record 21
-	dw $0520 ; record 22
-	dw $0540 ; record 23
-	dw $0560 ; record 24
-	dw $0580 ; record 25
-	dw $05a0 ; record 26
-	dw $05c0 ; record 27
-	dw $05e0 ; record 28
-	dw $0600 ; record 29
-	dw $0620 ; record 30
-	dw $0640 ; record 31
-	dw $0660 ; record 32
-	dw $0680 ; record 33
-	dw $06a0 ; record 34
-	dw $06c0 ; record 35
+ClearedMinigameLevelsTable:
+	; $6c11, 18 bytes (records:2)
+	dw MinigameLevelRow0 ; record 0
+	dw MinigameLevelRow1 ; record 1
+	dw MinigameLevelRow2 ; record 2
+	dw MinigameLevelRow3 ; record 3
+	dw MinigameLevelRow4 ; record 4
+	dw MinigameLevelRow5 ; record 5
+	dw MinigameLevelRow6 ; record 6
+	dw MinigameLevelRow7 ; record 7
+	dw MinigameLevelRow8 ; record 8
+MinigameLevelRow0:
+	INCBIN "data/bank_01b/d_6c23.bin" ; $6c23, 6 bytes
+MinigameLevelRow1:
+	INCBIN "data/bank_01b/d_6c29.bin" ; $6c29, 6 bytes
+MinigameLevelRow2:
+	INCBIN "data/bank_01b/d_6c2f.bin" ; $6c2f, 6 bytes
+MinigameLevelRow3:
+	INCBIN "data/bank_01b/d_6c35.bin" ; $6c35, 6 bytes
+MinigameLevelRow4:
+	INCBIN "data/bank_01b/d_6c3b.bin" ; $6c3b, 6 bytes
+MinigameLevelRow5:
+	INCBIN "data/bank_01b/d_6c41.bin" ; $6c41, 6 bytes
+MinigameLevelRow6:
+	INCBIN "data/bank_01b/d_6c47.bin" ; $6c47, 6 bytes
+MinigameLevelRow7:
+	INCBIN "data/bank_01b/d_6c4d.bin" ; $6c4d, 6 bytes
+MinigameLevelRow8:
+	INCBIN "data/bank_01b/d_6c53.bin" ; $6c53, 6 bytes
 LoadMinigameLevelSelectGfx:
 	ldh a, [hWramBank] ; $6c59
 	push af ; $6c5b
@@ -4664,7 +4318,7 @@ LoadMinigameLevelSelectGfx:
 .loop:
 	ld a, c ; $6c64
 	add a, a ; $6c65
-	ld hl, $6d2d ; $6c66
+	ld hl, MinigameLevelSelectGfxTable ; $6c66
 	add a, l ; $6c69
 	ld l, a ; $6c6a
 	jr nc, .read ; $6c6b
@@ -4773,6 +4427,7 @@ LoadMinigameLevelSelectGfx:
 	pop af ; $6d27
 	wram_bank ; $6d28
 	ret ; $6d2c
+MinigameLevelSelectGfxTable:
 	; $6d2d, 16 bytes (records:2)
 	dw $6d8a ; record 0
 	dw $6d8c ; record 1
@@ -4828,7 +4483,7 @@ MinigameLevelDescriptionTable:
 	; $6d8f, 6 bytes (bytes:6)
 	db $01, $d2, $01, $d2, $01, $d2 ; 0x00
 LoadMinigameLevelSelectPalette:
-	ld hl, $6da8 ; $6d95
+	ld hl, MinigameLevelSelectPalettePtrs ; $6d95
 	add a, a ; $6d98
 	add a, l ; $6d99
 	ld l, a ; $6d9a
@@ -4841,6 +4496,7 @@ LoadMinigameLevelSelectPalette:
 	ld de, $0401 ; $6da1
 	call LoadPaletteShadow ; $6da4
 	ret ; $6da7
+MinigameLevelSelectPalettePtrs:
 	; $6da8, 6 bytes (records:2)
 	dw $6dae ; record 0
 	dw $6dbe ; record 1
@@ -5575,7 +5231,7 @@ SavedDataTypeDescriptionTable:
 	; $73b2, 4 bytes (bytes:4)
 	db $01, $d2, $01, $d2 ; 0x00
 LoadSavedDataTypePalette:
-	ld hl, $73c9 ; $73b6
+	ld hl, SavedDataTypePalettePtrs ; $73b6
 	add a, a ; $73b9
 	add a, l ; $73ba
 	ld l, a ; $73bb
@@ -5588,6 +5244,7 @@ LoadSavedDataTypePalette:
 	ld de, $0401 ; $73c2
 	call LoadPaletteShadow ; $73c5
 	ret ; $73c8
+SavedDataTypePalettePtrs:
 	; $73c9, 4 bytes (records:2)
 	dw $73cd ; record 0
 	dw $73d5 ; record 1
@@ -5721,7 +5378,7 @@ LoadMinigameClearFlags:
 	ld a, c ; $74ed
 	add a, a ; $74ee
 	push hl ; $74ef
-	ld hl, $750d ; $74f0
+	ld hl, MinigameClearFlagsTable ; $74f0
 	add a, l ; $74f3
 	ld l, a ; $74f4
 	jr nc, .read ; $74f5
@@ -5743,6 +5400,7 @@ LoadMinigameClearFlags:
 	cp a, $09 ; $7508
 	jr nz, .loop ; $750a
 	ret ; $750c
+MinigameClearFlagsTable:
 	; $750d, 18 bytes (records:2)
 	dw $0280 ; record 0
 	dw $02e0 ; record 1
@@ -5763,7 +5421,7 @@ LoadMinigameStarFlags:
 	ld a, c ; $752d
 	add a, a ; $752e
 	push hl ; $752f
-	ld hl, $754d ; $7530
+	ld hl, MinigameStarFlagsTable ; $7530
 	add a, l ; $7533
 	ld l, a ; $7534
 	jr nc, .read ; $7535
@@ -5785,6 +5443,7 @@ LoadMinigameStarFlags:
 	cp a, $09 ; $7548
 	jr nz, .loop ; $754a
 	ret ; $754c
+MinigameStarFlagsTable:
 	; $754d, 19 bytes (records:2)
 	dw $02a0 ; record 0
 	dw $0300 ; record 1
@@ -6081,7 +5740,7 @@ DrawMinigameMarkTile:
 	push bc ; $774d
 	push de ; $774e
 	push hl ; $774f
-	ld hl, $7788 ; $7750
+	ld hl, MinigameMarkTileTable ; $7750
 	ld a, b ; $7753
 	add a, a ; $7754
 	add a, l ; $7755
@@ -6121,25 +5780,17 @@ DrawMinigameMarkTile:
 	pop bc ; $7785
 	pop af ; $7786
 	ret ; $7787
-	; $7788, 36 bytes (records:2)
-	dw $778e ; record 0
-	dw $7798 ; record 1
-	dw $77a2 ; record 2
-	dw $d0c6 ; record 3
-	dw $d106 ; record 4
-	dw $d146 ; record 5
-	dw $d186 ; record 6
-	dw $d1c6 ; record 7
-	dw $d0ca ; record 8
-	dw $d10a ; record 9
-	dw $d14a ; record 10
-	dw $d18a ; record 11
-	dw $d1ca ; record 12
-	dw $d0ce ; record 13
-	dw $d10e ; record 14
-	dw $d14e ; record 15
-	dw $d18e ; record 16
-	dw $d1ce ; record 17
+MinigameMarkTileTable:
+	; $7788, 6 bytes (records:2)
+	dw MinigameStarRow0 ; record 0
+	dw MinigameStarRow1 ; record 1
+	dw MinigameStarRow2 ; record 2
+MinigameStarRow0:
+	INCBIN "data/bank_01b/d_778e.bin" ; $778e, 10 bytes
+MinigameStarRow1:
+	INCBIN "data/bank_01b/d_7798.bin" ; $7798, 10 bytes
+MinigameStarRow2:
+	INCBIN "data/bank_01b/d_77a2.bin" ; $77a2, 10 bytes
 ClearMinigameMarkColumns:
 	ld hl, $d095 ; $77ac
 	ld de, $d0c6 ; $77af

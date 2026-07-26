@@ -984,7 +984,7 @@ LoadMatchRulesMenuGraphics:
 .loop:
 	ld a, c ; $4612
 	add a, a ; $4613
-	ld hl, $46d8 ; $4614
+	ld hl, MatchRulesMenuGraphicsTable ; $4614
 	add a, l ; $4617
 	ld l, a ; $4618
 	jr nc, .read ; $4619
@@ -1083,6 +1083,7 @@ LoadMatchRulesMenuGraphics:
 	pop af ; $46d2
 	wram_bank ; $46d3
 	ret ; $46d7
+MatchRulesMenuGraphicsTable:
 	; $46d8, 28 bytes (records:2)
 	dw $3c62 ; record 0
 	dw $3c64 ; record 1
@@ -1561,7 +1562,7 @@ AnimateLinkStatusPalette:
 	and a, $1c ; $4a5a
 	srl a ; $4a5c
 	srl a ; $4a5e
-	ld hl, $4a77 ; $4a60
+	ld hl, AnimateLinkStatusPalettePtrs ; $4a60
 	add a, a ; $4a63
 	add a, l ; $4a64
 	ld l, a ; $4a65
@@ -1578,6 +1579,7 @@ AnimateLinkStatusPalette:
 	pop bc ; $4a74
 	pop af ; $4a75
 	ret ; $4a76
+AnimateLinkStatusPalettePtrs:
 	; $4a77, 16 bytes (records:2)
 	dw $4a87 ; record 0
 	dw $4a87 ; record 1
@@ -2223,7 +2225,7 @@ RedrawRacketShoesChoiceMenu:
 	call QueueVRAMCopy ; $5034
 	ret ; $5037
 SetRacketShoesChoicePalette:
-	ld hl, $504b ; $5038
+	ld hl, RacketShoesChoicePalettePtrs ; $5038
 	add a, a ; $503b
 	add a, l ; $503c
 	ld l, a ; $503d
@@ -2236,6 +2238,7 @@ SetRacketShoesChoicePalette:
 	ld de, $0401 ; $5044
 	call LoadPaletteShadow ; $5047
 	ret ; $504a
+RacketShoesChoicePalettePtrs:
 	; $504b, 18 bytes (records:2)
 	dw $505d ; record 0
 	dw $5065 ; record 1
@@ -2624,7 +2627,7 @@ RedrawPlayAlonePartnerMenu:
 	call QueueVRAMCopy ; $531c
 	ret ; $531f
 SetPlayAlonePartnerPalette:
-	ld hl, $5333 ; $5320
+	ld hl, PlayAlonePartnerPalettePtrs ; $5320
 	add a, a ; $5323
 	add a, l ; $5324
 	ld l, a ; $5325
@@ -2637,6 +2640,7 @@ SetPlayAlonePartnerPalette:
 	ld de, $0401 ; $532c
 	call LoadPaletteShadow ; $532f
 	ret ; $5332
+PlayAlonePartnerPalettePtrs:
 	; $5333, 18 bytes (records:2)
 	dw $5345 ; record 0
 	dw $5345 ; record 1
@@ -3513,7 +3517,7 @@ DrawStatModEntry:
 GetItemStatModListPtr:
 	push af ; $5a44
 	push bc ; $5a45
-	ld hl, $5a5f ; $5a46
+	ld hl, ItemStatModListPtrPtrs ; $5a46
 	ld a, [$d813] ; $5a49
 	or a, a ; $5a4c
 	jr z, .zero ; $5a4d
@@ -3532,6 +3536,7 @@ GetItemStatModListPtr:
 	pop bc ; $5a5c
 	pop af ; $5a5d
 	ret ; $5a5e
+ItemStatModListPtrPtrs:
 	; $5a5f, 20 bytes (records:2)
 	dw $5a73 ; record 0
 	dw $5a7a ; record 1
@@ -3635,7 +3640,7 @@ WriteStatModValueTiles:
 GetStatModRowAddr:
 	ld a, [$d814] ; $5b3e
 	add a, a ; $5b41
-	ld hl, $5b63 ; $5b42
+	ld hl, StatModRowAddrPtrs ; $5b42
 	add a, l ; $5b45
 	ld l, a ; $5b46
 	jr nc, .read ; $5b47
@@ -3664,6 +3669,7 @@ GetStatModRowAddr:
 	inc h ; $5b61
 .done:
 	ret ; $5b62
+StatModRowAddrPtrs:
 	; $5b63, 6 bytes (records:2)
 	dw $5b69 ; record 0
 	dw $5b79 ; record 1
@@ -3864,7 +3870,7 @@ LoadCourtSelectGraphics:
 .loop:
 	ld a, c ; $5d28
 	add a, a ; $5d29
-	ld hl, $5df1 ; $5d2a
+	ld hl, CourtSelectGraphicsTable ; $5d2a
 	add a, l ; $5d2d
 	ld l, a ; $5d2e
 	jr nc, .read ; $5d2f
@@ -3966,6 +3972,7 @@ LoadCourtSelectGraphics:
 	pop af ; $5deb
 	wram_bank ; $5dec
 	ret ; $5df0
+CourtSelectGraphicsTable:
 	; $5df1, 38 bytes (records:2)
 	dw $3f02 ; record 0
 	dw $3f04 ; record 1
@@ -4094,7 +4101,7 @@ CourtSelect4CursorSpriteTask:
 	ld b, [hl] ; $5eb6
 	pop af ; $5eb7
 	add a, a ; $5eb8
-	ld hl, $5eea ; $5eb9
+	ld hl, CourtSelect4CursorSpriteTaskPtrs ; $5eb9
 	add a, l ; $5ebc
 	ld l, a ; $5ebd
 	jr nc, .read2 ; $5ebe
@@ -4126,6 +4133,7 @@ CourtSelect4CursorSpriteTask:
 	ld c, $72 ; $5ee4
 	call QueueSpriteTemplate ; $5ee6
 	ret ; $5ee9
+CourtSelect4CursorSpriteTaskPtrs:
 	; $5eea, 8 bytes (records:2)
 	dw $5ef2 ; record 0
 	dw $5ef2 ; record 1
@@ -4236,7 +4244,7 @@ CourtSelect4TabAttrAddrs_3e:
 	; $5fd6, 8 bytes (bytes:8)
 	db $84, $d4, $8b, $d4, $24, $d5, $2b, $d5 ; 0x00
 SetCourtSelect4Palette:
-	ld hl, $5ff1 ; $5fde
+	ld hl, CourtSelect4PalettePtrs ; $5fde
 	add a, a ; $5fe1
 	add a, l ; $5fe2
 	ld l, a ; $5fe3
@@ -4249,6 +4257,7 @@ SetCourtSelect4Palette:
 	ld de, $0401 ; $5fea
 	call LoadPaletteShadow ; $5fed
 	ret ; $5ff0
+CourtSelect4PalettePtrs:
 	; $5ff1, 18 bytes (records:2)
 	dw $6003 ; record 0
 	dw $600b ; record 1
@@ -4934,7 +4943,7 @@ CourtSelect9TabAttrAddrs_3e:
 	db $61, $d4, $67, $d4, $6d, $d4, $e1, $d4, $e7, $d4, $ed, $d4, $61, $d5, $67, $d5 ; 0x00
 	db $6d, $d5 ; 0x10
 SetCourtSelect9Palette:
-	ld hl, $68d9 ; $68c6
+	ld hl, CourtSelect9PalettePtrs ; $68c6
 	add a, a ; $68c9
 	add a, l ; $68ca
 	ld l, a ; $68cb
@@ -4947,6 +4956,7 @@ SetCourtSelect9Palette:
 	ld de, $0401 ; $68d2
 	call LoadPaletteShadow ; $68d5
 	ret ; $68d8
+CourtSelect9PalettePtrs:
 	; $68d9, 18 bytes (records:2)
 	dw $68eb ; record 0
 	dw $68f3 ; record 1

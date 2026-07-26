@@ -271,7 +271,7 @@ UpdateAnimatedTiles:
 	ld a, [wAnimatedTileSet] ; $4377
 	and a, $03 ; $437a
 	add a, a ; $437c
-	ld hl, $4403 ; $437d
+	ld hl, UpdateAnimatedTilesTable ; $437d
 	add a, l ; $4380
 	ld l, a ; $4381
 	jr nc, .readFrameTableA ; $4382
@@ -352,6 +352,7 @@ UpdateAnimatedTiles:
 	pop bc ; $4400
 	pop af ; $4401
 	ret ; $4402
+UpdateAnimatedTilesTable:
 	; $4403, 208 bytes (records:2)
 	dw $4413 ; record 0
 	dw $4453 ; record 1
@@ -3047,7 +3048,7 @@ FillMenuGridCellTile:
 	ld h, $0d ; $6dd4
 .step2:
 	push hl ; $6dd6
-	ld hl, $6ded ; $6dd7
+	ld hl, FillMenuGridCellTileTable ; $6dd7
 	ld a, e ; $6dda
 	add a, a ; $6ddb
 	add a, l ; $6ddc
@@ -3065,6 +3066,7 @@ FillMenuGridCellTile:
 	pop bc ; $6dea
 	pop af ; $6deb
 	ret ; $6dec
+FillMenuGridCellTileTable:
 	; $6ded, 12 bytes (records:2)
 	dw $d482 ; record 0
 	dw $d488 ; record 1

@@ -3236,17 +3236,19 @@ DrawCharGridSlotIcons:
 	ret ; $59b9
 SubHandlers_38_59ba:
 	; $59ba, 12 bytes (records:2)
-	dw $59c6 ; record 0
-	dw $59cf ; record 1
-	dw $59e0 ; record 2
-	dw $59e0 ; record 3
-	dw $59e9 ; record 4
-	dw $59e9 ; record 5
+	dw SubHandler0 ; record 0
+	dw SubHandler1 ; record 1
+	dw SubHandler2 ; record 2
+	dw SubHandler2 ; record 3
+	dw SubHandler4 ; record 4
+	dw SubHandler4 ; record 5
+SubHandler0:
 	ld bc, wDebugTextBuffer ; $59c6
 	ret nc ; $59c9
 	ld [bc], a ; $59ca
 	ld bc, $d12c ; $59cb
 	nop ; $59ce
+SubHandler1:
 	ld bc, wStoryCharacterSlot ; $59cf
 	ret nc ; $59d2
 	inc bc ; $59d3
@@ -3256,6 +3258,7 @@ SubHandlers_38_59ba:
 	inc b ; $59db
 	ld bc, $d12f ; $59dc
 	nop ; $59df
+SubHandler2:
 	ld bc, wDebugTextBuffer ; $59e0
 	ret nc ; $59e3
 	ld [bc], a ; $59e4
@@ -3263,6 +3266,7 @@ SubHandlers_38_59ba:
 	inc l ; $59e6
 	pop de ; $59e7
 	nop ; $59e8
+SubHandler4:
 	ld bc, wStoryCharacterSlot ; $59e9
 	ret nc ; $59ec
 	inc bc ; $59ed
@@ -4182,27 +4186,31 @@ ApplyCpuDifficultyToCharRecords:
 	ret ; $5fea
 SubHandlers_38_5feb:
 	; $5feb, 10 bytes (records:2)
-	dw $5ff5 ; record 0
-	dw $5ffb ; record 1
-	dw $6001 ; record 2
-	dw $6007 ; record 3
-	dw $600d ; record 4
+	dw SubHandler01 ; record 0
+	dw SubHandler11 ; record 1
+	dw SubHandler21 ; record 2
+	dw SubHandler3 ; record 3
+	dw SubHandler41 ; record 4
+SubHandler01:
 	ld [bc], a ; $5ff5
 	ld [bc], a ; $5ff6
 	nop ; $5ff7
 	and a, $03 ; $5ff8
 	rlca ; $5ffa
+SubHandler11:
 	inc e ; $5ffb
-	jr Data_38_5ffe.compare ; $5ffc
+	jr SubHandler3.compare ; $5ffc
 Data_38_5ffe:
 	; $5ffe, 3 bytes (bytes:3)
 	db $3c, $00, $01 ; 0x00
+SubHandler21:
 	ld [de], a ; $6001
 	rrca ; $6002
 	add hl, bc ; $6003
 	ld a, b ; $6004
 	db $01 ; $6005
 	db $03 ; $6006
+SubHandler3:
 	ld a, [bc] ; $6007
 	add hl, bc ; $6008
 	dec b ; $6009
@@ -4210,6 +4218,7 @@ Data_38_5ffe:
 	cp a, [hl] ; $600a
 	ld [bc], a ; $600b
 	dec b ; $600c
+SubHandler41:
 	ld [bc], a ; $600d
 	ld [bc], a ; $600e
 	nop ; $600f
@@ -5599,12 +5608,13 @@ GetRemoteSlotBoxAddress:
 	ret ; $69c0
 SubHandlers_38_69c1:
 	; $69c1, 12 bytes (records:2)
-	dw $69cd ; record 0
-	dw $69cd ; record 1
-	dw $69d7 ; record 2
-	dw $69cd ; record 3
-	dw $69e7 ; record 4
-	dw $69dd ; record 5
+	dw SubHandler02 ; record 0
+	dw SubHandler02 ; record 1
+	dw SubHandler22 ; record 2
+	dw SubHandler02 ; record 3
+	dw SubHandler42 ; record 4
+	dw SubHandler5 ; record 5
+SubHandler02:
 	ret nc ; $69cd
 	ret nc ; $69ce
 	nop ; $69cf
@@ -5615,11 +5625,13 @@ SubHandlers_38_69c1:
 	nop ; $69d4
 	nop ; $69d5
 	nop ; $69d6
+SubHandler22:
 	jr nc, GetRemoteSlotBoxAddress.fromCallerPtr ; $69d7
 	nop ; $69d9
 	nop ; $69da
 	nop ; $69db
 	nop ; $69dc
+SubHandler5:
 	call $d1d0 ; $69dd
 	ret nc ; $69e0
 	nop ; $69e1
@@ -5628,6 +5640,7 @@ SubHandlers_38_69c1:
 	nop ; $69e4
 	nop ; $69e5
 	nop ; $69e6
+SubHandler42:
 	dec l ; $69e7
 	pop de ; $69e8
 	ld sp, $00d1 ; $69e9

@@ -5377,11 +5377,12 @@ RecordDrillResult:
 	jp hl ; $7cd8
 DrillSubHandlers_1d:
 	; $7cd9, 10 bytes (records:2)
-	dw $7ce3 ; record 0
-	dw $7cee ; record 1
-	dw $7cf9 ; record 2
-	dw $7d04 ; record 3
-	dw $7d0f ; record 4
+	dw DrillSubHandler0 ; record 0
+	dw DrillSubHandler1 ; record 1
+	dw DrillSubHandler2 ; record 2
+	dw DrillSubHandler3 ; record 3
+	dw DrillSubHandler4 ; record 4
+DrillSubHandler0:
 	ld a, c ; $7ce3
 	ld [$d15c], a ; $7ce4
 	ld hl, $d152 ; $7ce7
@@ -5389,6 +5390,7 @@ DrillSubHandlers_1d:
 	ld [hl+], a ; $7ceb
 	ld [hl], d ; $7cec
 	ret ; $7ced
+DrillSubHandler1:
 	ld a, c ; $7cee
 	ld [$d15d], a ; $7cef
 	ld hl, $d154 ; $7cf2
@@ -5396,6 +5398,7 @@ DrillSubHandlers_1d:
 	ld [hl+], a ; $7cf6
 	ld [hl], d ; $7cf7
 	ret ; $7cf8
+DrillSubHandler2:
 	ld a, c ; $7cf9
 	ld [$d15e], a ; $7cfa
 	ld hl, $d156 ; $7cfd
@@ -5403,6 +5406,7 @@ DrillSubHandlers_1d:
 	ld [hl+], a ; $7d01
 	ld [hl], d ; $7d02
 	ret ; $7d03
+DrillSubHandler3:
 	ld a, c ; $7d04
 	ld [$d15f], a ; $7d05
 	ld hl, $d158 ; $7d08
@@ -5410,6 +5414,7 @@ DrillSubHandlers_1d:
 	ld [hl+], a ; $7d0c
 	ld [hl], d ; $7d0d
 	ret ; $7d0e
+DrillSubHandler4:
 	ld a, c ; $7d0f
 	ld [$d160], a ; $7d10
 	ld hl, $d15a ; $7d13

@@ -79,7 +79,7 @@ RecordDrillPointResultBits:
 	ld c, a ; $4087
 	ld a, [wTotalPointsScoredInCurrentGame] ; $4088
 	ld b, a ; $408b
-	ld hl, $40bc ; $408c
+	ld hl, DrillPointResultBitsTable ; $408c
 	ld a, [$c7bb] ; $408f
 	or a, a ; $4092
 	jr nz, .storeBits ; $4093
@@ -113,6 +113,7 @@ RecordDrillPointResultBits:
 	or a, [hl] ; $40b9
 	ld [hl], a ; $40ba
 	ret ; $40bb
+DrillPointResultBitsTable:
 	; $40bc, 4 bytes (records:2)
 	dw $c2fc ; record 0
 	dw $c2fd ; record 1
@@ -4022,7 +4023,7 @@ NetGamePractice1Hook_PointStart:
 	ld [$c2ed], a ; $5c23
 	ld a, $01 ; $5c26
 	ld [wTargetZoneEnabled], a ; $5c28
-	ld hl, $5cd7 ; $5c2b
+	ld hl, NetGamePractice1Table ; $5c2b
 	call SetDrillTargetZoneForPoint ; $5c2e
 	ld a, $40 ; $5c31
 	call LoadDrillOpponentChar ; $5c33
@@ -4118,6 +4119,7 @@ NetGamePractice1Hook_BallHit:
 	call ResetActiveCharState ; $5cd3
 .done:
 	ret ; $5cd6
+NetGamePractice1Table:
 	; $5cd7, 34 bytes (records:2)
 	dw $0000 ; record 0
 	dw $fb20 ; record 1
@@ -6303,7 +6305,7 @@ StrokePractice1Hook_PointStart:
 	ld [$c2e0], a ; $6b9a
 	xor a, a ; $6b9d
 	ld [wTargetZoneEnabled], a ; $6b9e
-	ld hl, $6c5f ; $6ba1
+	ld hl, StrokePractice1Table ; $6ba1
 	call SetDrillTargetZoneForPoint ; $6ba4
 	xor a, a ; $6ba7
 	ld [$c2e6], a ; $6ba8
@@ -6407,6 +6409,7 @@ StrokePractice1Hook_BallHit:
 	ret nz ; $6c5a
 	call ResetActiveCharState ; $6c5b
 	ret ; $6c5e
+StrokePractice1Table:
 	; $6c5f, 34 bytes (records:2)
 	dw $fe50 ; record 0
 	dw $fb20 ; record 1
@@ -7312,19 +7315,14 @@ RunDoublesDrillMatch:
 	ld [wExhibitionModeCPUPartnerCharacterDifficulty], a ; $72d9
 	farcall RunMatch ; $72dc
 	ret ; $72df
-	; $72e0, 27 bytes (records:2)
-	dw $72e6 ; record 0
-	dw $72ed ; record 1
-	dw $72f4 ; record 2
-	dw $0106 ; record 3
-	dw $1324 ; record 4
-	dw $1e12 ; record 5
-	dw $0600 ; record 6
-	dw $1403 ; record 7
-	dw $0a0f ; record 8
-	dw $0164 ; record 9
-	dw $0506 ; record 10
-	dw $0a0e ; record 11
-	dw $b402 ; record 12
-	db $03
+	; $72e0, 6 bytes (records:2)
+	dw DrillResultBitsRow0 ; record 0
+	dw DrillResultBitsRow1 ; record 1
+	dw DrillResultBitsRow2 ; record 2
+DrillResultBitsRow0:
+	INCBIN "data/bank_00b/d_72e6.bin" ; $72e6, 7 bytes
+DrillResultBitsRow1:
+	INCBIN "data/bank_00b/d_72ed.bin" ; $72ed, 7 bytes
+DrillResultBitsRow2:
+	INCBIN "data/bank_00b/d_72f4.bin" ; $72f4, 7 bytes
 	; $72fb, 3333 bytes fill to bank end (linker-padded)

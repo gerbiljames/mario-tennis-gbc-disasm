@@ -2894,7 +2894,7 @@ DrawRingShotModeTab:
 	wram_bank $03 ; $5429
 	ld a, [wMenuCursorX] ; $542f
 	add a, a ; $5432
-	ld hl, $544e ; $5433
+	ld hl, RingShotModeTabTable ; $5433
 	add a, l ; $5436
 	ld l, a ; $5437
 	jr nc, .read ; $5438
@@ -2910,6 +2910,7 @@ DrawRingShotModeTab:
 	pop af ; $5448
 	wram_bank ; $5449
 	ret ; $544d
+RingShotModeTabTable:
 	; $544e, 8 bytes (records:2)
 	dw $d055 ; record 0
 	dw $d095 ; record 1
@@ -3026,7 +3027,7 @@ DrawRingShotClearMarkRow:
 	push hl ; $552c
 	ld a, b ; $552d
 	add a, a ; $552e
-	ld hl, $5564 ; $552f
+	ld hl, RingShotClearMarkRowTable ; $552f
 	add a, l ; $5532
 	ld l, a ; $5533
 	jr nc, .read ; $5534
@@ -3070,6 +3071,7 @@ DrawRingShotClearMarkRow:
 	pop bc ; $5561
 	pop af ; $5562
 	ret ; $5563
+RingShotClearMarkRowTable:
 	; $5564, 10 bytes (records:2)
 	dw $d0c4 ; record 0
 	dw $d104 ; record 1
@@ -3083,7 +3085,7 @@ DrawRingShotMarkCell:
 	push hl ; $5571
 	ld a, b ; $5572
 	add a, a ; $5573
-	ld hl, $558b ; $5574
+	ld hl, RingShotMarkCellTable ; $5574
 	add a, l ; $5577
 	ld l, a ; $5578
 	jr nc, .read ; $5579
@@ -3100,6 +3102,7 @@ DrawRingShotMarkCell:
 	pop bc ; $5588
 	pop af ; $5589
 	ret ; $558a
+RingShotMarkCellTable:
 	; $558b, 4 bytes (records:2)
 	dw $d115 ; record 0
 	dw $d117 ; record 1
@@ -3498,7 +3501,7 @@ MainMenuCursorSpriteTask:
 	ld e, a ; $5882
 	farcall ApplySpriteBobOffset ; $5883
 	pop af ; $5886
-	ld hl, $58ba ; $5887
+	ld hl, MainMenuCursorSpriteTaskPtrs ; $5887
 	add a, l ; $588a
 	ld l, a ; $588b
 	jr nc, .read2 ; $588c
@@ -3531,6 +3534,7 @@ MainMenuCursorSpriteTask:
 	ld c, $72 ; $58b4
 	call QueueSpriteTemplate ; $58b6
 	ret ; $58b9
+MainMenuCursorSpriteTaskPtrs:
 	; $58ba, 18 bytes (records:2)
 	dw $58cc ; record 0
 	dw $58ed ; record 1
@@ -3681,7 +3685,7 @@ FillMainMenuCellHighlight:
 	ld h, $0d ; $5a2a
 .step4:
 	push hl ; $5a2c
-	ld hl, $5a43 ; $5a2d
+	ld hl, FillMainMenuCellHighlightTable ; $5a2d
 	ld a, e ; $5a30
 	add a, a ; $5a31
 	add a, l ; $5a32
@@ -3699,6 +3703,7 @@ FillMainMenuCellHighlight:
 	pop bc ; $5a40
 	pop af ; $5a41
 	ret ; $5a42
+FillMainMenuCellHighlightTable:
 	; $5a43, 20 bytes (records:2)
 	dw $d461 ; record 0
 	dw $d467 ; record 1
@@ -3711,7 +3716,7 @@ FillMainMenuCellHighlight:
 	dw $d56d ; record 8
 	dw $d507 ; record 9
 LoadMainMenuItemPalette:
-	ld hl, $5a6a ; $5a57
+	ld hl, MainMenuItemPalettePtrs ; $5a57
 	add a, a ; $5a5a
 	add a, l ; $5a5b
 	ld l, a ; $5a5c
@@ -3724,6 +3729,7 @@ LoadMainMenuItemPalette:
 	ld de, $0401 ; $5a63
 	call LoadPaletteShadow ; $5a66
 	ret ; $5a69
+MainMenuItemPalettePtrs:
 	; $5a6a, 18 bytes (records:2)
 	dw $5a7c ; record 0
 	dw $5a8c ; record 1
@@ -3905,7 +3911,7 @@ DrawMainMenuCaption:
 	ld b, a ; $5bdd
 	ld a, b ; $5bde
 	add a, a ; $5bdf
-	ld hl, $5c03 ; $5be0
+	ld hl, MainMenuCaptionTable ; $5be0
 	add a, l ; $5be3
 	ld l, a ; $5be4
 	jr nc, .read ; $5be5
@@ -3931,6 +3937,7 @@ DrawMainMenuCaption:
 	pop af ; $5bfd
 	wram_bank ; $5bfe
 	ret ; $5c02
+MainMenuCaptionTable:
 	; $5c03, 36 bytes (records:2)
 	dw $d201 ; record 0
 	dw $d201 ; record 1
@@ -4506,7 +4513,7 @@ FillMatchFormatOptionCell:
 	ldh a, [hWramBank] ; $604d
 	push af ; $604f
 	wram_bank $03 ; $6050
-	ld hl, $6085 ; $6056
+	ld hl, FillMatchFormatOptionCellTable ; $6056
 	ld a, b ; $6059
 	add a, a ; $605a
 	add a, l ; $605b
@@ -4541,6 +4548,7 @@ FillMatchFormatOptionCell:
 	pop bc ; $6082
 	pop af ; $6083
 	ret ; $6084
+FillMatchFormatOptionCellTable:
 	; $6085, 14 bytes (records:2)
 	dw $d463 ; record 0
 	dw $d46c ; record 1
@@ -5191,7 +5199,7 @@ RenderMinigameNameText:
 	pop af ; $65bd
 	ld b, a ; $65be
 	add a, a ; $65bf
-	ld hl, $65da ; $65c0
+	ld hl, RenderMinigameNameTextTable ; $65c0
 	add a, l ; $65c3
 	ld l, a ; $65c4
 	jr nc, .read ; $65c5
@@ -5210,6 +5218,7 @@ RenderMinigameNameText:
 	ld c, $20 ; $65d4
 	farcall RenderTextToBuffer64 ; $65d6
 	ret ; $65d9
+RenderMinigameNameTextTable:
 	; $65da, 18 bytes (records:2)
 	dw $d201 ; record 0
 	dw $d201 ; record 1
@@ -5270,7 +5279,7 @@ FillMinigameSelectCell:
 	ld h, $0d ; $6647
 .step2:
 	push hl ; $6649
-	ld hl, $6660 ; $664a
+	ld hl, FillMinigameSelectCellTable ; $664a
 	ld a, e ; $664d
 	add a, a ; $664e
 	add a, l ; $664f
@@ -5288,6 +5297,7 @@ FillMinigameSelectCell:
 	pop bc ; $665d
 	pop af ; $665e
 	ret ; $665f
+FillMinigameSelectCellTable:
 	; $6660, 18 bytes (records:2)
 	dw $d462 ; record 0
 	dw $d468 ; record 1
@@ -5311,7 +5321,7 @@ BuildStarCharUnlockMask:
 .loop:
 	ld a, c ; $6683
 	add a, a ; $6684
-	ld hl, $66a9 ; $6685
+	ld hl, StarCharUnlockMaskTable ; $6685
 	add a, l ; $6688
 	ld l, a ; $6689
 	jr nc, .read ; $668a
@@ -5337,6 +5347,7 @@ BuildStarCharUnlockMask:
 	ld a, b ; $66a4
 	ld [$cb5d], a ; $66a5
 	ret ; $66a8
+StarCharUnlockMaskTable:
 	; $66a9, 12 bytes (records:2)
 	dw $01e0 ; record 0
 	dw $01a0 ; record 1
@@ -5900,7 +5911,7 @@ FillSavedDataSourceCell:
 	ld h, $0d ; $6b2b
 .step4:
 	push hl ; $6b2d
-	ld hl, $6b44 ; $6b2e
+	ld hl, FillSavedDataSourceCellTable ; $6b2e
 	ld a, e ; $6b31
 	add a, a ; $6b32
 	add a, l ; $6b33
@@ -5918,6 +5929,7 @@ FillSavedDataSourceCell:
 	pop bc ; $6b41
 	pop af ; $6b42
 	ret ; $6b43
+FillSavedDataSourceCellTable:
 	; $6b44, 10 bytes (records:2)
 	dw $d482 ; record 0
 	dw $d488 ; record 1
@@ -5925,7 +5937,7 @@ FillSavedDataSourceCell:
 	dw $d523 ; record 3
 	dw $d52b ; record 4
 LoadSavedDataSourceCellPalette:
-	ld hl, $6b61 ; $6b4e
+	ld hl, SavedDataSourceCellPalettePtrs ; $6b4e
 	add a, a ; $6b51
 	add a, l ; $6b52
 	ld l, a ; $6b53
@@ -5938,6 +5950,7 @@ LoadSavedDataSourceCellPalette:
 	ld de, $0401 ; $6b5a
 	call LoadPaletteShadow ; $6b5d
 	ret ; $6b60
+SavedDataSourceCellPalettePtrs:
 	; $6b61, 18 bytes (records:2)
 	dw $6b73 ; record 0
 	dw $6b73 ; record 1
@@ -6600,7 +6613,7 @@ FillEraseSavedDataCell:
 	ld h, $0d ; $70a8
 .step4:
 	push hl ; $70aa
-	ld hl, $70c1 ; $70ab
+	ld hl, FillEraseSavedDataCellTable ; $70ab
 	ld a, e ; $70ae
 	add a, a ; $70af
 	add a, l ; $70b0
@@ -6618,6 +6631,7 @@ FillEraseSavedDataCell:
 	pop bc ; $70be
 	pop af ; $70bf
 	ret ; $70c0
+FillEraseSavedDataCellTable:
 	; $70c1, 10 bytes (records:2)
 	dw $d482 ; record 0
 	dw $d488 ; record 1
@@ -6625,7 +6639,7 @@ FillEraseSavedDataCell:
 	dw $d523 ; record 3
 	dw $d52b ; record 4
 LoadEraseSavedDataCellPalette:
-	ld hl, $70de ; $70cb
+	ld hl, EraseSavedDataCellPalettePtrs ; $70cb
 	add a, a ; $70ce
 	add a, l ; $70cf
 	ld l, a ; $70d0
@@ -6638,6 +6652,7 @@ LoadEraseSavedDataCellPalette:
 	ld de, $0401 ; $70d7
 	call LoadPaletteShadow ; $70da
 	ret ; $70dd
+EraseSavedDataCellPalettePtrs:
 	; $70de, 18 bytes (records:2)
 	dw $70f0 ; record 0
 	dw $70f0 ; record 1
@@ -7087,7 +7102,7 @@ FillN64RecordTypeCell:
 	ld h, $0d ; $7434
 .step2:
 	push hl ; $7436
-	ld hl, $7451 ; $7437
+	ld hl, FillN64RecordTypeCellTable ; $7437
 	ld a, b ; $743a
 	add a, a ; $743b
 	add a, l ; $743c
@@ -7107,6 +7122,7 @@ FillN64RecordTypeCell:
 	pop bc ; $744e
 	pop af ; $744f
 	ret ; $7450
+FillN64RecordTypeCellTable:
 	; $7451, 12 bytes (records:2)
 	dw $d4e1 ; record 0
 	dw $d4e7 ; record 1
@@ -7115,7 +7131,7 @@ FillN64RecordTypeCell:
 	dw $d567 ; record 4
 	dw $d56d ; record 5
 LoadN64RecordTypeCellPalette:
-	ld hl, $7470 ; $745d
+	ld hl, N64RecordTypeCellPalettePtrs ; $745d
 	add a, a ; $7460
 	add a, l ; $7461
 	ld l, a ; $7462
@@ -7128,6 +7144,7 @@ LoadN64RecordTypeCellPalette:
 	ld de, $0401 ; $7469
 	call LoadPaletteShadow ; $746c
 	ret ; $746f
+N64RecordTypeCellPalettePtrs:
 	; $7470, 18 bytes (records:2)
 	dw $7482 ; record 0
 	dw $7492 ; record 1
@@ -7375,7 +7392,7 @@ DrawN64TransferItemGrid:
 	call QueueVRAMCopy ; $767c
 	ret ; $767f
 LoadN64TransferItemCellPalette:
-	ld hl, $7693 ; $7680
+	ld hl, N64TransferItemCellPalettePtrs ; $7680
 	add a, a ; $7683
 	add a, l ; $7684
 	ld l, a ; $7685
@@ -7388,6 +7405,7 @@ LoadN64TransferItemCellPalette:
 	ld de, $0401 ; $768c
 	call LoadPaletteShadow ; $768f
 	ret ; $7692
+N64TransferItemCellPalettePtrs:
 	; $7693, 18 bytes (records:2)
 	dw $76a5 ; record 0
 	dw $76bd ; record 1
@@ -7601,7 +7619,7 @@ DrawTournamentBracketNameBoxes:
 	ret ; $786b
 WriteBracketSinglesNames:
 	ld a, [$d801] ; $786c
-	ld hl, $7889 ; $786f
+	ld hl, WriteBracketSinglesNamesPtrs ; $786f
 	add a, a ; $7872
 	add a, l ; $7873
 	ld l, a ; $7874
@@ -7621,6 +7639,7 @@ WriteBracketSinglesNames:
 	cp a, $04 ; $7884
 	jr nz, .loop ; $7886
 	ret ; $7888
+WriteBracketSinglesNamesPtrs:
 	; $7889, 10 bytes (records:2)
 	dw $7893 ; record 0
 	dw $7893 ; record 1
@@ -7647,7 +7666,7 @@ WriteBracketEntrantName:
 	inc h ; $78b2
 .gotPtr:
 	push hl ; $78b3
-	ld hl, $78e4 ; $78b4
+	ld hl, WriteBracketEntrantNameTable ; $78b4
 	ld a, b ; $78b7
 	add a, a ; $78b8
 	add a, l ; $78b9
@@ -7667,7 +7686,7 @@ WriteBracketEntrantName:
 	pop af ; $78ca
 	ret ; $78cb
 .zero:
-	ld hl, $78e4 ; $78cc
+	ld hl, WriteBracketEntrantNameTable ; $78cc
 	ld a, b ; $78cf
 	add a, a ; $78d0
 	add a, l ; $78d1
@@ -7685,6 +7704,7 @@ WriteBracketEntrantName:
 	pop bc ; $78e1
 	pop af ; $78e2
 	ret ; $78e3
+WriteBracketEntrantNameTable:
 	; $78e4, 8 bytes (records:2)
 	dw $d129 ; record 0
 	dw $d169 ; record 1
@@ -7730,7 +7750,7 @@ HighlightBracketPlayerRow:
 	or a, a ; $7948
 	jr nz, .nonZero ; $7949
 	ld a, [$d801] ; $794b
-	ld hl, $79b6 ; $794e
+	ld hl, HighlightBracketPlayerRowTable ; $794e
 	add a, a ; $7951
 	add a, l ; $7952
 	ld l, a ; $7953
@@ -7797,6 +7817,7 @@ HighlightBracketPlayerRow:
 	ld h, $0d ; $79b0
 	farcall FillTilemapRect ; $79b2
 	ret ; $79b5
+HighlightBracketPlayerRowTable:
 	; $79b6, 32 bytes (records:2)
 	dw $0000 ; record 0
 	dw $d509 ; record 1
@@ -8172,7 +8193,7 @@ FlushStarChartWindowToVram:
 BuildStarChartColumnList:
 	ld c, $00 ; $7cca
 .loop:
-	ld hl, $7d03 ; $7ccc
+	ld hl, StarChartColumnListTable ; $7ccc
 	ld a, c ; $7ccf
 	add a, a ; $7cd0
 	add a, l ; $7cd1
@@ -8214,6 +8235,7 @@ BuildStarChartColumnList:
 	cp a, $09 ; $7cfe
 	jr nz, .loop ; $7d00
 	ret ; $7d02
+StarChartColumnListTable:
 	; $7d03, 18 bytes (records:2)
 	dw $01c0 ; record 0
 	dw $ffff ; record 1

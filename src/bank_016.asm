@@ -2167,7 +2167,7 @@ LoadResultPortraitSlot:
 	ld b, d ; $607f
 	ld a, c ; $6080
 	add a, a ; $6081
-	ld hl, $60b7 ; $6082
+	ld hl, ResultPortraitSlotTable ; $6082
 	add a, l ; $6085
 	ld l, a ; $6086
 	jr nc, .readDest ; $6087
@@ -2202,6 +2202,7 @@ LoadResultPortraitSlot:
 	pop de ; $60b2
 	call DecompressResultPortrait ; $60b3
 	ret ; $60b6
+ResultPortraitSlotTable:
 	; $60b7, 9 bytes (records:2)
 	dw $8c00 ; record 0
 	dw $8d00 ; record 1

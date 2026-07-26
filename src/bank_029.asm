@@ -462,7 +462,7 @@ BallPosData_29:
 ShotBallPathServeTopspin:
 	farcall ComputeShotPlacement ; $5e9d
 	ld hl, BallPosData_29 ; $5ea0
-	ld bc, $5ebf ; $5ea3
+	ld bc, ShotBallPathServeTopspinTable ; $5ea3
 	ld a, [$df6e] ; $5ea6
 	call LookupBallPosByShotIndex_29 ; $5ea9
 	ld bc, $5ed3 ; $5eac
@@ -472,6 +472,7 @@ ShotBallPathServeTopspin:
 	call LookupBallPosByHeight_29 ; $5eb8
 	call SetBallTargetByPrediction_29 ; $5ebb
 	ret ; $5ebe
+ShotBallPathServeTopspinTable:
 	; $5ebf, 104 bytes (records:2)
 	dw $0000 ; record 0
 	dw $02d0 ; record 1

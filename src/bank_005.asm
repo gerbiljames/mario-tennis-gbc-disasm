@@ -3291,9 +3291,13 @@ DispatchControlCode:
 ControlCodeDispatchReturn:
 	pop hl ; $5488
 	ret ; $5489
+ControlCodeHandler16:
 	ret ; $548a
+ControlCodeHandler17:
 	ret ; $548b
+ControlCodeHandler18:
 	ret ; $548c
+ControlCodeHandler19:
 	ret ; $548d
 TextCmdNop0:
 	ret ; $548e
@@ -3315,10 +3319,10 @@ ControlCodeHandlers_05:
 	dw TextCmdNextGlyphStreamRow ; record 13
 	dw TextCmdPrintShortText ; record 14
 	dw TextCmdNewline ; record 15
-	dw $548a ; record 16
-	dw $548b ; record 17
-	dw $548c ; record 18
-	dw $548d ; record 19
+	dw ControlCodeHandler16 ; record 16
+	dw ControlCodeHandler17 ; record 17
+	dw ControlCodeHandler18 ; record 18
+	dw ControlCodeHandler19 ; record 19
 	dw TextCmdNewline ; record 20
 	dw TextCmdNewline ; record 21
 	dw TextCmdNewline ; record 22
@@ -4462,46 +4466,59 @@ FetchDialogueText:
 	jp hl ; $5c3a
 DialogueTextFetchers_05:
 	; $5c3b, 32 bytes (records:2)
-	dw $5c5b ; record 0
-	dw $5c60 ; record 1
-	dw $5c65 ; record 2
-	dw $5c6a ; record 3
-	dw $5c6f ; record 4
-	dw $5c74 ; record 5
-	dw $5c79 ; record 6
-	dw $5c7e ; record 7
-	dw $5c83 ; record 8
-	dw $5c88 ; record 9
-	dw $5c8d ; record 10
-	dw $5c92 ; record 11
-	dw $5c97 ; record 12
-	dw $5c5b ; record 13
-	dw $5c5b ; record 14
-	dw $5c5b ; record 15
+	dw FetchDialogueTextBank30 ; record 0
+	dw FetchDialogueTextBank31 ; record 1
+	dw FetchDialogueTextBank32 ; record 2
+	dw FetchDialogueTextBank33 ; record 3
+	dw FetchDialogueTextBank34 ; record 4
+	dw FetchDialogueTextBank35 ; record 5
+	dw FetchDialogueTextBank36 ; record 6
+	dw FetchDialogueTextBank37 ; record 7
+	dw FetchDialogueText_6eThunk ; record 8
+	dw FetchDialogueText_1fThunk ; record 9
+	dw FetchDialogueText_25Thunk ; record 10
+	dw FetchDialogueText_26Thunk ; record 11
+	dw FetchDialogueText_5eThunk ; record 12
+	dw FetchDialogueTextBank30 ; record 13
+	dw FetchDialogueTextBank30 ; record 14
+	dw FetchDialogueTextBank30 ; record 15
+FetchDialogueTextBank30:
 	farcall FetchDialogueText_30 ; $5c5b
 	jr FetchDialogueTextDone ; $5c5e
+FetchDialogueTextBank31:
 	farcall FetchDialogueText_31 ; $5c60
 	jr FetchDialogueTextDone ; $5c63
+FetchDialogueTextBank32:
 	farcall FetchDialogueText_32 ; $5c65
 	jr FetchDialogueTextDone ; $5c68
+FetchDialogueTextBank33:
 	farcall FetchDialogueText_33 ; $5c6a
 	jr FetchDialogueTextDone ; $5c6d
+FetchDialogueTextBank34:
 	farcall FetchDialogueText_34 ; $5c6f
 	jr FetchDialogueTextDone ; $5c72
+FetchDialogueTextBank35:
 	farcall FetchDialogueText_35 ; $5c74
 	jr FetchDialogueTextDone ; $5c77
+FetchDialogueTextBank36:
 	farcall FetchDialogueText_36 ; $5c79
 	jr FetchDialogueTextDone ; $5c7c
+FetchDialogueTextBank37:
 	farcall FetchDialogueText_37 ; $5c7e
 	jr FetchDialogueTextDone ; $5c81
+FetchDialogueText_6eThunk:
 	farcall FetchDialogueText_6e ; $5c83
 	jr FetchDialogueTextDone ; $5c86
+FetchDialogueText_1fThunk:
 	farcall FetchDialogueText_1f ; $5c88
 	jr FetchDialogueTextDone ; $5c8b
+FetchDialogueText_25Thunk:
 	farcall FetchDialogueText_25 ; $5c8d
 	jr FetchDialogueTextDone ; $5c90
+FetchDialogueText_26Thunk:
 	farcall FetchDialogueText_26 ; $5c92
 	jr FetchDialogueTextDone ; $5c95
+FetchDialogueText_5eThunk:
 	farcall FetchDialogueText_5e ; $5c97
 	jr FetchDialogueTextDone ; $5c9a
 FetchDialogueTextFromSram:
@@ -4543,46 +4560,59 @@ FetchShortText:
 	jp hl ; $5cc6
 ShortTextFetchers_05:
 	; $5cc7, 32 bytes (records:2)
-	dw $5ce7 ; record 0
-	dw $5cec ; record 1
-	dw $5cf1 ; record 2
-	dw $5cf6 ; record 3
-	dw $5cfb ; record 4
-	dw $5d00 ; record 5
-	dw $5d05 ; record 6
-	dw $5d0a ; record 7
-	dw $5d0f ; record 8
-	dw $5d14 ; record 9
-	dw $5d19 ; record 10
-	dw $5d1e ; record 11
-	dw $5d23 ; record 12
-	dw $5ce7 ; record 13
-	dw $5ce7 ; record 14
-	dw $5ce7 ; record 15
+	dw FetchShortTextBank30 ; record 0
+	dw FetchShortTextBank31 ; record 1
+	dw FetchShortTextBank32 ; record 2
+	dw FetchShortTextBank33 ; record 3
+	dw FetchShortTextBank34 ; record 4
+	dw FetchShortTextBank35 ; record 5
+	dw FetchShortTextBank36 ; record 6
+	dw FetchShortTextBank37 ; record 7
+	dw FetchShortText_6eThunk ; record 8
+	dw FetchShortText_1fThunk ; record 9
+	dw FetchShortText_25Thunk ; record 10
+	dw FetchShortText_26Thunk ; record 11
+	dw FetchShortText_5eThunk ; record 12
+	dw FetchShortTextBank30 ; record 13
+	dw FetchShortTextBank30 ; record 14
+	dw FetchShortTextBank30 ; record 15
+FetchShortTextBank30:
 	farcall FetchShortText_30 ; $5ce7
-	jr .restore ; $5cea
+	jr FetchShortText_5eThunk.restore ; $5cea
+FetchShortTextBank31:
 	farcall FetchShortText_31 ; $5cec
-	jr .restore ; $5cef
+	jr FetchShortText_5eThunk.restore ; $5cef
+FetchShortTextBank32:
 	farcall FetchShortText_32 ; $5cf1
-	jr .restore ; $5cf4
+	jr FetchShortText_5eThunk.restore ; $5cf4
+FetchShortTextBank33:
 	farcall FetchShortText_33 ; $5cf6
-	jr .restore ; $5cf9
+	jr FetchShortText_5eThunk.restore ; $5cf9
+FetchShortTextBank34:
 	farcall FetchShortText_34 ; $5cfb
-	jr .restore ; $5cfe
+	jr FetchShortText_5eThunk.restore ; $5cfe
+FetchShortTextBank35:
 	farcall FetchShortText_35 ; $5d00
-	jr .restore ; $5d03
+	jr FetchShortText_5eThunk.restore ; $5d03
+FetchShortTextBank36:
 	farcall FetchShortText_36 ; $5d05
-	jr .restore ; $5d08
+	jr FetchShortText_5eThunk.restore ; $5d08
+FetchShortTextBank37:
 	farcall FetchShortText_37 ; $5d0a
-	jr .restore ; $5d0d
+	jr FetchShortText_5eThunk.restore ; $5d0d
+FetchShortText_6eThunk:
 	farcall FetchShortText_6e ; $5d0f
-	jr .restore ; $5d12
+	jr FetchShortText_5eThunk.restore ; $5d12
+FetchShortText_1fThunk:
 	farcall FetchShortText_1f ; $5d14
-	jr .restore ; $5d17
+	jr FetchShortText_5eThunk.restore ; $5d17
+FetchShortText_25Thunk:
 	farcall FetchShortText_25 ; $5d19
-	jr .restore ; $5d1c
+	jr FetchShortText_5eThunk.restore ; $5d1c
+FetchShortText_26Thunk:
 	farcall FetchShortText_26 ; $5d1e
-	jr .restore ; $5d21
+	jr FetchShortText_5eThunk.restore ; $5d21
+FetchShortText_5eThunk:
 	farcall FetchShortText_5e ; $5d23
 .restore:
 	pop hl ; $5d26
@@ -6073,12 +6103,14 @@ RunDebugMenu:
 	ret ; $66dd
 TextSubcmdHandlers_05:
 	; $66de, 8 bytes (records:2)
-	dw $66e6 ; record 0
-	dw $66eb ; record 1
-	dw $6722 ; record 2
-	dw $6727 ; record 3
+	dw RunDebugWarpMenuThunk ; record 0
+	dw TextSubcmdHandler1 ; record 1
+	dw StartDebugPaletteEditorThunk ; record 2
+	dw RunDebugFlagEditorThunk ; record 3
+RunDebugWarpMenuThunk:
 	call RunDebugWarpMenu ; $66e6
 	jr RunDebugMenu.loop ; $66e9
+TextSubcmdHandler1:
 	ld c, $10 ; $66eb
 	call BeginFadeOut ; $66ed
 	call WaitFadeEnd ; $66f0
@@ -6102,8 +6134,10 @@ TextSubcmdHandlers_05:
 	pop bc ; $671f
 	pop af ; $6720
 	ret ; $6721
+StartDebugPaletteEditorThunk:
 	call StartDebugPaletteEditor ; $6722
 	jr RunDebugMenu.loop ; $6725
+RunDebugFlagEditorThunk:
 	call RunDebugFlagEditor ; $6727
 	jp RunDebugMenu.loop ; $672a
 DebugDrawWarpMenu:

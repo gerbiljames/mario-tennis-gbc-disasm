@@ -5384,7 +5384,7 @@ AdvanceRulesScreenAnimFrame:
 	srl a ; $7454
 	srl a ; $7456
 	and a, $1f ; $7458
-	ld hl, $747f ; $745a
+	ld hl, RulesScreenAnimFrameTable ; $745a
 	add a, l ; $745d
 	ld l, a ; $745e
 	jr nc, .readB ; $745f
@@ -5406,6 +5406,7 @@ AdvanceRulesScreenAnimFrame:
 	pop af ; $7479
 	wram_bank ; $747a
 	ret ; $747e
+RulesScreenAnimFrameTable:
 	; $747f, 92 bytes (records:2)
 	dw $0100 ; record 0
 	dw $0000 ; record 1

@@ -202,11 +202,12 @@ GetTilemapBufferCellDest:
 	pop bc ; $4169
 	pop af ; $416a
 	ret ; $416b
+MessageSpeedSettingPtrs:
 	; $416c, 10 bytes (records:2)
 	dw $4176 ; record 0
-	dw $4195 ; record 1
-	dw $41b2 ; record 2
-	dw $41c4 ; record 3
+	dw ShowGameProgressScreenThunk ; record 1
+	dw AdjustMessageSpeedSettingThunk ; record 2
+	dw ToggleMusicSettingThunk ; record 3
 	dw $41d6 ; record 4
 	ld a, $01 ; $4176
 	farcall ShowCharDataScreen ; $4178
@@ -219,6 +220,7 @@ GetTilemapBufferCellDest:
 	ld [$c294], a ; $418c
 	ld [wStoryModeExitLocationRequest], a ; $418f
 	jp RunPauseMenuWindow.done ; $4192
+ShowGameProgressScreenThunk:
 	farcall ShowGameProgressScreen ; $4195
 	ld hl, wStoryModePlayersXPosition ; $4198
 	ld de, wStoryModeSpawnPosition ; $419b
@@ -229,21 +231,24 @@ GetTilemapBufferCellDest:
 	ld [$c294], a ; $41a9
 	ld [wStoryModeExitLocationRequest], a ; $41ac
 	jp RunPauseMenuWindow.done ; $41af
+AdjustMessageSpeedSettingThunk:
 	call AdjustMessageSpeedSetting ; $41b2
 	ld a, [$d830] ; $41b5
 	ld [wMenuInitialRow], a ; $41b8
-	ld bc, $416c ; $41bb
+	ld bc, MessageSpeedSettingPtrs ; $41bb
 	ld a, [wPauseMenuWindowId] ; $41be
 	jp RunPauseMenuWindow.menuLoop ; $41c1
+ToggleMusicSettingThunk:
 	call ToggleMusicSetting ; $41c4
 	ld a, [$d830] ; $41c7
 	ld [wMenuInitialRow], a ; $41ca
-	ld bc, $416c ; $41cd
+	ld bc, MessageSpeedSettingPtrs ; $41cd
 	ld a, [wPauseMenuWindowId] ; $41d0
 	jp RunPauseMenuWindow.menuLoop ; $41d3
 	xor a, a ; $41d6
 	ld [$cb2c], a ; $41d7
 	jp RestoreMessageSpeed.scriptShowSpeakerDialogueRestoreBG ; $41da
+MusicSettingPtrs:
 	; $41dd, 4 bytes (records:2)
 	dw $41e1 ; record 0
 	dw $420f ; record 1
@@ -265,7 +270,7 @@ GetTilemapBufferCellDest:
 	ld [$cb2a], a ; $41fd
 	ld a, [$d830] ; $4200
 	ld [wMenuInitialRow], a ; $4203
-	ld bc, $41dd ; $4206
+	ld bc, MusicSettingPtrs ; $4206
 	ld a, [wPauseMenuWindowId] ; $4209
 	jp RunPauseMenuWindow.menuLoop ; $420c
 	ld a, [$cb2a] ; $420f
@@ -287,7 +292,7 @@ GetTilemapBufferCellDest:
 	ld [$cb2a], a ; $422c
 	ld a, [$d830] ; $422f
 	ld [wMenuInitialRow], a ; $4232
-	ld bc, $41dd ; $4235
+	ld bc, MusicSettingPtrs ; $4235
 	ld a, [wPauseMenuWindowId] ; $4238
 	jp RunPauseMenuWindow.menuLoop ; $423b
 	call ResetPauseMenuState ; $423e
@@ -298,7 +303,7 @@ GetTilemapBufferCellDest:
 	ld hl, wMenuKeepOpenRowMask ; $424b
 	ld [hl], $83 ; $424e
 	ld hl, $049b ; $4250
-	ld bc, $41dd ; $4253
+	ld bc, MusicSettingPtrs ; $4253
 	ld de, $0305 ; $4256
 	set_flag FLAG_PAUSE_OPTIONS_MENU_OPEN ; $4259
 	call RunPauseMenuWindow ; $425c
@@ -447,7 +452,7 @@ BuildMinigameModePauseMenu:
 	ld [wMenuAdjustRowMask], a ; $4386
 	ld [wMenuKeepOpenRowMask], a ; $4389
 	ld hl, $049a ; $438c
-	ld bc, $416c ; $438f
+	ld bc, MessageSpeedSettingPtrs ; $438f
 	ld de, $0304 ; $4392
 	set_flag FLAG_MINIGAME_PAUSE_MENU_OPEN ; $4395
 	ret ; $4398

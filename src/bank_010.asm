@@ -1300,15 +1300,16 @@ RunTitleAndMainMenuLoop:
 	jp hl ; $4fc5
 MatchSelectHandlersB_10:
 	; $4fc6, 18 bytes (records:2)
-	dw $4fd8 ; record 0
-	dw $4fd8 ; record 1
-	dw $4fd8 ; record 2
-	dw $50fe ; record 3
+	dw MatchSelectHandlersBHandler0 ; record 0
+	dw MatchSelectHandlersBHandler0 ; record 1
+	dw MatchSelectHandlersBHandler0 ; record 2
+	dw MatchSelectHandlersBHandler3 ; record 3
 	dw RunMinigameModeFlow ; record 4
-	dw $52a0 ; record 5
+	dw MatchSelectHandlersBHandler5 ; record 5
 	dw RunSavedDataMenuFlow ; record 6
-	dw $54b0 ; record 7
+	dw MatchSelectHandlersBHandler7 ; record 7
 	dw RunEraseSavedDataFlow ; record 8
+MatchSelectHandlersBHandler0:
 	ld a, e ; $4fd8
 	cp a, $ff ; $4fd9
 	jr z, .backToTitle ; $4fdb
@@ -1435,6 +1436,7 @@ MatchSelectHandlersB_10:
 	ld [$c294], a ; $50f7
 	ld [wStoryModeExitLocationRequest], a ; $50fa
 	ret ; $50fd
+MatchSelectHandlersBHandler3:
 	ld a, $03 ; $50fe
 	ld [wCurrentStorySlot], a ; $5100
 	farcall ReadExhibitionSaveBlock ; $5103
@@ -1611,6 +1613,7 @@ RunMinigameModeFlow:
 	cp a, $01 ; $5299
 	jr z, .levelMenu ; $529b
 	jp RunTitleAndMainMenuLoop.menuLoop ; $529d
+MatchSelectHandlersBHandler5:
 	ld a, $03 ; $52a0
 	ld [wCurrentStorySlot], a ; $52a2
 	farcall InitStoryModeState ; $52a5
@@ -1813,6 +1816,7 @@ RunSavedDataMenuFlow:
 	ld a, $00 ; $54a8
 	ld [wMenuSlideDirection], a ; $54aa
 	jp .checkSavedData ; $54ad
+MatchSelectHandlersBHandler7:
 	ld c, $10 ; $54b0
 	call BeginFadeOut ; $54b2
 	call WaitFadeEnd ; $54b5
