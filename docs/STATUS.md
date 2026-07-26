@@ -30,7 +30,7 @@ Everything below is **committed** (HEAD `d9337d5`); the whole history
 rebuilds byte-perfect. Per-bank progress at any time: `python3
 tools/progress.py` (proven-code bytes, fill runs, label counts, human-named
 counts) and `tools/progress.py --unnamed <bank>` to list still-auto-named
-symbols. **19,890 of 21,560 labels are human-named** (see the caveat in the
+symbols. **19,908 of 21,568 labels are human-named** (see the caveat in the
 auto-split section below) (up from 4,816 on 2026-07-23); what is left is
 data blobs.
 
@@ -4815,3 +4815,60 @@ what its body is.
 
 **Bank `$12` now has 316 of 319 labels named**; the three left are the
 `DataPtr_*MapScripts_12` slot words, which derive from their targets' names.
+
+## Bank $38: four routines that were never carved, and one more seeded table (2026-07-27)
+
+Bank `$38` (link/menu) held 15 unnamed symbols, and reading them turned up both
+kinds of error at once.
+
+**Four fragments were code all along.** Three are proven by twins: the same
+bytes are carved and *named* in bank `$16`, where the traces run them, and sat
+as `bytes:16` blobs here.
+
+| bank `$38` | identical to | for |
+| --- | --- | --- |
+| `$42d0` | `MoveMenuCursor2GridRemote_16` | 398 bytes |
+| `$43db` | `ClearWram3Row64_16` | 131 bytes |
+| `$43f1` | `ClearWram3Row64Alt_16` | 109 bytes |
+
+Bank `$1b` has the same two gaps (`$42f8`, `$4419`), so five fragments in total
+are now seeded with the twin justification recorded in each bank's static-code
+file. Their internal jump targets take bank `$16`'s local names, so
+`.asMaster`/`.asSlave` now read the same in all three copies.
+
+The fourth, `$38:$6bc2`, needs no twin: its three `jr z` branches all land
+exactly on `$6bd5`, which was already carved, and it ends in `ret`. It calls
+`IsStarCharacter` and then gates on `$d814` -- the equipment-panel category
+that bank `$3e` sets to `$01` for rackets and `$02` for shoes -- so it is
+`CheckStarCharacterEquipCategory`, with `$6bd5` as its `.returnFalse` tail.
+
+**And six more static seeds were aimed at a table.** `$56d5`, `$56df`, `$56e9`,
+`$56f3`, `$56fd` and `$5707` were seeded as handlers; they are the six 5-word
+sub-tables `GetPlayerSlotBoxAddress` reaches:
+
+```
+        ld a, [$d813]        ; remote player slot -> outer index
+        ld hl, PlayerSlotBoxAddrPtrs_38
+        ...
+        ld a, [$d814]        ; equip category -> inner index
+        ...
+        ld a, [hl+]          ; -> a WRAM box address in bc
+```
+
+Every word in them is a WRAM address (`$d0cd`, `$d0d0`, `$d12d`, `$d130`,
+`$d131`, or `$0000` for "none"), which is what a two-level address table looks
+like and not what a handler looks like. The old name `SubHandlers_38_56c9`
+said otherwise and is now `PlayerSlotBoxAddrPtrs_38` over
+`PlayerSlotBoxAddrs0`-`5`. Two stray curated labels *inside* the outer table
+(a `.loop` at `$56ca` and a pinned `Data_38_56ce`, both artefacts of the same
+mis-decode) had been truncating it to one byte; removed, it renders as its six
+records.
+
+Seven small fragments are left unnamed on purpose: nothing in the ROM
+references them -- no `ld rr` load and no split-base `add a, lo` / `adc a, hi`
+pair -- so there is no evidence to name them from. Two of them (`$560a`,
+`$5672`, identical 4-word tables of the same `$d0xx` family) are at least
+declared `records:2` so they read as the addresses they are.
+
+**Bank `$38`: 781 of 800 labels named; bank `$1b` gained the same two
+routines.**

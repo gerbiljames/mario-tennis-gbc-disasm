@@ -505,12 +505,21 @@ MoveMenuCursorGrid:
 .returnOne:
 	ld a, $01 ; $42f5
 	ret ; $42f7
-Data_1b_42f8:
-	; $42f8, 21 bytes (bytes:16)
-	db $fa, $06, $cb, $57, $fa, $07, $cb, $5f, $f0, $c2, $fe, $02, $28, $0b, $fe, $01 ; 0x00
-	db $28, $03, $cd, $4b, $28 ; 0x10
+MoveMenuCursor2GridRemote_1b:
+	ld a, [wMenuCursor2X] ; $42f8
+	ld d, a ; $42fb
+	ld a, [wMenuCursor2Y] ; $42fc
+	ld e, a ; $42ff
+	ldh a, [hLinkState] ; $4300
+	cp a, $02 ; $4302
+	jr z, .asSlave ; $4304
+	cp a, $01 ; $4306
+	jr z, .asMaster ; $4308
+	call LinkErrorReset ; $430a
+.asMaster:
 	ldh a, [hLinkRemoteInput] ; $430d
 	jr .checkMenuCursorLockFlags ; $430f
+.asSlave:
 	ldh a, [hLinkRemoteInputBuf] ; $4311
 .checkMenuCursorLockFlags:
 	ld h, a ; $4313
@@ -700,9 +709,12 @@ SetMenuCursorFromIndex:
 	pop af ; $4413
 	wram_bank ; $4414
 	ret ; $4418
-Data_1b_4419:
-	; $4419, 13 bytes (bytes:13)
-	db $f0, $96, $f5, $3e, $03, $e0, $96, $e0, $70, $3e, $00, $0e, $40 ; 0x00
+ClearWram3Row64Alt_1b:
+	ldh a, [hWramBank] ; $4419
+	push af ; $441b
+	wram_bank $03 ; $441c
+	ld a, $00 ; $4422
+	ld c, $40 ; $4424
 .loop3:
 	ld [hl+], a ; $4426
 	dec c ; $4427

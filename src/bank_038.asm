@@ -478,12 +478,21 @@ MoveMenuCursorBoxRemote_38:
 .moved:
 	ld a, $01 ; $42cd
 	ret ; $42cf
-Data_38_42d0:
-	; $42d0, 21 bytes (bytes:16)
-	db $fa, $06, $cb, $57, $fa, $07, $cb, $5f, $f0, $c2, $fe, $02, $28, $0b, $fe, $01 ; 0x00
-	db $28, $03, $cd, $4b, $28 ; 0x10
+MoveMenuCursor2GridRemote_38:
+	ld a, [wMenuCursor2X] ; $42d0
+	ld d, a ; $42d3
+	ld a, [wMenuCursor2Y] ; $42d4
+	ld e, a ; $42d7
+	ldh a, [hLinkState] ; $42d8
+	cp a, $02 ; $42da
+	jr z, .asSlave ; $42dc
+	cp a, $01 ; $42de
+	jr z, .asMaster ; $42e0
+	call LinkErrorReset ; $42e2
+.asMaster:
 	ldh a, [hLinkRemoteInput] ; $42e5
 	jr .haveInput2 ; $42e7
+.asSlave:
 	ldh a, [hLinkRemoteInputBuf] ; $42e9
 .haveInput2:
 	ld h, a ; $42eb
@@ -662,9 +671,12 @@ SetMenuCursorFromLinearIndexToPtr:
 	ld a, d ; $43d8
 	ld [hl], a ; $43d9
 	ret ; $43da
-Data_38_43db:
-	; $43db, 12 bytes (bytes:12)
-	db $f0, $96, $f5, $3e, $03, $e0, $96, $e0, $70, $af, $0e, $40 ; 0x00
+ClearWram3Row64_38:
+	ldh a, [hWramBank] ; $43db
+	push af ; $43dd
+	wram_bank $03 ; $43de
+	xor a, a ; $43e4
+	ld c, $40 ; $43e5
 .loop:
 	ld [hl+], a ; $43e7
 	dec c ; $43e8
@@ -672,9 +684,12 @@ Data_38_43db:
 	pop af ; $43eb
 	wram_bank ; $43ec
 	ret ; $43f0
-Data_38_43f1:
-	; $43f1, 13 bytes (bytes:13)
-	db $f0, $96, $f5, $3e, $03, $e0, $96, $e0, $70, $3e, $00, $0e, $40 ; 0x00
+ClearWram3Row64Alt_38:
+	ldh a, [hWramBank] ; $43f1
+	push af ; $43f3
+	wram_bank $03 ; $43f4
+	ld a, $00 ; $43fa
+	ld c, $40 ; $43fc
 .loopB:
 	ld [hl+], a ; $43fe
 	dec c ; $43ff
@@ -2679,8 +2694,11 @@ ClearPlayerSlotPortrait:
 .done:
 	ret ; $5609
 Data_38_560a:
-	; $560a, 8 bytes (bytes:8)
-	db $ce, $d0, $d0, $d0, $2e, $d1, $30, $d1 ; 0x00
+	; $560a, 8 bytes (records:2)
+	dw $d0ce ; record 0
+	dw $d0d0 ; record 1
+	dw $d12e ; record 2
+	dw $d130 ; record 3
 DrawPlayerSlotPortrait:
 	ld hl, $da00 ; $5612
 	ld a, b ; $5615
@@ -2734,8 +2752,11 @@ DrawPlayerSlotPortrait:
 .done:
 	ret ; $5671
 Data_38_5672:
-	; $5672, 8 bytes (bytes:8)
-	db $ce, $d0, $d0, $d0, $2e, $d1, $30, $d1 ; 0x00
+	; $5672, 8 bytes (records:2)
+	dw $d0ce ; record 0
+	dw $d0d0 ; record 1
+	dw $d12e ; record 2
+	dw $d130 ; record 3
 DrawPlayerSlotStarMark:
 	ld a, [$d814] ; $567a
 	ld hl, $d834 ; $567d
@@ -2775,7 +2796,7 @@ DrawPlayerSlotDifficultyMark:
 GetPlayerSlotBoxAddress:
 	ld a, [$d813] ; $56ad
 	add a, a ; $56b0
-	ld hl, SubHandlers_38_56c9 ; $56b1
+	ld hl, PlayerSlotBoxAddrPtrs_38 ; $56b1
 	add a, l ; $56b4
 	ld l, a ; $56b5
 	jr nc, .readTable ; $56b6
@@ -2795,69 +2816,57 @@ GetPlayerSlotBoxAddress:
 	ld b, [hl] ; $56c6
 	ld c, a ; $56c7
 	ret ; $56c8
-SubHandlers_38_56c9:
-	; $56c9, 1 bytes (records:2)
-	db $d5
-.loop:
-	ld d, [hl] ; $56ca
-	rst Rst18 ; $56cb
-	ld d, [hl] ; $56cc
-	jp hl ; $56cd
-Data_38_56ce:
-	; $56ce, 7 bytes (bytes:7)
-	db $56, $f3, $56, $fd, $56, $07, $57 ; 0x00
-Label_38_56d5:
-	ret nc ; $56d5
-	ret nc ; $56d6
-	nop ; $56d7
-	nop ; $56d8
-	jr nc, DrawPlayerSlotDifficultyMark.done ; $56d9
-	nop ; $56db
-	nop ; $56dc
-	nop ; $56dd
-	nop ; $56de
-	call $d1d0 ; $56df
-	ret nc ; $56e2
-	dec l ; $56e3
-	pop de ; $56e4
-	ld sp, $00d1 ; $56e5
-	nop ; $56e8
-	ret nc ; $56e9
-	ret nc ; $56ea
-	nop ; $56eb
-	nop ; $56ec
-	nop ; $56ed
-	nop ; $56ee
-	nop ; $56ef
-	nop ; $56f0
-	nop ; $56f1
-	nop ; $56f2
-	nop ; $56f3
-	nop ; $56f4
-	nop ; $56f5
-	nop ; $56f6
-	jr nc, SubHandlers_38_56c9.loop ; $56f7
-	nop ; $56f9
-	nop ; $56fa
-	nop ; $56fb
-	nop ; $56fc
-	call $d1d0 ; $56fd
-	ret nc ; $5700
-	nop ; $5701
-	nop ; $5702
-	nop ; $5703
-	nop ; $5704
-	nop ; $5705
-	nop ; $5706
-	nop ; $5707
-	nop ; $5708
-	nop ; $5709
-	nop ; $570a
-	dec l ; $570b
-	pop de ; $570c
-	ld sp, $00d1 ; $570d
-	nop ; $5710
-	ret ; $5711
+PlayerSlotBoxAddrPtrs_38:
+	; $56c9, 12 bytes (records:2)
+	dw PlayerSlotBoxAddrs0 ; record 0
+	dw PlayerSlotBoxAddrs1 ; record 1
+	dw PlayerSlotBoxAddrs2 ; record 2
+	dw PlayerSlotBoxAddrs3 ; record 3
+	dw PlayerSlotBoxAddrs4 ; record 4
+	dw PlayerSlotBoxAddrs5 ; record 5
+PlayerSlotBoxAddrs0:
+	; $56d5, 10 bytes (records:2)
+	dw $d0d0 ; record 0
+	dw $0000 ; record 1
+	dw $d130 ; record 2
+	dw $0000 ; record 3
+	dw $0000 ; record 4
+PlayerSlotBoxAddrs1:
+	; $56df, 10 bytes (records:2)
+	dw $d0cd ; record 0
+	dw $d0d1 ; record 1
+	dw $d12d ; record 2
+	dw $d131 ; record 3
+	dw $0000 ; record 4
+PlayerSlotBoxAddrs2:
+	; $56e9, 10 bytes (records:2)
+	dw $d0d0 ; record 0
+	dw $0000 ; record 1
+	dw $0000 ; record 2
+	dw $0000 ; record 3
+	dw $0000 ; record 4
+PlayerSlotBoxAddrs3:
+	; $56f3, 10 bytes (records:2)
+	dw $0000 ; record 0
+	dw $0000 ; record 1
+	dw $d130 ; record 2
+	dw $0000 ; record 3
+	dw $0000 ; record 4
+PlayerSlotBoxAddrs4:
+	; $56fd, 10 bytes (records:2)
+	dw $d0cd ; record 0
+	dw $d0d1 ; record 1
+	dw $0000 ; record 2
+	dw $0000 ; record 3
+	dw $0000 ; record 4
+PlayerSlotBoxAddrs5:
+	; $5707, 11 bytes (records:2)
+	dw $0000 ; record 0
+	dw $0000 ; record 1
+	dw $d12d ; record 2
+	dw $d131 ; record 3
+	dw $0000 ; record 4
+	db $c9
 WriteCharPortraitTiles:
 	ld a, b ; $5712
 	add a, a ; $5713
@@ -5685,21 +5694,16 @@ RetreatRemotePlayerSlot:
 	ret ; $6a26
 RemotePlayerSlotLists_38:
 	; $6a27, 12 bytes (records:2)
-	dw Data_38_6a33 ; record 0
-	dw Data_38_6a33 ; record 1
-	dw Data_38_6a33 ; record 2
-	dw Data_38_6a33 ; record 3
-	dw Data_38_6a37 ; record 4
-	dw Data_38_6a37 ; record 5
-Data_38_6a33:
-	; $6a33, 4 bytes (records:2)
-	dw $00ff ; record 0
-	dw $ff02 ; record 1
-Data_38_6a37:
-	; $6a37, 5 bytes (records:2)
-	dw $00ff ; record 0
-	dw $0201 ; record 1
-	db $ff
+	dw RemotePlayerSlotList0 ; record 0
+	dw RemotePlayerSlotList0 ; record 1
+	dw RemotePlayerSlotList0 ; record 2
+	dw RemotePlayerSlotList0 ; record 3
+	dw RemotePlayerSlotList1 ; record 4
+	dw RemotePlayerSlotList1 ; record 5
+RemotePlayerSlotList0:
+	INCBIN "data/bank_038/d_6a33.bin" ; $6a33, 4 bytes
+RemotePlayerSlotList1:
+	INCBIN "data/bank_038/d_6a37.bin" ; $6a37, 5 bytes
 	call GetGridSlotFromCursor ; $6a3c
 	ld hl, $da00 ; $6a3f
 	add a, a ; $6a42
@@ -5944,10 +5948,18 @@ StubNop_38_6bc0:
 	ret ; $6bc0
 StubNop_38_6bc1:
 	ret ; $6bc1
-Data_38_6bc2:
-	; $6bc2, 19 bytes (bytes:16)
-	db $cd, $08, $62, $b7, $28, $0d, $fa, $14, $d8, $b7, $28, $07, $fe, $02, $28, $03 ; 0x00
-	db $3e, $01, $c9 ; 0x10
+CheckStarCharacterEquipCategory:
+	call IsStarCharacter ; $6bc2
+	or a, a ; $6bc5
+	jr z, .returnFalse ; $6bc6
+	ld a, [$d814] ; $6bc8
+	or a, a ; $6bcb
+	jr z, .returnFalse ; $6bcc
+	cp a, $02 ; $6bce
+	jr z, .returnFalse ; $6bd0
+	ld a, $01 ; $6bd2
+	ret ; $6bd4
+.returnFalse:
 	xor a, a ; $6bd5
 	ret ; $6bd6
 RunLinkCpuDifficultySubmenu:
