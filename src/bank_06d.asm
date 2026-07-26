@@ -1,21 +1,21 @@
 SECTION "ROM Bank $6d", ROMX[$4000], BANK[$6d]
 
-DataPtr_6d_00:
-	dw Lz_6d_4094 ; $4000
-DataPtr_6d_02:
-	dw Lz_6d_4148 ; $4002
-DataPtr_6d_04:
-	dw Lz_6d_4215 ; $4004
-DataPtr_6d_06:
-	dw Lz_6d_42e3 ; $4006
-DataPtr_6d_08:
-	dw Lz_6d_43c8 ; $4008
-DataPtr_6d_0a:
-	dw Lz_6d_44a8 ; $400a
-DataPtr_6d_0c:
-	dw Lz_6d_4581 ; $400c
-DataPtr_6d_0e:
-	dw Lz_6d_4656 ; $400e
+DataPtr_TitleGfx0:
+	dw TitleGfx0 ; $4000
+DataPtr_TitleGfx1:
+	dw TitleGfx1 ; $4002
+DataPtr_TitleGfx2:
+	dw TitleGfx2 ; $4004
+DataPtr_TitleGfx3:
+	dw TitleGfx3 ; $4006
+DataPtr_TitleGfx4:
+	dw TitleGfx4 ; $4008
+DataPtr_TitleGfx5:
+	dw TitleGfx5 ; $400a
+DataPtr_TitleGfx6:
+	dw TitleGfx6 ; $400c
+DataPtr_TitleGfx7:
+	dw TitleGfx7 ; $400e
 DataPtr_IntroAwesomeTiles:
 	dw IntroAwesomeTiles ; $4010
 DataPtr_IntroGreatestPlayerTiles:
@@ -81,62 +81,62 @@ DataPtr_6d_4e:
 	dw Lz_6d_6e9e ; $404e
 DataPtr_6d_50:
 	dw Lz_6d_6ee6 ; $4050
-DataPtr_Lz_6d_6f2e:
-	dw Lz_6d_6f2e ; $4052
-DataPtr_Lz_6d_6f2eAlias1:
-	dw Lz_6d_6f2e ; $4054
-DataPtr_Lz_6d_6f2eAlias2:
-	dw Lz_6d_6f2e ; $4056
-DataPtr_Lz_6d_6f2eAlias3:
-	dw Lz_6d_6f2e ; $4058
-DataPtr_Lz_6d_6f2eAlias4:
-	dw Lz_6d_6f2e ; $405a
-DataPtr_Lz_6d_6f2eAlias5:
-	dw Lz_6d_6f2e ; $405c
-DataPtr_Lz_6d_6f2eAlias6:
-	dw Lz_6d_6f2e ; $405e
-DataPtr_Lz_6d_6f2eAlias7:
-	dw Lz_6d_6f2e ; $4060
-DataPtr_Lz_6d_6f2eAlias8:
-	dw Lz_6d_6f2e ; $4062
-DataPtr_Lz_6d_6f2eAlias9:
-	dw Lz_6d_6f2e ; $4064
-DataPtr_Lz_6d_6f2eAlias10:
-	dw Lz_6d_6f2e ; $4066
-DataPtr_Lz_6d_6f2eAlias11:
-	dw Lz_6d_6f2e ; $4068
-DataPtr_Lz_6d_6f2eAlias12:
-	dw Lz_6d_6f2e ; $406a
-DataPtr_Lz_6d_6f2eAlias13:
-	dw Lz_6d_6f2e ; $406c
-DataPtr_Lz_6d_6f2eAlias14:
-	dw Lz_6d_6f2e ; $406e
-DataPtr_Lz_6d_6f2eAlias15:
-	dw Lz_6d_6f2e ; $4070
-DataPtr_Lz_6d_6f2eAlias16:
-	dw Lz_6d_6f2e ; $4072
-DataPtr_6d_74:
-	dw Lz_6d_6fd3 ; $4074
-DataPtr_6d_76:
-	dw Lz_6d_7087 ; $4076
-DataPtr_6d_78:
-	dw Lz_6d_7132 ; $4078
-DataPtr_6d_7a:
-	dw Lz_6d_71e0 ; $407a
-DataPtr_6d_7c:
-	dw Lz_6d_728f ; $407c
+DataPtr_CourtSelectGfx5:
+	dw CourtSelectGfx5 ; $4052
+DataPtr_CourtSelectGfx5Alias1:
+	dw CourtSelectGfx5 ; $4054
+DataPtr_CourtSelectGfx5Alias2:
+	dw CourtSelectGfx5 ; $4056
+DataPtr_CourtSelectGfx5Alias3:
+	dw CourtSelectGfx5 ; $4058
+DataPtr_CourtSelectGfx5Alias4:
+	dw CourtSelectGfx5 ; $405a
+DataPtr_CourtSelectGfx5Alias5:
+	dw CourtSelectGfx5 ; $405c
+DataPtr_CourtSelectGfx5Alias6:
+	dw CourtSelectGfx5 ; $405e
+DataPtr_CourtSelectGfx5Alias7:
+	dw CourtSelectGfx5 ; $4060
+DataPtr_CourtSelectGfx5Alias8:
+	dw CourtSelectGfx5 ; $4062
+DataPtr_CourtSelectGfx5Alias9:
+	dw CourtSelectGfx5 ; $4064
+DataPtr_CourtSelectGfx5Alias10:
+	dw CourtSelectGfx5 ; $4066
+DataPtr_CourtSelectGfx5Alias11:
+	dw CourtSelectGfx5 ; $4068
+DataPtr_CourtSelectGfx5Alias12:
+	dw CourtSelectGfx5 ; $406a
+DataPtr_CourtSelectGfx5Alias13:
+	dw CourtSelectGfx5 ; $406c
+DataPtr_CourtSelectGfx5Alias14:
+	dw CourtSelectGfx5 ; $406e
+DataPtr_CourtSelectGfx5Alias15:
+	dw CourtSelectGfx5 ; $4070
+DataPtr_CourtSelectGfx5Alias16:
+	dw CourtSelectGfx5 ; $4072
+DataPtr_CourtSelectGfx6:
+	dw CourtSelectGfx6 ; $4074
+DataPtr_CourtSelectGfx7:
+	dw CourtSelectGfx7 ; $4076
+DataPtr_CourtSelectGfx8:
+	dw CourtSelectGfx8 ; $4078
+DataPtr_CourtSelectGfx9:
+	dw CourtSelectGfx9 ; $407a
+DataPtr_SharedMenuGfx111:
+	dw SharedMenuGfx111 ; $407c
 DataPtr_6d_7e:
 	dw Lz_6d_731f ; $407e
 DataPtr_6d_80:
 	dw Lz_6d_73d9 ; $4080
 DataPtr_6d_82:
 	dw Lz_6d_745b ; $4082
-DataPtr_6d_84:
-	dw Lz_6d_7507 ; $4084
+DataPtr_MinigameLevelSelectGfx0:
+	dw MinigameLevelSelectGfx0 ; $4084
 DataPtr_6d_86:
 	dw Lz_6d_758a ; $4086
-DataPtr_6d_88:
-	dw Lz_6d_761a ; $4088
+DataPtr_MinigameLevelSelectGfx1:
+	dw MinigameLevelSelectGfx1 ; $4088
 DataPtr_6d_8a:
 	dw Lz_6d_76b2 ; $408a
 DataPtr_6d_8c:
@@ -147,21 +147,21 @@ DataPtr_6d_90:
 	dw Lz_6d_7970 ; $4090
 DataPtr_MarioMiniGamesTiles:
 	dw MarioMiniGamesTiles ; $4092
-Lz_6d_4094:
+TitleGfx0:
 	INCBIN "data/bank_06d/lz_4094.bin" ; $4094, 180 bytes
-Lz_6d_4148:
+TitleGfx1:
 	INCBIN "data/bank_06d/lz_4148.bin" ; $4148, 205 bytes
-Lz_6d_4215:
+TitleGfx2:
 	INCBIN "data/bank_06d/lz_4215.bin" ; $4215, 206 bytes
-Lz_6d_42e3:
+TitleGfx3:
 	INCBIN "data/bank_06d/lz_42e3.bin" ; $42e3, 229 bytes
-Lz_6d_43c8:
+TitleGfx4:
 	INCBIN "data/bank_06d/lz_43c8.bin" ; $43c8, 224 bytes
-Lz_6d_44a8:
+TitleGfx5:
 	INCBIN "data/bank_06d/lz_44a8.bin" ; $44a8, 217 bytes
-Lz_6d_4581:
+TitleGfx6:
 	INCBIN "data/bank_06d/lz_4581.bin" ; $4581, 213 bytes
-Lz_6d_4656:
+TitleGfx7:
 	INCBIN "data/bank_06d/lz_4656.bin" ; $4656, 190 bytes
 IntroAwesomeTiles:
 	INCBIN "data/bank_06d/lz_4714.bin" ; $4714, 1577 bytes
@@ -269,17 +269,17 @@ Lz_6d_6e9e:
 	INCBIN "data/bank_06d/lz_6e9e.bin" ; $6e9e, 72 bytes
 Lz_6d_6ee6:
 	INCBIN "data/bank_06d/lz_6ee6.bin" ; $6ee6, 72 bytes
-Lz_6d_6f2e:
+CourtSelectGfx5:
 	INCBIN "data/bank_06d/lz_6f2e.bin" ; $6f2e, 165 bytes
-Lz_6d_6fd3:
+CourtSelectGfx6:
 	INCBIN "data/bank_06d/lz_6fd3.bin" ; $6fd3, 180 bytes
-Lz_6d_7087:
+CourtSelectGfx7:
 	INCBIN "data/bank_06d/lz_7087.bin" ; $7087, 171 bytes
-Lz_6d_7132:
+CourtSelectGfx8:
 	INCBIN "data/bank_06d/lz_7132.bin" ; $7132, 174 bytes
-Lz_6d_71e0:
+CourtSelectGfx9:
 	INCBIN "data/bank_06d/lz_71e0.bin" ; $71e0, 175 bytes
-Lz_6d_728f:
+SharedMenuGfx111:
 	INCBIN "data/bank_06d/lz_728f.bin" ; $728f, 144 bytes
 Lz_6d_731f:
 	INCBIN "data/bank_06d/lz_731f.bin" ; $731f, 186 bytes
@@ -287,11 +287,11 @@ Lz_6d_73d9:
 	INCBIN "data/bank_06d/lz_73d9.bin" ; $73d9, 130 bytes
 Lz_6d_745b:
 	INCBIN "data/bank_06d/lz_745b.bin" ; $745b, 172 bytes
-Lz_6d_7507:
+MinigameLevelSelectGfx0:
 	INCBIN "data/bank_06d/lz_7507.bin" ; $7507, 131 bytes
 Lz_6d_758a:
 	INCBIN "data/bank_06d/lz_758a.bin" ; $758a, 144 bytes
-Lz_6d_761a:
+MinigameLevelSelectGfx1:
 	INCBIN "data/bank_06d/lz_761a.bin" ; $761a, 152 bytes
 Lz_6d_76b2:
 	INCBIN "data/bank_06d/lz_76b2.bin" ; $76b2, 231 bytes

@@ -23,24 +23,24 @@ SECTION "ROM Bank $1b", ROMX[$4000], BANK[$1b]
 	farptr RunMinigameLevelSelect ; $4028
 	farptr RunSavedDataTypeSelect ; $402a
 	farptr ShowMinigameDataScreen ; $402c
-DataPtr_1b_2e:
-	dw Lz_1b_78bd ; $402e
-DataPtr_1b_30:
-	dw Lz_1b_7970 ; $4030
-DataPtr_1b_32:
-	dw Lz_1b_79c0 ; $4032
-DataPtr_1b_34:
-	dw Lz_1b_7a78 ; $4034
-DataPtr_1b_36:
-	dw Lz_1b_7ab5 ; $4036
-DataPtr_1b_38:
-	dw Lz_1b_7af6 ; $4038
-DataPtr_1b_3a:
-	dw Lz_1b_7b37 ; $403a
-DataPtr_1b_3c:
-	dw Lz_1b_7d2e ; $403c
-DataPtr_1b_3e:
-	dw Lz_1b_7e6f ; $403e
+DataPtr_ObjectSceneAGfx0:
+	dw ObjectSceneAGfx0 ; $402e
+DataPtr_ObjectSceneAGfx1:
+	dw ObjectSceneAGfx1 ; $4030
+DataPtr_ObjectSceneAGfx2:
+	dw ObjectSceneAGfx2 ; $4032
+DataPtr_ObjectSceneBGfx0:
+	dw ObjectSceneBGfx0 ; $4034
+DataPtr_ObjectSceneBGfx1:
+	dw ObjectSceneBGfx1 ; $4036
+DataPtr_ObjectSceneBGfx2:
+	dw ObjectSceneBGfx2 ; $4038
+DataPtr_Screen0Gfx:
+	dw Screen0Gfx ; $403a
+DataPtr_Screen1ObjGfx:
+	dw Screen1ObjGfx ; $403c
+DataPtr_Screen2ObjGfx:
+	dw Screen2ObjGfx ; $403e
 DrawMenuCursorCorners:
 	push de ; $4040
 	push bc ; $4041
@@ -6299,22 +6299,22 @@ CompactMinigameDataRows:
 	pop af ; $78b7
 	wram_bank ; $78b8
 	ret ; $78bc
-Lz_1b_78bd:
+ObjectSceneAGfx0:
 	INCBIN "data/bank_01b/lz_78bd.bin" ; $78bd, 179 bytes
-Lz_1b_7970:
+ObjectSceneAGfx1:
 	INCBIN "data/bank_01b/lz_7970.bin" ; $7970, 80 bytes
-Lz_1b_79c0:
+ObjectSceneAGfx2:
 	INCBIN "data/bank_01b/lz_79c0.bin" ; $79c0, 184 bytes
-Lz_1b_7a78:
+ObjectSceneBGfx0:
 	INCBIN "data/bank_01b/lz_7a78.bin" ; $7a78, 61 bytes
-Lz_1b_7ab5:
+ObjectSceneBGfx1:
 	INCBIN "data/bank_01b/lz_7ab5.bin" ; $7ab5, 65 bytes
-Lz_1b_7af6:
+ObjectSceneBGfx2:
 	INCBIN "data/bank_01b/lz_7af6.bin" ; $7af6, 65 bytes
-Lz_1b_7b37:
+Screen0Gfx:
 	INCBIN "data/bank_01b/lz_7b37.bin" ; $7b37, 503 bytes
-Lz_1b_7d2e:
+Screen1ObjGfx:
 	INCBIN "data/bank_01b/lz_7d2e.bin" ; $7d2e, 321 bytes
-Lz_1b_7e6f:
+Screen2ObjGfx:
 	INCBIN "data/bank_01b/lz_7e6f.bin" ; $7e6f, 323 bytes
 	; $7fb2, 78 bytes fill to bank end (linker-padded)

@@ -21,14 +21,14 @@ DataPtr_3f_12:
 	dw Lz_3f_5e92 ; $4012
 DataPtr_3f_14:
 	dw Lz_3f_5f7d ; $4014
-DataPtr_3f_16:
-	dw Lz_3f_6034 ; $4016
-DataPtr_3f_18:
-	dw Lz_3f_60cb ; $4018
-DataPtr_3f_1a:
-	dw Lz_3f_616f ; $401a
-DataPtr_3f_1c:
-	dw Lz_3f_6219 ; $401c
+DataPtr_CourtSelectGfx1:
+	dw CourtSelectGfx1 ; $4016
+DataPtr_CourtSelectGfx2:
+	dw CourtSelectGfx2 ; $4018
+DataPtr_CourtSelectGfx3:
+	dw CourtSelectGfx3 ; $401a
+DataPtr_CourtSelectGfx4:
+	dw CourtSelectGfx4 ; $401c
 DataPtr_VarsityTeamChartTiles:
 	dw VarsityTeamChartTiles ; $401e
 DataPtr_VarsityTeamChartTilemap:
@@ -41,8 +41,8 @@ DataPtr_VarsityTeamChartTilemap2:
 	dw VarsityTeamChartTilemap2 ; $4026
 DataPtr_VarsityTeamChartAttrmap2:
 	dw VarsityTeamChartAttrmap2 ; $4028
-DataPtr_3f_2a:
-	dw Lz_3f_6bdd ; $402a
+DataPtr_TournamentBracketGfx:
+	dw TournamentBracketGfx ; $402a
 DataPtr_MugshotTiles:
 	dw MugshotTiles ; $402c
 DataPtr_TournamentBracketTiles:
@@ -85,42 +85,42 @@ DataPtr_3f_52:
 	dw Lz_3f_7a63 ; $4052
 DataPtr_3f_54:
 	dw Lz_3f_7aad ; $4054
-DataPtr_Lz_3f_7af7:
-	dw Lz_3f_7af7 ; $4056
-DataPtr_Lz_3f_7af7Alias1:
-	dw Lz_3f_7af7 ; $4058
-DataPtr_Lz_3f_7af7Alias2:
-	dw Lz_3f_7af7 ; $405a
-DataPtr_Lz_3f_7af7Alias3:
-	dw Lz_3f_7af7 ; $405c
-DataPtr_Lz_3f_7af7Alias4:
-	dw Lz_3f_7af7 ; $405e
-DataPtr_Lz_3f_7af7Alias5:
-	dw Lz_3f_7af7 ; $4060
-DataPtr_Lz_3f_7af7Alias6:
-	dw Lz_3f_7af7 ; $4062
-DataPtr_Lz_3f_7af7Alias7:
-	dw Lz_3f_7af7 ; $4064
-DataPtr_Lz_3f_7af7Alias8:
-	dw Lz_3f_7af7 ; $4066
-DataPtr_Lz_3f_7af7Alias9:
-	dw Lz_3f_7af7 ; $4068
-DataPtr_Lz_3f_7af7Alias10:
-	dw Lz_3f_7af7 ; $406a
-DataPtr_Lz_3f_7af7Alias11:
-	dw Lz_3f_7af7 ; $406c
-DataPtr_Lz_3f_7af7Alias12:
-	dw Lz_3f_7af7 ; $406e
-DataPtr_Lz_3f_7af7Alias13:
-	dw Lz_3f_7af7 ; $4070
-DataPtr_Lz_3f_7af7Alias14:
-	dw Lz_3f_7af7 ; $4072
-DataPtr_Lz_3f_7af7Alias15:
-	dw Lz_3f_7af7 ; $4074
-DataPtr_Lz_3f_7af7Alias16:
-	dw Lz_3f_7af7 ; $4076
-DataPtr_3f_78:
-	dw Lz_3f_7b90 ; $4078
+DataPtr_MinigameLevelSelectGfx2:
+	dw MinigameLevelSelectGfx2 ; $4056
+DataPtr_MinigameLevelSelectGfx2Alias1:
+	dw MinigameLevelSelectGfx2 ; $4058
+DataPtr_MinigameLevelSelectGfx2Alias2:
+	dw MinigameLevelSelectGfx2 ; $405a
+DataPtr_MinigameLevelSelectGfx2Alias3:
+	dw MinigameLevelSelectGfx2 ; $405c
+DataPtr_MinigameLevelSelectGfx2Alias4:
+	dw MinigameLevelSelectGfx2 ; $405e
+DataPtr_MinigameLevelSelectGfx2Alias5:
+	dw MinigameLevelSelectGfx2 ; $4060
+DataPtr_MinigameLevelSelectGfx2Alias6:
+	dw MinigameLevelSelectGfx2 ; $4062
+DataPtr_MinigameLevelSelectGfx2Alias7:
+	dw MinigameLevelSelectGfx2 ; $4064
+DataPtr_MinigameLevelSelectGfx2Alias8:
+	dw MinigameLevelSelectGfx2 ; $4066
+DataPtr_MinigameLevelSelectGfx2Alias9:
+	dw MinigameLevelSelectGfx2 ; $4068
+DataPtr_MinigameLevelSelectGfx2Alias10:
+	dw MinigameLevelSelectGfx2 ; $406a
+DataPtr_MinigameLevelSelectGfx2Alias11:
+	dw MinigameLevelSelectGfx2 ; $406c
+DataPtr_MinigameLevelSelectGfx2Alias12:
+	dw MinigameLevelSelectGfx2 ; $406e
+DataPtr_MinigameLevelSelectGfx2Alias13:
+	dw MinigameLevelSelectGfx2 ; $4070
+DataPtr_MinigameLevelSelectGfx2Alias14:
+	dw MinigameLevelSelectGfx2 ; $4072
+DataPtr_MinigameLevelSelectGfx2Alias15:
+	dw MinigameLevelSelectGfx2 ; $4074
+DataPtr_MinigameLevelSelectGfx2Alias16:
+	dw MinigameLevelSelectGfx2 ; $4076
+DataPtr_SavedDataTypeSelectGfx:
+	dw SavedDataTypeSelectGfx ; $4078
 TennisDictionaryScreen:
 	push af ; $407a
 	wram_bank $06 ; $407b
@@ -1862,13 +1862,13 @@ Lz_3f_5e92:
 	INCBIN "data/bank_03f/lz_5e92.bin" ; $5e92, 235 bytes
 Lz_3f_5f7d:
 	INCBIN "data/bank_03f/lz_5f7d.bin" ; $5f7d, 183 bytes
-Lz_3f_6034:
+CourtSelectGfx1:
 	INCBIN "data/bank_03f/lz_6034.bin" ; $6034, 151 bytes
-Lz_3f_60cb:
+CourtSelectGfx2:
 	INCBIN "data/bank_03f/lz_60cb.bin" ; $60cb, 164 bytes
-Lz_3f_616f:
+CourtSelectGfx3:
 	INCBIN "data/bank_03f/lz_616f.bin" ; $616f, 170 bytes
-Lz_3f_6219:
+CourtSelectGfx4:
 	INCBIN "data/bank_03f/lz_6219.bin" ; $6219, 196 bytes
 VarsityTeamChartTiles:
 	INCBIN "data/bank_03f/lz_62dd.bin" ; $62dd, 1314 bytes
@@ -1891,7 +1891,7 @@ VarsityTeamChartTilemap2:
 	INCBIN "data/bank_03f/lz_6a11.bin" ; $6a11, 317 bytes
 VarsityTeamChartAttrmap2:
 	INCBIN "data/bank_03f/lz_6b4e.bin" ; $6b4e, 143 bytes
-Lz_3f_6bdd:
+TournamentBracketGfx:
 	INCBIN "data/bank_03f/lz_6bdd.bin" ; $6bdd, 38 bytes
 MugshotTiles:
 	INCBIN "data/bank_03f/lz_6c03.bin" ; $6c03, 1000 bytes
@@ -1935,8 +1935,8 @@ Lz_3f_7a63:
 	INCBIN "data/bank_03f/lz_7a63.bin" ; $7a63, 74 bytes
 Lz_3f_7aad:
 	INCBIN "data/bank_03f/lz_7aad.bin" ; $7aad, 74 bytes
-Lz_3f_7af7:
+MinigameLevelSelectGfx2:
 	INCBIN "data/bank_03f/lz_7af7.bin" ; $7af7, 153 bytes
-Lz_3f_7b90:
+SavedDataTypeSelectGfx:
 	INCBIN "data/bank_03f/lz_7b90.bin" ; $7b90, 185 bytes
 	; $7c49, 951 bytes fill to bank end (linker-padded)

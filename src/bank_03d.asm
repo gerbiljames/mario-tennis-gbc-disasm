@@ -8,48 +8,48 @@ DataPtr_3d_04:
 	dw Lz_3d_4271 ; $4004
 DataPtr_3d_06:
 	dw Lz_3d_4371 ; $4006
-DataPtr_3d_08:
-	dw Lz_3d_4467 ; $4008
-DataPtr_3d_0a:
-	dw Lz_3d_451b ; $400a
-DataPtr_3d_0c:
-	dw Lz_3d_45de ; $400c
+DataPtr_N64TransferItemGfx0:
+	dw N64TransferItemGfx0 ; $4008
+DataPtr_N64TransferItemGfx1:
+	dw N64TransferItemGfx1 ; $400a
+DataPtr_N64TransferItemGfx2:
+	dw N64TransferItemGfx2 ; $400c
 DataPtr_3d_0e:
 	dw Lz_3d_4682 ; $400e
 DataPtr_3d_10:
 	dw Lz_3d_475c ; $4010
-DataPtr_Lz_3d_4830:
-	dw Lz_3d_4830 ; $4012
-DataPtr_Lz_3d_4830Alias1:
-	dw Lz_3d_4830 ; $4014
-DataPtr_Lz_3d_4830Alias2:
-	dw Lz_3d_4830 ; $4016
-DataPtr_Lz_3d_4830Alias3:
-	dw Lz_3d_4830 ; $4018
-DataPtr_Lz_3d_4830Alias4:
-	dw Lz_3d_4830 ; $401a
-DataPtr_3d_1c:
-	dw Lz_3d_48e3 ; $401c
-DataPtr_3d_1e:
-	dw Lz_3d_499e ; $401e
-DataPtr_3d_20:
-	dw Lz_3d_4a55 ; $4020
-DataPtr_3d_22:
-	dw Lz_3d_4afc ; $4022
-DataPtr_3d_24:
-	dw Lz_3d_4b8d ; $4024
-DataPtr_3d_26:
-	dw Lz_3d_4c3d ; $4026
-DataPtr_3d_28:
-	dw Lz_3d_4ccd ; $4028
-DataPtr_3d_2a:
-	dw Lz_3d_4d97 ; $402a
-DataPtr_3d_2c:
-	dw Lz_3d_4e3a ; $402c
-DataPtr_3d_2e:
-	dw Lz_3d_4ef4 ; $402e
-DataPtr_3d_30:
-	dw Lz_3d_5073 ; $4030
+DataPtr_MainMenuGfx5:
+	dw MainMenuGfx5 ; $4012
+DataPtr_MainMenuGfx5Alias1:
+	dw MainMenuGfx5 ; $4014
+DataPtr_MainMenuGfx5Alias2:
+	dw MainMenuGfx5 ; $4016
+DataPtr_MainMenuGfx5Alias3:
+	dw MainMenuGfx5 ; $4018
+DataPtr_MainMenuGfx5Alias4:
+	dw MainMenuGfx5 ; $401a
+DataPtr_SharedMenuGfx63:
+	dw SharedMenuGfx63 ; $401c
+DataPtr_CourtSelectGfx0:
+	dw CourtSelectGfx0 ; $401e
+DataPtr_SharedMenuGfx65:
+	dw SharedMenuGfx65 ; $4020
+DataPtr_SavedDataSourceGfx4:
+	dw SavedDataSourceGfx4 ; $4022
+DataPtr_N64RecordTypeGfx2:
+	dw N64RecordTypeGfx2 ; $4024
+DataPtr_N64TransferItemGfx3:
+	dw N64TransferItemGfx3 ; $4026
+DataPtr_EraseDataConfirmGfx0:
+	dw EraseDataConfirmGfx0 ; $4028
+DataPtr_EraseDataConfirmGfx1:
+	dw EraseDataConfirmGfx1 ; $402a
+DataPtr_MinigameSelectGfx6:
+	dw MinigameSelectGfx6 ; $402c
+DataPtr_SharedMenuGfx72:
+	dw SharedMenuGfx72 ; $402e
+DataPtr_CharGridGfx1:
+	dw CharGridGfx1 ; $4030
 DataPtr_LinkingScreenTiles:
 	dw LinkingScreenTiles ; $4032
 DataPtr_LinkingScreenTilemap:
@@ -66,8 +66,8 @@ DataPtr_RingShotHudAttrmap:
 	dw RingShotHudAttrmap ; $403e
 DataPtr_RingShotHudPalettes:
 	dw RingShotHudPalettes ; $4040
-DataPtr_3d_42:
-	dw Lz_3d_5eea ; $4042
+DataPtr_NumberSpriteGfx:
+	dw NumberSpriteGfx ; $4042
 DataPtr_MatchStatsTiles:
 	dw MatchStatsTiles ; $4044
 DataPtr_MatchStatsTilemap:
@@ -88,8 +88,8 @@ DataPtr_3d_54:
 	dw Lz_3d_6d39 ; $4054
 DataPtr_3d_56:
 	dw Lz_3d_6e2e ; $4056
-DataPtr_3d_58:
-	dw Lz_3d_4fd6 ; $4058
+DataPtr_RacketShoesChoiceGfx2:
+	dw RacketShoesChoiceGfx2 ; $4058
 DataPtr_EquipmentSelectTiles:
 	dw EquipmentSelectTiles ; $405a
 DataPtr_EquipmentSelectTilemap:
@@ -98,8 +98,8 @@ DataPtr_EquipmentSelectAttrmap:
 	dw EquipmentSelectAttrmap ; $405e
 DataPtr_EquipmentSelectPalettes:
 	dw EquipmentSelectPalettes ; $4060
-DataPtr_3d_62:
-	dw Lz_3d_7870 ; $4062
+DataPtr_SharedMenuGfx99:
+	dw SharedMenuGfx99 ; $4062
 DataPtr_TournamentBracketSinglesTilemap:
 	dw TournamentBracketSinglesTilemap ; $4064
 DataPtr_TournamentBracketSinglesAttrmap:
@@ -118,41 +118,41 @@ Lz_3d_4271:
 	INCBIN "data/bank_03d/lz_4271.bin" ; $4271, 256 bytes
 Lz_3d_4371:
 	INCBIN "data/bank_03d/lz_4371.bin" ; $4371, 246 bytes
-Lz_3d_4467:
+N64TransferItemGfx0:
 	INCBIN "data/bank_03d/lz_4467.bin" ; $4467, 180 bytes
-Lz_3d_451b:
+N64TransferItemGfx1:
 	INCBIN "data/bank_03d/lz_451b.bin" ; $451b, 195 bytes
-Lz_3d_45de:
+N64TransferItemGfx2:
 	INCBIN "data/bank_03d/lz_45de.bin" ; $45de, 164 bytes
 Lz_3d_4682:
 	INCBIN "data/bank_03d/lz_4682.bin" ; $4682, 218 bytes
 Lz_3d_475c:
 	INCBIN "data/bank_03d/lz_475c.bin" ; $475c, 212 bytes
-Lz_3d_4830:
+MainMenuGfx5:
 	INCBIN "data/bank_03d/lz_4830.bin" ; $4830, 179 bytes
-Lz_3d_48e3:
+SharedMenuGfx63:
 	INCBIN "data/bank_03d/lz_48e3.bin" ; $48e3, 187 bytes
-Lz_3d_499e:
+CourtSelectGfx0:
 	INCBIN "data/bank_03d/lz_499e.bin" ; $499e, 183 bytes
-Lz_3d_4a55:
+SharedMenuGfx65:
 	INCBIN "data/bank_03d/lz_4a55.bin" ; $4a55, 167 bytes
-Lz_3d_4afc:
+SavedDataSourceGfx4:
 	INCBIN "data/bank_03d/lz_4afc.bin" ; $4afc, 145 bytes
-Lz_3d_4b8d:
+N64RecordTypeGfx2:
 	INCBIN "data/bank_03d/lz_4b8d.bin" ; $4b8d, 176 bytes
-Lz_3d_4c3d:
+N64TransferItemGfx3:
 	INCBIN "data/bank_03d/lz_4c3d.bin" ; $4c3d, 144 bytes
-Lz_3d_4ccd:
+EraseDataConfirmGfx0:
 	INCBIN "data/bank_03d/lz_4ccd.bin" ; $4ccd, 202 bytes
-Lz_3d_4d97:
+EraseDataConfirmGfx1:
 	INCBIN "data/bank_03d/lz_4d97.bin" ; $4d97, 163 bytes
-Lz_3d_4e3a:
+MinigameSelectGfx6:
 	INCBIN "data/bank_03d/lz_4e3a.bin" ; $4e3a, 186 bytes
-Lz_3d_4ef4:
+SharedMenuGfx72:
 	INCBIN "data/bank_03d/lz_4ef4.bin" ; $4ef4, 226 bytes
-Lz_3d_4fd6:
+RacketShoesChoiceGfx2:
 	INCBIN "data/bank_03d/lz_4fd6.bin" ; $4fd6, 157 bytes
-Lz_3d_5073:
+CharGridGfx1:
 	INCBIN "data/bank_03d/lz_5073.bin" ; $5073, 213 bytes
 LinkingScreenTiles:
 	INCBIN "data/bank_03d/lz_5148.bin" ; $5148, 1333 bytes
@@ -188,7 +188,7 @@ RingShotHudPalettes:
 	dw $331f, $6bff, $01df, $0000 ; pal 5: #ffc562 #ffffd5 #ff7300 #000000
 	dw $029f, $6bff, $001f, $0000 ; pal 6: #ffa400 #ffffd5 #ff0000 #000000
 	dw $318c, $6bff, $7d4a, $0000 ; pal 7: #626262 #ffffd5 #5252ff #000000
-Lz_3d_5eea:
+NumberSpriteGfx:
 	INCBIN "data/bank_03d/lz_5eea.bin" ; $5eea, 175 bytes
 MatchStatsTiles:
 	INCBIN "data/bank_03d/lz_5f99.bin" ; $5f99, 2148 bytes
@@ -236,7 +236,7 @@ EquipmentSelectPalettes:
 	dw $0000, $294a, $7fff, $015f ; pal 5: #000000 #525252 #ffffff #ff5200
 	dw $7fff, $7dcf, $4483, $015f ; pal 6: #ffffff #7b73ff #18208b #ff5200
 	dw $0000, $1884, $04d1, $015f ; pal 7: #000000 #202031 #8b3108 #ff5200
-Lz_3d_7870:
+SharedMenuGfx99:
 	INCBIN "data/bank_03d/lz_7870.bin" ; $7870, 26 bytes
 TournamentBracketSinglesTilemap:
 	INCBIN "data/bank_03d/lz_788a.bin" ; $788a, 465 bytes

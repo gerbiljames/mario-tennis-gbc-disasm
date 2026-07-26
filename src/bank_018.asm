@@ -108,8 +108,8 @@ DataPtr_MarioMiniGamesPalettes:
 	dw MarioMiniGamesPalettes ; $408c
 	farptr RunStorySceneByMode ; $408e
 	farptr DebugScreenAssetViewer ; $4090
-DataPtr_18_92:
-	dw Lz_18_7521 ; $4092
+DataPtr_MatchWinLoseGfx:
+	dw MatchWinLoseGfx ; $4092
 DataPtr_18_94:
 	dw Lz_18_7568 ; $4094
 Padding_18_4096:
@@ -1378,7 +1378,7 @@ MarioMiniGamesPalettes:
 	dw $331f, $6bff, $01df, $0000 ; pal 5: #ffc562 #ffffd5 #ff7300 #000000
 	dw $029f, $6bff, $001f, $0000 ; pal 6: #ffa400 #ffffd5 #ff0000 #000000
 	dw $318c, $6bff, $7d4a, $0000 ; pal 7: #626262 #ffffd5 #5252ff #000000
-Lz_18_7521:
+MatchWinLoseGfx:
 	INCBIN "data/bank_018/lz_7521.bin" ; $7521, 71 bytes
 Lz_18_7568:
 	INCBIN "data/bank_018/lz_7568.bin" ; $7568, 175 bytes

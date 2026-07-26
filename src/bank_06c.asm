@@ -28,20 +28,20 @@ DataPtr_IntroRalliesAttrmap4:
 	dw IntroRalliesAttrmap4 ; $4018
 DataPtr_IntroRalliesPalettes:
 	dw IntroRalliesPalettes ; $401a
-DataPtr_6c_1c:
-	dw Lz_6c_5424 ; $401c
-DataPtr_6c_1e:
-	dw Lz_6c_5451 ; $401e
-DataPtr_6c_20:
-	dw Lz_6c_54e8 ; $4020
-DataPtr_6c_22:
-	dw Lz_6c_55c6 ; $4022
-DataPtr_6c_24:
-	dw Lz_6c_55f6 ; $4024
-DataPtr_6c_26:
-	dw Lz_6c_56f9 ; $4026
-DataPtr_6c_28:
-	dw Lz_6c_57e1 ; $4028
+DataPtr_CutsceneGfx0:
+	dw CutsceneGfx0 ; $401c
+DataPtr_CutsceneGfx1:
+	dw CutsceneGfx1 ; $401e
+DataPtr_CutsceneGfx2:
+	dw CutsceneGfx2 ; $4020
+DataPtr_CutsceneGfx3:
+	dw CutsceneGfx3 ; $4022
+DataPtr_CutsceneGfx4:
+	dw CutsceneGfx4 ; $4024
+DataPtr_CutsceneGfx5:
+	dw CutsceneGfx5 ; $4026
+DataPtr_CutsceneGfx6:
+	dw CutsceneGfx6 ; $4028
 DataPtr_IntroSwingTiles:
 	dw IntroSwingTiles ; $402a
 DataPtr_IntroSwingTilemap:
@@ -82,20 +82,20 @@ DataPtr_IntroGirlSwingAttrmap:
 	dw IntroGirlSwingAttrmap ; $404e
 DataPtr_IntroGirlSwingPalettes:
 	dw IntroGirlSwingPalettes ; $4050
-DataPtr_6c_52:
-	dw Lz_6c_74db ; $4052
-DataPtr_6c_54:
-	dw Lz_6c_75a7 ; $4054
-DataPtr_6c_56:
-	dw Lz_6c_7678 ; $4056
-DataPtr_6c_58:
-	dw Lz_6c_7744 ; $4058
-DataPtr_6c_5a:
-	dw Lz_6c_7808 ; $405a
-DataPtr_6c_5c:
-	dw Lz_6c_7836 ; $405c
-DataPtr_6c_5e:
-	dw Lz_6c_786d ; $405e
+DataPtr_IntroGfx0:
+	dw IntroGfx0 ; $4052
+DataPtr_IntroGfx1:
+	dw IntroGfx1 ; $4054
+DataPtr_IntroGfx2:
+	dw IntroGfx2 ; $4056
+DataPtr_IntroGfx3:
+	dw IntroGfx3 ; $4058
+DataPtr_IntroGfx4:
+	dw IntroGfx4 ; $405a
+DataPtr_IntroGfx5:
+	dw IntroGfx5 ; $405c
+DataPtr_IntroGfx6:
+	dw IntroGfx6 ; $405e
 DataPtr_ChampionMedalTilemap5:
 	dw ChampionMedalTilemap5 ; $4060
 DataPtr_ChampionMedalAttrmap5:
@@ -154,19 +154,19 @@ IntroRalliesPalettes:
 	dw $294a, $294a, $294a, $294a ; pal 5: #525252 #525252 #525252 #525252
 	dw $294a, $294a, $294a, $294a ; pal 6: #525252 #525252 #525252 #525252
 	dw $294a, $294a, $294a, $294a ; pal 7: #525252 #525252 #525252 #525252
-Lz_6c_5424:
+CutsceneGfx0:
 	INCBIN "data/bank_06c/lz_5424.bin" ; $5424, 45 bytes
-Lz_6c_5451:
+CutsceneGfx1:
 	INCBIN "data/bank_06c/lz_5451.bin" ; $5451, 151 bytes
-Lz_6c_54e8:
+CutsceneGfx2:
 	INCBIN "data/bank_06c/lz_54e8.bin" ; $54e8, 222 bytes
-Lz_6c_55c6:
+CutsceneGfx3:
 	INCBIN "data/bank_06c/lz_55c6.bin" ; $55c6, 48 bytes
-Lz_6c_55f6:
+CutsceneGfx4:
 	INCBIN "data/bank_06c/lz_55f6.bin" ; $55f6, 259 bytes
-Lz_6c_56f9:
+CutsceneGfx5:
 	INCBIN "data/bank_06c/lz_56f9.bin" ; $56f9, 232 bytes
-Lz_6c_57e1:
+CutsceneGfx6:
 	INCBIN "data/bank_06c/lz_57e1.bin" ; $57e1, 16 bytes
 IntroSwingTiles:
 	INCBIN "data/bank_06c/lz_57f1.bin" ; $57f1, 1085 bytes
@@ -253,19 +253,19 @@ IntroGirlSwingPalettes:
 	dw $5ade, $73ff, $219f, $0000 ; pal 5: #f6b4b4 #ffffe6 #ff6241 #000000
 	dw $5a9f, $73ff, $001f, $0000 ; pal 6: #ffa4b4 #ffffe6 #ff0000 #000000
 	dw $3acc, $73ff, $7d4a, $0000 ; pal 7: #62b473 #ffffe6 #5252ff #000000
-Lz_6c_74db:
+IntroGfx0:
 	INCBIN "data/bank_06c/lz_74db.bin" ; $74db, 204 bytes
-Lz_6c_75a7:
+IntroGfx1:
 	INCBIN "data/bank_06c/lz_75a7.bin" ; $75a7, 209 bytes
-Lz_6c_7678:
+IntroGfx2:
 	INCBIN "data/bank_06c/lz_7678.bin" ; $7678, 204 bytes
-Lz_6c_7744:
+IntroGfx3:
 	INCBIN "data/bank_06c/lz_7744.bin" ; $7744, 196 bytes
-Lz_6c_7808:
+IntroGfx4:
 	INCBIN "data/bank_06c/lz_7808.bin" ; $7808, 46 bytes
-Lz_6c_7836:
+IntroGfx5:
 	INCBIN "data/bank_06c/lz_7836.bin" ; $7836, 55 bytes
-Lz_6c_786d:
+IntroGfx6:
 	INCBIN "data/bank_06c/lz_786d.bin" ; $786d, 39 bytes
 ChampionMedalTilemap5:
 	INCBIN "data/bank_06c/lz_7894.bin" ; $7894, 265 bytes

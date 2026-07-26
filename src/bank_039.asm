@@ -26,48 +26,48 @@ SECTION "ROM Bank $39", ROMX[$4000], BANK[$39]
 	farptr QueueWram3MapToVRAMAlias2, QueueWram3MapToVRAM ; $402e
 	farptr QueueWram3MapToVRAMAlias3, QueueWram3MapToVRAM ; $4030
 	farptr QueueWram3MapToVRAMAlias4, QueueWram3MapToVRAM ; $4032
-DataPtr_Lz_39_47ab:
-	dw Lz_39_47ab ; $4034
-DataPtr_Lz_39_47abAlias1:
-	dw Lz_39_47ab ; $4036
-DataPtr_Lz_39_47abAlias2:
-	dw Lz_39_47ab ; $4038
-DataPtr_Lz_39_47abAlias3:
-	dw Lz_39_47ab ; $403a
-DataPtr_Lz_39_47abAlias4:
-	dw Lz_39_47ab ; $403c
-DataPtr_Lz_39_47abAlias5:
-	dw Lz_39_47ab ; $403e
-DataPtr_Lz_39_47abAlias6:
-	dw Lz_39_47ab ; $4040
-DataPtr_Lz_39_47abAlias7:
-	dw Lz_39_47ab ; $4042
-DataPtr_Lz_39_47abAlias8:
-	dw Lz_39_47ab ; $4044
-DataPtr_Lz_39_47abAlias9:
-	dw Lz_39_47ab ; $4046
-DataPtr_Lz_39_47abAlias10:
-	dw Lz_39_47ab ; $4048
-DataPtr_Lz_39_47abAlias11:
-	dw Lz_39_47ab ; $404a
-DataPtr_Lz_39_47abAlias12:
-	dw Lz_39_47ab ; $404c
-DataPtr_Lz_39_47abAlias13:
-	dw Lz_39_47ab ; $404e
-DataPtr_Lz_39_47abAlias14:
-	dw Lz_39_47ab ; $4050
-DataPtr_Lz_39_47abAlias15:
-	dw Lz_39_47ab ; $4052
-DataPtr_Lz_39_47abAlias16:
-	dw Lz_39_47ab ; $4054
-DataPtr_Lz_39_47abAlias17:
-	dw Lz_39_47ab ; $4056
-DataPtr_39_58:
-	dw Lz_39_47fa ; $4058
-DataPtr_39_5a:
-	dw Lz_39_4809 ; $405a
-DataPtr_39_5c:
-	dw Lz_39_4833 ; $405c
+DataPtr_SharedMenuGfx17:
+	dw SharedMenuGfx17 ; $4034
+DataPtr_SharedMenuGfx17Alias1:
+	dw SharedMenuGfx17 ; $4036
+DataPtr_SharedMenuGfx17Alias2:
+	dw SharedMenuGfx17 ; $4038
+DataPtr_SharedMenuGfx17Alias3:
+	dw SharedMenuGfx17 ; $403a
+DataPtr_SharedMenuGfx17Alias4:
+	dw SharedMenuGfx17 ; $403c
+DataPtr_SharedMenuGfx17Alias5:
+	dw SharedMenuGfx17 ; $403e
+DataPtr_SharedMenuGfx17Alias6:
+	dw SharedMenuGfx17 ; $4040
+DataPtr_SharedMenuGfx17Alias7:
+	dw SharedMenuGfx17 ; $4042
+DataPtr_SharedMenuGfx17Alias8:
+	dw SharedMenuGfx17 ; $4044
+DataPtr_SharedMenuGfx17Alias9:
+	dw SharedMenuGfx17 ; $4046
+DataPtr_SharedMenuGfx17Alias10:
+	dw SharedMenuGfx17 ; $4048
+DataPtr_SharedMenuGfx17Alias11:
+	dw SharedMenuGfx17 ; $404a
+DataPtr_SharedMenuGfx17Alias12:
+	dw SharedMenuGfx17 ; $404c
+DataPtr_SharedMenuGfx17Alias13:
+	dw SharedMenuGfx17 ; $404e
+DataPtr_SharedMenuGfx17Alias14:
+	dw SharedMenuGfx17 ; $4050
+DataPtr_SharedMenuGfx17Alias15:
+	dw SharedMenuGfx17 ; $4052
+DataPtr_SharedMenuGfx17Alias16:
+	dw SharedMenuGfx17 ; $4054
+DataPtr_SharedMenuGfx17Alias17:
+	dw SharedMenuGfx17 ; $4056
+DataPtr_NameEntryGfx:
+	dw NameEntryGfx ; $4058
+DataPtr_CharacterSelectGfx:
+	dw CharacterSelectGfx ; $405a
+DataPtr_NumberSpriteGfxWideGfx:
+	dw NumberSpriteGfxWideGfx ; $405c
 DataPtr_StatLabelTiles:
 	dw StatLabelTiles ; $405e
 	farptr FillMenuGridCellTile ; $4060
@@ -76,20 +76,20 @@ DataPtr_StatLabelTiles:
 	farptr DrawDecimalNumberSprites_39 ; $4066
 	farptr ResetCheatCodeBuffer ; $4068
 	farptr UpdateCheatCodeEntry ; $406a
-DataPtr_39_6c:
-	dw Lz_39_7009 ; $406c
-DataPtr_39_6e:
-	dw Lz_39_70bb ; $406e
-DataPtr_39_70:
-	dw Lz_39_717d ; $4070
-DataPtr_39_72:
-	dw Lz_39_71b6 ; $4072
-DataPtr_39_74:
-	dw Lz_39_71e8 ; $4074
-DataPtr_39_76:
-	dw Lz_39_7223 ; $4076
-DataPtr_39_78:
-	dw Lz_39_725d ; $4078
+DataPtr_RacketShoesChoiceGfx0:
+	dw RacketShoesChoiceGfx0 ; $406c
+DataPtr_RacketShoesChoiceGfx1:
+	dw RacketShoesChoiceGfx1 ; $406e
+DataPtr_MenuArrowGfx0:
+	dw MenuArrowGfx0 ; $4070
+DataPtr_MenuArrowGfx1:
+	dw MenuArrowGfx1 ; $4072
+DataPtr_MenuArrowGfx2:
+	dw MenuArrowGfx2 ; $4074
+DataPtr_MenuArrowGfx3:
+	dw MenuArrowGfx3 ; $4076
+DataPtr_CharGridGfx2:
+	dw CharGridGfx2 ; $4078
 DataPtr_DigitFontTiles:
 	dw DigitFontTiles ; $407a
 	farptr FillIncrementingBytes ; $407c
@@ -155,7 +155,7 @@ ScreenAssetRecordTable:
 	; $40f5, 560 bytes (70 records x 4 slot words)
 	dslot DataPtr_Lz_3a_53fbAlias9, DataPtr_Lz_3a_53fbAlias10, DataPtr_Lz_3a_53fbAlias11, DataPtr_Lz_3a_53fbAlias12 ; record 0
 	dslot DataPtr_ExhibitionSetupTiles, DataPtr_ExhibitionSetupTilemap, DataPtr_ExhibitionSetupAttrmap, DataPtr_ExhibitionSetupPalettes ; record 1
-	dslot DataPtr_Lz_3d_4830, DataPtr_Lz_3d_4830Alias1, DataPtr_Lz_3d_4830Alias2, DataPtr_Lz_3d_4830Alias3 ; record 2
+	dslot DataPtr_MainMenuGfx5, DataPtr_MainMenuGfx5Alias1, DataPtr_MainMenuGfx5Alias2, DataPtr_MainMenuGfx5Alias3 ; record 2
 	dslot DataPtr_Lz_3a_53fbAlias9, DataPtr_Lz_3a_53fbAlias10, DataPtr_Lz_3a_53fbAlias11, DataPtr_Lz_3a_53fbAlias12 ; record 3
 	dslot DataPtr_JapanesePlayModeTiles, DataPtr_JapanesePlayModeTilemap, DataPtr_JapanesePlayModeAttrmap, DataPtr_JapanesePlayModePalettes ; record 4
 	dslot DataPtr_3c_70, DataPtr_3c_72, DataPtr_3c_74, DataPtr_3c_76 ; record 5
@@ -644,135 +644,135 @@ LoadCompressedTileBlock:
 	ret ; $46b6
 TileBlockPtrs_39:
 	; $46b7, 244 bytes (122 records x 1 slot words)
-	dslot DataPtr_1b_2e ; record 0
-	dslot DataPtr_1b_30 ; record 1
-	dslot DataPtr_1b_32 ; record 2
-	dslot DataPtr_1b_34 ; record 3
-	dslot DataPtr_1b_36 ; record 4
-	dslot DataPtr_1b_38 ; record 5
-	dslot DataPtr_1b_3a ; record 6
-	dslot DataPtr_1b_3c ; record 7
-	dslot DataPtr_1b_3e ; record 8
-	dslot DataPtr_18_92 ; record 9
+	dslot DataPtr_ObjectSceneAGfx0 ; record 0
+	dslot DataPtr_ObjectSceneAGfx1 ; record 1
+	dslot DataPtr_ObjectSceneAGfx2 ; record 2
+	dslot DataPtr_ObjectSceneBGfx0 ; record 3
+	dslot DataPtr_ObjectSceneBGfx1 ; record 4
+	dslot DataPtr_ObjectSceneBGfx2 ; record 5
+	dslot DataPtr_Screen0Gfx ; record 6
+	dslot DataPtr_Screen1ObjGfx ; record 7
+	dslot DataPtr_Screen2ObjGfx ; record 8
+	dslot DataPtr_MatchWinLoseGfx ; record 9
 	dslot DataPtr_18_94 ; record 10
-	dslot DataPtr_Lz_39_47abAlias11 ; record 11
-	dslot DataPtr_Lz_39_47abAlias12 ; record 12
-	dslot DataPtr_Lz_39_47abAlias13 ; record 13
-	dslot DataPtr_Lz_39_47abAlias14 ; record 14
-	dslot DataPtr_Lz_39_47abAlias15 ; record 15
-	dslot DataPtr_Lz_39_47abAlias16 ; record 16
-	dslot DataPtr_Lz_39_47abAlias17 ; record 17
-	dslot DataPtr_39_58 ; record 18
-	dslot DataPtr_39_5a ; record 19
-	dslot DataPtr_39_5c ; record 20
+	dslot DataPtr_SharedMenuGfx17Alias11 ; record 11
+	dslot DataPtr_SharedMenuGfx17Alias12 ; record 12
+	dslot DataPtr_SharedMenuGfx17Alias13 ; record 13
+	dslot DataPtr_SharedMenuGfx17Alias14 ; record 14
+	dslot DataPtr_SharedMenuGfx17Alias15 ; record 15
+	dslot DataPtr_SharedMenuGfx17Alias16 ; record 16
+	dslot DataPtr_SharedMenuGfx17Alias17 ; record 17
+	dslot DataPtr_NameEntryGfx ; record 18
+	dslot DataPtr_CharacterSelectGfx ; record 19
+	dslot DataPtr_NumberSpriteGfxWideGfx ; record 20
 	dslot DataPtr_StatLabelTiles ; record 21
 	dslot DataPtr_MugshotTiles ; record 22
-	dslot DataPtr_39_70 ; record 23
-	dslot DataPtr_39_72 ; record 24
-	dslot DataPtr_39_74 ; record 25
-	dslot DataPtr_39_76 ; record 26
-	dslot DataPtr_3c_22 ; record 27
-	dslot DataPtr_3c_24 ; record 28
-	dslot DataPtr_3c_26 ; record 29
-	dslot DataPtr_3c_28 ; record 30
-	dslot DataPtr_3c_2a ; record 31
-	dslot DataPtr_3c_2c ; record 32
-	dslot DataPtr_3c_2e ; record 33
-	dslot DataPtr_3c_30 ; record 34
-	dslot DataPtr_3c_32 ; record 35
-	dslot DataPtr_3c_34 ; record 36
-	dslot DataPtr_3c_36 ; record 37
-	dslot DataPtr_3c_38 ; record 38
-	dslot DataPtr_3c_3a ; record 39
-	dslot DataPtr_3c_3c ; record 40
-	dslot DataPtr_3c_3e ; record 41
-	dslot DataPtr_3c_40 ; record 42
-	dslot DataPtr_3c_42 ; record 43
-	dslot DataPtr_3c_44 ; record 44
-	dslot DataPtr_3c_46 ; record 45
-	dslot DataPtr_3c_48 ; record 46
-	dslot DataPtr_3c_4a ; record 47
-	dslot DataPtr_3c_4c ; record 48
-	dslot DataPtr_3c_4e ; record 49
-	dslot DataPtr_3c_50 ; record 50
-	dslot DataPtr_3c_52 ; record 51
-	dslot DataPtr_3c_54 ; record 52
-	dslot DataPtr_3c_56 ; record 53
-	dslot DataPtr_3c_58 ; record 54
-	dslot DataPtr_3c_5a ; record 55
-	dslot DataPtr_3c_5c ; record 56
-	dslot DataPtr_3c_5e ; record 57
-	dslot DataPtr_3c_60 ; record 58
-	dslot DataPtr_3d_08 ; record 59
-	dslot DataPtr_3d_0a ; record 60
-	dslot DataPtr_3d_0c ; record 61
-	dslot DataPtr_Lz_3d_4830Alias4 ; record 62
-	dslot DataPtr_3d_1c ; record 63
-	dslot DataPtr_3d_1e ; record 64
-	dslot DataPtr_3d_20 ; record 65
-	dslot DataPtr_3d_22 ; record 66
-	dslot DataPtr_3d_24 ; record 67
-	dslot DataPtr_3d_26 ; record 68
-	dslot DataPtr_3d_28 ; record 69
-	dslot DataPtr_3d_2a ; record 70
-	dslot DataPtr_3d_2c ; record 71
-	dslot DataPtr_3d_2e ; record 72
-	dslot DataPtr_3d_42 ; record 73
-	dslot DataPtr_39_6c ; record 74
-	dslot DataPtr_39_6e ; record 75
-	dslot DataPtr_3d_58 ; record 76
-	dslot DataPtr_6c_1c ; record 77
-	dslot DataPtr_6c_1e ; record 78
-	dslot DataPtr_6c_20 ; record 79
-	dslot DataPtr_6c_22 ; record 80
-	dslot DataPtr_6c_24 ; record 81
-	dslot DataPtr_6c_26 ; record 82
-	dslot DataPtr_6c_28 ; record 83
-	dslot DataPtr_6c_52 ; record 84
-	dslot DataPtr_6c_54 ; record 85
-	dslot DataPtr_6c_56 ; record 86
-	dslot DataPtr_6c_58 ; record 87
-	dslot DataPtr_6c_5a ; record 88
-	dslot DataPtr_6c_5c ; record 89
-	dslot DataPtr_6c_5e ; record 90
-	dslot DataPtr_6d_00 ; record 91
-	dslot DataPtr_6d_02 ; record 92
-	dslot DataPtr_6d_04 ; record 93
-	dslot DataPtr_6d_06 ; record 94
-	dslot DataPtr_6d_08 ; record 95
-	dslot DataPtr_6d_0a ; record 96
-	dslot DataPtr_6d_0c ; record 97
-	dslot DataPtr_6d_0e ; record 98
-	dslot DataPtr_3d_62 ; record 99
-	dslot DataPtr_3d_30 ; record 100
-	dslot DataPtr_3f_16 ; record 101
-	dslot DataPtr_3f_18 ; record 102
-	dslot DataPtr_3f_1a ; record 103
-	dslot DataPtr_3f_1c ; record 104
-	dslot DataPtr_3f_2a ; record 105
-	dslot DataPtr_Lz_6d_6f2eAlias16 ; record 106
-	dslot DataPtr_6d_74 ; record 107
-	dslot DataPtr_6d_76 ; record 108
-	dslot DataPtr_6d_78 ; record 109
-	dslot DataPtr_6d_7a ; record 110
-	dslot DataPtr_6d_7c ; record 111
-	dslot DataPtr_6d_84 ; record 112
+	dslot DataPtr_MenuArrowGfx0 ; record 23
+	dslot DataPtr_MenuArrowGfx1 ; record 24
+	dslot DataPtr_MenuArrowGfx2 ; record 25
+	dslot DataPtr_MenuArrowGfx3 ; record 26
+	dslot DataPtr_SharedMenuGfx27 ; record 27
+	dslot DataPtr_MainMenuGfx0 ; record 28
+	dslot DataPtr_SharedMenuGfx29 ; record 29
+	dslot DataPtr_SharedMenuGfx30 ; record 30
+	dslot DataPtr_MainMenuGfx1 ; record 31
+	dslot DataPtr_MainMenuGfx2 ; record 32
+	dslot DataPtr_MainMenuGfx3 ; record 33
+	dslot DataPtr_MainMenuGfx4 ; record 34
+	dslot DataPtr_SharedMenuGfx35 ; record 35
+	dslot DataPtr_SharedMenuGfx36 ; record 36
+	dslot DataPtr_SharedMenuGfx37 ; record 37
+	dslot DataPtr_SharedMenuGfx38 ; record 38
+	dslot DataPtr_SharedMenuGfx39 ; record 39
+	dslot DataPtr_SharedMenuGfx40 ; record 40
+	dslot DataPtr_SharedMenuGfx41 ; record 41
+	dslot DataPtr_SavedDataSourceGfx0 ; record 42
+	dslot DataPtr_SavedDataSourceGfx1 ; record 43
+	dslot DataPtr_SavedDataSourceGfx2 ; record 44
+	dslot DataPtr_SavedDataSourceGfx3 ; record 45
+	dslot DataPtr_EraseSavedDataGfx0 ; record 46
+	dslot DataPtr_EraseSavedDataGfx1 ; record 47
+	dslot DataPtr_EraseSavedDataGfx2 ; record 48
+	dslot DataPtr_EraseSavedDataGfx3 ; record 49
+	dslot DataPtr_EraseSavedDataGfx4 ; record 50
+	dslot DataPtr_MinigameSelectGfx0 ; record 51
+	dslot DataPtr_MinigameSelectGfx1 ; record 52
+	dslot DataPtr_MinigameSelectGfx2 ; record 53
+	dslot DataPtr_MinigameSelectGfx3 ; record 54
+	dslot DataPtr_MinigameSelectGfx4 ; record 55
+	dslot DataPtr_MinigameSelectGfx5 ; record 56
+	dslot DataPtr_N64RecordTypeGfx0 ; record 57
+	dslot DataPtr_N64RecordTypeGfx1 ; record 58
+	dslot DataPtr_N64TransferItemGfx0 ; record 59
+	dslot DataPtr_N64TransferItemGfx1 ; record 60
+	dslot DataPtr_N64TransferItemGfx2 ; record 61
+	dslot DataPtr_MainMenuGfx5Alias4 ; record 62
+	dslot DataPtr_SharedMenuGfx63 ; record 63
+	dslot DataPtr_CourtSelectGfx0 ; record 64
+	dslot DataPtr_SharedMenuGfx65 ; record 65
+	dslot DataPtr_SavedDataSourceGfx4 ; record 66
+	dslot DataPtr_N64RecordTypeGfx2 ; record 67
+	dslot DataPtr_N64TransferItemGfx3 ; record 68
+	dslot DataPtr_EraseDataConfirmGfx0 ; record 69
+	dslot DataPtr_EraseDataConfirmGfx1 ; record 70
+	dslot DataPtr_MinigameSelectGfx6 ; record 71
+	dslot DataPtr_SharedMenuGfx72 ; record 72
+	dslot DataPtr_NumberSpriteGfx ; record 73
+	dslot DataPtr_RacketShoesChoiceGfx0 ; record 74
+	dslot DataPtr_RacketShoesChoiceGfx1 ; record 75
+	dslot DataPtr_RacketShoesChoiceGfx2 ; record 76
+	dslot DataPtr_CutsceneGfx0 ; record 77
+	dslot DataPtr_CutsceneGfx1 ; record 78
+	dslot DataPtr_CutsceneGfx2 ; record 79
+	dslot DataPtr_CutsceneGfx3 ; record 80
+	dslot DataPtr_CutsceneGfx4 ; record 81
+	dslot DataPtr_CutsceneGfx5 ; record 82
+	dslot DataPtr_CutsceneGfx6 ; record 83
+	dslot DataPtr_IntroGfx0 ; record 84
+	dslot DataPtr_IntroGfx1 ; record 85
+	dslot DataPtr_IntroGfx2 ; record 86
+	dslot DataPtr_IntroGfx3 ; record 87
+	dslot DataPtr_IntroGfx4 ; record 88
+	dslot DataPtr_IntroGfx5 ; record 89
+	dslot DataPtr_IntroGfx6 ; record 90
+	dslot DataPtr_TitleGfx0 ; record 91
+	dslot DataPtr_TitleGfx1 ; record 92
+	dslot DataPtr_TitleGfx2 ; record 93
+	dslot DataPtr_TitleGfx3 ; record 94
+	dslot DataPtr_TitleGfx4 ; record 95
+	dslot DataPtr_TitleGfx5 ; record 96
+	dslot DataPtr_TitleGfx6 ; record 97
+	dslot DataPtr_TitleGfx7 ; record 98
+	dslot DataPtr_SharedMenuGfx99 ; record 99
+	dslot DataPtr_CharGridGfx1 ; record 100
+	dslot DataPtr_CourtSelectGfx1 ; record 101
+	dslot DataPtr_CourtSelectGfx2 ; record 102
+	dslot DataPtr_CourtSelectGfx3 ; record 103
+	dslot DataPtr_CourtSelectGfx4 ; record 104
+	dslot DataPtr_TournamentBracketGfx ; record 105
+	dslot DataPtr_CourtSelectGfx5Alias16 ; record 106
+	dslot DataPtr_CourtSelectGfx6 ; record 107
+	dslot DataPtr_CourtSelectGfx7 ; record 108
+	dslot DataPtr_CourtSelectGfx8 ; record 109
+	dslot DataPtr_CourtSelectGfx9 ; record 110
+	dslot DataPtr_SharedMenuGfx111 ; record 111
+	dslot DataPtr_MinigameLevelSelectGfx0 ; record 112
 	dslot DataPtr_6d_86 ; record 113
-	dslot DataPtr_6d_88 ; record 114
-	dslot DataPtr_3e_42 ; record 115
+	dslot DataPtr_MinigameLevelSelectGfx1 ; record 114
+	dslot DataPtr_N64TransferItemGfx4 ; record 115
 	dslot DataPtr_3e_44 ; record 116
-	dslot DataPtr_39_78 ; record 117
-	dslot DataPtr_3e_46 ; record 118
-	dslot DataPtr_Lz_3f_7af7Alias16 ; record 119
-	dslot DataPtr_3f_78 ; record 120
+	dslot DataPtr_CharGridGfx2 ; record 117
+	dslot DataPtr_SavedDataSourceGfx5 ; record 118
+	dslot DataPtr_MinigameLevelSelectGfx2Alias16 ; record 119
+	dslot DataPtr_SavedDataTypeSelectGfx ; record 120
 	dslot DataPtr_DigitFontTiles ; record 121
-Lz_39_47ab:
+SharedMenuGfx17:
 	INCBIN "data/bank_039/lz_47ab.bin" ; $47ab, 79 bytes
-Lz_39_47fa:
+NameEntryGfx:
 	INCBIN "data/bank_039/lz_47fa.bin" ; $47fa, 15 bytes
-Lz_39_4809:
+CharacterSelectGfx:
 	INCBIN "data/bank_039/lz_4809.bin" ; $4809, 42 bytes
-Lz_39_4833:
+NumberSpriteGfxWideGfx:
 	INCBIN "data/bank_039/lz_4833.bin" ; $4833, 240 bytes
 StatLabelTiles:
 	INCBIN "data/bank_039/lz_4923.bin" ; $4923, 243 bytes
@@ -3417,19 +3417,19 @@ TriggerCheatUnlock:
 	sound $65 ; $7003
 	farcall ApplyUnlockEverythingCheat ; $7005
 	ret ; $7008
-Lz_39_7009:
+RacketShoesChoiceGfx0:
 	INCBIN "data/bank_039/lz_7009.bin" ; $7009, 178 bytes
-Lz_39_70bb:
+RacketShoesChoiceGfx1:
 	INCBIN "data/bank_039/lz_70bb.bin" ; $70bb, 194 bytes
-Lz_39_717d:
+MenuArrowGfx0:
 	INCBIN "data/bank_039/lz_717d.bin" ; $717d, 57 bytes
-Lz_39_71b6:
+MenuArrowGfx1:
 	INCBIN "data/bank_039/lz_71b6.bin" ; $71b6, 50 bytes
-Lz_39_71e8:
+MenuArrowGfx2:
 	INCBIN "data/bank_039/lz_71e8.bin" ; $71e8, 59 bytes
-Lz_39_7223:
+MenuArrowGfx3:
 	INCBIN "data/bank_039/lz_7223.bin" ; $7223, 58 bytes
-Lz_39_725d:
+CharGridGfx2:
 	INCBIN "data/bank_039/lz_725d.bin" ; $725d, 241 bytes
 DigitFontTiles:
 	INCBIN "data/bank_039/lz_734e.bin" ; $734e, 249 bytes

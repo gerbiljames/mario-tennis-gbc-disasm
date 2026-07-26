@@ -41,12 +41,12 @@ DataPtr_AwardCeremonyTilemap5:
 	dw AwardCeremonyTilemap5 ; $403e
 DataPtr_AwardCeremonyAttrmap5:
 	dw AwardCeremonyAttrmap5 ; $4040
-DataPtr_3e_42:
-	dw Lz_3e_75e8 ; $4042
+DataPtr_N64TransferItemGfx4:
+	dw N64TransferItemGfx4 ; $4042
 DataPtr_3e_44:
 	dw Lz_3e_769b ; $4044
-DataPtr_3e_46:
-	dw Lz_3e_7752 ; $4046
+DataPtr_SavedDataSourceGfx5:
+	dw SavedDataSourceGfx5 ; $4046
 DrawSelectionBoxCorners:
 	push de ; $4048
 	push bc ; $4049
@@ -5075,10 +5075,10 @@ AwardCeremonyTilemap5:
 	INCBIN "data/bank_03e/lz_7466.bin" ; $7466, 279 bytes
 AwardCeremonyAttrmap5:
 	INCBIN "data/bank_03e/lz_757d.bin" ; $757d, 107 bytes
-Lz_3e_75e8:
+N64TransferItemGfx4:
 	INCBIN "data/bank_03e/lz_75e8.bin" ; $75e8, 179 bytes
 Lz_3e_769b:
 	INCBIN "data/bank_03e/lz_769b.bin" ; $769b, 183 bytes
-Lz_3e_7752:
+SavedDataSourceGfx5:
 	INCBIN "data/bank_03e/lz_7752.bin" ; $7752, 179 bytes
 	; $7805, 2043 bytes fill to bank end (linker-padded)
