@@ -9294,7 +9294,7 @@ RunSoundChannelScript:
 	ldh a, [hSndDataPtr + 1] ; $3562
 	ld d, a ; $3564
 	add hl, de ; $3565
-Label_00_3566:
+.nextCommand:
 	ldh a, [hSndScriptPtr] ; $3566
 	add a, $01 ; $3568
 	ldh [hSndScriptPtr], a ; $356a
@@ -9303,19 +9303,19 @@ Label_00_3566:
 	ldh [hSndScriptPtr + 1], a ; $3570
 	ld a, [hl+] ; $3572
 	cp a, $d0 ; $3573
-	jr nc, Label_00_35b9 ; $3575
+	jr nc, .cmdD0 ; $3575
 	cp a, $b0 ; $3577
-	jp nc, Label_00_35f9 ; $3579
+	jp nc, .cmdB0 ; $3579
 	cp a, $a0 ; $357c
-	jp nc, Label_00_3635 ; $357e
+	jp nc, .cmdA0 ; $357e
 	jp SndTriggerNote ; $3581
-Label_00_3584:
+.cmdF0:
 	cp a, $fd ; $3584
-	jr z, Label_00_358e ; $3586
+	jr z, .setLoopPoint ; $3586
 	cp a, $ff ; $3588
-	jr z, Label_00_359f ; $358a
-	jr Label_00_359c ; $358c
-Label_00_358e:
+	jr z, .endScript ; $358a
+	jr .skipOperand ; $358c
+.setLoopPoint:
 	push hl ; $358e
 	ld b, [hl] ; $358f
 	call GetChannelLoopSlot ; $3590
@@ -9326,68 +9326,68 @@ Label_00_358e:
 	ldh a, [hSndScriptPtr + 1] ; $3598
 	ld [hl], a ; $359a
 	pop hl ; $359b
-Label_00_359c:
+.skipOperand:
 	inc hl ; $359c
-	jr Label_00_3566 ; $359d
-Label_00_359f:
+	jr .nextCommand ; $359d
+.endScript:
 	ldh [hSndScriptPtr], a ; $359f
 	ldh [hSndScriptPtr + 1], a ; $35a1
 	ld a, [wSndChannelType] ; $35a3
 	cp a, $02 ; $35a6
-	jr nz, Label_00_35b6 ; $35a8
+	jr nz, .release ; $35a8
 	ld a, [wSndChannelIndex] ; $35aa
 	cp a, $02 ; $35ad
-	jr nc, Label_00_35b6 ; $35af
+	jr nc, .release ; $35af
 	ld a, $ff ; $35b1
 	ld [wSndWaveReloadPending], a ; $35b3
-Label_00_35b6:
+.release:
 	jp SndReleaseChannel ; $35b6
-Label_00_35b9:
+.cmdD0:
 	cp a, $f0 ; $35b9
-	jr nc, Label_00_3584 ; $35bb
+	jr nc, .cmdF0 ; $35bb
 	cp a, $e0 ; $35bd
-	jr nc, Label_00_35c5 ; $35bf
+	jr nc, .volSlideDown ; $35bf
 	and a, $0f ; $35c1
-	jr Label_00_35c9 ; $35c3
-Label_00_35c5:
+	jr .storeVolSlide ; $35c3
+.volSlideDown:
 	and a, $0f ; $35c5
 	cpl ; $35c7
 	inc a ; $35c8
-Label_00_35c9:
+.storeVolSlide:
 	ld b, a ; $35c9
 	ld a, [wSndChannelType] ; $35ca
 	cp a, $02 ; $35cd
-	jr z, Label_00_35d9 ; $35cf
+	jr z, .volSlideDone ; $35cf
 	ld a, b ; $35d1
 	ldh [hSndVolSlide], a ; $35d2
 	ld a, [hl] ; $35d4
 	ldh [hSndVolSlideReload], a ; $35d5
 	ldh [hSndVolSlideTimer], a ; $35d7
-Label_00_35d9:
+.volSlideDone:
 	inc hl ; $35d9
-	jp Label_00_3566 ; $35da
-Label_00_35dd:
+	jp .nextCommand ; $35da
+.cmdC0:
 	and a, $0f ; $35dd
 	ld b, a ; $35df
 	ld a, [wSndChannelType] ; $35e0
 	cp a, $02 ; $35e3
-	jr z, Label_00_35f5 ; $35e5
+	jr z, .envelopeDone ; $35e5
 	ldh a, [hSndVolume] ; $35e7
 	and a, $0f ; $35e9
-	jr nz, Label_00_35f5 ; $35eb
+	jr nz, .envelopeDone ; $35eb
 	ld a, [hl] ; $35ed
 	ldh [hSndEnvLength], a ; $35ee
 	ld a, b ; $35f0
 	swap a ; $35f1
 	ldh [hSndEnvRate], a ; $35f3
-Label_00_35f5:
+.envelopeDone:
 	inc hl ; $35f5
-	jp Label_00_3566 ; $35f6
-Label_00_35f9:
+	jp .nextCommand ; $35f6
+.cmdB0:
 	cp a, $c0 ; $35f9
-	jr nc, Label_00_35dd ; $35fb
+	jr nc, .cmdC0 ; $35fb
 	and a, $0f ; $35fd
-	jp z, Label_00_3618 ; $35ff
+	jp z, .loopSlotJump ; $35ff
 	ld e, a ; $3602
 	ld b, [hl] ; $3603
 	push hl ; $3604
@@ -9396,20 +9396,20 @@ Label_00_35f9:
 	ld a, [hl+] ; $3609
 	inc e ; $360a
 	cp a, e ; $360b
-	jr nc, Label_00_3614 ; $360c
+	jr nc, .loopNotTaken ; $360c
 	ld a, [hl+] ; $360e
 	ldh [hSndScriptPtr], a ; $360f
 	ld a, [hl] ; $3611
 	ldh [hSndScriptPtr + 1], a ; $3612
-Label_00_3614:
+.loopNotTaken:
 	pop hl ; $3614
 	jp RunSoundChannelScript ; $3615
-Label_00_3618:
+.loopSlotJump:
 	ld a, [hl] ; $3618
 	ld b, a ; $3619
 	and a, $f0 ; $361a
 	cp a, $f0 ; $361c
-	jp nz, Label_00_3631 ; $361e
+	jp nz, .skipByte ; $361e
 	ld b, [hl] ; $3621
 	push hl ; $3622
 	call GetChannelLoopSlot ; $3623
@@ -9420,12 +9420,12 @@ Label_00_3618:
 	ldh [hSndScriptPtr + 1], a ; $362b
 	pop hl ; $362d
 	jp RunSoundChannelScript ; $362e
-Label_00_3631:
+.skipByte:
 	inc hl ; $3631
-	jp Label_00_3566 ; $3632
-Label_00_3635:
+	jp .nextCommand ; $3632
+.cmdA0:
 	cp a, $a0 ; $3635
-	jr nz, Label_00_364f ; $3637
+	jr nz, .setWaveId ; $3637
 	ld a, [hl+] ; $3639
 	swap a ; $363a
 	ldh [hSndVolume], a ; $363c
@@ -9433,19 +9433,19 @@ Label_00_3635:
 	ld b, a ; $3641
 	ld a, [wSndActiveMask] ; $3642
 	and a, b ; $3645
-	jp nz, Label_00_3566 ; $3646
+	jp nz, .nextCommand ; $3646
 	call ApplyChannelEnvelope ; $3649
-	jp Label_00_3566 ; $364c
-Label_00_364f:
+	jp .nextCommand ; $364c
+.setWaveId:
 	cp a, $a1 ; $364f
-	jr nz, Label_00_369e ; $3651
+	jr nz, .setDuty ; $3651
 	ld a, [wSndChannelType] ; $3653
 	cp a, $02 ; $3656
-	jr z, Label_00_3660 ; $3658
+	jr z, .loadWave ; $3658
 	ld a, [hl+] ; $365a
 	ldh [hSndWaveId], a ; $365b
-	jp Label_00_3566 ; $365d
-Label_00_3660:
+	jp .nextCommand ; $365d
+.loadWave:
 	ld a, [hl+] ; $3660
 	ld e, a ; $3661
 	ldh [hSndWaveId], a ; $3662
@@ -9453,9 +9453,9 @@ Label_00_3660:
 	ld b, a ; $3667
 	ld a, [wSndActiveMask] ; $3668
 	and a, b ; $366b
-	jr z, Label_00_3671 ; $366c
-	jp Label_00_3566 ; $366e
-Label_00_3671:
+	jr z, .uploadWave ; $366c
+	jp .nextCommand ; $366e
+.uploadWave:
 	xor a, a ; $3671
 	ldh [rAUD3ENA], a ; $3672
 	ld d, a ; $3674
@@ -9479,20 +9479,20 @@ Label_00_3671:
 	add hl, de ; $368f
 	ld c, $30 ; $3690
 	ld b, $10 ; $3692
-Label_00_3694:
+.waveCopyLoop:
 	ld a, [hl+] ; $3694
 	ldh [c], a ; $3695
 	inc c ; $3696
 	dec b ; $3697
-	jr nz, Label_00_3694 ; $3698
+	jr nz, .waveCopyLoop ; $3698
 	pop hl ; $369a
-	jp Label_00_3566 ; $369b
-Label_00_369e:
+	jp .nextCommand ; $369b
+.setDuty:
 	cp a, $a2 ; $369e
-	jr nz, Label_00_36bf ; $36a0
+	jr nz, .setNoteLength ; $36a0
 	ld a, [wSndChannelType] ; $36a2
 	cp a, $02 ; $36a5
-	jr z, Label_00_36b9 ; $36a7
+	jr z, .setEnvLength ; $36a7
 	ld a, [hl+] ; $36a9
 	rrca ; $36aa
 	rrca ; $36ab
@@ -9502,18 +9502,18 @@ Label_00_369e:
 	and a, $3f ; $36b1
 	or a, d ; $36b3
 	ldh [hSndToneCtrl], a ; $36b4
-	jp Label_00_3566 ; $36b6
-Label_00_36b9:
+	jp .nextCommand ; $36b6
+.setEnvLength:
 	ld a, [hl+] ; $36b9
 	ldh [hSndEnvLength], a ; $36ba
-	jp Label_00_3566 ; $36bc
-Label_00_36bf:
+	jp .nextCommand ; $36bc
+.setNoteLength:
 	cp a, $a3 ; $36bf
 	cp a, $a3 ; $36c1
-	jr nz, Label_00_36e8 ; $36c3
+	jr nz, .setNoteOffset ; $36c3
 	ld a, [hl+] ; $36c5
 	cp a, $fe ; $36c6
-	jr z, Label_00_36e2 ; $36c8
+	jr z, .clearNoteLength ; $36c8
 	ld b, a ; $36ca
 	and a, $0f ; $36cb
 	add a, a ; $36cd
@@ -9526,45 +9526,45 @@ Label_00_36bf:
 	ldh a, [hSndChannelType] ; $36d8
 	and a, $0f ; $36da
 	or a, e ; $36dc
-Label_00_36dd:
+.storeChannelType:
 	ldh [hSndChannelType], a ; $36dd
-	jp Label_00_3566 ; $36df
-Label_00_36e2:
+	jp .nextCommand ; $36df
+.clearNoteLength:
 	ldh a, [hSndChannelType] ; $36e2
 	and a, $0f ; $36e4
-	jr Label_00_36dd ; $36e6
-Label_00_36e8:
+	jr .storeChannelType ; $36e6
+.setNoteOffset:
 	cp a, $a4 ; $36e8
-	jr nz, Label_00_36f2 ; $36ea
+	jr nz, .setPan ; $36ea
 	ld a, [hl+] ; $36ec
 	ldh [hSndNoteOffset], a ; $36ed
-	jp Label_00_3566 ; $36ef
-Label_00_36f2:
+	jp .nextCommand ; $36ef
+.setPan:
 	cp a, $a5 ; $36f2
-	jr nz, Label_00_3704 ; $36f4
+	jr nz, .setMasterVolume ; $36f4
 	ld a, [hl+] ; $36f6
 	cp a, $01 ; $36f7
-	jr nz, Label_00_36ff ; $36f9
+	jr nz, .storePan ; $36f9
 	ldh a, [hSndPanMask] ; $36fb
 	swap a ; $36fd
-Label_00_36ff:
+.storePan:
 	ldh [hSndPanMask], a ; $36ff
-	jp Label_00_3566 ; $3701
-Label_00_3704:
+	jp .nextCommand ; $3701
+.setMasterVolume:
 	cp a, $a6 ; $3704
-	jr nz, Label_00_370e ; $3706
+	jr nz, .setPortamento ; $3706
 	ld a, [hl+] ; $3708
 	ldh [rAUDVOL], a ; $3709
-	jp Label_00_3566 ; $370b
-Label_00_370e:
+	jp .nextCommand ; $370b
+.setPortamento:
 	cp a, $a7 ; $370e
-	jr nz, Label_00_3718 ; $3710
+	jr nz, .setInstrument ; $3710
 	ld a, [hl] ; $3712
 	ldh [hSndPortamentoTimer], a ; $3713
 	jp Label_00_3947 ; $3715
-Label_00_3718:
+.setInstrument:
 	cp a, $a8 ; $3718
-	jr nz, Label_00_372a ; $371a
+	jr nz, .transpose ; $371a
 	ld a, [hl+] ; $371c
 	ld c, a ; $371d
 	and a, $0f ; $371e
@@ -9573,28 +9573,28 @@ Label_00_3718:
 	and a, $f0 ; $3722
 	or a, b ; $3724
 	ldh [hSndInstrument], a ; $3725
-	jp Label_00_3566 ; $3727
-Label_00_372a:
+	jp .nextCommand ; $3727
+.transpose:
 	cp a, $a9 ; $372a
-	jp nz, Label_00_3795 ; $372c
+	jp nz, .setEcho ; $372c
 	ld a, [hl+] ; $372f
 	cp a, $f0 ; $3730
-	jr z, Label_00_3771 ; $3732
+	jr z, .transposeInc ; $3732
 	cp a, $f1 ; $3734
-	jr z, Label_00_3779 ; $3736
+	jr z, .transposeDec ; $3736
 	cp a, $f2 ; $3738
-	jr z, Label_00_3781 ; $373a
+	jr z, .globalTransposeInc ; $373a
 	cp a, $f3 ; $373c
-	jr z, Label_00_378b ; $373e
+	jr z, .globalTransposeDec ; $373e
 	cp a, $fe ; $3740
-	jr z, Label_00_374c ; $3742
+	jr z, .transposeFromGlobal ; $3742
 	cp a, $ff ; $3744
-	jr nz, Label_00_3760 ; $3746
+	jr nz, .setTranspose ; $3746
 	ldh a, [hSndTranspose] ; $3748
-	jr Label_00_374f ; $374a
-Label_00_374c:
+	jr .transposeJumpTable ; $374a
+.transposeFromGlobal:
 	ld a, [wSndTranspose] ; $374c
-Label_00_374f:
+.transposeJumpTable:
 	sla a ; $374f
 	add a, l ; $3751
 	ld l, a ; $3752
@@ -9606,42 +9606,42 @@ Label_00_374f:
 	ld a, [hl] ; $375a
 	ldh [hSndScriptPtr + 1], a ; $375b
 	jp RunSoundChannelScript ; $375d
-Label_00_3760:
+.setTranspose:
 	cp a, $80 ; $3760
-	jr nc, Label_00_3769 ; $3762
+	jr nc, .setGlobalTranspose ; $3762
 	ldh [hSndTranspose], a ; $3764
-	jp Label_00_3566 ; $3766
-Label_00_3769:
+	jp .nextCommand ; $3766
+.setGlobalTranspose:
 	sub a, $80 ; $3769
 	ld [wSndTranspose], a ; $376b
-	jp Label_00_3566 ; $376e
-Label_00_3771:
+	jp .nextCommand ; $376e
+.transposeInc:
 	ldh a, [hSndTranspose] ; $3771
 	inc a ; $3773
 	ldh [hSndTranspose], a ; $3774
-	jp Label_00_3566 ; $3776
-Label_00_3779:
+	jp .nextCommand ; $3776
+.transposeDec:
 	ldh a, [hSndTranspose] ; $3779
 	dec a ; $377b
 	ldh [hSndTranspose], a ; $377c
-	jp Label_00_3566 ; $377e
-Label_00_3781:
+	jp .nextCommand ; $377e
+.globalTransposeInc:
 	ld a, [wSndTranspose] ; $3781
 	inc a ; $3784
 	ld [wSndTranspose], a ; $3785
-	jp Label_00_3566 ; $3788
-Label_00_378b:
+	jp .nextCommand ; $3788
+.globalTransposeDec:
 	ld a, [wSndTranspose] ; $378b
 	dec a ; $378e
 	ld [wSndTranspose], a ; $378f
-	jp Label_00_3566 ; $3792
-Label_00_3795:
+	jp .nextCommand ; $3792
+.setEcho:
 	cp a, $aa ; $3795
-	jr nz, Label_00_37bf ; $3797
+	jr nz, .loopBlock ; $3797
 	ld a, [hl+] ; $3799
 	ld c, a ; $379a
 	and a, $f0 ; $379b
-	jr z, Label_00_37b5 ; $379d
+	jr z, .clearEcho ; $379d
 	swap a ; $379f
 	ldh [hSndEchoTimer], a ; $37a1
 	or a, $f0 ; $37a3
@@ -9653,22 +9653,22 @@ Label_00_3795:
 	and a, $f0 ; $37ad
 	or a, c ; $37af
 	ldh [hSndEcho], a ; $37b0
-	jp Label_00_3566 ; $37b2
-Label_00_37b5:
+	jp .nextCommand ; $37b2
+.clearEcho:
 	xor a, a ; $37b5
 	ldh [hSndEchoTimer], a ; $37b6
 	ldh [hSndEcho], a ; $37b8
 	ldh [hSndEchoCtrl], a ; $37ba
-	jp Label_00_3566 ; $37bc
-Label_00_37bf:
+	jp .nextCommand ; $37bc
+.loopBlock:
 	cp a, $ac ; $37bf
-	jr nz, Label_00_37fd ; $37c1
+	jr nz, .loopReturn ; $37c1
 	ldh a, [hSndLoopCount] ; $37c3
 	sub a, $01 ; $37c5
-	jr z, Label_00_37eb ; $37c7
-	jr nc, Label_00_37cc ; $37c9
+	jr z, .loopFinished ; $37c7
+	jr nc, .storeLoopCount ; $37c9
 	ld a, [hl] ; $37cb
-Label_00_37cc:
+.storeLoopCount:
 	ldh [hSndLoopCount], a ; $37cc
 	ldh a, [hSndScriptPtr] ; $37ce
 	sub a, $01 ; $37d0
@@ -9687,7 +9687,7 @@ Label_00_37cc:
 	ld a, h ; $37e5
 	ldh [hSndScriptPtr + 1], a ; $37e6
 	jp RunSoundChannelScript ; $37e8
-Label_00_37eb:
+.loopFinished:
 	xor a, a ; $37eb
 	ldh [hSndLoopCount], a ; $37ec
 	ldh a, [hSndScriptPtr] ; $37ee
@@ -9697,17 +9697,17 @@ Label_00_37eb:
 	adc a, $00 ; $37f6
 	ldh [hSndScriptPtr + 1], a ; $37f8
 	jp RunSoundChannelScript ; $37fa
-Label_00_37fd:
+.loopReturn:
 	cp a, $ad ; $37fd
-	jr nz, Label_00_380c ; $37ff
+	jr nz, .setSweepFlag ; $37ff
 	ldh a, [hSndLoopReturnPtr] ; $3801
 	ldh [hSndScriptPtr], a ; $3803
 	ldh a, [hSndLoopReturnPtr + 1] ; $3805
 	ldh [hSndScriptPtr + 1], a ; $3807
 	jp RunSoundChannelScript ; $3809
-Label_00_380c:
+.setSweepFlag:
 	cp a, $ae ; $380c
-	jr nz, Label_00_381e ; $380e
+	jr nz, .setToneLength ; $380e
 	ld a, [hl+] ; $3810
 	and a, $10 ; $3811
 	ld b, a ; $3813
@@ -9715,10 +9715,10 @@ Label_00_380c:
 	and a, $ef ; $3816
 	or a, b ; $3818
 	ldh [hSndToneCtrl], a ; $3819
-	jp Label_00_3566 ; $381b
-Label_00_381e:
+	jp .nextCommand ; $381b
+.setToneLength:
 	cp a, $af ; $381e
-	jr nz, Label_00_3832 ; $3820
+	jr nz, .skipUnknown ; $3820
 	ld a, [hl+] ; $3822
 	and a, $0f ; $3823
 	ldh [hSndLengthAccum], a ; $3825
@@ -9727,10 +9727,10 @@ Label_00_381e:
 	and a, $f0 ; $382a
 	or a, b ; $382c
 	ldh [hSndToneCtrl], a ; $382d
-	jp Label_00_3566 ; $382f
-Label_00_3832:
+	jp .nextCommand ; $382f
+.skipUnknown:
 	inc hl ; $3832
-	jp Label_00_3566 ; $3833
+	jp .nextCommand ; $3833
 NoiseNoteTable:
 	; $3836, 16 bytes (bytes:16)
 	db $00, $01, $11, $12, $14, $23, $07, $15, $17, $32, $33, $60, $61, $45, $53, $62 ; 0x00
