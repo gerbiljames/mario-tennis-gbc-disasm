@@ -485,11 +485,11 @@ RunSoundTest:
 	call AdvanceFrame ; $6a8a
 	ldh a, [hInputPressed] ; $6a8d
 	and a, PADF_UP | PADF_DOWN ; $6a8f
-	jr z, .step ; $6a91
+	jr z, .clampTrack ; $6a91
 	ld a, b ; $6a93
 	xor a, $01 ; $6a94
 	ld b, a ; $6a96
-.step:
+.clampTrack:
 	ld a, b ; $6a97
 	or a, a ; $6a98
 	jr nz, .nonZero ; $6a99
@@ -497,47 +497,47 @@ RunSoundTest:
 	bit PADB_RIGHT, a ; $6a9d
 	jr z, .zero ; $6a9f
 	inc d ; $6aa1
-	jr .step3 ; $6aa2
+	jr .clampBank ; $6aa2
 .zero:
 	bit 5, a ; $6aa4
-	jr z, .step9 ; $6aa6
+	jr z, .clampTrackDown ; $6aa6
 	dec d ; $6aa8
-.step3:
+.clampBank:
 	ld a, d ; $6aa9
 	cp a, $ff ; $6aaa
 	jr nz, .neff ; $6aac
 	ld d, $3e ; $6aae
-	jr .step9 ; $6ab0
+	jr .clampTrackDown ; $6ab0
 .neff:
 	ld a, d ; $6ab2
 	cp a, $3e ; $6ab3
-	jr c, .step9 ; $6ab5
-	jr z, .step9 ; $6ab7
+	jr c, .clampTrackDown ; $6ab5
+	jr z, .clampTrackDown ; $6ab7
 	ld d, $00 ; $6ab9
-	jr .step9 ; $6abb
+	jr .clampTrackDown ; $6abb
 .nonZero:
 	ldh a, [hInputPressed] ; $6abd
 	bit PADB_RIGHT, a ; $6abf
-	jr z, .step6 ; $6ac1
+	jr z, .checkLeft ; $6ac1
 	inc e ; $6ac3
-	jr .step7 ; $6ac4
-.step6:
+	jr .clampSfx ; $6ac4
+.checkLeft:
 	bit 5, a ; $6ac6
-	jr z, .step9 ; $6ac8
+	jr z, .clampTrackDown ; $6ac8
 	dec e ; $6aca
-.step7:
+.clampSfx:
 	ld a, e ; $6acb
 	cp a, $ff ; $6acc
 	jr nz, .neff2 ; $6ace
 	ld e, $71 ; $6ad0
-	jr .step9 ; $6ad2
+	jr .clampTrackDown ; $6ad2
 .neff2:
 	ld a, e ; $6ad4
 	cp a, $71 ; $6ad5
-	jr c, .step9 ; $6ad7
-	jr z, .step9 ; $6ad9
+	jr c, .clampTrackDown ; $6ad7
+	jr z, .clampTrackDown ; $6ad9
 	ld e, $00 ; $6adb
-.step9:
+.clampTrackDown:
 	ld a, b ; $6add
 	or a, a ; $6ade
 	jr nz, .nonZero2 ; $6adf

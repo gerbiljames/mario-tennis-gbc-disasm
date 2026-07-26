@@ -2906,7 +2906,7 @@ NetGameMatch1JudgePoint:
 	dw NetGameMatch1Cases1.step3 ; $5507 jumptable
 	dw NetGameMatch1Cases2.step3 ; $5509 jumptable
 	dw NetGameMatch1Cases3.step3 ; $550b jumptable
-	dw NetGameMatch1Cases4.step3 ; $550d jumptable
+	dw NetGameMatch1Cases4.dispatchResult ; $550d jumptable
 .rally1:
 	ld a, b ; $550f
 	ld a, a ; $5510
@@ -3050,8 +3050,8 @@ NetGameMatch1Cases3:
 	rst Rst00 ; $55e1
 	dw NetGameMatch1Cases3.checkPointOutcome ; $55e2 jumptable
 	dw NetGameMatch1Cases4 ; $55e4 jumptable
-	dw NetGameMatch1Cases4.step ; $55e6 jumptable
-	dw NetGameMatch1Cases4.step2 ; $55e8 jumptable
+	dw NetGameMatch1Cases4.noAction ; $55e6 jumptable
+	dw NetGameMatch1Cases4.noAction2 ; $55e8 jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $55ea
 	ld hl, DrillShotTable_0b_5609 ; $55ed
@@ -3079,19 +3079,19 @@ DrillShotTable_0b_5609:
 NetGameMatch1Cases4:
 	xor a, a ; $5613
 	ret ; $5614
-.step:
+.noAction:
 	xor a, a ; $5615
 	ret ; $5616
-.step2:
+.noAction2:
 	xor a, a ; $5617
 	ret ; $5618
-.step3:
+.dispatchResult:
 	ld a, b ; $5619
 	ld a, a ; $561a
 	rst Rst00 ; $561b
 	dw NetGameMatch1Cases4.queueDrillResultMessage2 ; $561c jumptable
 	dw NetGameMatch1Cases4.queueDrillResultMessage ; $561e jumptable
-	dw NetGameMatch1Cases4.step6 ; $5620 jumptable
+	dw NetGameMatch1Cases4.noAction3 ; $5620 jumptable
 	dw NetGameMatch1Cases4.storeMatchAbortFlag2 ; $5622 jumptable
 .queueDrillResultMessage2:
 	xor a, a ; $5624
@@ -3101,7 +3101,7 @@ NetGameMatch1Cases4:
 	ld b, $0d ; $5628
 	call QueueDrillResultMessage ; $562a
 	jp .storeMatchAbortFlag ; $562d
-.step6:
+.noAction3:
 	xor a, a ; $5630
 	ret ; $5631
 .storeMatchAbortFlag2:
@@ -3291,7 +3291,7 @@ NetGameMatch2JudgePoint:
 	dw NetGameMatch2Cases1.step3 ; $5781 jumptable
 	dw NetGameMatch2Cases2.step3 ; $5783 jumptable
 	dw NetGameMatch2Cases3.step3 ; $5785 jumptable
-	dw NetGameMatch2Cases4.step3 ; $5787 jumptable
+	dw NetGameMatch2Cases4.dispatchResult ; $5787 jumptable
 .rally1:
 	ld a, b ; $5789
 	ld a, a ; $578a
@@ -3436,8 +3436,8 @@ NetGameMatch2Cases3:
 	rst Rst00 ; $585c
 	dw NetGameMatch2Cases3.checkPointOutcome ; $585d jumptable
 	dw NetGameMatch2Cases4 ; $585f jumptable
-	dw NetGameMatch2Cases4.step ; $5861 jumptable
-	dw NetGameMatch2Cases4.step2 ; $5863 jumptable
+	dw NetGameMatch2Cases4.noAction ; $5861 jumptable
+	dw NetGameMatch2Cases4.noAction2 ; $5863 jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $5865
 	ld hl, DrillShotTable_0b_5884 ; $5868
@@ -3465,19 +3465,19 @@ DrillShotTable_0b_5884:
 NetGameMatch2Cases4:
 	xor a, a ; $588e
 	ret ; $588f
-.step:
+.noAction:
 	xor a, a ; $5890
 	ret ; $5891
-.step2:
+.noAction2:
 	xor a, a ; $5892
 	ret ; $5893
-.step3:
+.dispatchResult:
 	ld a, b ; $5894
 	ld a, a ; $5895
 	rst Rst00 ; $5896
 	dw NetGameMatch2Cases4.queueDrillResultMessage2 ; $5897 jumptable
 	dw NetGameMatch2Cases4.queueDrillResultMessage ; $5899 jumptable
-	dw NetGameMatch2Cases4.step6 ; $589b jumptable
+	dw NetGameMatch2Cases4.noAction3 ; $589b jumptable
 	dw NetGameMatch2Cases4.storeMatchAbortFlag3 ; $589d jumptable
 .queueDrillResultMessage2:
 	xor a, a ; $589f
@@ -3487,7 +3487,7 @@ NetGameMatch2Cases4:
 	ld b, $0d ; $58a3
 	call QueueDrillResultMessage ; $58a5
 	jp .storeMatchAbortFlag2 ; $58a8
-.step6:
+.noAction3:
 	xor a, a ; $58ab
 	ret ; $58ac
 .storeMatchAbortFlag3:
@@ -3777,7 +3777,7 @@ NetGameMatch3JudgePoint:
 	dw NetGameMatch3Cases1.step3 ; $5aac jumptable
 	dw NetGameMatch3Cases2.step3 ; $5aae jumptable
 	dw NetGameMatch3Cases3.step3 ; $5ab0 jumptable
-	dw NetGameMatch3Cases4.step3 ; $5ab2 jumptable
+	dw NetGameMatch3Cases4.dispatchResult ; $5ab2 jumptable
 .rally1:
 	ld a, b ; $5ab4
 	ld a, a ; $5ab5
@@ -3915,8 +3915,8 @@ NetGameMatch3Cases3:
 	rst Rst00 ; $5b77
 	dw NetGameMatch3Cases3.checkPointOutcome ; $5b78 jumptable
 	dw NetGameMatch3Cases4 ; $5b7a jumptable
-	dw NetGameMatch3Cases4.step ; $5b7c jumptable
-	dw NetGameMatch3Cases4.step2 ; $5b7e jumptable
+	dw NetGameMatch3Cases4.noAction ; $5b7c jumptable
+	dw NetGameMatch3Cases4.noAction2 ; $5b7e jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $5b80
 	ld hl, DrillShotTable_0b_5b9f ; $5b83
@@ -3944,19 +3944,19 @@ DrillShotTable_0b_5b9f:
 NetGameMatch3Cases4:
 	xor a, a ; $5ba9
 	ret ; $5baa
-.step:
+.noAction:
 	xor a, a ; $5bab
 	ret ; $5bac
-.step2:
+.noAction2:
 	xor a, a ; $5bad
 	ret ; $5bae
-.step3:
+.dispatchResult:
 	ld a, b ; $5baf
 	ld a, a ; $5bb0
 	rst Rst00 ; $5bb1
 	dw NetGameMatch3Cases4.queueDrillResultMessage2 ; $5bb2 jumptable
 	dw NetGameMatch3Cases4.queueDrillResultMessage ; $5bb4 jumptable
-	dw NetGameMatch3Cases4.step6 ; $5bb6 jumptable
+	dw NetGameMatch3Cases4.noAction3 ; $5bb6 jumptable
 	dw NetGameMatch3Cases4.storeMatchAbortFlag2 ; $5bb8 jumptable
 .queueDrillResultMessage2:
 	xor a, a ; $5bba
@@ -3966,7 +3966,7 @@ NetGameMatch3Cases4:
 	ld b, $0d ; $5bbe
 	call QueueDrillResultMessage ; $5bc0
 	jp .storeMatchAbortFlag ; $5bc3
-.step6:
+.noAction3:
 	xor a, a ; $5bc6
 	ret ; $5bc7
 .storeMatchAbortFlag2:
@@ -5751,7 +5751,7 @@ StrokeMatch2JudgePoint:
 	dw StrokeMatch2JudgePoint.rally1 ; $681c jumptable
 	dw StrokeMatch2Cases1.step3 ; $681e jumptable
 	dw StrokeMatch2Cases2.step3 ; $6820 jumptable
-	dw StrokeMatch2Cases3.step3 ; $6822 jumptable
+	dw StrokeMatch2Cases3.dispatchResult ; $6822 jumptable
 .rally1:
 	ld a, b ; $6824
 	ld a, a ; $6825
@@ -5849,8 +5849,8 @@ StrokeMatch2Cases2:
 	rst Rst00 ; $68ae
 	dw StrokeMatch2Cases2.checkPointOutcome ; $68af jumptable
 	dw StrokeMatch2Cases3 ; $68b1 jumptable
-	dw StrokeMatch2Cases3.step ; $68b3 jumptable
-	dw StrokeMatch2Cases3.step2 ; $68b5 jumptable
+	dw StrokeMatch2Cases3.noAction ; $68b3 jumptable
+	dw StrokeMatch2Cases3.noAction2 ; $68b5 jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $68b7
 	ld hl, DrillShotTable_0b_68d6 ; $68ba
@@ -5887,19 +5887,19 @@ StrokeMatch2Cases3:
 	jp z, .zero ; $68f2
 	xor a, a ; $68f5
 	ret ; $68f6
-.step:
+.noAction:
 	xor a, a ; $68f7
 	ret ; $68f8
-.step2:
+.noAction2:
 	xor a, a ; $68f9
 	ret ; $68fa
-.step3:
+.dispatchResult:
 	ld a, b ; $68fb
 	ld a, a ; $68fc
 	rst Rst00 ; $68fd
 	dw StrokeMatch2Cases3.setDrillMessageByServer2 ; $68fe jumptable
 	dw StrokeMatch2Cases3.setDrillMessageByServer ; $6900 jumptable
-	dw StrokeMatch2Cases3.step6 ; $6902 jumptable
+	dw StrokeMatch2Cases3.noAction3 ; $6902 jumptable
 	dw StrokeMatch2Cases3.storeMatchAbortFlag2 ; $6904 jumptable
 .setDrillMessageByServer2:
 	xor a, a ; $6906
@@ -5909,7 +5909,7 @@ StrokeMatch2Cases3:
 	ld b, $0d ; $690a
 	call SetDrillMessageByServer ; $690c
 	jp .storeMatchAbortFlag ; $690f
-.step6:
+.noAction3:
 	xor a, a ; $6912
 	ret ; $6913
 .storeMatchAbortFlag2:
@@ -6102,7 +6102,7 @@ StrokeMatch3JudgePoint:
 	dw StrokeMatch3JudgePoint.rally1 ; $6a67 jumptable
 	dw StrokeMatch3Cases1.step3 ; $6a69 jumptable
 	dw StrokeMatch3Cases2.step3 ; $6a6b jumptable
-	dw StrokeMatch3Cases3.step3 ; $6a6d jumptable
+	dw StrokeMatch3Cases3.dispatchResult ; $6a6d jumptable
 .rally1:
 	ld a, b ; $6a6f
 	ld a, a ; $6a70
@@ -6191,8 +6191,8 @@ StrokeMatch3Cases2:
 	rst Rst00 ; $6ae5
 	dw StrokeMatch3Cases2.checkPointOutcome ; $6ae6 jumptable
 	dw StrokeMatch3Cases3 ; $6ae8 jumptable
-	dw StrokeMatch3Cases3.step ; $6aea jumptable
-	dw StrokeMatch3Cases3.step2 ; $6aec jumptable
+	dw StrokeMatch3Cases3.noAction ; $6aea jumptable
+	dw StrokeMatch3Cases3.noAction2 ; $6aec jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $6aee
 	ld hl, DrillShotTable_0b_6b0d ; $6af1
@@ -6229,19 +6229,19 @@ StrokeMatch3Cases3:
 	jp z, .zero ; $6b29
 	xor a, a ; $6b2c
 	ret ; $6b2d
-.step:
+.noAction:
 	xor a, a ; $6b2e
 	ret ; $6b2f
-.step2:
+.noAction2:
 	xor a, a ; $6b30
 	ret ; $6b31
-.step3:
+.dispatchResult:
 	ld a, b ; $6b32
 	ld a, a ; $6b33
 	rst Rst00 ; $6b34
 	dw StrokeMatch3Cases3.setDrillMessageByServer2 ; $6b35 jumptable
 	dw StrokeMatch3Cases3.setDrillMessageByServer ; $6b37 jumptable
-	dw StrokeMatch3Cases3.step6 ; $6b39 jumptable
+	dw StrokeMatch3Cases3.noAction3 ; $6b39 jumptable
 	dw StrokeMatch3Cases3.storeMatchAbortFlag2 ; $6b3b jumptable
 .setDrillMessageByServer2:
 	xor a, a ; $6b3d
@@ -6251,7 +6251,7 @@ StrokeMatch3Cases3:
 	ld b, $0d ; $6b41
 	call SetDrillMessageByServer ; $6b43
 	jp .storeMatchAbortFlag ; $6b46
-.step6:
+.noAction3:
 	xor a, a ; $6b49
 	ret ; $6b4a
 .storeMatchAbortFlag2:

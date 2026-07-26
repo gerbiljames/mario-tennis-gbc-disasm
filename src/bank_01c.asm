@@ -1823,13 +1823,13 @@ DrawStatValueSprites:
 	ld l, a ; $4e5f
 	ld a, [$d028] ; $4e60
 	or a, a ; $4e63
-	jr nz, .step ; $4e64
+	jr nz, .digits1 ; $4e64
 	ld a, [$d024] ; $4e66
 	or a, a ; $4e69
-	jr nz, .step ; $4e6a
+	jr nz, .digits1 ; $4e6a
 	inc l ; $4e6c
 	ld b, $0f ; $4e6d
-.step:
+.digits1:
 	ld a, l ; $4e6f
 	cp a, $0a ; $4e70
 	jr c, .lt0a ; $4e72
@@ -1857,7 +1857,7 @@ DrawStatValueSprites:
 	xor a, a ; $4e9d
 	call GetStatDigitSpritePos ; $4e9e
 	call QueueSprite ; $4ea1
-	jr .step3 ; $4ea4
+	jr .stat2 ; $4ea4
 .lt0a:
 	ld a, l ; $4ea6
 	rlca ; $4ea7
@@ -1866,19 +1866,19 @@ DrawStatValueSprites:
 	xor a, a ; $4eac
 	call GetStatDigitSpritePos ; $4ead
 	call QueueSprite ; $4eb0
-.step3:
+.stat2:
 	ld b, $0e ; $4eb3
 	ld a, [$d00b] ; $4eb5
 	ld l, a ; $4eb8
 	ld a, [$d028] ; $4eb9
 	or a, a ; $4ebc
-	jr nz, .step4 ; $4ebd
+	jr nz, .digits2 ; $4ebd
 	ld a, [$d024] ; $4ebf
 	cp a, $01 ; $4ec2
-	jr nz, .step4 ; $4ec4
+	jr nz, .digits2 ; $4ec4
 	inc l ; $4ec6
 	ld b, $0f ; $4ec7
-.step4:
+.digits2:
 	ld a, l ; $4ec9
 	cp a, $0a ; $4eca
 	jr c, .lt0a2 ; $4ecc
@@ -1906,7 +1906,7 @@ DrawStatValueSprites:
 	ld a, $01 ; $4ef8
 	call GetStatDigitSpritePos ; $4efa
 	call QueueSprite ; $4efd
-	jr .step6 ; $4f00
+	jr .stat3 ; $4f00
 .lt0a2:
 	ld a, l ; $4f02
 	rlca ; $4f03
@@ -1915,19 +1915,19 @@ DrawStatValueSprites:
 	ld a, $01 ; $4f08
 	call GetStatDigitSpritePos ; $4f0a
 	call QueueSprite ; $4f0d
-.step6:
+.stat3:
 	ld b, $0e ; $4f10
 	ld a, [$d00c] ; $4f12
 	ld l, a ; $4f15
 	ld a, [$d028] ; $4f16
 	or a, a ; $4f19
-	jr nz, .step7 ; $4f1a
+	jr nz, .digits3 ; $4f1a
 	ld a, [$d024] ; $4f1c
 	cp a, $02 ; $4f1f
-	jr nz, .step7 ; $4f21
+	jr nz, .digits3 ; $4f21
 	inc l ; $4f23
 	ld b, $0f ; $4f24
-.step7:
+.digits3:
 	ld a, l ; $4f26
 	cp a, $0a ; $4f27
 	jr c, .lt0a3 ; $4f29
@@ -1955,7 +1955,7 @@ DrawStatValueSprites:
 	ld a, $02 ; $4f55
 	call GetStatDigitSpritePos ; $4f57
 	call QueueSprite ; $4f5a
-	jr .step9 ; $4f5d
+	jr .stat4 ; $4f5d
 .lt0a3:
 	ld a, l ; $4f5f
 	rlca ; $4f60
@@ -1964,19 +1964,19 @@ DrawStatValueSprites:
 	ld a, $02 ; $4f65
 	call GetStatDigitSpritePos ; $4f67
 	call QueueSprite ; $4f6a
-.step9:
+.stat4:
 	ld b, $0e ; $4f6d
 	ld a, [$d00d] ; $4f6f
 	ld l, a ; $4f72
 	ld a, [$d028] ; $4f73
 	or a, a ; $4f76
-	jr nz, .step10 ; $4f77
+	jr nz, .digits4 ; $4f77
 	ld a, [$d024] ; $4f79
 	cp a, $03 ; $4f7c
-	jr nz, .step10 ; $4f7e
+	jr nz, .digits4 ; $4f7e
 	inc l ; $4f80
 	ld b, $0f ; $4f81
-.step10:
+.digits4:
 	ld a, l ; $4f83
 	cp a, $0a ; $4f84
 	jr c, .lt0a4 ; $4f86

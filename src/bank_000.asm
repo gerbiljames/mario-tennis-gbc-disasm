@@ -5875,11 +5875,11 @@ RenderGlyphToTiles:
 	push af ; $214f
 	ld a, [de] ; $2150
 	and a, c ; $2151
-	jr z, .step ; $2152
+	jr z, .clearPixel ; $2152
 	ld a, b ; $2154
 	or a, [hl] ; $2155
 	jr .store ; $2156
-.step:
+.clearPixel:
 	ld a, b ; $2158
 	cpl ; $2159
 	and a, [hl] ; $215a
@@ -5888,20 +5888,20 @@ RenderGlyphToTiles:
 	rrc c ; $215c
 	ld a, [de] ; $215e
 	and a, c ; $215f
-	jr z, .step2 ; $2160
+	jr z, .clearPixel2 ; $2160
 	ld a, b ; $2162
 	or a, [hl] ; $2163
 	jr .store2 ; $2164
-.step2:
+.clearPixel2:
 	ld a, b ; $2166
 	cpl ; $2167
 	and a, [hl] ; $2168
 .store2:
 	ld [hl-], a ; $2169
 	rrc c ; $216a
-	jr nc, .step3 ; $216c
+	jr nc, .nextBit ; $216c
 	inc de ; $216e
-.step3:
+.nextBit:
 	rrc b ; $216f
 	jr nc, .restore ; $2171
 	ld a, $20 ; $2173
@@ -10127,34 +10127,34 @@ TickInstrumentEnvelope:
 	or a, e ; $3aa0
 	ld e, a ; $3aa1
 	bit 2, h ; $3aa2
-	jr nz, .step5 ; $3aa4
+	jr nz, .checkDirection ; $3aa4
 	inc b ; $3aa6
 	ld a, c ; $3aa7
 	swap a ; $3aa8
 	and a, $0f ; $3aaa
-	jr z, .step5 ; $3aac
+	jr z, .checkDirection ; $3aac
 	ld b, a ; $3aae
 	bit 3, e ; $3aaf
-	jr nz, .step3 ; $3ab1
+	jr nz, .checkVolume ; $3ab1
 	sla b ; $3ab3
 	bit 2, e ; $3ab5
-	jr nz, .step3 ; $3ab7
+	jr nz, .checkVolume ; $3ab7
 	sla b ; $3ab9
 	bit 1, e ; $3abb
 	jr z, .bit1Clear ; $3abd
-.step3:
+.checkVolume:
 	ld a, b ; $3abf
 	cp a, $08 ; $3ac0
-	jr c, .step5 ; $3ac2
+	jr c, .checkDirection ; $3ac2
 .bit1Clear:
 	ld b, $00 ; $3ac4
-.step5:
+.checkDirection:
 	bit 1, h ; $3ac6
-	jr z, .step6 ; $3ac8
+	jr z, .combine ; $3ac8
 	ld a, b ; $3aca
-	jr z, .step6 ; $3acb
+	jr z, .combine ; $3acb
 	srl b ; $3acd
-.step6:
+.combine:
 	ld a, h ; $3acf
 	and a, $08 ; $3ad0
 	or a, b ; $3ad2

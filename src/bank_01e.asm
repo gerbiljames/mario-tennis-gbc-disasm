@@ -3165,13 +3165,13 @@ ApplyPendingExpAwards:
 	ld h, [hl] ; $6b17
 	ld l, a ; $6b18
 	add hl, de ; $6b19
-	jr c, .step ; $6b1a
+	jr c, .sumAwards ; $6b1a
 	ld d, h ; $6b1c
 	ld e, l ; $6b1d
 	call ScaleExpByPlayerLevel ; $6b1e
 	call ComputeTrophyExpAwards ; $6b21
 	add hl, de ; $6b24
-	jr c, .step ; $6b25
+	jr c, .sumAwards ; $6b25
 	ld d, h ; $6b27
 	ld e, l ; $6b28
 	ld hl, $c8b1 ; $6b29
@@ -3179,7 +3179,7 @@ ApplyPendingExpAwards:
 	ld h, [hl] ; $6b2d
 	ld l, a ; $6b2e
 	add hl, de ; $6b2f
-	jr c, .step ; $6b30
+	jr c, .sumAwards ; $6b30
 	ld d, h ; $6b32
 	ld e, l ; $6b33
 	ld hl, $c8b3 ; $6b34
@@ -3188,7 +3188,7 @@ ApplyPendingExpAwards:
 	ld l, a ; $6b39
 	add hl, de ; $6b3a
 	jr nc, .noCarry ; $6b3b
-.step:
+.sumAwards:
 	ld hl, rIE ; $6b3d
 .noCarry:
 	ld a, h ; $6b40
@@ -3216,33 +3216,33 @@ ApplyPendingExpAwards:
 .recordDrillResult:
 	ld a, d ; $6b65
 	or a, e ; $6b66
-	jr z, .step4 ; $6b67
+	jr z, .award2 ; $6b67
 	ld b, $00 ; $6b69
 	ld c, $00 ; $6b6b
 	farcall RecordDrillResult ; $6b6d
-.step4:
+.award2:
 	ld hl, $c8b1 ; $6b70
 	ld a, [hl+] ; $6b73
 	ld d, [hl] ; $6b74
 	ld e, a ; $6b75
 	ld a, d ; $6b76
 	or a, e ; $6b77
-	jr z, .step5 ; $6b78
+	jr z, .award3 ; $6b78
 	ld b, $01 ; $6b7a
 	ld c, $00 ; $6b7c
 	farcall RecordDrillResult ; $6b7e
-.step5:
+.award3:
 	ld hl, $c8b3 ; $6b81
 	ld a, [hl+] ; $6b84
 	ld d, [hl] ; $6b85
 	ld e, a ; $6b86
 	ld a, d ; $6b87
 	or a, e ; $6b88
-	jr z, .step6 ; $6b89
+	jr z, .applyToRecord ; $6b89
 	ld b, $02 ; $6b8b
 	ld c, $00 ; $6b8d
 	farcall RecordDrillResult ; $6b8f
-.step6:
+.applyToRecord:
 	wram_bank $06 ; $6b92
 	ld hl, $d036 ; $6b98
 	ld a, [hl+] ; $6b9b
@@ -3250,11 +3250,11 @@ ApplyPendingExpAwards:
 	ld e, a ; $6b9d
 	ld a, d ; $6b9e
 	or a, e ; $6b9f
-	jr z, .step7 ; $6ba0
+	jr z, .checkDoubles ; $6ba0
 	ld b, $04 ; $6ba2
 	ld c, $00 ; $6ba4
 	farcall RecordDrillResult ; $6ba6
-.step7:
+.checkDoubles:
 	xor a, a ; $6ba9
 	test_flag FLAG_DOUBLES ; $6baa
 	jr nz, .isDoubles ; $6bad
@@ -4011,55 +4011,55 @@ ComputeTrophyExpAwards:
 	ld e, a ; $7073
 	ld a, d ; $7074
 	or a, e ; $7075
-	jr z, .step ; $7076
+	jr z, .sumGroup1 ; $7076
 	ld b, $04 ; $7078
 	ld c, $00 ; $707a
 	farcall RecordDrillResult ; $707c
-.step:
+.sumGroup1:
 	ld hl, $d02a ; $707f
 	ld a, [hl+] ; $7082
 	ld d, [hl] ; $7083
 	ld e, a ; $7084
 	ld a, d ; $7085
 	or a, e ; $7086
-	jr z, .step2 ; $7087
+	jr z, .sumGroup2 ; $7087
 	ld b, $04 ; $7089
 	ld c, $01 ; $708b
 	farcall RecordDrillResult ; $708d
-.step2:
+.sumGroup2:
 	ld hl, $d02c ; $7090
 	ld a, [hl+] ; $7093
 	ld d, [hl] ; $7094
 	ld e, a ; $7095
 	ld a, d ; $7096
 	or a, e ; $7097
-	jr z, .step3 ; $7098
+	jr z, .sumGroup3 ; $7098
 	ld b, $04 ; $709a
 	ld c, $02 ; $709c
 	farcall RecordDrillResult ; $709e
-.step3:
+.sumGroup3:
 	ld hl, $d02e ; $70a1
 	ld a, [hl+] ; $70a4
 	ld d, [hl] ; $70a5
 	ld e, a ; $70a6
 	ld a, d ; $70a7
 	or a, e ; $70a8
-	jr z, .step4 ; $70a9
+	jr z, .sumGroup4 ; $70a9
 	ld b, $04 ; $70ab
 	ld c, $03 ; $70ad
 	farcall RecordDrillResult ; $70af
-.step4:
+.sumGroup4:
 	ld hl, $d030 ; $70b2
 	ld a, [hl+] ; $70b5
 	ld d, [hl] ; $70b6
 	ld e, a ; $70b7
 	ld a, d ; $70b8
 	or a, e ; $70b9
-	jr z, .step5 ; $70ba
+	jr z, .sumGroup5 ; $70ba
 	ld b, $04 ; $70bc
 	ld c, $04 ; $70be
 	farcall RecordDrillResult ; $70c0
-.step5:
+.sumGroup5:
 	ld hl, $d032 ; $70c3
 	ld a, [hl+] ; $70c6
 	ld d, [hl] ; $70c7
