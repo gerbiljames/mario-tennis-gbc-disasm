@@ -4093,9 +4093,9 @@ CopyScoreboardTileColumn:
 	ld a, $1e ; $5f0e
 	add a, e ; $5f10
 	ld e, a ; $5f11
-	jr nc, Label_08_5f15 ; $5f12
+	jr nc, .row1 ; $5f12
 	inc d ; $5f14
-Label_08_5f15:
+.row1:
 	ld a, [hl+] ; $5f15
 	ld [de], a ; $5f16
 	inc de ; $5f17
@@ -4105,9 +4105,9 @@ Label_08_5f15:
 	ld a, $1e ; $5f1b
 	add a, e ; $5f1d
 	ld e, a ; $5f1e
-	jr nc, Label_08_5f22 ; $5f1f
+	jr nc, .row2 ; $5f1f
 	inc d ; $5f21
-Label_08_5f22:
+.row2:
 	ld a, [hl+] ; $5f22
 	ld [de], a ; $5f23
 	inc de ; $5f24
@@ -4117,9 +4117,9 @@ Label_08_5f22:
 	ld a, $1e ; $5f28
 	add a, e ; $5f2a
 	ld e, a ; $5f2b
-	jr nc, Label_08_5f2f ; $5f2c
+	jr nc, .row3 ; $5f2c
 	inc d ; $5f2e
-Label_08_5f2f:
+.row3:
 	ld a, [hl+] ; $5f2f
 	ld [de], a ; $5f30
 	inc de ; $5f31
@@ -4129,9 +4129,9 @@ Label_08_5f2f:
 	ld a, $1e ; $5f35
 	add a, e ; $5f37
 	ld e, a ; $5f38
-	jr nc, Label_08_5f3c ; $5f39
+	jr nc, .row4 ; $5f39
 	inc d ; $5f3b
-Label_08_5f3c:
+.row4:
 	ld a, [hl+] ; $5f3c
 	ld [de], a ; $5f3d
 	inc de ; $5f3e

@@ -2258,9 +2258,9 @@ Label_3e_50af:
 CloseChoiceTabPanel:
 	ld a, b ; $50c4
 	or a, a ; $50c5
-	jr z, Label_3e_50df ; $50c6
+	jr z, .close ; $50c6
 	ld c, $00 ; $50c8
-Label_3e_50ca:
+.openLoop:
 	call AdvanceFrame ; $50ca
 	ld b, $11 ; $50cd
 	farcall RestoreMenuBgAndDrawPanel ; $50cf
@@ -2270,11 +2270,11 @@ Label_3e_50ca:
 	inc a ; $50d8
 	ld c, a ; $50d9
 	cp a, $0a ; $50da
-	jr nz, Label_3e_50ca ; $50dc
+	jr nz, .openLoop ; $50dc
 	ret ; $50de
-Label_3e_50df:
+.close:
 	ld c, $0c ; $50df
-Label_3e_50e1:
+.closeLoop:
 	call AdvanceFrame ; $50e1
 	ld b, $10 ; $50e4
 	farcall RestoreMenuBgAndDrawPanel ; $50e6
@@ -2284,7 +2284,7 @@ Label_3e_50e1:
 	dec a ; $50ef
 	ld c, a ; $50f0
 	or a, a ; $50f1
-	jr nz, Label_3e_50e1 ; $50f2
+	jr nz, .closeLoop ; $50f2
 	ret ; $50f4
 ChoiceTabCursorSpriteTask:
 	farcall TickMenuBgScroll ; $50f5

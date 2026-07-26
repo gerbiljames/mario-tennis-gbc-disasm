@@ -1632,35 +1632,35 @@ LoadResultPortraitSlot:
 	ld hl, $60b7 ; $6082
 	add a, l ; $6085
 	ld l, a ; $6086
-	jr nc, Label_16_608a ; $6087
+	jr nc, .readDest ; $6087
 	inc h ; $6089
-Label_16_608a:
+.readDest:
 	ld a, [hl+] ; $608a
 	ld d, [hl] ; $608b
 	ld e, a ; $608c
 	push de ; $608d
 	ld a, c ; $608e
 	cp a, $02 ; $608f
-	jr z, Label_16_6099 ; $6091
+	jr z, .fixedVariant ; $6091
 	cp a, $03 ; $6093
-	jr z, Label_16_6099 ; $6095
-	jr Label_16_609d ; $6097
-Label_16_6099:
+	jr z, .fixedVariant ; $6095
+	jr .checkOutcome ; $6097
+.fixedVariant:
 	ld c, $00 ; $6099
-	jr Label_16_60b2 ; $609b
-Label_16_609d:
+	jr .decompress ; $609b
+.checkOutcome:
 	ld a, [$d801] ; $609d
 	or a, a ; $60a0
-	jr z, Label_16_60a7 ; $60a1
+	jr z, .winner ; $60a1
 	ld c, $00 ; $60a3
-	jr Label_16_60b2 ; $60a5
-Label_16_60a7:
+	jr .decompress ; $60a5
+.winner:
 	ld c, $01 ; $60a7
 	ld a, [wMatchWinLoseFlag] ; $60a9
 	cp a, $ff ; $60ac
-	jr nz, Label_16_60b2 ; $60ae
+	jr nz, .decompress ; $60ae
 	ld c, $02 ; $60b0
-Label_16_60b2:
+.decompress:
 	pop de ; $60b2
 	call DecompressResultPortrait ; $60b3
 	ret ; $60b6

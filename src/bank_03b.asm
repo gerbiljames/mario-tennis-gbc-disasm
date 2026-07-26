@@ -716,18 +716,18 @@ UpdateAnimatedTilesTask_3b:
 DrawNameWithDiacritics_3b:
 	push af ; $442c
 	push bc ; $442d
-Label_3b_442e:
+.charLoop:
 	ld a, [hl] ; $442e
 	cp a, $00 ; $442f
-	jr z, Label_3b_4462 ; $4431
+	jr z, .done ; $4431
 	ld [de], a ; $4433
 	inc hl ; $4434
 	ld a, [hl] ; $4435
 	cp a, $de ; $4436
-	jr z, Label_3b_443e ; $4438
+	jr z, .markChar ; $4438
 	cp a, $df ; $443a
-	jr nz, Label_3b_4453 ; $443c
-Label_3b_443e:
+	jr nz, .nextCell ; $443c
+.markChar:
 	push hl ; $443e
 	push bc ; $443f
 	ld h, d ; $4440
@@ -738,18 +738,18 @@ Label_3b_443e:
 	ld a, [hl] ; $4447
 	cp a, $03 ; $4448
 	ld a, b ; $444a
-	jr nz, Label_3b_444f ; $444b
+	jr nz, .writeMark ; $444b
 	sub a, $d0 ; $444d
-Label_3b_444f:
+.writeMark:
 	ld [hl], a ; $444f
 	pop bc ; $4450
 	pop hl ; $4451
 	inc hl ; $4452
-Label_3b_4453:
+.nextCell:
 	inc de ; $4453
 	ld a, e ; $4454
 	and a, $1f ; $4455
-	jr nz, Label_3b_442e ; $4457
+	jr nz, .charLoop ; $4457
 	push hl ; $4459
 	ld h, d ; $445a
 	ld l, e ; $445b
@@ -757,8 +757,8 @@ Label_3b_4453:
 	ld d, h ; $445d
 	ld e, l ; $445e
 	pop hl ; $445f
-	jr Label_3b_442e ; $4460
-Label_3b_4462:
+	jr .charLoop ; $4460
+.done:
 	pop bc ; $4462
 	pop af ; $4463
 	ret ; $4464
@@ -8060,86 +8060,86 @@ RedrawStarChartWindow:
 	wram_bank $03 ; $7bea
 	call CheckStarChartExpanded ; $7bf0
 	or a, a ; $7bf3
-	jr z, Label_3b_7c3c ; $7bf4
+	jr z, .compact ; $7bf4
 	ld bc, $d0a4 ; $7bf6
 	ld a, [wMenuCursorX] ; $7bf9
 	ld hl, $dc01 ; $7bfc
 	add a, l ; $7bff
 	ld l, a ; $7c00
-	jr nc, Label_3b_7c04 ; $7c01
+	jr nc, .wideRow ; $7c01
 	inc h ; $7c03
-Label_3b_7c04:
+.wideRow:
 	ld a, $07 ; $7c04
 	call DrawChartIconRow ; $7c06
 	ld a, [wMenuCursorY] ; $7c09
 	ld hl, $dc01 ; $7c0c
 	add a, l ; $7c0f
 	ld l, a ; $7c10
-	jr nc, Label_3b_7c14 ; $7c11
+	jr nc, .wideColumn ; $7c11
 	inc h ; $7c13
-Label_3b_7c14:
+.wideColumn:
 	ld bc, $d0e2 ; $7c14
 	call DrawChartIconColumn ; $7c17
 	ld a, [wMenuCursorY] ; $7c1a
 	ld hl, $db00 ; $7c1d
 	ld de, $0010 ; $7c20
-Label_3b_7c23:
+.wideRowLoop:
 	or a, a ; $7c23
-	jr z, Label_3b_7c2a ; $7c24
+	jr z, .wideRowFound ; $7c24
 	add hl, de ; $7c26
 	dec a ; $7c27
-	jr Label_3b_7c23 ; $7c28
-Label_3b_7c2a:
+	jr .wideRowLoop ; $7c28
+.wideRowFound:
 	ld a, [wMenuCursorX] ; $7c2a
 	add a, l ; $7c2d
 	ld l, a ; $7c2e
-	jr nc, Label_3b_7c32 ; $7c2f
+	jr nc, .wideCells ; $7c2f
 	inc h ; $7c31
-Label_3b_7c32:
+.wideCells:
 	ld de, $d0e4 ; $7c32
 	ld a, $07 ; $7c35
 	call DrawChartCellRows ; $7c37
-	jr Label_3b_7c80 ; $7c3a
-Label_3b_7c3c:
+	jr .done ; $7c3a
+.compact:
 	ld bc, $d0a6 ; $7c3c
 	ld a, [wMenuCursorX] ; $7c3f
 	ld hl, $dc01 ; $7c42
 	add a, l ; $7c45
 	ld l, a ; $7c46
-	jr nc, Label_3b_7c4a ; $7c47
+	jr nc, .compactRow ; $7c47
 	inc h ; $7c49
-Label_3b_7c4a:
+.compactRow:
 	ld a, $05 ; $7c4a
 	call DrawChartIconRow ; $7c4c
 	ld a, [wMenuCursorY] ; $7c4f
 	ld hl, $dc01 ; $7c52
 	add a, l ; $7c55
 	ld l, a ; $7c56
-	jr nc, Label_3b_7c5a ; $7c57
+	jr nc, .compactColumn ; $7c57
 	inc h ; $7c59
-Label_3b_7c5a:
+.compactColumn:
 	ld bc, $d0e4 ; $7c5a
 	call DrawChartIconColumn ; $7c5d
 	ld a, [wMenuCursorY] ; $7c60
 	ld hl, $db00 ; $7c63
 	ld de, $0010 ; $7c66
-Label_3b_7c69:
+.compactRowLoop:
 	or a, a ; $7c69
-	jr z, Label_3b_7c70 ; $7c6a
+	jr z, .compactRowFound ; $7c6a
 	add hl, de ; $7c6c
 	dec a ; $7c6d
-	jr Label_3b_7c69 ; $7c6e
-Label_3b_7c70:
+	jr .compactRowLoop ; $7c6e
+.compactRowFound:
 	ld a, [wMenuCursorX] ; $7c70
 	add a, l ; $7c73
 	ld l, a ; $7c74
-	jr nc, Label_3b_7c78 ; $7c75
+	jr nc, .compactCells ; $7c75
 	inc h ; $7c77
-Label_3b_7c78:
+.compactCells:
 	ld de, $d0e6 ; $7c78
 	ld a, $05 ; $7c7b
 	call DrawChartCellRows ; $7c7d
-Label_3b_7c80:
+.done:
 	ret ; $7c80
 FlushStarChartWindowToVram:
 	ld hl, $d0a0 ; $7c81

@@ -2548,7 +2548,7 @@ PromptExhibitionMatch:
 	ld [hl+], a ; $65f6
 	ld [hl], d ; $65f7
 	test_flag FLAG_DOUBLES ; $65f8
-	jr z, Label_0e_660b ; $65fb
+	jr z, .prompt ; $65fb
 	ld a, $05 ; $65fd
 	ld [wWaterSpriteMinigameTimer], a ; $65ff
 	ld hl, $c2b2 ; $6602
@@ -2556,7 +2556,7 @@ PromptExhibitionMatch:
 	ld a, e ; $6608
 	ld [hl+], a ; $6609
 	ld [hl], d ; $660a
-Label_0e_660b:
+.prompt:
 	ld hl, $c2b2 ; $660b
 	ld a, [hl+] ; $660e
 	ld h, [hl] ; $660f
@@ -2568,22 +2568,22 @@ Label_0e_660b:
 	farcall ScriptCloseDialogueWindow ; $661c
 	script_wait_frames $05 ; $661f
 	and a, a ; $6626
-	jr z, Label_0e_6644 ; $6627
+	jr z, .accepted ; $6627
 	script_speak $08 ; $6629
 	test_flag FLAG_DOUBLES ; $662e
-	jr z, Label_0e_6640 ; $6631
+	jr z, .declined ; $6631
 	script_get_actor_state ACTOR_PARTNER ; $6633
 	ld c, l ; $6638
 	ld b, h ; $6639
 	ld de, $d000 ; $663a
 	farcall AttachActorStepMover ; $663d
-Label_0e_6640:
+.declined:
 	farcall EndCutsceneScriptMode ; $6640
 	ret ; $6643
-Label_0e_6644:
+.accepted:
 	ld a, [$c2b0] ; $6644
 	and a, $01 ; $6647
-	jr z, Label_0e_666e ; $6649
+	jr z, .startMatchScene ; $6649
 	farcall AdvanceDialogueTextCursor ; $664b
 	script_speak $08 ; $664e
 	ld hl, $3088 ; $6653
@@ -2591,14 +2591,14 @@ Label_0e_6644:
 	ld a, $01 ; $6659
 	farcall RunPagedTextMenu ; $665b
 	cp a, $ff ; $665e
-	jp z, Label_0e_660b ; $6660
+	jp z, .prompt ; $6660
 	inc a ; $6663
 	test_flag FLAG_DOUBLES ; $6664
-	jr z, Label_0e_666b ; $6667
+	jr z, .storeSelection ; $6667
 	add a, $03 ; $6669
-Label_0e_666b:
+.storeSelection:
 	ld [wWaterSpriteMinigameTimer], a ; $666b
-Label_0e_666e:
+.startMatchScene:
 	ld hl, $c2b2 ; $666e
 	ld a, [hl+] ; $6671
 	ld h, [hl] ; $6672
@@ -2606,9 +2606,9 @@ Label_0e_666e:
 	ld a, $03 ; $6674
 	add a, l ; $6676
 	ld l, a ; $6677
-	jr nc, Label_0e_667b ; $6678
+	jr nc, .speakConfirm ; $6678
 	inc h ; $667a
-Label_0e_667b:
+.speakConfirm:
 	farcall InitDialogueTextCursor ; $667b
 	script_speak $08 ; $667e
 	script_face $0b, FACE_UP ; $6683
@@ -2662,14 +2662,14 @@ Label_0e_667b:
 	script_set_actor_script $11, ActorScript_0e_552d ; $67e8
 	script_wait_frames $64 ; $67f3
 	test_flag FLAG_DOUBLES ; $67fa
-	jr nz, Label_0e_680c ; $67fd
+	jr nz, .doublesWalk ; $67fd
 	script_move_target ACTOR_PLAYER, $1200, $0900 ; $67ff
-	jr Label_0e_682a ; $680a
-Label_0e_680c:
+	jr .crowdFollows ; $680a
+.doublesWalk:
 	script_set_speed ACTOR_PARTNER, $0020 ; $680c
 	script_move_target ACTOR_PLAYER, $1100, $0900 ; $6814
 	script_move_target ACTOR_PARTNER, $1300, $0900 ; $681f
-Label_0e_682a:
+.crowdFollows:
 	script_set_actor_script $0b, ActorScript_0e_552d ; $682a
 	script_set_actor_script $0a, ActorScript_0e_552d ; $6835
 	script_set_actor_script $09, ActorScript_0e_552d ; $6840
@@ -2678,9 +2678,9 @@ Label_0e_682a:
 	script_wait_frames $1e ; $6861
 	script_face ACTOR_PLAYER, FACE_DOWN ; $6868
 	test_flag FLAG_DOUBLES ; $686f
-	jr z, Label_0e_687b ; $6872
+	jr z, .dismissCrowd ; $6872
 	script_face ACTOR_PARTNER, FACE_DOWN ; $6874
-Label_0e_687b:
+.dismissCrowd:
 	script_set_actor_script $0f, ActorScript_0e_552d ; $687b
 	script_wait_frames $28 ; $6886
 	script_set_actor_script $10, ActorScript_0e_552d ; $688d
@@ -2689,13 +2689,13 @@ Label_0e_687b:
 	script_wait_actor_script $0e ; $68aa
 	script_move_player $1200, $0d00 ; $68af
 	test_flag FLAG_DOUBLES ; $68b9
-	jr nz, Label_0e_68cb ; $68bc
+	jr nz, .doublesApproach ; $68bc
 	script_move_target ACTOR_PLAYER, $1200, $0b00 ; $68be
-	jr Label_0e_68e1 ; $68c9
-Label_0e_68cb:
+	jr .coachArrives ; $68c9
+.doublesApproach:
 	script_move_target ACTOR_PLAYER, $1100, $0b00 ; $68cb
 	script_move_target ACTOR_PARTNER, $1300, $0b00 ; $68d6
-Label_0e_68e1:
+.coachArrives:
 	script_move_target $13, $1200, $0d00 ; $68e1
 	script_wait_move $13 ; $68ec
 	script_face $13, FACE_UP ; $68f1
@@ -2704,19 +2704,19 @@ Label_0e_68e1:
 	script_wait_frames $0a ; $6904
 	script_set_anim ACTOR_PLAYER, $03 ; $690b
 	test_flag FLAG_DOUBLES ; $6912
-	jr z, Label_0e_691e ; $6915
+	jr z, .bothReady ; $6915
 	script_set_anim ACTOR_PARTNER, $03 ; $6917
-Label_0e_691e:
+.bothReady:
 	script_wait_idle ACTOR_PLAYER ; $691e
 	script_wait_frames $14 ; $6923
 	script_set_actor_script $13, ActorScript_0e_5545 ; $692a
 	script_wait_frames $14 ; $6935
 	script_set_actor_script ACTOR_PLAYER, ActorScript_0e_5545 ; $693c
 	test_flag FLAG_DOUBLES ; $6947
-	jr z, Label_0e_695e ; $694a
+	jr z, .leave ; $694a
 	script_wait_frames $28 ; $694c
 	script_set_actor_script ACTOR_PARTNER, ActorScript_0e_5545 ; $6953
-Label_0e_695e:
+.leave:
 	script_move_player $1500, $0d00 ; $695e
 	script_wait_actor_script ACTOR_PLAYER ; $6968
 	call PlayStarWarpTransition ; $696d

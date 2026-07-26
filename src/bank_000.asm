@@ -8854,7 +8854,7 @@ PlaySound:
 	push hl ; $329d
 	ld hl, SfxIndexTable ; $329e
 	cp a, $50 ; $32a1
-	jr c, Label_00_32cf ; $32a3
+	jr c, .sfx ; $32a3
 	ld hl, MusicIndexTable ; $32a5
 	push af ; $32a8
 	push hl ; $32a9
@@ -8872,24 +8872,24 @@ PlaySound:
 	pop hl ; $32c5
 	pop af ; $32c6
 	sub a, $50 ; $32c7
-	jr nz, Label_00_32d2 ; $32c9
+	jr nz, .lookupEntry ; $32c9
 	pop hl ; $32cb
 	pop de ; $32cc
 	pop bc ; $32cd
 	ret ; $32ce
-Label_00_32cf:
+.sfx:
 	call StopAllSound ; $32cf
-Label_00_32d2:
+.lookupEntry:
 	dec a ; $32d2
 	add a, a ; $32d3
-	jr nc, Label_00_32d7 ; $32d4
+	jr nc, .addIndex ; $32d4
 	inc h ; $32d6
-Label_00_32d7:
+.addIndex:
 	add a, l ; $32d7
 	ld l, a ; $32d8
-	jr nc, Label_00_32dc ; $32d9
+	jr nc, .startChannels ; $32d9
 	inc h ; $32db
-Label_00_32dc:
+.startChannels:
 	ldh a, [hRomBank] ; $32dc
 	push af ; $32de
 	ld a, [hl] ; $32df
@@ -8909,7 +8909,7 @@ Label_00_32dc:
 	ld e, l ; $32f6
 	ld d, h ; $32f7
 	di ; $32f8
-Label_00_32f9:
+.channelLoop:
 	push bc ; $32f9
 	push de ; $32fa
 	call StartSoundChannel ; $32fb
@@ -8920,7 +8920,7 @@ Label_00_32f9:
 	ld d, h ; $3304
 	pop bc ; $3305
 	dec b ; $3306
-	jr nz, Label_00_32f9 ; $3307
+	jr nz, .channelLoop ; $3307
 	ei ; $3309
 	pop af ; $330a
 	ldh [hRomBank], a ; $330b
