@@ -30,7 +30,7 @@ Everything below is **committed** (HEAD `3fb9b67`); the whole history
 rebuilds byte-perfect. Per-bank progress at any time: `python3
 tools/progress.py` (proven-code bytes, fill runs, label counts, human-named
 counts) and `tools/progress.py --unnamed <bank>` to list still-auto-named
-symbols. **19,869 of 21,560 labels are human-named** (see the caveat in the
+symbols. **19,890 of 21,560 labels are human-named** (see the caveat in the
 auto-split section below) (up from 4,816 on 2026-07-23); what is left is
 data blobs.
 
@@ -4780,3 +4780,38 @@ ProportionalTextCodeHandlers_05:
 **No `Func_*` labels remain**, and 141 bytes stopped being counted as proven
 code -- the correct direction, since they never were. `make compare` OK from
 clean.
+
+## Bank $12's senior-court cutscenes (2026-07-27)
+
+The 21 unnamed `Label_*` in bank `$12` were the largest remaining cluster, and
+they are one structure: the handlers of three dispatch tables, all indexed the
+same way. `$c2b1` is the senior-court stage, and `ComputeSeniorCourtStage`
+(`$7756`) derives it from the story flags:
+
+| stage | flag reached |
+| --- | --- |
+| `$02`-`$05` | senior **singles** ranks 4, 3, 2, 1 |
+| `$06`-`$08` | senior **doubles** ranks 3, 2, 1 |
+| `$09` / `$0a` | Island Open singles / doubles |
+
+All three dispatchers do `ld a, [$c2b1]; sub a, $02; add a, a` and index their
+table with it, so record N is stage N+2 -- which names every handler:
+
+* `SeniorRankingMatchIntroPtrs` (7) -> `SeniorSinglesRank4Intro` ...
+  `SeniorDoublesRank1Intro`
+* `ResumeSeniorOpponentScriptsPtrs` (7) ->
+  `ResumeSeniorSinglesRank4Opponents` ... `ResumeSeniorDoublesRank1Opponents`
+* `SeniorMatchVictorySceneDispatchPtrs` (9) -> the victory cutscenes
+
+The mapping predicts which handlers are doubles, and the scripts confirm it:
+record 4 of the intro table (stage `$06`, senior doubles rank 3) is the first
+one that drives `ACTOR_PARTNER`, and the singles handlers never mention it.
+
+Two victory handlers are shared and keep names that say so:
+`SeniorSinglesRank4And3Victory` serves stages `$02` and `$03`, and
+`SeniorSharedVictoryScene` serves stage `$06` (senior doubles rank 3) and
+stage `$09` (Island Open singles) -- a generic walk-to-position scene, which is
+what its body is.
+
+**Bank `$12` now has 316 of 319 labels named**; the three left are the
+`DataPtr_*MapScripts_12` slot words, which derive from their targets' names.

@@ -2507,14 +2507,14 @@ RunSeniorRankingMatchIntro:
 	ret ; $64f1
 SeniorRankingMatchIntroPtrs:
 	; $64f2, 14 bytes (records:2)
-	dw Label_12_67a1 ; record 0
-	dw Label_12_683b ; record 1
-	dw Label_12_68f3 ; record 2
-	dw Label_12_69a9 ; record 3
-	dw Label_12_6500 ; record 4
-	dw Label_12_65e9 ; record 5
-	dw Label_12_66af ; record 6
-Label_12_6500:
+	dw SeniorSinglesRank4Intro ; record 0
+	dw SeniorSinglesRank3Intro ; record 1
+	dw SeniorSinglesRank2Intro ; record 2
+	dw SeniorSinglesRank1Intro ; record 3
+	dw SeniorDoublesRank3Intro ; record 4
+	dw SeniorDoublesRank2Intro ; record 5
+	dw SeniorDoublesRank1Intro ; record 6
+SeniorDoublesRank3Intro:
 	script_wait_frames $0f ; $6500
 	script_face_toward $09, $03 ; $6507
 	script_wait_frames $1e ; $650f
@@ -2554,7 +2554,7 @@ Label_12_6500:
 	script_face $08, FACE_UP ; $65da
 	script_face ACTOR_PARTNER, FACE_UP ; $65e1
 	ret ; $65e8
-Label_12_65e9:
+SeniorDoublesRank2Intro:
 	script_wait_frames $0f ; $65e9
 	script_face_toward $06, $03 ; $65f0
 	script_wait_frames $1e ; $65f8
@@ -2589,7 +2589,7 @@ Label_12_65e9:
 	script_face $07, FACE_UP ; $66a0
 	script_face $06, FACE_UP ; $66a7
 	ret ; $66ae
-Label_12_66af:
+SeniorDoublesRank1Intro:
 	script_wait_frames $0f ; $66af
 	script_face_toward $05, $03 ; $66b6
 	script_wait_frames $1e ; $66be
@@ -2626,7 +2626,7 @@ Label_12_66af:
 	script_face $05, FACE_UP ; $6792
 	script_face $04, FACE_UP ; $6799
 	ret ; $67a0
-Label_12_67a1:
+SeniorSinglesRank4Intro:
 	script_wait_frames $0f ; $67a1
 	script_face_toward $07, $03 ; $67a8
 	script_wait_frames $1e ; $67b0
@@ -2654,7 +2654,7 @@ Label_12_67a1:
 	script_wait_idle $07 ; $682e
 	script_face $07, FACE_UP ; $6833
 	ret ; $683a
-Label_12_683b:
+SeniorSinglesRank3Intro:
 	script_wait_frames $0f ; $683b
 	script_face_toward $06, $03 ; $6842
 	script_wait_frames $1e ; $684a
@@ -2687,7 +2687,7 @@ Label_12_683b:
 	script_wait_frames $0f ; $68e4
 	script_face $06, FACE_UP ; $68eb
 	ret ; $68f2
-Label_12_68f3:
+SeniorSinglesRank2Intro:
 	script_wait_frames $0f ; $68f3
 	script_face_toward $05, $03 ; $68fa
 	script_wait_frames $1e ; $6902
@@ -2720,7 +2720,7 @@ Label_12_68f3:
 	script_wait_frames $0f ; $699a
 	script_face $05, FACE_UP ; $69a1
 	ret ; $69a8
-Label_12_69a9:
+SeniorSinglesRank1Intro:
 	script_wait_frames $0f ; $69a9
 	script_face_toward $04, $03 ; $69b0
 	script_wait_frames $1e ; $69b8
@@ -2761,37 +2761,37 @@ ResumeSeniorOpponentScripts:
 	ret ; $6a54
 ResumeSeniorOpponentScriptsPtrs:
 	; $6a55, 14 bytes (records:2)
-	dw Label_12_6ab8 ; record 0
-	dw Label_12_6ac4 ; record 1
-	dw Label_12_6ad0 ; record 2
-	dw Label_12_6adc ; record 3
-	dw Label_12_6a63 ; record 4
-	dw Label_12_6a7a ; record 5
-	dw Label_12_6a91 ; record 6
-Label_12_6a63:
+	dw ResumeSeniorSinglesRank4Opponents ; record 0
+	dw ResumeSeniorSinglesRank3Opponents ; record 1
+	dw ResumeSeniorSinglesRank2Opponents ; record 2
+	dw ResumeSeniorSinglesRank1Opponents ; record 3
+	dw ResumeSeniorDoublesRank3Opponents ; record 4
+	dw ResumeSeniorDoublesRank2Opponents ; record 5
+	dw ResumeSeniorDoublesRank1Opponents ; record 6
+ResumeSeniorDoublesRank3Opponents:
 	script_set_actor_script $09, ActorScript_12_7849 ; $6a63
 	script_set_actor_script $08, ActorScript_12_7887 ; $6a6e
 	ret ; $6a79
-Label_12_6a7a:
+ResumeSeniorDoublesRank2Opponents:
 	script_set_actor_script $07, ActorScript_12_78fb ; $6a7a
 	script_set_actor_script $06, ActorScript_12_7912 ; $6a85
 	ret ; $6a90
-Label_12_6a91:
+ResumeSeniorDoublesRank1Opponents:
 	script_set_actor_script $05, ActorScript_12_7991 ; $6a91
 	script_set_actor_script $04, ActorScript_12_79a2 ; $6a9c
 	script_wait_actor_script $05 ; $6aa7
 	script_set_actor_script $05, ActorScript_12_7c59 ; $6aac
 	ret ; $6ab7
-Label_12_6ab8:
+ResumeSeniorSinglesRank4Opponents:
 	script_set_actor_script $07, ActorScript_12_6c29 ; $6ab8
 	ret ; $6ac3
-Label_12_6ac4:
+ResumeSeniorSinglesRank3Opponents:
 	script_set_actor_script $06, ActorScript_12_6c73 ; $6ac4
 	ret ; $6acf
-Label_12_6ad0:
+ResumeSeniorSinglesRank2Opponents:
 	script_set_actor_script $05, ActorScript_12_6cac ; $6ad0
 	ret ; $6adb
-Label_12_6adc:
+ResumeSeniorSinglesRank1Opponents:
 	script_set_actor_script $04, ActorScript_12_6ce5 ; $6adc
 	ret ; $6ae7
 SeniorSinglesMatchConfirm:
@@ -3113,16 +3113,16 @@ SeniorMatchVictorySceneDispatch:
 	ret ; $6e0c
 SeniorMatchVictorySceneDispatchPtrs:
 	; $6e0d, 18 bytes (records:2)
-	dw Label_12_73b2 ; record 0
-	dw Label_12_73b2 ; record 1
-	dw Label_12_7449 ; record 2
-	dw Label_12_74b8 ; record 3
-	dw Label_12_752a ; record 4
-	dw Label_12_6e1f ; record 5
-	dw Label_12_6f6a ; record 6
-	dw Label_12_752a ; record 7
-	dw Label_12_7071 ; record 8
-Label_12_6e1f:
+	dw SeniorSinglesRank4And3Victory ; record 0
+	dw SeniorSinglesRank4And3Victory ; record 1
+	dw SeniorSinglesRank2Victory ; record 2
+	dw SeniorSinglesRank1Victory ; record 3
+	dw SeniorSharedVictoryScene ; record 4
+	dw SeniorDoublesRank2Victory ; record 5
+	dw SeniorDoublesRank1Victory ; record 6
+	dw SeniorSharedVictoryScene ; record 7
+	dw IslandOpenDoublesVictory ; record 8
+SeniorDoublesRank2Victory:
 	script_null_script ACTOR_PARTNER ; $6e1f
 	script_null_script $08 ; $6e24
 	script_face $03, FACE_LEFT ; $6e29
@@ -3172,7 +3172,7 @@ Label_12_6e1f:
 	farcall AttachActorStepMover ; $6f63
 	farcall EndCutsceneScriptMode ; $6f66
 	ret ; $6f69
-Label_12_6f6a:
+SeniorDoublesRank1Victory:
 	script_null_script ACTOR_PARTNER ; $6f6a
 	script_face $03, FACE_RIGHT ; $6f6f
 	script_set_position $07, $3300, $1100 ; $6f76
@@ -3214,7 +3214,7 @@ Label_12_6f6a:
 	farcall AttachActorStepMover ; $706a
 	farcall EndCutsceneScriptMode ; $706d
 	ret ; $7070
-Label_12_7071:
+IslandOpenDoublesVictory:
 	script_set_position $09, $1b00, $0b00 ; $7071
 	script_set_position $08, $1b00, $0d00 ; $707c
 	script_face $09, FACE_LEFT ; $7087
@@ -3346,7 +3346,7 @@ Label_12_7071:
 	call WaitFadeEnd ; $73ab
 	farcall EndCutsceneScriptMode ; $73ae
 	ret ; $73b1
-Label_12_73b2:
+SeniorSinglesRank4And3Victory:
 	script_set_position $07, $2300, $0f00 ; $73b2
 	script_face $07, FACE_DOWN ; $73bd
 	call FadeInSeniorCourtNearPairA ; $73c4
@@ -3370,7 +3370,7 @@ Label_12_73b2:
 	script_wait_frames $01 ; $743e
 	farcall EndCutsceneScriptMode ; $7445
 	ret ; $7448
-Label_12_7449:
+SeniorSinglesRank2Victory:
 	set_flag FLAG_WON_SENIOR_SINGLES_RANK_3 ; $7449
 	script_set_position $06, $3300, $0f00 ; $744c
 	script_face $06, FACE_DOWN ; $7457
@@ -3390,7 +3390,7 @@ Label_12_7449:
 	call StartSeniorCourtPairBRally ; $74b1
 	farcall EndCutsceneScriptMode ; $74b4
 	ret ; $74b7
-Label_12_74b8:
+SeniorSinglesRank1Victory:
 	set_flag FLAG_WON_SENIOR_SINGLES_RANK_2 ; $74b8
 	call PlaceSeniorCourtPairB ; $74bb
 	script_set_position $05, $3300, $0f00 ; $74be
@@ -3411,7 +3411,7 @@ Label_12_74b8:
 	call StartSeniorCourtPairBRally ; $7523
 	farcall EndCutsceneScriptMode ; $7526
 	ret ; $7529
-Label_12_752a:
+SeniorSharedVictoryScene:
 	script_player_speed $0040 ; $752a
 	script_set_speed $04, $0018 ; $7530
 	script_set_position $03, $2b00, $2700 ; $7538
