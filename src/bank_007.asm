@@ -41,17 +41,17 @@ TryEstablishLink:
 	ldh a, [hLinkRxByte] ; $4049
 	ei ; $404b
 	cp a, $c1 ; $404c
-	jr z, Label_07_4061 ; $404e
+	jr z, .probe ; $404e
 	ld a, $01 ; $4050
 	ldh [hLinkState], a ; $4052
 	call TryLinkHandshakeMaster ; $4054
-	jr nc, Label_07_4076 ; $4057
+	jr nc, .done ; $4057
 	push af ; $4059
 	call ResetSerialState ; $405a
 	pop af ; $405d
 	scf ; $405e
-	jr Label_07_4076 ; $405f
-Label_07_4061:
+	jr .done ; $405f
+.probe:
 	di ; $4061
 	xor a, a ; $4062
 	ldh [hLinkRxByte], a ; $4063
@@ -61,10 +61,10 @@ Label_07_4061:
 	ld a, $02 ; $4069
 	ldh [hLinkState], a ; $406b
 	call TryLinkHandshakeSlave ; $406d
-	jr nc, Label_07_4076 ; $4070
+	jr nc, .done ; $4070
 	call ResetSerialState ; $4072
 	scf ; $4075
-Label_07_4076:
+.done:
 	ret ; $4076
 EnableSerialAndVBlankInterrupts:
 	di ; $4077
@@ -836,7 +836,7 @@ SendByteAwaitEchoMaster:
 	push bc ; $454b
 	ldh [hLinkTxByte], a ; $454c
 	ld c, $14 ; $454e
-Label_07_4550:
+.sendLoop:
 	di ; $4550
 	ldh a, [hLinkTxByte] ; $4551
 	ldh [rSB], a ; $4553
@@ -854,31 +854,31 @@ Label_07_4550:
 	ldh a, [hLinkRxByte] ; $456a
 	ei ; $456c
 	cp a, $00 ; $456d
-	jr z, Label_07_4581 ; $456f
+	jr z, .retry ; $456f
 	cp a, $ff ; $4571
-	jr z, Label_07_4581 ; $4573
+	jr z, .retry ; $4573
 	cp a, b ; $4575
-	jr z, Label_07_4586 ; $4576
+	jr z, .success ; $4576
 	xor a, a ; $4578
 	ldh [hLinkCounter], a ; $4579
 	dec c ; $457b
-	jr nz, Label_07_4550 ; $457c
+	jr nz, .sendLoop ; $457c
 	scf ; $457e
-	jr Label_07_4588 ; $457f
-Label_07_4581:
+	jr .done ; $457f
+.retry:
 	call IncrementLinkFrameCounter ; $4581
-	jr Label_07_4550 ; $4584
-Label_07_4586:
+	jr .sendLoop ; $4584
+.success:
 	scf ; $4586
 	ccf ; $4587
-Label_07_4588:
+.done:
 	pop bc ; $4588
 	ret ; $4589
 SendByteAwaitEchoSlave:
 	push bc ; $458a
 	ldh [hLinkTxByte], a ; $458b
 	ld c, $1e ; $458d
-Label_07_458f:
+.sendLoop:
 	di ; $458f
 	ldh a, [hLinkTxByte] ; $4590
 	ldh [rSB], a ; $4592
@@ -892,24 +892,24 @@ Label_07_458f:
 	call WaitSerialTransfer ; $459f
 	ldh a, [hLinkRxByte] ; $45a2
 	cp a, $00 ; $45a4
-	jr z, Label_07_45b8 ; $45a6
+	jr z, .retry ; $45a6
 	cp a, $ff ; $45a8
-	jr z, Label_07_45b8 ; $45aa
+	jr z, .retry ; $45aa
 	cp a, b ; $45ac
-	jr z, Label_07_45bd ; $45ad
+	jr z, .success ; $45ad
 	xor a, a ; $45af
 	ldh [hLinkCounter], a ; $45b0
 	dec c ; $45b2
-	jr nz, Label_07_458f ; $45b3
+	jr nz, .sendLoop ; $45b3
 	scf ; $45b5
-	jr Label_07_45bf ; $45b6
-Label_07_45b8:
+	jr .done ; $45b6
+.retry:
 	call IncrementLinkFrameCounter ; $45b8
-	jr Label_07_458f ; $45bb
-Label_07_45bd:
+	jr .sendLoop ; $45bb
+.success:
 	scf ; $45bd
 	ccf ; $45be
-Label_07_45bf:
+.done:
 	pop bc ; $45bf
 	ret ; $45c0
 SendByteGetReplyMaster:
@@ -1208,19 +1208,19 @@ ExchangeLinkReadySignal:
 	ld c, $64 ; $477f
 	ldh a, [hLinkState] ; $4781
 	cp a, $02 ; $4783
-	jr z, Label_07_4799 ; $4785
+	jr z, .asSlave ; $4785
 	cp a, $01 ; $4787
-	jr z, Label_07_478e ; $4789
+	jr z, .delayLoop ; $4789
 	call LinkErrorReset ; $478b
-Label_07_478e:
+.delayLoop:
 	call ShortDelay ; $478e
 	dec c ; $4791
-	jr nz, Label_07_478e ; $4792
+	jr nz, .delayLoop ; $4792
 	call ExchangeReadyTokenMaster ; $4794
-	jr Label_07_479c ; $4797
-Label_07_4799:
+	jr .done ; $4797
+.asSlave:
 	call ExchangeReadyTokenSlave ; $4799
-Label_07_479c:
+.done:
 	pop bc ; $479c
 	pop af ; $479d
 	ret ; $479e
@@ -1497,16 +1497,16 @@ ExchangeLinkDataBlock:
 	pop hl ; $498d
 	ldh a, [hLinkState] ; $498e
 	cp a, $02 ; $4990
-	jr z, Label_07_49a0 ; $4992
+	jr z, .asSlave ; $4992
 	cp a, $01 ; $4994
-	jr z, Label_07_499b ; $4996
+	jr z, .asMaster ; $4996
 	call LinkErrorReset ; $4998
-Label_07_499b:
+.asMaster:
 	call ExchangeNibbleBlockMaster ; $499b
-	jr Label_07_49a3 ; $499e
-Label_07_49a0:
+	jr .unpack ; $499e
+.asSlave:
 	call ExchangeNibbleBlockSlave ; $49a0
-Label_07_49a3:
+.unpack:
 	call PackNibblesToBytes ; $49a3
 	di ; $49a6
 	ld a, $09 ; $49a7
@@ -1556,7 +1556,7 @@ PackNibblesToBytes:
 PrimeSlaveSerialReply:
 	ldh a, [hLinkState] ; $49e2
 	cp a, $02 ; $49e4
-	jr nz, Label_07_49f6 ; $49e6
+	jr nz, .done ; $49e6
 	ld a, $40 ; $49e8
 	ldh [rSB], a ; $49ea
 	push af ; $49ec
@@ -1565,7 +1565,7 @@ PrimeSlaveSerialReply:
 	ld a, $82 ; $49f1
 	ldh [rSC], a ; $49f3
 	pop af ; $49f5
-Label_07_49f6:
+.done:
 	ret ; $49f6
 PrepareLinkStatePayload:
 	push af ; $49f7
@@ -1690,11 +1690,11 @@ ResyncLinkSessionWithTimer:
 	farcall ExchangeLinkReadySignal ; $4abc
 	ldh a, [hLinkState] ; $4abf
 	cp a, $02 ; $4ac1
-	jr z, Label_07_4ae1 ; $4ac3
+	jr z, .asSlave ; $4ac3
 	cp a, $01 ; $4ac5
-	jr z, Label_07_4acc ; $4ac7
+	jr z, .asMaster ; $4ac7
 	call LinkErrorReset ; $4ac9
-Label_07_4acc:
+.asMaster:
 	ld a, $40 ; $4acc
 	ldh [$ffdc], a ; $4ace
 	call ShortDelay ; $4ad0
@@ -1702,13 +1702,13 @@ Label_07_4acc:
 	call ShortDelay ; $4ad6
 	call ShortDelay ; $4ad9
 	call ShortDelay ; $4adc
-	jr Label_07_4ae8 ; $4adf
-Label_07_4ae1:
+	jr .encode ; $4adf
+.asSlave:
 	xor a, a ; $4ae1
 	ldh [$ffd7], a ; $4ae2
 	ld a, $80 ; $4ae4
 	ldh [$ffdc], a ; $4ae6
-Label_07_4ae8:
+.encode:
 	call SerialEncodeInput ; $4ae8
 	farcall PrimeSlaveSerialReply ; $4aeb
 	xor a, a ; $4aee
@@ -1869,12 +1869,12 @@ LongDelay:
 RunLinkCommandFrame:
 	ldh a, [hLinkState] ; $4bf3
 	cp a, $02 ; $4bf5
-	jr z, Label_07_4bfe ; $4bf7
+	jr z, .asSlave ; $4bf7
 	call RunLinkCommandFrameMaster ; $4bf9
-	jr Label_07_4c01 ; $4bfc
-Label_07_4bfe:
+	jr .done ; $4bfc
+.asSlave:
 	call RunLinkCommandFrameSlave ; $4bfe
-Label_07_4c01:
+.done:
 	ret ; $4c01
 RunLinkCommandFrameMaster:
 	push bc ; $4c02
@@ -1909,9 +1909,9 @@ SerialEncodeCommand:
 	ld c, b ; $4c30
 	ldh a, [hLinkState] ; $4c31
 	cp a, $01 ; $4c33
-	jr z, Label_07_4c49 ; $4c35
+	jr z, .checkSlaveWait ; $4c35
 	cp a, $02 ; $4c37
-	jr z, Label_07_4c49 ; $4c39
+	jr z, .checkSlaveWait ; $4c39
 	sound $72 ; $4c3b
 	xor a, a ; $4c3d
 	ldh [hLinkRemoteInputBuf], a ; $4c3e
@@ -1919,22 +1919,22 @@ SerialEncodeCommand:
 	ld a, $c0 ; $4c42
 	ldh [hLinkTxByte], a ; $4c44
 	call LinkErrorReset ; $4c46
-Label_07_4c49:
+.checkSlaveWait:
 	ldh a, [$ffdf] ; $4c49
 	or a, a ; $4c4b
-	jr z, Label_07_4c5d ; $4c4c
+	jr z, .send ; $4c4c
 	ldh a, [hLinkState] ; $4c4e
 	cp a, $02 ; $4c50
-	jr nz, Label_07_4c5d ; $4c52
-Label_07_4c54:
+	jr nz, .send ; $4c52
+.waitAck:
 	ei ; $4c54
 	nop ; $4c55
 	nop ; $4c56
 	di ; $4c57
 	ldh a, [$ffe0] ; $4c58
 	or a, a ; $4c5a
-	jr nz, Label_07_4c54 ; $4c5b
-Label_07_4c5d:
+	jr nz, .waitAck ; $4c5b
+.send:
 	ldh a, [$ffdc] ; $4c5d
 	or a, c ; $4c5f
 	di ; $4c60
@@ -1951,27 +1951,27 @@ SerialDecodeCommand:
 	ld b, a ; $4c6d
 	and a, $c0 ; $4c6e
 	cp a, $80 ; $4c70
-	jr z, Label_07_4c7f ; $4c72
+	jr z, .decode ; $4c72
 	cp a, $40 ; $4c74
-	jr z, Label_07_4c7f ; $4c76
+	jr z, .decode ; $4c76
 	sound $72 ; $4c78
 	xor a, a ; $4c7a
 	ldh [hLinkInput], a ; $4c7b
-	jr Label_07_4cae ; $4c7d
-Label_07_4c7f:
+	jr .done ; $4c7d
+.decode:
 	ld a, b ; $4c7f
 	and a, $3f ; $4c80
 	ldh [hLinkRemoteInput], a ; $4c82
 	ldh a, [hLinkState] ; $4c84
 	cp a, $01 ; $4c86
-	jr nz, Label_07_4c96 ; $4c88
+	jr nz, .asSlave ; $4c88
 	ldh a, [hLinkRemoteInputBuf] ; $4c8a
 	or a, a ; $4c8c
-	jr nz, Label_07_4cac ; $4c8d
+	jr nz, .storeInput ; $4c8d
 	ldh a, [hLinkRemoteInput] ; $4c8f
 	call DecodeLinkCommandCode ; $4c91
-	jr Label_07_4cac ; $4c94
-Label_07_4c96:
+	jr .storeInput ; $4c94
+.asSlave:
 	ldh a, [hLinkRemoteInputBuf] ; $4c96
 	ld b, a ; $4c98
 	ldh a, [$ffde] ; $4c99
@@ -1980,50 +1980,51 @@ Label_07_4c96:
 	ldh [$ffde], a ; $4c9e
 	ldh a, [hLinkRemoteInput] ; $4ca0
 	or a, a ; $4ca2
-	jr z, Label_07_4caa ; $4ca3
+	jr z, .useBuffered ; $4ca3
 	call DecodeLinkCommandCode ; $4ca5
-	jr Label_07_4cac ; $4ca8
-Label_07_4caa:
+	jr .storeInput ; $4ca8
+.useBuffered:
 	ldh a, [hLinkRemoteInputBuf] ; $4caa
-Label_07_4cac:
+.storeInput:
 	ldh [hLinkInput], a ; $4cac
-Label_07_4cae:
+.done:
 	pop bc ; $4cae
 	pop af ; $4caf
 	ret ; $4cb0
+AdvanceLinkPlayerCount:
 	ld a, [wMatchIsDoubles] ; $4cb1
 	inc a ; $4cb4
 	ld b, a ; $4cb5
 	ldh a, [$ffe2] ; $4cb6
 	cp a, b ; $4cb8
 	ldh a, [$ffd6] ; $4cb9
-	jr c, Label_07_4cc3 ; $4cbb
+	jr c, .maskHigh ; $4cbb
 	and a, $0f ; $4cbd
 	ldh [$ffd6], a ; $4cbf
-	jr Label_07_4cc9 ; $4cc1
-Label_07_4cc3:
+	jr .checkJoin ; $4cc1
+.maskHigh:
 	ld c, a ; $4cc3
 	and a, $f0 ; $4cc4
-	jr nz, Label_07_4ce3 ; $4cc6
+	jr nz, .done ; $4cc6
 	ld a, c ; $4cc8
-Label_07_4cc9:
+.checkJoin:
 	bit 0, a ; $4cc9
-	jr z, Label_07_4cd7 ; $4ccb
+	jr z, .checkLeave ; $4ccb
 	ldh a, [$ffe2] ; $4ccd
 	cp a, b ; $4ccf
-	jr nc, Label_07_4ce3 ; $4cd0
+	jr nc, .done ; $4cd0
 	inc a ; $4cd2
 	ldh [$ffe2], a ; $4cd3
-	jr Label_07_4ce3 ; $4cd5
-Label_07_4cd7:
+	jr .done ; $4cd5
+.checkLeave:
 	bit 1, a ; $4cd7
-	jr z, Label_07_4ce3 ; $4cd9
+	jr z, .done ; $4cd9
 	ldh a, [$ffe2] ; $4cdb
 	or a, a ; $4cdd
-	jr z, Label_07_4ce3 ; $4cde
+	jr z, .done ; $4cde
 	dec a ; $4ce0
 	ldh [$ffe2], a ; $4ce1
-Label_07_4ce3:
+.done:
 	ret ; $4ce3
 DecodeLinkCommandCode:
 	cp a, $14 ; $4ce4
