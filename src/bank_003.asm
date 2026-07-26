@@ -2871,7 +2871,7 @@ WriteStarVictoryGrid:
 MoveSaveEditorCursor:
 	ldh a, [hPlayerInputFlags] ; $524f
 	bit PADB_A, a ; $5251
-	jr nz, Label_03_5270 ; $5253
+	jr nz, .move ; $5253
 	ld hl, hSaveEditorCursor ; $5255
 	ld a, [hl+] ; $5258
 	ld h, [hl] ; $5259
@@ -2891,7 +2891,7 @@ MoveSaveEditorCursor:
 	xor a, a ; $526d
 	dec a ; $526e
 	ret ; $526f
-Label_03_5270:
+.move:
 	sound $5e ; $5270
 	ld hl, hSaveEditorCursor ; $5272
 	ld a, [hl+] ; $5275
@@ -6393,9 +6393,9 @@ AdvanceToPaletteEntry:
 	ld a, $08 ; $782c
 	add a, l ; $782e
 	ld l, a ; $782f
-	jr nc, Label_03_7833 ; $7830
+	jr nc, .seekLoop ; $7830
 	inc h ; $7832
-Label_03_7833:
+.seekLoop:
 	dec b ; $7833
 	jr AdvanceToPaletteEntry ; $7834
 	; $7836, 1994 bytes fill to bank end (linker-padded)

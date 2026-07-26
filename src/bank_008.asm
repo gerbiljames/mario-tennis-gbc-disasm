@@ -4313,24 +4313,24 @@ GetCharBaseCourtPosition:
 	ld h, b ; $60ac
 	ld a, [wCharCourtPos] ; $60ad
 	and a, $02 ; $60b0
-	jr z, Label_08_60ba ; $60b2
+	jr z, .checkSide ; $60b2
 	xor a, a ; $60b4
 	sub a, e ; $60b5
 	ld e, a ; $60b6
 	sbc a, a ; $60b7
 	sub a, d ; $60b8
 	ld d, a ; $60b9
-Label_08_60ba:
+.checkSide:
 	ld a, [wCharCourtPos] ; $60ba
 	and a, $01 ; $60bd
-	jr z, Label_08_60c7 ; $60bf
+	jr z, .done ; $60bf
 	xor a, a ; $60c1
 	sub a, l ; $60c2
 	ld l, a ; $60c3
 	sbc a, a ; $60c4
 	sub a, h ; $60c5
 	ld h, a ; $60c6
-Label_08_60c7:
+.done:
 	ret ; $60c7
 	; $60c8, 16 bytes (records:4)
 ; 4 records x 4 bytes
@@ -4457,9 +4457,9 @@ GetServeCameraTarget:
 	ld a, [wServingCharCourtPos] ; $6199
 	and a, $02 ; $619c
 	ld de, $fe80 ; $619e
-	jr z, Label_08_61a6 ; $61a1
+	jr z, .done ; $61a1
 	ld de, $f880 ; $61a3
-Label_08_61a6:
+.done:
 	ld hl, $0000 ; $61a6
 	ret ; $61a9
 SnapCameraTo:
@@ -6691,34 +6691,34 @@ BufferShotButtonPress:
 	ret z ; $7117
 	ld b, a ; $7118
 	cp a, PADF_A | PADF_B ; $7119
-	jr z, Label_08_714c ; $711b
+	jr z, .done ; $711b
 	ld a, [$df11] ; $711d
 	and a, a ; $7120
-	jr z, Label_08_712d ; $7121
+	jr z, .startSwing ; $7121
 	ld a, [$df4f] ; $7123
 	cp a, b ; $7126
-	jr z, Label_08_712d ; $7127
+	jr z, .startSwing ; $7127
 	ld b, $03 ; $7129
-	jr Label_08_714c ; $712b
-Label_08_712d:
+	jr .done ; $712b
+.startSwing:
 	ld a, b ; $712d
 	ld [$df4f], a ; $712e
 	ld a, $05 ; $7131
 	ld [$df11], a ; $7133
 	ld a, [$df16] ; $7136
 	and a, a ; $7139
-	jr z, Label_08_714c ; $713a
+	jr z, .done ; $713a
 	ld a, [$df17] ; $713c
 	and a, a ; $713f
-	jr z, Label_08_7143 ; $7140
+	jr z, .storeShot ; $7140
 	ret ; $7142
-Label_08_7143:
+.storeShot:
 	ld a, b ; $7143
 	ld [$df17], a ; $7144
 	xor a, a ; $7147
 	ld [$df11], a ; $7148
 	ret ; $714b
-Label_08_714c:
+.done:
 	ld a, b ; $714c
 	ld [$df16], a ; $714d
 	ret ; $7150

@@ -2404,16 +2404,16 @@ MoveCharDataScreenSelection:
 	ld a, [$d024] ; $53c9
 	add a, l ; $53cc
 	ld l, a ; $53cd
-	jr nc, Label_1c_53d1 ; $53ce
+	jr nc, .readTarget ; $53ce
 	inc h ; $53d0
-Label_1c_53d1:
+.readTarget:
 	ld a, [hl] ; $53d1
 	cp a, $ff ; $53d2
 	ret z ; $53d4
 	ld [$d024], a ; $53d5
 	sound $5e ; $53d8
 	cp a, $04 ; $53da
-	jr z, Label_1c_53f1 ; $53dc
+	jr z, .redraw ; $53dc
 	call RestoreCharDataScreenRow ; $53de
 	call LoadCharStatsWithLevelUpDeltas ; $53e1
 	call CharDataScreen_DrawStats ; $53e4
@@ -2421,7 +2421,7 @@ Label_1c_53d1:
 	call CharDataScreen_DrawPageColumns ; $53ea
 	call FlushCharDataTilemaps ; $53ed
 	ret ; $53f0
-Label_1c_53f1:
+.redraw:
 	call RestoreCharDataScreenRow ; $53f1
 	call LoadCharStats ; $53f4
 	call CharDataScreen_DrawStats ; $53f7

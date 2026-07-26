@@ -959,7 +959,7 @@ EndMinigamePoint:
 	call ShowPointOutcomeBanner ; $4770
 	farcall ResolvePointWinner ; $4773
 	add a, a ; $4776
-	jr c, Label_0d_479b ; $4777
+	jr c, .resolve ; $4777
 	ld a, [$c784] ; $4779
 	add a, a ; $477c
 	add a, a ; $477d
@@ -981,7 +981,7 @@ EndMinigamePoint:
 	ret z ; $4795
 	ld a, $0b ; $4796
 	ld [wPointOutcome], a ; $4798
-Label_0d_479b:
+.resolve:
 	call DetermineMinigamePointResult ; $479b
 	push de ; $479e
 	ldh a, [hWramBank] ; $479f

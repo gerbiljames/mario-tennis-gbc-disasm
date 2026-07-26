@@ -3892,26 +3892,26 @@ ApplyMessageSpeed:
 	wram_bank $05 ; $57eb
 	ld a, [wMessageSpeed] ; $57f1
 	bit 7, a ; $57f4
-	jr z, Label_05_57fe ; $57f6
+	jr z, .speed1 ; $57f6
 	xor a, a ; $57f8
 	ld [$d829], a ; $57f9
-	jr Label_05_5818 ; $57fc
-Label_05_57fe:
+	jr .store ; $57fc
+.speed1:
 	or a, a ; $57fe
-	jr nz, Label_05_5808 ; $57ff
+	jr nz, .speed2 ; $57ff
 	ld a, $00 ; $5801
 	ld [$d829], a ; $5803
-	jr Label_05_5818 ; $5806
-Label_05_5808:
+	jr .store ; $5806
+.speed2:
 	cp a, $01 ; $5808
-	jr nz, Label_05_5813 ; $580a
+	jr nz, .speed3 ; $580a
 	ld a, $02 ; $580c
 	ld [$d829], a ; $580e
-	jr Label_05_5818 ; $5811
-Label_05_5813:
+	jr .store ; $5811
+.speed3:
 	ld a, $04 ; $5813
 	ld [$d829], a ; $5815
-Label_05_5818:
+.store:
 	pop af ; $5818
 	wram_bank ; $5819
 	pop af ; $581d
@@ -5766,9 +5766,9 @@ DebugDrawHexRowLabel:
 	and a, $0f ; $64a1
 	add a, l ; $64a3
 	ld l, a ; $64a4
-	jr nc, Label_05_64a8 ; $64a5
+	jr nc, .writeCell ; $64a5
 	inc h ; $64a7
-Label_05_64a8:
+.writeCell:
 	ld c, [hl] ; $64a8
 	ld a, b ; $64a9
 	ld b, $80 ; $64aa
@@ -6118,9 +6118,9 @@ DebugDrawWarpMenu:
 	ld hl, $0179 ; $6742
 	add a, l ; $6745
 	ld l, a ; $6746
-	jr nc, Label_05_674a ; $6747
+	jr nc, .draw ; $6747
 	inc h ; $6749
-Label_05_674a:
+.draw:
 	ld de, $0102 ; $674a
 	ld a, [$c701] ; $674d
 	call WriteDialogueToWindow ; $6750

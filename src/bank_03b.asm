@@ -995,9 +995,9 @@ RedrawN64ExhibDataWindow:
 	ld hl, $dc01 ; $4636
 	add a, l ; $4639
 	ld l, a ; $463a
-	jr nc, Label_3b_463e ; $463b
+	jr nc, .drawRow ; $463b
 	inc h ; $463d
-Label_3b_463e:
+.drawRow:
 	ld bc, $d0a4 ; $463e
 	ld a, $07 ; $4641
 	call DrawChartIconRow ; $4643
@@ -1005,27 +1005,27 @@ Label_3b_463e:
 	ld hl, $dc01 ; $4649
 	add a, l ; $464c
 	ld l, a ; $464d
-	jr nc, Label_3b_4651 ; $464e
+	jr nc, .drawColumn ; $464e
 	inc h ; $4650
-Label_3b_4651:
+.drawColumn:
 	ld bc, $d0e2 ; $4651
 	call DrawChartIconColumn ; $4654
 	ld a, [$dc13] ; $4657
 	ld hl, $db00 ; $465a
 	ld de, $0010 ; $465d
-Label_3b_4660:
+.rowSeekLoop:
 	or a, a ; $4660
-	jr z, Label_3b_4667 ; $4661
+	jr z, .rowFound ; $4661
 	add hl, de ; $4663
 	dec a ; $4664
-	jr Label_3b_4660 ; $4665
-Label_3b_4667:
+	jr .rowSeekLoop ; $4665
+.rowFound:
 	ld a, [$dc12] ; $4667
 	add a, l ; $466a
 	ld l, a ; $466b
-	jr nc, Label_3b_466f ; $466c
+	jr nc, .drawCells ; $466c
 	inc h ; $466e
-Label_3b_466f:
+.drawCells:
 	ld de, $d0e4 ; $466f
 	ld a, $07 ; $4672
 	call DrawChartCellRows ; $4674

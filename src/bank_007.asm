@@ -1109,31 +1109,31 @@ ExchangeLinkFrameByteMaster:
 	ret ; $46ee
 ExchangeLinkFrameByteSlave:
 	call AwaitSerialByte ; $46ef
-	jr c, Label_07_470c ; $46f2
+	jr c, .resetLink ; $46f2
 	push bc ; $46f4
 	call AdvanceFrame ; $46f5
 	pop bc ; $46f8
 	di ; $46f9
 	cp a, $00 ; $46fa
-	jr z, Label_07_470c ; $46fc
+	jr z, .resetLink ; $46fc
 	cp a, $ff ; $46fe
-	jr z, Label_07_470f ; $4700
+	jr z, .resetLinkAgain ; $4700
 	and a, $c0 ; $4702
 	cp a, $40 ; $4704
-	jr z, Label_07_4712 ; $4706
+	jr z, .checkDuplicate ; $4706
 	cp a, $80 ; $4708
-	jr z, Label_07_4712 ; $470a
-Label_07_470c:
+	jr z, .checkDuplicate ; $470a
+.resetLink:
 	call LinkErrorReset ; $470c
-Label_07_470f:
+.resetLinkAgain:
 	call LinkErrorReset ; $470f
-Label_07_4712:
+.checkDuplicate:
 	ldh a, [$ffdb] ; $4712
 	cp a, b ; $4714
-	jr nz, Label_07_471b ; $4715
+	jr nz, .store ; $4715
 	and a, $3f ; $4717
-	jr Label_07_470c ; $4719
-Label_07_471b:
+	jr .resetLink ; $4719
+.store:
 	ld a, b ; $471b
 	ldh [$ffdb], a ; $471c
 	ldh [$ffda], a ; $471e
@@ -1598,31 +1598,31 @@ PrepareLinkInputPayload:
 AwaitSerialByte:
 	push de ; $4a29
 	ld de, $4e20 ; $4a2a
-Label_07_4a2d:
+.waitLoop:
 	ei ; $4a2d
 	nop ; $4a2e
 	nop ; $4a2f
 	di ; $4a30
 	ldh a, [hVBlankOccurred] ; $4a31
 	or a, a ; $4a33
-	jr z, Label_07_4a2d ; $4a34
+	jr z, .waitLoop ; $4a34
 	ldh a, [$ffd7] ; $4a36
 	or a, a ; $4a38
-	jr nz, Label_07_4a43 ; $4a39
+	jr nz, .received ; $4a39
 	dec de ; $4a3b
 	ld a, d ; $4a3c
 	or a, e ; $4a3d
-	jr nz, Label_07_4a2d ; $4a3e
+	jr nz, .waitLoop ; $4a3e
 	scf ; $4a40
-	jr Label_07_4a4b ; $4a41
-Label_07_4a43:
+	jr .done ; $4a41
+.received:
 	dec a ; $4a43
 	ldh [$ffd7], a ; $4a44
 	xor a, a ; $4a46
 	ldh [hVBlankOccurred], a ; $4a47
 	scf ; $4a49
 	ccf ; $4a4a
-Label_07_4a4b:
+.done:
 	ldh a, [hLinkRxByte] ; $4a4b
 	ld b, a ; $4a4d
 	ei ; $4a4e
@@ -2387,9 +2387,9 @@ AddChargeSpeedBonus:
 	add hl, de ; $534e
 	ld a, $80 ; $534f
 	bit 7, h ; $5351
-	jr z, Label_07_5357 ; $5353
+	jr z, .done ; $5353
 	srl a ; $5355
-Label_07_5357:
+.done:
 	call MulHLByASignedFull ; $5357
 	jr Label_07_5373 ; $535a
 AddChargeSpeedBonusHalf:

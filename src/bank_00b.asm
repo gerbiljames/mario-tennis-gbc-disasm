@@ -351,11 +351,11 @@ CountDrillResultBitsSet:
 	ld b, a ; $420f
 	xor a, a ; $4210
 	ld c, $08 ; $4211
-Label_0b_4213:
+.shiftLoop:
 	rr b ; $4213
 	adc a, $00 ; $4215
 	dec c ; $4217
-	jr nz, Label_0b_4213 ; $4218
+	jr nz, .shiftLoop ; $4218
 	pop bc ; $421a
 	ret ; $421b
 CheckDrillTargetZoneMissed:

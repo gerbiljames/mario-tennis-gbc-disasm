@@ -6062,42 +6062,42 @@ BlitBGRowFrom64:
 	push hl ; $2258
 	wram_bank $02 ; $2259
 	ld c, $20 ; $225f
-Label_00_2261:
+.copyLoop:
 	ld a, [hl+] ; $2261
 	ld [de], a ; $2262
 	ld a, l ; $2263
 	and a, $3f ; $2264
-	jr nz, Label_00_226e ; $2266
+	jr nz, .nextCell ; $2266
 	ld a, c ; $2268
 	ld bc, hLinkRxByte ; $2269
 	add hl, bc ; $226c
 	ld c, a ; $226d
-Label_00_226e:
+.nextCell:
 	inc e ; $226e
 	res 5, e ; $226f
 	dec c ; $2271
-	jr nz, Label_00_2261 ; $2272
+	jr nz, .copyLoop ; $2272
 	pop hl ; $2274
 	wram_bank $03 ; $2275
 	ld bc, $4020 ; $227b
 	ld a, e ; $227e
 	add a, b ; $227f
 	ld e, a ; $2280
-Label_00_2281:
+.secondHalf:
 	ld a, [hl+] ; $2281
 	ld [de], a ; $2282
 	ld a, l ; $2283
 	and a, $3f ; $2284
-	jr nz, Label_00_228e ; $2286
+	jr nz, .nextCell2 ; $2286
 	ld a, c ; $2288
 	ld bc, hLinkRxByte ; $2289
 	add hl, bc ; $228c
 	ld c, a ; $228d
-Label_00_228e:
+.nextCell2:
 	inc e ; $228e
 	res 5, e ; $228f
 	dec c ; $2291
-	jr nz, Label_00_2281 ; $2292
+	jr nz, .secondHalf ; $2292
 	ld a, $01 ; $2294
 	ldh [hBGRowBlitPending], a ; $2296
 	ret ; $2298
@@ -6121,7 +6121,7 @@ BlitBGColumnFrom64:
 	push hl ; $22b7
 	wram_bank $02 ; $22b8
 	ld c, $20 ; $22be
-Label_00_22c0:
+.copyLoop:
 	ld a, [hl] ; $22c0
 	ld [de], a ; $22c1
 	ld a, c ; $22c2
@@ -6133,14 +6133,14 @@ Label_00_22c0:
 	inc e ; $22cc
 	res 5, e ; $22cd
 	dec c ; $22cf
-	jr nz, Label_00_22c0 ; $22d0
+	jr nz, .copyLoop ; $22d0
 	pop hl ; $22d2
 	wram_bank $03 ; $22d3
 	ld bc, $4020 ; $22d9
 	ld a, e ; $22dc
 	add a, b ; $22dd
 	ld e, a ; $22de
-Label_00_22df:
+.secondHalf:
 	ld a, [hl] ; $22df
 	ld [de], a ; $22e0
 	ld a, c ; $22e1
@@ -6152,7 +6152,7 @@ Label_00_22df:
 	inc e ; $22eb
 	res 5, e ; $22ec
 	dec c ; $22ee
-	jr nz, Label_00_22df ; $22ef
+	jr nz, .secondHalf ; $22ef
 	ld a, $01 ; $22f1
 	ldh [hBGColumnBlitPending], a ; $22f3
 	ret ; $22f5

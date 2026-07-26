@@ -3188,13 +3188,13 @@ FindActorAtPoint:
 	ld a, d ; $53e5
 	ld [hl+], a ; $53e6
 	ld hl, $da00 ; $53e7
-Label_04_53ea:
+.actorLoop:
 	ld a, [hl+] ; $53ea
 	ld c, a ; $53eb
 	ld a, [hl+] ; $53ec
 	ld b, a ; $53ed
 	and a, a ; $53ee
-	jr z, Label_04_5452 ; $53ef
+	jr z, .done ; $53ef
 	push hl ; $53f1
 	ld hl, $daf2 ; $53f2
 	ld a, [hl+] ; $53f5
@@ -3212,17 +3212,17 @@ Label_04_53ea:
 	sbc a, d ; $5403
 	ld h, a ; $5404
 	bit 7, h ; $5405
-	jr z, Label_04_540f ; $5407
+	jr z, .checkX ; $5407
 	xor a, a ; $5409
 	sub a, l ; $540a
 	ld l, a ; $540b
 	sbc a, a ; $540c
 	sub a, h ; $540d
 	ld h, a ; $540e
-Label_04_540f:
+.checkX:
 	ld a, h ; $540f
 	and a, a ; $5410
-	jr nz, Label_04_544f ; $5411
+	jr nz, .nextActor ; $5411
 	ld a, l ; $5413
 	call GetSquareOfByte ; $5414
 	push hl ; $5417
@@ -3242,34 +3242,34 @@ Label_04_540f:
 	sbc a, d ; $5429
 	ld h, a ; $542a
 	bit 7, h ; $542b
-	jr z, Label_04_5435 ; $542d
+	jr z, .checkDepth ; $542d
 	xor a, a ; $542f
 	sub a, l ; $5430
 	ld l, a ; $5431
 	sbc a, a ; $5432
 	sub a, h ; $5433
 	ld h, a ; $5434
-Label_04_5435:
+.checkDepth:
 	pop de ; $5435
 	ld a, h ; $5436
 	and a, a ; $5437
-	jr nz, Label_04_544f ; $5438
+	jr nz, .nextActor ; $5438
 	ld a, l ; $543a
 	call GetSquareOfByte ; $543b
 	add hl, de ; $543e
-	jr c, Label_04_544f ; $543f
+	jr c, .nextActor ; $543f
 	ld de, $1f00 ; $5441
 	add hl, de ; $5444
-	jr c, Label_04_544f ; $5445
+	jr c, .nextActor ; $5445
 	pop hl ; $5447
 	ld l, c ; $5448
 	ld h, b ; $5449
 	call ActorSlotPtrToIndex ; $544a
-	jr Label_04_5452 ; $544d
-Label_04_544f:
+	jr .done ; $544d
+.nextActor:
 	pop hl ; $544f
-	jr Label_04_53ea ; $5450
-Label_04_5452:
+	jr .actorLoop ; $5450
+.done:
 	pop hl ; $5452
 	pop de ; $5453
 	pop bc ; $5454

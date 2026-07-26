@@ -3251,7 +3251,7 @@ InitNumberSpriteGfx:
 	ld [$cb6b], a ; $6edf
 	ld a, c ; $6ee2
 	or a, a ; $6ee3
-	jr nz, Label_39_6ef9 ; $6ee4
+	jr nz, InitNumberSpriteGfxWide ; $6ee4
 	push bc ; $6ee6
 	ld b, $49 ; $6ee7
 	ld c, $14 ; $6ee9
@@ -3262,7 +3262,7 @@ InitNumberSpriteGfx:
 	ld e, $01 ; $6ef3
 	call LoadPaletteShadow ; $6ef5
 	ret ; $6ef8
-Label_39_6ef9:
+InitNumberSpriteGfxWide:
 	push bc ; $6ef9
 	ld b, $14 ; $6efa
 	ld c, $18 ; $6efc

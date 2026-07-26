@@ -527,7 +527,7 @@ MachinePracticeLevelPrompt:
 	farcall ScriptCloseDialogueWindow ; $4632
 	script_wait_frames $05 ; $4635
 	and a, a ; $463c
-	jr nz, Label_14_4692 ; $463d
+	jr nz, .done ; $463d
 	script_face $05, FACE_UP ; $463f
 	script_set_speed ACTOR_PLAYER, $0020 ; $4646
 	script_move_angle ACTOR_PLAYER, FACE_RIGHT, $0200 ; $464e
@@ -548,7 +548,7 @@ MachinePracticeLevelPrompt:
 	add a, $12 ; $468a
 	farcall RunTrainingDrillByID ; $468c
 	farcall EndCutsceneScriptMode ; $468f
-Label_14_4692:
+.done:
 	ret ; $4692
 MachineLevelNotClearedMessage:
 	script_set_text Text_6e_225 ; $4693

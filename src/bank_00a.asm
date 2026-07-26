@@ -2246,13 +2246,13 @@ Label_0a_4f2b:
 RunStoryModeOverworld:
 	xor a, a ; $4f2c
 	ld [$cb5f], a ; $4f2d
-Label_0a_4f30:
+.restart:
 	call ClearFrameTasks ; $4f30
 	ld a, $01 ; $4f33
 	ld hl, DrawPlayerPositionDebugOverlay ; $4f35
 	call RegisterFrameTask ; $4f38
 	call RunStoryLocation ; $4f3b
-	jr Label_0a_4f30 ; $4f3e
+	jr .restart ; $4f3e
 RunStoryLocation:
 	push af ; $4f40
 	push bc ; $4f41

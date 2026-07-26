@@ -3077,24 +3077,24 @@ BuildOwnedItemList:
 	ld de, $d800 ; $5738
 	ld c, $00 ; $573b
 	ld b, $00 ; $573d
-Label_3e_573f:
+.scanLoop:
 	ld a, [hl+] ; $573f
 	or a, a ; $5740
-	jr z, Label_3e_574f ; $5741
+	jr z, .next ; $5741
 	cp a, $01 ; $5743
-	jr z, Label_3e_574b ; $5745
+	jr z, .append ; $5745
 	ld a, b ; $5747
 	ld [$d811], a ; $5748
-Label_3e_574b:
+.append:
 	ld a, c ; $574b
 	ld [de], a ; $574c
 	inc de ; $574d
 	inc b ; $574e
-Label_3e_574f:
+.next:
 	inc c ; $574f
 	ld a, c ; $5750
 	cp a, $08 ; $5751
-	jr nz, Label_3e_573f ; $5753
+	jr nz, .scanLoop ; $5753
 	ld a, b ; $5755
 	ld [$d810], a ; $5756
 	ret ; $5759
@@ -4117,13 +4117,13 @@ RedrawCourtSelect4Menu:
 	wram_bank $03 ; $5f51
 	ld b, $00 ; $5f57
 	ld c, $00 ; $5f59
-Label_3e_5f5b:
+.tabLoop:
 	call SetCourtSelect4TabAttrRect ; $5f5b
 	ld a, b ; $5f5e
 	inc a ; $5f5f
 	ld b, a ; $5f60
 	cp a, $04 ; $5f61
-	jr nz, Label_3e_5f5b ; $5f63
+	jr nz, .tabLoop ; $5f63
 	ld c, $02 ; $5f65
 	call GetMenuCursorIndex_3e ; $5f67
 	ld b, a ; $5f6a
@@ -4139,9 +4139,9 @@ Label_3e_5f5b:
 	call IsCourtUnlocked ; $5f7f
 	or a, a ; $5f82
 	ld b, $ff ; $5f83
-	jr z, Label_3e_5f88 ; $5f85
+	jr z, .drawName ; $5f85
 	ld b, d ; $5f87
-Label_3e_5f88:
+.drawName:
 	call DrawCourtNameTiles ; $5f88
 	ld hl, $d480 ; $5f8b
 	ld de, $b880 ; $5f8e
@@ -4810,13 +4810,13 @@ RedrawCourtSelect9Menu:
 	wram_bank $03 ; $6824
 	ld b, $00 ; $682a
 	ld c, $00 ; $682c
-Label_3e_682e:
+.tabLoop:
 	call SetCourtSelect9TabAttrRect ; $682e
 	ld a, b ; $6831
 	inc a ; $6832
 	ld b, a ; $6833
 	cp a, $09 ; $6834
-	jr nz, Label_3e_682e ; $6836
+	jr nz, .tabLoop ; $6836
 	ld c, $03 ; $6838
 	call GetMenuCursorIndex_3e ; $683a
 	ld b, a ; $683d
@@ -4832,9 +4832,9 @@ Label_3e_682e:
 	call IsCourtUnlocked ; $6852
 	or a, a ; $6855
 	ld b, $ff ; $6856
-	jr z, Label_3e_685b ; $6858
+	jr z, .drawName ; $6858
 	ld b, d ; $685a
-Label_3e_685b:
+.drawName:
 	call DrawCourtNameTiles ; $685b
 	ld hl, $d460 ; $685e
 	ld de, $b860 ; $6861
