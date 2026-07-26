@@ -4461,16 +4461,16 @@ UpdateActorTileAnimState_10:
 	dec e ; $7a0e
 	pop af ; $7a0f
 	or a, a ; $7a10
-	jr z, Label_10_7a15 ; $7a11
+	jr z, .readCell ; $7a11
 	dec e ; $7a13
 	dec e ; $7a14
-Label_10_7a15:
+.readCell:
 	push de ; $7a15
 	call ReadSceneTilemapCell_10 ; $7a16
 	pop de ; $7a19
 	and a, $87 ; $7a1a
 	cp a, $06 ; $7a1c
-	jr nz, Label_10_7a2f ; $7a1e
+	jr nz, .checkBelow ; $7a1e
 	wram_bank $04 ; $7a20
 	ld hl, $0020 ; $7a26
 	add hl, bc ; $7a29
@@ -4478,12 +4478,12 @@ Label_10_7a15:
 	xor a, $01 ; $7a2b
 	ld [hl], a ; $7a2d
 	ret ; $7a2e
-Label_10_7a2f:
+.checkBelow:
 	inc d ; $7a2f
 	call ReadSceneTilemapCell_10 ; $7a30
 	and a, $07 ; $7a33
 	cp a, $06 ; $7a35
-	jr nz, Label_10_7a48 ; $7a37
+	jr nz, .actorLoop ; $7a37
 	wram_bank $04 ; $7a39
 	ld hl, $0020 ; $7a3f
 	add hl, bc ; $7a42
@@ -4491,7 +4491,7 @@ Label_10_7a2f:
 	xor a, $01 ; $7a44
 	ld [hl], a ; $7a46
 	ret ; $7a47
-Label_10_7a48:
+.actorLoop:
 	wram_bank $04 ; $7a48
 	ld hl, $0020 ; $7a4e
 	add hl, bc ; $7a51
@@ -4532,7 +4532,7 @@ Label_10_7a48:
 	pop de ; $7a8b
 	and a, $87 ; $7a8c
 	cp a, $06 ; $7a8e
-	jr nz, Label_10_7aa1 ; $7a90
+	jr nz, .nextActor ; $7a90
 	wram_bank $04 ; $7a92
 	ld hl, $0020 ; $7a98
 	add hl, bc ; $7a9b
@@ -4540,12 +4540,12 @@ Label_10_7a48:
 	xor a, $01 ; $7a9d
 	ld [hl], a ; $7a9f
 	ret ; $7aa0
-Label_10_7aa1:
+.nextActor:
 	inc d ; $7aa1
 	call ReadSceneTilemapCell_10 ; $7aa2
 	and a, $07 ; $7aa5
 	cp a, $06 ; $7aa7
-	jr nz, Label_10_7aba ; $7aa9
+	jr nz, .done ; $7aa9
 	wram_bank $04 ; $7aab
 	ld hl, $0020 ; $7ab1
 	add hl, bc ; $7ab4
@@ -4553,7 +4553,7 @@ Label_10_7aa1:
 	xor a, $01 ; $7ab6
 	ld [hl], a ; $7ab8
 	ret ; $7ab9
-Label_10_7aba:
+.done:
 	wram_bank $04 ; $7aba
 	ld hl, $0020 ; $7ac0
 	add hl, bc ; $7ac3

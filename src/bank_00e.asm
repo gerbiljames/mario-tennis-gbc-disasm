@@ -1851,10 +1851,10 @@ MarioWorldArrivalSingles:
 	test_flag FLAG_DOUBLES ; $5579
 	jp nz, MarioWorldArrivalDoubles ; $557c
 	test_flag FLAG_ENDING_CREDITS_RUNNING ; $557f
-	jr nz, Label_0e_558a ; $5582
+	jr nz, .arrive ; $5582
 	test_flag FLAG_REACHED_MARIO_WORLD_SINGLES ; $5584
 	jp nz, Label_0e_69b3 ; $5587
-Label_0e_558a:
+.arrive:
 	script_set_position ACTOR_PLAYER, $3f00, $3f00 ; $558a
 	script_fade_in $04 ; $5595
 	call WaitFadeEnd ; $559a
@@ -1869,11 +1869,11 @@ Label_0e_558a:
 	script_face $13, FACE_UP ; $55dc
 	script_wait_frames $0a ; $55e3
 	test_flag FLAG_ENDING_CREDITS_RUNNING ; $55ea
-	jr nz, Label_0e_55ff ; $55ed
+	jr nz, .walkIn ; $55ed
 	script_set_text Text_5e_75 ; $55ef
 	script_speak $13 ; $55f5
 	script_speak $13 ; $55fa
-Label_0e_55ff:
+.walkIn:
 	script_player_speed $0020 ; $55ff
 	script_move_player $1200, $1800 ; $5605
 	farcall WaitPlayerMoveDone ; $560f
@@ -1881,9 +1881,9 @@ Label_0e_55ff:
 	script_set_anim $08, $03 ; $5619
 	script_wait_idle $08 ; $5620
 	test_flag FLAG_ENDING_CREDITS_RUNNING ; $5625
-	jr nz, Label_0e_562f ; $5628
+	jr nz, .approach ; $5628
 	script_speak $08 ; $562a
-Label_0e_562f:
+.approach:
 	script_player_speed $0014 ; $562f
 	script_set_speed ACTOR_PLAYER, $0014 ; $5635
 	script_set_speed $13, $0014 ; $563d
@@ -1899,14 +1899,14 @@ Label_0e_562f:
 	script_move_target $13, $0d00, $1300 ; $5694
 	script_wait_move $08 ; $569f
 	test_flag FLAG_ENDING_CREDITS_RUNNING ; $56a4
-	jr z, Label_0e_56c0 ; $56a7
+	jr z, .done ; $56a7
 	script_face $08, FACE_DOWN ; $56a9
 	script_wait_frames $14 ; $56b0
 	ld a, $01 ; $56b7
 	ld [$c294], a ; $56b9
 	ld [wStoryModeExitLocationRequest], a ; $56bc
 	ret ; $56bf
-Label_0e_56c0:
+.done:
 	call MarioWorldWelcomeCutscene ; $56c0
 	script_set_speed $0f, $0020 ; $56c3
 	script_set_speed $07, $0020 ; $56cb

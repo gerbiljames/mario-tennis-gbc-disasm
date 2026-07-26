@@ -1330,21 +1330,21 @@ Label_13_56b7:
 	ret ; $56ba
 RunPlayDoublesTodayPrompt:
 	test_flag FLAG_DOUBLES ; $56bb
-	jp nz, Label_13_5782 ; $56be
+	jp nz, .accepted ; $56be
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $56c1
-	jr nz, Label_13_56ce ; $56c4
+	jr nz, .altText ; $56c4
 	script_set_text Text_31_310 ; $56c6
-	jr Label_13_56d4 ; $56cc
-Label_13_56ce:
+	jr .prompt ; $56cc
+.altText:
 	script_set_text Text_31_304 ; $56ce
-Label_13_56d4:
+.prompt:
 	ld a, $03 ; $56d4
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $56d6
 	farcall RunDialogueYesNoPrompt ; $56d9
 	farcall ScriptCloseDialogueWindow ; $56dc
 	script_wait_frames $05 ; $56df
 	and a, a ; $56e6
-	jr nz, Label_13_574c ; $56e7
+	jr nz, .declined ; $56e7
 	set_flag FLAG_DOUBLES ; $56e9
 	call SetRoommateDoublesYesReplyText_13 ; $56ec
 	script_speak $03 ; $56ef
@@ -1371,7 +1371,7 @@ Label_13_56d4:
 	script_wait_frames $05 ; $573d
 	script_face ACTOR_PLAYER, FACE_DOWN ; $5744
 	ret ; $574b
-Label_13_574c:
+.declined:
 	call SetRoommateDoublesNoReplyText_13 ; $574c
 	farcall AdvanceDialogueTextCursor ; $574f
 	script_speak $03 ; $5752
@@ -1389,21 +1389,21 @@ Label_13_574c:
 	call SetDormRoomEventTriggerCells_13 ; $5777
 	script_face $03, FACE_DOWN ; $577a
 	ret ; $5781
-Label_13_5782:
+.accepted:
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $5782
-	jr nz, Label_13_578f ; $5785
+	jr nz, .acceptedAlt ; $5785
 	script_set_text Text_31_313 ; $5787
-	jr Label_13_5795 ; $578d
-Label_13_578f:
+	jr .setUpDoubles ; $578d
+.acceptedAlt:
 	script_set_text Text_31_307 ; $578f
-Label_13_5795:
+.setUpDoubles:
 	ld a, $03 ; $5795
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $5797
 	farcall RunDialogueYesNoPrompt ; $579a
 	farcall ScriptCloseDialogueWindow ; $579d
 	script_wait_frames $05 ; $57a0
 	and a, a ; $57a7
-	jr nz, Label_13_5807 ; $57a8
+	jr nz, .done ; $57a8
 	call SetRoommateSinglesYesReplyText_13 ; $57aa
 	script_speak $03 ; $57ad
 	script_null_script $03 ; $57b2
@@ -1426,7 +1426,7 @@ Label_13_5795:
 	script_null_script $03 ; $57fa
 	script_face $03, FACE_DOWN ; $57ff
 	ret ; $5806
-Label_13_5807:
+.done:
 	call SetRoommateSinglesNoReplyText_13 ; $5807
 	farcall AdvanceDialogueTextCursor ; $580a
 	script_speak $03 ; $580d

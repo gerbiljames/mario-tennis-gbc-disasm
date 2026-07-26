@@ -250,35 +250,35 @@ DrawBox:
 	push bc ; $43cc
 	push de ; $43cd
 	push hl ; $43ce
-Label_18_43cf:
+.rowLoop:
 	push bc ; $43cf
 	push de ; $43d0
 	push hl ; $43d1
-Label_18_43d2:
+.cellLoop:
 	ld a, $20 ; $43d2
 	ld [hl+], a ; $43d4
 	ld a, $00 ; $43d5
 	ld [de], a ; $43d7
 	inc de ; $43d8
 	dec b ; $43d9
-	jr nz, Label_18_43d2 ; $43da
+	jr nz, .cellLoop ; $43da
 	pop hl ; $43dc
 	pop de ; $43dd
 	pop bc ; $43de
 	ld a, $20 ; $43df
 	add a, l ; $43e1
 	ld l, a ; $43e2
-	jr nc, Label_18_43e6 ; $43e3
+	jr nc, .nextRowAttr ; $43e3
 	inc h ; $43e5
-Label_18_43e6:
+.nextRowAttr:
 	ld a, $20 ; $43e6
 	add a, e ; $43e8
 	ld e, a ; $43e9
-	jr nc, Label_18_43ed ; $43ea
+	jr nc, .nextRow ; $43ea
 	inc d ; $43ec
-Label_18_43ed:
+.nextRow:
 	dec c ; $43ed
-	jr nz, Label_18_43cf ; $43ee
+	jr nz, .rowLoop ; $43ee
 	pop hl ; $43f0
 	pop de ; $43f1
 	pop bc ; $43f2
@@ -286,21 +286,21 @@ Label_18_43ed:
 	ld a, $20 ; $43f6
 	add a, l ; $43f8
 	ld l, a ; $43f9
-	jr nc, Label_18_43fd ; $43fa
+	jr nc, .topRowDone ; $43fa
 	inc h ; $43fc
-Label_18_43fd:
+.topRowDone:
 	dec c ; $43fd
 	dec c ; $43fe
-Label_18_43ff:
+.bottomRow:
 	call DrawBoxSideRow ; $43ff
 	ld a, $20 ; $4402
 	add a, l ; $4404
 	ld l, a ; $4405
-	jr nc, Label_18_4409 ; $4406
+	jr nc, .done ; $4406
 	inc h ; $4408
-Label_18_4409:
+.done:
 	dec c ; $4409
-	jr nz, Label_18_43ff ; $440a
+	jr nz, .bottomRow ; $440a
 	call DrawBoxBottomRow ; $440c
 	pop hl ; $440f
 	pop de ; $4410

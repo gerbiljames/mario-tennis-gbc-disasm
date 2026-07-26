@@ -2284,14 +2284,14 @@ StartSeniorRankingMatch:
 	ld a, [$c2b1] ; $60b0
 	sub a, $02 ; $60b3
 	rst Rst00 ; $60b5
-	dw Label_12_6232 ; $60b6 jumptable
-	dw Label_12_628a ; $60b8 jumptable
-	dw Label_12_62e9 ; $60ba jumptable
-	dw Label_12_6348 ; $60bc jumptable
-	dw Label_12_60c4 ; $60be jumptable
-	dw Label_12_6136 ; $60c0 jumptable
-	dw Label_12_61b2 ; $60c2 jumptable
-Label_12_60c4:
+	dw StartSeniorRankingMatch.rank4 ; $60b6 jumptable
+	dw StartSeniorRankingMatch.rank5 ; $60b8 jumptable
+	dw StartSeniorRankingMatch.rank6 ; $60ba jumptable
+	dw StartSeniorRankingMatch.rank7 ; $60bc jumptable
+	dw StartSeniorRankingMatch.rank1 ; $60be jumptable
+	dw StartSeniorRankingMatch.rank2 ; $60c0 jumptable
+	dw StartSeniorRankingMatch.rank3 ; $60c2 jumptable
+.rank1:
 	script_face $03, FACE_LEFT ; $60c4
 	script_wait_frames $0f ; $60cb
 	script_set_actor_script $09, ActorScript_12_7876 ; $60d2
@@ -2310,7 +2310,7 @@ Label_12_60c4:
 	farcall RunStoryMatch ; $612f
 	farcall RestoreOverworldAfterMatch ; $6132
 	ret ; $6135
-Label_12_6136:
+.rank2:
 	script_face $03, FACE_RIGHT ; $6136
 	script_wait_frames $0f ; $613d
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $6144
@@ -2332,7 +2332,7 @@ Label_12_6136:
 	farcall RunStoryMatch ; $61ab
 	farcall RestoreOverworldAfterMatch ; $61ae
 	ret ; $61b1
-Label_12_61b2:
+.rank3:
 	script_face $03, FACE_LEFT ; $61b2
 	script_wait_frames $0f ; $61b9
 	script_face ACTOR_PLAYER, FACE_LEFT ; $61c0
@@ -2353,7 +2353,7 @@ Label_12_61b2:
 	farcall RunStoryMatch ; $622b
 	farcall RestoreOverworldAfterMatch ; $622e
 	ret ; $6231
-Label_12_6232:
+.rank4:
 	script_face $03, FACE_LEFT ; $6232
 	script_wait_frames $0f ; $6239
 	script_face ACTOR_PLAYER, FACE_LEFT ; $6240
@@ -2371,7 +2371,7 @@ Label_12_6232:
 	farcall RunStoryMatch ; $6283
 	farcall RestoreOverworldAfterMatch ; $6286
 	ret ; $6289
-Label_12_628a:
+.rank5:
 	script_face $03, FACE_RIGHT ; $628a
 	script_wait_frames $0f ; $6291
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $6298
@@ -2390,7 +2390,7 @@ Label_12_628a:
 	farcall RunStoryMatch ; $62e2
 	farcall RestoreOverworldAfterMatch ; $62e5
 	ret ; $62e8
-Label_12_62e9:
+.rank6:
 	script_face $03, FACE_RIGHT ; $62e9
 	script_wait_frames $0f ; $62f0
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $62f7
@@ -2409,7 +2409,7 @@ Label_12_62e9:
 	farcall RunStoryMatch ; $6341
 	farcall RestoreOverworldAfterMatch ; $6344
 	ret ; $6347
-Label_12_6348:
+.rank7:
 	script_face $03, FACE_LEFT ; $6348
 	script_wait_frames $0f ; $634f
 	script_face ACTOR_PLAYER, FACE_LEFT ; $6356

@@ -1756,16 +1756,16 @@ SetActorDrawModeFromSceneTile_0f:
 	dec e ; $634e
 	pop af ; $634f
 	or a, a ; $6350
-	jr z, Label_0f_6355 ; $6351
+	jr z, .readCell ; $6351
 	dec e ; $6353
 	dec e ; $6354
-Label_0f_6355:
+.readCell:
 	push de ; $6355
 	call ReadSceneTilemapTile_0f ; $6356
 	pop de ; $6359
 	and a, $87 ; $635a
 	cp a, $05 ; $635c
-	jr nz, Label_0f_636f ; $635e
+	jr nz, .checkBelow ; $635e
 	wram_bank $04 ; $6360
 	ld hl, $0020 ; $6366
 	add hl, bc ; $6369
@@ -1773,12 +1773,12 @@ Label_0f_6355:
 	xor a, $01 ; $636b
 	ld [hl], a ; $636d
 	ret ; $636e
-Label_0f_636f:
+.checkBelow:
 	inc d ; $636f
 	call ReadSceneTilemapTile_0f ; $6370
 	and a, $07 ; $6373
 	cp a, $05 ; $6375
-	jr nz, Label_0f_6388 ; $6377
+	jr nz, .actorLoop ; $6377
 	wram_bank $04 ; $6379
 	ld hl, $0020 ; $637f
 	add hl, bc ; $6382
@@ -1786,7 +1786,7 @@ Label_0f_636f:
 	xor a, $01 ; $6384
 	ld [hl], a ; $6386
 	ret ; $6387
-Label_0f_6388:
+.actorLoop:
 	wram_bank $04 ; $6388
 	ld hl, $0020 ; $638e
 	add hl, bc ; $6391
@@ -1827,7 +1827,7 @@ Label_0f_6388:
 	pop de ; $63cb
 	and a, $87 ; $63cc
 	cp a, $05 ; $63ce
-	jr nz, Label_0f_63e1 ; $63d0
+	jr nz, .nextActor ; $63d0
 	wram_bank $04 ; $63d2
 	ld hl, $0020 ; $63d8
 	add hl, bc ; $63db
@@ -1835,12 +1835,12 @@ Label_0f_6388:
 	xor a, $01 ; $63dd
 	ld [hl], a ; $63df
 	ret ; $63e0
-Label_0f_63e1:
+.nextActor:
 	inc d ; $63e1
 	call ReadSceneTilemapTile_0f ; $63e2
 	and a, $07 ; $63e5
 	cp a, $05 ; $63e7
-	jr nz, Label_0f_63fa ; $63e9
+	jr nz, .done ; $63e9
 	wram_bank $04 ; $63eb
 	ld hl, $0020 ; $63f1
 	add hl, bc ; $63f4
@@ -1848,7 +1848,7 @@ Label_0f_63e1:
 	xor a, $01 ; $63f6
 	ld [hl], a ; $63f8
 	ret ; $63f9
-Label_0f_63fa:
+.done:
 	wram_bank $04 ; $63fa
 	ld hl, $0020 ; $6400
 	add hl, bc ; $6403
@@ -1970,37 +1970,37 @@ IslandOpenRoundScripts_0f:
 	db $ff
 ComputeIslandOpenRound:
 	test_flag FLAG_DOUBLES ; $660f
-	jr nz, Label_0f_663b ; $6612
+	jr nz, .doubles ; $6612
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_SEMIFINAL ; $6614
-	jr z, Label_0f_661f ; $6617
+	jr z, .checkRound2 ; $6617
 	ld a, $03 ; $6619
 	ld [$c2b0], a ; $661b
 	ret ; $661e
-Label_0f_661f:
+.checkRound2:
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_2 ; $661f
-	jr z, Label_0f_662a ; $6622
+	jr z, .checkRound1 ; $6622
 	ld a, $02 ; $6624
 	ld [$c2b0], a ; $6626
 	ret ; $6629
-Label_0f_662a:
+.checkRound1:
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_1 ; $662a
-	jr z, Label_0f_6635 ; $662d
+	jr z, .round0 ; $662d
 	ld a, $01 ; $662f
 	ld [$c2b0], a ; $6631
 	ret ; $6634
-Label_0f_6635:
+.round0:
 	ld a, $00 ; $6635
 	ld [$c2b0], a ; $6637
 	ret ; $663a
-Label_0f_663b:
+.doubles:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_SEMIFINAL ; $663b
-	jr z, Label_0f_6646 ; $663e
+	jr z, .doublesCheckRound2 ; $663e
 	ld a, $03 ; $6640
 	ld [$c2b0], a ; $6642
 	ret ; $6645
-Label_0f_6646:
+.doublesCheckRound2:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_ROUND_1 ; $6646
-	jr z, Label_0f_6635 ; $6649
+	jr z, .round0 ; $6649
 	ld a, $02 ; $664b
 	ld [$c2b0], a ; $664d
 	ret ; $6650

@@ -694,18 +694,18 @@ UpdateAnimatedTilesTask_38:
 CopyStringToTilemap:
 	push af ; $440c
 	push bc ; $440d
-Label_38_440e:
+.charLoop:
 	ld a, [hl] ; $440e
 	cp a, $00 ; $440f
-	jr z, Label_38_4442 ; $4411
+	jr z, .done ; $4411
 	ld [de], a ; $4413
 	inc hl ; $4414
 	ld a, [hl] ; $4415
 	cp a, $de ; $4416
-	jr z, Label_38_441e ; $4418
+	jr z, .markChar ; $4418
 	cp a, $df ; $441a
-	jr nz, Label_38_4433 ; $441c
-Label_38_441e:
+	jr nz, .nextCell ; $441c
+.markChar:
 	push hl ; $441e
 	push bc ; $441f
 	ld h, d ; $4420
@@ -716,18 +716,18 @@ Label_38_441e:
 	ld a, [hl] ; $4427
 	cp a, $03 ; $4428
 	ld a, b ; $442a
-	jr nz, Label_38_442f ; $442b
+	jr nz, .writeMark ; $442b
 	sub a, $d0 ; $442d
-Label_38_442f:
+.writeMark:
 	ld [hl], a ; $442f
 	pop bc ; $4430
 	pop hl ; $4431
 	inc hl ; $4432
-Label_38_4433:
+.nextCell:
 	inc de ; $4433
 	ld a, e ; $4434
 	and a, $1f ; $4435
-	jr nz, Label_38_440e ; $4437
+	jr nz, .charLoop ; $4437
 	push hl ; $4439
 	ld h, d ; $443a
 	ld l, e ; $443b
@@ -735,8 +735,8 @@ Label_38_4433:
 	ld d, h ; $443d
 	ld e, l ; $443e
 	pop hl ; $443f
-	jr Label_38_440e ; $4440
-Label_38_4442:
+	jr .charLoop ; $4440
+.done:
 	pop bc ; $4442
 	pop af ; $4443
 	ret ; $4444
@@ -2076,19 +2076,19 @@ HandleCharGridDpad:
 	wram_bank $03 ; $5198
 	ld a, [$d814] ; $519e
 	cp a, $04 ; $51a1
-	jr z, Label_38_51ee ; $51a3
+	jr z, .done ; $51a3
 	ld a, [wMenuInputPressed] ; $51a5
 	ldh a, [hInputPressed] ; $51a8
 	bit PADB_RIGHT, a ; $51aa
-	jr nz, Label_38_51bc ; $51ac
+	jr nz, .scrollDown ; $51ac
 	bit 5, a ; $51ae
-	jr nz, Label_38_51d2 ; $51b0
+	jr nz, .moveLeft ; $51b0
 	bit 6, a ; $51b2
-	jr nz, Label_38_51dc ; $51b4
+	jr nz, .moveRight ; $51b4
 	bit 7, a ; $51b6
-	jr nz, Label_38_51e6 ; $51b8
-	jr Label_38_51ee ; $51ba
-Label_38_51bc:
+	jr nz, .moveDown ; $51b8
+	jr .done ; $51ba
+.scrollDown:
 	ld a, [$de00] ; $51bc
 	inc a ; $51bf
 	ld [$de00], a ; $51c0
@@ -2097,22 +2097,22 @@ Label_38_51bc:
 	call MoveCharGridCursorRight ; $51c8
 	xor a, a ; $51cb
 	ld [wMenuInputPressed], a ; $51cc
-	jp Label_38_51ee ; $51cf
-Label_38_51d2:
+	jp .done ; $51cf
+.moveLeft:
 	ld a, $02 ; $51d2
 	ld [$df00], a ; $51d4
 	call MoveCharGridCursorLeft ; $51d7
-	jr Label_38_51ee ; $51da
-Label_38_51dc:
+	jr .done ; $51da
+.moveRight:
 	ld a, $02 ; $51dc
 	ld [$df00], a ; $51de
 	call MoveCharGridCursorUp ; $51e1
-	jr Label_38_51ee ; $51e4
-Label_38_51e6:
+	jr .done ; $51e4
+.moveDown:
 	ld a, $02 ; $51e6
 	ld [$df00], a ; $51e8
 	call MoveCharGridCursorDown ; $51eb
-Label_38_51ee:
+.done:
 	pop af ; $51ee
 	wram_bank ; $51ef
 	ret ; $51f3
@@ -3802,13 +3802,13 @@ GetGridEntryTakenPtr:
 	ld hl, $da00 ; $5d60
 	ld a, c ; $5d63
 	ld bc, $000c ; $5d64
-Label_38_5d67:
+.rowLoop:
 	or a, a ; $5d67
-	jr z, Label_38_5d6e ; $5d68
+	jr z, .addColumn ; $5d68
 	add hl, bc ; $5d6a
 	dec a ; $5d6b
-	jr Label_38_5d67 ; $5d6c
-Label_38_5d6e:
+	jr .rowLoop ; $5d6c
+.addColumn:
 	ld a, e ; $5d6e
 	add a, a ; $5d6f
 	add a, e ; $5d70
@@ -3819,15 +3819,15 @@ Label_38_5d6e:
 	add a, a ; $5d75
 	add a, l ; $5d76
 	ld l, a ; $5d77
-	jr nc, Label_38_5d7b ; $5d78
+	jr nc, .offsetTaken ; $5d78
 	inc h ; $5d7a
-Label_38_5d7b:
+.offsetTaken:
 	ld a, $02 ; $5d7b
 	add a, l ; $5d7d
 	ld l, a ; $5d7e
-	jr nc, Label_38_5d82 ; $5d7f
+	jr nc, .done ; $5d7f
 	inc h ; $5d81
-Label_38_5d82:
+.done:
 	ret ; $5d82
 BuildCreatedCharRecords:
 	push af ; $5d83
@@ -3963,36 +3963,36 @@ ResolveSelectedCharIds:
 	wram_bank $03 ; $5e71
 	ld c, $00 ; $5e77
 	ld hl, $d816 ; $5e79
-Label_38_5e7c:
+.slotLoop:
 	ld a, [hl] ; $5e7c
 	cp a, $ff ; $5e7d
-	jr z, Label_38_5e98 ; $5e7f
+	jr z, .done ; $5e7f
 	push hl ; $5e81
 	ld hl, $da00 ; $5e82
 	add a, a ; $5e85
 	add a, a ; $5e86
 	add a, l ; $5e87
 	ld l, a ; $5e88
-	jr nc, Label_38_5e8c ; $5e89
+	jr nc, .readEntry ; $5e89
 	inc h ; $5e8b
-Label_38_5e8c:
+.readEntry:
 	ld a, [hl] ; $5e8c
 	cp a, $04 ; $5e8d
-	jr nc, Label_38_5e97 ; $5e8f
+	jr nc, .nextSlot ; $5e8f
 	inc hl ; $5e91
 	inc hl ; $5e92
 	inc hl ; $5e93
 	ld a, [hl] ; $5e94
 	or a, $80 ; $5e95
-Label_38_5e97:
+.nextSlot:
 	pop hl ; $5e97
-Label_38_5e98:
+.done:
 	ld [hl+], a ; $5e98
 	ld a, c ; $5e99
 	inc a ; $5e9a
 	ld c, a ; $5e9b
 	cp a, $04 ; $5e9c
-	jr nz, Label_38_5e7c ; $5e9e
+	jr nz, .slotLoop ; $5e9e
 	pop af ; $5ea0
 	wram_bank ; $5ea1
 	ret ; $5ea5
@@ -4683,31 +4683,31 @@ CloseCpuDifficultyPanel:
 HandleCpuDifficultyInput:
 	ld a, [wMenuInputPressed] ; $630f
 	bit PADB_LEFT, a ; $6312
-	jr nz, Label_38_631b ; $6314
+	jr nz, .decrease ; $6314
 	bit 4, a ; $6316
-	jr nz, Label_38_6323 ; $6318
+	jr nz, .increase ; $6318
 	ret ; $631a
-Label_38_631b:
+.decrease:
 	sound $5e ; $631b
 	ld a, [$d826] ; $631d
 	dec a ; $6320
-	jr Label_38_6329 ; $6321
-Label_38_6323:
+	jr .wrap ; $6321
+.increase:
 	sound $5e ; $6323
 	ld a, [$d826] ; $6325
 	inc a ; $6328
-Label_38_6329:
+.wrap:
 	add a, a ; $6329
-	jr nc, Label_38_6331 ; $632a
+	jr nc, .checkMax ; $632a
 	ld a, $04 ; $632c
 	dec a ; $632e
-	jr Label_38_6337 ; $632f
-Label_38_6331:
+	jr .store ; $632f
+.checkMax:
 	rra ; $6331
 	cp a, $04 ; $6332
-	jr c, Label_38_6337 ; $6334
+	jr c, .store ; $6334
 	xor a, a ; $6336
-Label_38_6337:
+.store:
 	ld [$d826], a ; $6337
 	ret ; $633a
 DrawCpuDifficultyCursorBox:
@@ -5708,16 +5708,16 @@ Label_38_6a49:
 SetGridEntryTakenByCharId:
 	ld a, d ; $6a4b
 	cp a, $04 ; $6a4c
-	jr nc, Label_38_6a52 ; $6a4e
+	jr nc, .search ; $6a4e
 	xor a, a ; $6a50
 	ret ; $6a51
-Label_38_6a52:
+.search:
 	ld c, $00 ; $6a52
 	ld hl, $da00 ; $6a54
-Label_38_6a57:
+.searchLoop:
 	ld a, [hl] ; $6a57
 	cp a, d ; $6a58
-	jr z, Label_38_6a69 ; $6a59
+	jr z, .found ; $6a59
 	inc hl ; $6a5b
 	inc hl ; $6a5c
 	inc hl ; $6a5d
@@ -5726,27 +5726,27 @@ Label_38_6a57:
 	inc a ; $6a60
 	ld c, a ; $6a61
 	cp a, $1f ; $6a62
-	jr nz, Label_38_6a57 ; $6a64
+	jr nz, .searchLoop ; $6a64
 	ld a, $fe ; $6a66
 	ret ; $6a68
-Label_38_6a69:
+.found:
 	inc hl ; $6a69
 	inc hl ; $6a6a
 	ld a, e ; $6a6b
 	or a, a ; $6a6c
-	jr z, Label_38_6a78 ; $6a6d
+	jr z, .clear ; $6a6d
 	ld a, [hl] ; $6a6f
 	or a, a ; $6a70
-	jr nz, Label_38_6a7c ; $6a71
+	jr nz, .done ; $6a71
 	ld a, $01 ; $6a73
 	ld [hl], a ; $6a75
-	jr Label_38_6a79 ; $6a76
-Label_38_6a78:
+	jr .store ; $6a76
+.clear:
 	ld [hl], e ; $6a78
-Label_38_6a79:
+.store:
 	ld a, $01 ; $6a79
 	ret ; $6a7b
-Label_38_6a7c:
+.done:
 	ld a, $ff ; $6a7c
 	ret ; $6a7e
 InitLinkMatchCharsFromSelection:

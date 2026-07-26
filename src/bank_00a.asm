@@ -381,30 +381,30 @@ FindDialogueChoiceMarker:
 	ld hl, wTextBuffer ; $42a3
 	ld bc, $0180 ; $42a6
 	ld de, $0000 ; $42a9
-Label_0a_42ac:
+.scanLoop:
 	ld a, $00 ; $42ac
 	cp a, [hl] ; $42ae
-	jr z, Label_0a_42be ; $42af
+	jr z, .storeMarker ; $42af
 	ld a, $02 ; $42b1
 	cp a, [hl] ; $42b3
 	inc hl ; $42b4
-	jr nz, Label_0a_42b9 ; $42b5
+	jr nz, .next ; $42b5
 	ld d, h ; $42b7
 	ld e, l ; $42b8
-Label_0a_42b9:
+.next:
 	dec bc ; $42b9
 	ld a, b ; $42ba
 	or a, c ; $42bb
-	jr nz, Label_0a_42ac ; $42bc
-Label_0a_42be:
+	jr nz, .scanLoop ; $42bc
+.storeMarker:
 	ld a, d ; $42be
 	or a, e ; $42bf
-	jr z, Label_0a_42ca ; $42c0
+	jr z, .done ; $42c0
 	ld a, e ; $42c2
 	ld [$d84e], a ; $42c3
 	ld a, d ; $42c6
 	ld [$d84f], a ; $42c7
-Label_0a_42ca:
+.done:
 	pop hl ; $42ca
 	pop de ; $42cb
 	pop bc ; $42cc
@@ -6264,7 +6264,7 @@ RunEndingCreditsSequence:
 	call LoadPalettesMasterOnly ; $6e8a
 	xor a, a ; $6e8d
 	ld [wStoryCharacterSlot], a ; $6e8e
-Label_0a_6e91:
+.sceneLoop:
 	call ClearFrameTasks ; $6e91
 	ld a, [wStoryCharacterSlot] ; $6e94
 	add a, a ; $6e97
@@ -6275,13 +6275,13 @@ Label_0a_6e91:
 	ld h, a ; $6e9e
 	ld a, [hl+] ; $6e9f
 	cp a, $ff ; $6ea0
-	jr z, Label_0a_6f03 ; $6ea2
+	jr z, .done ; $6ea2
 	and a, a ; $6ea4
-	jr nz, Label_0a_6eac ; $6ea5
+	jr nz, .setLocation ; $6ea5
 	ld a, [wStoryModeMainCharacterOverworldSprite] ; $6ea7
 	add a, a ; $6eaa
 	ld a, [hl+] ; $6eab
-Label_0a_6eac:
+.setLocation:
 	ld [wStoryModeCurrentLocation], a ; $6eac
 	ld a, [hl+] ; $6eaf
 	ld [wStoryModeEntryPoint], a ; $6eb0
@@ -6292,7 +6292,7 @@ Label_0a_6eac:
 	ld [$cb03], a ; $6ebd
 	call RunStoryLocation ; $6ec0
 	test_flag FLAG_ENDING_CREDITS_PENDING ; $6ec3
-	jr nz, Label_0a_6ee3 ; $6ec6
+	jr nz, .fadeOut ; $6ec6
 	set_flag FLAG_VRAM_UPDATE_BUSY ; $6ec8
 	call FreezeAllActors ; $6ecb
 	farcall InitGrayscalePaletteFade ; $6ece
@@ -6303,7 +6303,7 @@ Label_0a_6eac:
 	farcall AnimatePaletteFadeToTarget ; $6eda
 	ld a, [wStoryCharacterSlot] ; $6edd
 	farcall PlayScrollingStoryCutscene ; $6ee0
-Label_0a_6ee3:
+.fadeOut:
 	clear_flag FLAG_ENDING_CREDITS_PENDING ; $6ee3
 	ld c, $04 ; $6ee6
 	call BeginFadeOut ; $6ee8
@@ -6314,13 +6314,13 @@ Label_0a_6ee3:
 	inc [hl] ; $6ef5
 	ldh a, [hDebugStepMode] ; $6ef6
 	or a, a ; $6ef8
-	jr z, Label_0a_6f01 ; $6ef9
+	jr z, .nextScene ; $6ef9
 	ldh a, [hPlayerInputFlags] ; $6efb
 	bit PADB_SELECT, a ; $6efd
-	jr nz, Label_0a_6f03 ; $6eff
-Label_0a_6f01:
-	jr Label_0a_6e91 ; $6f01
-Label_0a_6f03:
+	jr nz, .done ; $6eff
+.nextScene:
+	jr .sceneLoop ; $6f01
+.done:
 	farcall ShowStoryResultScreen ; $6f03
 	ld c, $08 ; $6f06
 	call BeginFadeOut ; $6f08

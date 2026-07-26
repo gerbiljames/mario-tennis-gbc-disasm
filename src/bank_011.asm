@@ -2863,19 +2863,19 @@ Label_11_7076:
 PromptChallengeRankingOpponent:
 	script_set_text Text_32_34 ; $7288
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_4 ; $728e
-	jr z, Label_11_7296 ; $7291
+	jr z, .prompt ; $7291
 	farcall AdvanceDialogueTextCursor ; $7293
-Label_11_7296:
+.prompt:
 	ld a, $03 ; $7296
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $7298
 	farcall RunDialogueYesNoPrompt ; $729b
 	farcall ScriptCloseDialogueWindow ; $729e
 	script_wait_frames $05 ; $72a1
 	and a, a ; $72a8
-	jp nz, Label_11_72ec ; $72a9
+	jp nz, .done ; $72a9
 	script_set_anim $03, $03 ; $72ac
 	script_wait_idle $03 ; $72b3
-Label_11_72b8:
+.declined:
 	script_set_anim $03, $03 ; $72b8
 	script_wait_idle $03 ; $72bf
 	script_set_text Text_32_40 ; $72c4
@@ -2884,11 +2884,11 @@ Label_11_72b8:
 	script_set_speed ACTOR_PLAYER, $0018 ; $72d2
 	script_set_speed ACTOR_PARTNER, $0018 ; $72da
 	ret ; $72e2
-Label_11_72e3:
+.accepted:
 	script_speak $03 ; $72e3
 	call LoadRankingOpponentGraphics ; $72e8
 	ret ; $72eb
-Label_11_72ec:
+.done:
 	script_set_text Text_32_37 ; $72ec
 	ld a, $03 ; $72f2
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $72f4
@@ -2896,8 +2896,8 @@ Label_11_72ec:
 	farcall ScriptCloseDialogueWindow ; $72fa
 	script_wait_frames $05 ; $72fd
 	and a, a ; $7304
-	jr z, Label_11_72e3 ; $7305
-	jp Label_11_72b8 ; $7307
+	jr z, .accepted ; $7305
+	jp .declined ; $7307
 LoadRankingOpponentGraphics:
 	test_flag FLAG_DOUBLES ; $730a
 	jp nz, LoadDoublesRankingOpponentGraphics ; $730d
