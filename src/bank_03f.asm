@@ -127,40 +127,40 @@ TennisDictionaryScreen:
 	pop af ; $4081
 	ld [wTennisDictMode], a ; $4082
 	cp a, $00 ; $4085
-	jr z, Label_3f_40a1 ; $4087
+	jr z, .step ; $4087
 	cp a, $01 ; $4089
-	jr z, Label_3f_40a5 ; $408b
+	jr z, .step2 ; $408b
 	cp a, $02 ; $408d
-	jr z, Label_3f_40a9 ; $408f
+	jr z, .step3 ; $408f
 	cp a, $03 ; $4091
-	jr z, Label_3f_40ad ; $4093
+	jr z, .step4 ; $4093
 	cp a, $04 ; $4095
-	jr z, Label_3f_40b1 ; $4097
+	jr z, .step5 ; $4097
 	cp a, $05 ; $4099
-	jr z, Label_3f_40b5 ; $409b
+	jr z, .step6 ; $409b
 	ld a, $1f ; $409d
-	jr Label_3f_40be ; $409f
-Label_3f_40a1:
+	jr .store ; $409f
+.step:
 	ld a, $01 ; $40a1
-	jr Label_3f_40be ; $40a3
-Label_3f_40a5:
+	jr .store ; $40a3
+.step2:
 	ld a, $02 ; $40a5
-	jr Label_3f_40be ; $40a7
-Label_3f_40a9:
+	jr .store ; $40a7
+.step3:
 	ld a, $04 ; $40a9
-	jr Label_3f_40be ; $40ab
-Label_3f_40ad:
+	jr .store ; $40ab
+.step4:
 	ld a, $08 ; $40ad
-	jr Label_3f_40be ; $40af
-Label_3f_40b1:
+	jr .store ; $40af
+.step5:
 	ld a, $10 ; $40b1
-	jr Label_3f_40be ; $40b3
-Label_3f_40b5:
+	jr .store ; $40b3
+.step6:
 	ld a, $01 ; $40b5
 	ld [$cb33], a ; $40b7
 	ld a, $1f ; $40ba
-	jr Label_3f_40be ; $40bc
-Label_3f_40be:
+	jr .store ; $40bc
+.store:
 	ld [wTennisDictCategoryMask], a ; $40be
 	xor a, a ; $40c1
 	ld [$cb3a], a ; $40c2
@@ -180,15 +180,15 @@ Label_3f_40be:
 	ld [$cb33], a ; $40ea
 	ld a, [wTennisDictMode] ; $40ed
 	cp a, $06 ; $40f0
-	jr z, Label_3f_4106 ; $40f2
+	jr z, .disableLCDSafely ; $40f2
 	call AdvanceFrame ; $40f4
 	call DrawTennisDictionaryList ; $40f7
 	ld a, [wTennisDictMode] ; $40fa
 	cp a, $05 ; $40fd
-	jr nz, Label_3f_4106 ; $40ff
+	jr nz, .disableLCDSafely ; $40ff
 	ld a, $01 ; $4101
 	ld [$cb33], a ; $4103
-Label_3f_4106:
+.disableLCDSafely:
 	call DisableLCDSafely ; $4106
 	farcall LoadMenuTilesA ; $4109
 	call EnableLCD ; $410c
@@ -202,7 +202,7 @@ Label_3f_4106:
 	wram_bank $06 ; $4124
 	ld a, [wTennisDictMode] ; $412a
 	cp a, $06 ; $412d
-	jr nz, Label_3f_414a ; $412f
+	jr nz, .checkTennisDictFlags ; $412f
 	wram_bank $06 ; $4131
 	ld a, [wTennisDictFlags] ; $4137
 	res 0, a ; $413a
@@ -211,34 +211,34 @@ Label_3f_4106:
 	call WaitFramesCmd ; $4142
 	db $01 ; $4145 inline arg
 	ld a, $02 ; $4146
-	jr Label_3f_4154 ; $4148
-Label_3f_414a:
+	jr .loop ; $4148
+.checkTennisDictFlags:
 	ld a, [wTennisDictFlags] ; $414a
 	set 1, a ; $414d
 	ld [wTennisDictFlags], a ; $414f
 	ld a, $08 ; $4152
-Label_3f_4154:
+.loop:
 	call AdvanceFrame ; $4154
 	cp a, $04 ; $4157
-	jp z, Label_3f_4170 ; $4159
+	jp z, .showTennisDictionaryPageDefault ; $4159
 	cp a, $10 ; $415c
-	jp z, Label_3f_4175 ; $415e
+	jp z, .showTennisDictionaryPageChar6 ; $415e
 	cp a, $08 ; $4161
-	jp z, Label_3f_416b ; $4163
+	jp z, .handleTennisDictionaryListInput ; $4163
 	call HandleTennisDictionaryIndexInput ; $4166
-	jr Label_3f_4178 ; $4169
-Label_3f_416b:
+	jr .restorePalettesFromMaster ; $4169
+.handleTennisDictionaryListInput:
 	call HandleTennisDictionaryListInput ; $416b
-	jr Label_3f_4178 ; $416e
-Label_3f_4170:
+	jr .restorePalettesFromMaster ; $416e
+.showTennisDictionaryPageDefault:
 	call ShowTennisDictionaryPageDefault ; $4170
-	jr Label_3f_4178 ; $4173
-Label_3f_4175:
+	jr .restorePalettesFromMaster ; $4173
+.showTennisDictionaryPageChar6:
 	call ShowTennisDictionaryPageChar6 ; $4175
-Label_3f_4178:
+.restorePalettesFromMaster:
 	call RestorePalettesFromMaster ; $4178
 	cp a, $01 ; $417b
-	jp nz, Label_3f_4154 ; $417d
+	jp nz, .loop ; $417d
 	push af ; $4180
 	ld c, $10 ; $4181
 	call BeginFadeOut ; $4183
@@ -308,17 +308,17 @@ ShowTennisDictionaryPageChar6:
 	add hl, de ; $422a
 	ld a, h ; $422b
 	cp a, b ; $422c
-	jr nc, Label_3f_4239 ; $422d
+	jr nc, .updateSceneScroll ; $422d
 	ld a, l ; $422f
 	ld [wCameraX], a ; $4230
 	ld a, h ; $4233
 	ld [wCameraX + 1], a ; $4234
-	jr Label_3f_423f ; $4237
-Label_3f_4239:
+	jr .updateSceneScroll2 ; $4237
+.updateSceneScroll:
 	farcall UpdateSceneScroll ; $4239
 	ld a, $01 ; $423c
 	ret ; $423e
-Label_3f_423f:
+.updateSceneScroll2:
 	farcall UpdateSceneScroll ; $423f
 	xor a, a ; $4242
 	ret ; $4243
@@ -382,7 +382,7 @@ ClearTennisDictionaryTilemap:
 	wram_bank $02 ; $42de
 	ld c, $0e ; $42e4
 	ld hl, TennisDictionaryClearList2 ; $42e6
-Label_3f_42e9:
+.loop:
 	push bc ; $42e9
 	ld a, [hl+] ; $42ea
 	ld e, a ; $42eb
@@ -399,18 +399,18 @@ Label_3f_42e9:
 	pop hl ; $42f8
 	pop bc ; $42f9
 	dec c ; $42fa
-	jr nz, Label_3f_42e9 ; $42fb
+	jr nz, .loop ; $42fb
 	ret ; $42fd
 LoadTennisDictionaryScreen:
 	wram_bank $06 ; $42fe
 	ld a, [wTennisDictMode] ; $4304
 	cp a, $06 ; $4307
-	jr nz, Label_3f_430f ; $4309
+	jr nz, .step ; $4309
 	ld a, $21 ; $430b
-	jr Label_3f_4311 ; $430d
-Label_3f_430f:
+	jr .store ; $430d
+.step:
 	ld a, $0d ; $430f
-Label_3f_4311:
+.store:
 	ldh [hScrollX], a ; $4311
 	ld [wCameraX + 1], a ; $4313
 	xor a, a ; $4316
@@ -474,12 +474,12 @@ Label_3f_4311:
 	wram_bank $06 ; $43b8
 	ld a, [wTennisDictMode] ; $43be
 	cp a, $06 ; $43c1
-	jr nz, Label_3f_43ca ; $43c3
+	jr nz, .loadTennisDictionaryAssetsDefault ; $43c3
 	call LoadTennisDictionaryAssetsChar6 ; $43c5
-	jr Label_3f_43cd ; $43c8
-Label_3f_43ca:
+	jr .step2 ; $43c8
+.loadTennisDictionaryAssetsDefault:
 	call LoadTennisDictionaryAssetsDefault ; $43ca
-Label_3f_43cd:
+.step2:
 	wram_bank $03 ; $43cd
 	ld hl, TennisDictionaryListData ; $43d3
 	ld de, $d000 ; $43d6
@@ -487,7 +487,7 @@ Label_3f_43cd:
 	wram_bank $03 ; $43dc
 	ld c, $0e ; $43e2
 	ld hl, TennisDictionaryClearList2 ; $43e4
-Label_3f_43e7:
+.loop:
 	push bc ; $43e7
 	ld a, [hl+] ; $43e8
 	ld e, a ; $43e9
@@ -505,7 +505,7 @@ Label_3f_43e7:
 	pop hl ; $43f8
 	pop bc ; $43f9
 	dec c ; $43fa
-	jr nz, Label_3f_43e7 ; $43fb
+	jr nz, .loop ; $43fb
 	wram_bank $06 ; $43fd
 	ld a, [wTennisDictMode] ; $4403
 	ld c, a ; $4406
@@ -513,25 +513,25 @@ Label_3f_43e7:
 	inc c ; $440d
 	ld b, $20 ; $440e
 	xor a, a ; $4410
-Label_3f_4411:
+.loopB:
 	add a, b ; $4411
 	dec c ; $4412
-	jr nz, Label_3f_4411 ; $4413
+	jr nz, .loopB ; $4413
 	ld c, $0b ; $4415
 	ld hl, $d052 ; $4417
-Label_3f_441a:
+.loopBB:
 	ld [hl+], a ; $441a
 	inc a ; $441b
 	dec c ; $441c
-	jr nz, Label_3f_441a ; $441d
+	jr nz, .loopBB ; $441d
 	add a, $05 ; $441f
 	ld c, $0b ; $4421
 	ld hl, $d092 ; $4423
-Label_3f_4426:
+.loopBBB:
 	ld [hl+], a ; $4426
 	inc a ; $4427
 	dec c ; $4428
-	jr nz, Label_3f_4426 ; $4429
+	jr nz, .loopBBB ; $4429
 	wram_bank $06 ; $442b
 	call EnableLCD ; $4431
 	wram_bank $06 ; $4434
@@ -630,12 +630,12 @@ TennisDictionaryPalettes:
 EndTennisDictionaryAnim:
 	ld a, [$cb38] ; $4e69
 	cp a, $03 ; $4e6c
-	jr nc, Label_3f_4e7a ; $4e6e
+	jr nc, .done ; $4e6e
 	ld a, $04 ; $4e70
 	ld [$cb38], a ; $4e72
 	ld a, $ff ; $4e75
 	ld [$cb3d], a ; $4e77
-Label_3f_4e7a:
+.done:
 	ret ; $4e7a
 StartTennisDictionaryAnim:
 	ld a, $b4 ; $4e7b
@@ -643,9 +643,9 @@ StartTennisDictionaryAnim:
 	ldh a, [hVBlankCounter] ; $4e80
 	and a, $03 ; $4e82
 	cp a, $03 ; $4e84
-	jr nz, Label_3f_4e89 ; $4e86
+	jr nz, .store ; $4e86
 	xor a, a ; $4e88
-Label_3f_4e89:
+.store:
 	ld [$cb38], a ; $4e89
 	ret ; $4e8c
 UpdateTennisDictionarySprites:
@@ -657,51 +657,51 @@ UpdateTennisDictionarySprites:
 	push hl ; $4e93
 	wram_bank $06 ; $4e94
 	test_flag FLAG_TEXT_WAITING_FOR_BUTTON ; $4e9a
-	jr z, Label_3f_4ea4 ; $4e9d
+	jr z, .step ; $4e9d
 	sound $5f ; $4e9f
 	call StartTennisDictionaryAnim ; $4ea1
-Label_3f_4ea4:
+.step:
 	ld a, [$cb38] ; $4ea4
 	cp a, $04 ; $4ea7
-	jr nz, Label_3f_4ebb ; $4ea9
+	jr nz, .compare ; $4ea9
 	ld a, [$cb3d] ; $4eab
 	dec a ; $4eae
 	ld [$cb3d], a ; $4eaf
-	jr nz, Label_3f_4ed4 ; $4eb2
+	jr nz, .checkTennisDictMode ; $4eb2
 	ld a, $03 ; $4eb4
 	ld [$cb38], a ; $4eb6
-	jr Label_3f_4ed4 ; $4eb9
-Label_3f_4ebb:
+	jr .checkTennisDictMode ; $4eb9
+.compare:
 	cp a, $03 ; $4ebb
-	jr nz, Label_3f_4ec1 ; $4ebd
-	jr Label_3f_4ed4 ; $4ebf
-Label_3f_4ec1:
+	jr nz, .step2 ; $4ebd
+	jr .checkTennisDictMode ; $4ebf
+.step2:
 	ld a, [$cb3d] ; $4ec1
 	dec a ; $4ec4
 	ld [$cb3d], a ; $4ec5
-	jr nz, Label_3f_4ed4 ; $4ec8
+	jr nz, .checkTennisDictMode ; $4ec8
 	ld a, $04 ; $4eca
 	ld [$cb38], a ; $4ecc
 	ld a, $ff ; $4ecf
 	ld [$cb3d], a ; $4ed1
-Label_3f_4ed4:
+.checkTennisDictMode:
 	ld a, [wTennisDictMode] ; $4ed4
 	cp a, $06 ; $4ed7
-	jp nz, Label_3f_4f85 ; $4ed9
+	jp nz, .checkTennisDictFlags ; $4ed9
 	ld a, [$cb39] ; $4edc
 	dec a ; $4edf
 	ld [$cb39], a ; $4ee0
-	jr nz, Label_3f_4ef6 ; $4ee3
+	jr nz, .step3 ; $4ee3
 	ld a, $08 ; $4ee5
 	ld [$cb39], a ; $4ee7
 	ld a, [$cb3a] ; $4eea
 	inc a ; $4eed
 	cp a, $10 ; $4eee
-	jr nz, Label_3f_4ef3 ; $4ef0
+	jr nz, .store ; $4ef0
 	xor a, a ; $4ef2
-Label_3f_4ef3:
+.store:
 	ld [$cb3a], a ; $4ef3
-Label_3f_4ef6:
+.step3:
 	ld hl, Data_3f_5028 ; $4ef6
 	ld a, [$cb38] ; $4ef9
 	add a, a ; $4efc
@@ -710,15 +710,15 @@ Label_3f_4ef6:
 	add a, a ; $4eff
 	add a, l ; $4f00
 	ld l, a ; $4f01
-	jr nc, Label_3f_4f05 ; $4f02
+	jr nc, .step4 ; $4f02
 	inc h ; $4f04
-Label_3f_4f05:
+.step4:
 	ld a, [$cb3a] ; $4f05
 	add a, l ; $4f08
 	ld l, a ; $4f09
-	jr nc, Label_3f_4f0d ; $4f0a
+	jr nc, .read ; $4f0a
 	inc h ; $4f0c
-Label_3f_4f0d:
+.read:
 	ld a, [hl] ; $4f0d
 	add a, a ; $4f0e
 	add a, a ; $4f0f
@@ -728,21 +728,21 @@ Label_3f_4f0d:
 	ld hl, Data_3f_5078 ; $4f13
 	add a, l ; $4f16
 	ld l, a ; $4f17
-	jr nc, Label_3f_4f1b ; $4f18
+	jr nc, .readB ; $4f18
 	inc h ; $4f1a
-Label_3f_4f1b:
+.readB:
 	ld a, [hl+] ; $4f1b
 	ld c, a ; $4f1c
 	ld a, [hl+] ; $4f1d
 	ld b, a ; $4f1e
 	ld a, [wTennisDictFlags] ; $4f1f
 	bit 1, a ; $4f22
-	jr z, Label_3f_4f2b ; $4f24
+	jr z, .step5 ; $4f24
 	ld de, $907d ; $4f26
-	jr Label_3f_4f2e ; $4f29
-Label_3f_4f2b:
+	jr .step6 ; $4f29
+.step5:
 	ld de, $807d ; $4f2b
-Label_3f_4f2e:
+.step6:
 	push hl ; $4f2e
 	ld hl, SpriteTemplate_3f_50d0 ; $4f2f
 	call QueueSpriteTemplate ; $4f32
@@ -753,12 +753,12 @@ Label_3f_4f2e:
 	ld b, a ; $4f39
 	ld a, [wTennisDictFlags] ; $4f3a
 	bit 1, a ; $4f3d
-	jr z, Label_3f_4f46 ; $4f3f
+	jr z, .step7 ; $4f3f
 	ld de, $886d ; $4f41
-	jr Label_3f_4f49 ; $4f44
-Label_3f_4f46:
+	jr .step8 ; $4f44
+.step7:
 	ld de, $786d ; $4f46
-Label_3f_4f49:
+.step8:
 	push hl ; $4f49
 	ld hl, SpriteTemplate_3f_50d9 ; $4f4a
 	call QueueSpriteTemplate ; $4f4d
@@ -769,12 +769,12 @@ Label_3f_4f49:
 	ld b, a ; $4f54
 	ld a, [wTennisDictFlags] ; $4f55
 	bit 1, a ; $4f58
-	jr z, Label_3f_4f61 ; $4f5a
+	jr z, .step9 ; $4f5a
 	ld de, $887d ; $4f5c
-	jr Label_3f_4f64 ; $4f5f
-Label_3f_4f61:
+	jr .step10 ; $4f5f
+.step9:
 	ld de, $787d ; $4f61
-Label_3f_4f64:
+.step10:
 	push hl ; $4f64
 	ld hl, SpriteTemplate_3f_50d9 ; $4f65
 	call QueueSpriteTemplate ; $4f68
@@ -785,35 +785,35 @@ Label_3f_4f64:
 	ld b, a ; $4f6f
 	ld a, [wTennisDictFlags] ; $4f70
 	bit 1, a ; $4f73
-	jr z, Label_3f_4f7c ; $4f75
+	jr z, .step11 ; $4f75
 	ld de, $888d ; $4f77
-	jr Label_3f_4f7f ; $4f7a
-Label_3f_4f7c:
+	jr .step12 ; $4f7a
+.step11:
 	ld de, $788d ; $4f7c
-Label_3f_4f7f:
+.step12:
 	ld hl, SpriteTemplate_3f_50d9 ; $4f7f
 	call QueueSpriteTemplate ; $4f82
-Label_3f_4f85:
+.checkTennisDictFlags:
 	ld a, [wTennisDictFlags] ; $4f85
 	bit 1, a ; $4f88
-	jr z, Label_3f_4fec ; $4f8a
+	jr z, .restore ; $4f8a
 	ld a, [wTennisDictFlags] ; $4f8c
 	bit 0, a ; $4f8f
-	jr nz, Label_3f_4f9a ; $4f91
+	jr nz, .checkTennisDictCursorRow ; $4f91
 	ld a, [$cb3e] ; $4f93
 	inc a ; $4f96
 	ld [$cb3e], a ; $4f97
-Label_3f_4f9a:
+.checkTennisDictCursorRow:
 	ld a, [wTennisDictCursorRow] ; $4f9a
 	ld b, a ; $4f9d
 	inc b ; $4f9e
 	ld a, $14 ; $4f9f
 	ld e, $10 ; $4fa1
 	sub a, e ; $4fa3
-Label_3f_4fa4:
+.loop:
 	add a, e ; $4fa4
 	dec b ; $4fa5
-	jr nz, Label_3f_4fa4 ; $4fa6
+	jr nz, .loop ; $4fa6
 	add a, e ; $4fa8
 	add a, $14 ; $4fa9
 	ld e, a ; $4fab
@@ -822,9 +822,9 @@ Label_3f_4fa4:
 	and a, $0f ; $4fb2
 	add a, l ; $4fb4
 	ld l, a ; $4fb5
-	jr nc, Label_3f_4fb9 ; $4fb6
+	jr nc, .readBB ; $4fb6
 	inc h ; $4fb8
-Label_3f_4fb9:
+.readBB:
 	ld a, [hl] ; $4fb9
 	add a, $0a ; $4fba
 	ld d, a ; $4fbc
@@ -833,20 +833,20 @@ Label_3f_4fb9:
 	call QueueSpriteTemplate ; $4fc3
 	ld a, [wTennisDictFlags] ; $4fc6
 	bit 2, a ; $4fc9
-	jr z, Label_3f_4fd9 ; $4fcb
+	jr z, .checkTennisDictFlags2 ; $4fcb
 	ld hl, SpriteTemplate_3f_5006 ; $4fcd
 	ld de, $1810 ; $4fd0
 	ld bc, $0d34 ; $4fd3
 	call QueueSpriteTemplate ; $4fd6
-Label_3f_4fd9:
+.checkTennisDictFlags2:
 	ld a, [wTennisDictFlags] ; $4fd9
 	bit 3, a ; $4fdc
-	jr z, Label_3f_4fec ; $4fde
+	jr z, .restore ; $4fde
 	ld hl, SpriteTemplate_3f_5006 ; $4fe0
 	ld de, $8810 ; $4fe3
 	ld bc, $0d3a ; $4fe6
 	call QueueSpriteTemplate ; $4fe9
-Label_3f_4fec:
+.restore:
 	pop hl ; $4fec
 	pop de ; $4fed
 	pop bc ; $4fee
@@ -892,10 +892,10 @@ FillBytes_3f:
 	push bc ; $50eb
 	push de ; $50ec
 	push hl ; $50ed
-Label_3f_50ee:
+.loop:
 	ld [hl+], a ; $50ee
 	dec c ; $50ef
-	jr nz, Label_3f_50ee ; $50f0
+	jr nz, .loop ; $50f0
 	pop hl ; $50f2
 	pop de ; $50f3
 	pop bc ; $50f4
@@ -940,15 +940,15 @@ GetTennisDictionaryEntryIndex:
 	ld c, a ; $5136
 	inc c ; $5137
 	ld hl, SelectionMaskGrid_3f_539e ; $5138
-Label_3f_513b:
+.loop:
 	ld a, [hl+] ; $513b
 	cp a, $00 ; $513c
-	jr z, Label_3f_513b ; $513e
+	jr z, .loop ; $513e
 	inc d ; $5140
 	and a, b ; $5141
-	jr z, Label_3f_513b ; $5142
+	jr z, .loop ; $5142
 	dec c ; $5144
-	jr nz, Label_3f_513b ; $5145
+	jr nz, .loop ; $5145
 	dec d ; $5147
 	ld a, d ; $5148
 	ret ; $5149
@@ -957,35 +957,35 @@ GetTennisDictionaryEntryCategory:
 	ld c, a ; $514c
 	inc c ; $514d
 	ld hl, SelectionMaskGrid_3f_539e ; $514e
-Label_3f_5151:
+.loop:
 	ld a, [hl+] ; $5151
 	cp a, $00 ; $5152
-	jr z, Label_3f_5151 ; $5154
+	jr z, .loop ; $5154
 	inc d ; $5156
 	and a, b ; $5157
-	jr z, Label_3f_5151 ; $5158
+	jr z, .loop ; $5158
 	dec c ; $515a
-	jr nz, Label_3f_5151 ; $515b
+	jr nz, .loop ; $515b
 	cp a, $01 ; $515d
-	jr z, Label_3f_5170 ; $515f
+	jr z, .step ; $515f
 	cp a, $02 ; $5161
-	jr z, Label_3f_5172 ; $5163
+	jr z, .step2 ; $5163
 	cp a, $04 ; $5165
-	jr z, Label_3f_5175 ; $5167
+	jr z, .step3 ; $5167
 	cp a, $08 ; $5169
-	jr z, Label_3f_5178 ; $516b
+	jr z, .step4 ; $516b
 	ld a, $04 ; $516d
 	ret ; $516f
-Label_3f_5170:
+.step:
 	xor a, a ; $5170
 	ret ; $5171
-Label_3f_5172:
+.step2:
 	ld a, $01 ; $5172
 	ret ; $5174
-Label_3f_5175:
+.step3:
 	ld a, $02 ; $5175
 	ret ; $5177
-Label_3f_5178:
+.step4:
 	ld a, $03 ; $5178
 	ret ; $517a
 GetTennisDictionarySelectedIndex:
@@ -1012,7 +1012,7 @@ ScrollTennisDictionaryToPrevLetter:
 	ld [wTennisDictCursorRow], a ; $51a2
 	ld a, [wTennisDictCategoryMask] ; $51a5
 	ld e, a ; $51a8
-	jr Label_3f_51bc ; $51a9
+	jr WrapTennisDictionaryScanToEnd.loop ; $51a9
 WrapTennisDictionaryScanToEnd:
 	push af ; $51ab
 	ld a, [wTennisDictEntryCount] ; $51ac
@@ -1025,65 +1025,65 @@ WrapTennisDictionaryScanToEnd:
 	dec hl ; $51b9
 	pop af ; $51ba
 	ret ; $51bb
-Label_3f_51bc:
+.loop:
 	ld a, [hl+] ; $51bc
 	and a, e ; $51bd
-	jr z, Label_3f_51bc ; $51be
+	jr z, .loop ; $51be
 	dec b ; $51c0
-	jr nz, Label_3f_51bc ; $51c1
+	jr nz, .loop ; $51c1
 	dec hl ; $51c3
-Label_3f_51c4:
+.loopB:
 	ld a, [hl-] ; $51c4
 	ld d, a ; $51c5
 	and a, e ; $51c6
-	jr z, Label_3f_51ca ; $51c7
+	jr z, .step ; $51c7
 	dec c ; $51c9
-Label_3f_51ca:
+.step:
 	ld a, d ; $51ca
 	cp a, $40 ; $51cb
-	jr z, Label_3f_51d5 ; $51cd
+	jr z, .wrapTennisDictionaryScanToEnd ; $51cd
 	cp a, $00 ; $51cf
-	jr nz, Label_3f_51c4 ; $51d1
-	jr Label_3f_51d8 ; $51d3
-Label_3f_51d5:
+	jr nz, .loopB ; $51d1
+	jr .loopBB ; $51d3
+.wrapTennisDictionaryScanToEnd:
 	call WrapTennisDictionaryScanToEnd ; $51d5
-Label_3f_51d8:
+.loopBB:
 	ld a, [hl-] ; $51d8
 	cp a, $40 ; $51d9
-	jr nz, Label_3f_51e0 ; $51db
+	jr nz, .step2 ; $51db
 	call WrapTennisDictionaryScanToEnd ; $51dd
-Label_3f_51e0:
+.step2:
 	and a, e ; $51e0
-	jr z, Label_3f_51d8 ; $51e1
+	jr z, .loopBB ; $51e1
 	dec c ; $51e3
-Label_3f_51e4:
+.loopBBB:
 	ld a, [hl-] ; $51e4
 	ld d, a ; $51e5
 	and a, e ; $51e6
-	jr z, Label_3f_51ea ; $51e7
+	jr z, .step3 ; $51e7
 	dec c ; $51e9
-Label_3f_51ea:
+.step3:
 	ld a, d ; $51ea
 	cp a, $40 ; $51eb
-	jr z, Label_3f_51f7 ; $51ed
+	jr z, .wrapTennisDictionaryScanToEnd2 ; $51ed
 	cp a, $00 ; $51ef
-	jr nz, Label_3f_51e4 ; $51f1
+	jr nz, .loopBBB ; $51f1
 	inc hl ; $51f3
 	inc c ; $51f4
-	jr Label_3f_51fb ; $51f5
-Label_3f_51f7:
+	jr .loopBBBB ; $51f5
+.wrapTennisDictionaryScanToEnd2:
 	call WrapTennisDictionaryScanToEnd ; $51f7
 	inc hl ; $51fa
-Label_3f_51fb:
+.loopBBBB:
 	ld a, [hl+] ; $51fb
 	cp a, $40 ; $51fc
-	jr nz, Label_3f_5207 ; $51fe
+	jr nz, .step4 ; $51fe
 	ld c, $00 ; $5200
 	ld hl, SelectionMaskGrid_3f_539e ; $5202
-	jr Label_3f_51fb ; $5205
-Label_3f_5207:
+	jr .loopBBBB ; $5205
+.step4:
 	and a, e ; $5207
-	jr z, Label_3f_51fb ; $5208
+	jr z, .loopBBBB ; $5208
 	ld a, c ; $520a
 	ld [wTennisDictScrollTop], a ; $520b
 	ret ; $520e
@@ -1097,9 +1097,9 @@ ScrollTennisDictionaryToNextLetter:
 	ld a, [wTennisDictScrollTop] ; $5220
 	add a, c ; $5223
 	cp a, b ; $5224
-	jr c, Label_3f_5228 ; $5225
+	jr c, .step ; $5225
 	sub a, b ; $5227
-Label_3f_5228:
+.step:
 	ld b, a ; $5228
 	ld d, a ; $5229
 	inc b ; $522a
@@ -1107,37 +1107,37 @@ Label_3f_5228:
 	ld [wTennisDictCursorRow], a ; $522c
 	ld a, [wTennisDictCategoryMask] ; $522f
 	ld e, a ; $5232
-Label_3f_5233:
+.loop:
 	ld a, [hl+] ; $5233
 	and a, e ; $5234
-	jr z, Label_3f_5233 ; $5235
+	jr z, .loop ; $5235
 	dec b ; $5237
-	jr nz, Label_3f_5233 ; $5238
-Label_3f_523a:
+	jr nz, .loop ; $5238
+.loopB:
 	ld a, [hl+] ; $523a
 	cp a, $00 ; $523b
-	jr z, Label_3f_524e ; $523d
+	jr z, .step3 ; $523d
 	ld c, a ; $523f
 	and a, e ; $5240
-	jr z, Label_3f_5244 ; $5241
+	jr z, .step2 ; $5241
 	inc d ; $5243
-Label_3f_5244:
+.step2:
 	ld a, c ; $5244
 	cp a, $40 ; $5245
-	jr nz, Label_3f_523a ; $5247
+	jr nz, .loopB ; $5247
 	ld hl, SelectionMaskGrid_3f_539e ; $5249
 	ld d, $ff ; $524c
-Label_3f_524e:
+.step3:
 	inc d ; $524e
-Label_3f_524f:
+.loopBB:
 	ld a, [hl+] ; $524f
 	cp a, $40 ; $5250
-	jr nz, Label_3f_5259 ; $5252
+	jr nz, .step4 ; $5252
 	ld hl, SelectionMaskGrid_3f_539e ; $5254
 	ld d, $00 ; $5257
-Label_3f_5259:
+.step4:
 	and a, e ; $5259
-	jr z, Label_3f_524f ; $525a
+	jr z, .loopBB ; $525a
 	ld a, d ; $525c
 	ld [wTennisDictScrollTop], a ; $525d
 	ret ; $5260
@@ -1282,30 +1282,30 @@ DrawTennisDictionaryLetterLabels:
 	ld e, a ; $533c
 	ld hl, SelectionMaskGrid_3f_539e ; $533d
 	ld d, $00 ; $5340
-Label_3f_5342:
+.loop:
 	ld a, [hl+] ; $5342
 	cp a, $00 ; $5343
-	jr nz, Label_3f_534a ; $5345
+	jr nz, .step ; $5345
 	inc d ; $5347
-	jr Label_3f_5342 ; $5348
-Label_3f_534a:
+	jr .loop ; $5348
+.step:
 	and a, e ; $534a
-	jr z, Label_3f_5342 ; $534b
+	jr z, .loop ; $534b
 	dec b ; $534d
-	jr nz, Label_3f_5342 ; $534e
+	jr nz, .loop ; $534e
 	wram_bank $03 ; $5350
 	ld a, d ; $5356
 	dec a ; $5357
 	cp a, $ff ; $5358
-	jr nz, Label_3f_535e ; $535a
+	jr nz, .step2 ; $535a
 	ld a, $16 ; $535c
-Label_3f_535e:
+.step2:
 	ld hl, $148f ; $535e
 	add a, l ; $5361
 	ld l, a ; $5362
-	jr nc, Label_3f_5366 ; $5363
+	jr nc, .step3 ; $5363
 	inc h ; $5365
-Label_3f_5366:
+.step3:
 	push de ; $5366
 	ld c, $40 ; $5367
 	ld de, $d050 ; $5369
@@ -1314,29 +1314,29 @@ Label_3f_5366:
 	ld a, d ; $5370
 	inc a ; $5371
 	cp a, $17 ; $5372
-	jr nz, Label_3f_5377 ; $5374
+	jr nz, .step4 ; $5374
 	xor a, a ; $5376
-Label_3f_5377:
+.step4:
 	ld hl, $148f ; $5377
 	add a, l ; $537a
 	ld l, a ; $537b
-	jr nc, Label_3f_537f ; $537c
+	jr nc, .step5 ; $537c
 	inc h ; $537e
-Label_3f_537f:
+.step5:
 	ld de, $d05e ; $537f
 	farcall RenderTextToBuffer64 ; $5382
 	ld a, $06 ; $5385
 	ld [$d040], a ; $5387
-Label_3f_538a:
+.loopB:
 	ld hl, $d050 ; $538a
 	ld de, $9830 ; $538d
 	ld c, $01 ; $5390
 	call QueueVRAMCopy ; $5392
 	or a, a ; $5395
-	jr nz, Label_3f_539d ; $5396
+	jr nz, .done ; $5396
 	call AdvanceFrame ; $5398
-	jr Label_3f_538a ; $539b
-Label_3f_539d:
+	jr .loopB ; $539b
+.done:
 	ret ; $539d
 SelectionMaskGrid_3f_539e:
 	INCBIN "data/bank_03f/d_539e.bin" ; $539e, 121 bytes
@@ -1380,9 +1380,9 @@ GetTennisDictionaryRowFirstLetter:
 	ld hl, Data_3f_545f ; $5454
 	add a, l ; $5457
 	ld l, a ; $5458
-	jr nc, Label_3f_545c ; $5459
+	jr nc, .read ; $5459
 	inc h ; $545b
-Label_3f_545c:
+.read:
 	ld a, [hl] ; $545c
 	pop hl ; $545d
 	ret ; $545e
@@ -1428,9 +1428,9 @@ GetTennisDictionaryLetterRow:
 	ld hl, Data_3f_54ad ; $54a2
 	add a, l ; $54a5
 	ld l, a ; $54a6
-	jr nc, Label_3f_54aa ; $54a7
+	jr nc, .read ; $54a7
 	inc h ; $54a9
-Label_3f_54aa:
+.read:
 	ld a, [hl] ; $54aa
 	pop hl ; $54ab
 	ret ; $54ac
@@ -1543,29 +1543,29 @@ HandleTennisDictionaryIndexInput:
 	wram_bank $06 ; $558a
 	ldh a, [hInputRisingEdge] ; $5590
 	bit PADB_A, a ; $5592
-	jr z, Label_3f_559e ; $5594
+	jr z, .step ; $5594
 	pop af ; $5596
 	sound $5f ; $5597
 	ld a, $04 ; $5599
 	push af ; $559b
-	jr Label_3f_55fc ; $559c
-Label_3f_559e:
+	jr .restore ; $559c
+.step:
 	bit 1, a ; $559e
-	jr z, Label_3f_55aa ; $55a0
+	jr z, .step2 ; $55a0
 	pop af ; $55a2
 	sound $62 ; $55a3
 	ld a, $01 ; $55a5
 	push af ; $55a7
-	jr Label_3f_55fc ; $55a8
-Label_3f_55aa:
+	jr .restore ; $55a8
+.step2:
 	ldh a, [hInputPressed] ; $55aa
 	bit PADB_UP, a ; $55ac
-	jr z, Label_3f_55d1 ; $55ae
+	jr z, .step3 ; $55ae
 	ld a, [wTennisDictCursorRow] ; $55b0
 	ld b, a ; $55b3
 	dec a ; $55b4
 	cp a, $ff ; $55b5
-	jr z, Label_3f_55fc ; $55b7
+	jr z, .restore ; $55b7
 	ld [wTennisDictCursorRow], a ; $55b9
 	push af ; $55bc
 	xor a, a ; $55bd
@@ -1577,15 +1577,15 @@ Label_3f_55aa:
 	ld a, $01 ; $55c8
 	call DrawTennisDictionaryIndexCursor ; $55ca
 	ld a, $01 ; $55cd
-	jr Label_3f_55fc ; $55cf
-Label_3f_55d1:
+	jr .restore ; $55cf
+.step3:
 	bit 7, a ; $55d1
-	jr z, Label_3f_55f6 ; $55d3
+	jr z, .step4 ; $55d3
 	ld a, [wTennisDictCursorRow] ; $55d5
 	ld b, a ; $55d8
 	inc a ; $55d9
 	cp a, $09 ; $55da
-	jr z, Label_3f_55fc ; $55dc
+	jr z, .restore ; $55dc
 	ld [wTennisDictCursorRow], a ; $55de
 	push af ; $55e1
 	xor a, a ; $55e2
@@ -1597,12 +1597,12 @@ Label_3f_55d1:
 	ld a, $01 ; $55ed
 	call DrawTennisDictionaryIndexCursor ; $55ef
 	ld a, $01 ; $55f2
-	jr Label_3f_55fc ; $55f4
-Label_3f_55f6:
+	jr .restore ; $55f4
+.step4:
 	bit 5, a ; $55f6
-	jr z, Label_3f_55fc ; $55f8
-	jr Label_3f_55fc ; $55fa
-Label_3f_55fc:
+	jr z, .restore ; $55f8
+	jr .restore ; $55fa
+.restore:
 	pop af ; $55fc
 	pop bc ; $55fd
 	ret ; $55fe
@@ -1780,9 +1780,9 @@ QueueTennisDictionaryGlyphTiles:
 	push af ; $575d
 	ldh a, [rLCDC] ; $575e
 	bit 7, a ; $5760
-	jr z, Label_3f_5767 ; $5762
+	jr z, .restore ; $5762
 	call AdvanceFrame ; $5764
-Label_3f_5767:
+.restore:
 	pop af ; $5767
 	ld hl, $d7e0 ; $5768
 	ld de, $8ce0 ; $576b
@@ -1791,9 +1791,9 @@ Label_3f_5767:
 	push af ; $5773
 	ldh a, [rLCDC] ; $5774
 	bit 7, a ; $5776
-	jr z, Label_3f_577d ; $5778
+	jr z, .restore2 ; $5778
 	call AdvanceFrame ; $577a
-Label_3f_577d:
+.restore2:
 	pop af ; $577d
 	ld hl, $d960 ; $577e
 	ld de, $8e60 ; $5781

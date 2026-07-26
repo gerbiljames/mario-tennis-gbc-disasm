@@ -141,19 +141,19 @@ UpdateResultScreenAnimatedTilesTask:
 	ret ; $43f9
 	push af ; $43fa
 	push bc ; $43fb
-Label_16_43fc:
+.loop:
 	ld a, [hl] ; $43fc
 	cp a, $00 ; $43fd
-	jr z, Label_16_4430 ; $43ff
+	jr z, CourtDiagramBaseTask.restore ; $43ff
 	ld [de], a ; $4401
 	inc hl ; $4402
 	ld a, [hl] ; $4403
 	cp a, $de ; $4404
 CourtDiagramBaseTask:
-	jr z, Label_16_440c ; $4406
+	jr z, .step ; $4406
 	cp a, $df ; $4408
-	jr nz, Label_16_4421 ; $440a
-Label_16_440c:
+	jr nz, .step2 ; $440a
+.step:
 	push hl ; $440c
 	push bc ; $440d
 	ld h, d ; $440e
@@ -164,18 +164,18 @@ Label_16_440c:
 	ld a, [hl] ; $4415
 	cp a, $03 ; $4416
 	ld a, b ; $4418
-	jr nz, Label_16_441d ; $4419
+	jr nz, .store ; $4419
 	sub a, $d0 ; $441b
-Label_16_441d:
+.store:
 	ld [hl], a ; $441d
 	pop bc ; $441e
 	pop hl ; $441f
 	inc hl ; $4420
-Label_16_4421:
+.step2:
 	inc de ; $4421
 	ld a, e ; $4422
 	and a, $1f ; $4423
-	jr nz, Label_16_43fc ; $4425
+	jr nz, UpdateResultScreenAnimatedTilesTask.loop ; $4425
 	push hl ; $4427
 	ld h, d ; $4428
 	ld l, e ; $4429
@@ -183,8 +183,8 @@ Label_16_4421:
 	ld d, h ; $442b
 	ld e, l ; $442c
 	pop hl ; $442d
-	jr Label_16_43fc ; $442e
-Label_16_4430:
+	jr UpdateResultScreenAnimatedTilesTask.loop ; $442e
+.restore:
 	pop bc ; $4430
 	pop af ; $4431
 	ret ; $4432
@@ -218,16 +218,16 @@ PrintDecimalNumber:
 PrintNumberString_16:
 	ld a, [hl+] ; $4454
 	and a, a ; $4455
-	jr z, Label_16_445d ; $4456
+	jr z, .done ; $4456
 	call PrintNumberStringChar_16 ; $4458
 	jr PrintNumberString_16 ; $445b
-Label_16_445d:
+.done:
 	ret ; $445d
 PrintNumberStringChar_16:
 	push hl ; $445e
 	ld hl, $d240 ; $445f
 	sub a, $30 ; $4462
-	jr c, Label_16_4474 ; $4464
+	jr c, .step ; $4464
 	add a, $30 ; $4466
 	ld b, a ; $4468
 	wram_bank $03 ; $4469
@@ -236,7 +236,7 @@ PrintNumberStringChar_16:
 	inc de ; $4471
 	pop hl ; $4472
 	ret ; $4473
-Label_16_4474:
+.step:
 	inc de ; $4474
 	pop hl ; $4475
 	ret ; $4476
@@ -249,16 +249,16 @@ RunMatchWinLoseScreen:
 	wram_bank $03 ; $4483
 	ld a, [wGameMode] ; $4489
 	cp a, $04 ; $448c
-	jr z, Label_16_4496 ; $448e
+	jr z, .step ; $448e
 	cp a, $09 ; $4490
-	jr z, Label_16_4496 ; $4492
-	jr Label_16_449a ; $4494
-Label_16_4496:
+	jr z, .step ; $4492
+	jr .step2 ; $4494
+.step:
 	ld a, $01 ; $4496
-	jr Label_16_449b ; $4498
-Label_16_449a:
+	jr .store ; $4498
+.step2:
 	xor a, a ; $449a
-Label_16_449b:
+.store:
 	ld [$d800], a ; $449b
 	ld [$d801], a ; $449e
 	ld a, [wMatchWinLoseFlag] ; $44a1
@@ -267,12 +267,12 @@ Label_16_449b:
 	ld a, $ff ; $44aa
 	ld a, [wMatchWinLoseFlag] ; $44ac
 	cp a, $ff ; $44af
-	jr z, Label_16_44b7 ; $44b1
+	jr z, .playSfx ; $44b1
 	sound $09 ; $44b3
-	jr Label_16_44b9 ; $44b5
-Label_16_44b7:
+	jr .initMatchWinLoseScreen ; $44b5
+.playSfx:
 	sound $0a ; $44b7
-Label_16_44b9:
+.initMatchWinLoseScreen:
 	call InitMatchWinLoseScreen ; $44b9
 	farcall UpdateAnimatedTiles ; $44bc
 	ld a, $01 ; $44bf
@@ -297,7 +297,7 @@ Label_16_44b9:
 	ld a, $01 ; $44f1
 	ld hl, AdvanceResultScreenTimer ; $44f3
 	call RegisterFrameTask ; $44f6
-Label_16_44f9:
+.loop:
 	call AdvanceFrame ; $44f9
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $44fc
 	push de ; $44ff
@@ -310,13 +310,13 @@ Label_16_44f9:
 	ldh a, [hInputPressed] ; $450a
 	ld [wMenuInputPressed], a ; $450c
 	bit PADB_A, a ; $450f
-	jr nz, Label_16_451d ; $4511
+	jr nz, .playSfx2 ; $4511
 	bit 1, a ; $4513
-	jr nz, Label_16_451d ; $4515
+	jr nz, .playSfx2 ; $4515
 	bit 4, a ; $4517
-	jr nz, Label_16_453b ; $4519
-	jr Label_16_44f9 ; $451b
-Label_16_451d:
+	jr nz, .step3 ; $4519
+	jr .loop ; $451b
+.playSfx2:
 	sound $5f ; $451d
 	call ClearFrameTasks ; $451f
 	ld c, $40 ; $4522
@@ -329,7 +329,7 @@ Label_16_451d:
 	ld a, [$cb73] ; $4534
 	ld [wMatchWinLoseFlag], a ; $4537
 	ret ; $453a
-Label_16_453b:
+.step3:
 	ld c, $40 ; $453b
 	call BeginFadeOut ; $453d
 	call WaitFadeEnd ; $4540
@@ -433,18 +433,18 @@ DiagramTargetBracketsSpriteTask:
 LoadWinLoseScreenAssets:
 	ld a, [$d800] ; $490c
 	or a, a ; $490f
-	jr z, Label_16_4919 ; $4910
+	jr z, .step ; $4910
 	ld c, $14 ; $4912
 	farcall LoadScreenAssetRecord ; $4914
-	jr Label_16_4920 ; $4917
-Label_16_4919:
+	jr .step2 ; $4917
+.step:
 	ld c, $13 ; $4919
 	farcall LoadScreenAssetRecord ; $491b
-	jr Label_16_4920 ; $491e
-Label_16_4920:
+	jr .step2 ; $491e
+.step2:
 	ld de, $002f ; $4920
 	call TestGameFlagByNumber ; $4923
-	jr nz, Label_16_4962 ; $4926
+	jr nz, .done ; $4926
 	wram_bank $03 ; $4928
 	ld hl, $d280 ; $492e
 	ld de, $d08b ; $4931
@@ -466,15 +466,15 @@ Label_16_4920:
 	ld b, $08 ; $495b
 	ld c, $05 ; $495d
 	farcall CopyTilemapRect ; $495f
-Label_16_4962:
+.done:
 	ret ; $4962
 SetWinLosePortraitPaletteAttrs:
 	ld a, [$d801] ; $4963
 	or a, a ; $4966
-	jr nz, Label_16_49bc ; $4967
+	jr nz, .step2 ; $4967
 	ld de, $002f ; $4969
 	call TestGameFlagByNumber ; $496c
-	jr z, Label_16_49a3 ; $496f
+	jr z, .step ; $496f
 	ld de, $d48b ; $4971
 	ld b, $04 ; $4974
 	ld c, $04 ; $4976
@@ -495,8 +495,8 @@ SetWinLosePortraitPaletteAttrs:
 	ld c, $03 ; $499a
 	ld h, $0f ; $499c
 	farcall FillTilemapRect ; $499e
-	jr Label_16_49bb ; $49a1
-Label_16_49a3:
+	jr .done ; $49a1
+.step:
 	ld de, $d48d ; $49a3
 	ld b, $04 ; $49a6
 	ld c, $04 ; $49a8
@@ -507,12 +507,12 @@ Label_16_49a3:
 	ld c, $03 ; $49b4
 	ld h, $0e ; $49b6
 	farcall FillTilemapRect ; $49b8
-Label_16_49bb:
+.done:
 	ret ; $49bb
-Label_16_49bc:
+.step2:
 	ld de, $002f ; $49bc
 	call TestGameFlagByNumber ; $49bf
-	jr z, Label_16_49f6 ; $49c2
+	jr z, .step3 ; $49c2
 	ld de, $d4ac ; $49c4
 	ld b, $03 ; $49c7
 	ld c, $03 ; $49c9
@@ -533,8 +533,8 @@ Label_16_49bc:
 	ld c, $03 ; $49ed
 	ld h, $0f ; $49ef
 	farcall FillTilemapRect ; $49f1
-	jr Label_16_4a0e ; $49f4
-Label_16_49f6:
+	jr .doneB ; $49f4
+.step3:
 	ld de, $d4ad ; $49f6
 	ld b, $03 ; $49f9
 	ld c, $03 ; $49fb
@@ -545,12 +545,12 @@ Label_16_49f6:
 	ld c, $03 ; $4a07
 	ld h, $0e ; $4a09
 	farcall FillTilemapRect ; $4a0b
-Label_16_4a0e:
+.doneB:
 	ret ; $4a0e
 LoadMatchResultPalettes:
 	ld a, [wMatchWinLoseFlag] ; $4a0f
 	cp a, $ff ; $4a12
-	jr z, Label_16_4a2e ; $4a14
+	jr z, .step ; $4a14
 	ld a, $02 ; $4a16
 	ld [wAnimatedTileSet], a ; $4a18
 	ld hl, $4a4e ; $4a1b
@@ -560,7 +560,7 @@ LoadMatchResultPalettes:
 	ld de, $0201 ; $4a27
 	call LoadPaletteShadow ; $4a2a
 	ret ; $4a2d
-Label_16_4a2e:
+.step:
 	ld a, $03 ; $4a2e
 	ld [wAnimatedTileSet], a ; $4a30
 	ld hl, $4a4e ; $4a33
@@ -577,7 +577,7 @@ Label_16_4a2e:
 AdjustResultTilemapForLoss:
 	ld a, [wMatchWinLoseFlag] ; $4a56
 	cp a, $ff ; $4a59
-	jr nz, Label_16_4a6f ; $4a5b
+	jr nz, .done ; $4a5b
 	ld hl, $d240 ; $4a5d
 	ld de, $d120 ; $4a60
 	ld b, $20 ; $4a63
@@ -585,7 +585,7 @@ AdjustResultTilemapForLoss:
 	farcall CopyTilemapRect ; $4a67
 	ld a, $06 ; $4a6a
 	ld [wAnimatedTilePeriod], a ; $4a6c
-Label_16_4a6f:
+.done:
 	ret ; $4a6f
 	ret ; $4a70
 BuildMatchResultTilemap:
@@ -594,19 +594,19 @@ BuildMatchResultTilemap:
 	ld hl, MatchResultTilemapScripts_16 ; $4a75
 	add a, l ; $4a78
 	ld l, a ; $4a79
-	jr nc, Label_16_4a7d ; $4a7a
+	jr nc, .read ; $4a7a
 	inc h ; $4a7c
-Label_16_4a7d:
+.read:
 	ld a, [hl+] ; $4a7d
 	ld h, [hl] ; $4a7e
 	ld l, a ; $4a7f
-Label_16_4a80:
+.loop:
 	ld a, [hl+] ; $4a80
 	ld d, [hl] ; $4a81
 	ld e, a ; $4a82
 	ld a, d ; $4a83
 	or a, e ; $4a84
-	jr z, Label_16_4a99 ; $4a85
+	jr z, .checkCurrentMinigameStoryMatch ; $4a85
 	inc hl ; $4a87
 	ld a, [hl+] ; $4a88
 	ld b, [hl] ; $4a89
@@ -620,24 +620,24 @@ Label_16_4a80:
 	ld c, $02 ; $4a91
 	farcall CopyTilemapRect ; $4a93
 	pop hl ; $4a96
-	jr Label_16_4a80 ; $4a97
-Label_16_4a99:
+	jr .loop ; $4a97
+.checkCurrentMinigameStoryMatch:
 	ld a, [wCurrentMinigameStoryMatch] ; $4a99
 	cp a, $01 ; $4a9c
-	jr nz, Label_16_4aaf ; $4a9e
+	jr nz, .step ; $4a9e
 	ld hl, $d3c7 ; $4aa0
 	ld de, $d200 ; $4aa3
 	ld b, $06 ; $4aa6
 	ld c, $02 ; $4aa8
 	farcall CopyTilemapRect ; $4aaa
-	jr Label_16_4abc ; $4aad
-Label_16_4aaf:
+	jr .done ; $4aad
+.step:
 	ld hl, $d3c0 ; $4aaf
 	ld de, $d200 ; $4ab2
 	ld b, $07 ; $4ab5
 	ld c, $02 ; $4ab7
 	farcall CopyTilemapRect ; $4ab9
-Label_16_4abc:
+.done:
 	ret ; $4abc
 MatchResultTilemapScripts_16:
 	; $4abd, 480 bytes (tilemap_scripts)
@@ -772,11 +772,11 @@ MatchResultTilemapScripts_16:
 AdvanceResultScreenTimer:
 	ld a, [wMatchWinLoseFlag] ; $4c9d
 	cp a, $ff ; $4ca0
-	jr nz, Label_16_4ca9 ; $4ca2
+	jr nz, .step ; $4ca2
 	ldh a, [hVBlankCounter] ; $4ca4
 	and a, $01 ; $4ca6
 	ret z ; $4ca8
-Label_16_4ca9:
+.step:
 	ld a, [$cb01] ; $4ca9
 	inc a ; $4cac
 	ld [$cb01], a ; $4cad
@@ -784,7 +784,7 @@ Label_16_4ca9:
 QueueResultScreenSprites:
 	ld a, [wMatchWinLoseFlag] ; $4cb1
 	cp a, $ff ; $4cb4
-	jr z, Label_16_4cd1 ; $4cb6
+	jr z, .step ; $4cb6
 	ld de, $0824 ; $4cb8
 	call QueueResultPortraitTop ; $4cbb
 	ld de, $502c ; $4cbe
@@ -794,7 +794,7 @@ QueueResultScreenSprites:
 	ld de, $4e68 ; $4cca
 	call QueueLoserMarkerForOpponent ; $4ccd
 	ret ; $4cd0
-Label_16_4cd1:
+.step:
 	ld de, $5860 ; $4cd1
 	call QueueResultPortraitTop ; $4cd4
 	ld de, $5068 ; $4cd7
@@ -814,9 +814,9 @@ QueueResultPortraitTop:
 	ld b, $08 ; $4cf3
 	ldh a, [hVBlankCounter] ; $4cf5
 	and a, $10 ; $4cf7
-	jr z, Label_16_4cfd ; $4cf9
+	jr z, .step ; $4cf9
 	ld b, $0a ; $4cfb
-Label_16_4cfd:
+.step:
 	ld hl, ResultSpriteTemplateLeft_16 ; $4cfd
 	call QueueSpriteTemplate ; $4d00
 	ret ; $4d03
@@ -877,9 +877,9 @@ QueueWinnerMarkerForPlayer:
 	ld b, $08 ; $4d9f
 	ldh a, [hVBlankCounter] ; $4da1
 	and a, $10 ; $4da3
-	jr z, Label_16_4da9 ; $4da5
+	jr z, .queueSprite ; $4da5
 	ld b, $0a ; $4da7
-Label_16_4da9:
+.queueSprite:
 	call QueueSprite ; $4da9
 	ret ; $4dac
 QueueLoserMarkerForOpponent:
@@ -908,9 +908,9 @@ QueueLoserMarkerForPlayer:
 	ld b, $08 ; $4dd0
 	ldh a, [hVBlankCounter] ; $4dd2
 	and a, $10 ; $4dd4
-	jr z, Label_16_4dda ; $4dd6
+	jr z, .queueSprite ; $4dd6
 	ld b, $0a ; $4dd8
-Label_16_4dda:
+.queueSprite:
 	call QueueSprite ; $4dda
 	ret ; $4ddd
 GetResultSpriteWobbleOffset:
@@ -941,16 +941,16 @@ LoadResultScreenTileGraphics:
 	farcall FillTilemapRect ; $4e13
 	ld de, $002f ; $4e16
 	call TestGameFlagByNumber ; $4e19
-	jr nz, Label_16_4e29 ; $4e1c
+	jr nz, .step ; $4e1c
 	ld hl, $542e ; $4e1e
 	ld de, $9000 ; $4e21
 	call DecompressData ; $4e24
-	jr Label_16_4e32 ; $4e27
-Label_16_4e29:
+	jr .step2 ; $4e27
+.step:
 	ld hl, $54bd ; $4e29
 	ld de, $9000 ; $4e2c
 	call DecompressData ; $4e2f
-Label_16_4e32:
+.step2:
 	ld a, [$d800] ; $4e32
 	or a, a ; $4e35
 	jr z, LoadMatchResultGfxSet ; $4e36
@@ -971,9 +971,9 @@ LoadMatchResultGfxSet:
 	ld hl, GfxSetPointerTable_16 ; $4e5b
 	add a, l ; $4e5e
 	ld l, a ; $4e5f
-	jr nc, Label_16_4e63 ; $4e60
+	jr nc, .read ; $4e60
 	inc h ; $4e62
-Label_16_4e63:
+.read:
 	ld a, [hl+] ; $4e63
 	ld h, [hl] ; $4e64
 	ld l, a ; $4e65
@@ -1005,13 +1005,13 @@ RemapDoublesMatchGfxIndex:
 	push af ; $4e8a
 	ld de, $002f ; $4e8b
 	call TestGameFlagByNumber ; $4e8e
-	jr z, Label_16_4e9b ; $4e91
+	jr z, .restore ; $4e91
 	cp a, $11 ; $4e93
-	jr nz, Label_16_4e9b ; $4e95
+	jr nz, .restore ; $4e95
 	ld a, $10 ; $4e97
 	pop hl ; $4e99
 	ret ; $4e9a
-Label_16_4e9b:
+.restore:
 	pop af ; $4e9b
 	ret ; $4e9c
 GfxSetPointerTable_16:
@@ -1131,22 +1131,22 @@ MaybeInvertMatchWinLoseFlag:
 	ret nz ; $5c16
 	ld a, [$c8b9] ; $5c17
 	cp a, $01 ; $5c1a
-	jr nz, Label_16_5c1f ; $5c1c
+	jr nz, .compare ; $5c1c
 	ret ; $5c1e
-Label_16_5c1f:
+.compare:
 	cp a, $02 ; $5c1f
-	jr nz, Label_16_5c34 ; $5c21
+	jr nz, .done ; $5c21
 	ld a, [wMatchWinLoseFlag] ; $5c23
 	cp a, $ff ; $5c26
-	jr z, Label_16_5c2e ; $5c28
+	jr z, .step ; $5c28
 	ld a, $ff ; $5c2a
-	jr Label_16_5c30 ; $5c2c
-Label_16_5c2e:
+	jr .store ; $5c2c
+.step:
 	ld a, $01 ; $5c2e
-Label_16_5c30:
+.store:
 	ld [wMatchWinLoseFlag], a ; $5c30
 	ret ; $5c33
-Label_16_5c34:
+.done:
 	ret ; $5c34
 RunMatchStatsScreen:
 	call DisableLCDSafely ; $5c35
@@ -1162,24 +1162,24 @@ RunMatchStatsScreen:
 	call EnableLCD ; $5c54
 	script_fade_in $10 ; $5c57
 	call WaitFadeEnd ; $5c5c
-Label_16_5c5f:
+.loop:
 	call PrintMatchSetScores ; $5c5f
 	ldh a, [hInputPressed] ; $5c62
 	bit PADB_LEFT, a ; $5c64
-	jr nz, Label_16_5c75 ; $5c66
+	jr nz, .step ; $5c66
 	bit 0, a ; $5c68
-	jr nz, Label_16_5c7f ; $5c6a
+	jr nz, .step2 ; $5c6a
 	bit 1, a ; $5c6c
-	jr nz, Label_16_5c7f ; $5c6e
+	jr nz, .step2 ; $5c6e
 	call AdvanceFrame ; $5c70
-	jr Label_16_5c5f ; $5c73
-Label_16_5c75:
+	jr .loop ; $5c73
+.step:
 	ld c, $40 ; $5c75
 	call BeginFadeOut ; $5c77
 	call WaitFadeEnd ; $5c7a
 	xor a, a ; $5c7d
 	ret ; $5c7e
-Label_16_5c7f:
+.step2:
 	ld c, $20 ; $5c7f
 	call BeginFadeOut ; $5c81
 	call WaitFadeEnd ; $5c84
@@ -1221,7 +1221,7 @@ InitMatchStatsScreen:
 SetMatchStatsPortraitPaletteAttrs:
 	ld de, $002f ; $5cdc
 	call TestGameFlagByNumber ; $5cdf
-	jr z, Label_16_5d16 ; $5ce2
+	jr z, .step ; $5ce2
 	ld de, $d481 ; $5ce4
 	ld b, $03 ; $5ce7
 	ld c, $03 ; $5ce9
@@ -1242,8 +1242,8 @@ SetMatchStatsPortraitPaletteAttrs:
 	ld c, $03 ; $5d0d
 	ld h, $0f ; $5d0f
 	farcall FillTilemapRect ; $5d11
-	jr Label_16_5d2e ; $5d14
-Label_16_5d16:
+	jr .done ; $5d14
+.step:
 	ld de, $d482 ; $5d16
 	ld b, $03 ; $5d19
 	ld c, $03 ; $5d1b
@@ -1254,18 +1254,18 @@ Label_16_5d16:
 	ld c, $03 ; $5d27
 	ld h, $0e ; $5d29
 	farcall FillTilemapRect ; $5d2b
-Label_16_5d2e:
+.done:
 	ret ; $5d2e
 PrintMatchStatistics:
 	call ClearMatchStatsNumberArea ; $5d2f
 	ld de, $002f ; $5d32
 	call TestGameFlagByNumber ; $5d35
-	jr z, Label_16_5d3f ; $5d38
+	jr z, .printSinglesMatchStats ; $5d38
 	call PrintDoublesMatchStats ; $5d3a
-	jr Label_16_5d42 ; $5d3d
-Label_16_5d3f:
+	jr .done ; $5d3d
+.printSinglesMatchStats:
 	call PrintSinglesMatchStats ; $5d3f
-Label_16_5d42:
+.done:
 	ret ; $5d42
 PrintSinglesMatchStats:
 	ld a, [wCharacter1ServiceAces] ; $5d43
@@ -1549,14 +1549,14 @@ PrintMatchSetScores:
 LoadResultScreenPortraits:
 	ld a, c ; $5fe7
 	or a, a ; $5fe8
-	jr nz, Label_16_5ff9 ; $5fe9
+	jr nz, .checkPlayer1CurrentMainCharacter ; $5fe9
 	ld a, [wGameMode] ; $5feb
 	cp a, $09 ; $5fee
-	jr nz, Label_16_5ff9 ; $5ff0
+	jr nz, .checkPlayer1CurrentMainCharacter ; $5ff0
 	ld a, [$c8b9] ; $5ff2
 	cp a, $02 ; $5ff5
-	jr z, Label_16_6036 ; $5ff7
-Label_16_5ff9:
+	jr z, .checkPlayer1CurrentMainCharacter2 ; $5ff7
+.checkPlayer1CurrentMainCharacter:
 	ld a, [wPlayer1CurrentMainCharacter] ; $5ff9
 	ld d, a ; $5ffc
 	ld a, [$ca0c] ; $5ffd
@@ -1571,7 +1571,7 @@ Label_16_5ff9:
 	call LoadResultPortraitSlot ; $6010
 	ld de, $002f ; $6013
 	call TestGameFlagByNumber ; $6016
-	jr z, Label_16_6035 ; $6019
+	jr z, .done ; $6019
 	ld a, [wPlayer1CurrentPartnerCharacter] ; $601b
 	ld d, a ; $601e
 	ld a, [$ca4c] ; $601f
@@ -1584,9 +1584,9 @@ Label_16_5ff9:
 	ld b, a ; $602f
 	ld c, $03 ; $6030
 	call LoadResultPortraitSlot ; $6032
-Label_16_6035:
+.done:
 	ret ; $6035
-Label_16_6036:
+.checkPlayer1CurrentMainCharacter2:
 	ld a, [wPlayer1CurrentMainCharacter] ; $6036
 	ld d, a ; $6039
 	ld a, [$ca0c] ; $603a
@@ -1601,7 +1601,7 @@ Label_16_6036:
 	call LoadResultPortraitSlot ; $604d
 	ld de, $002f ; $6050
 	call TestGameFlagByNumber ; $6053
-	jr z, Label_16_6072 ; $6056
+	jr z, .doneB ; $6056
 	ld a, [wPlayer1CurrentPartnerCharacter] ; $6058
 	ld d, a ; $605b
 	ld a, [$ca4c] ; $605c
@@ -1614,7 +1614,7 @@ Label_16_6036:
 	ld b, a ; $606c
 	ld c, $01 ; $606d
 	call LoadResultPortraitSlot ; $606f
-Label_16_6072:
+.doneB:
 	ret ; $6072
 LoadResultPortraitSlot:
 	push de ; $6073
@@ -1673,16 +1673,16 @@ LoadResultPortraitSlot:
 DecompressResultPortrait:
 	ld a, c ; $60c0
 	or a, a ; $60c1
-	jr z, Label_16_60c8 ; $60c2
+	jr z, .compare ; $60c2
 	call DecompressWinLosePortraitVariant ; $60c4
 	ret ; $60c7
-Label_16_60c8:
+.compare:
 	cp a, $20 ; $60c8
-	jr c, Label_16_60d1 ; $60ca
+	jr c, .decompressCharacterPortrait ; $60ca
 	ld a, b ; $60cc
 	farcall RemapExtendedCharId ; $60cd
 	ld b, a ; $60d0
-Label_16_60d1:
+.decompressCharacterPortrait:
 	call DecompressCharacterPortrait ; $60d1
 	ret ; $60d4
 DecompressWinLosePortraitVariant:
@@ -1693,16 +1693,16 @@ DecompressWinLosePortraitVariant:
 	ld a, c ; $60da
 	cp a, $01 ; $60db
 	ld a, b ; $60dd
-	jr z, Label_16_60e1 ; $60de
+	jr z, .step ; $60de
 	inc a ; $60e0
-Label_16_60e1:
+.step:
 	ld hl, WinLosePortraitVariantTable_16 ; $60e1
 	add a, a ; $60e4
 	add a, l ; $60e5
 	ld l, a ; $60e6
-	jr nc, Label_16_60ea ; $60e7
+	jr nc, .read ; $60e7
 	inc h ; $60e9
-Label_16_60ea:
+.read:
 	ld a, [hl+] ; $60ea
 	ld h, [hl] ; $60eb
 	ld l, a ; $60ec
@@ -1741,9 +1741,9 @@ DecompressCharacterPortrait:
 	ld hl, CharacterPortraitTable_16 ; $6959
 	add a, l ; $695c
 	ld l, a ; $695d
-	jr nc, Label_16_6961 ; $695e
+	jr nc, .read ; $695e
 	inc h ; $6960
-Label_16_6961:
+.read:
 	ld a, [hl+] ; $6961
 	ld h, [hl] ; $6962
 	ld l, a ; $6963
