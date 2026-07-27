@@ -3576,7 +3576,17 @@ MainMenuCursorSpriteTask0:
 	db $10, $40, $0e, $00 ; 0x1c
 	db $80 ; 0x20
 MainMenuCursorSpriteTask1:
-	INCBIN "data/bank_03b/d_58ed.bin" ; $58ed, 37 bytes
+	; $58ed, 37 bytes (bytes:4)
+	db $10, $08, $00, $00 ; 0x00
+	db $10, $10, $02, $00 ; 0x04
+	db $10, $18, $04, $00 ; 0x08
+	db $10, $20, $06, $00 ; 0x0c
+	db $10, $28, $08, $00 ; 0x10
+	db $10, $30, $0a, $00 ; 0x14
+	db $10, $38, $0c, $00 ; 0x18
+	db $10, $40, $0e, $00 ; 0x1c
+	db $10, $48, $10, $00 ; 0x20
+	db $80 ; 0x24
 SpriteTemplate_3b_5912:
 	; $5912, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00

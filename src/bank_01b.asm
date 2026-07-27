@@ -3523,7 +3523,18 @@ UnlockDebugNavGridTable:
 	db $1a, $1b, $1c, $1d, $1e, $fe, $fd, $ff, $1f, $12, $13, $14, $15, $fe, $fd, $ff ; 0x00
 	db $ff, $ff, $ff, $ff, $ff, $fe, $fd, $ff, $ff, $ff, $ff, $ff, $ff, $fe, $fd, $ff ; 0x10
 UnlockDebugRosterTable:
-	INCBIN "data/bank_01b/d_6592.bin" ; $6592, 88 bytes
+	; $6592, 88 bytes (bytes:8)
+	db $1a, $00, $00, $b6, $20, $18, $83, $00 ; 0x00
+	db $1b, $00, $00, $b7, $20, $30, $86, $00 ; 0x08
+	db $1c, $00, $00, $a8, $20, $48, $89, $00 ; 0x10
+	db $1d, $00, $00, $a9, $20, $60, $8c, $00 ; 0x18
+	db $1e, $00, $00, $aa, $20, $78, $8f, $00 ; 0x20
+	db $1f, $00, $00, $ab, $38, $18, $e3, $00 ; 0x28
+	db $12, $00, $00, $ac, $38, $30, $e6, $00 ; 0x30
+	db $13, $00, $00, $ad, $38, $48, $e9, $00 ; 0x38
+	db $14, $00, $00, $ae, $38, $60, $ec, $00 ; 0x40
+	db $15, $00, $00, $af, $38, $78, $ef, $00 ; 0x48
+	db $ff, $00, $00, $b0, $18, $20, $64, $00 ; 0x50
 FindUnlockDebugRosterEntry:
 	ld hl, $ce40 ; $65ea
 	farcall FindRosterEntry ; $65ed

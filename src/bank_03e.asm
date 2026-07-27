@@ -3368,7 +3368,15 @@ EquipSelectTextRowPtrs_3e:
 	; $58d6, 14 bytes (bytes:14)
 	db $ea, $58, $f2, $58, $fe, $58, $0a, $59, $22, $59, $16, $59, $2c, $59 ; 0x00
 EquipSelectTextRows_3e:
-	INCBIN "data/bank_03e/d_58e4.bin" ; $58e4, 102 bytes
+	; $58e4, 102 bytes (bytes:14)
+	db $ea, $58, $34, $59, $40, $59, $ff, $ff, $ff, $ff, $27, $01, $00, $00 ; 0x00
+	db $fb, $00, $ff, $00, $07, $01, $1a, $01, $24, $01, $00, $00, $fd, $00 ; 0x0e
+	db $00, $01, $09, $01, $17, $01, $25, $01, $00, $00, $fa, $00, $fe, $00 ; 0x1c
+	db $02, $01, $ff, $ff, $26, $01, $00, $00, $fb, $00, $ff, $00, $06, $01 ; 0x2a
+	db $19, $01, $24, $01, $00, $00, $fd, $00, $01, $01, $03, $01, $18, $01 ; 0x38
+	db $00, $00, $fa, $00, $23, $01, $fe, $00, $00, $00, $1b, $01, $1f, $01 ; 0x46
+	db $13, $01, $26, $01, $26, $01, $00, $00, $1e, $01, $22, $01, $13, $01 ; 0x54
+	db $26, $01, $00, $00 ; 0x62
 GetHoveredItemId:
 	push bc ; $594a
 	push hl ; $594b
@@ -3564,12 +3572,17 @@ ItemStatModListPtrPtrs:
 	dw ItemStatModList4 ; record 5
 	dw ItemStatModList6 ; record 6
 ItemStatModListPtrTable:
-	INCBIN "data/bank_03e/d_5a6d.bin" ; $5a6d, 6 bytes
+	; $5a6d, 6 bytes (records:2)
+	dw ItemStatModList0 ; record 0
+	dw Data_3e_5ab6 ; record 1
+	dw Data_3e_5ac1 ; record 2
 ItemStatModList0:
 	; $5a73, 7 bytes (bytes:8)
 	db $fe, $fe, $fe, $fe, $0a, $fe, $ff ; 0x00
 ItemStatModList1:
-	INCBIN "data/bank_03e/d_5a7a.bin" ; $5a7a, 11 bytes
+	; $5a7a, 11 bytes (bytes:8)
+	db $00, $81, $01, $81, $03, $82, $04, $02 ; 0x00
+	db $05, $01, $ff ; 0x08
 ItemStatModList2:
 	INCBIN "data/bank_03e/d_5a85.bin" ; $5a85, 11 bytes
 ItemStatModList3:
@@ -3579,7 +3592,11 @@ ItemStatModList4:
 ItemStatModList5:
 	INCBIN "data/bank_03e/d_5aa6.bin" ; $5aa6, 9 bytes
 ItemStatModList6:
-	INCBIN "data/bank_03e/d_5aaf.bin" ; $5aaf, 27 bytes
+	INCBIN "data/bank_03e/d_5aaf.bin" ; $5aaf, 7 bytes
+Data_3e_5ab6:
+	INCBIN "data/bank_03e/d_5ab6.bin" ; $5ab6, 11 bytes
+Data_3e_5ac1:
+	INCBIN "data/bank_03e/d_5ac1.bin" ; $5ac1, 9 bytes
 DrawStatModLabel:
 	push af ; $5aca
 	push bc ; $5acb
@@ -4174,7 +4191,12 @@ CourtSelect4CursorSpriteTask0:
 	db $10, $38, $0c, $00, $10, $40, $0e, $00 ; 0x18
 	db $80 ; 0x20
 CourtSelect4CursorSpriteTask1:
-	INCBIN "data/bank_03e/d_5f13.bin" ; $5f13, 37 bytes
+	; $5f13, 37 bytes (bytes:8)
+	db $10, $08, $00, $00, $10, $10, $02, $00 ; 0x00
+	db $10, $18, $04, $00, $10, $20, $06, $00 ; 0x08
+	db $10, $28, $08, $00, $10, $30, $0a, $00 ; 0x10
+	db $10, $38, $0c, $00, $10, $40, $0e, $00 ; 0x18
+	db $10, $48, $10, $00, $80 ; 0x20
 SpriteTemplate_3e_5f38:
 	; $5f38, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00

@@ -2705,7 +2705,8 @@ CharDataPageLeftTargets_1c:
 	; $566f, 5 bytes (bytes:5)
 	db $ff, $ff, $00, $01, $ff ; 0x00
 CharDataPageRightTargets_1c:
-	INCBIN "data/bank_01c/d_5674.bin" ; $5674, 5 bytes
+	; $5674, 5 bytes (bytes:5)
+	db $02, $03, $ff, $ff, $03 ; 0x00
 Unused_1c_5679:
 	; $5679, 64 bytes (records:2)
 	dw UnusedShiftGfx00 ; record 0

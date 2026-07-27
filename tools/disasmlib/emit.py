@@ -1022,6 +1022,10 @@ class Emitter:
         seen = sorted(set(self.truncated))
         if not seen:
             return
+        import os
+        if os.environ.get("SHOW_TRUNCATIONS"):
+            for off, name, spec in seen:
+                print(f"  0x{off:x} {name} (inside {spec})")
         head = ", ".join(n for _o, n, _s in seen[:3])
         more = f", +{len(seen) - 3} more" if len(seen) > 3 else ""
         print(f"note: {len(seen)} pointer targets are named at the end of a "

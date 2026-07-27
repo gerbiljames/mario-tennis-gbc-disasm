@@ -5125,3 +5125,34 @@ pool's extracted length. Even then, shifting a table's base by one word still
 passed -- dropping entry 0 leaves every remaining word a valid string start --
 so it also asserts that entry 0 addresses the pool's first string, which holds
 in all 13 banks.
+
+## Structuring what the truncation note was reporting (2026-07-27)
+
+The `make`-time note listed 24 pointer targets named at the end of a declared
+table, whose payload therefore rendered as an anonymous blob. They are not all
+the same thing, and the distinction is the no-ROM-content rule: **a `bytes:N`
+declaration inlines the bytes into committed source**, which is right for a
+small table and wrong for graphics.
+
+Sorting them by size and name splits cleanly. `FireworkObjTiles_14` (2,048
+bytes), `ScoreboardModeGfx_RankingMatch` (181), `ConfirmScreenGfx3` (206) and
+the other `Gfx`/`Lz` names are bulk content and stay binary in `data/`. Seven
+are tables and are now declared: `UnlockDebugRosterTable`,
+`EquipSelectTextRows_3e`, `CharDataPageRightTargets_1c`,
+`MainMenuCursorSpriteTask1`, `CourtSelect4CursorSpriteTask1`,
+`ItemStatModList1`, and `ItemStatModListPtrTable` (`records:2` -- its name says
+what it holds).
+
+Left alone deliberately: the `records:2` payloads whose contents are not
+pointers. That spec asserts every word is one, which is what put 71 bogus
+pointer words into bank `$1b`'s coordinate arrays earlier; `RankingMarkerCoordSet0`
+is the same shape and stays a blob.
+
+`UnlockDebugRosterTable` took a second look after declaring. It went in as
+`bytes:16` -- the width of the table it was cut from -- but its rows are
+8 bytes with an ascending character id in byte 0 (`$1a`-`$1f`, `$12`-`$15`,
+`$ff` terminating), so it is 11 records, not 5.5. Declared `bytes:8`, it reads
+one record per line. Inheriting the parent's width would have been a plausible
+lie.
+
+24 notes down to 18, all remaining ones bulk content.
