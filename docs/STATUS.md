@@ -4872,3 +4872,39 @@ declared `records:2` so they read as the addresses they are.
 
 **Bank `$38`: 781 of 800 labels named; bank `$1b` gained the same two
 routines.**
+
+## Naming a cut point un-structures what follows (2026-07-27)
+
+`RemotePlayerSlotList0`/`1` came back as `INCBIN` blobs after being named, and
+they were not alone: **34 regions had silently lost their structure the same
+way** across the naming passes.
+
+The cause is the rule from the naming pass above -- a curated label *ends* a
+declared table, so the bytes after it no longer carry its spec. That rule is
+right (it is what stops a `records:2` pointer spec bleeding into bank `$1b`'s
+coordinate arrays), but it means every named cut point needs its own
+declaration, and the build stays byte-perfect either way, so forgetting one is
+invisible.
+
+Finding them needed a differential measurement rather than a guess: regenerate
+with this session's 450 names removed, and diff the manifest. A region that was
+structured then and is a `d_*.bin` blob now lost its spec by being named. That
+produced exactly 37 offsets -- 34 real, plus two that were *inside* a bigger
+blob and merely split it (which is the intended behaviour) and
+`Data_1a_4af4`, which bounds an over-running table on purpose. All 34 are now
+declared with the spec they used to render under: `records:2` for eighteen,
+`palettes` for fourteen, `bytes:4` and `map_actors` for one each.
+
+`RemotePlayerSlotList0`/`1` themselves are `bytes:4`/`bytes:5` -- byte cycle
+lists (`$ff, $00, $02, $ff`) that `AdvanceRemotePlayerSlot` scans for the
+current value and takes the next byte from, which is why the outer table has
+six pointers into just two lists.
+
+**The generator now reports the situation** instead of leaving it silent: after
+each bank is laid out, any *pointer target* named exactly at the end of a
+declared splittable table, whose payload rendered as a blob, is counted and
+listed. The pointer-target test matters -- a name at a table's natural end is
+just the next thing starting, and flagging those made the check fire 27 times
+on legitimate layout. Verified by removing one declaration and watching the
+count go 24 -> 25. The 24 standing cases are older than this session and are
+opportunities rather than regressions, so the note is one compact line.

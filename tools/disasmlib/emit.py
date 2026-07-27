@@ -178,6 +178,7 @@ class Emitter:
         self.manifest = []   # (blob path, rom offset, length, render spec)
         self.lines = []      # source lines of the bank being rendered
         self.emitted_labels = set()   # every label name actually written
+        self.truncated = []  # declared tables a curated label cut short
 
         self._classify_entries()
         self._mark_data_blobs()
@@ -364,6 +365,7 @@ class Emitter:
             for bank in range(nbanks):
                 self._emit_bank(bank)
         self._check_local_scopes()
+        self._report_truncations()
         self._write_text_ids()
         self._write_flag_constants()
         self._write_manifest()
@@ -408,6 +410,7 @@ class Emitter:
         # consecutive label lines are always an rgbasm redefinition error.
         lines[:] = [l for i, l in enumerate(lines)
                     if not (i and l == lines[i - 1] and _LABEL_LINE_RE.match(l))]
+        self._check_truncated_tables(lines, bank)
         self.emitted_labels.update(
             m.group(1) for l in lines if (m := _LABEL_LINE_RE.match(l)))
         Path(self.srcdir, f"bank_{bank:03x}.asm").write_text("\n".join(lines))
@@ -959,6 +962,50 @@ class Emitter:
         if not stride:
             return set(cuts)
         return {o for o in cuts if (o - start) % stride == 0}
+
+    def _report_truncations(self):
+        seen = sorted(set(self.truncated))
+        if not seen:
+            return
+        head = ", ".join(n for _o, n, _s in seen[:3])
+        more = f", +{len(seen) - 3} more" if len(seen) > 3 else ""
+        print(f"note: {len(seen)} pointer targets are named at the end of a "
+              f"declared table, so what they point at renders as an anonymous "
+              f"blob ({head}{more}); declaring them in data_tables.json keeps "
+              f"the structure.")
+
+    _SPEC_LINE_RE = re.compile(r"^\t; \$([0-9a-f]{4}), (\d+) bytes \(([^)]+)\)$")
+    _BLOB_LINE_RE = re.compile(r'^\tINCBIN "data/[^"]*/d_[0-9a-f]{4}\.bin" ; \$([0-9a-f]{4})')
+
+    def _check_truncated_tables(self, lines, bank):
+        """Flag a named offset that ends a declared table. Naming a cut point is
+        how a payload gets a symbol, but the name also ends the region, so the
+        bytes after it lose the table's spec and fall out as an anonymous blob
+        unless they are declared too. The build stays byte-perfect either way,
+        so this would otherwise be silent."""
+        run = None   # (start cpu, end cpu, spec) of the last declared region
+        for i, line in enumerate(lines[:-1]):
+            m = self._SPEC_LINE_RE.match(line)
+            if m:
+                start, n = int(m.group(1), 16), int(m.group(2))
+                run = (start, start + n, m.group(3))
+                continue
+            if not _LABEL_LINE_RE.match(line):
+                continue
+            b = self._BLOB_LINE_RE.match(lines[i + 1])
+            if not b or not run:
+                continue
+            off = bank * BANK_SIZE + run[1] - BANK_SIZE if bank else run[1]
+            # Only a *cut point* -- an offset something in the bank points at,
+            # which is why it got a name -- signals a truncated table. A name at
+            # a table's natural end is just the next thing starting. (A named
+            # target is not in ptr_data_targets, so ask the source instead.)
+            name = line[:-1]
+            if int(b.group(1), 16) == run[1] and is_splittable(run[2]) \
+                    and any(l.strip().startswith(("dw " + name, "ld hl, " + name,
+                                                  "ld de, " + name, "ld bc, " + name))
+                            for l in lines):
+                self.truncated.append((off, name, run[2]))
 
     def _splits_itself(self, start, end):
         """True if the region [start, end) renders in pieces, so the run and

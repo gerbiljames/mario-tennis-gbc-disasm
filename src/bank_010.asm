@@ -1046,7 +1046,8 @@ DevelopmentActors_10:
 	; $4cd9, 10 bytes (map_actors)
 	map_actor_end
 DevelopmentRespawnActorList_10:
-	INCBIN "data/bank_010/d_4ce3.bin" ; $4ce3, 10 bytes
+	; $4ce3, 10 bytes (map_actors)
+	map_actor_end
 DevelopmentEntryPoints_10:
 	; $4ced, 9 bytes (map_entries)
 	map_entry $01, FACE_DOWN, $0900, $0900, $0000

@@ -1098,7 +1098,14 @@ MatchRulesMenuGraphicsTable:
 	dw $3c6c ; record 5
 	dw $3c6e ; record 6
 MatchRulesMenuTable:
-	INCBIN "data/bank_03e/d_46e6.bin" ; $46e6, 14 bytes
+	; $46e6, 14 bytes (records:2)
+	dw $a800 ; record 0
+	dw $a900 ; record 1
+	dw $aa00 ; record 2
+	dw $ab00 ; record 3
+	dw $ac00 ; record 4
+	dw $ad00 ; record 5
+	dw $ae00 ; record 6
 OpenMatchRulesPanel:
 	ld a, b ; $46f4
 	or a, a ; $46f5
@@ -4003,7 +4010,16 @@ CourtSelectGraphicsTable:
 	dw $3f12 ; record 8
 	dw $3f14 ; record 9
 CourtSelectTable:
-	INCBIN "data/bank_03e/d_5e05.bin" ; $5e05, 18 bytes
+	; $5e05, 18 bytes (records:2)
+	dw $a800 ; record 0
+	dw $a900 ; record 1
+	dw $aa00 ; record 2
+	dw $ab00 ; record 3
+	dw $ac00 ; record 4
+	dw $ad00 ; record 5
+	dw $ae00 ; record 6
+	dw $af00 ; record 7
+	dw $b700 ; record 8
 GetCourtThumbnailPtr:
 	push af ; $5e17
 	push bc ; $5e18

@@ -5701,9 +5701,11 @@ RemotePlayerSlotLists_38:
 	dw RemotePlayerSlotList1 ; record 4
 	dw RemotePlayerSlotList1 ; record 5
 RemotePlayerSlotList0:
-	INCBIN "data/bank_038/d_6a33.bin" ; $6a33, 4 bytes
+	; $6a33, 4 bytes (bytes:4)
+	db $ff, $00, $02, $ff ; 0x00
 RemotePlayerSlotList1:
-	INCBIN "data/bank_038/d_6a37.bin" ; $6a37, 5 bytes
+	; $6a37, 5 bytes (bytes:5)
+	db $ff, $00, $01, $02, $ff ; 0x00
 	call GetGridSlotFromCursor ; $6a3c
 	ld hl, $da00 ; $6a3f
 	add a, a ; $6a42

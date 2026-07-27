@@ -3973,7 +3973,16 @@ MainMenuCaptionTable:
 	dw $d201 ; record 7
 	dw $d201 ; record 8
 MainMenuCaptionTable1:
-	INCBIN "data/bank_03b/d_5c15.bin" ; $5c15, 18 bytes
+	; $5c15, 18 bytes (records:2)
+	dw $007d ; record 0
+	dw $007e ; record 1
+	dw $007f ; record 2
+	dw $007c ; record 3
+	dw $007c ; record 4
+	dw $007c ; record 5
+	dw $0080 ; record 6
+	dw $0081 ; record 7
+	dw $0082 ; record 8
 Print2DigitNumberRightAligned:
 	ld a, $02 ; $5c27
 	jr PrintNumberRightAligned.format ; $5c29
@@ -7890,11 +7899,22 @@ HighlightBracketPlayerRowTable:
 	dw $d589 ; record 3
 	dw $d5c9 ; record 4
 BracketPlayerRowTable0:
-	INCBIN "data/bank_03b/d_79c0.bin" ; $79c0, 10 bytes
+	; $79c0, 10 bytes (records:2)
+	dw $0000 ; record 0
+	dw $d525 ; record 1
+	dw $d565 ; record 2
+	dw $d5a5 ; record 3
+	dw $d5e5 ; record 4
 BracketPlayerRowTable1:
-	INCBIN "data/bank_03b/d_79ca.bin" ; $79ca, 6 bytes
+	; $79ca, 6 bytes (records:2)
+	dw $0000 ; record 0
+	dw $d509 ; record 1
+	dw $d589 ; record 2
 BracketPlayerRowTable2:
-	INCBIN "data/bank_03b/d_79d0.bin" ; $79d0, 6 bytes
+	; $79d0, 6 bytes (records:2)
+	dw $0000 ; record 0
+	dw $d525 ; record 1
+	dw $d5a5 ; record 2
 BracketHighlightBlinkTask:
 	ld hl, $79e9 ; $79d6
 	ldh a, [hVBlankCounter] ; $79d9
@@ -8422,7 +8442,8 @@ VictoryScoreTable:
 	; $7dd9, 4 bytes (bytes:4)
 	db $03, $05, $07, $09 ; 0x00
 VictoryScoreTable1:
-	INCBIN "data/bank_03b/d_7ddd.bin" ; $7ddd, 4 bytes
+	; $7ddd, 4 bytes (bytes:4)
+	db $02, $04, $06, $08 ; 0x00
 GetStarCharIndex:
 	sub a, $17 ; $7de1
 	ld hl, StarCharOrderTable ; $7de3

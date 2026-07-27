@@ -19,7 +19,7 @@ MatchGfxTilesA_28:
 MatchGfxPalettesA_28:
 	INCLUDE "data/bank_028/palettes_4ba0.asm" ; $4ba0, 64 bytes (palettes)
 MatchGraphicsPalettes:
-	INCBIN "data/bank_028/d_4be0.bin" ; $4be0, 16 bytes
+	INCLUDE "data/bank_028/palettes_4be0.asm" ; $4be0, 16 bytes (palettes)
 MatchGfxMapsA_28:
 	INCBIN "data/bank_028/d_4bf0.bin" ; $4bf0, 320 bytes
 MatchVariantTiles0:
@@ -37,19 +37,19 @@ MatchSharedTiles_28:
 MatchGfxPalettesB_28:
 	INCLUDE "data/bank_028/palettes_5e30.asm" ; $5e30, 8 bytes (palettes)
 MatchVariantGraphicsPalettes0:
-	INCBIN "data/bank_028/d_5e38.bin" ; $5e38, 24 bytes
+	INCLUDE "data/bank_028/palettes_5e38.asm" ; $5e38, 24 bytes (palettes)
 MatchVariantGraphicsPalettes1:
-	INCBIN "data/bank_028/d_5e50.bin" ; $5e50, 24 bytes
+	INCLUDE "data/bank_028/palettes_5e50.asm" ; $5e50, 24 bytes (palettes)
 MatchVariantGraphicsPalettes2:
-	INCBIN "data/bank_028/d_5e68.bin" ; $5e68, 16 bytes
+	INCLUDE "data/bank_028/palettes_5e68.asm" ; $5e68, 16 bytes (palettes)
 MatchVariantGraphicsPalettes3:
-	INCBIN "data/bank_028/d_5e78.bin" ; $5e78, 8 bytes
+	INCLUDE "data/bank_028/palettes_5e78.asm" ; $5e78, 8 bytes (palettes)
 MatchVariantGraphicsPalettes4:
-	INCBIN "data/bank_028/d_5e80.bin" ; $5e80, 24 bytes
+	INCLUDE "data/bank_028/palettes_5e80.asm" ; $5e80, 24 bytes (palettes)
 MatchVariantGraphicsPalettes5:
-	INCBIN "data/bank_028/d_5e98.bin" ; $5e98, 8 bytes
+	INCLUDE "data/bank_028/palettes_5e98.asm" ; $5e98, 8 bytes (palettes)
 MatchVariantGraphicsPalettes6:
-	INCBIN "data/bank_028/d_5ea0.bin" ; $5ea0, 16 bytes
+	INCLUDE "data/bank_028/palettes_5ea0.asm" ; $5ea0, 16 bytes (palettes)
 LoadMatchGraphics:
 	wram_bank $01 ; $5eb0
 	ld hl, MatchGfxPalettesA_28 ; $5eb6
@@ -398,5 +398,5 @@ MatchGfxTilesB_28:
 MatchGfxPalettesC_28:
 	INCLUDE "data/bank_028/palettes_6d1c.asm" ; $6d1c, 56 bytes (palettes)
 MatchStoryGfxPalettes:
-	INCBIN "data/bank_028/d_6d54.bin" ; $6d54, 16 bytes
+	INCLUDE "data/bank_028/palettes_6d54.asm" ; $6d54, 16 bytes (palettes)
 	; $6d64, 4764 bytes fill to bank end (linker-padded)

@@ -1118,7 +1118,7 @@ LoadMatchResultPalettes:
 MatchResultPalettes0:
 	INCLUDE "data/bank_016/palettes_4a46.asm" ; $4a46, 8 bytes (palettes)
 MatchResultPalettes1:
-	INCBIN "data/bank_016/d_4a4e.bin" ; $4a4e, 8 bytes
+	INCLUDE "data/bank_016/palettes_4a4e.asm" ; $4a4e, 8 bytes (palettes)
 AdjustResultTilemapForLoss:
 	ld a, [wMatchWinLoseFlag] ; $4a56
 	cp a, $ff ; $4a59

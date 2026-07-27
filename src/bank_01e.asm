@@ -4763,13 +4763,13 @@ GameProgressHeaderAttrmap_1e:
 Palettes_1e_7700:
 	INCLUDE "data/bank_01e/palettes_7700.asm" ; $7700, 16 bytes (palettes)
 GameProgressScreenTiles0:
-	INCBIN "data/bank_01e/d_7710.bin" ; $7710, 256 bytes
+	INCLUDE "data/bank_01e/palettes_7710.asm" ; $7710, 256 bytes (palettes)
 Palettes_1e_7810:
 	INCLUDE "data/bank_01e/palettes_7810.asm" ; $7810, 16 bytes (palettes)
 GameProgressScreenTiles1:
-	INCBIN "data/bank_01e/d_7820.bin" ; $7820, 320 bytes
+	INCLUDE "data/bank_01e/palettes_7820.asm" ; $7820, 320 bytes (palettes)
 GameProgressScreenTiles2:
-	INCBIN "data/bank_01e/d_7960.bin" ; $7960, 128 bytes
+	INCLUDE "data/bank_01e/palettes_7960.asm" ; $7960, 128 bytes (palettes)
 Palettes_1e_79e0:
 	INCLUDE "data/bank_01e/palettes_79e0.asm" ; $79e0, 8 bytes (palettes)
 FillProgressListRowTiles:

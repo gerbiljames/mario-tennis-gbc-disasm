@@ -359,15 +359,115 @@ UpdateAnimatedTilesTable:
 	dw AnimatedTilesTable3 ; record 2
 	dw AnimatedTilesTable4 ; record 3
 AnimatedTilesTable0:
-	INCBIN "data/bank_039/d_440b.bin" ; $440b, 8 bytes
+	; $440b, 8 bytes (records:2)
+	dw $ffff ; record 0
+	dw $ffff ; record 1
+	dw AnimatedTilesTable4 ; record 2
+	dw AnimatedTilesTable3 ; record 3
 AnimatedTilesTable1:
-	INCBIN "data/bank_039/d_4413.bin" ; $4413, 64 bytes
+	; $4413, 64 bytes (records:2)
+	dw $6d32 ; record 0
+	dw $6d34 ; record 1
+	dw $6d36 ; record 2
+	dw $6d38 ; record 3
+	dw $6d3a ; record 4
+	dw $6d3c ; record 5
+	dw $6d3e ; record 6
+	dw $6d40 ; record 7
+	dw $6d42 ; record 8
+	dw $6d44 ; record 9
+	dw $6d46 ; record 10
+	dw $6d48 ; record 11
+	dw $6d4a ; record 12
+	dw $6d4c ; record 13
+	dw $6d4e ; record 14
+	dw $6d50 ; record 15
+	dw $6d52 ; record 16
+	dw $6d54 ; record 17
+	dw $6d56 ; record 18
+	dw $6d58 ; record 19
+	dw $6d5a ; record 20
+	dw $6d5c ; record 21
+	dw $6d5e ; record 22
+	dw $6d60 ; record 23
+	dw $6d62 ; record 24
+	dw $6d64 ; record 25
+	dw $6d66 ; record 26
+	dw $6d68 ; record 27
+	dw $6d6a ; record 28
+	dw $6d6c ; record 29
+	dw $6d6e ; record 30
+	dw $6d70 ; record 31
 AnimatedTilesTable2:
-	INCBIN "data/bank_039/d_4453.bin" ; $4453, 64 bytes
+	; $4453, 64 bytes (records:2)
+	dw $3f36 ; record 0
+	dw $3f38 ; record 1
+	dw $3f3a ; record 2
+	dw $3f3c ; record 3
+	dw $3f3e ; record 4
+	dw $3f40 ; record 5
+	dw $3f42 ; record 6
+	dw $3f44 ; record 7
+	dw $3f46 ; record 8
+	dw $3f48 ; record 9
+	dw $3f4a ; record 10
+	dw $3f4c ; record 11
+	dw $3f4e ; record 12
+	dw $3f50 ; record 13
+	dw $3f52 ; record 14
+	dw $3f54 ; record 15
+	dw $3f56 ; record 16
+	dw $3f58 ; record 17
+	dw $3f5a ; record 18
+	dw $3f5c ; record 19
+	dw $3f5e ; record 20
+	dw $3f60 ; record 21
+	dw $3f62 ; record 22
+	dw $3f64 ; record 23
+	dw $3f66 ; record 24
+	dw $3f68 ; record 25
+	dw $3f6a ; record 26
+	dw $3f6c ; record 27
+	dw $3f6e ; record 28
+	dw $3f70 ; record 29
+	dw $3f72 ; record 30
+	dw $3f74 ; record 31
 AnimatedTilesTable3:
-	INCBIN "data/bank_039/d_4493.bin" ; $4493, 32 bytes
+	; $4493, 32 bytes (records:2)
+	dw $1848 ; record 0
+	dw $184a ; record 1
+	dw $184c ; record 2
+	dw $184e ; record 3
+	dw $1850 ; record 4
+	dw $1852 ; record 5
+	dw $1854 ; record 6
+	dw $1856 ; record 7
+	dw $1858 ; record 8
+	dw $185a ; record 9
+	dw $185c ; record 10
+	dw $185e ; record 11
+	dw $1860 ; record 12
+	dw $1862 ; record 13
+	dw $1864 ; record 14
+	dw $1866 ; record 15
 AnimatedTilesTable4:
-	INCBIN "data/bank_039/d_44b3.bin" ; $44b3, 32 bytes
+	; $44b3, 32 bytes (records:2)
+	dw $1868 ; record 0
+	dw $186a ; record 1
+	dw $186c ; record 2
+	dw $186e ; record 3
+	dw $1870 ; record 4
+	dw $1872 ; record 5
+	dw $1874 ; record 6
+	dw $1876 ; record 7
+	dw $1878 ; record 8
+	dw $187a ; record 9
+	dw $187c ; record 10
+	dw $187e ; record 11
+	dw $1880 ; record 12
+	dw $1882 ; record 13
+	dw $1884 ; record 14
+	dw $1886 ; record 15
 LoadFixedTileBlockAndPalette:
 	push de ; $44d3
 	wram_bank $01 ; $44d4
@@ -802,7 +902,11 @@ LoadMenuSpritePalettePair:
 	dw $11df ; record 6
 	dw $139f ; record 7
 MenuSpritePalettePairPalettes:
-	INCBIN "data/bank_039/d_4b65.bin" ; $4b65, 8 bytes
+	; $4b65, 8 bytes (records:2)
+	dw $0000 ; record 0
+	dw $018f ; record 1
+	dw $031f ; record 2
+	dw $031f ; record 3
 TickMenuBgScroll:
 	ld a, [$cb12] ; $4b6d
 	dec a ; $4b70

@@ -192,9 +192,16 @@ MinigamePracticeTargetScores:
 	dw $001e ; record 1
 	dw $003c ; record 2
 MinigameDefaultRecordValue00:
-	INCBIN "data/bank_00d/d_4150.bin" ; $4150, 8 bytes
+	; $4150, 8 bytes (records:2)
+	dw $0064 ; record 0
+	dw $0032 ; record 1
+	dw $0032 ; record 2
+	dw $0032 ; record 3
 MinigameDefaultRecordValue01:
-	INCBIN "data/bank_00d/d_4158.bin" ; $4158, 6 bytes
+	; $4158, 6 bytes (records:2)
+	dw $0032 ; record 0
+	dw $270f ; record 1
+	dw $270f ; record 2
 MinigameTargetScores:
 	; $415e, 2 bytes (records:8)
 ; 0 records x 8 bytes
