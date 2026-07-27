@@ -46,6 +46,12 @@ restated:
   new stream need not be the same size.
 - **Tables.** Stats, physics constants, mode hooks, map actors and animation
   scripts render as structured source with named fields — see docs/STATUS.md.
+- **Copy counts follow their source.** A VRAM copy whose length equalled its
+  blob's size is written `ld c, (Next - Blob) / 16`, so growing the blob copies
+  the extra tiles instead of silently truncating.
+- **The header is fixed up.** `make` runs `rgbfix -v`, so editing the title or
+  cart type cannot leave a header checksum the CGB boot ROM rejects. It changes
+  nothing in the unmodified build, which is why `make compare` still holds.
 
 One caveat: `data/` is generated, so `./setup.sh` and `tools/extract.py`
 overwrite it (and now delete files the manifest no longer lists). Keep modified

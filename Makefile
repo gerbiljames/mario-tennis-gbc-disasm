@@ -1,6 +1,7 @@
 RGBDS   ?= tools/rgbds/
 RGBASM  := $(RGBDS)rgbasm
 RGBLINK := $(RGBDS)rgblink
+RGBFIX  := $(RGBDS)rgbfix
 
 ROM     := mariotennis.gbc
 SRCS    := $(wildcard src/bank_*.asm)
@@ -13,8 +14,13 @@ BASEROM_SHA1 := 414ba58340a27fc27b127bc01455b32764151ff0
 
 all: $(ROM)
 
+# rgbfix -v recomputes the header and global checksums. The unmodified build
+# already has them right, so it changes nothing and `make compare` still holds;
+# it is here for edited builds, where a wrong header checksum makes the CGB
+# boot ROM refuse the cart -- changing one character of the title is enough.
 $(ROM): $(OBJS)
 	$(RGBLINK) -p 0xff -o $@ -m build/$(ROM:.gbc=.map) -n build/$(ROM:.gbc=.sym) $(OBJS)
+	$(RGBFIX) -v $@
 
 # hardware.inc + macros.inc are preincluded for every bank via -P instead of a
 # repeated INCLUDE at the top of each source file.

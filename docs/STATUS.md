@@ -5072,3 +5072,21 @@ the count was right, the address was stale.) Restored, `make compare` is OK.
 
 The one site left numeric has no label at its blob's end; inventing one is
 possible but would be the only new symbol in the pass, so it stays as it is.
+
+## The header checksum, which silently bricks an edited ROM (2026-07-27)
+
+The cart header renders as source, so the title, cart type and RAM size are all
+editable -- and `$014d`, the header checksum, is a literal `db $a5` sitting
+right beneath them. The CGB boot ROM *verifies* that byte and refuses to run a
+cart whose value is wrong, so any header edit produces a ROM that builds
+cleanly, compares as changed, and then does nothing on hardware or in an
+accurate emulator.
+
+Demonstrated rather than assumed: changing `CGBTENNIS` to `CGBTENNIX` and
+rebuilding gives `$014d = $a5` where `$a0` is now required. `rgbfix -v`
+recomputes it (and the global checksum) and the cart boots again.
+
+`make` now runs `rgbfix -v` after the link. It is byte-neutral on the
+unmodified build -- same SHA-1, `make compare` still OK from clean -- because
+the checksums it computes are the ones already there. It only does anything
+once something in the header has moved, which is exactly when it is needed.
