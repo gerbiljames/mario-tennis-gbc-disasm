@@ -5680,7 +5680,7 @@ DebugToggleSelectedFlag:
 	push bc ; $63d9
 	push de ; $63da
 	push hl ; $63db
-	ld a, [$c714] ; $63dc
+	ld a, [wDebugFlagPage] ; $63dc
 	add a, a ; $63df
 	add a, a ; $63e0
 	add a, a ; $63e1
@@ -5688,13 +5688,13 @@ DebugToggleSelectedFlag:
 	add a, a ; $63e3
 	add a, a ; $63e4
 	ld l, a ; $63e5
-	ld a, [$c716] ; $63e6
+	ld a, [wDebugFlagByte] ; $63e6
 	add a, a ; $63e9
 	add a, a ; $63ea
 	add a, a ; $63eb
 	add a, l ; $63ec
 	ld l, a ; $63ed
-	ld a, [$c715] ; $63ee
+	ld a, [wDebugFlagBit] ; $63ee
 	add a, l ; $63f1
 	ld e, a ; $63f2
 	ld d, $00 ; $63f3
@@ -5717,7 +5717,7 @@ DebugDrawFlagsWindow1:
 	push hl ; $640a
 	ld hl, $c718 ; $640b
 	ld b, [hl] ; $640e
-	ld a, [$c714] ; $640f
+	ld a, [wDebugFlagPage] ; $640f
 	add a, a ; $6412
 	add a, a ; $6413
 	add a, a ; $6414
@@ -5751,7 +5751,7 @@ DebugDrawFlagsWindow2:
 	push hl ; $644a
 	ld hl, $c719 ; $644b
 	ld b, [hl] ; $644e
-	ld a, [$c714] ; $644f
+	ld a, [wDebugFlagPage] ; $644f
 	add a, a ; $6452
 	inc a ; $6453
 	add a, a ; $6454
@@ -5844,11 +5844,11 @@ DebugDrawFlagCursor:
 	push bc ; $64e4
 	push de ; $64e5
 	push hl ; $64e6
-	ld a, [$c715] ; $64e7
+	ld a, [wDebugFlagBit] ; $64e7
 	add a, a ; $64ea
 	add a, $03 ; $64eb
 	ld d, a ; $64ed
-	ld a, [$c716] ; $64ee
+	ld a, [wDebugFlagByte] ; $64ee
 	and a, $03 ; $64f1
 	add a, $01 ; $64f3
 	cp a, $03 ; $64f5
@@ -5857,7 +5857,7 @@ DebugDrawFlagCursor:
 .lt03:
 	ld e, a ; $64fa
 	ld hl, $c718 ; $64fb
-	ld a, [$c716] ; $64fe
+	ld a, [wDebugFlagByte] ; $64fe
 	bit 2, a ; $6501
 	jr z, .read ; $6503
 	ld hl, $c719 ; $6505
@@ -5875,11 +5875,11 @@ DebugEraseFlagCursor:
 	push bc ; $6515
 	push de ; $6516
 	push hl ; $6517
-	ld a, [$c715] ; $6518
+	ld a, [wDebugFlagBit] ; $6518
 	add a, a ; $651b
 	add a, $03 ; $651c
 	ld d, a ; $651e
-	ld a, [$c716] ; $651f
+	ld a, [wDebugFlagByte] ; $651f
 	and a, $03 ; $6522
 	add a, $01 ; $6524
 	cp a, $03 ; $6526
@@ -5888,7 +5888,7 @@ DebugEraseFlagCursor:
 .lt03:
 	ld e, a ; $652b
 	ld hl, $c718 ; $652c
-	ld a, [$c716] ; $652f
+	ld a, [wDebugFlagByte] ; $652f
 	bit 2, a ; $6532
 	jr z, .read ; $6534
 	ld hl, $c719 ; $6536
@@ -5907,9 +5907,9 @@ DebugMoveFlagCursor:
 	push bc ; $6547
 	push de ; $6548
 	push hl ; $6549
-	ld a, [$c715] ; $654a
+	ld a, [wDebugFlagBit] ; $654a
 	ld d, a ; $654d
-	ld a, [$c716] ; $654e
+	ld a, [wDebugFlagByte] ; $654e
 	ld e, a ; $6551
 	ldh a, [hPlayerInputFlags] ; $6552
 	bit PADB_LEFT, a ; $6554
@@ -5935,10 +5935,10 @@ DebugMoveFlagCursor:
 .step5:
 	ld a, d ; $6570
 	and a, $07 ; $6571
-	ld [$c715], a ; $6573
+	ld [wDebugFlagBit], a ; $6573
 	ld a, e ; $6576
 	and a, $07 ; $6577
-	ld [$c716], a ; $6579
+	ld [wDebugFlagByte], a ; $6579
 	pop hl ; $657c
 	pop de ; $657d
 	pop bc ; $657e
@@ -5961,9 +5961,9 @@ RunDebugFlagEditor:
 	jr z, .notDebugFlagEditorOpen ; $65a9
 	set_flag FLAG_DEBUG_FLAG_EDITOR_OPEN ; $65ab
 	xor a, a ; $65ae
-	ld [$c715], a ; $65af
-	ld [$c716], a ; $65b2
-	ld [$c714], a ; $65b5
+	ld [wDebugFlagBit], a ; $65af
+	ld [wDebugFlagByte], a ; $65b2
+	ld [wDebugFlagPage], a ; $65b5
 .notDebugFlagEditorOpen:
 	ld de, $0000 ; $65b8
 	ld bc, $1404 ; $65bb
@@ -6016,10 +6016,10 @@ RunDebugFlagEditor:
 	ldh a, [hInputRisingEdge] ; $663b
 	bit PADB_START, a ; $663d
 	jr z, .checkPlayerInputFlags ; $663f
-	ld a, [$c714] ; $6641
+	ld a, [wDebugFlagPage] ; $6641
 	inc a ; $6644
 	and a, $03 ; $6645
-	ld [$c714], a ; $6647
+	ld [wDebugFlagPage], a ; $6647
 	call DebugDrawFlagsWindow1 ; $664a
 	call DebugDrawFlagsWindow2 ; $664d
 	ld a, [$c718] ; $6650

@@ -860,21 +860,21 @@ Data_39_4ad3:
 	db $fe, $fe, $fe, $fe, $fe, $fe, $ff, $ff, $ff, $ff, $ff, $00, $00, $00, $00, $00 ; 0x30
 InitMenuBgScroll:
 	ld a, $01 ; $4b13
-	ld [$cb17], a ; $4b15
+	ld [wMenuBgScrollAttr], a ; $4b15
 	ld a, $01 ; $4b18
-	ld [$cb18], a ; $4b1a
+	ld [wMenuBgScrollAttr + 1], a ; $4b1a
 	xor a, a ; $4b1d
-	ld [$cb14], a ; $4b1e
+	ld [wMenuBgScrollX], a ; $4b1e
 	ld a, $40 ; $4b21
-	ld [$cb12], a ; $4b23
+	ld [wMenuBgScrollY], a ; $4b23
 	add a, $86 ; $4b26
-	ld [$cb13], a ; $4b28
+	ld [wMenuBgScrollY + 1], a ; $4b28
 	ld a, $00 ; $4b2b
-	ld [$cb15], a ; $4b2d
+	ld [wMenuBgScrollTile], a ; $4b2d
 	ld a, $00 ; $4b30
-	ld [$cb16], a ; $4b32
+	ld [wMenuBgScrollTile + 1], a ; $4b32
 	xor a, a ; $4b35
-	ld [$cb19], a ; $4b36
+	ld [wMenuBgScrollLane], a ; $4b36
 	ret ; $4b39
 LoadMenuSpritePalettePair:
 	push bc ; $4b3a
@@ -908,45 +908,45 @@ MenuSpritePalettePairPalettes:
 	dw $031f ; record 2
 	dw $031f ; record 3
 TickMenuBgScroll:
-	ld a, [$cb12] ; $4b6d
+	ld a, [wMenuBgScrollY] ; $4b6d
 	dec a ; $4b70
 	cp a, $b0 ; $4b71
 	jr nz, .wrapped1 ; $4b73
 	ld a, $a0 ; $4b75
 .wrapped1:
-	ld [$cb12], a ; $4b77
-	ld a, [$cb13] ; $4b7a
+	ld [wMenuBgScrollY], a ; $4b77
+	ld a, [wMenuBgScrollY + 1] ; $4b7a
 	dec a ; $4b7d
 	cp a, $b0 ; $4b7e
 	jr nz, .wrapped2 ; $4b80
 	ld a, $a0 ; $4b82
 .wrapped2:
-	ld [$cb13], a ; $4b84
-	ld a, [$cb19] ; $4b87
+	ld [wMenuBgScrollY + 1], a ; $4b84
+	ld a, [wMenuBgScrollLane] ; $4b87
 	or a, a ; $4b8a
 	jr nz, .secondSprite ; $4b8b
-	ld a, [$cb12] ; $4b8d
+	ld a, [wMenuBgScrollY] ; $4b8d
 	ld d, a ; $4b90
-	ld a, [$cb15] ; $4b91
+	ld a, [wMenuBgScrollTile] ; $4b91
 	ld c, a ; $4b94
-	ld a, [$cb17] ; $4b95
+	ld a, [wMenuBgScrollAttr] ; $4b95
 	ld b, a ; $4b98
-	ld a, [$cb14] ; $4b99
+	ld a, [wMenuBgScrollX] ; $4b99
 	ld e, a ; $4b9c
 	ld a, $01 ; $4b9d
-	ld [$cb19], a ; $4b9f
+	ld [wMenuBgScrollLane], a ; $4b9f
 	jr .queueSprite ; $4ba2
 .secondSprite:
-	ld a, [$cb13] ; $4ba4
+	ld a, [wMenuBgScrollY + 1] ; $4ba4
 	ld d, a ; $4ba7
-	ld a, [$cb16] ; $4ba8
+	ld a, [wMenuBgScrollTile + 1] ; $4ba8
 	ld c, a ; $4bab
-	ld a, [$cb18] ; $4bac
+	ld a, [wMenuBgScrollAttr + 1] ; $4bac
 	ld b, a ; $4baf
-	ld a, [$cb14] ; $4bb0
+	ld a, [wMenuBgScrollX] ; $4bb0
 	ld e, a ; $4bb3
 	xor a, a ; $4bb4
-	ld [$cb19], a ; $4bb5
+	ld [wMenuBgScrollLane], a ; $4bb5
 .queueSprite:
 	ld hl, SpriteTemplate_39_4bbf ; $4bb8
 	call QueueSpriteTemplate ; $4bbb

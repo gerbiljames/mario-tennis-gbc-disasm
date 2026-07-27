@@ -3032,7 +3032,7 @@ NetGameMatch1Cases3:
 	ld a, $1f ; $55ca
 	ld b, $0d ; $55cc
 	call QueueDrillResultMessage ; $55ce
-	ld a, [$c4a1] ; $55d1
+	ld a, [wShotRecoilVariant] ; $55d1
 	cp a, $01 ; $55d4
 	jp nz, NetGameMatch1Cases4.storeMatchAbortFlag ; $55d6
 	xor a, a ; $55d9
@@ -3419,7 +3419,7 @@ NetGameMatch2Cases3:
 	ld a, $1c ; $5845
 	ld b, $0d ; $5847
 	call QueueDrillResultMessage ; $5849
-	ld a, [$c4a1] ; $584c
+	ld a, [wShotRecoilVariant] ; $584c
 	cp a, $02 ; $584f
 	jp nz, NetGameMatch2Cases4.storeMatchAbortFlag2 ; $5851
 	xor a, a ; $5854
@@ -4332,7 +4332,7 @@ NetGamePractice1Cases3:
 	ld a, $3a ; $5e40
 	ld b, $00 ; $5e42
 	call QueueDrillResultMessage ; $5e44
-	ld a, [$c4a1] ; $5e47
+	ld a, [wShotRecoilVariant] ; $5e47
 	cp a, $01 ; $5e4a
 	jp nz, .storeMatchAbortFlag ; $5e4c
 	ld hl, $c2ec ; $5e4f
@@ -6707,7 +6707,7 @@ StrokePractice2EvaluateResult:
 	ld a, [wRallyLength] ; $6e6a
 	cp a, $03 ; $6e6d
 	jr nc, .step3 ; $6e6f
-	ld a, [$c4a1] ; $6e71
+	ld a, [wShotRecoilVariant] ; $6e71
 	cp a, $01 ; $6e74
 	jr nz, .compare ; $6e76
 	ld a, $02 ; $6e78

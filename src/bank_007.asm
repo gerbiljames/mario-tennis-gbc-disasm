@@ -1381,7 +1381,7 @@ UpdateLinkSession:
 	farcall PrimeSlaveSerialReply ; $48b4
 	xor a, a ; $48b7
 	ldh [$ffde], a ; $48b8
-	ld hl, $df1e ; $48ba
+	ld hl, wCharInputSource ; $48ba
 	wram_bank $04 ; $48bd
 	ld [hl], $05 ; $48c3
 	wram_bank $05 ; $48c5
@@ -2552,7 +2552,7 @@ ApplyShotRecoil:
 	ld hl, wCharFlags ; $546b
 	set 0, [hl] ; $546e
 	res 5, [hl] ; $5470
-	ld a, [$c4a1] ; $5472
+	ld a, [wShotRecoilVariant] ; $5472
 	add a, a ; $5475
 	add a, LOW(ShotRecoilVarPtrs_07) ; $5476
 	ld l, a ; $5478
@@ -2756,7 +2756,7 @@ ApplyShotTypePresets:
 	ld a, [hl+] ; $558c
 	call PlaySoundManaged ; $558d
 	ld a, [hl+] ; $5590
-	ld [$c4a1], a ; $5591
+	ld [wShotRecoilVariant], a ; $5591
 	ld a, [hl+] ; $5594
 	push hl ; $5595
 	farcall SetBallTrailColor ; $5596

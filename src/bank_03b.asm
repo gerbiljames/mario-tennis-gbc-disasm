@@ -3188,9 +3188,9 @@ RunMainMenu:
 	ld c, a ; $55f4
 	call SetMenuCursorFromCellIndex ; $55f5
 	ld a, $00 ; $55f8
-	ld [$cb16], a ; $55fa
+	ld [wMenuBgScrollTile + 1], a ; $55fa
 	ld a, $01 ; $55fd
-	ld [$cb18], a ; $55ff
+	ld [wMenuBgScrollAttr + 1], a ; $55ff
 	wram_bank $03 ; $5602
 	ld a, [wMenuSlideDirection] ; $5608
 	ld b, a ; $560b

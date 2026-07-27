@@ -5226,3 +5226,49 @@ a review would have caught:
 
 Structured source is 421,788 bytes over 4,908 blobs; `make compare` OK from
 clean and `make check` passes.
+
+## RAM the new table names identify (2026-07-27)
+
+Naming 343 tables made a class of RAM variable identifiable: **the byte that
+indexes a named table is defined by that table**. 73 unnamed addresses feed
+one, 47 index exactly one. Fourteen are now named, each read before naming.
+
+From the index relation:
+
+* `wStorySceneAssetIndex` (`$cb6d`) -- `RunStorySceneByMode` stores it from `c`
+  and every `LookupScreen<N>AssetId` indexes its own `Screen<N>AssetIdTable`.
+* `wTrophyExpGroup` (`$d038`, WRAM 6), `wResultScreenMode` (`$d801`, WRAM 3),
+  `wRulesScreenAnimFrame` (`$dc00`, WRAM 3) -- each scoped to the bank
+  `compute_wram_bank` proves at every one of its sites.
+* `wShotRecoilVariant` (`$c4a1`) -- `ApplyShotTypePresets` stores it out of a
+  `ShotTypePresets_07` record; `ApplyShotRecoil` indexes `ShotRecoilVarPtrs_07`.
+* `wCharInputSource`/`wCharInputBits` (`$df1e`/`$df1f`) in the per-character
+  struct: the first picks a handler from `CharInputPtrs`, the second is the
+  word `ReadCharPadInput` builds from `hPlayerInputFlags` and
+  `hInputRisingEdge` -- confirmed by `StartCharSwing` testing `PADB_RIGHT` on it.
+
+Three serial-link bytes went into the `$ffd0-$ffef` union's default variant:
+`hLinkTransferDone` (`$ffd7`, set by `SerialHandler`, spun on by
+`WaitSerialTransfer`), `hLinkExchangeActive` (`$ffd8`, non-zero across a block
+exchange -- which is why `AdvanceFrame` skips the SELECT+START single-step
+while it is set) and `hLinkCursorPage` (`$ffe3`). The overlay is what makes
+these safe: inside the sound driver's range the same bytes still render
+`hSndLengthAccum`/`hSndVolume`/`hSndPeriodLo`, so a global name would have been
+wrong in one subsystem or the other.
+
+Runs of consecutive unnamed addresses find structures rather than scalars. Two
+resolved completely:
+
+* `$cb12`-`$cb19` is the scrolling menu background: two lanes with a Y, tile
+  and attribute each (`wMenuBgScrollY`/`Tile`/`Attr`, size 2), a shared
+  `wMenuBgScrollX`, and `wMenuBgScrollLane` alternating which lane
+  `TickMenuBgScroll` queues.
+* `$c714`-`$c716` is the debug flag editor's cursor, and the arithmetic names
+  the fields exactly: `DebugToggleSelectedFlag` computes
+  `wDebugFlagPage * 64 + wDebugFlagByte * 8 + wDebugFlagBit`, which is the
+  game's own `byte * 8 + bit` flag numbering.
+
+Two signals turned out to be exhausted: no unnamed address is used with a named
+constant (those all already have names), and the remaining single-table indexes
+point at auto-named `Data_*` tables, which name nothing. 754 -> 733 distinct
+unnamed RAM addresses; the rest need per-address reading.

@@ -39,13 +39,13 @@ ShowCharDataScreen:
 	ld c, $05 ; $405c
 	farcall LoadMenuSpritePalettePair ; $405e
 	ld a, $0d ; $4061
-	ld [$cb17], a ; $4063
+	ld [wMenuBgScrollAttr], a ; $4063
 	ld a, $0d ; $4066
-	ld [$cb18], a ; $4068
+	ld [wMenuBgScrollAttr + 1], a ; $4068
 	ld a, $60 ; $406b
-	ld [$cb15], a ; $406d
+	ld [wMenuBgScrollTile], a ; $406d
 	ld a, $60 ; $4070
-	ld [$cb16], a ; $4072
+	ld [wMenuBgScrollTile + 1], a ; $4072
 	ld hl, rIE ; $4075
 	res 2, [hl] ; $4078
 	call EnableLCD ; $407a

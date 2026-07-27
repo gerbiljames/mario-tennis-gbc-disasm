@@ -377,7 +377,9 @@ wScoreboardLayout:: db
 
 ; [8-bit] Shot-type code of the shot in flight (rst00 jumptable in ExecuteShot; $09 smash, $0a lob, $0b drop - checked by RecordSmashAce/Lob/DropShot)
 wCurrentShotType:: db
-	ds 1
+
+; [8-bit] Recoil kind for the shot in flight: ApplyShotTypePresets stores it from the ShotTypePresets_07 record and ApplyShotRecoil indexes ShotRecoilVarPtrs_07 with it
+wShotRecoilVariant:: db
 
 ; [8-bit] Charge level of the shot being executed, 0-$3f. Snapshotted from the hitter's $df4b and clamped to $3f in ExecuteShot ($07:$5413-$541c). Scales the shot speed in AddChargeSpeedBonus / AddChargeSpeedBonusHalf ($07:$5345, $535c, both offsetting by $ffe0 first) and in WeakenShotByCharge / BoostShotByCharge ($07:$54de, $54ed); $08:$53f9 compares it against $3f (fully charged) to pick the special hit flash instead of the normal spark.
 wShotChargeLevel:: db
@@ -588,7 +590,17 @@ wTextBuffer:: db
 
 ; 32-byte staging buffer for inline text args (player name, arg strings, short texts) rendered via RenderInlineString
 wInlineTextBuffer:: ds 32
-	ds 160
+	ds 52
+
+; [8-bit] Page of 64 game flags shown by the debug flag editor; the flag number DebugToggleSelectedFlag builds is page * 64 + byte * 8 + bit
+wDebugFlagPage:: db
+
+; [8-bit] Bit 0-7 the flag cursor sits on (the low term of the flag number)
+wDebugFlagBit:: db
+
+; [8-bit] Flag byte within the page, scaled by 8 into the flag number
+wDebugFlagByte:: db
+	ds 105
 
 ; Mode-local scratch ($c780-$c78f is reused by each game mode;
 ; only proven consumers are named, sites in other modes stay numeric)
@@ -1327,7 +1339,22 @@ wMatchFormatSets:: db
 
 ; [8-bit] Menu transition direction (1 = forward into submenu, 0 = back); direction arg to the *SlideIn/*SlideOut menu transitions
 wMenuSlideDirection:: db
-	ds 20
+
+; [2 bytes] Y of each scrolling menu-background lane; TickMenuBgScroll decrements both and wraps $b0 back to $a0
+wMenuBgScrollY:: dw
+
+; [8-bit] X shared by both lanes (passed in e to QueueSpriteTemplate)
+wMenuBgScrollX:: db
+
+; [2 bytes] Per-lane tile argument (c) for SpriteTemplate_39_4bbf
+wMenuBgScrollTile:: dw
+
+; [2 bytes] Per-lane attribute argument (b) for SpriteTemplate_39_4bbf
+wMenuBgScrollAttr:: dw
+
+; [8-bit] Which lane TickMenuBgScroll queues this tick; it alternates 0/1
+wMenuBgScrollLane:: db
+	ds 12
 
 ; [8-bit] Window handle owned by bank $1a's menu code. Stored from the return value of CreateMenuWindowFromText ($1a:$403c) and CreateWindow ($1a:$43c0), then passed in a to RunMenuSelectionShared ($1a:$404b), CloseWindow ($1a:$4070, $1a:$444d), WriteStringToWindow ($1a:$43df/$43f9) and GetWindowStructPtr ($1a:$4149).
 wPauseMenuWindowId:: db
@@ -1600,7 +1627,11 @@ wCharState:: db
 	ds 2
 ; [3 bytes] Per-character banked struct (WRAM4-7): current sprite frame pointer (hi/lo) + h-flip flag, consumed by DrawCharSprite ($650a)
 wCharSpriteFrame:: ds 3
-	ds 4
+; [8-bit] Which input drives this character; ReadCharInput indexes CharInputPtrs with it (pad, CPU and link handlers)
+wCharInputSource:: db
+; [8-bit] Input word ReadCharInput produces: held buttons in the high nibble, newly pressed in the low one (ReadCharPadInput builds it from hPlayerInputFlags and hInputRisingEdge); read with the PADB_* bits
+wCharInputBits:: db
+	ds 2
 ; [8-bit] Per-character banked struct (WRAM4-7): active flag (UpdateChar exits when 0)
 wCharActive:: db
 	ds 29

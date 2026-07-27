@@ -409,7 +409,7 @@ MatchPauseMenu_ReviewControls:
 	ldh a, [hWramBank] ; $43cc
 	push af ; $43ce
 	wram_bank $04 ; $43cf
-	ld hl, $df1e ; $43d5
+	ld hl, wCharInputSource ; $43d5
 	ld a, [hl] ; $43d8
 	xor a, $01 ; $43d9
 	ld [hl], a ; $43db

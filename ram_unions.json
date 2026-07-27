@@ -355,6 +355,14 @@
        "name": "wCharSpriteFrame",
        "note": "[3 bytes] Per-character banked struct (WRAM4-7): current sprite frame pointer (hi/lo) + h-flip flag, consumed by DrawCharSprite ($650a)"
       },
+      "0xdf1e": {
+       "name": "wCharInputSource",
+       "note": "[8-bit] Which input drives this character; ReadCharInput indexes CharInputPtrs with it (pad, CPU and link handlers)"
+      },
+      "0xdf1f": {
+       "name": "wCharInputBits",
+       "note": "[8-bit] Input word ReadCharInput produces: held buttons in the high nibble, newly pressed in the low one (ReadCharPadInput builds it from hPlayerInputFlags and hInputRisingEdge); read with the PADB_* bits"
+      },
       "0xdf22": {
        "name": "wCharActive",
        "note": "[8-bit] Per-character banked struct (WRAM4-7): active flag (UpdateChar exits when 0)"

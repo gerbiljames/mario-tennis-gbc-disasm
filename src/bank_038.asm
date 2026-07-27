@@ -1460,8 +1460,8 @@ SetupCharacterSelectScreen:
 	ld c, $01 ; $4a8a
 	farcall LoadMenuSpritePalettePair ; $4a8c
 	ld a, $10 ; $4a8f
-	ld [$cb15], a ; $4a91
-	ld [$cb16], a ; $4a94
+	ld [wMenuBgScrollTile], a ; $4a91
+	ld [wMenuBgScrollTile + 1], a ; $4a94
 	ld b, $48 ; $4a97
 	ld c, $14 ; $4a99
 	ld de, $8100 ; $4a9b
@@ -2057,11 +2057,11 @@ SetupCharGridScreen:
 	ld c, $01 ; $505c
 	farcall LoadMenuSpritePalettePair ; $505e
 	ld a, $30 ; $5061
-	ld [$cb15], a ; $5063
-	ld [$cb16], a ; $5066
+	ld [wMenuBgScrollTile], a ; $5063
+	ld [wMenuBgScrollTile + 1], a ; $5066
 	ld a, $09 ; $5069
-	ld [$cb17], a ; $506b
-	ld [$cb18], a ; $506e
+	ld [wMenuBgScrollAttr], a ; $506b
+	ld [wMenuBgScrollAttr + 1], a ; $506e
 	ld b, $64 ; $5071
 	ld c, $14 ; $5073
 	ld de, $a300 ; $5075
@@ -6544,8 +6544,8 @@ SetupNameEntryScreen:
 	ld c, $01 ; $701f
 	farcall LoadMenuSpritePalettePair ; $7021
 	ld a, $10 ; $7024
-	ld [$cb15], a ; $7026
-	ld [$cb16], a ; $7029
+	ld [wMenuBgScrollTile], a ; $7026
+	ld [wMenuBgScrollTile + 1], a ; $7029
 	ld b, $48 ; $702c
 	ld c, $14 ; $702e
 	ld de, $8100 ; $7030

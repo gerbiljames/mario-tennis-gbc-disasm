@@ -5442,7 +5442,7 @@ InitChar:
 	ld de, $0000 ; $6873
 	call SetCharPosAndTarget ; $6876
 	ld a, $01 ; $6879
-	ld [$df1e], a ; $687b
+	ld [wCharInputSource], a ; $687b
 	ret ; $687e
 InitAllChars:
 	wram_bank $07 ; $687f
@@ -5511,7 +5511,7 @@ InitAllChars:
 	ld a, $00 ; $691e
 	call InitChar ; $6920
 	ld a, $00 ; $6923
-	ld [$df1e], a ; $6925
+	ld [wCharInputSource], a ; $6925
 	farcall LoadOnCourtCharacterGfx ; $6928
 	ret ; $692b
 UpdateAllChars:
@@ -5798,7 +5798,7 @@ CharServeInitPhase:
 	ret ; $6b3e
 CharServeTossPhase:
 	call HandleServePositioning ; $6b3f
-	ld a, [$df1f] ; $6b42
+	ld a, [wCharInputBits] ; $6b42
 	and a, PADF_A | PADF_B ; $6b45
 	jr z, .done ; $6b47
 	ld bc, rWBK ; $6b49
@@ -6089,12 +6089,12 @@ StartCharSwing:
 	call PredictBallLateralOffset ; $6d5f
 	bit 7, h ; $6d62
 	jr nz, .facingLeft ; $6d64
-	ld a, [$df1f] ; $6d66
+	ld a, [wCharInputBits] ; $6d66
 	bit PADB_RIGHT, a ; $6d69
 	jr z, .checkHeight ; $6d6b
 	jr .checkReach ; $6d6d
 .facingLeft:
-	ld a, [$df1f] ; $6d6f
+	ld a, [wCharInputBits] ; $6d6f
 	bit PADB_LEFT, a ; $6d72
 	jr z, .checkHeight ; $6d74
 .checkReach:
@@ -6188,7 +6188,7 @@ StartCharSwing:
 	ld hl, $df15 ; $6df4
 	ld [hl], $12 ; $6df7
 	ld d, $00 ; $6df9
-	ld a, [$df1f] ; $6dfb
+	ld a, [wCharInputBits] ; $6dfb
 	bit PADB_RIGHT, a ; $6dfe
 	jr nz, .storeFacing ; $6e00
 	ld d, $80 ; $6e02
@@ -6714,7 +6714,7 @@ PredictBallLateralOffset:
 	add hl, de ; $7110
 	ret ; $7111
 BufferShotButtonPress:
-	ld a, [$df1f] ; $7112
+	ld a, [wCharInputBits] ; $7112
 	and a, PADF_A | PADF_B ; $7115
 	ret z ; $7117
 	ld b, a ; $7118
@@ -6751,7 +6751,7 @@ BufferShotButtonPress:
 	ld [$df16], a ; $714d
 	ret ; $7150
 CaptureServeAim:
-	ld a, [$df1f] ; $7151
+	ld a, [wCharInputBits] ; $7151
 	ld b, $01 ; $7154
 	bit PADB_RIGHT, a ; $7156
 	jr nz, .store ; $7158
@@ -6764,7 +6764,7 @@ CaptureServeAim:
 	ld [$df4a], a ; $7163
 	ret ; $7166
 CaptureShotAim:
-	ld a, [$df1f] ; $7167
+	ld a, [wCharInputBits] ; $7167
 	cp a, PADF_LEFT ; $716a
 	jr z, .aimFarLeft ; $716c
 	bit PADB_LEFT, a ; $716e
@@ -6795,7 +6795,7 @@ CaptureShotAim:
 	ld [$df4a], a ; $7196
 	ret ; $7199
 ApplyCharMovementInput:
-	ld a, [$df1f] ; $719a
+	ld a, [wCharInputBits] ; $719a
 	and a, $f0 ; $719d
 	jr z, .done ; $719f
 	swap a ; $71a1
@@ -6818,13 +6818,13 @@ ApplyCharMovementInput:
 .checkTurnLimit:
 	cp a, $30 ; $71bf
 	jp nc, .done ; $71c1
-	ld a, [$df1f] ; $71c4
+	ld a, [wCharInputBits] ; $71c4
 	and a, PADF_RIGHT | PADF_LEFT ; $71c7
 	jr z, .checkVertical ; $71c9
 	ld hl, $df50 ; $71cb
 	set 6, [hl] ; $71ce
 .checkVertical:
-	ld a, [$df1f] ; $71d0
+	ld a, [wCharInputBits] ; $71d0
 	and a, PADF_UP | PADF_DOWN ; $71d3
 	jr z, .done ; $71d5
 	ld hl, $df50 ; $71d7
@@ -6835,7 +6835,7 @@ HandleServePositioning:
 	ld a, [$c7b9] ; $71dd
 	and a, a ; $71e0
 	jr nz, .receiver ; $71e1
-	ld a, [$df1f] ; $71e3
+	ld a, [wCharInputBits] ; $71e3
 	and a, PADF_RIGHT | PADF_LEFT ; $71e6
 	jr z, .done ; $71e8
 	swap a ; $71ea
@@ -6883,7 +6883,7 @@ HandleServePositioning:
 .done:
 	ret ; $7228
 .receiver:
-	ld a, [$df1f] ; $7229
+	ld a, [wCharInputBits] ; $7229
 	and a, PADF_RIGHT | PADF_LEFT ; $722c
 	jr z, .receiverDone ; $722e
 	swap a ; $7230
@@ -6926,7 +6926,7 @@ HandleServePositioning:
 .receiverDone:
 	ret ; $7266
 CheckSwingRelease:
-	ld a, [$df1f] ; $7267
+	ld a, [wCharInputBits] ; $7267
 	and a, PADF_SELECT ; $726a
 	jr z, .tickTimer ; $726c
 	xor a, a ; $726e
@@ -7010,7 +7010,7 @@ StepCharMovement:
 .move:
 	ld hl, wCharFlags ; $7309
 	res 6, [hl] ; $730c
-	ld a, [$df1e] ; $730e
+	ld a, [wCharInputSource] ; $730e
 	cp a, $01 ; $7311
 	jp z, .unclamped ; $7313
 	push de ; $7316
@@ -7167,7 +7167,7 @@ UpdateCharVelocityFromInput:
 	jr nz, .done ; $742c
 	ld hl, wCharFlags ; $742e
 	res 4, [hl] ; $7431
-	ld a, [$df1f] ; $7433
+	ld a, [wCharInputBits] ; $7433
 	and a, $f0 ; $7436
 	jr nz, .done ; $7438
 	ld a, [$df0c] ; $743a
@@ -7821,8 +7821,8 @@ StepCharAnimation:
 	ret ; $780b
 ReadCharInput:
 	xor a, a ; $780c
-	ld [$df1f], a ; $780d
-	ld a, [$df1e] ; $7810
+	ld [wCharInputBits], a ; $780d
+	ld a, [wCharInputSource] ; $7810
 	add a, a ; $7813
 	add a, LOW(CharInputPtrs) ; $7814
 	ld l, a ; $7816
@@ -7844,7 +7844,7 @@ CharInputPtrs:
 	dw Label_08_783f ; record 6
 Label_08_782d:
 	ldh a, [hLinkInput] ; $782d
-	ld [$df1f], a ; $782f
+	ld [wCharInputBits], a ; $782f
 	ret ; $7832
 Label_08_7833:
 	ldh a, [hLinkState] ; $7833
@@ -7866,7 +7866,7 @@ Label_08_783f:
 .remoteLive:
 	ldh a, [hLinkRemoteInput] ; $784f
 .store:
-	ld [$df1f], a ; $7851
+	ld [wCharInputBits], a ; $7851
 	ret ; $7854
 ReadCharPadInput:
 	ldh a, [hPlayerInputFlags] ; $7855
@@ -7875,7 +7875,7 @@ ReadCharPadInput:
 	ldh a, [hInputRisingEdge] ; $785a
 	and a, $0f ; $785c
 	or a, c ; $785e
-	ld [$df1f], a ; $785f
+	ld [wCharInputBits], a ; $785f
 	ret ; $7862
 Label_08_7863:
 	ld hl, $df12 ; $7863
@@ -8025,10 +8025,10 @@ AiSteerTowardTarget:
 	adc a, HIGH(Data_08_7296) ; $7936
 	sub a, l ; $7938
 	ld h, a ; $7939
-	ld a, [$df1f] ; $793a
+	ld a, [wCharInputBits] ; $793a
 	and a, $0f ; $793d
 	or a, [hl] ; $793f
-	ld [$df1f], a ; $7940
+	ld [wCharInputBits], a ; $7940
 	ret ; $7943
 AiSteerTowardBall:
 	ld hl, wBallRelCharX ; $7944
@@ -8047,10 +8047,10 @@ AiSteerTowardBall:
 	adc a, HIGH(Data_08_7296) ; $795a
 	sub a, l ; $795c
 	ld h, a ; $795d
-	ld a, [$df1f] ; $795e
+	ld a, [wCharInputBits] ; $795e
 	and a, $0f ; $7961
 	or a, [hl] ; $7963
-	ld [$df1f], a ; $7964
+	ld [wCharInputBits], a ; $7964
 	ret ; $7967
 AiAdvancePhase:
 	ld hl, $df1a ; $7968
@@ -8200,7 +8200,7 @@ AiServeSteerToSpot:
 .done:
 	ret ; $7a5e
 AiServePressToss:
-	ld hl, $df1f ; $7a5f
+	ld hl, wCharInputBits ; $7a5f
 	set 0, [hl] ; $7a62
 	ld a, [$c7a8] ; $7a64
 	and a, a ; $7a67
@@ -8291,7 +8291,7 @@ AiApplyServeAim:
 	ld h, a ; $7b00
 	ld b, [hl] ; $7b01
 .applyAim:
-	ld hl, $df1f ; $7b02
+	ld hl, wCharInputBits ; $7b02
 	ld a, [hl] ; $7b05
 	and a, $0f ; $7b06
 	or a, b ; $7b08
@@ -8344,7 +8344,7 @@ AiAimAwayFromChar:
 	jr z, .applyAim ; $7b55
 	ld b, $10 ; $7b57
 .applyAim:
-	ld hl, $df1f ; $7b59
+	ld hl, wCharInputBits ; $7b59
 	ld a, [hl] ; $7b5c
 	and a, $0f ; $7b5d
 	or a, b ; $7b5f
@@ -8454,7 +8454,7 @@ AiPressFirstShotButton:
 	swap a ; $7c13
 	and a, $0f ; $7c15
 	ld b, a ; $7c17
-	ld hl, $df1f ; $7c18
+	ld hl, wCharInputBits ; $7c18
 	ld a, [hl] ; $7c1b
 	and a, $f0 ; $7c1c
 	or a, b ; $7c1e
@@ -8464,7 +8464,7 @@ AiPressSecondShotButton:
 	ld a, [$df58] ; $7c21
 	and a, $0f ; $7c24
 	ld b, a ; $7c26
-	ld hl, $df1f ; $7c27
+	ld hl, wCharInputBits ; $7c27
 	ld a, [hl] ; $7c2a
 	and a, $f0 ; $7c2b
 	or a, b ; $7c2d
