@@ -5342,3 +5342,35 @@ stride is visible on the page:
 `$d0b6` was tempting -- the EXP loop tests and clears it -- but bank `$1c`'s
 character-data screen uses it too, so it is shared state rather than an EXP
 flag, and it stays unnamed until that is pinned down.
+
+## Walking around the overworld to finish a struct (2026-07-27)
+
+Story mode reached (Alex, LV99, dorm room), and moving the player is enough to
+identify overworld state directly. Reading `$c2a0`-`$c2ff`, walking right for
+40 frames and reading again changes exactly three bytes; walking down changes a
+different pair. The values name themselves:
+
+| address | right | down | meaning |
+| --- | --- | --- | --- |
+| `$c2d1` | `$0b` -> `$0d` | unchanged | X, high byte of an 8.8 position |
+| `$c2d3` | unchanged | `$0d` -> `$12` | Y |
+| `$c2d4` | `$c0` -> `$00` | `$00` -> `$40` | facing: `FACE_UP`, `FACE_RIGHT`, `FACE_DOWN` |
+
+The coordinate space is the one the actor scripts already use --
+`script_move_player $0b00, $1100` writes exactly these units -- and `$c2d0`
+/`$c2d2` turned out to be `wStoryModePlayersXPosition`/`YPosition` already,
+so the live read confirms two existing names.
+
+`$c2d4` was the unnamed third member, and the code agrees once you know to
+look: `UpdateActors` copies four bytes (X and Y) out of the player actor at
+`$d00c` into `wStoryModePlayersXPosition`, then copies the actor's `$d032`
+straight into it. It is `wStoryModePlayerFacing`.
+
+That also exposes two fields of the actor record itself -- `+$0c` position,
+`+$32` facing -- inside the `$d000`-`$d029` block (432 references) that is
+still unmapped; naming those needs the actor engine's WRAM bank pinned first.
+
+Navigation notes for next time: a button held across `step_frames` can register
+as two presses in menus (an 8-frame A press walked past the screen I wanted),
+so tap with 2-3 frames; and `pause_emulation` does not survive very long steps,
+where the emulator free-runs anyway.

@@ -96,7 +96,9 @@ wStoryModePlayersXPosition:: dw
 
 ; [16-bit] Story Mode - Player's Y Position
 wStoryModePlayersYPosition:: dw
-	ds 1
+
+; [8-bit] Player's facing in the overworld, one of the FACE_* values. UpdateActors snapshots it from the player actor's $d032 right after copying X/Y into wStoryModePlayersXPosition; observed live taking FACE_UP, FACE_RIGHT and FACE_DOWN as the player turns
+wStoryModePlayerFacing:: db
 
 ; [8-bit] Story Mode - nonzero shows the location-name popup after fade-in (derived from wStoryModeEntryPoint != $ff; name pointer at $c2d6/$c2d7)
 wStoryModeShowLocationName:: db
