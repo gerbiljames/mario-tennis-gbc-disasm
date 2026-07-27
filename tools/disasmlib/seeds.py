@@ -7,6 +7,8 @@ so the analysis can seed them as code and the referring table can name them.
 pointer_load_targets covers the general case: `ld rr, imm` sites whose value is
 provably used as a same-bank pointer.
 """
+import re
+
 from .rom import BANK_SIZE, target_to_offset
 
 
@@ -370,3 +372,59 @@ def minigame_config_init_targets(rom, data_tables):
             init = rom[cfg + 0x0c] | (rom[cfg + 0x0d] << 8)
             if 0x4000 <= init < 0x8000:
                 yield base + init - 0x4000
+
+
+def split_base_targets(dis):
+    """Addresses the `add a, LOW / ld l, a / adc a, HIGH / sub a, l / ld h, a`
+    idiom builds, where hl is dereferenced afterwards. The address never appears
+    as a word, so nothing else in the analysis sees these tables; yielding them
+    lets them be labelled, which is also what lets emit render the two halves as
+    LOW()/HIGH() instead of magic bytes."""
+    order = sorted(dis.instrs)
+    idx = {o: i for i, o in enumerate(order)}
+    for o in order:
+        ins = dis.instrs[o]
+        m = re.match(r"^add a, \$([0-9a-f]{2})$", ins.text)
+        if not m:
+            continue
+        i, prev_end, lo = idx[o] + 1, o + ins.size, int(m.group(1), 16)
+        hi = has_l = has_h = None
+        for _ in range(4):
+            if i >= len(order) or order[i] != prev_end:
+                break
+            t = dis.instrs[order[i]].text
+            if t == "ld l, a":
+                has_l = True
+            elif t == "ld h, a":
+                has_h = True
+            else:
+                mh = re.match(r"^adc a, \$([0-9a-f]{2})$", t)
+                if mh:
+                    hi = int(mh.group(1), 16)
+            prev_end = order[i] + dis.instrs[order[i]].size
+            i += 1
+        if hi is None or not has_l or not has_h:
+            continue
+        addr = hi << 8 | lo
+        if not 0x0100 <= addr < 0x8000:
+            continue
+        # hl has to be read for the pair to have been an address
+        j, end = i, prev_end
+        deref = False
+        for _ in range(6):
+            if j >= len(order) or order[j] != end:
+                break
+            if "[hl" in dis.instrs[order[j]].text:
+                deref = True
+                break
+            end = order[j] + dis.instrs[order[j]].size
+            j += 1
+        if not deref:
+            continue
+        bank = o // BANK_SIZE
+        if bank and addr < BANK_SIZE:
+            yield addr
+        elif bank:
+            yield bank * BANK_SIZE + addr - BANK_SIZE
+        elif addr < BANK_SIZE:
+            yield addr

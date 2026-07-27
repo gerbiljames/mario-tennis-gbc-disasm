@@ -5195,3 +5195,34 @@ Verified by moving a table: growing a blob before `CharStatTable_07_5c4a` by
 one byte moves it to `$5c4b`, and the assembled immediate follows, `$4a` ->
 `$4b`. Before this it would have stayed `$4a` and read one byte early, which no
 build error would have caught.
+
+## Seeding the tables only split-base arithmetic can see (2026-07-27)
+
+Rewriting the split-base idiom to `LOW()`/`HIGH()` covered the 270 sites whose
+address already carried a label. The other 130 gated sites pointed at 119
+addresses **nothing in the analysis had ever seen** -- that is the point of the
+idiom: the address is never a word, so no pointer pass, no slot table and no
+`dw` reaches it. 72 of them were in bank `$17` alone.
+
+`split_base_targets` now yields them during naming, exactly like a pointer
+load's target, so the tables get labels and the rewrite then covers their
+sites too: **270 -> 389 symbolic halves over 343 distinct tables**.
+
+Two failures taught the guards, and both were link errors rather than anything
+a review would have caught:
+
+* **Data only.** The first version accepted a hit inside code. The idiom builds
+  a table base, so that is a false positive by construction -- and naming an
+  offset inside a routine re-parents any curated local after it into a region
+  whose label lines are never emitted.
+* **LabelScopes has to see the cut labels.** `Table_14_64d5` is a 12-byte table
+  addressed at three different offsets, so the new labels split it into
+  `Table_14_64d5` / `Data_14_64d9` / `Data_14_64dd`. The curated local
+  `.scriptRespawnLocationActors` that follows was still being *spelled*
+  `Table_14_64d5.scriptRespawnLocationActors`, because LabelScopes only saw the
+  labels from naming and not the ones emit was about to generate for cut
+  points. It now seeds them before resolving scopes. This was a latent bug in
+  every cut label, not just these.
+
+Structured source is 421,788 bytes over 4,908 blobs; `make compare` OK from
+clean and `make check` passes.

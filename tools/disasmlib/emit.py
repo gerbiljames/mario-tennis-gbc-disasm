@@ -207,6 +207,15 @@ class Emitter:
                  flag_raw_sites=None):
         self.dis = dis
         self.rom = dis.rom
+        # The cut points emit is about to name are globals like any other, so
+        # LabelScopes has to see them before it decides which global each local
+        # label binds to. Without this a cut landing between a curated local
+        # and its parent re-parents it in the output while the reference is
+        # still spelled with the old parent -- an undefined symbol at link time.
+        labels = dict(labels)
+        for t in ptr_data_targets or ():
+            labels.setdefault(
+                t, f"Data_{t // BANK_SIZE:02x}_{offset_to_cpu(t):04x}")
         # Definitions keep the curated spelling (`.loop:`); every reference
         # goes through the qualified table, which spells a local label
         # `Parent.loop` for anything outside its function.

@@ -563,9 +563,9 @@ CharDataScreen_DrawStatBar:
 .altTable:
 	ld a, b ; $4515
 	rlca ; $4516
-	add a, $6e ; $4517
+	add a, LOW(Data_1c_456e) ; $4517
 	ld l, a ; $4519
-	adc a, $45 ; $451a
+	adc a, HIGH(Data_1c_456e) ; $451a
 	sub a, l ; $451c
 	ld h, a ; $451d
 	ld a, [hl+] ; $451e
@@ -591,9 +591,9 @@ CharDataScreen_DrawStatBar:
 	wram_bank $02 ; $4536
 	ld a, b ; $453c
 	rlca ; $453d
-	add a, $84 ; $453e
+	add a, LOW(Data_1c_4584) ; $453e
 	ld l, a ; $4540
-	adc a, $45 ; $4541
+	adc a, HIGH(Data_1c_4584) ; $4541
 	sub a, l ; $4543
 	ld h, a ; $4544
 	ld a, [hl+] ; $4545
@@ -616,7 +616,7 @@ CharDataScreen_DrawStatBar:
 	ld [de], a ; $4556
 	ret ; $4557
 CharDataScreen_DrawStatBarPtrs:
-	; $4558, 66 bytes (records:2)
+	; $4558, 22 bytes (records:2)
 	dw CharDataScreenStatBar00 ; record 0
 	dw CharDataScreenStatBar01 ; record 1
 	dw CharDataScreenStatBar02 ; record 2
@@ -628,28 +628,10 @@ CharDataScreen_DrawStatBarPtrs:
 	dw CharDataScreenStatBar08 ; record 8
 	dw CharDataScreenStatBar09 ; record 9
 	dw CharDataScreenStatBar10 ; record 10
-	dw CharDataScreenStatBar11 ; record 11
-	dw CharDataScreenStatBar12 ; record 12
-	dw CharDataScreenStatBar13 ; record 13
-	dw CharDataScreenStatBar14 ; record 14
-	dw CharDataScreenStatBar15 ; record 15
-	dw CharDataScreenStatBar16 ; record 16
-	dw CharDataScreenStatBar17 ; record 17
-	dw CharDataScreenStatBar18 ; record 18
-	dw CharDataScreenStatBar19 ; record 19
-	dw CharDataScreenStatBar20 ; record 20
-	dw CharDataScreenStatBar21 ; record 21
-	dw CharDataScreenStatBar22 ; record 22
-	dw CharDataScreenStatBar23 ; record 23
-	dw CharDataScreenStatBar24 ; record 24
-	dw CharDataScreenStatBar25 ; record 25
-	dw CharDataScreenStatBar26 ; record 26
-	dw CharDataScreenStatBar27 ; record 27
-	dw CharDataScreenStatBar28 ; record 28
-	dw CharDataScreenStatBar29 ; record 29
-	dw CharDataScreenStatBar30 ; record 30
-	dw CharDataScreenStatBar31 ; record 31
-	dw CharDataScreenStatBar32 ; record 32
+Data_1c_456e:
+	INCBIN "data/bank_01c/d_456e.bin" ; $456e, 22 bytes
+Data_1c_4584:
+	INCBIN "data/bank_01c/d_4584.bin" ; $4584, 22 bytes
 CharDataScreen_DrawPortrait:
 	push af ; $459a
 	ld hl, wStoryModeNameOfMainCharacter ; $459b
@@ -740,9 +722,9 @@ CharDataScreenAnimTask:
 	ld c, $02 ; $463d
 	call QueueVRAMCopy ; $463f
 	pop af ; $4642
-	add a, $99 ; $4643
+	add a, LOW(Data_1c_5699) ; $4643
 	ld l, a ; $4645
-	adc a, $56 ; $4646
+	adc a, HIGH(Data_1c_5699) ; $4646
 	sub a, l ; $4648
 	ld h, a ; $4649
 	ld a, [hl+] ; $464a
@@ -1750,9 +1732,9 @@ CharDataScreen_DrawPageColumns:
 	rlca ; $4ddf
 	push af ; $4de0
 	rlca ; $4de1
-	add a, $36 ; $4de2
+	add a, LOW(Data_1c_4e36) ; $4de2
 	ld l, a ; $4de4
-	adc a, $4e ; $4de5
+	adc a, HIGH(Data_1c_4e36) ; $4de5
 	sub a, l ; $4de7
 	ld h, a ; $4de8
 	ld a, [hl+] ; $4de9
@@ -1763,9 +1745,9 @@ CharDataScreen_DrawPageColumns:
 	ld b, [hl] ; $4dee
 	ld c, a ; $4def
 	pop af ; $4df0
-	add a, $4a ; $4df1
+	add a, LOW(Data_1c_4e4a) ; $4df1
 	ld l, a ; $4df3
-	adc a, $4e ; $4df4
+	adc a, HIGH(Data_1c_4e4a) ; $4df4
 	sub a, l ; $4df6
 	ld h, a ; $4df7
 	ld a, [hl+] ; $4df8
@@ -1808,15 +1790,15 @@ CharDataScreen_DrawPageColumns:
 	dec c ; $4e32
 	jr nz, .rowLoop ; $4e33
 	ret ; $4e35
-	; $4e36, 30 bytes (bytes:4)
+Data_1c_4e36:
+	; $4e36, 20 bytes (bytes:4)
 	db $60, $d0, $05, $0a ; 0x00
 	db $00, $d1, $07, $0a ; 0x04
 	db $6a, $d0, $05, $0a ; 0x08
 	db $0a, $d1, $09, $0a ; 0x0c
 	db $e0, $d1, $03, $0a ; 0x10
-	db $96, $65, $22, $66 ; 0x14
-	db $ba, $66, $4d, $67 ; 0x18
-	db $a7, $67 ; 0x1c
+Data_1c_4e4a:
+	INCBIN "data/bank_01c/d_4e4a.bin" ; $4e4a, 10 bytes
 DrawStatValueSprites:
 	wram_bank $06 ; $4e54
 	ld b, $0e ; $4e5a
@@ -2708,7 +2690,7 @@ CharDataPageRightTargets_1c:
 	; $5674, 5 bytes (bytes:5)
 	db $02, $03, $ff, $ff, $03 ; 0x00
 Unused_1c_5679:
-	; $5679, 64 bytes (records:2)
+	; $5679, 32 bytes (records:2)
 	dw UnusedShiftGfx00 ; record 0
 	dw UnusedShiftGfx01 ; record 1
 	dw UnusedShiftGfx02 ; record 2
@@ -2725,22 +2707,8 @@ Unused_1c_5679:
 	dw UnusedShiftGfx13 ; record 13
 	dw UnusedShiftGfx14 ; record 14
 	dw UnusedShiftGfx15 ; record 15
-	dw UnusedShiftGfx16 ; record 16
-	dw UnusedShiftGfx17 ; record 17
-	dw UnusedShiftGfx18 ; record 18
-	dw UnusedShiftGfx19 ; record 19
-	dw UnusedShiftGfx20 ; record 20
-	dw UnusedShiftGfx21 ; record 21
-	dw UnusedShiftGfx22 ; record 22
-	dw UnusedShiftGfx23 ; record 23
-	dw UnusedShiftGfx24 ; record 24
-	dw UnusedShiftGfx25 ; record 25
-	dw UnusedShiftGfx26 ; record 26
-	dw UnusedShiftGfx27 ; record 27
-	dw UnusedShiftGfx28 ; record 28
-	dw UnusedShiftGfx29 ; record 29
-	dw UnusedShiftGfx30 ; record 30
-	dw UnusedShiftGfx31 ; record 31
+Data_1c_5699:
+	INCBIN "data/bank_01c/d_5699.bin" ; $5699, 32 bytes
 CharDataBand0RunsStep7_1c:
 	; $56b9, 22 bytes (bytes:16)
 	db $00, $60, $00, $0a, $00, $80, $0a, $0a, $00, $a0, $14, $0a, $00, $c0, $1e, $0a ; 0x00

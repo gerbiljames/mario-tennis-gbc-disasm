@@ -433,7 +433,6 @@ def Text_34_19 equ $1013
 def Text_34_20 equ $1014
 def Text_34_21 equ $1015
 def Text_34_22 equ $1016
-def Text_34_23 equ $1017
 def Text_34_24 equ $1018
 def Text_34_25 equ $1019
 def Text_34_26 equ $101a
@@ -452,13 +451,11 @@ def Text_34_43 equ $102b
 def Text_34_44 equ $102c
 def Text_34_45 equ $102d
 def Text_34_46 equ $102e
-def Text_34_47 equ $102f
 def Text_34_48 equ $1030
 def Text_34_49 equ $1031
 def Text_34_50 equ $1032
 def Text_34_51 equ $1033
 def Text_34_52 equ $1034
-def Text_34_53 equ $1035
 def Text_34_54 equ $1036
 def Text_34_56 equ $1038
 def Text_34_58 equ $103a
@@ -514,7 +511,6 @@ def Text_34_146 equ $1092
 def Text_34_147 equ $1093
 def Text_34_148 equ $1094
 def Text_34_149 equ $1095
-def Text_34_150 equ $1096
 def Text_34_151 equ $1097
 def Text_34_152 equ $1098
 def Text_34_153 equ $1099
@@ -531,7 +527,6 @@ def Text_34_163 equ $10a3
 def Text_34_164 equ $10a4
 def Text_34_165 equ $10a5
 def Text_34_166 equ $10a6
-def Text_34_167 equ $10a7
 def Text_34_168 equ $10a8
 def Text_34_169 equ $10a9
 def Text_34_170 equ $10aa
@@ -549,7 +544,6 @@ def Text_34_181 equ $10b5
 def Text_34_182 equ $10b6
 def Text_34_183 equ $10b7
 def Text_34_184 equ $10b8
-def Text_34_185 equ $10b9
 def Text_34_186 equ $10ba
 def Text_34_187 equ $10bb
 def Text_34_188 equ $10bc
@@ -1059,10 +1053,8 @@ def Text_25_64 equ $2840
 def Text_25_67 equ $2843
 def Text_25_68 equ $2844
 def Text_25_69 equ $2845
-def Text_25_70 equ $2846
 def Text_25_71 equ $2847
 def Text_25_73 equ $2849
-def Text_25_74 equ $284a
 def Text_25_75 equ $284b
 def Text_25_78 equ $284e
 def Text_25_79 equ $284f

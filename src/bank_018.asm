@@ -344,9 +344,9 @@ AddBobbingOffsetXY:
 	push hl ; $4445
 	ldh a, [hVBlankCounter] ; $4446
 	and a, $0f ; $4448
-	add a, $68 ; $444a
+	add a, LOW(Data_18_4468) ; $444a
 	ld l, a ; $444c
-	adc a, $44 ; $444d
+	adc a, HIGH(Data_18_4468) ; $444d
 	sub a, l ; $444f
 	ld h, a ; $4450
 	ld a, [hl] ; $4451
@@ -355,9 +355,9 @@ AddBobbingOffsetXY:
 	ldh a, [hVBlankCounter] ; $4454
 	add a, $04 ; $4456
 	and a, $0f ; $4458
-	add a, $68 ; $445a
+	add a, LOW(Data_18_4468) ; $445a
 	ld l, a ; $445c
-	adc a, $44 ; $445d
+	adc a, HIGH(Data_18_4468) ; $445d
 	sub a, l ; $445f
 	ld h, a ; $4460
 	ld a, [hl] ; $4461
@@ -367,6 +367,7 @@ AddBobbingOffsetXY:
 	pop af ; $4465
 	pop hl ; $4466
 	ret ; $4467
+Data_18_4468:
 	; $4468, 16 bytes (bytes:16)
 	db $00, $01, $01, $01, $02, $02, $03, $04, $03, $02, $02, $01, $01, $01, $00, $00 ; 0x00
 AddBobbingOffsetY:

@@ -3591,9 +3591,9 @@ PrepareStoryMatch:
 	farcall InitStoryMatchSettings ; $7b91
 	ld a, [wWaterSpriteMinigameTimer] ; $7b94
 	add a, a ; $7b97
-	add a, $ac ; $7b98
+	add a, LOW(Data_0e_7bac) ; $7b98
 	ld l, a ; $7b9a
-	adc a, $7b ; $7b9b
+	adc a, HIGH(Data_0e_7bac) ; $7b9b
 	sub a, l ; $7b9d
 	ld h, a ; $7b9e
 	ld a, [hl+] ; $7b9f
@@ -3603,6 +3603,7 @@ PrepareStoryMatch:
 	farcall RunStoryMatch ; $7ba5
 	farcall RestoreOverworldAfterMatch ; $7ba8
 	ret ; $7bab
+Data_0e_7bac:
 	dw LoadExhibitionMatchSettings0 ; $7bac
 	dw LoadExhibitionMatchSettings1 ; $7bae
 	dw LoadExhibitionMatchSettings2 ; $7bb0

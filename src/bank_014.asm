@@ -478,9 +478,9 @@ MachineCourtStartLevelScene:
 	ld [$c294], a ; $458e
 	ld [wStoryModeExitLocationRequest], a ; $4591
 	ld a, [$c2b0] ; $4594
-	add a, $f8 ; $4597
+	add a, LOW(Data_14_45f8) ; $4597
 	ld l, a ; $4599
-	adc a, $45 ; $459a
+	adc a, HIGH(Data_14_45f8) ; $459a
 	sub a, l ; $459c
 	ld h, a ; $459d
 	ld a, [hl] ; $459e
@@ -501,6 +501,7 @@ MachineCourtStartLevelScene:
 	script_face ACTOR_PLAYER, FACE_DOWN ; $45ed
 	set_flag FLAG_PRACTICE_ROOM_SESSION_ACTIVE ; $45f4
 	ret ; $45f7
+Data_14_45f8:
 	; $45f8, 8 bytes (bytes:16)
 	db $12, $13, $14, $15, $1a, $1a, $1a, $c9 ; 0x00
 TennisMachineRoomNpc05TextIds:
@@ -1486,7 +1487,7 @@ IslandSkyInitScript_14:
 	cp a, $02 ; $52e6
 	jp z, QueuePlaneSpriteByFrameCounter_14.loadScene ; $52e8
 	cp a, $08 ; $52eb
-	jp z, Table_14_64d5.scriptRespawnLocationActors ; $52ed
+	jp z, Data_14_64dd.scriptRespawnLocationActors ; $52ed
 	cp a, $0e ; $52f0
 	jp z, QueueTwinkleSprite_14.queue ; $52f2
 	cp a, $0f ; $52f5
@@ -2301,9 +2302,9 @@ UpdateFirework0_14:
 	sound $81 ; $649e
 .burstSprite:
 	ld a, [wWaterSpriteMinigameSwingCount] ; $64a0
-	add a, $d9 ; $64a3
+	add a, LOW(Data_14_64d9) ; $64a3
 	ld l, a ; $64a5
-	adc a, $64 ; $64a6
+	adc a, HIGH(Data_14_64d9) ; $64a6
 	sub a, l ; $64a8
 	ld h, a ; $64a9
 	ld a, [hl] ; $64aa
@@ -2333,10 +2334,12 @@ AdvanceFirework0Ascent_14:
 	ld [wWaterSpriteMinigameTimer], a ; $64d1
 	ret ; $64d4
 Table_14_64d5:
-	; $64d5, 12 bytes (bytes:4)
+	; $64d5, 4 bytes (bytes:4)
 	db $00, $0c, $0e, $10 ; 0x00
-	db $00, $20, $30, $40 ; 0x04
-	db $00, $50, $60, $70 ; 0x08
+Data_14_64d9:
+	INCBIN "data/bank_014/d_64d9.bin" ; $64d9, 4 bytes
+Data_14_64dd:
+	INCBIN "data/bank_014/d_64dd.bin" ; $64dd, 4 bytes
 .scriptRespawnLocationActors:
 	ldh a, [hRomBank] ; $64e1
 	ld hl, FireworkMapActors_14 ; $64e3
@@ -2534,9 +2537,9 @@ UpdateFirework1_14:
 	sound $81 ; $6f44
 .burstSprite:
 	ld a, [wWaterSpriteMinigameSwingCount + 1] ; $6f46
-	add a, $dd ; $6f49
+	add a, LOW(Data_14_64dd) ; $6f49
 	ld l, a ; $6f4b
-	adc a, $64 ; $6f4c
+	adc a, HIGH(Data_14_64dd) ; $6f4c
 	sub a, l ; $6f4e
 	ld h, a ; $6f4f
 	ld a, [hl] ; $6f50

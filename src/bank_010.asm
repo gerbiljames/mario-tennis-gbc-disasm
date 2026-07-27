@@ -145,9 +145,9 @@ RunSinglesMatchListMenu:
 	farcall InitStoryMatchSettings ; $41bf
 	ld a, [$c2b0] ; $41c2
 	add a, a ; $41c5
-	add a, $20 ; $41c6
+	add a, LOW(Data_10_4220) ; $41c6
 	ld l, a ; $41c8
-	adc a, $42 ; $41c9
+	adc a, HIGH(Data_10_4220) ; $41c9
 	sub a, l ; $41cb
 	ld h, a ; $41cc
 	ld a, [hl+] ; $41cd
@@ -176,9 +176,9 @@ RunDoublesMatchListMenu:
 	farcall InitStoryMatchSettings ; $4204
 	ld a, [$c2b0] ; $4207
 	add a, a ; $420a
-	add a, $46 ; $420b
+	add a, LOW(Data_10_4246) ; $420b
 	ld l, a ; $420d
-	adc a, $42 ; $420e
+	adc a, HIGH(Data_10_4246) ; $420e
 	sub a, l ; $4210
 	ld h, a ; $4211
 	ld a, [hl+] ; $4212
@@ -190,6 +190,7 @@ RunDoublesMatchListMenu:
 	ret ; $421e
 .done:
 	ret ; $421f
+Data_10_4220:
 	dw LoadMatchSinglesJunior4 ; $4220
 	dw LoadMatchSinglesJunior3 ; $4222
 	dw LoadMatchSinglesJunior2 ; $4224
@@ -209,6 +210,7 @@ RunDoublesMatchListMenu:
 	dw LoadMatchSinglesDreamHard ; $4240
 	dw LoadMatchSinglesDreamIntense ; $4242
 	dw LoadMatchSinglesDreamMax ; $4244
+Data_10_4246:
 	dw LoadMatchDoublesJunior3 ; $4246
 	dw LoadMatchDoublesJunior2 ; $4248
 	dw LoadMatchDoublesJunior1 ; $424a

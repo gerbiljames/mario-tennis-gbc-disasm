@@ -5445,9 +5445,9 @@ DrawMinigameTarget:
 	ld a, [$dcf2] ; $66bf
 	and a, $0f ; $66c2
 	jr z, .readSprite ; $66c4
-	add a, $fe ; $66c6
+	add a, LOW(Data_0a_66fe) ; $66c6
 	ld l, a ; $66c8
-	adc a, $66 ; $66c9
+	adc a, HIGH(Data_0a_66fe) ; $66c9
 	sub a, l ; $66cb
 	ld h, a ; $66cc
 	ld a, [hl] ; $66cd
@@ -5479,10 +5479,10 @@ DrawMinigameTarget:
 	call QueueSpriteTemplate ; $66f2
 	ret ; $66f5
 Table_0a_66f6:
-	; $66f6, 24 bytes (bytes:8)
+	; $66f6, 8 bytes (bytes:8)
 	db $10, $0d, $14, $0f, $18, $0b, $1c, $0e ; 0x00
-	db $00, $01, $02, $03, $04, $06, $00, $01 ; 0x08
-	db $02, $04, $06, $00, $01, $02, $04, $06 ; 0x10
+Data_0a_66fe:
+	INCBIN "data/bank_00a/d_66fe.bin" ; $66fe, 16 bytes
 SpriteTemplate_0a_670e:
 	; $670e, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
@@ -6119,9 +6119,9 @@ DrawMinigameTargetAlt:
 	ld a, [$dcf2] ; $6d7f
 	and a, $0f ; $6d82
 	jr z, .readSprite ; $6d84
-	add a, $ad ; $6d86
+	add a, LOW(Data_0a_6dad) ; $6d86
 	ld l, a ; $6d88
-	adc a, $6d ; $6d89
+	adc a, HIGH(Data_0a_6dad) ; $6d89
 	sub a, l ; $6d8b
 	ld h, a ; $6d8c
 	ld a, [hl] ; $6d8d
@@ -6142,10 +6142,10 @@ DrawMinigameTargetAlt:
 	call QueueSpriteTemplate ; $6da1
 	ret ; $6da4
 Table_0a_6da5:
-	; $6da5, 24 bytes (bytes:8)
+	; $6da5, 8 bytes (bytes:8)
 	db $10, $0f, $20, $0e, $30, $0d, $20, $0f ; 0x00
-	db $00, $01, $02, $03, $04, $03, $02, $01 ; 0x08
-	db $00, $ff, $fe, $fd, $fc, $fd, $fe, $ff ; 0x10
+Data_0a_6dad:
+	INCBIN "data/bank_00a/d_6dad.bin" ; $6dad, 16 bytes
 SpriteTemplate_0a_6dbd:
 	; $6dbd, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00

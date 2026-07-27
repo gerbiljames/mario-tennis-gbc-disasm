@@ -1832,9 +1832,9 @@ ServeToTargetsBriefing_AdvanceAnim:
 	ld a, b ; $573c
 	ld [$d811], a ; $573d
 	ld a, c ; $5740
-	add a, $07 ; $5741
+	add a, LOW(Data_17_5807) ; $5741
 	ld l, a ; $5743
-	adc a, $58 ; $5744
+	adc a, HIGH(Data_17_5807) ; $5744
 	sub a, l ; $5746
 	ld h, a ; $5747
 	ld a, [hl] ; $5748
@@ -1846,9 +1846,9 @@ ServeToTargetsBriefing_AdvanceAnim:
 	ld a, b ; $5750
 	ld [$d829], a ; $5751
 	ld a, c ; $5754
-	add a, $cb ; $5755
+	add a, LOW(Data_17_57cb) ; $5755
 	ld l, a ; $5757
-	adc a, $57 ; $5758
+	adc a, HIGH(Data_17_57cb) ; $5758
 	sub a, l ; $575a
 	ld h, a ; $575b
 	ld a, [hl] ; $575c
@@ -1860,17 +1860,17 @@ ServeToTargetsBriefing_AdvanceAnim:
 	ld a, b ; $5764
 	ld [$d81f], a ; $5765
 	ld a, [$d82e] ; $5768
-	add a, $db ; $576b
+	add a, LOW(Data_17_57db) ; $576b
 	ld l, a ; $576d
-	adc a, $57 ; $576e
+	adc a, HIGH(Data_17_57db) ; $576e
 	sub a, l ; $5770
 	ld h, a ; $5771
 	ld a, [hl] ; $5772
 	ld [$d82d], a ; $5773
 	ld a, c ; $5776
-	add a, $df ; $5777
+	add a, LOW(Data_17_57df) ; $5777
 	ld l, a ; $5779
-	adc a, $57 ; $577a
+	adc a, HIGH(Data_17_57df) ; $577a
 	sub a, l ; $577c
 	ld h, a ; $577d
 	ld a, [hl] ; $577e
@@ -1882,17 +1882,17 @@ ServeToTargetsBriefing_AdvanceAnim:
 	ld a, b ; $5786
 	ld [$d81d], a ; $5787
 	ld a, [$d82e] ; $578a
-	add a, $ef ; $578d
+	add a, LOW(Data_17_57ef) ; $578d
 	ld l, a ; $578f
-	adc a, $57 ; $5790
+	adc a, HIGH(Data_17_57ef) ; $5790
 	sub a, l ; $5792
 	ld h, a ; $5793
 	ld a, [hl] ; $5794
 	ld [$d827], a ; $5795
 	ld a, c ; $5798
-	add a, $f3 ; $5799
+	add a, LOW(Data_17_57f3) ; $5799
 	ld l, a ; $579b
-	adc a, $57 ; $579c
+	adc a, HIGH(Data_17_57f3) ; $579c
 	sub a, l ; $579e
 	ld h, a ; $579f
 	ld a, [hl] ; $57a0
@@ -1904,16 +1904,16 @@ ServeToTargetsBriefing_AdvanceAnim:
 	ld a, b ; $57a8
 	ld [$d819], a ; $57a9
 	ld a, [$d82e] ; $57ac
-	add a, $03 ; $57af
+	add a, LOW(Data_17_5803) ; $57af
 	ld l, a ; $57b1
-	adc a, $58 ; $57b2
+	adc a, HIGH(Data_17_5803) ; $57b2
 	sub a, l ; $57b4
 	ld h, a ; $57b5
 	ld b, [hl] ; $57b6
 	call DrawDiagramTargetOverlay ; $57b7
 	ret ; $57ba
 ServeToTargetsBriefing_AdvanceAnimTable:
-	; $57bb, 92 bytes (records:2)
+	; $57bb, 16 bytes (records:2)
 	dw $0054 ; record 0
 	dw $0044 ; record 1
 	dw $003a ; record 2
@@ -1922,44 +1922,20 @@ ServeToTargetsBriefing_AdvanceAnimTable:
 	dw $0003 ; record 5
 	dw $0054 ; record 6
 	dw $0003 ; record 7
-	dw $004e ; record 8
-	dw $0038 ; record 9
-	dw $0056 ; record 10
-	dw $0038 ; record 11
-	dw $0056 ; record 12
-	dw $0028 ; record 13
-	dw $004e ; record 14
-	dw $0028 ; record 15
-	dw $0100 ; record 16
-	dw $0001 ; record 17
-	dw $003a ; record 18
-	dw $0024 ; record 19
-	dw $0064 ; record 20
-	dw $0024 ; record 21
-	dw $0064 ; record 22
-	dw $0034 ; record 23
-	dw $003a ; record 24
-	dw $0034 ; record 25
-	dw $0003 ; record 26
-	dw $0201 ; record 27
-	dw $0052 ; record 28
-	dw $0040 ; record 29
-	dw $004d ; record 30
-	dw $0040 ; record 31
-	dw $004d ; record 32
-	dw $0016 ; record 33
-	dw $0052 ; record 34
-	dw $0016 ; record 35
-	dw $0104 ; record 36
-	dw $0302 ; record 37
-	dw $0040 ; record 38
-	dw $0024 ; record 39
-	dw $005d ; record 40
-	dw $0024 ; record 41
-	dw $005d ; record 42
-	dw $0039 ; record 43
-	dw $0040 ; record 44
-	dw $0039 ; record 45
+Data_17_57cb:
+	INCLUDE "data/bank_017/text_57cb.asm" ; $57cb, 16 bytes
+Data_17_57db:
+	INCBIN "data/bank_017/d_57db.bin" ; $57db, 4 bytes
+Data_17_57df:
+	INCLUDE "data/bank_017/text_57df.asm" ; $57df, 16 bytes
+Data_17_57ef:
+	INCBIN "data/bank_017/d_57ef.bin" ; $57ef, 4 bytes
+Data_17_57f3:
+	INCBIN "data/bank_017/d_57f3.bin" ; $57f3, 16 bytes
+Data_17_5803:
+	INCBIN "data/bank_017/d_5803.bin" ; $5803, 4 bytes
+Data_17_5807:
+	INCBIN "data/bank_017/d_5807.bin" ; $5807, 16 bytes
 DrillBriefing_SpinServe:
 	ld a, $03 ; $5817
 	ld [$d82e], a ; $5819
@@ -2230,9 +2206,9 @@ SpinServeBriefing_AdvanceAnim:
 	ld a, b ; $5aa2
 	ld [$d811], a ; $5aa3
 	ld a, c ; $5aa6
-	add a, $31 ; $5aa7
+	add a, LOW(Data_17_5c31) ; $5aa7
 	ld l, a ; $5aa9
-	adc a, $5c ; $5aaa
+	adc a, HIGH(Data_17_5c31) ; $5aaa
 	sub a, l ; $5aac
 	ld h, a ; $5aad
 	ld a, [hl] ; $5aae
@@ -2244,9 +2220,9 @@ SpinServeBriefing_AdvanceAnim:
 	ld a, b ; $5ab6
 	ld [$d829], a ; $5ab7
 	ld a, c ; $5aba
-	add a, $f5 ; $5abb
+	add a, LOW(Data_17_5bf5) ; $5abb
 	ld l, a ; $5abd
-	adc a, $5b ; $5abe
+	adc a, HIGH(Data_17_5bf5) ; $5abe
 	sub a, l ; $5ac0
 	ld h, a ; $5ac1
 	ld a, [hl] ; $5ac2
@@ -2258,17 +2234,17 @@ SpinServeBriefing_AdvanceAnim:
 	ld a, b ; $5aca
 	ld [$d81f], a ; $5acb
 	ld a, [$d82e] ; $5ace
-	add a, $05 ; $5ad1
+	add a, LOW(Data_17_5c05) ; $5ad1
 	ld l, a ; $5ad3
-	adc a, $5c ; $5ad4
+	adc a, HIGH(Data_17_5c05) ; $5ad4
 	sub a, l ; $5ad6
 	ld h, a ; $5ad7
 	ld a, [hl] ; $5ad8
 	ld [$d82d], a ; $5ad9
 	ld a, c ; $5adc
-	add a, $09 ; $5add
+	add a, LOW(Data_17_5c09) ; $5add
 	ld l, a ; $5adf
-	adc a, $5c ; $5ae0
+	adc a, HIGH(Data_17_5c09) ; $5ae0
 	sub a, l ; $5ae2
 	ld h, a ; $5ae3
 	ld a, [hl] ; $5ae4
@@ -2280,17 +2256,17 @@ SpinServeBriefing_AdvanceAnim:
 	ld a, b ; $5aec
 	ld [$d81d], a ; $5aed
 	ld a, [$d82e] ; $5af0
-	add a, $19 ; $5af3
+	add a, LOW(Data_17_5c19) ; $5af3
 	ld l, a ; $5af5
-	adc a, $5c ; $5af6
+	adc a, HIGH(Data_17_5c19) ; $5af6
 	sub a, l ; $5af8
 	ld h, a ; $5af9
 	ld a, [hl] ; $5afa
 	ld [$d827], a ; $5afb
 	ld a, c ; $5afe
-	add a, $1d ; $5aff
+	add a, LOW(Data_17_5c1d) ; $5aff
 	ld l, a ; $5b01
-	adc a, $5c ; $5b02
+	adc a, HIGH(Data_17_5c1d) ; $5b02
 	sub a, l ; $5b04
 	ld h, a ; $5b05
 	ld a, [hl] ; $5b06
@@ -2302,9 +2278,9 @@ SpinServeBriefing_AdvanceAnim:
 	ld a, b ; $5b0e
 	ld [$d819], a ; $5b0f
 	ld a, [$d82e] ; $5b12
-	add a, $2d ; $5b15
+	add a, LOW(Data_17_5c2d) ; $5b15
 	ld l, a ; $5b17
-	adc a, $5c ; $5b18
+	adc a, HIGH(Data_17_5c2d) ; $5b18
 	sub a, l ; $5b1a
 	ld h, a ; $5b1b
 	ld b, [hl] ; $5b1c
@@ -2340,9 +2316,9 @@ SpinServeBriefing_AdvanceAnim2:
 	ld a, b ; $5b4d
 	ld [$d811], a ; $5b4e
 	ld a, c ; $5b51
-	add a, $41 ; $5b52
+	add a, LOW(Data_17_5c41) ; $5b52
 	ld l, a ; $5b54
-	adc a, $5c ; $5b55
+	adc a, HIGH(Data_17_5c41) ; $5b55
 	sub a, l ; $5b57
 	ld h, a ; $5b58
 	ld a, [hl] ; $5b59
@@ -2354,17 +2330,17 @@ SpinServeBriefing_AdvanceAnim2:
 	ld a, b ; $5b61
 	ld [$d81f], a ; $5b62
 	ld a, [$d82e] ; $5b65
-	add a, $19 ; $5b68
+	add a, LOW(Data_17_5c19) ; $5b68
 	ld l, a ; $5b6a
-	adc a, $5c ; $5b6b
+	adc a, HIGH(Data_17_5c19) ; $5b6b
 	sub a, l ; $5b6d
 	ld h, a ; $5b6e
 	ld a, [hl] ; $5b6f
 	ld [$d827], a ; $5b70
 	ld a, c ; $5b73
-	add a, $49 ; $5b74
+	add a, LOW(Data_17_5c49) ; $5b74
 	ld l, a ; $5b76
-	adc a, $5c ; $5b77
+	adc a, HIGH(Data_17_5c49) ; $5b77
 	sub a, l ; $5b79
 	ld h, a ; $5b7a
 	ld a, [hl] ; $5b7b
@@ -2376,17 +2352,17 @@ SpinServeBriefing_AdvanceAnim2:
 	ld a, b ; $5b83
 	ld [$d819], a ; $5b84
 	ld a, [$d82e] ; $5b87
-	add a, $51 ; $5b8a
+	add a, LOW(Data_17_5c51) ; $5b8a
 	ld l, a ; $5b8c
-	adc a, $5c ; $5b8d
+	adc a, HIGH(Data_17_5c51) ; $5b8d
 	sub a, l ; $5b8f
 	ld h, a ; $5b90
 	ld a, [hl] ; $5b91
 	ld [$d826], a ; $5b92
 	ld a, c ; $5b95
-	add a, $53 ; $5b96
+	add a, LOW(Data_17_5c53) ; $5b96
 	ld l, a ; $5b98
-	adc a, $5c ; $5b99
+	adc a, HIGH(Data_17_5c53) ; $5b99
 	sub a, l ; $5b9b
 	ld h, a ; $5b9c
 	ld a, [hl] ; $5b9d
@@ -2405,17 +2381,17 @@ SpinServeBriefing_AdvanceAnim2:
 .zero:
 	ld a, [$d82e] ; $5bb3
 	add a, b ; $5bb6
-	add a, $5b ; $5bb7
+	add a, LOW(Data_17_5c5b) ; $5bb7
 	ld l, a ; $5bb9
-	adc a, $5c ; $5bba
+	adc a, HIGH(Data_17_5c5b) ; $5bba
 	sub a, l ; $5bbc
 	ld h, a ; $5bbd
 	ld a, [hl] ; $5bbe
 	ld [$d822], a ; $5bbf
 	ld a, c ; $5bc2
-	add a, $5f ; $5bc3
+	add a, LOW(Data_17_5c5f) ; $5bc3
 	ld l, a ; $5bc5
-	adc a, $5c ; $5bc6
+	adc a, HIGH(Data_17_5c5f) ; $5bc6
 	sub a, l ; $5bc8
 	ld h, a ; $5bc9
 	ld a, [hl] ; $5bca
@@ -2427,16 +2403,16 @@ SpinServeBriefing_AdvanceAnim2:
 	ld a, b ; $5bd2
 	ld [$d815], a ; $5bd3
 	ld a, [$d82e] ; $5bd6
-	add a, $2d ; $5bd9
+	add a, LOW(Data_17_5c2d) ; $5bd9
 	ld l, a ; $5bdb
-	adc a, $5c ; $5bdc
+	adc a, HIGH(Data_17_5c2d) ; $5bdc
 	sub a, l ; $5bde
 	ld h, a ; $5bdf
 	ld b, [hl] ; $5be0
 	call DrawDiagramTargetOverlay ; $5be1
 	ret ; $5be4
 SpinServeBriefing_AdvanceAnimTable:
-	; $5be5, 130 bytes (records:2)
+	; $5be5, 16 bytes (records:2)
 	dw $0052 ; record 0
 	dw $0044 ; record 1
 	dw $003d ; record 2
@@ -2445,63 +2421,33 @@ SpinServeBriefing_AdvanceAnimTable:
 	dw $0000 ; record 5
 	dw $0052 ; record 6
 	dw $0000 ; record 7
-	dw $004e ; record 8
-	dw $0038 ; record 9
-	dw $0056 ; record 10
-	dw $0038 ; record 11
-	dw $0056 ; record 12
-	dw $0028 ; record 13
-	dw $004e ; record 14
-	dw $0028 ; record 15
-	dw $0100 ; record 16
-	dw $0001 ; record 17
-	dw $003a ; record 18
-	dw $0024 ; record 19
-	dw $0064 ; record 20
-	dw $0024 ; record 21
-	dw $0064 ; record 22
-	dw $0034 ; record 23
-	dw $003a ; record 24
-	dw $0034 ; record 25
-	dw $0003 ; record 26
-	dw $0201 ; record 27
-	dw $0052 ; record 28
-	dw $0040 ; record 29
-	dw $004d ; record 30
-	dw $0040 ; record 31
-	dw $004d ; record 32
-	dw $0016 ; record 33
-	dw $0052 ; record 34
-	dw $0016 ; record 35
-	dw $0104 ; record 36
-	dw $0302 ; record 37
-	dw $0040 ; record 38
-	dw $0024 ; record 39
-	dw $005d ; record 40
-	dw $0024 ; record 41
-	dw $005d ; record 42
-	dw $0039 ; record 43
-	dw $0040 ; record 44
-	dw $0039 ; record 45
-	dw $0046 ; record 46
-	dw $0028 ; record 47
-	dw $005e ; record 48
-	dw $0028 ; record 49
-	dw $0049 ; record 50
-	dw $002f ; record 51
-	dw $0056 ; record 52
-	dw $002f ; record 53
-	dw $0001 ; record 54
-	dw $0030 ; record 55
-	dw $0022 ; record 56
-	dw $006f ; record 57
-	dw $0022 ; record 58
-	dw $0609 ; record 59
-	dw $0708 ; record 60
-	dw $0061 ; record 61
-	dw $0044 ; record 62
-	dw $0026 ; record 63
-	dw $0044 ; record 64
+Data_17_5bf5:
+	INCLUDE "data/bank_017/text_5bf5.asm" ; $5bf5, 16 bytes
+Data_17_5c05:
+	INCBIN "data/bank_017/d_5c05.bin" ; $5c05, 4 bytes
+Data_17_5c09:
+	INCLUDE "data/bank_017/text_5c09.asm" ; $5c09, 16 bytes
+Data_17_5c19:
+	INCBIN "data/bank_017/d_5c19.bin" ; $5c19, 4 bytes
+Data_17_5c1d:
+	INCBIN "data/bank_017/d_5c1d.bin" ; $5c1d, 16 bytes
+Data_17_5c2d:
+	INCBIN "data/bank_017/d_5c2d.bin" ; $5c2d, 4 bytes
+Data_17_5c31:
+	INCBIN "data/bank_017/d_5c31.bin" ; $5c31, 16 bytes
+Data_17_5c41:
+	INCBIN "data/bank_017/d_5c41.bin" ; $5c41, 8 bytes
+Data_17_5c49:
+	INCLUDE "data/bank_017/text_5c49.asm" ; $5c49, 8 bytes
+Data_17_5c51:
+	db $01 ; $5c51
+	db $00 ; $5c52
+Data_17_5c53:
+	INCBIN "data/bank_017/d_5c53.bin" ; $5c53, 8 bytes
+Data_17_5c5b:
+	INCBIN "data/bank_017/d_5c5b.bin" ; $5c5b, 4 bytes
+Data_17_5c5f:
+	INCLUDE "data/bank_017/text_5c5f.asm" ; $5c5f, 8 bytes
 DrillBriefing_ServeThroughPoles:
 	ld a, $03 ; $5c67
 	ld [$d82e], a ; $5c69
@@ -2681,9 +2627,9 @@ PoleServeBriefing_AdvanceAnim:
 	ld a, b ; $5dfd
 	ld [$d811], a ; $5dfe
 	ld a, c ; $5e01
-	add a, $26 ; $5e02
+	add a, LOW(Data_17_5f26) ; $5e02
 	ld l, a ; $5e04
-	adc a, $5f ; $5e05
+	adc a, HIGH(Data_17_5f26) ; $5e05
 	sub a, l ; $5e07
 	ld h, a ; $5e08
 	ld a, [hl] ; $5e09
@@ -2695,17 +2641,17 @@ PoleServeBriefing_AdvanceAnim:
 	ld a, b ; $5e11
 	ld [$d81f], a ; $5e12
 	ld a, [$d82e] ; $5e15
-	add a, $36 ; $5e18
+	add a, LOW(Data_17_5f36) ; $5e18
 	ld l, a ; $5e1a
-	adc a, $5f ; $5e1b
+	adc a, HIGH(Data_17_5f36) ; $5e1b
 	sub a, l ; $5e1d
 	ld h, a ; $5e1e
 	ld a, [hl] ; $5e1f
 	ld [$d82d], a ; $5e20
 	ld a, c ; $5e23
-	add a, $3a ; $5e24
+	add a, LOW(Data_17_5f3a) ; $5e24
 	ld l, a ; $5e26
-	adc a, $5f ; $5e27
+	adc a, HIGH(Data_17_5f3a) ; $5e27
 	sub a, l ; $5e29
 	ld h, a ; $5e2a
 	ld a, [hl] ; $5e2b
@@ -2717,17 +2663,17 @@ PoleServeBriefing_AdvanceAnim:
 	ld a, b ; $5e33
 	ld [$d81d], a ; $5e34
 	ld a, [$d82e] ; $5e37
-	add a, $5a ; $5e3a
+	add a, LOW(Data_17_5f5a) ; $5e3a
 	ld l, a ; $5e3c
-	adc a, $5f ; $5e3d
+	adc a, HIGH(Data_17_5f5a) ; $5e3d
 	sub a, l ; $5e3f
 	ld h, a ; $5e40
 	ld a, [hl] ; $5e41
 	ld [$d827], a ; $5e42
 	ld a, c ; $5e45
-	add a, $5e ; $5e46
+	add a, LOW(Data_17_5f5e) ; $5e46
 	ld l, a ; $5e48
-	adc a, $5f ; $5e49
+	adc a, HIGH(Data_17_5f5e) ; $5e49
 	sub a, l ; $5e4b
 	ld h, a ; $5e4c
 	ld a, [hl] ; $5e4d
@@ -2739,9 +2685,9 @@ PoleServeBriefing_AdvanceAnim:
 	ld a, b ; $5e55
 	ld [$d819], a ; $5e56
 	ld a, [$d82e] ; $5e59
-	add a, $6e ; $5e5c
+	add a, LOW(Data_17_5f6e) ; $5e5c
 	ld l, a ; $5e5e
-	adc a, $5f ; $5e5f
+	adc a, HIGH(Data_17_5f6e) ; $5e5f
 	sub a, l ; $5e61
 	ld h, a ; $5e62
 	ld b, [hl] ; $5e63
@@ -2764,9 +2710,9 @@ PoleServeBriefing_AdvanceAnim2:
 	sla a ; $5e81
 	sla a ; $5e83
 	ld c, a ; $5e85
-	add a, $16 ; $5e86
+	add a, LOW(Data_17_5f16) ; $5e86
 	ld l, a ; $5e88
-	adc a, $5f ; $5e89
+	adc a, HIGH(Data_17_5f16) ; $5e89
 	sub a, l ; $5e8b
 	ld h, a ; $5e8c
 	ld a, [hl] ; $5e8d
@@ -2778,9 +2724,9 @@ PoleServeBriefing_AdvanceAnim2:
 	ld a, b ; $5e95
 	ld [$d811], a ; $5e96
 	ld a, c ; $5e99
-	add a, $72 ; $5e9a
+	add a, LOW(Data_17_5f72) ; $5e9a
 	ld l, a ; $5e9c
-	adc a, $5f ; $5e9d
+	adc a, HIGH(Data_17_5f72) ; $5e9d
 	sub a, l ; $5e9f
 	ld h, a ; $5ea0
 	ld a, [hl] ; $5ea1
@@ -2792,9 +2738,9 @@ PoleServeBriefing_AdvanceAnim2:
 	ld a, b ; $5ea9
 	ld [$d829], a ; $5eaa
 	ld a, c ; $5ead
-	add a, $82 ; $5eae
+	add a, LOW(Data_17_5f82) ; $5eae
 	ld l, a ; $5eb0
-	adc a, $5f ; $5eb1
+	adc a, HIGH(Data_17_5f82) ; $5eb1
 	sub a, l ; $5eb3
 	ld h, a ; $5eb4
 	ld a, [hl] ; $5eb5
@@ -2806,9 +2752,9 @@ PoleServeBriefing_AdvanceAnim2:
 	ld a, b ; $5ebd
 	ld [$d81b], a ; $5ebe
 	ld a, c ; $5ec1
-	add a, $82 ; $5ec2
+	add a, LOW(Data_17_5f82) ; $5ec2
 	ld l, a ; $5ec4
-	adc a, $5f ; $5ec5
+	adc a, HIGH(Data_17_5f82) ; $5ec5
 	sub a, l ; $5ec7
 	ld h, a ; $5ec8
 	ld a, [hl] ; $5ec9
@@ -2817,17 +2763,17 @@ PoleServeBriefing_AdvanceAnim2:
 	ld a, [$d81b] ; $5ecf
 	ld [$d821], a ; $5ed2
 	ld a, [$d82e] ; $5ed5
-	add a, $36 ; $5ed8
+	add a, LOW(Data_17_5f36) ; $5ed8
 	ld l, a ; $5eda
-	adc a, $5f ; $5edb
+	adc a, HIGH(Data_17_5f36) ; $5edb
 	sub a, l ; $5edd
 	ld h, a ; $5ede
 	ld a, [hl] ; $5edf
 	ld [$d82d], a ; $5ee0
 	ld a, c ; $5ee3
-	add a, $4a ; $5ee4
+	add a, LOW(Data_17_5f4a) ; $5ee4
 	ld l, a ; $5ee6
-	adc a, $5f ; $5ee7
+	adc a, HIGH(Data_17_5f4a) ; $5ee7
 	sub a, l ; $5ee9
 	ld h, a ; $5eea
 	ld a, [hl] ; $5eeb
@@ -2839,16 +2785,16 @@ PoleServeBriefing_AdvanceAnim2:
 	ld a, b ; $5ef3
 	ld [$d81d], a ; $5ef4
 	ld a, [$d82e] ; $5ef7
-	add a, $6e ; $5efa
+	add a, LOW(Data_17_5f6e) ; $5efa
 	ld l, a ; $5efc
-	adc a, $5f ; $5efd
+	adc a, HIGH(Data_17_5f6e) ; $5efd
 	sub a, l ; $5eff
 	ld h, a ; $5f00
 	ld b, [hl] ; $5f01
 	call DrawDiagramTargetOverlay ; $5f02
 	ret ; $5f05
 DrillBriefing_ServeThroughPolesTable:
-	; $5f06, 140 bytes (records:2)
+	; $5f06, 16 bytes (records:2)
 	dw $0055 ; record 0
 	dw $0044 ; record 1
 	dw $003a ; record 2
@@ -2857,68 +2803,26 @@ DrillBriefing_ServeThroughPolesTable:
 	dw $0003 ; record 5
 	dw $0055 ; record 6
 	dw $0003 ; record 7
-	dw $004f ; record 8
-	dw $0044 ; record 9
-	dw $0040 ; record 10
-	dw $0044 ; record 11
-	dw $0040 ; record 12
-	dw $0003 ; record 13
-	dw $004f ; record 14
-	dw $0003 ; record 15
-	dw $004e ; record 16
-	dw $0038 ; record 17
-	dw $0056 ; record 18
-	dw $0038 ; record 19
-	dw $0056 ; record 20
-	dw $0028 ; record 21
-	dw $004e ; record 22
-	dw $0028 ; record 23
-	dw $0100 ; record 24
-	dw $0001 ; record 25
-	dw $003a ; record 26
-	dw $0024 ; record 27
-	dw $0064 ; record 28
-	dw $0024 ; record 29
-	dw $0064 ; record 30
-	dw $0034 ; record 31
-	dw $003a ; record 32
-	dw $0034 ; record 33
-	dw $0042 ; record 34
-	dw $0020 ; record 35
-	dw $005d ; record 36
-	dw $0020 ; record 37
-	dw $005d ; record 38
-	dw $0038 ; record 39
-	dw $0042 ; record 40
-	dw $0038 ; record 41
-	dw $0003 ; record 42
-	dw $0201 ; record 43
-	dw $0052 ; record 44
-	dw $0040 ; record 45
-	dw $004d ; record 46
-	dw $0040 ; record 47
-	dw $004d ; record 48
-	dw $0016 ; record 49
-	dw $0052 ; record 50
-	dw $0016 ; record 51
-	dw $0104 ; record 52
-	dw $0302 ; record 53
-	dw $0048 ; record 54
-	dw $0024 ; record 55
-	dw $0055 ; record 56
-	dw $0024 ; record 57
-	dw $0055 ; record 58
-	dw $0039 ; record 59
-	dw $0048 ; record 60
-	dw $0039 ; record 61
-	dw $0050 ; record 62
-	dw $0036 ; record 63
-	dw $0048 ; record 64
-	dw $0036 ; record 65
-	dw $0048 ; record 66
-	dw $0021 ; record 67
-	dw $0050 ; record 68
-	dw $0021 ; record 69
+Data_17_5f16:
+	INCLUDE "data/bank_017/text_5f16.asm" ; $5f16, 16 bytes
+Data_17_5f26:
+	INCLUDE "data/bank_017/text_5f26.asm" ; $5f26, 16 bytes
+Data_17_5f36:
+	INCBIN "data/bank_017/d_5f36.bin" ; $5f36, 4 bytes
+Data_17_5f3a:
+	INCLUDE "data/bank_017/text_5f3a.asm" ; $5f3a, 16 bytes
+Data_17_5f4a:
+	INCLUDE "data/bank_017/text_5f4a.asm" ; $5f4a, 16 bytes
+Data_17_5f5a:
+	INCBIN "data/bank_017/d_5f5a.bin" ; $5f5a, 4 bytes
+Data_17_5f5e:
+	INCBIN "data/bank_017/d_5f5e.bin" ; $5f5e, 16 bytes
+Data_17_5f6e:
+	INCBIN "data/bank_017/d_5f6e.bin" ; $5f6e, 4 bytes
+Data_17_5f72:
+	INCLUDE "data/bank_017/text_5f72.asm" ; $5f72, 16 bytes
+Data_17_5f82:
+	INCLUDE "data/bank_017/text_5f82.asm" ; $5f82, 16 bytes
 DrillBriefing_ServeAndVolley:
 	ld a, $52 ; $5f92
 	ld [$d810], a ; $5f94
@@ -3079,9 +2983,9 @@ ServeAndVolleyBriefing_AdvanceAnim:
 	ld a, b ; $610d
 	ld [$d811], a ; $610e
 	ld a, c ; $6111
-	add a, $c4 ; $6112
+	add a, LOW(Data_17_61c4) ; $6112
 	ld l, a ; $6114
-	adc a, $61 ; $6115
+	adc a, HIGH(Data_17_61c4) ; $6115
 	sub a, l ; $6117
 	ld h, a ; $6118
 	ld a, [hl] ; $6119
@@ -3093,9 +2997,9 @@ ServeAndVolleyBriefing_AdvanceAnim:
 	ld a, b ; $6121
 	ld [$d813], a ; $6122
 	ld a, c ; $6125
-	add a, $20 ; $6126
+	add a, LOW(Data_17_6220) ; $6126
 	ld l, a ; $6128
-	adc a, $62 ; $6129
+	adc a, HIGH(Data_17_6220) ; $6129
 	sub a, l ; $612b
 	ld h, a ; $612c
 	ld a, [hl] ; $612d
@@ -3107,9 +3011,9 @@ ServeAndVolleyBriefing_AdvanceAnim:
 	ld a, b ; $6135
 	ld [$d829], a ; $6136
 	ld a, c ; $6139
-	add a, $d4 ; $613a
+	add a, LOW(Data_17_61d4) ; $613a
 	ld l, a ; $613c
-	adc a, $61 ; $613d
+	adc a, HIGH(Data_17_61d4) ; $613d
 	sub a, l ; $613f
 	ld h, a ; $6140
 	ld a, [hl] ; $6141
@@ -3121,17 +3025,17 @@ ServeAndVolleyBriefing_AdvanceAnim:
 	ld a, b ; $6149
 	ld [$d81f], a ; $614a
 	ld a, [$d82e] ; $614d
-	add a, $e4 ; $6150
+	add a, LOW(Data_17_61e4) ; $6150
 	ld l, a ; $6152
-	adc a, $61 ; $6153
+	adc a, HIGH(Data_17_61e4) ; $6153
 	sub a, l ; $6155
 	ld h, a ; $6156
 	ld a, [hl] ; $6157
 	ld [$d82d], a ; $6158
 	ld a, c ; $615b
-	add a, $e8 ; $615c
+	add a, LOW(Data_17_61e8) ; $615c
 	ld l, a ; $615e
-	adc a, $61 ; $615f
+	adc a, HIGH(Data_17_61e8) ; $615f
 	sub a, l ; $6161
 	ld h, a ; $6162
 	ld a, [hl] ; $6163
@@ -3143,17 +3047,17 @@ ServeAndVolleyBriefing_AdvanceAnim:
 	ld a, b ; $616b
 	ld [$d81d], a ; $616c
 	ld a, [$d82e] ; $616f
-	add a, $f8 ; $6172
+	add a, LOW(Data_17_61f8) ; $6172
 	ld l, a ; $6174
-	adc a, $61 ; $6175
+	adc a, HIGH(Data_17_61f8) ; $6175
 	sub a, l ; $6177
 	ld h, a ; $6178
 	ld a, [hl] ; $6179
 	ld [$d827], a ; $617a
 	ld a, c ; $617d
-	add a, $fc ; $617e
+	add a, LOW(Data_17_61fc) ; $617e
 	ld l, a ; $6180
-	adc a, $61 ; $6181
+	adc a, HIGH(Data_17_61fc) ; $6181
 	sub a, l ; $6183
 	ld h, a ; $6184
 	ld a, [hl] ; $6185
@@ -3165,17 +3069,17 @@ ServeAndVolleyBriefing_AdvanceAnim:
 	ld a, b ; $618d
 	ld [$d819], a ; $618e
 	ld a, [$d82e] ; $6191
-	add a, $0c ; $6194
+	add a, LOW(Data_17_620c) ; $6194
 	ld l, a ; $6196
-	adc a, $62 ; $6197
+	adc a, HIGH(Data_17_620c) ; $6197
 	sub a, l ; $6199
 	ld h, a ; $619a
 	ld a, [hl] ; $619b
 	ld [$d825], a ; $619c
 	ld a, c ; $619f
-	add a, $10 ; $61a0
+	add a, LOW(Data_17_6210) ; $61a0
 	ld l, a ; $61a2
-	adc a, $62 ; $61a3
+	adc a, HIGH(Data_17_6210) ; $61a3
 	sub a, l ; $61a5
 	ld h, a ; $61a6
 	ld a, [hl] ; $61a7
@@ -3188,7 +3092,7 @@ ServeAndVolleyBriefing_AdvanceAnim:
 	ld [$d824], a ; $61b0
 	ret ; $61b3
 ServeAndVolleyBriefing_AdvanceAnimTable:
-	; $61b4, 124 bytes (records:2)
+	; $61b4, 16 bytes (records:2)
 	dw $0052 ; record 0
 	dw $0030 ; record 1
 	dw $003c ; record 2
@@ -3197,60 +3101,24 @@ ServeAndVolleyBriefing_AdvanceAnimTable:
 	dw $0018 ; record 5
 	dw $0052 ; record 6
 	dw $0018 ; record 7
-	dw $0034 ; record 8
-	dw $0006 ; record 9
-	dw $005a ; record 10
-	dw $0006 ; record 11
-	dw $005a ; record 12
-	dw $0048 ; record 13
-	dw $0034 ; record 14
-	dw $0048 ; record 15
-	dw $005d ; record 16
-	dw $001c ; record 17
-	dw $0047 ; record 18
-	dw $001c ; record 19
-	dw $0047 ; record 20
-	dw $0046 ; record 21
-	dw $005d ; record 22
-	dw $0046 ; record 23
-	dw $0001 ; record 24
-	dw $0100 ; record 25
-	dw $0064 ; record 26
-	dw $0014 ; record 27
-	dw $003a ; record 28
-	dw $0014 ; record 29
-	dw $003a ; record 30
-	dw $0044 ; record 31
-	dw $0064 ; record 32
-	dw $0044 ; record 33
-	dw $0201 ; record 34
-	dw $0003 ; record 35
-	dw $0046 ; record 36
-	dw $0016 ; record 37
-	dw $005a ; record 38
-	dw $0016 ; record 39
-	dw $005a ; record 40
-	dw $0040 ; record 41
-	dw $0046 ; record 42
-	dw $0040 ; record 43
-	dw $0000 ; record 44
-	dw $0101 ; record 45
-	dw $005b ; record 46
-	dw $0021 ; record 47
-	dw $0045 ; record 48
-	dw $0021 ; record 49
-	dw $0045 ; record 50
-	dw $0037 ; record 51
-	dw $005b ; record 52
-	dw $0037 ; record 53
-	dw $0052 ; record 54
-	dw $0012 ; record 55
-	dw $003e ; record 56
-	dw $0012 ; record 57
-	dw $003e ; record 58
-	dw $003c ; record 59
-	dw $0052 ; record 60
-	dw $003c ; record 61
+Data_17_61c4:
+	INCBIN "data/bank_017/d_61c4.bin" ; $61c4, 16 bytes
+Data_17_61d4:
+	INCBIN "data/bank_017/d_61d4.bin" ; $61d4, 16 bytes
+Data_17_61e4:
+	INCBIN "data/bank_017/d_61e4.bin" ; $61e4, 4 bytes
+Data_17_61e8:
+	INCBIN "data/bank_017/d_61e8.bin" ; $61e8, 16 bytes
+Data_17_61f8:
+	INCBIN "data/bank_017/d_61f8.bin" ; $61f8, 4 bytes
+Data_17_61fc:
+	INCBIN "data/bank_017/d_61fc.bin" ; $61fc, 16 bytes
+Data_17_620c:
+	INCBIN "data/bank_017/d_620c.bin" ; $620c, 4 bytes
+Data_17_6210:
+	INCLUDE "data/bank_017/text_6210.asm" ; $6210, 16 bytes
+Data_17_6220:
+	INCBIN "data/bank_017/d_6220.bin" ; $6220, 16 bytes
 DrillBriefing_ServeAndSmash:
 	ld a, $55 ; $6230
 	ld [$d810], a ; $6232
@@ -3472,9 +3340,9 @@ DrillBriefing_ServeAndSmash:
 	ld a, b ; $644e
 	ld [$d811], a ; $644f
 	ld a, c ; $6452
-	add a, $cd ; $6453
+	add a, LOW(Data_17_64cd) ; $6453
 	ld l, a ; $6455
-	adc a, $64 ; $6456
+	adc a, HIGH(Data_17_64cd) ; $6456
 	sub a, l ; $6458
 	ld h, a ; $6459
 	ld a, [hl] ; $645a
@@ -3486,9 +3354,9 @@ DrillBriefing_ServeAndSmash:
 	ld a, b ; $6462
 	ld [$d813], a ; $6463
 	ld a, c ; $6466
-	add a, $29 ; $6467
+	add a, LOW(Data_17_6529) ; $6467
 	ld l, a ; $6469
-	adc a, $65 ; $646a
+	adc a, HIGH(Data_17_6529) ; $646a
 	sub a, l ; $646c
 	ld h, a ; $646d
 	ld a, [hl] ; $646e
@@ -3500,9 +3368,9 @@ DrillBriefing_ServeAndSmash:
 	ld a, b ; $6476
 	ld [$d829], a ; $6477
 	ld a, c ; $647a
-	add a, $dd ; $647b
+	add a, LOW(Data_17_64dd) ; $647b
 	ld l, a ; $647d
-	adc a, $64 ; $647e
+	adc a, HIGH(Data_17_64dd) ; $647e
 	sub a, l ; $6480
 	ld h, a ; $6481
 	ld a, [hl] ; $6482
@@ -3514,17 +3382,17 @@ DrillBriefing_ServeAndSmash:
 	ld a, b ; $648a
 	ld [$d81f], a ; $648b
 	ld a, [$d82e] ; $648e
-	add a, $01 ; $6491
+	add a, LOW(Data_17_6501) ; $6491
 	ld l, a ; $6493
-	adc a, $65 ; $6494
+	adc a, HIGH(Data_17_6501) ; $6494
 	sub a, l ; $6496
 	ld h, a ; $6497
 	ld a, [hl] ; $6498
 	ld [$d827], a ; $6499
 	ld a, c ; $649c
-	add a, $05 ; $649d
+	add a, LOW(Data_17_6505) ; $649d
 	ld l, a ; $649f
-	adc a, $65 ; $64a0
+	adc a, HIGH(Data_17_6505) ; $64a0
 	sub a, l ; $64a2
 	ld h, a ; $64a3
 	ld a, [hl] ; $64a4
@@ -3543,7 +3411,7 @@ DrillBriefing_ServeAndSmash:
 	call ClearFrameTasks ; $64b9
 	ret ; $64bc
 DrillBriefing_ServeAndSmashTable:
-	; $64bd, 124 bytes (records:2)
+	; $64bd, 16 bytes (records:2)
 	dw $0055 ; record 0
 	dw $0044 ; record 1
 	dw $003a ; record 2
@@ -3552,60 +3420,16 @@ DrillBriefing_ServeAndSmashTable:
 	dw $0003 ; record 5
 	dw $0055 ; record 6
 	dw $0003 ; record 7
-	dw $0034 ; record 8
-	dw $0006 ; record 9
-	dw $005a ; record 10
-	dw $0006 ; record 11
-	dw $005a ; record 12
-	dw $0046 ; record 13
-	dw $0034 ; record 14
-	dw $0046 ; record 15
-	dw $0050 ; record 16
-	dw $0037 ; record 17
-	dw $0054 ; record 18
-	dw $0037 ; record 19
-	dw $0054 ; record 20
-	dw $0028 ; record 21
-	dw $0050 ; record 22
-	dw $0028 ; record 23
-	dw $0001 ; record 24
-	dw $0100 ; record 25
-	dw $0064 ; record 26
-	dw $0014 ; record 27
-	dw $003a ; record 28
-	dw $0014 ; record 29
-	dw $003a ; record 30
-	dw $0044 ; record 31
-	dw $0064 ; record 32
-	dw $0044 ; record 33
-	dw $0003 ; record 34
-	dw $0201 ; record 35
-	dw $0054 ; record 36
-	dw $003d ; record 37
-	dw $004c ; record 38
-	dw $003d ; record 39
-	dw $004c ; record 40
-	dw $0016 ; record 41
-	dw $0054 ; record 42
-	dw $0016 ; record 43
-	dw $0000 ; record 44
-	dw $0101 ; record 45
-	dw $005b ; record 46
-	dw $0021 ; record 47
-	dw $0045 ; record 48
-	dw $0021 ; record 49
-	dw $0045 ; record 50
-	dw $0037 ; record 51
-	dw $005b ; record 52
-	dw $0037 ; record 53
-	dw $003e ; record 54
-	dw $0022 ; record 55
-	dw $0052 ; record 56
-	dw $0022 ; record 57
-	dw $0052 ; record 58
-	dw $003c ; record 59
-	dw $003e ; record 60
-	dw $003c ; record 61
+Data_17_64cd:
+	INCBIN "data/bank_017/d_64cd.bin" ; $64cd, 16 bytes
+Data_17_64dd:
+	INCBIN "data/bank_017/d_64dd.bin" ; $64dd, 36 bytes
+Data_17_6501:
+	INCBIN "data/bank_017/d_6501.bin" ; $6501, 4 bytes
+Data_17_6505:
+	INCBIN "data/bank_017/d_6505.bin" ; $6505, 36 bytes
+Data_17_6529:
+	INCLUDE "data/bank_017/text_6529.asm" ; $6529, 16 bytes
 DrillBriefing_ServeAndSmash2:
 	ld a, $55 ; $6539
 	ld [$d810], a ; $653b
@@ -3827,9 +3651,9 @@ DrillBriefing_ServeAndSmash2:
 	ld a, b ; $6757
 	ld [$d811], a ; $6758
 	ld a, c ; $675b
-	add a, $d6 ; $675c
+	add a, LOW(Data_17_67d6) ; $675c
 	ld l, a ; $675e
-	adc a, $67 ; $675f
+	adc a, HIGH(Data_17_67d6) ; $675f
 	sub a, l ; $6761
 	ld h, a ; $6762
 	ld a, [hl] ; $6763
@@ -3841,9 +3665,9 @@ DrillBriefing_ServeAndSmash2:
 	ld a, b ; $676b
 	ld [$d813], a ; $676c
 	ld a, c ; $676f
-	add a, $32 ; $6770
+	add a, LOW(Data_17_6832) ; $6770
 	ld l, a ; $6772
-	adc a, $68 ; $6773
+	adc a, HIGH(Data_17_6832) ; $6773
 	sub a, l ; $6775
 	ld h, a ; $6776
 	ld a, [hl] ; $6777
@@ -3855,9 +3679,9 @@ DrillBriefing_ServeAndSmash2:
 	ld a, b ; $677f
 	ld [$d829], a ; $6780
 	ld a, c ; $6783
-	add a, $e6 ; $6784
+	add a, LOW(Data_17_67e6) ; $6784
 	ld l, a ; $6786
-	adc a, $67 ; $6787
+	adc a, HIGH(Data_17_67e6) ; $6787
 	sub a, l ; $6789
 	ld h, a ; $678a
 	ld a, [hl] ; $678b
@@ -3869,17 +3693,17 @@ DrillBriefing_ServeAndSmash2:
 	ld a, b ; $6793
 	ld [$d81f], a ; $6794
 	ld a, [$d82e] ; $6797
-	add a, $0a ; $679a
+	add a, LOW(Data_17_680a) ; $679a
 	ld l, a ; $679c
-	adc a, $68 ; $679d
+	adc a, HIGH(Data_17_680a) ; $679d
 	sub a, l ; $679f
 	ld h, a ; $67a0
 	ld a, [hl] ; $67a1
 	ld [$d827], a ; $67a2
 	ld a, c ; $67a5
-	add a, $0e ; $67a6
+	add a, LOW(Data_17_680e) ; $67a6
 	ld l, a ; $67a8
-	adc a, $68 ; $67a9
+	adc a, HIGH(Data_17_680e) ; $67a9
 	sub a, l ; $67ab
 	ld h, a ; $67ac
 	ld a, [hl] ; $67ad
@@ -3898,7 +3722,7 @@ DrillBriefing_ServeAndSmash2:
 	call ClearFrameTasks ; $67c2
 	ret ; $67c5
 DrillBriefing_ServeAndSmash2Table:
-	; $67c6, 124 bytes (records:2)
+	; $67c6, 16 bytes (records:2)
 	dw $0055 ; record 0
 	dw $0044 ; record 1
 	dw $003a ; record 2
@@ -3907,60 +3731,16 @@ DrillBriefing_ServeAndSmash2Table:
 	dw $0003 ; record 5
 	dw $0055 ; record 6
 	dw $0003 ; record 7
-	dw $0034 ; record 8
-	dw $0006 ; record 9
-	dw $005a ; record 10
-	dw $0006 ; record 11
-	dw $005a ; record 12
-	dw $0046 ; record 13
-	dw $0034 ; record 14
-	dw $0046 ; record 15
-	dw $0050 ; record 16
-	dw $0037 ; record 17
-	dw $0054 ; record 18
-	dw $0037 ; record 19
-	dw $0054 ; record 20
-	dw $0028 ; record 21
-	dw $0050 ; record 22
-	dw $0028 ; record 23
-	dw $0001 ; record 24
-	dw $0100 ; record 25
-	dw $0064 ; record 26
-	dw $0014 ; record 27
-	dw $003a ; record 28
-	dw $0014 ; record 29
-	dw $003a ; record 30
-	dw $0044 ; record 31
-	dw $0064 ; record 32
-	dw $0044 ; record 33
-	dw $0003 ; record 34
-	dw $0201 ; record 35
-	dw $0054 ; record 36
-	dw $003d ; record 37
-	dw $004c ; record 38
-	dw $003d ; record 39
-	dw $004c ; record 40
-	dw $0016 ; record 41
-	dw $0054 ; record 42
-	dw $0016 ; record 43
-	dw $0000 ; record 44
-	dw $0101 ; record 45
-	dw $005b ; record 46
-	dw $0021 ; record 47
-	dw $0045 ; record 48
-	dw $0021 ; record 49
-	dw $0045 ; record 50
-	dw $0037 ; record 51
-	dw $005b ; record 52
-	dw $0037 ; record 53
-	dw $003e ; record 54
-	dw $0022 ; record 55
-	dw $0052 ; record 56
-	dw $0022 ; record 57
-	dw $0052 ; record 58
-	dw $003c ; record 59
-	dw $003e ; record 60
-	dw $003c ; record 61
+Data_17_67d6:
+	INCBIN "data/bank_017/d_67d6.bin" ; $67d6, 16 bytes
+Data_17_67e6:
+	INCBIN "data/bank_017/d_67e6.bin" ; $67e6, 36 bytes
+Data_17_680a:
+	INCBIN "data/bank_017/d_680a.bin" ; $680a, 4 bytes
+Data_17_680e:
+	INCBIN "data/bank_017/d_680e.bin" ; $680e, 36 bytes
+Data_17_6832:
+	INCLUDE "data/bank_017/text_6832.asm" ; $6832, 16 bytes
 DrillBriefing_ReturnToTarget:
 	ld a, $55 ; $6842
 	ld [$d810], a ; $6844
@@ -4100,9 +3880,9 @@ ReturnToTargetBriefing_AdvanceAnim:
 	ld a, b ; $6986
 	ld [$d811], a ; $6987
 	ld a, c ; $698a
-	add a, $1b ; $698b
+	add a, LOW(Data_17_6a1b) ; $698b
 	ld l, a ; $698d
-	adc a, $6a ; $698e
+	adc a, HIGH(Data_17_6a1b) ; $698e
 	sub a, l ; $6990
 	ld h, a ; $6991
 	ld a, [hl] ; $6992
@@ -4114,9 +3894,9 @@ ReturnToTargetBriefing_AdvanceAnim:
 	ld a, b ; $699a
 	ld [$d813], a ; $699b
 	ld a, c ; $699e
-	add a, $63 ; $699f
+	add a, LOW(Data_17_6a63) ; $699f
 	ld l, a ; $69a1
-	adc a, $6a ; $69a2
+	adc a, HIGH(Data_17_6a63) ; $69a2
 	sub a, l ; $69a4
 	ld h, a ; $69a5
 	ld a, [hl] ; $69a6
@@ -4128,9 +3908,9 @@ ReturnToTargetBriefing_AdvanceAnim:
 	ld a, b ; $69ae
 	ld [$d829], a ; $69af
 	ld a, c ; $69b2
-	add a, $2b ; $69b3
+	add a, LOW(Data_17_6a2b) ; $69b3
 	ld l, a ; $69b5
-	adc a, $6a ; $69b6
+	adc a, HIGH(Data_17_6a2b) ; $69b6
 	sub a, l ; $69b8
 	ld h, a ; $69b9
 	ld a, [hl] ; $69ba
@@ -4142,17 +3922,17 @@ ReturnToTargetBriefing_AdvanceAnim:
 	ld a, b ; $69c2
 	ld [$d81f], a ; $69c3
 	ld a, [$d82e] ; $69c6
-	add a, $3b ; $69c9
+	add a, LOW(Data_17_6a3b) ; $69c9
 	ld l, a ; $69cb
-	adc a, $6a ; $69cc
+	adc a, HIGH(Data_17_6a3b) ; $69cc
 	sub a, l ; $69ce
 	ld h, a ; $69cf
 	ld a, [hl] ; $69d0
 	ld [$d82d], a ; $69d1
 	ld a, c ; $69d4
-	add a, $3f ; $69d5
+	add a, LOW(Data_17_6a3f) ; $69d5
 	ld l, a ; $69d7
-	adc a, $6a ; $69d8
+	adc a, HIGH(Data_17_6a3f) ; $69d8
 	sub a, l ; $69da
 	ld h, a ; $69db
 	ld a, [hl] ; $69dc
@@ -4164,17 +3944,17 @@ ReturnToTargetBriefing_AdvanceAnim:
 	ld a, b ; $69e4
 	ld [$d81d], a ; $69e5
 	ld a, [$d82e] ; $69e8
-	add a, $4f ; $69eb
+	add a, LOW(Data_17_6a4f) ; $69eb
 	ld l, a ; $69ed
-	adc a, $6a ; $69ee
+	adc a, HIGH(Data_17_6a4f) ; $69ee
 	sub a, l ; $69f0
 	ld h, a ; $69f1
 	ld a, [hl] ; $69f2
 	ld [$d827], a ; $69f3
 	ld a, c ; $69f6
-	add a, $53 ; $69f7
+	add a, LOW(Data_17_6a53) ; $69f7
 	ld l, a ; $69f9
-	adc a, $6a ; $69fa
+	adc a, HIGH(Data_17_6a53) ; $69fa
 	sub a, l ; $69fc
 	ld h, a ; $69fd
 	ld a, [hl] ; $69fe
@@ -4187,7 +3967,7 @@ ReturnToTargetBriefing_AdvanceAnim:
 	ld [$d819], a ; $6a07
 	ret ; $6a0a
 ReturnToTargetBriefing_AdvanceAnimTable:
-	; $6a0b, 104 bytes (records:2)
+	; $6a0b, 16 bytes (records:2)
 	dw $0055 ; record 0
 	dw $0044 ; record 1
 	dw $003a ; record 2
@@ -4196,50 +3976,20 @@ ReturnToTargetBriefing_AdvanceAnimTable:
 	dw $0003 ; record 5
 	dw $0055 ; record 6
 	dw $0003 ; record 7
-	dw $003a ; record 8
-	dw $0003 ; record 9
-	dw $0055 ; record 10
-	dw $0003 ; record 11
-	dw $0055 ; record 12
-	dw $0044 ; record 13
-	dw $003a ; record 14
-	dw $0044 ; record 15
-	dw $0050 ; record 16
-	dw $0037 ; record 17
-	dw $0054 ; record 18
-	dw $0037 ; record 19
-	dw $0054 ; record 20
-	dw $0028 ; record 21
-	dw $0050 ; record 22
-	dw $0028 ; record 23
-	dw $0100 ; record 24
-	dw $0001 ; record 25
-	dw $003a ; record 26
-	dw $0014 ; record 27
-	dw $0064 ; record 28
-	dw $0014 ; record 29
-	dw $0064 ; record 30
-	dw $0044 ; record 31
-	dw $003a ; record 32
-	dw $0044 ; record 33
-	dw $0003 ; record 34
-	dw $0201 ; record 35
-	dw $0054 ; record 36
-	dw $003d ; record 37
-	dw $004c ; record 38
-	dw $003d ; record 39
-	dw $004c ; record 40
-	dw $0016 ; record 41
-	dw $0054 ; record 42
-	dw $0016 ; record 43
-	dw $003e ; record 44
-	dw $0012 ; record 45
-	dw $0052 ; record 46
-	dw $0012 ; record 47
-	dw $0052 ; record 48
-	dw $0042 ; record 49
-	dw $003e ; record 50
-	dw $0042 ; record 51
+Data_17_6a1b:
+	INCLUDE "data/bank_017/text_6a1b.asm" ; $6a1b, 16 bytes
+Data_17_6a2b:
+	INCLUDE "data/bank_017/text_6a2b.asm" ; $6a2b, 16 bytes
+Data_17_6a3b:
+	INCBIN "data/bank_017/d_6a3b.bin" ; $6a3b, 4 bytes
+Data_17_6a3f:
+	INCBIN "data/bank_017/d_6a3f.bin" ; $6a3f, 16 bytes
+Data_17_6a4f:
+	INCBIN "data/bank_017/d_6a4f.bin" ; $6a4f, 4 bytes
+Data_17_6a53:
+	INCBIN "data/bank_017/d_6a53.bin" ; $6a53, 16 bytes
+Data_17_6a63:
+	INCBIN "data/bank_017/d_6a63.bin" ; $6a63, 16 bytes
 DrillBriefing_ReturnLob:
 	ld a, $55 ; $6a73
 	ld [$d810], a ; $6a75
@@ -4385,9 +4135,9 @@ ReturnLobBriefing_AdvanceAnim:
 	ld a, b ; $6bc7
 	ld [$d811], a ; $6bc8
 	ld a, c ; $6bcb
-	add a, $7e ; $6bcc
+	add a, LOW(Data_17_6c7e) ; $6bcc
 	ld l, a ; $6bce
-	adc a, $6c ; $6bcf
+	adc a, HIGH(Data_17_6c7e) ; $6bcf
 	sub a, l ; $6bd1
 	ld h, a ; $6bd2
 	ld a, [hl] ; $6bd3
@@ -4399,9 +4149,9 @@ ReturnLobBriefing_AdvanceAnim:
 	ld a, b ; $6bdb
 	ld [$d813], a ; $6bdc
 	ld a, c ; $6bdf
-	add a, $c6 ; $6be0
+	add a, LOW(Data_17_6cc6) ; $6be0
 	ld l, a ; $6be2
-	adc a, $6c ; $6be3
+	adc a, HIGH(Data_17_6cc6) ; $6be3
 	sub a, l ; $6be5
 	ld h, a ; $6be6
 	ld a, [hl] ; $6be7
@@ -4413,9 +4163,9 @@ ReturnLobBriefing_AdvanceAnim:
 	ld a, b ; $6bef
 	ld [$d829], a ; $6bf0
 	ld a, c ; $6bf3
-	add a, $8e ; $6bf4
+	add a, LOW(Data_17_6c8e) ; $6bf4
 	ld l, a ; $6bf6
-	adc a, $6c ; $6bf7
+	adc a, HIGH(Data_17_6c8e) ; $6bf7
 	sub a, l ; $6bf9
 	ld h, a ; $6bfa
 	ld a, [hl] ; $6bfb
@@ -4427,17 +4177,17 @@ ReturnLobBriefing_AdvanceAnim:
 	ld a, b ; $6c03
 	ld [$d81f], a ; $6c04
 	ld a, [$d82e] ; $6c07
-	add a, $9e ; $6c0a
+	add a, LOW(Data_17_6c9e) ; $6c0a
 	ld l, a ; $6c0c
-	adc a, $6c ; $6c0d
+	adc a, HIGH(Data_17_6c9e) ; $6c0d
 	sub a, l ; $6c0f
 	ld h, a ; $6c10
 	ld a, [hl] ; $6c11
 	ld [$d82d], a ; $6c12
 	ld a, c ; $6c15
-	add a, $a2 ; $6c16
+	add a, LOW(Data_17_6ca2) ; $6c16
 	ld l, a ; $6c18
-	adc a, $6c ; $6c19
+	adc a, HIGH(Data_17_6ca2) ; $6c19
 	sub a, l ; $6c1b
 	ld h, a ; $6c1c
 	ld a, [hl] ; $6c1d
@@ -4449,17 +4199,17 @@ ReturnLobBriefing_AdvanceAnim:
 	ld a, b ; $6c25
 	ld [$d81d], a ; $6c26
 	ld a, [$d82e] ; $6c29
-	add a, $b2 ; $6c2c
+	add a, LOW(Data_17_6cb2) ; $6c2c
 	ld l, a ; $6c2e
-	adc a, $6c ; $6c2f
+	adc a, HIGH(Data_17_6cb2) ; $6c2f
 	sub a, l ; $6c31
 	ld h, a ; $6c32
 	ld a, [hl] ; $6c33
 	ld [$d827], a ; $6c34
 	ld a, c ; $6c37
-	add a, $b6 ; $6c38
+	add a, LOW(Data_17_6cb6) ; $6c38
 	ld l, a ; $6c3a
-	adc a, $6c ; $6c3b
+	adc a, HIGH(Data_17_6cb6) ; $6c3b
 	sub a, l ; $6c3d
 	ld h, a ; $6c3e
 	ld a, [hl] ; $6c3f
@@ -4471,17 +4221,17 @@ ReturnLobBriefing_AdvanceAnim:
 	ld a, b ; $6c47
 	ld [$d819], a ; $6c48
 	ld a, [$d82e] ; $6c4b
-	add a, $d6 ; $6c4e
+	add a, LOW(Data_17_6cd6) ; $6c4e
 	ld l, a ; $6c50
-	adc a, $6c ; $6c51
+	adc a, HIGH(Data_17_6cd6) ; $6c51
 	sub a, l ; $6c53
 	ld h, a ; $6c54
 	ld a, [hl] ; $6c55
 	ld [$d822], a ; $6c56
 	ld a, c ; $6c59
-	add a, $da ; $6c5a
+	add a, LOW(Data_17_6cda) ; $6c5a
 	ld l, a ; $6c5c
-	adc a, $6c ; $6c5d
+	adc a, HIGH(Data_17_6cda) ; $6c5d
 	sub a, l ; $6c5f
 	ld h, a ; $6c60
 	ld a, [hl] ; $6c61
@@ -4494,7 +4244,7 @@ ReturnLobBriefing_AdvanceAnim:
 	ld [$d815], a ; $6c6a
 	ret ; $6c6d
 ReturnLobBriefing_AdvanceAnimTable:
-	; $6c6e, 124 bytes (records:2)
+	; $6c6e, 16 bytes (records:2)
 	dw $0055 ; record 0
 	dw $0044 ; record 1
 	dw $003a ; record 2
@@ -4503,60 +4253,24 @@ ReturnLobBriefing_AdvanceAnimTable:
 	dw $0003 ; record 5
 	dw $0055 ; record 6
 	dw $0003 ; record 7
-	dw $003a ; record 8
-	dw $0003 ; record 9
-	dw $0055 ; record 10
-	dw $0003 ; record 11
-	dw $0055 ; record 12
-	dw $0044 ; record 13
-	dw $003a ; record 14
-	dw $0044 ; record 15
-	dw $0050 ; record 16
-	dw $0037 ; record 17
-	dw $0054 ; record 18
-	dw $0037 ; record 19
-	dw $0054 ; record 20
-	dw $0028 ; record 21
-	dw $0050 ; record 22
-	dw $0028 ; record 23
-	dw $0100 ; record 24
-	dw $0001 ; record 25
-	dw $003a ; record 26
-	dw $0014 ; record 27
-	dw $0064 ; record 28
-	dw $0014 ; record 29
-	dw $0064 ; record 30
-	dw $0044 ; record 31
-	dw $003a ; record 32
-	dw $0044 ; record 33
-	dw $0003 ; record 34
-	dw $0201 ; record 35
-	dw $0054 ; record 36
-	dw $003d ; record 37
-	dw $004c ; record 38
-	dw $003d ; record 39
-	dw $004c ; record 40
-	dw $0016 ; record 41
-	dw $0054 ; record 42
-	dw $0016 ; record 43
-	dw $003e ; record 44
-	dw $0012 ; record 45
-	dw $0052 ; record 46
-	dw $0012 ; record 47
-	dw $0052 ; record 48
-	dw $0042 ; record 49
-	dw $003e ; record 50
-	dw $0042 ; record 51
-	dw $0003 ; record 52
-	dw $0300 ; record 53
-	dw $002f ; record 54
-	dw $0044 ; record 55
-	dw $0049 ; record 56
-	dw $0044 ; record 57
-	dw $0049 ; record 58
-	dw $0003 ; record 59
-	dw $002f ; record 60
-	dw $0003 ; record 61
+Data_17_6c7e:
+	INCLUDE "data/bank_017/text_6c7e.asm" ; $6c7e, 16 bytes
+Data_17_6c8e:
+	INCLUDE "data/bank_017/text_6c8e.asm" ; $6c8e, 16 bytes
+Data_17_6c9e:
+	INCBIN "data/bank_017/d_6c9e.bin" ; $6c9e, 4 bytes
+Data_17_6ca2:
+	INCBIN "data/bank_017/d_6ca2.bin" ; $6ca2, 16 bytes
+Data_17_6cb2:
+	INCBIN "data/bank_017/d_6cb2.bin" ; $6cb2, 4 bytes
+Data_17_6cb6:
+	INCBIN "data/bank_017/d_6cb6.bin" ; $6cb6, 16 bytes
+Data_17_6cc6:
+	INCBIN "data/bank_017/d_6cc6.bin" ; $6cc6, 16 bytes
+Data_17_6cd6:
+	INCBIN "data/bank_017/d_6cd6.bin" ; $6cd6, 4 bytes
+Data_17_6cda:
+	INCLUDE "data/bank_017/text_6cda.asm" ; $6cda, 16 bytes
 DrillBriefing_ReturnDownLine:
 	ld a, $55 ; $6cea
 	ld [$d810], a ; $6cec
@@ -4696,9 +4410,9 @@ ReturnDownLineBriefing_AdvanceAnim:
 	ld a, b ; $6e2e
 	ld [$d811], a ; $6e2f
 	ld a, c ; $6e32
-	add a, $c3 ; $6e33
+	add a, LOW(Data_17_6ec3) ; $6e33
 	ld l, a ; $6e35
-	adc a, $6e ; $6e36
+	adc a, HIGH(Data_17_6ec3) ; $6e36
 	sub a, l ; $6e38
 	ld h, a ; $6e39
 	ld a, [hl] ; $6e3a
@@ -4710,9 +4424,9 @@ ReturnDownLineBriefing_AdvanceAnim:
 	ld a, b ; $6e42
 	ld [$d813], a ; $6e43
 	ld a, c ; $6e46
-	add a, $0b ; $6e47
+	add a, LOW(Data_17_6f0b) ; $6e47
 	ld l, a ; $6e49
-	adc a, $6f ; $6e4a
+	adc a, HIGH(Data_17_6f0b) ; $6e4a
 	sub a, l ; $6e4c
 	ld h, a ; $6e4d
 	ld a, [hl] ; $6e4e
@@ -4724,9 +4438,9 @@ ReturnDownLineBriefing_AdvanceAnim:
 	ld a, b ; $6e56
 	ld [$d829], a ; $6e57
 	ld a, c ; $6e5a
-	add a, $d3 ; $6e5b
+	add a, LOW(Data_17_6ed3) ; $6e5b
 	ld l, a ; $6e5d
-	adc a, $6e ; $6e5e
+	adc a, HIGH(Data_17_6ed3) ; $6e5e
 	sub a, l ; $6e60
 	ld h, a ; $6e61
 	ld a, [hl] ; $6e62
@@ -4738,17 +4452,17 @@ ReturnDownLineBriefing_AdvanceAnim:
 	ld a, b ; $6e6a
 	ld [$d81f], a ; $6e6b
 	ld a, [$d82e] ; $6e6e
-	add a, $e3 ; $6e71
+	add a, LOW(Data_17_6ee3) ; $6e71
 	ld l, a ; $6e73
-	adc a, $6e ; $6e74
+	adc a, HIGH(Data_17_6ee3) ; $6e74
 	sub a, l ; $6e76
 	ld h, a ; $6e77
 	ld a, [hl] ; $6e78
 	ld [$d82d], a ; $6e79
 	ld a, c ; $6e7c
-	add a, $e7 ; $6e7d
+	add a, LOW(Data_17_6ee7) ; $6e7d
 	ld l, a ; $6e7f
-	adc a, $6e ; $6e80
+	adc a, HIGH(Data_17_6ee7) ; $6e80
 	sub a, l ; $6e82
 	ld h, a ; $6e83
 	ld a, [hl] ; $6e84
@@ -4760,17 +4474,17 @@ ReturnDownLineBriefing_AdvanceAnim:
 	ld a, b ; $6e8c
 	ld [$d81d], a ; $6e8d
 	ld a, [$d82e] ; $6e90
-	add a, $f7 ; $6e93
+	add a, LOW(Data_17_6ef7) ; $6e93
 	ld l, a ; $6e95
-	adc a, $6e ; $6e96
+	adc a, HIGH(Data_17_6ef7) ; $6e96
 	sub a, l ; $6e98
 	ld h, a ; $6e99
 	ld a, [hl] ; $6e9a
 	ld [$d825], a ; $6e9b
 	ld a, c ; $6e9e
-	add a, $fb ; $6e9f
+	add a, LOW(Data_17_6efb) ; $6e9f
 	ld l, a ; $6ea1
-	adc a, $6e ; $6ea2
+	adc a, HIGH(Data_17_6efb) ; $6ea2
 	sub a, l ; $6ea4
 	ld h, a ; $6ea5
 	ld a, [hl] ; $6ea6
@@ -4783,7 +4497,7 @@ ReturnDownLineBriefing_AdvanceAnim:
 	ld [$d824], a ; $6eaf
 	ret ; $6eb2
 ReturnDownLineBriefing_AdvanceAnimTable:
-	; $6eb3, 104 bytes (records:2)
+	; $6eb3, 16 bytes (records:2)
 	dw $0055 ; record 0
 	dw $0044 ; record 1
 	dw $003a ; record 2
@@ -4792,50 +4506,20 @@ ReturnDownLineBriefing_AdvanceAnimTable:
 	dw $0003 ; record 5
 	dw $0055 ; record 6
 	dw $0003 ; record 7
-	dw $003a ; record 8
-	dw $0003 ; record 9
-	dw $0055 ; record 10
-	dw $0003 ; record 11
-	dw $0055 ; record 12
-	dw $0044 ; record 13
-	dw $003a ; record 14
-	dw $0044 ; record 15
-	dw $0061 ; record 16
-	dw $002f ; record 17
-	dw $0043 ; record 18
-	dw $002f ; record 19
-	dw $0043 ; record 20
-	dw $002c ; record 21
-	dw $0061 ; record 22
-	dw $002c ; record 23
-	dw $0001 ; record 24
-	dw $0100 ; record 25
-	dw $0064 ; record 26
-	dw $0014 ; record 27
-	dw $003a ; record 28
-	dw $0014 ; record 29
-	dw $003a ; record 30
-	dw $0044 ; record 31
-	dw $0064 ; record 32
-	dw $0044 ; record 33
-	dw $0000 ; record 34
-	dw $0101 ; record 35
-	dw $005f ; record 36
-	dw $0034 ; record 37
-	dw $0042 ; record 38
-	dw $0034 ; record 39
-	dw $0042 ; record 40
-	dw $001c ; record 41
-	dw $005f ; record 42
-	dw $001c ; record 43
-	dw $005d ; record 44
-	dw $0012 ; record 45
-	dw $003e ; record 46
-	dw $0012 ; record 47
-	dw $003e ; record 48
-	dw $0042 ; record 49
-	dw $005d ; record 50
-	dw $0042 ; record 51
+Data_17_6ec3:
+	INCLUDE "data/bank_017/text_6ec3.asm" ; $6ec3, 16 bytes
+Data_17_6ed3:
+	INCLUDE "data/bank_017/text_6ed3.asm" ; $6ed3, 16 bytes
+Data_17_6ee3:
+	INCBIN "data/bank_017/d_6ee3.bin" ; $6ee3, 4 bytes
+Data_17_6ee7:
+	INCBIN "data/bank_017/d_6ee7.bin" ; $6ee7, 16 bytes
+Data_17_6ef7:
+	INCBIN "data/bank_017/d_6ef7.bin" ; $6ef7, 4 bytes
+Data_17_6efb:
+	INCBIN "data/bank_017/d_6efb.bin" ; $6efb, 16 bytes
+Data_17_6f0b:
+	INCBIN "data/bank_017/d_6f0b.bin" ; $6f0b, 16 bytes
 ShowRulesScreen:
 	push af ; $6f1b
 	wram_bank $03 ; $6f1c

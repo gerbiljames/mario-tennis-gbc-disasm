@@ -354,14 +354,15 @@ HandleBallHitEvent:
 	ret ; $430e
 SetCharStateOnBallHit:
 	ld a, [wCharState] ; $430f
-	add a, $1e ; $4312
+	add a, LOW(Data_08_431e) ; $4312
 	ld l, a ; $4314
-	adc a, $43 ; $4315
+	adc a, HIGH(Data_08_431e) ; $4315
 	sub a, l ; $4317
 	ld h, a ; $4318
 	ld a, [hl] ; $4319
 	call SetCharState ; $431a
 	ret ; $431d
+Data_08_431e:
 	; $431e, 8 bytes (bytes:8)
 	db $00, $02, $01, $02, $02, $01, $06, $07 ; 0x00
 DetectServeAceOutcome:
@@ -1071,14 +1072,15 @@ CheckSetComplete:
 InitTiebreakPointCounter:
 	ld a, [wTotalGamesWonInMatch] ; $47cd
 	and a, $03 ; $47d0
-	add a, $de ; $47d2
+	add a, LOW(Data_08_47de) ; $47d2
 	ld l, a ; $47d4
-	adc a, $47 ; $47d5
+	adc a, HIGH(Data_08_47de) ; $47d5
 	sub a, l ; $47d7
 	ld h, a ; $47d8
 	ld a, [hl] ; $47d9
 	ld [wTotalPointsScoredInCurrentGame], a ; $47da
 	ret ; $47dd
+Data_08_47de:
 	; $47de, 4 bytes (bytes:4)
 	db $00, $12, $0c, $06 ; 0x00
 AssignCourtPositions:
@@ -2367,9 +2369,9 @@ DrawLandingMarker:
 	call QueueSprite16 ; $535d
 	ldh a, [$ffe9] ; $5360
 	and a, $0f ; $5362
-	add a, $73 ; $5364
+	add a, LOW(Data_08_5373) ; $5364
 	ld l, a ; $5366
-	adc a, $53 ; $5367
+	adc a, HIGH(Data_08_5373) ; $5367
 	sub a, l ; $5369
 	ld h, a ; $536a
 	ld a, [hl] ; $536b
@@ -2377,6 +2379,7 @@ DrawLandingMarker:
 	ret z ; $536e
 	farcall LoadBallTouchCharEffectTilesB ; $536f
 	ret ; $5372
+Data_08_5373:
 	; $5373, 16 bytes (bytes:8)
 	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $00 ; 0x00
 	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $01 ; 0x08
@@ -2513,9 +2516,9 @@ DrawSpecialHitEffect:
 	ld hl, wSpecialHitTimer ; $5454
 	call TickTimer ; $5457
 	ld a, [wSpecialHitTimer] ; $545a
-	add a, $6c ; $545d
+	add a, LOW(Data_08_546c) ; $545d
 	ld l, a ; $545f
-	adc a, $54 ; $5460
+	adc a, HIGH(Data_08_546c) ; $5460
 	sub a, l ; $5462
 	ld h, a ; $5463
 	ld a, [hl] ; $5464
@@ -2523,6 +2526,7 @@ DrawSpecialHitEffect:
 	ret z ; $5467
 	farcall LoadSpecialHitEffectTiles ; $5468
 	ret ; $546b
+Data_08_546c:
 	; $546c, 16 bytes (bytes:4)
 	db $ff, $ff, $ff, $03 ; 0x00
 	db $ff, $ff, $ff, $02 ; 0x04
@@ -2552,9 +2556,9 @@ DrawBallTouchCharEffect:
 	ld hl, wBallTouchCharTimer ; $54aa
 	call TickTimer ; $54ad
 	ld a, [wBallTouchCharTimer] ; $54b0
-	add a, $c2 ; $54b3
+	add a, LOW(Data_08_54c2) ; $54b3
 	ld l, a ; $54b5
-	adc a, $54 ; $54b6
+	adc a, HIGH(Data_08_54c2) ; $54b6
 	sub a, l ; $54b8
 	ld h, a ; $54b9
 	ld a, [hl] ; $54ba
@@ -2562,6 +2566,7 @@ DrawBallTouchCharEffect:
 	ret z ; $54bd
 	farcall LoadBallTouchCharEffectTilesA ; $54be
 	ret ; $54c1
+Data_08_54c2:
 	; $54c2, 40 bytes (bytes:8)
 	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $00 ; 0x00
 	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $01 ; 0x08
@@ -3979,6 +3984,7 @@ ResolvePointWinner:
 	add a, a ; $5dc1
 	dec a ; $5dc2
 	ret ; $5dc3
+Data_08_5dc4:
 	; $5dc4, 100 bytes (bytes:4)
 	db $cd, $cd, $05, $21 ; 0x00
 	db $b3, $99, $04, $22 ; 0x04
@@ -4015,9 +4021,9 @@ LoadCourtSceneData:
 	ld a, [wCurrentlyUsedCourt] ; $5e31
 	add a, a ; $5e34
 	add a, a ; $5e35
-	add a, $c4 ; $5e36
+	add a, LOW(Data_08_5dc4) ; $5e36
 	ld l, a ; $5e38
-	adc a, $5d ; $5e39
+	adc a, HIGH(Data_08_5dc4) ; $5e39
 	sub a, l ; $5e3b
 	ld h, a ; $5e3c
 	ld a, [hl+] ; $5e3d
@@ -4316,9 +4322,9 @@ GetCharBaseCourtPosition:
 	ld a, [wCharServeRole] ; $6098
 	add a, a ; $609b
 	add a, a ; $609c
-	add a, $c8 ; $609d
+	add a, LOW(Data_08_60c8) ; $609d
 	ld l, a ; $609f
-	adc a, $60 ; $60a0
+	adc a, HIGH(Data_08_60c8) ; $60a0
 	sub a, l ; $60a2
 	ld h, a ; $60a3
 	ld a, [hl+] ; $60a4
@@ -4351,6 +4357,7 @@ GetCharBaseCourtPosition:
 	ld h, a ; $60c6
 .done:
 	ret ; $60c7
+Data_08_60c8:
 	; $60c8, 16 bytes (records:4)
 ; 4 records x 4 bytes
 	dw $0120, $04e0 ; record 0
@@ -4361,9 +4368,9 @@ GetCharChangeoverPosition:
 	ld a, [wCharServeRole] ; $60d8
 	add a, a ; $60db
 	add a, a ; $60dc
-	add a, $07 ; $60dd
+	add a, LOW(Data_08_6107) ; $60dd
 	ld l, a ; $60df
-	adc a, $61 ; $60e0
+	adc a, HIGH(Data_08_6107) ; $60e0
 	sub a, l ; $60e2
 	ld h, a ; $60e3
 	ld a, [hl+] ; $60e4
@@ -4396,6 +4403,7 @@ GetCharChangeoverPosition:
 	ld h, a ; $6105
 .done:
 	ret ; $6106
+Data_08_6107:
 	; $6107, 16 bytes (records:4)
 ; 4 records x 4 bytes
 	dw $0300, $0240 ; record 0
@@ -6608,14 +6616,15 @@ CheckBallInSwingRange:
 	ret ; $706a
 SelectServeShotType:
 	ld a, [$df16] ; $706b
-	add a, $7a ; $706e
+	add a, LOW(Data_08_707a) ; $706e
 	ld l, a ; $7070
-	adc a, $70 ; $7071
+	adc a, HIGH(Data_08_707a) ; $7071
 	sub a, l ; $7073
 	ld h, a ; $7074
 	ld a, [hl] ; $7075
 	ld [$df14], a ; $7076
 	ret ; $7079
+Data_08_707a:
 	; $707a, 4 bytes (enum:SHOTTYPE:4)
 	db SHOTTYPE_SERVE_TOPSPIN, SHOTTYPE_SERVE_TOPSPIN, SHOTTYPE_SERVE_SLICE, SHOTTYPE_SERVE_FLAT ; 0x00
 SelectRallyShotType:
@@ -6790,9 +6799,9 @@ ApplyCharMovementInput:
 	and a, $f0 ; $719d
 	jr z, .done ; $719f
 	swap a ; $71a1
-	add a, $86 ; $71a3
+	add a, LOW(Data_08_7286) ; $71a3
 	ld l, a ; $71a5
-	adc a, $72 ; $71a6
+	adc a, HIGH(Data_08_7286) ; $71a6
 	sub a, l ; $71a8
 	ld h, a ; $71a9
 	ld a, [hl] ; $71aa
@@ -6830,9 +6839,9 @@ HandleServePositioning:
 	and a, PADF_RIGHT | PADF_LEFT ; $71e6
 	jr z, .done ; $71e8
 	swap a ; $71ea
-	add a, $86 ; $71ec
+	add a, LOW(Data_08_7286) ; $71ec
 	ld l, a ; $71ee
-	adc a, $72 ; $71ef
+	adc a, HIGH(Data_08_7286) ; $71ef
 	sub a, l ; $71f1
 	ld h, a ; $71f2
 	ld a, [hl] ; $71f3
@@ -6878,9 +6887,9 @@ HandleServePositioning:
 	and a, PADF_RIGHT | PADF_LEFT ; $722c
 	jr z, .receiverDone ; $722e
 	swap a ; $7230
-	add a, $86 ; $7232
+	add a, LOW(Data_08_7286) ; $7232
 	ld l, a ; $7234
-	adc a, $72 ; $7235
+	adc a, HIGH(Data_08_7286) ; $7235
 	sub a, l ; $7237
 	ld h, a ; $7238
 	ld a, [hl] ; $7239
@@ -6934,11 +6943,12 @@ CheckSwingRelease:
 	inc [hl] ; $7283
 	xor a, a ; $7284
 	ret ; $7285
-	; $7286, 32 bytes (bytes:8)
+Data_08_7286:
+	; $7286, 16 bytes (bytes:8)
 	db $ff, $00, $80, $ff, $c0, $e0, $a0, $c0 ; 0x00
 	db $40, $20, $60, $40, $ff, $00, $80, $ff ; 0x08
-	db $10, $90, $90, $80, $80, $a0, $a0, $20 ; 0x10
-	db $20, $60, $60, $40, $40, $50, $50, $10 ; 0x18
+Data_08_7296:
+	INCBIN "data/bank_008/d_7296.bin" ; $7296, 16 bytes
 StepCharJumpPhysics:
 	ld hl, wCharFlags ; $72a6
 	bit 2, [hl] ; $72a9
@@ -7509,9 +7519,9 @@ ReloadCharFacingTiles:
 	ret z ; $7626
 	res 6, [hl] ; $7627
 	ld a, d ; $7629
-	add a, $43 ; $762a
+	add a, LOW(Data_08_7643) ; $762a
 	ld l, a ; $762c
-	adc a, $76 ; $762d
+	adc a, HIGH(Data_08_7643) ; $762d
 	sub a, l ; $762f
 	ld h, a ; $7630
 	ld d, [hl] ; $7631
@@ -7527,6 +7537,7 @@ ReloadCharFacingTiles:
 	ld e, l ; $763e
 	ld d, h ; $763f
 	jp GetPerspectiveScale.checkRomBank ; $7640
+Data_08_7643:
 	; $7643, 8 bytes (bytes:8)
 	db $02, $03, $04, $03, $02, $01, $00, $01 ; 0x00
 UpdateChargeFlash:
@@ -7590,9 +7601,9 @@ BuildCharSpriteSlots:
 	add a, $80 ; $76a8
 	ld [wCharDepthKey], a ; $76aa
 	ld a, [$df32] ; $76ad
-	add a, $fc ; $76b0
+	add a, LOW(Data_08_76fc) ; $76b0
 	ld l, a ; $76b2
-	adc a, $76 ; $76b3
+	adc a, HIGH(Data_08_76fc) ; $76b3
 	sub a, l ; $76b5
 	ld h, a ; $76b6
 	ld a, [$df37] ; $76b7
@@ -7639,6 +7650,7 @@ BuildCharSpriteSlots:
 	ld [hl+], a ; $76f9
 	ld [hl], d ; $76fa
 	ret ; $76fb
+Data_08_76fc:
 	; $76fc, 8 bytes (bytes:8)
 	db $00, $00, $00, $20, $20, $20, $00, $00 ; 0x00
 DrawOffscreenCharArrow:
@@ -8008,9 +8020,9 @@ AiSteerTowardTarget:
 	call AngleFromVectorCoarse ; $792c
 	swap a ; $792f
 	and a, $0f ; $7931
-	add a, $96 ; $7933
+	add a, LOW(Data_08_7296) ; $7933
 	ld l, a ; $7935
-	adc a, $72 ; $7936
+	adc a, HIGH(Data_08_7296) ; $7936
 	sub a, l ; $7938
 	ld h, a ; $7939
 	ld a, [$df1f] ; $793a
@@ -8030,9 +8042,9 @@ AiSteerTowardBall:
 	call AngleFromVectorCoarse ; $7950
 	swap a ; $7953
 	and a, $0f ; $7955
-	add a, $96 ; $7957
+	add a, LOW(Data_08_7296) ; $7957
 	ld l, a ; $7959
-	adc a, $72 ; $795a
+	adc a, HIGH(Data_08_7296) ; $795a
 	sub a, l ; $795c
 	ld h, a ; $795d
 	ld a, [$df1f] ; $795e
@@ -8272,9 +8284,9 @@ AiApplyServeAim:
 .randomAim:
 	call AdvanceMatchRng ; $7af5
 	and a, $07 ; $7af8
-	add a, $0b ; $7afa
+	add a, LOW(Data_08_7b0b) ; $7afa
 	ld l, a ; $7afc
-	adc a, $7b ; $7afd
+	adc a, HIGH(Data_08_7b0b) ; $7afd
 	sub a, l ; $7aff
 	ld h, a ; $7b00
 	ld b, [hl] ; $7b01
@@ -8285,6 +8297,7 @@ AiApplyServeAim:
 	or a, b ; $7b08
 	ld [hl], a ; $7b09
 	ret ; $7b0a
+Data_08_7b0b:
 	; $7b0b, 8 bytes (bytes:8)
 	db $10, $10, $10, $10, $20, $20, $20, $20 ; 0x00
 AiMaybeAimAwayFromChar:
@@ -8340,14 +8353,15 @@ AiAimAwayFromChar:
 AiPickServeButtons:
 	call AdvanceMatchRng ; $7b62
 	and a, $07 ; $7b65
-	add a, $73 ; $7b67
+	add a, LOW(Data_08_7b73) ; $7b67
 	ld l, a ; $7b69
-	adc a, $7b ; $7b6a
+	adc a, HIGH(Data_08_7b73) ; $7b6a
 	sub a, l ; $7b6c
 	ld h, a ; $7b6d
 	ld a, [hl] ; $7b6e
 	ld [$df58], a ; $7b6f
 	ret ; $7b72
+Data_08_7b73:
 	; $7b73, 8 bytes (bytes:8)
 	db $10, $10, $10, $20, $20, $30, $30, $30 ; 0x00
 AiPickShotButtons:

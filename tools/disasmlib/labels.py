@@ -12,7 +12,7 @@ from .rom import BANK_SIZE, offset_to_cpu, target_to_offset
 from .seeds import (ACTOR_HANDLER_INSTALL, FRAME_TASK_REGISTER,
                     actor_handler_targets, frame_task_targets,
                     map_script_code_targets, minigame_config_init_targets,
-                    pointer_table_targets)
+                    pointer_table_targets, split_base_targets)
 
 
 VECTOR_LABELS = {
@@ -104,6 +104,13 @@ def build_labels(dis, overrides=None, data_tables=None, ptr_sites=None):
     table_ptrs = {t for t in pointer_table_targets(dis.rom, dt, dis.instrs,
                                                    labels)
                   if t in dis.instrs or t not in dis.code_bytes}
+    # Tables reached by split-base arithmetic; their address is never a word,
+    # so this is the only pass that sees them. Data only: the idiom builds a
+    # table base, so a hit inside code is a false positive, and naming one
+    # there re-parents any curated local after it into a region whose labels
+    # are never emitted.
+    table_ptrs |= {t for t in split_base_targets(dis)
+                   if t not in dis.code_bytes}
     for target in table_ptrs:
         if target in labels:
             continue

@@ -790,33 +790,12 @@ TennisMachine1Hook_BallHit:
 	call FreezeMinigameOpponentOnReturn ; $4542
 	ret ; $4545
 MinigameShotDifficultyRamp:
-	; $4546, 104 bytes (bytes:4)
-	db $01, $01, $01, $01 ; 0x00
-	db $02, $01, $01, $01 ; 0x04
-	db $03, $01, $02, $01 ; 0x08
-	db $03, $01, $02, $01 ; 0x0c
-	db $03, $02, $03, $01 ; 0x10
-	db $04, $02, $03, $01 ; 0x14
-	db $04, $02, $04, $01 ; 0x18
-	db $04, $03, $04, $01 ; 0x1c
-	db $05, $03, $05, $01 ; 0x20
-	db $05, $03, $05, $01 ; 0x24
-	db $05, $04, $06, $01 ; 0x28
-	db $05, $04, $06, $01 ; 0x2c
-	db $05, $04, $07, $01 ; 0x30
-	db $05, $04, $07, $01 ; 0x34
-	db $05, $04, $08, $01 ; 0x38
-	db $05, $04, $08, $01 ; 0x3c
-	db $05, $04, $09, $01 ; 0x40
-	db $05, $04, $09, $01 ; 0x44
-	db $05, $04, $0a, $01 ; 0x48
-	db $05, $04, $0a, $01 ; 0x4c
-	db $05, $04, $0a, $01 ; 0x50
-	db $05, $04, $0a, $01 ; 0x54
-	db $05, $04, $0a, $01 ; 0x58
-	db $05, $04, $0a, $01 ; 0x5c
-	db $05, $04, $0a, $01 ; 0x60
-	db $05, $04, $0a, $01 ; 0x64
+	; $4546, 1 bytes (bytes:4)
+	db $01 ; 0x00
+Data_0d_4547:
+	db $01 ; $4547
+Data_0d_4548:
+	INCBIN "data/bank_00d/d_4548.bin" ; $4548, 102 bytes
 MinigameShotIntervalByTempo:
 	; $45ae, 5 bytes (bytes:5)
 	db $28, $28, $1e, $14, $0a ; 0x00
@@ -977,9 +956,9 @@ EndMinigamePoint:
 	ld a, [$c784] ; $4779
 	add a, a ; $477c
 	add a, a ; $477d
-	add a, $47 ; $477e
+	add a, LOW(Data_0d_4547) ; $477e
 	ld l, a ; $4780
-	adc a, $45 ; $4781
+	adc a, HIGH(Data_0d_4547) ; $4781
 	sub a, l ; $4783
 	ld h, a ; $4784
 	ld a, [hl] ; $4785
@@ -1059,9 +1038,9 @@ LaunchBall:
 	ld a, [$c784] ; $4820
 	add a, a ; $4823
 	add a, a ; $4824
-	add a, $48 ; $4825
+	add a, LOW(Data_0d_4548) ; $4825
 	ld l, a ; $4827
-	adc a, $45 ; $4828
+	adc a, HIGH(Data_0d_4548) ; $4828
 	sub a, l ; $482a
 	ld h, a ; $482b
 	ld a, [hl] ; $482c

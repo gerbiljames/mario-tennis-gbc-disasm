@@ -1285,15 +1285,16 @@ LaunchWallPracticeMinigame:
 	ld [$c294], a ; $52a1
 	ld [wStoryModeExitLocationRequest], a ; $52a4
 	ld a, [$c2b0] ; $52a7
-	add a, $b9 ; $52aa
+	add a, LOW(Data_12_52b9) ; $52aa
 	ld l, a ; $52ac
-	adc a, $52 ; $52ad
+	adc a, HIGH(Data_12_52b9) ; $52ad
 	sub a, l ; $52af
 	ld h, a ; $52b0
 	ld a, [hl] ; $52b1
 	farcall RunTrainingDrillByID ; $52b2
 	farcall EndCutsceneScriptMode ; $52b5
 	ret ; $52b8
+Data_12_52b9:
 	; $52b9, 7 bytes (bytes:16)
 	db $16, $17, $18, $19, $1b, $1b, $1b ; 0x00
 RestoreWallPracticeRoomActors:
@@ -1951,9 +1952,9 @@ SeniorCourtNpc0C_12:
 	jr nz, .nonZero ; $5be1
 	ld a, [$c2b1] ; $5be3
 	add a, a ; $5be6
-	add a, $2f ; $5be7
+	add a, LOW(Data_12_5c2f) ; $5be7
 	ld l, a ; $5be9
-	adc a, $5c ; $5bea
+	adc a, HIGH(Data_12_5c2f) ; $5bea
 	sub a, l ; $5bec
 	ld h, a ; $5bed
 	ld a, [hl+] ; $5bee
@@ -1977,7 +1978,7 @@ SeniorCourtNpc0C_12:
 	script_speak $0c ; $5c0b
 	ret ; $5c10
 SeniorCourtNpc0CTextIds:
-	; $5c11, 60 bytes (text_ids)
+	; $5c11, 30 bytes (text_ids)
 	dw Text_34_22 ; record 0
 	dw Text_34_22 ; record 1
 	dw Text_34_46 ; record 2
@@ -1993,21 +1994,8 @@ SeniorCourtNpc0CTextIds:
 	dw Text_34_175 ; record 12
 	dw Text_34_184 ; record 13
 	dw Text_34_186 ; record 14
-	dw Text_34_23 ; record 15
-	dw Text_34_23 ; record 16
-	dw Text_34_47 ; record 17
-	dw Text_34_53 ; record 18
-	dw Text_34_53 ; record 19
-	dw Text_34_53 ; record 20
-	dw Text_34_108 ; record 21
-	dw Text_34_110 ; record 22
-	dw Text_34_110 ; record 23
-	dw Text_34_150 ; record 24
-	dw Text_34_158 ; record 25
-	dw Text_34_167 ; record 26
-	dw Text_34_175 ; record 27
-	dw Text_34_185 ; record 28
-	dw Text_34_186 ; record 29
+Data_12_5c2f:
+	INCBIN "data/bank_012/d_5c2f.bin" ; $5c2f, 30 bytes
 SeniorCourtNpcScripts_12:
 	; $5c4d, 121 bytes (map_scripts)
 	map_script $03, FACEMASK_RIGHT, $0840, SeniorCourtNpc03FaceRight_12, $01, $00

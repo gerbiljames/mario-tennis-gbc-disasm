@@ -3164,9 +3164,9 @@ DrawCharViewerCursorSprite:
 .nonZero:
 	ld a, [$d001] ; $6c44
 	rlca ; $6c47
-	add a, $95 ; $6c48
+	add a, LOW(Data_1a_6c95) ; $6c48
 	ld l, a ; $6c4a
-	adc a, $6c ; $6c4b
+	adc a, HIGH(Data_1a_6c95) ; $6c4b
 	sub a, l ; $6c4d
 	ld h, a ; $6c4e
 	ld a, [hl+] ; $6c4f
@@ -3187,11 +3187,12 @@ DrawCharViewerCursorSprite:
 	call QueueSprite ; $6c65
 	ret ; $6c68
 Data_1a_6c69:
-	; $6c69, 54 bytes (bytes:16)
+	; $6c69, 44 bytes (bytes:16)
 	db $50, $38, $50, $40, $50, $48, $50, $50, $50, $58, $50, $60, $50, $68, $50, $70 ; 0x00
 	db $50, $78, $50, $80, $50, $88, $58, $38, $58, $40, $58, $48, $58, $50, $58, $58 ; 0x10
-	db $58, $60, $58, $68, $58, $70, $58, $78, $58, $80, $58, $88, $78, $38, $78, $40 ; 0x20
-	db $78, $48, $78, $50, $78, $58 ; 0x30
+	db $58, $60, $58, $68, $58, $70, $58, $78, $58, $80, $58, $88 ; 0x20
+Data_1a_6c95:
+	INCBIN "data/bank_01a/d_6c95.bin" ; $6c95, 10 bytes
 RunCharViewerInputLoop:
 	call DrawCharViewerCharSprite ; $6c9f
 	wram_bank $06 ; $6ca2

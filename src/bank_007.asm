@@ -3509,9 +3509,9 @@ SetupCharacterSprite:
 	add a, $04 ; $5a7c
 	ld [$df37], a ; $5a7e
 	ld a, [wCharIndex] ; $5a81
-	add a, $af ; $5a84
+	add a, LOW(Data_07_5aaf) ; $5a84
 	ld l, a ; $5a86
-	adc a, $5a ; $5a87
+	adc a, HIGH(Data_07_5aaf) ; $5a87
 	sub a, l ; $5a89
 	ld h, a ; $5a8a
 	ld a, [hl] ; $5a8b
@@ -3533,13 +3533,13 @@ SetupCharacterSprite:
 	farcall ReloadCharFrameGfx ; $5aa3
 	ret ; $5aa6
 CharFrameGfxDest_07:
-	; $5aa7, 12 bytes (records:2)
+	; $5aa7, 8 bytes (records:2)
 	dw $a000 ; record 0
 	dw $a100 ; record 1
 	dw $a200 ; record 2
 	dw $a300 ; record 3
-	dw $1000 ; record 4
-	dw $3020 ; record 5
+Data_07_5aaf:
+	INCBIN "data/bank_007/d_5aaf.bin" ; $5aaf, 4 bytes
 LoadCharacterAttributes:
 	ld a, [wCharIndex] ; $5ab3
 	add a, a ; $5ab6

@@ -2757,9 +2757,9 @@ IslandOpenSinglesMatchReturn:
 	call WaitFadeEnd ; $74de
 	ld a, [$c2b0] ; $74e1
 	add a, a ; $74e4
-	add a, $99 ; $74e5
+	add a, LOW(Data_0f_7699) ; $74e5
 	ld l, a ; $74e7
-	adc a, $76 ; $74e8
+	adc a, HIGH(Data_0f_7699) ; $74e8
 	sub a, l ; $74ea
 	ld h, a ; $74eb
 	ld a, [hl+] ; $74ec
@@ -2835,9 +2835,9 @@ IslandOpenRoundSinglesNpc04_0f:
 IslandOpenRoundSinglesNpc03_0f:
 	ld a, [$c2b0] ; $7649
 	add a, a ; $764c
-	add a, $99 ; $764d
+	add a, LOW(Data_0f_7699) ; $764d
 	ld l, a ; $764f
-	adc a, $76 ; $7650
+	adc a, HIGH(Data_0f_7699) ; $7650
 	sub a, l ; $7652
 	ld h, a ; $7653
 	ld a, [hl+] ; $7654
@@ -2852,9 +2852,9 @@ IslandOpenRoundSinglesNpc05_0f:
 	ld a, [$c2b0] ; $766c
 	dec a ; $766f
 	add a, a ; $7670
-	add a, $91 ; $7671
+	add a, LOW(Data_0f_7691) ; $7671
 	ld l, a ; $7673
-	adc a, $76 ; $7674
+	adc a, HIGH(Data_0f_7691) ; $7674
 	sub a, l ; $7676
 	ld h, a ; $7677
 	ld a, [hl+] ; $7678
@@ -2866,16 +2866,14 @@ IslandOpenRoundSinglesNpc05_0f:
 	farcall ScriptWaitActorJumpDone ; $7688
 	script_speak $05 ; $768b
 	ret ; $7690
-	; $7691, 18 bytes (text_ids)
+Data_0f_7691:
+	; $7691, 8 bytes (text_ids)
 	dw Text_25_71 ; record 0
 	dw Text_25_75 ; record 1
 	dw Text_25_79 ; record 2
 	dw Text_25_79 ; record 3
-	dw Text_25_70 ; record 4
-	dw Text_25_70 ; record 5
-	dw Text_25_74 ; record 6
-	dw Text_25_78 ; record 7
-	dw Text_25_82 ; record 8
+Data_0f_7699:
+	INCBIN "data/bank_00f/d_7699.bin" ; $7699, 10 bytes
 	; $76a3, 1 bytes (bytes:1)
 	db $3e ; 0x00
 	inc b ; $76a4
