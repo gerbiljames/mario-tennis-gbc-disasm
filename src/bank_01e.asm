@@ -284,11 +284,11 @@ BuildResultsScreenPanels:
 	ld [$d0f2], a ; $42d1
 	ld [$d10f], a ; $42d4
 	ld [$d112], a ; $42d7
-	ld hl, $04d5 ; $42da
+	ld hl, Text_31_213 ; $42da
 	ld de, $d0f0 ; $42dd
 	ld bc, $0020 ; $42e0
 	call FetchAndDrawDialogueText ; $42e3
-	ld hl, $04d6 ; $42e6
+	ld hl, Text_31_214 ; $42e6
 	ld de, $d110 ; $42e9
 	ld bc, $0020 ; $42ec
 	call FetchAndDrawDialogueText ; $42ef
@@ -665,7 +665,7 @@ DrawSinglesPlayerNames:
 	call ShiftDestForLongName ; $460f
 	ld bc, $0020 ; $4612
 	call WriteTextToTilemap ; $4615
-	ld hl, $04d7 ; $4618
+	ld hl, Text_31_215 ; $4618
 	ld de, $d1c9 ; $461b
 	ld bc, $0020 ; $461e
 	call FetchAndDrawDialogueText ; $4621
@@ -688,7 +688,7 @@ DrawDoublesPlayerNames:
 	call ShiftDestForLongName ; $464f
 	ld bc, $0020 ; $4652
 	call WriteTextToTilemap ; $4655
-	ld hl, $04d7 ; $4658
+	ld hl, Text_31_215 ; $4658
 	ld de, $d1a9 ; $465b
 	ld bc, $0020 ; $465e
 	call FetchAndDrawDialogueText ; $4661
@@ -729,28 +729,28 @@ ShiftDestForLongName:
 	jr nz, .loopB ; $46a1
 	ret ; $46a3
 DrawSetsGamesScore:
-	ld hl, $04e1 ; $46a4
+	ld hl, Text_31_225 ; $46a4
 	ld de, $d202 ; $46a7
 	ld bc, $0020 ; $46aa
 	call FetchAndDrawDialogueText ; $46ad
 	ld a, [wPlayer1SetsWon] ; $46b0
 	ld de, $d206 ; $46b3
 	call FormatAndDrawNumber ; $46b6
-	ld hl, $04e3 ; $46b9
+	ld hl, Text_31_227 ; $46b9
 	ld de, $d207 ; $46bc
 	ld bc, $0020 ; $46bf
 	call FetchAndDrawDialogueText ; $46c2
 	ld a, [wPlayer2SetsWon] ; $46c5
 	ld de, $d208 ; $46c8
 	call FormatAndDrawNumber ; $46cb
-	ld hl, $04e2 ; $46ce
+	ld hl, Text_31_226 ; $46ce
 	ld de, $d20b ; $46d1
 	ld bc, $0020 ; $46d4
 	call FetchAndDrawDialogueText ; $46d7
 	ld a, [wPlayer1GamesWon] ; $46da
 	ld de, $d20f ; $46dd
 	call FormatAndDrawNumber ; $46e0
-	ld hl, $04e3 ; $46e3
+	ld hl, Text_31_227 ; $46e3
 	ld de, $d210 ; $46e6
 	call FetchAndDrawDialogueText ; $46e9
 	ld a, [wPlayer2GamesWon] ; $46ec
@@ -1019,7 +1019,7 @@ DrawPlayerNameAndLevel:
 	ld de, $d0c0 ; $490a
 	ld bc, $0020 ; $490d
 	call WriteTextToTilemap ; $4910
-	ld hl, $04e4 ; $4913
+	ld hl, Text_31_228 ; $4913
 	ld de, $d101 ; $4916
 	ld bc, $0020 ; $4919
 	call FetchAndDrawDialogueText ; $491c
@@ -1660,7 +1660,7 @@ DrawExpSinglesPlayerPanel:
 	ld de, $d0c4 ; $5660
 	ld bc, $0020 ; $5663
 	call WriteTextToTilemap ; $5666
-	ld hl, $04e4 ; $5669
+	ld hl, Text_31_228 ; $5669
 	ld de, $d0cc ; $566c
 	ld bc, $0020 ; $566f
 	call FetchAndDrawDialogueText ; $5672
@@ -1735,7 +1735,7 @@ DrawExpDoublesPlayerPanel:
 	ld de, $d0c1 ; $5722
 	ld bc, $0020 ; $5725
 	call WriteTextToTilemap ; $5728
-	ld hl, $04e4 ; $572b
+	ld hl, Text_31_228 ; $572b
 	ld de, $d101 ; $572e
 	ld bc, $0020 ; $5731
 	call FetchAndDrawDialogueText ; $5734
@@ -1809,7 +1809,7 @@ DrawExpDoublesPartnerPanel:
 	ld de, $d0cc ; $57e1
 	ld bc, $0020 ; $57e4
 	call WriteTextToTilemap ; $57e7
-	ld hl, $04e4 ; $57ea
+	ld hl, Text_31_228 ; $57ea
 	ld de, $d10c ; $57ed
 	ld bc, $0020 ; $57f0
 	call FetchAndDrawDialogueText ; $57f3
@@ -1867,7 +1867,7 @@ DrawExpTotalPanel:
 	call FillTilemapRun ; $5880
 	ld bc, $0901 ; $5883
 	call FillTilemapRun ; $5886
-	ld hl, $04e7 ; $5889
+	ld hl, Text_31_231 ; $5889
 	ld de, $d1e3 ; $588c
 	ld bc, $0020 ; $588f
 	call FetchAndDrawDialogueText ; $5892

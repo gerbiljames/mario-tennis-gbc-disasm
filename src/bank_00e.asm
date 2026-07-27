@@ -1265,7 +1265,7 @@ RepairCounterFarewell:
 	script_speak $0e ; $4e55
 	script_wait_frames $05 ; $4e5a
 RepairCounterServiceMenu:
-	ld hl, $20ec ; $4e61
+	ld hl, Text_6e_236 ; $4e61
 	ld de, $0101 ; $4e64
 	farcall RunMenuFromText ; $4e67
 .loop:
@@ -1524,7 +1524,7 @@ RepairCounterReopenServiceMenu:
 	script_face_toward ACTOR_PLAYER, $0e ; $50f0
 	script_fade_in $08 ; $50f8
 	call WaitFadeEnd ; $50fd
-	ld hl, $20ec ; $5100
+	ld hl, Text_6e_236 ; $5100
 	ld de, $0101 ; $5103
 	farcall RunMenuFromText ; $5106
 	ld [$c2bc], a ; $5109

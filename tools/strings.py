@@ -23,19 +23,41 @@ BANK_SIZE = 0x4000
 
 
 def dump_indexed(rom, want_bank, min_len, pat):
-    for ln in Path("data.manifest").read_text().splitlines():
-        if "/text_" not in ln or not ln.split()[0].endswith(".asm"):
+    """List strings by bank:index. The index comes from the bank's offset
+    table, which data_tables.json declares as a `text_offsets` region sitting
+    immediately before its `text_pool`; older banks keep the table inside the
+    text region, where solve_table finds it."""
+    import json
+    dt = {int(k, 16): v for k, v in json.load(
+        open(Path(__file__).resolve().parent.parent / "data_tables.json")).items()}
+    pairs = {}   # pool offset -> (table offset, entry count)
+    for off in sorted(dt):
+        if dt[off] != "text_offsets":
             continue
-        _p, o, l = ln.split()
-        off, length = int(o, 16), int(l, 16)
+        pool = min((o for o in dt if o > off and dt[o] == "text_pool"),
+                   default=None)
+        if pool:
+            pairs[pool] = (off, (pool - off) // 2)
+
+    for ln in Path("data.manifest").read_text().splitlines():
+        parts = ln.split()
+        if "/text_" not in ln or not parts[0].endswith(".asm"):
+            continue
+        off, length = int(parts[1], 16), int(parts[2], 16)
         bank = off // BANK_SIZE
         if want_bank is not None and bank != want_bank:
             continue
         data = rom[off:off + length]
-        entries = solve_table(data)
-        if entries is None:
-            continue
-        t = 2 * len(entries)
+        if off in pairs:
+            toff, n = pairs[off]
+            entries = [rom[toff + 2 * i] | (rom[toff + 2 * i + 1] << 8)
+                       for i in range(n)]
+            t = 0
+        else:
+            entries = solve_table(data)
+            if entries is None:
+                continue
+            t = 2 * len(entries)
         for k, e in enumerate(entries):
             end = data.find(b"\x03", t + e)
             end2 = data.find(b"\x00", t + e)

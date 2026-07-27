@@ -5917,11 +5917,11 @@ ShowStoryResultScreen:
 	ld de, $0240 ; $753f
 	ld b, $20 ; $7542
 	call FillMemoryDE ; $7544
-	ld hl, $3140 ; $7547
+	ld hl, Text_5e_320 ; $7547
 	ld de, $d0c0 ; $754a
 	ld bc, $0020 ; $754d
 	farcall FetchAndDrawDialogueText ; $7550
-	ld hl, $3142 ; $7553
+	ld hl, Text_5e_322 ; $7553
 	ld de, $d180 ; $7556
 	ld bc, $0020 ; $7559
 	farcall FetchAndDrawDialogueText ; $755c

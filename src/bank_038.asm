@@ -2466,7 +2466,7 @@ DrawCharGridSlotPrompt:
 	ld a, [$d824] ; $544e
 	or a, a ; $5451
 	jr z, .promptFromTable ; $5452
-	ld hl, $0095 ; $5454
+	ld hl, Text_30_149 ; $5454
 	ld de, $d061 ; $5457
 	ld c, $20 ; $545a
 	farcall RenderTextToBuffer64 ; $545c

@@ -3419,7 +3419,7 @@ RunLevelUpStatusTrophiesMenu:
 	wram_bank $05 ; $647f
 	ld d, $02 ; $6485
 	ld e, $02 ; $6487
-	ld hl, $047c ; $6489
+	ld hl, Text_31_124 ; $6489
 	farcall CreateMenuWindowFromText ; $648c
 	farcall RestoreShadowTilemap ; $648f
 	farcall RenderMenuWindowText ; $6492

@@ -3926,7 +3926,7 @@ DrawMainMenuCaption:
 	ld [$d210], a ; $5bcc
 	ret ; $5bcf
 .eq3f:
-	ld hl, $007c ; $5bd0
+	ld hl, Text_30_124 ; $5bd0
 	ld de, $d201 ; $5bd3
 	ld c, $20 ; $5bd6
 	farcall RenderTextToBuffer64 ; $5bd8
@@ -6084,7 +6084,7 @@ DrawSavedDataSourceCaption:
 	wram_bank ; $6c09
 	ret ; $6c0d
 .eq3f:
-	ld hl, $00c8 ; $6c0e
+	ld hl, Text_30_200 ; $6c0e
 	ld de, $d201 ; $6c11
 	ld c, $20 ; $6c14
 	farcall RenderTextToBuffer64 ; $6c16
@@ -6092,13 +6092,13 @@ DrawSavedDataSourceCaption:
 .compare:
 	cp a, $04 ; $6c1b
 	jr nz, .ne04 ; $6c1d
-	ld hl, $00c7 ; $6c1f
+	ld hl, Text_30_199 ; $6c1f
 	ld de, $d201 ; $6c22
 	ld c, $20 ; $6c25
 	farcall RenderTextToBuffer64 ; $6c27
 	jr .restore ; $6c2a
 .ne04:
-	ld hl, $00c9 ; $6c2c
+	ld hl, Text_30_201 ; $6c2c
 	ld de, $d201 ; $6c2f
 	ld c, $20 ; $6c32
 	farcall RenderTextToBuffer64 ; $6c34
@@ -6793,7 +6793,7 @@ DrawEraseSavedDataCaption:
 	wram_bank ; $7186
 	ret ; $718a
 .eq3f:
-	ld hl, $00ce ; $718b
+	ld hl, Text_30_206 ; $718b
 	ld de, $d201 ; $718e
 	ld c, $20 ; $7191
 	farcall RenderTextToBuffer64 ; $7193
@@ -7794,11 +7794,11 @@ WriteBracketDoublesNames:
 	ld hl, wStoryModeNameOfPartnerCharacter ; $78fc
 	ld de, $d169 ; $78ff
 	call DrawNameWithDiacritics_3b ; $7902
-	ld hl, $004b ; $7905
+	ld hl, Text_30_75 ; $7905
 	ld de, $d1a9 ; $7908
 	ld c, $20 ; $790b
 	farcall RenderTextToBuffer64 ; $790d
-	ld hl, $004c ; $7910
+	ld hl, Text_30_76 ; $7910
 	ld de, $d1e9 ; $7913
 	ld c, $20 ; $7916
 	farcall RenderTextToBuffer64 ; $7918
@@ -7810,11 +7810,11 @@ WriteBracketDoublesNames:
 	ld hl, wStoryModeNameOfPartnerCharacter ; $7925
 	ld de, $d1e9 ; $7928
 	call DrawNameWithDiacritics_3b ; $792b
-	ld hl, $004b ; $792e
+	ld hl, Text_30_75 ; $792e
 	ld de, $d129 ; $7931
 	ld c, $20 ; $7934
 	farcall RenderTextToBuffer64 ; $7936
-	ld hl, $004c ; $7939
+	ld hl, Text_30_76 ; $7939
 	ld de, $d169 ; $793c
 	ld c, $20 ; $793f
 	farcall RenderTextToBuffer64 ; $7941

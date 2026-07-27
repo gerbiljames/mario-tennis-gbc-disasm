@@ -839,7 +839,7 @@ RunFixedTextMenu:
 	push hl ; $4510
 	ldh a, [hWramBank] ; $4511
 	push af ; $4513
-	ld hl, $001a ; $4514
+	ld hl, Text_30_26 ; $4514
 	call CreateMenuWindowFromText ; $4517
 	call RestoreShadowTilemap ; $451a
 	call StubNop_05_4626 ; $451d
@@ -5192,7 +5192,7 @@ WriteDialogueToWindow:
 	ld a, $01 ; $606f
 	ld [$c360], a ; $6071
 	ld a, b ; $6074
-	ld hl, $0136 ; $6075
+	ld hl, Text_30_310 ; $6075
 	call FetchDialogueText ; $6078
 	ld hl, wTextBuffer ; $607b
 	call WriteStringToWindow ; $607e
@@ -6065,7 +6065,7 @@ RunDebugMenu:
 	push de ; $66a6
 	push hl ; $66a7
 .loop:
-	ld hl, $0137 ; $66a8
+	ld hl, Text_30_311 ; $66a8
 	ld de, $0a01 ; $66ab
 	call CreateMenuWindowFromText ; $66ae
 	ld [$c700], a ; $66b1

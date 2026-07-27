@@ -26,3 +26,94 @@ def text_id_name(idv):
     name = f"Text_{bank:02x}_{index}"
     TEXT_IDS_USED[idv] = name
     return name
+
+
+# Routines that take a dialogue text id in hl. Each was read to confirm it:
+# FetchDialogueText and AddTextIdOffset both open `bit 7, h` (the SRAM-string
+# flag of the id encoding), and CreateWindowWithTextId says so in its name.
+# Everything else is derived -- a routine that hands hl straight to one of
+# these takes an id too, which is what the wrappers in the menu banks do.
+TEXT_ID_SINKS = ("FetchDialogueText", "AddTextIdOffset", "CreateWindowWithTextId")
+
+_HL_CLOBBER = ("ld hl,", "ld h,", "ld l,", "pop hl")
+
+
+def _forwards_hl(dis, order, idx, start, sinks, limit=24):
+    """True if the routine at `start` reaches a sink with hl untouched."""
+    from .seeds import _call_target
+    i, prev_end = idx[start], start
+    for _ in range(limit):
+        if i >= len(order) or order[i] != prev_end:
+            return False
+        no = order[i]
+        ins = dis.instrs[no]
+        if ins.is_call and _call_target(dis, no, ins) in sinks:
+            return True
+        if ins.text.startswith(_HL_CLOBBER) or ins.ends_flow:
+            return False
+        prev_end = no + ins.size
+        i += 1
+    return False
+
+
+def text_id_consumers(dis, overrides, rounds=4):
+    """Offsets of every routine that treats hl as a text id, grown from the
+    curated sinks through the wrappers that forward to them."""
+    from .seeds import _call_target
+    sinks = {int(k, 0) for k, n in (overrides or {}).items()
+             if n in TEXT_ID_SINKS}
+    if not sinks:
+        return sinks
+    order = sorted(dis.instrs)
+    idx = {o: i for i, o in enumerate(order)}
+    entries = set()
+    for o, ins in dis.instrs.items():
+        if ins.is_call:
+            t = _call_target(dis, o, ins)
+            if t in dis.instrs:
+                entries.add(t)
+    for _ in range(rounds):
+        grew = False
+        for e in sorted(entries - sinks):
+            if _forwards_hl(dis, order, idx, e, sinks):
+                sinks.add(e)
+                grew = True
+        if not grew:
+            break
+    return sinks
+
+
+def text_id_load_sites(dis, overrides):
+    """{`ld hl, n16` site -> Text_<bank>_<index>} for the loads that reach a
+    text-id consumer. The id encoding is far too permissive to judge by value
+    ($0001 and $0012 both "decode"), so the consumer is the whole test; the
+    value only has to be a well-formed id once the consumer says it is one."""
+    from .seeds import _call_target
+    consumers = text_id_consumers(dis, overrides)
+    if not consumers:
+        return {}
+    rom = dis.rom
+    order = sorted(dis.instrs)
+    idx = {o: i for i, o in enumerate(order)}
+    out = {}
+    for o in order:
+        if rom[o] != 0x21 or dis.instrs[o].size != 3:
+            continue  # ld hl, n16
+        imm = rom[o + 1] | (rom[o + 2] << 8)
+        i, prev_end = idx[o] + 1, o + 3
+        for _ in range(5):
+            if i >= len(order) or order[i] != prev_end:
+                break
+            no = order[i]
+            ins = dis.instrs[no]
+            if ins.is_call:
+                if _call_target(dis, no, ins) in consumers:
+                    name = text_id_name(imm)
+                    if name:
+                        out[o] = name
+                break
+            if ins.text.startswith(_HL_CLOBBER) or ins.ends_flow:
+                break
+            prev_end = no + ins.size
+            i += 1
+    return out

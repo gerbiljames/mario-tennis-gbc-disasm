@@ -4957,3 +4957,47 @@ exactly +11 each. Restored, `make compare` is OK again.
 
 Structured source is up 8.2 KB to 421,788 bytes (20.1%) and 13 more blobs are
 gone.
+
+## Text ids at the call sites (2026-07-27)
+
+A dialogue text id already renders as `Text_<bank>_<index>` inside
+`script_set_text` operands and map-script handler fields. Plain code that loads
+one did not: `ld hl, $04ee` stayed a number even though `$04ee` names a string.
+
+The value cannot decide this. `text_id_name` accepts any word whose fetcher
+nibble is 0-12, so `$0001`, `$0012` and `$0300` all "decode" -- the top hits for
+a value-based scan are `ld de, $0001` into `LoadPaletteShadow` and
+`ld bc, $0012` into `QueueVRAMCopy`, which are a palette count and a width.
+**The consumer is the whole test.**
+
+So the sinks are curated and each was read first: `FetchDialogueText` and
+`AddTextIdOffset` both open `bit 7, h` -- the SRAM-string flag of the id
+encoding -- and `CreateWindowWithTextId` says so in its name. (That signature
+is not enough on its own to find them: 19 routines test `bit 7, h`, and 16 are
+signed multiplies testing a sign bit.) From those three, `text_id_consumers`
+grows the set through wrappers that hand `hl` straight on, reaching **20
+routines**, all of them text ones by name: `ShowSpeakerDialogue`,
+`InitDialogueTextCursor`, `RunMenuFromText`, `MeasureDialogueWidthTiles`,
+`ShowLocationNamePopup` and so on.
+
+`ld hl, imm` sites that reach one with `hl` untouched then render as the
+constant -- 503 sites, of which 414 sit inside `script_set_text` sequences that
+already printed the name, so **89 loads change**, one for one, from a hex word
+to the string it selects.
+
+Checked against the strings rather than assumed, and every sample matches what
+its routine is for:
+
+| site | id | string |
+| --- | --- | --- |
+| `DrawCharGridSlotPrompt` | `Text_30_149` | "CPU Difficulty" |
+| `WriteBracketDoublesNames` | `Text_30_76` | "Emily" |
+| `DrawSavedDataSourceCaption` | `Text_30_201` | "Mario Char. Data" |
+| `BuildResultsScreenPanels` | `Text_31_214` | "No" |
+| `CreateMenuWindowFromText` sites | `Text_34_215`/`217` | "Set/Continue", "Mini-Game/Ranking Match" |
+
+`tools/strings.py --index` needed fixing to go with it: it read the offset
+table with `solve_table`, which only finds a table *inside* a text region, and
+it split manifest lines on exactly three fields. Both broke when the offset
+tables became their own `text_offsets` regions. It now pairs each `text_pool`
+with its table through `data_tables.json`.

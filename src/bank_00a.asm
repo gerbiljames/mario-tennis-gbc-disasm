@@ -358,7 +358,7 @@ ShowYesNoPromptWindow:
 	pop af ; $427f
 	wram_bank ; $4280
 	ld d, $02 ; $4284
-	ld hl, $001a ; $4286
+	ld hl, Text_30_26 ; $4286
 	farcall CreateMenuWindowFromText ; $4289
 	pop hl ; $428c
 	pop de ; $428d
@@ -1805,7 +1805,7 @@ RunClearStatusSetupMenu:
 	farcall RenderProportionalTextAt ; $4bfd
 	ld a, [wCharPosDepth + 2] ; $4c00
 	farcall RedrawWindowRows ; $4c03
-	ld hl, $10d7 ; $4c06
+	ld hl, Text_34_215 ; $4c06
 	ld d, $01 ; $4c09
 	ld e, $00 ; $4c0b
 	farcall CreateMenuWindowFromText ; $4c0d
@@ -1844,7 +1844,7 @@ RunClearStatusSetupMenu:
 	farcall RenderProportionalTextAt ; $4c56
 	ld a, [wCharPosDepth + 2] ; $4c59
 	farcall RedrawWindowRows ; $4c5c
-	ld hl, $10d9 ; $4c5f
+	ld hl, Text_34_217 ; $4c5f
 	ld d, $03 ; $4c62
 	ld e, $00 ; $4c64
 	farcall CreateMenuWindowFromText ; $4c66
@@ -1865,7 +1865,7 @@ RunClearStatusSetupMenu:
 	farcall RenderProportionalTextAt ; $4c8f
 	ld a, [wCharPosDepth + 2] ; $4c92
 	farcall RedrawWindowRows ; $4c95
-	ld hl, $10da ; $4c98
+	ld hl, Text_34_218 ; $4c98
 	ld d, $05 ; $4c9b
 	ld e, $00 ; $4c9d
 	farcall CreateMenuWindowFromText ; $4c9f
@@ -4072,7 +4072,7 @@ SceneViewerSelectScene:
 	call InitSceneTileAnimations ; $5e4e
 .done:
 	ret ; $5e51
-	ld hl, $0176 ; $5e52
+	ld hl, Text_30_374 ; $5e52
 	ld d, $01 ; $5e55
 	ld e, $01 ; $5e57
 	farcall CreateMenuWindowFromText ; $5e59

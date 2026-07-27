@@ -23,6 +23,7 @@ from disasmlib import pipeline
 from disasmlib.config import (load_const_defs, load_flag_names, load_hwregs,
                               load_label_overrides, load_offset_map)
 from disasmlib.emit import emit
+from disasmlib.textids import text_id_load_sites
 from disasmlib.ram import compute_wram_bank, load_ram_map, load_ram_unions
 
 
@@ -62,10 +63,17 @@ def main(argv=None):
     ramscoped.bank_at = compute_wram_bank(dis)
     ramnames = load_ram_map(args.ram_map, unions_by_region)
 
+    # `ld hl, id` sites that reach a text-id consumer render as the
+    # Text_<bank>_<index> constant; a curated constants.json entry still wins.
+    constants = text_id_load_sites(dis, overrides)
+    auto_text_ids = len(constants)
+    constants.update(load_offset_map(args.constants))
+    print(f"text ids: {auto_text_ids} pointer loads named from their consumer")
+
     Path(args.srcdir).mkdir(parents=True, exist_ok=True)
     emit(dis, labels, load_hwregs(args.hardware_inc), ramnames, args.srcdir,
          args.manifest, data_tables, set(overrides.values()), ramscoped,
-         load_offset_map(args.constants), load_const_defs(args.constants_inc),
+         constants, load_const_defs(args.constants_inc),
          ptr_sites, ptr_data_targets, flag_names, flag_raw_sites)
 
 

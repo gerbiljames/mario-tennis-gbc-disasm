@@ -2136,7 +2136,7 @@ DrawExpScreenCaption:
 	jp z, .caption5 ; $4fbb
 	ret ; $4fbe
 .caption0:
-	ld hl, $04ee ; $4fbf
+	ld hl, Text_31_238 ; $4fbf
 	call LoadDialogueTextToBuffer ; $4fc2
 	wram_bank $01 ; $4fc5
 	ld hl, $d800 ; $4fcb
@@ -2145,14 +2145,14 @@ DrawExpScreenCaption:
 	call DrawStringToTileBuffer ; $4fd3
 	ret ; $4fd6
 .caption1:
-	ld hl, $04ef ; $4fd7
+	ld hl, Text_31_239 ; $4fd7
 	call LoadDialogueTextToBuffer ; $4fda
 	wram_bank $01 ; $4fdd
 	ld hl, $d800 ; $4fe3
 	ld bc, $0101 ; $4fe6
 	ld e, $01 ; $4fe9
 	call DrawStringToTileBuffer ; $4feb
-	ld hl, $04f0 ; $4fee
+	ld hl, Text_31_240 ; $4fee
 	call LoadDialogueTextToBuffer ; $4ff1
 	ld hl, $d800 ; $4ff4
 	ld bc, $0103 ; $4ff7
@@ -2160,7 +2160,7 @@ DrawExpScreenCaption:
 	call DrawStringToTileBuffer ; $4ffc
 	ret ; $4fff
 .caption2:
-	ld hl, $04f1 ; $5000
+	ld hl, Text_31_241 ; $5000
 	call LoadDialogueTextToBuffer ; $5003
 	wram_bank $01 ; $5006
 	ld hl, $d800 ; $500c
@@ -2177,7 +2177,7 @@ DrawExpScreenCaption:
 	sound $73 ; $5029
 	ret ; $502b
 .caption4:
-	ld hl, $04f3 ; $502c
+	ld hl, Text_31_243 ; $502c
 	call LoadDialogueTextToBuffer ; $502f
 	wram_bank $01 ; $5032
 	ld hl, $d800 ; $5038
@@ -2187,7 +2187,7 @@ DrawExpScreenCaption:
 	ret ; $5043
 .caption5:
 	sound $00 ; $5044
-	ld hl, $04f4 ; $5046
+	ld hl, Text_31_244 ; $5046
 	call LoadDialogueTextToBuffer ; $5049
 	wram_bank $01 ; $504c
 	ld hl, $d800 ; $5052
@@ -2288,7 +2288,7 @@ DrawExpBonusMessage:
 	jp z, .eq1e ; $511b
 	jp .loadDialogueTextToBuffer ; $511e
 .eq01:
-	ld hl, $04f5 ; $5121
+	ld hl, Text_31_245 ; $5121
 	call LoadDialogueTextToBuffer ; $5124
 	wram_bank $01 ; $5127
 	ld hl, $d800 ; $512d
@@ -2297,7 +2297,7 @@ DrawExpBonusMessage:
 	call DrawStringToTileBuffer ; $5135
 	jp .loadDialogueTextToBuffer2 ; $5138
 .eq02:
-	ld hl, $04f6 ; $513b
+	ld hl, Text_31_246 ; $513b
 	call LoadDialogueTextToBuffer ; $513e
 	wram_bank $01 ; $5141
 	ld hl, $d800 ; $5147
@@ -2306,7 +2306,7 @@ DrawExpBonusMessage:
 	call DrawStringToTileBuffer ; $514f
 	jp .loadDialogueTextToBuffer2 ; $5152
 .eq03:
-	ld hl, $04f7 ; $5155
+	ld hl, Text_31_247 ; $5155
 	call LoadDialogueTextToBuffer ; $5158
 	wram_bank $01 ; $515b
 	ld hl, $d800 ; $5161
@@ -2315,21 +2315,21 @@ DrawExpBonusMessage:
 	call DrawStringToTileBuffer ; $5169
 	jp .loadDialogueTextToBuffer2 ; $516c
 .eq14:
-	ld hl, $04f8 ; $516f
+	ld hl, Text_31_248 ; $516f
 	call LoadDialogueTextToBuffer ; $5172
 	wram_bank $01 ; $5175
 	ld hl, $d800 ; $517b
 	ld bc, $0201 ; $517e
 	ld e, $01 ; $5181
 	call DrawStringToTileBuffer ; $5183
-	ld hl, $001f ; $5186
+	ld hl, Text_30_31 ; $5186
 	call LoadDialogueTextToBuffer ; $5189
 	wram_bank $01 ; $518c
 	ld hl, $d800 ; $5192
 	ld bc, $0601 ; $5195
 	ld e, $01 ; $5198
 	call DrawStringToTileBuffer ; $519a
-	ld hl, $04f9 ; $519d
+	ld hl, Text_31_249 ; $519d
 	call LoadDialogueTextToBuffer ; $51a0
 	wram_bank $01 ; $51a3
 	ld hl, $d800 ; $51a9
@@ -2338,21 +2338,21 @@ DrawExpBonusMessage:
 	call DrawStringToTileBuffer ; $51b1
 	jp .loadDialogueTextToBuffer2 ; $51b4
 .eq15:
-	ld hl, $04f8 ; $51b7
+	ld hl, Text_31_248 ; $51b7
 	call LoadDialogueTextToBuffer ; $51ba
 	wram_bank $01 ; $51bd
 	ld hl, $d800 ; $51c3
 	ld bc, $0201 ; $51c6
 	ld e, $01 ; $51c9
 	call DrawStringToTileBuffer ; $51cb
-	ld hl, $0020 ; $51ce
+	ld hl, Text_30_32 ; $51ce
 	call LoadDialogueTextToBuffer ; $51d1
 	wram_bank $01 ; $51d4
 	ld hl, $d800 ; $51da
 	ld bc, $0601 ; $51dd
 	ld e, $01 ; $51e0
 	call DrawStringToTileBuffer ; $51e2
-	ld hl, $04f9 ; $51e5
+	ld hl, Text_31_249 ; $51e5
 	call LoadDialogueTextToBuffer ; $51e8
 	wram_bank $01 ; $51eb
 	ld hl, $d800 ; $51f1
@@ -2361,21 +2361,21 @@ DrawExpBonusMessage:
 	call DrawStringToTileBuffer ; $51f9
 	jp .loadDialogueTextToBuffer2 ; $51fc
 .eq16:
-	ld hl, $04f8 ; $51ff
+	ld hl, Text_31_248 ; $51ff
 	call LoadDialogueTextToBuffer ; $5202
 	wram_bank $01 ; $5205
 	ld hl, $d800 ; $520b
 	ld bc, $0201 ; $520e
 	ld e, $01 ; $5211
 	call DrawStringToTileBuffer ; $5213
-	ld hl, $0021 ; $5216
+	ld hl, Text_30_33 ; $5216
 	call LoadDialogueTextToBuffer ; $5219
 	wram_bank $01 ; $521c
 	ld hl, $d800 ; $5222
 	ld bc, $0601 ; $5225
 	ld e, $01 ; $5228
 	call DrawStringToTileBuffer ; $522a
-	ld hl, $04f9 ; $522d
+	ld hl, Text_31_249 ; $522d
 	call LoadDialogueTextToBuffer ; $5230
 	wram_bank $01 ; $5233
 	ld hl, $d800 ; $5239
@@ -2384,21 +2384,21 @@ DrawExpBonusMessage:
 	call DrawStringToTileBuffer ; $5241
 	jp .loadDialogueTextToBuffer2 ; $5244
 .eq17:
-	ld hl, $04f8 ; $5247
+	ld hl, Text_31_248 ; $5247
 	call LoadDialogueTextToBuffer ; $524a
 	wram_bank $01 ; $524d
 	ld hl, $d800 ; $5253
 	ld bc, $0201 ; $5256
 	ld e, $01 ; $5259
 	call DrawStringToTileBuffer ; $525b
-	ld hl, $0022 ; $525e
+	ld hl, Text_30_34 ; $525e
 	call LoadDialogueTextToBuffer ; $5261
 	wram_bank $01 ; $5264
 	ld hl, $d800 ; $526a
 	ld bc, $0601 ; $526d
 	ld e, $01 ; $5270
 	call DrawStringToTileBuffer ; $5272
-	ld hl, $04f9 ; $5275
+	ld hl, Text_31_249 ; $5275
 	call LoadDialogueTextToBuffer ; $5278
 	wram_bank $01 ; $527b
 	ld hl, $d800 ; $5281
@@ -2407,21 +2407,21 @@ DrawExpBonusMessage:
 	call DrawStringToTileBuffer ; $5289
 	jp .loadDialogueTextToBuffer2 ; $528c
 .eq18:
-	ld hl, $04f8 ; $528f
+	ld hl, Text_31_248 ; $528f
 	call LoadDialogueTextToBuffer ; $5292
 	wram_bank $01 ; $5295
 	ld hl, $d800 ; $529b
 	ld bc, $0201 ; $529e
 	ld e, $01 ; $52a1
 	call DrawStringToTileBuffer ; $52a3
-	ld hl, $0023 ; $52a6
+	ld hl, Text_30_35 ; $52a6
 	call LoadDialogueTextToBuffer ; $52a9
 	wram_bank $01 ; $52ac
 	ld hl, $d800 ; $52b2
 	ld bc, $0601 ; $52b5
 	ld e, $01 ; $52b8
 	call DrawStringToTileBuffer ; $52ba
-	ld hl, $04f9 ; $52bd
+	ld hl, Text_31_249 ; $52bd
 	call LoadDialogueTextToBuffer ; $52c0
 	wram_bank $01 ; $52c3
 	ld hl, $d800 ; $52c9
@@ -2430,21 +2430,21 @@ DrawExpBonusMessage:
 	call DrawStringToTileBuffer ; $52d1
 	jp .loadDialogueTextToBuffer2 ; $52d4
 .eq19:
-	ld hl, $04f8 ; $52d7
+	ld hl, Text_31_248 ; $52d7
 	call LoadDialogueTextToBuffer ; $52da
 	wram_bank $01 ; $52dd
 	ld hl, $d800 ; $52e3
 	ld bc, $0201 ; $52e6
 	ld e, $01 ; $52e9
 	call DrawStringToTileBuffer ; $52eb
-	ld hl, $0024 ; $52ee
+	ld hl, Text_30_36 ; $52ee
 	call LoadDialogueTextToBuffer ; $52f1
 	wram_bank $01 ; $52f4
 	ld hl, $d800 ; $52fa
 	ld bc, $0601 ; $52fd
 	ld e, $01 ; $5300
 	call DrawStringToTileBuffer ; $5302
-	ld hl, $04f9 ; $5305
+	ld hl, Text_31_249 ; $5305
 	call LoadDialogueTextToBuffer ; $5308
 	wram_bank $01 ; $530b
 	ld hl, $d800 ; $5311
@@ -2453,21 +2453,21 @@ DrawExpBonusMessage:
 	call DrawStringToTileBuffer ; $5319
 	jp .loadDialogueTextToBuffer2 ; $531c
 .eq1a:
-	ld hl, $04f8 ; $531f
+	ld hl, Text_31_248 ; $531f
 	call LoadDialogueTextToBuffer ; $5322
 	wram_bank $01 ; $5325
 	ld hl, $d800 ; $532b
 	ld bc, $0201 ; $532e
 	ld e, $01 ; $5331
 	call DrawStringToTileBuffer ; $5333
-	ld hl, $0025 ; $5336
+	ld hl, Text_30_37 ; $5336
 	call LoadDialogueTextToBuffer ; $5339
 	wram_bank $01 ; $533c
 	ld hl, $d800 ; $5342
 	ld bc, $0601 ; $5345
 	ld e, $01 ; $5348
 	call DrawStringToTileBuffer ; $534a
-	ld hl, $04f9 ; $534d
+	ld hl, Text_31_249 ; $534d
 	call LoadDialogueTextToBuffer ; $5350
 	wram_bank $01 ; $5353
 	ld hl, $d800 ; $5359
@@ -2476,21 +2476,21 @@ DrawExpBonusMessage:
 	call DrawStringToTileBuffer ; $5361
 	jp .loadDialogueTextToBuffer2 ; $5364
 .eq1b:
-	ld hl, $04f8 ; $5367
+	ld hl, Text_31_248 ; $5367
 	call LoadDialogueTextToBuffer ; $536a
 	wram_bank $01 ; $536d
 	ld hl, $d800 ; $5373
 	ld bc, $0201 ; $5376
 	ld e, $01 ; $5379
 	call DrawStringToTileBuffer ; $537b
-	ld hl, $0026 ; $537e
+	ld hl, Text_30_38 ; $537e
 	call LoadDialogueTextToBuffer ; $5381
 	wram_bank $01 ; $5384
 	ld hl, $d800 ; $538a
 	ld bc, $0601 ; $538d
 	ld e, $01 ; $5390
 	call DrawStringToTileBuffer ; $5392
-	ld hl, $04f9 ; $5395
+	ld hl, Text_31_249 ; $5395
 	call LoadDialogueTextToBuffer ; $5398
 	wram_bank $01 ; $539b
 	ld hl, $d800 ; $53a1
@@ -2499,21 +2499,21 @@ DrawExpBonusMessage:
 	call DrawStringToTileBuffer ; $53a9
 	jp .loadDialogueTextToBuffer2 ; $53ac
 .eq1c:
-	ld hl, $04f8 ; $53af
+	ld hl, Text_31_248 ; $53af
 	call LoadDialogueTextToBuffer ; $53b2
 	wram_bank $01 ; $53b5
 	ld hl, $d800 ; $53bb
 	ld bc, $0201 ; $53be
 	ld e, $01 ; $53c1
 	call DrawStringToTileBuffer ; $53c3
-	ld hl, $0027 ; $53c6
+	ld hl, Text_30_39 ; $53c6
 	call LoadDialogueTextToBuffer ; $53c9
 	wram_bank $01 ; $53cc
 	ld hl, $d800 ; $53d2
 	ld bc, $0601 ; $53d5
 	ld e, $01 ; $53d8
 	call DrawStringToTileBuffer ; $53da
-	ld hl, $04f9 ; $53dd
+	ld hl, Text_31_249 ; $53dd
 	call LoadDialogueTextToBuffer ; $53e0
 	wram_bank $01 ; $53e3
 	ld hl, $d800 ; $53e9
@@ -2522,21 +2522,21 @@ DrawExpBonusMessage:
 	call DrawStringToTileBuffer ; $53f1
 	jp .loadDialogueTextToBuffer2 ; $53f4
 .eq1d:
-	ld hl, $04f8 ; $53f7
+	ld hl, Text_31_248 ; $53f7
 	call LoadDialogueTextToBuffer ; $53fa
 	wram_bank $01 ; $53fd
 	ld hl, $d800 ; $5403
 	ld bc, $0201 ; $5406
 	ld e, $01 ; $5409
 	call DrawStringToTileBuffer ; $540b
-	ld hl, $0028 ; $540e
+	ld hl, Text_30_40 ; $540e
 	call LoadDialogueTextToBuffer ; $5411
 	wram_bank $01 ; $5414
 	ld hl, $d800 ; $541a
 	ld bc, $0601 ; $541d
 	ld e, $01 ; $5420
 	call DrawStringToTileBuffer ; $5422
-	ld hl, $04f9 ; $5425
+	ld hl, Text_31_249 ; $5425
 	call LoadDialogueTextToBuffer ; $5428
 	wram_bank $01 ; $542b
 	ld hl, $d800 ; $5431
@@ -2545,21 +2545,21 @@ DrawExpBonusMessage:
 	call DrawStringToTileBuffer ; $5439
 	jp .loadDialogueTextToBuffer2 ; $543c
 .eq1e:
-	ld hl, $04f8 ; $543f
+	ld hl, Text_31_248 ; $543f
 	call LoadDialogueTextToBuffer ; $5442
 	wram_bank $01 ; $5445
 	ld hl, $d800 ; $544b
 	ld bc, $0201 ; $544e
 	ld e, $01 ; $5451
 	call DrawStringToTileBuffer ; $5453
-	ld hl, $0029 ; $5456
+	ld hl, Text_30_41 ; $5456
 	call LoadDialogueTextToBuffer ; $5459
 	wram_bank $01 ; $545c
 	ld hl, $d800 ; $5462
 	ld bc, $0601 ; $5465
 	ld e, $01 ; $5468
 	call DrawStringToTileBuffer ; $546a
-	ld hl, $04f9 ; $546d
+	ld hl, Text_31_249 ; $546d
 	call LoadDialogueTextToBuffer ; $5470
 	wram_bank $01 ; $5473
 	ld hl, $d800 ; $5479
@@ -2568,21 +2568,21 @@ DrawExpBonusMessage:
 	call DrawStringToTileBuffer ; $5481
 	jr .loadDialogueTextToBuffer2 ; $5484
 .loadDialogueTextToBuffer:
-	ld hl, $04f8 ; $5486
+	ld hl, Text_31_248 ; $5486
 	call LoadDialogueTextToBuffer ; $5489
 	wram_bank $01 ; $548c
 	ld hl, $d800 ; $5492
 	ld bc, $0201 ; $5495
 	ld e, $01 ; $5498
 	call DrawStringToTileBuffer ; $549a
-	ld hl, $002a ; $549d
+	ld hl, Text_30_42 ; $549d
 	call LoadDialogueTextToBuffer ; $54a0
 	wram_bank $01 ; $54a3
 	ld hl, $d800 ; $54a9
 	ld bc, $0601 ; $54ac
 	ld e, $01 ; $54af
 	call DrawStringToTileBuffer ; $54b1
-	ld hl, $04f9 ; $54b4
+	ld hl, Text_31_249 ; $54b4
 	call LoadDialogueTextToBuffer ; $54b7
 	wram_bank $01 ; $54ba
 	ld hl, $d800 ; $54c0
@@ -2591,7 +2591,7 @@ DrawExpBonusMessage:
 	call DrawStringToTileBuffer ; $54c8
 	jr .loadDialogueTextToBuffer2 ; $54cb
 .loadDialogueTextToBuffer2:
-	ld hl, $04f4 ; $54cd
+	ld hl, Text_31_244 ; $54cd
 	call LoadDialogueTextToBuffer ; $54d0
 	wram_bank $01 ; $54d3
 	ld hl, $d800 ; $54d9
@@ -2931,33 +2931,33 @@ DrawCharViewerPageNames:
 	ret ; $6a43
 .zero:
 	wram_bank $03 ; $6a44
-	ld hl, $001b ; $6a4a
+	ld hl, Text_30_27 ; $6a4a
 	ld de, $d043 ; $6a4d
 	ld c, $08 ; $6a50
 	call RenderTextColumnToBuffer64 ; $6a52
-	ld hl, $0023 ; $6a55
+	ld hl, Text_30_35 ; $6a55
 	ld de, $d04b ; $6a58
 	ld c, $08 ; $6a5b
 	call RenderTextColumnToBuffer64 ; $6a5d
 	ret ; $6a60
 .countDone:
 	wram_bank $03 ; $6a61
-	ld hl, $002b ; $6a67
+	ld hl, Text_30_43 ; $6a67
 	ld de, $d043 ; $6a6a
 	ld c, $08 ; $6a6d
 	call RenderTextColumnToBuffer64 ; $6a6f
-	ld hl, $0033 ; $6a72
+	ld hl, Text_30_51 ; $6a72
 	ld de, $d04b ; $6a75
 	ld c, $08 ; $6a78
 	call RenderTextColumnToBuffer64 ; $6a7a
 	ret ; $6a7d
 .countDone2:
 	wram_bank $03 ; $6a7e
-	ld hl, $003b ; $6a84
+	ld hl, Text_30_59 ; $6a84
 	ld de, $d043 ; $6a87
 	ld c, $08 ; $6a8a
 	call RenderTextColumnToBuffer64 ; $6a8c
-	ld hl, $0043 ; $6a8f
+	ld hl, Text_30_67 ; $6a8f
 	ld de, $d04b ; $6a92
 	ld c, $08 ; $6a95
 	call RenderTextColumnToBuffer64 ; $6a97
@@ -3498,7 +3498,7 @@ RefreshCharViewerSelection:
 	jr .queueVRAMCopy2 ; $6f18
 .nonZero:
 	wram_bank $03 ; $6f1a
-	ld hl, $10c0 ; $6f20
+	ld hl, Text_34_192 ; $6f20
 	ld de, $d201 ; $6f23
 	ld c, $20 ; $6f26
 	farcall RenderTextToBuffer64 ; $6f28
