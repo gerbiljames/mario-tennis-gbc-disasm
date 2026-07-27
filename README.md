@@ -53,6 +53,12 @@ restated:
   cart type cannot leave a header checksum the CGB boot ROM rejects. It changes
   nothing in the unmodified build, which is why `make compare` still holds.
 
+`make check` verifies the structural claims a byte-perfect build cannot: that
+every declared LZ stream decodes inside its extent and survives a re-encode,
+that no symbol sits inside a compressed stream (which would truncate it), that
+every text offset table addresses real strings in its pool, and that the
+extracted regions stay in-bank and do not overlap.
+
 One caveat: `data/` is generated, so `./setup.sh` and `tools/extract.py`
 overwrite it (and now delete files the manifest no longer lists). Keep modified
 assets outside the tree and copy them in, or do not re-run extraction.

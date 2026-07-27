@@ -10,7 +10,7 @@ RAM_SRCS := ram.asm $(wildcard ram/*.asm)
 
 BASEROM_SHA1 := 414ba58340a27fc27b127bc01455b32764151ff0
 
-.PHONY: all compare clean
+.PHONY: all compare check clean
 
 all: $(ROM)
 
@@ -47,6 +47,13 @@ build:
 
 compare: $(ROM)
 	@echo "$(BASEROM_SHA1)  $(ROM)" | sha1sum -c
+
+# Structural invariants a byte-perfect build cannot see: that the declared LZ
+# streams really decode (and re-encode), that no symbol truncates one, that the
+# text offset tables address real strings, and that the extracted regions do
+# not overlap. See tools/check.py.
+check:
+	python3 tools/check.py
 
 clean:
 	rm -rf build $(ROM)

@@ -5090,3 +5090,38 @@ recomputes it (and the global checksum) and the cart boots again.
 unmodified build -- same SHA-1, `make compare` still OK from clean -- because
 the checksums it computes are the ones already there. It only does anything
 once something in the header has moved, which is exactly when it is needed.
+
+## `make check` — the invariants the byte compare cannot see (2026-07-27)
+
+`make compare` proves the bytes come back. It says nothing about whether the
+*structure* the source claims is true, and every structural defect this week
+had exactly that shape: the build stayed byte-perfect while the source lied.
+Two curated names sat inside LZ streams and truncated them by 29 and 160 bytes;
+an offset table was declared one byte late so every word was read from the
+wrong byte pair; a `records:2` run reached 43 bytes into a routine. None of
+that moves a single output byte.
+
+`tools/check.py` turns the checks into ones that run:
+
+| check | what it asserts |
+| --- | --- |
+| `lz` | each declared stream decodes *exactly* within its extent, and a re-encode decodes back to the same bytes |
+| `lz-labels` | no symbol lands inside a compressed stream |
+| `text` | every `text_offsets` word is a string start in its pool, and entry 0 addresses the first string |
+| `regions` | extracted regions stay inside their bank and do not overlap |
+
+Currently 619 + 619 + 13 + 4,828 checks, all passing.
+
+Each check was written against a defect and then **tested by reintroducing
+it**, because a check that cannot fail is worthless: re-adding
+`RulesNextPageArrowSprite_17` is caught as "280 bytes inside
+bank_017/lz_7770.bin, which truncates it", and shortening that stream's extent
+in the manifest is caught as "does not decode inside its 256-byte extent".
+
+The text check needed two rounds to become real. Its first version derived the
+pool's scan window from the table's own entries, so a bogus entry simply
+widened the window until it looked valid; it now bounds the window by the
+pool's extracted length. Even then, shifting a table's base by one word still
+passed -- dropping entry 0 leaves every remaining word a valid string start --
+so it also asserts that entry 0 addresses the pool's first string, which holds
+in all 13 banks.
