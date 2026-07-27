@@ -26,7 +26,7 @@ shape, not *twins*, and the shot banks are near-identical copies of each
 other, so a routine only one bank failed to execute reads as ordinary data
 until you diff it against its siblings.
 
-Everything below is **committed** (HEAD `0d2a117`); the whole history
+Everything below is **committed** (HEAD `3a890ad`); the whole history
 rebuilds byte-perfect. Per-bank progress at any time: `python3
 tools/progress.py` (proven-code bytes, fill runs, label counts, human-named
 counts) and `tools/progress.py --unnamed <bank>` to list still-auto-named
@@ -4572,7 +4572,7 @@ from clean throughout.
 
 ## Repo state
 
-All work is committed (HEAD `0d2a117`); every commit rebuilds byte-perfect.
+All work is committed (HEAD `3a890ad`); every commit rebuilds byte-perfect.
 Gitignored: baserom.gbc, data/, build/, tools/rgbds/, *.o, *.gbc, *.sav.
 
 ## Tail calls, and three tables that lied about their length (2026-07-26)
