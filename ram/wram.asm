@@ -1466,6 +1466,8 @@ ENDU
 ; Sound-engine WRAM (bank $07), used only by the bank-0 audio driver;
 ; scoped to the driver's code range so the same $d1xx/$d2xx offsets
 ; in other WRAM banks keep their numeric address.
+; The EXP award screen reuses the same bytes from WRAM bank $06, which the
+; bank $1a/$1d code selects explicitly with `wram_bank $06`.
 UNION
 ; sound engine (bank 0)
 ; [192 bytes] Six 32-byte channel state blocks (channels 0-1 music, 2-5 SFX); the active channel's block is mirrored into HRAM $ffd0 each pass, first word = script pointer ($ffff = idle)
@@ -1504,6 +1506,11 @@ wSndLoadedWaveId:: db
 wSndTranspose:: db
 ; [8-bit] Non-zero to force the wave channel to reload its pattern on the next note
 wSndWaveReloadPending:: db
+NEXTU
+; EXP award screen (banks $1a/$1d)
+	ds 97
+; [2 x 15 bytes] Per-character record the EXP award screen works on, selected by wStoryCharacterSlot (slot 0 at +0, slot 1 at +15). InitExpScreenCharStats fills $d161-$d16f; +8 is the 16-bit total CheckExpLevelUp/Down compare, and DrawExpScreenLevelNumber, DrawExpScreenLevelBar and the SweepExpBarMarker routines read +0 and +3
+wExpScreenCharStats:: ds 30
 ENDU
 
 	ds 1511

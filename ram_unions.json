@@ -116,7 +116,7 @@
   {
    "start": "0xd100",
    "end": "0xd21a",
-   "comment": "Sound-engine WRAM (bank $07), used only by the bank-0 audio driver;\nscoped to the driver's code range so the same $d1xx/$d2xx offsets\nin other WRAM banks keep their numeric address.",
+   "comment": "Sound-engine WRAM (bank $07), used only by the bank-0 audio driver;\nscoped to the driver's code range so the same $d1xx/$d2xx offsets\nin other WRAM banks keep their numeric address.\nThe EXP award screen reuses the same bytes from WRAM bank $06, which the\nbank $1a/$1d code selects explicitly with `wram_bank $06`.",
    "variants": [
     {
      "context": "sound engine (bank 0)",
@@ -198,6 +198,21 @@
       "0xd219": {
        "name": "wSndWaveReloadPending",
        "note": "[8-bit] Non-zero to force the wave channel to reload its pattern on the next note"
+      }
+     }
+    },
+    {
+     "context": "EXP award screen (banks $1a/$1d)",
+     "scopes": [
+      {
+       "wram_bank": "0x06"
+      }
+     ],
+     "symbols": {
+      "0xd161": {
+       "name": "wExpScreenCharStats",
+       "size": 30,
+       "note": "[2 x 15 bytes] Per-character record the EXP award screen works on, selected by wStoryCharacterSlot (slot 0 at +0, slot 1 at +15). InitExpScreenCharStats fills $d161-$d16f; +8 is the 16-bit total CheckExpLevelUp/Down compare, and DrawExpScreenLevelNumber, DrawExpScreenLevelBar and the SweepExpBarMarker routines read +0 and +3"
       }
      }
     }

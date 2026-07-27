@@ -5304,3 +5304,41 @@ A caution for future sessions: the emulator free-runs between MCP calls, so the
 first navigation attempt overshot the title screen into the attract intro.
 `pause_emulation` makes stepping exact -- after it, a 120-frame step advances
 the counter by exactly 120.
+
+## Driving story mode to find the EXP screen's structure (2026-07-27)
+
+Loading the story save (Alex, LV99) drops straight into the EXP award screen,
+which is where the `$d15x`-`$d18x` block lives -- 432 references that static
+reading had not attributed.
+
+The live read pinned the bank before anything else: SVBK is `$fe` there, so
+**WRAM bank 6**, which `compute_wram_bank` agrees with (159 of 171 accesses to
+that range are bank 6) and which `RunExpDistributionLoop` states outright with
+`wram_bank $06`. Reading `$d154` at that moment gave `$15` while the screen
+read "EXP Pts 21".
+
+Note for anyone repeating this: SVBK is back to bank 3 at every frame boundary,
+because the EXP routines switch to 6 and back *within* a frame. Stepping single
+frames never catches bank 6, so the useful read was the opportunistic one taken
+as the screen loaded, and everything after it had to come from the code.
+
+What the code then gave up is a structure rather than a scalar.
+`CheckExpLevelUp` selects `$d169` or `$d178` on `wStoryCharacterSlot`, 15 bytes
+apart; `InitExpScreenCharStats` fills `$d161`-`$d16f` from a `ld de, $d161`
+base; and `DrawExpScreenLevelNumber`, `DrawExpScreenLevelBar` and the
+`SweepExpBarMarker*` pair use `$d161`/`$d170` and `$d164`/`$d173`
+interchangeably. That is two 15-byte per-character records, now
+`wExpScreenCharStats` (size 30) as a WRAM-bank-6 variant of the `$d100`-`$d21a`
+union the sound engine already shares. 113 sites render through it, and the
+stride is visible on the page:
+
+```
+        ld hl, wExpScreenCharStats + 6
+        ld hl, wExpScreenCharStats + 21
+        ld hl, wExpScreenCharStats + 12
+        ld hl, wExpScreenCharStats + 27
+```
+
+`$d0b6` was tempting -- the EXP loop tests and clears it -- but bank `$1c`'s
+character-data screen uses it too, so it is shared state rather than an EXP
+flag, and it stays unnamed until that is pinned down.

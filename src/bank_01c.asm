@@ -3347,13 +3347,13 @@ LoadCharDataScreenBgAndPalettes:
 	call LoadPaletteShadow ; $740a
 	wram_bank $06 ; $740d
 	ld a, [wMasterPalettes + 58] ; $7413
-	ld [$d16b], a ; $7416
+	ld [wExpScreenCharStats + 10], a ; $7416
 	ld a, [wMasterPalettes + 59] ; $7419
-	ld [$d16c], a ; $741c
+	ld [wExpScreenCharStats + 11], a ; $741c
 	ld a, [wMasterPalettes + 34] ; $741f
-	ld [$d17a], a ; $7422
+	ld [wExpScreenCharStats + 25], a ; $7422
 	ld a, [wMasterPalettes + 35] ; $7425
-	ld [$d17b], a ; $7428
+	ld [wExpScreenCharStats + 26], a ; $7428
 	ld hl, wMasterPalettes + 34 ; $742b
 	farcall GrayscalePaletteColorInPlace ; $742e
 	ld hl, wMasterPalettes + 34 ; $7431
