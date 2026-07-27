@@ -456,6 +456,7 @@ def main() -> int:
     outdir = Path(sys.argv[3])
 
     count = 0
+    written = set()
     for line in manifest.read_text().splitlines():
         line = line.strip()
         if not line or line.startswith("#"):
@@ -475,8 +476,21 @@ def main() -> int:
             dest.write_text(render_text(rom[off:off + length]))
         else:
             dest.write_bytes(rom[off:off + length])
+        written.add(path)
         count += 1
-    print(f"extracted {count} files to {outdir}/")
+
+    # data/bank_*/ is generated in full from the manifest, so a file there the
+    # manifest no longer lists is a leftover from an older carve. Leaving them
+    # is actively misleading: a stale text_*.asm reads as if a region were
+    # decoded as game text when the current source renders it as a table.
+    # data/gfx/ is gfxdump.py's contact sheets, not ours to remove.
+    stale = [f for d in sorted(outdir.glob("bank_*")) if d.is_dir()
+             for f in sorted(d.rglob("*"))
+             if f.is_file() and str(f.relative_to(outdir)) not in written]
+    for f in stale:
+        f.unlink()
+    note = f", removed {len(stale)} stale" if stale else ""
+    print(f"extracted {count} files to {outdir}/{note}")
     return 0
 
 
