@@ -39,6 +39,10 @@
   "note": "[8-bit] Story Mode - Current Location\n\n0x00 - Not in Story Mode\n0x05 - Academy Main Building\n0x06 - Academy Wing\n0x07 - Courtyard\n0x08 - Restaurant Plaza\n0x09 - Dorm Entrance\n0x0a - Dormitory\n0x0b, 0x0c - Junior Class Court\n0x0d - Restaurant\n0x0e - Cafeteria\n0x0f - Training Court\n0x10 - Senior Class Court\n0x11 - Training Center\n0x12 - Tennis Machine Room\n0x13 - Wall Practice Room\n0x14 - Academy Entrance\n0x15 - Tournament Courtyard\n0x16 - Court #1\n0x17 - Court #2\n0x18 - Center Court\n0x19 - Tournament\n0x1a - Awards Ceremony\n0x1b - Plane Cutscene\n0x1c - Castle Court\n0x1d - Peach's Castle\n0x1e-0x29 - Final Credits Sequence",
   "size": 1
  },
+ "0xc294": {
+  "name": "wUnusedExitLocationMirror",
+  "note": "[8-bit] Write-only mirror of wStoryModeExitLocationRequest ($c2a1): all 204 stores write the same value to both, and no instruction anywhere reads this one. Vestigial -- changing it has no effect"
+ },
  "0xc295": {
   "name": "wStoryModeEntryPoint",
   "note": "[8-bit] Story Mode - entry point / spawn-door ID for the location being loaded; $ff = none (keep saved player position). LoadStoryEntryPointRecord searches the location's entry table with it"

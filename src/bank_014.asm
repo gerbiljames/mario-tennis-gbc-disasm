@@ -475,7 +475,7 @@ MachineCourtStartLevelScene:
 	ld a, $05 ; $4587
 	ld [wStoryModeEntryPoint], a ; $4589
 	ld a, $ff ; $458c
-	ld [$c294], a ; $458e
+	ld [wUnusedExitLocationMirror], a ; $458e
 	ld [wStoryModeExitLocationRequest], a ; $4591
 	ld a, [$c2b0] ; $4594
 	add a, LOW(Data_14_45f8) ; $4597
@@ -546,7 +546,7 @@ MachinePracticeLevelPrompt:
 	ld a, $07 ; $467a
 	ld [wStoryModeEntryPoint], a ; $467c
 	ld a, $ff ; $467f
-	ld [$c294], a ; $4681
+	ld [wUnusedExitLocationMirror], a ; $4681
 	ld [wStoryModeExitLocationRequest], a ; $4684
 	ld a, [$c2b8] ; $4687
 	add a, $12 ; $468a
@@ -665,7 +665,7 @@ MachineCourtRestartLevel:
 	ld a, $07 ; $47e0
 	ld [wStoryModeEntryPoint], a ; $47e2
 	ld a, $ff ; $47e5
-	ld [$c294], a ; $47e7
+	ld [wUnusedExitLocationMirror], a ; $47e7
 	ld [wStoryModeExitLocationRequest], a ; $47ea
 	jr .runTrainingDrillByID ; $47ed
 .storeStoryModeCurrentLocation:
@@ -674,7 +674,7 @@ MachineCourtRestartLevel:
 	ld a, $05 ; $47f4
 	ld [wStoryModeEntryPoint], a ; $47f6
 	ld a, $ff ; $47f9
-	ld [$c294], a ; $47fb
+	ld [wUnusedExitLocationMirror], a ; $47fb
 	ld [wStoryModeExitLocationRequest], a ; $47fe
 .runTrainingDrillByID:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $4801
@@ -703,7 +703,7 @@ ActorScript_14_4808:
 	ld a, $01 ; $4834
 	ld [wStoryModeEntryPoint], a ; $4836
 	ld a, $ff ; $4839
-	ld [$c294], a ; $483b
+	ld [wUnusedExitLocationMirror], a ; $483b
 	ld [wStoryModeExitLocationRequest], a ; $483e
 	ret ; $4841
 MachineExpertResultScene:
@@ -1676,7 +1676,7 @@ IslandSkyInitScript_14:
 	ld a, $04 ; $54d1
 	ld [wStoryModeEntryPoint], a ; $54d3
 	ld a, $ff ; $54d6
-	ld [$c294], a ; $54d8
+	ld [wUnusedExitLocationMirror], a ; $54d8
 	ld [wStoryModeExitLocationRequest], a ; $54db
 	ret ; $54de
 .setLocation:
@@ -1737,7 +1737,7 @@ IslandSkyInitScript_14:
 	ld [$c2be], a ; $55f4
 	ld [$c2bf], a ; $55f7
 	ld a, $01 ; $55fa
-	ld [$c294], a ; $55fc
+	ld [wUnusedExitLocationMirror], a ; $55fc
 	ld [wStoryModeExitLocationRequest], a ; $55ff
 	ret ; $5602
 .done:
@@ -1754,7 +1754,7 @@ IslandSkyInitScript_14:
 	ld a, $09 ; $562d
 	ld [wStoryModeEntryPoint], a ; $562f
 	ld a, $ff ; $5632
-	ld [$c294], a ; $5634
+	ld [wUnusedExitLocationMirror], a ; $5634
 	ld [wStoryModeExitLocationRequest], a ; $5637
 	ret ; $563a
 ActorScript_14_563b:
@@ -2234,7 +2234,7 @@ QueuePlaneSpriteByFrameCounter_14:
 	ld a, $02 ; $6411
 	ld [wStoryModeEntryPoint], a ; $6413
 	ld a, $ff ; $6416
-	ld [$c294], a ; $6418
+	ld [wUnusedExitLocationMirror], a ; $6418
 	ld [wStoryModeExitLocationRequest], a ; $641b
 	ret ; $641e
 AdvancePlaneFrameCounter_14:
@@ -2460,7 +2460,7 @@ Data_14_64dd:
 	ld a, $0b ; $6654
 	ld [wStoryModeEntryPoint], a ; $6656
 	ld a, $ff ; $6659
-	ld [$c294], a ; $665b
+	ld [wUnusedExitLocationMirror], a ; $665b
 	ld [wStoryModeExitLocationRequest], a ; $665e
 	ret ; $6661
 .notDoubles:
@@ -2469,7 +2469,7 @@ Data_14_64dd:
 	ld a, $0a ; $6667
 	ld [wStoryModeEntryPoint], a ; $6669
 	ld a, $ff ; $666c
-	ld [$c294], a ; $666e
+	ld [wUnusedExitLocationMirror], a ; $666e
 	ld [wStoryModeExitLocationRequest], a ; $6671
 	ret ; $6674
 FireworkMapActors_14:
@@ -2712,7 +2712,7 @@ AdvanceFirework1Ascent_14:
 	ld a, $01 ; $70fe
 	ld [$c2be], a ; $7100
 	ld a, $01 ; $7103
-	ld [$c294], a ; $7105
+	ld [wUnusedExitLocationMirror], a ; $7105
 	ld [wStoryModeExitLocationRequest], a ; $7108
 	ret ; $710b
 .fadeOut:
@@ -2739,7 +2739,7 @@ AdvanceFirework1Ascent_14:
 	ld a, $0a ; $713b
 	ld [wStoryModeEntryPoint], a ; $713d
 	ld a, $ff ; $7140
-	ld [$c294], a ; $7142
+	ld [wUnusedExitLocationMirror], a ; $7142
 	ld [wStoryModeExitLocationRequest], a ; $7145
 	ret ; $7148
 .doublesLocation:
@@ -2758,7 +2758,7 @@ AdvanceFirework1Ascent_14:
 	ld a, $01 ; $7162
 	ld [wStoryModeEntryPoint], a ; $7164
 	ld a, $ff ; $7167
-	ld [$c294], a ; $7169
+	ld [wUnusedExitLocationMirror], a ; $7169
 	ld [wStoryModeExitLocationRequest], a ; $716c
 	ret ; $716f
 .done:
@@ -2770,7 +2770,7 @@ AdvanceFirework1Ascent_14:
 	ld a, $0f ; $717d
 	ld [wStoryModeEntryPoint], a ; $717f
 	ld a, $ff ; $7182
-	ld [$c294], a ; $7184
+	ld [wUnusedExitLocationMirror], a ; $7184
 	ld [wStoryModeExitLocationRequest], a ; $7187
 	ret ; $718a
 	; $718b, 5 bytes (fill)
@@ -3094,7 +3094,7 @@ QueueTwinkleSprite_14:
 	ld a, $02 ; $7865
 	ld [wStoryModeEntryPoint], a ; $7867
 	ld a, $ff ; $786a
-	ld [$c294], a ; $786c
+	ld [wUnusedExitLocationMirror], a ; $786c
 	ld [wStoryModeExitLocationRequest], a ; $786f
 	ret ; $7872
 AdvancePlaneFrameCounter2_14:

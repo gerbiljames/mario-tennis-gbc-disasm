@@ -443,12 +443,12 @@ TrainingGymTileTriggers_0e:
 	db $ff
 TrainingGymTile02_0e:
 	ld a, $02 ; $4607
-	ld [$c294], a ; $4609
+	ld [wUnusedExitLocationMirror], a ; $4609
 	ld [wStoryModeExitLocationRequest], a ; $460c
 	ret ; $460f
 TrainingGymTile03_0e:
 	ld a, $03 ; $4610
-	ld [$c294], a ; $4612
+	ld [wUnusedExitLocationMirror], a ; $4612
 	ld [wStoryModeExitLocationRequest], a ; $4615
 	ret ; $4618
 TrainingGymInitScript_0e:
@@ -1299,7 +1299,7 @@ PrepareEquipmentSelectScreen:
 	ld a, [$c2b1] ; $4ebd
 	ld [wStoryModeEntryPoint], a ; $4ec0
 	ld a, $ff ; $4ec3
-	ld [$c294], a ; $4ec5
+	ld [wUnusedExitLocationMirror], a ; $4ec5
 	ld [wStoryModeExitLocationRequest], a ; $4ec8
 	ld c, $10 ; $4ecb
 	call BeginFadeOut ; $4ecd
@@ -1343,7 +1343,7 @@ RestoreScreenAfterEquipSelect:
 	ld a, [$c2b1] ; $4f2a
 	ld [wStoryModeEntryPoint], a ; $4f2d
 	ld a, $ff ; $4f30
-	ld [$c294], a ; $4f32
+	ld [wUnusedExitLocationMirror], a ; $4f32
 	ld [wStoryModeExitLocationRequest], a ; $4f35
 	call RestoreScreenAfterEquipSelect ; $4f38
 	ret ; $4f3b
@@ -1913,7 +1913,7 @@ MarioWorldArrivalSingles:
 	script_face $08, FACE_DOWN ; $56a9
 	script_wait_frames $14 ; $56b0
 	ld a, $01 ; $56b7
-	ld [$c294], a ; $56b9
+	ld [wUnusedExitLocationMirror], a ; $56b9
 	ld [wStoryModeExitLocationRequest], a ; $56bc
 	ret ; $56bf
 .done:
@@ -2098,7 +2098,7 @@ ExhibitionAcceptedSingles:
 	ld a, $01 ; $5bac
 	ld [wStoryModeEntryPoint], a ; $5bae
 	ld a, $ff ; $5bb1
-	ld [$c294], a ; $5bb3
+	ld [wUnusedExitLocationMirror], a ; $5bb3
 	ld [wStoryModeExitLocationRequest], a ; $5bb6
 	ret ; $5bb9
 MarioWorldArrivalDoubles:
@@ -2163,7 +2163,7 @@ MarioWorldArrivalDoubles:
 	script_face $08, FACE_DOWN ; $5d32
 	script_wait_frames $14 ; $5d39
 	ld a, $01 ; $5d40
-	ld [$c294], a ; $5d42
+	ld [wUnusedExitLocationMirror], a ; $5d42
 	ld [wStoryModeExitLocationRequest], a ; $5d45
 	ret ; $5d48
 .done:
@@ -2378,7 +2378,7 @@ ExhibitionAcceptedDoubles:
 	ld a, $04 ; $62fd
 	ld [wStoryModeEntryPoint], a ; $62ff
 	ld a, $ff ; $6302
-	ld [$c294], a ; $6304
+	ld [wUnusedExitLocationMirror], a ; $6304
 	ld [wStoryModeExitLocationRequest], a ; $6307
 	ret ; $630a
 ActorScript_0e_630b:
@@ -2735,7 +2735,7 @@ PromptExhibitionMatch:
 	ld a, [wWaterSpriteMinigameTimer] ; $6975
 	ld [wStoryModeEntryPoint], a ; $6978
 	ld a, $ff ; $697b
-	ld [$c294], a ; $697d
+	ld [wUnusedExitLocationMirror], a ; $697d
 	ld [wStoryModeExitLocationRequest], a ; $6980
 	farcall EndCutsceneScriptMode ; $6983
 	ret ; $6986
@@ -3414,7 +3414,7 @@ ExhibitionMatchIntroCutscene:
 	test_flag FLAG_ENDING_CREDITS_RUNNING ; $77f0
 	jr z, .doubles ; $77f3
 	ld a, $01 ; $77f5
-	ld [$c294], a ; $77f7
+	ld [wUnusedExitLocationMirror], a ; $77f7
 	ld [wStoryModeExitLocationRequest], a ; $77fa
 	ret ; $77fd
 .doubles:
@@ -3501,7 +3501,7 @@ ExhibitionMatchIntroCutscene:
 	test_flag FLAG_ENDING_CREDITS_RUNNING ; $7a58
 	jr z, .done ; $7a5b
 	ld a, $01 ; $7a5d
-	ld [$c294], a ; $7a5f
+	ld [wUnusedExitLocationMirror], a ; $7a5f
 	ld [wStoryModeExitLocationRequest], a ; $7a62
 	ret ; $7a65
 .done:
@@ -3586,7 +3586,7 @@ PrepareStoryMatch:
 	ld a, $0a ; $7b84
 	ld [wStoryModeEntryPoint], a ; $7b86
 	ld a, $ff ; $7b89
-	ld [$c294], a ; $7b8b
+	ld [wUnusedExitLocationMirror], a ; $7b8b
 	ld [wStoryModeExitLocationRequest], a ; $7b8e
 	farcall InitStoryMatchSettings ; $7b91
 	ld a, [wWaterSpriteMinigameTimer] ; $7b94
@@ -3646,7 +3646,7 @@ HandleExhibitionMatchResult:
 	ld a, $0e ; $7c29
 	ld [wStoryModeEntryPoint], a ; $7c2b
 	ld a, $ff ; $7c2e
-	ld [$c294], a ; $7c30
+	ld [wUnusedExitLocationMirror], a ; $7c30
 	ld [wStoryModeExitLocationRequest], a ; $7c33
 	ret ; $7c36
 .aborted:
@@ -3675,7 +3675,7 @@ HandleExhibitionMatchResult:
 	ld a, $0a ; $7c60
 	ld [wStoryModeEntryPoint], a ; $7c62
 	ld a, $ff ; $7c65
-	ld [$c294], a ; $7c67
+	ld [wUnusedExitLocationMirror], a ; $7c67
 	ld [wStoryModeExitLocationRequest], a ; $7c6a
 	ret ; $7c6d
 ActorScript_0e_7c6e:

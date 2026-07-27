@@ -89,12 +89,12 @@ DormEntranceTile01_12:
 	or a, a ; $415b
 	jr nz, .nonZero ; $415c
 	ld a, $01 ; $415e
-	ld [$c294], a ; $4160
+	ld [wUnusedExitLocationMirror], a ; $4160
 	ld [wStoryModeExitLocationRequest], a ; $4163
 	ret ; $4166
 .nonZero:
 	ld a, $01 ; $4167
-	ld [$c294], a ; $4169
+	ld [wUnusedExitLocationMirror], a ; $4169
 	ld [wStoryModeExitLocationRequest], a ; $416c
 	ret ; $416f
 DormEntranceInitScript_12:
@@ -303,7 +303,7 @@ DormEntranceEntry0FScene:
 	call BeginFadeOut ; $466d
 	call WaitFadeEnd ; $4670
 	ld a, $0f ; $4673
-	ld [$c294], a ; $4675
+	ld [wUnusedExitLocationMirror], a ; $4675
 	ld [wStoryModeExitLocationRequest], a ; $4678
 	ret ; $467b
 WallPracticeRoomMapScripts_12:
@@ -634,7 +634,7 @@ RelaunchWallPracticeMasterLevel:
 	ld a, $0a ; $49d2
 	ld [wStoryModeEntryPoint], a ; $49d4
 	ld a, $ff ; $49d7
-	ld [$c294], a ; $49d9
+	ld [wUnusedExitLocationMirror], a ; $49d9
 	ld [wStoryModeExitLocationRequest], a ; $49dc
 	ld a, $1b ; $49df
 	farcall RunTrainingDrillByID ; $49e1
@@ -888,7 +888,7 @@ WallPracticeRoomTile03_12:
 	ld a, $0b ; $4d82
 	ld [wStoryModeEntryPoint], a ; $4d84
 	ld a, $ff ; $4d87
-	ld [$c294], a ; $4d89
+	ld [wUnusedExitLocationMirror], a ; $4d89
 	ld [wStoryModeExitLocationRequest], a ; $4d8c
 	ld a, $16 ; $4d8f
 	farcall RunTrainingDrillByID ; $4d91
@@ -920,7 +920,7 @@ WallPracticeRoomTile04_12:
 	ld a, $0b ; $4df7
 	ld [wStoryModeEntryPoint], a ; $4df9
 	ld a, $ff ; $4dfc
-	ld [$c294], a ; $4dfe
+	ld [wUnusedExitLocationMirror], a ; $4dfe
 	ld [wStoryModeExitLocationRequest], a ; $4e01
 	ld a, $17 ; $4e04
 	farcall RunTrainingDrillByID ; $4e06
@@ -952,7 +952,7 @@ WallPracticeRoomTile05_12:
 	ld a, $0b ; $4e6c
 	ld [wStoryModeEntryPoint], a ; $4e6e
 	ld a, $ff ; $4e71
-	ld [$c294], a ; $4e73
+	ld [wUnusedExitLocationMirror], a ; $4e73
 	ld [wStoryModeExitLocationRequest], a ; $4e76
 	ld a, $18 ; $4e79
 	farcall RunTrainingDrillByID ; $4e7b
@@ -984,7 +984,7 @@ WallPracticeRoomTile06_12:
 	ld a, $0b ; $4ee1
 	ld [wStoryModeEntryPoint], a ; $4ee3
 	ld a, $ff ; $4ee6
-	ld [$c294], a ; $4ee8
+	ld [wUnusedExitLocationMirror], a ; $4ee8
 	ld [wStoryModeExitLocationRequest], a ; $4eeb
 	ld a, $19 ; $4eee
 	farcall RunTrainingDrillByID ; $4ef0
@@ -1108,7 +1108,7 @@ WallPracticeRoomInitScript_12:
 	ld a, $0b ; $504b
 	ld [wStoryModeEntryPoint], a ; $504d
 	ld a, $ff ; $5050
-	ld [$c294], a ; $5052
+	ld [wUnusedExitLocationMirror], a ; $5052
 	ld [wStoryModeExitLocationRequest], a ; $5055
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $5058
 	farcall RunTrainingDrillByID ; $505b
@@ -1282,7 +1282,7 @@ LaunchWallPracticeMinigame:
 	ld a, $0a ; $529a
 	ld [wStoryModeEntryPoint], a ; $529c
 	ld a, $ff ; $529f
-	ld [$c294], a ; $52a1
+	ld [wUnusedExitLocationMirror], a ; $52a1
 	ld [wStoryModeExitLocationRequest], a ; $52a4
 	ld a, [$c2b0] ; $52a7
 	add a, LOW(Data_12_52b9) ; $52aa
@@ -1759,7 +1759,7 @@ SeniorCourtNpc08_12:
 	call CopyMemoryBC ; $5a06
 	ld a, $ff ; $5a09
 	ld [wStoryModeEntryPoint], a ; $5a0b
-	ld [$c294], a ; $5a0e
+	ld [wUnusedExitLocationMirror], a ; $5a0e
 	ld [wStoryModeExitLocationRequest], a ; $5a11
 	farcall InitStoryMatchSettings ; $5a14
 	load_match_settings $0005 ; $5a17
@@ -1881,7 +1881,7 @@ SeniorCourtNpc0A_12:
 	call CopyMemoryBC ; $5b50
 	ld a, $ff ; $5b53
 	ld [wStoryModeEntryPoint], a ; $5b55
-	ld [$c294], a ; $5b58
+	ld [wUnusedExitLocationMirror], a ; $5b58
 	ld [wStoryModeExitLocationRequest], a ; $5b5b
 	farcall InitStoryMatchSettings ; $5b5e
 	load_match_settings $0105 ; $5b61
@@ -2307,7 +2307,7 @@ StartSeniorRankingMatch:
 	script_wait_actor_script $08 ; $610b
 	script_wait_frames $1e ; $6110
 	ld a, $0f ; $6117
-	ld [$c294], a ; $6119
+	ld [wUnusedExitLocationMirror], a ; $6119
 	ld [wStoryModeExitLocationRequest], a ; $611c
 	farcall InitStoryMatchSettings ; $611f
 	load_match_settings $0107 ; $6122
@@ -2329,7 +2329,7 @@ StartSeniorRankingMatch:
 	script_wait_actor_script $07 ; $6187
 	script_wait_frames $1e ; $618c
 	ld a, $0f ; $6193
-	ld [$c294], a ; $6195
+	ld [wUnusedExitLocationMirror], a ; $6195
 	ld [wStoryModeExitLocationRequest], a ; $6198
 	farcall InitStoryMatchSettings ; $619b
 	load_match_settings $0108 ; $619e
@@ -2350,7 +2350,7 @@ StartSeniorRankingMatch:
 	script_wait_actor_script $04 ; $6207
 	script_wait_frames $1e ; $620c
 	ld a, $0f ; $6213
-	ld [$c294], a ; $6215
+	ld [wUnusedExitLocationMirror], a ; $6215
 	ld [wStoryModeExitLocationRequest], a ; $6218
 	farcall InitStoryMatchSettings ; $621b
 	load_match_settings $0109 ; $621e
@@ -2368,7 +2368,7 @@ StartSeniorRankingMatch:
 	script_wait_actor_script $07 ; $625f
 	script_wait_frames $1e ; $6264
 	ld a, $0f ; $626b
-	ld [$c294], a ; $626d
+	ld [wUnusedExitLocationMirror], a ; $626d
 	ld [wStoryModeExitLocationRequest], a ; $6270
 	farcall InitStoryMatchSettings ; $6273
 	load_match_settings $0006 ; $6276
@@ -2387,7 +2387,7 @@ StartSeniorRankingMatch:
 	script_wait_actor_script $06 ; $62be
 	script_wait_frames $1e ; $62c3
 	ld a, $0f ; $62ca
-	ld [$c294], a ; $62cc
+	ld [wUnusedExitLocationMirror], a ; $62cc
 	ld [wStoryModeExitLocationRequest], a ; $62cf
 	farcall InitStoryMatchSettings ; $62d2
 	load_match_settings $0007 ; $62d5
@@ -2406,7 +2406,7 @@ StartSeniorRankingMatch:
 	script_wait_frames $78 ; $631d
 	script_wait_move ACTOR_PLAYER ; $6324
 	ld a, $0f ; $6329
-	ld [$c294], a ; $632b
+	ld [wUnusedExitLocationMirror], a ; $632b
 	ld [wStoryModeExitLocationRequest], a ; $632e
 	farcall InitStoryMatchSettings ; $6331
 	load_match_settings $0008 ; $6334
@@ -2424,7 +2424,7 @@ StartSeniorRankingMatch:
 	farcall WaitPlayerMoveDone ; $6379
 	script_wait_frames $b4 ; $637c
 	ld a, $0f ; $6383
-	ld [$c294], a ; $6385
+	ld [wUnusedExitLocationMirror], a ; $6385
 	ld [wStoryModeExitLocationRequest], a ; $6388
 	farcall InitStoryMatchSettings ; $638b
 	load_match_settings $0009 ; $638e
@@ -3060,7 +3060,7 @@ ActorScript_12_6d5d:
 	ld a, $0d ; $6d8f
 	ld [wStoryModeEntryPoint], a ; $6d91
 	ld a, $ff ; $6d94
-	ld [$c294], a ; $6d96
+	ld [wUnusedExitLocationMirror], a ; $6d96
 	ld [wStoryModeExitLocationRequest], a ; $6d99
 	farcall StubNop_1e ; $6d9c
 	ret ; $6d9f
@@ -3324,7 +3324,7 @@ IslandOpenDoublesVictory:
 	ld a, $01 ; $7386
 	ld [wStoryModeEntryPoint], a ; $7388
 	ld a, $ff ; $738b
-	ld [$c294], a ; $738d
+	ld [wUnusedExitLocationMirror], a ; $738d
 	ld [wStoryModeExitLocationRequest], a ; $7390
 	script_set_anim $03, $03 ; $7393
 	script_wait_idle $03 ; $739a
@@ -3478,7 +3478,7 @@ SeniorSharedVictoryScene:
 	ld a, $01 ; $771e
 	ld [wStoryModeEntryPoint], a ; $7720
 	ld a, $ff ; $7723
-	ld [$c294], a ; $7725
+	ld [wUnusedExitLocationMirror], a ; $7725
 	ld [wStoryModeExitLocationRequest], a ; $7728
 	script_set_anim $03, $03 ; $772b
 	script_wait_idle $03 ; $7732

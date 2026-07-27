@@ -54,7 +54,10 @@ wMasterPalettes:: ds 128
 ; 0x1d - Peach's Castle
 ; 0x1e-0x29 - Final Credits Sequence
 wStoryModeCurrentLocation:: db
-	ds 20
+	ds 19
+
+; [8-bit] Write-only mirror of wStoryModeExitLocationRequest ($c2a1): all 204 stores write the same value to both, and no instruction anywhere reads this one. Vestigial -- changing it has no effect
+wUnusedExitLocationMirror:: db
 
 ; [8-bit] Story Mode - entry point / spawn-door ID for the location being loaded; $ff = none (keep saved player position). LoadStoryEntryPointRecord searches the location's entry table with it
 wStoryModeEntryPoint:: db

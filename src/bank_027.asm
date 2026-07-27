@@ -166,7 +166,7 @@ End17AwardCeremonyInitScript_27:
 	farcall WaitPlayerMoveDone ; $43b1
 	script_delay $32 ; $43b4
 	ld a, $01 ; $43b9
-	ld [$c294], a ; $43bb
+	ld [wUnusedExitLocationMirror], a ; $43bb
 	ld [wStoryModeExitLocationRequest], a ; $43be
 	ret ; $43c1
 .isDoubles:
@@ -435,7 +435,7 @@ End16BeforeFinalsCutscene_27:
 	farcall WaitPlayerMoveDone ; $4a75
 	script_wait_frames $1e ; $4a78
 	ld a, $01 ; $4a7f
-	ld [$c294], a ; $4a81
+	ld [wUnusedExitLocationMirror], a ; $4a81
 	ld [wStoryModeExitLocationRequest], a ; $4a84
 	ret ; $4a87
 .face:
@@ -462,7 +462,7 @@ End16BeforeFinalsCutscene_27:
 	script_move_player $1100, $0d00 ; $4b2b
 	farcall WaitPlayerMoveDone ; $4b35
 	ld a, $01 ; $4b38
-	ld [$c294], a ; $4b3a
+	ld [wUnusedExitLocationMirror], a ; $4b3a
 	ld [wStoryModeExitLocationRequest], a ; $4b3d
 	ret ; $4b40
 Data_27_4b41:
@@ -691,7 +691,7 @@ End12PrincipalsOfficeInitScript_27:
 	script_wait_move ACTOR_PLAYER ; $4fe2
 .storeStoryModeExitLocationRequest:
 	ld a, $01 ; $4fe7
-	ld [$c294], a ; $4fe9
+	ld [wUnusedExitLocationMirror], a ; $4fe9
 	ld [wStoryModeExitLocationRequest], a ; $4fec
 	ret ; $4fef
 .eq02:
@@ -765,7 +765,7 @@ End12PrincipalsOfficeInitScript_27:
 	call BeginFadeOut ; $515c
 	call WaitFadeEnd ; $515f
 	ld a, $01 ; $5162
-	ld [$c294], a ; $5164
+	ld [wUnusedExitLocationMirror], a ; $5164
 	ld [wStoryModeExitLocationRequest], a ; $5167
 	ret ; $516a
 OpenPrincipalsOfficeDoor_27:
@@ -920,7 +920,7 @@ End11TrainingCourtInitScript_27:
 	farcall ScriptWaitActorJumpDone ; $53e8
 	script_delay $1e ; $53eb
 	ld a, $01 ; $53f0
-	ld [$c294], a ; $53f2
+	ld [wUnusedExitLocationMirror], a ; $53f2
 	ld [wStoryModeExitLocationRequest], a ; $53f5
 	ret ; $53f8
 .eq02:
@@ -968,7 +968,7 @@ End11TrainingCourtInitScript_27:
 	script_wait_move $06 ; $54ee
 	script_set_position $06, $3f00, $3f00 ; $54f3
 	ld a, $01 ; $54fe
-	ld [$c294], a ; $5500
+	ld [wUnusedExitLocationMirror], a ; $5500
 	ld [wStoryModeExitLocationRequest], a ; $5503
 	ret ; $5506
 End11TrainingCourtActorsAlt_27:
@@ -1127,7 +1127,7 @@ SetPartnerObjDefByGender_27:
 	script_face_toward $08, ACTOR_PLAYER ; $5814
 	script_wait_frames $0a ; $581c
 	ld a, $01 ; $5823
-	ld [$c294], a ; $5825
+	ld [wUnusedExitLocationMirror], a ; $5825
 	ld [wStoryModeExitLocationRequest], a ; $5828
 	ret ; $582b
 .scriptRespawnLocationActors:
@@ -1302,7 +1302,7 @@ CeremonyDoublesReaction_27:
 	script_set_anim ACTOR_PLAYER, $03 ; $5c19
 	script_set_anim ACTOR_PARTNER, $03 ; $5c20
 	ld a, $01 ; $5c27
-	ld [$c294], a ; $5c29
+	ld [wUnusedExitLocationMirror], a ; $5c29
 	ld [wStoryModeExitLocationRequest], a ; $5c2c
 	ret ; $5c2f
 ActorScript_27_5c30:
@@ -1506,7 +1506,7 @@ End8SrCourtInitScript_27:
 	script_set_anim ACTOR_PLAYER, $03 ; $6060
 	script_wait_idle ACTOR_PLAYER ; $6067
 	ld a, $01 ; $606c
-	ld [$c294], a ; $606e
+	ld [wUnusedExitLocationMirror], a ; $606e
 	ld [wStoryModeExitLocationRequest], a ; $6071
 	ret ; $6074
 .notDoubles:
@@ -1550,7 +1550,7 @@ End8SrCourtInitScript_27:
 	script_wait_idle $03 ; $616c
 	script_delay $28 ; $6171
 	ld a, $01 ; $6176
-	ld [$c294], a ; $6178
+	ld [wUnusedExitLocationMirror], a ; $6178
 	ld [wStoryModeExitLocationRequest], a ; $617b
 	ret ; $617e
 End7TrainingCtrMapScripts_27:
@@ -1658,7 +1658,7 @@ ComputeMachineCourtProgress_27:
 	script_face ACTOR_PLAYER, FACE_UP ; $6359
 	script_wait_frames $0a ; $6360
 	ld a, $01 ; $6367
-	ld [$c294], a ; $6369
+	ld [wUnusedExitLocationMirror], a ; $6369
 	ld [wStoryModeExitLocationRequest], a ; $636c
 	ret ; $636f
 .placeActors:
@@ -1686,7 +1686,7 @@ ComputeMachineCourtProgress_27:
 	script_set_speed ACTOR_PLAYER, $0020 ; $640b
 	script_face_toward $07, ACTOR_PLAYER ; $6413
 	ld a, $01 ; $641b
-	ld [$c294], a ; $641d
+	ld [wUnusedExitLocationMirror], a ; $641d
 	ld [wStoryModeExitLocationRequest], a ; $6420
 	ret ; $6423
 ActorScript_27_6424:
@@ -1767,7 +1767,7 @@ End5ServiceAceCutscene_27:
 	script_set_anim $12, $02 ; $6601
 	script_wait_frames $3c ; $6608
 	ld a, $01 ; $660f
-	ld [$c294], a ; $6611
+	ld [wUnusedExitLocationMirror], a ; $6611
 	ld [wStoryModeExitLocationRequest], a ; $6614
 	farcall EndCutsceneScriptMode ; $6617
 	ret ; $661a
@@ -1966,7 +1966,7 @@ End4JrCourtSceneSingles_27:
 	script_wait_actor_script $07 ; $69d9
 	script_wait_frames $14 ; $69de
 	ld a, $01 ; $69e5
-	ld [$c294], a ; $69e7
+	ld [wUnusedExitLocationMirror], a ; $69e7
 	ld [wStoryModeExitLocationRequest], a ; $69ea
 	ret ; $69ed
 .loop:
@@ -1986,7 +1986,7 @@ End4JrCourtSceneSingles_27:
 	script_wait_frames $1e ; $6a41
 	call End4JrCourtDepartureDoubles_27 ; $6a48
 	ld a, $01 ; $6a4b
-	ld [$c294], a ; $6a4d
+	ld [wUnusedExitLocationMirror], a ; $6a4d
 	ld [wStoryModeExitLocationRequest], a ; $6a50
 	ret ; $6a53
 .walkPlayer:
@@ -2039,7 +2039,7 @@ End4JrCourtDepartureDoubles_27:
 	script_face ACTOR_PARTNER, FACE_UP ; $6b7d
 	script_wait_frames $3c ; $6b84
 	ld a, $0f ; $6b8b
-	ld [$c294], a ; $6b8d
+	ld [wUnusedExitLocationMirror], a ; $6b8d
 	ld [wStoryModeExitLocationRequest], a ; $6b90
 	ret ; $6b93
 ActorScript_27_6b94:
@@ -2227,7 +2227,7 @@ End3DormEntCutscene_27:
 	script_set_anim $04, $03 ; $6eca
 	script_wait_idle $04 ; $6ed1
 	ld a, $0f ; $6ed6
-	ld [$c294], a ; $6ed8
+	ld [wUnusedExitLocationMirror], a ; $6ed8
 	ld [wStoryModeExitLocationRequest], a ; $6edb
 	ret ; $6ede
 EndRestaurantEntMapScripts_27:
@@ -2332,7 +2332,7 @@ EndRestaurantEntCutscene_27:
 	script_wait_idle $06 ; $70f5
 	script_face $07, FACE_DOWN ; $70fa
 	ld a, $0e ; $7101
-	ld [$c294], a ; $7103
+	ld [wUnusedExitLocationMirror], a ; $7103
 	ld [wStoryModeExitLocationRequest], a ; $7106
 	farcall EndCutsceneScriptMode ; $7109
 	ret ; $710c
@@ -2507,7 +2507,7 @@ End1MainBldgInitScript_27:
 	script_set_anim $06, $02 ; $7580
 	script_wait_idle $06 ; $7587
 	ld a, $01 ; $758c
-	ld [$c294], a ; $758e
+	ld [wUnusedExitLocationMirror], a ; $758e
 	ld [wStoryModeExitLocationRequest], a ; $7591
 	ret ; $7594
 End1MainBldgKnockdown_27:
@@ -2640,7 +2640,7 @@ ActorScript_27_7607:
 	script_move_target $08, $1800, $2100 ; $783d
 	script_wait_move $08 ; $7848
 	ld a, $05 ; $784d
-	ld [$c294], a ; $784f
+	ld [wUnusedExitLocationMirror], a ; $784f
 	ld [wStoryModeExitLocationRequest], a ; $7852
 	ret ; $7855
 WaitScriptFramesSaveA:

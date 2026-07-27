@@ -6115,7 +6115,7 @@ TextSubcmdHandler1:
 	call CopyMemoryBC ; $66fc
 	ld a, $ff ; $66ff
 	ld [wStoryModeEntryPoint], a ; $6701
-	ld [$c294], a ; $6704
+	ld [wUnusedExitLocationMirror], a ; $6704
 	ld [wStoryModeExitLocationRequest], a ; $6707
 	set_flag FLAG_CHAR_DATA_START_EXITS ; $670a
 	ld c, $00 ; $670d
@@ -6226,7 +6226,7 @@ RunDebugWarpMenu:
 	ld a, [$c704] ; $6805
 	ld [wStoryModeEntryPoint], a ; $6808
 	ld a, $ff ; $680b
-	ld [$c294], a ; $680d
+	ld [wUnusedExitLocationMirror], a ; $680d
 	ld [wStoryModeExitLocationRequest], a ; $6810
 	jr .closeWindow ; $6813
 .checkInputPressed:

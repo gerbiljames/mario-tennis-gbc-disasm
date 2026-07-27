@@ -662,7 +662,7 @@ AwardsCeremonyTile02_0f:
 	ld a, $0f ; $4e99
 	ld [wStoryModeEntryPoint], a ; $4e9b
 	ld a, $ff ; $4e9e
-	ld [$c294], a ; $4ea0
+	ld [wUnusedExitLocationMirror], a ; $4ea0
 	ld [wStoryModeExitLocationRequest], a ; $4ea3
 	ret ; $4ea6
 .doubles:
@@ -952,7 +952,7 @@ AwardsCeremonyTile02_0f:
 	ld a, $0f ; $5573
 	ld [wStoryModeEntryPoint], a ; $5575
 	ld a, $ff ; $5578
-	ld [$c294], a ; $557a
+	ld [wUnusedExitLocationMirror], a ; $557a
 	ld [wStoryModeExitLocationRequest], a ; $557d
 	ret ; $5580
 AwardsCeremonyInitScript_0f:
@@ -1599,7 +1599,7 @@ TournamentFacing01_0f:
 	call CopyMemoryBC ; $6197
 	ld a, $ff ; $619a
 	ld [wStoryModeEntryPoint], a ; $619c
-	ld [$c294], a ; $619f
+	ld [wUnusedExitLocationMirror], a ; $619f
 	ld [wStoryModeExitLocationRequest], a ; $61a2
 	ret ; $61a5
 TournamentTileTriggers_0f:
@@ -2519,7 +2519,7 @@ IslandOpenRoundCallCutscene:
 	ld a, $0a ; $71cf
 	ld [wStoryModeEntryPoint], a ; $71d1
 	ld a, $ff ; $71d4
-	ld [$c294], a ; $71d6
+	ld [wUnusedExitLocationMirror], a ; $71d6
 	ld [wStoryModeExitLocationRequest], a ; $71d9
 	farcall InitStoryMatchSettings ; $71dc
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_SEMIFINAL ; $71df
@@ -2593,7 +2593,7 @@ IslandOpenRoundCallCutscene:
 	ld a, $0b ; $736f
 	ld [wStoryModeEntryPoint], a ; $7371
 	ld a, $ff ; $7374
-	ld [$c294], a ; $7376
+	ld [wUnusedExitLocationMirror], a ; $7376
 	ld [wStoryModeExitLocationRequest], a ; $7379
 	farcall InitStoryMatchSettings ; $737c
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_SEMIFINAL ; $737f
@@ -2709,7 +2709,7 @@ CheckIslandOpenVictoryTransition:
 	ld a, $08 ; $7474
 	ld [wStoryModeEntryPoint], a ; $7476
 	ld a, $ff ; $7479
-	ld [$c294], a ; $747b
+	ld [wUnusedExitLocationMirror], a ; $747b
 	ld [wStoryModeExitLocationRequest], a ; $747e
 	ld a, $01 ; $7481
 	ret ; $7483

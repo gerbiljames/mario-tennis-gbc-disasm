@@ -5272,3 +5272,35 @@ Two signals turned out to be exhausted: no unnamed address is used with a named
 constant (those all already have names), and the remaining single-table indexes
 point at auto-named `Data_*` tables, which name nothing. 754 -> 733 distinct
 unnamed RAM addresses; the rest need per-address reading.
+
+## Checking the RAM names against the running game (2026-07-27)
+
+The names above were derived from the code. BizHawk can say whether they are
+*true*, which is a different question, and it also answers ones static reading
+cannot.
+
+**`wMenuBgScroll*` confirmed live.** On the main menu, `$cb12`-`$cb19` reads
+`19 8f 00 00 00 01 01 01`: two different lane Y values, both attributes `$01`
+exactly as `InitMenuBgScroll` sets them. Stepping a single frame gives
+`18 8e 00 00 00 01 01 00` -- both lane Ys decremented and the lane toggle
+flipped, which is precisely what `TickMenuBgScroll` claims to do. On the title
+screen the whole block is zero, so the scroll belongs to the main menu, not the
+title.
+
+**SVBK reads `$fb` on the menus** -- WRAM bank 3, the bank `compute_wram_bank`
+had proved statically for `wResultScreenMode` and `wRulesScreenAnimFrame`.
+
+**`$c294` turned out to be dead.** Watching `$c290`-`$c29f` across a screen
+change showed `$c295` moving `$0a` -> `$02`, which is `wStoryModeEntryPoint`
+being reused during the transition -- a false lead, but it put `$c294` under a
+microscope. It is written **204 times and read zero times, in any form**:
+every one of those writes is immediately followed by the same value going to
+`wStoryModeExitLocationRequest` at `$c2a1` (the single apparent exception just
+reloads `$ff` into `a` between the two stores). It is a write-only mirror, so
+it is now `wUnusedExitLocationMirror` -- worth naming precisely because it
+tells anyone modifying story transitions not to bother with it.
+
+A caution for future sessions: the emulator free-runs between MCP calls, so the
+first navigation attempt overshot the title screen into the attract intro.
+`pause_emulation` makes stepping exact -- after it, a 120-frame step advances
+the counter by exactly 120.

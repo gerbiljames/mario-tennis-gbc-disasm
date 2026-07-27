@@ -294,7 +294,7 @@ SetPlayerAndPartnerObjectDefs_11:
 	script_set_actor_script ACTOR_PLAYER, ActorScript_11_43f4 ; $43d2
 	script_wait_frames $f0 ; $43dd
 	ld a, $01 ; $43e4
-	ld [$c294], a ; $43e6
+	ld [wUnusedExitLocationMirror], a ; $43e6
 	ld [wStoryModeExitLocationRequest], a ; $43e9
 	ret ; $43ec
 ActorScript_11_43ed:
@@ -912,7 +912,7 @@ FollowGuideIntoAcademy:
 	script_move_target ACTOR_PLAYER, $1800, $0e00 ; $4fa2
 	script_wait_frames $1e ; $4fad
 	ld a, $0f ; $4fb4
-	ld [$c294], a ; $4fb6
+	ld [wUnusedExitLocationMirror], a ; $4fb6
 	ld [wStoryModeExitLocationRequest], a ; $4fb9
 	ld c, $04 ; $4fbc
 	call BeginFadeOut ; $4fbe
@@ -1074,7 +1074,7 @@ ActorListEnd_11_4fc5:
 	ld a, $01 ; $536f
 	ld [wStoryModeEntryPoint], a ; $5371
 	ld a, $ff ; $5374
-	ld [$c294], a ; $5376
+	ld [wUnusedExitLocationMirror], a ; $5376
 	ld [wStoryModeExitLocationRequest], a ; $5379
 	ret ; $537c
 ActorList_11_537d:
@@ -1117,7 +1117,7 @@ ActorList_11_537d:
 	ld a, $0f ; $545c
 	ld [wStoryModeEntryPoint], a ; $545e
 	ld a, $ff ; $5461
-	ld [$c294], a ; $5463
+	ld [wUnusedExitLocationMirror], a ; $5463
 	ld [wStoryModeExitLocationRequest], a ; $5466
 	ret ; $5469
 ActorList_11_546a:
@@ -1300,7 +1300,7 @@ JuniorClassCourtDoublesNpc0A_11:
 	call CopyMemoryBC ; $5736
 	ld a, $ff ; $5739
 	ld [wStoryModeEntryPoint], a ; $573b
-	ld [$c294], a ; $573e
+	ld [wUnusedExitLocationMirror], a ; $573e
 	ld [wStoryModeExitLocationRequest], a ; $5741
 	farcall WaitPlayerMoveDone ; $5744
 	script_set_anim $0a, $03 ; $5747
@@ -1791,7 +1791,7 @@ ActorScript_11_5d27:
 	ld a, $0d ; $5d8a
 	ld [wStoryModeEntryPoint], a ; $5d8c
 	ld a, $ff ; $5d8f
-	ld [$c294], a ; $5d91
+	ld [wUnusedExitLocationMirror], a ; $5d91
 	ld [wStoryModeExitLocationRequest], a ; $5d94
 	farcall StubNop_1e ; $5d97
 	ret ; $5d9a
@@ -1999,7 +1999,7 @@ ActorScript_11_5d27:
 	ld a, $01 ; $627a
 	ld [wStoryModeEntryPoint], a ; $627c
 	ld a, $ff ; $627f
-	ld [$c294], a ; $6281
+	ld [wUnusedExitLocationMirror], a ; $6281
 	ld [wStoryModeExitLocationRequest], a ; $6284
 	script_wait_frames $3c ; $6287
 	ld c, $04 ; $628e
@@ -2171,7 +2171,7 @@ StartNextDoublesRankingMatch:
 	script_face ACTOR_PARTNER, FACE_UP ; $6615
 	script_wait_frames $3c ; $661c
 	ld a, $0f ; $6623
-	ld [$c294], a ; $6625
+	ld [wUnusedExitLocationMirror], a ; $6625
 	ld [wStoryModeExitLocationRequest], a ; $6628
 	farcall InitStoryMatchSettings ; $662b
 	load_match_settings $0102 ; $662e
@@ -2200,7 +2200,7 @@ StartNextDoublesRankingMatch:
 	script_face ACTOR_PARTNER, FACE_UP ; $66d5
 	script_wait_frames $3c ; $66dc
 	ld a, $0f ; $66e3
-	ld [$c294], a ; $66e5
+	ld [wUnusedExitLocationMirror], a ; $66e5
 	ld [wStoryModeExitLocationRequest], a ; $66e8
 	farcall InitStoryMatchSettings ; $66eb
 	load_match_settings $0103 ; $66ee
@@ -2225,7 +2225,7 @@ StartNextDoublesRankingMatch:
 	script_face ACTOR_PARTNER, FACE_UP ; $6773
 	script_wait_frames $3c ; $677a
 	ld a, $0f ; $6781
-	ld [$c294], a ; $6783
+	ld [wUnusedExitLocationMirror], a ; $6783
 	ld [wStoryModeExitLocationRequest], a ; $6786
 	farcall InitStoryMatchSettings ; $6789
 	load_match_settings $0104 ; $678c
@@ -2417,7 +2417,7 @@ JuniorClassCourtSinglesNpc08_11:
 	call CopyMemoryBC ; $6ac4
 	ld a, $ff ; $6ac7
 	ld [wStoryModeEntryPoint], a ; $6ac9
-	ld [$c294], a ; $6acc
+	ld [wUnusedExitLocationMirror], a ; $6acc
 	ld [wStoryModeExitLocationRequest], a ; $6acf
 	farcall InitStoryMatchSettings ; $6ad2
 	load_match_settings $0000 ; $6ad5
@@ -2689,7 +2689,7 @@ ActorScript_11_6e16:
 	ld a, $0d ; $6e8d
 	ld [wStoryModeEntryPoint], a ; $6e8f
 	ld a, $ff ; $6e92
-	ld [$c294], a ; $6e94
+	ld [wUnusedExitLocationMirror], a ; $6e94
 	ld [wStoryModeExitLocationRequest], a ; $6e97
 	farcall StubNop_1e ; $6e9a
 	ret ; $6e9d
@@ -2856,7 +2856,7 @@ ActorScript_11_6e16:
 	ld a, $01 ; $724c
 	ld [wStoryModeEntryPoint], a ; $724e
 	ld a, $ff ; $7251
-	ld [$c294], a ; $7253
+	ld [wUnusedExitLocationMirror], a ; $7253
 	ld [wStoryModeExitLocationRequest], a ; $7256
 	script_set_anim $03, $03 ; $7259
 	script_wait_idle $03 ; $7260
@@ -3271,7 +3271,7 @@ StartNextRankingMatch:
 	script_wait_actor_script $07 ; $78a4
 	script_wait_frames $14 ; $78a9
 	ld a, $0f ; $78b0
-	ld [$c294], a ; $78b2
+	ld [wUnusedExitLocationMirror], a ; $78b2
 	ld [wStoryModeExitLocationRequest], a ; $78b5
 	farcall InitStoryMatchSettings ; $78b8
 	load_match_settings $0001 ; $78bb
@@ -3294,7 +3294,7 @@ StartNextRankingMatch:
 	script_wait_actor_script $06 ; $7932
 	script_wait_frames $28 ; $7937
 	ld a, $0f ; $793e
-	ld [$c294], a ; $7940
+	ld [wUnusedExitLocationMirror], a ; $7940
 	ld [wStoryModeExitLocationRequest], a ; $7943
 	farcall InitStoryMatchSettings ; $7946
 	load_match_settings $0002 ; $7949
@@ -3316,7 +3316,7 @@ StartNextRankingMatch:
 	script_wait_actor_script $05 ; $79bd
 	script_wait_frames $28 ; $79c2
 	ld a, $0f ; $79c9
-	ld [$c294], a ; $79cb
+	ld [wUnusedExitLocationMirror], a ; $79cb
 	ld [wStoryModeExitLocationRequest], a ; $79ce
 	farcall InitStoryMatchSettings ; $79d1
 	load_match_settings $0003 ; $79d4
@@ -3339,7 +3339,7 @@ StartNextRankingMatch:
 	script_wait_actor_script $04 ; $7a4b
 	script_wait_frames $28 ; $7a50
 	ld a, $0f ; $7a57
-	ld [$c294], a ; $7a59
+	ld [wUnusedExitLocationMirror], a ; $7a59
 	ld [wStoryModeExitLocationRequest], a ; $7a5c
 	farcall InitStoryMatchSettings ; $7a5f
 	load_match_settings $0004 ; $7a62

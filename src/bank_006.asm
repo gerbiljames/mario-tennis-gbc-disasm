@@ -3012,7 +3012,7 @@ StoryPauseMenu_CharPartnerData:
 	call CopyMemoryBC ; $6f6f
 	ld a, $ff ; $6f72
 	ld [wStoryModeEntryPoint], a ; $6f74
-	ld [$c294], a ; $6f77
+	ld [wUnusedExitLocationMirror], a ; $6f77
 	ld [wStoryModeExitLocationRequest], a ; $6f7a
 	ld a, $01 ; $6f7d
 	farcall ShowCharDataScreen ; $6f7f
@@ -3025,7 +3025,7 @@ StoryPauseMenu_Equipment:
 	call CopyMemoryBC ; $6f8d
 	ld a, $ff ; $6f90
 	ld [wStoryModeEntryPoint], a ; $6f92
-	ld [$c294], a ; $6f95
+	ld [wUnusedExitLocationMirror], a ; $6f95
 	ld [wStoryModeExitLocationRequest], a ; $6f98
 	farcall ShowEquipmentStatusScreen ; $6f9b
 	xor a, a ; $6f9e
@@ -3037,7 +3037,7 @@ StoryPauseMenu_GameProgress:
 	call CopyMemoryBC ; $6fa9
 	ld a, $ff ; $6fac
 	ld [wStoryModeEntryPoint], a ; $6fae
-	ld [$c294], a ; $6fb1
+	ld [wUnusedExitLocationMirror], a ; $6fb1
 	ld [wStoryModeExitLocationRequest], a ; $6fb4
 	farcall ShowGameProgressScreen ; $6fb7
 	xor a, a ; $6fba
@@ -3134,7 +3134,7 @@ StoryPauseMenu_SaveQuit:
 	ld a, $01 ; $7075
 	ld [wStoryModeEntryPoint], a ; $7077
 	ld a, $ff ; $707a
-	ld [$c294], a ; $707c
+	ld [wUnusedExitLocationMirror], a ; $707c
 	ld [wStoryModeExitLocationRequest], a ; $707f
 	ld a, $01 ; $7082
 	jr StoryPauseMenu_ReturnToMainMenu.done ; $7084
@@ -3150,7 +3150,7 @@ StoryPauseMenu_ReturnToMainMenu:
 	ld a, $01 ; $7099
 	ld [wStoryModeEntryPoint], a ; $709b
 	ld a, $ff ; $709e
-	ld [$c294], a ; $70a0
+	ld [wUnusedExitLocationMirror], a ; $70a0
 	ld [wStoryModeExitLocationRequest], a ; $70a3
 	ld a, $01 ; $70a6
 .done:

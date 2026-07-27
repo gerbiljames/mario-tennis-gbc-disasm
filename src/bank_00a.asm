@@ -1595,7 +1595,7 @@ RunStoryMatch:
 	ld a, $01 ; $497e
 	ld [wStoryModeEntryPoint], a ; $4980
 	ld a, $ff ; $4983
-	ld [$c294], a ; $4985
+	ld [wUnusedExitLocationMirror], a ; $4985
 	ld [wStoryModeExitLocationRequest], a ; $4988
 	ret ; $498b
 .matchAborted:
@@ -2755,7 +2755,7 @@ RestoreStoryReturnPoint:
 	ld a, [$c8aa] ; $52bf
 	ld [wStoryModeEntryPoint], a ; $52c2
 	ld a, $ff ; $52c5
-	ld [$c294], a ; $52c7
+	ld [wUnusedExitLocationMirror], a ; $52c7
 	ld [wStoryModeExitLocationRequest], a ; $52ca
 	jr .done ; $52cd
 .restorePosition:
@@ -2768,7 +2768,7 @@ RestoreStoryReturnPoint:
 	ld a, $ff ; $52e1
 	ld [wStoryModeEntryPoint], a ; $52e3
 	ld a, $ff ; $52e6
-	ld [$c294], a ; $52e8
+	ld [wUnusedExitLocationMirror], a ; $52e8
 	ld a, $ff ; $52eb
 	ld [wStoryModeExitLocationRequest], a ; $52ed
 .done:
