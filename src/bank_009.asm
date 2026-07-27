@@ -822,7 +822,7 @@ LoadPlayer2ScoreDigitGfx:
 LoadDeuceAdvantageGfx:
 	ld hl, DeuceAdvantageTiles ; $6148
 	ld de, $8300 ; $614b
-	ld c, $08 ; $614e
+	ld c, (LoadServeGfx - DeuceAdvantageTiles) / 16 ; $614e
 	call QueueVRAMCopy ; $6150
 	ret ; $6153
 GetGfxSourcePtr:

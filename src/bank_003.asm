@@ -2967,7 +2967,7 @@ SaveEditorCursorTiles_03:
 SaveSlotDebugEditor:
 	ld hl, SaveEditorCursorTiles_03 ; $5310
 	ld de, $8000 ; $5313
-	ld c, $02 ; $5316
+	ld c, (SaveSlotDebugEditor - SaveEditorCursorTiles_03) / 16 ; $5316
 	call QueueVRAMCopy ; $5318
 	sound $06 ; $531b
 	ld a, $03 ; $531d

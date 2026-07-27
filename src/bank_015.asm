@@ -1738,7 +1738,7 @@ LoadWaterSpriteMinigameHudGfx:
 	wram_bank $01 ; $589b
 	ld hl, WaterSpriteHudTiles_15 ; $58a1
 	ld de, $a000 ; $58a4
-	ld c, $0c ; $58a7
+	ld c, (WaterSpriteHudPalette_15 - WaterSpriteHudTiles_15) / 16 ; $58a7
 	call QueueVRAMCopy ; $58a9
 	ld hl, WaterSpriteHudPalette_15 ; $58ac
 	ld de, $0802 ; $58af

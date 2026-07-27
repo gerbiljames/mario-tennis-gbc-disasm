@@ -120,7 +120,7 @@ LoadMatchVariantGraphics:
 	call LoadPaletteShadow ; $5f49
 	ld hl, MatchVariantTiles0 ; $5f4c
 	ld de, $a100 ; $5f4f
-	ld c, $10 ; $5f52
+	ld c, (MatchVariantTiles1 - MatchVariantTiles0) / 16 ; $5f52
 	call QueueVRAMCopy ; $5f54
 	call LoadMatchSharedTiles_28 ; $5f57
 	ret ; $5f5a
@@ -137,7 +137,7 @@ LoadMatchVariantGraphics:
 	call LoadPaletteShadow ; $5f70
 	ld hl, MatchVariantTiles3 ; $5f73
 	ld de, $a3c0 ; $5f76
-	ld c, $02 ; $5f79
+	ld c, (MatchVariantTiles4 - MatchVariantTiles3) / 16 ; $5f79
 	call QueueVRAMCopy ; $5f7b
 	call LoadMatchSharedTiles_28 ; $5f7e
 	ret ; $5f81
@@ -147,7 +147,7 @@ LoadMatchVariantGraphics:
 	call LoadPaletteShadow ; $5f88
 	ld hl, MatchVariantTiles3 ; $5f8b
 	ld de, $a3c0 ; $5f8e
-	ld c, $02 ; $5f91
+	ld c, (MatchVariantTiles4 - MatchVariantTiles3) / 16 ; $5f91
 	call QueueVRAMCopy ; $5f93
 	call LoadMatchSharedTiles_28 ; $5f96
 	ret ; $5f99
@@ -157,11 +157,11 @@ LoadMatchVariantGraphics:
 	call LoadPaletteShadow ; $5fa0
 	ld hl, MatchVariantTiles4 ; $5fa3
 	ld de, $a200 ; $5fa6
-	ld c, $10 ; $5fa9
+	ld c, (MatchSharedTiles_28 - MatchVariantTiles4) / 16 ; $5fa9
 	call QueueVRAMCopy ; $5fab
 	ld hl, MatchVariantTiles3 ; $5fae
 	ld de, $a3c0 ; $5fb1
-	ld c, $02 ; $5fb4
+	ld c, (MatchVariantTiles4 - MatchVariantTiles3) / 16 ; $5fb4
 	call QueueVRAMCopy ; $5fb6
 	call LoadMatchSharedTiles_28 ; $5fb9
 	ret ; $5fbc
@@ -178,7 +178,7 @@ LoadMatchVariantGraphics:
 	call LoadPaletteShadow ; $5fd7
 	ld hl, MatchVariantTiles3 ; $5fda
 	ld de, $a3c0 ; $5fdd
-	ld c, $02 ; $5fe0
+	ld c, (MatchVariantTiles4 - MatchVariantTiles3) / 16 ; $5fe0
 	call QueueVRAMCopy ; $5fe2
 	call LoadMatchSharedTiles_28 ; $5fe5
 	ret ; $5fe8
@@ -202,7 +202,7 @@ LoadMatchVariantGraphics:
 	call LoadPaletteShadow ; $6012
 	ld hl, MatchVariantTiles1 ; $6015
 	ld de, $a100 ; $6018
-	ld c, $30 ; $601b
+	ld c, (MatchVariantTiles2 - MatchVariantTiles1) / 16 ; $601b
 	call QueueVRAMCopy ; $601d
 	call LoadMatchSharedTiles_28 ; $6020
 	ret ; $6023

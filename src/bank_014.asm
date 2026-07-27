@@ -1841,7 +1841,7 @@ LoadWaterSplashObjGfx_14:
 	wram_bank $01 ; $60a4
 	ld hl, WaterSplashObjGfx ; $60aa
 	ld de, $8200 ; $60ad
-	ld c, $1c ; $60b0
+	ld c, (SpriteTemplate_14_6090 - WaterSplashObjGfx) / 16 ; $60b0
 	call QueueVRAMCopy ; $60b2
 	ld hl, Palette_14_6099 ; $60b5
 	ld de, $0901 ; $60b8
@@ -2247,7 +2247,7 @@ LoadFireworkObjGfx_14:
 	wram_bank $01 ; $642a
 	ld hl, FireworkObjTiles_14 ; $6430
 	ld de, $8100 ; $6433
-	ld c, $80 ; $6436
+	ld c, (SpriteTemplate_14_6e80 - FireworkObjTiles_14) / 16 ; $6436
 	call QueueVRAMCopy ; $6438
 	ld hl, FireworkObjPalettes_14 ; $643b
 	ld de, $0904 ; $643e
@@ -2872,7 +2872,7 @@ LoadDistantPlaneObjGfx_14:
 	wram_bank $01 ; $753c
 	ld hl, DistantPlaneObjGfx ; $7542
 	ld de, $a000 ; $7545
-	ld c, $10 ; $7548
+	ld c, (SpriteTemplate_14_7530 - DistantPlaneObjGfx) / 16 ; $7548
 	call QueueVRAMCopy ; $754a
 	ld hl, IslandObjPalette_14 ; $754d
 	ld de, $0801 ; $7550
@@ -2913,7 +2913,7 @@ LoadTwinkleObjGfx_14:
 	wram_bank $01 ; $768b
 	ld hl, TwinkleObjGfx ; $7691
 	ld de, $a000 ; $7694
-	ld c, $10 ; $7697
+	ld c, (Palette_14_7680 - TwinkleObjGfx) / 16 ; $7697
 	call QueueVRAMCopy ; $7699
 	ld hl, Palette_14_7680 ; $769c
 	ld de, $0801 ; $769f

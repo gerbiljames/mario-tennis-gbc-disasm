@@ -580,7 +580,7 @@ LoadTourPointerSpriteGfx_13:
 	wram_bank $01 ; $4cdf
 	ld hl, TourPointerTiles_13 ; $4ce5
 	ld de, $a000 ; $4ce8
-	ld c, $04 ; $4ceb
+	ld c, (TourPointerPalette_13 - TourPointerTiles_13) / 16 ; $4ceb
 	call QueueVRAMCopy ; $4ced
 	ld hl, TourPointerPalette_13 ; $4cf0
 	ld de, $0801 ; $4cf3

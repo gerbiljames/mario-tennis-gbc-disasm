@@ -5040,3 +5040,35 @@ Restored, `make compare` is OK.
 
 README now has a Modding section covering the four editable kinds and the one
 trap: `data/` is generated, so extraction overwrites edits made in place.
+
+## Copy counts follow their blob now (2026-07-27)
+
+Pointers survive an edit; sizes did not. `ld hl, Tiles; ld c, $20; call
+QueueVRAMCopy` copies 32 tiles because that blob happens to be 512 bytes long,
+and enlarging the blob leaves the literal quietly wrong -- the new tiles simply
+never reach VRAM. It is the same defect class as the text offset tables, one
+step further along.
+
+A scan for `ld hl/de, <named blob>` followed by a count whose value is exactly
+the blob's size found **38 sites, 34 with an unambiguous consumer**: 31
+`QueueVRAMCopy` and 3 `CopyMemoryFast`, all taking `c` as a count of 16-byte
+tiles (`StartVRAMDMATransfer` writes `c - 1` to the HDMA length register, which
+transfers `(n + 1) * 16` bytes).
+
+**33 of the 34 already had a label at the blob's end**, so a post-pass rewrites
+the count as the difference of two labels and invents no symbols:
+
+```
+        ld hl, MenuFontTiles_01
+        ld de, $9200
+        ld c, (MenuTilesBStagedTiles0 - MenuFontTiles_01) / 16
+```
+
+Verified the way the text tables were: appended one 16-byte tile to
+`MenuFontTiles_01` (512 -> 528 bytes), rebuilt, and read the assembled operand
+back out of the ROM -- **32 became 33** on its own. (The first read of that
+test looked like garbage because the code after the blob had shifted 16 bytes;
+the count was right, the address was stale.) Restored, `make compare` is OK.
+
+The one site left numeric has no label at its blob's end; inventing one is
+possible but would be the only new symbol in the pass, so it stays as it is.

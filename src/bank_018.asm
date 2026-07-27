@@ -183,7 +183,7 @@ LoadMenuHandCursorGfx:
 	call LoadPaletteShadow ; $4380
 	pop de ; $4383
 	ld hl, MenuHandCursorGfx ; $4384
-	ld c, $04 ; $4387
+	ld c, (Palette_18_42e0 - MenuHandCursorGfx) / 16 ; $4387
 	call QueueVRAMCopy ; $4389
 	ret ; $438c
 StubLoadFontTiles:
@@ -1275,7 +1275,7 @@ LoadOnCourtCharTilesB:
 	ret ; $5ae6
 LoadOnCourtCharTilesFallback:
 	ld hl, OnCourtCharTilesFallbackGfx ; $5ae7
-	ld c, $04 ; $5aea
+	ld c, (CharRosterIcon00 - OnCourtCharTilesFallbackGfx) / 16 ; $5aea
 	call QueueVRAMCopy ; $5aec
 	ret ; $5aef
 OnCourtCharTilesAGfx:

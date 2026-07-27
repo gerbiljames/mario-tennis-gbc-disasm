@@ -16,7 +16,7 @@ RunMinigameEndMenu:
 	call LoadScoreboardModeGfx ; $401a
 	ld hl, ScoreboardModeGfxTail ; $401d
 	ld de, $8640 ; $4020
-	ld c, $04 ; $4023
+	ld c, (MatchMenuItemGfx_Rules - ScoreboardModeGfxTail) / 16 ; $4023
 	call QueueVRAMCopy ; $4025
 	farcall StepMatchFrame ; $4028
 	wram_bank $02 ; $402b
@@ -64,7 +64,7 @@ RunMatchPauseMenu:
 	call LoadScoreboardModeGfx ; $4090
 	ld hl, ScoreboardModeGfxTail ; $4093
 	ld de, $8640 ; $4096
-	ld c, $04 ; $4099
+	ld c, (MatchMenuItemGfx_Rules - ScoreboardModeGfxTail) / 16 ; $4099
 	call QueueVRAMCopy ; $409b
 	farcall StepMatchFrame ; $409e
 	wram_bank $02 ; $40a1
@@ -2866,7 +2866,7 @@ RunStoryModeMenu:
 .loop:
 	ld hl, ScoreboardModeGfxTail ; $6e52
 	ld de, $8640 ; $6e55
-	ld c, $04 ; $6e58
+	ld c, (MatchMenuItemGfx_Rules - ScoreboardModeGfxTail) / 16 ; $6e58
 	call QueueVRAMCopy ; $6e5a
 	ld a, $00 ; $6e5d
 	ld [wPauseMenuId], a ; $6e5f
@@ -2925,7 +2925,7 @@ StoryPauseMenu_AfterItem:
 	call DrawStoryMenuItemRow ; $6ec7
 	ld hl, ScoreboardModeGfxTail ; $6eca
 	ld de, $8640 ; $6ecd
-	ld c, $04 ; $6ed0
+	ld c, (MatchMenuItemGfx_Rules - ScoreboardModeGfxTail) / 16 ; $6ed0
 	call QueueVRAMCopy ; $6ed2
 	jr .checkMatchMenuSelection ; $6ed5
 .loop:

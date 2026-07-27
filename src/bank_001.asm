@@ -296,17 +296,17 @@ LoadMenuTilesBStaged:
 	push hl ; $5098
 	ld hl, MenuFontTiles_01 ; $5099
 	ld de, $9200 ; $509c
-	ld c, $20 ; $509f
+	ld c, (MenuTilesBStagedTiles0 - MenuFontTiles_01) / 16 ; $509f
 	call QueueVRAMCopy ; $50a1
 	call AdvanceFrame ; $50a4
 	ld hl, MenuTilesBStagedTiles0 ; $50a7
 	ld de, $9400 ; $50aa
-	ld c, $20 ; $50ad
+	ld c, (MenuTilesBStagedTiles1 - MenuTilesBStagedTiles0) / 16 ; $50ad
 	call QueueVRAMCopy ; $50af
 	call AdvanceFrame ; $50b2
 	ld hl, MenuTilesBStagedTiles1 ; $50b5
 	ld de, $9600 ; $50b8
-	ld c, $20 ; $50bb
+	ld c, (MenuFontFillTiles_01 - MenuTilesBStagedTiles1) / 16 ; $50bb
 	call QueueVRAMCopy ; $50bd
 	call AdvanceFrame ; $50c0
 	ld hl, MenuFontPalettes_01 ; $50c3
@@ -322,7 +322,7 @@ LoadMenuTilesBStaged:
 LoadMenuTilesBChunk2:
 	ld hl, MenuTilesBStagedTiles0 ; $50d6
 	ld de, $9400 ; $50d9
-	ld c, $20 ; $50dc
+	ld c, (MenuTilesBStagedTiles1 - MenuTilesBStagedTiles0) / 16 ; $50dc
 	call QueueVRAMCopy ; $50de
 	ret ; $50e1
 LoadMenuFontGfx:

@@ -102,6 +102,53 @@ def resolve_pointer_loads(lines, base, ptr_sites):
             lines[i] = f"{m.group(1)}{emitted[target]}{m.group(2)}"
 
 
+_REGION_RE = re.compile(r'^\t(?:INCBIN|INCLUDE) "data/[^"]+" ; \$([0-9a-f]{4}), (\d+) bytes')
+_SRC_LOAD_RE = re.compile(r"^\tld (?:hl|de), ([A-Za-z_][A-Za-z0-9_]*) ;")
+_COUNT_RE = re.compile(r"^(\tld c, )\$([0-9a-f]{1,2})( ;.*)$")
+# Helpers whose `c` is a count of 16-byte tiles, not a byte count.
+_TILE_COUNT_CALLS = ("QueueVRAMCopy", "CopyMemoryFast")
+_CALL_RE = re.compile(r"^\t(?:call|farcall) ([A-Za-z_][A-Za-z0-9_.]*)")
+
+
+def resolve_copy_lengths(lines, base):
+    """Post-pass: rewrite a copy count that equals its source blob's size into
+    the difference of two labels. `ld hl, Tiles; ld c, $20; call QueueVRAMCopy`
+    copies 32 tiles because the blob happens to be 512 bytes long -- edit the
+    blob and the literal is silently wrong, while `(Next - Tiles) / 16` follows
+    it. Only rewritten when a label already marks the blob's end, so this
+    invents no symbols."""
+    start, size, label_at = {}, {}, {}
+    for i, line in enumerate(lines[:-1]):
+        m = _LABEL_LINE_RE.match(line)
+        if not m:
+            continue
+        r = _REGION_RE.match(lines[i + 1])
+        c = _CPU_COMMENT_RE.search(lines[i + 1])
+        if c:
+            label_at.setdefault(int(c.group(1), 16), m.group(1))
+        if r:
+            start[m.group(1)] = int(r.group(1), 16)
+            size[m.group(1)] = int(r.group(2))
+    for i, line in enumerate(lines):
+        m = _SRC_LOAD_RE.match(line)
+        if not m or m.group(1) not in size:
+            continue
+        blob = m.group(1)
+        end = label_at.get(start[blob] + size[blob])
+        if not end:
+            continue
+        for k in range(i + 1, min(len(lines), i + 7)):
+            n = _COUNT_RE.match(lines[k])
+            if n and int(n.group(2), 16) * 16 == size[blob]:
+                call = next((_CALL_RE.match(x) for x in lines[k:k + 3]
+                             if _CALL_RE.match(x)), None)
+                if call and call.group(1) in _TILE_COUNT_CALLS:
+                    lines[k] = f"{n.group(1)}({end} - {blob}) / 16{n.group(3)}"
+                break
+            if _CALL_RE.match(lines[k]):
+                break
+
+
 def resolve_flag_names(lines, flag_names, raw_sites=(), base=0):
     """Post-pass: rewrite `set_flag $0a, 3` to `set_flag FLAG_NAME` for every
     flag flags.json names. The macro's one-argument form reassembles the same
@@ -405,6 +452,7 @@ class Emitter:
         if self.flag_names:
             resolve_flag_names(lines, self.flag_names, self.flag_raw_sites,
                                base)
+        resolve_copy_lengths(lines, base)
         # Several emitters declare a label for the same offset (the fill /
         # segment path that runs up to a blob, and the blob's own mark). Most
         # guard on lines[-1]; collapsing here covers the rest -- two identical

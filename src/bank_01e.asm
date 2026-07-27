@@ -4737,7 +4737,7 @@ LoadGameProgressScreenTiles:
 	wram_bank ; $756e
 	ld hl, GameProgressScreenTiles0 ; $7572
 	ld de, $a000 ; $7575
-	ld c, $10 ; $7578
+	ld c, (Palettes_1e_7810 - GameProgressScreenTiles0) / 16 ; $7578
 	call QueueVRAMCopy ; $757a
 	ld hl, GameProgressScreenTiles2 ; $757d
 	ld de, $a100 ; $7580
@@ -4745,7 +4745,7 @@ LoadGameProgressScreenTiles:
 	call QueueVRAMCopy ; $7585
 	ld hl, GameProgressScreenTiles1 ; $7588
 	ld de, $a200 ; $758b
-	ld c, $14 ; $758e
+	ld c, (GameProgressScreenTiles2 - GameProgressScreenTiles1) / 16 ; $758e
 	call QueueVRAMCopy ; $7590
 	ld hl, Palettes_1e_7810 ; $7593
 	ld de, $0a01 ; $7596

@@ -1098,11 +1098,11 @@ LoadExpScreenGfx:
 	wram_bank $01 ; $4916
 	ld hl, ExpScreenGfx2 ; $491c
 	ld de, $d000 ; $491f
-	ld c, $24 ; $4922
+	ld c, (ExpScreenGfx3 - ExpScreenGfx2) / 16 ; $4922
 	call CopyMemoryFast ; $4924
 	ld hl, ExpScreenGfx1 ; $4927
 	ld de, $d400 ; $492a
-	ld c, $24 ; $492d
+	ld c, (ExpScreenGfx2 - ExpScreenGfx1) / 16 ; $492d
 	call CopyMemoryFast ; $492f
 	ret ; $4932
 .copyMemoryFast:
@@ -1113,7 +1113,7 @@ LoadExpScreenGfx:
 	call CopyMemoryFast ; $4941
 	ld hl, ExpScreenGfx3 ; $4944
 	ld de, $d400 ; $4947
-	ld c, $24 ; $494a
+	ld c, (ExpScreenGfx4 - ExpScreenGfx3) / 16 ; $494a
 	call CopyMemoryFast ; $494c
 	ret ; $494f
 ExpScreenMessageBoxTilemap:
