@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 """Codec for the LZ scheme used by DecompressData ($1797).
 
+Both directions: decompress() reads the game's streams, compress() writes
+new ones the game reads back, which is what makes the compressed graphics
+editable. Verified by round-tripping all 619 streams in the ROM.
+
 A stream is a sequence of groups: one control byte holding 8 flags consumed
 LSB-first, each flag introducing either a literal byte (flag = 1) or a
 two-byte back-reference lo, hi (flag = 0). A back-reference copies
@@ -58,9 +62,96 @@ def decompress(rom, off, end=None):
                     out.append(out[i])
 
 
+# A reference encodes `d = 0x800 - distance`, so d = 0 (distance 2048) with the
+# minimum length is exactly the $0000 terminator. Capping the distance at 2047
+# keeps every emitted reference distinguishable from it.
+MIN_MATCH, MAX_MATCH, MAX_DIST = 3, 34, 0x7FF
+
+
+def compress(data):
+    """Encode `data` into a stream decompress() reads back exactly. Greedy
+    longest-match LZ77 over the format's 2 KiB window; matches may overlap the
+    write position, which is how the original encoder writes runs."""
+    out = bytearray()
+    tokens = []          # (flag bit, bytes) -- flag 1 = literal
+    index = {}           # 3-byte key -> positions, most recent last
+    i = 0
+
+    def flush(final=False):
+        """Emit one group: the control byte, then its items."""
+        ctrl = 0
+        for bit, (flag, _b) in enumerate(tokens):
+            ctrl |= flag << bit
+        out.append(ctrl)
+        for _flag, b in tokens:
+            out.extend(b)
+        if final and len(tokens) > 1:
+            # the terminator landed mid-group, so the decoder reads a pad byte
+            out.append(0)
+        tokens.clear()
+
+    while i < len(data):
+        best_len, best_dist = 0, 0
+        key = bytes(data[i:i + MIN_MATCH])
+        if len(key) == MIN_MATCH:
+            for start in reversed(index.get(key, ())):
+                dist = i - start
+                if dist > MAX_DIST:
+                    break
+                n = 0
+                while (n < MAX_MATCH and i + n < len(data)
+                       and data[start + n] == data[i + n]):
+                    n += 1
+                if n > best_len:
+                    best_len, best_dist = n, dist
+                    if n == MAX_MATCH:
+                        break
+        if best_len >= MIN_MATCH:
+            d = 0x800 - best_dist
+            tokens.append((0, bytes((d & 0xFF,
+                                     (d >> 8) << 5 | (best_len - MIN_MATCH)))))
+            step = best_len
+        else:
+            tokens.append((1, bytes((data[i],))))
+            step = 1
+        for k in range(i, i + step):
+            if k + MIN_MATCH <= len(data):
+                index.setdefault(bytes(data[k:k + MIN_MATCH]), []).append(k)
+        i += step
+        if len(tokens) == 8:
+            flush()
+
+    tokens.append((0, b"\x00\x00"))
+    flush(final=True)
+    return bytes(out)
+
+
+USAGE = """usage:
+  lz.py rom flat_offset [outfile]   decode the stream at an offset
+  lz.py -c infile outfile           encode a file into a stream
+
+Encoding is what makes compressed graphics editable: decode a stream, edit the
+bytes, encode them back over data/<bank>/lz_<addr>.bin and rebuild. The result
+does not have to match the original stream byte for byte -- only to decode back
+to the same data -- so an edit that compresses differently is fine as long as
+the bank still has room for it."""
+
+
 def main():
+    if len(sys.argv) >= 2 and sys.argv[1] in ("-c", "--compress"):
+        if len(sys.argv) != 4:
+            sys.exit(USAGE)
+        data = Path(sys.argv[2]).read_bytes()
+        enc = compress(data)
+        back, _ = decompress(enc, 0)
+        if back != data:
+            sys.exit("error: the encoded stream does not decode back")
+        Path(sys.argv[3]).write_bytes(enc)
+        print(f"{len(data)} bytes -> {len(enc)} bytes compressed "
+              f"({len(enc) / len(data):.1%})" if data else "0 bytes")
+        return
     if len(sys.argv) not in (3, 4):
-        sys.exit(f"usage: {sys.argv[0]} rom flat_offset [outfile]")
+        sys.exit(USAGE)
     rom = Path(sys.argv[1]).read_bytes()
     off = int(sys.argv[2], 0)
     data, length = decompress(rom, off)

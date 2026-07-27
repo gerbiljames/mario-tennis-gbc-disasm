@@ -1974,7 +1974,7 @@ EraseConfirmCursorSpriteTask:
 	ld a, [wMenuCursorY] ; $4e0f
 	or a, a ; $4e12
 	jr z, .queueEraseConfirmCursorSprites ; $4e13
-	ld de, ConfirmCursorSpriteTaskCursorSprites ; $4e15
+	ld de, $7386 ; $4e15
 .queueEraseConfirmCursorSprites:
 	call QueueEraseConfirmCursorSprites ; $4e18
 	ret ; $4e1b
@@ -5117,9 +5117,7 @@ CourtUnlockFlagIds_3e:
 StubNop_3e:
 	ret ; $69d4
 AwardCeremonyTiles:
-	INCBIN "data/bank_03e/lz_69d5.bin" ; $69d5, 2481 bytes
-ConfirmCursorSpriteTaskCursorSprites:
-	INCBIN "data/bank_03e/d_7386.bin" ; $7386, 160 bytes
+	INCBIN "data/bank_03e/lz_69d5.bin" ; $69d5, 2641 bytes
 AwardCeremonyPalettes:
 	INCLUDE "data/bank_03e/palettes_7426.asm" ; $7426, 64 bytes (palettes)
 AwardCeremonyTilemap5:

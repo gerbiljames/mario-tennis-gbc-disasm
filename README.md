@@ -26,6 +26,31 @@ byte-for-byte.
    make compare                 # confirms SHA-1 matches the original
    ```
 
+## Modding
+
+The build is a normal RGBDS project, so a change is an edit plus `make`; only
+`make compare` (which asserts the original SHA-1) is expected to fail after
+one. What makes edits *safe* is that the layout is recomputed rather than
+restated:
+
+- **Code and data may change size.** Pointers are symbols, so inserting bytes
+  moves what follows and every reference follows it. Each bank's section stops
+  at its last real byte and `rgblink -p 0xff` pads the rest, so the trailing
+  space (185 KiB across 122 banks) is free for new code.
+- **Text.** Edit the strings in `data/<bank>/text_pool_*.asm`; the per-bank
+  offset table is `dw Pool.sN - Pool` in the bank source, so the assembler
+  recomputes every offset. Find a string with
+  `tools/strings.py baserom.gbc --index --bank <bank>`.
+- **Compressed graphics.** `tools/lz.py rom <offset> out.bin` to decode,
+  edit, `tools/lz.py -c out.bin data/<bank>/lz_<addr>.bin` to encode back. The
+  new stream need not be the same size.
+- **Tables.** Stats, physics constants, mode hooks, map actors and animation
+  scripts render as structured source with named fields — see docs/STATUS.md.
+
+One caveat: `data/` is generated, so `./setup.sh` and `tools/extract.py`
+overwrite it (and now delete files the manifest no longer lists). Keep modified
+assets outside the tree and copy them in, or do not re-run extraction.
+
 ## Layout
 
 - `src/bank_XXX.asm` — one file per 16 KiB ROM bank (128 banks). Proven code
@@ -132,7 +157,11 @@ validated by decode-chain scoring in `tools/disasm.py`'s loader.
   `operands.py`, `idioms.py`, `datatables.py`, `macros.py`). The package
   docstring has the full module map.
 - `tools/lz.py` — codec for the game's LZ format (used by `DecompressData`,
-  `$1797`); also a CLI to decompress a stream from the ROM for inspection.
+  `$1797`), **both directions**. `lz.py rom <offset> [out]` decodes a stream;
+  `lz.py -c <in> <out>` encodes one the game reads back, which is what makes
+  the compressed graphics editable. The encoder is verified by round-tripping
+  all 619 streams in the ROM, and its output totals 99.98% of the original
+  encoder's size.
 - `tools/strings.py` — dumps the game text (ASCII; `$01` line break, `$02`
   page break, `$03`/`$00` terminators) from the user's ROM for local
   inspection. Text regions are emitted as generated `data/*/text_*.asm`

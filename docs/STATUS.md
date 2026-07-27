@@ -5001,3 +5001,42 @@ table with `solve_table`, which only finds a table *inside* a text region, and
 it split manifest lines on exactly three fields. Both broke when the offset
 tables became their own `text_offsets` regions. It now pairs each `text_pool`
 with its table through `data_tables.json`.
+
+## The LZ encoder, and the two streams it found broken (2026-07-27)
+
+`tools/lz.py` could read the game's compressed streams but not write them, so
+1.33 MB of graphics was inspectable and un-editable -- the largest remaining
+gap for using this as a modding base. It encodes now.
+
+The format constrains the encoder in one non-obvious way: a reference stores
+`d = 0x800 - distance`, so `d = 0` (distance 2048) at the minimum length *is*
+the `$0000` terminator. Capping distance at 2047 keeps every emitted reference
+distinguishable from the end of the stream.
+
+Greedy longest-match over the 2 KiB window, matches allowed to overlap the
+write position (which is how runs encode). **All 619 streams in the ROM
+round-trip**, and the encoder's total output is 261,856 bytes against the
+original encoder's 261,919 -- 99.98%, so nothing has to grow to be re-encoded.
+
+Two streams would not decode at all inside their declared extent, and the cause
+was mine: `RulesNextPageArrowSprite_17` and
+`ConfirmCursorSpriteTaskCursorSprites` were named during the pointer pass,
+*before* the prologue-push rule was fixed, and both offsets sit **inside an LZ
+stream** -- `$17:$7888` is 118 bytes into a 309-byte stream that decodes to a
+clean 1024-byte tilemap. Neither routine dereferences the register: both
+`ApplySpriteWobbleY_17` and `QueueEraseConfirmCursorSprites` treat `de` as a
+y/x pair (`add a, e; ld e, a`). The names were stale evidence from a superseded
+analysis, and being curated they truncated the streams by 29 and 160 bytes.
+Removed; 619/619 now decode. These were the two offsets the earlier
+lost-structure audit waved through as "merely splitting a blob" -- they were
+splitting compressed data, which is not the same thing.
+
+End-to-end check, because a codec that only round-trips in isolation proves
+little: decoded `$17:$7770` to its 1024 bytes, inverted 64 of them, re-encoded
+(309 -> 323 bytes), rebuilt, and read the stream back out of the built ROM --
+it decodes to exactly the edited bytes. The stream growing 14 bytes was
+absorbed because the bank had room and every pointer past it is a symbol.
+Restored, `make compare` is OK.
+
+README now has a Modding section covering the four editable kinds and the one
+trap: `data/` is generated, so extraction overwrites edits made in place.
