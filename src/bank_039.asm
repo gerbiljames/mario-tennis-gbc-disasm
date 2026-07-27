@@ -1023,7 +1023,7 @@ LoadStadiumBgGraphics:
 	ld de, $d400 ; $4c7b
 	call DecompressDataFromBank ; $4c7e
 	ld hl, $3c0c ; $4c81 -> DataPtr_StadiumAttrmap
-	ld de, $dc00 ; $4c84
+	ld de, wRulesScreenAnimFrame ; $4c84
 	call DecompressDataFromBank ; $4c87
 	wram_bank $01 ; $4c8a
 	ld hl, $3c0e ; $4c90 -> DataPtr_StadiumPalettes
@@ -1180,7 +1180,7 @@ RestoreMenuBgAndDrawPanel:
 	ld b, $14 ; $4df9
 	ld c, $10 ; $4dfb
 	call CopyTilemapRect ; $4dfd
-	ld hl, $dc00 ; $4e00
+	ld hl, wRulesScreenAnimFrame ; $4e00
 	ld de, $d400 ; $4e03
 	ld b, $14 ; $4e06
 	ld c, $10 ; $4e08

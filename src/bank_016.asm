@@ -801,7 +801,7 @@ RunMatchWinLoseScreen:
 	xor a, a ; $449a
 .store:
 	ld [$d800], a ; $449b
-	ld [$d801], a ; $449e
+	ld [wResultScreenMode], a ; $449e
 	ld a, [wMatchWinLoseFlag] ; $44a1
 	ld [$cb73], a ; $44a4
 	call MaybeInvertMatchWinLoseFlag ; $44a7
@@ -1014,7 +1014,7 @@ LoadWinLoseScreenAssets:
 .done:
 	ret ; $4962
 SetWinLosePortraitPaletteAttrs:
-	ld a, [$d801] ; $4963
+	ld a, [wResultScreenMode] ; $4963
 	or a, a ; $4966
 	jr nz, .nonZero ; $4967
 	ld de, $002f ; $4969
@@ -1698,7 +1698,7 @@ RunMatchStatsScreen:
 	farcall LoadMenuFontGfx ; $5c38
 	wram_bank $03 ; $5c3b
 	ld a, $01 ; $5c41
-	ld [$d801], a ; $5c43
+	ld [wResultScreenMode], a ; $5c43
 	call InitMatchStatsScreen ; $5c46
 	call LoadMatchResultPalettes ; $5c49
 	ld a, $01 ; $5c4c
@@ -2194,7 +2194,7 @@ LoadResultPortraitSlot:
 	ld c, $00 ; $6099
 	jr .decompress ; $609b
 .checkOutcome:
-	ld a, [$d801] ; $609d
+	ld a, [wResultScreenMode] ; $609d
 	or a, a ; $60a0
 	jr z, .winner ; $60a1
 	ld c, $00 ; $60a3

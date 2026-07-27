@@ -848,7 +848,7 @@ RunLinkMatchRulesMenu:
 	ld [wMatchFormatGames], a ; $44d4
 	ld [wMatchFormatSets], a ; $44d7
 	xor a, a ; $44da
-	ldh [$ffd8], a ; $44db
+	ldh [hLinkExchangeActive], a ; $44db
 	call ResetSerialState ; $44dd
 	call LoadMatchRulesMenuGraphics ; $44e0
 	wram_bank $03 ; $44e3
@@ -905,7 +905,7 @@ RunLinkMatchRulesMenu:
 	farcall SyncLinkFrame ; $4554
 	pop af ; $4557
 	xor a, a ; $4558
-	ldh [$ffd8], a ; $4559
+	ldh [hLinkExchangeActive], a ; $4559
 	call ResetSerialState ; $455b
 	call EnableTimerInterrupt ; $455e
 	call ClearFrameTasks ; $4561
@@ -924,7 +924,7 @@ RunLinkMatchRulesMenu:
 	farcall SyncLinkFrame ; $457c
 	pop af ; $457f
 	xor a, a ; $4580
-	ldh [$ffd8], a ; $4581
+	ldh [hLinkExchangeActive], a ; $4581
 	call ResetSerialState ; $4583
 	call ClearFrameTasks ; $4586
 	ld b, $00 ; $4589
@@ -3795,7 +3795,7 @@ RunCourtSelect4Menu:
 	ret ; $5c37
 RunLinkCourtSelect4Menu:
 	xor a, a ; $5c38
-	ldh [$ffd8], a ; $5c39
+	ldh [hLinkExchangeActive], a ; $5c39
 	call ResetSerialState ; $5c3b
 	call ClearFrameTasks ; $5c3e
 	call EnableTimerInterrupt ; $5c41
@@ -3855,7 +3855,7 @@ RunLinkCourtSelect4Menu:
 	pop af ; $5cb8
 	call ClearFrameTasks ; $5cb9
 	xor a, a ; $5cbc
-	ldh [$ffd8], a ; $5cbd
+	ldh [hLinkExchangeActive], a ; $5cbd
 	call ResetSerialState ; $5cbf
 	call EnableTimerInterrupt ; $5cc2
 	ld a, $01 ; $5cc5
@@ -3874,7 +3874,7 @@ RunLinkCourtSelect4Menu:
 	farcall SyncLinkFrame ; $5cdc
 	pop af ; $5cdf
 	xor a, a ; $5ce0
-	ldh [$ffd8], a ; $5ce1
+	ldh [hLinkExchangeActive], a ; $5ce1
 	call ResetSerialState ; $5ce3
 	call ClearFrameTasks ; $5ce6
 	ld b, $00 ; $5ce9
@@ -4634,7 +4634,7 @@ RunCourtSelect9Menu:
 	ret ; $65c8
 RunLinkCourtSelect9Menu:
 	xor a, a ; $65c9
-	ldh [$ffd8], a ; $65ca
+	ldh [hLinkExchangeActive], a ; $65ca
 	call ResetSerialState ; $65cc
 	call ClearFrameTasks ; $65cf
 	call EnableTimerInterrupt ; $65d2
@@ -4709,7 +4709,7 @@ RunLinkCourtSelect9Menu:
 	pop af ; $6665
 	call ClearFrameTasks ; $6666
 	xor a, a ; $6669
-	ldh [$ffd8], a ; $666a
+	ldh [hLinkExchangeActive], a ; $666a
 	call ResetSerialState ; $666c
 	call EnableTimerInterrupt ; $666f
 	ld a, $01 ; $6672
@@ -4728,7 +4728,7 @@ RunLinkCourtSelect9Menu:
 	farcall SyncLinkFrame ; $6689
 	pop af ; $668c
 	xor a, a ; $668d
-	ldh [$ffd8], a ; $668e
+	ldh [hLinkExchangeActive], a ; $668e
 	call ResetSerialState ; $6690
 	call ClearFrameTasks ; $6693
 	ld b, $00 ; $6696

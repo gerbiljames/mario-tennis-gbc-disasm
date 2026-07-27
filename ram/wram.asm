@@ -1403,7 +1403,10 @@ wDebugCharViewerPage:: db
 
 ; [8-bit] Debug character viewer (Func_1a_67d4): cursor index 0-15 within the current page - LEFT/RIGHT step by 1 and wrap inside the current row of 8 ($1a:$691b-$692d, $1a:$6934-$6945), UP/DOWN step by 8 and roll into $cb62 ($1a:$694c, $1a:$6979). Selected character id = ($cb62 << 4) + $cb63 ($1a:$69d8). Also indexes the cursor-sprite position table at $1a:$6b0f ($1a:$6af9).
 wDebugCharViewerIndex:: db
-	ds 10
+	ds 9
+
+; [8-bit] Scene selector RunStorySceneByMode stores from c ($18:$7617); each LookupScreen<N>AssetId indexes its Screen<N>AssetIdTable with it to pick the screen's asset record
+wStorySceneAssetIndex:: db
 
 ; [16-bit] Rules/briefing screens: base text id of the minigame's rules pages, taken from MinigameRulesTextIdBases_17 ($17:$6fdb) at $17:$6fc6. Each page offset from the minigame's MinigameRulesPageLists_17 row is added to it ($17:$70ef) and the result rendered through PrepareGlyphBuffer / RenderProportionalTextAt.
 wRulesPageTextIdBase:: dw
@@ -1417,7 +1420,18 @@ wGlyphTileWritePtr:: dw
 wDebugTextBuffer:: ds 576
 
 
-SECTION "WRAMX $d100", WRAMX[$d100]
+SECTION "WRAMX $d038", WRAMX[$d038]
+
+; Trophy EXP accumulator state (WRAM bank $06), used only by
+; ComputeTrophyExpForGroup in bank $1e; scoped so the same offset in other
+; WRAM banks keeps its numeric address.
+UNION
+; trophy EXP (bank $1e)
+; [8-bit] Character group being totalled; indexes TrophyExpForGroupTable0-4 and selects the row GetTrophyExpValue reads
+wTrophyExpGroup:: db
+ENDU
+
+	ds 199
 
 ; Sound-engine WRAM (bank $07), used only by the bank-0 audio driver;
 ; scoped to the driver's code range so the same $d1xx/$d2xx offsets
@@ -1462,7 +1476,17 @@ wSndTranspose:: db
 wSndWaveReloadPending:: db
 ENDU
 
-	ds 1575
+	ds 1511
+
+; Match result-screen mode (WRAM bank $03), stored on entry by the bank
+; $16 result screens and read back by their portrait and palette code.
+UNION
+; match results (bank $16)
+; [8-bit] Stored from a by RunMatchWinLoseScreen and RunMatchStatsScreen; SetWinLosePortraitPaletteAttrs and LoadResultPortraitSlot branch on it
+wResultScreenMode:: db
+ENDU
+
+	ds 63
 
 ; WRAM5: frame counter for the text continue-arrow blink task (bit 4 selects tile)
 wTextArrowBlinkCounter:: db
@@ -1500,7 +1524,17 @@ wTextArgStringQueue:: ds 32
 
 ; WRAM5: 16 x 2-byte values queued by PushTextArgNumber for TextCmdPrintArgNumber
 wTextArgNumberQueue:: ds 32
-	ds 1040
+	ds 784
+
+; Rules-screen animation state (WRAM bank $03), owned by the bank $17
+; rules screen.
+UNION
+; rules screen (bank $17)
+; [8-bit] Frame AdvanceRulesScreenAnimFrame steps; DrawRulesScreenCharacters indexes RulesScreenCharactersTable0-2 with it
+wRulesScreenAnimFrame:: db
+ENDU
+
+	ds 255
 
 ; Match ball-visuals history ring (WRAM bank 4 only); shared renderer
 ; state, so scoped by the selected WRAM bank plus the bank-$08 renderer.

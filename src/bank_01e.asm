@@ -4094,7 +4094,7 @@ ComputeTrophyExpForGroup:
 	push af ; $7104
 	wram_bank $06 ; $7105
 	ld a, c ; $710b
-	ld [$d038], a ; $710c
+	ld [wTrophyExpGroup], a ; $710c
 	ld hl, TrophyExpForGroupTable4 ; $710f
 	add a, l ; $7112
 	ld l, a ; $7113
@@ -4118,7 +4118,7 @@ ComputeTrophyExpForGroup:
 	and a, c ; $712b
 	cp a, b ; $712c
 	jr c, .tier2 ; $712d
-	ld a, [$d038] ; $712f
+	ld a, [wTrophyExpGroup] ; $712f
 	add a, a ; $7132
 	add a, a ; $7133
 	add a, a ; $7134
@@ -4138,7 +4138,7 @@ ComputeTrophyExpForGroup:
 	call SetGameFlag ; $7147
 	push bc ; $714a
 	ld b, $00 ; $714b
-	ld a, [$d038] ; $714d
+	ld a, [wTrophyExpGroup] ; $714d
 	call GetTrophyExpValue ; $7150
 	ld hl, $d034 ; $7153
 	ld a, [hl+] ; $7156
@@ -4158,7 +4158,7 @@ ComputeTrophyExpForGroup:
 	and a, c ; $7168
 	cp a, b ; $7169
 	jr c, .tier3 ; $716a
-	ld a, [$d038] ; $716c
+	ld a, [wTrophyExpGroup] ; $716c
 	add a, a ; $716f
 	add a, a ; $7170
 	add a, a ; $7171
@@ -4178,7 +4178,7 @@ ComputeTrophyExpForGroup:
 	call SetGameFlag ; $7184
 	push bc ; $7187
 	ld b, $04 ; $7188
-	ld a, [$d038] ; $718a
+	ld a, [wTrophyExpGroup] ; $718a
 	call GetTrophyExpValue ; $718d
 	ld hl, $d034 ; $7190
 	ld a, [hl+] ; $7193
@@ -4197,7 +4197,7 @@ ComputeTrophyExpForGroup:
 	and a, c ; $71a3
 	cp a, b ; $71a4
 	jr c, .tier4 ; $71a5
-	ld a, [$d038] ; $71a7
+	ld a, [wTrophyExpGroup] ; $71a7
 	add a, a ; $71aa
 	add a, a ; $71ab
 	add a, a ; $71ac
@@ -4217,7 +4217,7 @@ ComputeTrophyExpForGroup:
 	call SetGameFlag ; $71bf
 	push bc ; $71c2
 	ld b, $02 ; $71c3
-	ld a, [$d038] ; $71c5
+	ld a, [wTrophyExpGroup] ; $71c5
 	call GetTrophyExpValue ; $71c8
 	ld hl, $d034 ; $71cb
 	ld a, [hl+] ; $71ce
@@ -4237,7 +4237,7 @@ ComputeTrophyExpForGroup:
 	and a, c ; $71e0
 	cp a, b ; $71e1
 	jr c, .done ; $71e2
-	ld a, [$d038] ; $71e4
+	ld a, [wTrophyExpGroup] ; $71e4
 	add a, a ; $71e7
 	add a, a ; $71e8
 	add a, a ; $71e9
@@ -4257,7 +4257,7 @@ ComputeTrophyExpForGroup:
 	call SetGameFlag ; $71fc
 	push bc ; $71ff
 	ld b, $06 ; $7200
-	ld a, [$d038] ; $7202
+	ld a, [wTrophyExpGroup] ; $7202
 	call GetTrophyExpValue ; $7205
 	ld hl, $d034 ; $7208
 	ld a, [hl+] ; $720b

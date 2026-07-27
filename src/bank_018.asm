@@ -1361,7 +1361,7 @@ CharSelectMiscGfx:
 	INCBIN "data/bank_018/lz_7568.bin" ; $7568, 175 bytes
 RunStorySceneByMode:
 	ld a, c ; $7617
-	ld [$cb6d], a ; $7618
+	ld [wStorySceneAssetIndex], a ; $7618
 	call FadeOutAndResetScreen ; $761b
 	ld a, b ; $761e
 	or a, a ; $761f
@@ -1487,7 +1487,7 @@ SetupScreen0Assets:
 	farcall QueueWram3MapToVRAM ; $7729
 	ret ; $772c
 LookupScreen0AssetId:
-	ld a, [$cb6d] ; $772d
+	ld a, [wStorySceneAssetIndex] ; $772d
 	ld hl, Screen0AssetIdTable ; $7730
 	add a, l ; $7733
 	ld l, a ; $7734
@@ -1595,7 +1595,7 @@ SetupScreen1Assets:
 	farcall QueueWram3MapToVRAM ; $783e
 	ret ; $7841
 LookupScreen1AssetId:
-	ld a, [$cb6d] ; $7842
+	ld a, [wStorySceneAssetIndex] ; $7842
 	ld hl, Screen1AssetIdTable ; $7845
 	add a, l ; $7848
 	ld l, a ; $7849
@@ -1770,7 +1770,7 @@ PlayScreenSequence2:
 	farcall SaveStorySlotWithTimer ; $7a03
 	ret ; $7a06
 LookupScreen2AssetIdA:
-	ld a, [$cb6d] ; $7a07
+	ld a, [wStorySceneAssetIndex] ; $7a07
 	ld hl, Screen2AssetIdATable ; $7a0a
 	add a, l ; $7a0d
 	ld l, a ; $7a0e
@@ -1783,7 +1783,7 @@ Screen2AssetIdATable:
 	; $7a14, 6 bytes (bytes:6)
 	db $38, $39, $3b, $3a, $3c, $3d ; 0x00
 LookupScreen2AssetIdB:
-	ld a, [$cb6d] ; $7a1a
+	ld a, [wStorySceneAssetIndex] ; $7a1a
 	ld hl, Screen2AssetIdBTable ; $7a1d
 	add a, l ; $7a20
 	ld l, a ; $7a21

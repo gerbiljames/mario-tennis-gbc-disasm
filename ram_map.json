@@ -1291,6 +1291,11 @@
   "name": "wStoryModeMinigameCompletionFlags4",
   "note": "[Upper4] Story Mode - Minigame Completion Flags (4/4)\n\nBit 7 - Wall Level 3\nBit 6 - Wall Level 4"
  },
+ "0xc9dc": {
+  "name": "wGameFlagsTemp",
+  "note": "[4 bytes] wGameFlags bytes $1c-$1f (flags $e0-$ff): the temporary end of the array. ClearTemporaryStoryFlags ($0a:$50e4) zeroes all four at the top of RunStoryLocation, so anything stored here lasts only until the next location load - per-location NPC/scene-variant state ($1c) and the screen-mode bits the progress and results screens set and clear around themselves ($1f).",
+  "size": 4
+ },
  "0xca0b": {
   "name": "wPlayer1CurrentMainCharacter",
   "note": "[8-bit] Player 1 Current Main Character\n\n0x00 - Alex\n0x01 - Nina\n0x02 - Harry\n0x03 - Kate\n0x04 - Allie\n0x05 - Joy\n0x06 - Brian\n0x07 - Pam\n0x08 - Bob\n0x09 - Beth\n0x0a - Fay\n0x0b - Curt\n0x0c - Mark\n0x0d - Sean\n0x0e - Sammi\n0x0f - Elden\n0x10 - Spike\n0x11 - Emily\n0x12 - B. Coz\n0x13 - A. Coz\n0x14 - Kevin (dummied out)\n0x15 - Tennis Machine\n0x16 - Allie 2 (never shows up?)\n0x17 - Luigi\n0x18 - Donkey Kong\n0x19 - Baby Mario\n0x1a - Mario\n0x1b - Waluigi\n0x1c - Yoshi\n0x1d - Bowser\n0x1e - Wario\n0x1f - Peach",
@@ -1472,6 +1477,10 @@
  "0xcb63": {
   "name": "wDebugCharViewerIndex",
   "note": "[8-bit] Debug character viewer (Func_1a_67d4): cursor index 0-15 within the current page - LEFT/RIGHT step by 1 and wrap inside the current row of 8 ($1a:$691b-$692d, $1a:$6934-$6945), UP/DOWN step by 8 and roll into $cb62 ($1a:$694c, $1a:$6979). Selected character id = ($cb62 << 4) + $cb63 ($1a:$69d8). Also indexes the cursor-sprite position table at $1a:$6b0f ($1a:$6af9)."
+ },
+ "0xcb6d": {
+  "name": "wStorySceneAssetIndex",
+  "note": "[8-bit] Scene selector RunStorySceneByMode stores from c ($18:$7617); each LookupScreen<N>AssetId indexes its Screen<N>AssetIdTable with it to pick the screen's asset record"
  },
  "0xcb6e": {
   "name": "wRulesPageTextIdBase",
@@ -1731,10 +1740,5 @@
   "name": "hIsCGB",
   "note": "[8-bit] 1 = running on Game Boy Color hardware",
   "size": 1
- },
- "0xc9dc": {
-  "name": "wGameFlagsTemp",
-  "note": "[4 bytes] wGameFlags bytes $1c-$1f (flags $e0-$ff): the temporary end of the array. ClearTemporaryStoryFlags ($0a:$50e4) zeroes all four at the top of RunStoryLocation, so anything stored here lasts only until the next location load - per-location NPC/scene-variant state ($1c) and the screen-mode bits the progress and results screens set and clear around themselves ($1f).",
-  "size": 4
  }
 }

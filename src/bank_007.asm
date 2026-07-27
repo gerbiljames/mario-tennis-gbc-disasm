@@ -56,7 +56,7 @@ TryEstablishLink:
 	xor a, a ; $4062
 	ldh [hLinkRxByte], a ; $4063
 	xor a, a ; $4065
-	ldh [$ffd7], a ; $4066
+	ldh [hLinkTransferDone], a ; $4066
 	ei ; $4068
 	ld a, $02 ; $4069
 	ldh [hLinkState], a ; $406b
@@ -353,7 +353,7 @@ ExchangeNibbleBlockSlave:
 	and a, $f7 ; $423e
 	ldh [rIF], a ; $4240
 	xor a, a ; $4242
-	ldh [$ffd7], a ; $4243
+	ldh [hLinkTransferDone], a ; $4243
 	ld hl, $ce40 ; $4245
 	ldh a, [$ffc7] ; $4248
 	add a, l ; $424a
@@ -407,7 +407,7 @@ ExchangeNibbleBlockSlave:
 	and a, $f7 ; $4293
 	ldh [rIF], a ; $4295
 	xor a, a ; $4297
-	ldh [$ffd7], a ; $4298
+	ldh [hLinkTransferDone], a ; $4298
 	ld a, $c6 ; $429a
 	ldh [hLinkTxByte], a ; $429c
 	ei ; $429e
@@ -465,7 +465,7 @@ ExchangeNibbleBlockSlave:
 	and a, $f7 ; $42ea
 	ldh [rIF], a ; $42ec
 	xor a, a ; $42ee
-	ldh [$ffd7], a ; $42ef
+	ldh [hLinkTransferDone], a ; $42ef
 	ld a, $cb ; $42f1
 	ldh [rSB], a ; $42f3
 	push af ; $42f5
@@ -986,7 +986,7 @@ SendByteGetReplySlave:
 	and a, $f7 ; $462c
 	ldh [rIF], a ; $462e
 	xor a, a ; $4630
-	ldh [$ffd7], a ; $4631
+	ldh [hLinkTransferDone], a ; $4631
 	ei ; $4633
 	ld c, $64 ; $4634
 .waitLoop:
@@ -1335,13 +1335,13 @@ UpdateLinkSession:
 	ld a, [$c33f] ; $484a
 	or a, a ; $484d
 	jp z, .done ; $484e
-	ldh a, [$ffd8] ; $4851
+	ldh a, [hLinkExchangeActive] ; $4851
 	or a, a ; $4853
 	jp nz, .frameLoop ; $4854
 	sound $00 ; $4857
 	call DisableLCDSafely ; $4859
 	ld a, $01 ; $485c
-	ldh [$ffd8], a ; $485e
+	ldh [hLinkExchangeActive], a ; $485e
 	farcall ExchangeLinkReadySignal ; $4860
 	ldh a, [hLinkState] ; $4863
 	cp a, $02 ; $4865
@@ -1371,7 +1371,7 @@ UpdateLinkSession:
 	jr .encode ; $48a5
 .asSlave:
 	xor a, a ; $48a7
-	ldh [$ffd7], a ; $48a8
+	ldh [hLinkTransferDone], a ; $48a8
 	ld a, $80 ; $48aa
 	ldh [$ffdc], a ; $48ac
 .encode:
@@ -1389,7 +1389,7 @@ UpdateLinkSession:
 	wram_bank $04 ; $48cd
 	xor a, a ; $48d3
 	ldh [hLinkRxByte], a ; $48d4
-	ldh [$ffd7], a ; $48d6
+	ldh [hLinkTransferDone], a ; $48d6
 	ld a, $01 ; $48d8
 	ldh [$ffdf], a ; $48da
 	call EnableLCD ; $48dc
@@ -1448,7 +1448,7 @@ ExchangeLinkBlockToWram5:
 	ldh [rIF], a ; $492e
 	ei ; $4930
 	xor a, a ; $4931
-	ldh [$ffd8], a ; $4932
+	ldh [hLinkExchangeActive], a ; $4932
 	call LongDelay ; $4934
 	call LongDelay ; $4937
 	call LongDelay ; $493a
@@ -1469,7 +1469,7 @@ ExchangeLinkBlockToWram5:
 	ld c, $28 ; $495b
 	call PackNibblesToBytes ; $495d
 	ld a, $01 ; $4960
-	ldh [$ffd8], a ; $4962
+	ldh [hLinkExchangeActive], a ; $4962
 	di ; $4964
 	ld a, $09 ; $4965
 	ldh [rIF], a ; $4967
@@ -1488,7 +1488,7 @@ ExchangeLinkDataBlock:
 	ldh [rIF], a ; $497c
 	ei ; $497e
 	xor a, a ; $497f
-	ldh [$ffd8], a ; $4980
+	ldh [hLinkExchangeActive], a ; $4980
 	call LongDelay ; $4982
 	call LongDelay ; $4985
 	call LongDelay ; $4988
@@ -1607,7 +1607,7 @@ AwaitSerialByte:
 	ldh a, [hVBlankOccurred] ; $4a31
 	or a, a ; $4a33
 	jr z, .waitLoop ; $4a34
-	ldh a, [$ffd7] ; $4a36
+	ldh a, [hLinkTransferDone] ; $4a36
 	or a, a ; $4a38
 	jr nz, .received ; $4a39
 	dec de ; $4a3b
@@ -1618,7 +1618,7 @@ AwaitSerialByte:
 	jr .done ; $4a41
 .received:
 	dec a ; $4a43
-	ldh [$ffd7], a ; $4a44
+	ldh [hLinkTransferDone], a ; $4a44
 	xor a, a ; $4a46
 	ldh [hVBlankOccurred], a ; $4a47
 	scf ; $4a49
@@ -1641,7 +1641,7 @@ ResyncLinkSession:
 	ld a, $01 ; $4a5f
 	ldh [$ffe7], a ; $4a61
 	ld a, $01 ; $4a63
-	ldh [$ffd8], a ; $4a65
+	ldh [hLinkExchangeActive], a ; $4a65
 	farcall ExchangeLinkReadySignal ; $4a67
 	ldh a, [hLinkState] ; $4a6a
 	cp a, $02 ; $4a6c
@@ -1660,7 +1660,7 @@ ResyncLinkSession:
 	jr .encode ; $4a8a
 .asSlave:
 	xor a, a ; $4a8c
-	ldh [$ffd7], a ; $4a8d
+	ldh [hLinkTransferDone], a ; $4a8d
 	ld a, $80 ; $4a8f
 	ldh [$ffdc], a ; $4a91
 .encode:
@@ -1686,7 +1686,7 @@ ResyncLinkSessionWithTimer:
 	ld a, $01 ; $4ab4
 	ldh [$ffe7], a ; $4ab6
 	ld a, $01 ; $4ab8
-	ldh [$ffd8], a ; $4aba
+	ldh [hLinkExchangeActive], a ; $4aba
 	farcall ExchangeLinkReadySignal ; $4abc
 	ldh a, [hLinkState] ; $4abf
 	cp a, $02 ; $4ac1
@@ -1705,7 +1705,7 @@ ResyncLinkSessionWithTimer:
 	jr .encode ; $4adf
 .asSlave:
 	xor a, a ; $4ae1
-	ldh [$ffd7], a ; $4ae2
+	ldh [hLinkTransferDone], a ; $4ae2
 	ld a, $80 ; $4ae4
 	ldh [$ffdc], a ; $4ae6
 .encode:
@@ -1730,7 +1730,7 @@ TryLinkHandshakeSlave:
 	and a, $f7 ; $4b07
 	ldh [rIF], a ; $4b09
 	xor a, a ; $4b0b
-	ldh [$ffd7], a ; $4b0c
+	ldh [hLinkTransferDone], a ; $4b0c
 	ld a, $c2 ; $4b0e
 	ldh [hLinkTxByte], a ; $4b10
 	ldh [$ffe0], a ; $4b12
@@ -1791,7 +1791,7 @@ TryLinkHandshakeMaster:
 	ldh [rSC], a ; $4b68
 	pop af ; $4b6a
 	xor a, a ; $4b6b
-	ldh [$ffd7], a ; $4b6c
+	ldh [hLinkTransferDone], a ; $4b6c
 	ei ; $4b6e
 	call AwaitSerialByte ; $4b6f
 	farcall AnimateLinkStatusPalette ; $4b72
@@ -1834,7 +1834,7 @@ TryLinkHandshakeMaster:
 	ldh [rSC], a ; $4bae
 	pop af ; $4bb0
 	xor a, a ; $4bb1
-	ldh [$ffd7], a ; $4bb2
+	ldh [hLinkTransferDone], a ; $4bb2
 	ei ; $4bb4
 	call AwaitSerialByte ; $4bb5
 	ld a, e ; $4bb8

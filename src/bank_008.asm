@@ -493,19 +493,19 @@ AdvanceMatchRng:
 	pop hl ; $440b
 	ret ; $440c
 ReadMatchInputHeld:
-	ldh a, [$ffd8] ; $440d
+	ldh a, [hLinkExchangeActive] ; $440d
 	and a, a ; $440f
 	jr nz, ReadScriptedMatchInput ; $4410
 	ldh a, [hPlayerInputFlags] ; $4412
 	ret ; $4414
 ReadMatchInputPressed:
-	ldh a, [$ffd8] ; $4415
+	ldh a, [hLinkExchangeActive] ; $4415
 	and a, a ; $4417
 	jr nz, ReadScriptedMatchInput ; $4418
 	ldh a, [hInputRisingEdge] ; $441a
 	ret ; $441c
 ReadMatchInputRepeat:
-	ldh a, [$ffd8] ; $441d
+	ldh a, [hLinkExchangeActive] ; $441d
 	and a, a ; $441f
 	jr nz, ReadScriptedMatchInput ; $4420
 	ldh a, [hInputPressed] ; $4422
@@ -559,7 +559,7 @@ StepMatchFrame:
 	push hl ; $4468
 	ldh a, [hWramBank] ; $4469
 	push af ; $446b
-	ldh a, [$ffd8] ; $446c
+	ldh a, [hLinkExchangeActive] ; $446c
 	and a, a ; $446e
 	jr z, .localFrame ; $446f
 	farcall RunLinkMatchFrame ; $4471

@@ -375,7 +375,7 @@ IntroCutsceneState01Init_6b:
 	ld de, $d800 ; $4290
 	call DecompressDataFromBank ; $4293
 	ld hl, IntroCutsceneState01InitGfx2 ; $4296 -> DataPtr_IntroSwingAttrmap
-	ld de, $dc00 ; $4299
+	ld de, wRulesScreenAnimFrame ; $4299
 	call DecompressDataFromBank ; $429c
 	ld a, $01 ; $429f
 	ld hl, QueueCutsceneSpriteGroupA ; $42a1
@@ -486,7 +486,7 @@ IntroCutsceneState03Init_6b:
 	ld de, $d800 ; $4422
 	call DecompressDataFromBank ; $4425
 	ld hl, IntroCutsceneState03InitGfx2 ; $4428 -> DataPtr_IntroCloseupAttrmap
-	ld de, $dc00 ; $442b
+	ld de, wRulesScreenAnimFrame ; $442b
 	call DecompressDataFromBank ; $442e
 	ld a, $01 ; $4431
 	ld hl, QueueCutsceneSpriteGroupB ; $4433
@@ -2236,7 +2236,7 @@ RunTitleScreen:
 	ldh [hScrollX], a ; $75b9
 	ldh [hScrollY], a ; $75bb
 	ld [$d800], a ; $75bd
-	ld [$d801], a ; $75c0
+	ld [wResultScreenMode], a ; $75c0
 	ld [$d802], a ; $75c3
 	ld a, $98 ; $75c6
 	ld [$d800], a ; $75c8
@@ -2341,7 +2341,7 @@ QueueTitleSprite:
 	ldh a, [hWramBank] ; $76b6
 	push af ; $76b8
 	wram_bank $03 ; $76b9
-	ld a, [$d801] ; $76bf
+	ld a, [wResultScreenMode] ; $76bf
 	ld hl, TitleSpriteTable0 ; $76c2
 	add a, l ; $76c5
 	ld l, a ; $76c6
@@ -2349,7 +2349,7 @@ QueueTitleSprite:
 	inc h ; $76c9
 .read:
 	ld c, [hl] ; $76ca
-	ld a, [$d801] ; $76cb
+	ld a, [wResultScreenMode] ; $76cb
 	ld hl, TitleSpriteTable1 ; $76ce
 	add a, l ; $76d1
 	ld l, a ; $76d2
@@ -2398,10 +2398,10 @@ StepTitleSpriteAnimation:
 	and a, $07 ; $7734
 	cp a, $07 ; $7736
 	jr nz, .done ; $7738
-	ld a, [$d801] ; $773a
+	ld a, [wResultScreenMode] ; $773a
 	inc a ; $773d
 	and a, $07 ; $773e
-	ld [$d801], a ; $7740
+	ld [wResultScreenMode], a ; $7740
 	cp a, $07 ; $7743
 	jr nz, .done ; $7745
 	ld a, $01 ; $7747

@@ -850,7 +850,7 @@ RunMatchTypeMenu:
 	ret ; $44f0
 RunMatchTypeMenuLink:
 	xor a, a ; $44f1
-	ldh [$ffd8], a ; $44f2
+	ldh [hLinkExchangeActive], a ; $44f2
 	call ResetSerialState ; $44f4
 	call DisableLCDSafely ; $44f7
 	call SetupMatchTypeMenuScreen ; $44fa
@@ -899,7 +899,7 @@ RunMatchTypeMenuLink:
 	farcall SyncLinkFrame ; $4553
 	pop af ; $4556
 	xor a, a ; $4557
-	ldh [$ffd8], a ; $4558
+	ldh [hLinkExchangeActive], a ; $4558
 	call ResetSerialState ; $455a
 	ld c, $10 ; $455d
 	call BeginFadeOut ; $455f
@@ -915,7 +915,7 @@ RunMatchTypeMenuLink:
 	farcall SyncLinkFrame ; $4571
 	pop af ; $4574
 	xor a, a ; $4575
-	ldh [$ffd8], a ; $4576
+	ldh [hLinkExchangeActive], a ; $4576
 	call ResetSerialState ; $4578
 	ld c, $10 ; $457b
 	call BeginFadeOut ; $457d
@@ -4790,11 +4790,11 @@ QueueCpuDifficultyPanelToVram:
 	ret ; $63bc
 RunLinkCharSelectScreen:
 	xor a, a ; $63bd
-	ldh [$ffd8], a ; $63be
+	ldh [hLinkExchangeActive], a ; $63be
 	ldh [$ffe4], a ; $63c0
 	ld [wMenuCursor2X], a ; $63c2
 	ld [wMenuCursor2Y], a ; $63c5
-	ldh [$ffe3], a ; $63c8
+	ldh [hLinkCursorPage], a ; $63c8
 	call ResetSerialState ; $63ca
 	call EnableTimerInterrupt ; $63cd
 	sound $03 ; $63d0
@@ -4859,7 +4859,7 @@ RunLinkCharSelectScreen:
 	ldh [$ffe4], a ; $6448
 	ld [wMenuCursor2X], a ; $644a
 	ld [wMenuCursor2Y], a ; $644d
-	ldh [$ffe3], a ; $6450
+	ldh [hLinkCursorPage], a ; $6450
 	xor a, a ; $6452
 	ldh [hLinkRemoteInputBuf], a ; $6453
 	ldh [hLinkRemoteInput], a ; $6455
@@ -4921,7 +4921,7 @@ RunLinkCharSelectScreen:
 	farcall SyncLinkFrame ; $64d4
 	pop af ; $64d7
 	xor a, a ; $64d8
-	ldh [$ffd8], a ; $64d9
+	ldh [hLinkExchangeActive], a ; $64d9
 	call ResetSerialState ; $64db
 	call EnableTimerInterrupt ; $64de
 	call ResolveSelectedCharIds ; $64e1
@@ -4947,7 +4947,7 @@ RunLinkCharSelectScreen:
 	farcall SyncLinkFrame ; $650b
 	pop af ; $650e
 	xor a, a ; $650f
-	ldh [$ffd8], a ; $6510
+	ldh [hLinkExchangeActive], a ; $6510
 	call ResetSerialState ; $6512
 	ld c, $10 ; $6515
 	call BeginFadeOut ; $6517
@@ -5379,7 +5379,7 @@ CancelLinkGridSelection:
 	ld [wMenuCursor2X], a ; $6826
 	ld [wMenuCursor2Y], a ; $6829
 	ld [$d811], a ; $682c
-	ldh [$ffe3], a ; $682f
+	ldh [hLinkCursorPage], a ; $682f
 	call RefreshCharInfoPanel ; $6831
 .clearTaken:
 	sound $62 ; $6834
@@ -6021,7 +6021,7 @@ GetGridSlotFromLinkCursor:
 	ld a, d ; $6c4c
 	add a, e ; $6c4d
 	ld b, a ; $6c4e
-	ldh a, [$ffe3] ; $6c4f
+	ldh a, [hLinkCursorPage] ; $6c4f
 	ld c, a ; $6c51
 .loop:
 	ld a, c ; $6c52
@@ -6150,7 +6150,7 @@ MoveLinkCursorUp:
 	ld [wMenuCursor2Y], a ; $6d12
 	jr .done ; $6d15
 .prevPage:
-	ldh a, [$ffe3] ; $6d17
+	ldh a, [hLinkCursorPage] ; $6d17
 	or a, a ; $6d19
 	ret z ; $6d1a
 	dec a ; $6d1b
@@ -6158,7 +6158,7 @@ MoveLinkCursorUp:
 	jr nz, .storePage ; $6d1e
 	ld a, $03 ; $6d20
 .storePage:
-	ldh [$ffe3], a ; $6d22
+	ldh [hLinkCursorPage], a ; $6d22
 .done:
 	ret ; $6d24
 MoveLinkCursorDown:
@@ -6169,7 +6169,7 @@ MoveLinkCursorDown:
 	ld [wMenuCursor2Y], a ; $6d2d
 	jr .done ; $6d30
 .wrapPage:
-	ldh a, [$ffe3] ; $6d32
+	ldh a, [hLinkCursorPage] ; $6d32
 	cp a, $02 ; $6d34
 	jr nc, .nextPage ; $6d36
 	cp a, $01 ; $6d38
@@ -6178,7 +6178,7 @@ MoveLinkCursorDown:
 	cp a, $07 ; $6d3e
 	jr c, .done ; $6d40
 	ld a, $01 ; $6d42
-	ldh [$ffe3], a ; $6d44
+	ldh [hLinkCursorPage], a ; $6d44
 	jr .storeRow ; $6d46
 .nextPage:
 	inc a ; $6d48
@@ -6192,7 +6192,7 @@ MoveLinkCursorDown:
 	ld a, b ; $6d53
 	dec a ; $6d54
 .storeRow:
-	ldh [$ffe3], a ; $6d55
+	ldh [hLinkCursorPage], a ; $6d55
 .done:
 	ret ; $6d57
 MoveLinkCursorRight:
@@ -6200,17 +6200,17 @@ MoveLinkCursorRight:
 	inc a ; $6d5b
 	cp a, $03 ; $6d5c
 	jr nz, .store ; $6d5e
-	ldh a, [$ffe3] ; $6d60
+	ldh a, [hLinkCursorPage] ; $6d60
 	or a, a ; $6d62
 	jr z, .wrapToFirst ; $6d63
 	cp a, $01 ; $6d65
 	jr z, .wrapToFirst ; $6d67
 	xor a, a ; $6d69
-	ldh [$ffe3], a ; $6d6a
+	ldh [hLinkCursorPage], a ; $6d6a
 	jr .firstColumn ; $6d6c
 .wrapToFirst:
 	ld a, $03 ; $6d6e
-	ldh [$ffe3], a ; $6d70
+	ldh [hLinkCursorPage], a ; $6d70
 .firstColumn:
 	xor a, a ; $6d72
 .store:
@@ -6221,17 +6221,17 @@ MoveLinkCursorLeft:
 	dec a ; $6d7a
 	cp a, $ff ; $6d7b
 	jr nz, .store ; $6d7d
-	ldh a, [$ffe3] ; $6d7f
+	ldh a, [hLinkCursorPage] ; $6d7f
 	or a, a ; $6d81
 	jr z, .wrapToLast ; $6d82
 	cp a, $01 ; $6d84
 	jr z, .wrapToLast ; $6d86
 	xor a, a ; $6d88
-	ldh [$ffe3], a ; $6d89
+	ldh [hLinkCursorPage], a ; $6d89
 	jr .lastColumn ; $6d8b
 .wrapToLast:
 	ld a, $03 ; $6d8d
-	ldh [$ffe3], a ; $6d8f
+	ldh [hLinkCursorPage], a ; $6d8f
 .lastColumn:
 	ld a, $02 ; $6d91
 .store:
@@ -6984,7 +6984,7 @@ RunLinkMatchSequence:
 	call EnableLCD ; $7473
 	script_fade_in $10 ; $7476
 	xor a, a ; $747b
-	ldh [$ffd8], a ; $747c
+	ldh [hLinkExchangeActive], a ; $747c
 	call ResetSerialState ; $747e
 	ld a, $01 ; $7481
 	ld [wMenuSlideDirection], a ; $7483
@@ -7020,7 +7020,7 @@ RunLinkMatchSequence:
 .cleanup:
 	call ClearFrameTasks ; $74c4
 	xor a, a ; $74c7
-	ldh [$ffd8], a ; $74c8
+	ldh [hLinkExchangeActive], a ; $74c8
 	call ResetSerialState ; $74ca
 	call EnableTimerInterrupt ; $74cd
 	ld a, $01 ; $74d0
@@ -7078,7 +7078,7 @@ ExchangeLinkCharSelection:
 	push bc ; $7522
 	call ClearFrameTasks ; $7523
 	xor a, a ; $7526
-	ldh [$ffd8], a ; $7527
+	ldh [hLinkExchangeActive], a ; $7527
 	call ResetSerialState ; $7529
 	sound $50 ; $752c
 	sound $00 ; $752e
@@ -7090,7 +7090,7 @@ ExchangeLinkCharSelection:
 	farcall RunLinkInputFrame ; $7539
 	pop af ; $753c
 	xor a, a ; $753d
-	ldh [$ffd8], a ; $753e
+	ldh [hLinkExchangeActive], a ; $753e
 	call ResetSerialState ; $7540
 	ldh a, [hLinkState] ; $7543
 	cp a, $01 ; $7545
@@ -7222,7 +7222,7 @@ ExchangeLinkUnlockFlags:
 	push hl ; $7606
 	call ClearFrameTasks ; $7607
 	xor a, a ; $760a
-	ldh [$ffd8], a ; $760b
+	ldh [hLinkExchangeActive], a ; $760b
 	call ResetSerialState ; $760d
 	sound $50 ; $7610
 	sound $00 ; $7612
@@ -7234,7 +7234,7 @@ ExchangeLinkUnlockFlags:
 	farcall RunLinkInputFrame ; $761d
 	pop af ; $7620
 	xor a, a ; $7621
-	ldh [$ffd8], a ; $7622
+	ldh [hLinkExchangeActive], a ; $7622
 	call ResetSerialState ; $7624
 	ldh a, [hLinkState] ; $7627
 	cp a, $01 ; $7629
@@ -7246,7 +7246,7 @@ ExchangeLinkUnlockFlags:
 	ld c, $04 ; $7636
 	farcall ExchangeLinkDataBlock ; $7638
 	xor a, a ; $763b
-	ldh [$ffd8], a ; $763c
+	ldh [hLinkExchangeActive], a ; $763c
 	call ResetSerialState ; $763e
 	pop hl ; $7641
 	pop de ; $7642

@@ -1030,7 +1030,7 @@ ShowRankingBoard:
 	ld a, b ; $4e8b
 	ld [$d800], a ; $4e8c
 	ld a, c ; $4e8f
-	ld [$d801], a ; $4e90
+	ld [wResultScreenMode], a ; $4e90
 	ld a, d ; $4e93
 	ld [$d802], a ; $4e94
 	cp a, $03 ; $4e97
@@ -1168,7 +1168,7 @@ DispatchRankingBoardAnim:
 	ld a, [$d802] ; $5002
 	or a, a ; $5005
 	jr nz, .nonZero ; $5006
-	ld a, [$d801] ; $5008
+	ld a, [wResultScreenMode] ; $5008
 	add a, a ; $500b
 	ld hl, RankingBoardAnimHandlers2_1b ; $500c
 	add a, l ; $500f
@@ -1181,7 +1181,7 @@ DispatchRankingBoardAnim:
 	ld l, a ; $5016
 	jp hl ; $5017
 .nonZero:
-	ld a, [$d801] ; $5018
+	ld a, [wResultScreenMode] ; $5018
 	add a, a ; $501b
 	ld hl, RankingBoardAnimHandlers1_1b ; $501c
 	add a, l ; $501f
@@ -1197,7 +1197,7 @@ DispatchRankingBoardAnim:
 	ld a, [$d802] ; $5028
 	or a, a ; $502b
 	jr nz, .nonZero3 ; $502c
-	ld a, [$d801] ; $502e
+	ld a, [wResultScreenMode] ; $502e
 	add a, a ; $5031
 	ld hl, RankingBoardAnimHandlers4_1b ; $5032
 	add a, l ; $5035
@@ -1210,7 +1210,7 @@ DispatchRankingBoardAnim:
 	ld l, a ; $503c
 	jp hl ; $503d
 .nonZero3:
-	ld a, [$d801] ; $503e
+	ld a, [wResultScreenMode] ; $503e
 	add a, a ; $5041
 	ld hl, RankingBoardAnimHandlers3_1b ; $5042
 	add a, l ; $5045
@@ -2058,7 +2058,7 @@ RenderNameBottomRow:
 	call DrawNameWithDiacritics ; $570c
 	ret ; $570f
 HighlightSinglesRankingRows:
-	ld a, [$d801] ; $5710
+	ld a, [wResultScreenMode] ; $5710
 	or a, a ; $5713
 	ret z ; $5714
 	cp a, $01 ; $5715
@@ -2198,7 +2198,7 @@ DrawRankingRow11:
 	farcall CopyTilemapRect ; $5823
 	jp StubNop_1b_5760 ; $5826
 HighlightDoublesRankingRows:
-	ld a, [$d801] ; $5829
+	ld a, [wResultScreenMode] ; $5829
 	or a, a ; $582c
 	ret z ; $582d
 	cp a, $01 ; $582e
@@ -2691,7 +2691,7 @@ LoadRankingMarkerCoords:
 	jr z, .zero ; $5c48
 	ld hl, RankingMarkerCoordsTable0 ; $5c4a
 .zero:
-	ld a, [$d801] ; $5c4d
+	ld a, [wResultScreenMode] ; $5c4d
 	add a, a ; $5c50
 	add a, l ; $5c51
 	ld l, a ; $5c52
@@ -2716,7 +2716,7 @@ LoadRankingMarkerCoords:
 	jr z, .zero2 ; $5c6e
 	ld hl, RankingMarkerCoordsTable1 ; $5c70
 .zero2:
-	ld a, [$d801] ; $5c73
+	ld a, [wResultScreenMode] ; $5c73
 	add a, a ; $5c76
 	add a, l ; $5c77
 	ld l, a ; $5c78

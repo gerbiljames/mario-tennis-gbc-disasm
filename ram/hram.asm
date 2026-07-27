@@ -166,7 +166,15 @@ hLinkInput:: db
 hLinkRemoteInput:: db
 ; [8-bit] Buffered remote input from the previous exchange (double-buffered on the slave side)
 hLinkRemoteInputBuf:: db
-	ds 26
+	ds 1
+; [8-bit] Set to 1 by SerialHandler when a byte completes; WaitSerialTransfer spins on it and AdvanceFrame's link wait clears it after pairing it with hVBlankOccurred
+hLinkTransferDone:: db
+; [8-bit] Non-zero while a serial block exchange runs (UpdateLinkSession, ResyncLinkSession, ExchangeLinkBlockToWram5 set it; the link menus clear it when done). AdvanceFrame skips the SELECT+START debug single-step while it is set
+hLinkExchangeActive:: db
+	ds 10
+; [8-bit] Remote player's cursor page in the link character grid, written beside wMenuCursor2X/Y and read by GetGridSlotFromLinkCursor and the MoveLinkCursor* handlers
+hLinkCursorPage:: db
+	ds 12
 NEXTU
 ; sound driver (bank 0, $3373-$3ddf)
 ; [16-bit] Current channel's script/state pointer, copied from the channel struct each update (borrows the sprite-queue bytes; RunSoundEngine save/restores them)

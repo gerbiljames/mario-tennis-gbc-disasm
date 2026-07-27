@@ -4532,7 +4532,7 @@ ShowRulesScreen:
 	ld [$dc03], a ; $6f30
 	ld [$dc04], a ; $6f33
 	ld [$dc05], a ; $6f36
-	ld [$dc00], a ; $6f39
+	ld [wRulesScreenAnimFrame], a ; $6f39
 	ld c, $20 ; $6f3c
 	call BeginFadeOut ; $6f3e
 	call WaitFadeEnd ; $6f41
@@ -5041,7 +5041,7 @@ AdvanceRulesScreenAnimFrame:
 	inc h ; $7447
 .read:
 	ld a, [hl] ; $7448
-	ld [$dc00], a ; $7449
+	ld [wRulesScreenAnimFrame], a ; $7449
 	jr .step2 ; $744c
 .zero:
 	ldh a, [hVBlankCounter] ; $744e
@@ -5057,7 +5057,7 @@ AdvanceRulesScreenAnimFrame:
 	inc h ; $7461
 .readB:
 	ld a, [hl] ; $7462
-	ld [$dc00], a ; $7463
+	ld [wRulesScreenAnimFrame], a ; $7463
 	jr .step2 ; $7466
 .step2:
 	ld a, [$dc03] ; $7468
@@ -5126,7 +5126,7 @@ DrawRulesScreenCharacters:
 	ldh a, [hWramBank] ; $74db
 	push af ; $74dd
 	wram_bank $03 ; $74de
-	ld a, [$dc00] ; $74e4
+	ld a, [wRulesScreenAnimFrame] ; $74e4
 	ld hl, RulesScreenCharactersTable0 ; $74e7
 	add a, l ; $74ea
 	ld l, a ; $74eb
@@ -5136,7 +5136,7 @@ DrawRulesScreenCharacters:
 	ld a, [hl] ; $74ef
 	ld c, a ; $74f0
 	push bc ; $74f1
-	ld a, [$dc00] ; $74f2
+	ld a, [wRulesScreenAnimFrame] ; $74f2
 	ld hl, RulesScreenCharactersTable1 ; $74f5
 	add a, l ; $74f8
 	ld l, a ; $74f9
@@ -5151,7 +5151,7 @@ DrawRulesScreenCharacters:
 	ld a, $12 ; $7508
 	add a, c ; $750a
 	ld c, a ; $750b
-	ld a, [$dc00] ; $750c
+	ld a, [wRulesScreenAnimFrame] ; $750c
 	ld hl, RulesScreenCharactersTable2 ; $750f
 	add a, l ; $7512
 	ld l, a ; $7513

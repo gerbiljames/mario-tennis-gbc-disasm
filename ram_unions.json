@@ -502,6 +502,18 @@
       "0xffd5": {
        "name": "hLinkRemoteInputBuf",
        "note": "[8-bit] Buffered remote input from the previous exchange (double-buffered on the slave side)"
+      },
+      "0xffd7": {
+       "name": "hLinkTransferDone",
+       "note": "[8-bit] Set to 1 by SerialHandler when a byte completes; WaitSerialTransfer spins on it and AdvanceFrame's link wait clears it after pairing it with hVBlankOccurred"
+      },
+      "0xffd8": {
+       "name": "hLinkExchangeActive",
+       "note": "[8-bit] Non-zero while a serial block exchange runs (UpdateLinkSession, ResyncLinkSession, ExchangeLinkBlockToWram5 set it; the link menus clear it when done). AdvanceFrame skips the SELECT+START debug single-step while it is set"
+      },
+      "0xffe3": {
+       "name": "hLinkCursorPage",
+       "note": "[8-bit] Remote player's cursor page in the link character grid, written beside wMenuCursor2X/Y and read by GetGridSlotFromLinkCursor and the MoveLinkCursor* handlers"
       }
      }
     },
@@ -670,6 +682,69 @@
       "0xffea": {
        "name": "hActorPtr",
        "note": "[16-bit] Pointer to the actor struct currently being processed (stashed around GetActorStateAddr / StepActorScript)"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "start": "0xd038",
+   "end": "0xd039",
+   "comment": "Trophy EXP accumulator state (WRAM bank $06), used only by\nComputeTrophyExpForGroup in bank $1e; scoped so the same offset in other\nWRAM banks keeps its numeric address.",
+   "variants": [
+    {
+     "context": "trophy EXP (bank $1e)",
+     "scopes": [
+      {
+       "wram_bank": "0x06"
+      }
+     ],
+     "symbols": {
+      "0xd038": {
+       "name": "wTrophyExpGroup",
+       "note": "[8-bit] Character group being totalled; indexes TrophyExpForGroupTable0-4 and selects the row GetTrophyExpValue reads"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "start": "0xd801",
+   "end": "0xd802",
+   "comment": "Match result-screen mode (WRAM bank $03), stored on entry by the bank\n$16 result screens and read back by their portrait and palette code.",
+   "variants": [
+    {
+     "context": "match results (bank $16)",
+     "scopes": [
+      {
+       "wram_bank": "0x03"
+      }
+     ],
+     "symbols": {
+      "0xd801": {
+       "name": "wResultScreenMode",
+       "note": "[8-bit] Stored from a by RunMatchWinLoseScreen and RunMatchStatsScreen; SetWinLosePortraitPaletteAttrs and LoadResultPortraitSlot branch on it"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "start": "0xdc00",
+   "end": "0xdc01",
+   "comment": "Rules-screen animation state (WRAM bank $03), owned by the bank $17\nrules screen.",
+   "variants": [
+    {
+     "context": "rules screen (bank $17)",
+     "scopes": [
+      {
+       "wram_bank": "0x03"
+      }
+     ],
+     "symbols": {
+      "0xdc00": {
+       "name": "wRulesScreenAnimFrame",
+       "note": "[8-bit] Frame AdvanceRulesScreenAnimFrame steps; DrawRulesScreenCharacters indexes RulesScreenCharactersTable0-2 with it"
       }
      }
     }

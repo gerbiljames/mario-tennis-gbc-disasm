@@ -5171,7 +5171,7 @@ WaitFadeEnd:
 	ldh a, [hFadeState] ; $1da5
 	and a, a ; $1da7
 	jr z, .done ; $1da8
-	ldh a, [$ffd8] ; $1daa
+	ldh a, [hLinkExchangeActive] ; $1daa
 	or a, a ; $1dac
 	jr z, .waitLocalFrame ; $1dad
 	push af ; $1daf
@@ -6741,7 +6741,7 @@ AdvanceFrame:
 	ldh a, [hDebugStepMode] ; $2684
 	or a, a ; $2686
 	jp z, .waitFrame ; $2687
-	ldh a, [$ffd8] ; $268a
+	ldh a, [hLinkExchangeActive] ; $268a
 	or a, a ; $268c
 	jr nz, .checkStepActive ; $268d
 	ldh a, [hPlayerInputFlags] ; $268f
@@ -6780,7 +6780,7 @@ AdvanceFrame:
 	ldh a, [hInputPressed] ; $26c4
 	and a, $f3 ; $26c6
 	jr nz, .waitFrame ; $26c8
-	ldh a, [$ffd8] ; $26ca
+	ldh a, [hLinkExchangeActive] ; $26ca
 	or a, a ; $26cc
 	jr z, .stepHaltLoop ; $26cd
 	ldh a, [hLinkState] ; $26cf
@@ -6802,16 +6802,16 @@ AdvanceFrame:
 	di ; $26e4
 	ldh a, [hVBlankOccurred] ; $26e5
 	ld b, a ; $26e7
-	ldh a, [$ffd7] ; $26e8
+	ldh a, [hLinkTransferDone] ; $26e8
 	and a, b ; $26ea
 	jr z, .stepLinkLoop ; $26eb
 	xor a, a ; $26ed
-	ldh [$ffd7], a ; $26ee
+	ldh [hLinkTransferDone], a ; $26ee
 .stepFrameDone:
 	ei ; $26f0
 	jr .stepLoop ; $26f1
 .waitFrame:
-	ldh a, [$ffd8] ; $26f3
+	ldh a, [hLinkExchangeActive] ; $26f3
 	or a, a ; $26f5
 	jr z, .haltLoop ; $26f6
 	ldh a, [hLinkState] ; $26f8
@@ -6833,11 +6833,11 @@ AdvanceFrame:
 	di ; $270d
 	ldh a, [hVBlankOccurred] ; $270e
 	ld b, a ; $2710
-	ldh a, [$ffd7] ; $2711
+	ldh a, [hLinkTransferDone] ; $2711
 	and a, b ; $2713
 	jr z, .linkLoop ; $2714
 	xor a, a ; $2716
-	ldh [$ffd7], a ; $2717
+	ldh [hLinkTransferDone], a ; $2717
 .done:
 	ei ; $2719
 	pop af ; $271a
@@ -6942,7 +6942,7 @@ VBlankHandler:
 	ld hl, hVBlankCounter ; $27ad
 	inc [hl] ; $27b0
 .nonZero2:
-	ldh a, [$ffd8] ; $27b1
+	ldh a, [hLinkExchangeActive] ; $27b1
 	or a, a ; $27b3
 	jr nz, .updateGameTimer ; $27b4
 	call ReadJoypad ; $27b6
@@ -7037,7 +7037,7 @@ WaitSerialTransfer:
 	ei ; $2832
 	nop ; $2833
 	di ; $2834
-	ldh a, [$ffd7] ; $2835
+	ldh a, [hLinkTransferDone] ; $2835
 	and a, a ; $2837
 	jr nz, .received ; $2838
 	dec bc ; $283a
@@ -7049,7 +7049,7 @@ WaitSerialTransfer:
 	jr .done ; $2841
 .received:
 	xor a, a ; $2843
-	ldh [$ffd7], a ; $2844
+	ldh [hLinkTransferDone], a ; $2844
 	scf ; $2846
 	ccf ; $2847
 .done:
@@ -7086,7 +7086,7 @@ SerialHandler:
 	ldh a, [hLinkState] ; $286f
 	cp a, $01 ; $2871
 	jr nz, .ne01 ; $2873
-	ldh [$ffd7], a ; $2875
+	ldh [hLinkTransferDone], a ; $2875
 	pop hl ; $2877
 	pop de ; $2878
 	pop bc ; $2879
@@ -7112,7 +7112,7 @@ SerialHandler:
 	ldh [$ffe1], a ; $2894
 	jr c, .restore ; $2896
 	ld a, $01 ; $2898
-	ldh [$ffd7], a ; $289a
+	ldh [hLinkTransferDone], a ; $289a
 .restore:
 	pop hl ; $289c
 	pop de ; $289d
@@ -7155,8 +7155,8 @@ InitSerialLink:
 	ldh [hLinkRemoteInput], a ; $28d7
 	ldh [hLinkRemoteInputBuf], a ; $28d9
 	ldh [$ffd6], a ; $28db
-	ldh [$ffd7], a ; $28dd
-	ldh [$ffd8], a ; $28df
+	ldh [hLinkTransferDone], a ; $28dd
+	ldh [hLinkExchangeActive], a ; $28df
 	ldh [$ffdc], a ; $28e1
 	ldh [$ffd9], a ; $28e3
 	ldh [$ffda], a ; $28e5
@@ -7180,7 +7180,7 @@ ResetSerialState:
 	ldh [hLinkRemoteInput], a ; $2905
 	ldh [hLinkRemoteInputBuf], a ; $2907
 	ldh [$ffd6], a ; $2909
-	ldh [$ffd7], a ; $290b
+	ldh [hLinkTransferDone], a ; $290b
 	ldh [$ffdc], a ; $290d
 	ldh [$ffd9], a ; $290f
 	ldh [$ffda], a ; $2911
