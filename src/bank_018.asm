@@ -374,9 +374,9 @@ AddBobbingOffsetY:
 	push hl ; $4479
 	ldh a, [hVBlankCounter] ; $447a
 	and a, $0f ; $447c
-	add a, $8b ; $447e
+	add a, LOW(Data_18_448b) ; $447e
 	ld l, a ; $4480
-	adc a, $44 ; $4481
+	adc a, HIGH(Data_18_448b) ; $4481
 	sub a, l ; $4483
 	ld h, a ; $4484
 	ld a, [hl] ; $4485
@@ -393,9 +393,9 @@ AddBobbingOffsetYLarge:
 	push hl ; $449c
 	ldh a, [hVBlankCounter] ; $449d
 	and a, $3f ; $449f
-	add a, $ae ; $44a1
+	add a, LOW(Data_18_44ae) ; $44a1
 	ld l, a ; $44a3
-	adc a, $44 ; $44a4
+	adc a, HIGH(Data_18_44ae) ; $44a4
 	sub a, l ; $44a6
 	ld h, a ; $44a7
 	ld a, [hl] ; $44a8
@@ -817,9 +817,9 @@ GetTextSlotPointer:
 	add a, $04 ; $53e4
 	and a, $0f ; $53e6
 	add a, a ; $53e8
-	add a, $f8 ; $53e9
+	add a, LOW(TextSlotPointerTable) ; $53e9
 	ld l, a ; $53eb
-	adc a, $53 ; $53ec
+	adc a, HIGH(TextSlotPointerTable) ; $53ec
 	sub a, l ; $53ee
 	ld h, a ; $53ef
 	ld a, [hl+] ; $53f0
@@ -989,9 +989,9 @@ DrawGlyphSprite:
 	ld hl, hVBlankCounter ; $54ed
 	sub a, [hl] ; $54f0
 	and a, $1f ; $54f1
-	add a, $07 ; $54f3
+	add a, LOW(UnusedBobRamp_18) ; $54f3
 	ld l, a ; $54f5
-	adc a, $55 ; $54f6
+	adc a, HIGH(UnusedBobRamp_18) ; $54f6
 	sub a, l ; $54f8
 	ld h, a ; $54f9
 	ld a, [hl] ; $54fa
@@ -1197,18 +1197,18 @@ DrawCharSelectCursor:
 .animate:
 	ldh a, [hVBlankCounter] ; $59de
 	and a, $1f ; $59e0
-	add a, $fe ; $59e2
+	add a, LOW(CharSelectCursorAnimTable) ; $59e2
 	ld l, a ; $59e4
-	adc a, $59 ; $59e5
+	adc a, HIGH(CharSelectCursorAnimTable) ; $59e5
 	sub a, l ; $59e7
 	ld h, a ; $59e8
 	ld a, c ; $59e9
 	add a, a ; $59ea
 	add a, [hl] ; $59eb
 	add a, a ; $59ec
-	add a, $1e ; $59ed
+	add a, LOW(CharSelectCursorTemplatePtrs) ; $59ed
 	ld l, a ; $59ef
-	adc a, $5a ; $59f0
+	adc a, HIGH(CharSelectCursorTemplatePtrs) ; $59f0
 	sub a, l ; $59f2
 	ld h, a ; $59f3
 	ld a, [hl+] ; $59f4
@@ -1232,9 +1232,9 @@ CharSelectCursorTemplate3:
 ApplySpriteBobOffset_18:
 	ldh a, [hVBlankCounter] ; $5a6a
 	and a, $3f ; $5a6c
-	add a, $79 ; $5a6e
+	add a, LOW(SpriteBobRamp_18) ; $5a6e
 	ld l, a ; $5a70
-	adc a, $5a ; $5a71
+	adc a, HIGH(SpriteBobRamp_18) ; $5a71
 	sub a, l ; $5a73
 	ld h, a ; $5a74
 	ld a, [hl] ; $5a75

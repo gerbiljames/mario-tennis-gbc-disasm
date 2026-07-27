@@ -5156,3 +5156,42 @@ one record per line. Inheriting the parent's width would have been a plausible
 lie.
 
 24 notes down to 18, all remaining ones bulk content.
+
+## Split-base table addresses now relocate (2026-07-27)
+
+The pointer work left one relocation hole, and it was the biggest one. The game
+usually reaches a table not with `ld hl, table` but by adding an index to the
+address in halves:
+
+```
+        add a, $4a      ; LOW(CharStatTable_07_5c4a)
+        ld l, a
+        adc a, $5c      ; HIGH(...)
+        sub a, l
+        ld h, a
+        ld a, [hl]
+```
+
+Those two 8-bit immediates *are* the address, and unlike a `ld hl` they never
+moved when the table did -- which is exactly why an earlier pass had to search
+for the byte pair to find these tables at all. **564 full idioms exist; 270
+compute an address that carries a label** and now render as
+`add a, LOW(Name)` / `adc a, HIGH(Name)`, assembling to the same bytes and
+following the table thereafter. 234 distinct tables are addressed this way.
+
+Gated like a pointer load: the whole five-instruction shape, a label at the
+computed address, and a dereference of `hl` afterwards.
+
+Two guards came out of the compare failing rather than from foresight. The
+first version matched 272 sites and broke two bytes in bank `$1b`: the pair
+there computes `$c7xx`, a WRAM address, whose bogus flat offset still landed on
+a label, so the address must be checked to be in ROM (`$0100`-`$7fff`) before
+it means anything. The label it landed on was `DrawFourTileFlagLabel.nonZero` --
+a *qualified local*, which my "skip locals" test missed because it only looked
+for a leading dot. A local names a point inside a routine and is never a table
+base.
+
+Verified by moving a table: growing a blob before `CharStatTable_07_5c4a` by
+one byte moves it to `$5c4b`, and the assembled immediate follows, `$4a` ->
+`$4b`. Before this it would have stayed `$4a` and read one byte early, which no
+build error would have caught.

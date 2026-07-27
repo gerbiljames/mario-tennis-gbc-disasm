@@ -85,9 +85,9 @@ CenterCourtNpc04_11:
 CenterCourtNpc05_11:
 	ld a, [$c2b0] ; $4100
 	add a, a ; $4103
-	add a, $3c ; $4104
+	add a, LOW(CenterCourtNpc05TextIds) ; $4104
 	ld l, a ; $4106
-	adc a, $41 ; $4107
+	adc a, HIGH(CenterCourtNpc05TextIds) ; $4107
 	sub a, l ; $4109
 	ld h, a ; $410a
 	ld a, [hl+] ; $410b
@@ -123,9 +123,9 @@ CenterCourtNpc05TextIds:
 CenterCourtNpc06_11:
 	ld a, [$c2b0] ; $414a
 	add a, a ; $414d
-	add a, $61 ; $414e
+	add a, LOW(CenterCourtNpc06TextIds) ; $414e
 	ld l, a ; $4150
-	adc a, $41 ; $4151
+	adc a, HIGH(CenterCourtNpc06TextIds) ; $4151
 	sub a, l ; $4153
 	ld h, a ; $4154
 	ld a, [hl+] ; $4155
@@ -372,9 +372,9 @@ AcademyArrivalExitTriggers_11:
 AcademyArrivalNpc03_11:
 	ld a, [$c2b0] ; $459d
 	add a, a ; $45a0
-	add a, $e1 ; $45a1
+	add a, LOW(AcademyArrivalNpc03TextIds) ; $45a1
 	ld l, a ; $45a3
-	adc a, $45 ; $45a4
+	adc a, HIGH(AcademyArrivalNpc03TextIds) ; $45a4
 	sub a, l ; $45a6
 	ld h, a ; $45a7
 	ld a, [hl+] ; $45a8
@@ -418,9 +418,9 @@ AcademyArrivalNpc03TextIds:
 AcademyArrivalNpc04_11:
 	ld a, [$c2b0] ; $45f5
 	add a, a ; $45f8
-	add a, $0c ; $45f9
+	add a, LOW(AcademyArrivalNpc04TextIds) ; $45f9
 	ld l, a ; $45fb
-	adc a, $46 ; $45fc
+	adc a, HIGH(AcademyArrivalNpc04TextIds) ; $45fc
 	sub a, l ; $45fe
 	ld h, a ; $45ff
 	ld a, [hl+] ; $4600
@@ -445,9 +445,9 @@ AcademyArrivalNpc05_11:
 	ld a, [$c2b0] ; $4620
 	sra a ; $4623
 	add a, a ; $4625
-	add a, $39 ; $4626
+	add a, LOW(AcademyArrivalNpc05TextIds) ; $4626
 	ld l, a ; $4628
-	adc a, $46 ; $4629
+	adc a, HIGH(AcademyArrivalNpc05TextIds) ; $4629
 	sub a, l ; $462b
 	ld h, a ; $462c
 	ld a, [hl+] ; $462d

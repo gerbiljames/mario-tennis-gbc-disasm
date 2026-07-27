@@ -1818,9 +1818,9 @@ ServeToTargetsBriefing_AdvanceAnim:
 	sla a ; $5728
 	sla a ; $572a
 	ld c, a ; $572c
-	add a, $bb ; $572d
+	add a, LOW(ServeToTargetsBriefing_AdvanceAnimTable) ; $572d
 	ld l, a ; $572f
-	adc a, $57 ; $5730
+	adc a, HIGH(ServeToTargetsBriefing_AdvanceAnimTable) ; $5730
 	sub a, l ; $5732
 	ld h, a ; $5733
 	ld a, [hl] ; $5734
@@ -2216,9 +2216,9 @@ SpinServeBriefing_AdvanceAnim:
 	sla a ; $5a8e
 	sla a ; $5a90
 	ld c, a ; $5a92
-	add a, $e5 ; $5a93
+	add a, LOW(SpinServeBriefing_AdvanceAnimTable) ; $5a93
 	ld l, a ; $5a95
-	adc a, $5b ; $5a96
+	adc a, HIGH(SpinServeBriefing_AdvanceAnimTable) ; $5a96
 	sub a, l ; $5a98
 	ld h, a ; $5a99
 	ld a, [hl] ; $5a9a
@@ -2326,9 +2326,9 @@ SpinServeBriefing_AdvanceAnim2:
 	sla a ; $5b39
 	sla a ; $5b3b
 	ld c, a ; $5b3d
-	add a, $e5 ; $5b3e
+	add a, LOW(SpinServeBriefing_AdvanceAnimTable) ; $5b3e
 	ld l, a ; $5b40
-	adc a, $5b ; $5b41
+	adc a, HIGH(SpinServeBriefing_AdvanceAnimTable) ; $5b41
 	sub a, l ; $5b43
 	ld h, a ; $5b44
 	ld a, [hl] ; $5b45
@@ -2565,9 +2565,9 @@ DrillBriefing_ServeThroughPoles:
 	ld a, [$d82e] ; $5cfd
 	sla a ; $5d00
 	sla a ; $5d02
-	add a, $06 ; $5d04
+	add a, LOW(DrillBriefing_ServeThroughPolesTable) ; $5d04
 	ld l, a ; $5d06
-	adc a, $5f ; $5d07
+	adc a, HIGH(DrillBriefing_ServeThroughPolesTable) ; $5d07
 	sub a, l ; $5d09
 	ld h, a ; $5d0a
 	ld a, [hl] ; $5d0b
@@ -2667,9 +2667,9 @@ PoleServeBriefing_AdvanceAnim:
 	sla a ; $5de9
 	sla a ; $5deb
 	ld c, a ; $5ded
-	add a, $06 ; $5dee
+	add a, LOW(DrillBriefing_ServeThroughPolesTable) ; $5dee
 	ld l, a ; $5df0
-	adc a, $5f ; $5df1
+	adc a, HIGH(DrillBriefing_ServeThroughPolesTable) ; $5df1
 	sub a, l ; $5df3
 	ld h, a ; $5df4
 	ld a, [hl] ; $5df5
@@ -3065,9 +3065,9 @@ ServeAndVolleyBriefing_AdvanceAnim:
 	sla a ; $60f9
 	sla a ; $60fb
 	ld c, a ; $60fd
-	add a, $b4 ; $60fe
+	add a, LOW(ServeAndVolleyBriefing_AdvanceAnimTable) ; $60fe
 	ld l, a ; $6100
-	adc a, $61 ; $6101
+	adc a, HIGH(ServeAndVolleyBriefing_AdvanceAnimTable) ; $6101
 	sub a, l ; $6103
 	ld h, a ; $6104
 	ld a, [hl] ; $6105
@@ -3458,9 +3458,9 @@ DrillBriefing_ServeAndSmash:
 	sla a ; $643a
 	sla a ; $643c
 	ld c, a ; $643e
-	add a, $bd ; $643f
+	add a, LOW(DrillBriefing_ServeAndSmashTable) ; $643f
 	ld l, a ; $6441
-	adc a, $64 ; $6442
+	adc a, HIGH(DrillBriefing_ServeAndSmashTable) ; $6442
 	sub a, l ; $6444
 	ld h, a ; $6445
 	ld a, [hl] ; $6446
@@ -3813,9 +3813,9 @@ DrillBriefing_ServeAndSmash2:
 	sla a ; $6743
 	sla a ; $6745
 	ld c, a ; $6747
-	add a, $c6 ; $6748
+	add a, LOW(DrillBriefing_ServeAndSmash2Table) ; $6748
 	ld l, a ; $674a
-	adc a, $67 ; $674b
+	adc a, HIGH(DrillBriefing_ServeAndSmash2Table) ; $674b
 	sub a, l ; $674d
 	ld h, a ; $674e
 	ld a, [hl] ; $674f
@@ -4086,9 +4086,9 @@ ReturnToTargetBriefing_AdvanceAnim:
 	sla a ; $6972
 	sla a ; $6974
 	ld c, a ; $6976
-	add a, $0b ; $6977
+	add a, LOW(ReturnToTargetBriefing_AdvanceAnimTable) ; $6977
 	ld l, a ; $6979
-	adc a, $6a ; $697a
+	adc a, HIGH(ReturnToTargetBriefing_AdvanceAnimTable) ; $697a
 	sub a, l ; $697c
 	ld h, a ; $697d
 	ld a, [hl] ; $697e
@@ -4371,9 +4371,9 @@ ReturnLobBriefing_AdvanceAnim:
 	sla a ; $6bb3
 	sla a ; $6bb5
 	ld c, a ; $6bb7
-	add a, $6e ; $6bb8
+	add a, LOW(ReturnLobBriefing_AdvanceAnimTable) ; $6bb8
 	ld l, a ; $6bba
-	adc a, $6c ; $6bbb
+	adc a, HIGH(ReturnLobBriefing_AdvanceAnimTable) ; $6bbb
 	sub a, l ; $6bbd
 	ld h, a ; $6bbe
 	ld a, [hl] ; $6bbf
@@ -4682,9 +4682,9 @@ ReturnDownLineBriefing_AdvanceAnim:
 	sla a ; $6e1a
 	sla a ; $6e1c
 	ld c, a ; $6e1e
-	add a, $b3 ; $6e1f
+	add a, LOW(ReturnDownLineBriefing_AdvanceAnimTable) ; $6e1f
 	ld l, a ; $6e21
-	adc a, $6e ; $6e22
+	adc a, HIGH(ReturnDownLineBriefing_AdvanceAnimTable) ; $6e22
 	sub a, l ; $6e24
 	ld h, a ; $6e25
 	ld a, [hl] ; $6e26

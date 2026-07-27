@@ -2554,18 +2554,18 @@ ApplyShotRecoil:
 	res 5, [hl] ; $5470
 	ld a, [$c4a1] ; $5472
 	add a, a ; $5475
-	add a, $ca ; $5476
+	add a, LOW(ShotRecoilVarPtrs_07) ; $5476
 	ld l, a ; $5478
-	adc a, $54 ; $5479
+	adc a, HIGH(ShotRecoilVarPtrs_07) ; $5479
 	sub a, l ; $547b
 	ld h, a ; $547c
 	ld a, [hl+] ; $547d
 	ld h, [hl] ; $547e
 	ld l, a ; $547f
 	ld a, [hl] ; $5480
-	add a, $d4 ; $5481
+	add a, LOW(ShotRecoilTable_07) ; $5481
 	ld l, a ; $5483
-	adc a, $54 ; $5484
+	adc a, HIGH(ShotRecoilTable_07) ; $5484
 	sub a, l ; $5486
 	ld h, a ; $5487
 	ld b, [hl] ; $5488
@@ -2748,9 +2748,9 @@ ApplyShotTypePresets:
 	add a, a ; $5582
 	add a, a ; $5583
 	add a, b ; $5584
-	add a, $9e ; $5585
+	add a, LOW(ShotTypePresets_07) ; $5585
 	ld l, a ; $5587
-	adc a, $55 ; $5588
+	adc a, HIGH(ShotTypePresets_07) ; $5588
 	sub a, l ; $558a
 	ld h, a ; $558b
 	ld a, [hl+] ; $558c
@@ -3471,9 +3471,9 @@ SetSpecialShotFlagFromBallHeight:
 	add hl, hl ; $5a10
 	ld a, h ; $5a11
 	and a, $1f ; $5a12
-	add a, $23 ; $5a14
+	add a, LOW(SpecialShotFlagTable_07) ; $5a14
 	ld l, a ; $5a16
-	adc a, $5a ; $5a17
+	adc a, HIGH(SpecialShotFlagTable_07) ; $5a17
 	sub a, l ; $5a19
 	ld h, a ; $5a1a
 	ld a, [hl] ; $5a1b
@@ -3487,9 +3487,9 @@ SpecialShotFlagTable_07:
 LookupCharSpriteSet:
 	push hl ; $5a43
 	and a, $3f ; $5a44
-	add a, $50 ; $5a46
+	add a, LOW(CharSpriteSetTable) ; $5a46
 	ld l, a ; $5a48
-	adc a, $5a ; $5a49
+	adc a, HIGH(CharSpriteSetTable) ; $5a49
 	sub a, l ; $5a4b
 	ld h, a ; $5a4c
 	ld a, [hl] ; $5a4d
@@ -3518,9 +3518,9 @@ SetupCharacterSprite:
 	ld [$df36], a ; $5a8c
 	ld a, [wCharIndex] ; $5a8f
 	add a, a ; $5a92
-	add a, $a7 ; $5a93
+	add a, LOW(CharFrameGfxDest_07) ; $5a93
 	ld l, a ; $5a95
-	adc a, $5a ; $5a96
+	adc a, HIGH(CharFrameGfxDest_07) ; $5a96
 	sub a, l ; $5a98
 	ld h, a ; $5a99
 	ld a, [hl+] ; $5a9a
@@ -3543,9 +3543,9 @@ CharFrameGfxDest_07:
 LoadCharacterAttributes:
 	ld a, [wCharIndex] ; $5ab3
 	add a, a ; $5ab6
-	add a, $42 ; $5ab7
+	add a, LOW(CharAttrStructPtrs_07) ; $5ab7
 	ld l, a ; $5ab9
-	adc a, $5c ; $5aba
+	adc a, HIGH(CharAttrStructPtrs_07) ; $5aba
 	sub a, l ; $5abc
 	ld h, a ; $5abd
 	ld a, [hl+] ; $5abe
@@ -3622,9 +3622,9 @@ LoadCharacterAttributes:
 	add hl, de ; $5b29
 	ld a, [hl] ; $5b2a
 	add a, a ; $5b2b
-	add a, $4a ; $5b2c
+	add a, LOW(CharStatTable_07_5c4a) ; $5b2c
 	ld l, a ; $5b2e
-	adc a, $5c ; $5b2f
+	adc a, HIGH(CharStatTable_07_5c4a) ; $5b2f
 	sub a, l ; $5b31
 	ld h, a ; $5b32
 	ld a, [hl+] ; $5b33
@@ -3652,9 +3652,9 @@ LoadCharacterAttributes:
 	dec a ; $5b53
 .readPlacementTable:
 	add a, a ; $5b54
-	add a, $4a ; $5b55
+	add a, LOW(CharStatTable_07_5c4a) ; $5b55
 	ld l, a ; $5b57
-	adc a, $5c ; $5b58
+	adc a, HIGH(CharStatTable_07_5c4a) ; $5b58
 	sub a, l ; $5b5a
 	ld h, a ; $5b5b
 	ld a, [hl+] ; $5b5c
@@ -3668,9 +3668,9 @@ LoadCharacterAttributes:
 	add hl, de ; $5b68
 	ld a, [hl] ; $5b69
 	add a, a ; $5b6a
-	add a, $5e ; $5b6b
+	add a, LOW(CharStatTable_07_5c5e) ; $5b6b
 	ld l, a ; $5b6d
-	adc a, $5c ; $5b6e
+	adc a, HIGH(CharStatTable_07_5c5e) ; $5b6e
 	sub a, l ; $5b70
 	ld h, a ; $5b71
 	ld a, [hl+] ; $5b72
@@ -3684,9 +3684,9 @@ LoadCharacterAttributes:
 	add hl, de ; $5b7e
 	ld a, [hl] ; $5b7f
 	add a, a ; $5b80
-	add a, $72 ; $5b81
+	add a, LOW(CharStatTable_07_5c72) ; $5b81
 	ld l, a ; $5b83
-	adc a, $5c ; $5b84
+	adc a, HIGH(CharStatTable_07_5c72) ; $5b84
 	sub a, l ; $5b86
 	ld h, a ; $5b87
 	ld a, [hl+] ; $5b88
@@ -3699,9 +3699,9 @@ LoadCharacterAttributes:
 	ld hl, $0029 ; $5b91
 	add hl, de ; $5b94
 	ld a, [hl] ; $5b95
-	add a, $86 ; $5b96
+	add a, LOW(CharStatTable_07_5c86) ; $5b96
 	ld l, a ; $5b98
-	adc a, $5c ; $5b99
+	adc a, HIGH(CharStatTable_07_5c86) ; $5b99
 	sub a, l ; $5b9b
 	ld h, a ; $5b9c
 	ld a, [hl] ; $5b9d
@@ -3709,9 +3709,9 @@ LoadCharacterAttributes:
 	ld hl, $0025 ; $5ba1
 	add hl, de ; $5ba4
 	ld a, [hl] ; $5ba5
-	add a, $90 ; $5ba6
+	add a, LOW(CharStatTable_07_5c90) ; $5ba6
 	ld l, a ; $5ba8
-	adc a, $5c ; $5ba9
+	adc a, HIGH(CharStatTable_07_5c90) ; $5ba9
 	sub a, l ; $5bab
 	ld h, a ; $5bac
 	ld a, [hl] ; $5bad
@@ -3719,9 +3719,9 @@ LoadCharacterAttributes:
 	ld hl, $0026 ; $5bb1
 	add hl, de ; $5bb4
 	ld a, [hl] ; $5bb5
-	add a, $9a ; $5bb6
+	add a, LOW(CharStatTable_07_5c9a) ; $5bb6
 	ld l, a ; $5bb8
-	adc a, $5c ; $5bb9
+	adc a, HIGH(CharStatTable_07_5c9a) ; $5bb9
 	sub a, l ; $5bbb
 	ld h, a ; $5bbc
 	ld a, [hl] ; $5bbd
@@ -3872,17 +3872,17 @@ OverrideCharStatsForDebug:
 	add a, a ; $5d1f
 	add a, a ; $5d20
 	add a, a ; $5d21
-	add a, $a4 ; $5d22
+	add a, LOW(CharStatPresets_07) ; $5d22
 	ld l, a ; $5d24
-	adc a, $5c ; $5d25
+	adc a, HIGH(CharStatPresets_07) ; $5d25
 	sub a, l ; $5d27
 	ld h, a ; $5d28
 	ld a, [hl+] ; $5d29
 	push hl ; $5d2a
 	add a, a ; $5d2b
-	add a, $4a ; $5d2c
+	add a, LOW(CharStatTable_07_5c4a) ; $5d2c
 	ld l, a ; $5d2e
-	adc a, $5c ; $5d2f
+	adc a, HIGH(CharStatTable_07_5c4a) ; $5d2f
 	sub a, l ; $5d31
 	ld h, a ; $5d32
 	ld a, [hl+] ; $5d33
@@ -3897,9 +3897,9 @@ OverrideCharStatsForDebug:
 	ld a, [hl+] ; $5d3e
 	push hl ; $5d3f
 	add a, a ; $5d40
-	add a, $4a ; $5d41
+	add a, LOW(CharStatTable_07_5c4a) ; $5d41
 	ld l, a ; $5d43
-	adc a, $5c ; $5d44
+	adc a, HIGH(CharStatTable_07_5c4a) ; $5d44
 	sub a, l ; $5d46
 	ld h, a ; $5d47
 	ld a, [hl+] ; $5d48
@@ -3914,9 +3914,9 @@ OverrideCharStatsForDebug:
 	ld a, [hl+] ; $5d53
 	push hl ; $5d54
 	add a, a ; $5d55
-	add a, $5e ; $5d56
+	add a, LOW(CharStatTable_07_5c5e) ; $5d56
 	ld l, a ; $5d58
-	adc a, $5c ; $5d59
+	adc a, HIGH(CharStatTable_07_5c5e) ; $5d59
 	sub a, l ; $5d5b
 	ld h, a ; $5d5c
 	ld a, [hl+] ; $5d5d
@@ -3931,9 +3931,9 @@ OverrideCharStatsForDebug:
 	ld a, [hl+] ; $5d68
 	push hl ; $5d69
 	add a, a ; $5d6a
-	add a, $72 ; $5d6b
+	add a, LOW(CharStatTable_07_5c72) ; $5d6b
 	ld l, a ; $5d6d
-	adc a, $5c ; $5d6e
+	adc a, HIGH(CharStatTable_07_5c72) ; $5d6e
 	sub a, l ; $5d70
 	ld h, a ; $5d71
 	ld a, [hl+] ; $5d72
@@ -3947,9 +3947,9 @@ OverrideCharStatsForDebug:
 	pop hl ; $5d7c
 	ld a, [hl+] ; $5d7d
 	push hl ; $5d7e
-	add a, $86 ; $5d7f
+	add a, LOW(CharStatTable_07_5c86) ; $5d7f
 	ld l, a ; $5d81
-	adc a, $5c ; $5d82
+	adc a, HIGH(CharStatTable_07_5c86) ; $5d82
 	sub a, l ; $5d84
 	ld h, a ; $5d85
 	ld a, [hl] ; $5d86
@@ -3959,9 +3959,9 @@ OverrideCharStatsForDebug:
 	pop hl ; $5d8c
 	ld a, [hl+] ; $5d8d
 	push hl ; $5d8e
-	add a, $90 ; $5d8f
+	add a, LOW(CharStatTable_07_5c90) ; $5d8f
 	ld l, a ; $5d91
-	adc a, $5c ; $5d92
+	adc a, HIGH(CharStatTable_07_5c90) ; $5d92
 	sub a, l ; $5d94
 	ld h, a ; $5d95
 	ld a, [hl] ; $5d96
@@ -3971,9 +3971,9 @@ OverrideCharStatsForDebug:
 	pop hl ; $5d9c
 	ld a, [hl+] ; $5d9d
 	push hl ; $5d9e
-	add a, $9a ; $5d9f
+	add a, LOW(CharStatTable_07_5c9a) ; $5d9f
 	ld l, a ; $5da1
-	adc a, $5c ; $5da2
+	adc a, HIGH(CharStatTable_07_5c9a) ; $5da2
 	sub a, l ; $5da4
 	ld h, a ; $5da5
 	ld a, [hl] ; $5da6

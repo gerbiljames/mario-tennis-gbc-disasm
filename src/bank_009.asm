@@ -701,9 +701,9 @@ FinishObjSlotUpdate:
 GetNextMoveCurveValue:
 	ld a, [$ddfe] ; $4782
 	add a, a ; $4785
-	add a, $ae ; $4786
+	add a, LOW(MoveCurveTable_09) ; $4786
 	ld l, a ; $4788
-	adc a, $47 ; $4789
+	adc a, HIGH(MoveCurveTable_09) ; $4789
 	sub a, l ; $478b
 	ld h, a ; $478c
 	ld a, [hl+] ; $478d
@@ -735,9 +735,9 @@ MoveCurveTable_09:
 LoadTilesetGfx:
 	add a, a ; $4873
 	add a, a ; $4874
-	add a, $8a ; $4875
+	add a, LOW(VramTileset_09) ; $4875
 	ld l, a ; $4877
-	adc a, $48 ; $4878
+	adc a, HIGH(VramTileset_09) ; $4878
 	sub a, l ; $487a
 	ld h, a ; $487b
 	ld a, [hl+] ; $487c
@@ -857,9 +857,9 @@ DeuceAdvantageTiles:
 LoadServeGfx:
 	ld a, [wCurrentServingPlayer] ; $6c40
 	add a, a ; $6c43
-	add a, $6e ; $6c44
+	add a, LOW(ServeGfxPtrTable_09) ; $6c44
 	ld l, a ; $6c46
-	adc a, $6c ; $6c47
+	adc a, HIGH(ServeGfxPtrTable_09) ; $6c47
 	sub a, l ; $6c49
 	ld h, a ; $6c4a
 	ld a, [hl+] ; $6c4b
@@ -891,9 +891,9 @@ ServeGfxPtrTable_09:
 GetPlayer1ServeIndicatorSprites:
 	ld a, [wOnCourtCharCountMinus1] ; $7103
 	add a, a ; $7106
-	add a, $12 ; $7107
+	add a, LOW(Player1ServeIndicatorSpritePtrs_09) ; $7107
 	ld l, a ; $7109
-	adc a, $71 ; $710a
+	adc a, HIGH(Player1ServeIndicatorSpritePtrs_09) ; $710a
 	sub a, l ; $710c
 	ld h, a ; $710d
 	ld a, [hl+] ; $710e
@@ -909,9 +909,9 @@ Player1ServeIndicatorSpritePtrs_09:
 GetPlayer2ServeIndicatorSprites:
 	ld a, [wOnCourtCharCountMinus1] ; $711a
 	add a, a ; $711d
-	add a, $29 ; $711e
+	add a, LOW(Player2ServeIndicatorSpritePtrs_09) ; $711e
 	ld l, a ; $7120
-	adc a, $71 ; $7121
+	adc a, HIGH(Player2ServeIndicatorSpritePtrs_09) ; $7121
 	sub a, l ; $7123
 	ld h, a ; $7124
 	ld a, [hl+] ; $7125
@@ -963,9 +963,9 @@ SpriteTemplate_09_717c:
 GetPlayer1CharIconSprites:
 	ld a, [wOnCourtCharCountMinus1] ; $7195
 	add a, a ; $7198
-	add a, $a4 ; $7199
+	add a, LOW(Player1CharIconSpritePtrs_09) ; $7199
 	ld l, a ; $719b
-	adc a, $71 ; $719c
+	adc a, HIGH(Player1CharIconSpritePtrs_09) ; $719c
 	sub a, l ; $719e
 	ld h, a ; $719f
 	ld a, [hl+] ; $71a0
@@ -981,9 +981,9 @@ Player1CharIconSpritePtrs_09:
 GetPlayer2CharIconSprites:
 	ld a, [wOnCourtCharCountMinus1] ; $71ac
 	add a, a ; $71af
-	add a, $bb ; $71b0
+	add a, LOW(Player2CharIconSpritePtrs_09) ; $71b0
 	ld l, a ; $71b2
-	adc a, $71 ; $71b3
+	adc a, HIGH(Player2CharIconSpritePtrs_09) ; $71b3
 	sub a, l ; $71b5
 	ld h, a ; $71b6
 	ld a, [hl+] ; $71b7

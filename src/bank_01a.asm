@@ -958,9 +958,9 @@ ExpScreenDrawTask:
 .checkStoryModeMainCharacterOverworldSprite:
 	ld a, [wStoryModeMainCharacterOverworldSprite] ; $4790
 	rlca ; $4793
-	add a, $09 ; $4794
+	add a, LOW(Data_1a_4809) ; $4794
 	ld l, a ; $4796
-	adc a, $48 ; $4797
+	adc a, HIGH(Data_1a_4809) ; $4797
 	sub a, l ; $4799
 	ld h, a ; $479a
 	ld a, [hl+] ; $479b
@@ -3016,9 +3016,9 @@ DrawCharViewerGridCursor:
 	ret z ; $6af8
 	ld a, [wDebugCharViewerIndex] ; $6af9
 	rlca ; $6afc
-	add a, $0f ; $6afd
+	add a, LOW(Data_1a_6b0f) ; $6afd
 	ld l, a ; $6aff
-	adc a, $6b ; $6b00
+	adc a, HIGH(Data_1a_6b0f) ; $6b00
 	sub a, l ; $6b02
 	ld h, a ; $6b03
 	ld a, [hl+] ; $6b04
@@ -3152,9 +3152,9 @@ DrawCharViewerCursorSprite:
 	jr nz, .nonZero ; $6c32
 	ld a, [$d001] ; $6c34
 	rlca ; $6c37
-	add a, $69 ; $6c38
+	add a, LOW(Data_1a_6c69) ; $6c38
 	ld l, a ; $6c3a
-	adc a, $6c ; $6c3b
+	adc a, HIGH(Data_1a_6c69) ; $6c3b
 	sub a, l ; $6c3d
 	ld h, a ; $6c3e
 	ld a, [hl+] ; $6c3f
@@ -3589,9 +3589,9 @@ DrawCharViewerCharSprite:
 	farcall ReloadCharFacingTiles ; $7043
 	pop de ; $7046
 	ld a, d ; $7047
-	add a, $8e ; $7048
+	add a, LOW(Data_1a_708e) ; $7048
 	ld l, a ; $704a
-	adc a, $70 ; $704b
+	adc a, HIGH(Data_1a_708e) ; $704b
 	sub a, l ; $704d
 	ld h, a ; $704e
 	ld b, [hl] ; $704f
@@ -4309,9 +4309,9 @@ ComputeStatArrowSpriteX:
 	add a, d ; $7e26
 	ld d, a ; $7e27
 	ld a, h ; $7e28
-	add a, $34 ; $7e29
+	add a, LOW(Data_1a_7e34) ; $7e29
 	ld l, a ; $7e2b
-	adc a, $7e ; $7e2c
+	adc a, HIGH(Data_1a_7e34) ; $7e2c
 	sub a, l ; $7e2e
 	ld h, a ; $7e2f
 	ld a, [hl] ; $7e30

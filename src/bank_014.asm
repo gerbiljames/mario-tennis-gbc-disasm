@@ -47,9 +47,9 @@ TennisMachineRoomExitTriggers_14:
 TennisMachineRoomNpc03_14:
 	ld a, [$c2b0] ; $408f
 	add a, a ; $4092
-	add a, $a6 ; $4093
+	add a, LOW(TennisMachineRoomNpc03TextIds) ; $4093
 	ld l, a ; $4095
-	adc a, $40 ; $4096
+	adc a, HIGH(TennisMachineRoomNpc03TextIds) ; $4096
 	sub a, l ; $4098
 	ld h, a ; $4099
 	ld a, [hl+] ; $409a
@@ -70,9 +70,9 @@ TennisMachineRoomNpc03TextIds:
 TennisMachineRoomNpc04_14:
 	ld a, [$c2b0] ; $40b4
 	add a, a ; $40b7
-	add a, $ec ; $40b8
+	add a, LOW(TennisMachineRoomNpc04TextIds) ; $40b8
 	ld l, a ; $40ba
-	adc a, $40 ; $40bb
+	adc a, HIGH(TennisMachineRoomNpc04TextIds) ; $40bb
 	sub a, l ; $40bd
 	ld h, a ; $40be
 	ld a, [hl+] ; $40bf
@@ -370,9 +370,9 @@ TennisMachineRoomNpc05_14:
 	jp nz, MachineCourtStartLevelScene ; $4430
 	ld a, [$c2b0] ; $4433
 	add a, a ; $4436
-	add a, $00 ; $4437
+	add a, LOW(TennisMachineRoomNpc05TextIds) ; $4437
 	ld l, a ; $4439
-	adc a, $46 ; $443a
+	adc a, HIGH(TennisMachineRoomNpc05TextIds) ; $443a
 	sub a, l ; $443c
 	ld h, a ; $443d
 	ld a, [hl+] ; $443e
@@ -428,9 +428,9 @@ TennisMachineRoomNpc05_14:
 .done:
 	ld a, [$c2b0] ; $44ca
 	add a, a ; $44cd
-	add a, $00 ; $44ce
+	add a, LOW(TennisMachineRoomNpc05TextIds) ; $44ce
 	ld l, a ; $44d0
-	adc a, $46 ; $44d1
+	adc a, HIGH(TennisMachineRoomNpc05TextIds) ; $44d1
 	sub a, l ; $44d3
 	ld h, a ; $44d4
 	ld a, [hl+] ; $44d5
@@ -559,9 +559,9 @@ MachineLevelNotClearedMessage:
 	ret ; $469e
 TestMachineLevelClearedFlag:
 	add a, a ; $469f
-	add a, $bd ; $46a0
+	add a, LOW(TestMachineLevelClearedFlagTable) ; $46a0
 	ld l, a ; $46a2
-	adc a, $46 ; $46a3
+	adc a, HIGH(TestMachineLevelClearedFlagTable) ; $46a3
 	sub a, l ; $46a5
 	ld h, a ; $46a6
 	ld a, [hl+] ; $46a7
@@ -570,9 +570,9 @@ TestMachineLevelClearedFlag:
 	call TestGameFlagByNumber ; $46aa
 	ret ; $46ad
 	add a, a ; $46ae
-	add a, $bd ; $46af
+	add a, LOW(TestMachineLevelClearedFlagTable) ; $46af
 	ld l, a ; $46b1
-	adc a, $46 ; $46b2
+	adc a, HIGH(TestMachineLevelClearedFlagTable) ; $46b2
 	sub a, l ; $46b4
 	ld h, a ; $46b5
 	ld a, [hl+] ; $46b6
@@ -950,9 +950,9 @@ Court2Npc03_14:
 Court2Npc04_14:
 	ld a, [$c2b0] ; $4b6d
 	add a, a ; $4b70
-	add a, $84 ; $4b71
+	add a, LOW(Court2Npc04TextIds) ; $4b71
 	ld l, a ; $4b73
-	adc a, $4b ; $4b74
+	adc a, HIGH(Court2Npc04TextIds) ; $4b74
 	sub a, l ; $4b76
 	ld h, a ; $4b77
 	ld a, [hl+] ; $4b78
@@ -973,9 +973,9 @@ Court2Npc04TextIds:
 Court2Npc05_14:
 	ld a, [$c2b0] ; $4b92
 	add a, a ; $4b95
-	add a, $a9 ; $4b96
+	add a, LOW(Court2Npc05TextIds) ; $4b96
 	ld l, a ; $4b98
-	adc a, $4b ; $4b99
+	adc a, HIGH(Court2Npc05TextIds) ; $4b99
 	sub a, l ; $4b9b
 	ld h, a ; $4b9c
 	ld a, [hl+] ; $4b9d
@@ -996,9 +996,9 @@ Court2Npc05TextIds:
 Court2Npc06_14:
 	ld a, [$c2b0] ; $4bb7
 	add a, a ; $4bba
-	add a, $ce ; $4bbb
+	add a, LOW(Court2Npc06TextIds) ; $4bbb
 	ld l, a ; $4bbd
-	adc a, $4b ; $4bbe
+	adc a, HIGH(Court2Npc06TextIds) ; $4bbe
 	sub a, l ; $4bc0
 	ld h, a ; $4bc1
 	ld a, [hl+] ; $4bc2
@@ -1030,9 +1030,9 @@ Court2SpectatorChat_14:
 .step:
 	ld a, [$c2b0] ; $4bf5
 	add a, a ; $4bf8
-	add a, $5f ; $4bf9
+	add a, LOW(Court2SpectatorChatTextIds) ; $4bf9
 	ld l, a ; $4bfb
-	adc a, $4d ; $4bfc
+	adc a, HIGH(Court2SpectatorChatTextIds) ; $4bfc
 	sub a, l ; $4bfe
 	ld h, a ; $4bff
 	ld a, [hl+] ; $4c00
@@ -1279,9 +1279,9 @@ Court1Npc04_14:
 Court1Npc05_14:
 	ld a, [$c2b0] ; $507c
 	add a, a ; $507f
-	add a, $93 ; $5080
+	add a, LOW(Court1Npc05TextIds) ; $5080
 	ld l, a ; $5082
-	adc a, $50 ; $5083
+	adc a, HIGH(Court1Npc05TextIds) ; $5083
 	sub a, l ; $5085
 	ld h, a ; $5086
 	ld a, [hl+] ; $5087
@@ -1302,9 +1302,9 @@ Court1Npc05TextIds:
 Court1Npc06_14:
 	ld a, [$c2b0] ; $50a1
 	add a, a ; $50a4
-	add a, $b8 ; $50a5
+	add a, LOW(Court1Npc06TextIds) ; $50a5
 	ld l, a ; $50a7
-	adc a, $50 ; $50a8
+	adc a, HIGH(Court1Npc06TextIds) ; $50a8
 	sub a, l ; $50aa
 	ld h, a ; $50ab
 	ld a, [hl+] ; $50ac
@@ -2285,9 +2285,9 @@ UpdateFirework0_14:
 	cp a, $04 ; $647d
 	jp nc, .done ; $647f
 	ld a, [wWaterSpriteMinigameSwingCount] ; $6482
-	add a, $d5 ; $6485
+	add a, LOW(Table_14_64d5) ; $6485
 	ld l, a ; $6487
-	adc a, $64 ; $6488
+	adc a, HIGH(Table_14_64d5) ; $6488
 	sub a, l ; $648a
 	ld h, a ; $648b
 	ld a, [hl] ; $648c
@@ -2518,9 +2518,9 @@ UpdateFirework1_14:
 	cp a, $04 ; $6f23
 	jp nc, .done ; $6f25
 	ld a, [wWaterSpriteMinigameSwingCount + 1] ; $6f28
-	add a, $d5 ; $6f2b
+	add a, LOW(Table_14_64d5) ; $6f2b
 	ld l, a ; $6f2d
-	adc a, $64 ; $6f2e
+	adc a, HIGH(Table_14_64d5) ; $6f2e
 	sub a, l ; $6f30
 	ld h, a ; $6f31
 	ld a, [hl] ; $6f32

@@ -545,9 +545,9 @@ ApplyFallbackBallTrajectory_24:
 	farcall ComputeShotTrajectory ; $5825
 	pop af ; $5828
 	add a, a ; $5829
-	add a, $3c ; $582a
+	add a, LOW(BallPosFallbackOffsets_24) ; $582a
 	ld l, a ; $582c
-	adc a, $58 ; $582d
+	adc a, HIGH(BallPosFallbackOffsets_24) ; $582d
 	sub a, l ; $582f
 	ld h, a ; $5830
 	ld a, [hl+] ; $5831
@@ -645,9 +645,9 @@ ShotBallPathSmash:
 	call AngleFromVector16 ; $66c6
 	ld a, [$df6c] ; $66c9
 	add a, a ; $66cc
-	add a, $f2 ; $66cd
+	add a, LOW(SmashVelocityBySpeed_24) ; $66cd
 	ld l, a ; $66cf
-	adc a, $66 ; $66d0
+	adc a, HIGH(SmashVelocityBySpeed_24) ; $66d0
 	sub a, l ; $66d2
 	ld h, a ; $66d3
 	ld a, [hl+] ; $66d4

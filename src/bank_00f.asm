@@ -2924,9 +2924,9 @@ IslandOpenRoundSinglesNpc05_0f:
 	ld a, [$c2b0] ; $7742
 	dec a ; $7745
 	add a, a ; $7746
-	add a, $3a ; $7747
+	add a, LOW(IslandOpenRoundSinglesNpc05TextIds) ; $7747
 	ld l, a ; $7749
-	adc a, $78 ; $774a
+	adc a, HIGH(IslandOpenRoundSinglesNpc05TextIds) ; $774a
 	sub a, l ; $774c
 	ld h, a ; $774d
 	ld a, [hl+] ; $774e
@@ -3027,9 +3027,9 @@ IslandOpenRoundDoublesNpc03_0f:
 	ld a, [$c2b0] ; $78cc
 	dec a ; $78cf
 	add a, a ; $78d0
-	add a, $e4 ; $78d1
+	add a, LOW(IslandOpenRoundDoublesNpc03TextIds) ; $78d1
 	ld l, a ; $78d3
-	adc a, $78 ; $78d4
+	adc a, HIGH(IslandOpenRoundDoublesNpc03TextIds) ; $78d4
 	sub a, l ; $78d6
 	ld h, a ; $78d7
 	ld a, [hl+] ; $78d8
@@ -3195,9 +3195,9 @@ WalkActorsInFromEntryPoint_0f:
 	script_wait_move ACTOR_PARTNER ; $7ad9
 	ld a, [wStoryModeEntryPoint] ; $7ade
 	dec a ; $7ae1
-	add a, $16 ; $7ae2
+	add a, LOW(Facings_0f_7b16) ; $7ae2
 	ld l, a ; $7ae4
-	adc a, $7b ; $7ae5
+	adc a, HIGH(Facings_0f_7b16) ; $7ae5
 	sub a, l ; $7ae7
 	ld h, a ; $7ae8
 	ld b, [hl] ; $7ae9
@@ -3209,9 +3209,9 @@ WalkActorsInFromEntryPoint_0f:
 	script_set_speed ACTOR_PLAYER, $0010 ; $7af8
 	ld a, [wStoryModeEntryPoint] ; $7b00
 	dec a ; $7b03
-	add a, $16 ; $7b04
+	add a, LOW(Facings_0f_7b16) ; $7b04
 	ld l, a ; $7b06
-	adc a, $7b ; $7b07
+	adc a, HIGH(Facings_0f_7b16) ; $7b07
 	sub a, l ; $7b09
 	ld h, a ; $7b0a
 	ld b, [hl] ; $7b0b

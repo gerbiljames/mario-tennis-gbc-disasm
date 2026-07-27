@@ -149,6 +149,10 @@ def resolve_copy_lengths(lines, base):
                 break
 
 
+_ADD_LO_RE = re.compile(r"^(\tadd a, )\$([0-9a-f]{2})( ;.*)$")
+_ADC_HI_RE = re.compile(r"^(\tadc a, )\$([0-9a-f]{2})( ;.*)$")
+
+
 def resolve_flag_names(lines, flag_names, raw_sites=(), base=0):
     """Post-pass: rewrite `set_flag $0a, 3` to `set_flag FLAG_NAME` for every
     flag flags.json names. The macro's one-argument form reassembles the same
@@ -422,6 +426,55 @@ class Emitter:
               f"({ncode} bytes code, {len(self.rom) - ncode} bytes data, "
               f"{len(self.manifest)} blobs)")
 
+    def _resolve_split_base(self, lines, bank):
+        """Rewrite the split-base table setup so its address is a symbol.
+
+            add a, $bd      ->  add a, LOW(RestaurantNpc12TextIds)
+            ld l, a
+            adc a, $43      ->  adc a, HIGH(RestaurantNpc12TextIds)
+            sub a, l
+            ld h, a
+
+        The two halves of the address are 8-bit immediates, so unlike a `ld hl,
+        table` they do not move when the table does -- the one relocation hole
+        the pointer work left. LOW/HIGH assemble to the same bytes. Gated the
+        same way as a pointer load: the full five-instruction shape, an address
+        that carries a label, and a dereference of hl afterwards. Addresses
+        below $0100 are the vectors, where the pair is a small constant."""
+        for i, line in enumerate(lines):
+            m = _ADD_LO_RE.match(line)
+            if not m:
+                continue
+            window = lines[i + 1:i + 5]
+            hi = next(((k, _ADC_HI_RE.match(x)) for k, x in enumerate(window)
+                       if _ADC_HI_RE.match(x)), None)
+            if not hi or not any("ld l, a" in x for x in window) \
+                    or not any("ld h, a" in x for x in window):
+                continue
+            k, adc = hi
+            addr = int(adc.group(2), 16) << 8 | int(m.group(2), 16)
+            # must be a ROM address in reach: below $0100 is the vector area,
+            # and anything from $8000 up is VRAM/WRAM, so the pair is arithmetic
+            # rather than an address (this caught a $c7xx pair whose bogus flat
+            # offset still landed on a label).
+            if not 0x0100 <= addr < 0x8000:
+                continue
+            if bank and addr < BANK_SIZE:
+                flat = addr                      # ROM0, always mapped
+            elif not bank and addr >= BANK_SIZE:
+                continue                         # ROM0 code, no bank window
+            else:
+                flat = bank * BANK_SIZE + addr - BANK_SIZE if bank else addr
+            name = self.labels.get(flat)
+            # a qualified local (`Parent.loop`) names a point inside a routine,
+            # never a table base
+            if not name or "." in name:
+                continue
+            if not any("[hl" in x for x in lines[i + 3:i + 10]):
+                continue
+            lines[i] = f"{m.group(1)}LOW({name}){m.group(3)}"
+            lines[i + 1 + k] = f"{adc.group(1)}HIGH({name}){adc.group(3)}"
+
     def _emit_bank(self, bank):
         base = bank * BANK_SIZE
         end = base + BANK_SIZE
@@ -453,6 +506,7 @@ class Emitter:
             resolve_flag_names(lines, self.flag_names, self.flag_raw_sites,
                                base)
         resolve_copy_lengths(lines, base)
+        self._resolve_split_base(lines, bank)
         # Several emitters declare a label for the same offset (the fill /
         # segment path that runs up to a blob, and the blob's own mark). Most
         # guard on lines[-1]; collapsing here covers the rest -- two identical

@@ -551,9 +551,9 @@ CharDataScreen_DrawStatBar:
 	jr nz, .altTable ; $4505
 	ld a, b ; $4507
 	rlca ; $4508
-	add a, $58 ; $4509
+	add a, LOW(CharDataScreen_DrawStatBarPtrs) ; $4509
 	ld l, a ; $450b
-	adc a, $45 ; $450c
+	adc a, HIGH(CharDataScreen_DrawStatBarPtrs) ; $450c
 	sub a, l ; $450e
 	ld h, a ; $450f
 	ld a, [hl+] ; $4510
@@ -717,9 +717,9 @@ CharDataScreenAnimTask:
 	and a, $0f ; $461b
 	rlca ; $461d
 	push af ; $461e
-	add a, $79 ; $461f
+	add a, LOW(Unused_1c_5679) ; $461f
 	ld l, a ; $4621
-	adc a, $56 ; $4622
+	adc a, HIGH(Unused_1c_5679) ; $4622
 	sub a, l ; $4624
 	ld h, a ; $4625
 	ld a, [hl+] ; $4626
@@ -2019,9 +2019,9 @@ DrawStatValueSprites:
 	ret ; $4fcd
 GetStatDigitSpritePos:
 	rlca ; $4fce
-	add a, $e9 ; $4fcf
+	add a, LOW(RadialOffsetRamps_1c) ; $4fcf
 	ld l, a ; $4fd1
-	adc a, $4f ; $4fd2
+	adc a, HIGH(RadialOffsetRamps_1c) ; $4fd2
 	sub a, l ; $4fd4
 	ld h, a ; $4fd5
 	ld a, [hl+] ; $4fd6

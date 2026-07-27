@@ -392,9 +392,9 @@ StepActorScript:
 	ld hl, ActorScriptOpcodeReturn ; $4250
 	push hl ; $4253
 	add a, a ; $4254
-	add a, $7d ; $4255
+	add a, LOW(ActorScriptOpHandlers_04) ; $4255
 	ld l, a ; $4257
-	adc a, $44 ; $4258
+	adc a, HIGH(ActorScriptOpHandlers_04) ; $4258
 	sub a, l ; $425a
 	ld h, a ; $425b
 	ld a, [hl+] ; $425c
@@ -1756,9 +1756,9 @@ ActorScriptOp_Flag:
 	ld h, d ; $49f8
 	call FarReadByte ; $49f9
 	inc de ; $49fc
-	add a, $1f ; $49fd
+	add a, LOW(BitMaskTable_04) ; $49fd
 	ld l, a ; $49ff
-	adc a, $4a ; $4a00
+	adc a, HIGH(BitMaskTable_04) ; $4a00
 	sub a, l ; $4a02
 	ld h, a ; $4a03
 	ld c, [hl] ; $4a04
@@ -1910,9 +1910,9 @@ LoadActorObjectDef:
 	ld [hl], d ; $4ad3
 	ld a, d ; $4ad4
 	add a, a ; $4ad5
-	add a, $75 ; $4ad6
+	add a, LOW(ObjectIdList_04_4f75) ; $4ad6
 	ld l, a ; $4ad8
-	adc a, $4f ; $4ad9
+	adc a, HIGH(ObjectIdList_04_4f75) ; $4ad9
 	sub a, l ; $4adb
 	ld h, a ; $4adc
 	ld a, [hl+] ; $4add
@@ -1997,9 +1997,9 @@ SetupCharSpriteFromObjectDef:
 	ld a, d ; $4b68
 	ld [$df21], a ; $4b69
 	add a, a ; $4b6c
-	add a, $75 ; $4b6d
+	add a, LOW(ObjectIdList_04_4f75) ; $4b6d
 	ld l, a ; $4b6f
-	adc a, $4f ; $4b70
+	adc a, HIGH(ObjectIdList_04_4f75) ; $4b70
 	sub a, l ; $4b72
 	ld h, a ; $4b73
 	ld a, [hl+] ; $4b74
@@ -2383,9 +2383,9 @@ SpawnMainCharacterActor:
 	ld a, [wStoryModeMainCharacterOverworldSprite] ; $4e77
 	and a, $03 ; $4e7a
 	add a, a ; $4e7c
-	add a, $5f ; $4e7d
+	add a, LOW(ScriptedActorListPtrs_04) ; $4e7d
 	ld l, a ; $4e7f
-	adc a, $4e ; $4e80
+	adc a, HIGH(ScriptedActorListPtrs_04) ; $4e80
 	sub a, l ; $4e82
 	ld h, a ; $4e83
 	ld a, [hl+] ; $4e84
@@ -2679,9 +2679,9 @@ GetPointAheadOfActorRanged:
 	add a, a ; $50e9
 IndexPlayerControlTable:
 	add a, d ; $50ea
-	add a, $72 ; $50eb
+	add a, LOW(ActorMoveVectors_04) ; $50eb
 	ld l, a ; $50ed
-	adc a, $50 ; $50ee
+	adc a, HIGH(ActorMoveVectors_04) ; $50ee
 	sub a, l ; $50f0
 	ld h, a ; $50f1
 	ld a, [hl+] ; $50f2
@@ -3699,9 +3699,9 @@ UpdateActorFacingFromHeading:
 	add a, $08 ; $5695
 	swap a ; $5697
 	and a, $0f ; $5699
-	add a, $b3 ; $569b
+	add a, LOW(DirectionToFacing_04) ; $569b
 	ld l, a ; $569d
-	adc a, $56 ; $569e
+	adc a, HIGH(DirectionToFacing_04) ; $569e
 	sub a, l ; $56a0
 	ld h, a ; $56a1
 	ld d, [hl] ; $56a2

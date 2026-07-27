@@ -1450,9 +1450,9 @@ BobArrowSpriteLeft:
 	ld a, [$d144] ; $4c66
 	rrca ; $4c69
 	and a, $0f ; $4c6a
-	add a, $9c ; $4c6c
+	add a, LOW(Data_1d_4c9c) ; $4c6c
 	ld l, a ; $4c6e
-	adc a, $4c ; $4c6f
+	adc a, HIGH(Data_1d_4c9c) ; $4c6f
 	sub a, l ; $4c71
 	ld h, a ; $4c72
 	ld a, [hl] ; $4c73
@@ -1471,9 +1471,9 @@ BobArrowSpriteRight:
 	ld a, [$d144] ; $4c86
 	rrca ; $4c89
 	and a, $0f ; $4c8a
-	add a, $9c ; $4c8c
+	add a, LOW(Data_1d_4c9c) ; $4c8c
 	ld l, a ; $4c8e
-	adc a, $4c ; $4c8f
+	adc a, HIGH(Data_1d_4c9c) ; $4c8f
 	sub a, l ; $4c91
 	ld h, a ; $4c92
 	ld a, [hl] ; $4c93
@@ -3006,9 +3006,9 @@ DrawExpProgressBarTiles:
 	ld b, a ; $5a0a
 	ld a, $08 ; $5a0b
 	rlca ; $5a0d
-	add a, $51 ; $5a0e
+	add a, LOW(Data_1d_5a51) ; $5a0e
 	ld l, a ; $5a10
-	adc a, $5a ; $5a11
+	adc a, HIGH(Data_1d_5a51) ; $5a11
 	sub a, l ; $5a13
 	ld h, a ; $5a14
 	ld a, [hl+] ; $5a15
@@ -3028,9 +3028,9 @@ DrawExpProgressBarTiles:
 .carry:
 	add a, $08 ; $5a25
 	rlca ; $5a27
-	add a, $51 ; $5a28
+	add a, LOW(Data_1d_5a51) ; $5a28
 	ld l, a ; $5a2a
-	adc a, $5a ; $5a2b
+	adc a, HIGH(Data_1d_5a51) ; $5a2b
 	sub a, l ; $5a2d
 	ld h, a ; $5a2e
 	ld a, [hl+] ; $5a2f
@@ -3047,9 +3047,9 @@ DrawExpProgressBarTiles:
 .zero:
 	ld a, $08 ; $5a3b
 	rlca ; $5a3d
-	add a, $51 ; $5a3e
+	add a, LOW(Data_1d_5a51) ; $5a3e
 	ld l, a ; $5a40
-	adc a, $5a ; $5a41
+	adc a, HIGH(Data_1d_5a51) ; $5a41
 	sub a, l ; $5a43
 	ld h, a ; $5a44
 	ld a, [hl+] ; $5a45
@@ -3809,9 +3809,9 @@ DrawExpPoolGauge:
 	ld b, a ; $6b23
 	ld a, $08 ; $6b24
 	rlca ; $6b26
-	add a, $69 ; $6b27
+	add a, LOW(TilePairTable_1d_6b69) ; $6b27
 	ld l, a ; $6b29
-	adc a, $6b ; $6b2a
+	adc a, HIGH(TilePairTable_1d_6b69) ; $6b2a
 	sub a, l ; $6b2c
 	ld h, a ; $6b2d
 	ld a, [hl+] ; $6b2e
@@ -3827,9 +3827,9 @@ DrawExpPoolGauge:
 .carry:
 	add a, $08 ; $6b3b
 	rlca ; $6b3d
-	add a, $69 ; $6b3e
+	add a, LOW(TilePairTable_1d_6b69) ; $6b3e
 	ld l, a ; $6b40
-	adc a, $6b ; $6b41
+	adc a, HIGH(TilePairTable_1d_6b69) ; $6b41
 	sub a, l ; $6b43
 	ld h, a ; $6b44
 	ld a, [hl+] ; $6b45
@@ -4386,9 +4386,9 @@ DrawExpScreenLevelBar:
 	jr c, .carry ; $6f0a
 	ld b, a ; $6f0c
 	ld a, $08 ; $6f0d
-	add a, $35 ; $6f0f
+	add a, LOW(ExpBarFillTiles_1d) ; $6f0f
 	ld l, a ; $6f11
-	adc a, $6f ; $6f12
+	adc a, HIGH(ExpBarFillTiles_1d) ; $6f12
 	sub a, l ; $6f14
 	ld h, a ; $6f15
 	ld a, [hl] ; $6f16
@@ -4399,9 +4399,9 @@ DrawExpScreenLevelBar:
 	jr .loop ; $6f1b
 .carry:
 	add a, $08 ; $6f1d
-	add a, $35 ; $6f1f
+	add a, LOW(ExpBarFillTiles_1d) ; $6f1f
 	ld l, a ; $6f21
-	adc a, $6f ; $6f22
+	adc a, HIGH(ExpBarFillTiles_1d) ; $6f22
 	sub a, l ; $6f24
 	ld h, a ; $6f25
 	ld a, [hl] ; $6f26
@@ -5412,9 +5412,9 @@ GetExpScreenDigitSprite:
 DrawExpCharCursorTask:
 	wram_bank $06 ; $7727
 	ld a, [$d180] ; $772d
-	add a, $46 ; $7730
+	add a, LOW(Data_1d_7746) ; $7730
 	ld l, a ; $7732
-	adc a, $77 ; $7733
+	adc a, HIGH(Data_1d_7746) ; $7733
 	sub a, l ; $7735
 	ld h, a ; $7736
 	ld a, [hl] ; $7737
@@ -5578,9 +5578,9 @@ RecordDrillResult:
 	wram_bank $06 ; $7cc6
 	ld a, b ; $7ccc
 	rlca ; $7ccd
-	add a, $d9 ; $7cce
+	add a, LOW(DrillSubHandlers_1d) ; $7cce
 	ld l, a ; $7cd0
-	adc a, $7c ; $7cd1
+	adc a, HIGH(DrillSubHandlers_1d) ; $7cd1
 	sub a, l ; $7cd3
 	ld h, a ; $7cd4
 	ld a, [hl+] ; $7cd5

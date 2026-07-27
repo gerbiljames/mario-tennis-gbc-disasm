@@ -255,9 +255,9 @@ ShowMinigameRulesPages:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $423a
 	sub a, $1c ; $423d
 	add a, a ; $423f
-	add a, $62 ; $4240
+	add a, LOW(MinigameRulesTextIdBases) ; $4240
 	ld l, a ; $4242
-	adc a, $42 ; $4243
+	adc a, HIGH(MinigameRulesTextIdBases) ; $4243
 	sub a, l ; $4245
 	ld h, a ; $4246
 	ld a, [hl+] ; $4247
@@ -485,9 +485,9 @@ MatchPauseMenu_MusicToggle:
 MatchPauseMenu_SaveQuit:
 	call RestoreBgTilemapRegion ; $4462
 	ld a, [wGameMode] ; $4465
-	add a, $f3 ; $4468
+	add a, LOW(SaveQuitMenuIdByGameMode) ; $4468
 	ld l, a ; $446a
-	adc a, $44 ; $446b
+	adc a, HIGH(SaveQuitMenuIdByGameMode) ; $446b
 	sub a, l ; $446d
 	ld h, a ; $446e
 	ld a, [hl] ; $446f
@@ -1011,9 +1011,9 @@ GetMatchMenuItemCount:
 DrawMatchMenuItems:
 	ld a, [wPauseMenuItemCount] ; $482f
 	add a, a ; $4832
-	add a, $57 ; $4833
+	add a, LOW(MatchMenuItemPosPointers) ; $4833
 	ld l, a ; $4835
-	adc a, $48 ; $4836
+	adc a, HIGH(MatchMenuItemPosPointers) ; $4836
 	sub a, l ; $4838
 	ld h, a ; $4839
 	ld a, [hl+] ; $483a
@@ -1063,9 +1063,9 @@ MatchMenuItemPos4Items:
 DrawMatchMenuCursor:
 	ld a, [wPauseMenuItemCount] ; $4873
 	add a, a ; $4876
-	add a, $91 ; $4877
+	add a, LOW(MatchMenuCursorPosPointers) ; $4877
 	ld l, a ; $4879
-	adc a, $48 ; $487a
+	adc a, HIGH(MatchMenuCursorPosPointers) ; $487a
 	sub a, l ; $487c
 	ld h, a ; $487d
 	ld a, [hl+] ; $487e
@@ -1213,9 +1213,9 @@ DrawScoreboard:
 	ld e, a ; $49ad
 	ld a, [wScoreboardLayout] ; $49ae
 	add a, a ; $49b1
-	add a, $35 ; $49b2
+	add a, LOW(ScoreboardTilemapPointers) ; $49b2
 	ld l, a ; $49b4
-	adc a, $50 ; $49b5
+	adc a, HIGH(ScoreboardTilemapPointers) ; $49b5
 	sub a, l ; $49b7
 	ld h, a ; $49b8
 	ld a, [hl+] ; $49b9
@@ -1596,9 +1596,9 @@ DrawScoreboardSprites:
 	call AdjustSpriteCoordsForScroll ; $5078
 	ld a, [wScoreboardLayout] ; $507b
 	add a, a ; $507e
-	add a, $9c ; $507f
+	add a, LOW(ScoreboardSpriteTemplatePointers) ; $507f
 	ld l, a ; $5081
-	adc a, $50 ; $5082
+	adc a, HIGH(ScoreboardSpriteTemplatePointers) ; $5082
 	sub a, l ; $5084
 	ld h, a ; $5085
 	ld a, [hl+] ; $5086
@@ -1754,9 +1754,9 @@ SpriteTemplate_06_5210:
 	oam_sprite_end
 LoadMatchMenuItemGfx:
 	add a, a ; $5219
-	add a, $44 ; $521a
+	add a, LOW(MatchMenuItemGfxPointers) ; $521a
 	ld l, a ; $521c
-	adc a, $52 ; $521d
+	adc a, HIGH(MatchMenuItemGfxPointers) ; $521d
 	sub a, l ; $521f
 	ld h, a ; $5220
 	ld a, [hl+] ; $5221
@@ -1852,9 +1852,9 @@ LoadScoreboardModeGfx:
 .eq05:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $5c9b
 	add a, a ; $5c9e
-	add a, $df ; $5c9f
+	add a, LOW(ScoreboardMinigameGfxPointers) ; $5c9f
 	ld l, a ; $5ca1
-	adc a, $5c ; $5ca2
+	adc a, HIGH(ScoreboardMinigameGfxPointers) ; $5ca2
 	sub a, l ; $5ca4
 	ld h, a ; $5ca5
 .checkWramBank:
@@ -1967,9 +1967,9 @@ DrawMatchMenuItem:
 	push de ; $6803
 	add a, a ; $6804
 	add a, a ; $6805
-	add a, $35 ; $6806
+	add a, LOW(MatchMenuItemRectPointers) ; $6806
 	ld l, a ; $6808
-	adc a, $68 ; $6809
+	adc a, HIGH(MatchMenuItemRectPointers) ; $6809
 	sub a, l ; $680b
 	ld h, a ; $680c
 	ld a, [hl+] ; $680d
@@ -2370,9 +2370,9 @@ DrawDebugStatsLabels:
 	pop bc ; $6ad9
 	ld a, c ; $6ada
 	add a, a ; $6adb
-	add a, $39 ; $6adc
+	add a, LOW(DebugStatNamePointers) ; $6adc
 	ld l, a ; $6ade
-	adc a, $6a ; $6adf
+	adc a, HIGH(DebugStatNamePointers) ; $6adf
 	sub a, l ; $6ae1
 	ld h, a ; $6ae2
 	ld a, [hl+] ; $6ae3
@@ -2744,9 +2744,9 @@ GetStoryMenuItemCount:
 DrawStoryMenuItems:
 	ld a, [wPauseMenuItemCount] ; $6d99
 	add a, a ; $6d9c
-	add a, $c1 ; $6d9d
+	add a, LOW(StoryMenuItemPosPointers) ; $6d9d
 	ld l, a ; $6d9f
-	adc a, $6d ; $6da0
+	adc a, HIGH(StoryMenuItemPosPointers) ; $6da0
 	sub a, l ; $6da2
 	ld h, a ; $6da3
 	ld a, [hl+] ; $6da4
@@ -2796,9 +2796,9 @@ StoryMenuItemPos4Items:
 DrawStoryMenuCursor:
 	ld a, [wPauseMenuItemCount] ; $6ddd
 	add a, a ; $6de0
-	add a, $fb ; $6de1
+	add a, LOW(StoryMenuCursorPosPointers) ; $6de1
 	ld l, a ; $6de3
-	adc a, $6d ; $6de4
+	adc a, HIGH(StoryMenuCursorPosPointers) ; $6de4
 	sub a, l ; $6de6
 	ld h, a ; $6de7
 	ld a, [hl+] ; $6de8
@@ -2967,9 +2967,9 @@ StoryPauseMenu_AfterItem:
 .checkMatchMenuSelection2:
 	ld a, [wMatchMenuSelection] ; $6f20
 	add a, a ; $6f23
-	add a, $3a ; $6f24
+	add a, LOW(StoryPauseMenuCursorPositions) ; $6f24
 	ld l, a ; $6f26
-	adc a, $6f ; $6f27
+	adc a, HIGH(StoryPauseMenuCursorPositions) ; $6f27
 	sub a, l ; $6f29
 	ld h, a ; $6f2a
 	ld a, [hl+] ; $6f2b
@@ -3245,9 +3245,9 @@ RunStoryTwoOptionMenu:
 .checkMatchMenuSelection2:
 	ld a, [wMatchMenuSelection] ; $715b
 	add a, a ; $715e
-	add a, $76 ; $715f
+	add a, LOW(StoryTwoOptionCursorPositions) ; $715f
 	ld l, a ; $7161
-	adc a, $71 ; $7162
+	adc a, HIGH(StoryTwoOptionCursorPositions) ; $7162
 	sub a, l ; $7164
 	ld h, a ; $7165
 	ld a, [hl+] ; $7166
@@ -3338,9 +3338,9 @@ RunStoryThreeOptionMenu:
 .checkMatchMenuSelection:
 	ld a, [wMatchMenuSelection] ; $7213
 	add a, a ; $7216
-	add a, $31 ; $7217
+	add a, LOW(StoryThreeOptionCursorPositions) ; $7217
 	ld l, a ; $7219
-	adc a, $72 ; $721a
+	adc a, HIGH(StoryThreeOptionCursorPositions) ; $721a
 	sub a, l ; $721c
 	ld h, a ; $721d
 	ld a, [hl+] ; $721e
@@ -3403,9 +3403,9 @@ ClearStoryAttrPriorityBits:
 	ret ; $7282
 LoadStoryMenuItemGfx:
 	add a, a ; $7283
-	add a, $ae ; $7284
+	add a, LOW(StoryMenuItemGfxPointers) ; $7284
 	ld l, a ; $7286
-	adc a, $72 ; $7287
+	adc a, HIGH(StoryMenuItemGfxPointers) ; $7287
 	sub a, l ; $7289
 	ld h, a ; $728a
 	ld a, [hl+] ; $728b
@@ -3484,9 +3484,9 @@ StoryMenuItemGfx_Normal:
 DrawStoryMenuItem:
 	push de ; $77a6
 	add a, a ; $77a7
-	add a, $cb ; $77a8
+	add a, LOW(StoryMenuItemRectPointers) ; $77a8
 	ld l, a ; $77aa
-	adc a, $77 ; $77ab
+	adc a, HIGH(StoryMenuItemRectPointers) ; $77ab
 	sub a, l ; $77ad
 	ld h, a ; $77ae
 	ld a, [hl+] ; $77af

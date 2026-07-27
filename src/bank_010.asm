@@ -2274,9 +2274,9 @@ CafeteriaExitTriggers_10:
 CafeteriaNpc03_10:
 	ld a, [$c2b0] ; $5882
 	add a, a ; $5885
-	add a, $99 ; $5886
+	add a, LOW(CafeteriaNpc03TextIds) ; $5886
 	ld l, a ; $5888
-	adc a, $58 ; $5889
+	adc a, HIGH(CafeteriaNpc03TextIds) ; $5889
 	sub a, l ; $588b
 	ld h, a ; $588c
 	ld a, [hl+] ; $588d
@@ -2300,9 +2300,9 @@ CafeteriaNpc03TextIds:
 CafeteriaNpc04_10:
 	ld a, [$c2b1] ; $58ad
 	add a, a ; $58b0
-	add a, $21 ; $58b1
+	add a, LOW(CafeteriaNpc04TextIds) ; $58b1
 	ld l, a ; $58b3
-	adc a, $59 ; $58b4
+	adc a, HIGH(CafeteriaNpc04TextIds) ; $58b4
 	sub a, l ; $58b6
 	ld h, a ; $58b7
 	ld a, [hl+] ; $58b8
@@ -2356,9 +2356,9 @@ CafeteriaNpc04TextIds:
 CafeteriaNpc05_10:
 	ld a, [$c2b1] ; $592b
 	add a, a ; $592e
-	add a, $61 ; $592f
+	add a, LOW(CafeteriaNpc05TextIds) ; $592f
 	ld l, a ; $5931
-	adc a, $59 ; $5932
+	adc a, HIGH(CafeteriaNpc05TextIds) ; $5932
 	sub a, l ; $5934
 	ld h, a ; $5935
 	ld a, [hl+] ; $5936
@@ -2389,9 +2389,9 @@ CafeteriaNpc05TextIds:
 CafeteriaNpc06_10:
 	ld a, [$c2b0] ; $596b
 	add a, a ; $596e
-	add a, $82 ; $596f
+	add a, LOW(CafeteriaNpc06TextIds) ; $596f
 	ld l, a ; $5971
-	adc a, $59 ; $5972
+	adc a, HIGH(CafeteriaNpc06TextIds) ; $5972
 	sub a, l ; $5974
 	ld h, a ; $5975
 	ld a, [hl+] ; $5976
@@ -2415,9 +2415,9 @@ CafeteriaNpc06TextIds:
 CafeteriaNpc07_10:
 	ld a, [$c2b0] ; $5996
 	add a, a ; $5999
-	add a, $ad ; $599a
+	add a, LOW(CafeteriaNpc07TextIds) ; $599a
 	ld l, a ; $599c
-	adc a, $59 ; $599d
+	adc a, HIGH(CafeteriaNpc07TextIds) ; $599d
 	sub a, l ; $599f
 	ld h, a ; $59a0
 	ld a, [hl+] ; $59a1
@@ -2441,9 +2441,9 @@ CafeteriaNpc07TextIds:
 CafeteriaNpc08_10:
 	ld a, [$c2b0] ; $59c1
 	add a, a ; $59c4
-	add a, $d8 ; $59c5
+	add a, LOW(CafeteriaNpc08TextIds) ; $59c5
 	ld l, a ; $59c7
-	adc a, $59 ; $59c8
+	adc a, HIGH(CafeteriaNpc08TextIds) ; $59c8
 	sub a, l ; $59ca
 	ld h, a ; $59cb
 	ld a, [hl+] ; $59cc
@@ -2467,9 +2467,9 @@ CafeteriaNpc08TextIds:
 CafeteriaNpc09_10:
 	ld a, [$c2b0] ; $59ec
 	add a, a ; $59ef
-	add a, $03 ; $59f0
+	add a, LOW(CafeteriaNpc09TextIds) ; $59f0
 	ld l, a ; $59f2
-	adc a, $5a ; $59f3
+	adc a, HIGH(CafeteriaNpc09TextIds) ; $59f3
 	sub a, l ; $59f5
 	ld h, a ; $59f6
 	ld a, [hl+] ; $59f7
@@ -2584,9 +2584,9 @@ RestaurantExit01_10:
 RestaurantNpc03_10:
 	ld a, [$c2b1] ; $5bf2
 	add a, a ; $5bf5
-	add a, $13 ; $5bf6
+	add a, LOW(RestaurantNpc03TextIds) ; $5bf6
 	ld l, a ; $5bf8
-	adc a, $5c ; $5bf9
+	adc a, HIGH(RestaurantNpc03TextIds) ; $5bf9
 	sub a, l ; $5bfb
 	ld h, a ; $5bfc
 	ld a, [hl+] ; $5bfd
@@ -2610,9 +2610,9 @@ RestaurantNpc03TextIds:
 RestaurantNpc04_10:
 	ld a, [$c2b1] ; $5c1d
 	add a, a ; $5c20
-	add a, $34 ; $5c21
+	add a, LOW(RestaurantNpc04TextIds) ; $5c21
 	ld l, a ; $5c23
-	adc a, $5c ; $5c24
+	adc a, HIGH(RestaurantNpc04TextIds) ; $5c24
 	sub a, l ; $5c26
 	ld h, a ; $5c27
 	ld a, [hl+] ; $5c28
@@ -2632,9 +2632,9 @@ RestaurantNpc05_10:
 	script_face_toward ACTOR_PLAYER, $05 ; $5c3e
 	ld a, [$c2b0] ; $5c46
 	add a, a ; $5c49
-	add a, $9c ; $5c4a
+	add a, LOW(RestaurantNpc05TextIds) ; $5c4a
 	ld l, a ; $5c4c
-	adc a, $5c ; $5c4d
+	adc a, HIGH(RestaurantNpc05TextIds) ; $5c4d
 	sub a, l ; $5c4f
 	ld h, a ; $5c50
 	ld a, [hl+] ; $5c51
@@ -2670,9 +2670,9 @@ RestaurantNpc06_10:
 	script_wait_idle $06 ; $5cb7
 	ld a, [$c2b1] ; $5cbc
 	add a, a ; $5cbf
-	add a, $fb ; $5cc0
+	add a, LOW(TextIds_10_5cfb) ; $5cc0
 	ld l, a ; $5cc2
-	adc a, $5c ; $5cc3
+	adc a, HIGH(TextIds_10_5cfb) ; $5cc3
 	sub a, l ; $5cc5
 	ld h, a ; $5cc6
 	ld a, [hl+] ; $5cc7
@@ -2709,9 +2709,9 @@ RestaurantNpc12_10:
 	script_wait_idle $12 ; $5d12
 	ld a, [$c2b1] ; $5d17
 	add a, a ; $5d1a
-	add a, $dc ; $5d1b
+	add a, LOW(RestaurantNpc12TextIds) ; $5d1b
 	ld l, a ; $5d1d
-	adc a, $5d ; $5d1e
+	adc a, HIGH(RestaurantNpc12TextIds) ; $5d1e
 	sub a, l ; $5d20
 	ld h, a ; $5d21
 	ld a, [hl+] ; $5d22
@@ -2734,9 +2734,9 @@ RestaurantNpc12_10:
 	script_face_toward ACTOR_PLAYER, $12 ; $5d82
 	ld a, [$c2b1] ; $5d8a
 	add a, a ; $5d8d
-	add a, $dc ; $5d8e
+	add a, LOW(RestaurantNpc12TextIds) ; $5d8e
 	ld l, a ; $5d90
-	adc a, $5d ; $5d91
+	adc a, HIGH(RestaurantNpc12TextIds) ; $5d91
 	sub a, l ; $5d93
 	ld h, a ; $5d94
 	ld a, [hl+] ; $5d95
@@ -2757,9 +2757,9 @@ RestaurantNpc12_10:
 	script_face_toward ACTOR_PLAYER, $12 ; $5db6
 	ld a, [$c2b1] ; $5dbe
 	add a, a ; $5dc1
-	add a, $dc ; $5dc2
+	add a, LOW(RestaurantNpc12TextIds) ; $5dc2
 	ld l, a ; $5dc4
-	adc a, $5d ; $5dc5
+	adc a, HIGH(RestaurantNpc12TextIds) ; $5dc5
 	sub a, l ; $5dc7
 	ld h, a ; $5dc8
 	ld a, [hl+] ; $5dc9
@@ -2788,9 +2788,9 @@ RestaurantNpc08_10:
 	jr nz, .speak ; $5dec
 	ld a, [$c2b1] ; $5dee
 	add a, a ; $5df1
-	add a, $81 ; $5df2
+	add a, LOW(RestaurantNpc08TextIds) ; $5df2
 	ld l, a ; $5df4
-	adc a, $5e ; $5df5
+	adc a, HIGH(RestaurantNpc08TextIds) ; $5df5
 	sub a, l ; $5df7
 	ld h, a ; $5df8
 	ld a, [hl+] ; $5df9
@@ -2817,9 +2817,9 @@ RestaurantNpc08_10:
 .speak:
 	ld a, [$c2b1] ; $5e5c
 	add a, a ; $5e5f
-	add a, $81 ; $5e60
+	add a, LOW(RestaurantNpc08TextIds) ; $5e60
 	ld l, a ; $5e62
-	adc a, $5e ; $5e63
+	adc a, HIGH(RestaurantNpc08TextIds) ; $5e63
 	sub a, l ; $5e65
 	ld h, a ; $5e66
 	ld a, [hl+] ; $5e67
@@ -2845,9 +2845,9 @@ RestaurantNpc08TextIds:
 RestaurantNpc09_10:
 	ld a, [$c2b0] ; $5e8b
 	add a, a ; $5e8e
-	add a, $de ; $5e8f
+	add a, LOW(RestaurantNpc09TextIds) ; $5e8f
 	ld l, a ; $5e91
-	adc a, $5e ; $5e92
+	adc a, HIGH(RestaurantNpc09TextIds) ; $5e92
 	sub a, l ; $5e94
 	ld h, a ; $5e95
 	ld a, [hl+] ; $5e96
@@ -2894,9 +2894,9 @@ RestaurantNpc0A_10:
 	script_face_toward ACTOR_PLAYER, $0a ; $5ef2
 	ld a, [$c2b0] ; $5efa
 	add a, a ; $5efd
-	add a, $30 ; $5efe
+	add a, LOW(RestaurantNpc0ATextIds) ; $5efe
 	ld l, a ; $5f00
-	adc a, $5f ; $5f01
+	adc a, HIGH(RestaurantNpc0ATextIds) ; $5f01
 	sub a, l ; $5f03
 	ld h, a ; $5f04
 	ld a, [hl+] ; $5f05
@@ -2932,9 +2932,9 @@ RestaurantNpc0ATextIds:
 RestaurantNpc0B_10:
 	ld a, [$c2b1] ; $5f44
 	add a, a ; $5f47
-	add a, $65 ; $5f48
+	add a, LOW(RestaurantNpc0BTextIds) ; $5f48
 	ld l, a ; $5f4a
-	adc a, $5f ; $5f4b
+	adc a, HIGH(RestaurantNpc0BTextIds) ; $5f4b
 	sub a, l ; $5f4d
 	ld h, a ; $5f4e
 	ld a, [hl+] ; $5f4f
@@ -2958,9 +2958,9 @@ RestaurantNpc0BTextIds:
 RestaurantNpc0C_10:
 	ld a, [$c2b1] ; $5f6f
 	add a, a ; $5f72
-	add a, $bf ; $5f73
+	add a, LOW(RestaurantNpc0CTextIds) ; $5f73
 	ld l, a ; $5f75
-	adc a, $5f ; $5f76
+	adc a, HIGH(RestaurantNpc0CTextIds) ; $5f76
 	sub a, l ; $5f78
 	ld h, a ; $5f79
 	ld a, [hl+] ; $5f7a
@@ -3003,9 +3003,9 @@ RestaurantNpc0CTextIds:
 RestaurantNpc0D_10:
 	ld a, [$c2b1] ; $5fc9
 	add a, a ; $5fcc
-	add a, $09 ; $5fcd
+	add a, LOW(RestaurantNpc0DTextIds) ; $5fcd
 	ld l, a ; $5fcf
-	adc a, $60 ; $5fd0
+	adc a, HIGH(RestaurantNpc0DTextIds) ; $5fd0
 	sub a, l ; $5fd2
 	ld h, a ; $5fd3
 	ld a, [hl+] ; $5fd4
@@ -3041,9 +3041,9 @@ RestaurantNpc0DTextIds:
 RestaurantNpc0E_10:
 	ld a, [$c2b1] ; $6013
 	add a, a ; $6016
-	add a, $2a ; $6017
+	add a, LOW(RestaurantNpc0ETextIds) ; $6017
 	ld l, a ; $6019
-	adc a, $60 ; $601a
+	adc a, HIGH(RestaurantNpc0ETextIds) ; $601a
 	sub a, l ; $601c
 	ld h, a ; $601d
 	ld a, [hl+] ; $601e
@@ -3062,9 +3062,9 @@ RestaurantNpc0ETextIds:
 RestaurantNpc0F_10:
 	ld a, [$c2b1] ; $6034
 	add a, a ; $6037
-	add a, $4b ; $6038
+	add a, LOW(RestaurantNpc0FTextIds) ; $6038
 	ld l, a ; $603a
-	adc a, $60 ; $603b
+	adc a, HIGH(RestaurantNpc0FTextIds) ; $603b
 	sub a, l ; $603d
 	ld h, a ; $603e
 	ld a, [hl+] ; $603f
@@ -3083,9 +3083,9 @@ RestaurantNpc0FTextIds:
 RestaurantNpc10_10:
 	ld a, [$c2b1] ; $6055
 	add a, a ; $6058
-	add a, $6c ; $6059
+	add a, LOW(RestaurantNpc10TextIds) ; $6059
 	ld l, a ; $605b
-	adc a, $60 ; $605c
+	adc a, HIGH(RestaurantNpc10TextIds) ; $605c
 	sub a, l ; $605e
 	ld h, a ; $605f
 	ld a, [hl+] ; $6060
@@ -4206,9 +4206,9 @@ AcademyMainBldgNpc03_10:
 	ld a, [$c2b0] ; $75e7
 	sra a ; $75ea
 	add a, a ; $75ec
-	add a, $27 ; $75ed
+	add a, LOW(AcademyMainBldgNpc03TextIds) ; $75ed
 	ld l, a ; $75ef
-	adc a, $76 ; $75f0
+	adc a, HIGH(AcademyMainBldgNpc03TextIds) ; $75f0
 	sub a, l ; $75f2
 	ld h, a ; $75f3
 	ld a, [hl+] ; $75f4
@@ -4244,9 +4244,9 @@ AcademyMainBldgNpc04_10:
 	ld a, [$c2b0] ; $7631
 	sra a ; $7634
 	add a, a ; $7636
-	add a, $4a ; $7637
+	add a, LOW(AcademyMainBldgNpc04TextIds) ; $7637
 	ld l, a ; $7639
-	adc a, $76 ; $763a
+	adc a, HIGH(AcademyMainBldgNpc04TextIds) ; $763a
 	sub a, l ; $763c
 	ld h, a ; $763d
 	ld a, [hl+] ; $763e
@@ -4272,9 +4272,9 @@ AcademyMainBldgNpc05_10:
 	ld a, [$c2b0] ; $7670
 	sra a ; $7673
 	add a, a ; $7675
-	add a, $98 ; $7676
+	add a, LOW(AcademyMainBldgNpc05TextIds) ; $7676
 	ld l, a ; $7678
-	adc a, $76 ; $7679
+	adc a, HIGH(AcademyMainBldgNpc05TextIds) ; $7679
 	sub a, l ; $767b
 	ld h, a ; $767c
 	ld a, [hl+] ; $767d
@@ -4299,9 +4299,9 @@ AcademyMainBldgNpc05TextIds:
 	script_speak $05 ; $76af
 	call GetDoublesProgressStage_10 ; $76b4
 	add a, a ; $76b7
-	add a, $c7 ; $76b8
+	add a, LOW(AcademyMainBldgNpc05TextIds2) ; $76b8
 	ld l, a ; $76ba
-	adc a, $76 ; $76bb
+	adc a, HIGH(AcademyMainBldgNpc05TextIds2) ; $76bb
 	sub a, l ; $76bd
 	ld h, a ; $76be
 	ld a, [hl+] ; $76bf
@@ -4320,9 +4320,9 @@ AcademyMainBldgNpc06_10:
 	ld a, [$c2b0] ; $76d1
 	sra a ; $76d4
 	add a, a ; $76d6
-	add a, $ea ; $76d7
+	add a, LOW(AcademyMainBldgNpc06TextIds) ; $76d7
 	ld l, a ; $76d9
-	adc a, $76 ; $76da
+	adc a, HIGH(AcademyMainBldgNpc06TextIds) ; $76da
 	sub a, l ; $76dc
 	ld h, a ; $76dd
 	ld a, [hl+] ; $76de

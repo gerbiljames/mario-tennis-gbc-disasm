@@ -130,9 +130,9 @@ InitMinigameScore:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $40ea
 	sub a, $1a ; $40ed
 	ret c ; $40ef
-	add a, $16 ; $40f0
+	add a, LOW(MinigameRecordSlotIds) ; $40f0
 	ld l, a ; $40f2
-	adc a, $41 ; $40f3
+	adc a, HIGH(MinigameRecordSlotIds) ; $40f3
 	sub a, l ; $40f5
 	ld h, a ; $40f6
 	ld a, [hl] ; $40f7
@@ -162,9 +162,9 @@ GetMinigameTargetScore:
 	jr nc, .ge1c ; $4129
 	sub a, $12 ; $412b
 	add a, a ; $412d
-	add a, $4a ; $412e
+	add a, LOW(MinigamePracticeTargetScores) ; $412e
 	ld l, a ; $4130
-	adc a, $41 ; $4131
+	adc a, HIGH(MinigamePracticeTargetScores) ; $4131
 	sub a, l ; $4133
 	ld h, a ; $4134
 	ld a, [hl+] ; $4135
@@ -177,9 +177,9 @@ GetMinigameTargetScore:
 	add a, a ; $413c
 	add a, b ; $413d
 	add a, a ; $413e
-	add a, $5e ; $413f
+	add a, LOW(MinigameTargetScores) ; $413f
 	ld l, a ; $4141
-	adc a, $41 ; $4142
+	adc a, HIGH(MinigameTargetScores) ; $4142
 	sub a, l ; $4144
 	ld h, a ; $4145
 	ld a, [hl+] ; $4146
@@ -226,9 +226,9 @@ MinigameDefaultRecordValue10:
 	INCBIN "data/bank_00d/d_41a0.bin" ; $41a0, 6 bytes
 GetDefaultMinigameRecordValue:
 	add a, a ; $41a6
-	add a, $b5 ; $41a7
+	add a, LOW(MinigameDefaultRecordValuePointers) ; $41a7
 	ld l, a ; $41a9
-	adc a, $41 ; $41aa
+	adc a, HIGH(MinigameDefaultRecordValuePointers) ; $41aa
 	sub a, l ; $41ac
 	ld h, a ; $41ad
 	ld a, [hl+] ; $41ae
@@ -460,9 +460,9 @@ DrawMinigameGrid:
 	ret ; $431a
 DrawMinigameGridCell:
 	add a, a ; $431b
-	add a, $73 ; $431c
+	add a, LOW(MinigameGridCellTilemapOffsets) ; $431c
 	ld l, a ; $431e
-	adc a, $43 ; $431f
+	adc a, HIGH(MinigameGridCellTilemapOffsets) ; $431f
 	sub a, l ; $4321
 	ld h, a ; $4322
 	ld a, [hl+] ; $4323
@@ -983,9 +983,9 @@ EndMinigamePoint:
 	sub a, l ; $4783
 	ld h, a ; $4784
 	ld a, [hl] ; $4785
-	add a, $ae ; $4786
+	add a, LOW(MinigameShotIntervalByTempo) ; $4786
 	ld l, a ; $4788
-	adc a, $45 ; $4789
+	adc a, HIGH(MinigameShotIntervalByTempo) ; $4789
 	sub a, l ; $478b
 	ld h, a ; $478c
 	ld a, [hl] ; $478d
@@ -1073,9 +1073,9 @@ LaunchBall:
 	ld a, [$c784] ; $483a
 	add a, a ; $483d
 	add a, a ; $483e
-	add a, $46 ; $483f
+	add a, LOW(MinigameShotDifficultyRamp) ; $483f
 	ld l, a ; $4841
-	adc a, $45 ; $4842
+	adc a, HIGH(MinigameShotDifficultyRamp) ; $4842
 	sub a, l ; $4844
 	ld h, a ; $4845
 	ld a, [hl] ; $4846
@@ -1104,18 +1104,18 @@ LaunchBall:
 	ld [$df17], a ; $4867
 	farcall SelectRallyShotType ; $486a
 	ld a, [$c786] ; $486d
-	add a, $75 ; $4870
+	add a, LOW(MinigameBallLaunchSpeeds) ; $4870
 	ld l, a ; $4872
-	adc a, $46 ; $4873
+	adc a, HIGH(MinigameBallLaunchSpeeds) ; $4873
 	sub a, l ; $4875
 	ld h, a ; $4876
 	ld a, [hl] ; $4877
 	ld [$df69], a ; $4878
 	ld a, [$c786] ; $487b
 	add a, a ; $487e
-	add a, $6f ; $487f
+	add a, LOW(MinigameBallLaunchHeights) ; $487f
 	ld l, a ; $4881
-	adc a, $46 ; $4882
+	adc a, HIGH(MinigameBallLaunchHeights) ; $4882
 	sub a, l ; $4884
 	ld h, a ; $4885
 	ld a, [hl+] ; $4886
@@ -1132,9 +1132,9 @@ LaunchBall:
 	farcall SetBallPosition ; $4895
 	farcall AdvanceMatchRng ; $4898
 	and a, $07 ; $489b
-	add a, $43 ; $489d
+	add a, LOW(MinigameShotSpinPool) ; $489d
 	ld l, a ; $489f
-	adc a, $46 ; $48a0
+	adc a, HIGH(MinigameShotSpinPool) ; $48a0
 	sub a, l ; $48a2
 	ld h, a ; $48a3
 	ld a, [hl] ; $48a4
@@ -1204,9 +1204,9 @@ PlayMinigameCountdown:
 GetMinigameCharCoordsEntry:
 	add a, a ; $4926
 	add a, a ; $4927
-	add a, $4b ; $4928
+	add a, LOW(MinigameCharCoordsTable) ; $4928
 	ld l, a ; $492a
-	adc a, $46 ; $492b
+	adc a, HIGH(MinigameCharCoordsTable) ; $492b
 	sub a, l ; $492d
 	ld h, a ; $492e
 	ld a, [hl+] ; $492f
@@ -1989,9 +1989,9 @@ SelectRandomMinigameShot:
 	wram_bank $02 ; $4e23
 	ld a, [wMinigameLevel] ; $4e29
 	add a, a ; $4e2c
-	add a, $5a ; $4e2d
+	add a, LOW(TargetShotZonePoolsByLevel) ; $4e2d
 	ld l, a ; $4e2f
-	adc a, $4e ; $4e30
+	adc a, HIGH(TargetShotZonePoolsByLevel) ; $4e30
 	sub a, l ; $4e32
 	ld h, a ; $4e33
 	ld a, [hl+] ; $4e34
@@ -2144,9 +2144,9 @@ TargetShotZoneOverlayAttrs:
 	db $2f, $2f, $0e, $0e, $0e, $2e, $2e, $2e, $2f, $0f ; 0xf0
 LoadMatchUiCourtTilemap:
 	add a, a ; $50fa
-	add a, $3a ; $50fb
+	add a, LOW(TargetShotZoneOverlayOffsets) ; $50fb
 	ld l, a ; $50fd
-	adc a, $51 ; $50fe
+	adc a, HIGH(TargetShotZoneOverlayOffsets) ; $50fe
 	sub a, l ; $5100
 	ld h, a ; $5101
 	ld a, [hl+] ; $5102
@@ -2481,9 +2481,9 @@ DrawTargetReticleSprite:
 	call QueueSprite24x32 ; $5368
 	ldh a, [hVBlankCounter] ; $536b
 	and a, $1f ; $536d
-	add a, $7e ; $536f
+	add a, LOW(TargetReticleAnimFrames) ; $536f
 	ld l, a ; $5371
-	adc a, $53 ; $5372
+	adc a, HIGH(TargetReticleAnimFrames) ; $5372
 	sub a, l ; $5374
 	ld h, a ; $5375
 	ld a, [hl] ; $5376
@@ -2517,9 +2517,9 @@ ProjectMinigameWorldPosition:
 	ld h, d ; $53b6
 	farcall ApplyCameraProjection ; $53b7
 	ld a, [$c789] ; $53ba
-	add a, $c6 ; $53bd
+	add a, LOW(MinigameTargetSpriteOamAttrByHitStreak) ; $53bd
 	ld l, a ; $53bf
-	adc a, $53 ; $53c0
+	adc a, HIGH(MinigameTargetSpriteOamAttrByHitStreak) ; $53c0
 	sub a, l ; $53c2
 	ld h, a ; $53c3
 	ld b, [hl] ; $53c4
@@ -2646,9 +2646,9 @@ BananaBunchHook_PointStart:
 	call StartMinigameSoloPoint ; $5533
 	ld a, [wMinigameLevel] ; $5536
 	add a, a ; $5539
-	add a, $48 ; $553a
+	add a, LOW(BananaBunchGridLayoutsByLevel) ; $553a
 	ld l, a ; $553c
-	adc a, $55 ; $553d
+	adc a, HIGH(BananaBunchGridLayoutsByLevel) ; $553d
 	sub a, l ; $553f
 	ld h, a ; $5540
 	ld a, [hl+] ; $5541
@@ -2714,9 +2714,9 @@ ScoreMinigameTargetHitOrDeflectBall:
 	cp a, $ff ; $55d5
 	jr z, MinigameTargetTypeScores.eqff ; $55d7
 	ld a, [$c78d] ; $55d9
-	add a, $f9 ; $55dc
+	add a, LOW(MinigameTargetTypeScores) ; $55dc
 	ld l, a ; $55de
-	adc a, $55 ; $55df
+	adc a, HIGH(MinigameTargetTypeScores) ; $55df
 	sub a, l ; $55e1
 	ld h, a ; $55e2
 	ld e, [hl] ; $55e3
@@ -3043,9 +3043,9 @@ DrawBooBlastTargetSprite:
 	call QueueSprite24x32 ; $5806
 	ldh a, [hVBlankCounter] ; $5809
 	and a, $1f ; $580b
-	add a, $1c ; $580d
+	add a, LOW(BooBlastTargetAnimFrames) ; $580d
 	ld l, a ; $580f
-	adc a, $58 ; $5810
+	adc a, HIGH(BooBlastTargetAnimFrames) ; $5810
 	sub a, l ; $5812
 	ld h, a ; $5813
 	ld a, [hl] ; $5814
@@ -3118,9 +3118,9 @@ InitMinigame_PerfectShot:
 .initMinigameTargets:
 	farcall InitMinigameTargets ; $588f
 	ld a, [wMinigameLevel] ; $5892
-	add a, $a3 ; $5895
+	add a, LOW(PerfectShotLevelHasTargets) ; $5895
 	ld l, a ; $5897
-	adc a, $58 ; $5898
+	adc a, HIGH(PerfectShotLevelHasTargets) ; $5898
 	sub a, l ; $589a
 	ld h, a ; $589b
 	ld a, [hl] ; $589c
@@ -3367,9 +3367,9 @@ UpdateTreasureBoxScorePopup:
 SelectRandomTreasureBoxTargetZone:
 	ld a, [wMinigameLevel] ; $5a70
 	add a, a ; $5a73
-	add a, $a5 ; $5a74
+	add a, LOW(TreasureBoxZonePoolsByLevel) ; $5a74
 	ld l, a ; $5a76
-	adc a, $5a ; $5a77
+	adc a, HIGH(TreasureBoxZonePoolsByLevel) ; $5a77
 	sub a, l ; $5a79
 	ld h, a ; $5a7a
 	ld a, [hl+] ; $5a7b
@@ -3447,9 +3447,9 @@ AdvanceTreasureBoxActorState:
 	ld [$dc71], a ; $5b02
 	ld a, [$c7a5] ; $5b05
 	add a, a ; $5b08
-	add a, $6b ; $5b09
+	add a, LOW(TreasureBoxSpawnPointsByZone) ; $5b09
 	ld l, a ; $5b0b
-	adc a, $5b ; $5b0c
+	adc a, HIGH(TreasureBoxSpawnPointsByZone) ; $5b0c
 	sub a, l ; $5b0e
 	ld h, a ; $5b0f
 	ld a, [hl+] ; $5b10
@@ -3627,9 +3627,9 @@ AwardTreasureBoxHitScore:
 	ld a, [de] ; $5c40
 	call PlaySoundManaged ; $5c41
 	ld a, [$dc71] ; $5c44
-	add a, $7d ; $5c47
+	add a, LOW(TreasureBoxValuesByType) ; $5c47
 	ld l, a ; $5c49
-	adc a, $5c ; $5c4a
+	adc a, HIGH(TreasureBoxValuesByType) ; $5c4a
 	sub a, l ; $5c4c
 	ld h, a ; $5c4d
 	ld l, [hl] ; $5c4e
@@ -3676,9 +3676,9 @@ DrawTreasureBoxSprite:
 	ld a, [hl] ; $5c98
 	inc [hl] ; $5c99
 	and a, $1f ; $5c9a
-	add a, $ab ; $5c9c
+	add a, LOW(TreasureBoxSpriteAnimFrames) ; $5c9c
 	ld l, a ; $5c9e
-	adc a, $5c ; $5c9f
+	adc a, HIGH(TreasureBoxSpriteAnimFrames) ; $5c9f
 	sub a, l ; $5ca1
 	ld h, a ; $5ca2
 	ld a, [hl] ; $5ca3
@@ -4017,9 +4017,9 @@ DrawMedallionMatchSprite:
 	srl a ; $5efd
 	srl a ; $5eff
 	and a, $03 ; $5f01
-	add a, $0f ; $5f03
+	add a, LOW(MedallionMatchSpriteAnimFrames) ; $5f03
 	ld l, a ; $5f05
-	adc a, $5f ; $5f06
+	adc a, HIGH(MedallionMatchSpriteAnimFrames) ; $5f06
 	sub a, l ; $5f08
 	ld h, a ; $5f09
 	ld c, [hl] ; $5f0a
@@ -4087,9 +4087,9 @@ FruitFantasyHook_PointStart:
 	call StartMinigameSoloPoint ; $5f79
 	ld a, [wMinigameLevel] ; $5f7c
 	add a, a ; $5f7f
-	add a, $8e ; $5f80
+	add a, LOW(FruitFantasyGridLayoutsByLevel) ; $5f80
 	ld l, a ; $5f82
-	adc a, $5f ; $5f83
+	adc a, HIGH(FruitFantasyGridLayoutsByLevel) ; $5f83
 	sub a, l ; $5f85
 	ld h, a ; $5f86
 	ld a, [hl+] ; $5f87

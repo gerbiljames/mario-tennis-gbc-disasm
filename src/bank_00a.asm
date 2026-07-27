@@ -2887,9 +2887,9 @@ CheckTriggerFacingMask:
 	rlca ; $53cf
 	rlca ; $53d0
 	and a, $03 ; $53d1
-	add a, $b9 ; $53d3
+	add a, LOW(FacingMaskTable_0a) ; $53d3
 	ld l, a ; $53d5
-	adc a, $53 ; $53d6
+	adc a, HIGH(FacingMaskTable_0a) ; $53d6
 	sub a, l ; $53d8
 	ld h, a ; $53d9
 	ld a, [hl] ; $53da
@@ -5467,9 +5467,9 @@ DrawMinigameTarget:
 .readSprite:
 	ld a, [$dcf1] ; $66e1
 	add a, a ; $66e4
-	add a, $f6 ; $66e5
+	add a, LOW(Table_0a_66f6) ; $66e5
 	ld l, a ; $66e7
-	adc a, $66 ; $66e8
+	adc a, HIGH(Table_0a_66f6) ; $66e8
 	sub a, l ; $66ea
 	ld h, a ; $66eb
 	ld a, [hl+] ; $66ec
@@ -5817,9 +5817,9 @@ RunMinigameTargetScript:
 	push hl ; $68c9
 	ld a, [de] ; $68ca
 	add a, a ; $68cb
-	add a, $09 ; $68cc
+	add a, LOW(MinigameTargetOpHandlers_0a) ; $68cc
 	ld l, a ; $68ce
-	adc a, $68 ; $68cf
+	adc a, HIGH(MinigameTargetOpHandlers_0a) ; $68cf
 	sub a, l ; $68d1
 	ld h, a ; $68d2
 	ld a, [hl+] ; $68d3
@@ -6130,9 +6130,9 @@ DrawMinigameTargetAlt:
 .readSprite:
 	ld a, [$dcf1] ; $6d90
 	add a, a ; $6d93
-	add a, $a5 ; $6d94
+	add a, LOW(Table_0a_6da5) ; $6d94
 	ld l, a ; $6d96
-	adc a, $6d ; $6d97
+	adc a, HIGH(Table_0a_6da5) ; $6d97
 	sub a, l ; $6d99
 	ld h, a ; $6d9a
 	ld a, [hl+] ; $6d9b
@@ -6260,9 +6260,9 @@ RunEndingCreditsSequence:
 	call ClearFrameTasks ; $6e91
 	ld a, [wStoryCharacterSlot] ; $6e94
 	add a, a ; $6e97
-	add a, $40 ; $6e98
+	add a, LOW(TileList_0a_6e40) ; $6e98
 	ld l, a ; $6e9a
-	adc a, $6e ; $6e9b
+	adc a, HIGH(TileList_0a_6e40) ; $6e9b
 	sub a, l ; $6e9d
 	ld h, a ; $6e9e
 	ld a, [hl+] ; $6e9f

@@ -149,9 +149,9 @@ TrainingGymExit03_0e:
 TrainingGymNpc03_0e:
 	ld a, [$c2b0] ; $43a6
 	add a, a ; $43a9
-	add a, $bd ; $43aa
+	add a, LOW(TrainingGymNpc03TextIds) ; $43aa
 	ld l, a ; $43ac
-	adc a, $43 ; $43ad
+	adc a, HIGH(TrainingGymNpc03TextIds) ; $43ad
 	sub a, l ; $43af
 	ld h, a ; $43b0
 	ld a, [hl+] ; $43b1
@@ -176,9 +176,9 @@ TrainingGymNpc04_0e:
 	ld a, [$c2b0] ; $43d1
 	sra a ; $43d4
 	add a, a ; $43d6
-	add a, $ea ; $43d7
+	add a, LOW(TrainingGymNpc04TextIds) ; $43d7
 	ld l, a ; $43d9
-	adc a, $43 ; $43da
+	adc a, HIGH(TrainingGymNpc04TextIds) ; $43da
 	sub a, l ; $43dc
 	ld h, a ; $43dd
 	ld a, [hl+] ; $43de
@@ -197,9 +197,9 @@ TrainingGymNpc04TextIds:
 TrainingGymNpc05_0e:
 	ld a, [$c2b0] ; $43f4
 	add a, a ; $43f7
-	add a, $0b ; $43f8
+	add a, LOW(TrainingGymNpc05TextIds) ; $43f8
 	ld l, a ; $43fa
-	adc a, $44 ; $43fb
+	adc a, HIGH(TrainingGymNpc05TextIds) ; $43fb
 	sub a, l ; $43fd
 	ld h, a ; $43fe
 	ld a, [hl+] ; $43ff
@@ -223,9 +223,9 @@ TrainingGymNpc05TextIds:
 TrainingGymNpc06_0e:
 	ld a, [$c2b0] ; $441f
 	add a, a ; $4422
-	add a, $36 ; $4423
+	add a, LOW(TrainingGymNpc06TextIds) ; $4423
 	ld l, a ; $4425
-	adc a, $44 ; $4426
+	adc a, HIGH(TrainingGymNpc06TextIds) ; $4426
 	sub a, l ; $4428
 	ld h, a ; $4429
 	ld a, [hl+] ; $442a
@@ -252,9 +252,9 @@ TrainingGymNpc07_0e:
 	cp a, $03 ; $444f
 	jr z, TrainingGymNpc07TextIds.speak ; $4451
 	add a, a ; $4453
-	add a, $67 ; $4454
+	add a, LOW(TrainingGymNpc07TextIds) ; $4454
 	ld l, a ; $4456
-	adc a, $44 ; $4457
+	adc a, HIGH(TrainingGymNpc07TextIds) ; $4457
 	sub a, l ; $4459
 	ld h, a ; $445a
 	ld a, [hl+] ; $445b
@@ -287,9 +287,9 @@ TrainingGymNpc08_0e:
 	ld a, [$c2b0] ; $4495
 	sra a ; $4498
 	add a, a ; $449a
-	add a, $ae ; $449b
+	add a, LOW(TrainingGymNpc08TextIds) ; $449b
 	ld l, a ; $449d
-	adc a, $44 ; $449e
+	adc a, HIGH(TrainingGymNpc08TextIds) ; $449e
 	sub a, l ; $44a0
 	ld h, a ; $44a1
 	ld a, [hl+] ; $44a2
@@ -309,9 +309,9 @@ TrainingGymNpc09_0e:
 	ld a, [$c2b0] ; $44b8
 	sra a ; $44bb
 	add a, a ; $44bd
-	add a, $d1 ; $44be
+	add a, LOW(TrainingGymNpc09TextIds) ; $44be
 	ld l, a ; $44c0
-	adc a, $44 ; $44c1
+	adc a, HIGH(TrainingGymNpc09TextIds) ; $44c1
 	sub a, l ; $44c3
 	ld h, a ; $44c4
 	ld a, [hl+] ; $44c5
@@ -330,9 +330,9 @@ TrainingGymNpc09TextIds:
 TrainingGymNpc0A_0e:
 	ld a, [$c2b0] ; $44db
 	add a, a ; $44de
-	add a, $f2 ; $44df
+	add a, LOW(TrainingGymNpc0ATextIds) ; $44df
 	ld l, a ; $44e1
-	adc a, $44 ; $44e2
+	adc a, HIGH(TrainingGymNpc0ATextIds) ; $44e2
 	sub a, l ; $44e4
 	ld h, a ; $44e5
 	ld a, [hl+] ; $44e6
@@ -356,9 +356,9 @@ TrainingGymNpc0ATextIds:
 TrainingGymNpc0B_0e:
 	ld a, [$c2b0] ; $4506
 	add a, a ; $4509
-	add a, $1d ; $450a
+	add a, LOW(TrainingGymNpc0BTextIds) ; $450a
 	ld l, a ; $450c
-	adc a, $45 ; $450d
+	adc a, HIGH(TrainingGymNpc0BTextIds) ; $450d
 	sub a, l ; $450f
 	ld h, a ; $4510
 	ld a, [hl+] ; $4511
@@ -383,9 +383,9 @@ TrainingGymNpc0C_0e:
 	ld a, [$c2b0] ; $4531
 	sra a ; $4534
 	add a, a ; $4536
-	add a, $4a ; $4537
+	add a, LOW(TrainingGymNpc0CTextIds) ; $4537
 	ld l, a ; $4539
-	adc a, $45 ; $453a
+	adc a, HIGH(TrainingGymNpc0CTextIds) ; $453a
 	sub a, l ; $453c
 	ld h, a ; $453d
 	ld a, [hl+] ; $453e
@@ -3136,9 +3136,9 @@ UpdateStarWarpSprite:
 .draw:
 	ld a, [$d000] ; $7200
 	rlca ; $7203
-	add a, $80 ; $7204
+	add a, LOW(StarWarpFrameSprites) ; $7204
 	ld l, a ; $7206
-	adc a, $74 ; $7207
+	adc a, HIGH(StarWarpFrameSprites) ; $7207
 	sub a, l ; $7209
 	ld h, a ; $720a
 	push hl ; $720b
@@ -3179,18 +3179,18 @@ UpdateStarWarpSprite:
 	ret ; $7249
 OffsetStarWarpPathPoint:
 	ld a, [$d001] ; $724a
-	add a, $8c ; $724d
+	add a, LOW(StarWarpPathY) ; $724d
 	ld l, a ; $724f
-	adc a, $74 ; $7250
+	adc a, HIGH(StarWarpPathY) ; $7250
 	sub a, l ; $7252
 	ld h, a ; $7253
 	ld a, [hl] ; $7254
 	add a, d ; $7255
 	ld d, a ; $7256
 	ld a, [$d001] ; $7257
-	add a, $41 ; $725a
+	add a, LOW(StarWarpPathX) ; $725a
 	ld l, a ; $725c
-	adc a, $75 ; $725d
+	adc a, HIGH(StarWarpPathX) ; $725d
 	sub a, l ; $725f
 	ld h, a ; $7260
 	ld a, [hl] ; $7261

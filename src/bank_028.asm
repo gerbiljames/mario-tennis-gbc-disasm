@@ -253,9 +253,9 @@ LoadBallTouchCharEffectTilesB:
 	ret ; $606b
 QueueMatchSpriteFrameA:
 	add a, a ; $606c
-	add a, $80 ; $606d
+	add a, LOW(Data_28_6080) ; $606d
 	ld l, a ; $606f
-	adc a, $60 ; $6070
+	adc a, HIGH(Data_28_6080) ; $6070
 	sub a, l ; $6072
 	ld h, a ; $6073
 	ld a, [hl+] ; $6074
@@ -270,9 +270,9 @@ Data_28_6080:
 	db $30, $52, $f0, $52, $b0, $53 ; 0x00
 QueueMatchSpriteFrameB:
 	add a, a ; $6086
-	add a, $9a ; $6087
+	add a, LOW(Data_28_609a) ; $6087
 	ld l, a ; $6089
-	adc a, $60 ; $608a
+	adc a, HIGH(Data_28_609a) ; $608a
 	sub a, l ; $608c
 	ld h, a ; $608d
 	ld a, [hl+] ; $608e
@@ -298,9 +298,9 @@ LoadEffectFrameTiles_28:
 	ld d, h ; $60aa
 	ld a, b ; $60ab
 	add a, a ; $60ac
-	add a, $c1 ; $60ad
+	add a, LOW(Data_28_60c1) ; $60ad
 	ld l, a ; $60af
-	adc a, $60 ; $60b0
+	adc a, HIGH(Data_28_60c1) ; $60b0
 	sub a, l ; $60b2
 	ld h, a ; $60b3
 	ld a, [hl+] ; $60b4

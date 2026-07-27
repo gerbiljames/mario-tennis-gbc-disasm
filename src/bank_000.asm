@@ -3060,9 +3060,9 @@ GetSquareOfByte:
 	push af ; $106e
 	add a, a ; $106f
 	jr c, .highHalf ; $1070
-	add a, $30 ; $1072
+	add a, LOW(SquaresTable) ; $1072
 	ld l, a ; $1074
-	adc a, $11 ; $1075
+	adc a, HIGH(SquaresTable) ; $1075
 	sub a, l ; $1077
 	ld h, a ; $1078
 	ld a, [hl+] ; $1079
@@ -5769,9 +5769,9 @@ NumberFontGlyphPtrs:
 	sub a, $30 ; $20d0
 	and a, $1f ; $20d2
 	add a, a ; $20d4
-	add a, $91 ; $20d5
+	add a, LOW(NumberFontGlyphPtrs) ; $20d5
 	ld l, a ; $20d7
-	adc a, $20 ; $20d8
+	adc a, HIGH(NumberFontGlyphPtrs) ; $20d8
 	sub a, l ; $20da
 	ld h, a ; $20db
 	ld a, [hl+] ; $20dc
@@ -5800,9 +5800,9 @@ RenderTextToTiles:
 	push hl ; $20f7
 	and a, $1f ; $20f8
 	add a, a ; $20fa
-	add a, $91 ; $20fb
+	add a, LOW(NumberFontGlyphPtrs) ; $20fb
 	ld l, a ; $20fd
-	adc a, $20 ; $20fe
+	adc a, HIGH(NumberFontGlyphPtrs) ; $20fe
 	sub a, l ; $2100
 	ld h, a ; $2101
 	ld a, [hl+] ; $2102
@@ -5835,9 +5835,9 @@ RenderGlyphToTiles:
 	push hl ; $2127
 	ld a, b ; $2128
 	and a, $07 ; $2129
-	add a, $13 ; $212b
+	add a, LOW(PixelMaskTable) ; $212b
 	ld l, a ; $212d
-	adc a, $21 ; $212e
+	adc a, HIGH(PixelMaskTable) ; $212e
 	sub a, l ; $2130
 	ld h, a ; $2131
 	ld a, [hl] ; $2132
@@ -6443,9 +6443,9 @@ TestGameFlag:
 	rlca ; $24a3
 	rlca ; $24a4
 	rlca ; $24a5
-	add a, $97 ; $24a6
+	add a, LOW(FlagMaskTable) ; $24a6
 	ld l, a ; $24a8
-	adc a, $24 ; $24a9
+	adc a, HIGH(FlagMaskTable) ; $24a9
 	sub a, l ; $24ab
 	ld h, a ; $24ac
 	ld a, [hl] ; $24ad
@@ -6465,9 +6465,9 @@ SetGameFlag:
 	rlca ; $24bd
 	rlca ; $24be
 	rlca ; $24bf
-	add a, $97 ; $24c0
+	add a, LOW(FlagMaskTable) ; $24c0
 	ld l, a ; $24c2
-	adc a, $24 ; $24c3
+	adc a, HIGH(FlagMaskTable) ; $24c3
 	sub a, l ; $24c5
 	ld h, a ; $24c6
 	ld a, [hl] ; $24c7
@@ -6487,9 +6487,9 @@ ClearGameFlag:
 	rlca ; $24d7
 	rlca ; $24d8
 	rlca ; $24d9
-	add a, $97 ; $24da
+	add a, LOW(FlagMaskTable) ; $24da
 	ld l, a ; $24dc
-	adc a, $24 ; $24dd
+	adc a, HIGH(FlagMaskTable) ; $24dd
 	sub a, l ; $24df
 	ld h, a ; $24e0
 	ld a, [hl] ; $24e1

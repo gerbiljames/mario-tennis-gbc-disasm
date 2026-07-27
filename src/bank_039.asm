@@ -825,9 +825,9 @@ QueueStackedSpritePair:
 ApplySpriteWaveOffset:
 	ldh a, [hVBlankCounter] ; $4a75
 	and a, $3f ; $4a77
-	add a, $84 ; $4a79
+	add a, LOW(Data_39_4a84) ; $4a79
 	ld l, a ; $4a7b
-	adc a, $4a ; $4a7c
+	adc a, HIGH(Data_39_4a84) ; $4a7c
 	sub a, l ; $4a7e
 	ld h, a ; $4a7f
 	ld a, [hl] ; $4a80
@@ -843,9 +843,9 @@ Data_39_4a84:
 ApplySpriteBobOffset:
 	ldh a, [hVBlankCounter] ; $4ac4
 	and a, $3f ; $4ac6
-	add a, $d3 ; $4ac8
+	add a, LOW(Data_39_4ad3) ; $4ac8
 	ld l, a ; $4aca
-	adc a, $4a ; $4acb
+	adc a, HIGH(Data_39_4ad3) ; $4acb
 	sub a, l ; $4acd
 	ld h, a ; $4ace
 	ld a, [hl] ; $4acf

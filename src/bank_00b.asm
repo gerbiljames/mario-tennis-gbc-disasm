@@ -7281,9 +7281,9 @@ RunDoublesDrillMatch:
 	farcall InitCa00RecordFromCharId ; $7299
 	ld a, [wMinigameLevel] ; $729c
 	add a, a ; $729f
-	add a, $e0 ; $72a0
+	add a, LOW(DoublesDrillMatchPtrs) ; $72a0
 	ld l, a ; $72a2
-	adc a, $72 ; $72a3
+	adc a, HIGH(DoublesDrillMatchPtrs) ; $72a3
 	sub a, l ; $72a5
 	ld h, a ; $72a6
 	ld a, [hl+] ; $72a7

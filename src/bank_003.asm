@@ -2930,9 +2930,9 @@ GetCurrentSlotBlockId:
 	push hl ; $529e
 	ld a, [wCurrentStorySlot] ; $529f
 	and a, $03 ; $52a2
-	add a, $af ; $52a4
+	add a, LOW(StorySlotBlockIds_03) ; $52a4
 	ld l, a ; $52a6
-	adc a, $52 ; $52a7
+	adc a, HIGH(StorySlotBlockIds_03) ; $52a7
 	sub a, l ; $52a9
 	ld h, a ; $52aa
 	ld b, [hl] ; $52ab

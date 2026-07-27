@@ -1215,9 +1215,9 @@ UpdateResultsCharSprite:
 	farcall ReloadCharFacingTiles ; $4ab4
 	pop de ; $4ab7
 	ld a, d ; $4ab8
-	add a, $24 ; $4ab9
+	add a, LOW(Data_1e_4b24) ; $4ab9
 	ld l, a ; $4abb
-	adc a, $4b ; $4abc
+	adc a, HIGH(Data_1e_4b24) ; $4abc
 	sub a, l ; $4abe
 	ld h, a ; $4abf
 	ld b, [hl] ; $4ac0
@@ -1959,9 +1959,9 @@ UpdateExpScreenCharSprite:
 	ld [$df32], a ; $5960
 	farcall ReloadCharFacingTiles ; $5963
 	ld a, [$df32] ; $5966
-	add a, $b3 ; $5969
+	add a, LOW(Data_1e_59b3) ; $5969
 	ld l, a ; $596b
-	adc a, $59 ; $596c
+	adc a, HIGH(Data_1e_59b3) ; $596c
 	sub a, l ; $596e
 	ld h, a ; $596f
 	ld a, [$df37] ; $5970
@@ -2041,9 +2041,9 @@ DrawNextExpAwardMessage:
 	ld d, a ; $59e3
 	ld a, [$d024] ; $59e4
 	rlca ; $59e7
-	add a, $44 ; $59e8
+	add a, LOW(Data_1e_5a44) ; $59e8
 	ld l, a ; $59ea
-	adc a, $5a ; $59eb
+	adc a, HIGH(Data_1e_5a44) ; $59eb
 	sub a, l ; $59ed
 	ld h, a ; $59ee
 	ld a, [hl+] ; $59ef
@@ -2865,9 +2865,9 @@ LookupExpTierForChar:
 	ld e, $0a ; $694c
 	call DivAHLByE ; $694e
 	ld a, l ; $6951
-	add a, $5b ; $6952
+	add a, LOW(Data_1e_695b) ; $6952
 	ld l, a ; $6954
-	adc a, $69 ; $6955
+	adc a, HIGH(Data_1e_695b) ; $6955
 	sub a, l ; $6957
 	ld h, a ; $6958
 	ld c, [hl] ; $6959

@@ -347,9 +347,9 @@ WallPracticeRoomExitTriggers_12:
 WallPracticeRoomNpc03_12:
 	ld a, [$c2b0] ; $471f
 	add a, a ; $4722
-	add a, $73 ; $4723
+	add a, LOW(WallPracticeRoomNpc03TextIds) ; $4723
 	ld l, a ; $4725
-	adc a, $47 ; $4726
+	adc a, HIGH(WallPracticeRoomNpc03TextIds) ; $4726
 	sub a, l ; $4728
 	ld h, a ; $4729
 	ld a, [hl+] ; $472a
@@ -395,9 +395,9 @@ WallPracticeRoomNpc03TextIds:
 WallPracticeRoomNpc04_12:
 	ld a, [$c2b0] ; $4781
 	add a, a ; $4784
-	add a, $98 ; $4785
+	add a, LOW(WallPracticeRoomNpc04TextIds) ; $4785
 	ld l, a ; $4787
-	adc a, $47 ; $4788
+	adc a, HIGH(WallPracticeRoomNpc04TextIds) ; $4788
 	sub a, l ; $478a
 	ld h, a ; $478b
 	ld a, [hl+] ; $478c
@@ -418,9 +418,9 @@ WallPracticeRoomNpc04TextIds:
 WallPracticeRoomNpc05_12:
 	ld a, [$c2b0] ; $47a6
 	add a, a ; $47a9
-	add a, $e5 ; $47aa
+	add a, LOW(WallPracticeRoomNpc05TextIds) ; $47aa
 	ld l, a ; $47ac
-	adc a, $47 ; $47ad
+	adc a, HIGH(WallPracticeRoomNpc05TextIds) ; $47ad
 	sub a, l ; $47af
 	ld h, a ; $47b0
 	ld a, [hl+] ; $47b1
@@ -451,9 +451,9 @@ WallPracticeRoomNpc05TextIds:
 WallPracticeRoomNpc06_12:
 	ld a, [$c2b0] ; $47f3
 	add a, a ; $47f6
-	add a, $0a ; $47f7
+	add a, LOW(WallPracticeRoomNpc06TextIds) ; $47f7
 	ld l, a ; $47f9
-	adc a, $48 ; $47fa
+	adc a, HIGH(WallPracticeRoomNpc06TextIds) ; $47fa
 	sub a, l ; $47fc
 	ld h, a ; $47fd
 	ld a, [hl+] ; $47fe
@@ -529,9 +529,9 @@ WallPracticeScoreRetryPrompt:
 	ld a, [wPointOutcome] ; $48a2
 	and a, $03 ; $48a5
 	add a, a ; $48a7
-	add a, $af ; $48a8
+	add a, LOW(WallPracticeScoreRetryPromptTextIds) ; $48a8
 	ld l, a ; $48aa
-	adc a, $4a ; $48ab
+	adc a, HIGH(WallPracticeScoreRetryPromptTextIds) ; $48ab
 	sub a, l ; $48ad
 	ld h, a ; $48ae
 	ld a, [hl+] ; $48af
@@ -720,9 +720,9 @@ WallPracticeLevelResultScript:
 	ld a, [wPointOutcome] ; $4aef
 	and a, $03 ; $4af2
 	add a, a ; $4af4
-	add a, $9c ; $4af5
+	add a, LOW(WallPracticeLevelResultScriptTextIds) ; $4af5
 	ld l, a ; $4af7
-	adc a, $4b ; $4af8
+	adc a, HIGH(WallPracticeLevelResultScriptTextIds) ; $4af8
 	sub a, l ; $4afa
 	ld h, a ; $4afb
 	ld a, [hl+] ; $4afc
@@ -1079,9 +1079,9 @@ WallPracticeRoomInitScript_12:
 	ld a, [wPointOutcome] ; $5002
 	and a, $03 ; $5005
 	add a, a ; $5007
-	add a, $9c ; $5008
+	add a, LOW(WallPracticeLevelResultScriptTextIds) ; $5008
 	ld l, a ; $500a
-	adc a, $4b ; $500b
+	adc a, HIGH(WallPracticeLevelResultScriptTextIds) ; $500b
 	sub a, l ; $500d
 	ld h, a ; $500e
 	ld a, [hl+] ; $500f
@@ -1150,9 +1150,9 @@ WallPracticeRoomNpc07_12:
 .scoreLine:
 	ld a, [$c2b0] ; $50dd
 	add a, a ; $50e0
-	add a, $71 ; $50e1
+	add a, LOW(WallPracticeRoomNpc07TextIds) ; $50e1
 	ld l, a ; $50e3
-	adc a, $52 ; $50e4
+	adc a, HIGH(WallPracticeRoomNpc07TextIds) ; $50e4
 	sub a, l ; $50e6
 	ld h, a ; $50e7
 	ld a, [hl+] ; $50e8
@@ -1184,9 +1184,9 @@ WallPracticeRoomNpc07_12:
 	jp z, .doublesDeclined ; $5124
 	ld a, [$c2b0] ; $5127
 	add a, a ; $512a
-	add a, $7f ; $512b
+	add a, LOW(WallPracticeRoomNpc07TextIds2) ; $512b
 	ld l, a ; $512d
-	adc a, $52 ; $512e
+	adc a, HIGH(WallPracticeRoomNpc07TextIds2) ; $512e
 	sub a, l ; $5130
 	ld h, a ; $5131
 	ld a, [hl+] ; $5132
@@ -1391,9 +1391,9 @@ SeniorCourtExit01_12:
 	ld a, [$c2b1] ; $55b5
 	sub a, $09 ; $55b8
 	add a, a ; $55ba
-	add a, $dc ; $55bb
+	add a, LOW(SeniorCourtExit01TextIds) ; $55bb
 	ld l, a ; $55bd
-	adc a, $55 ; $55be
+	adc a, HIGH(SeniorCourtExit01TextIds) ; $55be
 	sub a, l ; $55c0
 	ld h, a ; $55c1
 	ld a, [hl+] ; $55c2
@@ -1541,9 +1541,9 @@ SeniorCourtNpc03FaceUpFlag0840_12:
 SeniorCourtNpc04_12:
 	ld a, [$c2b1] ; $5820
 	add a, a ; $5823
-	add a, $47 ; $5824
+	add a, LOW(SeniorCourtNpc04TextIds) ; $5824
 	ld l, a ; $5826
-	adc a, $58 ; $5827
+	adc a, HIGH(SeniorCourtNpc04TextIds) ; $5827
 	sub a, l ; $5829
 	ld h, a ; $582a
 	ld a, [hl+] ; $582b
@@ -1575,9 +1575,9 @@ SeniorCourtNpc04TextIds:
 SeniorCourtNpc05_12:
 	ld a, [$c2b1] ; $5859
 	add a, a ; $585c
-	add a, $95 ; $585d
+	add a, LOW(TextIds_12_5895) ; $585d
 	ld l, a ; $585f
-	adc a, $58 ; $5860
+	adc a, HIGH(TextIds_12_5895) ; $5860
 	sub a, l ; $5862
 	ld h, a ; $5863
 	ld a, [hl+] ; $5864
@@ -1621,9 +1621,9 @@ TextIds_12_5895:
 SeniorCourtNpc06_12:
 	ld a, [$c2b1] ; $58b3
 	add a, a ; $58b6
-	add a, $f8 ; $58b7
+	add a, LOW(TextIds_12_58f8) ; $58b7
 	ld l, a ; $58b9
-	adc a, $58 ; $58ba
+	adc a, HIGH(TextIds_12_58f8) ; $58ba
 	sub a, l ; $58bc
 	ld h, a ; $58bd
 	ld a, [hl+] ; $58be
@@ -1671,9 +1671,9 @@ TextIds_12_58f8:
 SeniorCourtNpc07_12:
 	ld a, [$c2b1] ; $5916
 	add a, a ; $5919
-	add a, $2d ; $591a
+	add a, LOW(SeniorCourtNpc07TextIds) ; $591a
 	ld l, a ; $591c
-	adc a, $59 ; $591d
+	adc a, HIGH(SeniorCourtNpc07TextIds) ; $591d
 	sub a, l ; $591f
 	ld h, a ; $5920
 	ld a, [hl+] ; $5921
@@ -1702,9 +1702,9 @@ SeniorCourtNpc07TextIds:
 SeniorCourtNpc08_12:
 	ld a, [$c2b1] ; $594b
 	add a, a ; $594e
-	add a, $2b ; $594f
+	add a, LOW(SeniorCourtNpc08TextIds) ; $594f
 	ld l, a ; $5951
-	adc a, $5a ; $5952
+	adc a, HIGH(SeniorCourtNpc08TextIds) ; $5952
 	sub a, l ; $5954
 	ld h, a ; $5955
 	ld a, [hl+] ; $5956
@@ -1785,9 +1785,9 @@ SeniorCourtNpc08TextIds:
 SeniorCourtNpc09_12:
 	ld a, [$c2b1] ; $5a49
 	add a, a ; $5a4c
-	add a, $6e ; $5a4d
+	add a, LOW(SeniorCourtNpc09TextIds) ; $5a4d
 	ld l, a ; $5a4f
-	adc a, $5a ; $5a50
+	adc a, HIGH(SeniorCourtNpc09TextIds) ; $5a50
 	sub a, l ; $5a52
 	ld h, a ; $5a53
 	ld a, [hl+] ; $5a54
@@ -1821,9 +1821,9 @@ SeniorCourtNpc09TextIds:
 SeniorCourtNpc0A_12:
 	ld a, [$c2b1] ; $5a8c
 	add a, a ; $5a8f
-	add a, $75 ; $5a90
+	add a, LOW(SeniorCourtNpc0ATextIds) ; $5a90
 	ld l, a ; $5a92
-	adc a, $5b ; $5a93
+	adc a, HIGH(SeniorCourtNpc0ATextIds) ; $5a93
 	sub a, l ; $5a95
 	ld h, a ; $5a96
 	ld a, [hl+] ; $5a97
@@ -1907,9 +1907,9 @@ SeniorCourtNpc0ATextIds:
 SeniorCourtNpc0B_12:
 	ld a, [$c2b1] ; $5b93
 	add a, a ; $5b96
-	add a, $bf ; $5b97
+	add a, LOW(SeniorCourtNpc0BTextIds) ; $5b97
 	ld l, a ; $5b99
-	adc a, $5b ; $5b9a
+	adc a, HIGH(SeniorCourtNpc0BTextIds) ; $5b9a
 	sub a, l ; $5b9c
 	ld h, a ; $5b9d
 	ld a, [hl+] ; $5b9e
@@ -1965,9 +1965,9 @@ SeniorCourtNpc0C_12:
 .nonZero:
 	ld a, [$c2b1] ; $5bfa
 	add a, a ; $5bfd
-	add a, $11 ; $5bfe
+	add a, LOW(SeniorCourtNpc0CTextIds) ; $5bfe
 	ld l, a ; $5c00
-	adc a, $5c ; $5c01
+	adc a, HIGH(SeniorCourtNpc0CTextIds) ; $5c01
 	sub a, l ; $5c03
 	ld h, a ; $5c04
 	ld a, [hl+] ; $5c05
@@ -2495,9 +2495,9 @@ RunSeniorRankingMatchIntro:
 	ld a, [$c2b1] ; $64de
 	sub a, $02 ; $64e1
 	add a, a ; $64e3
-	add a, $f2 ; $64e4
+	add a, LOW(SeniorRankingMatchIntroPtrs) ; $64e4
 	ld l, a ; $64e6
-	adc a, $64 ; $64e7
+	adc a, HIGH(SeniorRankingMatchIntroPtrs) ; $64e7
 	sub a, l ; $64e9
 	ld h, a ; $64ea
 	ld a, [hl+] ; $64eb
@@ -2749,9 +2749,9 @@ ResumeSeniorOpponentScripts:
 	ld a, [$c2b1] ; $6a41
 	sub a, $02 ; $6a44
 	add a, a ; $6a46
-	add a, $55 ; $6a47
+	add a, LOW(ResumeSeniorOpponentScriptsPtrs) ; $6a47
 	ld l, a ; $6a49
-	adc a, $6a ; $6a4a
+	adc a, HIGH(ResumeSeniorOpponentScriptsPtrs) ; $6a4a
 	sub a, l ; $6a4c
 	ld h, a ; $6a4d
 	ld a, [hl+] ; $6a4e
@@ -3100,9 +3100,9 @@ SeniorMatchVictorySceneDispatch:
 	ld a, [$c2b1] ; $6df6
 	sub a, $02 ; $6df9
 	add a, a ; $6dfb
-	add a, $0d ; $6dfc
+	add a, LOW(SeniorMatchVictorySceneDispatchPtrs) ; $6dfc
 	ld l, a ; $6dfe
-	adc a, $6e ; $6dff
+	adc a, HIGH(SeniorMatchVictorySceneDispatchPtrs) ; $6dff
 	sub a, l ; $6e01
 	ld h, a ; $6e02
 	ld a, [hl+] ; $6e03

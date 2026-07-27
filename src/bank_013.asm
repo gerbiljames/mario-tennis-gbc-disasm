@@ -985,9 +985,9 @@ SetRandomDormRoomNpc04Script_13:
 	ld a, l ; $5251
 	and a, $07 ; $5252
 	add a, a ; $5254
-	add a, $6a ; $5255
+	add a, LOW(DormRoomNpc04IdleScripts_13) ; $5255
 	ld l, a ; $5257
-	adc a, $52 ; $5258
+	adc a, HIGH(DormRoomNpc04IdleScripts_13) ; $5258
 	sub a, l ; $525a
 	ld h, a ; $525b
 	ld a, [hl+] ; $525c
@@ -2367,9 +2367,9 @@ CourtyardEntryWalkIn_13:
 	script_wait_move ACTOR_PARTNER ; $6329
 	ld a, [wStoryModeEntryPoint] ; $632e
 	dec a ; $6331
-	add a, $66 ; $6332
+	add a, LOW(Facings_13_6366) ; $6332
 	ld l, a ; $6334
-	adc a, $63 ; $6335
+	adc a, HIGH(Facings_13_6366) ; $6335
 	sub a, l ; $6337
 	ld h, a ; $6338
 	ld b, [hl] ; $6339
@@ -2381,9 +2381,9 @@ CourtyardEntryWalkIn_13:
 	script_set_speed ACTOR_PLAYER, $0010 ; $6348
 	ld a, [wStoryModeEntryPoint] ; $6350
 	dec a ; $6353
-	add a, $66 ; $6354
+	add a, LOW(Facings_13_6366) ; $6354
 	ld l, a ; $6356
-	adc a, $63 ; $6357
+	adc a, HIGH(Facings_13_6366) ; $6357
 	sub a, l ; $6359
 	ld h, a ; $635a
 	ld b, [hl] ; $635b

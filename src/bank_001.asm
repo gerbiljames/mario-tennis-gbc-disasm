@@ -565,9 +565,9 @@ RunSoundTest:
 	push de ; $6b39
 	push hl ; $6b3a
 	ld a, d ; $6b3b
-	add a, $75 ; $6b3c
+	add a, LOW(SoundTestSoundsA_01) ; $6b3c
 	ld l, a ; $6b3e
-	adc a, $6b ; $6b3f
+	adc a, HIGH(SoundTestSoundsA_01) ; $6b3f
 	sub a, l ; $6b41
 	ld h, a ; $6b42
 	ld a, [hl] ; $6b43
@@ -583,9 +583,9 @@ RunSoundTest:
 	push de ; $6b4f
 	push hl ; $6b50
 	ld a, e ; $6b51
-	add a, $b4 ; $6b52
+	add a, LOW(SoundTestSoundsB_01) ; $6b52
 	ld l, a ; $6b54
-	adc a, $6b ; $6b55
+	adc a, HIGH(SoundTestSoundsB_01) ; $6b55
 	sub a, l ; $6b57
 	ld h, a ; $6b58
 	ld a, [hl] ; $6b59

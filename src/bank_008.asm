@@ -1100,9 +1100,9 @@ FinalizeServeSideOrientation:
 GetGamePositionHandler:
 	ld a, [wOnCourtCharCountMinus1] ; $4808
 	add a, a ; $480b
-	add a, $3f ; $480c
+	add a, LOW(GamePositionPtrs) ; $480c
 	ld l, a ; $480e
-	adc a, $48 ; $480f
+	adc a, HIGH(GamePositionPtrs) ; $480f
 	sub a, l ; $4811
 	ld h, a ; $4812
 	ld a, [hl+] ; $4813
@@ -1182,9 +1182,9 @@ FlipFarBothCharPositions:
 .done:
 	ld a, [wOnCourtCharCountMinus1] ; $48c9
 	add a, a ; $48cc
-	add a, $e5 ; $48cd
+	add a, LOW(TiebreakPositionPtrs) ; $48cd
 	ld l, a ; $48cf
-	adc a, $48 ; $48d0
+	adc a, HIGH(TiebreakPositionPtrs) ; $48d0
 	sub a, l ; $48d2
 	ld h, a ; $48d3
 	ld a, [hl+] ; $48d4
@@ -1425,9 +1425,9 @@ IdentifyServingPlayer:
 	ret ; $4c98
 SetCharFacingFromCourtPos:
 	ld a, [wCharCourtPos] ; $4c99
-	add a, $ae ; $4c9c
+	add a, LOW(CourtPosFacingTable_08) ; $4c9c
 	ld l, a ; $4c9e
-	adc a, $4c ; $4c9f
+	adc a, HIGH(CourtPosFacingTable_08) ; $4c9f
 	sub a, l ; $4ca1
 	ld h, a ; $4ca2
 	ld a, [hl] ; $4ca3
@@ -1790,9 +1790,9 @@ ResetCharForPoint:
 	ret ; $4f90
 SetCharStateFromServeRole:
 	ld a, [wCharServeRole] ; $4f91
-	add a, $a0 ; $4f94
+	add a, LOW(ServeRoleCharStateTable_08) ; $4f94
 	ld l, a ; $4f96
-	adc a, $4f ; $4f97
+	adc a, HIGH(ServeRoleCharStateTable_08) ; $4f97
 	sub a, l ; $4f99
 	ld h, a ; $4f9a
 	ld a, [hl] ; $4f9b
@@ -7812,9 +7812,9 @@ ReadCharInput:
 	ld [$df1f], a ; $780d
 	ld a, [$df1e] ; $7810
 	add a, a ; $7813
-	add a, $1f ; $7814
+	add a, LOW(CharInputPtrs) ; $7814
 	ld l, a ; $7816
-	adc a, $78 ; $7817
+	adc a, HIGH(CharInputPtrs) ; $7817
 	sub a, l ; $7819
 	ld h, a ; $781a
 	ld a, [hl+] ; $781b
@@ -8140,9 +8140,9 @@ AiServeWalkToSpot:
 	call AdvanceMatchRng ; $7a12
 	and a, $07 ; $7a15
 	add a, a ; $7a17
-	add a, $3d ; $7a18
+	add a, LOW(ServeWalkToSpotTable) ; $7a18
 	ld l, a ; $7a1a
-	adc a, $7a ; $7a1b
+	adc a, HIGH(ServeWalkToSpotTable) ; $7a1b
 	sub a, l ; $7a1d
 	ld h, a ; $7a1e
 	ld a, [hl+] ; $7a1f
@@ -8199,9 +8199,9 @@ AiServePressToss:
 	ld a, [$df7d] ; $7a70
 	and a, $0f ; $7a73
 	add a, a ; $7a75
-	add a, $9d ; $7a76
+	add a, LOW(ServePressTossPtrs) ; $7a76
 	ld l, a ; $7a78
-	adc a, $7a ; $7a79
+	adc a, HIGH(ServePressTossPtrs) ; $7a79
 	sub a, l ; $7a7b
 	ld h, a ; $7a7c
 	ld a, [hl+] ; $7a7d

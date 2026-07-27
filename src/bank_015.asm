@@ -45,9 +45,9 @@ TournamentCourtyardExitTriggers_15:
 TournamentCourtyardNpc05_15:
 	ld a, [$c2b0] ; $4100
 	add a, a ; $4103
-	add a, $4b ; $4104
+	add a, LOW(TournamentCourtyardNpc05TextIds) ; $4104
 	ld l, a ; $4106
-	adc a, $41 ; $4107
+	adc a, HIGH(TournamentCourtyardNpc05TextIds) ; $4107
 	sub a, l ; $4109
 	ld h, a ; $410a
 	ld a, [hl+] ; $410b
@@ -402,9 +402,9 @@ TournamentSiteEntryWalkIn:
 	script_wait_move ACTOR_PARTNER ; $471a
 	ld a, [wStoryModeEntryPoint] ; $471f
 	dec a ; $4722
-	add a, $57 ; $4723
+	add a, LOW(Facings_15_4757) ; $4723
 	ld l, a ; $4725
-	adc a, $47 ; $4726
+	adc a, HIGH(Facings_15_4757) ; $4726
 	sub a, l ; $4728
 	ld h, a ; $4729
 	ld b, [hl] ; $472a
@@ -416,9 +416,9 @@ TournamentSiteEntryWalkIn:
 	script_set_speed ACTOR_PLAYER, $0010 ; $4739
 	ld a, [wStoryModeEntryPoint] ; $4741
 	dec a ; $4744
-	add a, $57 ; $4745
+	add a, LOW(Facings_15_4757) ; $4745
 	ld l, a ; $4747
-	adc a, $47 ; $4748
+	adc a, HIGH(Facings_15_4757) ; $4748
 	sub a, l ; $474a
 	ld h, a ; $474b
 	ld b, [hl] ; $474c
@@ -530,9 +530,9 @@ ClearTrainingCourtNpcFlags:
 TrainingCourtNpc03_15:
 	ld a, [$c2b0] ; $497a
 	add a, a ; $497d
-	add a, $91 ; $497e
+	add a, LOW(TrainingCourtNpc03TextIds) ; $497e
 	ld l, a ; $4980
-	adc a, $49 ; $4981
+	adc a, HIGH(TrainingCourtNpc03TextIds) ; $4981
 	sub a, l ; $4983
 	ld h, a ; $4984
 	ld a, [hl+] ; $4985
@@ -551,9 +551,9 @@ TrainingCourtNpc03TextIds:
 TrainingCourtNpc04_15:
 	ld a, [$c2b0] ; $499b
 	add a, a ; $499e
-	add a, $b2 ; $499f
+	add a, LOW(TrainingCourtNpc04TextIds) ; $499f
 	ld l, a ; $49a1
-	adc a, $49 ; $49a2
+	adc a, HIGH(TrainingCourtNpc04TextIds) ; $49a2
 	sub a, l ; $49a4
 	ld h, a ; $49a5
 	ld a, [hl+] ; $49a6
@@ -572,9 +572,9 @@ TrainingCourtNpc04TextIds:
 TrainingCourtNpc05_15:
 	ld a, [$c2b0] ; $49bc
 	add a, a ; $49bf
-	add a, $d3 ; $49c0
+	add a, LOW(TrainingCourtNpc05TextIds) ; $49c0
 	ld l, a ; $49c2
-	adc a, $49 ; $49c3
+	adc a, HIGH(TrainingCourtNpc05TextIds) ; $49c3
 	sub a, l ; $49c5
 	ld h, a ; $49c6
 	ld a, [hl+] ; $49c7
@@ -593,9 +593,9 @@ TrainingCourtNpc05TextIds:
 TrainingCourtNpc08_15:
 	ld a, [$c2b0] ; $49dd
 	add a, a ; $49e0
-	add a, $f4 ; $49e1
+	add a, LOW(TrainingCourtNpc08TextIds) ; $49e1
 	ld l, a ; $49e3
-	adc a, $49 ; $49e4
+	adc a, HIGH(TrainingCourtNpc08TextIds) ; $49e4
 	sub a, l ; $49e6
 	ld h, a ; $49e7
 	ld a, [hl+] ; $49e8
@@ -614,9 +614,9 @@ TrainingCourtNpc08TextIds:
 TrainingCourtNpc09_15:
 	ld a, [$c2b0] ; $49fe
 	add a, a ; $4a01
-	add a, $15 ; $4a02
+	add a, LOW(TextIds_15_4a15) ; $4a02
 	ld l, a ; $4a04
-	adc a, $4a ; $4a05
+	adc a, HIGH(TextIds_15_4a15) ; $4a05
 	sub a, l ; $4a07
 	ld h, a ; $4a08
 	ld a, [hl+] ; $4a09
@@ -635,9 +635,9 @@ TextIds_15_4a15:
 TrainingCourtNpc0A_15:
 	ld a, [$c2b0] ; $4a1f
 	add a, a ; $4a22
-	add a, $36 ; $4a23
+	add a, LOW(TrainingCourtNpc0ATextIds) ; $4a23
 	ld l, a ; $4a25
-	adc a, $4a ; $4a26
+	adc a, HIGH(TrainingCourtNpc0ATextIds) ; $4a26
 	sub a, l ; $4a28
 	ld h, a ; $4a29
 	ld a, [hl+] ; $4a2a
@@ -656,9 +656,9 @@ TrainingCourtNpc0ATextIds:
 TrainingCourtNpc0B_15:
 	ld a, [$c2b0] ; $4a40
 	add a, a ; $4a43
-	add a, $76 ; $4a44
+	add a, LOW(TrainingCourtNpc0BTextIds) ; $4a44
 	ld l, a ; $4a46
-	adc a, $4a ; $4a47
+	adc a, HIGH(TrainingCourtNpc0BTextIds) ; $4a47
 	sub a, l ; $4a49
 	ld h, a ; $4a4a
 	ld a, [hl+] ; $4a4b
@@ -689,9 +689,9 @@ TrainingCourtNpc0BTextIds:
 TrainingCourtNpc0E_15:
 	ld a, [$c2b0] ; $4a80
 	add a, a ; $4a83
-	add a, $97 ; $4a84
+	add a, LOW(TrainingCourtNpc0ETextIds) ; $4a84
 	ld l, a ; $4a86
-	adc a, $4a ; $4a87
+	adc a, HIGH(TrainingCourtNpc0ETextIds) ; $4a87
 	sub a, l ; $4a89
 	ld h, a ; $4a8a
 	ld a, [hl+] ; $4a8b
@@ -710,9 +710,9 @@ TrainingCourtNpc0ETextIds:
 TrainingCourtNpc0F_15:
 	ld a, [$c2b0] ; $4aa1
 	add a, a ; $4aa4
-	add a, $d7 ; $4aa5
+	add a, LOW(TrainingCourtNpc0FTextIds) ; $4aa5
 	ld l, a ; $4aa7
-	adc a, $4a ; $4aa8
+	adc a, HIGH(TrainingCourtNpc0FTextIds) ; $4aa8
 	sub a, l ; $4aaa
 	ld h, a ; $4aab
 	ld a, [hl+] ; $4aac
@@ -743,9 +743,9 @@ TrainingCourtNpc0FTextIds:
 TrainingCourtNpc10_15:
 	ld a, [$c2b0] ; $4ae1
 	add a, a ; $4ae4
-	add a, $17 ; $4ae5
+	add a, LOW(TextIds_15_4b17) ; $4ae5
 	ld l, a ; $4ae7
-	adc a, $4b ; $4ae8
+	adc a, HIGH(TextIds_15_4b17) ; $4ae8
 	sub a, l ; $4aea
 	ld h, a ; $4aeb
 	ld a, [hl+] ; $4aec
@@ -3597,9 +3597,9 @@ HideServeChallengerActor:
 TestServeChallengerGameFlag:
 	ld a, [$c2b0] ; $71d4
 	add a, a ; $71d7
-	add a, $f8 ; $71d8
+	add a, LOW(TestServeChallengerGameFlagTable) ; $71d8
 	ld l, a ; $71da
-	adc a, $71 ; $71db
+	adc a, HIGH(TestServeChallengerGameFlagTable) ; $71db
 	sub a, l ; $71dd
 	ld h, a ; $71de
 	ld a, [hl+] ; $71df
@@ -3609,9 +3609,9 @@ TestServeChallengerGameFlag:
 	ret ; $71e5
 	ld a, [$c2b0] ; $71e6
 	add a, a ; $71e9
-	add a, $f8 ; $71ea
+	add a, LOW(TestServeChallengerGameFlagTable) ; $71ea
 	ld l, a ; $71ec
-	adc a, $71 ; $71ed
+	adc a, HIGH(TestServeChallengerGameFlagTable) ; $71ed
 	sub a, l ; $71ef
 	ld h, a ; $71f0
 	ld a, [hl+] ; $71f1
@@ -3639,9 +3639,9 @@ HideNetChallengerActor:
 TestNetChallengerGameFlag:
 	ld a, [$c2b0] ; $721a
 	add a, a ; $721d
-	add a, $3e ; $721e
+	add a, LOW(TestNetChallengerGameFlagTable) ; $721e
 	ld l, a ; $7220
-	adc a, $72 ; $7221
+	adc a, HIGH(TestNetChallengerGameFlagTable) ; $7221
 	sub a, l ; $7223
 	ld h, a ; $7224
 	ld a, [hl+] ; $7225
@@ -3651,9 +3651,9 @@ TestNetChallengerGameFlag:
 	ret ; $722b
 	ld a, [$c2b0] ; $722c
 	add a, a ; $722f
-	add a, $3e ; $7230
+	add a, LOW(TestNetChallengerGameFlagTable) ; $7230
 	ld l, a ; $7232
-	adc a, $72 ; $7233
+	adc a, HIGH(TestNetChallengerGameFlagTable) ; $7233
 	sub a, l ; $7235
 	ld h, a ; $7236
 	ld a, [hl+] ; $7237
@@ -3681,9 +3681,9 @@ HideStrokeChallengerActor:
 TestStrokeChallengerGameFlag:
 	ld a, [$c2b0] ; $7260
 	add a, a ; $7263
-	add a, $84 ; $7264
+	add a, LOW(TestStrokeChallengerGameFlagTable) ; $7264
 	ld l, a ; $7266
-	adc a, $72 ; $7267
+	adc a, HIGH(TestStrokeChallengerGameFlagTable) ; $7267
 	sub a, l ; $7269
 	ld h, a ; $726a
 	ld a, [hl+] ; $726b
@@ -3693,9 +3693,9 @@ TestStrokeChallengerGameFlag:
 	ret ; $7271
 	ld a, [$c2b0] ; $7272
 	add a, a ; $7275
-	add a, $84 ; $7276
+	add a, LOW(TestStrokeChallengerGameFlagTable) ; $7276
 	ld l, a ; $7278
-	adc a, $72 ; $7279
+	adc a, HIGH(TestStrokeChallengerGameFlagTable) ; $7279
 	sub a, l ; $727b
 	ld h, a ; $727c
 	ld a, [hl+] ; $727d

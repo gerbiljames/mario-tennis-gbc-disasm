@@ -190,9 +190,9 @@ InitCa00RecordFromCharId:
 	ret ; $4127
 Unused_02_CharIdRemapLookup:
 	push hl ; $4128
-	add a, $33 ; $4129
+	add a, LOW(Unused_02_CharIdRemapTable) ; $4129
 	ld l, a ; $412b
-	adc a, $41 ; $412c
+	adc a, HIGH(Unused_02_CharIdRemapTable) ; $412c
 	sub a, l ; $412e
 	ld h, a ; $412f
 	ld a, [hl] ; $4130
@@ -206,9 +206,9 @@ Unused_02_CharIdRemapTable:
 	db $14, $15, $16, $17, $14, $15, $16, $17, $14, $15, $16, $17, $14, $15, $16, $17 ; 0x30
 GetCharPaletteIndex:
 	push hl ; $4173
-	add a, $7e ; $4174
+	add a, LOW(CharPaletteIndexTable) ; $4174
 	ld l, a ; $4176
-	adc a, $41 ; $4177
+	adc a, HIGH(CharPaletteIndexTable) ; $4177
 	sub a, l ; $4179
 	ld h, a ; $417a
 	ld a, [hl] ; $417b
@@ -524,9 +524,9 @@ InitPlayerRecordFromTemplate:
 	farcall FetchShortTextToBuffer ; $43d7
 	pop de ; $43da
 	ld a, d ; $43db
-	add a, $1b ; $43dc
+	add a, LOW(StoryCharGenderTable) ; $43dc
 	ld l, a ; $43de
-	adc a, $44 ; $43df
+	adc a, HIGH(StoryCharGenderTable) ; $43df
 	sub a, l ; $43e1
 	ld h, a ; $43e2
 	ld a, [hl] ; $43e3
@@ -536,9 +536,9 @@ InitPlayerRecordFromTemplate:
 	push bc ; $43e9
 	ld a, d ; $43ea
 	add a, a ; $43eb
-	add a, $f2 ; $43ec
+	add a, LOW(EquipRecordPtrs_02) ; $43ec
 	ld l, a ; $43ee
-	adc a, $47 ; $43ef
+	adc a, HIGH(EquipRecordPtrs_02) ; $43ef
 	sub a, l ; $43f1
 	ld h, a ; $43f2
 	ld a, [hl+] ; $43f3
@@ -704,9 +704,9 @@ RecomputeCharacterStats:
 	ld a, [hl] ; $44ee
 	and a, $03 ; $44ef
 	add a, a ; $44f1
-	add a, $f2 ; $44f2
+	add a, LOW(EquipRecordPtrs_02) ; $44f2
 	ld l, a ; $44f4
-	adc a, $47 ; $44f5
+	adc a, HIGH(EquipRecordPtrs_02) ; $44f5
 	sub a, l ; $44f7
 	ld h, a ; $44f8
 	ld a, [hl+] ; $44f9
@@ -1584,9 +1584,9 @@ RemapExtendedCharId:
 	push hl ; $4c5b
 	sub a, $20 ; $4c5c
 	and a, $7f ; $4c5e
-	add a, $6a ; $4c60
+	add a, LOW(NameTextRemap_02) ; $4c60
 	ld l, a ; $4c62
-	adc a, $4c ; $4c63
+	adc a, HIGH(NameTextRemap_02) ; $4c63
 	sub a, l ; $4c65
 	ld h, a ; $4c66
 	ld a, [hl] ; $4c67
@@ -1603,9 +1603,9 @@ SetStorySlotFlagB:
 	push af ; $4cb1
 	ld a, [wCurrentStorySlot] ; $4cb2
 	add a, a ; $4cb5
-	add a, $cc ; $4cb6
+	add a, LOW(StorySlotFlagBIds_02) ; $4cb6
 	ld l, a ; $4cb8
-	adc a, $4c ; $4cb9
+	adc a, HIGH(StorySlotFlagBIds_02) ; $4cb9
 	sub a, l ; $4cbb
 	ld h, a ; $4cbc
 	ld a, [hl+] ; $4cbd
@@ -1628,9 +1628,9 @@ StorySlotFlagBIds_02:
 TestStorySlotFlagB:
 	ld a, [wCurrentStorySlot] ; $4cd4
 	add a, a ; $4cd7
-	add a, $cc ; $4cd8
+	add a, LOW(StorySlotFlagBIds_02) ; $4cd8
 	ld l, a ; $4cda
-	adc a, $4c ; $4cdb
+	adc a, HIGH(StorySlotFlagBIds_02) ; $4cdb
 	sub a, l ; $4cdd
 	ld h, a ; $4cde
 	ld a, [hl+] ; $4cdf
@@ -1647,9 +1647,9 @@ SetStorySlotFlagA:
 	push af ; $4ced
 	ld a, [wCurrentStorySlot] ; $4cee
 	add a, a ; $4cf1
-	add a, $08 ; $4cf2
+	add a, LOW(StorySlotFlagAIds_02) ; $4cf2
 	ld l, a ; $4cf4
-	adc a, $4d ; $4cf5
+	adc a, HIGH(StorySlotFlagAIds_02) ; $4cf5
 	sub a, l ; $4cf7
 	ld h, a ; $4cf8
 	ld a, [hl+] ; $4cf9
@@ -1672,9 +1672,9 @@ StorySlotFlagAIds_02:
 TestStorySlotFlagA:
 	ld a, [wCurrentStorySlot] ; $4d10
 	add a, a ; $4d13
-	add a, $08 ; $4d14
+	add a, LOW(StorySlotFlagAIds_02) ; $4d14
 	ld l, a ; $4d16
-	adc a, $4d ; $4d17
+	adc a, HIGH(StorySlotFlagAIds_02) ; $4d17
 	sub a, l ; $4d19
 	ld h, a ; $4d1a
 	ld a, [hl+] ; $4d1b
@@ -2513,9 +2513,9 @@ Unused_02_CharGroupFind:
 	add a, a ; $5ec9
 	add a, a ; $5eca
 	add a, a ; $5ecb
-	add a, $23 ; $5ecc
+	add a, LOW(CharGroupTable_02) ; $5ecc
 	ld l, a ; $5ece
-	adc a, $5e ; $5ecf
+	adc a, HIGH(CharGroupTable_02) ; $5ecf
 	sub a, l ; $5ed1
 	ld h, a ; $5ed2
 	ld b, $10 ; $5ed3
@@ -2535,9 +2535,9 @@ DoesCharGroupRowContain:
 	add a, a ; $5ee3
 	add a, a ; $5ee4
 	add a, a ; $5ee5
-	add a, $23 ; $5ee6
+	add a, LOW(CharGroupTable_02) ; $5ee6
 	ld l, a ; $5ee8
-	adc a, $5e ; $5ee9
+	adc a, HIGH(CharGroupTable_02) ; $5ee9
 	sub a, l ; $5eeb
 	ld h, a ; $5eec
 	ld c, $10 ; $5eed
