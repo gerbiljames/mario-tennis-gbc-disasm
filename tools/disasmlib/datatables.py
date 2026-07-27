@@ -677,3 +677,25 @@ def _same_bank_refs(bank, labels, *words):
         tgt = bank * BANK_SIZE + w - BANK_SIZE if BANK_SIZE <= w < 0x8000 else None
         refs.append(labels.get(tgt) or f"${w:04x}")
     return refs
+
+
+def render_text_offsets(rom, start, end, base, base_label):
+    """A string-offset table: each word is an offset from `base`, the pool that
+    follows it (FetchText_<bank> does `hl = pool + table[id]`). The values are
+    layout, not content, so they render as the difference of two labels and
+    rgbasm recomputes them -- edit a string and every offset still lands. An
+    entry that does not fall on a string start keeps its numeric value."""
+    from extract import string_starts
+    span = max((rom[o] | (rom[o + 1] << 8) for o in range(start, end - 1, 2)),
+               default=0)
+    index = {off: n for n, off in
+             enumerate(string_starts(rom[base:base + span + 1]))}
+    out = []
+    for r, o in enumerate(range(start, end - 1, 2)):
+        w = rom[o] | (rom[o + 1] << 8)
+        n = index.get(w)
+        ref = f"{base_label}.s{n} - {base_label}" if n is not None else f"${w:04x}"
+        out.append(f"\tdw {ref} ; {r}")
+    if (end - start) % 2:
+        out.append(f"\tdb ${rom[end - 1]:02x}")
+    return out

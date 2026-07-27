@@ -31,6 +31,7 @@ from .datatables import (render_actor_list, render_actor_script,
                          render_rect_ptrs, render_rules_pages,
                          render_sprite_anim, render_text_ids,
                          render_slot_records, render_story_locations,
+                         render_text_offsets,
                          render_tilemap_dispatch, render_tilemap_scripts)
 from .idioms import match_launcher_seq, script_cmd_seq, wram_bank_seq
 from .labels import LabelScopes
@@ -49,7 +50,7 @@ INLINE_DB_MAX = 2
 # like game text, so no such content is committed. Anything whose rows are
 # label arithmetic or pointer symbols stays inline -- rgbasm recomputes those
 # from the layout, so they reproduce nothing.
-GENERATED_SPECS = {"palettes", "sound_index", "sound_data"}
+GENERATED_SPECS = {"palettes", "sound_index", "sound_data", "text_pool"}
 
 _LABEL_LINE_RE = re.compile(r"^([A-Za-z_][\w.]*):$")
 _CPU_COMMENT_RE = re.compile(r"; \$([0-9a-f]{4})\b")
@@ -820,6 +821,12 @@ class Emitter:
             return render_sprite_anim(self.rom, start, end)
         if spec == "text_ids":
             return render_text_ids(self.rom, start, end)
+        if spec == "text_offsets":
+            # the pool the offsets are relative to starts where the table ends
+            label = self.labels.get(end)
+            if label:
+                return render_text_offsets(self.rom, start, end, end, label)
+            return None
         if spec == "gfx_ptr_table":
             return render_gfx_ptr_table(self.rom, start, end, bank,
                                         self.data_labels)

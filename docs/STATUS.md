@@ -30,7 +30,7 @@ Everything below is **committed** (HEAD `dc9f878`); the whole history
 rebuilds byte-perfect. Per-bank progress at any time: `python3
 tools/progress.py` (proven-code bytes, fill runs, label counts, human-named
 counts) and `tools/progress.py --unnamed <bank>` to list still-auto-named
-symbols. **19,908 of 21,568 labels are human-named** (see the caveat in the
+symbols. **19,921 of 21,568 labels are human-named** (see the caveat in the
 auto-split section below) (up from 4,816 on 2026-07-23); what is left is
 data blobs.
 
@@ -4908,3 +4908,52 @@ just the next thing starting, and flagging those made the check fire 27 times
 on legitimate layout. Verified by removing one declaration and watching the
 count go 24 -> 25. The 24 standing cases are older than this session and are
 opportunities rather than regressions, so the note is one compact line.
+
+## The text offset tables are layout, so they are source now (2026-07-27)
+
+Each of the 13 text banks opens with an 8,218-byte-total blob at `$4004` that
+was carried as raw `d_4004.bin`. It is not text and it is not content:
+`FetchText_<bank>` reads it as a *pointer into the pool that follows it*.
+
+```
+        ld hl, FetchTextTable
+        sla e / rl d              ; text id * 2
+        add hl, de
+        ld e, [hl] / ld d, [hl]   ; offset = table[id]
+        ld hl, TextStrings_1f     ; base = the string pool
+        add hl, de                ; string = pool + offset
+```
+
+The shape is identical in all 13 banks: table at `$4004`, the pool starting at
+the byte after it, every offset list ascending and inside the pool. That is the
+same construct `render_text` already recomputes when the table happens to sit
+*inside* a text region (`dw .s0 - .strings`); these 13 were split out only
+because the fetch routine takes the pool's address, which makes it a pointer
+target and cuts the region in two.
+
+So the offsets are **recomputed layout**, and by the repository's own rule
+(inline = layout the assembler rebuilds, generated into `data/` = ROM values)
+they belong in committed source. Two new specs do it:
+
+* `text_offsets` renders the table inline as the difference of two labels --
+  **4,109 of 4,109 words resolve symbolically**, no numeric fallbacks:
+
+```
+FetchTextTable:
+        ; $4004, 378 bytes (text_offsets)
+        dw TextStrings_1f.s0 - TextStrings_1f ; 0
+        dw TextStrings_1f.s1 - TextStrings_1f ; 1
+```
+
+* `text_pool` renders the strings, in the gitignored tree as always, with an
+  `.sN` anchor on each so the table above can name them.
+
+The point is not tidiness. **Editing a string used to corrupt the table
+silently** -- every offset after the edit pointed into the middle of a string.
+Now the assembler recomputes them. Verified by lengthening string 0 of bank
+`$1f` by 11 characters and reading the built ROM back: offset 0 stayed `$0000`
+and offsets 1, 2, 3 moved `$0014`->`$001f`, `$004f`->`$005a`, `$0089`->`$0094`,
+exactly +11 each. Restored, `make compare` is OK again.
+
+Structured source is up 8.2 KB to 421,788 bytes (20.1%) and 13 more blobs are
+gone.

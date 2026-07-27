@@ -124,6 +124,38 @@ def render_text(data: bytes) -> str:
     return "\n".join(out) + "\n"
 
 
+def string_starts(data: bytes):
+    """Offsets of each string in a pool, in order. Strings run to a $00 or $03
+    terminator, the same split render_text uses."""
+    out, pos = [], 0
+    while pos < len(data):
+        out.append(pos)
+        while pos < len(data) and data[pos] not in (0x00, 0x03):
+            pos += 1
+        if pos < len(data):
+            pos += 1
+    return out
+
+
+def render_text_pool(data: bytes) -> str:
+    """A string pool with an `.sN` anchor on every string, so a *separate*
+    offset table can name them (`dw Pool.s3 - Pool`) instead of storing the
+    offsets as ROM values. Same rendering as render_text's string half; only
+    the anchors are new."""
+    out = []
+    starts = string_starts(data)
+    for n, start in enumerate(starts):
+        end = starts[n + 1] if n + 1 < len(starts) else len(data)
+        out.append(f".s{n}")
+        if end and data[end - 1] == 0x00:
+            chunk, tail = data[start:end - 1], ["\tdb $00"]
+        else:
+            chunk, tail = data[start:end], []
+        out.extend(render_string(chunk) if chunk else [])
+        out.extend(tail)
+    return "\n".join(out) + "\n"
+
+
 def render_db(data: bytes) -> str:
     """Render bytes as `db` lines that reassemble identically: printable
     runs as string literals, everything else as numeric bytes, one line per
@@ -436,6 +468,8 @@ def render_spec(data: bytes, spec: str) -> str:
         return render_rect_ptrs(data)
     if kind == "sound_index":
         return render_sound_index(data)
+    if kind == "text_pool":
+        return render_text_pool(data)
     if kind == "sound_data":
         # Engine/instrument tables of the sound driver. Rendered like bytes:16;
         # the separate spec name is what routes them out of the repository.
