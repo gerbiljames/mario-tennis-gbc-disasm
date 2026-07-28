@@ -5881,16 +5881,45 @@ counters over the same bytes, which is exactly the pair the RA notes recorded.
 Both are variants of one union now, and the scratch use in the other four banks
 is numeric again rather than wrong.
 
-### wShadowTilemap, and why the cells stay hex
+### wShadowTilemap, and the cells
 
 The full-screen UIs assemble their BG map at `$d000` in WRAM bank `$03` and
 `QueueVRAMCopy` it to `$9800`; `wShadowTilemapBank` / `wShadowTilemapPtr` point
 the text engine at it (bank `$03` for screens, `$05` for text windows, `$02` for
 the match). Rows are `$20` cells apart, so a cell is `$d000 + row * $20 + col` --
 which is what hundreds of `$d0xx`-`$d3xx` addresses across the screen banks
-actually are. Only the base is named. `ld hl, $d151` says "row 10, column 17"
-to anyone who knows the stride and `wShadowTilemap + 337` says nothing, so the
-union's comment carries the arithmetic instead of the operands.
+actually are, and the attribute plane is the same geometry `$400` higher
+(`CopyTilemapRect` steps rows by `$0020`; `SetWinLosePortraitPaletteAttrs`
+writes `$d48b` for the cell whose tile byte is `$d08b`).
+
+**The cells render as coordinates.** `ld de, $d151` is a tilemap cell and says
+so to nobody, and there are ~760 of them. They are now
+
+```
+        ld [wShadowTilemap + 19], a
+        ld [wShadowTilemap + 4 * TILEMAP_WIDTH], a
+        ld [wShadowTilemap + 4 * TILEMAP_WIDTH + 19], a
+```
+
+which is `BuildResultsScreenPanels` drawing a box at columns 0 and 19 of rows 0
+and 4 -- six stores that read as six unrelated addresses until the arithmetic is
+written down.
+
+A pokecrystal-style `hlcoord` macro cannot serve here, and it is worth saying
+why: RGBDS has no expression-returning macro, so `hlcoord` is a *statement*
+macro that emits the whole `ld hl, ...`. These addresses also appear as
+`ld [addr], a` and inside the `dw` rows of `tilemap_rect`, which such a macro
+cannot reach. A folded expression is the one form every operand position
+accepts, and rgbasm reduces it to the same word -- so `make compare` still
+checks the arithmetic, which is the reason to write it out rather than
+precompute it.
+
+The mechanism is a `stride` entry on a `ram_unions.json` symbol, carrying both
+the constant to multiply by and the value to divide by so a wrong pairing cannot
+hide. Only the two tilemap planes use it. Not every screen pairs the planes this
+way -- the bank `$03` cutscenes keep the attribute plane at `$d000` in WRAM bank
+`$02` -- which is why the names are scoped to a provable WRAM bank `$03` rather
+than to the addresses.
 
 The four bytes below the character-data screen's working set turned out to be a
 smaller scratch three screens overlay, so they took range-scoped variants: the
@@ -5929,6 +5958,6 @@ ROM-bank scope because the bank was selected in a callee; here it is selected in
 the caller, and the answer only shows up if you go looking one frame up the
 stack.
 
-Raw `[$xxxx]` WRAM operands in `src/`: **1,560 -> 1,037** over 394 distinct
-addresses, and 25 mislabelled references are gone. `make compare` OK, `make
+Raw `[$xxxx]` WRAM operands in `src/`: **1,560 -> 1,012** over 390 distinct
+addresses, ~760 tilemap cells now carry their row and column, and 25 mislabelled references are gone. `make compare` OK, `make
 check` clean.
