@@ -1176,7 +1176,7 @@ ServiceMatch1Hook_PointStart:
 	ld [wDrillPointJudgement], a ; $485f
 	ret ; $4862
 ServiceMatch1Hook_PointEnd:
-	call ServiceMatch1JudgeShot0 ; $4863
+	call ServiceMatch1JudgeOnPointEnd ; $4863
 	call ServiceMatch1HandlePointEnd ; $4866
 	ld a, [wTotalPointsScoredInCurrentGame] ; $4869
 	bit 0, a ; $486c
@@ -1209,13 +1209,13 @@ ServiceMatch1Hook_PointEnd:
 	ld [wPointWinLoseFlag], a ; $4896
 	ret ; $4899
 ServiceMatch1Hook_RallyTick:
-	call ServiceMatch1JudgeShot3 ; $489a
+	call ServiceMatch1JudgeOnRallyTick ; $489a
 	ret ; $489d
 ServiceMatch1Hook_Bounce:
-	call ServiceMatch1JudgeShot2 ; $489e
+	call ServiceMatch1JudgeOnBounce ; $489e
 	ret ; $48a1
 ServiceMatch1Hook_BallHit:
-	call ServiceMatch1JudgeShot1 ; $48a2
+	call ServiceMatch1JudgeOnBallHit ; $48a2
 	ret ; $48a5
 ServiceMatch1HandlePointEnd:
 	farcall UpdateScorePanelDisplay ; $48a6
@@ -1253,27 +1253,34 @@ ServiceMatch1HandlePointEnd:
 	farcall StartPointEndReactions ; $48f5
 	call PlayDrillPointEndSequence ; $48f8
 	ret ; $48fb
-ServiceMatch1JudgeShot0:
+ServiceMatch1JudgeOnPointEnd:
 	ld a, $00 ; $48fc
 	call ServiceMatch1JudgePoint ; $48fe
 	ld [wDrillPointJudgement], a ; $4901
 	ret ; $4904
-ServiceMatch1JudgeShot1:
+ServiceMatch1JudgeOnBallHit:
 	ld a, $01 ; $4905
 	call ServiceMatch1JudgePoint ; $4907
 	ld [wDrillPointJudgement], a ; $490a
 	ret ; $490d
-; Deliberately stubbed: the leading `ret` means the body never runs, so this
-; drill never judges its third shot. The same pair is stubbed in every drill --
-; twenty routines -- so a drill only ever judges shots 0 and 1. See
-; docs/bugs.md.
-ServiceMatch1JudgeShot2:
+; Judges the point on the ball-bounce event -- except that the leading `ret`
+; means the body never runs, so this drill does not judge on a bounce.
+;
+; Each drill has four of these, one per hook: PointEnd, BallHit, Bounce and
+; RallyTick, passing 0-3 to its JudgePoint as the event code. 18 of the 52 in
+; this bank start with `ret`, and which ones varies by drill -- most disable
+; only RallyTick, the serve and net drills also disable Bounce, and
+; ServiceMatch2 disables Bounce while leaving RallyTick live. So the effect is
+; a per-drill choice of which events can score a point. Whether each `ret` was
+; written as that choice or left behind by an edit is not something the code
+; can settle. See docs/bugs.md.
+ServiceMatch1JudgeOnBounce:
 	ret ; $490e
 	ld a, $02 ; $490f
 	call ServiceMatch1JudgePoint ; $4911
 	ld [wDrillPointJudgement], a ; $4914
 	ret ; $4917
-ServiceMatch1JudgeShot3:
+ServiceMatch1JudgeOnRallyTick:
 	ret ; $4918
 	ld a, $03 ; $4919
 	call ServiceMatch1JudgePoint ; $491b
@@ -1440,7 +1447,7 @@ Table_0b_4a23:
 	; $4a23, 4 bytes (bytes:4)
 	db $20, $10, $10, $20 ; 0x00
 ServiceMatch2Hook_PointEnd:
-	call ServiceMatch2JudgeShot0 ; $4a27
+	call ServiceMatch2JudgeOnPointEnd ; $4a27
 	call ServiceMatch2HandlePointEnd ; $4a2a
 	ld a, [wTotalPointsScoredInCurrentGame] ; $4a2d
 	bit 0, a ; $4a30
@@ -1473,13 +1480,13 @@ ServiceMatch2Hook_PointEnd:
 	ld [wPointWinLoseFlag], a ; $4a5a
 	ret ; $4a5d
 ServiceMatch2Hook_RallyTick:
-	call ServiceMatch2JudgeShot3 ; $4a5e
+	call ServiceMatch2JudgeOnRallyTick ; $4a5e
 	ret ; $4a61
 ServiceMatch2Hook_Bounce:
-	call ServiceMatch2JudgeShot2 ; $4a62
+	call ServiceMatch2JudgeOnBounce ; $4a62
 	ret ; $4a65
 ServiceMatch2Hook_BallHit:
-	call ServiceMatch2JudgeShot1 ; $4a66
+	call ServiceMatch2JudgeOnBallHit ; $4a66
 	ret ; $4a69
 DrillPositions_0b_4a6a:
 	; $4a6a, 66 bytes (records:4)
@@ -1569,23 +1576,23 @@ ServiceMatch2AwardPointToSide:
 	ld hl, wTotalPointsScoredInCurrentGame ; $4b29
 	inc [hl] ; $4b2c
 	ret ; $4b2d
-ServiceMatch2JudgeShot0:
+ServiceMatch2JudgeOnPointEnd:
 	ld a, $00 ; $4b2e
 	call ServiceMatch2JudgePoint ; $4b30
 	ld [wDrillPointJudgement], a ; $4b33
 	ret ; $4b36
-ServiceMatch2JudgeShot1:
+ServiceMatch2JudgeOnBallHit:
 	ld a, $01 ; $4b37
 	call ServiceMatch2JudgePoint ; $4b39
 	ld [wDrillPointJudgement], a ; $4b3c
 	ret ; $4b3f
-ServiceMatch2JudgeShot2:
+ServiceMatch2JudgeOnBounce:
 	ret ; $4b40
 	ld a, $02 ; $4b41
 	call ServiceMatch2JudgePoint ; $4b43
 	ld [wDrillPointJudgement], a ; $4b46
 	ret ; $4b49
-ServiceMatch2JudgeShot3:
+ServiceMatch2JudgeOnRallyTick:
 	ld a, $03 ; $4b4a
 	call ServiceMatch2JudgePoint ; $4b4c
 	ld [wDrillPointJudgement], a ; $4b4f
@@ -1742,7 +1749,7 @@ ServiceMatch3Hook_PointStart:
 	ld [wDrillPointJudgement], a ; $4c45
 	ret ; $4c48
 ServiceMatch3Hook_PointEnd:
-	call ServiceMatch3JudgeShot0 ; $4c49
+	call ServiceMatch3JudgeOnPointEnd ; $4c49
 	call ServiceMatch3HandlePointEnd ; $4c4c
 	ld a, [wPointWinLoseFlag] ; $4c4f
 	or a ; $4c52
@@ -1781,13 +1788,13 @@ ServiceMatch3Hook_PointEnd:
 	ld [wPointWinLoseFlag], a ; $4c88
 	ret ; $4c8b
 ServiceMatch3Hook_RallyTick:
-	call ServiceMatch3JudgeShot3 ; $4c8c
+	call ServiceMatch3JudgeOnRallyTick ; $4c8c
 	ret ; $4c8f
 ServiceMatch3Hook_Bounce:
-	call ServiceMatch3JudgeShot2 ; $4c90
+	call ServiceMatch3JudgeOnBounce ; $4c90
 	ret ; $4c93
 ServiceMatch3Hook_BallHit:
-	call ServiceMatch3JudgeShot1 ; $4c94
+	call ServiceMatch3JudgeOnBallHit ; $4c94
 	ret ; $4c97
 ServiceMatch3HandlePointEnd:
 	farcall UpdateScorePanelDisplay ; $4c98
@@ -1850,23 +1857,23 @@ ServiceMatch3AwardPointToSide:
 	ld hl, wTotalPointsScoredInCurrentGame ; $4d12
 	inc [hl] ; $4d15
 	ret ; $4d16
-ServiceMatch3JudgeShot0:
+ServiceMatch3JudgeOnPointEnd:
 	ld a, $00 ; $4d17
 	call ServiceMatch3JudgePoint ; $4d19
 	ld [wDrillPointJudgement], a ; $4d1c
 	ret ; $4d1f
-ServiceMatch3JudgeShot1:
+ServiceMatch3JudgeOnBallHit:
 	ld a, $01 ; $4d20
 	call ServiceMatch3JudgePoint ; $4d22
 	ld [wDrillPointJudgement], a ; $4d25
 	ret ; $4d28
-ServiceMatch3JudgeShot2:
+ServiceMatch3JudgeOnBounce:
 	ret ; $4d29
 	ld a, $02 ; $4d2a
 	call ServiceMatch3JudgePoint ; $4d2c
 	ld [wDrillPointJudgement], a ; $4d2f
 	ret ; $4d32
-ServiceMatch3JudgeShot3:
+ServiceMatch3JudgeOnRallyTick:
 	ret ; $4d33
 	ld a, $03 ; $4d34
 	call ServiceMatch3JudgePoint ; $4d36
@@ -2785,7 +2792,7 @@ NetGameMatch1DrillOpponent:
 	db $3d ; $542c
 	db $54 ; $542d
 NetGameMatch1Hook_PointEnd:
-	call NetGameMatch1JudgeShot0 ; $542e
+	call NetGameMatch1JudgeOnPointEnd ; $542e
 	call NetGameMatch1HandlePointEnd ; $5431
 	ld a, [wTotalPointsScoredInCurrentGame] ; $5434
 	bit 0, a ; $5437
@@ -2799,13 +2806,13 @@ NetGameMatch1Hook_PointEnd:
 	ld [wMatchAbortFlag], a ; $5447
 	ret ; $544a
 NetGameMatch1Hook_RallyTick:
-	call NetGameMatch1JudgeShot3 ; $544b
+	call NetGameMatch1JudgeOnRallyTick ; $544b
 	ret ; $544e
 NetGameMatch1Hook_Bounce:
-	call NetGameMatch1JudgeShot2 ; $544f
+	call NetGameMatch1JudgeOnBounce ; $544f
 	ret ; $5452
 NetGameMatch1Hook_BallHit:
-	call NetGameMatch1JudgeShot1 ; $5453
+	call NetGameMatch1JudgeOnBallHit ; $5453
 	ret ; $5456
 NetGameMatch1HandlePointEnd:
 	farcall UpdateScorePanelDisplay ; $5457
@@ -2874,23 +2881,23 @@ NetGameMatch1DecideWinner:
 .store:
 	ld [wPointWinLoseFlag], a ; $54cf
 	ret ; $54d2
-NetGameMatch1JudgeShot0:
+NetGameMatch1JudgeOnPointEnd:
 	ld a, $00 ; $54d3
 	call NetGameMatch1JudgePoint ; $54d5
 	ld [wDrillPointJudgement], a ; $54d8
 	ret ; $54db
-NetGameMatch1JudgeShot1:
+NetGameMatch1JudgeOnBallHit:
 	ld a, $01 ; $54dc
 	call NetGameMatch1JudgePoint ; $54de
 	ld [wDrillPointJudgement], a ; $54e1
 	ret ; $54e4
-NetGameMatch1JudgeShot2:
+NetGameMatch1JudgeOnBounce:
 	ret ; $54e5
 	ld a, $02 ; $54e6
 	call NetGameMatch1JudgePoint ; $54e8
 	ld [wDrillPointJudgement], a ; $54eb
 	ret ; $54ee
-NetGameMatch1JudgeShot3:
+NetGameMatch1JudgeOnRallyTick:
 	ret ; $54ef
 	ld a, $03 ; $54f0
 	call NetGameMatch1JudgePoint ; $54f2
@@ -3163,7 +3170,7 @@ NetGameMatch2DrillOpponent:
 	db $3e ; $5699
 	db $55 ; $569a
 NetGameMatch2Hook_PointEnd:
-	call NetGameMatch2JudgeShot0 ; $569b
+	call NetGameMatch2JudgeOnPointEnd ; $569b
 	call NetGameMatch2HandlePointEnd ; $569e
 	ld a, [wTotalPointsScoredInCurrentGame] ; $56a1
 	bit 0, a ; $56a4
@@ -3201,13 +3208,13 @@ NetGameMatch2Hook_PointEnd:
 	ld [wMatchAbortFlag], a ; $56da
 	ret ; $56dd
 NetGameMatch2Hook_RallyTick:
-	call NetGameMatch2JudgeShot3 ; $56de
+	call NetGameMatch2JudgeOnRallyTick ; $56de
 	ret ; $56e1
 NetGameMatch2Hook_Bounce:
-	call NetGameMatch2JudgeShot2 ; $56e2
+	call NetGameMatch2JudgeOnBounce ; $56e2
 	ret ; $56e5
 NetGameMatch2Hook_BallHit:
-	call NetGameMatch2JudgeShot1 ; $56e6
+	call NetGameMatch2JudgeOnBallHit ; $56e6
 	ret ; $56e9
 NetGameMatch2HandlePointEnd:
 	farcall UpdateScorePanelDisplay ; $56ea
@@ -3260,23 +3267,23 @@ NetGameMatch2AwardPointToSide:
 	ld hl, wTotalPointsScoredInCurrentGame ; $5748
 	inc [hl] ; $574b
 	ret ; $574c
-NetGameMatch2JudgeShot0:
+NetGameMatch2JudgeOnPointEnd:
 	ld a, $00 ; $574d
 	call NetGameMatch2JudgePoint ; $574f
 	ld [wDrillPointJudgement], a ; $5752
 	ret ; $5755
-NetGameMatch2JudgeShot1:
+NetGameMatch2JudgeOnBallHit:
 	ld a, $01 ; $5756
 	call NetGameMatch2JudgePoint ; $5758
 	ld [wDrillPointJudgement], a ; $575b
 	ret ; $575e
-NetGameMatch2JudgeShot2:
+NetGameMatch2JudgeOnBounce:
 	ret ; $575f
 	ld a, $02 ; $5760
 	call NetGameMatch2JudgePoint ; $5762
 	ld [wDrillPointJudgement], a ; $5765
 	ret ; $5768
-NetGameMatch2JudgeShot3:
+NetGameMatch2JudgeOnRallyTick:
 	ret ; $5769
 	ld a, $03 ; $576a
 	call NetGameMatch2JudgePoint ; $576c
@@ -3544,7 +3551,7 @@ NetGameMatch3Hook_PointStart:
 	ld [wDrillCounters + 6], a ; $5904
 	ret ; $5907
 NetGameMatch3Hook_PointEnd:
-	call NetGameMatch3JudgeShot0 ; $5908
+	call NetGameMatch3JudgeOnPointEnd ; $5908
 	call NetGameMatch3HandlePointEnd ; $590b
 	ld hl, NetGameMatch3DrillOpponent ; $590e
 	call LoadDrillOpponentBySide ; $5911
@@ -3585,13 +3592,13 @@ NetGameMatch3DrillOpponent:
 	db $3f ; $594c
 	db $56 ; $594d
 NetGameMatch3Hook_RallyTick:
-	call NetGameMatch3JudgeShot3 ; $594e
+	call NetGameMatch3JudgeOnRallyTick ; $594e
 	ret ; $5951
 NetGameMatch3Hook_Bounce:
-	call NetGameMatch3JudgeShot2 ; $5952
+	call NetGameMatch3JudgeOnBounce ; $5952
 	ret ; $5955
 NetGameMatch3Hook_BallHit:
-	call NetGameMatch3JudgeShot1 ; $5956
+	call NetGameMatch3JudgeOnBallHit ; $5956
 	ret ; $5959
 NetGameMatch3HandlePointEnd:
 	farcall UpdateScorePanelDisplay ; $595a
@@ -3748,23 +3755,23 @@ NetGameMatch3AwardPointToSide:
 	ld hl, wTotalPointsScoredInCurrentGame ; $5a73
 	inc [hl] ; $5a76
 	ret ; $5a77
-NetGameMatch3JudgeShot0:
+NetGameMatch3JudgeOnPointEnd:
 	ld a, $00 ; $5a78
 	call NetGameMatch3JudgePoint ; $5a7a
 	ld [wDrillPointJudgement], a ; $5a7d
 	ret ; $5a80
-NetGameMatch3JudgeShot1:
+NetGameMatch3JudgeOnBallHit:
 	ld a, $01 ; $5a81
 	call NetGameMatch3JudgePoint ; $5a83
 	ld [wDrillPointJudgement], a ; $5a86
 	ret ; $5a89
-NetGameMatch3JudgeShot2:
+NetGameMatch3JudgeOnBounce:
 	ret ; $5a8a
 	ld a, $02 ; $5a8b
 	call NetGameMatch3JudgePoint ; $5a8d
 	ld [wDrillPointJudgement], a ; $5a90
 	ret ; $5a93
-NetGameMatch3JudgeShot3:
+NetGameMatch3JudgeOnRallyTick:
 	ret ; $5a94
 	ld a, $03 ; $5a95
 	call NetGameMatch3JudgePoint ; $5a97
@@ -4429,7 +4436,7 @@ NetGamePractice2Hook_PointStart:
 	ld [wDrillPointJudgement], a ; $5ef6
 	ret ; $5ef9
 NetGamePractice2Hook_PointEnd:
-	call NetGamePractice2JudgeShot0 ; $5efa
+	call NetGamePractice2JudgeOnPointEnd ; $5efa
 	ld a, [wPointOutcome] ; $5efd
 	cp $04 ; $5f00
 	jr z, .netGamePractice2HandlePointEnd2 ; $5f02
@@ -4499,13 +4506,13 @@ NetGamePractice2EvaluateResult:
 	ld a, $ff ; $5f78
 	ret ; $5f7a
 NetGamePractice2Hook_RallyTick:
-	call NetGamePractice2JudgeShot3 ; $5f7b
+	call NetGamePractice2JudgeOnRallyTick ; $5f7b
 	ret ; $5f7e
 NetGamePractice2Hook_Bounce:
-	call NetGamePractice2JudgeShot2 ; $5f7f
+	call NetGamePractice2JudgeOnBounce ; $5f7f
 	ret ; $5f82
 NetGamePractice2Hook_BallHit:
-	call NetGamePractice2JudgeShot1 ; $5f83
+	call NetGamePractice2JudgeOnBallHit ; $5f83
 	ld a, [wLastShotCharIndex] ; $5f86
 	cp $01 ; $5f89
 	jr nz, .done ; $5f8b
@@ -4556,22 +4563,22 @@ NetGamePractice2HandlePointEnd:
 	call UnregisterFrameTask ; $5ffb
 	call PlayDrillPointEndSequence ; $5ffe
 	ret ; $6001
-NetGamePractice2JudgeShot0:
+NetGamePractice2JudgeOnPointEnd:
 	ld a, $00 ; $6002
 	call NetGamePractice2JudgePoint ; $6004
 	ld [wDrillPointJudgement], a ; $6007
 	ret ; $600a
-NetGamePractice2JudgeShot1:
+NetGamePractice2JudgeOnBallHit:
 	ld a, $01 ; $600b
 	call NetGamePractice2JudgePoint ; $600d
 	ld [wDrillPointJudgement], a ; $6010
 	ret ; $6013
-NetGamePractice2JudgeShot2:
+NetGamePractice2JudgeOnBounce:
 	ld a, $02 ; $6014
 	call NetGamePractice2JudgePoint ; $6016
 	ld [wDrillPointJudgement], a ; $6019
 	ret ; $601c
-NetGamePractice2JudgeShot3:
+NetGamePractice2JudgeOnRallyTick:
 	ret ; $601d
 	ld a, $03 ; $601e
 	call NetGamePractice2JudgePoint ; $6020
@@ -4810,7 +4817,7 @@ NetGamePractice3Hook_PointStart:
 	ld [wDrillPointJudgement], a ; $61a8
 	ret ; $61ab
 NetGamePractice3Hook_PointEnd:
-	call NetGamePractice3JudgeShot0 ; $61ac
+	call NetGamePractice3JudgeOnPointEnd ; $61ac
 	ld a, [wPointOutcome] ; $61af
 	cp $04 ; $61b2
 	jr z, .netGamePractice3HandlePointEnd2 ; $61b4
@@ -4887,13 +4894,13 @@ NetGamePractice3EvaluateResult:
 	ld a, $ff ; $6237
 	ret ; $6239
 NetGamePractice3Hook_RallyTick:
-	call NetGamePractice3JudgeShot3 ; $623a
+	call NetGamePractice3JudgeOnRallyTick ; $623a
 	ret ; $623d
 NetGamePractice3Hook_Bounce:
-	call NetGamePractice3JudgeShot2 ; $623e
+	call NetGamePractice3JudgeOnBounce ; $623e
 	ret ; $6241
 NetGamePractice3Hook_BallHit:
-	call NetGamePractice3JudgeShot1 ; $6242
+	call NetGamePractice3JudgeOnBallHit ; $6242
 	ld a, [wLastShotCharIndex] ; $6245
 	cp $01 ; $6248
 	jr nz, .done ; $624a
@@ -4944,22 +4951,22 @@ NetGamePractice3HandlePointEnd:
 	call UnregisterFrameTask ; $62ba
 	call PlayDrillPointEndSequence ; $62bd
 	ret ; $62c0
-NetGamePractice3JudgeShot0:
+NetGamePractice3JudgeOnPointEnd:
 	ld a, $00 ; $62c1
 	call NetGamePractice3JudgePoint ; $62c3
 	ld [wDrillPointJudgement], a ; $62c6
 	ret ; $62c9
-NetGamePractice3JudgeShot1:
+NetGamePractice3JudgeOnBallHit:
 	ld a, $01 ; $62ca
 	call NetGamePractice3JudgePoint ; $62cc
 	ld [wDrillPointJudgement], a ; $62cf
 	ret ; $62d2
-NetGamePractice3JudgeShot2:
+NetGamePractice3JudgeOnBounce:
 	ld a, $02 ; $62d3
 	call NetGamePractice3JudgePoint ; $62d5
 	ld [wDrillPointJudgement], a ; $62d8
 	ret ; $62db
-NetGamePractice3JudgeShot3:
+NetGamePractice3JudgeOnRallyTick:
 	ret ; $62dc
 	ld a, $03 ; $62dd
 	call NetGamePractice3JudgePoint ; $62df
@@ -5178,7 +5185,7 @@ StrokeMatch1Hook_PointStart:
 	ld [$c7a8], a ; $643d
 	ret ; $6440
 StrokeMatch1Hook_PointEnd:
-	call StrokeMatch1JudgeShot0 ; $6441
+	call StrokeMatch1JudgeOnPointEnd ; $6441
 	call StrokeMatch1HandlePointEnd ; $6444
 	ld a, [wPlayer1PointsWon] ; $6447
 	ld b, a ; $644a
@@ -5213,13 +5220,13 @@ StrokeMatch1Hook_PointEnd:
 	ld [wMatchAbortFlag], a ; $6479
 	ret ; $647c
 StrokeMatch1Hook_RallyTick:
-	call StrokeMatch1JudgeShot3 ; $647d
+	call StrokeMatch1JudgeOnRallyTick ; $647d
 	ret ; $6480
 StrokeMatch1Hook_Bounce:
-	call StrokeMatch1JudgeShot2 ; $6481
+	call StrokeMatch1JudgeOnBounce ; $6481
 	ret ; $6484
 StrokeMatch1Hook_BallHit:
-	call StrokeMatch1JudgeShot1 ; $6485
+	call StrokeMatch1JudgeOnBallHit ; $6485
 	ret ; $6488
 StrokeMatch1HandlePointEnd:
 	farcall UpdateScorePanelDisplay ; $6489
@@ -5266,22 +5273,22 @@ StrokeMatch1AwardPointToSide:
 	ld hl, wTotalPointsScoredInCurrentGame ; $64db
 	inc [hl] ; $64de
 	ret ; $64df
-StrokeMatch1JudgeShot0:
+StrokeMatch1JudgeOnPointEnd:
 	ld a, $00 ; $64e0
 	call StrokeMatch1JudgePoint ; $64e2
 	ld [wDrillPointJudgement], a ; $64e5
 	ret ; $64e8
-StrokeMatch1JudgeShot1:
+StrokeMatch1JudgeOnBallHit:
 	ld a, $01 ; $64e9
 	call StrokeMatch1JudgePoint ; $64eb
 	ld [wDrillPointJudgement], a ; $64ee
 	ret ; $64f1
-StrokeMatch1JudgeShot2:
+StrokeMatch1JudgeOnBounce:
 	ld a, $02 ; $64f2
 	call StrokeMatch1JudgePoint ; $64f4
 	ld [wDrillPointJudgement], a ; $64f7
 	ret ; $64fa
-StrokeMatch1JudgeShot3:
+StrokeMatch1JudgeOnRallyTick:
 	ret ; $64fb
 	ld a, $03 ; $64fc
 	call StrokeMatch1JudgePoint ; $64fe
@@ -5626,7 +5633,7 @@ StrokeMatch2DrillOpponent:
 	db $58 ; $6737
 	db $44 ; $6738
 StrokeMatch2Hook_PointEnd:
-	call StrokeMatch2JudgeShot0 ; $6739
+	call StrokeMatch2JudgeOnPointEnd ; $6739
 	call StrokeMatch2HandlePointEnd ; $673c
 	ld a, [wTotalPointsScoredInCurrentGame] ; $673f
 	bit 0, a ; $6742
@@ -5664,13 +5671,13 @@ StrokeMatch2Hook_PointEnd:
 	ld [wMatchAbortFlag], a ; $6778
 	ret ; $677b
 StrokeMatch2Hook_RallyTick:
-	call StrokeMatch2JudgeShot3 ; $677c
+	call StrokeMatch2JudgeOnRallyTick ; $677c
 	ret ; $677f
 StrokeMatch2Hook_Bounce:
-	call StrokeMatch2JudgeShot2 ; $6780
+	call StrokeMatch2JudgeOnBounce ; $6780
 	ret ; $6783
 StrokeMatch2Hook_BallHit:
-	call StrokeMatch2JudgeShot1 ; $6784
+	call StrokeMatch2JudgeOnBallHit ; $6784
 	ret ; $6787
 StrokeMatch2HandlePointEnd:
 	farcall UpdateScorePanelDisplay ; $6788
@@ -5723,22 +5730,22 @@ StrokeMatch2AwardPointToSide:
 	ld hl, wTotalPointsScoredInCurrentGame ; $67e6
 	inc [hl] ; $67e9
 	ret ; $67ea
-StrokeMatch2JudgeShot0:
+StrokeMatch2JudgeOnPointEnd:
 	ld a, $00 ; $67eb
 	call StrokeMatch2JudgePoint ; $67ed
 	ld [wDrillPointJudgement], a ; $67f0
 	ret ; $67f3
-StrokeMatch2JudgeShot1:
+StrokeMatch2JudgeOnBallHit:
 	ld a, $01 ; $67f4
 	call StrokeMatch2JudgePoint ; $67f6
 	ld [wDrillPointJudgement], a ; $67f9
 	ret ; $67fc
-StrokeMatch2JudgeShot2:
+StrokeMatch2JudgeOnBounce:
 	ld a, $02 ; $67fd
 	call StrokeMatch2JudgePoint ; $67ff
 	ld [wDrillPointJudgement], a ; $6802
 	ret ; $6805
-StrokeMatch2JudgeShot3:
+StrokeMatch2JudgeOnRallyTick:
 	ret ; $6806
 	ld a, $03 ; $6807
 	call StrokeMatch2JudgePoint ; $6809
@@ -5978,7 +5985,7 @@ StrokeMatch3DrillOpponent:
 	db $59 ; $6982
 	db $45 ; $6983
 StrokeMatch3Hook_PointEnd:
-	call StrokeMatch3JudgeShot0 ; $6984
+	call StrokeMatch3JudgeOnPointEnd ; $6984
 	call StrokeMatch3HandlePointEnd ; $6987
 	ld a, [wTotalPointsScoredInCurrentGame] ; $698a
 	bit 0, a ; $698d
@@ -6016,13 +6023,13 @@ StrokeMatch3Hook_PointEnd:
 	ld [wMatchAbortFlag], a ; $69c3
 	ret ; $69c6
 StrokeMatch3Hook_RallyTick:
-	call StrokeMatch3JudgeShot3 ; $69c7
+	call StrokeMatch3JudgeOnRallyTick ; $69c7
 	ret ; $69ca
 StrokeMatch3Hook_Bounce:
-	call StrokeMatch3JudgeShot2 ; $69cb
+	call StrokeMatch3JudgeOnBounce ; $69cb
 	ret ; $69ce
 StrokeMatch3Hook_BallHit:
-	call StrokeMatch3JudgeShot1 ; $69cf
+	call StrokeMatch3JudgeOnBallHit ; $69cf
 	ret ; $69d2
 StrokeMatch3HandlePointEnd:
 	farcall UpdateScorePanelDisplay ; $69d3
@@ -6075,22 +6082,22 @@ StrokeMatch3AwardPointToSide:
 	ld hl, wTotalPointsScoredInCurrentGame ; $6a31
 	inc [hl] ; $6a34
 	ret ; $6a35
-StrokeMatch3JudgeShot0:
+StrokeMatch3JudgeOnPointEnd:
 	ld a, $00 ; $6a36
 	call StrokeMatch3JudgePoint ; $6a38
 	ld [wDrillPointJudgement], a ; $6a3b
 	ret ; $6a3e
-StrokeMatch3JudgeShot1:
+StrokeMatch3JudgeOnBallHit:
 	ld a, $01 ; $6a3f
 	call StrokeMatch3JudgePoint ; $6a41
 	ld [wDrillPointJudgement], a ; $6a44
 	ret ; $6a47
-StrokeMatch3JudgeShot2:
+StrokeMatch3JudgeOnBounce:
 	ld a, $02 ; $6a48
 	call StrokeMatch3JudgePoint ; $6a4a
 	ld [wDrillPointJudgement], a ; $6a4d
 	ret ; $6a50
-StrokeMatch3JudgeShot3:
+StrokeMatch3JudgeOnRallyTick:
 	ret ; $6a51
 	ld a, $03 ; $6a52
 	call StrokeMatch3JudgePoint ; $6a54
@@ -6674,7 +6681,7 @@ StrokePractice2TargetZoneDelayTask:
 	call UnregisterFrameTask ; $6e29
 	ret ; $6e2c
 StrokePractice2Hook_PointEnd:
-	call StrokePractice2JudgeShot0 ; $6e2d
+	call StrokePractice2JudgeOnPointEnd ; $6e2d
 	call StrokePractice2HandlePointEnd ; $6e30
 	ld a, [wTotalPointsScoredInCurrentGame] ; $6e33
 	cp $04 ; $6e36
@@ -6727,17 +6734,17 @@ StrokePractice2EvaluateResult:
 	ld a, $ff ; $6e8f
 	ret ; $6e91
 StrokePractice2Hook_RallyTick:
-	call StrokePractice2JudgeShot3 ; $6e92
+	call StrokePractice2JudgeOnRallyTick ; $6e92
 	ld a, [wRallyLength] ; $6e95
 	cp $02 ; $6e98
 	ret nz ; $6e9a
 	call ResetActiveCharState ; $6e9b
 	ret ; $6e9e
 StrokePractice2Hook_Bounce:
-	call StrokePractice2JudgeShot2 ; $6e9f
+	call StrokePractice2JudgeOnBounce ; $6e9f
 	ret ; $6ea2
 StrokePractice2Hook_BallHit:
-	call StrokePractice2JudgeShot1 ; $6ea3
+	call StrokePractice2JudgeOnBallHit ; $6ea3
 	ret ; $6ea6
 DrillPositions_0b_6ea7:
 	; $6ea7, 34 bytes (records:4)
@@ -6783,22 +6790,22 @@ StrokePractice2HandlePointEnd:
 	call UnregisterFrameTask ; $6f11
 	call PlayDrillPointEndSequence ; $6f14
 	ret ; $6f17
-StrokePractice2JudgeShot0:
+StrokePractice2JudgeOnPointEnd:
 	ld a, $00 ; $6f18
 	call StrokePractice2JudgePoint ; $6f1a
 	ld [wDrillPointJudgement], a ; $6f1d
 	ret ; $6f20
-StrokePractice2JudgeShot1:
+StrokePractice2JudgeOnBallHit:
 	ld a, $01 ; $6f21
 	call StrokePractice2JudgePoint ; $6f23
 	ld [wDrillPointJudgement], a ; $6f26
 	ret ; $6f29
-StrokePractice2JudgeShot2:
+StrokePractice2JudgeOnBounce:
 	ld a, $02 ; $6f2a
 	call StrokePractice2JudgePoint ; $6f2c
 	ld [wDrillPointJudgement], a ; $6f2f
 	ret ; $6f32
-StrokePractice2JudgeShot3:
+StrokePractice2JudgeOnRallyTick:
 	ret ; $6f33
 	ld a, $03 ; $6f34
 	call StrokePractice2JudgePoint ; $6f36
@@ -7003,7 +7010,7 @@ StrokePractice3TargetZoneDelayTask:
 	call UnregisterFrameTask ; $708e
 	ret ; $7091
 StrokePractice3Hook_PointEnd:
-	call StrokePractice3JudgeShot0 ; $7092
+	call StrokePractice3JudgeOnPointEnd ; $7092
 	call StrokePractice3HandlePointEnd ; $7095
 	ld a, [wTotalPointsScoredInCurrentGame] ; $7098
 	cp $04 ; $709b
@@ -7053,17 +7060,17 @@ StrokePractice3EvaluateResult:
 	ld a, $ff ; $70eb
 	ret ; $70ed
 StrokePractice3Hook_RallyTick:
-	call StrokePractice3JudgeShot3 ; $70ee
+	call StrokePractice3JudgeOnRallyTick ; $70ee
 	ld a, [wRallyLength] ; $70f1
 	cp $02 ; $70f4
 	ret nz ; $70f6
 	call ResetActiveCharState ; $70f7
 	ret ; $70fa
 StrokePractice3Hook_Bounce:
-	call StrokePractice3JudgeShot2 ; $70fb
+	call StrokePractice3JudgeOnBounce ; $70fb
 	ret ; $70fe
 StrokePractice3Hook_BallHit:
-	call StrokePractice3JudgeShot1 ; $70ff
+	call StrokePractice3JudgeOnBallHit ; $70ff
 	ld a, [wRallyLength] ; $7102
 	cp $01 ; $7105
 	ret nz ; $7107
@@ -7112,22 +7119,22 @@ StrokePractice3HandlePointEnd:
 	call UnregisterFrameTask ; $7173
 	call PlayDrillPointEndSequence ; $7176
 	ret ; $7179
-StrokePractice3JudgeShot0:
+StrokePractice3JudgeOnPointEnd:
 	ld a, $00 ; $717a
 	call StrokePractice3JudgePoint ; $717c
 	ld [wDrillPointJudgement], a ; $717f
 	ret ; $7182
-StrokePractice3JudgeShot1:
+StrokePractice3JudgeOnBallHit:
 	ld a, $01 ; $7183
 	call StrokePractice3JudgePoint ; $7185
 	ld [wDrillPointJudgement], a ; $7188
 	ret ; $718b
-StrokePractice3JudgeShot2:
+StrokePractice3JudgeOnBounce:
 	ld a, $02 ; $718c
 	call StrokePractice3JudgePoint ; $718e
 	ld [wDrillPointJudgement], a ; $7191
 	ret ; $7194
-StrokePractice3JudgeShot3:
+StrokePractice3JudgeOnRallyTick:
 	ret ; $7195
 	ld a, $03 ; $7196
 	call StrokePractice3JudgePoint ; $7198

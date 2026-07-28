@@ -109,28 +109,41 @@ store with a missing counterpart.
 | `hLinkLastRxMirror` | bank `$07` | written beside `hLinkLastRxByte`, never compared |
 | `hUnusedLinkSelectByte` | bank `$38` | written twice by `RunLinkCharSelectScreen` |
 
-## Stubs — deliberate, not defects
+## Routines that return before their body
 
 Twenty-four routines in the ROM are *called* but begin with `ret`, so their
-bodies never run. Twenty of them are one family: the third and fourth shot
-judgements of every drill.
+bodies never run. Eighteen of them are one family, and they are listed here
+rather than under Bugs because what they do is coherent — but the intent behind
+them is not something the code can settle, so this section claims only what is
+observable.
 
-```
-ServiceMatch1JudgeShot2:
-        ret
-        ld a, $02
-        call ServiceMatch1JudgePoint
-        ld [wDrillPointJudgement], a
-        ret
-```
+Each drill in bank `$0b` has four judging routines, one per hook, which pass an
+event code to that drill's `JudgePoint`:
 
-`ServiceMatch1JudgeShot2` and `JudgeShot3` are both called from
-`ServiceMatch1Hook_PointEnd`, and the same pair is stubbed in
-`ServiceMatch2/3`, `NetGameMatch1/2/3`, `NetGamePractice2/3` and
-`StrokeMatch1/2/3` — so a drill only ever judges shots 0 and 1.
+| routine | hook | event code |
+| --- | --- | --- |
+| `<Drill>JudgeOnPointEnd` | `Hook_PointEnd` | 0 |
+| `<Drill>JudgeOnBallHit` | `Hook_BallHit` | 1 |
+| `<Drill>JudgeOnBounce` | `Hook_Bounce` | 2 |
+| `<Drill>JudgeOnRallyTick` | `Hook_RallyTick` | 3 |
 
-That this is systematic across every drill, rather than appearing once, is what
-says it is a decision and not an accident; several of the same shape elsewhere
-were already named `StubNop_*` and `StubLoadFontTiles` by earlier passes. The
-bodies are kept here rather than cut, because what they would have done is part
-of what the drill system was designed to do.
+`JudgePoint` dispatches on `wRallyLength` and then on the event code, and
+returns early if `wDrillPointJudgement` is already set, so the first event to
+judge a point wins.
+
+18 of the 52 begin with `ret`, and **which** ones varies by drill:
+
+* most drills disable only `JudgeOnRallyTick`;
+* the serve and net-game match drills disable `JudgeOnBounce` as well;
+* `ServiceMatch2` disables `JudgeOnBounce` but leaves `JudgeOnRallyTick` live.
+
+So the effect is a per-drill choice of which events are allowed to score a
+point, which is a sensible thing to vary between a serve drill and a stroke
+drill. That the pattern differs per drill rather than being one blanket edit is
+consistent with it being deliberate; it is not proof of it, and a leading `ret`
+looks the same whether it was written as configuration or left behind by an
+edit. Nothing else in the ROM distinguishes the two.
+
+Several routines of the same shape elsewhere were named `StubNop_*` and
+`StubLoadFontTiles` by earlier passes — those names carry the same assumption
+and are worth re-examining on the same grounds.
