@@ -164,12 +164,12 @@ hMusic:: db
 
 ; Shared HRAM scratch pool: the serial-link input path, the bank-0
 ; sound driver, the sprite queue and the story actor engine reuse the same
-; bytes (they never run concurrently). Only proven consumers are named;
-; sites outside every variant's scope keep the numeric address.
-; $ffe9 is a fourth tenant the match renderer reads (`and $0f` to index an
-; animation table, `and $01` to blink) and that every subsystem here only
-; ever clears -- nothing increments it, so what it reads is left over from
-; whichever ran last. Unnamed until that is understood.
+; bytes. They do not run concurrently, and the sound driver goes further --
+; RunSoundEngine copies all 32 bytes out to $d000 in WRAM bank $07 on entry
+; and copies them back on exit, so a value living here survives an audio
+; update untouched. That is what lets hMatchFrameCounter be a counter at all.
+; Only proven consumers are named; sites outside every variant's scope keep
+; the numeric address.
 UNION
 ; serial-link input slots (default: link-aware match/menu code in many banks)
 	ds 3
@@ -210,7 +210,10 @@ hLinkCursorPage:: db
 	ds 3
 ; [8-bit] Nonzero makes VBlankHandler return immediately, doing no palette, OAM or tilemap work. The link resync sets it while it busy-waits on the serial line and clears it when the session is back in step
 hVBlankSuppressed:: db
-	ds 8
+	ds 1
+; [8-bit] Frames the match has simulated. Incremented once per frame by the local driver (bank $08, after AdvanceFrame + UpdateMatchFrame) and by all three link frame drivers (SyncLinkFrame, RunLinkMatchFrame, RunLinkInputFrame), so it counts the same either way; cleared by ResetMatchState and by InitSerialLink / ResetSerialState. Read only for cheap periodic effects: `and $0f` cycles the landing marker's 16-frame animation, and `and $01` draws the ground shadow and the offscreen-character arrow on alternate frames -- the usual Game Boy way to fake a translucent sprite
+hMatchFrameCounter:: db
+	ds 6
 NEXTU
 ; sound driver (bank 0, $3373-$3ddf)
 ; [16-bit] Current channel's script/state pointer, copied from the channel struct each update (borrows the sprite-queue bytes; RunSoundEngine save/restores them)

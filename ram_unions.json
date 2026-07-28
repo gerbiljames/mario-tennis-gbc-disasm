@@ -799,7 +799,7 @@
   {
    "start": "0xffd0",
    "end": "0xfff0",
-   "comment": "Shared HRAM scratch pool: the serial-link input path, the bank-0\nsound driver, the sprite queue and the story actor engine reuse the same\nbytes (they never run concurrently). Only proven consumers are named;\nsites outside every variant's scope keep the numeric address.\n$ffe9 is a fourth tenant the match renderer reads (`and $0f` to index an\nanimation table, `and $01` to blink) and that every subsystem here only\never clears -- nothing increments it, so what it reads is left over from\nwhichever ran last. Unnamed until that is understood.",
+   "comment": "Shared HRAM scratch pool: the serial-link input path, the bank-0\nsound driver, the sprite queue and the story actor engine reuse the same\nbytes. They do not run concurrently, and the sound driver goes further --\nRunSoundEngine copies all 32 bytes out to $d000 in WRAM bank $07 on entry\nand copies them back on exit, so a value living here survives an audio\nupdate untouched. That is what lets hMatchFrameCounter be a counter at all.\nOnly proven consumers are named; sites outside every variant's scope keep\nthe numeric address.",
    "variants": [
     {
      "context": "serial-link input slots (default: link-aware match/menu code in many banks)",
@@ -876,6 +876,10 @@
       "0xffe7": {
        "name": "hVBlankSuppressed",
        "note": "[8-bit] Nonzero makes VBlankHandler return immediately, doing no palette, OAM or tilemap work. The link resync sets it while it busy-waits on the serial line and clears it when the session is back in step"
+      },
+      "0xffe9": {
+       "name": "hMatchFrameCounter",
+       "note": "[8-bit] Frames the match has simulated. Incremented once per frame by the local driver (bank $08, after AdvanceFrame + UpdateMatchFrame) and by all three link frame drivers (SyncLinkFrame, RunLinkMatchFrame, RunLinkInputFrame), so it counts the same either way; cleared by ResetMatchState and by InitSerialLink / ResetSerialState. Read only for cheap periodic effects: `and $0f` cycles the landing marker's 16-frame animation, and `and $01` draws the ground shadow and the offscreen-character arrow on alternate frames -- the usual Game Boy way to fake a translucent sprite"
       }
      }
     },

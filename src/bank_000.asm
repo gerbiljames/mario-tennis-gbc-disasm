@@ -7168,7 +7168,7 @@ InitSerialLink:
 	ldh [hLinkShiftQueue], a ; $28ef
 	ldh [hLinkPlayerCount], a ; $28f1
 	ldh [hVBlankSuppressed], a ; $28f3
-	ldh [$ffe9], a ; $28f5
+	ldh [hMatchFrameCounter], a ; $28f5
 	ret ; $28f7
 ResetSerialState:
 	xor a ; $28f8
@@ -7192,7 +7192,7 @@ ResetSerialState:
 	ldh [hLinkAckRequired], a ; $291b
 	ldh [hLinkPlayerCount], a ; $291d
 	ldh [hVBlankSuppressed], a ; $291f
-	ldh [$ffe9], a ; $2921
+	ldh [hMatchFrameCounter], a ; $2921
 	ret ; $2923
 SerialEncodeInput:
 	push bc ; $2924

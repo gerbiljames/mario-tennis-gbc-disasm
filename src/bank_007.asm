@@ -1167,7 +1167,7 @@ SyncLinkFrame:
 	push bc ; $4748
 	push de ; $4749
 	push hl ; $474a
-	ld hl, $ffe9 ; $474b
+	ld hl, hMatchFrameCounter ; $474b
 	inc [hl] ; $474e
 	ldh a, [hLinkState] ; $474f
 	cp $02 ; $4751
@@ -1187,7 +1187,7 @@ RunLinkMatchFrame:
 	push bc ; $4763
 	push de ; $4764
 	push hl ; $4765
-	ld hl, $ffe9 ; $4766
+	ld hl, hMatchFrameCounter ; $4766
 	inc [hl] ; $4769
 	ldh a, [hLinkState] ; $476a
 	cp $02 ; $476c
@@ -1316,7 +1316,7 @@ RunLinkInputFrameSlave:
 	pop bc ; $4831
 	ret ; $4832
 RunLinkInputFrame:
-	ld hl, $ffe9 ; $4833
+	ld hl, hMatchFrameCounter ; $4833
 	inc [hl] ; $4836
 	ldh a, [hLinkState] ; $4837
 	cp $02 ; $4839
@@ -1395,7 +1395,7 @@ UpdateLinkSession:
 	call EnableLCD ; $48dc
 .frameLoop:
 	xor a ; $48df
-	ldh [$ffe9], a ; $48e0
+	ldh [hMatchFrameCounter], a ; $48e0
 	push af ; $48e2
 	farcall SyncLinkFrame ; $48e3
 	pop af ; $48e6
@@ -1673,7 +1673,7 @@ ResyncLinkSession:
 	call EnableLCD ; $4aa0
 	xor a ; $4aa3
 	ldh [hVBlankSuppressed], a ; $4aa4
-	ldh [$ffe9], a ; $4aa6
+	ldh [hMatchFrameCounter], a ; $4aa6
 	ret ; $4aa8
 ResyncLinkSessionWithTimer:
 	di ; $4aa9
@@ -1718,7 +1718,7 @@ ResyncLinkSessionWithTimer:
 	call EnableTimerInterrupt ; $4af5
 	xor a ; $4af8
 	ldh [hVBlankSuppressed], a ; $4af9
-	ldh [$ffe9], a ; $4afb
+	ldh [hMatchFrameCounter], a ; $4afb
 	ret ; $4afd
 TryLinkHandshakeSlave:
 	push hl ; $4afe

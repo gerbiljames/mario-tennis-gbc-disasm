@@ -151,7 +151,7 @@ ResetMatchState:
 .seedRng:
 	ld [wMatchRngState], a ; $413b
 	xor a ; $413e
-	ldh [$ffe9], a ; $413f
+	ldh [hMatchFrameCounter], a ; $413f
 	xor a ; $4141
 	ldh [hLinkPayloadKind], a ; $4142
 	ret ; $4144
@@ -567,7 +567,7 @@ StepMatchFrame:
 .localFrame:
 	call AdvanceFrame ; $4476
 	call UpdateMatchFrame ; $4479
-	ld hl, $ffe9 ; $447c
+	ld hl, hMatchFrameCounter ; $447c
 	inc [hl] ; $447f
 .afterFrame:
 	ld a, [wMatchSimFrozen] ; $4480
@@ -2367,7 +2367,7 @@ DrawLandingMarker:
 	ld e, a ; $5359
 	ld bc, $097c ; $535a
 	call QueueSprite16 ; $535d
-	ldh a, [$ffe9] ; $5360
+	ldh a, [hMatchFrameCounter] ; $5360
 	and $0f ; $5362
 	add LOW(Data_08_5373) ; $5364
 	ld l, a ; $5366
@@ -7637,7 +7637,7 @@ BuildCharSpriteSlots:
 	ld hl, wCharFlags ; $76e3
 	bit 2, [hl] ; $76e6
 	ret nz ; $76e8
-	ldh a, [$ffe9] ; $76e9
+	ldh a, [hMatchFrameCounter] ; $76e9
 	and $01 ; $76eb
 	ret z ; $76ed
 	ld hl, wCharGroundShadowSlot ; $76ee
@@ -7657,7 +7657,7 @@ DrawOffscreenCharArrow:
 	ld a, [wOffscreenArrowsEnabled] ; $7704
 	and a ; $7707
 	ret z ; $7708
-	ldh a, [$ffe9] ; $7709
+	ldh a, [hMatchFrameCounter] ; $7709
 	and $01 ; $770b
 	ret z ; $770d
 	ld a, d ; $770e
