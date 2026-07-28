@@ -2309,7 +2309,7 @@ TextInterpreterLoop:
 .eq0e:
 	push af ; $4e9f
 	ld a, [hl+] ; $4ea0
-	ld [$c361], a ; $4ea1
+	ld [wTextCharNameArg], a ; $4ea1
 	pop af ; $4ea4
 .dispatchControlCode:
 	call DispatchControlCode ; $4ea5
@@ -2380,7 +2380,7 @@ TextCmdNextGlyphStreamRow:
 	ld a, [hl+] ; $4f10
 	ld h, [hl] ; $4f11
 	ld l, a ; $4f12
-	ld a, [$c362] ; $4f13
+	ld a, [wTextRowIndent] ; $4f13
 	cpl ; $4f16
 	inc a ; $4f17
 	sla a ; $4f18
@@ -3161,7 +3161,7 @@ Unused_05_SetTextVar:
 TextCmdPrintShortText:
 	push af ; $53ca
 	push bc ; $53cb
-	ld a, [$c361] ; $53cc
+	ld a, [wTextCharNameArg] ; $53cc
 	push de ; $53cf
 	ld hl, $001b ; $53d0
 	add l ; $53d3
@@ -3181,7 +3181,7 @@ MeasureIndexedShortTextWidth:
 	push bc ; $53e8
 	push de ; $53e9
 	push hl ; $53ea
-	ld a, [$c361] ; $53eb
+	ld a, [wTextCharNameArg] ; $53eb
 	ld hl, $001b ; $53ee
 	add l ; $53f1
 	ld l, a ; $53f2
@@ -3494,7 +3494,7 @@ RenderInlineNumber:
 	ld c, e ; $55a6
 	ld a, $00 ; $55a7
 	call FormatDecimalNumber ; $55a9
-	ld a, [$c360] ; $55ac
+	ld a, [wTextNumberRightAlign] ; $55ac
 	or a ; $55af
 	jr z, .zero ; $55b0
 	push bc ; $55b2
@@ -3699,7 +3699,7 @@ FitWindowToText:
 	cp $0e ; $56be
 	jr nz, .glyph ; $56c0
 	ld a, [hl+] ; $56c2
-	ld [$c361], a ; $56c3
+	ld [wTextCharNameArg], a ; $56c3
 	call MeasureIndexedShortTextWidth ; $56c6
 	add b ; $56c9
 	ld b, a ; $56ca
@@ -4774,7 +4774,7 @@ RenderProportionalTextAt:
 	cpl ; $5e00
 	inc a ; $5e01
 	ld c, a ; $5e02
-	ld [$c362], a ; $5e03
+	ld [wTextRowIndent], a ; $5e03
 	call FetchDialogueText ; $5e06
 	ld hl, wTextBuffer ; $5e09
 	xor a ; $5e0c
@@ -4831,7 +4831,7 @@ Label_05_5e59:
 	push af ; $5e5b
 	wram_bank $05 ; $5e5c
 	ld a, [hl] ; $5e62
-	ld [$c361], a ; $5e63
+	ld [wTextCharNameArg], a ; $5e63
 	pop af ; $5e66
 	wram_bank ; $5e67
 	pop af ; $5e6b
@@ -4908,7 +4908,7 @@ Label_05_5ecd:
 	push af ; $5ed0
 	wram_bank $05 ; $5ed1
 	xor a ; $5ed7
-	ld [$c362], a ; $5ed8
+	ld [wTextRowIndent], a ; $5ed8
 	ld [wTextArgStringWriteIndex], a ; $5edb
 	ld [w5_d866], a ; $5ede
 	ld [w5_d848], a ; $5ee1
@@ -5006,7 +5006,7 @@ RenderTextToBuffer64:
 	cpl ; $5f6e
 	inc a ; $5f6f
 	ld c, a ; $5f70
-	ld [$c362], a ; $5f71
+	ld [wTextRowIndent], a ; $5f71
 	call FetchDialogueText ; $5f74
 	ld hl, wTextBuffer ; $5f77
 	pop af ; $5f7a
@@ -5195,14 +5195,14 @@ WriteDialogueToWindow:
 	call PushTextArgNumber ; $606b
 	ld b, a ; $606e
 	ld a, $01 ; $606f
-	ld [$c360], a ; $6071
+	ld [wTextNumberRightAlign], a ; $6071
 	ld a, b ; $6074
 	ld hl, Text_30_310 ; $6075
 	call FetchDialogueText ; $6078
 	ld hl, wTextBuffer ; $607b
 	call WriteStringToWindow ; $607e
 	xor a ; $6081
-	ld [$c360], a ; $6082
+	ld [wTextNumberRightAlign], a ; $6082
 	pop hl ; $6085
 	pop de ; $6086
 	pop bc ; $6087
@@ -6854,7 +6854,7 @@ WriteStringToTilemapStreamed:
 	cpl ; $6ca8
 	inc a ; $6ca9
 	ld c, a ; $6caa
-	ld [$c362], a ; $6cab
+	ld [wTextRowIndent], a ; $6cab
 	call FetchDialogueText ; $6cae
 	ld hl, wTextBuffer ; $6cb1
 	pop af ; $6cb4
@@ -6868,7 +6868,7 @@ WriteStringToTilemapStreamed:
 	inc hl ; $6cc1
 	push af ; $6cc2
 	ld a, [hl] ; $6cc3
-	ld [$c361], a ; $6cc4
+	ld [wTextCharNameArg], a ; $6cc4
 	pop af ; $6cc7
 	jr .dispatchControlCode ; $6cc8
 	cp $01 ; $6cca
@@ -6920,7 +6920,7 @@ WriteStringToTilemapStreamed:
 	push af ; $6d04
 	wram_bank $05 ; $6d05
 	xor a ; $6d0b
-	ld [$c362], a ; $6d0c
+	ld [wTextRowIndent], a ; $6d0c
 	ld [wTextArgStringWriteIndex], a ; $6d0f
 	ld [w5_d866], a ; $6d12
 	ld [w5_d848], a ; $6d15
@@ -8842,7 +8842,7 @@ UploadGlyphBufferQueued:
 	pop hl ; $7845
 	add hl, bc ; $7846
 	pop bc ; $7847
-	ld a, [$c33f] ; $7848
+	ld a, [wLinkSessionActive] ; $7848
 	or a ; $784b
 	jr nz, .stepMatchFrame ; $784c
 	call AdvanceFrame ; $784e

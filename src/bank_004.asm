@@ -1791,7 +1791,7 @@ ComputeSpriteScrollOffset:
 	ld a, [hl+] ; $4a2a
 	ld d, [hl] ; $4a2b
 	ld e, a ; $4a2c
-	ld a, [$c368] ; $4a2d
+	ld a, [wScreenShakeOffsetX] ; $4a2d
 	ld l, a ; $4a30
 	ld h, $00 ; $4a31
 	bit 7, l ; $4a33
@@ -1830,7 +1830,7 @@ ComputeSpriteScrollOffset:
 	ld d, h ; $4a5f
 	ld e, l ; $4a60
 .clamp:
-	ld a, [$c369] ; $4a61
+	ld a, [wScreenShakeOffsetY] ; $4a61
 	ld l, a ; $4a64
 	ld h, $00 ; $4a65
 	bit 7, l ; $4a67
@@ -2944,7 +2944,7 @@ UpdatePlayerControl:
 	jr .setFacing ; $52a1
 .checkFacing:
 	ld [wPlayerMoveAngleApplied], a ; $52a3
-	ld hl, $c2a2 ; $52a6
+	ld hl, wStoryAutoInteractArmed ; $52a6
 	ld [hl], $01 ; $52a9
 .setFacing:
 	ld hl, $0014 ; $52ab

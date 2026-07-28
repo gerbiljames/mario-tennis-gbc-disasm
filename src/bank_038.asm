@@ -7024,7 +7024,7 @@ RunLinkMatchSequence:
 	call ResetSerialState ; $74ca
 	call EnableTimerInterrupt ; $74cd
 	ld a, $01 ; $74d0
-	ld [$c33f], a ; $74d2
+	ld [wLinkSessionActive], a ; $74d2
 	farcall RunMatch ; $74d5
 	ld a, $01 ; $74d8
 .done:

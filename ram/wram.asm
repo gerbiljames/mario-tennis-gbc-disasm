@@ -11,7 +11,22 @@ wVRAMCopyQueue:: ds 80
 
 ; [4 bytes] Play timer: frames (0-59), seconds, minutes, hours (caps at 99)
 wGameTimer:: ds 4
-	ds 12
+
+; [8-bit] Enables the second timer at wSecondaryTimer: UpdateGameTimer ticks it only while this reads exactly 1. The stranded countdown routine at $00:$240a (nothing calls it) writes $ff here when its clock runs out, so $ff means expired
+wSecondaryTimerMode:: db
+
+; [3 bytes] Second clock alongside wGameTimer, ticked by TickSecondaryTimer: frames (0-59), seconds, minutes. It saturates at 9:59 rather than wrapping (minutes reaching $0a is undone and seconds pinned to $3b). The stranded countdown at $00:$240a runs the same three bytes downwards, one sound $af per second and sound $b0 at zero
+wSecondaryTimer:: ds 3
+
+; [8-bit] Width in pixels of the glyph RenderGlyphToTiles is drawing, read from the glyph's first byte. It is the inner loop count, one iteration per pixel column, and the caller re-reads the same byte after the call to advance the pen
+wGlyphBlitWidth:: db
+
+; [8-bit] Rows still to draw in RenderGlyphToTiles, seeded from the glyph's second byte and decremented once per row
+wGlyphBlitRowsLeft:: db
+
+; [8-bit] Destination bit mask for RenderGlyphToTiles, PixelMaskTable[penX & 7]. It is rotated right once per pixel; the wrap from $01 back to $80 is what advances the destination to the next tile column
+wGlyphBlitDestMask:: db
+	ds 5
 
 ; [64 bytes] Live BG palette buffer, uploaded in VBlank when hPaletteDirtyFlags bit 0 set
 wBGPalettes:: ds 64
@@ -57,7 +72,37 @@ wMasterPalettes:: ds 128
 ; 0x1d - Peach's Castle
 ; 0x1e-0x29 - Final Credits Sequence
 wStoryModeCurrentLocation:: db
-	ds 19
+
+; [8-bit] Scene id of the loaded story location, byte 1 of its story_location record. Passed in a to LoadStorySceneGraphics, which indexes SceneGfxSlotTable with it
+wStoryLocationScene:: db
+
+; [2 bytes] The loaded location's map_scripts reference, copied straight out of its story_location record in the dslot encoding: slot offset into the target bank's $4000 directory, then the ROM bank. LoadStoryLocationHeader takes the bank byte for wStoryLocationBank and hands the pair to CopyDataFromBank, which resolves it and copies the 7-word map_tree to wMapEntryPointsPtr
+wStoryLocationMapScriptsSlot:: dw
+
+; [8-bit] BGM id from the loaded location's story_location record; $ff means leave the current music playing, anything else is handed to PlaySoundManaged as the location loads
+wStoryLocationBGM:: db
+	ds 1
+
+; [16-bit] Slot 0 of the loaded location's map_tree: its map_entry spawn-record table. LoadStoryEntryPointRecord searches it for wStoryModeEntryPoint, and the not-found path falls back to the table's first record
+wMapEntryPointsPtr:: dw
+
+; [16-bit] Slot 1 of the map_tree: the map_script table RunLocationExit searches when the location loop is asked to leave
+wMapExitTriggersPtr:: dw
+
+; [16-bit] Slot 2 of the map_tree: the location's map_actor spawn list, passed to InitLocationActors
+wMapActorsPtr:: dw
+
+; [16-bit] Slot 3 of the map_tree: the map_script table RunNpcInteraction searches when the player talks to an actor
+wMapNpcScriptsPtr:: dw
+
+; [16-bit] Slot 4 of the map_tree: the map_script table RunFacingTileScript searches for the tile the player is facing
+wMapFacingScriptsPtr:: dw
+
+; [16-bit] Slot 5 of the map_tree: the map_script table RunTileTriggerScript and RunQueuedTriggerScript search for step-on triggers
+wMapTileTriggersPtr:: dw
+
+; [16-bit] Slot 6 of the map_tree: the location's init code, run by RunLocationInitScript once the map is up
+wMapInitScriptPtr:: dw
 
 ; [8-bit] Write-only mirror of wStoryModeExitLocationRequest ($c2a1): all 204 stores write the same value to both, and no instruction anywhere reads this one. Vestigial -- changing it has no effect
 wUnusedExitLocationMirror:: db
@@ -70,14 +115,22 @@ wStoryModeSpawnPosition:: ds 5
 
 ; [8-bit] ROM bank of the current story location's header and script data: the high byte of the far pointer at $c282, taken by LoadStoryLocationHeader. Every consumer (LoadStoryEntryPointRecord, FindStoryScriptEntry, GetTileTriggerAtPlayer, RunNpcInteraction, RunLocationExit, ...) passes it to FarReadByte or a farcall
 wStoryLocationBank:: db
-	ds 4
+
+; [16-bit] The selected entry point's arrival_script, bytes 6-7 of its map_entry record. The location loader calls it through CallHLInBankA in wStoryLocationBank right after the LCD comes back on, and skips the call when the word is zero
+wStoryArrivalScript:: dw
+	ds 2
 
 ; [8-bit] Story Mode - queued tile trigger-script id (behavior-map cell with low nibble 1 stores its high nibble here); nonzero makes the overworld loop run RunQueuedTriggerScript
 wStoryModeTriggerScript:: db
 
 ; [8-bit] Story Mode - nonzero requests leaving the current location loop (RunLocationExit + reload); one of the event-request flags at $c2a0-$c2a5 cleared by ClearStoryEventRequests
 wStoryModeExitLocationRequest:: db
-	ds 2
+
+; [8-bit] Set to 1 by the overworld player-move code ($04:$52a6) on the frame the point ahead of the player resolves to a nonzero behaviour value. The location event loop consumes and clears it; combined with wPlayerMoving having reached $1e frames at an unchanged angle, it is what turns walking into a door or sign into an interaction
+wStoryAutoInteractArmed:: db
+
+; [8-bit] $ff once the auto-interact above has raised wStoryModeInteractRequest this frame, 0 otherwise. Its only reader is the debug-menu check further down the same frame, which stands down when an interaction already fired
+wStoryAutoInteractFired:: db
 
 ; [8-bit] Story Mode - set to 1 on an A-press in the overworld; the event loop then tries NPC interaction (FindActorFacingPlayer), facing-tile script, and tile trigger
 wStoryModeInteractRequest:: db
@@ -133,7 +186,9 @@ wSwingContestHudMode:: db
 wSwingContestHudPage:: db
 ENDU
 
-	ds 16
+; [8 bytes] Staging copy of one record from the loaded location's map tables, far-copied here out of wStoryLocationBank after FindStoryScriptEntry locates it. Both record shapes land in the same eight bytes, so the field meanings depend on which table was searched: a map_entry gives facing at +1, X and Y at +2 and +4, and the arrival_script at +6; a map_script gives the flag condition at +2, the handler at +4 and its two argument bytes at +6 and +7 (RunLocationExit reads those two as destination location and entry point)
+wStoryMapRecord:: ds 8
+	ds 8
 
 ; [16-bit] Story Mode - Player's X Position
 wStoryModePlayersXPosition:: dw
@@ -149,11 +204,19 @@ wStoryModeShowLocationName:: db
 
 ; [16-bit] Story Mode - text id of the current location's name, passed in hl to ShowLocationNamePopup when wStoryModeShowLocationName is set
 wStoryModeLocationNameTextId:: dw
-	ds 2
+
+; [8-bit] The talked-to actor's +$19 byte, saved by RunNpcInteraction while it forces the byte to 1 for the duration of the script and restored when the script returns
+wStoryScriptSavedActorBusy:: db
+
+; [8-bit] The talked-to actor's +$2e animation, saved by RunNpcInteraction when the handler's arg0 has bit 3 set, and put back through SetActorAnimationChecked once the script returns
+wStoryScriptSavedActorAnim:: db
 
 ; [8-bit] Set to 1 by RunStoryScriptOrDialogue whenever it dispatches a location script; the overworld frame loop clears it before checking for an interaction and stops looking for further triggers this frame once it is set
 wStoryScriptRan:: db
-	ds 5
+
+; [8-bit] Write-only: RunNpcInteraction, RunFacingTileScript, RunQueuedTriggerScript and RunLocationExit each store the id they are about to look up, and nothing reads it back
+wUnusedStoryScriptId:: db
+	ds 4
 
 ; [8-bit] Frames left before a drill point gives up: UpdateDrillAbortCountdown decrements it each frame while wDrillAbortCountdownActive is set and wPointOutcome is still 0, and sets wMatchAbortFlag when it reaches 0. The point start hooks load it with $0a
 wDrillAbortCountdown:: db
@@ -197,7 +260,12 @@ wCameraX:: dw
 
 ; [16-bit] BG scroll-buffer camera Y
 wCameraY:: dw
-	ds 2
+
+; [8-bit] wCameraX's high byte as of the previous UpdateSceneScroll. Comparing it against the live value is how the task notices the camera crossed a tile boundary and decides whether to blit a new BG column in from the 64-wide map, and which side
+wCameraTileXPrev:: db
+
+; [8-bit] wCameraY's high byte as of the previous UpdateSceneScroll, the row counterpart of wCameraTileXPrev
+wCameraTileYPrev:: db
 
 ; [16-bit] Tilemap address for the queued BG row blit
 wBGRowBlitDest:: dw
@@ -222,7 +290,19 @@ wScrollListLength:: db
 
 ; [8-bit] Current story-cutscene scene index; indexes SceneGfxSlotTable (index*16) and drives LoadAndDisplayScene / InitSceneTileAnimations
 wCurrentScene:: db
-	ds 15
+	ds 1
+
+; [8 bytes] Four scene tile-animation slots, 2 bytes each: the slot's current byte offset into the animation script at $05:$da88, then its frame countdown. The scroll task decrements each countdown and calls AdvanceSceneTileAnimation on the slot that reaches zero
+wSceneTileAnimState:: ds 8
+
+; [4 bytes] Where each of the four tile-animation slots' scripts begins, one byte per slot. AdvanceSceneTileAnimation rewinds a slot here when its script hits the $ff terminator, and $ff in this array marks a slot that was never built
+wSceneTileAnimStart:: ds 4
+
+; [8-bit] Scratch cursor AdvanceSceneTileAnimation works with: loaded from the slot's wSceneTileAnimState entry, walked forward over the script (four bytes per command), and written back at the end
+wSceneTileAnimCursor:: db
+
+; [8-bit] Write-only: the two paged-text-menu paths in bank $0a stash wCurrentScene here before stopping the tile animations, and the scene loader writes $ff, but nothing ever reads it
+wUnusedPrevSceneIndex:: db
 
 ; [8-bit] Current BGM
 ;
@@ -278,7 +358,30 @@ wCurrentScene:: db
 ; 0x31 - Exhibition Match Start
 ; 0x32 - Story Match Start
 wCurrentBGM:: db
-	ds 45
+
+; [8-bit] Nonzero while a cable-link match is in progress. Bank $38's link character select sets it to 1 just before RunMatch, EndLinkSession clears it, and the match and menu code branch on it to pick link behaviour over single-player
+wLinkSessionActive:: db
+	ds 32
+
+; [8-bit] Nonzero makes RenderInlineNumber right-align its formatted number in a five-character field by padding the pen instead of writing at the pen. Only one caller sets it, around the Text_30_310 line, and clears it again straight after
+wTextNumberRightAlign:: db
+
+; [8-bit] Argument byte of text control code $0e: a character id, which TextCmdPrintShortText and MeasureIndexedShortTextWidth turn into text id $1b + id -- the same 27-entry bias the character roster uses -- and fetch as an inline string
+wTextCharNameArg:: db
+
+; [8-bit] Glyph-row indent, stored negated. The dialogue setup writes -c here; StartGlyphStreamRow's caller negates it back, doubles it and adds it to wGlyphVramDest so the row starts that far in. Zeroed when a text window is torn down
+wTextRowIndent:: db
+
+; [8-bit] Screen shake strength, $ff when off and 1-3 otherwise (SetScreenShake clamps anything larger to 3, and registers/unregisters the UpdateScreenShake frame task on the transitions). UpdateScreenShake turns it into a mask of that many bits and ANDs it with a fresh random word to pick the two offsets
+wScreenShakeMagnitude:: db
+	ds 4
+
+; [8-bit] Signed screen-shake X offset, regenerated each frame by UpdateScreenShake. UpdateSceneScroll adds it to the camera before writing hScrollX, and bank $04's ComputeSpriteScrollOffset sign-extends it so objects shake with the background
+wScreenShakeOffsetX:: db
+
+; [8-bit] Signed screen-shake Y offset, the counterpart of wScreenShakeOffsetX; it biases hScrollY the same way
+wScreenShakeOffsetY:: db
+	ds 2
 
 ; [8-bit] Active story save-slot index (0-2); selects which SRAM story slot CheckStorySlot / SaveStorySlotWithTimer operate on
 wCurrentStorySlot:: db
@@ -288,7 +391,22 @@ wCurrentStorySlot:: db
 ;
 ; Value is current minigame level - 1
 wMinigameLevel:: db
-	ds 48
+	ds 41
+
+; [16-bit] Tile-plane source address for QueueDeferredTilemapCopy's pending copy to $9800
+wDeferredTilemapSrc:: dw
+
+; [16-bit] Attribute-plane source address for the same copy, sent to $9800 in VRAM bank 1
+wDeferredTilemapAttrSrc:: dw
+
+; [8-bit] WRAM bank the two source pointers live in; VBlankDeferredTilemapCopyTask selects it before queueing either half and restores the previous bank afterwards
+wDeferredTilemapWramBank:: db
+
+; [8-bit] Length of the deferred tilemap copy in 16-byte blocks, passed to QueueVRAMCopy in c for both planes
+wDeferredTilemapLength:: db
+
+; [8-bit] Which halves of the deferred tilemap copy are still owed: low nibble the tile plane, high nibble the attribute plane. QueueDeferredTilemapCopy clears it, the frame task acts on whichever nibbles are set and clears it again, so the copy only happens once something else marks the planes dirty
+wDeferredTilemapPending:: db
 
 ; [8-bit] High byte of current OAM shadow buffer ($c0/$c5); toggled each frame, OAM DMA source
 wSpriteBufferPage:: db

@@ -5845,9 +5845,9 @@ RenderGlyphToTiles:
 	push de ; $211d
 	push hl ; $211e
 	ld a, [hl+] ; $211f
-	ld [$c0f8], a ; $2120
+	ld [wGlyphBlitWidth], a ; $2120
 	ld a, [hl+] ; $2123
-	ld [$c0f9], a ; $2124
+	ld [wGlyphBlitRowsLeft], a ; $2124
 	push hl ; $2127
 	ld a, b ; $2128
 	and $07 ; $2129
@@ -5857,7 +5857,7 @@ RenderGlyphToTiles:
 	sub l ; $2130
 	ld h, a ; $2131
 	ld a, [hl] ; $2132
-	ld [$c0fa], a ; $2133
+	ld [wGlyphBlitDestMask], a ; $2133
 	ld a, b ; $2136
 	and $f8 ; $2137
 	ld l, a ; $2139
@@ -5872,9 +5872,9 @@ RenderGlyphToTiles:
 	ld c, $80 ; $2145
 .loop:
 	push hl ; $2147
-	ld a, [$c0fa] ; $2148
+	ld a, [wGlyphBlitDestMask] ; $2148
 	ld b, a ; $214b
-	ld a, [$c0f8] ; $214c
+	ld a, [wGlyphBlitWidth] ; $214c
 .loopB:
 	push af ; $214f
 	ld a, [de] ; $2150
@@ -5917,7 +5917,7 @@ RenderGlyphToTiles:
 	pop af ; $217a
 	dec a ; $217b
 	jp nz, .loopB ; $217c
-	ld hl, $c0f9 ; $217f
+	ld hl, wGlyphBlitRowsLeft ; $217f
 	dec [hl] ; $2182
 	pop hl ; $2183
 	inc hl ; $2184
@@ -6305,7 +6305,7 @@ BlitBGStrip2:
 	ldh [hBGColumnBlitPending], a ; $23da
 	ret ; $23dc
 UpdateGameTimer:
-	ld a, [$c0f4] ; $23dd
+	ld a, [wSecondaryTimerMode] ; $23dd
 	cp $01 ; $23e0
 	call z, TickSecondaryTimer ; $23e2
 	ld hl, wGameTimer ; $23e5
@@ -6335,7 +6335,7 @@ UpdateGameTimer:
 	dec hl ; $2406
 	ld [hl], $3b ; $2407
 	ret ; $2409
-	ld hl, $c0f5 ; $240a
+	ld hl, wSecondaryTimer ; $240a
 	inc [hl] ; $240d
 	ld a, [hl] ; $240e
 	cp $3c ; $240f
@@ -6351,12 +6351,12 @@ UpdateGameTimer:
 	inc hl ; $2420
 	dec [hl] ; $2421
 .step:
-	ld hl, $c0f6 ; $2422
+	ld hl, wSecondaryTimer + 1 ; $2422
 	ld a, [hl+] ; $2425
 	or [hl] ; $2426
 	ret nz ; $2427
 	xor a ; $2428
-	ld hl, $c0f4 ; $2429
+	ld hl, wSecondaryTimerMode ; $2429
 	ld [hl], $ff ; $242c
 	inc hl ; $242e
 	ld [hl+], a ; $242f
@@ -6365,7 +6365,7 @@ UpdateGameTimer:
 	sound $b0 ; $2432
 	ret ; $2434
 TickSecondaryTimer:
-	ld hl, $c0f5 ; $2435
+	ld hl, wSecondaryTimer ; $2435
 	inc [hl] ; $2438
 	ld a, [hl] ; $2439
 	cp $3c ; $243a
@@ -7408,19 +7408,19 @@ EnableTimerInterrupt:
 	ret ; $2a2d
 QueueDeferredTilemapCopy:
 	push af ; $2a2e
-	ld [$c3a4], a ; $2a2f
+	ld [wDeferredTilemapWramBank], a ; $2a2f
 	ld a, c ; $2a32
-	ld [$c3a5], a ; $2a33
+	ld [wDeferredTilemapLength], a ; $2a33
 	ld a, l ; $2a36
-	ld [$c3a0], a ; $2a37
+	ld [wDeferredTilemapSrc], a ; $2a37
 	ld a, h ; $2a3a
-	ld [$c3a1], a ; $2a3b
+	ld [wDeferredTilemapSrc + 1], a ; $2a3b
 	ld a, e ; $2a3e
-	ld [$c3a2], a ; $2a3f
+	ld [wDeferredTilemapAttrSrc], a ; $2a3f
 	ld a, d ; $2a42
-	ld [$c3a3], a ; $2a43
+	ld [wDeferredTilemapAttrSrc + 1], a ; $2a43
 	xor a ; $2a46
-	ld [$c3a6], a ; $2a47
+	ld [wDeferredTilemapPending], a ; $2a47
 	ld a, $05 ; $2a4a
 	ld hl, VBlankDeferredTilemapCopyTask ; $2a4c
 	call RegisterFrameTask ; $2a4f
@@ -7433,34 +7433,34 @@ VBlankDeferredTilemapCopyTask:
 	push hl ; $2a57
 	ldh a, [hWramBank] ; $2a58
 	push af ; $2a5a
-	ld a, [$c3a4] ; $2a5b
+	ld a, [wDeferredTilemapWramBank] ; $2a5b
 	wram_bank ; $2a5e
-	ld a, [$c3a6] ; $2a62
+	ld a, [wDeferredTilemapPending] ; $2a62
 	and $0f ; $2a65
 	jr z, .maskClear ; $2a67
-	ld hl, $c3a0 ; $2a69
+	ld hl, wDeferredTilemapSrc ; $2a69
 	ld a, [hl+] ; $2a6c
 	ld h, [hl] ; $2a6d
 	ld l, a ; $2a6e
 	ld de, $9800 ; $2a6f
-	ld a, [$c3a5] ; $2a72
+	ld a, [wDeferredTilemapLength] ; $2a72
 	ld c, a ; $2a75
 	call QueueVRAMCopy ; $2a76
 .maskClear:
-	ld a, [$c3a6] ; $2a79
+	ld a, [wDeferredTilemapPending] ; $2a79
 	and $f0 ; $2a7c
 	jr z, .maskClear2 ; $2a7e
-	ld hl, $c3a2 ; $2a80
+	ld hl, wDeferredTilemapAttrSrc ; $2a80
 	ld a, [hl+] ; $2a83
 	ld h, [hl] ; $2a84
 	ld l, a ; $2a85
 	ld de, $9800 + VRAM_BANK1 ; $2a86
-	ld a, [$c3a5] ; $2a89
+	ld a, [wDeferredTilemapLength] ; $2a89
 	ld c, a ; $2a8c
 	call QueueVRAMCopy ; $2a8d
 .maskClear2:
 	xor a ; $2a90
-	ld [$c3a6], a ; $2a91
+	ld [wDeferredTilemapPending], a ; $2a91
 	pop af ; $2a94
 	wram_bank ; $2a95
 	pop hl ; $2a99

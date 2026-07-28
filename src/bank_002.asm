@@ -2306,7 +2306,7 @@ LoadStorySlot:
 	pop de ; $5255
 	or a ; $5256
 	jr z, .zero ; $5257
-	ld a, [$c33f] ; $5259
+	ld a, [wLinkSessionActive] ; $5259
 	or a ; $525c
 	ld a, h ; $525d
 	jr nz, .storePlayer1CurrentMainCharacter ; $525e

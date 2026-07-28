@@ -119,10 +119,10 @@ BeginCutsceneScriptMode:
 	pop af ; $40dd
 	wram_bank ; $40de
 	ld a, $ff ; $40e2
-	ld [$c363], a ; $40e4
+	ld [wScreenShakeMagnitude], a ; $40e4
 	xor a ; $40e7
-	ld [$c368], a ; $40e8
-	ld [$c369], a ; $40eb
+	ld [wScreenShakeOffsetX], a ; $40e8
+	ld [wScreenShakeOffsetY], a ; $40eb
 	ld a, $01 ; $40ee
 	call SetActorNullScript ; $40f0
 	ldh a, [hDebugStepMode] ; $40f3
@@ -143,8 +143,8 @@ EndCutsceneScriptMode:
 	push de ; $4107
 	push hl ; $4108
 	xor a ; $4109
-	ld [$c368], a ; $410a
-	ld [$c369], a ; $410d
+	ld [wScreenShakeOffsetX], a ; $410a
+	ld [wScreenShakeOffsetY], a ; $410d
 	ld bc, $d040 ; $4110
 	ld de, $d000 ; $4113
 	farcall AttachActorWaypointFollower ; $4116
@@ -1495,7 +1495,7 @@ SetScreenShake:
 	or a ; $48c9
 	jr z, .stop ; $48ca
 	push af ; $48cc
-	ld a, [$c363] ; $48cd
+	ld a, [wScreenShakeMagnitude] ; $48cd
 	inc a ; $48d0
 	jr nz, .clampMagnitude ; $48d1
 	ld a, $01 ; $48d3
@@ -1508,18 +1508,18 @@ SetScreenShake:
 	ld a, $03 ; $48e0
 	jr .store ; $48e2
 .stop:
-	ld a, [$c363] ; $48e4
+	ld a, [wScreenShakeMagnitude] ; $48e4
 	inc a ; $48e7
 	ld a, $00 ; $48e8
 	jr z, .store ; $48ea
 	xor a ; $48ec
-	ld [$c368], a ; $48ed
-	ld [$c369], a ; $48f0
+	ld [wScreenShakeOffsetX], a ; $48ed
+	ld [wScreenShakeOffsetY], a ; $48f0
 	ld hl, UpdateScreenShake ; $48f3
 	call UnregisterFrameTask ; $48f6
 	ld a, $ff ; $48f9
 .store:
-	ld [$c363], a ; $48fb
+	ld [wScreenShakeMagnitude], a ; $48fb
 	pop af ; $48fe
 	wram_bank ; $48ff
 	pop hl ; $4903
@@ -1532,7 +1532,7 @@ UpdateScreenShake:
 	push bc ; $4909
 	push de ; $490a
 	push hl ; $490b
-	ld a, [$c363] ; $490c
+	ld a, [wScreenShakeMagnitude] ; $490c
 	ld c, $00 ; $490f
 .buildPattern:
 	scf ; $4911
@@ -1546,14 +1546,14 @@ UpdateScreenShake:
 	cpl ; $491e
 	inc a ; $491f
 .negate:
-	ld [$c368], a ; $4920
+	ld [wScreenShakeOffsetX], a ; $4920
 	ld a, l ; $4923
 	and c ; $4924
 	jr nc, .store ; $4925
 	cpl ; $4927
 	inc a ; $4928
 .store:
-	ld [$c369], a ; $4929
+	ld [wScreenShakeOffsetY], a ; $4929
 	pop hl ; $492c
 	pop de ; $492d
 	pop bc ; $492e
@@ -2269,14 +2269,14 @@ RunStoryLocation:
 	call AdvanceFrame ; $4f5a
 	test_flag FLAG_ENDING_CREDITS_RUNNING ; $4f5d
 	jr nz, .loadLocation ; $4f60
-	ld a, [$c284] ; $4f62
+	ld a, [wStoryLocationBGM] ; $4f62
 	cp $ff ; $4f65
 	jr z, .loadLocation ; $4f67
-	ld a, [$c284] ; $4f69
+	ld a, [wStoryLocationBGM] ; $4f69
 	call PlaySoundManaged ; $4f6c
 .loadLocation:
 	farcall ResetTextWindowState ; $4f6f
-	ld hl, $c28a ; $4f72
+	ld hl, wMapActorsPtr ; $4f72
 	ld a, [hl+] ; $4f75
 	ld h, [hl] ; $4f76
 	ld l, a ; $4f77
@@ -2293,7 +2293,7 @@ RunStoryLocation:
 	call DisableLCDSafely ; $4f93
 	farcall ResetTextWindowState ; $4f96
 	farcall InitSceneScroll ; $4f99
-	ld a, [$c281] ; $4f9c
+	ld a, [wStoryLocationScene] ; $4f9c
 	farcall LoadStorySceneGraphics ; $4f9f
 	ld a, $00 ; $4fa2
 	farcall CopyScrolledSceneTilemapToVram ; $4fa4
@@ -2302,9 +2302,9 @@ RunStoryLocation:
 	farcall LoadMenuFontGfx ; $4fac
 .enableLcd:
 	call EnableLCD ; $4faf
-	ld a, [$c29c] ; $4fb2
+	ld a, [wStoryArrivalScript] ; $4fb2
 	ld l, a ; $4fb5
-	ld a, [$c29d] ; $4fb6
+	ld a, [wStoryArrivalScript + 1] ; $4fb6
 	ld h, a ; $4fb9
 	ld a, h ; $4fba
 	or l ; $4fbb
@@ -2375,8 +2375,8 @@ RunStoryLocation:
 	jp .frameLoop ; $5045
 .checkInteract:
 	xor a ; $5048
-	ld [$c2a3], a ; $5049
-	ld hl, $c2a2 ; $504c
+	ld [wStoryAutoInteractFired], a ; $5049
+	ld hl, wStoryAutoInteractArmed ; $504c
 	ld a, [hl] ; $504f
 	and a ; $5050
 	jr z, .runInteract ; $5051
@@ -2394,7 +2394,7 @@ RunStoryLocation:
 	cp $1e ; $506e
 	jr c, .runInteract ; $5070
 	ld [hl], $00 ; $5072
-	ld hl, $c2a3 ; $5074
+	ld hl, wStoryAutoInteractFired ; $5074
 	ld [hl], $ff ; $5077
 	ld hl, wStoryModeInteractRequest ; $5079
 	ld [hl], $01 ; $507c
@@ -2428,7 +2428,7 @@ RunStoryLocation:
 	call RunTileTriggerScript ; $50af
 	jr .nextFrame ; $50b2
 .checkDebugMenu:
-	ld a, [$c2a3] ; $50b4
+	ld a, [wStoryAutoInteractFired] ; $50b4
 	and a ; $50b7
 	jr nz, .nextFrame ; $50b8
 	ldh a, [hDebugStepMode] ; $50ba
@@ -2510,17 +2510,17 @@ LoadStoryLocationHeader:
 	ld de, wStoryModeCurrentLocation ; $5120
 	ld bc, $0006 ; $5123
 	call CopyMemoryBC ; $5126
-	ld hl, $c282 ; $5129
+	ld hl, wStoryLocationMapScriptsSlot ; $5129
 	ld a, [hl+] ; $512c
 	ld h, [hl] ; $512d
 	ld l, a ; $512e
 	ld a, h ; $512f
 	ld [wStoryLocationBank], a ; $5130
-	ld hl, $c282 ; $5133
+	ld hl, wStoryLocationMapScriptsSlot ; $5133
 	ld a, [hl+] ; $5136
 	ld h, [hl] ; $5137
 	ld l, a ; $5138
-	ld de, $c286 ; $5139
+	ld de, wMapEntryPointsPtr ; $5139
 	ld bc, $000e ; $513c
 	call CopyDataFromBank ; $513f
 	ld a, [wStoryModeCurrentLocation] ; $5142
@@ -2564,7 +2564,7 @@ LoadStoryEntryPointRecord:
 	jr z, .done ; $5178
 	ld hl, wStoryModeEntryPoint ; $517a
 	ld d, [hl] ; $517d
-	ld hl, $c286 ; $517e
+	ld hl, wMapEntryPointsPtr ; $517e
 	ld a, [hl+] ; $5181
 	ld h, [hl] ; $5182
 	ld l, a ; $5183
@@ -2583,25 +2583,25 @@ LoadStoryEntryPointRecord:
 .next:
 	jr .searchLoop ; $5198
 .notFound:
-	ld hl, $c286 ; $519a
+	ld hl, wMapEntryPointsPtr ; $519a
 	ld a, [hl+] ; $519d
 	ld h, [hl] ; $519e
 	ld l, a ; $519f
 .copyRecord:
 	ld a, [wStoryLocationBank] ; $51a0
-	ld de, $c2c0 ; $51a3
+	ld de, wStoryMapRecord ; $51a3
 	ld bc, $0008 ; $51a6
 	call FarCopyBytes ; $51a9
-	ld a, [$c2c1] ; $51ac
+	ld a, [wStoryMapRecord + 1] ; $51ac
 	ld [wStoryModeSpawnPosition + 4], a ; $51af
-	ld hl, $c2c2 ; $51b2
+	ld hl, wStoryMapRecord + 2 ; $51b2
 	ld de, wStoryModeSpawnPosition ; $51b5
 	ld bc, $0004 ; $51b8
 	call CopyMemoryBC ; $51bb
-	ld a, [$c2c6] ; $51be
-	ld [$c29c], a ; $51c1
-	ld a, [$c2c7] ; $51c4
-	ld [$c29d], a ; $51c7
+	ld a, [wStoryMapRecord + 6] ; $51be
+	ld [wStoryArrivalScript], a ; $51c1
+	ld a, [wStoryMapRecord + 7] ; $51c4
+	ld [wStoryArrivalScript + 1], a ; $51c7
 .done:
 	pop hl ; $51ca
 	pop de ; $51cb
@@ -2839,7 +2839,7 @@ GetTileTriggerAtPlayer:
 	swap a ; $5386
 	and $0f ; $5388
 	ld d, a ; $538a
-	ld hl, $c290 ; $538b
+	ld hl, wMapTileTriggersPtr ; $538b
 	ld a, [hl+] ; $538e
 	ld h, [hl] ; $538f
 	ld l, a ; $5390
@@ -3019,7 +3019,7 @@ RunLocationInitScript:
 	push af ; $549b
 	ld a, $90 ; $549c
 	ldh [rWY], a ; $549e
-	ld hl, $c292 ; $54a0
+	ld hl, wMapInitScriptPtr ; $54a0
 	ld a, [hl+] ; $54a3
 	ld h, [hl] ; $54a4
 	ld l, a ; $54a5
@@ -3033,7 +3033,7 @@ RunLocationInitScript:
 	pop af ; $54b3
 	ret ; $54b4
 RunNpcInteraction:
-	ld [$c2db], a ; $54b5
+	ld [wUnusedStoryScriptId], a ; $54b5
 	cp $02 ; $54b8
 	jp z, .done ; $54ba
 	push af ; $54bd
@@ -3041,7 +3041,7 @@ RunNpcInteraction:
 	push de ; $54bf
 	push hl ; $54c0
 	ld d, a ; $54c1
-	ld hl, $c28c ; $54c2
+	ld hl, wMapNpcScriptsPtr ; $54c2
 	ld a, [hl+] ; $54c5
 	ld h, [hl] ; $54c6
 	ld l, a ; $54c7
@@ -3050,13 +3050,13 @@ RunNpcInteraction:
 	or l ; $54cc
 	jp z, .checkRespawn ; $54cd
 	ld a, [wStoryLocationBank] ; $54d0
-	ld de, $c2c0 ; $54d3
+	ld de, wStoryMapRecord ; $54d3
 	ld bc, $0008 ; $54d6
 	call FarCopyBytes ; $54d9
-	ld hl, $c2c6 ; $54dc
+	ld hl, wStoryMapRecord + 6 ; $54dc
 	ld b, [hl] ; $54df
 	wram_bank $04 ; $54e0
-	ld hl, $c2c0 ; $54e6
+	ld hl, wStoryMapRecord ; $54e6
 	ld a, [hl] ; $54e9
 	call GetActorStateAddr ; $54ea
 	ld e, l ; $54ed
@@ -3064,7 +3064,7 @@ RunNpcInteraction:
 	ld hl, $0019 ; $54ef
 	add hl, de ; $54f2
 	ld a, [hl] ; $54f3
-	ld [$c2d8], a ; $54f4
+	ld [wStoryScriptSavedActorBusy], a ; $54f4
 	ld a, $01 ; $54f7
 	ld [hl], a ; $54f9
 	ld a, b ; $54fa
@@ -3073,7 +3073,7 @@ RunNpcInteraction:
 	ld hl, $002e ; $54ff
 	add hl, de ; $5502
 	ld a, [hl] ; $5503
-	ld [$c2d9], a ; $5504
+	ld [wStoryScriptSavedActorAnim], a ; $5504
 	ld a, $01 ; $5507
 	push bc ; $5509
 	push de ; $550a
@@ -3102,11 +3102,11 @@ RunNpcInteraction:
 	ld [hl], a ; $552f
 .runScript:
 	push de ; $5530
-	ld hl, $c2c4 ; $5531
+	ld hl, wStoryMapRecord + 4 ; $5531
 	ld a, [hl+] ; $5534
 	ld h, [hl] ; $5535
 	ld l, a ; $5536
-	ld a, [$c2c0] ; $5537
+	ld a, [wStoryMapRecord] ; $5537
 	call RunStoryScriptOrDialogue ; $553a
 	pop de ; $553d
 	bit 1, b ; $553e
@@ -3130,7 +3130,7 @@ RunNpcInteraction:
 	push de ; $555a
 	ld c, e ; $555b
 	ld b, d ; $555c
-	ld a, [$c2d9] ; $555d
+	ld a, [wStoryScriptSavedActorAnim] ; $555d
 	ld d, a ; $5560
 	farcall SetActorAnimationChecked ; $5561
 	pop de ; $5564
@@ -3138,7 +3138,7 @@ RunNpcInteraction:
 .clearBusy:
 	ld hl, $0019 ; $5566
 	add hl, de ; $5569
-	ld a, [$c2d8] ; $556a
+	ld a, [wStoryScriptSavedActorBusy] ; $556a
 	ld [hl], a ; $556d
 .checkRespawn:
 	pop hl ; $556e
@@ -3153,9 +3153,9 @@ RunFacingTileScript:
 	push bc ; $5575
 	push de ; $5576
 	push hl ; $5577
-	ld [$c2db], a ; $5578
+	ld [wUnusedStoryScriptId], a ; $5578
 	ld d, a ; $557b
-	ld hl, $c28e ; $557c
+	ld hl, wMapFacingScriptsPtr ; $557c
 	ld a, [hl+] ; $557f
 	ld h, [hl] ; $5580
 	ld l, a ; $5581
@@ -3164,10 +3164,10 @@ RunFacingTileScript:
 	or l ; $5586
 	jr z, .done ; $5587
 	ld a, [wStoryLocationBank] ; $5589
-	ld de, $c2c0 ; $558c
+	ld de, wStoryMapRecord ; $558c
 	ld bc, $0008 ; $558f
 	call FarCopyBytes ; $5592
-	ld hl, $c2c4 ; $5595
+	ld hl, wStoryMapRecord + 4 ; $5595
 	ld a, [hl+] ; $5598
 	ld h, [hl] ; $5599
 	ld l, a ; $559a
@@ -3184,9 +3184,9 @@ RunQueuedTriggerScript:
 	push bc ; $55a6
 	push de ; $55a7
 	push hl ; $55a8
-	ld [$c2db], a ; $55a9
+	ld [wUnusedStoryScriptId], a ; $55a9
 	ld d, a ; $55ac
-	ld hl, $c290 ; $55ad
+	ld hl, wMapTileTriggersPtr ; $55ad
 	ld a, [hl+] ; $55b0
 	ld h, [hl] ; $55b1
 	ld l, a ; $55b2
@@ -3195,13 +3195,13 @@ RunQueuedTriggerScript:
 	or l ; $55b7
 	jr z, .done ; $55b8
 	ld a, [wStoryLocationBank] ; $55ba
-	ld de, $c2c0 ; $55bd
+	ld de, wStoryMapRecord ; $55bd
 	ld bc, $0008 ; $55c0
 	call FarCopyBytes ; $55c3
-	ld a, [$c2c6] ; $55c6
+	ld a, [wStoryMapRecord + 6] ; $55c6
 	cp $01 ; $55c9
 	jr z, .done ; $55cb
-	ld hl, $c2c4 ; $55cd
+	ld hl, wStoryMapRecord + 4 ; $55cd
 	ld a, [hl+] ; $55d0
 	ld h, [hl] ; $55d1
 	ld l, a ; $55d2
@@ -3219,7 +3219,7 @@ RunTileTriggerScript:
 	push de ; $55df
 	push hl ; $55e0
 	ld d, a ; $55e1
-	ld hl, $c290 ; $55e2
+	ld hl, wMapTileTriggersPtr ; $55e2
 	ld a, [hl+] ; $55e5
 	ld h, [hl] ; $55e6
 	ld l, a ; $55e7
@@ -3228,10 +3228,10 @@ RunTileTriggerScript:
 	or l ; $55ec
 	jr z, .done ; $55ed
 	ld a, [wStoryLocationBank] ; $55ef
-	ld de, $c2c0 ; $55f2
+	ld de, wStoryMapRecord ; $55f2
 	ld bc, $0008 ; $55f5
 	call FarCopyBytes ; $55f8
-	ld hl, $c2c4 ; $55fb
+	ld hl, wStoryMapRecord + 4 ; $55fb
 	ld a, [hl+] ; $55fe
 	ld h, [hl] ; $55ff
 	ld l, a ; $5600
@@ -3248,9 +3248,9 @@ RunLocationExit:
 	push bc ; $560c
 	push de ; $560d
 	push hl ; $560e
-	ld [$c2db], a ; $560f
+	ld [wUnusedStoryScriptId], a ; $560f
 	ld d, a ; $5612
-	ld hl, $c288 ; $5613
+	ld hl, wMapExitTriggersPtr ; $5613
 	ld a, [hl+] ; $5616
 	ld h, [hl] ; $5617
 	ld l, a ; $5618
@@ -3259,18 +3259,18 @@ RunLocationExit:
 	or l ; $561d
 	jr z, .saveSlot ; $561e
 	ld a, [wStoryLocationBank] ; $5620
-	ld de, $c2c0 ; $5623
+	ld de, wStoryMapRecord ; $5623
 	ld bc, $0008 ; $5626
 	call FarCopyBytes ; $5629
-	ld hl, $c2c4 ; $562c
+	ld hl, wStoryMapRecord + 4 ; $562c
 	ld a, [hl+] ; $562f
 	ld h, [hl] ; $5630
 	ld l, a ; $5631
 	ld a, $00 ; $5632
 	call RunStoryScriptOrDialogue ; $5634
-	ld a, [$c2c6] ; $5637
+	ld a, [wStoryMapRecord + 6] ; $5637
 	ld [wStoryModeCurrentLocation], a ; $563a
-	ld a, [$c2c7] ; $563d
+	ld a, [wStoryMapRecord + 7] ; $563d
 	ld [wStoryModeEntryPoint], a ; $5640
 .saveSlot:
 	xor a ; $5643
@@ -3605,8 +3605,8 @@ InitSceneScroll:
 	ld [wCameraX + 1], a ; $5945
 	ld [wCameraY], a ; $5948
 	ld [wCameraY + 1], a ; $594b
-	ld [$c324], a ; $594e
-	ld [$c325], a ; $5951
+	ld [wCameraTileXPrev], a ; $594e
+	ld [wCameraTileYPrev], a ; $5951
 	ld [wMapScrollMinX], a ; $5954
 	ld [wMapScrollMinY], a ; $5957
 	ld a, $40 ; $595a
@@ -3625,7 +3625,7 @@ StopSceneScrollTask:
 	call UnregisterFrameTask ; $5972
 	ret ; $5975
 UpdateSceneScroll:
-	ld a, [$c325] ; $5976
+	ld a, [wCameraTileYPrev] ; $5976
 	ld h, a ; $5979
 	ld a, [wCameraY + 1] ; $597a
 	sub h ; $597d
@@ -3639,7 +3639,7 @@ UpdateSceneScroll:
 	ld bc, $fb00 ; $598c
 	call BlitBGRowFrom64 ; $598f
 .checkX:
-	ld a, [$c324] ; $5992
+	ld a, [wCameraTileXPrev] ; $5992
 	ld h, a ; $5995
 	ld a, [wCameraX + 1] ; $5996
 	sub h ; $5999
@@ -3657,24 +3657,24 @@ UpdateSceneScroll:
 	ld l, a ; $59b1
 	ld a, [wCameraY + 1] ; $59b2
 	ld h, a ; $59b5
-	ld [$c325], a ; $59b6
+	ld [wCameraTileYPrev], a ; $59b6
 	add hl, hl ; $59b9
 	add hl, hl ; $59ba
 	add hl, hl ; $59bb
 	ld a, h ; $59bc
-	ld hl, $c369 ; $59bd
+	ld hl, wScreenShakeOffsetY ; $59bd
 	add [hl] ; $59c0
 	ldh [hScrollY], a ; $59c1
 	ld a, [wCameraX] ; $59c3
 	ld l, a ; $59c6
 	ld a, [wCameraX + 1] ; $59c7
 	ld h, a ; $59ca
-	ld [$c324], a ; $59cb
+	ld [wCameraTileXPrev], a ; $59cb
 	add hl, hl ; $59ce
 	add hl, hl ; $59cf
 	add hl, hl ; $59d0
 	ld a, h ; $59d1
-	ld hl, $c368 ; $59d2
+	ld hl, wScreenShakeOffsetX ; $59d2
 	add [hl] ; $59d5
 	ldh [hScrollX], a ; $59d6
 	ret ; $59d8
@@ -4058,7 +4058,7 @@ SceneViewerSelectScene:
 	inc a ; $5e2c
 	push af ; $5e2d
 	ld a, [wCurrentScene] ; $5e2e
-	ld [$c33d], a ; $5e31
+	ld [wUnusedPrevSceneIndex], a ; $5e31
 	call StopSceneTileAnimations ; $5e34
 	pop af ; $5e37
 	ld hl, $0176 ; $5e38
@@ -4111,7 +4111,7 @@ RunSceneSelectDebugMenu:
 	inc a ; $5e9f
 	push af ; $5ea0
 	ld a, [wCurrentScene] ; $5ea1
-	ld [$c33d], a ; $5ea4
+	ld [wUnusedPrevSceneIndex], a ; $5ea4
 	call StopSceneTileAnimations ; $5ea7
 	pop af ; $5eaa
 	ld hl, $0176 ; $5eab
@@ -4369,7 +4369,7 @@ InitSceneViewer:
 	ldh [hScrollY], a ; $6027
 	ldh [hScrollX], a ; $6029
 	dec a ; $602b
-	ld [$c33d], a ; $602c
+	ld [wUnusedPrevSceneIndex], a ; $602c
 	ld hl, SceneGfxSlotTable ; $602f
 	ld bc, rIE ; $6032
 .slotLoop:
@@ -4903,7 +4903,7 @@ InitSceneTileAnimations:
 	wram_bank $05 ; $63a2
 	ld a, $ff ; $63a8
 	ld b, $01 ; $63aa
-	ld hl, $c330 ; $63ac
+	ld hl, wSceneTileAnimState ; $63ac
 	ld [hl+], a ; $63af
 	ld [hl], b ; $63b0
 	inc hl ; $63b1
@@ -4932,7 +4932,7 @@ InitSceneTileAnimations:
 	jp .done ; $63d5
 .buildSlots:
 	add sp, -2 ; $63d8
-	ld de, $c332 ; $63da
+	ld de, wSceneTileAnimState + 2 ; $63da
 	push hl ; $63dd
 	ld hl, sp + 2 ; $63de
 	ld [hl], e ; $63e0
@@ -4944,9 +4944,9 @@ InitSceneTileAnimations:
 	ld b, $ff ; $63e6
 	ld c, $03 ; $63e8
 	xor a ; $63ea
-	ld hl, $c330 ; $63eb
+	ld hl, wSceneTileAnimState ; $63eb
 	ld [hl], a ; $63ee
-	ld hl, $c338 ; $63ef
+	ld hl, wSceneTileAnimStart ; $63ef
 	ld [hl], a ; $63f2
 	inc hl ; $63f3
 .scanLoop:
@@ -4986,7 +4986,7 @@ InitSceneTileAnimations:
 	ld d, a ; $641b
 	ld a, $04 ; $641c
 	sub c ; $641e
-	ld hl, $c330 ; $641f
+	ld hl, wSceneTileAnimState ; $641f
 	ld e, a ; $6422
 	ld a, d ; $6423
 	ld d, $00 ; $6424
@@ -5058,7 +5058,7 @@ UpdateSceneTileAnimations:
 	ld [hl+], a ; $6481
 	ld [hl], d ; $6482
 	ld c, $00 ; $6483
-	ld hl, $c338 ; $6485
+	ld hl, wSceneTileAnimStart ; $6485
 .read:
 	ld a, [hl] ; $6488
 	cp $ff ; $6489
@@ -5067,7 +5067,7 @@ UpdateSceneTileAnimations:
 	ld l, c ; $648e
 	ld h, $00 ; $648f
 	add hl, hl ; $6491
-	ld de, $c330 ; $6492
+	ld de, wSceneTileAnimState ; $6492
 	add hl, de ; $6495
 	inc hl ; $6496
 	ld a, [hl] ; $6497
@@ -5109,13 +5109,13 @@ AdvanceSceneTileAnimation:
 	ld h, $00 ; $64c5
 	ld l, a ; $64c7
 	add hl, hl ; $64c8
-	ld bc, $c330 ; $64c9
+	ld bc, wSceneTileAnimState ; $64c9
 	add hl, bc ; $64cc
 	ld a, [hl] ; $64cd
-	ld [$c33c], a ; $64ce
+	ld [wSceneTileAnimCursor], a ; $64ce
 .applyFrame:
 	ld hl, $da88 ; $64d1
-	ld a, [$c33c] ; $64d4
+	ld a, [wSceneTileAnimCursor] ; $64d4
 	ld c, a ; $64d7
 	ld b, $00 ; $64d8
 	add hl, bc ; $64da
@@ -5125,10 +5125,10 @@ AdvanceSceneTileAnimation:
 	ld hl, sp + 0 ; $64e0
 	ld c, [hl] ; $64e2
 	ld b, $00 ; $64e3
-	ld hl, $c338 ; $64e5
+	ld hl, wSceneTileAnimStart ; $64e5
 	add hl, bc ; $64e8
 	ld a, [hl] ; $64e9
-	ld [$c33c], a ; $64ea
+	ld [wSceneTileAnimCursor], a ; $64ea
 	jr .applyFrame ; $64ed
 .nextEntry:
 	ld b, a ; $64ef
@@ -5222,9 +5222,9 @@ AdvanceSceneTileAnimation:
 	ld a, c ; $6574
 	ld [hl+], a ; $6575
 	ld [hl], b ; $6576
-	ld a, [$c33c] ; $6577
+	ld a, [wSceneTileAnimCursor] ; $6577
 	add $04 ; $657a
-	ld [$c33c], a ; $657c
+	ld [wSceneTileAnimCursor], a ; $657c
 	pop af ; $657f
 	ld d, a ; $6580
 	add sp, 1 ; $6581
@@ -5232,9 +5232,9 @@ AdvanceSceneTileAnimation:
 	ld h, $00 ; $6584
 	ld l, a ; $6586
 	add hl, hl ; $6587
-	ld bc, $c330 ; $6588
+	ld bc, wSceneTileAnimState ; $6588
 	add hl, bc ; $658b
-	ld a, [$c33c] ; $658c
+	ld a, [wSceneTileAnimCursor] ; $658c
 	ld [hl+], a ; $658f
 	ld [hl], d ; $6590
 	pop hl ; $6591

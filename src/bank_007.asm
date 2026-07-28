@@ -1332,7 +1332,7 @@ UpdateLinkSession:
 	push bc ; $4847
 	push de ; $4848
 	push hl ; $4849
-	ld a, [$c33f] ; $484a
+	ld a, [wLinkSessionActive] ; $484a
 	or a ; $484d
 	jp z, .done ; $484e
 	ldh a, [hLinkExchangeActive] ; $4851
@@ -1413,7 +1413,7 @@ UpdateLinkSession:
 	ret ; $48f5
 EndLinkSession:
 	xor a ; $48f6
-	ld [$c33f], a ; $48f7
+	ld [wLinkSessionActive], a ; $48f7
 	call InitSerialLink ; $48fa
 	ret ; $48fd
 ExchangeHandshakeBlockMaster:

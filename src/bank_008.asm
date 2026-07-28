@@ -5465,7 +5465,7 @@ InitAllChars:
 	ld a, [wMatchIsDoubles] ; $68b9
 	and a ; $68bc
 	jr nz, .storeShadowFlag ; $68bd
-	ld a, [$c33f] ; $68bf
+	ld a, [wLinkSessionActive] ; $68bf
 	and a ; $68c2
 	jr nz, .storeShadowFlag ; $68c3
 	ld b, $01 ; $68c5
