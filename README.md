@@ -103,6 +103,11 @@ assets outside the tree and copy them in, or do not re-run extraction.
   fields after the Nintendo logo), `pattern` (a repeated byte pattern, as one
   `ds count, v1, v2, ...`), `fill` (padding, rendered as `ds` runs).
 - `include/hardware.inc` — standard Game Boy hardware definitions (CC0).
+- `docs/` — `STATUS.md` is the running log of what has been worked out and how;
+  `bugs.md` collects defects in the *game* (as opposed to in this disassembly),
+  with the dead stores and deliberately-stubbed routines kept separate from
+  them; `save_format.md`, `ram_map.md`, `sound_engine.md`, `actor_script.md`
+  and `bank0_notes.md` document one subsystem each.
 - `tools/` — the disassembly tooling (see below).
 
 ## Workflow: growing the disassembly
@@ -153,7 +158,7 @@ validated by decode-chain scoring in `tools/disasm.py`'s loader.
 
 - `tools/sm83.py` — exhaustive SM83 decoder emitting RGBDS syntax that
   round-trips byte-exactly through rgbasm (verified encodings: `ldh` vs `ld`,
-  `stop` padding, no auto-`nop` after `halt`, two-operand ALU forms).
+  `stop` padding, no auto-`nop` after `halt`, short-form ALU ops).
 - `tools/disasm.py` — coverage + ROM → `src/*.asm` + `data.manifest`. Besides
   code, it classifies `$4000` pointer-table slots holding *data* pointers:
   call sites of `CopyDataFromBank`/`DecompressDataFromBank` are backtracked
