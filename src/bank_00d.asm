@@ -312,7 +312,7 @@ StartScorePopup:
 	push af ; $4213
 	wram_bank $04 ; $4214
 	ld hl, wBallHistory + 30 ; $421a
-	ld de, $c7a0 ; $421d
+	ld de, wScorePopupSource ; $421d
 	ld a, [hl+] ; $4220
 	ld [de], a ; $4221
 	inc de ; $4222
@@ -336,11 +336,11 @@ UpdateScorePopup:
 	ret z ; $423b
 	ld hl, wScorePopupTimer ; $423c
 	call TickTimer ; $423f
-	ld hl, $c7a2 ; $4242
+	ld hl, wScorePopupSource + 2 ; $4242
 	ld a, [hl+] ; $4245
 	ld b, [hl] ; $4246
 	ld c, a ; $4247
-	ld hl, $c7a0 ; $4248
+	ld hl, wScorePopupSource ; $4248
 	ld a, [hl+] ; $424b
 	ld h, [hl] ; $424c
 	ld l, a ; $424d
@@ -439,7 +439,7 @@ GetMinigameGridCellIndex:
 	ld a, $ff ; $42ff
 	ret ; $4301
 DrawMinigameGrid:
-	ld hl, $c7c0 ; $4302
+	ld hl, wMinigameTargetGrid ; $4302
 	ld c, $00 ; $4305
 	ld b, $18 ; $4307
 .loop:
@@ -1545,7 +1545,7 @@ ReflectBallVelocity:
 	ld a, [hl] ; $4b7f
 	xor $02 ; $4b80
 	ld [hl], a ; $4b82
-	ld hl, $c404 ; $4b83
+	ld hl, wBallDepthFrac ; $4b83
 	ld a, [hl] ; $4b86
 	cpl ; $4b87
 	ld [hl+], a ; $4b88
@@ -1558,7 +1558,7 @@ ReflectBallVelocity:
 	ld a, [hl] ; $4b8f
 	cpl ; $4b90
 	ld [hl+], a ; $4b91
-	ld hl, $c423 ; $4b92
+	ld hl, wBallVelocityDepthFrac ; $4b92
 	ld a, [hl] ; $4b95
 	cpl ; $4b96
 	ld [hl+], a ; $4b97
@@ -1568,10 +1568,10 @@ ReflectBallVelocity:
 	ld a, [hl] ; $4b9b
 	cpl ; $4b9c
 	ld [hl+], a ; $4b9d
-	ld hl, $c423 ; $4b9e
+	ld hl, wBallVelocityDepthFrac ; $4b9e
 	ld b, $e6 ; $4ba1
 	farcall MulMem24ByFrac ; $4ba3
-	ld hl, $c423 ; $4ba6
+	ld hl, wBallVelocityDepthFrac ; $4ba6
 	ld [hl+], a ; $4ba9
 	ld a, e ; $4baa
 	ld [hl+], a ; $4bab
@@ -2595,7 +2595,7 @@ InitMinigame_BananaBunch:
 	ld a, $05 ; $54ff
 	farcall SpawnMinigameTargetFormation ; $5501
 	ld a, $01 ; $5504
-	ld [$c7a4], a ; $5506
+	ld [wMinigameTargetsAltMode], a ; $5506
 	ld a, $01 ; $5509
 	ld [wMinigameUsesWall], a ; $550b
 	ld a, [wMinigameLevel] ; $550e
@@ -2673,11 +2673,11 @@ UpdateBananaBunchTargetHits:
 BananaBunchReflectBallAndRecordCell:
 	call ReflectBallVelocity ; $55aa
 	call GetMinigameGridCellIndex ; $55ad
-	ld [$c7bf], a ; $55b0
+	ld [wMinigameLastHitCell], a ; $55b0
 	ret ; $55b3
 CopyMinigameTilemapBlock:
 	wram_bank $02 ; $55b4
-	ld de, $c7c0 ; $55ba
+	ld de, wMinigameTargetGrid ; $55ba
 	ld bc, $0018 ; $55bd
 	call CopyMemoryBC ; $55c0
 	call DrawMinigameGrid ; $55c3
@@ -2713,7 +2713,7 @@ MinigameTargetTypeScores:
 	; $55f9, 4 bytes (bytes:4)
 	db $01, $03, $05, $03 ; 0x00
 .eqff:
-	ld a, [$c7bf] ; $55fd
+	ld a, [wMinigameLastHitCell] ; $55fd
 	cp $ff ; $5600
 	ret z ; $5602
 	add $c0 ; $5603
@@ -3211,9 +3211,9 @@ ResetTargetGrid:
 	ld hl, PerfectShotTargetGridLayout ; $5979
 	call CopyMinigameTilemapBlock ; $597c
 	ld a, $01 ; $597f
-	ld [$c7c7], a ; $5981
-	ld [$c7cf], a ; $5984
-	ld [$c7d7], a ; $5987
+	ld [wMinigameTargetGrid + 7], a ; $5981
+	ld [wMinigameTargetGrid + 15], a ; $5984
+	ld [wMinigameTargetGrid + 23], a ; $5987
 	ret ; $598a
 AnimateTargetGridClear:
 	ld a, $02 ; $598b
@@ -3243,7 +3243,7 @@ AnimateTargetGridClear:
 	call ResetTargetGrid ; $59b3
 	ret ; $59b6
 AreAllTargetsHit:
-	ld hl, $c7c0 ; $59b7
+	ld hl, wMinigameTargetGrid ; $59b7
 	ld c, $18 ; $59ba
 	xor a ; $59bc
 .loop:
@@ -4036,7 +4036,7 @@ InitMinigame_FruitFantasy:
 	ld a, $06 ; $5f45
 	farcall SpawnMinigameTargetFormation ; $5f47
 	ld a, $01 ; $5f4a
-	ld [$c7a4], a ; $5f4c
+	ld [wMinigameTargetsAltMode], a ; $5f4c
 	ld a, $01 ; $5f4f
 	ld [wMinigameUsesWall], a ; $5f51
 	ld a, [wMinigameLevel] ; $5f54
@@ -4114,6 +4114,6 @@ UpdateFruitFantasyTargetHits:
 FruitFantasyReflectBallAndRecordCell:
 	call ReflectBallVelocity ; $5ff0
 	call GetMinigameGridCellIndex ; $5ff3
-	ld [$c7bf], a ; $5ff6
+	ld [wMinigameLastHitCell], a ; $5ff6
 	ret ; $5ff9
 	; $5ffa, 8198 bytes fill to bank end (linker-padded)

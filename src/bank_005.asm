@@ -662,7 +662,7 @@ RestoreShadowTilemapRow:
 	ld c, l ; $43f5
 	push bc ; $43f6
 	wram_bank $03 ; $43f7
-	ld hl, $c6a0 ; $43fd
+	ld hl, wTilemapRowStage ; $43fd
 	ld a, c ; $4400
 	and $1f ; $4401
 	add l ; $4403
@@ -678,7 +678,7 @@ RestoreShadowTilemapRow:
 	ld a, c ; $440d
 	and $1f ; $440e
 	jr nz, .next ; $4410
-	ld hl, $c6a0 ; $4412
+	ld hl, wTilemapRowStage ; $4412
 	ld a, c ; $4415
 	and $3f ; $4416
 	jr nz, .next ; $4418
@@ -707,13 +707,13 @@ RestoreShadowTilemapRow:
 	push de ; $443a
 	ld d, h ; $443b
 	ld e, l ; $443c
-	ld hl, $c6a0 ; $443d
+	ld hl, wTilemapRowStage ; $443d
 	wram_bank $05 ; $4440
 	ld bc, $0002 ; $4446
 	call CopyMemoryFast ; $4449
 	pop de ; $444c
 	pop bc ; $444d
-	ld hl, $c6a0 ; $444e
+	ld hl, wTilemapRowStage ; $444e
 	wram_bank $02 ; $4451
 	ld a, c ; $4457
 	and $1f ; $4458
@@ -730,7 +730,7 @@ RestoreShadowTilemapRow:
 	ld a, c ; $4464
 	and $1f ; $4465
 	jr nz, .next2 ; $4467
-	ld hl, $c6a0 ; $4469
+	ld hl, wTilemapRowStage ; $4469
 	ld a, c ; $446c
 	and $3f ; $446d
 	jr nz, .next2 ; $446f
@@ -758,7 +758,7 @@ RestoreShadowTilemapRow:
 	jr nz, .loop4 ; $448f
 	ld d, h ; $4491
 	ld e, l ; $4492
-	ld hl, $c6a0 ; $4493
+	ld hl, wTilemapRowStage ; $4493
 	wram_bank $05 ; $4496
 	ld bc, $0002 ; $449c
 	call CopyMemoryFast ; $449f
@@ -6159,35 +6159,35 @@ DebugDrawWarpMenu:
 	ld a, [wDebugWarpWindowId] ; $674d
 	call WriteDialogueToWindow ; $6750
 	ld hl, EnterNumberPrompt_05 ; $6753
-	ld de, $c720 ; $6756
+	ld de, wDebugNumberEntryText ; $6756
 	ld c, $01 ; $6759
 	call CopyMemoryFast ; $675b
-	ld hl, $c720 ; $675e
+	ld hl, wDebugNumberEntryText ; $675e
 	ld de, $0104 ; $6761
 	ld a, [wDebugWarpWindowId] ; $6764
 	call WriteStringToWindow ; $6767
-	ld de, $c720 ; $676a
+	ld de, wDebugNumberEntryText ; $676a
 	ld a, [wDebugMenuWindowId] ; $676d
 	ld h, $00 ; $6770
 	ld l, a ; $6772
 	ld a, $02 ; $6773
 	call FormatDecimalNumber ; $6775
-	ld hl, $c720 ; $6778
+	ld hl, wDebugNumberEntryText ; $6778
 	ld de, $1102 ; $677b
 	ld a, [wDebugWarpWindowId] ; $677e
 	call WriteStringToWindow ; $6781
-	ld de, $c720 ; $6784
+	ld de, wDebugNumberEntryText ; $6784
 	ld a, [wDebugWarpEntryPoint] ; $6787
 	ld h, $00 ; $678a
 	ld l, a ; $678c
 	ld a, $02 ; $678d
 	call FormatDecimalNumber ; $678f
-	ld hl, $c720 ; $6792
+	ld hl, wDebugNumberEntryText ; $6792
 	ld de, $1104 ; $6795
 	ld a, [wDebugWarpWindowId] ; $6798
 	call WriteStringToWindow ; $679b
 	ld d, $10 ; $679e
-	ld a, [$c703] ; $67a0
+	ld a, [wDebugWarpNumber] ; $67a0
 	add a ; $67a3
 	add $02 ; $67a4
 	ld e, a ; $67a6
@@ -6207,7 +6207,7 @@ RunDebugWarpMenu:
 	push hl ; $67c7
 	wram_bank $05 ; $67c8
 	xor a ; $67ce
-	ld [$c703], a ; $67cf
+	ld [wDebugWarpNumber], a ; $67cf
 	ld [wDebugWarpEntryPoint], a ; $67d2
 	ld a, [wStoryModeCurrentLocation] ; $67d5
 	ld [wDebugMenuWindowId], a ; $67d8
@@ -6238,13 +6238,13 @@ RunDebugWarpMenu:
 	ldh a, [hInputPressed] ; $6815
 	and PADF_UP | PADF_DOWN ; $6817
 	jr z, .step2 ; $6819
-	ld hl, $c703 ; $681b
+	ld hl, wDebugWarpNumber ; $681b
 	ld a, [hl] ; $681e
 	xor $01 ; $681f
 	ld [hl], a ; $6821
 	call DebugDrawWarpMenu ; $6822
 .step2:
-	ld a, [$c703] ; $6825
+	ld a, [wDebugWarpNumber] ; $6825
 	cp $01 ; $6828
 	jr z, .eq01 ; $682a
 	ld a, [wDebugWarpLocationCount] ; $682c
@@ -6347,7 +6347,7 @@ DebugDrawColorComponents:
 	call FormatDecimalNumber ; $697a
 	ld h, $00 ; $697d
 	ld l, b ; $697f
-	ld de, $c703 ; $6980
+	ld de, wDebugWarpNumber ; $6980
 	ld a, $03 ; $6983
 	call FormatDecimalNumber ; $6985
 	ld h, $00 ; $6988
@@ -8362,7 +8362,7 @@ InitGlyphStreamForWindow:
 	add e ; $7569
 	ld e, a ; $756a
 .zero2:
-	ld hl, $c3b9 ; $756b
+	ld hl, wTextRowWidth ; $756b
 	ld [hl], d ; $756e
 	inc hl ; $756f
 	ld [hl], e ; $7570
@@ -8382,7 +8382,7 @@ DrawStreamGlyph:
 	ldh a, [hWramBank] ; $7582
 	push af ; $7584
 	wram_bank $05 ; $7585
-	ld hl, $c3b9 ; $758b
+	ld hl, wTextRowWidth ; $758b
 	ld b, [hl] ; $758e
 	inc hl ; $758f
 	ld c, [hl] ; $7590
@@ -8435,7 +8435,7 @@ StartGlyphStreamRow:
 	push bc ; $75dc
 	push de ; $75dd
 	push hl ; $75de
-	ld hl, $c3b9 ; $75df
+	ld hl, wTextRowWidth ; $75df
 	ld b, [hl] ; $75e2
 	inc hl ; $75e3
 	ld c, [hl] ; $75e4
@@ -8552,7 +8552,7 @@ DrawInlineGlyph:
 	ldh a, [hWramBank] ; $7685
 	push af ; $7687
 	push hl ; $7688
-	ld hl, $c3b9 ; $7689
+	ld hl, wTextRowWidth ; $7689
 	ld b, [hl] ; $768c
 	inc hl ; $768d
 	ld c, [hl] ; $768e
@@ -8689,7 +8689,7 @@ InitGlyphStreamAt:
 	ld [hl], e ; $775f
 	inc hl ; $7760
 	ld [hl], d ; $7761
-	ld hl, $c3b9 ; $7762
+	ld hl, wTextRowWidth ; $7762
 	ld [hl], b ; $7765
 	inc hl ; $7766
 	ld a, [hl] ; $7767
@@ -8761,7 +8761,7 @@ FlushGlyphRow:
 .uploadGlyphBufferDMA:
 	call UploadGlyphBufferDMA ; $77c5
 .step2:
-	ld hl, $c3b9 ; $77c8
+	ld hl, wTextRowWidth ; $77c8
 	ld b, [hl] ; $77cb
 	inc hl ; $77cc
 	ld c, [hl] ; $77cd
@@ -8914,7 +8914,7 @@ UploadGlyphTileRange:
 	ldh a, [hWramBank] ; $78b0
 	push af ; $78b2
 	wram_bank $07 ; $78b3
-	ld a, [$c3be] ; $78b9
+	ld a, [wGlyphUploadFirstTile] ; $78b9
 	ld l, a ; $78bc
 	ld h, $00 ; $78bd
 	add hl, hl ; $78bf
@@ -8925,7 +8925,7 @@ UploadGlyphTileRange:
 	ld c, l ; $78c4
 	ld de, $8800 ; $78c5
 	add hl, de ; $78c8
-	ld a, [$c3bf] ; $78c9
+	ld a, [wGlyphUploadVramBank] ; $78c9
 	or a ; $78cc
 	jr z, .zero ; $78cd
 	ld de, $2000 ; $78cf
@@ -8937,7 +8937,7 @@ UploadGlyphTileRange:
 	ld de, wGlyphTileBuffer ; $78d6
 	add hl, de ; $78d9
 	pop de ; $78da
-	ld a, [$c3bd] ; $78db
+	ld a, [wGlyphUploadCount] ; $78db
 	cp $20 ; $78de
 	jr c, .lt20 ; $78e0
 	ld a, $20 ; $78e2

@@ -26,7 +26,9 @@ wGlyphBlitRowsLeft:: db
 
 ; [8-bit] Destination bit mask for RenderGlyphToTiles, PixelMaskTable[penX & 7]. It is rotated right once per pixel; the wrap from $01 back to $80 is what advances the destination to the next tile column
 wGlyphBlitDestMask:: db
-	ds 5
+
+; [5 bytes] Peak LY of the last frame as four hex digits, written by AdvanceFrame with FormatHexWord and copied to $9d08 by UpdateDebugOverlay
+wDebugPeakLYText:: ds 5
 
 ; [64 bytes] Live BG palette buffer, uploaded in VBlank when hPaletteDirtyFlags bit 0 set
 wBGPalettes:: ds 64
@@ -153,6 +155,8 @@ wMapSceneStage2:: db
 ; bytes. The three wWaterSpriteMinigame* names that used to sit here in
 ; ram_map.json were global, so they also labelled the generic scratch use
 ; in banks $0e/$0f/$10/$13, which is what STATUS flagged as mis-scoped.
+; Everywhere else the block is generic per-location scratch, which is what
+; the default variant names.
 UNION
 ; island cutscene sprite slots (bank $14, $5300-$7900)
 ; [2 bytes] World X of cutscene sprite slot 0 and slot 1; the drawers subtract hScrollX to get the OAM X. The plane sequence has no second object and borrows slot 0's byte as its frame counter (AdvancePlaneFrameCounter_14)
@@ -184,6 +188,10 @@ wSwingContestSwingState:: db
 wSwingContestHudMode:: db
 ; [8-bit] Which HUD page the swing contest shows; InitWaterSpriteMinigameHud seeds it and QueueWaterSpriteMinigameHudPanels queues the panels for it
 wSwingContestHudPage:: db
+NEXTU
+; generic location scratch
+; [14 bytes] The rest of the current location's scratch block, after wMapSceneStage / wMapSceneStage2. Every story script in banks $0e-$13 uses it for whatever that location needs -- a saved actor position, a name being assembled for a text argument, a menu's working bytes -- so the block has a name and the offsets do not. The two overlays that do have a fixed layout (bank $14's cutscene sprite slots, bank $15's swing contest) are the scoped variants above
+wMapScratch:: ds 14
 ENDU
 
 ; [8 bytes] Staging copy of one record from the loaded location's map tables, far-copied here out of wStoryLocationBank after FindStoryScriptEntry locates it. Both record shapes land in the same eight bytes, so the field meanings depend on which table was searched: a map_entry gives facing at +1, X and Y at +2 and +4, and the arrival_script at +6; a map_script gives the flag condition at +2, the handler at +4 and its two argument bytes at +6 and +7 (RunLocationExit reads those two as destination location and entry point)
@@ -253,7 +261,9 @@ wDrillShotResultBits:: dw
 
 ; [8-bit] Result of judging the current drill point, 0 until judged. Each drill's JudgeShot0-3 stores the value its JudgePoint returns, and JudgePoint returns early while this is already nonzero so the first judgement of a point wins
 wDrillPointJudgement:: db
-	ds 32
+
+; [32 bytes] One tilemap row of CGB attributes, sent to VRAM bank 1 at wBGRowBlitDest by ProcessBGBlitQueue when hBGRowBlitPending is set. Rows go out by VRAM DMA, columns by the byte loop in wBGColumnBlitAttrs
+wBGRowBlitAttrs:: ds 32
 
 ; [16-bit] BG scroll-buffer camera X (tiles<<3?)
 wCameraX:: dw
@@ -361,7 +371,9 @@ wCurrentBGM:: db
 
 ; [8-bit] Nonzero while a cable-link match is in progress. Bank $38's link character select sets it to 1 just before RunMatch, EndLinkSession clears it, and the match and menu code branch on it to pick link behaviour over single-player
 wLinkSessionActive:: db
-	ds 32
+
+; [32 bytes] The tile plane of the same row blit, sent to VRAM bank 0
+wBGRowBlitTiles:: ds 32
 
 ; [8-bit] Nonzero makes RenderInlineNumber right-align its formatted number in a five-character field by padding the pen instead of writing at the pen. Only one caller sets it, around the Text_30_310 line, and clears it again straight after
 wTextNumberRightAlign:: db
@@ -385,13 +397,23 @@ wScreenShakeOffsetY:: db
 
 ; [8-bit] Active story save-slot index (0-2); selects which SRAM story slot CheckStorySlot / SaveStorySlotWithTimer operate on
 wCurrentStorySlot:: db
-	ds 9
+	ds 2
+
+; [8-bit] Nonzero when the EXP screen still has a bonus to add once the gauge finishes; the level-up path reads it and clears it after folding wExpBonusAmount into wExpAwardTotal
+wExpBonusPending:: db
+
+; [16-bit] The bonus EXP added to wExpAwardTotal after the first fill
+wExpBonusAmount:: dw
+	ds 4
 
 ; [8-bit] Minigame Level (0x00-0x03)
 ;
 ; Value is current minigame level - 1
 wMinigameLevel:: db
-	ds 41
+	ds 9
+
+; [32 bytes] One tilemap column of CGB attributes, blitted to VRAM bank 1 at wBGColumnBlitX by ProcessBGBlitQueue when hBGColumnBlitPending is set. The tile plane it pairs with is wBGColumnBlitTiles
+wBGColumnBlitAttrs:: ds 32
 
 ; [16-bit] Tile-plane source address for QueueDeferredTilemapCopy's pending copy to $9800
 wDeferredTilemapSrc:: dw
@@ -432,7 +454,9 @@ wWindowTileAttr:: db
 
 ; [16-bit] Glyph-stream horizontal pen position (sub-pixel fixed point); advanced per glyph by DrawStreamGlyph
 wGlyphPenX:: dw
-	ds 1
+
+; [8-bit] Width in cells of the row the glyph stream is composing. FlushGlyphRow adds it to wTextRowColumn to step to the next row, and InitGlyphStreamForWindow derives it from the window width (less the two frame cells, plus wGlyphRowStartCol when a window owns the stream)
+wTextRowWidth:: db
 
 ; [8-bit] Column the current text row starts at, the window's x plus its indent. InitGlyphStreamAt stores the same value into wGlyphRowStartCol, and the row-flush path passes this copy as the destination column alongside the row in c
 wTextRowColumn:: db
@@ -442,46 +466,88 @@ wGlyphRowStartCol:: db
 
 ; [8-bit] Tilemap cell column already flushed out of the glyph buffer; StampGlyphTileAtPen subtracts it from the pen's column to find how far the write pointer has to advance
 wGlyphFlushedCol:: db
-	ds 69
+
+; [8-bit] Number of glyph tiles UploadGlyphTileRange should send, capped at $20 -- one QueueVRAMCopy is 32 tiles
+wGlyphUploadCount:: db
+
+; [8-bit] First glyph tile of the range to upload; the source is wGlyphTileBuffer + n * TILE_SIZE and the destination $8800 + n * TILE_SIZE
+wGlyphUploadFirstTile:: db
+
+; [8-bit] Nonzero to send the range to VRAM bank 1 instead of bank 0 (UploadGlyphTileRange adds $2000 to the destination)
+wGlyphUploadVramBank:: db
+
+; [32 bytes] The tile plane of the same column blit, sent to VRAM bank 0
+wBGColumnBlitTiles:: ds 32
+	ds 32
+
+; [16-bit] Fractional half of the ball X position; wBallX is the integer half above it. Position is 16.16 fixed point, and the three axes are one 12-byte block from here -- SetBallPosition writes each as a zero fraction plus an integer, and StepBallPhysics copies the block to wBallPrevXFrac before adding velocity
+wBallXFrac:: dw
 
 ; [16-bit] Ball X position, integer part (lateral, signed)
 wBallX:: dw
-	ds 2
+
+; [16-bit] Fractional half of wBallDepth
+wBallDepthFrac:: dw
 
 ; [16-bit] Ball depth position, integer part (signed, net at 0)
 wBallDepth:: dw
-	ds 2
+
+; [16-bit] Fractional half of wBallHeight
+wBallHeightFrac:: dw
 
 ; [16-bit] Ball height above the court, integer part
 wBallHeight:: dw
-	ds 2
+
+; [16-bit] Vertical angle of the ball's velocity, the companion of wBallHeadingAngle. UpdateBallAnglesAndSpeed writes it as AngleFromVector16(wBallVelocityHeight, wBallSpeedHorizontal), same $100-per-turn encoding
+wBallPitchAngle:: dw
 
 ; [16-bit] Ball physics - horizontal heading angle of the ball's velocity (same $100-per-turn encoding as wShotAimAngle). Written by UpdateBallAnglesAndSpeed ($08:$45f1) as AngleFromVector16(de=wBallVelocityX, hl=wBallVelocityDepth); read by ApplyBallSpin ($08:$5724, MulSinCosSigned to split the topspin term back onto the X/depth axes) and by PredictBallLateralOffset ($08:$70f5).
 wBallHeadingAngle:: dw
-	ds 6
+
+; [16-bit] Start-of-frame copy of the whole position block: StepBallPhysics copies $c400-$c40b here before integrating, so this mirrors wBallXFrac and the five words after it mirror their originals
+wBallPrevXFrac:: dw
+
+; [16-bit] Ball X at the start of the frame (integer part)
+wBallPrevX:: dw
+
+; [16-bit] Fractional half of wBallPrevDepth
+wBallPrevDepthFrac:: dw
 
 ; [16-bit] Ball depth at the start of the frame (integer part). StepBallPhysics ($08:$576b) copies the whole 12-byte position block $c400-$c40b to $c410-$c41b before adding velocity, so $c410/$c414/$c418 mirror the wBallX/wBallDepth/wBallHeight 32-bit triples; only the depth integer part is ever read back. HandleBallNetCrossing ($08:$581c) XORs wBallDepth+1 with $c417 and tests bit 7 to detect the net crossing; DidBallCrossGate ($08:$6773) reads the full word.
 wBallPrevDepth:: dw
-	ds 4
+
+; [16-bit] Fractional half of wBallPrevHeight
+wBallPrevHeightFrac:: dw
+
+; [16-bit] Ball height at the start of the frame (integer part)
+wBallPrevHeight:: dw
 
 ; [16-bit] Ball physics - top/backspin coefficient (rotation about the lateral axis). Set from bc by SetBallSpinComponents ($08:$45de). ApplyBallSpin ($08:$56a9-$5765): while nonzero it multiplies wBallVelocityHeight by it and adds the (negated) product along wBallHeadingAngle into the X/depth velocities ($c420/$c423), and multiplies wBallSpeedHorizontal by it and adds that into the height velocity ($c426) - i.e. a Magnus rotation of the (horizontal, vertical) velocity pair. Decayed by 3/256 per frame at $08:$574a-$5765.
 wBallTopspin:: dw
 
 ; [16-bit] Ball physics - sidespin/curve coefficient (rotation about the vertical axis). Set from de by SetBallSpinComponents ($08:$45d8). ApplyBallSpin ($08:$5613-$56a8): while nonzero it adds +k*wBallVelocityDepth to the X velocity ($c420) and -k*wBallVelocityX to the depth velocity ($c423), curving the ball laterally; then decays itself by 3/256 per frame ($08:$568d-$56a8).
 wBallSideSpin:: dw
-	ds 1
+
+; [8-bit] Fraction byte of wBallVelocityX. The three velocity components are 24-bit fixed point (8.16), each written as a zero fraction plus a 16-bit integer by SetBallVelocityPolar
+wBallVelocityXFrac:: db
 
 ; [16-bit] Ball X velocity, integer part (24-bit fixed-point triple $c420-$c422, fraction byte at $c420); decayed by ApplyBallAirDrag
 wBallVelocityX:: dw
-	ds 1
+
+; [8-bit] Fraction byte of wBallVelocityDepth
+wBallVelocityDepthFrac:: db
 
 ; [16-bit] Ball depth velocity, integer part (triple $c423-$c425); curved by ApplyBallSpin
 wBallVelocityDepth:: dw
-	ds 1
+
+; [8-bit] Fraction byte of wBallVelocityHeight
+wBallVelocityHeightFrac:: db
 
 ; [16-bit] Ball height (vertical) velocity, integer part (triple $c426-$c428)
 wBallVelocityHeight:: dw
-	ds 1
+
+; [8-bit] Fraction byte of wBallSpeedHorizontal
+wBallSpeedHorizontalFrac:: db
 
 ; [16-bit] Magnitude of the ball's horizontal (X,depth) velocity, integer part of the 24-bit triple $c429-$c42b (fraction byte at $c429). Written by UpdateBallAnglesAndSpeed ($08:$4606) as VectorLengthFromAngle(bc=wBallHeadingAngle, hl=wBallVelocityDepth, de=wBallVelocityX); read by ApplyBallSpin ($08:$56ed) as the horizontal-speed factor of the topspin lift term.
 wBallSpeedHorizontal:: dw
@@ -537,7 +603,12 @@ wBallTargetX:: dw
 
 ; [16-bit] Projected ball target/landing depth (companion to wBallTargetX; net at 0)
 wBallTargetDepth:: dw
-	ds 4
+
+; [16-bit] The ball's X velocity as the shot was struck, saved by ExecuteShot
+wShotRecoilVelocityX:: dw
+
+; [16-bit] The same for depth velocity. ApplyShotRecoil scales it by the ShotRecoilTable_07 factor for the shot type and pushes the striking character back along it
+wShotRecoilVelocityDepth:: dw
 
 ; [16-bit] Shot speed as FinalizeShotSpeed leaves it, after momentum and the character-flag penalty and clamped up to $0100. Write-only, like the three term traces above it
 wShotSpeedFinal:: dw
@@ -569,7 +640,9 @@ wBallGroundProjX:: dw
 
 ; [16-bit] Projected screen-space Y of the ball's ground position (companion to wBallGroundProjX, from the bc return of ProjectWorldToScreen at $08:$526d).
 wBallGroundProjY:: dw
-	ds 2
+
+; [16-bit] Negated wBallHeight, the drop the trajectory solver has to cover. ComputeShotTrajectory writes it just before it copies the aim target into wBallTargetX
+wShotSolverNegHeight:: dw
 
 ; [8-bit] Aim row (0-$1f) the shot banks derive from the ball's angle to index their per-aim target tables. Written by every bank's SetBallTargetFromAim and read by nothing -- the value is used from a, so this is a leftover store
 wShotAimRow:: db
@@ -577,7 +650,9 @@ wShotAimRow:: db
 
 ; [16-bit] The magnitude SetBallVelocityPolar was called with, saved before it is resolved into X/depth components through MulSinCosSigned. Write-only
 wBallVelocityPolarLength:: dw
-	ds 2
+
+; [16-bit] First word of the shot-table entry SetBallTargetByPrediction_* is acting on, stored before the aim delta is applied. Every shot bank writes it and nothing reads it
+wShotPredictionEntry:: dw
 
 ; [16-bit] Camera X offset added before the <<3 screen projection (Func_08_59bb)
 wCameraOffsetX:: dw
@@ -642,7 +717,9 @@ wShotRecoilVariant:: db
 
 ; [8-bit] Charge level of the shot being executed, 0-$3f. Snapshotted from the hitter's $df4b and clamped to $3f in ExecuteShot ($07:$5413-$541c). Scales the shot speed in AddChargeSpeedBonus / AddChargeSpeedBonusHalf ($07:$5345, $535c, both offsetting by $ffe0 first) and in WeakenShotByCharge / BoostShotByCharge ($07:$54de, $54ed); $08:$53f9 compares it against $3f (fully charged) to pick the special hit flash instead of the normal spark.
 wShotChargeLevel:: db
-	ds 1
+
+; [8-bit] Copy of the striking character's wCharQuickSwing taken by ExecuteShot, so the shot keeps the value the swing was started with
+wShotWasQuickSwing:: db
 
 ; [8-bit] The striker's wCharAimOffset at the moment of contact, snapshotted by ExecuteShot alongside wLastShotCharIndex and wLastShotServeRole. Write-only
 wLastShotAimOffset:: db
@@ -860,7 +937,9 @@ wDebugMatchFlags:: db
 
 ; Dialogue string buffer (160 bytes); text-bank fetch routines copy string N here when called with a = 0
 wTextBuffer:: ds 160
-	ds 32
+
+; [32 bytes] One tilemap row staged by RestoreShadowTilemapRow: it reads the row out of the map buffer, wrapping at the map edge, and writes it back into the shadow tilemap from here
+wTilemapRowStage:: ds 32
 
 ; 32-byte staging buffer for inline text args (player name, arg strings, short texts) rendered via RenderInlineString
 wInlineTextBuffer:: ds 32
@@ -874,7 +953,9 @@ wDebugWarpWindowId:: db
 
 ; [8-bit] Number of story locations GetStoryLocationCount reported, the upper bound RunDebugWarpMenu's location stepper wraps at
 wDebugWarpLocationCount:: db
-	ds 1
+
+; [8-bit] Location number typed into the debug warp menu. The colour-component viewer formats its digits over the same bytes, which is why the two after it stay numeric
+wDebugWarpNumber:: db
 
 ; [8-bit] Entry point the debug warp menu is editing, written to wStoryModeEntryPoint when A confirms the warp. Note that $c700-$c709 is shared debug scratch: the same bytes are wDebugMenuWindowId and wDebugWarpWindowId in one submenu, the "RRRGGGBBB" decimal buffer in the colour editor, and a save slot for eight bytes of wCharPosX in the stats editor
 wDebugWarpEntryPoint:: db
@@ -909,11 +990,21 @@ wDebugFlagWindow1Id:: db
 
 ; [8-bit] Window handle of the debug flag editor's second flag grid; the editor redraws all three windows on every cursor move
 wDebugFlagWindow2Id:: db
-	ds 78
+	ds 6
+
+; [16 bytes] Text buffer the debug warp menu builds its number-entry prompt in -- the prompt string is copied here and FormatDecimalNumber overwrites the digits in place
+wDebugNumberEntryText:: ds 16
+	ds 48
+
+; [8 bytes] Four 16-bit values the debug stats page shows as words. Only +$00, +$04 and +$06 are drawn; +$02 is skipped
+wDebugStatWords:: ds 8
 
 ; [8 bytes] The eight single-byte fields of the debug stats editor, drawn by DrawDebugStatByte and stepped in place: the first three wrap at 2, 8 and 2, the last five are decimal digits 0-9. They sit in a larger scratch block whose 16-bit fields start at $c760
 wDebugStatBytes:: ds 8
-	ds 16
+
+; [8 bytes] Four more 16-bit values on the same page, drawn after wDebugStatBytes
+wDebugStatWords2:: ds 8
+	ds 8
 
 ; Mode-local scratch ($c780-$c78f is reused by each game mode;
 ; only proven consumers are named, sites in other modes stay numeric)
@@ -976,7 +1067,17 @@ wTargetZoneX2:: dw
 
 ; [16-bit] Target zone depth bound 2 (world units)
 wTargetZoneDepth2:: dw
-	ds 13
+	ds 8
+
+; Mode-local scratch, the first five bytes above $c780. Scoped to the
+; minigame banks; bank $1b loads its 32-byte character-select nav grid over
+; the same address and on past the named mode bytes above, so that use has
+; no symbol it could be given.
+; minigame targets (banks $0a/$0d)
+; [4 bytes] Position the floating score popup starts from, copied out of wBallHistory + 30 by StartScorePopup and stepped by UpdateScorePopup
+wScorePopupSource:: ds 4
+; [8-bit] Set at init by Banana Bunch and Fruit Fantasy, the two minigames whose targets deflect the ball rather than absorb it. While it is nonzero UpdateMinigameTarget runs the Alt draw, hit-test and scoring handlers instead of the ordinary ones
+wMinigameTargetsAltMode:: db
 
 ; [8-bit] Random roll SelectRandomMinigameShot and SelectRandomTreasureBoxTargetZone keep while they walk their weight tables to pick the next shot or target zone
 wMinigameShotRoll:: db
@@ -1013,7 +1114,31 @@ wMinigameHighScoreMode:: db
 
 ; [8-bit] Passed in b to LoadPlayer1ScoreDigitGfx/LoadPlayer2ScoreDigitGfx, so the score panel shows tiebreak point counts instead of 0/15/30/40. CheckSetComplete sets it entering a tiebreak and clears it at the start of an ordinary game
 wScoreDisplayIsTiebreak:: db
-	ds 66
+
+; Mode-local scratch above the named mode flags, same rule as the $c780
+; block: each mode reuses the bytes, so the variants are scoped to the
+; owning ROM bank and anything outside them stays numeric.
+UNION
+; minigame targets (banks $0a/$0d)
+; [8-bit] Set while the target actors are live; UpdateMinigameTargets returns at once when it is clear
+wMinigameTargetsActive:: db
+; [8-bit] Grid cell the ball last bounced off, recorded by the banana-bunch and fruit-fantasy deflection handlers and read back when the hit is scored
+wMinigameLastHitCell:: db
+; [24 bytes] The 3 x 8 target grid, one byte per cell. AreAllTargetsHit passes only when all 24 read 1; ResetTargetGrid clears it a row at a time (+$07, +$0f, +$17 are the row ends)
+wMinigameTargetGrid:: ds 24
+NEXTU
+; character select and new game (bank $1b)
+; [8-bit] Cursor column carried in and out of RunCharacterSelectScreen, so the new-game roster loop resumes where the player left off
+wCharSelectCursorCol:: db
+; [8-bit] Cursor row, the same
+wCharSelectCursorRow:: db
+; [8 bytes] Two bytes per starting character (wCharRecordBuffer + 14 and + 12), collected by RunNewGameSetup before the roster is offered
+wNewGameRosterFields:: ds 8
+; [8-bit] Cleared by RunStoryDataConfirmMenu as the prompt opens
+wStoryDataPromptFlag:: db
+ENDU
+
+	ds 40
 
 ; [buffer] Base of the story-slot state image (WRAM $c800-$caff): the live region holding the wStoryModeMainCharacter*/wGameMode/match-settings/roster fields, saved wholesale as save block 2N (see docs/save_format.md) and reloaded from it on slot load
 wStorySlotData:: db
@@ -2021,6 +2146,22 @@ wGlyphStampEnabled:: db
 ; [576 bytes] Debug text console tilemap buffer, DMAed to $9d00 rows when active
 wDebugTextBuffer:: ds 576
 
+; The top of WRAM0, shared by two things that never run together: the
+; serial link's nibble staging and the character-select roster. Scoped to
+; the owning ROM bank.
+UNION
+; serial link nibble staging (bank $07)
+; [96 bytes] The block being exchanged, one nibble per byte. Both directions refuse a count that would take it past $5f nibbles. UnpackBytesToNibbles fills it from wLinkByteBuffer and PackNibblesToBytes folds it back
+wLinkNibbleBuffer:: ds 96
+; [48 bytes] The packed form of the same block -- two nibbles per byte -- which is what the caller reads and writes
+wLinkByteBuffer:: ds 48
+	ds 48
+NEXTU
+; character select roster (bank $1b)
+; [128 bytes] Copy of CharSelectRosterTable, the grid of character ids the select screen and the unlock-debug screen page through. FindCharSelectRosterEntry searches it and DrawCharSelectMugshots walks it
+wCharSelectRoster:: ds 128
+ENDU
+
 
 SECTION "WRAMX bank 1", WRAMX[$d000], BANK[1]
 
@@ -3015,7 +3156,10 @@ UNION
 ; text-arg fetch buffer (menu banks reuse the idle char struct)
 ; [bank 5] Scratch buffer that PushTextArgFetchedString fills (via FetchShortTextToBuffer) with a fetched short-text string, then pushes as a text argument; overlaps the idle far-P1 character struct at $df00
 wTextArgFetchBuffer:: db
-	ds 150
+	ds 75
+; [8-bit] 1 when the swing was started with fewer than 5 charge frames -- a tap rather than a held swing. Cleared as the swing starts and set only on that branch; ExecuteShot copies it into wShotWasQuickSwing so the shot keeps the value
+wCharQuickSwing:: db
+	ds 74
 NEXTU
 ; match character struct (WRAM banks 4-7, and the match/shot/results banks that address it with the bank already selected)
 ; [3 bytes] Per-character banked struct (WRAM4-7): lateral X position, 24-bit fixed point (fraction byte + signed 16-bit integer part)

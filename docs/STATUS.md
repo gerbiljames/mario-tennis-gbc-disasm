@@ -6843,3 +6843,59 @@ the top of both — those stay numeric, being neither.
 Where the evidence ran out the name says so rather than guessing:
 `wStubbedPromptTaskState`, and `wPlayerObjDefPending` in bank `$04`, are written
 and never read. That is a fact about the ROM, and it is worth more than a `ds 1`.
+
+## Bare RAM references, WRAM0 half cleared (2026-07-28)
+
+With no auto-named address left, what remained were the *numeric* ones — an
+address the generator could not attribute at all. WRAM0 is the tractable half:
+it is unbanked, so a name there is unambiguous and needs no scope. It held
+**135 addresses across 453 references**; it now holds **81 across 213**.
+
+Almost none of them were in a gap between unrelated things. The great majority
+were fields of structures whose neighbours were already named, and reading them
+that way is what identified them:
+
+**The ball's fixed point.** `wBallX`, `wBallDepth` and `wBallHeight` sit four
+bytes apart, and the bare addresses were the four bytes *between* them.
+`SetBallPosition` writes each axis as two zero bytes followed by a 16-bit
+integer: **position is 16.16 fixed point**, and the three axes are one 12-byte
+block. The velocities are the same trick at a different width — `wBallVelocityX`
+at `$c421` with a bare `$c420` below it is a 24-bit `8.16` triple. The notes had
+said as much for years ("fraction byte at `$c420`"); now the fractions have
+names, and `StepBallPhysics`'s block copy reads as
+`wBallXFrac` → `wBallPrevXFrac` instead of `$c400` → `$c410`.
+
+**Blit buffers in pairs.** `$c300`/`$c340` and `$c380`/`$c3c0` are the row and
+column BG blit sources, and each pair is attributes-then-tiles because
+`ProcessBGBlitQueue` sets `rVBK` to 1 before the first and 0 before the second.
+Rows go out by VRAM DMA, columns by a byte loop.
+
+**One that is not an address.** `ld bc, $c350` in `WaitSerialTransfer` is a
+timeout counted down with `dec bc`. It sits 16 bytes inside what is now
+`wBGRowBlitTiles`, so naming that buffer would have turned a loop counter into
+`wBGRowBlitTiles + 16`. It joins `RAM_IMM_IS_CONSTANT` — the fifth site in the
+ROM where a word immediate merely looks like RAM.
+
+**Overlays needed scoping, as ever.** `$ce40` is the serial link's nibble
+staging in bank `$07` and the character-select roster in bank `$1b`; `$c7be` is
+minigame target state in banks `$0a`/`$0d` and the character-select cursor in
+bank `$1b`. Both became unions scoped by ROM bank. One attempt failed loudly and
+usefully: a union over `$c7a0-$c7d7` tripped the `ram_map/ram_unions conflict`
+check on `$c7a5`, because the mode flags in between are already global names.
+Bank `$1b`'s 32-byte nav grid genuinely overlays them, so that one use keeps its
+numeric address — there is no symbol it could be given without unpicking eleven
+proven ones.
+
+**The story-script scratch, by default.** `$c2b2` alone had 30 references. The
+union there already had variants for the two screens with a fixed layout (bank
+`$14`'s cutscene sprite slots, bank `$15`'s swing contest); everything else in
+banks `$0e-$13` uses the block for whatever that location needs. That is what a
+*default* variant is for, and `wMapScratch` — one 14-byte symbol, offsets left
+unnamed — cleared 74 references on its own. Naming the block without pretending
+to name its fields is the honest shape for scratch.
+
+What is left in WRAM0 is mostly the same kind of per-mode scratch at `$c7xx`,
+the story character record's unnamed fields at `$c8xx`/`$c9xx`, and the menu and
+cutscene bytes at `$cbxx` — each needing its own owner established first. The
+banked halves ($dxxx immediates, ~3,000 references) are dominated by screen
+tilemap buffers and remain a separate problem.

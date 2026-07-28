@@ -83,7 +83,7 @@ InitDefaultMatchSettings:
 	ret ; $40aa
 ResetMatchState:
 	wram_bank $04 ; $40ab
-	ld hl, $c400 ; $40b1
+	ld hl, wBallXFrac ; $40b1
 	ld c, $0e ; $40b4
 	call ClearMemory16 ; $40b6
 	ld a, [wKeepMatchStatsFlag] ; $40b9
@@ -483,11 +483,11 @@ AdvanceMatchRng:
 	push hl ; $43f6
 	ld a, [wMatchRngState] ; $43f7
 	add $73 ; $43fa
-	ld hl, $c409 ; $43fc
+	ld hl, wBallHeightFrac + 1 ; $43fc
 	add [hl] ; $43ff
-	ld hl, $c401 ; $4400
+	ld hl, wBallXFrac + 1 ; $4400
 	add [hl] ; $4403
-	ld hl, $c405 ; $4404
+	ld hl, wBallDepthFrac + 1 ; $4404
 	add [hl] ; $4407
 	ld [wMatchRngState], a ; $4408
 	pop hl ; $440b
@@ -706,14 +706,14 @@ SelectScoreboardLayout:
 SetBallPosition:
 	push hl ; $458b
 	xor a ; $458c
-	ld hl, $c408 ; $458d
+	ld hl, wBallHeightFrac ; $458d
 	ld [hl+], a ; $4590
 	ld [hl+], a ; $4591
 	ld a, c ; $4592
 	ld [hl+], a ; $4593
 	ld [hl], b ; $4594
 	xor a ; $4595
-	ld hl, $c404 ; $4596
+	ld hl, wBallDepthFrac ; $4596
 	ld [hl+], a ; $4599
 	ld [hl+], a ; $459a
 	ld a, e ; $459b
@@ -721,7 +721,7 @@ SetBallPosition:
 	ld [hl], d ; $459d
 	pop de ; $459e
 	xor a ; $459f
-	ld hl, $c400 ; $45a0
+	ld hl, wBallXFrac ; $45a0
 	ld [hl+], a ; $45a3
 	ld [hl+], a ; $45a4
 	ld a, e ; $45a5
@@ -738,7 +738,7 @@ SetBallVelocityPolar:
 	ld c, l ; $45b5
 	ld b, h ; $45b6
 	xor a ; $45b7
-	ld hl, $c426 ; $45b8
+	ld hl, wBallVelocityHeightFrac ; $45b8
 	ld [hl+], a ; $45bb
 	ld a, e ; $45bc
 	ld [hl+], a ; $45bd
@@ -750,13 +750,13 @@ SetBallVelocityPolar:
 	ld c, l ; $45c5
 	ld b, h ; $45c6
 	xor a ; $45c7
-	ld hl, $c420 ; $45c8
+	ld hl, wBallVelocityXFrac ; $45c8
 	ld [hl+], a ; $45cb
 	ld a, c ; $45cc
 	ld [hl+], a ; $45cd
 	ld [hl], b ; $45ce
 	xor a ; $45cf
-	ld hl, $c423 ; $45d0
+	ld hl, wBallVelocityDepthFrac ; $45d0
 	ld [hl+], a ; $45d3
 	ld a, e ; $45d4
 	ld [hl+], a ; $45d5
@@ -797,7 +797,7 @@ UpdateBallAnglesAndSpeed:
 	call VectorLengthFromAngle ; $4606
 	ld e, l ; $4609
 	ld d, h ; $460a
-	ld hl, $c429 ; $460b
+	ld hl, wBallSpeedHorizontalFrac ; $460b
 	xor a ; $460e
 	ld [hl+], a ; $460f
 	ld a, e ; $4610
@@ -808,7 +808,7 @@ UpdateBallAnglesAndSpeed:
 	ld h, [hl] ; $4617
 	ld l, a ; $4618
 	call AngleFromVector16 ; $4619
-	ld hl, $c40c ; $461c
+	ld hl, wBallPitchAngle ; $461c
 	ld a, c ; $461f
 	ld [hl+], a ; $4620
 	ld [hl], b ; $4621
@@ -876,7 +876,7 @@ CheckBallOutOfBounds:
 	ld [wBallOutOfBoundsBits], a ; $4673
 	ret ; $4676
 GetBallHeightSign:
-	ld hl, $c408 ; $4677
+	ld hl, wBallHeightFrac ; $4677
 	ld a, [hl+] ; $467a
 	or [hl] ; $467b
 	inc hl ; $467c
@@ -920,31 +920,31 @@ MulMem24ByFrac:
 	call NegateADE ; $46ac
 	ret ; $46af
 ApplyCourtBounceDamping:
-	ld hl, $c420 ; $46b0
+	ld hl, wBallVelocityXFrac ; $46b0
 	ld a, [wCourtSurfaceFriction] ; $46b3
 	ld b, a ; $46b6
 	call MulMem24ByFrac ; $46b7
-	ld hl, $c420 ; $46ba
+	ld hl, wBallVelocityXFrac ; $46ba
 	ld [hl+], a ; $46bd
 	ld a, e ; $46be
 	ld [hl+], a ; $46bf
 	ld a, d ; $46c0
 	ld [hl+], a ; $46c1
-	ld hl, $c423 ; $46c2
+	ld hl, wBallVelocityDepthFrac ; $46c2
 	ld a, [wCourtSurfaceFriction] ; $46c5
 	ld b, a ; $46c8
 	call MulMem24ByFrac ; $46c9
-	ld hl, $c423 ; $46cc
+	ld hl, wBallVelocityDepthFrac ; $46cc
 	ld [hl+], a ; $46cf
 	ld a, e ; $46d0
 	ld [hl+], a ; $46d1
 	ld a, d ; $46d2
 	ld [hl+], a ; $46d3
-	ld hl, $c426 ; $46d4
+	ld hl, wBallVelocityHeightFrac ; $46d4
 	ld a, [wCourtSurfaceBounce] ; $46d7
 	ld b, a ; $46da
 	call MulMem24ByFrac ; $46db
-	ld hl, $c426 ; $46de
+	ld hl, wBallVelocityHeightFrac ; $46de
 	ld [hl+], a ; $46e1
 	ld a, e ; $46e2
 	ld [hl+], a ; $46e3
@@ -2019,7 +2019,7 @@ ResetBallState:
 	ld bc, $0000 ; $512f
 	call SetBallPosition ; $5132
 	xor a ; $5135
-	ld hl, $c420 ; $5136
+	ld hl, wBallVelocityXFrac ; $5136
 	ld [hl+], a ; $5139
 	ld [hl+], a ; $513a
 	ld [hl+], a ; $513b
@@ -2701,7 +2701,7 @@ ApplyBallAirDrag:
 	ld e, l ; $55d2
 	ld d, h ; $55d3
 	call NegateADE ; $55d4
-	ld hl, $c420 ; $55d7
+	ld hl, wBallVelocityXFrac ; $55d7
 	call Add24ToMem24 ; $55da
 	pop bc ; $55dd
 	push bc ; $55de
@@ -2716,7 +2716,7 @@ ApplyBallAirDrag:
 	ld e, l ; $55ed
 	ld d, h ; $55ee
 	call NegateADE ; $55ef
-	ld hl, $c423 ; $55f2
+	ld hl, wBallVelocityDepthFrac ; $55f2
 	call Add24ToMem24 ; $55f5
 	pop bc ; $55f8
 	ld hl, wBallVelocityHeight ; $55f9
@@ -2730,7 +2730,7 @@ ApplyBallAirDrag:
 	ld e, l ; $5607
 	ld d, h ; $5608
 	call NegateADE ; $5609
-	ld hl, $c426 ; $560c
+	ld hl, wBallVelocityHeightFrac ; $560c
 	call Add24ToMem24 ; $560f
 	ret ; $5612
 ApplyBallSpin:
@@ -2798,11 +2798,11 @@ ApplyBallSpin:
 	jr z, .accumulateX ; $567a
 	call NegateADE ; $567c
 .accumulateX:
-	ld hl, $c423 ; $567f
+	ld hl, wBallVelocityDepthFrac ; $567f
 	call Add24ToMem24 ; $5682
 	pop de ; $5685
 	pop af ; $5686
-	ld hl, $c420 ; $5687
+	ld hl, wBallVelocityXFrac ; $5687
 	call Add24ToMem24 ; $568a
 	ld hl, wBallSideSpin ; $568d
 	ld a, [hl+] ; $5690
@@ -2900,7 +2900,7 @@ ApplyBallSpin:
 	jr z, .accumulateDepth ; $5719
 	call NegateADE ; $571b
 .accumulateDepth:
-	ld hl, $c426 ; $571e
+	ld hl, wBallVelocityHeightFrac ; $571e
 	call Add24ToMem24 ; $5721
 	ld hl, wBallHeadingAngle ; $5724
 	ld a, [hl+] ; $5727
@@ -2917,7 +2917,7 @@ ApplyBallSpin:
 	ld d, a ; $5734
 	ld e, h ; $5735
 	ld a, l ; $5736
-	ld hl, $c423 ; $5737
+	ld hl, wBallVelocityDepthFrac ; $5737
 	call Add24ToMem24 ; $573a
 	ld l, c ; $573d
 	ld h, b ; $573e
@@ -2926,7 +2926,7 @@ ApplyBallSpin:
 	ld d, a ; $5741
 	ld e, h ; $5742
 	ld a, l ; $5743
-	ld hl, $c420 ; $5744
+	ld hl, wBallVelocityXFrac ; $5744
 	call Add24ToMem24 ; $5747
 	ld hl, wBallTopspin ; $574a
 	ld a, [hl+] ; $574d
@@ -2955,18 +2955,18 @@ ApplyBallSpin:
 StepBallPhysics:
 	xor a ; $5767
 	ld [wBallBounceEvent], a ; $5768
-	ld hl, $c400 ; $576b
-	ld de, $c410 ; $576e
+	ld hl, wBallXFrac ; $576b
+	ld de, wBallPrevXFrac ; $576e
 	ld bc, $000c ; $5771
 	call CopyMemoryBC ; $5774
-	ld hl, $c400 ; $5777
-	ld de, $c420 ; $577a
+	ld hl, wBallXFrac ; $5777
+	ld de, wBallVelocityXFrac ; $577a
 	call AddVel24ToPos32 ; $577d
-	ld hl, $c404 ; $5780
-	ld de, $c423 ; $5783
+	ld hl, wBallDepthFrac ; $5780
+	ld de, wBallVelocityDepthFrac ; $5783
 	call AddVel24ToPos32 ; $5786
-	ld hl, $c408 ; $5789
-	ld de, $c426 ; $578c
+	ld hl, wBallHeightFrac ; $5789
+	ld de, wBallVelocityHeightFrac ; $578c
 	call AddVel24ToPos32 ; $578f
 	call BounceBallOffCourtFences ; $5792
 	call HandleBallNetCrossing ; $5795
@@ -2988,12 +2988,12 @@ StepBallPhysics:
 	jr .falling ; $57ba
 .rising:
 	ld de, $4a00 ; $57bc
-	ld hl, $c426 ; $57bf
+	ld hl, wBallVelocityHeightFrac ; $57bf
 	call AddDEToMem24 ; $57c2
 	ret ; $57c5
 .falling:
 	call ApplyCourtBounceDamping ; $57c6
-	ld hl, $c408 ; $57c9
+	ld hl, wBallHeightFrac ; $57c9
 	ld a, [hl] ; $57cc
 	cpl ; $57cd
 	add $01 ; $57ce
@@ -3015,7 +3015,7 @@ StepBallPhysics:
 	jr z, .done ; $57e4
 	ld a, $01 ; $57e6
 	ld [wBallBounceEvent], a ; $57e8
-	ld hl, $c426 ; $57eb
+	ld hl, wBallVelocityHeightFrac ; $57eb
 	ld a, [hl] ; $57ee
 	cpl ; $57ef
 	ld [hl+], a ; $57f0
@@ -3034,12 +3034,12 @@ StepBallPhysics:
 	bit 7, h ; $5801
 	jr nz, .done ; $5803
 	xor a ; $5805
-	ld hl, $c408 ; $5806
+	ld hl, wBallHeightFrac ; $5806
 	ld [hl+], a ; $5809
 	ld [hl+], a ; $580a
 	ld [hl+], a ; $580b
 	ld [hl+], a ; $580c
-	ld hl, $c426 ; $580d
+	ld hl, wBallVelocityHeightFrac ; $580d
 	ld [hl+], a ; $5810
 	ld [hl+], a ; $5811
 	ld [hl+], a ; $5812
@@ -3074,7 +3074,7 @@ HandleBallNetCrossing:
 	call StartBounceEffect ; $5843
 	ld a, $01 ; $5846
 	ld [wBallHasBouncedFlag], a ; $5848
-	ld hl, $c404 ; $584b
+	ld hl, wBallDepthFrac ; $584b
 	ld a, [hl] ; $584e
 	cpl ; $584f
 	ld [hl+], a ; $5850
@@ -3193,7 +3193,7 @@ HandleBallNetCrossing:
 	ld [hl], d ; $58f3
 	ret ; $58f4
 .clearSpin:
-	ld hl, $c408 ; $58f5
+	ld hl, wBallHeightFrac ; $58f5
 	xor a ; $58f8
 	ld [hl+], a ; $58f9
 	ld [hl+], a ; $58fa
@@ -3267,7 +3267,7 @@ BounceBallOffCourtFences:
 	add hl, de ; $595e
 	jr c, .checkSideFences ; $595f
 .bounceDepth:
-	ld hl, $c423 ; $5961
+	ld hl, wBallVelocityDepthFrac ; $5961
 	ld a, [hl] ; $5964
 	cpl ; $5965
 	ld [hl+], a ; $5966
@@ -3277,8 +3277,8 @@ BounceBallOffCourtFences:
 	ld a, [hl] ; $596a
 	cpl ; $596b
 	ld [hl+], a ; $596c
-	ld hl, $c404 ; $596d
-	ld de, $c423 ; $5970
+	ld hl, wBallDepthFrac ; $596d
+	ld de, wBallVelocityDepthFrac ; $5970
 	call AddVel24ToPos32 ; $5973
 	call ApplyCourtBounceDamping ; $5976
 	call ApplyCourtBounceDamping ; $5979
@@ -3301,7 +3301,7 @@ BounceBallOffCourtFences:
 	ld de, $fc60 ; $5991
 	add hl, de ; $5994
 	jr nc, .done ; $5995
-	ld hl, $c420 ; $5997
+	ld hl, wBallVelocityXFrac ; $5997
 	ld a, [hl] ; $599a
 	cpl ; $599b
 	ld [hl+], a ; $599c
@@ -3311,8 +3311,8 @@ BounceBallOffCourtFences:
 	ld a, [hl] ; $59a0
 	cpl ; $59a1
 	ld [hl+], a ; $59a2
-	ld hl, $c400 ; $59a3
-	ld de, $c420 ; $59a6
+	ld hl, wBallXFrac ; $59a3
+	ld de, wBallVelocityXFrac ; $59a6
 	call AddVel24ToPos32 ; $59a9
 	call ApplyCourtBounceDamping ; $59ac
 	call ApplyCourtBounceDamping ; $59af
@@ -6416,7 +6416,7 @@ CheckCharBallContact:
 	ld a, e ; $6f52
 	ld [hl+], a ; $6f53
 	ld [hl], d ; $6f54
-	ld hl, $c423 ; $6f55
+	ld hl, wBallVelocityDepthFrac ; $6f55
 	ld a, [hl] ; $6f58
 	cpl ; $6f59
 	ld [hl+], a ; $6f5a
@@ -6426,8 +6426,8 @@ CheckCharBallContact:
 	ld a, [hl] ; $6f5e
 	cpl ; $6f5f
 	ld [hl+], a ; $6f60
-	ld hl, $c404 ; $6f61
-	ld de, $c423 ; $6f64
+	ld hl, wBallDepthFrac ; $6f61
+	ld de, wBallVelocityDepthFrac ; $6f64
 	call AddVel24ToPos32 ; $6f67
 	ld hl, wBallVelocityDepth ; $6f6a
 	ld a, [hl+] ; $6f6d

@@ -1210,20 +1210,20 @@ DormRoomNpc03_13:
 .morningDoubles:
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $5593
 	jr z, .morningAlt ; $5596
-	ld hl, $c2b2 ; $5598
+	ld hl, wMapScratch ; $5598
 	ld de, $052a ; $559b
 	ld a, e ; $559e
 	ld [hl+], a ; $559f
 	ld [hl], d ; $55a0
 	jr .morningEnd ; $55a1
 .morningAlt:
-	ld hl, $c2b2 ; $55a3
+	ld hl, wMapScratch ; $55a3
 	ld de, $0524 ; $55a6
 	ld a, e ; $55a9
 	ld [hl+], a ; $55aa
 	ld [hl], d ; $55ab
 .morningEnd:
-	ld hl, $c2b2 ; $55ac
+	ld hl, wMapScratch ; $55ac
 	ld a, [hl+] ; $55af
 	ld h, [hl] ; $55b0
 	ld l, a ; $55b1
@@ -1245,14 +1245,14 @@ DormRoomNpc03_13:
 	call GetDormRoomStoryStage_13 ; $55fc
 	and a ; $55ff
 	jp z, .dayText ; $5600
-	ld hl, $c2b2 ; $5603
+	ld hl, wMapScratch ; $5603
 	ld a, [hl+] ; $5606
 	ld h, [hl] ; $5607
 	ld l, a ; $5608
 	ld a, $05 ; $5609
 	jr .daySpeak ; $560b
 .dayText:
-	ld hl, $c2b2 ; $560d
+	ld hl, wMapScratch ; $560d
 	ld a, [hl+] ; $5610
 	ld h, [hl] ; $5611
 	ld l, a ; $5612
@@ -1273,7 +1273,7 @@ DormRoomNpc03_13:
 	script_wait_frames $05 ; $5634
 	and a ; $563b
 	jr nz, .finalText ; $563c
-	ld hl, $c2b2 ; $563e
+	ld hl, wMapScratch ; $563e
 	ld a, [hl+] ; $5641
 	ld h, [hl] ; $5642
 	ld l, a ; $5643
@@ -1304,7 +1304,7 @@ DormRoomNpc03_13:
 	farcall SaveStorySlotWithTimer ; $568b
 	ret ; $568e
 .finalText:
-	ld hl, $c2b2 ; $568f
+	ld hl, wMapScratch ; $568f
 	ld a, [hl+] ; $5692
 	ld h, [hl] ; $5693
 	ld l, a ; $5694
@@ -1496,11 +1496,11 @@ ActorScript_13_588b:
 RunAcademyQuestionsMenu:
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $58be
 	jr z, .variantB ; $58c1
-	ld hl, $c2b2 ; $58c3
+	ld hl, wMapScratch ; $58c3
 	ld de, $054f ; $58c6
 	jr .menuLoop ; $58c9
 .variantB:
-	ld hl, $c2b2 ; $58cb
+	ld hl, wMapScratch ; $58cb
 	ld de, $0808 ; $58ce
 .menuLoop:
 	ld a, e ; $58d1
@@ -1530,7 +1530,7 @@ RunAcademyQuestionsMenu:
 	ld l, a ; $58fe
 	call JumpToHL ; $58ff
 	script_speak $03 ; $5902
-	ld hl, $c2b2 ; $5907
+	ld hl, wMapScratch ; $5907
 	ld a, [hl+] ; $590a
 	ld h, [hl] ; $590b
 	ld l, a ; $590c
@@ -1558,7 +1558,7 @@ RunAcademyQuestionsMenu:
 	ld a, [de] ; $5934
 	ld e, d ; $5935
 	ld de, $0001 ; $5936
-	ld hl, $c2b2 ; $5939
+	ld hl, wMapScratch ; $5939
 	ld a, [hl+] ; $593c
 	ld h, [hl] ; $593d
 	ld l, a ; $593e
@@ -1592,7 +1592,7 @@ AcademyTopicSinglesRank:
 	ret ; $5967
 AcademyTopicDoublesRank:
 	ld de, $0005 ; $5968
-	ld hl, $c2b2 ; $596b
+	ld hl, wMapScratch ; $596b
 	ld a, [hl+] ; $596e
 	ld h, [hl] ; $596f
 	ld l, a ; $5970
@@ -1633,7 +1633,7 @@ AcademyTopicDoublesRank:
 	ret ; $59a5
 AcademyTopicRules:
 	ld de, $000a ; $59a6
-	ld hl, $c2b2 ; $59a9
+	ld hl, wMapScratch ; $59a9
 	ld a, [hl+] ; $59ac
 	ld h, [hl] ; $59ad
 	ld l, a ; $59ae
@@ -1650,7 +1650,7 @@ AcademyTopicRules:
 	ret ; $59bf
 AcademyTopicClassRank:
 	ld de, $000c ; $59c0
-	ld hl, $c2b2 ; $59c3
+	ld hl, wMapScratch ; $59c3
 	ld a, [hl+] ; $59c6
 	ld h, [hl] ; $59c7
 	ld l, a ; $59c8
@@ -1675,7 +1675,7 @@ AcademyTopicClassRank:
 	ret ; $59e5
 AcademyTopicVarsity:
 	ld de, $000f ; $59e6
-	ld hl, $c2b2 ; $59e9
+	ld hl, wMapScratch ; $59e9
 	ld a, [hl+] ; $59ec
 	ld h, [hl] ; $59ed
 	ld l, a ; $59ee
@@ -1692,7 +1692,7 @@ AcademyTopicVarsity:
 	ret ; $59ff
 AcademyTopicIslandOpen:
 	ld de, $0011 ; $5a00
-	ld hl, $c2b2 ; $5a03
+	ld hl, wMapScratch ; $5a03
 	ld a, [hl+] ; $5a06
 	ld h, [hl] ; $5a07
 	ld l, a ; $5a08
@@ -1708,7 +1708,7 @@ AcademyTopicIslandOpen:
 	farcall InitDialogueTextCursor ; $5a16
 	ret ; $5a19
 	ld de, $0013 ; $5a1a
-	ld hl, $c2b2 ; $5a1d
+	ld hl, wMapScratch ; $5a1d
 	ld a, [hl+] ; $5a20
 	ld h, [hl] ; $5a21
 	ld l, a ; $5a22
@@ -1884,7 +1884,7 @@ ComputeEmoteActorPosition_13:
 	add hl, de ; $5c0a
 	ld e, l ; $5c0b
 	ld d, h ; $5c0c
-	ld hl, $c2b8 ; $5c0d
+	ld hl, wMapScratch + 6 ; $5c0d
 	ld a, e ; $5c10
 	ld [hl+], a ; $5c11
 	ld [hl], d ; $5c12
@@ -1897,17 +1897,17 @@ ComputeEmoteActorPosition_13:
 	add hl, de ; $5c1d
 	ld e, l ; $5c1e
 	ld d, h ; $5c1f
-	ld hl, $c2ba ; $5c20
+	ld hl, wMapScratch + 8 ; $5c20
 	ld a, e ; $5c23
 	ld [hl+], a ; $5c24
 	ld [hl], d ; $5c25
 	ret ; $5c26
 PlaceEmoteActorAtComputedPosition_13:
-	ld hl, $c2b8 ; $5c27
+	ld hl, wMapScratch + 6 ; $5c27
 	ld a, [hl+] ; $5c2a
 	ld b, [hl] ; $5c2b
 	ld c, a ; $5c2c
-	ld hl, $c2ba ; $5c2d
+	ld hl, wMapScratch + 8 ; $5c2d
 	ld a, [hl+] ; $5c30
 	ld d, [hl] ; $5c31
 	ld e, a ; $5c32
@@ -1927,7 +1927,7 @@ PlaceRoommateAtPlayerTarget_13:
 	add hl, de ; $5c4a
 	ld e, l ; $5c4b
 	ld d, h ; $5c4c
-	ld hl, $c2b8 ; $5c4d
+	ld hl, wMapScratch + 6 ; $5c4d
 	ld a, e ; $5c50
 	ld [hl+], a ; $5c51
 	ld [hl], d ; $5c52
@@ -1940,15 +1940,15 @@ PlaceRoommateAtPlayerTarget_13:
 	add hl, de ; $5c5d
 	ld e, l ; $5c5e
 	ld d, h ; $5c5f
-	ld hl, $c2ba ; $5c60
+	ld hl, wMapScratch + 8 ; $5c60
 	ld a, e ; $5c63
 	ld [hl+], a ; $5c64
 	ld [hl], d ; $5c65
-	ld hl, $c2b8 ; $5c66
+	ld hl, wMapScratch + 6 ; $5c66
 	ld a, [hl+] ; $5c69
 	ld b, [hl] ; $5c6a
 	ld c, a ; $5c6b
-	ld hl, $c2ba ; $5c6c
+	ld hl, wMapScratch + 8 ; $5c6c
 	ld a, [hl+] ; $5c6f
 	ld d, [hl] ; $5c70
 	ld e, a ; $5c71

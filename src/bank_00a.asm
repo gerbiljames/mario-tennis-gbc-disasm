@@ -5248,7 +5248,7 @@ InitMinigameTargets:
 	ld c, $10 ; $659f
 	call ClearMemory16 ; $65a1
 	ld a, $01 ; $65a4
-	ld [$c7be], a ; $65a6
+	ld [wMinigameTargetsActive], a ; $65a6
 	ld a, $ff ; $65a9
 	ld [$c78d], a ; $65ab
 	ret ; $65ae
@@ -5266,7 +5266,7 @@ ActivateMinigameTarget:
 	set 0, [hl] ; $65c0
 	ret ; $65c2
 UpdateMinigameTargets:
-	ld a, [$c7be] ; $65c3
+	ld a, [wMinigameTargetsActive] ; $65c3
 	and a ; $65c6
 	ret z ; $65c7
 	ld hl, $dc00 ; $65c8
@@ -5297,7 +5297,7 @@ UpdateMinigameTarget:
 .hit:
 	call RunMinigameTargetScript ; $65f0
 	call MoveMinigameTargetTowardGoal ; $65f3
-	ld a, [$c7a4] ; $65f6
+	ld a, [wMinigameTargetsAltMode] ; $65f6
 	and a ; $65f9
 	jr nz, .expire ; $65fa
 	call DrawMinigameTarget ; $65fc

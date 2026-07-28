@@ -1180,7 +1180,7 @@ DrawTennisDictionaryList:
 	ld [hl+], a ; $52c2
 	ld [hl], d ; $52c3
 	ld a, $0c ; $52c4
-	ld [$c3b9], a ; $52c6
+	ld [wTextRowWidth], a ; $52c6
 	ld a, $36 ; $52c9
 	ld hl, wTextRowColumn ; $52cb
 	ld [hl+], a ; $52ce

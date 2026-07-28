@@ -2807,7 +2807,7 @@ CharSelectRosterTable:
 	ld h, h ; $5fc2
 	nop ; $5fc3
 FindCharSelectRosterEntry:
-	ld hl, $ce40 ; $5fc4
+	ld hl, wCharSelectRoster ; $5fc4
 	farcall FindRosterEntry ; $5fc7
 	ret ; $5fca
 GetCharSelectRosterField:
@@ -2826,7 +2826,7 @@ LoadCharSelectNavGrid:
 	ret ; $5fe0
 LoadCharSelectRosterTable:
 	ld hl, CharSelectRosterTable ; $5fe1
-	ld de, $ce40 ; $5fe4
+	ld de, wCharSelectRoster ; $5fe4
 	ld bc, $0080 ; $5fe7
 	call CopyMemoryBC ; $5fea
 	ret ; $5fed
@@ -2885,7 +2885,7 @@ DrawCharSelectPrompt:
 	ret ; $606e
 DrawCharSelectMugshots:
 	farcall ResetMugshotPalettes_1b ; $606f
-	ld hl, $ce40 ; $6072
+	ld hl, wCharSelectRoster ; $6072
 .loop:
 	ld a, [hl] ; $6075
 	farcall LoadCharacterRecordToBuffer ; $6076
@@ -3050,10 +3050,10 @@ RunNewGameSetup:
 	farcall RollStoryRandomByte ; $61c1
 	wram_bank $01 ; $61c4
 	ld a, $01 ; $61ca
-	ld [$c7be], a ; $61cc
+	ld [wCharSelectCursorCol], a ; $61cc
 	ld a, $01 ; $61cf
-	ld [$c7bf], a ; $61d1
-	ld hl, $c7c0 ; $61d4
+	ld [wCharSelectCursorRow], a ; $61d1
+	ld hl, wNewGameRosterFields ; $61d4
 	xor a ; $61d7
 .loop:
 	push af ; $61d8
@@ -3071,15 +3071,15 @@ RunNewGameSetup:
 	xor a ; $61ee
 	ld [wStoryCharacterSlot], a ; $61ef
 .loopB:
-	ld a, [$c7be] ; $61f2
+	ld a, [wCharSelectCursorCol] ; $61f2
 	ld d, a ; $61f5
-	ld a, [$c7bf] ; $61f6
+	ld a, [wCharSelectCursorRow] ; $61f6
 	ld e, a ; $61f9
 	ld b, $00 ; $61fa
 	farcall RunCharacterSelectScreen ; $61fc
-	ld hl, $c7be ; $61ff
+	ld hl, wCharSelectCursorCol ; $61ff
 	ld [hl], d ; $6202
-	ld hl, $c7bf ; $6203
+	ld hl, wCharSelectCursorRow ; $6203
 	ld [hl], e ; $6206
 	cp $ff ; $6207
 	jr nz, .compare ; $6209
@@ -3162,15 +3162,15 @@ RunNewGameSetup:
 	jr nz, .loop3 ; $628f
 	jr .restore ; $6291
 .loop4:
-	ld a, [$c7be] ; $6293
+	ld a, [wCharSelectCursorCol] ; $6293
 	ld d, a ; $6296
-	ld a, [$c7bf] ; $6297
+	ld a, [wCharSelectCursorRow] ; $6297
 	ld e, a ; $629a
 	ld b, $01 ; $629b
 	farcall RunCharacterSelectScreen ; $629d
-	ld hl, $c7be ; $62a0
+	ld hl, wCharSelectCursorCol ; $62a0
 	ld [hl], d ; $62a3
-	ld hl, $c7bf ; $62a4
+	ld hl, wCharSelectCursorRow ; $62a4
 	ld [hl], e ; $62a7
 	cp $ff ; $62a8
 	jr nz, .compare2 ; $62aa
@@ -3536,7 +3536,7 @@ UnlockDebugRosterTable:
 	db $15, $00, $00, $af, $38, $78, $ef, $00 ; 0x48
 	db $ff, $00, $00, $b0, $18, $20, $64, $00 ; 0x50
 FindUnlockDebugRosterEntry:
-	ld hl, $ce40 ; $65ea
+	ld hl, wCharSelectRoster ; $65ea
 	farcall FindRosterEntry ; $65ed
 	ret ; $65f0
 GetUnlockDebugRosterField:
@@ -3557,7 +3557,7 @@ LoadUnlockDebugNavGrid:
 	db $0c ; $6608
 LoadUnlockDebugRosterTable:
 	ld hl, UnlockDebugRosterTable ; $6609
-	ld de, $ce40 ; $660c
+	ld de, wCharSelectRoster ; $660c
 	ld bc, $0080 ; $660f
 	call CopyMemoryBC ; $6612
 	ret ; $6615
@@ -3655,7 +3655,7 @@ UpdateUnlockDebugStatOnChange:
 	ret ; $66d6
 DrawUnlockDebugMugshots:
 	farcall ResetMugshotPalettes_1b ; $66d7
-	ld hl, $ce40 ; $66da
+	ld hl, wCharSelectRoster ; $66da
 .loop:
 	ld a, [hl] ; $66dd
 	farcall LoadCharacterRecordToBuffer ; $66de
@@ -4003,7 +4003,7 @@ RunStoryDataConfirmMenu:
 	call DisableLCDSafely ; $6990
 	xor a ; $6993
 	ld [wMinigameHighScoreMode], a ; $6994
-	ld [$c7c8], a ; $6997
+	ld [wStoryDataPromptFlag], a ; $6997
 	farcall ForceFlushBgMapToVram ; $699a
 	call EnableLCD ; $699d
 	script_fade_in $20 ; $69a0

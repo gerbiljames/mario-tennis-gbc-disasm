@@ -2390,17 +2390,17 @@ DrawDebugStatsLabels:
 DrawDebugStatsValues:
 	ld de, $0a01 ; $6af3
 	call GetShadowTilemapAddr ; $6af6
-	ld hl, $c760 ; $6af9
+	ld hl, wDebugStatWords ; $6af9
 	ld a, [hl+] ; $6afc
 	ld h, [hl] ; $6afd
 	ld l, a ; $6afe
 	call DrawDebugStatWord ; $6aff
-	ld hl, $c764 ; $6b02
+	ld hl, wDebugStatWords + 4 ; $6b02
 	ld a, [hl+] ; $6b05
 	ld h, [hl] ; $6b06
 	ld l, a ; $6b07
 	call DrawDebugStatWord ; $6b08
-	ld hl, $c766 ; $6b0b
+	ld hl, wDebugStatWords + 6 ; $6b0b
 	ld a, [hl+] ; $6b0e
 	ld h, [hl] ; $6b0f
 	ld l, a ; $6b10
@@ -2421,22 +2421,22 @@ DrawDebugStatsValues:
 	call DrawDebugStatByte ; $6b3b
 	ld a, [wDebugStatBytes + 7] ; $6b3e
 	call DrawDebugStatByte ; $6b41
-	ld hl, $c770 ; $6b44
+	ld hl, wDebugStatWords2 ; $6b44
 	ld a, [hl+] ; $6b47
 	ld h, [hl] ; $6b48
 	ld l, a ; $6b49
 	call DrawDebugStatWord ; $6b4a
-	ld hl, $c772 ; $6b4d
+	ld hl, wDebugStatWords2 + 2 ; $6b4d
 	ld a, [hl+] ; $6b50
 	ld h, [hl] ; $6b51
 	ld l, a ; $6b52
 	call DrawDebugStatWord ; $6b53
-	ld hl, $c774 ; $6b56
+	ld hl, wDebugStatWords2 + 4 ; $6b56
 	ld a, [hl+] ; $6b59
 	ld h, [hl] ; $6b5a
 	ld l, a ; $6b5b
 	call DrawDebugStatWord ; $6b5c
-	ld hl, $c776 ; $6b5f
+	ld hl, wDebugStatWords2 + 6 ; $6b5f
 	ld a, [hl+] ; $6b62
 	ld h, [hl] ; $6b63
 	ld l, a ; $6b64
@@ -2553,15 +2553,15 @@ AdjustSelectedDebugStat:
 	dw AdjustSelectedDebugStat.adjustDebugStatDigit4 ; $6c48 jumptable
 	dw AdjustSelectedDebugStat.adjustDebugStatDigit5 ; $6c4a jumptable
 .adjustDebugStatWord:
-	ld hl, $c760 ; $6c4c
+	ld hl, wDebugStatWords ; $6c4c
 	ld bc, $0010 ; $6c4f
 	jp AdjustDebugStatWord ; $6c52
 .adjustDebugStatWord2:
-	ld hl, $c764 ; $6c55
+	ld hl, wDebugStatWords + 4 ; $6c55
 	ld bc, $0010 ; $6c58
 	jp AdjustDebugStatWord ; $6c5b
 .adjustDebugStatWord3:
-	ld hl, $c766 ; $6c5e
+	ld hl, wDebugStatWords + 6 ; $6c5e
 	ld bc, $0010 ; $6c61
 	jp AdjustDebugStatWord ; $6c64
 .adjustDebugStatByte:

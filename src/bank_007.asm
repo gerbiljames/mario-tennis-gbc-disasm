@@ -146,7 +146,7 @@ ExchangeNibbleBlockMaster:
 	ld de, $0000 ; $40fd
 	ld b, c ; $4100
 .nibbleLoop:
-	ld hl, $ce40 ; $4101
+	ld hl, wLinkNibbleBuffer ; $4101
 	ldh a, [hLinkBlockOffset] ; $4104
 	add l ; $4106
 	ld l, a ; $4107
@@ -178,7 +178,7 @@ ExchangeNibbleBlockMaster:
 .storeRxNibble:
 	ld a, h ; $4136
 	push af ; $4137
-	ld hl, $cea0 ; $4138
+	ld hl, wLinkByteBuffer ; $4138
 	ldh a, [hLinkNibbleAccum] ; $413b
 	add l ; $413d
 	ld l, a ; $413e
@@ -322,7 +322,7 @@ ExchangeNibbleBlockSlave:
 	nop ; $420f
 	nop ; $4210
 	di ; $4211
-	ld a, [$ce40] ; $4212
+	ld a, [wLinkNibbleBuffer] ; $4212
 	or $80 ; $4215
 	ldh [hLinkTxByte], a ; $4217
 	ei ; $4219
@@ -354,7 +354,7 @@ ExchangeNibbleBlockSlave:
 	ldh [rIF], a ; $4240
 	xor a ; $4242
 	ldh [hLinkTransferDone], a ; $4243
-	ld hl, $ce40 ; $4245
+	ld hl, wLinkNibbleBuffer ; $4245
 	ldh a, [hLinkBlockOffset] ; $4248
 	add l ; $424a
 	ld l, a ; $424b
@@ -379,7 +379,7 @@ ExchangeNibbleBlockSlave:
 	jr z, .storeRxNibble ; $426a
 	call LinkErrorReset ; $426c
 .storeRxNibble:
-	ld hl, $cea0 ; $426f
+	ld hl, wLinkByteBuffer ; $426f
 	ldh a, [hLinkNibbleAccum] ; $4272
 	add l ; $4274
 	ld l, a ; $4275
@@ -421,7 +421,7 @@ ExchangeNibbleBlockSlave:
 	jr z, .storeLastNibble ; $42ab
 	call LinkErrorReset ; $42ad
 .storeLastNibble:
-	ld hl, $cea0 ; $42b0
+	ld hl, wLinkByteBuffer ; $42b0
 	ldh a, [hLinkNibbleAccum] ; $42b3
 	add l ; $42b5
 	ld l, a ; $42b6
@@ -625,7 +625,7 @@ ComputeNibbleBufferChecksum:
 	push bc ; $440d
 	push de ; $440e
 	push hl ; $440f
-	ld hl, $ce40 ; $4410
+	ld hl, wLinkNibbleBuffer ; $4410
 	ld de, $0000 ; $4413
 .sumLoop:
 	ld a, [hl+] ; $4416
@@ -661,7 +661,7 @@ SendNibbleBlockSlave:
 	ld b, $c4 ; $443a
 	call SendByteAwaitEchoSlave ; $443c
 	jr c, .startBlock ; $443f
-	ld hl, $ce40 ; $4441
+	ld hl, wLinkNibbleBuffer ; $4441
 	ld de, $0000 ; $4444
 	ld b, c ; $4447
 .sendLoop:
@@ -756,7 +756,7 @@ ReceiveNibbleBlockMaster:
 	ld b, $c3 ; $44ca
 	call SendByteAwaitEchoMaster ; $44cc
 	jr c, .startBlock ; $44cf
-	ld hl, $cea0 ; $44d1
+	ld hl, wLinkByteBuffer ; $44d1
 	ld de, $0000 ; $44d4
 	ld b, $00 ; $44d7
 .nibbleLoop:
@@ -1012,7 +1012,7 @@ SendByteGetReplySlave:
 	pop bc ; $4654
 	ret ; $4655
 UnpackBytesToNibbles:
-	ld hl, $ce40 ; $4656
+	ld hl, wLinkNibbleBuffer ; $4656
 	ld a, c ; $4659
 	add a ; $465a
 	cp $5f ; $465b
@@ -1523,7 +1523,7 @@ PackNibblesToBytes:
 .pack:
 	ld c, a ; $49b9
 	ld b, $00 ; $49ba
-	ld de, $cea0 ; $49bc
+	ld de, wLinkByteBuffer ; $49bc
 .nibbleLoop:
 	ld a, b ; $49bf
 	and $01 ; $49c0
@@ -2507,12 +2507,12 @@ ExecuteShot:
 .storeCharge:
 	ld [wShotChargeLevel], a ; $541c
 	ld a, [$df4c] ; $541f
-	ld [$c4a3], a ; $5422
+	ld [wShotWasQuickSwing], a ; $5422
 	ld hl, wBallVelocityX ; $5425
 	ld a, [hl+] ; $5428
 	ld d, [hl] ; $5429
 	ld e, a ; $542a
-	ld hl, $c454 ; $542b
+	ld hl, wShotRecoilVelocityX ; $542b
 	ld a, e ; $542e
 	ld [hl+], a ; $542f
 	ld [hl], d ; $5430
@@ -2520,7 +2520,7 @@ ExecuteShot:
 	ld a, [hl+] ; $5434
 	ld d, [hl] ; $5435
 	ld e, a ; $5436
-	ld hl, $c456 ; $5437
+	ld hl, wShotRecoilVelocityDepth ; $5437
 	ld a, e ; $543a
 	ld [hl+], a ; $543b
 	ld [hl], d ; $543c
@@ -2569,7 +2569,7 @@ ApplyShotRecoil:
 	sub l ; $5486
 	ld h, a ; $5487
 	ld b, [hl] ; $5488
-	ld hl, $c456 ; $5489
+	ld hl, wShotRecoilVelocityDepth ; $5489
 	ld a, [hl+] ; $548c
 	ld h, [hl] ; $548d
 	ld l, a ; $548e
@@ -3240,7 +3240,7 @@ ComputeShotTrajectory:
 	sbc a ; $585a
 	sub d ; $585b
 	ld d, a ; $585c
-	ld hl, $c470 ; $585d
+	ld hl, wShotSolverNegHeight ; $585d
 	ld a, e ; $5860
 	ld [hl+], a ; $5861
 	ld [hl], d ; $5862

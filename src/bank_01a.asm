@@ -812,7 +812,7 @@ ShowExpGainScreen:
 	jr .fillLoop ; $4679
 .levelUp:
 	sound $5f ; $467b
-	ld a, [$c36f] ; $467d
+	ld a, [wExpBonusPending] ; $467d
 	and a ; $4680
 	jr z, .finish ; $4681
 	push af ; $4683
@@ -848,7 +848,7 @@ ShowExpGainScreen:
 	call WaitFramesCmd ; $46b5
 	db $14 ; $46b8 inline arg
 	wram_bank $06 ; $46b9
-	ld hl, $c370 ; $46bf
+	ld hl, wExpBonusAmount ; $46bf
 	ld a, [hl+] ; $46c2
 	ld d, [hl] ; $46c3
 	ld e, a ; $46c4
@@ -864,7 +864,7 @@ ShowExpGainScreen:
 	ld [hl+], a ; $46d2
 	ld [hl], d ; $46d3
 	xor a ; $46d4
-	ld [$c36f], a ; $46d5
+	ld [wExpBonusPending], a ; $46d5
 	ld [wExpCountDone], a ; $46d8
 	jp .fillLoop ; $46db
 .finish:

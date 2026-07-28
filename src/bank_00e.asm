@@ -985,7 +985,7 @@ ActorScript_0e_4a80:
 	ld a, [hl+] ; $4c42
 	ld d, [hl] ; $4c43
 	ld e, a ; $4c44
-	ld hl, $c2b4 ; $4c45
+	ld hl, wMapScratch + 2 ; $4c45
 	ld a, e ; $4c48
 	ld [hl+], a ; $4c49
 	ld [hl], d ; $4c4a
@@ -994,7 +994,7 @@ ActorScript_0e_4a80:
 	ld a, [hl+] ; $4c4f
 	ld d, [hl] ; $4c50
 	ld e, a ; $4c51
-	ld hl, $c2b2 ; $4c52
+	ld hl, wMapScratch ; $4c52
 	ld a, e ; $4c55
 	ld [hl+], a ; $4c56
 	ld [hl], d ; $4c57
@@ -1006,7 +1006,7 @@ ActorScript_0e_4a80:
 	ld a, [hl+] ; $4c63
 	ld d, [hl] ; $4c64
 	ld e, a ; $4c65
-	ld hl, $c2b8 ; $4c66
+	ld hl, wMapScratch + 6 ; $4c66
 	ld a, e ; $4c69
 	ld [hl+], a ; $4c6a
 	ld [hl], d ; $4c6b
@@ -1015,7 +1015,7 @@ ActorScript_0e_4a80:
 	ld a, [hl+] ; $4c70
 	ld d, [hl] ; $4c71
 	ld e, a ; $4c72
-	ld hl, $c2b6 ; $4c73
+	ld hl, wMapScratch + 4 ; $4c73
 	ld a, e ; $4c76
 	ld [hl+], a ; $4c77
 	ld [hl], d ; $4c78
@@ -1037,7 +1037,7 @@ ActorScript_0e_4a80:
 	ld a, [hl+] ; $4c99
 	ld d, [hl] ; $4c9a
 	ld e, a ; $4c9b
-	ld hl, $c2b4 ; $4c9c
+	ld hl, wMapScratch + 2 ; $4c9c
 	ld a, e ; $4c9f
 	ld [hl+], a ; $4ca0
 	ld [hl], d ; $4ca1
@@ -1046,7 +1046,7 @@ ActorScript_0e_4a80:
 	ld a, [hl+] ; $4ca6
 	ld d, [hl] ; $4ca7
 	ld e, a ; $4ca8
-	ld hl, $c2b2 ; $4ca9
+	ld hl, wMapScratch ; $4ca9
 	ld a, e ; $4cac
 	ld [hl+], a ; $4cad
 	ld [hl], d ; $4cae
@@ -1058,7 +1058,7 @@ ActorScript_0e_4a80:
 	ld a, [hl+] ; $4cba
 	ld d, [hl] ; $4cbb
 	ld e, a ; $4cbc
-	ld hl, $c2b8 ; $4cbd
+	ld hl, wMapScratch + 6 ; $4cbd
 	ld a, e ; $4cc0
 	ld [hl+], a ; $4cc1
 	ld [hl], d ; $4cc2
@@ -1067,7 +1067,7 @@ ActorScript_0e_4a80:
 	ld a, [hl+] ; $4cc7
 	ld d, [hl] ; $4cc8
 	ld e, a ; $4cc9
-	ld hl, $c2b6 ; $4cca
+	ld hl, wMapScratch + 4 ; $4cca
 	ld a, e ; $4ccd
 	ld [hl+], a ; $4cce
 	ld [hl], d ; $4ccf
@@ -1089,7 +1089,7 @@ ActorScript_0e_4a80:
 	ld a, [hl+] ; $4cf0
 	ld d, [hl] ; $4cf1
 	ld e, a ; $4cf2
-	ld hl, $c2b4 ; $4cf3
+	ld hl, wMapScratch + 2 ; $4cf3
 	ld a, e ; $4cf6
 	ld [hl+], a ; $4cf7
 	ld [hl], d ; $4cf8
@@ -1098,7 +1098,7 @@ ActorScript_0e_4a80:
 	ld a, [hl+] ; $4cfd
 	ld d, [hl] ; $4cfe
 	ld e, a ; $4cff
-	ld hl, $c2b2 ; $4d00
+	ld hl, wMapScratch ; $4d00
 	ld a, e ; $4d03
 	ld [hl+], a ; $4d04
 	ld [hl], d ; $4d05
@@ -1110,7 +1110,7 @@ ActorScript_0e_4a80:
 	ld a, [hl+] ; $4d11
 	ld d, [hl] ; $4d12
 	ld e, a ; $4d13
-	ld hl, $c2b8 ; $4d14
+	ld hl, wMapScratch + 6 ; $4d14
 	ld a, e ; $4d17
 	ld [hl+], a ; $4d18
 	ld [hl], d ; $4d19
@@ -1119,7 +1119,7 @@ ActorScript_0e_4a80:
 	ld a, [hl+] ; $4d1e
 	ld d, [hl] ; $4d1f
 	ld e, a ; $4d20
-	ld hl, $c2b6 ; $4d21
+	ld hl, wMapScratch + 4 ; $4d21
 	ld a, e ; $4d24
 	ld [hl+], a ; $4d25
 	ld [hl], d ; $4d26
@@ -1134,11 +1134,11 @@ ActorScript_0e_4a80:
 	ld a, $00 ; $4d39
 	ret ; $4d3b
 .checkTimer:
-	ld hl, $c2b4 ; $4d3c
+	ld hl, wMapScratch + 2 ; $4d3c
 	ld a, [hl+] ; $4d3f
 	ld d, [hl] ; $4d40
 	ld e, a ; $4d41
-	ld hl, $c2b8 ; $4d42
+	ld hl, wMapScratch + 6 ; $4d42
 	ld a, [hl+] ; $4d45
 	ld h, [hl] ; $4d46
 	ld l, a ; $4d47
@@ -1160,11 +1160,11 @@ ActorScript_0e_4a80:
 	ld a, h ; $4d58
 	cp $05 ; $4d59
 	jr nc, .outOfRange ; $4d5b
-	ld hl, $c2b2 ; $4d5d
+	ld hl, wMapScratch ; $4d5d
 	ld a, [hl+] ; $4d60
 	ld d, [hl] ; $4d61
 	ld e, a ; $4d62
-	ld hl, $c2b6 ; $4d63
+	ld hl, wMapScratch + 4 ; $4d63
 	ld a, [hl+] ; $4d66
 	ld h, [hl] ; $4d67
 	ld l, a ; $4d68
@@ -1269,7 +1269,7 @@ RepairCounterServiceMenu:
 	ld de, $0101 ; $4e64
 	farcall RunMenuFromText ; $4e67
 .loop:
-	ld [$c2bc], a ; $4e6a
+	ld [wMapScratch + 10], a ; $4e6a
 	cp $ff ; $4e6d
 	jp z, RepairCounterFarewell ; $4e6f
 	cp $02 ; $4e72
@@ -1293,7 +1293,7 @@ RepairCounterServiceMenu:
 	ret ; $4eb1
 PrepareEquipmentSelectScreen:
 	ld a, [wEquippedRacket] ; $4eb2
-	ld [$c2ba], a ; $4eb5
+	ld [wMapScratch + 8], a ; $4eb5
 	ld a, $11 ; $4eb8
 	ld [wStoryModeCurrentLocation], a ; $4eba
 	ld a, [wMapSceneStage2] ; $4ebd
@@ -1360,7 +1360,7 @@ FetchAndPushShortTextArg:
 	wram_bank ; $4f58
 	ret ; $4f5c
 GetEquippedRacketNibble:
-	ld a, [$c2bc] ; $4f5d
+	ld a, [wMapScratch + 10] ; $4f5d
 	and a ; $4f60
 	jr z, .lowNibble ; $4f61
 	jr .highNibble ; $4f63
@@ -1374,7 +1374,7 @@ GetEquippedRacketNibble:
 	swap a ; $4f70
 	ret ; $4f72
 PushEquipmentNameTextArg:
-	ld a, [$c2bc] ; $4f73
+	ld a, [wMapScratch + 10] ; $4f73
 	and a ; $4f76
 	jr z, .racket ; $4f77
 	jr .shoes ; $4f79
@@ -1399,7 +1399,7 @@ PushEquipmentNameTextArg:
 	call FetchAndPushShortTextArg ; $4f95
 	ret ; $4f98
 InitEquipmentHandoutDialogue:
-	ld a, [$c2bc] ; $4f99
+	ld a, [wMapScratch + 10] ; $4f99
 	and a ; $4f9c
 	jr z, .racket ; $4f9d
 	jr .shoes ; $4f9f
@@ -1441,7 +1441,7 @@ RepairCounterReturnB:
 	jp RepairCounterCheckEquipChanged ; $5001
 	ret ; $5004
 CompareEquippedRacketToMinigameFlag:
-	ld a, [$c2ba] ; $5005
+	ld a, [wMapScratch + 8] ; $5005
 	ld b, a ; $5008
 	ld a, [wEquippedRacket] ; $5009
 	cp b ; $500c
@@ -1459,7 +1459,7 @@ RepairCounterCheckEquipChanged:
 	call CompareEquippedRacketToMinigameFlag ; $5021
 	cp $ff ; $5024
 	jp nz, .repairRacket ; $5026
-	ld a, [$c2bc] ; $5029
+	ld a, [wMapScratch + 10] ; $5029
 	ld hl, $2401 ; $502c
 	add l ; $502f
 	ld l, a ; $5030
@@ -1475,11 +1475,11 @@ RepairCounterCheckEquipChanged:
 	script_wait_frames $05 ; $5045
 	and a ; $504c
 	jp nz, .noChange ; $504d
-	ld a, [$c2bc] ; $5050
+	ld a, [wMapScratch + 10] ; $5050
 	jp RepairCounterServiceMenu.loop ; $5053
 .repairRacket:
 	ld a, [wEquippedRacket] ; $5056
-	ld [$c2ba], a ; $5059
+	ld [wMapScratch + 8], a ; $5059
 	call InitEquipmentHandoutDialogue ; $505c
 	script_speak $0e ; $505f
 	call ShowEquipChangeConfirmation ; $5064
@@ -1527,7 +1527,7 @@ RepairCounterReopenServiceMenu:
 	ld hl, Text_6e_236 ; $5100
 	ld de, $0101 ; $5103
 	farcall RunMenuFromText ; $5106
-	ld [$c2bc], a ; $5109
+	ld [wMapScratch + 10], a ; $5109
 	cp $ff ; $510c
 	jp z, RepairCounterFarewell ; $510e
 	cp $02 ; $5111
@@ -1550,7 +1550,7 @@ RepairCounterReopenServiceMenu:
 	script_face $0e, FACE_RIGHT ; $514b
 	ret ; $5152
 ShowEquipChangeConfirmation:
-	ld a, [$c2bc] ; $5153
+	ld a, [wMapScratch + 10] ; $5153
 	ld hl, $20ef ; $5156
 	add l ; $5159
 	ld l, a ; $515a
@@ -1559,7 +1559,7 @@ ShowEquipChangeConfirmation:
 .speak:
 	farcall InitDialogueTextCursor ; $515e
 	call PushEquipmentNameTextArg ; $5161
-	ld a, [$c2bc] ; $5164
+	ld a, [wMapScratch + 10] ; $5164
 	and a ; $5167
 	jr nz, .handOver ; $5168
 	call MirrorPlayerSpriteIfLeftHanded ; $516a
@@ -2551,8 +2551,8 @@ PromptExhibitionMatch:
 	script_move_player $1200, $0d00 ; $65dd
 	farcall WaitPlayerMoveDone ; $65e7
 	ld a, $02 ; $65ea
-	ld [$c2b4], a ; $65ec
-	ld hl, $c2b2 ; $65ef
+	ld [wMapScratch + 2], a ; $65ec
+	ld hl, wMapScratch ; $65ef
 	ld de, $3083 ; $65f2
 	ld a, e ; $65f5
 	ld [hl+], a ; $65f6
@@ -2560,14 +2560,14 @@ PromptExhibitionMatch:
 	test_flag FLAG_DOUBLES ; $65f8
 	jr z, .prompt ; $65fb
 	ld a, $05 ; $65fd
-	ld [$c2b4], a ; $65ff
-	ld hl, $c2b2 ; $6602
+	ld [wMapScratch + 2], a ; $65ff
+	ld hl, wMapScratch ; $6602
 	ld de, $3089 ; $6605
 	ld a, e ; $6608
 	ld [hl+], a ; $6609
 	ld [hl], d ; $660a
 .prompt:
-	ld hl, $c2b2 ; $660b
+	ld hl, wMapScratch ; $660b
 	ld a, [hl+] ; $660e
 	ld h, [hl] ; $660f
 	ld l, a ; $6610
@@ -2607,9 +2607,9 @@ PromptExhibitionMatch:
 	jr z, .storeSelection ; $6667
 	add $03 ; $6669
 .storeSelection:
-	ld [$c2b4], a ; $666b
+	ld [wMapScratch + 2], a ; $666b
 .startMatchScene:
-	ld hl, $c2b2 ; $666e
+	ld hl, wMapScratch ; $666e
 	ld a, [hl+] ; $6671
 	ld h, [hl] ; $6672
 	ld l, a ; $6673
@@ -2732,7 +2732,7 @@ PromptExhibitionMatch:
 	call PlayStarWarpTransition ; $696d
 	ld a, $1c ; $6970
 	ld [wStoryModeCurrentLocation], a ; $6972
-	ld a, [$c2b4] ; $6975
+	ld a, [wMapScratch + 2] ; $6975
 	ld [wStoryModeEntryPoint], a ; $6978
 	ld a, $ff ; $697b
 	ld [wUnusedExitLocationMirror], a ; $697d
@@ -3380,7 +3380,7 @@ ExhibitionMatchIntroCutscene:
 	ld [wStoryModeShowLocationName], a ; $76fc
 	ld a, [wStoryModeEntryPoint] ; $76ff
 	dec a ; $7702
-	ld [$c2b4], a ; $7703
+	ld [wMapScratch + 2], a ; $7703
 	test_flag FLAG_DOUBLES ; $7706
 	jp nz, .startMatch ; $7709
 	script_set_speed $0e, $0014 ; $770c
@@ -3589,7 +3589,7 @@ PrepareStoryMatch:
 	ld [wUnusedExitLocationMirror], a ; $7b8b
 	ld [wStoryModeExitLocationRequest], a ; $7b8e
 	farcall InitStoryMatchSettings ; $7b91
-	ld a, [$c2b4] ; $7b94
+	ld a, [wMapScratch + 2] ; $7b94
 	add a ; $7b97
 	add LOW(Data_0e_7bac) ; $7b98
 	ld l, a ; $7b9a

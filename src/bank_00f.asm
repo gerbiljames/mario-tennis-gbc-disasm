@@ -996,11 +996,11 @@ AwardsCeremonyInitScript_0f:
 	test_flag FLAG_DOUBLES ; $5600
 	jp nz, .done ; $5603
 	call SavePlayerActorPosition ; $5606
-	ld hl, $c2b2 ; $5609
+	ld hl, wMapScratch ; $5609
 	ld a, [hl+] ; $560c
 	ld b, [hl] ; $560d
 	ld c, a ; $560e
-	ld hl, $c2b4 ; $560f
+	ld hl, wMapScratch + 2 ; $560f
 	ld a, [hl+] ; $5612
 	ld d, [hl] ; $5613
 	ld e, a ; $5614
@@ -1471,7 +1471,7 @@ SavePlayerActorPosition:
 	ld a, [hl+] ; $5f63
 	ld d, [hl] ; $5f64
 	ld e, a ; $5f65
-	ld hl, $c2b2 ; $5f66
+	ld hl, wMapScratch ; $5f66
 	ld a, e ; $5f69
 	ld [hl+], a ; $5f6a
 	ld [hl], d ; $5f6b
@@ -1480,7 +1480,7 @@ SavePlayerActorPosition:
 	ld a, [hl+] ; $5f70
 	ld d, [hl] ; $5f71
 	ld e, a ; $5f72
-	ld hl, $c2b4 ; $5f73
+	ld hl, wMapScratch + 2 ; $5f73
 	ld a, e ; $5f76
 	ld [hl+], a ; $5f77
 	ld [hl], d ; $5f78

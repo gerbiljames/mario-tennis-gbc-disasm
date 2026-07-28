@@ -4198,7 +4198,7 @@ ClearDebugTextBuffer:
 UpdateDebugOverlay:
 	xor a ; $1893
 	ldh [rVBK], a ; $1894
-	ld hl, $c0fb ; $1896
+	ld hl, wDebugPeakLYText ; $1896
 	ld de, $9d08 ; $1899
 	ld a, [hl+] ; $189c
 	ld [de], a ; $189d
@@ -5936,7 +5936,7 @@ ProcessBGBlitQueue:
 	jr z, .zero ; $2193
 	ld a, $01 ; $2195
 	ldh [rVBK], a ; $2197
-	ld bc, $c300 ; $2199
+	ld bc, wBGRowBlitAttrs ; $2199
 	ld hl, wBGRowBlitDest ; $219c
 	ld a, [hl+] ; $219f
 	ld d, [hl] ; $21a0
@@ -5954,7 +5954,7 @@ ProcessBGBlitQueue:
 	ld [hl], a ; $21af
 	xor a ; $21b0
 	ldh [rVBK], a ; $21b1
-	ld bc, $c340 ; $21b3
+	ld bc, wBGRowBlitTiles ; $21b3
 	ld hl, wBGRowBlitDest ; $21b6
 	ld a, [hl+] ; $21b9
 	ld d, [hl] ; $21ba
@@ -5977,7 +5977,7 @@ ProcessBGBlitQueue:
 	ld a, $01 ; $21cf
 	ldh [hBGColumnBlitDone], a ; $21d1
 	ldh [rVBK], a ; $21d3
-	ld de, $c380 ; $21d5
+	ld de, wBGColumnBlitAttrs ; $21d5
 	ld a, [wBGColumnBlitX] ; $21d8
 	ld l, a ; $21db
 	ld h, $98 ; $21dc
@@ -5994,7 +5994,7 @@ ProcessBGBlitQueue:
 	jr nz, .loop ; $21ea
 	xor a ; $21ec
 	ldh [rVBK], a ; $21ed
-	ld de, $c3c0 ; $21ef
+	ld de, wBGColumnBlitTiles ; $21ef
 	ld a, [wBGColumnBlitX] ; $21f2
 	ld l, a ; $21f5
 	ld h, $98 ; $21f6
@@ -6058,7 +6058,7 @@ BlitBGRowFrom64:
 	and $1f ; $224a
 	ld h, $00 ; $224c
 	ld l, a ; $224e
-	ld de, $c300 ; $224f
+	ld de, wBGRowBlitAttrs ; $224f
 	add hl, de ; $2252
 	push hl ; $2253
 	call GetMapBufferAddr64 ; $2254
@@ -6117,7 +6117,7 @@ BlitBGColumnFrom64:
 	and $1f ; $22a9
 	ld h, $00 ; $22ab
 	ld l, a ; $22ad
-	ld de, $c380 ; $22ae
+	ld de, wBGColumnBlitAttrs ; $22ae
 	add hl, de ; $22b1
 	push hl ; $22b2
 	call GetMapBufferAddr64 ; $22b3
@@ -6202,7 +6202,7 @@ BlitBGStrip:
 	and $1f ; $2331
 	ld h, $00 ; $2333
 	ld l, a ; $2335
-	ld de, $c300 ; $2336
+	ld de, wBGRowBlitAttrs ; $2336
 	add hl, de ; $2339
 	push hl ; $233a
 	call GetScrollBufferAddr ; $233b
@@ -6261,7 +6261,7 @@ BlitBGStrip2:
 	and $1f ; $2390
 	ld h, $00 ; $2392
 	ld l, a ; $2394
-	ld de, $c380 ; $2395
+	ld de, wBGColumnBlitAttrs ; $2395
 	add hl, de ; $2398
 	push hl ; $2399
 	call GetScrollBufferAddr ; $239a
@@ -6760,7 +6760,7 @@ AdvanceFrame:
 	ld a, $0f ; $267a
 	ldh [hPeakLYFrames], a ; $267c
 .peakDone:
-	ld de, $c0fb ; $267e
+	ld de, wDebugPeakLYText ; $267e
 	call FormatHexWord ; $2681
 	ldh a, [hDebugStepMode] ; $2684
 	or a ; $2686

@@ -394,6 +394,10 @@
       "0xdf00": {
        "name": "wTextArgFetchBuffer",
        "note": "[bank 5] Scratch buffer that PushTextArgFetchedString fills (via FetchShortTextToBuffer) with a fetched short-text string, then pushes as a text argument; overlaps the idle far-P1 character struct at $df00"
+      },
+      "0xdf4c": {
+       "name": "wCharQuickSwing",
+       "note": "[8-bit] 1 when the swing was started with fewer than 5 charge frames -- a tap rather than a held swing. Cleared as the swing starts and set only on that branch; ExecuteShot copies it into wShotWasQuickSwing so the shot keeps the value"
       }
      }
     },
@@ -1906,7 +1910,7 @@
   {
    "start": "0xc2b2",
    "end": "0xc2c0",
-   "comment": "Story-script scratch, second half ($c2b0-$c2bf as a whole is the\ncurrent location's scratch block; wMapSceneStage and wMapSceneStage2\nare its first two bytes). Two consumers overlay it: bank $14's island\ncutscenes keep two sprite slots here as parallel byte arrays, and bank\n$15's water-sprite swing contest keeps 16-bit counters over the same\nbytes. The three wWaterSpriteMinigame* names that used to sit here in\nram_map.json were global, so they also labelled the generic scratch use\nin banks $0e/$0f/$10/$13, which is what STATUS flagged as mis-scoped.",
+   "comment": "Story-script scratch, second half ($c2b0-$c2bf as a whole is the\ncurrent location's scratch block; wMapSceneStage and wMapSceneStage2\nare its first two bytes). Two consumers overlay it: bank $14's island\ncutscenes keep two sprite slots here as parallel byte arrays, and bank\n$15's water-sprite swing contest keeps 16-bit counters over the same\nbytes. The three wWaterSpriteMinigame* names that used to sit here in\nram_map.json were global, so they also labelled the generic scratch use\nin banks $0e/$0f/$10/$13, which is what STATUS flagged as mis-scoped.\nEverywhere else the block is generic per-location scratch, which is what\nthe default variant names.",
    "variants": [
     {
      "context": "island cutscene sprite slots (bank $14, $5300-$7900)",
@@ -1986,6 +1990,18 @@
       "0xc2bb": {
        "name": "wSwingContestHudPage",
        "note": "[8-bit] Which HUD page the swing contest shows; InitWaterSpriteMinigameHud seeds it and QueueWaterSpriteMinigameHudPanels queues the panels for it"
+      }
+     }
+    },
+    {
+     "context": "generic location scratch",
+     "default": true,
+     "scopes": [],
+     "symbols": {
+      "0xc2b2": {
+       "name": "wMapScratch",
+       "note": "[14 bytes] The rest of the current location's scratch block, after wMapSceneStage / wMapSceneStage2. Every story script in banks $0e-$13 uses it for whatever that location needs -- a saved actor position, a name being assembled for a text argument, a menu's working bytes -- so the block has a name and the offsets do not. The two overlays that do have a fixed layout (bank $14's cutscene sprite slots, bank $15's swing contest) are the scoped variants above",
+       "size": 14
       }
      }
     }
@@ -2952,6 +2968,137 @@
        "name": "wStubbedPromptTaskState",
        "note": "[2 bytes] RunStoryDataConfirmMenu selects WRAM bank $07, clears +$00, sets +$01 to $0c and registers StubNop_1b_69d6 as a per-frame task. That task's body is a bare ret, so nothing ever reads either byte -- the register/unregister pair around the prompt is real, only the work is missing",
        "size": 2
+      }
+     }
+    }
+   ]
+  },
+  {
+   "start": "0xce40",
+   "end": "0xcf00",
+   "comment": "The top of WRAM0, shared by two things that never run together: the\nserial link's nibble staging and the character-select roster. Scoped to\nthe owning ROM bank.",
+   "variants": [
+    {
+     "context": "serial link nibble staging (bank $07)",
+     "scopes": [
+      {
+       "bank": "0x07"
+      }
+     ],
+     "symbols": {
+      "0xce40": {
+       "name": "wLinkNibbleBuffer",
+       "note": "[96 bytes] The block being exchanged, one nibble per byte. Both directions refuse a count that would take it past $5f nibbles. UnpackBytesToNibbles fills it from wLinkByteBuffer and PackNibblesToBytes folds it back",
+       "size": 96
+      },
+      "0xcea0": {
+       "name": "wLinkByteBuffer",
+       "note": "[48 bytes] The packed form of the same block -- two nibbles per byte -- which is what the caller reads and writes",
+       "size": 48
+      }
+     }
+    },
+    {
+     "context": "character select roster (bank $1b)",
+     "scopes": [
+      {
+       "bank": "0x1b"
+      }
+     ],
+     "symbols": {
+      "0xce40": {
+       "name": "wCharSelectRoster",
+       "note": "[128 bytes] Copy of CharSelectRosterTable, the grid of character ids the select screen and the unlock-debug screen page through. FindCharSelectRosterEntry searches it and DrawCharSelectMugshots walks it",
+       "size": 128
+      }
+     }
+    }
+   ]
+  },
+  {
+   "start": "0xc7a0",
+   "end": "0xc7a5",
+   "comment": "Mode-local scratch, the first five bytes above $c780. Scoped to the\nminigame banks; bank $1b loads its 32-byte character-select nav grid over\nthe same address and on past the named mode bytes above, so that use has\nno symbol it could be given.",
+   "variants": [
+    {
+     "context": "minigame targets (banks $0a/$0d)",
+     "scopes": [
+      {
+       "bank": "0x0a"
+      },
+      {
+       "bank": "0x0d"
+      }
+     ],
+     "symbols": {
+      "0xc7a0": {
+       "name": "wScorePopupSource",
+       "note": "[4 bytes] Position the floating score popup starts from, copied out of wBallHistory + 30 by StartScorePopup and stepped by UpdateScorePopup",
+       "size": 4
+      },
+      "0xc7a4": {
+       "name": "wMinigameTargetsAltMode",
+       "note": "[8-bit] Set at init by Banana Bunch and Fruit Fantasy, the two minigames whose targets deflect the ball rather than absorb it. While it is nonzero UpdateMinigameTarget runs the Alt draw, hit-test and scoring handlers instead of the ordinary ones"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "start": "0xc7be",
+   "end": "0xc7d8",
+   "comment": "Mode-local scratch above the named mode flags, same rule as the $c780\nblock: each mode reuses the bytes, so the variants are scoped to the\nowning ROM bank and anything outside them stays numeric.",
+   "variants": [
+    {
+     "context": "minigame targets (banks $0a/$0d)",
+     "scopes": [
+      {
+       "bank": "0x0a"
+      },
+      {
+       "bank": "0x0d"
+      }
+     ],
+     "symbols": {
+      "0xc7be": {
+       "name": "wMinigameTargetsActive",
+       "note": "[8-bit] Set while the target actors are live; UpdateMinigameTargets returns at once when it is clear"
+      },
+      "0xc7bf": {
+       "name": "wMinigameLastHitCell",
+       "note": "[8-bit] Grid cell the ball last bounced off, recorded by the banana-bunch and fruit-fantasy deflection handlers and read back when the hit is scored"
+      },
+      "0xc7c0": {
+       "name": "wMinigameTargetGrid",
+       "note": "[24 bytes] The 3 x 8 target grid, one byte per cell. AreAllTargetsHit passes only when all 24 read 1; ResetTargetGrid clears it a row at a time (+$07, +$0f, +$17 are the row ends)",
+       "size": 24
+      }
+     }
+    },
+    {
+     "context": "character select and new game (bank $1b)",
+     "scopes": [
+      {
+       "bank": "0x1b"
+      }
+     ],
+     "symbols": {
+      "0xc7be": {
+       "name": "wCharSelectCursorCol",
+       "note": "[8-bit] Cursor column carried in and out of RunCharacterSelectScreen, so the new-game roster loop resumes where the player left off"
+      },
+      "0xc7bf": {
+       "name": "wCharSelectCursorRow",
+       "note": "[8-bit] Cursor row, the same"
+      },
+      "0xc7c0": {
+       "name": "wNewGameRosterFields",
+       "note": "[8 bytes] Two bytes per starting character (wCharRecordBuffer + 14 and + 12), collected by RunNewGameSetup before the roster is offered",
+       "size": 8
+      },
+      "0xc7c8": {
+       "name": "wStoryDataPromptFlag",
+       "note": "[8-bit] Cleared by RunStoryDataConfirmMenu as the prompt opens"
       }
      }
     }

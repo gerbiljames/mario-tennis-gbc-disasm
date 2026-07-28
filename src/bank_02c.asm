@@ -140,7 +140,7 @@ SetBallVelocityFromEntry4_2c:
 	ld a, [hl+] ; $409e
 	ld b, a ; $409f
 	push hl ; $40a0
-	ld hl, $c476 ; $40a1
+	ld hl, wShotPredictionEntry ; $40a1
 	ld a, c ; $40a4
 	ld [hl+], a ; $40a5
 	ld [hl], b ; $40a6

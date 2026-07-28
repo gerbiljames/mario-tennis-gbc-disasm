@@ -516,11 +516,11 @@ TennisMachineRoomNpc05TextIds:
 	dw Text_6e_209 ; record 7
 	dw Text_6e_216 ; record 8
 MachinePracticeLevelPrompt:
-	ld [$c2b8], a ; $4612
+	ld [wMapScratch + 6], a ; $4612
 	call TestMachineLevelClearedFlag ; $4615
 	jr z, MachineLevelNotClearedMessage ; $4618
 	script_set_text Text_6e_224 ; $461a
-	ld a, [$c2b8] ; $4620
+	ld a, [wMapScratch + 6] ; $4620
 	inc a ; $4623
 	ld h, $00 ; $4624
 	ld l, a ; $4626
@@ -548,7 +548,7 @@ MachinePracticeLevelPrompt:
 	ld a, $ff ; $467f
 	ld [wUnusedExitLocationMirror], a ; $4681
 	ld [wStoryModeExitLocationRequest], a ; $4684
-	ld a, [$c2b8] ; $4687
+	ld a, [wMapScratch + 6] ; $4687
 	add $12 ; $468a
 	farcall RunTrainingDrillByID ; $468c
 	farcall EndCutsceneScriptMode ; $468f
