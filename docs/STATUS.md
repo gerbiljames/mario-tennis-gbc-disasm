@@ -6272,3 +6272,63 @@ called the write a no-op. It is not: `$0000-$1fff` is the cartridge-RAM gate, so
 the write sets it to the blue value's low nibble, and the effect is benign only
 because the save engine re-enables SRAM before touching it. Game defects now
 live in `docs/bugs.md` rather than scattered through this log.
+
+
+## A generated tree can carry prose now (2026-07-28)
+
+The one thing hand-written assembly buys that this generated tree could not was
+an explanation next to the code. `labels.json` values were bare strings, so
+everything a *name* cannot say -- why a routine exists, what its arguments mean,
+what is wrong with it -- had nowhere to go but this file, which by now is 6,274
+lines of chronological log and the wrong shape for "what does
+`FinishObjSlotUpdate` do".
+
+A `labels.json` value may now be `{"name": ..., "note": ...}`, and the note
+renders as a comment block above the label:
+
+```
+; The only way anything reaches VRAM: 613 call sites, and not one direct
+; `ld [$8xxx], a` in the ROM. hl = source, de = destination, c = length in
+; 16-byte blocks.
+;
+; The VRAM bank rides in bit 13 of the destination -- `bit 5, d` selects it and
+; `res 5, d` recovers the address ...
+QueueVRAMCopy:
+```
+
+This is exactly what `ram_map.json` has always done for RAM symbols, where the
+notes are the most useful documentation in the repository; code just did not
+have the same channel. `load_label_overrides` still returns `{key: name}` so the
+eight places that read overrides by name are untouched, and `load_label_notes`
+reads the other half.
+
+One detail worth keeping: both label-emitting paths share `_emit_label_note`,
+and it fires only when the label is actually written. Emitting the comment first
+and *then* discovering the label was already on the previous line would strand a
+paragraph above unrelated code.
+
+Twelve routines annotated to start, all of them worked out in the passes above:
+the two VRAM routines, `RunSoundEngine` (it context-switches the shared HRAM
+pool, which is what lets a counter live there), `SerialEncodeInput`,
+`AdvanceFrame` (the debug stepper and its dead link-error check), the
+object-slot trio, `StepCharAnimation`, `LoadCharacterAttributes`,
+`ConvertColorToGrayscale` and one stubbed drill judge.
+
+### Why this rather than hand-editing the output
+
+The question that prompted it was whether the disassembly has reached the point
+where `src/` should be maintained by hand instead of generated. Not yet, and the
+reason is visible in this session's own diffs: rendering changes touched 13,529
+lines (short-form ALU), 762 (tilemap coordinates), 418 (`VRAM_BANK1`) and 136
+(MBC registers), and several of those were not improvements but *corrections of
+systematic errors* -- 42 sites rendering `ld de, hPeakLY` for the constant -96,
+seven maths-table rows rendering as code labels. In a hand-maintained tree those
+would be frozen in, and each fix would be a four-hundred-site edit with no
+`make compare` to catch a slip. Discovery is still live too: two seed
+corrections this session changed which bytes decode as code at all.
+
+The answer flips when discovery is finished and a regeneration stops changing
+lines. Then the right move is to generate once, commit that as the source of
+truth, and keep the generator as a verifier. Until then every improvement is
+retroactive across the whole tree, which is the entire value of the arrangement
+-- and the missing comment channel was the one real argument on the other side.
