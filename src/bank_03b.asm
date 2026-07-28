@@ -978,14 +978,14 @@ BuildN64ExhibDataScreen:
 	jr nz, .buildN64ExhibColumnList ; $4602
 	call BuildN64ExhibColumnList ; $4604
 	call InitChartRowFlags ; $4607
-	ld hl, $dc01 ; $460a
+	ld hl, wChartColumnList ; $460a
 	ld bc, wShadowTilemap + 7 * TILEMAP_WIDTH + 2 ; $460d
 	call DrawChartIconColumn ; $4610
-	ld hl, $dc01 ; $4613
+	ld hl, wChartColumnList ; $4613
 	ld bc, wShadowTilemap + 5 * TILEMAP_WIDTH + 4 ; $4616
 	ld a, $07 ; $4619
 	call DrawChartIconRow ; $461b
-	ld hl, $db00 ; $461e
+	ld hl, wChartRows ; $461e
 	ld de, wShadowTilemap + 7 * TILEMAP_WIDTH + 4 ; $4621
 	ld a, $07 ; $4624
 	call DrawChartCellRows ; $4626
@@ -994,7 +994,7 @@ BuildN64ExhibDataScreen:
 RedrawN64ExhibDataWindow:
 	wram_bank $03 ; $462d
 	ld a, [wN64ExhibPage] ; $4633
-	ld hl, $dc01 ; $4636
+	ld hl, wChartColumnList ; $4636
 	add l ; $4639
 	ld l, a ; $463a
 	jr nc, .drawRow ; $463b
@@ -1004,7 +1004,7 @@ RedrawN64ExhibDataWindow:
 	ld a, $07 ; $4641
 	call DrawChartIconRow ; $4643
 	ld a, [wN64ExhibCursorRow] ; $4646
-	ld hl, $dc01 ; $4649
+	ld hl, wChartColumnList ; $4649
 	add l ; $464c
 	ld l, a ; $464d
 	jr nc, .drawColumn ; $464e
@@ -1013,7 +1013,7 @@ RedrawN64ExhibDataWindow:
 	ld bc, wShadowTilemap + 7 * TILEMAP_WIDTH + 2 ; $4651
 	call DrawChartIconColumn ; $4654
 	ld a, [wN64ExhibCursorRow] ; $4657
-	ld hl, $db00 ; $465a
+	ld hl, wChartRows ; $465a
 	ld de, $0010 ; $465d
 .rowSeekLoop:
 	or a ; $4660
@@ -1169,7 +1169,7 @@ ChartCellMarkTable:
 BuildN64ExhibColumnList:
 	wram_bank $03 ; $4743
 	ld hl, N64ExhibColumn ; $4749
-	ld de, $dc01 ; $474c
+	ld de, wChartColumnList ; $474c
 	ld bc, $0001 ; $474f
 	call CopyMemoryFast ; $4752
 	ld hl, wN64RecordsBlock + 344 ; $4755
@@ -1178,13 +1178,13 @@ BuildN64ExhibColumnList:
 	and $01 ; $475a
 	jr nz, .maskSet ; $475c
 	ld a, $10 ; $475e
-	ld [$dc0f], a ; $4760
+	ld [wChartColumnList + 14], a ; $4760
 .maskSet:
 	ld a, b ; $4763
 	and $02 ; $4764
 	jr nz, .buildN64ExhibResultsGrid ; $4766
 	ld a, $10 ; $4768
-	ld [$dc10], a ; $476a
+	ld [wChartColumnList + 15], a ; $476a
 .buildN64ExhibResultsGrid:
 	call BuildN64ExhibResultsGrid ; $476d
 	ret ; $4770
@@ -1195,7 +1195,7 @@ N64ExhibColumn:
 	db $08, $09, $0a, $0b, $0c, $0d, $0e, $0f ; 0x08
 	db $10 ; 0x10
 InitChartRowFlags:
-	ld hl, $db00 ; $4783
+	ld hl, wChartRows ; $4783
 	ld c, $00 ; $4786
 .loop:
 	ld a, $01 ; $4788
@@ -1213,7 +1213,7 @@ InitChartRowFlags:
 	jr nz, .loop ; $4797
 	ret ; $4799
 BuildN64ExhibResultsGrid:
-	ld de, $db00 ; $479a
+	ld de, wChartRows ; $479a
 	ld b, $00 ; $479d
 .loop:
 	push bc ; $479f
@@ -2673,7 +2673,7 @@ LoadN64RingShotRecords:
 	ld a, $10 ; $5266
 	ld [wRingShotEntryList + 15], a ; $5268
 .maskSet2:
-	ld hl, $db00 ; $526b
+	ld hl, wChartRows ; $526b
 	ld bc, $0140 ; $526e
 	call ClearBytes ; $5271
 	call BuildRingShotResultsGrid ; $5274
@@ -2723,7 +2723,7 @@ DefaultRingShot1:
 	db $00, $33, $00, $44, $00, $55, $00, $66, $00, $11, $00, $28, $00, $22, $01, $ff ; 0x00
 	db $00, $02, $00, $00, $01, $43, $01, $00, $00, $01, $00, $21, $00, $12, $00, $12 ; 0x10
 BuildRingShotResultsGrid:
-	ld de, $db00 ; $5319
+	ld de, wChartRows ; $5319
 	ld c, $00 ; $531c
 .loop:
 	ld hl, RingShotResultsGridTable ; $531e
@@ -2744,7 +2744,7 @@ BuildRingShotResultsGrid:
 	ld c, a ; $5333
 	cp $10 ; $5334
 	jr nz, .loop ; $5336
-	ld de, $db04 ; $5338
+	ld de, wChartRows + 4 ; $5338
 	ld c, $00 ; $533b
 .loopB:
 	ld hl, RingShotResultsGridTable ; $533d
@@ -3007,7 +3007,7 @@ RingShotScrollArrowsTask:
 	ret ; $54fd
 DrawRingShotClearMarks:
 	ld a, [wMenuCursorY] ; $54fe
-	ld hl, $db00 ; $5501
+	ld hl, wChartRows ; $5501
 	ld bc, $000c ; $5504
 .loop:
 	or a ; $5507
@@ -8176,7 +8176,7 @@ RedrawMarioCastChartWindow:
 	jr z, .compact ; $7bf4
 	ld bc, wShadowTilemap + 5 * TILEMAP_WIDTH + 4 ; $7bf6
 	ld a, [wMenuCursorX] ; $7bf9
-	ld hl, $dc01 ; $7bfc
+	ld hl, wChartColumnList ; $7bfc
 	add l ; $7bff
 	ld l, a ; $7c00
 	jr nc, .wideRow ; $7c01
@@ -8185,7 +8185,7 @@ RedrawMarioCastChartWindow:
 	ld a, $07 ; $7c04
 	call DrawChartIconRow ; $7c06
 	ld a, [wMenuCursorY] ; $7c09
-	ld hl, $dc01 ; $7c0c
+	ld hl, wChartColumnList ; $7c0c
 	add l ; $7c0f
 	ld l, a ; $7c10
 	jr nc, .wideColumn ; $7c11
@@ -8194,7 +8194,7 @@ RedrawMarioCastChartWindow:
 	ld bc, wShadowTilemap + 7 * TILEMAP_WIDTH + 2 ; $7c14
 	call DrawChartIconColumn ; $7c17
 	ld a, [wMenuCursorY] ; $7c1a
-	ld hl, $db00 ; $7c1d
+	ld hl, wChartRows ; $7c1d
 	ld de, $0010 ; $7c20
 .wideRowLoop:
 	or a ; $7c23
@@ -8216,7 +8216,7 @@ RedrawMarioCastChartWindow:
 .compact:
 	ld bc, wShadowTilemap + 5 * TILEMAP_WIDTH + 6 ; $7c3c
 	ld a, [wMenuCursorX] ; $7c3f
-	ld hl, $dc01 ; $7c42
+	ld hl, wChartColumnList ; $7c42
 	add l ; $7c45
 	ld l, a ; $7c46
 	jr nc, .compactRow ; $7c47
@@ -8225,7 +8225,7 @@ RedrawMarioCastChartWindow:
 	ld a, $05 ; $7c4a
 	call DrawChartIconRow ; $7c4c
 	ld a, [wMenuCursorY] ; $7c4f
-	ld hl, $dc01 ; $7c52
+	ld hl, wChartColumnList ; $7c52
 	add l ; $7c55
 	ld l, a ; $7c56
 	jr nc, .compactColumn ; $7c57
@@ -8234,7 +8234,7 @@ RedrawMarioCastChartWindow:
 	ld bc, wShadowTilemap + 7 * TILEMAP_WIDTH + 4 ; $7c5a
 	call DrawChartIconColumn ; $7c5d
 	ld a, [wMenuCursorY] ; $7c60
-	ld hl, $db00 ; $7c63
+	ld hl, wChartRows ; $7c63
 	ld de, $0010 ; $7c66
 .compactRowLoop:
 	or a ; $7c69
@@ -8314,7 +8314,7 @@ BuildMarioCastChartColumnList:
 .readB:
 	ld b, [hl] ; $7cf1
 .step2:
-	ld hl, $dc01 ; $7cf2
+	ld hl, wChartColumnList ; $7cf2
 	ld a, c ; $7cf5
 	add l ; $7cf6
 	ld l, a ; $7cf7
@@ -8350,7 +8350,7 @@ LoadMarioCastExhibGrid:
 	ld hl, wN64RecordsBlock ; $7d27
 	farcall ReadMarioCastVictoryGrid ; $7d2a
 	ld hl, wN64RecordsBlock ; $7d2d
-	ld de, $db00 ; $7d30
+	ld de, wChartRows ; $7d30
 	ld c, $00 ; $7d33
 .loop:
 	push bc ; $7d35
@@ -8512,7 +8512,7 @@ CheckMarioCastChartExpanded:
 	push af ; $7e27
 	push bc ; $7e28
 	ld b, $10 ; $7e29
-	ld a, [$dc07] ; $7e2b
+	ld a, [wChartColumnList + 6] ; $7e2b
 	cp $10 ; $7e2e
 	jr z, .notExpanded ; $7e30
 	pop bc ; $7e32
@@ -8561,16 +8561,16 @@ CopyMarioCastChartReducedTilemap:
 	farcall CopyTilemapRect ; $7e80
 	ret ; $7e83
 FixupMarioCastChartHeaderRow:
-	ld a, [$dc06] ; $7e84
-	ld [$dc05], a ; $7e87
+	ld a, [wChartColumnList + 5] ; $7e84
+	ld [wChartColumnList + 4], a ; $7e87
 	ret ; $7e8a
 CompactMarioCastChartRows:
-	ld hl, $db50 ; $7e8b
-	ld de, $db40 ; $7e8e
+	ld hl, wChartRows + 80 ; $7e8b
+	ld de, wChartRows + 64 ; $7e8e
 	ld bc, $0010 ; $7e91
 	call CopyMemoryBC ; $7e94
-	ld hl, $db05 ; $7e97
-	ld de, $db04 ; $7e9a
+	ld hl, wChartRows + 5 ; $7e97
+	ld de, wChartRows + 4 ; $7e9a
 	ld c, $00 ; $7e9d
 .loop:
 	ld a, [hl] ; $7e9f

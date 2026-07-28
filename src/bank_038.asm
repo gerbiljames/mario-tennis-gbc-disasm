@@ -1855,7 +1855,7 @@ RunExhibitionCharSelectScreen:
 	ld a, b ; $4e6d
 	ld [wCharSelectMode], a ; $4e6e
 	ld a, $02 ; $4e71
-	ld [$df00], a ; $4e73
+	ld [wCharGridHandedness], a ; $4e73
 	call DisableLCDSafely ; $4e76
 	farcall LoadMenuFontGfx ; $4e79
 	xor a ; $4e7c
@@ -1879,7 +1879,7 @@ RunExhibitionCharSelectScreen:
 	ldh a, [hInputPressed] ; $4ead
 	ld [wMenuInputPressed], a ; $4eaf
 	wram_bank $03 ; $4eb2
-	ld a, [$de00] ; $4eb8
+	ld a, [wCharGridScrollCount] ; $4eb8
 	push de ; $4ebb
 	push af ; $4ebc
 	ld a, a ; $4ebd
@@ -2098,28 +2098,28 @@ HandleCharGridDpad:
 	jr nz, .moveDown ; $51b8
 	jr .done ; $51ba
 .scrollDown:
-	ld a, [$de00] ; $51bc
+	ld a, [wCharGridScrollCount] ; $51bc
 	inc a ; $51bf
-	ld [$de00], a ; $51c0
+	ld [wCharGridScrollCount], a ; $51c0
 	ld a, $02 ; $51c3
-	ld [$df00], a ; $51c5
+	ld [wCharGridHandedness], a ; $51c5
 	call MoveCharGridCursorRight ; $51c8
 	xor a ; $51cb
 	ld [wMenuInputPressed], a ; $51cc
 	jp .done ; $51cf
 .moveLeft:
 	ld a, $02 ; $51d2
-	ld [$df00], a ; $51d4
+	ld [wCharGridHandedness], a ; $51d4
 	call MoveCharGridCursorLeft ; $51d7
 	jr .done ; $51da
 .moveRight:
 	ld a, $02 ; $51dc
-	ld [$df00], a ; $51de
+	ld [wCharGridHandedness], a ; $51de
 	call MoveCharGridCursorUp ; $51e1
 	jr .done ; $51e4
 .moveDown:
 	ld a, $02 ; $51e6
-	ld [$df00], a ; $51e8
+	ld [wCharGridHandedness], a ; $51e8
 	call MoveCharGridCursorDown ; $51eb
 .done:
 	pop af ; $51ee
@@ -2270,16 +2270,16 @@ HandleCharGridButtons:
 	or a ; $52e4
 	jr z, .done ; $52e5
 	sound $5e ; $52e7
-	ld a, [$df00] ; $52e9
+	ld a, [wCharGridHandedness] ; $52e9
 	cp $02 ; $52ec
 	jr z, .starChar ; $52ee
 	xor $01 ; $52f0
-	ld [$df00], a ; $52f2
+	ld [wCharGridHandedness], a ; $52f2
 	call RefreshCharInfoPanel ; $52f5
 	ret ; $52f8
 .starChar:
 	ld a, $01 ; $52f9
-	ld [$df00], a ; $52fb
+	ld [wCharGridHandedness], a ; $52fb
 	call RefreshCharInfoPanel ; $52fe
 .done:
 	ret ; $5301
@@ -2324,7 +2324,7 @@ ConfirmCharGridSelection:
 	call IsMarioCastCharacter ; $5342
 	or a ; $5345
 	jr z, .drawPortrait ; $5346
-	ld a, [$df00] ; $5348
+	ld a, [wCharGridHandedness] ; $5348
 	cp $01 ; $534b
 	jr nz, .drawPortrait ; $534d
 	ld a, [wCharSelectSlot] ; $534f
@@ -3158,7 +3158,7 @@ DrawCharSelectSlotLabel:
 	ld a, [wCharGridPage] ; $591b
 	cp $02 ; $591e
 	jr nc, .drawName ; $5920
-	ld a, [$df00] ; $5922
+	ld a, [wCharGridHandedness] ; $5922
 	or a ; $5925
 	jr nz, .slot2 ; $5926
 	ld hl, wShadowTilemap + 26 * TILEMAP_WIDTH ; $5928
@@ -3334,7 +3334,7 @@ InitCharGridState:
 	ld a, $02 ; $5a5c
 .storeSlot:
 	ld [wCharSelectSlot], a ; $5a5e
-	ld hl, $d840 ; $5a61
+	ld hl, wCharUnlockFlags ; $5a61
 	call BuildCharGridFromUnlockFlags ; $5a64
 	call FillCharGridPaletteIndices ; $5a67
 	call AddCreatedCharsToCharGrid ; $5a6a
@@ -3350,7 +3350,7 @@ BuildCharUnlockFlags:
 	ldh a, [hWramBank] ; $5a82
 	push af ; $5a84
 	wram_bank $03 ; $5a85
-	ld hl, $d840 ; $5a8b
+	ld hl, wCharUnlockFlags ; $5a8b
 	ld bc, $0028 ; $5a8e
 	call ClearBytes ; $5a91
 	ld b, $00 ; $5a94
@@ -3374,7 +3374,7 @@ BuildCharUnlockFlags:
 	jr nz, .markUnlocked ; $5aac
 	jr .nextFlag ; $5aae
 .markUnlocked:
-	ld hl, $d840 ; $5ab0
+	ld hl, wCharUnlockFlags ; $5ab0
 	ld a, b ; $5ab3
 	add l ; $5ab4
 	ld l, a ; $5ab5
@@ -3389,7 +3389,7 @@ BuildCharUnlockFlags:
 	ld b, a ; $5abe
 	cp $09 ; $5abf
 	jr nz, .flagLoop ; $5ac1
-	ld hl, $d84f ; $5ac3
+	ld hl, wCharUnlockFlags + 15 ; $5ac3
 	ld a, $01 ; $5ac6
 	ld [hl+], a ; $5ac8
 	ld [hl+], a ; $5ac9
@@ -3402,7 +3402,7 @@ BuildCharUnlockFlags:
 	ld [wCurrentStorySlot], a ; $5ad2
 	farcall CheckStorySlot ; $5ad5
 	push bc ; $5ad8
-	ld hl, $d852 ; $5ad9
+	ld hl, wCharUnlockFlags + 18 ; $5ad9
 	ld b, $00 ; $5adc
 .charLoop:
 	ld a, b ; $5ade
@@ -3420,7 +3420,7 @@ BuildCharUnlockFlags:
 	jr nz, .markChar ; $5aee
 	jr .nextSlot ; $5af0
 .markChar:
-	ld hl, $d852 ; $5af2
+	ld hl, wCharUnlockFlags + 18 ; $5af2
 	ld a, b ; $5af5
 	add l ; $5af6
 	ld l, a ; $5af7
@@ -4816,7 +4816,7 @@ RunLinkCharSelectScreen:
 	sound $03 ; $63d0
 	wram_bank $03 ; $63d2
 	ld a, $02 ; $63d8
-	ld [$df00], a ; $63da
+	ld [wCharGridHandedness], a ; $63da
 	ld a, [wMatchIsDoubles] ; $63dd
 	or a ; $63e0
 	jr nz, .singles ; $63e1
@@ -5334,7 +5334,7 @@ ConfirmLinkGridSelection:
 	call IsMarioCastCharacter ; $67b3
 	or a ; $67b6
 	jr z, .emptyCell ; $67b7
-	ld a, [$df00] ; $67b9
+	ld a, [wCharGridHandedness] ; $67b9
 	cp $01 ; $67bc
 	jr nz, .emptyCell ; $67be
 	ld a, [wCharSelectSlot] ; $67c0
@@ -6106,7 +6106,7 @@ UpdateMenuCursorFromLinkInput:
 	ld a, b ; $6cab
 	bit 0, a ; $6cac
 	jr z, .checkB ; $6cae
-	ld a, [$df00] ; $6cb0
+	ld a, [wCharGridHandedness] ; $6cb0
 	cp $01 ; $6cb3
 	jr nz, .sendSelect ; $6cb5
 	ld b, $28 ; $6cb7
@@ -7318,7 +7318,7 @@ PackUnlockFlagsForLink:
 	call ClearBytes ; $7695
 	ld c, $00 ; $7698
 	ld b, $01 ; $769a
-	ld hl, $d840 ; $769c
+	ld hl, wCharUnlockFlags ; $769c
 	ld d, $00 ; $769f
 .charLoop:
 	ld a, [hl+] ; $76a1
@@ -7335,7 +7335,7 @@ PackUnlockFlagsForLink:
 	jr nz, .charLoop ; $76ae
 	ld hl, wLinkUnlockFlagsSend ; $76b0
 	ld [hl], d ; $76b3
-	ld hl, $d848 ; $76b4
+	ld hl, wCharUnlockFlags + 8 ; $76b4
 	ld a, [hl] ; $76b7
 	or a ; $76b8
 	jr z, .storeCharFlags ; $76b9
@@ -7345,7 +7345,7 @@ PackUnlockFlagsForLink:
 	ld [hl], a ; $76c0
 	ld c, $00 ; $76c1
 	ld b, $01 ; $76c3
-	ld hl, $d84f ; $76c5
+	ld hl, wCharUnlockFlags + 15 ; $76c5
 	ld d, $00 ; $76c8
 .courtLoop:
 	ld a, [hl+] ; $76ca
@@ -7364,7 +7364,7 @@ PackUnlockFlagsForLink:
 	ld [hl], d ; $76dc
 	ld c, $00 ; $76dd
 	ld b, $01 ; $76df
-	ld hl, $d857 ; $76e1
+	ld hl, wCharUnlockFlags + 23 ; $76e1
 	ld d, $00 ; $76e4
 .itemLoop:
 	ld a, [hl+] ; $76e6
@@ -7383,7 +7383,7 @@ PackUnlockFlagsForLink:
 	ld [hl], d ; $76f8
 	ret ; $76f9
 UnpackUnlockFlagsFromLink:
-	ld hl, $d840 ; $76fa
+	ld hl, wCharUnlockFlags ; $76fa
 	ld bc, $0028 ; $76fd
 	call ClearBytes ; $7700
 	ld hl, wLinkUnlockFlagsSend ; $7703
@@ -7394,7 +7394,7 @@ UnpackUnlockFlagsFromLink:
 	and b ; $770b
 	jr z, .nextCharBit ; $770c
 	push hl ; $770e
-	ld hl, $d840 ; $770f
+	ld hl, wCharUnlockFlags ; $770f
 	ld a, c ; $7712
 	add l ; $7713
 	ld l, a ; $7714
@@ -7413,7 +7413,7 @@ UnpackUnlockFlagsFromLink:
 	ld a, [wLinkUnlockFlagsSend + 1] ; $7724
 	or a ; $7727
 	jr z, .courtFlags ; $7728
-	ld hl, $d848 ; $772a
+	ld hl, wCharUnlockFlags + 8 ; $772a
 	ld a, $01 ; $772d
 	ld [hl], a ; $772f
 .courtFlags:
@@ -7425,7 +7425,7 @@ UnpackUnlockFlagsFromLink:
 	and b ; $7738
 	jr z, .nextCourtBit ; $7739
 	push hl ; $773b
-	ld hl, $d84f ; $773c
+	ld hl, wCharUnlockFlags + 15 ; $773c
 	ld a, c ; $773f
 	add l ; $7740
 	ld l, a ; $7741
@@ -7449,7 +7449,7 @@ UnpackUnlockFlagsFromLink:
 	and b ; $7759
 	jr z, .done ; $775a
 	push hl ; $775c
-	ld hl, $d857 ; $775d
+	ld hl, wCharUnlockFlags + 23 ; $775d
 	ld a, c ; $7760
 	add l ; $7761
 	ld l, a ; $7762

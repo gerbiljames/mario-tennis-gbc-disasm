@@ -7274,3 +7274,51 @@ uploads its own state bytes as the first four tiles of row 0.
 Three references are not worth guessing over, so they keep their numeric
 addresses until someone establishes which it is. Naming them either way would
 bury the question.
+
+## Bank $03's screens (2026-07-28)
+
+WRAM bank `$03` is the screen-tilemap bank and was already 74% named, so what
+was left there was per-screen state above the two planes: **131 bare references
+→ 70**.
+
+- **`$d840` `wCharUnlockFlags`** (bank `$38`) — 40 bytes, one per character.
+  `BuildCharUnlockFlags` marks a character either because its
+  `CharUnlockFlagsTable0` entry reads `$ffff` (always available) or because
+  `TestSaveFlag` says so; `PackUnlockFlagsForLink` folds eight at a time into a
+  bit each for the link exchange. The array runs straight through the
+  ranking-banner bytes named two passes ago, so those became variants of one
+  union rather than two unions side by side.
+- **`$df00` `wCharGridHandedness`** — 0 right, 1 left, 2 not yet chosen. START
+  toggles it with `xor $01`, but only when `IsMarioCastCharacter` passes, and 2
+  becomes 1 on the first press. It picks one of the three pre-rendered labels
+  30:150/151/152 that `IsMarioCastCharacter`'s own note describes.
+- **`$db00` `wChartRows`** (bank `$3b`) — sixteen rows of seventeen bytes, a
+  flag plus sixteen cells. Seventeen, not sixteen: `InitChartRowFlags` steps
+  `$11` between row heads. That makes the array `$110` long, so it reaches
+  `$dc0f` and its last row runs into the block below — which is exactly why
+  `wChartColumnList` starts at `$dc01` and not `$dc00`.
+
+### Two names were already taken, and both times that was the finding
+
+`wCharSelectSlot` and then `wCharSelectHandedness` each failed to assemble as
+duplicates. Neither was a naming collision to work around:
+
+- `wCharSelectSlot` already exists at `$d814` and *is* the slot index, so `$df00`
+  had to be something else — which is what sent me back to
+  `HandleCharGridButtons` and turned up the handedness toggle.
+- `wCharSelectHandedness` already exists at `$cb50`, the **story mode** screen's
+  copy of the same idea. `$df00` is the exhibition and link grids' copy. Two
+  screens, two bytes, one concept — so `wCharGridHandedness` for the grid, and
+  both notes now point at each other.
+
+rgbasm refusing a duplicate symbol is a weak check that keeps doing strong work:
+twice in two passes it has caught a name that was wrong about *what the byte is*,
+not merely about what to call it.
+
+### Left open
+
+`$dc20` is 64 bytes of expanded bits (`ExpandRowBytesToBits` clears four
+16-byte units and fills them eight at a time) and it overlaps
+`wRingShotEntryList` at `$dc40` — both in bank `$3b`. A ROM-bank scope cannot
+separate two screens in the same bank, so this one needs code ranges, and 3
+references are not enough to justify guessing at the boundaries.

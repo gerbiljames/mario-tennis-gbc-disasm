@@ -2622,11 +2622,19 @@ NEXTU
 wStatsPrintBuffer:: ds 8
 ENDU
 
-	ds 22
+	ds 1
 
-; Ranking-board banner animation (WRAM bank $03), owned by bank $1b and
-; scoped to its ranking-board code range like the $d800 block below it.
+; Two screens over the same 40 bytes of WRAM bank $03: bank $38 keeps the
+; character-unlock array here and bank $1b its ranking-banner animation.
+; The array runs straight through where the banner bytes sit, so they are
+; variants of one union rather than two unions side by side.
+UNION
+; character unlock flags (bank $38)
+; [40 bytes] One byte per character, nonzero when unlocked. BuildCharUnlockFlags clears the array and walks CharUnlockFlagsTable0, marking a character either because its entry reads $ffff (always available) or because TestSaveFlag says so. PackUnlockFlagsForLink folds eight at a time into one bit each for the link exchange
+wCharUnlockFlags:: ds 40
+NEXTU
 ; ranking board (bank $1b)
+	ds 21
 ; [8-bit] Frame counter for the sliding banner sprite. RankingBoardAnimTask_1b indexes RankingBoardAnimTaskTable with it for this frame's X delta, and unregisters itself once it reaches $87
 wRankingBannerAnimFrame:: db
 ; [8-bit] X the banner sprite is drawn at, seeded to $a0 on frame 0 and advanced by the table delta every frame after
@@ -2637,8 +2645,9 @@ wRankingAnimStateDone:: db
 	ds 1
 ; [8-bit] Set when ShowRankingBoard is called with mode $03, which it then rewrites to $00. It suppresses the board's entrance animation (DispatchRankingBoardAnim returns at once) and the closing jingle -- the quiet variant used when the board is shown as part of a longer sequence
 wRankingBoardSilent:: db
+ENDU
 
-	ds 165
+	ds 152
 
 ; Screen-sized buffers in WRAM bank $03 that three unrelated screens keep
 ; at the same addresses, so the variants are scoped to the owning ROM bank.
@@ -2665,7 +2674,14 @@ wEndingSceneStep:: db
 wScreenSequenceTimer:: db
 ENDU
 
-	ds 256
+; Chart row store for the bank $3b N64 exhibition and Mario-cast screens
+; (WRAM bank $03). Sixteen rows of 17 bytes each -- a flag byte and sixteen
+; cells -- which is $110 in all, so the array actually reaches $dc0f and the
+; last row runs into the block below. That is why wChartColumnList begins at
+; $dc01 rather than $dc00.
+; chart rows (bank $3b)
+; [256 bytes, of $110 used] The decoded chart. InitChartRowFlags writes 1 to the head of each of the 16 rows, stepping 17 at a time; BuildN64ExhibResultsGrid and DecodeN64ExhibResultsRow fill the cells behind them from the N64 records block
+wChartRows:: ds 256
 
 ; Screen state in WRAM bank $03 at $dc00. Bank $17's rules screen and bank
 ; $3b's N64 exhibition-data screen each keep their own bytes here, so the
@@ -2688,8 +2704,11 @@ wRulesIsMinigame:: db
 wRulesMinigameLevel:: db
 	ds 13
 NEXTU
-; N64 exhibition data (bank $3b)
-	ds 18
+; N64 exhibition and Mario-cast charts (bank $3b)
+	ds 1
+; [16 bytes] Which column each chart row shows, one byte per row. BuildMarioCastChartColumnList fills it from MarioCastChartColumnTable, substituting $10 -- the blank column -- for any entry whose save flag is clear, so a locked character leaves a gap rather than shifting the chart
+wChartColumnList:: ds 16
+	ds 1
 ; [8-bit] Page of the N64 exhibition-data screen; N64ExhibScrollArrowsTask picks the arrows from it
 wN64ExhibPage:: db
 ; [8-bit] Cursor row within the page, stepped by ScrollN64ExhibDataCursor
@@ -2707,6 +2726,22 @@ ENDU
 ; ring-shot results (bank $3b)
 ; [16 bytes] The ring-shot rows to show, copied from the N64RingShot table and then patched: an entry becomes $10 (the blank row) when the matching bit in the N64 records block is clear, so a course the player never transferred is left out
 wRingShotEntryList:: ds 16
+
+	ds 432
+
+; Character-grid scroll counter (WRAM bank $03), owned by bank $38.
+; character select (bank $38)
+; [8-bit] Incremented every time the grid scrolls down a row. The select screen prints it as a decimal byte at row 3, column 1 each frame, which makes it a counter left on screen -- there is no other reader
+wCharGridScrollCount:: db
+
+	ds 255
+
+; Character-select handedness (WRAM bank $03), owned by bank $38. The same
+; address is the per-character match struct in WRAM banks $04-$07, which is
+; a different union in different banks.
+; character select (bank $38)
+; [8-bit] Handedness the exhibition and link character grids are offering for the highlighted character: 0 right, 1 left, 2 not yet chosen. START toggles it with `xor $01` but only when IsMarioCastCharacter passes, and 2 becomes 1 on the first press. DrawCharSelectSlotLabel picks one of three pre-rendered labels off it -- 30:150/151/152, "START: Right-Handed", "START: Left-Handed" and "START: Change Hands". The story-mode screen keeps its own copy at wCharSelectHandedness in WRAM0
+wCharGridHandedness:: db
 
 
 SECTION "WRAMX bank 4", WRAMX[$d000], BANK[4]

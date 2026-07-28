@@ -1183,13 +1183,18 @@
      }
     },
     {
-     "context": "N64 exhibition data (bank $3b)",
+     "context": "N64 exhibition and Mario-cast charts (bank $3b)",
      "scopes": [
       {
        "bank": "0x3b"
       }
      ],
      "symbols": {
+      "0xdc01": {
+       "name": "wChartColumnList",
+       "note": "[16 bytes] Which column each chart row shows, one byte per row. BuildMarioCastChartColumnList fills it from MarioCastChartColumnTable, substituting $10 -- the blank column -- for any entry whose save flag is clear, so a locked character leaves a gap rather than shifting the chart",
+       "size": 16
+      },
       "0xdc12": {
        "name": "wN64ExhibPage",
        "note": "[8-bit] Page of the N64 exhibition-data screen; N64ExhibScrollArrowsTask picks the arrows from it"
@@ -3145,11 +3150,27 @@
    ]
   },
   {
-   "start": "0xd855",
+   "start": "0xd840",
    "wram_bank": "0x03",
-   "end": "0xd85b",
-   "comment": "Ranking-board banner animation (WRAM bank $03), owned by bank $1b and\nscoped to its ranking-board code range like the $d800 block below it.",
+   "end": "0xd868",
+   "comment": "Two screens over the same 40 bytes of WRAM bank $03: bank $38 keeps the\ncharacter-unlock array here and bank $1b its ranking-banner animation.\nThe array runs straight through where the banner bytes sit, so they are\nvariants of one union rather than two unions side by side.",
    "variants": [
+    {
+     "context": "character unlock flags (bank $38)",
+     "scopes": [
+      {
+       "bank": "0x38",
+       "wram_bank": "0x03"
+      }
+     ],
+     "symbols": {
+      "0xd840": {
+       "name": "wCharUnlockFlags",
+       "note": "[40 bytes] One byte per character, nonzero when unlocked. BuildCharUnlockFlags clears the array and walks CharUnlockFlagsTable0, marking a character either because its entry reads $ffff (always available) or because TestSaveFlag says so. PackUnlockFlagsForLink folds eight at a time into one bit each for the link exchange",
+       "size": 40
+      }
+     }
+    },
     {
      "context": "ranking board (bank $1b)",
      "scopes": [
@@ -3645,6 +3666,76 @@
        "name": "wUnlockFlagsBlock",
        "note": "[512 bytes] Image of save block $0b read by ReadUnlockFlagsSaveBlock for the minigame-flags debug screen -- the same block bank $3b stages at wN64RecordsBlock in WRAM bank $03 and the bank $03 engine at wSaveBlockBuffer in bank $07",
        "size": 512
+      }
+     }
+    }
+   ]
+  },
+  {
+   "start": "0xdf00",
+   "wram_bank": "0x03",
+   "end": "0xdf01",
+   "comment": "Character-select handedness (WRAM bank $03), owned by bank $38. The same\naddress is the per-character match struct in WRAM banks $04-$07, which is\na different union in different banks.",
+   "variants": [
+    {
+     "context": "character select (bank $38)",
+     "scopes": [
+      {
+       "bank": "0x38",
+       "wram_bank": "0x03"
+      }
+     ],
+     "symbols": {
+      "0xdf00": {
+       "name": "wCharGridHandedness",
+       "note": "[8-bit] Handedness the exhibition and link character grids are offering for the highlighted character: 0 right, 1 left, 2 not yet chosen. START toggles it with `xor $01` but only when IsMarioCastCharacter passes, and 2 becomes 1 on the first press. DrawCharSelectSlotLabel picks one of three pre-rendered labels off it -- 30:150/151/152, \"START: Right-Handed\", \"START: Left-Handed\" and \"START: Change Hands\". The story-mode screen keeps its own copy at wCharSelectHandedness in WRAM0"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "start": "0xde00",
+   "wram_bank": "0x03",
+   "end": "0xde01",
+   "comment": "Character-grid scroll counter (WRAM bank $03), owned by bank $38.",
+   "variants": [
+    {
+     "context": "character select (bank $38)",
+     "scopes": [
+      {
+       "bank": "0x38",
+       "wram_bank": "0x03"
+      }
+     ],
+     "symbols": {
+      "0xde00": {
+       "name": "wCharGridScrollCount",
+       "note": "[8-bit] Incremented every time the grid scrolls down a row. The select screen prints it as a decimal byte at row 3, column 1 each frame, which makes it a counter left on screen -- there is no other reader"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "start": "0xdb00",
+   "wram_bank": "0x03",
+   "end": "0xdc00",
+   "comment": "Chart row store for the bank $3b N64 exhibition and Mario-cast screens\n(WRAM bank $03). Sixteen rows of 17 bytes each -- a flag byte and sixteen\ncells -- which is $110 in all, so the array actually reaches $dc0f and the\nlast row runs into the block below. That is why wChartColumnList begins at\n$dc01 rather than $dc00.",
+   "variants": [
+    {
+     "context": "chart rows (bank $3b)",
+     "scopes": [
+      {
+       "bank": "0x3b",
+       "wram_bank": "0x03"
+      }
+     ],
+     "symbols": {
+      "0xdb00": {
+       "name": "wChartRows",
+       "note": "[256 bytes, of $110 used] The decoded chart. InitChartRowFlags writes 1 to the head of each of the 16 rows, stepping 17 at a time; BuildN64ExhibResultsGrid and DecodeN64ExhibResultsRow fill the cells behind them from the N64 records block",
+       "size": 256
       }
      }
     }
