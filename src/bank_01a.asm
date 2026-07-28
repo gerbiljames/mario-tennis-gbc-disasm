@@ -723,7 +723,7 @@ ShowExpGainScreen:
 	ld [hl+], a ; $45b0
 	xor a ; $45b1
 	ld [wExpLevelUpQueued], a ; $45b2
-	ld [$d151], a ; $45b5
+	ld [wExpScreenFlags], a ; $45b5
 	wram_bank $01 ; $45b8
 	ld hl, wDecompBuffer ; $45be
 	ld de, $9800 + VRAM_BANK1 ; $45c1
@@ -818,7 +818,7 @@ ShowExpGainScreen:
 	push af ; $4683
 	wram_bank $06 ; $4684
 	ld c, $00 ; $468a
-	ld a, [$d000] ; $468c
+	ld a, [wCharDataAnimCounter] ; $468c
 	and a ; $468f
 	jr nz, .storeScroll ; $4690
 	ld c, $fc ; $4692
@@ -870,7 +870,7 @@ ShowExpGainScreen:
 .finish:
 	wram_bank $06 ; $46de
 	ld c, $00 ; $46e4
-	ld a, [$d000] ; $46e6
+	ld a, [wCharDataAnimCounter] ; $46e6
 	and a ; $46e9
 	jr nz, .storeFinalScroll ; $46ea
 	ld c, $fc ; $46ec
@@ -951,7 +951,7 @@ ExpScreenDrawTask:
 	ldh a, [hWramBank] ; $477e
 	push af ; $4780
 	wram_bank $06 ; $4781
-	ld a, [$d151] ; $4787
+	ld a, [wExpScreenFlags] ; $4787
 	or a ; $478a
 	jr nz, .checkStoryModeMainCharacterOverworldSprite ; $478b
 	ld de, $8000 + VRAM_BANK1 ; $478d
@@ -971,7 +971,7 @@ ExpScreenDrawTask:
 	ld bc, $09c0 ; $47a4
 	ld de, $7058 ; $47a7
 	call QueueSpriteTemplate ; $47aa
-	ld a, [$d151] ; $47ad
+	ld a, [wExpScreenFlags] ; $47ad
 	and $80 ; $47b0
 	jr z, .restore ; $47b2
 	wram_bank $02 ; $47b4
@@ -1001,9 +1001,9 @@ ExpScreenDrawTask:
 	ld c, $04 ; $47ec
 	call QueueVRAMCopy ; $47ee
 	wram_bank $06 ; $47f1
-	ld a, [$d151] ; $47f7
+	ld a, [wExpScreenFlags] ; $47f7
 	and $7f ; $47fa
-	ld [$d151], a ; $47fc
+	ld [wExpScreenFlags], a ; $47fc
 .restore:
 	pop af ; $47ff
 	wram_bank ; $4800
@@ -1845,9 +1845,9 @@ SignExtendModifierByte:
 	ldh a, [hWramBank] ; $4dad
 	push af ; $4daf
 	wram_bank $06 ; $4db0
-	ld a, [$d151] ; $4db6
+	ld a, [wExpScreenFlags] ; $4db6
 	or $01 ; $4db9
-	ld [$d151], a ; $4dbb
+	ld [wExpScreenFlags], a ; $4dbb
 	call AdvanceFrame ; $4dbe
 	call DrawExpScreenMessageBox ; $4dc1
 	ld hl, ExtendModifierByteTable0 ; $4dc4
@@ -1865,9 +1865,9 @@ SignExtendModifierByte:
 	call QueueVRAMCopy ; $4de9
 	call AdvanceFrame ; $4dec
 	wram_bank $06 ; $4def
-	ld a, [$d151] ; $4df5
+	ld a, [wExpScreenFlags] ; $4df5
 	and $fe ; $4df8
-	ld [$d151], a ; $4dfa
+	ld [wExpScreenFlags], a ; $4dfa
 	pop af ; $4dfd
 	wram_bank ; $4dfe
 	pop hl ; $4e02
@@ -1882,9 +1882,9 @@ SignExtendModifierByte:
 	ldh a, [hWramBank] ; $4e0b
 	push af ; $4e0d
 	wram_bank $06 ; $4e0e
-	ld a, [$d151] ; $4e14
+	ld a, [wExpScreenFlags] ; $4e14
 	or $01 ; $4e17
-	ld [$d151], a ; $4e19
+	ld [wExpScreenFlags], a ; $4e19
 	call AdvanceFrame ; $4e1c
 	call DrawExpScreenMessageBox ; $4e1f
 	ld hl, ExtendModifierByteTable2 ; $4e22
@@ -1902,9 +1902,9 @@ SignExtendModifierByte:
 	call QueueVRAMCopy ; $4e47
 	call AdvanceFrame ; $4e4a
 	wram_bank $06 ; $4e4d
-	ld a, [$d151] ; $4e53
+	ld a, [wExpScreenFlags] ; $4e53
 	and $fe ; $4e56
-	ld [$d151], a ; $4e58
+	ld [wExpScreenFlags], a ; $4e58
 	pop af ; $4e5b
 	wram_bank ; $4e5c
 	pop hl ; $4e60
@@ -1946,7 +1946,7 @@ ExpScreenNumberTask:
 	ld a, [hl] ; $4ea2
 	cp $63 ; $4ea3
 	ret z ; $4ea5
-	ld a, [$d000] ; $4ea6
+	ld a, [wCharDataAnimCounter] ; $4ea6
 	and a ; $4ea9
 	jp nz, .nonZero ; $4eaa
 	ld a, [wExpLevelUpQueued] ; $4ead
@@ -1974,9 +1974,9 @@ ExpScreenNumberTask:
 	ld a, [wExpLevelUpQueued] ; $4ed3
 	and a ; $4ed6
 	ret nz ; $4ed7
-	ld a, [$d151] ; $4ed8
+	ld a, [wExpScreenFlags] ; $4ed8
 	or $80 ; $4edb
-	ld [$d151], a ; $4edd
+	ld [wExpScreenFlags], a ; $4edd
 	ld a, $01 ; $4ee0
 	ld [wExpLevelUpQueued], a ; $4ee2
 .nonZero:
@@ -2220,7 +2220,7 @@ ResetCharDataScreenAnim:
 	push af ; $5088
 	wram_bank $06 ; $5089
 	xor a ; $508f
-	ld [$d000], a ; $5090
+	ld [wCharDataAnimCounter], a ; $5090
 	pop af ; $5093
 	wram_bank ; $5094
 	pop hl ; $5098
@@ -2241,7 +2241,7 @@ ResetCharDataScreenAnim:
 	jr z, .restore ; $50b2
 	wram_bank $06 ; $50b4
 	ld a, $01 ; $50ba
-	ld [$d000], a ; $50bc
+	ld [wCharDataAnimCounter], a ; $50bc
 	ld a, $01 ; $50bf
 	ld de, $0000 ; $50c1
 	ld h, $04 ; $50c4
@@ -2599,9 +2599,9 @@ DrawExpBonusMessage:
 	ld e, $01 ; $54df
 	call DrawStringToTileBuffer ; $54e1
 	wram_bank $06 ; $54e4
-	ld a, [$d151] ; $54ea
+	ld a, [wExpScreenFlags] ; $54ea
 	or $01 ; $54ed
-	ld [$d151], a ; $54ef
+	ld [wExpScreenFlags], a ; $54ef
 	call AdvanceFrame ; $54f2
 	wram_bank $01 ; $54f5
 	ld hl, wDecompBuffer ; $54fb
@@ -2614,9 +2614,9 @@ DrawExpBonusMessage:
 	call QueueVRAMCopy ; $550e
 	call AdvanceFrame ; $5511
 	wram_bank $06 ; $5514
-	ld a, [$d151] ; $551a
+	ld a, [wExpScreenFlags] ; $551a
 	and $fe ; $551d
-	ld [$d151], a ; $551f
+	ld [wExpScreenFlags], a ; $551f
 	ret ; $5522
 Padding_1a_5523:
 	; $5523, 13 bytes (fill)
@@ -3645,7 +3645,7 @@ LoadCharViewerMugshot:
 	ld de, $0701 ; $7097
 	farcall LoadIndexedPaletteThunk ; $709a
 	wram_bank $06 ; $709d
-	ld a, [$d002] ; $70a3
+	ld a, [wCharDataFlushChunk] ; $70a3
 	ld b, a ; $70a6
 	wram_bank $01 ; $70a7
 	ld a, b ; $70ad
@@ -4007,7 +4007,7 @@ CharDataScreen_LoadGfx:
 	ret ; $7be4
 DrawStatChangeArrows:
 	wram_bank $06 ; $7be5
-	ld a, [$d142] ; $7beb
+	ld a, [wCharDataPageArrowMode] ; $7beb
 	dec a ; $7bee
 	ret nz ; $7bef
 	ld hl, wCharDataStatsSlideX ; $7bf0

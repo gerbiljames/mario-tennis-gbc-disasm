@@ -83,9 +83,9 @@ CharDataScreenBgScrollTask:
 InitDrillWorkRam:
 	wram_bank $06 ; $40d0
 	xor a ; $40d6
-	ld [$d000], a ; $40d7
+	ld [wCharDataAnimCounter], a ; $40d7
 	ld [$d001], a ; $40da
-	ld [$d002], a ; $40dd
+	ld [wCharDataFlushChunk], a ; $40dd
 	ld [wCharDataPageArrowMode], a ; $40e0
 	ld [wCharDataArrowHold], a ; $40e3
 	ld [wCharDataArrowPhase], a ; $40e6
@@ -576,7 +576,7 @@ BuildCharDataSummaryFields:
 	ld de, wCharDataNumberBuffer ; $458b
 	call FormatDecimalNumberUnsigned ; $458e
 	ld hl, wCharDataNumberBuffer ; $4591
-	ld de, $d12c ; $4594
+	ld de, wCharStatPageMain + 10 ; $4594
 	ld a, [hl+] ; $4597
 	ld [de], a ; $4598
 	inc de ; $4599
@@ -602,7 +602,7 @@ BuildCharDataSummaryFields:
 	pop af ; $45b9
 	call FormatExp24BitDecimal ; $45ba
 	ld hl, wCharDataNumberBuffer ; $45bd
-	ld de, $d126 ; $45c0
+	ld de, wCharStatPageMain + 4 ; $45c0
 	ld a, [hl] ; $45c3
 	or a ; $45c4
 	jr nz, .nonZero ; $45c5
@@ -787,7 +787,7 @@ BuildCharDataSummaryFields:
 	ld de, wCharDataNumberBuffer ; $4721
 	call FormatDecimalNumberUnsigned ; $4724
 	ld hl, wCharDataNumberBuffer ; $4727
-	ld de, $d139 ; $472a
+	ld de, wCharStatPagePartner + 10 ; $472a
 	ld a, [hl+] ; $472d
 	ld [de], a ; $472e
 	inc de ; $472f
@@ -813,7 +813,7 @@ BuildCharDataSummaryFields:
 	pop af ; $474f
 	call FormatExp24BitDecimal ; $4750
 	ld hl, wCharDataNumberBuffer ; $4753
-	ld de, $d133 ; $4756
+	ld de, wCharStatPagePartner + 4 ; $4756
 	ld a, [hl] ; $4759
 	or a ; $475a
 	jr nz, .nonZero2 ; $475b
@@ -1118,7 +1118,7 @@ CharDataValuesSyncTask:
 	call ApplySlideOffsetToSpriteX ; $494d
 	call QueueSprite ; $4950
 	wram_bank $06 ; $4953
-	ld a, [$d12c] ; $4959
+	ld a, [wCharStatPageMain + 10] ; $4959
 	cp $20 ; $495c
 	jr z, .eq203 ; $495e
 	call GetSummaryExpDigitSprite ; $4960
@@ -1127,7 +1127,7 @@ CharDataValuesSyncTask:
 	call ApplySlideOffsetToSpriteX ; $4969
 	call QueueSprite ; $496c
 .eq203:
-	ld a, [$d12d] ; $496f
+	ld a, [wCharStatPageMain + 11] ; $496f
 	cp $20 ; $4972
 	jr z, .eq204 ; $4974
 	call GetSummaryExpDigitSprite ; $4976
@@ -1136,7 +1136,7 @@ CharDataValuesSyncTask:
 	call ApplySlideOffsetToSpriteX ; $497f
 	call QueueSprite ; $4982
 .eq204:
-	ld a, [$d12e] ; $4985
+	ld a, [wCharStatPageMain + 12] ; $4985
 	cp $20 ; $4988
 	jr z, .eq205 ; $498a
 	call GetSummaryExpDigitSprite ; $498c
@@ -1145,7 +1145,7 @@ CharDataValuesSyncTask:
 	call ApplySlideOffsetToSpriteX ; $4995
 	call QueueSprite ; $4998
 .eq205:
-	ld a, [$d139] ; $499b
+	ld a, [wCharStatPagePartner + 10] ; $499b
 	cp $20 ; $499e
 	jr z, .eq206 ; $49a0
 	call GetSummaryExpDigitSprite ; $49a2
@@ -1154,7 +1154,7 @@ CharDataValuesSyncTask:
 	call ApplySlideOffsetToSpriteX ; $49ab
 	call QueueSprite ; $49ae
 .eq206:
-	ld a, [$d13a] ; $49b1
+	ld a, [wCharStatPagePartner + 11] ; $49b1
 	cp $20 ; $49b4
 	jr z, .eq207 ; $49b6
 	call GetSummaryExpDigitSprite ; $49b8
@@ -1163,7 +1163,7 @@ CharDataValuesSyncTask:
 	call ApplySlideOffsetToSpriteX ; $49c1
 	call QueueSprite ; $49c4
 .eq207:
-	ld a, [$d13b] ; $49c7
+	ld a, [wCharStatPagePartner + 12] ; $49c7
 	cp $20 ; $49ca
 	jr z, .checkEquippedRacket ; $49cc
 	call GetSummaryExpDigitSprite ; $49ce
@@ -1285,13 +1285,13 @@ BuildMainCharStatPage:
 	call BuildCharStatDisplay ; $4aef
 	wram_bank $06 ; $4af2
 	ld a, [wCharDataLevels] ; $4af8
-	ld [$d122], a ; $4afb
+	ld [wCharStatPageMain], a ; $4afb
 	ld a, [wCharDataLevels + 1] ; $4afe
-	ld [$d123], a ; $4b01
+	ld [wCharStatPageMain + 1], a ; $4b01
 	ld a, [wCharDataLevels + 2] ; $4b04
-	ld [$d124], a ; $4b07
+	ld [wCharStatPageMain + 2], a ; $4b07
 	ld a, [wCharDataLevels + 3] ; $4b0a
-	ld [$d125], a ; $4b0d
+	ld [wCharStatPageMain + 3], a ; $4b0d
 	ld hl, MainCharStatPageTilemapPatch00 ; $4b10
 	ld bc, $d370 ; $4b13
 	call ApplyTilemapPatchList ; $4b16
@@ -1320,13 +1320,13 @@ BuildPartnerStatPage:
 	call BuildCharStatDisplay ; $4b55
 	wram_bank $06 ; $4b58
 	ld a, [wCharDataLevels] ; $4b5e
-	ld [$d12f], a ; $4b61
+	ld [wCharStatPagePartner], a ; $4b61
 	ld a, [wCharDataLevels + 1] ; $4b64
-	ld [$d130], a ; $4b67
+	ld [wCharStatPagePartner + 1], a ; $4b67
 	ld a, [wCharDataLevels + 2] ; $4b6a
-	ld [$d131], a ; $4b6d
+	ld [wCharStatPagePartner + 2], a ; $4b6d
 	ld a, [wCharDataLevels + 3] ; $4b70
-	ld [$d132], a ; $4b73
+	ld [wCharStatPagePartner + 3], a ; $4b73
 	ld hl, PartnerStatPageTilemapPatch01 ; $4b76
 	ld bc, $d500 ; $4b79
 	call ApplyTilemapPatchList ; $4b7c
@@ -1519,16 +1519,16 @@ RunDrillResultInputLoop:
 	ld hl, DrawCharStatDigitsTask ; $4cf1
 	call RegisterFrameTask ; $4cf4
 	wram_bank $06 ; $4cf7
-	ld a, [$d12f] ; $4cfd
+	ld a, [wCharStatPagePartner] ; $4cfd
 	ld [wCharDataLevels], a ; $4d00
-	ld a, [$d130] ; $4d03
+	ld a, [wCharStatPagePartner + 1] ; $4d03
 	ld [wCharDataLevels + 1], a ; $4d06
-	ld a, [$d131] ; $4d09
+	ld a, [wCharStatPagePartner + 2] ; $4d09
 	ld [wCharDataLevels + 2], a ; $4d0c
-	ld a, [$d132] ; $4d0f
+	ld a, [wCharStatPagePartner + 3] ; $4d0f
 	ld [wCharDataLevels + 3], a ; $4d12
-	ld hl, $d133 ; $4d15
-	ld de, $d13c ; $4d18
+	ld hl, wCharStatPagePartner + 4 ; $4d15
+	ld de, wCharStatPageShown ; $4d18
 	ld bc, $0006 ; $4d1b
 	call CopyMemoryBC ; $4d1e
 	call SlideToPartnerStatPage ; $4d21
@@ -1552,16 +1552,16 @@ RunDrillResultInputLoop:
 	ld hl, DrawCharStatDigitsTask ; $4d52
 	call RegisterFrameTask ; $4d55
 	wram_bank $06 ; $4d58
-	ld a, [$d122] ; $4d5e
+	ld a, [wCharStatPageMain] ; $4d5e
 	ld [wCharDataLevels], a ; $4d61
-	ld a, [$d123] ; $4d64
+	ld a, [wCharStatPageMain + 1] ; $4d64
 	ld [wCharDataLevels + 1], a ; $4d67
-	ld a, [$d124] ; $4d6a
+	ld a, [wCharStatPageMain + 2] ; $4d6a
 	ld [wCharDataLevels + 2], a ; $4d6d
-	ld a, [$d125] ; $4d70
+	ld a, [wCharStatPageMain + 3] ; $4d70
 	ld [wCharDataLevels + 3], a ; $4d73
-	ld hl, $d126 ; $4d76
-	ld de, $d13c ; $4d79
+	ld hl, wCharStatPageMain + 4 ; $4d76
+	ld de, wCharStatPageShown ; $4d79
 	ld bc, $0006 ; $4d7c
 	call CopyMemoryBC ; $4d7f
 	call SlideToMainCharStatPage ; $4d82
@@ -2016,7 +2016,7 @@ BuildCharStatDisplay:
 	ret ; $509b
 SlideToMainCharStatPage:
 	call AdvanceFrame ; $509c
-	ld a, [$d002] ; $509f
+	ld a, [wCharDataFlushChunk] ; $509f
 	or a ; $50a2
 	jr nz, SlideToMainCharStatPage ; $50a3
 	call LoadBasePageIntoWorkTilemap ; $50a5
@@ -2189,7 +2189,7 @@ SlideToMainCharStatPage:
 	ret ; $5267
 SlideFromMainCharStatPage:
 	call AdvanceFrame ; $5268
-	ld a, [$d002] ; $526b
+	ld a, [wCharDataFlushChunk] ; $526b
 	or a ; $526e
 	jr nz, SlideFromMainCharStatPage ; $526f
 	wram_bank $06 ; $5271
@@ -2365,7 +2365,7 @@ SlideFromMainCharStatPage:
 	ret ; $543c
 SlideToPartnerStatPage:
 	call AdvanceFrame ; $543d
-	ld a, [$d002] ; $5440
+	ld a, [wCharDataFlushChunk] ; $5440
 	or a ; $5443
 	jr nz, SlideToPartnerStatPage ; $5444
 	wram_bank $06 ; $5446
@@ -2536,7 +2536,7 @@ SlideToPartnerStatPage:
 	ret ; $5602
 SlideFromPartnerStatPage:
 	call AdvanceFrame ; $5603
-	ld a, [$d002] ; $5606
+	ld a, [wCharDataFlushChunk] ; $5606
 	or a ; $5609
 	jr nz, SlideFromPartnerStatPage ; $560a
 	wram_bank $06 ; $560c
@@ -2878,7 +2878,7 @@ DrawCharStatDigitsTask:
 	call ApplySlideOffsetToSpriteX ; $5923
 	call QueueSprite ; $5926
 .getCharDataDigitSprite:
-	ld a, [$d13d] ; $5929
+	ld a, [wCharStatPageShown + 1] ; $5929
 	cp $20 ; $592c
 	jr z, .eq20 ; $592e
 	call GetCharDataDigitSprite ; $5930
@@ -2887,7 +2887,7 @@ DrawCharStatDigitsTask:
 	call ApplySlideOffsetToSpriteX ; $5939
 	call QueueSprite ; $593c
 .eq20:
-	ld a, [$d13e] ; $593f
+	ld a, [wCharStatPageShown + 2] ; $593f
 	cp $20 ; $5942
 	jr z, .eq202 ; $5944
 	call GetCharDataDigitSprite ; $5946
@@ -2896,7 +2896,7 @@ DrawCharStatDigitsTask:
 	call ApplySlideOffsetToSpriteX ; $594f
 	call QueueSprite ; $5952
 .eq202:
-	ld a, [$d13f] ; $5955
+	ld a, [wCharStatPageShown + 3] ; $5955
 	cp $20 ; $5958
 	jr z, .eq203 ; $595a
 	call GetCharDataDigitSprite ; $595c
@@ -2905,7 +2905,7 @@ DrawCharStatDigitsTask:
 	call ApplySlideOffsetToSpriteX ; $5965
 	call QueueSprite ; $5968
 .eq203:
-	ld a, [$d140] ; $596b
+	ld a, [wCharStatPageShown + 4] ; $596b
 	cp $20 ; $596e
 	jr z, .eq204 ; $5970
 	call GetCharDataDigitSprite ; $5972
@@ -2914,7 +2914,7 @@ DrawCharStatDigitsTask:
 	call ApplySlideOffsetToSpriteX ; $597b
 	call QueueSprite ; $597e
 .eq204:
-	ld a, [$d141] ; $5981
+	ld a, [wCharStatPageShown + 5] ; $5981
 	call GetCharDataDigitSprite ; $5984
 	ld de, $4984 ; $5987
 	ld hl, wCharDataStatsSlideX ; $598a

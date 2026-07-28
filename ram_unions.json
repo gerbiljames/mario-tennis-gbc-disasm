@@ -1582,6 +1582,30 @@
    "comment": "Character-data (level-up) screen working set, WRAM bank $06, shared by\nthe bank $1a/$1c/$1d screen code. The first four bytes are a smaller\nscratch that three screens overlay -- the debug character viewer, the\nresults continue prompt and the character-data screen itself -- so those\nget their own range-scoped variants ahead of it.\nThe viewer's scope stops at SetupCharViewerScene and resumes inside it\nonly where WRAM bank $06 is provable: that routine selects bank $04 to\nplace the four actors it poses, where $d000 is wActors, not a cursor.",
    "variants": [
     {
+     "context": "star warp transition (bank $0e)",
+     "scopes": [
+      {
+       "bank": "0x0e",
+       "wram_bank": "0x06"
+      }
+     ],
+     "symbols": {
+      "0xd000": {
+       "name": "wStarWarpFrame",
+       "note": "[8-bit] Animation frame of the warp star, 0-5, stepped every other VBlank by UpdateStarWarpSprite"
+      },
+      "0xd002": {
+       "name": "wStarWarpCountdown",
+       "note": "[8-bit] Frames left in the transition, seeded to $5a. The wait loop starts the fade out when it reaches $1e and returns at zero"
+      },
+      "0xd003": {
+       "name": "wStarWarpSparkleLife",
+       "note": "[16 bytes] One life counter per trail sparkle. UpdateStarWarpTrailSparkles finds the first zero, sets it to $10 and seeds that slot's position from wStarWarpPathX/Y; the positions themselves are two bytes per slot from $d014",
+       "size": 16
+      }
+     }
+    },
+    {
      "context": "debug character viewer (bank $1a, $6800-$7000)",
      "scopes": [
       {
@@ -1652,13 +1676,30 @@
      }
     },
     {
-     "context": "character-data screen (WRAM bank $06)",
+     "context": "character-data screen (banks $1a/$1c/$1d)",
      "scopes": [
       {
+       "bank": "0x1a",
+       "wram_bank": "0x06"
+      },
+      {
+       "bank": "0x1c",
+       "wram_bank": "0x06"
+      },
+      {
+       "bank": "0x1d",
        "wram_bank": "0x06"
       }
      ],
      "symbols": {
+      "0xd000": {
+       "name": "wCharDataAnimCounter",
+       "note": "[8-bit] Free-running counter CharDataScreenAnimTask steps every frame the screen is idle; its low nibble indexes the animation table"
+      },
+      "0xd002": {
+       "name": "wCharDataFlushChunk",
+       "note": "[8-bit] Which third of the screen still needs pushing to VRAM. FlushCharDataTilemapChunk sends one chunk per call and branches on 0, 1 and 2; while it is nonzero the animation task holds off"
+      },
       "0xd004": {
        "name": "wCharDataLevel",
        "note": "[8-bit] Level the character-data screen is committing; WriteCharStatsToDisplayBuffer stores it back into record +$18 (wStoryModeMainCharacterLevel)"
@@ -1712,45 +1753,33 @@
        "note": "[8-bit] Number of entries written to wCharDataChoiceLog so far; also the write index"
       }
      }
-    }
-   ]
-  },
-  {
-   "start": "0xdaea",
-   "wram_bank": "0x04",
-   "end": "0xdaf8",
-   "comment": "Overworld actor engine scratch (WRAM bank $04), owned by the bank $04\nactor-script VM. Scoped to that bank as well as to the WRAM bank: the\nVM selects the bank once on entry, so most references cannot prove it.",
-   "variants": [
+    },
     {
-     "context": "actor engine (bank $04)",
+     "context": "EXP award screen (bank $1e)",
      "scopes": [
       {
-       "bank": "0x04"
-      },
-      {
-       "wram_bank": "0x04"
+       "bank": "0x1e",
+       "wram_bank": "0x06"
       }
      ],
      "symbols": {
-      "0xdaea": {
-       "name": "wPlayerMoveAngle",
-       "note": "[8-bit] Heading the D-pad asks the overworld player to walk in ($40 per quarter turn, matching the FACE_* encoding). UpdatePlayerControl also writes it to actor field +$34, then probes $20/$40/$e0/$c0 away from it to slide along a blocked wall"
+      "0xd005": {
+       "name": "wExpAwardRunningTotal",
+       "note": "[16-bit] The EXP total ticking up on screen. CountUpExpTotal increments it and decrements the amount still to add, one point and one sound per pass, and DrawExpTotalDigits redraws it",
+       "size": 2
       },
-      "0xdaec": {
-       "name": "wPlayerMoveAngleApplied",
-       "note": "[8-bit] Heading actually walked this frame, 0 when the move was blocked"
+      "0xd007": {
+       "name": "wExpAwardAmount",
+       "note": "[16-bit] The award being counted in, set as each message is shown",
+       "size": 2
       },
-      "0xdaed": {
-       "name": "wPlayerMoveAnglePrev",
-       "note": "[8-bit] Previous frame's wPlayerMoveAngleApplied, saved before it is recomputed"
+      "0xd024": {
+       "name": "wExpAwardIndex",
+       "note": "[8-bit] Which award message is being shown; BeginNextExpAward steps it and DrawNextExpAwardMessage returns zero once the list runs out"
       },
-      "0xdaee": {
-       "name": "wPlayerMoving",
-       "note": "[8-bit] Cleared when no direction is held, so the walk animation stops"
-      },
-      "0xdaf7": {
-       "name": "wActorScriptBank",
-       "note": "[8-bit] ROM bank of the actor script currently executing, taken from the actor's field +$22. Every ActorScriptOp_* passes it to FarReadByte / FarReadWord / CallHLInBankA to reach the script bytes"
+      "0xd026": {
+       "name": "wExpAwardMessageTimer",
+       "note": "[8-bit] Cleared as each award begins, so the message holds for its full dwell"
       }
      }
     }
@@ -1763,13 +1792,48 @@
    "comment": "WRAM bank $06 from $d02a up, shared by four subsystems that never run at\nonce. The palette fade engine's two 128-byte buffers straddle what used\nto be the boundary between two unions, which is why they are one now.\nEvery scope carries a ROM bank and wram_bank $06: the working palette\nbuffer and the character-data screen's stat arrays start at the same\naddress, and only the owning bank tells them apart.\nThe sound driver's scope keeps its wram_bank $07 alternative, since the\nsame offsets are its channel state in that bank.",
    "variants": [
     {
-     "context": "trophy EXP (bank $1e)",
+     "context": "star warp transition (bank $0e)",
      "scopes": [
       {
-       "bank": "0x1e"
+       "bank": "0x0e",
+       "wram_bank": "0x06"
       }
      ],
      "symbols": {
+      "0xd040": {
+       "name": "wStarWarpPathX",
+       "note": "[8-bit] X of the point the star has reached along its path, copied into each sparkle as it spawns"
+      },
+      "0xd041": {
+       "name": "wStarWarpPathY",
+       "note": "[8-bit] Y of the same point"
+      }
+     }
+    },
+    {
+     "context": "trophy EXP awards (bank $1e)",
+     "scopes": [
+      {
+       "bank": "0x1e",
+       "wram_bank": "0x06"
+      }
+     ],
+     "symbols": {
+      "0xd02a": {
+       "name": "wTrophyExpByGroup",
+       "note": "[10 bytes] EXP for trophy groups 1-5, five 16-bit words. ComputeTrophyExpAwards fills them one group at a time carrying a running sum in hl -- group 0's word goes two bytes lower still, onto the byte the character-data screen calls wCharDataLevelPreview, which is why the array cannot be declared from its true base here",
+       "size": 10
+      },
+      "0xd034": {
+       "name": "wTrophyExpGroupAccum",
+       "note": "[16-bit] ComputeTrophyExpForGroup's own accumulator while it walks one group's trophies, testing and setting each award flag as it goes",
+       "size": 2
+      },
+      "0xd036": {
+       "name": "wTrophyExpTotal",
+       "note": "[16-bit] The sum of all six groups, which ApplyPendingExpAwards adds to the match award",
+       "size": 2
+      },
       "0xd038": {
        "name": "wTrophyExpGroup",
        "note": "[8-bit] Character group being totalled; indexes TrophyExpForGroupTable0-4 and selects the row GetTrophyExpValue reads"
@@ -1975,8 +2039,16 @@
      }
     },
     {
-     "context": "EXP distribution screen (bank $1d)",
+     "context": "character-data page arrows (banks $1a/$1c/$1d)",
      "scopes": [
+      {
+       "bank": "0x1a",
+       "wram_bank": "0x06"
+      },
+      {
+       "bank": "0x1c",
+       "wram_bank": "0x06"
+      },
       {
        "bank": "0x1d",
        "wram_bank": "0x06"
@@ -1994,6 +2066,32 @@
       "0xd144": {
        "name": "wCharDataArrowPhase",
        "note": "[8-bit] Free-running counter the arrow bob reads for its offset"
+      }
+     }
+    },
+    {
+     "context": "EXP distribution screen (bank $1d)",
+     "scopes": [
+      {
+       "bank": "0x1d",
+       "wram_bank": "0x06"
+      }
+     ],
+     "symbols": {
+      "0xd122": {
+       "name": "wCharStatPageMain",
+       "note": "[13 bytes] The main character's stat page as it will be drawn: +$00 the four Spin/Power/Control/Speed levels copied out of wCharDataLevels, +$04 six values the page copies to wCharStatPageShown, +$0a three more the value sync task reads",
+       "size": 13
+      },
+      "0xd12f": {
+       "name": "wCharStatPagePartner",
+       "note": "[13 bytes] The partner's page, same layout 13 bytes on -- which is what makes the two a pair rather than two unrelated blocks",
+       "size": 13
+      },
+      "0xd13c": {
+       "name": "wCharStatPageShown",
+       "note": "[6 bytes] Whichever page is on screen, copied from +$04 of the main or partner record as the screen slides between them. DrawCharStatDigitsTask draws from here",
+       "size": 6
       },
       "0xd14e": {
        "name": "wExpPoolRemaining",
@@ -2036,6 +2134,62 @@
       "0xd186": {
        "name": "wExpLevelUpFanfare",
        "note": "[8-bit] $ff when a level-up has just happened; TickLevelUpJingle plays the jingle off it and clears it"
+      }
+     }
+    },
+    {
+     "context": "EXP award screen (bank $1a)",
+     "scopes": [
+      {
+       "bank": "0x1a",
+       "wram_bank": "0x06"
+      }
+     ],
+     "symbols": {
+      "0xd151": {
+       "name": "wExpScreenFlags",
+       "note": "[8-bit] Bit flags the EXP award screen runs on: ExpScreenNumberTask sets bit 7 once the EXP-to-next figure has reached zero, ExpScreenDrawTask branches on it each frame, and SignExtendModifierByte rewrites it as it works. Bank $1d keeps the high half of wExpPoolTotal over the same byte, which is why this variant is scoped to bank $1a"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "start": "0xdaea",
+   "wram_bank": "0x04",
+   "end": "0xdaf8",
+   "comment": "Overworld actor engine scratch (WRAM bank $04), owned by the bank $04\nactor-script VM. Scoped to that bank as well as to the WRAM bank: the\nVM selects the bank once on entry, so most references cannot prove it.",
+   "variants": [
+    {
+     "context": "actor engine (bank $04)",
+     "scopes": [
+      {
+       "bank": "0x04"
+      },
+      {
+       "wram_bank": "0x04"
+      }
+     ],
+     "symbols": {
+      "0xdaea": {
+       "name": "wPlayerMoveAngle",
+       "note": "[8-bit] Heading the D-pad asks the overworld player to walk in ($40 per quarter turn, matching the FACE_* encoding). UpdatePlayerControl also writes it to actor field +$34, then probes $20/$40/$e0/$c0 away from it to slide along a blocked wall"
+      },
+      "0xdaec": {
+       "name": "wPlayerMoveAngleApplied",
+       "note": "[8-bit] Heading actually walked this frame, 0 when the move was blocked"
+      },
+      "0xdaed": {
+       "name": "wPlayerMoveAnglePrev",
+       "note": "[8-bit] Previous frame's wPlayerMoveAngleApplied, saved before it is recomputed"
+      },
+      "0xdaee": {
+       "name": "wPlayerMoving",
+       "note": "[8-bit] Cleared when no direction is held, so the walk animation stops"
+      },
+      "0xdaf7": {
+       "name": "wActorScriptBank",
+       "note": "[8-bit] ROM bank of the actor script currently executing, taken from the actor's field +$22. Every ActorScriptOp_* passes it to FarReadByte / FarReadWord / CallHLInBankA to reach the script bytes"
       }
      }
     }
@@ -3401,6 +3555,46 @@
         "TILEMAP_WIDTH",
         "0x20"
        ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "start": "0xd400",
+   "wram_bank": "0x06",
+   "end": "0xd600",
+   "comment": "Two save-block readers share $d400 in WRAM bank $06. Scoped to the owning\nROM bank as well as the WRAM bank -- bank $1e writes shadow-tilemap cells\nat these addresses in WRAM bank $03, which is what a bank-only scope\nwould have claimed.",
+   "variants": [
+    {
+     "context": "story slot signatures (bank $02)",
+     "scopes": [
+      {
+       "bank": "0x02",
+       "wram_bank": "0x06"
+      }
+     ],
+     "symbols": {
+      "0xd400": {
+       "name": "wStorySlotSignatures",
+       "note": "[12 bytes] One wStorySaveSignature per story slot, cached four bytes apart by CacheStorySlotSummaries so CheckStorySignatureCollision can compare a new signature against all three without touching SRAM again",
+       "size": 12
+      }
+     }
+    },
+    {
+     "context": "unlock flags block (bank $1b)",
+     "scopes": [
+      {
+       "bank": "0x1b",
+       "wram_bank": "0x06"
+      }
+     ],
+     "symbols": {
+      "0xd400": {
+       "name": "wUnlockFlagsBlock",
+       "note": "[512 bytes] Image of save block $0b read by ReadUnlockFlagsSaveBlock for the minigame-flags debug screen -- the same block bank $3b stages at wN64RecordsBlock in WRAM bank $03 and the bank $03 engine at wSaveBlockBuffer in bank $07",
+       "size": 512
       }
      }
     }

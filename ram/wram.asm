@@ -3127,6 +3127,16 @@ SECTION "WRAMX bank 6", WRAMX[$d000], BANK[6]
 ; only where WRAM bank $06 is provable: that routine selects bank $04 to
 ; place the four actors it poses, where $d000 is wActors, not a cursor.
 UNION
+; star warp transition (bank $0e)
+; [8-bit] Animation frame of the warp star, 0-5, stepped every other VBlank by UpdateStarWarpSprite
+wStarWarpFrame:: db
+	ds 1
+; [8-bit] Frames left in the transition, seeded to $5a. The wait loop starts the fade out when it reaches $1e and returns at zero
+wStarWarpCountdown:: db
+; [16 bytes] One life counter per trail sparkle. UpdateStarWarpTrailSparkles finds the first zero, sets it to $10 and seeds that slot's position from wStarWarpPathX/Y; the positions themselves are two bytes per slot from $d014
+wStarWarpSparkleLife:: ds 16
+	ds 23
+NEXTU
 ; debug character viewer (bank $1a, $6800-$7000)
 ; [8-bit] Which row of the debug character viewer the cursor is on, toggled with `xor $01`: 0 = the character grid, 1 = the palette row
 wCharViewerRow:: db
@@ -3140,7 +3150,6 @@ wCharViewerSavedCursor:: db
 wCharViewerPalette:: db
 ; [8-bit] Animation/pose index the debug character viewer is showing, stepped by RunCharViewerInputLoop
 wCharViewerPose:: db
-	ds 36
 NEXTU
 ; results continue prompt (bank $1e)
 ; [8-bit] Which continue prompt is up, stored from c by InitResultsPromptState
@@ -3152,8 +3161,13 @@ wContinuePromptPage:: db
 ; [8-bit] What the prompt returned: 1 confirm, $ff cancel, or wContinuePromptPage - 1
 wContinuePromptResult:: db
 NEXTU
-; character-data screen (WRAM bank $06)
-	ds 4
+; character-data screen (banks $1a/$1c/$1d)
+; [8-bit] Free-running counter CharDataScreenAnimTask steps every frame the screen is idle; its low nibble indexes the animation table
+wCharDataAnimCounter:: db
+	ds 1
+; [8-bit] Which third of the screen still needs pushing to VRAM. FlushCharDataTilemapChunk sends one chunk per call and branches on 0, 1 and 2; while it is nonzero the animation task holds off
+wCharDataFlushChunk:: db
+	ds 1
 ; [8-bit] Level the character-data screen is committing; WriteCharStatsToDisplayBuffer stores it back into record +$18 (wStoryModeMainCharacterLevel)
 wCharDataLevel:: db
 ; [4 bytes] Spin/Power/Control/Speed levels the screen is committing; WriteCharStatsToDisplayBuffer stores them back into record +$38-$3b
@@ -3178,6 +3192,19 @@ wCharDataRevealStep:: db
 wCharDataLevelPreview:: db
 ; [8-bit] Number of entries written to wCharDataChoiceLog so far; also the write index
 wCharDataChoiceCount:: db
+NEXTU
+; EXP award screen (bank $1e)
+	ds 5
+; [16-bit] The EXP total ticking up on screen. CountUpExpTotal increments it and decrements the amount still to add, one point and one sound per pass, and DrawExpTotalDigits redraws it
+wExpAwardRunningTotal:: dw
+; [16-bit] The award being counted in, set as each message is shown
+wExpAwardAmount:: dw
+	ds 27
+; [8-bit] Which award message is being shown; BeginNextExpAward steps it and DrawNextExpAwardMessage returns zero once the list runs out
+wExpAwardIndex:: db
+	ds 1
+; [8-bit] Cleared as each award begins, so the message holds for its full dwell
+wExpAwardMessageTimer:: db
 ENDU
 
 ; WRAM bank $06 from $d02a up, shared by four subsystems that never run at
@@ -3189,11 +3216,23 @@ ENDU
 ; The sound driver's scope keeps its wram_bank $07 alternative, since the
 ; same offsets are its channel state in that bank.
 UNION
-; trophy EXP (bank $1e)
-	ds 14
+; star warp transition (bank $0e)
+	ds 22
+; [8-bit] X of the point the star has reached along its path, copied into each sparkle as it spawns
+wStarWarpPathX:: db
+; [8-bit] Y of the same point
+wStarWarpPathY:: db
+	ds 472
+NEXTU
+; trophy EXP awards (bank $1e)
+; [10 bytes] EXP for trophy groups 1-5, five 16-bit words. ComputeTrophyExpAwards fills them one group at a time carrying a running sum in hl -- group 0's word goes two bytes lower still, onto the byte the character-data screen calls wCharDataLevelPreview, which is why the array cannot be declared from its true base here
+wTrophyExpByGroup:: ds 10
+; [16-bit] ComputeTrophyExpForGroup's own accumulator while it walks one group's trophies, testing and setting each award flag as it goes
+wTrophyExpGroupAccum:: dw
+; [16-bit] The sum of all six groups, which ApplyPendingExpAwards adds to the match award
+wTrophyExpTotal:: dw
 ; [8-bit] Character group being totalled; indexes TrophyExpForGroupTable0-4 and selects the row GetTrophyExpValue reads
 wTrophyExpGroup:: db
-	ds 481
 NEXTU
 ; character-data screen (bank $1a)
 ; [100 bytes] One byte per level-up taken on this visit: the wCharDataPage the player confirmed. Cleared by WriteCharStatsToDisplayBuffer before the screen opens
@@ -3242,7 +3281,7 @@ wPaletteFadeStep:: db
 ; [8-bit] Set while a cutscene text window is sliding, by AnimateWindowSlideUpTask and the scrolling-story player
 wCutsceneWindowSliding:: db
 NEXTU
-; EXP distribution screen (bank $1d)
+; character-data page arrows (banks $1a/$1c/$1d)
 	ds 280
 ; [8-bit] Which page arrows to bob: 1 draws the left one, 2 the right, 0 neither. DrawCharDataPageArrowsTask reads it every frame
 wCharDataPageArrowMode:: db
@@ -3250,7 +3289,16 @@ wCharDataPageArrowMode:: db
 wCharDataArrowHold:: db
 ; [8-bit] Free-running counter the arrow bob reads for its offset
 wCharDataArrowPhase:: db
-	ds 9
+NEXTU
+; EXP distribution screen (bank $1d)
+	ds 248
+; [13 bytes] The main character's stat page as it will be drawn: +$00 the four Spin/Power/Control/Speed levels copied out of wCharDataLevels, +$04 six values the page copies to wCharStatPageShown, +$0a three more the value sync task reads
+wCharStatPageMain:: ds 13
+; [13 bytes] The partner's page, same layout 13 bytes on -- which is what makes the two a pair rather than two unrelated blocks
+wCharStatPagePartner:: ds 13
+; [6 bytes] Whichever page is on screen, copied from +$04 of the main or partner record as the screen slides between them. DrawCharStatDigitsTask draws from here
+wCharStatPageShown:: ds 6
+	ds 12
 ; [16-bit] EXP points still to hand out. AssignExpPointToChar decrements it per point spent, DrawExpPoolReadout prints it and DrawExpPoolGauge draws it as a fraction of wExpPoolTotal
 wExpPoolRemaining:: dw
 ; [16-bit] What the pool started at, kept so the gauge has a denominator. Both are seeded from hl by InitLevelUpScreenState
@@ -3272,6 +3320,11 @@ wExpRedrawPending:: db
 wExpInputRepeating:: db
 ; [8-bit] $ff when a level-up has just happened; TickLevelUpJingle plays the jingle off it and clears it
 wExpLevelUpFanfare:: db
+NEXTU
+; EXP award screen (bank $1a)
+	ds 295
+; [8-bit] Bit flags the EXP award screen runs on: ExpScreenNumberTask sets bit 7 once the EXP-to-next figure has reached zero, ExpScreenDrawTask branches on it each frame, and SignExtendModifierByte rewrites it as it works. Bank $1d keeps the high half of wExpPoolTotal over the same byte, which is why this variant is scoped to bank $1a
+wExpScreenFlags:: db
 ENDU
 
 	ds 22
@@ -3322,6 +3375,23 @@ wExpCountedDigits:: ds 5
 	ds 1
 ; [8-bit] Which character record the award belongs to, kept so the screen can hand it to AddPlayerExp once the count finishes
 wExpAwardSlot:: db
+ENDU
+
+	ds 422
+
+; Two save-block readers share $d400 in WRAM bank $06. Scoped to the owning
+; ROM bank as well as the WRAM bank -- bank $1e writes shadow-tilemap cells
+; at these addresses in WRAM bank $03, which is what a bank-only scope
+; would have claimed.
+UNION
+; story slot signatures (bank $02)
+; [12 bytes] One wStorySaveSignature per story slot, cached four bytes apart by CacheStorySlotSummaries so CheckStorySignatureCollision can compare a new signature against all three without touching SRAM again
+wStorySlotSignatures:: ds 12
+	ds 500
+NEXTU
+; unlock flags block (bank $1b)
+; [512 bytes] Image of save block $0b read by ReadUnlockFlagsSaveBlock for the minigame-flags debug screen -- the same block bank $3b stages at wN64RecordsBlock in WRAM bank $03 and the bank $03 engine at wSaveBlockBuffer in bank $07
+wUnlockFlagsBlock:: ds 512
 ENDU
 
 

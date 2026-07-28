@@ -3453,7 +3453,7 @@ RunDebugSaveDataMenu:
 	call ClearScreenMaps ; $64ce
 	call ReadUnlockFlagsSaveBlock ; $64d1
 	wram_bank $06 ; $64d4
-	ld hl, $d400 ; $64da
+	ld hl, wUnlockFlagsBlock ; $64da
 	ld a, [hl+] ; $64dd
 	ld d, [hl] ; $64de
 	ld e, a ; $64df
@@ -3879,7 +3879,7 @@ ReadUnlockFlagsSaveBlock:
 	ldh a, [hWramBank] ; $6870
 	push af ; $6872
 	wram_bank $06 ; $6873
-	ld hl, $d400 ; $6879
+	ld hl, wUnlockFlagsBlock ; $6879
 	ld b, $0b ; $687c
 	farcall ReadSaveBlock ; $687e
 	ld b, a ; $6881
@@ -3892,7 +3892,7 @@ WriteUnlockFlagsSaveBlock:
 	ldh a, [hWramBank] ; $688a
 	push af ; $688c
 	wram_bank $06 ; $688d
-	ld hl, $d400 ; $6893
+	ld hl, wUnlockFlagsBlock ; $6893
 	ld de, $0000 ; $6896
 	ld b, $0b ; $6899
 	farcall WriteSaveBlock ; $689b
@@ -3903,7 +3903,7 @@ ToggleSelectedUnlockFlag:
 	ldh a, [hWramBank] ; $68a4
 	push af ; $68a6
 	wram_bank $06 ; $68a7
-	ld hl, $d400 ; $68ad
+	ld hl, wUnlockFlagsBlock ; $68ad
 	ld a, [wCharSelectChar] ; $68b0
 	cp $1a ; $68b3
 	jr c, .playSfx ; $68b5
@@ -3955,7 +3955,7 @@ DrawUnlockDebugFlagSprites:
 	ldh a, [hWramBank] ; $6938
 	push af ; $693a
 	wram_bank $06 ; $693b
-	ld hl, $d402 ; $6941
+	ld hl, wUnlockFlagsBlock + 2 ; $6941
 	xor a ; $6944
 .loop:
 	push af ; $6945

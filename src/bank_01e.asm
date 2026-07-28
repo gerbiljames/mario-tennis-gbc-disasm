@@ -67,7 +67,7 @@ ShowMatchResultsScreen:
 	call UnregisterFrameTask ; $4096
 	farcall LoadMenuFontGfx ; $4099
 	wram_bank $06 ; $409c
-	ld hl, wCharDataNewLevels ; $40a2
+	ld hl, wExpAwardRunningTotal ; $40a2
 	ld a, [hl+] ; $40a5
 	ld h, [hl] ; $40a6
 	ld l, a ; $40a7
@@ -1390,7 +1390,7 @@ RefreshContinuePromptText:
 	ld a, $01 ; $4bef
 	ld [wContinuePromptRow], a ; $4bf1
 	call ClearContinuePromptRows ; $4bf4
-	ld hl, wCharDataStatDeltas + 8 ; $4bf7
+	ld hl, $d021 ; $4bf7
 	call DrawSaveWarningTextLine1 ; $4bfa
 	ld hl, $d061 ; $4bfd
 	call DrawSaveWarningTextLine2 ; $4c00
@@ -1481,7 +1481,7 @@ ShowExpAwardScreen:
 	ld hl, DrawExpTotalDigits ; $54a8
 	call UnregisterFrameTask ; $54ab
 	wram_bank $06 ; $54ae
-	ld hl, wCharDataNewLevels ; $54b4
+	ld hl, wExpAwardRunningTotal ; $54b4
 	ld a, [hl+] ; $54b7
 	ld h, [hl] ; $54b8
 	ld l, a ; $54b9
@@ -1489,7 +1489,7 @@ ShowExpAwardScreen:
 InitExpAwardScreenState:
 	wram_bank $06 ; $54bb
 	xor a ; $54c1
-	ld hl, wCharDataLevel ; $54c2
+	ld hl, $d004 ; $54c2
 	ld d, $05 ; $54c5
 	call FillMemoryD ; $54c7
 	ld a, $20 ; $54ca
@@ -2015,7 +2015,7 @@ Data_1e_59b3:
 	db $00, $00, $00, $20, $20, $20, $00, $00 ; 0x00
 DrawNextExpAwardMessage:
 	wram_bank $06 ; $59bb
-	ld a, [wCharDataPage] ; $59c1
+	ld a, [wExpAwardIndex] ; $59c1
 	cp $05 ; $59c4
 	jr z, .uploadGlyphBuffer ; $59c6
 	rlca ; $59c8
@@ -2031,7 +2031,7 @@ DrawNextExpAwardMessage:
 	dec hl ; $59d5
 	ld c, [hl] ; $59d6
 	push bc ; $59d7
-	ld a, [wCharDataPage] ; $59d8
+	ld a, [wExpAwardIndex] ; $59d8
 	add $5c ; $59db
 	ld l, a ; $59dd
 	adc $d1 ; $59de
@@ -2039,7 +2039,7 @@ DrawNextExpAwardMessage:
 	ld h, a ; $59e1
 	ld a, [hl] ; $59e2
 	ld d, a ; $59e3
-	ld a, [wCharDataPage] ; $59e4
+	ld a, [wExpAwardIndex] ; $59e4
 	rlca ; $59e7
 	add LOW(Data_1e_5a44) ; $59e8
 	ld l, a ; $59ea
@@ -2058,19 +2058,19 @@ DrawNextExpAwardMessage:
 	push hl ; $59f8
 	call DrawExpMessageWindow ; $59f9
 	wram_bank $06 ; $59fc
-	ld hl, wCharDataNewLevels ; $5a02
+	ld hl, wExpAwardRunningTotal ; $5a02
 	ld a, [hl+] ; $5a05
 	ld d, [hl] ; $5a06
 	or d ; $5a07
 	jr z, .drawProportionalTextLine ; $5a08
 	ld hl, $04c8 ; $5a0a
-	ld de, wCharDataStatDeltas + 9 ; $5a0d
+	ld de, $d022 ; $5a0d
 	ld bc, $0020 ; $5a10
 	call DrawProportionalTextLine ; $5a13
 	jr .restore ; $5a16
 .drawProportionalTextLine:
 	ld hl, $04c7 ; $5a18
-	ld de, wCharDataStatDeltas + 9 ; $5a1b
+	ld de, $d022 ; $5a1b
 	ld bc, $0020 ; $5a1e
 	call DrawProportionalTextLine ; $5a21
 .restore:
@@ -2083,9 +2083,9 @@ DrawNextExpAwardMessage:
 	ld a, $01 ; $5a32
 	ret ; $5a34
 .zero:
-	ld a, [wCharDataPage] ; $5a35
+	ld a, [wExpAwardIndex] ; $5a35
 	inc a ; $5a38
-	ld [wCharDataPage], a ; $5a39
+	ld [wExpAwardIndex], a ; $5a39
 	jp DrawNextExpAwardMessage ; $5a3c
 .uploadGlyphBuffer:
 	farcall UploadGlyphBuffer ; $5a3f
@@ -2096,7 +2096,7 @@ Data_1e_5a44:
 	db $c9, $04, $ca, $04, $cb, $04, $cc, $04, $d1, $04 ; 0x00
 DrawExpTotalDigits:
 	wram_bank $06 ; $5a4e
-	ld hl, wCharDataNewLevels ; $5a54
+	ld hl, wExpAwardRunningTotal ; $5a54
 	ld a, [hl+] ; $5a57
 	ld h, [hl] ; $5a58
 	ld l, a ; $5a59
@@ -2195,12 +2195,12 @@ BeginNextExpAward:
 	sound $00 ; $5b20
 	sound $0b ; $5b22
 	wram_bank $06 ; $5b24
-	ld a, [wCharDataPage] ; $5b2a
+	ld a, [wExpAwardIndex] ; $5b2a
 	inc a ; $5b2d
-	ld [wCharDataPage], a ; $5b2e
+	ld [wExpAwardIndex], a ; $5b2e
 	xor a ; $5b31
-	ld [wCharDataRevealTimer], a ; $5b32
-	ld hl, wCharDataNewLevels + 2 ; $5b35
+	ld [wExpAwardMessageTimer], a ; $5b32
+	ld hl, wExpAwardAmount ; $5b35
 	ld a, c ; $5b38
 	ld [hl+], a ; $5b39
 	ld [hl], b ; $5b3a
@@ -2223,7 +2223,7 @@ BeginNextExpAward:
 	ret ; $5b65
 CountUpExpTotal:
 	wram_bank $06 ; $5b66
-	ld hl, wCharDataNewLevels + 2 ; $5b6c
+	ld hl, wExpAwardAmount ; $5b6c
 	ld a, [hl+] ; $5b6f
 	ld d, [hl] ; $5b70
 	ld e, a ; $5b71
@@ -2243,7 +2243,7 @@ CountUpExpTotal:
 	ld a, e ; $5b89
 	ld [hl+], a ; $5b8a
 	ld [hl], d ; $5b8b
-	ld hl, wCharDataNewLevels ; $5b8c
+	ld hl, wExpAwardRunningTotal ; $5b8c
 	ld a, [hl+] ; $5b8f
 	ld d, [hl] ; $5b90
 	ld e, a ; $5b91
@@ -2255,14 +2255,14 @@ CountUpExpTotal:
 	sound $5e ; $5b97
 	jr CountUpExpTotal ; $5b99
 .step:
-	ld hl, wCharDataNewLevels ; $5b9b
+	ld hl, wExpAwardRunningTotal ; $5b9b
 	ld a, [hl+] ; $5b9e
 	ld h, [hl] ; $5b9f
 	ld l, a ; $5ba0
 	add hl, de ; $5ba1
 	ld d, h ; $5ba2
 	ld e, l ; $5ba3
-	ld hl, wCharDataNewLevels ; $5ba4
+	ld hl, wExpAwardRunningTotal ; $5ba4
 	ld a, e ; $5ba7
 	ld [hl+], a ; $5ba8
 	ld [hl], d ; $5ba9
@@ -3231,7 +3231,7 @@ ApplyPendingExpAwards:
 	farcall RecordDrillResult ; $6b8f
 .applyToRecord:
 	wram_bank $06 ; $6b92
-	ld hl, $d036 ; $6b98
+	ld hl, wTrophyExpTotal ; $6b98
 	ld a, [hl+] ; $6b9b
 	ld d, [hl] ; $6b9c
 	ld e, a ; $6b9d
@@ -3929,7 +3929,7 @@ ComputeTrophyExpAwards:
 	ld hl, $0000 ; $7007
 	call ComputeTrophyExpGroup0 ; $700a
 	push hl ; $700d
-	ld hl, wCharDataLevelPreview ; $700e
+	ld hl, $d028 ; $700e
 	ld a, c ; $7011
 	ld [hl+], a ; $7012
 	ld [hl], b ; $7013
@@ -3937,7 +3937,7 @@ ComputeTrophyExpAwards:
 	add hl, bc ; $7015
 	call ComputeTrophyExpGroup1 ; $7016
 	push hl ; $7019
-	ld hl, $d02a ; $701a
+	ld hl, wTrophyExpByGroup ; $701a
 	ld a, c ; $701d
 	ld [hl+], a ; $701e
 	ld [hl], b ; $701f
@@ -3945,7 +3945,7 @@ ComputeTrophyExpAwards:
 	add hl, bc ; $7021
 	call ComputeTrophyExpGroup2 ; $7022
 	push hl ; $7025
-	ld hl, $d02c ; $7026
+	ld hl, wTrophyExpByGroup + 2 ; $7026
 	ld a, c ; $7029
 	ld [hl+], a ; $702a
 	ld [hl], b ; $702b
@@ -3953,7 +3953,7 @@ ComputeTrophyExpAwards:
 	add hl, bc ; $702d
 	call ComputeTrophyExpGroup3 ; $702e
 	push hl ; $7031
-	ld hl, $d02e ; $7032
+	ld hl, wTrophyExpByGroup + 4 ; $7032
 	ld a, c ; $7035
 	ld [hl+], a ; $7036
 	ld [hl], b ; $7037
@@ -3961,7 +3961,7 @@ ComputeTrophyExpAwards:
 	add hl, bc ; $7039
 	call ComputeTrophyExpGroup4 ; $703a
 	push hl ; $703d
-	ld hl, $d030 ; $703e
+	ld hl, wTrophyExpByGroup + 6 ; $703e
 	ld a, c ; $7041
 	ld [hl+], a ; $7042
 	ld [hl], b ; $7043
@@ -3969,7 +3969,7 @@ ComputeTrophyExpAwards:
 	add hl, bc ; $7045
 	call ComputeTrophyExpGroup5 ; $7046
 	push hl ; $7049
-	ld hl, $d032 ; $704a
+	ld hl, wTrophyExpByGroup + 8 ; $704a
 	ld a, c ; $704d
 	ld [hl+], a ; $704e
 	ld [hl], b ; $704f
@@ -3978,7 +3978,7 @@ ComputeTrophyExpAwards:
 	push hl ; $7052
 	ld b, h ; $7053
 	ld c, l ; $7054
-	ld hl, $d036 ; $7055
+	ld hl, wTrophyExpTotal ; $7055
 	ld a, c ; $7058
 	ld [hl+], a ; $7059
 	ld [hl], b ; $705a
@@ -3992,7 +3992,7 @@ ComputeTrophyExpAwards:
 	ldh a, [hWramBank] ; $7065
 	push af ; $7067
 	wram_bank $06 ; $7068
-	ld hl, wCharDataLevelPreview ; $706e
+	ld hl, $d028 ; $706e
 	ld a, [hl+] ; $7071
 	ld d, [hl] ; $7072
 	ld e, a ; $7073
@@ -4003,7 +4003,7 @@ ComputeTrophyExpAwards:
 	ld c, $00 ; $707a
 	farcall RecordDrillResult ; $707c
 .sumGroup1:
-	ld hl, $d02a ; $707f
+	ld hl, wTrophyExpByGroup ; $707f
 	ld a, [hl+] ; $7082
 	ld d, [hl] ; $7083
 	ld e, a ; $7084
@@ -4014,7 +4014,7 @@ ComputeTrophyExpAwards:
 	ld c, $01 ; $708b
 	farcall RecordDrillResult ; $708d
 .sumGroup2:
-	ld hl, $d02c ; $7090
+	ld hl, wTrophyExpByGroup + 2 ; $7090
 	ld a, [hl+] ; $7093
 	ld d, [hl] ; $7094
 	ld e, a ; $7095
@@ -4025,7 +4025,7 @@ ComputeTrophyExpAwards:
 	ld c, $02 ; $709c
 	farcall RecordDrillResult ; $709e
 .sumGroup3:
-	ld hl, $d02e ; $70a1
+	ld hl, wTrophyExpByGroup + 4 ; $70a1
 	ld a, [hl+] ; $70a4
 	ld d, [hl] ; $70a5
 	ld e, a ; $70a6
@@ -4036,7 +4036,7 @@ ComputeTrophyExpAwards:
 	ld c, $03 ; $70ad
 	farcall RecordDrillResult ; $70af
 .sumGroup4:
-	ld hl, $d030 ; $70b2
+	ld hl, wTrophyExpByGroup + 6 ; $70b2
 	ld a, [hl+] ; $70b5
 	ld d, [hl] ; $70b6
 	ld e, a ; $70b7
@@ -4047,7 +4047,7 @@ ComputeTrophyExpAwards:
 	ld c, $04 ; $70be
 	farcall RecordDrillResult ; $70c0
 .sumGroup5:
-	ld hl, $d032 ; $70c3
+	ld hl, wTrophyExpByGroup + 8 ; $70c3
 	ld a, [hl+] ; $70c6
 	ld d, [hl] ; $70c7
 	ld e, a ; $70c8
@@ -4111,7 +4111,7 @@ ComputeTrophyExpForGroup:
 .readMask:
 	ld c, [hl] ; $7121
 	xor a ; $7122
-	ld hl, $d034 ; $7123
+	ld hl, wTrophyExpGroupAccum ; $7123
 	ld [hl+], a ; $7126
 	ld [hl], a ; $7127
 	ld a, [wN64TrophyCounts] ; $7128
@@ -4140,14 +4140,14 @@ ComputeTrophyExpForGroup:
 	ld b, $00 ; $714b
 	ld a, [wTrophyExpGroup] ; $714d
 	call GetTrophyExpValue ; $7150
-	ld hl, $d034 ; $7153
+	ld hl, wTrophyExpGroupAccum ; $7153
 	ld a, [hl+] ; $7156
 	ld h, [hl] ; $7157
 	ld l, a ; $7158
 	add hl, bc ; $7159
 	ld b, h ; $715a
 	ld c, l ; $715b
-	ld hl, $d034 ; $715c
+	ld hl, wTrophyExpGroupAccum ; $715c
 	ld a, c ; $715f
 	ld [hl+], a ; $7160
 	ld [hl], b ; $7161
@@ -4180,14 +4180,14 @@ ComputeTrophyExpForGroup:
 	ld b, $04 ; $7188
 	ld a, [wTrophyExpGroup] ; $718a
 	call GetTrophyExpValue ; $718d
-	ld hl, $d034 ; $7190
+	ld hl, wTrophyExpGroupAccum ; $7190
 	ld a, [hl+] ; $7193
 	ld h, [hl] ; $7194
 	ld l, a ; $7195
 	add hl, bc ; $7196
 	ld b, h ; $7197
 	ld c, l ; $7198
-	ld hl, $d034 ; $7199
+	ld hl, wTrophyExpGroupAccum ; $7199
 	ld a, c ; $719c
 	ld [hl+], a ; $719d
 	ld [hl], b ; $719e
@@ -4219,14 +4219,14 @@ ComputeTrophyExpForGroup:
 	ld b, $02 ; $71c3
 	ld a, [wTrophyExpGroup] ; $71c5
 	call GetTrophyExpValue ; $71c8
-	ld hl, $d034 ; $71cb
+	ld hl, wTrophyExpGroupAccum ; $71cb
 	ld a, [hl+] ; $71ce
 	ld h, [hl] ; $71cf
 	ld l, a ; $71d0
 	add hl, bc ; $71d1
 	ld b, h ; $71d2
 	ld c, l ; $71d3
-	ld hl, $d034 ; $71d4
+	ld hl, wTrophyExpGroupAccum ; $71d4
 	ld a, c ; $71d7
 	ld [hl+], a ; $71d8
 	ld [hl], b ; $71d9
@@ -4259,20 +4259,20 @@ ComputeTrophyExpForGroup:
 	ld b, $06 ; $7200
 	ld a, [wTrophyExpGroup] ; $7202
 	call GetTrophyExpValue ; $7205
-	ld hl, $d034 ; $7208
+	ld hl, wTrophyExpGroupAccum ; $7208
 	ld a, [hl+] ; $720b
 	ld h, [hl] ; $720c
 	ld l, a ; $720d
 	add hl, bc ; $720e
 	ld b, h ; $720f
 	ld c, l ; $7210
-	ld hl, $d034 ; $7211
+	ld hl, wTrophyExpGroupAccum ; $7211
 	ld a, c ; $7214
 	ld [hl+], a ; $7215
 	ld [hl], b ; $7216
 	pop bc ; $7217
 .done:
-	ld hl, $d034 ; $7218
+	ld hl, wTrophyExpGroupAccum ; $7218
 	ld a, [hl+] ; $721b
 	ld b, [hl] ; $721c
 	ld c, a ; $721d

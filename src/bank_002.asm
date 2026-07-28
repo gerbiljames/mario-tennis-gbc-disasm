@@ -307,7 +307,7 @@ CacheStorySlotSummaries:
 	wram_bank $06 ; $4268
 	xor a ; $426e
 	ld c, $0c ; $426f
-	ld hl, $d400 ; $4271
+	ld hl, wStorySlotSignatures ; $4271
 .loop:
 	ld [hl+], a ; $4274
 	dec c ; $4275
@@ -320,7 +320,7 @@ CacheStorySlotSummaries:
 	cp $fe ; $4284
 	jr z, .eqfe ; $4286
 	ld hl, wStorySaveSignature ; $4288
-	ld de, $d400 ; $428b
+	ld de, wStorySlotSignatures ; $428b
 	call Copy4Bytes ; $428e
 .eqfe:
 	ld a, $01 ; $4291
@@ -329,7 +329,7 @@ CacheStorySlotSummaries:
 	cp $fe ; $4299
 	jr z, .eqfe2 ; $429b
 	ld hl, wStorySaveSignature ; $429d
-	ld de, $d404 ; $42a0
+	ld de, wStorySlotSignatures + 4 ; $42a0
 	call Copy4Bytes ; $42a3
 .eqfe2:
 	ld a, $02 ; $42a6
@@ -338,7 +338,7 @@ CacheStorySlotSummaries:
 	cp $fe ; $42ae
 	jr z, .restore ; $42b0
 	ld hl, wStorySaveSignature ; $42b2
-	ld de, $d408 ; $42b5
+	ld de, wStorySlotSignatures + 8 ; $42b5
 	call Copy4Bytes ; $42b8
 .restore:
 	pop af ; $42bb
@@ -380,7 +380,7 @@ CheckStorySignatureCollision:
 	ld a, $ff ; $42ea
 	jr z, .step ; $42ec
 	ld de, wStorySaveSignature ; $42ee
-	ld hl, $d400 ; $42f1
+	ld hl, wStorySlotSignatures ; $42f1
 	call CompareNextByte ; $42f4
 	jr z, .step ; $42f7
 	call CompareNextByte ; $42f9
@@ -390,7 +390,7 @@ CheckStorySignatureCollision:
 	call CompareNextByte ; $4303
 	jr z, .step ; $4306
 	ld de, wStorySaveSignature ; $4308
-	ld hl, $d404 ; $430b
+	ld hl, wStorySlotSignatures + 4 ; $430b
 	call CompareNextByte ; $430e
 	jr z, .step ; $4311
 	call CompareNextByte ; $4313
@@ -400,7 +400,7 @@ CheckStorySignatureCollision:
 	call CompareNextByte ; $431d
 	jr z, .step ; $4320
 	ld de, wStorySaveSignature ; $4322
-	ld hl, $d408 ; $4325
+	ld hl, wStorySlotSignatures + 8 ; $4325
 	call CompareNextByte ; $4328
 	jr z, .step ; $432b
 	call CompareNextByte ; $432d

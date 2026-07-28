@@ -112,16 +112,16 @@ CharDataScreen_InitState:
 	ld a, c ; $4101
 	ld [wStoryCharacterSlot], a ; $4102
 	xor a ; $4105
-	ld [$d000], a ; $4106
+	ld [wCharDataAnimCounter], a ; $4106
 	ld [$d001], a ; $4109
-	ld [$d002], a ; $410c
+	ld [wCharDataFlushChunk], a ; $410c
 	ld [$d09f], a ; $410f
 	ld a, c ; $4112
 	ld [wCharDataStatsSlideX], a ; $4113
 	ld [wCharDataStatsSlideX + 1], a ; $4116
 	inc a ; $4119
 	inc a ; $411a
-	ld [$d142], a ; $411b
+	ld [wCharDataPageArrowMode], a ; $411b
 	ld a, $04 ; $411e
 	ld [wCharDataPage], a ; $4120
 	ld a, $0a ; $4123
@@ -689,13 +689,13 @@ CharDataScreenAnimTask:
 	ldh a, [hWramBank] ; $45fe
 	push af ; $4600
 	wram_bank $06 ; $4601
-	ld a, [$d002] ; $4607
+	ld a, [wCharDataFlushChunk] ; $4607
 	or a ; $460a
 	jp nz, .nonZero ; $460b
 	wram_bank $06 ; $460e
-	ld a, [$d000] ; $4614
+	ld a, [wCharDataAnimCounter] ; $4614
 	inc a ; $4617
-	ld [$d000], a ; $4618
+	ld [wCharDataAnimCounter], a ; $4618
 	and $0f ; $461b
 	rlca ; $461d
 	push af ; $461e
@@ -746,13 +746,13 @@ CharDataScreenAnimTask:
 	call QueueVRAMCopy ; $4663
 .nonZero:
 	wram_bank $06 ; $4666
-	ld a, [$d002] ; $466c
+	ld a, [wCharDataFlushChunk] ; $466c
 	inc a ; $466f
 	cp $03 ; $4670
 	jr nz, .store ; $4672
 	xor a ; $4674
 .store:
-	ld [$d002], a ; $4675
+	ld [wCharDataFlushChunk], a ; $4675
 	pop af ; $4678
 	wram_bank ; $4679
 	pop hl ; $467d
@@ -766,7 +766,7 @@ AnimateCharDataStatsReveal:
 	wram_bank $06 ; $4687
 .loop:
 	call AdvanceFrame ; $468d
-	ld a, [$d002] ; $4690
+	ld a, [wCharDataFlushChunk] ; $4690
 	or a ; $4693
 	jr nz, .loop ; $4694
 	call RestoreCharDataScreenRow ; $4696
@@ -879,7 +879,7 @@ AnimateCharDataStatsReveal:
 	ld bc, $d310 ; $47e3
 	call BlitTilemapRunsFromTable ; $47e6
 	wram_bank $06 ; $47e9
-	ld hl, $d142 ; $47ef
+	ld hl, wCharDataPageArrowMode ; $47ef
 	dec [hl] ; $47f2
 	xor a ; $47f3
 	ld [wCharDataRevealTimer], a ; $47f4
@@ -1041,7 +1041,7 @@ FlushCharDataTilemaps:
 	ret ; $4966
 FlushCharDataTilemapChunk:
 	wram_bank $06 ; $4967
-	ld a, [$d002] ; $496d
+	ld a, [wCharDataFlushChunk] ; $496d
 	inc a ; $4970
 	dec a ; $4971
 	jr z, .countDone ; $4972

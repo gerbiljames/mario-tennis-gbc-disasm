@@ -3076,7 +3076,7 @@ PlayStarWarpTransition:
 	call QueueVRAMCopy ; $716f
 	wram_bank $06 ; $7172
 	xor a ; $7178
-	ld hl, $d000 ; $7179
+	ld hl, wStarWarpFrame ; $7179
 	ld [hl+], a ; $717c
 	ld [hl+], a ; $717d
 	ld a, $5a ; $717e
@@ -3108,7 +3108,7 @@ PlayStarWarpTransition:
 	wram_bank $06 ; $71c9
 .waitLoop:
 	call AdvanceFrame ; $71cf
-	ld a, [$d002] ; $71d2
+	ld a, [wStarWarpCountdown] ; $71d2
 	cp $1e ; $71d5
 	jr z, .startFade ; $71d7
 	or a ; $71d9
@@ -3125,7 +3125,7 @@ UpdateStarWarpSprite:
 	ldh a, [hVBlankCounter] ; $71ef
 	and $01 ; $71f1
 	jr nz, .draw ; $71f3
-	ld hl, $d000 ; $71f5
+	ld hl, wStarWarpFrame ; $71f5
 	ld a, [hl] ; $71f8
 	inc a ; $71f9
 	cp $06 ; $71fa
@@ -3134,7 +3134,7 @@ UpdateStarWarpSprite:
 .store:
 	ld [hl], a ; $71ff
 .draw:
-	ld a, [$d000] ; $7200
+	ld a, [wStarWarpFrame] ; $7200
 	rlca ; $7203
 	add LOW(StarWarpFrameSprites) ; $7204
 	ld l, a ; $7206
@@ -3159,7 +3159,7 @@ UpdateStarWarpSprite:
 	ld a, $fc ; $7228
 	add d ; $722a
 	ld d, a ; $722b
-	ld hl, $d040 ; $722c
+	ld hl, wStarWarpPathX ; $722c
 	ld a, e ; $722f
 	ld [hl+], a ; $7230
 	ld [hl], d ; $7231
@@ -3169,7 +3169,7 @@ UpdateStarWarpSprite:
 	inc a ; $7239
 	inc a ; $723a
 	ld [hl], a ; $723b
-	ld hl, $d002 ; $723c
+	ld hl, wStarWarpCountdown ; $723c
 	ld a, [hl] ; $723f
 	dec a ; $7240
 	ld [hl], a ; $7241
@@ -3199,7 +3199,7 @@ OffsetStarWarpPathPoint:
 	ret ; $7264
 UpdateStarWarpTrailSparkles:
 	ld c, $00 ; $7265
-	ld hl, $d003 ; $7267
+	ld hl, wStarWarpSparkleLife ; $7267
 	ld b, $10 ; $726a
 .findFreeSlot:
 	ld a, [hl] ; $726c
@@ -3219,9 +3219,9 @@ UpdateStarWarpTrailSparkles:
 	adc $d0 ; $727e
 	sub l ; $7280
 	ld h, a ; $7281
-	ld a, [$d040] ; $7282
+	ld a, [wStarWarpPathX] ; $7282
 	ld [hl+], a ; $7285
-	ld a, [$d041] ; $7286
+	ld a, [wStarWarpPathY] ; $7286
 	ld [hl], a ; $7289
 	dec hl ; $728a
 	push hl ; $728b
@@ -3241,7 +3241,7 @@ UpdateStarWarpTrailSparkles:
 	ld [hl+], a ; $729b
 	ld [hl], d ; $729c
 .drawSparkles:
-	ld hl, $d003 ; $729d
+	ld hl, wStarWarpSparkleLife ; $729d
 	ld b, $00 ; $72a0
 	ld c, $10 ; $72a2
 .drawLoop:

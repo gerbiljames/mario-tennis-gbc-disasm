@@ -7145,3 +7145,56 @@ Direct accesses in bank `$06`: **184 → 102**, across 45 → 31 addresses. What
 remains there is the `$d000-$d003` block, which ten ROM banks share for the star
 warp transition, cutscene text, the character viewer and the character-data
 screen — four more variants, each needing its owner established first.
+
+## Bank $06 finished off (2026-07-28)
+
+Direct accesses in WRAM bank `$06`: **184 → 29**, across 45 → 7 addresses. Four
+more subsystems came out of it, and the pattern by now is familiar enough to
+state as a method: find the routine that *initialises* a block, and the block
+names itself.
+
+- **Trophy EXP** (bank `$1e`) — `ComputeTrophyExpAwards` writes one 16-bit word
+  per trophy group while carrying a running sum in `hl`, so `$d02a` is five
+  groups' awards, `$d034` is the per-group accumulator and `$d036` the total.
+  Group 0's word lands two bytes lower, on the byte the character-data screen
+  calls `wCharDataLevelPreview` — which is why the array is declared from
+  `$d02a` and not from its real base.
+- **The stat pages** (bank `$1d`) — `$d122` and `$d12f` are two 13-byte records
+  thirteen bytes apart, main character and partner: four Spin/Power/Control/Speed
+  levels, six values copied to `wCharStatPageShown` as the page slides in, three
+  more the sync task reads. Spotting the stride is what made them a pair rather
+  than two loose runs.
+- **The star warp transition** (bank `$0e`) — a frame counter, a `$5a` countdown
+  that starts the fade at `$1e`, and sixteen sparkle life counters that
+  `UpdateStarWarpTrailSparkles` scans for the first free slot.
+- **The EXP award screen** (bank `$1e`) — `wExpAwardRunningTotal` ticking up one
+  point and one sound per frame against `wExpAwardAmount` counting down.
+
+### Narrowing a scope is how the false names surfaced
+
+Every one of these needed its variant scoped to a ROM bank *and* WRAM bank `$06`,
+and each narrowing exposed names that had been wrong:
+
+| symbol | was claiming |
+|---|---|
+| `wCharDataChoiceLog` (100 bytes) | addresses in banks `$03`, `$0e`, `$1e` belonging to none of it |
+| `wCharDataNewLevels`, `wCharDataPage` | bank `$1e`'s EXP award total and message index |
+| `wTrophyExpByGroup` | bank `$1e`'s shadow-tilemap cells, until the scope gained `wram_bank` |
+
+The last was caught by the diff rather than by reasoning: `ld [wTrophyExpByGroup
++ 9], a` appeared in the middle of a run of `ld [wShadowTilemap + N *
+TILEMAP_WIDTH + 19], a`, which is not a thing that happens.
+
+### And two more merges the guard refused
+
+The trophy array wanted to start at `$d028`, two bytes below a union boundary,
+so the natural move was to merge the unions either side. The overlap guard
+refused: the `$d02a-$d21a` union carries the sound driver's variant, whose scope
+covers WRAM bank `$07` as well as `$06`, so merging down to `$d000` would have
+made it collide with `wSndHramSave`. A union's bank set is the union of its
+*variants'* banks, and that can be wider than the bank it is filed under.
+
+**What remains in bank `$06`** is 286 argument-address references — the case
+documented earlier, addresses passed to routines that pick their own bank — plus
+`$d001`, which bank `$03`'s cutscene text window and bank `$0e`'s star warp both
+write, and a handful of singletons.
