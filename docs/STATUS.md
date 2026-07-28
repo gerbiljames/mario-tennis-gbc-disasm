@@ -7198,3 +7198,49 @@ made it collide with `wSndHramSave`. A union's bank set is the union of its
 documented earlier, addresses passed to routines that pick their own bank — plus
 `$d001`, which bank `$03`'s cutscene text window and bank `$0e`'s star warp both
 write, and a handful of singletons.
+
+## The guard that was missing (2026-07-28)
+
+Bank `$06`'s direct accesses are down to **22 across 3 addresses** — the
+character-data screen's backup pair (`wCharDataEditBackup` and the 101-byte
+`wCharDataChoiceBackup`, which is how cancelling a level-up forgets every point
+provisionally spent) and the value-sync pair. What is left is `$d001`, which the
+cutscene text window and the star warp both write, and the argument addresses.
+
+The interesting part of this pass is a bug I wrote and the compare caught.
+
+Declaring `wCharDataEditState` as **6 bytes at `$d003`** looked right —
+`BackupCharData` copies exactly six bytes from there. But `wCharDataLevel` and
+`wCharDataNewLevels` are *inside* that run, already named, and
+`_emit_union_block` lays a variant's symbols out sequentially:
+
+```
+if addr > cursor:  ds addr - cursor
+emit symbol
+cursor = addr + size
+```
+
+An oversized symbol makes `addr > cursor` false for the next one, so no padding
+is emitted and **every symbol after it lands later than the address it was
+declared at**. Nothing warns. The symbols still assemble, the section still
+fits, and any ROM operand naming one of the shifted symbols quietly assembles to
+a different word — which is why the only sign of it was `mariotennis.gbc` and
+`baserom.gbc` differing at byte 335.
+
+The emitter now refuses:
+
+```
+ram_unions: wCharDataLevel at $d004 starts inside the previous symbol,
+which runs to $d009 -- shrink that one or make the two a single symbol
+```
+
+That message is from re-introducing the mistake deliberately to check the guard
+fires on it. The real fix was smaller than the wrong one: `$d003` is a single
+byte, `wCharDataPointsWorking`, and the six-byte backup unit is a fact for the
+note rather than a size — the block is that byte plus two symbols that already
+had names.
+
+Three guards now stand between a plausible-looking union edit and a silently
+wrong ROM: ram_map-inside-union, union-overlaps-union, and symbol-overruns-
+symbol. All three were added after the mistake they catch, and all three were
+found by a diff or a compare rather than by reading the JSON.

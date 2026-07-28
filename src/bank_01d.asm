@@ -15,7 +15,7 @@ ShowCharDataScreen:
 	ld b, a ; $4016
 	wram_bank $06 ; $4017
 	ld a, b ; $401d
-	ld [$d149], a ; $401e
+	ld [wCharDataSyncSource], a ; $401e
 	sound $04 ; $4021
 	farcall RefreshMainCharacterStats ; $4023
 	call EnableLCD ; $4026
@@ -1058,7 +1058,7 @@ FormatExp24BitDecimal:
 	ret ; $48c6
 CharDataValuesSyncTask:
 	wram_bank $06 ; $48c7
-	ld a, [$d149] ; $48cd
+	ld a, [wCharDataSyncSource] ; $48cd
 	or a ; $48d0
 	jr nz, .nonZero ; $48d1
 	ld hl, wCharDataSyncValues ; $48d3
@@ -1066,13 +1066,13 @@ CharDataValuesSyncTask:
 .nonZero:
 	ld hl, wGameTimer + 2 ; $48d8
 .step2:
-	ld de, $d14c ; $48db
+	ld de, wCharDataSyncPair ; $48db
 	ld a, [hl+] ; $48de
 	ld [de], a ; $48df
 	inc de ; $48e0
 	ld a, [hl] ; $48e1
 	ld [de], a ; $48e2
-	ld a, [$d14d] ; $48e3
+	ld a, [wCharDataSyncPair + 1] ; $48e3
 	ld h, $00 ; $48e6
 	ld l, a ; $48e8
 	ld a, $02 ; $48e9
@@ -1093,7 +1093,7 @@ CharDataValuesSyncTask:
 	ld hl, wCharDataValuesSlideX ; $4910
 	call ApplySlideOffsetToSpriteX ; $4913
 	call QueueSprite ; $4916
-	ld a, [$d14c] ; $4919
+	ld a, [wCharDataSyncPair] ; $4919
 	ld h, $00 ; $491c
 	ld l, a ; $491e
 	ld a, $02 ; $491f
@@ -3894,7 +3894,7 @@ InitExpScreenCharStats:
 	adc $00 ; $6b9d
 	ld h, a ; $6b9f
 	pop af ; $6ba0
-	ld de, $d0ec ; $6ba1
+	ld de, wCharDataChoiceBackup + 47 ; $6ba1
 	ld c, $20 ; $6ba4
 	call WriteExpScreenStringTiles ; $6ba6
 	wram_bank $06 ; $6ba9
@@ -4068,7 +4068,7 @@ InitExpScreenCharStats:
 	adc $00 ; $6ce1
 	ld h, a ; $6ce3
 	pop af ; $6ce4
-	ld de, $d0ec ; $6ce5
+	ld de, wCharDataChoiceBackup + 47 ; $6ce5
 	ld c, $20 ; $6ce8
 	call WriteExpScreenStringTiles ; $6cea
 	wram_bank $06 ; $6ced

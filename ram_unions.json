@@ -1700,6 +1700,10 @@
        "name": "wCharDataFlushChunk",
        "note": "[8-bit] Which third of the screen still needs pushing to VRAM. FlushCharDataTilemapChunk sends one chunk per call and branches on 0, 1 and 2; while it is nonzero the animation task holds off"
       },
+      "0xd003": {
+       "name": "wCharDataPointsWorking",
+       "note": "[8-bit] Points still unspent while the player is editing. It heads the six bytes BackupCharData copies out and RestoreCharData copies back -- this byte, wCharDataLevel and the four wCharDataNewLevels -- which together are everything a cancelled visit has to forget"
+      },
       "0xd004": {
        "name": "wCharDataLevel",
        "note": "[8-bit] Level the character-data screen is committing; WriteCharStatsToDisplayBuffer stores it back into record +$18 (wStoryModeMainCharacterLevel)"
@@ -1880,6 +1884,16 @@
       "0xd0b6": {
        "name": "wCharDataViewOnly",
        "note": "[8-bit] Nonzero opens the character-data screen read-only: CharDataScreen_Show skips the allocation flow, LoadCharStatsWithLevelUpDeltas returns without computing deltas, and the input loop will not spend a point. Set by RunExpDistributionFlow and RestoreCharData"
+      },
+      "0xd0b7": {
+       "name": "wCharDataEditBackup",
+       "note": "[6 bytes] Copy of wCharDataEditState taken as the screen opens; RestoreCharData copies it back and sets wCharDataViewOnly, which is how cancelling out of a level-up returns everything unspent",
+       "size": 6
+      },
+      "0xd0bd": {
+       "name": "wCharDataChoiceBackup",
+       "note": "[101 bytes] The matching backup of wCharDataChoiceCount and the choice log behind it, so a cancelled visit forgets every level-up the player had provisionally taken",
+       "size": 101
       }
      }
     },
@@ -2092,6 +2106,15 @@
        "name": "wCharStatPageShown",
        "note": "[6 bytes] Whichever page is on screen, copied from +$04 of the main or partner record as the screen slides between them. DrawCharStatDigitsTask draws from here",
        "size": 6
+      },
+      "0xd149": {
+       "name": "wCharDataSyncSource",
+       "note": "[8-bit] Which pair CharDataValuesSyncTask pushes into the screen: zero takes wCharDataSyncValues, nonzero takes wGameTimer + 2"
+      },
+      "0xd14c": {
+       "name": "wCharDataSyncPair",
+       "note": "[2 bytes] The two bytes it copied in, formatted and drawn as the screen's live readout",
+       "size": 2
       },
       "0xd14e": {
        "name": "wExpPoolRemaining",

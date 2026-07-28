@@ -3167,7 +3167,8 @@ wCharDataAnimCounter:: db
 	ds 1
 ; [8-bit] Which third of the screen still needs pushing to VRAM. FlushCharDataTilemapChunk sends one chunk per call and branches on 0, 1 and 2; while it is nonzero the animation task holds off
 wCharDataFlushChunk:: db
-	ds 1
+; [8-bit] Points still unspent while the player is editing. It heads the six bytes BackupCharData copies out and RestoreCharData copies back -- this byte, wCharDataLevel and the four wCharDataNewLevels -- which together are everything a cancelled visit has to forget
+wCharDataPointsWorking:: db
 ; [8-bit] Level the character-data screen is committing; WriteCharStatsToDisplayBuffer stores it back into record +$18 (wStoryModeMainCharacterLevel)
 wCharDataLevel:: db
 ; [4 bytes] Spin/Power/Control/Speed levels the screen is committing; WriteCharStatsToDisplayBuffer stores them back into record +$38-$3b
@@ -3246,6 +3247,10 @@ wCharDataStatsNoRacket:: ds 11
 wCharDataRacketDeltas:: ds 11
 ; [8-bit] Nonzero opens the character-data screen read-only: CharDataScreen_Show skips the allocation flow, LoadCharStatsWithLevelUpDeltas returns without computing deltas, and the input loop will not spend a point. Set by RunExpDistributionFlow and RestoreCharData
 wCharDataViewOnly:: db
+; [6 bytes] Copy of wCharDataEditState taken as the screen opens; RestoreCharData copies it back and sets wCharDataViewOnly, which is how cancelling out of a level-up returns everything unspent
+wCharDataEditBackup:: ds 6
+; [101 bytes] The matching backup of wCharDataChoiceCount and the choice log behind it, so a cancelled visit forgets every level-up the player had provisionally taken
+wCharDataChoiceBackup:: ds 101
 NEXTU
 ; character-data and EXP screens (banks $1a/$1c/$1d)
 	ds 283
@@ -3298,7 +3303,12 @@ wCharStatPageMain:: ds 13
 wCharStatPagePartner:: ds 13
 ; [6 bytes] Whichever page is on screen, copied from +$04 of the main or partner record as the screen slides between them. DrawCharStatDigitsTask draws from here
 wCharStatPageShown:: ds 6
-	ds 12
+	ds 7
+; [8-bit] Which pair CharDataValuesSyncTask pushes into the screen: zero takes wCharDataSyncValues, nonzero takes wGameTimer + 2
+wCharDataSyncSource:: db
+	ds 2
+; [2 bytes] The two bytes it copied in, formatted and drawn as the screen's live readout
+wCharDataSyncPair:: dw
 ; [16-bit] EXP points still to hand out. AssignExpPointToChar decrements it per point spent, DrawExpPoolReadout prints it and DrawExpPoolGauge draws it as a fraction of wExpPoolTotal
 wExpPoolRemaining:: dw
 ; [16-bit] What the pool started at, kept so the gauge has a denominator. Both are seeded from hl by InitLevelUpScreenState

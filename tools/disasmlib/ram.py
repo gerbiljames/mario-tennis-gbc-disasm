@@ -401,6 +401,16 @@ def _emit_union_block(out, start, end, comment, variants):
             out.append(f"; {context}")
         cursor = start
         for addr, name, size, note in syms:
+            # A symbol whose size runs past the next one has no `ds` gap to
+            # absorb it, so every symbol after it lands later than the address
+            # it was declared at -- and any ROM operand naming one of those
+            # silently assembles to a different word. Nothing downstream can
+            # see that; `make compare` only reports the ROM differs.
+            if addr < cursor:
+                raise SystemExit(
+                    f"ram_unions: {name} at ${addr:04x} starts inside the "
+                    f"previous symbol, which runs to ${cursor:04x} -- shrink "
+                    f"that one or make the two a single symbol")
             if addr > cursor:
                 out.append(f"\tds {addr - cursor}")
             for ln in (note or "").split("\n"):

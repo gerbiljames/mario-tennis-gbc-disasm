@@ -133,7 +133,7 @@ CharDataScreen_InitState:
 	or a ; $4133
 	ret nz ; $4134
 	xor a ; $4135
-	ld [$d003], a ; $4136
+	ld [wCharDataPointsWorking], a ; $4136
 	push af ; $4139
 	ld hl, wStoryModeNameOfMainCharacter ; $413a
 	ld a, [wStoryCharacterSlot] ; $413d
@@ -225,7 +225,7 @@ CharDataScreen_InitState:
 	ld a, [wStoryCharacterSlot] ; $41ca
 	ld d, $00 ; $41cd
 	farcall LevelUpPlayer ; $41cf
-	ld hl, $d003 ; $41d2
+	ld hl, wCharDataPointsWorking ; $41d2
 	inc [hl] ; $41d5
 	jr .loop ; $41d6
 .writeCharStatsToDisplayBuffer:
@@ -1089,7 +1089,7 @@ FlushCharDataTilemapChunk:
 	ret ; $49ea
 WriteCharStatsToDisplayBuffer:
 	wram_bank $06 ; $49eb
-	ld a, [$d003] ; $49f1
+	ld a, [wCharDataPointsWorking] ; $49f1
 	ld [wCharDataPointsLeft], a ; $49f4
 	push af ; $49f7
 	ld hl, wStoryModeNameOfMainCharacter ; $49f8
@@ -3207,22 +3207,22 @@ FlushCharDataTilemapsFar:
 	ret ; $72ff
 BackupCharData:
 	wram_bank $06 ; $7300
-	ld hl, $d003 ; $7306
-	ld de, $d0b7 ; $7309
+	ld hl, wCharDataPointsWorking ; $7306
+	ld de, wCharDataEditBackup ; $7309
 	ld bc, $0006 ; $730c
 	call CopyMemoryBC ; $730f
 	ld hl, wCharDataChoiceCount ; $7312
-	ld de, $d0bd ; $7315
+	ld de, wCharDataChoiceBackup ; $7315
 	ld bc, $0065 ; $7318
 	call CopyMemoryBC ; $731b
 	ret ; $731e
 RestoreCharData:
 	wram_bank $06 ; $731f
-	ld hl, $d0b7 ; $7325
-	ld de, $d003 ; $7328
+	ld hl, wCharDataEditBackup ; $7325
+	ld de, wCharDataPointsWorking ; $7328
 	ld bc, $0006 ; $732b
 	call CopyMemoryBC ; $732e
-	ld hl, $d0bd ; $7331
+	ld hl, wCharDataChoiceBackup ; $7331
 	ld de, wCharDataChoiceCount ; $7334
 	ld bc, $0065 ; $7337
 	call CopyMemoryBC ; $733a
@@ -3230,7 +3230,7 @@ RestoreCharData:
 	ld [wCharDataViewOnly], a ; $733f
 	xor a ; $7342
 	ld [wStoryCharacterSlot], a ; $7343
-	ld a, [$d003] ; $7346
+	ld a, [wCharDataPointsWorking] ; $7346
 	ld [wCharDataPointsLeft], a ; $7349
 	push af ; $734c
 	ld hl, wStoryModeNameOfMainCharacter ; $734d
