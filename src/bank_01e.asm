@@ -1378,7 +1378,7 @@ RefreshContinuePromptText:
 	xor a ; $4bd0
 	ld [wContinuePromptRow], a ; $4bd1
 	call ClearContinuePromptRows ; $4bd4
-	ld hl, wCharDataChoiceLog + 23 ; $4bd7
+	ld hl, $d041 ; $4bd7
 	call DrawContinuePromptText ; $4bda
 	ld hl, wContinuePromptKind ; $4bdd
 	ld de, $9800 ; $4be0
@@ -1392,7 +1392,7 @@ RefreshContinuePromptText:
 	call ClearContinuePromptRows ; $4bf4
 	ld hl, wCharDataStatDeltas + 8 ; $4bf7
 	call DrawSaveWarningTextLine1 ; $4bfa
-	ld hl, wCharDataChoiceLog + 55 ; $4bfd
+	ld hl, $d061 ; $4bfd
 	call DrawSaveWarningTextLine2 ; $4c00
 	ld hl, wContinuePromptKind ; $4c03
 	ld de, $9800 ; $4c06
@@ -2076,7 +2076,7 @@ DrawNextExpAwardMessage:
 .restore:
 	pop hl ; $5a24
 	ld bc, $0020 ; $5a25
-	ld de, wCharDataChoiceLog + 56 ; $5a28
+	ld de, $d062 ; $5a28
 	call DrawProportionalTextLine ; $5a2b
 	pop bc ; $5a2e
 	farcall UploadGlyphBuffer ; $5a2f
@@ -3231,7 +3231,7 @@ ApplyPendingExpAwards:
 	farcall RecordDrillResult ; $6b8f
 .applyToRecord:
 	wram_bank $06 ; $6b92
-	ld hl, wCharDataChoiceLog + 12 ; $6b98
+	ld hl, $d036 ; $6b98
 	ld a, [hl+] ; $6b9b
 	ld d, [hl] ; $6b9c
 	ld e, a ; $6b9d
@@ -3937,7 +3937,7 @@ ComputeTrophyExpAwards:
 	add hl, bc ; $7015
 	call ComputeTrophyExpGroup1 ; $7016
 	push hl ; $7019
-	ld hl, wCharDataChoiceLog ; $701a
+	ld hl, $d02a ; $701a
 	ld a, c ; $701d
 	ld [hl+], a ; $701e
 	ld [hl], b ; $701f
@@ -3945,7 +3945,7 @@ ComputeTrophyExpAwards:
 	add hl, bc ; $7021
 	call ComputeTrophyExpGroup2 ; $7022
 	push hl ; $7025
-	ld hl, wCharDataChoiceLog + 2 ; $7026
+	ld hl, $d02c ; $7026
 	ld a, c ; $7029
 	ld [hl+], a ; $702a
 	ld [hl], b ; $702b
@@ -3953,7 +3953,7 @@ ComputeTrophyExpAwards:
 	add hl, bc ; $702d
 	call ComputeTrophyExpGroup3 ; $702e
 	push hl ; $7031
-	ld hl, wCharDataChoiceLog + 4 ; $7032
+	ld hl, $d02e ; $7032
 	ld a, c ; $7035
 	ld [hl+], a ; $7036
 	ld [hl], b ; $7037
@@ -3961,7 +3961,7 @@ ComputeTrophyExpAwards:
 	add hl, bc ; $7039
 	call ComputeTrophyExpGroup4 ; $703a
 	push hl ; $703d
-	ld hl, wCharDataChoiceLog + 6 ; $703e
+	ld hl, $d030 ; $703e
 	ld a, c ; $7041
 	ld [hl+], a ; $7042
 	ld [hl], b ; $7043
@@ -3969,7 +3969,7 @@ ComputeTrophyExpAwards:
 	add hl, bc ; $7045
 	call ComputeTrophyExpGroup5 ; $7046
 	push hl ; $7049
-	ld hl, wCharDataChoiceLog + 8 ; $704a
+	ld hl, $d032 ; $704a
 	ld a, c ; $704d
 	ld [hl+], a ; $704e
 	ld [hl], b ; $704f
@@ -3978,7 +3978,7 @@ ComputeTrophyExpAwards:
 	push hl ; $7052
 	ld b, h ; $7053
 	ld c, l ; $7054
-	ld hl, wCharDataChoiceLog + 12 ; $7055
+	ld hl, $d036 ; $7055
 	ld a, c ; $7058
 	ld [hl+], a ; $7059
 	ld [hl], b ; $705a
@@ -4003,7 +4003,7 @@ ComputeTrophyExpAwards:
 	ld c, $00 ; $707a
 	farcall RecordDrillResult ; $707c
 .sumGroup1:
-	ld hl, wCharDataChoiceLog ; $707f
+	ld hl, $d02a ; $707f
 	ld a, [hl+] ; $7082
 	ld d, [hl] ; $7083
 	ld e, a ; $7084
@@ -4014,7 +4014,7 @@ ComputeTrophyExpAwards:
 	ld c, $01 ; $708b
 	farcall RecordDrillResult ; $708d
 .sumGroup2:
-	ld hl, wCharDataChoiceLog + 2 ; $7090
+	ld hl, $d02c ; $7090
 	ld a, [hl+] ; $7093
 	ld d, [hl] ; $7094
 	ld e, a ; $7095
@@ -4025,7 +4025,7 @@ ComputeTrophyExpAwards:
 	ld c, $02 ; $709c
 	farcall RecordDrillResult ; $709e
 .sumGroup3:
-	ld hl, wCharDataChoiceLog + 4 ; $70a1
+	ld hl, $d02e ; $70a1
 	ld a, [hl+] ; $70a4
 	ld d, [hl] ; $70a5
 	ld e, a ; $70a6
@@ -4036,7 +4036,7 @@ ComputeTrophyExpAwards:
 	ld c, $03 ; $70ad
 	farcall RecordDrillResult ; $70af
 .sumGroup4:
-	ld hl, wCharDataChoiceLog + 6 ; $70b2
+	ld hl, $d030 ; $70b2
 	ld a, [hl+] ; $70b5
 	ld d, [hl] ; $70b6
 	ld e, a ; $70b7
@@ -4047,7 +4047,7 @@ ComputeTrophyExpAwards:
 	ld c, $04 ; $70be
 	farcall RecordDrillResult ; $70c0
 .sumGroup5:
-	ld hl, wCharDataChoiceLog + 8 ; $70c3
+	ld hl, $d032 ; $70c3
 	ld a, [hl+] ; $70c6
 	ld d, [hl] ; $70c7
 	ld e, a ; $70c8
@@ -4111,7 +4111,7 @@ ComputeTrophyExpForGroup:
 .readMask:
 	ld c, [hl] ; $7121
 	xor a ; $7122
-	ld hl, wCharDataChoiceLog + 10 ; $7123
+	ld hl, $d034 ; $7123
 	ld [hl+], a ; $7126
 	ld [hl], a ; $7127
 	ld a, [wN64TrophyCounts] ; $7128
@@ -4140,14 +4140,14 @@ ComputeTrophyExpForGroup:
 	ld b, $00 ; $714b
 	ld a, [wTrophyExpGroup] ; $714d
 	call GetTrophyExpValue ; $7150
-	ld hl, wCharDataChoiceLog + 10 ; $7153
+	ld hl, $d034 ; $7153
 	ld a, [hl+] ; $7156
 	ld h, [hl] ; $7157
 	ld l, a ; $7158
 	add hl, bc ; $7159
 	ld b, h ; $715a
 	ld c, l ; $715b
-	ld hl, wCharDataChoiceLog + 10 ; $715c
+	ld hl, $d034 ; $715c
 	ld a, c ; $715f
 	ld [hl+], a ; $7160
 	ld [hl], b ; $7161
@@ -4180,14 +4180,14 @@ ComputeTrophyExpForGroup:
 	ld b, $04 ; $7188
 	ld a, [wTrophyExpGroup] ; $718a
 	call GetTrophyExpValue ; $718d
-	ld hl, wCharDataChoiceLog + 10 ; $7190
+	ld hl, $d034 ; $7190
 	ld a, [hl+] ; $7193
 	ld h, [hl] ; $7194
 	ld l, a ; $7195
 	add hl, bc ; $7196
 	ld b, h ; $7197
 	ld c, l ; $7198
-	ld hl, wCharDataChoiceLog + 10 ; $7199
+	ld hl, $d034 ; $7199
 	ld a, c ; $719c
 	ld [hl+], a ; $719d
 	ld [hl], b ; $719e
@@ -4219,14 +4219,14 @@ ComputeTrophyExpForGroup:
 	ld b, $02 ; $71c3
 	ld a, [wTrophyExpGroup] ; $71c5
 	call GetTrophyExpValue ; $71c8
-	ld hl, wCharDataChoiceLog + 10 ; $71cb
+	ld hl, $d034 ; $71cb
 	ld a, [hl+] ; $71ce
 	ld h, [hl] ; $71cf
 	ld l, a ; $71d0
 	add hl, bc ; $71d1
 	ld b, h ; $71d2
 	ld c, l ; $71d3
-	ld hl, wCharDataChoiceLog + 10 ; $71d4
+	ld hl, $d034 ; $71d4
 	ld a, c ; $71d7
 	ld [hl+], a ; $71d8
 	ld [hl], b ; $71d9
@@ -4259,20 +4259,20 @@ ComputeTrophyExpForGroup:
 	ld b, $06 ; $7200
 	ld a, [wTrophyExpGroup] ; $7202
 	call GetTrophyExpValue ; $7205
-	ld hl, wCharDataChoiceLog + 10 ; $7208
+	ld hl, $d034 ; $7208
 	ld a, [hl+] ; $720b
 	ld h, [hl] ; $720c
 	ld l, a ; $720d
 	add hl, bc ; $720e
 	ld b, h ; $720f
 	ld c, l ; $7210
-	ld hl, wCharDataChoiceLog + 10 ; $7211
+	ld hl, $d034 ; $7211
 	ld a, c ; $7214
 	ld [hl+], a ; $7215
 	ld [hl], b ; $7216
 	pop bc ; $7217
 .done:
-	ld hl, wCharDataChoiceLog + 10 ; $7218
+	ld hl, $d034 ; $7218
 	ld a, [hl+] ; $721b
 	ld b, [hl] ; $721c
 	ld c, a ; $721d

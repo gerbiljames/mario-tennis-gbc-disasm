@@ -5515,7 +5515,7 @@ PlayScrollingStoryCutscene:
 	ld [wCutsceneSlideTimer], a ; $7036
 	pop af ; $7039
 	push af ; $703a
-	ld [$d1fe], a ; $703b
+	ld [wCutsceneWindowSliding], a ; $703b
 	ld a, $01 ; $703e
 	ld hl, AnimateWindowSlideUpTask ; $7040
 	call RegisterFrameTask ; $7043
@@ -5565,7 +5565,7 @@ AnimateWindowSlideUpTask:
 	ldh a, [hWramBank] ; $72a0
 	push af ; $72a2
 	wram_bank $06 ; $72a3
-	ld a, [$d1fe] ; $72a9
+	ld a, [wCutsceneWindowSliding] ; $72a9
 	ld b, a ; $72ac
 	ld hl, WindowSlideStepTable_03 ; $72ad
 	ld a, b ; $72b0
@@ -5729,7 +5729,7 @@ DrawCutsceneTextLines:
 .mulHLByA:
 	call MulHLByA ; $7418
 .step:
-	ld de, wCharDataChoiceLog + 57 ; $741b
+	ld de, $d063 ; $741b
 	add hl, de ; $741e
 	ld d, h ; $741f
 	ld e, l ; $7420
@@ -5959,7 +5959,7 @@ InitGrayscalePaletteFade:
 	push af ; $75ad
 	wram_bank $06 ; $75ae
 	xor a ; $75b4
-	ld hl, $d1e0 ; $75b5
+	ld hl, wPaletteFadeMask ; $75b5
 	ld b, $10 ; $75b8
 .loop:
 	ld [hl+], a ; $75ba
@@ -5974,7 +5974,7 @@ InitGrayscalePaletteFade:
 	push af ; $75cc
 	wram_bank $06 ; $75cd
 	xor a ; $75d3
-	ld hl, $d1e0 ; $75d4
+	ld hl, wPaletteFadeMask ; $75d4
 	ld b, $10 ; $75d7
 .loopB:
 	ld [hl+], a ; $75d9
@@ -5987,7 +5987,7 @@ InitGrayscalePaletteFade:
 	ret ; $75e8
 BackupMasterPalettes:
 	ld hl, wMasterPalettes ; $75e9
-	ld de, $d140 ; $75ec
+	ld de, wMasterPalettesBackup ; $75ec
 	ld b, $80 ; $75ef
 .loop:
 	ld a, [hl+] ; $75f1
@@ -5996,7 +5996,7 @@ BackupMasterPalettes:
 	dec b ; $75f4
 	jr nz, .loop ; $75f5
 	ld hl, wMasterPalettes ; $75f7
-	ld de, wCharDataStatsNoRacket ; $75fa
+	ld de, wWorkingPalettes ; $75fa
 	ld b, $80 ; $75fd
 .loopB:
 	ld a, [hl+] ; $75ff
@@ -6006,7 +6006,7 @@ BackupMasterPalettes:
 	jr nz, .loopB ; $7603
 	ret ; $7605
 ClearWorkingPaletteBuffer:
-	ld hl, wCharDataStatsNoRacket ; $7606
+	ld hl, wWorkingPalettes ; $7606
 	ld b, $40 ; $7609
 	ld de, $0000 ; $760b
 .loop:
@@ -6018,8 +6018,8 @@ ClearWorkingPaletteBuffer:
 	jr nz, .loop ; $7613
 	ret ; $7615
 DesaturateWorkingPalettes:
-	ld hl, wCharDataStatsNoRacket ; $7616
-	ld de, $d1f2 ; $7619
+	ld hl, wWorkingPalettes ; $7616
+	ld de, wPaletteColorSplit ; $7619
 	ld b, $40 ; $761c
 .loop:
 	push bc ; $761e
@@ -6107,15 +6107,15 @@ SetupPaletteFadeMask:
 	ldh a, [hWramBank] ; $7687
 	push af ; $7689
 	wram_bank $06 ; $768a
-	ld hl, $d1f0 ; $7690
+	ld hl, wPaletteFadeAmount ; $7690
 	ld [hl], d ; $7693
 	ld l, d ; $7694
 	ld h, $00 ; $7695
 	ld de, $001f ; $7697
 	call DivHLByDE ; $769a
 	ld a, l ; $769d
-	ld [$d1f9], a ; $769e
-	ld hl, $d1e0 ; $76a1
+	ld [wPaletteFadeStep], a ; $769e
+	ld hl, wPaletteFadeMask ; $76a1
 	bit 7, b ; $76a4
 	jr z, .positive ; $76a6
 	ld [hl], $01 ; $76a8
@@ -6203,7 +6203,7 @@ AnimatePaletteFadeToTarget:
 	push af ; $771b
 	wram_bank $06 ; $771c
 .loop:
-	ld a, [$d1f9] ; $7722
+	ld a, [wPaletteFadeStep] ; $7722
 .loopB:
 	and a ; $7725
 	jr z, .zero ; $7726
@@ -6211,7 +6211,7 @@ AnimatePaletteFadeToTarget:
 	dec a ; $772b
 	jr .loopB ; $772c
 .zero:
-	ld de, $d1e0 ; $772e
+	ld de, wPaletteFadeMask ; $772e
 	ld b, $00 ; $7731
 .loop2:
 	push de ; $7733
@@ -6228,12 +6228,12 @@ AnimatePaletteFadeToTarget:
 	ld a, b ; $7740
 	cp $10 ; $7741
 	jr nz, .loop2 ; $7743
-	ld hl, $d140 ; $7745
+	ld hl, wMasterPalettesBackup ; $7745
 	ld d, $00 ; $7748
 	ld e, $10 ; $774a
 	call LoadPalettesImmediate ; $774c
 	call AdvanceFrame ; $774f
-	ld hl, $d1f0 ; $7752
+	ld hl, wPaletteFadeAmount ; $7752
 	ld a, [hl] ; $7755
 	dec a ; $7756
 	ld [hl], a ; $7757
@@ -6245,13 +6245,13 @@ AnimatePaletteFadeToTarget:
 	ret ; $7763
 StepPaletteColorsTowardTarget:
 	ld a, b ; $7764
-	ld [$d1f1], a ; $7765
-	ld hl, wCharDataStatsNoRacket ; $7768
+	ld [wPaletteFadeIndex], a ; $7765
+	ld hl, wWorkingPalettes ; $7768
 	call AdvanceToPaletteEntry ; $776b
 	ld d, h ; $776e
 	ld e, l ; $776f
-	ld hl, $d140 ; $7770
-	ld a, [$d1f1] ; $7773
+	ld hl, wMasterPalettesBackup ; $7770
+	ld a, [wPaletteFadeIndex] ; $7773
 	ld b, a ; $7776
 	call AdvanceToPaletteEntry ; $7777
 	ld b, $04 ; $777a
@@ -6263,7 +6263,7 @@ StepPaletteColorsTowardTarget:
 	ld b, [hl] ; $7780
 	ld c, a ; $7781
 	call SplitColorComponents ; $7782
-	ld hl, $d1f2 ; $7785
+	ld hl, wPaletteColorSplit ; $7785
 	ld [hl+], a ; $7788
 	ld a, b ; $7789
 	ld [hl+], a ; $778a
@@ -6275,22 +6275,22 @@ StepPaletteColorsTowardTarget:
 	ld b, [hl] ; $7790
 	ld c, a ; $7791
 	call SplitColorComponents ; $7792
-	ld hl, $d1f5 ; $7795
+	ld hl, wPaletteColorSplit + 3 ; $7795
 	ld [hl+], a ; $7798
 	ld a, b ; $7799
 	ld [hl+], a ; $779a
 	ld a, c ; $779b
 	ld [hl], a ; $779c
-	ld hl, $d1f2 ; $779d
-	ld de, $d1f5 ; $77a0
+	ld hl, wPaletteColorSplit ; $779d
+	ld de, wPaletteColorSplit + 3 ; $77a0
 	call StepColorComponentTowardTarget ; $77a3
-	ld hl, $d1f3 ; $77a6
-	ld de, $d1f6 ; $77a9
+	ld hl, wPaletteColorSplit + 1 ; $77a6
+	ld de, wPaletteColorSplit + 4 ; $77a9
 	call StepColorComponentTowardTarget ; $77ac
-	ld hl, $d1f4 ; $77af
-	ld de, $d1f7 ; $77b2
+	ld hl, wPaletteColorSplit + 2 ; $77af
+	ld de, wPaletteColorSplit + 5 ; $77b2
 	call StepColorComponentTowardTarget ; $77b5
-	ld hl, $d1f4 ; $77b8
+	ld hl, wPaletteColorSplit + 2 ; $77b8
 	ld a, [hl-] ; $77bb
 	ld c, a ; $77bc
 	ld a, [hl-] ; $77bd
@@ -6327,7 +6327,7 @@ StepColorComponentTowardTarget:
 	ld [hl], a ; $77e0
 	ret ; $77e1
 SnapPalettesToTarget:
-	ld hl, $d1e0 ; $77e2
+	ld hl, wPaletteFadeMask ; $77e2
 	ld b, $00 ; $77e5
 .loop:
 	push hl ; $77e7
@@ -6336,12 +6336,12 @@ SnapPalettesToTarget:
 	and a ; $77ea
 	jr z, .restore ; $77eb
 	ld c, b ; $77ed
-	ld hl, wCharDataStatsNoRacket ; $77ee
+	ld hl, wWorkingPalettes ; $77ee
 	call AdvanceToPaletteEntry ; $77f1
 	ld d, h ; $77f4
 	ld e, l ; $77f5
 	ld b, c ; $77f6
-	ld hl, $d140 ; $77f7
+	ld hl, wMasterPalettesBackup ; $77f7
 	call AdvanceToPaletteEntry ; $77fa
 	ld a, [de] ; $77fd
 	ld [hl+], a ; $77fe
@@ -6375,7 +6375,7 @@ SnapPalettesToTarget:
 	ld a, b ; $7819
 	cp $10 ; $781a
 	jr nz, .loop ; $781c
-	ld hl, $d140 ; $781e
+	ld hl, wMasterPalettesBackup ; $781e
 	ld d, $00 ; $7821
 	ld e, $10 ; $7823
 	call LoadPalettesImmediate ; $7825

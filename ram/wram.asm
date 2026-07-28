@@ -3180,17 +3180,22 @@ wCharDataLevelPreview:: db
 wCharDataChoiceCount:: db
 ENDU
 
-; Character-data level-up log and the screen's scratch above it (WRAM bank
-; $06). ComputeTrophyExpForGroup in bank $1e uses one byte inside the log's
-; span for its own accumulator, so it keeps the variant it had.
+; WRAM bank $06 from $d02a up, shared by four subsystems that never run at
+; once. The palette fade engine's two 128-byte buffers straddle what used
+; to be the boundary between two unions, which is why they are one now.
+; Every scope carries a ROM bank and wram_bank $06: the working palette
+; buffer and the character-data screen's stat arrays start at the same
+; address, and only the owning bank tells them apart.
+; The sound driver's scope keeps its wram_bank $07 alternative, since the
+; same offsets are its channel state in that bank.
 UNION
 ; trophy EXP (bank $1e)
 	ds 14
 ; [8-bit] Character group being totalled; indexes TrophyExpForGroupTable0-4 and selects the row GetTrophyExpValue reads
 wTrophyExpGroup:: db
-	ds 126
+	ds 481
 NEXTU
-; character-data screen (WRAM bank $06)
+; character-data screen (bank $1a)
 ; [100 bytes] One byte per level-up taken on this visit: the wCharDataPage the player confirmed. Cleared by WriteCharStatsToDisplayBuffer before the screen opens
 wCharDataChoiceLog:: ds 100
 ; [6 bytes] Scratch the character-data and EXP screens format numbers into. FormatExp24BitDecimal puts the 24-bit value's top byte at +$00 and formats the low word to five places from +$01, which is what makes the buffer six wide
@@ -3202,19 +3207,9 @@ wCharDataStatsNoRacket:: ds 11
 wCharDataRacketDeltas:: ds 11
 ; [8-bit] Nonzero opens the character-data screen read-only: CharDataScreen_Show skips the allocation flow, LoadCharStatsWithLevelUpDeltas returns without computing deltas, and the input loop will not spend a point. Set by RunExpDistributionFlow and RestoreCharData
 wCharDataViewOnly:: db
-ENDU
-
-	ds 73
-
-; Sound-engine WRAM (bank $07), used only by the bank-0 audio driver;
-; scoped to the driver's code range so the same $d1xx/$d2xx offsets
-; in other WRAM banks keep their numeric address.
-; The EXP award screen reuses the same bytes from WRAM bank $06, which the
-; bank $1a/$1d code selects explicitly with `wram_bank $06`.
-; That variant is where the character-data screen keeps its page-slide
-; offsets, which is the same overlay seen from the other side.
+NEXTU
 ; character-data and EXP screens (banks $1a/$1c/$1d)
-	ds 69
+	ds 283
 ; [16-bit] X offset the stat digits are drawn at while a page slides. The Slide*StatPage routines step it and DrawCharStatDigitsTask hands it to ApplySlideOffsetToSpriteX for every digit it queues
 wCharDataStatsSlideX:: dw
 ; [16-bit] The same offset for the value column, stepped in step with wCharDataStatsSlideX and applied by CharDataValuesSyncTask -- two offsets because the two columns slide in and out at different times
@@ -3222,7 +3217,62 @@ wCharDataValuesSlideX:: dw
 	ds 24
 ; [2 x 15 bytes] Per-character record the EXP award screen works on, selected by wStoryCharacterSlot (slot 0 at +0, slot 1 at +15). InitExpScreenCharStats fills $d161-$d16f; +8 is the 16-bit total CheckExpLevelUp/Down compare, and DrawExpScreenLevelNumber, DrawExpScreenLevelBar and the SweepExpBarMarker routines read +0 and +3
 wExpScreenCharStats:: ds 30
-	ds 155
+NEXTU
+; palette fade engine (bank $03)
+	ds 118
+; [128 bytes] The palettes being faded: 16 palettes of four 16-bit colours. BackupMasterPalettes seeds it from wMasterPalettes, ClearWorkingPaletteBuffer zeroes all 64 colours and DesaturateWorkingPalettes rewrites each one through SplitColorComponents. AdvanceToPaletteEntry walks it 8 bytes at a time
+wWorkingPalettes:: ds 128
+	ds 32
+; [128 bytes] The untouched copy taken at the same moment, so a fade always has its endpoint to interpolate from and can be snapped back
+wMasterPalettesBackup:: ds 128
+	ds 32
+; [8 bytes] One flag per palette, set from the bits of b at SetupPaletteFadeMask -- bit 7 is palette 0. Only flagged palettes are stepped
+wPaletteFadeMask:: ds 8
+	ds 8
+; [8-bit] How far through the fade, as passed in d
+wPaletteFadeAmount:: db
+; [8-bit] Palette currently being stepped, saved across the AdvanceToPaletteEntry calls that resolve the same entry in both buffers
+wPaletteFadeIndex:: db
+; [6 bytes] The two colours being interpolated, unpacked to red, green and blue by SplitColorComponents -- the working colour at +$00 and the target at +$03
+wPaletteColorSplit:: ds 6
+	ds 1
+; [8-bit] wPaletteFadeAmount divided by $1f, the per-component step the fade moves each call
+wPaletteFadeStep:: db
+	ds 4
+; [8-bit] Set while a cutscene text window is sliding, by AnimateWindowSlideUpTask and the scrolling-story player
+wCutsceneWindowSliding:: db
+NEXTU
+; EXP distribution screen (bank $1d)
+	ds 280
+; [8-bit] Which page arrows to bob: 1 draws the left one, 2 the right, 0 neither. DrawCharDataPageArrowsTask reads it every frame
+wCharDataPageArrowMode:: db
+; [8-bit] Nonzero freezes the arrow bob; while it is clear the task steps wCharDataArrowPhase
+wCharDataArrowHold:: db
+; [8-bit] Free-running counter the arrow bob reads for its offset
+wCharDataArrowPhase:: db
+	ds 9
+; [16-bit] EXP points still to hand out. AssignExpPointToChar decrements it per point spent, DrawExpPoolReadout prints it and DrawExpPoolGauge draws it as a fraction of wExpPoolTotal
+wExpPoolRemaining:: dw
+; [16-bit] What the pool started at, kept so the gauge has a denominator. Both are seeded from hl by InitLevelUpScreenState
+wExpPoolTotal:: dw
+	ds 45
+; [8-bit] Which character the distribution cursor is on; cleared when the screen opens
+wExpCursorChar:: db
+; [8-bit] Slide progress for the cursor moving between characters, stepped by SlideExpCursorToMainCharTask
+wExpCursorSlide:: db
+; [8-bit] X of the marker sweeping along the EXP bar. $a8 is its home; SweepExpBarMarkerLeft subtracts the per-frame step and snaps back to $a8 once it passes $18
+wExpBarMarkerX:: db
+; [8-bit] Row the confirm prompt cursor sits on
+wExpPromptCursorRow:: db
+; [8-bit] Frames before a held direction starts repeating, seeded to $08 when the screen opens
+wExpRepeatDelay:: db
+; [8-bit] Set when something changed and the screen needs its tilemap rows pushed again
+wExpRedrawPending:: db
+; [8-bit] Set once a held direction has begun repeating, so the delay is only applied on the first step
+wExpInputRepeating:: db
+; [8-bit] $ff when a level-up has just happened; TickLevelUpJingle plays the jingle off it and clears it
+wExpLevelUpFanfare:: db
+ENDU
 
 	ds 22
 
@@ -3285,16 +3335,18 @@ SECTION "WRAMX bank 7", WRAMX[$d000], BANK[7]
 ; [32 bytes] Copy of $ffd0-$ffef taken by RunSoundEngine on entry and put back on exit. The driver keeps its channel state in that HRAM window, so context-switching it is what lets four other subsystems keep their own bytes there across an audio update -- see the $ffd0 union
 wSndHramSave:: ds 32
 
-	ds 224
+	ds 10
 
-; Sound-engine WRAM (bank $07), used only by the bank-0 audio driver;
-; scoped to the driver's code range so the same $d1xx/$d2xx offsets
-; in other WRAM banks keep their numeric address.
-; The EXP award screen reuses the same bytes from WRAM bank $06, which the
-; bank $1a/$1d code selects explicitly with `wram_bank $06`.
-; That variant is where the character-data screen keeps its page-slide
-; offsets, which is the same overlay seen from the other side.
+; WRAM bank $06 from $d02a up, shared by four subsystems that never run at
+; once. The palette fade engine's two 128-byte buffers straddle what used
+; to be the boundary between two unions, which is why they are one now.
+; Every scope carries a ROM bank and wram_bank $06: the working palette
+; buffer and the character-data screen's stat arrays start at the same
+; address, and only the owning bank tells them apart.
+; The sound driver's scope keeps its wram_bank $07 alternative, since the
+; same offsets are its channel state in that bank.
 ; sound engine (bank 0)
+	ds 214
 ; [192 bytes] Six 32-byte channel state blocks (channels 0-1 music, 2-5 SFX); the active channel's block is mirrored into HRAM $ffd0 each pass, first word = script pointer ($ffff = idle)
 wSndChannels:: ds 192
 ; [72 bytes] Per-channel loop bookkeeping (counter + return pointer per loop level); base resolved by GetChannelLoopSlot

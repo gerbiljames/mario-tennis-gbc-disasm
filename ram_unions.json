@@ -193,121 +193,6 @@
    ]
   },
   {
-   "start": "0xd100",
-   "end": "0xd21a",
-   "comment": "Sound-engine WRAM (bank $07), used only by the bank-0 audio driver;\nscoped to the driver's code range so the same $d1xx/$d2xx offsets\nin other WRAM banks keep their numeric address.\nThe EXP award screen reuses the same bytes from WRAM bank $06, which the\nbank $1a/$1d code selects explicitly with `wram_bank $06`.\nThat variant is where the character-data screen keeps its page-slide\noffsets, which is the same overlay seen from the other side.",
-   "variants": [
-    {
-     "context": "sound engine (bank 0)",
-     "scopes": [
-      {
-       "wram_bank": "0x07"
-      },
-      {
-       "bank": "0x00",
-       "start": "0x2f00",
-       "end": "0x3de0"
-      }
-     ],
-     "symbols": {
-      "0xd100": {
-       "name": "wSndChannels",
-       "note": "[192 bytes] Six 32-byte channel state blocks (channels 0-1 music, 2-5 SFX); the active channel's block is mirrored into HRAM $ffd0 each pass, first word = script pointer ($ffff = idle)"
-      },
-      "0xd1c0": {
-       "name": "wSndLoopSlots",
-       "note": "[72 bytes] Per-channel loop bookkeeping (counter + return pointer per loop level); base resolved by GetChannelLoopSlot"
-      },
-      "0xd208": {
-       "name": "wSndActiveMask",
-       "note": "[8-bit] Bitmask of channels already serviced/keyed this update pass (AbortIfChannelTriggered tests it; folded into rAUDTERM at the end)"
-      },
-      "0xd209": {
-       "name": "wSndPanShadow",
-       "note": "[8-bit] Shadow of rAUDTERM: per-channel left/right output enable bits accumulated across channels"
-      },
-      "0xd20a": {
-       "name": "wSndChannelType",
-       "note": "[8-bit] Current channel type (0=square1/sweep, 1=square2, 2=wave, 3=noise)"
-      },
-      "0xd20b": {
-       "name": "wSndChannelBits",
-       "note": "[8-bit] Current channel's stereo output bit-pair (ch1=$11 .. ch4=$88), used for active-channel tracking"
-      },
-      "0xd20c": {
-       "name": "wSndChannelPanMask",
-       "note": "[8-bit] Same bit-pair as wSndChannelBits, masked against hSndPanMask to build wSndPanShadow"
-      },
-      "0xd20d": {
-       "name": "wSndRegBase",
-       "note": "[8-bit] Current channel's APU register offset (type*5); WriteChannelReg forms rAUD via $ff10+this+reg"
-      },
-      "0xd20e": {
-       "name": "wSndFrameCounter",
-       "note": "[8-bit] Free-running update counter; low nibble supplies the vibrato phase in TickVibrato"
-      },
-      "0xd20f": {
-       "name": "wSndChannelIndex",
-       "note": "[8-bit] Index (0-5) of the channel currently being updated"
-      },
-      "0xd212": {
-       "name": "wSndUpdateReqMask",
-       "note": "[8-bit] Pending channel-update request: mask of channels to reconfigure (SetChannelUpdateRequest)"
-      },
-      "0xd213": {
-       "name": "wSndUpdateReqData",
-       "note": "[8-bit] Value applied by the pending channel-update request (low nibble)"
-      },
-      "0xd214": {
-       "name": "wSndUpdateReqAck",
-       "note": "[8-bit] Accumulator of channels that have acknowledged the pending update request"
-      },
-      "0xd215": {
-       "name": "wSndFirstChannel",
-       "note": "[8-bit] Channel index the update pass starts from (normally 0)"
-      },
-      "0xd217": {
-       "name": "wSndLoadedWaveId",
-       "note": "[8-bit] Wave-pattern id currently loaded into wave RAM (change detection for the wave channel)"
-      },
-      "0xd218": {
-       "name": "wSndTranspose",
-       "note": "[8-bit] Global transpose added to note ids (cmd $a9 $fe/$f2/$f3)"
-      },
-      "0xd219": {
-       "name": "wSndWaveReloadPending",
-       "note": "[8-bit] Non-zero to force the wave channel to reload its pattern on the next note"
-      }
-     }
-    },
-    {
-     "context": "character-data and EXP screens (banks $1a/$1c/$1d)",
-     "scopes": [
-      {
-       "wram_bank": "0x06"
-      }
-     ],
-     "symbols": {
-      "0xd145": {
-       "name": "wCharDataStatsSlideX",
-       "note": "[16-bit] X offset the stat digits are drawn at while a page slides. The Slide*StatPage routines step it and DrawCharStatDigitsTask hands it to ApplySlideOffsetToSpriteX for every digit it queues",
-       "size": 2
-      },
-      "0xd147": {
-       "name": "wCharDataValuesSlideX",
-       "note": "[16-bit] The same offset for the value column, stepped in step with wCharDataStatsSlideX and applied by CharDataValuesSyncTask -- two offsets because the two columns slide in and out at different times",
-       "size": 2
-      },
-      "0xd161": {
-       "name": "wExpScreenCharStats",
-       "size": 30,
-       "note": "[2 x 15 bytes] Per-character record the EXP award screen works on, selected by wStoryCharacterSlot (slot 0 at +0, slot 1 at +15). InitExpScreenCharStats fills $d161-$d16f; +8 is the 16-bit total CheckExpLevelUp/Down compare, and DrawExpScreenLevelNumber, DrawExpScreenLevelBar and the SweepExpBarMarker routines read +0 and +3"
-      }
-     }
-    }
-   ]
-  },
-  {
    "start": "0xdd00",
    "end": "0xdd24",
    "comment": "Match ball-visuals history ring (WRAM bank 4 only); shared renderer\nstate, so scoped by the selected WRAM bank plus the bank-$08 renderer.",
@@ -1831,62 +1716,6 @@
    ]
   },
   {
-   "start": "0xd02a",
-   "wram_bank": "0x06",
-   "end": "0xd0b7",
-   "comment": "Character-data level-up log and the screen's scratch above it (WRAM bank\n$06). ComputeTrophyExpForGroup in bank $1e uses one byte inside the log's\nspan for its own accumulator, so it keeps the variant it had.",
-   "variants": [
-    {
-     "context": "trophy EXP (bank $1e)",
-     "scopes": [
-      {
-       "bank": "0x1e"
-      }
-     ],
-     "symbols": {
-      "0xd038": {
-       "name": "wTrophyExpGroup",
-       "note": "[8-bit] Character group being totalled; indexes TrophyExpForGroupTable0-4 and selects the row GetTrophyExpValue reads"
-      }
-     }
-    },
-    {
-     "context": "character-data screen (WRAM bank $06)",
-     "scopes": [
-      {
-       "wram_bank": "0x06"
-      }
-     ],
-     "symbols": {
-      "0xd02a": {
-       "name": "wCharDataChoiceLog",
-       "note": "[100 bytes] One byte per level-up taken on this visit: the wCharDataPage the player confirmed. Cleared by WriteCharStatsToDisplayBuffer before the screen opens",
-       "size": 100
-      },
-      "0xd08e": {
-       "name": "wCharDataNumberBuffer",
-       "note": "[6 bytes] Scratch the character-data and EXP screens format numbers into. FormatExp24BitDecimal puts the 24-bit value's top byte at +$00 and formats the low word to five places from +$01, which is what makes the buffer six wide",
-       "size": 6
-      },
-      "0xd0a0": {
-       "name": "wCharDataStatsNoRacket",
-       "note": "[11 bytes] The eleven stats recomputed as if no racket were equipped, so the screen can show what the equipment is worth. CharDataScreen_BuildStats fills it from wStoryMainCharStats after RecomputeStatsWithoutRacket, and leaves it alone when nothing is equipped",
-       "size": 11
-      },
-      "0xd0ab": {
-       "name": "wCharDataRacketDeltas",
-       "note": "[11 bytes] Per-stat difference the equipped racket makes, cleared to zero before anything else so an unequipped character shows no arrows at all. DrawStatChangeArrows reads it alongside wCharDataStatsNoRacket",
-       "size": 11
-      },
-      "0xd0b6": {
-       "name": "wCharDataViewOnly",
-       "note": "[8-bit] Nonzero opens the character-data screen read-only: CharDataScreen_Show skips the allocation flow, LoadCharStatsWithLevelUpDeltas returns without computing deltas, and the input loop will not spend a point. Set by RunExpDistributionFlow and RestoreCharData"
-      }
-     }
-    }
-   ]
-  },
-  {
    "start": "0xdaea",
    "wram_bank": "0x04",
    "end": "0xdaf8",
@@ -1922,6 +1751,291 @@
       "0xdaf7": {
        "name": "wActorScriptBank",
        "note": "[8-bit] ROM bank of the actor script currently executing, taken from the actor's field +$22. Every ActorScriptOp_* passes it to FarReadByte / FarReadWord / CallHLInBankA to reach the script bytes"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "start": "0xd02a",
+   "wram_bank": "0x06",
+   "end": "0xd21a",
+   "comment": "WRAM bank $06 from $d02a up, shared by four subsystems that never run at\nonce. The palette fade engine's two 128-byte buffers straddle what used\nto be the boundary between two unions, which is why they are one now.\nEvery scope carries a ROM bank and wram_bank $06: the working palette\nbuffer and the character-data screen's stat arrays start at the same\naddress, and only the owning bank tells them apart.\nThe sound driver's scope keeps its wram_bank $07 alternative, since the\nsame offsets are its channel state in that bank.",
+   "variants": [
+    {
+     "context": "trophy EXP (bank $1e)",
+     "scopes": [
+      {
+       "bank": "0x1e"
+      }
+     ],
+     "symbols": {
+      "0xd038": {
+       "name": "wTrophyExpGroup",
+       "note": "[8-bit] Character group being totalled; indexes TrophyExpForGroupTable0-4 and selects the row GetTrophyExpValue reads"
+      }
+     }
+    },
+    {
+     "context": "character-data screen (bank $1a)",
+     "scopes": [
+      {
+       "bank": "0x1a",
+       "wram_bank": "0x06"
+      },
+      {
+       "bank": "0x1c",
+       "wram_bank": "0x06"
+      },
+      {
+       "bank": "0x1d",
+       "wram_bank": "0x06"
+      }
+     ],
+     "symbols": {
+      "0xd02a": {
+       "name": "wCharDataChoiceLog",
+       "note": "[100 bytes] One byte per level-up taken on this visit: the wCharDataPage the player confirmed. Cleared by WriteCharStatsToDisplayBuffer before the screen opens",
+       "size": 100
+      },
+      "0xd08e": {
+       "name": "wCharDataNumberBuffer",
+       "note": "[6 bytes] Scratch the character-data and EXP screens format numbers into. FormatExp24BitDecimal puts the 24-bit value's top byte at +$00 and formats the low word to five places from +$01, which is what makes the buffer six wide",
+       "size": 6
+      },
+      "0xd0a0": {
+       "name": "wCharDataStatsNoRacket",
+       "note": "[11 bytes] The eleven stats recomputed as if no racket were equipped, so the screen can show what the equipment is worth. CharDataScreen_BuildStats fills it from wStoryMainCharStats after RecomputeStatsWithoutRacket, and leaves it alone when nothing is equipped",
+       "size": 11
+      },
+      "0xd0ab": {
+       "name": "wCharDataRacketDeltas",
+       "note": "[11 bytes] Per-stat difference the equipped racket makes, cleared to zero before anything else so an unequipped character shows no arrows at all. DrawStatChangeArrows reads it alongside wCharDataStatsNoRacket",
+       "size": 11
+      },
+      "0xd0b6": {
+       "name": "wCharDataViewOnly",
+       "note": "[8-bit] Nonzero opens the character-data screen read-only: CharDataScreen_Show skips the allocation flow, LoadCharStatsWithLevelUpDeltas returns without computing deltas, and the input loop will not spend a point. Set by RunExpDistributionFlow and RestoreCharData"
+      }
+     }
+    },
+    {
+     "context": "sound engine (bank 0)",
+     "scopes": [
+      {
+       "wram_bank": "0x07"
+      },
+      {
+       "bank": "0x00",
+       "start": "0x2f00",
+       "end": "0x3de0"
+      }
+     ],
+     "symbols": {
+      "0xd100": {
+       "name": "wSndChannels",
+       "note": "[192 bytes] Six 32-byte channel state blocks (channels 0-1 music, 2-5 SFX); the active channel's block is mirrored into HRAM $ffd0 each pass, first word = script pointer ($ffff = idle)"
+      },
+      "0xd1c0": {
+       "name": "wSndLoopSlots",
+       "note": "[72 bytes] Per-channel loop bookkeeping (counter + return pointer per loop level); base resolved by GetChannelLoopSlot"
+      },
+      "0xd208": {
+       "name": "wSndActiveMask",
+       "note": "[8-bit] Bitmask of channels already serviced/keyed this update pass (AbortIfChannelTriggered tests it; folded into rAUDTERM at the end)"
+      },
+      "0xd209": {
+       "name": "wSndPanShadow",
+       "note": "[8-bit] Shadow of rAUDTERM: per-channel left/right output enable bits accumulated across channels"
+      },
+      "0xd20a": {
+       "name": "wSndChannelType",
+       "note": "[8-bit] Current channel type (0=square1/sweep, 1=square2, 2=wave, 3=noise)"
+      },
+      "0xd20b": {
+       "name": "wSndChannelBits",
+       "note": "[8-bit] Current channel's stereo output bit-pair (ch1=$11 .. ch4=$88), used for active-channel tracking"
+      },
+      "0xd20c": {
+       "name": "wSndChannelPanMask",
+       "note": "[8-bit] Same bit-pair as wSndChannelBits, masked against hSndPanMask to build wSndPanShadow"
+      },
+      "0xd20d": {
+       "name": "wSndRegBase",
+       "note": "[8-bit] Current channel's APU register offset (type*5); WriteChannelReg forms rAUD via $ff10+this+reg"
+      },
+      "0xd20e": {
+       "name": "wSndFrameCounter",
+       "note": "[8-bit] Free-running update counter; low nibble supplies the vibrato phase in TickVibrato"
+      },
+      "0xd20f": {
+       "name": "wSndChannelIndex",
+       "note": "[8-bit] Index (0-5) of the channel currently being updated"
+      },
+      "0xd212": {
+       "name": "wSndUpdateReqMask",
+       "note": "[8-bit] Pending channel-update request: mask of channels to reconfigure (SetChannelUpdateRequest)"
+      },
+      "0xd213": {
+       "name": "wSndUpdateReqData",
+       "note": "[8-bit] Value applied by the pending channel-update request (low nibble)"
+      },
+      "0xd214": {
+       "name": "wSndUpdateReqAck",
+       "note": "[8-bit] Accumulator of channels that have acknowledged the pending update request"
+      },
+      "0xd215": {
+       "name": "wSndFirstChannel",
+       "note": "[8-bit] Channel index the update pass starts from (normally 0)"
+      },
+      "0xd217": {
+       "name": "wSndLoadedWaveId",
+       "note": "[8-bit] Wave-pattern id currently loaded into wave RAM (change detection for the wave channel)"
+      },
+      "0xd218": {
+       "name": "wSndTranspose",
+       "note": "[8-bit] Global transpose added to note ids (cmd $a9 $fe/$f2/$f3)"
+      },
+      "0xd219": {
+       "name": "wSndWaveReloadPending",
+       "note": "[8-bit] Non-zero to force the wave channel to reload its pattern on the next note"
+      }
+     }
+    },
+    {
+     "context": "character-data and EXP screens (banks $1a/$1c/$1d)",
+     "scopes": [
+      {
+       "wram_bank": "0x06"
+      }
+     ],
+     "symbols": {
+      "0xd145": {
+       "name": "wCharDataStatsSlideX",
+       "note": "[16-bit] X offset the stat digits are drawn at while a page slides. The Slide*StatPage routines step it and DrawCharStatDigitsTask hands it to ApplySlideOffsetToSpriteX for every digit it queues",
+       "size": 2
+      },
+      "0xd147": {
+       "name": "wCharDataValuesSlideX",
+       "note": "[16-bit] The same offset for the value column, stepped in step with wCharDataStatsSlideX and applied by CharDataValuesSyncTask -- two offsets because the two columns slide in and out at different times",
+       "size": 2
+      },
+      "0xd161": {
+       "name": "wExpScreenCharStats",
+       "size": 30,
+       "note": "[2 x 15 bytes] Per-character record the EXP award screen works on, selected by wStoryCharacterSlot (slot 0 at +0, slot 1 at +15). InitExpScreenCharStats fills $d161-$d16f; +8 is the 16-bit total CheckExpLevelUp/Down compare, and DrawExpScreenLevelNumber, DrawExpScreenLevelBar and the SweepExpBarMarker routines read +0 and +3"
+      }
+     }
+    },
+    {
+     "context": "palette fade engine (bank $03)",
+     "scopes": [
+      {
+       "bank": "0x03",
+       "wram_bank": "0x06"
+      }
+     ],
+     "symbols": {
+      "0xd0a0": {
+       "name": "wWorkingPalettes",
+       "note": "[128 bytes] The palettes being faded: 16 palettes of four 16-bit colours. BackupMasterPalettes seeds it from wMasterPalettes, ClearWorkingPaletteBuffer zeroes all 64 colours and DesaturateWorkingPalettes rewrites each one through SplitColorComponents. AdvanceToPaletteEntry walks it 8 bytes at a time",
+       "size": 128
+      },
+      "0xd140": {
+       "name": "wMasterPalettesBackup",
+       "note": "[128 bytes] The untouched copy taken at the same moment, so a fade always has its endpoint to interpolate from and can be snapped back",
+       "size": 128
+      },
+      "0xd1e0": {
+       "name": "wPaletteFadeMask",
+       "note": "[8 bytes] One flag per palette, set from the bits of b at SetupPaletteFadeMask -- bit 7 is palette 0. Only flagged palettes are stepped",
+       "size": 8
+      },
+      "0xd1f0": {
+       "name": "wPaletteFadeAmount",
+       "note": "[8-bit] How far through the fade, as passed in d"
+      },
+      "0xd1f1": {
+       "name": "wPaletteFadeIndex",
+       "note": "[8-bit] Palette currently being stepped, saved across the AdvanceToPaletteEntry calls that resolve the same entry in both buffers"
+      },
+      "0xd1f2": {
+       "name": "wPaletteColorSplit",
+       "note": "[6 bytes] The two colours being interpolated, unpacked to red, green and blue by SplitColorComponents -- the working colour at +$00 and the target at +$03",
+       "size": 6
+      },
+      "0xd1f9": {
+       "name": "wPaletteFadeStep",
+       "note": "[8-bit] wPaletteFadeAmount divided by $1f, the per-component step the fade moves each call"
+      },
+      "0xd1fe": {
+       "name": "wCutsceneWindowSliding",
+       "note": "[8-bit] Set while a cutscene text window is sliding, by AnimateWindowSlideUpTask and the scrolling-story player"
+      }
+     }
+    },
+    {
+     "context": "EXP distribution screen (bank $1d)",
+     "scopes": [
+      {
+       "bank": "0x1d",
+       "wram_bank": "0x06"
+      }
+     ],
+     "symbols": {
+      "0xd142": {
+       "name": "wCharDataPageArrowMode",
+       "note": "[8-bit] Which page arrows to bob: 1 draws the left one, 2 the right, 0 neither. DrawCharDataPageArrowsTask reads it every frame"
+      },
+      "0xd143": {
+       "name": "wCharDataArrowHold",
+       "note": "[8-bit] Nonzero freezes the arrow bob; while it is clear the task steps wCharDataArrowPhase"
+      },
+      "0xd144": {
+       "name": "wCharDataArrowPhase",
+       "note": "[8-bit] Free-running counter the arrow bob reads for its offset"
+      },
+      "0xd14e": {
+       "name": "wExpPoolRemaining",
+       "note": "[16-bit] EXP points still to hand out. AssignExpPointToChar decrements it per point spent, DrawExpPoolReadout prints it and DrawExpPoolGauge draws it as a fraction of wExpPoolTotal",
+       "size": 2
+      },
+      "0xd150": {
+       "name": "wExpPoolTotal",
+       "note": "[16-bit] What the pool started at, kept so the gauge has a denominator. Both are seeded from hl by InitLevelUpScreenState",
+       "size": 2
+      },
+      "0xd17f": {
+       "name": "wExpCursorChar",
+       "note": "[8-bit] Which character the distribution cursor is on; cleared when the screen opens"
+      },
+      "0xd180": {
+       "name": "wExpCursorSlide",
+       "note": "[8-bit] Slide progress for the cursor moving between characters, stepped by SlideExpCursorToMainCharTask"
+      },
+      "0xd181": {
+       "name": "wExpBarMarkerX",
+       "note": "[8-bit] X of the marker sweeping along the EXP bar. $a8 is its home; SweepExpBarMarkerLeft subtracts the per-frame step and snaps back to $a8 once it passes $18"
+      },
+      "0xd182": {
+       "name": "wExpPromptCursorRow",
+       "note": "[8-bit] Row the confirm prompt cursor sits on"
+      },
+      "0xd183": {
+       "name": "wExpRepeatDelay",
+       "note": "[8-bit] Frames before a held direction starts repeating, seeded to $08 when the screen opens"
+      },
+      "0xd184": {
+       "name": "wExpRedrawPending",
+       "note": "[8-bit] Set when something changed and the screen needs its tilemap rows pushed again"
+      },
+      "0xd185": {
+       "name": "wExpInputRepeating",
+       "note": "[8-bit] Set once a held direction has begun repeating, so the delay is only applied on the first step"
+      },
+      "0xd186": {
+       "name": "wExpLevelUpFanfare",
+       "note": "[8-bit] $ff when a level-up has just happened; TickLevelUpJingle plays the jingle off it and clears it"
       }
      }
     }

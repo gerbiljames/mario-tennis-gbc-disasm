@@ -86,9 +86,9 @@ InitDrillWorkRam:
 	ld [$d000], a ; $40d7
 	ld [$d001], a ; $40da
 	ld [$d002], a ; $40dd
-	ld [$d142], a ; $40e0
-	ld [$d143], a ; $40e3
-	ld [$d144], a ; $40e6
+	ld [wCharDataPageArrowMode], a ; $40e0
+	ld [wCharDataArrowHold], a ; $40e3
+	ld [wCharDataArrowPhase], a ; $40e6
 	ld hl, wCharDataStatsSlideX ; $40e9
 	ld de, $00a8 ; $40ec
 	ld a, e ; $40ef
@@ -1405,13 +1405,13 @@ ApplyTilemapPatchList:
 	jr ApplyTilemapPatchList ; $4c02
 DrawCharDataPageArrowsTask:
 	wram_bank $06 ; $4c04
-	ld a, [$d143] ; $4c0a
+	ld a, [wCharDataArrowHold] ; $4c0a
 	or a ; $4c0d
 	jr nz, .nonZero ; $4c0e
-	ld hl, $d144 ; $4c10
+	ld hl, wCharDataArrowPhase ; $4c10
 	inc [hl] ; $4c13
 .nonZero:
-	ld a, [$d142] ; $4c14
+	ld a, [wCharDataPageArrowMode] ; $4c14
 	or a ; $4c17
 	jr z, .zero ; $4c18
 	dec a ; $4c1a
@@ -1447,7 +1447,7 @@ DrawCharDataPageArrowsTask:
 	ret ; $4c5f
 BobArrowSpriteLeft:
 	wram_bank $06 ; $4c60
-	ld a, [$d144] ; $4c66
+	ld a, [wCharDataArrowPhase] ; $4c66
 	rrca ; $4c69
 	and $0f ; $4c6a
 	add LOW(Data_1d_4c9c) ; $4c6c
@@ -1460,7 +1460,7 @@ BobArrowSpriteLeft:
 	inc a ; $4c75
 	add d ; $4c76
 	ld d, a ; $4c77
-	ld a, [$d143] ; $4c78
+	ld a, [wCharDataArrowHold] ; $4c78
 	cpl ; $4c7b
 	inc a ; $4c7c
 	add d ; $4c7d
@@ -1468,7 +1468,7 @@ BobArrowSpriteLeft:
 	ret ; $4c7f
 BobArrowSpriteRight:
 	wram_bank $06 ; $4c80
-	ld a, [$d144] ; $4c86
+	ld a, [wCharDataArrowPhase] ; $4c86
 	rrca ; $4c89
 	and $0f ; $4c8a
 	add LOW(Data_1d_4c9c) ; $4c8c
@@ -1479,7 +1479,7 @@ BobArrowSpriteRight:
 	ld a, [hl] ; $4c93
 	add d ; $4c94
 	ld d, a ; $4c95
-	ld a, [$d143] ; $4c96
+	ld a, [wCharDataArrowHold] ; $4c96
 	add d ; $4c99
 	ld d, a ; $4c9a
 	ret ; $4c9b
@@ -1488,7 +1488,7 @@ Data_1d_4c9c:
 	db $00, $01, $02, $03, $04, $05, $06, $06, $06, $05, $04, $03, $02, $01, $00, $00 ; 0x00
 RunDrillResultInputLoop:
 	wram_bank $06 ; $4cac
-	ld a, [$d142] ; $4cb2
+	ld a, [wCharDataPageArrowMode] ; $4cb2
 	or a ; $4cb5
 	jr z, .loop ; $4cb6
 	dec a ; $4cb8
@@ -1534,7 +1534,7 @@ RunDrillResultInputLoop:
 	call SlideToPartnerStatPage ; $4d21
 	wram_bank $06 ; $4d24
 	ld a, $02 ; $4d2a
-	ld [$d142], a ; $4d2c
+	ld [wCharDataPageArrowMode], a ; $4d2c
 	ld a, $01 ; $4d2f
 	ld hl, SlideCharDataArrowsInTask ; $4d31
 	call RegisterFrameTask ; $4d34
@@ -1567,7 +1567,7 @@ RunDrillResultInputLoop:
 	call SlideToMainCharStatPage ; $4d82
 	wram_bank $06 ; $4d85
 	ld a, $01 ; $4d8b
-	ld [$d142], a ; $4d8d
+	ld [wCharDataPageArrowMode], a ; $4d8d
 	ld a, $01 ; $4d90
 	ld hl, SlideCharDataArrowsInTask ; $4d92
 	call RegisterFrameTask ; $4d95
@@ -1598,7 +1598,7 @@ RunDrillResultInputLoop:
 	call SlideFromMainCharStatPage ; $4dc3
 	wram_bank $06 ; $4dc6
 	xor a ; $4dcc
-	ld [$d142], a ; $4dcd
+	ld [wCharDataPageArrowMode], a ; $4dcd
 	call ClearFrameTasks ; $4dd0
 	ld a, $01 ; $4dd3
 	ld hl, CharDataScreenBgScrollTask ; $4dd5
@@ -1640,7 +1640,7 @@ RunDrillResultInputLoop:
 	call SlideFromPartnerStatPage ; $4e22
 	wram_bank $06 ; $4e25
 	xor a ; $4e2b
-	ld [$d142], a ; $4e2c
+	ld [wCharDataPageArrowMode], a ; $4e2c
 	call ClearFrameTasks ; $4e2f
 	ld a, $01 ; $4e32
 	ld hl, CharDataScreenBgScrollTask ; $4e34
@@ -1664,9 +1664,9 @@ RunDrillResultInputLoop:
 	ret ; $4e5d
 SlideCharDataArrowsOutTask:
 	wram_bank $06 ; $4e5e
-	ld a, [$d143] ; $4e64
+	ld a, [wCharDataArrowHold] ; $4e64
 	add $04 ; $4e67
-	ld [$d143], a ; $4e69
+	ld [wCharDataArrowHold], a ; $4e69
 	cp $40 ; $4e6c
 	ret c ; $4e6e
 	ld hl, SlideCharDataArrowsOutTask ; $4e6f
@@ -1674,9 +1674,9 @@ SlideCharDataArrowsOutTask:
 	ret ; $4e75
 SlideCharDataArrowsInTask:
 	wram_bank $06 ; $4e76
-	ld a, [$d143] ; $4e7c
+	ld a, [wCharDataArrowHold] ; $4e7c
 	sub $08 ; $4e7f
-	ld [$d143], a ; $4e81
+	ld [wCharDataArrowHold], a ; $4e81
 	or a ; $4e84
 	ret nz ; $4e85
 	ld hl, SlideCharDataArrowsInTask ; $4e86
@@ -3625,28 +3625,28 @@ InitLevelUpScreenState:
 	or a ; $693d
 	jr nz, .nonZero ; $693e
 	ld a, l ; $6940
-	ld [$d14e], a ; $6941
-	ld [$d150], a ; $6944
+	ld [wExpPoolRemaining], a ; $6941
+	ld [wExpPoolTotal], a ; $6944
 	ld a, h ; $6947
-	ld [$d14f], a ; $6948
-	ld [$d151], a ; $694b
+	ld [wExpPoolRemaining + 1], a ; $6948
+	ld [wExpPoolTotal + 1], a ; $694b
 	xor a ; $694e
 	ld [wExpScreenCharStats + 6], a ; $694f
 	ld [wExpScreenCharStats + 7], a ; $6952
 	ld [wExpScreenCharStats + 21], a ; $6955
 	ld [wExpScreenCharStats + 22], a ; $6958
-	ld [$d186], a ; $695b
+	ld [wExpLevelUpFanfare], a ; $695b
 	xor a ; $695e
-	ld [$d185], a ; $695f
+	ld [wExpInputRepeating], a ; $695f
 	ld a, $08 ; $6962
-	ld [$d183], a ; $6964
+	ld [wExpRepeatDelay], a ; $6964
 .nonZero:
 	xor a ; $6967
-	ld [$d17f], a ; $6968
-	ld [$d180], a ; $696b
-	ld [$d184], a ; $696e
+	ld [wExpCursorChar], a ; $6968
+	ld [wExpCursorSlide], a ; $696b
+	ld [wExpRedrawPending], a ; $696e
 	ld a, $a8 ; $6971
-	ld [$d181], a ; $6973
+	ld [wExpBarMarkerX], a ; $6973
 	ret ; $6976
 BuildExpDistributionScreen:
 	call DrawExpPoolReadout ; $6977
@@ -3767,7 +3767,7 @@ CopyWram1ToWram2ExpScreen:
 	ret ; $6acd
 DrawExpPoolReadout:
 	wram_bank $06 ; $6ace
-	ld hl, $d14e ; $6ad4
+	ld hl, wExpPoolRemaining ; $6ad4
 	ld a, [hl+] ; $6ad7
 	ld h, [hl] ; $6ad8
 	ld l, a ; $6ad9
@@ -3781,11 +3781,11 @@ DrawExpPoolReadout:
 	ret ; $6aee
 DrawExpPoolGauge:
 	wram_bank $06 ; $6aef
-	ld hl, $d14e ; $6af5
+	ld hl, wExpPoolRemaining ; $6af5
 	ld a, [hl+] ; $6af8
 	ld d, [hl] ; $6af9
 	ld e, a ; $6afa
-	ld hl, $d150 ; $6afb
+	ld hl, wExpPoolTotal ; $6afb
 	ld a, [hl+] ; $6afe
 	ld h, [hl] ; $6aff
 	ld l, a ; $6b00
@@ -4430,23 +4430,23 @@ RunExpDistributionLoop:
 	jp CheckExpLevelDown.step2 ; $6f4e
 .tick:
 	wram_bank $06 ; $6f51
-	ld a, [$d185] ; $6f57
+	ld a, [wExpInputRepeating] ; $6f57
 	and $08 ; $6f5a
 	or a ; $6f5c
 	jr z, .checkRepeat ; $6f5d
-	ld a, [$d183] ; $6f5f
+	ld a, [wExpRepeatDelay] ; $6f5f
 	or a ; $6f62
 	jr z, .checkRepeat ; $6f63
 	dec a ; $6f65
-	ld [$d183], a ; $6f66
+	ld [wExpRepeatDelay], a ; $6f66
 	xor a ; $6f69
-	ld [$d185], a ; $6f6a
+	ld [wExpInputRepeating], a ; $6f6a
 .checkRepeat:
-	ld a, [$d184] ; $6f6d
+	ld a, [wExpRedrawPending] ; $6f6d
 	or a ; $6f70
 	jr z, .frame ; $6f71
 	dec a ; $6f73
-	ld [$d184], a ; $6f74
+	ld [wExpRedrawPending], a ; $6f74
 .frame:
 	call TickLevelUpJingle ; $6f77
 	call UploadExpScreenTilemapRows ; $6f7a
@@ -4457,7 +4457,7 @@ RunExpDistributionLoop:
 	push af ; $6f86
 	wram_bank $06 ; $6f87
 	xor a ; $6f8d
-	ld [$d184], a ; $6f8e
+	ld [wExpRedrawPending], a ; $6f8e
 	pop af ; $6f91
 .checkButtons:
 	bit 5, a ; $6f92
@@ -4468,12 +4468,12 @@ RunExpDistributionLoop:
 	jp nz, .increase ; $6f9e
 	wram_bank $06 ; $6fa1
 	ld a, $a8 ; $6fa7
-	ld [$d181], a ; $6fa9
+	ld [wExpBarMarkerX], a ; $6fa9
 	ld a, $08 ; $6fac
-	ld [$d183], a ; $6fae
+	ld [wExpRepeatDelay], a ; $6fae
 	xor a ; $6fb1
-	ld [$d185], a ; $6fb2
-	ld hl, $d17f ; $6fb5
+	ld [wExpInputRepeating], a ; $6fb2
+	ld hl, wExpCursorChar ; $6fb5
 	res 1, [hl] ; $6fb8
 	ldh a, [hInputRisingEdge] ; $6fba
 	bit PADB_UP, a ; $6fbc
@@ -4495,7 +4495,7 @@ RunExpDistributionLoop:
 	ld a, $01 ; $6fe3
 	ld hl, SlideExpCursorToMainCharTask ; $6fe5
 	call RegisterFrameTask ; $6fe8
-	ld hl, $d17f ; $6feb
+	ld hl, wExpCursorChar ; $6feb
 	set 0, [hl] ; $6fee
 	jp RunExpDistributionLoop ; $6ff0
 .selectPartner:
@@ -4512,17 +4512,17 @@ RunExpDistributionLoop:
 	ld a, $01 ; $7010
 	ld hl, SlideExpCursorToPartnerTask ; $7012
 	call RegisterFrameTask ; $7015
-	ld hl, $d17f ; $7018
+	ld hl, wExpCursorChar ; $7018
 	set 0, [hl] ; $701b
 	jp RunExpDistributionLoop ; $701d
 .decrease:
 	wram_bank $06 ; $7020
-	ld a, [$d17f] ; $7026
+	ld a, [wExpCursorChar] ; $7026
 	bit 0, a ; $7029
 	jp nz, RunExpDistributionLoop ; $702b
-	ld hl, $d185 ; $702e
+	ld hl, wExpInputRepeating ; $702e
 	inc [hl] ; $7031
-	ld a, [$d184] ; $7032
+	ld a, [wExpRedrawPending] ; $7032
 	or a ; $7035
 	jr nz, .decreaseRepeat ; $7036
 	call UnassignExpPointFromChar ; $7038
@@ -4530,35 +4530,35 @@ RunExpDistributionLoop:
 	jr z, .decreaseFailed ; $703c
 	sound $62 ; $703e
 	wram_bank $06 ; $7040
-	ld a, [$d183] ; $7046
+	ld a, [wExpRepeatDelay] ; $7046
 	or a ; $7049
 	jr nz, .applyDecrease ; $704a
 	call UnassignExpPointFromChar ; $704c
 .applyDecrease:
-	ld hl, $d17f ; $704f
+	ld hl, wExpCursorChar ; $704f
 	set 1, [hl] ; $7052
-	ld a, [$d183] ; $7054
-	ld [$d184], a ; $7057
+	ld a, [wExpRepeatDelay] ; $7054
+	ld [wExpRedrawPending], a ; $7057
 	call RefreshExpScreenReadouts ; $705a
 	call SweepExpBarMarkerLeft ; $705d
 	jp RunExpDistributionLoop ; $7060
 .decreaseFailed:
-	ld hl, $d17f ; $7063
+	ld hl, wExpCursorChar ; $7063
 	res 1, [hl] ; $7066
 	ld a, $a8 ; $7068
-	ld [$d181], a ; $706a
+	ld [wExpBarMarkerX], a ; $706a
 	jp RunExpDistributionLoop ; $706d
 .decreaseRepeat:
 	call SweepExpBarMarkerLeft ; $7070
 	jp RunExpDistributionLoop ; $7073
 .increase:
 	wram_bank $06 ; $7076
-	ld a, [$d17f] ; $707c
+	ld a, [wExpCursorChar] ; $707c
 	bit 0, a ; $707f
 	jp nz, RunExpDistributionLoop ; $7081
-	ld hl, $d185 ; $7084
+	ld hl, wExpInputRepeating ; $7084
 	inc [hl] ; $7087
-	ld a, [$d184] ; $7088
+	ld a, [wExpRedrawPending] ; $7088
 	or a ; $708b
 	jr nz, .increaseRepeat ; $708c
 	call AssignExpPointToChar ; $708e
@@ -4566,46 +4566,46 @@ RunExpDistributionLoop:
 	jr z, .increaseFailed ; $7092
 	sound $5f ; $7094
 	wram_bank $06 ; $7096
-	ld a, [$d183] ; $709c
+	ld a, [wExpRepeatDelay] ; $709c
 	or a ; $709f
 	jr nz, .applyIncrease ; $70a0
 	call AssignExpPointToChar ; $70a2
 .applyIncrease:
-	ld hl, $d17f ; $70a5
+	ld hl, wExpCursorChar ; $70a5
 	set 1, [hl] ; $70a8
-	ld a, [$d183] ; $70aa
-	ld [$d184], a ; $70ad
+	ld a, [wExpRepeatDelay] ; $70aa
+	ld [wExpRedrawPending], a ; $70ad
 	call RefreshExpScreenReadouts ; $70b0
 	call SweepExpBarMarkerRight ; $70b3
 	jp RunExpDistributionLoop ; $70b6
 .increaseFailed:
-	ld hl, $d17f ; $70b9
+	ld hl, wExpCursorChar ; $70b9
 	res 1, [hl] ; $70bc
 	ld a, $a8 ; $70be
-	ld [$d181], a ; $70c0
+	ld [wExpBarMarkerX], a ; $70c0
 	jp CheckExpLevelDown.step2 ; $70c3
 .increaseRepeat:
 	call SweepExpBarMarkerRight ; $70c6
 	jp RunExpDistributionLoop ; $70c9
 SlideExpCursorToMainCharTask:
 	wram_bank $06 ; $70cc
-	ld a, [$d180] ; $70d2
+	ld a, [wExpCursorSlide] ; $70d2
 	dec a ; $70d5
-	ld [$d180], a ; $70d6
+	ld [wExpCursorSlide], a ; $70d6
 	ret nz ; $70d9
-	ld hl, $d17f ; $70da
+	ld hl, wExpCursorChar ; $70da
 	res 0, [hl] ; $70dd
 	ld hl, SlideExpCursorToMainCharTask ; $70df
 	call UnregisterFrameTask ; $70e2
 	ret ; $70e5
 SlideExpCursorToPartnerTask:
 	wram_bank $06 ; $70e6
-	ld a, [$d180] ; $70ec
+	ld a, [wExpCursorSlide] ; $70ec
 	inc a ; $70ef
-	ld [$d180], a ; $70f0
+	ld [wExpCursorSlide], a ; $70f0
 	cp $18 ; $70f3
 	ret nz ; $70f5
-	ld hl, $d17f ; $70f6
+	ld hl, wExpCursorChar ; $70f6
 	res 0, [hl] ; $70f9
 	ld hl, SlideExpCursorToPartnerTask ; $70fb
 	call UnregisterFrameTask ; $70fe
@@ -4613,15 +4613,15 @@ SlideExpCursorToPartnerTask:
 SweepExpBarMarkerLeft:
 	call GetExpBarSweepStep ; $7102
 	wram_bank $06 ; $7105
-	ld a, [$d181] ; $710b
+	ld a, [wExpBarMarkerX] ; $710b
 	cp $a8 ; $710e
 	jr z, .checkStoryCharacterSlot ; $7110
 	sub b ; $7112
-	ld [$d181], a ; $7113
+	ld [wExpBarMarkerX], a ; $7113
 	cp $18 ; $7116
 	ret nc ; $7118
 	ld a, $a8 ; $7119
-	ld [$d181], a ; $711b
+	ld [wExpBarMarkerX], a ; $711b
 	ret ; $711e
 .checkStoryCharacterSlot:
 	ld a, [wStoryCharacterSlot] ; $711f
@@ -4633,16 +4633,16 @@ SweepExpBarMarkerLeft:
 	ld a, [wExpScreenCharStats + 18] ; $712a
 .getExpBarSweepStep:
 	add $36 ; $712d
-	ld [$d181], a ; $712f
+	ld [wExpBarMarkerX], a ; $712f
 	ret ; $7132
 SweepExpBarMarkerRight:
 	call GetExpBarSweepStep ; $7133
 	wram_bank $06 ; $7136
-	ld a, [$d181] ; $713c
+	ld a, [wExpBarMarkerX] ; $713c
 	cp $a8 ; $713f
 	jr z, .eqa8 ; $7141
 	add b ; $7143
-	ld [$d181], a ; $7144
+	ld [wExpBarMarkerX], a ; $7144
 	ld b, a ; $7147
 	ld a, [wStoryCharacterSlot] ; $7148
 	or a ; $714b
@@ -4658,11 +4658,11 @@ SweepExpBarMarkerRight:
 	cp c ; $715a
 	ret c ; $715b
 	ld a, $a8 ; $715c
-	ld [$d181], a ; $715e
+	ld [wExpBarMarkerX], a ; $715e
 	ret ; $7161
 .eqa8:
 	ld a, $18 ; $7162
-	ld [$d181], a ; $7164
+	ld [wExpBarMarkerX], a ; $7164
 	ret ; $7167
 GetExpBarSweepStep:
 	wram_bank $06 ; $7168
@@ -4804,13 +4804,13 @@ ConvertColorToGrayscale:
 	ret ; $726c
 AssignExpPointToChar:
 	wram_bank $06 ; $726d
-	ld a, [$d14e] ; $7273
+	ld a, [wExpPoolRemaining] ; $7273
 	ld d, a ; $7276
-	ld a, [$d14f] ; $7277
+	ld a, [wExpPoolRemaining + 1] ; $7277
 	or d ; $727a
 	ld a, $00 ; $727b
 	ret z ; $727d
-	ld hl, $d14e ; $727e
+	ld hl, wExpPoolRemaining ; $727e
 	ld a, [hl+] ; $7281
 	ld d, [hl] ; $7282
 	ld e, a ; $7283
@@ -4953,7 +4953,7 @@ UnassignExpPointFromChar:
 	ld [hl], d ; $7337
 	call CheckExpLevelDown ; $7338
 .step2:
-	ld hl, $d14e ; $733b
+	ld hl, wExpPoolRemaining ; $733b
 	ld a, [hl+] ; $733e
 	ld d, [hl] ; $733f
 	ld e, a ; $7340
@@ -5000,7 +5000,7 @@ CheckExpLevelUp:
 	or e ; $7390
 	ret nz ; $7391
 	ld a, $ff ; $7392
-	ld [$d186], a ; $7394
+	ld [wExpLevelUpFanfare], a ; $7394
 	ld a, [wExpScreenCharStats] ; $7397
 	inc a ; $739a
 	ld [wExpScreenCharStats], a ; $739b
@@ -5025,7 +5025,7 @@ CheckExpLevelUp:
 	or e ; $73bf
 	ret nz ; $73c0
 	ld a, $ff ; $73c1
-	ld [$d186], a ; $73c3
+	ld [wExpLevelUpFanfare], a ; $73c3
 	ld a, [wExpScreenCharStats + 15] ; $73c6
 	inc a ; $73c9
 	ld [wExpScreenCharStats + 15], a ; $73ca
@@ -5103,7 +5103,7 @@ CheckExpLevelDown:
 	ret ; $7452
 .step2:
 	wram_bank $06 ; $7453
-	ld hl, $d17f ; $7459
+	ld hl, wExpCursorChar ; $7459
 	set 2, [hl] ; $745c
 	wram_bank $06 ; $745e
 	ld a, [wExpScreenCharStats + 10] ; $7464
@@ -5162,7 +5162,7 @@ CheckExpLevelDown:
 	db $0c ; $74f7 inline arg
 	wram_bank $06 ; $74f8
 	ld a, $01 ; $74fe
-	ld [$d182], a ; $7500
+	ld [wExpPromptCursorRow], a ; $7500
 	jr UploadExpPromptWindowRows.loop ; $7503
 UploadExpPromptWindowRows:
 	wram_bank $03 ; $7505
@@ -5208,7 +5208,7 @@ DrawExpPromptCursor:
 	ret z ; $756c
 	ld bc, $0816 ; $756d
 	ld de, $0c7f ; $7570
-	ld a, [$d182] ; $7573
+	ld a, [wExpPromptCursorRow] ; $7573
 	or a ; $7576
 	jr z, .queueSprite ; $7577
 	ld e, $87 ; $7579
@@ -5217,12 +5217,12 @@ DrawExpPromptCursor:
 	ret ; $757e
 .playSfx:
 	sound $5e ; $757f
-	ld a, [$d182] ; $7581
+	ld a, [wExpPromptCursorRow] ; $7581
 	xor $01 ; $7584
-	ld [$d182], a ; $7586
+	ld [wExpPromptCursorRow], a ; $7586
 	jr UploadExpPromptWindowRows.loop ; $7589
 .bit0Set:
-	ld a, [$d182] ; $758b
+	ld a, [wExpPromptCursorRow] ; $758b
 	or a ; $758e
 	jr nz, .playSfx2 ; $758f
 	sound $5f ; $7591
@@ -5269,7 +5269,7 @@ DrawExpPromptCursor:
 	call WaitFramesCmd ; $75fb
 	db $02 ; $75fe inline arg
 	wram_bank $06 ; $75ff
-	ld hl, $d17f ; $7605
+	ld hl, wExpCursorChar ; $7605
 	res 2, [hl] ; $7608
 	call UpdateExpScreenSelectionPalettes ; $760a
 	jp RunExpDistributionLoop ; $760d
@@ -5329,7 +5329,7 @@ ApplyTilemapPatchListExpScreen:
 	jr ApplyTilemapPatchListExpScreen ; $765c
 DrawExpToNextLevelTask:
 	wram_bank $06 ; $765e
-	ld a, [$d17f] ; $7664
+	ld a, [wExpCursorChar] ; $7664
 	bit 0, a ; $7667
 	ret nz ; $7669
 	bit 2, a ; $766a
@@ -5418,7 +5418,7 @@ GetExpScreenDigitSprite:
 	ret ; $7726
 DrawExpCharCursorTask:
 	wram_bank $06 ; $7727
-	ld a, [$d180] ; $772d
+	ld a, [wExpCursorSlide] ; $772d
 	add LOW(Data_1d_7746) ; $7730
 	ld l, a ; $7732
 	adc HIGH(Data_1d_7746) ; $7733
@@ -5461,7 +5461,7 @@ DrawExpBarSweepSpriteTask:
 	ld e, $49 ; $7791
 .zero:
 	wram_bank $06 ; $7793
-	ld a, [$d181] ; $7799
+	ld a, [wExpBarMarkerX] ; $7799
 	ld d, a ; $779c
 	ld hl, SpriteTemplate_1d_79b4 ; $779d
 	ld bc, $0f10 ; $77a0
@@ -5469,19 +5469,19 @@ DrawExpBarSweepSpriteTask:
 	ret ; $77a6
 TickLevelUpJingle:
 	wram_bank $06 ; $77a7
-	ld a, [$d186] ; $77ad
+	ld a, [wExpLevelUpFanfare] ; $77ad
 	or a ; $77b0
 	ret z ; $77b1
 	cp $ff ; $77b2
 	jr z, .eqff ; $77b4
 	dec a ; $77b6
-	ld [$d186], a ; $77b7
+	ld [wExpLevelUpFanfare], a ; $77b7
 	ret nz ; $77ba
 	sound $0c ; $77bb
 	ret ; $77bd
 .eqff:
 	ld a, $a0 ; $77be
-	ld [$d186], a ; $77c0
+	ld [wExpLevelUpFanfare], a ; $77c0
 	sound $00 ; $77c3
 	sound $2f ; $77c5
 	ret ; $77c7

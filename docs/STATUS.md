@@ -7103,3 +7103,45 @@ Worth stating plainly, because it is counter-intuitive: a default variant is
 *less* safe than a scoped one, not more. It is the right tool only where the
 alternatives are also scoped by ROM range and the whole union sits in one WRAM
 bank by construction — `wMapScratch` qualifies, this did not.
+
+## Bank $06 continued: a palette engine hiding under the stats (2026-07-28)
+
+Picking up the 184 direct accesses left in WRAM bank `$06` turned up something
+the previous pass had got wrong. Bank `$03`'s palette fade engine keeps its
+buffers in bank `$06`, and its working buffer starts at **`$d0a0` — the same
+address as `wCharDataStatsNoRacket`**, named last pass from
+`CharDataScreen_BuildStats`. That name was scoped `{wram_bank: $06}` alone, so
+it was rendering across five sites in `BackupMasterPalettes`,
+`ClearWorkingPaletteBuffer` and `DesaturateWorkingPalettes`, where the bytes are
+64 CGB colours and not eleven tennis stats.
+
+The same over-reach had `wCharDataChoiceLog` — 100 bytes — claiming addresses in
+banks `$03`, `$0e` and `$1e` that belong to none of it. Both are fixed by the
+rule the last three passes keep arriving at: the character-data variant is now
+scoped to banks `$1a`/`$1c`/`$1d` **and** WRAM bank `$06`.
+
+**The palette engine, once separated, is legible:**
+
+| | |
+|---|---|
+| `$d0a0` `wWorkingPalettes` | 128 bytes — the 16 palettes being faded |
+| `$d140` `wMasterPalettesBackup` | the untouched copy taken at the same moment, so a fade always has an endpoint |
+| `$d1e0` `wPaletteFadeMask` | one flag per palette, set from the bits of `b`, bit 7 = palette 0 |
+| `$d1f0`/`$d1f9` | how far through the fade, and that divided by `$1f` — the per-component step |
+| `$d1f2` `wPaletteColorSplit` | the two colours mid-interpolation, unpacked to r/g/b |
+
+Its two 128-byte buffers straddle `$d0b7`, which was the boundary between two
+unions, so those merged into one spanning `$d02a-$d21a`.
+
+**The EXP distribution screen** (bank `$1d`) accounts for most of the rest:
+`wExpPoolRemaining`/`wExpPoolTotal` are the point pool and its denominator —
+`InitLevelUpScreenState` seeds both from `hl` and `AssignExpPointToChar`
+decrements the first; `wExpBarMarkerX` sweeps from `$a8` home to `$18` and snaps
+back; `wExpLevelUpFanfare` is `$ff` for one frame when a level is gained. It is
+scoped to bank `$1d` alone because bank `$1a` keeps a different byte at `$d151`
+— the high half of the pool total to one screen, a flags byte to the other.
+
+Direct accesses in bank `$06`: **184 → 102**, across 45 → 31 addresses. What
+remains there is the `$d000-$d003` block, which ten ROM banks share for the star
+warp transition, cutscene text, the character viewer and the character-data
+screen — four more variants, each needing its owner established first.

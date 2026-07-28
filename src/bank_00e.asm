@@ -3159,7 +3159,7 @@ UpdateStarWarpSprite:
 	ld a, $fc ; $7228
 	add d ; $722a
 	ld d, a ; $722b
-	ld hl, wCharDataChoiceLog + 22 ; $722c
+	ld hl, $d040 ; $722c
 	ld a, e ; $722f
 	ld [hl+], a ; $7230
 	ld [hl], d ; $7231
@@ -3219,9 +3219,9 @@ UpdateStarWarpTrailSparkles:
 	adc $d0 ; $727e
 	sub l ; $7280
 	ld h, a ; $7281
-	ld a, [wCharDataChoiceLog + 22] ; $7282
+	ld a, [$d040] ; $7282
 	ld [hl+], a ; $7285
-	ld a, [wCharDataChoiceLog + 23] ; $7286
+	ld a, [$d041] ; $7286
 	ld [hl], a ; $7289
 	dec hl ; $728a
 	push hl ; $728b
