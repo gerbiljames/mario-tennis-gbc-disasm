@@ -130,7 +130,7 @@ BuildCharDataScreenPages:
 	ld a, $01 ; $4144
 	call SaveWorkTilemapToPage ; $4146
 	ld hl, DrillDisplayData_1d ; $4149
-	ld bc, $d390 ; $414c
+	ld bc, wScreenAttrmap + 28 * TILEMAP_WIDTH + 16 ; $414c
 	call ApplyTilemapPatchList ; $414f
 	wram_bank $03 ; $4152
 	ld hl, wShadowTilemap ; $4158
@@ -427,11 +427,11 @@ BuildCharDataSummaryFields:
 	adc $00 ; $4462
 	ld h, a ; $4464
 	pop af ; $4465
-	ld de, $d3cb ; $4466
+	ld de, wScreenAttrmap + 30 * TILEMAP_WIDTH + 11 ; $4466
 	ld c, $0a ; $4469
 	call WriteNameStringTiles ; $446b
 	ld hl, CharDataSummaryFieldsTilePlot0 ; $446e
-	ld de, $d3c0 ; $4471
+	ld de, wScreenAttrmap + 30 * TILEMAP_WIDTH ; $4471
 	ld b, $0c ; $4474
 	call PlotTilesAtOffsets ; $4476
 	push af ; $4479
@@ -449,7 +449,7 @@ BuildCharDataSummaryFields:
 	ld h, a ; $448c
 	pop af ; $448d
 	ld a, [hl] ; $448e
-	ld hl, $d3e3 ; $448f
+	ld hl, wScreenAttrmap + 31 * TILEMAP_WIDTH + 3 ; $448f
 	call DrawFourTileFlagLabel ; $4492
 	wram_bank $06 ; $4495
 	push af ; $449b
@@ -660,7 +660,7 @@ BuildCharDataSummaryFields:
 	ld h, a ; $4621
 	pop af ; $4622
 	ld a, [hl] ; $4623
-	ld hl, wShadowAttrmap + 3 * TILEMAP_WIDTH + 19 ; $4624
+	ld hl, $d473 ; $4624
 	call DrawFourTileFlagLabel ; $4627
 	wram_bank $06 ; $462a
 	push af ; $4630
@@ -1299,16 +1299,16 @@ BuildMainCharStatPage:
 	ld bc, $d500 ; $4b1c
 	call ApplyTilemapPatchList ; $4b1f
 	ld hl, StatPageTilemapPatch1 ; $4b22
-	ld bc, $d240 ; $4b25
+	ld bc, wScreenAttrmap + 18 * TILEMAP_WIDTH ; $4b25
 	call ApplyTilemapPatchList ; $4b28
 	ld hl, StatPageTilemapPatch2 ; $4b2b
-	ld bc, $d280 ; $4b2e
+	ld bc, wScreenAttrmap + 20 * TILEMAP_WIDTH ; $4b2e
 	call ApplyTilemapPatchList ; $4b31
 	ld hl, StatPageTilemapPatch3 ; $4b34
-	ld bc, $d2d0 ; $4b37
+	ld bc, wScreenAttrmap + 22 * TILEMAP_WIDTH + 16 ; $4b37
 	call ApplyTilemapPatchList ; $4b3a
 	ld hl, StatPageTilemapPatch4 ; $4b3d
-	ld bc, $d310 ; $4b40
+	ld bc, wScreenAttrmap + 24 * TILEMAP_WIDTH + 16 ; $4b40
 	call ApplyTilemapPatchList ; $4b43
 	ld hl, StatPageTilemapPatch5 ; $4b46
 	ld bc, $d530 ; $4b49
@@ -1331,19 +1331,19 @@ BuildPartnerStatPage:
 	ld bc, $d500 ; $4b79
 	call ApplyTilemapPatchList ; $4b7c
 	ld hl, PartnerStatPageTilemapPatch00 ; $4b7f
-	ld bc, $d380 ; $4b82
+	ld bc, wScreenAttrmap + 28 * TILEMAP_WIDTH ; $4b82
 	call ApplyTilemapPatchList ; $4b85
 	ld hl, StatPageTilemapPatch1 ; $4b88
-	ld bc, $d240 ; $4b8b
+	ld bc, wScreenAttrmap + 18 * TILEMAP_WIDTH ; $4b8b
 	call ApplyTilemapPatchList ; $4b8e
 	ld hl, StatPageTilemapPatch2 ; $4b91
-	ld bc, $d280 ; $4b94
+	ld bc, wScreenAttrmap + 20 * TILEMAP_WIDTH ; $4b94
 	call ApplyTilemapPatchList ; $4b97
 	ld hl, StatPageTilemapPatch3 ; $4b9a
-	ld bc, $d2d0 ; $4b9d
+	ld bc, wScreenAttrmap + 22 * TILEMAP_WIDTH + 16 ; $4b9d
 	call ApplyTilemapPatchList ; $4ba0
 	ld hl, StatPageTilemapPatch4 ; $4ba3
-	ld bc, $d310 ; $4ba6
+	ld bc, wScreenAttrmap + 24 * TILEMAP_WIDTH + 16 ; $4ba6
 	call ApplyTilemapPatchList ; $4ba9
 	ld hl, StatPageTilemapPatch5 ; $4bac
 	ld bc, $d530 ; $4baf
@@ -2385,7 +2385,7 @@ SlideToPartnerStatPage:
 	ld bc, $d9e0 ; $546d
 	call ApplyTilemapPatchList ; $5470
 	ld hl, DrillDisplayData_1d ; $5473
-	ld bc, $d390 ; $5476
+	ld bc, wScreenAttrmap + 28 * TILEMAP_WIDTH + 16 ; $5476
 	call ApplyTilemapPatchList ; $5479
 	farcall FlushCharDataTilemapsFar ; $547c
 	wram_bank $06 ; $547f
@@ -2419,7 +2419,7 @@ SlideToPartnerStatPage:
 	ld bc, $de60 ; $54ca
 	call ApplyTilemapPatchList ; $54cd
 	ld hl, StatPageTilemapPatch0 ; $54d0
-	ld bc, $d390 ; $54d3
+	ld bc, wScreenAttrmap + 28 * TILEMAP_WIDTH + 16 ; $54d3
 	call ApplyTilemapPatchList ; $54d6
 	farcall FlushCharDataTilemapsFar ; $54d9
 	wram_bank $06 ; $54dc
@@ -2649,7 +2649,7 @@ SlideFromPartnerStatPage:
 	ld bc, $de60 ; $572f
 	call ApplyTilemapPatchList ; $5732
 	ld hl, StatPageTilemapPatch0 ; $5735
-	ld bc, $d390 ; $5738
+	ld bc, wScreenAttrmap + 28 * TILEMAP_WIDTH + 16 ; $5738
 	call ApplyTilemapPatchList ; $573b
 	farcall FlushCharDataTilemapsFar ; $573e
 	wram_bank $06 ; $5741
@@ -2674,7 +2674,7 @@ SlideFromPartnerStatPage:
 	ld bc, $d9e0 ; $5771
 	call ApplyTilemapPatchList ; $5774
 	ld hl, DrillDisplayData_1d ; $5777
-	ld bc, $d390 ; $577a
+	ld bc, wScreenAttrmap + 28 * TILEMAP_WIDTH + 16 ; $577a
 	call ApplyTilemapPatchList ; $577d
 	farcall FlushCharDataTilemapsFar ; $5780
 	wram_bank $06 ; $5783
@@ -2699,7 +2699,7 @@ SlideFromPartnerStatPage:
 	ld bc, $d9e0 ; $57b3
 	call ApplyTilemapPatchList ; $57b6
 	ld hl, DrillDisplayData_1d ; $57b9
-	ld bc, $d390 ; $57bc
+	ld bc, wScreenAttrmap + 28 * TILEMAP_WIDTH + 16 ; $57bc
 	call ApplyTilemapPatchList ; $57bf
 	farcall FlushCharDataTilemapsFar ; $57c2
 	wram_bank $06 ; $57c5

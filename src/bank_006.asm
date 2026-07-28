@@ -675,7 +675,7 @@ DrawMenuCaptionWindow:
 	ret ; $45a9
 RestoreBgTilemap:
 	ld hl, $d800 ; $45aa
-	ld de, $d000 ; $45ad
+	ld de, wScreenAttrmap ; $45ad
 	ld c, $40 ; $45b0
 	call CopyMemoryFast ; $45b2
 	ld hl, $dc00 ; $45b5
@@ -689,7 +689,7 @@ RestoreBgTilemapRegion:
 	ld c, l ; $45c6
 	ld b, h ; $45c7
 	push bc ; $45c8
-	ld hl, $d000 ; $45c9
+	ld hl, wScreenAttrmap ; $45c9
 	add hl, bc ; $45cc
 	ld e, l ; $45cd
 	ld d, h ; $45ce
@@ -732,7 +732,7 @@ FlushTilemapToVram:
 	add hl, bc ; $4607
 	ld e, l ; $4608
 	ld d, h ; $4609
-	ld hl, $d000 ; $460a
+	ld hl, wScreenAttrmap ; $460a
 	add hl, bc ; $460d
 	ld c, $22 ; $460e
 	call QueueVRAMCopy ; $4610
@@ -748,7 +748,7 @@ FlushTilemapToVram:
 	ret ; $4623
 GetShadowTilemapAddr:
 	call GetScrolledTilemapOffset ; $4624
-	ld de, $d000 ; $4627
+	ld de, wScreenAttrmap ; $4627
 	add hl, de ; $462a
 	ld e, l ; $462b
 	ld d, h ; $462c

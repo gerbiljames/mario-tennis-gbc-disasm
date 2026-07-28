@@ -8824,7 +8824,7 @@ UploadGlyphBufferQueued:
 	push hl ; $782d
 	ld h, b ; $782e
 	ld l, c ; $782f
-	ld de, $d300 ; $7830
+	ld de, wGlyphTileBuffer ; $7830
 	add hl, de ; $7833
 	pop de ; $7834
 	pop bc ; $7835

@@ -7446,3 +7446,50 @@ backwards, and `wObjSlot1 + 10` was itself the false name, from a bank-`$09`
 union variant scoped by ROM bank alone. Its bank `$08` scope now carries
 `wram_bank $04`; bank `$09` keeps the ROM-only scope, because that bank is the
 object engine and never selects another.
+
+## A second session, and the trace overrules the analysis (2026-07-28)
+
+More driving -- the pause menu and rules screen, save-and-quit, the file select,
+and the character-data screens whose WRAM bank `$06` took two passes to name.
+Observations went 19,066 -> 25,683 and resolved sites 5,412 -> 5,756.
+
+**Disagreements went 142 -> 885.** That is 3.4% of everything observed, and the
+jump with only 6,617 more observations says the first sample had been flattering.
+The dataflow is wrong far more often than one session suggested.
+
+So the merge policy changed: **the observation now wins.** The reasoning is not
+that traces are nicer than analysis, it is that these two claims are not the same
+kind of claim. `compute_wram_bank` propagates a caller's bank into a callee, so a
+routine inherits the meet over the call sites the CFG happens to contain -- any
+caller the descent never found is silently excluded, and the meet looks unanimous
+when it is not. A trace is what the hardware did, and the callback timing was
+verified against a known switch before any of this was trusted.
+
+### The audit found a name of mine that was wrong
+
+Of the 885, exactly one carried a banked name: `1d:$4624`,
+`ld hl, wShadowAttrmap + 3 * TILEMAP_WIDTH + 19`. The dataflow proved WRAM bank
+`$03`; the hardware ran it in bank `$02`. Bank `$02` is right, and it is right
+for a reason already written down two passes earlier -- the character-data
+screens pair bank `$03` tiles with bank `$02` attributes, which is exactly what
+`FlushCharDataTilemapChunk` demonstrates. The name was wrong, my own, and no
+amount of reading would have caught it: the union trusted a dataflow result that
+looked like a proof.
+
+With the observation preferred it drops to a numeric `$d473`, because bank
+`$02`'s `$d400` region is the page storage this project deliberately left
+unnamed. An honest number in place of a confident falsehood.
+
+The same change turned ~30 of bank `$1d`'s `ApplyTilemapPatchList` arguments into
+`wScreenAttrmap + row * TILEMAP_WIDTH + col`. Those are the addresses documented
+as unnameable because they denote a cell in two banks at once -- and they still
+do, but the trace settles which bank is selected *at the call site*, which is the
+question the scoping model actually asks.
+
+### Where this leaves the two sources
+
+The static analysis is now the fallback and the trace is the authority, for the
+33% of the ROM a session reaches. That is the right way round: one is an
+inference from a CFG known to be incomplete, the other is a record of what
+happened. Every further session both extends the coverage and re-audits the
+59,815 sites the dataflow still claims on its own.

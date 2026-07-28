@@ -965,7 +965,7 @@ LoadCharMugshotToBuffer:
 	cp $40 ; $4e37
 	ret nc ; $4e39
 	push de ; $4e3a
-	ld de, $d600 ; $4e3b
+	ld de, wShadowAttrmap + 16 * TILEMAP_WIDTH ; $4e3b
 	call DecompressCharMugshot ; $4e3e
 	pop de ; $4e41
 	ret ; $4e42
@@ -980,7 +980,7 @@ CopyMugshotBufferToVram:
 	push bc ; $4e47
 	push de ; $4e48
 	push hl ; $4e49
-	ld hl, $d600 ; $4e4a
+	ld hl, wShadowAttrmap + 16 * TILEMAP_WIDTH ; $4e4a
 	ld c, $09 ; $4e4d
 	call QueueVRAMCopy ; $4e4f
 	pop hl ; $4e52

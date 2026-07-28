@@ -295,14 +295,23 @@ def load_traced_wram_banks(coverage_paths):
 
 
 def merge_traced_wram_banks(bank_at, traced):
-    """Fold observed banks into the static result. An observation only fills a
-    gap -- where the static analysis already proved a bank, that proof stands,
-    and a disagreement is reported rather than silently resolved either way:
-    one of the two is wrong and a name is riding on it.
+    """Fold observed banks into the static result, and let the observation win
+    where the two disagree.
+
+    That direction is deliberate. compute_wram_bank propagates a caller's bank
+    into a callee, so a routine inherits the meet over the call sites the CFG
+    happens to contain -- and any caller the descent never found is silently
+    excluded, which makes the meet look unanimous when it is not. A trace is
+    what the hardware did. Verified against a known switch: at the `ldh
+    [rWBK], a` of a `wram_bank $07` the recorded bank is still the caller's and
+    only the instruction after it reads 7, so the value is the bank the
+    instruction itself sees.
 
     Sites observed under more than one bank stay unresolved, which is the
-    honest answer and the same one the static analysis gives."""
-    added = conflicts = 0
+    honest answer and the same one the static analysis gives. Disagreements are
+    still counted and sampled, because each one is a place the dataflow is
+    wrong and worth knowing about."""
+    added = corrected = 0
     for off, banks in traced.items():
         if len(banks) != 1:
             continue
@@ -312,14 +321,15 @@ def merge_traced_wram_banks(bank_at, traced):
             bank_at[off] = b
             added += 1
         elif have != b:
-            conflicts += 1
-            if conflicts <= 5:
-                print(f"warning: traced WRAM bank {b} at ${off:05x} but the "
-                      f"dataflow proved {have}", file=sys.stderr)
+            corrected += 1
+            if corrected <= 5:
+                print(f"note: traced WRAM bank {b} at ${off:05x} overrides the "
+                      f"dataflow's {have}", file=sys.stderr)
+            bank_at[off] = b
     if traced:
         print(f"traced wram banks: {len(traced)} instructions observed, "
               f"{added} resolved that the dataflow could not"
-              + (f", {conflicts} disagreements" if conflicts else ""))
+              + (f", {corrected} corrected" if corrected else ""))
     return bank_at
 
 
