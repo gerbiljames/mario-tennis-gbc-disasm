@@ -824,6 +824,72 @@
      }
     },
     {
+     "context": "ranking board (bank $1b)",
+     "scopes": [
+      {
+       "bank": "0x1b",
+       "start": "0x4e00",
+       "end": "0x6000"
+      }
+     ],
+     "symbols": {
+      "0xd800": {
+       "name": "wRankingBoardDoubles",
+       "note": "[8-bit] Nonzero shows the doubles ranking rather than the singles one; ShowRankingBoard takes it from b, and it picks both the screen asset record and Draw/HighlightSinglesRankingRows vs the doubles pair"
+      },
+      "0xd801": {
+       "name": "wRankingBoardPlayerRow",
+       "note": "[8-bit] Which ranking row is the player's, from c; the highlight and the marker animation address the board through it"
+      },
+      "0xd802": {
+       "name": "wRankingBoardMode",
+       "note": "[8-bit] How the board is presented, from d: 0 plain, 1 plays fanfare $2b, 2 plays the second fanfare and registers RankingCursorBobTask. A 3 is turned back into 0 with w3_d85a set instead"
+      },
+      "0xd803": {
+       "name": "wRankingMarkerSlots",
+       "note": "[8-bit] Base of the ranking marker slots (83 bytes, $d803-$d855, so it runs past this block into the $d810 one). Cleared by ClearRankingMarkerSlots and filled by LoadRankingMarkerCoords; GetRankingMarkerSlot hands out one per marker drawn"
+      }
+     }
+    },
+    {
+     "context": "trophy / N64-tournament / bracket screens (bank $3b)",
+     "scopes": [
+      {
+       "bank": "0x3b"
+      }
+     ],
+     "symbols": {
+      "0xd801": {
+       "name": "wDataScreenPage",
+       "note": "[8-bit] Page the bank $3b data screens are showing; DrawN64TnmtPageLabels and the bracket builders key off it and N64TnmtScrollArrowsTask decides from it which scroll arrows to draw"
+      },
+      "0xd802": {
+       "name": "wDataScreenCursorRow",
+       "note": "[8-bit] Cursor row within the page, stepped by ScrollN64TnmtDataCursor"
+      }
+     }
+    },
+    {
+     "context": "title screen (bank $6b)",
+     "scopes": [
+      {
+       "bank": "0x6b",
+       "start": "0x7500",
+       "end": "0x7800"
+      }
+     ],
+     "symbols": {
+      "0xd801": {
+       "name": "wTitleSpriteFrame",
+       "note": "[8-bit] Frame of the title screen's animated sprite; QueueTitleSprite reads it and StepTitleSpriteAnimation advances it"
+      },
+      "0xd802": {
+       "name": "wTitleSpriteTimer",
+       "note": "[8-bit] Frames left on the current title sprite frame"
+      }
+     }
+    },
+    {
      "context": "screen scratch (any other screen, where WRAM bank $03 is provable)",
      "scopes": [
       {

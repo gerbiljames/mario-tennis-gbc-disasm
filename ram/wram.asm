@@ -559,7 +559,9 @@ wFallbackTrajectoryFlag:: db
 
 ; [8-bit] Nonzero when the player chose Retry / Select New Level / Quit in the quit menu (discriminated by wMatchRetryRequest/wMatchSelectNewLevelRequest); outer mode loops branch on it
 wMatchExitRequest:: db
-	ds 1
+
+; [8-bit] Set by InitViewFlipPreference when the court view is fixed rather than the player's saved preference (link matches, game mode $08/$09, and any minigame). The pause menus read it to decide whether the view row can be changed
+wCourtViewLocked:: db
 
 ; [8-bit] Nonzero makes UpdateMatchCamera ($08:$61dc) overwrite the camera target from wBallGroundProjX/Y each frame instead of holding the target set by SetCameraTarget. Cleared by SetCameraTarget and SnapCameraTo ($08:$61c5, $61d8, $0d:$4955); set to 1 when the rally starts ($08:$425f), by the bank $0d wall bounce ($0d:$4b72), and explicitly cleared by KeepMinigameCameraFixed ($0d:$47be).
 wCameraFollowBall:: db
@@ -668,7 +670,14 @@ wTextBuffer:: db
 
 ; 32-byte staging buffer for inline text args (player name, arg strings, short texts) rendered via RenderInlineString
 wInlineTextBuffer:: ds 32
-	ds 52
+	ds 32
+
+; [8-bit] Window struct index of the debug menu's own window, from CreateMenuWindowFromText; RunDebugMenu passes it to RunMenuSelection and CloseWindow
+wDebugMenuWindowId:: db
+
+; [8-bit] Window struct index of the debug warp submenu, addressed the same way by DebugDrawWarpMenu
+wDebugWarpWindowId:: db
+	ds 18
 
 ; [8-bit] Page of 64 game flags shown by the debug flag editor; the flag number DebugToggleSelectedFlag builds is page * 64 + byte * 8 + bit
 wDebugFlagPage:: db
@@ -740,7 +749,10 @@ wModeHookTable:: dw
 
 ; [8-bit] ROM bank of the mode callback table (0 = no hooks registered)
 wModeHookBank:: db
-	ds 3
+
+; [8-bit] Aim AiApplyServeAim must use for the next serve; $ff (set by RunMatch) means pick one at random from Data_08_7b0b. The drill point-start hooks write a specific aim so a lesson always serves where the script needs it
+wAiServeAimOverride:: db
+	ds 2
 
 ; [8-bit] Set to 1 by the InitMinigame_* routines whose ball is fed by the tennis machine (Tennis Machine 1-4, Target Shot, Shooting Star, Treasure Box, Medallion Match). The shared match engine reads it for the scoreboard layout, the point reset and the serve phase
 wMinigameUsesTennisMachine:: db
@@ -1654,6 +1666,30 @@ NEXTU
 wResultScreenWon:: db
 ; [8-bit] Stored from a by RunMatchWinLoseScreen and RunMatchStatsScreen; SetWinLosePortraitPaletteAttrs and LoadResultPortraitSlot branch on it
 wResultScreenMode:: db
+NEXTU
+; ranking board (bank $1b)
+; [8-bit] Nonzero shows the doubles ranking rather than the singles one; ShowRankingBoard takes it from b, and it picks both the screen asset record and Draw/HighlightSinglesRankingRows vs the doubles pair
+wRankingBoardDoubles:: db
+; [8-bit] Which ranking row is the player's, from c; the highlight and the marker animation address the board through it
+wRankingBoardPlayerRow:: db
+; [8-bit] How the board is presented, from d: 0 plain, 1 plays fanfare $2b, 2 plays the second fanfare and registers RankingCursorBobTask. A 3 is turned back into 0 with w3_d85a set instead
+wRankingBoardMode:: db
+; [8-bit] Base of the ranking marker slots (83 bytes, $d803-$d855, so it runs past this block into the $d810 one). Cleared by ClearRankingMarkerSlots and filled by LoadRankingMarkerCoords; GetRankingMarkerSlot hands out one per marker drawn
+wRankingMarkerSlots:: db
+NEXTU
+; trophy / N64-tournament / bracket screens (bank $3b)
+	ds 1
+; [8-bit] Page the bank $3b data screens are showing; DrawN64TnmtPageLabels and the bracket builders key off it and N64TnmtScrollArrowsTask decides from it which scroll arrows to draw
+wDataScreenPage:: db
+; [8-bit] Cursor row within the page, stepped by ScrollN64TnmtDataCursor
+wDataScreenCursorRow:: db
+NEXTU
+; title screen (bank $6b)
+	ds 1
+; [8-bit] Frame of the title screen's animated sprite; QueueTitleSprite reads it and StepTitleSpriteAnimation advances it
+wTitleSpriteFrame:: db
+; [8-bit] Frames left on the current title sprite frame
+wTitleSpriteTimer:: db
 NEXTU
 ; screen scratch (any other screen, where WRAM bank $03 is provable)
 ; [8-bit] Base of the screen-local scratch block in WRAM bank $03. Screens

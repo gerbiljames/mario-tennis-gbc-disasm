@@ -196,7 +196,7 @@ RunMatch:
 	ld c, $08 ; $41b0
 	call ClearMemory16 ; $41b2
 	ld a, $ff ; $41b5
-	ld [$c7b5], a ; $41b7
+	ld [wAiServeAimOverride], a ; $41b7
 	script_fade_in $20 ; $41ba
 	wram_bank $04 ; $41bf
 	call PlayCourtIntro ; $41c5
@@ -603,7 +603,7 @@ HandlePauseMenu:
 	ld [wMatchSimFrozen], a ; $44b9
 	ret ; $44bc
 ReinitPointAfterPause:
-	ld a, [$c4c8] ; $44bd
+	ld a, [wCourtViewLocked] ; $44bd
 	and a, a ; $44c0
 	ret nz ; $44c1
 	call AssignCourtPositions ; $44c2
@@ -651,13 +651,13 @@ InitViewFlipPreference:
 	farcall TestStorySlotFlagB ; $4523
 	ld [wCourtViewOption], a ; $4526
 	xor a, a ; $4529
-	ld [$c4c8], a ; $452a
+	ld [wCourtViewLocked], a ; $452a
 	ret ; $452d
 .storeFlip:
 	ld a, $00 ; $452e
 	ld [wCourtViewOption], a ; $4530
 	ld a, $01 ; $4533
-	ld [$c4c8], a ; $4535
+	ld [wCourtViewLocked], a ; $4535
 	ret ; $4538
 ApplyMatchBgmPreference:
 	ld a, [wGameMode] ; $4539
@@ -1483,7 +1483,7 @@ ResetPointState:
 	ret ; $4d0e
 PlayPoint:
 	call ResetPointState ; $4d0f
-	ld hl, $c4c8 ; $4d12
+	ld hl, wCourtViewLocked ; $4d12
 	res 1, [hl] ; $4d15
 	farcall LoadServeGfx ; $4d17
 	call StepMatchFrame ; $4d1a
@@ -4062,7 +4062,7 @@ UploadCourtAttrmap:
 	call QueueVRAMCopy ; $5e8f
 	ret ; $5e92
 RefreshCourtScoreboard:
-	ld a, [$c4c8] ; $5e93
+	ld a, [wCourtViewLocked] ; $5e93
 	and a, $01 ; $5e96
 	ret nz ; $5e98
 	ld a, [wCourtViewFlipped] ; $5e99
@@ -4971,7 +4971,7 @@ InitMinigameMatchSettings:
 	ld a, $01 ; $654c
 	ld [$c7bd], a ; $654e
 	ld a, $ff ; $6551
-	ld [$c7b5], a ; $6553
+	ld [wAiServeAimOverride], a ; $6553
 	ret ; $6556
 RunMinigameMatch:
 	ld c, $20 ; $6557
@@ -5858,7 +5858,7 @@ CharServeSwingWindowPhase:
 	call SetCharAnimation ; $6bb5
 	ld hl, $df19 ; $6bb8
 	inc [hl] ; $6bbb
-	ld hl, $c4c8 ; $6bbc
+	ld hl, wCourtViewLocked ; $6bbc
 	set 1, [hl] ; $6bbf
 .done:
 	ret ; $6bc1
@@ -8276,7 +8276,7 @@ AiServeApplyAim:
 	call AiApplyServeAim ; $7ae7
 	ret ; $7aea
 AiApplyServeAim:
-	ld a, [$c7b5] ; $7aeb
+	ld a, [wAiServeAimOverride] ; $7aeb
 	cp a, $ff ; $7aee
 	jr z, .randomAim ; $7af0
 	ld b, a ; $7af2

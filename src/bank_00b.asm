@@ -1029,7 +1029,7 @@ RunTrainingDrillByID:
 	ld c, $02 ; $4729
 	call ClearMemory16 ; $472b
 	ld a, $ff ; $472e
-	ld [$c7b5], a ; $4730
+	ld [wAiServeAimOverride], a ; $4730
 	xor a, a ; $4733
 	ld hl, $c7b6 ; $4734
 	ld [hl+], a ; $4737
@@ -1041,7 +1041,7 @@ RunTrainingDrillByID:
 	ldh [hScrollX], a ; $4740
 	ldh [hScrollY], a ; $4742
 	ld a, $ff ; $4744
-	ld [$c7b5], a ; $4746
+	ld [wAiServeAimOverride], a ; $4746
 	xor a, a ; $4749
 	ld hl, $c7b6 ; $474a
 	ld [hl+], a ; $474d
@@ -1426,7 +1426,7 @@ ServiceMatch2Hook_PointStart:
 	inc h ; $4a15
 .read:
 	ld a, [hl] ; $4a16
-	ld [$c7b5], a ; $4a17
+	ld [wAiServeAimOverride], a ; $4a17
 	xor a, a ; $4a1a
 	ld [wDrillMessageId], a ; $4a1b
 	xor a, a ; $4a1e
@@ -4040,7 +4040,7 @@ NetGamePractice1Hook_PointStart:
 	inc h ; $5c48
 .read:
 	ld a, [hl] ; $5c49
-	ld [$c7b5], a ; $5c4a
+	ld [wAiServeAimOverride], a ; $5c4a
 	ret ; $5c4d
 Table_0b_5c4e:
 	; $5c4e, 4 bytes (bytes:4)
@@ -6327,7 +6327,7 @@ StrokePractice1Hook_PointStart:
 	inc h ; $6bc6
 .read:
 	ld a, [hl] ; $6bc7
-	ld [$c7b5], a ; $6bc8
+	ld [wAiServeAimOverride], a ; $6bc8
 	ret ; $6bcb
 Table_0b_6bcc:
 	; $6bcc, 4 bytes (bytes:4)
@@ -6658,7 +6658,7 @@ StrokePractice2Hook_PointStart:
 	inc h ; $6e12
 .read:
 	ld a, [hl] ; $6e13
-	ld [$c7b5], a ; $6e14
+	ld [wAiServeAimOverride], a ; $6e14
 	ret ; $6e17
 Table_0b_6e18:
 	; $6e18, 4 bytes (bytes:4)
@@ -6987,7 +6987,7 @@ StrokePractice3Hook_PointStart:
 	inc h ; $7077
 .read:
 	ld a, [hl] ; $7078
-	ld [$c7b5], a ; $7079
+	ld [wAiServeAimOverride], a ; $7079
 	ret ; $707c
 Table_0b_707d:
 	; $707d, 4 bytes (bytes:4)

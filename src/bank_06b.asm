@@ -2236,8 +2236,8 @@ RunTitleScreen:
 	ldh [hScrollX], a ; $75b9
 	ldh [hScrollY], a ; $75bb
 	ld [wScreenScratch], a ; $75bd
-	ld [$d801], a ; $75c0
-	ld [$d802], a ; $75c3
+	ld [wTitleSpriteFrame], a ; $75c0
+	ld [wTitleSpriteTimer], a ; $75c3
 	ld a, $98 ; $75c6
 	ld [wScreenScratch], a ; $75c8
 	ld c, $7f ; $75cb
@@ -2341,7 +2341,7 @@ QueueTitleSprite:
 	ldh a, [hWramBank] ; $76b6
 	push af ; $76b8
 	wram_bank $03 ; $76b9
-	ld a, [$d801] ; $76bf
+	ld a, [wTitleSpriteFrame] ; $76bf
 	ld hl, TitleSpriteTable0 ; $76c2
 	add a, l ; $76c5
 	ld l, a ; $76c6
@@ -2349,7 +2349,7 @@ QueueTitleSprite:
 	inc h ; $76c9
 .read:
 	ld c, [hl] ; $76ca
-	ld a, [$d801] ; $76cb
+	ld a, [wTitleSpriteFrame] ; $76cb
 	ld hl, TitleSpriteTable1 ; $76ce
 	add a, l ; $76d1
 	ld l, a ; $76d2
@@ -2383,29 +2383,29 @@ SpriteTemplate_6b_76f6:
 	oam_sprite $10, $50, $12, $00
 	oam_sprite_end
 StepTitleSpriteAnimation:
-	ld a, [$d802] ; $771f
+	ld a, [wTitleSpriteTimer] ; $771f
 	or a, a ; $7722
 	jr z, .zero ; $7723
 	inc a ; $7725
-	ld [$d802], a ; $7726
+	ld [wTitleSpriteTimer], a ; $7726
 	cp a, $10 ; $7729
 	jr nz, .done ; $772b
 	xor a, a ; $772d
-	ld [$d802], a ; $772e
+	ld [wTitleSpriteTimer], a ; $772e
 	ret ; $7731
 .zero:
 	ldh a, [hVBlankCounter] ; $7732
 	and a, $07 ; $7734
 	cp a, $07 ; $7736
 	jr nz, .done ; $7738
-	ld a, [$d801] ; $773a
+	ld a, [wTitleSpriteFrame] ; $773a
 	inc a ; $773d
 	and a, $07 ; $773e
-	ld [$d801], a ; $7740
+	ld [wTitleSpriteFrame], a ; $7740
 	cp a, $07 ; $7743
 	jr nz, .done ; $7745
 	ld a, $01 ; $7747
-	ld [$d802], a ; $7749
+	ld [wTitleSpriteTimer], a ; $7749
 .done:
 	ret ; $774c
 	ret ; $774d

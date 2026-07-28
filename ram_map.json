@@ -1946,5 +1946,21 @@
  "0xcb47": {
   "name": "wCutsceneSpriteBY",
   "note": "[8-bit] Y of the intro cutscene's second sprite group"
+ },
+ "0xc700": {
+  "name": "wDebugMenuWindowId",
+  "note": "[8-bit] Window struct index of the debug menu's own window, from CreateMenuWindowFromText; RunDebugMenu passes it to RunMenuSelection and CloseWindow"
+ },
+ "0xc701": {
+  "name": "wDebugWarpWindowId",
+  "note": "[8-bit] Window struct index of the debug warp submenu, addressed the same way by DebugDrawWarpMenu"
+ },
+ "0xc4c8": {
+  "name": "wCourtViewLocked",
+  "note": "[8-bit] Set by InitViewFlipPreference when the court view is fixed rather than the player's saved preference (link matches, game mode $08/$09, and any minigame). The pause menus read it to decide whether the view row can be changed"
+ },
+ "0xc7b5": {
+  "name": "wAiServeAimOverride",
+  "note": "[8-bit] Aim AiApplyServeAim must use for the next serve; $ff (set by RunMatch) means pick one at random from Data_08_7b0b. The drill point-start hooks write a specific aim so a lesson always serves where the script needs it"
  }
 }

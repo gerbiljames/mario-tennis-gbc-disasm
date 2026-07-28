@@ -1028,19 +1028,19 @@ ShowRankingBoard:
 	xor a, a ; $4e87
 	ld [w3_d85a], a ; $4e88
 	ld a, b ; $4e8b
-	ld [wScreenScratch], a ; $4e8c
+	ld [wRankingBoardDoubles], a ; $4e8c
 	ld a, c ; $4e8f
-	ld [$d801], a ; $4e90
+	ld [wRankingBoardPlayerRow], a ; $4e90
 	ld a, d ; $4e93
-	ld [$d802], a ; $4e94
+	ld [wRankingBoardMode], a ; $4e94
 	cp a, $03 ; $4e97
 	jr nz, .checkFanfare ; $4e99
 	xor a, a ; $4e9b
-	ld [$d802], a ; $4e9c
+	ld [wRankingBoardMode], a ; $4e9c
 	ld a, $01 ; $4e9f
 	ld [w3_d85a], a ; $4ea1
 .checkFanfare:
-	ld a, [$d802] ; $4ea4
+	ld a, [wRankingBoardMode] ; $4ea4
 	cp a, $01 ; $4ea7
 	jr nz, .checkSecondFanfare ; $4ea9
 	sound $2b ; $4eab
@@ -1061,7 +1061,7 @@ ShowRankingBoard:
 	db $1e ; $4ed2 inline arg
 	call WaitForAOrBPress ; $4ed3
 	ld c, $20 ; $4ed6
-	ld a, [$d802] ; $4ed8
+	ld a, [wRankingBoardMode] ; $4ed8
 	or a, a ; $4edb
 	jr nz, .fadeOut ; $4edc
 	ld a, [w3_d85a] ; $4ede
@@ -1088,12 +1088,12 @@ BuildRankingBoardScreen:
 	xor a, a ; $4f0f
 	ld [w3_d855], a ; $4f10
 	ld [w3_d858], a ; $4f13
-	ld hl, $d803 ; $4f16
+	ld hl, wRankingMarkerSlots ; $4f16
 	ld bc, $0053 ; $4f19
 	call ClearBytes ; $4f1c
 	call ClearRankingMarkerSlots ; $4f1f
 	call LoadRankingMarkerCoords ; $4f22
-	ld a, [wScreenScratch] ; $4f25
+	ld a, [wRankingBoardDoubles] ; $4f25
 	or a, a ; $4f28
 	jr z, .zero ; $4f29
 	ld c, $2a ; $4f2b
@@ -1116,7 +1116,7 @@ BuildRankingBoardScreen:
 	ld a, $01 ; $4f5b
 	ld hl, DrawRankingMarkersTask ; $4f5d
 	call RegisterFrameTask ; $4f60
-	ld a, [$d802] ; $4f63
+	ld a, [wRankingBoardMode] ; $4f63
 	cp a, $02 ; $4f66
 	jr nz, .queueWram3MapToVRAM ; $4f68
 	ld a, $01 ; $4f6a
@@ -1159,16 +1159,16 @@ DispatchRankingBoardAnim:
 	ld a, [w3_d85a] ; $4ff1
 	or a, a ; $4ff4
 	ret nz ; $4ff5
-	ld a, [$d802] ; $4ff6
+	ld a, [wRankingBoardMode] ; $4ff6
 	cp a, $02 ; $4ff9
 	ret z ; $4ffb
-	ld a, [wScreenScratch] ; $4ffc
+	ld a, [wRankingBoardDoubles] ; $4ffc
 	or a, a ; $4fff
 	jr nz, .nonZero2 ; $5000
-	ld a, [$d802] ; $5002
+	ld a, [wRankingBoardMode] ; $5002
 	or a, a ; $5005
 	jr nz, .nonZero ; $5006
-	ld a, [$d801] ; $5008
+	ld a, [wRankingBoardPlayerRow] ; $5008
 	add a, a ; $500b
 	ld hl, RankingBoardAnimHandlers2_1b ; $500c
 	add a, l ; $500f
@@ -1181,7 +1181,7 @@ DispatchRankingBoardAnim:
 	ld l, a ; $5016
 	jp hl ; $5017
 .nonZero:
-	ld a, [$d801] ; $5018
+	ld a, [wRankingBoardPlayerRow] ; $5018
 	add a, a ; $501b
 	ld hl, RankingBoardAnimHandlers1_1b ; $501c
 	add a, l ; $501f
@@ -1194,10 +1194,10 @@ DispatchRankingBoardAnim:
 	ld l, a ; $5026
 	jp hl ; $5027
 .nonZero2:
-	ld a, [$d802] ; $5028
+	ld a, [wRankingBoardMode] ; $5028
 	or a, a ; $502b
 	jr nz, .nonZero3 ; $502c
-	ld a, [$d801] ; $502e
+	ld a, [wRankingBoardPlayerRow] ; $502e
 	add a, a ; $5031
 	ld hl, RankingBoardAnimHandlers4_1b ; $5032
 	add a, l ; $5035
@@ -1210,7 +1210,7 @@ DispatchRankingBoardAnim:
 	ld l, a ; $503c
 	jp hl ; $503d
 .nonZero3:
-	ld a, [$d801] ; $503e
+	ld a, [wRankingBoardPlayerRow] ; $503e
 	add a, a ; $5041
 	ld hl, RankingBoardAnimHandlers3_1b ; $5042
 	add a, l ; $5045
@@ -2058,7 +2058,7 @@ RenderNameBottomRow:
 	call DrawNameWithDiacritics ; $570c
 	ret ; $570f
 HighlightSinglesRankingRows:
-	ld a, [$d801] ; $5710
+	ld a, [wRankingBoardPlayerRow] ; $5710
 	or a, a ; $5713
 	ret z ; $5714
 	cp a, $01 ; $5715
@@ -2198,7 +2198,7 @@ DrawRankingRow11:
 	farcall CopyTilemapRect ; $5823
 	jp StubNop_1b_5760 ; $5826
 HighlightDoublesRankingRows:
-	ld a, [$d801] ; $5829
+	ld a, [wRankingBoardPlayerRow] ; $5829
 	or a, a ; $582c
 	ret z ; $582d
 	cp a, $01 ; $582e
@@ -2331,7 +2331,7 @@ RankingBoardAnimTask_1b:
 	ld [$d856], a ; $592d
 	ld hl, SpriteTemplate_1b_595a ; $5930
 	ld e, $40 ; $5933
-	ld a, [$d800] ; $5935
+	ld a, [wRankingBoardDoubles] ; $5935
 	or a, a ; $5938
 	jr z, .zero ; $5939
 	ld e, $50 ; $593b
@@ -2369,7 +2369,7 @@ RankingCursorBobTask:
 	jr nz, .nonZero ; $5a08
 .nonZero:
 	ld de, $3040 ; $5a0a
-	ld a, [$d800] ; $5a0d
+	ld a, [wRankingBoardDoubles] ; $5a0d
 	or a, a ; $5a10
 	jr z, .applySpriteBobOffset ; $5a11
 	ld de, $3050 ; $5a13
@@ -2677,21 +2677,21 @@ RankingBoardAnimState_5273Table1:
 	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff ; 0x10
 	db $ff, $ff, $ff, $ff, $40 ; 0x20
 ClearRankingMarkerSlots:
-	ld hl, $d803 ; $5c31
+	ld hl, wRankingMarkerSlots ; $5c31
 	ld bc, $0030 ; $5c34
 	call ClearBytes ; $5c37
 	ret ; $5c3a
 LoadRankingMarkerCoords:
-	ld a, [wScreenScratch] ; $5c3b
+	ld a, [wRankingBoardDoubles] ; $5c3b
 	or a, a ; $5c3e
 	jr nz, .nonZero ; $5c3f
 	ld hl, RankingMarkerCoordsTable ; $5c41
-	ld a, [$d802] ; $5c44
+	ld a, [wRankingBoardMode] ; $5c44
 	or a, a ; $5c47
 	jr z, .zero ; $5c48
 	ld hl, RankingMarkerCoordsTable0 ; $5c4a
 .zero:
-	ld a, [$d801] ; $5c4d
+	ld a, [wRankingBoardPlayerRow] ; $5c4d
 	add a, a ; $5c50
 	add a, l ; $5c51
 	ld l, a ; $5c52
@@ -2711,12 +2711,12 @@ LoadRankingMarkerCoords:
 	ret ; $5c66
 .nonZero:
 	ld hl, $5e21 ; $5c67
-	ld a, [$d802] ; $5c6a
+	ld a, [wRankingBoardMode] ; $5c6a
 	or a, a ; $5c6d
 	jr z, .zero2 ; $5c6e
 	ld hl, RankingMarkerCoordsTable1 ; $5c70
 .zero2:
-	ld a, [$d801] ; $5c73
+	ld a, [wRankingBoardPlayerRow] ; $5c73
 	add a, a ; $5c76
 	add a, l ; $5c77
 	ld l, a ; $5c78
@@ -2758,7 +2758,7 @@ GetRankingMarkerSlot:
 	ld a, c ; $5f52
 	add a, a ; $5f53
 	add a, a ; $5f54
-	ld hl, $d803 ; $5f55
+	ld hl, wRankingMarkerSlots ; $5f55
 	add a, l ; $5f58
 	ld l, a ; $5f59
 	jr nc, .done ; $5f5a

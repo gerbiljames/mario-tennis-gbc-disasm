@@ -5791,6 +5791,6 @@ camera clamp (`wMapWidthTiles`/`wMapHeightTiles`, confirmed by the `- $14` and
 `- $12` the clamp subtracts for the 20x18 screen), and `wActorScriptBank`,
 which every `ActorScriptOp_*` passes to `FarReadByte`.
 
-Raw `[$xxxx]` WRAM operands in `src/`: **3,496 -> 1,653**, over 483 distinct
+Raw `[$xxxx]` WRAM operands in `src/`: **3,496 -> 1,560**, over 476 distinct
 addresses, and 400 more addresses moved from the generator's `w<bank>_<addr>`
 placeholder to a real name. `make compare` OK, `make check` clean.

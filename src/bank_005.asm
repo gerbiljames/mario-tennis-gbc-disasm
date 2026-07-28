@@ -6068,13 +6068,13 @@ RunDebugMenu:
 	ld hl, Text_30_311 ; $66a8
 	ld de, $0a01 ; $66ab
 	call CreateMenuWindowFromText ; $66ae
-	ld [$c700], a ; $66b1
+	ld [wDebugMenuWindowId], a ; $66b1
 	farcall RestoreShadowTilemap ; $66b4
 	call RenderMenuWindowText ; $66b7
-	ld a, [$c700] ; $66ba
+	ld a, [wDebugMenuWindowId] ; $66ba
 	call RunMenuSelection ; $66bd
 	push af ; $66c0
-	ld a, [$c700] ; $66c1
+	ld a, [wDebugMenuWindowId] ; $66c1
 	call CloseWindow ; $66c4
 	pop af ; $66c7
 	cp a, $ff ; $66c8
@@ -6136,14 +6136,14 @@ RunDebugFlagEditorThunk:
 	call RunDebugFlagEditor ; $6727
 	jp RunDebugMenu.loop ; $672a
 DebugDrawWarpMenu:
-	ld a, [$c701] ; $672d
+	ld a, [wDebugWarpWindowId] ; $672d
 	call DrawTextWindowFrameSaveRegs ; $6730
-	ld a, [$c700] ; $6733
+	ld a, [wDebugMenuWindowId] ; $6733
 	ld h, $00 ; $6736
 	ld l, a ; $6738
 	ld de, $0d02 ; $6739
-	ld a, [$c701] ; $673c
-	ld a, [$c700] ; $673f
+	ld a, [wDebugWarpWindowId] ; $673c
+	ld a, [wDebugMenuWindowId] ; $673f
 	ld hl, $0179 ; $6742
 	add a, l ; $6745
 	ld l, a ; $6746
@@ -6151,7 +6151,7 @@ DebugDrawWarpMenu:
 	inc h ; $6749
 .draw:
 	ld de, $0102 ; $674a
-	ld a, [$c701] ; $674d
+	ld a, [wDebugWarpWindowId] ; $674d
 	call WriteDialogueToWindow ; $6750
 	ld hl, EnterNumberPrompt_05 ; $6753
 	ld de, $c720 ; $6756
@@ -6159,17 +6159,17 @@ DebugDrawWarpMenu:
 	call CopyMemoryFast ; $675b
 	ld hl, $c720 ; $675e
 	ld de, $0104 ; $6761
-	ld a, [$c701] ; $6764
+	ld a, [wDebugWarpWindowId] ; $6764
 	call WriteStringToWindow ; $6767
 	ld de, $c720 ; $676a
-	ld a, [$c700] ; $676d
+	ld a, [wDebugMenuWindowId] ; $676d
 	ld h, $00 ; $6770
 	ld l, a ; $6772
 	ld a, $02 ; $6773
 	call FormatDecimalNumber ; $6775
 	ld hl, $c720 ; $6778
 	ld de, $1102 ; $677b
-	ld a, [$c701] ; $677e
+	ld a, [wDebugWarpWindowId] ; $677e
 	call WriteStringToWindow ; $6781
 	ld de, $c720 ; $6784
 	ld a, [$c704] ; $6787
@@ -6179,7 +6179,7 @@ DebugDrawWarpMenu:
 	call FormatDecimalNumber ; $678f
 	ld hl, $c720 ; $6792
 	ld de, $1104 ; $6795
-	ld a, [$c701] ; $6798
+	ld a, [wDebugWarpWindowId] ; $6798
 	call WriteStringToWindow ; $679b
 	ld d, $10 ; $679e
 	ld a, [$c703] ; $67a0
@@ -6187,9 +6187,9 @@ DebugDrawWarpMenu:
 	add a, $02 ; $67a4
 	ld e, a ; $67a6
 	ld bc, $800d ; $67a7
-	ld a, [$c701] ; $67aa
+	ld a, [wDebugWarpWindowId] ; $67aa
 	call WriteWindowCellTileAttr ; $67ad
-	ld a, [$c701] ; $67b0
+	ld a, [wDebugWarpWindowId] ; $67b0
 	call RedrawWindowRows ; $67b3
 	ret ; $67b6
 EnterNumberPrompt_05:
@@ -6205,13 +6205,13 @@ RunDebugWarpMenu:
 	ld [$c703], a ; $67cf
 	ld [$c704], a ; $67d2
 	ld a, [wStoryModeCurrentLocation] ; $67d5
-	ld [$c700], a ; $67d8
+	ld [wDebugMenuWindowId], a ; $67d8
 	farcall GetStoryLocationCount ; $67db
 	ld [$c702], a ; $67de
 	ld de, $0000 ; $67e1
 	ld bc, $1406 ; $67e4
 	call CreateWindow ; $67e7
-	ld [$c701], a ; $67ea
+	ld [wDebugWarpWindowId], a ; $67ea
 	call DebugDrawWarpMenu ; $67ed
 	call AdvanceFrame ; $67f0
 .loop:
@@ -6221,7 +6221,7 @@ RunDebugWarpMenu:
 	ldh a, [hInputRisingEdge] ; $67f9
 	and a, PADF_A ; $67fb
 	jr z, .checkInputPressed ; $67fd
-	ld a, [$c700] ; $67ff
+	ld a, [wDebugMenuWindowId] ; $67ff
 	ld [wStoryModeCurrentLocation], a ; $6802
 	ld a, [$c704] ; $6805
 	ld [wStoryModeEntryPoint], a ; $6808
@@ -6244,7 +6244,7 @@ RunDebugWarpMenu:
 	jr z, .eq01 ; $682a
 	ld a, [$c702] ; $682c
 	ld d, a ; $682f
-	ld hl, $c700 ; $6830
+	ld hl, wDebugMenuWindowId ; $6830
 	ld a, [hl] ; $6833
 	call DebugStepValueWithDpad ; $6834
 	cp a, [hl] ; $6837
@@ -6266,7 +6266,7 @@ RunDebugWarpMenu:
 	call AdvanceFrame ; $6852
 	jr .loop ; $6855
 .closeWindow:
-	ld a, [$c701] ; $6857
+	ld a, [wDebugWarpWindowId] ; $6857
 	call CloseWindow ; $685a
 	pop hl ; $685d
 	pop de ; $685e
@@ -6337,7 +6337,7 @@ DebugDrawColorComponents:
 	push de ; $6971
 	ld h, $00 ; $6972
 	ld l, a ; $6974
-	ld de, $c700 ; $6975
+	ld de, wDebugMenuWindowId ; $6975
 	ld a, $03 ; $6978
 	call FormatDecimalNumber ; $697a
 	ld h, $00 ; $697d
@@ -6362,7 +6362,7 @@ DebugDrawColorComponents:
 	ld [hl], $0d ; $699e
 	xor a, a ; $69a0
 	ld [$c709], a ; $69a1
-	ld hl, $c700 ; $69a4
+	ld hl, wDebugMenuWindowId ; $69a4
 	ld de, $0102 ; $69a7
 	ld a, [$c711] ; $69aa
 	call WriteStringToWindow ; $69ad

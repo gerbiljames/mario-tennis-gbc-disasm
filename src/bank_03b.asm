@@ -1989,11 +1989,11 @@ ScrollN64TnmtDataCursor:
 	ld a, [wMenuInputPressed] ; $4d5d
 	bit PADB_LEFT, a ; $4d60
 	jr z, .step ; $4d62
-	ld a, [$d801] ; $4d64
+	ld a, [wDataScreenPage] ; $4d64
 	or a, a ; $4d67
 	jr z, .done ; $4d68
 	xor a, a ; $4d6a
-	ld [$d801], a ; $4d6b
+	ld [wDataScreenPage], a ; $4d6b
 	sound $5e ; $4d6e
 	call RedrawN64TnmtDataWindow ; $4d70
 	jr .done ; $4d73
@@ -2003,33 +2003,33 @@ ScrollN64TnmtDataCursor:
 	ld a, [wScreenScratch] ; $4d79
 	or a, a ; $4d7c
 	jr z, .done ; $4d7d
-	ld a, [$d801] ; $4d7f
+	ld a, [wDataScreenPage] ; $4d7f
 	or a, a ; $4d82
 	jr nz, .done ; $4d83
 	ld a, $01 ; $4d85
-	ld [$d801], a ; $4d87
+	ld [wDataScreenPage], a ; $4d87
 	sound $5e ; $4d8a
 	call RedrawN64TnmtDataWindow ; $4d8c
 	jr .done ; $4d8f
 .bit4Clear:
 	bit 6, a ; $4d91
 	jr z, .bit6Clear ; $4d93
-	ld a, [$d802] ; $4d95
+	ld a, [wDataScreenCursorRow] ; $4d95
 	or a, a ; $4d98
 	jr z, .done ; $4d99
 	dec a ; $4d9b
-	ld [$d802], a ; $4d9c
+	ld [wDataScreenCursorRow], a ; $4d9c
 	sound $5e ; $4d9f
 	call RedrawN64TnmtDataWindow ; $4da1
 	jr .done ; $4da4
 .bit6Clear:
 	bit 7, a ; $4da6
 	jr z, .done ; $4da8
-	ld a, [$d802] ; $4daa
+	ld a, [wDataScreenCursorRow] ; $4daa
 	cp a, $0b ; $4dad
 	jr z, .done ; $4daf
 	inc a ; $4db1
-	ld [$d802], a ; $4db2
+	ld [wDataScreenCursorRow], a ; $4db2
 	sound $5e ; $4db5
 	call RedrawN64TnmtDataWindow ; $4db7
 	jr .done ; $4dba
@@ -2042,9 +2042,9 @@ BuildN64TnmtDataScreen:
 	xor a, a ; $4dc8
 	ld [wScreenScratch], a ; $4dc9
 	ld a, $00 ; $4dcc
-	ld [$d801], a ; $4dce
+	ld [wDataScreenPage], a ; $4dce
 	ld a, $00 ; $4dd1
-	ld [$d802], a ; $4dd3
+	ld [wDataScreenCursorRow], a ; $4dd3
 	call LoadN64TnmtDataRecords ; $4dd6
 	wram_bank $03 ; $4dd9
 	ld de, $aac0 ; $4ddf
@@ -2268,7 +2268,7 @@ DrawN64TnmtRowIcons:
 	push af ; $4f4b
 	wram_bank $03 ; $4f4c
 	ld hl, $d810 ; $4f52
-	ld a, [$d802] ; $4f55
+	ld a, [wDataScreenCursorRow] ; $4f55
 	add a, l ; $4f58
 	ld l, a ; $4f59
 	jr nc, .gotPtr ; $4f5a
@@ -2303,7 +2303,7 @@ DrawN64TnmtPageLabels:
 	ldh a, [hWramBank] ; $4f81
 	push af ; $4f83
 	wram_bank $03 ; $4f84
-	ld a, [$d801] ; $4f8a
+	ld a, [wDataScreenPage] ; $4f8a
 	or a, a ; $4f8d
 	jr nz, .nonZero ; $4f8e
 	ld hl, $d240 ; $4f90
@@ -2354,7 +2354,7 @@ DrawN64TnmtPageLabels:
 	ret ; $4fff
 DrawN64TnmtTrophyRows:
 	wram_bank $03 ; $5000
-	ld a, [$d802] ; $5006
+	ld a, [wDataScreenCursorRow] ; $5006
 	add a, a ; $5009
 	ld b, a ; $500a
 	add a, a ; $500b
@@ -2366,7 +2366,7 @@ DrawN64TnmtTrophyRows:
 	jr nc, .gotPtr ; $5013
 	inc h ; $5015
 .gotPtr:
-	ld a, [$d801] ; $5016
+	ld a, [wDataScreenPage] ; $5016
 	or a, a ; $5019
 	jr z, .drawN64TnmtTrophyRow ; $501a
 	ld a, $06 ; $501c
@@ -2491,7 +2491,7 @@ N64TnmtScrollArrowsTask:
 	ld a, [wScreenScratch] ; $50df
 	or a, a ; $50e2
 	jr z, .applyCursorBounceX ; $50e3
-	ld a, [$d801] ; $50e5
+	ld a, [wDataScreenPage] ; $50e5
 	or a, a ; $50e8
 	jr nz, .applyCursorBounceX ; $50e9
 	ld de, $932f ; $50eb
@@ -2502,7 +2502,7 @@ N64TnmtScrollArrowsTask:
 	ld h, $00 ; $50f7
 	farcall QueueStackedSpritePair ; $50f9
 .applyCursorBounceX:
-	ld a, [$d801] ; $50fc
+	ld a, [wDataScreenPage] ; $50fc
 	or a, a ; $50ff
 	jr z, .zero ; $5100
 	ld de, $202f ; $5102
@@ -2513,7 +2513,7 @@ N64TnmtScrollArrowsTask:
 	ld h, $01 ; $510e
 	farcall QueueStackedSpritePair ; $5110
 .zero:
-	ld a, [$d802] ; $5113
+	ld a, [wDataScreenCursorRow] ; $5113
 	or a, a ; $5116
 	jr z, .zero2 ; $5117
 	ld de, $0c32 ; $5119
@@ -2524,7 +2524,7 @@ N64TnmtScrollArrowsTask:
 	ld h, $02 ; $5125
 	farcall QueueStackedSpritePair ; $5127
 .zero2:
-	ld a, [$d802] ; $512a
+	ld a, [wDataScreenCursorRow] ; $512a
 	cp a, $0b ; $512d
 	jr z, .restore ; $512f
 	ld de, $0c88 ; $5131
@@ -7582,7 +7582,7 @@ ShowTournamentBracket:
 	ld a, b ; $7763
 	ld [wScreenScratch], a ; $7764
 	ld a, c ; $7767
-	ld [$d801], a ; $7768
+	ld [wDataScreenPage], a ; $7768
 	call DisableLCDSafely ; $776b
 	call BuildTournamentBracketScreen ; $776e
 	call EnableLCD ; $7771
@@ -7695,7 +7695,7 @@ DrawTournamentBracketNameBoxes:
 	farcall FillTilemapRect ; $7868
 	ret ; $786b
 WriteBracketSinglesNames:
-	ld a, [$d801] ; $786c
+	ld a, [wDataScreenPage] ; $786c
 	ld hl, WriteBracketSinglesNamesPtrs ; $786f
 	add a, a ; $7872
 	add a, l ; $7873
@@ -7795,7 +7795,7 @@ WriteBracketEntrantNameTable:
 	dw $d1a9 ; record 2
 	dw $d1e9 ; record 3
 WriteBracketDoublesNames:
-	ld a, [$d801] ; $78ec
+	ld a, [wDataScreenPage] ; $78ec
 	cp a, $01 ; $78ef
 	jr nz, .ne01 ; $78f1
 	ld hl, wStoryModeNameOfMainCharacter ; $78f3
@@ -7833,7 +7833,7 @@ HighlightBracketPlayerRow:
 	ld a, [wScreenScratch] ; $7945
 	or a, a ; $7948
 	jr nz, .nonZero ; $7949
-	ld a, [$d801] ; $794b
+	ld a, [wDataScreenPage] ; $794b
 	ld hl, HighlightBracketPlayerRowTable ; $794e
 	add a, a ; $7951
 	add a, l ; $7952
@@ -7848,7 +7848,7 @@ HighlightBracketPlayerRow:
 	ld c, $02 ; $795c
 	ld h, $05 ; $795e
 	farcall FillTilemapRect ; $7960
-	ld a, [$d801] ; $7963
+	ld a, [wDataScreenPage] ; $7963
 	ld hl, BracketPlayerRowTable0 ; $7966
 	add a, a ; $7969
 	add a, l ; $796a
@@ -7861,7 +7861,7 @@ HighlightBracketPlayerRow:
 	ld e, a ; $7971
 	ld b, $02 ; $7972
 	ld c, $02 ; $7974
-	ld a, [$d801] ; $7976
+	ld a, [wDataScreenPage] ; $7976
 	cp a, $04 ; $7979
 	jr nz, .ne04 ; $797b
 	ld c, $01 ; $797d
@@ -7870,7 +7870,7 @@ HighlightBracketPlayerRow:
 	farcall FillTilemapRect ; $7981
 	ret ; $7984
 .nonZero:
-	ld a, [$d801] ; $7985
+	ld a, [wDataScreenPage] ; $7985
 	ld hl, BracketPlayerRowTable1 ; $7988
 	add a, a ; $798b
 	add a, l ; $798c
@@ -7885,7 +7885,7 @@ HighlightBracketPlayerRow:
 	ld c, $04 ; $7996
 	ld h, $05 ; $7998
 	farcall FillTilemapRect ; $799a
-	ld a, [$d801] ; $799d
+	ld a, [wDataScreenPage] ; $799d
 	ld hl, BracketPlayerRowTable2 ; $79a0
 	add a, a ; $79a3
 	add a, l ; $79a4

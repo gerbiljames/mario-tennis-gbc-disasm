@@ -78,7 +78,7 @@ RunMatchPauseMenu:
 	ld hl, DrawScoreboardModeTitle ; $40b6
 	call RegisterFrameTask ; $40b9
 	ld b, $00 ; $40bc
-	ld a, [$c4c8] ; $40be
+	ld a, [wCourtViewLocked] ; $40be
 	and a, a ; $40c1
 	jr z, .zero ; $40c2
 	ld b, $01 ; $40c4
@@ -425,7 +425,7 @@ MatchPauseMenu_ReviewControls:
 	ret ; $43ed
 MatchPauseMenu_ChangeOptions:
 	call RestoreBgTilemapRegion ; $43ee
-	ld a, [$c4c8] ; $43f1
+	ld a, [wCourtViewLocked] ; $43f1
 	and a, a ; $43f4
 	jr nz, MatchPauseMenu_MusicToggle ; $43f5
 	xor a, a ; $43f7
@@ -2245,7 +2245,7 @@ Unused_06_DrawMusicMenuRow:
 	ld hl, TextRectAttrs_06_6973 ; $69a0
 	ld bc, $0c02 ; $69a3
 	call CopyTextRect ; $69a6
-	ld a, [$c4c8] ; $69a9
+	ld a, [wCourtViewLocked] ; $69a9
 	and a, a ; $69ac
 	ret z ; $69ad
 	ld a, $05 ; $69ae
@@ -2469,7 +2469,7 @@ RunDebugStatsEditor:
 	farcall LoadMenuTilesBChunk2 ; $6b8a
 	wram_bank $04 ; $6b8d
 	ld hl, wCharPosX ; $6b93
-	ld de, $c700 ; $6b96
+	ld de, wDebugMenuWindowId ; $6b96
 	ld c, $08 ; $6b99
 	call CopyMemoryFast ; $6b9b
 	wram_bank $02 ; $6b9e
@@ -2501,7 +2501,7 @@ RunDebugStatsEditor:
 	call FlushTilemapToVram ; $6bd9
 	farcall StepMatchFrame ; $6bdc
 	wram_bank $04 ; $6bdf
-	ld hl, $c700 ; $6be5
+	ld hl, wDebugMenuWindowId ; $6be5
 	ld de, wCharPosX ; $6be8
 	ld c, $08 ; $6beb
 	call CopyMemoryFast ; $6bed
@@ -3044,7 +3044,7 @@ StoryPauseMenu_GameProgress:
 	ret ; $6fbb
 StoryPauseMenu_Options:
 	call RestoreStoryTilemapNoPriority ; $6fbc
-	ld a, [$c4c8] ; $6fbf
+	ld a, [wCourtViewLocked] ; $6fbf
 	and a, a ; $6fc2
 	xor a, a ; $6fc3
 	ld [wMatchMenuSelection], a ; $6fc4
