@@ -6362,6 +6362,35 @@ their body".
 Worth generalising: the wrong name made the wrong conclusion easy. "JudgeShot2"
 invites "the second shot is not judged", which is a claim about gameplay;
 "JudgeOnBounce" invites "this drill does not judge on a bounce", which is a
-claim about configuration. The `StubNop_*` and `StubLoadFontTiles` names from
-earlier passes encode the same assumption and are flagged in `docs/bugs.md` as
-worth re-examining on the same grounds.
+claim about configuration.
+
+### Names chosen for a leading `ret`
+
+Following that through the rest of the ROM: 36 labels were named `Stub*`, and
+six of them had a real body the name was hiding. Two were drill judges, which is
+why the counts above were first written as thirteen drills and 52 judges — it is
+fifteen and 60.
+
+| was | is |
+| --- | --- |
+| `StubNop_0b_5d63` | `NetGamePractice1JudgeOnRallyTick` |
+| `StubNop_0b_6ceb` | `StrokePractice1JudgeOnRallyTick` |
+| `StubLoadFontTiles` | `LoadFontTiles` |
+| `StubNop_1b_664a` | `LoadUnlockDebugNavGridGfx` |
+| `StubAlwaysNotZero` | `CheckExpAwardAllowed` |
+| `StubNop_05_49dc` | `PagedMenuFrameTask` |
+
+The thirty others have a bare `ret` for a body, where `StubNop` is accurate.
+
+Those two drills also turned up a *third* naming scheme for the same routines —
+`NetGamePractice1` and `StrokePractice1` had their other three judges as
+`Drill09`/`Drill15JudgePointMode0-2`. Each is called from exactly one hook, so
+they are `<Drill>JudgeOn<Hook>` now and all 60 judges use one convention.
+
+Two of the six renames are findings rather than tidying. **`CheckExpAwardAllowed`
+cannot return z**: `xor a` / `dec a` sets the flags from `$ff` and the following
+`ld a, c` restores the caller's `a` without touching them, so
+`AddExpToCa00RecordChecked`'s `ret z` never fires and the EXP award is ungated.
+**`PagedMenuFrameTask` runs and does nothing**: it is genuinely registered and
+unregistered as a per-frame task, so the plumbing is real, but the body reads
+`wMenuCursorRow` into `a` and `pop af` discards it.
