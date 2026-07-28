@@ -101,7 +101,7 @@ wMapSceneStage2:: db
 ; ram_map.json were global, so they also labelled the generic scratch use
 ; in banks $0e/$0f/$10/$13, which is what STATUS flagged as mis-scoped.
 UNION
-; island cutscene sprite slots (bank $14, $5300-$6600)
+; island cutscene sprite slots (bank $14, $5300-$7900)
 ; [2 bytes] World X of cutscene sprite slot 0 and slot 1; the drawers subtract hScrollX to get the OAM X. The plane sequence has no second object and borrows slot 0's byte as its frame counter (AdvancePlaneFrameCounter_14)
 wCutsceneObjX:: dw
 ; [2 bytes] World Y of the two cutscene sprite slots
@@ -129,6 +129,8 @@ wSwingContestPrevInput:: db
 wSwingContestSwingState:: db
 ; [8-bit] Which HUD panels QueueWaterSpriteMinigameHudPanels draws
 wSwingContestHudMode:: db
+; [8-bit] Which HUD page the swing contest shows; InitWaterSpriteMinigameHud seeds it and QueueWaterSpriteMinigameHudPanels queues the panels for it
+wSwingContestHudPage:: db
 ENDU
 
 	ds 16

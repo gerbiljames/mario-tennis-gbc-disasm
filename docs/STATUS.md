@@ -5794,3 +5794,116 @@ which every `ActorScriptOp_*` passes to `FarReadByte`.
 Raw `[$xxxx]` WRAM operands in `src/`: **3,496 -> 1,560**, over 476 distinct
 addresses, and 400 more addresses moved from the generator's `w<bank>_<addr>`
 placeholder to a real name. `make compare` OK, `make check` clean.
+
+
+## The match character struct, field by field (2026-07-28)
+
+The per-character struct at `$df00` -- one copy in each of WRAM banks `$04`-`$07`
+-- had 34 named fields and about 190 references still numeric. It is the
+densest single structure in the ROM, and the call sites name most of it for you
+once you read the routines that own each group.
+
+**The animation format falls out of two routines.** `SetCharAnimation` and
+`StepCharAnimation` between them define it:
+
+```
+wCharAnimTablePtr   -> indexed by wCharAnimId, in wCharObjectBank
+wCharAnimScriptBase -> where $ff (rewind) jumps back to
+wCharAnimScriptPtr  -> cursor; commands are words:
+                         < $f0  [delay, frame]
+                         $ff    jump to base + d
+                         $fe    switch animation
+                         $fb    xor d into the flip bits of wCharSpriteAttr
+```
+
+A frame change sets bit 6 of `wCharSpriteDirty`, which `ReloadCharFacingTiles`
+clears after uploading. `wCharSpriteAttr` is doing double duty and that is worth
+saying out loud: its low three bits are the CGB OBJ palette (`wCharIndex + 4`)
+*and* the VRAM tile-block index `ReloadCharFrameGfx` uploads into (`& $07`,
+`+ $08`), while the high bits are the flip bits the `$fb` command toggles and
+`SetCharAnimation` clears with `and $0f`.
+
+**The shot buttons are a 2-D table index.** `wCharShotButton1` and
+`wCharShotButton2` are the two presses inside `wCharShotComboTimer`'s five-frame
+window, and the pair indexes `RallyShotTypeTable0/1` -- which is how A+B
+combinations become lobs, drops and power shots. `wCharBallReachFlags` bit 4
+picks between the normal table and the stretching one, so the same buttons mean
+a different shot when you are reaching.
+
+**The AI's personality is six bytes of the character record.** `+$0f` and
+`+$1b`-`$1f` become `wAiPositionStrategy` (an RST00 index -- baseline, net, or
+mid-court), `wAiReactionDelayNear` / `wAiReactionDelayFar` (separate, so a
+stretching return can be made deliberately slower than a comfortable one),
+`wAiTrackingParam`, `wAiAimAwayChance` (an RNG threshold: higher places more
+shots away from the opponent) and `wAiServeStyle`. That this is exactly the
+block `OverrideCharStatsForDebug` rewrites is the corroboration.
+
+**A correction.** `$df22` was `wCharActive`. It is the ROM bank of the
+character's object data: `GetPerspectiveScale` writes it straight to `hRomBank`
+and `$2000`, and `SetCharAnimation` passes it to `FarReadWordDI`. It is
+`wCharObjectBank` now, and the zero test `UpdateChar` exits on is "no object
+loaded" rather than an active flag.
+
+**The scope grew too.** The nine shot banks (`$20`-`$24`, `$29`-`$2c`) and the
+results/EXP screens read the struct with the WRAM bank already selected by their
+caller, so `compute_wram_bank` cannot prove it and every field read as numeric
+there. Adding their ROM banks named 54 more references without changing what a
+single address means -- the same lesson as the screen blocks: a `wram_bank`
+scope needs a subsystem that selects its own bank.
+
+### The water-sprite names were three cells of a shared block
+
+`wWaterSpriteMinigameTimer`, `wWaterSpriteMinigameSwingCount` and
+`wWaterSpriteMinigameFlag` came from the RetroAchievements notes and sat in
+`ram_map.json` at global scope. STATUS flagged them as mis-scoped twice and left
+them "pending its own pass". They are `$c2b4`/`$c2b6`/`$c2ba`, three bytes of the
+`$c2b0`-`$c2bf` location scratch block, and 25 references in banks
+`$0e`/`$0f`/`$10`/`$13`/`$14` carried a name for a minigame they have nothing to
+do with.
+
+What is there is an overlay of two shapes, which is also why the old names
+looked 16-bit:
+
+| | bank `$14` island cutscenes | bank `$15` swing contest |
+| --- | --- | --- |
+| `$c2b2` | `wCutsceneObjX` [2] | — |
+| `$c2b4` | `wCutsceneObjY` [2] | `wSwingContestTimer` [16-bit] |
+| `$c2b6` | `wCutsceneObjPhase` [2] | `wSwingContestSwings` [16-bit] |
+| `$c2b8` | `wCutsceneObjTimer` [2] | `wSwingContestPrevInput` |
+| `$c2ba` | `wCutsceneObjLimit` [2] | `wSwingContestHudMode` |
+
+The cutscene side is **two sprite slots as parallel byte arrays** -- X, Y,
+phase, timer, limit, rise timer, active, each a two-byte array indexed by slot.
+The water splashes use both slots; the fireworks use the same seven fields for
+their own version of the same roles; the plane sequence has no second object, so
+it borrows slot 0's X byte as a frame counter. The contest side is two 16-bit
+counters over the same bytes, which is exactly the pair the RA notes recorded.
+Both are variants of one union now, and the scratch use in the other four banks
+is numeric again rather than wrong.
+
+### wShadowTilemap, and why the cells stay hex
+
+The full-screen UIs assemble their BG map at `$d000` in WRAM bank `$03` and
+`QueueVRAMCopy` it to `$9800`; `wShadowTilemapBank` / `wShadowTilemapPtr` point
+the text engine at it (bank `$03` for screens, `$05` for text windows, `$02` for
+the match). Rows are `$20` cells apart, so a cell is `$d000 + row * $20 + col` --
+which is what hundreds of `$d0xx`-`$d3xx` addresses across the screen banks
+actually are. Only the base is named. `ld hl, $d151` says "row 10, column 17"
+to anyone who knows the stride and `wShadowTilemap + 337` says nothing, so the
+union's comment carries the arithmetic instead of the operands.
+
+The four bytes below the character-data screen's working set turned out to be a
+smaller scratch three screens overlay, so they took range-scoped variants: the
+debug character viewer (`wCharViewerRow` toggles with `xor $01` between the
+character grid and the palette row, and `wCharViewerSavedCursor` is why coming
+back lands on the same character) and the results continue prompt.
+
+Also this pass, in WRAM0: the four saved menu cursors at `$cb1b`-`$cb1e` -- how
+each menu reopens where you left it, and why they are cleared together when a
+new game starts -- `wSelectedMinigame`, the tennis dictionary's mascot animation
+pair, `wDrillGateActive`, and `wShotAimRow`, an aim index every shot bank stores
+and none reads (the value is used from `a`, so the store is a leftover).
+
+Raw `[$xxxx]` WRAM operands in `src/`: **1,560 -> 1,106** over 406 distinct
+addresses, and 25 mislabelled references are gone. `make compare` OK, `make
+check` clean.

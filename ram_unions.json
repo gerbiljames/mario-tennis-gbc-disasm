@@ -1743,12 +1743,12 @@
    "comment": "Story-script scratch, second half ($c2b0-$c2bf as a whole is the\ncurrent location's scratch block; wMapSceneStage and wMapSceneStage2\nare its first two bytes). Two consumers overlay it: bank $14's island\ncutscenes keep two sprite slots here as parallel byte arrays, and bank\n$15's water-sprite swing contest keeps 16-bit counters over the same\nbytes. The three wWaterSpriteMinigame* names that used to sit here in\nram_map.json were global, so they also labelled the generic scratch use\nin banks $0e/$0f/$10/$13, which is what STATUS flagged as mis-scoped.",
    "variants": [
     {
-     "context": "island cutscene sprite slots (bank $14, $5300-$6600)",
+     "context": "island cutscene sprite slots (bank $14, $5300-$7900)",
      "scopes": [
       {
        "bank": "0x14",
        "start": "0x5300",
-       "end": "0x6600"
+       "end": "0x7900"
       }
      ],
      "symbols": {
@@ -1816,6 +1816,10 @@
       "0xc2ba": {
        "name": "wSwingContestHudMode",
        "note": "[8-bit] Which HUD panels QueueWaterSpriteMinigameHudPanels draws"
+      },
+      "0xc2bb": {
+       "name": "wSwingContestHudPage",
+       "note": "[8-bit] Which HUD page the swing contest shows; InitWaterSpriteMinigameHud seeds it and QueueWaterSpriteMinigameHudPanels queues the panels for it"
       }
      }
     }

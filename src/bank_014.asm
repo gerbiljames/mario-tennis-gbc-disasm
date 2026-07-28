@@ -2432,22 +2432,22 @@ Data_14_64dd:
 	ld [wCutsceneObjTimer + 1], a ; $65ff
 	script_wait_frames $28 ; $6602
 	ld a, $40 ; $6609
-	ld [$c2b2], a ; $660b
+	ld [wCutsceneObjX], a ; $660b
 	ld a, $20 ; $660e
-	ld [$c2b4], a ; $6610
+	ld [wCutsceneObjY], a ; $6610
 	ld a, $00 ; $6613
-	ld [$c2b6], a ; $6615
+	ld [wCutsceneObjPhase], a ; $6615
 	ld a, $16 ; $6618
-	ld [$c2b8], a ; $661a
+	ld [wCutsceneObjTimer], a ; $661a
 	script_wait_frames $32 ; $661d
 	ld a, $48 ; $6624
-	ld [$c2b3], a ; $6626
+	ld [wCutsceneObjX + 1], a ; $6626
 	ld a, $28 ; $6629
-	ld [$c2b5], a ; $662b
+	ld [wCutsceneObjY + 1], a ; $662b
 	ld a, $00 ; $662e
-	ld [$c2b7], a ; $6630
+	ld [wCutsceneObjPhase + 1], a ; $6630
 	ld a, $1c ; $6633
-	ld [$c2b9], a ; $6635
+	ld [wCutsceneObjTimer + 1], a ; $6635
 	script_wait_frames $48 ; $6638
 	ld c, $04 ; $663f
 	call BeginFadeOut ; $6641
@@ -2492,51 +2492,51 @@ SpriteTemplate_14_6e80:
 FireworkObjPalettes_14:
 	INCLUDE "data/bank_014/palettes_6ea1.asm" ; $6ea1, 79 bytes (palettes)
 UpdateFirework1_14:
-	ld a, [$c2b7] ; $6ef0
+	ld a, [wCutsceneObjPhase + 1] ; $6ef0
 	cp a, $04 ; $6ef3
 	jp nc, .done ; $6ef5
-	ld a, [$c2b7] ; $6ef8
+	ld a, [wCutsceneObjPhase + 1] ; $6ef8
 	and a, a ; $6efb
 	jr nz, .draw ; $6efc
 	call AdvanceFirework1Ascent_14 ; $6efe
 .draw:
 	ldh a, [hScrollX] ; $6f01
 	ld b, a ; $6f03
-	ld a, [$c2b3] ; $6f04
+	ld a, [wCutsceneObjX + 1] ; $6f04
 	sub a, b ; $6f07
 	ld d, a ; $6f08
 	ldh a, [hScrollY] ; $6f09
 	ld b, a ; $6f0b
-	ld a, [$c2b5] ; $6f0c
+	ld a, [wCutsceneObjY + 1] ; $6f0c
 	sub a, b ; $6f0f
 	ld e, a ; $6f10
-	ld a, [$c2b9] ; $6f11
+	ld a, [wCutsceneObjTimer + 1] ; $6f11
 	dec a ; $6f14
-	ld [$c2b9], a ; $6f15
+	ld [wCutsceneObjTimer + 1], a ; $6f15
 	and a, a ; $6f18
 	jp nz, .burstSprite ; $6f19
-	ld a, [$c2b7] ; $6f1c
+	ld a, [wCutsceneObjPhase + 1] ; $6f1c
 	inc a ; $6f1f
-	ld [$c2b7], a ; $6f20
+	ld [wCutsceneObjPhase + 1], a ; $6f20
 	cp a, $04 ; $6f23
 	jp nc, .done ; $6f25
-	ld a, [$c2b7] ; $6f28
+	ld a, [wCutsceneObjPhase + 1] ; $6f28
 	add a, LOW(Table_14_64d5) ; $6f2b
 	ld l, a ; $6f2d
 	adc a, HIGH(Table_14_64d5) ; $6f2e
 	sub a, l ; $6f30
 	ld h, a ; $6f31
 	ld a, [hl] ; $6f32
-	ld [$c2b9], a ; $6f33
-	ld a, [$c2b7] ; $6f36
+	ld [wCutsceneObjTimer + 1], a ; $6f33
+	ld a, [wCutsceneObjPhase + 1] ; $6f36
 	cp a, $01 ; $6f39
 	jr nz, .burstSprite ; $6f3b
-	ld a, [$c2b9] ; $6f3d
+	ld a, [wCutsceneObjTimer + 1] ; $6f3d
 	cp a, $0c ; $6f40
 	jr nz, .burstSprite ; $6f42
 	sound $81 ; $6f44
 .burstSprite:
-	ld a, [$c2b7] ; $6f46
+	ld a, [wCutsceneObjPhase + 1] ; $6f46
 	add a, LOW(Data_14_64dd) ; $6f49
 	ld l, a ; $6f4b
 	adc a, HIGH(Data_14_64dd) ; $6f4c
@@ -2545,7 +2545,7 @@ UpdateFirework1_14:
 	ld a, [hl] ; $6f50
 	add a, $10 ; $6f51
 	ld c, a ; $6f53
-	ld a, [$c2b9] ; $6f54
+	ld a, [wCutsceneObjTimer + 1] ; $6f54
 	srl a ; $6f57
 	and a, $03 ; $6f59
 	inc a ; $6f5b
@@ -2556,7 +2556,7 @@ UpdateFirework1_14:
 	ret ; $6f63
 AdvanceFirework1Ascent_14:
 	ld b, $03 ; $6f64
-	ld a, [$c2b9] ; $6f66
+	ld a, [wCutsceneObjTimer + 1] ; $6f66
 	cp a, $14 ; $6f69
 	jr nc, .store ; $6f6b
 	dec b ; $6f6d
@@ -2564,9 +2564,9 @@ AdvanceFirework1Ascent_14:
 	jr nc, .store ; $6f70
 	dec b ; $6f72
 .store:
-	ld a, [$c2b5] ; $6f73
+	ld a, [wCutsceneObjY + 1] ; $6f73
 	sub a, b ; $6f76
-	ld [$c2b5], a ; $6f77
+	ld [wCutsceneObjY + 1], a ; $6f77
 	ret ; $6f7a
 .loadScene:
 	call DisableLCDSafely ; $6f7b
@@ -2581,9 +2581,9 @@ AdvanceFirework1Ascent_14:
 	ld hl, QueuePlaneSpriteByHeight_14 ; $6f93
 	call RegisterFrameTask ; $6f96
 	ld a, $00 ; $6f99
-	ld [$c2ba], a ; $6f9b
-	ld [$c2bb], a ; $6f9e
-	ld [$c2be], a ; $6fa1
+	ld [wCutsceneObjLimit], a ; $6f9b
+	ld [wCutsceneObjLimit + 1], a ; $6f9e
+	ld [wCutsceneObjActive], a ; $6fa1
 	ld a, $01 ; $6fa4
 	ld hl, AnimateIslandSkyEffectSprites_14 ; $6fa6
 	call RegisterFrameTask ; $6fa9
@@ -2677,7 +2677,7 @@ AdvanceFirework1Ascent_14:
 	script_move_player $0b00, $0d00 ; $709d
 	call LoadDistantPlaneObjGfx_14 ; $70a7
 	ld a, $04 ; $70aa
-	ld [$c2b6], a ; $70ac
+	ld [wCutsceneObjPhase], a ; $70ac
 	ld a, $a8 ; $70af
 	ld [wMapSceneStage2], a ; $70b1
 	ld a, $01 ; $70b4
@@ -2697,7 +2697,7 @@ AdvanceFirework1Ascent_14:
 	cp a, $1e ; $70d7
 	jr nz, .speakDoubles ; $70d9
 	ld a, $00 ; $70db
-	ld [$c2b6], a ; $70dd
+	ld [wCutsceneObjPhase], a ; $70dd
 .speakDoubles:
 	dec h ; $70e0
 	jr nz, .speak ; $70e1
@@ -2710,7 +2710,7 @@ AdvanceFirework1Ascent_14:
 	cp a, $0d ; $70f9
 	jp nz, .fadeOut ; $70fb
 	ld a, $01 ; $70fe
-	ld [$c2be], a ; $7100
+	ld [wCutsceneObjActive], a ; $7100
 	ld a, $01 ; $7103
 	ld [wUnusedExitLocationMirror], a ; $7105
 	ld [wStoryModeExitLocationRequest], a ; $7108
@@ -2823,20 +2823,20 @@ AnimateIslandSkyEffectSprites_14:
 	ld e, a ; $73e5
 	ld c, $10 ; $73e6
 	ld hl, IslandSkySpriteData_14 ; $73e8
-	ld a, [$c2be] ; $73eb
+	ld a, [wCutsceneObjActive] ; $73eb
 	and a, a ; $73ee
 	jr nz, .nonZero ; $73ef
-	ld a, [$c2ba] ; $73f1
+	ld a, [wCutsceneObjLimit] ; $73f1
 	inc a ; $73f4
-	ld [$c2ba], a ; $73f5
+	ld [wCutsceneObjLimit], a ; $73f5
 .nonZero:
-	ld a, [$c2ba] ; $73f8
+	ld a, [wCutsceneObjLimit] ; $73f8
 	swap a ; $73fb
 	and a, $03 ; $73fd
 	cp a, $03 ; $73ff
 	jr nz, .ne03 ; $7401
 	ld a, $00 ; $7403
-	ld [$c2ba], a ; $7405
+	ld [wCutsceneObjLimit], a ; $7405
 .ne03:
 	inc a ; $7408
 	ld b, a ; $7409
@@ -2853,7 +2853,7 @@ AnimateIslandSkyEffectSprites_14:
 	ld e, a ; $741a
 	ld c, $20 ; $741b
 	ld hl, SpriteTemplate_14_7371 ; $741d
-	ld a, [$c2ba] ; $7420
+	ld a, [wCutsceneObjLimit] ; $7420
 	swap a ; $7423
 	and a, $03 ; $7425
 	inc a ; $7427
@@ -2885,7 +2885,7 @@ LoadDistantPlaneObjGfx_14:
 	ret ; $755b
 QueueDistantPlaneSprite_14:
 	call GetSceneObjectScreenPos_14 ; $755c
-	ld a, [$c2b6] ; $755f
+	ld a, [wCutsceneObjPhase] ; $755f
 	ld c, a ; $7562
 	ld c, a ; $7563
 	ld hl, SpriteTemplate_14_7530 ; $7564
@@ -2935,7 +2935,7 @@ QueueTwinkleSprite_14:
 	ld a, $58 ; $76b5
 	sub a, b ; $76b7
 	ld e, a ; $76b8
-	ld a, [$c2b6] ; $76b9
+	ld a, [wCutsceneObjPhase] ; $76b9
 	ld c, a ; $76bc
 	ld hl, SpriteTemplate_14_7530 ; $76bd
 	ld b, $08 ; $76c0
@@ -2947,8 +2947,8 @@ QueueTwinkleSprite_14:
 	call LoadTwinkleObjGfx_14 ; $76cc
 	call EnableLCD ; $76cf
 	ld a, $00 ; $76d2
-	ld [$c2ba], a ; $76d4
-	ld [$c2bb], a ; $76d7
+	ld [wCutsceneObjLimit], a ; $76d4
+	ld [wCutsceneObjLimit + 1], a ; $76d7
 	ld a, $01 ; $76da
 	ld hl, AnimateIslandSkyEffectSprites_14 ; $76dc
 	call RegisterFrameTask ; $76df
@@ -2967,7 +2967,7 @@ QueueTwinkleSprite_14:
 	script_wait_frames $1e ; $7719
 	call LoadDistantPlaneObjGfx_14 ; $7720
 	ld a, $08 ; $7723
-	ld [$c2b6], a ; $7725
+	ld [wCutsceneObjPhase], a ; $7725
 	ld a, $54 ; $7728
 	ld [wMapSceneStage], a ; $772a
 	ld a, $58 ; $772d
@@ -2989,7 +2989,7 @@ QueueTwinkleSprite_14:
 	cp a, $2d ; $7755
 	jr nz, .fireworkLoop ; $7757
 	ld a, $0c ; $7759
-	ld [$c2b6], a ; $775b
+	ld [wCutsceneObjPhase], a ; $775b
 .fireworkLoop:
 	dec h ; $775e
 	jr nz, .fadeIn ; $775f
@@ -3009,7 +3009,7 @@ QueueTwinkleSprite_14:
 	ld a, $c6 ; $778e
 	ld [wMapSceneStage2], a ; $7790
 	ld a, $3c ; $7793
-	ld [$c2b2], a ; $7795
+	ld [wCutsceneObjX], a ; $7795
 	ld a, $01 ; $7798
 	ld hl, QueuePlaneSpriteByFrameCounter_14 ; $779a
 	call RegisterFrameTask ; $779d
@@ -3098,13 +3098,13 @@ QueueTwinkleSprite_14:
 	ld [wStoryModeExitLocationRequest], a ; $786f
 	ret ; $7872
 AdvancePlaneFrameCounter2_14:
-	ld a, [$c2b2] ; $7873
+	ld a, [wCutsceneObjX] ; $7873
 	inc a ; $7876
-	ld [$c2b2], a ; $7877
+	ld [wCutsceneObjX], a ; $7877
 	ret ; $787a
 PlayTwinkleAnimation_14:
 	xor a, a ; $787b
-	ld [$c2b6], a ; $787c
+	ld [wCutsceneObjPhase], a ; $787c
 	call AdvanceFrame ; $787f
 	ld a, $01 ; $7882
 	ld hl, QueueTwinkleSprite_14 ; $7884
@@ -3113,9 +3113,9 @@ PlayTwinkleAnimation_14:
 	ld h, $04 ; $788c
 .loop:
 	script_wait_frames $04 ; $788e
-	ld a, [$c2b6] ; $7895
+	ld a, [wCutsceneObjPhase] ; $7895
 	add a, $04 ; $7898
-	ld [$c2b6], a ; $789a
+	ld [wCutsceneObjPhase], a ; $789a
 	dec h ; $789d
 	jr nz, .loop ; $789e
 	ld hl, QueueTwinkleSprite_14 ; $78a0
