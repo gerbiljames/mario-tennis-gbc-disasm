@@ -358,7 +358,7 @@ UpdateActors:
 	ld de, wStoryModePlayersXPosition ; $4219
 	ld bc, $0004 ; $421c
 	call CopyMemoryBC ; $421f
-	ld a, [$d032] ; $4222
+	ld a, [w4_d032] ; $4222
 	ld [wStoryModePlayerFacing], a ; $4225
 	ret ; $4228
 StepActorScript:

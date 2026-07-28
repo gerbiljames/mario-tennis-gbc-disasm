@@ -2532,7 +2532,7 @@ ReadMinigameRecord:
 	push bc ; $5030
 	push de ; $5031
 	push hl ; $5032
-	ld hl, $d480 ; $5033
+	ld hl, wMinigameRecordBlock ; $5033
 	ld c, $02 ; $5036
 	xor a ; $5038
 	call FillMemory16 ; $5039
@@ -2551,7 +2551,7 @@ ReadMinigameRecord:
 	add $38 ; $504b
 	push bc ; $504d
 	ld b, a ; $504e
-	ld hl, $d480 ; $504f
+	ld hl, wMinigameRecordBlock ; $504f
 	call ReadSaveBlock ; $5052
 	pop bc ; $5055
 	ld a, b ; $5056
@@ -2559,12 +2559,12 @@ ReadMinigameRecord:
 	ld l, a ; $5058
 	xor a ; $5059
 	ld h, a ; $505a
-	ld de, $d480 ; $505b
+	ld de, wMinigameRecordBlock ; $505b
 	add hl, de ; $505e
 	ld a, [hl+] ; $505f
 	ld d, [hl] ; $5060
 	ld e, a ; $5061
-	ld hl, $de00 ; $5062
+	ld hl, wMinigameRecordValue ; $5062
 	ld a, e ; $5065
 	ld [hl+], a ; $5066
 	ld [hl], d ; $5067
@@ -2598,7 +2598,7 @@ UpdateMinigameRecord:
 	push bc ; $5091
 	push de ; $5092
 	push hl ; $5093
-	ld hl, $d480 ; $5094
+	ld hl, wMinigameRecordBlock ; $5094
 	ld c, $02 ; $5097
 	xor a ; $5099
 	call FillMemory16 ; $509a
@@ -2609,10 +2609,10 @@ UpdateMinigameRecord:
 	add $38 ; $50a1
 	push bc ; $50a3
 	ld b, a ; $50a4
-	ld hl, $d480 ; $50a5
+	ld hl, wMinigameRecordBlock ; $50a5
 	call ReadSaveBlock ; $50a8
 	pop bc ; $50ab
-	ld hl, $de00 ; $50ac
+	ld hl, wMinigameRecordValue ; $50ac
 	ld a, [hl+] ; $50af
 	ld d, [hl] ; $50b0
 	ld e, a ; $50b1
@@ -2622,7 +2622,7 @@ UpdateMinigameRecord:
 	ld l, a ; $50b5
 	xor a ; $50b6
 	ld h, a ; $50b7
-	ld de, $d480 ; $50b8
+	ld de, wMinigameRecordBlock ; $50b8
 	add hl, de ; $50bb
 	pop de ; $50bc
 	ld a, e ; $50bd
@@ -2639,7 +2639,7 @@ UpdateMinigameRecord:
 	push bc ; $50cb
 	add $38 ; $50cc
 	ld b, a ; $50ce
-	ld hl, $d480 ; $50cf
+	ld hl, wMinigameRecordBlock ; $50cf
 	ld de, $0000 ; $50d2
 	call WriteSaveBlock ; $50d5
 	pop bc ; $50d8
@@ -2656,7 +2656,7 @@ UpdateMinigameRecord:
 	push bc ; $50e7
 	add $38 ; $50e8
 	ld b, a ; $50ea
-	ld hl, $d480 ; $50eb
+	ld hl, wMinigameRecordBlock ; $50eb
 	call VerifySaveBlock ; $50ee
 	pop bc ; $50f1
 	or a ; $50f2
@@ -2672,7 +2672,7 @@ UpdateMinigameRecord:
 	push bc ; $5100
 	add $3b ; $5101
 	ld b, a ; $5103
-	ld hl, $d480 ; $5104
+	ld hl, wMinigameRecordBlock ; $5104
 	ld de, $0000 ; $5107
 	call WriteSaveBlock ; $510a
 	pop bc ; $510d
@@ -2689,7 +2689,7 @@ UpdateMinigameRecord:
 	push bc ; $511c
 	add $3b ; $511d
 	ld b, a ; $511f
-	ld hl, $d480 ; $5120
+	ld hl, wMinigameRecordBlock ; $5120
 	call VerifySaveBlock ; $5123
 	pop bc ; $5126
 	or a ; $5127
@@ -2722,24 +2722,24 @@ InitCurrentSlotMinigameRecords:
 	ld a, [wCurrentStorySlot] ; $514e
 	add $38 ; $5151
 	ld b, a ; $5153
-	ld hl, $d480 ; $5154
+	ld hl, wMinigameRecordBlock ; $5154
 	call ReadSaveBlock ; $5157
 	xor a ; $515a
 	farcall GetDefaultMinigameRecordValue ; $515b
-	ld hl, $d480 ; $515e
+	ld hl, wMinigameRecordBlock ; $515e
 	ld a, e ; $5161
 	ld [hl+], a ; $5162
 	ld [hl], d ; $5163
 	ld a, $01 ; $5164
 	farcall GetDefaultMinigameRecordValue ; $5166
-	ld hl, $d482 ; $5169
+	ld hl, wMinigameRecordBlock + 2 ; $5169
 	ld a, e ; $516c
 	ld [hl+], a ; $516d
 	ld [hl], d ; $516e
 	ld a, [wCurrentStorySlot] ; $516f
 	add $38 ; $5172
 	ld b, a ; $5174
-	ld hl, $d480 ; $5175
+	ld hl, wMinigameRecordBlock ; $5175
 	ld de, $0000 ; $5178
 	call WriteSaveBlock ; $517b
 	or a ; $517e
@@ -2747,7 +2747,7 @@ InitCurrentSlotMinigameRecords:
 	ld a, [wCurrentStorySlot] ; $5181
 	add $3b ; $5184
 	ld b, a ; $5186
-	ld hl, $d480 ; $5187
+	ld hl, wMinigameRecordBlock ; $5187
 	ld de, $0000 ; $518a
 	call WriteSaveBlock ; $518d
 .restore:
@@ -2770,7 +2770,7 @@ InitAllMinigameRecordBlocks:
 	push bc ; $51a8
 	push de ; $51a9
 	push hl ; $51aa
-	ld hl, $d480 ; $51ab
+	ld hl, wMinigameRecordBlock ; $51ab
 	ld c, $02 ; $51ae
 	xor a ; $51b0
 	call FillMemory16 ; $51b1
@@ -2778,7 +2778,7 @@ InitAllMinigameRecordBlocks:
 	pop de ; $51b5
 	pop bc ; $51b6
 	pop af ; $51b7
-	ld hl, $d480 ; $51b8
+	ld hl, wMinigameRecordBlock ; $51b8
 	xor a ; $51bb
 .loop:
 	cp $0b ; $51bc
@@ -2797,38 +2797,38 @@ InitAllMinigameRecordBlocks:
 .eq0b:
 	ld a, $38 ; $51ce
 	ld b, a ; $51d0
-	ld hl, $d480 ; $51d1
+	ld hl, wMinigameRecordBlock ; $51d1
 	ld de, $0000 ; $51d4
 	call WriteSaveBlock ; $51d7
 	or a ; $51da
 	jr nz, .restore ; $51db
 	ld a, $3b ; $51dd
 	ld b, a ; $51df
-	ld hl, $d480 ; $51e0
+	ld hl, wMinigameRecordBlock ; $51e0
 	ld de, $0000 ; $51e3
 	call WriteSaveBlock ; $51e6
 	ld a, $39 ; $51e9
 	ld b, a ; $51eb
-	ld hl, $d480 ; $51ec
+	ld hl, wMinigameRecordBlock ; $51ec
 	ld de, $0000 ; $51ef
 	call WriteSaveBlock ; $51f2
 	or a ; $51f5
 	jr nz, .restore ; $51f6
 	ld a, $3c ; $51f8
 	ld b, a ; $51fa
-	ld hl, $d480 ; $51fb
+	ld hl, wMinigameRecordBlock ; $51fb
 	ld de, $0000 ; $51fe
 	call WriteSaveBlock ; $5201
 	ld a, $3a ; $5204
 	ld b, a ; $5206
-	ld hl, $d480 ; $5207
+	ld hl, wMinigameRecordBlock ; $5207
 	ld de, $0000 ; $520a
 	call WriteSaveBlock ; $520d
 	or a ; $5210
 	jr nz, .restore ; $5211
 	ld a, $3d ; $5213
 	ld b, a ; $5215
-	ld hl, $d480 ; $5216
+	ld hl, wMinigameRecordBlock ; $5216
 	ld de, $0000 ; $5219
 	call WriteSaveBlock ; $521c
 .restore:
@@ -2945,19 +2945,19 @@ StorySlotBlockIds_03:
 ReadCurrentSlotBlock:
 	wram_bank $07 ; $52b3
 	call GetCurrentSlotBlockId ; $52b9
-	ld hl, $d500 ; $52bc
+	ld hl, wSaveBlockBuffer ; $52bc
 	call ReadSaveBlock ; $52bf
 	ret ; $52c2
 WriteCurrentSlotBlock:
 	wram_bank $07 ; $52c3
 	call GetCurrentSlotBlockId ; $52c9
-	ld hl, $d500 ; $52cc
+	ld hl, wSaveBlockBuffer ; $52cc
 	call WriteSaveBlock ; $52cf
 	ret ; $52d2
 InvalidateCurrentSlotBlock:
 	wram_bank $07 ; $52d3
 	call GetCurrentSlotBlockId ; $52d9
-	ld hl, $d500 ; $52dc
+	ld hl, wSaveBlockBuffer ; $52dc
 	call InvalidateStorySlot ; $52df
 	ret ; $52e2
 	; $52e3, 13 bytes (fill)
@@ -3424,12 +3424,12 @@ ApplyN64RecordsUnlockFlags:
 	ldh a, [hWramBank] ; $56ac
 	push af ; $56ae
 	wram_bank $07 ; $56af
-	ld hl, $d500 ; $56b5
+	ld hl, wSaveBlockBuffer ; $56b5
 	ld b, $0b ; $56b8
 	call ReadSaveBlock ; $56ba
 	or a ; $56bd
 	jr nz, .restore ; $56be
-	ld hl, $d500 ; $56c0
+	ld hl, wSaveBlockBuffer ; $56c0
 	ld a, [hl] ; $56c3
 	inc hl ; $56c4
 	add [hl] ; $56c5
@@ -3471,12 +3471,12 @@ UpdateUnlockablesSaveBlock:
 	ldh a, [hWramBank] ; $56ff
 	push af ; $5701
 	wram_bank $07 ; $5702
-	ld hl, $d500 ; $5708
+	ld hl, wSaveBlockBuffer ; $5708
 	ld b, $0b ; $570b
 	call ReadSaveBlock ; $570d
 	or a ; $5710
 	jp nz, .restore ; $5711
-	ld hl, $d500 ; $5714
+	ld hl, wSaveBlockBuffer ; $5714
 	ld a, [hl] ; $5717
 	inc hl ; $5718
 	add [hl] ; $5719
@@ -3486,7 +3486,7 @@ UpdateUnlockablesSaveBlock:
 	call CheckUnlockCondition ; $5720
 	or a ; $5723
 	jr z, .zero ; $5724
-	ld hl, $d502 ; $5726
+	ld hl, wSaveBlockBuffer + 2 ; $5726
 	ld a, $01 ; $5729
 	ld [hl], a ; $572b
 .zero:
@@ -3494,7 +3494,7 @@ UpdateUnlockablesSaveBlock:
 	call CheckUnlockCondition ; $572e
 	or a ; $5731
 	jr z, .zero2 ; $5732
-	ld hl, $d507 ; $5734
+	ld hl, wSaveBlockBuffer + 7 ; $5734
 	ld a, $01 ; $5737
 	ld [hl], a ; $5739
 .zero2:
@@ -3502,7 +3502,7 @@ UpdateUnlockablesSaveBlock:
 	call CheckUnlockCondition ; $573c
 	or a ; $573f
 	jr z, .zero3 ; $5740
-	ld hl, $d504 ; $5742
+	ld hl, wSaveBlockBuffer + 4 ; $5742
 	ld a, $01 ; $5745
 	ld [hl], a ; $5747
 .zero3:
@@ -3510,7 +3510,7 @@ UpdateUnlockablesSaveBlock:
 	call CheckUnlockCondition ; $574a
 	or a ; $574d
 	jr z, .zero4 ; $574e
-	ld hl, $d506 ; $5750
+	ld hl, wSaveBlockBuffer + 6 ; $5750
 	ld a, $01 ; $5753
 	ld [hl], a ; $5755
 .zero4:
@@ -3518,7 +3518,7 @@ UpdateUnlockablesSaveBlock:
 	call CheckUnlockCondition ; $5758
 	or a ; $575b
 	jr z, .zero5 ; $575c
-	ld hl, $d503 ; $575e
+	ld hl, wSaveBlockBuffer + 3 ; $575e
 	ld a, $01 ; $5761
 	ld [hl], a ; $5763
 .zero5:
@@ -3526,11 +3526,11 @@ UpdateUnlockablesSaveBlock:
 	call CheckUnlockCondition ; $5766
 	or a ; $5769
 	jr z, .zero6 ; $576a
-	ld hl, $d505 ; $576c
+	ld hl, wSaveBlockBuffer + 5 ; $576c
 	ld a, $01 ; $576f
 	ld [hl], a ; $5771
 .zero6:
-	ld hl, $d500 ; $5772
+	ld hl, wSaveBlockBuffer ; $5772
 	ld b, $0b ; $5775
 	ld de, $0000 ; $5777
 	call WriteSaveBlock ; $577a
@@ -3550,30 +3550,30 @@ SetAllUnlockablesInSaveBlock:
 	ldh a, [hWramBank] ; $578b
 	push af ; $578d
 	wram_bank $07 ; $578e
-	ld hl, $d500 ; $5794
+	ld hl, wSaveBlockBuffer ; $5794
 	ld b, $0b ; $5797
 	call ReadSaveBlock ; $5799
 	or a ; $579c
 	jp nz, .restore ; $579d
-	ld hl, $d502 ; $57a0
+	ld hl, wSaveBlockBuffer + 2 ; $57a0
 	ld a, $01 ; $57a3
 	ld [hl], a ; $57a5
-	ld hl, $d507 ; $57a6
+	ld hl, wSaveBlockBuffer + 7 ; $57a6
 	ld a, $01 ; $57a9
 	ld [hl], a ; $57ab
-	ld hl, $d504 ; $57ac
+	ld hl, wSaveBlockBuffer + 4 ; $57ac
 	ld a, $01 ; $57af
 	ld [hl], a ; $57b1
-	ld hl, $d506 ; $57b2
+	ld hl, wSaveBlockBuffer + 6 ; $57b2
 	ld a, $01 ; $57b5
 	ld [hl], a ; $57b7
-	ld hl, $d503 ; $57b8
+	ld hl, wSaveBlockBuffer + 3 ; $57b8
 	ld a, $01 ; $57bb
 	ld [hl], a ; $57bd
-	ld hl, $d505 ; $57be
+	ld hl, wSaveBlockBuffer + 5 ; $57be
 	ld a, $01 ; $57c1
 	ld [hl], a ; $57c3
-	ld hl, $d500 ; $57c4
+	ld hl, wSaveBlockBuffer ; $57c4
 	ld b, $0b ; $57c7
 	ld de, $0000 ; $57c9
 	call WriteSaveBlock ; $57cc
@@ -3636,7 +3636,7 @@ CheckUnlockCondition:
 	farcall GetDefaultMinigameRecordValue ; $581f
 	ld a, b ; $5822
 	call ReadMinigameRecord ; $5823
-	ld hl, $de00 ; $5826
+	ld hl, wMinigameRecordValue ; $5826
 	ld a, [hl+] ; $5829
 	ld h, [hl] ; $582a
 	ld l, a ; $582b
@@ -3859,21 +3859,21 @@ DebugTestMinigameRecords:
 	push de ; $5977
 	push hl ; $5978
 	wram_bank $07 ; $5979
-	ld hl, $de00 ; $597f
+	ld hl, wMinigameRecordValue ; $597f
 	ld de, $270f ; $5982
 	ld a, e ; $5985
 	ld [hl+], a ; $5986
 	ld [hl], d ; $5987
 	xor a ; $5988
 	call UpdateMinigameRecord ; $5989
-	ld hl, $de00 ; $598c
+	ld hl, wMinigameRecordValue ; $598c
 	ld de, $03e7 ; $598f
 	ld a, e ; $5992
 	ld [hl+], a ; $5993
 	ld [hl], d ; $5994
 	ld a, $01 ; $5995
 	call UpdateMinigameRecord ; $5997
-	ld hl, $de00 ; $599a
+	ld hl, wMinigameRecordValue ; $599a
 	ld de, $0000 ; $599d
 	ld a, e ; $59a0
 	ld [hl+], a ; $59a1

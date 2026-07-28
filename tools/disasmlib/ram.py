@@ -195,7 +195,7 @@ class ScopedRamNames:
 BANKED_WRAM_RE = re.compile(r"\[\$(d[0-9a-f]{3})\]")
 
 
-def auto_banked_wram_names(dis, scoped, covered):
+def auto_banked_wram_names(dis, scoped, covered, covered_banks=None):
     """Name still-unidentified banked-WRAM addresses `w<bank>_<addr>` (the
     pokecrystal convention) where every site that references them provably
     selects the same WRAM bank. The address alone is ambiguous -- $d000 is
@@ -203,12 +203,17 @@ def auto_banked_wram_names(dis, scoped, covered):
     purpose is unknown; a curated name in ram_map.json/ram_unions.json always
     wins, since `covered` addresses are skipped here.
 
+    `covered_banks` blocks a span only for the WRAM banks a union claims: a
+    union in bank $07 says nothing about bank $03's use of the same addresses,
+    and the two land in different SECTIONs, so there is no layout to collide.
+
     Only the `[$dxxx]` operand form is considered: a word immediate equal to a
     RAM address is more often arithmetic (see RAM_IMM_IS_CONSTANT). Addresses
     whose sites disagree stay numeric -- they are either genuinely per-bank
     copies of one struct or a limit of the dataflow, and both want a human.
     Registered scoped, so a site whose bank is not provable still renders the
     bare address rather than claiming a bank it cannot show."""
+    covered_banks = covered_banks or {}
     refs = {}
     for off, ins in dis.instrs.items():
         if "[$d" not in ins.text:
@@ -226,10 +231,23 @@ def auto_banked_wram_names(dis, scoped, covered):
         if len(known) != 1:
             continue
         bank = known.pop()
+        if bank in covered_banks.get(addr, ()):
+            continue
         name = f"w{bank}_{addr:04x}"
         scoped.add(addr, name, [(None, bank)])
         named.append((addr, name, bank))
     return named
+
+
+def union_banks(variants, ubank):
+    """The WRAM banks a union occupies: the banks its variants are scoped to,
+    falling back to the bank declared on the union itself. Empty when neither
+    says -- an unbanked region, or a union scoped only by referencing ROM bank,
+    where the span has to be treated as claiming every bank."""
+    banks = set()
+    for v in variants:
+        banks |= (v[2] or ({ubank} if ubank is not None else set()))
+    return banks
 
 
 def compute_wram_bank(dis):
@@ -488,8 +506,9 @@ def write_ram_layout(regions, unions_by_region=None):
         items = [("sym", addr, name, size, note, bank)
                  for addr, name, size, note, bank in regions.get(ri, [])]
         for ustart, uend, comment, variants, ubank in unions_by_region.get(ri, []):
-            for addr, *_rest in regions.get(ri, []):
-                if ustart <= addr < uend:
+            banks = union_banks(variants, ubank)
+            for addr, _name, _size, _note, bank in regions.get(ri, []):
+                if ustart <= addr < uend and (not banks or bank in banks):
                     raise SystemExit(
                         f"ram_map/ram_unions conflict: ${addr:04x} inside "
                         f"union ${ustart:04x}-${uend:04x}")
@@ -581,11 +600,19 @@ def load_ram_map(path, unions_by_region=None, scoped=None, dis=None):
         # A union's whole span is off limits, not just its named bytes: an
         # auto symbol inside one would have to be emitted inside the UNION
         # block, where it belongs to a single variant rather than all of them.
+        # That only holds within the union's own WRAM bank, though -- another
+        # bank's copy of the same addresses is a different SECTION.
         covered = set(names)
+        covered_banks = {}
         for ulist in (unions_by_region or {}).values():
-            for ustart, uend, *_rest in ulist:
-                covered.update(range(ustart, uend))
-        autos = auto_banked_wram_names(dis, scoped, covered)
+            for ustart, uend, _comment, variants, ubank in ulist:
+                banks = union_banks(variants, ubank)
+                if not banks:
+                    covered.update(range(ustart, uend))
+                    continue
+                for a in range(ustart, uend):
+                    covered_banks.setdefault(a, set()).update(banks)
+        autos = auto_banked_wram_names(dis, scoped, covered, covered_banks)
         for addr, name, bank in autos:
             for ri, (rs, re_, _mem, _p) in enumerate(RAM_REGIONS):
                 if rs <= addr < re_:

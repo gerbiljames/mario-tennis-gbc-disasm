@@ -3058,9 +3058,9 @@ RunNewGameSetup:
 .loop:
 	push af ; $61d8
 	farcall LoadCharacterRecordToBuffer ; $61d9
-	ld a, [$d58e] ; $61dc
+	ld a, [w1_d58e] ; $61dc
 	ld [hl+], a ; $61df
-	ld a, [$d58c] ; $61e0
+	ld a, [w1_d58c] ; $61e0
 	ld [hl+], a ; $61e3
 	pop af ; $61e4
 	inc a ; $61e5
@@ -3670,7 +3670,7 @@ DrawUnlockDebugMugshots:
 	ld a, [hl] ; $66f6
 	ld de, $0006 ; $66f7
 	call GetUnlockDebugRosterField ; $66fa
-	ld a, [$d58c] ; $66fd
+	ld a, [w1_d58c] ; $66fd
 	farcall SetMugshotAttrs ; $6700
 .step:
 	ld a, $08 ; $6703
@@ -5521,7 +5521,7 @@ LoadMinigameHighScores:
 	inc a ; $757f
 	farcall ReadMinigameRecord ; $7580
 	wram_bank $07 ; $7583
-	ld hl, $de00 ; $7589
+	ld hl, wMinigameRecordValue ; $7589
 	ld a, [hl+] ; $758c
 	ld d, [hl] ; $758d
 	ld e, a ; $758e

@@ -140,7 +140,7 @@ InitMinigameScore:
 	ldh a, [hWramBank] ; $40fb
 	push af ; $40fd
 	wram_bank $07 ; $40fe
-	ld hl, $de00 ; $4104
+	ld hl, wMinigameRecordValue ; $4104
 	ld de, wMinigameHighScore ; $4107
 	ld a, [hl+] ; $410a
 	ld [de], a ; $410b

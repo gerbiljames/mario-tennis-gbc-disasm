@@ -324,7 +324,7 @@
   {
    "start": "0xde00",
    "end": "0xde20",
-   "comment": "Match ball sprite slots (WRAM bank 4 only), alongside the per-character\n$df80+ slots; scoped by the selected WRAM bank plus the bank-$08 renderer.",
+   "comment": "Match ball sprite slots (WRAM bank 4 only), alongside the per-character\n$df80+ slots; scoped by the selected WRAM bank plus the bank-$08 renderer.\nThe bank $03 save engine passes minigame records through the same address\nin WRAM bank $07, which is a different variable in a different bank.",
    "variants": [
     {
      "context": "match ball sprite slots (WRAM bank 4)",
@@ -352,6 +352,21 @@
       "0xde0c": {
        "name": "wBallTrailSlots",
        "note": "[20 bytes] Five match sprite-slot records (WRAM bank 4): ball-trail afterimages (tile = ball tile + 8) fed from the history ring; slots 3-5 only when wBallTrailColor is nonzero (BuildBallTrailSlots)"
+      }
+     }
+    },
+    {
+     "context": "minigame record parameter (WRAM bank $07)",
+     "scopes": [
+      {
+       "wram_bank": "0x07"
+      }
+     ],
+     "symbols": {
+      "0xde00": {
+       "name": "wMinigameRecordValue",
+       "note": "[16-bit] In/out parameter of ReadMinigameRecord / WriteMinigameRecord: the high score for one record, pulled out of wMinigameRecordBlock or written into it. Every caller selects WRAM bank $07 around the two bytes, which is how the bank is provable at sites in banks $03/$0d/$12/$14/$17/$1b/$1e",
+       "size": 2
       }
      }
     }
@@ -2243,7 +2258,7 @@
   {
    "start": "0xd841",
    "wram_bank": "0x05",
-   "end": "0xd855",
+   "end": "0xd880",
    "comment": "Text and dialogue engine state (WRAM bank $05), owned by the bank $05\ntext/window engine and driven from the bank $0a story scripts and the\nbank $0b drill messages. Scoped to those three ROM banks as well as to\nthe WRAM bank, because the engine selects bank $05 once on entry and\nthen saves and restores an unknown bank around its glyph-buffer work,\nso compute_wram_bank cannot prove it at every reference.\nThe scope is not decoration: bank $1b keeps its ranking-marker\nanimation channels over the same $d84x bytes in a different WRAM bank,\nand banks $18/$1a/$6b address $d8bx/$d8fx as screen tilemap cells.",
    "variants": [
     {
@@ -2326,34 +2341,7 @@
       "0xd854": {
        "name": "wFitTextWidthCells",
        "note": "[8-bit] Widest line of the measured text, rounded up to whole cells -- FitWindowToText writes it, MeasureDialogueWidthTiles returns it"
-      }
-     }
-    }
-   ]
-  },
-  {
-   "start": "0xd85c",
-   "wram_bank": "0x05",
-   "end": "0xd880",
-   "comment": "Text and dialogue engine state (WRAM bank $05), continued -- see the\n$d841 block for the scope. The run breaks at $d855-$d85b because bank\n$1b's results screen keeps three bytes of its own there in WRAM bank\n$03, which the auto-namer can prove and this union would hide.",
-   "variants": [
-    {
-     "context": "text and window engine (banks $05/$0a/$0b)",
-     "scopes": [
-      {
-       "bank": "0x05"
       },
-      {
-       "bank": "0x0a"
-      },
-      {
-       "bank": "0x0b"
-      },
-      {
-       "wram_bank": "0x05"
-      }
-     ],
-     "symbols": {
       "0xd85c": {
        "name": "wSpeechBubbleLowerHalf",
        "note": "[8-bit] 1 when OpenSpeechBubble / OpenCenteredDialogueWindow put the window on the lower half of the screen because the speaking actor is near the top, 0 otherwise. Written by both, read by nothing"
@@ -2512,6 +2500,84 @@
        "name": "wTextArgShortTextQueue",
        "note": "16 x 1-byte short-text ids queued by PushTextArgShortTextId; the $08 control code pops one and prints the string it names",
        "size": 16
+      }
+     }
+    }
+   ]
+  },
+  {
+   "start": "0xd000",
+   "wram_bank": "0x07",
+   "end": "0xd020",
+   "comment": "Where the shared HRAM pool goes during an audio update (WRAM bank $07).\nScoped to RunSoundEngine itself: bank $05 and the boot path also load\n$d000 with WRAM bank $07 selected, and there it is the base of a\n4 KiB clear over the whole bank, not this buffer.",
+   "variants": [
+    {
+     "context": "sound driver (bank 0)",
+     "scopes": [
+      {
+       "bank": "0x00",
+       "start": "0x3373",
+       "end": "0x3392"
+      }
+     ],
+     "symbols": {
+      "0xd000": {
+       "name": "wSndHramSave",
+       "note": "[32 bytes] Copy of $ffd0-$ffef taken by RunSoundEngine on entry and put back on exit. The driver keeps its channel state in that HRAM window, so context-switching it is what lets four other subsystems keep their own bytes there across an audio update -- see the $ffd0 union",
+       "size": 32
+      }
+     }
+    }
+   ]
+  },
+  {
+   "start": "0xd300",
+   "wram_bank": "0x07",
+   "end": "0xdb00",
+   "comment": "Two subsystems overlay this 2 KiB of WRAM bank $07. The text engine keeps\nits glyph tiles here and uploads them to VRAM $8800; the bank $03 save\nengine borrows the same bytes as block staging, because a save never runs\nwhile text is being composed.\nBoth constraints are needed on every scope. The WRAM bank alone cannot\nseparate the two overlays -- an interior byte would take whichever symbol\nwas registered first -- and the ROM bank alone is far too coarse: a 2 KiB\nextent would otherwise claim every $d3xx-$dafx literal in banks $05/$3f,\nwhich is most of the window engine and two decompression buffers in other\nWRAM banks.\nBank $03's debug save editor loads $d300 as well -- it hex-dumps the whole\nregion from there, one byte at a time under a cursor, so that literal is a\nwindow base rather than a variable and is left numeric. (Its \"wipe the\nblock\" branch clears from $d300 and its slot-3 branch edits $d300+, both\n$200 short of where ReadCurrentSlotBlock actually puts the block.)",
+   "variants": [
+    {
+     "context": "text glyph tiles (banks $05/$3f)",
+     "scopes": [
+      {
+       "bank": "0x05",
+       "wram_bank": "0x07"
+      },
+      {
+       "bank": "0x3f",
+       "wram_bank": "0x07"
+      }
+     ],
+     "symbols": {
+      "0xd300": {
+       "name": "wGlyphTileBuffer",
+       "note": "[2048 bytes] 128 proportional-font glyph tiles, laid out 1:1 against VRAM $8800 so tile n is at + n * TILE_SIZE and uploads to $8800 + n * TILE_SIZE. ClearGlyphBuffer fills all 128 with the blank glyph; UploadGlyphBufferFull sends the first 80 as five 256-byte pages, and UploadGlyphTilesPartial / UploadGlyphTileRange send narrower runs",
+       "size": 2048,
+       "stride": [
+        "TILE_SIZE",
+        "0x10"
+       ]
+      }
+     }
+    },
+    {
+     "context": "save-block staging (bank $03)",
+     "scopes": [
+      {
+       "bank": "0x03",
+       "wram_bank": "0x07"
+      }
+     ],
+     "symbols": {
+      "0xd480": {
+       "name": "wMinigameRecordBlock",
+       "note": "[32 bytes] Image of a minigame-record save block ($38 + story slot): 16 16-bit records indexed by record id. ReadMinigameRecord zeroes it, reads the block over it and hands record b back through wMinigameRecordValue; WriteMinigameRecord does the reverse and verifies the block afterwards",
+       "size": 32
+      },
+      "0xd500": {
+       "name": "wSaveBlockBuffer",
+       "note": "[512 bytes] Image of whichever $200-byte block the save engine is working on: the story slot block for ReadCurrentSlotBlock / WriteCurrentSlotBlock (ids from StorySlotBlockIds_03), and block $0b for the N64 transfer records. ApplyN64RecordsUnlockFlags and UpdateUnlockablesSaveBlock address the unlock bytes at +$00-$07 directly",
+       "size": 512
       }
      }
     }

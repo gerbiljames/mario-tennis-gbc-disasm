@@ -1748,7 +1748,7 @@ QueueTennisDictionaryGlyphTiles:
 	ldh a, [hWramBank] ; $5749
 	push af ; $574b
 	wram_bank $07 ; $574c
-	ld hl, $d660 ; $5752
+	ld hl, wGlyphTileBuffer + 54 * TILE_SIZE ; $5752
 	ld de, $8b60 ; $5755
 	ld c, $18 ; $5758
 	call QueueVRAMCopy ; $575a
@@ -1759,7 +1759,7 @@ QueueTennisDictionaryGlyphTiles:
 	call AdvanceFrame ; $5764
 .restore:
 	pop af ; $5767
-	ld hl, $d7e0 ; $5768
+	ld hl, wGlyphTileBuffer + 78 * TILE_SIZE ; $5768
 	ld de, $8ce0 ; $576b
 	ld c, $18 ; $576e
 	call QueueVRAMCopy ; $5770
@@ -1770,7 +1770,7 @@ QueueTennisDictionaryGlyphTiles:
 	call AdvanceFrame ; $577a
 .restore2:
 	pop af ; $577d
-	ld hl, $d960 ; $577e
+	ld hl, wGlyphTileBuffer + 102 * TILE_SIZE ; $577e
 	ld de, $8e60 ; $5781
 	ld c, $18 ; $5784
 	call QueueVRAMCopy ; $5786

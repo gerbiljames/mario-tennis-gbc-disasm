@@ -4572,14 +4572,6 @@ NeedsCpuDifficultyPrompt:
 ; ApplyHandednessToCharRecords copies it to the match record's +$0e, which
 ; LoadCharacterAttributes turns into wCharMirrorAttrMask: the OAM X-flip bit plus
 ; the forehand/backhand swap in SelectForehandBackhand.
-;
-; Nothing in the game's own text calls these characters star characters -- the
-; only "star" strings in the ROM belong to Shooting Star, the Perfect Shot panels
-; and Star Court -- so the whole family was renamed on 2026-07-28: the routines
-; and tables about the nine became MarioCast*, and the ones about the flag became
-; *Handedness*/*LeftHanded*. The minigame completion stars (DrawMinigameStarMarks,
-; LoadMinigameStarFlags, DrawStarLegendMark) are a genuinely unrelated star and
-; kept their names.
 IsMarioCastCharacter:
 	ld a, c ; $6208
 	cp $17 ; $6209

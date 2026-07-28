@@ -8868,11 +8868,11 @@ StartSoundChannel:
 RunSoundEngine:
 	wram_bank $07 ; $3373
 	ld hl, hSndScriptPtr ; $3379
-	ld de, $d000 ; $337c
+	ld de, wSndHramSave ; $337c
 	ld c, $02 ; $337f
 	call CopyMemoryFast ; $3381
 	call UpdateSoundChannels ; $3384
-	ld hl, $d000 ; $3387
+	ld hl, wSndHramSave ; $3387
 	ld de, hSndScriptPtr ; $338a
 	ld c, $02 ; $338d
 	jp CopyMemoryFast ; $338f

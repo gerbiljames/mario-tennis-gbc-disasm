@@ -2665,13 +2665,13 @@ LoadN64RingShotRecords:
 	and $01 ; $5258
 	jr nz, .maskSet ; $525a
 	ld a, $10 ; $525c
-	ld [$dc4e], a ; $525e
+	ld [w3_dc4e], a ; $525e
 .maskSet:
 	ld a, b ; $5261
 	and $02 ; $5262
 	jr nz, .maskSet2 ; $5264
 	ld a, $10 ; $5266
-	ld [$dc4f], a ; $5268
+	ld [w3_dc4f], a ; $5268
 .maskSet2:
 	ld hl, $db00 ; $526b
 	ld bc, $0140 ; $526e

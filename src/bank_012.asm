@@ -504,7 +504,7 @@ WallPracticeScoreRetryPrompt:
 	wram_bank $07 ; $4871
 	ld a, $00 ; $4877
 	farcall ReadMinigameRecord ; $4879
-	ld hl, $de00 ; $487c
+	ld hl, wMinigameRecordValue ; $487c
 	ld a, [hl+] ; $487f
 	ld d, [hl] ; $4880
 	ld e, a ; $4881
@@ -564,7 +564,7 @@ WallPracticeNewRecordScript:
 	ld a, [hl+] ; $48f7
 	ld d, [hl] ; $48f8
 	ld e, a ; $48f9
-	ld hl, $de00 ; $48fa
+	ld hl, wMinigameRecordValue ; $48fa
 	ld a, e ; $48fd
 	ld [hl+], a ; $48fe
 	ld [hl], d ; $48ff
@@ -596,7 +596,7 @@ WallPracticeMaxScoreScript:
 	wram_bank $07 ; $4944
 	ld a, $00 ; $494a
 	farcall ReadMinigameRecord ; $494c
-	ld hl, $de00 ; $494f
+	ld hl, wMinigameRecordValue ; $494f
 	ld a, [hl+] ; $4952
 	ld h, [hl] ; $4953
 	ld l, a ; $4954
@@ -647,7 +647,7 @@ RelaunchWallPracticeMasterLevel:
 	ld a, [hl+] ; $49f1
 	ld d, [hl] ; $49f2
 	ld e, a ; $49f3
-	ld hl, $de00 ; $49f4
+	ld hl, wMinigameRecordValue ; $49f4
 	ld a, e ; $49f7
 	ld [hl+], a ; $49f8
 	ld [hl], d ; $49f9
@@ -778,7 +778,7 @@ WallPracticeLevelResultScriptTextIds:
 	push af ; $4bb4
 	wram_bank $07 ; $4bb5
 	ld de, $0032 ; $4bbb
-	ld hl, $de00 ; $4bbe
+	ld hl, wMinigameRecordValue ; $4bbe
 	ld a, e ; $4bc1
 	ld [hl+], a ; $4bc2
 	ld [hl], d ; $4bc3
@@ -1167,7 +1167,7 @@ WallPracticeRoomNpc07_12:
 	wram_bank $07 ; $50f8
 	ld a, $00 ; $50fe
 	farcall ReadMinigameRecord ; $5100
-	ld hl, $de00 ; $5103
+	ld hl, wMinigameRecordValue ; $5103
 	ld a, [hl+] ; $5106
 	ld h, [hl] ; $5107
 	ld l, a ; $5108

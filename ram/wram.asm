@@ -2022,6 +2022,16 @@ wGlyphStampEnabled:: db
 wDebugTextBuffer:: ds 576
 
 
+SECTION "WRAMX bank 1", WRAMX[$d000], BANK[1]
+
+	ds 1420
+
+w1_d58c:: db
+	ds 1
+
+w1_d58e:: db
+
+
 SECTION "WRAMX bank 3", WRAMX[$d000], BANK[3]
 
 ; Screen tilemap buffers, WRAM bank $03. The full-screen UIs assemble their
@@ -2291,10 +2301,31 @@ NEXTU
 wRulesScreenAnimFrame:: db
 ENDU
 
+	ds 58
+
+w3_dc4e:: db
+
+w3_dc4f:: db
+
 
 SECTION "WRAMX bank 4", WRAMX[$d000], BANK[4]
 
-	ds 2761
+	ds 50
+
+w4_d032:: db
+	ds 4
+
+w4_d037:: db
+	ds 63
+
+w4_d077:: db
+	ds 63
+
+w4_d0b7:: db
+	ds 63
+
+w4_d0f7:: db
+	ds 2513
 
 w4_dac9:: db
 	ds 6
@@ -2481,6 +2512,8 @@ wObjSlotWork:: ds 16
 
 ; Match ball sprite slots (WRAM bank 4 only), alongside the per-character
 ; $df80+ slots; scoped by the selected WRAM bank plus the bank-$08 renderer.
+; The bank $03 save engine passes minigame records through the same address
+; in WRAM bank $07, which is a different variable in a different bank.
 ; match ball sprite slots (WRAM bank 4)
 ; [4 bytes] Match sprite-slot record [tile, attr, screenY, screenX] (WRAM bank 4): ball-at-net marker (tile $4e), drawn after the point resolves when the ball rests within $1e0 of the net (BuildNetBallSlot)
 wNetBallSlot:: ds 4
@@ -2589,14 +2622,7 @@ wDialogueSpeaker:: db
 wScriptDialogueTextId:: dw
 ; [8-bit] Widest line of the measured text, rounded up to whole cells -- FitWindowToText writes it, MeasureDialogueWidthTiles returns it
 wFitTextWidthCells:: db
-
 	ds 7
-
-; Text and dialogue engine state (WRAM bank $05), continued -- see the
-; $d841 block for the scope. The run breaks at $d855-$d85b because bank
-; $1b's results screen keeps three bytes of its own there in WRAM bank
-; $03, which the auto-namer can prove and this union would hide.
-; text and window engine (banks $05/$0a/$0b)
 ; [8-bit] 1 when OpenSpeechBubble / OpenCenteredDialogueWindow put the window on the lower half of the screen because the speaking actor is near the top, 0 otherwise. Written by both, read by nothing
 wSpeechBubbleLowerHalf:: db
 ; [8-bit] The byte Unused_05_SetTextVar stores. Nothing reads it
@@ -2790,10 +2816,35 @@ wScrollTextId:: dw
 ; [8-bit] Set once the last line has scrolled off, which stops the scroll without leaving the loop
 wScrollTextDone:: db
 
+	ds 1
+
+w6_d236:: db
+
+w6_d237:: db
+
+w6_d238:: db
+
+w6_d239:: db
+
+w6_d23a:: db
+
+w6_d23b:: db
+	ds 24
+
+w6_d254:: db
+
 
 SECTION "WRAMX bank 7", WRAMX[$d000], BANK[7]
 
-	ds 256
+; Where the shared HRAM pool goes during an audio update (WRAM bank $07).
+; Scoped to RunSoundEngine itself: bank $05 and the boot path also load
+; $d000 with WRAM bank $07 selected, and there it is the base of a
+; 4 KiB clear over the whole bank, not this buffer.
+; sound driver (bank 0)
+; [32 bytes] Copy of $ffd0-$ffef taken by RunSoundEngine on entry and put back on exit. The driver keeps its channel state in that HRAM window, so context-switching it is what lets four other subsystems keep their own bytes there across an audio update -- see the $ffd0 union
+wSndHramSave:: ds 32
+
+	ds 224
 
 ; Sound-engine WRAM (bank $07), used only by the bank-0 audio driver;
 ; scoped to the driver's code range so the same $d1xx/$d2xx offsets
@@ -2838,11 +2889,52 @@ wSndTranspose:: db
 ; [8-bit] Non-zero to force the wave channel to reload its pattern on the next note
 wSndWaveReloadPending:: db
 
-	ds 2316
+	ds 230
+
+; Two subsystems overlay this 2 KiB of WRAM bank $07. The text engine keeps
+; its glyph tiles here and uploads them to VRAM $8800; the bank $03 save
+; engine borrows the same bytes as block staging, because a save never runs
+; while text is being composed.
+; Both constraints are needed on every scope. The WRAM bank alone cannot
+; separate the two overlays -- an interior byte would take whichever symbol
+; was registered first -- and the ROM bank alone is far too coarse: a 2 KiB
+; extent would otherwise claim every $d3xx-$dafx literal in banks $05/$3f,
+; which is most of the window engine and two decompression buffers in other
+; WRAM banks.
+; Bank $03's debug save editor loads $d300 as well -- it hex-dumps the whole
+; region from there, one byte at a time under a cursor, so that literal is a
+; window base rather than a variable and is left numeric. (Its "wipe the
+; block" branch clears from $d300 and its slot-3 branch edits $d300+, both
+; $200 short of where ReadCurrentSlotBlock actually puts the block.)
+UNION
+; text glyph tiles (banks $05/$3f)
+; [2048 bytes] 128 proportional-font glyph tiles, laid out 1:1 against VRAM $8800 so tile n is at + n * TILE_SIZE and uploads to $8800 + n * TILE_SIZE. ClearGlyphBuffer fills all 128 with the blank glyph; UploadGlyphBufferFull sends the first 80 as five 256-byte pages, and UploadGlyphTilesPartial / UploadGlyphTileRange send narrower runs
+wGlyphTileBuffer:: ds 2048
+NEXTU
+; save-block staging (bank $03)
+	ds 384
+; [32 bytes] Image of a minigame-record save block ($38 + story slot): 16 16-bit records indexed by record id. ReadMinigameRecord zeroes it, reads the block over it and hands record b back through wMinigameRecordValue; WriteMinigameRecord does the reverse and verifies the block afterwards
+wMinigameRecordBlock:: ds 32
+	ds 96
+; [512 bytes] Image of whichever $200-byte block the save engine is working on: the story slot block for ReadCurrentSlotBlock / WriteCurrentSlotBlock (ids from StorySlotBlockIds_03), and block $0b for the N64 transfer records. ApplyN64RecordsUnlockFlags and UpdateUnlockablesSaveBlock address the unlock bytes at +$00-$07 directly
+wSaveBlockBuffer:: ds 512
+ENDU
+
+	ds 38
 
 w7_db26:: db
 
 w7_db27:: db
+	ds 728
+
+; Match ball sprite slots (WRAM bank 4 only), alongside the per-character
+; $df80+ slots; scoped by the selected WRAM bank plus the bank-$08 renderer.
+; The bank $03 save engine passes minigame records through the same address
+; in WRAM bank $07, which is a different variable in a different bank.
+; minigame record parameter (WRAM bank $07)
+; [16-bit] In/out parameter of ReadMinigameRecord / WriteMinigameRecord: the high score for one record, pulled out of wMinigameRecordBlock or written into it. Every caller selects WRAM bank $07 around the two bytes, which is how the bank is provable at sites in banks $03/$0d/$12/$14/$17/$1b/$1e
+wMinigameRecordValue:: dw
+	ds 30
 
 
 SECTION "WRAMX banks 4-7", WRAMX[$df00]

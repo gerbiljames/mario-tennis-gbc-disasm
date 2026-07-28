@@ -699,7 +699,7 @@ ShowExpGainScreen:
 	push hl ; $4588
 	push de ; $4589
 	ld a, l ; $458a
-	ld [$d254], a ; $458b
+	ld [w6_d254], a ; $458b
 	ld de, $0000 ; $458e
 	farcall GetExpRemainingToNextLevel ; $4591
 	ld d, h ; $4594
@@ -722,7 +722,7 @@ ShowExpGainScreen:
 	ld a, $08 ; $45ae
 	ld [hl+], a ; $45b0
 	xor a ; $45b1
-	ld [$d23b], a ; $45b2
+	ld [w6_d23b], a ; $45b2
 	ld [$d151], a ; $45b5
 	wram_bank $01 ; $45b8
 	ld hl, $d000 ; $45be
@@ -760,10 +760,10 @@ ShowExpGainScreen:
 	jp z, .finish ; $460a
 .fillLoop:
 	call AdvanceExpGaugeFill ; $460d
-	ld a, [$d238] ; $4610
+	ld a, [w6_d238] ; $4610
 	and a ; $4613
 	jr nz, .levelUp ; $4614
-	ld a, [$d239] ; $4616
+	ld a, [w6_d239] ; $4616
 	and a ; $4619
 	jr nz, .gaugeFull ; $461a
 	ldh a, [hPlayerInputFlags] ; $461c
@@ -775,7 +775,7 @@ ShowExpGainScreen:
 	jr .fillLoop ; $4628
 .gaugeFull:
 	ld a, $01 ; $462a
-	ld [$d239], a ; $462c
+	ld [w6_d239], a ; $462c
 	sound $5f ; $462f
 	call AdvanceExpGaugeFill ; $4631
 	ld hl, $d230 ; $4634
@@ -824,11 +824,11 @@ ShowExpGainScreen:
 	ld c, $fc ; $4692
 .storeScroll:
 	ld a, c ; $4694
-	ld hl, $d23a ; $4695
+	ld hl, w6_d23a ; $4695
 	ld [hl], a ; $4698
 	ld b, $28 ; $4699
 .bonusWaitLoop:
-	ld hl, $d23a ; $469b
+	ld hl, w6_d23a ; $469b
 	ld a, [hl] ; $469e
 	and a ; $469f
 	jr z, .bonusFrame ; $46a0
@@ -865,7 +865,7 @@ ShowExpGainScreen:
 	ld [hl], d ; $46d3
 	xor a ; $46d4
 	ld [$c36f], a ; $46d5
-	ld [$d238], a ; $46d8
+	ld [w6_d238], a ; $46d8
 	jp .fillLoop ; $46db
 .finish:
 	wram_bank $06 ; $46de
@@ -876,11 +876,11 @@ ShowExpGainScreen:
 	ld c, $fc ; $46ec
 .storeFinalScroll:
 	ld a, c ; $46ee
-	ld hl, $d23a ; $46ef
+	ld hl, w6_d23a ; $46ef
 	ld [hl], a ; $46f2
 	ld b, $f0 ; $46f3
 .finalWaitLoop:
-	ld hl, $d23a ; $46f5
+	ld hl, w6_d23a ; $46f5
 	ld a, [hl] ; $46f8
 	and a ; $46f9
 	jr z, .finalFrame ; $46fa
@@ -915,7 +915,7 @@ ShowExpGainScreen:
 	ld a, d ; $4734
 	or e ; $4735
 	ret z ; $4736
-	ld a, [$d254] ; $4737
+	ld a, [w6_d254] ; $4737
 	farcall AddPlayerExp ; $473a
 	ret ; $473d
 .queueVRAMCopy:
@@ -1949,7 +1949,7 @@ ExpScreenNumberTask:
 	ld a, [$d000] ; $4ea6
 	and a ; $4ea9
 	jp nz, .nonZero ; $4eaa
-	ld a, [$d23b] ; $4ead
+	ld a, [w6_d23b] ; $4ead
 	and a ; $4eb0
 	ret nz ; $4eb1
 	ld hl, $d242 ; $4eb2
@@ -1971,14 +1971,14 @@ ExpScreenNumberTask:
 	call QueueNumberSprites ; $4ecf
 	ret ; $4ed2
 .step2:
-	ld a, [$d23b] ; $4ed3
+	ld a, [w6_d23b] ; $4ed3
 	and a ; $4ed6
 	ret nz ; $4ed7
 	ld a, [$d151] ; $4ed8
 	or $80 ; $4edb
 	ld [$d151], a ; $4edd
 	ld a, $01 ; $4ee0
-	ld [$d23b], a ; $4ee2
+	ld [w6_d23b], a ; $4ee2
 .nonZero:
 	ld hl, $d23c ; $4ee5
 	ld a, [hl+] ; $4ee8
@@ -1998,7 +1998,7 @@ ExpScreenNumberTask:
 QueueNumberSpritesShifted:
 	push af ; $4f02
 	push de ; $4f03
-	ld a, [$d23a] ; $4f04
+	ld a, [w6_d23a] ; $4f04
 	add d ; $4f07
 	ld d, a ; $4f08
 	push hl ; $4f09
@@ -2009,12 +2009,12 @@ QueueNumberSpritesShifted:
 	sub $10 ; $4f10
 	add a ; $4f12
 	ld b, a ; $4f13
-	ld a, [$d236] ; $4f14
+	ld a, [w6_d236] ; $4f14
 	ld c, a ; $4f17
 	ld a, b ; $4f18
 	add c ; $4f19
 	ld c, a ; $4f1a
-	ld a, [$d237] ; $4f1b
+	ld a, [w6_d237] ; $4f1b
 	ld b, a ; $4f1e
 	call QueueSprite ; $4f1f
 .restore:
@@ -2032,7 +2032,7 @@ QueueNumberSpritesShifted:
 	ret ; $4f2f
 AdvanceExpGaugeFill:
 	wram_bank $06 ; $4f30
-	ld a, [$d238] ; $4f36
+	ld a, [w6_d238] ; $4f36
 	and a ; $4f39
 	jr nz, .updateRemaining ; $4f3a
 	ld hl, $d232 ; $4f3c
@@ -2058,7 +2058,7 @@ AdvanceExpGaugeFill:
 	or l ; $4f54
 	jr nz, .updateRemaining ; $4f55
 	ld a, $01 ; $4f57
-	ld [$d238], a ; $4f59
+	ld [w6_d238], a ; $4f59
 .updateRemaining:
 	ld hl, $d232 ; $4f5c
 	ld a, [hl+] ; $4f5f
@@ -2100,12 +2100,12 @@ QueueNumberSprites:
 	sub $10 ; $4f8b
 	add a ; $4f8d
 	ld b, a ; $4f8e
-	ld a, [$d236] ; $4f8f
+	ld a, [w6_d236] ; $4f8f
 	ld c, a ; $4f92
 	ld a, b ; $4f93
 	add c ; $4f94
 	ld c, a ; $4f95
-	ld a, [$d237] ; $4f96
+	ld a, [w6_d237] ; $4f96
 	ld b, a ; $4f99
 	call QueueSprite ; $4f9a
 .restore:
@@ -2236,7 +2236,7 @@ ResetCharDataScreenAnim:
 	ld a, $01 ; $50a3
 	call ShowExpGainScreen ; $50a5
 	wram_bank $06 ; $50a8
-	ld a, [$d23b] ; $50ae
+	ld a, [w6_d23b] ; $50ae
 	and a ; $50b1
 	jr z, .restore ; $50b2
 	wram_bank $06 ; $50b4
@@ -3538,10 +3538,10 @@ SetupCharViewerScene:
 	ld bc, $d0c0 ; $6f87
 	farcall SetActorAnimationChecked ; $6f8a
 	ld a, $07 ; $6f8d
-	ld [$d037], a ; $6f8f
-	ld [$d077], a ; $6f92
-	ld [$d0b7], a ; $6f95
-	ld [$d0f7], a ; $6f98
+	ld [w4_d037], a ; $6f8f
+	ld [w4_d077], a ; $6f92
+	ld [w4_d0b7], a ; $6f95
+	ld [w4_d0f7], a ; $6f98
 	wram_bank $06 ; $6f9b
 	ld a, [wCharViewerCharId] ; $6fa1
 	ld [wMatchPlayerChar], a ; $6fa4

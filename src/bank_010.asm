@@ -394,7 +394,7 @@ RunLessonSelectMenu:
 	push af ; $44e3
 	wram_bank $07 ; $44e4
 	ld de, $0000 ; $44ea
-	ld hl, $de00 ; $44ed
+	ld hl, wMinigameRecordValue ; $44ed
 	ld a, [hl+] ; $44f0
 	ld d, [hl] ; $44f1
 	ld e, a ; $44f2

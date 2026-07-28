@@ -161,15 +161,18 @@ drive the star-rank unlock logic after exhibition wins.
 ## WRAM staging buffers
 
 The save engine never reads/writes SRAM in place; every block moves
-through banked-WRAM scratch (all multiplexed with other uses, hence
-not named in `ram_map.json`):
+through banked-WRAM scratch, all of it multiplexed with other uses. The
+three bank-`$07` buffers are named now — they overlay `wGlyphTileBuffer`,
+the text engine's glyph tiles, and a union in `ram_unions.json` scoped to
+*both* the referencing ROM bank and a provable WRAM bank `$07` keeps the
+two apart. The rest stay numeric.
 
 | buffer | used for |
 |---|---|
 | WRAM1 `$d000` | generic block scratch: `RestoreStoryBlockFromBackup`/`RepairAllSaveSlots`, block-6 preserve, `$d400` = tag readback |
-| WRAM7 `$d480` | minigame-record block image (blocks `$38-$3d`) |
-| WRAM7 `$d500` | `$200`-byte record staging: N64 block, slot secondary blocks, debug save editor (block from `GetCurrentSlotBlockId` table 03:52af = `00 02 04 0b`) |
-| WRAM7 `$de00` | 16-bit minigame-record value in/out parameter |
+| WRAM7 `$d480` `wMinigameRecordBlock` | minigame-record block image (blocks `$38-$3d`) |
+| WRAM7 `$d500` `wSaveBlockBuffer` | `$200`-byte record staging: N64 block, slot secondary blocks, debug save editor (block from `GetCurrentSlotBlockId` table 03:52af = `00 02 04 0b`) |
+| WRAM7 `$de00` `wMinigameRecordValue` | 16-bit minigame-record value in/out parameter |
 | WRAM6 `$d400` | N64 block staging in bank $1b char select |
 | WRAM3 `$d900` | N64 block (trophies screen) and star victory grid staging in bank $3b |
 | WRAM2 `$d000` | N64 block presence check (`CheckN64DataPresent`) |

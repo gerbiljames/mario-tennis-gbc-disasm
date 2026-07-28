@@ -6735,3 +6735,60 @@ into `b` before calling `SetWindowTextId`, which takes the window id *in* `b` �
 so the id it stores, and that `RunFixedTextMenu` later passes to `CloseWindow`,
 is really the WRAM bank number. Both routines are exported through the bank
 `$05` farptr table and neither is called.
+
+## WRAM bank $07, and a union bug that was hiding 20 names (2026-07-28)
+
+Bank `$07` was the sound engine (`$d100-$d21a`) and 2,316 bytes of `ds`. The
+gap is the **glyph tile buffer**: `$d300`, 2 KiB, 128 proportional-font tiles
+laid out 1:1 against VRAM `$8800`, so tile *n* is at `+ n * TILE_SIZE` and
+uploads to `$8800 + n * TILE_SIZE`. Every literal that looked arbitrary is a
+tile index once it renders that way — `UploadGlyphTilesPartial` copies 27 tiles
+and resumes at `wGlyphTileBuffer + 27 * TILE_SIZE`; bank `$3f`'s dictionary rows
+are tiles 54, 78 and 102 going to `$8800 + $360/$4e0/$660`.
+
+Three more, all previously anonymous:
+
+- `$d000` `wSndHramSave` — where `RunSoundEngine` parks `$ffd0-$ffef` for the
+  duration of an audio update. That copy-out/copy-back is why four subsystems
+  can keep live bytes in that HRAM window (see the `$ffd0` union).
+- `$d480` `wMinigameRecordBlock` / `$d500` `wSaveBlockBuffer` — the bank `$03`
+  save engine's block staging, **overlaying the glyph buffer**. `docs/save_format.md`
+  listed both as deliberately unnamed because they are "multiplexed with other
+  uses"; a union is exactly the mechanism for that, so they are named now and
+  the doc points at them.
+- `$de00` `wMinigameRecordValue` — the 16-bit in/out parameter of
+  `ReadMinigameRecord`/`WriteMinigameRecord`, which seven banks read by selecting
+  WRAM bank `$07` around two bytes. It is a second variant of the `$de00` union
+  whose first variant is the match ball sprite slots in WRAM bank `$04`.
+
+### A scope needs both halves
+
+The glyph/save union is the first where **every scope carries a ROM bank *and* a
+WRAM bank**, and the first attempt showed why. Scoped by WRAM bank alone, the two
+overlays cannot be told apart: `$d502` is an interior byte of both
+`wGlyphTileBuffer` and `wSaveBlockBuffer`, and interior lookup takes whichever
+was registered first. Scoped by ROM bank alone, a 2 KiB extent is far too greedy
+— it claimed `$d800` and `$d822` in banks `$05`/`$3f`, which are the window
+engine's own WRAM bank `$05` bytes and a bank `$01` decompression buffer. With
+both constraints on each scope the 15 real sites resolve and nothing else does.
+
+### The bug: a union's span blocked every bank
+
+`load_ram_map` took a union's whole address span off limits to the auto-namer,
+on the reasoning that an auto symbol inside a union would have to be emitted
+inside the `UNION` block. **That only holds within the union's own WRAM bank.**
+Another bank's copy of the same addresses is a different `SECTION` — there is no
+layout to collide with — and `_group_by_bank` already splits unions across banks.
+
+Blocking regardless of bank was silently deleting names. The new `$d300-$db00`
+union alone would have taken out 16 (`w3_d855`, `w4_dad0`, ...), and the fix
+turned up 20 more that unions committed earlier had been suppressing all along,
+in WRAM banks `$01`, `$03`, `$04` and `$06`. `covered` is now a per-bank map,
+and `write_ram_layout`'s conflict check compares banks the same way. That also
+let the bank `$05` text block, split in two the previous pass precisely to dodge
+three `w3_*` names, go back to being one union.
+
+**What is left in bank `$07`** is `$db26`/`$db27`, two bytes
+`RunStoryDataConfirmMenu` sets to 0 and `$0c` before registering a frame task
+whose body is `ret`. Nothing reads them, and with the task stubbed out nothing
+ever will, so they keep their auto-names.

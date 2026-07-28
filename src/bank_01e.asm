@@ -3807,7 +3807,7 @@ UpdateMinigameBestScore:
 	inc a ; $6f50
 	farcall ReadMinigameRecord ; $6f51
 	wram_bank $07 ; $6f54
-	ld hl, $de00 ; $6f5a
+	ld hl, wMinigameRecordValue ; $6f5a
 	ld a, [hl+] ; $6f5d
 	ld d, [hl] ; $6f5e
 	ld e, a ; $6f5f
@@ -3827,7 +3827,7 @@ UpdateMinigameBestScore:
 	ld h, a ; $6f6f
 	bit 7, h ; $6f70
 	jr z, .restore ; $6f72
-	ld hl, $de00 ; $6f74
+	ld hl, wMinigameRecordValue ; $6f74
 	ld a, e ; $6f77
 	ld [hl+], a ; $6f78
 	ld [hl], d ; $6f79

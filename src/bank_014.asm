@@ -349,7 +349,7 @@ ComputeMachineCourtProgress:
 	ldh a, [hWramBank] ; $4406
 	push af ; $4408
 	wram_bank $07 ; $4409
-	ld hl, $de00 ; $440f
+	ld hl, wMinigameRecordValue ; $440f
 	ld a, [hl+] ; $4412
 	ld h, [hl] ; $4413
 	ld l, a ; $4414
@@ -387,7 +387,7 @@ TennisMachineRoomNpc05_14:
 	wram_bank $07 ; $444e
 	ld a, $01 ; $4454
 	farcall ReadMinigameRecord ; $4456
-	ld hl, $de00 ; $4459
+	ld hl, wMinigameRecordValue ; $4459
 	ld a, [hl+] ; $445c
 	ld h, [hl] ; $445d
 	ld l, a ; $445e
@@ -692,7 +692,7 @@ ActorScript_14_4808:
 	ld a, $01 ; $481c
 	farcall ReadMinigameRecord ; $481e
 	ld de, $0050 ; $4821
-	ld hl, $de00 ; $4824
+	ld hl, wMinigameRecordValue ; $4824
 	ld a, e ; $4827
 	ld [hl+], a ; $4828
 	ld [hl], d ; $4829
@@ -738,7 +738,7 @@ MachineExpertResultScene:
 	wram_bank $07 ; $4877
 	ld a, $01 ; $487d
 	farcall ReadMinigameRecord ; $487f
-	ld hl, $de00 ; $4882
+	ld hl, wMinigameRecordValue ; $4882
 	ld a, [hl+] ; $4885
 	ld d, [hl] ; $4886
 	ld e, a ; $4887
@@ -760,7 +760,7 @@ MachineExpertResultScene:
 	ldh a, [hWramBank] ; $489e
 	push af ; $48a0
 	wram_bank $07 ; $48a1
-	ld hl, $de00 ; $48a7
+	ld hl, wMinigameRecordValue ; $48a7
 	ld a, [hl+] ; $48aa
 	ld d, [hl] ; $48ab
 	ld e, a ; $48ac
@@ -807,7 +807,7 @@ MachineExpertCounterMaxScene:
 	wram_bank $07 ; $48fc
 	ld a, $01 ; $4902
 	farcall ReadMinigameRecord ; $4904
-	ld hl, $de00 ; $4907
+	ld hl, wMinigameRecordValue ; $4907
 	ld a, [hl+] ; $490a
 	ld h, [hl] ; $490b
 	ld l, a ; $490c
@@ -845,7 +845,7 @@ MachineExpertCounterMaxScene:
 	ldh a, [hWramBank] ; $4957
 	push af ; $4959
 	wram_bank $07 ; $495a
-	ld hl, $de00 ; $4960
+	ld hl, wMinigameRecordValue ; $4960
 	ld a, [hl+] ; $4963
 	ld d, [hl] ; $4964
 	ld e, a ; $4965
@@ -868,7 +868,7 @@ SaveMachineExpertRecord:
 	ld a, [hl+] ; $4980
 	ld d, [hl] ; $4981
 	ld e, a ; $4982
-	ld hl, $de00 ; $4983
+	ld hl, wMinigameRecordValue ; $4983
 	ld a, e ; $4986
 	ld [hl+], a ; $4987
 	ld [hl], d ; $4988

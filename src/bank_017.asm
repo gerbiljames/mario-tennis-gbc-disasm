@@ -4573,7 +4573,7 @@ RunMinigameRulesPages:
 	inc a ; $6f9e
 	farcall ReadMinigameRecord ; $6f9f
 	wram_bank $07 ; $6fa2
-	ld hl, $de00 ; $6fa8
+	ld hl, wMinigameRecordValue ; $6fa8
 	ld a, [hl+] ; $6fab
 	ld h, [hl] ; $6fac
 	ld l, a ; $6fad
@@ -4662,7 +4662,7 @@ MinigameRulesPageLoop:
 	push af ; $70af
 	ld d, a ; $70b0
 	wram_bank $07 ; $70b1
-	ld hl, $de00 ; $70b7
+	ld hl, wMinigameRecordValue ; $70b7
 	ld a, [hl+] ; $70ba
 	ld h, [hl] ; $70bb
 	ld l, a ; $70bc

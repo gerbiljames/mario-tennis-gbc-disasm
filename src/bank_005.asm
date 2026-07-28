@@ -5444,7 +5444,7 @@ UploadGlyphTilesPartial:
 	ldh a, [hWramBank] ; $622e
 	push af ; $6230
 	wram_bank $07 ; $6231
-	ld hl, $d300 ; $6237
+	ld hl, wGlyphTileBuffer ; $6237
 	ld de, $8800 ; $623a
 	ld c, $1b ; $623d
 	call QueueVRAMCopy ; $623f
@@ -5455,7 +5455,7 @@ UploadGlyphTilesPartial:
 	call AdvanceFrame ; $6249
 .restore:
 	pop af ; $624c
-	ld hl, $d4b0 ; $624d
+	ld hl, wGlyphTileBuffer + 27 * TILE_SIZE ; $624d
 	ld de, $89b0 ; $6250
 	ld c, $1b ; $6253
 	call QueueVRAMCopy ; $6255
@@ -8095,7 +8095,7 @@ PlotGlyphRow:
 	rr e ; $73af
 	sra d ; $73b1
 	rr e ; $73b3
-	ld hl, $d300 ; $73b5
+	ld hl, wGlyphTileBuffer ; $73b5
 	add hl, de ; $73b8
 	pop de ; $73b9
 	ld a, [hl] ; $73ba
@@ -8118,7 +8118,7 @@ ClearGlyphBuffer:
 	push bc ; $73cc
 	push de ; $73cd
 	push hl ; $73ce
-	ld de, $d300 ; $73cf
+	ld de, wGlyphTileBuffer ; $73cf
 	ld b, $80 ; $73d2
 .glyphLoop:
 	ld hl, FontGlyphs ; $73d4
@@ -8210,7 +8210,7 @@ UploadGlyphBufferFull:
 	ld d, h ; $745f
 	ld e, l ; $7460
 	wram_bank $07 ; $7461
-	ld hl, $d300 ; $7467
+	ld hl, wGlyphTileBuffer ; $7467
 	ld c, $10 ; $746a
 	call QueueVRAMCopy ; $746c
 	push af ; $746f
@@ -8220,7 +8220,7 @@ UploadGlyphBufferFull:
 	call AdvanceFrame ; $7476
 .page2:
 	pop af ; $7479
-	ld hl, $d400 ; $747a
+	ld hl, wGlyphTileBuffer + 16 * TILE_SIZE ; $747a
 	pop de ; $747d
 	ld c, $10 ; $747e
 	call QueueVRAMCopy ; $7480
@@ -8231,7 +8231,7 @@ UploadGlyphBufferFull:
 	call AdvanceFrame ; $748a
 .page3:
 	pop af ; $748d
-	ld hl, $d500 ; $748e
+	ld hl, wGlyphTileBuffer + 32 * TILE_SIZE ; $748e
 	pop de ; $7491
 	ld c, $10 ; $7492
 	call QueueVRAMCopy ; $7494
@@ -8242,7 +8242,7 @@ UploadGlyphBufferFull:
 	call AdvanceFrame ; $749e
 .page4:
 	pop af ; $74a1
-	ld hl, $d600 ; $74a2
+	ld hl, wGlyphTileBuffer + 48 * TILE_SIZE ; $74a2
 	pop de ; $74a5
 	ld c, $10 ; $74a6
 	call QueueVRAMCopy ; $74a8
@@ -8258,7 +8258,7 @@ UploadGlyphBufferFull:
 	jr z, .uploadPage5 ; $74bb
 	ld c, $07 ; $74bd
 .uploadPage5:
-	ld hl, $d700 ; $74bf
+	ld hl, wGlyphTileBuffer + 64 * TILE_SIZE ; $74bf
 	pop de ; $74c2
 	call QueueVRAMCopy ; $74c3
 	push af ; $74c6
@@ -8526,7 +8526,7 @@ UploadLastGlyphTiles:
 	add hl, hl ; $7663
 	ld d, h ; $7664
 	ld e, l ; $7665
-	ld bc, $d300 ; $7666
+	ld bc, wGlyphTileBuffer ; $7666
 	add hl, bc ; $7669
 	push hl ; $766a
 	ld hl, $8800 ; $766b
@@ -8880,7 +8880,7 @@ UploadGlyphBufferDMA:
 	jr c, .step ; $7880
 	jr .loop ; $7882
 .step:
-	ld hl, $d300 ; $7884
+	ld hl, wGlyphTileBuffer ; $7884
 	ld de, $8800 ; $7887
 	ld c, $20 ; $788a
 .loopB:
@@ -8934,7 +8934,7 @@ UploadGlyphTileRange:
 	push hl ; $78d3
 	ld h, b ; $78d4
 	ld l, c ; $78d5
-	ld de, $d300 ; $78d6
+	ld de, wGlyphTileBuffer ; $78d6
 	add hl, de ; $78d9
 	pop de ; $78da
 	ld a, [$c3bd] ; $78db
