@@ -474,6 +474,9 @@ def render_spec(data: bytes, spec: str) -> str:
         # Engine/instrument tables of the sound driver. Rendered like bytes:16;
         # the separate spec name is what routes them out of the repository.
         return render_byte_table(data, 16)
+    if kind == "words":
+        # a maths table: numeric words, never resolved against labels
+        return render_records(data, 2 * int(param or 1))
     if kind == "squares":
         return render_squares(data)
     if kind == "fill":

@@ -27,7 +27,8 @@ from .datatables import (render_actor_list, render_actor_script,
                          render_gfx_ptr_table, render_lz_ptr_table,
                          render_map_table, render_menu_def,
                          render_mugshot_ptr_table, render_object_header,
-                         render_pointer_words, render_rect_pair,
+                         render_number_words, render_pointer_words,
+                         render_rect_pair,
                          render_rect_ptrs, render_rules_pages,
                          render_sprite_anim, render_text_ids,
                          render_slot_records, render_story_locations,
@@ -963,6 +964,9 @@ class Emitter:
         if spec in ("records:2", "mode_hooks", "minigame_configs"):
             return render_pointer_words(self.rom, start, end, bank,
                                         self.ptr_names, spec)
+        if spec.startswith("words:"):
+            return render_number_words(self.rom, start, end,
+                                       int(spec.split(":")[1]))
         if spec == "story_locations":
             return render_story_locations(self.rom, start, end, self._slot_ref)
         if spec.startswith("rules_pages:"):
@@ -1053,6 +1057,8 @@ class Emitter:
         kind, _, param = (spec or "").partition(":")
         if kind == "records" and param.isdigit():
             return int(param)
+        if kind == "words" and param.isdigit():
+            return 2 * int(param)
         return self._STRIDES.get(kind)
 
     def _actor_list_starts(self, start, end):

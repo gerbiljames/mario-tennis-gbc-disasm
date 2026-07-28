@@ -3666,7 +3666,7 @@ AngleFromVector16:
 .done:
 	ret ; $1564
 TangentTable:
-	; $1565, 514 bytes (records:2)
+	; $1565, 514 bytes (words:1)
 	dw $0000 ; record 0
 	dw $0001 ; record 1
 	dw $0003 ; record 2
@@ -3707,12 +3707,12 @@ TangentTable:
 	dw $003b ; record 37
 	dw $003c ; record 38
 	dw $003e ; record 39
-	dw VBlankInterrupt ; record 40
+	dw $0040 ; record 40
 	dw $0041 ; record 41
 	dw $0043 ; record 42
 	dw $0045 ; record 43
 	dw $0046 ; record 44
-	dw LCDStatInterrupt ; record 45
+	dw $0048 ; record 45
 	dw $004a ; record 46
 	dw $004c ; record 47
 	dw $004d ; record 48
@@ -3721,7 +3721,7 @@ TangentTable:
 	dw $0052 ; record 51
 	dw $0054 ; record 52
 	dw $0056 ; record 53
-	dw SerialInterrupt ; record 54
+	dw $0058 ; record 54
 	dw $0059 ; record 55
 	dw $005b ; record 56
 	dw $005d ; record 57
@@ -3795,7 +3795,7 @@ TangentTable:
 	dw $00f7 ; record 125
 	dw $00fa ; record 126
 	dw $00fd ; record 127
-	dw EntryPoint ; record 128
+	dw $0100 ; record 128
 	dw $0103 ; record 129
 	dw $0106 ; record 130
 	dw $010a ; record 131
@@ -3820,7 +3820,7 @@ TangentTable:
 	dw $0151 ; record 150
 	dw $0155 ; record 151
 	dw $015a ; record 152
-	dw CallHLInBankA ; record 153
+	dw $015e ; record 153
 	dw $0163 ; record 154
 	dw $0167 ; record 155
 	dw $016c ; record 156
@@ -3896,7 +3896,7 @@ TangentTable:
 	dw $056d ; record 226
 	dw $059f ; record 227
 	dw $05d4 ; record 228
-	dw ApplyPendingPaletteUpdates ; record 229
+	dw $060d ; record 229
 	dw $064b ; record 230
 	dw $068d ; record 231
 	dw $06d5 ; record 232
@@ -10030,7 +10030,7 @@ AbortIfChannelTriggered:
 	pop af ; $3b1b
 	ret ; $3b1c
 NotePeriodTable:
-	; $3b1d, 48 bytes (records:2)
+	; $3b1d, 48 bytes (words:1)
 	dw $07d4 ; record 0
 	dw $0764 ; record 1
 	dw $06f9 ; record 2
@@ -10041,7 +10041,7 @@ NotePeriodTable:
 	dw $053a ; record 7
 	dw $04f0 ; record 8
 	dw $04a8 ; record 9
-	dw ClearVRAMCopyQueue ; record 10
+	dw $0465 ; record 10
 	dw $0426 ; record 11
 	dw $079c ; record 12
 	dw $072e ; record 13

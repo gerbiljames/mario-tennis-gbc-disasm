@@ -536,6 +536,23 @@ def render_text_ids(rom, start, end):
     return out
 
 
+def render_number_words(rom, start, end, per_row):
+    """A dw table of *numbers* -- a maths table, not pointers. Same rows as
+    render_pointer_words without the label lookup, which is the whole point:
+    in ROM0 that lookup resolves any word below $4000, so a tangent of $0040
+    rendered as `dw VBlankInterrupt` and an APU note period as
+    `dw ClearVRAMCopyQueue`. Both assemble to the right bytes and both are
+    lies about what the table holds."""
+    out, stride = [], 2 * per_row
+    for r in range((end - start) // stride):
+        ro = start + r * stride
+        ws = [rom[ro + k * 2] | (rom[ro + k * 2 + 1] << 8) for k in range(per_row)]
+        out.append("\tdw " + ", ".join(f"${w:04x}" for w in ws) + f" ; record {r}")
+    for b in rom[start + (end - start) // stride * stride:end]:
+        out.append(f"\tdb ${b:02x}")
+    return out
+
+
 def render_pointer_words(rom, start, end, bank, labels, spec):
     """A dw table of same-bank pointers (records:2 tables are usually pointer
     tables; mode_hooks and minigame_configs always are). Words that hit a

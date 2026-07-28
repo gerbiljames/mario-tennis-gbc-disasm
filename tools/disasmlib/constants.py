@@ -12,7 +12,7 @@
 # such a spec past a cut turned 1,472 bytes of bank $28 tile graphics into
 # `ds` runs -- wrong, and it would have inlined ROM content into the repo.
 SPLITTABLE_SPEC_KINDS = frozenset((
-    "bytes", "records", "tilemap", "palettes", "sound_data",
+    "bytes", "records", "words", "tilemap", "palettes", "sound_data",
     "text_ids", "flag_ids", "map_actors",
 ))
 
