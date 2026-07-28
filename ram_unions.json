@@ -2055,6 +2055,84 @@
      }
     }
    ]
+  },
+  {
+   "start": "0xdd80",
+   "wram_bank": "0x04",
+   "end": "0xddd0",
+   "comment": "Match object slots (WRAM bank $04): five 16-byte records the bank $09\nsprite engine animates along a move curve -- serve indicators, the\ncourt banner, the point-situation banner, special-shot effects.\nScoped to banks $08/$09 as well as the WRAM bank because the spawners\npass a slot base in bc without selecting the bank at the reference.\n$ddd0-$ddef above them belongs to the bank $18/$1b menu screens.",
+   "variants": [
+    {
+     "context": "match object slots (banks $08/$09)",
+     "scopes": [
+      {
+       "bank": "0x08"
+      },
+      {
+       "bank": "0x09"
+      },
+      {
+       "wram_bank": "0x04"
+      }
+     ],
+     "symbols": {
+      "0xdd80": {
+       "name": "wObjSlot0",
+       "note": "[16 bytes] Match object slot 0. UpdateAllObjSprites walks the five in order; each spawner claims a fixed one (the court banner and the special-shot effect both take slot 3). Object-slot record, 16 bytes:\n  +$00 object id, $ff = slot free (ProcessObjSlot skips it)\n  +$01 flags; bit 0 = draw this frame\n  +$02 sprite template pointer, passed to QueueSpriteTemplate as hl\n  +$04 OAM attribute (b), +$05 base tile (c)\n  +$06 X offset, +$07 Y offset\n  +$08 handler pointer -- ProcessObjSlot `jp`s to it with DrawObjSlot\n       pushed as the return address\n  +$0a X from the move curve, +$0b Y\n  +$0c handler sub-state, an RST00 index the handler steps\n  +$0d curve step, incremented every frame by FinishObjSlotUpdate\n  +$0e curve id, indexing MoveCurveTable_09\n  +$0f anchor: 0 draws at the offsets as they stand, 1 adds the serving\n       character's wCharScreenX/Y first",
+       "size": 16
+      },
+      "0xdd90": {
+       "name": "wObjSlot1",
+       "note": "[16 bytes] Match object slot 1. UpdateAllObjSprites walks the five in order; each spawner claims a fixed one (the court banner and the special-shot effect both take slot 3). Object-slot record, 16 bytes:\n  +$00 object id, $ff = slot free (ProcessObjSlot skips it)\n  +$01 flags; bit 0 = draw this frame\n  +$02 sprite template pointer, passed to QueueSpriteTemplate as hl\n  +$04 OAM attribute (b), +$05 base tile (c)\n  +$06 X offset, +$07 Y offset\n  +$08 handler pointer -- ProcessObjSlot `jp`s to it with DrawObjSlot\n       pushed as the return address\n  +$0a X from the move curve, +$0b Y\n  +$0c handler sub-state, an RST00 index the handler steps\n  +$0d curve step, incremented every frame by FinishObjSlotUpdate\n  +$0e curve id, indexing MoveCurveTable_09\n  +$0f anchor: 0 draws at the offsets as they stand, 1 adds the serving\n       character's wCharScreenX/Y first",
+       "size": 16
+      },
+      "0xdda0": {
+       "name": "wObjSlot2",
+       "note": "[16 bytes] Match object slot 2. UpdateAllObjSprites walks the five in order; each spawner claims a fixed one (the court banner and the special-shot effect both take slot 3). Object-slot record, 16 bytes:\n  +$00 object id, $ff = slot free (ProcessObjSlot skips it)\n  +$01 flags; bit 0 = draw this frame\n  +$02 sprite template pointer, passed to QueueSpriteTemplate as hl\n  +$04 OAM attribute (b), +$05 base tile (c)\n  +$06 X offset, +$07 Y offset\n  +$08 handler pointer -- ProcessObjSlot `jp`s to it with DrawObjSlot\n       pushed as the return address\n  +$0a X from the move curve, +$0b Y\n  +$0c handler sub-state, an RST00 index the handler steps\n  +$0d curve step, incremented every frame by FinishObjSlotUpdate\n  +$0e curve id, indexing MoveCurveTable_09\n  +$0f anchor: 0 draws at the offsets as they stand, 1 adds the serving\n       character's wCharScreenX/Y first",
+       "size": 16
+      },
+      "0xddb0": {
+       "name": "wObjSlot3",
+       "note": "[16 bytes] Match object slot 3. UpdateAllObjSprites walks the five in order; each spawner claims a fixed one (the court banner and the special-shot effect both take slot 3). Object-slot record, 16 bytes:\n  +$00 object id, $ff = slot free (ProcessObjSlot skips it)\n  +$01 flags; bit 0 = draw this frame\n  +$02 sprite template pointer, passed to QueueSpriteTemplate as hl\n  +$04 OAM attribute (b), +$05 base tile (c)\n  +$06 X offset, +$07 Y offset\n  +$08 handler pointer -- ProcessObjSlot `jp`s to it with DrawObjSlot\n       pushed as the return address\n  +$0a X from the move curve, +$0b Y\n  +$0c handler sub-state, an RST00 index the handler steps\n  +$0d curve step, incremented every frame by FinishObjSlotUpdate\n  +$0e curve id, indexing MoveCurveTable_09\n  +$0f anchor: 0 draws at the offsets as they stand, 1 adds the serving\n       character's wCharScreenX/Y first",
+       "size": 16
+      },
+      "0xddc0": {
+       "name": "wObjSlot4",
+       "note": "[16 bytes] Match object slot 4. UpdateAllObjSprites walks the five in order; each spawner claims a fixed one (the court banner and the special-shot effect both take slot 3). Object-slot record, 16 bytes:\n  +$00 object id, $ff = slot free (ProcessObjSlot skips it)\n  +$01 flags; bit 0 = draw this frame\n  +$02 sprite template pointer, passed to QueueSpriteTemplate as hl\n  +$04 OAM attribute (b), +$05 base tile (c)\n  +$06 X offset, +$07 Y offset\n  +$08 handler pointer -- ProcessObjSlot `jp`s to it with DrawObjSlot\n       pushed as the return address\n  +$0a X from the move curve, +$0b Y\n  +$0c handler sub-state, an RST00 index the handler steps\n  +$0d curve step, incremented every frame by FinishObjSlotUpdate\n  +$0e curve id, indexing MoveCurveTable_09\n  +$0f anchor: 0 draws at the offsets as they stand, 1 adds the serving\n       character's wCharScreenX/Y first",
+       "size": 16
+      }
+     }
+    }
+   ]
+  },
+  {
+   "start": "0xddf0",
+   "wram_bank": "0x04",
+   "end": "0xde00",
+   "comment": "Working copy of the object slot being processed (WRAM bank $04).\nProcessObjSlot copies the slot here, calls its handler, and\nFinishObjSlotUpdate copies it back to the slot it pushed -- so every\nhandler addresses one fixed record instead of indexing bc.",
+   "variants": [
+    {
+     "context": "match object slots (banks $08/$09)",
+     "scopes": [
+      {
+       "bank": "0x08"
+      },
+      {
+       "bank": "0x09"
+      },
+      {
+       "wram_bank": "0x04"
+      }
+     ],
+     "symbols": {
+      "0xddf0": {
+       "name": "wObjSlotWork",
+       "note": "[16 bytes] The slot ProcessObjSlot is currently running, copied in from wObjSlot0-4 and copied back by FinishObjSlotUpdate. Writing $ff to +$00 here is how GetNextMoveCurveValue frees the slot when the curve hits its $81 terminator. Object-slot record, 16 bytes:\n  +$00 object id, $ff = slot free (ProcessObjSlot skips it)\n  +$01 flags; bit 0 = draw this frame\n  +$02 sprite template pointer, passed to QueueSpriteTemplate as hl\n  +$04 OAM attribute (b), +$05 base tile (c)\n  +$06 X offset, +$07 Y offset\n  +$08 handler pointer -- ProcessObjSlot `jp`s to it with DrawObjSlot\n       pushed as the return address\n  +$0a X from the move curve, +$0b Y\n  +$0c handler sub-state, an RST00 index the handler steps\n  +$0d curve step, incremented every frame by FinishObjSlotUpdate\n  +$0e curve id, indexing MoveCurveTable_09\n  +$0f anchor: 0 draws at the offsets as they stand, 1 adds the serving\n       character's wCharScreenX/Y first",
+       "size": 16
+      }
+     }
+    }
+   ]
   }
  ]
 }

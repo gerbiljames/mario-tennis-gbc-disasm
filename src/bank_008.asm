@@ -331,7 +331,7 @@ HandleBallHitEvent:
 	jr z, .placeEffect ; $42e7
 	ld de, $f000 ; $42e9
 .placeEffect:
-	ld bc, $ddb0 ; $42ec
+	ld bc, wObjSlot3 ; $42ec
 	farcall SetObjPosition ; $42ef
 .done:
 	ret ; $42f2
@@ -1582,7 +1582,7 @@ AnnouncePointSituation:
 	jr nz, .placeObj ; $4dd6
 	ld de, $3420 ; $4dd8
 .placeObj:
-	ld bc, $ddb0 ; $4ddb
+	ld bc, wObjSlot3 ; $4ddb
 	farcall SetObjPosition ; $4dde
 	ld a, $0a ; $4de1
 	call StepMatchFrames ; $4de3
@@ -4072,13 +4072,13 @@ RefreshCourtScoreboard:
 	ld de, $d99a ; $5ea2
 	call CopyScoreboardTileColumn ; $5ea5
 	ld hl, $debc ; $5ea8
-	ld de, $dd9a ; $5eab
+	ld de, wObjSlot1 + 10 ; $5eab
 	call CopyScoreboardTileColumn ; $5eae
 	ld hl, $de8a ; $5eb1
 	ld de, $d984 ; $5eb4
 	call CopyScoreboardTileColumn ; $5eb7
 	ld hl, $deb2 ; $5eba
-	ld de, $dd84 ; $5ebd
+	ld de, wObjSlot0 + 4 ; $5ebd
 	call CopyScoreboardTileColumn ; $5ec0
 	call SnapshotCourtTilemaps ; $5ec3
 	ret ; $5ec6
@@ -4087,13 +4087,13 @@ RefreshCourtScoreboardFlipped:
 	ld de, $d984 ; $5eca
 	call CopyScoreboardTileColumn ; $5ecd
 	ld hl, $dea8 ; $5ed0
-	ld de, $dd84 ; $5ed3
+	ld de, wObjSlot0 + 4 ; $5ed3
 	call CopyScoreboardTileColumn ; $5ed6
 	ld hl, $de9e ; $5ed9
 	ld de, $d99a ; $5edc
 	call CopyScoreboardTileColumn ; $5edf
 	ld hl, $dec6 ; $5ee2
-	ld de, $dd9a ; $5ee5
+	ld de, wObjSlot1 + 10 ; $5ee5
 	call CopyScoreboardTileColumn ; $5ee8
 	call SnapshotCourtTilemaps ; $5eeb
 	ret ; $5eee

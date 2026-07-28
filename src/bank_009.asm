@@ -160,7 +160,7 @@ SpawnGameScoreDisplayObjs:
 	push bc ; $4154
 	ld a, b ; $4155
 	ld hl, ObjTemplates_09_41bc ; $4156
-	ld bc, $dd80 ; $4159
+	ld bc, wObjSlot0 ; $4159
 	call LoadObjTemplate_09 ; $415c
 	call GetPlayer1CharIconSprites ; $415f
 	call SetObjSpriteTemplate ; $4162
@@ -168,19 +168,19 @@ SpawnGameScoreDisplayObjs:
 	ld a, b ; $4166
 	xor $03 ; $4167
 	ld hl, ObjTemplates_09_41bc ; $4169
-	ld bc, $dd90 ; $416c
+	ld bc, wObjSlot1 ; $416c
 	call LoadObjTemplate_09 ; $416f
 	call GetPlayer2CharIconSprites ; $4172
 	call SetObjSpriteTemplate ; $4175
 	ld a, $00 ; $4178
 	ld hl, SpawnGameScoreDisplayObjsObjTemplate ; $417a
-	ld bc, $dda0 ; $417d
+	ld bc, wObjSlot2 ; $417d
 	call LoadObjTemplate_09 ; $4180
 	ret ; $4183
 .doubles:
 	ld a, $00 ; $4184
 	ld hl, GameScoreDisplayObjsObjTemplate ; $4186
-	ld bc, $dd80 ; $4189
+	ld bc, wObjSlot0 ; $4189
 	call LoadObjTemplate_09 ; $418c
 	ret ; $418f
 DismissGameScoreDisplayObjs:
@@ -188,18 +188,18 @@ DismissGameScoreDisplayObjs:
 	and a ; $4193
 	jr nz, .doubles ; $4194
 	ld hl, ObjTemplates_09_41bc ; $4196
-	ld bc, $dd80 ; $4199
+	ld bc, wObjSlot0 ; $4199
 	call StartObjExitAnim ; $419c
 	ld hl, ObjTemplates_09_41bc ; $419f
-	ld bc, $dd90 ; $41a2
+	ld bc, wObjSlot1 ; $41a2
 	call StartObjExitAnim ; $41a5
 	ld hl, SpawnGameScoreDisplayObjsObjTemplate ; $41a8
-	ld bc, $dda0 ; $41ab
+	ld bc, wObjSlot2 ; $41ab
 	call StartObjExitAnim ; $41ae
 	ret ; $41b1
 .doubles:
 	ld hl, GameScoreDisplayObjsObjTemplate ; $41b2
-	ld bc, $dd80 ; $41b5
+	ld bc, wObjSlot0 ; $41b5
 	call StartObjExitAnim ; $41b8
 	ret ; $41bb
 ObjTemplates_09_41bc:
@@ -221,12 +221,12 @@ SpawnGameScoreDisplayObjsObjTemplate:
 SpawnGameResultObj:
 	ld a, $01 ; $422c
 	ld hl, SpawnGameScoreDisplayObjsObjTemplate ; $422e
-	ld bc, $dda0 ; $4231
+	ld bc, wObjSlot2 ; $4231
 	call LoadObjTemplate_09 ; $4234
 	ret ; $4237
 DismissGameResultObj:
 	ld hl, SpawnGameScoreDisplayObjsObjTemplate ; $4238
-	ld bc, $dda0 ; $423b
+	ld bc, wObjSlot2 ; $423b
 	call StartObjExitAnim ; $423e
 	ret ; $4241
 SpawnServeIndicatorObjs:
@@ -234,7 +234,7 @@ SpawnServeIndicatorObjs:
 	call SpawnServeIndicatorSideObj ; $4245
 	ld a, [wServingCharCourtPos] ; $4248
 	ld hl, ServeIndicatorObjTemplates_09 ; $424b
-	ld bc, $dd80 ; $424e
+	ld bc, wObjSlot0 ; $424e
 	call LoadObjTemplate_09 ; $4251
 	call GetPlayer1ServeIndicatorSprites ; $4254
 	call SetObjSpriteTemplate ; $4257
@@ -243,7 +243,7 @@ SpawnServeIndicatorObjs:
 	jr z, .player2Indicator ; $425f
 	ld a, [wServingCharCourtPos] ; $4261
 	ld hl, ServeIndicatorObjTemplates_09 ; $4264
-	ld bc, $dd90 ; $4267
+	ld bc, wObjSlot1 ; $4267
 	call LoadObjTemplate_09 ; $426a
 	call GetPlayer2ServeIndicatorSprites ; $426d
 	call SetObjSpriteTemplate ; $4270
@@ -252,7 +252,7 @@ SpawnServeIndicatorObjs:
 	ld a, [wServingCharCourtPos] ; $4274
 	and $02 ; $4277
 	ret nz ; $4279
-	ld hl, $dd87 ; $427a
+	ld hl, wObjSlot0 + 7 ; $427a
 	ld a, [hl] ; $427d
 	add $10 ; $427e
 	ld [hl], a ; $4280
@@ -260,10 +260,10 @@ SpawnServeIndicatorObjs:
 DismissServeIndicatorObjs:
 	call DismissServeIndicatorSideObj ; $4282
 	ld hl, ServeIndicatorObjTemplates_09 ; $4285
-	ld bc, $dd80 ; $4288
+	ld bc, wObjSlot0 ; $4288
 	call StartObjExitAnim ; $428b
 	ld hl, ServeIndicatorObjTemplates_09 ; $428e
-	ld bc, $dd90 ; $4291
+	ld bc, wObjSlot1 ; $4291
 	call StartObjExitAnim ; $4294
 	ret ; $4297
 ServeIndicatorObjTemplates_09:
@@ -277,7 +277,7 @@ SpawnWinLoseResultObj:
 	push af ; $42d8
 	ld a, $00 ; $42d9
 	ld hl, WinLoseResultObjTemplate_09 ; $42db
-	ld bc, $dd80 ; $42de
+	ld bc, wObjSlot0 ; $42de
 	call LoadObjTemplate_09 ; $42e1
 	pop af ; $42e4
 	add a ; $42e5
@@ -291,7 +291,7 @@ SpawnWinLoseResultObj:
 	ret ; $42f5
 DismissWinLoseResultObj:
 	ld hl, WinLoseResultObjTemplate_09 ; $42f6
-	ld bc, $dd80 ; $42f9
+	ld bc, wObjSlot0 ; $42f9
 	call StartObjExitAnim ; $42fc
 	ret ; $42ff
 WinLoseResultObjTemplate_09:
@@ -301,12 +301,12 @@ WinLoseResultObjTemplate_09:
 SpawnServeIndicatorSideObj:
 	ld a, [wServingCharCourtPos] ; $4310
 	ld hl, ServeIndicatorSideObjTemplates_09 ; $4313
-	ld bc, $ddc0 ; $4316
+	ld bc, wObjSlot4 ; $4316
 	call LoadObjTemplate_09 ; $4319
 	ret ; $431c
 DismissServeIndicatorSideObj:
 	ld hl, ServeIndicatorSideObjTemplates_09 ; $431d
-	ld bc, $ddc0 ; $4320
+	ld bc, wObjSlot4 ; $4320
 	call StartObjExitAnim ; $4323
 	ret ; $4326
 ServeIndicatorSideObjTemplates_09:
@@ -325,12 +325,12 @@ ShowCourtBanner:
 	pop af ; $4370
 SpawnCourtBannerObj:
 	ld hl, CourtBannerObjTemplates_09 ; $4371
-	ld bc, $ddb0 ; $4374
+	ld bc, wObjSlot3 ; $4374
 	call LoadObjTemplate_09 ; $4377
 	ret ; $437a
 HideCourtBanner:
 	ld hl, CourtBannerObjTemplates_09 ; $437b
-	ld bc, $ddb0 ; $437e
+	ld bc, wObjSlot3 ; $437e
 	call StartObjExitAnim ; $4381
 	ret ; $4384
 CourtBannerObjTemplates_09:
@@ -367,23 +367,23 @@ CourtBannerObjTemplates_09:
 	dw $403c, $70e2, $4764, $0000, $4764, $0003, $0067, $0000 ; record 28
 InitAllObjSlots:
 	wram_bank $04 ; $4555
-	ld bc, $dd80 ; $455b
+	ld bc, wObjSlot0 ; $455b
 	call InitObjSlot ; $455e
-	ld bc, $dd90 ; $4561
+	ld bc, wObjSlot1 ; $4561
 	call InitObjSlot ; $4564
-	ld bc, $dda0 ; $4567
+	ld bc, wObjSlot2 ; $4567
 	call InitObjSlot ; $456a
 	ld d, $01 ; $456d
 	call SetObjSpriteAttr ; $456f
 	ld d, $30 ; $4572
 	call SetObjTileOffset ; $4574
-	ld bc, $ddb0 ; $4577
+	ld bc, wObjSlot3 ; $4577
 	call InitObjSlot ; $457a
 	ld d, $01 ; $457d
 	call SetObjSpriteAttr ; $457f
 	ld d, $20 ; $4582
 	call SetObjTileOffset ; $4584
-	ld bc, $ddc0 ; $4587
+	ld bc, wObjSlot4 ; $4587
 	call InitObjSlot ; $458a
 	ld d, $01 ; $458d
 	call SetObjSpriteAttr ; $458f
@@ -566,22 +566,22 @@ StartObjExitAnim:
 	ret ; $4682
 ClearAllObjSlots:
 	ld a, $ff ; $4683
-	ld [$dd80], a ; $4685
-	ld [$dd90], a ; $4688
-	ld [$dda0], a ; $468b
-	ld [$ddb0], a ; $468e
-	ld [$ddc0], a ; $4691
+	ld [wObjSlot0], a ; $4685
+	ld [wObjSlot1], a ; $4688
+	ld [wObjSlot2], a ; $468b
+	ld [wObjSlot3], a ; $468e
+	ld [wObjSlot4], a ; $4691
 	ret ; $4694
 UpdateAllObjSprites:
-	ld bc, $dd80 ; $4695
+	ld bc, wObjSlot0 ; $4695
 	call ProcessObjSlot ; $4698
-	ld bc, $dd90 ; $469b
+	ld bc, wObjSlot1 ; $469b
 	call ProcessObjSlot ; $469e
-	ld bc, $dda0 ; $46a1
+	ld bc, wObjSlot2 ; $46a1
 	call ProcessObjSlot ; $46a4
-	ld bc, $ddb0 ; $46a7
+	ld bc, wObjSlot3 ; $46a7
 	call ProcessObjSlot ; $46aa
-	ld bc, $ddc0 ; $46ad
+	ld bc, wObjSlot4 ; $46ad
 	call ProcessObjSlot ; $46b0
 	ret ; $46b3
 	ret ; $46b4
@@ -594,12 +594,12 @@ ProcessObjSlot:
 	ld l, c ; $46bd
 	ld h, b ; $46be
 	push hl ; $46bf
-	ld de, $ddf0 ; $46c0
+	ld de, wObjSlotWork ; $46c0
 	ld c, $01 ; $46c3
 	call CopyMemoryFast ; $46c5
 	ld hl, DrawObjSlot ; $46c8
 	push hl ; $46cb
-	ld hl, $ddf8 ; $46cc
+	ld hl, wObjSlotWork + 8 ; $46cc
 	ld a, [hl+] ; $46cf
 	ld h, [hl] ; $46d0
 	ld l, a ; $46d1
@@ -607,44 +607,44 @@ ProcessObjSlot:
 DrawObjSlot:
 	ld hl, FinishObjSlotUpdate ; $46d3
 	push hl ; $46d6
-	ld a, [$ddff] ; $46d7
+	ld a, [wObjSlotWork + 15] ; $46d7
 	and a ; $46da
-	jr z, FinishObjSlotUpdate.applyCurve ; $46db
+	jr z, FinishObjSlotUpdate.drawAtOffset ; $46db
 	cp $01 ; $46dd
-	jr z, FinishObjSlotUpdate.checkExit ; $46df
+	jr z, FinishObjSlotUpdate.drawOnServer ; $46df
 FinishObjSlotUpdate:
-	ld hl, $ddfd ; $46e1
+	ld hl, wObjSlotWork + 13 ; $46e1
 	ld a, [hl] ; $46e4
 	inc [hl] ; $46e5
 	pop de ; $46e6
-	ld hl, $ddf0 ; $46e7
+	ld hl, wObjSlotWork ; $46e7
 	ld c, $01 ; $46ea
 	call CopyMemoryFast ; $46ec
 	ret ; $46ef
-.applyCurve:
-	ld hl, $ddf1 ; $46f0
+.drawAtOffset:
+	ld hl, wObjSlotWork + 1 ; $46f0
 	bit 0, [hl] ; $46f3
 	ret z ; $46f5
-	ld hl, $ddf6 ; $46f6
-	ld a, [$ddfa] ; $46f9
+	ld hl, wObjSlotWork + 6 ; $46f6
+	ld a, [wObjSlotWork + 10] ; $46f9
 	add [hl] ; $46fc
 	ld d, a ; $46fd
-	ld hl, $ddf7 ; $46fe
-	ld a, [$ddfb] ; $4701
+	ld hl, wObjSlotWork + 7 ; $46fe
+	ld a, [wObjSlotWork + 11] ; $4701
 	add [hl] ; $4704
 	ld e, a ; $4705
-	ld a, [$ddf4] ; $4706
+	ld a, [wObjSlotWork + 4] ; $4706
 	ld b, a ; $4709
-	ld a, [$ddf5] ; $470a
+	ld a, [wObjSlotWork + 5] ; $470a
 	ld c, a ; $470d
-	ld hl, $ddf2 ; $470e
+	ld hl, wObjSlotWork + 2 ; $470e
 	ld a, [hl+] ; $4711
 	ld h, [hl] ; $4712
 	ld l, a ; $4713
 	call QueueSpriteTemplate ; $4714
 	ret ; $4717
-.checkExit:
-	ld hl, $ddf1 ; $4718
+.drawOnServer:
+	ld hl, wObjSlotWork + 1 ; $4718
 	bit 0, [hl] ; $471b
 	ret z ; $471d
 	farcall FindServerCharBank ; $471e
@@ -655,51 +655,51 @@ FinishObjSlotUpdate:
 	ld a, [wCharScreenY] ; $472a
 	ld e, a ; $472d
 	wram_bank $04 ; $472e
-	ld a, [w4_ddfa] ; $4734
-	ld hl, $ddf6 ; $4737
+	ld a, [wObjSlotWork + 10] ; $4734
+	ld hl, wObjSlotWork + 6 ; $4737
 	add [hl] ; $473a
 	add d ; $473b
 	ld d, a ; $473c
-	ld a, [w4_ddfb] ; $473d
-	ld hl, $ddf7 ; $4740
+	ld a, [wObjSlotWork + 11] ; $473d
+	ld hl, wObjSlotWork + 7 ; $4740
 	add [hl] ; $4743
 	add e ; $4744
 	ld e, a ; $4745
-	ld a, [w4_ddf4] ; $4746
+	ld a, [wObjSlotWork + 4] ; $4746
 	ld b, a ; $4749
-	ld a, [w4_ddf5] ; $474a
+	ld a, [wObjSlotWork + 5] ; $474a
 	ld c, a ; $474d
-	ld hl, $ddf2 ; $474e
+	ld hl, wObjSlotWork + 2 ; $474e
 	ld a, [hl+] ; $4751
 	ld h, [hl] ; $4752
 	ld l, a ; $4753
 	call QueueSpriteTemplate ; $4754
 	ret ; $4757
-	ld hl, $ddf1 ; $4758
+	ld hl, wObjSlotWork + 1 ; $4758
 	set 0, [hl] ; $475b
 	ret ; $475d
-	ld hl, $ddf1 ; $475e
+	ld hl, wObjSlotWork + 1 ; $475e
 	res 0, [hl] ; $4761
 	ret ; $4763
-	ld a, [$ddfc] ; $4764
+	ld a, [wObjSlotWork + 12] ; $4764
 	rst Rst00 ; $4767
-	dw FinishObjSlotUpdate.freeSlot ; $4768 jumptable
+	dw FinishObjSlotUpdate.stepCurve ; $4768 jumptable
 	dw FinishObjSlotUpdate.done ; $476a jumptable
-.freeSlot:
-	ld hl, $ddf1 ; $476c
+.stepCurve:
+	ld hl, wObjSlotWork + 1 ; $476c
 	set 0, [hl] ; $476f
 	call GetNextMoveCurveValue ; $4771
-	jp z, .keepSlot ; $4774
+	jp z, .advanceState ; $4774
 	ret ; $4777
-	ld hl, $ddf1 ; $4778
+	ld hl, wObjSlotWork + 1 ; $4778
 	res 0, [hl] ; $477b
-.keepSlot:
-	ld hl, $ddfc ; $477d
+.advanceState:
+	ld hl, wObjSlotWork + 12 ; $477d
 	inc [hl] ; $4780
 .done:
 	ret ; $4781
 GetNextMoveCurveValue:
-	ld a, [$ddfe] ; $4782
+	ld a, [wObjSlotWork + 14] ; $4782
 	add a ; $4785
 	add LOW(MoveCurveTable_09) ; $4786
 	ld l, a ; $4788
@@ -709,7 +709,7 @@ GetNextMoveCurveValue:
 	ld a, [hl+] ; $478d
 	ld h, [hl] ; $478e
 	ld l, a ; $478f
-	ld a, [$ddfd] ; $4790
+	ld a, [wObjSlotWork + 13] ; $4790
 	add l ; $4793
 	ld l, a ; $4794
 	jr nc, .readValue ; $4795
@@ -720,13 +720,13 @@ GetNextMoveCurveValue:
 	jr z, .done ; $479b
 	cp $81 ; $479d
 	jr z, .markFinished ; $479f
-	ld [$ddfa], a ; $47a1
+	ld [wObjSlotWork + 10], a ; $47a1
 	xor a ; $47a4
 	inc a ; $47a5
 	ret ; $47a6
 .markFinished:
 	ld a, $ff ; $47a7
-	ld [$ddf0], a ; $47a9
+	ld [wObjSlotWork], a ; $47a9
 .done:
 	xor a ; $47ac
 	ret ; $47ad
