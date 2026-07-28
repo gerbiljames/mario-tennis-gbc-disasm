@@ -57,7 +57,7 @@ SECTION "ROM Bank $08", ROMX[$4000], BANK[$08]
 	farptr CharPointEndReaction ; $406c
 	farptr MulMem24ByFrac ; $406e
 InitDefaultMatchSettings:
-	xor a, a ; $4070
+	xor a ; $4070
 	ld [wKeepMatchStatsFlag], a ; $4071
 	ld hl, wMatchMenuSelection ; $4074
 	ld c, $02 ; $4077
@@ -87,19 +87,19 @@ ResetMatchState:
 	ld c, $0e ; $40b4
 	call ClearMemory16 ; $40b6
 	ld a, [wKeepMatchStatsFlag] ; $40b9
-	and a, a ; $40bc
+	and a ; $40bc
 	jr nz, .keepStats ; $40bd
 	ld hl, wCharacter1ServiceAces ; $40bf
 	ld c, $03 ; $40c2
 	call ClearMemory16 ; $40c4
 .keepStats:
-	xor a, a ; $40c7
+	xor a ; $40c7
 	ld [wKeepMatchStatsFlag], a ; $40c8
 	ld a, $ff ; $40cb
 	ld [wMatchSimFrozen], a ; $40cd
 	ld a, $01 ; $40d0
 	ld [wPauseDisabled], a ; $40d2
-	xor a, a ; $40d5
+	xor a ; $40d5
 	ld [wPlayer1PointsWon], a ; $40d6
 	ld [wPlayer2PointsWon], a ; $40d9
 	ld [wTotalPointsScoredInCurrentGame], a ; $40dc
@@ -121,7 +121,7 @@ ResetMatchState:
 	ld [hl+], a ; $40fe
 	ld [hl], d ; $40ff
 	ld a, [wMatchIsDoubles] ; $4100
-	and a, a ; $4103
+	and a ; $4103
 	ld bc, $0220 ; $4104
 	jr z, .storeAimSpread ; $4107
 	ld bc, $0320 ; $4109
@@ -132,7 +132,7 @@ ResetMatchState:
 	ld [hl], b ; $4111
 	ld a, [wOnCourtCharCount] ; $4112
 	dec a ; $4115
-	and a, $03 ; $4116
+	and $03 ; $4116
 	ld [wOnCourtCharCountMinus1], a ; $4118
 	ld a, [wMatchTypeNumberOfSets] ; $411b
 	srl a ; $411e
@@ -140,19 +140,19 @@ ResetMatchState:
 	ld a, [wMatchTypeNumberOfGames] ; $4123
 	rrca ; $4126
 	rrca ; $4127
-	and a, $01 ; $4128
+	and $01 ; $4128
 	ld [wRulesGamesIndex], a ; $412a
 	call SelectScoreboardLayout ; $412d
 	ld a, [wGameMode] ; $4130
-	cp a, $09 ; $4133
+	cp $09 ; $4133
 	ldh a, [hVBlankCounter] ; $4135
 	jr nz, .seedRng ; $4137
 	ld a, $00 ; $4139
 .seedRng:
 	ld [wMatchRngState], a ; $413b
-	xor a, a ; $413e
+	xor a ; $413e
 	ldh [$ffe9], a ; $413f
-	xor a, a ; $4141
+	xor a ; $4141
 	ldh [hLinkPayloadKind], a ; $4142
 	ret ; $4144
 InitMatchScene:
@@ -172,7 +172,7 @@ InitMatchScene:
 	farcall InitAllObjSlots ; $416d
 	call ClearSpriteSlots ; $4170
 	call AssignCourtPositions ; $4173
-	xor a, a ; $4176
+	xor a ; $4176
 	ld [wChangeEndsPending], a ; $4177
 	farcall UpdatePointDigitsDisplay ; $417a
 	call RefreshCourtScoreboard ; $417d
@@ -200,14 +200,14 @@ RunMatch:
 	script_fade_in $20 ; $41ba
 	wram_bank $04 ; $41bf
 	call PlayCourtIntro ; $41c5
-	xor a, a ; $41c8
+	xor a ; $41c8
 	ld [wMatchSimFrozen], a ; $41c9
 	call RunMatchPlayLoop ; $41cc
 	ldh a, [hLinkState] ; $41cf
 	ld [$c493], a ; $41d1
 	farcall EndLinkSession ; $41d4
 	ld a, [wGameMode] ; $41d7
-	cp a, $08 ; $41da
+	cp $08 ; $41da
 	call z, ShowMatchResultScreens ; $41dc
 	ld c, $20 ; $41df
 	call BeginFadeOut ; $41e1
@@ -221,7 +221,7 @@ RunMatch:
 UpdateMatchFrame:
 	wram_bank $04 ; $41f7
 	ld a, [wMatchSimFrozen] ; $41fd
-	and a, a ; $4200
+	and a ; $4200
 	jr nz, .draw ; $4201
 	call ClearSpriteSlots ; $4203
 	call UpdateMatchCamera ; $4206
@@ -237,42 +237,42 @@ UpdateMatchFrame:
 	call FarCallVector ; $4223
 .draw:
 	ld a, [wMatchDrawFrozen] ; $4226
-	and a, a ; $4229
+	and a ; $4229
 	jr nz, .stepTargets ; $422a
 	call DrawActorsByDepth ; $422c
 .stepTargets:
 	ld a, [wMatchSimFrozen] ; $422f
-	and a, a ; $4232
+	and a ; $4232
 	jr nz, .drawMarkers ; $4233
 	farcall UpdateMinigameTargets ; $4235
 .drawMarkers:
 	ld a, [wMatchDrawFrozen] ; $4238
-	and a, a ; $423b
+	and a ; $423b
 	jr nz, .done ; $423c
 	call DrawMarkersAndShadows ; $423e
 .done:
 	ret ; $4241
 TickRallyTimers:
 	ld a, [wBallCrossedNetFlag] ; $4242
-	and a, a ; $4245
+	and a ; $4245
 	ret z ; $4246
 	ld hl, $c4b5 ; $4247
 	ld a, [hl] ; $424a
-	cp a, $64 ; $424b
+	cp $64 ; $424b
 	jr nc, .checkFirstShot ; $424d
 	inc [hl] ; $424f
 .checkFirstShot:
 	ld a, [wRallyLength] ; $4250
-	cp a, $01 ; $4253
+	cp $01 ; $4253
 	jr nz, .modeHook ; $4255
 	ld a, [wPointOutcome] ; $4257
-	and a, a ; $425a
+	and a ; $425a
 	jr nz, .checkBounce ; $425b
 	ld a, $01 ; $425d
 	ld [wCameraFollowBall], a ; $425f
 .checkBounce:
 	ld a, [wBallHasBouncedFlag] ; $4262
-	and a, a ; $4265
+	and a ; $4265
 	jr z, .modeHook ; $4266
 	ld hl, SetCharStateForRallyTick ; $4268
 	call ForEachCharBank ; $426b
@@ -286,15 +286,15 @@ SetCharStateForRallyTick:
 	ret ; $4279
 HandleBallHitEvent:
 	ld a, [wBallHitEvent] ; $427a
-	and a, a ; $427d
+	and a ; $427d
 	ret z ; $427e
 	ld hl, wRallyLength ; $427f
 	ld a, [hl] ; $4282
-	cp a, $64 ; $4283
+	cp $64 ; $4283
 	jr nc, .clearEvent ; $4285
 	inc [hl] ; $4287
 .clearEvent:
-	xor a, a ; $4288
+	xor a ; $4288
 	ld [wBallHitEvent], a ; $4289
 	ld [wBallHasBouncedFlag], a ; $428c
 	ld [wLandingMarkerActive], a ; $428f
@@ -311,22 +311,22 @@ HandleBallHitEvent:
 	call DetectServeAceOutcome ; $42bc
 	ld d, $04 ; $42bf
 	call CallModeHook ; $42c1
-	xor a, a ; $42c4
+	xor a ; $42c4
 	ld [wBallBounceCount], a ; $42c5
 	ld a, [wRallyLength] ; $42c8
-	cp a, $01 ; $42cb
+	cp $01 ; $42cb
 	jr z, .specialShot ; $42cd
-	cp a, $02 ; $42cf
+	cp $02 ; $42cf
 	jr z, .resetCourtLimits ; $42d1
 	ret ; $42d3
 .specialShot:
 	ld a, [wSpecialShotFlag] ; $42d4
-	and a, a ; $42d7
+	and a ; $42d7
 	jr z, .done ; $42d8
 	ld a, $0e ; $42da
 	farcall ShowCourtBanner ; $42dc
 	ld a, [wServingCharCourtPos] ; $42df
-	and a, $02 ; $42e2
+	and $02 ; $42e2
 	ld de, $f0d8 ; $42e4
 	jr z, .placeEffect ; $42e7
 	ld de, $f000 ; $42e9
@@ -342,7 +342,7 @@ HandleBallHitEvent:
 	ld [hl+], a ; $42fa
 	ld [hl], d ; $42fb
 	ld a, [wMatchIsDoubles] ; $42fc
-	and a, a ; $42ff
+	and a ; $42ff
 	ld de, $fe50 ; $4300
 	jr z, .doneLimits ; $4303
 	ld de, $fdc0 ; $4305
@@ -354,10 +354,10 @@ HandleBallHitEvent:
 	ret ; $430e
 SetCharStateOnBallHit:
 	ld a, [wCharState] ; $430f
-	add a, LOW(Data_08_431e) ; $4312
+	add LOW(Data_08_431e) ; $4312
 	ld l, a ; $4314
-	adc a, HIGH(Data_08_431e) ; $4315
-	sub a, l ; $4317
+	adc HIGH(Data_08_431e) ; $4315
+	sub l ; $4317
 	ld h, a ; $4318
 	ld a, [hl] ; $4319
 	call SetCharState ; $431a
@@ -367,20 +367,20 @@ Data_08_431e:
 	db $00, $02, $01, $02, $02, $01, $06, $07 ; 0x00
 DetectServeAceOutcome:
 	ld a, [wRallyLength] ; $4326
-	cp a, $02 ; $4329
+	cp $02 ; $4329
 	jr nz, .done ; $432b
 	ld a, [wPointOutcome] ; $432d
-	and a, a ; $4330
+	and a ; $4330
 	jr nz, .done ; $4331
 	ld b, $08 ; $4333
 	ld c, $ff ; $4335
 	ld a, [wLastShotServeRole] ; $4337
-	cp a, $01 ; $433a
+	cp $01 ; $433a
 	jr nz, .setOutcome ; $433c
 	ld b, $07 ; $433e
 	ld c, $ff ; $4340
 	ld a, [wBallBounceCount] ; $4342
-	and a, a ; $4345
+	and a ; $4345
 	jr z, .setOutcome ; $4346
 .done:
 	ret ; $4348
@@ -392,20 +392,20 @@ DetectServeAceOutcome:
 	ret ; $4351
 HandleBallBounceEvent:
 	ld a, [wBallBounceEvent] ; $4352
-	and a, a ; $4355
+	and a ; $4355
 	ret z ; $4356
 	ld a, [wBallBounceCount] ; $4357
-	cp a, $02 ; $435a
+	cp $02 ; $435a
 	jr nc, .clearEvent ; $435c
 	sound $5b ; $435e
 .clearEvent:
 	ld hl, wBallBounceCount ; $4360
 	ld a, [hl] ; $4363
-	cp a, $0a ; $4364
+	cp $0a ; $4364
 	jr nc, .done ; $4366
 	inc [hl] ; $4368
 .done:
-	xor a, a ; $4369
+	xor a ; $4369
 	ld [wLandingMarkerActive], a ; $436a
 	call StartBounceEffect ; $436d
 	call EvaluateBounceOutcome ; $4370
@@ -414,42 +414,42 @@ HandleBallBounceEvent:
 	ret ; $4378
 EvaluateBounceOutcome:
 	ld a, [wRallyLength] ; $4379
-	and a, a ; $437c
+	and a ; $437c
 	jr z, .done ; $437d
 	ld a, [wPointOutcome] ; $437f
-	and a, a ; $4382
+	and a ; $4382
 	jr nz, .done ; $4383
 	ld b, $06 ; $4385
 	ld c, $01 ; $4387
 	ld a, [wBallBounceCount] ; $4389
-	cp a, $01 ; $438c
+	cp $01 ; $438c
 	jr nz, .setOutcome ; $438e
 	ld b, $04 ; $4390
 	ld c, $ff ; $4392
 	ld hl, wBallQuadrantAtHit ; $4394
 	ld a, [wBallCourtQuadrant] ; $4397
-	xor a, [hl] ; $439a
-	and a, $02 ; $439b
+	xor [hl] ; $439a
+	and $02 ; $439b
 	jr z, .setOutcome ; $439d
 	call CheckBallOutOfBounds ; $439f
 	ld b, $05 ; $43a2
 	ld c, $ff ; $43a4
-	and a, a ; $43a6
+	and a ; $43a6
 	jr nz, .setOutcome ; $43a7
 	ld a, [wRallyLength] ; $43a9
-	cp a, $01 ; $43ac
+	cp $01 ; $43ac
 	jr nz, .done ; $43ae
 	ld b, $05 ; $43b0
 	ld c, $ff ; $43b2
 	ld hl, wBallQuadrantAtHit ; $43b4
 	ld a, [wBallCourtQuadrant] ; $43b7
-	xor a, [hl] ; $43ba
-	and a, $01 ; $43bb
+	xor [hl] ; $43ba
+	and $01 ; $43bb
 	jr z, .setOutcome ; $43bd
 	ld b, $03 ; $43bf
 	ld c, $00 ; $43c1
 	ld a, [wBallHasBouncedFlag] ; $43c3
-	and a, a ; $43c6
+	and a ; $43c6
 	jr nz, .setOutcome ; $43c7
 .done:
 	ret ; $43c9
@@ -461,9 +461,9 @@ EvaluateBounceOutcome:
 	ret ; $43d2
 HandleBallTouchCharEvent:
 	ld a, [wBallTouchCharFlag] ; $43d3
-	and a, a ; $43d6
+	and a ; $43d6
 	ret z ; $43d7
-	xor a, a ; $43d8
+	xor a ; $43d8
 	ld [wBallTouchCharFlag], a ; $43d9
 	sound $77 ; $43dc
 	call StartBallTouchCharEffect ; $43de
@@ -471,7 +471,7 @@ HandleBallTouchCharEvent:
 	ret ; $43e4
 ApplyBallTouchOutcome:
 	ld a, [wPointOutcome] ; $43e5
-	and a, a ; $43e8
+	and a ; $43e8
 	jr nz, .done ; $43e9
 	ld a, $09 ; $43eb
 	ld [wPointOutcome], a ; $43ed
@@ -482,31 +482,31 @@ ApplyBallTouchOutcome:
 AdvanceMatchRng:
 	push hl ; $43f6
 	ld a, [wMatchRngState] ; $43f7
-	add a, $73 ; $43fa
+	add $73 ; $43fa
 	ld hl, $c409 ; $43fc
-	add a, [hl] ; $43ff
+	add [hl] ; $43ff
 	ld hl, $c401 ; $4400
-	add a, [hl] ; $4403
+	add [hl] ; $4403
 	ld hl, $c405 ; $4404
-	add a, [hl] ; $4407
+	add [hl] ; $4407
 	ld [wMatchRngState], a ; $4408
 	pop hl ; $440b
 	ret ; $440c
 ReadMatchInputHeld:
 	ldh a, [hLinkExchangeActive] ; $440d
-	and a, a ; $440f
+	and a ; $440f
 	jr nz, ReadScriptedMatchInput ; $4410
 	ldh a, [hPlayerInputFlags] ; $4412
 	ret ; $4414
 ReadMatchInputPressed:
 	ldh a, [hLinkExchangeActive] ; $4415
-	and a, a ; $4417
+	and a ; $4417
 	jr nz, ReadScriptedMatchInput ; $4418
 	ldh a, [hInputRisingEdge] ; $441a
 	ret ; $441c
 ReadMatchInputRepeat:
 	ldh a, [hLinkExchangeActive] ; $441d
-	and a, a ; $441f
+	and a ; $441f
 	jr nz, ReadScriptedMatchInput ; $4420
 	ldh a, [hInputPressed] ; $4422
 	ret ; $4424
@@ -517,7 +517,7 @@ StepMatchFrames:
 	ld b, a ; $4428
 .loop:
 	ld a, [wMatchFramesAbort] ; $4429
-	and a, a ; $442c
+	and a ; $442c
 	jr nz, .done ; $442d
 	call StepMatchFrame ; $442f
 	dec b ; $4432
@@ -528,11 +528,11 @@ StepMatchFramesSkippable:
 	ld b, a ; $4436
 .loop:
 	ld a, [wMatchFramesAbort] ; $4437
-	and a, a ; $443a
+	and a ; $443a
 	jr nz, .done ; $443b
 	call StepMatchFrame ; $443d
 	call ReadMatchInputHeld ; $4440
-	and a, $03 ; $4443
+	and $03 ; $4443
 	jr nz, .done ; $4445
 	ld a, [wDebugMatchFlags] ; $4447
 	bit 0, a ; $444a
@@ -543,11 +543,11 @@ StepMatchFramesSkippable:
 	ret ; $4451
 RunMatchFramesUntilInput:
 	ld a, [wMatchFramesAbort] ; $4452
-	and a, a ; $4455
+	and a ; $4455
 	jr nz, .done ; $4456
 	call StepMatchFrame ; $4458
 	call ReadMatchInputHeld ; $445b
-	and a, $f3 ; $445e
+	and $f3 ; $445e
 	jr nz, .done ; $4460
 	jr RunMatchFramesUntilInput ; $4462
 .done:
@@ -560,7 +560,7 @@ StepMatchFrame:
 	ldh a, [hWramBank] ; $4469
 	push af ; $446b
 	ldh a, [hLinkExchangeActive] ; $446c
-	and a, a ; $446e
+	and a ; $446e
 	jr z, .localFrame ; $446f
 	farcall RunLinkMatchFrame ; $4471
 	jr .afterFrame ; $4474
@@ -571,7 +571,7 @@ StepMatchFrame:
 	inc [hl] ; $447f
 .afterFrame:
 	ld a, [wMatchSimFrozen] ; $4480
-	and a, a ; $4483
+	and a ; $4483
 	jr nz, .done ; $4484
 	call HandlePauseMenu ; $4486
 	call CheckDebugStatsEditorHotkey ; $4489
@@ -585,13 +585,13 @@ StepMatchFrame:
 	ret ; $4495
 HandlePauseMenu:
 	call ReadMatchInputPressed ; $4496
-	and a, $08 ; $4499
+	and $08 ; $4499
 	ret z ; $449b
 	ld a, [wPauseDisabled] ; $449c
-	and a, a ; $449f
+	and a ; $449f
 	ret nz ; $44a0
 	ld a, [wMatchWinLoseFlag] ; $44a1
-	and a, a ; $44a4
+	and a ; $44a4
 	ret nz ; $44a5
 	ld a, $ff ; $44a6
 	ld [wMatchSimFrozen], a ; $44a8
@@ -604,11 +604,11 @@ HandlePauseMenu:
 	ret ; $44bc
 ReinitPointAfterPause:
 	ld a, [wCourtViewLocked] ; $44bd
-	and a, a ; $44c0
+	and a ; $44c0
 	ret nz ; $44c1
 	call AssignCourtPositions ; $44c2
 	ld a, [wCourtViewFlipChanged] ; $44c5
-	and a, a ; $44c8
+	and a ; $44c8
 	ret z ; $44c9
 	call RefreshCourtAfterEndChange ; $44ca
 	call ResetCameraForServe ; $44cd
@@ -625,10 +625,10 @@ ReinitPointAfterPause:
 CheckDebugStatsEditorHotkey:
 	ret ; $44ef
 	call ReadMatchInputPressed ; $44f0
-	and a, $04 ; $44f3
+	and $04 ; $44f3
 	ret z ; $44f5
 	ldh a, [hDebugStepMode] ; $44f6
-	and a, a ; $44f8
+	and a ; $44f8
 	ret z ; $44f9
 	ld a, $ff ; $44fa
 	ld [wMatchSimFrozen], a ; $44fc
@@ -640,17 +640,17 @@ CheckDebugStatsEditorHotkey:
 	ret ; $450d
 InitViewFlipPreference:
 	ld a, [wGameMode] ; $450e
-	cp a, $09 ; $4511
+	cp $09 ; $4511
 	jr z, .storeFlip ; $4513
 	ld a, [wMatchContext] ; $4515
-	cp a, $02 ; $4518
+	cp $02 ; $4518
 	jr z, .storeFlip ; $451a
 	ld a, [wGameMode] ; $451c
-	cp a, $08 ; $451f
+	cp $08 ; $451f
 	jr z, .storeFlip ; $4521
 	farcall TestStorySlotFlagB ; $4523
 	ld [wCourtViewOption], a ; $4526
-	xor a, a ; $4529
+	xor a ; $4529
 	ld [wCourtViewLocked], a ; $452a
 	ret ; $452d
 .storeFlip:
@@ -661,7 +661,7 @@ InitViewFlipPreference:
 	ret ; $4538
 ApplyMatchBgmPreference:
 	ld a, [wGameMode] ; $4539
-	cp a, $09 ; $453c
+	cp $09 ; $453c
 	jr z, .resume ; $453e
 	farcall TestStorySlotFlagA ; $4540
 	call SetMusicMuted ; $4543
@@ -671,31 +671,31 @@ ApplyMatchBgmPreference:
 	ret ; $454a
 SelectScoreboardLayout:
 	ld a, [wMatchContext] ; $454b
-	cp a, $02 ; $454e
+	cp $02 ; $454e
 	jr z, .doubles ; $4550
 	ld a, [wOnCourtCharCount] ; $4552
-	sub a, $02 ; $4555
-	and a, $03 ; $4557
+	sub $02 ; $4555
+	and $03 ; $4557
 	ld [wScoreboardLayout], a ; $4559
 	ret ; $455c
 .doubles:
 	ld b, $03 ; $455d
 	ld a, [wDrillIsPracticeLesson] ; $455f
-	and a, a ; $4562
+	and a ; $4562
 	jr nz, .done ; $4563
 	ld b, $07 ; $4565
 	ld a, [wMinigameHighScoreMode] ; $4567
-	and a, a ; $456a
+	and a ; $456a
 	jr nz, .done ; $456b
 	ld b, $06 ; $456d
 	ld a, [wMinigameUsesWall] ; $456f
-	and a, a ; $4572
+	and a ; $4572
 	jr nz, .done ; $4573
 	ld a, [wMinigameUsesTennisMachine] ; $4575
-	and a, a ; $4578
+	and a ; $4578
 	jr nz, .done ; $4579
 	ld a, [wMinigameIsBooBlast] ; $457b
-	and a, a ; $457e
+	and a ; $457e
 	jr nz, .done ; $457f
 	ld b, $04 ; $4581
 .done:
@@ -705,14 +705,14 @@ SelectScoreboardLayout:
 	jp TickTimer ; $4588
 SetBallPosition:
 	push hl ; $458b
-	xor a, a ; $458c
+	xor a ; $458c
 	ld hl, $c408 ; $458d
 	ld [hl+], a ; $4590
 	ld [hl+], a ; $4591
 	ld a, c ; $4592
 	ld [hl+], a ; $4593
 	ld [hl], b ; $4594
-	xor a, a ; $4595
+	xor a ; $4595
 	ld hl, $c404 ; $4596
 	ld [hl+], a ; $4599
 	ld [hl+], a ; $459a
@@ -720,7 +720,7 @@ SetBallPosition:
 	ld [hl+], a ; $459c
 	ld [hl], d ; $459d
 	pop de ; $459e
-	xor a, a ; $459f
+	xor a ; $459f
 	ld hl, $c400 ; $45a0
 	ld [hl+], a ; $45a3
 	ld [hl+], a ; $45a4
@@ -737,7 +737,7 @@ SetBallVelocityPolar:
 	call MulSinCosSigned ; $45b2
 	ld c, l ; $45b5
 	ld b, h ; $45b6
-	xor a, a ; $45b7
+	xor a ; $45b7
 	ld hl, $c426 ; $45b8
 	ld [hl+], a ; $45bb
 	ld a, e ; $45bc
@@ -749,13 +749,13 @@ SetBallVelocityPolar:
 	call MulSinCosSigned ; $45c2
 	ld c, l ; $45c5
 	ld b, h ; $45c6
-	xor a, a ; $45c7
+	xor a ; $45c7
 	ld hl, $c420 ; $45c8
 	ld [hl+], a ; $45cb
 	ld a, c ; $45cc
 	ld [hl+], a ; $45cd
 	ld [hl], b ; $45ce
-	xor a, a ; $45cf
+	xor a ; $45cf
 	ld hl, $c423 ; $45d0
 	ld [hl+], a ; $45d3
 	ld a, e ; $45d4
@@ -798,7 +798,7 @@ UpdateBallAnglesAndSpeed:
 	ld e, l ; $4609
 	ld d, h ; $460a
 	ld hl, $c429 ; $460b
-	xor a, a ; $460e
+	xor a ; $460e
 	ld [hl+], a ; $460f
 	ld a, e ; $4610
 	ld [hl+], a ; $4611
@@ -840,11 +840,11 @@ CheckBallOutOfBounds:
 	ld l, a ; $4647
 	bit 7, h ; $4648
 	jr z, .checkDepth ; $464a
-	xor a, a ; $464c
-	sub a, l ; $464d
+	xor a ; $464c
+	sub l ; $464d
 	ld l, a ; $464e
-	sbc a, a ; $464f
-	sub a, h ; $4650
+	sbc a ; $464f
+	sub h ; $4650
 	ld h, a ; $4651
 .checkDepth:
 	add hl, bc ; $4652
@@ -861,11 +861,11 @@ CheckBallOutOfBounds:
 	ld l, a ; $4662
 	bit 7, h ; $4663
 	jr z, .inBounds ; $4665
-	xor a, a ; $4667
-	sub a, l ; $4668
+	xor a ; $4667
+	sub l ; $4668
 	ld l, a ; $4669
-	sbc a, a ; $466a
-	sub a, h ; $466b
+	sbc a ; $466a
+	sub h ; $466b
 	ld h, a ; $466c
 .inBounds:
 	add hl, bc ; $466d
@@ -878,11 +878,11 @@ CheckBallOutOfBounds:
 GetBallHeightSign:
 	ld hl, $c408 ; $4677
 	ld a, [hl+] ; $467a
-	or a, [hl] ; $467b
+	or [hl] ; $467b
 	inc hl ; $467c
-	or a, [hl] ; $467d
+	or [hl] ; $467d
 	inc hl ; $467e
-	or a, [hl] ; $467f
+	or [hl] ; $467f
 	jr z, .done ; $4680
 	ld a, $01 ; $4682
 	bit 7, [hl] ; $4684
@@ -904,7 +904,7 @@ MulMem24ByFrac:
 	ld h, d ; $4697
 	ld a, b ; $4698
 	call MulHLByAFracSigned ; $4699
-	xor a, a ; $469c
+	xor a ; $469c
 	ld e, l ; $469d
 	ld d, h ; $469e
 	ret ; $469f
@@ -914,7 +914,7 @@ MulMem24ByFrac:
 	ld h, d ; $46a4
 	ld a, b ; $46a5
 	call MulHLByAFracSigned ; $46a6
-	xor a, a ; $46a9
+	xor a ; $46a9
 	ld e, l ; $46aa
 	ld d, h ; $46ab
 	call NegateADE ; $46ac
@@ -957,19 +957,19 @@ FindServerCharBank:
 	ld a, b ; $46ec
 	wram_bank ; $46ed
 	ld a, [hl] ; $46f1
-	and a, a ; $46f2
+	and a ; $46f2
 	jr z, .setBank ; $46f3
 	ld b, $05 ; $46f5
 	ld a, b ; $46f7
 	wram_bank ; $46f8
 	ld a, [hl] ; $46fc
-	and a, a ; $46fd
+	and a ; $46fd
 	jr z, .setBank ; $46fe
 	ld b, $06 ; $4700
 	ld a, b ; $4702
 	wram_bank ; $4703
 	ld a, [hl] ; $4707
-	and a, a ; $4708
+	and a ; $4708
 	jr z, .setBank ; $4709
 	ld b, $07 ; $470b
 .setBank:
@@ -977,10 +977,10 @@ FindServerCharBank:
 	ret ; $4713
 RunMatchPlayLoop:
 	ld a, [wGameMode] ; $4714
-	cp a, $02 ; $4717
+	cp $02 ; $4717
 	jr z, .markChangeEnds ; $4719
 	ld a, [wMatchContext] ; $471b
-	and a, a ; $471e
+	and a ; $471e
 	jr nz, .setLoop ; $471f
 .markChangeEnds:
 	ld hl, $c4cc ; $4721
@@ -988,10 +988,10 @@ RunMatchPlayLoop:
 .setLoop:
 	call PlaySet ; $4726
 	ld a, [wMatchAbortFlag] ; $4729
-	and a, $80 ; $472c
+	and $80 ; $472c
 	jr nz, .done ; $472e
 	ld a, [wMatchWinLoseFlag] ; $4730
-	and a, a ; $4733
+	and a ; $4733
 	jr z, .setLoop ; $4734
 .done:
 	ret ; $4736
@@ -999,22 +999,22 @@ PlaySet:
 	ld hl, CheckSetComplete ; $4737
 	push hl ; $473a
 	ld a, [wTiebreakerIndicator] ; $473b
-	and a, a ; $473e
+	and a ; $473e
 	jp z, CheckSetComplete.playGame ; $473f
 	jp CheckSetComplete.tiebreak ; $4742
 CheckSetComplete:
 	ld a, [wMatchAbortFlag] ; $4745
-	and a, $80 ; $4748
+	and $80 ; $4748
 	jr nz, .done ; $474a
 	ld a, [wSetWinLoseFlag] ; $474c
-	and a, a ; $474f
+	and a ; $474f
 	jr z, PlaySet ; $4750
 	ld a, $01 ; $4752
 	ld [$c4cc], a ; $4754
 .done:
 	ret ; $4757
 .playGame:
-	xor a, a ; $4758
+	xor a ; $4758
 	ld [$c7bd], a ; $4759
 	call AssignCourtPositions ; $475c
 	call RefreshCourtAfterEndChange ; $475f
@@ -1023,13 +1023,13 @@ CheckSetComplete:
 	call AssignCourtPositions ; $4765
 	call PlayPoint ; $4768
 	ld a, [wMatchAbortFlag] ; $476b
-	and a, $80 ; $476e
+	and $80 ; $476e
 	jr nz, .gameDone ; $4770
 	ld a, [wGameWinLoseFlag] ; $4772
-	and a, a ; $4775
+	and a ; $4775
 	jr z, .pointLoop ; $4776
 	ld a, [wTiebreakerIndicator] ; $4778
-	and a, a ; $477b
+	and a ; $477b
 	jr z, .gameDone ; $477c
 	call WalkCharsOffCourt ; $477e
 .gameDone:
@@ -1054,16 +1054,16 @@ CheckSetComplete:
 	call RunChangeoverSequence ; $47a9
 	call PlayPoint ; $47ac
 	ld a, [wMatchAbortFlag] ; $47af
-	and a, $80 ; $47b2
+	and $80 ; $47b2
 	jr nz, .tiebreakDone ; $47b4
 	ld hl, wTotalPointsScoredInCurrentGame ; $47b6
 	ld a, [hl] ; $47b9
-	cp a, $18 ; $47ba
+	cp $18 ; $47ba
 	jr c, .storeCounter ; $47bc
 	ld [hl], $00 ; $47be
 .storeCounter:
 	ld a, [wGameWinLoseFlag] ; $47c0
-	and a, a ; $47c3
+	and a ; $47c3
 	jr z, .tiebreakChangeover ; $47c4
 .tiebreakDone:
 	ld a, [wMatchBGM] ; $47c6
@@ -1071,11 +1071,11 @@ CheckSetComplete:
 	ret ; $47cc
 InitTiebreakPointCounter:
 	ld a, [wTotalGamesWonInMatch] ; $47cd
-	and a, $03 ; $47d0
-	add a, LOW(Data_08_47de) ; $47d2
+	and $03 ; $47d0
+	add LOW(Data_08_47de) ; $47d2
 	ld l, a ; $47d4
-	adc a, HIGH(Data_08_47de) ; $47d5
-	sub a, l ; $47d7
+	adc HIGH(Data_08_47de) ; $47d5
+	sub l ; $47d7
 	ld h, a ; $47d8
 	ld a, [hl] ; $47d9
 	ld [wTotalPointsScoredInCurrentGame], a ; $47da
@@ -1087,7 +1087,7 @@ AssignCourtPositions:
 	ld hl, FinalizeServeSideOrientation ; $47e2
 	push hl ; $47e5
 	ld a, [wTiebreakerIndicator] ; $47e6
-	and a, a ; $47e9
+	and a ; $47e9
 	jp nz, FlipFarBothCharPositions.done ; $47ea
 	jr GetGamePositionHandler ; $47ed
 FinalizeServeSideOrientation:
@@ -1101,17 +1101,17 @@ FinalizeServeSideOrientation:
 	ret ; $4807
 GetGamePositionHandler:
 	ld a, [wOnCourtCharCountMinus1] ; $4808
-	add a, a ; $480b
-	add a, LOW(GamePositionPtrs) ; $480c
+	add a ; $480b
+	add LOW(GamePositionPtrs) ; $480c
 	ld l, a ; $480e
-	adc a, HIGH(GamePositionPtrs) ; $480f
-	sub a, l ; $4811
+	adc HIGH(GamePositionPtrs) ; $480f
+	sub l ; $4811
 	ld h, a ; $4812
 	ld a, [hl+] ; $4813
 	ld h, [hl] ; $4814
 	ld l, a ; $4815
 	ld a, [wTotalGamesWonInMatch] ; $4816
-	and a, $03 ; $4819
+	and $03 ; $4819
 	call LoadPositionRecord ; $481b
 	ld a, [wTotalPointsScoredInCurrentGame] ; $481e
 	rrca ; $4821
@@ -1145,7 +1145,7 @@ FlipNearCharPosition:
 FlipBothCharPositions:
 	wram_bank $04 ; $4853
 	ld a, [wCharServeRole] ; $4859
-	and a, $01 ; $485c
+	and $01 ; $485c
 	jr nz, .toggleRows ; $485e
 	ld b, $01 ; $4860
 	wram_bank $04 ; $4862
@@ -1167,7 +1167,7 @@ FlipFarCharPosition:
 FlipFarBothCharPositions:
 	wram_bank $04 ; $4894
 	ld a, [wCharServeRole] ; $489a
-	and a, $01 ; $489d
+	and $01 ; $489d
 	jr z, .toggleRows ; $489f
 	ld b, $01 ; $48a1
 	wram_bank $05 ; $48a3
@@ -1183,11 +1183,11 @@ FlipFarBothCharPositions:
 	ret ; $48c8
 .done:
 	ld a, [wOnCourtCharCountMinus1] ; $48c9
-	add a, a ; $48cc
-	add a, LOW(TiebreakPositionPtrs) ; $48cd
+	add a ; $48cc
+	add LOW(TiebreakPositionPtrs) ; $48cd
 	ld l, a ; $48cf
-	adc a, HIGH(TiebreakPositionPtrs) ; $48d0
-	sub a, l ; $48d2
+	adc HIGH(TiebreakPositionPtrs) ; $48d0
+	sub l ; $48d2
 	ld h, a ; $48d3
 	ld a, [hl+] ; $48d4
 	ld h, [hl] ; $48d5
@@ -1204,10 +1204,10 @@ TiebreakPositionPtrs:
 	dw TiebreakPosition1 ; record 2
 	dw TiebreakPosition0 ; record 3
 LoadPositionRecord:
-	add a, a ; $48ed
-	add a, a ; $48ee
-	add a, a ; $48ef
-	add a, l ; $48f0
+	add a ; $48ed
+	add a ; $48ee
+	add a ; $48ef
+	add l ; $48f0
 	ld l, a ; $48f1
 	jr nc, .singles ; $48f2
 	inc h ; $48f4
@@ -1227,10 +1227,10 @@ LoadPositionRecord:
 	ld [de], a ; $4917
 	jr .done ; $4918
 .doubles:
-	add a, a ; $491a
-	add a, a ; $491b
-	add a, a ; $491c
-	add a, l ; $491d
+	add a ; $491a
+	add a ; $491b
+	add a ; $491c
+	add l ; $491d
 	ld l, a ; $491e
 	jr nc, .doublesEntry ; $491f
 	inc h ; $4921
@@ -1238,19 +1238,19 @@ LoadPositionRecord:
 	ld de, wCharCourtPos ; $4922
 	wram_bank $04 ; $4925
 	ld a, [hl+] ; $492b
-	xor a, $03 ; $492c
+	xor $03 ; $492c
 	ld [de], a ; $492e
 	wram_bank $05 ; $492f
 	ld a, [hl+] ; $4935
-	xor a, $03 ; $4936
+	xor $03 ; $4936
 	ld [de], a ; $4938
 	wram_bank $06 ; $4939
 	ld a, [hl+] ; $493f
-	xor a, $03 ; $4940
+	xor $03 ; $4940
 	ld [de], a ; $4942
 	wram_bank $07 ; $4943
 	ld a, [hl+] ; $4949
-	xor a, $03 ; $494a
+	xor $03 ; $494a
 	ld [de], a ; $494c
 .done:
 	ld de, wCharServeRole ; $494d
@@ -1270,7 +1270,7 @@ LoadPositionRecord:
 ToggleCharCourtRow:
 	ld hl, wCharServeRole ; $4971
 	ld a, [hl] ; $4974
-	xor a, $02 ; $4975
+	xor $02 ; $4975
 	ld [hl], a ; $4977
 	ret ; $4978
 GamePositionTables:
@@ -1376,8 +1376,8 @@ CheckServerEndChanged:
 	ld hl, $c8cf ; $4c23
 	ld a, [hl] ; $4c26
 	ld [hl], b ; $4c27
-	xor a, b ; $4c28
-	and a, $02 ; $4c29
+	xor b ; $4c28
+	and $02 ; $4c29
 	jr z, .done ; $4c2b
 	ld a, $01 ; $4c2d
 	ld [wChangeEndsPending], a ; $4c2f
@@ -1386,22 +1386,22 @@ CheckServerEndChanged:
 UpdateViewFlipState:
 	ld c, $00 ; $4c33
 	ld a, [wCourtViewOption] ; $4c35
-	and a, a ; $4c38
+	and a ; $4c38
 	jr z, .store ; $4c39
 	ld a, [$c8cf] ; $4c3b
-	and a, $02 ; $4c3e
+	and $02 ; $4c3e
 	jr z, .store ; $4c40
 	ld c, $01 ; $4c42
 .store:
 	ld hl, wCourtViewFlipped ; $4c44
 	ld a, [hl] ; $4c47
 	ld [hl], c ; $4c48
-	sub a, c ; $4c49
+	sub c ; $4c49
 	ld [wCourtViewFlipChanged], a ; $4c4a
 	ret ; $4c4d
 FlipAllCharPositions:
 	ld a, [wCourtViewFlipped] ; $4c4e
-	and a, a ; $4c51
+	and a ; $4c51
 	ret z ; $4c52
 	ld b, $03 ; $4c53
 	wram_bank $07 ; $4c55
@@ -1427,10 +1427,10 @@ IdentifyServingPlayer:
 	ret ; $4c98
 SetCharFacingFromCourtPos:
 	ld a, [wCharCourtPos] ; $4c99
-	add a, LOW(CourtPosFacingTable_08) ; $4c9c
+	add LOW(CourtPosFacingTable_08) ; $4c9c
 	ld l, a ; $4c9e
-	adc a, HIGH(CourtPosFacingTable_08) ; $4c9f
-	sub a, l ; $4ca1
+	adc HIGH(CourtPosFacingTable_08) ; $4c9f
+	sub l ; $4ca1
 	ld h, a ; $4ca2
 	ld a, [hl] ; $4ca3
 	ld [wCharBaseFacing], a ; $4ca4
@@ -1445,7 +1445,7 @@ MoveCharToBaseCourtPosition:
 	call SetCharPosAndTarget ; $4cb5
 	ret ; $4cb8
 ResetPointState:
-	xor a, a ; $4cb9
+	xor a ; $4cb9
 	ld [$c4b5], a ; $4cba
 	ld [wBallBounceCount], a ; $4cbd
 	ld [wRallyLength], a ; $4cc0
@@ -1465,7 +1465,7 @@ ResetPointState:
 	ld [wOffscreenArrowsEnabled], a ; $4ce8
 	call ResetBallState ; $4ceb
 	ld a, [wMinigameUsesTennisMachine] ; $4cee
-	and a, a ; $4cf1
+	and a ; $4cf1
 	ret nz ; $4cf2
 	call ResetCameraForServe ; $4cf3
 	ld de, $fe50 ; $4cf6
@@ -1493,13 +1493,13 @@ PlayPoint:
 .rallyLoop:
 	call StepMatchFrame ; $4d26
 	ld a, [wMatchAbortFlag] ; $4d29
-	and a, $01 ; $4d2c
+	and $01 ; $4d2c
 	jr nz, .aborted ; $4d2e
 	ld a, [wPointOutcome] ; $4d30
-	and a, a ; $4d33
+	and a ; $4d33
 	jr z, .rallyLoop ; $4d34
 	ld a, [wPointOutcome] ; $4d36
-	cp a, $09 ; $4d39
+	cp $09 ; $4d39
 	jr nz, .pointOver ; $4d3b
 	ld a, $28 ; $4d3d
 	call StepMatchFrames ; $4d3f
@@ -1516,25 +1516,25 @@ PlayPoint:
 .aborted:
 	ld hl, wMatchAbortFlag ; $4d5b
 	ld a, [hl] ; $4d5e
-	and a, $fe ; $4d5f
+	and $fe ; $4d5f
 	ld [hl], a ; $4d61
 	ret ; $4d62
 SetPointSituationBgm:
 	ld d, $0f ; $4d63
 	ld a, [wMatchPointFlag] ; $4d65
-	and a, a ; $4d68
+	and a ; $4d68
 	jr nz, .play ; $4d69
 	ld d, $0f ; $4d6b
 	ld a, [wSetPointFlag] ; $4d6d
-	and a, a ; $4d70
+	and a ; $4d70
 	jr nz, .play ; $4d71
 	ld d, $10 ; $4d73
 	ld a, [wGamePointFlag] ; $4d75
-	and a, a ; $4d78
+	and a ; $4d78
 	jr nz, .play ; $4d79
 	ld d, $0e ; $4d7b
 	ld a, [wTiebreakerIndicator] ; $4d7d
-	and a, a ; $4d80
+	and a ; $4d80
 	jr nz, .play ; $4d81
 	ld a, [wMatchBGM] ; $4d83
 	ld d, a ; $4d86
@@ -1547,22 +1547,22 @@ AnnouncePointSituation:
 	call SetPointSituationBgm ; $4d8f
 	ld d, $0a ; $4d92
 	ld a, [wMatchPointFlag] ; $4d94
-	and a, a ; $4d97
+	and a ; $4d97
 	jr nz, .showBanner ; $4d98
 	ld d, $09 ; $4d9a
 	ld a, [wSetPointFlag] ; $4d9c
-	and a, a ; $4d9f
+	and a ; $4d9f
 	jr nz, .showBanner ; $4da0
 	ld a, [wGamePointFlag] ; $4da2
-	and a, a ; $4da5
+	and a ; $4da5
 	jr z, .done ; $4da6
 	ld a, [wGamePointFlag] ; $4da8
 	inc a ; $4dab
 	srl a ; $4dac
 	ld b, a ; $4dae
 	ld a, [wCurrentServingPlayer] ; $4daf
-	xor a, b ; $4db2
-	and a, $01 ; $4db3
+	xor b ; $4db2
+	and $01 ; $4db3
 	ld d, $08 ; $4db5
 	jr nz, .showBanner ; $4db7
 	ld d, $07 ; $4db9
@@ -1576,8 +1576,8 @@ AnnouncePointSituation:
 	wram_bank $04 ; $4dc6
 	ld a, [wCharCourtPos] ; $4dcc
 	rrca ; $4dcf
-	xor a, b ; $4dd0
-	and a, $01 ; $4dd1
+	xor b ; $4dd0
+	and $01 ; $4dd1
 	ld de, $3460 ; $4dd3
 	jr nz, .placeObj ; $4dd6
 	ld de, $3420 ; $4dd8
@@ -1622,13 +1622,13 @@ ResolvePointResultSequence:
 	ld hl, DelayAfterPointResolution ; $4e22
 	push hl ; $4e25
 	ld a, [wMatchWinLoseFlag] ; $4e26
-	and a, a ; $4e29
+	and a ; $4e29
 	jp nz, DelayAfterPointResolution.case7 ; $4e2a
 	ld a, [wSetWinLoseFlag] ; $4e2d
-	and a, a ; $4e30
+	and a ; $4e30
 	jp nz, DelayAfterPointResolution.case10 ; $4e31
 	ld a, [wGameWinLoseFlag] ; $4e34
-	and a, a ; $4e37
+	and a ; $4e37
 	jp nz, DelayAfterPointResolution.case11 ; $4e38
 	jp DelayAfterPointResolution.case5 ; $4e3b
 DelayAfterPointResolution:
@@ -1655,10 +1655,10 @@ DelayAfterPointResolution:
 	ret ; $4e6c
 .case3:
 	ld a, [wPointWinnerShotType] ; $4e6d
-	and a, a ; $4e70
+	and a ; $4e70
 	ret z ; $4e71
 	ld a, [wPointWinnerShotType] ; $4e72
-	add a, $17 ; $4e75
+	add $17 ; $4e75
 	farcall ShowCourtBanner ; $4e77
 	ld a, $0a ; $4e7a
 	call StepMatchFrames ; $4e7c
@@ -1670,7 +1670,7 @@ DelayAfterPointResolution:
 	ret ; $4e8c
 .case4:
 	ld a, [wPointOutcome] ; $4e8d
-	add a, $00 ; $4e90
+	add $00 ; $4e90
 	farcall ShowCourtBanner ; $4e92
 	ld a, $1e ; $4e95
 	call StepMatchFrames ; $4e97
@@ -1680,7 +1680,7 @@ DelayAfterPointResolution:
 	ret ; $4ea2
 .case5:
 	ld a, [wPointWinLoseFlag] ; $4ea3
-	and a, a ; $4ea6
+	and a ; $4ea6
 	ret z ; $4ea7
 	farcall SpawnGameScoreDisplayObjs ; $4ea8
 	ld a, $0a ; $4eab
@@ -1688,7 +1688,7 @@ DelayAfterPointResolution:
 	ld a, $0a ; $4eb0
 	call StepMatchFramesSkippable ; $4eb2
 	ld a, [wDeuceIndicator] ; $4eb5
-	and a, a ; $4eb8
+	and a ; $4eb8
 	jr z, .case6 ; $4eb9
 	sound $69 ; $4ebb
 	call StepMatchFrame ; $4ebd
@@ -1702,17 +1702,17 @@ DelayAfterPointResolution:
 	ret ; $4ed0
 .case7:
 	ld a, [wGameMode] ; $4ed1
-	cp a, $08 ; $4ed4
+	cp $08 ; $4ed4
 	jr nz, .case9 ; $4ed6
 	ld a, [wMatchWinLoseFlag] ; $4ed8
-	add a, a ; $4edb
+	add a ; $4edb
 	jr nc, .case8 ; $4edc
 	ld d, $17 ; $4ede
 	farcall ShowMinigamePointResult ; $4ee0
 	ret ; $4ee3
 .case8:
 	ld a, [wMinigameLevel] ; $4ee4
-	add a, $12 ; $4ee7
+	add $12 ; $4ee7
 	ld d, a ; $4ee9
 	farcall ShowMinigamePointResult ; $4eea
 	ret ; $4eed
@@ -1782,7 +1782,7 @@ ResetCharForPoint:
 	res 0, [hl] ; $4f82
 	res 1, [hl] ; $4f84
 	ld hl, wCharVelX ; $4f86
-	xor a, a ; $4f89
+	xor a ; $4f89
 	ld [hl+], a ; $4f8a
 	ld [hl+], a ; $4f8b
 	ld [hl+], a ; $4f8c
@@ -1792,10 +1792,10 @@ ResetCharForPoint:
 	ret ; $4f90
 SetCharStateFromServeRole:
 	ld a, [wCharServeRole] ; $4f91
-	add a, LOW(ServeRoleCharStateTable_08) ; $4f94
+	add LOW(ServeRoleCharStateTable_08) ; $4f94
 	ld l, a ; $4f96
-	adc a, HIGH(ServeRoleCharStateTable_08) ; $4f97
-	sub a, l ; $4f99
+	adc HIGH(ServeRoleCharStateTable_08) ; $4f97
+	sub l ; $4f99
 	ld h, a ; $4f9a
 	ld a, [hl] ; $4f9b
 	call SetCharState ; $4f9c
@@ -1804,15 +1804,15 @@ ServeRoleCharStateTable_08:
 	; $4fa0, 4 bytes (bytes:4)
 	db $03, $05, $04, $05 ; 0x00
 EndPointBallEffects:
-	xor a, a ; $4fa4
+	xor a ; $4fa4
 	ld [wBallTrailEnabled], a ; $4fa5
-	xor a, a ; $4fa8
+	xor a ; $4fa8
 	call SetBallTrailColor ; $4fa9
-	xor a, a ; $4fac
+	xor a ; $4fac
 	ld [wLandingMarkerActive], a ; $4fad
 	ld hl, wMatchAbortFlag ; $4fb0
 	ld a, [hl] ; $4fb3
-	and a, $fe ; $4fb4
+	and $fe ; $4fb4
 	ld [hl], a ; $4fb6
 	ret ; $4fb7
 StartPointEndReactions:
@@ -1842,7 +1842,7 @@ CharPointEndReaction:
 	ld h, [hl] ; $4fe5
 	ld l, a ; $4fe6
 	call SetCharTarget ; $4fe7
-	xor a, a ; $4fea
+	xor a ; $4fea
 	ld hl, wCharVelX ; $4feb
 	ld [hl+], a ; $4fee
 	ld [hl+], a ; $4fef
@@ -1907,18 +1907,18 @@ SpreadFarTeamPair:
 ComputePairSpread:
 	push hl ; $506e
 	ld a, l ; $506f
-	sub a, e ; $5070
+	sub e ; $5070
 	ld l, a ; $5071
 	ld a, h ; $5072
-	sbc a, d ; $5073
+	sbc d ; $5073
 	ld h, a ; $5074
 	bit 7, h ; $5075
 	jr z, .checkRange ; $5077
-	xor a, a ; $5079
-	sub a, l ; $507a
+	xor a ; $5079
+	sub l ; $507a
 	ld l, a ; $507b
-	sbc a, a ; $507c
-	sub a, h ; $507d
+	sbc a ; $507c
+	sub h ; $507d
 	ld h, a ; $507e
 .checkRange:
 	ld bc, $fe00 ; $507f
@@ -1932,17 +1932,17 @@ ComputePairSpread:
 	push hl ; $5089
 	bit 7, h ; $508a
 	jr z, .absSecond ; $508c
-	xor a, a ; $508e
-	sub a, l ; $508f
+	xor a ; $508e
+	sub l ; $508f
 	ld l, a ; $5090
-	sbc a, a ; $5091
-	sub a, h ; $5092
+	sbc a ; $5091
+	sub h ; $5092
 	ld h, a ; $5093
-	xor a, a ; $5094
-	sub a, e ; $5095
+	xor a ; $5094
+	sub e ; $5095
 	ld e, a ; $5096
-	sbc a, a ; $5097
-	sub a, d ; $5098
+	sbc a ; $5097
+	sub d ; $5098
 	ld d, a ; $5099
 .absSecond:
 	push hl ; $509a
@@ -1961,10 +1961,10 @@ ComputePairSpread:
 .compare:
 	pop hl ; $50b1
 	ld a, l ; $50b2
-	sub a, e ; $50b3
+	sub e ; $50b3
 	ld l, a ; $50b4
 	ld a, h ; $50b5
-	sbc a, d ; $50b6
+	sbc d ; $50b6
 	ld h, a ; $50b7
 	jr nc, .useFirst ; $50b8
 	ld hl, $0200 ; $50ba
@@ -1983,17 +1983,17 @@ ComputePairSpread:
 	pop hl ; $50ca
 	bit 7, h ; $50cb
 	jr z, .done ; $50cd
-	xor a, a ; $50cf
-	sub a, c ; $50d0
+	xor a ; $50cf
+	sub c ; $50d0
 	ld c, a ; $50d1
-	sbc a, a ; $50d2
-	sub a, b ; $50d3
+	sbc a ; $50d2
+	sub b ; $50d3
 	ld b, a ; $50d4
-	xor a, a ; $50d5
-	sub a, e ; $50d6
+	xor a ; $50d5
+	sub e ; $50d6
 	ld e, a ; $50d7
-	sbc a, a ; $50d8
-	sub a, d ; $50d9
+	sbc a ; $50d8
+	sub d ; $50d9
 	ld d, a ; $50da
 .done:
 	ret ; $50db
@@ -2009,7 +2009,7 @@ BallTrailPalettes:
 	dw $0180, $031f, $7fe0, $0000 ; record 6
 	dw $0180, $031f, $7ffe, $0000 ; record 7
 ResetBallState:
-	xor a, a ; $511c
+	xor a ; $511c
 	ld [wBallSpriteEnabled], a ; $511d
 	ld [wBallShadowEnabled], a ; $5120
 	ld [wBallTrailEnabled], a ; $5123
@@ -2018,7 +2018,7 @@ ResetBallState:
 	ld de, $0000 ; $512c
 	ld bc, $0000 ; $512f
 	call SetBallPosition ; $5132
-	xor a, a ; $5135
+	xor a ; $5135
 	ld hl, $c420 ; $5136
 	ld [hl+], a ; $5139
 	ld [hl+], a ; $513a
@@ -2037,7 +2037,7 @@ ResetBallState:
 	ld hl, wShotAimTargetX ; $5149
 	ld [hl+], a ; $514c
 	ld [hl+], a ; $514d
-	xor a, a ; $514e
+	xor a ; $514e
 	call SetBallTrailColor ; $514f
 	ret ; $5152
 UpdateBallVisuals:
@@ -2048,10 +2048,10 @@ UpdateBallVisuals:
 	call BuildNetBallSlot ; $515f
 	call DrawBallTouchCharEffect ; $5162
 	ld a, [wMatchIsDoubles] ; $5165
-	and a, a ; $5168
+	and a ; $5168
 	jr nz, .shiftHistory ; $5169
 	ldh a, [hDebugStepMode] ; $516b
-	and a, a ; $516d
+	and a ; $516d
 	jr z, .shiftHistory ; $516e
 .shiftHistory:
 	ld hl, wBallHistory + 6 ; $5170
@@ -2065,13 +2065,13 @@ UpdateBallVisuals:
 	ret ; $5188
 SetBallTrailColor:
 	ld [wBallTrailColor], a ; $5189
-	add a, a ; $518c
-	add a, a ; $518d
-	add a, a ; $518e
-	add a, $dc ; $518f
+	add a ; $518c
+	add a ; $518d
+	add a ; $518e
+	add $dc ; $518f
 	ld l, a ; $5191
-	adc a, $50 ; $5192
-	sub a, l ; $5194
+	adc $50 ; $5192
+	sub l ; $5194
 	ld h, a ; $5195
 	ld de, $0801 ; $5196
 	call LoadPalettesImmediate ; $5199
@@ -2123,7 +2123,7 @@ BuildBallSlot:
 	ld c, a ; $51e1
 	ld b, $08 ; $51e2
 	ld a, [wBallSpriteEnabled] ; $51e4
-	and a, a ; $51e7
+	and a ; $51e7
 	jr z, .done ; $51e8
 	ld hl, wBallSlot ; $51ea
 	ld a, c ; $51ed
@@ -2136,13 +2136,13 @@ BuildBallSlot:
 .done:
 	ld hl, wBallHistory + 34 ; $51f4
 	ld a, c ; $51f7
-	add a, $08 ; $51f8
+	add $08 ; $51f8
 	ld [hl+], a ; $51fa
 	ld [hl], b ; $51fb
 	ret ; $51fc
 BuildBallTrailSlots:
 	ld a, [wBallTrailEnabled] ; $51fd
-	and a, a ; $5200
+	and a ; $5200
 	jr z, .done ; $5201
 	ld hl, wBallHistory + 24 ; $5203
 	ld de, wBallTrailSlots ; $5206
@@ -2151,7 +2151,7 @@ BuildBallTrailSlots:
 	ld de, wBallTrailSlots + 4 ; $520f
 	call BuildTrailSlot ; $5212
 	ld a, [wBallTrailColor] ; $5215
-	and a, a ; $5218
+	and a ; $5218
 	jr z, .done ; $5219
 	ld hl, wBallHistory + 12 ; $521b
 	ld de, wBallTrailSlots + 8 ; $521e
@@ -2215,7 +2215,7 @@ BuildBallShadowSlot:
 	ld l, e ; $5273
 	ld h, d ; $5274
 	ld a, [wBallShadowEnabled] ; $5275
-	and a, a ; $5278
+	and a ; $5278
 	jr z, .done ; $5279
 	call ApplyCameraProjection ; $527b
 	ld bc, $0846 ; $527e
@@ -2231,7 +2231,7 @@ BuildBallShadowSlot:
 	ret ; $528b
 BuildNetBallSlot:
 	ld a, [wPointOutcome] ; $528c
-	and a, a ; $528f
+	and a ; $528f
 	ret z ; $5290
 	ld hl, wBallDepth ; $5291
 	ld a, [hl+] ; $5294
@@ -2249,11 +2249,11 @@ BuildNetBallSlot:
 	ld l, a ; $52a6
 	bit 7, h ; $52a7
 	jr z, .checkRange ; $52a9
-	xor a, a ; $52ab
-	sub a, l ; $52ac
+	xor a ; $52ab
+	sub l ; $52ac
 	ld l, a ; $52ad
-	sbc a, a ; $52ae
-	sub a, h ; $52af
+	sbc a ; $52ae
+	sub h ; $52af
 	ld h, a ; $52b0
 .checkRange:
 	ld de, $fdc0 ; $52b1
@@ -2266,11 +2266,11 @@ BuildNetBallSlot:
 	ld bc, $fe80 ; $52bc
 	call ApplyCameraProjection ; $52bf
 	ld a, d ; $52c2
-	and a, $fe ; $52c3
+	and $fe ; $52c3
 	ld d, a ; $52c5
 	ldh a, [hScrollX] ; $52c6
-	and a, $01 ; $52c8
-	or a, d ; $52ca
+	and $01 ; $52c8
+	or d ; $52ca
 	ld d, a ; $52cb
 	ld bc, $0b4e ; $52cc
 	ld hl, wNetBallSlot ; $52cf
@@ -2284,10 +2284,10 @@ BuildNetBallSlot:
 	ret ; $52d9
 StartLandingMarker:
 	ld a, [wCurrentShotType] ; $52da
-	cp a, SHOTTYPE_LOB ; $52dd
+	cp SHOTTYPE_LOB ; $52dd
 	jr z, .place ; $52df
 	ld a, [wFallbackTrajectoryFlag] ; $52e1
-	and a, a ; $52e4
+	and a ; $52e4
 	jr nz, .place ; $52e5
 	ret ; $52e7
 .place:
@@ -2298,11 +2298,11 @@ StartLandingMarker:
 	ld h, d ; $52f0
 	bit 7, h ; $52f1
 	jr z, .checkX ; $52f3
-	xor a, a ; $52f5
-	sub a, l ; $52f6
+	xor a ; $52f5
+	sub l ; $52f6
 	ld l, a ; $52f7
-	sbc a, a ; $52f8
-	sub a, h ; $52f9
+	sbc a ; $52f8
+	sub h ; $52f9
 	ld h, a ; $52fa
 .checkX:
 	ld bc, $ff80 ; $52fb
@@ -2315,11 +2315,11 @@ StartLandingMarker:
 	ld h, d ; $5305
 	bit 7, h ; $5306
 	jr z, .checkDepth ; $5308
-	xor a, a ; $530a
-	sub a, l ; $530b
+	xor a ; $530a
+	sub l ; $530b
 	ld l, a ; $530c
-	sbc a, a ; $530d
-	sub a, h ; $530e
+	sbc a ; $530d
+	sub h ; $530e
 	ld h, a ; $530f
 .checkDepth:
 	ld bc, $ff00 ; $5310
@@ -2351,7 +2351,7 @@ StartLandingMarker:
 	ret ; $5341
 DrawLandingMarker:
 	ld a, [wLandingMarkerActive] ; $5342
-	and a, a ; $5345
+	and a ; $5345
 	ret z ; $5346
 	ld hl, wLandingMarkerY ; $5347
 	ld a, [hl+] ; $534a
@@ -2363,19 +2363,19 @@ DrawLandingMarker:
 	ld l, a ; $5352
 	call ApplyCameraProjection ; $5353
 	ld a, e ; $5356
-	add a, $08 ; $5357
+	add $08 ; $5357
 	ld e, a ; $5359
 	ld bc, $097c ; $535a
 	call QueueSprite16 ; $535d
 	ldh a, [$ffe9] ; $5360
-	and a, $0f ; $5362
-	add a, LOW(Data_08_5373) ; $5364
+	and $0f ; $5362
+	add LOW(Data_08_5373) ; $5364
 	ld l, a ; $5366
-	adc a, HIGH(Data_08_5373) ; $5367
-	sub a, l ; $5369
+	adc HIGH(Data_08_5373) ; $5367
+	sub l ; $5369
 	ld h, a ; $536a
 	ld a, [hl] ; $536b
-	cp a, $ff ; $536c
+	cp $ff ; $536c
 	ret z ; $536e
 	farcall LoadBallTouchCharEffectTilesB ; $536f
 	ret ; $5372
@@ -2412,7 +2412,7 @@ StartBounceEffect:
 	ret ; $53ab
 DrawBounceEffect:
 	ld a, [wBounceEffectTimer] ; $53ac
-	and a, a ; $53af
+	and a ; $53af
 	ret z ; $53b0
 	ld hl, wBounceEffectY ; $53b1
 	ld a, [hl+] ; $53b4
@@ -2425,7 +2425,7 @@ DrawBounceEffect:
 	call ApplyCameraProjection ; $53bd
 	ld bc, $0a60 ; $53c0
 	ld a, [wBounceEffectTimer] ; $53c3
-	cp a, $0a ; $53c6
+	cp $0a ; $53c6
 	jr nc, .queue ; $53c8
 	inc c ; $53ca
 	inc c ; $53cb
@@ -2457,10 +2457,10 @@ StartHitEffect:
 	ld [hl+], a ; $53f1
 	ld [hl], b ; $53f2
 	ld a, [wSpecialShotFlag] ; $53f3
-	and a, a ; $53f6
+	and a ; $53f6
 	jr nz, .specialEffect ; $53f7
 	ld a, [wShotChargeLevel] ; $53f9
-	cp a, $3f ; $53fc
+	cp $3f ; $53fc
 	jr z, .specialEffect ; $53fe
 	ld a, $10 ; $5400
 	ld [wHitSparkTimer], a ; $5402
@@ -2472,7 +2472,7 @@ StartHitEffect:
 	ret ; $540d
 DrawHitSpark:
 	ld a, [wHitSparkTimer] ; $540e
-	and a, a ; $5411
+	and a ; $5411
 	ret z ; $5412
 	ld hl, wHitEffectY ; $5413
 	ld a, [hl+] ; $5416
@@ -2486,18 +2486,18 @@ DrawHitSpark:
 	ld a, [wHitSparkTimer] ; $5422
 	rra ; $5425
 	rra ; $5426
-	and a, $03 ; $5427
+	and $03 ; $5427
 	cpl ; $5429
-	add a, $04 ; $542a
-	add a, a ; $542c
-	add a, $68 ; $542d
+	add $04 ; $542a
+	add a ; $542c
+	add $68 ; $542d
 	ld c, a ; $542f
 	ld b, $0a ; $5430
 	call QueueSprite ; $5432
 	ret ; $5435
 DrawSpecialHitEffect:
 	ld a, [wSpecialHitTimer] ; $5436
-	and a, a ; $5439
+	and a ; $5439
 	ret z ; $543a
 	ld hl, wHitEffectY ; $543b
 	ld a, [hl+] ; $543e
@@ -2509,20 +2509,20 @@ DrawSpecialHitEffect:
 	ld l, a ; $5446
 	call ApplyCameraProjection ; $5447
 	ld a, e ; $544a
-	add a, $08 ; $544b
+	add $08 ; $544b
 	ld e, a ; $544d
 	ld bc, $0974 ; $544e
 	call QueueSprite16 ; $5451
 	ld hl, wSpecialHitTimer ; $5454
 	call TickTimer ; $5457
 	ld a, [wSpecialHitTimer] ; $545a
-	add a, LOW(Data_08_546c) ; $545d
+	add LOW(Data_08_546c) ; $545d
 	ld l, a ; $545f
-	adc a, HIGH(Data_08_546c) ; $5460
-	sub a, l ; $5462
+	adc HIGH(Data_08_546c) ; $5460
+	sub l ; $5462
 	ld h, a ; $5463
 	ld a, [hl] ; $5464
-	cp a, $ff ; $5465
+	cp $ff ; $5465
 	ret z ; $5467
 	farcall LoadSpecialHitEffectTiles ; $5468
 	ret ; $546b
@@ -2538,17 +2538,17 @@ StartBallTouchCharEffect:
 	ret ; $5481
 DrawBallTouchCharEffect:
 	ld a, [wBallTouchCharTimer] ; $5482
-	and a, a ; $5485
+	and a ; $5485
 	ret z ; $5486
 	ld a, [wBallTouchCharIndex] ; $5487
 	call CharIndexToWramBank ; $548a
 	ld a, a ; $548d
 	wram_bank ; $548e
 	ld a, [wCharScreenX] ; $5492
-	add a, $08 ; $5495
+	add $08 ; $5495
 	ld d, a ; $5497
 	ld a, [wCharScreenY] ; $5498
-	add a, $f8 ; $549b
+	add $f8 ; $549b
 	ld e, a ; $549d
 	wram_bank $04 ; $549e
 	ld bc, $0a78 ; $54a4
@@ -2556,13 +2556,13 @@ DrawBallTouchCharEffect:
 	ld hl, wBallTouchCharTimer ; $54aa
 	call TickTimer ; $54ad
 	ld a, [wBallTouchCharTimer] ; $54b0
-	add a, LOW(Data_08_54c2) ; $54b3
+	add LOW(Data_08_54c2) ; $54b3
 	ld l, a ; $54b5
-	adc a, HIGH(Data_08_54c2) ; $54b6
-	sub a, l ; $54b8
+	adc HIGH(Data_08_54c2) ; $54b6
+	sub l ; $54b8
 	ld h, a ; $54b9
 	ld a, [hl] ; $54ba
-	cp a, $ff ; $54bb
+	cp $ff ; $54bb
 	ret z ; $54bd
 	farcall LoadBallTouchCharEffectTilesA ; $54be
 	ret ; $54c1
@@ -2603,7 +2603,7 @@ Data_08_54c2:
 	ret ; $5521
 DrawTargetZone:
 	ld a, [wTargetZoneEnabled] ; $5522
-	and a, a ; $5525
+	and a ; $5525
 	ret z ; $5526
 	ld hl, wTargetZoneDepth1 ; $5527
 	ld a, [hl+] ; $552a
@@ -2686,7 +2686,7 @@ ApplyBallAirDrag:
 	inc a ; $55bc
 .toNibble:
 	swap a ; $55bd
-	and a, $0f ; $55bf
+	and $0f ; $55bf
 	inc a ; $55c1
 	ld b, a ; $55c2
 	push bc ; $55c3
@@ -2736,7 +2736,7 @@ ApplyBallAirDrag:
 ApplyBallSpin:
 	ld hl, wBallSideSpin ; $5613
 	ld a, [hl+] ; $5616
-	or a, [hl] ; $5617
+	or [hl] ; $5617
 	jp z, .checkTopspin ; $5618
 	ld hl, wBallVelocityDepth ; $561b
 	ld a, [hl+] ; $561e
@@ -2809,15 +2809,15 @@ ApplyBallSpin:
 	ld h, [hl] ; $5691
 	ld l, a ; $5692
 	ld a, h ; $5693
-	add a, a ; $5694
-	sbc a, a ; $5695
+	add a ; $5694
+	sbc a ; $5695
 	ld d, a ; $5696
 	ld e, h ; $5697
-	xor a, a ; $5698
-	sub a, e ; $5699
+	xor a ; $5698
+	sub e ; $5699
 	ld e, a ; $569a
-	sbc a, a ; $569b
-	sub a, d ; $569c
+	sbc a ; $569b
+	sub d ; $569c
 	ld d, a ; $569d
 	add hl, de ; $569e
 	add hl, de ; $569f
@@ -2829,7 +2829,7 @@ ApplyBallSpin:
 .checkTopspin:
 	ld hl, wBallTopspin ; $56a9
 	ld a, [hl+] ; $56ac
-	or a, [hl] ; $56ad
+	or [hl] ; $56ad
 	jp z, .done ; $56ae
 	ld hl, wBallVelocityHeight ; $56b1
 	ld a, [hl+] ; $56b4
@@ -2863,11 +2863,11 @@ ApplyBallSpin:
 	ld hl, hMathSign ; $56df
 	bit 7, [hl] ; $56e2
 	jr nz, .applyTopspin ; $56e4
-	xor a, a ; $56e6
-	sub a, e ; $56e7
+	xor a ; $56e6
+	sub e ; $56e7
 	ld e, a ; $56e8
-	sbc a, a ; $56e9
-	sub a, d ; $56ea
+	sbc a ; $56e9
+	sub d ; $56ea
 	ld d, a ; $56eb
 .applyTopspin:
 	push de ; $56ec
@@ -2913,7 +2913,7 @@ ApplyBallSpin:
 	ld l, e ; $5730
 	ld h, d ; $5731
 	add hl, hl ; $5732
-	sbc a, a ; $5733
+	sbc a ; $5733
 	ld d, a ; $5734
 	ld e, h ; $5735
 	ld a, l ; $5736
@@ -2922,7 +2922,7 @@ ApplyBallSpin:
 	ld l, c ; $573d
 	ld h, b ; $573e
 	add hl, hl ; $573f
-	sbc a, a ; $5740
+	sbc a ; $5740
 	ld d, a ; $5741
 	ld e, h ; $5742
 	ld a, l ; $5743
@@ -2933,15 +2933,15 @@ ApplyBallSpin:
 	ld h, [hl] ; $574e
 	ld l, a ; $574f
 	ld a, h ; $5750
-	add a, a ; $5751
-	sbc a, a ; $5752
+	add a ; $5751
+	sbc a ; $5752
 	ld d, a ; $5753
 	ld e, h ; $5754
-	xor a, a ; $5755
-	sub a, e ; $5756
+	xor a ; $5755
+	sub e ; $5756
 	ld e, a ; $5757
-	sbc a, a ; $5758
-	sub a, d ; $5759
+	sbc a ; $5758
+	sub d ; $5759
 	ld d, a ; $575a
 	add hl, de ; $575b
 	add hl, de ; $575c
@@ -2953,7 +2953,7 @@ ApplyBallSpin:
 .done:
 	ret ; $5766
 StepBallPhysics:
-	xor a, a ; $5767
+	xor a ; $5767
 	ld [wBallBounceEvent], a ; $5768
 	ld hl, $c400 ; $576b
 	ld de, $c410 ; $576e
@@ -2972,10 +2972,10 @@ StepBallPhysics:
 	call HandleBallNetCrossing ; $5795
 	ld b, $00 ; $5798
 	ld a, [wBallDepth + 1] ; $579a
-	add a, a ; $579d
+	add a ; $579d
 	rl b ; $579e
 	ld a, [wBallX + 1] ; $57a0
-	add a, a ; $57a3
+	add a ; $57a3
 	rl b ; $57a4
 	ld hl, wBallCourtQuadrant ; $57a6
 	ld [hl], b ; $57a9
@@ -2983,7 +2983,7 @@ StepBallPhysics:
 	call ApplyBallAirDrag ; $57ad
 	call ApplyBallSpin ; $57b0
 	call GetBallHeightSign ; $57b3
-	cp a, $ff ; $57b6
+	cp $ff ; $57b6
 	jr z, .rising ; $57b8
 	jr .falling ; $57ba
 .rising:
@@ -2996,22 +2996,22 @@ StepBallPhysics:
 	ld hl, $c408 ; $57c9
 	ld a, [hl] ; $57cc
 	cpl ; $57cd
-	add a, $01 ; $57ce
+	add $01 ; $57ce
 	ld [hl+], a ; $57d0
 	ld a, [hl] ; $57d1
 	cpl ; $57d2
-	adc a, $00 ; $57d3
+	adc $00 ; $57d3
 	ld [hl+], a ; $57d5
 	ld a, [hl] ; $57d6
 	cpl ; $57d7
-	adc a, $00 ; $57d8
+	adc $00 ; $57d8
 	ld [hl+], a ; $57da
 	ld a, [hl] ; $57db
 	cpl ; $57dc
-	adc a, $00 ; $57dd
+	adc $00 ; $57dd
 	ld [hl+], a ; $57df
 	call GetBallHeightSign ; $57e0
-	and a, a ; $57e3
+	and a ; $57e3
 	jr z, .done ; $57e4
 	ld a, $01 ; $57e6
 	ld [wBallBounceEvent], a ; $57e8
@@ -3033,7 +3033,7 @@ StepBallPhysics:
 	add hl, de ; $5800
 	bit 7, h ; $5801
 	jr nz, .done ; $5803
-	xor a, a ; $5805
+	xor a ; $5805
 	ld hl, $c408 ; $5806
 	ld [hl+], a ; $5809
 	ld [hl+], a ; $580a
@@ -3046,18 +3046,18 @@ StepBallPhysics:
 .done:
 	ret ; $5813
 HandleBallNetCrossing:
-	xor a, a ; $5814
+	xor a ; $5814
 	ld [wBallCrossedNetFlag], a ; $5815
 	ld hl, wBallDepth + 1 ; $5818
 	ld a, [hl] ; $581b
 	ld hl, wBallPrevDepth + 1 ; $581c
-	xor a, [hl] ; $581f
+	xor [hl] ; $581f
 	bit 7, a ; $5820
 	jp z, .done ; $5822
 	ld a, $01 ; $5825
 	ld [wBallCrossedNetFlag], a ; $5827
 	ld a, [wMinigameUsesWall] ; $582a
-	and a, a ; $582d
+	and a ; $582d
 	jr nz, .done ; $582e
 	ld hl, wNetHeight ; $5830
 	ld a, [hl+] ; $5833
@@ -3115,11 +3115,11 @@ HandleBallNetCrossing:
 	ld a, [hl+] ; $5887
 	ld d, [hl] ; $5888
 	ld e, a ; $5889
-	xor a, a ; $588a
-	sub a, e ; $588b
+	xor a ; $588a
+	sub e ; $588b
 	ld e, a ; $588c
-	sbc a, a ; $588d
-	sub a, d ; $588e
+	sbc a ; $588d
+	sub d ; $588e
 	ld d, a ; $588f
 	sra d ; $5890
 	rr e ; $5892
@@ -3146,11 +3146,11 @@ HandleBallNetCrossing:
 	rr e ; $58b3
 	bit 7, d ; $58b5
 	jr z, .jitter ; $58b7
-	xor a, a ; $58b9
-	sub a, e ; $58ba
+	xor a ; $58b9
+	sub e ; $58ba
 	ld e, a ; $58bb
-	sbc a, a ; $58bc
-	sub a, d ; $58bd
+	sbc a ; $58bc
+	sub d ; $58bd
 	ld d, a ; $58be
 .jitter:
 	call AdvanceMatchRng ; $58bf
@@ -3161,11 +3161,11 @@ HandleBallNetCrossing:
 	add hl, de ; $58c7
 	ld e, l ; $58c8
 	ld d, h ; $58c9
-	xor a, a ; $58ca
-	sub a, e ; $58cb
+	xor a ; $58ca
+	sub e ; $58cb
 	ld e, a ; $58cc
-	sbc a, a ; $58cd
-	sub a, d ; $58ce
+	sbc a ; $58cd
+	sub d ; $58ce
 	ld d, a ; $58cf
 	ld hl, wBallVelocityHeight ; $58d0
 	ld a, e ; $58d3
@@ -3175,11 +3175,11 @@ HandleBallNetCrossing:
 	ld a, [hl+] ; $58d9
 	ld d, [hl] ; $58da
 	ld e, a ; $58db
-	xor a, a ; $58dc
-	sub a, e ; $58dd
+	xor a ; $58dc
+	sub e ; $58dd
 	ld e, a ; $58de
-	sbc a, a ; $58df
-	sub a, d ; $58e0
+	sbc a ; $58df
+	sub d ; $58e0
 	ld d, a ; $58e1
 	sra d ; $58e2
 	rr e ; $58e4
@@ -3194,7 +3194,7 @@ HandleBallNetCrossing:
 	ret ; $58f4
 .clearSpin:
 	ld hl, $c408 ; $58f5
-	xor a, a ; $58f8
+	xor a ; $58f8
 	ld [hl+], a ; $58f9
 	ld [hl+], a ; $58fa
 	ld de, $ffa0 ; $58fb
@@ -3213,11 +3213,11 @@ HandleBallNetCrossing:
 	rr e ; $5911
 	bit 7, d ; $5913
 	jr z, .store ; $5915
-	xor a, a ; $5917
-	sub a, e ; $5918
+	xor a ; $5917
+	sub e ; $5918
 	ld e, a ; $5919
-	sbc a, a ; $591a
-	sub a, d ; $591b
+	sbc a ; $591a
+	sub d ; $591b
 	ld d, a ; $591c
 .store:
 	call AdvanceMatchRng ; $591d
@@ -3228,11 +3228,11 @@ HandleBallNetCrossing:
 	add hl, de ; $5925
 	ld e, l ; $5926
 	ld d, h ; $5927
-	xor a, a ; $5928
-	sub a, e ; $5929
+	xor a ; $5928
+	sub e ; $5929
 	ld e, a ; $592a
-	sbc a, a ; $592b
-	sub a, d ; $592c
+	sbc a ; $592b
+	sub d ; $592c
 	ld d, a ; $592d
 	ld hl, wBallVelocityHeight ; $592e
 	ld a, e ; $5931
@@ -3291,11 +3291,11 @@ BounceBallOffCourtFences:
 	ld l, a ; $5986
 	bit 7, h ; $5987
 	jr z, .checkFarSide ; $5989
-	xor a, a ; $598b
-	sub a, l ; $598c
+	xor a ; $598b
+	sub l ; $598c
 	ld l, a ; $598d
-	sbc a, a ; $598e
-	sub a, h ; $598f
+	sbc a ; $598e
+	sub h ; $598f
 	ld h, a ; $5990
 .checkFarSide:
 	ld de, $fc60 ; $5991
@@ -3346,51 +3346,51 @@ ApplyCameraProjection:
 	ret ; $59d3
 	bit 7, h ; $59d4
 	jp z, MulHLByDE ; $59d6
-	xor a, a ; $59d9
-	sub a, l ; $59da
+	xor a ; $59d9
+	sub l ; $59da
 	ld l, a ; $59db
-	sbc a, a ; $59dc
-	sub a, h ; $59dd
+	sbc a ; $59dc
+	sub h ; $59dd
 	ld h, a ; $59de
 	call MulHLByDE ; $59df
 NegateMulResultLow:
 	ldh a, [hMulResult] ; $59e2
 	cpl ; $59e4
-	add a, $01 ; $59e5
+	add $01 ; $59e5
 	ldh [hMulResult], a ; $59e7
 	ldh a, [hMulResult + 1] ; $59e9
 	cpl ; $59eb
-	adc a, $00 ; $59ec
+	adc $00 ; $59ec
 	ldh [hMulResult + 1], a ; $59ee
 	ld a, l ; $59f0
 	cpl ; $59f1
-	adc a, $00 ; $59f2
+	adc $00 ; $59f2
 	ld l, a ; $59f4
 	ld a, h ; $59f5
 	cpl ; $59f6
-	adc a, $00 ; $59f7
+	adc $00 ; $59f7
 	ld h, a ; $59f9
 	ret ; $59fa
 MulHLByDESigned32:
 	ld a, h ; $59fb
-	xor a, d ; $59fc
+	xor d ; $59fc
 	ldh [hMathSign], a ; $59fd
 	bit 7, h ; $59ff
 	jr z, .absDE ; $5a01
-	xor a, a ; $5a03
-	sub a, l ; $5a04
+	xor a ; $5a03
+	sub l ; $5a04
 	ld l, a ; $5a05
-	sbc a, a ; $5a06
-	sub a, h ; $5a07
+	sbc a ; $5a06
+	sub h ; $5a07
 	ld h, a ; $5a08
 .absDE:
 	bit 7, d ; $5a09
 	jr z, .multiply ; $5a0b
-	xor a, a ; $5a0d
-	sub a, e ; $5a0e
+	xor a ; $5a0d
+	sub e ; $5a0e
 	ld e, a ; $5a0f
-	sbc a, a ; $5a10
-	sub a, d ; $5a11
+	sbc a ; $5a10
+	sub d ; $5a11
 	ld d, a ; $5a12
 .multiply:
 	call MulHLByDE ; $5a13
@@ -3400,24 +3400,24 @@ MulHLByDESigned32:
 	ret ; $5a1c
 MulHLByDEAbs:
 	ld a, h ; $5a1d
-	xor a, d ; $5a1e
+	xor d ; $5a1e
 	ldh [hMathSign], a ; $5a1f
 	bit 7, h ; $5a21
 	jr z, .absDE ; $5a23
-	xor a, a ; $5a25
-	sub a, l ; $5a26
+	xor a ; $5a25
+	sub l ; $5a26
 	ld l, a ; $5a27
-	sbc a, a ; $5a28
-	sub a, h ; $5a29
+	sbc a ; $5a28
+	sub h ; $5a29
 	ld h, a ; $5a2a
 .absDE:
 	bit 7, d ; $5a2b
 	jr z, .multiply ; $5a2d
-	xor a, a ; $5a2f
-	sub a, e ; $5a30
+	xor a ; $5a2f
+	sub e ; $5a30
 	ld e, a ; $5a31
-	sbc a, a ; $5a32
-	sub a, d ; $5a33
+	sbc a ; $5a32
+	sub d ; $5a33
 	ld d, a ; $5a34
 .multiply:
 	call MulHLByDE ; $5a35
@@ -3426,11 +3426,11 @@ MulSignedHLByAFrac:
 	bit 7, h ; $5a39
 	jp z, MulHLByAFrac ; $5a3b
 	ld d, a ; $5a3e
-	xor a, a ; $5a3f
-	sub a, l ; $5a40
+	xor a ; $5a3f
+	sub l ; $5a40
 	ld l, a ; $5a41
-	sbc a, a ; $5a42
-	sub a, h ; $5a43
+	sbc a ; $5a42
+	sub h ; $5a43
 	ld h, a ; $5a44
 	ld a, d ; $5a45
 	call MulHLByAFrac ; $5a46
@@ -3457,12 +3457,12 @@ NegateADE:
 	cpl ; $5a63
 	inc a ; $5a64
 	jr nz, .notZero ; $5a65
-	sub a, e ; $5a67
+	sub e ; $5a67
 	ld e, a ; $5a68
-	sbc a, a ; $5a69
-	sub a, d ; $5a6a
+	sbc a ; $5a69
+	sub d ; $5a6a
 	ld d, a ; $5a6b
-	xor a, a ; $5a6c
+	xor a ; $5a6c
 	ret ; $5a6d
 .notZero:
 	push af ; $5a6e
@@ -3476,10 +3476,10 @@ NegateADE:
 	ret ; $5a76
 AddSignedDEToMem24:
 	ld a, e ; $5a77
-	add a, [hl] ; $5a78
+	add [hl] ; $5a78
 	ld [hl+], a ; $5a79
 	ld a, d ; $5a7a
-	adc a, [hl] ; $5a7b
+	adc [hl] ; $5a7b
 	ld [hl+], a ; $5a7c
 	bit 7, d ; $5a7d
 	jr nz, .negative ; $5a7f
@@ -3492,43 +3492,43 @@ AddSignedDEToMem24:
 	ret ; $5a86
 AddVel24ToPos32:
 	ld a, [de] ; $5a87
-	add a, [hl] ; $5a88
+	add [hl] ; $5a88
 	ld [hl+], a ; $5a89
 	inc de ; $5a8a
 	ld a, [de] ; $5a8b
-	adc a, [hl] ; $5a8c
+	adc [hl] ; $5a8c
 	ld [hl+], a ; $5a8d
 	inc de ; $5a8e
 	ld a, [de] ; $5a8f
 	bit 7, a ; $5a90
 	jr nz, .carryHigh ; $5a92
-	adc a, [hl] ; $5a94
+	adc [hl] ; $5a94
 	ld [hl+], a ; $5a95
 	ret nc ; $5a96
 	inc [hl] ; $5a97
 	ret ; $5a98
 .carryHigh:
-	adc a, [hl] ; $5a99
+	adc [hl] ; $5a99
 	ld [hl+], a ; $5a9a
 	ret c ; $5a9b
 	dec [hl] ; $5a9c
 	ret ; $5a9d
 Add24ToMem24:
-	add a, [hl] ; $5a9e
+	add [hl] ; $5a9e
 	ld [hl+], a ; $5a9f
 	ld a, [hl] ; $5aa0
-	adc a, e ; $5aa1
+	adc e ; $5aa1
 	ld [hl+], a ; $5aa2
 	ld a, [hl] ; $5aa3
-	adc a, d ; $5aa4
+	adc d ; $5aa4
 	ld [hl+], a ; $5aa5
 	ret ; $5aa6
 AddDEToMem24:
 	ld a, [hl] ; $5aa7
-	add a, e ; $5aa8
+	add e ; $5aa8
 	ld [hl+], a ; $5aa9
 	ld a, [hl] ; $5aaa
-	adc a, d ; $5aab
+	adc d ; $5aab
 	ld [hl+], a ; $5aac
 	bit 7, d ; $5aad
 	jr nz, .negative ; $5aaf
@@ -3541,10 +3541,10 @@ AddDEToMem24:
 	ret ; $5ab6
 AddBCToMem24:
 	ld a, [hl] ; $5ab7
-	add a, c ; $5ab8
+	add c ; $5ab8
 	ld [hl+], a ; $5ab9
 	ld a, [hl] ; $5aba
-	adc a, b ; $5abb
+	adc b ; $5abb
 	ld [hl+], a ; $5abc
 	bit 7, b ; $5abd
 	jr nz, .negative ; $5abf
@@ -3557,9 +3557,9 @@ AddBCToMem24:
 	ret ; $5ac6
 AddDEToMem24IntoBC:
 	ld a, [hl+] ; $5ac7
-	add a, e ; $5ac8
+	add e ; $5ac8
 	ld a, [hl+] ; $5ac9
-	adc a, d ; $5aca
+	adc d ; $5aca
 	ld c, a ; $5acb
 	bit 7, d ; $5acc
 	ld b, [hl] ; $5ace
@@ -3579,7 +3579,7 @@ ScorePoint:
 	call UpdatePointStats ; $5ae3
 ApplyPointToScore:
 	ld a, [wTiebreakerIndicator] ; $5ae6
-	and a, a ; $5ae9
+	and a ; $5ae9
 	jr nz, .tiebreakPoint ; $5aea
 	call AwardPoint ; $5aec
 	ld b, $04 ; $5aef
@@ -3609,7 +3609,7 @@ ApplyPointToScore:
 EvaluatePointSituation:
 	ld a, [wPlayer1PointsWon] ; $5b2e
 	ld hl, wPlayer2PointsWon ; $5b31
-	sub a, [hl] ; $5b34
+	sub [hl] ; $5b34
 	jr z, .done ; $5b35
 	bit 7, a ; $5b37
 	ld a, $01 ; $5b39
@@ -3641,20 +3641,20 @@ EvaluatePointSituation:
 	add sp, 16 ; $5b71
 	ret ; $5b73
 .done:
-	xor a, a ; $5b74
+	xor a ; $5b74
 	ld [wGamePointFlag], a ; $5b75
 	ld [wSetPointFlag], a ; $5b78
 	ld [wMatchPointFlag], a ; $5b7b
 	ret ; $5b7e
 HandleServeFault:
 	ld a, [wRallyLength] ; $5b7f
-	cp a, $01 ; $5b82
+	cp $01 ; $5b82
 	ret nz ; $5b84
 	ld a, [wPointOutcomeSide] ; $5b85
-	cp a, $ff ; $5b88
+	cp $ff ; $5b88
 	ret nz ; $5b8a
 	ld a, [wServeFaultFlag] ; $5b8b
-	and a, a ; $5b8e
+	and a ; $5b8e
 	jr nz, .doubleFault ; $5b8f
 	ld a, $01 ; $5b91
 	ld [wServeFaultFlag], a ; $5b93
@@ -3669,16 +3669,16 @@ HandleServeFault:
 	ret ; $5ba6
 FlagServiceReturnAce:
 	ld a, [wPointOutcome] ; $5ba7
-	cp a, POINTOUTCOME_WINNER ; $5baa
+	cp POINTOUTCOME_WINNER ; $5baa
 	ret nz ; $5bac
 	ld a, [wRallyLength] ; $5bad
-	cp a, $01 ; $5bb0
+	cp $01 ; $5bb0
 	jr nz, .checkReturnAce ; $5bb2
 	ld a, $01 ; $5bb4
 	ld [wServiceAceFlag], a ; $5bb6
 .checkReturnAce:
 	ld a, [wRallyLength] ; $5bb9
-	cp a, $02 ; $5bbc
+	cp $02 ; $5bbc
 	jr nz, .done ; $5bbe
 	ld a, $01 ; $5bc0
 	ld [wReturnAceFlag], a ; $5bc2
@@ -3686,10 +3686,10 @@ FlagServiceReturnAce:
 	ret ; $5bc5
 ResetAdvantageToDeuce:
 	ld a, [wPlayer1PointsWon] ; $5bc6
-	cp a, b ; $5bc9
+	cp b ; $5bc9
 	jr nz, .done ; $5bca
 	ld a, [wPlayer2PointsWon] ; $5bcc
-	cp a, b ; $5bcf
+	cp b ; $5bcf
 	jr nz, .done ; $5bd0
 	ld a, b ; $5bd2
 	dec a ; $5bd3
@@ -3699,28 +3699,28 @@ ResetAdvantageToDeuce:
 	ret ; $5bda
 AwardSet:
 	ld a, [wSetWinLoseFlag] ; $5bdb
-	add a, a ; $5bde
+	add a ; $5bde
 	ret z ; $5bdf
 	ld hl, wPlayer1SetsWon ; $5be0
 	jr nc, .increment ; $5be3
 	ld hl, wPlayer2SetsWon ; $5be5
 .increment:
 	inc [hl] ; $5be8
-	xor a, a ; $5be9
+	xor a ; $5be9
 	ld [wPlayer1GamesWon], a ; $5bea
 	ld [wPlayer2GamesWon], a ; $5bed
 	ld [wTiebreakerIndicator], a ; $5bf0
 	ret ; $5bf3
 AwardGame:
 	ld a, [wGameWinLoseFlag] ; $5bf4
-	add a, a ; $5bf7
+	add a ; $5bf7
 	ret z ; $5bf8
 	ld hl, wPlayer1GamesWon ; $5bf9
 	jr nc, .increment ; $5bfc
 	ld hl, wPlayer2GamesWon ; $5bfe
 .increment:
 	inc [hl] ; $5c01
-	xor a, a ; $5c02
+	xor a ; $5c02
 	ld [wPlayer1PointsWon], a ; $5c03
 	ld [wPlayer2PointsWon], a ; $5c06
 	ld [wTotalPointsScoredInCurrentGame], a ; $5c09
@@ -3730,14 +3730,14 @@ AwardGame:
 	ret ; $5c13
 AwardPoint:
 	ld a, [wPointWinLoseFlag] ; $5c14
-	add a, a ; $5c17
+	add a ; $5c17
 	ret z ; $5c18
 	ld hl, wPlayer1PointsWon ; $5c19
 	jr nc, .increment ; $5c1c
 	ld hl, wPlayer2PointsWon ; $5c1e
 .increment:
 	inc [hl] ; $5c21
-	xor a, a ; $5c22
+	xor a ; $5c22
 	ld [wServeFaultFlag], a ; $5c23
 	ld hl, wTotalPointsScoredInCurrentGame ; $5c26
 	inc [hl] ; $5c29
@@ -3746,7 +3746,7 @@ UpdatePointStats:
 	call RecordFaultStat ; $5c2b
 	call RecordDoubleFaultStat ; $5c2e
 	ld a, [wPointOutcome] ; $5c31
-	cp a, POINTOUTCOME_WINNER ; $5c34
+	cp POINTOUTCOME_WINNER ; $5c34
 	ret nz ; $5c36
 	call RecordDropShotWinnerStat ; $5c37
 	call RecordLobWinnerStat ; $5c3a
@@ -3756,19 +3756,19 @@ UpdatePointStats:
 	ret ; $5c46
 RecordFaultStat:
 	ld a, [wPointOutcome] ; $5c47
-	cp a, POINTOUTCOME_FAULT ; $5c4a
+	cp POINTOUTCOME_FAULT ; $5c4a
 	ret nz ; $5c4c
 	ld hl, wCharacter1Faults ; $5c4d
 	jp RecordDropShotWinnerStat.bumpStat ; $5c50
 RecordDoubleFaultStat:
 	ld a, [wPointOutcome] ; $5c53
-	cp a, POINTOUTCOME_DOUBLE_FAULT ; $5c56
+	cp POINTOUTCOME_DOUBLE_FAULT ; $5c56
 	ret nz ; $5c58
 	ld hl, wCharacter1DoubleFaults ; $5c59
 	jp RecordDropShotWinnerStat.bumpStat ; $5c5c
 RecordServiceAceStat:
 	ld a, [wServiceAceFlag] ; $5c5f
-	and a, a ; $5c62
+	and a ; $5c62
 	ret z ; $5c63
 	ld a, POINTWINNER_SERVICE_ACE ; $5c64
 	ld [wPointWinnerShotType], a ; $5c66
@@ -3776,7 +3776,7 @@ RecordServiceAceStat:
 	jp RecordDropShotWinnerStat.bumpStat ; $5c6c
 RecordReturnAceStat:
 	ld a, [wReturnAceFlag] ; $5c6f
-	and a, a ; $5c72
+	and a ; $5c72
 	ret z ; $5c73
 	ld a, POINTWINNER_RETURN_ACE ; $5c74
 	ld [wPointWinnerShotType], a ; $5c76
@@ -3784,7 +3784,7 @@ RecordReturnAceStat:
 	jp RecordDropShotWinnerStat.bumpStat ; $5c7c
 RecordSmashAceStat:
 	ld a, [wCurrentShotType] ; $5c7f
-	cp a, SHOTTYPE_SMASH ; $5c82
+	cp SHOTTYPE_SMASH ; $5c82
 	ret nz ; $5c84
 	ld a, POINTWINNER_SMASH_ACE ; $5c85
 	ld [wPointWinnerShotType], a ; $5c87
@@ -3792,7 +3792,7 @@ RecordSmashAceStat:
 	jp RecordDropShotWinnerStat.bumpStat ; $5c8d
 RecordLobWinnerStat:
 	ld a, [wCurrentShotType] ; $5c90
-	cp a, SHOTTYPE_LOB ; $5c93
+	cp SHOTTYPE_LOB ; $5c93
 	ret nz ; $5c95
 	ld a, POINTWINNER_LOB ; $5c96
 	ld [wPointWinnerShotType], a ; $5c98
@@ -3800,7 +3800,7 @@ RecordLobWinnerStat:
 	jp RecordDropShotWinnerStat.bumpStat ; $5c9e
 RecordDropShotWinnerStat:
 	ld a, [wCurrentShotType] ; $5ca1
-	cp a, SHOTTYPE_DROP ; $5ca4
+	cp SHOTTYPE_DROP ; $5ca4
 	ret nz ; $5ca6
 	ld a, POINTWINNER_DROP_SHOT ; $5ca7
 	ld [wPointWinnerShotType], a ; $5ca9
@@ -3808,16 +3808,16 @@ RecordDropShotWinnerStat:
 	jp .bumpStat ; $5caf
 .bumpStat:
 	ld a, [wLastShotCharIndex] ; $5cb2
-	add a, a ; $5cb5
-	add a, a ; $5cb6
-	add a, a ; $5cb7
-	add a, l ; $5cb8
+	add a ; $5cb5
+	add a ; $5cb6
+	add a ; $5cb7
+	add l ; $5cb8
 	ld l, a ; $5cb9
 	jr nc, .increment ; $5cba
 	inc h ; $5cbc
 .increment:
 	ld a, [hl] ; $5cbd
-	cp a, $63 ; $5cbe
+	cp $63 ; $5cbe
 	ret nc ; $5cc0
 	inc [hl] ; $5cc1
 	ret ; $5cc2
@@ -3828,73 +3828,73 @@ CheckMatchWon:
 	ld b, a ; $5cc9
 	ld hl, wPlayer1SetsWon ; $5cca
 	ld a, [hl+] ; $5ccd
-	sub a, [hl] ; $5cce
+	sub [hl] ; $5cce
 	jr z, .undecided ; $5ccf
 	bit 7, a ; $5cd1
 	jr nz, .checkPlayer2 ; $5cd3
 	ld a, [wPlayer1SetsWon] ; $5cd5
-	cp a, b ; $5cd8
+	cp b ; $5cd8
 	jr c, .undecided ; $5cd9
 	ld a, $01 ; $5cdb
 	ret ; $5cdd
 .checkPlayer2:
 	ld a, [wPlayer2SetsWon] ; $5cde
-	cp a, b ; $5ce1
+	cp b ; $5ce1
 	jr c, .undecided ; $5ce2
 	ld a, $ff ; $5ce4
 	ret ; $5ce6
 .undecided:
-	xor a, a ; $5ce7
+	xor a ; $5ce7
 	ret ; $5ce8
 CheckSetWon:
 	ld a, [wMatchTypeNumberOfGames] ; $5ce9
-	cp a, $02 ; $5cec
+	cp $02 ; $5cec
 	jp z, .checkTiebreak ; $5cee
 	ld a, [wPlayer1GamesWon] ; $5cf1
 	ld d, a ; $5cf4
-	cp a, $07 ; $5cf5
+	cp $07 ; $5cf5
 	jr nz, .readPlayer2 ; $5cf7
 	inc d ; $5cf9
 .readPlayer2:
 	ld a, [wPlayer2GamesWon] ; $5cfa
 	ld e, a ; $5cfd
-	cp a, $07 ; $5cfe
+	cp $07 ; $5cfe
 	jr nz, .winByTwo ; $5d00
 	inc e ; $5d02
 .winByTwo:
 	ld b, $06 ; $5d03
 	ld c, $06 ; $5d05
 	call EvalWinByTwo ; $5d07
-	cp a, $80 ; $5d0a
+	cp $80 ; $5d0a
 	ret nz ; $5d0c
 	ld a, $01 ; $5d0d
 	ld [wTiebreakerIndicator], a ; $5d0f
-	xor a, a ; $5d12
+	xor a ; $5d12
 	ret ; $5d13
 .checkTiebreak:
 	ld a, [wPlayer1GamesWon] ; $5d14
 	ld d, a ; $5d17
-	cp a, $03 ; $5d18
+	cp $03 ; $5d18
 	jr nz, .setWon ; $5d1a
 	inc d ; $5d1c
 .setWon:
 	ld a, [wPlayer2GamesWon] ; $5d1d
 	ld e, a ; $5d20
-	cp a, $03 ; $5d21
+	cp $03 ; $5d21
 	jr nz, .done ; $5d23
 	inc e ; $5d25
 .done:
 	ld b, $02 ; $5d26
 	ld c, $02 ; $5d28
 	call EvalWinByTwo ; $5d2a
-	cp a, $80 ; $5d2d
+	cp $80 ; $5d2d
 	ret nz ; $5d2f
 	ld a, $01 ; $5d30
 	ld [wTiebreakerIndicator], a ; $5d32
-	xor a, a ; $5d35
+	xor a ; $5d35
 	ret ; $5d36
 CheckGameWon:
-	xor a, a ; $5d37
+	xor a ; $5d37
 	ld [wDeuceIndicator], a ; $5d38
 	ld b, $03 ; $5d3b
 	ld c, $04 ; $5d3d
@@ -3903,14 +3903,14 @@ CheckGameWon:
 	ld a, [wPlayer2PointsWon] ; $5d43
 	ld e, a ; $5d46
 	call EvalWinByTwo ; $5d47
-	cp a, $80 ; $5d4a
+	cp $80 ; $5d4a
 	ret nz ; $5d4c
 	ld a, $01 ; $5d4d
 	ld [wDeuceIndicator], a ; $5d4f
-	xor a, a ; $5d52
+	xor a ; $5d52
 	ret ; $5d53
 CheckTiebreakGameWon:
-	xor a, a ; $5d54
+	xor a ; $5d54
 	ld [wDeuceIndicator], a ; $5d55
 	ld b, $06 ; $5d58
 	ld c, $07 ; $5d5a
@@ -3919,54 +3919,54 @@ CheckTiebreakGameWon:
 	ld a, [wPlayer2PointsWon] ; $5d60
 	ld e, a ; $5d63
 	call EvalWinByTwo ; $5d64
-	cp a, $80 ; $5d67
+	cp $80 ; $5d67
 	ret nz ; $5d69
 	ld a, $01 ; $5d6a
 	ld [wDeuceIndicator], a ; $5d6c
-	xor a, a ; $5d6f
+	xor a ; $5d6f
 	ret ; $5d70
 EvalWinByTwo:
 	ld a, d ; $5d71
-	sub a, e ; $5d72
+	sub e ; $5d72
 	jr z, .checkTie ; $5d73
 	bit 7, a ; $5d75
 	jr nz, .negativeLead ; $5d77
-	cp a, $02 ; $5d79
+	cp $02 ; $5d79
 	jr c, .undecided ; $5d7b
 	ld a, d ; $5d7d
-	cp a, c ; $5d7e
+	cp c ; $5d7e
 	jr c, .undecided ; $5d7f
 	ld a, $01 ; $5d81
 	ret ; $5d83
 .negativeLead:
 	cpl ; $5d84
 	inc a ; $5d85
-	cp a, $02 ; $5d86
+	cp $02 ; $5d86
 	jr c, .undecided ; $5d88
 	ld a, e ; $5d8a
-	cp a, c ; $5d8b
+	cp c ; $5d8b
 	jr c, .undecided ; $5d8c
 	ld a, $ff ; $5d8e
 	ret ; $5d90
 .checkTie:
 	ld a, e ; $5d91
-	cp a, b ; $5d92
+	cp b ; $5d92
 	jr nz, .undecided ; $5d93
 	ld a, $80 ; $5d95
 	ret ; $5d97
 .undecided:
-	xor a, a ; $5d98
+	xor a ; $5d98
 	ret ; $5d99
 ResolvePointWinner:
 	ld a, [wPointOutcome] ; $5d9a
-	cp a, POINTOUTCOME_FAULT ; $5d9d
+	cp POINTOUTCOME_FAULT ; $5d9d
 	jr z, .noWinner ; $5d9f
-	cp a, $03 ; $5da1
+	cp $03 ; $5da1
 	jr z, .noWinner ; $5da3
-	cp a, $09 ; $5da5
+	cp $09 ; $5da5
 	jr z, .fromToucher ; $5da7
 	ld a, [wLastShotCharIndex] ; $5da9
-	and a, $01 ; $5dac
+	and $01 ; $5dac
 	jr z, .sameSide ; $5dae
 	ld a, [wPointOutcomeSide] ; $5db0
 	cpl ; $5db3
@@ -3976,12 +3976,12 @@ ResolvePointWinner:
 	ld a, [wPointOutcomeSide] ; $5db6
 	ret ; $5db9
 .noWinner:
-	xor a, a ; $5dba
+	xor a ; $5dba
 	ret ; $5dbb
 .fromToucher:
 	ld a, [wBallTouchCharIndex] ; $5dbc
-	and a, $01 ; $5dbf
-	add a, a ; $5dc1
+	and $01 ; $5dbf
+	add a ; $5dc1
 	dec a ; $5dc2
 	ret ; $5dc3
 Data_08_5dc4:
@@ -4014,17 +4014,17 @@ Data_08_5dc4:
 LoadCourtSceneData:
 	ldh a, [hWramBank] ; $5e28
 	push af ; $5e2a
-	xor a, a ; $5e2b
+	xor a ; $5e2b
 	ldh [hScrollX], a ; $5e2c
-	xor a, a ; $5e2e
+	xor a ; $5e2e
 	ldh [hScrollY], a ; $5e2f
 	ld a, [wCurrentlyUsedCourt] ; $5e31
-	add a, a ; $5e34
-	add a, a ; $5e35
-	add a, LOW(Data_08_5dc4) ; $5e36
+	add a ; $5e34
+	add a ; $5e35
+	add LOW(Data_08_5dc4) ; $5e36
 	ld l, a ; $5e38
-	adc a, HIGH(Data_08_5dc4) ; $5e39
-	sub a, l ; $5e3b
+	adc HIGH(Data_08_5dc4) ; $5e39
+	sub l ; $5e3b
 	ld h, a ; $5e3c
 	ld a, [hl+] ; $5e3d
 	ld [wCourtSurfaceFriction], a ; $5e3e
@@ -4063,10 +4063,10 @@ UploadCourtAttrmap:
 	ret ; $5e92
 RefreshCourtScoreboard:
 	ld a, [wCourtViewLocked] ; $5e93
-	and a, $01 ; $5e96
+	and $01 ; $5e96
 	ret nz ; $5e98
 	ld a, [wCourtViewFlipped] ; $5e99
-	and a, a ; $5e9c
+	and a ; $5e9c
 	jr nz, RefreshCourtScoreboardFlipped ; $5e9d
 	ld hl, $de94 ; $5e9f
 	ld de, $d99a ; $5ea2
@@ -4113,7 +4113,7 @@ CopyScoreboardTileColumn:
 	ld [de], a ; $5f0c
 	inc de ; $5f0d
 	ld a, $1e ; $5f0e
-	add a, e ; $5f10
+	add e ; $5f10
 	ld e, a ; $5f11
 	jr nc, .row1 ; $5f12
 	inc d ; $5f14
@@ -4125,7 +4125,7 @@ CopyScoreboardTileColumn:
 	ld [de], a ; $5f19
 	inc de ; $5f1a
 	ld a, $1e ; $5f1b
-	add a, e ; $5f1d
+	add e ; $5f1d
 	ld e, a ; $5f1e
 	jr nc, .row2 ; $5f1f
 	inc d ; $5f21
@@ -4137,7 +4137,7 @@ CopyScoreboardTileColumn:
 	ld [de], a ; $5f26
 	inc de ; $5f27
 	ld a, $1e ; $5f28
-	add a, e ; $5f2a
+	add e ; $5f2a
 	ld e, a ; $5f2b
 	jr nc, .row3 ; $5f2c
 	inc d ; $5f2e
@@ -4149,7 +4149,7 @@ CopyScoreboardTileColumn:
 	ld [de], a ; $5f33
 	inc de ; $5f34
 	ld a, $1e ; $5f35
-	add a, e ; $5f37
+	add e ; $5f37
 	ld e, a ; $5f38
 	jr nc, .row4 ; $5f39
 	inc d ; $5f3b
@@ -4163,7 +4163,7 @@ CopyScoreboardTileColumn:
 	ret ; $5f42
 RefreshCourtAfterEndChange:
 	ld a, [wCourtViewFlipChanged] ; $5f43
-	and a, a ; $5f46
+	and a ; $5f46
 	ret z ; $5f47
 	ld a, [wMatchSimFrozen] ; $5f48
 	push af ; $5f4b
@@ -4194,10 +4194,10 @@ RunChangeoverSequence:
 	ld a, $01 ; $5f8c
 	ld [wPauseDisabled], a ; $5f8e
 	ld a, [$c4cc] ; $5f91
-	and a, a ; $5f94
+	and a ; $5f94
 	jr nz, .walkLoop ; $5f95
 	ld a, [wChangeEndsPending] ; $5f97
-	and a, a ; $5f9a
+	and a ; $5f9a
 	jr z, .done ; $5f9b
 	call StepMatchFrame ; $5f9d
 	ld a, $00 ; $5fa0
@@ -4209,12 +4209,12 @@ RunChangeoverSequence:
 	farcall HideCourtBanner ; $5fae
 	call StepMatchFrame ; $5fb1
 .done:
-	xor a, a ; $5fb4
+	xor a ; $5fb4
 	ld [$c4cc], a ; $5fb5
 	ld [wChangeEndsPending], a ; $5fb8
 	ret ; $5fbb
 WalkCharsToNewEnds:
-	xor a, a ; $5fbc
+	xor a ; $5fbc
 	ld [wOffscreenArrowsEnabled], a ; $5fbd
 	call ResetBallState ; $5fc0
 	call GetServeCameraTarget ; $5fc3
@@ -4224,7 +4224,7 @@ WalkCharsToNewEnds:
 .waitLoop:
 	call StepMatchFrame ; $5fcf
 	call ReadMatchInputPressed ; $5fd2
-	and a, $0b ; $5fd5
+	and $0b ; $5fd5
 	jr nz, .settle ; $5fd7
 	call CheckAllCharsPhaseDone ; $5fd9
 	jr z, .waitLoop ; $5fdc
@@ -4254,7 +4254,7 @@ PlaceCharAtBasePosition:
 WalkCharsOffCourt:
 	ld a, $01 ; $6010
 	ld [wPauseDisabled], a ; $6012
-	xor a, a ; $6015
+	xor a ; $6015
 	ld [wOffscreenArrowsEnabled], a ; $6016
 	call GetServeCameraTarget ; $6019
 	call SetCameraTarget ; $601c
@@ -4263,7 +4263,7 @@ WalkCharsOffCourt:
 .waitLoop:
 	call StepMatchFrame ; $6025
 	call ReadMatchInputPressed ; $6028
-	and a, $0b ; $602b
+	and $0b ; $602b
 	jr nz, .settle ; $602d
 	call CheckAllCharsPhaseDone ; $602f
 	jr z, .waitLoop ; $6032
@@ -4301,31 +4301,31 @@ CheckAllCharsPhaseDone:
 .char4:
 	wram_bank $06 ; $6074
 	ld a, [de] ; $607a
-	and a, b ; $607b
+	and b ; $607b
 	ld b, a ; $607c
 .char3:
 	wram_bank $07 ; $607d
 	ld a, [de] ; $6083
-	and a, b ; $6084
+	and b ; $6084
 	ld b, a ; $6085
 .char2:
 	wram_bank $05 ; $6086
 	ld a, [de] ; $608c
-	and a, b ; $608d
+	and b ; $608d
 	ld b, a ; $608e
 .char1:
 	wram_bank $04 ; $608f
 	ld a, [de] ; $6095
-	and a, b ; $6096
+	and b ; $6096
 	ret ; $6097
 GetCharBaseCourtPosition:
 	ld a, [wCharServeRole] ; $6098
-	add a, a ; $609b
-	add a, a ; $609c
-	add a, LOW(Data_08_60c8) ; $609d
+	add a ; $609b
+	add a ; $609c
+	add LOW(Data_08_60c8) ; $609d
 	ld l, a ; $609f
-	adc a, HIGH(Data_08_60c8) ; $60a0
-	sub a, l ; $60a2
+	adc HIGH(Data_08_60c8) ; $60a0
+	sub l ; $60a2
 	ld h, a ; $60a3
 	ld a, [hl+] ; $60a4
 	ld c, a ; $60a5
@@ -4337,23 +4337,23 @@ GetCharBaseCourtPosition:
 	ld l, c ; $60ab
 	ld h, b ; $60ac
 	ld a, [wCharCourtPos] ; $60ad
-	and a, $02 ; $60b0
+	and $02 ; $60b0
 	jr z, .checkSide ; $60b2
-	xor a, a ; $60b4
-	sub a, e ; $60b5
+	xor a ; $60b4
+	sub e ; $60b5
 	ld e, a ; $60b6
-	sbc a, a ; $60b7
-	sub a, d ; $60b8
+	sbc a ; $60b7
+	sub d ; $60b8
 	ld d, a ; $60b9
 .checkSide:
 	ld a, [wCharCourtPos] ; $60ba
-	and a, $01 ; $60bd
+	and $01 ; $60bd
 	jr z, .done ; $60bf
-	xor a, a ; $60c1
-	sub a, l ; $60c2
+	xor a ; $60c1
+	sub l ; $60c2
 	ld l, a ; $60c3
-	sbc a, a ; $60c4
-	sub a, h ; $60c5
+	sbc a ; $60c4
+	sub h ; $60c5
 	ld h, a ; $60c6
 .done:
 	ret ; $60c7
@@ -4366,12 +4366,12 @@ Data_08_60c8:
 	dw $00c0, $0300 ; record 3
 GetCharChangeoverPosition:
 	ld a, [wCharServeRole] ; $60d8
-	add a, a ; $60db
-	add a, a ; $60dc
-	add a, LOW(Data_08_6107) ; $60dd
+	add a ; $60db
+	add a ; $60dc
+	add LOW(Data_08_6107) ; $60dd
 	ld l, a ; $60df
-	adc a, HIGH(Data_08_6107) ; $60e0
-	sub a, l ; $60e2
+	adc HIGH(Data_08_6107) ; $60e0
+	sub l ; $60e2
 	ld h, a ; $60e3
 	ld a, [hl+] ; $60e4
 	ld c, a ; $60e5
@@ -4383,23 +4383,23 @@ GetCharChangeoverPosition:
 	ld l, c ; $60eb
 	ld h, b ; $60ec
 	ld a, [wCharCourtPos] ; $60ed
-	and a, $02 ; $60f0
+	and $02 ; $60f0
 	jr z, .checkFlip ; $60f2
-	xor a, a ; $60f4
-	sub a, e ; $60f5
+	xor a ; $60f4
+	sub e ; $60f5
 	ld e, a ; $60f6
-	sbc a, a ; $60f7
-	sub a, d ; $60f8
+	sbc a ; $60f7
+	sub d ; $60f8
 	ld d, a ; $60f9
 .checkFlip:
 	ld a, [wCourtViewFlipped] ; $60fa
-	and a, a ; $60fd
+	and a ; $60fd
 	jr z, .done ; $60fe
-	xor a, a ; $6100
-	sub a, l ; $6101
+	xor a ; $6100
+	sub l ; $6101
 	ld l, a ; $6102
-	sbc a, a ; $6103
-	sub a, h ; $6104
+	sbc a ; $6103
+	sub h ; $6104
 	ld h, a ; $6105
 .done:
 	ret ; $6106
@@ -4413,17 +4413,17 @@ Data_08_6107:
 PlayCourtIntro:
 	ld b, $44 ; $6117
 	ld a, [wMatchContext] ; $6119
-	and a, a ; $611c
+	and a ; $611c
 	jr z, .playFanfare ; $611d
 	ld b, $45 ; $611f
 .playFanfare:
 	ld a, b ; $6121
 	call PlaySoundManaged ; $6122
 	ld a, [wGameMode] ; $6125
-	cp a, $02 ; $6128
+	cp $02 ; $6128
 	jr z, .panCamera ; $612a
 	ld a, [wMatchContext] ; $612c
-	and a, a ; $612f
+	and a ; $612f
 	jr nz, .done ; $6130
 .panCamera:
 	ld d, $00 ; $6132
@@ -4463,13 +4463,13 @@ PanCamera:
 	ld a, e ; $617b
 	ldh [hScrollY], a ; $617c
 	ld a, d ; $617e
-	add a, h ; $617f
+	add h ; $617f
 	ld d, a ; $6180
 	ld a, e ; $6181
-	add a, l ; $6182
+	add l ; $6182
 	ld e, a ; $6183
 	call ReadMatchInputPressed ; $6184
-	and a, $0b ; $6187
+	and $0b ; $6187
 	jr nz, .done ; $6189
 	call StepMatchFrame ; $618b
 	dec b ; $618e
@@ -4482,7 +4482,7 @@ ResetCameraForServe:
 	ret ; $6198
 GetServeCameraTarget:
 	ld a, [wServingCharCourtPos] ; $6199
-	and a, $02 ; $619c
+	and $02 ; $619c
 	ld de, $fe80 ; $619e
 	jr z, .done ; $61a1
 	ld de, $f880 ; $61a3
@@ -4508,7 +4508,7 @@ SnapCameraTo:
 	ld a, e ; $61c1
 	ld [hl+], a ; $61c2
 	ld [hl], d ; $61c3
-	xor a, a ; $61c4
+	xor a ; $61c4
 	ld [wCameraFollowBall], a ; $61c5
 	ret ; $61c8
 SetCameraTarget:
@@ -4522,12 +4522,12 @@ SetCameraTarget:
 	ld a, e ; $61d4
 	ld [hl+], a ; $61d5
 	ld [hl], d ; $61d6
-	xor a, a ; $61d7
+	xor a ; $61d7
 	ld [wCameraFollowBall], a ; $61d8
 	ret ; $61db
 UpdateMatchCamera:
 	ld a, [wCameraFollowBall] ; $61dc
-	and a, a ; $61df
+	and a ; $61df
 	jr z, .easeX ; $61e0
 	ld hl, wBallGroundProjX ; $61e2
 	ld de, wMatchCameraTargetX ; $61e5
@@ -4553,10 +4553,10 @@ UpdateMatchCamera:
 	ld h, [hl] ; $61fe
 	ld l, a ; $61ff
 	ld a, l ; $6200
-	sub a, c ; $6201
+	sub c ; $6201
 	ld l, a ; $6202
 	ld a, h ; $6203
-	sbc a, b ; $6204
+	sbc b ; $6204
 	ld h, a ; $6205
 	ld e, l ; $6206
 	ld d, h ; $6207
@@ -4569,10 +4569,10 @@ UpdateMatchCamera:
 	ld h, [hl] ; $6212
 	ld l, a ; $6213
 	ld a, l ; $6214
-	sub a, c ; $6215
+	sub c ; $6215
 	ld l, a ; $6216
 	ld a, h ; $6217
-	sbc a, b ; $6218
+	sbc b ; $6218
 	ld h, a ; $6219
 	push hl ; $621a
 	push de ; $621b
@@ -4583,17 +4583,17 @@ UpdateMatchCamera:
 	ld b, h ; $6226
 	ld hl, wMatchCameraX ; $6227
 	ld a, [hl] ; $622a
-	add a, c ; $622b
+	add c ; $622b
 	ld [hl+], a ; $622c
 	ld a, [hl] ; $622d
-	adc a, b ; $622e
+	adc b ; $622e
 	ld [hl+], a ; $622f
 	ld hl, wMatchCameraY ; $6230
 	ld a, [hl] ; $6233
-	add a, e ; $6234
+	add e ; $6234
 	ld [hl+], a ; $6235
 	ld a, [hl] ; $6236
-	adc a, d ; $6237
+	adc d ; $6237
 	ld [hl+], a ; $6238
 	ld hl, wMatchCameraX ; $6239
 	ld a, [hl+] ; $623c
@@ -4604,13 +4604,13 @@ UpdateMatchCamera:
 	ld h, [hl] ; $6243
 	ld l, a ; $6244
 	ld a, l ; $6245
-	sub a, c ; $6246
+	sub c ; $6246
 	ld l, a ; $6247
 	ld a, h ; $6248
-	sbc a, b ; $6249
+	sbc b ; $6249
 	ld h, a ; $624a
 	pop af ; $624b
-	xor a, h ; $624c
+	xor h ; $624c
 	bit 7, a ; $624d
 	jr z, .easeY ; $624f
 	ld hl, wMatchCameraTargetX ; $6251
@@ -4631,13 +4631,13 @@ UpdateMatchCamera:
 	ld h, [hl] ; $6267
 	ld l, a ; $6268
 	ld a, l ; $6269
-	sub a, c ; $626a
+	sub c ; $626a
 	ld l, a ; $626b
 	ld a, h ; $626c
-	sbc a, b ; $626d
+	sbc b ; $626d
 	ld h, a ; $626e
 	pop af ; $626f
-	xor a, h ; $6270
+	xor h ; $6270
 	bit 7, a ; $6271
 	jr z, .clampX ; $6273
 	ld hl, wMatchCameraTargetY ; $6275
@@ -4664,14 +4664,14 @@ UpdateMatchCamera:
 	jr z, .clampY ; $6296
 	ld hl, $0000 ; $6298
 .clampY:
-	sub a, $0c ; $629b
+	sub $0c ; $629b
 	bit 7, a ; $629d
 	jr nz, .done ; $629f
 	ld h, $0c ; $62a1
 	ld l, $00 ; $62a3
 .done:
 	ld a, l ; $62a5
-	and a, $e0 ; $62a6
+	and $e0 ; $62a6
 	ld e, a ; $62a8
 	ld d, h ; $62a9
 	ld l, e ; $62aa
@@ -4681,11 +4681,11 @@ UpdateMatchCamera:
 	add hl, hl ; $62ae
 	ld a, h ; $62af
 	ldh [hScrollX], a ; $62b0
-	xor a, a ; $62b2
-	sub a, e ; $62b3
+	xor a ; $62b2
+	sub e ; $62b3
 	ld e, a ; $62b4
-	sbc a, a ; $62b5
-	sub a, d ; $62b6
+	sbc a ; $62b5
+	sub d ; $62b6
 	ld d, a ; $62b7
 	ld hl, $1010 ; $62b8
 	add hl, de ; $62bb
@@ -4713,7 +4713,7 @@ UpdateMatchCamera:
 	ld de, $1010 ; $62dd
 	add hl, de ; $62e0
 	ld a, l ; $62e1
-	and a, $e0 ; $62e2
+	and $e0 ; $62e2
 	ld e, a ; $62e4
 	ld d, h ; $62e5
 	ld l, e ; $62e6
@@ -4723,11 +4723,11 @@ UpdateMatchCamera:
 	add hl, hl ; $62ea
 	ld a, h ; $62eb
 	ldh [hScrollY], a ; $62ec
-	xor a, a ; $62ee
-	sub a, e ; $62ef
+	xor a ; $62ee
+	sub e ; $62ef
 	ld e, a ; $62f0
-	sbc a, a ; $62f1
-	sub a, d ; $62f2
+	sbc a ; $62f1
+	sub d ; $62f2
 	ld d, a ; $62f3
 	ld hl, $1010 ; $62f4
 	add hl, de ; $62f7
@@ -4781,7 +4781,7 @@ DrawNearTeamChars:
 	ld b, [hl] ; $6376
 	wram_bank $04 ; $6377
 	ld a, [hl] ; $637d
-	cp a, b ; $637e
+	cp b ; $637e
 	jr c, DrawNearTeamCharsDoubles ; $637f
 	wram_bank $04 ; $6381
 	ld hl, wCharSpriteSlot ; $6387
@@ -4806,7 +4806,7 @@ DrawFarTeamChars:
 	ld b, [hl] ; $63c8
 	wram_bank $05 ; $63c9
 	ld a, [hl] ; $63cf
-	cp a, b ; $63d0
+	cp b ; $63d0
 	jr c, DrawFarTeamCharsDoubles ; $63d1
 	wram_bank $05 ; $63d3
 	ld hl, wCharSpriteSlot ; $63d9
@@ -4837,17 +4837,17 @@ DrawBallAndEffects:
 	ret ; $6428
 DrawActorsByDepth:
 	ld a, [wMinigameUsesTennisMachine] ; $6429
-	and a, a ; $642c
+	and a ; $642c
 	jr nz, .done ; $642d
 	ld hl, wCharDepthKey ; $642f
 	wram_bank $05 ; $6432
 	ld b, [hl] ; $6438
 	wram_bank $04 ; $6439
 	ld a, [hl] ; $643f
-	cp a, b ; $6440
+	cp b ; $6440
 	jr nc, .drawLoop ; $6441
 	ld a, [wPointOutcome] ; $6443
-	and a, a ; $6446
+	and a ; $6446
 	jr z, .sortLoop ; $6447
 	call DrawFarTeamChars ; $6449
 	call DrawNearTeamChars ; $644c
@@ -4860,7 +4860,7 @@ DrawActorsByDepth:
 	ret ; $645c
 .drawLoop:
 	ld a, [wPointOutcome] ; $645d
-	and a, a ; $6460
+	and a ; $6460
 	jr z, .next ; $6461
 	call DrawNearTeamChars ; $6463
 	call DrawFarTeamChars ; $6466
@@ -4914,7 +4914,7 @@ DrawMarkersAndShadows:
 	ret ; $64fc
 DrawSlotSprite:
 	ld a, [hl+] ; $64fd
-	cp a, $ff ; $64fe
+	cp $ff ; $64fe
 	ret z ; $6500
 	ld c, a ; $6501
 	ld a, [hl+] ; $6502
@@ -4925,7 +4925,7 @@ DrawSlotSprite:
 	jp QueueSprite ; $6507
 DrawCharSprite:
 	ld a, [hl+] ; $650a
-	cp a, $ff ; $650b
+	cp $ff ; $650b
 	ret z ; $650d
 	ld c, a ; $650e
 	ld a, [hl+] ; $650f
@@ -4939,12 +4939,12 @@ DrawCharSprite:
 	ld a, [wCharSpriteFrame + 1] ; $6519
 	ld l, a ; $651c
 	ld a, [wCharSpriteFrame + 2] ; $651d
-	and a, a ; $6520
+	and a ; $6520
 	jp z, QueueSprite24x32 ; $6521
 	jp QueueSprite32x32 ; $6524
 DrawStandingShadowSlot:
 	ld a, [hl+] ; $6527
-	cp a, $ff ; $6528
+	cp $ff ; $6528
 	ret z ; $652a
 	ld c, a ; $652b
 	ld a, [hl+] ; $652c
@@ -4955,7 +4955,7 @@ DrawStandingShadowSlot:
 	ld hl, StandingShadowOamTemplate ; $6531
 	jp QueueSpriteTemplate ; $6534
 	ld a, [hl+] ; $6537
-	cp a, $ff ; $6538
+	cp $ff ; $6538
 	ret z ; $653a
 	ld c, a ; $653b
 	ld a, [hl+] ; $653c
@@ -4984,7 +4984,7 @@ RunMinigameMatch:
 	ld a, [wMatchBGM] ; $656b
 	call PlaySoundManaged ; $656e
 	script_fade_in $20 ; $6571
-	xor a, a ; $6576
+	xor a ; $6576
 	ld [wMatchSimFrozen], a ; $6577
 	call RunMinigamePointLoop ; $657a
 	call ShowMatchResultScreens ; $657d
@@ -4997,16 +4997,16 @@ RunMinigameMatch:
 	ret ; $6591
 ShowMatchResultScreens:
 	ld a, [wMatchExitRequest] ; $6592
-	and a, a ; $6595
+	and a ; $6595
 	ret nz ; $6596
 	ld a, $ff ; $6597
 	ld [wMatchSimFrozen], a ; $6599
 	ld [wMatchDrawFrozen], a ; $659c
 	ld a, [wGameMode] ; $659f
-	cp a, $08 ; $65a2
+	cp $08 ; $65a2
 	jr nz, .scoreboard ; $65a4
 	ld a, [wPointWinLoseFlag] ; $65a6
-	cp a, $01 ; $65a9
+	cp $01 ; $65a9
 	jr z, .scoreboard ; $65ab
 	farcall RunMinigameEndMenu ; $65ad
 	jr .unfreeze ; $65b0
@@ -5021,7 +5021,7 @@ RunMinigamePointLoop:
 	wram_bank $04 ; $65be
 	ld a, $00 ; $65c4
 	ld [wAiPositionStrategy], a ; $65c6
-	xor a, a ; $65c9
+	xor a ; $65c9
 	ld [wAiReactionDelayNear], a ; $65ca
 	ld [wAiReactionDelayFar], a ; $65cd
 	ld a, $00 ; $65d0
@@ -5029,7 +5029,7 @@ RunMinigamePointLoop:
 	ld d, $03 ; $65d5
 	call CallModeHook ; $65d7
 	ld a, [wMatchAbortFlag] ; $65da
-	and a, $80 ; $65dd
+	and $80 ; $65dd
 	jr nz, .done ; $65df
 .pointLoop:
 	call LoadMinigamePointLayout ; $65e1
@@ -5037,39 +5037,39 @@ RunMinigamePointLoop:
 	ld d, $01 ; $65e7
 	call CallModeHook ; $65e9
 	ld a, [wMatchAbortFlag] ; $65ec
-	and a, $80 ; $65ef
+	and $80 ; $65ef
 	jr nz, .done ; $65f1
 	ld a, [wMinigameUsesTennisMachine] ; $65f3
-	and a, a ; $65f6
+	and a ; $65f6
 	jr nz, .playPoint ; $65f7
 	ld hl, SetCharStateFromServeRole ; $65f9
 	call ForEachCharBank ; $65fc
 .playPoint:
 	call PlayMinigamePoint ; $65ff
 	ld a, [wMatchAbortFlag] ; $6602
-	and a, $80 ; $6605
+	and $80 ; $6605
 	jr nz, .done ; $6607
 	ld d, $02 ; $6609
 	call CallModeHook ; $660b
 	ld a, [wMatchAbortFlag] ; $660e
-	and a, $80 ; $6611
+	and $80 ; $6611
 	jr nz, .done ; $6613
 	ld hl, $c7b0 ; $6615
 	ld a, [hl+] ; $6618
 	ld h, [hl] ; $6619
 	ld l, a ; $661a
 	ld a, [wTotalPointsScoredInCurrentGame] ; $661b
-	add a, a ; $661e
-	add a, a ; $661f
-	add a, a ; $6620
-	add a, l ; $6621
+	add a ; $661e
+	add a ; $661f
+	add a ; $6620
+	add l ; $6621
 	ld l, a ; $6622
 	jr nc, .nextPoint ; $6623
 	inc h ; $6625
 .nextPoint:
 	ld a, [wModeHookBank] ; $6626
 	call FarReadByte ; $6629
-	cp a, $ff ; $662c
+	cp $ff ; $662c
 	jr nz, .pointLoop ; $662e
 .done:
 	ret ; $6630
@@ -5081,14 +5081,14 @@ PlayMinigamePoint:
 .rallyLoop:
 	call StepMatchFrame ; $663c
 	ld a, [wMatchAbortFlag] ; $663f
-	and a, $01 ; $6642
+	and $01 ; $6642
 	jr nz, .pointOver ; $6644
 	ld a, [wPointOutcome] ; $6646
-	and a, a ; $6649
+	and a ; $6649
 	jr z, .rallyLoop ; $664a
 .pointOver:
 	ld a, [wPointOutcome] ; $664c
-	cp a, $09 ; $664f
+	cp $09 ; $664f
 	jr nz, .settle ; $6651
 	ld a, $28 ; $6653
 	call StepMatchFrames ; $6655
@@ -5099,7 +5099,7 @@ PlayMinigamePoint:
 	ret ; $6661
 LoadMinigamePointLayout:
 	ld a, [wModeHookBank] ; $6662
-	and a, a ; $6665
+	and a ; $6665
 	ret z ; $6666
 	add sp, -8 ; $6667
 	ld hl, sp + 0 ; $6669
@@ -5111,10 +5111,10 @@ LoadMinigamePointLayout:
 	ld h, [hl] ; $6672
 	ld l, a ; $6673
 	ld a, [wTotalPointsScoredInCurrentGame] ; $6674
-	add a, a ; $6677
-	add a, a ; $6678
-	add a, a ; $6679
-	add a, l ; $667a
+	add a ; $6677
+	add a ; $6678
+	add a ; $6679
+	add l ; $667a
 	ld l, a ; $667b
 	jr nc, .copyLayout ; $667c
 	inc h ; $667e
@@ -5126,36 +5126,36 @@ LoadMinigamePointLayout:
 	ld de, wCharCourtPos ; $6689
 	wram_bank $04 ; $668c
 	ld a, [hl+] ; $6692
-	and a, $03 ; $6693
+	and $03 ; $6693
 	ld [de], a ; $6695
 	wram_bank $05 ; $6696
 	ld a, [hl+] ; $669c
-	and a, $03 ; $669d
+	and $03 ; $669d
 	ld [de], a ; $669f
 	wram_bank $06 ; $66a0
 	ld a, [hl+] ; $66a6
-	and a, $03 ; $66a7
+	and $03 ; $66a7
 	ld [de], a ; $66a9
 	wram_bank $07 ; $66aa
 	ld a, [hl+] ; $66b0
-	and a, $03 ; $66b1
+	and $03 ; $66b1
 	ld [de], a ; $66b3
 	ld de, wCharServeRole ; $66b4
 	wram_bank $04 ; $66b7
 	ld a, [hl+] ; $66bd
-	and a, $03 ; $66be
+	and $03 ; $66be
 	ld [de], a ; $66c0
 	wram_bank $05 ; $66c1
 	ld a, [hl+] ; $66c7
-	and a, $03 ; $66c8
+	and $03 ; $66c8
 	ld [de], a ; $66ca
 	wram_bank $06 ; $66cb
 	ld a, [hl+] ; $66d1
-	and a, $03 ; $66d2
+	and $03 ; $66d2
 	ld [de], a ; $66d4
 	wram_bank $07 ; $66d5
 	ld a, [hl+] ; $66db
-	and a, $03 ; $66dc
+	and $03 ; $66dc
 	ld [de], a ; $66de
 	wram_bank $04 ; $66df
 	call IdentifyServingPlayer ; $66e5
@@ -5165,7 +5165,7 @@ LoadMinigamePointLayout:
 	ret ; $66f0
 CallModeHook:
 	ld a, [wModeHookBank] ; $66f1
-	and a, a ; $66f4
+	and a ; $66f4
 	ret z ; $66f5
 	push af ; $66f6
 	push bc ; $66f7
@@ -5176,8 +5176,8 @@ CallModeHook:
 	ld h, [hl] ; $66fe
 	ld l, a ; $66ff
 	ld a, d ; $6700
-	add a, a ; $6701
-	add a, l ; $6702
+	add a ; $6701
+	add l ; $6702
 	ld l, a ; $6703
 	jr nc, .readHook ; $6704
 	inc h ; $6706
@@ -5270,23 +5270,23 @@ DidBallCrossGate:
 	ld d, [hl] ; $6777
 	ld e, a ; $6778
 	ld a, e ; $6779
-	sub a, c ; $677a
+	sub c ; $677a
 	ld e, a ; $677b
 	ld a, d ; $677c
-	sbc a, b ; $677d
+	sbc b ; $677d
 	ld d, a ; $677e
 	ld hl, wBallDepth ; $677f
 	ld a, [hl+] ; $6782
 	ld h, [hl] ; $6783
 	ld l, a ; $6784
 	ld a, l ; $6785
-	sub a, c ; $6786
+	sub c ; $6786
 	ld l, a ; $6787
 	ld a, h ; $6788
-	sbc a, b ; $6789
+	sbc b ; $6789
 	ld h, a ; $678a
 	ld a, h ; $678b
-	xor a, d ; $678c
+	xor d ; $678c
 	bit 7, a ; $678d
 	jr z, .no ; $678f
 	ld hl, $c798 ; $6791
@@ -5298,10 +5298,10 @@ DidBallCrossGate:
 	ld h, [hl] ; $679b
 	ld l, a ; $679c
 	ld a, l ; $679d
-	sub a, e ; $679e
+	sub e ; $679e
 	ld l, a ; $679f
 	ld a, h ; $67a0
-	sbc a, d ; $67a1
+	sbc d ; $67a1
 	ld h, a ; $67a2
 	bit 7, h ; $67a3
 	jr nz, .no ; $67a5
@@ -5314,18 +5314,18 @@ DidBallCrossGate:
 	ld h, [hl] ; $67b1
 	ld l, a ; $67b2
 	ld a, l ; $67b3
-	sub a, e ; $67b4
+	sub e ; $67b4
 	ld l, a ; $67b5
 	ld a, h ; $67b6
-	sbc a, d ; $67b7
+	sbc d ; $67b7
 	ld h, a ; $67b8
 	bit 7, h ; $67b9
 	jr z, .no ; $67bb
-	xor a, a ; $67bd
+	xor a ; $67bd
 	inc a ; $67be
 	ret ; $67bf
 .no:
-	xor a, a ; $67c0
+	xor a ; $67c0
 	ret ; $67c1
 IsBallInTargetZone:
 	ldh a, [hWramBank] ; $67c2
@@ -5344,10 +5344,10 @@ IsBallInTargetZone:
 	ld h, [hl] ; $67db
 	ld l, a ; $67dc
 	ld a, l ; $67dd
-	sub a, e ; $67de
+	sub e ; $67de
 	ld l, a ; $67df
 	ld a, h ; $67e0
-	sbc a, d ; $67e1
+	sbc d ; $67e1
 	ld h, a ; $67e2
 	bit 7, h ; $67e3
 	jr nz, .outside ; $67e5
@@ -5364,10 +5364,10 @@ IsBallInTargetZone:
 	ld h, [hl] ; $67f7
 	ld l, a ; $67f8
 	ld a, l ; $67f9
-	sub a, e ; $67fa
+	sub e ; $67fa
 	ld l, a ; $67fb
 	ld a, h ; $67fc
-	sbc a, d ; $67fd
+	sbc d ; $67fd
 	ld h, a ; $67fe
 	bit 7, h ; $67ff
 	jr z, .outside ; $6801
@@ -5384,10 +5384,10 @@ IsBallInTargetZone:
 	ld h, [hl] ; $6813
 	ld l, a ; $6814
 	ld a, l ; $6815
-	sub a, e ; $6816
+	sub e ; $6816
 	ld l, a ; $6817
 	ld a, h ; $6818
-	sbc a, d ; $6819
+	sbc d ; $6819
 	ld h, a ; $681a
 	bit 7, h ; $681b
 	jr nz, .outside ; $681d
@@ -5404,22 +5404,22 @@ IsBallInTargetZone:
 	ld h, [hl] ; $682f
 	ld l, a ; $6830
 	ld a, l ; $6831
-	sub a, e ; $6832
+	sub e ; $6832
 	ld l, a ; $6833
 	ld a, h ; $6834
-	sbc a, d ; $6835
+	sbc d ; $6835
 	ld h, a ; $6836
 	bit 7, h ; $6837
 	jr z, .outside ; $6839
 	pop af ; $683b
 	wram_bank ; $683c
-	xor a, a ; $6840
+	xor a ; $6840
 	inc a ; $6841
 	ret ; $6842
 .outside:
 	pop af ; $6843
 	wram_bank ; $6844
-	xor a, a ; $6848
+	xor a ; $6848
 	ret ; $6849
 InitChar:
 	ld [wCharIndex], a ; $684a
@@ -5432,7 +5432,7 @@ InitChar:
 	farcall LookupCharSpriteSet ; $685d
 	ld d, a ; $6860
 	ld a, e ; $6861
-	add a, $03 ; $6862
+	add $03 ; $6862
 	ld e, a ; $6864
 	farcall SetupCharacterSprite ; $6865
 	farcall LoadCharacterAttributes ; $6868
@@ -5463,10 +5463,10 @@ InitAllChars:
 	call ClearMemory16 ; $68b4
 	ld b, $00 ; $68b7
 	ld a, [wMatchIsDoubles] ; $68b9
-	and a, a ; $68bc
+	and a ; $68bc
 	jr nz, .storeShadowFlag ; $68bd
 	ld a, [$c33f] ; $68bf
-	and a, a ; $68c2
+	and a ; $68c2
 	jr nz, .storeShadowFlag ; $68c3
 	ld b, $01 ; $68c5
 .storeShadowFlag:
@@ -5528,7 +5528,7 @@ UpdateAllChars:
 	ret ; $6957
 UpdateChar:
 	ld a, [wCharObjectBank] ; $6958
-	and a, a ; $695b
+	and a ; $695b
 	ret z ; $695c
 	call UpdateCharBallGeometry ; $695d
 	call ReadCharInput ; $6960
@@ -5549,7 +5549,7 @@ SetCharPosAndTarget:
 	ld c, l ; $6988
 	ld b, h ; $6989
 	ld hl, wCharPosDepth ; $698a
-	xor a, a ; $698d
+	xor a ; $698d
 	ld [hl+], a ; $698e
 	ld a, e ; $698f
 	ld [hl+], a ; $6990
@@ -5559,7 +5559,7 @@ SetCharPosAndTarget:
 	ld [hl+], a ; $6996
 	ld [hl], d ; $6997
 	ld hl, wCharPosX ; $6998
-	xor a, a ; $699b
+	xor a ; $699b
 	ld [hl+], a ; $699c
 	ld a, c ; $699d
 	ld [hl+], a ; $699e
@@ -5569,7 +5569,7 @@ SetCharPosAndTarget:
 	ld [hl+], a ; $69a4
 	ld [hl], b ; $69a5
 	ld hl, wCharPosHeight ; $69a6
-	xor a, a ; $69a9
+	xor a ; $69a9
 	ld [hl+], a ; $69aa
 	ld [hl+], a ; $69ab
 	ld [hl+], a ; $69ac
@@ -5590,8 +5590,8 @@ SetCharTarget:
 	ret ; $69c1
 ReloadCharFrameGfx:
 	ld a, [wCharSpriteAttr] ; $69c2
-	and a, $07 ; $69c5
-	add a, $08 ; $69c7
+	and $07 ; $69c5
+	add $08 ; $69c7
 	ld d, a ; $69c9
 	ld a, [wCharGfxBank] ; $69ca
 	ld b, a ; $69cd
@@ -5600,11 +5600,11 @@ ReloadCharFrameGfx:
 	ret ; $69d4
 LoadCharChargeFlashGfx:
 	ld a, [wCharSpriteAttr] ; $69d5
-	and a, $07 ; $69d8
-	add a, $08 ; $69da
+	and $07 ; $69d8
+	add $08 ; $69da
 	ld d, a ; $69dc
 	ld a, [wCharGfxBank] ; $69dd
-	add a, $08 ; $69e0
+	add $08 ; $69e0
 	ld b, a ; $69e2
 	ld hl, $0110 ; $69e3
 	call FarCallVector ; $69e6
@@ -5612,22 +5612,22 @@ LoadCharChargeFlashGfx:
 SetCharAnimation:
 	ld hl, wCharAnimId ; $69ea
 	ld a, [hl] ; $69ed
-	cp a, d ; $69ee
+	cp d ; $69ee
 	ret z ; $69ef
 	ld [hl], d ; $69f0
-	xor a, a ; $69f1
+	xor a ; $69f1
 	ld [wCharAnimDelay], a ; $69f2
 	ld hl, wCharSpriteAttr ; $69f5
 	ld a, [hl] ; $69f8
-	and a, $0f ; $69f9
+	and $0f ; $69f9
 	ld [hl], a ; $69fb
 	ld hl, wCharAnimTablePtr ; $69fc
 	ld a, [hl+] ; $69ff
 	ld h, [hl] ; $6a00
 	ld l, a ; $6a01
 	ld a, d ; $6a02
-	add a, a ; $6a03
-	add a, l ; $6a04
+	add a ; $6a03
+	add l ; $6a04
 	ld l, a ; $6a05
 	jr nc, .readAnimPtr ; $6a06
 	inc h ; $6a08
@@ -5646,7 +5646,7 @@ SetCharAnimation:
 SetCharState:
 	ld hl, wCharState ; $6a1c
 	ld [hl+], a ; $6a1f
-	xor a, a ; $6a20
+	xor a ; $6a20
 	ld [hl+], a ; $6a21
 	ld [hl+], a ; $6a22
 	ld hl, wCharFreezeTimer ; $6a23
@@ -5661,7 +5661,7 @@ SetCharFacing:
 FlipCharPositionCode:
 	ld hl, wCharCourtPos ; $6a33
 	ld a, [hl] ; $6a36
-	xor a, b ; $6a37
+	xor b ; $6a37
 	ld [hl], a ; $6a38
 	ret ; $6a39
 ForEachCharBank:
@@ -5680,18 +5680,18 @@ ForEachCharBank:
 	wram_bank $04 ; $6a5b
 	jp hl ; $6a61
 UpdateCharStateMachine:
-	xor a, a ; $6a62
+	xor a ; $6a62
 	ld [$df56], a ; $6a63
 	ld hl, wCharFreezeTimer ; $6a66
 	ld a, [hl] ; $6a69
-	and a, a ; $6a6a
+	and a ; $6a6a
 	jr z, .dispatch ; $6a6b
 	dec [hl] ; $6a6d
 	ret ; $6a6e
 .dispatch:
 	ld hl, wCharShotComboTimer ; $6a6f
 	ld a, [hl] ; $6a72
-	and a, a ; $6a73
+	and a ; $6a73
 	jr z, .runState ; $6a74
 	dec [hl] ; $6a76
 .runState:
@@ -5712,24 +5712,24 @@ AdvanceCharStatePhase:
 	ret ; $6a8f
 CharRallyEndState:
 	ld a, [wCharAnimId] ; $6a90
-	cp a, $05 ; $6a93
+	cp $05 ; $6a93
 	jr z, .clearShot ; $6a95
-	cp a, $06 ; $6a97
+	cp $06 ; $6a97
 	jr z, .clearShot ; $6a99
-	cp a, $07 ; $6a9b
+	cp $07 ; $6a9b
 	jr z, .clearShot ; $6a9d
-	cp a, $09 ; $6a9f
+	cp $09 ; $6a9f
 	jr z, .clearShot ; $6aa1
-	cp a, $0a ; $6aa3
+	cp $0a ; $6aa3
 	jr z, .clearShot ; $6aa5
-	cp a, $0b ; $6aa7
+	cp $0b ; $6aa7
 	jr z, .clearShot ; $6aa9
-	cp a, $12 ; $6aab
+	cp $12 ; $6aab
 	jr z, .clearShot ; $6aad
 	ld hl, wCharFlags ; $6aaf
 	bit 2, [hl] ; $6ab2
 	jr nz, .clearShot ; $6ab4
-	xor a, a ; $6ab6
+	xor a ; $6ab6
 	ld [wCharShotButton1], a ; $6ab7
 	ld [wCharShotButton2], a ; $6aba
 	ld [wCharLastShotButton], a ; $6abd
@@ -5741,11 +5741,11 @@ CharRallyEndState:
 	ld hl, wCharStatePhase ; $6acc
 	inc [hl] ; $6acf
 .clearShot:
-	xor a, a ; $6ad0
+	xor a ; $6ad0
 	ld [wCharShotButton1], a ; $6ad1
 	ld [wCharShotButton2], a ; $6ad4
 	ld [$df5a], a ; $6ad7
-	xor a, a ; $6ada
+	xor a ; $6ada
 	ld [wCharChargeFlashOn], a ; $6adb
 	call EndChargeFlash ; $6ade
 	ret ; $6ae1
@@ -5760,7 +5760,7 @@ CharServeState:
 	dw AdvanceCharStatePhase.done ; $6af0 jumptable
 CharServeInitPhase:
 	call ResetBallState ; $6af2
-	xor a, a ; $6af5
+	xor a ; $6af5
 	ld [wCharShotButton1], a ; $6af6
 	ld [wCharShotButton2], a ; $6af9
 	ld [wCharLastShotButton], a ; $6afc
@@ -5768,13 +5768,13 @@ CharServeInitPhase:
 	res 0, [hl] ; $6b02
 	res 1, [hl] ; $6b04
 	ld a, [wMinigameUsesTennisMachine] ; $6b06
-	and a, a ; $6b09
+	and a ; $6b09
 	jr nz, .startAnim ; $6b0a
 	ld a, [wMinigameUsesWall] ; $6b0c
-	and a, a ; $6b0f
+	and a ; $6b0f
 	jr nz, .startAnim ; $6b10
 	ld a, [wMinigameIsBooBlast] ; $6b12
-	and a, a ; $6b15
+	and a ; $6b15
 	jr nz, .startAnim ; $6b16
 	ldh a, [hWramBank] ; $6b18
 	push af ; $6b1a
@@ -5790,7 +5790,7 @@ CharServeInitPhase:
 	ret ; $6b32
 .waitAnim:
 	ld a, [wCharAnimId] ; $6b33
-	cp a, $10 ; $6b36
+	cp $10 ; $6b36
 	jr nz, .done ; $6b38
 	ld hl, wCharStatePhase ; $6b3a
 	inc [hl] ; $6b3d
@@ -5799,7 +5799,7 @@ CharServeInitPhase:
 CharServeTossPhase:
 	call HandleServePositioning ; $6b3f
 	ld a, [wCharInputBits] ; $6b42
-	and a, PADF_A | PADF_B ; $6b45
+	and PADF_A | PADF_B ; $6b45
 	jr z, .done ; $6b47
 	ld bc, rWBK ; $6b49
 	ld hl, wCharPosDepth + 1 ; $6b4c
@@ -5850,7 +5850,7 @@ CharServeSwingWindowPhase:
 	ret ; $6ba8
 .checkButton:
 	call BufferShotButtonPress ; $6ba9
-	and a, a ; $6bac
+	and a ; $6bac
 	jr z, .done ; $6bad
 	ld a, $07 ; $6baf
 	ld [wCharSwingAnim], a ; $6bb1
@@ -5865,7 +5865,7 @@ CharServeSwingWindowPhase:
 CharServeStrikePhase:
 	call BufferShotButtonPress ; $6bc2
 	ld a, [wCharShotComboTimer] ; $6bc5
-	and a, a ; $6bc8
+	and a ; $6bc8
 	jr nz, .done ; $6bc9
 	call CaptureServeAim ; $6bcb
 	call SelectServeShotType ; $6bce
@@ -5898,17 +5898,17 @@ CharRallyReadyPhase:
 	call ApplyCharMovementInput ; $6bfd
 	call UpdateCharRunAnimation ; $6c00
 	call BufferShotButtonPress ; $6c03
-	and a, a ; $6c06
+	and a ; $6c06
 	jr z, .done ; $6c07
 	call SelectForehandBackhand ; $6c09
 	ld hl, wCharSwingAnim ; $6c0c
 	ld a, $08 ; $6c0f
-	add a, [hl] ; $6c11
+	add [hl] ; $6c11
 	ld d, a ; $6c12
 	call SetCharAnimation ; $6c13
 	ld hl, wCharFlags ; $6c16
 	set 5, [hl] ; $6c19
-	xor a, a ; $6c1b
+	xor a ; $6c1b
 	ld [wCharSwingFrames], a ; $6c1c
 	ld [$df4d], a ; $6c1f
 	ld [$df4e], a ; $6c22
@@ -5924,7 +5924,7 @@ CharSwingWindupPhase:
 	call ApplyCharMovementInput ; $6c33
 	call BufferShotButtonPress ; $6c36
 	call CheckSwingRelease ; $6c39
-	and a, a ; $6c3c
+	and a ; $6c3c
 	jr nz, .abort ; $6c3d
 	ld hl, wCharBallReachFlags ; $6c3f
 	bit 0, [hl] ; $6c42
@@ -5936,7 +5936,7 @@ CharSwingWindupPhase:
 	ld d, [hl] ; $6c4d
 	call SetCharAnimation ; $6c4e
 	sound $59 ; $6c51
-	xor a, a ; $6c53
+	xor a ; $6c53
 	ld [wCharChargeFlashOn], a ; $6c54
 	call EndChargeFlash ; $6c57
 	ld hl, wCharStatePhase ; $6c5a
@@ -5945,10 +5945,10 @@ CharSwingWindupPhase:
 .abort:
 	ld hl, wCharFlags ; $6c5f
 	res 5, [hl] ; $6c62
-	xor a, a ; $6c64
+	xor a ; $6c64
 	ld [wCharChargeFlashOn], a ; $6c65
 	call EndChargeFlash ; $6c68
-	xor a, a ; $6c6b
+	xor a ; $6c6b
 	ld [wCharShotButton1], a ; $6c6c
 	ld [wCharShotButton2], a ; $6c6f
 	ld [wCharLastShotButton], a ; $6c72
@@ -5972,9 +5972,9 @@ CharSwingContactPhase:
 	ret ; $6c98
 ResetSwingAnimation:
 	ld a, [wCharAnimId] ; $6c99
-	cp a, $08 ; $6c9c
+	cp $08 ; $6c9c
 	jr z, .toIdle ; $6c9e
-	cp a, $0c ; $6ca0
+	cp $0c ; $6ca0
 	jr z, .toIdle ; $6ca2
 	jr .checkAnim ; $6ca4
 .toIdle:
@@ -5985,9 +5985,9 @@ ResetSwingAnimation:
 	call SetCharAnimation ; $6caf
 .checkAnim:
 	ld a, [wCharAnimId] ; $6cb2
-	cp a, $01 ; $6cb5
+	cp $01 ; $6cb5
 	jr nz, .done ; $6cb7
-	xor a, a ; $6cb9
+	xor a ; $6cb9
 	ld [wCharStatePhase], a ; $6cba
 .done:
 	ret ; $6cbd
@@ -6017,11 +6017,11 @@ CharAwaitServeState:
 	ld l, a ; $6ce6
 	bit 7, h ; $6ce7
 	jr z, .waitForToss ; $6ce9
-	xor a, a ; $6ceb
-	sub a, l ; $6cec
+	xor a ; $6ceb
+	sub l ; $6cec
 	ld l, a ; $6ced
-	sbc a, a ; $6cee
-	sub a, h ; $6cef
+	sbc a ; $6cee
+	sub h ; $6cef
 	ld h, a ; $6cf0
 .waitForToss:
 	ld de, $fe00 ; $6cf1
@@ -6055,7 +6055,7 @@ CharPointEndState:
 CharPointReactionPhase:
 	call ReloadCharFrameGfx ; $6d27
 	ld a, [wCharPointResult] ; $6d2a
-	add a, a ; $6d2d
+	add a ; $6d2d
 	jr z, .advance ; $6d2e
 	ld d, $03 ; $6d30
 	jr nc, .setAnim ; $6d32
@@ -6071,7 +6071,7 @@ CharWalkToTargetPhase:
 	push af ; $6d41
 	call UpdateCharRunAnimation ; $6d42
 	pop af ; $6d45
-	and a, a ; $6d46
+	and a ; $6d46
 	jp z, AdvanceCharStatePhase ; $6d47
 	ret ; $6d4a
 UpdateCharRunAnimation:
@@ -6110,27 +6110,27 @@ StartCharSwing:
 .absOffset:
 	bit 7, h ; $6d8b
 	jr z, .compareReach ; $6d8d
-	xor a, a ; $6d8f
-	sub a, l ; $6d90
+	xor a ; $6d8f
+	sub l ; $6d90
 	ld l, a ; $6d91
-	sbc a, a ; $6d92
-	sub a, h ; $6d93
+	sbc a ; $6d92
+	sub h ; $6d93
 	ld h, a ; $6d94
 .compareReach:
 	add hl, bc ; $6d95
 	ld a, l ; $6d96
-	sub a, e ; $6d97
+	sub e ; $6d97
 	ld l, a ; $6d98
 	ld a, h ; $6d99
-	sbc a, d ; $6d9a
+	sbc d ; $6d9a
 	ld h, a ; $6d9b
 	bit 7, h ; $6d9c
 	jr z, .dive ; $6d9e
 .checkHeight:
 	ld a, [wBallVelocityHeight + 1] ; $6da0
 	ld l, a ; $6da3
-	add a, a ; $6da4
-	sbc a, a ; $6da5
+	add a ; $6da4
+	sbc a ; $6da5
 	ld h, a ; $6da6
 	add hl, hl ; $6da7
 	ld c, l ; $6da8
@@ -6170,11 +6170,11 @@ StartCharSwing:
 	ld a, [hl+] ; $6ddd
 	ld d, [hl] ; $6dde
 	ld e, a ; $6ddf
-	xor a, a ; $6de0
-	sub a, e ; $6de1
+	xor a ; $6de0
+	sub e ; $6de1
 	ld e, a ; $6de2
-	sbc a, a ; $6de3
-	sub a, d ; $6de4
+	sbc a ; $6de3
+	sub d ; $6de4
 	ld d, a ; $6de5
 	ld hl, wCharVelHeight ; $6de6
 	ld a, e ; $6de9
@@ -6206,25 +6206,25 @@ StartCharSwing:
 	call VectorFromLengthAndAngleRaw ; $6e18
 	ld c, l ; $6e1b
 	ld b, h ; $6e1c
-	xor a, a ; $6e1d
+	xor a ; $6e1d
 	ld hl, wCharVelX ; $6e1e
 	ld [hl+], a ; $6e21
 	ld [hl], c ; $6e22
-	xor a, a ; $6e23
+	xor a ; $6e23
 	ld hl, wCharVelDepth ; $6e24
 	ld [hl+], a ; $6e27
 	ld [hl], e ; $6e28
 	sound $5c ; $6e29
 	ret ; $6e2b
 .startSwing:
-	xor a, a ; $6e2c
+	xor a ; $6e2c
 	ld [$df4c], a ; $6e2d
 	ld a, [wCharSwingFrames] ; $6e30
-	cp a, $05 ; $6e33
+	cp $05 ; $6e33
 	jr nc, .chargedSwing ; $6e35
 	ld hl, wCharSwingAnim ; $6e37
 	ld a, $04 ; $6e3a
-	add a, [hl] ; $6e3c
+	add [hl] ; $6e3c
 	ld [hl], a ; $6e3d
 	ld a, $01 ; $6e3e
 	ld [$df4c], a ; $6e40
@@ -6233,14 +6233,14 @@ StartCharSwing:
 SelectForehandBackhand:
 	call PredictBallLateralOffset ; $6e44
 	ld a, [wCharMirrorAttrMask] ; $6e47
-	and a, a ; $6e4a
+	and a ; $6e4a
 	jr z, .compareSide ; $6e4b
 	ld a, h ; $6e4d
 	cpl ; $6e4e
 	ld h, a ; $6e4f
 .compareSide:
 	ld a, [wCharPosDepth + 2] ; $6e50
-	xor a, h ; $6e53
+	xor h ; $6e53
 	bit 7, a ; $6e54
 	jr nz, .backhand ; $6e56
 	ld a, $05 ; $6e58
@@ -6255,37 +6255,37 @@ UpdateCharBallGeometry:
 	ld hl, wCharPosX + 1 ; $6e67
 	ld bc, wBallRelCharX ; $6e6a
 	ld a, [de] ; $6e6d
-	sub a, [hl] ; $6e6e
+	sub [hl] ; $6e6e
 	ld [bc], a ; $6e6f
 	inc e ; $6e70
 	inc l ; $6e71
 	inc c ; $6e72
 	ld a, [de] ; $6e73
-	sbc a, [hl] ; $6e74
+	sbc [hl] ; $6e74
 	ld [bc], a ; $6e75
 	inc c ; $6e76
 	ld de, wBallDepth ; $6e77
 	ld hl, wCharPosDepth + 1 ; $6e7a
 	ld a, [de] ; $6e7d
-	sub a, [hl] ; $6e7e
+	sub [hl] ; $6e7e
 	ld [bc], a ; $6e7f
 	inc e ; $6e80
 	inc l ; $6e81
 	inc c ; $6e82
 	ld a, [de] ; $6e83
-	sbc a, [hl] ; $6e84
+	sbc [hl] ; $6e84
 	ld [bc], a ; $6e85
 	inc c ; $6e86
 	ld de, wBallHeight ; $6e87
 	ld hl, wCharPosHeight + 1 ; $6e8a
 	ld a, [de] ; $6e8d
-	sub a, [hl] ; $6e8e
+	sub [hl] ; $6e8e
 	ld [bc], a ; $6e8f
 	inc e ; $6e90
 	inc l ; $6e91
 	inc c ; $6e92
 	ld a, [de] ; $6e93
-	sbc a, [hl] ; $6e94
+	sbc [hl] ; $6e94
 	ld [bc], a ; $6e95
 	ld hl, wCharPosDepth + 1 ; $6e96
 	ld a, [hl+] ; $6e99
@@ -6293,14 +6293,14 @@ UpdateCharBallGeometry:
 	ld l, a ; $6e9b
 	bit 7, h ; $6e9c
 	jr z, .checkReach ; $6e9e
-	xor a, a ; $6ea0
-	sub a, l ; $6ea1
+	xor a ; $6ea0
+	sub l ; $6ea1
 	ld l, a ; $6ea2
-	sbc a, a ; $6ea3
-	sub a, h ; $6ea4
+	sbc a ; $6ea3
+	sub h ; $6ea4
 	ld h, a ; $6ea5
 .checkReach:
-	xor a, a ; $6ea6
+	xor a ; $6ea6
 	ld de, $fd60 ; $6ea7
 	add hl, de ; $6eaa
 	jr c, .storeFlags ; $6eab
@@ -6318,13 +6318,13 @@ UpdateCharBallGeometry:
 	ret ; $6ec4
 CheckCharBallContact:
 	ld a, [wCharShotButton1] ; $6ec5
-	and a, a ; $6ec8
+	and a ; $6ec8
 	ret nz ; $6ec9
 	ld a, [wCharState] ; $6eca
-	cp a, $01 ; $6ecd
+	cp $01 ; $6ecd
 	ret nz ; $6ecf
 	ld a, [wPointOutcome] ; $6ed0
-	and a, a ; $6ed3
+	and a ; $6ed3
 	ret nz ; $6ed4
 	ld hl, wBallRelCharDepth ; $6ed5
 	ld a, [hl+] ; $6ed8
@@ -6332,11 +6332,11 @@ CheckCharBallContact:
 	ld l, a ; $6eda
 	bit 7, h ; $6edb
 	jr z, .checkHeight ; $6edd
-	xor a, a ; $6edf
-	sub a, l ; $6ee0
+	xor a ; $6edf
+	sub l ; $6ee0
 	ld l, a ; $6ee1
-	sbc a, a ; $6ee2
-	sub a, h ; $6ee3
+	sbc a ; $6ee2
+	sub h ; $6ee3
 	ld h, a ; $6ee4
 .checkHeight:
 	ld de, $fff0 ; $6ee5
@@ -6354,19 +6354,19 @@ CheckCharBallContact:
 	ld l, a ; $6ef7
 	bit 7, h ; $6ef8
 	jr z, .checkX ; $6efa
-	xor a, a ; $6efc
-	sub a, l ; $6efd
+	xor a ; $6efc
+	sub l ; $6efd
 	ld l, a ; $6efe
-	sbc a, a ; $6eff
-	sub a, h ; $6f00
+	sbc a ; $6eff
+	sub h ; $6f00
 	ld h, a ; $6f01
 .checkX:
 	add hl, hl ; $6f02
 	ld a, l ; $6f03
-	sub a, e ; $6f04
+	sub e ; $6f04
 	ld l, a ; $6f05
 	ld a, h ; $6f06
-	sbc a, d ; $6f07
+	sbc d ; $6f07
 	ld h, a ; $6f08
 	ret nc ; $6f09
 	ld hl, wCharReachHeight ; $6f0a
@@ -6381,18 +6381,18 @@ CheckCharBallContact:
 	ld l, a ; $6f17
 	bit 7, h ; $6f18
 	jr z, .done ; $6f1a
-	xor a, a ; $6f1c
-	sub a, l ; $6f1d
+	xor a ; $6f1c
+	sub l ; $6f1d
 	ld l, a ; $6f1e
-	sbc a, a ; $6f1f
-	sub a, h ; $6f20
+	sbc a ; $6f1f
+	sub h ; $6f20
 	ld h, a ; $6f21
 .done:
 	ld a, l ; $6f22
-	sub a, e ; $6f23
+	sub e ; $6f23
 	ld l, a ; $6f24
 	ld a, h ; $6f25
-	sbc a, d ; $6f26
+	sbc d ; $6f26
 	ld h, a ; $6f27
 	ret nc ; $6f28
 	ld hl, wCharBallReachFlags ; $6f29
@@ -6473,11 +6473,11 @@ CheckBallContactWindow:
 	ld l, a ; $6fac
 	bit 7, h ; $6fad
 	jr z, .checkHeight ; $6faf
-	xor a, a ; $6fb1
-	sub a, l ; $6fb2
+	xor a ; $6fb1
+	sub l ; $6fb2
 	ld l, a ; $6fb3
-	sbc a, a ; $6fb4
-	sub a, h ; $6fb5
+	sbc a ; $6fb4
+	sub h ; $6fb5
 	ld h, a ; $6fb6
 .checkHeight:
 	ld de, $ffa0 ; $6fb7
@@ -6504,13 +6504,13 @@ CheckBallContactWindow:
 	jr .checkX ; $6fd8
 .checkState:
 	ld a, [wCharAnimId] ; $6fda
-	cp a, $05 ; $6fdd
+	cp $05 ; $6fdd
 	jr z, .checkX ; $6fdf
-	cp a, $06 ; $6fe1
+	cp $06 ; $6fe1
 	jr z, .checkX ; $6fe3
-	cp a, $09 ; $6fe5
+	cp $09 ; $6fe5
 	jr z, .checkX ; $6fe7
-	cp a, $0a ; $6fe9
+	cp $0a ; $6fe9
 	jr z, .checkX ; $6feb
 .checkX:
 	ld hl, wBallRelCharX ; $6fed
@@ -6519,18 +6519,18 @@ CheckBallContactWindow:
 	ld l, a ; $6ff2
 	bit 7, h ; $6ff3
 	jr z, .compare ; $6ff5
-	xor a, a ; $6ff7
-	sub a, l ; $6ff8
+	xor a ; $6ff7
+	sub l ; $6ff8
 	ld l, a ; $6ff9
-	sbc a, a ; $6ffa
-	sub a, h ; $6ffb
+	sbc a ; $6ffa
+	sub h ; $6ffb
 	ld h, a ; $6ffc
 .compare:
 	ld a, l ; $6ffd
-	sub a, e ; $6ffe
+	sub e ; $6ffe
 	ld l, a ; $6fff
 	ld a, h ; $7000
-	sbc a, d ; $7001
+	sbc d ; $7001
 	ld h, a ; $7002
 	ret nc ; $7003
 	ld hl, wCharReachHeight ; $7004
@@ -6546,18 +6546,18 @@ CheckBallContactWindow:
 	ld l, a ; $7012
 	bit 7, h ; $7013
 	jr z, .done ; $7015
-	xor a, a ; $7017
-	sub a, l ; $7018
+	xor a ; $7017
+	sub l ; $7018
 	ld l, a ; $7019
-	sbc a, a ; $701a
-	sub a, h ; $701b
+	sbc a ; $701a
+	sub h ; $701b
 	ld h, a ; $701c
 .done:
 	ld a, l ; $701d
-	sub a, e ; $701e
+	sub e ; $701e
 	ld l, a ; $701f
 	ld a, h ; $7020
-	sbc a, d ; $7021
+	sbc d ; $7021
 	ld h, a ; $7022
 	ret nc ; $7023
 	ld hl, wCharBallReachFlags ; $7024
@@ -6570,11 +6570,11 @@ CheckBallInSwingRange:
 	ld l, a ; $702f
 	bit 7, h ; $7030
 	jr z, .checkDepth ; $7032
-	xor a, a ; $7034
-	sub a, l ; $7035
+	xor a ; $7034
+	sub l ; $7035
 	ld l, a ; $7036
-	sbc a, a ; $7037
-	sub a, h ; $7038
+	sbc a ; $7037
+	sub h ; $7038
 	ld h, a ; $7039
 .checkDepth:
 	ld de, $ff60 ; $703a
@@ -6597,18 +6597,18 @@ CheckBallInSwingRange:
 	ld l, a ; $7053
 	bit 7, h ; $7054
 	jr z, .done ; $7056
-	xor a, a ; $7058
-	sub a, l ; $7059
+	xor a ; $7058
+	sub l ; $7059
 	ld l, a ; $705a
-	sbc a, a ; $705b
-	sub a, h ; $705c
+	sbc a ; $705b
+	sub h ; $705c
 	ld h, a ; $705d
 .done:
 	ld a, l ; $705e
-	sub a, e ; $705f
+	sub e ; $705f
 	ld l, a ; $7060
 	ld a, h ; $7061
-	sbc a, d ; $7062
+	sbc d ; $7062
 	ld h, a ; $7063
 	ret nc ; $7064
 	ld hl, wCharBallReachFlags ; $7065
@@ -6616,10 +6616,10 @@ CheckBallInSwingRange:
 	ret ; $706a
 SelectServeShotType:
 	ld a, [wCharShotButton1] ; $706b
-	add a, LOW(Data_08_707a) ; $706e
+	add LOW(Data_08_707a) ; $706e
 	ld l, a ; $7070
-	adc a, HIGH(Data_08_707a) ; $7071
-	sub a, l ; $7073
+	adc HIGH(Data_08_707a) ; $7071
+	sub l ; $7073
 	ld h, a ; $7074
 	ld a, [hl] ; $7075
 	ld [wCharShotType], a ; $7076
@@ -6629,11 +6629,11 @@ Data_08_707a:
 	db SHOTTYPE_SERVE_TOPSPIN, SHOTTYPE_SERVE_TOPSPIN, SHOTTYPE_SERVE_SLICE, SHOTTYPE_SERVE_FLAT ; 0x00
 SelectRallyShotType:
 	ld a, [wCharShotButton2] ; $707e
-	add a, a ; $7081
-	add a, a ; $7082
+	add a ; $7081
+	add a ; $7082
 	ld d, a ; $7083
 	ld a, [wCharShotButton1] ; $7084
-	add a, d ; $7087
+	add d ; $7087
 	ld e, a ; $7088
 	ld d, $00 ; $7089
 	ld hl, wCharBallReachFlags ; $708b
@@ -6700,11 +6700,11 @@ PredictBallLateralOffset:
 	ld a, [hl+] ; $70fe
 	ld h, [hl] ; $70ff
 	ld l, a ; $7100
-	xor a, a ; $7101
-	sub a, l ; $7102
+	xor a ; $7101
+	sub l ; $7102
 	ld l, a ; $7103
-	sbc a, a ; $7104
-	sub a, h ; $7105
+	sbc a ; $7104
+	sub h ; $7105
 	ld h, a ; $7106
 	call MulHLByTangent ; $7107
 	ld hl, wBallRelCharX ; $710a
@@ -6715,16 +6715,16 @@ PredictBallLateralOffset:
 	ret ; $7111
 BufferShotButtonPress:
 	ld a, [wCharInputBits] ; $7112
-	and a, PADF_A | PADF_B ; $7115
+	and PADF_A | PADF_B ; $7115
 	ret z ; $7117
 	ld b, a ; $7118
-	cp a, PADF_A | PADF_B ; $7119
+	cp PADF_A | PADF_B ; $7119
 	jr z, .done ; $711b
 	ld a, [wCharShotComboTimer] ; $711d
-	and a, a ; $7120
+	and a ; $7120
 	jr z, .startSwing ; $7121
 	ld a, [wCharLastShotButton] ; $7123
-	cp a, b ; $7126
+	cp b ; $7126
 	jr z, .startSwing ; $7127
 	ld b, $03 ; $7129
 	jr .done ; $712b
@@ -6734,16 +6734,16 @@ BufferShotButtonPress:
 	ld a, $05 ; $7131
 	ld [wCharShotComboTimer], a ; $7133
 	ld a, [wCharShotButton1] ; $7136
-	and a, a ; $7139
+	and a ; $7139
 	jr z, .done ; $713a
 	ld a, [wCharShotButton2] ; $713c
-	and a, a ; $713f
+	and a ; $713f
 	jr z, .storeShot ; $7140
 	ret ; $7142
 .storeShot:
 	ld a, b ; $7143
 	ld [wCharShotButton2], a ; $7144
-	xor a, a ; $7147
+	xor a ; $7147
 	ld [wCharShotComboTimer], a ; $7148
 	ret ; $714b
 .done:
@@ -6765,11 +6765,11 @@ CaptureServeAim:
 	ret ; $7166
 CaptureShotAim:
 	ld a, [wCharInputBits] ; $7167
-	cp a, PADF_LEFT ; $716a
+	cp PADF_LEFT ; $716a
 	jr z, .aimFarLeft ; $716c
 	bit PADB_LEFT, a ; $716e
 	jr nz, .aimLeft ; $7170
-	cp a, PADF_RIGHT ; $7172
+	cp PADF_RIGHT ; $7172
 	jr z, .aimFarRight ; $7174
 	bit PADB_RIGHT, a ; $7176
 	jr nz, .aimRight ; $7178
@@ -6796,36 +6796,36 @@ CaptureShotAim:
 	ret ; $7199
 ApplyCharMovementInput:
 	ld a, [wCharInputBits] ; $719a
-	and a, $f0 ; $719d
+	and $f0 ; $719d
 	jr z, .done ; $719f
 	swap a ; $71a1
-	add a, LOW(Data_08_7286) ; $71a3
+	add LOW(Data_08_7286) ; $71a3
 	ld l, a ; $71a5
-	adc a, HIGH(Data_08_7286) ; $71a6
-	sub a, l ; $71a8
+	adc HIGH(Data_08_7286) ; $71a6
+	sub l ; $71a8
 	ld h, a ; $71a9
 	ld a, [hl] ; $71aa
-	cp a, $ff ; $71ab
+	cp $ff ; $71ab
 	jr z, .done ; $71ad
 	ld [wCharFacingDesired], a ; $71af
 	ld a, [wCharFacingDesired] ; $71b2
 	ld hl, wCharFacingShown ; $71b5
-	sub a, [hl] ; $71b8
+	sub [hl] ; $71b8
 	bit 7, a ; $71b9
 	jr z, .checkTurnLimit ; $71bb
 	cpl ; $71bd
 	inc a ; $71be
 .checkTurnLimit:
-	cp a, $30 ; $71bf
+	cp $30 ; $71bf
 	jp nc, .done ; $71c1
 	ld a, [wCharInputBits] ; $71c4
-	and a, PADF_RIGHT | PADF_LEFT ; $71c7
+	and PADF_RIGHT | PADF_LEFT ; $71c7
 	jr z, .checkVertical ; $71c9
 	ld hl, wCharBallReachFlags ; $71cb
 	set 6, [hl] ; $71ce
 .checkVertical:
 	ld a, [wCharInputBits] ; $71d0
-	and a, PADF_UP | PADF_DOWN ; $71d3
+	and PADF_UP | PADF_DOWN ; $71d3
 	jr z, .done ; $71d5
 	ld hl, wCharBallReachFlags ; $71d7
 	set 7, [hl] ; $71da
@@ -6833,19 +6833,19 @@ ApplyCharMovementInput:
 	ret ; $71dc
 HandleServePositioning:
 	ld a, [wMinigameUsesWall] ; $71dd
-	and a, a ; $71e0
+	and a ; $71e0
 	jr nz, .receiver ; $71e1
 	ld a, [wCharInputBits] ; $71e3
-	and a, PADF_RIGHT | PADF_LEFT ; $71e6
+	and PADF_RIGHT | PADF_LEFT ; $71e6
 	jr z, .done ; $71e8
 	swap a ; $71ea
-	add a, LOW(Data_08_7286) ; $71ec
+	add LOW(Data_08_7286) ; $71ec
 	ld l, a ; $71ee
-	adc a, HIGH(Data_08_7286) ; $71ef
-	sub a, l ; $71f1
+	adc HIGH(Data_08_7286) ; $71ef
+	sub l ; $71f1
 	ld h, a ; $71f2
 	ld a, [hl] ; $71f3
-	cp a, $ff ; $71f4
+	cp $ff ; $71f4
 	jr z, .done ; $71f6
 	ld hl, $000a ; $71f8
 	call VectorFromLengthAndAngleRaw ; $71fb
@@ -6858,11 +6858,11 @@ HandleServePositioning:
 	add hl, bc ; $7206
 	bit 7, h ; $7207
 	jr z, .stepToward ; $7209
-	xor a, a ; $720b
-	sub a, l ; $720c
+	xor a ; $720b
+	sub l ; $720c
 	ld l, a ; $720d
-	sbc a, a ; $720e
-	sub a, h ; $720f
+	sbc a ; $720e
+	sub h ; $720f
 	ld h, a ; $7210
 .stepToward:
 	push hl ; $7211
@@ -6875,25 +6875,25 @@ HandleServePositioning:
 	jr c, .done ; $721d
 	ld hl, wCharPosX + 1 ; $721f
 	ld a, [hl] ; $7222
-	add a, c ; $7223
+	add c ; $7223
 	ld [hl+], a ; $7224
 	ld a, [hl] ; $7225
-	adc a, b ; $7226
+	adc b ; $7226
 	ld [hl+], a ; $7227
 .done:
 	ret ; $7228
 .receiver:
 	ld a, [wCharInputBits] ; $7229
-	and a, PADF_RIGHT | PADF_LEFT ; $722c
+	and PADF_RIGHT | PADF_LEFT ; $722c
 	jr z, .receiverDone ; $722e
 	swap a ; $7230
-	add a, LOW(Data_08_7286) ; $7232
+	add LOW(Data_08_7286) ; $7232
 	ld l, a ; $7234
-	adc a, HIGH(Data_08_7286) ; $7235
-	sub a, l ; $7237
+	adc HIGH(Data_08_7286) ; $7235
+	sub l ; $7237
 	ld h, a ; $7238
 	ld a, [hl] ; $7239
-	cp a, $ff ; $723a
+	cp $ff ; $723a
 	jr z, .receiverDone ; $723c
 	ld hl, $000a ; $723e
 	call VectorFromLengthAndAngleRaw ; $7241
@@ -6906,11 +6906,11 @@ HandleServePositioning:
 	add hl, bc ; $724c
 	bit 7, h ; $724d
 	jr z, .receiverStep ; $724f
-	xor a, a ; $7251
-	sub a, l ; $7252
+	xor a ; $7251
+	sub l ; $7252
 	ld l, a ; $7253
-	sbc a, a ; $7254
-	sub a, h ; $7255
+	sbc a ; $7254
+	sub h ; $7255
 	ld h, a ; $7256
 .receiverStep:
 	ld de, $fe80 ; $7257
@@ -6918,30 +6918,30 @@ HandleServePositioning:
 	jr c, .receiverDone ; $725b
 	ld hl, wCharPosX + 1 ; $725d
 	ld a, [hl] ; $7260
-	add a, c ; $7261
+	add c ; $7261
 	ld [hl+], a ; $7262
 	ld a, [hl] ; $7263
-	adc a, b ; $7264
+	adc b ; $7264
 	ld [hl+], a ; $7265
 .receiverDone:
 	ret ; $7266
 CheckSwingRelease:
 	ld a, [wCharInputBits] ; $7267
-	and a, PADF_SELECT ; $726a
+	and PADF_SELECT ; $726a
 	jr z, .tickTimer ; $726c
-	xor a, a ; $726e
+	xor a ; $726e
 	ld [$df4d], a ; $726f
 	ld [$df4e], a ; $7272
 	ld a, $01 ; $7275
 	ret ; $7277
 	ld a, b ; $7278
 	ld [$df4d], a ; $7279
-	xor a, a ; $727c
+	xor a ; $727c
 	ld [$df4e], a ; $727d
 .tickTimer:
 	ld hl, $df4e ; $7280
 	inc [hl] ; $7283
-	xor a, a ; $7284
+	xor a ; $7284
 	ret ; $7285
 Data_08_7286:
 	; $7286, 16 bytes (bytes:8)
@@ -6965,14 +6965,14 @@ StepCharJumpPhysics:
 	ld hl, wCharVelHeight ; $72bf
 	ld de, $0090 ; $72c2
 	ld a, [hl] ; $72c5
-	add a, e ; $72c6
+	add e ; $72c6
 	ld [hl+], a ; $72c7
 	ld a, [hl] ; $72c8
-	adc a, d ; $72c9
+	adc d ; $72c9
 	ld [hl+], a ; $72ca
 	ret ; $72cb
 .clearHeight:
-	xor a, a ; $72cc
+	xor a ; $72cc
 	ld hl, wCharPosHeight ; $72cd
 	ld [hl+], a ; $72d0
 	ld [hl+], a ; $72d1
@@ -7011,7 +7011,7 @@ StepCharMovement:
 	ld hl, wCharFlags ; $7309
 	res 6, [hl] ; $730c
 	ld a, [wCharInputSource] ; $730e
-	cp a, $01 ; $7311
+	cp $01 ; $7311
 	jp z, .unclamped ; $7313
 	push de ; $7316
 	ld e, c ; $7317
@@ -7113,7 +7113,7 @@ StepCharMovement:
 	ret ; $73c9
 UpdateCharVelocityFromInput:
 	ld a, [$df56] ; $73ca
-	and a, a ; $73cd
+	and a ; $73cd
 	ret nz ; $73ce
 	ld hl, wCharFlags ; $73cf
 	bit 1, [hl] ; $73d2
@@ -7159,16 +7159,16 @@ UpdateCharVelocityFromInput:
 	set 4, [hl] ; $7421
 	ld hl, wCharVelX ; $7423
 	ld a, [hl+] ; $7426
-	or a, [hl] ; $7427
+	or [hl] ; $7427
 	inc hl ; $7428
-	or a, [hl] ; $7429
+	or [hl] ; $7429
 	inc hl ; $742a
-	or a, [hl] ; $742b
+	or [hl] ; $742b
 	jr nz, .done ; $742c
 	ld hl, wCharFlags ; $742e
 	res 4, [hl] ; $7431
 	ld a, [wCharInputBits] ; $7433
-	and a, $f0 ; $7436
+	and $f0 ; $7436
 	jr nz, .done ; $7438
 	ld a, [wCharBaseFacing] ; $743a
 	ld [wCharFacingDesired], a ; $743d
@@ -7187,10 +7187,10 @@ AccelerateCharDepth:
 	ld d, h ; $7450
 	ld hl, wCharVelDepth ; $7451
 	ld a, [hl] ; $7454
-	add a, e ; $7455
+	add e ; $7455
 	ld [hl+], a ; $7456
 	ld a, [hl] ; $7457
-	adc a, d ; $7458
+	adc d ; $7458
 	ld [hl+], a ; $7459
 	ret ; $745a
 AccelerateCharX:
@@ -7206,10 +7206,10 @@ AccelerateCharX:
 	ld d, h ; $746a
 	ld hl, wCharVelX ; $746b
 	ld a, [hl] ; $746e
-	add a, e ; $746f
+	add e ; $746f
 	ld [hl+], a ; $7470
 	ld a, [hl] ; $7471
-	adc a, d ; $7472
+	adc d ; $7472
 	ld [hl+], a ; $7473
 	ret ; $7474
 DecelerateCharDepth:
@@ -7218,7 +7218,7 @@ DecelerateCharDepth:
 	ld d, [hl] ; $7479
 	ld e, a ; $747a
 	ld a, d ; $747b
-	or a, e ; $747c
+	or e ; $747c
 	ret z ; $747d
 	ld hl, $df66 ; $747e
 	ld a, [hl+] ; $7481
@@ -7226,16 +7226,16 @@ DecelerateCharDepth:
 	ld l, a ; $7483
 	bit 7, d ; $7484
 	jr nz, .negate ; $7486
-	xor a, a ; $7488
-	sub a, l ; $7489
+	xor a ; $7488
+	sub l ; $7489
 	ld l, a ; $748a
-	sbc a, a ; $748b
-	sub a, h ; $748c
+	sbc a ; $748b
+	sub h ; $748c
 	ld h, a ; $748d
 .negate:
 	add hl, de ; $748e
 	ld a, d ; $748f
-	xor a, h ; $7490
+	xor h ; $7490
 	bit 7, a ; $7491
 	jr z, .apply ; $7493
 	ld hl, $0000 ; $7495
@@ -7251,7 +7251,7 @@ DecelerateCharX:
 	ld d, [hl] ; $74a5
 	ld e, a ; $74a6
 	ld a, d ; $74a7
-	or a, e ; $74a8
+	or e ; $74a8
 	ret z ; $74a9
 	ld hl, $df66 ; $74aa
 	ld a, [hl+] ; $74ad
@@ -7264,16 +7264,16 @@ DecelerateCharX:
 .negate:
 	bit 7, d ; $74ba
 	jr nz, .apply ; $74bc
-	xor a, a ; $74be
-	sub a, l ; $74bf
+	xor a ; $74be
+	sub l ; $74bf
 	ld l, a ; $74c0
-	sbc a, a ; $74c1
-	sub a, h ; $74c2
+	sbc a ; $74c1
+	sub h ; $74c2
 	ld h, a ; $74c3
 .apply:
 	add hl, de ; $74c4
 	ld a, d ; $74c5
-	xor a, h ; $74c6
+	xor h ; $74c6
 	bit 7, a ; $74c7
 	jr z, .store ; $74c9
 	ld hl, $0000 ; $74cb
@@ -7300,24 +7300,24 @@ ClampCharDepthSpeed:
 	ld l, a ; $74ec
 	bit 7, h ; $74ed
 	jr z, .clamp ; $74ef
-	xor a, a ; $74f1
-	sub a, l ; $74f2
+	xor a ; $74f1
+	sub l ; $74f2
 	ld l, a ; $74f3
-	sbc a, a ; $74f4
-	sub a, h ; $74f5
+	sbc a ; $74f4
+	sub h ; $74f5
 	ld h, a ; $74f6
-	xor a, a ; $74f7
-	sub a, c ; $74f8
+	xor a ; $74f7
+	sub c ; $74f8
 	ld c, a ; $74f9
-	sbc a, a ; $74fa
-	sub a, b ; $74fb
+	sbc a ; $74fa
+	sub b ; $74fb
 	ld b, a ; $74fc
 .clamp:
 	ld a, c ; $74fd
-	sub a, l ; $74fe
+	sub l ; $74fe
 	ld c, a ; $74ff
 	ld a, b ; $7500
-	sbc a, h ; $7501
+	sbc h ; $7501
 	ld b, a ; $7502
 	jr nc, .done ; $7503
 	ld hl, wCharVelDepth ; $7505
@@ -7343,24 +7343,24 @@ ClampCharXSpeed:
 	ld l, a ; $7521
 	bit 7, h ; $7522
 	jr z, .clamp ; $7524
-	xor a, a ; $7526
-	sub a, l ; $7527
+	xor a ; $7526
+	sub l ; $7527
 	ld l, a ; $7528
-	sbc a, a ; $7529
-	sub a, h ; $752a
+	sbc a ; $7529
+	sub h ; $752a
 	ld h, a ; $752b
-	xor a, a ; $752c
-	sub a, c ; $752d
+	xor a ; $752c
+	sub c ; $752d
 	ld c, a ; $752e
-	sbc a, a ; $752f
-	sub a, b ; $7530
+	sbc a ; $752f
+	sub b ; $7530
 	ld b, a ; $7531
 .clamp:
 	ld a, c ; $7532
-	sub a, l ; $7533
+	sub l ; $7533
 	ld c, a ; $7534
 	ld a, b ; $7535
-	sbc a, h ; $7536
+	sbc h ; $7536
 	ld b, a ; $7537
 	jr nc, .done ; $7538
 	ld hl, wCharVelX ; $753a
@@ -7371,7 +7371,7 @@ ClampCharXSpeed:
 	ret ; $7540
 MoveCharTowardTarget:
 	call CheckCharNearTarget ; $7541
-	and a, a ; $7544
+	and a ; $7544
 	jp nz, .toward ; $7545
 	ld hl, wCharPosX + 1 ; $7548
 	ld a, [hl+] ; $754b
@@ -7382,10 +7382,10 @@ MoveCharTowardTarget:
 	ld d, [hl] ; $7552
 	ld e, a ; $7553
 	ld a, e ; $7554
-	sub a, c ; $7555
+	sub c ; $7555
 	ld e, a ; $7556
 	ld a, d ; $7557
-	sbc a, b ; $7558
+	sbc b ; $7558
 	ld d, a ; $7559
 	ld hl, wCharPosDepth + 1 ; $755a
 	ld a, [hl+] ; $755d
@@ -7396,10 +7396,10 @@ MoveCharTowardTarget:
 	ld h, [hl] ; $7564
 	ld l, a ; $7565
 	ld a, l ; $7566
-	sub a, c ; $7567
+	sub c ; $7567
 	ld l, a ; $7568
 	ld a, h ; $7569
-	sbc a, b ; $756a
+	sbc b ; $756a
 	ld h, a ; $756b
 	call AngleFromVectorCoarse ; $756c
 	ld [wCharFacingDesired], a ; $756f
@@ -7437,7 +7437,7 @@ MoveCharTowardTarget:
 	ld a, c ; $75ae
 	ld [hl+], a ; $75af
 	ld [hl], b ; $75b0
-	xor a, a ; $75b1
+	xor a ; $75b1
 	ld hl, wCharVelX ; $75b2
 	ld [hl+], a ; $75b5
 	ld [hl+], a ; $75b6
@@ -7445,7 +7445,7 @@ MoveCharTowardTarget:
 	ld [hl+], a ; $75b8
 	ld hl, wCharFlags ; $75b9
 	res 4, [hl] ; $75bc
-	xor a, a ; $75be
+	xor a ; $75be
 	ret ; $75bf
 EaseCharFacing:
 	ld hl, wCharFlags ; $75c0
@@ -7455,58 +7455,58 @@ EaseCharFacing:
 	ld b, a ; $75c9
 	ld a, [wCharFacingDesired] ; $75ca
 	ld hl, wCharFacingShown ; $75cd
-	sub a, [hl] ; $75d0
+	sub [hl] ; $75d0
 	ret z ; $75d1
 	bit 7, a ; $75d2
 	jr nz, .negative ; $75d4
-	cp a, b ; $75d6
+	cp b ; $75d6
 	jr c, .stepUp ; $75d7
 	ld a, b ; $75d9
 .stepUp:
-	add a, [hl] ; $75da
+	add [hl] ; $75da
 	ld [hl], a ; $75db
 	ret ; $75dc
 .negative:
 	cpl ; $75dd
 	inc a ; $75de
-	cp a, b ; $75df
+	cp b ; $75df
 	jr c, .stepDown ; $75e0
 	ld a, b ; $75e2
 .stepDown:
 	cpl ; $75e3
 	inc a ; $75e4
-	add a, [hl] ; $75e5
+	add [hl] ; $75e5
 	ld [hl], a ; $75e6
 	ret ; $75e7
 UpdateCharFacingOctant:
 	ld a, [wCharAnimId] ; $75e8
-	cp a, $02 ; $75eb
+	cp $02 ; $75eb
 	jr z, .mirrored ; $75ed
-	cp a, $01 ; $75ef
+	cp $01 ; $75ef
 	jr z, .mirrored ; $75f1
-	cp a, $12 ; $75f3
+	cp $12 ; $75f3
 	jr z, .easeToShown ; $75f5
 	ld a, [wCharBaseFacing] ; $75f7
 	jr .toOctant ; $75fa
 .easeToShown:
 	ld a, [wCharFacingShown] ; $75fc
 	ld hl, wCharBaseFacing ; $75ff
-	sub a, [hl] ; $7602
+	sub [hl] ; $7602
 	sra a ; $7603
-	add a, [hl] ; $7605
+	add [hl] ; $7605
 	jr .toOctant ; $7606
 .mirrored:
 	ld a, [wCharFacingShown] ; $7608
-	add a, $10 ; $760b
+	add $10 ; $760b
 .toOctant:
 	rlca ; $760d
 	rlca ; $760e
 	rlca ; $760f
-	and a, $07 ; $7610
+	and $07 ; $7610
 	ld d, a ; $7612
 	ld hl, wCharFacingOctant ; $7613
 	ld a, [hl] ; $7616
-	cp a, d ; $7617
+	cp d ; $7617
 	jr z, .store ; $7618
 	ld [hl], d ; $761a
 	ld hl, wCharSpriteDirty ; $761b
@@ -7519,18 +7519,18 @@ ReloadCharFacingTiles:
 	ret z ; $7626
 	res 6, [hl] ; $7627
 	ld a, d ; $7629
-	add a, LOW(Data_08_7643) ; $762a
+	add LOW(Data_08_7643) ; $762a
 	ld l, a ; $762c
-	adc a, HIGH(Data_08_7643) ; $762d
-	sub a, l ; $762f
+	adc HIGH(Data_08_7643) ; $762d
+	sub l ; $762f
 	ld h, a ; $7630
 	ld d, [hl] ; $7631
 	ld a, [wCharAnimFrame] ; $7632
 	ld e, a ; $7635
-	add a, a ; $7636
-	add a, a ; $7637
-	add a, e ; $7638
-	add a, d ; $7639
+	add a ; $7636
+	add a ; $7637
+	add e ; $7638
+	add d ; $7639
 	ld h, $00 ; $763a
 	ld l, a ; $763c
 	add hl, hl ; $763d
@@ -7542,16 +7542,16 @@ Data_08_7643:
 	db $02, $03, $04, $03, $02, $01, $00, $01 ; 0x00
 UpdateChargeFlash:
 	ld a, [wCharChargeFlashOn] ; $764b
-	and a, a ; $764e
+	and a ; $764e
 	ret z ; $764f
 	ld a, [wCharSwingFrames] ; $7650
-	cp a, $14 ; $7653
+	cp $14 ; $7653
 	ret c ; $7655
-	and a, $04 ; $7656
+	and $04 ; $7656
 	jr z, EndChargeFlash ; $7658
 	ld hl, $df52 ; $765a
 	ld a, [hl] ; $765d
-	and a, a ; $765e
+	and a ; $765e
 	ret nz ; $765f
 	ld [hl], $01 ; $7660
 	call LoadCharChargeFlashGfx ; $7662
@@ -7559,7 +7559,7 @@ UpdateChargeFlash:
 EndChargeFlash:
 	ld hl, $df52 ; $7666
 	ld a, [hl] ; $7669
-	and a, a ; $766a
+	and a ; $766a
 	ret z ; $766b
 	ld [hl], $00 ; $766c
 	call ReloadCharFrameGfx ; $766e
@@ -7584,11 +7584,11 @@ BuildCharSpriteSlots:
 	ld a, e ; $768e
 	ld [wCharScreenY], a ; $768f
 	ld a, d ; $7692
-	add a, $08 ; $7693
-	cp a, $b0 ; $7695
+	add $08 ; $7693
+	cp $b0 ; $7695
 	jr nc, DrawOffscreenCharArrow ; $7697
 	ld a, e ; $7699
-	cp a, $a0 ; $769a
+	cp $a0 ; $769a
 	jr nc, DrawOffscreenCharArrow ; $769c
 	ld hl, wCharPosDepth + 1 ; $769e
 	ld a, [hl+] ; $76a1
@@ -7598,29 +7598,29 @@ BuildCharSpriteSlots:
 	add hl, hl ; $76a5
 	add hl, hl ; $76a6
 	ld a, h ; $76a7
-	add a, $80 ; $76a8
+	add $80 ; $76a8
 	ld [wCharDepthKey], a ; $76aa
 	ld a, [wCharFacingOctant] ; $76ad
-	add a, LOW(Data_08_76fc) ; $76b0
+	add LOW(Data_08_76fc) ; $76b0
 	ld l, a ; $76b2
-	adc a, HIGH(Data_08_76fc) ; $76b3
-	sub a, l ; $76b5
+	adc HIGH(Data_08_76fc) ; $76b3
+	sub l ; $76b5
 	ld h, a ; $76b6
 	ld a, [wCharSpriteAttr] ; $76b7
-	or a, $08 ; $76ba
-	xor a, [hl] ; $76bc
+	or $08 ; $76ba
+	xor [hl] ; $76bc
 	ld b, a ; $76bd
 	ld a, [wCharTileBase] ; $76be
 	ld c, a ; $76c1
 	ld a, [wCharFacingOctant] ; $76c2
-	cp a, $02 ; $76c5
+	cp $02 ; $76c5
 	jr z, .mirrorSprite ; $76c7
-	cp a, $06 ; $76c9
+	cp $06 ; $76c9
 	jr z, .mirrorSprite ; $76cb
 	jr .store ; $76cd
 .mirrorSprite:
 	ld a, [wCharMirrorAttrMask] ; $76cf
-	xor a, b ; $76d2
+	xor b ; $76d2
 	ld b, a ; $76d3
 .store:
 	ld hl, wCharSpriteSlot ; $76d4
@@ -7632,13 +7632,13 @@ BuildCharSpriteSlots:
 	ld [hl+], a ; $76dc
 	ld [hl], d ; $76dd
 	ld a, [wStandingShadowsEnabled] ; $76de
-	and a, a ; $76e1
+	and a ; $76e1
 	ret z ; $76e2
 	ld hl, wCharFlags ; $76e3
 	bit 2, [hl] ; $76e6
 	ret nz ; $76e8
 	ldh a, [$ffe9] ; $76e9
-	and a, $01 ; $76eb
+	and $01 ; $76eb
 	ret z ; $76ed
 	ld hl, wCharGroundShadowSlot ; $76ee
 	ld bc, $0858 ; $76f1
@@ -7655,14 +7655,14 @@ Data_08_76fc:
 	db $00, $00, $00, $20, $20, $20, $00, $00 ; 0x00
 DrawOffscreenCharArrow:
 	ld a, [wOffscreenArrowsEnabled] ; $7704
-	and a, a ; $7707
+	and a ; $7707
 	ret z ; $7708
 	ldh a, [$ffe9] ; $7709
-	and a, $01 ; $770b
+	and $01 ; $770b
 	ret z ; $770d
 	ld a, d ; $770e
-	add a, $f8 ; $770f
-	cp a, $90 ; $7711
+	add $f8 ; $770f
+	cp $90 ; $7711
 	jr c, .clampDepth ; $7713
 	ld a, [wCharPosX + 2] ; $7715
 	bit 7, a ; $7718
@@ -7671,8 +7671,8 @@ DrawOffscreenCharArrow:
 	ld d, $98 ; $771e
 .clampDepth:
 	ld a, e ; $7720
-	add a, $f0 ; $7721
-	cp a, $80 ; $7723
+	add $f0 ; $7721
+	cp $80 ; $7723
 	jr c, .queue ; $7725
 	ld a, [wCharPosDepth + 2] ; $7727
 	bit 7, a ; $772a
@@ -7684,10 +7684,10 @@ DrawOffscreenCharArrow:
 	ld b, a ; $7735
 	res 5, b ; $7736
 	ld a, [wCharIndex] ; $7738
-	add a, a ; $773b
-	add a, a ; $773c
-	add a, a ; $773d
-	add a, $00 ; $773e
+	add a ; $773b
+	add a ; $773c
+	add a ; $773d
+	add $00 ; $773e
 	ld c, a ; $7740
 	call QueueSprite16 ; $7741
 	ret ; $7744
@@ -7712,15 +7712,15 @@ BuildAirborneShadowSlot:
 	ld l, a ; $7765
 	bit 7, h ; $7766
 	jr z, .fillSlot ; $7768
-	xor a, a ; $776a
-	sub a, l ; $776b
+	xor a ; $776a
+	sub l ; $776b
 	ld l, a ; $776c
-	sbc a, a ; $776d
-	sub a, h ; $776e
+	sbc a ; $776d
+	sub h ; $776e
 	ld h, a ; $776f
 .fillSlot:
 	ld bc, $ffe0 ; $7770
-	xor a, a ; $7773
+	xor a ; $7773
 	add hl, bc ; $7774
 	jr nc, .done ; $7775
 	inc a ; $7777
@@ -7732,8 +7732,8 @@ BuildAirborneShadowSlot:
 	inc a ; $777f
 .done:
 	ld bc, $0850 ; $7780
-	add a, a ; $7783
-	add a, c ; $7784
+	add a ; $7783
+	add c ; $7784
 	ld c, a ; $7785
 	ld hl, wCharAirShadowSlot ; $7786
 	ld a, c ; $7789
@@ -7746,7 +7746,7 @@ BuildAirborneShadowSlot:
 	ret ; $7790
 StepCharAnimation:
 	ld a, [wCharAnimDelay] ; $7791
-	and a, a ; $7794
+	and a ; $7794
 	jr nz, .keepFrame ; $7795
 .nextCommand:
 	ld hl, wCharAnimScriptPtr ; $7797
@@ -7758,13 +7758,13 @@ StepCharAnimation:
 	ld e, c ; $77a3
 	ld d, b ; $77a4
 	ld a, e ; $77a5
-	cp a, $f0 ; $77a6
+	cp $f0 ; $77a6
 	jr c, .setDelay ; $77a8
-	cp a, $ff ; $77aa
+	cp $ff ; $77aa
 	jr z, .jumpToFrames ; $77ac
-	cp a, $fe ; $77ae
+	cp $fe ; $77ae
 	jr z, .setAnimation ; $77b0
-	cp a, $fb ; $77b2
+	cp $fb ; $77b2
 	jr z, .toggleFlip ; $77b4
 	ld a, $ff ; $77b6
 	ld [wCharAnimDelay], a ; $77b8
@@ -7772,10 +7772,10 @@ StepCharAnimation:
 .jumpToFrames:
 	ld hl, wCharAnimScriptBase ; $77bd
 	ld a, [hl+] ; $77c0
-	add a, d ; $77c1
+	add d ; $77c1
 	ld [wCharAnimScriptPtr], a ; $77c2
 	ld a, [hl+] ; $77c5
-	adc a, $00 ; $77c6
+	adc $00 ; $77c6
 	ld [wCharAnimScriptPtr + 1], a ; $77c8
 	jr .nextCommand ; $77cb
 .setAnimation:
@@ -7784,12 +7784,12 @@ StepCharAnimation:
 .toggleFlip:
 	ld hl, wCharSpriteAttr ; $77d2
 	ld a, [hl] ; $77d5
-	and a, $0f ; $77d6
-	xor a, d ; $77d8
+	and $0f ; $77d6
+	xor d ; $77d8
 	ld [hl], a ; $77d9
 	ld hl, wCharAnimScriptPtr ; $77da
 	ld a, [hl] ; $77dd
-	add a, $02 ; $77de
+	add $02 ; $77de
 	ld [hl+], a ; $77e0
 	jr nc, .nextCommand ; $77e1
 	inc [hl] ; $77e3
@@ -7799,7 +7799,7 @@ StepCharAnimation:
 	ld [wCharAnimDelay], a ; $77e7
 	ld hl, wCharAnimScriptPtr ; $77ea
 	ld a, [hl] ; $77ed
-	add a, $02 ; $77ee
+	add $02 ; $77ee
 	ld [hl+], a ; $77f0
 	jr nc, .storeFrame ; $77f1
 	inc [hl] ; $77f3
@@ -7812,7 +7812,7 @@ StepCharAnimation:
 	dec [hl] ; $77fd
 	ld hl, wCharAnimFrame ; $77fe
 	ld a, [hl] ; $7801
-	cp a, e ; $7802
+	cp e ; $7802
 	jr z, .done ; $7803
 	ld [hl], e ; $7805
 	ld hl, wCharSpriteDirty ; $7806
@@ -7820,14 +7820,14 @@ StepCharAnimation:
 .done:
 	ret ; $780b
 ReadCharInput:
-	xor a, a ; $780c
+	xor a ; $780c
 	ld [wCharInputBits], a ; $780d
 	ld a, [wCharInputSource] ; $7810
-	add a, a ; $7813
-	add a, LOW(CharInputPtrs) ; $7814
+	add a ; $7813
+	add LOW(CharInputPtrs) ; $7814
 	ld l, a ; $7816
-	adc a, HIGH(CharInputPtrs) ; $7817
-	sub a, l ; $7819
+	adc HIGH(CharInputPtrs) ; $7817
+	sub l ; $7819
 	ld h, a ; $781a
 	ld a, [hl+] ; $781b
 	ld h, [hl] ; $781c
@@ -7848,16 +7848,16 @@ Label_08_782d:
 	ret ; $7832
 Label_08_7833:
 	ldh a, [hLinkState] ; $7833
-	cp a, $02 ; $7835
+	cp $02 ; $7835
 	jr z, Label_08_783f.remoteLive ; $7837
-	cp a, $01 ; $7839
+	cp $01 ; $7839
 	jr z, Label_08_783f.remoteBuffered ; $783b
 	jr ReadCharPadInput ; $783d
 Label_08_783f:
 	ldh a, [hLinkState] ; $783f
-	cp a, $02 ; $7841
+	cp $02 ; $7841
 	jr z, .remoteBuffered ; $7843
-	cp a, $01 ; $7845
+	cp $01 ; $7845
 	jr z, .remoteLive ; $7847
 	jr ReadCharPadInput ; $7849
 .remoteBuffered:
@@ -7870,32 +7870,32 @@ Label_08_783f:
 	ret ; $7854
 ReadCharPadInput:
 	ldh a, [hPlayerInputFlags] ; $7855
-	and a, $f0 ; $7857
+	and $f0 ; $7857
 	ld c, a ; $7859
 	ldh a, [hInputRisingEdge] ; $785a
-	and a, $0f ; $785c
-	or a, c ; $785e
+	and $0f ; $785c
+	or c ; $785e
 	ld [wCharInputBits], a ; $785f
 	ret ; $7862
 Label_08_7863:
 	ld hl, wAiActionTimer ; $7863
 	ld a, [hl] ; $7866
-	and a, a ; $7867
+	and a ; $7867
 	jr z, .player2 ; $7868
 	dec [hl] ; $786a
 	ret ; $786b
 .player2:
 	ld hl, $df13 ; $786c
 	ld a, [hl] ; $786f
-	and a, a ; $7870
+	and a ; $7870
 	jr z, .maskInput ; $7871
 	dec [hl] ; $7873
 .maskInput:
 	ld a, [wMatchIsDoubles] ; $7874
-	and a, a ; $7877
+	and a ; $7877
 	jr z, .store ; $7878
 	ld a, [wCharServeRole] ; $787a
-	and a, $02 ; $787d
+	and $02 ; $787d
 	jp z, .checkCpu ; $787f
 	ld a, [wCharState] ; $7882
 	rst Rst00 ; $7885
@@ -7939,18 +7939,18 @@ CheckCharNearTarget:
 	ld h, [hl] ; $78c8
 	ld l, a ; $78c9
 	ld a, l ; $78ca
-	sub a, c ; $78cb
+	sub c ; $78cb
 	ld l, a ; $78cc
 	ld a, h ; $78cd
-	sbc a, b ; $78ce
+	sbc b ; $78ce
 	ld h, a ; $78cf
 	bit 7, h ; $78d0
 	jr z, .absX ; $78d2
-	xor a, a ; $78d4
-	sub a, l ; $78d5
+	xor a ; $78d4
+	sub l ; $78d5
 	ld l, a ; $78d6
-	sbc a, a ; $78d7
-	sub a, h ; $78d8
+	sbc a ; $78d7
+	sub h ; $78d8
 	ld h, a ; $78d9
 .absX:
 	ld de, $ffe8 ; $78da
@@ -7965,28 +7965,28 @@ CheckCharNearTarget:
 	ld h, [hl] ; $78ea
 	ld l, a ; $78eb
 	ld a, l ; $78ec
-	sub a, c ; $78ed
+	sub c ; $78ed
 	ld l, a ; $78ee
 	ld a, h ; $78ef
-	sbc a, b ; $78f0
+	sbc b ; $78f0
 	ld h, a ; $78f1
 	bit 7, h ; $78f2
 	jr z, .absDepth ; $78f4
-	xor a, a ; $78f6
-	sub a, l ; $78f7
+	xor a ; $78f6
+	sub l ; $78f7
 	ld l, a ; $78f8
-	sbc a, a ; $78f9
-	sub a, h ; $78fa
+	sbc a ; $78f9
+	sub h ; $78fa
 	ld h, a ; $78fb
 .absDepth:
 	ld de, $ffe8 ; $78fc
 	add hl, de ; $78ff
 	jr c, .tooFar ; $7900
 	ld a, $01 ; $7902
-	and a, a ; $7904
+	and a ; $7904
 	ret ; $7905
 .tooFar:
-	xor a, a ; $7906
+	xor a ; $7906
 	ret ; $7907
 AiSteerTowardTarget:
 	ld hl, wCharPosX + 1 ; $7908
@@ -7998,10 +7998,10 @@ AiSteerTowardTarget:
 	ld d, [hl] ; $7912
 	ld e, a ; $7913
 	ld a, e ; $7914
-	sub a, c ; $7915
+	sub c ; $7915
 	ld e, a ; $7916
 	ld a, d ; $7917
-	sbc a, b ; $7918
+	sbc b ; $7918
 	ld d, a ; $7919
 	ld hl, wCharPosDepth + 1 ; $791a
 	ld a, [hl+] ; $791d
@@ -8012,22 +8012,22 @@ AiSteerTowardTarget:
 	ld h, [hl] ; $7924
 	ld l, a ; $7925
 	ld a, l ; $7926
-	sub a, c ; $7927
+	sub c ; $7927
 	ld l, a ; $7928
 	ld a, h ; $7929
-	sbc a, b ; $792a
+	sbc b ; $792a
 	ld h, a ; $792b
 	call AngleFromVectorCoarse ; $792c
 	swap a ; $792f
-	and a, $0f ; $7931
-	add a, LOW(Data_08_7296) ; $7933
+	and $0f ; $7931
+	add LOW(Data_08_7296) ; $7933
 	ld l, a ; $7935
-	adc a, HIGH(Data_08_7296) ; $7936
-	sub a, l ; $7938
+	adc HIGH(Data_08_7296) ; $7936
+	sub l ; $7938
 	ld h, a ; $7939
 	ld a, [wCharInputBits] ; $793a
-	and a, $0f ; $793d
-	or a, [hl] ; $793f
+	and $0f ; $793d
+	or [hl] ; $793f
 	ld [wCharInputBits], a ; $7940
 	ret ; $7943
 AiSteerTowardBall:
@@ -8041,15 +8041,15 @@ AiSteerTowardBall:
 	ld l, a ; $794f
 	call AngleFromVectorCoarse ; $7950
 	swap a ; $7953
-	and a, $0f ; $7955
-	add a, LOW(Data_08_7296) ; $7957
+	and $0f ; $7955
+	add LOW(Data_08_7296) ; $7957
 	ld l, a ; $7959
-	adc a, HIGH(Data_08_7296) ; $795a
-	sub a, l ; $795c
+	adc HIGH(Data_08_7296) ; $795a
+	sub l ; $795c
 	ld h, a ; $795d
 	ld a, [wCharInputBits] ; $795e
-	and a, $0f ; $7961
-	or a, [hl] ; $7963
+	and $0f ; $7961
+	or [hl] ; $7963
 	ld [wCharInputBits], a ; $7964
 	ret ; $7967
 AiAdvancePhase:
@@ -8062,11 +8062,11 @@ AiRushToBallLanding:
 	call OffsetFromBallLanding ; $7970
 	bit 7, d ; $7973
 	jr z, .clampTarget ; $7975
-	xor a, a ; $7977
-	sub a, e ; $7978
+	xor a ; $7977
+	sub e ; $7978
 	ld e, a ; $7979
-	sbc a, a ; $797a
-	sub a, d ; $797b
+	sbc a ; $797a
+	sub d ; $797b
 	ld d, a ; $797c
 .clampTarget:
 	push hl ; $797d
@@ -8115,16 +8115,16 @@ AiSetMirroredTarget:
 	jp AiAdvancePhase ; $79d6
 AiIsIncomingDropOrLobShot:
 	ld a, [wCurrentShotType] ; $79d9
-	cp a, SHOTTYPE_DROP ; $79dc
+	cp SHOTTYPE_DROP ; $79dc
 	jr z, ReturnOne_08 ; $79de
 AiIsIncomingLobShot:
 	ld a, [wCurrentShotType] ; $79e0
-	cp a, SHOTTYPE_LOB ; $79e3
+	cp SHOTTYPE_LOB ; $79e3
 	jr z, ReturnOne_08 ; $79e5
 	ld a, [wFallbackTrajectoryFlag] ; $79e7
-	and a, a ; $79ea
+	and a ; $79ea
 	jr nz, ReturnOne_08 ; $79eb
-	xor a, a ; $79ed
+	xor a ; $79ed
 	ret ; $79ee
 ReturnOne_08:
 	ld a, $01 ; $79ef
@@ -8140,22 +8140,22 @@ AiServeState:
 	dw AiPhaseNoop ; $7a00 jumptable
 AiServeWalkToSpot:
 	ld a, [wCharAnimId] ; $7a02
-	cp a, $10 ; $7a05
+	cp $10 ; $7a05
 	ret nz ; $7a07
 	ld hl, $c7b6 ; $7a08
 	ld a, [hl+] ; $7a0b
 	ld b, [hl] ; $7a0c
 	ld c, a ; $7a0d
 	ld a, b ; $7a0e
-	or a, c ; $7a0f
+	or c ; $7a0f
 	jr nz, .haveTargetX ; $7a10
 	call AdvanceMatchRng ; $7a12
-	and a, $07 ; $7a15
-	add a, a ; $7a17
-	add a, LOW(ServeWalkToSpotTable) ; $7a18
+	and $07 ; $7a15
+	add a ; $7a17
+	add LOW(ServeWalkToSpotTable) ; $7a18
 	ld l, a ; $7a1a
-	adc a, HIGH(ServeWalkToSpotTable) ; $7a1b
-	sub a, l ; $7a1d
+	adc HIGH(ServeWalkToSpotTable) ; $7a1b
+	sub l ; $7a1d
 	ld h, a ; $7a1e
 	ld a, [hl+] ; $7a1f
 	ld b, [hl] ; $7a20
@@ -8166,13 +8166,13 @@ AiServeWalkToSpot:
 	ld d, [hl] ; $7a26
 	ld e, a ; $7a27
 	ld a, [wCharCourtPos] ; $7a28
-	and a, $01 ; $7a2b
+	and $01 ; $7a2b
 	jr z, .setTarget ; $7a2d
-	xor a, a ; $7a2f
-	sub a, c ; $7a30
+	xor a ; $7a2f
+	sub c ; $7a30
 	ld c, a ; $7a31
-	sbc a, a ; $7a32
-	sub a, b ; $7a33
+	sbc a ; $7a32
+	sub b ; $7a33
 	ld b, a ; $7a34
 .setTarget:
 	ld l, c ; $7a35
@@ -8192,7 +8192,7 @@ ServeWalkToSpotTable:
 AiServeSteerToSpot:
 	call AiSteerTowardTarget ; $7a4d
 	call CheckCharNearTarget ; $7a50
-	and a, a ; $7a53
+	and a ; $7a53
 	jr z, .done ; $7a54
 	ld hl, wAiActionTimer ; $7a56
 	ld [hl], $19 ; $7a59
@@ -8203,31 +8203,31 @@ AiServePressToss:
 	ld hl, wCharInputBits ; $7a5f
 	set 0, [hl] ; $7a62
 	ld a, [$c7a8] ; $7a64
-	and a, a ; $7a67
+	and a ; $7a67
 	jr nz, .release ; $7a68
 	ld a, [wServeFaultFlag] ; $7a6a
-	and a, a ; $7a6d
+	and a ; $7a6d
 	jr nz, .release ; $7a6e
 	ld a, [wAiServeStyle] ; $7a70
-	and a, $0f ; $7a73
-	add a, a ; $7a75
-	add a, LOW(ServePressTossPtrs) ; $7a76
+	and $0f ; $7a73
+	add a ; $7a75
+	add LOW(ServePressTossPtrs) ; $7a76
 	ld l, a ; $7a78
-	adc a, HIGH(ServePressTossPtrs) ; $7a79
-	sub a, l ; $7a7b
+	adc HIGH(ServePressTossPtrs) ; $7a79
+	sub l ; $7a7b
 	ld h, a ; $7a7c
 	ld a, [hl+] ; $7a7d
 	ld h, [hl] ; $7a7e
 	ld l, a ; $7a7f
 	call AdvanceMatchRng ; $7a80
-	and a, $07 ; $7a83
-	add a, l ; $7a85
+	and $07 ; $7a83
+	add l ; $7a85
 	ld l, a ; $7a86
 	jr nc, .press ; $7a87
 	inc h ; $7a89
 .press:
 	ld a, [hl] ; $7a8a
-	and a, a ; $7a8b
+	and a ; $7a8b
 	jr z, .release ; $7a8c
 	ld a, $23 ; $7a8e
 	ld [wAiActionTimer], a ; $7a90
@@ -8277,24 +8277,24 @@ AiServeApplyAim:
 	ret ; $7aea
 AiApplyServeAim:
 	ld a, [wAiServeAimOverride] ; $7aeb
-	cp a, $ff ; $7aee
+	cp $ff ; $7aee
 	jr z, .randomAim ; $7af0
 	ld b, a ; $7af2
 	jr .applyAim ; $7af3
 .randomAim:
 	call AdvanceMatchRng ; $7af5
-	and a, $07 ; $7af8
-	add a, LOW(Data_08_7b0b) ; $7afa
+	and $07 ; $7af8
+	add LOW(Data_08_7b0b) ; $7afa
 	ld l, a ; $7afc
-	adc a, HIGH(Data_08_7b0b) ; $7afd
-	sub a, l ; $7aff
+	adc HIGH(Data_08_7b0b) ; $7afd
+	sub l ; $7aff
 	ld h, a ; $7b00
 	ld b, [hl] ; $7b01
 .applyAim:
 	ld hl, wCharInputBits ; $7b02
 	ld a, [hl] ; $7b05
-	and a, $0f ; $7b06
-	or a, b ; $7b08
+	and $0f ; $7b06
+	or b ; $7b08
 	ld [hl], a ; $7b09
 	ret ; $7b0a
 Data_08_7b0b:
@@ -8304,7 +8304,7 @@ AiMaybeAimAwayFromChar:
 	ld c, a ; $7b13
 	call AdvanceMatchRng ; $7b14
 	ld hl, wAiAimAwayChance ; $7b17
-	cp a, [hl] ; $7b1a
+	cp [hl] ; $7b1a
 	ld b, $00 ; $7b1b
 	jr nc, AiAimAwayFromChar.applyAim ; $7b1d
 AiAimAwayFromChar:
@@ -8325,9 +8325,9 @@ AiAimAwayFromChar:
 	pop af ; $7b37
 	wram_bank ; $7b38
 	call AdvanceMatchRng ; $7b3c
-	and a, $03 ; $7b3f
+	and $03 ; $7b3f
 	jr z, .pickDirection ; $7b41
-	cp a, $01 ; $7b43
+	cp $01 ; $7b43
 	jr nz, .useSecond ; $7b45
 	ld a, h ; $7b47
 	cpl ; $7b48
@@ -8335,7 +8335,7 @@ AiAimAwayFromChar:
 	jr .pickDirection ; $7b4a
 .useSecond:
 	ld a, d ; $7b4c
-	or a, e ; $7b4d
+	or e ; $7b4d
 	jr z, .pickDirection ; $7b4e
 	ld h, d ; $7b50
 .pickDirection:
@@ -8346,17 +8346,17 @@ AiAimAwayFromChar:
 .applyAim:
 	ld hl, wCharInputBits ; $7b59
 	ld a, [hl] ; $7b5c
-	and a, $0f ; $7b5d
-	or a, b ; $7b5f
+	and $0f ; $7b5d
+	or b ; $7b5f
 	ld [hl], a ; $7b60
 	ret ; $7b61
 AiPickServeButtons:
 	call AdvanceMatchRng ; $7b62
-	and a, $07 ; $7b65
-	add a, LOW(Data_08_7b73) ; $7b67
+	and $07 ; $7b65
+	add LOW(Data_08_7b73) ; $7b67
 	ld l, a ; $7b69
-	adc a, HIGH(Data_08_7b73) ; $7b6a
-	sub a, l ; $7b6c
+	adc HIGH(Data_08_7b73) ; $7b6a
+	sub l ; $7b6c
 	ld h, a ; $7b6d
 	ld a, [hl] ; $7b6e
 	ld [wAiShotButtons], a ; $7b6f
@@ -8366,19 +8366,19 @@ Data_08_7b73:
 	db $10, $10, $10, $20, $20, $30, $30, $30 ; 0x00
 AiPickShotButtons:
 	ld a, [wLandingMarkerActive] ; $7b7b
-	and a, a ; $7b7e
+	and a ; $7b7e
 	jr z, .maybeCharge ; $7b7f
 	ld b, $30 ; $7b81
 	ld a, [wAiServeStyle] ; $7b83
 	farcall DoesCharGroupRowContain ; $7b86
-	and a, a ; $7b89
+	and a ; $7b89
 	jr z, .maybeCharge ; $7b8a
 	ld a, $30 ; $7b8c
 	ld [wAiShotButtons], a ; $7b8e
 	ret ; $7b91
 .maybeCharge:
 	call AdvanceMatchRng ; $7b92
-	and a, $01 ; $7b95
+	and $01 ; $7b95
 	jr nz, .done ; $7b97
 	ld hl, wBallRelCharDepth ; $7b99
 	ld a, [hl+] ; $7b9c
@@ -8386,11 +8386,11 @@ AiPickShotButtons:
 	ld l, a ; $7b9e
 	bit 7, h ; $7b9f
 	jr z, .checkReachX ; $7ba1
-	xor a, a ; $7ba3
-	sub a, l ; $7ba4
+	xor a ; $7ba3
+	sub l ; $7ba4
 	ld l, a ; $7ba5
-	sbc a, a ; $7ba6
-	sub a, h ; $7ba7
+	sbc a ; $7ba6
+	sub h ; $7ba7
 	ld h, a ; $7ba8
 .checkReachX:
 	ld de, $fec0 ; $7ba9
@@ -8400,21 +8400,21 @@ AiPickShotButtons:
 	ld b, $12 ; $7bb1
 	ld a, [wAiServeStyle] ; $7bb3
 	farcall DoesCharGroupRowContain ; $7bb6
-	and a, a ; $7bb9
+	and a ; $7bb9
 	jr z, .done ; $7bba
 	ld a, [wMatchIsDoubles] ; $7bbc
-	and a, a ; $7bbf
+	and a ; $7bbf
 	jr z, .checkPartner ; $7bc0
 	call AdvanceMatchRng ; $7bc2
-	and a, $03 ; $7bc5
+	and $03 ; $7bc5
 	jr nz, .done ; $7bc7
 	jr .pressShot ; $7bc9
 .checkPartner:
 	ldh a, [hWramBank] ; $7bcb
 	push af ; $7bcd
 	ld a, [wCharIndex] ; $7bce
-	add a, $01 ; $7bd1
-	and a, $01 ; $7bd3
+	add $01 ; $7bd1
+	and $01 ; $7bd3
 	call CharIndexToWramBank ; $7bd5
 	ld a, a ; $7bd8
 	wram_bank ; $7bd9
@@ -8426,11 +8426,11 @@ AiPickShotButtons:
 	wram_bank ; $7be4
 	bit 7, h ; $7be8
 	jr z, .checkReachDepth ; $7bea
-	xor a, a ; $7bec
-	sub a, l ; $7bed
+	xor a ; $7bec
+	sub l ; $7bed
 	ld l, a ; $7bee
-	sbc a, a ; $7bef
-	sub a, h ; $7bf0
+	sbc a ; $7bef
+	sub h ; $7bf0
 	ld h, a ; $7bf1
 .checkReachDepth:
 	ld de, $fe20 ; $7bf2
@@ -8443,7 +8443,7 @@ AiPickShotButtons:
 	ret ; $7bff
 .done:
 	call AdvanceMatchRng ; $7c00
-	and a, $0f ; $7c03
+	and $0f ; $7c03
 	ld b, a ; $7c05
 	ld a, [wAiServeStyle] ; $7c06
 	farcall GetCharGroupEntry ; $7c09
@@ -8452,36 +8452,36 @@ AiPickShotButtons:
 AiPressFirstShotButton:
 	ld a, [wAiShotButtons] ; $7c10
 	swap a ; $7c13
-	and a, $0f ; $7c15
+	and $0f ; $7c15
 	ld b, a ; $7c17
 	ld hl, wCharInputBits ; $7c18
 	ld a, [hl] ; $7c1b
-	and a, $f0 ; $7c1c
-	or a, b ; $7c1e
+	and $f0 ; $7c1c
+	or b ; $7c1e
 	ld [hl], a ; $7c1f
 	ret ; $7c20
 AiPressSecondShotButton:
 	ld a, [wAiShotButtons] ; $7c21
-	and a, $0f ; $7c24
+	and $0f ; $7c24
 	ld b, a ; $7c26
 	ld hl, wCharInputBits ; $7c27
 	ld a, [hl] ; $7c2a
-	and a, $f0 ; $7c2b
-	or a, b ; $7c2d
+	and $f0 ; $7c2b
+	or b ; $7c2d
 	ld [hl], a ; $7c2e
 	ret ; $7c2f
 CharIndexToWramBank:
-	add a, $04 ; $7c30
+	add $04 ; $7c30
 	ret ; $7c32
 MirrorDepthForFarSide:
 	ld a, [wCharCourtPos] ; $7c33
-	and a, $02 ; $7c36
+	and $02 ; $7c36
 	ret z ; $7c38
-	xor a, a ; $7c39
-	sub a, e ; $7c3a
+	xor a ; $7c39
+	sub e ; $7c3a
 	ld e, a ; $7c3b
-	sbc a, a ; $7c3c
-	sub a, d ; $7c3d
+	sbc a ; $7c3c
+	sub d ; $7c3d
 	ld d, a ; $7c3e
 	ret ; $7c3f
 GetCharRoleByIndex:
@@ -8527,7 +8527,7 @@ SetCharTargetMirrored:
 	ld a, e ; $7c7e
 	ld [hl+], a ; $7c7f
 	ld [hl], d ; $7c80
-	xor a, a ; $7c81
+	xor a ; $7c81
 	ld [$df55], a ; $7c82
 	ret ; $7c85
 PredictBallXAtDepth:
@@ -8539,11 +8539,11 @@ PredictBallXAtDepth:
 	ld a, [hl+] ; $7c8f
 	ld h, [hl] ; $7c90
 	ld l, a ; $7c91
-	xor a, a ; $7c92
-	sub a, l ; $7c93
+	xor a ; $7c92
+	sub l ; $7c93
 	ld l, a ; $7c94
-	sbc a, a ; $7c95
-	sub a, h ; $7c96
+	sbc a ; $7c95
+	sub h ; $7c96
 	ld h, a ; $7c97
 	add hl, de ; $7c98
 	call MulHLByTangent ; $7c99
@@ -8583,11 +8583,11 @@ AiChooseHomePosition:
 	ld e, a ; $7cd1
 	bit 7, d ; $7cd2
 	jr z, .apply ; $7cd4
-	xor a, a ; $7cd6
-	sub a, e ; $7cd7
+	xor a ; $7cd6
+	sub e ; $7cd7
 	ld e, a ; $7cd8
-	sbc a, a ; $7cd9
-	sub a, d ; $7cda
+	sbc a ; $7cd9
+	sub d ; $7cda
 	ld d, a ; $7cdb
 .apply:
 	ld hl, wBallTargetX ; $7cdc
@@ -8602,7 +8602,7 @@ AiChooseHomePosition:
 AiReturnToPositionPhase:
 	call AiSteerTowardTarget ; $7ced
 	call CheckCharNearTarget ; $7cf0
-	and a, a ; $7cf3
+	and a ; $7cf3
 	jr z, .done ; $7cf4
 	jp AiAdvancePhase ; $7cf6
 .done:
@@ -8624,8 +8624,8 @@ AiSetReactionDelay:
 	ld hl, wAiReactionDelayNear ; $7d14
 .randomize:
 	call AdvanceMatchRng ; $7d17
-	and a, $03 ; $7d1a
-	add a, [hl] ; $7d1c
+	and $03 ; $7d1a
+	add [hl] ; $7d1c
 	ld [wAiActionTimer], a ; $7d1d
 	jp AiAdvancePhase ; $7d20
 AiChoosePositionByStrategy:
@@ -8640,19 +8640,19 @@ AiChoosePositionByStrategy:
 	dw AiChoosePositionByStrategy.nearNet ; $7d33 jumptable
 	dw AiChoosePositionByStrategy.behindLanding ; $7d35 jumptable
 	call AiIsIncomingLobShot ; $7d37
-	and a, a ; $7d3a
+	and a ; $7d3a
 	jp nz, AiRushToBallLanding ; $7d3b
 .behindLanding:
 	jp AiMoveBehindBallLanding ; $7d3e
 .lateral:
 	call AiIsIncomingDropOrLobShot ; $7d41
-	and a, a ; $7d44
+	and a ; $7d44
 	jp nz, AiRushToBallLanding ; $7d45
 .lateralMove:
 	jp AiMoveLaterallyToBallLine ; $7d48
 .midCourt:
 	call AiIsIncomingDropOrLobShot ; $7d4b
-	and a, a ; $7d4e
+	and a ; $7d4e
 	jp nz, AiRushToBallLanding ; $7d4f
 	jp AiInterceptAtMidCourt ; $7d52
 .nearNet:
@@ -8662,26 +8662,26 @@ AiChoosePositionByStrategy:
 	bit 4, [hl] ; $7d5b
 	jr z, .adaptiveLob ; $7d5d
 	call AiIsIncomingDropOrLobShot ; $7d5f
-	and a, a ; $7d62
+	and a ; $7d62
 	jp nz, AiRushToBallLanding ; $7d63
 	jp AiInterceptAtMidCourt ; $7d66
 .adaptiveLob:
 	call AiIsIncomingLobShot ; $7d69
-	and a, a ; $7d6c
+	and a ; $7d6c
 	jp nz, AiRushToBallLanding ; $7d6d
 	jp AiMoveBehindBallLanding ; $7d70
 AiTrackBallPhase:
 	ld a, [wBallHasBouncedFlag] ; $7d73
 	ld b, a ; $7d76
 	ld a, [wBallCrossedNetFlag] ; $7d77
-	and a, b ; $7d7a
+	and b ; $7d7a
 	jr nz, .trackBall ; $7d7b
 	ld a, [$df5a] ; $7d7d
-	and a, a ; $7d80
+	and a ; $7d80
 	ret z ; $7d81
 	call AiSteerTowardTarget ; $7d82
 	call CheckCharNearTarget ; $7d85
-	and a, a ; $7d88
+	and a ; $7d88
 	jr nz, .advance ; $7d89
 	ld hl, wCharBallReachFlags ; $7d8b
 	bit 0, [hl] ; $7d8e
@@ -8705,7 +8705,7 @@ AiWaitThenPickShot:
 	jr nz, .pickShot ; $7db2
 	ld hl, $df59 ; $7db4
 	ld a, [hl] ; $7db7
-	and a, a ; $7db8
+	and a ; $7db8
 	jr z, .pickShot ; $7db9
 	dec [hl] ; $7dbb
 	ret ; $7dbc
@@ -8717,10 +8717,10 @@ AiWaitThenPickShot:
 	jp AiAdvancePhase ; $7dc8
 AiSwingControlSingles:
 	ld a, [$df13] ; $7dcb
-	and a, a ; $7dce
+	and a ; $7dce
 	jr nz, .checkSwing ; $7dcf
 	ld a, [wCharShotButton2] ; $7dd1
-	and a, a ; $7dd4
+	and a ; $7dd4
 	jr nz, .checkSwing ; $7dd5
 	call AiPressSecondShotButton ; $7dd7
 .checkSwing:
@@ -8731,8 +8731,8 @@ AiSwingControlSingles:
 	ret ; $7de4
 .partnerCheck:
 	ld a, [wCharIndex] ; $7de5
-	add a, $01 ; $7de8
-	and a, $01 ; $7dea
+	add $01 ; $7de8
+	and $01 ; $7dea
 	call AiMaybeAimAwayFromChar ; $7dec
 	jp AiAdvancePhase ; $7def
 AiRecoverStateNetPlayer:
@@ -8767,8 +8767,8 @@ AiBaselinerShadowPartner:
 	ldh a, [hWramBank] ; $7e22
 	push af ; $7e24
 	ld a, [wCharIndex] ; $7e25
-	add a, $02 ; $7e28
-	and a, $03 ; $7e2a
+	add $02 ; $7e28
+	and $03 ; $7e2a
 	call CharIndexToWramBank ; $7e2c
 	ld a, a ; $7e2f
 	wram_bank ; $7e30
@@ -8776,11 +8776,11 @@ AiBaselinerShadowPartner:
 	ld a, [wCharWalkTargetX + 1] ; $7e37
 	bit 7, a ; $7e3a
 	jr z, .setTarget ; $7e3c
-	xor a, a ; $7e3e
-	sub a, l ; $7e3f
+	xor a ; $7e3e
+	sub l ; $7e3f
 	ld l, a ; $7e40
-	sbc a, a ; $7e41
-	sub a, h ; $7e42
+	sbc a ; $7e41
+	sub h ; $7e42
 	ld h, a ; $7e43
 .setTarget:
 	pop af ; $7e44
@@ -8814,12 +8814,12 @@ AiRallyStateBaseliner:
 	dw AiNetPlayerPoachCheck ; $7e7c jumptable
 .checkRally:
 	ld a, [wRallyLength] ; $7e7e
-	cp a, $02 ; $7e81
+	cp $02 ; $7e81
 	ret c ; $7e83
 	call AdvanceMatchRng ; $7e84
-	and a, $03 ; $7e87
+	and $03 ; $7e87
 	ld hl, wAiReactionDelayNear ; $7e89
-	add a, [hl] ; $7e8c
+	add [hl] ; $7e8c
 	ld [wAiActionTimer], a ; $7e8d
 	ld a, [wAiTrackingParam] ; $7e90
 	ld [$df59], a ; $7e93
@@ -8835,9 +8835,9 @@ AiRallyStateBaseliner:
 	jp AiAdvancePhase ; $7eae
 .setTarget:
 	call AdvanceMatchRng ; $7eb1
-	and a, $03 ; $7eb4
+	and $03 ; $7eb4
 	ld hl, wAiReactionDelayFar ; $7eb6
-	add a, [hl] ; $7eb9
+	add [hl] ; $7eb9
 	ld [wAiActionTimer], a ; $7eba
 	jp AiAdvancePhase ; $7ebd
 .done:
@@ -8849,11 +8849,11 @@ AiRallyStateBaseliner:
 	jp AiAdvancePhase ; $7ecf
 AiDoublesTrackBallPhase:
 	ld a, [$df5a] ; $7ed2
-	and a, a ; $7ed5
+	and a ; $7ed5
 	ret z ; $7ed6
 	call AiSteerTowardTarget ; $7ed7
 	call CheckCharNearTarget ; $7eda
-	and a, a ; $7edd
+	and a ; $7edd
 	jr nz, .advance ; $7ede
 	ld hl, wCharBallReachFlags ; $7ee0
 	bit 0, [hl] ; $7ee3
@@ -8861,8 +8861,8 @@ AiDoublesTrackBallPhase:
 	ldh a, [hWramBank] ; $7ee7
 	push af ; $7ee9
 	ld a, [wCharIndex] ; $7eea
-	add a, $02 ; $7eed
-	and a, $03 ; $7eef
+	add $02 ; $7eed
+	and $03 ; $7eef
 	call CharIndexToWramBank ; $7ef1
 	ld a, a ; $7ef4
 	wram_bank ; $7ef5
@@ -8871,7 +8871,7 @@ AiDoublesTrackBallPhase:
 	pop af ; $7efd
 	wram_bank ; $7efe
 	ld a, b ; $7f02
-	and a, a ; $7f03
+	and a ; $7f03
 	jr nz, .poachCheck ; $7f04
 	ret ; $7f06
 .advance:
@@ -8882,10 +8882,10 @@ AiDoublesTrackBallPhase:
 	jr AiNetPlayerPoachCheck ; $7f0f
 AiNetPlayerPoachCheck:
 	ld a, [wCharServeRole] ; $7f11
-	and a, $02 ; $7f14
+	and $02 ; $7f14
 	jr z, .checkSide ; $7f16
 	ld a, [wCharIndex] ; $7f18
-	and a, $01 ; $7f1b
+	and $01 ; $7f1b
 	jr z, .checkSide ; $7f1d
 	ld a, [wCharIndex] ; $7f1f
 .checkSide:
@@ -8899,8 +8899,8 @@ AiNetPlayerPoachCheck:
 	ldh a, [hWramBank] ; $7f31
 	push af ; $7f33
 	ld a, [wCharIndex] ; $7f34
-	add a, $02 ; $7f37
-	and a, $03 ; $7f39
+	add $02 ; $7f37
+	and $03 ; $7f39
 	call CharIndexToWramBank ; $7f3b
 	ld a, a ; $7f3e
 	wram_bank ; $7f3f
@@ -8910,11 +8910,11 @@ AiNetPlayerPoachCheck:
 	ld e, a ; $7f48
 	bit 7, d ; $7f49
 	jr z, .poach ; $7f4b
-	xor a, a ; $7f4d
-	sub a, e ; $7f4e
+	xor a ; $7f4d
+	sub e ; $7f4e
 	ld e, a ; $7f4f
-	sbc a, a ; $7f50
-	sub a, d ; $7f51
+	sbc a ; $7f50
+	sub d ; $7f51
 	ld d, a ; $7f52
 .poach:
 	ld hl, wCharPosDepth + 1 ; $7f53
@@ -8923,20 +8923,20 @@ AiNetPlayerPoachCheck:
 	ld l, a ; $7f58
 	bit 7, h ; $7f59
 	jr z, .stay ; $7f5b
-	xor a, a ; $7f5d
-	sub a, l ; $7f5e
+	xor a ; $7f5d
+	sub l ; $7f5e
 	ld l, a ; $7f5f
-	sbc a, a ; $7f60
-	sub a, h ; $7f61
+	sbc a ; $7f60
+	sub h ; $7f61
 	ld h, a ; $7f62
 .stay:
 	ld bc, $0020 ; $7f63
 	add hl, bc ; $7f66
 	ld a, l ; $7f67
-	sub a, e ; $7f68
+	sub e ; $7f68
 	ld l, a ; $7f69
 	ld a, h ; $7f6a
-	sbc a, d ; $7f6b
+	sbc d ; $7f6b
 	ld h, a ; $7f6c
 	pop af ; $7f6d
 	wram_bank ; $7f6e
@@ -8956,10 +8956,10 @@ AiNetPlayerPoachCheck:
 	ret ; $7f89
 AiSwingControlDoubles:
 	ld a, [$df13] ; $7f8a
-	and a, a ; $7f8d
+	and a ; $7f8d
 	jr nz, .checkPartner ; $7f8e
 	ld a, [wCharShotButton2] ; $7f90
-	and a, a ; $7f93
+	and a ; $7f93
 	jr nz, .checkPartner ; $7f94
 	call AiPressSecondShotButton ; $7f96
 .checkPartner:
@@ -8970,16 +8970,16 @@ AiSwingControlDoubles:
 	ret ; $7fa3
 .swing:
 	ld a, [wCharIndex] ; $7fa4
-	add a, $01 ; $7fa7
-	and a, $03 ; $7fa9
+	add $01 ; $7fa7
+	and $03 ; $7fa9
 	ld d, a ; $7fab
 	call GetCharRoleByIndex ; $7fac
 	ld a, b ; $7faf
-	and a, $02 ; $7fb0
+	and $02 ; $7fb0
 	jr nz, .done ; $7fb2
 	ld a, [wCharIndex] ; $7fb4
-	add a, $03 ; $7fb7
-	and a, $03 ; $7fb9
+	add $03 ; $7fb7
+	and $03 ; $7fb9
 	ld d, a ; $7fbb
 .done:
 	ld c, d ; $7fbc

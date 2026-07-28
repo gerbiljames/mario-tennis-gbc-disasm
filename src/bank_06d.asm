@@ -191,7 +191,7 @@ ShowIntroCharacterScreen:
 	sound $22 ; $6a7f
 	call DisableLCDSafely ; $6a81
 	call ClearFrameTasks ; $6a84
-	xor a, a ; $6a87
+	xor a ; $6a87
 	ldh [hScrollY], a ; $6a88
 	ldh [hScrollX], a ; $6a8a
 	ld c, $28 ; $6a8c
@@ -207,7 +207,7 @@ ShowIntroCharacterScreen:
 .loop:
 	call AdvanceFrame ; $6aaa
 	ldh a, [hInputPressed] ; $6aad
-	and a, PADF_A | PADF_B ; $6aaf
+	and PADF_A | PADF_B ; $6aaf
 	jr z, .loop ; $6ab1
 	ld c, $01 ; $6ab3
 	call BeginFadeOut ; $6ab5

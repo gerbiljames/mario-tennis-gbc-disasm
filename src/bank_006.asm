@@ -29,13 +29,13 @@ RunMinigameEndMenu:
 	ld hl, DrawScoreboardModeTitle ; $4040
 	call RegisterFrameTask ; $4043
 .loop:
-	xor a, a ; $4046
+	xor a ; $4046
 	ld [wMatchMenuSelection], a ; $4047
 	ld a, $0e ; $404a
 	ld [wPauseMenuId], a ; $404c
 	call RunMatchQuitMenu ; $404f
 	ld a, [wMatchMenuSelection] ; $4052
-	cp a, $ff ; $4055
+	cp $ff ; $4055
 	jr z, .loop ; $4057
 	ld hl, DrawScoreboardSprites ; $4059
 	call UnregisterFrameTask ; $405c
@@ -55,7 +55,7 @@ RunMatchPauseMenu:
 	farcall StepMatchFrame ; $407a
 	farcall StepMatchFrame ; $407d
 	sound $63 ; $4080
-	xor a, a ; $4082
+	xor a ; $4082
 	ld [wMatchMenuSelection], a ; $4083
 	ld a, $02 ; $4086
 	ldh [hLinkPayloadKind], a ; $4088
@@ -79,7 +79,7 @@ RunMatchPauseMenu:
 	call RegisterFrameTask ; $40b9
 	ld b, $00 ; $40bc
 	ld a, [wCourtViewLocked] ; $40be
-	and a, a ; $40c1
+	and a ; $40c1
 	jr z, .zero ; $40c2
 	ld b, $01 ; $40c4
 .zero:
@@ -87,7 +87,7 @@ RunMatchPauseMenu:
 	ld [wPauseMenuId], a ; $40c7
 	call RunMatchMenu ; $40ca
 	ld a, [wMatchMenuSelection] ; $40cd
-	cp a, $ff ; $40d0
+	cp $ff ; $40d0
 	jr z, MatchPauseMenu_AfterItem.unregisterFrameTask ; $40d2
 	push af ; $40d4
 	ld hl, MatchPauseMenu_AfterItem ; $40d5
@@ -102,7 +102,7 @@ MatchPauseMenu_AfterItem:
 	pop af ; $40e5
 	ld [wMatchMenuSelection], a ; $40e6
 	ld a, [wMatchAbortFlag] ; $40e9
-	and a, a ; $40ec
+	and a ; $40ec
 	jr z, RunMatchPauseMenu.loop ; $40ed
 .unregisterFrameTask:
 	ld hl, DrawScoreboardSprites ; $40ef
@@ -125,10 +125,10 @@ MatchPauseMenu_CheckRules:
 	ld hl, MatchPauseMenu_AfterRules ; $4119
 	push hl ; $411c
 	ld a, [wGameMode] ; $411d
-	cp a, $08 ; $4120
+	cp $08 ; $4120
 	jp z, ShowMinigameRulesPages ; $4122
 	ld a, [wMatchContext] ; $4125
-	cp a, $02 ; $4128
+	cp $02 ; $4128
 	jp z, ShowTrainingRulesPages ; $412a
 	jr ShowMatchRulesPages ; $412d
 MatchPauseMenu_AfterRules:
@@ -138,13 +138,13 @@ ShowMatchRulesPages:
 	ld a, [wRulesGamesIndex] ; $4133
 	ld b, a ; $4136
 	ld a, [wRulesSetsIndex] ; $4137
-	add a, a ; $413a
-	add a, b ; $413b
+	add a ; $413a
+	add b ; $413b
 	ld [wRulesPageListIndex], a ; $413c
-	add a, $25 ; $413f
+	add $25 ; $413f
 	ld e, a ; $4141
-	adc a, $2c ; $4142
-	sub a, e ; $4144
+	adc $2c ; $4142
+	sub e ; $4144
 	ld d, a ; $4145
 	ld hl, wRulesTitleTextId ; $4146
 	ld a, e ; $4149
@@ -156,12 +156,12 @@ ShowMatchRulesPages:
 	ld [hl+], a ; $4153
 	ld [hl], d ; $4154
 	ld a, [wRulesPageListIndex] ; $4155
-	add a, a ; $4158
-	add a, a ; $4159
-	add a, $65 ; $415a
+	add a ; $4158
+	add a ; $4159
+	add $65 ; $415a
 	ld l, a ; $415c
-	adc a, $41 ; $415d
-	sub a, l ; $415f
+	adc $41 ; $415d
+	sub l ; $415f
 	ld h, a ; $4160
 	call ShowRulesPageSequence ; $4161
 	ret ; $4164
@@ -177,10 +177,10 @@ MatchRulesPageLists:
 ShowTrainingRulesPages:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $417d
 	ld [wRulesPageListIndex], a ; $4180
-	add a, $2b ; $4183
+	add $2b ; $4183
 	ld e, a ; $4185
-	adc a, $2c ; $4186
-	sub a, e ; $4188
+	adc $2c ; $4186
+	sub e ; $4188
 	ld d, a ; $4189
 	ld hl, wRulesTitleTextId ; $418a
 	ld a, e ; $418d
@@ -192,12 +192,12 @@ ShowTrainingRulesPages:
 	ld [hl+], a ; $4197
 	ld [hl], d ; $4198
 	ld a, [wRulesPageListIndex] ; $4199
-	add a, a ; $419c
-	add a, a ; $419d
-	add a, $a9 ; $419e
+	add a ; $419c
+	add a ; $419d
+	add $a9 ; $419e
 	ld l, a ; $41a0
-	adc a, $41 ; $41a1
-	sub a, l ; $41a3
+	adc $41 ; $41a1
+	sub l ; $41a3
 	ld h, a ; $41a4
 	call ShowRulesPageSequence ; $41a5
 	ret ; $41a8
@@ -235,30 +235,30 @@ TrainingRulesPageLists:
 	rules_pages $1c ; list 28
 ShowMinigameRulesPages:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $421d
-	sub a, $1c ; $4220
+	sub $1c ; $4220
 	ld b, a ; $4222
-	add a, a ; $4223
-	add a, b ; $4224
+	add a ; $4223
+	add b ; $4224
 	ld b, a ; $4225
 	ld a, [wMinigameLevel] ; $4226
-	add a, b ; $4229
+	add b ; $4229
 	ld [wRulesPageListIndex], a ; $422a
-	add a, $47 ; $422d
+	add $47 ; $422d
 	ld e, a ; $422f
-	adc a, $2c ; $4230
-	sub a, e ; $4232
+	adc $2c ; $4230
+	sub e ; $4232
 	ld d, a ; $4233
 	ld hl, wRulesTitleTextId ; $4234
 	ld a, e ; $4237
 	ld [hl+], a ; $4238
 	ld [hl], d ; $4239
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $423a
-	sub a, $1c ; $423d
-	add a, a ; $423f
-	add a, LOW(MinigameRulesTextIdBases) ; $4240
+	sub $1c ; $423d
+	add a ; $423f
+	add LOW(MinigameRulesTextIdBases) ; $4240
 	ld l, a ; $4242
-	adc a, HIGH(MinigameRulesTextIdBases) ; $4243
-	sub a, l ; $4245
+	adc HIGH(MinigameRulesTextIdBases) ; $4243
+	sub l ; $4245
 	ld h, a ; $4246
 	ld a, [hl+] ; $4247
 	ld d, [hl] ; $4248
@@ -268,14 +268,14 @@ ShowMinigameRulesPages:
 	ld [hl+], a ; $424e
 	ld [hl], d ; $424f
 	ld a, [wRulesPageListIndex] ; $4250
-	add a, a ; $4253
+	add a ; $4253
 	ld b, a ; $4254
-	add a, a ; $4255
-	add a, b ; $4256
-	add a, $74 ; $4257
+	add a ; $4255
+	add b ; $4256
+	add $74 ; $4257
 	ld l, a ; $4259
-	adc a, $42 ; $425a
-	sub a, l ; $425c
+	adc $42 ; $425a
+	sub l ; $425c
 	ld h, a ; $425d
 	call ShowRulesPageSequence ; $425e
 	ret ; $4261
@@ -322,12 +322,12 @@ MinigameRulesPageLists:
 	rules_pages $06, $07, $08 ; list 26
 ShowRulesPageSequence:
 	ld a, [hl+] ; $4316
-	cp a, $ff ; $4317
+	cp $ff ; $4317
 	jr z, .done ; $4319
 	push hl ; $431b
 	push af ; $431c
 	ld a, [hl] ; $431d
-	cp a, $ff ; $431e
+	cp $ff ; $431e
 	jr z, .prepareGlyphBuffer ; $4320
 	ld a, $01 ; $4322
 	ld hl, DrawRulesNextPageArrow_06 ; $4324
@@ -348,7 +348,7 @@ ShowRulesPageSequence:
 	ld h, [hl] ; $4346
 	ld l, a ; $4347
 	pop af ; $4348
-	add a, l ; $4349
+	add l ; $4349
 	ld l, a ; $434a
 	jr nc, .drawMenuTextLine ; $434b
 	inc h ; $434d
@@ -361,7 +361,7 @@ ShowRulesPageSequence:
 .loop:
 	farcall StepMatchFrame ; $435d
 	farcall ReadMatchInputPressed ; $4360
-	and a, $03 ; $4363
+	and $03 ; $4363
 	jr z, .loop ; $4365
 	sound $5f ; $4367
 	ld hl, DrawRulesNextPageArrow_06 ; $4369
@@ -398,20 +398,20 @@ MatchPauseMenu_ReviewControls:
 	farcall StepMatchFrame ; $43b6
 .loop:
 	farcall ReadMatchInputPressed ; $43b9
-	and a, $03 ; $43bc
+	and $03 ; $43bc
 	jr nz, .restoreBgTilemap ; $43be
 	farcall ReadMatchInputPressed ; $43c0
-	and a, $40 ; $43c3
+	and $40 ; $43c3
 	jr z, .stepMatchFrame ; $43c5
 	ldh a, [hDebugStepMode] ; $43c7
-	and a, a ; $43c9
+	and a ; $43c9
 	jr z, .stepMatchFrame ; $43ca
 	ldh a, [hWramBank] ; $43cc
 	push af ; $43ce
 	wram_bank $04 ; $43cf
 	ld hl, wCharInputSource ; $43d5
 	ld a, [hl] ; $43d8
-	xor a, $01 ; $43d9
+	xor $01 ; $43d9
 	ld [hl], a ; $43db
 	pop af ; $43dc
 	wram_bank ; $43dd
@@ -426,16 +426,16 @@ MatchPauseMenu_ReviewControls:
 MatchPauseMenu_ChangeOptions:
 	call RestoreBgTilemapRegion ; $43ee
 	ld a, [wCourtViewLocked] ; $43f1
-	and a, a ; $43f4
+	and a ; $43f4
 	jr nz, MatchPauseMenu_MusicToggle ; $43f5
-	xor a, a ; $43f7
+	xor a ; $43f7
 	ld [wMatchMenuSelection], a ; $43f8
 .loop:
 	ld a, $02 ; $43fb
 	ld [wPauseMenuId], a ; $43fd
 	call RunMatchMenu ; $4400
 	ld a, [wMatchMenuSelection] ; $4403
-	cp a, $ff ; $4406
+	cp $ff ; $4406
 	jr z, MatchOptionsMenu_AfterItem.done ; $4408
 	push af ; $440a
 	ld hl, MatchOptionsMenu_AfterItem ; $440b
@@ -457,7 +457,7 @@ MatchPauseMenu_CameraSelect:
 	ld [wPauseMenuId], a ; $4426
 	call RunMatchMenu ; $4429
 	ld a, [wMatchMenuSelection] ; $442c
-	cp a, $ff ; $442f
+	cp $ff ; $442f
 	jr z, .done ; $4431
 	ld [wCourtViewOption], a ; $4433
 	farcall SetStorySlotFlagB ; $4436
@@ -465,35 +465,35 @@ MatchPauseMenu_CameraSelect:
 	ret ; $4439
 MatchPauseMenu_MusicToggle:
 	ldh a, [hMusic] ; $443a
-	and a, $01 ; $443c
+	and $01 ; $443c
 	ld [wMatchMenuSelection], a ; $443e
 	ld a, $04 ; $4441
 	ld [wPauseMenuId], a ; $4443
 	call RunMatchMenu ; $4446
 	ld a, [wMatchMenuSelection] ; $4449
-	cp a, $ff ; $444c
+	cp $ff ; $444c
 	jr z, .done ; $444e
 	call SetMusicMuted ; $4450
 	ld a, [wGameMode] ; $4453
-	cp a, $09 ; $4456
+	cp $09 ; $4456
 	jr z, .done ; $4458
 	ldh a, [hMusic] ; $445a
-	and a, $01 ; $445c
+	and $01 ; $445c
 	farcall SetStorySlotFlagA ; $445e
 .done:
 	ret ; $4461
 MatchPauseMenu_SaveQuit:
 	call RestoreBgTilemapRegion ; $4462
 	ld a, [wGameMode] ; $4465
-	add a, LOW(SaveQuitMenuIdByGameMode) ; $4468
+	add LOW(SaveQuitMenuIdByGameMode) ; $4468
 	ld l, a ; $446a
-	adc a, HIGH(SaveQuitMenuIdByGameMode) ; $446b
-	sub a, l ; $446d
+	adc HIGH(SaveQuitMenuIdByGameMode) ; $446b
+	sub l ; $446d
 	ld h, a ; $446e
 	ld a, [hl] ; $446f
 	ld [wPauseMenuId], a ; $4470
 	ld a, [wDrillIsPracticeLesson] ; $4473
-	and a, a ; $4476
+	and a ; $4476
 	jr z, .getMatchMenuItemCount ; $4477
 	ld a, $08 ; $4479
 	ld [wPauseMenuId], a ; $447b
@@ -504,10 +504,10 @@ MatchPauseMenu_SaveQuit:
 RunMatchQuitMenu:
 	call RunMatchMenu ; $4485
 	ld a, [wMatchMenuSelection] ; $4488
-	cp a, $ff ; $448b
+	cp $ff ; $448b
 	ret z ; $448d
 	call GetMatchMenuItemId ; $448e
-	sub a, $0a ; $4491
+	sub $0a ; $4491
 	ld a, a ; $4493
 	rst Rst00 ; $4494
 	dw MatchQuitMenu_ReturnToGame ; $4495 jumptable
@@ -613,12 +613,12 @@ ShowMessageWindow:
 .waitInput:
 	farcall StepMatchFrame ; $4543
 	farcall ReadMatchInputPressed ; $4546
-	and a, $0f ; $4549
+	and $0f ; $4549
 	jr z, .waitInput ; $454b
 	call RestoreBgTilemap ; $454d
 	call FlushTilemapToVram ; $4550
 	farcall StepMatchFrame ; $4553
-	xor a, a ; $4556
+	xor a ; $4556
 	ld [wMatchSimFrozen], a ; $4557
 	pop af ; $455a
 	wram_bank ; $455b
@@ -709,19 +709,19 @@ RestoreBgTilemapRegion:
 	ret ; $45e8
 ClearAttrPriorityRegion:
 	ld a, [hl] ; $45e9
-	and a, $7f ; $45ea
+	and $7f ; $45ea
 	ld [hl+], a ; $45ec
 	dec bc ; $45ed
 	ld a, b ; $45ee
-	or a, c ; $45ef
+	or c ; $45ef
 	jr nz, ClearAttrPriorityRegion ; $45f0
 	ret ; $45f2
 FlushTilemapToVramIfDirty:
 	ld a, [wTilemapDirtyFlag] ; $45f3
-	and a, a ; $45f6
+	and a ; $45f6
 	ret z ; $45f7
 FlushTilemapToVram:
-	xor a, a ; $45f8
+	xor a ; $45f8
 	ld [wTilemapDirtyFlag], a ; $45f9
 	ld e, $00 ; $45fc
 	call GetScrolledTilemapRowOffset ; $45fe
@@ -763,13 +763,13 @@ GetShadowAttrmapAddr:
 GetScrolledTilemapOffset:
 	call GetScrolledTilemapRowOffset ; $4638
 	ldh a, [hScrollX] ; $463b
-	add a, $07 ; $463d
+	add $07 ; $463d
 	rrca ; $463f
 	rrca ; $4640
 	rrca ; $4641
-	add a, d ; $4642
-	and a, $1f ; $4643
-	add a, l ; $4645
+	add d ; $4642
+	and $1f ; $4643
+	add l ; $4645
 	ld l, a ; $4646
 	jr nc, .done ; $4647
 	inc h ; $4649
@@ -777,12 +777,12 @@ GetScrolledTilemapOffset:
 	ret ; $464a
 GetScrolledTilemapRowOffset:
 	ldh a, [hScrollY] ; $464b
-	add a, $07 ; $464d
+	add $07 ; $464d
 	rrca ; $464f
 	rrca ; $4650
 	rrca ; $4651
-	add a, e ; $4652
-	and a, $1f ; $4653
+	add e ; $4652
+	and $1f ; $4653
 	ld l, a ; $4655
 	ld h, $00 ; $4656
 	add hl, hl ; $4658
@@ -795,14 +795,14 @@ AdjustSpriteCoordsForScroll:
 	ldh a, [hScrollX] ; $465e
 	cpl ; $4660
 	inc a ; $4661
-	and a, $07 ; $4662
-	add a, d ; $4664
+	and $07 ; $4662
+	add d ; $4664
 	ld d, a ; $4665
 	ldh a, [hScrollY] ; $4666
 	cpl ; $4668
 	inc a ; $4669
-	and a, $07 ; $466a
-	add a, e ; $466c
+	and $07 ; $466a
+	add e ; $466c
 	ld e, a ; $466d
 	ret ; $466e
 MatchMenuDefs:
@@ -835,7 +835,7 @@ RunMatchMenu:
 	jr .redraw ; $46ff
 .inputLoop:
 	farcall ReadMatchInputPressed ; $4701
-	and a, $0a ; $4704
+	and $0a ; $4704
 	jr z, .checkA ; $4706
 	sound $62 ; $4708
 	ld a, $ff ; $470a
@@ -843,13 +843,13 @@ RunMatchMenu:
 	jr .done ; $470f
 .checkA:
 	farcall ReadMatchInputPressed ; $4711
-	and a, $01 ; $4714
+	and $01 ; $4714
 	jr z, .checkLeftRight ; $4716
 	sound $5f ; $4718
 	jr .done ; $471a
 .checkLeftRight:
 	farcall ReadMatchInputRepeat ; $471c
-	and a, $30 ; $471f
+	and $30 ; $471f
 	jr z, .drawCursor ; $4721
 	ld b, a ; $4723
 	ld a, [wPauseMenuItemCount] ; $4724
@@ -875,10 +875,10 @@ RunMatchMenu:
 	push af ; $474d
 	call LoadMatchMenuItemGfx ; $474e
 	pop af ; $4751
-	add a, $3f ; $4752
+	add $3f ; $4752
 	ld l, a ; $4754
-	adc a, $01 ; $4755
-	sub a, l ; $4757
+	adc $01 ; $4755
+	sub l ; $4757
 	ld h, a ; $4758
 	ld de, $000e ; $4759
 	call DrawMenuCaptionWindow ; $475c
@@ -980,16 +980,16 @@ ScoreboardCaption_ScoreHigh:
 GetMatchMenuItemId:
 	ld b, a ; $480a
 	ld a, [wPauseMenuId] ; $480b
-	add a, a ; $480e
-	add a, a ; $480f
-	add a, a ; $4810
-	add a, $6f ; $4811
+	add a ; $480e
+	add a ; $480f
+	add a ; $4810
+	add $6f ; $4811
 	ld l, a ; $4813
-	adc a, $46 ; $4814
-	sub a, l ; $4816
+	adc $46 ; $4814
+	sub l ; $4816
 	ld h, a ; $4817
 	ld a, b ; $4818
-	add a, l ; $4819
+	add l ; $4819
 	ld l, a ; $481a
 	jr nc, .read ; $481b
 	inc h ; $481d
@@ -998,23 +998,23 @@ GetMatchMenuItemId:
 	ret ; $481f
 GetMatchMenuItemCount:
 	ld a, [wPauseMenuId] ; $4820
-	add a, a ; $4823
-	add a, a ; $4824
-	add a, a ; $4825
-	add a, $73 ; $4826
+	add a ; $4823
+	add a ; $4824
+	add a ; $4825
+	add $73 ; $4826
 	ld l, a ; $4828
-	adc a, $46 ; $4829
-	sub a, l ; $482b
+	adc $46 ; $4829
+	sub l ; $482b
 	ld h, a ; $482c
 	ld a, [hl] ; $482d
 	ret ; $482e
 DrawMatchMenuItems:
 	ld a, [wPauseMenuItemCount] ; $482f
-	add a, a ; $4832
-	add a, LOW(MatchMenuItemPosPointers) ; $4833
+	add a ; $4832
+	add LOW(MatchMenuItemPosPointers) ; $4833
 	ld l, a ; $4835
-	adc a, HIGH(MatchMenuItemPosPointers) ; $4836
-	sub a, l ; $4838
+	adc HIGH(MatchMenuItemPosPointers) ; $4836
+	sub l ; $4838
 	ld h, a ; $4839
 	ld a, [hl+] ; $483a
 	ld h, [hl] ; $483b
@@ -1062,18 +1062,18 @@ MatchMenuItemPos4Items:
 	db $0a, $0c ; 0x06
 DrawMatchMenuCursor:
 	ld a, [wPauseMenuItemCount] ; $4873
-	add a, a ; $4876
-	add a, LOW(MatchMenuCursorPosPointers) ; $4877
+	add a ; $4876
+	add LOW(MatchMenuCursorPosPointers) ; $4877
 	ld l, a ; $4879
-	adc a, HIGH(MatchMenuCursorPosPointers) ; $487a
-	sub a, l ; $487c
+	adc HIGH(MatchMenuCursorPosPointers) ; $487a
+	sub l ; $487c
 	ld h, a ; $487d
 	ld a, [hl+] ; $487e
 	ld h, [hl] ; $487f
 	ld l, a ; $4880
 	ld a, [wMatchMenuSelection] ; $4881
-	add a, a ; $4884
-	add a, l ; $4885
+	add a ; $4884
+	add l ; $4885
 	ld l, a ; $4886
 	jr nc, .read ; $4887
 	inc h ; $4889
@@ -1131,7 +1131,7 @@ ShowMatchScoreboardScreen:
 	wram_bank $02 ; $48e8
 .loop:
 	farcall ReadMatchInputPressed ; $48ee
-	and a, $0f ; $48f1
+	and $0f ; $48f1
 	jr nz, .maskSet ; $48f3
 	farcall StepMatchFrame ; $48f5
 	jr .loop ; $48f8
@@ -1152,13 +1152,13 @@ PrepareScoreboardGfx:
 	ld a, $02 ; $491a
 	ld [wScoreboardOrigin], a ; $491c
 	ld a, [wScoreboardLayout] ; $491f
-	cp a, $06 ; $4922
+	cp $06 ; $4922
 	jr nz, .checkScoreboardLayout ; $4924
 	ld a, $02 ; $4926
 	ld [wScoreboardOrigin + 1], a ; $4928
 .checkScoreboardLayout:
 	ld a, [wScoreboardLayout] ; $492b
-	cp a, $07 ; $492e
+	cp $07 ; $492e
 	jr nz, .checkOnCourtCharCountMinus1 ; $4930
 	ld a, $02 ; $4932
 	ld [wScoreboardOrigin + 1], a ; $4934
@@ -1183,7 +1183,7 @@ PrepareScoreboardGfx:
 	farcall ReloadCharFrameGfx ; $4964
 	farcall StepMatchFrame ; $4967
 	ld a, [wMatchContext] ; $496a
-	cp a, $02 ; $496d
+	cp $02 ; $496d
 	jr z, .eq02 ; $496f
 	ld a, [wPlayer1GamesWon] ; $4971
 	ld b, $01 ; $4974
@@ -1212,11 +1212,11 @@ DrawScoreboard:
 	ld d, [hl] ; $49ac
 	ld e, a ; $49ad
 	ld a, [wScoreboardLayout] ; $49ae
-	add a, a ; $49b1
-	add a, LOW(ScoreboardTilemapPointers) ; $49b2
+	add a ; $49b1
+	add LOW(ScoreboardTilemapPointers) ; $49b2
 	ld l, a ; $49b4
-	adc a, HIGH(ScoreboardTilemapPointers) ; $49b5
-	sub a, l ; $49b7
+	adc HIGH(ScoreboardTilemapPointers) ; $49b5
+	sub l ; $49b7
 	ld h, a ; $49b8
 	ld a, [hl+] ; $49b9
 	ld h, [hl] ; $49ba
@@ -1277,7 +1277,7 @@ DrawScoreboardPackedPips:
 	ld hl, DrawScoreboardPackedPipsNext ; $4a1e
 	push hl ; $4a21
 	ld a, c ; $4a22
-	and a, $03 ; $4a23
+	and $03 ; $4a23
 	ld a, a ; $4a25
 	rst Rst00 ; $4a26
 	dw RetStub ; $4a27 jumptable
@@ -1595,11 +1595,11 @@ DrawScoreboardSprites:
 	push de ; $5077
 	call AdjustSpriteCoordsForScroll ; $5078
 	ld a, [wScoreboardLayout] ; $507b
-	add a, a ; $507e
-	add a, LOW(ScoreboardSpriteTemplatePointers) ; $507f
+	add a ; $507e
+	add LOW(ScoreboardSpriteTemplatePointers) ; $507f
 	ld l, a ; $5081
-	adc a, HIGH(ScoreboardSpriteTemplatePointers) ; $5082
-	sub a, l ; $5084
+	adc HIGH(ScoreboardSpriteTemplatePointers) ; $5082
+	sub l ; $5084
 	ld h, a ; $5085
 	ld a, [hl+] ; $5086
 	ld h, [hl] ; $5087
@@ -1608,9 +1608,9 @@ DrawScoreboardSprites:
 	call QueueSpriteTemplate ; $508c
 	pop de ; $508f
 	ld a, [wScoreboardLayout] ; $5090
-	cp a, $06 ; $5093
+	cp $06 ; $5093
 	jr z, ScoreboardSpriteTemplatePointers.adjustSpriteCoordsForScroll ; $5095
-	cp a, $07 ; $5097
+	cp $07 ; $5097
 	jr z, ScoreboardSpriteTemplatePointers.adjustSpriteCoordsForScroll ; $5099
 	ret ; $509b
 ScoreboardSpriteTemplatePointers:
@@ -1639,11 +1639,11 @@ ScoreboardSpriteTemplatePointers:
 	farcall DrawNumberWithSprites ; $50c0
 	pop de ; $50c3
 	ld a, e ; $50c4
-	add a, $18 ; $50c5
+	add $18 ; $50c5
 	ld e, a ; $50c7
 	call AdjustSpriteCoordsForScroll ; $50c8
 	ld a, [wMinigameHighScoreMode] ; $50cb
-	and a, a ; $50ce
+	and a ; $50ce
 	ld hl, wMinigameHighScore ; $50cf
 	jr nz, .read ; $50d2
 	ld hl, wMinigamesTargetScore ; $50d4
@@ -1753,11 +1753,11 @@ SpriteTemplate_06_5210:
 	oam_sprite $18, $1c, $02, $04
 	oam_sprite_end
 LoadMatchMenuItemGfx:
-	add a, a ; $5219
-	add a, LOW(MatchMenuItemGfxPointers) ; $521a
+	add a ; $5219
+	add LOW(MatchMenuItemGfxPointers) ; $521a
 	ld l, a ; $521c
-	adc a, HIGH(MatchMenuItemGfxPointers) ; $521d
-	sub a, l ; $521f
+	adc HIGH(MatchMenuItemGfxPointers) ; $521d
+	sub l ; $521f
 	ld h, a ; $5220
 	ld a, [hl+] ; $5221
 	ld h, [hl] ; $5222
@@ -1840,22 +1840,22 @@ MatchMenuItemGfx_QuitMinigame:
 	INCBIN "data/bank_006/d_5bda.bin" ; $5bda, 176 bytes
 LoadScoreboardModeGfx:
 	ld a, [wGameMode] ; $5c8a
-	cp a, $05 ; $5c8d
+	cp $05 ; $5c8d
 	jr z, .eq05 ; $5c8f
-	add a, a ; $5c91
-	add a, $c9 ; $5c92
+	add a ; $5c91
+	add $c9 ; $5c92
 	ld l, a ; $5c94
-	adc a, $5c ; $5c95
-	sub a, l ; $5c97
+	adc $5c ; $5c95
+	sub l ; $5c97
 	ld h, a ; $5c98
 	jr .checkWramBank ; $5c99
 .eq05:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $5c9b
-	add a, a ; $5c9e
-	add a, LOW(ScoreboardMinigameGfxPointers) ; $5c9f
+	add a ; $5c9e
+	add LOW(ScoreboardMinigameGfxPointers) ; $5c9f
 	ld l, a ; $5ca1
-	adc a, HIGH(ScoreboardMinigameGfxPointers) ; $5ca2
-	sub a, l ; $5ca4
+	adc HIGH(ScoreboardMinigameGfxPointers) ; $5ca2
+	sub l ; $5ca4
 	ld h, a ; $5ca5
 .checkWramBank:
 	ldh a, [hWramBank] ; $5ca6
@@ -1965,12 +1965,12 @@ ScoreboardModeGfx_StrokePractice:
 DrawMatchMenuItem:
 	push af ; $6802
 	push de ; $6803
-	add a, a ; $6804
-	add a, a ; $6805
-	add a, LOW(MatchMenuItemRectPointers) ; $6806
+	add a ; $6804
+	add a ; $6805
+	add LOW(MatchMenuItemRectPointers) ; $6806
 	ld l, a ; $6808
-	adc a, HIGH(MatchMenuItemRectPointers) ; $6809
-	sub a, l ; $680b
+	adc HIGH(MatchMenuItemRectPointers) ; $6809
+	sub l ; $680b
 	ld h, a ; $680c
 	ld a, [hl+] ; $680d
 	ld h, [hl] ; $680e
@@ -1982,12 +1982,12 @@ DrawMatchMenuItem:
 	call CopyTextRect ; $6818
 	pop de ; $681b
 	pop af ; $681c
-	add a, a ; $681d
-	add a, a ; $681e
-	add a, $37 ; $681f
+	add a ; $681d
+	add a ; $681e
+	add $37 ; $681f
 	ld l, a ; $6821
-	adc a, $68 ; $6822
-	sub a, l ; $6824
+	adc $68 ; $6822
+	sub l ; $6824
 	ld h, a ; $6825
 	ld a, [hl+] ; $6826
 	ld h, [hl] ; $6827
@@ -2246,7 +2246,7 @@ Unused_06_DrawMusicMenuRow:
 	ld bc, $0c02 ; $69a3
 	call CopyTextRect ; $69a6
 	ld a, [wCourtViewLocked] ; $69a9
-	and a, a ; $69ac
+	and a ; $69ac
 	ret z ; $69ad
 	ld a, $05 ; $69ae
 	ld de, $090a ; $69b0
@@ -2254,7 +2254,7 @@ Unused_06_DrawMusicMenuRow:
 	ret ; $69b6
 QueueMatchMenuCursorSprite:
 	ld a, d ; $69b7
-	add a, $fc ; $69b8
+	add $fc ; $69b8
 	ld d, a ; $69ba
 	call AdjustSpriteCoordsForScroll ; $69bb
 	ld hl, SpriteTemplate_06_69e7 ; $69be
@@ -2369,11 +2369,11 @@ DrawDebugStatsLabels:
 	call GetShadowTilemapAddr ; $6ad6
 	pop bc ; $6ad9
 	ld a, c ; $6ada
-	add a, a ; $6adb
-	add a, LOW(DebugStatNamePointers) ; $6adc
+	add a ; $6adb
+	add LOW(DebugStatNamePointers) ; $6adc
 	ld l, a ; $6ade
-	adc a, HIGH(DebugStatNamePointers) ; $6adf
-	sub a, l ; $6ae1
+	adc HIGH(DebugStatNamePointers) ; $6adf
+	sub l ; $6ae1
 	ld h, a ; $6ae2
 	ld a, [hl+] ; $6ae3
 	ld h, [hl] ; $6ae4
@@ -2384,7 +2384,7 @@ DrawDebugStatsLabels:
 	inc e ; $6aeb
 	inc c ; $6aec
 	ld a, c ; $6aed
-	cp a, $0f ; $6aee
+	cp $0f ; $6aee
 	jr nz, .loop ; $6af0
 	ret ; $6af2
 DrawDebugStatsValues:
@@ -2474,7 +2474,7 @@ RunDebugStatsEditor:
 	call CopyMemoryFast ; $6b9b
 	wram_bank $02 ; $6b9e
 	farcall StepMatchFrame ; $6ba4
-	xor a, a ; $6ba7
+	xor a ; $6ba7
 	ld [wMatchMenuSelection], a ; $6ba8
 	call DrawDebugStatsLabels ; $6bab
 	call DrawDebugStatsValues ; $6bae
@@ -2482,14 +2482,14 @@ RunDebugStatsEditor:
 	farcall StepMatchFrame ; $6bb4
 .loop:
 	farcall ReadMatchInputPressed ; $6bb7
-	and a, $0d ; $6bba
+	and $0d ; $6bba
 	jr nz, .maskSet ; $6bbc
 	call HandleDebugStatsInput ; $6bbe
 	call FlushTilemapToVramIfDirty ; $6bc1
 	farcall StepMatchFrame ; $6bc4
 	jr .loop ; $6bc7
 .maskSet:
-	and a, $08 ; $6bc9
+	and $08 ; $6bc9
 	jr z, .restoreBgTilemap ; $6bcb
 	ld de, $270b ; $6bcd
 	ld hl, wMinigamesCurrentScore ; $6bd0
@@ -2525,15 +2525,15 @@ QueueDebugStatsCursorSprites:
 	ld de, $0c0c ; $6c13
 	call AdjustSpriteCoordsForScroll ; $6c16
 	ld a, [wMatchMenuSelection] ; $6c19
-	add a, a ; $6c1c
-	add a, a ; $6c1d
-	add a, a ; $6c1e
-	add a, e ; $6c1f
+	add a ; $6c1c
+	add a ; $6c1d
+	add a ; $6c1e
+	add e ; $6c1f
 	ld e, a ; $6c20
 	ld bc, $0942 ; $6c21
 	call QueueSprite ; $6c24
 	ld a, d ; $6c27
-	add a, $40 ; $6c28
+	add $40 ; $6c28
 	ld d, a ; $6c2a
 	ld bc, $0942 ; $6c2b
 	call QueueSprite ; $6c2e
@@ -2608,12 +2608,12 @@ AdjustDebugStatByte:
 	ret ; $6cb2
 .read:
 	ld a, [hl] ; $6cb3
-	sub a, b ; $6cb4
+	sub b ; $6cb4
 	ld [hl], a ; $6cb5
 	ret ; $6cb6
 .readB:
 	ld a, [hl] ; $6cb7
-	add a, b ; $6cb8
+	add b ; $6cb8
 	ld [hl], a ; $6cb9
 	ret ; $6cba
 AdjustDebugStatWord:
@@ -2628,10 +2628,10 @@ AdjustDebugStatWord:
 	ld e, a ; $6cc7
 	ld d, [hl] ; $6cc8
 	ld a, e ; $6cc9
-	sub a, c ; $6cca
+	sub c ; $6cca
 	ld e, a ; $6ccb
 	ld a, d ; $6ccc
-	sbc a, b ; $6ccd
+	sbc b ; $6ccd
 	ld d, a ; $6cce
 	ld a, d ; $6ccf
 	ld [hl-], a ; $6cd0
@@ -2642,10 +2642,10 @@ AdjustDebugStatWord:
 	ld e, a ; $6cd4
 	ld d, [hl] ; $6cd5
 	ld a, e ; $6cd6
-	add a, c ; $6cd7
+	add c ; $6cd7
 	ld e, a ; $6cd8
 	ld a, d ; $6cd9
-	adc a, b ; $6cda
+	adc b ; $6cda
 	ld d, a ; $6cdb
 	ld a, d ; $6cdc
 	ld [hl-], a ; $6cdd
@@ -2666,7 +2666,7 @@ RunStoryMenu:
 	jr .redraw ; $6d19
 .inputLoop:
 	farcall ReadMatchInputPressed ; $6d1b
-	and a, $0a ; $6d1e
+	and $0a ; $6d1e
 	jr z, .checkA ; $6d20
 	sound $62 ; $6d22
 	ld a, $ff ; $6d24
@@ -2674,13 +2674,13 @@ RunStoryMenu:
 	jr .done ; $6d29
 .checkA:
 	farcall ReadMatchInputPressed ; $6d2b
-	and a, $01 ; $6d2e
+	and $01 ; $6d2e
 	jr z, .checkLeftRight ; $6d30
 	sound $5f ; $6d32
 	jr .done ; $6d34
 .checkLeftRight:
 	farcall ReadMatchInputRepeat ; $6d36
-	and a, $30 ; $6d39
+	and $30 ; $6d39
 	jr z, .drawCursor ; $6d3b
 	ld b, a ; $6d3d
 	ld a, [wPauseMenuItemCount] ; $6d3e
@@ -2695,10 +2695,10 @@ RunStoryMenu:
 	push af ; $6d53
 	call LoadStoryMenuItemGfx ; $6d54
 	pop af ; $6d57
-	add a, $62 ; $6d58
+	add $62 ; $6d58
 	ld l, a ; $6d5a
-	adc a, $01 ; $6d5b
-	sub a, l ; $6d5d
+	adc $01 ; $6d5b
+	sub l ; $6d5d
 	ld h, a ; $6d5e
 	ld de, $000e ; $6d5f
 	call DrawStoryMenuCaption ; $6d62
@@ -2713,16 +2713,16 @@ RunStoryMenu:
 GetStoryMenuItemId:
 	ld b, a ; $6d74
 	ld a, [wPauseMenuId] ; $6d75
-	add a, a ; $6d78
-	add a, a ; $6d79
-	add a, a ; $6d7a
-	add a, $e0 ; $6d7b
+	add a ; $6d78
+	add a ; $6d79
+	add a ; $6d7a
+	add $e0 ; $6d7b
 	ld l, a ; $6d7d
-	adc a, $6c ; $6d7e
-	sub a, l ; $6d80
+	adc $6c ; $6d7e
+	sub l ; $6d80
 	ld h, a ; $6d81
 	ld a, b ; $6d82
-	add a, l ; $6d83
+	add l ; $6d83
 	ld l, a ; $6d84
 	jr nc, .read ; $6d85
 	inc h ; $6d87
@@ -2731,23 +2731,23 @@ GetStoryMenuItemId:
 	ret ; $6d89
 GetStoryMenuItemCount:
 	ld a, [wPauseMenuId] ; $6d8a
-	add a, a ; $6d8d
-	add a, a ; $6d8e
-	add a, a ; $6d8f
-	add a, $e4 ; $6d90
+	add a ; $6d8d
+	add a ; $6d8e
+	add a ; $6d8f
+	add $e4 ; $6d90
 	ld l, a ; $6d92
-	adc a, $6c ; $6d93
-	sub a, l ; $6d95
+	adc $6c ; $6d93
+	sub l ; $6d95
 	ld h, a ; $6d96
 	ld a, [hl] ; $6d97
 	ret ; $6d98
 DrawStoryMenuItems:
 	ld a, [wPauseMenuItemCount] ; $6d99
-	add a, a ; $6d9c
-	add a, LOW(StoryMenuItemPosPointers) ; $6d9d
+	add a ; $6d9c
+	add LOW(StoryMenuItemPosPointers) ; $6d9d
 	ld l, a ; $6d9f
-	adc a, HIGH(StoryMenuItemPosPointers) ; $6da0
-	sub a, l ; $6da2
+	adc HIGH(StoryMenuItemPosPointers) ; $6da0
+	sub l ; $6da2
 	ld h, a ; $6da3
 	ld a, [hl+] ; $6da4
 	ld h, [hl] ; $6da5
@@ -2795,18 +2795,18 @@ StoryMenuItemPos4Items:
 	db $0a, $0c ; 0x06
 DrawStoryMenuCursor:
 	ld a, [wPauseMenuItemCount] ; $6ddd
-	add a, a ; $6de0
-	add a, LOW(StoryMenuCursorPosPointers) ; $6de1
+	add a ; $6de0
+	add LOW(StoryMenuCursorPosPointers) ; $6de1
 	ld l, a ; $6de3
-	adc a, HIGH(StoryMenuCursorPosPointers) ; $6de4
-	sub a, l ; $6de6
+	adc HIGH(StoryMenuCursorPosPointers) ; $6de4
+	sub l ; $6de6
 	ld h, a ; $6de7
 	ld a, [hl+] ; $6de8
 	ld h, [hl] ; $6de9
 	ld l, a ; $6dea
 	ld a, [wMatchMenuSelection] ; $6deb
-	add a, a ; $6dee
-	add a, l ; $6def
+	add a ; $6dee
+	add l ; $6def
 	ld l, a ; $6df0
 	jr nc, .read ; $6df1
 	inc h ; $6df3
@@ -2846,7 +2846,7 @@ RunStoryModeMenu:
 	push af ; $6e1f
 	call AdvanceFrame ; $6e20
 	sound $63 ; $6e23
-	xor a, a ; $6e25
+	xor a ; $6e25
 	ld [wMatchMenuSelection], a ; $6e26
 	ld a, $02 ; $6e29
 	ldh [hLinkPayloadKind], a ; $6e2b
@@ -2872,7 +2872,7 @@ RunStoryModeMenu:
 	ld [wPauseMenuId], a ; $6e5f
 	call RunStoryMenu ; $6e62
 	ld a, [wMatchMenuSelection] ; $6e65
-	cp a, $ff ; $6e68
+	cp $ff ; $6e68
 	jr z, StoryPauseMenu_AfterItem.restoreStoryShadowTilemap ; $6e6a
 	push af ; $6e6c
 	ld hl, StoryPauseMenu_AfterItem ; $6e6d
@@ -2887,16 +2887,16 @@ StoryPauseMenu_AfterItem:
 	ld b, a ; $6e7d
 	pop af ; $6e7e
 	ld [wMatchMenuSelection], a ; $6e7f
-	cp a, $02 ; $6e82
+	cp $02 ; $6e82
 	jr c, .runStoryModeMenu ; $6e84
-	cp a, $03 ; $6e86
+	cp $03 ; $6e86
 	jr nz, .checkMatchAbortFlag ; $6e88
 	ld a, b ; $6e8a
-	or a, a ; $6e8b
+	or a ; $6e8b
 	jr nz, .runStoryModeMenu ; $6e8c
 .checkMatchAbortFlag:
 	ld a, [wMatchAbortFlag] ; $6e8e
-	and a, a ; $6e91
+	and a ; $6e91
 	jr z, RunStoryModeMenu.loop ; $6e92
 .restoreStoryShadowTilemap:
 	call RestoreStoryShadowTilemap ; $6e94
@@ -2913,7 +2913,7 @@ StoryPauseMenu_AfterItem:
 	ret ; $6eb1
 .runStoryModeMenu:
 	ld a, b ; $6eb2
-	cp a, $ff ; $6eb3
+	cp $ff ; $6eb3
 	jp z, RunStoryModeMenu.loop ; $6eb5
 	pop af ; $6eb8
 	ldh [hLinkPayloadKind], a ; $6eb9
@@ -2930,7 +2930,7 @@ StoryPauseMenu_AfterItem:
 	jr .checkMatchMenuSelection ; $6ed5
 .loop:
 	farcall ReadMatchInputPressed ; $6ed7
-	and a, $0e ; $6eda
+	and $0e ; $6eda
 	jr z, .readMatchInputPressed ; $6edc
 	sound $62 ; $6ede
 	ld a, $ff ; $6ee0
@@ -2938,13 +2938,13 @@ StoryPauseMenu_AfterItem:
 	jr .advanceFrame ; $6ee5
 .readMatchInputPressed:
 	farcall ReadMatchInputPressed ; $6ee7
-	and a, $01 ; $6eea
+	and $01 ; $6eea
 	jr z, .readMatchInputRepeat ; $6eec
 	sound $5f ; $6eee
 	jr .advanceFrame ; $6ef0
 .readMatchInputRepeat:
 	farcall ReadMatchInputRepeat ; $6ef2
-	and a, $30 ; $6ef5
+	and $30 ; $6ef5
 	jr z, .checkMatchMenuSelection2 ; $6ef7
 	ld b, a ; $6ef9
 	ld c, $04 ; $6efa
@@ -2956,21 +2956,21 @@ StoryPauseMenu_AfterItem:
 	ld a, [wMatchMenuSelection] ; $6f07
 	call LoadStoryMenuItemGfx ; $6f0a
 	ld a, [wMatchMenuSelection] ; $6f0d
-	add a, $62 ; $6f10
+	add $62 ; $6f10
 	ld l, a ; $6f12
-	adc a, $01 ; $6f13
-	sub a, l ; $6f15
+	adc $01 ; $6f13
+	sub l ; $6f15
 	ld h, a ; $6f16
 	ld de, $000e ; $6f17
 	call DrawStoryMenuCaption ; $6f1a
 	call RedrawStoryTilemapRows ; $6f1d
 .checkMatchMenuSelection2:
 	ld a, [wMatchMenuSelection] ; $6f20
-	add a, a ; $6f23
-	add a, LOW(StoryPauseMenuCursorPositions) ; $6f24
+	add a ; $6f23
+	add LOW(StoryPauseMenuCursorPositions) ; $6f24
 	ld l, a ; $6f26
-	adc a, HIGH(StoryPauseMenuCursorPositions) ; $6f27
-	sub a, l ; $6f29
+	adc HIGH(StoryPauseMenuCursorPositions) ; $6f27
+	sub l ; $6f29
 	ld h, a ; $6f2a
 	ld a, [hl+] ; $6f2b
 	ld d, [hl] ; $6f2c
@@ -2989,13 +2989,13 @@ StoryPauseMenuCursorPositions:
 	db $60, $50 ; 0x06
 StoryPauseMenu_PlayerData:
 	call RestoreStoryTilemapNoPriority ; $6f42
-	xor a, a ; $6f45
+	xor a ; $6f45
 	ld [wMatchMenuSelection], a ; $6f46
 	ld a, $01 ; $6f49
 	ld [wPauseMenuId], a ; $6f4b
 	call RunStoryMenu ; $6f4e
 	ld a, [wMatchMenuSelection] ; $6f51
-	cp a, $ff ; $6f54
+	cp $ff ; $6f54
 	jr z, .restoreStoryTilemapNoPriority ; $6f56
 	ld a, [wMatchMenuSelection] ; $6f58
 	rst Rst00 ; $6f5b
@@ -3016,7 +3016,7 @@ StoryPauseMenu_CharPartnerData:
 	ld [wStoryModeExitLocationRequest], a ; $6f7a
 	ld a, $01 ; $6f7d
 	farcall ShowCharDataScreen ; $6f7f
-	xor a, a ; $6f82
+	xor a ; $6f82
 	ret ; $6f83
 StoryPauseMenu_Equipment:
 	ld hl, wStoryModePlayersXPosition ; $6f84
@@ -3028,7 +3028,7 @@ StoryPauseMenu_Equipment:
 	ld [wUnusedExitLocationMirror], a ; $6f95
 	ld [wStoryModeExitLocationRequest], a ; $6f98
 	farcall ShowEquipmentStatusScreen ; $6f9b
-	xor a, a ; $6f9e
+	xor a ; $6f9e
 	ret ; $6f9f
 StoryPauseMenu_GameProgress:
 	ld hl, wStoryModePlayersXPosition ; $6fa0
@@ -3040,20 +3040,20 @@ StoryPauseMenu_GameProgress:
 	ld [wUnusedExitLocationMirror], a ; $6fb1
 	ld [wStoryModeExitLocationRequest], a ; $6fb4
 	farcall ShowGameProgressScreen ; $6fb7
-	xor a, a ; $6fba
+	xor a ; $6fba
 	ret ; $6fbb
 StoryPauseMenu_Options:
 	call RestoreStoryTilemapNoPriority ; $6fbc
 	ld a, [wCourtViewLocked] ; $6fbf
-	and a, a ; $6fc2
-	xor a, a ; $6fc3
+	and a ; $6fc2
+	xor a ; $6fc3
 	ld [wMatchMenuSelection], a ; $6fc4
 .loop:
 	ld a, $02 ; $6fc7
 	ld [wPauseMenuId], a ; $6fc9
 	call RunStoryMenu ; $6fcc
 	ld a, [wMatchMenuSelection] ; $6fcf
-	cp a, $ff ; $6fd2
+	cp $ff ; $6fd2
 	jr z, StoryOptionsMenu_AfterItem.done ; $6fd4
 	push af ; $6fd6
 	ld hl, StoryOptionsMenu_AfterItem ; $6fd7
@@ -3077,29 +3077,29 @@ StoryPauseMenu_MessageSpeed:
 	ld a, [wMessageSpeed] ; $6ff7
 	ld b, a ; $6ffa
 	ld a, $02 ; $6ffb
-	sub a, b ; $6ffd
+	sub b ; $6ffd
 	ld [wMatchMenuSelection], a ; $6ffe
 	call RunMessageSpeedMenu ; $7001
 	ld a, [wMatchMenuSelection] ; $7004
-	cp a, $ff ; $7007
+	cp $ff ; $7007
 	jr z, .done ; $7009
 	ld b, a ; $700b
 	ld a, $02 ; $700c
-	sub a, b ; $700e
+	sub b ; $700e
 	ld [wMessageSpeed], a ; $700f
 .done:
 	ret ; $7012
 StoryPauseMenu_MusicToggle:
 	ldh a, [hMusic] ; $7013
-	and a, $01 ; $7015
+	and $01 ; $7015
 	ld [wMatchMenuSelection], a ; $7017
 	call RunMusicOnOffMenu ; $701a
 	ld a, [wMatchMenuSelection] ; $701d
-	cp a, $ff ; $7020
+	cp $ff ; $7020
 	jr z, .done ; $7022
 	call SetMusicMuted ; $7024
 	ldh a, [hMusic] ; $7027
-	and a, $01 ; $7029
+	and $01 ; $7029
 	farcall SetStorySlotFlagA ; $702b
 .done:
 	ret ; $702e
@@ -3114,12 +3114,12 @@ StoryPauseMenu_SaveQuit:
 	ld [wPauseMenuId], a ; $7042
 	call RunStoryMenu ; $7045
 	ld a, [wMatchMenuSelection] ; $7048
-	cp a, $ff ; $704b
+	cp $ff ; $704b
 	jr z, StoryPauseMenu_ReturnToMainMenu.storeStoryMenuFirstItem ; $704d
-	cp a, $02 ; $704f
+	cp $02 ; $704f
 	jr z, StoryPauseMenu_ReturnToMainMenu.storeStoryMenuFirstItem ; $7051
 	ld a, [wMatchMenuSelection] ; $7053
-	cp a, $01 ; $7056
+	cp $01 ; $7056
 	jr z, StoryPauseMenu_ReturnToMainMenu ; $7058
 	ld a, $01 ; $705a
 	ld [wSaveAndQuitRequest], a ; $705c
@@ -3181,12 +3181,12 @@ RunStoryTwoOptionMenu:
 	ld de, $0b0a ; $70d9
 	call DrawStoryMenuItem ; $70dc
 	ld a, [wStoryMenuFirstItem] ; $70df
-	cp a, $0b ; $70e2
+	cp $0b ; $70e2
 	jr z, .redrawStoryTilemapRows ; $70e4
 	ld hl, wMatchMenuSelection ; $70e6
-	add a, [hl] ; $70e9
+	add [hl] ; $70e9
 	ld hl, $0162 ; $70ea
-	add a, l ; $70ed
+	add l ; $70ed
 	ld l, a ; $70ee
 	jr nc, .drawStoryMenuCaption ; $70ef
 	inc h ; $70f1
@@ -3197,11 +3197,11 @@ RunStoryTwoOptionMenu:
 	call RedrawStoryTilemapRows ; $70f8
 	ld a, [wMatchMenuSelection] ; $70fb
 	ld hl, wStoryMenuFirstItem ; $70fe
-	add a, [hl] ; $7101
+	add [hl] ; $7101
 	call LoadStoryMenuItemGfx ; $7102
 .loop:
 	farcall ReadMatchInputPressed ; $7105
-	and a, $02 ; $7108
+	and $02 ; $7108
 	jr z, .readMatchInputPressed ; $710a
 	sound $62 ; $710c
 	ld a, $ff ; $710e
@@ -3209,13 +3209,13 @@ RunStoryTwoOptionMenu:
 	jr .advanceFrame ; $7113
 .readMatchInputPressed:
 	farcall ReadMatchInputPressed ; $7115
-	and a, $01 ; $7118
+	and $01 ; $7118
 	jr z, .readMatchInputRepeat ; $711a
 	sound $5f ; $711c
 	jr .advanceFrame ; $711e
 .readMatchInputRepeat:
 	farcall ReadMatchInputRepeat ; $7120
-	and a, $30 ; $7123
+	and $30 ; $7123
 	jr z, .checkMatchMenuSelection2 ; $7125
 	ld b, a ; $7127
 	ld c, $02 ; $7128
@@ -3224,12 +3224,12 @@ RunStoryTwoOptionMenu:
 	ld [wMatchMenuSelection], a ; $7130
 	sound $5e ; $7133
 	ld a, [wStoryMenuFirstItem] ; $7135
-	cp a, $0b ; $7138
+	cp $0b ; $7138
 	jr z, .checkMatchMenuSelection ; $713a
 	ld hl, wMatchMenuSelection ; $713c
-	add a, [hl] ; $713f
+	add [hl] ; $713f
 	ld hl, $0162 ; $7140
-	add a, l ; $7143
+	add l ; $7143
 	ld l, a ; $7144
 	jr nc, .drawStoryMenuCaption2 ; $7145
 	inc h ; $7147
@@ -3240,15 +3240,15 @@ RunStoryTwoOptionMenu:
 .checkMatchMenuSelection:
 	ld a, [wMatchMenuSelection] ; $7151
 	ld hl, wStoryMenuFirstItem ; $7154
-	add a, [hl] ; $7157
+	add [hl] ; $7157
 	call LoadStoryMenuItemGfx ; $7158
 .checkMatchMenuSelection2:
 	ld a, [wMatchMenuSelection] ; $715b
-	add a, a ; $715e
-	add a, LOW(StoryTwoOptionCursorPositions) ; $715f
+	add a ; $715e
+	add LOW(StoryTwoOptionCursorPositions) ; $715f
 	ld l, a ; $7161
-	adc a, HIGH(StoryTwoOptionCursorPositions) ; $7162
-	sub a, l ; $7164
+	adc HIGH(StoryTwoOptionCursorPositions) ; $7162
+	sub l ; $7164
 	ld h, a ; $7165
 	ld a, [hl+] ; $7166
 	ld d, [hl] ; $7167
@@ -3278,11 +3278,11 @@ RunStoryThreeOptionMenu:
 	ld de, $0d0a ; $7195
 	call DrawStoryMenuItem ; $7198
 	ld a, [wStoryMenuFirstItem] ; $719b
-	cp a, $06 ; $719e
+	cp $06 ; $719e
 	ld hl, wMatchMenuSelection ; $71a0
-	add a, [hl] ; $71a3
+	add [hl] ; $71a3
 	ld hl, $0162 ; $71a4
-	add a, l ; $71a7
+	add l ; $71a7
 	ld l, a ; $71a8
 	jr nc, .drawStoryMenuCaption ; $71a9
 	inc h ; $71ab
@@ -3292,11 +3292,11 @@ RunStoryThreeOptionMenu:
 	call RedrawStoryTilemapRows ; $71b2
 	ld a, [wMatchMenuSelection] ; $71b5
 	ld hl, wStoryMenuFirstItem ; $71b8
-	add a, [hl] ; $71bb
+	add [hl] ; $71bb
 	call LoadStoryMenuItemGfx ; $71bc
 .loop:
 	farcall ReadMatchInputPressed ; $71bf
-	and a, $02 ; $71c2
+	and $02 ; $71c2
 	jr z, .readMatchInputPressed ; $71c4
 	sound $62 ; $71c6
 	ld a, $ff ; $71c8
@@ -3304,13 +3304,13 @@ RunStoryThreeOptionMenu:
 	jr .restoreStoryTilemapNoPriority ; $71cd
 .readMatchInputPressed:
 	farcall ReadMatchInputPressed ; $71cf
-	and a, $01 ; $71d2
+	and $01 ; $71d2
 	jr z, .readMatchInputRepeat ; $71d4
 	sound $5f ; $71d6
 	jr .restoreStoryTilemapNoPriority ; $71d8
 .readMatchInputRepeat:
 	farcall ReadMatchInputRepeat ; $71da
-	and a, $30 ; $71dd
+	and $30 ; $71dd
 	jr z, .checkMatchMenuSelection ; $71df
 	ld b, a ; $71e1
 	ld c, $03 ; $71e2
@@ -3319,11 +3319,11 @@ RunStoryThreeOptionMenu:
 	ld [wMatchMenuSelection], a ; $71ea
 	sound $5e ; $71ed
 	ld a, [wStoryMenuFirstItem] ; $71ef
-	cp a, $06 ; $71f2
+	cp $06 ; $71f2
 	ld hl, wMatchMenuSelection ; $71f4
-	add a, [hl] ; $71f7
+	add [hl] ; $71f7
 	ld hl, $0162 ; $71f8
-	add a, l ; $71fb
+	add l ; $71fb
 	ld l, a ; $71fc
 	jr nc, .drawStoryMenuCaption2 ; $71fd
 	inc h ; $71ff
@@ -3333,15 +3333,15 @@ RunStoryThreeOptionMenu:
 	call RedrawStoryTilemapRows ; $7206
 	ld a, [wMatchMenuSelection] ; $7209
 	ld hl, wStoryMenuFirstItem ; $720c
-	add a, [hl] ; $720f
+	add [hl] ; $720f
 	call LoadStoryMenuItemGfx ; $7210
 .checkMatchMenuSelection:
 	ld a, [wMatchMenuSelection] ; $7213
-	add a, a ; $7216
-	add a, LOW(StoryThreeOptionCursorPositions) ; $7217
+	add a ; $7216
+	add LOW(StoryThreeOptionCursorPositions) ; $7217
 	ld l, a ; $7219
-	adc a, HIGH(StoryThreeOptionCursorPositions) ; $721a
-	sub a, l ; $721c
+	adc HIGH(StoryThreeOptionCursorPositions) ; $721a
+	sub l ; $721c
 	ld h, a ; $721d
 	ld a, [hl+] ; $721e
 	ld d, [hl] ; $721f
@@ -3373,7 +3373,7 @@ RestoreStoryTilemapNoPriority:
 DrawStoryMenuCaption:
 	push hl ; $724f
 	farcall PrepareGlyphBuffer ; $7250
-	xor a, a ; $7253
+	xor a ; $7253
 	farcall DrawTextWindowFrame ; $7254
 	ld hl, $0101 ; $7257
 	add hl, de ; $725a
@@ -3398,15 +3398,15 @@ ClearStoryAttrPriorityBits:
 	inc hl ; $727c
 	dec bc ; $727d
 	ld a, b ; $727e
-	or a, c ; $727f
+	or c ; $727f
 	jr nz, .loop ; $7280
 	ret ; $7282
 LoadStoryMenuItemGfx:
-	add a, a ; $7283
-	add a, LOW(StoryMenuItemGfxPointers) ; $7284
+	add a ; $7283
+	add LOW(StoryMenuItemGfxPointers) ; $7284
 	ld l, a ; $7286
-	adc a, HIGH(StoryMenuItemGfxPointers) ; $7287
-	sub a, l ; $7289
+	adc HIGH(StoryMenuItemGfxPointers) ; $7287
+	sub l ; $7289
 	ld h, a ; $728a
 	ld a, [hl+] ; $728b
 	ld h, [hl] ; $728c
@@ -3443,7 +3443,7 @@ StoryMenuItemGfxPointers:
 	dw StoryMenuItemGfx_Items ; record 15
 QueueStoryMenuCursorSprite:
 	ld a, d ; $72ce
-	add a, $fc ; $72cf
+	add $fc ; $72cf
 	ld d, a ; $72d1
 	call AdjustSpriteCoordsForScroll ; $72d2
 	ld hl, SpriteTemplate_06_72df ; $72d5
@@ -3483,11 +3483,11 @@ StoryMenuItemGfx_Normal:
 	INCBIN "data/bank_006/d_772d.bin" ; $772d, 121 bytes
 DrawStoryMenuItem:
 	push de ; $77a6
-	add a, a ; $77a7
-	add a, LOW(StoryMenuItemRectPointers) ; $77a8
+	add a ; $77a7
+	add LOW(StoryMenuItemRectPointers) ; $77a8
 	ld l, a ; $77aa
-	adc a, HIGH(StoryMenuItemRectPointers) ; $77ab
-	sub a, l ; $77ad
+	adc HIGH(StoryMenuItemRectPointers) ; $77ab
+	sub l ; $77ad
 	ld h, a ; $77ae
 	ld a, [hl+] ; $77af
 	ld h, [hl] ; $77b0
@@ -3640,12 +3640,12 @@ CopyTileRectToShadowTilemap:
 	push de ; $7883
 .loop:
 	ld a, [hl+] ; $7884
-	and a, a ; $7885
+	and a ; $7885
 	ld [de], a ; $7886
 	inc de ; $7887
 	push hl ; $7888
 	ld a, e ; $7889
-	and a, $1f ; $788a
+	and $1f ; $788a
 	jr nz, .restore ; $788c
 	ld h, d ; $788e
 	ld l, e ; $788f
@@ -3660,13 +3660,13 @@ CopyTileRectToShadowTilemap:
 	pop de ; $789a
 	pop bc ; $789b
 	ld a, $20 ; $789c
-	add a, e ; $789e
+	add e ; $789e
 	ld e, a ; $789f
 	jr nc, .gotPtr ; $78a0
 	inc d ; $78a2
 .gotPtr:
 	ld a, d ; $78a3
-	and a, $f3 ; $78a4
+	and $f3 ; $78a4
 	ld d, a ; $78a6
 	dec c ; $78a7
 	jr nz, CopyTileRectToShadowTilemap ; $78a8
@@ -3676,12 +3676,12 @@ CopyTileRectToShadowAttrmap:
 	push de ; $78ac
 .loop:
 	ld a, [hl+] ; $78ad
-	and a, a ; $78ae
+	and a ; $78ae
 	ld [de], a ; $78af
 	inc de ; $78b0
 	push hl ; $78b1
 	ld a, e ; $78b2
-	and a, $1f ; $78b3
+	and $1f ; $78b3
 	jr nz, .restore ; $78b5
 	ld h, d ; $78b7
 	ld l, e ; $78b8
@@ -3696,13 +3696,13 @@ CopyTileRectToShadowAttrmap:
 	pop de ; $78c3
 	pop bc ; $78c4
 	ld a, $20 ; $78c5
-	add a, e ; $78c7
+	add e ; $78c7
 	ld e, a ; $78c8
 	jr nc, .gotPtr ; $78c9
 	inc d ; $78cb
 .gotPtr:
 	ld a, d ; $78cc
-	cp a, $d8 ; $78cd
+	cp $d8 ; $78cd
 	jr c, .ltd8 ; $78cf
 	ld d, $d4 ; $78d1
 .ltd8:

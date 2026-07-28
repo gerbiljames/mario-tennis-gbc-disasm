@@ -22,7 +22,7 @@ RunMinigameModePauseMenu:
 	ld a, [$cb2b] ; $4028
 	ret ; $402b
 RunPauseMenuWindow:
-	xor a, a ; $402c
+	xor a ; $402c
 	ld [$cb2b], a ; $402d
 	wram_bank $05 ; $4030
 	farcall CreateMenuWindowFromText ; $4036
@@ -37,12 +37,12 @@ RunPauseMenuWindow:
 	farcall RunMenuSelectionShared ; $404e
 	push af ; $4051
 	push bc ; $4052
-	cp a, $ff ; $4053
+	cp $ff ; $4053
 	jr z, .checkEnabled ; $4055
 	ld a, [wMenuKeepOpenRowMask] ; $4057
 	bit 7, a ; $405a
 	jr z, .checkEnabled ; $405c
-	and a, $7f ; $405e
+	and $7f ; $405e
 	ld b, a ; $4060
 	ld a, [wMenuCursorRow] ; $4061
 	inc a ; $4064
@@ -61,10 +61,10 @@ RunPauseMenuWindow:
 .apply:
 	pop bc ; $407c
 	pop af ; $407d
-	cp a, $ff ; $407e
+	cp $ff ; $407e
 	jr z, .done ; $4080
-	add a, a ; $4082
-	add a, c ; $4083
+	add a ; $4082
+	add c ; $4083
 	ld c, a ; $4084
 	jr nc, .redraw ; $4085
 	inc b ; $4087
@@ -79,7 +79,7 @@ RunPauseMenuWindow:
 	call ResetPauseMenuState ; $408e
 	ret ; $4091
 ResetPauseMenuState:
-	xor a, a ; $4092
+	xor a ; $4092
 	ld [wMenuInitialRow], a ; $4093
 	ld [wMenuAdjustRowMask], a ; $4096
 	ld [wPauseMenuOptionBits], a ; $4099
@@ -100,7 +100,7 @@ DrawPauseMenuSettingValues:
 	ret ; $40af
 .checkMessageSpeed:
 	ld a, [wMessageSpeed] ; $40b0
-	and a, $7f ; $40b3
+	and $7f ; $40b3
 	jr z, .maskClear ; $40b5
 	dec a ; $40b7
 	jr z, .countDone ; $40b8
@@ -151,7 +151,7 @@ DrawPauseMenuSettingValues:
 	pop de ; $411e
 	pop bc ; $411f
 	pop af ; $4120
-	and a, $01 ; $4121
+	and $01 ; $4121
 	jr nz, .maskSet ; $4123
 	ld l, $dd ; $4125
 	ld de, $0b07 ; $4127
@@ -184,10 +184,10 @@ GetTilemapBufferCellDest:
 	ld e, [hl] ; $4151
 	pop hl ; $4152
 	ld a, h ; $4153
-	add a, d ; $4154
+	add d ; $4154
 	ld d, a ; $4155
 	ld a, l ; $4156
-	add a, e ; $4157
+	add e ; $4157
 	ld e, a ; $4158
 	farcall GetTilemapCellAddress ; $4159
 	ld h, d ; $415c
@@ -247,7 +247,7 @@ ToggleMusicSettingThunk:
 	ld a, [wPauseMenuWindowId] ; $41d0
 	jp RunPauseMenuWindow.menuLoop ; $41d3
 Label_1a_41d6:
-	xor a, a ; $41d6
+	xor a ; $41d6
 	ld [$cb2c], a ; $41d7
 	jp RestoreMessageSpeed.scriptShowSpeakerDialogueRestoreBG ; $41da
 MusicSettingPtrs:
@@ -256,9 +256,9 @@ MusicSettingPtrs:
 	dw Label_1a_420f ; record 1
 Label_1a_41e1:
 	ld a, [wPauseMenuOptionBits] ; $41e1
-	and a, $0f ; $41e4
+	and $0f ; $41e4
 	jr z, .storeMenuInitialRow ; $41e6
-	cp a, $03 ; $41e8
+	cp $03 ; $41e8
 	jr z, .storeMenuInitialRow ; $41ea
 	sound $9b ; $41ec
 	bit 0, a ; $41ee
@@ -269,7 +269,7 @@ Label_1a_41e1:
 	set 0, a ; $41f6
 .storeMenuInitialRow:
 	ld a, [wPauseMenuOptionBits] ; $41f8
-	or a, $c0 ; $41fb
+	or $c0 ; $41fb
 	ld [wPauseMenuOptionBits], a ; $41fd
 	ld a, [$d830] ; $4200
 	ld [wMenuInitialRow], a ; $4203
@@ -278,10 +278,10 @@ Label_1a_41e1:
 	jp RunPauseMenuWindow.menuLoop ; $420c
 Label_1a_420f:
 	ld a, [wPauseMenuOptionBits] ; $420f
-	and a, $0f ; $4212
-	and a, a ; $4214
+	and $0f ; $4212
+	and a ; $4214
 	jr z, .storeMenuInitialRow2 ; $4215
-	cp a, $03 ; $4217
+	cp $03 ; $4217
 	jr z, .storeMenuInitialRow2 ; $4219
 	sound $9b ; $421b
 	bit 1, a ; $421d
@@ -292,7 +292,7 @@ Label_1a_420f:
 	set 1, a ; $4225
 .storeMenuInitialRow2:
 	ld a, [wPauseMenuOptionBits] ; $4227
-	or a, $c0 ; $422a
+	or $c0 ; $422a
 	ld [wPauseMenuOptionBits], a ; $422c
 	ld a, [$d830] ; $422f
 	ld [wMenuInitialRow], a ; $4232
@@ -318,23 +318,23 @@ Label_1a_420f:
 	ret ; $426a
 AdjustMessageSpeedSetting:
 	ld a, [wPauseMenuOptionBits] ; $426b
-	and a, $0f ; $426e
-	cp a, $02 ; $4270
+	and $0f ; $426e
+	cp $02 ; $4270
 	jr z, .playSfx2 ; $4272
-	cp a, $01 ; $4274
+	cp $01 ; $4274
 	jr z, .playSfx ; $4276
 	jr .done ; $4278
 .playSfx:
 	sound $5e ; $427a
 	ld hl, wMessageSpeed ; $427c
 	ld a, [hl] ; $427f
-	and a, $7f ; $4280
+	and $7f ; $4280
 	inc a ; $4282
 	ld b, a ; $4283
-	sub a, $03 ; $4284
+	sub $03 ; $4284
 	jr z, .zero ; $4286
 	ld a, b ; $4288
-	or a, $80 ; $4289
+	or $80 ; $4289
 	ld [hl], a ; $428b
 	jr .done ; $428c
 .zero:
@@ -345,11 +345,11 @@ AdjustMessageSpeedSetting:
 	sound $5e ; $4293
 	ld hl, wMessageSpeed ; $4295
 	ld a, [hl] ; $4298
-	and a, $7f ; $4299
+	and $7f ; $4299
 	dec a ; $429b
 	bit 7, a ; $429c
 	jr nz, .negative ; $429e
-	or a, $80 ; $42a0
+	or $80 ; $42a0
 	ld [hl], a ; $42a2
 	jr .done ; $42a3
 .negative:
@@ -361,12 +361,12 @@ ToggleMusicSetting:
 	sound $5e ; $42a9
 	ld a, [$c8a3] ; $42ab
 	ld b, a ; $42ae
-	and a, $01 ; $42af
-	xor a, $01 ; $42b1
+	and $01 ; $42af
+	xor $01 ; $42b1
 	ld c, a ; $42b3
 	ld a, b ; $42b4
-	and a, $fe ; $42b5
-	or a, c ; $42b7
+	and $fe ; $42b5
+	or c ; $42b7
 	ld [$c8a3], a ; $42b8
 	ret ; $42bb
 ForceInstantMessageSpeed:
@@ -387,7 +387,7 @@ RestoreMessageSpeed:
 	farcall RunDialogueYesNoPrompt ; $42dc
 	farcall ScriptCloseDialogueWindow ; $42df
 	script_wait_frames $05 ; $42e2
-	and a, a ; $42e9
+	and a ; $42e9
 	jr nz, .compare ; $42ea
 	ld a, $01 ; $42ec
 	ld [wSaveAndQuitRequest], a ; $42ee
@@ -406,13 +406,13 @@ RestoreMessageSpeed:
 	ld [wStoryModeExitLocationRequest], a ; $4311
 	jp RunPauseMenuWindow.done ; $4314
 .compare:
-	cp a, $ff ; $4317
+	cp $ff ; $4317
 	jr nz, .setText ; $4319
 	call BuildMinigameModePauseMenu ; $431b
 	ld a, $03 ; $431e
 	ld [wMenuInitialRow], a ; $4320
 	ld a, [$cb2c] ; $4323
-	and a, a ; $4326
+	and a ; $4326
 	jr nz, .runPauseMenuWindow ; $4327
 	set_flag FLAG_MINIGAME_PAUSE_MENU_OPEN ; $4329
 	jr .runPauseMenuWindow ; $432c
@@ -427,7 +427,7 @@ RestoreMessageSpeed:
 	farcall RunDialogueYesNoPrompt ; $4341
 	farcall ScriptCloseDialogueWindow ; $4344
 	script_wait_frames $05 ; $4347
-	and a, a ; $434e
+	and a ; $434e
 	jr nz, .buildMinigameModePauseMenu ; $434f
 	ld a, $00 ; $4351
 	ld [wStoryModeCurrentLocation], a ; $4353
@@ -442,7 +442,7 @@ RestoreMessageSpeed:
 	ld a, $03 ; $4369
 	ld [wMenuInitialRow], a ; $436b
 	ld a, [$cb2c] ; $436e
-	and a, a ; $4371
+	and a ; $4371
 	jr nz, .runPauseMenuWindow2 ; $4372
 	set_flag FLAG_MINIGAME_PAUSE_MENU_OPEN ; $4374
 	jr .runPauseMenuWindow2 ; $4377
@@ -463,7 +463,7 @@ BuildMinigameModePauseMenu:
 CheckDebugExpEditorHotkey:
 	push af ; $4399
 	ldh a, [hDebugStepMode] ; $439a
-	or a, a ; $439c
+	or a ; $439c
 	jr z, .restore ; $439d
 	ldh a, [hPlayerInputFlags] ; $439f
 	bit PADB_SELECT, a ; $43a1
@@ -514,7 +514,7 @@ RunDebugExpEditor:
 	farcall StubNop_05_4626 ; $4402
 	call AdvanceFrame ; $4405
 	ldh a, [hPlayerInputFlags] ; $4408
-	and a, PADF_A ; $440a
+	and PADF_A ; $440a
 	jr z, .checkPlayerInputFlags ; $440c
 	sound $5f ; $440e
 	ld de, $0064 ; $4410
@@ -522,7 +522,7 @@ RunDebugExpEditor:
 	jr .loop ; $4416
 .checkPlayerInputFlags:
 	ldh a, [hPlayerInputFlags] ; $4418
-	and a, PADF_RIGHT ; $441a
+	and PADF_RIGHT ; $441a
 	jr z, .checkPlayerInputFlags2 ; $441c
 	sound $5e ; $441e
 	ld de, $000a ; $4420
@@ -530,7 +530,7 @@ RunDebugExpEditor:
 	jr .loop ; $4426
 .checkPlayerInputFlags2:
 	ldh a, [hPlayerInputFlags] ; $4428
-	and a, PADF_LEFT ; $442a
+	and PADF_LEFT ; $442a
 	jr z, .checkPlayerInputFlags3 ; $442c
 	sound $5e ; $442e
 	ld de, $0001 ; $4430
@@ -538,16 +538,16 @@ RunDebugExpEditor:
 	jr .loop ; $4436
 .checkPlayerInputFlags3:
 	ldh a, [hPlayerInputFlags] ; $4438
-	and a, PADF_UP | PADF_DOWN ; $443a
+	and PADF_UP | PADF_DOWN ; $443a
 	jr z, .checkPlayerInputFlags4 ; $443c
 	sound $62 ; $443e
 	ld a, c ; $4440
-	xor a, $01 ; $4441
+	xor $01 ; $4441
 	ld c, a ; $4443
 	jr .loop ; $4444
 .checkPlayerInputFlags4:
 	ldh a, [hPlayerInputFlags] ; $4446
-	and a, PADF_B ; $4448
+	and PADF_B ; $4448
 	jp z, .loop ; $444a
 	ld a, [wPauseMenuWindowId] ; $444d
 	farcall CloseWindow ; $4450
@@ -572,7 +572,7 @@ RunDebugExpEditor:
 	ret ; $4472
 DebugAddExp:
 	ld a, c ; $4473
-	or a, a ; $4474
+	or a ; $4474
 	jr nz, .nonZero ; $4475
 	push bc ; $4477
 	farcall AddPlayerExp ; $4478
@@ -615,7 +615,7 @@ ShowExpGainScreen:
 	farcall LoadMenuFontGfx ; $44f4
 	call DisableLCDSafely ; $44f7
 	call ClearSpriteQueue ; $44fa
-	xor a, a ; $44fd
+	xor a ; $44fd
 	ldh [hScrollY], a ; $44fe
 	ldh [hScrollX], a ; $4500
 	pop hl ; $4502
@@ -624,7 +624,7 @@ ShowExpGainScreen:
 	call DrawExpScreenNameAndLevel ; $4507
 	pop hl ; $450a
 	ld a, h ; $450b
-	cp a, $00 ; $450c
+	cp $00 ; $450c
 	jr nz, .done ; $450e
 	call DrawExpScreenYesNoBox ; $4510
 	ld a, $0e ; $4513
@@ -650,19 +650,19 @@ ShowExpGainScreen:
 	push af ; $453e
 	ld hl, wStoryModeNameOfMainCharacter ; $453f
 	ld a, [wStoryCharacterSlot] ; $4542
-	or a, a ; $4545
+	or a ; $4545
 	jr z, .gotRecord ; $4546
 	ld l, $40 ; $4548
 .gotRecord:
 	ld a, l ; $454a
-	add a, $18 ; $454b
+	add $18 ; $454b
 	ld l, a ; $454d
 	ld a, h ; $454e
-	adc a, $00 ; $454f
+	adc $00 ; $454f
 	ld h, a ; $4551
 	pop af ; $4552
 	ld a, [hl] ; $4553
-	cp a, $63 ; $4554
+	cp $63 ; $4554
 	jr z, .captionMaxLevel ; $4556
 	ld a, $02 ; $4558
 	call DrawExpScreenCaption ; $455a
@@ -679,7 +679,7 @@ ShowExpGainScreen:
 	ld [hl+], a ; $4570
 	ld [hl], d ; $4571
 	inc hl ; $4572
-	xor a, a ; $4573
+	xor a ; $4573
 	ld [hl+], a ; $4574
 	ld [hl+], a ; $4575
 	ld a, $1c ; $4576
@@ -690,7 +690,7 @@ ShowExpGainScreen:
 	ld [hl+], a ; $457e
 	ld a, $0f ; $457f
 	ld [hl+], a ; $4581
-	xor a, a ; $4582
+	xor a ; $4582
 	ld [hl+], a ; $4583
 	ld [hl+], a ; $4584
 	ld [hl], a ; $4585
@@ -721,7 +721,7 @@ ShowExpGainScreen:
 	ld [hl+], a ; $45ad
 	ld a, $08 ; $45ae
 	ld [hl+], a ; $45b0
-	xor a, a ; $45b1
+	xor a ; $45b1
 	ld [$d23b], a ; $45b2
 	ld [$d151], a ; $45b5
 	wram_bank $01 ; $45b8
@@ -749,25 +749,25 @@ ShowExpGainScreen:
 	push hl ; $45fa
 	push de ; $45fb
 	ld a, h ; $45fc
-	sub a, $04 ; $45fd
+	sub $04 ; $45fd
 	jp z, .finish ; $45ff
 	ld hl, $d230 ; $4602
 	ld a, [hl+] ; $4605
 	ld h, [hl] ; $4606
 	ld l, a ; $4607
 	ld a, h ; $4608
-	or a, l ; $4609
+	or l ; $4609
 	jp z, .finish ; $460a
 .fillLoop:
 	call AdvanceExpGaugeFill ; $460d
 	ld a, [$d238] ; $4610
-	and a, a ; $4613
+	and a ; $4613
 	jr nz, .levelUp ; $4614
 	ld a, [$d239] ; $4616
-	and a, a ; $4619
+	and a ; $4619
 	jr nz, .gaugeFull ; $461a
 	ldh a, [hPlayerInputFlags] ; $461c
-	and a, PADF_A | PADF_B ; $461e
+	and PADF_A | PADF_B ; $461e
 	jr nz, .gaugeFull ; $4620
 	sound $5e ; $4622
 	call WaitFramesCmd ; $4624
@@ -813,13 +813,13 @@ ShowExpGainScreen:
 .levelUp:
 	sound $5f ; $467b
 	ld a, [$c36f] ; $467d
-	and a, a ; $4680
+	and a ; $4680
 	jr z, .finish ; $4681
 	push af ; $4683
 	wram_bank $06 ; $4684
 	ld c, $00 ; $468a
 	ld a, [$d000] ; $468c
-	and a, a ; $468f
+	and a ; $468f
 	jr nz, .storeScroll ; $4690
 	ld c, $fc ; $4692
 .storeScroll:
@@ -830,7 +830,7 @@ ShowExpGainScreen:
 .bonusWaitLoop:
 	ld hl, $d23a ; $469b
 	ld a, [hl] ; $469e
-	and a, a ; $469f
+	and a ; $469f
 	jr z, .bonusFrame ; $46a0
 	inc a ; $46a2
 	ld [hl], a ; $46a3
@@ -839,7 +839,7 @@ ShowExpGainScreen:
 	dec b ; $46a7
 	jr z, .bonusDone ; $46a8
 	ldh a, [hInputRisingEdge] ; $46aa
-	or a, a ; $46ac
+	or a ; $46ac
 	jr z, .bonusWaitLoop ; $46ad
 .bonusDone:
 	pop af ; $46af
@@ -863,7 +863,7 @@ ShowExpGainScreen:
 	ld a, e ; $46d1
 	ld [hl+], a ; $46d2
 	ld [hl], d ; $46d3
-	xor a, a ; $46d4
+	xor a ; $46d4
 	ld [$c36f], a ; $46d5
 	ld [$d238], a ; $46d8
 	jp .fillLoop ; $46db
@@ -871,7 +871,7 @@ ShowExpGainScreen:
 	wram_bank $06 ; $46de
 	ld c, $00 ; $46e4
 	ld a, [$d000] ; $46e6
-	and a, a ; $46e9
+	and a ; $46e9
 	jr nz, .storeFinalScroll ; $46ea
 	ld c, $fc ; $46ec
 .storeFinalScroll:
@@ -882,7 +882,7 @@ ShowExpGainScreen:
 .finalWaitLoop:
 	ld hl, $d23a ; $46f5
 	ld a, [hl] ; $46f8
-	and a, a ; $46f9
+	and a ; $46f9
 	jr z, .finalFrame ; $46fa
 	inc a ; $46fc
 	ld [hl], a ; $46fd
@@ -891,7 +891,7 @@ ShowExpGainScreen:
 	dec b ; $4701
 	jr z, .fadeOut ; $4702
 	ldh a, [hInputRisingEdge] ; $4704
-	or a, a ; $4706
+	or a ; $4706
 	jr z, .finalWaitLoop ; $4707
 .fadeOut:
 	ld c, $10 ; $4709
@@ -913,7 +913,7 @@ ShowExpGainScreen:
 	ld d, [hl] ; $4732
 	ld e, a ; $4733
 	ld a, d ; $4734
-	or a, e ; $4735
+	or e ; $4735
 	ret z ; $4736
 	ld a, [$d254] ; $4737
 	farcall AddPlayerExp ; $473a
@@ -952,16 +952,16 @@ ExpScreenDrawTask:
 	push af ; $4780
 	wram_bank $06 ; $4781
 	ld a, [$d151] ; $4787
-	or a, a ; $478a
+	or a ; $478a
 	jr nz, .checkStoryModeMainCharacterOverworldSprite ; $478b
 	ld de, $a000 ; $478d
 .checkStoryModeMainCharacterOverworldSprite:
 	ld a, [wStoryModeMainCharacterOverworldSprite] ; $4790
 	rlca ; $4793
-	add a, LOW(Data_1a_4809) ; $4794
+	add LOW(Data_1a_4809) ; $4794
 	ld l, a ; $4796
-	adc a, HIGH(Data_1a_4809) ; $4797
-	sub a, l ; $4799
+	adc HIGH(Data_1a_4809) ; $4797
+	sub l ; $4799
 	ld h, a ; $479a
 	ld a, [hl+] ; $479b
 	ld d, [hl] ; $479c
@@ -972,7 +972,7 @@ ExpScreenDrawTask:
 	ld de, $7058 ; $47a7
 	call QueueSpriteTemplate ; $47aa
 	ld a, [$d151] ; $47ad
-	and a, $80 ; $47b0
+	and $80 ; $47b0
 	jr z, .restore ; $47b2
 	wram_bank $02 ; $47b4
 	ld a, $01 ; $47ba
@@ -1002,7 +1002,7 @@ ExpScreenDrawTask:
 	call QueueVRAMCopy ; $47ee
 	wram_bank $06 ; $47f1
 	ld a, [$d151] ; $47f7
-	and a, $7f ; $47fa
+	and $7f ; $47fa
 	ld [$d151], a ; $47fc
 .restore:
 	pop af ; $47ff
@@ -1069,7 +1069,7 @@ LoadExpScreenGfx:
 	call LoadPalettesMasterOnly ; $48c8
 	pop hl ; $48cb
 	ld a, h ; $48cc
-	cp a, $01 ; $48cd
+	cp $01 ; $48cd
 	jr z, .processVRAMCopyQueues ; $48cf
 	ld hl, ExpScreenGfx5 ; $48d1
 	ld de, $d000 ; $48d4
@@ -1227,12 +1227,12 @@ DrawExpScreenMessageBox:
 	ld hl, ExpScreenMessageBoxTilemap ; $4a1e
 .loop:
 	ld a, c ; $4a21
-	cp a, $05 ; $4a22
+	cp $05 ; $4a22
 	jr z, .restore ; $4a24
 	ld b, $00 ; $4a26
 .loopB:
 	ld a, b ; $4a28
-	cp a, $14 ; $4a29
+	cp $14 ; $4a29
 	jr z, .eq14 ; $4a2b
 	ld a, [hl] ; $4a2d
 	ld d, a ; $4a2e
@@ -1294,12 +1294,12 @@ DrawExpScreenYesNoBox:
 	ld hl, ExpScreenYesNoBoxTilemap ; $4a86
 .loop:
 	ld a, c ; $4a89
-	cp a, $0a ; $4a8a
+	cp $0a ; $4a8a
 	jr z, .eq0a ; $4a8c
 	ld b, $00 ; $4a8e
 .loopB:
 	ld a, b ; $4a90
-	cp a, $06 ; $4a91
+	cp $06 ; $4a91
 	jr z, .eq06 ; $4a93
 	ld a, [hl] ; $4a95
 	ld d, a ; $4a96
@@ -1368,15 +1368,15 @@ DrawExpScreenNameAndLevel:
 	push af ; $4b2c
 	ld hl, wStoryModeNameOfMainCharacter ; $4b2d
 	ld a, [wStoryCharacterSlot] ; $4b30
-	or a, a ; $4b33
+	or a ; $4b33
 	jr z, .zero ; $4b34
 	ld l, $40 ; $4b36
 .zero:
 	ld a, l ; $4b38
-	add a, $00 ; $4b39
+	add $00 ; $4b39
 	ld l, a ; $4b3b
 	ld a, h ; $4b3c
-	adc a, $00 ; $4b3d
+	adc $00 ; $4b3d
 	ld h, a ; $4b3f
 	pop af ; $4b40
 	ld de, $d4c7 ; $4b41
@@ -1384,15 +1384,15 @@ DrawExpScreenNameAndLevel:
 	push af ; $4b47
 	ld hl, wStoryModeNameOfMainCharacter ; $4b48
 	ld a, [wStoryCharacterSlot] ; $4b4b
-	or a, a ; $4b4e
+	or a ; $4b4e
 	jr z, .zero2 ; $4b4f
 	ld l, $40 ; $4b51
 .zero2:
 	ld a, l ; $4b53
-	add a, $18 ; $4b54
+	add $18 ; $4b54
 	ld l, a ; $4b56
 	ld a, h ; $4b57
-	adc a, $00 ; $4b58
+	adc $00 ; $4b58
 	ld h, a ; $4b5a
 	pop af ; $4b5b
 	ld a, [hl] ; $4b5c
@@ -1410,11 +1410,11 @@ DrawExpScreenNameAndLevel:
 	ret ; $4b72
 CopyNameToTileBuffer:
 	ld a, [hl+] ; $4b73
-	or a, a ; $4b74
+	or a ; $4b74
 	ret z ; $4b75
-	cp a, $de ; $4b76
+	cp $de ; $4b76
 	jr z, .moveTileBufferDestUpRow ; $4b78
-	cp a, $df ; $4b7a
+	cp $df ; $4b7a
 	jr z, .moveTileBufferDestUpRow ; $4b7c
 	ld [de], a ; $4b7e
 	inc de ; $4b7f
@@ -1423,7 +1423,7 @@ CopyNameToTileBuffer:
 	call MoveTileBufferDestUpRow ; $4b82
 	ld [de], a ; $4b85
 	ld a, $21 ; $4b86
-	add a, e ; $4b88
+	add e ; $4b88
 	ld e, a ; $4b89
 	jr nc, .copyNameToTileBuffer ; $4b8a
 	inc d ; $4b8c
@@ -1444,12 +1444,12 @@ ClearExpScreenNameBox:
 	ld c, $05 ; $4b9a
 .loop:
 	ld a, c ; $4b9c
-	cp a, $09 ; $4b9d
+	cp $09 ; $4b9d
 	jr z, .restore ; $4b9f
 	ld b, $07 ; $4ba1
 .loopB:
 	ld a, b ; $4ba3
-	cp a, $0d ; $4ba4
+	cp $0d ; $4ba4
 	jr z, .eq0d ; $4ba6
 	ld de, $2000 ; $4ba8
 	call WriteTileBufferCell ; $4bab
@@ -1495,15 +1495,15 @@ DrawStringToTileBuffer:
 	push hl ; $4bd3
 .charLoop:
 	ld a, [hl] ; $4bd4
-	cp a, $00 ; $4bd5
+	cp $00 ; $4bd5
 	jr z, .done ; $4bd7
-	cp a, $9e ; $4bd9
+	cp $9e ; $4bd9
 	jr z, .specialChar ; $4bdb
-	cp a, $9f ; $4bdd
+	cp $9f ; $4bdd
 	jr z, .specialChar ; $4bdf
-	cp a, $de ; $4be1
+	cp $de ; $4be1
 	jr z, .specialChar ; $4be3
-	cp a, $df ; $4be5
+	cp $df ; $4be5
 	jr z, .specialChar ; $4be7
 	ld d, a ; $4be9
 	call WriteTileBufferCell ; $4bea
@@ -1516,7 +1516,7 @@ DrawStringToTileBuffer:
 	dec c ; $4bf3
 	push af ; $4bf4
 	ld a, c ; $4bf5
-	cp a, $00 ; $4bf6
+	cp $00 ; $4bf6
 	jr z, .noRoom ; $4bf8
 	pop af ; $4bfa
 	ld d, a ; $4bfb
@@ -1527,9 +1527,9 @@ DrawStringToTileBuffer:
 .noRoom:
 	pop af ; $4c03
 	push de ; $4c04
-	cp a, $9e ; $4c05
+	cp $9e ; $4c05
 	jr z, .altTile ; $4c07
-	cp a, $de ; $4c09
+	cp $de ; $4c09
 	jr z, .altTile ; $4c0b
 	ld de, $040b ; $4c0d
 	jr .writeTile ; $4c10
@@ -1600,7 +1600,7 @@ WriteStatModifierToTileBuffer:
 	pop bc ; $4c67
 	ld de, $0000 ; $4c68
 	call CompareBCToDE ; $4c6b
-	cp a, $00 ; $4c6e
+	cp $00 ; $4c6e
 	jr z, .zero ; $4c70
 	bit 7, h ; $4c72
 	jr nz, .negative ; $4c74
@@ -1621,7 +1621,7 @@ WriteStatModifierToTileBuffer:
 	pop de ; $4c89
 	inc b ; $4c8a
 	ld a, d ; $4c8b
-	cp a, $00 ; $4c8c
+	cp $00 ; $4c8c
 	jr z, .tens ; $4c8e
 	push bc ; $4c90
 	push de ; $4c91
@@ -1632,10 +1632,10 @@ WriteStatModifierToTileBuffer:
 	pop de ; $4c9a
 	ld hl, $0000 ; $4c9b
 	ld a, l ; $4c9e
-	sub a, e ; $4c9f
+	sub e ; $4c9f
 	ld l, a ; $4ca0
 	ld a, h ; $4ca1
-	sbc a, d ; $4ca2
+	sbc d ; $4ca2
 	ld h, a ; $4ca3
 .divide:
 	ld de, $0064 ; $4ca4
@@ -1643,7 +1643,7 @@ WriteStatModifierToTileBuffer:
 	pop de ; $4caa
 	pop bc ; $4cab
 	ld a, l ; $4cac
-	cp a, $00 ; $4cad
+	cp $00 ; $4cad
 	jr z, .tens ; $4caf
 	push de ; $4cb1
 	ld d, $31 ; $4cb2
@@ -1654,15 +1654,15 @@ WriteStatModifierToTileBuffer:
 .tens:
 	ld a, d ; $4cbb
 	call GetModifierTensDigit ; $4cbc
-	cp a, $00 ; $4cbf
+	cp $00 ; $4cbf
 	jr nz, .writeTens ; $4cc1
 	ld a, d ; $4cc3
-	sub a, $64 ; $4cc4
+	sub $64 ; $4cc4
 	bit 7, a ; $4cc6
 	jr nz, .ones ; $4cc8
 	ld a, $00 ; $4cca
 .writeTens:
-	add a, $30 ; $4ccc
+	add $30 ; $4ccc
 	push de ; $4cce
 	ld d, a ; $4ccf
 	ld e, $01 ; $4cd0
@@ -1672,7 +1672,7 @@ WriteStatModifierToTileBuffer:
 .ones:
 	ld a, d ; $4cd7
 	call GetModifierOnesDigit ; $4cd8
-	add a, $30 ; $4cdb
+	add $30 ; $4cdb
 	push de ; $4cdd
 	ld d, a ; $4cde
 	ld e, $01 ; $4cdf
@@ -1690,18 +1690,18 @@ CompareBCToDE:
 	push bc ; $4ced
 	pop hl ; $4cee
 	ld a, l ; $4cef
-	sub a, e ; $4cf0
+	sub e ; $4cf0
 	ld l, a ; $4cf1
 	ld a, h ; $4cf2
-	sbc a, d ; $4cf3
+	sbc d ; $4cf3
 	ld h, a ; $4cf4
 	bit 7, h ; $4cf5
 	jr nz, .negative ; $4cf7
 	ld a, h ; $4cf9
-	cp a, $00 ; $4cfa
+	cp $00 ; $4cfa
 	jr nz, .step ; $4cfc
 	ld a, l ; $4cfe
-	cp a, $00 ; $4cff
+	cp $00 ; $4cff
 	jr nz, .step ; $4d01
 	ld a, $00 ; $4d03
 	jr .restore ; $4d05
@@ -1726,20 +1726,20 @@ GetModifierTensDigit:
 	pop de ; $4d1c
 	ld hl, $0000 ; $4d1d
 	ld a, l ; $4d20
-	sub a, e ; $4d21
+	sub e ; $4d21
 	ld l, a ; $4d22
 	ld a, h ; $4d23
-	sbc a, d ; $4d24
+	sbc d ; $4d24
 	ld h, a ; $4d25
 .positive:
 	push hl ; $4d26
 	pop bc ; $4d27
 	ld de, $0064 ; $4d28
 	ld a, l ; $4d2b
-	sub a, e ; $4d2c
+	sub e ; $4d2c
 	ld l, a ; $4d2d
 	ld a, h ; $4d2e
-	sbc a, d ; $4d2f
+	sbc d ; $4d2f
 	ld h, a ; $4d30
 	bit 7, h ; $4d31
 	jr nz, .negative ; $4d33
@@ -1766,20 +1766,20 @@ GetModifierOnesDigit:
 	pop de ; $4d4f
 	ld hl, $0000 ; $4d50
 	ld a, l ; $4d53
-	sub a, e ; $4d54
+	sub e ; $4d54
 	ld l, a ; $4d55
 	ld a, h ; $4d56
-	sbc a, d ; $4d57
+	sbc d ; $4d57
 	ld h, a ; $4d58
 .positive:
 	push hl ; $4d59
 	pop bc ; $4d5a
 	ld de, $0064 ; $4d5b
 	ld a, l ; $4d5e
-	sub a, e ; $4d5f
+	sub e ; $4d5f
 	ld l, a ; $4d60
 	ld a, h ; $4d61
-	sbc a, d ; $4d62
+	sbc d ; $4d62
 	ld h, a ; $4d63
 	bit 7, h ; $4d64
 	jr nz, .negative ; $4d66
@@ -1797,10 +1797,10 @@ GetModifierOnesDigit:
 	push bc ; $4d79
 	pop hl ; $4d7a
 	ld a, l ; $4d7b
-	sub a, e ; $4d7c
+	sub e ; $4d7c
 	ld l, a ; $4d7d
 	ld a, h ; $4d7e
-	sbc a, d ; $4d7f
+	sbc d ; $4d7f
 	ld h, a ; $4d80
 	ld a, l ; $4d81
 	pop hl ; $4d82
@@ -1818,10 +1818,10 @@ SignExtendModifierByte:
 	ld d, $00 ; $4d8e
 	ld e, $91 ; $4d90
 	ld a, l ; $4d92
-	sub a, e ; $4d93
+	sub e ; $4d93
 	ld l, a ; $4d94
 	ld a, h ; $4d95
-	sbc a, d ; $4d96
+	sbc d ; $4d96
 	ld h, a ; $4d97
 	bit 7, h ; $4d98
 	jr nz, .positive ; $4d9a
@@ -1846,7 +1846,7 @@ SignExtendModifierByte:
 	push af ; $4daf
 	wram_bank $06 ; $4db0
 	ld a, [$d151] ; $4db6
-	or a, $01 ; $4db9
+	or $01 ; $4db9
 	ld [$d151], a ; $4dbb
 	call AdvanceFrame ; $4dbe
 	call DrawExpScreenMessageBox ; $4dc1
@@ -1866,7 +1866,7 @@ SignExtendModifierByte:
 	call AdvanceFrame ; $4dec
 	wram_bank $06 ; $4def
 	ld a, [$d151] ; $4df5
-	and a, $fe ; $4df8
+	and $fe ; $4df8
 	ld [$d151], a ; $4dfa
 	pop af ; $4dfd
 	wram_bank ; $4dfe
@@ -1883,7 +1883,7 @@ SignExtendModifierByte:
 	push af ; $4e0d
 	wram_bank $06 ; $4e0e
 	ld a, [$d151] ; $4e14
-	or a, $01 ; $4e17
+	or $01 ; $4e17
 	ld [$d151], a ; $4e19
 	call AdvanceFrame ; $4e1c
 	call DrawExpScreenMessageBox ; $4e1f
@@ -1903,7 +1903,7 @@ SignExtendModifierByte:
 	call AdvanceFrame ; $4e4a
 	wram_bank $06 ; $4e4d
 	ld a, [$d151] ; $4e53
-	and a, $fe ; $4e56
+	and $fe ; $4e56
 	ld [$d151], a ; $4e58
 	pop af ; $4e5b
 	wram_bank ; $4e5c
@@ -1932,32 +1932,32 @@ ExpScreenNumberTask:
 	push af ; $4e8d
 	ld hl, wStoryModeNameOfMainCharacter ; $4e8e
 	ld a, [wStoryCharacterSlot] ; $4e91
-	or a, a ; $4e94
+	or a ; $4e94
 	jr z, .zero ; $4e95
 	ld l, $40 ; $4e97
 .zero:
 	ld a, l ; $4e99
-	add a, $18 ; $4e9a
+	add $18 ; $4e9a
 	ld l, a ; $4e9c
 	ld a, h ; $4e9d
-	adc a, $00 ; $4e9e
+	adc $00 ; $4e9e
 	ld h, a ; $4ea0
 	pop af ; $4ea1
 	ld a, [hl] ; $4ea2
-	cp a, $63 ; $4ea3
+	cp $63 ; $4ea3
 	ret z ; $4ea5
 	ld a, [$d000] ; $4ea6
-	and a, a ; $4ea9
+	and a ; $4ea9
 	jp nz, .nonZero ; $4eaa
 	ld a, [$d23b] ; $4ead
-	and a, a ; $4eb0
+	and a ; $4eb0
 	ret nz ; $4eb1
 	ld hl, $d242 ; $4eb2
 	ld a, [hl+] ; $4eb5
 	ld h, [hl] ; $4eb6
 	ld l, a ; $4eb7
 	ld a, h ; $4eb8
-	or a, l ; $4eb9
+	or l ; $4eb9
 	jr z, .step2 ; $4eba
 	ld de, $d244 ; $4ebc
 	ld a, $05 ; $4ebf
@@ -1972,10 +1972,10 @@ ExpScreenNumberTask:
 	ret ; $4ed2
 .step2:
 	ld a, [$d23b] ; $4ed3
-	and a, a ; $4ed6
+	and a ; $4ed6
 	ret nz ; $4ed7
 	ld a, [$d151] ; $4ed8
-	or a, $80 ; $4edb
+	or $80 ; $4edb
 	ld [$d151], a ; $4edd
 	ld a, $01 ; $4ee0
 	ld [$d23b], a ; $4ee2
@@ -1999,20 +1999,20 @@ QueueNumberSpritesShifted:
 	push af ; $4f02
 	push de ; $4f03
 	ld a, [$d23a] ; $4f04
-	add a, d ; $4f07
+	add d ; $4f07
 	ld d, a ; $4f08
 	push hl ; $4f09
 	push bc ; $4f0a
 	ld a, [hl] ; $4f0b
-	sub a, $20 ; $4f0c
+	sub $20 ; $4f0c
 	jr z, .restore ; $4f0e
-	sub a, $10 ; $4f10
-	add a, a ; $4f12
+	sub $10 ; $4f10
+	add a ; $4f12
 	ld b, a ; $4f13
 	ld a, [$d236] ; $4f14
 	ld c, a ; $4f17
 	ld a, b ; $4f18
-	add a, c ; $4f19
+	add c ; $4f19
 	ld c, a ; $4f1a
 	ld a, [$d237] ; $4f1b
 	ld b, a ; $4f1e
@@ -2024,7 +2024,7 @@ QueueNumberSpritesShifted:
 	dec bc ; $4f25
 	inc hl ; $4f26
 	ld a, d ; $4f27
-	add a, $08 ; $4f28
+	add $08 ; $4f28
 	ld d, a ; $4f2a
 	pop af ; $4f2b
 	dec a ; $4f2c
@@ -2033,7 +2033,7 @@ QueueNumberSpritesShifted:
 AdvanceExpGaugeFill:
 	wram_bank $06 ; $4f30
 	ld a, [$d238] ; $4f36
-	and a, a ; $4f39
+	and a ; $4f39
 	jr nz, .updateRemaining ; $4f3a
 	ld hl, $d232 ; $4f3c
 	ld a, [hl+] ; $4f3f
@@ -2049,13 +2049,13 @@ AdvanceExpGaugeFill:
 	ld h, [hl] ; $4f4b
 	ld l, a ; $4f4c
 	ld a, l ; $4f4d
-	sub a, e ; $4f4e
+	sub e ; $4f4e
 	ld l, a ; $4f4f
 	ld a, h ; $4f50
-	sbc a, d ; $4f51
+	sbc d ; $4f51
 	ld h, a ; $4f52
 	ld a, h ; $4f53
-	or a, l ; $4f54
+	or l ; $4f54
 	jr nz, .updateRemaining ; $4f55
 	ld a, $01 ; $4f57
 	ld [$d238], a ; $4f59
@@ -2069,10 +2069,10 @@ AdvanceExpGaugeFill:
 	ld h, [hl] ; $4f66
 	ld l, a ; $4f67
 	ld a, l ; $4f68
-	sub a, c ; $4f69
+	sub c ; $4f69
 	ld l, a ; $4f6a
 	ld a, h ; $4f6b
-	sbc a, b ; $4f6c
+	sbc b ; $4f6c
 	ld h, a ; $4f6d
 	bit 7, h ; $4f6e
 	jr nz, .clampToZero ; $4f70
@@ -2084,7 +2084,7 @@ AdvanceExpGaugeFill:
 	ld [hl], d ; $4f79
 	ret ; $4f7a
 .clampToZero:
-	xor a, a ; $4f7b
+	xor a ; $4f7b
 	ld hl, $d242 ; $4f7c
 	ld [hl+], a ; $4f7f
 	ld [hl+], a ; $4f80
@@ -2095,15 +2095,15 @@ QueueNumberSprites:
 	push hl ; $4f84
 	push bc ; $4f85
 	ld a, [hl] ; $4f86
-	sub a, $20 ; $4f87
+	sub $20 ; $4f87
 	jr z, .restore ; $4f89
-	sub a, $10 ; $4f8b
-	add a, a ; $4f8d
+	sub $10 ; $4f8b
+	add a ; $4f8d
 	ld b, a ; $4f8e
 	ld a, [$d236] ; $4f8f
 	ld c, a ; $4f92
 	ld a, b ; $4f93
-	add a, c ; $4f94
+	add c ; $4f94
 	ld c, a ; $4f95
 	ld a, [$d237] ; $4f96
 	ld b, a ; $4f99
@@ -2115,14 +2115,14 @@ QueueNumberSprites:
 	dec bc ; $4fa0
 	inc hl ; $4fa1
 	ld a, d ; $4fa2
-	add a, $08 ; $4fa3
+	add $08 ; $4fa3
 	ld d, a ; $4fa5
 	pop af ; $4fa6
 	dec a ; $4fa7
 	jr nz, QueueNumberSprites ; $4fa8
 	ret ; $4faa
 DrawExpScreenCaption:
-	and a, a ; $4fab
+	and a ; $4fab
 	jr z, .caption0 ; $4fac
 	dec a ; $4fae
 	jr z, .caption1 ; $4faf
@@ -2208,7 +2208,7 @@ LoadDialogueTextToBuffer:
 	ld [de], a ; $507b
 	inc hl ; $507c
 	inc de ; $507d
-	and a, a ; $507e
+	and a ; $507e
 	jr nz, .copyLoop ; $507f
 	ret ; $5081
 ResetCharDataScreenAnim:
@@ -2219,7 +2219,7 @@ ResetCharDataScreenAnim:
 	ldh a, [hWramBank] ; $5086
 	push af ; $5088
 	wram_bank $06 ; $5089
-	xor a, a ; $508f
+	xor a ; $508f
 	ld [$d000], a ; $5090
 	pop af ; $5093
 	wram_bank ; $5094
@@ -2237,7 +2237,7 @@ ResetCharDataScreenAnim:
 	call ShowExpGainScreen ; $50a5
 	wram_bank $06 ; $50a8
 	ld a, [$d23b] ; $50ae
-	and a, a ; $50b1
+	and a ; $50b1
 	jr z, .restore ; $50b2
 	wram_bank $06 ; $50b4
 	ld a, $01 ; $50ba
@@ -2258,33 +2258,33 @@ DrawExpBonusMessage:
 	push af ; $50d3
 	call DrawExpScreenMessageBox ; $50d4
 	pop af ; $50d7
-	cp a, $01 ; $50d8
+	cp $01 ; $50d8
 	jp z, .eq01 ; $50da
-	cp a, $02 ; $50dd
+	cp $02 ; $50dd
 	jp z, .eq02 ; $50df
-	cp a, $03 ; $50e2
+	cp $03 ; $50e2
 	jp z, .eq03 ; $50e4
-	cp a, $14 ; $50e7
+	cp $14 ; $50e7
 	jp z, .eq14 ; $50e9
-	cp a, $15 ; $50ec
+	cp $15 ; $50ec
 	jp z, .eq15 ; $50ee
-	cp a, $16 ; $50f1
+	cp $16 ; $50f1
 	jp z, .eq16 ; $50f3
-	cp a, $17 ; $50f6
+	cp $17 ; $50f6
 	jp z, .eq17 ; $50f8
-	cp a, $18 ; $50fb
+	cp $18 ; $50fb
 	jp z, .eq18 ; $50fd
-	cp a, $19 ; $5100
+	cp $19 ; $5100
 	jp z, .eq19 ; $5102
-	cp a, $1a ; $5105
+	cp $1a ; $5105
 	jp z, .eq1a ; $5107
-	cp a, $1b ; $510a
+	cp $1b ; $510a
 	jp z, .eq1b ; $510c
-	cp a, $1c ; $510f
+	cp $1c ; $510f
 	jp z, .eq1c ; $5111
-	cp a, $1d ; $5114
+	cp $1d ; $5114
 	jp z, .eq1d ; $5116
-	cp a, $1e ; $5119
+	cp $1e ; $5119
 	jp z, .eq1e ; $511b
 	jp .loadDialogueTextToBuffer ; $511e
 .eq01:
@@ -2600,7 +2600,7 @@ DrawExpBonusMessage:
 	call DrawStringToTileBuffer ; $54e1
 	wram_bank $06 ; $54e4
 	ld a, [$d151] ; $54ea
-	or a, $01 ; $54ed
+	or $01 ; $54ed
 	ld [$d151], a ; $54ef
 	call AdvanceFrame ; $54f2
 	wram_bank $01 ; $54f5
@@ -2615,7 +2615,7 @@ DrawExpBonusMessage:
 	call AdvanceFrame ; $5511
 	wram_bank $06 ; $5514
 	ld a, [$d151] ; $551a
-	and a, $fe ; $551d
+	and $fe ; $551d
 	ld [$d151], a ; $551f
 	ret ; $5522
 Padding_1a_5523:
@@ -2660,14 +2660,14 @@ ExpScreenGfxPalettes3:
 ExpScreenGfx8:
 	INCBIN "data/bank_01a/d_6729.bin" ; $6729, 171 bytes
 RunDebugCharViewer:
-	xor a, a ; $67d4
+	xor a ; $67d4
 	ld [wDebugCharViewerPage], a ; $67d5
 	ld [wDebugCharViewerIndex], a ; $67d8
 .loop:
 	call ClearFrameTasks ; $67db
 	call DisableLCDSafely ; $67de
 	farcall LoadMenuFontGfx ; $67e1
-	xor a, a ; $67e4
+	xor a ; $67e4
 	ldh [hScrollX], a ; $67e5
 	ldh [hScrollY], a ; $67e7
 	ld [wCameraX], a ; $67e9
@@ -2680,7 +2680,7 @@ RunDebugCharViewer:
 	farcall InitActorEngine ; $67fc
 	farcall ResetTextWindowState ; $67ff
 	call RunCharViewerSelectGrid ; $6802
-	cp a, $ff ; $6805
+	cp $ff ; $6805
 	jr z, .eqff ; $6807
 	ld c, $40 ; $6809
 	call BeginFadeOut ; $680b
@@ -2718,7 +2718,7 @@ RunDebugCharViewer:
 	ret ; $686b
 RunCharViewerSelectGrid:
 	wram_bank $06 ; $686c
-	xor a, a ; $6872
+	xor a ; $6872
 	ld hl, Palette_1a_70d9 ; $6873
 	ld de, $0008 ; $6876
 	call LoadPaletteShadow ; $6879
@@ -2781,9 +2781,9 @@ RunCharViewerSelectGrid:
 .checkDebugCharViewerIndex:
 	ld a, [wDebugCharViewerIndex] ; $691b
 	dec a ; $691e
-	cp a, $ff ; $691f
+	cp $ff ; $691f
 	jr z, .eqff ; $6921
-	cp a, $07 ; $6923
+	cp $07 ; $6923
 	jr nz, .store ; $6925
 	ld a, $0f ; $6927
 	jr .store ; $6929
@@ -2796,26 +2796,26 @@ RunCharViewerSelectGrid:
 .checkDebugCharViewerIndex2:
 	ld a, [wDebugCharViewerIndex] ; $6934
 	inc a ; $6937
-	cp a, $08 ; $6938
+	cp $08 ; $6938
 	jr z, .eq08 ; $693a
-	cp a, $10 ; $693c
+	cp $10 ; $693c
 	jr nz, .store2 ; $693e
 	ld a, $08 ; $6940
 	jr .store2 ; $6942
 .eq08:
-	xor a, a ; $6944
+	xor a ; $6944
 .store2:
 	ld [wDebugCharViewerIndex], a ; $6945
 	sound $5e ; $6948
 	jr .loop ; $694a
 .checkDebugCharViewerIndex3:
 	ld a, [wDebugCharViewerIndex] ; $694c
-	sub a, $08 ; $694f
+	sub $08 ; $694f
 	jr nc, .store3 ; $6951
-	add a, $10 ; $6953
+	add $10 ; $6953
 	ld [wDebugCharViewerIndex], a ; $6955
 	ld a, [wDebugCharViewerPage] ; $6958
-	or a, a ; $695b
+	or a ; $695b
 	jr z, .checkDebugCharViewerIndex4 ; $695c
 	dec a ; $695e
 	ld [wDebugCharViewerPage], a ; $695f
@@ -2827,18 +2827,18 @@ RunCharViewerSelectGrid:
 	jp .loop ; $696b
 .checkDebugCharViewerIndex4:
 	ld a, [wDebugCharViewerIndex] ; $696e
-	sub a, $08 ; $6971
+	sub $08 ; $6971
 	ld [wDebugCharViewerIndex], a ; $6973
 	jp .loop ; $6976
 .checkDebugCharViewerIndex5:
 	ld a, [wDebugCharViewerIndex] ; $6979
-	add a, $08 ; $697c
-	cp a, $10 ; $697e
+	add $08 ; $697c
+	cp $10 ; $697e
 	jr c, .store4 ; $6980
-	sub a, $10 ; $6982
+	sub $10 ; $6982
 	ld [wDebugCharViewerIndex], a ; $6984
 	ld a, [wDebugCharViewerPage] ; $6987
-	cp a, $01 ; $698a
+	cp $01 ; $698a
 	jr z, .checkDebugCharViewerIndex6 ; $698c
 	inc a ; $698e
 	ld [wDebugCharViewerPage], a ; $698f
@@ -2850,7 +2850,7 @@ RunCharViewerSelectGrid:
 	jp .loop ; $699b
 .checkDebugCharViewerIndex6:
 	ld a, [wDebugCharViewerIndex] ; $699e
-	add a, $08 ; $69a1
+	add $08 ; $69a1
 	ld [wDebugCharViewerIndex], a ; $69a3
 	jp .loop ; $69a6
 .loadCharViewerGridTilemap:
@@ -2876,7 +2876,7 @@ RunCharViewerSelectGrid:
 	rlca ; $69d6
 	ld b, a ; $69d7
 	ld a, [wDebugCharViewerIndex] ; $69d8
-	add a, b ; $69db
+	add b ; $69db
 	ld [wCharViewerCharId], a ; $69dc
 	ret ; $69df
 .bit1Set:
@@ -2907,13 +2907,13 @@ LoadCharViewerGridTilemap:
 	push hl ; $6a26
 	ld b, $12 ; $6a27
 .loopB:
-	xor a, a ; $6a29
+	xor a ; $6a29
 	ld [hl+], a ; $6a2a
 	dec b ; $6a2b
 	jr nz, .loopB ; $6a2c
 	pop hl ; $6a2e
 	ld a, $20 ; $6a2f
-	add a, l ; $6a31
+	add l ; $6a31
 	ld l, a ; $6a32
 	jr nc, .gotPtr ; $6a33
 	inc h ; $6a35
@@ -2922,7 +2922,7 @@ LoadCharViewerGridTilemap:
 	jr nz, .loop ; $6a37
 	ret ; $6a39
 DrawCharViewerPageNames:
-	or a, a ; $6a3a
+	or a ; $6a3a
 	jr z, .zero ; $6a3b
 	dec a ; $6a3d
 	jr z, .countDone ; $6a3e
@@ -2984,7 +2984,7 @@ RenderTextColumnToBuffer64:
 DrawCharViewerGridCursor:
 	wram_bank $06 ; $6ab3
 	ldh a, [hVBlankCounter] ; $6ab9
-	and a, $1c ; $6abb
+	and $1c ; $6abb
 	jr z, .checkVBlankCounter ; $6abd
 	ld a, [wDebugCharViewerPage] ; $6abf
 	dec a ; $6ac2
@@ -3012,14 +3012,14 @@ DrawCharViewerGridCursor:
 	call QueueSprite ; $6af1
 .checkVBlankCounter:
 	ldh a, [hVBlankCounter] ; $6af4
-	and a, $2a ; $6af6
+	and $2a ; $6af6
 	ret z ; $6af8
 	ld a, [wDebugCharViewerIndex] ; $6af9
 	rlca ; $6afc
-	add a, LOW(Data_1a_6b0f) ; $6afd
+	add LOW(Data_1a_6b0f) ; $6afd
 	ld l, a ; $6aff
-	adc a, HIGH(Data_1a_6b0f) ; $6b00
-	sub a, l ; $6b02
+	adc HIGH(Data_1a_6b0f) ; $6b00
+	sub l ; $6b02
 	ld h, a ; $6b03
 	ld a, [hl+] ; $6b04
 	ld d, [hl] ; $6b05
@@ -3077,7 +3077,7 @@ LoadCharViewerScreenGfx:
 	call CopyBank1ToBank2Buffer ; $6bb0
 	wram_bank $02 ; $6bb3
 	ld hl, $d1e1 ; $6bb9
-	xor a, a ; $6bbc
+	xor a ; $6bbc
 	ld [hl+], a ; $6bbd
 	ld [hl+], a ; $6bbe
 	ld [hl+], a ; $6bbf
@@ -3120,7 +3120,7 @@ CopyBank1ToBank3Buffer:
 	inc hl ; $6bef
 	dec bc ; $6bf0
 	ld a, b ; $6bf1
-	or a, c ; $6bf2
+	or c ; $6bf2
 	jr nz, CopyBank1ToBank3Buffer ; $6bf3
 	ret ; $6bf5
 CopyBank1ToBank2Buffer:
@@ -3131,12 +3131,12 @@ CopyBank1ToBank2Buffer:
 	inc hl ; $6c04
 	dec bc ; $6c05
 	ld a, b ; $6c06
-	or a, c ; $6c07
+	or c ; $6c07
 	jr nz, CopyBank1ToBank2Buffer ; $6c08
 	ret ; $6c0a
 InitCharViewerState:
 	wram_bank $06 ; $6c0b
-	xor a, a ; $6c11
+	xor a ; $6c11
 	ld [wCharViewerCursor], a ; $6c12
 	ld [wCharViewerRow], a ; $6c15
 	ld [wCharViewerSavedCursor], a ; $6c18
@@ -3148,14 +3148,14 @@ InitCharViewerState:
 DrawCharViewerCursorSprite:
 	wram_bank $06 ; $6c28
 	ld a, [wCharViewerRow] ; $6c2e
-	or a, a ; $6c31
+	or a ; $6c31
 	jr nz, .nonZero ; $6c32
 	ld a, [wCharViewerCursor] ; $6c34
 	rlca ; $6c37
-	add a, LOW(Data_1a_6c69) ; $6c38
+	add LOW(Data_1a_6c69) ; $6c38
 	ld l, a ; $6c3a
-	adc a, HIGH(Data_1a_6c69) ; $6c3b
-	sub a, l ; $6c3d
+	adc HIGH(Data_1a_6c69) ; $6c3b
+	sub l ; $6c3d
 	ld h, a ; $6c3e
 	ld a, [hl+] ; $6c3f
 	ld d, [hl] ; $6c40
@@ -3164,10 +3164,10 @@ DrawCharViewerCursorSprite:
 .nonZero:
 	ld a, [wCharViewerCursor] ; $6c44
 	rlca ; $6c47
-	add a, LOW(Data_1a_6c95) ; $6c48
+	add LOW(Data_1a_6c95) ; $6c48
 	ld l, a ; $6c4a
-	adc a, HIGH(Data_1a_6c95) ; $6c4b
-	sub a, l ; $6c4d
+	adc HIGH(Data_1a_6c95) ; $6c4b
+	sub l ; $6c4d
 	ld h, a ; $6c4e
 	ld a, [hl+] ; $6c4f
 	ld d, [hl] ; $6c50
@@ -3180,7 +3180,7 @@ DrawCharViewerCursorSprite:
 	call QueueSprite ; $6c59
 	pop de ; $6c5c
 	ld a, $08 ; $6c5d
-	add a, d ; $6c5f
+	add d ; $6c5f
 	ld d, a ; $6c60
 	ld b, $0d ; $6c61
 	ld c, $82 ; $6c63
@@ -3219,19 +3219,19 @@ RunCharViewerInputLoop:
 	sound $5e ; $6cd5
 	wram_bank $06 ; $6cd7
 	ld a, [wCharViewerRow] ; $6cdd
-	or a, a ; $6ce0
+	or a ; $6ce0
 	jr nz, .upWrapToChar ; $6ce1
 	ld a, [wCharViewerCursor] ; $6ce3
-	cp a, $0b ; $6ce6
+	cp $0b ; $6ce6
 	jr c, .upWrapToPalette ; $6ce8
 	ld a, [wCharViewerCursor] ; $6cea
-	sub a, $0b ; $6ced
+	sub $0b ; $6ced
 	ld [wCharViewerCursor], a ; $6cef
 	jp .refresh ; $6cf2
 .upWrapToPalette:
 	wram_bank $06 ; $6cf5
 	ld a, [wCharViewerRow] ; $6cfb
-	xor a, $01 ; $6cfe
+	xor $01 ; $6cfe
 	ld [wCharViewerRow], a ; $6d00
 	ld a, [wCharViewerPalette] ; $6d03
 	ld [wCharViewerCursor], a ; $6d06
@@ -3239,7 +3239,7 @@ RunCharViewerInputLoop:
 .upWrapToChar:
 	wram_bank $06 ; $6d0c
 	ld a, [wCharViewerRow] ; $6d12
-	xor a, $01 ; $6d15
+	xor $01 ; $6d15
 	ld [wCharViewerRow], a ; $6d17
 	ld a, [wCharViewerSavedCursor] ; $6d1a
 	ld [wCharViewerCursor], a ; $6d1d
@@ -3248,19 +3248,19 @@ RunCharViewerInputLoop:
 	sound $5e ; $6d23
 	wram_bank $06 ; $6d25
 	ld a, [wCharViewerRow] ; $6d2b
-	or a, a ; $6d2e
+	or a ; $6d2e
 	jr nz, .downWrapToChar ; $6d2f
 	ld a, [wCharViewerCursor] ; $6d31
-	cp a, $0b ; $6d34
+	cp $0b ; $6d34
 	jr nc, .downWrapToPalette ; $6d36
 	ld a, [wCharViewerCursor] ; $6d38
-	add a, $0b ; $6d3b
+	add $0b ; $6d3b
 	ld [wCharViewerCursor], a ; $6d3d
 	jp .refresh ; $6d40
 .downWrapToPalette:
 	wram_bank $06 ; $6d43
 	ld a, [wCharViewerRow] ; $6d49
-	xor a, $01 ; $6d4c
+	xor $01 ; $6d4c
 	ld [wCharViewerRow], a ; $6d4e
 	ld a, [wCharViewerPalette] ; $6d51
 	ld [wCharViewerCursor], a ; $6d54
@@ -3268,7 +3268,7 @@ RunCharViewerInputLoop:
 .downWrapToChar:
 	wram_bank $06 ; $6d5a
 	ld a, [wCharViewerRow] ; $6d60
-	xor a, $01 ; $6d63
+	xor $01 ; $6d63
 	ld [wCharViewerRow], a ; $6d65
 	ld a, [wCharViewerSavedCursor] ; $6d68
 	ld [wCharViewerCursor], a ; $6d6b
@@ -3277,18 +3277,18 @@ RunCharViewerInputLoop:
 	sound $5e ; $6d71
 	wram_bank $06 ; $6d73
 	ld a, [wCharViewerRow] ; $6d79
-	or a, a ; $6d7c
+	or a ; $6d7c
 	jr nz, .leftPalette ; $6d7d
 	ld a, [wCharViewerCursor] ; $6d7f
 	dec a ; $6d82
 	ld [wCharViewerCursor], a ; $6d83
-	cp a, $ff ; $6d86
+	cp $ff ; $6d86
 	jr nz, .leftWrapRow ; $6d88
 	ld a, $0a ; $6d8a
 	ld [wCharViewerCursor], a ; $6d8c
 	jp .refresh ; $6d8f
 .leftWrapRow:
-	cp a, $0a ; $6d92
+	cp $0a ; $6d92
 	jp nz, .refresh ; $6d94
 	ld a, $15 ; $6d97
 	ld [wCharViewerCursor], a ; $6d99
@@ -3296,7 +3296,7 @@ RunCharViewerInputLoop:
 .leftPalette:
 	ld a, [wCharViewerCursor] ; $6d9f
 	dec a ; $6da2
-	cp a, $ff ; $6da3
+	cp $ff ; $6da3
 	jr nz, .storeLeftPalette ; $6da5
 	ld a, $04 ; $6da7
 .storeLeftPalette:
@@ -3306,17 +3306,17 @@ RunCharViewerInputLoop:
 	sound $5e ; $6dae
 	wram_bank $06 ; $6db0
 	ld a, [wCharViewerRow] ; $6db6
-	or a, a ; $6db9
+	or a ; $6db9
 	jr nz, .rightPalette ; $6dba
 	ld a, [wCharViewerCursor] ; $6dbc
 	inc a ; $6dbf
 	ld [wCharViewerCursor], a ; $6dc0
-	cp a, $0b ; $6dc3
+	cp $0b ; $6dc3
 	jr nz, .rightWrapRow ; $6dc5
-	xor a, a ; $6dc7
+	xor a ; $6dc7
 	ld [wCharViewerCursor], a ; $6dc8
 .rightWrapRow:
-	cp a, $16 ; $6dcb
+	cp $16 ; $6dcb
 	jr nz, .refresh ; $6dcd
 	ld a, $0b ; $6dcf
 	ld [wCharViewerCursor], a ; $6dd1
@@ -3324,9 +3324,9 @@ RunCharViewerInputLoop:
 .rightPalette:
 	ld a, [wCharViewerCursor] ; $6dd6
 	inc a ; $6dd9
-	cp a, $05 ; $6dda
+	cp $05 ; $6dda
 	jr nz, .storeRightPalette ; $6ddc
-	xor a, a ; $6dde
+	xor a ; $6dde
 .storeRightPalette:
 	ld [wCharViewerCursor], a ; $6ddf
 	jr .refresh ; $6de2
@@ -3334,12 +3334,12 @@ RunCharViewerInputLoop:
 	sound $5e ; $6de4
 	wram_bank $06 ; $6de6
 	ld a, [wCharViewerRow] ; $6dec
-	or a, a ; $6def
+	or a ; $6def
 	jr nz, .selectPalette ; $6df0
 	ld a, [wCharViewerCursor] ; $6df2
 	ld [wCharViewerSavedCursor], a ; $6df5
 	ld hl, CharViewerInputLoopTable ; $6df8
-	add a, l ; $6dfb
+	add l ; $6dfb
 	ld l, a ; $6dfc
 	jr nc, .readAnimId ; $6dfd
 	inc h ; $6dff
@@ -3364,13 +3364,13 @@ RunCharViewerInputLoop:
 .prevPose:
 	ld a, [wCharViewerPose] ; $6e29
 	dec a ; $6e2c
-	and a, $07 ; $6e2d
+	and $07 ; $6e2d
 	ld [wCharViewerPose], a ; $6e2f
 	jp RunCharViewerInputLoop ; $6e32
 .nextPose:
 	ld a, [wCharViewerPose] ; $6e35
 	inc a ; $6e38
-	and a, $07 ; $6e39
+	and $07 ; $6e39
 	ld [wCharViewerPose], a ; $6e3b
 	jp RunCharViewerInputLoop ; $6e3e
 RefreshCharViewerSelection:
@@ -3408,20 +3408,20 @@ RefreshCharViewerSelection:
 	ld [hl+], a ; $6e6c
 	wram_bank $06 ; $6e6d
 	ld a, [wCharViewerSavedCursor] ; $6e73
-	cp a, $0b ; $6e76
+	cp $0b ; $6e76
 	jr nc, .ge0b ; $6e78
-	add a, $28 ; $6e7a
+	add $28 ; $6e7a
 	ld l, a ; $6e7c
-	adc a, $d1 ; $6e7d
-	sub a, l ; $6e7f
+	adc $d1 ; $6e7d
+	sub l ; $6e7f
 	ld h, a ; $6e80
 	jr .queueVRAMCopy ; $6e81
 .ge0b:
-	sub a, $0b ; $6e83
-	add a, $48 ; $6e85
+	sub $0b ; $6e83
+	add $48 ; $6e85
 	ld l, a ; $6e87
-	adc a, $d1 ; $6e88
-	sub a, l ; $6e8a
+	adc $d1 ; $6e88
+	sub l ; $6e8a
 	ld h, a ; $6e8b
 .queueVRAMCopy:
 	wram_bank $02 ; $6e8c
@@ -3433,10 +3433,10 @@ RefreshCharViewerSelection:
 	call QueueVRAMCopy ; $6e9d
 	wram_bank $06 ; $6ea0
 	ld a, [wCharViewerPalette] ; $6ea6
-	add a, $c8 ; $6ea9
+	add $c8 ; $6ea9
 	ld l, a ; $6eab
-	adc a, $d1 ; $6eac
-	sub a, l ; $6eae
+	adc $d1 ; $6eac
+	sub l ; $6eae
 	ld h, a ; $6eaf
 	wram_bank $02 ; $6eb0
 	ld a, $08 ; $6eb6
@@ -3483,14 +3483,14 @@ RefreshCharViewerSelection:
 	ld [hl+], a ; $6ef1
 	wram_bank $06 ; $6ef2
 	ld a, [wCharViewerRow] ; $6ef8
-	or a, a ; $6efb
+	or a ; $6efb
 	jr nz, .nonZero ; $6efc
 	ld a, [wCharViewerCursor] ; $6efe
-	add a, $01 ; $6f01
-	add a, $c0 ; $6f03
+	add $01 ; $6f01
+	add $c0 ; $6f03
 	ld l, a ; $6f05
-	adc a, $10 ; $6f06
-	sub a, l ; $6f08
+	adc $10 ; $6f06
+	sub l ; $6f08
 	ld h, a ; $6f09
 	ld de, $d201 ; $6f0a
 	ld c, $20 ; $6f0d
@@ -3590,17 +3590,17 @@ DrawCharViewerCharSprite:
 	farcall ReloadCharFacingTiles ; $7043
 	pop de ; $7046
 	ld a, d ; $7047
-	add a, LOW(Data_1a_708e) ; $7048
+	add LOW(Data_1a_708e) ; $7048
 	ld l, a ; $704a
-	adc a, HIGH(Data_1a_708e) ; $704b
-	sub a, l ; $704d
+	adc HIGH(Data_1a_708e) ; $704b
+	sub l ; $704d
 	ld h, a ; $704e
 	ld b, [hl] ; $704f
 	ld hl, wCharTileBase ; $7050
 	ld a, [hl+] ; $7053
 	ld c, a ; $7054
 	ld a, [hl] ; $7055
-	or a, b ; $7056
+	or b ; $7056
 	ld b, a ; $7057
 	push bc ; $7058
 	push de ; $7059
@@ -3632,7 +3632,7 @@ DrawCharViewerCharSprite:
 	ld a, [wCharSpriteFrame] ; $707f
 	ld [hl+], a ; $7082
 	pop af ; $7083
-	add a, $80 ; $7084
+	add $80 ; $7084
 	ld [hl+], a ; $7086
 	ld hl, wCharSpriteSlot ; $7087
 	farcall DrawCharSprite ; $708a
@@ -3641,7 +3641,7 @@ Data_1a_708e:
 	; $708e, 8 bytes (bytes:8)
 	db $00, $00, $00, $20, $20, $20, $00, $00 ; 0x00
 LoadCharViewerMugshot:
-	xor a, a ; $7096
+	xor a ; $7096
 	ld de, $0701 ; $7097
 	farcall LoadIndexedPaletteThunk ; $709a
 	wram_bank $06 ; $709d
@@ -3729,17 +3729,17 @@ RunCharDataConfirmScreen:
 	jr nz, .step ; $79d2
 	bit 1, a ; $79d4
 	jr nz, .beginFadeOut2 ; $79d6
-	and a, $c0 ; $79d8
+	and $c0 ; $79d8
 	jr z, .loop ; $79da
 	sound $5e ; $79dc
 	ld a, [wCharDataConfirmState] ; $79de
-	xor a, $01 ; $79e1
+	xor $01 ; $79e1
 	ld [wCharDataConfirmState], a ; $79e3
 	jr .loop ; $79e6
 .step:
 	wram_bank $06 ; $79e8
 	ld a, [wCharDataConfirmState] ; $79ee
-	or a, a ; $79f1
+	or a ; $79f1
 	jr nz, .beginFadeOut2 ; $79f2
 	sound $5f ; $79f4
 	jr .beginFadeOut ; $79f6
@@ -3760,7 +3760,7 @@ RunCharDataConfirmScreen:
 DrawCharDataPromptCursor:
 	wram_bank $06 ; $7a1d
 	ld a, [wCharDataConfirmState] ; $7a23
-	or a, a ; $7a26
+	or a ; $7a26
 	jr nz, .nonZero ; $7a27
 	ld bc, $0fd4 ; $7a29
 	ld de, $7a0c ; $7a2c
@@ -3779,7 +3779,7 @@ CopyBank1ToBank3BufferAlt:
 	inc hl ; $7a4b
 	dec bc ; $7a4c
 	ld a, b ; $7a4d
-	or a, c ; $7a4e
+	or c ; $7a4e
 	jr nz, CopyBank1ToBank3BufferAlt ; $7a4f
 	ret ; $7a51
 CopyBank1ToBank2BufferAlt:
@@ -3790,12 +3790,12 @@ CopyBank1ToBank2BufferAlt:
 	inc hl ; $7a60
 	dec bc ; $7a61
 	ld a, b ; $7a62
-	or a, c ; $7a63
+	or c ; $7a63
 	jr nz, CopyBank1ToBank2BufferAlt ; $7a64
 	ret ; $7a66
 ApplyTilemapPatchList_1a:
 	ld a, [hl] ; $7a67
-	cp a, $ff ; $7a68
+	cp $ff ; $7a68
 	ret z ; $7a6a
 	push hl ; $7a6b
 	ld d, [hl] ; $7a6c
@@ -3812,7 +3812,7 @@ ApplyTilemapPatchList_1a:
 	ld a, [hl] ; $7a79
 	ld h, b ; $7a7a
 	ld l, c ; $7a7b
-	add a, l ; $7a7c
+	add l ; $7a7c
 	ld l, a ; $7a7d
 	jr nc, .gotPtr ; $7a7e
 	inc h ; $7a80
@@ -3849,10 +3849,10 @@ ApplyTilemapPatchList_1a:
 	jr ApplyTilemapPatchList_1a ; $7ab3
 CharDataScreen_BuildStats:
 	ld a, [wStoryCharacterSlot] ; $7ab5
-	or a, a ; $7ab8
+	or a ; $7ab8
 	ret nz ; $7ab9
 	wram_bank $06 ; $7aba
-	xor a, a ; $7ac0
+	xor a ; $7ac0
 	ld hl, $d0ab ; $7ac1
 	ld [hl+], a ; $7ac4
 	ld [hl+], a ; $7ac5
@@ -3866,7 +3866,7 @@ CharDataScreen_BuildStats:
 	ld [hl+], a ; $7acd
 	ld [hl+], a ; $7ace
 	ld a, [wEquippedRacket] ; $7acf
-	or a, a ; $7ad2
+	or a ; $7ad2
 	ret z ; $7ad3
 	farcall RecomputeStatsWithoutRacket ; $7ad4
 	ld hl, $c920 ; $7ad7
@@ -3907,67 +3907,67 @@ CharDataScreen_BuildStats:
 	ld c, [hl] ; $7b00
 	ld a, [wCharDataStats] ; $7b01
 	dec a ; $7b04
-	sub a, c ; $7b05
+	sub c ; $7b05
 	ld [$d0ab], a ; $7b06
 	ld hl, $d0a1 ; $7b09
 	ld c, [hl] ; $7b0c
 	ld a, [wCharDataStats + 1] ; $7b0d
 	dec a ; $7b10
-	sub a, c ; $7b11
+	sub c ; $7b11
 	ld [$d0ac], a ; $7b12
 	ld hl, $d0a2 ; $7b15
 	ld c, [hl] ; $7b18
 	ld a, [wCharDataStats + 2] ; $7b19
 	dec a ; $7b1c
-	sub a, c ; $7b1d
+	sub c ; $7b1d
 	ld [$d0ad], a ; $7b1e
 	ld hl, $d0a3 ; $7b21
 	ld c, [hl] ; $7b24
 	ld a, [wCharDataStats + 3] ; $7b25
 	dec a ; $7b28
-	sub a, c ; $7b29
+	sub c ; $7b29
 	ld [$d0ae], a ; $7b2a
 	ld hl, $d0a4 ; $7b2d
 	ld c, [hl] ; $7b30
 	ld a, [wCharDataStats + 4] ; $7b31
 	dec a ; $7b34
-	sub a, c ; $7b35
+	sub c ; $7b35
 	ld [$d0af], a ; $7b36
 	ld hl, $d0a5 ; $7b39
 	ld c, [hl] ; $7b3c
 	ld a, [wCharDataStats + 5] ; $7b3d
 	dec a ; $7b40
-	sub a, c ; $7b41
+	sub c ; $7b41
 	ld [$d0b0], a ; $7b42
 	ld hl, $d0a6 ; $7b45
 	ld c, [hl] ; $7b48
 	ld a, [wCharDataStats + 6] ; $7b49
 	dec a ; $7b4c
-	sub a, c ; $7b4d
+	sub c ; $7b4d
 	ld [$d0b1], a ; $7b4e
 	ld hl, $d0a7 ; $7b51
 	ld c, [hl] ; $7b54
 	ld a, [wCharDataStats + 7] ; $7b55
 	dec a ; $7b58
-	sub a, c ; $7b59
+	sub c ; $7b59
 	ld [$d0b2], a ; $7b5a
 	ld hl, $d0a8 ; $7b5d
 	ld c, [hl] ; $7b60
 	ld a, [wCharDataStats + 8] ; $7b61
 	dec a ; $7b64
-	sub a, c ; $7b65
+	sub c ; $7b65
 	ld [$d0b3], a ; $7b66
 	ld hl, $d0a9 ; $7b69
 	ld c, [hl] ; $7b6c
 	ld a, [wCharDataStats + 9] ; $7b6d
 	dec a ; $7b70
-	sub a, c ; $7b71
+	sub c ; $7b71
 	ld [$d0b4], a ; $7b72
 	ld hl, $d0aa ; $7b75
 	ld c, [hl] ; $7b78
 	ld a, [wCharDataStats + 10] ; $7b79
 	dec a ; $7b7c
-	sub a, c ; $7b7d
+	sub c ; $7b7d
 	ld [$d0b5], a ; $7b7e
 	farcall RefreshMainCharacterStats ; $7b81
 	ret ; $7b84
@@ -4015,13 +4015,13 @@ DrawStatChangeArrows:
 	ld h, [hl] ; $7bf4
 	ld l, a ; $7bf5
 	ld a, h ; $7bf6
-	or a, l ; $7bf7
+	or l ; $7bf7
 	ret nz ; $7bf8
 	ldh a, [hVBlankCounter] ; $7bf9
-	and a, $18 ; $7bfb
+	and $18 ; $7bfb
 	ret z ; $7bfd
 	ld a, [$d0ab] ; $7bfe
-	or a, a ; $7c01
+	or a ; $7c01
 	jr z, .getStatArrowSpriteAttr ; $7c02
 	call GetStatArrowSpriteAttr ; $7c04
 	call GetStatArrowTile ; $7c07
@@ -4029,21 +4029,21 @@ DrawStatChangeArrows:
 	ld a, [$d0a0] ; $7c0b
 	ld l, a ; $7c0e
 	ld a, [wCharDataStatDeltas] ; $7c0f
-	add a, l ; $7c12
+	add l ; $7c12
 	ld de, $142c ; $7c13
 	call ComputeStatArrowSpriteX ; $7c16
 	push de ; $7c19
 	call QueueSprite ; $7c1a
 	pop de ; $7c1d
 	pop af ; $7c1e
-	or a, a ; $7c1f
+	or a ; $7c1f
 	jr z, .getStatArrowSpriteAttr ; $7c20
 	call GetStatArrowExtraTile ; $7c22
 	call OffsetStatArrowSpriteX ; $7c25
 	call QueueSprite ; $7c28
 .getStatArrowSpriteAttr:
 	ld a, [$d0ac] ; $7c2b
-	or a, a ; $7c2e
+	or a ; $7c2e
 	jr z, .getStatArrowSpriteAttr2 ; $7c2f
 	call GetStatArrowSpriteAttr ; $7c31
 	call GetStatArrowTile ; $7c34
@@ -4051,21 +4051,21 @@ DrawStatChangeArrows:
 	ld a, [$d0a1] ; $7c38
 	ld l, a ; $7c3b
 	ld a, [wCharDataStatDeltas + 1] ; $7c3c
-	add a, l ; $7c3f
+	add l ; $7c3f
 	ld de, $143c ; $7c40
 	call ComputeStatArrowSpriteX ; $7c43
 	push de ; $7c46
 	call QueueSprite ; $7c47
 	pop de ; $7c4a
 	pop af ; $7c4b
-	or a, a ; $7c4c
+	or a ; $7c4c
 	jr z, .getStatArrowSpriteAttr2 ; $7c4d
 	call GetStatArrowExtraTile ; $7c4f
 	call OffsetStatArrowSpriteX ; $7c52
 	call QueueSprite ; $7c55
 .getStatArrowSpriteAttr2:
 	ld a, [$d0ad] ; $7c58
-	or a, a ; $7c5b
+	or a ; $7c5b
 	jr z, .getStatArrowSpriteAttr3 ; $7c5c
 	call GetStatArrowSpriteAttr ; $7c5e
 	call GetStatArrowTile ; $7c61
@@ -4073,21 +4073,21 @@ DrawStatChangeArrows:
 	ld a, [$d0a2] ; $7c65
 	ld l, a ; $7c68
 	ld a, [wCharDataStatDeltas + 2] ; $7c69
-	add a, l ; $7c6c
+	add l ; $7c6c
 	ld de, $1454 ; $7c6d
 	call ComputeStatArrowSpriteX ; $7c70
 	push de ; $7c73
 	call QueueSprite ; $7c74
 	pop de ; $7c77
 	pop af ; $7c78
-	or a, a ; $7c79
+	or a ; $7c79
 	jr z, .getStatArrowSpriteAttr3 ; $7c7a
 	call GetStatArrowExtraTile ; $7c7c
 	call OffsetStatArrowSpriteX ; $7c7f
 	call QueueSprite ; $7c82
 .getStatArrowSpriteAttr3:
 	ld a, [$d0ae] ; $7c85
-	or a, a ; $7c88
+	or a ; $7c88
 	jr z, .getStatArrowSpriteAttr4 ; $7c89
 	call GetStatArrowSpriteAttr ; $7c8b
 	call GetStatArrowTile ; $7c8e
@@ -4095,21 +4095,21 @@ DrawStatChangeArrows:
 	ld a, [$d0a3] ; $7c92
 	ld l, a ; $7c95
 	ld a, [wCharDataStatDeltas + 3] ; $7c96
-	add a, l ; $7c99
+	add l ; $7c99
 	ld de, $1464 ; $7c9a
 	call ComputeStatArrowSpriteX ; $7c9d
 	push de ; $7ca0
 	call QueueSprite ; $7ca1
 	pop de ; $7ca4
 	pop af ; $7ca5
-	or a, a ; $7ca6
+	or a ; $7ca6
 	jr z, .getStatArrowSpriteAttr4 ; $7ca7
 	call GetStatArrowExtraTile ; $7ca9
 	call OffsetStatArrowSpriteX ; $7cac
 	call QueueSprite ; $7caf
 .getStatArrowSpriteAttr4:
 	ld a, [$d0af] ; $7cb2
-	or a, a ; $7cb5
+	or a ; $7cb5
 	jr z, .getStatArrowSpriteAttr5 ; $7cb6
 	call GetStatArrowSpriteAttr ; $7cb8
 	call GetStatArrowTile ; $7cbb
@@ -4117,21 +4117,21 @@ DrawStatChangeArrows:
 	ld a, [$d0a4] ; $7cbf
 	ld l, a ; $7cc2
 	ld a, [wCharDataStatDeltas + 4] ; $7cc3
-	add a, l ; $7cc6
+	add l ; $7cc6
 	ld de, $1474 ; $7cc7
 	call ComputeStatArrowSpriteX ; $7cca
 	push de ; $7ccd
 	call QueueSprite ; $7cce
 	pop de ; $7cd1
 	pop af ; $7cd2
-	or a, a ; $7cd3
+	or a ; $7cd3
 	jr z, .getStatArrowSpriteAttr5 ; $7cd4
 	call GetStatArrowExtraTile ; $7cd6
 	call OffsetStatArrowSpriteX ; $7cd9
 	call QueueSprite ; $7cdc
 .getStatArrowSpriteAttr5:
 	ld a, [$d0b0] ; $7cdf
-	or a, a ; $7ce2
+	or a ; $7ce2
 	jr z, .getStatArrowSpriteAttr6 ; $7ce3
 	call GetStatArrowSpriteAttr ; $7ce5
 	call GetStatArrowTile ; $7ce8
@@ -4139,21 +4139,21 @@ DrawStatChangeArrows:
 	ld a, [$d0a5] ; $7cec
 	ld l, a ; $7cef
 	ld a, [wCharDataStatDeltas + 5] ; $7cf0
-	add a, l ; $7cf3
+	add l ; $7cf3
 	ld de, StatChangeArrows0 ; $7cf4
 	call ComputeStatArrowSpriteX ; $7cf7
 	push de ; $7cfa
 	call QueueSprite ; $7cfb
 	pop de ; $7cfe
 	pop af ; $7cff
-	or a, a ; $7d00
+	or a ; $7d00
 	jr z, .getStatArrowSpriteAttr6 ; $7d01
 	call GetStatArrowExtraTile ; $7d03
 	call OffsetStatArrowSpriteX ; $7d06
 	call QueueSprite ; $7d09
 .getStatArrowSpriteAttr6:
 	ld a, [$d0b1] ; $7d0c
-	or a, a ; $7d0f
+	or a ; $7d0f
 	jr z, .getStatArrowSpriteAttr7 ; $7d10
 	call GetStatArrowSpriteAttr ; $7d12
 	call GetStatArrowTile ; $7d15
@@ -4161,21 +4161,21 @@ DrawStatChangeArrows:
 	ld a, [$d0a6] ; $7d19
 	ld l, a ; $7d1c
 	ld a, [wCharDataStatDeltas + 6] ; $7d1d
-	add a, l ; $7d20
+	add l ; $7d20
 	ld de, StatChangeArrows1 ; $7d21
 	call ComputeStatArrowSpriteX ; $7d24
 	push de ; $7d27
 	call QueueSprite ; $7d28
 	pop de ; $7d2b
 	pop af ; $7d2c
-	or a, a ; $7d2d
+	or a ; $7d2d
 	jr z, .getStatArrowSpriteAttr7 ; $7d2e
 	call GetStatArrowExtraTile ; $7d30
 	call OffsetStatArrowSpriteX ; $7d33
 	call QueueSprite ; $7d36
 .getStatArrowSpriteAttr7:
 	ld a, [$d0b2] ; $7d39
-	or a, a ; $7d3c
+	or a ; $7d3c
 	jr z, .getStatArrowSpriteAttr8 ; $7d3d
 	call GetStatArrowSpriteAttr ; $7d3f
 	call GetStatArrowTile ; $7d42
@@ -4183,21 +4183,21 @@ DrawStatChangeArrows:
 	ld a, [$d0a7] ; $7d46
 	ld l, a ; $7d49
 	ld a, [wCharDataStatDeltas + 7] ; $7d4a
-	add a, l ; $7d4d
+	add l ; $7d4d
 	ld de, StatChangeArrows2 ; $7d4e
 	call ComputeStatArrowSpriteX ; $7d51
 	push de ; $7d54
 	call QueueSprite ; $7d55
 	pop de ; $7d58
 	pop af ; $7d59
-	or a, a ; $7d5a
+	or a ; $7d5a
 	jr z, .getStatArrowSpriteAttr8 ; $7d5b
 	call GetStatArrowExtraTile ; $7d5d
 	call OffsetStatArrowSpriteX ; $7d60
 	call QueueSprite ; $7d63
 .getStatArrowSpriteAttr8:
 	ld a, [$d0b3] ; $7d66
-	or a, a ; $7d69
+	or a ; $7d69
 	jr z, .getStatArrowSpriteAttr9 ; $7d6a
 	call GetStatArrowSpriteAttr ; $7d6c
 	call GetStatArrowTile ; $7d6f
@@ -4205,21 +4205,21 @@ DrawStatChangeArrows:
 	ld a, [$d0a8] ; $7d73
 	ld l, a ; $7d76
 	ld a, [wCharDataStatDeltas + 8] ; $7d77
-	add a, l ; $7d7a
+	add l ; $7d7a
 	ld de, StatChangeArrows3 ; $7d7b
 	call ComputeStatArrowSpriteX ; $7d7e
 	push de ; $7d81
 	call QueueSprite ; $7d82
 	pop de ; $7d85
 	pop af ; $7d86
-	or a, a ; $7d87
+	or a ; $7d87
 	jr z, .getStatArrowSpriteAttr9 ; $7d88
 	call GetStatArrowExtraTile ; $7d8a
 	call OffsetStatArrowSpriteX ; $7d8d
 	call QueueSprite ; $7d90
 .getStatArrowSpriteAttr9:
 	ld a, [$d0b4] ; $7d93
-	or a, a ; $7d96
+	or a ; $7d96
 	jr z, .getStatArrowSpriteAttr10 ; $7d97
 	call GetStatArrowSpriteAttr ; $7d99
 	call GetStatArrowTile ; $7d9c
@@ -4227,21 +4227,21 @@ DrawStatChangeArrows:
 	ld a, [$d0a9] ; $7da0
 	ld l, a ; $7da3
 	ld a, [wCharDataStatDeltas + 9] ; $7da4
-	add a, l ; $7da7
+	add l ; $7da7
 	ld de, StatChangeArrows4 ; $7da8
 	call ComputeStatArrowSpriteX ; $7dab
 	push de ; $7dae
 	call QueueSprite ; $7daf
 	pop de ; $7db2
 	pop af ; $7db3
-	or a, a ; $7db4
+	or a ; $7db4
 	jr z, .getStatArrowSpriteAttr10 ; $7db5
 	call GetStatArrowExtraTile ; $7db7
 	call OffsetStatArrowSpriteX ; $7dba
 	call QueueSprite ; $7dbd
 .getStatArrowSpriteAttr10:
 	ld a, [$d0b5] ; $7dc0
-	or a, a ; $7dc3
+	or a ; $7dc3
 	jr z, .done ; $7dc4
 	call GetStatArrowSpriteAttr ; $7dc6
 	call GetStatArrowTile ; $7dc9
@@ -4249,14 +4249,14 @@ DrawStatChangeArrows:
 	ld a, [$d0aa] ; $7dcd
 	ld l, a ; $7dd0
 	ld a, [wCharDataStatDeltas + 10] ; $7dd1
-	add a, l ; $7dd4
+	add l ; $7dd4
 	ld de, StatChangeArrows5 ; $7dd5
 	call ComputeStatArrowSpriteX ; $7dd8
 	push de ; $7ddb
 	call QueueSprite ; $7ddc
 	pop de ; $7ddf
 	pop af ; $7de0
-	or a, a ; $7de1
+	or a ; $7de1
 	jr z, .done ; $7de2
 	call GetStatArrowExtraTile ; $7de4
 	call OffsetStatArrowSpriteX ; $7de7
@@ -4307,16 +4307,16 @@ ComputeStatArrowSpriteX:
 	inc a ; $7e23
 	rlca ; $7e24
 	rlca ; $7e25
-	add a, d ; $7e26
+	add d ; $7e26
 	ld d, a ; $7e27
 	ld a, h ; $7e28
-	add a, LOW(Data_1a_7e34) ; $7e29
+	add LOW(Data_1a_7e34) ; $7e29
 	ld l, a ; $7e2b
-	adc a, HIGH(Data_1a_7e34) ; $7e2c
-	sub a, l ; $7e2e
+	adc HIGH(Data_1a_7e34) ; $7e2c
+	sub l ; $7e2e
 	ld h, a ; $7e2f
 	ld a, [hl] ; $7e30
-	add a, d ; $7e31
+	add d ; $7e31
 	ld d, a ; $7e32
 	ret ; $7e33
 Data_1a_7e34:
@@ -4326,12 +4326,12 @@ OffsetStatArrowSpriteX:
 	bit 7, a ; $7e38
 	jr nz, .shiftLeft ; $7e3a
 	ld a, $08 ; $7e3c
-	add a, d ; $7e3e
+	add d ; $7e3e
 	ld d, a ; $7e3f
 	ret ; $7e40
 .shiftLeft:
 	ld a, $f8 ; $7e41
-	add a, d ; $7e43
+	add d ; $7e43
 	ld d, a ; $7e44
 	ret ; $7e45
 CharDataConfirmScreenTable0:

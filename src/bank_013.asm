@@ -31,7 +31,7 @@ RestaurantPlazaEntryPoints_13:
 	db $ff
 RestaurantPlazaArrival04_13:
 	ld a, [wStoryModeEntryPoint] ; $405f
-	cp a, $ff ; $4062
+	cp $ff ; $4062
 	jp z, .done ; $4064
 	test_flag FLAG_DOUBLES ; $4067
 	jr z, .walkOff ; $406a
@@ -47,7 +47,7 @@ RestaurantPlazaArrival04_13:
 	ret ; $40a4
 RestaurantPlazaArrival06_13:
 	ld a, [wStoryModeEntryPoint] ; $40a5
-	cp a, $ff ; $40a8
+	cp $ff ; $40a8
 	jp z, .done ; $40aa
 	test_flag FLAG_DOUBLES ; $40ad
 	jr z, .walkOff ; $40b0
@@ -63,7 +63,7 @@ RestaurantPlazaArrival06_13:
 	ret ; $40ea
 RestaurantPlazaArrival01_13:
 	ld a, [wStoryModeEntryPoint] ; $40eb
-	cp a, $ff ; $40ee
+	cp $ff ; $40ee
 	jp z, RestaurantPlazaArrivalWalkIn_13.done ; $40f0
 	script_set_speed ACTOR_PLAYER, $0018 ; $40f3
 	script_set_anim ACTOR_PLAYER, $08 ; $40fb
@@ -83,7 +83,7 @@ RestaurantPlazaArrival01_13:
 	ret ; $4162
 RestaurantPlazaArrival02_13:
 	ld a, [wStoryModeEntryPoint] ; $4163
-	cp a, $ff ; $4166
+	cp $ff ; $4166
 	jp z, RestaurantPlazaArrivalWalkIn_13.done ; $4168
 	script_copy_scene_rect $14, $08, $06, $15, $02, $02 ; $416b
 	script_copy_scene_rect $04, $15, $14, $08, $02, $02 ; $417a
@@ -103,7 +103,7 @@ RestaurantPlazaArrival02_13:
 	ret ; $41ce
 RestaurantPlazaArrivalWalkIn_13:
 	ld a, [wStoryModeEntryPoint] ; $41cf
-	cp a, $ff ; $41d2
+	cp $ff ; $41d2
 	jr z, .done ; $41d4
 	script_set_speed ACTOR_PLAYER, $000c ; $41d6
 	script_set_anim ACTOR_PLAYER, $08 ; $41de
@@ -262,11 +262,11 @@ StoryActorsWalkOffAndFadeOutDoubles_13:
 	ret ; $44de
 RestaurantPlazaInitScript_13:
 	ld a, [wStoryModeEntryPoint] ; $44df
-	cp a, $0f ; $44e2
+	cp $0f ; $44e2
 	jr nz, .ne0f ; $44e4
 	call AcademyCourtsTourCutscene ; $44e6
 .ne0f:
-	cp a, $0e ; $44e9
+	cp $0e ; $44e9
 	jr nz, .done ; $44eb
 	call ServiceAceCoachIntroCutscene ; $44ed
 .done:
@@ -463,7 +463,7 @@ ServiceAceCoachIntroCutscene:
 	script_wait_frames $32 ; $49a9
 	script_face_toward $07, $06 ; $49b0
 	ld a, [wStoryModeGenderOfMainCharacter] ; $49b8
-	or a, a ; $49bb
+	or a ; $49bb
 	jr z, .speak ; $49bc
 	farcall AdvanceDialogueTextCursor ; $49be
 .speak:
@@ -599,11 +599,11 @@ AnimateTourPointerSprite_13:
 	ld d, a ; $4d0d
 	ldh a, [hVBlankCounter] ; $4d0e
 	srl a ; $4d10
-	and a, $07 ; $4d12
+	and $07 ; $4d12
 	ld e, a ; $4d14
 	ld a, [wMapSceneStage2] ; $4d15
-	add a, $08 ; $4d18
-	sub a, e ; $4d1a
+	add $08 ; $4d18
+	sub e ; $4d1a
 	ld e, a ; $4d1b
 	call QueueTourPointerSprite_13 ; $4d1c
 	ret ; $4d1f
@@ -670,11 +670,11 @@ DormRoomExitTriggers_13:
 DormRoomNpc04_13:
 	call AdvanceRandomSeed ; $4ea4
 	ld a, l ; $4ea7
-	and a, $07 ; $4ea8
-	add a, $3c ; $4eaa
+	and $07 ; $4ea8
+	add $3c ; $4eaa
 	ld l, a ; $4eac
-	adc a, $05 ; $4ead
-	sub a, l ; $4eaf
+	adc $05 ; $4ead
+	sub l ; $4eaf
 	ld h, a ; $4eb0
 	farcall InitDialogueTextCursor ; $4eb1
 	script_speak $04 ; $4eb4
@@ -770,27 +770,27 @@ DormRoomTile0F_13:
 	script_wait_frames $14 ; $5022
 	ret ; $5029
 DormRoomInitScript_13:
-	xor a, a ; $502a
+	xor a ; $502a
 	ld [wStoryModeShowLocationName], a ; $502b
 	ld a, [wStoryModeEntryPoint] ; $502e
-	cp a, $0a ; $5031
+	cp $0a ; $5031
 	jp z, ShowStoryNarration_13.setText ; $5033
-	cp a, $09 ; $5036
+	cp $09 ; $5036
 	jp z, ShowStoryNarration_13.setText2 ; $5038
-	cp a, $08 ; $503b
+	cp $08 ; $503b
 	jp z, ShowStoryNarration_13.setText3 ; $503d
 	call ComputeStoryRankTier_13 ; $5040
 	call SetupDormRoomSceneVariant ; $5043
 	call PlaceDormRoomArrivalActors_13 ; $5046
 	call SetDormRoomEventTriggerCells_13 ; $5049
 	ld a, [wStoryModeEntryPoint] ; $504c
-	cp a, $0f ; $504f
+	cp $0f ; $504f
 	jp z, DormRoomNpc03_13.walkToBed ; $5051
 	sound $1c ; $5054
 	ld a, [wStoryModeEntryPoint] ; $5056
-	cp a, $01 ; $5059
+	cp $01 ; $5059
 	jp z, DormRoomNpc03_13.byStage ; $505b
-	cp a, $02 ; $505e
+	cp $02 ; $505e
 	jp z, DormRoomNpc03_13.morningDoubles ; $5060
 	farcall EndCutsceneScriptMode ; $5063
 	ret ; $5066
@@ -894,7 +894,7 @@ SetDormRoomEventTriggerCells_13:
 	ret ; $512f
 SetupDormRoomSceneVariant:
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $5130
-	or a, a ; $5133
+	or a ; $5133
 	jr nz, .nonZero ; $5134
 	farcall WaitPlayerMoveDone ; $5136
 	ld b, $20 ; $5139
@@ -935,9 +935,9 @@ SetupDormRoomSceneVariant:
 	ret ; $51af
 PlaceDormRoomArrivalActors_13:
 	ld a, [wStoryModeEntryPoint] ; $51b0
-	cp a, $ff ; $51b3
+	cp $ff ; $51b3
 	jr z, .stage3 ; $51b5
-	cp a, $01 ; $51b7
+	cp $01 ; $51b7
 	jr z, .stage2 ; $51b9
 	wram_bank $04 ; $51bb
 	test_flag FLAG_DOUBLES ; $51c1
@@ -983,12 +983,12 @@ PlaceDormRoomArrivalActors_13:
 SetRandomDormRoomNpc04Script_13:
 	call AdvanceRandomSeed ; $524e
 	ld a, l ; $5251
-	and a, $07 ; $5252
-	add a, a ; $5254
-	add a, LOW(DormRoomNpc04IdleScripts_13) ; $5255
+	and $07 ; $5252
+	add a ; $5254
+	add LOW(DormRoomNpc04IdleScripts_13) ; $5255
 	ld l, a ; $5257
-	adc a, HIGH(DormRoomNpc04IdleScripts_13) ; $5258
-	sub a, l ; $525a
+	adc HIGH(DormRoomNpc04IdleScripts_13) ; $5258
+	sub l ; $525a
 	ld h, a ; $525b
 	ld a, [hl+] ; $525c
 	ld h, [hl] ; $525d
@@ -1033,7 +1033,7 @@ DormRoomNpc03_13:
 	farcall RunDialogueYesNoPrompt ; $52d0
 	farcall ScriptCloseDialogueWindow ; $52d3
 	script_wait_frames $05 ; $52d6
-	and a, a ; $52dd
+	and a ; $52dd
 	jr nz, .doublesPrompt ; $52de
 	call RunAcademyQuestionsMenu ; $52e0
 .doublesPrompt:
@@ -1041,7 +1041,7 @@ DormRoomNpc03_13:
 	ret ; $52e6
 .byStage:
 	call GetDormRoomStoryStage_13 ; $52e7
-	cp a, $01 ; $52ea
+	cp $01 ; $52ea
 	jp z, DormRoomArrivalCutscene_13 ; $52ec
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $52ef
 	jr z, .stage2Text ; $52f2
@@ -1118,7 +1118,7 @@ DormRoomNpc03_13:
 	farcall RunDialogueYesNoPrompt ; $540b
 	farcall ScriptCloseDialogueWindow ; $540e
 	script_wait_frames $05 ; $5411
-	and a, a ; $5418
+	and a ; $5418
 	jr nz, .variantB ; $5419
 	script_speak $03 ; $541b
 	farcall AdvanceDialogueTextCursor ; $5420
@@ -1146,7 +1146,7 @@ DormRoomNpc03_13:
 	farcall RunDialogueYesNoPrompt ; $5490
 	farcall ScriptCloseDialogueWindow ; $5493
 	script_wait_frames $05 ; $5496
-	and a, a ; $549d
+	and a ; $549d
 	jr nz, .variantBAlt ; $549e
 	script_speak $03 ; $54a0
 	farcall AdvanceDialogueTextCursor ; $54a5
@@ -1170,7 +1170,7 @@ DormRoomNpc03_13:
 	farcall RunDialogueYesNoPrompt ; $54f5
 	farcall ScriptCloseDialogueWindow ; $54f8
 	script_wait_frames $05 ; $54fb
-	and a, a ; $5502
+	and a ; $5502
 	jr nz, .sleepScene ; $5503
 	call RunAcademyQuestionsMenu ; $5505
 .sleepScene:
@@ -1243,7 +1243,7 @@ DormRoomNpc03_13:
 	script_wait_idle $03 ; $55f2
 	script_speak $03 ; $55f7
 	call GetDormRoomStoryStage_13 ; $55fc
-	and a, a ; $55ff
+	and a ; $55ff
 	jp z, .dayText ; $5600
 	ld hl, $c2b2 ; $5603
 	ld a, [hl+] ; $5606
@@ -1258,7 +1258,7 @@ DormRoomNpc03_13:
 	ld l, a ; $5612
 	ld a, $02 ; $5613
 .daySpeak:
-	add a, l ; $5615
+	add l ; $5615
 	ld l, a ; $5616
 	jr nc, .dayScene ; $5617
 	inc h ; $5619
@@ -1271,14 +1271,14 @@ DormRoomNpc03_13:
 	farcall RunDialogueYesNoPrompt ; $562e
 	farcall ScriptCloseDialogueWindow ; $5631
 	script_wait_frames $05 ; $5634
-	and a, a ; $563b
+	and a ; $563b
 	jr nz, .finalText ; $563c
 	ld hl, $c2b2 ; $563e
 	ld a, [hl+] ; $5641
 	ld h, [hl] ; $5642
 	ld l, a ; $5643
 	ld a, $03 ; $5644
-	add a, l ; $5646
+	add l ; $5646
 	ld l, a ; $5647
 	jr nc, .dayEnd ; $5648
 	inc h ; $564a
@@ -1309,7 +1309,7 @@ DormRoomNpc03_13:
 	ld h, [hl] ; $5693
 	ld l, a ; $5694
 	ld a, $04 ; $5695
-	add a, l ; $5697
+	add l ; $5697
 	ld l, a ; $5698
 	jr nc, .finalSpeak ; $5699
 	inc h ; $569b
@@ -1320,7 +1320,7 @@ DormRoomNpc03_13:
 	farcall RunDialogueYesNoPrompt ; $56a4
 	farcall ScriptCloseDialogueWindow ; $56a7
 	script_wait_frames $05 ; $56aa
-	and a, a ; $56b1
+	and a ; $56b1
 	jr nz, .done ; $56b2
 	call RunAcademyQuestionsMenu ; $56b4
 .done:
@@ -1341,7 +1341,7 @@ RunPlayDoublesTodayPrompt:
 	farcall RunDialogueYesNoPrompt ; $56d9
 	farcall ScriptCloseDialogueWindow ; $56dc
 	script_wait_frames $05 ; $56df
-	and a, a ; $56e6
+	and a ; $56e6
 	jr nz, .declined ; $56e7
 	set_flag FLAG_DOUBLES ; $56e9
 	call SetRoommateDoublesYesReplyText_13 ; $56ec
@@ -1400,7 +1400,7 @@ RunPlayDoublesTodayPrompt:
 	farcall RunDialogueYesNoPrompt ; $579a
 	farcall ScriptCloseDialogueWindow ; $579d
 	script_wait_frames $05 ; $57a0
-	and a, a ; $57a7
+	and a ; $57a7
 	jr nz, .done ; $57a8
 	call SetRoommateSinglesYesReplyText_13 ; $57aa
 	script_speak $03 ; $57ad
@@ -1517,13 +1517,13 @@ RunAcademyQuestionsMenu:
 	ld de, $0101 ; $58e7
 	ld a, $01 ; $58ea
 	farcall RunPagedTextMenu ; $58ec
-	cp a, $ff ; $58ef
+	cp $ff ; $58ef
 	jp z, .done ; $58f1
-	add a, a ; $58f4
-	add a, $28 ; $58f5
+	add a ; $58f4
+	add $28 ; $58f5
 	ld l, a ; $58f7
-	adc a, $59 ; $58f8
-	sub a, l ; $58fa
+	adc $59 ; $58f8
+	sub l ; $58fa
 	ld h, a ; $58fb
 	ld a, [hl+] ; $58fc
 	ld h, [hl] ; $58fd
@@ -1540,7 +1540,7 @@ RunAcademyQuestionsMenu:
 	farcall RunDialogueYesNoPrompt ; $5915
 	farcall ScriptCloseDialogueWindow ; $5918
 	script_wait_frames $05 ; $591b
-	and a, a ; $5922
+	and a ; $5922
 	jr nz, .done ; $5923
 	jr .menuLoop ; $5925
 .done:
@@ -1548,11 +1548,11 @@ RunAcademyQuestionsMenu:
 	ld [hl], $59 ; $5928
 	ld l, b ; $592a
 	ld e, c ; $592b
-	and a, [hl] ; $592c
+	and [hl] ; $592c
 	ld e, c ; $592d
 	ret nz ; $592e
 	ld e, c ; $592f
-	and a, $59 ; $5930
+	and $59 ; $5930
 	nop ; $5932
 	ld e, d ; $5933
 	ld a, [de] ; $5934
@@ -1567,7 +1567,7 @@ AcademyTopicSinglesRank:
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $5940
 	jr z, .setCursor ; $5943
 	ld a, $01 ; $5945
-	add a, l ; $5947
+	add l ; $5947
 	ld l, a ; $5948
 	jr nc, .rank2 ; $5949
 	inc h ; $594b
@@ -1575,7 +1575,7 @@ AcademyTopicSinglesRank:
 	test_flag FLAG_WON_VARSITY_SINGLES_RANK_4 ; $594c
 	jr z, .setCursor ; $594f
 	ld a, $01 ; $5951
-	add a, l ; $5953
+	add l ; $5953
 	ld l, a ; $5954
 	jr nc, .rank3 ; $5955
 	inc h ; $5957
@@ -1583,7 +1583,7 @@ AcademyTopicSinglesRank:
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_FINAL ; $5958
 	jr z, .setCursor ; $595b
 	ld a, $01 ; $595d
-	add a, l ; $595f
+	add l ; $595f
 	ld l, a ; $5960
 	jr nc, .setCursor ; $5961
 	inc h ; $5963
@@ -1600,7 +1600,7 @@ AcademyTopicDoublesRank:
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $5972
 	jr z, .setCursor ; $5975
 	ld a, $01 ; $5977
-	add a, l ; $5979
+	add l ; $5979
 	ld l, a ; $597a
 	jr nc, .rank2 ; $597b
 	inc h ; $597d
@@ -1608,7 +1608,7 @@ AcademyTopicDoublesRank:
 	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_1 ; $597e
 	jr z, .setCursor ; $5981
 	ld a, $01 ; $5983
-	add a, l ; $5985
+	add l ; $5985
 	ld l, a ; $5986
 	jr nc, .rank3 ; $5987
 	inc h ; $5989
@@ -1616,7 +1616,7 @@ AcademyTopicDoublesRank:
 	test_flag FLAG_WON_VARSITY_DOUBLES_RANK_2 ; $598a
 	jr z, .setCursor ; $598d
 	ld a, $01 ; $598f
-	add a, l ; $5991
+	add l ; $5991
 	ld l, a ; $5992
 	jr nc, .rank4 ; $5993
 	inc h ; $5995
@@ -1624,7 +1624,7 @@ AcademyTopicDoublesRank:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_FINAL ; $5996
 	jr z, .setCursor ; $5999
 	ld a, $01 ; $599b
-	add a, l ; $599d
+	add l ; $599d
 	ld l, a ; $599e
 	jr nc, .setCursor ; $599f
 	inc h ; $59a1
@@ -1641,7 +1641,7 @@ AcademyTopicRules:
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $59b0
 	jr z, .setCursor ; $59b3
 	ld a, $01 ; $59b5
-	add a, l ; $59b7
+	add l ; $59b7
 	ld l, a ; $59b8
 	jr nc, .setCursor ; $59b9
 	inc h ; $59bb
@@ -1658,7 +1658,7 @@ AcademyTopicClassRank:
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $59ca
 	jr z, .setCursor ; $59cd
 	ld a, $01 ; $59cf
-	add a, l ; $59d1
+	add l ; $59d1
 	ld l, a ; $59d2
 	jr nc, .rank2 ; $59d3
 	inc h ; $59d5
@@ -1666,7 +1666,7 @@ AcademyTopicClassRank:
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $59d6
 	jr z, .setCursor ; $59d9
 	ld a, $01 ; $59db
-	add a, l ; $59dd
+	add l ; $59dd
 	ld l, a ; $59de
 	jr nc, .setCursor ; $59df
 	inc h ; $59e1
@@ -1683,7 +1683,7 @@ AcademyTopicVarsity:
 	test_flag FLAG_WON_VARSITY_SINGLES_RANK_4 ; $59f0
 	jr z, .setCursor ; $59f3
 	ld a, $01 ; $59f5
-	add a, l ; $59f7
+	add l ; $59f7
 	ld l, a ; $59f8
 	jr nc, .setCursor ; $59f9
 	inc h ; $59fb
@@ -1700,7 +1700,7 @@ AcademyTopicIslandOpen:
 	test_flag FLAG_WON_VARSITY_SINGLES_RANK_4 ; $5a0a
 	jr z, .setCursor ; $5a0d
 	ld a, $01 ; $5a0f
-	add a, l ; $5a11
+	add l ; $5a11
 	ld l, a ; $5a12
 	jr nc, .setCursor ; $5a13
 	inc h ; $5a15
@@ -1825,7 +1825,7 @@ DormRoomArrivalCutscene_13:
 	ret ; $5b8a
 SetRoommateDoublesNoReplyText_13:
 	call GetDormRoomStoryStage_13 ; $5b8b
-	cp a, $01 ; $5b8e
+	cp $01 ; $5b8e
 	jp nz, .done ; $5b90
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $5b93
 	jr z, .setText ; $5b96
@@ -1837,7 +1837,7 @@ SetRoommateDoublesNoReplyText_13:
 	ret ; $5ba6
 SetRoommateSinglesNoReplyText_13:
 	call GetDormRoomStoryStage_13 ; $5ba7
-	cp a, $01 ; $5baa
+	cp $01 ; $5baa
 	jp nz, .done ; $5bac
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $5baf
 	jr z, .setText ; $5bb2
@@ -1849,7 +1849,7 @@ SetRoommateSinglesNoReplyText_13:
 	ret ; $5bc2
 SetRoommateSinglesYesReplyText_13:
 	call GetDormRoomStoryStage_13 ; $5bc3
-	cp a, $01 ; $5bc6
+	cp $01 ; $5bc6
 	jp nz, .done ; $5bc8
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $5bcb
 	jr z, .setText ; $5bce
@@ -1861,7 +1861,7 @@ SetRoommateSinglesYesReplyText_13:
 	ret ; $5bde
 SetRoommateDoublesYesReplyText_13:
 	call GetDormRoomStoryStage_13 ; $5bdf
-	cp a, $01 ; $5be2
+	cp $01 ; $5be2
 	jp nz, .done ; $5be4
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $5be7
 	jr z, .setText ; $5bea
@@ -2037,7 +2037,7 @@ CourtyardNpc03_13:
 	farcall RunDialogueYesNoPrompt ; $5ec0
 	farcall ScriptCloseDialogueWindow ; $5ec3
 	script_wait_frames $05 ; $5ec6
-	and a, a ; $5ecd
+	and a ; $5ecd
 	jr nz, .speak ; $5ece
 	script_set_text Text_30_531 ; $5ed0
 .speak:
@@ -2062,7 +2062,7 @@ VarsityCourtANpc05_13:
 	farcall RunDialogueYesNoPrompt ; $5f2c
 	farcall ScriptCloseDialogueWindow ; $5f2f
 	script_wait_frames $05 ; $5f32
-	and a, a ; $5f39
+	and a ; $5f39
 	jr z, .advanceText ; $5f3a
 	script_speak $05 ; $5f3c
 	script_set_actor_script $05, ActorScript_13_7a40 ; $5f41
@@ -2096,7 +2096,7 @@ VarsityCourtBNpc09_13:
 	farcall RunDialogueYesNoPrompt ; $5fac
 	farcall ScriptCloseDialogueWindow ; $5faf
 	script_wait_frames $05 ; $5fb2
-	and a, a ; $5fb9
+	and a ; $5fb9
 	jr z, .speak ; $5fba
 	farcall AdvanceDialogueTextCursor ; $5fbc
 .speak:
@@ -2111,7 +2111,7 @@ VarsityCourtBNpc05_13:
 	farcall RunDialogueYesNoPrompt ; $5fdc
 	farcall ScriptCloseDialogueWindow ; $5fdf
 	script_wait_frames $05 ; $5fe2
-	and a, a ; $5fe9
+	and a ; $5fe9
 	jr z, .advanceText ; $5fea
 	script_speak $05 ; $5fec
 	script_set_actor_script $05, ActorScript_13_7a40 ; $5ff1
@@ -2217,16 +2217,16 @@ CourtyardTileTriggers_13:
 CourtyardInitScript_13:
 	call SetupVarsityCourtSceneVariant ; $6189
 	ld a, [wStoryModeEntryPoint] ; $618c
-	cp a, $0f ; $618f
+	cp $0f ; $618f
 	jr nz, .doubles ; $6191
 	jp VarsityCourtTourCutscene ; $6193
 .doubles:
-	cp a, $0d ; $6196
+	cp $0d ; $6196
 	jr nz, .placeActors ; $6198
 	call RunTravelingTeamBracketIfWon_13 ; $619a
 	ret ; $619d
 .placeActors:
-	cp a, $0e ; $619e
+	cp $0e ; $619e
 	jr nz, .done ; $61a0
 	jp RunTravelingTeamVictoryCutscene_13 ; $61a2
 .done:
@@ -2333,7 +2333,7 @@ SetupVarsityCourtSceneVariant:
 	ret ; $62bd
 ApplyPartnerCharacterVariant_13:
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $62be
-	or a, a ; $62c1
+	or a ; $62c1
 	jr nz, .done ; $62c2
 	script_set_objdef $28, $0d ; $62c4
 	script_set_anim $0d, $01 ; $62d0
@@ -2347,17 +2347,17 @@ Table_13_62db:
 	db $ff, $10, $02, $01, $5a, $10, $04, $01, $96, $0c, $f7, $ff ; 0x18
 CourtyardEntryWalkIn_13:
 	ld a, [wStoryModeEntryPoint] ; $62ff
-	cp a, $ff ; $6302
+	cp $ff ; $6302
 	jp z, .done ; $6304
 	test_flag FLAG_DOUBLES ; $6307
 	jr z, .walkOff ; $630a
 	script_set_speed ACTOR_PARTNER, $00ff ; $630c
 	ld a, [wStoryModeEntryPoint] ; $6314
 	dec a ; $6317
-	add a, $69 ; $6318
+	add $69 ; $6318
 	ld l, a ; $631a
-	adc a, $63 ; $631b
-	sub a, l ; $631d
+	adc $63 ; $631b
+	sub l ; $631d
 	ld h, a ; $631e
 	ld b, [hl] ; $631f
 	ld a, $02 ; $6320
@@ -2367,10 +2367,10 @@ CourtyardEntryWalkIn_13:
 	script_wait_move ACTOR_PARTNER ; $6329
 	ld a, [wStoryModeEntryPoint] ; $632e
 	dec a ; $6331
-	add a, LOW(Facings_13_6366) ; $6332
+	add LOW(Facings_13_6366) ; $6332
 	ld l, a ; $6334
-	adc a, HIGH(Facings_13_6366) ; $6335
-	sub a, l ; $6337
+	adc HIGH(Facings_13_6366) ; $6335
+	sub l ; $6337
 	ld h, a ; $6338
 	ld b, [hl] ; $6339
 	ld a, $02 ; $633a
@@ -2381,10 +2381,10 @@ CourtyardEntryWalkIn_13:
 	script_set_speed ACTOR_PLAYER, $0010 ; $6348
 	ld a, [wStoryModeEntryPoint] ; $6350
 	dec a ; $6353
-	add a, LOW(Facings_13_6366) ; $6354
+	add LOW(Facings_13_6366) ; $6354
 	ld l, a ; $6356
-	adc a, HIGH(Facings_13_6366) ; $6357
-	sub a, l ; $6359
+	adc HIGH(Facings_13_6366) ; $6357
+	sub l ; $6359
 	ld h, a ; $635a
 	ld b, [hl] ; $635b
 	ld a, $00 ; $635c
@@ -2518,13 +2518,13 @@ DecompressVarsityCourtTourRecords_13:
 	push af ; $667c
 	wram_bank $01 ; $667d
 	ld c, $04 ; $6683
-	xor a, a ; $6685
+	xor a ; $6685
 .loop:
 	push bc ; $6686
 	push af ; $6687
 	ld hl, VarsityCourtTourLzPtrs_13 ; $6688
 	sla a ; $668b
-	add a, l ; $668d
+	add l ; $668d
 	ld l, a ; $668e
 	jr nc, .read ; $668f
 	inc h ; $6691
@@ -2558,20 +2558,20 @@ DecompressVarsityCourtTourRecords_13:
 	ret ; $66c2
 QueueVarsityCourtTourSprites_13:
 	ld a, [wCameraX + 1] ; $66c3
-	cp a, $18 ; $66c6
+	cp $18 ; $66c6
 	ret c ; $66c8
 	ld a, [wCameraY + 1] ; $66c9
-	cp a, $10 ; $66cc
+	cp $10 ; $66cc
 	ret c ; $66ce
 	ldh a, [hVBlankCounter] ; $66cf
 	srl a ; $66d1
 	srl a ; $66d3
 	srl a ; $66d5
-	and a, $03 ; $66d7
+	and $03 ; $66d7
 	push af ; $66d9
 	ld hl, VarsityCourtTourSpritePtrs_13 ; $66da
 	sla a ; $66dd
-	add a, l ; $66df
+	add l ; $66df
 	ld l, a ; $66e0
 	jr nc, .read ; $66e1
 	inc h ; $66e3
@@ -2585,12 +2585,12 @@ QueueVarsityCourtTourSprites_13:
 	ldh a, [hScrollX] ; $66eb
 	ld b, a ; $66ed
 	ld a, $70 ; $66ee
-	sub a, b ; $66f0
+	sub b ; $66f0
 	ld d, a ; $66f1
 	ldh a, [hScrollY] ; $66f2
 	ld b, a ; $66f4
 	ld a, $20 ; $66f5
-	sub a, b ; $66f7
+	sub b ; $66f7
 	ld e, a ; $66f8
 	ld b, $08 ; $66f9
 	call QueueSpriteTemplate ; $66fb
@@ -2799,7 +2799,7 @@ VarsityCourtANpc03_13:
 	farcall RunDialogueYesNoPrompt ; $6c4b
 	farcall ScriptCloseDialogueWindow ; $6c4e
 	script_wait_frames $05 ; $6c51
-	and a, a ; $6c58
+	and a ; $6c58
 	jp nz, .stage3 ; $6c59
 	farcall AdvanceDialogueTextCursor ; $6c5c
 	script_set_speed ACTOR_PLAYER, $0010 ; $6c5f
@@ -2835,7 +2835,7 @@ VarsityCourtANpc03_13:
 	farcall RunDialogueYesNoPrompt ; $6d27
 	farcall ScriptCloseDialogueWindow ; $6d2a
 	script_wait_frames $05 ; $6d2d
-	and a, a ; $6d34
+	and a ; $6d34
 	jp nz, .speak ; $6d35
 	script_set_anim $03, $03 ; $6d38
 	script_wait_idle $03 ; $6d3f
@@ -2879,7 +2879,7 @@ VarsityCourtANpc03_13:
 	farcall RunDialogueYesNoPrompt ; $6e03
 	farcall ScriptCloseDialogueWindow ; $6e06
 	script_wait_frames $05 ; $6e09
-	and a, a ; $6e10
+	and a ; $6e10
 	jr z, .done ; $6e11
 	jp .stage2 ; $6e13
 	ret ; $6e16
@@ -2902,7 +2902,7 @@ VarsityCourtBNpc03_13:
 	farcall RunDialogueYesNoPrompt ; $6e5d
 	farcall ScriptCloseDialogueWindow ; $6e60
 	script_wait_frames $05 ; $6e63
-	and a, a ; $6e6a
+	and a ; $6e6a
 	jp nz, .stage3 ; $6e6b
 	farcall AdvanceDialogueTextCursor ; $6e6e
 	script_set_speed ACTOR_PLAYER, $0010 ; $6e71
@@ -2950,7 +2950,7 @@ VarsityCourtBNpc03_13:
 	farcall RunDialogueYesNoPrompt ; $6f99
 	farcall ScriptCloseDialogueWindow ; $6f9c
 	script_wait_frames $05 ; $6f9f
-	and a, a ; $6fa6
+	and a ; $6fa6
 	jp nz, .speak ; $6fa7
 	script_set_anim $03, $03 ; $6faa
 	script_wait_idle $03 ; $6fb1
@@ -3001,7 +3001,7 @@ VarsityCourtBNpc03_13:
 	farcall RunDialogueYesNoPrompt ; $7098
 	farcall ScriptCloseDialogueWindow ; $709b
 	script_wait_frames $05 ; $709e
-	and a, a ; $70a5
+	and a ; $70a5
 	jr z, .done ; $70a6
 	jp .stage2 ; $70a8
 	ret ; $70ab
@@ -3024,7 +3024,7 @@ ReturnVarsityCourtBNpcsToSpawn_13:
 	ret ; $70eb
 	wram_bank $04 ; $70ec
 	ld a, [wMatchWinLoseFlag] ; $70f2
-	cp a, $01 ; $70f5
+	cp $01 ; $70f5
 	jp z, SinglesTravelingTeamVictoryCutscene ; $70f7
 	ret ; $70fa
 SinglesTravelingTeamVictoryCutscene:
@@ -3137,7 +3137,7 @@ SinglesTravelingTeamVictoryCutscene:
 	call WaitFadeEnd ; $737b
 	ld b, $00 ; $737e
 	ld a, [wStoryModeGenderOfMainCharacter] ; $7380
-	add a, $04 ; $7383
+	add $04 ; $7383
 	ld c, a ; $7385
 	farcall RunStorySceneByMode ; $7386
 	ld a, $00 ; $7389
@@ -3165,7 +3165,7 @@ SinglesTravelingTeamActors_13:
 RunDoublesTravelingTeamVictoryIfWon_13:
 	wram_bank $04 ; $7440
 	ld a, [wMatchWinLoseFlag] ; $7446
-	cp a, $01 ; $7449
+	cp $01 ; $7449
 	jp z, DoublesTravelingTeamVictoryCutscene ; $744b
 	ret ; $744e
 DoublesTravelingTeamVictoryCutscene:
@@ -3372,8 +3372,8 @@ PlayDoublesTravelingTeamScreenSequence_13:
 	sla a ; $78ca
 	ld c, a ; $78cc
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $78cd
-	xor a, d ; $78d0
-	or a, c ; $78d1
+	xor d ; $78d0
+	or c ; $78d1
 	ld c, a ; $78d2
 	farcall RunStorySceneByMode ; $78d3
 	ret ; $78d6
@@ -3408,7 +3408,7 @@ RunTravelingTeamVictoryCutscene_13:
 RunTravelingTeamBracketIfWon_13:
 	wram_bank $04 ; $7995
 	ld a, [wMatchWinLoseFlag] ; $799b
-	cp a, $01 ; $799e
+	cp $01 ; $799e
 	jp z, .eq01 ; $79a0
 	ret ; $79a3
 .eq01:
@@ -3525,7 +3525,7 @@ ShowStoryTournamentBracket_13:
 	ld c, $08 ; $7ae0
 	call BeginFadeOut ; $7ae2
 	call WaitFadeEnd ; $7ae5
-	xor a, a ; $7ae8
+	xor a ; $7ae8
 	ldh [hBGColumnBlitPending], a ; $7ae9
 	ldh [hBGRowBlitPending], a ; $7aeb
 	ldh [hScrollY], a ; $7aed
@@ -3588,12 +3588,12 @@ ActorScript_13_7b2f:
 	as_jump .L15
 MapScriptNop_13:
 	ret ; $7b4d
-	xor a, a ; $7b4e
+	xor a ; $7b4e
 	ld [wStoryScriptRan], a ; $7b4f
 	ret ; $7b52
 	sound $a2 ; $7b53
 	ret ; $7b55
-	xor a, a ; $7b56
+	xor a ; $7b56
 	ld [wStoryModeShowLocationName], a ; $7b57
 	ret ; $7b5a
 ActorScript_13_7b5b:

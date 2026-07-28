@@ -40,13 +40,13 @@ CenterCourtNpc03_11:
 	test_flag FLAG_DOUBLES ; $4088
 	jr nz, .isDoubles ; $408b
 	ld a, [wMapSceneStage] ; $408d
-	cp a, $03 ; $4090
+	cp $03 ; $4090
 	jr nz, .speak ; $4092
 	script_set_text Text_1f_91 ; $4094
 	jr .speak ; $409a
 .isDoubles:
 	ld a, [wMapSceneStage] ; $409c
-	cp a, $06 ; $409f
+	cp $06 ; $409f
 	jr nz, .speak ; $40a1
 	script_set_text Text_1f_91 ; $40a3
 .speak:
@@ -57,7 +57,7 @@ CenterCourtNpc04_11:
 	jr z, .altText ; $40b2
 	script_set_text Text_1f_96 ; $40b4
 	ld a, [wMapSceneStage] ; $40ba
-	cp a, $06 ; $40bd
+	cp $06 ; $40bd
 	jr nz, .done ; $40bf
 	script_set_text Text_1f_101 ; $40c1
 	jr .done ; $40c7
@@ -68,14 +68,14 @@ CenterCourtNpc04_11:
 	farcall RunDialogueYesNoPrompt ; $40d4
 	farcall ScriptCloseDialogueWindow ; $40d7
 	script_wait_frames $05 ; $40da
-	and a, a ; $40e1
+	and a ; $40e1
 	jr z, .speak ; $40e2
 	farcall AdvanceDialogueTextCursor ; $40e4
 	script_speak $04 ; $40e7
 	ret ; $40ec
 .speak:
 	ld a, [wMapSceneStage] ; $40ed
-	cp a, $03 ; $40f0
+	cp $03 ; $40f0
 	jr nz, .done ; $40f2
 	farcall AdvanceDialogueTextCursor ; $40f4
 	farcall AdvanceDialogueTextCursor ; $40f7
@@ -84,18 +84,18 @@ CenterCourtNpc04_11:
 	ret ; $40ff
 CenterCourtNpc05_11:
 	ld a, [wMapSceneStage] ; $4100
-	add a, a ; $4103
-	add a, LOW(CenterCourtNpc05TextIds) ; $4104
+	add a ; $4103
+	add LOW(CenterCourtNpc05TextIds) ; $4104
 	ld l, a ; $4106
-	adc a, HIGH(CenterCourtNpc05TextIds) ; $4107
-	sub a, l ; $4109
+	adc HIGH(CenterCourtNpc05TextIds) ; $4107
+	sub l ; $4109
 	ld h, a ; $410a
 	ld a, [hl+] ; $410b
 	ld h, [hl] ; $410c
 	ld l, a ; $410d
 	farcall InitDialogueTextCursor ; $410e
 	ld a, [wMapSceneStage] ; $4111
-	cp a, $03 ; $4114
+	cp $03 ; $4114
 	jr z, .eq03 ; $4116
 	script_speak $05 ; $4118
 	ret ; $411d
@@ -105,7 +105,7 @@ CenterCourtNpc05_11:
 	farcall RunDialogueYesNoPrompt ; $4123
 	farcall ScriptCloseDialogueWindow ; $4126
 	script_wait_frames $05 ; $4129
-	and a, a ; $4130
+	and a ; $4130
 	jr z, .speak ; $4131
 	farcall AdvanceDialogueTextCursor ; $4133
 .speak:
@@ -122,11 +122,11 @@ CenterCourtNpc05TextIds:
 	dw Text_1f_102 ; record 6
 CenterCourtNpc06_11:
 	ld a, [wMapSceneStage] ; $414a
-	add a, a ; $414d
-	add a, LOW(CenterCourtNpc06TextIds) ; $414e
+	add a ; $414d
+	add LOW(CenterCourtNpc06TextIds) ; $414e
 	ld l, a ; $4150
-	adc a, HIGH(CenterCourtNpc06TextIds) ; $4151
-	sub a, l ; $4153
+	adc HIGH(CenterCourtNpc06TextIds) ; $4151
+	sub l ; $4153
 	ld h, a ; $4154
 	ld a, [hl+] ; $4155
 	ld h, [hl] ; $4156
@@ -166,7 +166,7 @@ CenterCourtInitScript_11:
 	call SetupCenterCourtSceneVariant ; $41a4
 	call SetPlayerAndPartnerObjectDefs_11 ; $41a7
 	ld a, [wStoryModeEntryPoint] ; $41aa
-	cp a, $0f ; $41ad
+	cp $0f ; $41ad
 	jp z, SetPlayerAndPartnerObjectDefs_11.placeActors ; $41af
 	call MapArrivalWalk_11 ; $41b2
 	ret ; $41b5
@@ -238,7 +238,7 @@ CenterCourtSceneVariantActors_11:
 	map_actor_end
 MapArrivalWalk_11:
 	ld a, [wStoryModeEntryPoint] ; $42fd
-	cp a, $ff ; $4300
+	cp $ff ; $4300
 	jp z, .done ; $4302
 	test_flag FLAG_DOUBLES ; $4305
 	jr z, .walkOff ; $4308
@@ -257,7 +257,7 @@ SetPlayerAndPartnerObjectDefs_11:
 	jp z, .notDoubles ; $4346
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $4349
 	ld d, $58 ; $434c
-	add a, d ; $434e
+	add d ; $434e
 	ld d, a ; $434f
 	script_get_actor_state ACTOR_PARTNER ; $4350
 	ld c, l ; $4355
@@ -267,7 +267,7 @@ SetPlayerAndPartnerObjectDefs_11:
 .notDoubles:
 	ld a, [wStoryModeGenderOfMainCharacter] ; $4361
 	ld d, $56 ; $4364
-	add a, d ; $4366
+	add d ; $4366
 	ld d, a ; $4367
 	script_get_actor_state ACTOR_PLAYER ; $4368
 	ld c, l ; $436d
@@ -281,7 +281,7 @@ SetPlayerAndPartnerObjectDefs_11:
 	jr z, .notDoubles2 ; $4388
 	script_set_position ACTOR_PARTNER, $0c00, $3300 ; $438a
 .notDoubles2:
-	xor a, a ; $4395
+	xor a ; $4395
 	ld [wStoryModeShowLocationName], a ; $4396
 	script_fade_in $04 ; $4399
 	script_set_actor_script ACTOR_PLAYER, ActorScript_11_43ed ; $439e
@@ -348,7 +348,7 @@ AcademyArrivalEntryPoints_11:
 	db $ff
 AcademyArrivalArrival01_11:
 	ld a, [wStoryModeEntryPoint] ; $4536
-	cp a, $ff ; $4539
+	cp $ff ; $4539
 	jp z, .done ; $453b
 	test_flag FLAG_DOUBLES ; $453e
 	jr z, .walkOff ; $4541
@@ -371,22 +371,22 @@ AcademyArrivalExitTriggers_11:
 	db $ff
 AcademyArrivalNpc03_11:
 	ld a, [wMapSceneStage] ; $459d
-	add a, a ; $45a0
-	add a, LOW(AcademyArrivalNpc03TextIds) ; $45a1
+	add a ; $45a0
+	add LOW(AcademyArrivalNpc03TextIds) ; $45a1
 	ld l, a ; $45a3
-	adc a, HIGH(AcademyArrivalNpc03TextIds) ; $45a4
-	sub a, l ; $45a6
+	adc HIGH(AcademyArrivalNpc03TextIds) ; $45a4
+	sub l ; $45a6
 	ld h, a ; $45a7
 	ld a, [hl+] ; $45a8
 	ld h, [hl] ; $45a9
 	ld l, a ; $45aa
 	farcall InitDialogueTextCursor ; $45ab
 	ld a, [wMapSceneStage] ; $45ae
-	cp a, $08 ; $45b1
+	cp $08 ; $45b1
 	jr nc, .altText ; $45b3
-	cp a, $04 ; $45b5
+	cp $04 ; $45b5
 	jr nc, .speak ; $45b7
-	cp a, $02 ; $45b9
+	cp $02 ; $45b9
 	jr c, .speak ; $45bb
 .altText:
 	script_speak $03 ; $45bd
@@ -397,7 +397,7 @@ AcademyArrivalNpc03_11:
 	farcall RunDialogueYesNoPrompt ; $45c8
 	farcall ScriptCloseDialogueWindow ; $45cb
 	script_wait_frames $05 ; $45ce
-	and a, a ; $45d5
+	and a ; $45d5
 	jr z, .done ; $45d6
 	farcall AdvanceDialogueTextCursor ; $45d8
 .done:
@@ -417,11 +417,11 @@ AcademyArrivalNpc03TextIds:
 	dw Text_36_76 ; record 9
 AcademyArrivalNpc04_11:
 	ld a, [wMapSceneStage] ; $45f5
-	add a, a ; $45f8
-	add a, LOW(AcademyArrivalNpc04TextIds) ; $45f9
+	add a ; $45f8
+	add LOW(AcademyArrivalNpc04TextIds) ; $45f9
 	ld l, a ; $45fb
-	adc a, HIGH(AcademyArrivalNpc04TextIds) ; $45fc
-	sub a, l ; $45fe
+	adc HIGH(AcademyArrivalNpc04TextIds) ; $45fc
+	sub l ; $45fe
 	ld h, a ; $45ff
 	ld a, [hl+] ; $4600
 	ld h, [hl] ; $4601
@@ -444,11 +444,11 @@ AcademyArrivalNpc04TextIds:
 AcademyArrivalNpc05_11:
 	ld a, [wMapSceneStage] ; $4620
 	sra a ; $4623
-	add a, a ; $4625
-	add a, LOW(AcademyArrivalNpc05TextIds) ; $4626
+	add a ; $4625
+	add LOW(AcademyArrivalNpc05TextIds) ; $4626
 	ld l, a ; $4628
-	adc a, HIGH(AcademyArrivalNpc05TextIds) ; $4629
-	sub a, l ; $462b
+	adc HIGH(AcademyArrivalNpc05TextIds) ; $4629
+	sub l ; $462b
 	ld h, a ; $462c
 	ld a, [hl+] ; $462d
 	ld h, [hl] ; $462e
@@ -507,18 +507,18 @@ AcademyArrivalInitScript_11:
 	call EnableAcademyCampusExit ; $46b4
 	call MoveCampusGateGuardAside ; $46b7
 	ld a, [wStoryModeEntryPoint] ; $46ba
-	cp a, $0a ; $46bd
+	cp $0a ; $46bd
 	jp z, ActorListEnd_11_4fc5.scriptRespawnLocationActors ; $46bf
-	cp a, $0c ; $46c2
+	cp $0c ; $46c2
 	jp z, ActorList_11_537d.scriptRespawnLocationActors2 ; $46c4
-	cp a, $0f ; $46c7
+	cp $0f ; $46c7
 	jr nz, .done ; $46c9
 	call LateStudentCrashCutscene ; $46cb
 .done:
 	ret ; $46ce
 LateStudentCrashCutscene:
 	script_set_speed ACTOR_PLAYER, $0010 ; $46cf
-	xor a, a ; $46d7
+	xor a ; $46d7
 	ld [wStoryModeShowLocationName], a ; $46d8
 	script_set_position $11, $1800, $0d00 ; $46db
 	script_set_position ACTOR_PLAYER, $1800, $3700 ; $46e6
@@ -675,7 +675,7 @@ LateStudentCrashCutscene:
 	farcall RunDialogueYesNoPrompt ; $4aff
 	farcall ScriptCloseDialogueWindow ; $4b02
 	script_wait_frames $05 ; $4b05
-	and a, a ; $4b0c
+	and a ; $4b0c
 	jr z, .setText ; $4b0d
 	script_set_anim $11, $02 ; $4b0f
 	script_speak $11 ; $4b16
@@ -771,7 +771,7 @@ LateStudentCrashImpact:
 	ld hl, $0037 ; $4d3a
 	add hl, bc ; $4d3d
 	ld a, [hl] ; $4d3e
-	or a, $40 ; $4d3f
+	or $40 ; $4d3f
 	ld [hl], a ; $4d41
 	script_wait_frames $1e ; $4d42
 	script_set_anim ACTOR_PLAYER, $02 ; $4d49
@@ -789,7 +789,7 @@ KnockPlayerAirborneFlipped_11:
 	ld hl, $0037 ; $4d84
 	add hl, bc ; $4d87
 	ld a, [hl] ; $4d88
-	xor a, $40 ; $4d89
+	xor $40 ; $4d89
 	ld [hl], a ; $4d8b
 	ret ; $4d8c
 ActorScript_11_4d8d:
@@ -810,7 +810,7 @@ AcademyArrivalGreetingScene:
 	script_set_position $12, $1800, $0f00 ; $4ddc
 	script_wait_move ACTOR_PLAYER ; $4de7
 	ld a, [wStoryModeGenderOfMainCharacter] ; $4dec
-	or a, a ; $4def
+	or a ; $4def
 	jr z, .doubles ; $4df0
 	farcall AdvanceDialogueTextCursor ; $4df2
 .doubles:
@@ -850,7 +850,7 @@ AcademyArrivalGreetingScene:
 	farcall RunDialogueYesNoPrompt ; $4ece
 	farcall ScriptCloseDialogueWindow ; $4ed1
 	script_wait_frames $05 ; $4ed4
-	and a, a ; $4edb
+	and a ; $4edb
 	jr z, .finish ; $4edc
 	farcall AdvanceDialogueTextCursor ; $4ede
 .finish:
@@ -859,9 +859,9 @@ AcademyArrivalGreetingScene:
 	farcall RunDialogueYesNoPrompt ; $4ee6
 	farcall ScriptCloseDialogueWindow ; $4ee9
 	script_wait_frames $05 ; $4eec
-	and a, a ; $4ef3
+	and a ; $4ef3
 	jr z, .done ; $4ef4
-	xor a, a ; $4ef6
+	xor a ; $4ef6
 	ld [wStoryModeShowLocationName], a ; $4ef7
 	script_set_text Text_30_427 ; $4efa
 	script_speak $12 ; $4f00
@@ -932,7 +932,7 @@ ActorListEnd_11_4fc5:
 	script_set_position ACTOR_PARTNER, $3f00, $3f00 ; $4fe5
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $4ff0
 	ld d, $58 ; $4ff3
-	add a, d ; $4ff5
+	add d ; $4ff5
 	ld d, a ; $4ff6
 	script_get_actor_state $05 ; $4ff7
 	ld c, l ; $4ffc
@@ -944,7 +944,7 @@ ActorListEnd_11_4fc5:
 .notDoubles:
 	ld a, [wStoryModeGenderOfMainCharacter] ; $501a
 	ld d, $56 ; $501d
-	add a, d ; $501f
+	add d ; $501f
 	ld d, a ; $5020
 	script_get_actor_state ACTOR_PLAYER ; $5021
 	ld c, l ; $5026
@@ -1101,7 +1101,7 @@ ActorList_11_537d:
 .placeActors:
 	script_set_position ACTOR_PLAYER, $1800, $1f00 ; $5415
 	script_move_target ACTOR_PLAYER, $1800, $3b00 ; $5420
-	xor a, a ; $542b
+	xor a ; $542b
 	ld [wStoryModeShowLocationName], a ; $542c
 	script_fade_in $04 ; $542f
 	call WaitFadeEnd ; $5434
@@ -1146,7 +1146,7 @@ EnableAcademyCampusExit:
 	ret ; $54a5
 MoveCampusGateGuardAside:
 	ld a, [wMapSceneStage] ; $54a6
-	cp a, $06 ; $54a9
+	cp $06 ; $54a9
 	jr c, .done ; $54ab
 	script_set_position $14, $1500, $3000 ; $54ad
 	script_face $14, FACE_RIGHT ; $54b8
@@ -1222,7 +1222,7 @@ JuniorClassCourtDoublesNpc06_11:
 	farcall RunDialogueYesNoPrompt ; $5603
 	farcall ScriptCloseDialogueWindow ; $5606
 	script_wait_frames $05 ; $5609
-	and a, a ; $5610
+	and a ; $5610
 	jr z, .speak ; $5611
 	farcall AdvanceDialogueTextCursor ; $5613
 .speak:
@@ -1268,7 +1268,7 @@ JuniorClassCourtDoublesNpc0A_11:
 	farcall RunDialogueYesNoPrompt ; $5685
 	farcall ScriptCloseDialogueWindow ; $5688
 	script_wait_frames $05 ; $568b
-	and a, a ; $5692
+	and a ; $5692
 	jr nz, JuniorClassCourtDoublesNpc09_11.loop ; $5693
 	farcall AdvanceDialogueTextCursor ; $5695
 	script_face_toward ACTOR_PLAYER, $0b ; $5698
@@ -1277,7 +1277,7 @@ JuniorClassCourtDoublesNpc0A_11:
 	farcall RunDialogueYesNoPrompt ; $56a5
 	farcall ScriptCloseDialogueWindow ; $56a8
 	script_wait_frames $05 ; $56ab
-	and a, a ; $56b2
+	and a ; $56b2
 	jr nz, JuniorClassCourtDoublesNpc09_11.loop ; $56b3
 	script_set_anim ACTOR_PLAYER, $03 ; $56b5
 	script_null_script ACTOR_PARTNER ; $56bc
@@ -1404,7 +1404,7 @@ JuniorClassCourtDoublesCNpc07_11:
 	farcall RunDialogueYesNoPrompt ; $5951
 	farcall ScriptCloseDialogueWindow ; $5954
 	script_wait_frames $05 ; $5957
-	and a, a ; $595e
+	and a ; $595e
 	jp z, .speak ; $595f
 	farcall AdvanceDialogueTextCursor ; $5962
 .speak:
@@ -1417,7 +1417,7 @@ JuniorClassCourtDoublesDNpc07_11:
 	farcall RunDialogueYesNoPrompt ; $5976
 	farcall ScriptCloseDialogueWindow ; $5979
 	script_wait_frames $05 ; $597c
-	and a, a ; $5983
+	and a ; $5983
 	jp z, .speak ; $5984
 	farcall AdvanceDialogueTextCursor ; $5987
 .speak:
@@ -1453,7 +1453,7 @@ JuniorClassCourtDoublesDNpc0A_11:
 	farcall RunDialogueYesNoPrompt ; $5a04
 	farcall ScriptCloseDialogueWindow ; $5a07
 	script_wait_frames $05 ; $5a0a
-	and a, a ; $5a11
+	and a ; $5a11
 	jp z, .speak ; $5a12
 	farcall AdvanceDialogueTextCursor ; $5a15
 .speak:
@@ -1478,11 +1478,11 @@ JuniorClassCourtDoublesInitScript_11:
 	script_set_actor_script $09, ActorScript_11_7ba9 ; $5a5b
 .stage2:
 	ld a, [wStoryModeEntryPoint] ; $5a66
-	cp a, $0f ; $5a69
+	cp $0f ; $5a69
 	jp z, ActorScript_11_5d27.checkMatchExitRequest ; $5a6b
-	cp a, $0e ; $5a6e
+	cp $0e ; $5a6e
 	jp z, ActorScript_11_5d27.eq012 ; $5a70
-	cp a, $0d ; $5a73
+	cp $0d ; $5a73
 	jp z, ActorScript_11_5d27.storeStoryModeShowLocationName ; $5a75
 	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $5a78
 	jr nz, .stage3 ; $5a7b
@@ -1771,10 +1771,10 @@ ActorScript_11_5d27:
 .checkMatchExitRequest:
 	wram_bank $04 ; $5d38
 	ld a, [wMatchExitRequest] ; $5d3e
-	cp a, $01 ; $5d41
+	cp $01 ; $5d41
 	jr z, .eq01 ; $5d43
 	ld a, [wMatchWinLoseFlag] ; $5d45
-	cp a, $01 ; $5d48
+	cp $01 ; $5d48
 	jp z, .eq012 ; $5d4a
 .eq01:
 	script_player_speed $0040 ; $5d4d
@@ -1796,12 +1796,12 @@ ActorScript_11_5d27:
 	farcall StubNop_1e ; $5d97
 	ret ; $5d9a
 .storeStoryModeShowLocationName:
-	xor a, a ; $5d9b
+	xor a ; $5d9b
 	ld [wStoryModeShowLocationName], a ; $5d9c
 	script_null_script ACTOR_PARTNER ; $5d9f
 	script_player_speed $0040 ; $5da4
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $5daa
-	sub a, $02 ; $5dad
+	sub $02 ; $5dad
 	ld a, a ; $5daf
 	rst Rst00 ; $5db0
 	dw ActorScript_11_5d27.setFlag ; $5db1 jumptable
@@ -2014,7 +2014,7 @@ OfferDoublesRankingMatch:
 	farcall RunDialogueYesNoPrompt ; $62a9
 	farcall ScriptCloseDialogueWindow ; $62ac
 	script_wait_frames $05 ; $62af
-	and a, a ; $62b6
+	and a ; $62b6
 	jp nz, .speak ; $62b7
 	script_set_speed ACTOR_PLAYER, $0010 ; $62ba
 	script_set_speed ACTOR_PARTNER, $0010 ; $62c2
@@ -2338,7 +2338,7 @@ JuniorClassCourtSinglesNpc05_11:
 	farcall RunDialogueYesNoPrompt ; $69ae
 	farcall ScriptCloseDialogueWindow ; $69b1
 	script_wait_frames $05 ; $69b4
-	and a, a ; $69bb
+	and a ; $69bb
 	jr z, .done ; $69bc
 	farcall AdvanceDialogueTextCursor ; $69be
 .done:
@@ -2357,7 +2357,7 @@ JuniorClassCourtSinglesNpc06_11:
 	farcall RunDialogueYesNoPrompt ; $69e2
 	farcall ScriptCloseDialogueWindow ; $69e5
 	script_wait_frames $05 ; $69e8
-	and a, a ; $69ef
+	and a ; $69ef
 	jr z, .speak ; $69f0
 	farcall AdvanceDialogueTextCursor ; $69f2
 .speak:
@@ -2384,7 +2384,7 @@ JuniorClassCourtSinglesNpc08_11:
 	farcall RunDialogueYesNoPrompt ; $6a2b
 	farcall ScriptCloseDialogueWindow ; $6a2e
 	script_wait_frames $05 ; $6a31
-	and a, a ; $6a38
+	and a ; $6a38
 	jr z, .done ; $6a39
 .speak:
 	script_speak $08 ; $6a3b
@@ -2396,7 +2396,7 @@ JuniorClassCourtSinglesNpc08_11:
 	farcall RunDialogueYesNoPrompt ; $6a49
 	farcall ScriptCloseDialogueWindow ; $6a4c
 	script_wait_frames $05 ; $6a4f
-	and a, a ; $6a56
+	and a ; $6a56
 	jr nz, .speak ; $6a57
 	script_set_anim ACTOR_PLAYER, $03 ; $6a59
 	script_wait_idle ACTOR_PLAYER ; $6a60
@@ -2454,7 +2454,7 @@ JuniorClassCourtSinglesNpc0B_11:
 	farcall RunDialogueYesNoPrompt ; $6b3b
 	farcall ScriptCloseDialogueWindow ; $6b3e
 	script_wait_frames $05 ; $6b41
-	and a, a ; $6b48
+	and a ; $6b48
 	jr z, .speak ; $6b49
 	farcall AdvanceDialogueTextCursor ; $6b4b
 .speak:
@@ -2530,7 +2530,7 @@ JuniorClassCourtSinglesDNpc0A_11:
 	farcall RunDialogueYesNoPrompt ; $6cc5
 	farcall ScriptCloseDialogueWindow ; $6cc8
 	script_wait_frames $05 ; $6ccb
-	and a, a ; $6cd2
+	and a ; $6cd2
 	jp z, .speak ; $6cd3
 	farcall AdvanceDialogueTextCursor ; $6cd6
 .speak:
@@ -2555,11 +2555,11 @@ JuniorClassCourtSinglesInitScript_11:
 	script_face $07, FACE_RIGHT ; $6d0e
 .stage2:
 	ld a, [wStoryModeEntryPoint] ; $6d15
-	cp a, $0f ; $6d18
+	cp $0f ; $6d18
 	jp z, ActorScript_11_6e16.checkMatchExitRequest ; $6d1a
-	cp a, $0e ; $6d1d
+	cp $0e ; $6d1d
 	jp z, ActorScript_11_6e16.eq012 ; $6d1f
-	cp a, $0d ; $6d22
+	cp $0d ; $6d22
 	jp z, ActorScript_11_6e16.storeStoryModeShowLocationName ; $6d24
 	test_flag FLAG_STORY_COMPLETE_SINGLES ; $6d27
 	jr nz, .stage3 ; $6d2a
@@ -2671,10 +2671,10 @@ ActorScript_11_6e16:
 .checkMatchExitRequest:
 	wram_bank $04 ; $6e4d
 	ld a, [wMatchExitRequest] ; $6e53
-	cp a, $01 ; $6e56
+	cp $01 ; $6e56
 	jr z, .eq01 ; $6e58
 	ld a, [wMatchWinLoseFlag] ; $6e5a
-	cp a, $01 ; $6e5d
+	cp $01 ; $6e5d
 	jp z, .eq012 ; $6e5f
 .eq01:
 	script_player_speed $0040 ; $6e62
@@ -2694,10 +2694,10 @@ ActorScript_11_6e16:
 	farcall StubNop_1e ; $6e9a
 	ret ; $6e9d
 .storeStoryModeShowLocationName:
-	xor a, a ; $6e9e
+	xor a ; $6e9e
 	ld [wStoryModeShowLocationName], a ; $6e9f
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $6ea2
-	sub a, $01 ; $6ea5
+	sub $01 ; $6ea5
 	ld a, a ; $6ea7
 	rst Rst00 ; $6ea8
 	dw ActorScript_11_6e16.parkMiddleCourtPracticePair ; $6ea9 jumptable
@@ -2879,7 +2879,7 @@ PromptChallengeRankingOpponent:
 	farcall RunDialogueYesNoPrompt ; $729b
 	farcall ScriptCloseDialogueWindow ; $729e
 	script_wait_frames $05 ; $72a1
-	and a, a ; $72a8
+	and a ; $72a8
 	jp nz, .done ; $72a9
 	script_set_anim $03, $03 ; $72ac
 	script_wait_idle $03 ; $72b3
@@ -2903,7 +2903,7 @@ PromptChallengeRankingOpponent:
 	farcall RunDialogueYesNoPrompt ; $72f7
 	farcall ScriptCloseDialogueWindow ; $72fa
 	script_wait_frames $05 ; $72fd
-	and a, a ; $7304
+	and a ; $7304
 	jr z, .accepted ; $7305
 	jp .declined ; $7307
 LoadRankingOpponentGraphics:
@@ -3211,7 +3211,7 @@ OfferSinglesRankingMatch:
 	farcall RunDialogueYesNoPrompt ; $778f
 	farcall ScriptCloseDialogueWindow ; $7792
 	script_wait_frames $05 ; $7795
-	and a, a ; $779c
+	and a ; $779c
 	jp nz, .speak2 ; $779d
 	script_facing_lock ACTOR_PLAYER, FACE_RIGHT ; $77a0
 	script_set_speed ACTOR_PLAYER, $0018 ; $77a7
@@ -3427,12 +3427,12 @@ ActorScript_11_7bbd:
 	as_jump .Lb
 MapScriptNop_11:
 	ret ; $7bd1
-	xor a, a ; $7bd2
+	xor a ; $7bd2
 	ld [wStoryScriptRan], a ; $7bd3
 	ret ; $7bd6
 	sound $a2 ; $7bd7
 	ret ; $7bd9
-	xor a, a ; $7bda
+	xor a ; $7bda
 	ld [wStoryModeShowLocationName], a ; $7bdb
 	ret ; $7bde
 ActorScript_11_7bdf:

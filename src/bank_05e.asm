@@ -354,7 +354,7 @@ FetchText_5e:
 	ld d, [hl] ; $6eac
 	ld hl, TextStrings_5e ; $6ead
 	add hl, de ; $6eb0
-	or a, a ; $6eb1
+	or a ; $6eb1
 	jr nz, .nonZero ; $6eb2
 	ld de, wTextBuffer ; $6eb4
 	ld c, $a0 ; $6eb7
@@ -368,17 +368,17 @@ FetchText_5e:
 	ld a, [hl+] ; $6ec3
 	ld [de], a ; $6ec4
 	inc de ; $6ec5
-	or a, a ; $6ec6
+	or a ; $6ec6
 	jr nz, .loop ; $6ec7
 	pop hl ; $6ec9
 	pop de ; $6eca
 	pop bc ; $6ecb
 	ret ; $6ecc
 .countDone:
-	xor a, a ; $6ecd
+	xor a ; $6ecd
 	ld [de], a ; $6ece
 	ldh a, [hDebugStepMode] ; $6ecf
-	or a, a ; $6ed1
+	or a ; $6ed1
 	jr z, .restore ; $6ed2
 	sound $2c ; $6ed4
 .restore:

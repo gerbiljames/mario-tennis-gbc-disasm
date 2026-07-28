@@ -74,12 +74,12 @@ LoadMatchGraphics:
 	ld c, $80 ; $5eed
 	call QueueVRAMCopy ; $5eef
 	ld a, [wMatchContext] ; $5ef2
-	cp a, $02 ; $5ef5
+	cp $02 ; $5ef5
 	call z, LoadMatchVariantGraphics ; $5ef7
 	ret ; $5efa
 LoadMatchVariantGraphics:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $5efb
-	sub a, $12 ; $5efe
+	sub $12 ; $5efe
 	jr c, .carry ; $5f00
 	ld a, a ; $5f02
 	rst Rst00 ; $5f03
@@ -215,11 +215,11 @@ LoadMatchSharedTiles_28:
 LoadSpecialHitEffectTiles:
 	rrca ; $6030
 	rrca ; $6031
-	and a, $c0 ; $6032
-	add a, $60 ; $6034
+	and $c0 ; $6032
+	add $60 ; $6034
 	ld l, a ; $6036
-	adc a, $43 ; $6037
-	sub a, l ; $6039
+	adc $43 ; $6037
+	sub l ; $6039
 	ld h, a ; $603a
 	ld de, $a740 ; $603b
 	ld c, $04 ; $603e
@@ -228,11 +228,11 @@ LoadSpecialHitEffectTiles:
 LoadBallTouchCharEffectTilesA:
 	rrca ; $6044
 	rrca ; $6045
-	and a, $40 ; $6046
-	add a, $60 ; $6048
+	and $40 ; $6046
+	add $60 ; $6048
 	ld l, a ; $604a
-	adc a, $44 ; $604b
-	sub a, l ; $604d
+	adc $44 ; $604b
+	sub l ; $604d
 	ld h, a ; $604e
 	ld de, $a780 ; $604f
 	ld c, $04 ; $6052
@@ -241,22 +241,22 @@ LoadBallTouchCharEffectTilesA:
 LoadBallTouchCharEffectTilesB:
 	rrca ; $6058
 	rrca ; $6059
-	and a, $40 ; $605a
-	add a, $60 ; $605c
+	and $40 ; $605a
+	add $60 ; $605c
 	ld l, a ; $605e
-	adc a, $45 ; $605f
-	sub a, l ; $6061
+	adc $45 ; $605f
+	sub l ; $6061
 	ld h, a ; $6062
 	ld de, $a7c0 ; $6063
 	ld c, $04 ; $6066
 	call QueueVRAMCopy ; $6068
 	ret ; $606b
 QueueMatchSpriteFrameA:
-	add a, a ; $606c
-	add a, LOW(Data_28_6080) ; $606d
+	add a ; $606c
+	add LOW(Data_28_6080) ; $606d
 	ld l, a ; $606f
-	adc a, HIGH(Data_28_6080) ; $6070
-	sub a, l ; $6072
+	adc HIGH(Data_28_6080) ; $6070
+	sub l ; $6072
 	ld h, a ; $6073
 	ld a, [hl+] ; $6074
 	ld h, [hl] ; $6075
@@ -269,11 +269,11 @@ Data_28_6080:
 	; $6080, 6 bytes (bytes:6)
 	db $30, $52, $f0, $52, $b0, $53 ; 0x00
 QueueMatchSpriteFrameB:
-	add a, a ; $6086
-	add a, LOW(Data_28_609a) ; $6087
+	add a ; $6086
+	add LOW(Data_28_609a) ; $6087
 	ld l, a ; $6089
-	adc a, HIGH(Data_28_609a) ; $608a
-	sub a, l ; $608c
+	adc HIGH(Data_28_609a) ; $608a
+	sub l ; $608c
 	ld h, a ; $608d
 	ld a, [hl+] ; $608e
 	ld h, [hl] ; $608f
@@ -297,11 +297,11 @@ LoadEffectFrameTiles_28:
 	ld e, l ; $60a9
 	ld d, h ; $60aa
 	ld a, b ; $60ab
-	add a, a ; $60ac
-	add a, LOW(Data_28_60c1) ; $60ad
+	add a ; $60ac
+	add LOW(Data_28_60c1) ; $60ad
 	ld l, a ; $60af
-	adc a, HIGH(Data_28_60c1) ; $60b0
-	sub a, l ; $60b2
+	adc HIGH(Data_28_60c1) ; $60b0
+	sub l ; $60b2
 	ld h, a ; $60b3
 	ld a, [hl+] ; $60b4
 	ld h, [hl] ; $60b5

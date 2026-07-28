@@ -40,7 +40,7 @@ TryEstablishLink:
 	di ; $4048
 	ldh a, [hLinkRxByte] ; $4049
 	ei ; $404b
-	cp a, $c1 ; $404c
+	cp $c1 ; $404c
 	jr z, .probe ; $404e
 	ld a, $01 ; $4050
 	ldh [hLinkState], a ; $4052
@@ -53,9 +53,9 @@ TryEstablishLink:
 	jr .done ; $405f
 .probe:
 	di ; $4061
-	xor a, a ; $4062
+	xor a ; $4062
 	ldh [hLinkRxByte], a ; $4063
-	xor a, a ; $4065
+	xor a ; $4065
 	ldh [hLinkTransferDone], a ; $4066
 	ei ; $4068
 	ld a, $02 ; $4069
@@ -68,7 +68,7 @@ TryEstablishLink:
 	ret ; $4076
 EnableSerialAndVBlankInterrupts:
 	di ; $4077
-	xor a, a ; $4078
+	xor a ; $4078
 	ldh [rIF], a ; $4079
 	ld a, $09 ; $407b
 	ldh [rIE], a ; $407d
@@ -134,13 +134,13 @@ ExchangeNibbleBlockMaster:
 	di ; $40ea
 	ldh a, [hLinkRxByte] ; $40eb
 	ei ; $40ed
-	cp a, $c4 ; $40ee
+	cp $c4 ; $40ee
 	jr z, .synced ; $40f0
 	dec e ; $40f2
 	jr nz, .syncLoop ; $40f3
 	call LinkErrorReset ; $40f5
 .synced:
-	xor a, a ; $40f8
+	xor a ; $40f8
 	ldh [$ffc6], a ; $40f9
 	ldh [$ffc7], a ; $40fb
 	ld de, $0000 ; $40fd
@@ -148,7 +148,7 @@ ExchangeNibbleBlockMaster:
 .nibbleLoop:
 	ld hl, $ce40 ; $4101
 	ldh a, [$ffc7] ; $4104
-	add a, l ; $4106
+	add l ; $4106
 	ld l, a ; $4107
 	jr nc, .loadTxNibble ; $4108
 	inc h ; $410a
@@ -157,7 +157,7 @@ ExchangeNibbleBlockMaster:
 	ldh [hLinkTxByte], a ; $410c
 .sendRetry:
 	ldh a, [hLinkTxByte] ; $410e
-	or a, $40 ; $4110
+	or $40 ; $4110
 	ldh [rSB], a ; $4112
 	push af ; $4114
 	ld a, $03 ; $4115
@@ -171,8 +171,8 @@ ExchangeNibbleBlockMaster:
 	call PollSerialResponse ; $4127
 	jr c, .sendRetry ; $412a
 	ld h, a ; $412c
-	and a, $c0 ; $412d
-	cp a, $80 ; $412f
+	and $c0 ; $412d
+	cp $80 ; $412f
 	jr z, .storeRxNibble ; $4131
 	call LinkErrorReset ; $4133
 .storeRxNibble:
@@ -180,20 +180,20 @@ ExchangeNibbleBlockMaster:
 	push af ; $4137
 	ld hl, $cea0 ; $4138
 	ldh a, [$ffc6] ; $413b
-	add a, l ; $413d
+	add l ; $413d
 	ld l, a ; $413e
 	jr nc, .accumulate ; $413f
 	inc h ; $4141
 .accumulate:
 	pop af ; $4142
-	and a, $3f ; $4143
+	and $3f ; $4143
 	ld [hl], a ; $4145
-	add a, e ; $4146
+	add e ; $4146
 	ld e, a ; $4147
 	jr nc, .nextNibble ; $4148
 	inc d ; $414a
 .nextNibble:
-	xor a, a ; $414b
+	xor a ; $414b
 	ldh [hLinkCounter], a ; $414c
 	ld hl, $ffc7 ; $414e
 	inc [hl] ; $4151
@@ -209,7 +209,7 @@ ExchangeNibbleBlockMaster:
 .sendBlockEnd:
 	ld a, $cc ; $4165
 	call SendByteGetReplyMaster ; $4167
-	cp a, $cc ; $416a
+	cp $cc ; $416a
 	jr z, .compareChecksum ; $416c
 	call LinkErrorReset ; $416e
 .compareChecksum:
@@ -221,29 +221,29 @@ ExchangeNibbleBlockMaster:
 	push hl ; $417a
 	push de ; $417b
 	ld a, l ; $417c
-	sub a, e ; $417d
+	sub e ; $417d
 	ld l, a ; $417e
 	ld a, h ; $417f
-	sbc a, d ; $4180
+	sbc d ; $4180
 	ld h, a ; $4181
 	ld a, h ; $4182
-	or a, l ; $4183
+	or l ; $4183
 	pop de ; $4184
 	pop hl ; $4185
 	jp z, .checksumOk ; $4186
 	ld a, $cb ; $4189
 	call SendByteGetReplyMaster ; $418b
-	cp a, $cd ; $418e
+	cp $cd ; $418e
 	jp z, .startBlock ; $4190
-	cp a, $cb ; $4193
+	cp $cb ; $4193
 	jp z, .startBlock ; $4195
 	call LinkErrorReset ; $4198
 .checksumOk:
 	ld a, $cd ; $419b
 	call SendByteGetReplyMaster ; $419d
-	cp a, $cd ; $41a0
+	cp $cd ; $41a0
 	jr z, .done ; $41a2
-	cp a, $cb ; $41a4
+	cp $cb ; $41a4
 	jp z, .startBlock ; $41a6
 	call LinkErrorReset ; $41a9
 .done:
@@ -259,7 +259,7 @@ DelayByLinkPhase:
 .spinLoop:
 	dec bc ; $41b6
 	ld a, c ; $41b7
-	or a, b ; $41b8
+	or b ; $41b8
 	jr nz, .spinLoop ; $41b9
 	ldh a, [$ffe8] ; $41bb
 	dec a ; $41bd
@@ -323,7 +323,7 @@ ExchangeNibbleBlockSlave:
 	nop ; $4210
 	di ; $4211
 	ld a, [$ce40] ; $4212
-	or a, $80 ; $4215
+	or $80 ; $4215
 	ldh [hLinkTxByte], a ; $4217
 	ei ; $4219
 	ld e, $64 ; $421a
@@ -333,7 +333,7 @@ ExchangeNibbleBlockSlave:
 	di ; $4221
 	ldh a, [hLinkRxByte] ; $4222
 	ei ; $4224
-	cp a, $c3 ; $4225
+	cp $c3 ; $4225
 	jr z, .synced ; $4227
 	dec e ; $4229
 	jr nz, .syncLoop ; $422a
@@ -342,7 +342,7 @@ ExchangeNibbleBlockSlave:
 .synced:
 	ld a, $01 ; $422f
 	ldh [$ffc7], a ; $4231
-	xor a, a ; $4233
+	xor a ; $4233
 	ldh [$ffc6], a ; $4234
 	ld de, $0000 ; $4236
 	ld b, c ; $4239
@@ -350,19 +350,19 @@ ExchangeNibbleBlockSlave:
 .nibbleLoop:
 	di ; $423b
 	ldh a, [rIF] ; $423c
-	and a, $f7 ; $423e
+	and $f7 ; $423e
 	ldh [rIF], a ; $4240
-	xor a, a ; $4242
+	xor a ; $4242
 	ldh [hLinkTransferDone], a ; $4243
 	ld hl, $ce40 ; $4245
 	ldh a, [$ffc7] ; $4248
-	add a, l ; $424a
+	add l ; $424a
 	ld l, a ; $424b
 	jr nc, .loadTxNibble ; $424c
 	inc h ; $424e
 .loadTxNibble:
 	ld a, [hl] ; $424f
-	or a, $80 ; $4250
+	or $80 ; $4250
 	ldh [hLinkTxByte], a ; $4252
 	ei ; $4254
 	call WaitSerialTransfer ; $4255
@@ -374,27 +374,27 @@ ExchangeNibbleBlockSlave:
 	call LinkErrorReset ; $4262
 .checkTag:
 	ld c, a ; $4265
-	and a, $c0 ; $4266
-	cp a, $40 ; $4268
+	and $c0 ; $4266
+	cp $40 ; $4268
 	jr z, .storeRxNibble ; $426a
 	call LinkErrorReset ; $426c
 .storeRxNibble:
 	ld hl, $cea0 ; $426f
 	ldh a, [$ffc6] ; $4272
-	add a, l ; $4274
+	add l ; $4274
 	ld l, a ; $4275
 	jr nc, .accumulate ; $4276
 	inc h ; $4278
 .accumulate:
 	ld a, c ; $4279
-	and a, $3f ; $427a
+	and $3f ; $427a
 	ld [hl], a ; $427c
-	add a, e ; $427d
+	add e ; $427d
 	ld e, a ; $427e
 	jr nc, .nextNibble ; $427f
 	inc d ; $4281
 .nextNibble:
-	xor a, a ; $4282
+	xor a ; $4282
 	ldh [hLinkCounter], a ; $4283
 	ld hl, $ffc7 ; $4285
 	inc [hl] ; $4288
@@ -404,9 +404,9 @@ ExchangeNibbleBlockSlave:
 	jr nz, .nibbleLoop ; $428e
 	di ; $4290
 	ldh a, [rIF] ; $4291
-	and a, $f7 ; $4293
+	and $f7 ; $4293
 	ldh [rIF], a ; $4295
-	xor a, a ; $4297
+	xor a ; $4297
 	ldh [hLinkTransferDone], a ; $4298
 	ld a, $c6 ; $429a
 	ldh [hLinkTxByte], a ; $429c
@@ -416,29 +416,29 @@ ExchangeNibbleBlockSlave:
 	ldh a, [hLinkRxByte] ; $42a3
 	ei ; $42a5
 	ld b, a ; $42a6
-	and a, $c0 ; $42a7
-	cp a, $40 ; $42a9
+	and $c0 ; $42a7
+	cp $40 ; $42a9
 	jr z, .storeLastNibble ; $42ab
 	call LinkErrorReset ; $42ad
 .storeLastNibble:
 	ld hl, $cea0 ; $42b0
 	ldh a, [$ffc6] ; $42b3
-	add a, l ; $42b5
+	add l ; $42b5
 	ld l, a ; $42b6
 	jr nc, .accumulateLast ; $42b7
 	inc h ; $42b9
 .accumulateLast:
 	ld a, b ; $42ba
-	and a, $3f ; $42bb
+	and $3f ; $42bb
 	ld [hl], a ; $42bd
-	add a, e ; $42be
+	add e ; $42be
 	ld e, a ; $42bf
 	jr nc, .sendBlockEnd ; $42c0
 	inc d ; $42c2
 .sendBlockEnd:
 	ld a, $cc ; $42c3
 	call SendByteGetReplySlave ; $42c5
-	cp a, $c5 ; $42c8
+	cp $c5 ; $42c8
 	jr z, .compareChecksum ; $42ca
 	call LinkErrorReset ; $42cc
 .compareChecksum:
@@ -450,21 +450,21 @@ ExchangeNibbleBlockSlave:
 	push hl ; $42d8
 	push de ; $42d9
 	ld a, l ; $42da
-	sub a, e ; $42db
+	sub e ; $42db
 	ld l, a ; $42dc
 	ld a, h ; $42dd
-	sbc a, d ; $42de
+	sbc d ; $42de
 	ld h, a ; $42df
 	ld a, h ; $42e0
-	or a, l ; $42e1
+	or l ; $42e1
 	pop de ; $42e2
 	pop hl ; $42e3
 	jp z, .checksumOk ; $42e4
 	di ; $42e7
 	ldh a, [rIF] ; $42e8
-	and a, $f7 ; $42ea
+	and $f7 ; $42ea
 	ldh [rIF], a ; $42ec
-	xor a, a ; $42ee
+	xor a ; $42ee
 	ldh [hLinkTransferDone], a ; $42ef
 	ld a, $cb ; $42f1
 	ldh [rSB], a ; $42f3
@@ -477,17 +477,17 @@ ExchangeNibbleBlockSlave:
 	ei ; $42ff
 	ld a, $cb ; $4300
 	call SendByteGetReplySlave ; $4302
-	cp a, $cb ; $4305
+	cp $cb ; $4305
 	jp z, .startBlock ; $4307
-	cp a, $cd ; $430a
+	cp $cd ; $430a
 	jp z, .startBlock ; $430c
 	call LinkErrorReset ; $430f
 .checksumOk:
 	ld a, $cd ; $4312
 	call SendByteGetReplySlave ; $4314
-	cp a, $cb ; $4317
+	cp $cb ; $4317
 	jp z, .startBlock ; $4319
-	cp a, $cd ; $431c
+	cp $cd ; $431c
 	jr z, .done ; $431e
 	call LinkErrorReset ; $4320
 .done:
@@ -501,46 +501,46 @@ ExchangeChecksumMaster:
 	ld hl, $0000 ; $4329
 	ld a, d ; $432c
 	swap a ; $432d
-	and a, $0f ; $432f
-	or a, $40 ; $4331
+	and $0f ; $432f
+	or $40 ; $4331
 	call SendByteGetReplyMaster ; $4333
 	ld b, a ; $4336
-	and a, $c0 ; $4337
-	cp a, $80 ; $4339
+	and $c0 ; $4337
+	cp $80 ; $4339
 	jr z, .nibble1 ; $433b
 	call LinkErrorReset ; $433d
 .nibble1:
 	call ShiftNibbleIntoChecksum ; $4340
 	ld a, d ; $4343
-	and a, $0f ; $4344
-	or a, $40 ; $4346
+	and $0f ; $4344
+	or $40 ; $4346
 	call SendByteGetReplyMaster ; $4348
 	ld b, a ; $434b
-	and a, $c0 ; $434c
-	cp a, $80 ; $434e
+	and $c0 ; $434c
+	cp $80 ; $434e
 	jr z, .nibble2 ; $4350
 	call LinkErrorReset ; $4352
 .nibble2:
 	call ShiftNibbleIntoChecksum ; $4355
 	ld a, e ; $4358
 	swap a ; $4359
-	and a, $0f ; $435b
-	or a, $40 ; $435d
+	and $0f ; $435b
+	or $40 ; $435d
 	call SendByteGetReplyMaster ; $435f
 	ld b, a ; $4362
-	and a, $c0 ; $4363
-	cp a, $80 ; $4365
+	and $c0 ; $4363
+	cp $80 ; $4365
 	jr z, .nibble3 ; $4367
 	call LinkErrorReset ; $4369
 .nibble3:
 	call ShiftNibbleIntoChecksum ; $436c
 	ld a, e ; $436f
-	and a, $0f ; $4370
-	or a, $40 ; $4372
+	and $0f ; $4370
+	or $40 ; $4372
 	call SendByteGetReplyMaster ; $4374
 	ld b, a ; $4377
-	and a, $c0 ; $4378
-	cp a, $80 ; $437a
+	and $c0 ; $4378
+	cp $80 ; $437a
 	jr z, .done ; $437c
 	call LinkErrorReset ; $437e
 .done:
@@ -554,43 +554,43 @@ ExchangeChecksumSlave:
 	ld hl, $0000 ; $438d
 	ld a, d ; $4390
 	swap a ; $4391
-	and a, $0f ; $4393
-	or a, $80 ; $4395
+	and $0f ; $4393
+	or $80 ; $4395
 	call SendByteGetReplySlave ; $4397
-	cp a, $cc ; $439a
+	cp $cc ; $439a
 	jr z, .nibble1 ; $439c
 	call LinkErrorReset ; $439e
 .nibble1:
 	ld a, d ; $43a1
-	and a, $0f ; $43a2
-	or a, $80 ; $43a4
+	and $0f ; $43a2
+	or $80 ; $43a4
 	call SendByteGetReplySlave ; $43a6
 	ld b, a ; $43a9
-	and a, $c0 ; $43aa
-	cp a, $40 ; $43ac
+	and $c0 ; $43aa
+	cp $40 ; $43ac
 	jr z, .nibble2 ; $43ae
 	call LinkErrorReset ; $43b0
 .nibble2:
 	call ShiftNibbleIntoChecksum ; $43b3
 	ld a, e ; $43b6
 	swap a ; $43b7
-	and a, $0f ; $43b9
-	or a, $80 ; $43bb
+	and $0f ; $43b9
+	or $80 ; $43bb
 	call SendByteGetReplySlave ; $43bd
 	ld b, a ; $43c0
-	and a, $c0 ; $43c1
-	cp a, $40 ; $43c3
+	and $c0 ; $43c1
+	cp $40 ; $43c3
 	jr z, .nibble3 ; $43c5
 	call LinkErrorReset ; $43c7
 .nibble3:
 	call ShiftNibbleIntoChecksum ; $43ca
 	ld a, e ; $43cd
-	and a, $0f ; $43ce
-	or a, $80 ; $43d0
+	and $0f ; $43ce
+	or $80 ; $43d0
 	call SendByteGetReplySlave ; $43d2
 	ld b, a ; $43d5
-	and a, $c0 ; $43d6
-	cp a, $40 ; $43d8
+	and $c0 ; $43d6
+	cp $40 ; $43d8
 	jr z, .nibble4 ; $43da
 	call LinkErrorReset ; $43dc
 .nibble4:
@@ -598,8 +598,8 @@ ExchangeChecksumSlave:
 	ld a, $cd ; $43e2
 	call SendByteGetReplySlave ; $43e4
 	ld b, a ; $43e7
-	and a, $c0 ; $43e8
-	cp a, $40 ; $43ea
+	and $c0 ; $43e8
+	cp $40 ; $43ea
 	jr z, .done ; $43ec
 	call LinkErrorReset ; $43ee
 .done:
@@ -616,8 +616,8 @@ ShiftNibbleIntoChecksum:
 	sla l ; $4402
 	rl h ; $4404
 	ld a, b ; $4406
-	and a, $0f ; $4407
-	or a, l ; $4409
+	and $0f ; $4407
+	or l ; $4409
 	ld l, a ; $440a
 	ret ; $440b
 ComputeNibbleBufferChecksum:
@@ -629,7 +629,7 @@ ComputeNibbleBufferChecksum:
 	ld de, $0000 ; $4413
 .sumLoop:
 	ld a, [hl+] ; $4416
-	add a, e ; $4417
+	add e ; $4417
 	ld e, a ; $4418
 	jr nc, .next ; $4419
 	inc d ; $441b
@@ -667,14 +667,14 @@ SendNibbleBlockSlave:
 .sendLoop:
 	ld a, [hl+] ; $4448
 	ldh [hLinkTxByte], a ; $4449
-	add a, e ; $444b
+	add e ; $444b
 	ld e, a ; $444c
 	jr nc, .sendByte ; $444d
 	inc d ; $444f
 .sendByte:
 	di ; $4450
 	ldh a, [hLinkTxByte] ; $4451
-	or a, $80 ; $4453
+	or $80 ; $4453
 	ldh [rSB], a ; $4455
 	push af ; $4457
 	ld a, $02 ; $4458
@@ -686,7 +686,7 @@ SendNibbleBlockSlave:
 	call WaitSerialTransfer ; $4462
 	call PollSerialResponse ; $4465
 	jr c, .sendByte ; $4468
-	xor a, a ; $446a
+	xor a ; $446a
 	ldh [hLinkCounter], a ; $446b
 	dec b ; $446d
 	jr nz, .sendLoop ; $446e
@@ -699,11 +699,11 @@ SendNibbleBlockSlave:
 .compareChecksum:
 	ld a, $cc ; $447c
 	call SendByteGetReplySlave ; $447e
-	cp a, $cd ; $4481
+	cp $cd ; $4481
 	jr z, .checksumOk ; $4483
 	ld b, a ; $4485
-	and a, $c0 ; $4486
-	cp a, $40 ; $4488
+	and $c0 ; $4486
+	cp $40 ; $4488
 	jr nz, .compareChecksum ; $448a
 	sla l ; $448c
 	rl h ; $448e
@@ -714,28 +714,28 @@ SendNibbleBlockSlave:
 	sla l ; $4498
 	rl h ; $449a
 	ld a, b ; $449c
-	and a, $0f ; $449d
-	or a, l ; $449f
+	and $0f ; $449d
+	or l ; $449f
 	ld l, a ; $44a0
 	jr .compareChecksum ; $44a1
 .checksumOk:
 	push hl ; $44a3
 	push de ; $44a4
 	ld a, l ; $44a5
-	sub a, e ; $44a6
+	sub e ; $44a6
 	ld l, a ; $44a7
 	ld a, h ; $44a8
-	sbc a, d ; $44a9
+	sbc d ; $44a9
 	ld h, a ; $44aa
 	ld a, h ; $44ab
-	or a, l ; $44ac
+	or l ; $44ac
 	pop de ; $44ad
 	pop hl ; $44ae
 	jr nz, .startBlock ; $44af
 .retry:
 	ld a, $80 ; $44b1
 	call SendByteGetReplySlave ; $44b3
-	cp a, $40 ; $44b6
+	cp $40 ; $44b6
 	jr nz, .retry ; $44b8
 	scf ; $44ba
 	ccf ; $44bb
@@ -771,39 +771,39 @@ ReceiveNibbleBlockMaster:
 	call ShortDelay ; $44e7
 	call PollSerialResponse ; $44ea
 	jr c, .nibbleLoop ; $44ed
-	cp a, $c5 ; $44ef
+	cp $c5 ; $44ef
 	jr z, .compareChecksum ; $44f1
-	and a, $3f ; $44f3
+	and $3f ; $44f3
 	ld [hl+], a ; $44f5
-	add a, e ; $44f6
+	add e ; $44f6
 	ld e, a ; $44f7
 	jr nc, .nextNibble ; $44f8
 	inc d ; $44fa
 .nextNibble:
-	xor a, a ; $44fb
+	xor a ; $44fb
 	ldh [hLinkCounter], a ; $44fc
 	inc b ; $44fe
 	ld a, b ; $44ff
-	cp a, $40 ; $4500
+	cp $40 ; $4500
 	jr c, .nibbleLoop ; $4502
 	call LinkErrorReset ; $4504
 .compareChecksum:
 	ld a, $c6 ; $4507
 	call SendByteGetReplyMaster ; $4509
 	ld a, d ; $450c
-	or a, $40 ; $450d
+	or $40 ; $450d
 	call SendByteGetReplyMaster ; $450f
 	ld a, e ; $4512
-	or a, $40 ; $4513
+	or $40 ; $4513
 	call SendByteGetReplyMaster ; $4515
 	ld a, $cd ; $4518
 	call SendByteGetReplyMaster ; $451a
 .retry:
 	ld a, $40 ; $451d
 	call SendByteGetReplyMaster ; $451f
-	cp a, $c3 ; $4522
+	cp $c3 ; $4522
 	jr z, .startBlock ; $4524
-	cp a, $80 ; $4526
+	cp $80 ; $4526
 	jr nz, .retry ; $4528
 	pop hl ; $452a
 	pop de ; $452b
@@ -815,11 +815,11 @@ PollSerialResponse:
 	di ; $4530
 	ldh a, [hLinkRxByte] ; $4531
 	ld b, a ; $4533
-	cp a, $00 ; $4534
+	cp $00 ; $4534
 	jr z, .noReply ; $4536
-	cp a, $ff ; $4538
+	cp $ff ; $4538
 	jr z, .noReply ; $453a
-	xor a, a ; $453c
+	xor a ; $453c
 	ldh [hLinkCounter], a ; $453d
 	scf ; $453f
 	ccf ; $4540
@@ -853,13 +853,13 @@ SendByteAwaitEchoMaster:
 	di ; $4569
 	ldh a, [hLinkRxByte] ; $456a
 	ei ; $456c
-	cp a, $00 ; $456d
+	cp $00 ; $456d
 	jr z, .retry ; $456f
-	cp a, $ff ; $4571
+	cp $ff ; $4571
 	jr z, .retry ; $4573
-	cp a, b ; $4575
+	cp b ; $4575
 	jr z, .success ; $4576
-	xor a, a ; $4578
+	xor a ; $4578
 	ldh [hLinkCounter], a ; $4579
 	dec c ; $457b
 	jr nz, .sendLoop ; $457c
@@ -891,13 +891,13 @@ SendByteAwaitEchoSlave:
 	ei ; $459e
 	call WaitSerialTransfer ; $459f
 	ldh a, [hLinkRxByte] ; $45a2
-	cp a, $00 ; $45a4
+	cp $00 ; $45a4
 	jr z, .retry ; $45a6
-	cp a, $ff ; $45a8
+	cp $ff ; $45a8
 	jr z, .retry ; $45aa
-	cp a, b ; $45ac
+	cp b ; $45ac
 	jr z, .success ; $45ad
-	xor a, a ; $45af
+	xor a ; $45af
 	ldh [hLinkCounter], a ; $45b0
 	dec c ; $45b2
 	jr nz, .sendLoop ; $45b3
@@ -934,9 +934,9 @@ SendByteGetReplyMaster:
 	call ShortDelay ; $45de
 	di ; $45e1
 	ldh a, [hLinkRxByte] ; $45e2
-	cp a, $00 ; $45e4
+	cp $00 ; $45e4
 	jr z, .retry ; $45e6
-	cp a, $ff ; $45e8
+	cp $ff ; $45e8
 	jr z, .retry ; $45ea
 	jr .done ; $45ec
 .retry:
@@ -962,12 +962,12 @@ SendByteAwaitReplyMaster:
 	pop af ; $4608
 	call AdvanceFrame ; $4609
 	ldh a, [hLinkRxByte] ; $460c
-	cp a, $00 ; $460e
+	cp $00 ; $460e
 	jr z, .retry ; $4610
-	cp a, $ff ; $4612
+	cp $ff ; $4612
 	jr z, .retry ; $4614
 	ld b, a ; $4616
-	xor a, a ; $4617
+	xor a ; $4617
 	ldh [hLinkCounter], a ; $4618
 	ld a, b ; $461a
 	jr .done ; $461b
@@ -983,9 +983,9 @@ SendByteGetReplySlave:
 	ldh [hLinkTxPending], a ; $4626
 	ldh [hLinkTxByte], a ; $4628
 	ldh a, [rIF] ; $462a
-	and a, $f7 ; $462c
+	and $f7 ; $462c
 	ldh [rIF], a ; $462e
-	xor a, a ; $4630
+	xor a ; $4630
 	ldh [hLinkTransferDone], a ; $4631
 	ei ; $4633
 	ld c, $64 ; $4634
@@ -995,12 +995,12 @@ SendByteGetReplySlave:
 	di ; $463b
 	ldh a, [hLinkRxByte] ; $463c
 	ei ; $463e
-	cp a, $00 ; $463f
+	cp $00 ; $463f
 	jr z, .retry ; $4641
-	cp a, $ff ; $4643
+	cp $ff ; $4643
 	jr z, .retry ; $4645
 	ld b, a ; $4647
-	xor a, a ; $4648
+	xor a ; $4648
 	ldh [hLinkCounter], a ; $4649
 	ld a, b ; $464b
 	jr .done ; $464c
@@ -1014,10 +1014,10 @@ SendByteGetReplySlave:
 UnpackBytesToNibbles:
 	ld hl, $ce40 ; $4656
 	ld a, c ; $4659
-	add a, a ; $465a
-	cp a, $5f ; $465b
+	add a ; $465a
+	cp $5f ; $465b
 	jr c, .unpack ; $465d
-	xor a, a ; $465f
+	xor a ; $465f
 	scf ; $4660
 	jp .done ; $4661
 .unpack:
@@ -1028,16 +1028,16 @@ UnpackBytesToNibbles:
 	bit 0, b ; $4668
 	jr nz, .lowNibble ; $466a
 	swap a ; $466c
-	and a, $0f ; $466e
+	and $0f ; $466e
 	jr .store ; $4670
 .lowNibble:
-	and a, $0f ; $4672
+	and $0f ; $4672
 	inc de ; $4674
 .store:
 	ld [hl+], a ; $4675
 	inc b ; $4676
 	ld a, b ; $4677
-	cp a, c ; $4678
+	cp c ; $4678
 	jr nz, .nibbleLoop ; $4679
 	ld a, c ; $467b
 	scf ; $467c
@@ -1048,7 +1048,7 @@ ExchangeLinkFrameByteMaster:
 	di ; $467f
 	ldh a, [rLY] ; $4680
 	ei ; $4682
-	cp a, $8c ; $4683
+	cp $8c ; $4683
 	jr nz, ExchangeLinkFrameByteMaster ; $4685
 	di ; $4687
 	ldh a, [hLinkTxByte] ; $4688
@@ -1063,21 +1063,21 @@ ExchangeLinkFrameByteMaster:
 	call AdvanceFrame ; $4697
 	ldh a, [hLinkRxByte] ; $469a
 	ld b, a ; $469c
-	cp a, $00 ; $469d
+	cp $00 ; $469d
 	jr z, .badReply ; $469f
-	cp a, $ff ; $46a1
+	cp $ff ; $46a1
 	jr z, .resetLink ; $46a3
-	and a, $c0 ; $46a5
-	cp a, $80 ; $46a7
+	and $c0 ; $46a5
+	cp $80 ; $46a7
 	jr z, .checkDuplicate ; $46a9
-	cp a, $40 ; $46ab
+	cp $40 ; $46ab
 	jr z, .checkDuplicate ; $46ad
 .badReply:
 	call LinkErrorReset ; $46af
 	ld hl, hLinkCounter ; $46b2
 	inc [hl] ; $46b5
 	ld a, [hl] ; $46b6
-	cp a, $0a ; $46b7
+	cp $0a ; $46b7
 	jr nc, .giveUp ; $46b9
 	call WaitVBlank ; $46bb
 	jp ExchangeLinkFrameByteMaster ; $46be
@@ -1087,13 +1087,13 @@ ExchangeLinkFrameByteMaster:
 	call LinkErrorReset ; $46c4
 .checkDuplicate:
 	ldh a, [hLinkLastRxByte] ; $46c7
-	cp a, b ; $46c9
+	cp b ; $46c9
 	jr nz, .store ; $46ca
-	and a, $3f ; $46cc
+	and $3f ; $46cc
 	ld hl, hLinkCounter ; $46ce
 	inc [hl] ; $46d1
 	ld a, [hl] ; $46d2
-	cp a, $02 ; $46d3
+	cp $02 ; $46d3
 	jr nc, .reinitLink ; $46d5
 	call WaitVBlank ; $46d7
 	call WaitVBlank ; $46da
@@ -1105,7 +1105,7 @@ ExchangeLinkFrameByteMaster:
 	ld a, b ; $46e6
 	ldh [hLinkLastRxByte], a ; $46e7
 	ldh [hLinkLastRxMirror], a ; $46e9
-	xor a, a ; $46eb
+	xor a ; $46eb
 	ldh [hLinkCounter], a ; $46ec
 	ret ; $46ee
 ExchangeLinkFrameByteSlave:
@@ -1115,14 +1115,14 @@ ExchangeLinkFrameByteSlave:
 	call AdvanceFrame ; $46f5
 	pop bc ; $46f8
 	di ; $46f9
-	cp a, $00 ; $46fa
+	cp $00 ; $46fa
 	jr z, .resetLink ; $46fc
-	cp a, $ff ; $46fe
+	cp $ff ; $46fe
 	jr z, .resetLinkAgain ; $4700
-	and a, $c0 ; $4702
-	cp a, $40 ; $4704
+	and $c0 ; $4702
+	cp $40 ; $4704
 	jr z, .checkDuplicate ; $4706
-	cp a, $80 ; $4708
+	cp $80 ; $4708
 	jr z, .checkDuplicate ; $470a
 .resetLink:
 	call LinkErrorReset ; $470c
@@ -1130,15 +1130,15 @@ ExchangeLinkFrameByteSlave:
 	call LinkErrorReset ; $470f
 .checkDuplicate:
 	ldh a, [hLinkLastRxByte] ; $4712
-	cp a, b ; $4714
+	cp b ; $4714
 	jr nz, .store ; $4715
-	and a, $3f ; $4717
+	and $3f ; $4717
 	jr .resetLink ; $4719
 .store:
 	ld a, b ; $471b
 	ldh [hLinkLastRxByte], a ; $471c
 	ldh [hLinkLastRxMirror], a ; $471e
-	xor a, a ; $4720
+	xor a ; $4720
 	ldh [hLinkCounter], a ; $4721
 	ei ; $4723
 	ret ; $4724
@@ -1170,7 +1170,7 @@ SyncLinkFrame:
 	ld hl, $ffe9 ; $474b
 	inc [hl] ; $474e
 	ldh a, [hLinkState] ; $474f
-	cp a, $02 ; $4751
+	cp $02 ; $4751
 	jr z, .slave ; $4753
 	call SyncLinkFrameMaster ; $4755
 	jr .done ; $4758
@@ -1190,7 +1190,7 @@ RunLinkMatchFrame:
 	ld hl, $ffe9 ; $4766
 	inc [hl] ; $4769
 	ldh a, [hLinkState] ; $476a
-	cp a, $02 ; $476c
+	cp $02 ; $476c
 	jr z, .asSlave ; $476e
 	call RunLinkMatchFrameMaster ; $4770
 	jr .done ; $4773
@@ -1207,9 +1207,9 @@ ExchangeLinkReadySignal:
 	push bc ; $477e
 	ld c, $64 ; $477f
 	ldh a, [hLinkState] ; $4781
-	cp a, $02 ; $4783
+	cp $02 ; $4783
 	jr z, .asSlave ; $4785
-	cp a, $01 ; $4787
+	cp $01 ; $4787
 	jr z, .delayLoop ; $4789
 	call LinkErrorReset ; $478b
 .delayLoop:
@@ -1228,7 +1228,7 @@ ExchangeReadyTokenMaster:
 	push af ; $479f
 	push de ; $47a0
 	ldh a, [rSC] ; $47a1
-	and a, $7f ; $47a3
+	and $7f ; $47a3
 	ldh [rSC], a ; $47a5
 	ld de, $2710 ; $47a7
 .retry:
@@ -1237,7 +1237,7 @@ ExchangeReadyTokenMaster:
 	jr nz, .retry ; $47ae
 	di ; $47b0
 	ld a, $0b ; $47b1
-	or a, $40 ; $47b3
+	or $40 ; $47b3
 	ldh [rSB], a ; $47b5
 	push af ; $47b7
 	ld a, $03 ; $47b8
@@ -1248,12 +1248,12 @@ ExchangeReadyTokenMaster:
 	ei ; $47c1
 	call ShortDelay ; $47c2
 	ldh a, [hLinkRxByte] ; $47c5
-	and a, $3f ; $47c7
-	cp a, $0a ; $47c9
+	and $3f ; $47c7
+	cp $0a ; $47c9
 	jr z, .done ; $47cb
 	dec de ; $47cd
 	ld a, d ; $47ce
-	or a, e ; $47cf
+	or e ; $47cf
 	jr nz, .retry ; $47d0
 	call LinkErrorReset ; $47d2
 .done:
@@ -1266,7 +1266,7 @@ ExchangeReadyTokenSlave:
 	ld de, $0003 ; $47da
 	di ; $47dd
 	ld a, $0a ; $47de
-	or a, $80 ; $47e0
+	or $80 ; $47e0
 	ldh [hLinkTxByte], a ; $47e2
 	ldh [rSB], a ; $47e4
 	push af ; $47e6
@@ -1279,12 +1279,12 @@ ExchangeReadyTokenSlave:
 .retry:
 	call WaitSerialTransfer ; $47f1
 	ldh a, [hLinkRxByte] ; $47f4
-	and a, $3f ; $47f6
-	cp a, $0b ; $47f8
+	and $3f ; $47f6
+	cp $0b ; $47f8
 	jr z, .done ; $47fa
 	dec de ; $47fc
 	ld a, d ; $47fd
-	or a, e ; $47fe
+	or e ; $47fe
 	jr nz, .retry ; $47ff
 	call LinkErrorReset ; $4801
 .done:
@@ -1319,7 +1319,7 @@ RunLinkInputFrame:
 	ld hl, $ffe9 ; $4833
 	inc [hl] ; $4836
 	ldh a, [hLinkState] ; $4837
-	cp a, $02 ; $4839
+	cp $02 ; $4839
 	jr z, .slave ; $483b
 	call RunLinkInputFrameMaster ; $483d
 	jr .done ; $4840
@@ -1333,10 +1333,10 @@ UpdateLinkSession:
 	push de ; $4848
 	push hl ; $4849
 	ld a, [$c33f] ; $484a
-	or a, a ; $484d
+	or a ; $484d
 	jp z, .done ; $484e
 	ldh a, [hLinkExchangeActive] ; $4851
-	or a, a ; $4853
+	or a ; $4853
 	jp nz, .frameLoop ; $4854
 	sound $00 ; $4857
 	call DisableLCDSafely ; $4859
@@ -1344,9 +1344,9 @@ UpdateLinkSession:
 	ldh [hLinkExchangeActive], a ; $485e
 	farcall ExchangeLinkReadySignal ; $4860
 	ldh a, [hLinkState] ; $4863
-	cp a, $02 ; $4865
+	cp $02 ; $4865
 	jp z, .asSlave ; $4867
-	cp a, $01 ; $486a
+	cp $01 ; $486a
 	jr z, .asMaster ; $486c
 	call LinkErrorReset ; $486e
 .asMaster:
@@ -1370,16 +1370,16 @@ UpdateLinkSession:
 	call ShortDelay ; $48a2
 	jr .encode ; $48a5
 .asSlave:
-	xor a, a ; $48a7
+	xor a ; $48a7
 	ldh [hLinkTransferDone], a ; $48a8
 	ld a, $80 ; $48aa
 	ldh [hLinkTxSeqBits], a ; $48ac
 .encode:
-	xor a, a ; $48ae
+	xor a ; $48ae
 	ldh [hLinkPlayerCount], a ; $48af
 	call SerialEncodeInput ; $48b1
 	farcall PrimeSlaveSerialReply ; $48b4
-	xor a, a ; $48b7
+	xor a ; $48b7
 	ldh [hLinkRemoteInputPrev], a ; $48b8
 	ld hl, wCharInputSource ; $48ba
 	wram_bank $04 ; $48bd
@@ -1387,14 +1387,14 @@ UpdateLinkSession:
 	wram_bank $05 ; $48c5
 	ld [hl], $06 ; $48cb
 	wram_bank $04 ; $48cd
-	xor a, a ; $48d3
+	xor a ; $48d3
 	ldh [hLinkRxByte], a ; $48d4
 	ldh [hLinkTransferDone], a ; $48d6
 	ld a, $01 ; $48d8
 	ldh [hLinkAckRequired], a ; $48da
 	call EnableLCD ; $48dc
 .frameLoop:
-	xor a, a ; $48df
+	xor a ; $48df
 	ldh [$ffe9], a ; $48e0
 	push af ; $48e2
 	farcall SyncLinkFrame ; $48e3
@@ -1412,7 +1412,7 @@ UpdateLinkSession:
 	pop af ; $48f4
 	ret ; $48f5
 EndLinkSession:
-	xor a, a ; $48f6
+	xor a ; $48f6
 	ld [$c33f], a ; $48f7
 	call InitSerialLink ; $48fa
 	ret ; $48fd
@@ -1444,18 +1444,18 @@ ExchangeLinkBlockToWram5:
 	call DisableLCDSafely ; $4926
 	di ; $4929
 	ldh a, [rIF] ; $492a
-	and a, $08 ; $492c
+	and $08 ; $492c
 	ldh [rIF], a ; $492e
 	ei ; $4930
-	xor a, a ; $4931
+	xor a ; $4931
 	ldh [hLinkExchangeActive], a ; $4932
 	call LongDelay ; $4934
 	call LongDelay ; $4937
 	call LongDelay ; $493a
 	ldh a, [hLinkState] ; $493d
-	cp a, $02 ; $493f
+	cp $02 ; $493f
 	jr z, .asSlave ; $4941
-	cp a, $01 ; $4943
+	cp $01 ; $4943
 	jr z, .asMaster ; $4945
 	call LinkErrorReset ; $4947
 .asMaster:
@@ -1484,10 +1484,10 @@ ExchangeLinkDataBlock:
 	call DisableLCDSafely ; $4974
 	di ; $4977
 	ldh a, [rIF] ; $4978
-	and a, $08 ; $497a
+	and $08 ; $497a
 	ldh [rIF], a ; $497c
 	ei ; $497e
-	xor a, a ; $497f
+	xor a ; $497f
 	ldh [hLinkExchangeActive], a ; $4980
 	call LongDelay ; $4982
 	call LongDelay ; $4985
@@ -1496,9 +1496,9 @@ ExchangeLinkDataBlock:
 	pop de ; $498c
 	pop hl ; $498d
 	ldh a, [hLinkState] ; $498e
-	cp a, $02 ; $4990
+	cp $02 ; $4990
 	jr z, .asSlave ; $4992
-	cp a, $01 ; $4994
+	cp $01 ; $4994
 	jr z, .asMaster ; $4996
 	call LinkErrorReset ; $4998
 .asMaster:
@@ -1516,8 +1516,8 @@ ExchangeLinkDataBlock:
 	ret ; $49af
 PackNibblesToBytes:
 	ld a, c ; $49b0
-	add a, a ; $49b1
-	cp a, $5f ; $49b2
+	add a ; $49b1
+	cp $5f ; $49b2
 	jr c, .pack ; $49b4
 	call LinkErrorReset ; $49b6
 .pack:
@@ -1526,20 +1526,20 @@ PackNibblesToBytes:
 	ld de, $cea0 ; $49bc
 .nibbleLoop:
 	ld a, b ; $49bf
-	and a, $01 ; $49c0
+	and $01 ; $49c0
 	jr nz, .lowNibble ; $49c2
 	ld a, [de] ; $49c4
 	swap a ; $49c5
-	and a, $f0 ; $49c7
+	and $f0 ; $49c7
 	jr .store ; $49c9
 .lowNibble:
 	ld a, [de] ; $49cb
-	and a, $0f ; $49cc
+	and $0f ; $49cc
 	push bc ; $49ce
 	ld b, a ; $49cf
 	ld a, [hl] ; $49d0
-	and a, $f0 ; $49d1
-	or a, b ; $49d3
+	and $f0 ; $49d1
+	or b ; $49d3
 	pop bc ; $49d4
 .store:
 	ld [hl], a ; $49d5
@@ -1550,12 +1550,12 @@ PackNibblesToBytes:
 	inc hl ; $49dc
 .next:
 	ld a, b ; $49dd
-	cp a, c ; $49de
+	cp c ; $49de
 	jr c, .nibbleLoop ; $49df
 	ret ; $49e1
 PrimeSlaveSerialReply:
 	ldh a, [hLinkState] ; $49e2
-	cp a, $02 ; $49e4
+	cp $02 ; $49e4
 	jr nz, .done ; $49e6
 	ld a, $40 ; $49e8
 	ldh [rSB], a ; $49ea
@@ -1570,14 +1570,14 @@ PrimeSlaveSerialReply:
 PrepareLinkStatePayload:
 	push af ; $49f7
 	ldh a, [hLinkTxByte] ; $49f8
-	and a, $c0 ; $49fa
-	xor a, $c0 ; $49fc
+	and $c0 ; $49fa
+	xor $c0 ; $49fc
 	ldh [hLinkTxSeqBits], a ; $49fe
 	ldh a, [hLinkTxInput] ; $4a00
 	ldh [hLinkRemoteInputBuf], a ; $4a02
 	call ReadJoypadThunk ; $4a04
 	ldh a, [hPlayerInputFlags] ; $4a07
-	and a, $f0 ; $4a09
+	and $f0 ; $4a09
 	ld c, a ; $4a0b
 	call ComposeLinkStateByte ; $4a0c
 	ldh [hLinkTxInput], a ; $4a0f
@@ -1586,8 +1586,8 @@ PrepareLinkStatePayload:
 PrepareLinkInputPayload:
 	push af ; $4a13
 	ldh a, [hLinkTxByte] ; $4a14
-	and a, $c0 ; $4a16
-	xor a, $c0 ; $4a18
+	and $c0 ; $4a16
+	xor $c0 ; $4a18
 	ldh [hLinkTxSeqBits], a ; $4a1a
 	ldh a, [hLinkTxInput] ; $4a1c
 	ldh [hLinkRemoteInputBuf], a ; $4a1e
@@ -1605,21 +1605,21 @@ AwaitSerialByte:
 	nop ; $4a2f
 	di ; $4a30
 	ldh a, [hVBlankOccurred] ; $4a31
-	or a, a ; $4a33
+	or a ; $4a33
 	jr z, .waitLoop ; $4a34
 	ldh a, [hLinkTransferDone] ; $4a36
-	or a, a ; $4a38
+	or a ; $4a38
 	jr nz, .received ; $4a39
 	dec de ; $4a3b
 	ld a, d ; $4a3c
-	or a, e ; $4a3d
+	or e ; $4a3d
 	jr nz, .waitLoop ; $4a3e
 	scf ; $4a40
 	jr .done ; $4a41
 .received:
 	dec a ; $4a43
 	ldh [hLinkTransferDone], a ; $4a44
-	xor a, a ; $4a46
+	xor a ; $4a46
 	ldh [hVBlankOccurred], a ; $4a47
 	scf ; $4a49
 	ccf ; $4a4a
@@ -1631,10 +1631,10 @@ AwaitSerialByte:
 	ret ; $4a50
 ResyncLinkSession:
 	di ; $4a51
-	xor a, a ; $4a52
+	xor a ; $4a52
 	ldh [rIF], a ; $4a53
 	ldh a, [rIE] ; $4a55
-	and a, $09 ; $4a57
+	and $09 ; $4a57
 	ldh [rIE], a ; $4a59
 	ei ; $4a5b
 	call DisableLCDSafely ; $4a5c
@@ -1644,9 +1644,9 @@ ResyncLinkSession:
 	ldh [hLinkExchangeActive], a ; $4a65
 	farcall ExchangeLinkReadySignal ; $4a67
 	ldh a, [hLinkState] ; $4a6a
-	cp a, $02 ; $4a6c
+	cp $02 ; $4a6c
 	jr z, .asSlave ; $4a6e
-	cp a, $01 ; $4a70
+	cp $01 ; $4a70
 	jr z, .asMaster ; $4a72
 	call LinkErrorReset ; $4a74
 .asMaster:
@@ -1659,28 +1659,28 @@ ResyncLinkSession:
 	call ShortDelay ; $4a87
 	jr .encode ; $4a8a
 .asSlave:
-	xor a, a ; $4a8c
+	xor a ; $4a8c
 	ldh [hLinkTransferDone], a ; $4a8d
 	ld a, $80 ; $4a8f
 	ldh [hLinkTxSeqBits], a ; $4a91
 .encode:
 	call SerialEncodeInput ; $4a93
 	farcall PrimeSlaveSerialReply ; $4a96
-	xor a, a ; $4a99
+	xor a ; $4a99
 	ldh [hLinkRemoteInputPrev], a ; $4a9a
 	ld a, $01 ; $4a9c
 	ldh [hLinkAckRequired], a ; $4a9e
 	call EnableLCD ; $4aa0
-	xor a, a ; $4aa3
+	xor a ; $4aa3
 	ldh [hVBlankSuppressed], a ; $4aa4
 	ldh [$ffe9], a ; $4aa6
 	ret ; $4aa8
 ResyncLinkSessionWithTimer:
 	di ; $4aa9
-	xor a, a ; $4aaa
+	xor a ; $4aaa
 	ldh [rIF], a ; $4aab
 	ldh a, [rIE] ; $4aad
-	and a, $09 ; $4aaf
+	and $09 ; $4aaf
 	ldh [rIE], a ; $4ab1
 	ei ; $4ab3
 	ld a, $01 ; $4ab4
@@ -1689,9 +1689,9 @@ ResyncLinkSessionWithTimer:
 	ldh [hLinkExchangeActive], a ; $4aba
 	farcall ExchangeLinkReadySignal ; $4abc
 	ldh a, [hLinkState] ; $4abf
-	cp a, $02 ; $4ac1
+	cp $02 ; $4ac1
 	jr z, .asSlave ; $4ac3
-	cp a, $01 ; $4ac5
+	cp $01 ; $4ac5
 	jr z, .asMaster ; $4ac7
 	call LinkErrorReset ; $4ac9
 .asMaster:
@@ -1704,19 +1704,19 @@ ResyncLinkSessionWithTimer:
 	call ShortDelay ; $4adc
 	jr .encode ; $4adf
 .asSlave:
-	xor a, a ; $4ae1
+	xor a ; $4ae1
 	ldh [hLinkTransferDone], a ; $4ae2
 	ld a, $80 ; $4ae4
 	ldh [hLinkTxSeqBits], a ; $4ae6
 .encode:
 	call SerialEncodeInput ; $4ae8
 	farcall PrimeSlaveSerialReply ; $4aeb
-	xor a, a ; $4aee
+	xor a ; $4aee
 	ldh [hLinkRemoteInputPrev], a ; $4aef
 	ld a, $01 ; $4af1
 	ldh [hLinkAckRequired], a ; $4af3
 	call EnableTimerInterrupt ; $4af5
-	xor a, a ; $4af8
+	xor a ; $4af8
 	ldh [hVBlankSuppressed], a ; $4af9
 	ldh [$ffe9], a ; $4afb
 	ret ; $4afd
@@ -1727,9 +1727,9 @@ TryLinkHandshakeSlave:
 	call EnableSerialAndVBlankInterrupts ; $4b01
 	di ; $4b04
 	ldh a, [rIF] ; $4b05
-	and a, $f7 ; $4b07
+	and $f7 ; $4b07
 	ldh [rIF], a ; $4b09
-	xor a, a ; $4b0b
+	xor a ; $4b0b
 	ldh [hLinkTransferDone], a ; $4b0c
 	ld a, $c2 ; $4b0e
 	ldh [hLinkTxByte], a ; $4b10
@@ -1739,13 +1739,13 @@ TryLinkHandshakeSlave:
 	jr c, .failed ; $4b18
 	di ; $4b1a
 	ldh a, [hLinkRxByte] ; $4b1b
-	cp a, $c2 ; $4b1d
+	cp $c2 ; $4b1d
 	jr z, .failed ; $4b1f
-	cp a, $00 ; $4b21
+	cp $00 ; $4b21
 	jr z, .failed ; $4b23
-	cp a, $ff ; $4b25
+	cp $ff ; $4b25
 	jr z, .failed ; $4b27
-	cp a, $c1 ; $4b29
+	cp $c1 ; $4b29
 	jr z, .success ; $4b2b
 	ei ; $4b2d
 .failed:
@@ -1767,7 +1767,7 @@ TryLinkHandshakeMaster:
 	call EnableSerialAndVBlankInterrupts ; $4b3b
 	di ; $4b3e
 	ldh a, [rSC] ; $4b3f
-	and a, $7f ; $4b41
+	and $7f ; $4b41
 	ldh [rSC], a ; $4b43
 	ei ; $4b45
 	ld a, $c1 ; $4b46
@@ -1776,7 +1776,7 @@ TryLinkHandshakeMaster:
 	ld de, $03e8 ; $4b4d
 .pollLoop:
 	ldh a, [rLY] ; $4b50
-	cp a, $8c ; $4b52
+	cp $8c ; $4b52
 	jr nz, .pollLoop ; $4b54
 	ldh a, [rSC] ; $4b56
 	bit 7, a ; $4b58
@@ -1790,24 +1790,24 @@ TryLinkHandshakeMaster:
 	ld a, $83 ; $4b66
 	ldh [rSC], a ; $4b68
 	pop af ; $4b6a
-	xor a, a ; $4b6b
+	xor a ; $4b6b
 	ldh [hLinkTransferDone], a ; $4b6c
 	ei ; $4b6e
 	call AwaitSerialByte ; $4b6f
 	farcall AnimateLinkStatusPalette ; $4b72
 	farcall UpdateAnimatedTiles ; $4b75
 	jr c, .sendReady ; $4b78
-	cp a, $c1 ; $4b7a
+	cp $c1 ; $4b7a
 	jr z, .sendReady ; $4b7c
-	cp a, $ff ; $4b7e
+	cp $ff ; $4b7e
 	jr z, .sendReady ; $4b80
-	cp a, $c2 ; $4b82
+	cp $c2 ; $4b82
 	jr z, .failed ; $4b84
 	ld a, d ; $4b86
-	cp a, $03 ; $4b87
+	cp $03 ; $4b87
 	jr nz, .retry ; $4b89
 	ld a, e ; $4b8b
-	cp a, $e8 ; $4b8c
+	cp $e8 ; $4b8c
 	jr nz, .retry ; $4b8e
 	push bc ; $4b90
 	push de ; $4b91
@@ -1820,7 +1820,7 @@ TryLinkHandshakeMaster:
 .retry:
 	dec de ; $4b9b
 	ld a, d ; $4b9c
-	or a, e ; $4b9d
+	or e ; $4b9d
 	jr nz, .pollLoop ; $4b9e
 	jr .sendReady ; $4ba0
 .sendReady:
@@ -1833,7 +1833,7 @@ TryLinkHandshakeMaster:
 	ld a, $83 ; $4bac
 	ldh [rSC], a ; $4bae
 	pop af ; $4bb0
-	xor a, a ; $4bb1
+	xor a ; $4bb1
 	ldh [hLinkTransferDone], a ; $4bb2
 	ei ; $4bb4
 	call AwaitSerialByte ; $4bb5
@@ -1868,7 +1868,7 @@ LongDelay:
 	ret ; $4bf2
 RunLinkCommandFrame:
 	ldh a, [hLinkState] ; $4bf3
-	cp a, $02 ; $4bf5
+	cp $02 ; $4bf5
 	jr z, .asSlave ; $4bf7
 	call RunLinkCommandFrameMaster ; $4bf9
 	jr .done ; $4bfc
@@ -1908,12 +1908,12 @@ SerialEncodeCommand:
 	pop hl ; $4c2f
 	ld c, b ; $4c30
 	ldh a, [hLinkState] ; $4c31
-	cp a, $01 ; $4c33
+	cp $01 ; $4c33
 	jr z, .checkSlaveWait ; $4c35
-	cp a, $02 ; $4c37
+	cp $02 ; $4c37
 	jr z, .checkSlaveWait ; $4c39
 	sound $72 ; $4c3b
-	xor a, a ; $4c3d
+	xor a ; $4c3d
 	ldh [hLinkRemoteInputBuf], a ; $4c3e
 	ldh [hLinkTxInput], a ; $4c40
 	ld a, $c0 ; $4c42
@@ -1921,10 +1921,10 @@ SerialEncodeCommand:
 	call LinkErrorReset ; $4c46
 .checkSlaveWait:
 	ldh a, [hLinkAckRequired] ; $4c49
-	or a, a ; $4c4b
+	or a ; $4c4b
 	jr z, .send ; $4c4c
 	ldh a, [hLinkState] ; $4c4e
-	cp a, $02 ; $4c50
+	cp $02 ; $4c50
 	jr nz, .send ; $4c52
 .waitAck:
 	ei ; $4c54
@@ -1932,11 +1932,11 @@ SerialEncodeCommand:
 	nop ; $4c56
 	di ; $4c57
 	ldh a, [hLinkTxPending] ; $4c58
-	or a, a ; $4c5a
+	or a ; $4c5a
 	jr nz, .waitAck ; $4c5b
 .send:
 	ldh a, [hLinkTxSeqBits] ; $4c5d
-	or a, c ; $4c5f
+	or c ; $4c5f
 	di ; $4c60
 	ldh [hLinkTxByte], a ; $4c61
 	ldh [hLinkTxPending], a ; $4c63
@@ -1949,24 +1949,24 @@ SerialDecodeCommand:
 	push bc ; $4c6a
 	ldh a, [hLinkRxByte] ; $4c6b
 	ld b, a ; $4c6d
-	and a, $c0 ; $4c6e
-	cp a, $80 ; $4c70
+	and $c0 ; $4c6e
+	cp $80 ; $4c70
 	jr z, .decode ; $4c72
-	cp a, $40 ; $4c74
+	cp $40 ; $4c74
 	jr z, .decode ; $4c76
 	sound $72 ; $4c78
-	xor a, a ; $4c7a
+	xor a ; $4c7a
 	ldh [hLinkInput], a ; $4c7b
 	jr .done ; $4c7d
 .decode:
 	ld a, b ; $4c7f
-	and a, $3f ; $4c80
+	and $3f ; $4c80
 	ldh [hLinkRemoteInput], a ; $4c82
 	ldh a, [hLinkState] ; $4c84
-	cp a, $01 ; $4c86
+	cp $01 ; $4c86
 	jr nz, .asSlave ; $4c88
 	ldh a, [hLinkRemoteInputBuf] ; $4c8a
-	or a, a ; $4c8c
+	or a ; $4c8c
 	jr nz, .storeInput ; $4c8d
 	ldh a, [hLinkRemoteInput] ; $4c8f
 	call DecodeLinkCommandCode ; $4c91
@@ -1979,7 +1979,7 @@ SerialDecodeCommand:
 	ld a, b ; $4c9d
 	ldh [hLinkRemoteInputPrev], a ; $4c9e
 	ldh a, [hLinkRemoteInput] ; $4ca0
-	or a, a ; $4ca2
+	or a ; $4ca2
 	jr z, .useBuffered ; $4ca3
 	call DecodeLinkCommandCode ; $4ca5
 	jr .storeInput ; $4ca8
@@ -1996,22 +1996,22 @@ AdvanceLinkPlayerCount:
 	inc a ; $4cb4
 	ld b, a ; $4cb5
 	ldh a, [hLinkPlayerCount] ; $4cb6
-	cp a, b ; $4cb8
+	cp b ; $4cb8
 	ldh a, [hLinkTxInput] ; $4cb9
 	jr c, .maskHigh ; $4cbb
-	and a, $0f ; $4cbd
+	and $0f ; $4cbd
 	ldh [hLinkTxInput], a ; $4cbf
 	jr .checkJoin ; $4cc1
 .maskHigh:
 	ld c, a ; $4cc3
-	and a, $f0 ; $4cc4
+	and $f0 ; $4cc4
 	jr nz, .done ; $4cc6
 	ld a, c ; $4cc8
 .checkJoin:
 	bit 0, a ; $4cc9
 	jr z, .checkLeave ; $4ccb
 	ldh a, [hLinkPlayerCount] ; $4ccd
-	cp a, b ; $4ccf
+	cp b ; $4ccf
 	jr nc, .done ; $4cd0
 	inc a ; $4cd2
 	ldh [hLinkPlayerCount], a ; $4cd3
@@ -2020,39 +2020,39 @@ AdvanceLinkPlayerCount:
 	bit 1, a ; $4cd7
 	jr z, .done ; $4cd9
 	ldh a, [hLinkPlayerCount] ; $4cdb
-	or a, a ; $4cdd
+	or a ; $4cdd
 	jr z, .done ; $4cde
 	dec a ; $4ce0
 	ldh [hLinkPlayerCount], a ; $4ce1
 .done:
 	ret ; $4ce3
 DecodeLinkCommandCode:
-	cp a, $14 ; $4ce4
+	cp $14 ; $4ce4
 	jr nz, .code15 ; $4ce6
 	ld a, $0f ; $4ce8
 	jr .store ; $4cea
 .code15:
-	cp a, $15 ; $4cec
+	cp $15 ; $4cec
 	jr nz, .code19 ; $4cee
 	ld a, $01 ; $4cf0
 	jr .store ; $4cf2
 .code19:
-	cp a, $19 ; $4cf4
+	cp $19 ; $4cf4
 	jr nz, .passthrough ; $4cf6
 	ld a, $02 ; $4cf8
 	jr .store ; $4cfa
 .passthrough:
-	xor a, a ; $4cfc
+	xor a ; $4cfc
 .store:
 	ret ; $4cfd
 ComposeLinkStateByte:
 	push bc ; $4cfe
 	push hl ; $4cff
 	ldh a, [hLinkPayloadKind] ; $4d00
-	add a, a ; $4d02
-	add a, a ; $4d03
+	add a ; $4d02
+	add a ; $4d03
 	ld hl, LinkStateBytePtrs_07 ; $4d04
-	add a, l ; $4d07
+	add l ; $4d07
 	ld l, a ; $4d08
 	jr nc, .readEntry ; $4d09
 	inc h ; $4d0b
@@ -2062,7 +2062,7 @@ ComposeLinkStateByte:
 	ld h, [hl] ; $4d0e
 	ld l, a ; $4d0f
 	ld a, [hl] ; $4d10
-	and a, $f0 ; $4d11
+	and $f0 ; $4d11
 	ld b, a ; $4d13
 	pop hl ; $4d14
 	inc hl ; $4d15
@@ -2071,8 +2071,8 @@ ComposeLinkStateByte:
 	ld h, [hl] ; $4d18
 	ld l, a ; $4d19
 	ld a, [hl] ; $4d1a
-	and a, $0f ; $4d1b
-	or a, b ; $4d1d
+	and $0f ; $4d1b
+	or b ; $4d1d
 	pop hl ; $4d1e
 	pop bc ; $4d1f
 	ret ; $4d20
@@ -2266,10 +2266,10 @@ ShotPlacementServeFlat:
 LoadShotPlacementEntry:
 	push hl ; $52a0
 	ld a, d ; $52a1
-	add a, a ; $52a2
-	add a, a ; $52a3
-	add a, a ; $52a4
-	add a, l ; $52a5
+	add a ; $52a2
+	add a ; $52a3
+	add a ; $52a4
+	add l ; $52a5
 	ld l, a ; $52a6
 	jr nc, .gotEntry ; $52a7
 	inc h ; $52a9
@@ -2282,13 +2282,13 @@ LoadShotPlacementEntry:
 	ld b, [hl] ; $52b3
 	ld c, a ; $52b4
 	ld a, [wShotAimMirror] ; $52b5
-	and a, a ; $52b8
+	and a ; $52b8
 	jr z, .storeSideSpin ; $52b9
-	xor a, a ; $52bb
-	sub a, c ; $52bc
+	xor a ; $52bb
+	sub c ; $52bc
 	ld c, a ; $52bd
-	sbc a, a ; $52be
-	sub a, b ; $52bf
+	sbc a ; $52be
+	sub b ; $52bf
 	ld b, a ; $52c0
 .storeSideSpin:
 	ld hl, wBallSideSpin ; $52c1
@@ -2297,11 +2297,11 @@ LoadShotPlacementEntry:
 	ld [hl], b ; $52c6
 	pop hl ; $52c7
 	ld a, e ; $52c8
-	add a, a ; $52c9
-	add a, a ; $52ca
-	add a, a ; $52cb
-	add a, $04 ; $52cc
-	add a, l ; $52ce
+	add a ; $52c9
+	add a ; $52ca
+	add a ; $52cb
+	add $04 ; $52cc
+	add l ; $52ce
 	ld l, a ; $52cf
 	jr nc, .readTarget ; $52d0
 	inc h ; $52d2
@@ -2366,11 +2366,11 @@ AddBallSpeedEighth:
 .absSpeed:
 	bit 7, h ; $532f
 	jr nz, .store ; $5331
-	xor a, a ; $5333
-	sub a, l ; $5334
+	xor a ; $5333
+	sub l ; $5334
 	ld l, a ; $5335
-	sbc a, a ; $5336
-	sub a, h ; $5337
+	sbc a ; $5336
+	sub h ; $5337
 	ld h, a ; $5338
 .store:
 	ld a, l ; $5339
@@ -2424,13 +2424,13 @@ AddPlayerMomentumToShot:
 	sra h ; $5385
 	rr l ; $5387
 	ld a, [wCharCourtPos] ; $5389
-	and a, $02 ; $538c
+	and $02 ; $538c
 	jr nz, .store ; $538e
-	xor a, a ; $5390
-	sub a, l ; $5391
+	xor a ; $5390
+	sub l ; $5391
 	ld l, a ; $5392
-	sbc a, a ; $5393
-	sub a, h ; $5394
+	sbc a ; $5393
+	sub h ; $5394
 	ld h, a ; $5395
 .store:
 	ld a, l ; $5396
@@ -2454,7 +2454,7 @@ ApplyCharFlagShotSpeedPenalty:
 ExecuteShot:
 	ld hl, wBallHitEvent ; $53b0
 	ld a, [hl] ; $53b3
-	and a, a ; $53b4
+	and a ; $53b4
 	ret nz ; $53b5
 	ld a, $01 ; $53b6
 	ld [wBallHitEvent], a ; $53b8
@@ -2469,39 +2469,39 @@ ExecuteShot:
 	ld a, [wCharShotButton1] ; $53d3
 	swap a ; $53d6
 	ld hl, wCharShotButton2 ; $53d8
-	or a, [hl] ; $53db
+	or [hl] ; $53db
 	ld [$c490], a ; $53dc
 	ld a, [wBallCourtQuadrant] ; $53df
 	ld [wBallQuadrantAtHit], a ; $53e2
-	xor a, a ; $53e5
+	xor a ; $53e5
 	ld [wSpecialShotFlag], a ; $53e6
 	ld [$c4a6], a ; $53e9
 	ld [wFallbackTrajectoryFlag], a ; $53ec
 	ld b, $00 ; $53ef
 	ld a, [wCharSwingAnim] ; $53f1
-	cp a, $06 ; $53f4
+	cp $06 ; $53f4
 	jr nz, .checkShot0a ; $53f6
 	inc b ; $53f8
 .checkShot0a:
-	cp a, $0a ; $53f9
+	cp $0a ; $53f9
 	jr nz, .checkLeftHanded ; $53fb
 	inc b ; $53fd
 .checkLeftHanded:
 	ld a, [wCharMirrorAttrMask] ; $53fe
-	and a, a ; $5401
+	and a ; $5401
 	jr z, .checkServe ; $5402
 	inc b ; $5404
 .checkServe:
 	ld a, [wRallyLength] ; $5405
-	cp a, $00 ; $5408
+	cp $00 ; $5408
 	jr nz, .storeMirror ; $540a
 	inc b ; $540c
 .storeMirror:
 	ld a, b ; $540d
-	and a, $01 ; $540e
+	and $01 ; $540e
 	ld [wShotAimMirror], a ; $5410
 	ld a, [wCharSwingFrames] ; $5413
-	cp a, $3f ; $5416
+	cp $3f ; $5416
 	jr c, .storeCharge ; $5418
 	ld a, $3f ; $541a
 .storeCharge:
@@ -2545,7 +2545,7 @@ ExecuteShot:
 	dw ExecuteShotServeFlat ; $5461 jumptable
 ShotRecoilFrameTask:
 	call ApplyShotRecoil ; $5463
-	xor a, a ; $5466
+	xor a ; $5466
 	ld [wCharSwingFrames], a ; $5467
 	ret ; $546a
 ApplyShotRecoil:
@@ -2553,20 +2553,20 @@ ApplyShotRecoil:
 	set 0, [hl] ; $546e
 	res 5, [hl] ; $5470
 	ld a, [wShotRecoilVariant] ; $5472
-	add a, a ; $5475
-	add a, LOW(ShotRecoilVarPtrs_07) ; $5476
+	add a ; $5475
+	add LOW(ShotRecoilVarPtrs_07) ; $5476
 	ld l, a ; $5478
-	adc a, HIGH(ShotRecoilVarPtrs_07) ; $5479
-	sub a, l ; $547b
+	adc HIGH(ShotRecoilVarPtrs_07) ; $5479
+	sub l ; $547b
 	ld h, a ; $547c
 	ld a, [hl+] ; $547d
 	ld h, [hl] ; $547e
 	ld l, a ; $547f
 	ld a, [hl] ; $5480
-	add a, LOW(ShotRecoilTable_07) ; $5481
+	add LOW(ShotRecoilTable_07) ; $5481
 	ld l, a ; $5483
-	adc a, HIGH(ShotRecoilTable_07) ; $5484
-	sub a, l ; $5486
+	adc HIGH(ShotRecoilTable_07) ; $5484
+	sub l ; $5486
 	ld h, a ; $5487
 	ld b, [hl] ; $5488
 	ld hl, $c456 ; $5489
@@ -2628,10 +2628,10 @@ WeakenShotByCharge:
 	add hl, hl ; $54e4
 	add hl, hl ; $54e5
 	ld a, c ; $54e6
-	sub a, l ; $54e7
+	sub l ; $54e7
 	ld c, a ; $54e8
 	ld a, b ; $54e9
-	sbc a, h ; $54ea
+	sbc h ; $54ea
 	ld b, a ; $54eb
 	ret ; $54ec
 BoostShotByCharge:
@@ -2663,13 +2663,13 @@ NudgeShotByPlayerMomentum:
 	sra h ; $5510
 	rr l ; $5512
 	ld a, [wCharCourtPos] ; $5514
-	and a, $02 ; $5517
+	and $02 ; $5517
 	jr nz, .addMomentum ; $5519
-	xor a, a ; $551b
-	sub a, l ; $551c
+	xor a ; $551b
+	sub l ; $551c
 	ld l, a ; $551d
-	sbc a, a ; $551e
-	sub a, h ; $551f
+	sbc a ; $551e
+	sub h ; $551f
 	ld h, a ; $5520
 .addMomentum:
 	add hl, bc ; $5521
@@ -2683,11 +2683,11 @@ CheckBallInSmashRange:
 	ld l, a ; $552a
 	bit 7, h ; $552b
 	jr z, .absX ; $552d
-	xor a, a ; $552f
-	sub a, l ; $5530
+	xor a ; $552f
+	sub l ; $5530
 	ld l, a ; $5531
-	sbc a, a ; $5532
-	sub a, h ; $5533
+	sbc a ; $5532
+	sub h ; $5533
 	ld h, a ; $5534
 .absX:
 	ld e, l ; $5535
@@ -2715,11 +2715,11 @@ CheckBallInSmashRange:
 	ld l, a ; $5559
 	bit 7, h ; $555a
 	jr z, .absDepth ; $555c
-	xor a, a ; $555e
-	sub a, l ; $555f
+	xor a ; $555e
+	sub l ; $555f
 	ld l, a ; $5560
-	sbc a, a ; $5561
-	sub a, h ; $5562
+	sbc a ; $5561
+	sub h ; $5562
 	ld h, a ; $5563
 .absDepth:
 	ld de, $04e0 ; $5564
@@ -2730,11 +2730,11 @@ CheckBallInSmashRange:
 	ld a, [hl+] ; $556d
 	ld h, [hl] ; $556e
 	ld l, a ; $556f
-	xor a, a ; $5570
-	sub a, l ; $5571
+	xor a ; $5570
+	sub l ; $5571
 	ld l, a ; $5572
-	sbc a, a ; $5573
-	sub a, h ; $5574
+	sbc a ; $5573
+	sub h ; $5574
 	ld h, a ; $5575
 	call AngleFromVector16 ; $5576
 	pop hl ; $5579
@@ -2745,13 +2745,13 @@ CheckBallInSmashRange:
 ApplyShotTypePresets:
 	ld a, [wCurrentShotType] ; $557e
 	ld b, a ; $5581
-	add a, a ; $5582
-	add a, a ; $5583
-	add a, b ; $5584
-	add a, LOW(ShotTypePresets_07) ; $5585
+	add a ; $5582
+	add a ; $5583
+	add b ; $5584
+	add LOW(ShotTypePresets_07) ; $5585
 	ld l, a ; $5587
-	adc a, HIGH(ShotTypePresets_07) ; $5588
-	sub a, l ; $558a
+	adc HIGH(ShotTypePresets_07) ; $5588
+	sub l ; $558a
 	ld h, a ; $558b
 	ld a, [hl+] ; $558c
 	call PlaySoundManaged ; $558d
@@ -2786,23 +2786,23 @@ ShotTypePresets_07:
 GetShotAimOffsetForSide:
 	ld hl, CourtSideOffsets_07_563e ; $55e9
 	ld a, [wMinigameUsesWall] ; $55ec
-	and a, a ; $55ef
+	and a ; $55ef
 	jr nz, .readAim ; $55f0
 	ld a, [wCharCourtPos] ; $55f2
-	and a, $01 ; $55f5
-	add a, a ; $55f7
-	add a, a ; $55f8
-	add a, a ; $55f9
-	add a, $2e ; $55fa
+	and $01 ; $55f5
+	add a ; $55f7
+	add a ; $55f8
+	add a ; $55f9
+	add $2e ; $55fa
 	ld l, a ; $55fc
-	adc a, $56 ; $55fd
-	sub a, l ; $55ff
+	adc $56 ; $55fd
+	sub l ; $55ff
 	ld h, a ; $5600
 .readAim:
 	ld a, [wCharAimOffset] ; $5601
 	inc a ; $5604
-	add a, a ; $5605
-	add a, l ; $5606
+	add a ; $5605
+	add l ; $5606
 	ld l, a ; $5607
 	jr nc, .done ; $5608
 	inc h ; $560a
@@ -2814,11 +2814,11 @@ GetShotAimOffsetForSide:
 	ld a, [hl+] ; $5611
 	ld h, [hl] ; $5612
 	ld l, a ; $5613
-	xor a, a ; $5614
-	sub a, l ; $5615
+	xor a ; $5614
+	sub l ; $5615
 	ld l, a ; $5616
-	sbc a, a ; $5617
-	sub a, h ; $5618
+	sbc a ; $5617
+	sub h ; $5618
 	ld h, a ; $5619
 	sra h ; $561a
 	rr l ; $561c
@@ -2852,12 +2852,12 @@ CourtSideOffsets_07_563e:
 	dw $0000 ; record 3
 ComputeShotTargetX:
 	ld a, [wRallyLength] ; $5646
-	and a, a ; $5649
+	and a ; $5649
 	jr z, GetShotAimOffsetForSide ; $564a
 	call ComputeAimBaseOffset ; $564c
 	ld a, [wCharAimOffset] ; $564f
-	add a, $02 ; $5652
-	and a, $07 ; $5654
+	add $02 ; $5652
+	and $07 ; $5654
 	ld a, a ; $5656
 	rst Rst00 ; $5657
 	dw ComputeShotTargetX.fromBallX ; $5658 jumptable
@@ -2876,21 +2876,21 @@ ComputeShotTargetX:
 	ld a, [hl+] ; $566f
 	ld h, [hl] ; $5670
 	ld l, a ; $5671
-	xor a, a ; $5672
-	sub a, l ; $5673
+	xor a ; $5672
+	sub l ; $5673
 	ld l, a ; $5674
-	sbc a, a ; $5675
-	sub a, h ; $5676
+	sbc a ; $5675
+	sub h ; $5676
 	ld h, a ; $5677
 	add hl, de ; $5678
 	ld e, l ; $5679
 	ld d, h ; $567a
 	call ClampShotTargetX ; $567b
-	xor a, a ; $567e
-	sub a, e ; $567f
+	xor a ; $567e
+	sub e ; $567f
 	ld e, a ; $5680
-	sbc a, a ; $5681
-	sub a, d ; $5682
+	sbc a ; $5681
+	sub d ; $5682
 	ld d, a ; $5683
 	ret ; $5684
 .halveLong:
@@ -2917,14 +2917,14 @@ ComputeShotTargetX:
 	rr e ; $56a2
 	call GetRandomAimJitter ; $56a4
 	ld a, e ; $56a7
-	sub a, h ; $56a8
+	sub h ; $56a8
 	ld e, a ; $56a9
 	jr nc, .absTarget ; $56aa
 	dec d ; $56ac
 .absTarget:
 	call GetRandomAimJitter ; $56ad
 	ld a, h ; $56b0
-	add a, e ; $56b1
+	add e ; $56b1
 	ld e, a ; $56b2
 	jr nc, .store ; $56b3
 	inc d ; $56b5
@@ -2941,11 +2941,11 @@ ComputeAimBaseOffset:
 	ld l, a ; $56c2
 	bit 7, h ; $56c3
 	jr z, .quarter ; $56c5
-	xor a, a ; $56c7
-	sub a, l ; $56c8
+	xor a ; $56c7
+	sub l ; $56c8
 	ld l, a ; $56c9
-	sbc a, a ; $56ca
-	sub a, h ; $56cb
+	sbc a ; $56ca
+	sub h ; $56cb
 	ld h, a ; $56cc
 .quarter:
 	sra h ; $56cd
@@ -2967,21 +2967,21 @@ ClampShotTargetX:
 	ld l, a ; $56e8
 	ld bc, $0020 ; $56e9
 	add hl, bc ; $56ec
-	xor a, a ; $56ed
-	sub a, l ; $56ee
+	xor a ; $56ed
+	sub l ; $56ee
 	ld l, a ; $56ef
-	sbc a, a ; $56f0
-	sub a, h ; $56f1
+	sbc a ; $56f0
+	sub h ; $56f1
 	ld h, a ; $56f2
 	ld c, l ; $56f3
 	ld b, h ; $56f4
 	ld l, e ; $56f5
 	ld h, d ; $56f6
 	ld a, l ; $56f7
-	sub a, c ; $56f8
+	sub c ; $56f8
 	ld l, a ; $56f9
 	ld a, h ; $56fa
-	sbc a, b ; $56fb
+	sbc b ; $56fb
 	ld h, a ; $56fc
 	bit 7, h ; $56fd
 	jr nz, .applyJitter ; $56ff
@@ -2990,7 +2990,7 @@ ClampShotTargetX:
 .applyJitter:
 	call GetRandomAimJitter ; $5703
 	ld a, e ; $5706
-	sub a, h ; $5707
+	sub h ; $5707
 	ld e, a ; $5708
 	jr nc, .done ; $5709
 	dec d ; $570b
@@ -3009,13 +3009,13 @@ GetRandomAimJitter:
 	ret ; $571d
 ComputeShotTrajectory:
 	ld a, [wCharCourtPos] ; $571e
-	and a, $02 ; $5721
+	and $02 ; $5721
 	jr nz, .aimReady ; $5723
-	xor a, a ; $5725
-	sub a, c ; $5726
+	xor a ; $5725
+	sub c ; $5726
 	ld c, a ; $5727
-	sbc a, a ; $5728
-	sub a, b ; $5729
+	sbc a ; $5728
+	sub b ; $5729
 	ld b, a ; $572a
 .aimReady:
 	ld hl, wShotAimTargetDepth ; $572b
@@ -3027,10 +3027,10 @@ ComputeShotTrajectory:
 	ld h, [hl] ; $5735
 	ld l, a ; $5736
 	ld a, c ; $5737
-	sub a, l ; $5738
+	sub l ; $5738
 	ld c, a ; $5739
 	ld a, b ; $573a
-	sbc a, h ; $573b
+	sbc h ; $573b
 	ld b, a ; $573c
 	ld hl, wShotAimDeltaDepth ; $573d
 	ld a, c ; $5740
@@ -3046,10 +3046,10 @@ ComputeShotTrajectory:
 	ld h, [hl] ; $5750
 	ld l, a ; $5751
 	ld a, e ; $5752
-	sub a, l ; $5753
+	sub l ; $5753
 	ld e, a ; $5754
 	ld a, d ; $5755
-	sbc a, h ; $5756
+	sbc h ; $5756
 	ld d, a ; $5757
 	ld hl, wShotAimDeltaX ; $5758
 	ld a, e ; $575b
@@ -3074,11 +3074,11 @@ ComputeShotTrajectory:
 	ld l, a ; $5778
 	bit 7, h ; $5779
 	jr z, .absMinDepth ; $577b
-	xor a, a ; $577d
-	sub a, l ; $577e
+	xor a ; $577d
+	sub l ; $577e
 	ld l, a ; $577f
-	sbc a, a ; $5780
-	sub a, h ; $5781
+	sbc a ; $5780
+	sub h ; $5781
 	ld h, a ; $5782
 .absMinDepth:
 	ld de, $0140 ; $5783
@@ -3086,11 +3086,11 @@ ComputeShotTrajectory:
 	call DivBySin ; $5787
 	bit 7, h ; $578a
 	jr z, .absMinDist ; $578c
-	xor a, a ; $578e
-	sub a, l ; $578f
+	xor a ; $578e
+	sub l ; $578f
 	ld l, a ; $5790
-	sbc a, a ; $5791
-	sub a, h ; $5792
+	sbc a ; $5791
+	sub h ; $5792
 	ld h, a ; $5793
 .absMinDist:
 	ld e, l ; $5794
@@ -3113,11 +3113,11 @@ ComputeShotTrajectory:
 	ld l, a ; $57ad
 	bit 7, h ; $57ae
 	jr z, .absMaxDepth ; $57b0
-	xor a, a ; $57b2
-	sub a, l ; $57b3
+	xor a ; $57b2
+	sub l ; $57b3
 	ld l, a ; $57b4
-	sbc a, a ; $57b5
-	sub a, h ; $57b6
+	sbc a ; $57b5
+	sub h ; $57b6
 	ld h, a ; $57b7
 .absMaxDepth:
 	ld de, $0480 ; $57b8
@@ -3125,11 +3125,11 @@ ComputeShotTrajectory:
 	call DivBySin ; $57bc
 	bit 7, h ; $57bf
 	jr z, .absMaxDist ; $57c1
-	xor a, a ; $57c3
-	sub a, l ; $57c4
+	xor a ; $57c3
+	sub l ; $57c4
 	ld l, a ; $57c5
-	sbc a, a ; $57c6
-	sub a, h ; $57c7
+	sbc a ; $57c6
+	sub h ; $57c7
 	ld h, a ; $57c8
 .absMaxDist:
 	ld e, l ; $57c9
@@ -3151,11 +3151,11 @@ ComputeShotTrajectory:
 	call MulSinCos ; $57df
 	bit 7, h ; $57e2
 	jr z, .absSideways ; $57e4
-	xor a, a ; $57e6
-	sub a, l ; $57e7
+	xor a ; $57e6
+	sub l ; $57e7
 	ld l, a ; $57e8
-	sbc a, a ; $57e9
-	sub a, h ; $57ea
+	sbc a ; $57e9
+	sub h ; $57ea
 	ld h, a ; $57eb
 .absSideways:
 	ld c, l ; $57ec
@@ -3172,14 +3172,14 @@ ComputeShotTrajectory:
 	ld e, l ; $57fe
 	ld d, h ; $57ff
 	ld a, [wShotAimAngle + 1] ; $5800
-	add a, $40 ; $5803
+	add $40 ; $5803
 	bit 7, a ; $5805
 	jr z, .absLimitX ; $5807
-	xor a, a ; $5809
-	sub a, e ; $580a
+	xor a ; $5809
+	sub e ; $580a
 	ld e, a ; $580b
-	sbc a, a ; $580c
-	sub a, d ; $580d
+	sbc a ; $580c
+	sub d ; $580d
 	ld d, a ; $580e
 .absLimitX:
 	ld hl, wBallX ; $580f
@@ -3189,20 +3189,20 @@ ComputeShotTrajectory:
 	add hl, de ; $5815
 	bit 7, h ; $5816
 	jr z, .absBallX ; $5818
-	xor a, a ; $581a
-	sub a, l ; $581b
+	xor a ; $581a
+	sub l ; $581b
 	ld l, a ; $581c
-	sbc a, a ; $581d
-	sub a, h ; $581e
+	sbc a ; $581d
+	sub h ; $581e
 	ld h, a ; $581f
 .absBallX:
 	ld e, l ; $5820
 	ld d, h ; $5821
 	ld a, l ; $5822
-	sub a, c ; $5823
+	sub c ; $5823
 	ld l, a ; $5824
 	ld a, h ; $5825
-	sbc a, b ; $5826
+	sbc b ; $5826
 	ld h, a ; $5827
 	bit 7, h ; $5828
 	jr z, .solveHeight ; $582a
@@ -3234,11 +3234,11 @@ ComputeShotTrajectory:
 	ld a, [hl+] ; $5854
 	ld d, [hl] ; $5855
 	ld e, a ; $5856
-	xor a, a ; $5857
-	sub a, e ; $5858
+	xor a ; $5857
+	sub e ; $5858
 	ld e, a ; $5859
-	sbc a, a ; $585a
-	sub a, d ; $585b
+	sbc a ; $585a
+	sub d ; $585b
 	ld d, a ; $585c
 	ld hl, $c470 ; $585d
 	ld a, e ; $5860
@@ -3273,10 +3273,10 @@ NormalizeBallHeightForShot:
 	sra h ; $5888
 	rr l ; $588a
 	ld a, e ; $588c
-	sub a, l ; $588d
+	sub l ; $588d
 	ld e, a ; $588e
 	ld a, d ; $588f
-	sbc a, h ; $5890
+	sbc h ; $5890
 	ld d, a ; $5891
 	ld hl, wBallHeight ; $5892
 	ld a, e ; $5895
@@ -3414,9 +3414,9 @@ ExecuteShotNeutral:
 	call CheckBallInSmashRange ; $59a8
 	jr z, .neutralShot ; $59ab
 	ld a, [wCharSwingAnim] ; $59ad
-	cp a, $07 ; $59b0
+	cp $07 ; $59b0
 	jr z, ExecuteShotSmash ; $59b2
-	cp a, $08 ; $59b4
+	cp $08 ; $59b4
 	jr z, ExecuteShotSmash ; $59b6
 .neutralShot:
 	call NormalizeBallHeightForShot ; $59b8
@@ -3459,22 +3459,22 @@ SetSpecialShotFlagFromBallHeight:
 	ld a, [hl+] ; $5a04
 	ld h, [hl] ; $5a05
 	ld l, a ; $5a06
-	xor a, a ; $5a07
-	sub a, l ; $5a08
+	xor a ; $5a07
+	sub l ; $5a08
 	ld l, a ; $5a09
-	sbc a, a ; $5a0a
-	sub a, h ; $5a0b
+	sbc a ; $5a0a
+	sub h ; $5a0b
 	ld h, a ; $5a0c
 	add hl, hl ; $5a0d
 	add hl, hl ; $5a0e
 	add hl, hl ; $5a0f
 	add hl, hl ; $5a10
 	ld a, h ; $5a11
-	and a, $1f ; $5a12
-	add a, LOW(SpecialShotFlagTable_07) ; $5a14
+	and $1f ; $5a12
+	add LOW(SpecialShotFlagTable_07) ; $5a14
 	ld l, a ; $5a16
-	adc a, HIGH(SpecialShotFlagTable_07) ; $5a17
-	sub a, l ; $5a19
+	adc HIGH(SpecialShotFlagTable_07) ; $5a17
+	sub l ; $5a19
 	ld h, a ; $5a1a
 	ld a, [hl] ; $5a1b
 	ld [wSpecialShotFlag], a ; $5a1c
@@ -3486,11 +3486,11 @@ SpecialShotFlagTable_07:
 	db $00, $00, $00, $00, $00, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01 ; 0x10
 LookupCharSpriteSet:
 	push hl ; $5a43
-	and a, $3f ; $5a44
-	add a, LOW(CharSpriteSetTable) ; $5a46
+	and $3f ; $5a44
+	add LOW(CharSpriteSetTable) ; $5a46
 	ld l, a ; $5a48
-	adc a, HIGH(CharSpriteSetTable) ; $5a49
-	sub a, l ; $5a4b
+	adc HIGH(CharSpriteSetTable) ; $5a49
+	sub l ; $5a4b
 	ld h, a ; $5a4c
 	ld a, [hl] ; $5a4d
 	pop hl ; $5a4e
@@ -3506,22 +3506,22 @@ SetupCharacterSprite:
 	ld a, e ; $5a75
 	ld [wCharGfxBank], a ; $5a76
 	ld a, [wCharIndex] ; $5a79
-	add a, $04 ; $5a7c
+	add $04 ; $5a7c
 	ld [wCharSpriteAttr], a ; $5a7e
 	ld a, [wCharIndex] ; $5a81
-	add a, LOW(Data_07_5aaf) ; $5a84
+	add LOW(Data_07_5aaf) ; $5a84
 	ld l, a ; $5a86
-	adc a, HIGH(Data_07_5aaf) ; $5a87
-	sub a, l ; $5a89
+	adc HIGH(Data_07_5aaf) ; $5a87
+	sub l ; $5a89
 	ld h, a ; $5a8a
 	ld a, [hl] ; $5a8b
 	ld [wCharTileBase], a ; $5a8c
 	ld a, [wCharIndex] ; $5a8f
-	add a, a ; $5a92
-	add a, LOW(CharFrameGfxDest_07) ; $5a93
+	add a ; $5a92
+	add LOW(CharFrameGfxDest_07) ; $5a93
 	ld l, a ; $5a95
-	adc a, HIGH(CharFrameGfxDest_07) ; $5a96
-	sub a, l ; $5a98
+	adc HIGH(CharFrameGfxDest_07) ; $5a96
+	sub l ; $5a98
 	ld h, a ; $5a99
 	ld a, [hl+] ; $5a9a
 	ld d, [hl] ; $5a9b
@@ -3542,11 +3542,11 @@ Data_07_5aaf:
 	INCBIN "data/bank_007/d_5aaf.bin" ; $5aaf, 4 bytes
 LoadCharacterAttributes:
 	ld a, [wCharIndex] ; $5ab3
-	add a, a ; $5ab6
-	add a, LOW(CharAttrStructPtrs_07) ; $5ab7
+	add a ; $5ab6
+	add LOW(CharAttrStructPtrs_07) ; $5ab7
 	ld l, a ; $5ab9
-	adc a, HIGH(CharAttrStructPtrs_07) ; $5aba
-	sub a, l ; $5abc
+	adc HIGH(CharAttrStructPtrs_07) ; $5aba
+	sub l ; $5abc
 	ld h, a ; $5abd
 	ld a, [hl+] ; $5abe
 	ld d, [hl] ; $5abf
@@ -3612,7 +3612,7 @@ LoadCharacterAttributes:
 	ld hl, $000e ; $5b18
 	add hl, de ; $5b1b
 	ld a, [hl] ; $5b1c
-	and a, a ; $5b1d
+	and a ; $5b1d
 	jr z, .storeHandedness ; $5b1e
 	ld b, $20 ; $5b20
 .storeHandedness:
@@ -3621,11 +3621,11 @@ LoadCharacterAttributes:
 	ld hl, $0027 ; $5b26
 	add hl, de ; $5b29
 	ld a, [hl] ; $5b2a
-	add a, a ; $5b2b
-	add a, LOW(CharStatTable_07_5c4a) ; $5b2c
+	add a ; $5b2b
+	add LOW(CharStatTable_07_5c4a) ; $5b2c
 	ld l, a ; $5b2e
-	adc a, HIGH(CharStatTable_07_5c4a) ; $5b2f
-	sub a, l ; $5b31
+	adc HIGH(CharStatTable_07_5c4a) ; $5b2f
+	sub l ; $5b31
 	ld h, a ; $5b32
 	ld a, [hl+] ; $5b33
 	ld b, [hl] ; $5b34
@@ -3639,23 +3639,23 @@ LoadCharacterAttributes:
 	ld a, [hl] ; $5b40
 	ld hl, $002b ; $5b41
 	add hl, de ; $5b44
-	add a, [hl] ; $5b45
-	add a, a ; $5b46
+	add [hl] ; $5b45
+	add a ; $5b46
 	jr nc, .clampSpin ; $5b47
-	xor a, a ; $5b49
+	xor a ; $5b49
 	jr .readPlacementTable ; $5b4a
 .clampSpin:
 	rra ; $5b4c
-	cp a, $0a ; $5b4d
+	cp $0a ; $5b4d
 	jr c, .readPlacementTable ; $5b4f
 	ld a, $0a ; $5b51
 	dec a ; $5b53
 .readPlacementTable:
-	add a, a ; $5b54
-	add a, LOW(CharStatTable_07_5c4a) ; $5b55
+	add a ; $5b54
+	add LOW(CharStatTable_07_5c4a) ; $5b55
 	ld l, a ; $5b57
-	adc a, HIGH(CharStatTable_07_5c4a) ; $5b58
-	sub a, l ; $5b5a
+	adc HIGH(CharStatTable_07_5c4a) ; $5b58
+	sub l ; $5b5a
 	ld h, a ; $5b5b
 	ld a, [hl+] ; $5b5c
 	ld b, [hl] ; $5b5d
@@ -3667,11 +3667,11 @@ LoadCharacterAttributes:
 	ld hl, $0028 ; $5b65
 	add hl, de ; $5b68
 	ld a, [hl] ; $5b69
-	add a, a ; $5b6a
-	add a, LOW(CharStatTable_07_5c5e) ; $5b6b
+	add a ; $5b6a
+	add LOW(CharStatTable_07_5c5e) ; $5b6b
 	ld l, a ; $5b6d
-	adc a, HIGH(CharStatTable_07_5c5e) ; $5b6e
-	sub a, l ; $5b70
+	adc HIGH(CharStatTable_07_5c5e) ; $5b6e
+	sub l ; $5b70
 	ld h, a ; $5b71
 	ld a, [hl+] ; $5b72
 	ld b, [hl] ; $5b73
@@ -3683,11 +3683,11 @@ LoadCharacterAttributes:
 	ld hl, $002a ; $5b7b
 	add hl, de ; $5b7e
 	ld a, [hl] ; $5b7f
-	add a, a ; $5b80
-	add a, LOW(CharStatTable_07_5c72) ; $5b81
+	add a ; $5b80
+	add LOW(CharStatTable_07_5c72) ; $5b81
 	ld l, a ; $5b83
-	adc a, HIGH(CharStatTable_07_5c72) ; $5b84
-	sub a, l ; $5b86
+	adc HIGH(CharStatTable_07_5c72) ; $5b84
+	sub l ; $5b86
 	ld h, a ; $5b87
 	ld a, [hl+] ; $5b88
 	ld b, [hl] ; $5b89
@@ -3699,30 +3699,30 @@ LoadCharacterAttributes:
 	ld hl, $0029 ; $5b91
 	add hl, de ; $5b94
 	ld a, [hl] ; $5b95
-	add a, LOW(CharStatTable_07_5c86) ; $5b96
+	add LOW(CharStatTable_07_5c86) ; $5b96
 	ld l, a ; $5b98
-	adc a, HIGH(CharStatTable_07_5c86) ; $5b99
-	sub a, l ; $5b9b
+	adc HIGH(CharStatTable_07_5c86) ; $5b99
+	sub l ; $5b9b
 	ld h, a ; $5b9c
 	ld a, [hl] ; $5b9d
 	ld [wCharFacingEaseRate], a ; $5b9e
 	ld hl, $0025 ; $5ba1
 	add hl, de ; $5ba4
 	ld a, [hl] ; $5ba5
-	add a, LOW(CharStatTable_07_5c90) ; $5ba6
+	add LOW(CharStatTable_07_5c90) ; $5ba6
 	ld l, a ; $5ba8
-	adc a, HIGH(CharStatTable_07_5c90) ; $5ba9
-	sub a, l ; $5bab
+	adc HIGH(CharStatTable_07_5c90) ; $5ba9
+	sub l ; $5bab
 	ld h, a ; $5bac
 	ld a, [hl] ; $5bad
 	ld [$df69], a ; $5bae
 	ld hl, $0026 ; $5bb1
 	add hl, de ; $5bb4
 	ld a, [hl] ; $5bb5
-	add a, LOW(CharStatTable_07_5c9a) ; $5bb6
+	add LOW(CharStatTable_07_5c9a) ; $5bb6
 	ld l, a ; $5bb8
-	adc a, HIGH(CharStatTable_07_5c9a) ; $5bb9
-	sub a, l ; $5bbb
+	adc HIGH(CharStatTable_07_5c9a) ; $5bb9
+	sub l ; $5bbb
 	ld h, a ; $5bbc
 	ld a, [hl] ; $5bbd
 	ld [$df6a], a ; $5bbe
@@ -3868,22 +3868,22 @@ OverrideCharStatsForDebug:
 	ld a, $01 ; $5d1a
 	pop af ; $5d1c
 	ret ; $5d1d
-	add a, a ; $5d1e
-	add a, a ; $5d1f
-	add a, a ; $5d20
-	add a, a ; $5d21
-	add a, LOW(CharStatPresets_07) ; $5d22
+	add a ; $5d1e
+	add a ; $5d1f
+	add a ; $5d20
+	add a ; $5d21
+	add LOW(CharStatPresets_07) ; $5d22
 	ld l, a ; $5d24
-	adc a, HIGH(CharStatPresets_07) ; $5d25
-	sub a, l ; $5d27
+	adc HIGH(CharStatPresets_07) ; $5d25
+	sub l ; $5d27
 	ld h, a ; $5d28
 	ld a, [hl+] ; $5d29
 	push hl ; $5d2a
-	add a, a ; $5d2b
-	add a, LOW(CharStatTable_07_5c4a) ; $5d2c
+	add a ; $5d2b
+	add LOW(CharStatTable_07_5c4a) ; $5d2c
 	ld l, a ; $5d2e
-	adc a, HIGH(CharStatTable_07_5c4a) ; $5d2f
-	sub a, l ; $5d31
+	adc HIGH(CharStatTable_07_5c4a) ; $5d2f
+	sub l ; $5d31
 	ld h, a ; $5d32
 	ld a, [hl+] ; $5d33
 	ld d, [hl] ; $5d34
@@ -3896,11 +3896,11 @@ OverrideCharStatsForDebug:
 	pop hl ; $5d3d
 	ld a, [hl+] ; $5d3e
 	push hl ; $5d3f
-	add a, a ; $5d40
-	add a, LOW(CharStatTable_07_5c4a) ; $5d41
+	add a ; $5d40
+	add LOW(CharStatTable_07_5c4a) ; $5d41
 	ld l, a ; $5d43
-	adc a, HIGH(CharStatTable_07_5c4a) ; $5d44
-	sub a, l ; $5d46
+	adc HIGH(CharStatTable_07_5c4a) ; $5d44
+	sub l ; $5d46
 	ld h, a ; $5d47
 	ld a, [hl+] ; $5d48
 	ld d, [hl] ; $5d49
@@ -3913,11 +3913,11 @@ OverrideCharStatsForDebug:
 	pop hl ; $5d52
 	ld a, [hl+] ; $5d53
 	push hl ; $5d54
-	add a, a ; $5d55
-	add a, LOW(CharStatTable_07_5c5e) ; $5d56
+	add a ; $5d55
+	add LOW(CharStatTable_07_5c5e) ; $5d56
 	ld l, a ; $5d58
-	adc a, HIGH(CharStatTable_07_5c5e) ; $5d59
-	sub a, l ; $5d5b
+	adc HIGH(CharStatTable_07_5c5e) ; $5d59
+	sub l ; $5d5b
 	ld h, a ; $5d5c
 	ld a, [hl+] ; $5d5d
 	ld d, [hl] ; $5d5e
@@ -3930,11 +3930,11 @@ OverrideCharStatsForDebug:
 	pop hl ; $5d67
 	ld a, [hl+] ; $5d68
 	push hl ; $5d69
-	add a, a ; $5d6a
-	add a, LOW(CharStatTable_07_5c72) ; $5d6b
+	add a ; $5d6a
+	add LOW(CharStatTable_07_5c72) ; $5d6b
 	ld l, a ; $5d6d
-	adc a, HIGH(CharStatTable_07_5c72) ; $5d6e
-	sub a, l ; $5d70
+	adc HIGH(CharStatTable_07_5c72) ; $5d6e
+	sub l ; $5d70
 	ld h, a ; $5d71
 	ld a, [hl+] ; $5d72
 	ld d, [hl] ; $5d73
@@ -3947,10 +3947,10 @@ OverrideCharStatsForDebug:
 	pop hl ; $5d7c
 	ld a, [hl+] ; $5d7d
 	push hl ; $5d7e
-	add a, LOW(CharStatTable_07_5c86) ; $5d7f
+	add LOW(CharStatTable_07_5c86) ; $5d7f
 	ld l, a ; $5d81
-	adc a, HIGH(CharStatTable_07_5c86) ; $5d82
-	sub a, l ; $5d84
+	adc HIGH(CharStatTable_07_5c86) ; $5d82
+	sub l ; $5d84
 	ld h, a ; $5d85
 	ld a, [hl] ; $5d86
 	ld hl, $0068 ; $5d87
@@ -3959,10 +3959,10 @@ OverrideCharStatsForDebug:
 	pop hl ; $5d8c
 	ld a, [hl+] ; $5d8d
 	push hl ; $5d8e
-	add a, LOW(CharStatTable_07_5c90) ; $5d8f
+	add LOW(CharStatTable_07_5c90) ; $5d8f
 	ld l, a ; $5d91
-	adc a, HIGH(CharStatTable_07_5c90) ; $5d92
-	sub a, l ; $5d94
+	adc HIGH(CharStatTable_07_5c90) ; $5d92
+	sub l ; $5d94
 	ld h, a ; $5d95
 	ld a, [hl] ; $5d96
 	ld hl, $0069 ; $5d97
@@ -3971,10 +3971,10 @@ OverrideCharStatsForDebug:
 	pop hl ; $5d9c
 	ld a, [hl+] ; $5d9d
 	push hl ; $5d9e
-	add a, LOW(CharStatTable_07_5c9a) ; $5d9f
+	add LOW(CharStatTable_07_5c9a) ; $5d9f
 	ld l, a ; $5da1
-	adc a, HIGH(CharStatTable_07_5c9a) ; $5da2
-	sub a, l ; $5da4
+	adc HIGH(CharStatTable_07_5c9a) ; $5da2
+	sub l ; $5da4
 	ld h, a ; $5da5
 	ld a, [hl] ; $5da6
 	ld hl, $006a ; $5da7
@@ -3982,31 +3982,31 @@ OverrideCharStatsForDebug:
 	ld [hl], a ; $5dab
 	pop hl ; $5dac
 	ld a, $6b ; $5dad
-	add a, c ; $5daf
+	add c ; $5daf
 	ld e, a ; $5db0
 	ld d, b ; $5db1
 	ld a, [hl+] ; $5db2
 	ld [de], a ; $5db3
 	ld a, $6c ; $5db4
-	add a, c ; $5db6
+	add c ; $5db6
 	ld e, a ; $5db7
 	ld d, b ; $5db8
 	ld a, [hl+] ; $5db9
 	ld [de], a ; $5dba
 	ld a, $6d ; $5dbb
-	add a, c ; $5dbd
+	add c ; $5dbd
 	ld e, a ; $5dbe
 	ld d, b ; $5dbf
 	ld a, [hl+] ; $5dc0
 	ld [de], a ; $5dc1
 	ld a, $6e ; $5dc2
-	add a, c ; $5dc4
+	add c ; $5dc4
 	ld e, a ; $5dc5
 	ld d, b ; $5dc6
 	ld a, [hl+] ; $5dc7
 	ld [de], a ; $5dc8
 	ld a, $6f ; $5dc9
-	add a, c ; $5dcb
+	add c ; $5dcb
 	ld e, a ; $5dcc
 	ld d, b ; $5dcd
 	ld a, [hl+] ; $5dce
@@ -4174,11 +4174,11 @@ TargetZoneBounceHook_07:
 	ld h, $00 ; $5f2d
 	ld l, a ; $5f2f
 	add hl, hl ; $5f30
-	xor a, a ; $5f31
-	sub a, l ; $5f32
+	xor a ; $5f31
+	sub l ; $5f32
 	ld l, a ; $5f33
-	sbc a, a ; $5f34
-	sub a, h ; $5f35
+	sbc a ; $5f34
+	sub h ; $5f35
 	ld h, a ; $5f36
 	ld e, l ; $5f37
 	ld d, h ; $5f38
@@ -4218,7 +4218,7 @@ TargetZonePointEndHook_07:
 	call ResolveTargetModePoint ; $5f81
 	ld a, [wCharacter1ServiceAces] ; $5f84
 	ld hl, wCharacter2ServiceAces ; $5f87
-	cp a, [hl] ; $5f8a
+	cp [hl] ; $5f8a
 	jr nz, .abortMatch ; $5f8b
 	ret ; $5f8d
 .abortMatch:

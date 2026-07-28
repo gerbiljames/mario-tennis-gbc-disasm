@@ -150,8 +150,8 @@ def resolve_copy_lengths(lines, base):
                 break
 
 
-_ADD_LO_RE = re.compile(r"^(\tadd a, )\$([0-9a-f]{2})( ;.*)$")
-_ADC_HI_RE = re.compile(r"^(\tadc a, )\$([0-9a-f]{2})( ;.*)$")
+_ADD_LO_RE = re.compile(r"^(\tadd )\$([0-9a-f]{2})( ;.*)$")
+_ADC_HI_RE = re.compile(r"^(\tadc )\$([0-9a-f]{2})( ;.*)$")
 
 
 def resolve_flag_names(lines, flag_names, raw_sites=(), base=0):
@@ -439,10 +439,10 @@ class Emitter:
     def _resolve_split_base(self, lines, bank):
         """Rewrite the split-base table setup so its address is a symbol.
 
-            add a, $bd      ->  add a, LOW(RestaurantNpc12TextIds)
+            add $bd         ->  add LOW(RestaurantNpc12TextIds)
             ld l, a
-            adc a, $43      ->  adc a, HIGH(RestaurantNpc12TextIds)
-            sub a, l
+            adc $43         ->  adc HIGH(RestaurantNpc12TextIds)
+            sub l
             ld h, a
 
         The two halves of the address are 8-bit immediates, so unlike a `ld hl,

@@ -50,7 +50,7 @@ SpawnActor:
 .findSlot:
 	inc hl ; $4063
 	ld a, [hl-] ; $4064
-	or a, a ; $4065
+	or a ; $4065
 	jr z, .initSlot ; $4066
 	ld de, $0040 ; $4068
 	add hl, de ; $406b
@@ -117,7 +117,7 @@ InitActorSlotFields:
 	pop af ; $40be
 	ld [bc], a ; $40bf
 	inc bc ; $40c0
-	xor a, a ; $40c1
+	xor a ; $40c1
 	ld [bc], a ; $40c2
 	pop bc ; $40c3
 	pop af ; $40c4
@@ -333,7 +333,7 @@ UpdateActors:
 .actorLoop:
 	inc hl ; $41f2
 	ld a, [hl-] ; $41f3
-	or a, a ; $41f4
+	or a ; $41f4
 	jr z, .next ; $41f5
 	push bc ; $41f7
 	push hl ; $41f8
@@ -369,7 +369,7 @@ StepActorScript:
 	ld hl, $0003 ; $4230
 	add hl, bc ; $4233
 	ld a, [hl] ; $4234
-	or a, a ; $4235
+	or a ; $4235
 	jr z, .stepJump ; $4236
 	dec [hl] ; $4238
 	ret ; $4239
@@ -391,11 +391,11 @@ StepActorScript:
 	call FarReadByte ; $424d
 	ld hl, ActorScriptOpcodeReturn ; $4250
 	push hl ; $4253
-	add a, a ; $4254
-	add a, LOW(ActorScriptOpHandlers_04) ; $4255
+	add a ; $4254
+	add LOW(ActorScriptOpHandlers_04) ; $4255
 	ld l, a ; $4257
-	adc a, HIGH(ActorScriptOpHandlers_04) ; $4258
-	sub a, l ; $425a
+	adc HIGH(ActorScriptOpHandlers_04) ; $4258
+	sub l ; $425a
 	ld h, a ; $425b
 	ld a, [hl+] ; $425c
 	ld h, [hl] ; $425d
@@ -409,7 +409,7 @@ ActorScriptOpcodeReturn:
 	inc hl ; $4266
 	ld [hl], d ; $4267
 	inc hl ; $4268
-	or a, a ; $4269
+	or a ; $4269
 	jr nz, StepActorScript.applyGravity ; $426a
 	pop bc ; $426c
 	ret ; $426d
@@ -424,9 +424,9 @@ UpdateActorJumpPhysics:
 	ld a, [hl+] ; $4279
 	ld h, [hl] ; $427a
 	ld l, a ; $427b
-	or a, h ; $427c
-	or a, d ; $427d
-	or a, e ; $427e
+	or h ; $427c
+	or d ; $427d
+	or e ; $427e
 	jr z, .done ; $427f
 	push hl ; $4281
 	ld hl, $0010 ; $4282
@@ -437,7 +437,7 @@ UpdateActorJumpPhysics:
 	add hl, de ; $4289
 	bit 7, h ; $428a
 	jr nz, .storeVelocity ; $428c
-	xor a, a ; $428e
+	xor a ; $428e
 	ld hl, $0010 ; $428f
 	add hl, bc ; $4292
 	ld [hl+], a ; $4293
@@ -482,10 +482,10 @@ AdvanceActorTowardTarget:
 	ld h, [hl] ; $42c7
 	ld l, a ; $42c8
 	ld a, l ; $42c9
-	sub a, e ; $42ca
+	sub e ; $42ca
 	ld l, a ; $42cb
 	ld a, h ; $42cc
-	sbc a, d ; $42cd
+	sbc d ; $42cd
 	ld h, a ; $42ce
 	push hl ; $42cf
 	ld hl, $000a ; $42d0
@@ -499,34 +499,34 @@ AdvanceActorTowardTarget:
 	ld h, [hl] ; $42dc
 	ld l, a ; $42dd
 	ld a, l ; $42de
-	sub a, e ; $42df
+	sub e ; $42df
 	ld l, a ; $42e0
 	ld a, h ; $42e1
-	sbc a, d ; $42e2
+	sbc d ; $42e2
 	ld h, a ; $42e3
 	pop de ; $42e4
 	push de ; $42e5
 	push hl ; $42e6
 	call AngleFromVectorCoarse ; $42e7
-	add a, $80 ; $42ea
+	add $80 ; $42ea
 	push af ; $42ec
 	ld hl, $0014 ; $42ed
 	add hl, bc ; $42f0
 	ld e, [hl] ; $42f1
-	sub a, e ; $42f2
+	sub e ; $42f2
 	ld d, a ; $42f3
 	bit 7, a ; $42f4
 	jr z, .absDeltaX ; $42f6
 	cpl ; $42f8
 	inc a ; $42f9
 .absDeltaX:
-	cp a, $60 ; $42fa
+	cp $60 ; $42fa
 	jr c, .compareDeltas ; $42fc
 	ld a, e ; $42fe
-	add a, $80 ; $42ff
+	add $80 ; $42ff
 	ld e, a ; $4301
 	ld a, d ; $4302
-	add a, $80 ; $4303
+	add $80 ; $4303
 	ld d, a ; $4305
 	bit 7, a ; $4306
 	jr z, .compareDeltas ; $4308
@@ -534,7 +534,7 @@ AdvanceActorTowardTarget:
 	inc a ; $430b
 .compareDeltas:
 	inc hl ; $430c
-	cp a, [hl] ; $430d
+	cp [hl] ; $430d
 	ld a, d ; $430e
 	jr c, .stepAxis ; $430f
 	ld a, [hl] ; $4311
@@ -543,7 +543,7 @@ AdvanceActorTowardTarget:
 	cpl ; $4316
 	inc a ; $4317
 .stepAxis:
-	add a, e ; $4318
+	add e ; $4318
 	dec hl ; $4319
 	ld [hl], a ; $431a
 	ld e, a ; $431b
@@ -589,7 +589,7 @@ AdvanceActorTowardTarget:
 	call IsPointNearPlayer ; $4351
 	pop hl ; $4354
 	pop de ; $4355
-	and a, a ; $4356
+	and a ; $4356
 	jr z, .arrived ; $4357
 	ld hl, $0005 ; $4359
 	add hl, bc ; $435c
@@ -601,8 +601,8 @@ AdvanceActorTowardTarget:
 .arrived:
 	ld bc, $0001 ; $4365
 	pop af ; $4368
-	add a, $20 ; $4369
-	and a, $40 ; $436b
+	add $20 ; $4369
+	and $40 ; $436b
 	jr z, .storeArrival ; $436d
 	inc c ; $436f
 .storeArrival:
@@ -610,7 +610,7 @@ AdvanceActorTowardTarget:
 	ld hl, hActorPtr ; $4371
 	ld a, [hl+] ; $4374
 	ld h, [hl] ; $4375
-	add a, $0e ; $4376
+	add $0e ; $4376
 	ld l, a ; $4378
 	push hl ; $4379
 	ld a, [hl+] ; $437a
@@ -627,27 +627,27 @@ AdvanceActorTowardTarget:
 	ld hl, hActorPtr ; $4385
 	ld a, [hl+] ; $4388
 	ld h, [hl] ; $4389
-	add a, $0a ; $438a
+	add $0a ; $438a
 	ld l, a ; $438c
 	ld a, [hl+] ; $438d
 	ld d, [hl] ; $438e
 	ld e, a ; $438f
 	pop hl ; $4390
 	ld a, l ; $4391
-	sub a, e ; $4392
+	sub e ; $4392
 	ld l, a ; $4393
 	ld a, h ; $4394
-	sbc a, d ; $4395
+	sbc d ; $4395
 	ld h, a ; $4396
 	ld a, h ; $4397
-	or a, l ; $4398
+	or l ; $4398
 	jr nz, .stepTowardTarget ; $4399
 	set 1, b ; $439b
 .stepTowardTarget:
 	pop de ; $439d
 	ld a, h ; $439e
 	pop hl ; $439f
-	xor a, h ; $43a0
+	xor h ; $43a0
 	bit 7, a ; $43a1
 	jr z, .applyStep ; $43a3
 	set 1, b ; $43a5
@@ -655,7 +655,7 @@ AdvanceActorTowardTarget:
 	ld hl, hActorPtr ; $43a7
 	ld a, [hl+] ; $43aa
 	ld h, [hl] ; $43ab
-	add a, $0c ; $43ac
+	add $0c ; $43ac
 	ld l, a ; $43ae
 	push hl ; $43af
 	ld a, [hl+] ; $43b0
@@ -672,32 +672,32 @@ AdvanceActorTowardTarget:
 	ld hl, hActorPtr ; $43bb
 	ld a, [hl+] ; $43be
 	ld h, [hl] ; $43bf
-	add a, $08 ; $43c0
+	add $08 ; $43c0
 	ld l, a ; $43c2
 	ld a, [hl+] ; $43c3
 	ld d, [hl] ; $43c4
 	ld e, a ; $43c5
 	pop hl ; $43c6
 	ld a, l ; $43c7
-	sub a, e ; $43c8
+	sub e ; $43c8
 	ld l, a ; $43c9
 	ld a, h ; $43ca
-	sbc a, d ; $43cb
+	sbc d ; $43cb
 	ld h, a ; $43cc
 	ld a, h ; $43cd
-	or a, l ; $43ce
+	or l ; $43ce
 	jr nz, .clampToTarget ; $43cf
 	set 0, b ; $43d1
 .clampToTarget:
 	ld a, h ; $43d3
 	pop hl ; $43d4
-	xor a, h ; $43d5
+	xor h ; $43d5
 	bit 7, a ; $43d6
 	jr z, .storePosition ; $43d8
 	set 0, b ; $43da
 .storePosition:
 	ld a, b ; $43dc
-	and a, c ; $43dd
+	and c ; $43dd
 	jr z, .done ; $43de
 	ld hl, hActorPtr ; $43e0
 	ld a, [hl+] ; $43e3
@@ -707,7 +707,7 @@ AdvanceActorTowardTarget:
 	add hl, bc ; $43e9
 	res 7, [hl] ; $43ea
 	ld a, $0c ; $43ec
-	add a, c ; $43ee
+	add c ; $43ee
 	ld e, a ; $43ef
 	ld d, b ; $43f0
 	ld hl, $0008 ; $43f1
@@ -730,7 +730,7 @@ UpdateCameraIfActorIsCameraTarget:
 	ld hl, $0020 ; $4402
 	add hl, bc ; $4405
 	ld a, [hl] ; $4406
-	cp a, $01 ; $4407
+	cp $01 ; $4407
 	ret nz ; $4409
 UpdateCameraToActor:
 	push af ; $440a
@@ -747,7 +747,7 @@ UpdateCameraToActor:
 	ld a, [wMapScrollMinX] ; $441e
 	ld d, a ; $4421
 	ld a, h ; $4422
-	sub a, d ; $4423
+	sub d ; $4423
 	bit 7, a ; $4424
 	jr z, .clampX ; $4426
 	ld h, d ; $4428
@@ -755,17 +755,17 @@ UpdateCameraToActor:
 	jr .storeX ; $442b
 .clampX:
 	ld a, [wMapWidthTiles] ; $442d
-	sub a, $14 ; $4430
+	sub $14 ; $4430
 	ld d, a ; $4432
 	ld a, h ; $4433
-	sub a, d ; $4434
+	sub d ; $4434
 	bit 7, a ; $4435
 	jr nz, .storeX ; $4437
 	ld h, d ; $4439
 	ld l, $00 ; $443a
 .storeX:
 	ld a, l ; $443c
-	and a, $e0 ; $443d
+	and $e0 ; $443d
 	ld [wCameraX], a ; $443f
 	ld a, h ; $4442
 	ld [wCameraX + 1], a ; $4443
@@ -779,7 +779,7 @@ UpdateCameraToActor:
 	ld a, [wMapScrollMinY] ; $4451
 	ld d, a ; $4454
 	ld a, h ; $4455
-	sub a, d ; $4456
+	sub d ; $4456
 	bit 7, a ; $4457
 	jr z, .clampDepth ; $4459
 	ld h, d ; $445b
@@ -787,17 +787,17 @@ UpdateCameraToActor:
 	jr .done ; $445e
 .clampDepth:
 	ld a, [wMapHeightTiles] ; $4460
-	sub a, $12 ; $4463
+	sub $12 ; $4463
 	ld d, a ; $4465
 	ld a, h ; $4466
-	sub a, d ; $4467
+	sub d ; $4467
 	bit 7, a ; $4468
 	jr nz, .done ; $446a
 	ld h, d ; $446c
 	ld l, $00 ; $446d
 .done:
 	ld a, l ; $446f
-	and a, $e0 ; $4470
+	and $e0 ; $4470
 	ld [wCameraY], a ; $4472
 	ld a, h ; $4475
 	ld [wCameraY + 1], a ; $4476
@@ -845,7 +845,7 @@ ActorScriptOp_Call:
 	ld a, [wActorScriptBank] ; $44bb
 	call CallHLInBankA ; $44be
 	pop de ; $44c1
-	and a, a ; $44c2
+	and a ; $44c2
 	jr z, .skipOperand ; $44c3
 	inc b ; $44c5
 	dec b ; $44c6
@@ -887,10 +887,10 @@ ActorScriptOp_MoveRel:
 	ld hl, hActorPtr ; $44f6
 	ld a, [hl+] ; $44f9
 	ld h, [hl] ; $44fa
-	add a, $14 ; $44fb
+	add $14 ; $44fb
 	ld l, a ; $44fd
 	pop af ; $44fe
-	add a, [hl] ; $44ff
+	add [hl] ; $44ff
 ApplyActorHeadingStep:
 	push af ; $4500
 	ld a, [wActorScriptBank] ; $4501
@@ -910,7 +910,7 @@ ApplyActorHeadingStep:
 	ld hl, hActorPtr ; $4515
 	ld a, [hl+] ; $4518
 	ld h, [hl] ; $4519
-	add a, $0e ; $451a
+	add $0e ; $451a
 	ld l, a ; $451c
 	ld a, [hl+] ; $451d
 	ld h, [hl] ; $451e
@@ -921,7 +921,7 @@ ApplyActorHeadingStep:
 	ld hl, hActorPtr ; $4523
 	ld a, [hl+] ; $4526
 	ld h, [hl] ; $4527
-	add a, $0a ; $4528
+	add $0a ; $4528
 	ld l, a ; $452a
 	ld a, e ; $452b
 	ld [hl+], a ; $452c
@@ -930,7 +930,7 @@ ApplyActorHeadingStep:
 	ld hl, hActorPtr ; $452f
 	ld a, [hl+] ; $4532
 	ld h, [hl] ; $4533
-	add a, $0c ; $4534
+	add $0c ; $4534
 	ld l, a ; $4536
 	ld a, [hl+] ; $4537
 	ld h, [hl] ; $4538
@@ -941,7 +941,7 @@ ApplyActorHeadingStep:
 	ld hl, hActorPtr ; $453d
 	ld a, [hl+] ; $4540
 	ld h, [hl] ; $4541
-	add a, $08 ; $4542
+	add $08 ; $4542
 	ld l, a ; $4544
 	ld a, e ; $4545
 	ld [hl+], a ; $4546
@@ -950,7 +950,7 @@ ApplyActorHeadingStep:
 	ld hl, hActorPtr ; $4549
 	ld a, [hl+] ; $454c
 	ld h, [hl] ; $454d
-	add a, $05 ; $454e
+	add $05 ; $454e
 	ld l, a ; $4550
 	set 7, [hl] ; $4551
 	ld a, $01 ; $4553
@@ -961,7 +961,7 @@ ActorScriptOp_SetPos:
 	ld hl, hActorPtr ; $4558
 	ld a, [hl+] ; $455b
 	ld h, [hl] ; $455c
-	add a, $0c ; $455d
+	add $0c ; $455d
 	ld l, a ; $455f
 	ld e, l ; $4560
 	ld d, h ; $4561
@@ -974,7 +974,7 @@ ActorScriptOp_SetPos:
 	ld hl, hActorPtr ; $456e
 	ld a, [hl+] ; $4571
 	ld h, [hl] ; $4572
-	add a, $05 ; $4573
+	add $05 ; $4573
 	ld l, a ; $4575
 	res 7, [hl] ; $4576
 	ld a, $01 ; $4578
@@ -985,7 +985,7 @@ ActorScriptOp_SetTarget:
 	ld hl, hActorPtr ; $457d
 	ld a, [hl+] ; $4580
 	ld h, [hl] ; $4581
-	add a, $08 ; $4582
+	add $08 ; $4582
 	ld l, a ; $4584
 	ld e, l ; $4585
 	ld d, h ; $4586
@@ -998,7 +998,7 @@ ActorScriptOp_SetTarget:
 	ld hl, hActorPtr ; $4593
 	ld a, [hl+] ; $4596
 	ld h, [hl] ; $4597
-	add a, $05 ; $4598
+	add $05 ; $4598
 	ld l, a ; $459a
 	set 7, [hl] ; $459b
 	ld a, $01 ; $459d
@@ -1016,7 +1016,7 @@ ActorScriptOp_TargetRel:
 	ld hl, hActorPtr ; $45ad
 	ld a, [hl+] ; $45b0
 	ld h, [hl] ; $45b1
-	add a, $0c ; $45b2
+	add $0c ; $45b2
 	ld l, a ; $45b4
 	ld a, [hl+] ; $45b5
 	ld h, [hl] ; $45b6
@@ -1027,7 +1027,7 @@ ActorScriptOp_TargetRel:
 	ld hl, hActorPtr ; $45bb
 	ld a, [hl+] ; $45be
 	ld h, [hl] ; $45bf
-	add a, $08 ; $45c0
+	add $08 ; $45c0
 	ld l, a ; $45c2
 	ld a, c ; $45c3
 	ld [hl+], a ; $45c4
@@ -1043,7 +1043,7 @@ ActorScriptOp_TargetRel:
 	ld hl, hActorPtr ; $45d2
 	ld a, [hl+] ; $45d5
 	ld h, [hl] ; $45d6
-	add a, $0e ; $45d7
+	add $0e ; $45d7
 	ld l, a ; $45d9
 	ld a, [hl+] ; $45da
 	ld h, [hl] ; $45db
@@ -1054,7 +1054,7 @@ ActorScriptOp_TargetRel:
 	ld hl, hActorPtr ; $45e0
 	ld a, [hl+] ; $45e3
 	ld h, [hl] ; $45e4
-	add a, $0a ; $45e5
+	add $0a ; $45e5
 	ld l, a ; $45e7
 	ld a, c ; $45e8
 	ld [hl+], a ; $45e9
@@ -1062,7 +1062,7 @@ ActorScriptOp_TargetRel:
 	ld hl, hActorPtr ; $45eb
 	ld a, [hl+] ; $45ee
 	ld h, [hl] ; $45ef
-	add a, $05 ; $45f0
+	add $05 ; $45f0
 	ld l, a ; $45f2
 	set 7, [hl] ; $45f3
 	ld a, $01 ; $45f5
@@ -1071,7 +1071,7 @@ ActorScriptOp_WaitMove:
 	ld hl, hActorPtr ; $45f8
 	ld a, [hl+] ; $45fb
 	ld h, [hl] ; $45fc
-	add a, $05 ; $45fd
+	add $05 ; $45fd
 	ld l, a ; $45ff
 	bit 7, [hl] ; $4600
 	jr nz, .noAdvance ; $4602
@@ -1079,10 +1079,10 @@ ActorScriptOp_WaitMove:
 	ld a, $01 ; $4605
 	ret ; $4607
 .noAdvance:
-	xor a, a ; $4608
+	xor a ; $4608
 	ret ; $4609
 ActorScriptOp_Halt:
-	xor a, a ; $460a
+	xor a ; $460a
 	ret ; $460b
 ActorScriptOp_Wait:
 	inc de ; $460c
@@ -1095,11 +1095,11 @@ ActorScriptOp_Wait:
 	ld hl, hActorPtr ; $4617
 	ld a, [hl+] ; $461a
 	ld h, [hl] ; $461b
-	add a, $03 ; $461c
+	add $03 ; $461c
 	ld l, a ; $461e
 	ld [hl], b ; $461f
 	inc de ; $4620
-	xor a, a ; $4621
+	xor a ; $4621
 	ret ; $4622
 ActorScriptOp_FollowWaypoint:
 	inc de ; $4623
@@ -1116,7 +1116,7 @@ ActorScriptOp_FollowWaypoint:
 	ld hl, $000c ; $4632
 	add hl, de ; $4635
 	ld a, $08 ; $4636
-	add a, c ; $4638
+	add c ; $4638
 	ld e, a ; $4639
 	ld d, b ; $463a
 	ld a, [hl+] ; $463b
@@ -1137,7 +1137,7 @@ ActorScriptOp_FollowWaypoint:
 	ld a, [hl] ; $464f
 	ld hl, $000d ; $4650
 	add hl, bc ; $4653
-	sub a, [hl] ; $4654
+	sub [hl] ; $4654
 	bit 7, a ; $4655
 	jr z, .squareDeltaX ; $4657
 	cpl ; $4659
@@ -1150,7 +1150,7 @@ ActorScriptOp_FollowWaypoint:
 	ld a, [hl] ; $4663
 	ld hl, $000f ; $4664
 	add hl, bc ; $4667
-	sub a, [hl] ; $4668
+	sub [hl] ; $4668
 	bit 7, a ; $4669
 	jr z, .squareDeltaDepth ; $466b
 	cpl ; $466d
@@ -1160,25 +1160,25 @@ ActorScriptOp_FollowWaypoint:
 	pop de ; $4672
 	add hl, de ; $4673
 	ld a, h ; $4674
-	or a, a ; $4675
+	or a ; $4675
 	jr nz, .speed5 ; $4676
 	ld a, l ; $4678
-	cp a, $01 ; $4679
+	cp $01 ; $4679
 	jr nc, .speed2 ; $467b
 	ld de, $0010 ; $467d
 	jr .setSpeed ; $4680
 .speed2:
-	cp a, $04 ; $4682
+	cp $04 ; $4682
 	jr nc, .speed3 ; $4684
 	ld de, $0018 ; $4686
 	jr .setSpeed ; $4689
 .speed3:
-	cp a, $09 ; $468b
+	cp $09 ; $468b
 	jr nc, .speed4 ; $468d
 	ld de, $0020 ; $468f
 	jr .setSpeed ; $4692
 .speed4:
-	cp a, $10 ; $4694
+	cp $10 ; $4694
 	jr nc, .speed5 ; $4696
 	ld de, $0040 ; $4698
 	jr .setSpeed ; $469b
@@ -1195,7 +1195,7 @@ ActorScriptOp_FollowWaypoint:
 	set 7, [hl] ; $46ab
 .done:
 	pop de ; $46ad
-	xor a, a ; $46ae
+	xor a ; $46ae
 	ret ; $46af
 ActorScriptOp_Step:
 	inc de ; $46b0
@@ -1208,7 +1208,7 @@ ActorScriptOp_Step:
 	add hl, bc ; $46bb
 	ld a, [hl+] ; $46bc
 	ld h, [hl] ; $46bd
-	add a, $0e ; $46be
+	add $0e ; $46be
 	ld l, a ; $46c0
 	ld a, [hl+] ; $46c1
 	ld d, [hl] ; $46c2
@@ -1241,7 +1241,7 @@ ActorScriptOp_Step:
 	ld hl, $000d ; $46e5
 	add hl, bc ; $46e8
 	ld a, d ; $46e9
-	sub a, [hl] ; $46ea
+	sub [hl] ; $46ea
 	bit 7, a ; $46eb
 	jr z, .negative ; $46ed
 	cpl ; $46ef
@@ -1252,7 +1252,7 @@ ActorScriptOp_Step:
 	ld hl, $000f ; $46f5
 	add hl, bc ; $46f8
 	ld a, e ; $46f9
-	sub a, [hl] ; $46fa
+	sub [hl] ; $46fa
 	bit 7, a ; $46fb
 	jr z, .apply ; $46fd
 	cpl ; $46ff
@@ -1262,11 +1262,11 @@ ActorScriptOp_Step:
 	pop de ; $4704
 	add hl, de ; $4705
 	ld a, l ; $4706
-	cp a, $08 ; $4707
+	cp $08 ; $4707
 	jr nc, .depthAxis ; $4709
 	add sp, 8 ; $470b
 	pop de ; $470d
-	xor a, a ; $470e
+	xor a ; $470e
 	ret ; $470f
 .depthAxis:
 	pop de ; $4710
@@ -1276,7 +1276,7 @@ ActorScriptOp_Step:
 	ld [hl+], a ; $4716
 	ld [hl], d ; $4717
 	pop af ; $4718
-	add a, $80 ; $4719
+	add $80 ; $4719
 	ld hl, $0200 ; $471b
 	call VectorFromLengthAndAngle ; $471e
 	pop bc ; $4721
@@ -1290,12 +1290,12 @@ ActorScriptOp_Step:
 	ld l, c ; $4729
 	ld h, b ; $472a
 	call IsTerrainBlockedAtPoint ; $472b
-	and a, a ; $472e
+	and a ; $472e
 	jr nz, .done ; $472f
 	ld hl, hActorPtr ; $4731
 	ld a, [hl+] ; $4734
 	ld h, [hl] ; $4735
-	add a, $08 ; $4736
+	add $08 ; $4736
 	ld l, a ; $4738
 	ld a, c ; $4739
 	ld [hl+], a ; $473a
@@ -1319,38 +1319,38 @@ ActorScriptOp_Step:
 	set 7, [hl] ; $4755
 .done:
 	pop de ; $4757
-	xor a, a ; $4758
+	xor a ; $4758
 	ret ; $4759
 IsActorAtTarget:
 	ld hl, $000c ; $475a
 	add hl, bc ; $475d
 	ld a, $08 ; $475e
-	add a, c ; $4760
+	add c ; $4760
 	ld e, a ; $4761
 	ld d, b ; $4762
 	ld a, [de] ; $4763
-	cp a, [hl] ; $4764
+	cp [hl] ; $4764
 	jr nz, .notThere ; $4765
 	inc hl ; $4767
 	inc de ; $4768
 	ld a, [de] ; $4769
-	cp a, [hl] ; $476a
+	cp [hl] ; $476a
 	jr nz, .notThere ; $476b
 	inc hl ; $476d
 	inc de ; $476e
 	ld a, [de] ; $476f
-	cp a, [hl] ; $4770
+	cp [hl] ; $4770
 	jr nz, .notThere ; $4771
 	inc hl ; $4773
 	inc de ; $4774
 	ld a, [de] ; $4775
-	cp a, [hl] ; $4776
+	cp [hl] ; $4776
 	jr nz, .notThere ; $4777
-	xor a, a ; $4779
+	xor a ; $4779
 	ret ; $477a
 .notThere:
 	ld a, $01 ; $477b
-	or a, a ; $477d
+	or a ; $477d
 	ret ; $477e
 ActorScriptOp_SetField:
 	inc de ; $477f
@@ -1369,27 +1369,27 @@ ActorScriptOp_SetField:
 	pop af ; $4794
 	push af ; $4795
 	ld hl, hActorPtr ; $4796
-	add a, [hl] ; $4799
+	add [hl] ; $4799
 	inc hl ; $479a
 	ld h, [hl] ; $479b
 	ld l, a ; $479c
 	pop af ; $479d
 	push hl ; $479e
-	add a, $fd ; $479f
+	add $fd ; $479f
 	ld l, a ; $47a1
 	ld a, $47 ; $47a2
-	adc a, $00 ; $47a4
+	adc $00 ; $47a4
 	ld h, a ; $47a6
 	ld a, [hl] ; $47a7
 	pop hl ; $47a8
-	cp a, $02 ; $47a9
+	cp $02 ; $47a9
 	jr nz, .wordField ; $47ab
 	ld a, c ; $47ad
 	ld [hl+], a ; $47ae
 	ld [hl], b ; $47af
 	jr .done ; $47b0
 .wordField:
-	cp a, $01 ; $47b2
+	cp $01 ; $47b2
 	jr nz, .done ; $47b4
 	ld [hl], c ; $47b6
 .done:
@@ -1410,20 +1410,20 @@ ActorScriptOp_AddField:
 	pop af ; $47cd
 	push af ; $47ce
 	ld hl, hActorPtr ; $47cf
-	add a, [hl] ; $47d2
+	add [hl] ; $47d2
 	inc hl ; $47d3
 	ld h, [hl] ; $47d4
 	ld l, a ; $47d5
 	pop af ; $47d6
 	push hl ; $47d7
-	add a, $fd ; $47d8
+	add $fd ; $47d8
 	ld l, a ; $47da
 	ld a, $47 ; $47db
-	adc a, $00 ; $47dd
+	adc $00 ; $47dd
 	ld h, a ; $47df
 	ld a, [hl] ; $47e0
 	pop hl ; $47e1
-	cp a, $02 ; $47e2
+	cp $02 ; $47e2
 	jr nz, .wordField ; $47e4
 	push hl ; $47e6
 	ld a, [hl+] ; $47e7
@@ -1438,10 +1438,10 @@ ActorScriptOp_AddField:
 	ld [hl], b ; $47f0
 	jr .done ; $47f1
 .wordField:
-	cp a, $01 ; $47f3
+	cp $01 ; $47f3
 	jr nz, .done ; $47f5
 	ld a, [hl] ; $47f7
-	add a, c ; $47f8
+	add c ; $47f8
 	ld [hl], a ; $47f9
 .done:
 	ld a, $01 ; $47fa
@@ -1482,19 +1482,19 @@ ActorScriptOp_BeginPath:
 	ld hl, hActorPtr ; $484e
 	ld a, [hl+] ; $4851
 	ld h, [hl] ; $4852
-	add a, $0d ; $4853
+	add $0d ; $4853
 	ld l, a ; $4855
 	ld b, [hl] ; $4856
 	ld hl, hActorPtr ; $4857
 	ld a, [hl+] ; $485a
 	ld h, [hl] ; $485b
-	add a, $0f ; $485c
+	add $0f ; $485c
 	ld l, a ; $485e
 	ld c, [hl] ; $485f
 	ld hl, hActorPtr ; $4860
 	ld a, [hl+] ; $4863
 	ld h, [hl] ; $4864
-	add a, $16 ; $4865
+	add $16 ; $4865
 	ld l, a ; $4867
 	ld a, c ; $4868
 	ld [hl+], a ; $4869
@@ -1502,7 +1502,7 @@ ActorScriptOp_BeginPath:
 	ld hl, hActorPtr ; $486b
 	ld a, [hl+] ; $486e
 	ld h, [hl] ; $486f
-	add a, $06 ; $4870
+	add $06 ; $4870
 	ld l, a ; $4872
 	ld [hl], $08 ; $4873
 	inc hl ; $4875
@@ -1510,7 +1510,7 @@ ActorScriptOp_BeginPath:
 	ld hl, hActorPtr ; $4878
 	ld a, [hl+] ; $487b
 	ld h, [hl] ; $487c
-	add a, $05 ; $487d
+	add $05 ; $487d
 	ld l, a ; $487f
 	set 2, [hl] ; $4880
 	inc de ; $4882
@@ -1520,7 +1520,7 @@ ActorScriptOp_RandBox:
 	ld hl, hActorPtr ; $4886
 	ld a, [hl+] ; $4889
 	ld h, [hl] ; $488a
-	add a, $30 ; $488b
+	add $30 ; $488b
 	ld l, a ; $488d
 	bit 7, [hl] ; $488e
 	jr z, .advance ; $4890
@@ -1535,16 +1535,16 @@ ActorScriptOp_RandBox:
 	ld a, b ; $48a0
 	ld [$daf6], a ; $48a1
 	call TryPickRandomReachableTarget ; $48a4
-	and a, a ; $48a7
+	and a ; $48a7
 	jr nz, .skipOperands ; $48a8
 	call TryPickRandomReachableTarget ; $48aa
-	and a, a ; $48ad
+	and a ; $48ad
 	jr nz, .skipOperands ; $48ae
 	call TryPickRandomReachableTarget ; $48b0
-	and a, a ; $48b3
+	and a ; $48b3
 	jr nz, .skipOperands ; $48b4
 	call TryPickRandomReachableTarget ; $48b6
-	and a, a ; $48b9
+	and a ; $48b9
 	jr nz, .skipOperands ; $48ba
 	jr .skipOperands ; $48bc
 .skipOperands:
@@ -1562,7 +1562,7 @@ TryPickRandomReachableTarget:
 	ld c, a ; $48c9
 	call AdvanceRandomSeed ; $48ca
 	ld a, l ; $48cd
-	and a, $fc ; $48ce
+	and $fc ; $48ce
 	ld [$daf4], a ; $48d0
 	ld hl, $0100 ; $48d3
 	call ProjectPointFromActor ; $48d6
@@ -1582,7 +1582,7 @@ TryPickRandomReachableTarget:
 	call TestPointInBox ; $48ec
 	pop hl ; $48ef
 	pop de ; $48f0
-	and a, a ; $48f1
+	and a ; $48f1
 	jr nz, .failed ; $48f2
 	push de ; $48f4
 	push hl ; $48f5
@@ -1592,29 +1592,29 @@ TryPickRandomReachableTarget:
 	call IsTerrainBlockedAtPoint ; $48ff
 	pop hl ; $4902
 	pop de ; $4903
-	and a, a ; $4904
+	and a ; $4904
 	jr nz, .failed ; $4905
 	push de ; $4907
 	push hl ; $4908
 	ld a, [$daf4] ; $4909
-	add a, $20 ; $490c
+	add $20 ; $490c
 	ld bc, $00e0 ; $490e
 	call OffsetPointByPolarVector ; $4911
 	call IsTerrainBlockedAtPoint ; $4914
 	pop hl ; $4917
 	pop de ; $4918
-	and a, a ; $4919
+	and a ; $4919
 	jr nz, .failed ; $491a
 	push de ; $491c
 	push hl ; $491d
 	ld a, [$daf4] ; $491e
-	add a, $e0 ; $4921
+	add $e0 ; $4921
 	ld bc, $00e0 ; $4923
 	call OffsetPointByPolarVector ; $4926
 	call IsTerrainBlockedAtPoint ; $4929
 	pop hl ; $492c
 	pop de ; $492d
-	and a, a ; $492e
+	and a ; $492e
 	jr nz, .failed ; $492f
 	push hl ; $4931
 	ld hl, hActorPtr ; $4932
@@ -1629,7 +1629,7 @@ TryPickRandomReachableTarget:
 	ld a, $01 ; $4942
 	jr .done ; $4944
 .failed:
-	xor a, a ; $4946
+	xor a ; $4946
 .done:
 	pop bc ; $4947
 	ret ; $4948
@@ -1637,14 +1637,14 @@ ActorScriptOp_WaitMove2:
 	ld hl, hActorPtr ; $4949
 	ld a, [hl+] ; $494c
 	ld h, [hl] ; $494d
-	add a, $05 ; $494e
+	add $05 ; $494e
 	ld l, a ; $4950
 	bit 7, [hl] ; $4951
 	jr nz, .setWait ; $4953
 	ld hl, hActorPtr ; $4955
 	ld a, [hl+] ; $4958
 	ld h, [hl] ; $4959
-	add a, $03 ; $495a
+	add $03 ; $495a
 	ld l, a ; $495c
 	ld [hl], $28 ; $495d
 	inc de ; $495f
@@ -1653,19 +1653,19 @@ ActorScriptOp_WaitMove2:
 	ld hl, hActorPtr ; $4962
 	ld a, [hl+] ; $4965
 	ld h, [hl] ; $4966
-	add a, $05 ; $4967
+	add $05 ; $4967
 	ld l, a ; $4969
 	bit 6, [hl] ; $496a
 	jr z, .done ; $496c
 	ld hl, hActorPtr ; $496e
 	ld a, [hl+] ; $4971
 	ld h, [hl] ; $4972
-	add a, $03 ; $4973
+	add $03 ; $4973
 	ld l, a ; $4975
 	ld [hl], $0a ; $4976
 	inc de ; $4978
 .done:
-	xor a, a ; $4979
+	xor a ; $4979
 	ret ; $497a
 	inc de ; $497b
 	push de ; $497c
@@ -1717,7 +1717,7 @@ ActorScriptOp_WaitMove2:
 	ld hl, hActorPtr ; $49bf
 	ld a, [hl+] ; $49c2
 	ld h, [hl] ; $49c3
-	add a, $08 ; $49c4
+	add $08 ; $49c4
 	ld l, a ; $49c6
 	ld [hl], c ; $49c7
 	inc hl ; $49c8
@@ -1756,28 +1756,28 @@ ActorScriptOp_Flag:
 	ld h, d ; $49f8
 	call FarReadByte ; $49f9
 	inc de ; $49fc
-	add a, LOW(BitMaskTable_04) ; $49fd
+	add LOW(BitMaskTable_04) ; $49fd
 	ld l, a ; $49ff
-	adc a, HIGH(BitMaskTable_04) ; $4a00
-	sub a, l ; $4a02
+	adc HIGH(BitMaskTable_04) ; $4a00
+	sub l ; $4a02
 	ld h, a ; $4a03
 	ld c, [hl] ; $4a04
 	pop af ; $4a05
 	ld hl, hActorPtr ; $4a06
-	add a, [hl] ; $4a09
+	add [hl] ; $4a09
 	inc hl ; $4a0a
 	ld h, [hl] ; $4a0b
 	ld l, a ; $4a0c
 	pop af ; $4a0d
-	cp a, $01 ; $4a0e
+	cp $01 ; $4a0e
 	jr z, .setBits ; $4a10
 	ld a, c ; $4a12
-	xor a, $ff ; $4a13
-	and a, [hl] ; $4a15
+	xor $ff ; $4a13
+	and [hl] ; $4a15
 	jr .store ; $4a16
 .setBits:
 	ld a, c ; $4a18
-	or a, [hl] ; $4a19
+	or [hl] ; $4a19
 .store:
 	ld [hl], a ; $4a1a
 	pop bc ; $4a1b
@@ -1804,11 +1804,11 @@ ComputeSpriteScrollOffset:
 	add hl, hl ; $4a3c
 	add hl, hl ; $4a3d
 	add hl, de ; $4a3e
-	xor a, a ; $4a3f
-	sub a, l ; $4a40
+	xor a ; $4a3f
+	sub l ; $4a40
 	ld l, a ; $4a41
-	sbc a, a ; $4a42
-	sub a, h ; $4a43
+	sbc a ; $4a42
+	sub h ; $4a43
 	ld h, a ; $4a44
 	ld c, l ; $4a45
 	ld b, h ; $4a46
@@ -1843,11 +1843,11 @@ ComputeSpriteScrollOffset:
 	add hl, hl ; $4a70
 	add hl, hl ; $4a71
 	add hl, de ; $4a72
-	xor a, a ; $4a73
-	sub a, l ; $4a74
+	xor a ; $4a73
+	sub l ; $4a74
 	ld l, a ; $4a75
-	sbc a, a ; $4a76
-	sub a, h ; $4a77
+	sbc a ; $4a76
+	sub h ; $4a77
 	ld h, a ; $4a78
 	ld c, l ; $4a79
 	ld b, h ; $4a7a
@@ -1867,12 +1867,12 @@ DrawActors:
 	inc c ; $4a94
 	ld a, [bc] ; $4a95
 	dec c ; $4a96
-	or a, a ; $4a97
+	or a ; $4a97
 	jr z, .next ; $4a98
 	ld hl, $0031 ; $4a9a
 	add hl, bc ; $4a9d
 	ld a, [hl] ; $4a9e
-	and a, a ; $4a9f
+	and a ; $4a9f
 	jr z, .drawActor ; $4aa0
 	dec [hl] ; $4aa2
 	jr .next ; $4aa3
@@ -1885,7 +1885,7 @@ DrawActors:
 	ld hl, $0020 ; $4aae
 	add hl, bc ; $4ab1
 	ld a, [hl] ; $4ab2
-	cp a, $02 ; $4ab3
+	cp $02 ; $4ab3
 	call z, DrawAndAnimateActor ; $4ab5
 	pop de ; $4ab8
 .next:
@@ -1909,17 +1909,17 @@ LoadActorObjectDef:
 	add hl, bc ; $4ad2
 	ld [hl], d ; $4ad3
 	ld a, d ; $4ad4
-	add a, a ; $4ad5
-	add a, LOW(ObjectIdList_04_4f75) ; $4ad6
+	add a ; $4ad5
+	add LOW(ObjectIdList_04_4f75) ; $4ad6
 	ld l, a ; $4ad8
-	adc a, HIGH(ObjectIdList_04_4f75) ; $4ad9
-	sub a, l ; $4adb
+	adc HIGH(ObjectIdList_04_4f75) ; $4ad9
+	sub l ; $4adb
 	ld h, a ; $4adc
 	ld a, [hl+] ; $4add
 	ld h, [hl] ; $4ade
 	ld l, a ; $4adf
 	ld a, $22 ; $4ae0
-	add a, c ; $4ae2
+	add c ; $4ae2
 	ld e, a ; $4ae3
 	ld d, b ; $4ae4
 	ld a, h ; $4ae5
@@ -1958,7 +1958,7 @@ LoadActorObjectDef:
 	ld hl, $0037 ; $4b26
 	add hl, bc ; $4b29
 	ld a, [hl] ; $4b2a
-	cp a, $63 ; $4b2b
+	cp $63 ; $4b2b
 	jr nz, .initFields ; $4b2d
 	ld [hl], $02 ; $4b2f
 	push bc ; $4b31
@@ -1967,7 +1967,7 @@ LoadActorObjectDef:
 	ld h, [hl] ; $4b36
 	ld l, a ; $4b37
 	ld a, $22 ; $4b38
-	add a, c ; $4b3a
+	add c ; $4b3a
 	ld e, a ; $4b3b
 	ld d, b ; $4b3c
 	ld a, [de] ; $4b3d
@@ -1996,11 +1996,11 @@ LoadActorObjectDef:
 SetupCharSpriteFromObjectDef:
 	ld a, d ; $4b68
 	ld [wCharObjectDefId], a ; $4b69
-	add a, a ; $4b6c
-	add a, LOW(ObjectIdList_04_4f75) ; $4b6d
+	add a ; $4b6c
+	add LOW(ObjectIdList_04_4f75) ; $4b6d
 	ld l, a ; $4b6f
-	adc a, HIGH(ObjectIdList_04_4f75) ; $4b70
-	sub a, l ; $4b72
+	adc HIGH(ObjectIdList_04_4f75) ; $4b70
+	sub l ; $4b72
 	ld h, a ; $4b73
 	ld a, [hl+] ; $4b74
 	ld h, [hl] ; $4b75
@@ -2047,7 +2047,7 @@ SetActorAnimation:
 	ld hl, $002e ; $4bc7
 	add hl, bc ; $4bca
 	ld a, [hl] ; $4bcb
-	cp a, d ; $4bcc
+	cp d ; $4bcc
 	jr z, .done ; $4bcd
 	ld [hl], d ; $4bcf
 	ld hl, $002f ; $4bd0
@@ -2055,7 +2055,7 @@ SetActorAnimation:
 	ld [hl], $00 ; $4bd4
 	ld hl, wCharSpriteAttr ; $4bd6
 	ld a, [hl] ; $4bd9
-	and a, $0f ; $4bda
+	and $0f ; $4bda
 	ld [hl], a ; $4bdc
 	push bc ; $4bdd
 	ld hl, $0028 ; $4bde
@@ -2064,8 +2064,8 @@ SetActorAnimation:
 	ld h, [hl] ; $4be3
 	ld l, a ; $4be4
 	ld a, d ; $4be5
-	add a, a ; $4be6
-	add a, l ; $4be7
+	add a ; $4be6
+	add l ; $4be7
 	ld l, a ; $4be8
 	jr nc, .readEntry ; $4be9
 	inc h ; $4beb
@@ -2104,7 +2104,7 @@ GetObjectDefCount:
 	ld a, [hl+] ; $4c13
 	ld b, a ; $4c14
 	ld a, [hl+] ; $4c15
-	or a, b ; $4c16
+	or b ; $4c16
 	jr nz, .searchLoop ; $4c17
 	ld a, c ; $4c19
 	pop hl ; $4c1a
@@ -2113,7 +2113,7 @@ GetObjectDefCount:
 LookupTileId:
 	push hl ; $4c1d
 	ld hl, TileIdLookup_04_4c29 ; $4c1e
-	add a, l ; $4c21
+	add l ; $4c21
 	ld l, a ; $4c22
 	jr nc, .read ; $4c23
 	inc h ; $4c25
@@ -2129,7 +2129,7 @@ TileIdLookup_04_4c29:
 	db $6e, $6f, $2a, $2b, $2c, $2d, $48, $2e ; 0x18
 EvalFlagCondition:
 	ld a, e ; $4c49
-	or a, d ; $4c4a
+	or d ; $4c4a
 	ret z ; $4c4b
 	bit 7, d ; $4c4c
 	jr nz, .negated ; $4c4e
@@ -2139,10 +2139,10 @@ EvalFlagCondition:
 	res 7, d ; $4c54
 	call TestGameFlag ; $4c56
 	jr z, .true ; $4c59
-	xor a, a ; $4c5b
+	xor a ; $4c5b
 	ret ; $4c5c
 .true:
-	xor a, a ; $4c5d
+	xor a ; $4c5d
 	inc a ; $4c5e
 	ret ; $4c5f
 SpawnActorFromTemplate:
@@ -2177,7 +2177,7 @@ SpawnActorFromTemplate:
 	dec b ; $4c86
 	jr z, .done ; $4c87
 	ld a, $0c ; $4c89
-	add a, c ; $4c8b
+	add c ; $4c8b
 	ld e, a ; $4c8c
 	ld d, b ; $4c8d
 	ld a, [hl+] ; $4c8e
@@ -2186,7 +2186,7 @@ SpawnActorFromTemplate:
 	ld a, [hl-] ; $4c91
 	ld [de], a ; $4c92
 	ld a, $08 ; $4c93
-	add a, c ; $4c95
+	add c ; $4c95
 	ld e, a ; $4c96
 	ld d, b ; $4c97
 	ld a, [hl+] ; $4c98
@@ -2195,7 +2195,7 @@ SpawnActorFromTemplate:
 	ld a, [hl+] ; $4c9b
 	ld [de], a ; $4c9c
 	ld a, $0e ; $4c9d
-	add a, c ; $4c9f
+	add c ; $4c9f
 	ld e, a ; $4ca0
 	ld d, b ; $4ca1
 	ld a, [hl+] ; $4ca2
@@ -2204,7 +2204,7 @@ SpawnActorFromTemplate:
 	ld a, [hl-] ; $4ca5
 	ld [de], a ; $4ca6
 	ld a, $0a ; $4ca7
-	add a, c ; $4ca9
+	add c ; $4ca9
 	ld e, a ; $4caa
 	ld d, b ; $4cab
 	ld a, [hl+] ; $4cac
@@ -2213,7 +2213,7 @@ SpawnActorFromTemplate:
 	ld a, [hl+] ; $4caf
 	ld [de], a ; $4cb0
 	ld a, $14 ; $4cb1
-	add a, c ; $4cb3
+	add c ; $4cb3
 	ld e, a ; $4cb4
 	ld d, b ; $4cb5
 	ld a, [hl+] ; $4cb6
@@ -2226,10 +2226,10 @@ SpawnActorFromTemplate:
 	ld d, a ; $4cbf
 	call SetActorAnimation ; $4cc0
 	ld a, [hl] ; $4cc3
-	cp a, $00 ; $4cc4
+	cp $00 ; $4cc4
 	jr z, .setFlags ; $4cc6
 	ld a, $37 ; $4cc8
-	add a, c ; $4cca
+	add c ; $4cca
 	ld e, a ; $4ccb
 	ld d, b ; $4ccc
 	ld a, [hl] ; $4ccd
@@ -2246,7 +2246,7 @@ SpawnActorFromTemplate:
 	add hl, hl ; $4cdb
 	add hl, hl ; $4cdc
 	ld a, h ; $4cdd
-	and a, $0f ; $4cde
+	and $0f ; $4cde
 	ld hl, $0031 ; $4ce0
 	add hl, bc ; $4ce3
 	ld [hl], a ; $4ce4
@@ -2381,12 +2381,12 @@ SpawnMainCharacterActor:
 	push hl ; $4e75
 	push bc ; $4e76
 	ld a, [wStoryModeMainCharacterOverworldSprite] ; $4e77
-	and a, $03 ; $4e7a
-	add a, a ; $4e7c
-	add a, LOW(ScriptedActorListPtrs_04) ; $4e7d
+	and $03 ; $4e7a
+	add a ; $4e7c
+	add LOW(ScriptedActorListPtrs_04) ; $4e7d
 	ld l, a ; $4e7f
-	adc a, HIGH(ScriptedActorListPtrs_04) ; $4e80
-	sub a, l ; $4e82
+	adc HIGH(ScriptedActorListPtrs_04) ; $4e80
+	sub l ; $4e82
 	ld h, a ; $4e83
 	ld a, [hl+] ; $4e84
 	ld h, [hl] ; $4e85
@@ -2414,7 +2414,7 @@ SpawnMainCharacterActor:
 	call SetActorPosition ; $4eb2
 	ld hl, wStoryModeMainCharacterOverworldSpriteColor ; $4eb5
 	ld a, [hl] ; $4eb8
-	add a, $03 ; $4eb9
+	add $03 ; $4eb9
 	ld bc, $d000 ; $4ebb
 	ld hl, $0037 ; $4ebe
 	add hl, bc ; $4ec1
@@ -2446,7 +2446,7 @@ SpawnCompanionActor:
 	push hl ; $4f13
 	wram_bank $04 ; $4f14
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $4f1a
-	or a, a ; $4f1d
+	or a ; $4f1d
 	jr nz, .partnerSlot ; $4f1e
 	ld hl, PartnerActorList_04_4ec8 ; $4f20
 	ld a, $02 ; $4f23
@@ -2466,7 +2466,7 @@ SpawnCompanionActor:
 	ldh a, [hRomBank] ; $4f3e
 	call SpawnActorFromTemplate ; $4f40
 	ld a, [$cb5e] ; $4f43
-	cp a, $ff ; $4f46
+	cp $ff ; $4f46
 	jr z, .done ; $4f48
 	ld de, $d000 ; $4f4a
 	call AttachActorStepMover ; $4f4d
@@ -2661,7 +2661,7 @@ GetPointAheadOfActorFixed:
 	rrca ; $50d2
 	rrca ; $50d3
 	rrca ; $50d4
-	and a, $1c ; $50d5
+	and $1c ; $50d5
 	ld d, a ; $50d7
 	ld a, $40 ; $50d8
 	jr IndexPlayerControlTable ; $50da
@@ -2669,20 +2669,20 @@ GetPointAheadOfActorRanged:
 	rrca ; $50dc
 	rrca ; $50dd
 	rrca ; $50de
-	and a, $1c ; $50df
+	and $1c ; $50df
 	ld d, a ; $50e1
 	ld a, [$daef] ; $50e2
-	add a, a ; $50e5
-	add a, a ; $50e6
-	add a, a ; $50e7
-	add a, a ; $50e8
-	add a, a ; $50e9
+	add a ; $50e5
+	add a ; $50e6
+	add a ; $50e7
+	add a ; $50e8
+	add a ; $50e9
 IndexPlayerControlTable:
-	add a, d ; $50ea
-	add a, LOW(ActorMoveVectors_04) ; $50eb
+	add d ; $50ea
+	add LOW(ActorMoveVectors_04) ; $50eb
 	ld l, a ; $50ed
-	adc a, HIGH(ActorMoveVectors_04) ; $50ee
-	sub a, l ; $50f0
+	adc HIGH(ActorMoveVectors_04) ; $50ee
+	sub l ; $50f0
 	ld h, a ; $50f1
 	ld a, [hl+] ; $50f2
 	ld e, a ; $50f3
@@ -2760,23 +2760,23 @@ CheckTileTriggerAtPoint:
 	ld d, h ; $5144
 	farcall ReadBehaviorMapCell ; $5145
 	ld d, a ; $5148
-	and a, $0f ; $5149
-	cp a, $01 ; $514b
+	and $0f ; $5149
+	cp $01 ; $514b
 	jr z, .scriptTrigger ; $514d
-	cp a, $03 ; $514f
+	cp $03 ; $514f
 	jr z, .exitTrigger ; $5151
-	xor a, a ; $5153
+	xor a ; $5153
 	jr .done ; $5154
 .scriptTrigger:
 	ld a, d ; $5156
 	swap a ; $5157
-	and a, $0f ; $5159
+	and $0f ; $5159
 	ld [wStoryModeTriggerScript], a ; $515b
 	jr .done ; $515e
 .exitTrigger:
 	ld a, d ; $5160
 	swap a ; $5161
-	and a, $0f ; $5163
+	and $0f ; $5163
 	ld [wStoryModeExitLocationRequest], a ; $5165
 .done:
 	pop de ; $5168
@@ -2815,7 +2815,7 @@ UpdatePlayerControl:
 .setAnimSpeed:
 	ld d, $01 ; $51a6
 	ldh a, [hPlayerInputFlags] ; $51a8
-	and a, $f0 ; $51aa
+	and $f0 ; $51aa
 	jr z, .storeSpeed ; $51ac
 	ld d, $03 ; $51ae
 .storeSpeed:
@@ -2824,12 +2824,12 @@ UpdatePlayerControl:
 	ld [hl], d ; $51b4
 	ld a, [wPlayerMoveAngleApplied] ; $51b5
 	ld [wPlayerMoveAnglePrev], a ; $51b8
-	xor a, a ; $51bb
+	xor a ; $51bb
 	ld [wPlayerMoveAngleApplied], a ; $51bc
 	ldh a, [hPlayerInputFlags] ; $51bf
-	and a, $f0 ; $51c1
+	and $f0 ; $51c1
 	jr nz, .dpadToAngle ; $51c3
-	xor a, a ; $51c5
+	xor a ; $51c5
 	ld [wPlayerMoving], a ; $51c6
 	jp .done ; $51c9
 .dpadToAngle:
@@ -2839,7 +2839,7 @@ UpdatePlayerControl:
 	ld e, a ; $51d3
 	add hl, de ; $51d4
 	ld a, [hl] ; $51d5
-	cp a, $ff ; $51d6
+	cp $ff ; $51d6
 	jr nz, .haveAngle ; $51d8
 	jp .done ; $51da
 .haveAngle:
@@ -2876,8 +2876,8 @@ UpdatePlayerControl:
 	ld e, [hl] ; $5214
 	farcall ReadCollisionMapCell ; $5215
 	ld a, $00 ; $5218
-	and a, $0f ; $521a
-	cp a, $0b ; $521c
+	and $0f ; $521a
+	cp $0b ; $521c
 	jr nz, .slideX ; $521e
 	ld a, $02 ; $5220
 	ld [$daef], a ; $5222
@@ -2889,7 +2889,7 @@ UpdatePlayerControl:
 	ld [hl], d ; $522e
 	jr .slideDepth ; $522f
 .slideX:
-	xor a, a ; $5231
+	xor a ; $5231
 	ld [$daef], a ; $5232
 	ld de, $0020 ; $5235
 	ld hl, $0006 ; $5238
@@ -2904,41 +2904,41 @@ UpdatePlayerControl:
 	ld a, [wPlayerMoveAngle] ; $5247
 	call GetPointAheadOfActorFixed ; $524a
 	call IsPointBlocked ; $524d
-	and a, a ; $5250
+	and a ; $5250
 	jr nz, .checkFacing ; $5251
 	ld a, [wPlayerMoveAngle] ; $5253
-	add a, $20 ; $5256
+	add $20 ; $5256
 	call GetPointAheadOfActorRanged ; $5258
 	call IsPointBlocked ; $525b
-	and a, a ; $525e
+	and a ; $525e
 	jr nz, .applyMove ; $525f
 	ld a, [wPlayerMoveAngle] ; $5261
-	add a, $e0 ; $5264
+	add $e0 ; $5264
 	call GetPointAheadOfActorRanged ; $5266
 	call IsPointBlocked ; $5269
-	and a, a ; $526c
+	and a ; $526c
 	ld d, $00 ; $526d
 	jr z, .stopMoving ; $526f
 	ld a, [wPlayerMoveAngle] ; $5271
-	add a, $40 ; $5274
+	add $40 ; $5274
 	call GetPointAheadOfActorFixed ; $5276
 	call IsPointBlocked ; $5279
-	and a, a ; $527c
+	and a ; $527c
 	ld d, $20 ; $527d
 	jr z, .stopMoving ; $527f
 	jr .setFacing ; $5281
 .applyMove:
 	ld a, [wPlayerMoveAngle] ; $5283
-	add a, $e0 ; $5286
+	add $e0 ; $5286
 	call GetPointAheadOfActorRanged ; $5288
 	call IsPointBlocked ; $528b
-	and a, a ; $528e
+	and a ; $528e
 	jr nz, .checkFacing ; $528f
 	ld a, [wPlayerMoveAngle] ; $5291
-	add a, $c0 ; $5294
+	add $c0 ; $5294
 	call GetPointAheadOfActorFixed ; $5296
 	call IsPointBlocked ; $5299
-	and a, a ; $529c
+	and a ; $529c
 	ld d, $e0 ; $529d
 	jr z, .stopMoving ; $529f
 	jr .setFacing ; $52a1
@@ -2959,7 +2959,7 @@ UpdatePlayerControl:
 	ld h, [hl] ; $52ba
 	ld l, a ; $52bb
 	ld a, [wPlayerMoveAngle] ; $52bc
-	add a, d ; $52bf
+	add d ; $52bf
 	call ProjectPointFromActor ; $52c0
 	call CheckTileTriggerAtPoint ; $52c3
 	call SetActorMoveTarget ; $52c6
@@ -2973,13 +2973,13 @@ UpdatePlayerControl:
 	ld hl, wPlayerMoving ; $52d5
 	inc [hl] ; $52d8
 	ld a, [wPlayerMoveAngleApplied] ; $52d9
-	and a, a ; $52dc
+	and a ; $52dc
 	jr nz, .clearMove ; $52dd
 	ld [hl], $00 ; $52df
 .clearMove:
 	clear_flag FLAG_PLAYER_RUNNING ; $52e1
 	pop bc ; $52e4
-	xor a, a ; $52e5
+	xor a ; $52e5
 	ret ; $52e6
 .done:
 	push bc ; $52e7
@@ -2995,7 +2995,7 @@ UpdatePlayerControl:
 	ld de, $0010 ; $52f5
 	add hl, de ; $52f8
 	ld a, l ; $52f9
-	and a, $e0 ; $52fa
+	and $e0 ; $52fa
 	ld l, a ; $52fc
 	push hl ; $52fd
 	ld hl, $000e ; $52fe
@@ -3012,7 +3012,7 @@ UpdatePlayerControl:
 	ld de, $0010 ; $530d
 	add hl, de ; $5310
 	ld a, l ; $5311
-	and a, $e0 ; $5312
+	and $e0 ; $5312
 	ld l, a ; $5314
 	push hl ; $5315
 	ld hl, $000c ; $5316
@@ -3028,7 +3028,7 @@ UpdatePlayerControl:
 	add hl, bc ; $5327
 	ld [hl], $01 ; $5328
 	pop bc ; $532a
-	xor a, a ; $532b
+	xor a ; $532b
 	ret ; $532c
 DpadMaskToAngleTable_04:
 	; $532d, 16 bytes (bytes:1)
@@ -3050,12 +3050,12 @@ DpadMaskToAngleTable_04:
 	db $ff ; 0x0f
 IsPointBlocked:
 	call IsTerrainBlockedAtPoint ; $533d
-	and a, a ; $5340
+	and a ; $5340
 	jr nz, .terrain ; $5341
 	call FindActorAtPoint ; $5343
 	jr .done ; $5346
 .terrain:
-	or a, $80 ; $5348
+	or $80 ; $5348
 .done:
 	ret ; $534a
 IsTerrainBlockedAtPoint:
@@ -3063,36 +3063,36 @@ IsTerrainBlockedAtPoint:
 	ld e, d ; $534c
 	ld d, h ; $534d
 	farcall ReadCollisionMapCell ; $534e
-	and a, $0f ; $5351
+	and $0f ; $5351
 	jr z, .done ; $5353
-	cp a, $0f ; $5355
+	cp $0f ; $5355
 	jr z, .done ; $5357
-	xor a, a ; $5359
+	xor a ; $5359
 .done:
 	pop de ; $535a
 	ret ; $535b
 TestPointInBox:
 	ld a, b ; $535c
 	dec a ; $535d
-	sub a, h ; $535e
-	cp a, d ; $535f
+	sub h ; $535e
+	cp d ; $535f
 	jr nc, .inside ; $5360
 	ld a, b ; $5362
 	dec a ; $5363
-	add a, h ; $5364
-	cp a, d ; $5365
+	add h ; $5364
+	cp d ; $5365
 	jr c, .inside ; $5366
 	ld a, c ; $5368
 	dec a ; $5369
-	sub a, l ; $536a
-	cp a, e ; $536b
+	sub l ; $536a
+	cp e ; $536b
 	jr nc, .inside ; $536c
 	ld a, c ; $536e
 	dec a ; $536f
-	add a, l ; $5370
-	cp a, e ; $5371
+	add l ; $5370
+	cp e ; $5371
 	jr c, .inside ; $5372
-	xor a, a ; $5374
+	xor a ; $5374
 	jr .done ; $5375
 .inside:
 	ld a, $ff ; $5377
@@ -3109,24 +3109,24 @@ IsPointNearPlayer:
 	ld h, [hl] ; $5383
 	ld l, a ; $5384
 	ld a, l ; $5385
-	sub a, e ; $5386
+	sub e ; $5386
 	ld l, a ; $5387
 	ld a, h ; $5388
-	sbc a, d ; $5389
+	sbc d ; $5389
 	ld h, a ; $538a
 	bit 7, h ; $538b
 	jr z, .absX ; $538d
-	xor a, a ; $538f
-	sub a, l ; $5390
+	xor a ; $538f
+	sub l ; $5390
 	ld l, a ; $5391
-	sbc a, a ; $5392
-	sub a, h ; $5393
+	sbc a ; $5392
+	sub h ; $5393
 	ld h, a ; $5394
 .absX:
 	srl h ; $5395
 	rr l ; $5397
 	ld a, h ; $5399
-	and a, a ; $539a
+	and a ; $539a
 	jr nz, .tooFar ; $539b
 	ld a, l ; $539d
 	call GetSquareOfByte ; $539e
@@ -3137,24 +3137,24 @@ IsPointNearPlayer:
 	ld h, [hl] ; $53a7
 	ld l, a ; $53a8
 	ld a, l ; $53a9
-	sub a, c ; $53aa
+	sub c ; $53aa
 	ld l, a ; $53ab
 	ld a, h ; $53ac
-	sbc a, b ; $53ad
+	sbc b ; $53ad
 	ld h, a ; $53ae
 	bit 7, h ; $53af
 	jr z, .absDepth ; $53b1
-	xor a, a ; $53b3
-	sub a, l ; $53b4
+	xor a ; $53b3
+	sub l ; $53b4
 	ld l, a ; $53b5
-	sbc a, a ; $53b6
-	sub a, h ; $53b7
+	sbc a ; $53b6
+	sub h ; $53b7
 	ld h, a ; $53b8
 .absDepth:
 	srl h ; $53b9
 	rr l ; $53bb
 	ld a, h ; $53bd
-	and a, a ; $53be
+	and a ; $53be
 	jr nz, .tooFar ; $53bf
 	ld a, l ; $53c1
 	call GetSquareOfByte ; $53c2
@@ -3166,7 +3166,7 @@ IsPointNearPlayer:
 	ld a, $01 ; $53ce
 	jr .done ; $53d0
 .tooFar:
-	xor a, a ; $53d2
+	xor a ; $53d2
 .done:
 	pop hl ; $53d3
 	pop de ; $53d4
@@ -3193,7 +3193,7 @@ FindActorAtPoint:
 	ld c, a ; $53eb
 	ld a, [hl+] ; $53ec
 	ld b, a ; $53ed
-	and a, a ; $53ee
+	and a ; $53ee
 	jr z, .done ; $53ef
 	push hl ; $53f1
 	ld hl, $daf2 ; $53f2
@@ -3206,22 +3206,22 @@ FindActorAtPoint:
 	ld h, [hl] ; $53fd
 	ld l, a ; $53fe
 	ld a, l ; $53ff
-	sub a, e ; $5400
+	sub e ; $5400
 	ld l, a ; $5401
 	ld a, h ; $5402
-	sbc a, d ; $5403
+	sbc d ; $5403
 	ld h, a ; $5404
 	bit 7, h ; $5405
 	jr z, .checkX ; $5407
-	xor a, a ; $5409
-	sub a, l ; $540a
+	xor a ; $5409
+	sub l ; $540a
 	ld l, a ; $540b
-	sbc a, a ; $540c
-	sub a, h ; $540d
+	sbc a ; $540c
+	sub h ; $540d
 	ld h, a ; $540e
 .checkX:
 	ld a, h ; $540f
-	and a, a ; $5410
+	and a ; $5410
 	jr nz, .nextActor ; $5411
 	ld a, l ; $5413
 	call GetSquareOfByte ; $5414
@@ -3236,23 +3236,23 @@ FindActorAtPoint:
 	ld h, [hl] ; $5423
 	ld l, a ; $5424
 	ld a, l ; $5425
-	sub a, e ; $5426
+	sub e ; $5426
 	ld l, a ; $5427
 	ld a, h ; $5428
-	sbc a, d ; $5429
+	sbc d ; $5429
 	ld h, a ; $542a
 	bit 7, h ; $542b
 	jr z, .checkDepth ; $542d
-	xor a, a ; $542f
-	sub a, l ; $5430
+	xor a ; $542f
+	sub l ; $5430
 	ld l, a ; $5431
-	sbc a, a ; $5432
-	sub a, h ; $5433
+	sbc a ; $5432
+	sub h ; $5433
 	ld h, a ; $5434
 .checkDepth:
 	pop de ; $5435
 	ld a, h ; $5436
-	and a, a ; $5437
+	and a ; $5437
 	jr nz, .nextActor ; $5438
 	ld a, l ; $543a
 	call GetSquareOfByte ; $543b
@@ -3288,7 +3288,7 @@ BuildNearbyActorList:
 	inc c ; $5464
 	ld a, [bc] ; $5465
 	dec c ; $5466
-	or a, a ; $5467
+	or a ; $5467
 	jr z, .done ; $5468
 	ld hl, $0030 ; $546a
 	add hl, bc ; $546d
@@ -3308,22 +3308,22 @@ BuildNearbyActorList:
 	ld h, [hl] ; $5485
 	ld l, a ; $5486
 	ld a, l ; $5487
-	sub a, e ; $5488
+	sub e ; $5488
 	ld l, a ; $5489
 	ld a, h ; $548a
-	sbc a, d ; $548b
+	sbc d ; $548b
 	ld h, a ; $548c
 	bit 7, h ; $548d
 	jr z, .withinRange ; $548f
-	xor a, a ; $5491
-	sub a, l ; $5492
+	xor a ; $5491
+	sub l ; $5492
 	ld l, a ; $5493
-	sbc a, a ; $5494
-	sub a, h ; $5495
+	sbc a ; $5494
+	sub h ; $5495
 	ld h, a ; $5496
 .withinRange:
 	ld a, h ; $5497
-	and a, $fe ; $5498
+	and $fe ; $5498
 	jr nz, .done ; $549a
 	ld hl, $d00c ; $549c
 	ld a, [hl+] ; $549f
@@ -3335,22 +3335,22 @@ BuildNearbyActorList:
 	ld h, [hl] ; $54a7
 	ld l, a ; $54a8
 	ld a, l ; $54a9
-	sub a, e ; $54aa
+	sub e ; $54aa
 	ld l, a ; $54ab
 	ld a, h ; $54ac
-	sbc a, d ; $54ad
+	sbc d ; $54ad
 	ld h, a ; $54ae
 	bit 7, h ; $54af
 	jr z, .next ; $54b1
-	xor a, a ; $54b3
-	sub a, l ; $54b4
+	xor a ; $54b3
+	sub l ; $54b4
 	ld l, a ; $54b5
-	sbc a, a ; $54b6
-	sub a, h ; $54b7
+	sbc a ; $54b6
+	sub h ; $54b7
 	ld h, a ; $54b8
 .next:
 	ld a, h ; $54b9
-	and a, $fe ; $54ba
+	and $fe ; $54ba
 	jr nz, .done ; $54bc
 	pop hl ; $54be
 	ld a, c ; $54bf
@@ -3367,7 +3367,7 @@ BuildNearbyActorList:
 	pop af ; $54cb
 	dec a ; $54cc
 	jr nz, .actorLoop ; $54cd
-	xor a, a ; $54cf
+	xor a ; $54cf
 	ld [hl+], a ; $54d0
 	ld [hl+], a ; $54d1
 	pop hl ; $54d2
@@ -3389,7 +3389,7 @@ BuildActorQueryList:
 	inc c ; $54e5
 	ld a, [bc] ; $54e6
 	dec c ; $54e7
-	or a, a ; $54e8
+	or a ; $54e8
 	jr z, .done ; $54e9
 	ld hl, $0030 ; $54eb
 	add hl, bc ; $54ee
@@ -3414,7 +3414,7 @@ BuildActorQueryList:
 	pop af ; $5508
 	dec a ; $5509
 	jr nz, .actorLoop ; $550a
-	xor a, a ; $550c
+	xor a ; $550c
 	ld [hl+], a ; $550d
 	ld [hl+], a ; $550e
 	pop hl ; $550f
@@ -3468,17 +3468,17 @@ DrawActorSprite:
 	ld l, a ; $5554
 	bit 7, h ; $5555
 	jr z, .offscreen ; $5557
-	xor a, a ; $5559
-	sub a, l ; $555a
+	xor a ; $5559
+	sub l ; $555a
 	ld l, a ; $555b
-	sbc a, a ; $555c
-	sub a, h ; $555d
+	sbc a ; $555c
+	sub h ; $555d
 	ld h, a ; $555e
-	xor a, a ; $555f
-	sub a, e ; $5560
+	xor a ; $555f
+	sub e ; $5560
 	ld e, a ; $5561
-	sbc a, a ; $5562
-	sub a, d ; $5563
+	sbc a ; $5562
+	sub d ; $5563
 	ld d, a ; $5564
 	srl h ; $5565
 	rr l ; $5567
@@ -3491,10 +3491,10 @@ DrawActorSprite:
 	ld h, [hl] ; $5571
 	ld l, a ; $5572
 	ld a, l ; $5573
-	sub a, e ; $5574
+	sub e ; $5574
 	ld l, a ; $5575
 	ld a, h ; $5576
-	sbc a, d ; $5577
+	sbc d ; $5577
 	ld h, a ; $5578
 	jr .queue ; $5579
 .offscreen:
@@ -3508,7 +3508,7 @@ DrawActorSprite:
 	ld de, $0090 ; $5583
 	add hl, de ; $5586
 	ld a, h ; $5587
-	cp a, $14 ; $5588
+	cp $14 ; $5588
 	jr nc, .done ; $558a
 	add hl, hl ; $558c
 	add hl, hl ; $558d
@@ -3530,7 +3530,7 @@ DrawActorSprite:
 	pop de ; $55a3
 	ld a, h ; $55a4
 	inc a ; $55a5
-	cp a, $16 ; $55a6
+	cp $16 ; $55a6
 	jr nc, .done ; $55a8
 	add hl, hl ; $55aa
 	add hl, hl ; $55ab
@@ -3557,7 +3557,7 @@ AdvanceActorAnimation:
 	ld hl, $002f ; $55c9
 	add hl, bc ; $55cc
 	ld a, [hl] ; $55cd
-	and a, a ; $55ce
+	and a ; $55ce
 	jr nz, .frameReady ; $55cf
 .nextCommand:
 	push bc ; $55d1
@@ -3576,11 +3576,11 @@ AdvanceActorAnimation:
 	ld d, b ; $55e4
 	pop bc ; $55e5
 	ld a, e ; $55e6
-	cp a, $f0 ; $55e7
+	cp $f0 ; $55e7
 	jr c, .setFrameDelay ; $55e9
-	cp a, $ff ; $55eb
+	cp $ff ; $55eb
 	jr z, .jumpToFrames ; $55ed
-	cp a, $fe ; $55ef
+	cp $fe ; $55ef
 	jr z, .setAnimation ; $55f1
 	ld hl, $002f ; $55f3
 	add hl, bc ; $55f6
@@ -3642,9 +3642,9 @@ AdvanceActorAnimation:
 	pop hl ; $5643
 	ld b, [hl] ; $5644
 	ld a, c ; $5645
-	sub a, b ; $5646
+	sub b ; $5646
 	jr nc, .storeFrame ; $5647
-	xor a, a ; $5649
+	xor a ; $5649
 	jr .storeFrame ; $564a
 .noFlip:
 	ld hl, $0018 ; $564c
@@ -3656,9 +3656,9 @@ AdvanceActorAnimation:
 	pop hl ; $5656
 	ld b, [hl] ; $5657
 	ld a, c ; $5658
-	sub a, b ; $5659
+	sub b ; $5659
 	jr nc, .storeFrame ; $565a
-	xor a, a ; $565c
+	xor a ; $565c
 .storeFrame:
 	pop bc ; $565d
 	ld hl, $002f ; $565e
@@ -3667,7 +3667,7 @@ AdvanceActorAnimation:
 	ld hl, $0033 ; $5663
 	add hl, bc ; $5666
 	ld a, [hl] ; $5667
-	cp a, e ; $5668
+	cp e ; $5668
 	jr z, .done ; $5669
 	ld [hl], e ; $566b
 	ld hl, $0030 ; $566c
@@ -3691,25 +3691,25 @@ UpdateActorFacingFromHeading:
 	ld hl, $0035 ; $5687
 	add hl, bc ; $568a
 	ld a, [hl] ; $568b
-	cp a, $01 ; $568c
+	cp $01 ; $568c
 	jr z, .store ; $568e
 	ld hl, $0034 ; $5690
 	add hl, bc ; $5693
 	ld a, [hl] ; $5694
-	add a, $08 ; $5695
+	add $08 ; $5695
 	swap a ; $5697
-	and a, $0f ; $5699
-	add a, LOW(DirectionToFacing_04) ; $569b
+	and $0f ; $5699
+	add LOW(DirectionToFacing_04) ; $569b
 	ld l, a ; $569d
-	adc a, HIGH(DirectionToFacing_04) ; $569e
-	sub a, l ; $56a0
+	adc HIGH(DirectionToFacing_04) ; $569e
+	sub l ; $56a0
 	ld h, a ; $56a1
 	ld d, [hl] ; $56a2
 .store:
 	ld hl, $0032 ; $56a3
 	add hl, bc ; $56a6
 	ld a, [hl] ; $56a7
-	cp a, d ; $56a8
+	cp d ; $56a8
 	jr z, .done ; $56a9
 	ld [hl], d ; $56ab
 	ld hl, $0030 ; $56ac
@@ -3736,8 +3736,8 @@ QueueActorFrameTileCopy:
 	ld h, [hl] ; $56d6
 	ld l, a ; $56d7
 	ld a, e ; $56d8
-	add a, a ; $56d9
-	add a, l ; $56da
+	add a ; $56d9
+	add l ; $56da
 	ld l, a ; $56db
 	jr nc, .queue ; $56dc
 	inc h ; $56de
@@ -3747,7 +3747,7 @@ QueueActorFrameTileCopy:
 	ld l, c ; $56e5
 	ld h, b ; $56e6
 	ld a, d ; $56e7
-	add a, l ; $56e8
+	add l ; $56e8
 	ld l, a ; $56e9
 	jr nc, .done ; $56ea
 	inc h ; $56ec
@@ -3787,9 +3787,9 @@ IsActorJumping:
 	ld a, [hl+] ; $571c
 	ld h, [hl] ; $571d
 	ld l, a ; $571e
-	or a, h ; $571f
-	or a, d ; $5720
-	or a, e ; $5721
+	or h ; $571f
+	or d ; $5720
+	or e ; $5721
 	pop hl ; $5722
 	pop de ; $5723
 	pop bc ; $5724
@@ -3815,7 +3815,7 @@ IsActorMoving:
 	push hl ; $573b
 	wram_bank $04 ; $573c
 	ld a, $05 ; $5742
-	add a, l ; $5744
+	add l ; $5744
 	ld l, a ; $5745
 	jr nc, .readFlag ; $5746
 	inc h ; $5748
@@ -3839,7 +3839,7 @@ WaitActorMoveDone:
 	call AdvanceFrame ; $575f
 	dec bc ; $5762
 	ld a, c ; $5763
-	or a, b ; $5764
+	or b ; $5764
 	jr nz, .waitLoop ; $5765
 .done:
 	pop bc ; $5767

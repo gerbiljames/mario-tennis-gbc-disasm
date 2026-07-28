@@ -40,18 +40,18 @@ SmallCharTestExitTriggers_0f:
 	ld a, [hl] ; $40d3
 	dec a ; $40d4
 	ld hl, wMapSceneStage2 ; $40d5
-	add a, a ; $40d8
+	add a ; $40d8
 	jr nc, .checkMax ; $40d9
 	ld a, [hl] ; $40db
 	dec a ; $40dc
 	jr .compare ; $40dd
 .checkMax:
 	rra ; $40df
-	cp a, [hl] ; $40e0
+	cp [hl] ; $40e0
 	jr c, .compare ; $40e1
-	xor a, a ; $40e3
+	xor a ; $40e3
 .compare:
-	cp a, $29 ; $40e4
+	cp $29 ; $40e4
 	jr nc, .loop ; $40e6
 	ld hl, wMapSceneStage2 ; $40e8
 	ld a, [hl] ; $40eb
@@ -64,8 +64,8 @@ SmallCharTestNpc03_0f:
 	ld hl, wMapSceneStage ; $40f4
 	ld a, [hl] ; $40f7
 	inc [hl] ; $40f8
-	and a, $03 ; $40f9
-	add a, $26 ; $40fb
+	and $03 ; $40f9
+	add $26 ; $40fb
 	call SetPlayerActorObjectDef ; $40fd
 	ret ; $4100
 SmallCharTestNpc04_0f:
@@ -73,18 +73,18 @@ SmallCharTestNpc04_0f:
 	ld a, [hl] ; $4104
 	inc a ; $4105
 	ld hl, wMapSceneStage2 ; $4106
-	add a, a ; $4109
+	add a ; $4109
 	jr nc, .checkMax ; $410a
 	ld a, [hl] ; $410c
 	dec a ; $410d
 	jr .compare ; $410e
 .checkMax:
 	rra ; $4110
-	cp a, [hl] ; $4111
+	cp [hl] ; $4111
 	jr c, .compare ; $4112
-	xor a, a ; $4114
+	xor a ; $4114
 .compare:
-	cp a, $2a ; $4115
+	cp $2a ; $4115
 	jr nc, SmallCharTestExitTriggers_0f.loop ; $4117
 	ld hl, $002a ; $4119
 	ld a, l ; $411c
@@ -125,7 +125,7 @@ SmallCharTestTileTriggers_0f:
 	map_script $01, FACEMASK_ANY, $0000, SmallCharTestTile01_0f, $00, $00
 	db $ff
 SmallCharTestInitScript_0f:
-	xor a, a ; $41a4
+	xor a ; $41a4
 	ld [wMapSceneStage], a ; $41a5
 	farcall GetObjectDefCount ; $41a8
 	ld [wMapSceneStage2], a ; $41ab
@@ -135,7 +135,7 @@ SmallCharTestInitScript_0f:
 	ret ; $41b6
 SmallCharTestButtonTask_0f:
 	ldh a, [hInputRisingEdge] ; $41b7
-	and a, $f0 ; $41b9
+	and $f0 ; $41b9
 	jr z, .done ; $41bb
 	script_set_anim ACTOR_PLAYER, $01 ; $41bd
 .done:
@@ -261,7 +261,7 @@ AwardsCeremonyTile01_0f:
 	script_set_position $16, $0b00, $1b00 ; $450a
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $4515
 	ld d, $58 ; $4518
-	add a, d ; $451a
+	add d ; $451a
 	ld d, a ; $451b
 	script_get_actor_state $15 ; $451c
 	ld c, l ; $4521
@@ -635,7 +635,7 @@ AwardsCeremonyTile02_0f:
 	call DelayFrames ; $4e3b
 	ld a, [wStoryModeGenderOfMainCharacter] ; $4e3e
 	ld d, $26 ; $4e41
-	add a, d ; $4e43
+	add d ; $4e43
 	ld d, a ; $4e44
 	script_get_actor_state $16 ; $4e45
 	ld c, l ; $4e4a
@@ -654,7 +654,7 @@ AwardsCeremonyTile02_0f:
 	call WaitFadeEnd ; $4e86
 	ld b, $01 ; $4e89
 	ld a, [wStoryModeGenderOfMainCharacter] ; $4e8b
-	add a, $04 ; $4e8e
+	add $04 ; $4e8e
 	ld c, a ; $4e90
 	farcall RunStorySceneByMode ; $4e91
 	ld a, $06 ; $4e94
@@ -706,7 +706,7 @@ AwardsCeremonyTile02_0f:
 	script_set_position $16, $0d00, $0d60 ; $4f73
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $4f7e
 	ld d, $58 ; $4f81
-	add a, d ; $4f83
+	add d ; $4f83
 	ld d, a ; $4f84
 	script_get_actor_state $11 ; $4f85
 	ld c, l ; $4f8a
@@ -920,7 +920,7 @@ AwardsCeremonyTile02_0f:
 	call DelayFrames ; $550e
 	ld a, [wStoryModeGenderOfMainCharacter] ; $5511
 	ld d, $26 ; $5514
-	add a, d ; $5516
+	add d ; $5516
 	ld d, a ; $5517
 	script_get_actor_state $16 ; $5518
 	ld c, l ; $551d
@@ -943,8 +943,8 @@ AwardsCeremonyTile02_0f:
 	sla a ; $5562
 	ld c, a ; $5564
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $5565
-	xor a, d ; $5568
-	or a, c ; $5569
+	xor d ; $5568
+	or c ; $5569
 	ld c, a ; $556a
 	farcall RunStorySceneByMode ; $556b
 	ld a, $06 ; $556e
@@ -975,12 +975,12 @@ AwardsCeremonyInitScript_0f:
 .setObjectDefs:
 	call SetPlayerAndPartnerObjectDefs ; $55c3
 	ld a, [wStoryModeEntryPoint] ; $55c6
-	cp a, $0a ; $55c9
+	cp $0a ; $55c9
 	jp z, CutsceneStompScreenShake.arrival ; $55cb
-	cp a, $0b ; $55ce
+	cp $0b ; $55ce
 	jp z, CutsceneStompScreenShake.doubles ; $55d0
 	call CheckAwardsCeremonyRivalSceneDone ; $55d3
-	and a, $01 ; $55d6
+	and $01 ; $55d6
 	jr z, .checkDoubles ; $55d8
 	script_move_target $08, $0900, $1d00 ; $55da
 	script_wait_move $08 ; $55e5
@@ -1016,7 +1016,7 @@ AwardsCeremonyInitScript_0f:
 AwardsCeremonyNpc08_0f:
 	script_set_text Text_25_125 ; $5628
 	call CheckAwardsCeremonyRivalSceneDone ; $562e
-	and a, $01 ; $5631
+	and $01 ; $5631
 	jr z, .speak ; $5633
 	script_set_text Text_25_129 ; $5635
 .speak:
@@ -1025,7 +1025,7 @@ AwardsCeremonyNpc08_0f:
 ReplacePlayerWithStandInActor:
 	ld a, [wStoryModeGenderOfMainCharacter] ; $5641
 	ld d, $56 ; $5644
-	add a, d ; $5646
+	add d ; $5646
 	ld d, a ; $5647
 	script_get_actor_state $16 ; $5648
 	ld c, l ; $564d
@@ -1281,7 +1281,7 @@ CutsceneStompScreenShake:
 	ret ; $5aeb
 SpeakPartnerVariantLine:
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $5aec
-	and a, a ; $5aef
+	and a ; $5aef
 	jr nz, .femalePartner ; $5af0
 	script_speak ACTOR_PARTNER ; $5af2
 	farcall AdvanceDialogueTextCursor ; $5af7
@@ -1306,7 +1306,7 @@ AwardsCeremonyArrivalIntro:
 	script_player_speed $00ff ; $5b4d
 	script_move_player $0c00, $0b00 ; $5b53
 	farcall WaitPlayerMoveDone ; $5b5d
-	xor a, a ; $5b60
+	xor a ; $5b60
 	ld [wStoryModeShowLocationName], a ; $5b61
 	script_fade_in $04 ; $5b64
 	call WaitFadeEnd ; $5b69
@@ -1555,7 +1555,7 @@ TournamentNpc0A_0f:
 	farcall RunDialogueYesNoPrompt ; $60e9
 	farcall ScriptCloseDialogueWindow ; $60ec
 	script_wait_frames $05 ; $60ef
-	and a, a ; $60f6
+	and a ; $60f6
 	jr z, .speak ; $60f7
 	farcall AdvanceDialogueTextCursor ; $60f9
 .speak:
@@ -1582,7 +1582,7 @@ TournamentFacingScripts_0f:
 	map_script $01, FACEMASK_ANY, $0000, TournamentFacing01_0f, $00, $00
 	db $ff
 TournamentFacing01_0f:
-	xor a, a ; $6174
+	xor a ; $6174
 	ldh [hBGColumnBlitPending], a ; $6175
 	ldh [hBGRowBlitPending], a ; $6177
 	ldh [hScrollY], a ; $6179
@@ -1640,7 +1640,7 @@ TournamentInitScript_0f:
 	ld hl, UpdateTournamentActorDrawModes_0f ; $6211
 	call RegisterFrameTask ; $6214
 	ld a, [wStoryModeEntryPoint] ; $6217
-	cp a, $ff ; $621a
+	cp $ff ; $621a
 	jr z, .inProgress ; $621c
 	clear_flag FLAG_ISLAND_OPEN_IN_PROGRESS ; $621e
 .inProgress:
@@ -1648,7 +1648,7 @@ TournamentInitScript_0f:
 	jp z, .notInProgress ; $6224
 	call ComputeIslandOpenRound ; $6227
 	ld a, [wMapSceneStage] ; $622a
-	and a, a ; $622d
+	and a ; $622d
 	jr nz, .singles ; $622e
 	ldh a, [hRomBank] ; $6230
 	ld hl, IslandOpenRoundActors_0f ; $6232
@@ -1698,17 +1698,17 @@ TournamentInitScript_0f:
 	ret ; $62ea
 .notInProgress:
 	ld a, [wStoryModeEntryPoint] ; $62eb
-	cp a, $0f ; $62ee
+	cp $0f ; $62ee
 	jr nz, .placeActors ; $62f0
 	call IslandOpenArrivalCutscene ; $62f2
 	ret ; $62f5
 .placeActors:
-	cp a, $0a ; $62f6
+	cp $0a ; $62f6
 	jr nz, .placeActorsDoubles ; $62f8
 	call IslandOpenSinglesMatchReturn ; $62fa
 	ret ; $62fd
 .placeActorsDoubles:
-	cp a, $0b ; $62fe
+	cp $0b ; $62fe
 	jr nz, .done ; $6300
 	call $76a3 ; $6302
 	ret ; $6305
@@ -1749,13 +1749,13 @@ SetActorDrawModeFromSceneTile_0f:
 	ld hl, $000e ; $6343
 	add hl, bc ; $6346
 	ld a, [hl+] ; $6347
-	add a, $40 ; $6348
+	add $40 ; $6348
 	ld a, [hl] ; $634a
-	adc a, $00 ; $634b
+	adc $00 ; $634b
 	ld e, a ; $634d
 	dec e ; $634e
 	pop af ; $634f
-	or a, a ; $6350
+	or a ; $6350
 	jr z, .readCell ; $6351
 	dec e ; $6353
 	dec e ; $6354
@@ -1763,27 +1763,27 @@ SetActorDrawModeFromSceneTile_0f:
 	push de ; $6355
 	call ReadSceneTilemapTile_0f ; $6356
 	pop de ; $6359
-	and a, $87 ; $635a
-	cp a, $05 ; $635c
+	and $87 ; $635a
+	cp $05 ; $635c
 	jr nz, .checkBelow ; $635e
 	wram_bank $04 ; $6360
 	ld hl, $0020 ; $6366
 	add hl, bc ; $6369
 	ld a, [hl] ; $636a
-	xor a, $01 ; $636b
+	xor $01 ; $636b
 	ld [hl], a ; $636d
 	ret ; $636e
 .checkBelow:
 	inc d ; $636f
 	call ReadSceneTilemapTile_0f ; $6370
-	and a, $07 ; $6373
-	cp a, $05 ; $6375
+	and $07 ; $6373
+	cp $05 ; $6375
 	jr nz, .actorLoop ; $6377
 	wram_bank $04 ; $6379
 	ld hl, $0020 ; $637f
 	add hl, bc ; $6382
 	ld a, [hl] ; $6383
-	xor a, $01 ; $6384
+	xor $01 ; $6384
 	ld [hl], a ; $6386
 	ret ; $6387
 .actorLoop:
@@ -1815,9 +1815,9 @@ SetActorDrawModeFromSceneTile_0f:
 	ld hl, $000e ; $63b9
 	add hl, bc ; $63bc
 	ld a, [hl+] ; $63bd
-	add a, $40 ; $63be
+	add $40 ; $63be
 	ld a, [hl] ; $63c0
-	adc a, $00 ; $63c1
+	adc $00 ; $63c1
 	ld e, a ; $63c3
 	dec e ; $63c4
 	dec e ; $63c5
@@ -1825,27 +1825,27 @@ SetActorDrawModeFromSceneTile_0f:
 	push de ; $63c7
 	call ReadSceneTilemapTile_0f ; $63c8
 	pop de ; $63cb
-	and a, $87 ; $63cc
-	cp a, $05 ; $63ce
+	and $87 ; $63cc
+	cp $05 ; $63ce
 	jr nz, .nextActor ; $63d0
 	wram_bank $04 ; $63d2
 	ld hl, $0020 ; $63d8
 	add hl, bc ; $63db
 	ld a, [hl] ; $63dc
-	xor a, $01 ; $63dd
+	xor $01 ; $63dd
 	ld [hl], a ; $63df
 	ret ; $63e0
 .nextActor:
 	inc d ; $63e1
 	call ReadSceneTilemapTile_0f ; $63e2
-	and a, $07 ; $63e5
-	cp a, $05 ; $63e7
+	and $07 ; $63e5
+	cp $05 ; $63e7
 	jr nz, .done ; $63e9
 	wram_bank $04 ; $63eb
 	ld hl, $0020 ; $63f1
 	add hl, bc ; $63f4
 	ld a, [hl] ; $63f5
-	xor a, $01 ; $63f6
+	xor $01 ; $63f6
 	ld [hl], a ; $63f8
 	ret ; $63f9
 .done:
@@ -1864,7 +1864,7 @@ ReadSceneTilemapTile_0f:
 	srl h ; $6415
 	rr l ; $6417
 	ld a, d ; $6419
-	add a, l ; $641a
+	add l ; $641a
 	ld l, a ; $641b
 	jr nc, .read ; $641c
 	inc h ; $641e
@@ -2226,7 +2226,7 @@ IslandOpenRound1DoublesNpc0A_0f:
 	farcall RunDialogueYesNoPrompt ; $6be5
 	farcall ScriptCloseDialogueWindow ; $6be8
 	script_wait_frames $05 ; $6beb
-	and a, a ; $6bf2
+	and a ; $6bf2
 	jr z, .speak ; $6bf3
 	farcall AdvanceDialogueTextCursor ; $6bf5
 .speak:
@@ -2239,7 +2239,7 @@ IslandOpenRound1DoublesNpc0B_0f:
 	farcall RunDialogueYesNoPrompt ; $6c09
 	farcall ScriptCloseDialogueWindow ; $6c0c
 	script_wait_frames $05 ; $6c0f
-	and a, a ; $6c16
+	and a ; $6c16
 	jr z, .speak ; $6c17
 	farcall AdvanceDialogueTextCursor ; $6c19
 .speak:
@@ -2252,7 +2252,7 @@ IslandOpenRound1DoublesNpc0D_0f:
 	farcall RunDialogueYesNoPrompt ; $6c2d
 	farcall ScriptCloseDialogueWindow ; $6c30
 	script_wait_frames $05 ; $6c33
-	and a, a ; $6c3a
+	and a ; $6c3a
 	jr z, .speak ; $6c3b
 	farcall AdvanceDialogueTextCursor ; $6c3d
 .speak:
@@ -2296,7 +2296,7 @@ IslandOpenRound2DoublesNpc08_0f:
 	farcall RunDialogueYesNoPrompt ; $6d72
 	farcall ScriptCloseDialogueWindow ; $6d75
 	script_wait_frames $05 ; $6d78
-	and a, a ; $6d7f
+	and a ; $6d7f
 	jr z, .speak ; $6d80
 	farcall AdvanceDialogueTextCursor ; $6d82
 .speak:
@@ -2309,7 +2309,7 @@ IslandOpenRound2DoublesNpc0D_0f:
 	farcall RunDialogueYesNoPrompt ; $6d96
 	farcall ScriptCloseDialogueWindow ; $6d99
 	script_wait_frames $05 ; $6d9c
-	and a, a ; $6da3
+	and a ; $6da3
 	jr z, .speak ; $6da4
 	farcall AdvanceDialogueTextCursor ; $6da6
 .speak:
@@ -2353,7 +2353,7 @@ IslandOpenRound3DoublesNpc0C_0f:
 	farcall RunDialogueYesNoPrompt ; $6edb
 	farcall ScriptCloseDialogueWindow ; $6ede
 	script_wait_frames $05 ; $6ee1
-	and a, a ; $6ee8
+	and a ; $6ee8
 	jr z, .speak ; $6ee9
 	farcall AdvanceDialogueTextCursor ; $6eeb
 .speak:
@@ -2366,7 +2366,7 @@ IslandOpenRound3DoublesNpc0B_0f:
 	farcall RunDialogueYesNoPrompt ; $6eff
 	farcall ScriptCloseDialogueWindow ; $6f02
 	script_wait_frames $05 ; $6f05
-	and a, a ; $6f0c
+	and a ; $6f0c
 	jr z, .speak ; $6f0d
 	farcall AdvanceDialogueTextCursor ; $6f0f
 .speak:
@@ -2378,7 +2378,7 @@ IslandOpenRound3DoublesNpc0B_0f:
 	farcall RunDialogueYesNoPrompt ; $6f23
 	farcall ScriptCloseDialogueWindow ; $6f26
 	script_wait_frames $05 ; $6f29
-	and a, a ; $6f30
+	and a ; $6f30
 	jr z, .speakAlt ; $6f31
 	farcall AdvanceDialogueTextCursor ; $6f33
 .speakAlt:
@@ -2391,14 +2391,14 @@ TournamentNpc03_0f:
 	farcall RunDialogueYesNoPrompt ; $6f47
 	farcall ScriptCloseDialogueWindow ; $6f4a
 	script_wait_frames $05 ; $6f4d
-	and a, a ; $6f54
+	and a ; $6f54
 	jr nz, .altLine ; $6f55
 	script_speak $03 ; $6f57
 	ret ; $6f5c
 .altLine:
 	ld hl, $24ae ; $6f5d
 	ld a, [wMapSceneStage] ; $6f60
-	add a, l ; $6f63
+	add l ; $6f63
 	ld l, a ; $6f64
 	jr nc, .setCursor ; $6f65
 	inc h ; $6f67
@@ -2409,7 +2409,7 @@ TournamentNpc03_0f:
 TournamentNpc04_0f:
 	ld hl, $24b2 ; $6f71
 	ld a, [wMapSceneStage] ; $6f74
-	add a, l ; $6f77
+	add l ; $6f77
 	ld l, a ; $6f78
 	jr nc, .setCursor ; $6f79
 	inc h ; $6f7b
@@ -2465,7 +2465,7 @@ IslandOpenRoundCallCutscene:
 	script_wait_idle $04 ; $708d
 	script_move_target $05, $1000, $1700 ; $7092
 	ld a, [wMapSceneStage] ; $709d
-	cp a, $03 ; $70a0
+	cp $03 ; $70a0
 	jr z, .partnerReady ; $70a2
 	script_move_target $04, $1800, $1700 ; $70a4
 	script_wait_move $04 ; $70af
@@ -2664,7 +2664,7 @@ GetIslandOpenRoundParams:
 	ld b, $01 ; $7425
 	ld a, [wMapSceneStage] ; $7427
 	inc a ; $742a
-	cp a, $03 ; $742b
+	cp $03 ; $742b
 	jr c, .store ; $742d
 	dec a ; $742f
 .store:
@@ -2672,7 +2672,7 @@ GetIslandOpenRoundParams:
 	ld d, $00 ; $7431
 	ret ; $7433
 ShowTournamentRankingBoard_0f:
-	xor a, a ; $7434
+	xor a ; $7434
 	ldh [hBGColumnBlitPending], a ; $7435
 	ldh [hBGRowBlitPending], a ; $7437
 	ldh [hScrollY], a ; $7439
@@ -2686,7 +2686,7 @@ ShowTournamentRankingBoard_0f:
 QueueUpcomingRoundNameText:
 	ld a, [wMapSceneStage] ; $744d
 	ld hl, $2861 ; $7450
-	add a, l ; $7453
+	add l ; $7453
 	ld l, a ; $7454
 	jr nc, .queue ; $7455
 	inc h ; $7457
@@ -2719,10 +2719,10 @@ CheckIslandOpenVictoryTransition:
 IslandOpenSinglesMatchReturn:
 	wram_bank $04 ; $7487
 	ld a, [wMatchExitRequest] ; $748d
-	cp a, $01 ; $7490
+	cp $01 ; $7490
 	jr z, .won ; $7492
 	ld a, [wMatchWinLoseFlag] ; $7494
-	cp a, $01 ; $7497
+	cp $01 ; $7497
 	jp z, .lost ; $7499
 .won:
 	call LoadIslandOpenRoundNpcs ; $749c
@@ -2732,7 +2732,7 @@ IslandOpenSinglesMatchReturn:
 	clear_flag FLAG_TOURNAMENT_NPC05_TALKED_SINGLES ; $74a3
 	clear_flag FLAG_COURT2_SPECTATORS_TALKED_SINGLES ; $74a6
 	call CheckIslandOpenVictoryTransition ; $74a9
-	and a, a ; $74ac
+	and a ; $74ac
 	jr z, .returnToSite ; $74ad
 	ret ; $74af
 .returnToSite:
@@ -2751,16 +2751,16 @@ IslandOpenSinglesMatchReturn:
 	ld hl, $0037 ; $74d1
 	add hl, bc ; $74d4
 	ld a, [hl] ; $74d5
-	xor a, $20 ; $74d6
+	xor $20 ; $74d6
 	ld [hl], a ; $74d8
 	script_fade_in $04 ; $74d9
 	call WaitFadeEnd ; $74de
 	ld a, [wMapSceneStage] ; $74e1
-	add a, a ; $74e4
-	add a, LOW(Data_0f_7699) ; $74e5
+	add a ; $74e4
+	add LOW(Data_0f_7699) ; $74e5
 	ld l, a ; $74e7
-	adc a, HIGH(Data_0f_7699) ; $74e8
-	sub a, l ; $74ea
+	adc HIGH(Data_0f_7699) ; $74e8
+	sub l ; $74ea
 	ld h, a ; $74eb
 	ld a, [hl+] ; $74ec
 	ld h, [hl] ; $74ed
@@ -2787,7 +2787,7 @@ IslandOpenSinglesMatchReturn:
 	ld a, [wMapSceneStage] ; $7565
 	dec a ; $7568
 	ld hl, $2862 ; $7569
-	add a, l ; $756c
+	add l ; $756c
 	ld l, a ; $756d
 	jr nc, .done ; $756e
 	inc h ; $7570
@@ -2824,7 +2824,7 @@ IslandOpenRoundSinglesNpc04_0f:
 	ld a, [wMapSceneStage] ; $7634
 	dec a ; $7637
 	ld hl, $2862 ; $7638
-	add a, l ; $763b
+	add l ; $763b
 	ld l, a ; $763c
 	jr nc, .queue ; $763d
 	inc h ; $763f
@@ -2834,11 +2834,11 @@ IslandOpenRoundSinglesNpc04_0f:
 	ret ; $7648
 IslandOpenRoundSinglesNpc03_0f:
 	ld a, [wMapSceneStage] ; $7649
-	add a, a ; $764c
-	add a, LOW(Data_0f_7699) ; $764d
+	add a ; $764c
+	add LOW(Data_0f_7699) ; $764d
 	ld l, a ; $764f
-	adc a, HIGH(Data_0f_7699) ; $7650
-	sub a, l ; $7652
+	adc HIGH(Data_0f_7699) ; $7650
+	sub l ; $7652
 	ld h, a ; $7653
 	ld a, [hl+] ; $7654
 	ld h, [hl] ; $7655
@@ -2851,11 +2851,11 @@ IslandOpenRoundSinglesNpc03_0f:
 IslandOpenRoundSinglesNpc05_0f:
 	ld a, [wMapSceneStage] ; $766c
 	dec a ; $766f
-	add a, a ; $7670
-	add a, LOW(Data_0f_7691) ; $7671
+	add a ; $7670
+	add LOW(Data_0f_7691) ; $7671
 	ld l, a ; $7673
-	adc a, HIGH(Data_0f_7691) ; $7674
-	sub a, l ; $7676
+	adc HIGH(Data_0f_7691) ; $7674
+	sub l ; $7676
 	ld h, a ; $7677
 	ld a, [hl+] ; $7678
 	ld h, [hl] ; $7679
@@ -2879,10 +2879,10 @@ Data_0f_7699:
 	inc b ; $76a4
 	wram_bank ; $76a5
 	ld a, [wMatchExitRequest] ; $76a9
-	cp a, $01 ; $76ac
+	cp $01 ; $76ac
 	jr z, .prompt ; $76ae
 	ld a, [wMatchWinLoseFlag] ; $76b0
-	cp a, $01 ; $76b3
+	cp $01 ; $76b3
 	jp z, $76e9 ; $76b5
 .prompt:
 	call LoadIslandOpenRoundNpcs ; $76b8
@@ -2897,7 +2897,7 @@ Data_0f_7699:
 	ldh [$ff0e], a ; $76ea
 	clear_flag FLAG_COURT2_SPECTATORS_TALKED_DOUBLES ; $76ec
 	call CheckIslandOpenVictoryTransition ; $76ef
-	and a, a ; $76f2
+	and a ; $76f2
 	jr z, .accepted ; $76f3
 	ret ; $76f5
 .accepted:
@@ -2921,18 +2921,18 @@ Data_0f_7699:
 	call WaitFadeEnd ; $773f
 	ld a, [wMapSceneStage] ; $7742
 	dec a ; $7745
-	add a, a ; $7746
-	add a, LOW(IslandOpenRoundSinglesNpc05TextIds) ; $7747
+	add a ; $7746
+	add LOW(IslandOpenRoundSinglesNpc05TextIds) ; $7747
 	ld l, a ; $7749
-	adc a, HIGH(IslandOpenRoundSinglesNpc05TextIds) ; $774a
-	sub a, l ; $774c
+	adc HIGH(IslandOpenRoundSinglesNpc05TextIds) ; $774a
+	sub l ; $774c
 	ld h, a ; $774d
 	ld a, [hl+] ; $774e
 	ld h, [hl] ; $774f
 	ld l, a ; $7750
 	farcall InitDialogueTextCursor ; $7751
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $7754
-	or a, a ; $7757
+	or a ; $7757
 	jr nz, .declined ; $7758
 	farcall AdvanceDialogueTextCursor ; $775a
 	farcall AdvanceDialogueTextCursor ; $775d
@@ -2944,7 +2944,7 @@ Data_0f_7699:
 	ld hl, $0037 ; $776a
 	add hl, bc ; $776d
 	ld a, [hl] ; $776e
-	xor a, $20 ; $776f
+	xor $20 ; $776f
 	ld [hl], a ; $7771
 	script_face_toward ACTOR_PLAYER, ACTOR_PARTNER ; $7772
 	script_jump_velocity ACTOR_PARTNER, $ff80 ; $777a
@@ -2972,7 +2972,7 @@ Data_0f_7699:
 	ld a, [wMapSceneStage] ; $7805
 	dec a ; $7808
 	ld hl, $2862 ; $7809
-	add a, l ; $780c
+	add l ; $780c
 	ld l, a ; $780d
 	jr nc, .done ; $780e
 	inc h ; $7810
@@ -3013,7 +3013,7 @@ IslandOpenRoundDoublesNpc04_0f:
 	ld a, [wMapSceneStage] ; $78b7
 	dec a ; $78ba
 	ld hl, $2862 ; $78bb
-	add a, l ; $78be
+	add l ; $78be
 	ld l, a ; $78bf
 	jr nc, .queue ; $78c0
 	inc h ; $78c2
@@ -3024,11 +3024,11 @@ IslandOpenRoundDoublesNpc04_0f:
 IslandOpenRoundDoublesNpc03_0f:
 	ld a, [wMapSceneStage] ; $78cc
 	dec a ; $78cf
-	add a, a ; $78d0
-	add a, LOW(IslandOpenRoundDoublesNpc03TextIds) ; $78d1
+	add a ; $78d0
+	add LOW(IslandOpenRoundDoublesNpc03TextIds) ; $78d1
 	ld l, a ; $78d3
-	adc a, HIGH(IslandOpenRoundDoublesNpc03TextIds) ; $78d4
-	sub a, l ; $78d6
+	adc HIGH(IslandOpenRoundDoublesNpc03TextIds) ; $78d4
+	sub l ; $78d6
 	ld h, a ; $78d7
 	ld a, [hl+] ; $78d8
 	ld h, [hl] ; $78d9
@@ -3048,7 +3048,7 @@ QueueFinishedRoundNameText:
 	ld a, [wMapSceneStage] ; $78f1
 	dec a ; $78f4
 	ld hl, $2861 ; $78f5
-	add a, l ; $78f8
+	add l ; $78f8
 	ld l, a ; $78f9
 	jr nc, .queue ; $78fa
 	inc h ; $78fc
@@ -3059,7 +3059,7 @@ QueueFinishedRoundNameText:
 	ld a, [wMapSceneStage] ; $7901
 	dec a ; $7904
 	ld hl, $2865 ; $7905
-	add a, l ; $7908
+	add l ; $7908
 	ld l, a ; $7909
 	jr nc, .queueDoubles ; $790a
 	inc h ; $790c
@@ -3090,7 +3090,7 @@ IslandOpenBreakCutscene:
 	script_wait_idle $06 ; $79a1
 	ld a, [wMapSceneStage] ; $79a6
 	ld hl, $2861 ; $79a9
-	add a, l ; $79ac
+	add l ; $79ac
 	ld l, a ; $79ad
 	jr nc, .queue ; $79ae
 	inc h ; $79b0
@@ -3115,7 +3115,7 @@ ReplacePartnerWithStandInActor:
 	test_flag FLAG_DOUBLES ; $7a1a
 	jr z, .noPartner ; $7a1d
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $7a1f
-	or a, a ; $7a22
+	or a ; $7a22
 	jr nz, .female ; $7a23
 	ld d, $58 ; $7a25
 	jr .apply ; $7a27
@@ -3173,17 +3173,17 @@ QueueShortText:
 	ret ; $7aae
 WalkActorsInFromEntryPoint_0f:
 	ld a, [wStoryModeEntryPoint] ; $7aaf
-	cp a, $ff ; $7ab2
+	cp $ff ; $7ab2
 	jp z, .done ; $7ab4
 	test_flag FLAG_DOUBLES ; $7ab7
 	jr z, .walkOff ; $7aba
 	script_set_speed ACTOR_PARTNER, $00ff ; $7abc
 	ld a, [wStoryModeEntryPoint] ; $7ac4
 	dec a ; $7ac7
-	add a, $1b ; $7ac8
+	add $1b ; $7ac8
 	ld l, a ; $7aca
-	adc a, $7b ; $7acb
-	sub a, l ; $7acd
+	adc $7b ; $7acb
+	sub l ; $7acd
 	ld h, a ; $7ace
 	ld b, [hl] ; $7acf
 	ld a, $02 ; $7ad0
@@ -3193,10 +3193,10 @@ WalkActorsInFromEntryPoint_0f:
 	script_wait_move ACTOR_PARTNER ; $7ad9
 	ld a, [wStoryModeEntryPoint] ; $7ade
 	dec a ; $7ae1
-	add a, LOW(Facings_0f_7b16) ; $7ae2
+	add LOW(Facings_0f_7b16) ; $7ae2
 	ld l, a ; $7ae4
-	adc a, HIGH(Facings_0f_7b16) ; $7ae5
-	sub a, l ; $7ae7
+	adc HIGH(Facings_0f_7b16) ; $7ae5
+	sub l ; $7ae7
 	ld h, a ; $7ae8
 	ld b, [hl] ; $7ae9
 	ld a, $02 ; $7aea
@@ -3207,10 +3207,10 @@ WalkActorsInFromEntryPoint_0f:
 	script_set_speed ACTOR_PLAYER, $0010 ; $7af8
 	ld a, [wStoryModeEntryPoint] ; $7b00
 	dec a ; $7b03
-	add a, LOW(Facings_0f_7b16) ; $7b04
+	add LOW(Facings_0f_7b16) ; $7b04
 	ld l, a ; $7b06
-	adc a, HIGH(Facings_0f_7b16) ; $7b07
-	sub a, l ; $7b09
+	adc HIGH(Facings_0f_7b16) ; $7b07
+	sub l ; $7b09
 	ld h, a ; $7b0a
 	ld b, [hl] ; $7b0b
 	ld a, $00 ; $7b0c
@@ -3227,7 +3227,7 @@ SetPlayerAndPartnerObjectDefs:
 	jp z, .mainChar ; $7b23
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $7b26
 	ld d, $58 ; $7b29
-	add a, d ; $7b2b
+	add d ; $7b2b
 	ld d, a ; $7b2c
 	script_get_actor_state ACTOR_PARTNER ; $7b2d
 	ld c, l ; $7b32
@@ -3237,7 +3237,7 @@ SetPlayerAndPartnerObjectDefs:
 .mainChar:
 	ld a, [wStoryModeGenderOfMainCharacter] ; $7b3e
 	ld d, $56 ; $7b41
-	add a, d ; $7b43
+	add d ; $7b43
 	ld d, a ; $7b44
 	script_get_actor_state ACTOR_PLAYER ; $7b45
 	ld c, l ; $7b4a
@@ -3277,12 +3277,12 @@ ActorScript_0f_7b75:
 	as_wait $28
 	as_jump .L1
 	ret ; $7b7f
-	xor a, a ; $7b80
+	xor a ; $7b80
 	ld [wStoryScriptRan], a ; $7b81
 	ret ; $7b84
 	sound $a2 ; $7b85
 	ret ; $7b87
-	xor a, a ; $7b88
+	xor a ; $7b88
 	ld [wStoryModeShowLocationName], a ; $7b89
 	ret ; $7b8c
 ActorScript_0f_7b8d:

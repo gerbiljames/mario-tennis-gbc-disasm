@@ -20,9 +20,13 @@ Notes on exactness / rgbasm quirks, for callers doing byte-exact reassembly:
     string "{target}" inside `text`; the caller is expected to substitute a
     label name or a `$xx`/`$xxxx` literal for that placeholder itself. The
     resolved absolute address is available separately via `Instr.target`.
-  - 8-bit ALU ops (add/adc/sub/sbc/and/xor/or/cp) are always rendered in the
-    two-operand form (`sub a, b`, `cp a, $12`, ...); rgbasm 1.0 accepts and
-    re-emits this form identically for all eight ops, so it is unambiguous.
+  - 8-bit ALU ops (add/adc/sub/sbc/and/xor/or/cp) are rendered in the short
+    form (`sub b`, `cp $12`, `xor a`), leaving the accumulator destination
+    implicit as the platform's assembly conventionally does. rgbasm 1.0 accepts
+    it for all eight ops and assembles it identically to the two-operand form;
+    the destination is not a choice the opcode offers, so writing it adds no
+    information. Note this is only the A-destination group: `add hl, de` and
+    `add sp, e8` are different opcodes and keep both operands.
 """
 
 from dataclasses import dataclass
@@ -126,7 +130,7 @@ def decode(buf: bytes, offset: int, pc: int) -> Instr:
     if top == 2:
         sub = (op >> 3) & 7
         src = op & 7
-        text = f"{ALU[sub]} a, {R8[src]}"
+        text = f"{ALU[sub]} {R8[src]}"
         return Instr(1, text, None, False, False, False, False, True)
 
     # ---- block 00 ----------------------------------------------------------
@@ -333,7 +337,7 @@ def decode(buf: bytes, offset: int, pc: int) -> Instr:
         if not have(1):
             return _invalid1(op)
         imm = buf[offset + 1]
-        text = f"{ALU[b53]} a, {hex8(imm)}"
+        text = f"{ALU[b53]} {hex8(imm)}"
         return Instr(2, text, None, False, False, False, False, True)
 
     # low3 == 7: rst
@@ -472,15 +476,15 @@ def selftest():
     check([0x78], 0, 0, "ld a, b", 1)
     check([0x7E], 0, 0, "ld a, [hl]", 1)
 
-    check([0x80], 0, 0, "add a, b", 1)
-    check([0x8E], 0, 0, "adc a, [hl]", 1)
-    check([0x90], 0, 0, "sub a, b", 1)
-    check([0x9E], 0, 0, "sbc a, [hl]", 1)
-    check([0xA1], 0, 0, "and a, c", 1)
-    check([0xAA], 0, 0, "xor a, d", 1)
-    check([0xB6], 0, 0, "or a, [hl]", 1)
-    check([0xFE, 0x12], 0, 0, "cp a, $12", 2)
-    check([0xC6, 0x12], 0, 0, "add a, $12", 2)
+    check([0x80], 0, 0, "add b", 1)
+    check([0x8E], 0, 0, "adc [hl]", 1)
+    check([0x90], 0, 0, "sub b", 1)
+    check([0x9E], 0, 0, "sbc [hl]", 1)
+    check([0xA1], 0, 0, "and c", 1)
+    check([0xAA], 0, 0, "xor d", 1)
+    check([0xB6], 0, 0, "or [hl]", 1)
+    check([0xFE, 0x12], 0, 0, "cp $12", 2)
+    check([0xC6, 0x12], 0, 0, "add $12", 2)
 
     check([0x09], 0, 0, "add hl, bc", 1)
     check([0x39], 0, 0, "add hl, sp", 1)

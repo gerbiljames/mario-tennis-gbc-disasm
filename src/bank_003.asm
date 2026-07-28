@@ -1195,7 +1195,7 @@ WipeAllSaveRam:
 	ld [$4000], a ; $47fe
 	ld bc, $0200 ; $4801
 	ld hl, $a000 ; $4804
-	xor a, a ; $4807
+	xor a ; $4807
 .loopB:
 	ld [hl+], a ; $4808
 	ld [hl+], a ; $4809
@@ -1219,11 +1219,11 @@ WipeAllSaveRam:
 	jr nz, .loopB ; $481c
 	inc e ; $481e
 	ld a, e ; $481f
-	cp a, $04 ; $4820
+	cp $04 ; $4820
 	jr c, .loop ; $4822
 	ret ; $4824
 ClearSaveFlagsArea:
-	xor a, a ; $4825
+	xor a ; $4825
 	ldh [hSramBank], a ; $4826
 	ld [$4000], a ; $4828
 	ld c, $02 ; $482b
@@ -1252,7 +1252,7 @@ SumSaveHeaderRegion:
 	push af ; $4844
 	push de ; $4845
 	push bc ; $4846
-	xor a, a ; $4847
+	xor a ; $4847
 	ldh [hSramBank], a ; $4848
 	ld [$4000], a ; $484a
 	ld h, a ; $484d
@@ -1262,7 +1262,7 @@ SumSaveHeaderRegion:
 .loop:
 	ld a, [de] ; $4855
 	inc de ; $4856
-	add a, l ; $4857
+	add l ; $4857
 	ld l, a ; $4858
 	jr nc, .gotPtr ; $4859
 	inc h ; $485b
@@ -1392,13 +1392,13 @@ VerifySaveHeaderChecksum:
 	ld l, a ; $4950
 	pop de ; $4951
 	ld a, l ; $4952
-	sub a, e ; $4953
+	sub e ; $4953
 	ld l, a ; $4954
 	ld a, h ; $4955
-	sbc a, d ; $4956
+	sbc d ; $4956
 	ld h, a ; $4957
 	ld a, h ; $4958
-	or a, l ; $4959
+	or l ; $4959
 	pop de ; $495a
 	pop hl ; $495b
 	ret ; $495c
@@ -1417,7 +1417,7 @@ ValidateSaveRam:
 	jr nz, .setSramBank ; $4975
 	call VerifySaveHeaderChecksum ; $4977
 	jr nz, .setSramBank ; $497a
-	xor a, a ; $497c
+	xor a ; $497c
 	jp .step2 ; $497d
 .setSramBank:
 	ld a, $01 ; $4980
@@ -1492,7 +1492,7 @@ ValidateSaveRam:
 	ld a, $ff ; $4a30
 .step2:
 	push af ; $4a32
-	xor a, a ; $4a33
+	xor a ; $4a33
 	ld [$0000], a ; $4a34
 	pop af ; $4a37
 	pop bc ; $4a38
@@ -1508,7 +1508,7 @@ EraseAndInitSaveRam:
 	call WipeAllSaveRam ; $4a48
 	call InitSaveHeader ; $4a4b
 	call MirrorSaveHeaderToBank1 ; $4a4e
-	xor a, a ; $4a51
+	xor a ; $4a51
 	ld [$0000], a ; $4a52
 	ret ; $4a55
 CompareSaveSignature:
@@ -1516,9 +1516,9 @@ CompareSaveSignature:
 	push hl ; $4a57
 .loop:
 	ld a, [de] ; $4a58
-	cp a, [hl] ; $4a59
+	cp [hl] ; $4a59
 	jr nz, .step ; $4a5a
-	or a, a ; $4a5c
+	or a ; $4a5c
 	jr z, .restore ; $4a5d
 	inc de ; $4a5f
 	inc hl ; $4a60
@@ -1528,7 +1528,7 @@ CompareSaveSignature:
 .restore:
 	pop hl ; $4a65
 	pop de ; $4a66
-	or a, a ; $4a67
+	or a ; $4a67
 	ret ; $4a68
 CopySaveSignature:
 	push af ; $4a69
@@ -1537,7 +1537,7 @@ CopySaveSignature:
 .loop:
 	ld a, [hl] ; $4a6c
 	ld [de], a ; $4a6d
-	or a, a ; $4a6e
+	or a ; $4a6e
 	jr z, .restore ; $4a6f
 	inc hl ; $4a71
 	inc de ; $4a72
@@ -1605,21 +1605,21 @@ WriteSaveBlock:
 	inc de ; $4ac2
 	dec bc ; $4ac3
 	ld a, b ; $4ac4
-	or a, c ; $4ac5
+	or c ; $4ac5
 	jr nz, .copyLoop ; $4ac6
 	pop bc ; $4ac8
 	pop hl ; $4ac9
 	ld de, $0000 ; $4aca
 .checksumLoop:
 	ld a, [hl+] ; $4acd
-	add a, e ; $4ace
+	add e ; $4ace
 	ld e, a ; $4acf
 	ld a, d ; $4ad0
-	adc a, $00 ; $4ad1
+	adc $00 ; $4ad1
 	ld d, a ; $4ad3
 	dec bc ; $4ad4
 	ld a, b ; $4ad5
-	or a, c ; $4ad6
+	or c ; $4ad6
 	jr nz, .checksumLoop ; $4ad7
 	ld a, $00 ; $4ad9
 	ldh [hSramBank], a ; $4adb
@@ -1639,9 +1639,9 @@ WriteSaveBlock:
 	ld a, e ; $4aef
 	ld [hl+], a ; $4af0
 	call MirrorSaveHeaderToBank1 ; $4af1
-	xor a, a ; $4af4
+	xor a ; $4af4
 	push af ; $4af5
-	xor a, a ; $4af6
+	xor a ; $4af6
 	ld [$0000], a ; $4af7
 	pop af ; $4afa
 	pop bc ; $4afb
@@ -1653,12 +1653,12 @@ InvalidateStorySlot:
 	push de ; $4b00
 	push bc ; $4b01
 	ld a, b ; $4b02
-	cp a, $03 ; $4b03
+	cp $03 ; $4b03
 	jr nc, .ge03 ; $4b05
 	sla a ; $4b07
 	ld b, a ; $4b09
 	call InvalidateSaveBlock ; $4b0a
-	or a, a ; $4b0d
+	or a ; $4b0d
 	jr nz, .restore ; $4b0e
 	inc b ; $4b10
 	call InvalidateSaveBlock ; $4b11
@@ -1682,7 +1682,7 @@ InvalidateSaveBlock:
 	call InitSaveHeader ; $4b2b
 	ld a, b ; $4b2e
 	call GetSaveBlockDirEntry ; $4b2f
-	xor a, a ; $4b32
+	xor a ; $4b32
 	ld [bc], a ; $4b33
 	ld de, $0000 ; $4b34
 	ld hl, $0006 ; $4b37
@@ -1692,15 +1692,15 @@ InvalidateSaveBlock:
 	ld [hl], d ; $4b3d
 	inc hl ; $4b3e
 	ld c, $08 ; $4b3f
-	xor a, a ; $4b41
+	xor a ; $4b41
 .clearLoop:
 	ld [hl+], a ; $4b42
 	dec c ; $4b43
 	jr nz, .clearLoop ; $4b44
 	call MirrorSaveHeaderToBank1 ; $4b46
-	xor a, a ; $4b49
+	xor a ; $4b49
 	push af ; $4b4a
-	xor a, a ; $4b4b
+	xor a ; $4b4b
 	ld [$0000], a ; $4b4c
 	pop af ; $4b4f
 	pop bc ; $4b50
@@ -1734,7 +1734,7 @@ ResetAllSaveBlocks:
 	call ClearSaveFlagsArea ; $4b8d
 	call InitSaveHeader ; $4b90
 	call MirrorSaveHeaderToBank1 ; $4b93
-	xor a, a ; $4b96
+	xor a ; $4b96
 	ld [$0000], a ; $4b97
 	ret ; $4b9a
 ReadSaveBlock:
@@ -1749,7 +1749,7 @@ ReadSaveBlock:
 	ld a, b ; $4baa
 	call GetSaveBlockDirEntry ; $4bab
 	ld a, [bc] ; $4bae
-	or a, a ; $4baf
+	or a ; $4baf
 	jp nz, .present ; $4bb0
 	ld a, $fe ; $4bb3
 	jp .done ; $4bb5
@@ -1785,21 +1785,21 @@ ReadSaveBlock:
 	inc de ; $4bda
 	dec bc ; $4bdb
 	ld a, b ; $4bdc
-	or a, c ; $4bdd
+	or c ; $4bdd
 	jr nz, .copyLoop ; $4bde
 	pop bc ; $4be0
 	pop hl ; $4be1
 	ld de, $0000 ; $4be2
 .checksumLoop:
 	ld a, [hl+] ; $4be5
-	add a, e ; $4be6
+	add e ; $4be6
 	ld e, a ; $4be7
 	ld a, d ; $4be8
-	adc a, $00 ; $4be9
+	adc $00 ; $4be9
 	ld d, a ; $4beb
 	dec bc ; $4bec
 	ld a, b ; $4bed
-	or a, c ; $4bee
+	or c ; $4bee
 	jr nz, .checksumLoop ; $4bef
 	ld a, $00 ; $4bf1
 	ldh [hSramBank], a ; $4bf3
@@ -1811,16 +1811,16 @@ ReadSaveBlock:
 	ld h, [hl] ; $4bfe
 	ld l, a ; $4bff
 	ld a, h ; $4c00
-	xor a, d ; $4c01
+	xor d ; $4c01
 	ld h, a ; $4c02
 	ld a, l ; $4c03
-	xor a, e ; $4c04
-	or a, h ; $4c05
+	xor e ; $4c04
+	or h ; $4c05
 	jr z, .done ; $4c06
 	ld a, $ff ; $4c08
 .done:
 	push af ; $4c0a
-	xor a, a ; $4c0b
+	xor a ; $4c0b
 	ld [$0000], a ; $4c0c
 	pop af ; $4c0f
 	pop bc ; $4c10
@@ -1839,7 +1839,7 @@ VerifySaveBlock:
 	ld a, b ; $4c23
 	call GetSaveBlockDirEntry ; $4c24
 	ld a, [bc] ; $4c27
-	or a, a ; $4c28
+	or a ; $4c28
 	jp nz, .present ; $4c29
 	ld a, $fe ; $4c2c
 	jp .done ; $4c2e
@@ -1871,7 +1871,7 @@ VerifySaveBlock:
 	push bc ; $4c50
 .compareLoop:
 	ld a, [de] ; $4c51
-	cp a, [hl] ; $4c52
+	cp [hl] ; $4c52
 	jr z, .next ; $4c53
 	ld a, $00 ; $4c55
 	ldh [hSramBank], a ; $4c57
@@ -1884,21 +1884,21 @@ VerifySaveBlock:
 	inc de ; $4c64
 	dec bc ; $4c65
 	ld a, b ; $4c66
-	or a, c ; $4c67
+	or c ; $4c67
 	jr nz, .compareLoop ; $4c68
 	pop bc ; $4c6a
 	pop hl ; $4c6b
 	ld de, $0000 ; $4c6c
 .checksumLoop:
 	ld a, [hl+] ; $4c6f
-	add a, e ; $4c70
+	add e ; $4c70
 	ld e, a ; $4c71
 	ld a, d ; $4c72
-	adc a, $00 ; $4c73
+	adc $00 ; $4c73
 	ld d, a ; $4c75
 	dec bc ; $4c76
 	ld a, b ; $4c77
-	or a, c ; $4c78
+	or c ; $4c78
 	jr nz, .checksumLoop ; $4c79
 	ld a, $00 ; $4c7b
 	ldh [hSramBank], a ; $4c7d
@@ -1910,16 +1910,16 @@ VerifySaveBlock:
 	ld h, [hl] ; $4c88
 	ld l, a ; $4c89
 	ld a, h ; $4c8a
-	xor a, d ; $4c8b
+	xor d ; $4c8b
 	ld h, a ; $4c8c
 	ld a, l ; $4c8d
-	xor a, e ; $4c8e
-	or a, h ; $4c8f
+	xor e ; $4c8e
+	or h ; $4c8f
 	jr z, .done ; $4c90
 	ld a, $ff ; $4c92
 .done:
 	push af ; $4c94
-	xor a, a ; $4c95
+	xor a ; $4c95
 	ld [$0000], a ; $4c96
 	pop af ; $4c99
 	pop bc ; $4c9a
@@ -1938,13 +1938,13 @@ ReadSaveBlockTag:
 	ld a, b ; $4cad
 	call GetSaveBlockDirEntry ; $4cae
 	ld a, [bc] ; $4cb1
-	or a, a ; $4cb2
+	or a ; $4cb2
 	jp nz, .nonZero ; $4cb3
 	ld a, $fe ; $4cb6
 	jp .loopB ; $4cb8
 .nonZero:
 	ld a, $08 ; $4cbb
-	add a, c ; $4cbd
+	add c ; $4cbd
 	ld e, a ; $4cbe
 	ld d, b ; $4cbf
 	ld c, $08 ; $4cc0
@@ -1954,10 +1954,10 @@ ReadSaveBlockTag:
 	inc de ; $4cc4
 	dec c ; $4cc5
 	jr nz, .loop ; $4cc6
-	xor a, a ; $4cc8
+	xor a ; $4cc8
 .loopB:
 	push af ; $4cc9
-	xor a, a ; $4cca
+	xor a ; $4cca
 	ld [$0000], a ; $4ccb
 	pop af ; $4cce
 	pop bc ; $4ccf
@@ -1975,13 +1975,13 @@ ReadSaveBlockTag:
 	ld a, b ; $4ce2
 	call GetSaveBlockDirEntry ; $4ce3
 	ld a, [bc] ; $4ce6
-	or a, a ; $4ce7
+	or a ; $4ce7
 	jp nz, .nonZero2 ; $4ce8
 	ld a, $fe ; $4ceb
 	jp .loopB ; $4ced
 .nonZero2:
 	ld a, $08 ; $4cf0
-	add a, c ; $4cf2
+	add c ; $4cf2
 	ld e, a ; $4cf3
 	ld d, b ; $4cf4
 	ld c, $02 ; $4cf5
@@ -1991,9 +1991,9 @@ ReadSaveBlockTag:
 	inc de ; $4cf9
 	dec c ; $4cfa
 	jr nz, .loop2 ; $4cfb
-	xor a, a ; $4cfd
+	xor a ; $4cfd
 	push af ; $4cfe
-	xor a, a ; $4cff
+	xor a ; $4cff
 	ld [$0000], a ; $4d00
 	pop af ; $4d03
 	pop bc ; $4d04
@@ -2002,49 +2002,49 @@ ReadSaveBlockTag:
 	ret ; $4d07
 SaveStorySlot:
 	ld a, [wCurrentStorySlot] ; $4d08
-	cp a, $03 ; $4d0b
+	cp $03 ; $4d0b
 	ret nc ; $4d0d
 	jr SaveStorySlotWithTimer.checkCurrentStorySlot ; $4d0e
 SaveStorySlotWithTimer:
 	ld a, [wCurrentStorySlot] ; $4d10
-	cp a, $03 ; $4d13
+	cp $03 ; $4d13
 	ret nc ; $4d15
 	call SaveGameTimer ; $4d16
 .checkCurrentStorySlot:
 	ld a, [wCurrentStorySlot] ; $4d19
-	add a, a ; $4d1c
+	add a ; $4d1c
 	ld b, a ; $4d1d
 	ld hl, wStorySlotData ; $4d1e
 	ld de, $0000 ; $4d21
 	call WriteSaveBlock ; $4d24
-	or a, a ; $4d27
+	or a ; $4d27
 	ret nz ; $4d28
 	ld a, [wCurrentStorySlot] ; $4d29
-	add a, a ; $4d2c
+	add a ; $4d2c
 	ld b, a ; $4d2d
 	ld hl, wStorySlotData ; $4d2e
 	call VerifySaveBlock ; $4d31
-	or a, a ; $4d34
+	or a ; $4d34
 	ret nz ; $4d35
 	ld a, [wCurrentStorySlot] ; $4d36
-	add a, a ; $4d39
-	add a, $1b ; $4d3a
+	add a ; $4d39
+	add $1b ; $4d3a
 	ld b, a ; $4d3c
 	ld hl, wStorySlotData ; $4d3d
 	ld de, wTextBuffer ; $4d40
 	call WriteSaveBlock ; $4d43
-	or a, a ; $4d46
+	or a ; $4d46
 	ret nz ; $4d47
 	ld a, [wCurrentStorySlot] ; $4d48
-	add a, a ; $4d4b
-	add a, $1b ; $4d4c
+	add a ; $4d4b
+	add $1b ; $4d4c
 	ld b, a ; $4d4e
 	ld hl, wStorySlotData ; $4d4f
 	call VerifySaveBlock ; $4d52
-	or a, a ; $4d55
+	or a ; $4d55
 	ret nz ; $4d56
 	call UpdateUnlockablesSaveBlock ; $4d57
-	xor a, a ; $4d5a
+	xor a ; $4d5a
 	ret ; $4d5b
 	pop af ; $4d5c
 	wram_bank ; $4d5d
@@ -2055,9 +2055,9 @@ CheckStorySlot:
 	push de ; $4d65
 	push hl ; $4d66
 	ld a, [wCurrentStorySlot] ; $4d67
-	cp a, $03 ; $4d6a
+	cp $03 ; $4d6a
 	jr nc, .noSlot ; $4d6c
-	add a, a ; $4d6e
+	add a ; $4d6e
 	ld b, a ; $4d6f
 	ld hl, wStorySlotData ; $4d70
 	call ReadSaveBlock ; $4d73
@@ -2087,7 +2087,7 @@ TestSaveFlag:
 	rlca ; $4d9a
 	rlca ; $4d9b
 	rlca ; $4d9c
-	add a, l ; $4d9d
+	add l ; $4d9d
 	ld l, a ; $4d9e
 	jr nc, .gotMask ; $4d9f
 	inc h ; $4da1
@@ -2097,9 +2097,9 @@ TestSaveFlag:
 	ld e, d ; $4da6
 	ld d, $00 ; $4da7
 	add hl, de ; $4da9
-	and a, [hl] ; $4daa
+	and [hl] ; $4daa
 	push af ; $4dab
-	xor a, a ; $4dac
+	xor a ; $4dac
 	ld [$0000], a ; $4dad
 	pop af ; $4db0
 	ld a, b ; $4db1
@@ -2120,7 +2120,7 @@ SetSaveFlag:
 	rlca ; $4dc8
 	rlca ; $4dc9
 	rlca ; $4dca
-	add a, l ; $4dcb
+	add l ; $4dcb
 	ld l, a ; $4dcc
 	jr nc, .gotMask ; $4dcd
 	inc h ; $4dcf
@@ -2130,10 +2130,10 @@ SetSaveFlag:
 	ld e, d ; $4dd4
 	ld d, $00 ; $4dd5
 	add hl, de ; $4dd7
-	or a, [hl] ; $4dd8
+	or [hl] ; $4dd8
 	ld [hl], a ; $4dd9
 	call UpdateSaveHeaderChecksum ; $4dda
-	xor a, a ; $4ddd
+	xor a ; $4ddd
 	ld [$0000], a ; $4dde
 	pop af ; $4de1
 	pop hl ; $4de2
@@ -2151,7 +2151,7 @@ ClearSaveFlag:
 	rlca ; $4df6
 	rlca ; $4df7
 	rlca ; $4df8
-	add a, l ; $4df9
+	add l ; $4df9
 	ld l, a ; $4dfa
 	jr nc, .gotMask ; $4dfb
 	inc h ; $4dfd
@@ -2162,10 +2162,10 @@ ClearSaveFlag:
 	ld d, $00 ; $4e03
 	add hl, de ; $4e05
 	cpl ; $4e06
-	and a, [hl] ; $4e07
+	and [hl] ; $4e07
 	ld [hl], a ; $4e08
 	call UpdateSaveHeaderChecksum ; $4e09
-	xor a, a ; $4e0c
+	xor a ; $4e0c
 	ld [$0000], a ; $4e0d
 	pop af ; $4e10
 	pop hl ; $4e11
@@ -2179,30 +2179,30 @@ EraseStorySlotSaveData:
 	ld [$0000], a ; $4e19
 	call InitSaveHeader ; $4e1c
 	ld a, [wCurrentStorySlot] ; $4e1f
-	cp a, $03 ; $4e22
+	cp $03 ; $4e22
 	jp nc, .badSlot ; $4e24
-	add a, a ; $4e27
+	add a ; $4e27
 	ld c, a ; $4e28
 	ld a, $00 ; $4e29
-	add a, c ; $4e2b
+	add c ; $4e2b
 	ld b, a ; $4e2c
 	call ClearSaveBlock ; $4e2d
 	inc b ; $4e30
 	call ClearSaveBlock ; $4e31
 	ld a, $1b ; $4e34
-	add a, c ; $4e36
+	add c ; $4e36
 	ld b, a ; $4e37
 	call ClearSaveBlock ; $4e38
 	inc b ; $4e3b
 	call ClearSaveBlock ; $4e3c
 	call MirrorSaveHeaderToBank1 ; $4e3f
-	xor a, a ; $4e42
+	xor a ; $4e42
 	ld [$0000], a ; $4e43
 	call InitCurrentSlotMinigameRecords ; $4e46
 	ld a, [wCurrentStorySlot] ; $4e49
-	or a, a ; $4e4c
+	or a ; $4e4c
 	jr z, .slot0 ; $4e4d
-	cp a, $01 ; $4e4f
+	cp $01 ; $4e4f
 	jr z, .slot1 ; $4e51
 	push de ; $4e53
 	ld de, SAVEFLAG_STORY_SLOT2_A ; $4e54
@@ -2233,7 +2233,7 @@ EraseStorySlotSaveData:
 	farcall ClearSaveFlag ; $4e83
 	pop de ; $4e86
 .ok:
-	xor a, a ; $4e87
+	xor a ; $4e87
 	jr .done ; $4e88
 .badSlot:
 	ld a, $01 ; $4e8a
@@ -2244,7 +2244,7 @@ EraseStorySlotSaveData:
 	ret ; $4e8f
 ClearSaveBlock:
 	ld a, h ; $4e90
-	or a, a ; $4e91
+	or a ; $4e91
 	jr nz, .clearData ; $4e92
 	call ClearSaveBlockEntry ; $4e94
 	jr .done ; $4e97
@@ -2287,12 +2287,12 @@ ClearSaveBlockData:
 	push hl ; $4ec9
 	push bc ; $4eca
 .loop:
-	xor a, a ; $4ecb
+	xor a ; $4ecb
 	ld [de], a ; $4ecc
 	inc de ; $4ecd
 	dec bc ; $4ece
 	ld a, b ; $4ecf
-	or a, c ; $4ed0
+	or c ; $4ed0
 	jr nz, .loop ; $4ed1
 	pop bc ; $4ed3
 	pop hl ; $4ed4
@@ -2311,11 +2311,11 @@ ClearSaveBlockData:
 	inc hl ; $4eea
 	ld c, $08 ; $4eeb
 .loopB:
-	xor a, a ; $4eed
+	xor a ; $4eed
 	ld [hl+], a ; $4eee
 	dec c ; $4eef
 	jr nz, .loopB ; $4ef0
-	xor a, a ; $4ef2
+	xor a ; $4ef2
 	pop bc ; $4ef3
 	pop de ; $4ef4
 	pop hl ; $4ef5
@@ -2358,12 +2358,12 @@ ClearSaveBlockData:
 	push hl ; $4f29
 	push bc ; $4f2a
 .loop2:
-	xor a, a ; $4f2b
+	xor a ; $4f2b
 	ld [de], a ; $4f2c
 	inc de ; $4f2d
 	dec bc ; $4f2e
 	ld a, b ; $4f2f
-	or a, c ; $4f30
+	or c ; $4f30
 	jr nz, .loop2 ; $4f31
 	pop bc ; $4f33
 	pop hl ; $4f34
@@ -2382,11 +2382,11 @@ ClearSaveBlockData:
 	inc hl ; $4f4a
 	ld c, $08 ; $4f4b
 .loop3:
-	xor a, a ; $4f4d
+	xor a ; $4f4d
 	ld [hl+], a ; $4f4e
 	dec c ; $4f4f
 	jr nz, .loop3 ; $4f50
-	xor a, a ; $4f52
+	xor a ; $4f52
 	pop bc ; $4f53
 	pop de ; $4f54
 	pop hl ; $4f55
@@ -2400,7 +2400,7 @@ ClearSaveBlockEntry:
 	ld [$4000], a ; $4f5e
 	ld a, b ; $4f61
 	call GetSaveBlockDirEntry ; $4f62
-	xor a, a ; $4f65
+	xor a ; $4f65
 	ld [bc], a ; $4f66
 	ld de, $0000 ; $4f67
 	ld hl, $0006 ; $4f6a
@@ -2410,7 +2410,7 @@ ClearSaveBlockEntry:
 	ld [hl], d ; $4f70
 	inc hl ; $4f71
 	ld c, $08 ; $4f72
-	xor a, a ; $4f74
+	xor a ; $4f74
 .loop:
 	ld [hl+], a ; $4f75
 	dec c ; $4f76
@@ -2434,7 +2434,7 @@ ReinitSaveRamPreservingBlock6:
 	call EraseAndInitSaveRam ; $4f92
 	pop bc ; $4f95
 	ld a, b ; $4f96
-	cp a, $fe ; $4f97
+	cp $fe ; $4f97
 	jr z, .initAllMinigameRecordBlocks ; $4f99
 	ld hl, $d000 ; $4f9b
 	call WriteBlock6WithBackup ; $4f9e
@@ -2453,28 +2453,28 @@ WriteExhibitionSaveBlock:
 	ld hl, wStorySlotData ; $4fb1
 	ld de, $0000 ; $4fb4
 	call WriteSaveBlock ; $4fb7
-	or a, a ; $4fba
+	or a ; $4fba
 	ret nz ; $4fbb
 	ld a, $36 ; $4fbc
 	ld b, a ; $4fbe
 	ld hl, wStorySlotData ; $4fbf
 	call VerifySaveBlock ; $4fc2
-	or a, a ; $4fc5
+	or a ; $4fc5
 	ret nz ; $4fc6
 	ld a, $37 ; $4fc7
 	ld b, a ; $4fc9
 	ld hl, wStorySlotData ; $4fca
 	ld de, wTextBuffer ; $4fcd
 	call WriteSaveBlock ; $4fd0
-	or a, a ; $4fd3
+	or a ; $4fd3
 	ret nz ; $4fd4
 	ld a, $37 ; $4fd5
 	ld b, a ; $4fd7
 	ld hl, wStorySlotData ; $4fd8
 	call VerifySaveBlock ; $4fdb
-	or a, a ; $4fde
+	or a ; $4fde
 	ret nz ; $4fdf
-	xor a, a ; $4fe0
+	xor a ; $4fe0
 	ret ; $4fe1
 	pop af ; $4fe2
 	wram_bank ; $4fe3
@@ -2505,7 +2505,7 @@ ClearSaveBlock11:
 	ld b, $0b ; $5006
 	call ClearSaveBlockData ; $5008
 	push af ; $500b
-	xor a, a ; $500c
+	xor a ; $500c
 	ld [$0000], a ; $500d
 	pop af ; $5010
 	pop hl ; $5011
@@ -2522,10 +2522,10 @@ ReadMinigameRecord:
 	push af ; $501c
 	wram_bank $07 ; $501d
 	ld a, b ; $5023
-	sub a, $02 ; $5024
+	sub $02 ; $5024
 	jr nc, .read ; $5026
 	ld a, [wCurrentStorySlot] ; $5028
-	cp a, $03 ; $502b
+	cp $03 ; $502b
 	jr nc, .done ; $502d
 .read:
 	push af ; $502f
@@ -2534,30 +2534,30 @@ ReadMinigameRecord:
 	push hl ; $5032
 	ld hl, $d480 ; $5033
 	ld c, $02 ; $5036
-	xor a, a ; $5038
+	xor a ; $5038
 	call FillMemory16 ; $5039
 	pop hl ; $503c
 	pop de ; $503d
 	pop bc ; $503e
 	pop af ; $503f
 	ld a, b ; $5040
-	sub a, $02 ; $5041
+	sub $02 ; $5041
 	jr nc, .notStory ; $5043
 	ld a, [wCurrentStorySlot] ; $5045
 	jr .gotBlockId ; $5048
 .notStory:
-	xor a, a ; $504a
+	xor a ; $504a
 .gotBlockId:
-	add a, $38 ; $504b
+	add $38 ; $504b
 	push bc ; $504d
 	ld b, a ; $504e
 	ld hl, $d480 ; $504f
 	call ReadSaveBlock ; $5052
 	pop bc ; $5055
 	ld a, b ; $5056
-	add a, a ; $5057
+	add a ; $5057
 	ld l, a ; $5058
-	xor a, a ; $5059
+	xor a ; $5059
 	ld h, a ; $505a
 	ld de, $d480 ; $505b
 	add hl, de ; $505e
@@ -2585,10 +2585,10 @@ UpdateMinigameRecord:
 	push af ; $5078
 	wram_bank $07 ; $5079
 	ld a, b ; $507f
-	sub a, $02 ; $5080
+	sub $02 ; $5080
 	jr nc, .readSlot0 ; $5082
 	ld a, [wCurrentStorySlot] ; $5084
-	cp a, $03 ; $5087
+	cp $03 ; $5087
 	jp nc, .failed ; $5089
 	jr .read ; $508c
 .readSlot0:
@@ -2600,13 +2600,13 @@ UpdateMinigameRecord:
 	push hl ; $5093
 	ld hl, $d480 ; $5094
 	ld c, $02 ; $5097
-	xor a, a ; $5099
+	xor a ; $5099
 	call FillMemory16 ; $509a
 	pop hl ; $509d
 	pop de ; $509e
 	pop bc ; $509f
 	pop af ; $50a0
-	add a, $38 ; $50a1
+	add $38 ; $50a1
 	push bc ; $50a3
 	ld b, a ; $50a4
 	ld hl, $d480 ; $50a5
@@ -2618,9 +2618,9 @@ UpdateMinigameRecord:
 	ld e, a ; $50b1
 	push de ; $50b2
 	ld a, b ; $50b3
-	add a, a ; $50b4
+	add a ; $50b4
 	ld l, a ; $50b5
-	xor a, a ; $50b6
+	xor a ; $50b6
 	ld h, a ; $50b7
 	ld de, $d480 ; $50b8
 	add hl, de ; $50bb
@@ -2629,70 +2629,70 @@ UpdateMinigameRecord:
 	ld [hl+], a ; $50be
 	ld [hl], d ; $50bf
 	ld a, b ; $50c0
-	sub a, $02 ; $50c1
+	sub $02 ; $50c1
 	jr nc, .writeSlot0 ; $50c3
 	ld a, [wCurrentStorySlot] ; $50c5
 	jr .write ; $50c8
 .writeSlot0:
-	xor a, a ; $50ca
+	xor a ; $50ca
 .write:
 	push bc ; $50cb
-	add a, $38 ; $50cc
+	add $38 ; $50cc
 	ld b, a ; $50ce
 	ld hl, $d480 ; $50cf
 	ld de, $0000 ; $50d2
 	call WriteSaveBlock ; $50d5
 	pop bc ; $50d8
-	or a, a ; $50d9
+	or a ; $50d9
 	jr nz, .failed ; $50da
 	ld a, b ; $50dc
-	sub a, $02 ; $50dd
+	sub $02 ; $50dd
 	jr nc, .verifySlot0 ; $50df
 	ld a, [wCurrentStorySlot] ; $50e1
 	jr .verify ; $50e4
 .verifySlot0:
-	xor a, a ; $50e6
+	xor a ; $50e6
 .verify:
 	push bc ; $50e7
-	add a, $38 ; $50e8
+	add $38 ; $50e8
 	ld b, a ; $50ea
 	ld hl, $d480 ; $50eb
 	call VerifySaveBlock ; $50ee
 	pop bc ; $50f1
-	or a, a ; $50f2
+	or a ; $50f2
 	jr nz, .failed ; $50f3
 	ld a, b ; $50f5
-	sub a, $02 ; $50f6
+	sub $02 ; $50f6
 	jr nc, .backupSlot0 ; $50f8
 	ld a, [wCurrentStorySlot] ; $50fa
 	jr .writeBackup ; $50fd
 .backupSlot0:
-	xor a, a ; $50ff
+	xor a ; $50ff
 .writeBackup:
 	push bc ; $5100
-	add a, $3b ; $5101
+	add $3b ; $5101
 	ld b, a ; $5103
 	ld hl, $d480 ; $5104
 	ld de, $0000 ; $5107
 	call WriteSaveBlock ; $510a
 	pop bc ; $510d
-	or a, a ; $510e
+	or a ; $510e
 	jr nz, .failed ; $510f
 	ld a, b ; $5111
-	sub a, $02 ; $5112
+	sub $02 ; $5112
 	jr nc, .backupVerifySlot0 ; $5114
 	ld a, [wCurrentStorySlot] ; $5116
 	jr .verifyBackup ; $5119
 .backupVerifySlot0:
-	xor a, a ; $511b
+	xor a ; $511b
 .verifyBackup:
 	push bc ; $511c
-	add a, $3b ; $511d
+	add $3b ; $511d
 	ld b, a ; $511f
 	ld hl, $d480 ; $5120
 	call VerifySaveBlock ; $5123
 	pop bc ; $5126
-	or a, a ; $5127
+	or a ; $5127
 	jr nz, .failed ; $5128
 	jr .done ; $512a
 .failed:
@@ -2706,7 +2706,7 @@ UpdateMinigameRecord:
 .done:
 	pop af ; $5137
 	wram_bank ; $5138
-	xor a, a ; $513c
+	xor a ; $513c
 	pop hl ; $513d
 	pop de ; $513e
 	pop bc ; $513f
@@ -2720,11 +2720,11 @@ InitCurrentSlotMinigameRecords:
 	push af ; $5147
 	wram_bank $07 ; $5148
 	ld a, [wCurrentStorySlot] ; $514e
-	add a, $38 ; $5151
+	add $38 ; $5151
 	ld b, a ; $5153
 	ld hl, $d480 ; $5154
 	call ReadSaveBlock ; $5157
-	xor a, a ; $515a
+	xor a ; $515a
 	farcall GetDefaultMinigameRecordValue ; $515b
 	ld hl, $d480 ; $515e
 	ld a, e ; $5161
@@ -2737,15 +2737,15 @@ InitCurrentSlotMinigameRecords:
 	ld [hl+], a ; $516d
 	ld [hl], d ; $516e
 	ld a, [wCurrentStorySlot] ; $516f
-	add a, $38 ; $5172
+	add $38 ; $5172
 	ld b, a ; $5174
 	ld hl, $d480 ; $5175
 	ld de, $0000 ; $5178
 	call WriteSaveBlock ; $517b
-	or a, a ; $517e
+	or a ; $517e
 	jr nz, .restore ; $517f
 	ld a, [wCurrentStorySlot] ; $5181
-	add a, $3b ; $5184
+	add $3b ; $5184
 	ld b, a ; $5186
 	ld hl, $d480 ; $5187
 	ld de, $0000 ; $518a
@@ -2772,16 +2772,16 @@ InitAllMinigameRecordBlocks:
 	push hl ; $51aa
 	ld hl, $d480 ; $51ab
 	ld c, $02 ; $51ae
-	xor a, a ; $51b0
+	xor a ; $51b0
 	call FillMemory16 ; $51b1
 	pop hl ; $51b4
 	pop de ; $51b5
 	pop bc ; $51b6
 	pop af ; $51b7
 	ld hl, $d480 ; $51b8
-	xor a, a ; $51bb
+	xor a ; $51bb
 .loop:
-	cp a, $0b ; $51bc
+	cp $0b ; $51bc
 	jr z, .eq0b ; $51be
 	push af ; $51c0
 	push hl ; $51c1
@@ -2800,7 +2800,7 @@ InitAllMinigameRecordBlocks:
 	ld hl, $d480 ; $51d1
 	ld de, $0000 ; $51d4
 	call WriteSaveBlock ; $51d7
-	or a, a ; $51da
+	or a ; $51da
 	jr nz, .restore ; $51db
 	ld a, $3b ; $51dd
 	ld b, a ; $51df
@@ -2812,7 +2812,7 @@ InitAllMinigameRecordBlocks:
 	ld hl, $d480 ; $51ec
 	ld de, $0000 ; $51ef
 	call WriteSaveBlock ; $51f2
-	or a, a ; $51f5
+	or a ; $51f5
 	jr nz, .restore ; $51f6
 	ld a, $3c ; $51f8
 	ld b, a ; $51fa
@@ -2824,7 +2824,7 @@ InitAllMinigameRecordBlocks:
 	ld hl, $d480 ; $5207
 	ld de, $0000 ; $520a
 	call WriteSaveBlock ; $520d
-	or a, a ; $5210
+	or a ; $5210
 	jr nz, .restore ; $5211
 	ld a, $3d ; $5213
 	ld b, a ; $5215
@@ -2846,9 +2846,9 @@ ReadStarVictoryGrid:
 	push hl ; $522c
 	ld b, $3e ; $522d
 	call ReadSaveBlock ; $522f
-	or a, a ; $5232
+	or a ; $5232
 	jr z, .restore ; $5233
-	xor a, a ; $5235
+	xor a ; $5235
 	ld c, $06 ; $5236
 	call FillMemory16 ; $5238
 .restore:
@@ -2881,14 +2881,14 @@ MoveSaveEditorCursor:
 	call SignExtendEToDE ; $525d
 	add hl, de ; $5260
 	ld a, h ; $5261
-	and a, $03 ; $5262
+	and $03 ; $5262
 	ldh [hSaveEditorCursor + 1], a ; $5264
 	ld a, l ; $5266
 	ldh [hSaveEditorCursor], a ; $5267
-	xor a, b ; $5269
+	xor b ; $5269
 	bit 7, a ; $526a
 	ret ; $526c
-	xor a, a ; $526d
+	xor a ; $526d
 	dec a ; $526e
 	ret ; $526f
 .move:
@@ -2901,7 +2901,7 @@ MoveSaveEditorCursor:
 	add hl, de ; $527b
 	push hl ; $527c
 	ld a, [hl] ; $527d
-	add a, b ; $527e
+	add b ; $527e
 	ld [hl], a ; $527f
 	pop hl ; $5280
 	res 0, l ; $5281
@@ -2911,29 +2911,29 @@ MoveSaveEditorCursor:
 	ld h, a ; $5286
 	push hl ; $5287
 	ld a, b ; $5288
-	and a, $06 ; $5289
-	add a, a ; $528b
-	add a, $04 ; $528c
+	and $06 ; $5289
+	add a ; $528b
+	add $04 ; $528c
 	ld d, a ; $528e
 	ld a, b ; $528f
-	and a, $78 ; $5290
-	add a, a ; $5292
+	and $78 ; $5290
+	add a ; $5292
 	swap a ; $5293
 	inc a ; $5295
 	ld e, a ; $5296
 	pop hl ; $5297
 	call PrintHexWord ; $5298
-	xor a, a ; $529b
+	xor a ; $529b
 	ret ; $529c
 GetCurrentSlotBlockId:
 	push af ; $529d
 	push hl ; $529e
 	ld a, [wCurrentStorySlot] ; $529f
-	and a, $03 ; $52a2
-	add a, LOW(StorySlotBlockIds_03) ; $52a4
+	and $03 ; $52a2
+	add LOW(StorySlotBlockIds_03) ; $52a4
 	ld l, a ; $52a6
-	adc a, HIGH(StorySlotBlockIds_03) ; $52a7
-	sub a, l ; $52a9
+	adc HIGH(StorySlotBlockIds_03) ; $52a7
+	sub l ; $52a9
 	ld h, a ; $52aa
 	ld b, [hl] ; $52ab
 	pop hl ; $52ac
@@ -2972,7 +2972,7 @@ SaveSlotDebugEditor:
 	sound $06 ; $531b
 	ld a, $03 ; $531d
 	ldh [hDebugStepMode], a ; $531f
-	xor a, a ; $5321
+	xor a ; $5321
 	ld [wCurrentStorySlot], a ; $5322
 	ld hl, $0000 ; $5325
 	ld a, l ; $5328
@@ -2988,7 +2988,7 @@ SaveSlotDebugEditor:
 	ld de, $0000 ; $5341
 .loop:
 	call ReadCurrentSlotBlock ; $5344
-	or a, a ; $5347
+	or a ; $5347
 	jr z, .zero ; $5348
 	push de ; $534a
 	ld hl, SaveResultFailedString_03 ; $534b
@@ -3013,7 +3013,7 @@ SaveSlotDebugEditor:
 	ld de, $d300 ; $5376
 	add hl, de ; $5379
 	ld a, l ; $537a
-	and a, $80 ; $537b
+	and $80 ; $537b
 	ld l, a ; $537d
 	ld b, $10 ; $537e
 	ld e, $01 ; $5380
@@ -3023,7 +3023,7 @@ SaveSlotDebugEditor:
 	push de ; $5385
 	push hl ; $5386
 	ld a, h ; $5387
-	sub a, $d3 ; $5388
+	sub $d3 ; $5388
 	ld h, a ; $538a
 	call PrintHexWord ; $538b
 	pop hl ; $538e
@@ -3080,13 +3080,13 @@ SaveSlotDebugEditor:
 	push de ; $53d4
 	ldh a, [hSaveEditorCursor] ; $53d5
 	ld e, a ; $53d7
-	and a, $07 ; $53d8
+	and $07 ; $53d8
 	swap a ; $53da
-	add a, $24 ; $53dc
+	add $24 ; $53dc
 	ld d, a ; $53de
 	ld a, e ; $53df
-	and a, $78 ; $53e0
-	add a, $0c ; $53e2
+	and $78 ; $53e0
+	add $0c ; $53e2
 	ld e, a ; $53e4
 	ld bc, $0000 ; $53e5
 	push de ; $53e8
@@ -3094,7 +3094,7 @@ SaveSlotDebugEditor:
 	pop de ; $53ec
 	ld bc, $0000 ; $53ed
 	ld a, d ; $53f0
-	add a, $08 ; $53f1
+	add $08 ; $53f1
 	ld d, a ; $53f3
 	call QueueSprite ; $53f4
 	pop de ; $53f7
@@ -3136,11 +3136,11 @@ SaveSlotDebugEditor:
 	ld a, $03 ; $5442
 	ld [wCurrentStorySlot], a ; $5444
 	call ReadCurrentSlotBlock ; $5447
-	or a, a ; $544a
+	or a ; $544a
 	jr nz, .restore ; $544b
 	ld hl, $d300 ; $544d
 	ld a, [hl+] ; $5450
-	or a, [hl] ; $5451
+	or [hl] ; $5451
 	jr z, .restore ; $5452
 	inc hl ; $5454
 	ld a, $01 ; $5455
@@ -3164,7 +3164,7 @@ SaveSlotDebugEditor:
 	sound $5f ; $5471
 	ld a, [wCurrentStorySlot] ; $5473
 	inc a ; $5476
-	and a, $03 ; $5477
+	and $03 ; $5477
 	ld [wCurrentStorySlot], a ; $5479
 	jp .loop ; $547c
 .bit2Clear:
@@ -3217,14 +3217,14 @@ MarioGolfSignature_03:
 RestoreStoryBlockFromBackup:
 	ld hl, $d000 ; $550d
 	call ReadSaveBlock ; $5510
-	cp a, $ff ; $5513
+	cp $ff ; $5513
 	ret nz ; $5515
 	push bc ; $5516
 	ld a, $1b ; $5517
-	add a, b ; $5519
+	add b ; $5519
 	ld b, a ; $551a
 	call ReadSaveBlock ; $551b
-	or a, a ; $551e
+	or a ; $551e
 	jr nz, .restore ; $551f
 	ld hl, $d400 ; $5521
 	call ReadSaveBlockTag ; $5524
@@ -3241,20 +3241,20 @@ RestoreStoryBlockFromBackup:
 	ret ; $553a
 	ld hl, $d000 ; $553b
 	call ReadSaveBlock ; $553e
-	cp a, $ff ; $5541
+	cp $ff ; $5541
 	ret nz ; $5543
 	call InvalidateSaveBlock ; $5544
 	ret ; $5547
 	ld hl, $d000 ; $5548
 	call ReadSaveBlock ; $554b
-	cp a, $ff ; $554e
+	cp $ff ; $554e
 	ret nz ; $5550
 	push bc ; $5551
 	ld a, $1b ; $5552
-	add a, b ; $5554
+	add b ; $5554
 	ld b, a ; $5555
 	call ReadSaveBlock ; $5556
-	or a, a ; $5559
+	or a ; $5559
 	jr nz, .nonZero ; $555a
 	pop bc ; $555c
 	ld hl, $d000 ; $555d
@@ -3274,11 +3274,11 @@ RestoreStoryBlockFromBackup:
 	ld b, $06 ; $557b
 	ld hl, $d000 ; $557d
 	call ReadSaveBlock ; $5580
-	cp a, $ff ; $5583
+	cp $ff ; $5583
 	ret nz ; $5585
 	ld b, $21 ; $5586
 	call ReadSaveBlock ; $5588
-	or a, a ; $558b
+	or a ; $558b
 	jr nz, .nonZero2 ; $558c
 	ld b, $06 ; $558e
 	ld hl, $d000 ; $5590
@@ -3294,11 +3294,11 @@ RestoreStoryBlockFromBackup:
 	ld b, $07 ; $55a5
 	ld hl, $d000 ; $55a7
 	call ReadSaveBlock ; $55aa
-	cp a, $ff ; $55ad
+	cp $ff ; $55ad
 	ret nz ; $55af
 	ld b, $22 ; $55b0
 	call ReadSaveBlock ; $55b2
-	or a, a ; $55b5
+	or a ; $55b5
 	jr nz, .nonZero3 ; $55b6
 	ld b, $07 ; $55b8
 	ld hl, $d000 ; $55ba
@@ -3314,11 +3314,11 @@ RestoreStoryBlockFromBackup:
 	ld b, $08 ; $55cf
 	ld hl, $d000 ; $55d1
 	call ReadSaveBlock ; $55d4
-	cp a, $ff ; $55d7
+	cp $ff ; $55d7
 	ret nz ; $55d9
 	ld b, $23 ; $55da
 	call ReadSaveBlock ; $55dc
-	or a, a ; $55df
+	or a ; $55df
 	jr nz, .nonZero4 ; $55e0
 	ld b, $08 ; $55e2
 	ld hl, $d000 ; $55e4
@@ -3334,11 +3334,11 @@ RestoreStoryBlockFromBackup:
 	ld b, $09 ; $55f9
 	ld hl, $d000 ; $55fb
 	call ReadSaveBlock ; $55fe
-	cp a, $ff ; $5601
+	cp $ff ; $5601
 	ret nz ; $5603
 	ld b, $24 ; $5604
 	call ReadSaveBlock ; $5606
-	or a, a ; $5609
+	or a ; $5609
 	jr nz, .nonZero5 ; $560a
 	ld b, $09 ; $560c
 	ld hl, $d000 ; $560e
@@ -3354,11 +3354,11 @@ RestoreStoryBlockFromBackup:
 	ld b, $0a ; $5623
 	ld hl, $d000 ; $5625
 	call ReadSaveBlock ; $5628
-	cp a, $ff ; $562b
+	cp $ff ; $562b
 	ret nz ; $562d
 	ld b, $25 ; $562e
 	call ReadSaveBlock ; $5630
-	or a, a ; $5633
+	or a ; $5633
 	jr nz, .nonZero6 ; $5634
 	ld b, $0a ; $5636
 	ld hl, $d000 ; $5638
@@ -3373,7 +3373,7 @@ RestoreStoryBlockFromBackup:
 	ret ; $564c
 	ld hl, $d000 ; $564d
 	call ReadSaveBlock ; $5650
-	or a, a ; $5653
+	or a ; $5653
 	ret z ; $5654
 	push bc ; $5655
 	ld hl, $d000 ; $5656
@@ -3399,13 +3399,13 @@ RestoreBlock36FromBackup:
 	ld b, a ; $5684
 	ld hl, $d000 ; $5685
 	call ReadSaveBlock ; $5688
-	cp a, $ff ; $568b
+	cp $ff ; $568b
 	ret nz ; $568d
 	push bc ; $568e
 	ld a, $37 ; $568f
 	ld b, a ; $5691
 	call ReadSaveBlock ; $5692
-	or a, a ; $5695
+	or a ; $5695
 	jr nz, .restore ; $5696
 	pop bc ; $5698
 	ld hl, $d000 ; $5699
@@ -3427,13 +3427,13 @@ ApplyN64RecordsUnlockFlags:
 	ld hl, $d500 ; $56b5
 	ld b, $0b ; $56b8
 	call ReadSaveBlock ; $56ba
-	or a, a ; $56bd
+	or a ; $56bd
 	jr nz, .restore ; $56be
 	ld hl, $d500 ; $56c0
 	ld a, [hl] ; $56c3
 	inc hl ; $56c4
-	add a, [hl] ; $56c5
-	or a, a ; $56c6
+	add [hl] ; $56c5
+	or a ; $56c6
 	jr z, .restore ; $56c7
 	push de ; $56c9
 	ld de, SAVEFLAG_N64_RECORDS_PRESENT ; $56ca
@@ -3474,17 +3474,17 @@ UpdateUnlockablesSaveBlock:
 	ld hl, $d500 ; $5708
 	ld b, $0b ; $570b
 	call ReadSaveBlock ; $570d
-	or a, a ; $5710
+	or a ; $5710
 	jp nz, .restore ; $5711
 	ld hl, $d500 ; $5714
 	ld a, [hl] ; $5717
 	inc hl ; $5718
-	add a, [hl] ; $5719
-	or a, a ; $571a
+	add [hl] ; $5719
+	or a ; $571a
 	jp z, .restore ; $571b
 	ld a, $02 ; $571e
 	call CheckUnlockCondition ; $5720
-	or a, a ; $5723
+	or a ; $5723
 	jr z, .zero ; $5724
 	ld hl, $d502 ; $5726
 	ld a, $01 ; $5729
@@ -3492,7 +3492,7 @@ UpdateUnlockablesSaveBlock:
 .zero:
 	ld a, $04 ; $572c
 	call CheckUnlockCondition ; $572e
-	or a, a ; $5731
+	or a ; $5731
 	jr z, .zero2 ; $5732
 	ld hl, $d507 ; $5734
 	ld a, $01 ; $5737
@@ -3500,7 +3500,7 @@ UpdateUnlockablesSaveBlock:
 .zero2:
 	ld a, $06 ; $573a
 	call CheckUnlockCondition ; $573c
-	or a, a ; $573f
+	or a ; $573f
 	jr z, .zero3 ; $5740
 	ld hl, $d504 ; $5742
 	ld a, $01 ; $5745
@@ -3508,7 +3508,7 @@ UpdateUnlockablesSaveBlock:
 .zero3:
 	ld a, $08 ; $5748
 	call CheckUnlockCondition ; $574a
-	or a, a ; $574d
+	or a ; $574d
 	jr z, .zero4 ; $574e
 	ld hl, $d506 ; $5750
 	ld a, $01 ; $5753
@@ -3516,7 +3516,7 @@ UpdateUnlockablesSaveBlock:
 .zero4:
 	ld a, $09 ; $5756
 	call CheckUnlockCondition ; $5758
-	or a, a ; $575b
+	or a ; $575b
 	jr z, .zero5 ; $575c
 	ld hl, $d503 ; $575e
 	ld a, $01 ; $5761
@@ -3524,7 +3524,7 @@ UpdateUnlockablesSaveBlock:
 .zero5:
 	ld a, $0a ; $5764
 	call CheckUnlockCondition ; $5766
-	or a, a ; $5769
+	or a ; $5769
 	jr z, .zero6 ; $576a
 	ld hl, $d505 ; $576c
 	ld a, $01 ; $576f
@@ -3553,7 +3553,7 @@ SetAllUnlockablesInSaveBlock:
 	ld hl, $d500 ; $5794
 	ld b, $0b ; $5797
 	call ReadSaveBlock ; $5799
-	or a, a ; $579c
+	or a ; $579c
 	jp nz, .restore ; $579d
 	ld hl, $d502 ; $57a0
 	ld a, $01 ; $57a3
@@ -3604,9 +3604,9 @@ CheckUnlockCondition:
 	ldh a, [hWramBank] ; $57e6
 	push af ; $57e8
 	wram_bank $07 ; $57e9
-	cp a, $02 ; $57ef
+	cp $02 ; $57ef
 	jr nc, .saveFlagCondition ; $57f1
-	or a, a ; $57f3
+	or a ; $57f3
 	jr nz, .machineWall ; $57f4
 	test_flag FLAG_CLEARED_WALL_LEVEL_4 ; $57f6
 	jr z, .locked ; $57f9
@@ -3617,7 +3617,7 @@ CheckUnlockCondition:
 	jr .checkRecord ; $5802
 .saveFlagCondition:
 	ld a, b ; $5804
-	sub a, $02 ; $5805
+	sub $02 ; $5805
 	ld hl, UnlockConditionFlagRows_03 ; $5807
 	ld d, $00 ; $580a
 	ld e, a ; $580c
@@ -3641,16 +3641,16 @@ CheckUnlockCondition:
 	ld h, [hl] ; $582a
 	ld l, a ; $582b
 	ld a, l ; $582c
-	sub a, e ; $582d
+	sub e ; $582d
 	ld l, a ; $582e
 	ld a, h ; $582f
-	sbc a, d ; $5830
+	sbc d ; $5830
 	ld h, a ; $5831
 	jr c, .locked ; $5832
 	ld b, $01 ; $5834
 	jr .done ; $5836
 .locked:
-	xor a, a ; $5838
+	xor a ; $5838
 	ld b, a ; $5839
 .done:
 	pop af ; $583a
@@ -3667,19 +3667,19 @@ WriteBlock6WithBackup:
 	ld de, $0000 ; $5847
 	ld b, $06 ; $584a
 	call WriteSaveBlock ; $584c
-	or a, a ; $584f
+	or a ; $584f
 	jr nz, .step ; $5850
 	call VerifySaveBlock ; $5852
-	or a, a ; $5855
+	or a ; $5855
 	jr nz, .step ; $5856
 	ld b, $21 ; $5858
 	call WriteSaveBlock ; $585a
-	or a, a ; $585d
+	or a ; $585d
 	jr nz, .step ; $585e
 	call VerifySaveBlock ; $5860
-	or a, a ; $5863
+	or a ; $5863
 	jr nz, .step ; $5864
-	xor a, a ; $5866
+	xor a ; $5866
 	jr .restore ; $5867
 .step:
 	ld a, $ff ; $5869
@@ -3705,19 +3705,19 @@ WriteBlock7WithBackup:
 	ld de, $0000 ; $587e
 	ld b, $07 ; $5881
 	call WriteSaveBlock ; $5883
-	or a, a ; $5886
+	or a ; $5886
 	jr nz, .step ; $5887
 	call VerifySaveBlock ; $5889
-	or a, a ; $588c
+	or a ; $588c
 	jr nz, .step ; $588d
 	ld b, $22 ; $588f
 	call WriteSaveBlock ; $5891
-	or a, a ; $5894
+	or a ; $5894
 	jr nz, .step ; $5895
 	call VerifySaveBlock ; $5897
-	or a, a ; $589a
+	or a ; $589a
 	jr nz, .step ; $589b
-	xor a, a ; $589d
+	xor a ; $589d
 	jr .restore ; $589e
 .step:
 	ld a, $ff ; $58a0
@@ -3743,19 +3743,19 @@ WriteBlock8WithBackup:
 	ld de, $0000 ; $58b5
 	ld b, $08 ; $58b8
 	call WriteSaveBlock ; $58ba
-	or a, a ; $58bd
+	or a ; $58bd
 	jr nz, .step ; $58be
 	call VerifySaveBlock ; $58c0
-	or a, a ; $58c3
+	or a ; $58c3
 	jr nz, .step ; $58c4
 	ld b, $23 ; $58c6
 	call WriteSaveBlock ; $58c8
-	or a, a ; $58cb
+	or a ; $58cb
 	jr nz, .step ; $58cc
 	call VerifySaveBlock ; $58ce
-	or a, a ; $58d1
+	or a ; $58d1
 	jr nz, .step ; $58d2
-	xor a, a ; $58d4
+	xor a ; $58d4
 	jr .restore ; $58d5
 .step:
 	ld a, $ff ; $58d7
@@ -3781,19 +3781,19 @@ WriteBlock9WithBackup:
 	ld de, $0000 ; $58ec
 	ld b, $09 ; $58ef
 	call WriteSaveBlock ; $58f1
-	or a, a ; $58f4
+	or a ; $58f4
 	jr nz, .step ; $58f5
 	call VerifySaveBlock ; $58f7
-	or a, a ; $58fa
+	or a ; $58fa
 	jr nz, .step ; $58fb
 	ld b, $24 ; $58fd
 	call WriteSaveBlock ; $58ff
-	or a, a ; $5902
+	or a ; $5902
 	jr nz, .step ; $5903
 	call VerifySaveBlock ; $5905
-	or a, a ; $5908
+	or a ; $5908
 	jr nz, .step ; $5909
-	xor a, a ; $590b
+	xor a ; $590b
 	jr .restore ; $590c
 .step:
 	ld a, $ff ; $590e
@@ -3819,19 +3819,19 @@ WriteBlock10WithBackup:
 	ld de, $0000 ; $5923
 	ld b, $0a ; $5926
 	call WriteSaveBlock ; $5928
-	or a, a ; $592b
+	or a ; $592b
 	jr nz, .step ; $592c
 	call VerifySaveBlock ; $592e
-	or a, a ; $5931
+	or a ; $5931
 	jr nz, .step ; $5932
 	ld b, $25 ; $5934
 	call WriteSaveBlock ; $5936
-	or a, a ; $5939
+	or a ; $5939
 	jr nz, .step ; $593a
 	call VerifySaveBlock ; $593c
-	or a, a ; $593f
+	or a ; $593f
 	jr nz, .step ; $5940
-	xor a, a ; $5942
+	xor a ; $5942
 	jr .restore ; $5943
 .step:
 	ld a, $ff ; $5945
@@ -3864,7 +3864,7 @@ DebugTestMinigameRecords:
 	ld a, e ; $5985
 	ld [hl+], a ; $5986
 	ld [hl], d ; $5987
-	xor a, a ; $5988
+	xor a ; $5988
 	call UpdateMinigameRecord ; $5989
 	ld hl, $de00 ; $598c
 	ld de, $03e7 ; $598f
@@ -3878,7 +3878,7 @@ DebugTestMinigameRecords:
 	ld a, e ; $59a0
 	ld [hl+], a ; $59a1
 	ld [hl], d ; $59a2
-	xor a, a ; $59a3
+	xor a ; $59a3
 	call ReadMinigameRecord ; $59a4
 	ld a, $01 ; $59a7
 	call ReadMinigameRecord ; $59a9
@@ -3911,7 +3911,7 @@ RunScrollingTextScreen:
 	call ClearFrameTasks ; $59c5
 	farcall LoadMenuFontGfx ; $59c8
 	call DisableLCDSafely ; $59cb
-	xor a, a ; $59ce
+	xor a ; $59ce
 	ldh [hScrollX], a ; $59cf
 	ldh [hScrollY], a ; $59d1
 	ld [wCameraX], a ; $59d3
@@ -3939,12 +3939,12 @@ RunScrollingTextScreen:
 	ld a, $02 ; $5a0e
 	ld [wScrollTextDelay], a ; $5a10
 	ld a, [wScrollTextDone] ; $5a13
-	and a, a ; $5a16
+	and a ; $5a16
 	jr nz, .checkDebugStepMode ; $5a17
 	ldh a, [hScrollY] ; $5a19
 	inc a ; $5a1b
 	ldh [hScrollY], a ; $5a1c
-	and a, $07 ; $5a1e
+	and $07 ; $5a1e
 	jr nz, .checkDebugStepMode ; $5a20
 	ld hl, wScrollTextId ; $5a22
 	ld a, [hl+] ; $5a25
@@ -3955,7 +3955,7 @@ RunScrollingTextScreen:
 	ld c, $10 ; $5a31
 	farcall FetchAndDrawDialogueText ; $5a33
 	call TestTextEndMarker ; $5a36
-	and a, a ; $5a39
+	and a ; $5a39
 	jr nz, .nonZero ; $5a3a
 	wram_bank $06 ; $5a3c
 	ld a, $01 ; $5a42
@@ -3985,19 +3985,19 @@ RunScrollingTextScreen:
 	ld [hl], d ; $5a72
 .checkDebugStepMode:
 	ldh a, [hDebugStepMode] ; $5a73
-	or a, a ; $5a75
+	or a ; $5a75
 	jr nz, .nonZero2 ; $5a76
 	ld a, [wScrollTextDone] ; $5a78
-	and a, a ; $5a7b
+	and a ; $5a7b
 	jr z, .advanceFrame ; $5a7c
 .nonZero2:
 	ldh a, [hPlayerInputFlags] ; $5a7e
-	and a, $0b ; $5a80
+	and $0b ; $5a80
 	jr nz, .maskSet ; $5a82
 .advanceFrame:
 	call AdvanceFrame ; $5a84
 	wram_bank $03 ; $5a87
-	xor a, a ; $5a8d
+	xor a ; $5a8d
 	ld b, $40 ; $5a8e
 	ld hl, wShadowTilemap ; $5a90
 .loopB:
@@ -4022,7 +4022,7 @@ InitScrollingTextScreen:
 	ld a, e ; $5ab9
 	ld [hl+], a ; $5aba
 	ld [hl], d ; $5abb
-	xor a, a ; $5abc
+	xor a ; $5abc
 	ld [wScrollTextDone], a ; $5abd
 	wram_bank $02 ; $5ac0
 	ld bc, $0400 ; $5ac6
@@ -4048,7 +4048,7 @@ FillMemoryBC:
 	inc hl ; $5afa
 	dec bc ; $5afb
 	ld a, b ; $5afc
-	or a, c ; $5afd
+	or c ; $5afd
 	jr nz, FillMemoryBC ; $5afe
 	ret ; $5b00
 GetScrollTextRowVramAddr:
@@ -4061,7 +4061,7 @@ GetScrollTextRowVramAddr:
 	sla l ; $5b0b
 	rl h ; $5b0d
 	ld a, h ; $5b0f
-	and a, $03 ; $5b10
+	and $03 ; $5b10
 	ld h, a ; $5b12
 	ld de, $9800 ; $5b13
 	add hl, de ; $5b16
@@ -4070,7 +4070,7 @@ GetScrollTextRowVramAddr:
 	ret ; $5b19
 TestTextEndMarker:
 	ld a, [wShadowTilemap] ; $5b1a
-	sub a, $23 ; $5b1d
+	sub $23 ; $5b1d
 	ret ; $5b1f
 ScrollTextPalette_03:
 	INCLUDE "data/bank_003/palettes_5b20.asm" ; $5b20, 8 bytes (palettes)
@@ -4078,7 +4078,7 @@ SetupSceneAnimationPalettes:
 	ldh a, [hWramBank] ; $5b28
 	push af ; $5b2a
 	wram_bank $06 ; $5b2b
-	xor a, a ; $5b31
+	xor a ; $5b31
 	ld [$d000], a ; $5b32
 	ld hl, SceneAnimObjPalette0_03 ; $5b35
 	ld de, $0a01 ; $5b38
@@ -4101,11 +4101,11 @@ UpdateSceneAnimation:
 	call LoadCutsceneAnimFrameGfx_2D_35 ; $5b65
 	wram_bank $06 ; $5b68
 	ld a, [$cb60] ; $5b6e
-	and a, $03 ; $5b71
+	and $03 ; $5b71
 	jr nz, .restore ; $5b73
 	ld a, [$d000] ; $5b75
 	ld b, a ; $5b78
-	sub a, $36 ; $5b79
+	sub $36 ; $5b79
 	jp nc, .restore ; $5b7b
 	ld a, b ; $5b7e
 	inc a ; $5b7f
@@ -4117,23 +4117,23 @@ UpdateSceneAnimation:
 LoadCutsceneAnimFrameGfx_00_08:
 	wram_bank $06 ; $5b89
 	ld a, [$d000] ; $5b8f
-	cp a, $00 ; $5b92
+	cp $00 ; $5b92
 	jp z, .eq00 ; $5b94
-	cp a, $01 ; $5b97
+	cp $01 ; $5b97
 	jp z, .eq01 ; $5b99
-	cp a, $02 ; $5b9c
+	cp $02 ; $5b9c
 	jp z, .eq02 ; $5b9e
-	cp a, $03 ; $5ba1
+	cp $03 ; $5ba1
 	jp z, .eq03 ; $5ba3
-	cp a, $04 ; $5ba6
+	cp $04 ; $5ba6
 	jp z, .eq04 ; $5ba8
-	cp a, $05 ; $5bab
+	cp $05 ; $5bab
 	jp z, .eq05 ; $5bad
-	cp a, $06 ; $5bb0
+	cp $06 ; $5bb0
 	jp z, .eq06 ; $5bb2
-	cp a, $07 ; $5bb5
+	cp $07 ; $5bb5
 	jp z, .eq07 ; $5bb7
-	cp a, $08 ; $5bba
+	cp $08 ; $5bba
 	jp z, .eq08 ; $5bbc
 	jp .queueSpriteTemplate ; $5bbf
 .eq00:
@@ -4282,26 +4282,26 @@ LoadCutsceneAnimFrameGfx_09_11:
 	wram_bank $06 ; $5d38
 	ld a, [$d000] ; $5d3e
 	ld b, a ; $5d41
-	sub a, $09 ; $5d42
+	sub $09 ; $5d42
 	ret c ; $5d44
 	ld a, b ; $5d45
-	cp a, $09 ; $5d46
+	cp $09 ; $5d46
 	jp z, .eq09 ; $5d48
-	cp a, $0a ; $5d4b
+	cp $0a ; $5d4b
 	jp z, .eq0a ; $5d4d
-	cp a, $0b ; $5d50
+	cp $0b ; $5d50
 	jp z, .eq0b ; $5d52
-	cp a, $0c ; $5d55
+	cp $0c ; $5d55
 	jp z, .eq0c ; $5d57
-	cp a, $0d ; $5d5a
+	cp $0d ; $5d5a
 	jp z, .eq0d ; $5d5c
-	cp a, $0e ; $5d5f
+	cp $0e ; $5d5f
 	jp z, .eq0e ; $5d61
-	cp a, $0f ; $5d64
+	cp $0f ; $5d64
 	jp z, .eq0f ; $5d66
-	cp a, $10 ; $5d69
+	cp $10 ; $5d69
 	jp z, .eq10 ; $5d6b
-	cp a, $11 ; $5d6e
+	cp $11 ; $5d6e
 	jp z, .eq11 ; $5d70
 	jp .queueSpriteTemplate ; $5d73
 .eq09:
@@ -4450,26 +4450,26 @@ LoadCutsceneAnimFrameGfx_12_1A:
 	wram_bank $06 ; $5eec
 	ld a, [$d000] ; $5ef2
 	ld b, a ; $5ef5
-	sub a, $12 ; $5ef6
+	sub $12 ; $5ef6
 	ret c ; $5ef8
 	ld a, b ; $5ef9
-	cp a, $12 ; $5efa
+	cp $12 ; $5efa
 	jp z, .eq12 ; $5efc
-	cp a, $13 ; $5eff
+	cp $13 ; $5eff
 	jp z, .eq13 ; $5f01
-	cp a, $14 ; $5f04
+	cp $14 ; $5f04
 	jp z, .eq14 ; $5f06
-	cp a, $15 ; $5f09
+	cp $15 ; $5f09
 	jp z, .eq15 ; $5f0b
-	cp a, $16 ; $5f0e
+	cp $16 ; $5f0e
 	jp z, .eq16 ; $5f10
-	cp a, $17 ; $5f13
+	cp $17 ; $5f13
 	jp z, .eq17 ; $5f15
-	cp a, $18 ; $5f18
+	cp $18 ; $5f18
 	jp z, .eq18 ; $5f1a
-	cp a, $19 ; $5f1d
+	cp $19 ; $5f1d
 	jp z, .eq19 ; $5f1f
-	cp a, $1a ; $5f22
+	cp $1a ; $5f22
 	jp z, .eq1a ; $5f24
 	jp .queueSpriteTemplate ; $5f27
 .eq12:
@@ -4618,26 +4618,26 @@ LoadCutsceneAnimFrameGfx_1B_23:
 	wram_bank $06 ; $60a0
 	ld a, [$d000] ; $60a6
 	ld b, a ; $60a9
-	sub a, $1b ; $60aa
+	sub $1b ; $60aa
 	ret c ; $60ac
 	ld a, b ; $60ad
-	cp a, $1b ; $60ae
+	cp $1b ; $60ae
 	jp z, .eq1b ; $60b0
-	cp a, $1c ; $60b3
+	cp $1c ; $60b3
 	jp z, .eq1c ; $60b5
-	cp a, $1d ; $60b8
+	cp $1d ; $60b8
 	jp z, .eq1d ; $60ba
-	cp a, $1e ; $60bd
+	cp $1e ; $60bd
 	jp z, .eq1e ; $60bf
-	cp a, $1f ; $60c2
+	cp $1f ; $60c2
 	jp z, .eq1f ; $60c4
-	cp a, $20 ; $60c7
+	cp $20 ; $60c7
 	jp z, .eq20 ; $60c9
-	cp a, $21 ; $60cc
+	cp $21 ; $60cc
 	jp z, .eq21 ; $60ce
-	cp a, $22 ; $60d1
+	cp $22 ; $60d1
 	jp z, .eq22 ; $60d3
-	cp a, $23 ; $60d6
+	cp $23 ; $60d6
 	jp z, .eq23 ; $60d8
 	jp .queueSpriteTemplate ; $60db
 .eq1b:
@@ -4786,26 +4786,26 @@ LoadCutsceneAnimFrameGfx_24_2C:
 	wram_bank $06 ; $6254
 	ld a, [$d000] ; $625a
 	ld b, a ; $625d
-	sub a, $24 ; $625e
+	sub $24 ; $625e
 	ret c ; $6260
 	ld a, b ; $6261
-	cp a, $24 ; $6262
+	cp $24 ; $6262
 	jp z, .eq24 ; $6264
-	cp a, $25 ; $6267
+	cp $25 ; $6267
 	jp z, .eq25 ; $6269
-	cp a, $26 ; $626c
+	cp $26 ; $626c
 	jp z, .eq26 ; $626e
-	cp a, $27 ; $6271
+	cp $27 ; $6271
 	jp z, .eq27 ; $6273
-	cp a, $28 ; $6276
+	cp $28 ; $6276
 	jp z, .eq28 ; $6278
-	cp a, $29 ; $627b
+	cp $29 ; $627b
 	jp z, .eq29 ; $627d
-	cp a, $2a ; $6280
+	cp $2a ; $6280
 	jp z, .eq2a ; $6282
-	cp a, $2b ; $6285
+	cp $2b ; $6285
 	jp z, .eq2b ; $6287
-	cp a, $2c ; $628a
+	cp $2c ; $628a
 	jp z, .eq2c ; $628c
 	jp .queueSpriteTemplate ; $628f
 .eq24:
@@ -4954,26 +4954,26 @@ LoadCutsceneAnimFrameGfx_2D_35:
 	wram_bank $06 ; $6408
 	ld a, [$d000] ; $640e
 	ld b, a ; $6411
-	sub a, $2d ; $6412
+	sub $2d ; $6412
 	ret c ; $6414
 	ld a, b ; $6415
-	cp a, $2d ; $6416
+	cp $2d ; $6416
 	jp z, .eq2d ; $6418
-	cp a, $2e ; $641b
+	cp $2e ; $641b
 	jp z, .eq2e ; $641d
-	cp a, $2f ; $6420
+	cp $2f ; $6420
 	jp z, .eq2f ; $6422
-	cp a, $30 ; $6425
+	cp $30 ; $6425
 	jp z, .eq30 ; $6427
-	cp a, $31 ; $642a
+	cp $31 ; $642a
 	jp z, .eq31 ; $642c
-	cp a, $32 ; $642f
+	cp $32 ; $642f
 	jp z, .eq32 ; $6431
-	cp a, $33 ; $6434
+	cp $33 ; $6434
 	jp z, .eq33 ; $6436
-	cp a, $34 ; $6439
+	cp $34 ; $6439
 	jp z, .eq34 ; $643b
-	cp a, $35 ; $643e
+	cp $35 ; $643e
 	jp z, .eq35 ; $6440
 	jp .queueSpriteTemplate ; $6443
 .eq2d:
@@ -5480,7 +5480,7 @@ FillMemoryDE:
 	ld [hl+], a ; $6ff0
 	dec de ; $6ff1
 	ld a, d ; $6ff2
-	or a, e ; $6ff3
+	or e ; $6ff3
 	jr nz, FillMemoryDE ; $6ff4
 	ret ; $6ff6
 PlayScrollingStoryCutscene:
@@ -5510,7 +5510,7 @@ PlayScrollingStoryCutscene:
 	ld a, $90 ; $7028
 	ldh [rWY], a ; $702a
 	wram_bank $06 ; $702c
-	xor a, a ; $7032
+	xor a ; $7032
 	ld [$d000], a ; $7033
 	ld [$cb60], a ; $7036
 	pop af ; $7039
@@ -5522,13 +5522,13 @@ PlayScrollingStoryCutscene:
 .loop:
 	call AdvanceFrame ; $7046
 	ld a, [$d000] ; $7049
-	or a, a ; $704c
+	or a ; $704c
 	jr z, .loop ; $704d
 	ld a, $20 ; $704f
 .loopB:
 	call AdvanceFrame ; $7051
 	dec a ; $7054
-	or a, a ; $7055
+	or a ; $7055
 	jr nz, .loopB ; $7056
 	wram_bank $01 ; $7058
 	ld hl, $d000 ; $705e
@@ -5569,8 +5569,8 @@ AnimateWindowSlideUpTask:
 	ld b, a ; $72ac
 	ld hl, WindowSlideStepTable_03 ; $72ad
 	ld a, b ; $72b0
-	add a, a ; $72b1
-	add a, l ; $72b2
+	add a ; $72b1
+	add l ; $72b2
 	ld l, a ; $72b3
 	jr nc, .read ; $72b4
 	inc h ; $72b6
@@ -5582,10 +5582,10 @@ AnimateWindowSlideUpTask:
 	pop af ; $72bc
 	wram_bank ; $72bd
 	ldh a, [hVBlankCounter] ; $72c1
-	and a, $01 ; $72c3
+	and $01 ; $72c3
 	jr nz, .maskSet ; $72c5
 	ldh a, [hScrollY] ; $72c7
-	add a, c ; $72c9
+	add c ; $72c9
 	ldh [hScrollY], a ; $72ca
 	ld hl, $cb02 ; $72cc
 	ld a, [hl+] ; $72cf
@@ -5602,13 +5602,13 @@ AnimateWindowSlideUpTask:
 	ld a, [$cb60] ; $72db
 	inc a ; $72de
 	ld [$cb60], a ; $72df
-	and a, $3f ; $72e2
+	and $3f ; $72e2
 	ld b, a ; $72e4
 	ld a, $90 ; $72e5
-	sub a, b ; $72e7
+	sub b ; $72e7
 	ldh [rWY], a ; $72e8
 	ld a, b ; $72ea
-	cp a, $3f ; $72eb
+	cp $3f ; $72eb
 	jr nz, .done ; $72ed
 	ld hl, AnimateWindowSlideUpTask ; $72ef
 	call UnregisterFrameTask ; $72f2
@@ -5652,15 +5652,15 @@ DrawCutsceneTextPage:
 	ld b, a ; $7337
 	ldh a, [hWramBank] ; $7338
 	push af ; $733a
-	and a, $0f ; $733b
+	and $0f ; $733b
 	ld a, b ; $733d
 	ld c, a ; $733e
-	add a, a ; $733f
-	add a, c ; $7340
-	add a, a ; $7341
-	add a, c ; $7342
+	add a ; $733f
+	add c ; $7340
+	add a ; $7341
+	add c ; $7342
 	ld hl, TextPageDescriptors_03 ; $7343
-	add a, l ; $7346
+	add l ; $7346
 	ld l, a ; $7347
 	jr nc, .gotPtr ; $7348
 	inc h ; $734a
@@ -5678,7 +5678,7 @@ DrawCutsceneTextPage:
 	inc hl ; $7360
 	inc c ; $7361
 	ld a, c ; $7362
-	cp a, b ; $7363
+	cp b ; $7363
 	jr nz, .loop ; $7364
 	pop af ; $7366
 	wram_bank ; $7367
@@ -5721,7 +5721,7 @@ DrawCutsceneTextLines:
 	push hl ; $740a
 	ld hl, $0014 ; $740b
 	ld a, c ; $740e
-	or a, a ; $740f
+	or a ; $740f
 	jr nz, .mulHLByA ; $7410
 	ld h, $00 ; $7412
 	ld l, $00 ; $7414
@@ -5740,7 +5740,7 @@ DrawCutsceneTextLines:
 	ld b, a ; $7425
 	ld hl, $30ab ; $7426
 	pop af ; $7429
-	add a, l ; $742a
+	add l ; $742a
 	ld l, a ; $742b
 	jr nc, .gotPtr ; $742c
 	inc h ; $742e
@@ -5751,7 +5751,7 @@ DrawCutsceneTextLines:
 	call DrawDialogueLineToBuffer ; $7437
 	call AdvanceFrame ; $743a
 	ld a, $50 ; $743d
-	add a, e ; $743f
+	add e ; $743f
 	ld e, a ; $7440
 	jr nc, .gotPtr2 ; $7441
 	inc d ; $7443
@@ -5775,7 +5775,7 @@ ScrollCutsceneTextWindow:
 	push af ; $7458
 	wram_bank $06 ; $7459
 	ld a, [$d001] ; $745f
-	and a, $03 ; $7462
+	and $03 ; $7462
 	jr nz, .maskSet ; $7464
 	ld a, $01 ; $7466
 .maskSet:
@@ -5797,7 +5797,7 @@ ScrollCutsceneTextWindow:
 	jr nz, .loop2 ; $747f
 	inc d ; $7481
 	ld a, d ; $7482
-	cp a, b ; $7483
+	cp b ; $7483
 	jr nz, .loop ; $7484
 	pop af ; $7486
 	wram_bank ; $7487
@@ -5815,7 +5815,7 @@ BlitCutsceneTextWindow:
 	push af ; $7496
 	ld hl, $d000 ; $7497
 	ld a, c ; $749a
-	add a, l ; $749b
+	add l ; $749b
 	ld l, a ; $749c
 	jr nc, .gotPtr ; $749d
 	inc h ; $749f
@@ -5843,13 +5843,13 @@ BlitCutsceneTextWindow:
 	pop de ; $74c1
 	pop hl ; $74c2
 	ld a, $50 ; $74c3
-	add a, l ; $74c5
+	add l ; $74c5
 	ld l, a ; $74c6
 	jr nc, .gotPtr2 ; $74c7
 	inc h ; $74c9
 .gotPtr2:
 	ld a, $20 ; $74ca
-	add a, e ; $74cc
+	add e ; $74cc
 	ld e, a ; $74cd
 	jr nc, .gotPtr3 ; $74ce
 	inc d ; $74d0
@@ -5882,7 +5882,7 @@ DrawDialogueLineToBuffer:
 	ld c, $14 ; $7505
 .loop:
 	ld a, [hl+] ; $7507
-	or a, a ; $7508
+	or a ; $7508
 	jr z, .restore ; $7509
 	push hl ; $750b
 	ld h, d ; $750c
@@ -5935,7 +5935,7 @@ ShowStoryResultScreen:
 	ld de, $9800 ; $7579
 	ld c, $24 ; $757c
 	call QueueVRAMCopy ; $757e
-	xor a, a ; $7581
+	xor a ; $7581
 	ldh [hScrollX], a ; $7582
 	ldh [hScrollY], a ; $7584
 	ld [wCameraX], a ; $7586
@@ -5958,7 +5958,7 @@ InitGrayscalePaletteFade:
 	ldh a, [hWramBank] ; $75ab
 	push af ; $75ad
 	wram_bank $06 ; $75ae
-	xor a, a ; $75b4
+	xor a ; $75b4
 	ld hl, $d1e0 ; $75b5
 	ld b, $10 ; $75b8
 .loop:
@@ -5973,7 +5973,7 @@ InitGrayscalePaletteFade:
 	ldh a, [hWramBank] ; $75ca
 	push af ; $75cc
 	wram_bank $06 ; $75cd
-	xor a, a ; $75d3
+	xor a ; $75d3
 	ld hl, $d1e0 ; $75d4
 	ld b, $10 ; $75d7
 .loopB:
@@ -6063,10 +6063,10 @@ ComputeGrayscaleColor:
 	ld c, a ; $764a
 	ld a, [de] ; $764b
 	inc de ; $764c
-	add a, c ; $764d
+	add c ; $764d
 	ld c, a ; $764e
 	ld a, [de] ; $764f
-	add a, c ; $7650
+	add c ; $7650
 	ld c, a ; $7651
 	ld b, $00 ; $7652
 	srl a ; $7654
@@ -6205,7 +6205,7 @@ AnimatePaletteFadeToTarget:
 .loop:
 	ld a, [$d1f9] ; $7722
 .loopB:
-	and a, a ; $7725
+	and a ; $7725
 	jr z, .zero ; $7726
 	call AdvanceFrame ; $7728
 	dec a ; $772b
@@ -6217,7 +6217,7 @@ AnimatePaletteFadeToTarget:
 	push de ; $7733
 	push bc ; $7734
 	ld a, [de] ; $7735
-	and a, a ; $7736
+	and a ; $7736
 	jr z, .restore ; $7737
 	call StepPaletteColorsTowardTarget ; $7739
 .restore:
@@ -6226,7 +6226,7 @@ AnimatePaletteFadeToTarget:
 	inc de ; $773e
 	inc b ; $773f
 	ld a, b ; $7740
-	cp a, $10 ; $7741
+	cp $10 ; $7741
 	jr nz, .loop2 ; $7743
 	ld hl, $d140 ; $7745
 	ld d, $00 ; $7748
@@ -6237,7 +6237,7 @@ AnimatePaletteFadeToTarget:
 	ld a, [hl] ; $7755
 	dec a ; $7756
 	ld [hl], a ; $7757
-	and a, a ; $7758
+	and a ; $7758
 	jr nz, .loop ; $7759
 	call SnapPalettesToTarget ; $775b
 	pop af ; $775e
@@ -6312,18 +6312,18 @@ StepPaletteColorsTowardTarget:
 StepColorComponentTowardTarget:
 	ld a, [de] ; $77d0
 	ld b, [hl] ; $77d1
-	sub a, b ; $77d2
+	sub b ; $77d2
 	ret z ; $77d3
 	jr c, .read ; $77d4
 	ld a, [hl] ; $77d6
 	inc a ; $77d7
-	and a, $1f ; $77d8
+	and $1f ; $77d8
 	ld [hl], a ; $77da
 	ret ; $77db
 .read:
 	ld a, [hl] ; $77dc
 	dec a ; $77dd
-	and a, $1f ; $77de
+	and $1f ; $77de
 	ld [hl], a ; $77e0
 	ret ; $77e1
 SnapPalettesToTarget:
@@ -6333,7 +6333,7 @@ SnapPalettesToTarget:
 	push hl ; $77e7
 	push bc ; $77e8
 	ld a, [hl] ; $77e9
-	and a, a ; $77ea
+	and a ; $77ea
 	jr z, .restore ; $77eb
 	ld c, b ; $77ed
 	ld hl, $d0a0 ; $77ee
@@ -6373,7 +6373,7 @@ SnapPalettesToTarget:
 	inc hl ; $7817
 	inc b ; $7818
 	ld a, b ; $7819
-	cp a, $10 ; $781a
+	cp $10 ; $781a
 	jr nz, .loop ; $781c
 	ld hl, $d140 ; $781e
 	ld d, $00 ; $7821
@@ -6382,10 +6382,10 @@ SnapPalettesToTarget:
 	ret ; $7828
 AdvanceToPaletteEntry:
 	ld a, b ; $7829
-	and a, a ; $782a
+	and a ; $782a
 	ret z ; $782b
 	ld a, $08 ; $782c
-	add a, l ; $782e
+	add l ; $782e
 	ld l, a ; $782f
 	jr nc, .seekLoop ; $7830
 	inc h ; $7832

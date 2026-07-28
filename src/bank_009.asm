@@ -29,10 +29,10 @@ SECTION "ROM Bank $09", ROMX[$4000], BANK[$09]
 	farptr DismissGameResultObj ; $4034
 UpdatePointDigitsDisplay:
 	ld a, [wTiebreakerIndicator] ; $4036
-	and a, a ; $4039
+	and a ; $4039
 	jr nz, .drawPlayer2 ; $403a
 	ld a, [wPlayer2PointsWon] ; $403c
-	cp a, $04 ; $403f
+	cp $04 ; $403f
 	ld a, [wPlayer1PointsWon] ; $4041
 	jr nz, .drawPlayer1 ; $4044
 	ld a, $05 ; $4046
@@ -40,7 +40,7 @@ UpdatePointDigitsDisplay:
 	ld b, $00 ; $4048
 	call LoadPlayer1PointsDigitGfx ; $404a
 	ld a, [wPlayer1PointsWon] ; $404d
-	cp a, $04 ; $4050
+	cp $04 ; $4050
 	ld a, [wPlayer2PointsWon] ; $4052
 	jr nz, .checkPlayer2 ; $4055
 	ld a, $05 ; $4057
@@ -50,7 +50,7 @@ UpdatePointDigitsDisplay:
 	ret ; $405e
 .drawPlayer2:
 	ld a, [wPlayer2PointsWon] ; $405f
-	cp a, $07 ; $4062
+	cp $07 ; $4062
 	ld a, [wPlayer1PointsWon] ; $4064
 	jr nz, .checkAdvantage ; $4067
 	ld a, $08 ; $4069
@@ -58,7 +58,7 @@ UpdatePointDigitsDisplay:
 	ld b, $01 ; $406b
 	call LoadPlayer1PointsDigitGfx ; $406d
 	ld a, [wPlayer1PointsWon] ; $4070
-	cp a, $07 ; $4073
+	cp $07 ; $4073
 	ld a, [wPlayer2PointsWon] ; $4075
 	jr nz, .done ; $4078
 	ld a, $08 ; $407a
@@ -72,7 +72,7 @@ GetPointScoreForDisplay:
 	ld a, [wPlayer2PointsWon] ; $4086
 	ld e, a ; $4089
 	ld a, [wCurrentServingPlayer] ; $408a
-	and a, $01 ; $408d
+	and $01 ; $408d
 	jr z, .readDeuce ; $408f
 	ld a, d ; $4091
 	ld d, e ; $4092
@@ -82,7 +82,7 @@ GetPointScoreForDisplay:
 	ret ; $4097
 UpdateScorePanelDisplay:
 	call GetPointScoreForDisplay ; $4098
-	and a, a ; $409b
+	and a ; $409b
 	jr nz, .deuce ; $409c
 	push de ; $409e
 	ld a, [$c7bd] ; $409f
@@ -145,16 +145,16 @@ SpawnGameScoreDisplayObjs:
 	wram_bank $04 ; $412a
 	call ClearAllObjSlots ; $4130
 	ld a, [wScoreboardLayout] ; $4133
-	cp a, $03 ; $4136
+	cp $03 ; $4136
 	jr z, .doubles ; $4138
 	ld a, [wCurrentServingPlayer] ; $413a
 	cpl ; $413d
-	and a, $01 ; $413e
+	and $01 ; $413e
 	ld b, a ; $4140
 	wram_bank $04 ; $4141
 	ld a, [wCharCourtPos] ; $4147
-	and a, $02 ; $414a
-	or a, b ; $414c
+	and $02 ; $414a
+	or b ; $414c
 	ld b, a ; $414d
 	wram_bank $04 ; $414e
 	push bc ; $4154
@@ -166,7 +166,7 @@ SpawnGameScoreDisplayObjs:
 	call SetObjSpriteTemplate ; $4162
 	pop bc ; $4165
 	ld a, b ; $4166
-	xor a, $03 ; $4167
+	xor $03 ; $4167
 	ld hl, ObjTemplates_09_41bc ; $4169
 	ld bc, $dd90 ; $416c
 	call LoadObjTemplate_09 ; $416f
@@ -185,7 +185,7 @@ SpawnGameScoreDisplayObjs:
 	ret ; $418f
 DismissGameScoreDisplayObjs:
 	ld a, [wDrillIsPracticeLesson] ; $4190
-	and a, a ; $4193
+	and a ; $4193
 	jr nz, .doubles ; $4194
 	ld hl, ObjTemplates_09_41bc ; $4196
 	ld bc, $dd80 ; $4199
@@ -239,7 +239,7 @@ SpawnServeIndicatorObjs:
 	call GetPlayer1ServeIndicatorSprites ; $4254
 	call SetObjSpriteTemplate ; $4257
 	ld a, [wScoreboardLayout] ; $425a
-	cp a, $03 ; $425d
+	cp $03 ; $425d
 	jr z, .player2Indicator ; $425f
 	ld a, [wServingCharCourtPos] ; $4261
 	ld hl, ServeIndicatorObjTemplates_09 ; $4264
@@ -250,11 +250,11 @@ SpawnServeIndicatorObjs:
 	ret ; $4273
 .player2Indicator:
 	ld a, [wServingCharCourtPos] ; $4274
-	and a, $02 ; $4277
+	and $02 ; $4277
 	ret nz ; $4279
 	ld hl, $dd87 ; $427a
 	ld a, [hl] ; $427d
-	add a, $10 ; $427e
+	add $10 ; $427e
 	ld [hl], a ; $4280
 	ret ; $4281
 DismissServeIndicatorObjs:
@@ -280,7 +280,7 @@ SpawnWinLoseResultObj:
 	ld bc, $dd80 ; $42de
 	call LoadObjTemplate_09 ; $42e1
 	pop af ; $42e4
-	add a, a ; $42e5
+	add a ; $42e5
 	jr c, .player2 ; $42e6
 	call GetPlayer1CharIconSprites ; $42e8
 	call SetObjSpriteTemplate ; $42eb
@@ -463,13 +463,13 @@ SetObjDrawMode:
 	ld hl, $000e ; $45f8
 	add hl, bc ; $45fb
 	ld a, [hl] ; $45fc
-	xor a, $02 ; $45fd
+	xor $02 ; $45fd
 	ld [hl], a ; $45ff
 	ret ; $4600
 	ld hl, $000e ; $4601
 	add hl, bc ; $4604
 	ld a, [hl] ; $4605
-	xor a, $03 ; $4606
+	xor $03 ; $4606
 	ld [hl], a ; $4608
 	ret ; $4609
 LoadObjTemplate_09:
@@ -514,13 +514,13 @@ LoadObjTemplate_09:
 	add hl, de ; $463d
 	ld a, [hl+] ; $463e
 	inc hl ; $463f
-	and a, a ; $4640
+	and a ; $4640
 	jr z, .setDrawMode ; $4641
 	call PlaySoundManaged ; $4643
 .setDrawMode:
 	ld d, [hl] ; $4646
 	call SetObjDrawMode ; $4647
-	xor a, a ; $464a
+	xor a ; $464a
 	ld hl, $000a ; $464b
 	add hl, bc ; $464e
 	ld [hl+], a ; $464f
@@ -531,7 +531,7 @@ LoadObjTemplate_09:
 	ret ; $4657
 StartObjExitAnim:
 	ld a, $01 ; $4658
-	add a, c ; $465a
+	add c ; $465a
 	ld e, a ; $465b
 	ld d, b ; $465c
 	ld a, [de] ; $465d
@@ -540,16 +540,16 @@ StartObjExitAnim:
 	res 7, a ; $4661
 	ld [de], a ; $4663
 	ld a, $00 ; $4664
-	add a, c ; $4666
+	add c ; $4666
 	ld e, a ; $4667
 	ld d, b ; $4668
 	ld a, [de] ; $4669
-	add a, a ; $466a
-	add a, a ; $466b
-	add a, a ; $466c
-	add a, a ; $466d
-	add a, $08 ; $466e
-	add a, l ; $4670
+	add a ; $466a
+	add a ; $466b
+	add a ; $466c
+	add a ; $466d
+	add $08 ; $466e
+	add l ; $4670
 	ld l, a ; $4671
 	jr nc, .readEntry ; $4672
 	inc h ; $4674
@@ -589,7 +589,7 @@ ProcessObjSlot:
 	ld hl, $0000 ; $46b5
 	add hl, bc ; $46b8
 	ld a, [hl] ; $46b9
-	cp a, $ff ; $46ba
+	cp $ff ; $46ba
 	ret z ; $46bc
 	ld l, c ; $46bd
 	ld h, b ; $46be
@@ -608,9 +608,9 @@ DrawObjSlot:
 	ld hl, FinishObjSlotUpdate ; $46d3
 	push hl ; $46d6
 	ld a, [$ddff] ; $46d7
-	and a, a ; $46da
+	and a ; $46da
 	jr z, FinishObjSlotUpdate.applyCurve ; $46db
-	cp a, $01 ; $46dd
+	cp $01 ; $46dd
 	jr z, FinishObjSlotUpdate.checkExit ; $46df
 FinishObjSlotUpdate:
 	ld hl, $ddfd ; $46e1
@@ -627,11 +627,11 @@ FinishObjSlotUpdate:
 	ret z ; $46f5
 	ld hl, $ddf6 ; $46f6
 	ld a, [$ddfa] ; $46f9
-	add a, [hl] ; $46fc
+	add [hl] ; $46fc
 	ld d, a ; $46fd
 	ld hl, $ddf7 ; $46fe
 	ld a, [$ddfb] ; $4701
-	add a, [hl] ; $4704
+	add [hl] ; $4704
 	ld e, a ; $4705
 	ld a, [$ddf4] ; $4706
 	ld b, a ; $4709
@@ -657,13 +657,13 @@ FinishObjSlotUpdate:
 	wram_bank $04 ; $472e
 	ld a, [w4_ddfa] ; $4734
 	ld hl, $ddf6 ; $4737
-	add a, [hl] ; $473a
-	add a, d ; $473b
+	add [hl] ; $473a
+	add d ; $473b
 	ld d, a ; $473c
 	ld a, [w4_ddfb] ; $473d
 	ld hl, $ddf7 ; $4740
-	add a, [hl] ; $4743
-	add a, e ; $4744
+	add [hl] ; $4743
+	add e ; $4744
 	ld e, a ; $4745
 	ld a, [w4_ddf4] ; $4746
 	ld b, a ; $4749
@@ -700,45 +700,45 @@ FinishObjSlotUpdate:
 	ret ; $4781
 GetNextMoveCurveValue:
 	ld a, [$ddfe] ; $4782
-	add a, a ; $4785
-	add a, LOW(MoveCurveTable_09) ; $4786
+	add a ; $4785
+	add LOW(MoveCurveTable_09) ; $4786
 	ld l, a ; $4788
-	adc a, HIGH(MoveCurveTable_09) ; $4789
-	sub a, l ; $478b
+	adc HIGH(MoveCurveTable_09) ; $4789
+	sub l ; $478b
 	ld h, a ; $478c
 	ld a, [hl+] ; $478d
 	ld h, [hl] ; $478e
 	ld l, a ; $478f
 	ld a, [$ddfd] ; $4790
-	add a, l ; $4793
+	add l ; $4793
 	ld l, a ; $4794
 	jr nc, .readValue ; $4795
 	inc h ; $4797
 .readValue:
 	ld a, [hl] ; $4798
-	cp a, $80 ; $4799
+	cp $80 ; $4799
 	jr z, .done ; $479b
-	cp a, $81 ; $479d
+	cp $81 ; $479d
 	jr z, .markFinished ; $479f
 	ld [$ddfa], a ; $47a1
-	xor a, a ; $47a4
+	xor a ; $47a4
 	inc a ; $47a5
 	ret ; $47a6
 .markFinished:
 	ld a, $ff ; $47a7
 	ld [$ddf0], a ; $47a9
 .done:
-	xor a, a ; $47ac
+	xor a ; $47ac
 	ret ; $47ad
 MoveCurveTable_09:
 	INCBIN "data/bank_009/d_47ae.bin" ; $47ae, 197 bytes
 LoadTilesetGfx:
-	add a, a ; $4873
-	add a, a ; $4874
-	add a, LOW(VramTileset_09) ; $4875
+	add a ; $4873
+	add a ; $4874
+	add LOW(VramTileset_09) ; $4875
 	ld l, a ; $4877
-	adc a, HIGH(VramTileset_09) ; $4878
-	sub a, l ; $487a
+	adc HIGH(VramTileset_09) ; $4878
+	sub l ; $487a
 	ld h, a ; $487b
 	ld a, [hl+] ; $487c
 	ld e, a ; $487d
@@ -828,8 +828,8 @@ LoadDeuceAdvantageGfx:
 GetGfxSourcePtr:
 	push af ; $6154
 	ld a, b ; $6155
-	add a, a ; $6156
-	add a, l ; $6157
+	add a ; $6156
+	add l ; $6157
 	ld l, a ; $6158
 	jr nc, .read ; $6159
 	inc h ; $615b
@@ -856,28 +856,28 @@ DeuceAdvantageTiles:
 	INCBIN "data/bank_009/d_6bc0.bin" ; $6bc0, 128 bytes
 LoadServeGfx:
 	ld a, [wCurrentServingPlayer] ; $6c40
-	add a, a ; $6c43
-	add a, LOW(ServeGfxPtrTable_09) ; $6c44
+	add a ; $6c43
+	add LOW(ServeGfxPtrTable_09) ; $6c44
 	ld l, a ; $6c46
-	adc a, HIGH(ServeGfxPtrTable_09) ; $6c47
-	sub a, l ; $6c49
+	adc HIGH(ServeGfxPtrTable_09) ; $6c47
+	sub l ; $6c49
 	ld h, a ; $6c4a
 	ld a, [hl+] ; $6c4b
 	ld h, [hl] ; $6c4c
 	ld l, a ; $6c4d
 	ld a, [wServeFaultFlag] ; $6c4e
-	and a, $01 ; $6c51
+	and $01 ; $6c51
 	ld b, a ; $6c53
 	ld a, [wServingCharCourtPos] ; $6c54
-	and a, $02 ; $6c57
-	or a, b ; $6c59
-	add a, a ; $6c5a
-	add a, a ; $6c5b
-	add a, a ; $6c5c
-	add a, a ; $6c5d
-	add a, a ; $6c5e
-	add a, a ; $6c5f
-	add a, l ; $6c60
+	and $02 ; $6c57
+	or b ; $6c59
+	add a ; $6c5a
+	add a ; $6c5b
+	add a ; $6c5c
+	add a ; $6c5d
+	add a ; $6c5e
+	add a ; $6c5f
+	add l ; $6c60
 	ld l, a ; $6c61
 	jr nc, .queue ; $6c62
 	inc h ; $6c64
@@ -890,11 +890,11 @@ ServeGfxPtrTable_09:
 	INCBIN "data/bank_009/d_6c6e.bin" ; $6c6e, 1173 bytes
 GetPlayer1ServeIndicatorSprites:
 	ld a, [wOnCourtCharCountMinus1] ; $7103
-	add a, a ; $7106
-	add a, LOW(Player1ServeIndicatorSpritePtrs_09) ; $7107
+	add a ; $7106
+	add LOW(Player1ServeIndicatorSpritePtrs_09) ; $7107
 	ld l, a ; $7109
-	adc a, HIGH(Player1ServeIndicatorSpritePtrs_09) ; $710a
-	sub a, l ; $710c
+	adc HIGH(Player1ServeIndicatorSpritePtrs_09) ; $710a
+	sub l ; $710c
 	ld h, a ; $710d
 	ld a, [hl+] ; $710e
 	ld d, [hl] ; $710f
@@ -908,11 +908,11 @@ Player1ServeIndicatorSpritePtrs_09:
 	dw SpriteTemplate_09_714a ; record 3
 GetPlayer2ServeIndicatorSprites:
 	ld a, [wOnCourtCharCountMinus1] ; $711a
-	add a, a ; $711d
-	add a, LOW(Player2ServeIndicatorSpritePtrs_09) ; $711e
+	add a ; $711d
+	add LOW(Player2ServeIndicatorSpritePtrs_09) ; $711e
 	ld l, a ; $7120
-	adc a, HIGH(Player2ServeIndicatorSpritePtrs_09) ; $7121
-	sub a, l ; $7123
+	adc HIGH(Player2ServeIndicatorSpritePtrs_09) ; $7121
+	sub l ; $7123
 	ld h, a ; $7124
 	ld a, [hl+] ; $7125
 	ld d, [hl] ; $7126
@@ -962,11 +962,11 @@ SpriteTemplate_09_717c:
 	oam_sprite_end
 GetPlayer1CharIconSprites:
 	ld a, [wOnCourtCharCountMinus1] ; $7195
-	add a, a ; $7198
-	add a, LOW(Player1CharIconSpritePtrs_09) ; $7199
+	add a ; $7198
+	add LOW(Player1CharIconSpritePtrs_09) ; $7199
 	ld l, a ; $719b
-	adc a, HIGH(Player1CharIconSpritePtrs_09) ; $719c
-	sub a, l ; $719e
+	adc HIGH(Player1CharIconSpritePtrs_09) ; $719c
+	sub l ; $719e
 	ld h, a ; $719f
 	ld a, [hl+] ; $71a0
 	ld d, [hl] ; $71a1
@@ -980,11 +980,11 @@ Player1CharIconSpritePtrs_09:
 	dw SpriteTemplate_09_71cc ; record 3
 GetPlayer2CharIconSprites:
 	ld a, [wOnCourtCharCountMinus1] ; $71ac
-	add a, a ; $71af
-	add a, LOW(Player2CharIconSpritePtrs_09) ; $71b0
+	add a ; $71af
+	add LOW(Player2CharIconSpritePtrs_09) ; $71b0
 	ld l, a ; $71b2
-	adc a, HIGH(Player2CharIconSpritePtrs_09) ; $71b3
-	sub a, l ; $71b5
+	adc HIGH(Player2CharIconSpritePtrs_09) ; $71b3
+	sub l ; $71b5
 	ld h, a ; $71b6
 	ld a, [hl+] ; $71b7
 	ld d, [hl] ; $71b8

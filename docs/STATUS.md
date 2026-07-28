@@ -50,7 +50,7 @@ QueueVRAMCopy:
         ldh a, [rLCDC]
         add a, a
         jr c, .queue          ; LCD on -> queue the copy for VBlank
-        xor a, a
+        xor a
         bit 5, d
         jr z, .setVramBank
         res 5, d
@@ -5179,7 +5179,7 @@ Those two 8-bit immediates *are* the address, and unlike a `ld hl` they never
 moved when the table did -- which is exactly why an earlier pass had to search
 for the byte pair to find these tables at all. **564 full idioms exist; 270
 compute an address that carries a label** and now render as
-`add a, LOW(Name)` / `adc a, HIGH(Name)`, assembling to the same bytes and
+`add LOW(Name)` / `adc HIGH(Name)`, assembling to the same bytes and
 following the table thereafter. 234 distinct tables are addressed this way.
 
 Gated like a pointer load: the whole five-instruction shape, a label at the
@@ -5654,7 +5654,7 @@ otherwise perfectly detectable -- the byte cannot say which symbol it is the low
 half of, and at one site in five the honest answer is "none of them".
 
 This is a different mechanism from `_resolve_split_base` in `emit.py`, which
-rewrites the `add a, LOW(x)` / `adc a, HIGH(x)` pair: there the two halves
+rewrites the `add LOW(x)` / `adc HIGH(x)` pair: there the two halves
 corroborate each other into a full address, which is what lets that one be
 inferred from shape. Here the high half is implicit in the `ldh`, so there is
 nothing to corroborate.

@@ -10,19 +10,19 @@ SECTION "ROM Bank $1e", ROMX[$4000], BANK[$1e]
 ShowMatchResultsScreen:
 	clear_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $400e
 	ld a, [wGameMode] ; $4011
-	cp a, $05 ; $4014
+	cp $05 ; $4014
 	jr z, .checkExpScreen ; $4016
-	cp a, $06 ; $4018
+	cp $06 ; $4018
 	jr z, .checkExpScreen ; $401a
-	cp a, $07 ; $401c
+	cp $07 ; $401c
 	jr z, .checkExpScreen ; $401e
-	cp a, $08 ; $4020
+	cp $08 ; $4020
 	test_flag FLAG_DOUBLES ; $4022
 	jr z, .checkExpScreen ; $4025
 	set_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $4027
 .checkExpScreen:
 	ld a, c ; $402a
-	or a, a ; $402b
+	or a ; $402b
 	jr z, .showResults ; $402c
 	jp ShowExpAwardScreen ; $402e
 .showResults:
@@ -37,7 +37,7 @@ ShowMatchResultsScreen:
 	farcall PrepareGlyphBuffer ; $4044
 	call ClearFrameTasks ; $4047
 	call DisableLCDSafely ; $404a
-	xor a, a ; $404d
+	xor a ; $404d
 	ldh [hScrollX], a ; $404e
 	ldh [hScrollY], a ; $4050
 	ld [wCameraX], a ; $4052
@@ -77,7 +77,7 @@ InitResultsPromptState:
 	wram_bank $06 ; $40ac
 	ld a, c ; $40b2
 	ld [wContinuePromptKind], a ; $40b3
-	xor a, a ; $40b6
+	xor a ; $40b6
 	ld [wContinuePromptRow], a ; $40b7
 	ld [wContinuePromptPage], a ; $40ba
 	ret ; $40bd
@@ -155,7 +155,7 @@ ResultsCopyToTilemap:
 	inc hl ; $4195
 	dec bc ; $4196
 	ld a, b ; $4197
-	or a, c ; $4198
+	or c ; $4198
 	jr nz, ResultsCopyToTilemap ; $4199
 	ret ; $419b
 ResultsCopyToAttrmap:
@@ -166,7 +166,7 @@ ResultsCopyToAttrmap:
 	inc hl ; $41aa
 	dec bc ; $41ab
 	ld a, b ; $41ac
-	or a, c ; $41ad
+	or c ; $41ad
 	jr nz, ResultsCopyToAttrmap ; $41ae
 	ret ; $41b0
 BuildResultsScreenPanels:
@@ -206,7 +206,7 @@ BuildResultsScreenPanels:
 	ld c, $12 ; $420a
 	call FillMemoryC ; $420c
 	wram_bank $02 ; $420f
-	xor a, a ; $4215
+	xor a ; $4215
 	ld hl, wContinuePromptKind ; $4216
 	ld c, $a0 ; $4219
 	call FillMemoryC ; $421b
@@ -248,7 +248,7 @@ BuildResultsScreenPanels:
 	ld c, $12 ; $427d
 	call FillMemoryC ; $427f
 	wram_bank $02 ; $4282
-	xor a, a ; $4288
+	xor a ; $4288
 	ld hl, $d1a0 ; $4289
 	ld c, $a0 ; $428c
 	call FillMemoryC ; $428e
@@ -279,7 +279,7 @@ BuildResultsScreenPanels:
 	ld a, $06 ; $42c5
 	ld [wShadowTilemap + 7 * TILEMAP_WIDTH + 19], a ; $42c7
 	ld [wShadowTilemap + 8 * TILEMAP_WIDTH + 19], a ; $42ca
-	xor a, a ; $42cd
+	xor a ; $42cd
 	ld [wShadowTilemap + 7 * TILEMAP_WIDTH + 15], a ; $42ce
 	ld [wShadowTilemap + 7 * TILEMAP_WIDTH + 18], a ; $42d1
 	ld [wShadowTilemap + 8 * TILEMAP_WIDTH + 15], a ; $42d4
@@ -293,7 +293,7 @@ BuildResultsScreenPanels:
 	ld bc, $0020 ; $42ec
 	call FetchAndDrawDialogueText ; $42ef
 	wram_bank $02 ; $42f2
-	xor a, a ; $42f8
+	xor a ; $42f8
 	ld hl, $d0ce ; $42f9
 	ld c, $06 ; $42fc
 	call FillMemoryC ; $42fe
@@ -307,17 +307,17 @@ BuildResultsScreenPanels:
 	ld c, $06 ; $4314
 	call FillMemoryC ; $4316
 	ld a, [wGameMode] ; $4319
-	or a, a ; $431c
+	or a ; $431c
 	jp z, DrawStoryResultsHeader ; $431d
-	cp a, $04 ; $4320
+	cp $04 ; $4320
 	jp z, DrawExhibitionResultsHeader ; $4322
-	cp a, $01 ; $4325
+	cp $01 ; $4325
 	jp z, DrawRankMatchResultsHeader ; $4327
-	cp a, $02 ; $432a
+	cp $02 ; $432a
 	jp z, DrawTournamentResultsHeader ; $432c
-	cp a, $03 ; $432f
+	cp $03 ; $432f
 	jp z, DrawPracticeResultsHeader ; $4331
-	cp a, $0a ; $4334
+	cp $0a ; $4334
 	jp z, DrawMarioExhibitionResultsHeader ; $4336
 	ret ; $4339
 LoadSinglesLabelTiles:
@@ -333,7 +333,7 @@ LoadDoublesLabelTiles:
 	call DecompressData ; $4356
 	ret ; $4359
 DrawResultsNameLabelRows:
-	or a, a ; $435a
+	or a ; $435a
 	jr nz, .doublesLayout ; $435b
 	ld hl, wContinuePromptKind ; $435d
 	ld de, $d160 ; $4360
@@ -390,7 +390,7 @@ DrawResultsNameLabelRows:
 	ld a, $08 ; $43eb
 	ld [wShadowTilemap + 11 * TILEMAP_WIDTH + 6], a ; $43ed
 	wram_bank $02 ; $43f0
-	xor a, a ; $43f6
+	xor a ; $43f6
 	ld hl, $d160 ; $43f7
 	ld c, $14 ; $43fa
 	call FillMemoryC ; $43fc
@@ -423,7 +423,7 @@ CopyLabelTilesToTilemap:
 	ld a, $05 ; $4441
 	ld [wShadowTilemap + 13 * TILEMAP_WIDTH], a ; $4443
 	wram_bank $02 ; $4446
-	xor a, a ; $444c
+	xor a ; $444c
 	ld [$d1a0], a ; $444d
 	ld a, $08 ; $4450
 	ld [$d1a6], a ; $4452
@@ -440,7 +440,7 @@ DrawStoryResultsHeader:
 	test_flag FLAG_ISLAND_SKY_SCENE_ACTIVE ; $4466
 	jr nz, .skyScene ; $4469
 	ld a, [$c8a9] ; $446b
-	cp a, $1d ; $446e
+	cp $1d ; $446e
 	jr z, .altPosition ; $4470
 	ld hl, $04d8 ; $4472
 	ld de, $d1c3 ; $4475
@@ -454,20 +454,20 @@ DrawStoryResultsHeader:
 	call DrawProportionalTextLine ; $4489
 .drawOpponentName:
 	ld a, [$c8a9] ; $448c
-	add a, $79 ; $448f
+	add $79 ; $448f
 	ld l, a ; $4491
-	adc a, $01 ; $4492
-	sub a, l ; $4494
+	adc $01 ; $4492
+	sub l ; $4494
 	ld h, a ; $4495
 	ld de, $d204 ; $4496
 	ld bc, $0020 ; $4499
 	call DrawProportionalTextLine ; $449c
 	ret ; $449f
 .altPosition:
-	add a, $79 ; $44a0
+	add $79 ; $44a0
 	ld l, a ; $44a2
-	adc a, $01 ; $44a3
-	sub a, l ; $44a5
+	adc $01 ; $44a3
+	sub l ; $44a5
 	ld h, a ; $44a6
 	ld de, $d1e7 ; $44a7
 	ld bc, $0020 ; $44aa
@@ -477,7 +477,7 @@ DrawExhibitionResultsHeader:
 	test_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $44b1
 	jr nz, .doubles ; $44b4
 	call LoadSinglesLabelTiles ; $44b6
-	xor a, a ; $44b9
+	xor a ; $44b9
 	call DrawResultsNameLabelRows ; $44ba
 	call DrawSinglesPlayerNames ; $44bd
 	call DrawSetsGamesScore ; $44c0
@@ -493,14 +493,14 @@ DrawMarioExhibitionResultsHeader:
 	test_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $44d3
 	jr nz, .doubles ; $44d6
 	call LoadSinglesLabelTiles ; $44d8
-	xor a, a ; $44db
+	xor a ; $44db
 	call DrawResultsNameLabelRows ; $44dc
 	call DrawMarioExhibitionLabel ; $44df
 	call DrawSetsGamesScore ; $44e2
 	ret ; $44e5
 .doubles:
 	call LoadDoublesLabelTiles ; $44e6
-	xor a, a ; $44e9
+	xor a ; $44e9
 	call DrawResultsNameLabelRows ; $44ea
 	call DrawMarioExhibitionLabel ; $44ed
 	call DrawSetsGamesScore ; $44f0
@@ -509,7 +509,7 @@ DrawRankMatchResultsHeader:
 	test_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $44f4
 	jr nz, .doubles ; $44f7
 	call LoadSinglesLabelTiles ; $44f9
-	xor a, a ; $44fc
+	xor a ; $44fc
 	call DrawResultsNameLabelRows ; $44fd
 	call DrawClassNameLabel ; $4500
 	call DrawRankMatchLabel ; $4503
@@ -517,7 +517,7 @@ DrawRankMatchResultsHeader:
 	ret ; $4509
 .doubles:
 	call LoadDoublesLabelTiles ; $450a
-	xor a, a ; $450d
+	xor a ; $450d
 	call DrawResultsNameLabelRows ; $450e
 	call DrawClassNameLabel ; $4511
 	call DrawRankMatchLabel ; $4514
@@ -527,14 +527,14 @@ DrawTournamentResultsHeader:
 	test_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $451b
 	jr nz, .doubles ; $451e
 	call LoadSinglesLabelTiles ; $4520
-	xor a, a ; $4523
+	xor a ; $4523
 	call DrawResultsNameLabelRows ; $4524
 	call DrawTournamentRoundLabel ; $4527
 	call DrawSetsGamesScore ; $452a
 	ret ; $452d
 .doubles:
 	call LoadDoublesLabelTiles ; $452e
-	xor a, a ; $4531
+	xor a ; $4531
 	call DrawResultsNameLabelRows ; $4532
 	call DrawTournamentRoundLabel ; $4535
 	call DrawSetsGamesScore ; $4538
@@ -543,7 +543,7 @@ DrawPracticeResultsHeader:
 	test_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $453c
 	jr nz, .doubles ; $453f
 	call LoadSinglesLabelTiles ; $4541
-	xor a, a ; $4544
+	xor a ; $4544
 	call DrawResultsNameLabelRows ; $4545
 	call DrawClassNameLabel ; $4548
 	call DrawPracticeMatchLabel ; $454b
@@ -551,7 +551,7 @@ DrawPracticeResultsHeader:
 	ret ; $4551
 .doubles:
 	call LoadDoublesLabelTiles ; $4552
-	xor a, a ; $4555
+	xor a ; $4555
 	call DrawResultsNameLabelRows ; $4556
 	call DrawClassNameLabel ; $4559
 	call DrawPracticeMatchLabel ; $455c
@@ -571,7 +571,7 @@ DrawContinuePromptText:
 	wram_bank $03 ; $4575
 	ld a, $80 ; $457b
 .loop:
-	cp a, $91 ; $457d
+	cp $91 ; $457d
 	jr z, .restore ; $457f
 	ld [hl], a ; $4581
 	inc hl ; $4582
@@ -587,7 +587,7 @@ DrawSaveWarningTextLine1:
 	wram_bank $03 ; $458f
 	ld a, $92 ; $4595
 .loop:
-	cp a, $9e ; $4597
+	cp $9e ; $4597
 	jr z, .restore ; $4599
 	ld [hl], a ; $459b
 	inc hl ; $459c
@@ -603,7 +603,7 @@ DrawSaveWarningTextLine2:
 	wram_bank $03 ; $45a9
 	ld a, $a4 ; $45af
 .loop:
-	cp a, $b5 ; $45b1
+	cp $b5 ; $45b1
 	jr z, .restore ; $45b3
 	ld [hl], a ; $45b5
 	inc hl ; $45b6
@@ -615,7 +615,7 @@ DrawSaveWarningTextLine2:
 	ret ; $45bf
 FetchAndDrawDialogueText:
 	push bc ; $45c0
-	xor a, a ; $45c1
+	xor a ; $45c1
 	farcall AddTextIdOffset ; $45c2
 	farcall FetchDialogueText ; $45c5
 	pop bc ; $45c8
@@ -624,11 +624,11 @@ WriteTextToTilemap:
 .charLoop:
 	wram_bank $03 ; $45cc
 	ld a, [hl+] ; $45d2
-	or a, a ; $45d3
+	or a ; $45d3
 	ret z ; $45d4
-	cp a, $de ; $45d5
+	cp $de ; $45d5
 	jr z, .markChar ; $45d7
-	cp a, $df ; $45d9
+	cp $df ; $45d9
 	jr z, .markChar ; $45db
 	ld [de], a ; $45dd
 	wram_bank $02 ; $45de
@@ -646,10 +646,10 @@ WriteTextToTilemap:
 	dec de ; $45ef
 	ld c, a ; $45f0
 	ld a, [de] ; $45f1
-	cp a, $03 ; $45f2
+	cp $03 ; $45f2
 	ld a, c ; $45f4
 	jr nz, .storeMark ; $45f5
-	sub a, $d0 ; $45f7
+	sub $d0 ; $45f7
 .storeMark:
 	ld [de], a ; $45f9
 	wram_bank $02 ; $45fa
@@ -708,20 +708,20 @@ ShiftDestForLongName:
 	ld hl, wTextBuffer ; $4685
 .loop:
 	ld a, [hl+] ; $4688
-	or a, a ; $4689
+	or a ; $4689
 	jr z, .zero ; $468a
-	cp a, $de ; $468c
+	cp $de ; $468c
 	jr z, .loop ; $468e
-	cp a, $df ; $4690
+	cp $df ; $4690
 	jr z, .loop ; $4692
 	inc c ; $4694
 	jr .loop ; $4695
 .zero:
 	ld a, $05 ; $4697
-	cp a, c ; $4699
+	cp c ; $4699
 	ret nc ; $469a
 	ld a, c ; $469b
-	sub a, $05 ; $469c
+	sub $05 ; $469c
 	ld c, a ; $469e
 .loopB:
 	dec de ; $469f
@@ -774,7 +774,7 @@ CopyStringToTextBuffer:
 .copyLoop:
 	ld a, [hl+] ; $4710
 	ld [de], a ; $4711
-	or a, a ; $4712
+	or a ; $4712
 	ret z ; $4713
 	inc de ; $4714
 	jr .copyLoop ; $4715
@@ -867,9 +867,9 @@ DrawRankMatchLabel:
 	ret ; $47c0
 .read:
 	ld a, [hl] ; $47c1
-	sub a, $30 ; $47c2
+	sub $30 ; $47c2
 	ld l, a ; $47c4
-	xor a, a ; $47c5
+	xor a ; $47c5
 	ld h, a ; $47c6
 	farcall PushTextArgNumber ; $47c7
 	ld hl, $04dd ; $47ca
@@ -925,9 +925,9 @@ DrawTournamentRoundLabel:
 	ret ; $4830
 .read:
 	ld a, [hl] ; $4831
-	sub a, $30 ; $4832
+	sub $30 ; $4832
 	ld l, a ; $4834
-	xor a, a ; $4835
+	xor a ; $4835
 	ld h, a ; $4836
 	farcall PushTextArgNumber ; $4837
 	ld hl, $04df ; $483a
@@ -979,7 +979,7 @@ DrawMarioExhibitionLabel:
 	ret ; $489a
 DrawPlayerNameAndLevel:
 	ld a, [wGameMode] ; $489b
-	cp a, $04 ; $489e
+	cp $04 ; $489e
 	ret z ; $48a0
 	wram_bank $01 ; $48a1
 	ld hl, ResultsPlayerPanelTilemap_1e ; $48a7
@@ -1062,7 +1062,7 @@ CopyTilesAndAttrsRun:
 	wram_bank $01 ; $4971
 	push hl ; $4977
 	ld a, $c8 ; $4978
-	add a, l ; $497a
+	add l ; $497a
 	ld l, a ; $497b
 	jr nc, .readAttr ; $497c
 	inc h ; $497e
@@ -1080,12 +1080,12 @@ CopyTilesAndAttrsRun:
 InitResultsScreenCharacters:
 	ld a, [wLinkMatchRole] ; $498f
 	srl a ; $4992
-	add a, $04 ; $4994
+	add $04 ; $4994
 	ld a, a ; $4996
 	wram_bank ; $4997
 	ld bc, wCharPosX ; $499b
 	ld a, [wGameMode] ; $499e
-	or a, a ; $49a1
+	or a ; $49a1
 	jr nz, .nonZero ; $49a2
 	ld a, [wStoryModeMainCharacterOverworldSprite] ; $49a4
 	ld d, a ; $49a7
@@ -1095,7 +1095,7 @@ InitResultsScreenCharacters:
 .nonZero:
 	ld a, [wLinkMatchRole] ; $49ae
 	srl a ; $49b1
-	or a, a ; $49b3
+	or a ; $49b3
 	jr nz, .checkPlayer2CurrentMainCharacter ; $49b4
 	ld a, [wPlayer1CurrentMainCharacter] ; $49b6
 	ld d, a ; $49b9
@@ -1130,7 +1130,7 @@ InitResultsScreenCharacters:
 	farcall LoadIndexedPaletteThunk ; $49f1
 	wram_bank $06 ; $49f4
 	ld a, [wContinuePromptKind] ; $49fa
-	or a, a ; $49fd
+	or a ; $49fd
 	jr nz, .nonZero2 ; $49fe
 	wram_bank $04 ; $4a00
 	test_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $4a06
@@ -1138,12 +1138,12 @@ InitResultsScreenCharacters:
 .nonZero2:
 	ld a, [wLinkMatchRole] ; $4a0a
 	srl a ; $4a0d
-	add a, $06 ; $4a0f
+	add $06 ; $4a0f
 	ld a, a ; $4a11
 	wram_bank ; $4a12
 	ld bc, wCharPosX ; $4a16
 	ld a, [wGameMode] ; $4a19
-	or a, a ; $4a1c
+	or a ; $4a1c
 	jr nz, .nonZero3 ; $4a1d
 	ld a, [wStoryModePartnerCharacterOverworldSprite] ; $4a1f
 	ld d, a ; $4a22
@@ -1153,7 +1153,7 @@ InitResultsScreenCharacters:
 .nonZero3:
 	ld a, [wLinkMatchRole] ; $4a29
 	srl a ; $4a2c
-	or a, a ; $4a2e
+	or a ; $4a2e
 	jr nz, .checkPlayer2CurrentPartnerCharacter ; $4a2f
 	ld a, [wPlayer1CurrentPartnerCharacter] ; $4a31
 	ld d, a ; $4a34
@@ -1190,7 +1190,7 @@ InitResultsScreenCharacters:
 	ret ; $4a75
 DrawResultsCharSprites:
 	wram_bank $04 ; $4a76
-	xor a, a ; $4a7c
+	xor a ; $4a7c
 	call UpdateResultsCharSprite ; $4a7d
 	ld hl, wCharSpriteSlot ; $4a80
 	farcall DrawCharSprite ; $4a83
@@ -1215,38 +1215,38 @@ UpdateResultsCharSprite:
 	farcall ReloadCharFacingTiles ; $4ab4
 	pop de ; $4ab7
 	ld a, d ; $4ab8
-	add a, LOW(Data_1e_4b24) ; $4ab9
+	add LOW(Data_1e_4b24) ; $4ab9
 	ld l, a ; $4abb
-	adc a, HIGH(Data_1e_4b24) ; $4abc
-	sub a, l ; $4abe
+	adc HIGH(Data_1e_4b24) ; $4abc
+	sub l ; $4abe
 	ld h, a ; $4abf
 	ld b, [hl] ; $4ac0
 	pop af ; $4ac1
 	push af ; $4ac2
-	or a, a ; $4ac3
+	or a ; $4ac3
 	jr nz, .nonZero ; $4ac4
 	ld a, [$ca0e] ; $4ac6
 	jr .compare ; $4ac9
 .nonZero:
 	ld a, [$ca8e] ; $4acb
 .compare:
-	or a, a ; $4ace
+	or a ; $4ace
 	jr z, .zero ; $4acf
 	ld a, $20 ; $4ad1
-	xor a, b ; $4ad3
+	xor b ; $4ad3
 	ld b, a ; $4ad4
 .zero:
 	ld hl, wCharTileBase ; $4ad5
 	ld a, [hl+] ; $4ad8
 	ld c, a ; $4ad9
 	ld a, [hl] ; $4ada
-	or a, b ; $4adb
+	or b ; $4adb
 	ld b, a ; $4adc
 	pop af ; $4add
 	push af ; $4ade
 	push bc ; $4adf
 	push de ; $4ae0
-	or a, a ; $4ae1
+	or a ; $4ae1
 	jr nz, .nonZero2 ; $4ae2
 	test_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $4ae4
 	jr z, .notTempResultsScreenOpen ; $4ae7
@@ -1288,7 +1288,7 @@ UpdateResultsCharSprite:
 	ld a, [wCharSpriteFrame] ; $4b1b
 	ld [hl+], a ; $4b1e
 	pop af ; $4b1f
-	add a, $80 ; $4b20
+	add $80 ; $4b20
 	ld [hl+], a ; $4b22
 	ret ; $4b23
 Data_1e_4b24:
@@ -1310,7 +1310,7 @@ RunContinuePrompt:
 DrawContinuePromptCursor:
 	wram_bank $06 ; $4b46
 	ld a, [wContinuePromptRow] ; $4b4c
-	or a, a ; $4b4f
+	or a ; $4b4f
 	jr nz, .nonZero ; $4b50
 	ld de, $7a3c ; $4b52
 	jr .queueSprite ; $4b55
@@ -1324,17 +1324,17 @@ DrawContinuePromptCursor:
 	sound $5e ; $4b61
 	wram_bank $06 ; $4b63
 	ld a, [wContinuePromptRow] ; $4b69
-	xor a, $01 ; $4b6c
+	xor $01 ; $4b6c
 	ld [wContinuePromptRow], a ; $4b6e
 	jr RunContinuePrompt ; $4b71
 .playSfx2:
 	sound $5f ; $4b73
 	wram_bank $06 ; $4b75
 	ld a, [wContinuePromptPage] ; $4b7b
-	or a, a ; $4b7e
+	or a ; $4b7e
 	jr nz, .nonZero2 ; $4b7f
 	ld a, [wContinuePromptRow] ; $4b81
-	or a, a ; $4b84
+	or a ; $4b84
 	jr z, .zero ; $4b85
 	ld a, $01 ; $4b87
 	ld [wContinuePromptPage], a ; $4b89
@@ -1342,10 +1342,10 @@ DrawContinuePromptCursor:
 	jr RunContinuePrompt ; $4b8f
 .nonZero2:
 	ld a, [wContinuePromptRow] ; $4b91
-	or a, a ; $4b94
+	or a ; $4b94
 	jr z, .zero2 ; $4b95
 .loop:
-	xor a, a ; $4b97
+	xor a ; $4b97
 	ld [wContinuePromptPage], a ; $4b98
 	call RefreshContinuePromptText ; $4b9b
 	jr RunContinuePrompt ; $4b9e
@@ -1355,14 +1355,14 @@ DrawContinuePromptCursor:
 	ret ; $4ba5
 .zero2:
 	ld a, [wContinuePromptPage] ; $4ba6
-	add a, $ff ; $4ba9
+	add $ff ; $4ba9
 	ld [wContinuePromptResult], a ; $4bab
 	ret ; $4bae
 .playSfx3:
 	sound $62 ; $4baf
 	wram_bank $06 ; $4bb1
 	ld a, [wContinuePromptPage] ; $4bb7
-	or a, a ; $4bba
+	or a ; $4bba
 	jr nz, .nonZero3 ; $4bbb
 	ld a, $ff ; $4bbd
 	ld [wContinuePromptResult], a ; $4bbf
@@ -1373,9 +1373,9 @@ DrawContinuePromptCursor:
 	jr .loop ; $4bc8
 RefreshContinuePromptText:
 	ld a, [wContinuePromptPage] ; $4bca
-	or a, a ; $4bcd
+	or a ; $4bcd
 	jr nz, .nonZero ; $4bce
-	xor a, a ; $4bd0
+	xor a ; $4bd0
 	ld [wContinuePromptRow], a ; $4bd1
 	call ClearContinuePromptRows ; $4bd4
 	ld hl, wCharDataChoiceLog + 23 ; $4bd7
@@ -1437,7 +1437,7 @@ ResultsPlayerPanelAttrmap_1e:
 	INCBIN "data/bank_01e/d_5421.bin" ; $5421, 23 bytes
 ShowExpAwardScreen:
 	call HasPendingExpAwards ; $5438
-	or a, a ; $543b
+	or a ; $543b
 	ret z ; $543c
 	farcall LoadMenuFontGfx ; $543d
 	farcall InitTextWindows ; $5440
@@ -1446,7 +1446,7 @@ ShowExpAwardScreen:
 	farcall PrepareGlyphBuffer ; $5448
 	call ClearFrameTasks ; $544b
 	call DisableLCDSafely ; $544e
-	xor a, a ; $5451
+	xor a ; $5451
 	ldh [hScrollX], a ; $5452
 	ldh [hScrollY], a ; $5454
 	ld [wCameraX], a ; $5456
@@ -1488,7 +1488,7 @@ ShowExpAwardScreen:
 	ret ; $54ba
 InitExpAwardScreenState:
 	wram_bank $06 ; $54bb
-	xor a, a ; $54c1
+	xor a ; $54c1
 	ld hl, wCharDataLevel ; $54c2
 	ld d, $05 ; $54c5
 	call FillMemoryD ; $54c7
@@ -1497,7 +1497,7 @@ InitExpAwardScreenState:
 	call FillMemoryD ; $54ce
 	ld a, $30 ; $54d1
 	ld [hl+], a ; $54d3
-	xor a, a ; $54d4
+	xor a ; $54d4
 	ld d, $0b ; $54d5
 	call FillMemoryD ; $54d7
 	ld a, $20 ; $54da
@@ -1505,7 +1505,7 @@ InitExpAwardScreenState:
 	call FillMemoryD ; $54de
 	ld a, $30 ; $54e1
 	ld [hl+], a ; $54e3
-	xor a, a ; $54e4
+	xor a ; $54e4
 	ld d, $0a ; $54e5
 	call FillMemoryD ; $54e7
 	ld a, $01 ; $54ea
@@ -1588,7 +1588,7 @@ ExpScreenCopyToTilemap:
 	inc hl ; $55c8
 	dec bc ; $55c9
 	ld a, b ; $55ca
-	or a, c ; $55cb
+	or c ; $55cb
 	jr nz, ExpScreenCopyToTilemap ; $55cc
 	ret ; $55ce
 ExpScreenCopyToAttrmap:
@@ -1599,7 +1599,7 @@ ExpScreenCopyToAttrmap:
 	inc hl ; $55dd
 	dec bc ; $55de
 	ld a, b ; $55df
-	or a, c ; $55e0
+	or c ; $55e0
 	jr nz, ExpScreenCopyToAttrmap ; $55e1
 	ret ; $55e3
 DrawExpAwardScreenPanels:
@@ -1647,7 +1647,7 @@ DrawExpSinglesPlayerPanel:
 	call FillTilemapRun ; $5642
 	ld bc, $ca00 ; $5645
 	ld a, [wLinkMatchRole] ; $5648
-	cp a, $02 ; $564b
+	cp $02 ; $564b
 	jr nz, .ne02 ; $564d
 	ld bc, $ca80 ; $564f
 	ld a, [$c8ba] ; $5652
@@ -1715,14 +1715,14 @@ DrawExpDoublesPlayerPanel:
 	ld bc, $0901 ; $56f6
 	call FillTilemapRun ; $56f9
 	ld a, [wGameMode] ; $56fc
-	or a, a ; $56ff
+	or a ; $56ff
 	jr nz, .nonZero ; $5700
 	ld bc, wStoryModeNameOfMainCharacter ; $5702
 	jr .copyStringToTextBuffer ; $5705
 .nonZero:
 	ld bc, $ca00 ; $5707
 	ld a, [wLinkMatchRole] ; $570a
-	cp a, $02 ; $570d
+	cp $02 ; $570d
 	jr nz, .copyStringToTextBuffer ; $570f
 	ld bc, $ca80 ; $5711
 	ld a, [$c8ba] ; $5714
@@ -1791,14 +1791,14 @@ DrawExpDoublesPartnerPanel:
 	ld bc, $0901 ; $57bb
 	call FillTilemapRun ; $57be
 	ld a, [wGameMode] ; $57c1
-	or a, a ; $57c4
+	or a ; $57c4
 	jr nz, .nonZero ; $57c5
 	ld bc, wStoryModeNameOfPartnerCharacter ; $57c7
 	jr .copyStringToTextBuffer ; $57ca
 .nonZero:
 	ld bc, $ca40 ; $57cc
 	ld a, [wLinkMatchRole] ; $57cf
-	cp a, $02 ; $57d2
+	cp $02 ; $57d2
 	jr nz, .copyStringToTextBuffer ; $57d4
 	ld bc, $cac0 ; $57d6
 .copyStringToTextBuffer:
@@ -1921,16 +1921,16 @@ FillTilemapRun:
 DrawExpScreenCharSprites:
 	ld b, $04 ; $5914
 	ld a, [wLinkMatchRole] ; $5916
-	or a, a ; $5919
+	or a ; $5919
 	jr z, .zero ; $591a
 	srl a ; $591c
-	add a, b ; $591e
+	add b ; $591e
 	ld b, a ; $591f
 .zero:
 	push bc ; $5920
 	ld a, b ; $5921
 	wram_bank ; $5922
-	xor a, a ; $5926
+	xor a ; $5926
 	call UpdateExpScreenCharSprite ; $5927
 	ld hl, wCharSpriteSlot ; $592a
 	farcall DrawCharSprite ; $592d
@@ -1959,34 +1959,34 @@ UpdateExpScreenCharSprite:
 	ld [wCharFacingOctant], a ; $5960
 	farcall ReloadCharFacingTiles ; $5963
 	ld a, [wCharFacingOctant] ; $5966
-	add a, LOW(Data_1e_59b3) ; $5969
+	add LOW(Data_1e_59b3) ; $5969
 	ld l, a ; $596b
-	adc a, HIGH(Data_1e_59b3) ; $596c
-	sub a, l ; $596e
+	adc HIGH(Data_1e_59b3) ; $596c
+	sub l ; $596e
 	ld h, a ; $596f
 	ld a, [wCharSpriteAttr] ; $5970
-	or a, $08 ; $5973
-	xor a, [hl] ; $5975
+	or $08 ; $5973
+	xor [hl] ; $5975
 	ld b, a ; $5976
 	pop af ; $5977
 	push af ; $5978
-	or a, a ; $5979
+	or a ; $5979
 	jr nz, .nonZero ; $597a
 	ld a, [$ca0e] ; $597c
 	jr .compare ; $597f
 .nonZero:
 	ld a, [$ca8e] ; $5981
 .compare:
-	or a, a ; $5984
+	or a ; $5984
 	jr z, .zero ; $5985
 	ld a, $20 ; $5987
-	xor a, b ; $5989
+	xor b ; $5989
 	ld b, a ; $598a
 .zero:
 	ld a, [wCharTileBase] ; $598b
 	ld c, a ; $598e
 	pop af ; $598f
-	or a, a ; $5990
+	or a ; $5990
 	jr nz, .nonZero2 ; $5991
 	test_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $5993
 	jr z, .notTempResultsScreenOpen ; $5996
@@ -2016,41 +2016,41 @@ Data_1e_59b3:
 DrawNextExpAwardMessage:
 	wram_bank $06 ; $59bb
 	ld a, [wCharDataPage] ; $59c1
-	cp a, $05 ; $59c4
+	cp $05 ; $59c4
 	jr z, .uploadGlyphBuffer ; $59c6
 	rlca ; $59c8
-	add a, $52 ; $59c9
+	add $52 ; $59c9
 	ld l, a ; $59cb
-	adc a, $d1 ; $59cc
-	sub a, l ; $59ce
+	adc $d1 ; $59cc
+	sub l ; $59ce
 	ld h, a ; $59cf
 	ld a, [hl+] ; $59d0
 	ld b, [hl] ; $59d1
-	or a, b ; $59d2
+	or b ; $59d2
 	jr z, .zero ; $59d3
 	dec hl ; $59d5
 	ld c, [hl] ; $59d6
 	push bc ; $59d7
 	ld a, [wCharDataPage] ; $59d8
-	add a, $5c ; $59db
+	add $5c ; $59db
 	ld l, a ; $59dd
-	adc a, $d1 ; $59de
-	sub a, l ; $59e0
+	adc $d1 ; $59de
+	sub l ; $59e0
 	ld h, a ; $59e1
 	ld a, [hl] ; $59e2
 	ld d, a ; $59e3
 	ld a, [wCharDataPage] ; $59e4
 	rlca ; $59e7
-	add a, LOW(Data_1e_5a44) ; $59e8
+	add LOW(Data_1e_5a44) ; $59e8
 	ld l, a ; $59ea
-	adc a, HIGH(Data_1e_5a44) ; $59eb
-	sub a, l ; $59ed
+	adc HIGH(Data_1e_5a44) ; $59eb
+	sub l ; $59ed
 	ld h, a ; $59ee
 	ld a, [hl+] ; $59ef
 	ld h, [hl] ; $59f0
 	ld l, a ; $59f1
 	ld a, d ; $59f2
-	add a, l ; $59f3
+	add l ; $59f3
 	ld l, a ; $59f4
 	jr nc, .drawExpMessageWindow ; $59f5
 	inc h ; $59f7
@@ -2061,7 +2061,7 @@ DrawNextExpAwardMessage:
 	ld hl, wCharDataNewLevels ; $5a02
 	ld a, [hl+] ; $5a05
 	ld d, [hl] ; $5a06
-	or a, d ; $5a07
+	or d ; $5a07
 	jr z, .drawProportionalTextLine ; $5a08
 	ld hl, $04c8 ; $5a0a
 	ld de, wCharDataStatDeltas + 9 ; $5a0d
@@ -2089,7 +2089,7 @@ DrawNextExpAwardMessage:
 	jp DrawNextExpAwardMessage ; $5a3c
 .uploadGlyphBuffer:
 	farcall UploadGlyphBuffer ; $5a3f
-	xor a, a ; $5a42
+	xor a ; $5a42
 	ret ; $5a43
 Data_1e_5a44:
 	; $5a44, 10 bytes (bytes:10)
@@ -2104,31 +2104,31 @@ DrawExpTotalDigits:
 	ld de, wTextBuffer ; $5a5c
 	call FormatDecimalNumberUnsigned ; $5a5f
 	ld a, [$c604] ; $5a62
-	or a, a ; $5a65
+	or a ; $5a65
 	jr nz, .checkTextBuffer ; $5a66
 	ld a, [wTextBuffer] ; $5a68
-	cp a, $20 ; $5a6b
+	cp $20 ; $5a6b
 	jr z, .eq20 ; $5a6d
 	call GetDigitSpriteTile ; $5a6f
 	ld de, $6b77 ; $5a72
 	call QueueSprite ; $5a75
 .eq20:
 	ld a, [$c601] ; $5a78
-	cp a, $20 ; $5a7b
+	cp $20 ; $5a7b
 	jr z, .eq202 ; $5a7d
 	call GetDigitSpriteTile ; $5a7f
 	ld de, $7377 ; $5a82
 	call QueueSprite ; $5a85
 .eq202:
 	ld a, [$c602] ; $5a88
-	cp a, $20 ; $5a8b
+	cp $20 ; $5a8b
 	jr z, .eq203 ; $5a8d
 	call GetDigitSpriteTile ; $5a8f
 	ld de, $7b77 ; $5a92
 	call QueueSprite ; $5a95
 .eq203:
 	ld a, [$c603] ; $5a98
-	cp a, $20 ; $5a9b
+	cp $20 ; $5a9b
 	jr z, .done ; $5a9d
 	call GetDigitSpriteTile ; $5a9f
 	ld de, $8377 ; $5aa2
@@ -2137,35 +2137,35 @@ DrawExpTotalDigits:
 	ret ; $5aa8
 .checkTextBuffer:
 	ld a, [wTextBuffer] ; $5aa9
-	cp a, $20 ; $5aac
+	cp $20 ; $5aac
 	jr z, .eq204 ; $5aae
 	call GetDigitSpriteTile ; $5ab0
 	ld de, $6777 ; $5ab3
 	call QueueSprite ; $5ab6
 .eq204:
 	ld a, [$c601] ; $5ab9
-	cp a, $20 ; $5abc
+	cp $20 ; $5abc
 	jr z, .eq205 ; $5abe
 	call GetDigitSpriteTile ; $5ac0
 	ld de, $6f77 ; $5ac3
 	call QueueSprite ; $5ac6
 .eq205:
 	ld a, [$c602] ; $5ac9
-	cp a, $20 ; $5acc
+	cp $20 ; $5acc
 	jr z, .eq206 ; $5ace
 	call GetDigitSpriteTile ; $5ad0
 	ld de, $7777 ; $5ad3
 	call QueueSprite ; $5ad6
 .eq206:
 	ld a, [$c603] ; $5ad9
-	cp a, $20 ; $5adc
+	cp $20 ; $5adc
 	jr z, .eq207 ; $5ade
 	call GetDigitSpriteTile ; $5ae0
 	ld de, $7f77 ; $5ae3
 	call QueueSprite ; $5ae6
 .eq207:
 	ld a, [$c604] ; $5ae9
-	cp a, $20 ; $5aec
+	cp $20 ; $5aec
 	jr z, .doneB ; $5aee
 	call GetDigitSpriteTile ; $5af0
 	ld de, $8777 ; $5af3
@@ -2173,9 +2173,9 @@ DrawExpTotalDigits:
 .doneB:
 	ret ; $5af9
 GetDigitSpriteTile:
-	sub a, $30 ; $5afa
+	sub $30 ; $5afa
 	rlca ; $5afc
-	add a, $6c ; $5afd
+	add $6c ; $5afd
 	ld c, a ; $5aff
 	ld b, $08 ; $5b00
 	ret ; $5b02
@@ -2183,14 +2183,14 @@ RunExpAwardSequence:
 	wram_bank $06 ; $5b03
 	call AdvanceFrame ; $5b09
 	call BeginNextExpAward ; $5b0c
-	or a, a ; $5b0f
+	or a ; $5b0f
 	ret z ; $5b10
 	call CountUpExpTotal ; $5b11
 	call WaitForConfirmOrTimeout ; $5b14
 	jr RunExpAwardSequence ; $5b17
 BeginNextExpAward:
 	call DrawNextExpAwardMessage ; $5b19
-	or a, a ; $5b1c
+	or a ; $5b1c
 	jp z, .waitFramesCmd ; $5b1d
 	sound $00 ; $5b20
 	sound $0b ; $5b22
@@ -2198,7 +2198,7 @@ BeginNextExpAward:
 	ld a, [wCharDataPage] ; $5b2a
 	inc a ; $5b2d
 	ld [wCharDataPage], a ; $5b2e
-	xor a, a ; $5b31
+	xor a ; $5b31
 	ld [wCharDataRevealTimer], a ; $5b32
 	ld hl, wCharDataNewLevels + 2 ; $5b35
 	ld a, c ; $5b38
@@ -2219,7 +2219,7 @@ BeginNextExpAward:
 .waitFramesCmd:
 	call WaitFramesCmd ; $5b60
 	db $0a ; $5b63 inline arg
-	xor a, a ; $5b64
+	xor a ; $5b64
 	ret ; $5b65
 CountUpExpTotal:
 	wram_bank $06 ; $5b66
@@ -2228,15 +2228,15 @@ CountUpExpTotal:
 	ld d, [hl] ; $5b70
 	ld e, a ; $5b71
 	ld a, d ; $5b72
-	or a, e ; $5b73
+	or e ; $5b73
 	ret z ; $5b74
 	call AdvanceFrame ; $5b75
 	ldh a, [hInputRisingEdge] ; $5b78
-	and a, PADF_A | PADF_B ; $5b7a
+	and PADF_A | PADF_B ; $5b7a
 	jr nz, .step ; $5b7c
 	call AdvanceFrame ; $5b7e
 	ldh a, [hInputRisingEdge] ; $5b81
-	and a, PADF_A | PADF_B ; $5b83
+	and PADF_A | PADF_B ; $5b83
 	jr nz, .step ; $5b85
 	dec hl ; $5b87
 	dec de ; $5b88
@@ -2273,7 +2273,7 @@ WaitForConfirmOrTimeout:
 .loop:
 	call AdvanceFrame ; $5baf
 	ldh a, [hInputRisingEdge] ; $5bb2
-	and a, PADF_A | PADF_B ; $5bb4
+	and PADF_A | PADF_B ; $5bb4
 	ret nz ; $5bb6
 	dec c ; $5bb7
 	jr nz, .loop ; $5bb8
@@ -2283,29 +2283,29 @@ HasPendingExpAwards:
 	ld a, [hl+] ; $5bbe
 	ld d, [hl] ; $5bbf
 	inc hl ; $5bc0
-	or a, d ; $5bc1
+	or d ; $5bc1
 	jr nz, .returnOne ; $5bc2
 	ld a, [hl+] ; $5bc4
 	ld d, [hl] ; $5bc5
 	inc hl ; $5bc6
-	or a, d ; $5bc7
+	or d ; $5bc7
 	jr nz, .returnOne ; $5bc8
 	ld a, [hl+] ; $5bca
 	ld d, [hl] ; $5bcb
 	inc hl ; $5bcc
-	or a, d ; $5bcd
+	or d ; $5bcd
 	jr nz, .returnOne ; $5bce
 	ld a, [hl+] ; $5bd0
 	ld d, [hl] ; $5bd1
 	inc hl ; $5bd2
-	or a, d ; $5bd3
+	or d ; $5bd3
 	jr nz, .returnOne ; $5bd4
 	ld a, [hl+] ; $5bd6
 	ld d, [hl] ; $5bd7
 	inc hl ; $5bd8
-	or a, d ; $5bd9
+	or d ; $5bd9
 	jr nz, .returnOne ; $5bda
-	xor a, a ; $5bdc
+	xor a ; $5bdc
 	ret ; $5bdd
 .returnOne:
 	ld a, $01 ; $5bde
@@ -2326,31 +2326,31 @@ StubNop_1e:
 	ret ; $6533
 ProcessMatchRewards:
 	ld a, [wMatchExitRequest] ; $6534
-	or a, a ; $6537
+	or a ; $6537
 	ret nz ; $6538
 	ld a, [wKeepMatchStatsFlag] ; $6539
-	or a, a ; $653c
+	or a ; $653c
 	ret nz ; $653d
 	call DisableLCDSafely ; $653e
 	farcall LoadMenuFontGfx ; $6541
 	call EnableLCD ; $6544
 	ld hl, $0000 ; $6547
 	ld a, [wGameMode] ; $654a
-	cp a, $08 ; $654d
+	cp $08 ; $654d
 	jp z, .updateMinigameBestScore ; $654f
-	cp a, $09 ; $6552
+	cp $09 ; $6552
 	jp z, .eq09 ; $6554
-	cp a, $06 ; $6557
+	cp $06 ; $6557
 	jp z, .checkMatchExitRequest ; $6559
-	cp a, $07 ; $655c
+	cp $07 ; $655c
 	jp z, .checkMatchExitRequest ; $655e
-	cp a, $0a ; $6561
+	cp $0a ; $6561
 	jp z, .computeMatchStatsReward ; $6563
-	cp a, $04 ; $6566
+	cp $04 ; $6566
 	jp z, .eq04 ; $6568
 	jp c, .computeMatchStatsReward ; $656b
 	ld a, [wPointWinLoseFlag] ; $656e
-	cp a, $01 ; $6571
+	cp $01 ; $6571
 	jp nz, .runExpDistributionFlow ; $6573
 	call GetFirstClearRewardExp ; $6576
 	call ShowExpAwardForMinigame ; $6579
@@ -2360,7 +2360,7 @@ ProcessMatchRewards:
 	jp .runExpDistributionFlow ; $6581
 .checkMatchExitRequest:
 	ld a, [wMatchExitRequest] ; $6584
-	and a, a ; $6587
+	and a ; $6587
 	jp nz, .runExpDistributionFlow ; $6588
 	push hl ; $658b
 	ld hl, wMinigamesCurrentScore ; $658c
@@ -2368,10 +2368,10 @@ ProcessMatchRewards:
 	ld h, [hl] ; $6590
 	ld l, a ; $6591
 	ld a, [wGameMode] ; $6592
-	cp a, $07 ; $6595
+	cp $07 ; $6595
 	ld a, $0f ; $6597
 	jr nz, .mulHLByAFracSigned ; $6599
-	add a, $0f ; $659b
+	add $0f ; $659b
 .mulHLByAFracSigned:
 	call MulHLByAFracSigned ; $659d
 	ld e, a ; $65a0
@@ -2386,13 +2386,13 @@ ProcessMatchRewards:
 	ld d, a ; $65ae
 	call ApplyMatchSettingsExpBonus ; $65af
 	ld a, [wPointWinLoseFlag] ; $65b2
-	cp a, $01 ; $65b5
+	cp $01 ; $65b5
 	jp nz, .getScoreBonus ; $65b7
 	ld a, [wMinigameHighScoreMode] ; $65ba
-	or a, a ; $65bd
+	or a ; $65bd
 	jr z, .getFirstClearRewardExp ; $65be
 	ld a, [wGameMode] ; $65c0
-	cp a, $06 ; $65c3
+	cp $06 ; $65c3
 	jr nz, .checkFlag ; $65c5
 	test_flag FLAG_CLEARED_MACHINE_MASTER ; $65c7
 	jr .step ; $65ca
@@ -2407,13 +2407,13 @@ ProcessMatchRewards:
 	ld l, a ; $65d7
 	ld de, $270f ; $65d8
 	ld a, l ; $65db
-	sub a, e ; $65dc
+	sub e ; $65dc
 	ld l, a ; $65dd
 	ld a, h ; $65de
-	sbc a, d ; $65df
+	sbc d ; $65df
 	ld h, a ; $65e0
 	ld a, h ; $65e1
-	or a, l ; $65e2
+	or l ; $65e2
 	pop hl ; $65e3
 	jr nz, .getScoreBonus ; $65e4
 .getFirstClearRewardExp:
@@ -2435,7 +2435,7 @@ ProcessMatchRewards:
 	call ApplyMatchSettingsExpBonus ; $6606
 	ld de, $0000 ; $6609
 	ld a, [wMatchWinLoseFlag] ; $660c
-	cp a, $01 ; $660f
+	cp $01 ; $660f
 	jr nz, .offset ; $6611
 	call GetFirstClearRewardExp ; $6613
 .offset:
@@ -2444,7 +2444,7 @@ ProcessMatchRewards:
 	ld e, l ; $6618
 	call ShowExpAwardForMatch ; $6619
 	ld a, [wMatchWinLoseFlag] ; $661c
-	cp a, $01 ; $661f
+	cp $01 ; $661f
 	jr nz, .runExpDistributionFlow ; $6621
 	call SetRewardGameFlag ; $6623
 	push hl ; $6626
@@ -2462,7 +2462,7 @@ ProcessMatchRewards:
 	ret ; $6643
 .eq09:
 	ld a, [wLinkMatchRole] ; $6644
-	cp a, $02 ; $6647
+	cp $02 ; $6647
 	jr z, .eq02 ; $6649
 	wram_bank $04 ; $664b
 	call ComputeMatchStatsReward ; $6651
@@ -2470,7 +2470,7 @@ ProcessMatchRewards:
 	ld d, a ; $6657
 	call ApplyMatchSettingsExpBonus ; $6658
 	ld a, [wMatchWinLoseFlag] ; $665b
-	cp a, $01 ; $665e
+	cp $01 ; $665e
 	jr z, .step6 ; $6660
 	jr .awardLinkedPlayMatchExp ; $6662
 .eq02:
@@ -2480,7 +2480,7 @@ ProcessMatchRewards:
 	ld d, a ; $6670
 	call ApplyMatchSettingsExpBonus ; $6671
 	ld a, [wMatchWinLoseFlag] ; $6674
-	cp a, $ff ; $6677
+	cp $ff ; $6677
 	jr z, .step6 ; $6679
 	jr .awardLinkedPlayMatchExp ; $667b
 .step6:
@@ -2495,13 +2495,13 @@ ProcessMatchRewards:
 .updateMinigameBestScore:
 	call UpdateMinigameBestScore ; $6688
 	ld a, [wPointWinLoseFlag] ; $668b
-	cp a, $01 ; $668e
+	cp $01 ; $668e
 	ret nz ; $6690
 	call SetMinigameClearFlag ; $6691
 	ret ; $6694
 .runExpDistributionFlow:
 	ld a, h ; $6695
-	or a, l ; $6696
+	or l ; $6696
 	jr z, .showIslandOpenRankingBoard ; $6697
 	farcall RunExpDistributionFlow ; $6699
 	ld c, $00 ; $669c
@@ -2537,8 +2537,8 @@ GetFirstClearRewardExp:
 	push hl ; $66d9
 	ld a, [wCurrentMinigameStoryMatch] ; $66da
 	ld hl, FirstClearExpTablePtrs_1e ; $66dd
-	add a, a ; $66e0
-	add a, l ; $66e1
+	add a ; $66e0
+	add l ; $66e1
 	ld l, a ; $66e2
 	jr nc, .read ; $66e3
 	inc h ; $66e5
@@ -2547,8 +2547,8 @@ GetFirstClearRewardExp:
 	ld h, [hl] ; $66e7
 	ld l, a ; $66e8
 	call GetRewardTableIndex ; $66e9
-	add a, a ; $66ec
-	add a, l ; $66ed
+	add a ; $66ec
+	add l ; $66ed
 	ld l, a ; $66ee
 	jr nc, .readB ; $66ef
 	inc h ; $66f1
@@ -2680,7 +2680,7 @@ MatchStatsRewardTable5:
 GetScoreBonus:
 	ld de, $0000 ; $6807
 	ld a, [wMinigameHighScoreMode] ; $680a
-	or a, a ; $680d
+	or a ; $680d
 	ret z ; $680e
 	push hl ; $680f
 	ld hl, wMinigamesCurrentScore ; $6810
@@ -2689,10 +2689,10 @@ GetScoreBonus:
 	ld e, a ; $6815
 	ld hl, $03e7 ; $6816
 	ld a, l ; $6819
-	sub a, e ; $681a
+	sub e ; $681a
 	ld l, a ; $681b
 	ld a, h ; $681c
-	sbc a, d ; $681d
+	sbc d ; $681d
 	ld h, a ; $681e
 	bit 7, h ; $681f
 	jr z, .positive ; $6821
@@ -2701,10 +2701,10 @@ GetScoreBonus:
 .positive:
 	ld hl, $01f3 ; $6828
 	ld a, l ; $682b
-	sub a, e ; $682c
+	sub e ; $682c
 	ld l, a ; $682d
 	ld a, h ; $682e
-	sbc a, d ; $682f
+	sbc d ; $682f
 	ld h, a ; $6830
 	bit 7, h ; $6831
 	jr z, .positive2 ; $6833
@@ -2713,10 +2713,10 @@ GetScoreBonus:
 .positive2:
 	ld hl, $0063 ; $683a
 	ld a, l ; $683d
-	sub a, e ; $683e
+	sub e ; $683e
 	ld l, a ; $683f
 	ld a, h ; $6840
-	sbc a, d ; $6841
+	sbc d ; $6841
 	ld h, a ; $6842
 	bit 7, h ; $6843
 	jr z, .positive3 ; $6845
@@ -2729,7 +2729,7 @@ GetScoreBonus:
 	ret ; $6850
 ComputeMatchStatsReward:
 	ld a, [wCharId] ; $6851
-	cp a, $04 ; $6854
+	cp $04 ; $6854
 	ret nc ; $6856
 	push hl ; $6857
 	call GetPlayerExpTier ; $6858
@@ -2740,7 +2740,7 @@ ComputeMatchStatsReward:
 	ld l, e ; $6865
 	ld h, d ; $6866
 	ld a, [wGameMode] ; $6867
-	cp a, $09 ; $686a
+	cp $09 ; $686a
 	ret z ; $686c
 	push hl ; $686d
 	call GetOpponentExpTier ; $686e
@@ -2791,22 +2791,22 @@ AccumulateStatExp:
 ApplyMatchSettingsExpBonus:
 	ld b, $00 ; $68dc
 	ld a, d ; $68de
-	and a, $0f ; $68df
-	cp a, $03 ; $68e1
+	and $0f ; $68df
+	cp $03 ; $68e1
 	jr nz, .checkSets ; $68e3
 	inc b ; $68e5
 .checkSets:
 	ld a, d ; $68e6
 	swap a ; $68e7
-	and a, $0f ; $68e9
-	cp a, $01 ; $68eb
+	and $0f ; $68e9
+	cp $01 ; $68eb
 	jr nz, .applyBonus ; $68ed
 	inc b ; $68ef
 .applyBonus:
 	ld a, b ; $68f0
-	and a, a ; $68f1
+	and a ; $68f1
 	ret z ; $68f2
-	cp a, $02 ; $68f3
+	cp $02 ; $68f3
 	jr z, .doubleExp ; $68f5
 	ld e, l ; $68f7
 	ld d, h ; $68f8
@@ -2823,20 +2823,20 @@ GetOpponentExpTier:
 	wram_bank $05 ; $6904
 	call LookupExpTierForChar ; $690a
 	ld a, [wMatchIsDoubles] ; $690d
-	and a, a ; $6910
+	and a ; $6910
 	jr z, .zero ; $6911
 	push bc ; $6913
 	wram_bank $07 ; $6914
 	call LookupExpTierForChar ; $691a
 	ld a, c ; $691d
 	pop bc ; $691e
-	add a, c ; $691f
+	add c ; $691f
 	inc a ; $6920
 	srl a ; $6921
 	ld c, a ; $6923
 .zero:
 	ld a, c ; $6924
-	cp a, $06 ; $6925
+	cp $06 ; $6925
 	jr c, .lt06 ; $6927
 	ld a, $06 ; $6929
 .lt06:
@@ -2847,7 +2847,7 @@ GetOpponentExpTier:
 GetPlayerExpTier:
 	call LookupExpTierForChar ; $6932
 	ld a, c ; $6935
-	cp a, $06 ; $6936
+	cp $06 ; $6936
 	jr c, .lt06 ; $6938
 	ld a, $06 ; $693a
 .lt06:
@@ -2857,18 +2857,18 @@ LookupExpTierForChar:
 	ld a, [wCharExpTier] ; $693e
 	ld c, a ; $6941
 	ld a, [wCharId] ; $6942
-	cp a, $04 ; $6945
+	cp $04 ; $6945
 	jr nc, Data_1e_695b.ge04 ; $6947
 	ld l, c ; $6949
-	xor a, a ; $694a
+	xor a ; $694a
 	ld h, a ; $694b
 	ld e, $0a ; $694c
 	call DivAHLByE ; $694e
 	ld a, l ; $6951
-	add a, LOW(Data_1e_695b) ; $6952
+	add LOW(Data_1e_695b) ; $6952
 	ld l, a ; $6954
-	adc a, HIGH(Data_1e_695b) ; $6955
-	sub a, l ; $6957
+	adc HIGH(Data_1e_695b) ; $6955
+	sub l ; $6957
 	ld h, a ; $6958
 	ld c, [hl] ; $6959
 	ret ; $695a
@@ -2897,7 +2897,7 @@ AwardExhibitionMatchExp:
 	ld l, a ; $6982
 	ld a, [$c8b5] ; $6983
 	srl a ; $6986
-	and a, $03 ; $6988
+	and $03 ; $6988
 	ld [wCurrentStorySlot], a ; $698a
 	farcall CheckStorySlot ; $698d
 	ld d, h ; $6990
@@ -2934,7 +2934,7 @@ AwardLinkedPlayMatchExp:
 	ld a, [wLinkMatchRole] ; $69bf
 	srl a ; $69c2
 	sla a ; $69c4
-	add a, l ; $69c6
+	add l ; $69c6
 	ld l, a ; $69c7
 	jr nc, .read ; $69c8
 	inc h ; $69ca
@@ -2942,24 +2942,24 @@ AwardLinkedPlayMatchExp:
 	ld a, [hl] ; $69cb
 	bit 7, a ; $69cc
 	jr z, .done ; $69ce
-	cp a, $ff ; $69d0
+	cp $ff ; $69d0
 	jr z, .done ; $69d2
 	call ShowExpAwardForLinkedPlay ; $69d4
 	ld a, [wCurrentStorySlot] ; $69d7
 	push af ; $69da
 	ld hl, $c8b5 ; $69db
 	ld a, [wLinkMatchRole] ; $69de
-	and a, $03 ; $69e1
+	and $03 ; $69e1
 	srl a ; $69e3
 	sla a ; $69e5
-	add a, l ; $69e7
+	add l ; $69e7
 	ld l, a ; $69e8
 	jr nc, .readB ; $69e9
 	inc h ; $69eb
 .readB:
 	ld a, [hl] ; $69ec
 	srl a ; $69ed
-	and a, $03 ; $69ef
+	and $03 ; $69ef
 	ld [wCurrentStorySlot], a ; $69f1
 	farcall CheckStorySlot ; $69f4
 	ld hl, $c8b3 ; $69f7
@@ -2983,7 +2983,7 @@ AwardLinkedPlayMatchExp:
 	ret ; $6a12
 ShowExpAwardForMinigame:
 	ld a, e ; $6a13
-	or a, d ; $6a14
+	or d ; $6a14
 	ret z ; $6a15
 	push af ; $6a16
 	push bc ; $6a17
@@ -3006,7 +3006,7 @@ ShowExpAwardForMinigame:
 	ret ; $6a35
 ShowExpAwardForMatch:
 	ld a, e ; $6a36
-	or a, d ; $6a37
+	or d ; $6a37
 	ret z ; $6a38
 	push af ; $6a39
 	push bc ; $6a3a
@@ -3018,15 +3018,15 @@ ShowExpAwardForMatch:
 	ld b, $03 ; $6a43
 	ld c, $00 ; $6a45
 	ld a, [wGameMode] ; $6a47
-	cp a, $02 ; $6a4a
+	cp $02 ; $6a4a
 	jr nz, .compare ; $6a4c
 	ld c, $02 ; $6a4e
 .compare:
-	cp a, $03 ; $6a50
+	cp $03 ; $6a50
 	jr nz, .compare2 ; $6a52
 	ld c, $03 ; $6a54
 .compare2:
-	cp a, $0a ; $6a56
+	cp $0a ; $6a56
 	jr nz, .recordDrillResult ; $6a58
 	ld c, $04 ; $6a5a
 .recordDrillResult:
@@ -3042,7 +3042,7 @@ ShowExpAwardForMatch:
 	ret ; $6a6d
 ShowExpAwardForExhibition:
 	ld a, e ; $6a6e
-	or a, d ; $6a6f
+	or d ; $6a6f
 	ret z ; $6a70
 	push af ; $6a71
 	push bc ; $6a72
@@ -3054,7 +3054,7 @@ ShowExpAwardForExhibition:
 	ld b, $01 ; $6a7b
 	ld c, $00 ; $6a7d
 	farcall RecordDrillResult ; $6a7f
-	xor a, a ; $6a82
+	xor a ; $6a82
 	test_flag FLAG_DOUBLES ; $6a83
 	jr z, .notDoubles ; $6a86
 	ld a, $01 ; $6a88
@@ -3064,7 +3064,7 @@ ShowExpAwardForExhibition:
 	ld c, $01 ; $6a8e
 	call ShowMatchResultsScreen ; $6a90
 	pop af ; $6a93
-	or a, a ; $6a94
+	or a ; $6a94
 	jr z, .restore ; $6a95
 	set_flag FLAG_DOUBLES ; $6a97
 .restore:
@@ -3077,7 +3077,7 @@ ShowExpAwardForExhibition:
 	ret ; $6aa3
 ShowExpAwardForLinkedPlay:
 	ld a, e ; $6aa4
-	or a, d ; $6aa5
+	or d ; $6aa5
 	ret z ; $6aa6
 	push af ; $6aa7
 	push bc ; $6aa8
@@ -3089,7 +3089,7 @@ ShowExpAwardForLinkedPlay:
 	ld b, $02 ; $6ab1
 	ld c, $00 ; $6ab3
 	farcall RecordDrillResult ; $6ab5
-	xor a, a ; $6ab8
+	xor a ; $6ab8
 	test_flag FLAG_DOUBLES ; $6ab9
 	jr z, .notDoubles ; $6abc
 	ld a, $01 ; $6abe
@@ -3099,7 +3099,7 @@ ShowExpAwardForLinkedPlay:
 	ld c, $01 ; $6ac4
 	call ShowMatchResultsScreen ; $6ac6
 	pop af ; $6ac9
-	or a, a ; $6aca
+	or a ; $6aca
 	jr z, .restore ; $6acb
 	set_flag FLAG_DOUBLES ; $6acd
 .restore:
@@ -3111,7 +3111,7 @@ ShowExpAwardForLinkedPlay:
 	pop af ; $6ad8
 	ret ; $6ad9
 	ld a, e ; $6ada
-	or a, d ; $6adb
+	or d ; $6adb
 	ret z ; $6adc
 	push af ; $6add
 	push bc ; $6ade
@@ -3179,7 +3179,7 @@ ApplyPendingExpAwards:
 	ld hl, rIE ; $6b3d
 .noCarry:
 	ld a, h ; $6b40
-	or a, l ; $6b41
+	or l ; $6b41
 	jp z, .restore2 ; $6b42
 	push hl ; $6b45
 	farcall ClearDrillResultBuffer ; $6b46
@@ -3202,7 +3202,7 @@ ApplyPendingExpAwards:
 	ld de, rIE ; $6b62
 .recordDrillResult:
 	ld a, d ; $6b65
-	or a, e ; $6b66
+	or e ; $6b66
 	jr z, .award2 ; $6b67
 	ld b, $00 ; $6b69
 	ld c, $00 ; $6b6b
@@ -3213,7 +3213,7 @@ ApplyPendingExpAwards:
 	ld d, [hl] ; $6b74
 	ld e, a ; $6b75
 	ld a, d ; $6b76
-	or a, e ; $6b77
+	or e ; $6b77
 	jr z, .award3 ; $6b78
 	ld b, $01 ; $6b7a
 	ld c, $00 ; $6b7c
@@ -3224,7 +3224,7 @@ ApplyPendingExpAwards:
 	ld d, [hl] ; $6b85
 	ld e, a ; $6b86
 	ld a, d ; $6b87
-	or a, e ; $6b88
+	or e ; $6b88
 	jr z, .applyToRecord ; $6b89
 	ld b, $02 ; $6b8b
 	ld c, $00 ; $6b8d
@@ -3236,13 +3236,13 @@ ApplyPendingExpAwards:
 	ld d, [hl] ; $6b9c
 	ld e, a ; $6b9d
 	ld a, d ; $6b9e
-	or a, e ; $6b9f
+	or e ; $6b9f
 	jr z, .checkDoubles ; $6ba0
 	ld b, $04 ; $6ba2
 	ld c, $00 ; $6ba4
 	farcall RecordDrillResult ; $6ba6
 .checkDoubles:
-	xor a, a ; $6ba9
+	xor a ; $6ba9
 	test_flag FLAG_DOUBLES ; $6baa
 	jr nz, .isDoubles ; $6bad
 	ld a, $01 ; $6baf
@@ -3252,7 +3252,7 @@ ApplyPendingExpAwards:
 	ld c, $01 ; $6bb5
 	call ShowMatchResultsScreen ; $6bb7
 	pop af ; $6bba
-	or a, a ; $6bbb
+	or a ; $6bbb
 	jr z, .restore ; $6bbc
 	clear_flag FLAG_DOUBLES ; $6bbe
 .restore:
@@ -3263,7 +3263,7 @@ ApplyPendingExpAwards:
 	ld c, $01 ; $6bca
 	farcall CharDataScreen_Show ; $6bcc
 	call ApplyStatGapProgressFlag ; $6bcf
-	xor a, a ; $6bd2
+	xor a ; $6bd2
 	ld hl, $c9b0 ; $6bd3
 	ld [hl+], a ; $6bd6
 	ld [hl], a ; $6bd7
@@ -3296,20 +3296,20 @@ ApplyPendingExpAwards:
 	pop de ; $6c04
 	pop bc ; $6c05
 	pop af ; $6c06
-	xor a, a ; $6c07
+	xor a ; $6c07
 	ret ; $6c08
 ScaleExpByPlayerLevel:
 	ld a, [$c918] ; $6c09
 	ld b, a ; $6c0c
 	ld a, [$c958] ; $6c0d
-	add a, b ; $6c10
+	add b ; $6c10
 	srl a ; $6c11
-	cp a, $0a ; $6c13
+	cp $0a ; $6c13
 	jr nc, .compare ; $6c15
 	ccf ; $6c17
 	ret ; $6c18
 .compare:
-	cp a, $14 ; $6c19
+	cp $14 ; $6c19
 	jr nc, .compare2 ; $6c1b
 	ld h, d ; $6c1d
 	ld l, e ; $6c1e
@@ -3320,7 +3320,7 @@ ScaleExpByPlayerLevel:
 	ld e, l ; $6c25
 	ret ; $6c26
 .compare2:
-	cp a, $1e ; $6c27
+	cp $1e ; $6c27
 	jr nc, .compare3 ; $6c29
 	ld h, d ; $6c2b
 	ld l, e ; $6c2c
@@ -3329,7 +3329,7 @@ ScaleExpByPlayerLevel:
 	ld e, l ; $6c2f
 	ret ; $6c30
 .compare3:
-	cp a, $28 ; $6c31
+	cp $28 ; $6c31
 	jr nc, .compare4 ; $6c33
 	ld h, d ; $6c35
 	ld l, e ; $6c36
@@ -3341,7 +3341,7 @@ ScaleExpByPlayerLevel:
 	ld e, l ; $6c3e
 	ret ; $6c3f
 .compare4:
-	cp a, $32 ; $6c40
+	cp $32 ; $6c40
 	jr nc, .compare5 ; $6c42
 	ld h, d ; $6c44
 	ld l, e ; $6c45
@@ -3351,7 +3351,7 @@ ScaleExpByPlayerLevel:
 	ld e, l ; $6c49
 	ret ; $6c4a
 .compare5:
-	cp a, $3c ; $6c4b
+	cp $3c ; $6c4b
 	jr nc, .ge3c ; $6c4d
 	ld h, d ; $6c4f
 	ld l, e ; $6c50
@@ -3379,10 +3379,10 @@ ApplyStatGapProgressFlag:
 	ld a, [$c939] ; $6c68
 	ld b, a ; $6c6b
 	ld a, [$c938] ; $6c6c
-	sub a, b ; $6c6f
+	sub b ; $6c6f
 	bit 7, a ; $6c70
 	ret nz ; $6c72
-	cp a, $05 ; $6c73
+	cp $05 ; $6c73
 	jr nc, .setFlag ; $6c75
 	ret ; $6c77
 .setFlag:
@@ -3422,9 +3422,9 @@ SetRewardGameFlag:
 	push de ; $6cac
 	push hl ; $6cad
 	ld a, [wCurrentMinigameStoryMatch] ; $6cae
-	add a, a ; $6cb1
+	add a ; $6cb1
 	ld hl, RewardFlagListPtrs_1e ; $6cb2
-	add a, l ; $6cb5
+	add l ; $6cb5
 	ld l, a ; $6cb6
 	jr nc, .read ; $6cb7
 	inc h ; $6cb9
@@ -3433,8 +3433,8 @@ SetRewardGameFlag:
 	ld h, [hl] ; $6cbb
 	ld l, a ; $6cbc
 	call GetRewardTableIndex ; $6cbd
-	add a, a ; $6cc0
-	add a, l ; $6cc1
+	add a ; $6cc0
+	add l ; $6cc1
 	ld l, a ; $6cc2
 	jr nc, .readB ; $6cc3
 	inc h ; $6cc5
@@ -3453,9 +3453,9 @@ TestRewardGameFlag:
 	push de ; $6cd2
 	push hl ; $6cd3
 	ld a, [wCurrentMinigameStoryMatch] ; $6cd4
-	add a, a ; $6cd7
+	add a ; $6cd7
 	ld hl, RewardFlagListPtrs_1e ; $6cd8
-	add a, l ; $6cdb
+	add l ; $6cdb
 	ld l, a ; $6cdc
 	jr nc, .read ; $6cdd
 	inc h ; $6cdf
@@ -3464,8 +3464,8 @@ TestRewardGameFlag:
 	ld h, [hl] ; $6ce1
 	ld l, a ; $6ce2
 	call GetRewardTableIndex ; $6ce3
-	add a, a ; $6ce6
-	add a, l ; $6ce7
+	add a ; $6ce6
+	add l ; $6ce7
 	ld l, a ; $6ce8
 	jr nc, .readB ; $6ce9
 	inc h ; $6ceb
@@ -3480,21 +3480,21 @@ TestRewardGameFlag:
 	ret ; $6cf5
 GetRewardTableIndex:
 	ld a, [wCurrentMinigameStoryMatch] ; $6cf6
-	cp a, $02 ; $6cf9
+	cp $02 ; $6cf9
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $6cfb
 	ret nz ; $6cfe
-	cp a, $1a ; $6cff
+	cp $1a ; $6cff
 	ret c ; $6d01
 	jr nz, .checkFlag ; $6d02
 	test_flag FLAG_CLEARED_MACHINE_MASTER ; $6d04
 	jr z, .done ; $6d07
-	add a, $02 ; $6d09
+	add $02 ; $6d09
 .done:
 	ret ; $6d0b
 .checkFlag:
 	test_flag FLAG_CLEARED_WALL_MASTER ; $6d0c
 	jr z, .doneB ; $6d0f
-	add a, $02 ; $6d11
+	add $02 ; $6d11
 .doneB:
 	ret ; $6d13
 RewardFlagListPtrs_1e:
@@ -3647,10 +3647,10 @@ ApplyRewardUnlockFlags:
 	ld c, $00 ; $6e1c
 	ld b, $0d ; $6e1e
 	ld a, c ; $6e20
-	add a, a ; $6e21
-	add a, a ; $6e22
+	add a ; $6e21
+	add a ; $6e22
 	ld hl, RewardUnlockFlagsTable ; $6e23
-	add a, l ; $6e26
+	add l ; $6e26
 	ld l, a ; $6e27
 	jr nc, .loop ; $6e28
 	inc h ; $6e2a
@@ -3660,7 +3660,7 @@ ApplyRewardUnlockFlags:
 	ld e, a ; $6e2d
 	inc hl ; $6e2e
 	ld a, d ; $6e2f
-	or a, e ; $6e30
+	or e ; $6e30
 	jr z, .read ; $6e31
 	call TestGameFlag ; $6e33
 	jr z, .read ; $6e36
@@ -3671,7 +3671,7 @@ ApplyRewardUnlockFlags:
 	ld e, a ; $6e3d
 	inc hl ; $6e3e
 	ld a, d ; $6e3f
-	or a, e ; $6e40
+	or e ; $6e40
 	jr z, .next ; $6e41
 	call TestGameFlag ; $6e43
 	jr z, .next ; $6e46
@@ -3684,9 +3684,9 @@ ApplyRewardUnlockFlags:
 SetRewardUnlockFlag:
 	push hl ; $6e50
 	ld a, c ; $6e51
-	add a, a ; $6e52
+	add a ; $6e52
 	ld hl, RewardUnlockFlagTable ; $6e53
-	add a, l ; $6e56
+	add l ; $6e56
 	ld l, a ; $6e57
 	jr nc, .read ; $6e58
 	inc h ; $6e5a
@@ -3709,7 +3709,7 @@ RewardUnlockFlagsTable:
 	db $80, $07, $a0, $06 ; 0x30
 SetMinigameRecordSaveFlag:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $6eb1
-	cp a, $1d ; $6eb4
+	cp $1d ; $6eb4
 	jr nz, .compare ; $6eb6
 	push de ; $6eb8
 	ld de, SAVEFLAG_COURT_CASTLE ; $6eb9
@@ -3717,7 +3717,7 @@ SetMinigameRecordSaveFlag:
 	pop de ; $6ebf
 	ret ; $6ec0
 .compare:
-	cp a, $1f ; $6ec1
+	cp $1f ; $6ec1
 	jr nz, .compare2 ; $6ec3
 	push de ; $6ec5
 	ld de, SAVEFLAG_COURT_TROPICS ; $6ec6
@@ -3725,7 +3725,7 @@ SetMinigameRecordSaveFlag:
 	pop de ; $6ecc
 	ret ; $6ecd
 .compare2:
-	cp a, $21 ; $6ece
+	cp $21 ; $6ece
 	jr nz, .done ; $6ed0
 	push de ; $6ed2
 	ld de, SAVEFLAG_COURT_JUNGLE ; $6ed3
@@ -3736,21 +3736,21 @@ SetMinigameRecordSaveFlag:
 	ret ; $6edb
 SetMinigameClearFlag:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $6edc
-	sub a, $1c ; $6edf
+	sub $1c ; $6edf
 	bit 7, a ; $6ee1
 	ret nz ; $6ee3
-	add a, a ; $6ee4
+	add a ; $6ee4
 	ld h, $00 ; $6ee5
 	ld l, a ; $6ee7
 	add hl, hl ; $6ee8
-	add a, l ; $6ee9
+	add l ; $6ee9
 	ld l, a ; $6eea
 	jr nc, .checkMinigameLevel ; $6eeb
 	inc h ; $6eed
 .checkMinigameLevel:
 	ld a, [wMinigameLevel] ; $6eee
-	add a, a ; $6ef1
-	add a, l ; $6ef2
+	add a ; $6ef1
+	add l ; $6ef2
 	ld l, a ; $6ef3
 	jr nc, .gotPtr ; $6ef4
 	inc h ; $6ef6
@@ -3795,13 +3795,13 @@ UpdateMinigameBestScore:
 	ldh a, [hWramBank] ; $6f38
 	push af ; $6f3a
 	ld a, [wMinigameLevel] ; $6f3b
-	cp a, $02 ; $6f3e
+	cp $02 ; $6f3e
 	jr nz, .restore ; $6f40
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $6f42
-	sub a, $1c ; $6f45
+	sub $1c ; $6f45
 	bit 7, a ; $6f47
 	jr nz, .restore ; $6f49
-	cp a, $09 ; $6f4b
+	cp $09 ; $6f4b
 	jr nc, .restore ; $6f4d
 	inc a ; $6f4f
 	inc a ; $6f50
@@ -3820,10 +3820,10 @@ UpdateMinigameBestScore:
 	ld d, b ; $6f68
 	ld e, c ; $6f69
 	ld a, l ; $6f6a
-	sub a, c ; $6f6b
+	sub c ; $6f6b
 	ld l, a ; $6f6c
 	ld a, h ; $6f6d
-	sbc a, b ; $6f6e
+	sbc b ; $6f6e
 	ld h, a ; $6f6f
 	bit 7, h ; $6f70
 	jr z, .restore ; $6f72
@@ -3832,7 +3832,7 @@ UpdateMinigameBestScore:
 	ld [hl+], a ; $6f78
 	ld [hl], d ; $6f79
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $6f7a
-	sub a, $1c ; $6f7d
+	sub $1c ; $6f7d
 	inc a ; $6f7f
 	inc a ; $6f80
 	farcall UpdateMinigameRecord ; $6f81
@@ -3872,32 +3872,32 @@ CheckAllProgressComplete:
 	ret ; $6fb1
 ShowIslandOpenRankingBoard:
 	ld a, [wGameMode] ; $6fb2
-	cp a, $02 ; $6fb5
+	cp $02 ; $6fb5
 	ret nz ; $6fb7
 	call SetupRankingBoardArgs ; $6fb8
 	farcall ShowRankingBoard ; $6fbb
 	ret ; $6fbe
 SetupRankingBoardArgs:
 	ld a, [wCurrentMinigameStoryMatch] ; $6fbf
-	and a, $01 ; $6fc2
+	and $01 ; $6fc2
 	ld b, a ; $6fc4
-	or a, a ; $6fc5
+	or a ; $6fc5
 	jr nz, .nonZero ; $6fc6
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $6fc8
-	sub a, $13 ; $6fcb
-	add a, $04 ; $6fcd
-	and a, $07 ; $6fcf
+	sub $13 ; $6fcb
+	add $04 ; $6fcd
+	and $07 ; $6fcf
 	ld c, a ; $6fd1
 	jr .checkMatchWinLoseFlag ; $6fd2
 .nonZero:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $6fd4
-	sub a, $13 ; $6fd7
-	add a, $03 ; $6fd9
-	and a, $03 ; $6fdb
+	sub $13 ; $6fd7
+	add $03 ; $6fd9
+	and $03 ; $6fdb
 	ld c, a ; $6fdd
 .checkMatchWinLoseFlag:
 	ld a, [wMatchWinLoseFlag] ; $6fde
-	cp a, $01 ; $6fe1
+	cp $01 ; $6fe1
 	jr nz, .ne01 ; $6fe3
 	ld d, $01 ; $6fe5
 	ret ; $6fe7
@@ -3905,12 +3905,12 @@ SetupRankingBoardArgs:
 	ld d, $02 ; $6fe8
 	ret ; $6fea
 GetTrophyExpValue:
-	add a, a ; $6feb
-	add a, a ; $6fec
-	add a, a ; $6fed
-	add a, b ; $6fee
+	add a ; $6feb
+	add a ; $6fec
+	add a ; $6fed
+	add b ; $6fee
 	ld hl, TrophyExpValueTable ; $6fef
-	add a, l ; $6ff2
+	add l ; $6ff2
 	ld l, a ; $6ff3
 	jr nc, .read ; $6ff4
 	inc h ; $6ff6
@@ -3997,7 +3997,7 @@ ComputeTrophyExpAwards:
 	ld d, [hl] ; $7072
 	ld e, a ; $7073
 	ld a, d ; $7074
-	or a, e ; $7075
+	or e ; $7075
 	jr z, .sumGroup1 ; $7076
 	ld b, $04 ; $7078
 	ld c, $00 ; $707a
@@ -4008,7 +4008,7 @@ ComputeTrophyExpAwards:
 	ld d, [hl] ; $7083
 	ld e, a ; $7084
 	ld a, d ; $7085
-	or a, e ; $7086
+	or e ; $7086
 	jr z, .sumGroup2 ; $7087
 	ld b, $04 ; $7089
 	ld c, $01 ; $708b
@@ -4019,7 +4019,7 @@ ComputeTrophyExpAwards:
 	ld d, [hl] ; $7094
 	ld e, a ; $7095
 	ld a, d ; $7096
-	or a, e ; $7097
+	or e ; $7097
 	jr z, .sumGroup3 ; $7098
 	ld b, $04 ; $709a
 	ld c, $02 ; $709c
@@ -4030,7 +4030,7 @@ ComputeTrophyExpAwards:
 	ld d, [hl] ; $70a5
 	ld e, a ; $70a6
 	ld a, d ; $70a7
-	or a, e ; $70a8
+	or e ; $70a8
 	jr z, .sumGroup4 ; $70a9
 	ld b, $04 ; $70ab
 	ld c, $03 ; $70ad
@@ -4041,7 +4041,7 @@ ComputeTrophyExpAwards:
 	ld d, [hl] ; $70b6
 	ld e, a ; $70b7
 	ld a, d ; $70b8
-	or a, e ; $70b9
+	or e ; $70b9
 	jr z, .sumGroup5 ; $70ba
 	ld b, $04 ; $70bc
 	ld c, $04 ; $70be
@@ -4052,7 +4052,7 @@ ComputeTrophyExpAwards:
 	ld d, [hl] ; $70c7
 	ld e, a ; $70c8
 	ld a, d ; $70c9
-	or a, e ; $70ca
+	or e ; $70ca
 	jr z, .restore ; $70cb
 	ld b, $04 ; $70cd
 	ld c, $05 ; $70cf
@@ -4096,7 +4096,7 @@ ComputeTrophyExpForGroup:
 	ld a, c ; $710b
 	ld [wTrophyExpGroup], a ; $710c
 	ld hl, TrophyExpForGroupTable4 ; $710f
-	add a, l ; $7112
+	add l ; $7112
 	ld l, a ; $7113
 	jr nc, .readThreshold ; $7114
 	inc h ; $7116
@@ -4104,26 +4104,26 @@ ComputeTrophyExpForGroup:
 	ld b, [hl] ; $7117
 	ld a, c ; $7118
 	ld hl, TrophyExpForGroupTable5 ; $7119
-	add a, l ; $711c
+	add l ; $711c
 	ld l, a ; $711d
 	jr nc, .readMask ; $711e
 	inc h ; $7120
 .readMask:
 	ld c, [hl] ; $7121
-	xor a, a ; $7122
+	xor a ; $7122
 	ld hl, wCharDataChoiceLog + 10 ; $7123
 	ld [hl+], a ; $7126
 	ld [hl], a ; $7127
 	ld a, [$c9b5] ; $7128
-	and a, c ; $712b
-	cp a, b ; $712c
+	and c ; $712b
+	cp b ; $712c
 	jr c, .tier2 ; $712d
 	ld a, [wTrophyExpGroup] ; $712f
-	add a, a ; $7132
-	add a, a ; $7133
-	add a, a ; $7134
+	add a ; $7132
+	add a ; $7133
+	add a ; $7134
 	ld hl, TrophyExpForGroupTable0 ; $7135
-	add a, l ; $7138
+	add l ; $7138
 	ld l, a ; $7139
 	jr nc, .readFlag1 ; $713a
 	inc h ; $713c
@@ -4155,15 +4155,15 @@ ComputeTrophyExpForGroup:
 .tier2:
 	ld a, [$c9b5] ; $7163
 	swap a ; $7166
-	and a, c ; $7168
-	cp a, b ; $7169
+	and c ; $7168
+	cp b ; $7169
 	jr c, .tier3 ; $716a
 	ld a, [wTrophyExpGroup] ; $716c
-	add a, a ; $716f
-	add a, a ; $7170
-	add a, a ; $7171
+	add a ; $716f
+	add a ; $7170
+	add a ; $7171
 	ld hl, TrophyExpForGroupTable1 ; $7172
-	add a, l ; $7175
+	add l ; $7175
 	ld l, a ; $7176
 	jr nc, .readFlag2 ; $7177
 	inc h ; $7179
@@ -4194,15 +4194,15 @@ ComputeTrophyExpForGroup:
 	pop bc ; $719f
 .tier3:
 	ld a, [$c9b6] ; $71a0
-	and a, c ; $71a3
-	cp a, b ; $71a4
+	and c ; $71a3
+	cp b ; $71a4
 	jr c, .tier4 ; $71a5
 	ld a, [wTrophyExpGroup] ; $71a7
-	add a, a ; $71aa
-	add a, a ; $71ab
-	add a, a ; $71ac
+	add a ; $71aa
+	add a ; $71ab
+	add a ; $71ac
 	ld hl, TrophyExpForGroupTable2 ; $71ad
-	add a, l ; $71b0
+	add l ; $71b0
 	ld l, a ; $71b1
 	jr nc, .readFlag3 ; $71b2
 	inc h ; $71b4
@@ -4234,15 +4234,15 @@ ComputeTrophyExpForGroup:
 .tier4:
 	ld a, [$c9b6] ; $71db
 	swap a ; $71de
-	and a, c ; $71e0
-	cp a, b ; $71e1
+	and c ; $71e0
+	cp b ; $71e1
 	jr c, .done ; $71e2
 	ld a, [wTrophyExpGroup] ; $71e4
-	add a, a ; $71e7
-	add a, a ; $71e8
-	add a, a ; $71e9
+	add a ; $71e7
+	add a ; $71e8
+	add a ; $71e9
 	ld hl, TrophyExpForGroupTable3 ; $71ea
-	add a, l ; $71ed
+	add l ; $71ed
 	ld l, a ; $71ee
 	jr nc, .readFlag4 ; $71ef
 	inc h ; $71f1
@@ -4319,7 +4319,7 @@ InitGameProgressScreen:
 	sound $04 ; $727d
 	call ClearFrameTasks ; $727f
 	call ClearSpriteQueue ; $7282
-	xor a, a ; $7285
+	xor a ; $7285
 	ldh [hScrollX], a ; $7286
 	ldh [hScrollY], a ; $7288
 	farcall ResetTextWindowState ; $728a
@@ -4443,13 +4443,13 @@ ScrollProgressListDown:
 	farcall ResetGlyphStream ; $7383
 	wram_bank $05 ; $7386
 	ld a, [wCharPosDepth] ; $738c
-	sub a, $06 ; $738f
+	sub $06 ; $738f
 	jr c, .restore ; $7391
 	ld b, a ; $7393
 	ld hl, wCharPosDepth + 2 ; $7394
 	ld a, [hl] ; $7397
 	inc a ; $7398
-	cp a, b ; $7399
+	cp b ; $7399
 	jr nc, .restore ; $739a
 	ld [hl], a ; $739c
 	sound $5e ; $739d
@@ -4497,8 +4497,8 @@ TestProgressEntryFlag:
 	push hl ; $73ef
 	push de ; $73f0
 	ld hl, ProgressEntryFlagList_1e ; $73f1
-	add a, a ; $73f4
-	add a, l ; $73f5
+	add a ; $73f4
+	add l ; $73f5
 	ld l, a ; $73f6
 	jr nc, .read ; $73f7
 	inc h ; $73f9
@@ -4509,15 +4509,15 @@ TestProgressEntryFlag:
 	call TestGameFlag ; $73fd
 	ld a, $01 ; $7400
 	jr nz, .restore ; $7402
-	xor a, a ; $7404
+	xor a ; $7404
 .restore:
 	pop de ; $7405
 	pop hl ; $7406
 	ret ; $7407
 RunRewardCategoryList:
 	ld hl, RewardCategoryEntryListPtrs_1e ; $7408
-	add a, a ; $740b
-	add a, l ; $740c
+	add a ; $740b
+	add l ; $740c
 	ld l, a ; $740d
 	jr nc, .readList ; $740e
 	inc h ; $7410
@@ -4527,13 +4527,13 @@ RunRewardCategoryList:
 	ld e, a ; $7413
 .entryLoop:
 	ld a, [de] ; $7414
-	cp a, $ff ; $7415
+	cp $ff ; $7415
 	jr z, .done ; $7417
 	push de ; $7419
 	push af ; $741a
 	ld hl, RewardCategoryFlagTable_1e ; $741b
-	add a, a ; $741e
-	add a, l ; $741f
+	add a ; $741e
+	add l ; $741f
 	ld l, a ; $7420
 	jr nc, .readFlagId ; $7421
 	inc h ; $7423
@@ -4542,18 +4542,18 @@ RunRewardCategoryList:
 	ld d, [hl] ; $7425
 	ld e, a ; $7426
 	ld a, d ; $7427
-	or a, e ; $7428
+	or e ; $7428
 	ld a, $01 ; $7429
 	jr z, .storeState ; $742b
 	call TestGameFlag ; $742d
 	ld a, $01 ; $7430
 	jr nz, .storeState ; $7432
-	xor a, a ; $7434
+	xor a ; $7434
 .storeState:
 	ld e, a ; $7435
 	pop af ; $7436
 	ld hl, wCharFreezeTimer ; $7437
-	add a, l ; $743a
+	add l ; $743a
 	ld l, a ; $743b
 	jr nc, .writeSlot ; $743c
 	inc h ; $743e
@@ -4598,7 +4598,7 @@ BuildVisibleProgressEntryList:
 	ld de, wCharReachHeight ; $7483
 .loop:
 	ld a, [hl+] ; $7486
-	or a, a ; $7487
+	or a ; $7487
 	jr z, .zero ; $7488
 	inc b ; $748a
 	ld a, c ; $748b
@@ -4607,7 +4607,7 @@ BuildVisibleProgressEntryList:
 .zero:
 	inc c ; $748e
 	ld a, c ; $748f
-	cp a, $30 ; $7490
+	cp $30 ; $7490
 	jr c, .loop ; $7492
 	ld a, b ; $7494
 	ld [wCharPosDepth], a ; $7495
@@ -4615,7 +4615,7 @@ BuildVisibleProgressEntryList:
 BuildProgressEntryEarnedTable:
 	ld hl, wCharVelX ; $7499
 	ld c, $25 ; $749c
-	xor a, a ; $749e
+	xor a ; $749e
 .entryLoop:
 	push af ; $749f
 	call TestProgressEntryFlag ; $74a0
@@ -4628,7 +4628,7 @@ BuildProgressEntryEarnedTable:
 GetProgressEntryEarned:
 	push hl ; $74aa
 	ld hl, wCharVelX ; $74ab
-	add a, l ; $74ae
+	add l ; $74ae
 	ld l, a ; $74af
 	jr nc, .read ; $74b0
 	inc h ; $74b2
@@ -4648,7 +4648,7 @@ DrawProgressListRows:
 	ld e, l ; $74c4
 	ld a, [wCharPosDepth + 2] ; $74c5
 	ld hl, wCharReachHeight ; $74c8
-	add a, l ; $74cb
+	add l ; $74cb
 	ld l, a ; $74cc
 	jr nc, .gotPtr ; $74cd
 	inc h ; $74cf
@@ -4656,11 +4656,11 @@ DrawProgressListRows:
 	ld c, $07 ; $74d0
 .loop:
 	ld a, [hl+] ; $74d2
-	cp a, $ff ; $74d3
+	cp $ff ; $74d3
 	jr z, .eqff ; $74d5
 	push hl ; $74d7
 	ld hl, $04a0 ; $74d8
-	add a, l ; $74db
+	add l ; $74db
 	ld l, a ; $74dc
 	jr nc, .renderProportionalTextAt ; $74dd
 	inc h ; $74df
@@ -4835,25 +4835,25 @@ DrawProgressEntryDefaultIcon:
 	push de ; $7a3e
 	push hl ; $7a3f
 	ld a, b ; $7a40
-	add a, a ; $7a41
-	add a, $05 ; $7a42
-	add a, a ; $7a44
-	add a, a ; $7a45
-	add a, a ; $7a46
+	add a ; $7a41
+	add $05 ; $7a42
+	add a ; $7a44
+	add a ; $7a45
+	add a ; $7a46
 	ld hl, hScrollY ; $7a47
-	sub a, [hl] ; $7a4a
-	add a, $03 ; $7a4b
+	sub [hl] ; $7a4a
+	add $03 ; $7a4b
 	ld e, a ; $7a4d
 	ld d, $8c ; $7a4e
 	ldh a, [hVBlankCounter] ; $7a50
 	rrca ; $7a52
 	rrca ; $7a53
 	rrca ; $7a54
-	and a, $03 ; $7a55
+	and $03 ; $7a55
 	ld a, $03 ; $7a57
-	add a, a ; $7a59
-	add a, a ; $7a5a
-	add a, $00 ; $7a5b
+	add a ; $7a59
+	add a ; $7a5a
+	add $00 ; $7a5b
 	ld c, a ; $7a5d
 	ld b, $0a ; $7a5e
 	call QueueSprite16 ; $7a60
@@ -4868,21 +4868,21 @@ DrawProgressEntryTrophyIcon:
 	push de ; $7a6a
 	push hl ; $7a6b
 	ld a, b ; $7a6c
-	add a, a ; $7a6d
-	add a, $05 ; $7a6e
-	add a, a ; $7a70
-	add a, a ; $7a71
-	add a, a ; $7a72
+	add a ; $7a6d
+	add $05 ; $7a6e
+	add a ; $7a70
+	add a ; $7a71
+	add a ; $7a72
 	ld hl, hScrollY ; $7a73
-	sub a, [hl] ; $7a76
-	add a, $03 ; $7a77
+	sub [hl] ; $7a76
+	add $03 ; $7a77
 	ld e, a ; $7a79
 	ld d, $8c ; $7a7a
 	ld a, c ; $7a7c
-	add a, a ; $7a7d
-	add a, a ; $7a7e
+	add a ; $7a7d
+	add a ; $7a7e
 	ld c, $20 ; $7a7f
-	add a, c ; $7a81
+	add c ; $7a81
 	ld c, a ; $7a82
 	ld b, $0a ; $7a83
 	call QueueSprite16 ; $7a85
@@ -4892,24 +4892,24 @@ DrawProgressEntryTrophyIcon:
 	pop af ; $7a8b
 	ret ; $7a8c
 DrawProgressScreenSprites:
-	xor a, a ; $7a8d
+	xor a ; $7a8d
 	ld [wCharPosHeight + 1], a ; $7a8e
 	ld [wCharPosHeight + 2], a ; $7a91
 	ld a, [wCharPosDepth] ; $7a94
-	sub a, $07 ; $7a97
+	sub $07 ; $7a97
 	ld b, a ; $7a99
 	ld a, [wCharPosDepth + 2] ; $7a9a
-	or a, a ; $7a9d
+	or a ; $7a9d
 	jr z, .compare ; $7a9e
 	ld [wCharPosHeight + 1], a ; $7aa0
 .compare:
-	cp a, b ; $7aa3
+	cp b ; $7aa3
 	jr nc, .nonZero ; $7aa4
 	ld a, $01 ; $7aa6
 	ld [wCharPosHeight + 2], a ; $7aa8
 .nonZero:
 	ld a, [wCharPosHeight + 1] ; $7aab
-	or a, a ; $7aae
+	or a ; $7aae
 	jr z, .zero ; $7aaf
 	ld d, $0a ; $7ab1
 	ld e, $18 ; $7ab3
@@ -4921,7 +4921,7 @@ DrawProgressScreenSprites:
 	farcall QueueStackedSpritePair ; $7ac0
 .zero:
 	ld a, [wCharPosHeight + 2] ; $7ac3
-	or a, a ; $7ac6
+	or a ; $7ac6
 	jr z, .zero2 ; $7ac7
 	ld d, $0a ; $7ac9
 	ld e, $86 ; $7acb
@@ -4934,7 +4934,7 @@ DrawProgressScreenSprites:
 .zero2:
 	ld hl, wCharReachHeight ; $7adb
 	ld a, [wCharPosDepth + 2] ; $7ade
-	add a, l ; $7ae1
+	add l ; $7ae1
 	ld l, a ; $7ae2
 	jr nc, .gotPtr ; $7ae3
 	inc h ; $7ae5
@@ -4943,28 +4943,28 @@ DrawProgressScreenSprites:
 	ld b, $00 ; $7ae8
 .loop:
 	ld a, [hl+] ; $7aea
-	cp a, $ff ; $7aeb
+	cp $ff ; $7aeb
 	jr z, .next ; $7aed
 	ld d, a ; $7aef
 	call GetProgressEntryEarned ; $7af0
-	or a, a ; $7af3
+	or a ; $7af3
 	jr z, .next ; $7af4
 	ld a, d ; $7af6
-	cp a, $00 ; $7af7
+	cp $00 ; $7af7
 	jr z, .drawProgressEntryTrophyIcon ; $7af9
-	cp a, $0b ; $7afb
+	cp $0b ; $7afb
 	jr nc, .drawProgressEntryDefaultIcon ; $7afd
 	dec a ; $7aff
 	srl a ; $7b00
-	or a, a ; $7b02
+	or a ; $7b02
 	jr z, .drawProgressEntryTrophyIcon ; $7b03
-	cp a, $01 ; $7b05
+	cp $01 ; $7b05
 	jr z, .eq01 ; $7b07
-	cp a, $02 ; $7b09
+	cp $02 ; $7b09
 	jr z, .eq02 ; $7b0b
-	cp a, $03 ; $7b0d
+	cp $03 ; $7b0d
 	jr z, .eq03 ; $7b0f
-	cp a, $04 ; $7b11
+	cp $04 ; $7b11
 	jr z, .eq04 ; $7b13
 .drawProgressEntryDefaultIcon:
 	call DrawProgressEntryDefaultIcon ; $7b15

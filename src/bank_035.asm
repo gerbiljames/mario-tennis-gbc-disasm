@@ -301,7 +301,7 @@ FetchText_35:
 	ld d, [hl] ; $7b46
 	ld hl, TextStrings_35 ; $7b47
 	add hl, de ; $7b4a
-	or a, a ; $7b4b
+	or a ; $7b4b
 	jr nz, .nonZero ; $7b4c
 	ld de, wTextBuffer ; $7b4e
 	ld c, $a0 ; $7b51
@@ -315,17 +315,17 @@ FetchText_35:
 	ld a, [hl+] ; $7b5d
 	ld [de], a ; $7b5e
 	inc de ; $7b5f
-	or a, a ; $7b60
+	or a ; $7b60
 	jr nz, .loop ; $7b61
 	pop hl ; $7b63
 	pop de ; $7b64
 	pop bc ; $7b65
 	ret ; $7b66
 .countDone:
-	xor a, a ; $7b67
+	xor a ; $7b67
 	ld [de], a ; $7b68
 	ldh a, [hDebugStepMode] ; $7b69
-	or a, a ; $7b6b
+	or a ; $7b6b
 	jr z, .restore ; $7b6c
 	sound $2c ; $7b6e
 .restore:

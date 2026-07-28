@@ -44,11 +44,11 @@ SeekBallTrajEntry6_2a:
 	pop hl ; $402c
 	jr c, .done ; $402d
 	ld a, d ; $402f
-	cp a, e ; $4030
+	cp e ; $4030
 	jr nc, .done ; $4031
 	inc d ; $4033
 	ld a, $06 ; $4034
-	add a, l ; $4036
+	add l ; $4036
 	ld l, a ; $4037
 	jr nc, .gotPtr ; $4038
 	inc h ; $403a
@@ -70,11 +70,11 @@ SeekBallTrajEntry4_2a:
 	pop hl ; $404b
 	jr c, .done ; $404c
 	ld a, d ; $404e
-	cp a, e ; $404f
+	cp e ; $404f
 	jr nc, .done ; $4050
 	inc d ; $4052
 	ld a, $04 ; $4053
-	add a, l ; $4055
+	add l ; $4055
 	ld l, a ; $4056
 	jr nc, .gotPtr ; $4057
 	inc h ; $4059
@@ -97,13 +97,13 @@ SetBallVelocityFromEntry6_2a:
 	ld a, [hl+] ; $4068
 	ld d, a ; $4069
 	ld a, [wShotAimMirror] ; $406a
-	and a, a ; $406d
+	and a ; $406d
 	jr z, .zero ; $406e
-	xor a, a ; $4070
-	sub a, e ; $4071
+	xor a ; $4070
+	sub e ; $4071
 	ld e, a ; $4072
-	sbc a, a ; $4073
-	sub a, d ; $4074
+	sbc a ; $4073
+	sub d ; $4074
 	ld d, a ; $4075
 .zero:
 	ld hl, wShotAimAngle ; $4076
@@ -149,11 +149,11 @@ SetBallTargetByPrediction_2a:
 	ld l, a ; $40a8
 	bit 7, h ; $40a9
 	jr z, .offset ; $40ab
-	xor a, a ; $40ad
-	sub a, l ; $40ae
+	xor a ; $40ad
+	sub l ; $40ae
 	ld l, a ; $40af
-	sbc a, a ; $40b0
-	sub a, h ; $40b1
+	sbc a ; $40b0
+	sub h ; $40b1
 	ld h, a ; $40b2
 .offset:
 	add hl, hl ; $40b3
@@ -175,13 +175,13 @@ SetBallTargetByPrediction_2a:
 	ld a, [hl+] ; $40c5
 	ld d, a ; $40c6
 	ld a, [wShotAimMirror] ; $40c7
-	and a, a ; $40ca
+	and a ; $40ca
 	jr z, .zero ; $40cb
-	xor a, a ; $40cd
-	sub a, e ; $40ce
+	xor a ; $40cd
+	sub e ; $40ce
 	ld e, a ; $40cf
-	sbc a, a ; $40d0
-	sub a, d ; $40d1
+	sbc a ; $40d0
+	sub d ; $40d1
 	ld d, a ; $40d2
 .zero:
 	ld hl, wShotAimAngle ; $40d3
@@ -195,13 +195,13 @@ SetBallTargetByPrediction_2a:
 	farcall SetBallVelocityPolar ; $40dd
 	ld de, $fd40 ; $40e0
 	ld a, [wCharCourtPos] ; $40e3
-	and a, $02 ; $40e6
+	and $02 ; $40e6
 	jr z, .maskClear ; $40e8
-	xor a, a ; $40ea
-	sub a, e ; $40eb
+	xor a ; $40ea
+	sub e ; $40eb
 	ld e, a ; $40ec
-	sbc a, a ; $40ed
-	sub a, d ; $40ee
+	sbc a ; $40ed
+	sub d ; $40ee
 	ld d, a ; $40ef
 .maskClear:
 	ld hl, wBallTargetDepth ; $40f0
@@ -216,11 +216,11 @@ SetBallTargetByPrediction_2a:
 	ld [hl+], a ; $40ff
 	ld [hl], d ; $4100
 	ret ; $4101
-	xor a, a ; $4102
-	sub a, c ; $4103
+	xor a ; $4102
+	sub c ; $4103
 	ld c, a ; $4104
-	sbc a, a ; $4105
-	sub a, b ; $4106
+	sbc a ; $4105
+	sub b ; $4106
 	ld b, a ; $4107
 	ld a, [wShotDistMin] ; $4108
 	ld e, a ; $410b
@@ -248,11 +248,11 @@ SetBallTargetByPrediction_2a:
 	rr l ; $412f
 	call SetBallTargetFromAim_2a ; $4131
 	ret ; $4134
-	xor a, a ; $4135
-	sub a, c ; $4136
+	xor a ; $4135
+	sub c ; $4136
 	ld c, a ; $4137
-	sbc a, a ; $4138
-	sub a, b ; $4139
+	sbc a ; $4138
+	sub b ; $4139
 	ld b, a ; $413a
 	ld a, [wShotDistMin] ; $413b
 	ld e, a ; $413e
@@ -292,10 +292,10 @@ SetBallTargetByPrediction_2a:
 	ld h, [hl] ; $4179
 	ld l, a ; $417a
 	ld a, l ; $417b
-	sub a, e ; $417c
+	sub e ; $417c
 	ld l, a ; $417d
 	ld a, h ; $417e
-	sbc a, d ; $417f
+	sbc d ; $417f
 	ld h, a ; $4180
 	jr nc, .restore ; $4181
 	ld hl, wShotDistMax ; $4183
@@ -310,11 +310,11 @@ SetBallTargetByPrediction_2a:
 	pop hl ; $4191
 	call SetBallTargetFromAim_2a ; $4192
 	ret ; $4195
-	xor a, a ; $4196
-	sub a, c ; $4197
+	xor a ; $4196
+	sub c ; $4197
 	ld c, a ; $4198
-	sbc a, a ; $4199
-	sub a, b ; $419a
+	sbc a ; $4199
+	sub b ; $419a
 	ld b, a ; $419b
 	ld a, [wShotDistMin] ; $419c
 	ld e, a ; $419f
@@ -342,11 +342,11 @@ SetBallTargetByPrediction_2a:
 	rr l ; $41c3
 	call SetBallTargetFromAim_2a ; $41c5
 	ret ; $41c8
-	xor a, a ; $41c9
-	sub a, c ; $41ca
+	xor a ; $41c9
+	sub c ; $41ca
 	ld c, a ; $41cb
-	sbc a, a ; $41cc
-	sub a, b ; $41cd
+	sbc a ; $41cc
+	sub b ; $41cd
 	ld b, a ; $41ce
 	ld a, [wShotDistMin] ; $41cf
 	ld e, a ; $41d2
@@ -416,12 +416,12 @@ SetBallTargetFromAim_2a:
 	call VectorLengthFromAngle ; $4235
 	add hl, hl ; $4238
 	ld a, h ; $4239
-	and a, $1f ; $423a
+	and $1f ; $423a
 	ld [wShotAimRow], a ; $423c
-	add a, a ; $423f
+	add a ; $423f
 	pop hl ; $4240
 	pop de ; $4241
-	add a, l ; $4242
+	add l ; $4242
 	ld l, a ; $4243
 	jr nc, .readEntry ; $4244
 	inc h ; $4246
@@ -438,22 +438,22 @@ LookupBallPosByHeight_2a:
 	ld a, [hl+] ; $4251
 	ld h, [hl] ; $4252
 	ld l, a ; $4253
-	xor a, a ; $4254
-	sub a, l ; $4255
+	xor a ; $4254
+	sub l ; $4255
 	ld l, a ; $4256
-	sbc a, a ; $4257
-	sub a, h ; $4258
+	sbc a ; $4257
+	sub h ; $4258
 	ld h, a ; $4259
 	add hl, hl ; $425a
 	add hl, hl ; $425b
 	add hl, hl ; $425c
 	add hl, hl ; $425d
 	ld a, h ; $425e
-	and a, $1f ; $425f
-	add a, a ; $4261
+	and $1f ; $425f
+	add a ; $4261
 	ld l, c ; $4262
 	ld h, b ; $4263
-	add a, l ; $4264
+	add l ; $4264
 	ld l, a ; $4265
 	jr nc, .read ; $4266
 	inc h ; $4268
@@ -466,10 +466,10 @@ LookupBallPosByHeight_2a:
 LookupBallPosByShotIndex_2a:
 	ld e, l ; $426e
 	ld d, h ; $426f
-	add a, a ; $4270
+	add a ; $4270
 	ld l, c ; $4271
 	ld h, b ; $4272
-	add a, l ; $4273
+	add l ; $4273
 	ld l, a ; $4274
 	jr nc, .read ; $4275
 	inc h ; $4277

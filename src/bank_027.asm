@@ -95,7 +95,7 @@ End17AwardCeremonyInitScript_27:
 .placeActors:
 	script_set_position $03, $3f00, $3f00 ; $41cd
 	script_set_position ACTOR_PLAYER, $3f00, $3f00 ; $41d8
-	xor a, a ; $41e3
+	xor a ; $41e3
 	ld [wStoryModeShowLocationName], a ; $41e4
 	script_fade_in $04 ; $41e7
 	call WaitFadeEnd ; $41ec
@@ -152,7 +152,7 @@ End17AwardCeremonyInitScript_27:
 .loop:
 	ld a, [wStoryModeGenderOfMainCharacter] ; $437b
 	ld d, $26 ; $437e
-	add a, d ; $4380
+	add d ; $4380
 	ld d, a ; $4381
 	script_get_actor_state $09 ; $4382
 	ld c, l ; $4387
@@ -243,7 +243,7 @@ SetEnd17CeremonyObjectDefs_27:
 	jp z, .checkStoryModeGenderOfMainCharacter ; $45c1
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $45c4
 	ld d, $58 ; $45c7
-	add a, d ; $45c9
+	add d ; $45c9
 	ld d, a ; $45ca
 	script_get_actor_state ACTOR_PARTNER ; $45cb
 	ld c, l ; $45d0
@@ -256,7 +256,7 @@ SetEnd17CeremonyObjectDefs_27:
 .checkStoryModeGenderOfMainCharacter:
 	ld a, [wStoryModeGenderOfMainCharacter] ; $45f3
 	ld d, $56 ; $45f6
-	add a, d ; $45f8
+	add d ; $45f8
 	ld d, a ; $45f9
 	script_get_actor_state $09 ; $45fa
 	ld c, l ; $45ff
@@ -553,12 +553,12 @@ End12PrincipalsOfficeInitScript_27:
 	farcall CopyScrolledSceneTilemapToVram ; $4c7a
 	call EnableLCD ; $4c7d
 	ld a, [wStoryModeEntryPoint] ; $4c80
-	cp a, $02 ; $4c83
+	cp $02 ; $4c83
 	jp z, .eq02 ; $4c85
 	jp .clearStoryModeShowLocationName ; $4c88
 	ret ; $4c8b
 .clearStoryModeShowLocationName:
-	xor a, a ; $4c8c
+	xor a ; $4c8c
 	ld [wStoryModeShowLocationName], a ; $4c8d
 	script_set_position ACTOR_PLAYER, $2b00, $3b00 ; $4c90
 	script_set_position ACTOR_PARTNER, $2b00, $3b00 ; $4c9b
@@ -717,7 +717,7 @@ End12PrincipalsOfficeInitScript_27:
 	script_set_position $05, $3f00, $3f00 ; $504c
 .face:
 	script_face ACTOR_PLAYER, FACE_UP ; $5057
-	xor a, a ; $505e
+	xor a ; $505e
 	ld [wStoryModeShowLocationName], a ; $505f
 	script_fade_in $04 ; $5062
 	call WaitFadeEnd ; $5067
@@ -828,9 +828,9 @@ End11TrainingCourtTileTriggers_27:
 	ds 1, $ff ; $526f, fill
 End11TrainingCourtInitScript_27:
 	ld a, [wStoryModeEntryPoint] ; $5270
-	cp a, $01 ; $5273
+	cp $01 ; $5273
 	jp z, .checkDoubles ; $5275
-	cp a, $02 ; $5278
+	cp $02 ; $5278
 	jp z, .eq02 ; $527a
 	ret ; $527d
 .checkDoubles:
@@ -840,7 +840,7 @@ End11TrainingCourtInitScript_27:
 	script_set_position ACTOR_PARTNER, $3f00, $3f00 ; $528e
 .checkStoryModeMainCharacterLeftHanded:
 	ld a, [wStoryModeMainCharacterLeftHanded] ; $5299
-	and a, a ; $529c
+	and a ; $529c
 	jr z, .face ; $529d
 	script_get_actor_state ACTOR_PLAYER ; $529f
 	ld c, l ; $52a4
@@ -848,12 +848,12 @@ End11TrainingCourtInitScript_27:
 	ld hl, $0037 ; $52a6
 	add hl, bc ; $52a9
 	ld a, [hl] ; $52aa
-	xor a, $20 ; $52ab
+	xor $20 ; $52ab
 	ld [hl], a ; $52ad
 .face:
 	script_face ACTOR_PLAYER, FACE_DOWN ; $52ae
 	script_set_actor_script ACTOR_PLAYER, ActorScript_27_555e ; $52b5
-	xor a, a ; $52c0
+	xor a ; $52c0
 	ld [wStoryModeShowLocationName], a ; $52c1
 	script_fade_in $04 ; $52c4
 	script_delay $78 ; $52c9
@@ -904,7 +904,7 @@ End11TrainingCourtInitScript_27:
 	farcall WaitScriptFrames ; $5397
 	pop af ; $539a
 	ld a, d ; $539b
-	sub a, $02 ; $539c
+	sub $02 ; $539c
 	jp nz, .loop ; $539e
 	script_set_active $03, $02 ; $53a1
 	script_delay $3c ; $53a8
@@ -1035,12 +1035,12 @@ End10VarsityCourtTileTriggers_27:
 	ds 1, $ff ; $561c, fill
 End10VarsityCourtInitScript_27:
 	ld a, [wStoryModeEntryPoint] ; $561d
-	cp a, $01 ; $5620
+	cp $01 ; $5620
 	jp z, SetPartnerObjDefByGender_27.checkDoubles ; $5622
 	ret ; $5625
 SetPartnerObjDefByGender_27:
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $5626
-	or a, a ; $5629
+	or a ; $5629
 	jr nz, .done ; $562a
 	script_set_objdef $28, $0d ; $562c
 	script_set_anim $0d, $01 ; $5638
@@ -1454,7 +1454,7 @@ End8SrCourtInitScript_27:
 	script_set_position ACTOR_PARTNER, $2300, $1b00 ; $5f03
 	script_face ACTOR_PARTNER, FACE_UP ; $5f0e
 	script_face $03, FACE_LEFT ; $5f15
-	xor a, a ; $5f1c
+	xor a ; $5f1c
 	ld [wStoryModeShowLocationName], a ; $5f1d
 	script_fade_in $04 ; $5f20
 	script_move_target $04, $2500, $1300 ; $5f25
@@ -1513,7 +1513,7 @@ End8SrCourtInitScript_27:
 	script_set_speed $04, $0018 ; $6075
 	script_set_position ACTOR_PLAYER, $2400, $1b00 ; $607d
 	script_face ACTOR_PLAYER, FACE_UP ; $6088
-	xor a, a ; $608f
+	xor a ; $608f
 	ld [wStoryModeShowLocationName], a ; $6090
 	script_fade_in $04 ; $6093
 	script_move_target $04, $2400, $1300 ; $6098
@@ -1588,9 +1588,9 @@ End7TrainingCtrTileTriggers_27:
 	ds 1, $ff ; $6201, fill
 End7TrainingCtrInitScript_27:
 	ld a, [wStoryModeEntryPoint] ; $6202
-	cp a, $01 ; $6205
+	cp $01 ; $6205
 	jr z, ComputeMachineCourtProgress_27.eq01 ; $6207
-	cp a, $02 ; $6209
+	cp $02 ; $6209
 	jp z, ComputeMachineCourtProgress_27.placeActors ; $620b
 	ret ; $620e
 ComputeMachineCourtProgress_27:
@@ -1848,7 +1848,7 @@ End4JrCourtInitScript_27:
 	farcall BeginCutsceneScriptMode ; $6805
 .checkStoryModeEntryPoint:
 	ld a, [wStoryModeEntryPoint] ; $6808
-	cp a, $01 ; $680b
+	cp $01 ; $680b
 	jp z, End4JrCourtSceneSingles_27.walkPlayer ; $680d
 	ret ; $6810
 ActorScript_27_6811:
@@ -2139,7 +2139,7 @@ End3DormEntTileTriggers_27:
 End3DormEntInitScript_27:
 	farcall BeginCutsceneScriptMode ; $6c85
 	ld a, [wStoryModeEntryPoint] ; $6c88
-	cp a, $01 ; $6c8b
+	cp $01 ; $6c8b
 	call z, End3DormEntCutscene_27 ; $6c8d
 	farcall EndCutsceneScriptMode ; $6c90
 	ret ; $6c93
@@ -2206,7 +2206,7 @@ End3DormEntCutscene_27:
 	script_set_active $03, $02 ; $6e3d
 	script_set_position $03, $1500, $0b00 ; $6e44
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $6e4f
-	or a, a ; $6e52
+	or a ; $6e52
 	jr nz, .walk ; $6e53
 	script_set_objdef $28, $04 ; $6e55
 	script_set_anim $04, $01 ; $6e61
@@ -2266,7 +2266,7 @@ EndRestaurantEntTileTriggers_27:
 	ds 1, $ff ; $6f4b, fill
 EndRestaurantEntInitScript_27:
 	ld a, [wStoryModeEntryPoint] ; $6f4c
-	cp a, $01 ; $6f4f
+	cp $01 ; $6f4f
 	jr nz, .done ; $6f51
 	call EndRestaurantEntCutscene_27 ; $6f53
 .done:
@@ -2409,14 +2409,14 @@ End1MainBldgTileTriggers_27:
 	ds 1, $ff ; $72fb, fill
 End1MainBldgInitScript_27:
 	ld a, [wStoryModeEntryPoint] ; $72fc
-	cp a, $01 ; $72ff
+	cp $01 ; $72ff
 	jp z, .walkOff ; $7301
-	cp a, $02 ; $7304
+	cp $02 ; $7304
 	jp z, ActorScript_27_7607.placeActors ; $7306
 	ret ; $7309
 .walkOff:
 	script_set_speed ACTOR_PLAYER, $0010 ; $730a
-	xor a, a ; $7312
+	xor a ; $7312
 	ld [wStoryModeShowLocationName], a ; $7313
 	script_set_position $06, $1800, $0d00 ; $7316
 	script_set_position ACTOR_PLAYER, $1800, $3700 ; $7321
@@ -2528,7 +2528,7 @@ End1MainBldgKnockdown_27:
 	ld hl, $0037 ; $75d9
 	add hl, bc ; $75dc
 	ld a, [hl] ; $75dd
-	or a, $40 ; $75de
+	or $40 ; $75de
 	ld [hl], a ; $75e0
 	script_wait_frames $1e ; $75e1
 	script_set_anim ACTOR_PLAYER, $02 ; $75e8
@@ -2549,7 +2549,7 @@ ActorScript_27_7607:
 	script_set_position ACTOR_PARTNER, $3f00, $3f00 ; $7624
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $762f
 	ld d, $58 ; $7632
-	add a, d ; $7634
+	add d ; $7634
 	ld d, a ; $7635
 	script_get_actor_state $0a ; $7636
 	ld c, l ; $763b
@@ -2561,7 +2561,7 @@ ActorScript_27_7607:
 .checkStoryModeGenderOfMainCharacter:
 	ld a, [wStoryModeGenderOfMainCharacter] ; $7659
 	ld d, $56 ; $765c
-	add a, d ; $765e
+	add d ; $765e
 	ld d, a ; $765f
 	script_get_actor_state ACTOR_PLAYER ; $7660
 	ld c, l ; $7665

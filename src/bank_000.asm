@@ -101,8 +101,8 @@ CallHLInBankA:
 	ld [$2000], a ; $0196
 	pop hl ; $0199
 	ld a, b ; $019a
-	add a, a ; $019b
-	add a, l ; $019c
+	add a ; $019b
+	add l ; $019c
 	ld l, a ; $019d
 	jr nc, .readSlot ; $019e
 	inc h ; $01a0
@@ -110,7 +110,7 @@ CallHLInBankA:
 	ld a, [hl+] ; $01a1
 	ld h, [hl] ; $01a2
 	ld l, a ; $01a3
-	or a, h ; $01a4
+	or h ; $01a4
 	ret z ; $01a5
 	jp hl ; $01a6
 	push af ; $01a7
@@ -242,7 +242,7 @@ ClearBothVRAMBanks:
 	ld hl, $8000 ; $0252
 	ld bc, $0200 ; $0255
 	call ClearMemoryBC16 ; $0258
-	xor a, a ; $025b
+	xor a ; $025b
 	ldh [rVBK], a ; $025c
 	ld hl, $8000 ; $025e
 	ld bc, $0200 ; $0261
@@ -253,7 +253,7 @@ ClearBothVRAMBanks:
 	ld hl, $9800 ; $026b
 	ld c, $80 ; $026e
 	call ClearMemory16 ; $0270
-	xor a, a ; $0273
+	xor a ; $0273
 	ldh [rVBK], a ; $0274
 	ld hl, $9800 ; $0276
 	ld c, $80 ; $0279
@@ -298,7 +298,7 @@ SwitchCPUSpeed:
 	ldh [rSPD], a ; $02aa
 	ldh a, [rIE] ; $02ac
 	push af ; $02ae
-	xor a, a ; $02af
+	xor a ; $02af
 	ldh [rIE], a ; $02b0
 	ld a, $30 ; $02b2
 	ldh [rJOYP], a ; $02b4
@@ -307,7 +307,7 @@ SwitchCPUSpeed:
 	ldh a, [rSPD] ; $02b8
 	bit 7, a ; $02ba
 	jr z, .loop ; $02bc
-	xor a, a ; $02be
+	xor a ; $02be
 	ldh [rJOYP], a ; $02bf
 	ldh [rIF], a ; $02c1
 	pop af ; $02c3
@@ -320,7 +320,7 @@ SwitchCPUSpeed:
 	ldh [rSPD], a ; $02ce
 	ldh a, [rIE] ; $02d0
 	push af ; $02d2
-	xor a, a ; $02d3
+	xor a ; $02d3
 	ldh [rIE], a ; $02d4
 	ld a, $30 ; $02d6
 	ldh [rJOYP], a ; $02d8
@@ -329,7 +329,7 @@ SwitchCPUSpeed:
 	ldh a, [rSPD] ; $02dc
 	bit 7, a ; $02de
 	jr nz, .loopB ; $02e0
-	xor a, a ; $02e2
+	xor a ; $02e2
 	ldh [rJOYP], a ; $02e3
 	ldh [rIF], a ; $02e5
 	pop af ; $02e7
@@ -341,7 +341,7 @@ ReadJoypad:
 	ldh a, [rJOYP] ; $02ef
 	ldh a, [rJOYP] ; $02f1
 	cpl ; $02f3
-	and a, $0f ; $02f4
+	and $0f ; $02f4
 	swap a ; $02f6
 	ld b, a ; $02f8
 	ld a, $10 ; $02f9
@@ -353,12 +353,12 @@ ReadJoypad:
 	ldh a, [rJOYP] ; $0305
 	ldh a, [rJOYP] ; $0307
 	cpl ; $0309
-	and a, $0f ; $030a
-	or a, b ; $030c
+	and $0f ; $030a
+	or b ; $030c
 	ld c, a ; $030d
 	ldh a, [hPlayerInputFlags] ; $030e
-	xor a, c ; $0310
-	and a, c ; $0311
+	xor c ; $0310
+	and c ; $0311
 	ldh [hInputRisingEdge], a ; $0312
 	ld a, c ; $0314
 	ldh [hPlayerInputFlags], a ; $0315
@@ -366,13 +366,13 @@ ReadJoypad:
 	ldh [rJOYP], a ; $0319
 	ldh a, [hPlayerInputFlags] ; $031b
 	ld b, a ; $031d
-	or a, a ; $031e
+	or a ; $031e
 	jr z, .setInputRepeatTimer ; $031f
 	ldh a, [hInputRepeatButtons] ; $0321
-	and a, b ; $0323
+	and b ; $0323
 	jr nz, .nonZero ; $0324
 	ldh a, [hInputRepeatButtons] ; $0326
-	cp a, b ; $0328
+	cp b ; $0328
 	jr nz, .setInputRepeatTimer ; $0329
 .nonZero:
 	ldh a, [hInputRepeatTimer] ; $032b
@@ -384,7 +384,7 @@ ReadJoypad:
 	jr .store2 ; $0335
 .store:
 	ldh [hInputRepeatTimer], a ; $0337
-	xor a, a ; $0339
+	xor a ; $0339
 	jr .store2 ; $033a
 .setInputRepeatTimer:
 	ld a, $12 ; $033c
@@ -404,12 +404,12 @@ DisableLCDSafely:
 	ldh [rIE], a ; $0352
 .waitVBlank:
 	ldh a, [rLY] ; $0354
-	cp a, $91 ; $0356
+	cp $91 ; $0356
 	jr nz, .waitVBlank ; $0358
 	ldh a, [rLCDC] ; $035a
-	and a, $7f ; $035c
+	and $7f ; $035c
 	ldh [rLCDC], a ; $035e
-	xor a, a ; $0360
+	xor a ; $0360
 	ldh [rIF], a ; $0361
 	ldh a, [$ff9f] ; $0363
 	ldh [rIE], a ; $0365
@@ -417,7 +417,7 @@ DisableLCDSafely:
 	push hl ; $0367
 	push bc ; $0368
 	call ClearVRAMCopyQueue ; $0369
-	xor a, a ; $036c
+	xor a ; $036c
 	ld hl, hBGRowBlitPending ; $036d
 	ld [hl+], a ; $0370
 	ld [hl+], a ; $0371
@@ -427,44 +427,44 @@ DisableLCDSafely:
 	ret ; $0375
 EnableLCD:
 	ldh a, [rLCDC] ; $0376
-	or a, $80 ; $0378
+	or $80 ; $0378
 	ldh [rLCDC], a ; $037a
 	call ClearUnusedSprites ; $037c
-	xor a, a ; $037f
+	xor a ; $037f
 	ldh [hVBlankOccurred], a ; $0380
 	ret ; $0382
 ClearVRAMBank:
 	ldh a, [hIsCGB] ; $0383
-	and a, a ; $0385
+	and a ; $0385
 	jp nz, ClearBothVRAMBanks ; $0386
 	ld hl, $8000 ; $0389
 	ld bc, $0200 ; $038c
 	call ClearMemoryBC16 ; $038f
 	ret ; $0392
 	ldh a, [hIsCGB] ; $0393
-	and a, a ; $0395
+	and a ; $0395
 	jp nz, ClearBothVRAMBanks.loop ; $0396
 	ld hl, $9800 ; $0399
 	ld bc, $0400 ; $039c
 .loop:
-	xor a, a ; $039f
+	xor a ; $039f
 	ld [hl+], a ; $03a0
 	dec bc ; $03a1
 	ld a, b ; $03a2
-	or a, c ; $03a3
+	or c ; $03a3
 	jr nz, .loop ; $03a4
 	ret ; $03a6
 ClearBytes:
-	xor a, a ; $03a7
+	xor a ; $03a7
 	ld [hl+], a ; $03a8
 	dec bc ; $03a9
 	ld a, c ; $03aa
-	or a, b ; $03ab
+	or b ; $03ab
 	jr nz, ClearBytes ; $03ac
 RetStub:
 	ret ; $03ae
 ClearMemory16:
-	xor a, a ; $03af
+	xor a ; $03af
 .loop:
 	ld [hl+], a ; $03b0
 	ld [hl+], a ; $03b1
@@ -486,7 +486,7 @@ ClearMemory16:
 	jr nz, .loop ; $03c1
 	ret ; $03c3
 ClearMemoryBC16:
-	xor a, a ; $03c4
+	xor a ; $03c4
 	ld [hl+], a ; $03c5
 	ld [hl+], a ; $03c6
 	ld [hl+], a ; $03c7
@@ -505,7 +505,7 @@ ClearMemoryBC16:
 	ld [hl+], a ; $03d4
 	dec bc ; $03d5
 	ld a, b ; $03d6
-	or a, c ; $03d7
+	or c ; $03d7
 	jr nz, ClearMemoryBC16 ; $03d8
 	ret ; $03da
 CopyMemoryBC:
@@ -528,12 +528,12 @@ CopyMemoryReverseBC:
 	dec de ; $03ec
 	dec bc ; $03ed
 	ld a, b ; $03ee
-	or a, c ; $03ef
+	or c ; $03ef
 	jr nz, CopyMemoryReverseBC ; $03f0
 	ret ; $03f2
 CopyMemoryFast:
 	ld a, $0f ; $03f3
-	and a, e ; $03f5
+	and e ; $03f5
 	jr z, .copyAlignedLoop ; $03f6
 .copyLoop:
 	ld a, [hl+] ; $03f8
@@ -661,9 +661,9 @@ QueueVRAMCopyFromBank:
 	ret ; $047f
 QueueVRAMCopy:
 	ldh a, [rLCDC] ; $0480
-	add a, a ; $0482
+	add a ; $0482
 	jr c, .queue ; $0483
-	xor a, a ; $0485
+	xor a ; $0485
 	bit 5, d ; $0486
 	jr z, .setVramBank ; $0488
 	res 5, d ; $048a
@@ -672,7 +672,7 @@ QueueVRAMCopy:
 	ldh [rVBK], a ; $048d
 	jp StartVRAMDMAFromHL ; $048f
 .queue:
-	xor a, a ; $0492
+	xor a ; $0492
 	ldh [hVRAMQueueDirty], a ; $0493
 	ld a, c ; $0495
 	dec a ; $0496
@@ -681,54 +681,54 @@ QueueVRAMCopy:
 	ld hl, wVRAMCopyQueue ; $0499
 	ld l, $a0 ; $049c
 	ld a, [hl] ; $049e
-	or a, a ; $049f
+	or a ; $049f
 	jr z, .fillSlot ; $04a0
 	ld l, $a8 ; $04a2
 	ld a, [hl] ; $04a4
-	or a, a ; $04a5
+	or a ; $04a5
 	jr z, .fillSlot ; $04a6
 	ld l, $b0 ; $04a8
 	ld a, [hl] ; $04aa
-	or a, a ; $04ab
+	or a ; $04ab
 	jr z, .fillSlot ; $04ac
 	ld l, $b8 ; $04ae
 	ld a, [hl] ; $04b0
-	or a, a ; $04b1
+	or a ; $04b1
 	jr z, .fillSlot ; $04b2
 	ld l, $c0 ; $04b4
 	ld a, [hl] ; $04b6
-	or a, a ; $04b7
+	or a ; $04b7
 	jr z, .fillSlot ; $04b8
 	ld l, $c8 ; $04ba
 	ld a, [hl] ; $04bc
-	or a, a ; $04bd
+	or a ; $04bd
 	jr z, .fillSlot ; $04be
 	ld l, $d0 ; $04c0
 	ld a, [hl] ; $04c2
-	or a, a ; $04c3
+	or a ; $04c3
 	jr z, .fillSlot ; $04c4
 	ld l, $d8 ; $04c6
 	ld a, [hl] ; $04c8
-	or a, a ; $04c9
+	or a ; $04c9
 	jr z, .fillSlot ; $04ca
 	ld l, $e0 ; $04cc
 	ld a, [hl] ; $04ce
-	or a, a ; $04cf
+	or a ; $04cf
 	jr z, .fillSlot ; $04d0
 	ld l, $e8 ; $04d2
 	ld a, [hl] ; $04d4
-	or a, a ; $04d5
+	or a ; $04d5
 	jr z, .fillSlot ; $04d6
 	ld a, $01 ; $04d8
 	ldh [hVRAMQueueDirty], a ; $04da
 	ldh a, [hDebugStepMode] ; $04dc
-	or a, a ; $04de
+	or a ; $04de
 	jr z, .queueFull ; $04df
 	sound $6f ; $04e1
 .queueFull:
 	pop hl ; $04e3
 	pop af ; $04e4
-	xor a, a ; $04e5
+	xor a ; $04e5
 	ret ; $04e6
 .fillSlot:
 	ldh a, [hRomBank] ; $04e7
@@ -741,7 +741,7 @@ QueueVRAMCopy:
 	ld [hl], c ; $04f0
 	inc l ; $04f1
 	ld a, $20 ; $04f2
-	and a, d ; $04f4
+	and d ; $04f4
 	jr z, .storeVramBank ; $04f5
 	ld a, $01 ; $04f7
 .storeVramBank:
@@ -757,14 +757,14 @@ QueueVRAMCopy:
 	ldh [hVRAMQueueDirty], a ; $0504
 	ret ; $0506
 QueueBGTileWrite:
-	xor a, a ; $0507
+	xor a ; $0507
 	ldh [hVRAMQueueDirty], a ; $0508
 	push hl ; $050a
 	ld hl, wTileWriteQueue ; $050b
 	ld c, $10 ; $050e
 .findSlot:
 	ld a, [hl] ; $0510
-	or a, a ; $0511
+	or a ; $0511
 	jr z, .fillSlot ; $0512
 	inc hl ; $0514
 	inc hl ; $0515
@@ -790,7 +790,7 @@ QueueBGTileWrite:
 	ret ; $052d
 ProcessVRAMCopyQueues:
 	ldh a, [hVRAMQueueDirty] ; $052e
-	or a, a ; $0530
+	or a ; $0530
 	ret z ; $0531
 	ld hl, wVRAMCopyQueue ; $0532
 	ld c, $0a ; $0535
@@ -802,11 +802,11 @@ ProcessVRAMCopyQueues:
 	ld d, $ff ; $053e
 .loop:
 	ld a, [hl] ; $0540
-	or a, a ; $0541
+	or a ; $0541
 	jr z, .loopB ; $0542
 	ldh [hRomBank], a ; $0544
 	ld [$2000], a ; $0546
-	xor a, a ; $0549
+	xor a ; $0549
 	ld [hl+], a ; $054a
 	ld a, [hl+] ; $054b
 	wram_bank ; $054c
@@ -840,11 +840,11 @@ ProcessVRAMCopyQueues:
 	ld c, $10 ; $0575
 .loop2:
 	ld a, [hl] ; $0577
-	or a, a ; $0578
+	or a ; $0578
 	jr z, .done ; $0579
 	push bc ; $057b
 	ld d, a ; $057c
-	xor a, a ; $057d
+	xor a ; $057d
 	ld [hl+], a ; $057e
 	ld e, [hl] ; $057f
 	inc l ; $0580
@@ -852,7 +852,7 @@ ProcessVRAMCopyQueues:
 	inc l ; $0582
 	ld b, [hl] ; $0583
 	inc l ; $0584
-	xor a, a ; $0585
+	xor a ; $0585
 	ldh [rVBK], a ; $0586
 	ld a, c ; $0588
 	ld [de], a ; $0589
@@ -868,13 +868,13 @@ ProcessVRAMCopyQueues:
 	dec c ; $0595
 	jr z, .loopB ; $0596
 	ld a, c ; $0598
-	add a, a ; $0599
-	add a, a ; $059a
-	add a, a ; $059b
+	add a ; $0599
+	add a ; $059a
+	add a ; $059b
 	ld c, a ; $059c
 	ld a, l ; $059d
-	add a, $08 ; $059e
-	and a, $f8 ; $05a0
+	add $08 ; $059e
+	and $f8 ; $05a0
 	ld l, a ; $05a2
 	ld de, wVRAMCopyQueue ; $05a3
 .loop3:
@@ -883,23 +883,23 @@ ProcessVRAMCopyQueues:
 	inc e ; $05a8
 	dec c ; $05a9
 	jr nz, .loop3 ; $05aa
-	xor a, a ; $05ac
+	xor a ; $05ac
 	ld [de], a ; $05ad
 	jr .loopB ; $05ae
 LoadPaletteShadow:
 	ldh a, [hFadedOut] ; $05b0
-	and a, a ; $05b2
+	and a ; $05b2
 	jr nz, LoadPalettesMasterOnly ; $05b3
 LoadPalettesImmediate:
 	push de ; $05b5
 	ld a, e ; $05b6
-	add a, a ; $05b7
-	add a, a ; $05b8
+	add a ; $05b7
+	add a ; $05b8
 	ld c, a ; $05b9
 	ld a, d ; $05ba
-	add a, a ; $05bb
-	add a, a ; $05bc
-	add a, a ; $05bd
+	add a ; $05bb
+	add a ; $05bc
+	add a ; $05bd
 	ld e, a ; $05be
 	ld d, $c1 ; $05bf
 .copyLoop:
@@ -922,22 +922,22 @@ LoadPalettesImmediate:
 	set 0, [hl] ; $05d6
 .checkRange:
 	ld a, e ; $05d8
-	add a, d ; $05d9
-	cp a, $09 ; $05da
+	add d ; $05d9
+	cp $09 ; $05da
 	jr c, .done ; $05dc
 	set 1, [hl] ; $05de
 .done:
 	ret ; $05e0
 LoadPalettesMasterOnly:
 	ld a, e ; $05e1
-	add a, a ; $05e2
-	add a, a ; $05e3
-	add a, a ; $05e4
+	add a ; $05e2
+	add a ; $05e3
+	add a ; $05e4
 	ld c, a ; $05e5
 	ld a, d ; $05e6
-	add a, a ; $05e7
-	add a, a ; $05e8
-	add a, a ; $05e9
+	add a ; $05e7
+	add a ; $05e8
+	add a ; $05e9
 	ld e, a ; $05ea
 	ld d, $c2 ; $05eb
 .copyLoop:
@@ -977,7 +977,7 @@ ApplyPendingPaletteUpdates:
 	ld hl, wOBJPalettes ; $061e
 	call LoadOBJPaletteData ; $0621
 .clearPaletteDirtyFlags:
-	xor a, a ; $0624
+	xor a ; $0624
 	ldh [hPaletteDirtyFlags], a ; $0625
 	ret ; $0627
 FarReadByte:
@@ -1091,9 +1091,9 @@ OAMDMARoutine:
 	jr nz, .loopB ; $06c1
 	ret ; $06c3
 JumpTableDispatch:
-	add a, a ; $06c4
+	add a ; $06c4
 	pop hl ; $06c5
-	add a, l ; $06c6
+	add l ; $06c6
 	ld l, a ; $06c7
 	jr nc, .read ; $06c8
 	inc h ; $06ca
@@ -1117,11 +1117,11 @@ FarDispatchIndexed:
 	ld h, [hl] ; $06de
 	ld l, a ; $06df
 	ld a, c ; $06e0
-	add a, a ; $06e1
-	add a, l ; $06e2
+	add a ; $06e1
+	add l ; $06e2
 	ld l, a ; $06e3
 	ld a, h ; $06e4
-	adc a, $00 ; $06e5
+	adc $00 ; $06e5
 	ld h, a ; $06e7
 	ld a, [hl+] ; $06e8
 	ld h, [hl] ; $06e9
@@ -1149,11 +1149,11 @@ FarCopyIndexed:
 	ld h, [hl] ; $0708
 	ld l, a ; $0709
 	ld a, b ; $070a
-	add a, a ; $070b
-	add a, l ; $070c
+	add a ; $070b
+	add l ; $070c
 	ld l, a ; $070d
 	ld a, h ; $070e
-	adc a, $00 ; $070f
+	adc $00 ; $070f
 	ld h, a ; $0711
 	ld a, [hl+] ; $0712
 	ld h, [hl] ; $0713
@@ -1188,11 +1188,11 @@ FarCallIndexed1:
 	ld h, [hl] ; $0737
 	ld l, a ; $0738
 	ld a, b ; $0739
-	add a, a ; $073a
-	add a, l ; $073b
+	add a ; $073a
+	add l ; $073b
 	ld l, a ; $073c
 	ld a, h ; $073d
-	adc a, $00 ; $073e
+	adc $00 ; $073e
 	ld h, a ; $0740
 	ld a, [hl+] ; $0741
 	ld h, [hl] ; $0742
@@ -1222,11 +1222,11 @@ FarCallIndexed2:
 	ld h, [hl] ; $0763
 	ld l, a ; $0764
 	ld a, b ; $0765
-	add a, a ; $0766
-	add a, l ; $0767
+	add a ; $0766
+	add l ; $0767
 	ld l, a ; $0768
 	ld a, h ; $0769
-	adc a, $00 ; $076a
+	adc $00 ; $076a
 	ld h, a ; $076c
 	ld a, [hl+] ; $076d
 	ld h, [hl] ; $076e
@@ -1256,11 +1256,11 @@ FarCallIndexed3:
 	ld h, [hl] ; $078f
 	ld l, a ; $0790
 	ld a, b ; $0791
-	add a, a ; $0792
-	add a, l ; $0793
+	add a ; $0792
+	add l ; $0793
 	ld l, a ; $0794
 	ld a, h ; $0795
-	adc a, $00 ; $0796
+	adc $00 ; $0796
 	ld h, a ; $0798
 	ld a, [hl+] ; $0799
 	ld h, [hl] ; $079a
@@ -1409,7 +1409,7 @@ CopyMapRows32To64:
 	push hl ; $083f
 	ld h, d ; $0840
 	ld l, e ; $0841
-	xor a, a ; $0842
+	xor a ; $0842
 	ld [hl+], a ; $0843
 	ld [hl+], a ; $0844
 	ld [hl+], a ; $0845
@@ -1426,7 +1426,7 @@ CopyMapRows32To64:
 	ld [hl+], a ; $0850
 	ld [hl+], a ; $0851
 	ld [hl+], a ; $0852
-	xor a, a ; $0853
+	xor a ; $0853
 	ld [hl+], a ; $0854
 	ld [hl+], a ; $0855
 	ld [hl+], a ; $0856
@@ -1527,66 +1527,66 @@ SignExtendCToBC:
 	ld hl, $0000 ; $0922
 	ret ; $0925
 MulHLByA:
-	or a, a ; $0926
+	or a ; $0926
 	jr z, SignExtendCToBC.loop ; $0927
 	push af ; $0929
 	push de ; $092a
 	ld d, h ; $092b
 	ld e, l ; $092c
-	add a, a ; $092d
+	add a ; $092d
 	jr c, .top7 ; $092e
-	add a, a ; $0930
+	add a ; $0930
 	jr c, .top6 ; $0931
-	add a, a ; $0933
+	add a ; $0933
 	jr c, .top5 ; $0934
-	add a, a ; $0936
+	add a ; $0936
 	jr c, .top4 ; $0937
-	add a, a ; $0939
+	add a ; $0939
 	jr c, .top3 ; $093a
-	add a, a ; $093c
+	add a ; $093c
 	jr c, .top2 ; $093d
-	add a, a ; $093f
+	add a ; $093f
 	jr c, .top1 ; $0940
 	jr .done ; $0942
 .top7:
 	jr z, .mul128 ; $0944
 	add hl, hl ; $0946
-	add a, a ; $0947
+	add a ; $0947
 	jr nc, .step6 ; $0948
 	add hl, de ; $094a
 .top6:
 	jr z, .finish6 ; $094b
 .step6:
 	add hl, hl ; $094d
-	add a, a ; $094e
+	add a ; $094e
 	jr nc, .step5 ; $094f
 	add hl, de ; $0951
 .top5:
 	jr z, .finish5 ; $0952
 .step5:
 	add hl, hl ; $0954
-	add a, a ; $0955
+	add a ; $0955
 	jr nc, .step4 ; $0956
 	add hl, de ; $0958
 .top4:
 	jr z, .finish4 ; $0959
 .step4:
 	add hl, hl ; $095b
-	add a, a ; $095c
+	add a ; $095c
 	jr nc, .step3 ; $095d
 	add hl, de ; $095f
 .top3:
 	jr z, .finish3 ; $0960
 .step3:
 	add hl, hl ; $0962
-	add a, a ; $0963
+	add a ; $0963
 	jr nc, .step2 ; $0964
 	add hl, de ; $0966
 .top2:
 	jr z, .finish2 ; $0967
 .step2:
 	add hl, hl ; $0969
-	add a, a ; $096a
+	add a ; $096a
 	jr nc, .step1 ; $096b
 	add hl, de ; $096d
 .top1:
@@ -1623,13 +1623,13 @@ MulHLByA:
 DivHLByDE:
 	push af ; $0987
 	push bc ; $0988
-	xor a, a ; $0989
-	sub a, e ; $098a
+	xor a ; $0989
+	sub e ; $098a
 	ld c, a ; $098b
-	sbc a, a ; $098c
-	sub a, d ; $098d
+	sbc a ; $098c
+	sub d ; $098d
 	ld b, a ; $098e
-	or a, c ; $098f
+	or c ; $098f
 	jr nz, .divide ; $0990
 	ld hl, rIE ; $0992
 	pop bc ; $0995
@@ -1641,56 +1641,56 @@ DivHLByDE:
 	push hl ; $099a
 	ld hl, $0000 ; $099b
 	scf ; $099e
-	adc a, a ; $099f
+	adc a ; $099f
 	rl l ; $09a0
 	add hl, bc ; $09a2
 	jr c, .hiBit6 ; $09a3
 	dec a ; $09a5
 	add hl, de ; $09a6
 .hiBit6:
-	adc a, a ; $09a7
+	adc a ; $09a7
 	rl l ; $09a8
 	add hl, bc ; $09aa
 	jr c, .hiBit5 ; $09ab
 	dec a ; $09ad
 	add hl, de ; $09ae
 .hiBit5:
-	adc a, a ; $09af
+	adc a ; $09af
 	rl l ; $09b0
 	add hl, bc ; $09b2
 	jr c, .hiBit4 ; $09b3
 	dec a ; $09b5
 	add hl, de ; $09b6
 .hiBit4:
-	adc a, a ; $09b7
+	adc a ; $09b7
 	rl l ; $09b8
 	add hl, bc ; $09ba
 	jr c, .hiBit3 ; $09bb
 	dec a ; $09bd
 	add hl, de ; $09be
 .hiBit3:
-	adc a, a ; $09bf
+	adc a ; $09bf
 	rl l ; $09c0
 	add hl, bc ; $09c2
 	jr c, .hiBit2 ; $09c3
 	dec a ; $09c5
 	add hl, de ; $09c6
 .hiBit2:
-	adc a, a ; $09c7
+	adc a ; $09c7
 	rl l ; $09c8
 	add hl, bc ; $09ca
 	jr c, .hiBit1 ; $09cb
 	dec a ; $09cd
 	add hl, de ; $09ce
 .hiBit1:
-	adc a, a ; $09cf
+	adc a ; $09cf
 	rl l ; $09d0
 	add hl, bc ; $09d2
 	jr c, .hiBit0 ; $09d3
 	dec a ; $09d5
 	add hl, de ; $09d6
 .hiBit0:
-	adc a, a ; $09d7
+	adc a ; $09d7
 	rl l ; $09d8
 	add hl, bc ; $09da
 	jr c, .hiDone ; $09db
@@ -1702,7 +1702,7 @@ DivHLByDE:
 	push hl ; $09e1
 	ld h, $00 ; $09e2
 	scf ; $09e4
-	adc a, a ; $09e5
+	adc a ; $09e5
 	rl l ; $09e6
 	rl h ; $09e8
 	add hl, bc ; $09ea
@@ -1710,7 +1710,7 @@ DivHLByDE:
 	dec a ; $09ed
 	add hl, de ; $09ee
 .loBit6:
-	adc a, a ; $09ef
+	adc a ; $09ef
 	rl l ; $09f0
 	rl h ; $09f2
 	add hl, bc ; $09f4
@@ -1718,7 +1718,7 @@ DivHLByDE:
 	dec a ; $09f7
 	add hl, de ; $09f8
 .loBit5:
-	adc a, a ; $09f9
+	adc a ; $09f9
 	rl l ; $09fa
 	rl h ; $09fc
 	add hl, bc ; $09fe
@@ -1726,7 +1726,7 @@ DivHLByDE:
 	dec a ; $0a01
 	add hl, de ; $0a02
 .loBit4:
-	adc a, a ; $0a03
+	adc a ; $0a03
 	rl l ; $0a04
 	rl h ; $0a06
 	add hl, bc ; $0a08
@@ -1734,7 +1734,7 @@ DivHLByDE:
 	dec a ; $0a0b
 	add hl, de ; $0a0c
 .loBit3:
-	adc a, a ; $0a0d
+	adc a ; $0a0d
 	rl l ; $0a0e
 	rl h ; $0a10
 	add hl, bc ; $0a12
@@ -1742,7 +1742,7 @@ DivHLByDE:
 	dec a ; $0a15
 	add hl, de ; $0a16
 .loBit2:
-	adc a, a ; $0a17
+	adc a ; $0a17
 	rl l ; $0a18
 	rl h ; $0a1a
 	add hl, bc ; $0a1c
@@ -1750,7 +1750,7 @@ DivHLByDE:
 	dec a ; $0a1f
 	add hl, de ; $0a20
 .loBit1:
-	adc a, a ; $0a21
+	adc a ; $0a21
 	rl l ; $0a22
 	rl h ; $0a24
 	add hl, bc ; $0a26
@@ -1758,7 +1758,7 @@ DivHLByDE:
 	dec a ; $0a29
 	add hl, de ; $0a2a
 .loBit0:
-	adc a, a ; $0a2b
+	adc a ; $0a2b
 	rl l ; $0a2c
 	rl h ; $0a2e
 	add hl, bc ; $0a30
@@ -1796,34 +1796,34 @@ AngleFromVectorCoarse:
 	push bc ; $0a54
 	ld c, $00 ; $0a55
 	ld a, h ; $0a57
-	or a, l ; $0a58
+	or l ; $0a58
 	jr z, .toAngle ; $0a59
 	ld c, $10 ; $0a5b
 	ld a, d ; $0a5d
-	or a, e ; $0a5e
+	or e ; $0a5e
 	jr z, .toAngle ; $0a5f
 	push hl ; $0a61
 	push de ; $0a62
 	bit 7, d ; $0a63
 	jr z, .absY ; $0a65
-	xor a, a ; $0a67
-	sub a, e ; $0a68
+	xor a ; $0a67
+	sub e ; $0a68
 	ld e, a ; $0a69
-	sbc a, a ; $0a6a
-	sub a, d ; $0a6b
+	sbc a ; $0a6a
+	sub d ; $0a6b
 	ld d, a ; $0a6c
 .absY:
 	bit 7, h ; $0a6d
 	jr z, .absX ; $0a6f
-	xor a, a ; $0a71
-	sub a, l ; $0a72
+	xor a ; $0a71
+	sub l ; $0a72
 	ld l, a ; $0a73
-	sbc a, a ; $0a74
-	sub a, h ; $0a75
+	sbc a ; $0a74
+	sub h ; $0a75
 	ld h, a ; $0a76
 .absX:
 	ld a, h ; $0a77
-	cp a, $10 ; $0a78
+	cp $10 ; $0a78
 	jr c, .scaleUp ; $0a7a
 	sra d ; $0a7c
 	rr e ; $0a7e
@@ -1841,7 +1841,7 @@ AngleFromVectorCoarse:
 	call DivHLByDE ; $0a8c
 	ld c, $0f ; $0a8f
 	ld a, h ; $0a91
-	or a, a ; $0a92
+	or a ; $0a92
 	jr nz, .restore ; $0a93
 	ld b, l ; $0a95
 	ld hl, ArcTanTable ; $0a96
@@ -1849,19 +1849,19 @@ AngleFromVectorCoarse:
 .searchLoop:
 	inc c ; $0a9b
 	ld a, [hl+] ; $0a9c
-	cp a, b ; $0a9d
+	cp b ; $0a9d
 	jr c, .searchLoop ; $0a9e
 .restore:
 	pop de ; $0aa0
 	pop hl ; $0aa1
 .toAngle:
 	ld a, c ; $0aa2
-	add a, a ; $0aa3
-	add a, a ; $0aa4
+	add a ; $0aa3
+	add a ; $0aa4
 	bit 7, d ; $0aa5
 	jr z, .mirrorY ; $0aa7
 	cpl ; $0aa9
-	add a, $81 ; $0aaa
+	add $81 ; $0aaa
 .mirrorY:
 	bit 7, h ; $0aac
 	jr z, .done ; $0aae
@@ -1902,14 +1902,14 @@ VectorFromLengthAndAngle:
 	bit 7, h ; $0aea
 	jr z, VectorFromLengthAndAngleRaw ; $0aec
 	push af ; $0aee
-	xor a, a ; $0aef
-	sub a, l ; $0af0
+	xor a ; $0aef
+	sub l ; $0af0
 	ld l, a ; $0af1
-	sbc a, a ; $0af2
-	sub a, h ; $0af3
+	sbc a ; $0af2
+	sub h ; $0af3
 	ld h, a ; $0af4
 	pop af ; $0af5
-	add a, $80 ; $0af6
+	add $80 ; $0af6
 VectorFromLengthAndAngleRaw:
 	push hl ; $0af8
 	push af ; $0af9
@@ -1919,66 +1919,66 @@ VectorFromLengthAndAngleRaw:
 	ld e, l ; $0aff
 	pop hl ; $0b00
 MulHLByCos:
-	add a, $40 ; $0b01
+	add $40 ; $0b01
 MulHLBySin:
 	bit 7, a ; $0b03
 	jr z, MulHLBySinHalf ; $0b05
-	and a, $7f ; $0b07
+	and $7f ; $0b07
 	call MulHLBySinHalf ; $0b09
-	xor a, a ; $0b0c
-	sub a, l ; $0b0d
+	xor a ; $0b0c
+	sub l ; $0b0d
 	ld l, a ; $0b0e
-	sbc a, a ; $0b0f
-	sub a, h ; $0b10
+	sbc a ; $0b0f
+	sub h ; $0b10
 	ld h, a ; $0b11
 	ret ; $0b12
 MulHLBySinHalf:
 	bit 6, a ; $0b13
 	jr z, .bit6Clear ; $0b15
 	cpl ; $0b17
-	add a, $81 ; $0b18
+	add $81 ; $0b18
 .bit6Clear:
 	push bc ; $0b1a
-	add a, $5c ; $0b1b
+	add $5c ; $0b1b
 	ld c, a ; $0b1d
-	adc a, $0b ; $0b1e
-	sub a, c ; $0b20
+	adc $0b ; $0b1e
+	sub c ; $0b20
 	ld b, a ; $0b21
 	ld a, [bc] ; $0b22
 	call MulHLByA ; $0b23
 	ld bc, $0040 ; $0b26
 	add hl, bc ; $0b29
 	add hl, hl ; $0b2a
-	sbc a, a ; $0b2b
+	sbc a ; $0b2b
 	ld l, h ; $0b2c
 	ld h, a ; $0b2d
 	pop bc ; $0b2e
 	ret ; $0b2f
 MulHLByCosSigned:
-	add a, $40 ; $0b30
+	add $40 ; $0b30
 MulHLBySinSigned:
 	bit 7, a ; $0b32
 	jr z, MulHLBySinSignedHalf ; $0b34
-	and a, $7f ; $0b36
+	and $7f ; $0b36
 	call MulHLBySinSignedHalf ; $0b38
-	xor a, a ; $0b3b
-	sub a, l ; $0b3c
+	xor a ; $0b3b
+	sub l ; $0b3c
 	ld l, a ; $0b3d
-	sbc a, a ; $0b3e
-	sub a, h ; $0b3f
+	sbc a ; $0b3e
+	sub h ; $0b3f
 	ld h, a ; $0b40
 	ret ; $0b41
 MulHLBySinSignedHalf:
 	bit 6, a ; $0b42
 	jr z, .bit6Clear ; $0b44
 	cpl ; $0b46
-	add a, $81 ; $0b47
+	add $81 ; $0b47
 .bit6Clear:
 	push bc ; $0b49
-	add a, $5c ; $0b4a
+	add $5c ; $0b4a
 	ld c, a ; $0b4c
-	adc a, $0b ; $0b4d
-	sub a, c ; $0b4f
+	adc $0b ; $0b4d
+	sub c ; $0b4f
 	ld b, a ; $0b50
 	ld a, [bc] ; $0b51
 	call MulHLByASigned ; $0b52
@@ -1998,20 +1998,20 @@ MulHLByASignedFull:
 	bit 7, h ; $0b9d
 	jp z, MulHLByA ; $0b9f
 	push af ; $0ba2
-	xor a, a ; $0ba3
-	sub a, l ; $0ba4
+	xor a ; $0ba3
+	sub l ; $0ba4
 	ld l, a ; $0ba5
-	sbc a, a ; $0ba6
-	sub a, h ; $0ba7
+	sbc a ; $0ba6
+	sub h ; $0ba7
 	ld h, a ; $0ba8
 	pop af ; $0ba9
 	call MulHLByA ; $0baa
 	push af ; $0bad
-	xor a, a ; $0bae
-	sub a, l ; $0baf
+	xor a ; $0bae
+	sub l ; $0baf
 	ld l, a ; $0bb0
-	sbc a, a ; $0bb1
-	sub a, h ; $0bb2
+	sbc a ; $0bb1
+	sub h ; $0bb2
 	ld h, a ; $0bb3
 	pop af ; $0bb4
 	ret ; $0bb5
@@ -2020,20 +2020,20 @@ MulHLByAFracSigned:
 	jr z, MulHLByAFrac ; $0bb8
 	push de ; $0bba
 	ld d, a ; $0bbb
-	xor a, a ; $0bbc
-	sub a, l ; $0bbd
+	xor a ; $0bbc
+	sub l ; $0bbd
 	ld l, a ; $0bbe
-	sbc a, a ; $0bbf
-	sub a, h ; $0bc0
+	sbc a ; $0bbf
+	sub h ; $0bc0
 	ld h, a ; $0bc1
 	ld a, d ; $0bc2
 	call MulHLByAFrac ; $0bc3
 	ld d, a ; $0bc6
-	xor a, a ; $0bc7
-	sub a, l ; $0bc8
+	xor a ; $0bc7
+	sub l ; $0bc8
 	ld l, a ; $0bc9
-	sbc a, a ; $0bca
-	sub a, h ; $0bcb
+	sbc a ; $0bca
+	sub h ; $0bcb
 	ld h, a ; $0bcc
 	ld a, d ; $0bcd
 	pop de ; $0bce
@@ -2042,7 +2042,7 @@ MulHLByAFracSigned:
 	ld hl, $0000 ; $0bd0
 	ret ; $0bd3
 MulHLByAFrac:
-	or a, a ; $0bd4
+	or a ; $0bd4
 	jr z, MulHLByAFracSigned.loop ; $0bd5
 	push de ; $0bd7
 	ld e, l ; $0bd8
@@ -2140,10 +2140,10 @@ MulHLByDESigned:
 	push af ; $0c4c
 	ld a, l ; $0c4d
 	cpl ; $0c4e
-	add a, $01 ; $0c4f
+	add $01 ; $0c4f
 	ld l, a ; $0c51
 	ld a, h ; $0c52
-	sbc a, $00 ; $0c53
+	sbc $00 ; $0c53
 	cpl ; $0c55
 	ld h, a ; $0c56
 	pop af ; $0c57
@@ -2151,44 +2151,44 @@ MulHLByDESigned:
 	push af ; $0c5b
 	ld a, l ; $0c5c
 	cpl ; $0c5d
-	add a, $01 ; $0c5e
+	add $01 ; $0c5e
 	ld l, a ; $0c60
 	ld a, h ; $0c61
-	sbc a, $00 ; $0c62
+	sbc $00 ; $0c62
 	cpl ; $0c64
 	ld h, a ; $0c65
 	pop af ; $0c66
 	ret ; $0c67
 	ld a, h ; $0c68
-	xor a, d ; $0c69
+	xor d ; $0c69
 	ldh [hMathSign], a ; $0c6a
 	bit 7, h ; $0c6c
 	jr z, .positive ; $0c6e
-	xor a, a ; $0c70
-	sub a, l ; $0c71
+	xor a ; $0c70
+	sub l ; $0c71
 	ld l, a ; $0c72
-	sbc a, a ; $0c73
-	sub a, h ; $0c74
+	sbc a ; $0c73
+	sub h ; $0c74
 	ld h, a ; $0c75
 .positive:
 	bit 7, d ; $0c76
 	jr z, .mulHLByDE ; $0c78
-	xor a, a ; $0c7a
-	sub a, e ; $0c7b
+	xor a ; $0c7a
+	sub e ; $0c7b
 	ld e, a ; $0c7c
-	sbc a, a ; $0c7d
-	sub a, d ; $0c7e
+	sbc a ; $0c7d
+	sub d ; $0c7e
 	ld d, a ; $0c7f
 .mulHLByDE:
 	call MulHLByDE ; $0c80
 	ldh a, [hMathSign] ; $0c83
 	bit 7, a ; $0c85
 	ret z ; $0c87
-	xor a, a ; $0c88
-	sub a, l ; $0c89
+	xor a ; $0c88
+	sub l ; $0c89
 	ld l, a ; $0c8a
-	sbc a, a ; $0c8b
-	sub a, h ; $0c8c
+	sbc a ; $0c8b
+	sub h ; $0c8c
 	ld h, a ; $0c8d
 	ret ; $0c8e
 MulHLByDE:
@@ -2198,24 +2198,24 @@ MulHLByDE:
 	ld a, e ; $0c92
 	ld b, $00 ; $0c93
 	push hl ; $0c95
-	add a, a ; $0c96
+	add a ; $0c96
 	jr c, .loTop7 ; $0c97
 	jr z, .loZero ; $0c99
 	ld e, l ; $0c9b
 	ld d, h ; $0c9c
-	add a, a ; $0c9d
+	add a ; $0c9d
 	jr c, .loBit6 ; $0c9e
-	add a, a ; $0ca0
+	add a ; $0ca0
 	jr c, .loBit5 ; $0ca1
-	add a, a ; $0ca3
+	add a ; $0ca3
 	jr c, .loBit4 ; $0ca4
-	add a, a ; $0ca6
+	add a ; $0ca6
 	jr c, .loBit3 ; $0ca7
-	add a, a ; $0ca9
+	add a ; $0ca9
 	jr c, .loBit2 ; $0caa
-	add a, a ; $0cac
+	add a ; $0cac
 	jr c, .loBit1 ; $0cad
-	xor a, a ; $0caf
+	xor a ; $0caf
 	jr .loDone ; $0cb0
 .loZero:
 	ld hl, $0000 ; $0cb2
@@ -2224,46 +2224,46 @@ MulHLByDE:
 	ld e, l ; $0cb7
 	ld d, h ; $0cb8
 	add hl, hl ; $0cb9
-	adc a, a ; $0cba
+	adc a ; $0cba
 	jr nc, .loBit6 ; $0cbb
 	add hl, de ; $0cbd
-	adc a, b ; $0cbe
+	adc b ; $0cbe
 .loBit6:
 	add hl, hl ; $0cbf
-	adc a, a ; $0cc0
+	adc a ; $0cc0
 	jr nc, .loBit5 ; $0cc1
 	add hl, de ; $0cc3
-	adc a, b ; $0cc4
+	adc b ; $0cc4
 .loBit5:
 	add hl, hl ; $0cc5
-	adc a, a ; $0cc6
+	adc a ; $0cc6
 	jr nc, .loBit4 ; $0cc7
 	add hl, de ; $0cc9
-	adc a, b ; $0cca
+	adc b ; $0cca
 .loBit4:
 	add hl, hl ; $0ccb
-	adc a, a ; $0ccc
+	adc a ; $0ccc
 	jr nc, .loBit3 ; $0ccd
 	add hl, de ; $0ccf
-	adc a, b ; $0cd0
+	adc b ; $0cd0
 .loBit3:
 	add hl, hl ; $0cd1
-	adc a, a ; $0cd2
+	adc a ; $0cd2
 	jr nc, .loBit2 ; $0cd3
 	add hl, de ; $0cd5
-	adc a, b ; $0cd6
+	adc b ; $0cd6
 .loBit2:
 	add hl, hl ; $0cd7
-	adc a, a ; $0cd8
+	adc a ; $0cd8
 	jr nc, .loBit1 ; $0cd9
 	add hl, de ; $0cdb
-	adc a, b ; $0cdc
+	adc b ; $0cdc
 .loBit1:
 	add hl, hl ; $0cdd
-	adc a, a ; $0cde
+	adc a ; $0cde
 	jr nc, .loDone ; $0cdf
 	add hl, de ; $0ce1
-	adc a, b ; $0ce2
+	adc b ; $0ce2
 .loDone:
 	ld e, h ; $0ce3
 	ld d, a ; $0ce4
@@ -2271,24 +2271,24 @@ MulHLByDE:
 	ld c, l ; $0ce6
 	pop hl ; $0ce7
 	push de ; $0ce8
-	add a, a ; $0ce9
+	add a ; $0ce9
 	jr c, .hiTop7 ; $0cea
 	jr z, .hiZero ; $0cec
 	ld e, l ; $0cee
 	ld d, h ; $0cef
-	add a, a ; $0cf0
+	add a ; $0cf0
 	jr c, .hiBit6 ; $0cf1
-	add a, a ; $0cf3
+	add a ; $0cf3
 	jr c, .hiBit5 ; $0cf4
-	add a, a ; $0cf6
+	add a ; $0cf6
 	jr c, .hiBit4 ; $0cf7
-	add a, a ; $0cf9
+	add a ; $0cf9
 	jr c, .hiBit3 ; $0cfa
-	add a, a ; $0cfc
+	add a ; $0cfc
 	jr c, .hiBit2 ; $0cfd
-	add a, a ; $0cff
+	add a ; $0cff
 	jr c, .hiBit1 ; $0d00
-	xor a, a ; $0d02
+	xor a ; $0d02
 	jr .hiDone ; $0d03
 .hiZero:
 	ld hl, $0000 ; $0d05
@@ -2297,50 +2297,50 @@ MulHLByDE:
 	ld e, l ; $0d0a
 	ld d, h ; $0d0b
 	add hl, hl ; $0d0c
-	adc a, a ; $0d0d
+	adc a ; $0d0d
 	jr nc, .hiBit6 ; $0d0e
 	add hl, de ; $0d10
-	adc a, b ; $0d11
+	adc b ; $0d11
 .hiBit6:
 	add hl, hl ; $0d12
-	adc a, a ; $0d13
+	adc a ; $0d13
 	jr nc, .hiBit5 ; $0d14
 	add hl, de ; $0d16
-	adc a, b ; $0d17
+	adc b ; $0d17
 .hiBit5:
 	add hl, hl ; $0d18
-	adc a, a ; $0d19
+	adc a ; $0d19
 	jr nc, .hiBit4 ; $0d1a
 	add hl, de ; $0d1c
-	adc a, b ; $0d1d
+	adc b ; $0d1d
 .hiBit4:
 	add hl, hl ; $0d1e
-	adc a, a ; $0d1f
+	adc a ; $0d1f
 	jr nc, .hiBit3 ; $0d20
 	add hl, de ; $0d22
-	adc a, b ; $0d23
+	adc b ; $0d23
 .hiBit3:
 	add hl, hl ; $0d24
-	adc a, a ; $0d25
+	adc a ; $0d25
 	jr nc, .hiBit2 ; $0d26
 	add hl, de ; $0d28
-	adc a, b ; $0d29
+	adc b ; $0d29
 .hiBit2:
 	add hl, hl ; $0d2a
-	adc a, a ; $0d2b
+	adc a ; $0d2b
 	jr nc, .hiBit1 ; $0d2c
 	add hl, de ; $0d2e
-	adc a, b ; $0d2f
+	adc b ; $0d2f
 .hiBit1:
 	add hl, hl ; $0d30
-	adc a, a ; $0d31
+	adc a ; $0d31
 	jr nc, .hiDone ; $0d32
 	add hl, de ; $0d34
-	adc a, b ; $0d35
+	adc b ; $0d35
 .hiDone:
 	pop de ; $0d36
 	add hl, de ; $0d37
-	adc a, b ; $0d38
+	adc b ; $0d38
 	ld b, a ; $0d39
 	ld a, c ; $0d3a
 	ldh [hMulResult], a ; $0d3b
@@ -2361,24 +2361,24 @@ MulHLByDE32:
 	ld a, e ; $0d4d
 	ld b, $00 ; $0d4e
 	push hl ; $0d50
-	add a, a ; $0d51
+	add a ; $0d51
 	jr c, .carry ; $0d52
 	jr z, .zero ; $0d54
 	ld e, l ; $0d56
 	ld d, h ; $0d57
-	add a, a ; $0d58
+	add a ; $0d58
 	jr c, .offset ; $0d59
-	add a, a ; $0d5b
+	add a ; $0d5b
 	jr c, .offset2 ; $0d5c
-	add a, a ; $0d5e
+	add a ; $0d5e
 	jr c, .offset3 ; $0d5f
-	add a, a ; $0d61
+	add a ; $0d61
 	jr c, .offset4 ; $0d62
-	add a, a ; $0d64
+	add a ; $0d64
 	jr c, .offset5 ; $0d65
-	add a, a ; $0d67
+	add a ; $0d67
 	jr c, .offset6 ; $0d68
-	xor a, a ; $0d6a
+	xor a ; $0d6a
 	jr .step3 ; $0d6b
 .zero:
 	ld hl, $0000 ; $0d6d
@@ -2387,46 +2387,46 @@ MulHLByDE32:
 	ld e, l ; $0d72
 	ld d, h ; $0d73
 	add hl, hl ; $0d74
-	adc a, a ; $0d75
+	adc a ; $0d75
 	jr nc, .offset ; $0d76
 	add hl, de ; $0d78
-	adc a, b ; $0d79
+	adc b ; $0d79
 .offset:
 	add hl, hl ; $0d7a
-	adc a, a ; $0d7b
+	adc a ; $0d7b
 	jr nc, .offset2 ; $0d7c
 	add hl, de ; $0d7e
-	adc a, b ; $0d7f
+	adc b ; $0d7f
 .offset2:
 	add hl, hl ; $0d80
-	adc a, a ; $0d81
+	adc a ; $0d81
 	jr nc, .offset3 ; $0d82
 	add hl, de ; $0d84
-	adc a, b ; $0d85
+	adc b ; $0d85
 .offset3:
 	add hl, hl ; $0d86
-	adc a, a ; $0d87
+	adc a ; $0d87
 	jr nc, .offset4 ; $0d88
 	add hl, de ; $0d8a
-	adc a, b ; $0d8b
+	adc b ; $0d8b
 .offset4:
 	add hl, hl ; $0d8c
-	adc a, a ; $0d8d
+	adc a ; $0d8d
 	jr nc, .offset5 ; $0d8e
 	add hl, de ; $0d90
-	adc a, b ; $0d91
+	adc b ; $0d91
 .offset5:
 	add hl, hl ; $0d92
-	adc a, a ; $0d93
+	adc a ; $0d93
 	jr nc, .offset6 ; $0d94
 	add hl, de ; $0d96
-	adc a, b ; $0d97
+	adc b ; $0d97
 .offset6:
 	add hl, hl ; $0d98
-	adc a, a ; $0d99
+	adc a ; $0d99
 	jr nc, .step3 ; $0d9a
 	add hl, de ; $0d9c
-	adc a, b ; $0d9d
+	adc b ; $0d9d
 .step3:
 	ld e, h ; $0d9e
 	ld d, a ; $0d9f
@@ -2434,24 +2434,24 @@ MulHLByDE32:
 	ld c, l ; $0da1
 	pop hl ; $0da2
 	push de ; $0da3
-	add a, a ; $0da4
+	add a ; $0da4
 	jr c, .carry2 ; $0da5
 	jr z, .zero2 ; $0da7
 	ld e, l ; $0da9
 	ld d, h ; $0daa
-	add a, a ; $0dab
+	add a ; $0dab
 	jr c, .offset7 ; $0dac
-	add a, a ; $0dae
+	add a ; $0dae
 	jr c, .offset8 ; $0daf
-	add a, a ; $0db1
+	add a ; $0db1
 	jr c, .offset9 ; $0db2
-	add a, a ; $0db4
+	add a ; $0db4
 	jr c, .offset10 ; $0db5
-	add a, a ; $0db7
+	add a ; $0db7
 	jr c, .offset11 ; $0db8
-	add a, a ; $0dba
+	add a ; $0dba
 	jr c, .offset12 ; $0dbb
-	xor a, a ; $0dbd
+	xor a ; $0dbd
 	jr .restore ; $0dbe
 .zero2:
 	ld hl, $0000 ; $0dc0
@@ -2460,50 +2460,50 @@ MulHLByDE32:
 	ld e, l ; $0dc5
 	ld d, h ; $0dc6
 	add hl, hl ; $0dc7
-	adc a, a ; $0dc8
+	adc a ; $0dc8
 	jr nc, .offset7 ; $0dc9
 	add hl, de ; $0dcb
-	adc a, b ; $0dcc
+	adc b ; $0dcc
 .offset7:
 	add hl, hl ; $0dcd
-	adc a, a ; $0dce
+	adc a ; $0dce
 	jr nc, .offset8 ; $0dcf
 	add hl, de ; $0dd1
-	adc a, b ; $0dd2
+	adc b ; $0dd2
 .offset8:
 	add hl, hl ; $0dd3
-	adc a, a ; $0dd4
+	adc a ; $0dd4
 	jr nc, .offset9 ; $0dd5
 	add hl, de ; $0dd7
-	adc a, b ; $0dd8
+	adc b ; $0dd8
 .offset9:
 	add hl, hl ; $0dd9
-	adc a, a ; $0dda
+	adc a ; $0dda
 	jr nc, .offset10 ; $0ddb
 	add hl, de ; $0ddd
-	adc a, b ; $0dde
+	adc b ; $0dde
 .offset10:
 	add hl, hl ; $0ddf
-	adc a, a ; $0de0
+	adc a ; $0de0
 	jr nc, .offset11 ; $0de1
 	add hl, de ; $0de3
-	adc a, b ; $0de4
+	adc b ; $0de4
 .offset11:
 	add hl, hl ; $0de5
-	adc a, a ; $0de6
+	adc a ; $0de6
 	jr nc, .offset12 ; $0de7
 	add hl, de ; $0de9
-	adc a, b ; $0dea
+	adc b ; $0dea
 .offset12:
 	add hl, hl ; $0deb
-	adc a, a ; $0dec
+	adc a ; $0dec
 	jr nc, .restore ; $0ded
 	add hl, de ; $0def
-	adc a, b ; $0df0
+	adc b ; $0df0
 .restore:
 	pop de ; $0df1
 	add hl, de ; $0df2
-	adc a, b ; $0df3
+	adc b ; $0df3
 	ld e, c ; $0df4
 	ld d, l ; $0df5
 	ld l, h ; $0df6
@@ -2514,45 +2514,45 @@ MulHLByASigned:
 	bit 7, h ; $0dfa
 	jr z, MulPosHLByA ; $0dfc
 	call MulNegHLByA ; $0dfe
-	xor a, a ; $0e01
-	sub a, l ; $0e02
+	xor a ; $0e01
+	sub l ; $0e02
 	ld l, a ; $0e03
-	sbc a, a ; $0e04
-	sub a, h ; $0e05
+	sbc a ; $0e04
+	sub h ; $0e05
 	ld h, a ; $0e06
 	ret ; $0e07
 MulNegHLByA:
 	push de ; $0e08
 	ld e, a ; $0e09
-	xor a, a ; $0e0a
-	sub a, l ; $0e0b
+	xor a ; $0e0a
+	sub l ; $0e0b
 	ld l, a ; $0e0c
-	sbc a, a ; $0e0d
-	sub a, h ; $0e0e
+	sbc a ; $0e0d
+	sub h ; $0e0e
 	ld h, a ; $0e0f
 	ld a, e ; $0e10
 	jr MulPosHLByA.step ; $0e11
 MulPosHLByA:
 	push de ; $0e13
 .step:
-	add a, a ; $0e14
+	add a ; $0e14
 	jr c, .carry ; $0e15
 	jr z, .zero ; $0e17
 	ld e, l ; $0e19
 	ld d, h ; $0e1a
-	add a, a ; $0e1b
+	add a ; $0e1b
 	jr c, .offset ; $0e1c
-	add a, a ; $0e1e
+	add a ; $0e1e
 	jr c, .offset2 ; $0e1f
-	add a, a ; $0e21
+	add a ; $0e21
 	jr c, .offset3 ; $0e22
-	add a, a ; $0e24
+	add a ; $0e24
 	jr c, .offset4 ; $0e25
-	add a, a ; $0e27
+	add a ; $0e27
 	jr c, .offset5 ; $0e28
-	add a, a ; $0e2a
+	add a ; $0e2a
 	jr c, .offset6 ; $0e2b
-	xor a, a ; $0e2d
+	xor a ; $0e2d
 	jr .step4 ; $0e2e
 .zero:
 	ld hl, $0000 ; $0e30
@@ -2561,46 +2561,46 @@ MulPosHLByA:
 	ld e, l ; $0e35
 	ld d, h ; $0e36
 	add hl, hl ; $0e37
-	adc a, a ; $0e38
+	adc a ; $0e38
 	jr nc, .offset ; $0e39
 	add hl, de ; $0e3b
-	adc a, $00 ; $0e3c
+	adc $00 ; $0e3c
 .offset:
 	add hl, hl ; $0e3e
-	adc a, a ; $0e3f
+	adc a ; $0e3f
 	jr nc, .offset2 ; $0e40
 	add hl, de ; $0e42
-	adc a, $00 ; $0e43
+	adc $00 ; $0e43
 .offset2:
 	add hl, hl ; $0e45
-	adc a, a ; $0e46
+	adc a ; $0e46
 	jr nc, .offset3 ; $0e47
 	add hl, de ; $0e49
-	adc a, $00 ; $0e4a
+	adc $00 ; $0e4a
 .offset3:
 	add hl, hl ; $0e4c
-	adc a, a ; $0e4d
+	adc a ; $0e4d
 	jr nc, .offset4 ; $0e4e
 	add hl, de ; $0e50
-	adc a, $00 ; $0e51
+	adc $00 ; $0e51
 .offset4:
 	add hl, hl ; $0e53
-	adc a, a ; $0e54
+	adc a ; $0e54
 	jr nc, .offset5 ; $0e55
 	add hl, de ; $0e57
-	adc a, $00 ; $0e58
+	adc $00 ; $0e58
 .offset5:
 	add hl, hl ; $0e5a
-	adc a, a ; $0e5b
+	adc a ; $0e5b
 	jr nc, .offset6 ; $0e5c
 	add hl, de ; $0e5e
-	adc a, $00 ; $0e5f
+	adc $00 ; $0e5f
 .offset6:
 	add hl, hl ; $0e61
-	adc a, a ; $0e62
+	adc a ; $0e62
 	jr nc, .step4 ; $0e63
 	add hl, de ; $0e65
-	adc a, $00 ; $0e66
+	adc $00 ; $0e66
 .step4:
 	ld l, h ; $0e68
 	ld h, a ; $0e69
@@ -2608,15 +2608,15 @@ MulPosHLByA:
 	ret ; $0e6b
 DivAHLByDESigned:
 	ld b, a ; $0e6c
-	xor a, d ; $0e6d
+	xor d ; $0e6d
 	ldh [hMathSign], a ; $0e6e
 	bit 7, d ; $0e70
 	jr z, .positive ; $0e72
-	xor a, a ; $0e74
-	sub a, e ; $0e75
+	xor a ; $0e74
+	sub e ; $0e75
 	ld e, a ; $0e76
-	sbc a, a ; $0e77
-	sub a, d ; $0e78
+	sbc a ; $0e77
+	sub d ; $0e78
 	ld d, a ; $0e79
 .positive:
 	ld a, b ; $0e7a
@@ -2624,15 +2624,15 @@ DivAHLByDESigned:
 	jr z, .divAHLByDE ; $0e7d
 	ld a, l ; $0e7f
 	cpl ; $0e80
-	add a, $01 ; $0e81
+	add $01 ; $0e81
 	ld l, a ; $0e83
 	ld a, h ; $0e84
 	cpl ; $0e85
-	adc a, $00 ; $0e86
+	adc $00 ; $0e86
 	ld h, a ; $0e88
 	ld a, b ; $0e89
 	cpl ; $0e8a
-	adc a, $00 ; $0e8b
+	adc $00 ; $0e8b
 .divAHLByDE:
 	call DivAHLByDE ; $0e8d
 	ld b, a ; $0e90
@@ -2642,15 +2642,15 @@ DivAHLByDESigned:
 	ret z ; $0e96
 	ld a, l ; $0e97
 	cpl ; $0e98
-	add a, $01 ; $0e99
+	add $01 ; $0e99
 	ld l, a ; $0e9b
 	ld a, h ; $0e9c
 	cpl ; $0e9d
-	adc a, $00 ; $0e9e
+	adc $00 ; $0e9e
 	ld h, a ; $0ea0
 	ld a, b ; $0ea1
 	cpl ; $0ea2
-	adc a, $00 ; $0ea3
+	adc $00 ; $0ea3
 	ret ; $0ea5
 DivAHLByDE:
 	inc d ; $0ea6
@@ -2661,13 +2661,13 @@ DivAHLByDE:
 .wideDivisor:
 	push bc ; $0eaf
 	ldh [$ffac], a ; $0eb0
-	xor a, a ; $0eb2
-	sub a, e ; $0eb3
+	xor a ; $0eb2
+	sub e ; $0eb3
 	ld c, a ; $0eb4
-	sbc a, a ; $0eb5
-	sub a, d ; $0eb6
+	sbc a ; $0eb5
+	sub d ; $0eb6
 	ld b, a ; $0eb7
-	or a, c ; $0eb8
+	or c ; $0eb8
 	jr nz, .divide ; $0eb9
 	ld a, $ff ; $0ebb
 	ld h, a ; $0ebd
@@ -2681,56 +2681,56 @@ DivAHLByDE:
 	push hl ; $0ec5
 	scf ; $0ec6
 	ld hl, $0000 ; $0ec7
-	adc a, a ; $0eca
+	adc a ; $0eca
 	rl l ; $0ecb
 	add hl, bc ; $0ecd
 	jr c, .bit22 ; $0ece
 	dec a ; $0ed0
 	add hl, de ; $0ed1
 .bit22:
-	adc a, a ; $0ed2
+	adc a ; $0ed2
 	rl l ; $0ed3
 	add hl, bc ; $0ed5
 	jr c, .bit21 ; $0ed6
 	dec a ; $0ed8
 	add hl, de ; $0ed9
 .bit21:
-	adc a, a ; $0eda
+	adc a ; $0eda
 	rl l ; $0edb
 	add hl, bc ; $0edd
 	jr c, .bit20 ; $0ede
 	dec a ; $0ee0
 	add hl, de ; $0ee1
 .bit20:
-	adc a, a ; $0ee2
+	adc a ; $0ee2
 	rl l ; $0ee3
 	add hl, bc ; $0ee5
 	jr c, .bit19 ; $0ee6
 	dec a ; $0ee8
 	add hl, de ; $0ee9
 .bit19:
-	adc a, a ; $0eea
+	adc a ; $0eea
 	rl l ; $0eeb
 	add hl, bc ; $0eed
 	jr c, .bit18 ; $0eee
 	dec a ; $0ef0
 	add hl, de ; $0ef1
 .bit18:
-	adc a, a ; $0ef2
+	adc a ; $0ef2
 	rl l ; $0ef3
 	add hl, bc ; $0ef5
 	jr c, .bit17 ; $0ef6
 	dec a ; $0ef8
 	add hl, de ; $0ef9
 .bit17:
-	adc a, a ; $0efa
+	adc a ; $0efa
 	rl l ; $0efb
 	add hl, bc ; $0efd
 	jr c, .bit16 ; $0efe
 	dec a ; $0f00
 	add hl, de ; $0f01
 .bit16:
-	adc a, a ; $0f02
+	adc a ; $0f02
 	rl l ; $0f03
 	add hl, bc ; $0f05
 	jr c, .bit15 ; $0f06
@@ -2741,7 +2741,7 @@ DivAHLByDE:
 	pop af ; $0f0c
 	ld h, $00 ; $0f0d
 	scf ; $0f0f
-	adc a, a ; $0f10
+	adc a ; $0f10
 	rl l ; $0f11
 	rl h ; $0f13
 	add hl, bc ; $0f15
@@ -2749,7 +2749,7 @@ DivAHLByDE:
 	dec a ; $0f18
 	add hl, de ; $0f19
 .bit14:
-	adc a, a ; $0f1a
+	adc a ; $0f1a
 	rl l ; $0f1b
 	rl h ; $0f1d
 	add hl, bc ; $0f1f
@@ -2757,7 +2757,7 @@ DivAHLByDE:
 	dec a ; $0f22
 	add hl, de ; $0f23
 .bit13:
-	adc a, a ; $0f24
+	adc a ; $0f24
 	rl l ; $0f25
 	rl h ; $0f27
 	add hl, bc ; $0f29
@@ -2765,7 +2765,7 @@ DivAHLByDE:
 	dec a ; $0f2c
 	add hl, de ; $0f2d
 .bit12:
-	adc a, a ; $0f2e
+	adc a ; $0f2e
 	rl l ; $0f2f
 	rl h ; $0f31
 	add hl, bc ; $0f33
@@ -2773,7 +2773,7 @@ DivAHLByDE:
 	dec a ; $0f36
 	add hl, de ; $0f37
 .bit11:
-	adc a, a ; $0f38
+	adc a ; $0f38
 	rl l ; $0f39
 	rl h ; $0f3b
 	add hl, bc ; $0f3d
@@ -2781,7 +2781,7 @@ DivAHLByDE:
 	dec a ; $0f40
 	add hl, de ; $0f41
 .bit10:
-	adc a, a ; $0f42
+	adc a ; $0f42
 	rl l ; $0f43
 	rl h ; $0f45
 	add hl, bc ; $0f47
@@ -2789,7 +2789,7 @@ DivAHLByDE:
 	dec a ; $0f4a
 	add hl, de ; $0f4b
 .bit9:
-	adc a, a ; $0f4c
+	adc a ; $0f4c
 	rl l ; $0f4d
 	rl h ; $0f4f
 	add hl, bc ; $0f51
@@ -2797,7 +2797,7 @@ DivAHLByDE:
 	dec a ; $0f54
 	add hl, de ; $0f55
 .bit8:
-	adc a, a ; $0f56
+	adc a ; $0f56
 	rl l ; $0f57
 	rl h ; $0f59
 	add hl, bc ; $0f5b
@@ -2808,7 +2808,7 @@ DivAHLByDE:
 	ldh [$ffad], a ; $0f60
 	pop af ; $0f62
 	scf ; $0f63
-	adc a, a ; $0f64
+	adc a ; $0f64
 	rl l ; $0f65
 	rl h ; $0f67
 	add hl, bc ; $0f69
@@ -2816,7 +2816,7 @@ DivAHLByDE:
 	dec a ; $0f6c
 	add hl, de ; $0f6d
 .bit6:
-	adc a, a ; $0f6e
+	adc a ; $0f6e
 	rl l ; $0f6f
 	rl h ; $0f71
 	add hl, bc ; $0f73
@@ -2824,7 +2824,7 @@ DivAHLByDE:
 	dec a ; $0f76
 	add hl, de ; $0f77
 .bit5:
-	adc a, a ; $0f78
+	adc a ; $0f78
 	rl l ; $0f79
 	rl h ; $0f7b
 	add hl, bc ; $0f7d
@@ -2832,7 +2832,7 @@ DivAHLByDE:
 	dec a ; $0f80
 	add hl, de ; $0f81
 .bit4:
-	adc a, a ; $0f82
+	adc a ; $0f82
 	rl l ; $0f83
 	rl h ; $0f85
 	add hl, bc ; $0f87
@@ -2840,7 +2840,7 @@ DivAHLByDE:
 	dec a ; $0f8a
 	add hl, de ; $0f8b
 .bit3:
-	adc a, a ; $0f8c
+	adc a ; $0f8c
 	rl l ; $0f8d
 	rl h ; $0f8f
 	add hl, bc ; $0f91
@@ -2848,7 +2848,7 @@ DivAHLByDE:
 	dec a ; $0f94
 	add hl, de ; $0f95
 .bit2:
-	adc a, a ; $0f96
+	adc a ; $0f96
 	rl l ; $0f97
 	rl h ; $0f99
 	add hl, bc ; $0f9b
@@ -2856,7 +2856,7 @@ DivAHLByDE:
 	dec a ; $0f9e
 	add hl, de ; $0f9f
 .bit1:
-	adc a, a ; $0fa0
+	adc a ; $0fa0
 	rl l ; $0fa1
 	rl h ; $0fa3
 	add hl, bc ; $0fa5
@@ -2864,7 +2864,7 @@ DivAHLByDE:
 	dec a ; $0fa8
 	add hl, de ; $0fa9
 .bit0:
-	adc a, a ; $0faa
+	adc a ; $0faa
 	rl l ; $0fab
 	rl h ; $0fad
 	add hl, bc ; $0faf
@@ -2883,188 +2883,188 @@ DivAHLByE:
 	ld c, l ; $0fbd
 	ld l, h ; $0fbe
 	ld h, a ; $0fbf
-	xor a, a ; $0fc0
+	xor a ; $0fc0
 	add hl, hl ; $0fc1
-	adc a, a ; $0fc2
-	cp a, e ; $0fc3
+	adc a ; $0fc2
+	cp e ; $0fc3
 	jr c, .bit22 ; $0fc4
 	inc l ; $0fc6
-	sub a, e ; $0fc7
+	sub e ; $0fc7
 .bit22:
 	add hl, hl ; $0fc8
-	adc a, a ; $0fc9
-	cp a, e ; $0fca
+	adc a ; $0fc9
+	cp e ; $0fca
 	jr c, .bit21 ; $0fcb
 	inc l ; $0fcd
-	sub a, e ; $0fce
+	sub e ; $0fce
 .bit21:
 	add hl, hl ; $0fcf
-	adc a, a ; $0fd0
-	cp a, e ; $0fd1
+	adc a ; $0fd0
+	cp e ; $0fd1
 	jr c, .bit20 ; $0fd2
 	inc l ; $0fd4
-	sub a, e ; $0fd5
+	sub e ; $0fd5
 .bit20:
 	add hl, hl ; $0fd6
-	adc a, a ; $0fd7
-	cp a, e ; $0fd8
+	adc a ; $0fd7
+	cp e ; $0fd8
 	jr c, .bit19 ; $0fd9
 	inc l ; $0fdb
-	sub a, e ; $0fdc
+	sub e ; $0fdc
 .bit19:
 	add hl, hl ; $0fdd
-	adc a, a ; $0fde
-	cp a, e ; $0fdf
+	adc a ; $0fde
+	cp e ; $0fdf
 	jr c, .bit18 ; $0fe0
 	inc l ; $0fe2
-	sub a, e ; $0fe3
+	sub e ; $0fe3
 .bit18:
 	add hl, hl ; $0fe4
-	adc a, a ; $0fe5
-	cp a, e ; $0fe6
+	adc a ; $0fe5
+	cp e ; $0fe6
 	jr c, .bit17 ; $0fe7
 	inc l ; $0fe9
-	sub a, e ; $0fea
+	sub e ; $0fea
 .bit17:
 	add hl, hl ; $0feb
-	adc a, a ; $0fec
-	cp a, e ; $0fed
+	adc a ; $0fec
+	cp e ; $0fed
 	jr c, .bit16 ; $0fee
 	inc l ; $0ff0
-	sub a, e ; $0ff1
+	sub e ; $0ff1
 .bit16:
 	add hl, hl ; $0ff2
-	adc a, a ; $0ff3
-	cp a, e ; $0ff4
+	adc a ; $0ff3
+	cp e ; $0ff4
 	jr c, .bit15 ; $0ff5
 	inc l ; $0ff7
-	sub a, e ; $0ff8
+	sub e ; $0ff8
 .bit15:
 	ld b, l ; $0ff9
 	add hl, hl ; $0ffa
-	adc a, a ; $0ffb
-	cp a, e ; $0ffc
+	adc a ; $0ffb
+	cp e ; $0ffc
 	jr c, .bit14 ; $0ffd
 	inc l ; $0fff
-	sub a, e ; $1000
+	sub e ; $1000
 .bit14:
 	add hl, hl ; $1001
-	adc a, a ; $1002
-	cp a, e ; $1003
+	adc a ; $1002
+	cp e ; $1003
 	jr c, .bit13 ; $1004
 	inc l ; $1006
-	sub a, e ; $1007
+	sub e ; $1007
 .bit13:
 	add hl, hl ; $1008
-	adc a, a ; $1009
-	cp a, e ; $100a
+	adc a ; $1009
+	cp e ; $100a
 	jr c, .bit12 ; $100b
 	inc l ; $100d
-	sub a, e ; $100e
+	sub e ; $100e
 .bit12:
 	add hl, hl ; $100f
-	adc a, a ; $1010
-	cp a, e ; $1011
+	adc a ; $1010
+	cp e ; $1011
 	jr c, .bit11 ; $1012
 	inc l ; $1014
-	sub a, e ; $1015
+	sub e ; $1015
 .bit11:
 	add hl, hl ; $1016
-	adc a, a ; $1017
-	cp a, e ; $1018
+	adc a ; $1017
+	cp e ; $1018
 	jr c, .bit10 ; $1019
 	inc l ; $101b
-	sub a, e ; $101c
+	sub e ; $101c
 .bit10:
 	add hl, hl ; $101d
-	adc a, a ; $101e
-	cp a, e ; $101f
+	adc a ; $101e
+	cp e ; $101f
 	jr c, .bit9 ; $1020
 	inc l ; $1022
-	sub a, e ; $1023
+	sub e ; $1023
 .bit9:
 	add hl, hl ; $1024
-	adc a, a ; $1025
-	cp a, e ; $1026
+	adc a ; $1025
+	cp e ; $1026
 	jr c, .bit8 ; $1027
 	inc l ; $1029
-	sub a, e ; $102a
+	sub e ; $102a
 .bit8:
 	add hl, hl ; $102b
-	adc a, a ; $102c
-	cp a, e ; $102d
+	adc a ; $102c
+	cp e ; $102d
 	jr c, .bit7 ; $102e
 	inc l ; $1030
-	sub a, e ; $1031
+	sub e ; $1031
 .bit7:
 	ld h, c ; $1032
 	add hl, hl ; $1033
-	adc a, a ; $1034
-	cp a, e ; $1035
+	adc a ; $1034
+	cp e ; $1035
 	jr c, .bit6 ; $1036
 	inc l ; $1038
-	sub a, e ; $1039
+	sub e ; $1039
 .bit6:
 	add hl, hl ; $103a
-	adc a, a ; $103b
-	cp a, e ; $103c
+	adc a ; $103b
+	cp e ; $103c
 	jr c, .bit5 ; $103d
 	inc l ; $103f
-	sub a, e ; $1040
+	sub e ; $1040
 .bit5:
 	add hl, hl ; $1041
-	adc a, a ; $1042
-	cp a, e ; $1043
+	adc a ; $1042
+	cp e ; $1043
 	jr c, .bit4 ; $1044
 	inc l ; $1046
-	sub a, e ; $1047
+	sub e ; $1047
 .bit4:
 	add hl, hl ; $1048
-	adc a, a ; $1049
-	cp a, e ; $104a
+	adc a ; $1049
+	cp e ; $104a
 	jr c, .bit3 ; $104b
 	inc l ; $104d
-	sub a, e ; $104e
+	sub e ; $104e
 .bit3:
 	add hl, hl ; $104f
-	adc a, a ; $1050
-	cp a, e ; $1051
+	adc a ; $1050
+	cp e ; $1051
 	jr c, .bit2 ; $1052
 	inc l ; $1054
-	sub a, e ; $1055
+	sub e ; $1055
 .bit2:
 	add hl, hl ; $1056
-	adc a, a ; $1057
-	cp a, e ; $1058
+	adc a ; $1057
+	cp e ; $1058
 	jr c, .bit1 ; $1059
 	inc l ; $105b
-	sub a, e ; $105c
+	sub e ; $105c
 .bit1:
 	add hl, hl ; $105d
-	adc a, a ; $105e
-	cp a, e ; $105f
+	adc a ; $105e
+	cp e ; $105f
 	jr c, .bit0 ; $1060
 	inc l ; $1062
-	sub a, e ; $1063
+	sub e ; $1063
 .bit0:
 	add hl, hl ; $1064
-	adc a, a ; $1065
-	cp a, e ; $1066
+	adc a ; $1065
+	cp e ; $1066
 	jr c, .done ; $1067
 	inc l ; $1069
-	sub a, e ; $106a
+	sub e ; $106a
 .done:
 	ld a, b ; $106b
 	pop bc ; $106c
 	ret ; $106d
 GetSquareOfByte:
 	push af ; $106e
-	add a, a ; $106f
+	add a ; $106f
 	jr c, .highHalf ; $1070
-	add a, LOW(SquaresTable) ; $1072
+	add LOW(SquaresTable) ; $1072
 	ld l, a ; $1074
-	adc a, HIGH(SquaresTable) ; $1075
-	sub a, l ; $1077
+	adc HIGH(SquaresTable) ; $1075
+	sub l ; $1077
 	ld h, a ; $1078
 	ld a, [hl+] ; $1079
 	ld h, [hl] ; $107a
@@ -3072,10 +3072,10 @@ GetSquareOfByte:
 	pop af ; $107c
 	ret ; $107d
 .highHalf:
-	add a, $30 ; $107e
+	add $30 ; $107e
 	ld l, a ; $1080
-	adc a, $12 ; $1081
-	sub a, l ; $1083
+	adc $12 ; $1081
+	sub l ; $1083
 	ld h, a ; $1084
 	ld a, [hl+] ; $1085
 	ld h, [hl] ; $1086
@@ -3092,13 +3092,13 @@ AngleFromVector:
 	ld a, h ; $1090
 	cpl ; $1091
 	ld b, a ; $1092
-	and a, c ; $1093
+	and c ; $1093
 	inc a ; $1094
 	jp z, .restore ; $1095
 	ld de, $4000 ; $1098
 	ld h, e ; $109b
 	ld a, d ; $109c
-	add a, b ; $109d
+	add b ; $109d
 	jr c, .carry ; $109e
 	ld b, a ; $10a0
 	set 7, h ; $10a1
@@ -3107,10 +3107,10 @@ AngleFromVector:
 .carry:
 	ld a, $e0 ; $10a7
 .step2:
-	add a, d ; $10a9
+	add d ; $10a9
 	srl a ; $10aa
 	ld d, a ; $10ac
-	add a, b ; $10ad
+	add b ; $10ad
 	jr c, .carry2 ; $10ae
 	ld b, a ; $10b0
 	set 6, h ; $10b1
@@ -3119,10 +3119,10 @@ AngleFromVector:
 .carry2:
 	ld a, $f8 ; $10b7
 .step4:
-	add a, d ; $10b9
+	add d ; $10b9
 	srl a ; $10ba
 	ld d, a ; $10bc
-	add a, b ; $10bd
+	add b ; $10bd
 	jr c, .carry3 ; $10be
 	ld b, a ; $10c0
 	set 5, h ; $10c1
@@ -3131,7 +3131,7 @@ AngleFromVector:
 .carry3:
 	ld a, $fe ; $10c7
 .step6:
-	add a, d ; $10c9
+	add d ; $10c9
 	srl a ; $10ca
 	ld d, a ; $10cc
 	ld a, h ; $10cd
@@ -3198,7 +3198,7 @@ AngleFromVector:
 	ld e, l ; $1126
 	ld d, h ; $1127
 	add hl, bc ; $1128
-	sbc a, $ff ; $1129
+	sbc $ff ; $1129
 .restore:
 	pop hl ; $112b
 	pop de ; $112c
@@ -3214,18 +3214,18 @@ ENDR
 MulSinCosSigned:
 	bit 7, h ; $1332
 	jr z, MulSinCos ; $1334
-	xor a, a ; $1336
-	sub a, l ; $1337
+	xor a ; $1336
+	sub l ; $1337
 	ld l, a ; $1338
-	sbc a, a ; $1339
-	sub a, h ; $133a
+	sbc a ; $1339
+	sub h ; $133a
 	ld h, a ; $133b
 	ld a, $80 ; $133c
-	add a, b ; $133e
+	add b ; $133e
 	ld b, a ; $133f
 MulSinCos:
 	ld a, c ; $1340
-	and a, $f0 ; $1341
+	and $f0 ; $1341
 	ld c, a ; $1343
 	push bc ; $1344
 	push hl ; $1345
@@ -3235,18 +3235,18 @@ MulSinCos:
 	pop hl ; $134b
 	pop bc ; $134c
 	ld a, b ; $134d
-	add a, $40 ; $134e
+	add $40 ; $134e
 	ld b, a ; $1350
 MulSin:
 	bit 7, b ; $1351
 	jr z, MulSinUnsigned ; $1353
 	res 7, b ; $1355
 	call MulSinUnsigned ; $1357
-	xor a, a ; $135a
-	sub a, l ; $135b
+	xor a ; $135a
+	sub l ; $135b
 	ld l, a ; $135c
-	sbc a, a ; $135d
-	sub a, h ; $135e
+	sbc a ; $135d
+	sub h ; $135e
 	ld h, a ; $135f
 	ret ; $1360
 MulSinUnsigned:
@@ -3265,7 +3265,7 @@ MulSinUnsigned:
 	res 0, a ; $1370
 	ld l, a ; $1372
 	ld a, h ; $1373
-	add a, $40 ; $1374
+	add $40 ; $1374
 	ld h, a ; $1376
 	ldh a, [hRomBank] ; $1377
 	ld b, a ; $1379
@@ -3283,27 +3283,27 @@ MulSinUnsigned:
 	ret ; $138e
 VectorLengthFromAngle:
 	ld a, b ; $138f
-	and a, $7f ; $1390
-	sub a, $20 ; $1392
-	cp a, $40 ; $1394
+	and $7f ; $1390
+	sub $20 ; $1392
+	cp $40 ; $1394
 	jr c, .viaSin ; $1396
 	bit 7, h ; $1398
 	jr z, .absX ; $139a
-	xor a, a ; $139c
-	sub a, l ; $139d
+	xor a ; $139c
+	sub l ; $139d
 	ld l, a ; $139e
-	sbc a, a ; $139f
-	sub a, h ; $13a0
+	sbc a ; $139f
+	sub h ; $13a0
 	ld h, a ; $13a1
 .absX:
 	call DivByCos ; $13a2
 	bit 7, h ; $13a5
 	jr z, .doneX ; $13a7
-	xor a, a ; $13a9
-	sub a, l ; $13aa
+	xor a ; $13a9
+	sub l ; $13aa
 	ld l, a ; $13ab
-	sbc a, a ; $13ac
-	sub a, h ; $13ad
+	sbc a ; $13ac
+	sub h ; $13ad
 	ld h, a ; $13ae
 .doneX:
 	ret ; $13af
@@ -3312,38 +3312,38 @@ VectorLengthFromAngle:
 	ld h, d ; $13b1
 	bit 7, h ; $13b2
 	jr z, .absY ; $13b4
-	xor a, a ; $13b6
-	sub a, l ; $13b7
+	xor a ; $13b6
+	sub l ; $13b7
 	ld l, a ; $13b8
-	sbc a, a ; $13b9
-	sub a, h ; $13ba
+	sbc a ; $13b9
+	sub h ; $13ba
 	ld h, a ; $13bb
 .absY:
 	call DivBySin ; $13bc
 	bit 7, h ; $13bf
 	jr z, .doneY ; $13c1
-	xor a, a ; $13c3
-	sub a, l ; $13c4
+	xor a ; $13c3
+	sub l ; $13c4
 	ld l, a ; $13c5
-	sbc a, a ; $13c6
-	sub a, h ; $13c7
+	sbc a ; $13c6
+	sub h ; $13c7
 	ld h, a ; $13c8
 .doneY:
 	ret ; $13c9
 DivByCos:
 	ld a, b ; $13ca
-	add a, $40 ; $13cb
+	add $40 ; $13cb
 	ld b, a ; $13cd
 DivBySin:
 	bit 7, b ; $13ce
 	jr z, DivBySinUnsigned ; $13d0
 	res 7, b ; $13d2
 	call DivBySinUnsigned ; $13d4
-	xor a, a ; $13d7
-	sub a, l ; $13d8
+	xor a ; $13d7
+	sub l ; $13d8
 	ld l, a ; $13d9
-	sbc a, a ; $13da
-	sub a, h ; $13db
+	sbc a ; $13da
+	sub h ; $13db
 	ld h, a ; $13dc
 	ret ; $13dd
 DivBySinUnsigned:
@@ -3361,7 +3361,7 @@ DivBySinUnsigned:
 	res 0, a ; $13ec
 	ld l, a ; $13ee
 	ld a, h ; $13ef
-	add a, $50 ; $13f0
+	add $50 ; $13f0
 	ld h, a ; $13f2
 	ldh a, [hRomBank] ; $13f3
 	ld b, a ; $13f5
@@ -3373,10 +3373,10 @@ DivBySinUnsigned:
 	ld l, a ; $13ff
 	call MulHLByDE32 ; $1400
 	ld a, d ; $1403
-	add a, a ; $1404
+	add a ; $1404
 	rl l ; $1405
 	rl h ; $1407
-	add a, a ; $1409
+	add a ; $1409
 	rl l ; $140a
 	rl h ; $140c
 	ld a, b ; $140e
@@ -3387,30 +3387,30 @@ DivBySinUnsigned:
 AngleFromVector16:
 	ld bc, $0000 ; $1416
 	ld a, h ; $1419
-	or a, l ; $141a
+	or l ; $141a
 	jp z, .applySignY ; $141b
 	ld b, $40 ; $141e
 	ld a, d ; $1420
-	or a, e ; $1421
+	or e ; $1421
 	jp z, .applySignY ; $1422
 	push hl ; $1425
 	push de ; $1426
 	bit 7, d ; $1427
 	jr z, .absY ; $1429
-	xor a, a ; $142b
-	sub a, e ; $142c
+	xor a ; $142b
+	sub e ; $142c
 	ld e, a ; $142d
-	sbc a, a ; $142e
-	sub a, d ; $142f
+	sbc a ; $142e
+	sub d ; $142f
 	ld d, a ; $1430
 .absY:
 	bit 7, h ; $1431
 	jr z, .absX ; $1433
-	xor a, a ; $1435
-	sub a, l ; $1436
+	xor a ; $1435
+	sub l ; $1436
 	ld l, a ; $1437
-	sbc a, a ; $1438
-	sub a, h ; $1439
+	sbc a ; $1438
+	sub h ; $1439
 	ld h, a ; $143a
 .absX:
 	ld a, h ; $143b
@@ -3418,7 +3418,7 @@ AngleFromVector16:
 	ld l, $00 ; $143d
 	call DivAHLByDE ; $143f
 	ld bc, $3fc0 ; $1442
-	or a, a ; $1445
+	or a ; $1445
 	jp nz, .restore ; $1446
 	ld e, l ; $1449
 	ld d, h ; $144a
@@ -3427,15 +3427,15 @@ AngleFromVector16:
 	ld a, [hl+] ; $1450
 	ld c, a ; $1451
 	ld a, [hl-] ; $1452
-	cp a, d ; $1453
+	cp d ; $1453
 	jr c, .add7 ; $1454
 	jr nz, .sub7 ; $1456
 	ld a, c ; $1458
-	cp a, e ; $1459
+	cp e ; $1459
 	jr c, .add7 ; $145a
 .sub7:
 	ld a, l ; $145c
-	sub a, $80 ; $145d
+	sub $80 ; $145d
 	ld l, a ; $145f
 	jr nc, .sub7Done ; $1460
 	dec h ; $1462
@@ -3443,7 +3443,7 @@ AngleFromVector16:
 	jr .step6 ; $1463
 .add7:
 	ld a, $80 ; $1465
-	add a, l ; $1467
+	add l ; $1467
 	ld l, a ; $1468
 	jr nc, .setBit7 ; $1469
 	inc h ; $146b
@@ -3453,15 +3453,15 @@ AngleFromVector16:
 	ld a, [hl+] ; $146e
 	ld c, a ; $146f
 	ld a, [hl-] ; $1470
-	cp a, d ; $1471
+	cp d ; $1471
 	jr c, .add6 ; $1472
 	jr nz, .sub6 ; $1474
 	ld a, c ; $1476
-	cp a, e ; $1477
+	cp e ; $1477
 	jr c, .add6 ; $1478
 .sub6:
 	ld a, l ; $147a
-	sub a, $40 ; $147b
+	sub $40 ; $147b
 	ld l, a ; $147d
 	jr nc, .sub6Done ; $147e
 	dec h ; $1480
@@ -3469,7 +3469,7 @@ AngleFromVector16:
 	jr .step5 ; $1481
 .add6:
 	ld a, $40 ; $1483
-	add a, l ; $1485
+	add l ; $1485
 	ld l, a ; $1486
 	jr nc, .setBit6 ; $1487
 	inc h ; $1489
@@ -3479,15 +3479,15 @@ AngleFromVector16:
 	ld a, [hl+] ; $148c
 	ld c, a ; $148d
 	ld a, [hl-] ; $148e
-	cp a, d ; $148f
+	cp d ; $148f
 	jr c, .add5 ; $1490
 	jr nz, .sub5 ; $1492
 	ld a, c ; $1494
-	cp a, e ; $1495
+	cp e ; $1495
 	jr c, .add5 ; $1496
 .sub5:
 	ld a, l ; $1498
-	sub a, $20 ; $1499
+	sub $20 ; $1499
 	ld l, a ; $149b
 	jr nc, .sub5Done ; $149c
 	dec h ; $149e
@@ -3495,7 +3495,7 @@ AngleFromVector16:
 	jr .step4 ; $149f
 .add5:
 	ld a, $20 ; $14a1
-	add a, l ; $14a3
+	add l ; $14a3
 	ld l, a ; $14a4
 	jr nc, .setBit5 ; $14a5
 	inc h ; $14a7
@@ -3505,15 +3505,15 @@ AngleFromVector16:
 	ld a, [hl+] ; $14aa
 	ld c, a ; $14ab
 	ld a, [hl-] ; $14ac
-	cp a, d ; $14ad
+	cp d ; $14ad
 	jr c, .add4 ; $14ae
 	jr nz, .sub4 ; $14b0
 	ld a, c ; $14b2
-	cp a, e ; $14b3
+	cp e ; $14b3
 	jr c, .add4 ; $14b4
 .sub4:
 	ld a, l ; $14b6
-	sub a, $10 ; $14b7
+	sub $10 ; $14b7
 	ld l, a ; $14b9
 	jr nc, .sub4Done ; $14ba
 	dec h ; $14bc
@@ -3521,7 +3521,7 @@ AngleFromVector16:
 	jr .step3 ; $14bd
 .add4:
 	ld a, $10 ; $14bf
-	add a, l ; $14c1
+	add l ; $14c1
 	ld l, a ; $14c2
 	jr nc, .setBit4 ; $14c3
 	inc h ; $14c5
@@ -3531,15 +3531,15 @@ AngleFromVector16:
 	ld a, [hl+] ; $14c8
 	ld c, a ; $14c9
 	ld a, [hl-] ; $14ca
-	cp a, d ; $14cb
+	cp d ; $14cb
 	jr c, .add3 ; $14cc
 	jr nz, .sub3 ; $14ce
 	ld a, c ; $14d0
-	cp a, e ; $14d1
+	cp e ; $14d1
 	jr c, .add3 ; $14d2
 .sub3:
 	ld a, l ; $14d4
-	sub a, $08 ; $14d5
+	sub $08 ; $14d5
 	ld l, a ; $14d7
 	jr nc, .sub3Done ; $14d8
 	dec h ; $14da
@@ -3547,7 +3547,7 @@ AngleFromVector16:
 	jr .step2 ; $14db
 .add3:
 	ld a, $08 ; $14dd
-	add a, l ; $14df
+	add l ; $14df
 	ld l, a ; $14e0
 	jr nc, .setBit3 ; $14e1
 	inc h ; $14e3
@@ -3557,15 +3557,15 @@ AngleFromVector16:
 	ld a, [hl+] ; $14e6
 	ld c, a ; $14e7
 	ld a, [hl-] ; $14e8
-	cp a, d ; $14e9
+	cp d ; $14e9
 	jr c, .add2 ; $14ea
 	jr nz, .sub2 ; $14ec
 	ld a, c ; $14ee
-	cp a, e ; $14ef
+	cp e ; $14ef
 	jr c, .add2 ; $14f0
 .sub2:
 	ld a, l ; $14f2
-	sub a, $04 ; $14f3
+	sub $04 ; $14f3
 	ld l, a ; $14f5
 	jr nc, .sub2Done ; $14f6
 	dec h ; $14f8
@@ -3573,7 +3573,7 @@ AngleFromVector16:
 	jr .step1 ; $14f9
 .add2:
 	ld a, $04 ; $14fb
-	add a, l ; $14fd
+	add l ; $14fd
 	ld l, a ; $14fe
 	jr nc, .setBit2 ; $14ff
 	inc h ; $1501
@@ -3583,15 +3583,15 @@ AngleFromVector16:
 	ld a, [hl+] ; $1504
 	ld c, a ; $1505
 	ld a, [hl-] ; $1506
-	cp a, d ; $1507
+	cp d ; $1507
 	jr c, .add1 ; $1508
 	jr nz, .sub1 ; $150a
 	ld a, c ; $150c
-	cp a, e ; $150d
+	cp e ; $150d
 	jr c, .add1 ; $150e
 .sub1:
 	ld a, l ; $1510
-	sub a, $02 ; $1511
+	sub $02 ; $1511
 	ld l, a ; $1513
 	jr nc, .sub1Done ; $1514
 	dec h ; $1516
@@ -3599,7 +3599,7 @@ AngleFromVector16:
 	jr .lastStep ; $1517
 .add1:
 	ld a, $02 ; $1519
-	add a, l ; $151b
+	add l ; $151b
 	ld l, a ; $151c
 	jr nc, .setBit1 ; $151d
 	inc h ; $151f
@@ -3609,11 +3609,11 @@ AngleFromVector16:
 	ld a, [hl+] ; $1522
 	ld c, a ; $1523
 	ld a, [hl+] ; $1524
-	cp a, d ; $1525
+	cp d ; $1525
 	jr c, .roundUp ; $1526
 	jr nz, .checkOverflow ; $1528
 	ld a, c ; $152a
-	cp a, e ; $152b
+	cp e ; $152b
 	jr nc, .checkOverflow ; $152c
 .roundUp:
 	inc b ; $152e
@@ -3624,11 +3624,11 @@ AngleFromVector16:
 	ld a, [hl+] ; $1533
 	ld c, a ; $1534
 	ld a, [hl+] ; $1535
-	cp a, d ; $1536
+	cp d ; $1536
 	jr c, .quarterTurn ; $1537
 	jr nz, .packAngle ; $1539
 	ld a, c ; $153b
-	cp a, e ; $153c
+	cp e ; $153c
 	jr nc, .packAngle ; $153d
 .quarterTurn:
 	ld bc, $4000 ; $153f
@@ -3638,9 +3638,9 @@ AngleFromVector16:
 	rrca ; $1545
 	rrca ; $1546
 	ld b, a ; $1547
-	and a, $c0 ; $1548
+	and $c0 ; $1548
 	ld c, a ; $154a
-	xor a, b ; $154b
+	xor b ; $154b
 	ld b, a ; $154c
 .restore:
 	pop de ; $154d
@@ -3648,20 +3648,20 @@ AngleFromVector16:
 .applySignY:
 	bit 7, d ; $154f
 	jr z, .signYDone ; $1551
-	xor a, a ; $1553
-	sub a, c ; $1554
+	xor a ; $1553
+	sub c ; $1554
 	ld c, a ; $1555
 	ld a, $80 ; $1556
-	sbc a, b ; $1558
+	sbc b ; $1558
 	ld b, a ; $1559
 .signYDone:
 	bit 7, h ; $155a
 	jr z, .done ; $155c
-	xor a, a ; $155e
-	sub a, c ; $155f
+	xor a ; $155e
+	sub c ; $155f
 	ld c, a ; $1560
-	sbc a, a ; $1561
-	sub a, b ; $1562
+	sbc a ; $1561
+	sub b ; $1562
 	ld b, a ; $1563
 .done:
 	ret ; $1564
@@ -3938,7 +3938,7 @@ GetTangent:
 	ld a, [hl-] ; $1775
 	ld l, [hl] ; $1776
 	ld h, a ; $1777
-	add a, a ; $1778
+	add a ; $1778
 	ret nc ; $1779
 	ld hl, $7fff ; $177a
 	ret ; $177d
@@ -3951,15 +3951,15 @@ GetTangent:
 	add hl, hl ; $1784
 	ld bc, TangentTable ; $1785
 	add hl, bc ; $1788
-	xor a, a ; $1789
-	sub a, [hl] ; $178a
+	xor a ; $1789
+	sub [hl] ; $178a
 	ld c, a ; $178b
-	sbc a, a ; $178c
+	sbc a ; $178c
 	inc hl ; $178d
-	sub a, [hl] ; $178e
+	sub [hl] ; $178e
 	ld l, c ; $178f
 	ld h, a ; $1790
-	add a, a ; $1791
+	add a ; $1791
 	ret c ; $1792
 	ld hl, $8001 ; $1793
 	ret ; $1796
@@ -4027,10 +4027,10 @@ DecompressData:
 	ld l, e ; $17e7
 	pop de ; $17e8
 	ld a, l ; $17e9
-	sub a, e ; $17ea
+	sub e ; $17ea
 	ld l, a ; $17eb
 	ld a, h ; $17ec
-	sbc a, d ; $17ed
+	sbc d ; $17ed
 	ld h, a ; $17ee
 	pop de ; $17ef
 	pop bc ; $17f0
@@ -4042,17 +4042,17 @@ DecompressData:
 	inc hl ; $17f5
 	push hl ; $17f6
 	ld l, a ; $17f7
-	or a, b ; $17f8
+	or b ; $17f8
 	jr z, .done ; $17f9
 	ld a, b ; $17fb
 	rlca ; $17fc
 	rlca ; $17fd
 	rlca ; $17fe
-	or a, $f8 ; $17ff
+	or $f8 ; $17ff
 	ld h, a ; $1801
 	add hl, de ; $1802
 	ld a, b ; $1803
-	and a, $1f ; $1804
+	and $1f ; $1804
 	jr z, .matchTail ; $1806
 	ld b, a ; $1808
 	srl b ; $1809
@@ -4181,7 +4181,7 @@ ClearDebugTextBuffer:
 	ld c, $24 ; $188e
 	jp ClearMemory16 ; $1890
 UpdateDebugOverlay:
-	xor a, a ; $1893
+	xor a ; $1893
 	ldh [rVBK], a ; $1894
 	ld hl, $c0fb ; $1896
 	ld de, $9d08 ; $1899
@@ -4198,30 +4198,30 @@ UpdateDebugOverlay:
 	ld [de], a ; $18a6
 	inc de ; $18a7
 	ldh a, [hDebugStepMode] ; $18a8
-	cp a, $03 ; $18aa
+	cp $03 ; $18aa
 	jr z, .storeShowDebugConsole2 ; $18ac
-	cp a, $01 ; $18ae
+	cp $01 ; $18ae
 	jr z, .eq01 ; $18b0
 	ldh a, [hVBlankCounter] ; $18b2
-	and a, $01 ; $18b4
+	and $01 ; $18b4
 	jr z, .storeShowDebugConsole2 ; $18b6
 	jr .storeShowDebugConsole ; $18b8
 .eq01:
 	ldh a, [hPlayerInputFlags] ; $18ba
 	bit PADB_SELECT, a ; $18bc
 .storeShowDebugConsole:
-	xor a, a ; $18be
+	xor a ; $18be
 	jr .store ; $18bf
 .storeShowDebugConsole2:
 	ld a, $01 ; $18c1
 .store:
 	ldh [hShowDebugConsole], a ; $18c3
 	ldh a, [hDebugTextDirty] ; $18c5
-	or a, a ; $18c7
+	or a ; $18c7
 	ret z ; $18c8
-	xor a, a ; $18c9
+	xor a ; $18c9
 	ldh [hDebugTextDirty], a ; $18ca
-	xor a, a ; $18cc
+	xor a ; $18cc
 	ldh [rVBK], a ; $18cd
 	ld bc, wDebugTextBuffer ; $18cf
 	ld de, $1d00 ; $18d2
@@ -4241,7 +4241,7 @@ StartVRAMDMATransfer:
 	push af ; $18e4
 .loop:
 	ldh a, [hVBlankOccurred] ; $18e5
-	or a, a ; $18e7
+	or a ; $18e7
 	jr nz, .loop ; $18e8
 	pop af ; $18ea
 StartVRAMDMAFromHL:
@@ -4260,9 +4260,9 @@ GetDebugTextBufferAddr:
 	rrca ; $18f8
 	rrca ; $18f9
 	ld e, a ; $18fa
-	and a, $1f ; $18fb
+	and $1f ; $18fb
 	ld d, a ; $18fd
-	xor a, e ; $18fe
+	xor e ; $18fe
 	ld e, a ; $18ff
 	add hl, de ; $1900
 	ld e, l ; $1901
@@ -4275,15 +4275,15 @@ PrintString:
 	call GetDebugTextBufferAddr ; $1907
 .charLoop:
 	ld a, [hl+] ; $190a
-	or a, a ; $190b
+	or a ; $190b
 	jr z, .terminated ; $190c
 	ld [de], a ; $190e
 	inc de ; $190f
 	ld a, e ; $1910
-	and a, $1f ; $1911
+	and $1f ; $1911
 	jr nz, .charLoop ; $1913
 	ld a, e ; $1915
-	sub a, $20 ; $1916
+	sub $20 ; $1916
 	ld e, a ; $1918
 	jr nc, .nextRow ; $1919
 	dec d ; $191b
@@ -4303,43 +4303,43 @@ FormatHexWord:
 	push af ; $1935
 	ld a, h ; $1936
 	swap a ; $1937
-	and a, $0f ; $1939
-	cp a, $0a ; $193b
+	and $0f ; $1939
+	cp $0a ; $193b
 	jr c, .nibble0 ; $193d
-	add a, $07 ; $193f
+	add $07 ; $193f
 .nibble0:
-	add a, $30 ; $1941
+	add $30 ; $1941
 	ld [de], a ; $1943
 	inc de ; $1944
 	ld a, h ; $1945
-	and a, $0f ; $1946
-	cp a, $0a ; $1948
+	and $0f ; $1946
+	cp $0a ; $1948
 	jr c, .nibble1 ; $194a
-	add a, $07 ; $194c
+	add $07 ; $194c
 .nibble1:
-	add a, $30 ; $194e
+	add $30 ; $194e
 	ld [de], a ; $1950
 	inc de ; $1951
 	ld a, l ; $1952
 	swap a ; $1953
-	and a, $0f ; $1955
-	cp a, $0a ; $1957
+	and $0f ; $1955
+	cp $0a ; $1957
 	jr c, .nibble2 ; $1959
-	add a, $07 ; $195b
+	add $07 ; $195b
 .nibble2:
-	add a, $30 ; $195d
+	add $30 ; $195d
 	ld [de], a ; $195f
 	inc de ; $1960
 	ld a, l ; $1961
-	and a, $0f ; $1962
-	cp a, $0a ; $1964
+	and $0f ; $1962
+	cp $0a ; $1964
 	jr c, .nibble3 ; $1966
-	add a, $07 ; $1968
+	add $07 ; $1968
 .nibble3:
-	add a, $30 ; $196a
+	add $30 ; $196a
 	ld [de], a ; $196c
 	inc de ; $196d
-	xor a, a ; $196e
+	xor a ; $196e
 	ld [de], a ; $196f
 	pop af ; $1970
 	ret ; $1971
@@ -4359,11 +4359,11 @@ FormatDecimalNumber:
 	ld h, d ; $1982
 	bit 7, h ; $1983
 	jr z, .positive ; $1985
-	xor a, a ; $1987
-	sub a, l ; $1988
+	xor a ; $1987
+	sub l ; $1988
 	ld l, a ; $1989
-	sbc a, a ; $198a
-	sub a, h ; $198b
+	sbc a ; $198a
+	sub h ; $198b
 	ld h, a ; $198c
 	ld e, l ; $198d
 	ld d, h ; $198e
@@ -4414,7 +4414,7 @@ FormatDecimalNumber:
 	ld hl, sp + 2 ; $19d7
 .countDigitsLoop:
 	ld a, [hl] ; $19d9
-	or a, a ; $19da
+	or a ; $19da
 	jr nz, .checkPad ; $19db
 	dec b ; $19dd
 	inc hl ; $19de
@@ -4423,7 +4423,7 @@ FormatDecimalNumber:
 	inc b ; $19e3
 .checkPad:
 	ld a, c ; $19e4
-	sub a, b ; $19e5
+	sub b ; $19e5
 	jr c, .emitSign ; $19e6
 	jr z, .emitSign ; $19e8
 	ld b, a ; $19ea
@@ -4451,24 +4451,24 @@ FormatDecimalNumber:
 	ld hl, sp + 2 ; $1a09
 .skipZerosLoop:
 	ld a, [hl+] ; $1a0b
-	or a, a ; $1a0c
+	or a ; $1a0c
 	jr nz, .digitLoop ; $1a0d
 	dec b ; $1a0f
 	jr nz, .skipZerosLoop ; $1a10
 .digitLoop:
-	add a, c ; $1a12
+	add c ; $1a12
 	ld [de], a ; $1a13
 	inc de ; $1a14
 	ld a, [hl+] ; $1a15
 	bit 7, a ; $1a16
 	jr z, .digitLoop ; $1a18
-	xor a, a ; $1a1a
+	xor a ; $1a1a
 	ld [de], a ; $1a1b
 	pop bc ; $1a1c
 	add sp, 6 ; $1a1d
 	ret ; $1a1f
 ExtractDecimalDigit:
-	xor a, a ; $1a20
+	xor a ; $1a20
 .loop:
 	inc a ; $1a21
 	add hl, bc ; $1a22
@@ -4531,7 +4531,7 @@ FormatDecimalNumberUnsigned:
 	ld hl, sp + 2 ; $1a7a
 .countDigitsLoop:
 	ld a, [hl] ; $1a7c
-	or a, a ; $1a7d
+	or a ; $1a7d
 	jr nz, .checkPad ; $1a7e
 	dec b ; $1a80
 	inc hl ; $1a81
@@ -4540,7 +4540,7 @@ FormatDecimalNumberUnsigned:
 	inc b ; $1a86
 .checkPad:
 	ld a, c ; $1a87
-	sub a, b ; $1a88
+	sub b ; $1a88
 	jr c, .emitDigits ; $1a89
 	jr z, .emitDigits ; $1a8b
 	ld b, a ; $1a8d
@@ -4556,24 +4556,24 @@ FormatDecimalNumberUnsigned:
 	ld hl, sp + 2 ; $1a99
 .skipZerosLoop:
 	ld a, [hl+] ; $1a9b
-	or a, a ; $1a9c
+	or a ; $1a9c
 	jr nz, .digitLoop ; $1a9d
 	dec b ; $1a9f
 	jr nz, .skipZerosLoop ; $1aa0
 .digitLoop:
-	add a, c ; $1aa2
+	add c ; $1aa2
 	ld [de], a ; $1aa3
 	inc de ; $1aa4
 	ld a, [hl+] ; $1aa5
 	bit 7, a ; $1aa6
 	jr z, .digitLoop ; $1aa8
-	xor a, a ; $1aaa
+	xor a ; $1aaa
 	ld [de], a ; $1aab
 	pop bc ; $1aac
 	add sp, 6 ; $1aad
 	ret ; $1aaf
 ExtractDecimalDigitUnsigned:
-	xor a, a ; $1ab0
+	xor a ; $1ab0
 .loop:
 	inc a ; $1ab1
 	add hl, bc ; $1ab2
@@ -4681,7 +4681,7 @@ PrintDecimalWord:
 	pop af ; $1b36
 	ret ; $1b37
 ClearFrameTasks:
-	xor a, a ; $1b38
+	xor a ; $1b38
 	ldh [hFrameTasksReady], a ; $1b39
 	ld hl, wFrameTasks ; $1b3b
 	ld c, $04 ; $1b3e
@@ -4693,23 +4693,23 @@ Compare3Bytes:
 	push hl ; $1b48
 	push de ; $1b49
 	ld a, [de] ; $1b4a
-	cp a, [hl] ; $1b4b
+	cp [hl] ; $1b4b
 	jr nz, .step ; $1b4c
 	inc hl ; $1b4e
 	inc de ; $1b4f
 	ld a, [de] ; $1b50
-	cp a, [hl] ; $1b51
+	cp [hl] ; $1b51
 	jr nz, .step ; $1b52
 	inc hl ; $1b54
 	inc de ; $1b55
 	ld a, [de] ; $1b56
-	cp a, [hl] ; $1b57
+	cp [hl] ; $1b57
 	jr nz, .step ; $1b58
-	xor a, a ; $1b5a
+	xor a ; $1b5a
 	jr .restore ; $1b5b
 .step:
 	ld a, $01 ; $1b5d
-	or a, a ; $1b5f
+	or a ; $1b5f
 .restore:
 	pop de ; $1b60
 	pop hl ; $1b61
@@ -4717,15 +4717,15 @@ Compare3Bytes:
 Check3BytesZero:
 	push hl ; $1b63
 	ld a, [hl+] ; $1b64
-	or a, [hl] ; $1b65
+	or [hl] ; $1b65
 	inc hl ; $1b66
-	or a, [hl] ; $1b67
+	or [hl] ; $1b67
 	pop hl ; $1b68
 	ret ; $1b69
 RegisterFrameTask:
 	add sp, -4 ; $1b6a
 	push af ; $1b6c
-	xor a, a ; $1b6d
+	xor a ; $1b6d
 	ldh [hFrameTasksReady], a ; $1b6e
 	pop af ; $1b70
 	ld d, h ; $1b71
@@ -4757,7 +4757,7 @@ RegisterFrameTask:
 	jr nz, .searchLoop ; $1b94
 .searchDone:
 	ld a, b ; $1b96
-	or a, a ; $1b97
+	or a ; $1b97
 	jr nz, .done ; $1b98
 	ld c, $16 ; $1b9a
 	ld hl, wFrameTasks ; $1b9c
@@ -4789,7 +4789,7 @@ RegisterFrameTask:
 	dec c ; $1bba
 	jr nz, .insertLoop ; $1bbb
 	ld a, b ; $1bbd
-	or a, a ; $1bbe
+	or a ; $1bbe
 	jr nz, .done ; $1bbf
 .done:
 	call SortFrameTasks ; $1bc1
@@ -4800,7 +4800,7 @@ RegisterFrameTask:
 UnregisterFrameTask:
 	add sp, -3 ; $1bcb
 	push af ; $1bcd
-	xor a, a ; $1bce
+	xor a ; $1bce
 	ldh [hFrameTasksReady], a ; $1bcf
 	pop af ; $1bd1
 	ld d, h ; $1bd2
@@ -4821,7 +4821,7 @@ UnregisterFrameTask:
 	call Compare3Bytes ; $1be5
 	jr nz, .next ; $1be8
 	dec hl ; $1bea
-	xor a, a ; $1beb
+	xor a ; $1beb
 	ld [hl+], a ; $1bec
 	ld [hl+], a ; $1bed
 	ld [hl+], a ; $1bee
@@ -4839,10 +4839,10 @@ UnregisterFrameTask:
 	add sp, 3 ; $1bfc
 	ret ; $1bfe
 RunFrameTasks:
-	and a, $80 ; $1bff
+	and $80 ; $1bff
 	ld b, a ; $1c01
 	ldh a, [hFrameTasksReady] ; $1c02
-	or a, a ; $1c04
+	or a ; $1c04
 	ret z ; $1c05
 	ldh a, [hRomBank] ; $1c06
 	ld d, a ; $1c08
@@ -4853,8 +4853,8 @@ RunFrameTasks:
 	ld hl, wFrameTasks ; $1c0f
 .loop:
 	ld a, [hl+] ; $1c12
-	xor a, b ; $1c13
-	add a, a ; $1c14
+	xor b ; $1c13
+	add a ; $1c14
 	jr z, .next ; $1c15
 	jr c, .next ; $1c17
 	push bc ; $1c19
@@ -4892,7 +4892,7 @@ SortFrameTasks:
 	ld b, c ; $1c47
 .loopB:
 	ld a, [de] ; $1c48
-	cp a, [hl] ; $1c49
+	cp [hl] ; $1c49
 	jr c, .next ; $1c4a
 	push bc ; $1c4c
 	ld c, $04 ; $1c4d
@@ -4925,59 +4925,59 @@ SortFrameTasks:
 SplitColorComponents:
 	push de ; $1c6a
 	ld a, b ; $1c6b
-	and a, $7c ; $1c6c
+	and $7c ; $1c6c
 	rrca ; $1c6e
 	rrca ; $1c6f
 	ld e, a ; $1c70
 	ld a, b ; $1c71
-	and a, $03 ; $1c72
+	and $03 ; $1c72
 	ld b, a ; $1c74
 	ld a, c ; $1c75
-	and a, $e0 ; $1c76
-	or a, b ; $1c78
+	and $e0 ; $1c76
+	or b ; $1c78
 	rlca ; $1c79
 	rlca ; $1c7a
 	rlca ; $1c7b
 	ld b, a ; $1c7c
 	ld a, c ; $1c7d
-	and a, $1f ; $1c7e
+	and $1f ; $1c7e
 	ld c, e ; $1c80
 	pop de ; $1c81
 	ret ; $1c82
 CombineColorComponents:
 	push af ; $1c83
 	push de ; $1c84
-	and a, $1f ; $1c85
+	and $1f ; $1c85
 	ld e, a ; $1c87
 	ld a, b ; $1c88
 	rrca ; $1c89
 	rrca ; $1c8a
 	rrca ; $1c8b
 	ld b, a ; $1c8c
-	and a, $e0 ; $1c8d
-	or a, e ; $1c8f
+	and $e0 ; $1c8d
+	or e ; $1c8f
 	ld e, a ; $1c90
 	ld a, b ; $1c91
-	and a, $03 ; $1c92
+	and $03 ; $1c92
 	ld b, a ; $1c94
 	ld a, c ; $1c95
 	rlca ; $1c96
 	rlca ; $1c97
-	and a, $7c ; $1c98
-	or a, b ; $1c9a
+	and $7c ; $1c98
+	or b ; $1c9a
 	ld b, a ; $1c9b
 	ld c, e ; $1c9c
 	pop de ; $1c9d
 	pop af ; $1c9e
 	ret ; $1c9f
 AddClampColorComponent:
-	add a, d ; $1ca0
+	add d ; $1ca0
 	bit 7, a ; $1ca1
 	jr z, .clampHigh ; $1ca3
-	xor a, a ; $1ca5
+	xor a ; $1ca5
 	ret ; $1ca6
 .clampHigh:
-	cp a, $1f ; $1ca7
+	cp $1f ; $1ca7
 	ret c ; $1ca9
 	ld a, $1f ; $1caa
 	ret ; $1cac
@@ -5058,9 +5058,9 @@ ForceFadeIn:
 	call BeginFadeOut ; $1d10
 	push af ; $1d13
 	ldh a, [hFadeState] ; $1d14
-	or a, a ; $1d16
+	or a ; $1d16
 	jr z, .restore ; $1d17
-	or a, $80 ; $1d19
+	or $80 ; $1d19
 	ldh [hFadeState], a ; $1d1b
 .restore:
 	pop af ; $1d1d
@@ -5069,7 +5069,7 @@ ForceFadeIn:
 BeginFadeOut:
 	push af ; $1d20
 	ldh a, [hFadedOut] ; $1d21
-	or a, a ; $1d23
+	or a ; $1d23
 	jr nz, BeginFadeIn.done ; $1d24
 .start:
 	ld a, $01 ; $1d26
@@ -5079,16 +5079,16 @@ BeginFadeOut:
 BeginFadeIn:
 	push af ; $1d2e
 	ldh a, [hFadedOut] ; $1d2f
-	or a, a ; $1d31
+	or a ; $1d31
 	jr z, .done ; $1d32
 .start:
 	ld a, $02 ; $1d34
 	ldh [hFadeState], a ; $1d36
-	xor a, a ; $1d38
+	xor a ; $1d38
 	ldh [hFadedOut], a ; $1d39
 .setSpeed:
 	ld a, c ; $1d3b
-	and a, a ; $1d3c
+	and a ; $1d3c
 	jr nz, .storeSpeed ; $1d3d
 	inc a ; $1d3f
 .storeSpeed:
@@ -5101,7 +5101,7 @@ BeginFadeIn:
 UpdateFadeIn:
 	push af ; $1d48
 	ldh a, [hFadeState] ; $1d49
-	and a, $02 ; $1d4b
+	and $02 ; $1d4b
 	jr z, UpdateFadeOut.restore2 ; $1d4d
 	push bc ; $1d4f
 	push de ; $1d50
@@ -5109,9 +5109,9 @@ UpdateFadeIn:
 	ldh a, [hFadeSpeed] ; $1d52
 	ld c, a ; $1d54
 	ldh a, [hFadeCounter] ; $1d55
-	sub a, c ; $1d57
+	sub c ; $1d57
 	jr nc, .noCarry ; $1d58
-	xor a, a ; $1d5a
+	xor a ; $1d5a
 .noCarry:
 	ld c, a ; $1d5b
 	jr UpdateFadeOut.step2 ; $1d5c
@@ -5126,22 +5126,22 @@ UpdateFadeOut:
 	ldh a, [hFadeSpeed] ; $1d67
 	ld c, a ; $1d69
 	ldh a, [hFadeCounter] ; $1d6a
-	sub a, c ; $1d6c
+	sub c ; $1d6c
 	jr nc, .noCarry ; $1d6d
-	xor a, a ; $1d6f
+	xor a ; $1d6f
 .noCarry:
 	ld b, a ; $1d70
 	ld a, $7c ; $1d71
-	sub a, b ; $1d73
+	sub b ; $1d73
 	ld c, a ; $1d74
 	ld a, b ; $1d75
 .step2:
 	push af ; $1d76
 	ldh a, [hFadeState] ; $1d77
-	add a, a ; $1d79
+	add a ; $1d79
 	jr nc, .noCarry2 ; $1d7a
 	ld a, c ; $1d7c
-	and a, $04 ; $1d7d
+	and $04 ; $1d7d
 	call z, ApplyWhiteFade ; $1d7f
 	jr .restore ; $1d82
 .noCarry2:
@@ -5153,7 +5153,7 @@ UpdateFadeOut:
 	call AdjustColorsBrightness ; $1d90
 .restore:
 	pop af ; $1d93
-	and a, a ; $1d94
+	and a ; $1d94
 	jr nz, .store ; $1d95
 	ldh [hFadeState], a ; $1d97
 .store:
@@ -5170,10 +5170,10 @@ WaitFadeEnd:
 	push af ; $1da4
 .loop:
 	ldh a, [hFadeState] ; $1da5
-	and a, a ; $1da7
+	and a ; $1da7
 	jr z, .done ; $1da8
 	ldh a, [hLinkExchangeActive] ; $1daa
-	or a, a ; $1dac
+	or a ; $1dac
 	jr z, .waitLocalFrame ; $1dad
 	push af ; $1daf
 	farcall SyncLinkFrame ; $1db0
@@ -5190,7 +5190,7 @@ WaitFadeEndLinked:
 	push af ; $1dbd
 .loop:
 	ldh a, [hFadeState] ; $1dbe
-	and a, a ; $1dc0
+	and a ; $1dc0
 	jr z, .done ; $1dc1
 	push af ; $1dc3
 	farcall SyncLinkFrame ; $1dc4
@@ -5202,7 +5202,7 @@ WaitFadeEndLinked:
 ApplyWhiteFade:
 	push af ; $1dcc
 	ld a, c ; $1dcd
-	and a, $78 ; $1dce
+	and $78 ; $1dce
 	ld d, a ; $1dd0
 	rrca ; $1dd1
 	rrca ; $1dd2
@@ -5224,20 +5224,20 @@ ApplyWhiteFade:
 	push de ; $1de8
 	push bc ; $1de9
 	ld a, [hl+] ; $1dea
-	and a, $df ; $1deb
-	add a, e ; $1ded
+	and $df ; $1deb
+	add e ; $1ded
 	ld c, a ; $1dee
 	ld a, [hl+] ; $1def
 	res 2, a ; $1df0
-	adc a, d ; $1df2
+	adc d ; $1df2
 	ld b, a ; $1df3
 	bit 7, a ; $1df4
 	jr z, .positive ; $1df6
-	or a, $78 ; $1df8
+	or $78 ; $1df8
 .positive:
 	bit 2, a ; $1dfa
 	jr z, .bit2Clear ; $1dfc
-	and a, $fc ; $1dfe
+	and $fc ; $1dfe
 	dec a ; $1e00
 	set 7, c ; $1e01
 	set 6, c ; $1e03
@@ -5246,7 +5246,7 @@ ApplyWhiteFade:
 	ld a, c ; $1e06
 	bit 5, a ; $1e07
 	jr z, .restore ; $1e09
-	and a, $e0 ; $1e0b
+	and $e0 ; $1e0b
 	dec a ; $1e0d
 .restore:
 	pop de ; $1e0e
@@ -5264,7 +5264,7 @@ ApplyWhiteFade:
 	pop af ; $1e1b
 	ret ; $1e1c
 ClearSpriteQueue:
-	xor a, a ; $1e1d
+	xor a ; $1e1d
 	ldh [hSpriteQueueIndex], a ; $1e1e
 	ldh [hSpriteQueueBase], a ; $1e20
 ClearUnusedSprites:
@@ -5274,12 +5274,12 @@ ClearUnusedSprites:
 	ld a, [wSpriteBufferPage] ; $1e27
 	ld h, a ; $1e2a
 	ld a, $a0 ; $1e2b
-	sub a, l ; $1e2d
+	sub l ; $1e2d
 	ret z ; $1e2e
 	srl a ; $1e2f
 	srl a ; $1e31
 	ld c, a ; $1e33
-	xor a, a ; $1e34
+	xor a ; $1e34
 .loop:
 	ld [hl+], a ; $1e35
 	ld [hl+], a ; $1e36
@@ -5292,8 +5292,8 @@ ClearBothSpriteBuffers:
 	call ClearSpriteQueue ; $1e3d
 	ld a, [wSpriteBufferPage] ; $1e40
 	push af ; $1e43
-	and a, $cf ; $1e44
-	xor a, $05 ; $1e46
+	and $cf ; $1e44
+	xor $05 ; $1e46
 	ld [wSpriteBufferPage], a ; $1e48
 	call ClearSpriteQueue ; $1e4b
 	pop af ; $1e4e
@@ -5303,7 +5303,7 @@ ClearBothSpriteBuffers:
 	ret ; $1e54
 QueueSprite16:
 	ldh a, [hSpriteQueueIndex] ; $1e55
-	cp a, $a0 ; $1e57
+	cp $a0 ; $1e57
 	ret z ; $1e59
 	ld l, a ; $1e5a
 	ld a, [wSpriteBufferPage] ; $1e5b
@@ -5321,12 +5321,12 @@ QueueSprite16:
 	inc c ; $1e6b
 	inc c ; $1e6c
 	ld a, l ; $1e6d
-	cp a, $a0 ; $1e6e
+	cp $a0 ; $1e6e
 	jr z, .store ; $1e70
 	ld [hl], e ; $1e72
 	inc l ; $1e73
 	ld a, d ; $1e74
-	add a, $08 ; $1e75
+	add $08 ; $1e75
 	ld [hl+], a ; $1e77
 	ld [hl], c ; $1e78
 	inc l ; $1e79
@@ -5340,7 +5340,7 @@ QueueSprite16:
 	ld [hl], e ; $1e80
 	inc l ; $1e81
 	ld a, d ; $1e82
-	add a, $08 ; $1e83
+	add $08 ; $1e83
 	ld [hl+], a ; $1e85
 	ld [hl], c ; $1e86
 	inc l ; $1e87
@@ -5349,7 +5349,7 @@ QueueSprite16:
 	inc c ; $1e8a
 	inc c ; $1e8b
 	ld a, l ; $1e8c
-	cp a, $a0 ; $1e8d
+	cp $a0 ; $1e8d
 	jr z, .store ; $1e8f
 	ld [hl], e ; $1e91
 	inc l ; $1e92
@@ -5382,31 +5382,31 @@ QueueSpriteTemplate:
 	ld c, a ; $1eb4
 .copyLoop:
 	ld a, c ; $1eb5
-	cp a, $a0 ; $1eb6
+	cp $a0 ; $1eb6
 	jr z, .done ; $1eb8
 	ld a, [de] ; $1eba
-	cp a, $80 ; $1ebb
+	cp $80 ; $1ebb
 	jr z, .done ; $1ebd
 	ld hl, sp + 0 ; $1ebf
-	add a, [hl] ; $1ec1
+	add [hl] ; $1ec1
 	ld [bc], a ; $1ec2
 	inc c ; $1ec3
 	inc de ; $1ec4
 	inc hl ; $1ec5
 	ld a, [de] ; $1ec6
-	add a, [hl] ; $1ec7
+	add [hl] ; $1ec7
 	ld [bc], a ; $1ec8
 	inc c ; $1ec9
 	inc de ; $1eca
 	inc hl ; $1ecb
 	ld a, [de] ; $1ecc
-	add a, [hl] ; $1ecd
+	add [hl] ; $1ecd
 	ld [bc], a ; $1ece
 	inc c ; $1ecf
 	inc de ; $1ed0
 	inc hl ; $1ed1
 	ld a, [de] ; $1ed2
-	add a, [hl] ; $1ed3
+	add [hl] ; $1ed3
 	ld [bc], a ; $1ed4
 	inc c ; $1ed5
 	inc de ; $1ed6
@@ -5418,33 +5418,33 @@ QueueSpriteTemplate:
 	ld c, a ; $1edf
 .mirrorLoop:
 	ld a, c ; $1ee0
-	cp a, $a0 ; $1ee1
+	cp $a0 ; $1ee1
 	jr z, .done ; $1ee3
 	ld a, [de] ; $1ee5
-	cp a, $80 ; $1ee6
+	cp $80 ; $1ee6
 	jr z, .done ; $1ee8
 	ld hl, sp + 0 ; $1eea
-	add a, [hl] ; $1eec
+	add [hl] ; $1eec
 	ld [bc], a ; $1eed
 	inc c ; $1eee
 	inc de ; $1eef
 	inc hl ; $1ef0
 	ld a, [de] ; $1ef1
 	cpl ; $1ef2
-	add a, $09 ; $1ef3
-	add a, [hl] ; $1ef5
+	add $09 ; $1ef3
+	add [hl] ; $1ef5
 	ld [bc], a ; $1ef6
 	inc c ; $1ef7
 	inc de ; $1ef8
 	inc hl ; $1ef9
 	ld a, [de] ; $1efa
-	add a, [hl] ; $1efb
+	add [hl] ; $1efb
 	ld [bc], a ; $1efc
 	inc c ; $1efd
 	inc de ; $1efe
 	inc hl ; $1eff
 	ld a, [de] ; $1f00
-	or a, [hl] ; $1f01
+	or [hl] ; $1f01
 	ld [bc], a ; $1f02
 	inc c ; $1f03
 	inc de ; $1f04
@@ -5470,7 +5470,7 @@ QueueSpriteGrid:
 	push hl ; $1f1a
 .colLoop:
 	ldh a, [hSpriteQueueIndex] ; $1f1b
-	cp a, $a0 ; $1f1d
+	cp $a0 ; $1f1d
 	jr nz, .store ; $1f1f
 	add sp, 4 ; $1f21
 	pop hl ; $1f23
@@ -5497,14 +5497,14 @@ QueueSpriteGrid:
 	inc c ; $1f3a
 	inc c ; $1f3b
 	ld a, d ; $1f3c
-	add a, $08 ; $1f3d
+	add $08 ; $1f3d
 	ld d, a ; $1f3f
 	dec h ; $1f40
 	jr nz, .colLoop ; $1f41
 	pop hl ; $1f43
 	pop de ; $1f44
 	ld a, e ; $1f45
-	add a, $10 ; $1f46
+	add $10 ; $1f46
 	ld e, a ; $1f48
 	dec l ; $1f49
 	jr nz, .rowLoop ; $1f4a
@@ -5515,16 +5515,16 @@ QueueSpriteGrid:
 	ret ; $1f50
 QueueSprite:
 	ldh a, [hSpriteQueueIndex] ; $1f51
-	cp a, $a0 ; $1f53
+	cp $a0 ; $1f53
 	ret z ; $1f55
 	ld l, a ; $1f56
 	ld a, [wSpriteBufferPage] ; $1f57
 	ld h, a ; $1f5a
 	ld a, e ; $1f5b
-	add a, $0c ; $1f5c
+	add $0c ; $1f5c
 	ld [hl+], a ; $1f5e
 	ld a, d ; $1f5f
-	add a, $04 ; $1f60
+	add $04 ; $1f60
 	ld [hl+], a ; $1f62
 	ld a, c ; $1f63
 	ld [hl+], a ; $1f64
@@ -5544,14 +5544,14 @@ PositionSpriteWorld:
 	ld a, [wCameraX + 1] ; $1f74
 	ld b, a ; $1f77
 	ld a, l ; $1f78
-	sub a, c ; $1f79
+	sub c ; $1f79
 	ld l, a ; $1f7a
 	ld a, h ; $1f7b
-	sbc a, b ; $1f7c
+	sbc b ; $1f7c
 	ld h, a ; $1f7d
 	ld a, h ; $1f7e
 	inc a ; $1f7f
-	cp a, $16 ; $1f80
+	cp $16 ; $1f80
 	jp nc, .restore ; $1f82
 	add hl, hl ; $1f85
 	add hl, hl ; $1f86
@@ -5564,14 +5564,14 @@ PositionSpriteWorld:
 	ld l, e ; $1f8f
 	ld h, d ; $1f90
 	ld a, l ; $1f91
-	sub a, c ; $1f92
+	sub c ; $1f92
 	ld l, a ; $1f93
 	ld a, h ; $1f94
-	sbc a, b ; $1f95
+	sbc b ; $1f95
 	ld h, a ; $1f96
 	pop de ; $1f97
 	ld a, h ; $1f98
-	cp a, $14 ; $1f99
+	cp $14 ; $1f99
 	jp nc, .restore ; $1f9b
 	add hl, hl ; $1f9e
 	add hl, hl ; $1f9f
@@ -5602,14 +5602,14 @@ PositionSpriteWorld2:
 	ld a, [wCameraX + 1] ; $1fba
 	ld b, a ; $1fbd
 	ld a, l ; $1fbe
-	sub a, c ; $1fbf
+	sub c ; $1fbf
 	ld l, a ; $1fc0
 	ld a, h ; $1fc1
-	sbc a, b ; $1fc2
+	sbc b ; $1fc2
 	ld h, a ; $1fc3
 	ld a, h ; $1fc4
 	inc a ; $1fc5
-	cp a, $16 ; $1fc6
+	cp $16 ; $1fc6
 	jp nc, .restore ; $1fc8
 	add hl, hl ; $1fcb
 	add hl, hl ; $1fcc
@@ -5622,14 +5622,14 @@ PositionSpriteWorld2:
 	ld l, e ; $1fd5
 	ld h, d ; $1fd6
 	ld a, l ; $1fd7
-	sub a, c ; $1fd8
+	sub c ; $1fd8
 	ld l, a ; $1fd9
 	ld a, h ; $1fda
-	sbc a, b ; $1fdb
+	sbc b ; $1fdb
 	ld h, a ; $1fdc
 	pop de ; $1fdd
 	ld a, h ; $1fde
-	cp a, $13 ; $1fdf
+	cp $13 ; $1fdf
 	jp nc, .restore ; $1fe1
 	add hl, hl ; $1fe4
 	add hl, hl ; $1fe5
@@ -5767,13 +5767,13 @@ NumberFontGlyphPtrs:
 	ret ; $20cd
 	push af ; $20ce
 	push hl ; $20cf
-	sub a, $30 ; $20d0
-	and a, $1f ; $20d2
-	add a, a ; $20d4
-	add a, LOW(NumberFontGlyphPtrs) ; $20d5
+	sub $30 ; $20d0
+	and $1f ; $20d2
+	add a ; $20d4
+	add LOW(NumberFontGlyphPtrs) ; $20d5
 	ld l, a ; $20d7
-	adc a, HIGH(NumberFontGlyphPtrs) ; $20d8
-	sub a, l ; $20da
+	adc HIGH(NumberFontGlyphPtrs) ; $20d8
+	sub l ; $20da
 	ld h, a ; $20db
 	ld a, [hl+] ; $20dc
 	ld h, [hl] ; $20dd
@@ -5789,29 +5789,29 @@ RenderTextToTiles:
 	push hl ; $20e8
 .loop:
 	ld a, [hl+] ; $20e9
-	and a, a ; $20ea
+	and a ; $20ea
 	jr z, .restore ; $20eb
-	sub a, $30 ; $20ed
+	sub $30 ; $20ed
 	jr nc, .noCarry ; $20ef
 	ld a, b ; $20f1
-	add a, $06 ; $20f2
+	add $06 ; $20f2
 	ld b, a ; $20f4
 	jr .loop ; $20f5
 .noCarry:
 	push hl ; $20f7
-	and a, $1f ; $20f8
-	add a, a ; $20fa
-	add a, LOW(NumberFontGlyphPtrs) ; $20fb
+	and $1f ; $20f8
+	add a ; $20fa
+	add LOW(NumberFontGlyphPtrs) ; $20fb
 	ld l, a ; $20fd
-	adc a, HIGH(NumberFontGlyphPtrs) ; $20fe
-	sub a, l ; $2100
+	adc HIGH(NumberFontGlyphPtrs) ; $20fe
+	sub l ; $2100
 	ld h, a ; $2101
 	ld a, [hl+] ; $2102
 	ld h, [hl] ; $2103
 	ld l, a ; $2104
 	call RenderGlyphToTiles ; $2105
 	ld a, [hl] ; $2108
-	add a, b ; $2109
+	add b ; $2109
 	ld b, a ; $210a
 	pop hl ; $210b
 	jr .loop ; $210c
@@ -5835,16 +5835,16 @@ RenderGlyphToTiles:
 	ld [$c0f9], a ; $2124
 	push hl ; $2127
 	ld a, b ; $2128
-	and a, $07 ; $2129
-	add a, LOW(PixelMaskTable) ; $212b
+	and $07 ; $2129
+	add LOW(PixelMaskTable) ; $212b
 	ld l, a ; $212d
-	adc a, HIGH(PixelMaskTable) ; $212e
-	sub a, l ; $2130
+	adc HIGH(PixelMaskTable) ; $212e
+	sub l ; $2130
 	ld h, a ; $2131
 	ld a, [hl] ; $2132
 	ld [$c0fa], a ; $2133
 	ld a, b ; $2136
-	and a, $f8 ; $2137
+	and $f8 ; $2137
 	ld l, a ; $2139
 	ld h, $00 ; $213a
 	add hl, hl ; $213c
@@ -5863,28 +5863,28 @@ RenderGlyphToTiles:
 .loopB:
 	push af ; $214f
 	ld a, [de] ; $2150
-	and a, c ; $2151
+	and c ; $2151
 	jr z, .clearPixel ; $2152
 	ld a, b ; $2154
-	or a, [hl] ; $2155
+	or [hl] ; $2155
 	jr .store ; $2156
 .clearPixel:
 	ld a, b ; $2158
 	cpl ; $2159
-	and a, [hl] ; $215a
+	and [hl] ; $215a
 .store:
 	ld [hl+], a ; $215b
 	rrc c ; $215c
 	ld a, [de] ; $215e
-	and a, c ; $215f
+	and c ; $215f
 	jr z, .clearPixel2 ; $2160
 	ld a, b ; $2162
-	or a, [hl] ; $2163
+	or [hl] ; $2163
 	jr .store2 ; $2164
 .clearPixel2:
 	ld a, b ; $2166
 	cpl ; $2167
-	and a, [hl] ; $2168
+	and [hl] ; $2168
 .store2:
 	ld [hl-], a ; $2169
 	rrc c ; $216a
@@ -5894,7 +5894,7 @@ RenderGlyphToTiles:
 	rrc b ; $216f
 	jr nc, .restore ; $2171
 	ld a, $20 ; $2173
-	add a, l ; $2175
+	add l ; $2175
 	ld l, a ; $2176
 	jr nc, .restore ; $2177
 	inc h ; $2179
@@ -5914,10 +5914,10 @@ RenderGlyphToTiles:
 	pop af ; $218b
 	ret ; $218c
 ProcessBGBlitQueue:
-	xor a, a ; $218d
+	xor a ; $218d
 	ldh [hBGColumnBlitDone], a ; $218e
 	ldh a, [hBGRowBlitPending] ; $2190
-	or a, a ; $2192
+	or a ; $2192
 	jr z, .zero ; $2193
 	ld a, $01 ; $2195
 	ldh [rVBK], a ; $2197
@@ -5937,7 +5937,7 @@ ProcessBGBlitQueue:
 	ld [hl], e ; $21ad
 	inc hl ; $21ae
 	ld [hl], a ; $21af
-	xor a, a ; $21b0
+	xor a ; $21b0
 	ldh [rVBK], a ; $21b1
 	ld bc, $c340 ; $21b3
 	ld hl, wBGRowBlitDest ; $21b6
@@ -5957,7 +5957,7 @@ ProcessBGBlitQueue:
 	ld [hl], a ; $21c9
 .zero:
 	ldh a, [hBGColumnBlitPending] ; $21ca
-	or a, a ; $21cc
+	or a ; $21cc
 	jr z, .zero2 ; $21cd
 	ld a, $01 ; $21cf
 	ldh [hBGColumnBlitDone], a ; $21d1
@@ -5977,7 +5977,7 @@ ProcessBGBlitQueue:
 	ld b, a ; $21e8
 	dec b ; $21e9
 	jr nz, .loop ; $21ea
-	xor a, a ; $21ec
+	xor a ; $21ec
 	ldh [rVBK], a ; $21ed
 	ld de, $c3c0 ; $21ef
 	ld a, [wBGColumnBlitX] ; $21f2
@@ -5995,15 +5995,15 @@ ProcessBGBlitQueue:
 	dec b ; $2203
 	jr nz, .loopB ; $2204
 .zero2:
-	xor a, a ; $2206
+	xor a ; $2206
 	ldh [hBGRowBlitPending], a ; $2207
 	ldh [hBGColumnBlitPending], a ; $2209
 	ldh a, [hBGColumnBlitDone] ; $220b
 	ret ; $220d
 GetMapBufferAddr64:
 	ld a, [wCameraY + 1] ; $220e
-	add a, c ; $2211
-	and a, $3f ; $2212
+	add c ; $2211
+	and $3f ; $2212
 	ld h, $00 ; $2214
 	ld l, a ; $2216
 	add hl, hl ; $2217
@@ -6013,8 +6013,8 @@ GetMapBufferAddr64:
 	add hl, hl ; $221b
 	add hl, hl ; $221c
 	ld a, [wCameraX + 1] ; $221d
-	add a, b ; $2220
-	and a, $3f ; $2221
+	add b ; $2220
+	and $3f ; $2221
 	ld d, $00 ; $2223
 	ld e, a ; $2225
 	add hl, de ; $2226
@@ -6023,8 +6023,8 @@ GetMapBufferAddr64:
 	ret ; $222b
 BlitBGRowFrom64:
 	ld a, [wCameraY + 1] ; $222c
-	add a, c ; $222f
-	and a, $1f ; $2230
+	add c ; $222f
+	and $1f ; $2230
 	ld h, $00 ; $2232
 	ld l, a ; $2234
 	add hl, hl ; $2235
@@ -6039,8 +6039,8 @@ BlitBGRowFrom64:
 	ld a, h ; $2242
 	ld [wBGRowBlitDest + 1], a ; $2243
 	ld a, [wCameraX + 1] ; $2246
-	add a, b ; $2249
-	and a, $1f ; $224a
+	add b ; $2249
+	and $1f ; $224a
 	ld h, $00 ; $224c
 	ld l, a ; $224e
 	ld de, $c300 ; $224f
@@ -6055,7 +6055,7 @@ BlitBGRowFrom64:
 	ld a, [hl+] ; $2261
 	ld [de], a ; $2262
 	ld a, l ; $2263
-	and a, $3f ; $2264
+	and $3f ; $2264
 	jr nz, .nextCell ; $2266
 	ld a, c ; $2268
 	ld bc, $ffc0 ; $2269
@@ -6070,13 +6070,13 @@ BlitBGRowFrom64:
 	wram_bank $03 ; $2275
 	ld bc, $4020 ; $227b
 	ld a, e ; $227e
-	add a, b ; $227f
+	add b ; $227f
 	ld e, a ; $2280
 .secondHalf:
 	ld a, [hl+] ; $2281
 	ld [de], a ; $2282
 	ld a, l ; $2283
-	and a, $3f ; $2284
+	and $3f ; $2284
 	jr nz, .nextCell2 ; $2286
 	ld a, c ; $2288
 	ld bc, $ffc0 ; $2289
@@ -6092,14 +6092,14 @@ BlitBGRowFrom64:
 	ret ; $2298
 BlitBGColumnFrom64:
 	ld a, [wCameraX + 1] ; $2299
-	add a, b ; $229c
-	and a, $1f ; $229d
+	add b ; $229c
+	and $1f ; $229d
 	ld [wBGColumnBlitX], a ; $229f
 	ld d, $00 ; $22a2
 	ld e, a ; $22a4
 	ld a, [wCameraY + 1] ; $22a5
-	add a, c ; $22a8
-	and a, $1f ; $22a9
+	add c ; $22a8
+	and $1f ; $22a9
 	ld h, $00 ; $22ab
 	ld l, a ; $22ad
 	ld de, $c380 ; $22ae
@@ -6127,7 +6127,7 @@ BlitBGColumnFrom64:
 	wram_bank $03 ; $22d3
 	ld bc, $4020 ; $22d9
 	ld a, e ; $22dc
-	add a, b ; $22dd
+	add b ; $22dd
 	ld e, a ; $22de
 .secondHalf:
 	ld a, [hl] ; $22df
@@ -6147,8 +6147,8 @@ BlitBGColumnFrom64:
 	ret ; $22f5
 GetScrollBufferAddr:
 	ld a, [wCameraY + 1] ; $22f6
-	add a, c ; $22f9
-	and a, $7f ; $22fa
+	add c ; $22f9
+	and $7f ; $22fa
 	ld h, $00 ; $22fc
 	ld l, a ; $22fe
 	add hl, hl ; $22ff
@@ -6157,8 +6157,8 @@ GetScrollBufferAddr:
 	add hl, hl ; $2302
 	add hl, hl ; $2303
 	ld a, [wCameraX + 1] ; $2304
-	add a, b ; $2307
-	and a, $1f ; $2308
+	add b ; $2307
+	and $1f ; $2308
 	ld d, $00 ; $230a
 	ld e, a ; $230c
 	add hl, de ; $230d
@@ -6167,8 +6167,8 @@ GetScrollBufferAddr:
 	ret ; $2312
 BlitBGStrip:
 	ld a, [wCameraY + 1] ; $2313
-	add a, c ; $2316
-	and a, $1f ; $2317
+	add c ; $2316
+	and $1f ; $2317
 	ld h, $00 ; $2319
 	ld l, a ; $231b
 	add hl, hl ; $231c
@@ -6183,8 +6183,8 @@ BlitBGStrip:
 	ld a, h ; $2329
 	ld [wBGRowBlitDest + 1], a ; $232a
 	ld a, [wCameraX + 1] ; $232d
-	add a, b ; $2330
-	and a, $1f ; $2331
+	add b ; $2330
+	and $1f ; $2331
 	ld h, $00 ; $2333
 	ld l, a ; $2335
 	ld de, $c300 ; $2336
@@ -6199,7 +6199,7 @@ BlitBGStrip:
 	ld a, [hl+] ; $2348
 	ld [de], a ; $2349
 	ld a, l ; $234a
-	and a, $1f ; $234b
+	and $1f ; $234b
 	jr nz, .maskSet ; $234d
 	ld a, c ; $234f
 	ld bc, $ffe0 ; $2350
@@ -6214,13 +6214,13 @@ BlitBGStrip:
 	wram_bank $03 ; $235c
 	ld bc, $4020 ; $2362
 	ld a, e ; $2365
-	add a, b ; $2366
+	add b ; $2366
 	ld e, a ; $2367
 .loopB:
 	ld a, [hl+] ; $2368
 	ld [de], a ; $2369
 	ld a, l ; $236a
-	and a, $1f ; $236b
+	and $1f ; $236b
 	jr nz, .maskSet2 ; $236d
 	ld a, c ; $236f
 	ld bc, $ffe0 ; $2370
@@ -6236,14 +6236,14 @@ BlitBGStrip:
 	ret ; $237f
 BlitBGStrip2:
 	ld a, [wCameraX + 1] ; $2380
-	add a, b ; $2383
-	and a, $1f ; $2384
+	add b ; $2383
+	and $1f ; $2384
 	ld [wBGColumnBlitX], a ; $2386
 	ld d, $00 ; $2389
 	ld e, a ; $238b
 	ld a, [wCameraY + 1] ; $238c
-	add a, c ; $238f
-	and a, $1f ; $2390
+	add c ; $238f
+	and $1f ; $2390
 	ld h, $00 ; $2392
 	ld l, a ; $2394
 	ld de, $c380 ; $2395
@@ -6271,7 +6271,7 @@ BlitBGStrip2:
 	wram_bank $03 ; $23ba
 	ld bc, $4020 ; $23c0
 	ld a, e ; $23c3
-	add a, b ; $23c4
+	add b ; $23c4
 	ld e, a ; $23c5
 .loopB:
 	ld a, [hl] ; $23c6
@@ -6291,30 +6291,30 @@ BlitBGStrip2:
 	ret ; $23dc
 UpdateGameTimer:
 	ld a, [$c0f4] ; $23dd
-	cp a, $01 ; $23e0
+	cp $01 ; $23e0
 	call z, TickSecondaryTimer ; $23e2
 	ld hl, wGameTimer ; $23e5
 	inc [hl] ; $23e8
 	ld a, [hl] ; $23e9
-	cp a, $3c ; $23ea
+	cp $3c ; $23ea
 	ret c ; $23ec
 	ld [hl], $00 ; $23ed
 	inc hl ; $23ef
 	inc [hl] ; $23f0
 	ld a, [hl] ; $23f1
-	cp a, $3c ; $23f2
+	cp $3c ; $23f2
 	ret c ; $23f4
 	ld [hl], $00 ; $23f5
 	inc hl ; $23f7
 	inc [hl] ; $23f8
 	ld a, [hl] ; $23f9
-	cp a, $3c ; $23fa
+	cp $3c ; $23fa
 	ret c ; $23fc
 	ld [hl], $00 ; $23fd
 	inc hl ; $23ff
 	inc [hl] ; $2400
 	ld a, [hl] ; $2401
-	cp a, $64 ; $2402
+	cp $64 ; $2402
 	ret c ; $2404
 	dec [hl] ; $2405
 	dec hl ; $2406
@@ -6323,14 +6323,14 @@ UpdateGameTimer:
 	ld hl, $c0f5 ; $240a
 	inc [hl] ; $240d
 	ld a, [hl] ; $240e
-	cp a, $3c ; $240f
+	cp $3c ; $240f
 	jr nz, .step ; $2411
 	ld [hl], $00 ; $2413
 	inc hl ; $2415
 	sound $af ; $2416
 	dec [hl] ; $2418
 	ld a, [hl] ; $2419
-	cp a, $ff ; $241a
+	cp $ff ; $241a
 	jr nz, .step ; $241c
 	ld [hl], $3b ; $241e
 	inc hl ; $2420
@@ -6338,9 +6338,9 @@ UpdateGameTimer:
 .step:
 	ld hl, $c0f6 ; $2422
 	ld a, [hl+] ; $2425
-	or a, [hl] ; $2426
+	or [hl] ; $2426
 	ret nz ; $2427
-	xor a, a ; $2428
+	xor a ; $2428
 	ld hl, $c0f4 ; $2429
 	ld [hl], $ff ; $242c
 	inc hl ; $242e
@@ -6353,19 +6353,19 @@ TickSecondaryTimer:
 	ld hl, $c0f5 ; $2435
 	inc [hl] ; $2438
 	ld a, [hl] ; $2439
-	cp a, $3c ; $243a
+	cp $3c ; $243a
 	ret c ; $243c
 	ld [hl], $00 ; $243d
 	inc hl ; $243f
 	inc [hl] ; $2440
 	ld a, [hl] ; $2441
-	cp a, $3c ; $2442
+	cp $3c ; $2442
 	ret c ; $2444
 	ld [hl], $00 ; $2445
 	inc hl ; $2447
 	inc [hl] ; $2448
 	ld a, [hl] ; $2449
-	cp a, $0a ; $244a
+	cp $0a ; $244a
 	ret c ; $244c
 	dec [hl] ; $244d
 	dec hl ; $244e
@@ -6423,7 +6423,7 @@ ResetGameTimer:
 	push af ; $2488
 	push hl ; $2489
 	ld hl, wGameTimer ; $248a
-	xor a, a ; $248d
+	xor a ; $248d
 	di ; $248e
 	ld [hl+], a ; $248f
 	ld [hl+], a ; $2490
@@ -6444,17 +6444,17 @@ TestGameFlag:
 	rlca ; $24a3
 	rlca ; $24a4
 	rlca ; $24a5
-	add a, LOW(FlagMaskTable) ; $24a6
+	add LOW(FlagMaskTable) ; $24a6
 	ld l, a ; $24a8
-	adc a, HIGH(FlagMaskTable) ; $24a9
-	sub a, l ; $24ab
+	adc HIGH(FlagMaskTable) ; $24a9
+	sub l ; $24ab
 	ld h, a ; $24ac
 	ld a, [hl] ; $24ad
 	ld hl, wGameFlags ; $24ae
 	ld e, d ; $24b1
 	ld d, $00 ; $24b2
 	add hl, de ; $24b4
-	and a, [hl] ; $24b5
+	and [hl] ; $24b5
 	ld a, b ; $24b6
 	pop bc ; $24b7
 	pop hl ; $24b8
@@ -6466,17 +6466,17 @@ SetGameFlag:
 	rlca ; $24bd
 	rlca ; $24be
 	rlca ; $24bf
-	add a, LOW(FlagMaskTable) ; $24c0
+	add LOW(FlagMaskTable) ; $24c0
 	ld l, a ; $24c2
-	adc a, HIGH(FlagMaskTable) ; $24c3
-	sub a, l ; $24c5
+	adc HIGH(FlagMaskTable) ; $24c3
+	sub l ; $24c5
 	ld h, a ; $24c6
 	ld a, [hl] ; $24c7
 	ld hl, wGameFlags ; $24c8
 	ld e, d ; $24cb
 	ld d, $00 ; $24cc
 	add hl, de ; $24ce
-	or a, [hl] ; $24cf
+	or [hl] ; $24cf
 	ld [hl], a ; $24d0
 	pop af ; $24d1
 	pop hl ; $24d2
@@ -6488,10 +6488,10 @@ ClearGameFlag:
 	rlca ; $24d7
 	rlca ; $24d8
 	rlca ; $24d9
-	add a, LOW(FlagMaskTable) ; $24da
+	add LOW(FlagMaskTable) ; $24da
 	ld l, a ; $24dc
-	adc a, HIGH(FlagMaskTable) ; $24dd
-	sub a, l ; $24df
+	adc HIGH(FlagMaskTable) ; $24dd
+	sub l ; $24df
 	ld h, a ; $24e0
 	ld a, [hl] ; $24e1
 	ld hl, wGameFlags ; $24e2
@@ -6499,7 +6499,7 @@ ClearGameFlag:
 	ld d, $00 ; $24e6
 	add hl, de ; $24e8
 	cpl ; $24e9
-	and a, [hl] ; $24ea
+	and [hl] ; $24ea
 	ld [hl], a ; $24eb
 	pop af ; $24ec
 	pop hl ; $24ed
@@ -6598,8 +6598,8 @@ ClearGameFlagCmd:
 	pop de ; $2576
 	ret ; $2577
 Start:
-	and a, a ; $2578
-	cp a, $11 ; $2579
+	and a ; $2578
+	cp $11 ; $2579
 	ld a, $00 ; $257b
 	jr nz, .store ; $257d
 	inc a ; $257f
@@ -6612,7 +6612,7 @@ SoftReset:
 	ld hl, wShadowOAM ; $2589
 	ld c, $ff ; $258c
 	call ClearMemory16 ; $258e
-	xor a, a ; $2591
+	xor a ; $2591
 	ld c, $80 ; $2592
 	ld b, $70 ; $2594
 .clearHramLoop:
@@ -6626,19 +6626,19 @@ SoftReset:
 	ldh [rSCX], a ; $25a1
 	ldh [rSTAT], a ; $25a3
 	ldh a, [hIsCGB] ; $25a5
-	or a, a ; $25a7
+	or a ; $25a7
 	jr nz, .cgbOk ; $25a8
 	farcall ShowDmgLockoutScreen ; $25aa
 .cgbOk:
-	xor a, a ; $25ad
+	xor a ; $25ad
 	ldh [rVBK], a ; $25ae
 	ldh [rWBK], a ; $25b0
 	ldh [rRP], a ; $25b2
-	xor a, a ; $25b4
+	xor a ; $25b4
 	ld [$0000], a ; $25b5
 	call CopyOAMDMARoutineToHRAM ; $25b8
 	call ClearVRAMBank ; $25bb
-	xor a, a ; $25be
+	xor a ; $25be
 	ldh [hDebugStepMode], a ; $25bf
 	call SwitchCPUSpeed ; $25c1
 	ld a, $06 ; $25c4
@@ -6662,27 +6662,27 @@ SoftReset:
 	ld hl, rTMA ; $25f2
 	ld a, $77 ; $25f5
 	ld [hl+], a ; $25f7
-	xor a, a ; $25f8
+	xor a ; $25f8
 	ld [hl], a ; $25f9
 	set 2, [hl] ; $25fa
 	ld a, $08 ; $25fc
 	ldh [rSTAT], a ; $25fe
 	ld a, $50 ; $2600
 	ldh [rLYC], a ; $2602
-	xor a, a ; $2604
+	xor a ; $2604
 	ldh [rSB], a ; $2605
 	ld a, $02 ; $2607
 	ldh [rSC], a ; $2609
 	ld a, $82 ; $260b
 	ldh [rSC], a ; $260d
-	xor a, a ; $260f
+	xor a ; $260f
 	ldh [rIF], a ; $2610
 	ld a, $0d ; $2612
 	ldh [rIE], a ; $2614
 	ld a, $e7 ; $2616
 	ldh [rLCDC], a ; $2618
 	ei ; $261a
-	xor a, a ; $261b
+	xor a ; $261b
 	ldh [hPaletteDirtyFlags], a ; $261c
 	ldh [hFadeState], a ; $261e
 	ldh [hFadeSpeed], a ; $2620
@@ -6698,21 +6698,21 @@ AdvanceFrame:
 	push de ; $2633
 	push hl ; $2634
 	ldh a, [hLinkCounter] ; $2635
-	or a, a ; $2637
+	or a ; $2637
 	jr z, .linkOk ; $2638
 	ldh a, [hLinkErrorFlags] ; $263a
-	and a, $e0 ; $263c
+	and $e0 ; $263c
 	jp nz, LinkErrorReset ; $263e
 .linkOk:
 	ldh a, [rVBK] ; $2641
 	push af ; $2643
-	xor a, a ; $2644
+	xor a ; $2644
 	ldh [hVBlankOccurred], a ; $2645
-	xor a, a ; $2647
+	xor a ; $2647
 	call RunFrameTasks ; $2648
 	ld a, [wSpriteBufferPage] ; $264b
-	and a, $cf ; $264e
-	xor a, $05 ; $2650
+	and $cf ; $264e
+	xor $05 ; $2650
 	ld [wSpriteBufferPage], a ; $2652
 	ldh a, [hWramBank] ; $2655
 	push af ; $2657
@@ -6724,7 +6724,7 @@ AdvanceFrame:
 	ld l, a ; $2668
 	ldh a, [hPeakLY] ; $2669
 	ld h, a ; $266b
-	cp a, l ; $266c
+	cp l ; $266c
 	jr c, .newPeakLY ; $266d
 	ldh a, [hPeakLYFrames] ; $266f
 	dec a ; $2671
@@ -6740,21 +6740,21 @@ AdvanceFrame:
 	ld de, $c0fb ; $267e
 	call FormatHexWord ; $2681
 	ldh a, [hDebugStepMode] ; $2684
-	or a, a ; $2686
+	or a ; $2686
 	jp z, .waitFrame ; $2687
 	ldh a, [hLinkExchangeActive] ; $268a
-	or a, a ; $268c
+	or a ; $268c
 	jr nz, .checkStepActive ; $268d
 	ldh a, [hPlayerInputFlags] ; $268f
-	and a, PADF_SELECT | PADF_START ; $2691
-	cp a, PADF_SELECT | PADF_START ; $2693
+	and PADF_SELECT | PADF_START ; $2691
+	cp PADF_SELECT | PADF_START ; $2693
 	jr nz, .checkStepActive ; $2695
 	ld a, $01 ; $2697
 	ldh [$ff9a], a ; $2699
 	jr .stepLoop ; $269b
 .checkStepActive:
 	ldh a, [$ff9a] ; $269d
-	or a, a ; $269f
+	or a ; $269f
 	jr z, .waitFrame ; $26a0
 .stepLoop:
 	ldh a, [hInputRisingEdge] ; $26a2
@@ -6762,7 +6762,7 @@ AdvanceFrame:
 	jr z, .checkStepExit ; $26a6
 	ldh a, [hDebugStepMode] ; $26a8
 	inc a ; $26aa
-	cp a, $04 ; $26ab
+	cp $04 ; $26ab
 	jr c, .storeStepMode ; $26ad
 	ld a, $01 ; $26af
 .storeStepMode:
@@ -6774,18 +6774,18 @@ AdvanceFrame:
 	jr z, .stepWaitFrame ; $26b9
 	bit 2, a ; $26bb
 	jr nz, .stepWaitFrame ; $26bd
-	xor a, a ; $26bf
+	xor a ; $26bf
 	ldh [$ff9a], a ; $26c0
 	jr .waitFrame ; $26c2
 .stepWaitFrame:
 	ldh a, [hInputPressed] ; $26c4
-	and a, $f3 ; $26c6
+	and $f3 ; $26c6
 	jr nz, .waitFrame ; $26c8
 	ldh a, [hLinkExchangeActive] ; $26ca
-	or a, a ; $26cc
+	or a ; $26cc
 	jr z, .stepHaltLoop ; $26cd
 	ldh a, [hLinkState] ; $26cf
-	cp a, $02 ; $26d1
+	cp $02 ; $26d1
 	jr z, .stepFrameDone ; $26d3
 	jr .stepLinkLoop ; $26d5
 .stepHaltLoop:
@@ -6794,7 +6794,7 @@ AdvanceFrame:
 	nop ; $26d9
 	di ; $26da
 	ldh a, [hVBlankOccurred] ; $26db
-	and a, a ; $26dd
+	and a ; $26dd
 	jr z, .stepHaltLoop ; $26de
 	jr .stepFrameDone ; $26e0
 .stepLinkLoop:
@@ -6804,19 +6804,19 @@ AdvanceFrame:
 	ldh a, [hVBlankOccurred] ; $26e5
 	ld b, a ; $26e7
 	ldh a, [hLinkTransferDone] ; $26e8
-	and a, b ; $26ea
+	and b ; $26ea
 	jr z, .stepLinkLoop ; $26eb
-	xor a, a ; $26ed
+	xor a ; $26ed
 	ldh [hLinkTransferDone], a ; $26ee
 .stepFrameDone:
 	ei ; $26f0
 	jr .stepLoop ; $26f1
 .waitFrame:
 	ldh a, [hLinkExchangeActive] ; $26f3
-	or a, a ; $26f5
+	or a ; $26f5
 	jr z, .haltLoop ; $26f6
 	ldh a, [hLinkState] ; $26f8
-	cp a, $02 ; $26fa
+	cp $02 ; $26fa
 	jr z, .done ; $26fc
 	jr .linkLoop ; $26fe
 .haltLoop:
@@ -6824,7 +6824,7 @@ AdvanceFrame:
 	nop ; $2701
 	di ; $2702
 	ldh a, [hVBlankOccurred] ; $2703
-	and a, a ; $2705
+	and a ; $2705
 	jr nz, .done ; $2706
 	ei ; $2708
 	jr .haltLoop ; $2709
@@ -6835,9 +6835,9 @@ AdvanceFrame:
 	ldh a, [hVBlankOccurred] ; $270e
 	ld b, a ; $2710
 	ldh a, [hLinkTransferDone] ; $2711
-	and a, b ; $2713
+	and b ; $2713
 	jr z, .linkLoop ; $2714
-	xor a, a ; $2716
+	xor a ; $2716
 	ldh [hLinkTransferDone], a ; $2717
 .done:
 	ei ; $2719
@@ -6885,7 +6885,7 @@ WaitFrames:
 VBlankHandler:
 	push af ; $2749
 	ldh a, [hVBlankSuppressed] ; $274a
-	or a, a ; $274c
+	or a ; $274c
 	jp nz, .restore ; $274d
 	push bc ; $2750
 	push de ; $2751
@@ -6894,28 +6894,28 @@ VBlankHandler:
 	push af ; $2755
 	call ApplyPendingPaletteUpdates ; $2756
 	ldh a, [hVBlankOccurred] ; $2759
-	or a, a ; $275b
+	or a ; $275b
 	jr nz, .nonZero2 ; $275c
 	ldh a, [hShowDebugConsole] ; $275e
-	or a, a ; $2760
+	or a ; $2760
 	jr nz, .compare ; $2761
 	ldh a, [hScrollX] ; $2763
 	ldh [rSCX], a ; $2765
 	ldh a, [hScrollY] ; $2767
 	ldh [rSCY], a ; $2769
 	ldh a, [rLCDC] ; $276b
-	and a, $f7 ; $276d
+	and $f7 ; $276d
 	ldh [rLCDC], a ; $276f
 	jr .checkSpriteBufferPage ; $2771
 .compare:
-	cp a, $01 ; $2773
+	cp $01 ; $2773
 	jr nz, .ne01 ; $2775
-	xor a, a ; $2777
+	xor a ; $2777
 	ldh [rSCX], a ; $2778
 	ld a, $40 ; $277a
 	ldh [rSCY], a ; $277c
 	ldh a, [rLCDC] ; $277e
-	or a, $08 ; $2780
+	or $08 ; $2780
 	ldh [rLCDC], a ; $2782
 	jr .checkSpriteBufferPage ; $2784
 .ne01:
@@ -6925,16 +6925,16 @@ VBlankHandler:
 	ldh [rSCY], a ; $278c
 .checkSpriteBufferPage:
 	ld a, [wSpriteBufferPage] ; $278e
-	xor a, $05 ; $2791
+	xor $05 ; $2791
 	ldh [hOAMDMARoutine + 1], a ; $2793
 	call hOAMDMARoutine ; $2795
 	call ProcessBGBlitQueue ; $2798
-	or a, a ; $279b
+	or a ; $279b
 	jr nz, .nonZero ; $279c
 	call ProcessVRAMCopyQueues ; $279e
 .nonZero:
 	ldh a, [hDebugStepMode] ; $27a1
-	or a, a ; $27a3
+	or a ; $27a3
 	jr z, .zero ; $27a4
 	call UpdateDebugOverlay ; $27a6
 .zero:
@@ -6944,11 +6944,11 @@ VBlankHandler:
 	inc [hl] ; $27b0
 .nonZero2:
 	ldh a, [hLinkExchangeActive] ; $27b1
-	or a, a ; $27b3
+	or a ; $27b3
 	jr nz, .updateGameTimer ; $27b4
 	call ReadJoypad ; $27b6
 	ldh a, [hPlayerInputFlags] ; $27b9
-	cp a, $0f ; $27bb
+	cp $0f ; $27bb
 	jp z, SoftReset ; $27bd
 	call AdvanceRandomSeed ; $27c0
 .updateGameTimer:
@@ -6967,10 +6967,10 @@ VBlankHandler:
 TimerHandler:
 	push af ; $27d7
 	ldh a, [hLinkState] ; $27d8
-	cp a, $02 ; $27da
+	cp $02 ; $27da
 	jr nz, .ne02 ; $27dc
 	ldh a, [rIF] ; $27de
-	and a, $08 ; $27e0
+	and $08 ; $27e0
 	jr nz, .restore ; $27e2
 .ne02:
 	ldh a, [rLCDC] ; $27e4
@@ -6992,30 +6992,30 @@ LCDStatHandler:
 	ld a, [$cb02] ; $27f7
 	ld b, a ; $27fa
 	ldh a, [rLY] ; $27fb
-	cp a, b ; $27fd
+	cp b ; $27fd
 	jr c, .restore ; $27fe
 	ld a, [$cb01] ; $2800
 	ldh [rSCX], a ; $2803
 	ld a, [$cb03] ; $2805
 	ld b, a ; $2808
 	ldh a, [rLY] ; $2809
-	cp a, b ; $280b
+	cp b ; $280b
 	jr c, .restore ; $280c
-	xor a, a ; $280e
+	xor a ; $280e
 	ldh [rSCX], a ; $280f
 .restore:
 	pop bc ; $2811
 	pop af ; $2812
 	reti ; $2813
 WaitVBlank:
-	xor a, a ; $2814
+	xor a ; $2814
 	ldh [hVBlankOccurred], a ; $2815
 .waitLoop:
 	ei ; $2817
 	nop ; $2818
 	di ; $2819
 	ldh a, [hVBlankOccurred] ; $281a
-	and a, a ; $281c
+	and a ; $281c
 	jr z, .waitLoop ; $281d
 	ei ; $281f
 	ret ; $2820
@@ -7026,7 +7026,7 @@ ShortDelay:
 .loop:
 	dec bc ; $2826
 	ld a, c ; $2827
-	or a, b ; $2828
+	or b ; $2828
 	jr nz, .loop ; $2829
 	pop bc ; $282b
 	pop af ; $282c
@@ -7039,17 +7039,17 @@ WaitSerialTransfer:
 	nop ; $2833
 	di ; $2834
 	ldh a, [hLinkTransferDone] ; $2835
-	and a, a ; $2837
+	and a ; $2837
 	jr nz, .received ; $2838
 	dec bc ; $283a
 	ld a, b ; $283b
-	or a, c ; $283c
+	or c ; $283c
 	jr nz, .waitLoop ; $283d
 	ei ; $283f
 	scf ; $2840
 	jr .done ; $2841
 .received:
-	xor a, a ; $2843
+	xor a ; $2843
 	ldh [hLinkTransferDone], a ; $2844
 	scf ; $2846
 	ccf ; $2847
@@ -7064,7 +7064,7 @@ ReadJoypadThunk:
 	call ReadJoypad ; $2851
 	ret ; $2854
 SoftResetIfABStartSelect:
-	xor a, $0f ; $2855
+	xor $0f ; $2855
 	jr nz, .done ; $2857
 	jp SoftReset ; $2859
 .done:
@@ -7078,14 +7078,14 @@ SerialHandler:
 	push de ; $2863
 	push hl ; $2864
 	ldh a, [hLinkShiftQueue] ; $2865
-	add a, a ; $2867
+	add a ; $2867
 	jr c, .carry ; $2868
 	ldh a, [rSB] ; $286a
 	ld b, a ; $286c
 	ldh [hLinkRxByte], a ; $286d
 .carry:
 	ldh a, [hLinkState] ; $286f
-	cp a, $01 ; $2871
+	cp $01 ; $2871
 	jr nz, .ne01 ; $2873
 	ldh [hLinkTransferDone], a ; $2875
 	pop hl ; $2877
@@ -7095,12 +7095,12 @@ SerialHandler:
 	reti ; $287b
 .ne01:
 	ldh a, [hLinkAckRequired] ; $287c
-	or a, a ; $287e
+	or a ; $287e
 	jr z, .step4 ; $287f
 	ldh a, [hLinkTxPending] ; $2881
-	or a, a ; $2883
+	or a ; $2883
 	jr z, .zero ; $2884
-	xor a, a ; $2886
+	xor a ; $2886
 	ldh [hLinkTxPending], a ; $2887
 	jr .step4 ; $2889
 .zero:
@@ -7109,7 +7109,7 @@ SerialHandler:
 	ldh [hLinkShiftQueue], a ; $288f
 .step4:
 	ldh a, [hLinkShiftQueue] ; $2891
-	add a, a ; $2893
+	add a ; $2893
 	ldh [hLinkShiftQueue], a ; $2894
 	jr c, .restore ; $2896
 	ld a, $01 ; $2898
@@ -7131,7 +7131,7 @@ SerialHandler:
 IncrementLinkFrameCounter:
 	ldh a, [hLinkCounter] ; $28af
 	inc a ; $28b1
-	cp a, $08 ; $28b2
+	cp $08 ; $28b2
 	jr z, .done ; $28b4
 	ldh [hLinkCounter], a ; $28b6
 .done:
@@ -7139,7 +7139,7 @@ IncrementLinkFrameCounter:
 InitSerialLink:
 	ld a, $c0 ; $28b9
 	ldh [rSB], a ; $28bb
-	xor a, a ; $28bd
+	xor a ; $28bd
 	ldh [hLinkRxByte], a ; $28be
 	ld a, $c0 ; $28c0
 	ldh [hLinkTxByte], a ; $28c2
@@ -7147,7 +7147,7 @@ InitSerialLink:
 	ldh [rSC], a ; $28c6
 	ld a, $82 ; $28c8
 	ldh [rSC], a ; $28ca
-	xor a, a ; $28cc
+	xor a ; $28cc
 	ldh [hLinkState], a ; $28cd
 	ldh [hLinkErrorFlags], a ; $28cf
 	ldh [hUnusedLinkByte], a ; $28d1
@@ -7171,7 +7171,7 @@ InitSerialLink:
 	ldh [$ffe9], a ; $28f5
 	ret ; $28f7
 ResetSerialState:
-	xor a, a ; $28f8
+	xor a ; $28f8
 	ldh [hLinkRxByte], a ; $28f9
 	ldh [hLinkTxByte], a ; $28fb
 	ldh [hLinkErrorFlags], a ; $28fd
@@ -7199,8 +7199,8 @@ SerialEncodeInput:
 	push hl ; $2925
 	ldh a, [hLinkTxInput] ; $2926
 	ld b, a ; $2928
-	and a, $0f ; $2929
-	cp a, $0f ; $292b
+	and $0f ; $2929
+	cp $0f ; $292b
 	jr nz, .checkBit3 ; $292d
 	ld a, $3f ; $292f
 	ld b, $0f ; $2931
@@ -7218,16 +7218,16 @@ SerialEncodeInput:
 	ld b, $04 ; $2945
 	jr .storeQueue ; $2947
 .pairBits:
-	and a, $03 ; $2949
+	and $03 ; $2949
 	ld c, a ; $294b
 	ld a, b ; $294c
 	rra ; $294d
 	rra ; $294e
-	and a, $3c ; $294f
-	or a, c ; $2951
+	and $3c ; $294f
+	or c ; $2951
 	push af ; $2952
 	ld a, b ; $2953
-	and a, $f3 ; $2954
+	and $f3 ; $2954
 	ld b, a ; $2956
 	pop af ; $2957
 .storeQueue:
@@ -7235,12 +7235,12 @@ SerialEncodeInput:
 	ld a, b ; $2959
 	ldh [hLinkTxInput], a ; $295a
 	ldh a, [hLinkState] ; $295c
-	cp a, $01 ; $295e
+	cp $01 ; $295e
 	jr z, .checkSlaveWait ; $2960
-	cp a, $02 ; $2962
+	cp $02 ; $2962
 	jr z, .checkSlaveWait ; $2964
 	sound $72 ; $2966
-	xor a, a ; $2968
+	xor a ; $2968
 	ldh [hLinkRemoteInputBuf], a ; $2969
 	ldh [hLinkTxInput], a ; $296b
 	ld a, $c0 ; $296d
@@ -7248,10 +7248,10 @@ SerialEncodeInput:
 	call LinkErrorReset ; $2971
 .checkSlaveWait:
 	ldh a, [hLinkAckRequired] ; $2974
-	or a, a ; $2976
+	or a ; $2976
 	jr z, .send ; $2977
 	ldh a, [hLinkState] ; $2979
-	cp a, $02 ; $297b
+	cp $02 ; $297b
 	jr nz, .send ; $297d
 .waitAck:
 	ei ; $297f
@@ -7259,11 +7259,11 @@ SerialEncodeInput:
 	nop ; $2981
 	di ; $2982
 	ldh a, [hLinkTxPending] ; $2983
-	or a, a ; $2985
+	or a ; $2985
 	jr nz, .waitAck ; $2986
 .send:
 	ldh a, [hLinkTxSeqBits] ; $2988
-	or a, c ; $298a
+	or c ; $298a
 	di ; $298b
 	ldh [hLinkTxByte], a ; $298c
 	ldh [hLinkTxPending], a ; $298e
@@ -7276,48 +7276,48 @@ SerialDecodeInput:
 	push bc ; $2995
 	ldh a, [hLinkRxByte] ; $2996
 	ld b, a ; $2998
-	and a, $c0 ; $2999
-	cp a, $80 ; $299b
+	and $c0 ; $2999
+	cp $80 ; $299b
 	jr z, .decode ; $299d
-	cp a, $40 ; $299f
+	cp $40 ; $299f
 	jr z, .decode ; $29a1
 	sound $72 ; $29a3
-	xor a, a ; $29a5
+	xor a ; $29a5
 	ldh [hLinkInput], a ; $29a6
 	jr .done ; $29a8
 .decode:
 	ld a, b ; $29aa
-	and a, $3f ; $29ab
-	cp a, $3f ; $29ad
+	and $3f ; $29ab
+	cp $3f ; $29ad
 	jr nz, .checkLeftRight ; $29af
 	ld a, $0f ; $29b1
 	jr .storeRemote ; $29b3
 .checkLeftRight:
-	cp a, $30 ; $29b5
+	cp $30 ; $29b5
 	jr nz, .checkUpDown ; $29b7
 	ld a, $08 ; $29b9
 	jr .storeRemote ; $29bb
 .checkUpDown:
-	cp a, $0c ; $29bd
+	cp $0c ; $29bd
 	jr nz, .unpackPair ; $29bf
 	ld a, $04 ; $29c1
 	jr .storeRemote ; $29c3
 .unpackPair:
 	ld c, a ; $29c5
-	and a, $03 ; $29c6
+	and $03 ; $29c6
 	ld b, a ; $29c8
 	ld a, c ; $29c9
 	rla ; $29ca
 	rla ; $29cb
-	and a, $f0 ; $29cc
-	or a, b ; $29ce
+	and $f0 ; $29cc
+	or b ; $29ce
 .storeRemote:
 	ldh [hLinkRemoteInput], a ; $29cf
 	ldh a, [hLinkState] ; $29d1
-	cp a, $01 ; $29d3
+	cp $01 ; $29d3
 	jr nz, .asSlave ; $29d5
 	ldh a, [hLinkRemoteInputBuf] ; $29d7
-	or a, a ; $29d9
+	or a ; $29d9
 	jr nz, .storeInput ; $29da
 	ldh a, [hLinkRemoteInput] ; $29dc
 	jr .storeInput ; $29de
@@ -7329,7 +7329,7 @@ SerialDecodeInput:
 	ld a, b ; $29e7
 	ldh [hLinkRemoteInputPrev], a ; $29e8
 	ldh a, [hLinkRemoteInput] ; $29ea
-	or a, a ; $29ec
+	or a ; $29ec
 	jr nz, .storeInput ; $29ed
 	ldh a, [hLinkRemoteInputBuf] ; $29ef
 .storeInput:
@@ -7339,39 +7339,39 @@ SerialDecodeInput:
 	pop af ; $29f4
 	ret ; $29f5
 	di ; $29f6
-	xor a, a ; $29f7
+	xor a ; $29f7
 	ldh [rIF], a ; $29f8
 	ldh a, [rIE] ; $29fa
-	or a, $08 ; $29fc
+	or $08 ; $29fc
 	ldh [rIE], a ; $29fe
 	ei ; $2a00
 	ret ; $2a01
 	di ; $2a02
-	xor a, a ; $2a03
+	xor a ; $2a03
 	ldh [rIF], a ; $2a04
 	ldh a, [rIE] ; $2a06
-	or a, $01 ; $2a08
+	or $01 ; $2a08
 	ldh [rIE], a ; $2a0a
 	ei ; $2a0c
 	ret ; $2a0d
 EnableTimerInterrupt:
 	di ; $2a0e
-	xor a, a ; $2a0f
+	xor a ; $2a0f
 	ldh [rIF], a ; $2a10
 	ldh a, [rIE] ; $2a12
-	or a, $04 ; $2a14
+	or $04 ; $2a14
 	ldh [rIE], a ; $2a16
 	ei ; $2a18
 	ret ; $2a19
 	di ; $2a1a
-	xor a, a ; $2a1b
+	xor a ; $2a1b
 	ldh [rIF], a ; $2a1c
 	ld a, $0d ; $2a1e
 	ldh [rIE], a ; $2a20
 	ei ; $2a22
 	ret ; $2a23
 	di ; $2a24
-	xor a, a ; $2a25
+	xor a ; $2a25
 	ldh [rIF], a ; $2a26
 	ld a, $09 ; $2a28
 	ldh [rIE], a ; $2a2a
@@ -7390,7 +7390,7 @@ QueueDeferredTilemapCopy:
 	ld [$c3a2], a ; $2a3f
 	ld a, d ; $2a42
 	ld [$c3a3], a ; $2a43
-	xor a, a ; $2a46
+	xor a ; $2a46
 	ld [$c3a6], a ; $2a47
 	ld a, $05 ; $2a4a
 	ld hl, VBlankDeferredTilemapCopyTask ; $2a4c
@@ -7407,7 +7407,7 @@ VBlankDeferredTilemapCopyTask:
 	ld a, [$c3a4] ; $2a5b
 	wram_bank ; $2a5e
 	ld a, [$c3a6] ; $2a62
-	and a, $0f ; $2a65
+	and $0f ; $2a65
 	jr z, .maskClear ; $2a67
 	ld hl, $c3a0 ; $2a69
 	ld a, [hl+] ; $2a6c
@@ -7419,7 +7419,7 @@ VBlankDeferredTilemapCopyTask:
 	call QueueVRAMCopy ; $2a76
 .maskClear:
 	ld a, [$c3a6] ; $2a79
-	and a, $f0 ; $2a7c
+	and $f0 ; $2a7c
 	jr z, .maskClear2 ; $2a7e
 	ld hl, $c3a2 ; $2a80
 	ld a, [hl+] ; $2a83
@@ -7430,7 +7430,7 @@ VBlankDeferredTilemapCopyTask:
 	ld c, a ; $2a8c
 	call QueueVRAMCopy ; $2a8d
 .maskClear2:
-	xor a, a ; $2a90
+	xor a ; $2a90
 	ld [$c3a6], a ; $2a91
 	pop af ; $2a94
 	wram_bank ; $2a95
@@ -7451,11 +7451,11 @@ CopyTextString:
 	push hl ; $2aa8
 .loop:
 	ld a, [hl+] ; $2aa9
-	cp a, $00 ; $2aaa
+	cp $00 ; $2aaa
 	jr z, .restore ; $2aac
-	cp a, $de ; $2aae
+	cp $de ; $2aae
 	jr z, .step ; $2ab0
-	cp a, $df ; $2ab2
+	cp $df ; $2ab2
 	jr z, .step ; $2ab4
 	ld [de], a ; $2ab6
 	inc de ; $2ab7
@@ -7466,10 +7466,10 @@ CopyTextString:
 	ld hl, $ffdf ; $2abc
 	add hl, de ; $2abf
 	ld a, [hl] ; $2ac0
-	cp a, $03 ; $2ac1
+	cp $03 ; $2ac1
 	ld a, b ; $2ac3
 	jr nz, .store ; $2ac4
-	sub a, $d0 ; $2ac6
+	sub $d0 ; $2ac6
 .store:
 	ld [hl], a ; $2ac8
 	pop hl ; $2ac9
@@ -7571,7 +7571,7 @@ CopyTextRect:
 	push de ; $2b47
 .cellLoop:
 	ld a, [hl+] ; $2b48
-	and a, a ; $2b49
+	and a ; $2b49
 	ld [de], a ; $2b4a
 	inc de ; $2b4b
 	dec b ; $2b4c
@@ -7579,7 +7579,7 @@ CopyTextRect:
 	pop de ; $2b4f
 	pop bc ; $2b50
 	ld a, $20 ; $2b51
-	add a, e ; $2b53
+	add e ; $2b53
 	ld e, a ; $2b54
 	jr nc, .nextRow ; $2b55
 	inc d ; $2b57
@@ -7624,13 +7624,13 @@ DrawWindowFrame:
 	pop de ; $2b84
 	pop bc ; $2b85
 	ld a, $20 ; $2b86
-	add a, l ; $2b88
+	add l ; $2b88
 	ld l, a ; $2b89
 	jr nc, .gotPtr ; $2b8a
 	inc h ; $2b8c
 .gotPtr:
 	ld a, $20 ; $2b8d
-	add a, e ; $2b8f
+	add e ; $2b8f
 	ld e, a ; $2b90
 	jr nc, .gotPtr2 ; $2b91
 	inc d ; $2b93
@@ -7642,7 +7642,7 @@ DrawWindowFrame:
 	pop bc ; $2b99
 	call DrawWindowFrameTop ; $2b9a
 	ld a, $20 ; $2b9d
-	add a, l ; $2b9f
+	add l ; $2b9f
 	ld l, a ; $2ba0
 	jr nc, .gotPtr3 ; $2ba1
 	inc h ; $2ba3
@@ -7652,7 +7652,7 @@ DrawWindowFrame:
 .loop2:
 	call DrawWindowFrameSides ; $2ba6
 	ld a, $20 ; $2ba9
-	add a, l ; $2bab
+	add l ; $2bab
 	ld l, a ; $2bac
 	jr nc, .drawWindowFrameBottom ; $2bad
 	inc h ; $2baf
@@ -7687,7 +7687,7 @@ DrawWindowFrameSides:
 	ld [hl], $05 ; $2bcf
 	ld a, b ; $2bd1
 	dec a ; $2bd2
-	add a, l ; $2bd3
+	add l ; $2bd3
 	ld l, a ; $2bd4
 	jr nc, .store ; $2bd5
 	inc h ; $2bd7
@@ -7746,21 +7746,21 @@ MoveCursorHorizontal:
 	inc a ; $2c17
 .wrap:
 	dec a ; $2c18
-	add a, a ; $2c19
+	add a ; $2c19
 	jr nc, .checkMax ; $2c1a
 	ld a, c ; $2c1c
 	dec a ; $2c1d
 	jr .done ; $2c1e
 .checkMax:
 	rra ; $2c20
-	cp a, c ; $2c21
+	cp c ; $2c21
 	jr c, .done ; $2c22
-	xor a, a ; $2c24
+	xor a ; $2c24
 .done:
 	ret ; $2c25
 TickTimer:
 	ld a, [hl] ; $2c26
-	and a, a ; $2c27
+	and a ; $2c27
 	ret z ; $2c28
 	dec [hl] ; $2c29
 	ret ; $2c2a
@@ -7768,15 +7768,15 @@ QueueSprite24x32:
 	bit 5, b ; $2c2b
 	jr nz, .bit5Set ; $2c2d
 	ld a, h ; $2c2f
-	add a, d ; $2c30
+	add d ; $2c30
 	ld d, a ; $2c31
 	ld a, l ; $2c32
-	add a, e ; $2c33
+	add e ; $2c33
 	ld e, a ; $2c34
 	ld a, [wSpriteBufferPage] ; $2c35
 	ld h, a ; $2c38
 	ldh a, [hSpriteQueueIndex] ; $2c39
-	cp a, $89 ; $2c3b
+	cp $89 ; $2c3b
 	ret nc ; $2c3d
 	ld l, a ; $2c3e
 	ld a, e ; $2c3f
@@ -7790,7 +7790,7 @@ QueueSprite24x32:
 	inc c ; $2c47
 	inc c ; $2c48
 	ld a, e ; $2c49
-	add a, $10 ; $2c4a
+	add $10 ; $2c4a
 	ld [hl+], a ; $2c4c
 	ld a, d ; $2c4d
 	ld [hl+], a ; $2c4e
@@ -7803,7 +7803,7 @@ QueueSprite24x32:
 	ld a, e ; $2c55
 	ld [hl+], a ; $2c56
 	ld a, d ; $2c57
-	add a, $08 ; $2c58
+	add $08 ; $2c58
 	ld [hl+], a ; $2c5a
 	ld a, c ; $2c5b
 	ld [hl+], a ; $2c5c
@@ -7812,10 +7812,10 @@ QueueSprite24x32:
 	inc c ; $2c5f
 	inc c ; $2c60
 	ld a, e ; $2c61
-	add a, $10 ; $2c62
+	add $10 ; $2c62
 	ld [hl+], a ; $2c64
 	ld a, d ; $2c65
-	add a, $08 ; $2c66
+	add $08 ; $2c66
 	ld [hl+], a ; $2c68
 	ld a, c ; $2c69
 	ld [hl+], a ; $2c6a
@@ -7826,7 +7826,7 @@ QueueSprite24x32:
 	ld a, e ; $2c6f
 	ld [hl+], a ; $2c70
 	ld a, d ; $2c71
-	add a, $10 ; $2c72
+	add $10 ; $2c72
 	ld [hl+], a ; $2c74
 	ld a, c ; $2c75
 	ld [hl+], a ; $2c76
@@ -7835,10 +7835,10 @@ QueueSprite24x32:
 	inc c ; $2c79
 	inc c ; $2c7a
 	ld a, e ; $2c7b
-	add a, $10 ; $2c7c
+	add $10 ; $2c7c
 	ld [hl+], a ; $2c7e
 	ld a, d ; $2c7f
-	add a, $10 ; $2c80
+	add $10 ; $2c80
 	ld [hl+], a ; $2c82
 	ld a, c ; $2c83
 	ld [hl+], a ; $2c84
@@ -7851,16 +7851,16 @@ QueueSprite24x32:
 	ret ; $2c8c
 .bit5Set:
 	ld a, d ; $2c8d
-	sub a, h ; $2c8e
-	add a, $08 ; $2c8f
+	sub h ; $2c8e
+	add $08 ; $2c8f
 	ld d, a ; $2c91
 	ld a, l ; $2c92
-	add a, e ; $2c93
+	add e ; $2c93
 	ld e, a ; $2c94
 	ld a, [wSpriteBufferPage] ; $2c95
 	ld h, a ; $2c98
 	ldh a, [hSpriteQueueIndex] ; $2c99
-	cp a, $89 ; $2c9b
+	cp $89 ; $2c9b
 	ret nc ; $2c9d
 	ld l, a ; $2c9e
 	ld a, e ; $2c9f
@@ -7874,7 +7874,7 @@ QueueSprite24x32:
 	inc c ; $2ca7
 	inc c ; $2ca8
 	ld a, e ; $2ca9
-	add a, $10 ; $2caa
+	add $10 ; $2caa
 	ld [hl+], a ; $2cac
 	ld a, d ; $2cad
 	ld [hl+], a ; $2cae
@@ -7887,7 +7887,7 @@ QueueSprite24x32:
 	ld a, e ; $2cb5
 	ld [hl+], a ; $2cb6
 	ld a, d ; $2cb7
-	add a, $f8 ; $2cb8
+	add $f8 ; $2cb8
 	ld [hl+], a ; $2cba
 	ld a, c ; $2cbb
 	ld [hl+], a ; $2cbc
@@ -7896,10 +7896,10 @@ QueueSprite24x32:
 	inc c ; $2cbf
 	inc c ; $2cc0
 	ld a, e ; $2cc1
-	add a, $10 ; $2cc2
+	add $10 ; $2cc2
 	ld [hl+], a ; $2cc4
 	ld a, d ; $2cc5
-	add a, $f8 ; $2cc6
+	add $f8 ; $2cc6
 	ld [hl+], a ; $2cc8
 	ld a, c ; $2cc9
 	ld [hl+], a ; $2cca
@@ -7910,7 +7910,7 @@ QueueSprite24x32:
 	ld a, e ; $2ccf
 	ld [hl+], a ; $2cd0
 	ld a, d ; $2cd1
-	add a, $f0 ; $2cd2
+	add $f0 ; $2cd2
 	ld [hl+], a ; $2cd4
 	ld a, c ; $2cd5
 	ld [hl+], a ; $2cd6
@@ -7919,10 +7919,10 @@ QueueSprite24x32:
 	inc c ; $2cd9
 	inc c ; $2cda
 	ld a, e ; $2cdb
-	add a, $10 ; $2cdc
+	add $10 ; $2cdc
 	ld [hl+], a ; $2cde
 	ld a, d ; $2cdf
-	add a, $f0 ; $2ce0
+	add $f0 ; $2ce0
 	ld [hl+], a ; $2ce2
 	ld a, c ; $2ce3
 	ld [hl+], a ; $2ce4
@@ -7937,10 +7937,10 @@ QueueSprite32x32:
 	bit 5, b ; $2ced
 	jr nz, .bit5Set ; $2cef
 	ld a, h ; $2cf1
-	add a, d ; $2cf2
+	add d ; $2cf2
 	ldh [hSpriteBlitY], a ; $2cf3
 	ld a, l ; $2cf5
-	add a, e ; $2cf6
+	add e ; $2cf6
 	ldh [hSpriteBlitX], a ; $2cf7
 	ld a, [wSpriteBufferPage] ; $2cf9
 	ld h, a ; $2cfc
@@ -7967,11 +7967,11 @@ QueueSprite32x32:
 	ret ; $2d33
 .bit5Set:
 	ld a, d ; $2d34
-	sub a, h ; $2d35
-	add a, $08 ; $2d36
+	sub h ; $2d35
+	add $08 ; $2d36
 	ldh [hSpriteBlitY], a ; $2d38
 	ld a, l ; $2d3a
-	add a, e ; $2d3b
+	add e ; $2d3b
 	ldh [hSpriteBlitX], a ; $2d3c
 	ld a, [wSpriteBufferPage] ; $2d3e
 	ld h, a ; $2d41
@@ -7998,13 +7998,13 @@ QueueSprite32x32:
 	ret ; $2d78
 QueueSpriteBlockPart:
 	ld a, l ; $2d79
-	cp a, $a0 ; $2d7a
+	cp $a0 ; $2d7a
 	ret z ; $2d7c
 	ldh a, [hSpriteBlitX] ; $2d7d
-	add a, e ; $2d7f
+	add e ; $2d7f
 	ld [hl+], a ; $2d80
 	ldh a, [hSpriteBlitY] ; $2d81
-	add a, d ; $2d83
+	add d ; $2d83
 	ld [hl+], a ; $2d84
 	ld a, c ; $2d85
 	ld [hl+], a ; $2d86
@@ -8082,33 +8082,33 @@ MulViewScaleA:
 	jr nz, .negative ; $2deb
 	res 0, l ; $2ded
 	ld a, h ; $2def
-	and a, $1f ; $2df0
-	add a, $40 ; $2df2
+	and $1f ; $2df0
+	add $40 ; $2df2
 	ld h, a ; $2df4
 	ld a, [hl+] ; $2df5
 	ld h, [hl] ; $2df6
 	ld l, a ; $2df7
 	ret ; $2df8
 .negative:
-	xor a, a ; $2df9
-	sub a, l ; $2dfa
+	xor a ; $2df9
+	sub l ; $2dfa
 	ld l, a ; $2dfb
-	sbc a, a ; $2dfc
-	sub a, h ; $2dfd
+	sbc a ; $2dfc
+	sub h ; $2dfd
 	ld h, a ; $2dfe
 	res 0, l ; $2dff
 	ld a, h ; $2e01
-	and a, $1f ; $2e02
-	add a, $40 ; $2e04
+	and $1f ; $2e02
+	add $40 ; $2e04
 	ld h, a ; $2e06
 	ld a, [hl+] ; $2e07
 	ld h, [hl] ; $2e08
 	ld l, a ; $2e09
-	xor a, a ; $2e0a
-	sub a, l ; $2e0b
+	xor a ; $2e0a
+	sub l ; $2e0b
 	ld l, a ; $2e0c
-	sbc a, a ; $2e0d
-	sub a, h ; $2e0e
+	sbc a ; $2e0d
+	sub h ; $2e0e
 	ld h, a ; $2e0f
 	ret ; $2e10
 MulViewScaleANeg:
@@ -8116,30 +8116,30 @@ MulViewScaleANeg:
 	jr nz, .negative ; $2e13
 	res 0, l ; $2e15
 	ld a, h ; $2e17
-	and a, $1f ; $2e18
-	add a, $40 ; $2e1a
+	and $1f ; $2e18
+	add $40 ; $2e1a
 	ld h, a ; $2e1c
 	ld a, [hl+] ; $2e1d
 	ld h, [hl] ; $2e1e
 	ld l, a ; $2e1f
-	xor a, a ; $2e20
-	sub a, l ; $2e21
+	xor a ; $2e20
+	sub l ; $2e21
 	ld l, a ; $2e22
-	sbc a, a ; $2e23
-	sub a, h ; $2e24
+	sbc a ; $2e23
+	sub h ; $2e24
 	ld h, a ; $2e25
 	ret ; $2e26
 .negative:
-	xor a, a ; $2e27
-	sub a, l ; $2e28
+	xor a ; $2e27
+	sub l ; $2e28
 	ld l, a ; $2e29
-	sbc a, a ; $2e2a
-	sub a, h ; $2e2b
+	sbc a ; $2e2a
+	sub h ; $2e2b
 	ld h, a ; $2e2c
 	res 0, l ; $2e2d
 	ld a, h ; $2e2f
-	and a, $1f ; $2e30
-	add a, $40 ; $2e32
+	and $1f ; $2e30
+	add $40 ; $2e32
 	ld h, a ; $2e34
 	ld a, [hl+] ; $2e35
 	ld h, [hl] ; $2e36
@@ -8150,39 +8150,39 @@ MulViewScaleB:
 	jr nz, .negative ; $2e3b
 	res 0, l ; $2e3d
 	ld a, h ; $2e3f
-	and a, $1f ; $2e40
-	add a, $60 ; $2e42
+	and $1f ; $2e40
+	add $60 ; $2e42
 	ld h, a ; $2e44
 	ld a, [hl+] ; $2e45
 	ld h, [hl] ; $2e46
 	ld l, a ; $2e47
 	ret ; $2e48
 .negative:
-	xor a, a ; $2e49
-	sub a, l ; $2e4a
+	xor a ; $2e49
+	sub l ; $2e4a
 	ld l, a ; $2e4b
-	sbc a, a ; $2e4c
-	sub a, h ; $2e4d
+	sbc a ; $2e4c
+	sub h ; $2e4d
 	ld h, a ; $2e4e
 	res 0, l ; $2e4f
 	ld a, h ; $2e51
-	and a, $1f ; $2e52
-	add a, $60 ; $2e54
+	and $1f ; $2e52
+	add $60 ; $2e54
 	ld h, a ; $2e56
 	ld a, [hl+] ; $2e57
 	ld h, [hl] ; $2e58
 	ld l, a ; $2e59
-	xor a, a ; $2e5a
-	sub a, l ; $2e5b
+	xor a ; $2e5a
+	sub l ; $2e5b
 	ld l, a ; $2e5c
-	sbc a, a ; $2e5d
-	sub a, h ; $2e5e
+	sbc a ; $2e5d
+	sub h ; $2e5e
 	ld h, a ; $2e5f
 	ret ; $2e60
 GetPerspectiveScale:
 	ld a, h ; $2e61
-	add a, $20 ; $2e62
-	and a, $3f ; $2e64
+	add $20 ; $2e62
+	and $3f ; $2e64
 	ld h, a ; $2e66
 	set 6, h ; $2e67
 	ld d, [hl] ; $2e69
@@ -8219,7 +8219,7 @@ GetPerspectiveScale:
 	ld a, [wCharFrameVramDest + 1] ; $2e99
 	ld d, a ; $2e9c
 	ld a, [wStandingShadowsEnabled] ; $2e9d
-	and a, a ; $2ea0
+	and a ; $2ea0
 	jr nz, .nonZero ; $2ea1
 	call QueueVRAMCopy ; $2ea3
 .loop:
@@ -8234,33 +8234,33 @@ GetPerspectiveScale:
 	pop hl ; $2eb2
 	pop de ; $2eb3
 	ld a, [wCharSpriteFrame + 2] ; $2eb4
-	and a, a ; $2eb7
+	and a ; $2eb7
 	jr z, .zero ; $2eb8
 	ld bc, $0100 ; $2eba
 	add hl, bc ; $2ebd
 	ld a, $30 ; $2ebe
-	add a, e ; $2ec0
+	add e ; $2ec0
 	ld e, a ; $2ec1
 	jr nc, .queueTileCopyAdvance ; $2ec2
 	inc d ; $2ec4
 .queueTileCopyAdvance:
 	call QueueTileCopyAdvance ; $2ec5
 	ld a, $40 ; $2ec8
-	add a, e ; $2eca
+	add e ; $2eca
 	ld e, a ; $2ecb
 	jr nc, .queueTileCopyAdvance2 ; $2ecc
 	inc d ; $2ece
 .queueTileCopyAdvance2:
 	call QueueTileCopyAdvance ; $2ecf
 	ld a, $40 ; $2ed2
-	add a, e ; $2ed4
+	add e ; $2ed4
 	ld e, a ; $2ed5
 	jr nc, .queueTileCopyAdvance3 ; $2ed6
 	inc d ; $2ed8
 .queueTileCopyAdvance3:
 	call QueueTileCopyAdvance ; $2ed9
 	ld a, $40 ; $2edc
-	add a, e ; $2ede
+	add e ; $2ede
 	ld e, a ; $2edf
 	jr nc, .queueTileCopyAdvance4 ; $2ee0
 	inc d ; $2ee2
@@ -8271,21 +8271,21 @@ GetPerspectiveScale:
 	ld bc, $00c0 ; $2ee8
 	add hl, bc ; $2eeb
 	ld a, $30 ; $2eec
-	add a, e ; $2eee
+	add e ; $2eee
 	ld e, a ; $2eef
 	jr nc, .queueTileCopyAdvance5 ; $2ef0
 	inc d ; $2ef2
 .queueTileCopyAdvance5:
 	call QueueTileCopyAdvance ; $2ef3
 	ld a, $40 ; $2ef6
-	add a, e ; $2ef8
+	add e ; $2ef8
 	ld e, a ; $2ef9
 	jr nc, .queueTileCopyAdvance6 ; $2efa
 	inc d ; $2efc
 .queueTileCopyAdvance6:
 	call QueueTileCopyAdvance ; $2efd
 	ld a, $40 ; $2f00
-	add a, e ; $2f02
+	add e ; $2f02
 	ld e, a ; $2f03
 	jr nc, .queueTileCopyAdvance7 ; $2f04
 	inc d ; $2f06
@@ -8305,7 +8305,7 @@ QueueTileCopyAdvance:
 UpdateSoundEngine:
 	ld hl, $ffd2 ; $2f1a
 	ld a, [hl] ; $2f1d
-	or a, a ; $2f1e
+	or a ; $2f1e
 	jr nz, .done ; $2f1f
 	ld [hl], $01 ; $2f21
 	ldh a, [hWramBank] ; $2f23
@@ -8313,7 +8313,7 @@ UpdateSoundEngine:
 	call RunSoundEngine ; $2f26
 	pop af ; $2f29
 	wram_bank ; $2f2a
-	xor a, a ; $2f2e
+	xor a ; $2f2e
 	ldh [$ffd2], a ; $2f2f
 .done:
 	ret ; $2f31
@@ -8354,17 +8354,17 @@ SyncBGMEnableFlag:
 	push de ; $2f62
 	push hl ; $2f63
 	ld a, [$c8a3] ; $2f64
-	and a, $01 ; $2f67
+	and $01 ; $2f67
 	ld c, a ; $2f69
 	ldh a, [hMusic] ; $2f6a
-	and a, $fe ; $2f6c
-	or a, c ; $2f6e
+	and $fe ; $2f6c
+	or c ; $2f6e
 	ldh [hMusic], a ; $2f6f
 	bit 0, a ; $2f71
 	jr z, .done ; $2f73
 	ldh a, [hWramBank] ; $2f75
 	push af ; $2f77
-	xor a, a ; $2f78
+	xor a ; $2f78
 	call PlaySound ; $2f79
 	pop af ; $2f7c
 	wram_bank ; $2f7d
@@ -8380,23 +8380,23 @@ SetMusicMuted:
 	push de ; $2f88
 	push hl ; $2f89
 	ld b, a ; $2f8a
-	xor a, a ; $2f8b
+	xor a ; $2f8b
 	ldh [hActiveJingle], a ; $2f8c
 	ldh a, [hWramBank] ; $2f8e
 	push af ; $2f90
 	ld a, b ; $2f91
-	and a, $01 ; $2f92
+	and $01 ; $2f92
 	ld c, a ; $2f94
 	ldh a, [hMusic] ; $2f95
-	and a, $fe ; $2f97
-	or a, c ; $2f99
+	and $fe ; $2f97
+	or c ; $2f99
 	ldh [hMusic], a ; $2f9a
 	bit 0, a ; $2f9c
 	jr nz, .mute ; $2f9e
 	ld a, [wCurrentBGM] ; $2fa0
 	jr .apply ; $2fa3
 .mute:
-	xor a, a ; $2fa5
+	xor a ; $2fa5
 .apply:
 	call PlaySound ; $2fa6
 	pop af ; $2fa9
@@ -8422,17 +8422,17 @@ PlaySoundCmd:
 	inc hl ; $2fc0
 	ld [hl], d ; $2fc1
 .loop:
-	cp a, $50 ; $2fc2
+	cp $50 ; $2fc2
 	jr nc, JingleSoundIds.ge50 ; $2fc4
-	cp a, $40 ; $2fc6
+	cp $40 ; $2fc6
 	jr c, JingleSoundIds.lt40 ; $2fc8
 	ld hl, hMusic ; $2fca
 	bit 0, [hl] ; $2fcd
 	jr nz, JingleSoundIds.restore ; $2fcf
 	ldh [hActiveJingle], a ; $2fd1
-	sub a, $40 ; $2fd3
+	sub $40 ; $2fd3
 	ld hl, JingleSoundIds ; $2fd5
-	add a, l ; $2fd8
+	add l ; $2fd8
 	ld l, a ; $2fd9
 	jr nc, .read ; $2fda
 	inc h ; $2fdc
@@ -8444,7 +8444,7 @@ JingleSoundIds:
 .lt40:
 	ld d, a ; $2fe6
 	ldh a, [hActiveJingle] ; $2fe7
-	or a, a ; $2fe9
+	or a ; $2fe9
 	ld a, d ; $2fea
 	jr z, .zero ; $2feb
 	ld hl, wCurrentBGM ; $2fed
@@ -8452,7 +8452,7 @@ JingleSoundIds:
 	jr .restore ; $2ff1
 .zero:
 	ld hl, wCurrentBGM ; $2ff3
-	cp a, [hl] ; $2ff6
+	cp [hl] ; $2ff6
 	jr z, .restore ; $2ff7
 	ld [hl], a ; $2ff9
 .step3:
@@ -8494,18 +8494,18 @@ WaitJingleEnd:
 	push de ; $302c
 	push hl ; $302d
 	ldh a, [hActiveJingle] ; $302e
-	or a, a ; $3030
+	or a ; $3030
 	jr z, .restore ; $3031
 .loop:
 	call AdvanceFrame ; $3033
 	ldh a, [hPlayerInputFlags] ; $3036
-	or a, a ; $3038
+	or a ; $3038
 	jr nz, .nonZero ; $3039
 	ldh a, [hActiveJingle] ; $303b
-	or a, a ; $303d
+	or a ; $303d
 	jr nz, .loop ; $303e
 .nonZero:
-	xor a, a ; $3040
+	xor a ; $3040
 	ldh [hActiveJingle], a ; $3041
 	ld hl, hMusic ; $3043
 	bit 0, [hl] ; $3046
@@ -8526,12 +8526,12 @@ ResumeBGMAfterJingle:
 	call CheckSfxChannelsIdle ; $305d
 	ret nz ; $3060
 	ldh a, [hActiveJingle] ; $3061
-	or a, a ; $3063
+	or a ; $3063
 	ret z ; $3064
 	ld a, e ; $3065
-	and a, $0f ; $3066
+	and $0f ; $3066
 	ret nz ; $3068
-	xor a, a ; $3069
+	xor a ; $3069
 	ldh [hActiveJingle], a ; $306a
 	ld hl, hMusic ; $306c
 	bit 0, [hl] ; $306f
@@ -8544,7 +8544,7 @@ InitAudioEngine:
 	call SetChannelUpdateRequest ; $3081
 	ld a, $80 ; $3084
 	ldh [rAUDENA], a ; $3086
-	xor a, a ; $3088
+	xor a ; $3088
 	ldh [rAUDTERM], a ; $3089
 	ld [wSndPanShadow], a ; $308b
 	ld a, $77 ; $308e
@@ -8561,12 +8561,12 @@ InitAudioEngine:
 	jr nz, .loop ; $30a0
 	ld hl, wSndLoopSlots ; $30a2
 	ld b, $48 ; $30a5
-	xor a, a ; $30a7
+	xor a ; $30a7
 .loopB:
 	ld [hl+], a ; $30a8
 	dec b ; $30a9
 	jr nz, .loopB ; $30aa
-	xor a, a ; $30ac
+	xor a ; $30ac
 	ld [wSndFirstChannel], a ; $30ad
 	ld [wSndWaveReloadPending], a ; $30b0
 	ret ; $30b3
@@ -8575,7 +8575,7 @@ SetChannelUpdateRequest:
 	ld [wSndUpdateReqMask], a ; $30b5
 	ld a, c ; $30b8
 	ld [wSndUpdateReqData], a ; $30b9
-	xor a, a ; $30bc
+	xor a ; $30bc
 	ld [wSndUpdateReqAck], a ; $30bd
 	ret ; $30c0
 MarkCurrentChannelUpdated:
@@ -8586,23 +8586,23 @@ MarkCurrentChannelUpdated:
 .loop:
 	dec b ; $30c8
 	jr z, .countDone ; $30c9
-	add a, a ; $30cb
+	add a ; $30cb
 	jr .loop ; $30cc
 .countDone:
 	ld b, a ; $30ce
 	ld a, [wSndUpdateReqAck] ; $30cf
-	or a, b ; $30d2
+	or b ; $30d2
 	ld [wSndUpdateReqAck], a ; $30d3
 	ret ; $30d6
 ApplyChannelUpdateRequest:
 	ld a, [wSndUpdateReqAck] ; $30d7
 	ld hl, wSndUpdateReqMask ; $30da
-	and a, [hl] ; $30dd
-	cp a, [hl] ; $30de
+	and [hl] ; $30dd
+	cp [hl] ; $30de
 	jr nz, .clearSndUpdateReqAck ; $30df
 	ld hl, wSndChannels + 6 ; $30e1
 	ld a, [wSndUpdateReqData] ; $30e4
-	and a, $0f ; $30e7
+	and $0f ; $30e7
 	ld b, a ; $30e9
 	ld a, [wSndUpdateReqMask] ; $30ea
 .loop:
@@ -8610,23 +8610,23 @@ ApplyChannelUpdateRequest:
 	ld [wSndUpdateReqAck], a ; $30ef
 	jr nc, .noCarry ; $30f2
 	ld a, [hl] ; $30f4
-	and a, $f0 ; $30f5
-	or a, b ; $30f7
+	and $f0 ; $30f5
+	or b ; $30f7
 	ld [hl], a ; $30f8
 .noCarry:
 	ld a, l ; $30f9
-	add a, $20 ; $30fa
+	add $20 ; $30fa
 	ld l, a ; $30fc
 	ld a, h ; $30fd
-	adc a, $00 ; $30fe
+	adc $00 ; $30fe
 	ld h, a ; $3100
 	ld a, [wSndUpdateReqAck] ; $3101
-	and a, a ; $3104
+	and a ; $3104
 	jr nz, .loop ; $3105
-	xor a, a ; $3107
+	xor a ; $3107
 	ld [wSndUpdateReqMask], a ; $3108
 .clearSndUpdateReqAck:
-	xor a, a ; $310b
+	xor a ; $310b
 	ld [wSndUpdateReqAck], a ; $310c
 	ret ; $310f
 CheckSfxChannelsIdle:
@@ -8674,13 +8674,13 @@ SfxIndexTable:
 MusicIndexTable:
 	INCLUDE "data/bank_000/sound_index_31b5.asm" ; $31b5, 226 bytes (sound_index)
 PlaySound:
-	and a, a ; $3297
+	and a ; $3297
 	jp z, StopAllSound ; $3298
 	push bc ; $329b
 	push de ; $329c
 	push hl ; $329d
 	ld hl, SfxIndexTable ; $329e
-	cp a, $50 ; $32a1
+	cp $50 ; $32a1
 	jr c, .sfx ; $32a3
 	ld hl, MusicIndexTable ; $32a5
 	push af ; $32a8
@@ -8698,7 +8698,7 @@ PlaySound:
 	call ClearBytes ; $32c2
 	pop hl ; $32c5
 	pop af ; $32c6
-	sub a, $50 ; $32c7
+	sub $50 ; $32c7
 	jr nz, .lookupEntry ; $32c9
 	pop hl ; $32cb
 	pop de ; $32cc
@@ -8708,11 +8708,11 @@ PlaySound:
 	call StopAllSound ; $32cf
 .lookupEntry:
 	dec a ; $32d2
-	add a, a ; $32d3
+	add a ; $32d3
 	jr nc, .addIndex ; $32d4
 	inc h ; $32d6
 .addIndex:
-	add a, l ; $32d7
+	add l ; $32d7
 	ld l, a ; $32d8
 	jr nc, .startChannels ; $32d9
 	inc h ; $32db
@@ -8720,13 +8720,13 @@ PlaySound:
 	ldh a, [hRomBank] ; $32dc
 	push af ; $32de
 	ld a, [hl] ; $32df
-	and a, $0f ; $32e0
-	or a, $70 ; $32e2
+	and $0f ; $32e0
+	or $70 ; $32e2
 	ldh [hRomBank], a ; $32e4
 	ld [$2000], a ; $32e6
 	ld a, [hl+] ; $32e9
 	swap a ; $32ea
-	and a, $0f ; $32ec
+	and $0f ; $32ec
 	ld b, a ; $32ee
 	ld l, [hl] ; $32ef
 	ld h, $00 ; $32f0
@@ -8764,26 +8764,26 @@ StartSoundChannel:
 	ld hl, wSndChannels ; $3319
 	add hl, bc ; $331c
 	ld a, [hl] ; $331d
-	cp a, $ff ; $331e
+	cp $ff ; $331e
 	jr z, .eqff ; $3320
 	inc hl ; $3322
 	ld a, [hl-] ; $3323
 	ld b, $ee ; $3324
-	and a, $03 ; $3326
+	and $03 ; $3326
 	jr z, .checkSndPanShadow ; $3328
 	ld b, $dd ; $332a
-	cp a, $01 ; $332c
+	cp $01 ; $332c
 	jr z, .checkSndPanShadow ; $332e
 	ld b, $bb ; $3330
-	cp a, $02 ; $3332
+	cp $02 ; $3332
 	jr z, .checkSndPanShadow ; $3334
 	ld b, $77 ; $3336
 .checkSndPanShadow:
 	ld a, [wSndPanShadow] ; $3338
-	and a, b ; $333b
+	and b ; $333b
 	ld [wSndPanShadow], a ; $333c
 .eqff:
-	xor a, a ; $333f
+	xor a ; $333f
 	ld [hl+], a ; $3340
 	ld [hl+], a ; $3341
 	ld a, [de] ; $3342
@@ -8804,7 +8804,7 @@ StartSoundChannel:
 	inc hl ; $3352
 	ld a, $ff ; $3353
 	ld [hl+], a ; $3355
-	xor a, a ; $3356
+	xor a ; $3356
 	push de ; $3357
 	ld de, $000e ; $3358
 	add hl, de ; $335b
@@ -8824,7 +8824,7 @@ StartSoundChannel:
 	inc hl ; $336a
 	inc hl ; $336b
 	inc hl ; $336c
-	xor a, a ; $336d
+	xor a ; $336d
 	ld [hl+], a ; $336e
 	ld [hl+], a ; $336f
 	ld [hl+], a ; $3370
@@ -8846,7 +8846,7 @@ UpdateSoundChannels:
 	push af ; $3394
 	ld a, [wSndFirstChannel] ; $3395
 	ld [wSndChannelIndex], a ; $3398
-	xor a, a ; $339b
+	xor a ; $339b
 	ld [wSndActiveMask], a ; $339c
 	ld hl, wSndFrameCounter ; $339f
 	inc [hl] ; $33a2
@@ -8855,7 +8855,7 @@ UpdateSoundChannels:
 	ld a, [hl+] ; $33a6
 	ld b, a ; $33a7
 	ld a, [hl-] ; $33a8
-	and a, b ; $33a9
+	and b ; $33a9
 	inc a ; $33aa
 	jp z, .countDone ; $33ab
 	push hl ; $33ae
@@ -8866,12 +8866,12 @@ UpdateSoundChannels:
 	ldh [hRomBank], a ; $33b9
 	ld [$2000], a ; $33bb
 	ldh a, [hSndChannelType] ; $33be
-	and a, $03 ; $33c0
+	and $03 ; $33c0
 	ld [wSndChannelType], a ; $33c2
 	ld b, a ; $33c5
-	add a, a ; $33c6
-	add a, a ; $33c7
-	add a, b ; $33c8
+	add a ; $33c6
+	add a ; $33c7
+	add b ; $33c8
 	ld [wSndRegBase], a ; $33c9
 	inc b ; $33cc
 	ld a, $88 ; $33cd
@@ -8884,8 +8884,8 @@ UpdateSoundChannels:
 	ldh a, [hSndScriptPtr] ; $33d9
 	ld b, a ; $33db
 	ldh a, [hSndScriptPtr + 1] ; $33dc
-	or a, b ; $33de
-	and a, a ; $33df
+	or b ; $33de
+	and a ; $33df
 	jp z, .zero2 ; $33e0
 	call TickVibrato ; $33e3
 	call TickInstrumentEnvelope ; $33e6
@@ -8893,44 +8893,44 @@ UpdateSoundChannels:
 	ld b, a ; $33eb
 	ldh a, [hSndEnvPos] ; $33ec
 	inc a ; $33ee
-	cp a, b ; $33ef
+	cp b ; $33ef
 	jr c, .store ; $33f0
 	ld a, b ; $33f2
 .store:
 	ldh [hSndEnvPos], a ; $33f3
 	ld hl, hSndLengthAccum ; $33f5
 	ldh a, [hSndToneCtrl] ; $33f8
-	and a, $0f ; $33fa
-	add a, [hl] ; $33fc
-	cp a, $10 ; $33fd
+	and $0f ; $33fa
+	add [hl] ; $33fc
+	cp $10 ; $33fd
 	jr c, .store2 ; $33ff
-	sub a, $10 ; $3401
+	sub $10 ; $3401
 	ld [hl], a ; $3403
 	jr .checkSndWaveReloadPending ; $3404
 .store2:
 	ld [hl], a ; $3406
 	call TickVolumeSlide ; $3407
 	ldh a, [hSndNoteLenTimer] ; $340a
-	and a, a ; $340c
+	and a ; $340c
 	jr z, .zero ; $340d
 	dec a ; $340f
 	ldh [hSndNoteLenTimer], a ; $3410
 .zero:
 	ldh a, [hSndPortamentoTimer] ; $3412
-	and a, a ; $3414
+	and a ; $3414
 	jr nz, .nonZero ; $3415
 	ldh a, [hSndEchoCtrl] ; $3417
-	and a, $f0 ; $3419
+	and $f0 ; $3419
 	jr z, .loop2 ; $341b
 	ld hl, hSndEchoTimer ; $341d
 	dec [hl] ; $3420
 	jr nz, .countLeft ; $3421
 	ldh a, [hSndEcho] ; $3423
-	and a, $f0 ; $3425
+	and $f0 ; $3425
 	ld c, a ; $3427
 	ldh a, [hSndVolume] ; $3428
-	and a, $0f ; $342a
-	or a, c ; $342c
+	and $0f ; $342a
+	or c ; $342c
 	ldh [hSndVolume], a ; $342d
 .loop2:
 	call MarkCurrentChannelUpdated ; $342f
@@ -8941,9 +8941,9 @@ UpdateSoundChannels:
 	jr .checkSndWaveReloadPending ; $3439
 .countLeft:
 	ldh a, [hSndEchoCtrl] ; $343b
-	and a, $0f ; $343d
+	and $0f ; $343d
 	dec a ; $343f
-	cp a, [hl] ; $3440
+	cp [hl] ; $3440
 	jr nz, .checkSndWaveReloadPending ; $3441
 	call ScaleEchoVolume ; $3443
 	ldh a, [hSndVolume] ; $3446
@@ -8954,7 +8954,7 @@ UpdateSoundChannels:
 	ldh [hSndPortamentoTimer], a ; $344e
 	push af ; $3450
 	ldh a, [hSndRestFlag] ; $3451
-	or a, a ; $3453
+	or a ; $3453
 	jr z, .restore ; $3454
 	dec a ; $3456
 	ldh [hSndRestFlag], a ; $3457
@@ -8962,33 +8962,33 @@ UpdateSoundChannels:
 	pop af ; $3459
 	jr nz, .checkSndWaveReloadPending ; $345a
 	ldh a, [hSndEchoCtrl] ; $345c
-	and a, $f0 ; $345e
+	and $f0 ; $345e
 	jr nz, .checkSndWaveReloadPending ; $3460
 	jr .loop2 ; $3462
 .checkSndWaveReloadPending:
 	ld a, [wSndWaveReloadPending] ; $3464
-	and a, a ; $3467
+	and a ; $3467
 	jr z, .checkSndChannelBits ; $3468
 	ld a, [wSndChannelType] ; $346a
-	cp a, $02 ; $346d
+	cp $02 ; $346d
 	jr nz, .checkSndChannelBits ; $346f
 	ld a, [wSndChannelIndex] ; $3471
-	cp a, $02 ; $3474
+	cp $02 ; $3474
 	jr c, .checkSndChannelBits ; $3476
 	ld a, [wSndChannelBits] ; $3478
 	ld b, a ; $347b
 	ld a, [wSndActiveMask] ; $347c
-	and a, b ; $347f
+	and b ; $347f
 	jr nz, .checkSndChannelBits ; $3480
 	ld a, [wSndLoadedWaveId] ; $3482
 	ld b, a ; $3485
 	ldh a, [hSndWaveId] ; $3486
-	cp a, b ; $3488
+	cp b ; $3488
 	jr z, .checkSndChannelBits ; $3489
 	ld e, a ; $348b
 	ld [wSndLoadedWaveId], a ; $348c
 	swap e ; $348f
-	xor a, a ; $3491
+	xor a ; $3491
 	ld [wSndWaveReloadPending], a ; $3492
 	ldh [rAUD3ENA], a ; $3495
 	ld d, a ; $3497
@@ -8999,7 +8999,7 @@ UpdateSoundChannels:
 	ld a, [wSndChannelBits] ; $349f
 	ld b, a ; $34a2
 	ld a, [wSndActiveMask] ; $34a3
-	or a, b ; $34a6
+	or b ; $34a6
 	ld [wSndActiveMask], a ; $34a7
 	pop hl ; $34aa
 	push hl ; $34ab
@@ -9015,12 +9015,12 @@ UpdateSoundChannels:
 	ld a, [wSndChannelIndex] ; $34bb
 	inc a ; $34be
 	ld [wSndChannelIndex], a ; $34bf
-	cp a, $06 ; $34c2
+	cp $06 ; $34c2
 	jp c, .loop ; $34c4
 	ld a, [wSndActiveMask] ; $34c7
 	ld b, a ; $34ca
 	ld a, [wSndPanShadow] ; $34cb
-	and a, b ; $34ce
+	and b ; $34ce
 	ld [wSndPanShadow], a ; $34cf
 	ldh [rAUDTERM], a ; $34d2
 	pop af ; $34d4
@@ -9034,31 +9034,31 @@ UpdateSoundChannels:
 	ldh a, [hSndDataPtr + 1] ; $34e0
 	ld h, a ; $34e2
 	ld a, [hl+] ; $34e3
-	and a, $0f ; $34e4
+	and $0f ; $34e4
 	ld d, a ; $34e6
 	ldh [hSndLengthAccum], a ; $34e7
 	ld a, [wSndChannelType] ; $34e9
-	cp a, $02 ; $34ec
+	cp $02 ; $34ec
 	jr z, .read ; $34ee
 	ld a, [hl+] ; $34f0
 	rrca ; $34f1
 	rrca ; $34f2
-	and a, $c0 ; $34f3
-	or a, d ; $34f5
+	and $c0 ; $34f3
+	or d ; $34f5
 .loop4:
 	ldh [hSndToneCtrl], a ; $34f6
 	ld a, [hl+] ; $34f8
 	swap a ; $34f9
 	ldh [hSndVolume], a ; $34fb
 	ld a, [wSndChannelType] ; $34fd
-	cp a, $02 ; $3500
+	cp $02 ; $3500
 	jr z, .eq02 ; $3502
 	ld a, [hl+] ; $3504
 	ldh [hSndWaveId], a ; $3505
 .loop5:
 	ld a, $ff ; $3507
 	ldh [hSndNoteOffset], a ; $3509
-	xor a, a ; $350b
+	xor a ; $350b
 	ldh [hSndTranspose], a ; $350c
 	ldh [hSndEnvRate], a ; $350e
 	ldh [hSndVolSlide], a ; $3510
@@ -9074,12 +9074,12 @@ UpdateSoundChannels:
 	ld a, d ; $3521
 	jr .loop4 ; $3522
 .eq02:
-	xor a, a ; $3524
+	xor a ; $3524
 	ldh [rAUD3ENA], a ; $3525
 	ld d, a ; $3527
 	ldh a, [hSndWaveId] ; $3528
 	ld e, a ; $352a
-	cp a, $ff ; $352b
+	cp $ff ; $352b
 	jr nz, .store3 ; $352d
 	ld e, [hl] ; $352f
 	ld a, e ; $3530
@@ -9091,8 +9091,8 @@ UpdateSoundChannels:
 	push de ; $353b
 	ldh a, [hSndInstrument] ; $353c
 	swap a ; $353e
-	and a, $0f ; $3540
-	add a, a ; $3542
+	and $0f ; $3540
+	add a ; $3542
 	ld e, a ; $3543
 	ld d, $00 ; $3544
 	add hl, de ; $3546
@@ -9123,30 +9123,30 @@ RunSoundChannelScript:
 	add hl, de ; $3565
 .nextCommand:
 	ldh a, [hSndScriptPtr] ; $3566
-	add a, $01 ; $3568
+	add $01 ; $3568
 	ldh [hSndScriptPtr], a ; $356a
 	ldh a, [hSndScriptPtr + 1] ; $356c
-	adc a, $00 ; $356e
+	adc $00 ; $356e
 	ldh [hSndScriptPtr + 1], a ; $3570
 	ld a, [hl+] ; $3572
-	cp a, $d0 ; $3573
+	cp $d0 ; $3573
 	jr nc, .cmdD0 ; $3575
-	cp a, $b0 ; $3577
+	cp $b0 ; $3577
 	jp nc, .cmdB0 ; $3579
-	cp a, $a0 ; $357c
+	cp $a0 ; $357c
 	jp nc, .cmdA0 ; $357e
 	jp SndTriggerNote ; $3581
 .cmdF0:
-	cp a, $fd ; $3584
+	cp $fd ; $3584
 	jr z, .setLoopPoint ; $3586
-	cp a, $ff ; $3588
+	cp $ff ; $3588
 	jr z, .endScript ; $358a
 	jr .skipOperand ; $358c
 .setLoopPoint:
 	push hl ; $358e
 	ld b, [hl] ; $358f
 	call GetChannelLoopSlot ; $3590
-	xor a, a ; $3593
+	xor a ; $3593
 	ld [hl+], a ; $3594
 	ldh a, [hSndScriptPtr] ; $3595
 	ld [hl+], a ; $3597
@@ -9160,30 +9160,30 @@ RunSoundChannelScript:
 	ldh [hSndScriptPtr], a ; $359f
 	ldh [hSndScriptPtr + 1], a ; $35a1
 	ld a, [wSndChannelType] ; $35a3
-	cp a, $02 ; $35a6
+	cp $02 ; $35a6
 	jr nz, .release ; $35a8
 	ld a, [wSndChannelIndex] ; $35aa
-	cp a, $02 ; $35ad
+	cp $02 ; $35ad
 	jr nc, .release ; $35af
 	ld a, $ff ; $35b1
 	ld [wSndWaveReloadPending], a ; $35b3
 .release:
 	jp SndReleaseChannel ; $35b6
 .cmdD0:
-	cp a, $f0 ; $35b9
+	cp $f0 ; $35b9
 	jr nc, .cmdF0 ; $35bb
-	cp a, $e0 ; $35bd
+	cp $e0 ; $35bd
 	jr nc, .volSlideDown ; $35bf
-	and a, $0f ; $35c1
+	and $0f ; $35c1
 	jr .storeVolSlide ; $35c3
 .volSlideDown:
-	and a, $0f ; $35c5
+	and $0f ; $35c5
 	cpl ; $35c7
 	inc a ; $35c8
 .storeVolSlide:
 	ld b, a ; $35c9
 	ld a, [wSndChannelType] ; $35ca
-	cp a, $02 ; $35cd
+	cp $02 ; $35cd
 	jr z, .volSlideDone ; $35cf
 	ld a, b ; $35d1
 	ldh [hSndVolSlide], a ; $35d2
@@ -9194,13 +9194,13 @@ RunSoundChannelScript:
 	inc hl ; $35d9
 	jp .nextCommand ; $35da
 .cmdC0:
-	and a, $0f ; $35dd
+	and $0f ; $35dd
 	ld b, a ; $35df
 	ld a, [wSndChannelType] ; $35e0
-	cp a, $02 ; $35e3
+	cp $02 ; $35e3
 	jr z, .envelopeDone ; $35e5
 	ldh a, [hSndVolume] ; $35e7
-	and a, $0f ; $35e9
+	and $0f ; $35e9
 	jr nz, .envelopeDone ; $35eb
 	ld a, [hl] ; $35ed
 	ldh [hSndEnvLength], a ; $35ee
@@ -9211,9 +9211,9 @@ RunSoundChannelScript:
 	inc hl ; $35f5
 	jp .nextCommand ; $35f6
 .cmdB0:
-	cp a, $c0 ; $35f9
+	cp $c0 ; $35f9
 	jr nc, .cmdC0 ; $35fb
-	and a, $0f ; $35fd
+	and $0f ; $35fd
 	jp z, .loopSlotJump ; $35ff
 	ld e, a ; $3602
 	ld b, [hl] ; $3603
@@ -9222,7 +9222,7 @@ RunSoundChannelScript:
 	inc [hl] ; $3608
 	ld a, [hl+] ; $3609
 	inc e ; $360a
-	cp a, e ; $360b
+	cp e ; $360b
 	jr nc, .loopNotTaken ; $360c
 	ld a, [hl+] ; $360e
 	ldh [hSndScriptPtr], a ; $360f
@@ -9234,8 +9234,8 @@ RunSoundChannelScript:
 .loopSlotJump:
 	ld a, [hl] ; $3618
 	ld b, a ; $3619
-	and a, $f0 ; $361a
-	cp a, $f0 ; $361c
+	and $f0 ; $361a
+	cp $f0 ; $361c
 	jp nz, .skipByte ; $361e
 	ld b, [hl] ; $3621
 	push hl ; $3622
@@ -9251,7 +9251,7 @@ RunSoundChannelScript:
 	inc hl ; $3631
 	jp .nextCommand ; $3632
 .cmdA0:
-	cp a, $a0 ; $3635
+	cp $a0 ; $3635
 	jr nz, .setWaveId ; $3637
 	ld a, [hl+] ; $3639
 	swap a ; $363a
@@ -9259,15 +9259,15 @@ RunSoundChannelScript:
 	ld a, [wSndChannelBits] ; $363e
 	ld b, a ; $3641
 	ld a, [wSndActiveMask] ; $3642
-	and a, b ; $3645
+	and b ; $3645
 	jp nz, .nextCommand ; $3646
 	call ApplyChannelEnvelope ; $3649
 	jp .nextCommand ; $364c
 .setWaveId:
-	cp a, $a1 ; $364f
+	cp $a1 ; $364f
 	jr nz, .setDuty ; $3651
 	ld a, [wSndChannelType] ; $3653
-	cp a, $02 ; $3656
+	cp $02 ; $3656
 	jr z, .loadWave ; $3658
 	ld a, [hl+] ; $365a
 	ldh [hSndWaveId], a ; $365b
@@ -9279,11 +9279,11 @@ RunSoundChannelScript:
 	ld a, [wSndChannelBits] ; $3664
 	ld b, a ; $3667
 	ld a, [wSndActiveMask] ; $3668
-	and a, b ; $366b
+	and b ; $366b
 	jr z, .uploadWave ; $366c
 	jp .nextCommand ; $366e
 .uploadWave:
-	xor a, a ; $3671
+	xor a ; $3671
 	ldh [rAUD3ENA], a ; $3672
 	ld d, a ; $3674
 	push hl ; $3675
@@ -9294,8 +9294,8 @@ RunSoundChannelScript:
 	push de ; $367f
 	ldh a, [hSndInstrument] ; $3680
 	swap a ; $3682
-	and a, $0f ; $3684
-	add a, a ; $3686
+	and $0f ; $3684
+	add a ; $3686
 	ld e, a ; $3687
 	ld d, $00 ; $3688
 	add hl, de ; $368a
@@ -9315,19 +9315,19 @@ RunSoundChannelScript:
 	pop hl ; $369a
 	jp .nextCommand ; $369b
 .setDuty:
-	cp a, $a2 ; $369e
+	cp $a2 ; $369e
 	jr nz, .setNoteLength ; $36a0
 	ld a, [wSndChannelType] ; $36a2
-	cp a, $02 ; $36a5
+	cp $02 ; $36a5
 	jr z, .setEnvLength ; $36a7
 	ld a, [hl+] ; $36a9
 	rrca ; $36aa
 	rrca ; $36ab
-	and a, $c0 ; $36ac
+	and $c0 ; $36ac
 	ld d, a ; $36ae
 	ldh a, [hSndToneCtrl] ; $36af
-	and a, $3f ; $36b1
-	or a, d ; $36b3
+	and $3f ; $36b1
+	or d ; $36b3
 	ldh [hSndToneCtrl], a ; $36b4
 	jp .nextCommand ; $36b6
 .setEnvLength:
@@ -9335,42 +9335,42 @@ RunSoundChannelScript:
 	ldh [hSndEnvLength], a ; $36ba
 	jp .nextCommand ; $36bc
 .setNoteLength:
-	cp a, $a3 ; $36bf
-	cp a, $a3 ; $36c1
+	cp $a3 ; $36bf
+	cp $a3 ; $36c1
 	jr nz, .setNoteOffset ; $36c3
 	ld a, [hl+] ; $36c5
-	cp a, $fe ; $36c6
+	cp $fe ; $36c6
 	jr z, .clearNoteLength ; $36c8
 	ld b, a ; $36ca
-	and a, $0f ; $36cb
-	add a, a ; $36cd
+	and $0f ; $36cb
+	add a ; $36cd
 	ldh [hSndNoteLenReload], a ; $36ce
 	ldh [hSndNoteLenTimer], a ; $36d0
 	ld a, b ; $36d2
-	add a, $10 ; $36d3
-	and a, $f0 ; $36d5
+	add $10 ; $36d3
+	and $f0 ; $36d5
 	ld e, a ; $36d7
 	ldh a, [hSndChannelType] ; $36d8
-	and a, $0f ; $36da
-	or a, e ; $36dc
+	and $0f ; $36da
+	or e ; $36dc
 .storeChannelType:
 	ldh [hSndChannelType], a ; $36dd
 	jp .nextCommand ; $36df
 .clearNoteLength:
 	ldh a, [hSndChannelType] ; $36e2
-	and a, $0f ; $36e4
+	and $0f ; $36e4
 	jr .storeChannelType ; $36e6
 .setNoteOffset:
-	cp a, $a4 ; $36e8
+	cp $a4 ; $36e8
 	jr nz, .setPan ; $36ea
 	ld a, [hl+] ; $36ec
 	ldh [hSndNoteOffset], a ; $36ed
 	jp .nextCommand ; $36ef
 .setPan:
-	cp a, $a5 ; $36f2
+	cp $a5 ; $36f2
 	jr nz, .setMasterVolume ; $36f4
 	ld a, [hl+] ; $36f6
-	cp a, $01 ; $36f7
+	cp $01 ; $36f7
 	jr nz, .storePan ; $36f9
 	ldh a, [hSndPanMask] ; $36fb
 	swap a ; $36fd
@@ -9378,44 +9378,44 @@ RunSoundChannelScript:
 	ldh [hSndPanMask], a ; $36ff
 	jp .nextCommand ; $3701
 .setMasterVolume:
-	cp a, $a6 ; $3704
+	cp $a6 ; $3704
 	jr nz, .setPortamento ; $3706
 	ld a, [hl+] ; $3708
 	ldh [rAUDVOL], a ; $3709
 	jp .nextCommand ; $370b
 .setPortamento:
-	cp a, $a7 ; $370e
+	cp $a7 ; $370e
 	jr nz, .setInstrument ; $3710
 	ld a, [hl] ; $3712
 	ldh [hSndPortamentoTimer], a ; $3713
 	jp SndTriggerNote.checkSndChannelPanMask ; $3715
 .setInstrument:
-	cp a, $a8 ; $3718
+	cp $a8 ; $3718
 	jr nz, .transpose ; $371a
 	ld a, [hl+] ; $371c
 	ld c, a ; $371d
-	and a, $0f ; $371e
+	and $0f ; $371e
 	ld b, a ; $3720
 	ld a, c ; $3721
-	and a, $f0 ; $3722
-	or a, b ; $3724
+	and $f0 ; $3722
+	or b ; $3724
 	ldh [hSndInstrument], a ; $3725
 	jp .nextCommand ; $3727
 .transpose:
-	cp a, $a9 ; $372a
+	cp $a9 ; $372a
 	jp nz, .setEcho ; $372c
 	ld a, [hl+] ; $372f
-	cp a, $f0 ; $3730
+	cp $f0 ; $3730
 	jr z, .transposeInc ; $3732
-	cp a, $f1 ; $3734
+	cp $f1 ; $3734
 	jr z, .transposeDec ; $3736
-	cp a, $f2 ; $3738
+	cp $f2 ; $3738
 	jr z, .globalTransposeInc ; $373a
-	cp a, $f3 ; $373c
+	cp $f3 ; $373c
 	jr z, .globalTransposeDec ; $373e
-	cp a, $fe ; $3740
+	cp $fe ; $3740
 	jr z, .transposeFromGlobal ; $3742
-	cp a, $ff ; $3744
+	cp $ff ; $3744
 	jr nz, .setTranspose ; $3746
 	ldh a, [hSndTranspose] ; $3748
 	jr .transposeJumpTable ; $374a
@@ -9423,10 +9423,10 @@ RunSoundChannelScript:
 	ld a, [wSndTranspose] ; $374c
 .transposeJumpTable:
 	sla a ; $374f
-	add a, l ; $3751
+	add l ; $3751
 	ld l, a ; $3752
 	ld a, h ; $3753
-	adc a, $00 ; $3754
+	adc $00 ; $3754
 	ld h, a ; $3756
 	ld a, [hl+] ; $3757
 	ldh [hSndScriptPtr], a ; $3758
@@ -9434,12 +9434,12 @@ RunSoundChannelScript:
 	ldh [hSndScriptPtr + 1], a ; $375b
 	jp RunSoundChannelScript ; $375d
 .setTranspose:
-	cp a, $80 ; $3760
+	cp $80 ; $3760
 	jr nc, .setGlobalTranspose ; $3762
 	ldh [hSndTranspose], a ; $3764
 	jp .nextCommand ; $3766
 .setGlobalTranspose:
-	sub a, $80 ; $3769
+	sub $80 ; $3769
 	ld [wSndTranspose], a ; $376b
 	jp .nextCommand ; $376e
 .transposeInc:
@@ -9463,45 +9463,45 @@ RunSoundChannelScript:
 	ld [wSndTranspose], a ; $378f
 	jp .nextCommand ; $3792
 .setEcho:
-	cp a, $aa ; $3795
+	cp $aa ; $3795
 	jr nz, .loopBlock ; $3797
 	ld a, [hl+] ; $3799
 	ld c, a ; $379a
-	and a, $f0 ; $379b
+	and $f0 ; $379b
 	jr z, .clearEcho ; $379d
 	swap a ; $379f
 	ldh [hSndEchoTimer], a ; $37a1
-	or a, $f0 ; $37a3
+	or $f0 ; $37a3
 	ldh [hSndEchoCtrl], a ; $37a5
 	ld a, c ; $37a7
-	and a, $0f ; $37a8
+	and $0f ; $37a8
 	ld c, a ; $37aa
 	ldh a, [hSndEcho] ; $37ab
-	and a, $f0 ; $37ad
-	or a, c ; $37af
+	and $f0 ; $37ad
+	or c ; $37af
 	ldh [hSndEcho], a ; $37b0
 	jp .nextCommand ; $37b2
 .clearEcho:
-	xor a, a ; $37b5
+	xor a ; $37b5
 	ldh [hSndEchoTimer], a ; $37b6
 	ldh [hSndEcho], a ; $37b8
 	ldh [hSndEchoCtrl], a ; $37ba
 	jp .nextCommand ; $37bc
 .loopBlock:
-	cp a, $ac ; $37bf
+	cp $ac ; $37bf
 	jr nz, .loopReturn ; $37c1
 	ldh a, [hSndLoopCount] ; $37c3
-	sub a, $01 ; $37c5
+	sub $01 ; $37c5
 	jr z, .loopFinished ; $37c7
 	jr nc, .storeLoopCount ; $37c9
 	ld a, [hl] ; $37cb
 .storeLoopCount:
 	ldh [hSndLoopCount], a ; $37cc
 	ldh a, [hSndScriptPtr] ; $37ce
-	sub a, $01 ; $37d0
+	sub $01 ; $37d0
 	ldh [hSndLoopReturnPtr], a ; $37d2
 	ldh a, [hSndScriptPtr + 1] ; $37d4
-	sbc a, $00 ; $37d6
+	sbc $00 ; $37d6
 	ldh [hSndLoopReturnPtr + 1], a ; $37d8
 	inc hl ; $37da
 	ld a, [hl+] ; $37db
@@ -9515,17 +9515,17 @@ RunSoundChannelScript:
 	ldh [hSndScriptPtr + 1], a ; $37e6
 	jp RunSoundChannelScript ; $37e8
 .loopFinished:
-	xor a, a ; $37eb
+	xor a ; $37eb
 	ldh [hSndLoopCount], a ; $37ec
 	ldh a, [hSndScriptPtr] ; $37ee
-	add a, $01 ; $37f0
+	add $01 ; $37f0
 	ldh [hSndScriptPtr], a ; $37f2
 	ldh a, [hSndScriptPtr + 1] ; $37f4
-	adc a, $00 ; $37f6
+	adc $00 ; $37f6
 	ldh [hSndScriptPtr + 1], a ; $37f8
 	jp RunSoundChannelScript ; $37fa
 .loopReturn:
-	cp a, $ad ; $37fd
+	cp $ad ; $37fd
 	jr nz, .setSweepFlag ; $37ff
 	ldh a, [hSndLoopReturnPtr] ; $3801
 	ldh [hSndScriptPtr], a ; $3803
@@ -9533,26 +9533,26 @@ RunSoundChannelScript:
 	ldh [hSndScriptPtr + 1], a ; $3807
 	jp RunSoundChannelScript ; $3809
 .setSweepFlag:
-	cp a, $ae ; $380c
+	cp $ae ; $380c
 	jr nz, .setToneLength ; $380e
 	ld a, [hl+] ; $3810
-	and a, $10 ; $3811
+	and $10 ; $3811
 	ld b, a ; $3813
 	ldh a, [hSndToneCtrl] ; $3814
-	and a, $ef ; $3816
-	or a, b ; $3818
+	and $ef ; $3816
+	or b ; $3818
 	ldh [hSndToneCtrl], a ; $3819
 	jp .nextCommand ; $381b
 .setToneLength:
-	cp a, $af ; $381e
+	cp $af ; $381e
 	jr nz, .skipUnknown ; $3820
 	ld a, [hl+] ; $3822
-	and a, $0f ; $3823
+	and $0f ; $3823
 	ldh [hSndLengthAccum], a ; $3825
 	ld b, a ; $3827
 	ldh a, [hSndToneCtrl] ; $3828
-	and a, $f0 ; $382a
-	or a, b ; $382c
+	and $f0 ; $382a
+	or b ; $382c
 	ldh [hSndToneCtrl], a ; $382d
 	jp .nextCommand ; $382f
 .skipUnknown:
@@ -9562,35 +9562,35 @@ NoiseNoteTable:
 	; $3836, 16 bytes (bytes:16)
 	db $00, $01, $11, $12, $14, $23, $07, $15, $17, $32, $33, $60, $61, $45, $53, $62 ; 0x00
 SndTriggerNoteBody:
-	xor a, a ; $3846
+	xor a ; $3846
 	ldh [hSndRestFlag], a ; $3847
 	ld a, [wSndChannelType] ; $3849
-	cp a, $02 ; $384c
+	cp $02 ; $384c
 	jr z, .checkPeriod ; $384e
 	ldh a, [hSndPeriodHi] ; $3850
-	and a, $7f ; $3852
+	and $7f ; $3852
 	jp z, SndSilenceChannel ; $3854
 	ret ; $3857
 .checkPeriod:
 	ldh a, [hSndPeriodHi] ; $3858
-	and a, $7f ; $385a
+	and $7f ; $385a
 	ret nz ; $385c
 	call AbortIfChannelTriggered ; $385d
-	xor a, a ; $3860
+	xor a ; $3860
 	ldh [rAUD3ENA], a ; $3861
 	ret ; $3863
 SndTriggerNote:
 	ld b, a ; $3864
 	ldh a, [hSndEchoCtrl] ; $3865
-	and a, $f0 ; $3867
+	and $f0 ; $3867
 	jr z, .read ; $3869
 	push de ; $386b
 	ldh a, [hSndEchoCtrl] ; $386c
-	and a, $0f ; $386e
+	and $0f ; $386e
 	ldh [hSndEchoTimer], a ; $3870
 	ld c, a ; $3872
 	ld a, [hl] ; $3873
-	sub a, c ; $3874
+	sub c ; $3874
 	ldh [hSndPortamentoTimer], a ; $3875
 	pop de ; $3877
 	jr .step ; $3878
@@ -9603,7 +9603,7 @@ SndTriggerNote:
 	ldh a, [hSndNoteOffset] ; $387f
 	bit 7, a ; $3881
 	jr z, .restore ; $3883
-	add a, c ; $3885
+	add c ; $3885
 	jr z, .zero ; $3886
 	jr c, .restore ; $3888
 .zero:
@@ -9612,18 +9612,18 @@ SndTriggerNote:
 	pop bc ; $388c
 	ldh [hSndRestFlag], a ; $388d
 	ld a, [wSndChannelType] ; $388f
-	cp a, $03 ; $3892
+	cp $03 ; $3892
 	jr nz, .ne03 ; $3894
 	ld a, b ; $3896
-	cp a, $1f ; $3897
+	cp $1f ; $3897
 	jr z, SndTriggerNoteBody ; $3899
-	cp a, $10 ; $389b
+	cp $10 ; $389b
 	jr nc, .ge10 ; $389d
 	ld hl, NoiseNoteTable ; $389f
-	add a, l ; $38a2
+	add l ; $38a2
 	ld l, a ; $38a3
 	ld a, h ; $38a4
-	adc a, $00 ; $38a5
+	adc $00 ; $38a5
 	ld h, a ; $38a7
 	ld l, [hl] ; $38a8
 	ld h, $00 ; $38a9
@@ -9634,16 +9634,16 @@ SndTriggerNote:
 	jr .abortIfChannelTriggered ; $38b0
 .ne03:
 	ld a, b ; $38b2
-	and a, $0f ; $38b3
-	cp a, $0c ; $38b5
+	and $0f ; $38b3
+	cp $0c ; $38b5
 	jr nc, SndTriggerNoteBody ; $38b7
-	add a, a ; $38b9
+	add a ; $38b9
 	ld e, a ; $38ba
 	ldh a, [hSndToneCtrl] ; $38bb
-	and a, $10 ; $38bd
+	and $10 ; $38bd
 	jr z, .maskClear ; $38bf
 	ld a, e ; $38c1
-	add a, $18 ; $38c2
+	add $18 ; $38c2
 	ld e, a ; $38c4
 .maskClear:
 	ld d, $00 ; $38c5
@@ -9654,7 +9654,7 @@ SndTriggerNote:
 	ld l, a ; $38cd
 	ld a, b ; $38ce
 	swap a ; $38cf
-	and a, $0f ; $38d1
+	and $0f ; $38d1
 	jr z, .maskClear2 ; $38d3
 	ld b, a ; $38d5
 .loop:
@@ -9664,17 +9664,17 @@ SndTriggerNote:
 	jr nz, .loop ; $38db
 .maskClear2:
 	ld a, $00 ; $38dd
-	sub a, l ; $38df
+	sub l ; $38df
 	ld l, a ; $38e0
 	ld a, $08 ; $38e1
-	sbc a, h ; $38e3
+	sbc h ; $38e3
 	ld h, a ; $38e4
 .abortIfChannelTriggered:
-	xor a, a ; $38e5
+	xor a ; $38e5
 	ldh [hSndEnvPos], a ; $38e6
 	call AbortIfChannelTriggered ; $38e8
 	ld a, [wSndChannelType] ; $38eb
-	cp a, $02 ; $38ee
+	cp $02 ; $38ee
 	jr nz, .ne02 ; $38f0
 	call LoadWavePatternIfChanged ; $38f2
 	ld a, $80 ; $38f5
@@ -9684,7 +9684,7 @@ SndTriggerNote:
 	call ApplyChannelVolumeEnvelope ; $38fa
 	pop hl ; $38fd
 	ld a, [wSndChannelType] ; $38fe
-	and a, a ; $3901
+	and a ; $3901
 	ldh a, [hSndWaveId] ; $3902
 	ld c, $10 ; $3904
 	call z, WriteChannelReg ; $3906
@@ -9692,9 +9692,9 @@ SndTriggerNote:
 	ld c, $13 ; $390a
 	call WriteChannelReg ; $390c
 	ld a, l ; $390f
-	cp a, $02 ; $3910
+	cp $02 ; $3910
 	jr c, .lt02 ; $3912
-	cp a, $fe ; $3914
+	cp $fe ; $3914
 	jr c, .store ; $3916
 	ld a, $fd ; $3918
 	jr .store ; $391a
@@ -9703,21 +9703,21 @@ SndTriggerNote:
 .store:
 	ldh [hSndPeriodLo], a ; $391e
 	ld a, [wSndChannelType] ; $3920
-	cp a, $02 ; $3923
+	cp $02 ; $3923
 	jr z, .eq02 ; $3925
-	cp a, $02 ; $3927
+	cp $02 ; $3927
 	jr nc, .loopB ; $3929
 	ldh a, [hSndToneCtrl] ; $392b
-	and a, $c0 ; $392d
-	or a, $3f ; $392f
+	and $c0 ; $392d
+	or $3f ; $392f
 	ld c, $11 ; $3931
 	call WriteChannelReg ; $3933
 .loopB:
 	ld a, h ; $3936
-	and a, $07 ; $3937
-	or a, $80 ; $3939
+	and $07 ; $3937
+	or $80 ; $3939
 .loop2:
-	or a, $20 ; $393b
+	or $20 ; $393b
 	ldh [hSndPeriodHi], a ; $393d
 	ld c, $14 ; $393f
 	call WriteChannelReg ; $3941
@@ -9728,37 +9728,37 @@ SndTriggerNote:
 	cpl ; $394b
 	ld c, a ; $394c
 	ldh a, [hSndPanMask] ; $394d
-	and a, b ; $394f
+	and b ; $394f
 	ld b, a ; $3950
 	ld a, [wSndPanShadow] ; $3951
-	and a, c ; $3954
-	or a, b ; $3955
+	and c ; $3954
+	or b ; $3955
 	ld [wSndPanShadow], a ; $3956
 	ret ; $3959
 .eq02:
-	xor a, a ; $395a
+	xor a ; $395a
 	ldh [rAUD3LEN], a ; $395b
 	ldh a, [rAUDENA] ; $395d
-	and a, $04 ; $395f
+	and $04 ; $395f
 	jr z, .loopB ; $3961
 	ld a, h ; $3963
-	and a, $07 ; $3964
+	and $07 ; $3964
 	jr .loop2 ; $3966
 TickVolumeSlide:
 	ld a, [wSndChannelType] ; $3968
-	cp a, $02 ; $396b
+	cp $02 ; $396b
 	ret z ; $396d
 	ldh a, [hSndVolSlide] ; $396e
-	and a, a ; $3970
+	and a ; $3970
 	ret z ; $3971
 	ld hl, hSndVolSlideTimer ; $3972
 	dec [hl] ; $3975
 	ret nz ; $3976
 	ldh a, [hSndVolume] ; $3977
 	swap a ; $3979
-	cp a, $10 ; $397b
+	cp $10 ; $397b
 	ret nc ; $397d
-	and a, $0f ; $397e
+	and $0f ; $397e
 	ld b, a ; $3980
 	ldh a, [hSndVolSlideReload] ; $3981
 	ldh [hSndVolSlideTimer], a ; $3983
@@ -9768,83 +9768,83 @@ TickVolumeSlide:
 	jr nz, .bump ; $398b
 	dec [hl] ; $398d
 	ld a, b ; $398e
-	cp a, $0f ; $398f
+	cp $0f ; $398f
 	ret z ; $3991
 	ldh a, [hSndVolume] ; $3992
-	add a, $10 ; $3994
+	add $10 ; $3994
 	ldh [hSndVolume], a ; $3996
 	jp ApplyChannelEnvelope ; $3998
 .bump:
 	inc [hl] ; $399b
 	ld a, b ; $399c
-	and a, a ; $399d
+	and a ; $399d
 	ret z ; $399e
 	ldh a, [hSndVolume] ; $399f
-	sub a, $10 ; $39a1
+	sub $10 ; $39a1
 	ldh [hSndVolume], a ; $39a3
 	jr ApplyChannelEnvelope ; $39a5
 TickVibrato:
 	call AbortIfChannelTriggered ; $39a7
 	ld a, [wSndChannelType] ; $39aa
-	cp a, $03 ; $39ad
+	cp $03 ; $39ad
 	ret z ; $39af
 	ldh a, [hSndNoteLenTimer] ; $39b0
-	and a, a ; $39b2
+	and a ; $39b2
 	ret nz ; $39b3
 	ldh a, [hSndChannelType] ; $39b4
-	and a, $f0 ; $39b6
+	and $f0 ; $39b6
 	ret z ; $39b8
-	sub a, $10 ; $39b9
+	sub $10 ; $39b9
 	ld b, a ; $39bb
 	ld a, [wSndFrameCounter] ; $39bc
-	and a, $0f ; $39bf
-	or a, b ; $39c1
+	and $0f ; $39bf
+	or b ; $39c1
 	ld e, a ; $39c2
 	ld d, $00 ; $39c3
 	ld hl, SoundPitchTable ; $39c5
 	add hl, de ; $39c8
 	ldh a, [hSndPeriodLo] ; $39c9
-	add a, [hl] ; $39cb
+	add [hl] ; $39cb
 	ld c, $13 ; $39cc
 	jr WriteChannelReg ; $39ce
 ApplyChannelVolumeEnvelope:
 	ld a, [wSndChannelType] ; $39d0
-	cp a, $02 ; $39d3
+	cp $02 ; $39d3
 	jr z, WriteChannelReg.writeChannelReg ; $39d5
 	ldh a, [hSndEnvRate] ; $39d7
-	and a, a ; $39d9
+	and a ; $39d9
 	jp nz, TickInstrumentEnvelope.eq02 ; $39da
 	ldh a, [hSndVolume] ; $39dd
 ApplyChannelEnvelope:
 	ld b, a ; $39df
-	and a, $f0 ; $39e0
+	and $f0 ; $39e0
 	jr z, .checkRate ; $39e2
 	ldh a, [hSndRestFlag] ; $39e4
-	or a, a ; $39e6
+	or a ; $39e6
 	jr nz, .checkRate ; $39e7
 	ld a, b ; $39e9
 	rrca ; $39ea
 	rrca ; $39eb
-	add a, $10 ; $39ec
-	and a, $f0 ; $39ee
+	add $10 ; $39ec
+	and $f0 ; $39ee
 	ld c, a ; $39f0
 	ld a, b ; $39f1
-	and a, $0f ; $39f2
-	or a, c ; $39f4
+	and $0f ; $39f2
+	or c ; $39f4
 	ld b, a ; $39f5
 .checkRate:
 	ld a, b ; $39f6
-	and a, $07 ; $39f7
+	and $07 ; $39f7
 	jr nz, .writeReg ; $39f9
 	ld a, b ; $39fb
-	or a, $08 ; $39fc
+	or $08 ; $39fc
 	ld b, a ; $39fe
 .writeReg:
 	ld a, [wSndRegBase] ; $39ff
-	add a, $12 ; $3a02
+	add $12 ; $3a02
 	ld c, a ; $3a04
 	ldh a, [c] ; $3a05
-	cp a, b ; $3a06
+	cp b ; $3a06
 	ret z ; $3a07
 	ld a, b ; $3a08
 	ldh [c], a ; $3a09
@@ -9855,7 +9855,7 @@ ApplyChannelEnvelope:
 WriteChannelReg:
 	ld b, a ; $3a14
 	ld a, [wSndRegBase] ; $3a15
-	add a, c ; $3a18
+	add c ; $3a18
 	ld c, a ; $3a19
 	ld a, b ; $3a1a
 	ldh [c], a ; $3a1b
@@ -9867,68 +9867,68 @@ WriteChannelReg:
 ResetChannelLength:
 	ld c, $11 ; $3a23
 	ld a, [wSndRegBase] ; $3a25
-	add a, c ; $3a28
+	add c ; $3a28
 	ld c, a ; $3a29
 	ldh a, [c] ; $3a2a
-	and a, $c0 ; $3a2b
+	and $c0 ; $3a2b
 	ldh [c], a ; $3a2d
 	ret ; $3a2e
 .loop:
 	ld a, e ; $3a2f
 	srl a ; $3a30
-	add a, $02 ; $3a32
+	add $02 ; $3a32
 	swap a ; $3a34
 	ld hl, hSndVolume ; $3a36
-	cp a, [hl] ; $3a39
+	cp [hl] ; $3a39
 	ret c ; $3a3a
-	and a, $60 ; $3a3b
+	and $60 ; $3a3b
 	ldh [rAUD3LEVEL], a ; $3a3d
 	ret ; $3a3f
 TickInstrumentEnvelope:
 	call AbortIfChannelTriggered ; $3a40
 	ldh a, [hSndPeriodHi] ; $3a43
-	and a, $7f ; $3a45
+	and $7f ; $3a45
 	jp z, SndSilenceChannel ; $3a47
 	ld a, [wSndChannelType] ; $3a4a
-	cp a, $02 ; $3a4d
+	cp $02 ; $3a4d
 	jr z, .eq02 ; $3a4f
 	ldh a, [hSndEnvRate] ; $3a51
-	and a, a ; $3a53
+	and a ; $3a53
 	ret z ; $3a54
 .eq02:
 	ldh a, [hSndEnvLength] ; $3a55
-	and a, a ; $3a57
+	and a ; $3a57
 	ret z ; $3a58
 	ld e, $00 ; $3a59
 	ld c, a ; $3a5b
 	ldh a, [hSndEnvPos] ; $3a5c
 	ld b, $04 ; $3a5e
 .loop:
-	add a, a ; $3a60
-	cp a, c ; $3a61
+	add a ; $3a60
+	cp c ; $3a61
 	jr c, .carry ; $3a62
-	sub a, c ; $3a64
+	sub c ; $3a64
 .carry:
 	ccf ; $3a65
 	rl e ; $3a66
 	dec b ; $3a68
 	jr nz, .loop ; $3a69
 	ld a, [wSndChannelType] ; $3a6b
-	cp a, $02 ; $3a6e
+	cp $02 ; $3a6e
 	jr z, ResetChannelLength.loop ; $3a70
 	ldh a, [hSndEnvRate] ; $3a72
-	or a, e ; $3a74
+	or e ; $3a74
 	ld e, a ; $3a75
 	ld d, $00 ; $3a76
 	push de ; $3a78
 	ldh a, [hSndInstrument] ; $3a79
-	and a, $0f ; $3a7b
+	and $0f ; $3a7b
 	ld de, SoundEnvelopeTable ; $3a7d
 	sla a ; $3a80
-	add a, e ; $3a82
+	add e ; $3a82
 	ld e, a ; $3a83
 	ld a, $00 ; $3a84
-	adc a, d ; $3a86
+	adc d ; $3a86
 	ld d, a ; $3a87
 	ld a, [de] ; $3a88
 	ld l, a ; $3a89
@@ -9937,10 +9937,10 @@ TickInstrumentEnvelope:
 	ld h, a ; $3a8c
 	pop de ; $3a8d
 	ld a, l ; $3a8e
-	sub a, $10 ; $3a8f
+	sub $10 ; $3a8f
 	ld l, a ; $3a91
 	ld a, h ; $3a92
-	sbc a, $00 ; $3a93
+	sbc $00 ; $3a93
 	ld h, a ; $3a95
 	add hl, de ; $3a96
 	ldh a, [hSndVolume] ; $3a97
@@ -9948,15 +9948,15 @@ TickInstrumentEnvelope:
 	ld e, a ; $3a9b
 	ld a, [hl] ; $3a9c
 	ld h, a ; $3a9d
-	and a, $f0 ; $3a9e
-	or a, e ; $3aa0
+	and $f0 ; $3a9e
+	or e ; $3aa0
 	ld e, a ; $3aa1
 	bit 2, h ; $3aa2
 	jr nz, .checkDirection ; $3aa4
 	inc b ; $3aa6
 	ld a, c ; $3aa7
 	swap a ; $3aa8
-	and a, $0f ; $3aaa
+	and $0f ; $3aaa
 	jr z, .checkDirection ; $3aac
 	ld b, a ; $3aae
 	bit 3, e ; $3aaf
@@ -9969,7 +9969,7 @@ TickInstrumentEnvelope:
 	jr z, .bit1Clear ; $3abd
 .checkVolume:
 	ld a, b ; $3abf
-	cp a, $08 ; $3ac0
+	cp $08 ; $3ac0
 	jr c, .checkDirection ; $3ac2
 .bit1Clear:
 	ld b, $00 ; $3ac4
@@ -9981,32 +9981,32 @@ TickInstrumentEnvelope:
 	srl b ; $3acd
 .combine:
 	ld a, h ; $3acf
-	and a, $08 ; $3ad0
-	or a, b ; $3ad2
+	and $08 ; $3ad0
+	or b ; $3ad2
 	ld b, a ; $3ad3
 	bit 0, h ; $3ad4
 	jr z, .bit0Clear ; $3ad6
 	ld hl, SoundChannelMaskTable ; $3ad8
 	add hl, de ; $3adb
 	ld a, [hl] ; $3adc
-	or a, b ; $3add
+	or b ; $3add
 	jp ApplyChannelEnvelope ; $3ade
 .bit0Clear:
 	ld c, $12 ; $3ae1
 	ld a, [wSndRegBase] ; $3ae3
-	add a, c ; $3ae6
+	add c ; $3ae6
 	ld c, a ; $3ae7
 	ldh a, [c] ; $3ae8
-	and a, $08 ; $3ae9
+	and $08 ; $3ae9
 	ld l, a ; $3aeb
 	ld a, h ; $3aec
-	and a, $08 ; $3aed
-	cp a, l ; $3aef
+	and $08 ; $3aed
+	cp l ; $3aef
 	ret z ; $3af0
 	ld hl, SoundChannelMaskTable ; $3af1
 	add hl, de ; $3af4
 	ld a, [hl] ; $3af5
-	or a, b ; $3af6
+	or b ; $3af6
 	jp ApplyChannelEnvelope ; $3af7
 SndSilenceChannel:
 	call AbortIfChannelTriggered ; $3afa
@@ -10018,14 +10018,14 @@ SndReleaseChannel:
 	cpl ; $3b08
 	ld b, a ; $3b09
 	ld a, [wSndPanShadow] ; $3b0a
-	and a, b ; $3b0d
+	and b ; $3b0d
 	ld [wSndPanShadow], a ; $3b0e
 	ret ; $3b11
 AbortIfChannelTriggered:
 	ld a, [wSndChannelBits] ; $3b12
 	ld b, a ; $3b15
 	ld a, [wSndActiveMask] ; $3b16
-	and a, b ; $3b19
+	and b ; $3b19
 	ret z ; $3b1a
 	pop af ; $3b1b
 	ret ; $3b1c
@@ -10063,12 +10063,12 @@ LoadWavePatternIfChanged:
 	ld a, [wSndLoadedWaveId] ; $3d3d
 	ld b, a ; $3d40
 	ldh a, [hSndWaveId] ; $3d41
-	cp a, b ; $3d43
+	cp b ; $3d43
 	ret z ; $3d44
 	ld [wSndLoadedWaveId], a ; $3d45
 	ld e, a ; $3d48
 	swap e ; $3d49
-	xor a, a ; $3d4b
+	xor a ; $3d4b
 	ldh [rAUD3ENA], a ; $3d4c
 LoadWavePattern:
 	ld d, a ; $3d4e
@@ -10076,8 +10076,8 @@ LoadWavePattern:
 	push de ; $3d52
 	ldh a, [hSndInstrument] ; $3d53
 	swap a ; $3d55
-	and a, $0f ; $3d57
-	add a, a ; $3d59
+	and $0f ; $3d57
+	add a ; $3d59
 	ld e, a ; $3d5a
 	ld d, $00 ; $3d5b
 	add hl, de ; $3d5d
@@ -10097,44 +10097,44 @@ LoadWavePattern:
 	ret ; $3d6e
 GetChannelLoopSlot:
 	ld a, [wSndChannelIndex] ; $3d6f
-	add a, a ; $3d72
+	add a ; $3d72
 	ld c, a ; $3d73
-	add a, a ; $3d74
-	add a, c ; $3d75
-	add a, a ; $3d76
+	add a ; $3d74
+	add c ; $3d75
+	add a ; $3d76
 	ld c, a ; $3d77
 	ld a, b ; $3d78
-	and a, $0f ; $3d79
+	and $0f ; $3d79
 	ld b, a ; $3d7b
-	add a, a ; $3d7c
-	add a, b ; $3d7d
-	add a, c ; $3d7e
+	add a ; $3d7c
+	add b ; $3d7d
+	add c ; $3d7e
 	ld hl, wSndLoopSlots ; $3d7f
-	add a, l ; $3d82
+	add l ; $3d82
 	ld l, a ; $3d83
 	ld a, $00 ; $3d84
-	adc a, h ; $3d86
+	adc h ; $3d86
 	ld h, a ; $3d87
 	ret ; $3d88
 ScaleEchoVolume:
 	push de ; $3d89
 	push bc ; $3d8a
 	ldh a, [hSndEcho] ; $3d8b
-	and a, $0f ; $3d8d
+	and $0f ; $3d8d
 	inc a ; $3d8f
 	ld d, a ; $3d90
 	ld bc, $0000 ; $3d91
 	ldh a, [hSndVolume] ; $3d94
 	swap a ; $3d96
-	and a, $0f ; $3d98
+	and $0f ; $3d98
 	inc a ; $3d9a
 	ld e, a ; $3d9b
 .loop:
 	ld a, e ; $3d9c
-	add a, c ; $3d9d
+	add c ; $3d9d
 	ld c, a ; $3d9e
 	ld a, $00 ; $3d9f
-	adc a, b ; $3da1
+	adc b ; $3da1
 	ld b, a ; $3da2
 	dec d ; $3da3
 	jr nz, .loop ; $3da4
@@ -10147,22 +10147,22 @@ ScaleEchoVolume:
 	srl b ; $3db2
 	rr c ; $3db4
 	ld a, c ; $3db6
-	and a, a ; $3db7
+	and a ; $3db7
 	jr nz, .nonZero ; $3db8
 	ld c, $01 ; $3dba
 .nonZero:
 	swap c ; $3dbc
 	ldh a, [hSndVolume] ; $3dbe
 	ld d, a ; $3dc0
-	and a, $f0 ; $3dc1
+	and $f0 ; $3dc1
 	ld e, a ; $3dc3
 	ldh a, [hSndEcho] ; $3dc4
-	and a, $0f ; $3dc6
-	or a, e ; $3dc8
+	and $0f ; $3dc6
+	or e ; $3dc8
 	ldh [hSndEcho], a ; $3dc9
 	ld a, d ; $3dcb
-	and a, $0f ; $3dcc
-	or a, c ; $3dce
+	and $0f ; $3dcc
+	or c ; $3dce
 	ldh [hSndVolume], a ; $3dcf
 	pop bc ; $3dd1
 	pop de ; $3dd2

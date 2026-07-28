@@ -123,7 +123,7 @@ MatchSelectFacingScripts_10:
 MatchSelectTileTriggers_10:
 	ds 1, $ff ; $418f, fill
 MatchSelectInitScript_10:
-	xor a, a ; $4190
+	xor a ; $4190
 	ld [wStoryModeShowLocationName], a ; $4191
 	ret ; $4194
 RunSinglesMatchListMenu:
@@ -131,7 +131,7 @@ RunSinglesMatchListMenu:
 	ld de, $0101 ; $4198
 	ld a, $05 ; $419b
 	farcall RunPagedTextMenu ; $419d
-	cp a, $ff ; $41a0
+	cp $ff ; $41a0
 	jp z, RunDoublesMatchListMenu.done ; $41a2
 	ld [wMapSceneStage], a ; $41a5
 	ld hl, wStoryModePlayersXPosition ; $41a8
@@ -144,11 +144,11 @@ RunSinglesMatchListMenu:
 	ld [wStoryModeExitLocationRequest], a ; $41bc
 	farcall InitStoryMatchSettings ; $41bf
 	ld a, [wMapSceneStage] ; $41c2
-	add a, a ; $41c5
-	add a, LOW(Data_10_4220) ; $41c6
+	add a ; $41c5
+	add LOW(Data_10_4220) ; $41c6
 	ld l, a ; $41c8
-	adc a, HIGH(Data_10_4220) ; $41c9
-	sub a, l ; $41cb
+	adc HIGH(Data_10_4220) ; $41c9
+	sub l ; $41cb
 	ld h, a ; $41cc
 	ld a, [hl+] ; $41cd
 	ld h, [hl] ; $41ce
@@ -162,7 +162,7 @@ RunDoublesMatchListMenu:
 	ld de, $0101 ; $41dd
 	ld a, $04 ; $41e0
 	farcall RunPagedTextMenu ; $41e2
-	cp a, $ff ; $41e5
+	cp $ff ; $41e5
 	jp z, .done ; $41e7
 	ld [wMapSceneStage], a ; $41ea
 	ld hl, wStoryModePlayersXPosition ; $41ed
@@ -175,11 +175,11 @@ RunDoublesMatchListMenu:
 	ld [wStoryModeExitLocationRequest], a ; $4201
 	farcall InitStoryMatchSettings ; $4204
 	ld a, [wMapSceneStage] ; $4207
-	add a, a ; $420a
-	add a, LOW(Data_10_4246) ; $420b
+	add a ; $420a
+	add LOW(Data_10_4246) ; $420b
 	ld l, a ; $420d
-	adc a, HIGH(Data_10_4246) ; $420e
-	sub a, l ; $4210
+	adc HIGH(Data_10_4246) ; $420e
+	sub l ; $4210
 	ld h, a ; $4211
 	ld a, [hl+] ; $4212
 	ld h, [hl] ; $4213
@@ -336,7 +336,7 @@ RunDrillMatchListMenu:
 	ld hl, $048d ; $4450
 	ld a, $09 ; $4453
 	farcall RunPagedTextMenu ; $4455
-	cp a, $ff ; $4458
+	cp $ff ; $4458
 	jp z, RunDoublesMatchListMenu.done ; $445a
 	push af ; $445d
 	ld hl, wStoryModePlayersXPosition ; $445e
@@ -407,16 +407,16 @@ RunLessonSelectMenu:
 	ld l, c ; $4502
 	ld h, b ; $4503
 	ld a, l ; $4504
-	sub a, e ; $4505
+	sub e ; $4505
 	ld l, a ; $4506
 	ld a, h ; $4507
-	sbc a, d ; $4508
+	sbc d ; $4508
 	ld h, a ; $4509
 	ld hl, $1c0c ; $450a
 	ld de, $0101 ; $450d
 	ld a, $01 ; $4510
 	farcall RunPagedTextMenu ; $4512
-	cp a, $ff ; $4515
+	cp $ff ; $4515
 	jp z, RunDoublesMatchListMenu.done ; $4517
 	ld a, a ; $451a
 	rst Rst00 ; $451b
@@ -429,9 +429,9 @@ RunServiceLessonMenu:
 	ld de, $0101 ; $4527
 	ld a, $01 ; $452a
 	farcall RunPagedTextMenu ; $452c
-	cp a, $ff ; $452f
+	cp $ff ; $452f
 	jp z, RunDoublesMatchListMenu.done ; $4531
-	add a, $03 ; $4534
+	add $03 ; $4534
 	ld [wCurrentMinigameStoryMatch + 1], a ; $4536
 	ld hl, wStoryModePlayersXPosition ; $4539
 	ld de, wStoryModeSpawnPosition ; $453c
@@ -451,9 +451,9 @@ RunNetLessonMenu:
 	ld de, $0101 ; $455f
 	ld a, $01 ; $4562
 	farcall RunPagedTextMenu ; $4564
-	cp a, $ff ; $4567
+	cp $ff ; $4567
 	jp z, RunDoublesMatchListMenu.done ; $4569
-	add a, $09 ; $456c
+	add $09 ; $456c
 	ld [wCurrentMinigameStoryMatch + 1], a ; $456e
 	ld hl, wStoryModePlayersXPosition ; $4571
 	ld de, wStoryModeSpawnPosition ; $4574
@@ -473,9 +473,9 @@ RunStrokeLessonMenu:
 	ld de, $0101 ; $4597
 	ld a, $01 ; $459a
 	farcall RunPagedTextMenu ; $459c
-	cp a, $ff ; $459f
+	cp $ff ; $459f
 	jp z, RunDoublesMatchListMenu.done ; $45a1
-	add a, $0f ; $45a4
+	add $0f ; $45a4
 	ld [wCurrentMinigameStoryMatch + 1], a ; $45a6
 	ld hl, wStoryModePlayersXPosition ; $45a9
 	ld de, wStoryModeSpawnPosition ; $45ac
@@ -503,7 +503,7 @@ ShowRankingBoardSamples:
 	call BeginFadeOut ; $45e5
 	call WaitFadeEnd ; $45e8
 	call ClearFrameTasks ; $45eb
-	xor a, a ; $45ee
+	xor a ; $45ee
 	ldh [hBGColumnBlitPending], a ; $45ef
 	ldh [hBGRowBlitPending], a ; $45f1
 	ldh [hScrollY], a ; $45f3
@@ -515,7 +515,7 @@ ShowRankingBoardSamples:
 	ld c, $01 ; $4602
 	ld d, $00 ; $4604
 	farcall ShowRankingBoard ; $4606
-	xor a, a ; $4609
+	xor a ; $4609
 	ldh [hBGColumnBlitPending], a ; $460a
 	ldh [hBGRowBlitPending], a ; $460c
 	ldh [hScrollY], a ; $460e
@@ -527,7 +527,7 @@ ShowRankingBoardSamples:
 	ld c, $02 ; $461d
 	ld d, $00 ; $461f
 	farcall ShowRankingBoard ; $4621
-	xor a, a ; $4624
+	xor a ; $4624
 	ldh [hBGColumnBlitPending], a ; $4625
 	ldh [hBGRowBlitPending], a ; $4627
 	ldh [hScrollY], a ; $4629
@@ -544,10 +544,10 @@ RunMinigameSelectMenu:
 	ld hl, $0496 ; $4640
 	ld a, $03 ; $4643
 	farcall RunPagedTextMenu ; $4645
-	cp a, $ff ; $4648
+	cp $ff ; $4648
 	jp z, RunDoublesMatchListMenu.done ; $464a
 	ld de, MinigameSelectMenuTable ; $464d
-	add a, e ; $4650
+	add e ; $4650
 	ld e, a ; $4651
 	jr nc, .runPagedTextMenu ; $4652
 	inc d ; $4654
@@ -555,7 +555,7 @@ RunMinigameSelectMenu:
 	ld hl, $0499 ; $4655
 	ld a, $01 ; $4658
 	farcall RunPagedTextMenu ; $465a
-	cp a, $ff ; $465d
+	cp $ff ; $465d
 	jp z, RunMinigameSelectMenu ; $465f
 	ld [wMinigameLevel], a ; $4662
 	ld a, [de] ; $4665
@@ -922,7 +922,7 @@ Test2Tile01_10:
 	ret ; $4b9a
 Test2InitScript_10:
 	ld a, [wStoryModeEntryPoint] ; $4b9b
-	cp a, $0f ; $4b9e
+	cp $0f ; $4b9e
 	ret z ; $4ba0
 	farcall ClearStatusSetupMenuEntry ; $4ba1
 	ld a, a ; $4ba4
@@ -964,7 +964,7 @@ Label_10_4bea:
 	ret ; $4bea
 Label_10_4beb:
 	ld a, [wRallyLength] ; $4beb
-	cp a, $02 ; $4bee
+	cp $02 ; $4bee
 	jr c, .done ; $4bf0
 	ld a, $01 ; $4bf2
 	ld [wMatchAbortFlag], a ; $4bf4
@@ -980,7 +980,7 @@ Label_10_4bfd:
 	ret nz ; $4c02
 	ld a, [wCharacter1ServiceAces] ; $4c03
 	ld hl, wCharacter2ServiceAces ; $4c06
-	cp a, [hl] ; $4c09
+	cp [hl] ; $4c09
 	jr nz, .storeMatchAbortFlag ; $4c0a
 	ret ; $4c0c
 .storeMatchAbortFlag:
@@ -1196,7 +1196,7 @@ MainMenuInitScript_10:
 ApplyMatchTypeSettings:
 	ld hl, MatchTypeSettingsTable0 ; $4ece
 	ld a, [wMatchFormatSets] ; $4ed1
-	add a, l ; $4ed4
+	add l ; $4ed4
 	ld l, a ; $4ed5
 	jr nc, .readSets ; $4ed6
 	inc h ; $4ed8
@@ -1205,7 +1205,7 @@ ApplyMatchTypeSettings:
 	ld [wMatchTypeNumberOfSets], a ; $4eda
 	ld hl, MatchTypeSettingsTable1 ; $4edd
 	ld a, [wMatchFormatGames] ; $4ee0
-	add a, l ; $4ee3
+	add l ; $4ee3
 	ld l, a ; $4ee4
 	jr nc, .readGames ; $4ee5
 	inc h ; $4ee7
@@ -1214,7 +1214,7 @@ ApplyMatchTypeSettings:
 	ld [wMatchTypeNumberOfGames], a ; $4ee9
 	ld a, [wMatchFormatDoubles] ; $4eec
 	ld [wMatchIsDoubles], a ; $4eef
-	or a, a ; $4ef2
+	or a ; $4ef2
 	jr z, .singles ; $4ef3
 	ld a, $04 ; $4ef5
 	ld [wOnCourtCharCount], a ; $4ef7
@@ -1237,12 +1237,12 @@ RunTitleAndMainMenuLoop:
 	sound $00 ; $4f10
 	call ResumeBGM ; $4f12
 	ld a, [wStoryModeEntryPoint] ; $4f15
-	cp a, $0a ; $4f18
+	cp $0a ; $4f18
 	jr nz, .newGame ; $4f1a
 	call ClearFrameTasks ; $4f1c
 	sound $00 ; $4f1f
 	call ResumeBGM ; $4f21
-	xor a, a ; $4f24
+	xor a ; $4f24
 	ld [$cb71], a ; $4f25
 .intro:
 	farcall ShowIntroLogoScreen ; $4f28
@@ -1250,13 +1250,13 @@ RunTitleAndMainMenuLoop:
 	farcall RunIntroCutscene ; $4f2e
 .titleScreen:
 	farcall RunTitleScreen ; $4f31
-	cp a, $ff ; $4f34
+	cp $ff ; $4f34
 	jr z, .intro ; $4f36
-	cp a, $01 ; $4f38
+	cp $01 ; $4f38
 	jr z, .intro ; $4f3a
 .newGame:
 	farcall InitDefaultMatchSettings ; $4f3c
-	xor a, a ; $4f3f
+	xor a ; $4f3f
 	ld [wMainMenuCursor], a ; $4f40
 	ld [wSavedDataMenuCursor], a ; $4f43
 	ld [wN64TransferMenuCursor], a ; $4f46
@@ -1279,7 +1279,7 @@ RunTitleAndMainMenuLoop:
 	script_fade_in $10 ; $4f74
 	call WaitFadeEnd ; $4f79
 .menuLoop:
-	xor a, a ; $4f7c
+	xor a ; $4f7c
 	ld [$cb22], a ; $4f7d
 	ld [wSavedDataMenuCursor], a ; $4f80
 	ld [wN64TransferMenuCursor], a ; $4f83
@@ -1299,12 +1299,12 @@ RunTitleAndMainMenuLoop:
 	call ResumeBGM ; $4faa
 	call InitSerialLink ; $4fad
 	farcall RunMainMenu ; $4fb0
-	cp a, $ff ; $4fb3
+	cp $ff ; $4fb3
 	jp z, .titleScreen ; $4fb5
 	ld e, a ; $4fb8
 	ld hl, MatchSelectHandlersB_10 ; $4fb9
-	add a, a ; $4fbc
-	add a, l ; $4fbd
+	add a ; $4fbc
+	add l ; $4fbd
 	ld l, a ; $4fbe
 	jr nc, .done ; $4fbf
 	inc h ; $4fc1
@@ -1326,42 +1326,42 @@ MatchSelectHandlersB_10:
 	dw RunEraseSavedDataFlow ; record 8
 MatchSelectHandlersBHandler0:
 	ld a, e ; $4fd8
-	cp a, $ff ; $4fd9
+	cp $ff ; $4fd9
 	jr z, .backToTitle ; $4fdb
-	and a, $7f ; $4fdd
+	and $7f ; $4fdd
 	ld [wCurrentStorySlot], a ; $4fdf
 	farcall CheckStorySlot ; $4fe2
-	cp a, $fe ; $4fe5
+	cp $fe ; $4fe5
 	jr z, .backToTitle ; $4fe7
 	farcall ApplyPendingExpAwards ; $4fe9
-	or a, a ; $4fec
+	or a ; $4fec
 	jr z, .checkMatchResult ; $4fed
 	call DisableLCDSafely ; $4fef
 	farcall ResetScreenAndTextWindows ; $4ff2
 	call EnableLCD ; $4ff5
 	ld a, [wSaveAndQuitRequest] ; $4ff8
-	or a, a ; $4ffb
+	or a ; $4ffb
 	jr nz, .checkMatchResult ; $4ffc
 	script_fade_in $10 ; $4ffe
 	call WaitFadeEnd ; $5003
 .checkMatchResult:
 	ld a, [wSaveAndQuitRequest] ; $5006
-	or a, a ; $5009
+	or a ; $5009
 	jp z, .clearMatchState ; $500a
 	ld c, $00 ; $500d
 	farcall ShowMatchResultsScreen ; $500f
 	push af ; $5012
 	call RestoreGameTimer ; $5013
 	pop af ; $5016
-	or a, a ; $5017
+	or a ; $5017
 	jp z, .resetScreen ; $5018
-	cp a, $ff ; $501b
+	cp $ff ; $501b
 	jp z, RunTitleAndMainMenuLoop.redrawMenu ; $501d
-	xor a, a ; $5020
+	xor a ; $5020
 	ld [wSaveAndQuitRequest], a ; $5021
 	farcall SaveStorySlotWithTimer ; $5024
 	ld a, [wKeepMatchStatsFlag] ; $5027
-	or a, a ; $502a
+	or a ; $502a
 	jr z, .restoreReturnPoint ; $502b
 	jp Label_10_5565.runMatch ; $502d
 .restoreReturnPoint:
@@ -1381,7 +1381,7 @@ MatchSelectHandlersBHandler0:
 	ld a, e ; $504e
 	ld [wCurrentStorySlot], a ; $504f
 	farcall RunNewGameSetup ; $5052
-	cp a, $ff ; $5055
+	cp $ff ; $5055
 	jp nz, .newStorySlot ; $5057
 	ld a, $00 ; $505a
 	ld [wMenuSlideDirection], a ; $505c
@@ -1413,17 +1413,17 @@ MatchSelectHandlersBHandler0:
 	script_fade_in $10 ; $509c
 	call WaitFadeEnd ; $50a1
 .clearMatchState:
-	xor a, a ; $50a4
+	xor a ; $50a4
 	ld [wSaveAndQuitRequest], a ; $50a5
 	ld [wKeepMatchStatsFlag], a ; $50a8
 	call RestoreGameTimer ; $50ab
 	farcall SaveStorySlotWithTimer ; $50ae
 	call GetStoryContinueDestination ; $50b1
 	ld [$cb74], a ; $50b4
-	cp a, $04 ; $50b7
+	cp $04 ; $50b7
 	jr z, .continueStory ; $50b9
 	farcall RunPlayAlonePartnerMenu ; $50bb
-	cp a, $ff ; $50be
+	cp $ff ; $50be
 	jr nz, .continueStory ; $50c0
 	ld a, $00 ; $50c2
 	ld [wMenuSlideDirection], a ; $50c4
@@ -1458,16 +1458,16 @@ MatchSelectHandlersBHandler3:
 	bit 7, a ; $5106
 	jr nz, .noSlot ; $5108
 	ld a, [wSaveAndQuitRequest] ; $510a
-	or a, a ; $510d
+	or a ; $510d
 	jr z, .noSlot ; $510e
 	ld c, $00 ; $5110
 	farcall ShowMatchResultsScreen ; $5112
-	or a, a ; $5115
+	or a ; $5115
 	jr z, .startStory ; $5116
-	cp a, $ff ; $5118
+	cp $ff ; $5118
 	jp z, RunTitleAndMainMenuLoop.redrawMenu ; $511a
 	ld a, [wKeepMatchStatsFlag] ; $511d
-	or a, a ; $5120
+	or a ; $5120
 	jp nz, .optionsFlow ; $5121
 .startStory:
 	call DisableLCDSafely ; $5124
@@ -1478,7 +1478,7 @@ MatchSelectHandlersBHandler3:
 	call WaitFadeEnd ; $5133
 	pop af ; $5136
 .noSlot:
-	xor a, a ; $5137
+	xor a ; $5137
 	ld [$c8a8], a ; $5138
 	ld a, $03 ; $513b
 	ld [wCurrentStorySlot], a ; $513d
@@ -1487,7 +1487,7 @@ MatchSelectHandlersBHandler3:
 	farcall WriteExhibitionSaveBlock ; $5146
 .eraseFlow:
 	farcall RunMatchFormatSelect ; $5149
-	cp a, $ff ; $514c
+	cp $ff ; $514c
 	jp z, RunTitleAndMainMenuLoop.menuLoop ; $514e
 	ld c, $10 ; $5151
 	call BeginFadeOut ; $5153
@@ -1502,13 +1502,13 @@ MatchSelectHandlersBHandler3:
 	call DisableLCDSafely ; $5167
 	farcall LoadMenuFontGfx ; $516a
 	farcall ResetScreenAndTextWindows ; $516d
-	xor a, a ; $5170
+	xor a ; $5170
 	ld [wLinkPartnerCourtMask], a ; $5171
 	ld [wUnlockedCourtMask], a ; $5174
 	farcall ComputeUnlockedCourtFlags ; $5177
 	farcall LoadCourtSelectGraphics ; $517a
 	pop af ; $517d
-	cp a, $ff ; $517e
+	cp $ff ; $517e
 	jr nz, .minigameFlow ; $5180
 	call EnableLCD ; $5182
 	script_fade_in $10 ; $5185
@@ -1520,12 +1520,12 @@ MatchSelectHandlersBHandler3:
 	ld [wMenuSlideDirection], a ; $5193
 	farcall StubNop_3e ; $5196
 	ld a, [wUnlockedCourtMask] ; $5199
-	or a, a ; $519c
+	or a ; $519c
 	jr z, .exhibitionFlow ; $519d
 	call EnableLCD ; $519f
 	script_fade_in $10 ; $51a2
 	farcall RunCourtSelect9Menu ; $51a7
-	cp a, $ff ; $51aa
+	cp $ff ; $51aa
 	jr nz, .linkFlow ; $51ac
 	ld a, $00 ; $51ae
 	ld [wMenuSlideDirection], a ; $51b0
@@ -1534,7 +1534,7 @@ MatchSelectHandlersBHandler3:
 	call EnableLCD ; $51b6
 	script_fade_in $10 ; $51b9
 	farcall RunCourtSelect4Menu ; $51be
-	cp a, $ff ; $51c1
+	cp $ff ; $51c1
 	jr nz, .linkFlow ; $51c3
 	ld a, $00 ; $51c5
 	ld [wMenuSlideDirection], a ; $51c7
@@ -1548,14 +1548,14 @@ MatchSelectHandlersBHandler3:
 .optionsFlow:
 	ld a, $03 ; $51db
 	ld [wCurrentStorySlot], a ; $51dd
-	xor a, a ; $51e0
+	xor a ; $51e0
 	ld [wSaveAndQuitRequest], a ; $51e1
 	farcall WriteExhibitionSaveBlock ; $51e4
 	ld a, $04 ; $51e7
 	ld [wGameMode], a ; $51e9
 	farcall RunMatch ; $51ec
 	ld a, [wSaveAndQuitRequest] ; $51ef
-	or a, a ; $51f2
+	or a ; $51f2
 	jr z, .done ; $51f3
 	ld a, $01 ; $51f5
 	ld [$c8a8], a ; $51f7
@@ -1570,10 +1570,10 @@ MatchSelectHandlersBHandler3:
 	script_fade_in $10 ; $520e
 	jp RunTitleAndMainMenuLoop.menuLoop ; $5213
 RunMinigameModeFlow:
-	xor a, a ; $5216
+	xor a ; $5216
 	ld [wKeepMatchStatsFlag], a ; $5217
 	farcall RunMinigameSelect ; $521a
-	cp a, $ff ; $521d
+	cp $ff ; $521d
 	jr nz, .levelMenu ; $521f
 	ld a, $00 ; $5221
 	ld [wMenuSlideDirection], a ; $5223
@@ -1584,7 +1584,7 @@ RunMinigameModeFlow:
 	ld a, [wSelectedMinigame] ; $522e
 	ld c, a ; $5231
 	farcall RunMinigameLevelSelect ; $5232
-	cp a, $ff ; $5235
+	cp $ff ; $5235
 	jr nz, .startMinigame ; $5237
 	ld a, $00 ; $5239
 	ld [wMenuSlideDirection], a ; $523b
@@ -1593,13 +1593,13 @@ RunMinigameModeFlow:
 	ld [wMinigameLevel], a ; $5241
 	ld a, [wSelectedMinigame] ; $5244
 	ld b, a ; $5247
-	add a, a ; $5248
-	add a, b ; $5249
+	add a ; $5248
+	add b ; $5249
 	ld c, a ; $524a
 	ld a, [wMinigameLevel] ; $524b
-	add a, c ; $524e
+	add c ; $524e
 	farcall ShowRulesScreen ; $524f
-	cp a, $ff ; $5252
+	cp $ff ; $5252
 	jr nz, .done ; $5254
 	call DisableLCDSafely ; $5256
 	farcall LoadMenuFontGfx ; $5259
@@ -1622,10 +1622,10 @@ RunMinigameModeFlow:
 	script_fade_in $10 ; $5288
 	call WaitFadeEnd ; $528d
 	ld a, [wMatchSelectNewLevelRequest] ; $5290
-	or a, a ; $5293
+	or a ; $5293
 	jr nz, .levelMenu ; $5294
 	ld a, [wPointWinLoseFlag] ; $5296
-	cp a, $01 ; $5299
+	cp $01 ; $5299
 	jr z, .levelMenu ; $529b
 	jp RunTitleAndMainMenuLoop.menuLoop ; $529d
 MatchSelectHandlersBHandler5:
@@ -1637,7 +1637,7 @@ MatchSelectHandlersBHandler5:
 	push af ; $52ae
 	call InitSerialLink ; $52af
 	pop af ; $52b2
-	cp a, $ff ; $52b3
+	cp $ff ; $52b3
 	jp z, RunTitleAndMainMenuLoop.menuLoop ; $52b5
 	ld a, $01 ; $52b8
 	ld [wMenuSlideDirection], a ; $52ba
@@ -1649,17 +1649,17 @@ MatchSelectHandlersBHandler5:
 	jp RunTitleAndMainMenuLoop.menuLoop ; $52ce
 RunSavedDataMenuFlow:
 	farcall RunSavedDataSourceSelect ; $52d1
-	cp a, $ff ; $52d4
+	cp $ff ; $52d4
 	jp z, RunTitleAndMainMenuLoop.menuLoop ; $52d6
-	cp a, $03 ; $52d9
+	cp $03 ; $52d9
 	jp nc, .checkSavedData ; $52db
 	ld [wCurrentStorySlot], a ; $52de
 	farcall CheckStorySlot ; $52e1
 .transferMenu:
 	farcall RunN64TransferItemSelect ; $52e4
-	cp a, $ff ; $52e7
+	cp $ff ; $52e7
 	jp z, RunSavedDataMenuFlow ; $52e9
-	or a, a ; $52ec
+	or a ; $52ec
 	jr nz, .transferOption1 ; $52ed
 	ld c, $10 ; $52ef
 	call BeginFadeOut ; $52f1
@@ -1675,7 +1675,7 @@ RunSavedDataMenuFlow:
 	ld [wMenuSlideDirection], a ; $530f
 	jp .transferMenu ; $5312
 .transferOption1:
-	cp a, $01 ; $5315
+	cp $01 ; $5315
 	jr nz, .transferOption2 ; $5317
 	ld c, $10 ; $5319
 	call BeginFadeOut ; $531b
@@ -1693,7 +1693,7 @@ RunSavedDataMenuFlow:
 	ld [wMenuSlideDirection], a ; $533f
 	jp .transferMenu ; $5342
 .transferOption2:
-	cp a, $02 ; $5345
+	cp $02 ; $5345
 	jr nz, .equipmentMenu ; $5347
 	ld c, $10 ; $5349
 	call BeginFadeOut ; $534b
@@ -1709,9 +1709,9 @@ RunSavedDataMenuFlow:
 	jp .transferMenu ; $536a
 .equipmentMenu:
 	farcall RunRacketShoesChoiceMenu ; $536d
-	cp a, $00 ; $5370
+	cp $00 ; $5370
 	jr z, .racketSelect ; $5372
-	cp a, $01 ; $5374
+	cp $01 ; $5374
 	jr z, .shoesSelect ; $5376
 	ld a, $00 ; $5378
 	ld [wMenuSlideDirection], a ; $537a
@@ -1747,15 +1747,15 @@ RunSavedDataMenuFlow:
 	ld [wMenuSlideDirection], a ; $53ce
 	jp .equipmentMenu ; $53d1
 .checkSavedData:
-	cp a, $03 ; $53d4
+	cp $03 ; $53d4
 	jr nz, .n64RecordMenu ; $53d6
 .savedDataMenu:
 	farcall RunSavedDataTypeSelect ; $53d8
-	cp a, $ff ; $53db
+	cp $ff ; $53db
 	jr nz, .savedDataOption ; $53dd
 	jp RunSavedDataMenuFlow ; $53df
 .savedDataOption:
-	or a, a ; $53e2
+	or a ; $53e2
 	jr nz, .minigameData ; $53e3
 	ld c, $10 ; $53e5
 	call BeginFadeOut ; $53e7
@@ -1790,9 +1790,9 @@ RunSavedDataMenuFlow:
 	jp .savedDataMenu ; $543a
 .n64RecordMenu:
 	farcall RunN64RecordTypeSelect ; $543d
-	cp a, $ff ; $5440
+	cp $ff ; $5440
 	jp z, RunSavedDataMenuFlow ; $5442
-	or a, a ; $5445
+	or a ; $5445
 	jr nz, .n64RecordOption1 ; $5446
 	ld c, $10 ; $5448
 	call BeginFadeOut ; $544a
@@ -1807,7 +1807,7 @@ RunSavedDataMenuFlow:
 	ld [wMenuSlideDirection], a ; $5466
 	jp .checkSavedData ; $5469
 .n64RecordOption1:
-	cp a, $01 ; $546c
+	cp $01 ; $546c
 	jr nz, .done ; $546e
 	ld c, $10 ; $5470
 	call BeginFadeOut ; $5472
@@ -1847,12 +1847,12 @@ MatchSelectHandlersBHandler7:
 	jp RunTitleAndMainMenuLoop.menuLoop ; $54d3
 RunEraseSavedDataFlow:
 	farcall RunEraseSavedDataSelect ; $54d6
-	cp a, $ff ; $54d9
+	cp $ff ; $54d9
 	jp z, RunTitleAndMainMenuLoop.menuLoop ; $54db
 	ld b, a ; $54de
-	add a, a ; $54df
+	add a ; $54df
 	ld hl, EraseSavedDataFlowHandlers_10 ; $54e0
-	add a, l ; $54e3
+	add l ; $54e3
 	ld l, a ; $54e4
 	jr nc, .readHandler ; $54e5
 	inc h ; $54e7
@@ -1878,16 +1878,16 @@ Label_10_54f6:
 	call WaitFadeEnd ; $5503
 	farcall RunCharDataConfirmScreen ; $5506
 	pop bc ; $5509
-	or a, a ; $550a
+	or a ; $550a
 	jr nz, .redrawAfterErase ; $550b
 	call ConfirmDiscardSuspendedExhibMatch ; $550d
-	or a, a ; $5510
+	or a ; $5510
 	jr nz, .redrawAfterErase ; $5511
 	ld a, b ; $5513
 	ld [wCurrentStorySlot], a ; $5514
 	ld a, $00 ; $5517
 	farcall EraseStorySlotSaveData ; $5519
-	xor a, a ; $551c
+	xor a ; $551c
 	ld [wMainMenuCursor], a ; $551d
 .redrawAfterErase:
 	call DisableLCDSafely ; $5520
@@ -1904,7 +1904,7 @@ Label_10_5539:
 	call WaitFadeEnd ; $553e
 	ld b, $01 ; $5541
 	farcall RunEraseDataConfirmMenu ; $5543
-	or a, a ; $5546
+	or a ; $5546
 	jr z, .redrawAfterBlockErase ; $5547
 	farcall ClearSaveBlock11 ; $5549
 .redrawAfterBlockErase:
@@ -1922,7 +1922,7 @@ Label_10_5565:
 	call WaitFadeEnd ; $556a
 	ld b, $00 ; $556d
 	farcall RunEraseDataConfirmMenu ; $556f
-	or a, a ; $5572
+	or a ; $5572
 	jr nz, .reinitSram ; $5573
 	call DisableLCDSafely ; $5575
 	farcall LoadMenuFontGfx ; $5578
@@ -1931,7 +1931,7 @@ Label_10_5565:
 	script_fade_in $10 ; $5581
 	ld a, $00 ; $5586
 	ld [wMenuSlideDirection], a ; $5588
-	xor a, a ; $558b
+	xor a ; $558b
 	ld [wMainMenuCursor], a ; $558c
 	jp RunEraseSavedDataFlow ; $558f
 .reinitSram:
@@ -1943,7 +1943,7 @@ Label_10_5565:
 	script_fade_in $10 ; $55a1
 	ld a, $00 ; $55a6
 	ld [wMenuSlideDirection], a ; $55a8
-	xor a, a ; $55ab
+	xor a ; $55ab
 	ld [wMainMenuCursor], a ; $55ac
 	ld [wSelectedMinigame], a ; $55af
 	jp RunEraseSavedDataFlow ; $55b2
@@ -1951,7 +1951,7 @@ Label_10_5565:
 .runMatch:
 	farcall RunMatch ; $55b6
 	ld a, [wSaveAndQuitRequest] ; $55b9
-	or a, a ; $55bc
+	or a ; $55bc
 	jr z, .matchFinished ; $55bd
 	farcall SaveStorySlotWithTimer ; $55bf
 	ld a, $00 ; $55c2
@@ -1964,10 +1964,10 @@ Label_10_5565:
 	ret ; $55d4
 .matchFinished:
 	ld a, [wGameMode] ; $55d5
-	cp a, $04 ; $55d8
+	cp $04 ; $55d8
 	jr nz, .chooseReturn ; $55da
 	clear_flag FLAG_ISLAND_SKY_SCENE_ACTIVE ; $55dc
-	xor a, a ; $55df
+	xor a ; $55df
 	ld [wKeepMatchStatsFlag], a ; $55e0
 	ld b, $00 ; $55e3
 	ld c, $01 ; $55e5
@@ -1986,7 +1986,7 @@ Label_10_5565:
 	ret ; $5603
 .chooseReturn:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $5604
-	cp a, $14 ; $5607
+	cp $14 ; $5607
 	jr c, .below14 ; $5609
 	ld a, $1c ; $560b
 	ld [wStoryModeCurrentLocation], a ; $560d
@@ -1997,7 +1997,7 @@ Label_10_5565:
 	ld [wStoryModeExitLocationRequest], a ; $561a
 	ret ; $561d
 .below14:
-	cp a, $0f ; $561e
+	cp $0f ; $561e
 	jr c, .below0f ; $5620
 	test_flag FLAG_DOUBLES ; $5622
 	jr nz, .below14Doubles ; $5625
@@ -2019,7 +2019,7 @@ Label_10_5565:
 	ld [wStoryModeExitLocationRequest], a ; $5649
 	ret ; $564c
 .below0f:
-	cp a, $0a ; $564d
+	cp $0a ; $564d
 	jr c, .below0a ; $564f
 	ld a, $07 ; $5651
 	ld [wStoryModeCurrentLocation], a ; $5653
@@ -2030,7 +2030,7 @@ Label_10_5565:
 	ld [wStoryModeExitLocationRequest], a ; $5660
 	ret ; $5663
 .below0a:
-	cp a, $05 ; $5664
+	cp $05 ; $5664
 	jr c, .below05 ; $5666
 	jr z, .id05 ; $5668
 	ld a, $10 ; $566a
@@ -2053,7 +2053,7 @@ Label_10_5565:
 .below05:
 	test_flag FLAG_DOUBLES ; $5690
 	jr nz, .otherRoom ; $5693
-	cp a, $00 ; $5695
+	cp $00 ; $5695
 	jr z, .practiceRoomAlt ; $5697
 	ld a, $0b ; $5699
 	ld [wStoryModeCurrentLocation], a ; $569b
@@ -2073,7 +2073,7 @@ Label_10_5565:
 	ld [wStoryModeExitLocationRequest], a ; $56bb
 	ret ; $56be
 .otherRoom:
-	cp a, $00 ; $56bf
+	cp $00 ; $56bf
 	jr z, .otherRoomAlt ; $56c1
 	ld a, $0c ; $56c3
 	ld [wStoryModeCurrentLocation], a ; $56c5
@@ -2094,7 +2094,7 @@ Label_10_5565:
 	ret ; $56e8
 GetMinigameDrillId:
 	ld hl, MinigameDrillIdTable ; $56e9
-	add a, l ; $56ec
+	add l ; $56ec
 	ld l, a ; $56ed
 	jr nc, .read ; $56ee
 	inc h ; $56f0
@@ -2128,23 +2128,23 @@ CopyExhibitionCharSlotIds:
 	ret ; $571d
 	ld a, [wCurrentStorySlot] ; $571e
 	push af ; $5721
-	xor a, a ; $5722
+	xor a ; $5722
 	ld [wCurrentStorySlot], a ; $5723
 	farcall CheckStorySlot ; $5726
-	cp a, $fe ; $5729
+	cp $fe ; $5729
 	jr nz, .restore ; $572b
 	ld a, $01 ; $572d
 	ld [wCurrentStorySlot], a ; $572f
 	farcall CheckStorySlot ; $5732
-	cp a, $fe ; $5735
+	cp $fe ; $5735
 	jr nz, .restore ; $5737
 	ld a, $02 ; $5739
 	ld [wCurrentStorySlot], a ; $573b
 	farcall CheckStorySlot ; $573e
-	cp a, $fe ; $5741
+	cp $fe ; $5741
 	jr nz, .restore ; $5743
 	pop af ; $5745
-	xor a, a ; $5746
+	xor a ; $5746
 	ld [wCurrentStorySlot], a ; $5747
 	ret ; $574a
 .restore:
@@ -2187,49 +2187,49 @@ ConfirmDiscardSuspendedExhibMatch:
 	bit 7, a ; $578f
 	jr nz, .done ; $5791
 	ld a, [wSaveAndQuitRequest] ; $5793
-	or a, a ; $5796
+	or a ; $5796
 	jr z, .done ; $5797
 	ld a, [wCurrentStorySlot] ; $5799
 	ld b, a ; $579c
 	ld a, [$c8b5] ; $579d
 	bit 7, a ; $57a0
 	jr z, .checkSlot2 ; $57a2
-	and a, $7f ; $57a4
+	and $7f ; $57a4
 	srl a ; $57a6
-	cp a, b ; $57a8
+	cp b ; $57a8
 	jr z, .prompt ; $57a9
 .checkSlot2:
 	ld a, [$c8b6] ; $57ab
 	bit 7, a ; $57ae
 	jr z, .checkSlot3 ; $57b0
-	and a, $7f ; $57b2
+	and $7f ; $57b2
 	srl a ; $57b4
-	cp a, b ; $57b6
+	cp b ; $57b6
 	jr z, .prompt ; $57b7
 .checkSlot3:
 	ld a, [$c8b7] ; $57b9
 	bit 7, a ; $57bc
 	jr z, .checkSlot4 ; $57be
-	and a, $7f ; $57c0
+	and $7f ; $57c0
 	srl a ; $57c2
-	cp a, b ; $57c4
+	cp b ; $57c4
 	jr z, .prompt ; $57c5
 .checkSlot4:
 	ld a, [$c8b8] ; $57c7
 	bit 7, a ; $57ca
 	jr z, .noMatch ; $57cc
-	and a, $7f ; $57ce
+	and $7f ; $57ce
 	srl a ; $57d0
-	cp a, b ; $57d2
+	cp b ; $57d2
 	jr z, .prompt ; $57d3
 .noMatch:
 	jr .done ; $57d5
 .prompt:
 	ld b, $02 ; $57d7
 	farcall RunEraseDataConfirmMenu ; $57d9
-	or a, a ; $57dc
+	or a ; $57dc
 	jr z, .discarded ; $57dd
-	xor a, a ; $57df
+	xor a ; $57df
 	ld [wSaveAndQuitRequest], a ; $57e0
 	ld [wKeepMatchStatsFlag], a ; $57e3
 	farcall WriteExhibitionSaveBlock ; $57e6
@@ -2275,11 +2275,11 @@ CafeteriaExitTriggers_10:
 	db $ff
 CafeteriaNpc03_10:
 	ld a, [wMapSceneStage] ; $5882
-	add a, a ; $5885
-	add a, LOW(CafeteriaNpc03TextIds) ; $5886
+	add a ; $5885
+	add LOW(CafeteriaNpc03TextIds) ; $5886
 	ld l, a ; $5888
-	adc a, HIGH(CafeteriaNpc03TextIds) ; $5889
-	sub a, l ; $588b
+	adc HIGH(CafeteriaNpc03TextIds) ; $5889
+	sub l ; $588b
 	ld h, a ; $588c
 	ld a, [hl+] ; $588d
 	ld h, [hl] ; $588e
@@ -2301,28 +2301,28 @@ CafeteriaNpc03TextIds:
 	dw Text_33_218 ; record 9
 CafeteriaNpc04_10:
 	ld a, [wMapSceneStage2] ; $58ad
-	add a, a ; $58b0
-	add a, LOW(CafeteriaNpc04TextIds) ; $58b1
+	add a ; $58b0
+	add LOW(CafeteriaNpc04TextIds) ; $58b1
 	ld l, a ; $58b3
-	adc a, HIGH(CafeteriaNpc04TextIds) ; $58b4
-	sub a, l ; $58b6
+	adc HIGH(CafeteriaNpc04TextIds) ; $58b4
+	sub l ; $58b6
 	ld h, a ; $58b7
 	ld a, [hl+] ; $58b8
 	ld h, [hl] ; $58b9
 	ld l, a ; $58ba
 	farcall InitDialogueTextCursor ; $58bb
 	ld a, [wMapSceneStage2] ; $58be
-	cp a, $03 ; $58c1
+	cp $03 ; $58c1
 	jr c, .speak ; $58c3
 	ld a, [wMapSceneStage2] ; $58c5
-	cp a, $04 ; $58c8
+	cp $04 ; $58c8
 	jr z, .prompt ; $58ca
 	ld a, $04 ; $58cc
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $58ce
 	farcall RunDialogueYesNoPrompt ; $58d1
 	farcall ScriptCloseDialogueWindow ; $58d4
 	script_wait_frames $05 ; $58d7
-	and a, a ; $58de
+	and a ; $58de
 	jr z, .speak ; $58df
 	farcall AdvanceDialogueTextCursor ; $58e1
 .speak:
@@ -2330,7 +2330,7 @@ CafeteriaNpc04_10:
 	ret ; $58e9
 .prompt:
 	ld a, [wMapSceneStage] ; $58ea
-	cp a, $09 ; $58ed
+	cp $09 ; $58ed
 	jr nz, .askQuestion ; $58ef
 	farcall AdvanceDialogueTextCursor ; $58f1
 .askQuestion:
@@ -2339,7 +2339,7 @@ CafeteriaNpc04_10:
 	farcall RunDialogueYesNoPrompt ; $58f9
 	farcall ScriptCloseDialogueWindow ; $58fc
 	script_wait_frames $05 ; $58ff
-	and a, a ; $5906
+	and a ; $5906
 	jr z, .declined ; $5907
 	script_set_text Text_33_222 ; $5909
 	script_speak $04 ; $590f
@@ -2357,25 +2357,25 @@ CafeteriaNpc04TextIds:
 	dw Text_33_219 ; record 4
 CafeteriaNpc05_10:
 	ld a, [wMapSceneStage2] ; $592b
-	add a, a ; $592e
-	add a, LOW(CafeteriaNpc05TextIds) ; $592f
+	add a ; $592e
+	add LOW(CafeteriaNpc05TextIds) ; $592f
 	ld l, a ; $5931
-	adc a, HIGH(CafeteriaNpc05TextIds) ; $5932
-	sub a, l ; $5934
+	adc HIGH(CafeteriaNpc05TextIds) ; $5932
+	sub l ; $5934
 	ld h, a ; $5935
 	ld a, [hl+] ; $5936
 	ld h, [hl] ; $5937
 	ld l, a ; $5938
 	farcall InitDialogueTextCursor ; $5939
 	ld a, [wMapSceneStage2] ; $593c
-	cp a, $01 ; $593f
+	cp $01 ; $593f
 	jr nz, .speak ; $5941
 	ld a, $05 ; $5943
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $5945
 	farcall RunDialogueYesNoPrompt ; $5948
 	farcall ScriptCloseDialogueWindow ; $594b
 	script_wait_frames $05 ; $594e
-	and a, a ; $5955
+	and a ; $5955
 	jr z, .speak ; $5956
 	farcall AdvanceDialogueTextCursor ; $5958
 .speak:
@@ -2390,11 +2390,11 @@ CafeteriaNpc05TextIds:
 	dw Text_33_223 ; record 4
 CafeteriaNpc06_10:
 	ld a, [wMapSceneStage] ; $596b
-	add a, a ; $596e
-	add a, LOW(CafeteriaNpc06TextIds) ; $596f
+	add a ; $596e
+	add LOW(CafeteriaNpc06TextIds) ; $596f
 	ld l, a ; $5971
-	adc a, HIGH(CafeteriaNpc06TextIds) ; $5972
-	sub a, l ; $5974
+	adc HIGH(CafeteriaNpc06TextIds) ; $5972
+	sub l ; $5974
 	ld h, a ; $5975
 	ld a, [hl+] ; $5976
 	ld h, [hl] ; $5977
@@ -2416,11 +2416,11 @@ CafeteriaNpc06TextIds:
 	dw Text_33_189 ; record 9
 CafeteriaNpc07_10:
 	ld a, [wMapSceneStage] ; $5996
-	add a, a ; $5999
-	add a, LOW(CafeteriaNpc07TextIds) ; $599a
+	add a ; $5999
+	add LOW(CafeteriaNpc07TextIds) ; $599a
 	ld l, a ; $599c
-	adc a, HIGH(CafeteriaNpc07TextIds) ; $599d
-	sub a, l ; $599f
+	adc HIGH(CafeteriaNpc07TextIds) ; $599d
+	sub l ; $599f
 	ld h, a ; $59a0
 	ld a, [hl+] ; $59a1
 	ld h, [hl] ; $59a2
@@ -2442,11 +2442,11 @@ CafeteriaNpc07TextIds:
 	dw Text_33_191 ; record 9
 CafeteriaNpc08_10:
 	ld a, [wMapSceneStage] ; $59c1
-	add a, a ; $59c4
-	add a, LOW(CafeteriaNpc08TextIds) ; $59c5
+	add a ; $59c4
+	add LOW(CafeteriaNpc08TextIds) ; $59c5
 	ld l, a ; $59c7
-	adc a, HIGH(CafeteriaNpc08TextIds) ; $59c8
-	sub a, l ; $59ca
+	adc HIGH(CafeteriaNpc08TextIds) ; $59c8
+	sub l ; $59ca
 	ld h, a ; $59cb
 	ld a, [hl+] ; $59cc
 	ld h, [hl] ; $59cd
@@ -2468,11 +2468,11 @@ CafeteriaNpc08TextIds:
 	dw Text_33_193 ; record 9
 CafeteriaNpc09_10:
 	ld a, [wMapSceneStage] ; $59ec
-	add a, a ; $59ef
-	add a, LOW(CafeteriaNpc09TextIds) ; $59f0
+	add a ; $59ef
+	add LOW(CafeteriaNpc09TextIds) ; $59f0
 	ld l, a ; $59f2
-	adc a, HIGH(CafeteriaNpc09TextIds) ; $59f3
-	sub a, l ; $59f5
+	adc HIGH(CafeteriaNpc09TextIds) ; $59f3
+	sub l ; $59f5
 	ld h, a ; $59f6
 	ld a, [hl+] ; $59f7
 	ld h, [hl] ; $59f8
@@ -2561,7 +2561,7 @@ RestaurantEntryPoints_10:
 	db $ff
 RestaurantArrival01_10:
 	ld a, [wStoryModeEntryPoint] ; $5b97
-	cp a, $ff ; $5b9a
+	cp $ff ; $5b9a
 	jp z, .done ; $5b9c
 	test_flag FLAG_DOUBLES ; $5b9f
 	jr z, .walkOff ; $5ba2
@@ -2585,18 +2585,18 @@ RestaurantExit01_10:
 	ret ; $5bf1
 RestaurantNpc03_10:
 	ld a, [wMapSceneStage2] ; $5bf2
-	add a, a ; $5bf5
-	add a, LOW(RestaurantNpc03TextIds) ; $5bf6
+	add a ; $5bf5
+	add LOW(RestaurantNpc03TextIds) ; $5bf6
 	ld l, a ; $5bf8
-	adc a, HIGH(RestaurantNpc03TextIds) ; $5bf9
-	sub a, l ; $5bfb
+	adc HIGH(RestaurantNpc03TextIds) ; $5bf9
+	sub l ; $5bfb
 	ld h, a ; $5bfc
 	ld a, [hl+] ; $5bfd
 	ld h, [hl] ; $5bfe
 	ld l, a ; $5bff
 	farcall InitDialogueTextCursor ; $5c00
 	ld a, [wMapSceneStage] ; $5c03
-	cp a, $03 ; $5c06
+	cp $03 ; $5c06
 	jr nz, .speak ; $5c08
 	farcall AdvanceDialogueTextCursor ; $5c0a
 .speak:
@@ -2611,11 +2611,11 @@ RestaurantNpc03TextIds:
 	dw Text_33_196 ; record 4
 RestaurantNpc04_10:
 	ld a, [wMapSceneStage2] ; $5c1d
-	add a, a ; $5c20
-	add a, LOW(RestaurantNpc04TextIds) ; $5c21
+	add a ; $5c20
+	add LOW(RestaurantNpc04TextIds) ; $5c21
 	ld l, a ; $5c23
-	adc a, HIGH(RestaurantNpc04TextIds) ; $5c24
-	sub a, l ; $5c26
+	adc HIGH(RestaurantNpc04TextIds) ; $5c24
+	sub l ; $5c26
 	ld h, a ; $5c27
 	ld a, [hl+] ; $5c28
 	ld h, [hl] ; $5c29
@@ -2633,11 +2633,11 @@ RestaurantNpc04TextIds:
 RestaurantNpc05_10:
 	script_face_toward ACTOR_PLAYER, $05 ; $5c3e
 	ld a, [wMapSceneStage] ; $5c46
-	add a, a ; $5c49
-	add a, LOW(RestaurantNpc05TextIds) ; $5c4a
+	add a ; $5c49
+	add LOW(RestaurantNpc05TextIds) ; $5c4a
 	ld l, a ; $5c4c
-	adc a, HIGH(RestaurantNpc05TextIds) ; $5c4d
-	sub a, l ; $5c4f
+	adc HIGH(RestaurantNpc05TextIds) ; $5c4d
+	sub l ; $5c4f
 	ld h, a ; $5c50
 	ld a, [hl+] ; $5c51
 	ld h, [hl] ; $5c52
@@ -2671,25 +2671,25 @@ RestaurantNpc06_10:
 	script_set_anim $06, $04 ; $5cb0
 	script_wait_idle $06 ; $5cb7
 	ld a, [wMapSceneStage2] ; $5cbc
-	add a, a ; $5cbf
-	add a, LOW(TextIds_10_5cfb) ; $5cc0
+	add a ; $5cbf
+	add LOW(TextIds_10_5cfb) ; $5cc0
 	ld l, a ; $5cc2
-	adc a, HIGH(TextIds_10_5cfb) ; $5cc3
-	sub a, l ; $5cc5
+	adc HIGH(TextIds_10_5cfb) ; $5cc3
+	sub l ; $5cc5
 	ld h, a ; $5cc6
 	ld a, [hl+] ; $5cc7
 	ld h, [hl] ; $5cc8
 	ld l, a ; $5cc9
 	farcall InitDialogueTextCursor ; $5cca
 	ld a, [wMapSceneStage] ; $5ccd
-	cp a, $05 ; $5cd0
+	cp $05 ; $5cd0
 	jr nz, .speak ; $5cd2
 	farcall AdvanceDialogueTextCursor ; $5cd4
 	farcall AdvanceDialogueTextCursor ; $5cd7
 .speak:
 	script_speak $06 ; $5cda
 	ld a, [wMapSceneStage2] ; $5cdf
-	cp a, $00 ; $5ce2
+	cp $00 ; $5ce2
 	jr nz, .animate ; $5ce4
 	call RestaurantShowActor11NearPlayer_10 ; $5ce6
 .animate:
@@ -2710,11 +2710,11 @@ RestaurantNpc12_10:
 	script_set_anim $12, $03 ; $5d0b
 	script_wait_idle $12 ; $5d12
 	ld a, [wMapSceneStage2] ; $5d17
-	add a, a ; $5d1a
-	add a, LOW(RestaurantNpc12TextIds) ; $5d1b
+	add a ; $5d1a
+	add LOW(RestaurantNpc12TextIds) ; $5d1b
 	ld l, a ; $5d1d
-	adc a, HIGH(RestaurantNpc12TextIds) ; $5d1e
-	sub a, l ; $5d20
+	adc HIGH(RestaurantNpc12TextIds) ; $5d1e
+	sub l ; $5d20
 	ld h, a ; $5d21
 	ld a, [hl+] ; $5d22
 	ld h, [hl] ; $5d23
@@ -2735,17 +2735,17 @@ RestaurantNpc12_10:
 	call SetRestaurantNpc12StageFlag_10 ; $5d7f
 	script_face_toward ACTOR_PLAYER, $12 ; $5d82
 	ld a, [wMapSceneStage2] ; $5d8a
-	add a, a ; $5d8d
-	add a, LOW(RestaurantNpc12TextIds) ; $5d8e
+	add a ; $5d8d
+	add LOW(RestaurantNpc12TextIds) ; $5d8e
 	ld l, a ; $5d90
-	adc a, HIGH(RestaurantNpc12TextIds) ; $5d91
-	sub a, l ; $5d93
+	adc HIGH(RestaurantNpc12TextIds) ; $5d91
+	sub l ; $5d93
 	ld h, a ; $5d94
 	ld a, [hl+] ; $5d95
 	ld h, [hl] ; $5d96
 	ld l, a ; $5d97
 	ld a, $02 ; $5d98
-	add a, l ; $5d9a
+	add l ; $5d9a
 	ld l, a ; $5d9b
 	jr nc, .altText ; $5d9c
 	inc h ; $5d9e
@@ -2758,17 +2758,17 @@ RestaurantNpc12_10:
 .speak:
 	script_face_toward ACTOR_PLAYER, $12 ; $5db6
 	ld a, [wMapSceneStage2] ; $5dbe
-	add a, a ; $5dc1
-	add a, LOW(RestaurantNpc12TextIds) ; $5dc2
+	add a ; $5dc1
+	add LOW(RestaurantNpc12TextIds) ; $5dc2
 	ld l, a ; $5dc4
-	adc a, HIGH(RestaurantNpc12TextIds) ; $5dc5
-	sub a, l ; $5dc7
+	adc HIGH(RestaurantNpc12TextIds) ; $5dc5
+	sub l ; $5dc7
 	ld h, a ; $5dc8
 	ld a, [hl+] ; $5dc9
 	ld h, [hl] ; $5dca
 	ld l, a ; $5dcb
 	ld a, $02 ; $5dcc
-	add a, l ; $5dce
+	add l ; $5dce
 	ld l, a ; $5dcf
 	jr nc, .done ; $5dd0
 	inc h ; $5dd2
@@ -2789,11 +2789,11 @@ RestaurantNpc08_10:
 	test_flag FLAG_RESTAURANT_NPC08_MOVED ; $5de9
 	jr nz, .speak ; $5dec
 	ld a, [wMapSceneStage2] ; $5dee
-	add a, a ; $5df1
-	add a, LOW(RestaurantNpc08TextIds) ; $5df2
+	add a ; $5df1
+	add LOW(RestaurantNpc08TextIds) ; $5df2
 	ld l, a ; $5df4
-	adc a, HIGH(RestaurantNpc08TextIds) ; $5df5
-	sub a, l ; $5df7
+	adc HIGH(RestaurantNpc08TextIds) ; $5df5
+	sub l ; $5df7
 	ld h, a ; $5df8
 	ld a, [hl+] ; $5df9
 	ld h, [hl] ; $5dfa
@@ -2818,17 +2818,17 @@ RestaurantNpc08_10:
 	ret ; $5e5b
 .speak:
 	ld a, [wMapSceneStage2] ; $5e5c
-	add a, a ; $5e5f
-	add a, LOW(RestaurantNpc08TextIds) ; $5e60
+	add a ; $5e5f
+	add LOW(RestaurantNpc08TextIds) ; $5e60
 	ld l, a ; $5e62
-	adc a, HIGH(RestaurantNpc08TextIds) ; $5e63
-	sub a, l ; $5e65
+	adc HIGH(RestaurantNpc08TextIds) ; $5e63
+	sub l ; $5e65
 	ld h, a ; $5e66
 	ld a, [hl+] ; $5e67
 	ld h, [hl] ; $5e68
 	ld l, a ; $5e69
 	ld a, $01 ; $5e6a
-	add a, l ; $5e6c
+	add l ; $5e6c
 	ld l, a ; $5e6d
 	jr nc, .done ; $5e6e
 	inc h ; $5e70
@@ -2846,18 +2846,18 @@ RestaurantNpc08TextIds:
 	dw Text_33_206 ; record 4
 RestaurantNpc09_10:
 	ld a, [wMapSceneStage] ; $5e8b
-	add a, a ; $5e8e
-	add a, LOW(RestaurantNpc09TextIds) ; $5e8f
+	add a ; $5e8e
+	add LOW(RestaurantNpc09TextIds) ; $5e8f
 	ld l, a ; $5e91
-	adc a, HIGH(RestaurantNpc09TextIds) ; $5e92
-	sub a, l ; $5e94
+	adc HIGH(RestaurantNpc09TextIds) ; $5e92
+	sub l ; $5e94
 	ld h, a ; $5e95
 	ld a, [hl+] ; $5e96
 	ld h, [hl] ; $5e97
 	ld l, a ; $5e98
 	farcall InitDialogueTextCursor ; $5e99
 	ld a, [wMapSceneStage] ; $5e9c
-	cp a, $06 ; $5e9f
+	cp $06 ; $5e9f
 	jr nc, .altText ; $5ea1
 	script_speak $09 ; $5ea3
 	ret ; $5ea8
@@ -2867,7 +2867,7 @@ RestaurantNpc09_10:
 	farcall RunDialogueYesNoPrompt ; $5eae
 	farcall ScriptCloseDialogueWindow ; $5eb1
 	script_wait_frames $05 ; $5eb4
-	and a, a ; $5ebb
+	and a ; $5ebb
 	jr nz, .done ; $5ebc
 	script_set_text Text_33_169 ; $5ebe
 	test_flag FLAG_DOUBLES ; $5ec4
@@ -2895,25 +2895,25 @@ RestaurantNpc09TextIds:
 RestaurantNpc0A_10:
 	script_face_toward ACTOR_PLAYER, $0a ; $5ef2
 	ld a, [wMapSceneStage] ; $5efa
-	add a, a ; $5efd
-	add a, LOW(RestaurantNpc0ATextIds) ; $5efe
+	add a ; $5efd
+	add LOW(RestaurantNpc0ATextIds) ; $5efe
 	ld l, a ; $5f00
-	adc a, HIGH(RestaurantNpc0ATextIds) ; $5f01
-	sub a, l ; $5f03
+	adc HIGH(RestaurantNpc0ATextIds) ; $5f01
+	sub l ; $5f03
 	ld h, a ; $5f04
 	ld a, [hl+] ; $5f05
 	ld h, [hl] ; $5f06
 	ld l, a ; $5f07
 	farcall InitDialogueTextCursor ; $5f08
 	ld a, [wMapSceneStage] ; $5f0b
-	cp a, $06 ; $5f0e
+	cp $06 ; $5f0e
 	jr nc, .speak ; $5f10
 	ld a, $0a ; $5f12
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $5f14
 	farcall RunDialogueYesNoPrompt ; $5f17
 	farcall ScriptCloseDialogueWindow ; $5f1a
 	script_wait_frames $05 ; $5f1d
-	and a, a ; $5f24
+	and a ; $5f24
 	jr z, .speak ; $5f25
 	farcall AdvanceDialogueTextCursor ; $5f27
 .speak:
@@ -2933,18 +2933,18 @@ RestaurantNpc0ATextIds:
 	dw Text_33_209 ; record 9
 RestaurantNpc0B_10:
 	ld a, [wMapSceneStage2] ; $5f44
-	add a, a ; $5f47
-	add a, LOW(RestaurantNpc0BTextIds) ; $5f48
+	add a ; $5f47
+	add LOW(RestaurantNpc0BTextIds) ; $5f48
 	ld l, a ; $5f4a
-	adc a, HIGH(RestaurantNpc0BTextIds) ; $5f4b
-	sub a, l ; $5f4d
+	adc HIGH(RestaurantNpc0BTextIds) ; $5f4b
+	sub l ; $5f4d
 	ld h, a ; $5f4e
 	ld a, [hl+] ; $5f4f
 	ld h, [hl] ; $5f50
 	ld l, a ; $5f51
 	farcall InitDialogueTextCursor ; $5f52
 	ld a, [wMapSceneStage] ; $5f55
-	cp a, $01 ; $5f58
+	cp $01 ; $5f58
 	jr nz, .speak ; $5f5a
 	farcall AdvanceDialogueTextCursor ; $5f5c
 .speak:
@@ -2959,37 +2959,37 @@ RestaurantNpc0BTextIds:
 	dw Text_33_210 ; record 4
 RestaurantNpc0C_10:
 	ld a, [wMapSceneStage2] ; $5f6f
-	add a, a ; $5f72
-	add a, LOW(RestaurantNpc0CTextIds) ; $5f73
+	add a ; $5f72
+	add LOW(RestaurantNpc0CTextIds) ; $5f73
 	ld l, a ; $5f75
-	adc a, HIGH(RestaurantNpc0CTextIds) ; $5f76
-	sub a, l ; $5f78
+	adc HIGH(RestaurantNpc0CTextIds) ; $5f76
+	sub l ; $5f78
 	ld h, a ; $5f79
 	ld a, [hl+] ; $5f7a
 	ld h, [hl] ; $5f7b
 	ld l, a ; $5f7c
 	farcall InitDialogueTextCursor ; $5f7d
 	ld a, [wMapSceneStage2] ; $5f80
-	cp a, $00 ; $5f83
+	cp $00 ; $5f83
 	jr z, .speak ; $5f85
-	cp a, $03 ; $5f87
+	cp $03 ; $5f87
 	jr nc, .ge03 ; $5f89
 	ld a, $0c ; $5f8b
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $5f8d
 	farcall RunDialogueYesNoPrompt ; $5f90
 	farcall ScriptCloseDialogueWindow ; $5f93
 	script_wait_frames $05 ; $5f96
-	and a, a ; $5f9d
+	and a ; $5f9d
 	jr z, .speak ; $5f9e
 	farcall AdvanceDialogueTextCursor ; $5fa0
 	ld a, [wMapSceneStage] ; $5fa3
-	cp a, $05 ; $5fa6
+	cp $05 ; $5fa6
 	jr nz, .speak ; $5fa8
 	farcall AdvanceDialogueTextCursor ; $5faa
 	jr .speak ; $5fad
 .ge03:
 	ld a, [wMapSceneStage] ; $5faf
-	and a, $01 ; $5fb2
+	and $01 ; $5fb2
 	jr z, .speak ; $5fb4
 	farcall AdvanceDialogueTextCursor ; $5fb6
 .speak:
@@ -3004,30 +3004,30 @@ RestaurantNpc0CTextIds:
 	dw Text_33_211 ; record 4
 RestaurantNpc0D_10:
 	ld a, [wMapSceneStage2] ; $5fc9
-	add a, a ; $5fcc
-	add a, LOW(RestaurantNpc0DTextIds) ; $5fcd
+	add a ; $5fcc
+	add LOW(RestaurantNpc0DTextIds) ; $5fcd
 	ld l, a ; $5fcf
-	adc a, HIGH(RestaurantNpc0DTextIds) ; $5fd0
-	sub a, l ; $5fd2
+	adc HIGH(RestaurantNpc0DTextIds) ; $5fd0
+	sub l ; $5fd2
 	ld h, a ; $5fd3
 	ld a, [hl+] ; $5fd4
 	ld h, [hl] ; $5fd5
 	ld l, a ; $5fd6
 	farcall InitDialogueTextCursor ; $5fd7
 	ld a, [wMapSceneStage2] ; $5fda
-	cp a, $03 ; $5fdd
+	cp $03 ; $5fdd
 	jr nz, .advanceDialogueTextCursor ; $5fdf
 	ld a, $0d ; $5fe1
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $5fe3
 	farcall RunDialogueYesNoPrompt ; $5fe6
 	farcall ScriptCloseDialogueWindow ; $5fe9
 	script_wait_frames $05 ; $5fec
-	and a, a ; $5ff3
+	and a ; $5ff3
 	jr z, .advanceDialogueTextCursor ; $5ff4
 	farcall AdvanceDialogueTextCursor ; $5ff6
 .advanceDialogueTextCursor:
 	ld a, [wMapSceneStage] ; $5ff9
-	cp a, $03 ; $5ffc
+	cp $03 ; $5ffc
 	jr nz, .speak ; $5ffe
 	farcall AdvanceDialogueTextCursor ; $6000
 .speak:
@@ -3042,11 +3042,11 @@ RestaurantNpc0DTextIds:
 	dw Text_33_213 ; record 4
 RestaurantNpc0E_10:
 	ld a, [wMapSceneStage2] ; $6013
-	add a, a ; $6016
-	add a, LOW(RestaurantNpc0ETextIds) ; $6017
+	add a ; $6016
+	add LOW(RestaurantNpc0ETextIds) ; $6017
 	ld l, a ; $6019
-	adc a, HIGH(RestaurantNpc0ETextIds) ; $601a
-	sub a, l ; $601c
+	adc HIGH(RestaurantNpc0ETextIds) ; $601a
+	sub l ; $601c
 	ld h, a ; $601d
 	ld a, [hl+] ; $601e
 	ld h, [hl] ; $601f
@@ -3063,11 +3063,11 @@ RestaurantNpc0ETextIds:
 	dw Text_33_214 ; record 4
 RestaurantNpc0F_10:
 	ld a, [wMapSceneStage2] ; $6034
-	add a, a ; $6037
-	add a, LOW(RestaurantNpc0FTextIds) ; $6038
+	add a ; $6037
+	add LOW(RestaurantNpc0FTextIds) ; $6038
 	ld l, a ; $603a
-	adc a, HIGH(RestaurantNpc0FTextIds) ; $603b
-	sub a, l ; $603d
+	adc HIGH(RestaurantNpc0FTextIds) ; $603b
+	sub l ; $603d
 	ld h, a ; $603e
 	ld a, [hl+] ; $603f
 	ld h, [hl] ; $6040
@@ -3084,11 +3084,11 @@ RestaurantNpc0FTextIds:
 	dw Text_33_215 ; record 4
 RestaurantNpc10_10:
 	ld a, [wMapSceneStage2] ; $6055
-	add a, a ; $6058
-	add a, LOW(RestaurantNpc10TextIds) ; $6059
+	add a ; $6058
+	add LOW(RestaurantNpc10TextIds) ; $6059
 	ld l, a ; $605b
-	adc a, HIGH(RestaurantNpc10TextIds) ; $605c
-	sub a, l ; $605e
+	adc HIGH(RestaurantNpc10TextIds) ; $605c
+	sub l ; $605e
 	ld h, a ; $605f
 	ld a, [hl+] ; $6060
 	ld h, [hl] ; $6061
@@ -3148,11 +3148,11 @@ RestaurantRestoreNpc12Position_10:
 	ret ; $612b
 TestRestaurantNpc12StageFlag_10:
 	ld a, [wMapSceneStage2] ; $612c
-	add a, a ; $612f
-	add a, $50 ; $6130
+	add a ; $612f
+	add $50 ; $6130
 	ld l, a ; $6132
-	adc a, $61 ; $6133
-	sub a, l ; $6135
+	adc $61 ; $6133
+	sub l ; $6135
 	ld h, a ; $6136
 	ld a, [hl+] ; $6137
 	ld d, [hl] ; $6138
@@ -3161,11 +3161,11 @@ TestRestaurantNpc12StageFlag_10:
 	ret ; $613d
 SetRestaurantNpc12StageFlag_10:
 	ld a, [wMapSceneStage2] ; $613e
-	add a, a ; $6141
-	add a, $50 ; $6142
+	add a ; $6141
+	add $50 ; $6142
 	ld l, a ; $6144
-	adc a, $61 ; $6145
-	sub a, l ; $6147
+	adc $61 ; $6145
+	sub l ; $6147
 	ld h, a ; $6148
 	ld a, [hl+] ; $6149
 	ld d, [hl] ; $614a
@@ -3268,7 +3268,7 @@ AcademyWingNpc03_10:
 	ld hl, $0037 ; $6257
 	add hl, bc ; $625a
 	ld a, [hl] ; $625b
-	or a, $20 ; $625c
+	or $20 ; $625c
 	ld [hl], a ; $625e
 	script_set_position $06, $1b80, $2e00 ; $625f
 	sound $97 ; $626a
@@ -3285,7 +3285,7 @@ AcademyWingNpc03_10:
 	farcall RunDialogueYesNoPrompt ; $6297
 	farcall ScriptCloseDialogueWindow ; $629a
 	script_wait_frames $05 ; $629d
-	and a, a ; $62a4
+	and a ; $62a4
 	jr nz, .done ; $62a5
 	script_set_text Text_30_516 ; $62a7
 	set_flag FLAG_TEMP_SCENE_VARIANT_A ; $62ad
@@ -3303,7 +3303,7 @@ AcademyWingFacingScripts_10:
 	db $ff
 AcademyWingFacing02_10:
 	ld a, [wMapSceneStage] ; $62d0
-	cp a, $01 ; $62d3
+	cp $01 ; $62d3
 	jr nz, AcademyWingFacing01_10 ; $62d5
 	farcall BeginCutsceneScriptMode ; $62d7
 	script_player_speed $0020 ; $62da
@@ -3384,7 +3384,7 @@ AcademyWingInitScript_10:
 .byStage:
 	call SetAcademyWingDialogueStage_10 ; $6462
 	ld a, [wMapSceneStage] ; $6465
-	cp a, $03 ; $6468
+	cp $03 ; $6468
 	jr nz, .stage4 ; $646a
 	ldh a, [hRomBank] ; $646c
 	ld hl, AcademyWingInitActors1_10 ; $646e
@@ -3403,7 +3403,7 @@ AcademyWingInitScript_10:
 	script_face $03, FACE_UP ; $6497
 .stage4:
 	ld a, [wMapSceneStage] ; $649e
-	cp a, $01 ; $64a1
+	cp $01 ; $64a1
 	jr nz, .stage5 ; $64a3
 	script_set_position $03, $19a0, $32c0 ; $64a5
 .stage5:
@@ -3420,9 +3420,9 @@ AcademyWingInitScript_10:
 	farcall CopyScrolledSceneTilemapToVram ; $64c9
 	call EnableLCD ; $64cc
 	ld a, [wStoryModeEntryPoint] ; $64cf
-	cp a, $0d ; $64d2
+	cp $0d ; $64d2
 	jp z, .stage6 ; $64d4
-	cp a, $0f ; $64d7
+	cp $0f ; $64d7
 	jp z, AcademyWingInitActors0_10.eq0f ; $64d9
 	call AcademyWingInstallDoorTriggers_10 ; $64dc
 	ret ; $64df
@@ -3444,7 +3444,7 @@ AcademyWingInitScript_10:
 	script_move_player $1f00, $3b00 ; $6518
 	farcall WaitPlayerMoveDone ; $6522
 	script_set_position ACTOR_PLAYER, $3500, $3b00 ; $6525
-	xor a, a ; $6530
+	xor a ; $6530
 	ld [wStoryModeShowLocationName], a ; $6531
 	script_set_position ACTOR_PLAYER, $2b00, $3b00 ; $6534
 	script_fade_in $08 ; $653f
@@ -3765,7 +3765,7 @@ AcademyWingInitScript_10:
 	farcall RunDialogueYesNoPrompt ; $6d85
 	farcall ScriptCloseDialogueWindow ; $6d88
 	script_wait_frames $05 ; $6d8b
-	and a, a ; $6d92
+	and a ; $6d92
 	jp z, .animate ; $6d93
 	script_set_anim $06, $02 ; $6d96
 	script_wait_idle $06 ; $6d9d
@@ -3812,7 +3812,7 @@ AcademyWingInitScript_10:
 	farcall RunDialogueYesNoPrompt ; $6e9e
 	farcall ScriptCloseDialogueWindow ; $6ea1
 	script_wait_frames $05 ; $6ea4
-	and a, a ; $6eab
+	and a ; $6eab
 	jr nz, .loop ; $6eac
 .animate:
 	script_set_anim $06, $03 ; $6eae
@@ -3883,7 +3883,7 @@ AcademyWingInitActors0_10:
 	script_set_position $05, $3f00, $3f00 ; $701e
 .face2:
 	script_face ACTOR_PLAYER, FACE_UP ; $7029
-	xor a, a ; $7030
+	xor a ; $7030
 	ld [wStoryModeShowLocationName], a ; $7031
 	script_fade_in $04 ; $7034
 	call WaitFadeEnd ; $7039
@@ -3900,7 +3900,7 @@ AcademyWingInitActors0_10:
 	farcall RunDialogueYesNoPrompt ; $7068
 	farcall ScriptCloseDialogueWindow ; $706b
 	script_wait_frames $05 ; $706e
-	and a, a ; $7075
+	and a ; $7075
 	jr nz, .animate4 ; $7076
 	script_set_anim ACTOR_PLAYER, $03 ; $7078
 	script_wait_idle ACTOR_PLAYER ; $707f
@@ -3963,7 +3963,7 @@ AcademyWingInitActors0_10:
 	farcall RunDialogueYesNoPrompt ; $71c0
 	farcall ScriptCloseDialogueWindow ; $71c3
 	script_wait_frames $05 ; $71c6
-	and a, a ; $71cd
+	and a ; $71cd
 	jr z, .checkDoubles ; $71ce
 	script_set_anim ACTOR_PLAYER, $04 ; $71d0
 	script_wait_idle ACTOR_PLAYER ; $71d7
@@ -4085,7 +4085,7 @@ ActorScript_10_741c:
 	as_halt
 AcademyWingInstallDoorTriggers_10:
 	ld a, [wMapSceneStage] ; $7429
-	cp a, $03 ; $742c
+	cp $03 ; $742c
 	jr nz, .done ; $742e
 	ld a, $11 ; $7430
 	ld d, $20 ; $7432
@@ -4166,7 +4166,7 @@ AcademyMainBldgEntryPoints_10:
 	db $ff
 AcademyMainBldgArrival02_10:
 	ld a, [wStoryModeEntryPoint] ; $7532
-	cp a, $ff ; $7535
+	cp $ff ; $7535
 	jp z, .done ; $7537
 	test_flag FLAG_DOUBLES ; $753a
 	jr z, .walkOff ; $753d
@@ -4182,7 +4182,7 @@ AcademyMainBldgArrival02_10:
 	ret ; $7577
 AcademyMainBldgArrival01_10:
 	ld a, [wStoryModeEntryPoint] ; $7578
-	cp a, $ff ; $757b
+	cp $ff ; $757b
 	jp z, .done ; $757d
 	test_flag FLAG_DOUBLES ; $7580
 	jr z, .walkOff ; $7583
@@ -4207,11 +4207,11 @@ AcademyMainBldgExitTriggers_10:
 AcademyMainBldgNpc03_10:
 	ld a, [wMapSceneStage] ; $75e7
 	sra a ; $75ea
-	add a, a ; $75ec
-	add a, LOW(AcademyMainBldgNpc03TextIds) ; $75ed
+	add a ; $75ec
+	add LOW(AcademyMainBldgNpc03TextIds) ; $75ed
 	ld l, a ; $75ef
-	adc a, HIGH(AcademyMainBldgNpc03TextIds) ; $75f0
-	sub a, l ; $75f2
+	adc HIGH(AcademyMainBldgNpc03TextIds) ; $75f0
+	sub l ; $75f2
 	ld h, a ; $75f3
 	ld a, [hl+] ; $75f4
 	ld h, [hl] ; $75f5
@@ -4219,7 +4219,7 @@ AcademyMainBldgNpc03_10:
 	farcall InitDialogueTextCursor ; $75f7
 	ld a, [wMapSceneStage] ; $75fa
 	sra a ; $75fd
-	cp a, $03 ; $75ff
+	cp $03 ; $75ff
 	jr z, .eq03 ; $7601
 	script_speak $03 ; $7603
 	ret ; $7608
@@ -4229,7 +4229,7 @@ AcademyMainBldgNpc03_10:
 	farcall RunDialogueYesNoPrompt ; $760e
 	farcall ScriptCloseDialogueWindow ; $7611
 	script_wait_frames $05 ; $7614
-	and a, a ; $761b
+	and a ; $761b
 	jr z, .speak ; $761c
 	farcall AdvanceDialogueTextCursor ; $761e
 .speak:
@@ -4245,11 +4245,11 @@ AcademyMainBldgNpc03TextIds:
 AcademyMainBldgNpc04_10:
 	ld a, [wMapSceneStage] ; $7631
 	sra a ; $7634
-	add a, a ; $7636
-	add a, LOW(AcademyMainBldgNpc04TextIds) ; $7637
+	add a ; $7636
+	add LOW(AcademyMainBldgNpc04TextIds) ; $7637
 	ld l, a ; $7639
-	adc a, HIGH(AcademyMainBldgNpc04TextIds) ; $763a
-	sub a, l ; $763c
+	adc HIGH(AcademyMainBldgNpc04TextIds) ; $763a
+	sub l ; $763c
 	ld h, a ; $763d
 	ld a, [hl+] ; $763e
 	ld h, [hl] ; $763f
@@ -4273,11 +4273,11 @@ AcademyMainBldgNpc05_10:
 	script_speak $05 ; $766b
 	ld a, [wMapSceneStage] ; $7670
 	sra a ; $7673
-	add a, a ; $7675
-	add a, LOW(AcademyMainBldgNpc05TextIds) ; $7676
+	add a ; $7675
+	add LOW(AcademyMainBldgNpc05TextIds) ; $7676
 	ld l, a ; $7678
-	adc a, HIGH(AcademyMainBldgNpc05TextIds) ; $7679
-	sub a, l ; $767b
+	adc HIGH(AcademyMainBldgNpc05TextIds) ; $7679
+	sub l ; $767b
 	ld h, a ; $767c
 	ld a, [hl+] ; $767d
 	ld h, [hl] ; $767e
@@ -4300,11 +4300,11 @@ AcademyMainBldgNpc05TextIds:
 	script_wait_frames $14 ; $76a8
 	script_speak $05 ; $76af
 	call GetDoublesProgressStage_10 ; $76b4
-	add a, a ; $76b7
-	add a, LOW(AcademyMainBldgNpc05TextIds2) ; $76b8
+	add a ; $76b7
+	add LOW(AcademyMainBldgNpc05TextIds2) ; $76b8
 	ld l, a ; $76ba
-	adc a, HIGH(AcademyMainBldgNpc05TextIds2) ; $76bb
-	sub a, l ; $76bd
+	adc HIGH(AcademyMainBldgNpc05TextIds2) ; $76bb
+	sub l ; $76bd
 	ld h, a ; $76be
 	ld a, [hl+] ; $76bf
 	ld h, [hl] ; $76c0
@@ -4321,11 +4321,11 @@ AcademyMainBldgNpc05TextIds2:
 AcademyMainBldgNpc06_10:
 	ld a, [wMapSceneStage] ; $76d1
 	sra a ; $76d4
-	add a, a ; $76d6
-	add a, LOW(AcademyMainBldgNpc06TextIds) ; $76d7
+	add a ; $76d6
+	add LOW(AcademyMainBldgNpc06TextIds) ; $76d7
 	ld l, a ; $76d9
-	adc a, HIGH(AcademyMainBldgNpc06TextIds) ; $76da
-	sub a, l ; $76dc
+	adc HIGH(AcademyMainBldgNpc06TextIds) ; $76da
+	sub l ; $76dc
 	ld h, a ; $76dd
 	ld a, [hl+] ; $76de
 	ld h, [hl] ; $76df
@@ -4355,7 +4355,7 @@ AcademyMainBldgInitScript_10:
 	call SetStoryDialogueStage_10 ; $7717
 	ld a, [wMapSceneStage] ; $771a
 	sra a ; $771d
-	cp a, $02 ; $771f
+	cp $02 ; $771f
 	jr nz, .ne02 ; $7721
 	script_set_actor_script $03, ActorScript_10_7b8b ; $7723
 .ne02:
@@ -4363,7 +4363,7 @@ AcademyMainBldgInitScript_10:
 	ld hl, UpdatePlayerPairTileAnimState_10 ; $7730
 	call RegisterFrameTask ; $7733
 	ld a, [wStoryModeEntryPoint] ; $7736
-	cp a, $0f ; $7739
+	cp $0f ; $7739
 	jr nz, .done ; $773b
 	call AcademyMainBldgNewStudentCutscene_10 ; $773d
 .done:
@@ -4409,13 +4409,13 @@ AcademyMainBldgNewStudentCutscene_10:
 	script_face_toward $04, $03 ; $7835
 	script_wait_frames $1e ; $783d
 	ld a, [wStoryModeGenderOfMainCharacter] ; $7844
-	or a, a ; $7847
+	or a ; $7847
 	jr z, .speak ; $7848
 	farcall AdvanceDialogueTextCursor ; $784a
 .speak:
 	script_speak $03 ; $784d
 	ld a, [wStoryModeGenderOfMainCharacter] ; $7852
-	or a, a ; $7855
+	or a ; $7855
 	jr nz, .wait ; $7856
 	farcall AdvanceDialogueTextCursor ; $7858
 .wait:
@@ -4505,13 +4505,13 @@ UpdateActorTileAnimState_10:
 	ld hl, $000e ; $7a03
 	add hl, bc ; $7a06
 	ld a, [hl+] ; $7a07
-	add a, $40 ; $7a08
+	add $40 ; $7a08
 	ld a, [hl] ; $7a0a
-	adc a, $00 ; $7a0b
+	adc $00 ; $7a0b
 	ld e, a ; $7a0d
 	dec e ; $7a0e
 	pop af ; $7a0f
-	or a, a ; $7a10
+	or a ; $7a10
 	jr z, .readCell ; $7a11
 	dec e ; $7a13
 	dec e ; $7a14
@@ -4519,27 +4519,27 @@ UpdateActorTileAnimState_10:
 	push de ; $7a15
 	call ReadSceneTilemapCell_10 ; $7a16
 	pop de ; $7a19
-	and a, $87 ; $7a1a
-	cp a, $06 ; $7a1c
+	and $87 ; $7a1a
+	cp $06 ; $7a1c
 	jr nz, .checkBelow ; $7a1e
 	wram_bank $04 ; $7a20
 	ld hl, $0020 ; $7a26
 	add hl, bc ; $7a29
 	ld a, [hl] ; $7a2a
-	xor a, $01 ; $7a2b
+	xor $01 ; $7a2b
 	ld [hl], a ; $7a2d
 	ret ; $7a2e
 .checkBelow:
 	inc d ; $7a2f
 	call ReadSceneTilemapCell_10 ; $7a30
-	and a, $07 ; $7a33
-	cp a, $06 ; $7a35
+	and $07 ; $7a33
+	cp $06 ; $7a35
 	jr nz, .actorLoop ; $7a37
 	wram_bank $04 ; $7a39
 	ld hl, $0020 ; $7a3f
 	add hl, bc ; $7a42
 	ld a, [hl] ; $7a43
-	xor a, $01 ; $7a44
+	xor $01 ; $7a44
 	ld [hl], a ; $7a46
 	ret ; $7a47
 .actorLoop:
@@ -4571,9 +4571,9 @@ UpdateActorTileAnimState_10:
 	ld hl, $000e ; $7a79
 	add hl, bc ; $7a7c
 	ld a, [hl+] ; $7a7d
-	add a, $40 ; $7a7e
+	add $40 ; $7a7e
 	ld a, [hl] ; $7a80
-	adc a, $00 ; $7a81
+	adc $00 ; $7a81
 	ld e, a ; $7a83
 	dec e ; $7a84
 	dec e ; $7a85
@@ -4581,27 +4581,27 @@ UpdateActorTileAnimState_10:
 	push de ; $7a87
 	call ReadSceneTilemapCell_10 ; $7a88
 	pop de ; $7a8b
-	and a, $87 ; $7a8c
-	cp a, $06 ; $7a8e
+	and $87 ; $7a8c
+	cp $06 ; $7a8e
 	jr nz, .nextActor ; $7a90
 	wram_bank $04 ; $7a92
 	ld hl, $0020 ; $7a98
 	add hl, bc ; $7a9b
 	ld a, [hl] ; $7a9c
-	xor a, $01 ; $7a9d
+	xor $01 ; $7a9d
 	ld [hl], a ; $7a9f
 	ret ; $7aa0
 .nextActor:
 	inc d ; $7aa1
 	call ReadSceneTilemapCell_10 ; $7aa2
-	and a, $07 ; $7aa5
-	cp a, $06 ; $7aa7
+	and $07 ; $7aa5
+	cp $06 ; $7aa7
 	jr nz, .done ; $7aa9
 	wram_bank $04 ; $7aab
 	ld hl, $0020 ; $7ab1
 	add hl, bc ; $7ab4
 	ld a, [hl] ; $7ab5
-	xor a, $01 ; $7ab6
+	xor $01 ; $7ab6
 	ld [hl], a ; $7ab8
 	ret ; $7ab9
 .done:
@@ -4620,7 +4620,7 @@ ReadSceneTilemapCell_10:
 	srl h ; $7ad5
 	rr l ; $7ad7
 	ld a, d ; $7ad9
-	add a, l ; $7ada
+	add l ; $7ada
 	ld l, a ; $7adb
 	jr nc, .read ; $7adc
 	inc h ; $7ade
@@ -4643,7 +4643,7 @@ MapExitWalkCurveRight_10:
 	ret ; $7b1e
 MapExitWalkCurveLeft_10:
 	ld a, [wStoryModeEntryPoint] ; $7b1f
-	cp a, $ff ; $7b22
+	cp $ff ; $7b22
 	jr z, .done ; $7b24
 	script_set_speed ACTOR_PARTNER, $0010 ; $7b26
 	script_set_speed ACTOR_PLAYER, $0010 ; $7b2e
@@ -4656,7 +4656,7 @@ MapExitWalkCurveLeft_10:
 	ret ; $7b5e
 MapArrivalWalkPair_10:
 	ld a, [wStoryModeEntryPoint] ; $7b5f
-	cp a, $ff ; $7b62
+	cp $ff ; $7b62
 	jr z, .done ; $7b64
 	script_set_speed ACTOR_PLAYER, $0010 ; $7b66
 	script_set_speed ACTOR_PARTNER, $0010 ; $7b6e
@@ -4730,12 +4730,12 @@ ActorScript_10_7bdb:
 MapScriptNop_10:
 	ret ; $7bf9
 MapScriptClearActiveFlag_10:
-	xor a, a ; $7bfa
+	xor a ; $7bfa
 	ld [wStoryScriptRan], a ; $7bfb
 	ret ; $7bfe
 	sound $a2 ; $7bff
 	ret ; $7c01
-	xor a, a ; $7c02
+	xor a ; $7c02
 	ld [wStoryModeShowLocationName], a ; $7c03
 	ret ; $7c06
 ActorScript_10_7c07:

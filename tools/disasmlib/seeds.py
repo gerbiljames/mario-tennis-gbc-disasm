@@ -118,7 +118,7 @@ def _call_target(dis, off, ins):
 
 def _scan_ptr_use(dis, order, i, prev_end, ptr, callees, limit=12,
                   push_is_use=True):
-    added = None   # the pair whose low byte an `add a, <low>` just indexed
+    added = None   # the pair whose low byte an `add <low>` just indexed
     copy = None    # a `ld <dst hi>, <src hi>` awaiting its low half
     depth, saved = 0, {}   # stack depth, and {depth: reg} for saved pointers
     for _ in range(limit):
@@ -178,11 +178,11 @@ def _scan_ptr_use(dis, order, i, prev_end, ptr, callees, limit=12,
         if t in ("add hl, de", "add hl, bc") and t.split(", ")[1] in ptr:
             ptr = ptr | {"hl"}
         else:
-            # `add a, l; ld l, a; jr nc, .x; inc h` adds an index to the pair
+            # `add l; ld l, a; jr nc, .x; inc h` adds an index to the pair
             # rather than clobbering it -- the split-base indexing the game
             # uses everywhere for table lookups.
             indexed = added if added and t == f"ld {added[1]}, a" else None
-            added = next((r for r in ptr if t == f"add a, {r[1]}"), None)
+            added = next((r for r in ptr if t == f"add {r[1]}"), None)
             for r in ("hl", "de", "bc"):
                 if r in ptr and not (indexed and r == indexed) \
                         and (t.startswith(f"ld {r},")
@@ -375,7 +375,7 @@ def minigame_config_init_targets(rom, data_tables):
 
 
 def split_base_targets(dis):
-    """Addresses the `add a, LOW / ld l, a / adc a, HIGH / sub a, l / ld h, a`
+    """Addresses the `add LOW / ld l, a / adc HIGH / sub l / ld h, a`
     idiom builds, where hl is dereferenced afterwards. The address never appears
     as a word, so nothing else in the analysis sees these tables; yielding them
     lets them be labelled, which is also what lets emit render the two halves as
@@ -384,7 +384,7 @@ def split_base_targets(dis):
     idx = {o: i for i, o in enumerate(order)}
     for o in order:
         ins = dis.instrs[o]
-        m = re.match(r"^add a, \$([0-9a-f]{2})$", ins.text)
+        m = re.match(r"^add \$([0-9a-f]{2})$", ins.text)
         if not m:
             continue
         i, prev_end, lo = idx[o] + 1, o + ins.size, int(m.group(1), 16)
@@ -398,7 +398,7 @@ def split_base_targets(dis):
             elif t == "ld h, a":
                 has_h = True
             else:
-                mh = re.match(r"^adc a, \$([0-9a-f]{2})$", t)
+                mh = re.match(r"^adc \$([0-9a-f]{2})$", t)
                 if mh:
                     hi = int(mh.group(1), 16)
             prev_end = order[i] + dis.instrs[order[i]].size

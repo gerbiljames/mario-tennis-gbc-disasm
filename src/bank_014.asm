@@ -31,7 +31,7 @@ TennisMachineRoomEntryPoints_14:
 	db $ff
 TennisMachineRoomArrival01_14:
 	ld a, [wStoryModeEntryPoint] ; $4063
-	cp a, $ff ; $4066
+	cp $ff ; $4066
 	jp z, .done ; $4068
 	clear_flag FLAG_PRACTICE_ROOM_SESSION_ACTIVE ; $406b
 	test_flag FLAG_DOUBLES ; $406e
@@ -46,11 +46,11 @@ TennisMachineRoomExitTriggers_14:
 	db $ff
 TennisMachineRoomNpc03_14:
 	ld a, [wMapSceneStage] ; $408f
-	add a, a ; $4092
-	add a, LOW(TennisMachineRoomNpc03TextIds) ; $4093
+	add a ; $4092
+	add LOW(TennisMachineRoomNpc03TextIds) ; $4093
 	ld l, a ; $4095
-	adc a, HIGH(TennisMachineRoomNpc03TextIds) ; $4096
-	sub a, l ; $4098
+	adc HIGH(TennisMachineRoomNpc03TextIds) ; $4096
+	sub l ; $4098
 	ld h, a ; $4099
 	ld a, [hl+] ; $409a
 	ld h, [hl] ; $409b
@@ -69,18 +69,18 @@ TennisMachineRoomNpc03TextIds:
 	dw Text_6e_214 ; record 6
 TennisMachineRoomNpc04_14:
 	ld a, [wMapSceneStage] ; $40b4
-	add a, a ; $40b7
-	add a, LOW(TennisMachineRoomNpc04TextIds) ; $40b8
+	add a ; $40b7
+	add LOW(TennisMachineRoomNpc04TextIds) ; $40b8
 	ld l, a ; $40ba
-	adc a, HIGH(TennisMachineRoomNpc04TextIds) ; $40bb
-	sub a, l ; $40bd
+	adc HIGH(TennisMachineRoomNpc04TextIds) ; $40bb
+	sub l ; $40bd
 	ld h, a ; $40be
 	ld a, [hl+] ; $40bf
 	ld h, [hl] ; $40c0
 	ld l, a ; $40c1
 	farcall InitDialogueTextCursor ; $40c2
 	ld a, [wMapSceneStage] ; $40c5
-	cp a, $01 ; $40c8
+	cp $01 ; $40c8
 	jr z, .eq01 ; $40ca
 	jr .speak ; $40cc
 .eq01:
@@ -89,7 +89,7 @@ TennisMachineRoomNpc04_14:
 	farcall RunDialogueYesNoPrompt ; $40d3
 	farcall ScriptCloseDialogueWindow ; $40d6
 	script_wait_frames $05 ; $40d9
-	and a, a ; $40e0
+	and a ; $40e0
 	jr z, .speak ; $40e1
 	farcall AdvanceDialogueTextCursor ; $40e3
 .speak:
@@ -252,11 +252,11 @@ TennisMachineRoomInitScript_14:
 	call ComputeMachineCourtProgress ; $4297
 	farcall WaitPlayerMoveDone ; $429a
 	ld a, [wStoryModeEntryPoint] ; $429d
-	cp a, $05 ; $42a0
+	cp $05 ; $42a0
 	jp z, MachineCourtResultScene ; $42a2
-	cp a, $07 ; $42a5
+	cp $07 ; $42a5
 	jp z, MachinePracticeResultScene ; $42a7
-	cp a, $ff ; $42aa
+	cp $ff ; $42aa
 	jp z, MachineCourtWalkToAttendantCutscene.practiceRoom ; $42ac
 	ret ; $42af
 MachineCourtResultScene:
@@ -276,13 +276,13 @@ MachineCourtResultScene:
 	test_flag FLAG_DOUBLES ; $42fc
 	jr z, .lose ; $42ff
 .lose:
-	xor a, a ; $4301
+	xor a ; $4301
 	ld [wStoryModeShowLocationName], a ; $4302
 	ld a, [wMatchExitRequest] ; $4305
-	and a, a ; $4308
+	and a ; $4308
 	jp nz, MachineCourtGameOverExitScene ; $4309
 	ld a, [wPointWinLoseFlag] ; $430c
-	cp a, $01 ; $430f
+	cp $01 ; $430f
 	jr z, .done ; $4311
 	ld a, [wMapSceneStage] ; $4313
 	ld a, a ; $4316
@@ -369,18 +369,18 @@ TennisMachineRoomNpc05_14:
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $442d
 	jp nz, MachineCourtStartLevelScene ; $4430
 	ld a, [wMapSceneStage] ; $4433
-	add a, a ; $4436
-	add a, LOW(TennisMachineRoomNpc05TextIds) ; $4437
+	add a ; $4436
+	add LOW(TennisMachineRoomNpc05TextIds) ; $4437
 	ld l, a ; $4439
-	adc a, HIGH(TennisMachineRoomNpc05TextIds) ; $443a
-	sub a, l ; $443c
+	adc HIGH(TennisMachineRoomNpc05TextIds) ; $443a
+	sub l ; $443c
 	ld h, a ; $443d
 	ld a, [hl+] ; $443e
 	ld h, [hl] ; $443f
 	ld l, a ; $4440
 	farcall InitDialogueTextCursor ; $4441
 	ld a, [wMapSceneStage] ; $4444
-	cp a, $05 ; $4447
+	cp $05 ; $4447
 	jr c, .prompt ; $4449
 	ldh a, [hWramBank] ; $444b
 	push af ; $444d
@@ -402,12 +402,12 @@ TennisMachineRoomNpc05_14:
 	farcall RunDialogueYesNoPrompt ; $447a
 	farcall ScriptCloseDialogueWindow ; $447d
 	script_wait_frames $05 ; $4480
-	and a, a ; $4487
+	and a ; $4487
 	jr nz, .accepted ; $4488
 	set_flag FLAG_TEMP_SCENE_VARIANT_A ; $448a
 	farcall AdvanceDialogueTextCursor ; $448d
 	ld a, [wMapSceneStage] ; $4490
-	and a, a ; $4493
+	and a ; $4493
 	jr nz, .declined ; $4494
 	script_speak $05 ; $4496
 .declined:
@@ -423,15 +423,15 @@ TennisMachineRoomNpc05_14:
 	farcall RunDialogueYesNoPrompt ; $44b9
 	farcall ScriptCloseDialogueWindow ; $44bc
 	script_wait_frames $05 ; $44bf
-	and a, a ; $44c6
+	and a ; $44c6
 	jp z, MachineCourtStartLevelScene.speak ; $44c7
 .done:
 	ld a, [wMapSceneStage] ; $44ca
-	add a, a ; $44cd
-	add a, LOW(TennisMachineRoomNpc05TextIds) ; $44ce
+	add a ; $44cd
+	add LOW(TennisMachineRoomNpc05TextIds) ; $44ce
 	ld l, a ; $44d0
-	adc a, HIGH(TennisMachineRoomNpc05TextIds) ; $44d1
-	sub a, l ; $44d3
+	adc HIGH(TennisMachineRoomNpc05TextIds) ; $44d1
+	sub l ; $44d3
 	ld h, a ; $44d4
 	ld a, [hl+] ; $44d5
 	ld h, [hl] ; $44d6
@@ -461,7 +461,7 @@ MachineCourtStartLevelScene:
 	script_face ACTOR_PLAYER, FACE_UP ; $4557
 	script_wait_frames $0a ; $455e
 	ld a, [wMapSceneStage] ; $4565
-	cp a, $04 ; $4568
+	cp $04 ; $4568
 	jr c, .lt04 ; $456a
 	script_set_text Text_6e_204 ; $456c
 	script_speak $05 ; $4572
@@ -478,10 +478,10 @@ MachineCourtStartLevelScene:
 	ld [wUnusedExitLocationMirror], a ; $458e
 	ld [wStoryModeExitLocationRequest], a ; $4591
 	ld a, [wMapSceneStage] ; $4594
-	add a, LOW(Data_14_45f8) ; $4597
+	add LOW(Data_14_45f8) ; $4597
 	ld l, a ; $4599
-	adc a, HIGH(Data_14_45f8) ; $459a
-	sub a, l ; $459c
+	adc HIGH(Data_14_45f8) ; $459a
+	sub l ; $459c
 	ld h, a ; $459d
 	ld a, [hl] ; $459e
 	farcall RunTrainingDrillByID ; $459f
@@ -530,7 +530,7 @@ MachinePracticeLevelPrompt:
 	farcall RunDialogueYesNoPrompt ; $462f
 	farcall ScriptCloseDialogueWindow ; $4632
 	script_wait_frames $05 ; $4635
-	and a, a ; $463c
+	and a ; $463c
 	jr nz, .done ; $463d
 	script_face $05, FACE_UP ; $463f
 	script_set_speed ACTOR_PLAYER, $0020 ; $4646
@@ -549,7 +549,7 @@ MachinePracticeLevelPrompt:
 	ld [wUnusedExitLocationMirror], a ; $4681
 	ld [wStoryModeExitLocationRequest], a ; $4684
 	ld a, [$c2b8] ; $4687
-	add a, $12 ; $468a
+	add $12 ; $468a
 	farcall RunTrainingDrillByID ; $468c
 	farcall EndCutsceneScriptMode ; $468f
 .done:
@@ -559,22 +559,22 @@ MachineLevelNotClearedMessage:
 	script_speak $05 ; $4699
 	ret ; $469e
 TestMachineLevelClearedFlag:
-	add a, a ; $469f
-	add a, LOW(TestMachineLevelClearedFlagTable) ; $46a0
+	add a ; $469f
+	add LOW(TestMachineLevelClearedFlagTable) ; $46a0
 	ld l, a ; $46a2
-	adc a, HIGH(TestMachineLevelClearedFlagTable) ; $46a3
-	sub a, l ; $46a5
+	adc HIGH(TestMachineLevelClearedFlagTable) ; $46a3
+	sub l ; $46a5
 	ld h, a ; $46a6
 	ld a, [hl+] ; $46a7
 	ld d, [hl] ; $46a8
 	ld e, a ; $46a9
 	call TestGameFlagByNumber ; $46aa
 	ret ; $46ad
-	add a, a ; $46ae
-	add a, LOW(TestMachineLevelClearedFlagTable) ; $46af
+	add a ; $46ae
+	add LOW(TestMachineLevelClearedFlagTable) ; $46af
 	ld l, a ; $46b1
-	adc a, HIGH(TestMachineLevelClearedFlagTable) ; $46b2
-	sub a, l ; $46b4
+	adc HIGH(TestMachineLevelClearedFlagTable) ; $46b2
+	sub l ; $46b4
 	ld h, a ; $46b5
 	ld a, [hl+] ; $46b6
 	ld d, [hl] ; $46b7
@@ -588,7 +588,7 @@ TestMachineLevelClearedFlagTable:
 	dw $00d4 ; record 2
 	dw $00d5 ; record 3
 MachinePracticeResultScene:
-	xor a, a ; $46c5
+	xor a ; $46c5
 	ld [wStoryModeShowLocationName], a ; $46c6
 	set_flag FLAG_TEMP_SCENE_VARIANT_B ; $46c9
 	test_flag FLAG_DOUBLES ; $46cc
@@ -604,7 +604,7 @@ MachinePracticeResultScene:
 	call WaitFadeEnd ; $4706
 	script_wait_frames $28 ; $4709
 	ld a, [wMatchExitRequest] ; $4710
-	and a, a ; $4713
+	and a ; $4713
 	jp nz, .done ; $4714
 	script_set_text Text_6e_219 ; $4717
 	ld hl, wMinigamesTargetScore ; $471d
@@ -623,7 +623,7 @@ MachinePracticeResultScene:
 	farcall RunDialogueYesNoPrompt ; $473c
 	farcall ScriptCloseDialogueWindow ; $473f
 	script_wait_frames $05 ; $4742
-	and a, a ; $4749
+	and a ; $4749
 	jp z, MachineCourtRestartLevel ; $474a
 .done:
 	ret ; $474d
@@ -633,7 +633,7 @@ MachineCourtHandleRetryChoice:
 	farcall RunDialogueYesNoPrompt ; $4753
 	farcall ScriptCloseDialogueWindow ; $4756
 	script_wait_frames $05 ; $4759
-	and a, a ; $4760
+	and a ; $4760
 	jr z, MachineCourtRestartLevel ; $4761
 	script_set_text Text_6e_220 ; $4763
 	script_speak $05 ; $4769
@@ -655,9 +655,9 @@ MachineCourtHandleRetryChoice:
 	ret ; $47cc
 MachineCourtRestartLevel:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $47cd
-	cp a, $1a ; $47d0
+	cp $1a ; $47d0
 	jr z, .storeStoryModeCurrentLocation ; $47d2
-	sub a, $12 ; $47d4
+	sub $12 ; $47d4
 	call TestMachineLevelClearedFlag ; $47d6
 	jr z, .storeStoryModeCurrentLocation ; $47d9
 	ld a, $12 ; $47db
@@ -710,7 +710,7 @@ MachineExpertResultScene:
 	test_flag FLAG_CLEARED_MACHINE_EXPERT ; $4842
 	jr z, .notClearedMachineExpert ; $4845
 	ld a, [wPointWinLoseFlag] ; $4847
-	cp a, $01 ; $484a
+	cp $01 ; $484a
 	jp z, MachineExpertCounterMaxScene ; $484c
 .notClearedMachineExpert:
 	ld bc, $0001 ; $484f
@@ -726,10 +726,10 @@ MachineExpertResultScene:
 	ld l, c ; $4866
 	ld h, b ; $4867
 	ld a, l ; $4868
-	sub a, e ; $4869
+	sub e ; $4869
 	ld l, a ; $486a
 	ld a, h ; $486b
-	sbc a, d ; $486c
+	sbc d ; $486c
 	ld h, a ; $486d
 	jp nc, MachineExpertRetryPrompt ; $486e
 	ld bc, $270f ; $4871
@@ -747,10 +747,10 @@ MachineExpertResultScene:
 	ld l, c ; $488d
 	ld h, b ; $488e
 	ld a, l ; $488f
-	sub a, e ; $4890
+	sub e ; $4890
 	ld l, a ; $4891
 	ld a, h ; $4892
-	sbc a, d ; $4893
+	sbc d ; $4893
 	ld h, a ; $4894
 	jp z, MachineExpertRetryPrompt ; $4895
 	ld hl, wMinigamesCurrentScore ; $4898
@@ -770,10 +770,10 @@ MachineExpertResultScene:
 	ld h, b ; $48b3
 	inc de ; $48b4
 	ld a, l ; $48b5
-	sub a, e ; $48b6
+	sub e ; $48b6
 	ld l, a ; $48b7
 	ld a, h ; $48b8
-	sbc a, d ; $48b9
+	sbc d ; $48b9
 	ld h, a ; $48ba
 	jp nc, MachineExpertNewRecordScene ; $48bb
 MachineExpertRetryPrompt:
@@ -815,10 +815,10 @@ MachineExpertCounterMaxScene:
 	wram_bank ; $490e
 	ld de, $270f ; $4912
 	ld a, l ; $4915
-	sub a, e ; $4916
+	sub e ; $4916
 	ld l, a ; $4917
 	ld a, h ; $4918
-	sbc a, d ; $4919
+	sbc d ; $4919
 	ld h, a ; $491a
 	jp z, MachineExpertRetryPrompt ; $491b
 	call SaveMachineExpertRecord ; $491e
@@ -854,10 +854,10 @@ MachineExpertCounterMaxScene:
 	ld l, c ; $496b
 	ld h, b ; $496c
 	ld a, l ; $496d
-	sub a, e ; $496e
+	sub e ; $496e
 	ld l, a ; $496f
 	ld a, h ; $4970
-	sbc a, d ; $4971
+	sbc d ; $4971
 	ld h, a ; $4972
 	ret ; $4973
 SaveMachineExpertRecord:
@@ -950,11 +950,11 @@ Court2Npc03_14:
 	ret ; $4b6c
 Court2Npc04_14:
 	ld a, [wMapSceneStage] ; $4b6d
-	add a, a ; $4b70
-	add a, LOW(Court2Npc04TextIds) ; $4b71
+	add a ; $4b70
+	add LOW(Court2Npc04TextIds) ; $4b71
 	ld l, a ; $4b73
-	adc a, HIGH(Court2Npc04TextIds) ; $4b74
-	sub a, l ; $4b76
+	adc HIGH(Court2Npc04TextIds) ; $4b74
+	sub l ; $4b76
 	ld h, a ; $4b77
 	ld a, [hl+] ; $4b78
 	ld h, [hl] ; $4b79
@@ -973,11 +973,11 @@ Court2Npc04TextIds:
 	dw Text_1f_151 ; record 6
 Court2Npc05_14:
 	ld a, [wMapSceneStage] ; $4b92
-	add a, a ; $4b95
-	add a, LOW(Court2Npc05TextIds) ; $4b96
+	add a ; $4b95
+	add LOW(Court2Npc05TextIds) ; $4b96
 	ld l, a ; $4b98
-	adc a, HIGH(Court2Npc05TextIds) ; $4b99
-	sub a, l ; $4b9b
+	adc HIGH(Court2Npc05TextIds) ; $4b99
+	sub l ; $4b9b
 	ld h, a ; $4b9c
 	ld a, [hl+] ; $4b9d
 	ld h, [hl] ; $4b9e
@@ -996,11 +996,11 @@ Court2Npc05TextIds:
 	dw Text_1f_157 ; record 6
 Court2Npc06_14:
 	ld a, [wMapSceneStage] ; $4bb7
-	add a, a ; $4bba
-	add a, LOW(Court2Npc06TextIds) ; $4bbb
+	add a ; $4bba
+	add LOW(Court2Npc06TextIds) ; $4bbb
 	ld l, a ; $4bbd
-	adc a, HIGH(Court2Npc06TextIds) ; $4bbe
-	sub a, l ; $4bc0
+	adc HIGH(Court2Npc06TextIds) ; $4bbe
+	sub l ; $4bc0
 	ld h, a ; $4bc1
 	ld a, [hl+] ; $4bc2
 	ld h, [hl] ; $4bc3
@@ -1030,11 +1030,11 @@ Court2SpectatorChat_14:
 	set_flag FLAG_COURT2_SPECTATORS_TALKED_SINGLES ; $4bf2
 .step:
 	ld a, [wMapSceneStage] ; $4bf5
-	add a, a ; $4bf8
-	add a, LOW(Court2SpectatorChatTextIds) ; $4bf9
+	add a ; $4bf8
+	add LOW(Court2SpectatorChatTextIds) ; $4bf9
 	ld l, a ; $4bfb
-	adc a, HIGH(Court2SpectatorChatTextIds) ; $4bfc
-	sub a, l ; $4bfe
+	adc HIGH(Court2SpectatorChatTextIds) ; $4bfc
+	sub l ; $4bfe
 	ld h, a ; $4bff
 	ld a, [hl+] ; $4c00
 	ld h, [hl] ; $4c01
@@ -1122,13 +1122,13 @@ Court2Npc0A_14:
 	test_flag FLAG_DOUBLES ; $4dd2
 	jr nz, .isDoubles ; $4dd5
 	ld a, [wMapSceneStage] ; $4dd7
-	cp a, $03 ; $4dda
+	cp $03 ; $4dda
 	jr nz, .speak ; $4ddc
 	script_set_text Text_1f_113 ; $4dde
 	jr .speak ; $4de4
 .isDoubles:
 	ld a, [wMapSceneStage] ; $4de6
-	cp a, $06 ; $4de9
+	cp $06 ; $4de9
 	jr nz, .speak ; $4deb
 	script_set_text Text_1f_113 ; $4ded
 .speak:
@@ -1224,7 +1224,7 @@ Court2ActorsAlt_14:
 	map_actor_end
 Court2EntryWalkIn:
 	ld a, [wStoryModeEntryPoint] ; $4f66
-	cp a, $ff ; $4f69
+	cp $ff ; $4f69
 	jp z, .done ; $4f6b
 	test_flag FLAG_DOUBLES ; $4f6e
 	jr z, .walkOff ; $4f71
@@ -1279,11 +1279,11 @@ Court1Npc04_14:
 	ret ; $507b
 Court1Npc05_14:
 	ld a, [wMapSceneStage] ; $507c
-	add a, a ; $507f
-	add a, LOW(Court1Npc05TextIds) ; $5080
+	add a ; $507f
+	add LOW(Court1Npc05TextIds) ; $5080
 	ld l, a ; $5082
-	adc a, HIGH(Court1Npc05TextIds) ; $5083
-	sub a, l ; $5085
+	adc HIGH(Court1Npc05TextIds) ; $5083
+	sub l ; $5085
 	ld h, a ; $5086
 	ld a, [hl+] ; $5087
 	ld h, [hl] ; $5088
@@ -1302,11 +1302,11 @@ Court1Npc05TextIds:
 	dw Text_1f_143 ; record 6
 Court1Npc06_14:
 	ld a, [wMapSceneStage] ; $50a1
-	add a, a ; $50a4
-	add a, LOW(Court1Npc06TextIds) ; $50a5
+	add a ; $50a4
+	add LOW(Court1Npc06TextIds) ; $50a5
 	ld l, a ; $50a7
-	adc a, HIGH(Court1Npc06TextIds) ; $50a8
-	sub a, l ; $50aa
+	adc HIGH(Court1Npc06TextIds) ; $50a8
+	sub l ; $50aa
 	ld h, a ; $50ab
 	ld a, [hl+] ; $50ac
 	ld h, [hl] ; $50ad
@@ -1403,7 +1403,7 @@ Court1ActorsAlt_14:
 	map_actor_end
 Court1EntryWalkIn:
 	ld a, [wStoryModeEntryPoint] ; $51a4
-	cp a, $ff ; $51a7
+	cp $ff ; $51a7
 	jp z, .done ; $51a9
 	test_flag FLAG_DOUBLES ; $51ac
 	jr z, .walkOff ; $51af
@@ -1422,7 +1422,7 @@ LoadCourtPlayerPartnerObjDefs_14:
 	jp z, .notDoubles ; $51ed
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $51f0
 	ld d, $58 ; $51f3
-	add a, d ; $51f5
+	add d ; $51f5
 	ld d, a ; $51f6
 	script_get_actor_state ACTOR_PARTNER ; $51f7
 	ld c, l ; $51fc
@@ -1432,7 +1432,7 @@ LoadCourtPlayerPartnerObjDefs_14:
 .notDoubles:
 	ld a, [wStoryModeGenderOfMainCharacter] ; $5208
 	ld d, $56 ; $520b
-	add a, d ; $520d
+	add d ; $520d
 	ld d, a ; $520e
 	script_get_actor_state ACTOR_PLAYER ; $520f
 	ld c, l ; $5214
@@ -1484,15 +1484,15 @@ IslandSkyInitScript_14:
 	script_set_position $05, $3f00, $3f00 ; $52cd
 	script_set_position $06, $3f00, $3f00 ; $52d8
 	ld a, [wStoryModeEntryPoint] ; $52e3
-	cp a, $02 ; $52e6
+	cp $02 ; $52e6
 	jp z, QueuePlaneSpriteByFrameCounter_14.loadScene ; $52e8
-	cp a, $08 ; $52eb
+	cp $08 ; $52eb
 	jp z, Data_14_64dd.scriptRespawnLocationActors ; $52ed
-	cp a, $0e ; $52f0
+	cp $0e ; $52f0
 	jp z, QueueTwinkleSprite_14.queue ; $52f2
-	cp a, $0f ; $52f5
+	cp $0f ; $52f5
 	jp z, AdvanceFirework1Ascent_14.loadScene ; $52f7
-	cp a, $0d ; $52fa
+	cp $0d ; $52fa
 	jp z, AdvanceFirework1Ascent_14.loadScene ; $52fc
 	jp .loadScene ; $52ff
 	ret ; $5302
@@ -1515,7 +1515,7 @@ IslandSkyInitScript_14:
 	script_set_position ACTOR_PARTNER, $3f00, $3f00 ; $532f
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $533a
 	ld d, $58 ; $533d
-	add a, d ; $533f
+	add d ; $533f
 	ld d, a ; $5340
 	script_get_actor_state $05 ; $5341
 	ld c, l ; $5346
@@ -1525,7 +1525,7 @@ IslandSkyInitScript_14:
 .setPlayerObjDef:
 	ld a, [wStoryModeGenderOfMainCharacter] ; $5352
 	ld d, $56 ; $5355
-	add a, d ; $5357
+	add d ; $5357
 	ld d, a ; $5358
 	script_get_actor_state ACTOR_PLAYER ; $5359
 	ld c, l ; $535e
@@ -1534,10 +1534,10 @@ IslandSkyInitScript_14:
 	script_set_anim ACTOR_PLAYER, $01 ; $5363
 	script_set_active ACTOR_PLAYER, $00 ; $536a
 	ld a, [wStoryModeEntryPoint] ; $5371
-	cp a, $0c ; $5374
+	cp $0c ; $5374
 	jr nz, .fadeIn ; $5376
 	script_set_position ACTOR_PLAYER, $0600, $2700 ; $5378
-	xor a, a ; $5383
+	xor a ; $5383
 	ld [wStoryModeShowLocationName], a ; $5384
 	script_fade_in $04 ; $5387
 	call WaitFadeEnd ; $538c
@@ -1547,7 +1547,7 @@ IslandSkyInitScript_14:
 	ld [wMapSceneStage2], a ; $5396
 	jp .afterFlight ; $5399
 .fadeIn:
-	xor a, a ; $539c
+	xor a ; $539c
 	ld [wStoryModeShowLocationName], a ; $539d
 	script_fade_in $06 ; $53a0
 	call WaitFadeEnd ; $53a5
@@ -1568,7 +1568,7 @@ IslandSkyInitScript_14:
 	script_wait_frames $05 ; $53d4
 	call PlayPlaneMoveSfx_14 ; $53db
 	ld a, h ; $53de
-	and a, $01 ; $53df
+	and $01 ; $53df
 	jr z, .advanceStage ; $53e1
 	ld a, [wMapSceneStage] ; $53e3
 	dec a ; $53e6
@@ -1598,7 +1598,7 @@ IslandSkyInitScript_14:
 	script_wait_frames $03 ; $5420
 	call PlayPlaneMoveSfx_14 ; $5427
 	ld a, h ; $542a
-	and a, $01 ; $542b
+	and $01 ; $542b
 	jr z, .landed ; $542d
 	ld a, [wMapSceneStage] ; $542f
 	dec a ; $5432
@@ -1618,15 +1618,15 @@ IslandSkyInitScript_14:
 	ld a, [wMapSceneStage2] ; $544d
 	inc a ; $5450
 	ld [wMapSceneStage2], a ; $5451
-	and a, $03 ; $5454
-	cp a, $03 ; $5456
+	and $03 ; $5454
+	cp $03 ; $5456
 	jr nz, .placeDoubles ; $5458
 	ld a, [wMapSceneStage] ; $545a
 	dec a ; $545d
 	ld [wMapSceneStage], a ; $545e
 .placeDoubles:
 	ld a, [wMapSceneStage] ; $5461
-	cp a, $20 ; $5464
+	cp $20 ; $5464
 	jr nz, .placeActors ; $5466
 	ld h, $08 ; $5468
 .walkOff:
@@ -1656,7 +1656,7 @@ IslandSkyInitScript_14:
 	dec h ; $54a5
 	jr nz, .speakDoubles ; $54a6
 	ld a, [wStoryModeEntryPoint] ; $54a8
-	cp a, $0c ; $54ab
+	cp $0c ; $54ab
 	jr z, .setLocation ; $54ad
 	test_flag FLAG_DOUBLES ; $54af
 	jr z, .fadeOut ; $54b2
@@ -1684,7 +1684,7 @@ IslandSkyInitScript_14:
 	ld [wCutsceneObjX], a ; $54e1
 	ld a, $00 ; $54e4
 	ld [wCutsceneObjY], a ; $54e6
-	xor a, a ; $54e9
+	xor a ; $54e9
 	ld [wCutsceneObjPhase], a ; $54ea
 	ld a, $10 ; $54ed
 	ld [wCutsceneObjRiseTimer], a ; $54ef
@@ -1698,7 +1698,7 @@ IslandSkyInitScript_14:
 	ld [wCutsceneObjX + 1], a ; $5508
 	ld a, $02 ; $550b
 	ld [wCutsceneObjY + 1], a ; $550d
-	xor a, a ; $5510
+	xor a ; $5510
 	ld [wCutsceneObjPhase + 1], a ; $5511
 	ld a, $10 ; $5514
 	ld [wCutsceneObjRiseTimer + 1], a ; $5516
@@ -1731,7 +1731,7 @@ IslandSkyInitScript_14:
 	script_set_anim ACTOR_PLAYER, $02 ; $55df
 	script_wait_idle ACTOR_PLAYER ; $55e6
 	ld a, [wStoryModeEntryPoint] ; $55eb
-	cp a, $0c ; $55ee
+	cp $0c ; $55ee
 	jr nz, .done ; $55f0
 	ld a, $01 ; $55f2
 	ld [wCutsceneObjActive], a ; $55f4
@@ -1803,20 +1803,20 @@ QueuePlaneSpriteByHeight_14:
 	call GetSceneObjectScreenPos_14 ; $5e9c
 	ld b, $00 ; $5e9f
 	ld a, [wMapSceneStage2] ; $5ea1
-	sub a, $88 ; $5ea4
-	cp a, $0a ; $5ea6
+	sub $88 ; $5ea4
+	cp $0a ; $5ea6
 	jr c, .queueSpriteTemplate ; $5ea8
 	ld b, $10 ; $5eaa
-	cp a, $14 ; $5eac
+	cp $14 ; $5eac
 	jr c, .queueSpriteTemplate ; $5eae
 	ld b, $20 ; $5eb0
-	cp a, $1e ; $5eb2
+	cp $1e ; $5eb2
 	jr c, .queueSpriteTemplate ; $5eb4
 	ld b, $30 ; $5eb6
-	cp a, $50 ; $5eb8
+	cp $50 ; $5eb8
 	jr c, .queueSpriteTemplate ; $5eba
 	ld b, $20 ; $5ebc
-	cp a, $78 ; $5ebe
+	cp $78 ; $5ebe
 	jr c, .queueSpriteTemplate ; $5ec0
 	ld b, $10 ; $5ec2
 .queueSpriteTemplate:
@@ -1854,32 +1854,32 @@ UpdateWaterSplash0_14:
 	ldh a, [hScrollX] ; $60c4
 	ld b, a ; $60c6
 	ld a, [wCutsceneObjX] ; $60c7
-	sub a, b ; $60ca
+	sub b ; $60ca
 	ld d, a ; $60cb
 	ld a, [wCutsceneObjActive] ; $60cc
-	and a, a ; $60cf
+	and a ; $60cf
 	jr nz, .checkHit ; $60d0
 	call AdvanceWaterSplash0Rise_14 ; $60d2
 .checkHit:
 	ldh a, [hScrollY] ; $60d5
 	ld b, a ; $60d7
 	ld a, [wCutsceneObjY] ; $60d8
-	add a, $20 ; $60db
-	sub a, b ; $60dd
+	add $20 ; $60db
+	sub b ; $60dd
 	ld e, a ; $60de
 	ld a, [wCutsceneObjActive] ; $60df
-	and a, a ; $60e2
+	and a ; $60e2
 	jp z, .hit ; $60e3
 	ld a, [wCutsceneObjLimit] ; $60e6
 	ld b, a ; $60e9
 	ld a, [wCutsceneObjPhase] ; $60ea
-	cp a, $14 ; $60ed
+	cp $14 ; $60ed
 	jr c, .respawn ; $60ef
-	cp a, b ; $60f1
+	cp b ; $60f1
 	jr c, .done ; $60f2
 .hit:
 	ld a, [wCutsceneObjRiseTimer] ; $60f4
-	and a, a ; $60f7
+	and a ; $60f7
 	jr z, .scorePoint ; $60f8
 	ld a, $08 ; $60fa
 	ld [wCutsceneObjTimer], a ; $60fc
@@ -1890,48 +1890,48 @@ UpdateWaterSplash0_14:
 	ld a, [wCutsceneObjTimer] ; $6107
 	inc a ; $610a
 	ld [wCutsceneObjTimer], a ; $610b
-	cp a, $08 ; $610e
+	cp $08 ; $610e
 	jr c, .advance ; $6110
-	cp a, $08 ; $6112
+	cp $08 ; $6112
 	jr z, .playSfx ; $6114
 	sound $7e ; $6116
 .playSfx:
 	ld a, [wCutsceneObjX] ; $6118
 	inc a ; $611b
 	ld [wCutsceneObjX], a ; $611c
-	xor a, a ; $611f
+	xor a ; $611f
 	ld [wCutsceneObjTimer], a ; $6120
 	ld a, [wCutsceneObjPhase] ; $6123
-	add a, $04 ; $6126
+	add $04 ; $6126
 	ld [wCutsceneObjPhase], a ; $6128
 .advance:
 	ld a, [wCutsceneObjLimit] ; $612b
 	ld b, a ; $612e
 	ld a, [wCutsceneObjPhase] ; $612f
-	cp a, $14 ; $6132
+	cp $14 ; $6132
 	jr c, .respawn ; $6134
-	cp a, b ; $6136
+	cp b ; $6136
 	jr c, .done ; $6137
-	xor a, a ; $6139
+	xor a ; $6139
 	ld [wCutsceneObjPhase], a ; $613a
 	call AdvanceRandomSeed ; $613d
 	ld a, l ; $6140
-	and a, $0f ; $6141
-	add a, a ; $6143
-	add a, $40 ; $6144
+	and $0f ; $6141
+	add a ; $6143
+	add $40 ; $6144
 	ld [wCutsceneObjX], a ; $6146
 	ld a, h ; $6149
-	and a, $3c ; $614a
+	and $3c ; $614a
 	ld [wCutsceneObjLimit], a ; $614c
 	ld a, h ; $614f
-	and a, $0f ; $6150
+	and $0f ; $6150
 	ld [wCutsceneObjY], a ; $6152
 	ld a, $10 ; $6155
 	ld [wCutsceneObjRiseTimer], a ; $6157
 	jr .done ; $615a
 .respawn:
 	ld a, [wCutsceneObjPhase] ; $615c
-	add a, $20 ; $615f
+	add $20 ; $615f
 	ld c, a ; $6161
 	ld hl, SpriteTemplate_14_6090 ; $6162
 	ld b, $01 ; $6165
@@ -1940,12 +1940,12 @@ UpdateWaterSplash0_14:
 	ret ; $616a
 AdvanceWaterSplash0Rise_14:
 	ld a, [wCutsceneObjRiseTimer] ; $616b
-	and a, a ; $616e
+	and a ; $616e
 	jr z, .done ; $616f
 	dec a ; $6171
 	ld [wCutsceneObjRiseTimer], a ; $6172
 	ld a, [wCutsceneObjY] ; $6175
-	sub a, $02 ; $6178
+	sub $02 ; $6178
 	ld [wCutsceneObjY], a ; $617a
 .done:
 	ret ; $617d
@@ -1953,32 +1953,32 @@ UpdateWaterSplash1_14:
 	ldh a, [hScrollX] ; $617e
 	ld b, a ; $6180
 	ld a, [wCutsceneObjX + 1] ; $6181
-	sub a, b ; $6184
+	sub b ; $6184
 	ld d, a ; $6185
 	ld a, [wCutsceneObjActive + 1] ; $6186
-	and a, a ; $6189
+	and a ; $6189
 	jr nz, .checkHit ; $618a
 	call AdvanceWaterSplash1Rise_14 ; $618c
 .checkHit:
 	ldh a, [hScrollY] ; $618f
 	ld b, a ; $6191
 	ld a, [wCutsceneObjY + 1] ; $6192
-	add a, $20 ; $6195
-	sub a, b ; $6197
+	add $20 ; $6195
+	sub b ; $6197
 	ld e, a ; $6198
 	ld a, [wCutsceneObjActive + 1] ; $6199
-	and a, a ; $619c
+	and a ; $619c
 	jp z, .hit ; $619d
 	ld a, [wCutsceneObjLimit + 1] ; $61a0
 	ld b, a ; $61a3
 	ld a, [wCutsceneObjPhase + 1] ; $61a4
-	cp a, $14 ; $61a7
+	cp $14 ; $61a7
 	jr c, .respawn ; $61a9
-	cp a, b ; $61ab
+	cp b ; $61ab
 	jr c, .done ; $61ac
 .hit:
 	ld a, [wCutsceneObjRiseTimer + 1] ; $61ae
-	and a, a ; $61b1
+	and a ; $61b1
 	jr z, .scorePoint ; $61b2
 	ld a, $08 ; $61b4
 	ld [wCutsceneObjTimer + 1], a ; $61b6
@@ -1989,48 +1989,48 @@ UpdateWaterSplash1_14:
 	ld a, [wCutsceneObjTimer + 1] ; $61c1
 	inc a ; $61c4
 	ld [wCutsceneObjTimer + 1], a ; $61c5
-	cp a, $08 ; $61c8
+	cp $08 ; $61c8
 	jr c, .advance ; $61ca
-	cp a, $08 ; $61cc
+	cp $08 ; $61cc
 	jr z, .playSfx ; $61ce
 	sound $7e ; $61d0
 .playSfx:
 	ld a, [wCutsceneObjX + 1] ; $61d2
 	inc a ; $61d5
 	ld [wCutsceneObjX + 1], a ; $61d6
-	xor a, a ; $61d9
+	xor a ; $61d9
 	ld [wCutsceneObjTimer + 1], a ; $61da
 	ld a, [wCutsceneObjPhase + 1] ; $61dd
-	add a, $04 ; $61e0
+	add $04 ; $61e0
 	ld [wCutsceneObjPhase + 1], a ; $61e2
 .advance:
 	ld a, [wCutsceneObjLimit + 1] ; $61e5
 	ld b, a ; $61e8
 	ld a, [wCutsceneObjPhase + 1] ; $61e9
-	cp a, $14 ; $61ec
+	cp $14 ; $61ec
 	jr c, .respawn ; $61ee
-	cp a, b ; $61f0
+	cp b ; $61f0
 	jr c, .done ; $61f1
-	xor a, a ; $61f3
+	xor a ; $61f3
 	ld [wCutsceneObjPhase + 1], a ; $61f4
 	call AdvanceRandomSeed ; $61f7
 	ld a, l ; $61fa
-	and a, $0f ; $61fb
-	add a, a ; $61fd
-	add a, $40 ; $61fe
+	and $0f ; $61fb
+	add a ; $61fd
+	add $40 ; $61fe
 	ld [wCutsceneObjX + 1], a ; $6200
 	ld a, l ; $6203
-	and a, $3f ; $6204
+	and $3f ; $6204
 	ld [wCutsceneObjLimit + 1], a ; $6206
 	ld a, h ; $6209
-	and a, $0f ; $620a
+	and $0f ; $620a
 	ld [wCutsceneObjY + 1], a ; $620c
 	ld a, $10 ; $620f
 	ld [wCutsceneObjRiseTimer + 1], a ; $6211
 	jr .done ; $6214
 .respawn:
 	ld a, [wCutsceneObjPhase + 1] ; $6216
-	add a, $20 ; $6219
+	add $20 ; $6219
 	ld c, a ; $621b
 	ld hl, SpriteTemplate_14_6090 ; $621c
 	ld b, $01 ; $621f
@@ -2039,12 +2039,12 @@ UpdateWaterSplash1_14:
 	ret ; $6224
 AdvanceWaterSplash1Rise_14:
 	ld a, [wCutsceneObjRiseTimer + 1] ; $6225
-	and a, a ; $6228
+	and a ; $6228
 	jr z, .done ; $6229
 	dec a ; $622b
 	ld [wCutsceneObjRiseTimer + 1], a ; $622c
 	ld a, [wCutsceneObjY + 1] ; $622f
-	sub a, $02 ; $6232
+	sub $02 ; $6232
 	ld [wCutsceneObjY + 1], a ; $6234
 .done:
 	ret ; $6237
@@ -2066,19 +2066,19 @@ QueuePlaneSpriteByFrameCounter_14:
 	call GetSceneObjectScreenPos_14 ; $625b
 	ld b, $10 ; $625e
 	ld a, [wCutsceneObjX] ; $6260
-	cp a, $14 ; $6263
+	cp $14 ; $6263
 	jr c, .queue ; $6265
 	ld b, $20 ; $6267
-	cp a, $1e ; $6269
+	cp $1e ; $6269
 	jr c, .queue ; $626b
 	ld b, $30 ; $626d
-	cp a, $5a ; $626f
+	cp $5a ; $626f
 	jr c, .queue ; $6271
 	ld b, $20 ; $6273
-	cp a, $78 ; $6275
+	cp $78 ; $6275
 	jr c, .queue ; $6277
 	ld b, $10 ; $6279
-	cp a, $8c ; $627b
+	cp $8c ; $627b
 	jr c, .queue ; $627d
 	ld b, $00 ; $627f
 .queue:
@@ -2108,7 +2108,7 @@ QueuePlaneSpriteByFrameCounter_14:
 	script_null_script ACTOR_PARTNER ; $62c2
 	script_set_position ACTOR_PARTNER, $3f00, $3f00 ; $62c7
 .fadeIn:
-	xor a, a ; $62d2
+	xor a ; $62d2
 	ld [wStoryModeShowLocationName], a ; $62d3
 	script_fade_in $06 ; $62d6
 	call WaitFadeEnd ; $62db
@@ -2130,7 +2130,7 @@ QueuePlaneSpriteByFrameCounter_14:
 	script_wait_frames $05 ; $630d
 	call PlayPlaneMoveSfx_14 ; $6314
 	ld a, h ; $6317
-	and a, $01 ; $6318
+	and $01 ; $6318
 	jr z, .planeArrived ; $631a
 	ld a, [wMapSceneStage] ; $631c
 	inc a ; $631f
@@ -2162,7 +2162,7 @@ QueuePlaneSpriteByFrameCounter_14:
 	script_wait_frames $03 ; $635f
 	call PlayPlaneMoveSfx_14 ; $6366
 	ld a, h ; $6369
-	and a, $01 ; $636a
+	and $01 ; $636a
 	jr z, .disembark ; $636c
 	ld a, [wMapSceneStage] ; $636e
 	inc a ; $6371
@@ -2182,8 +2182,8 @@ QueuePlaneSpriteByFrameCounter_14:
 	ld a, [wMapSceneStage2] ; $638f
 	dec a ; $6392
 	ld [wMapSceneStage2], a ; $6393
-	and a, $03 ; $6396
-	cp a, $03 ; $6398
+	and $03 ; $6396
+	cp $03 ; $6398
 	jr nz, .speak ; $639a
 	ld a, [wMapSceneStage] ; $639c
 	inc a ; $639f
@@ -2191,7 +2191,7 @@ QueuePlaneSpriteByFrameCounter_14:
 .speak:
 	call AdvancePlaneFrameCounter_14 ; $63a3
 	ld a, [wMapSceneStage] ; $63a6
-	cp a, $50 ; $63a9
+	cp $50 ; $63a9
 	jr nz, .walkOff ; $63ab
 	ld h, $08 ; $63ad
 .speakDoubles:
@@ -2258,61 +2258,61 @@ LoadFireworkObjGfx_14:
 	ret ; $6449
 UpdateFirework0_14:
 	ld a, [wCutsceneObjPhase] ; $644a
-	cp a, $04 ; $644d
+	cp $04 ; $644d
 	jp nc, .done ; $644f
 	ld a, [wCutsceneObjPhase] ; $6452
-	and a, a ; $6455
+	and a ; $6455
 	jr nz, .draw ; $6456
 	call AdvanceFirework0Ascent_14 ; $6458
 .draw:
 	ldh a, [hScrollX] ; $645b
 	ld b, a ; $645d
 	ld a, [wCutsceneObjX] ; $645e
-	sub a, b ; $6461
+	sub b ; $6461
 	ld d, a ; $6462
 	ldh a, [hScrollY] ; $6463
 	ld b, a ; $6465
 	ld a, [wCutsceneObjY] ; $6466
-	sub a, b ; $6469
+	sub b ; $6469
 	ld e, a ; $646a
 	ld a, [wCutsceneObjTimer] ; $646b
 	dec a ; $646e
 	ld [wCutsceneObjTimer], a ; $646f
-	and a, a ; $6472
+	and a ; $6472
 	jp nz, .burstSprite ; $6473
 	ld a, [wCutsceneObjPhase] ; $6476
 	inc a ; $6479
 	ld [wCutsceneObjPhase], a ; $647a
-	cp a, $04 ; $647d
+	cp $04 ; $647d
 	jp nc, .done ; $647f
 	ld a, [wCutsceneObjPhase] ; $6482
-	add a, LOW(Table_14_64d5) ; $6485
+	add LOW(Table_14_64d5) ; $6485
 	ld l, a ; $6487
-	adc a, HIGH(Table_14_64d5) ; $6488
-	sub a, l ; $648a
+	adc HIGH(Table_14_64d5) ; $6488
+	sub l ; $648a
 	ld h, a ; $648b
 	ld a, [hl] ; $648c
 	ld [wCutsceneObjTimer], a ; $648d
 	ld a, [wCutsceneObjPhase] ; $6490
-	cp a, $01 ; $6493
+	cp $01 ; $6493
 	jr nz, .burstSprite ; $6495
 	ld a, [wCutsceneObjTimer] ; $6497
-	cp a, $0c ; $649a
+	cp $0c ; $649a
 	jr nz, .burstSprite ; $649c
 	sound $81 ; $649e
 .burstSprite:
 	ld a, [wCutsceneObjPhase] ; $64a0
-	add a, LOW(Data_14_64d9) ; $64a3
+	add LOW(Data_14_64d9) ; $64a3
 	ld l, a ; $64a5
-	adc a, HIGH(Data_14_64d9) ; $64a6
-	sub a, l ; $64a8
+	adc HIGH(Data_14_64d9) ; $64a6
+	sub l ; $64a8
 	ld h, a ; $64a9
 	ld a, [hl] ; $64aa
-	add a, $10 ; $64ab
+	add $10 ; $64ab
 	ld c, a ; $64ad
 	ld a, [wCutsceneObjTimer] ; $64ae
 	srl a ; $64b1
-	and a, $03 ; $64b3
+	and $03 ; $64b3
 	inc a ; $64b5
 	ld b, a ; $64b6
 	ld hl, SpriteTemplate_14_6e80 ; $64b7
@@ -2322,15 +2322,15 @@ UpdateFirework0_14:
 AdvanceFirework0Ascent_14:
 	ld b, $03 ; $64be
 	ld a, [wCutsceneObjTimer] ; $64c0
-	cp a, $14 ; $64c3
+	cp $14 ; $64c3
 	jr nc, .checkWaterSpriteMinigameTimer ; $64c5
 	dec b ; $64c7
-	cp a, $0a ; $64c8
+	cp $0a ; $64c8
 	jr nc, .checkWaterSpriteMinigameTimer ; $64ca
 	dec b ; $64cc
 .checkWaterSpriteMinigameTimer:
 	ld a, [wCutsceneObjY] ; $64cd
-	sub a, b ; $64d0
+	sub b ; $64d0
 	ld [wCutsceneObjY], a ; $64d1
 	ret ; $64d4
 Table_14_64d5:
@@ -2354,7 +2354,7 @@ Data_14_64dd:
 	script_set_position ACTOR_PARTNER, $3f00, $3f00 ; $6500
 .placeActors:
 	script_set_position ACTOR_PLAYER, $3f00, $3f00 ; $650b
-	xor a, a ; $6516
+	xor a ; $6516
 	ld [wStoryModeShowLocationName], a ; $6517
 	script_fade_in $04 ; $651a
 	call WaitFadeEnd ; $651f
@@ -2493,61 +2493,61 @@ FireworkObjPalettes_14:
 	INCLUDE "data/bank_014/palettes_6ea1.asm" ; $6ea1, 79 bytes (palettes)
 UpdateFirework1_14:
 	ld a, [wCutsceneObjPhase + 1] ; $6ef0
-	cp a, $04 ; $6ef3
+	cp $04 ; $6ef3
 	jp nc, .done ; $6ef5
 	ld a, [wCutsceneObjPhase + 1] ; $6ef8
-	and a, a ; $6efb
+	and a ; $6efb
 	jr nz, .draw ; $6efc
 	call AdvanceFirework1Ascent_14 ; $6efe
 .draw:
 	ldh a, [hScrollX] ; $6f01
 	ld b, a ; $6f03
 	ld a, [wCutsceneObjX + 1] ; $6f04
-	sub a, b ; $6f07
+	sub b ; $6f07
 	ld d, a ; $6f08
 	ldh a, [hScrollY] ; $6f09
 	ld b, a ; $6f0b
 	ld a, [wCutsceneObjY + 1] ; $6f0c
-	sub a, b ; $6f0f
+	sub b ; $6f0f
 	ld e, a ; $6f10
 	ld a, [wCutsceneObjTimer + 1] ; $6f11
 	dec a ; $6f14
 	ld [wCutsceneObjTimer + 1], a ; $6f15
-	and a, a ; $6f18
+	and a ; $6f18
 	jp nz, .burstSprite ; $6f19
 	ld a, [wCutsceneObjPhase + 1] ; $6f1c
 	inc a ; $6f1f
 	ld [wCutsceneObjPhase + 1], a ; $6f20
-	cp a, $04 ; $6f23
+	cp $04 ; $6f23
 	jp nc, .done ; $6f25
 	ld a, [wCutsceneObjPhase + 1] ; $6f28
-	add a, LOW(Table_14_64d5) ; $6f2b
+	add LOW(Table_14_64d5) ; $6f2b
 	ld l, a ; $6f2d
-	adc a, HIGH(Table_14_64d5) ; $6f2e
-	sub a, l ; $6f30
+	adc HIGH(Table_14_64d5) ; $6f2e
+	sub l ; $6f30
 	ld h, a ; $6f31
 	ld a, [hl] ; $6f32
 	ld [wCutsceneObjTimer + 1], a ; $6f33
 	ld a, [wCutsceneObjPhase + 1] ; $6f36
-	cp a, $01 ; $6f39
+	cp $01 ; $6f39
 	jr nz, .burstSprite ; $6f3b
 	ld a, [wCutsceneObjTimer + 1] ; $6f3d
-	cp a, $0c ; $6f40
+	cp $0c ; $6f40
 	jr nz, .burstSprite ; $6f42
 	sound $81 ; $6f44
 .burstSprite:
 	ld a, [wCutsceneObjPhase + 1] ; $6f46
-	add a, LOW(Data_14_64dd) ; $6f49
+	add LOW(Data_14_64dd) ; $6f49
 	ld l, a ; $6f4b
-	adc a, HIGH(Data_14_64dd) ; $6f4c
-	sub a, l ; $6f4e
+	adc HIGH(Data_14_64dd) ; $6f4c
+	sub l ; $6f4e
 	ld h, a ; $6f4f
 	ld a, [hl] ; $6f50
-	add a, $10 ; $6f51
+	add $10 ; $6f51
 	ld c, a ; $6f53
 	ld a, [wCutsceneObjTimer + 1] ; $6f54
 	srl a ; $6f57
-	and a, $03 ; $6f59
+	and $03 ; $6f59
 	inc a ; $6f5b
 	ld b, a ; $6f5c
 	ld hl, SpriteTemplate_14_6e80 ; $6f5d
@@ -2557,15 +2557,15 @@ UpdateFirework1_14:
 AdvanceFirework1Ascent_14:
 	ld b, $03 ; $6f64
 	ld a, [wCutsceneObjTimer + 1] ; $6f66
-	cp a, $14 ; $6f69
+	cp $14 ; $6f69
 	jr nc, .store ; $6f6b
 	dec b ; $6f6d
-	cp a, $0a ; $6f6e
+	cp $0a ; $6f6e
 	jr nc, .store ; $6f70
 	dec b ; $6f72
 .store:
 	ld a, [wCutsceneObjY + 1] ; $6f73
-	sub a, b ; $6f76
+	sub b ; $6f76
 	ld [wCutsceneObjY + 1], a ; $6f77
 	ret ; $6f7a
 .loadScene:
@@ -2593,7 +2593,7 @@ AdvanceFirework1Ascent_14:
 	script_null_script ACTOR_PARTNER ; $6fbd
 	script_set_position ACTOR_PARTNER, $3f00, $3f00 ; $6fc2
 .fadeIn:
-	xor a, a ; $6fcd
+	xor a ; $6fcd
 	ld [wStoryModeShowLocationName], a ; $6fce
 	script_fade_in $06 ; $6fd1
 	call WaitFadeEnd ; $6fd6
@@ -2615,10 +2615,10 @@ AdvanceFirework1Ascent_14:
 	ld a, [wMapSceneStage2] ; $7004
 	inc a ; $7007
 	ld [wMapSceneStage2], a ; $7008
-	and a, $01 ; $700b
+	and $01 ; $700b
 	ld b, a ; $700d
 	ld a, [wMapSceneStage] ; $700e
-	add a, b ; $7011
+	add b ; $7011
 	ld [wMapSceneStage], a ; $7012
 	dec h ; $7015
 	jr nz, .planeArrived ; $7016
@@ -2643,10 +2643,10 @@ AdvanceFirework1Ascent_14:
 	ld a, [wMapSceneStage] ; $7051
 	inc a ; $7054
 	ld [wMapSceneStage], a ; $7055
-	and a, $01 ; $7058
+	and $01 ; $7058
 	ld b, a ; $705a
 	ld a, [wMapSceneStage2] ; $705b
-	add a, b ; $705e
+	add b ; $705e
 	ld [wMapSceneStage2], a ; $705f
 	dec h ; $7062
 	jr nz, .land ; $7063
@@ -2657,8 +2657,8 @@ AdvanceFirework1Ascent_14:
 	ld a, [wMapSceneStage] ; $7071
 	inc a ; $7074
 	ld [wMapSceneStage], a ; $7075
-	and a, $03 ; $7078
-	cp a, $03 ; $707a
+	and $03 ; $7078
+	cp $03 ; $707a
 	jr nz, .walkOff ; $707c
 	ld a, [wMapSceneStage2] ; $707e
 	inc a ; $7081
@@ -2694,7 +2694,7 @@ AdvanceFirework1Ascent_14:
 	dec a ; $70d2
 	ld [wMapSceneStage], a ; $70d3
 	ld a, h ; $70d6
-	cp a, $1e ; $70d7
+	cp $1e ; $70d7
 	jr nz, .speakDoubles ; $70d9
 	ld a, $00 ; $70db
 	ld [wCutsceneObjPhase], a ; $70dd
@@ -2707,7 +2707,7 @@ AdvanceFirework1Ascent_14:
 	call PlayTwinkleAnimation_14 ; $70ec
 	script_wait_frames $46 ; $70ef
 	ld a, [wStoryModeEntryPoint] ; $70f6
-	cp a, $0d ; $70f9
+	cp $0d ; $70f9
 	jp nz, .fadeOut ; $70fb
 	ld a, $01 ; $70fe
 	ld [wCutsceneObjActive], a ; $7100
@@ -2814,17 +2814,17 @@ AnimateIslandSkyEffectSprites_14:
 	ldh a, [hScrollX] ; $73d8
 	ld b, a ; $73da
 	ld a, $40 ; $73db
-	sub a, b ; $73dd
+	sub b ; $73dd
 	ld d, a ; $73de
 	ldh a, [hScrollY] ; $73df
 	ld b, a ; $73e1
 	ld a, $40 ; $73e2
-	sub a, b ; $73e4
+	sub b ; $73e4
 	ld e, a ; $73e5
 	ld c, $10 ; $73e6
 	ld hl, IslandSkySpriteData_14 ; $73e8
 	ld a, [wCutsceneObjActive] ; $73eb
-	and a, a ; $73ee
+	and a ; $73ee
 	jr nz, .nonZero ; $73ef
 	ld a, [wCutsceneObjLimit] ; $73f1
 	inc a ; $73f4
@@ -2832,8 +2832,8 @@ AnimateIslandSkyEffectSprites_14:
 .nonZero:
 	ld a, [wCutsceneObjLimit] ; $73f8
 	swap a ; $73fb
-	and a, $03 ; $73fd
-	cp a, $03 ; $73ff
+	and $03 ; $73fd
+	cp $03 ; $73ff
 	jr nz, .ne03 ; $7401
 	ld a, $00 ; $7403
 	ld [wCutsceneObjLimit], a ; $7405
@@ -2844,18 +2844,18 @@ AnimateIslandSkyEffectSprites_14:
 	ldh a, [hScrollX] ; $740d
 	ld b, a ; $740f
 	ld a, $68 ; $7410
-	sub a, b ; $7412
+	sub b ; $7412
 	ld d, a ; $7413
 	ldh a, [hScrollY] ; $7414
 	ld b, a ; $7416
 	ld a, $50 ; $7417
-	sub a, b ; $7419
+	sub b ; $7419
 	ld e, a ; $741a
 	ld c, $20 ; $741b
 	ld hl, SpriteTemplate_14_7371 ; $741d
 	ld a, [wCutsceneObjLimit] ; $7420
 	swap a ; $7423
-	and a, $03 ; $7425
+	and $03 ; $7425
 	inc a ; $7427
 	ld b, a ; $7428
 	call QueueSpriteTemplate ; $7429
@@ -2896,12 +2896,12 @@ GetSceneObjectScreenPos_14:
 	ldh a, [hScrollX] ; $756d
 	ld b, a ; $756f
 	ld a, [wMapSceneStage] ; $7570
-	sub a, b ; $7573
+	sub b ; $7573
 	ld d, a ; $7574
 	ldh a, [hScrollY] ; $7575
 	ld b, a ; $7577
 	ld a, [wMapSceneStage2] ; $7578
-	sub a, b ; $757b
+	sub b ; $757b
 	ld e, a ; $757c
 	ret ; $757d
 	; $757e, 2 bytes (fill)
@@ -2928,12 +2928,12 @@ QueueTwinkleSprite_14:
 	ldh a, [hScrollX] ; $76ab
 	ld b, a ; $76ad
 	ld a, $54 ; $76ae
-	sub a, b ; $76b0
+	sub b ; $76b0
 	ld d, a ; $76b1
 	ldh a, [hScrollY] ; $76b2
 	ld b, a ; $76b4
 	ld a, $58 ; $76b5
-	sub a, b ; $76b7
+	sub b ; $76b7
 	ld e, a ; $76b8
 	ld a, [wCutsceneObjPhase] ; $76b9
 	ld c, a ; $76bc
@@ -2958,7 +2958,7 @@ QueueTwinkleSprite_14:
 	script_null_script ACTOR_PARTNER ; $76f3
 	script_set_position ACTOR_PARTNER, $3f00, $3f00 ; $76f8
 .loadScene:
-	xor a, a ; $7703
+	xor a ; $7703
 	ld [wStoryModeShowLocationName], a ; $7704
 	script_fade_in $06 ; $7707
 	call WaitFadeEnd ; $770c
@@ -2986,7 +2986,7 @@ QueueTwinkleSprite_14:
 	inc a ; $7750
 	ld [wMapSceneStage], a ; $7751
 	ld a, h ; $7754
-	cp a, $2d ; $7755
+	cp $2d ; $7755
 	jr nz, .fireworkLoop ; $7757
 	ld a, $0c ; $7759
 	ld [wCutsceneObjPhase], a ; $775b
@@ -3020,8 +3020,8 @@ QueueTwinkleSprite_14:
 	ld a, [wMapSceneStage] ; $77ac
 	dec a ; $77af
 	ld [wMapSceneStage], a ; $77b0
-	and a, $03 ; $77b3
-	cp a, $03 ; $77b5
+	and $03 ; $77b3
+	cp $03 ; $77b5
 	jr nz, .finale ; $77b7
 	ld a, [wMapSceneStage2] ; $77b9
 	dec a ; $77bc
@@ -3037,10 +3037,10 @@ QueueTwinkleSprite_14:
 	ld a, [wMapSceneStage] ; $77d2
 	dec a ; $77d5
 	ld [wMapSceneStage], a ; $77d6
-	and a, $01 ; $77d9
+	and $01 ; $77d9
 	ld b, a ; $77db
 	ld a, [wMapSceneStage2] ; $77dc
-	sub a, b ; $77df
+	sub b ; $77df
 	ld [wMapSceneStage2], a ; $77e0
 	call AdvancePlaneFrameCounter2_14 ; $77e3
 	dec h ; $77e6
@@ -3066,10 +3066,10 @@ QueueTwinkleSprite_14:
 	ld a, [wMapSceneStage2] ; $781f
 	dec a ; $7822
 	ld [wMapSceneStage2], a ; $7823
-	and a, $01 ; $7826
+	and $01 ; $7826
 	ld b, a ; $7828
 	ld a, [wMapSceneStage] ; $7829
-	sub a, b ; $782c
+	sub b ; $782c
 	ld [wMapSceneStage], a ; $782d
 	call AdvancePlaneFrameCounter2_14 ; $7830
 	dec h ; $7833
@@ -3103,7 +3103,7 @@ AdvancePlaneFrameCounter2_14:
 	ld [wCutsceneObjX], a ; $7877
 	ret ; $787a
 PlayTwinkleAnimation_14:
-	xor a, a ; $787b
+	xor a ; $787b
 	ld [wCutsceneObjPhase], a ; $787c
 	call AdvanceFrame ; $787f
 	ld a, $01 ; $7882
@@ -3114,7 +3114,7 @@ PlayTwinkleAnimation_14:
 .loop:
 	script_wait_frames $04 ; $788e
 	ld a, [wCutsceneObjPhase] ; $7895
-	add a, $04 ; $7898
+	add $04 ; $7898
 	ld [wCutsceneObjPhase], a ; $789a
 	dec h ; $789d
 	jr nz, .loop ; $789e
@@ -3124,7 +3124,7 @@ PlayTwinkleAnimation_14:
 PlayPlaneMoveSfx_14:
 	ld a, h ; $78a7
 	srl a ; $78a8
-	and a, $01 ; $78aa
+	and $01 ; $78aa
 	jr z, .done ; $78ac
 	sound $7b ; $78ae
 .done:
@@ -3161,14 +3161,14 @@ ActorScript_14_78bb:
 MapScriptNop_14:
 	ret ; $78d9
 MapScriptClearActiveFlag_14:
-	xor a, a ; $78da
+	xor a ; $78da
 	ld [wStoryScriptRan], a ; $78db
 	ret ; $78de
 MapScriptPlaySoundA2_14:
 	sound $a2 ; $78df
 	ret ; $78e1
 MapScriptHideLocationName_14:
-	xor a, a ; $78e2
+	xor a ; $78e2
 	ld [wStoryModeShowLocationName], a ; $78e3
 	ret ; $78e6
 ActorScript_14_78e7:

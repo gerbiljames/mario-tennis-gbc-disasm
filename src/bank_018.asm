@@ -141,14 +141,14 @@ LoadIndexedPalette_18:
 	push bc ; $433a
 	push de ; $433b
 	push hl ; $433c
-	and a, $0f ; $433d
-	add a, a ; $433f
-	add a, a ; $4340
-	add a, a ; $4341
-	add a, $00 ; $4342
+	and $0f ; $433d
+	add a ; $433f
+	add a ; $4340
+	add a ; $4341
+	add $00 ; $4342
 	ld l, a ; $4344
-	adc a, $43 ; $4345
-	sub a, l ; $4347
+	adc $43 ; $4345
+	sub l ; $4347
 	ld h, a ; $4348
 	ld e, $01 ; $4349
 	call LoadPaletteShadow ; $434b
@@ -159,7 +159,7 @@ LoadIndexedPalette_18:
 	ret ; $4352
 FlushBgMapShadowToVram:
 	ld a, [wBgMapShadowDirty] ; $4353
-	and a, $0f ; $4356
+	and $0f ; $4356
 	jr z, .attrPlane ; $4358
 	ld hl, $d800 ; $435a
 	ld de, $9800 ; $435d
@@ -167,14 +167,14 @@ FlushBgMapShadowToVram:
 	call QueueVRAMCopy ; $4362
 .attrPlane:
 	ld a, [wBgMapShadowDirty] ; $4365
-	and a, $f0 ; $4368
+	and $f0 ; $4368
 	jr z, .done ; $436a
 	ld hl, $dc00 ; $436c
 	ld de, $b800 ; $436f
 	ld c, $24 ; $4372
 	call QueueVRAMCopy ; $4374
 .done:
-	xor a, a ; $4377
+	xor a ; $4377
 	ld [wBgMapShadowDirty], a ; $4378
 	ret ; $437b
 LoadMenuHandCursorGfx:
@@ -255,13 +255,13 @@ DrawBox:
 	pop de ; $43dd
 	pop bc ; $43de
 	ld a, $20 ; $43df
-	add a, l ; $43e1
+	add l ; $43e1
 	ld l, a ; $43e2
 	jr nc, .nextRowAttr ; $43e3
 	inc h ; $43e5
 .nextRowAttr:
 	ld a, $20 ; $43e6
-	add a, e ; $43e8
+	add e ; $43e8
 	ld e, a ; $43e9
 	jr nc, .nextRow ; $43ea
 	inc d ; $43ec
@@ -273,7 +273,7 @@ DrawBox:
 	pop bc ; $43f2
 	call DrawBoxTopRow ; $43f3
 	ld a, $20 ; $43f6
-	add a, l ; $43f8
+	add l ; $43f8
 	ld l, a ; $43f9
 	jr nc, .topRowDone ; $43fa
 	inc h ; $43fc
@@ -283,7 +283,7 @@ DrawBox:
 .bottomRow:
 	call DrawBoxSideRow ; $43ff
 	ld a, $20 ; $4402
-	add a, l ; $4404
+	add l ; $4404
 	ld l, a ; $4405
 	jr nc, .done ; $4406
 	inc h ; $4408
@@ -318,7 +318,7 @@ DrawBoxSideRow:
 	ld [hl], $05 ; $4428
 	ld a, b ; $442a
 	dec a ; $442b
-	add a, l ; $442c
+	add l ; $442c
 	ld l, a ; $442d
 	jr nc, .read ; $442e
 	inc h ; $4430
@@ -343,26 +343,26 @@ AddBobbingOffsetXY:
 	push af ; $4444
 	push hl ; $4445
 	ldh a, [hVBlankCounter] ; $4446
-	and a, $0f ; $4448
-	add a, LOW(Data_18_4468) ; $444a
+	and $0f ; $4448
+	add LOW(Data_18_4468) ; $444a
 	ld l, a ; $444c
-	adc a, HIGH(Data_18_4468) ; $444d
-	sub a, l ; $444f
+	adc HIGH(Data_18_4468) ; $444d
+	sub l ; $444f
 	ld h, a ; $4450
 	ld a, [hl] ; $4451
-	add a, d ; $4452
+	add d ; $4452
 	ld d, a ; $4453
 	ldh a, [hVBlankCounter] ; $4454
-	add a, $04 ; $4456
-	and a, $0f ; $4458
-	add a, LOW(Data_18_4468) ; $445a
+	add $04 ; $4456
+	and $0f ; $4458
+	add LOW(Data_18_4468) ; $445a
 	ld l, a ; $445c
-	adc a, HIGH(Data_18_4468) ; $445d
-	sub a, l ; $445f
+	adc HIGH(Data_18_4468) ; $445d
+	sub l ; $445f
 	ld h, a ; $4460
 	ld a, [hl] ; $4461
 	cpl ; $4462
-	add a, e ; $4463
+	add e ; $4463
 	ld e, a ; $4464
 	pop af ; $4465
 	pop hl ; $4466
@@ -374,14 +374,14 @@ AddBobbingOffsetY:
 	push af ; $4478
 	push hl ; $4479
 	ldh a, [hVBlankCounter] ; $447a
-	and a, $0f ; $447c
-	add a, LOW(Data_18_448b) ; $447e
+	and $0f ; $447c
+	add LOW(Data_18_448b) ; $447e
 	ld l, a ; $4480
-	adc a, HIGH(Data_18_448b) ; $4481
-	sub a, l ; $4483
+	adc HIGH(Data_18_448b) ; $4481
+	sub l ; $4483
 	ld h, a ; $4484
 	ld a, [hl] ; $4485
-	add a, e ; $4486
+	add e ; $4486
 	ld e, a ; $4487
 	pop af ; $4488
 	pop hl ; $4489
@@ -393,14 +393,14 @@ AddBobbingOffsetYLarge:
 	push af ; $449b
 	push hl ; $449c
 	ldh a, [hVBlankCounter] ; $449d
-	and a, $3f ; $449f
-	add a, LOW(Data_18_44ae) ; $44a1
+	and $3f ; $449f
+	add LOW(Data_18_44ae) ; $44a1
 	ld l, a ; $44a3
-	adc a, HIGH(Data_18_44ae) ; $44a4
-	sub a, l ; $44a6
+	adc HIGH(Data_18_44ae) ; $44a4
+	sub l ; $44a6
 	ld h, a ; $44a7
 	ld a, [hl] ; $44a8
-	add a, e ; $44a9
+	add e ; $44a9
 	ld e, a ; $44aa
 	pop af ; $44ab
 	pop hl ; $44ac
@@ -419,12 +419,12 @@ FindRosterEntry:
 	ld b, a ; $44f1
 .searchLoop:
 	ld a, [hl] ; $44f2
-	cp a, b ; $44f3
+	cp b ; $44f3
 	jr z, .found ; $44f4
-	cp a, $ff ; $44f6
+	cp $ff ; $44f6
 	jr z, .found ; $44f8
 	ld a, $08 ; $44fa
-	add a, l ; $44fc
+	add l ; $44fc
 	ld l, a ; $44fd
 	jr nc, .next ; $44fe
 	inc h ; $4500
@@ -436,7 +436,7 @@ FindRosterEntry:
 	pop af ; $4505
 	ret ; $4506
 LoadCharacterRecordToBuffer:
-	cp a, $84 ; $4507
+	cp $84 ; $4507
 	jr z, .fixedRecord ; $4509
 	push af ; $450b
 	push bc ; $450c
@@ -462,12 +462,12 @@ CheckCharacterUnlocked:
 	bit 7, a ; $452a
 	jr z, .checkRange ; $452c
 	ld a, [$d58b] ; $452e
-	cp a, $ff ; $4531
+	cp $ff ; $4531
 	ret ; $4533
 .checkRange:
-	cp a, $04 ; $4534
+	cp $04 ; $4534
 	jr nc, .lookup ; $4536
-	cp a, $ff ; $4538
+	cp $ff ; $4538
 	ret ; $453a
 .lookup:
 	push hl ; $453b
@@ -485,30 +485,30 @@ CheckCharacterUnlocked:
 	pop de ; $454a
 	pop hl ; $454b
 	ret ; $454c
-	cp a, $10 ; $454d
+	cp $10 ; $454d
 	jr nc, .done ; $454f
 	ld a, $01 ; $4551
-	and a, a ; $4553
+	and a ; $4553
 	ret ; $4554
 .done:
-	xor a, a ; $4555
+	xor a ; $4555
 	ret ; $4556
 CheckUnlockFlag:
 	bit 7, a ; $4557
 	jr z, TestUnlockFlagById ; $4559
-	cp a, $84 ; $455b
+	cp $84 ; $455b
 	jr nz, .locked ; $455d
-	cp a, $ff ; $455f
+	cp $ff ; $455f
 	ret ; $4561
 .locked:
-	xor a, a ; $4562
+	xor a ; $4562
 	ret ; $4563
 TestUnlockFlagById:
 	push hl ; $4564
 	push de ; $4565
 	ld hl, UnlockFlagIds_18 ; $4566
-	add a, a ; $4569
-	add a, l ; $456a
+	add a ; $4569
+	add l ; $456a
 	ld l, a ; $456b
 	jr nc, .readFlagId ; $456c
 	inc h ; $456e
@@ -516,9 +516,9 @@ TestUnlockFlagById:
 	ld a, [hl+] ; $456f
 	ld d, [hl] ; $4570
 	ld e, a ; $4571
-	or a, d ; $4572
+	or d ; $4572
 	jr nz, .gameFlag ; $4573
-	cp a, $ff ; $4575
+	cp $ff ; $4575
 	jr .done ; $4577
 .gameFlag:
 	bit 0, e ; $4579
@@ -559,67 +559,67 @@ MoveGridCursor:
 	inc e ; $45e3
 .wrapX:
 	ld a, d ; $45e4
-	add a, a ; $45e5
+	add a ; $45e5
 	jr nc, .checkMaxX ; $45e6
 	ld a, $08 ; $45e8
 	dec a ; $45ea
 	jr .wrapY ; $45eb
 .checkMaxX:
 	rra ; $45ed
-	cp a, $08 ; $45ee
+	cp $08 ; $45ee
 	jr c, .wrapY ; $45f0
-	xor a, a ; $45f2
+	xor a ; $45f2
 .wrapY:
 	ld d, a ; $45f3
 	ld a, e ; $45f4
-	add a, a ; $45f5
+	add a ; $45f5
 	jr nc, .checkMaxY ; $45f6
 	ld a, $04 ; $45f8
 	dec a ; $45fa
 	jr .readCell ; $45fb
 .checkMaxY:
 	rra ; $45fd
-	cp a, $04 ; $45fe
+	cp $04 ; $45fe
 	jr c, .readCell ; $4600
-	xor a, a ; $4602
+	xor a ; $4602
 .readCell:
 	ld e, a ; $4603
 	ld a, e ; $4604
-	add a, a ; $4605
-	add a, a ; $4606
-	add a, a ; $4607
-	add a, d ; $4608
+	add a ; $4605
+	add a ; $4606
+	add a ; $4607
+	add d ; $4608
 	push hl ; $4609
-	add a, l ; $460a
+	add l ; $460a
 	ld l, a ; $460b
 	jr nc, .haveCell ; $460c
 	inc h ; $460e
 .haveCell:
 	ld a, [hl] ; $460f
 	pop hl ; $4610
-	cp a, $ff ; $4611
+	cp $ff ; $4611
 	jr z, MoveGridCursor ; $4613
-	cp a, $fe ; $4615
+	cp $fe ; $4615
 	jr nz, .occupied ; $4617
 	inc d ; $4619
 	inc e ; $461a
 	jr MoveGridCursor ; $461b
 .occupied:
-	cp a, $fd ; $461d
+	cp $fd ; $461d
 	jr nz, .store ; $461f
 	dec d ; $4621
 	dec e ; $4622
 	jr MoveGridCursor ; $4623
 .store:
-	cp a, $fc ; $4625
+	cp $fc ; $4625
 	jr nz, .retry ; $4627
 	dec d ; $4629
 	jr MoveGridCursor ; $462a
 .retry:
-	cp a, $fb ; $462c
+	cp $fb ; $462c
 	jr nz, .done ; $462e
 	ld a, b ; $4630
-	and a, $20 ; $4631
+	and $20 ; $4631
 	bit 5, a ; $4633
 	jr nz, .done ; $4635
 	inc d ; $4637
@@ -633,7 +633,7 @@ InitPlayerRecordForCharacter:
 	bit PADB_SELECT, a ; $463f
 	jr z, .fromTemplate ; $4641
 	ldh a, [hDebugStepMode] ; $4643
-	or a, a ; $4645
+	or a ; $4645
 	jr z, .fromTemplate ; $4646
 	ld a, b ; $4648
 	farcall LoadMainCharacterFromRoster ; $4649
@@ -643,18 +643,18 @@ InitPlayerRecordForCharacter:
 	farcall InitPlayerRecordFromTemplate ; $464f
 .storeRecord:
 	pop af ; $4652
-	add a, a ; $4653
-	add a, $c0 ; $4654
+	add a ; $4653
+	add $c0 ; $4654
 	ld l, a ; $4656
-	adc a, $c7 ; $4657
-	sub a, l ; $4659
+	adc $c7 ; $4657
+	sub l ; $4659
 	ld h, a ; $465a
 	ld d, h ; $465b
 	ld e, l ; $465c
 	push af ; $465d
 	ld hl, wStoryModeNameOfMainCharacter ; $465e
 	ld a, [wStoryCharacterSlot] ; $4661
-	or a, a ; $4664
+	or a ; $4664
 	jr z, .partnerSlot ; $4665
 	ld l, $40 ; $4667
 .partnerSlot:
@@ -712,7 +712,7 @@ InitConfirmScreen:
 	call ClearSpriteQueue ; $52e1
 	call ClearTileVramBothBanks ; $52e4
 	call LoadScorePanelValue ; $52e7
-	xor a, a ; $52ea
+	xor a ; $52ea
 	ld [$c783], a ; $52eb
 	ld [$c780], a ; $52ee
 	ld hl, ConfirmScreenGfx0 ; $52f1
@@ -798,7 +798,7 @@ DrawScoreNumbersTask:
 	ld a, $02 ; $53be
 	call DrawDecimalNumberSprites ; $53c0
 	ld a, [$c780] ; $53c3
-	cp a, $03 ; $53c6
+	cp $03 ; $53c6
 	jr nz, .draw ; $53c8
 	ld a, $01 ; $53ca
 	ld [$c783], a ; $53cc
@@ -811,17 +811,17 @@ DrawScoreNumbersTask:
 	ld b, $01 ; $53d8
 	ld a, $03 ; $53da
 	call DrawDecimalNumberSprites ; $53dc
-	xor a, a ; $53df
+	xor a ; $53df
 	ld [$c783], a ; $53e0
 	ret ; $53e3
 GetTextSlotPointer:
-	add a, $04 ; $53e4
-	and a, $0f ; $53e6
-	add a, a ; $53e8
-	add a, LOW(TextSlotPointerTable) ; $53e9
+	add $04 ; $53e4
+	and $0f ; $53e6
+	add a ; $53e8
+	add LOW(TextSlotPointerTable) ; $53e9
 	ld l, a ; $53eb
-	adc a, HIGH(TextSlotPointerTable) ; $53ec
-	sub a, l ; $53ee
+	adc HIGH(TextSlotPointerTable) ; $53ec
+	sub l ; $53ee
 	ld h, a ; $53ef
 	ld a, [hl+] ; $53f0
 	ld h, [hl] ; $53f1
@@ -854,29 +854,29 @@ ForceFlushBgMapToVram:
 	ret ; $5420
 RunTwoOptionSelect:
 	ldh a, [hInputRisingEdge] ; $5421
-	and a, PADF_LEFT ; $5423
+	and PADF_LEFT ; $5423
 	jr z, .inputLoop ; $5425
 	ld b, $00 ; $5427
 	sound $5e ; $5429
 .inputLoop:
 	ldh a, [hInputRisingEdge] ; $542b
-	and a, PADF_RIGHT ; $542d
+	and PADF_RIGHT ; $542d
 	jr z, .checkUp ; $542f
 	ld b, $01 ; $5431
 	sound $5e ; $5433
 .checkUp:
 	ldh a, [hInputRisingEdge] ; $5435
-	and a, PADF_A ; $5437
+	and PADF_A ; $5437
 	jr nz, .confirm ; $5439
 	ldh a, [hInputRisingEdge] ; $543b
-	and a, PADF_B ; $543d
+	and PADF_B ; $543d
 	jr z, .checkDown ; $543f
 	ld b, $ff ; $5441
 	jr .confirm ; $5443
 .checkDown:
 	ld de, $128e ; $5445
 	ld a, b ; $5448
-	and a, a ; $5449
+	and a ; $5449
 	jr z, .redraw ; $544a
 	ld de, $3a8e ; $544c
 .redraw:
@@ -889,7 +889,7 @@ RunTwoOptionSelect:
 	jr RunTwoOptionSelect ; $545d
 .confirm:
 	ld a, b ; $545f
-	and a, a ; $5460
+	and a ; $5460
 	jr z, .done ; $5461
 	sound $62 ; $5463
 	ret ; $5465
@@ -898,29 +898,29 @@ RunTwoOptionSelect:
 	ret ; $5468
 RunTwoOptionSelectB:
 	ldh a, [hInputRisingEdge] ; $5469
-	and a, PADF_LEFT ; $546b
+	and PADF_LEFT ; $546b
 	jr z, .inputLoop ; $546d
 	ld b, $00 ; $546f
 	sound $5e ; $5471
 .inputLoop:
 	ldh a, [hInputRisingEdge] ; $5473
-	and a, PADF_RIGHT ; $5475
+	and PADF_RIGHT ; $5475
 	jr z, .checkUp ; $5477
 	ld b, $01 ; $5479
 	sound $5e ; $547b
 .checkUp:
 	ldh a, [hInputRisingEdge] ; $547d
-	and a, PADF_A ; $547f
+	and PADF_A ; $547f
 	jr nz, .confirm ; $5481
 	ldh a, [hInputRisingEdge] ; $5483
-	and a, PADF_B ; $5485
+	and PADF_B ; $5485
 	jr z, .checkDown ; $5487
 	ld b, $ff ; $5489
 	jr .confirm ; $548b
 .checkDown:
 	ld de, $2892 ; $548d
 	ld a, b ; $5490
-	and a, a ; $5491
+	and a ; $5491
 	jr z, .redraw ; $5492
 	ld de, TwoOptionSelectBTable ; $5494
 .redraw:
@@ -933,7 +933,7 @@ RunTwoOptionSelectB:
 	jr RunTwoOptionSelectB ; $54a5
 .confirm:
 	ld a, b ; $54a7
-	and a, a ; $54a8
+	and a ; $54a8
 	jr z, .done ; $54a9
 	sound $62 ; $54ab
 	ret ; $54ad
@@ -969,34 +969,34 @@ DrawDecimalNumberSprites:
 	ret ; $54d1
 DrawStringSprites:
 	ld a, [hl+] ; $54d2
-	and a, a ; $54d3
+	and a ; $54d3
 	jr z, .done ; $54d4
 	call DrawGlyphSprite ; $54d6
 	jr DrawStringSprites ; $54d9
 .done:
 	ret ; $54db
 DrawGlyphSprite:
-	sub a, $30 ; $54dc
+	sub $30 ; $54dc
 	jr c, .advance ; $54de
 	push de ; $54e0
 	push hl ; $54e1
-	add a, a ; $54e2
-	add a, $30 ; $54e3
+	add a ; $54e2
+	add $30 ; $54e3
 	ld c, a ; $54e5
 	ld a, [$c783] ; $54e6
-	and a, a ; $54e9
+	and a ; $54e9
 	jr z, .queue ; $54ea
 	ld a, d ; $54ec
 	ld hl, hVBlankCounter ; $54ed
-	sub a, [hl] ; $54f0
-	and a, $1f ; $54f1
-	add a, LOW(UnusedBobRamp_18) ; $54f3
+	sub [hl] ; $54f0
+	and $1f ; $54f1
+	add LOW(UnusedBobRamp_18) ; $54f3
 	ld l, a ; $54f5
-	adc a, HIGH(UnusedBobRamp_18) ; $54f6
-	sub a, l ; $54f8
+	adc HIGH(UnusedBobRamp_18) ; $54f6
+	sub l ; $54f8
 	ld h, a ; $54f9
 	ld a, [hl] ; $54fa
-	add a, e ; $54fb
+	add e ; $54fb
 	ld e, a ; $54fc
 .queue:
 	call QueueSprite ; $54fd
@@ -1004,7 +1004,7 @@ DrawGlyphSprite:
 	pop de ; $5501
 .advance:
 	ld a, d ; $5502
-	add a, $08 ; $5503
+	add $08 ; $5503
 	ld d, a ; $5505
 	ret ; $5506
 UnusedBobRamp_18:
@@ -1064,13 +1064,13 @@ DrawTileBlock6x2ToTilemap:
 	ld [de], a ; $5596
 	inc de ; $5597
 	ld a, $1a ; $5598
-	add a, l ; $559a
+	add l ; $559a
 	ld l, a ; $559b
 	jr nc, .gotSource ; $559c
 	inc h ; $559e
 .gotSource:
 	ld a, $1a ; $559f
-	add a, e ; $55a1
+	add e ; $55a1
 	ld e, a ; $55a2
 	jr nc, .copyRows ; $55a3
 	inc d ; $55a5
@@ -1134,13 +1134,13 @@ ClearTileVramBothBanks:
 	ld c, $80 ; $55de
 	call ClearMemory16 ; $55e0
 	ldh a, [rVBK] ; $55e3
-	xor a, $01 ; $55e5
+	xor $01 ; $55e5
 	ldh [rVBK], a ; $55e7
 	ld hl, $8000 ; $55e9
 	ld c, $80 ; $55ec
 	call ClearMemory16 ; $55ee
 	ldh a, [rVBK] ; $55f1
-	xor a, $01 ; $55f3
+	xor $01 ; $55f3
 	ldh [rVBK], a ; $55f5
 	ret ; $55f7
 LoadConfirmScreenSpriteGfx:
@@ -1192,25 +1192,25 @@ LoadCharSelectCursorGfx:
 	ret ; $59d5
 DrawCharSelectCursor:
 	ld c, $00 ; $59d6
-	cp a, $84 ; $59d8
+	cp $84 ; $59d8
 	jr nz, .animate ; $59da
 	ld c, $01 ; $59dc
 .animate:
 	ldh a, [hVBlankCounter] ; $59de
-	and a, $1f ; $59e0
-	add a, LOW(CharSelectCursorAnimTable) ; $59e2
+	and $1f ; $59e0
+	add LOW(CharSelectCursorAnimTable) ; $59e2
 	ld l, a ; $59e4
-	adc a, HIGH(CharSelectCursorAnimTable) ; $59e5
-	sub a, l ; $59e7
+	adc HIGH(CharSelectCursorAnimTable) ; $59e5
+	sub l ; $59e7
 	ld h, a ; $59e8
 	ld a, c ; $59e9
-	add a, a ; $59ea
-	add a, [hl] ; $59eb
-	add a, a ; $59ec
-	add a, LOW(CharSelectCursorTemplatePtrs) ; $59ed
+	add a ; $59ea
+	add [hl] ; $59eb
+	add a ; $59ec
+	add LOW(CharSelectCursorTemplatePtrs) ; $59ed
 	ld l, a ; $59ef
-	adc a, HIGH(CharSelectCursorTemplatePtrs) ; $59f0
-	sub a, l ; $59f2
+	adc HIGH(CharSelectCursorTemplatePtrs) ; $59f0
+	sub l ; $59f2
 	ld h, a ; $59f3
 	ld a, [hl+] ; $59f4
 	ld h, [hl] ; $59f5
@@ -1232,14 +1232,14 @@ CharSelectCursorTemplate3:
 	INCBIN "data/bank_018/d_5a59.bin" ; $5a59, 17 bytes
 ApplySpriteBobOffset_18:
 	ldh a, [hVBlankCounter] ; $5a6a
-	and a, $3f ; $5a6c
-	add a, LOW(SpriteBobRamp_18) ; $5a6e
+	and $3f ; $5a6c
+	add LOW(SpriteBobRamp_18) ; $5a6e
 	ld l, a ; $5a70
-	adc a, HIGH(SpriteBobRamp_18) ; $5a71
-	sub a, l ; $5a73
+	adc HIGH(SpriteBobRamp_18) ; $5a71
+	sub l ; $5a73
 	ld h, a ; $5a74
 	ld a, [hl] ; $5a75
-	add a, e ; $5a76
+	add e ; $5a76
 	ld e, a ; $5a77
 	ret ; $5a78
 SpriteBobRamp_18:
@@ -1261,7 +1261,7 @@ LoadOnCourtCharTilesA:
 	call QueueVRAMCopy ; $5aca
 	ret ; $5acd
 LoadOnCourtCharTilesB:
-	cp a, $ff ; $5ace
+	cp $ff ; $5ace
 	jr z, LoadOnCourtCharTilesFallback ; $5ad0
 	ld h, a ; $5ad2
 	ld l, $00 ; $5ad3
@@ -1364,12 +1364,12 @@ RunStorySceneByMode:
 	ld [wStorySceneAssetIndex], a ; $7618
 	call FadeOutAndResetScreen ; $761b
 	ld a, b ; $761e
-	or a, a ; $761f
+	or a ; $761f
 	jr nz, .checkMode1 ; $7620
 	call PlayScreenSequence0 ; $7622
 	ret ; $7625
 .checkMode1:
-	cp a, $01 ; $7626
+	cp $01 ; $7626
 	jr nz, .mode2 ; $7628
 	call PlayScreenSequence1 ; $762a
 	ret ; $762d
@@ -1386,7 +1386,7 @@ FadeOutAndResetScreen:
 	call ResetScrollAndCamera ; $7643
 	ret ; $7646
 ResetScrollAndCamera:
-	xor a, a ; $7647
+	xor a ; $7647
 	ldh [hScrollX], a ; $7648
 	ldh [hScrollY], a ; $764a
 	ld [wCameraX], a ; $764c
@@ -1401,7 +1401,7 @@ DebugScreenAssetViewer:
 	push bc ; $765e
 	ld a, c ; $765f
 	ld hl, DebugScreenAssetViewerRecords ; $7660
-	add a, l ; $7663
+	add l ; $7663
 	ld l, a ; $7664
 	jr nc, .loadScreen ; $7665
 	inc h ; $7667
@@ -1421,13 +1421,13 @@ DebugScreenAssetViewer:
 .inputLoop:
 	call AdvanceFrame ; $7687
 	ldh a, [hInputPressed] ; $768a
-	or a, a ; $768c
+	or a ; $768c
 	jr z, .inputLoop ; $768d
 	pop bc ; $768f
 	ld a, c ; $7690
 	inc a ; $7691
 	ld c, a ; $7692
-	cp a, $18 ; $7693
+	cp $18 ; $7693
 	jr nz, .screenLoop ; $7695
 	ld c, $00 ; $7697
 	jr .screenLoop ; $7699
@@ -1443,14 +1443,14 @@ PlayScreenSequence0:
 	script_fade_in $02 ; $76bd
 	call WaitFadeEnd ; $76c2
 	wram_bank $03 ; $76c5
-	xor a, a ; $76cb
+	xor a ; $76cb
 	ld [w3_da01], a ; $76cc
 .scrollLoop:
 	call AdvanceFrame ; $76cf
 	ld a, [w3_da01] ; $76d2
 	inc a ; $76d5
 	ld [w3_da01], a ; $76d6
-	cp a, $fa ; $76d9
+	cp $fa ; $76d9
 	jr nz, .scrollLoop ; $76db
 	farcall InitGrayscalePaletteFade ; $76dd
 	ld b, $3f ; $76e0
@@ -1461,7 +1461,7 @@ PlayScreenSequence0:
 .waitInput:
 	call AdvanceFrame ; $76ec
 	ldh a, [hInputPressed] ; $76ef
-	and a, PADF_A | PADF_B ; $76f1
+	and PADF_A | PADF_B ; $76f1
 	jr z, .waitInput ; $76f3
 	ld c, $10 ; $76f5
 	call BeginFadeOut ; $76f7
@@ -1477,7 +1477,7 @@ PlayScreenSequence0:
 .done:
 	call AdvanceFrame ; $7716
 	ldh a, [hInputPressed] ; $7719
-	and a, PADF_A | PADF_B ; $771b
+	and PADF_A | PADF_B ; $771b
 	jr z, .done ; $771d
 	ret ; $771f
 SetupScreen0Assets:
@@ -1489,7 +1489,7 @@ SetupScreen0Assets:
 LookupScreen0AssetId:
 	ld a, [wStorySceneAssetIndex] ; $772d
 	ld hl, Screen0AssetIdTable ; $7730
-	add a, l ; $7733
+	add l ; $7733
 	ld l, a ; $7734
 	jr nc, .read ; $7735
 	inc h ; $7737
@@ -1554,17 +1554,17 @@ PlayScreenSequence1:
 	script_fade_in $02 ; $77d6
 	call WaitFadeEnd ; $77db
 	wram_bank $03 ; $77de
-	xor a, a ; $77e4
+	xor a ; $77e4
 	ld [w3_da01], a ; $77e5
 .scrollLoop:
 	call AdvanceFrame ; $77e8
 	ldh a, [hVBlankCounter] ; $77eb
-	and a, $03 ; $77ed
+	and $03 ; $77ed
 	jr nz, .scrollLoop ; $77ef
 	ld a, [w3_da01] ; $77f1
 	inc a ; $77f4
 	ld [w3_da01], a ; $77f5
-	cp a, $af ; $77f8
+	cp $af ; $77f8
 	jr nz, .scrollLoop ; $77fa
 	ld c, $01 ; $77fc
 	call BeginFadeOut ; $77fe
@@ -1585,7 +1585,7 @@ PlayScreenSequence1:
 .waitInput:
 	call AdvanceFrame ; $782b
 	ldh a, [hInputPressed] ; $782e
-	and a, PADF_A | PADF_B ; $7830
+	and PADF_A | PADF_B ; $7830
 	jr z, .waitInput ; $7832
 	ret ; $7834
 SetupScreen1Assets:
@@ -1597,7 +1597,7 @@ SetupScreen1Assets:
 LookupScreen1AssetId:
 	ld a, [wStorySceneAssetIndex] ; $7842
 	ld hl, Screen1AssetIdTable ; $7845
-	add a, l ; $7848
+	add l ; $7848
 	ld l, a ; $7849
 	jr nc, .read ; $784a
 	inc h ; $784c
@@ -1699,7 +1699,7 @@ PlayScreenSequence2:
 .scene1:
 	call AdvanceFrame ; $7958
 	ldh a, [hInputPressed] ; $795b
-	and a, PADF_A | PADF_B ; $795d
+	and PADF_A | PADF_B ; $795d
 	jr z, .scene1 ; $795f
 	ld c, $02 ; $7961
 	call BeginFadeOut ; $7963
@@ -1721,7 +1721,7 @@ PlayScreenSequence2:
 	farcall RunEndingCreditsSequence ; $7987
 .scene3:
 	wram_bank $03 ; $798a
-	xor a, a ; $7990
+	xor a ; $7990
 	ld [w3_da00], a ; $7991
 	call ClearFrameTasks ; $7994
 	call ResetScrollAndCamera ; $7997
@@ -1734,14 +1734,14 @@ PlayScreenSequence2:
 	script_fade_in $02 ; $79ac
 	call WaitFadeEnd ; $79b1
 	wram_bank $03 ; $79b4
-	xor a, a ; $79ba
+	xor a ; $79ba
 	ld [w3_da01], a ; $79bb
 .scene4:
 	call AdvanceFrame ; $79be
 	ld a, [w3_da01] ; $79c1
 	inc a ; $79c4
 	ld [w3_da01], a ; $79c5
-	cp a, $b4 ; $79c8
+	cp $b4 ; $79c8
 	jr nz, .scene4 ; $79ca
 	ld a, $01 ; $79cc
 	ld hl, TaskFadeInPalette_18 ; $79ce
@@ -1753,7 +1753,7 @@ PlayScreenSequence2:
 .scene5:
 	call AdvanceFrame ; $79de
 	ldh a, [hInputPressed] ; $79e1
-	and a, PADF_A | PADF_B ; $79e3
+	and PADF_A | PADF_B ; $79e3
 	jr z, .scene5 ; $79e5
 	ld de, SAVEFLAG_OPENING_SEEN ; $79e7
 	farcall SetSaveFlag ; $79ea
@@ -1772,7 +1772,7 @@ PlayScreenSequence2:
 LookupScreen2AssetIdA:
 	ld a, [wStorySceneAssetIndex] ; $7a07
 	ld hl, Screen2AssetIdATable ; $7a0a
-	add a, l ; $7a0d
+	add l ; $7a0d
 	ld l, a ; $7a0e
 	jr nc, .read ; $7a0f
 	inc h ; $7a11
@@ -1785,7 +1785,7 @@ Screen2AssetIdATable:
 LookupScreen2AssetIdB:
 	ld a, [wStorySceneAssetIndex] ; $7a1a
 	ld hl, Screen2AssetIdBTable ; $7a1d
-	add a, l ; $7a20
+	add l ; $7a20
 	ld l, a ; $7a21
 	jr nc, .read ; $7a22
 	inc h ; $7a24
@@ -1832,13 +1832,13 @@ TaskFadeInPalette_18:
 	push af ; $7a83
 	wram_bank $03 ; $7a84
 	ld a, [w3_da00] ; $7a8a
-	cp a, $10 ; $7a8d
+	cp $10 ; $7a8d
 	jr z, .alt2 ; $7a8f
-	add a, a ; $7a91
-	add a, a ; $7a92
-	add a, a ; $7a93
+	add a ; $7a91
+	add a ; $7a92
+	add a ; $7a93
 	ld hl, PaletteFadeTable_18 ; $7a94
-	add a, l ; $7a97
+	add l ; $7a97
 	ld l, a ; $7a98
 	jr nc, .read ; $7a99
 	inc h ; $7a9b
@@ -1846,7 +1846,7 @@ TaskFadeInPalette_18:
 	ld de, $0801 ; $7a9c
 	call LoadPalettesImmediate ; $7a9f
 	ldh a, [hVBlankCounter] ; $7aa2
-	and a, $03 ; $7aa4
+	and $03 ; $7aa4
 	jr nz, .alt2 ; $7aa6
 	ld a, [w3_da00] ; $7aa8
 	inc a ; $7aab
@@ -1863,11 +1863,11 @@ TaskDrawObjectSprites_18:
 	push bc ; $7b38
 	ld hl, $d800 ; $7b39
 	ld a, c ; $7b3c
-	add a, a ; $7b3d
-	add a, a ; $7b3e
-	add a, a ; $7b3f
-	add a, a ; $7b40
-	add a, l ; $7b41
+	add a ; $7b3d
+	add a ; $7b3e
+	add a ; $7b3f
+	add a ; $7b40
+	add l ; $7b41
 	ld l, a ; $7b42
 	jr nc, .read ; $7b43
 	inc h ; $7b45
@@ -1894,7 +1894,7 @@ TaskDrawObjectSprites_18:
 	pop bc ; $7b5b
 	pop af ; $7b5c
 	ld a, $08 ; $7b5d
-	add a, d ; $7b5f
+	add d ; $7b5f
 	ld d, a ; $7b60
 	inc c ; $7b61
 	inc c ; $7b62
@@ -1902,7 +1902,7 @@ TaskDrawObjectSprites_18:
 	pop bc ; $7b66
 	inc c ; $7b67
 	ld a, c ; $7b68
-	cp a, $10 ; $7b69
+	cp $10 ; $7b69
 	jr nz, .objectLoop ; $7b6b
 	ret ; $7b6d
 TaskUpdateObjects_18:
@@ -1911,11 +1911,11 @@ TaskUpdateObjects_18:
 	push bc ; $7b70
 	ld hl, $d800 ; $7b71
 	ld a, c ; $7b74
-	add a, a ; $7b75
-	add a, a ; $7b76
-	add a, a ; $7b77
-	add a, a ; $7b78
-	add a, l ; $7b79
+	add a ; $7b75
+	add a ; $7b76
+	add a ; $7b77
+	add a ; $7b78
+	add l ; $7b79
 	ld l, a ; $7b7a
 	jr nc, .updateObject ; $7b7b
 	inc h ; $7b7d
@@ -1967,7 +1967,7 @@ TaskUpdateObjects_18:
 	ld hl, $0004 ; $7bba
 	add hl, bc ; $7bbd
 	ld a, [hl] ; $7bbe
-	cp a, $c0 ; $7bbf
+	cp $c0 ; $7bbf
 	jr c, .next ; $7bc1
 	ld a, $10 ; $7bc3
 	ld [hl], a ; $7bc5
@@ -1975,7 +1975,7 @@ TaskUpdateObjects_18:
 	pop bc ; $7bc6
 	inc c ; $7bc7
 	ld a, c ; $7bc8
-	cp a, $10 ; $7bc9
+	cp $10 ; $7bc9
 	jr nz, .objectLoop ; $7bcb
 	ret ; $7bcd
 InitObjectSceneA:
@@ -2032,14 +2032,14 @@ PopulateObjectArrayA:
 	ld e, l ; $7c43
 	pop hl ; $7c44
 	ld a, $0b ; $7c45
-	add a, l ; $7c47
+	add l ; $7c47
 	ld l, a ; $7c48
 	jr nc, .read ; $7c49
 	inc h ; $7c4b
 .read:
 	inc c ; $7c4c
 	ld a, c ; $7c4d
-	cp a, $10 ; $7c4e
+	cp $10 ; $7c4e
 	jr nz, .spawnLoop ; $7c50
 	ret ; $7c52
 ObjectSpawnTable_18_7c53:
@@ -2112,14 +2112,14 @@ PopulateObjectArrayB:
 	ld e, l ; $7d78
 	pop hl ; $7d79
 	ld a, $0b ; $7d7a
-	add a, l ; $7d7c
+	add l ; $7d7c
 	ld l, a ; $7d7d
 	jr nc, .read ; $7d7e
 	inc h ; $7d80
 .read:
 	inc c ; $7d81
 	ld a, c ; $7d82
-	cp a, $10 ; $7d83
+	cp $10 ; $7d83
 	jr nz, .spawnLoop ; $7d85
 	ret ; $7d87
 ObjectSpawnTable_18_7d88:

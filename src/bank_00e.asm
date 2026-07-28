@@ -42,7 +42,7 @@ TrainingGymEntryPoints_0e:
 	db $ff
 TrainingGymArrival01_0e:
 	ld a, [wStoryModeEntryPoint] ; $40ff
-	cp a, $ff ; $4102
+	cp $ff ; $4102
 	jp z, .done ; $4104
 	test_flag FLAG_DOUBLES ; $4107
 	jr z, .walkUp ; $410a
@@ -58,7 +58,7 @@ TrainingGymArrival01_0e:
 	ret ; $4144
 TrainingGymArrival02_0e:
 	ld a, [wStoryModeEntryPoint] ; $4145
-	cp a, $ff ; $4148
+	cp $ff ; $4148
 	jp z, .done ; $414a
 	script_set_speed ACTOR_PLAYER, $0010 ; $414d
 	script_set_speed ACTOR_PARTNER, $0010 ; $4155
@@ -81,7 +81,7 @@ TrainingGymArrival02_0e:
 	ret ; $41e1
 TrainingGymArrival03_0e:
 	ld a, [wStoryModeEntryPoint] ; $41e2
-	cp a, $ff ; $41e5
+	cp $ff ; $41e5
 	jr z, TrainingGymArrival02_0e.done ; $41e7
 	script_set_speed ACTOR_PLAYER, $0010 ; $41e9
 	script_set_speed ACTOR_PARTNER, $0010 ; $41f1
@@ -148,11 +148,11 @@ TrainingGymExit03_0e:
 	ret ; $43a5
 TrainingGymNpc03_0e:
 	ld a, [wMapSceneStage] ; $43a6
-	add a, a ; $43a9
-	add a, LOW(TrainingGymNpc03TextIds) ; $43aa
+	add a ; $43a9
+	add LOW(TrainingGymNpc03TextIds) ; $43aa
 	ld l, a ; $43ac
-	adc a, HIGH(TrainingGymNpc03TextIds) ; $43ad
-	sub a, l ; $43af
+	adc HIGH(TrainingGymNpc03TextIds) ; $43ad
+	sub l ; $43af
 	ld h, a ; $43b0
 	ld a, [hl+] ; $43b1
 	ld h, [hl] ; $43b2
@@ -175,11 +175,11 @@ TrainingGymNpc03TextIds:
 TrainingGymNpc04_0e:
 	ld a, [wMapSceneStage] ; $43d1
 	sra a ; $43d4
-	add a, a ; $43d6
-	add a, LOW(TrainingGymNpc04TextIds) ; $43d7
+	add a ; $43d6
+	add LOW(TrainingGymNpc04TextIds) ; $43d7
 	ld l, a ; $43d9
-	adc a, HIGH(TrainingGymNpc04TextIds) ; $43da
-	sub a, l ; $43dc
+	adc HIGH(TrainingGymNpc04TextIds) ; $43da
+	sub l ; $43dc
 	ld h, a ; $43dd
 	ld a, [hl+] ; $43de
 	ld h, [hl] ; $43df
@@ -196,11 +196,11 @@ TrainingGymNpc04TextIds:
 	dw Text_35_220 ; record 4
 TrainingGymNpc05_0e:
 	ld a, [wMapSceneStage] ; $43f4
-	add a, a ; $43f7
-	add a, LOW(TrainingGymNpc05TextIds) ; $43f8
+	add a ; $43f7
+	add LOW(TrainingGymNpc05TextIds) ; $43f8
 	ld l, a ; $43fa
-	adc a, HIGH(TrainingGymNpc05TextIds) ; $43fb
-	sub a, l ; $43fd
+	adc HIGH(TrainingGymNpc05TextIds) ; $43fb
+	sub l ; $43fd
 	ld h, a ; $43fe
 	ld a, [hl+] ; $43ff
 	ld h, [hl] ; $4400
@@ -222,11 +222,11 @@ TrainingGymNpc05TextIds:
 	dw Text_35_221 ; record 9
 TrainingGymNpc06_0e:
 	ld a, [wMapSceneStage] ; $441f
-	add a, a ; $4422
-	add a, LOW(TrainingGymNpc06TextIds) ; $4423
+	add a ; $4422
+	add LOW(TrainingGymNpc06TextIds) ; $4423
 	ld l, a ; $4425
-	adc a, HIGH(TrainingGymNpc06TextIds) ; $4426
-	sub a, l ; $4428
+	adc HIGH(TrainingGymNpc06TextIds) ; $4426
+	sub l ; $4428
 	ld h, a ; $4429
 	ld a, [hl+] ; $442a
 	ld h, [hl] ; $442b
@@ -249,13 +249,13 @@ TrainingGymNpc06TextIds:
 TrainingGymNpc07_0e:
 	ld a, [wMapSceneStage] ; $444a
 	sra a ; $444d
-	cp a, $03 ; $444f
+	cp $03 ; $444f
 	jr z, TrainingGymNpc07TextIds.speak ; $4451
-	add a, a ; $4453
-	add a, LOW(TrainingGymNpc07TextIds) ; $4454
+	add a ; $4453
+	add LOW(TrainingGymNpc07TextIds) ; $4454
 	ld l, a ; $4456
-	adc a, HIGH(TrainingGymNpc07TextIds) ; $4457
-	sub a, l ; $4459
+	adc HIGH(TrainingGymNpc07TextIds) ; $4457
+	sub l ; $4459
 	ld h, a ; $445a
 	ld a, [hl+] ; $445b
 	ld h, [hl] ; $445c
@@ -277,7 +277,7 @@ TrainingGymNpc07TextIds:
 	farcall RunDialogueYesNoPrompt ; $447c
 	farcall ScriptCloseDialogueWindow ; $447f
 	script_wait_frames $05 ; $4482
-	and a, a ; $4489
+	and a ; $4489
 	jr z, .speakLine ; $448a
 	farcall AdvanceDialogueTextCursor ; $448c
 .speakLine:
@@ -286,11 +286,11 @@ TrainingGymNpc07TextIds:
 TrainingGymNpc08_0e:
 	ld a, [wMapSceneStage] ; $4495
 	sra a ; $4498
-	add a, a ; $449a
-	add a, LOW(TrainingGymNpc08TextIds) ; $449b
+	add a ; $449a
+	add LOW(TrainingGymNpc08TextIds) ; $449b
 	ld l, a ; $449d
-	adc a, HIGH(TrainingGymNpc08TextIds) ; $449e
-	sub a, l ; $44a0
+	adc HIGH(TrainingGymNpc08TextIds) ; $449e
+	sub l ; $44a0
 	ld h, a ; $44a1
 	ld a, [hl+] ; $44a2
 	ld h, [hl] ; $44a3
@@ -308,11 +308,11 @@ TrainingGymNpc08TextIds:
 TrainingGymNpc09_0e:
 	ld a, [wMapSceneStage] ; $44b8
 	sra a ; $44bb
-	add a, a ; $44bd
-	add a, LOW(TrainingGymNpc09TextIds) ; $44be
+	add a ; $44bd
+	add LOW(TrainingGymNpc09TextIds) ; $44be
 	ld l, a ; $44c0
-	adc a, HIGH(TrainingGymNpc09TextIds) ; $44c1
-	sub a, l ; $44c3
+	adc HIGH(TrainingGymNpc09TextIds) ; $44c1
+	sub l ; $44c3
 	ld h, a ; $44c4
 	ld a, [hl+] ; $44c5
 	ld h, [hl] ; $44c6
@@ -329,11 +329,11 @@ TrainingGymNpc09TextIds:
 	dw Text_35_225 ; record 4
 TrainingGymNpc0A_0e:
 	ld a, [wMapSceneStage] ; $44db
-	add a, a ; $44de
-	add a, LOW(TrainingGymNpc0ATextIds) ; $44df
+	add a ; $44de
+	add LOW(TrainingGymNpc0ATextIds) ; $44df
 	ld l, a ; $44e1
-	adc a, HIGH(TrainingGymNpc0ATextIds) ; $44e2
-	sub a, l ; $44e4
+	adc HIGH(TrainingGymNpc0ATextIds) ; $44e2
+	sub l ; $44e4
 	ld h, a ; $44e5
 	ld a, [hl+] ; $44e6
 	ld h, [hl] ; $44e7
@@ -355,11 +355,11 @@ TrainingGymNpc0ATextIds:
 	dw Text_35_227 ; record 9
 TrainingGymNpc0B_0e:
 	ld a, [wMapSceneStage] ; $4506
-	add a, a ; $4509
-	add a, LOW(TrainingGymNpc0BTextIds) ; $450a
+	add a ; $4509
+	add LOW(TrainingGymNpc0BTextIds) ; $450a
 	ld l, a ; $450c
-	adc a, HIGH(TrainingGymNpc0BTextIds) ; $450d
-	sub a, l ; $450f
+	adc HIGH(TrainingGymNpc0BTextIds) ; $450d
+	sub l ; $450f
 	ld h, a ; $4510
 	ld a, [hl+] ; $4511
 	ld h, [hl] ; $4512
@@ -382,11 +382,11 @@ TrainingGymNpc0BTextIds:
 TrainingGymNpc0C_0e:
 	ld a, [wMapSceneStage] ; $4531
 	sra a ; $4534
-	add a, a ; $4536
-	add a, LOW(TrainingGymNpc0CTextIds) ; $4537
+	add a ; $4536
+	add LOW(TrainingGymNpc0CTextIds) ; $4537
 	ld l, a ; $4539
-	adc a, HIGH(TrainingGymNpc0CTextIds) ; $453a
-	sub a, l ; $453c
+	adc HIGH(TrainingGymNpc0CTextIds) ; $453a
+	sub l ; $453c
 	ld h, a ; $453d
 	ld a, [hl+] ; $453e
 	ld h, [hl] ; $453f
@@ -479,22 +479,22 @@ TrainingGymInitScript_0e:
 	script_set_anim $09, $05 ; $4654
 	call SetupGymActorsForProgress ; $465b
 	ld a, [wStoryModeEntryPoint] ; $465e
-	cp a, $0b ; $4661
+	cp $0b ; $4661
 	jr nz, .entry0c ; $4663
 	call RepairCounterReturnA ; $4665
 	ret ; $4668
 .entry0c:
-	cp a, $0c ; $4669
+	cp $0c ; $4669
 	jr nz, .entry0d ; $466b
 	call RepairCounterReturnB ; $466d
 	ret ; $4670
 .entry0d:
-	cp a, $0d ; $4671
+	cp $0d ; $4671
 	jr nz, .entry0e ; $4673
 	call RepairCounterChangedReturnA ; $4675
 	ret ; $4678
 .entry0e:
-	cp a, $0e ; $4679
+	cp $0e ; $4679
 	jr nz, .done ; $467b
 	call RepairCounterChangedReturnB ; $467d
 .done:
@@ -502,11 +502,11 @@ TrainingGymInitScript_0e:
 SetupGymActorsForProgress:
 	ld a, [wMapSceneStage] ; $4681
 	sra a ; $4684
-	cp a, $01 ; $4686
+	cp $01 ; $4686
 	jr z, .stage1 ; $4688
-	cp a, $03 ; $468a
+	cp $03 ; $468a
 	jr z, .stage2 ; $468c
-	cp a, $04 ; $468e
+	cp $04 ; $468e
 	jr z, .done ; $4690
 	ret ; $4692
 .stage1:
@@ -1143,22 +1143,22 @@ ActorScript_0e_4a80:
 	ld h, [hl] ; $4d46
 	ld l, a ; $4d47
 	ld a, l ; $4d48
-	sub a, e ; $4d49
+	sub e ; $4d49
 	ld l, a ; $4d4a
 	ld a, h ; $4d4b
-	sbc a, d ; $4d4c
+	sbc d ; $4d4c
 	ld h, a ; $4d4d
 	bit 7, h ; $4d4e
 	jr z, .checkX ; $4d50
-	xor a, a ; $4d52
-	sub a, l ; $4d53
+	xor a ; $4d52
+	sub l ; $4d53
 	ld l, a ; $4d54
-	sbc a, a ; $4d55
-	sub a, h ; $4d56
+	sbc a ; $4d55
+	sub h ; $4d56
 	ld h, a ; $4d57
 .checkX:
 	ld a, h ; $4d58
-	cp a, $05 ; $4d59
+	cp $05 ; $4d59
 	jr nc, .outOfRange ; $4d5b
 	ld hl, $c2b2 ; $4d5d
 	ld a, [hl+] ; $4d60
@@ -1169,22 +1169,22 @@ ActorScript_0e_4a80:
 	ld h, [hl] ; $4d67
 	ld l, a ; $4d68
 	ld a, l ; $4d69
-	sub a, e ; $4d6a
+	sub e ; $4d6a
 	ld l, a ; $4d6b
 	ld a, h ; $4d6c
-	sbc a, d ; $4d6d
+	sbc d ; $4d6d
 	ld h, a ; $4d6e
 	bit 7, h ; $4d6f
 	jr z, .checkDepth ; $4d71
-	xor a, a ; $4d73
-	sub a, l ; $4d74
+	xor a ; $4d73
+	sub l ; $4d74
 	ld l, a ; $4d75
-	sbc a, a ; $4d76
-	sub a, h ; $4d77
+	sbc a ; $4d76
+	sub h ; $4d77
 	ld h, a ; $4d78
 .checkDepth:
 	ld a, h ; $4d79
-	cp a, $05 ; $4d7a
+	cp $05 ; $4d7a
 	jr nc, .outOfRange ; $4d7c
 	ld b, $01 ; $4d7e
 	ld a, $01 ; $4d80
@@ -1254,7 +1254,7 @@ RunRepairCounterDialogue:
 	farcall RunDialogueYesNoPrompt ; $4e33
 	farcall ScriptCloseDialogueWindow ; $4e36
 	script_wait_frames $05 ; $4e39
-	and a, a ; $4e40
+	and a ; $4e40
 	jr z, RepairCounterFarewell.altLine ; $4e41
 RepairCounterFarewell:
 	script_set_text Text_6e_234 ; $4e43
@@ -1270,11 +1270,11 @@ RepairCounterServiceMenu:
 	farcall RunMenuFromText ; $4e67
 .loop:
 	ld [$c2bc], a ; $4e6a
-	cp a, $ff ; $4e6d
+	cp $ff ; $4e6d
 	jp z, RepairCounterFarewell ; $4e6f
-	cp a, $02 ; $4e72
+	cp $02 ; $4e72
 	jp z, RepairCounterFarewell ; $4e74
-	cp a, $00 ; $4e77
+	cp $00 ; $4e77
 	jp z, RepairCounterChangeRackets ; $4e79
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $4e7c
 	jp nz, RepairCounterChangeShoes ; $4e7f
@@ -1286,7 +1286,7 @@ RepairCounterServiceMenu:
 	farcall RunDialogueYesNoPrompt ; $4e98
 	farcall ScriptCloseDialogueWindow ; $4e9b
 	script_wait_frames $05 ; $4e9e
-	and a, a ; $4ea5
+	and a ; $4ea5
 	jr z, RepairCounterServiceMenu ; $4ea6
 	jr RepairCounterFarewell ; $4ea8
 	script_face $0e, FACE_RIGHT ; $4eaa
@@ -1307,7 +1307,7 @@ PrepareEquipmentSelectScreen:
 	call ClearFrameTasks ; $4ed3
 	call DisableLCDSafely ; $4ed6
 	farcall LoadMenuFontGfx ; $4ed9
-	xor a, a ; $4edc
+	xor a ; $4edc
 	ldh [hBGColumnBlitPending], a ; $4edd
 	ldh [hBGRowBlitPending], a ; $4edf
 	ldh [hScrollY], a ; $4ee1
@@ -1319,7 +1319,7 @@ RepairCounterChangeRackets:
 	script_speak $0e ; $4eef
 	call PrepareEquipmentSelectScreen ; $4ef4
 	farcall RunRacketSelectScreen ; $4ef7
-	and a, a ; $4efa
+	and a ; $4efa
 	jr nz, RestoreScreenAfterEquipSelect.advanceStage ; $4efb
 	jr RestoreScreenAfterEquipSelect ; $4efd
 RepairCounterChangeShoes:
@@ -1327,7 +1327,7 @@ RepairCounterChangeShoes:
 	script_speak $0e ; $4f05
 	call PrepareEquipmentSelectScreen ; $4f0a
 	farcall RunShoesSelectScreen ; $4f0d
-	and a, a ; $4f10
+	and a ; $4f10
 	jr nz, RestoreScreenAfterEquipSelect.advanceStage ; $4f11
 RestoreScreenAfterEquipSelect:
 	call DisableLCDSafely ; $4f13
@@ -1336,7 +1336,7 @@ RestoreScreenAfterEquipSelect:
 	ret ; $4f1c
 .advanceStage:
 	ld a, [wMapSceneStage2] ; $4f1d
-	add a, $02 ; $4f20
+	add $02 ; $4f20
 	ld [wMapSceneStage2], a ; $4f22
 	ld a, $11 ; $4f25
 	ld [wStoryModeCurrentLocation], a ; $4f27
@@ -1361,27 +1361,27 @@ FetchAndPushShortTextArg:
 	ret ; $4f5c
 GetEquippedRacketNibble:
 	ld a, [$c2bc] ; $4f5d
-	and a, a ; $4f60
+	and a ; $4f60
 	jr z, .lowNibble ; $4f61
 	jr .highNibble ; $4f63
 .lowNibble:
 	ld a, [wEquippedRacket] ; $4f65
-	and a, $0f ; $4f68
+	and $0f ; $4f68
 	ret ; $4f6a
 .highNibble:
 	ld a, [wEquippedRacket] ; $4f6b
-	and a, $f0 ; $4f6e
+	and $f0 ; $4f6e
 	swap a ; $4f70
 	ret ; $4f72
 PushEquipmentNameTextArg:
 	ld a, [$c2bc] ; $4f73
-	and a, a ; $4f76
+	and a ; $4f76
 	jr z, .racket ; $4f77
 	jr .shoes ; $4f79
 .racket:
 	call GetEquippedRacketNibble ; $4f7b
 	ld hl, $00e5 ; $4f7e
-	add a, l ; $4f81
+	add l ; $4f81
 	ld l, a ; $4f82
 	jr nc, .pushRacket ; $4f83
 	inc h ; $4f85
@@ -1391,7 +1391,7 @@ PushEquipmentNameTextArg:
 .shoes:
 	call GetEquippedRacketNibble ; $4f8a
 	ld hl, $00f4 ; $4f8d
-	add a, l ; $4f90
+	add l ; $4f90
 	ld l, a ; $4f91
 	jr nc, .pushShoes ; $4f92
 	inc h ; $4f94
@@ -1400,13 +1400,13 @@ PushEquipmentNameTextArg:
 	ret ; $4f98
 InitEquipmentHandoutDialogue:
 	ld a, [$c2bc] ; $4f99
-	and a, a ; $4f9c
+	and a ; $4f9c
 	jr z, .racket ; $4f9d
 	jr .shoes ; $4f9f
 .racket:
 	call GetEquippedRacketNibble ; $4fa1
 	ld hl, $2403 ; $4fa4
-	add a, l ; $4fa7
+	add l ; $4fa7
 	ld l, a ; $4fa8
 	jr nc, .setRacketCursor ; $4fa9
 	inc h ; $4fab
@@ -1416,7 +1416,7 @@ InitEquipmentHandoutDialogue:
 .shoes:
 	call GetEquippedRacketNibble ; $4fb0
 	ld hl, $240a ; $4fb3
-	add a, l ; $4fb6
+	add l ; $4fb6
 	ld l, a ; $4fb7
 	jr nc, .setShoesCursor ; $4fb8
 	inc h ; $4fba
@@ -1444,7 +1444,7 @@ CompareEquippedRacketToMinigameFlag:
 	ld a, [$c2ba] ; $5005
 	ld b, a ; $5008
 	ld a, [wEquippedRacket] ; $5009
-	cp a, b ; $500c
+	cp b ; $500c
 	jr z, .failed ; $500d
 	ld a, $00 ; $500f
 	ret ; $5011
@@ -1452,16 +1452,16 @@ CompareEquippedRacketToMinigameFlag:
 	ld a, $ff ; $5012
 	ret ; $5014
 RepairCounterCheckEquipChanged:
-	xor a, a ; $5015
+	xor a ; $5015
 	ld [wStoryModeShowLocationName], a ; $5016
 	script_fade_in $08 ; $5019
 	call WaitFadeEnd ; $501e
 	call CompareEquippedRacketToMinigameFlag ; $5021
-	cp a, $ff ; $5024
+	cp $ff ; $5024
 	jp nz, .repairRacket ; $5026
 	ld a, [$c2bc] ; $5029
 	ld hl, $2401 ; $502c
-	add a, l ; $502f
+	add l ; $502f
 	ld l, a ; $5030
 	jr nc, .askRepair ; $5031
 	inc h ; $5033
@@ -1473,7 +1473,7 @@ RepairCounterCheckEquipChanged:
 	farcall RunDialogueYesNoPrompt ; $503f
 	farcall ScriptCloseDialogueWindow ; $5042
 	script_wait_frames $05 ; $5045
-	and a, a ; $504c
+	and a ; $504c
 	jp nz, .noChange ; $504d
 	ld a, [$c2bc] ; $5050
 	jp RepairCounterServiceMenu.loop ; $5053
@@ -1495,7 +1495,7 @@ RepairCounterCheckEquipChanged:
 	farcall RunDialogueYesNoPrompt ; $508b
 	farcall ScriptCloseDialogueWindow ; $508e
 	script_wait_frames $05 ; $5091
-	and a, a ; $5098
+	and a ; $5098
 	jp z, RepairCounterServiceMenu ; $5099
 	jp RepairCounterFarewell ; $509c
 RepairCounterChangedReturnA:
@@ -1515,7 +1515,7 @@ RepairCounterChangedReturnB:
 	jp RepairCounterReopenServiceMenu ; $50d9
 	ret ; $50dc
 RepairCounterReopenServiceMenu:
-	xor a, a ; $50dd
+	xor a ; $50dd
 	ld [wStoryModeShowLocationName], a ; $50de
 	script_set_text Text_6e_239 ; $50e1
 	ld hl, $00e6 ; $50e7
@@ -1528,11 +1528,11 @@ RepairCounterReopenServiceMenu:
 	ld de, $0101 ; $5103
 	farcall RunMenuFromText ; $5106
 	ld [$c2bc], a ; $5109
-	cp a, $ff ; $510c
+	cp $ff ; $510c
 	jp z, RepairCounterFarewell ; $510e
-	cp a, $02 ; $5111
+	cp $02 ; $5111
 	jp z, RepairCounterFarewell ; $5113
-	cp a, $00 ; $5116
+	cp $00 ; $5116
 	jp z, RepairCounterChangeRackets ; $5118
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $511b
 	jp nz, RepairCounterChangeShoes ; $511e
@@ -1544,7 +1544,7 @@ RepairCounterReopenServiceMenu:
 	farcall RunDialogueYesNoPrompt ; $5137
 	farcall ScriptCloseDialogueWindow ; $513a
 	script_wait_frames $05 ; $513d
-	and a, a ; $5144
+	and a ; $5144
 	jp z, RepairCounterServiceMenu ; $5145
 	jp RepairCounterFarewell ; $5148
 	script_face $0e, FACE_RIGHT ; $514b
@@ -1552,7 +1552,7 @@ RepairCounterReopenServiceMenu:
 ShowEquipChangeConfirmation:
 	ld a, [$c2bc] ; $5153
 	ld hl, $20ef ; $5156
-	add a, l ; $5159
+	add l ; $5159
 	ld l, a ; $515a
 	jr nc, .speak ; $515b
 	inc h ; $515d
@@ -1560,7 +1560,7 @@ ShowEquipChangeConfirmation:
 	farcall InitDialogueTextCursor ; $515e
 	call PushEquipmentNameTextArg ; $5161
 	ld a, [$c2bc] ; $5164
-	and a, a ; $5167
+	and a ; $5167
 	jr nz, .handOver ; $5168
 	call MirrorPlayerSpriteIfLeftHanded ; $516a
 	script_set_anim ACTOR_PLAYER, $09 ; $516d
@@ -1610,7 +1610,7 @@ ActorScript_0e_51e4:
 	as_jump ActorScript_0e_51e4
 MirrorPlayerSpriteIfLeftHanded:
 	ld a, [wStoryModeMainCharacterLeftHanded] ; $520f
-	and a, a ; $5212
+	and a ; $5212
 	jr z, .done ; $5213
 	script_get_actor_state ACTOR_PLAYER ; $5215
 	ld c, l ; $521a
@@ -1618,7 +1618,7 @@ MirrorPlayerSpriteIfLeftHanded:
 	ld hl, $0037 ; $521c
 	add hl, bc ; $521f
 	ld a, [hl] ; $5220
-	xor a, $20 ; $5221
+	xor $20 ; $5221
 	ld [hl], a ; $5223
 .done:
 	ret ; $5224
@@ -1685,7 +1685,7 @@ MarioWorldNpc12Mario_0e:
 MarioWorldNpc11_0e:
 	ld hl, $308f ; $539a
 	ld a, [wMapSceneStage] ; $539d
-	add a, l ; $53a0
+	add l ; $53a0
 	ld l, a ; $53a1
 	jr nc, .speak ; $53a2
 	inc h ; $53a4
@@ -1696,7 +1696,7 @@ MarioWorldNpc11_0e:
 MarioWorldNpc0BLuigi_0e:
 	ld hl, $3093 ; $53ae
 	ld a, [wMapSceneStage] ; $53b1
-	add a, l ; $53b4
+	add l ; $53b4
 	ld l, a ; $53b5
 	jr nc, .speak ; $53b6
 	inc h ; $53b8
@@ -1727,7 +1727,7 @@ MarioWorldNpc0D_0e:
 MarioWorldNpc0FBowser_0e:
 	ld hl, $309b ; $53fa
 	ld a, [wMapSceneStage] ; $53fd
-	add a, l ; $5400
+	add l ; $5400
 	ld l, a ; $5401
 	jr nc, .speak ; $5402
 	inc h ; $5404
@@ -1738,7 +1738,7 @@ MarioWorldNpc0FBowser_0e:
 MarioWorldNpc10Wario_0e:
 	ld hl, $309f ; $540e
 	ld a, [wMapSceneStage] ; $5411
-	add a, l ; $5414
+	add l ; $5414
 	ld l, a ; $5415
 	jr nc, .speak ; $5416
 	inc h ; $5418
@@ -1749,7 +1749,7 @@ MarioWorldNpc10Wario_0e:
 MarioWorldNpc0EWaluigi_0e:
 	ld hl, $30a3 ; $5422
 	ld a, [wMapSceneStage] ; $5425
-	add a, l ; $5428
+	add l ; $5428
 	ld l, a ; $5429
 	jr nc, .speak ; $542a
 	inc h ; $542c
@@ -1792,11 +1792,11 @@ MarioWorldTileTriggers_0e:
 MarioWorldInitScript_0e:
 	call ComputeMarioWorldProgressIndex ; $54d2
 	ld a, [wStoryModeEntryPoint] ; $54d5
-	cp a, $0a ; $54d8
+	cp $0a ; $54d8
 	jp z, MarioWorldArrivalSingles ; $54da
-	cp a, $0e ; $54dd
+	cp $0e ; $54dd
 	jp z, MoveDoublesPartnerToPlayer.checkDoubles ; $54df
-	cp a, $0f ; $54e2
+	cp $0f ; $54e2
 	jp z, MarioWorldArrivalSingles ; $54e4
 	test_flag FLAG_DOUBLES ; $54e7
 	jr nz, .placeActors ; $54ea
@@ -2006,7 +2006,7 @@ MarioWorldArrivalSingles:
 	farcall RunDialogueYesNoPrompt ; $591e
 	farcall ScriptCloseDialogueWindow ; $5921
 	script_wait_frames $05 ; $5924
-	and a, a ; $592b
+	and a ; $592b
 	jr z, ExhibitionAcceptedSingles ; $592c
 	script_set_text Text_5e_96 ; $592e
 	call ExhibitionDeclinedCutscene ; $5934
@@ -2276,7 +2276,7 @@ MarioWorldArrivalDoubles:
 	farcall RunDialogueYesNoPrompt ; $6039
 	farcall ScriptCloseDialogueWindow ; $603c
 	script_wait_frames $05 ; $603f
-	and a, a ; $6046
+	and a ; $6046
 	jr z, ExhibitionAcceptedDoubles ; $6047
 	script_set_text Text_5e_125 ; $6049
 	call ExhibitionDeclinedCutscene ; $604f
@@ -2577,7 +2577,7 @@ PromptExhibitionMatch:
 	farcall RunDialogueYesNoPrompt ; $6619
 	farcall ScriptCloseDialogueWindow ; $661c
 	script_wait_frames $05 ; $661f
-	and a, a ; $6626
+	and a ; $6626
 	jr z, .accepted ; $6627
 	script_speak $08 ; $6629
 	test_flag FLAG_DOUBLES ; $662e
@@ -2592,7 +2592,7 @@ PromptExhibitionMatch:
 	ret ; $6643
 .accepted:
 	ld a, [wMapSceneStage] ; $6644
-	and a, $01 ; $6647
+	and $01 ; $6647
 	jr z, .startMatchScene ; $6649
 	farcall AdvanceDialogueTextCursor ; $664b
 	script_speak $08 ; $664e
@@ -2600,12 +2600,12 @@ PromptExhibitionMatch:
 	ld de, $0101 ; $6656
 	ld a, $01 ; $6659
 	farcall RunPagedTextMenu ; $665b
-	cp a, $ff ; $665e
+	cp $ff ; $665e
 	jp z, .prompt ; $6660
 	inc a ; $6663
 	test_flag FLAG_DOUBLES ; $6664
 	jr z, .storeSelection ; $6667
-	add a, $03 ; $6669
+	add $03 ; $6669
 .storeSelection:
 	ld [$c2b4], a ; $666b
 .startMatchScene:
@@ -2614,7 +2614,7 @@ PromptExhibitionMatch:
 	ld h, [hl] ; $6672
 	ld l, a ; $6673
 	ld a, $03 ; $6674
-	add a, l ; $6676
+	add l ; $6676
 	ld l, a ; $6677
 	jr nc, .speakConfirm ; $6678
 	inc h ; $667a
@@ -3075,13 +3075,13 @@ PlayStarWarpTransition:
 	ld c, (StarWarpFrameSprites - StarWarpSparkleTiles) / 16 ; $716d
 	call QueueVRAMCopy ; $716f
 	wram_bank $06 ; $7172
-	xor a, a ; $7178
+	xor a ; $7178
 	ld hl, $d000 ; $7179
 	ld [hl+], a ; $717c
 	ld [hl+], a ; $717d
 	ld a, $5a ; $717e
 	ld [hl+], a ; $7180
-	xor a, a ; $7181
+	xor a ; $7181
 	ld [hl+], a ; $7182
 	ld [hl+], a ; $7183
 	ld [hl+], a ; $7184
@@ -3109,9 +3109,9 @@ PlayStarWarpTransition:
 .waitLoop:
 	call AdvanceFrame ; $71cf
 	ld a, [$d002] ; $71d2
-	cp a, $1e ; $71d5
+	cp $1e ; $71d5
 	jr z, .startFade ; $71d7
-	or a, a ; $71d9
+	or a ; $71d9
 	jr nz, .waitLoop ; $71da
 	pop af ; $71dc
 	wram_bank ; $71dd
@@ -3123,23 +3123,23 @@ PlayStarWarpTransition:
 UpdateStarWarpSprite:
 	wram_bank $06 ; $71e9
 	ldh a, [hVBlankCounter] ; $71ef
-	and a, $01 ; $71f1
+	and $01 ; $71f1
 	jr nz, .draw ; $71f3
 	ld hl, $d000 ; $71f5
 	ld a, [hl] ; $71f8
 	inc a ; $71f9
-	cp a, $06 ; $71fa
+	cp $06 ; $71fa
 	jr nz, .store ; $71fc
-	xor a, a ; $71fe
+	xor a ; $71fe
 .store:
 	ld [hl], a ; $71ff
 .draw:
 	ld a, [$d000] ; $7200
 	rlca ; $7203
-	add a, LOW(StarWarpFrameSprites) ; $7204
+	add LOW(StarWarpFrameSprites) ; $7204
 	ld l, a ; $7206
-	adc a, HIGH(StarWarpFrameSprites) ; $7207
-	sub a, l ; $7209
+	adc HIGH(StarWarpFrameSprites) ; $7207
+	sub l ; $7209
 	ld h, a ; $720a
 	push hl ; $720b
 	ld c, [hl] ; $720c
@@ -3157,7 +3157,7 @@ UpdateStarWarpSprite:
 	call QueueSprite ; $7224
 	pop de ; $7227
 	ld a, $fc ; $7228
-	add a, d ; $722a
+	add d ; $722a
 	ld d, a ; $722b
 	ld hl, wCharDataChoiceLog + 22 ; $722c
 	ld a, e ; $722f
@@ -3179,22 +3179,22 @@ UpdateStarWarpSprite:
 	ret ; $7249
 OffsetStarWarpPathPoint:
 	ld a, [$d001] ; $724a
-	add a, LOW(StarWarpPathY) ; $724d
+	add LOW(StarWarpPathY) ; $724d
 	ld l, a ; $724f
-	adc a, HIGH(StarWarpPathY) ; $7250
-	sub a, l ; $7252
+	adc HIGH(StarWarpPathY) ; $7250
+	sub l ; $7252
 	ld h, a ; $7253
 	ld a, [hl] ; $7254
-	add a, d ; $7255
+	add d ; $7255
 	ld d, a ; $7256
 	ld a, [$d001] ; $7257
-	add a, LOW(StarWarpPathX) ; $725a
+	add LOW(StarWarpPathX) ; $725a
 	ld l, a ; $725c
-	adc a, HIGH(StarWarpPathX) ; $725d
-	sub a, l ; $725f
+	adc HIGH(StarWarpPathX) ; $725d
+	sub l ; $725f
 	ld h, a ; $7260
 	ld a, [hl] ; $7261
-	add a, e ; $7262
+	add e ; $7262
 	ld e, a ; $7263
 	ret ; $7264
 UpdateStarWarpTrailSparkles:
@@ -3203,7 +3203,7 @@ UpdateStarWarpTrailSparkles:
 	ld b, $10 ; $726a
 .findFreeSlot:
 	ld a, [hl] ; $726c
-	or a, a ; $726d
+	or a ; $726d
 	jr z, .spawnSparkle ; $726e
 	inc hl ; $7270
 	inc c ; $7271
@@ -3214,10 +3214,10 @@ UpdateStarWarpTrailSparkles:
 	ld [hl], $10 ; $7277
 	ld a, c ; $7279
 	rlca ; $727a
-	add a, $14 ; $727b
+	add $14 ; $727b
 	ld l, a ; $727d
-	adc a, $d0 ; $727e
-	sub a, l ; $7280
+	adc $d0 ; $727e
+	sub l ; $7280
 	ld h, a ; $7281
 	ld a, [wCharDataChoiceLog + 22] ; $7282
 	ld [hl+], a ; $7285
@@ -3229,12 +3229,12 @@ UpdateStarWarpTrailSparkles:
 	ld d, [hl] ; $728d
 	ld e, a ; $728e
 	ldh a, [hVBlankCounter] ; $728f
-	and a, $07 ; $7291
+	and $07 ; $7291
 	push af ; $7293
-	add a, d ; $7294
+	add d ; $7294
 	ld d, a ; $7295
 	pop af ; $7296
-	add a, e ; $7297
+	add e ; $7297
 	ld e, a ; $7298
 	pop hl ; $7299
 	ld a, e ; $729a
@@ -3248,16 +3248,16 @@ UpdateStarWarpTrailSparkles:
 	push bc ; $72a4
 	push hl ; $72a5
 	ld a, [hl] ; $72a6
-	or a, a ; $72a7
+	or a ; $72a7
 	jr z, .nextSparkle ; $72a8
-	and a, $02 ; $72aa
+	and $02 ; $72aa
 	jr z, .nextSparkle ; $72ac
 	ld a, b ; $72ae
 	rlca ; $72af
-	add a, $14 ; $72b0
+	add $14 ; $72b0
 	ld l, a ; $72b2
-	adc a, $d0 ; $72b3
-	sub a, l ; $72b5
+	adc $d0 ; $72b3
+	sub l ; $72b5
 	ld h, a ; $72b6
 	ld a, [hl+] ; $72b7
 	ld d, [hl] ; $72b8
@@ -3269,7 +3269,7 @@ UpdateStarWarpTrailSparkles:
 	pop hl ; $72c1
 	pop bc ; $72c2
 	ld a, [hl] ; $72c3
-	or a, a ; $72c4
+	or a ; $72c4
 	jr z, .done ; $72c5
 	dec [hl] ; $72c7
 .done:
@@ -3364,9 +3364,9 @@ SpecialCourtTileTriggers_0e:
 	ds 1, $ff ; $76e6, fill
 SpecialCourtInitScript_0e:
 	ld a, [wStoryModeEntryPoint] ; $76e7
-	cp a, $07 ; $76ea
+	cp $07 ; $76ea
 	jr c, .intro ; $76ec
-	cp a, $0a ; $76ee
+	cp $0a ; $76ee
 	jr z, .result ; $76f0
 	ret ; $76f2
 .result:
@@ -3376,7 +3376,7 @@ SpecialCourtInitScript_0e:
 	call ExhibitionMatchIntroCutscene ; $76f7
 	ret ; $76fa
 ExhibitionMatchIntroCutscene:
-	xor a, a ; $76fb
+	xor a ; $76fb
 	ld [wStoryModeShowLocationName], a ; $76fc
 	ld a, [wStoryModeEntryPoint] ; $76ff
 	dec a ; $7702
@@ -3590,11 +3590,11 @@ PrepareStoryMatch:
 	ld [wStoryModeExitLocationRequest], a ; $7b8e
 	farcall InitStoryMatchSettings ; $7b91
 	ld a, [$c2b4] ; $7b94
-	add a, a ; $7b97
-	add a, LOW(Data_0e_7bac) ; $7b98
+	add a ; $7b97
+	add LOW(Data_0e_7bac) ; $7b98
 	ld l, a ; $7b9a
-	adc a, HIGH(Data_0e_7bac) ; $7b9b
-	sub a, l ; $7b9d
+	adc HIGH(Data_0e_7bac) ; $7b9b
+	sub l ; $7b9d
 	ld h, a ; $7b9e
 	ld a, [hl+] ; $7b9f
 	ld h, [hl] ; $7ba0
@@ -3630,7 +3630,7 @@ LoadExhibitionMatchSettings5:
 	ret ; $7c0b
 HandleExhibitionMatchResult:
 	ld a, [wMatchWinLoseFlag] ; $7c0c
-	cp a, $01 ; $7c0f
+	cp $01 ; $7c0f
 	jr nz, .lost ; $7c11
 	test_flag FLAG_DOUBLES ; $7c13
 	jr nz, .won ; $7c16
@@ -3654,7 +3654,7 @@ HandleExhibitionMatchResult:
 	jr nz, .returnToLocation ; $7c3a
 	ld b, $02 ; $7c3c
 	ld a, [wStoryModeGenderOfMainCharacter] ; $7c3e
-	add a, $04 ; $7c41
+	add $04 ; $7c41
 	ld c, a ; $7c43
 	farcall RunStorySceneByMode ; $7c44
 	jr .done ; $7c47
@@ -3665,8 +3665,8 @@ HandleExhibitionMatchResult:
 	sla a ; $7c4f
 	ld c, a ; $7c51
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $7c52
-	xor a, d ; $7c55
-	or a, c ; $7c56
+	xor d ; $7c55
+	or c ; $7c56
 	ld c, a ; $7c57
 	farcall RunStorySceneByMode ; $7c58
 .done:
@@ -3708,14 +3708,14 @@ ActorScript_0e_7c6e:
 MapScriptNop_0e:
 	ret ; $7c96
 MapScriptClearActiveFlag_0e:
-	xor a, a ; $7c97
+	xor a ; $7c97
 	ld [wStoryScriptRan], a ; $7c98
 	ret ; $7c9b
 MapScriptPlaySoundA2_0e:
 	sound $a2 ; $7c9c
 	ret ; $7c9e
 MapScriptHideLocationName_0e:
-	xor a, a ; $7c9f
+	xor a ; $7c9f
 	ld [wStoryModeShowLocationName], a ; $7ca0
 	ret ; $7ca3
 ActorScript_0e_7ca4:

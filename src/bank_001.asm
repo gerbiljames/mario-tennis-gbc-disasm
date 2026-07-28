@@ -365,13 +365,13 @@ LoadMenuObjPalettes3To7:
 	ret ; $5199
 LoadDebugMenuPalette:
 	ld a, b ; $519a
-	add a, a ; $519b
-	add a, a ; $519c
-	add a, a ; $519d
-	add a, $f6 ; $519e
+	add a ; $519b
+	add a ; $519c
+	add a ; $519d
+	add $f6 ; $519e
 	ld l, a ; $51a0
-	adc a, $50 ; $51a1
-	sub a, l ; $51a3
+	adc $50 ; $51a1
+	sub l ; $51a3
 	ld h, a ; $51a4
 	ld e, $01 ; $51a5
 	call LoadPaletteShadow ; $51a7
@@ -408,7 +408,7 @@ ShowDmgLockoutScreen:
 	call CopyMemoryFast ; $6064
 	ld a, $e4 ; $6067
 	ldh [rBGP], a ; $6069
-	xor a, a ; $606b
+	xor a ; $606b
 	ldh [rIF], a ; $606c
 	ld a, $00 ; $606e
 	ldh [rIE], a ; $6070
@@ -453,14 +453,14 @@ RunSoundTest:
 .loop:
 	call AdvanceFrame ; $6a8a
 	ldh a, [hInputPressed] ; $6a8d
-	and a, PADF_UP | PADF_DOWN ; $6a8f
+	and PADF_UP | PADF_DOWN ; $6a8f
 	jr z, .clampTrack ; $6a91
 	ld a, b ; $6a93
-	xor a, $01 ; $6a94
+	xor $01 ; $6a94
 	ld b, a ; $6a96
 .clampTrack:
 	ld a, b ; $6a97
-	or a, a ; $6a98
+	or a ; $6a98
 	jr nz, .nonZero ; $6a99
 	ldh a, [hInputPressed] ; $6a9b
 	bit PADB_RIGHT, a ; $6a9d
@@ -473,13 +473,13 @@ RunSoundTest:
 	dec d ; $6aa8
 .clampBank:
 	ld a, d ; $6aa9
-	cp a, $ff ; $6aaa
+	cp $ff ; $6aaa
 	jr nz, .neff ; $6aac
 	ld d, $3e ; $6aae
 	jr .clampTrackDown ; $6ab0
 .neff:
 	ld a, d ; $6ab2
-	cp a, $3e ; $6ab3
+	cp $3e ; $6ab3
 	jr c, .clampTrackDown ; $6ab5
 	jr z, .clampTrackDown ; $6ab7
 	ld d, $00 ; $6ab9
@@ -496,19 +496,19 @@ RunSoundTest:
 	dec e ; $6aca
 .clampSfx:
 	ld a, e ; $6acb
-	cp a, $ff ; $6acc
+	cp $ff ; $6acc
 	jr nz, .neff2 ; $6ace
 	ld e, $71 ; $6ad0
 	jr .clampTrackDown ; $6ad2
 .neff2:
 	ld a, e ; $6ad4
-	cp a, $71 ; $6ad5
+	cp $71 ; $6ad5
 	jr c, .clampTrackDown ; $6ad7
 	jr z, .clampTrackDown ; $6ad9
 	ld e, $00 ; $6adb
 .clampTrackDown:
 	ld a, b ; $6add
-	or a, a ; $6ade
+	or a ; $6ade
 	jr nz, .nonZero2 ; $6adf
 	push hl ; $6ae1
 	push de ; $6ae2
@@ -565,10 +565,10 @@ RunSoundTest:
 	push de ; $6b39
 	push hl ; $6b3a
 	ld a, d ; $6b3b
-	add a, LOW(SoundTestSoundsA_01) ; $6b3c
+	add LOW(SoundTestSoundsA_01) ; $6b3c
 	ld l, a ; $6b3e
-	adc a, HIGH(SoundTestSoundsA_01) ; $6b3f
-	sub a, l ; $6b41
+	adc HIGH(SoundTestSoundsA_01) ; $6b3f
+	sub l ; $6b41
 	ld h, a ; $6b42
 	ld a, [hl] ; $6b43
 	call PlaySoundManaged ; $6b44
@@ -583,10 +583,10 @@ RunSoundTest:
 	push de ; $6b4f
 	push hl ; $6b50
 	ld a, e ; $6b51
-	add a, LOW(SoundTestSoundsB_01) ; $6b52
+	add LOW(SoundTestSoundsB_01) ; $6b52
 	ld l, a ; $6b54
-	adc a, HIGH(SoundTestSoundsB_01) ; $6b55
-	sub a, l ; $6b57
+	adc HIGH(SoundTestSoundsB_01) ; $6b55
+	sub l ; $6b57
 	ld h, a ; $6b58
 	ld a, [hl] ; $6b59
 	call PlaySoundManaged ; $6b5a

@@ -355,7 +355,7 @@ MACRO script_jump_velocity
 ENDM
 ; Usage: script_move_player x, y (moves actor $00, the player)
 MACRO script_move_player
-	xor a, a
+	xor a
 	ld bc, \1
 	ld de, \2
 	farcall MovePlayerToPosition

@@ -36,30 +36,30 @@ SECTION "ROM Bank $02", ROMX[$4000], BANK[$02]
 	farptr TestStorySlotFlagA ; $4042
 ValidateN64TransferRecord:
 	ld a, [$c9b4] ; $4044
-	cp a, $64 ; $4047
+	cp $64 ; $4047
 	jr nz, .returnZero ; $4049
 	ld hl, $c9b0 ; $404b
 	ld a, [hl+] ; $404e
-	add a, [hl] ; $404f
+	add [hl] ; $404f
 	inc l ; $4050
-	add a, [hl] ; $4051
+	add [hl] ; $4051
 	inc l ; $4052
-	add a, [hl] ; $4053
+	add [hl] ; $4053
 	inc l ; $4054
-	add a, [hl] ; $4055
+	add [hl] ; $4055
 	inc l ; $4056
-	add a, [hl] ; $4057
+	add [hl] ; $4057
 	inc l ; $4058
-	add a, [hl] ; $4059
+	add [hl] ; $4059
 	inc l ; $405a
 	rlca ; $405b
-	xor a, $fe ; $405c
-	cp a, [hl] ; $405e
+	xor $fe ; $405c
+	cp [hl] ; $405e
 	jr nz, .returnZero ; $405f
 	ld a, $ff ; $4061
 	ret ; $4063
 .returnZero:
-	xor a, a ; $4064
+	xor a ; $4064
 	ret ; $4065
 InitCa00RecordFromCharId:
 	ld a, b ; $4066
@@ -69,29 +69,29 @@ InitCa00RecordFromCharId:
 	ld l, c ; $406c
 	ld h, b ; $406d
 	pop af ; $406e
-	cp a, $ff ; $406f
+	cp $ff ; $406f
 	jr z, .emptySlot ; $4071
-	cp a, $90 ; $4073
+	cp $90 ; $4073
 	jr z, .mainCharacter ; $4075
 	bit 7, a ; $4077
 	jr z, .fromRoster ; $4079
 	ld b, a ; $407b
 	ld a, [wCurrentStorySlot] ; $407c
-	cp a, $0f ; $407f
+	cp $0f ; $407f
 	jr z, .skip ; $4081
 	push hl ; $4083
 	ld c, $04 ; $4084
 	call ClearMemory16 ; $4086
 	pop de ; $4089
 	ld a, b ; $408a
-	and a, $01 ; $408b
+	and $01 ; $408b
 	swap a ; $408d
-	add a, a ; $408f
-	add a, a ; $4090
-	add a, $00 ; $4091
+	add a ; $408f
+	add a ; $4090
+	add $00 ; $4091
 	ld l, a ; $4093
-	adc a, $c9 ; $4094
-	sub a, l ; $4096
+	adc $c9 ; $4094
+	sub l ; $4096
 	ld h, a ; $4097
 	ld c, $04 ; $4098
 	call CopyMemoryFast ; $409a
@@ -136,7 +136,7 @@ InitCa00RecordFromCharId:
 	ld b, a ; $40d2
 	push de ; $40d3
 	ld a, $0f ; $40d4
-	add a, e ; $40d6
+	add e ; $40d6
 	ld e, a ; $40d7
 	jr nc, .gotDest ; $40d8
 	inc d ; $40da
@@ -163,7 +163,7 @@ InitCa00RecordFromCharId:
 	add hl, de ; $40f9
 	ld a, [hl] ; $40fa
 	ld hl, $001b ; $40fb
-	add a, l ; $40fe
+	add l ; $40fe
 	ld l, a ; $40ff
 	jr nc, .gotTextId ; $4100
 	inc h ; $4102
@@ -190,10 +190,10 @@ InitCa00RecordFromCharId:
 	ret ; $4127
 Unused_02_CharIdRemapLookup:
 	push hl ; $4128
-	add a, LOW(Unused_02_CharIdRemapTable) ; $4129
+	add LOW(Unused_02_CharIdRemapTable) ; $4129
 	ld l, a ; $412b
-	adc a, HIGH(Unused_02_CharIdRemapTable) ; $412c
-	sub a, l ; $412e
+	adc HIGH(Unused_02_CharIdRemapTable) ; $412c
+	sub l ; $412e
 	ld h, a ; $412f
 	ld a, [hl] ; $4130
 	pop hl ; $4131
@@ -206,10 +206,10 @@ Unused_02_CharIdRemapTable:
 	db $14, $15, $16, $17, $14, $15, $16, $17, $14, $15, $16, $17, $14, $15, $16, $17 ; 0x30
 GetCharPaletteIndex:
 	push hl ; $4173
-	add a, LOW(CharPaletteIndexTable) ; $4174
+	add LOW(CharPaletteIndexTable) ; $4174
 	ld l, a ; $4176
-	adc a, HIGH(CharPaletteIndexTable) ; $4177
-	sub a, l ; $4179
+	adc HIGH(CharPaletteIndexTable) ; $4177
+	sub l ; $4179
 	ld h, a ; $417a
 	ld a, [hl] ; $417b
 	pop hl ; $417c
@@ -247,19 +247,19 @@ GetStoryCharacterRecordPtr:
 	ret ; $4205
 GetPlayerRecordPtr:
 	ld bc, wStoryModeNameOfMainCharacter ; $4206
-	or a, a ; $4209
+	or a ; $4209
 	ret z ; $420a
 	ld c, $40 ; $420b
 	ret ; $420d
 GetCa00RecordPtr:
-	and a, $03 ; $420e
+	and $03 ; $420e
 	swap a ; $4210
-	add a, a ; $4212
-	add a, a ; $4213
-	add a, $00 ; $4214
+	add a ; $4212
+	add a ; $4213
+	add $00 ; $4214
 	ld c, a ; $4216
-	adc a, $ca ; $4217
-	sub a, c ; $4219
+	adc $ca ; $4217
+	sub c ; $4219
 	ld b, a ; $421a
 	ret ; $421b
 InitStoryModeState:
@@ -283,7 +283,7 @@ InitStoryModeState:
 	clear_flag $01, 6 ; $4247
 	set_flag $01, 7 ; $424a
 	ld hl, $c884 ; $424d
-	xor a, a ; $4250
+	xor a ; $4250
 	ld [hl], $56 ; $4251
 	inc hl ; $4253
 	ld [hl+], a ; $4254
@@ -305,7 +305,7 @@ CacheStorySlotSummaries:
 	ldh a, [hWramBank] ; $4265
 	push af ; $4267
 	wram_bank $06 ; $4268
-	xor a, a ; $426e
+	xor a ; $426e
 	ld c, $0c ; $426f
 	ld hl, $d400 ; $4271
 .loop:
@@ -317,7 +317,7 @@ CacheStorySlotSummaries:
 	ld a, $00 ; $427c
 	ld [wCurrentStorySlot], a ; $427e
 	farcall CheckStorySlot ; $4281
-	cp a, $fe ; $4284
+	cp $fe ; $4284
 	jr z, .eqfe ; $4286
 	ld hl, $c880 ; $4288
 	ld de, $d400 ; $428b
@@ -326,7 +326,7 @@ CacheStorySlotSummaries:
 	ld a, $01 ; $4291
 	ld [wCurrentStorySlot], a ; $4293
 	farcall CheckStorySlot ; $4296
-	cp a, $fe ; $4299
+	cp $fe ; $4299
 	jr z, .eqfe2 ; $429b
 	ld hl, $c880 ; $429d
 	ld de, $d404 ; $42a0
@@ -335,7 +335,7 @@ CacheStorySlotSummaries:
 	ld a, $02 ; $42a6
 	ld [wCurrentStorySlot], a ; $42a8
 	farcall CheckStorySlot ; $42ab
-	cp a, $fe ; $42ae
+	cp $fe ; $42ae
 	jr z, .restore ; $42b0
 	ld hl, $c880 ; $42b2
 	ld de, $d408 ; $42b5
@@ -372,11 +372,11 @@ CheckStorySignatureCollision:
 	wram_bank $06 ; $42db
 	ld hl, $c880 ; $42e1
 	ld a, [hl+] ; $42e4
-	or a, [hl] ; $42e5
+	or [hl] ; $42e5
 	inc hl ; $42e6
-	or a, [hl] ; $42e7
+	or [hl] ; $42e7
 	inc hl ; $42e8
-	or a, [hl] ; $42e9
+	or [hl] ; $42e9
 	ld a, $ff ; $42ea
 	jr z, .step ; $42ec
 	ld de, $c880 ; $42ee
@@ -409,7 +409,7 @@ CheckStorySignatureCollision:
 	jr z, .step ; $4335
 	call CompareNextByte ; $4337
 	jr z, .step ; $433a
-	xor a, a ; $433c
+	xor a ; $433c
 .step:
 	ld h, a ; $433d
 	pop af ; $433e
@@ -420,7 +420,7 @@ CheckStorySignatureCollision:
 	ret ; $4346
 CompareNextByte:
 	ld a, [de] ; $4347
-	cp a, [hl] ; $4348
+	cp [hl] ; $4348
 	inc de ; $4349
 	inc hl ; $434a
 	ld a, $ff ; $434b
@@ -431,7 +431,7 @@ RollStoryRandomByte:
 	push de ; $4350
 	push hl ; $4351
 	ld de, $c8bb ; $4352
-	add a, e ; $4355
+	add e ; $4355
 	ld e, a ; $4356
 	jr nc, .advanceRandomSeed ; $4357
 	inc d ; $4359
@@ -465,7 +465,7 @@ GenerateUniqueStorySaveSignature:
 	inc de ; $4379
 .loop:
 	call CheckStorySignatureCollision ; $437a
-	or a, a ; $437d
+	or a ; $437d
 	jr z, .restore ; $437e
 	call AdvanceRandomSeed ; $4380
 	ld a, h ; $4383
@@ -489,10 +489,10 @@ GenerateUniqueStorySaveSignature:
 InitPlayerRecordFromTemplate:
 	push af ; $43a3
 	ld a, d ; $43a4
-	and a, $03 ; $43a5
+	and $03 ; $43a5
 	ld d, a ; $43a7
 	pop af ; $43a8
-	and a, $01 ; $43a9
+	and $01 ; $43a9
 	call GetPlayerRecordPtr ; $43ab
 	push bc ; $43ae
 	ld l, c ; $43af
@@ -512,22 +512,22 @@ InitPlayerRecordFromTemplate:
 	ld [hl], a ; $43c8
 	ld a, d ; $43c9
 	push de ; $43ca
-	add a, $1b ; $43cb
+	add $1b ; $43cb
 	ld l, a ; $43cd
-	adc a, $00 ; $43ce
-	sub a, l ; $43d0
+	adc $00 ; $43ce
+	sub l ; $43d0
 	ld h, a ; $43d1
 	ld a, $00 ; $43d2
-	add a, c ; $43d4
+	add c ; $43d4
 	ld e, a ; $43d5
 	ld d, b ; $43d6
 	farcall FetchShortTextToBuffer ; $43d7
 	pop de ; $43da
 	ld a, d ; $43db
-	add a, LOW(StoryCharGenderTable) ; $43dc
+	add LOW(StoryCharGenderTable) ; $43dc
 	ld l, a ; $43de
-	adc a, HIGH(StoryCharGenderTable) ; $43df
-	sub a, l ; $43e1
+	adc HIGH(StoryCharGenderTable) ; $43df
+	sub l ; $43e1
 	ld h, a ; $43e2
 	ld a, [hl] ; $43e3
 	ld hl, $000d ; $43e4
@@ -535,11 +535,11 @@ InitPlayerRecordFromTemplate:
 	ld [hl], a ; $43e8
 	push bc ; $43e9
 	ld a, d ; $43ea
-	add a, a ; $43eb
-	add a, LOW(EquipRecordPtrs_02) ; $43ec
+	add a ; $43eb
+	add LOW(EquipRecordPtrs_02) ; $43ec
 	ld l, a ; $43ee
-	adc a, HIGH(EquipRecordPtrs_02) ; $43ef
-	sub a, l ; $43f1
+	adc HIGH(EquipRecordPtrs_02) ; $43ef
+	sub l ; $43f1
 	ld h, a ; $43f2
 	ld a, [hl+] ; $43f3
 	ld h, [hl] ; $43f4
@@ -551,7 +551,7 @@ InitPlayerRecordFromTemplate:
 	ld [hl], a ; $43fc
 	pop hl ; $43fd
 	ld a, $30 ; $43fe
-	add a, c ; $4400
+	add c ; $4400
 	ld e, a ; $4401
 	ld d, b ; $4402
 	ld c, $0c ; $4403
@@ -583,7 +583,7 @@ LoadMainCharacterFromRoster:
 	pop de ; $4444
 	ld c, d ; $4445
 	ld a, d ; $4446
-	and a, $3f ; $4447
+	and $3f ; $4447
 	ld b, a ; $4449
 	call GetStoryCharacterRecordPtr ; $444a
 	ld de, wStoryModeNameOfMainCharacter ; $444d
@@ -602,7 +602,7 @@ LoadMainCharacterFromRoster:
 	ld hl, $000b ; $4467
 	add hl, de ; $446a
 	ld a, [hl] ; $446b
-	add a, l ; $446c
+	add l ; $446c
 	ld l, a ; $446d
 	jr nc, .gotPtr ; $446e
 	inc h ; $4470
@@ -642,18 +642,18 @@ LookupStatBarLevel:
 	call SignExtendCToBC ; $449c
 	call SignExtendLToHL ; $449f
 	ld a, l ; $44a2
-	sub a, c ; $44a3
+	sub c ; $44a3
 	ld l, a ; $44a4
 	ld a, h ; $44a5
-	sbc a, b ; $44a6
+	sbc b ; $44a6
 	ld h, a ; $44a7
 	ld a, h ; $44a8
-	or a, l ; $44a9
+	or l ; $44a9
 	bit 7, h ; $44aa
 	pop bc ; $44ac
 	pop hl ; $44ad
 	ret nz ; $44ae
-	or a, a ; $44af
+	or a ; $44af
 	ret z ; $44b0
 	inc e ; $44b1
 	inc hl ; $44b2
@@ -672,10 +672,10 @@ ScaleStatForBarLevel:
 	dec e ; $44c5
 	pop hl ; $44c6
 	ld a, l ; $44c7
-	sub a, e ; $44c8
+	sub e ; $44c8
 	ld l, a ; $44c9
 	ld a, h ; $44ca
-	sbc a, d ; $44cb
+	sbc d ; $44cb
 	ld h, a ; $44cc
 	push hl ; $44cd
 	ld de, $ff81 ; $44ce
@@ -702,12 +702,12 @@ RecomputeCharacterStats:
 	ld hl, $000b ; $44ea
 	add hl, bc ; $44ed
 	ld a, [hl] ; $44ee
-	and a, $03 ; $44ef
-	add a, a ; $44f1
-	add a, LOW(EquipRecordPtrs_02) ; $44f2
+	and $03 ; $44ef
+	add a ; $44f1
+	add LOW(EquipRecordPtrs_02) ; $44f2
 	ld l, a ; $44f4
-	adc a, HIGH(EquipRecordPtrs_02) ; $44f5
-	sub a, l ; $44f7
+	adc HIGH(EquipRecordPtrs_02) ; $44f5
+	sub l ; $44f7
 	ld h, a ; $44f8
 	ld a, [hl+] ; $44f9
 	ld d, [hl] ; $44fa
@@ -896,30 +896,30 @@ RecomputeCharacterStats:
 	ld d, a ; $462e
 .modifierLoop:
 	ld a, [hl+] ; $462f
-	cp a, $ff ; $4630
+	cp $ff ; $4630
 	jr z, .copyStats ; $4632
-	cp a, d ; $4634
+	cp d ; $4634
 	jr nz, .nextModifier ; $4635
 	ld a, [hl] ; $4637
 	push hl ; $4638
-	and a, $0f ; $4639
-	add a, a ; $463b
-	add a, $6e ; $463c
+	and $0f ; $4639
+	add a ; $463b
+	add $6e ; $463c
 	ld l, a ; $463e
-	adc a, $46 ; $463f
-	sub a, l ; $4641
+	adc $46 ; $463f
+	sub l ; $4641
 	ld h, a ; $4642
 	ld a, $19 ; $4643
-	add a, c ; $4645
+	add c ; $4645
 	ld e, a ; $4646
 	ld d, b ; $4647
 	ld a, [de] ; $4648
-	or a, [hl] ; $4649
+	or [hl] ; $4649
 	ld [de], a ; $464a
 	inc hl ; $464b
 	inc de ; $464c
 	ld a, [de] ; $464d
-	or a, [hl] ; $464e
+	or [hl] ; $464e
 	ld [de], a ; $464f
 	pop hl ; $4650
 .nextModifier:
@@ -929,7 +929,7 @@ RecomputeCharacterStats:
 	ld hl, $0030 ; $4654
 	add hl, bc ; $4657
 	ld a, $10 ; $4658
-	add a, c ; $465a
+	add c ; $465a
 	ld e, a ; $465b
 	ld d, b ; $465c
 	ld c, $08 ; $465d
@@ -942,7 +942,7 @@ RecomputeCharacterStats:
 	pop bc ; $4665
 	push bc ; $4666
 	ld a, c ; $4667
-	or a, a ; $4668
+	or a ; $4668
 	call z, ApplyStatModifiers ; $4669
 	pop bc ; $466c
 	ret ; $466d
@@ -973,7 +973,7 @@ ApplyStatModifiers:
 	ld hl, $003c ; $4693
 	add hl, bc ; $4696
 	ld a, [hl] ; $4697
-	and a, $0f ; $4698
+	and $0f ; $4698
 	ld d, $00 ; $469a
 	call ApplyStatModifierRow ; $469c
 	pop bc ; $469f
@@ -981,7 +981,7 @@ ApplyStatModifiers:
 	add hl, bc ; $46a3
 	ld a, [hl] ; $46a4
 	swap a ; $46a5
-	and a, $0f ; $46a7
+	and $0f ; $46a7
 	ld d, $01 ; $46a9
 	call ApplyStatModifierRow ; $46ab
 	pop hl ; $46ae
@@ -993,9 +993,9 @@ ApplyStatModifierRow:
 	push bc ; $46b3
 	ld c, a ; $46b4
 	ld a, d ; $46b5
-	add a, a ; $46b6
+	add a ; $46b6
 	ld hl, CharStatClampPtrs_02 ; $46b7
-	add a, l ; $46ba
+	add l ; $46ba
 	ld l, a ; $46bb
 	jr nc, .read ; $46bc
 	inc h ; $46be
@@ -1014,20 +1014,20 @@ ApplyStatModifierRow:
 	add hl, de ; $46cb
 	pop bc ; $46cc
 	ld a, $20 ; $46cd
-	add a, c ; $46cf
+	add c ; $46cf
 	ld e, a ; $46d0
 	ld d, b ; $46d1
 	ld c, $0b ; $46d2
 .loop:
 	ld b, [hl] ; $46d4
 	ld a, [de] ; $46d5
-	add a, b ; $46d6
+	add b ; $46d6
 	bit 7, a ; $46d7
 	jr z, .compare ; $46d9
-	xor a, a ; $46db
+	xor a ; $46db
 	jr .store ; $46dc
 .compare:
-	cp a, $09 ; $46de
+	cp $09 ; $46de
 	jr c, .store ; $46e0
 	ld a, $09 ; $46e2
 .store:
@@ -1064,20 +1064,20 @@ RefreshMainCharacterStats:
 	call CopyMemoryFast ; $479d
 	ld a, [$c83c] ; $47a0
 	ld b, a ; $47a3
-	and a, $0f ; $47a4
-	cp a, $03 ; $47a6
+	and $0f ; $47a4
+	cp $03 ; $47a6
 	jr nz, .checkHighNibble ; $47a8
 	ld a, b ; $47aa
-	and a, $f0 ; $47ab
+	and $f0 ; $47ab
 	ld b, a ; $47ad
 .checkHighNibble:
 	ld a, b ; $47ae
 	swap a ; $47af
-	and a, $0f ; $47b1
-	cp a, $01 ; $47b3
+	and $0f ; $47b1
+	cp $01 ; $47b3
 	jr nz, .store ; $47b5
 	ld a, b ; $47b7
-	and a, $0f ; $47b8
+	and $0f ; $47b8
 	ld b, a ; $47ba
 .store:
 	ld a, b ; $47bb
@@ -1089,7 +1089,7 @@ RecomputeStatsWithoutRacket:
 	ld hl, wEquippedRacket ; $47c6
 	ld a, [hl] ; $47c9
 	push af ; $47ca
-	xor a, a ; $47cb
+	xor a ; $47cb
 	ld [hl], a ; $47cc
 	ld bc, wStoryModeNameOfMainCharacter ; $47cd
 	call RecomputeCharacterStats ; $47d0
@@ -1152,31 +1152,31 @@ LevelUpPlayerRecord:
 	ld hl, $0018 ; $49c1
 	add hl, bc ; $49c4
 	ld a, [hl] ; $49c5
-	cp a, $63 ; $49c6
+	cp $63 ; $49c6
 	jp nc, .done ; $49c8
 	ld a, d ; $49cb
-	or a, a ; $49cc
+	or a ; $49cc
 	jr nz, .compare ; $49cd
 	ld hl, $0038 ; $49cf
 	add hl, bc ; $49d2
 	inc [hl] ; $49d3
 	jr .recomputeCharacterStats ; $49d4
 .compare:
-	cp a, $01 ; $49d6
+	cp $01 ; $49d6
 	jr nz, .compare2 ; $49d8
 	ld hl, $0039 ; $49da
 	add hl, bc ; $49dd
 	inc [hl] ; $49de
 	jr .recomputeCharacterStats ; $49df
 .compare2:
-	cp a, $02 ; $49e1
+	cp $02 ; $49e1
 	jr nz, .compare3 ; $49e3
 	ld hl, $003a ; $49e5
 	add hl, bc ; $49e8
 	inc [hl] ; $49e9
 	jr .recomputeCharacterStats ; $49ea
 .compare3:
-	cp a, $03 ; $49ec
+	cp $03 ; $49ec
 	jr nz, .recomputeCharacterStats ; $49ee
 	ld hl, $003b ; $49f0
 	add hl, bc ; $49f3
@@ -1225,7 +1225,7 @@ ComputeLevelUpStatDeltas:
 	ld hl, $0020 ; $4a32
 	add hl, bc ; $4a35
 	ld a, [hl] ; $4a36
-	sub a, d ; $4a37
+	sub d ; $4a37
 	ld d, a ; $4a38
 	ld hl, hStatDeltaOutPtr ; $4a39
 	ld a, [hl+] ; $4a3c
@@ -1247,7 +1247,7 @@ ComputeLevelUpStatDeltas:
 	ld hl, $0021 ; $4a52
 	add hl, bc ; $4a55
 	ld a, [hl] ; $4a56
-	sub a, d ; $4a57
+	sub d ; $4a57
 	ld d, a ; $4a58
 	ld hl, hStatDeltaOutPtr ; $4a59
 	ld a, [hl+] ; $4a5c
@@ -1269,7 +1269,7 @@ ComputeLevelUpStatDeltas:
 	ld hl, $0022 ; $4a72
 	add hl, bc ; $4a75
 	ld a, [hl] ; $4a76
-	sub a, d ; $4a77
+	sub d ; $4a77
 	ld d, a ; $4a78
 	ld hl, hStatDeltaOutPtr ; $4a79
 	ld a, [hl+] ; $4a7c
@@ -1291,7 +1291,7 @@ ComputeLevelUpStatDeltas:
 	ld hl, $0023 ; $4a92
 	add hl, bc ; $4a95
 	ld a, [hl] ; $4a96
-	sub a, d ; $4a97
+	sub d ; $4a97
 	ld d, a ; $4a98
 	ld hl, hStatDeltaOutPtr ; $4a99
 	ld a, [hl+] ; $4a9c
@@ -1313,7 +1313,7 @@ ComputeLevelUpStatDeltas:
 	ld hl, $0024 ; $4ab2
 	add hl, bc ; $4ab5
 	ld a, [hl] ; $4ab6
-	sub a, d ; $4ab7
+	sub d ; $4ab7
 	ld d, a ; $4ab8
 	ld hl, hStatDeltaOutPtr ; $4ab9
 	ld a, [hl+] ; $4abc
@@ -1335,7 +1335,7 @@ ComputeLevelUpStatDeltas:
 	ld hl, $0025 ; $4ad2
 	add hl, bc ; $4ad5
 	ld a, [hl] ; $4ad6
-	sub a, d ; $4ad7
+	sub d ; $4ad7
 	ld d, a ; $4ad8
 	ld hl, hStatDeltaOutPtr ; $4ad9
 	ld a, [hl+] ; $4adc
@@ -1357,7 +1357,7 @@ ComputeLevelUpStatDeltas:
 	ld hl, $0026 ; $4af2
 	add hl, bc ; $4af5
 	ld a, [hl] ; $4af6
-	sub a, d ; $4af7
+	sub d ; $4af7
 	ld d, a ; $4af8
 	ld hl, hStatDeltaOutPtr ; $4af9
 	ld a, [hl+] ; $4afc
@@ -1379,7 +1379,7 @@ ComputeLevelUpStatDeltas:
 	ld hl, $0027 ; $4b12
 	add hl, bc ; $4b15
 	ld a, [hl] ; $4b16
-	sub a, d ; $4b17
+	sub d ; $4b17
 	ld d, a ; $4b18
 	ld hl, hStatDeltaOutPtr ; $4b19
 	ld a, [hl+] ; $4b1c
@@ -1401,7 +1401,7 @@ ComputeLevelUpStatDeltas:
 	ld hl, $0028 ; $4b32
 	add hl, bc ; $4b35
 	ld a, [hl] ; $4b36
-	sub a, d ; $4b37
+	sub d ; $4b37
 	ld d, a ; $4b38
 	ld hl, hStatDeltaOutPtr ; $4b39
 	ld a, [hl+] ; $4b3c
@@ -1423,7 +1423,7 @@ ComputeLevelUpStatDeltas:
 	ld hl, $0029 ; $4b52
 	add hl, bc ; $4b55
 	ld a, [hl] ; $4b56
-	sub a, d ; $4b57
+	sub d ; $4b57
 	ld d, a ; $4b58
 	ld hl, hStatDeltaOutPtr ; $4b59
 	ld a, [hl+] ; $4b5c
@@ -1445,7 +1445,7 @@ ComputeLevelUpStatDeltas:
 	ld hl, $002a ; $4b72
 	add hl, bc ; $4b75
 	ld a, [hl] ; $4b76
-	sub a, d ; $4b77
+	sub d ; $4b77
 	ld d, a ; $4b78
 	ld hl, hStatDeltaOutPtr ; $4b79
 	ld a, [hl+] ; $4b7c
@@ -1469,10 +1469,10 @@ ComputeLevelUpStatDeltas:
 	add sp, 64 ; $4b96
 	ret ; $4b98
 Unused_02_ListForEach:
-	add a, a ; $4b99
-	add a, a ; $4b9a
+	add a ; $4b99
+	add a ; $4b9a
 	ld hl, Unused_02_4b99_Table ; $4b9b
-	add a, l ; $4b9e
+	add l ; $4b9e
 	ld l, a ; $4b9f
 	jr nc, .levelUpPlayer ; $4ba0
 	inc h ; $4ba2
@@ -1483,7 +1483,7 @@ Unused_02_ListForEach:
 	pop hl ; $4ba9
 	ld a, [hl+] ; $4baa
 .loop:
-	or a, a ; $4bab
+	or a ; $4bab
 	jr z, .read ; $4bac
 	push af ; $4bae
 	push hl ; $4baf
@@ -1496,7 +1496,7 @@ Unused_02_ListForEach:
 .read:
 	ld a, [hl+] ; $4bba
 .loopB:
-	or a, a ; $4bbb
+	or a ; $4bbb
 	jr z, .readB ; $4bbc
 	push af ; $4bbe
 	push hl ; $4bbf
@@ -1509,7 +1509,7 @@ Unused_02_ListForEach:
 .readB:
 	ld a, [hl+] ; $4bca
 .loop2:
-	or a, a ; $4bcb
+	or a ; $4bcb
 	jr z, .read2 ; $4bcc
 	push af ; $4bce
 	push hl ; $4bcf
@@ -1522,7 +1522,7 @@ Unused_02_ListForEach:
 .read2:
 	ld a, [hl+] ; $4bda
 .loop3:
-	or a, a ; $4bdb
+	or a ; $4bdb
 	jr z, .zero ; $4bdc
 	push af ; $4bde
 	push hl ; $4bdf
@@ -1533,9 +1533,9 @@ Unused_02_ListForEach:
 	dec a ; $4be7
 	jr .loop3 ; $4be8
 .zero:
-	xor a, a ; $4bea
+	xor a ; $4bea
 	ld hl, CharDataPtr_02 ; $4beb
-	add a, l ; $4bee
+	add l ; $4bee
 	ld l, a ; $4bef
 	jr nc, .read3 ; $4bf0
 	inc h ; $4bf2
@@ -1546,14 +1546,14 @@ Unused_02_ListForEach:
 	ld hl, $0018 ; $4bf6
 	add hl, bc ; $4bf9
 	ld a, [hl] ; $4bfa
-	cp a, $01 ; $4bfb
+	cp $01 ; $4bfb
 	jr z, .done ; $4bfd
 	ld h, d ; $4bff
 	ld l, e ; $4c00
 	ld d, a ; $4c01
-	add a, a ; $4c02
-	add a, d ; $4c03
-	add a, l ; $4c04
+	add a ; $4c02
+	add d ; $4c03
+	add l ; $4c04
 	ld l, a ; $4c05
 	jr nc, .gotPtr ; $4c06
 	inc h ; $4c08
@@ -1579,15 +1579,15 @@ Unused_02_4b99_Table:
 	db $00, $00, $00, $00, $08, $02, $04, $01, $0f, $03, $06, $02, $10, $0b, $0a, $08 ; 0x20
 	db $06, $00, $01, $01, $07, $02, $03, $02, $13, $15, $11, $0a, $18, $0c, $0f, $07 ; 0x30
 RemapExtendedCharId:
-	cp a, $20 ; $4c58
+	cp $20 ; $4c58
 	ret c ; $4c5a
 	push hl ; $4c5b
-	sub a, $20 ; $4c5c
-	and a, $7f ; $4c5e
-	add a, LOW(NameTextRemap_02) ; $4c60
+	sub $20 ; $4c5c
+	and $7f ; $4c5e
+	add LOW(NameTextRemap_02) ; $4c60
 	ld l, a ; $4c62
-	adc a, HIGH(NameTextRemap_02) ; $4c63
-	sub a, l ; $4c65
+	adc HIGH(NameTextRemap_02) ; $4c63
+	sub l ; $4c65
 	ld h, a ; $4c66
 	ld a, [hl] ; $4c67
 	pop hl ; $4c68
@@ -1602,17 +1602,17 @@ NameTextRemap_02:
 SetStorySlotFlagB:
 	push af ; $4cb1
 	ld a, [wCurrentStorySlot] ; $4cb2
-	add a, a ; $4cb5
-	add a, LOW(StorySlotFlagBIds_02) ; $4cb6
+	add a ; $4cb5
+	add LOW(StorySlotFlagBIds_02) ; $4cb6
 	ld l, a ; $4cb8
-	adc a, HIGH(StorySlotFlagBIds_02) ; $4cb9
-	sub a, l ; $4cbb
+	adc HIGH(StorySlotFlagBIds_02) ; $4cb9
+	sub l ; $4cbb
 	ld h, a ; $4cbc
 	ld a, [hl+] ; $4cbd
 	ld d, [hl] ; $4cbe
 	ld e, a ; $4cbf
 	pop af ; $4cc0
-	and a, a ; $4cc1
+	and a ; $4cc1
 	jr nz, .setSaveFlag ; $4cc2
 	farcall ClearSaveFlag ; $4cc4
 	ret ; $4cc7
@@ -1627,11 +1627,11 @@ StorySlotFlagBIds_02:
 	dw $04e0 ; 3: flag $04, 7
 TestStorySlotFlagB:
 	ld a, [wCurrentStorySlot] ; $4cd4
-	add a, a ; $4cd7
-	add a, LOW(StorySlotFlagBIds_02) ; $4cd8
+	add a ; $4cd7
+	add LOW(StorySlotFlagBIds_02) ; $4cd8
 	ld l, a ; $4cda
-	adc a, HIGH(StorySlotFlagBIds_02) ; $4cdb
-	sub a, l ; $4cdd
+	adc HIGH(StorySlotFlagBIds_02) ; $4cdb
+	sub l ; $4cdd
 	ld h, a ; $4cde
 	ld a, [hl+] ; $4cdf
 	ld d, [hl] ; $4ce0
@@ -1646,17 +1646,17 @@ TestStorySlotFlagB:
 SetStorySlotFlagA:
 	push af ; $4ced
 	ld a, [wCurrentStorySlot] ; $4cee
-	add a, a ; $4cf1
-	add a, LOW(StorySlotFlagAIds_02) ; $4cf2
+	add a ; $4cf1
+	add LOW(StorySlotFlagAIds_02) ; $4cf2
 	ld l, a ; $4cf4
-	adc a, HIGH(StorySlotFlagAIds_02) ; $4cf5
-	sub a, l ; $4cf7
+	adc HIGH(StorySlotFlagAIds_02) ; $4cf5
+	sub l ; $4cf7
 	ld h, a ; $4cf8
 	ld a, [hl+] ; $4cf9
 	ld d, [hl] ; $4cfa
 	ld e, a ; $4cfb
 	pop af ; $4cfc
-	and a, a ; $4cfd
+	and a ; $4cfd
 	jr nz, .setSaveFlag ; $4cfe
 	farcall ClearSaveFlag ; $4d00
 	ret ; $4d03
@@ -1671,11 +1671,11 @@ StorySlotFlagAIds_02:
 	dw $0460 ; 3: flag $04, 3
 TestStorySlotFlagA:
 	ld a, [wCurrentStorySlot] ; $4d10
-	add a, a ; $4d13
-	add a, LOW(StorySlotFlagAIds_02) ; $4d14
+	add a ; $4d13
+	add LOW(StorySlotFlagAIds_02) ; $4d14
 	ld l, a ; $4d16
-	adc a, HIGH(StorySlotFlagAIds_02) ; $4d17
-	sub a, l ; $4d19
+	adc HIGH(StorySlotFlagAIds_02) ; $4d17
+	sub l ; $4d19
 	ld h, a ; $4d1a
 	ld a, [hl+] ; $4d1b
 	ld d, [hl] ; $4d1c
@@ -1690,20 +1690,20 @@ TestStorySlotFlagA:
 StubAlwaysNotZero:
 	push bc ; $4d29
 	ld c, a ; $4d2a
-	xor a, a ; $4d2b
+	xor a ; $4d2b
 	dec a ; $4d2c
 	ld a, c ; $4d2d
 	pop bc ; $4d2e
 	ret ; $4d2f
 AddExpCapped:
 	ld a, [hl] ; $4d30
-	add a, e ; $4d31
+	add e ; $4d31
 	ld [hl+], a ; $4d32
 	ld a, [hl] ; $4d33
-	adc a, d ; $4d34
+	adc d ; $4d34
 	ld [hl+], a ; $4d35
 	ld a, [hl] ; $4d36
-	adc a, $00 ; $4d37
+	adc $00 ; $4d37
 	ld [hl], a ; $4d39
 	dec hl ; $4d3a
 	dec hl ; $4d3b
@@ -1729,21 +1729,21 @@ Value100000_02:
 Compare24Bit:
 	ld a, [de] ; $4d54
 	inc de ; $4d55
-	sub a, [hl] ; $4d56
+	sub [hl] ; $4d56
 	inc hl ; $4d57
 	ld a, [de] ; $4d58
 	inc de ; $4d59
-	sbc a, [hl] ; $4d5a
+	sbc [hl] ; $4d5a
 	inc hl ; $4d5b
 	ld a, [de] ; $4d5c
-	sbc a, [hl] ; $4d5d
+	sbc [hl] ; $4d5d
 	bit 7, a ; $4d5e
 	ret ; $4d60
 ClearCa00RecordExp:
 	call GetCa00RecordPtr ; $4d61
 	ld hl, $002c ; $4d64
 	add hl, bc ; $4d67
-	xor a, a ; $4d68
+	xor a ; $4d68
 	ld [hl+], a ; $4d69
 	ld [hl+], a ; $4d6a
 	ld [hl+], a ; $4d6b
@@ -1773,7 +1773,7 @@ HasReachedNextLevelExp:
 	ld hl, $0018 ; $4d9c
 	add hl, bc ; $4d9f
 	ld a, [hl] ; $4da0
-	cp a, $63 ; $4da1
+	cp $63 ; $4da1
 	jp nc, .ge63 ; $4da3
 	ld h, $00 ; $4da6
 	ld l, a ; $4da8
@@ -1782,9 +1782,9 @@ HasReachedNextLevelExp:
 	add hl, hl ; $4dab
 	add hl, de ; $4dac
 	push hl ; $4dad
-	xor a, a ; $4dae
+	xor a ; $4dae
 	ld hl, CharDataPtr_02 ; $4daf
-	add a, l ; $4db2
+	add l ; $4db2
 	ld l, a ; $4db3
 	jr nc, .read ; $4db4
 	inc h ; $4db6
@@ -1795,20 +1795,20 @@ HasReachedNextLevelExp:
 	pop de ; $4dba
 	add hl, de ; $4dbb
 	ld a, $2c ; $4dbc
-	add a, c ; $4dbe
+	add c ; $4dbe
 	ld e, a ; $4dbf
 	ld d, b ; $4dc0
 	jp Compare24Bit ; $4dc1
 .ge63:
 	ld a, $80 ; $4dc4
-	or a, a ; $4dc6
+	or a ; $4dc6
 	ret ; $4dc7
 GetExpRemainingToNextLevel:
 	call GetPlayerRecordPtr ; $4dc8
 	ld hl, $0018 ; $4dcb
 	add hl, bc ; $4dce
 	ld a, [hl] ; $4dcf
-	cp a, $63 ; $4dd0
+	cp $63 ; $4dd0
 	jp nc, .maxLevel ; $4dd2
 	ld h, $00 ; $4dd5
 	ld l, a ; $4dd7
@@ -1817,9 +1817,9 @@ GetExpRemainingToNextLevel:
 	add hl, hl ; $4dda
 	add hl, de ; $4ddb
 	push hl ; $4ddc
-	xor a, a ; $4ddd
+	xor a ; $4ddd
 	ld hl, CharDataPtr_02 ; $4dde
-	add a, l ; $4de1
+	add l ; $4de1
 	ld l, a ; $4de2
 	jr nc, .readTable ; $4de3
 	inc h ; $4de5
@@ -1840,10 +1840,10 @@ GetExpRemainingToNextLevel:
 	ld e, a ; $4df5
 	pop hl ; $4df6
 	ld a, l ; $4df7
-	sub a, e ; $4df8
+	sub e ; $4df8
 	ld l, a ; $4df9
 	ld a, h ; $4dfa
-	sbc a, d ; $4dfb
+	sbc d ; $4dfb
 	ld h, a ; $4dfc
 	ret ; $4dfd
 .maxLevel:
@@ -1854,7 +1854,7 @@ GetExpProgressInCurrentLevel:
 	ld hl, $0018 ; $4e05
 	add hl, bc ; $4e08
 	ld a, [hl] ; $4e09
-	cp a, $63 ; $4e0a
+	cp $63 ; $4e0a
 	jr nc, .ge63 ; $4e0c
 	dec a ; $4e0e
 	ld h, $00 ; $4e0f
@@ -1864,9 +1864,9 @@ GetExpProgressInCurrentLevel:
 	add hl, hl ; $4e14
 	add hl, de ; $4e15
 	push hl ; $4e16
-	xor a, a ; $4e17
+	xor a ; $4e17
 	ld hl, CharDataPtr_02 ; $4e18
-	add a, l ; $4e1b
+	add l ; $4e1b
 	ld l, a ; $4e1c
 	jr nc, .read ; $4e1d
 	inc h ; $4e1f
@@ -1885,10 +1885,10 @@ GetExpProgressInCurrentLevel:
 	ld h, [hl] ; $4e2d
 	ld l, a ; $4e2e
 	ld a, l ; $4e2f
-	sub a, e ; $4e30
+	sub e ; $4e30
 	ld l, a ; $4e31
 	ld a, h ; $4e32
-	sbc a, d ; $4e33
+	sbc d ; $4e33
 	ld h, a ; $4e34
 	ret ; $4e35
 .ge63:
@@ -1904,9 +1904,9 @@ GetExpRequiredForLevel:
 	add hl, hl ; $4e41
 	add hl, de ; $4e42
 	push hl ; $4e43
-	xor a, a ; $4e44
+	xor a ; $4e44
 	ld hl, CharDataPtr_02 ; $4e45
-	add a, l ; $4e48
+	add l ; $4e48
 	ld l, a ; $4e49
 	jr nc, .readPrevTable ; $4e4a
 	inc h ; $4e4c
@@ -1928,9 +1928,9 @@ GetExpRequiredForLevel:
 	add hl, hl ; $4e5c
 	add hl, de ; $4e5d
 	push hl ; $4e5e
-	xor a, a ; $4e5f
+	xor a ; $4e5f
 	ld hl, CharDataPtr_02 ; $4e60
-	add a, l ; $4e63
+	add l ; $4e63
 	ld l, a ; $4e64
 	jr nc, .readTable ; $4e65
 	inc h ; $4e67
@@ -1945,10 +1945,10 @@ GetExpRequiredForLevel:
 	ld l, a ; $4e6f
 	pop de ; $4e70
 	ld a, l ; $4e71
-	sub a, e ; $4e72
+	sub e ; $4e72
 	ld l, a ; $4e73
 	ld a, h ; $4e74
-	sbc a, d ; $4e75
+	sbc d ; $4e75
 	ld h, a ; $4e76
 	ret ; $4e77
 CharDataPtr_02:
@@ -1980,7 +1980,7 @@ DebugStoryStatsScreen:
 	wram_bank $01 ; $4fa8
 	ld a, $03 ; $4fae
 	ldh [hDebugStepMode], a ; $4fb0
-	xor a, a ; $4fb2
+	xor a ; $4fb2
 	ld [wCurrentStorySlot], a ; $4fb3
 	farcall InitTextWindows ; $4fb6
 	call EnableLCD ; $4fb9
@@ -1991,7 +1991,7 @@ DebugStoryStatsScreen:
 	ld d, $00 ; $4fc9
 .loop:
 	farcall CheckStorySlot ; $4fcb
-	or a, a ; $4fce
+	or a ; $4fce
 	jr z, .zero ; $4fcf
 	push de ; $4fd1
 	ld hl, MenuTilemaps_02 ; $4fd2
@@ -2004,7 +2004,7 @@ DebugStoryStatsScreen:
 	ld de, $0802 ; $4fe2
 	call PrintString ; $4fe5
 	call ValidateN64TransferRecord ; $4fe8
-	or a, a ; $4feb
+	or a ; $4feb
 	jr z, .printString ; $4fec
 	push de ; $4fee
 	ld hl, $c9b0 ; $4fef
@@ -2021,7 +2021,7 @@ DebugStoryStatsScreen:
 	call PrintDecimalWord ; $5004
 	pop de ; $5007
 	ld hl, $c9b0 ; $5008
-	xor a, a ; $500b
+	xor a ; $500b
 	ld [hl+], a ; $500c
 	ld [hl+], a ; $500d
 	ld [hl+], a ; $500e
@@ -2240,9 +2240,9 @@ DebugStoryStatsScreen:
 	pop af ; $51b0
 	ld a, d ; $51b1
 	inc a ; $51b2
-	and a, $07 ; $51b3
+	and $07 ; $51b3
 	ld d, a ; $51b5
-	xor a, a ; $51b6
+	xor a ; $51b6
 	push de ; $51b7
 	res 2, d ; $51b8
 	call InitPlayerRecordFromTemplate ; $51ba
@@ -2258,9 +2258,9 @@ DebugStoryStatsScreen:
 	sound $5f ; $51cf
 	ld a, [wCurrentStorySlot] ; $51d1
 	inc a ; $51d4
-	cp a, $03 ; $51d5
+	cp $03 ; $51d5
 	jr c, .store ; $51d7
-	xor a, a ; $51d9
+	xor a ; $51d9
 .store:
 	ld [wCurrentStorySlot], a ; $51da
 	jp .loop ; $51dd
@@ -2299,10 +2299,10 @@ LoadStorySlot:
 	farcall CheckStorySlot ; $5251
 	pop bc ; $5254
 	pop de ; $5255
-	or a, a ; $5256
+	or a ; $5256
 	jr z, .zero ; $5257
 	ld a, [$c33f] ; $5259
-	or a, a ; $525c
+	or a ; $525c
 	ld a, h ; $525d
 	jr nz, .storePlayer1CurrentMainCharacter ; $525e
 	ld a, $3f ; $5260
@@ -2319,7 +2319,7 @@ LoadStorySlot:
 .zero:
 	push bc ; $5275
 	push de ; $5276
-	xor a, a ; $5277
+	xor a ; $5277
 	ld [wCurrentStorySlot], a ; $5278
 	ld bc, $8000 ; $527b
 	call InitCa00RecordFromCharId ; $527e
@@ -2336,7 +2336,7 @@ Unused_02_StorySlotVariant:
 	farcall CheckStorySlot ; $528e
 	pop bc ; $5291
 	pop de ; $5292
-	or a, a ; $5293
+	or a ; $5293
 	jr z, .zero ; $5294
 	ld a, $ff ; $5296
 	ld [wPlayer1CurrentMainCharacter], a ; $5298
@@ -2349,7 +2349,7 @@ Unused_02_StorySlotVariant:
 	call InitCa00RecordFromCharId ; $52a3
 	pop de ; $52a6
 	pop bc ; $52a7
-	xor a, a ; $52a8
+	xor a ; $52a8
 	ret ; $52a9
 LoadCharacterRecordToCa80:
 	push af ; $52aa
@@ -2490,18 +2490,18 @@ CharGroupTable_02:
 	db $11, $11, $20, $22, $30, $21, $21, $21, $12, $12, $12, $12, $12, $12, $12, $12 ; 0x70
 	db $11, $11, $11, $11, $30, $22, $12, $12, $21, $21, $21, $21, $21, $21, $21, $21 ; 0x80
 GetCharGroupEntry:
-	add a, a ; $5eb3
-	add a, a ; $5eb4
-	add a, a ; $5eb5
-	add a, a ; $5eb6
-	add a, $23 ; $5eb7
+	add a ; $5eb3
+	add a ; $5eb4
+	add a ; $5eb5
+	add a ; $5eb6
+	add $23 ; $5eb7
 	ld l, a ; $5eb9
-	adc a, $5e ; $5eba
-	sub a, l ; $5ebc
+	adc $5e ; $5eba
+	sub l ; $5ebc
 	ld h, a ; $5ebd
 	ld a, b ; $5ebe
-	and a, $0f ; $5ebf
-	add a, l ; $5ec1
+	and $0f ; $5ebf
+	add l ; $5ec1
 	ld l, a ; $5ec2
 	jr nc, .read ; $5ec3
 	inc h ; $5ec5
@@ -2509,45 +2509,45 @@ GetCharGroupEntry:
 	ld a, [hl] ; $5ec6
 	ret ; $5ec7
 Unused_02_CharGroupFind:
-	add a, a ; $5ec8
-	add a, a ; $5ec9
-	add a, a ; $5eca
-	add a, a ; $5ecb
-	add a, LOW(CharGroupTable_02) ; $5ecc
+	add a ; $5ec8
+	add a ; $5ec9
+	add a ; $5eca
+	add a ; $5ecb
+	add LOW(CharGroupTable_02) ; $5ecc
 	ld l, a ; $5ece
-	adc a, HIGH(CharGroupTable_02) ; $5ecf
-	sub a, l ; $5ed1
+	adc HIGH(CharGroupTable_02) ; $5ecf
+	sub l ; $5ed1
 	ld h, a ; $5ed2
 	ld b, $10 ; $5ed3
 .loop:
 	ld a, [hl+] ; $5ed5
-	cp a, $30 ; $5ed6
+	cp $30 ; $5ed6
 	jr z, .eq30 ; $5ed8
 	dec b ; $5eda
 	jr nz, .loop ; $5edb
-	xor a, a ; $5edd
+	xor a ; $5edd
 	ret ; $5ede
 .eq30:
 	ld a, $01 ; $5edf
 	ret ; $5ee1
 DoesCharGroupRowContain:
-	add a, a ; $5ee2
-	add a, a ; $5ee3
-	add a, a ; $5ee4
-	add a, a ; $5ee5
-	add a, LOW(CharGroupTable_02) ; $5ee6
+	add a ; $5ee2
+	add a ; $5ee3
+	add a ; $5ee4
+	add a ; $5ee5
+	add LOW(CharGroupTable_02) ; $5ee6
 	ld l, a ; $5ee8
-	adc a, HIGH(CharGroupTable_02) ; $5ee9
-	sub a, l ; $5eeb
+	adc HIGH(CharGroupTable_02) ; $5ee9
+	sub l ; $5eeb
 	ld h, a ; $5eec
 	ld c, $10 ; $5eed
 .loop:
 	ld a, [hl+] ; $5eef
-	cp a, b ; $5ef0
+	cp b ; $5ef0
 	jr z, .zero ; $5ef1
 	dec c ; $5ef3
 	jr nz, .loop ; $5ef4
-	xor a, a ; $5ef6
+	xor a ; $5ef6
 	ret ; $5ef7
 .zero:
 	ld a, $01 ; $5ef8
