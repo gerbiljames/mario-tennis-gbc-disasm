@@ -5904,6 +5904,31 @@ new game starts -- `wSelectedMinigame`, the tennis dictionary's mascot animation
 pair, `wDrillGateActive`, and `wShotAimRow`, an aim index every shot bank stores
 and none reads (the value is used from `a`, so the store is a leftover).
 
-Raw `[$xxxx]` WRAM operands in `src/`: **1,560 -> 1,106** over 406 distinct
+### Earning a WRAM bank from the dispatcher
+
+Bank `$0d`'s minigame actors are eight 16-byte records at `$dc00`-`$dc7f`, and
+the layout comes straight off the three helpers, which all address a record
+through `bc`: `+$00` flags, `+$02` state, `+$03` timer, `+$06`/`+$08` world
+position, `+$0a`/`+$0c` the projected screen position, `+$0e` handler pointer.
+`ClearMinigameActors` clears exactly seven of them; the eighth is the object the
+minigame itself drives -- the shot target, the Boo, the treasure box -- and the
+only one the code addresses by literal address, which is why
+`wMinigameSceneActor`'s fields render as `+ n`.
+
+The WRAM bank was the obstacle, and it is worth writing down how it was
+resolved, because `compute_wram_bank` cannot help here at all: the minigame
+hooks are reached through a far pointer, so no dataflow edge reaches them. Bank
+`$0d` never executes `wram_bank $03` and the references disagree. But the
+*dispatcher* does: `RunMinigamePointLoop` and `UpdateMatchFrame` in bank `$08`
+both `wram_bank $04` immediately before `CallModeHook`, and
+`ClearMinigameActors`, `SetMinigameActorHandler` and `SetMinigameActorPosition`
+each select it again on entry. The bank is a property of how the code is
+*called*, and reading the caller is as good a proof as reading the reference.
+That is a different move from the screen blocks above, where the fix was a
+ROM-bank scope because the bank was selected in a callee; here it is selected in
+the caller, and the answer only shows up if you go looking one frame up the
+stack.
+
+Raw `[$xxxx]` WRAM operands in `src/`: **1,560 -> 1,037** over 394 distinct
 addresses, and 25 mislabelled references are gone. `make compare` OK, `make
 check` clean.
