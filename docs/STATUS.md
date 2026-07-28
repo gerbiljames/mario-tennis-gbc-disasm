@@ -4579,7 +4579,10 @@ Gitignored: baserom.gbc, data/, build/, tools/rgbds/, *.o, *.gbc, *.sav.
 
 The pointer work above left 132 bare addresses. **95 remain, and exactly one
 `dw` pointer row is among them** -- `TangentTable` record 254, whose value
-`$62ca` is a tangent, not an address.
+`$62ca` is a tangent, not an address. (That framing was too kind to the table;
+see "A maths table is not a pointer table" below -- six *other* records of it
+were resolving to labels, which the bare-address count could not see because a
+resolved row is not bare.)
 
 **Tail calls.** The use-gate followed a pointer into a `call`ed routine but not
 a `jp`, which is how the VRAM helpers pass their argument down: `QueueVRAMCopy`
@@ -5961,3 +5964,35 @@ stack.
 Raw `[$xxxx]` WRAM operands in `src/`: **1,560 -> 1,012** over 390 distinct
 addresses, ~760 tilemap cells now carry their row and column, and 25 mislabelled references are gone. `make compare` OK, `make
 check` clean.
+
+
+## A maths table is not a pointer table (2026-07-28)
+
+`TangentTable` and `NotePeriodTable` were declared `records:2`, which routes a
+table through `render_pointer_words`. In ROM0 that renderer resolves *any* word
+below `$4000` against the label map -- correctly, because ROM0 pointer tables do
+hold ROM0 addresses. The consequence for a table of numbers:
+
+```
+        dw VBlankInterrupt ; record 40      <- a tangent of $0040
+        dw ClearVRAMCopyQueue ; record 10   <- an APU note period of $0465
+```
+
+Seven rows across the two tables. Both assemble to the right bytes, which is why
+`make compare` never objected and why the earlier pointer pass counted only
+*one* problem here (record 254's `$62ca`, which stayed bare): a row that
+resolves to a label is not a bare address, so the metric that found the tail
+could not see the head.
+
+The corrected values corroborate themselves. The tangent table is monotonic
+again across records 39-41 (`$003e`, `$0040`, `$0041`), and `$0465` sits where
+it belongs between `$04a8` and `$0426` in the semitone sequence -- the false
+labels were interruptions in two obviously smooth series.
+
+`words:N` is the declaration for a table of numbers: the same `dw` rows, no
+label lookup. Only these two tables need it, and the reason is worth keeping.
+A *banked* table resolves a word only when it lands in `$4000`-`$7fff`, so a
+maths table in a banked ROM is safe by accident. ROM0 is where the eagerness
+bites, and it bites hardest on small values -- which is exactly what a lookup
+table near zero is made of. A sweep for the signature (a `records:2` table where
+fewer than a quarter of the rows resolve) finds no others.
