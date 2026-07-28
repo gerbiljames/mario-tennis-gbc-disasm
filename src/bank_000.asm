@@ -7017,7 +7017,7 @@ LCDStatHandler:
 	ldh a, [rLY] ; $27fb
 	cp b ; $27fd
 	jr c, .restore ; $27fe
-	ld a, [$cb01] ; $2800
+	ld a, [wRasterScrollX] ; $2800
 	ldh [rSCX], a ; $2803
 	ld a, [$cb03] ; $2805
 	ld b, a ; $2808
@@ -8382,7 +8382,7 @@ SyncBGMEnableFlag:
 	push bc ; $2f61
 	push de ; $2f62
 	push hl ; $2f63
-	ld a, [$c8a3] ; $2f64
+	ld a, [wSoundOptionBits] ; $2f64
 	and $01 ; $2f67
 	ld c, a ; $2f69
 	ldh a, [hMusic] ; $2f6a

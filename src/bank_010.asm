@@ -1243,7 +1243,7 @@ RunTitleAndMainMenuLoop:
 	sound $00 ; $4f1f
 	call ResumeBGM ; $4f21
 	xor a ; $4f24
-	ld [$cb71], a ; $4f25
+	ld [wCheatUnlockTriggered], a ; $4f25
 .intro:
 	farcall ShowIntroLogoScreen ; $4f28
 	farcall ScrollOutIntroLogo ; $4f2b
@@ -2110,7 +2110,7 @@ CopyExhibitionCharSlotIds:
 	push af ; $56ff
 	wram_bank $03 ; $5700
 	ld hl, $d816 ; $5706
-	ld de, $c8b5 ; $5709
+	ld de, wMatchSlotCharRefs ; $5709
 	ld a, [hl+] ; $570c
 	ld [de], a ; $570d
 	inc de ; $570e
@@ -2191,7 +2191,7 @@ ConfirmDiscardSuspendedExhibMatch:
 	jr z, .done ; $5797
 	ld a, [wCurrentStorySlot] ; $5799
 	ld b, a ; $579c
-	ld a, [$c8b5] ; $579d
+	ld a, [wMatchSlotCharRefs] ; $579d
 	bit 7, a ; $57a0
 	jr z, .checkSlot2 ; $57a2
 	and $7f ; $57a4
@@ -2199,7 +2199,7 @@ ConfirmDiscardSuspendedExhibMatch:
 	cp b ; $57a8
 	jr z, .prompt ; $57a9
 .checkSlot2:
-	ld a, [$c8b6] ; $57ab
+	ld a, [wMatchSlotCharRefs + 1] ; $57ab
 	bit 7, a ; $57ae
 	jr z, .checkSlot3 ; $57b0
 	and $7f ; $57b2
@@ -2207,7 +2207,7 @@ ConfirmDiscardSuspendedExhibMatch:
 	cp b ; $57b6
 	jr z, .prompt ; $57b7
 .checkSlot3:
-	ld a, [$c8b7] ; $57b9
+	ld a, [wMatchSlotCharRefs + 2] ; $57b9
 	bit 7, a ; $57bc
 	jr z, .checkSlot4 ; $57be
 	and $7f ; $57c0
@@ -2215,7 +2215,7 @@ ConfirmDiscardSuspendedExhibMatch:
 	cp b ; $57c4
 	jr z, .prompt ; $57c5
 .checkSlot4:
-	ld a, [$c8b8] ; $57c7
+	ld a, [wMatchSlotCharRefs + 3] ; $57c7
 	bit 7, a ; $57ca
 	jr z, .noMatch ; $57cc
 	and $7f ; $57ce

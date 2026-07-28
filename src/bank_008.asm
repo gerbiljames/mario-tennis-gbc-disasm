@@ -1015,7 +1015,7 @@ CheckSetComplete:
 	ret ; $4757
 .playGame:
 	xor a ; $4758
-	ld [$c7bd], a ; $4759
+	ld [wScoreDisplayIsTiebreak], a ; $4759
 	call AssignCourtPositions ; $475c
 	call RefreshCourtAfterEndChange ; $475f
 	call RunChangeoverSequence ; $4762
@@ -1036,7 +1036,7 @@ CheckSetComplete:
 	ret ; $4781
 .tiebreak:
 	ld a, $01 ; $4782
-	ld [$c7bd], a ; $4784
+	ld [wScoreDisplayIsTiebreak], a ; $4784
 	call InitTiebreakPointCounter ; $4787
 	ld a, $01 ; $478a
 	ld [wChangeoverSkipBanner], a ; $478c
@@ -4969,7 +4969,7 @@ InitMinigameMatchSettings:
 	ld a, $02 ; $6547
 	ld [wMatchContext], a ; $6549
 	ld a, $01 ; $654c
-	ld [$c7bd], a ; $654e
+	ld [wScoreDisplayIsTiebreak], a ; $654e
 	ld a, $ff ; $6551
 	ld [wAiServeAimOverride], a ; $6553
 	ret ; $6556

@@ -2722,18 +2722,18 @@ SaveStoryReturnPoint:
 	ld a, b ; $5283
 	cp $ff ; $5284
 	jr z, .fromCurrent ; $5286
-	ld hl, $c8a9 ; $5288
+	ld hl, wStoryReturnLocation ; $5288
 	ld [hl], b ; $528b
-	ld hl, $c8aa ; $528c
+	ld hl, wStoryReturnEntryPoint ; $528c
 	ld [hl], c ; $528f
 	jr .done ; $5290
 .fromCurrent:
 	ld a, [wStoryModeCurrentLocation] ; $5292
-	ld [$c8a9], a ; $5295
-	ld hl, $c8aa ; $5298
+	ld [wStoryReturnLocation], a ; $5295
+	ld hl, wStoryReturnEntryPoint ; $5298
 	ld [hl], $ff ; $529b
 	ld hl, wStoryModePlayersXPosition ; $529d
-	ld de, $c8ab ; $52a0
+	ld de, wStoryReturnPosition ; $52a0
 	ld bc, $0005 ; $52a3
 	call CopyMemoryBC ; $52a6
 .done:
@@ -2747,23 +2747,23 @@ RestoreStoryReturnPoint:
 	push bc ; $52af
 	push de ; $52b0
 	push hl ; $52b1
-	ld a, [$c8aa] ; $52b2
+	ld a, [wStoryReturnEntryPoint] ; $52b2
 	cp $ff ; $52b5
 	jr z, .restorePosition ; $52b7
-	ld a, [$c8a9] ; $52b9
+	ld a, [wStoryReturnLocation] ; $52b9
 	ld [wStoryModeCurrentLocation], a ; $52bc
-	ld a, [$c8aa] ; $52bf
+	ld a, [wStoryReturnEntryPoint] ; $52bf
 	ld [wStoryModeEntryPoint], a ; $52c2
 	ld a, $ff ; $52c5
 	ld [wUnusedExitLocationMirror], a ; $52c7
 	ld [wStoryModeExitLocationRequest], a ; $52ca
 	jr .done ; $52cd
 .restorePosition:
-	ld hl, $c8ab ; $52cf
+	ld hl, wStoryReturnPosition ; $52cf
 	ld de, wStoryModeSpawnPosition ; $52d2
 	ld bc, $0005 ; $52d5
 	call CopyMemoryBC ; $52d8
-	ld a, [$c8a9] ; $52db
+	ld a, [wStoryReturnLocation] ; $52db
 	ld [wStoryModeCurrentLocation], a ; $52de
 	ld a, $ff ; $52e1
 	ld [wStoryModeEntryPoint], a ; $52e3

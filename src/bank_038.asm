@@ -1183,7 +1183,7 @@ RunCharacterSelectScreen:
 	farcall ResetMatchState ; $480b
 	call ClearFrameTasks ; $480e
 	xor a ; $4811
-	ld [$cb4f], a ; $4812
+	ld [wCharSelectIdleAnimState], a ; $4812
 	ld [wCharSelectHandedness], a ; $4815
 	ld [wCharSelectIdleTimer], a ; $4818
 	call DisableLCDSafely ; $481b
@@ -1359,7 +1359,7 @@ SetupCharacterSelectScreen:
 	ldh [hScrollY], a ; $4978
 	wram_bank $02 ; $497a
 	xor a ; $4980
-	ld [$cb4f], a ; $4981
+	ld [wCharSelectIdleAnimState], a ; $4981
 	ld [wCharSelectHandedness], a ; $4984
 	ld [wCharSelectIdleTimer], a ; $4987
 	ld [wCameraX], a ; $498a
@@ -1452,7 +1452,7 @@ SetupCharacterSelectScreen:
 	farcall QueueWram3MapToVRAM ; $4a72
 	wram_bank $02 ; $4a75
 	xor a ; $4a7b
-	ld [$cb4f], a ; $4a7c
+	ld [wCharSelectIdleAnimState], a ; $4a7c
 	ld [wCharSelectIdleTimer], a ; $4a7f
 	ld [wCharSelectHandedness], a ; $4a82
 	farcall InitMenuBgScroll ; $4a85
@@ -1719,7 +1719,7 @@ SetCharSelectAnimations:
 	push af ; $4d55
 	wram_bank $02 ; $4d56
 	xor a ; $4d5c
-	ld [$cb4f], a ; $4d5d
+	ld [wCharSelectIdleAnimState], a ; $4d5d
 	pop af ; $4d60
 	wram_bank ; $4d61
 	ret ; $4d65
@@ -1758,9 +1758,9 @@ TickCharSelectIdleAnim:
 	ldh a, [hWramBank] ; $4daf
 	push af ; $4db1
 	wram_bank $02 ; $4db2
-	ld a, [$cb4f] ; $4db8
+	ld a, [wCharSelectIdleAnimState] ; $4db8
 	inc a ; $4dbb
-	ld [$cb4f], a ; $4dbc
+	ld [wCharSelectIdleAnimState], a ; $4dbc
 	ld d, a ; $4dbf
 	pop af ; $4dc0
 	wram_bank ; $4dc1
@@ -7259,7 +7259,7 @@ StoreLinkMatchCharInfo:
 	push af ; $7649
 	wram_bank $03 ; $764a
 	ld hl, wCharSelectSlotChars ; $7650
-	ld de, $c8b5 ; $7653
+	ld de, wMatchSlotCharRefs ; $7653
 	ld a, [hl+] ; $7656
 	ld [de], a ; $7657
 	inc de ; $7658
@@ -7273,7 +7273,7 @@ StoreLinkMatchCharInfo:
 	ld [de], a ; $7660
 	ldh a, [hLinkState] ; $7661
 	ld [wLinkMatchRole], a ; $7663
-	ld a, [$c8b7] ; $7666
+	ld a, [wMatchSlotCharRefs + 2] ; $7666
 	bit 7, a ; $7669
 	jr z, .restore ; $766b
 	and $07 ; $766d

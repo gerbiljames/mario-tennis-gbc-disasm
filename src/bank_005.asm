@@ -4778,14 +4778,14 @@ RenderProportionalTextAt:
 	call FetchDialogueText ; $5e06
 	ld hl, wTextBuffer ; $5e09
 	xor a ; $5e0c
-	ld [$cb78], a ; $5e0d
+	ld [wGlyphStampEnabled], a ; $5e0d
 	ld a, [wWindowId] ; $5e10
 	ld b, a ; $5e13
 	ld a, [wMenuWindowId] ; $5e14
 	cp b ; $5e17
 	jr z, .markerChecked ; $5e18
 	ld a, $01 ; $5e1a
-	ld [$cb78], a ; $5e1c
+	ld [wGlyphStampEnabled], a ; $5e1c
 .markerChecked:
 	pop af ; $5e1f
 	wram_bank ; $5e20
@@ -4939,7 +4939,7 @@ StampGlyphTileAtPen:
 	push bc ; $5f0e
 	push de ; $5f0f
 	push hl ; $5f10
-	ld a, [$cb78] ; $5f11
+	ld a, [wGlyphStampEnabled] ; $5f11
 	or a ; $5f14
 	jr z, .restore ; $5f15
 	ld hl, wGlyphTileWritePtr ; $5f17
@@ -7365,7 +7365,7 @@ DrawTextWindowFrame:
 	wram_bank ; $6fbd
 	ld a, [wGlyphRowStartCol] ; $6fc1
 	add $80 ; $6fc4
-	ld [$cb75], a ; $6fc6
+	ld [wTextRowNextTile], a ; $6fc6
 	push hl ; $6fc9
 	ld [hl], $02 ; $6fca
 	inc hl ; $6fcc
@@ -7396,7 +7396,7 @@ DrawTextWindowFrame:
 	ld b, e ; $6ff2
 	bit 0, d ; $6ff3
 	jr z, .fillBlank ; $6ff5
-	ld a, [$cb75] ; $6ff7
+	ld a, [wTextRowNextTile] ; $6ff7
 .textCellLoop:
 	test_flag FLAG_TEXT_RENDER_ACTIVE ; $6ffa
 	jr z, .blankCell ; $6ffd
@@ -7410,7 +7410,7 @@ DrawTextWindowFrame:
 	inc a ; $7008
 	dec b ; $7009
 	jr nz, .textCellLoop ; $700a
-	ld [$cb75], a ; $700c
+	ld [wTextRowNextTile], a ; $700c
 	jr .midRowEnd ; $700f
 .fillBlank:
 	ld a, $20 ; $7011
@@ -7975,7 +7975,7 @@ ResetGlyphStream:
 	ld [hl+], a ; $7319
 	ld [hl+], a ; $731a
 	ld [hl], a ; $731b
-	ld [$cb75], a ; $731c
+	ld [wTextRowNextTile], a ; $731c
 	pop hl ; $731f
 	pop af ; $7320
 	ret ; $7321
@@ -8662,7 +8662,7 @@ InitGlyphStreamAt:
 	ld [hl+], a ; $7732
 	ld [hl+], a ; $7733
 	ld [hl], a ; $7734
-	ld [$cb75], a ; $7735
+	ld [wTextRowNextTile], a ; $7735
 	ld a, [$c3ba] ; $7738
 	ld d, a ; $773b
 	ld e, c ; $773c

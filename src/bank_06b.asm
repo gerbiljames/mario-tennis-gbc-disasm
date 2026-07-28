@@ -278,9 +278,9 @@ IntroCutsceneState00Init_6b:
 	ld [wCameraY + 1], a ; $419a
 	xor a ; $419d
 	ld [wCutsceneStepTimer], a ; $419e
-	ld [$cb4c], a ; $41a1
+	ld [wCutsceneSpriteAnimFrame], a ; $41a1
 	ld [wCutsceneSpriteAX], a ; $41a4
-	ld [$cb4d], a ; $41a7
+	ld [wCutsceneSpriteAnimTick], a ; $41a7
 	xor a ; $41aa
 	ld [wCameraY], a ; $41ab
 	ld a, $24 ; $41ae
@@ -597,7 +597,7 @@ IntroCutsceneState05Init_6b:
 	ld a, $78 ; $4572
 	ld [$cb03], a ; $4574
 	xor a ; $4577
-	ld [$cb01], a ; $4578
+	ld [wRasterScrollX], a ; $4578
 	ld a, $01 ; $457b
 	ld hl, UpdateCutsceneScroll ; $457d
 	call RegisterFrameTask ; $4580
@@ -945,8 +945,8 @@ IntroCutsceneState12Init_6b:
 	ld a, $24 ; $48fd
 	ld [wCameraY + 1], a ; $48ff
 	ld a, $00 ; $4902
-	ld [$cb4d], a ; $4904
-	ld [$cb4c], a ; $4907
+	ld [wCutsceneSpriteAnimTick], a ; $4904
+	ld [wCutsceneSpriteAnimFrame], a ; $4907
 	ld de, $015c ; $490a
 	ld hl, $cb48 ; $490d
 	ld a, e ; $4910
@@ -1224,8 +1224,8 @@ IntroCutsceneState19Init_6b:
 	ld a, $24 ; $4c4c
 	ld [wCameraY + 1], a ; $4c4e
 	ld a, $00 ; $4c51
-	ld [$cb4d], a ; $4c53
-	ld [$cb4c], a ; $4c56
+	ld [wCutsceneSpriteAnimTick], a ; $4c53
+	ld [wCutsceneSpriteAnimFrame], a ; $4c56
 	ld de, $015c ; $4c59
 	ld hl, $cb48 ; $4c5c
 	ld a, e ; $4c5f
@@ -1669,7 +1669,7 @@ UpdateCutsceneScroll:
 	ld a, [wIntroCutsceneSubState] ; $53e5
 	sub $03 ; $53e8
 	ld [wIntroCutsceneSubState], a ; $53ea
-	ld [$cb01], a ; $53ed
+	ld [wRasterScrollX], a ; $53ed
 	ret ; $53f0
 CheckIntroSkipInput:
 	ldh a, [hInputRisingEdge] ; $53f1
@@ -1860,21 +1860,21 @@ QueueScrollingSprite:
 	sbc d ; $6108
 	ld h, a ; $6109
 	ld e, l ; $610a
-	ld a, [$cb4c] ; $610b
+	ld a, [wCutsceneSpriteAnimFrame] ; $610b
 	ld c, a ; $610e
 	ld d, $40 ; $610f
 	call QueueIntroSpriteBlock ; $6111
 	ret ; $6114
 AdvanceSpriteAnimTimer:
-	ld a, [$cb4d] ; $6115
+	ld a, [wCutsceneSpriteAnimTick] ; $6115
 	inc a ; $6118
-	ld [$cb4d], a ; $6119
+	ld [wCutsceneSpriteAnimTick], a ; $6119
 	and $30 ; $611c
 	rrca ; $611e
 	rrca ; $611f
 	rrca ; $6120
 	rrca ; $6121
-	ld [$cb4c], a ; $6122
+	ld [wCutsceneSpriteAnimFrame], a ; $6122
 	ret ; $6125
 QueueIntroSpriteBlock:
 	ld hl, IntroSpriteBlockTable ; $6126

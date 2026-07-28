@@ -85,12 +85,12 @@ UpdateScorePanelDisplay:
 	and a ; $409b
 	jr nz, .deuce ; $409c
 	push de ; $409e
-	ld a, [$c7bd] ; $409f
+	ld a, [wScoreDisplayIsTiebreak] ; $409f
 	ld b, a ; $40a2
 	ld a, d ; $40a3
 	call LoadPlayer1ScoreDigitGfx ; $40a4
 	pop de ; $40a7
-	ld a, [$c7bd] ; $40a8
+	ld a, [wScoreDisplayIsTiebreak] ; $40a8
 	ld b, a ; $40ab
 	ld a, e ; $40ac
 	call LoadPlayer2ScoreDigitGfx ; $40ad

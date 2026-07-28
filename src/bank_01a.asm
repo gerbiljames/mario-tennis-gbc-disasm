@@ -144,7 +144,7 @@ DrawPauseMenuSettingValues:
 	push hl ; $410d
 	ld de, $0404 ; $410e
 	call PrintHexByte ; $4111
-	ld a, [$c8a3] ; $4114
+	ld a, [wSoundOptionBits] ; $4114
 	ld de, $0405 ; $4117
 	call PrintHexByte ; $411a
 	pop hl ; $411d
@@ -359,7 +359,7 @@ AdjustMessageSpeedSetting:
 	ret ; $42a8
 ToggleMusicSetting:
 	sound $5e ; $42a9
-	ld a, [$c8a3] ; $42ab
+	ld a, [wSoundOptionBits] ; $42ab
 	ld b, a ; $42ae
 	and $01 ; $42af
 	xor $01 ; $42b1
@@ -367,7 +367,7 @@ ToggleMusicSetting:
 	ld a, b ; $42b4
 	and $fe ; $42b5
 	or c ; $42b7
-	ld [$c8a3], a ; $42b8
+	ld [wSoundOptionBits], a ; $42b8
 	ret ; $42bb
 ForceInstantMessageSpeed:
 	ld a, [wMessageSpeed] ; $42bc

@@ -998,7 +998,10 @@ wDrillIsPracticeLesson:: db
 
 ; [8-bit] Set to 1 when the minigame is being played for a high score: the InitMinigame_*HighScore entries set it outright, and the ordinary minigames set it when wMinigameLevel is 2 (the third level). SelectScoreboardLayout picks layout 7
 wMinigameHighScoreMode:: db
-	ds 67
+
+; [8-bit] Passed in b to LoadPlayer1ScoreDigitGfx/LoadPlayer2ScoreDigitGfx, so the score panel shows tiebreak point counts instead of 0/15/30/40. CheckSetComplete sets it entering a tiebreak and clears it at the start of an ordinary game
+wScoreDisplayIsTiebreak:: db
+	ds 66
 
 ; [buffer] Base of the story-slot state image (WRAM $c800-$caff): the live region holding the wStoryModeMainCharacter*/wGameMode/match-settings/roster fields, saved wholesale as save block 2N (see docs/save_format.md) and reloaded from it on slot load
 wStorySlotData:: db
@@ -1112,7 +1115,10 @@ wStoryModePartnerCharacterControlLevel:: db
 
 ; [8-bit] Story Mode - Partner Character Speed Level
 wStoryModePartnerCharacterSpeedLevel:: db
-	ds 40
+	ds 39
+
+; [8-bit] Sound options from the pause menu. Bit 0 is music on/off: ToggleMusicSetting flips just that bit and SyncBGMEnableFlag mirrors it into hMusic bit 0, stopping the BGM when it goes clear. The remaining bits are preserved by both
+wSoundOptionBits:: db
 
 ; [8-bit] Message Speed
 ;
@@ -1140,7 +1146,20 @@ wGameMode:: db
 
 ; [8-bit] Nonzero makes ResetMatchState skip clearing the per-character match stats (set by MatchQuitMenu_SaveAndQuit so a resumed match keeps its stats); cleared after use
 wKeepMatchStatsFlag:: db
-	ds 17
+	ds 1
+
+; [8-bit] Location SaveStoryReturnPoint recorded to come back to. Called with b = $ff it snapshots the live position instead of a fixed door
+wStoryReturnLocation:: db
+
+; [8-bit] Entry point paired with wStoryReturnLocation, or $ff to mean 'no door - restore wStoryReturnPosition instead'. RestoreStoryReturnPoint branches on exactly that
+wStoryReturnEntryPoint:: db
+
+; [5 bytes] Player X, Y and facing saved with the return point, in the wStoryModeSpawnPosition layout it is copied back into
+wStoryReturnPosition:: ds 5
+	ds 5
+
+; [4 bytes] One byte per player slot naming the character the suspended or link match was set up with, copied out of wCharSelectSlotChars by StoreLinkMatchCharInfo (or out of the exhibition save block by CopyExhibitionCharSlotIds). Bit 7 marks a created story character and the low bits then say which story slot it came from
+wMatchSlotCharRefs:: ds 4
 
 ; [8-bit] Copy of hLinkState taken by StoreLinkMatchCharInfo when the link match's characters are committed. The results and EXP screens turn it back into a WRAM bank with `srl a / add a, $04`, i.e. which per-character struct is the local player's
 wLinkMatchRole:: db
@@ -1760,7 +1779,10 @@ wExhibitionModeCPUPartnerCharacterDifficulty:: db
 
 ; [8-bit] Story Mode - which of the two story character records the character-select / name-entry / char-data screens are acting on: 0 = main character, 1 = partner. Used as a $40-stride index into the wStoryModeMainCharacter*/wStoryModePartnerCharacter* pair (GetActiveStoryNameBuffer at $38:$73fa returns wStoryModeNameOfMainCharacter or ...OfPartnerCharacter straight off it).
 wStoryCharacterSlot:: db
-	ds 3
+
+; [8-bit] rSCX the LCD STAT handler applies inside a scanline band, giving the results and cutscene screens a horizontally offset strip. The band's first and last lines live in the two bytes after it, which the credits and window-slide code reuse as a 16-bit camera offset instead - the STAT handler is not running then
+wRasterScrollX:: db
+	ds 2
 
 ; [8-bit] Menu cursor column; MoveMenuCursor wraps it at the column count in b
 wMenuCursorX:: db
@@ -1813,7 +1835,9 @@ wMenuBgScrollAttr:: dw
 
 ; [8-bit] Which lane TickMenuBgScroll queues this tick; it alternates 0/1
 wMenuBgScrollLane:: db
-	ds 1
+
+; [8-bit] How many button presses of the cheat code have been entered. It indexes the 32-byte buffer at WRAM bank $01 $d000 (masked to $1f) that UpdateCheatCodeEntry compares against CheatCodeEntryTable, and ResetCheatCodeBuffer zeroes both
+wCheatCodeLength:: db
 
 ; [8-bit] Cell index the main-menu cursor was last left on, so the menu reopens where you were; RunMainMenu restores it through SetMenuCursorFromCellIndex and stores it back on exit. Cleared with the other saved cursors when a new game starts
 wMainMenuCursor:: db
@@ -1907,7 +1931,16 @@ wCutsceneSpriteBY:: db
 
 ; [16-bit] Intro cutscene (bank $6b): world-space vertical scroll/camera position, little-endian. Initialised to $0120 at the start of scenes 00/12/19 ($6b:$41bf, $6b:$4916, $6b:$4c65) and decremented every frame by the per-frame delta table at $6b:$4cc1 indexed by wCutsceneStepTimer ($6b:$4caa-$4cbd). Consumers: ApplyCutsceneScrollToSpriteX ($6b:$5191) subtracts it from the sprite base coordinate that QueueSpriteTemplate treats as Y (the sp+0 slot, $00:$1ebf - so despite the existing label it is the Y axis), and SetCameraYFromScrollPos ($6b:$60d5) shifts it left 5 into wCameraY. $6b:$60fe uses ($cb48 - $cb4a) as the on-screen Y of the object drawn by QueueIntroSpriteBlock.
 wIntroCutsceneScrollY:: dw
-	ds 4
+
+; [8-bit] Animation frame the intro cutscene's scrolling sprites are drawn on, derived from wCutsceneSpriteAnimTick's bits 4-5 shifted down, so it steps once every 16 ticks
+wCutsceneSpriteAnimFrame:: db
+
+; [8-bit] Free-running counter AdvanceSpriteAnimTimer increments each call; the intro cutscene state inits clear it together with wCutsceneSpriteAnimFrame
+wCutsceneSpriteAnimTick:: db
+	ds 1
+
+; [8-bit] Idle-animation state of the character-select portrait, cleared everywhere wCharSelectIdleTimer and wCharSelectHandedness are (screen setup, page reload, and after a fresh animation is set) and stepped by TickCharSelectIdleAnim when the timer expires
+wCharSelectIdleAnimState:: db
 
 ; [8-bit] Story-mode character-select screen (bank $38): handedness toggle, 0 = default, 1 = mirrored (left-handed). Cleared on entry ($38:$4815, $38:$4984, $38:$4a82) and flipped by START ($38:$48fc `xor $01`) - the on-screen prompt for that row is text 30:118 'START: Change Hands' ($38:$4b0c). When non-zero, Func_38_4bac sets bit 5 (OAM X-flip) in wCharSpriteSlot+1 for all four displayed characters ($38:$4c6f-$4ca6), and Func_38_4e23 draws the marker sprite with tile base $00 instead of $02 ($38:$4e3c). The chosen value is written into the story character record at +$0e ($38:$48ba).
 wCharSelectHandedness:: db
@@ -1946,11 +1979,21 @@ wStorySceneAssetIndex:: db
 
 ; [16-bit] Rules/briefing screens: base text id of the minigame's rules pages, taken from MinigameRulesTextIdBases_17 ($17:$6fdb) at $17:$6fc6. Each page offset from the minigame's MinigameRulesPageLists_17 row is added to it ($17:$70ef) and the result rendered through PrepareGlyphBuffer / RenderProportionalTextAt.
 wRulesPageTextIdBase:: dw
-	ds 6
+	ds 1
+
+; [8-bit] Set to 1 once the cheat code has been matched and TriggerCheatUnlock has run, which stops UpdateCheatCodeEntry accepting any more input. The title and main-menu loops clear it when they re-enter
+wCheatUnlockTriggered:: db
+	ds 3
+
+; [8-bit] Next window tile id the text engine will stamp into the shadow tilemap. A row starts at wGlyphRowStartCol + $80 and the cell loop increments it per cell before writing it back, so a wrapped row carries on where the previous one stopped
+wTextRowNextTile:: db
 
 ; VRAM tile-data write pointer for the proportional-glyph renderer (bank $05 text engine)
 wGlyphTileWritePtr:: dw
-	ds 136
+
+; [8-bit] Nonzero when the text being rendered belongs to a window other than wMenuWindowId, which is the condition StampGlyphTileAtPen requires before it writes a glyph tile through wGlyphTileWritePtr. Menu text goes through the tilemap alone
+wGlyphStampEnabled:: db
+	ds 135
 
 ; [576 bytes] Debug text console tilemap buffer, DMAed to $9d00 rows when active
 wDebugTextBuffer:: ds 576

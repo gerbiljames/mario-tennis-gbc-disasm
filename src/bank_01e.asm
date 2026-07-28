@@ -439,7 +439,7 @@ FillMemoryC:
 DrawStoryResultsHeader:
 	test_flag FLAG_ISLAND_SKY_SCENE_ACTIVE ; $4466
 	jr nz, .skyScene ; $4469
-	ld a, [$c8a9] ; $446b
+	ld a, [wStoryReturnLocation] ; $446b
 	cp $1d ; $446e
 	jr z, .altPosition ; $4470
 	ld hl, $04d8 ; $4472
@@ -453,7 +453,7 @@ DrawStoryResultsHeader:
 	ld bc, $0020 ; $4486
 	call DrawProportionalTextLine ; $4489
 .drawOpponentName:
-	ld a, [$c8a9] ; $448c
+	ld a, [wStoryReturnLocation] ; $448c
 	add $79 ; $448f
 	ld l, a ; $4491
 	adc $01 ; $4492
@@ -2885,7 +2885,7 @@ AwardExhibitionMatchExp:
 	ld a, e ; $696c
 	ld [hl+], a ; $696d
 	ld [hl], d ; $696e
-	ld a, [$c8b5] ; $696f
+	ld a, [wMatchSlotCharRefs] ; $696f
 	bit 7, a ; $6972
 	jr z, .recordExhibitionVictory ; $6974
 	call ShowExpAwardForExhibition ; $6976
@@ -2895,7 +2895,7 @@ AwardExhibitionMatchExp:
 	ld a, [hl+] ; $6980
 	ld h, [hl] ; $6981
 	ld l, a ; $6982
-	ld a, [$c8b5] ; $6983
+	ld a, [wMatchSlotCharRefs] ; $6983
 	srl a ; $6986
 	and $03 ; $6988
 	ld [wCurrentStorySlot], a ; $698a
@@ -2930,7 +2930,7 @@ AwardLinkedPlayMatchExp:
 	ld a, e ; $69b9
 	ld [hl+], a ; $69ba
 	ld [hl], d ; $69bb
-	ld hl, $c8b5 ; $69bc
+	ld hl, wMatchSlotCharRefs ; $69bc
 	ld a, [wLinkMatchRole] ; $69bf
 	srl a ; $69c2
 	sla a ; $69c4
@@ -2947,7 +2947,7 @@ AwardLinkedPlayMatchExp:
 	call ShowExpAwardForLinkedPlay ; $69d4
 	ld a, [wCurrentStorySlot] ; $69d7
 	push af ; $69da
-	ld hl, $c8b5 ; $69db
+	ld hl, wMatchSlotCharRefs ; $69db
 	ld a, [wLinkMatchRole] ; $69de
 	and $03 ; $69e1
 	srl a ; $69e3

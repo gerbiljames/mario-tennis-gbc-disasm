@@ -3320,7 +3320,7 @@ UpdateCheatCodeEntry:
 	ldh a, [hWramBank] ; $6f67
 	push af ; $6f69
 	wram_bank $01 ; $6f6a
-	ld a, [$cb71] ; $6f70
+	ld a, [wCheatUnlockTriggered] ; $6f70
 	or a ; $6f73
 	jr nz, .restore ; $6f74
 	ldh a, [hInputRisingEdge] ; $6f76
@@ -3352,14 +3352,14 @@ UpdateCheatCodeEntry:
 	jr nz, .loop ; $6f99
 	call TriggerCheatUnlock ; $6f9b
 	ld a, $01 ; $6f9e
-	ld [$cb71], a ; $6fa0
+	ld [wCheatUnlockTriggered], a ; $6fa0
 	jr .restore ; $6fa3
 .zero:
 	ldh a, [hInputRisingEdge] ; $6fa5
 	or a ; $6fa7
 	jr z, .restore ; $6fa8
 	ld b, a ; $6faa
-	ld a, [$cb1a] ; $6fab
+	ld a, [wCheatCodeLength] ; $6fab
 	and $1f ; $6fae
 	ld hl, $d000 ; $6fb0
 	add l ; $6fb3
@@ -3368,9 +3368,9 @@ UpdateCheatCodeEntry:
 	inc h ; $6fb7
 .store:
 	ld [hl], b ; $6fb8
-	ld a, [$cb1a] ; $6fb9
+	ld a, [wCheatCodeLength] ; $6fb9
 	inc a ; $6fbc
-	ld [$cb1a], a ; $6fbd
+	ld [wCheatCodeLength], a ; $6fbd
 .restore:
 	pop af ; $6fc0
 	wram_bank ; $6fc1
@@ -3385,7 +3385,7 @@ ResetCheatCodeBuffer:
 	push af ; $6fe9
 	wram_bank $01 ; $6fea
 	xor a ; $6ff0
-	ld [$cb1a], a ; $6ff1
+	ld [wCheatCodeLength], a ; $6ff1
 	ld hl, $d000 ; $6ff4
 	ld bc, $0020 ; $6ff7
 	call ClearBytes ; $6ffa

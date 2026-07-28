@@ -834,7 +834,7 @@ RunMatchWinLoseScreen:
 	ld a, $57 ; $44e8
 	ld [$cb03], a ; $44ea
 	xor a ; $44ed
-	ld [$cb01], a ; $44ee
+	ld [wRasterScrollX], a ; $44ee
 	ld a, $01 ; $44f1
 	ld hl, AdvanceResultScreenTimer ; $44f3
 	call RegisterFrameTask ; $44f6
@@ -1322,9 +1322,9 @@ AdvanceResultScreenTimer:
 	and $01 ; $4ca6
 	ret z ; $4ca8
 .neff:
-	ld a, [$cb01] ; $4ca9
+	ld a, [wRasterScrollX] ; $4ca9
 	inc a ; $4cac
-	ld [$cb01], a ; $4cad
+	ld [wRasterScrollX], a ; $4cad
 	ret ; $4cb0
 QueueResultScreenSprites:
 	ld a, [wMatchWinLoseFlag] ; $4cb1

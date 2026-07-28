@@ -3177,7 +3177,7 @@ RunMainMenu:
 	res 2, [hl] ; $55d9
 	call BuildSaveSlotSummaries ; $55db
 	xor a ; $55de
-	ld [$cb1a], a ; $55df
+	ld [wCheatCodeLength], a ; $55df
 	call LoadMainMenuGfx ; $55e2
 	farcall InitMenuBgScroll ; $55e5
 	ld b, $01 ; $55e8
@@ -3229,7 +3229,7 @@ RunMainMenu:
 	jr .loop ; $5653
 .clearFrameTasks:
 	ld a, $01 ; $5655
-	ld [$cb71], a ; $5657
+	ld [wCheatUnlockTriggered], a ; $5657
 	sound $5f ; $565a
 	call ClearFrameTasks ; $565c
 	ld hl, rIE ; $565f
