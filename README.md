@@ -102,7 +102,12 @@ assets outside the tree and copy them in, or do not re-run extraction.
   `data/` tree at setup and `INCLUDE`d, keeping that content out of the
   repository. `palettes` (BGR555 `dw` colors), `sound_index` (the sound-id
   directory) and `sound_data` (the driver's pitch/envelope/mask tables) are
-  generated this way. Inline kinds: `records:N` (fixed N-byte records), `bytes:C` (byte table, C per
+  generated this way. Inline kinds: `records:N` (fixed N-byte records),
+  `ram_ptrs:<wram bank>[:<zero name>]` (a `dw` table whose words are RAM
+  addresses rather than ROM pointers — the bank has to be stated because a
+  data word has no dataflow for `compute_wram_bank` to read; bank `0` asserts
+  nothing, for WRAM0 or where a ROM-bank-scoped union already covers the
+  addresses), `bytes:C` (byte table, C per
   row), `ascii` (a quoted string), `font_glyph` (a `db width, height` glyph
   record, drawn as pixel art in the comments), `cart_header` (the header
   fields after the Nintendo logo), `pattern` (a repeated byte pattern, as one

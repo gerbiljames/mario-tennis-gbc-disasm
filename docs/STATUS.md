@@ -26,7 +26,7 @@ shape, not *twins*, and the shot banks are near-identical copies of each
 other, so a routine only one bank failed to execute reads as ordinary data
 until you diff it against its siblings.
 
-Everything below is **committed** (HEAD `78cb868`); the whole history
+Everything below is **committed** (HEAD `4790647`); the whole history
 rebuilds byte-perfect. Per-bank progress at any time: `python3
 tools/progress.py` (proven-code bytes, fill runs, label counts, human-named
 counts) and `tools/progress.py --unnamed <bank>` to list still-auto-named
@@ -4572,7 +4572,7 @@ from clean throughout.
 
 ## Repo state
 
-All work is committed (HEAD `78cb868`); every commit rebuilds byte-perfect.
+All work is committed (HEAD `4790647`); every commit rebuilds byte-perfect.
 Gitignored: baserom.gbc, data/, build/, tools/rgbds/, *.o, *.gbc, *.sav.
 
 ## Tail calls, and three tables that lied about their length (2026-07-26)
@@ -6555,3 +6555,85 @@ rest of the map for notes that describe a length the `size` field does not.
 `tools/progress.py` also crashed on start since labels.json entries gained
 prose: it reads the values as strings to find curated `.local` names, and a
 `{"name": …, "note": …}` value is a dict. It unwraps both shapes now.
+
+
+## A `dw` table of RAM addresses is layout too (2026-07-28)
+
+`PlayerSlotBoxAddrs0` and its five siblings render as `dw $d0d0` — the question
+of whether those are addresses at all is what started this. They are:
+`ClearPlayerSlotPortrait` hands the word straight to `FillTilemapRect` as `de`
+and reaches the attribute plane by adding **`$0400`**, which is exactly
+`wShadowAttrmap - wShadowTilemap`. The flush after it copies
+`wShadowTilemap + 6 * TILEMAP_WIDTH` to `$98c0` = `$9800 + 6 * 32`, so the
+shadow map sits 1:1 over the BG map and row 6 really is row 6.
+
+**Why they stayed numeric** is two separate gaps. `render_pointer_words` only
+resolves ROM labels — same-bank `$4000-$7fff` or ROM0 — so there was no RAM path
+for a `dw` row at all. And even with one, `wShadowTilemap`'s union variant is
+scoped `{"wram_bank": "0x03"}`, which is a `compute_wram_bank` fact about a
+*code* site; a data word has no dataflow, so the scope could never fire.
+
+The fix is a new render spec, **`ram_ptrs:<wram bank>[:<zero name>]`**. The bank
+is the human assertion the dataflow cannot make, and `resolve()` takes it as an
+override. Bank `0` asserts nothing — for a WRAM0 table, or where the covering
+union is scoped by the referencing code's ROM bank instead, which matches on the
+word's own offset and needs no assertion. That last case worked out of the box:
+`ShotRecoilVarPtrs_07` sits in bank `$07`, inside the match-struct union's ROM
+scope, so its words came back `wGroundStrokeSpeedIndex` / `wReachSpeedIndex` /
+`wSmashServeSpeedIndex` with nothing declared but `ram_ptrs:0`.
+
+This is a *no-ROM-content* improvement as well as a readability one. `dw $d0d0`
+is a ROM value sitting in the repository; `dw wShadowTilemap + 6 * TILEMAP_WIDTH
++ 16` is layout the assembler recomputes, and `make compare` still checks the
+arithmetic folds back to the same word.
+
+### The sweep
+
+Counting `dw` words that land in a RAM range found 247 across 49 tables, and the
+first lesson was that **two thirds of the regions were not RAM at all**. Every
+`$ffxx` hit — `ActorMoveVectors_04`, `DPadMoveVectors_0a`,
+`MinigameBallLaunchHeights`, `SmashVelocityBySpeed_24`, `CourtSideOffsets_07_*`
+— is a *negative 16-bit number*: `$ffc0` is −64, not an HRAM address. That is
+the `RAM_IMM_NEVER` hazard in a new operand position, and it is why the spec is
+opt-in per table rather than a blanket fallback on `records:2`.
+
+Of what remained, 27 tables were declared:
+
+| what | tables | words |
+| --- | --- | --- |
+| character-select slot boxes (bank `$38`) | 8 | 40 |
+| menu / bracket / ranking cell tables (`$1b`, `$39`, `$3b`) | 16 | 105 |
+| WRAM0 and char-struct pointer tables (`$07`, `$0b`) | 3 | 11 |
+
+Each was checked the same way: every word either zero or inside
+`$d000-$d7ff` (the shadow tilemap and attrmap, and nothing else lives there in
+WRAM bank `$03`), and the consumer proven to write the tilemap under that bank.
+`DrawSinglesRankingNames` corroborates its own table exactly — it does
+`wram_bank $03` and writes `wShadowTilemap + 1 * TILEMAP_WIDTH + 1`, which is
+`SinglesRankingEntryTable1`'s first entry.
+
+The renderer also picks the *plane* correctly without being told:
+`BracketPlayerRowTable0` came back `wShadowAttrmap + 9 * TILEMAP_WIDTH + 5`,
+which is right — `HighlightBracketPlayerRow` fills an attribute rect with a
+palette in `h`.
+
+**Four tables were deliberately left numeric**, all for the same reason: they are
+not flat arrays of addresses. `TennisDictionaryClearList`/`2` are 4-byte
+`{address, length}` records — and in WRAM bank **`$02`**, not `$03`, so a blind
+declaration would have named them wrongly twice over.
+`DiagramTargetPatchRecords_17` is 6-byte mixed records and
+`CharMugshotGfxPointers_1b_4cec` 4-byte ones.
+
+### `NO_BOX`
+
+The six slot-box tables store `$0000` for a slot their layout does not show, and
+**nothing checks the fetched address** — none of the five callers tests `bc`, so
+a zero would be written straight into ROM. It is a placeholder the code relies on
+never selecting rather than a guard value, which is exactly the case for naming
+it: `def NO_BOX equ $0000`, emitted by the spec's optional zero-name field. The
+bracket tables reuse it for page 0, which has no row.
+
+What the six tables say once they render is the screen's geometry, which was
+invisible before: singles centres one 2x2 portrait box per side at column 16,
+doubles pairs them at columns 13 and 17, rows 6 and 9 are the two sides, and the
+four link layouts light one box or one row depending on which side you are.
