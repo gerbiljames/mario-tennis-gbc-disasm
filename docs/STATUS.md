@@ -7322,3 +7322,62 @@ not merely about what to call it.
 `wRingShotEntryList` at `$dc40` — both in bank `$3b`. A ROM-bank scope cannot
 separate two screens in the same bank, so this one needs code ranges, and 3
 references are not enough to justify guessing at the boundaries.
+
+## compute_wram_bank was one dict-ordering change from useless (2026-07-28)
+
+The remaining bare references are dominated not by any bank but by the 431
+sites where `compute_wram_bank` cannot prove a bank at all, so the next lever
+was the analysis rather than more names. Two things were wrong with it, and the
+smaller one is the interesting one.
+
+**The idiom it could not follow.** Every routine in this ROM saves and restores
+the bank the same way:
+
+```
+ldh a, [hWramBank]
+push af
+wram_bank $05
+...
+pop af
+wram_bank
+```
+
+`ldh a, [hWramBank]` was treated as clobbering `a`, and the stack was not
+tracked, so everything after the restore was unknown. Since the `wram_bank`
+macro writes `hWramBank` and `rWBK` from the same `a` -- the only two raw
+`ldh [rWBK], a` writes in the ROM are the boot clear and one preceded by the
+shadow write across a label -- the shadow is a faithful copy, so reading it back
+recovers the bank. Adding that plus a bounded push/pop stack (with `add sp`,
+`ld sp` and `rst` dropping it to unknown rather than guessing a depth) makes the
+restore resolve.
+
+**The bug underneath it.** `ldh [rWBK], a` did `a if a is not NOINFO else UNK`.
+NOINFO means *not reached yet*, not *unknown* -- and this lattice only descends,
+so an instruction visited before its predecessors had settled was pinned to
+unknown for good. With the stack in play NOINFO now propagates much further, and
+the first attempt at all of this gained almost nothing because of it.
+
+The consequence was worse than imprecision. Shuffling the worklist order:
+
+| | provable instructions |
+|---|---|
+| before, natural order | 59,386 |
+| before, shuffled | **8,640** |
+| after, natural order | 59,820 |
+| after, shuffled | 59,477 |
+
+The old analysis produced a usable answer only because `deque(instrs)` happened
+to walk in address order. Any change to how `instrs` iterates -- a different
+dict ordering, a new pipeline stage inserting instructions out of order -- would
+have silently collapsed WRAM-bank resolution to a seventh of what it was, and
+the only symptom would have been thousands of operands quietly reverting to
+numeric. The worklist is now `deque(sorted(instrs))`, explicitly, with a comment
+saying the order is part of the answer.
+
+**The gain in names is four operands.** That is the honest number, and it is
+small because the real limit is elsewhere: the save/restore idiom restores *the
+bank the routine was entered with*, and most routines are entered with an
+unknown bank because they are called from several contexts. Getting past that
+needs context sensitivity -- cloning the analysis per call site -- which is a
+different piece of work. What this pass bought is that the 37% the analysis does
+resolve is now robust rather than accidental.

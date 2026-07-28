@@ -3933,7 +3933,7 @@ DrawMainMenuCaption:
 	pop af ; $5bc5
 	wram_bank ; $5bc6
 	ld a, $3a ; $5bca
-	ld [$d210], a ; $5bcc
+	ld [wShadowTilemap + 16 * TILEMAP_WIDTH + 16], a ; $5bcc
 	ret ; $5bcf
 .eq3f:
 	ld hl, Text_30_124 ; $5bd0

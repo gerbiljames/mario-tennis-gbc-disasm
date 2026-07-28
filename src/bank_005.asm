@@ -5103,7 +5103,7 @@ GetObjectSlotPointer:
 	ld hl, $0000 ; $5ff2
 	cp $ff ; $5ff5
 	ret z ; $5ff7
-	ld hl, $d000 ; $5ff8
+	ld hl, wWindowShadowTilemap ; $5ff8
 	cp $18 ; $5ffb
 	jr nc, .done ; $5ffd
 	push bc ; $5fff

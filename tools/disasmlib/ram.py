@@ -250,6 +250,15 @@ def union_banks(variants, ubank):
     return banks
 
 
+# The `wram_bank` macro writes hWramBank and rWBK from the same `a`, so the
+# shadow tracks the register exactly. Two raw `ldh [rWBK], a` writes exist in
+# the ROM; one is the boot clear (before anything reads the shadow) and the
+# other is preceded by the shadow write across a label. That makes
+# `ldh a, [hWramBank]` a reliable way to recover the current bank -- which is
+# what the save/restore idiom is built on.
+HWRAMBANK_LOW = 0x96
+
+
 def compute_wram_bank(dis):
     """Forward CFG dataflow computing, per instruction, the WRAM bank
     ($ff70/rSVBK) provably selected on entry -- or absent when unknown or
@@ -258,10 +267,29 @@ def compute_wram_bank(dis):
     keeps the analysis conservative. Calls are assumed to preserve the bank:
     the return edge carries the pre-call bank (clobbering `a`), and the caller's
     bank also flows into the callee so a helper reached from a single banked
-    context inherits it. Purely informative -- RAM operand names are text, so a
-    wrong result can only mislabel, never change an assembled byte."""
+    context inherits it.
+
+    The stack is tracked as well, because the ROM's universal idiom is
+    `ldh a, [hWramBank] / push af / wram_bank $XX / ... / pop af / wram_bank`
+    and without it every instruction after the restore looks unknown -- which
+    is most of a screen. `ldh a, [hWramBank]` therefore reads back the tracked
+    bank, and push/pop carry values through, so the restore recovers the bank
+    the routine was entered with. Anything else that moves sp (`add sp`,
+    `ld sp`, `rst`) drops the stack to unknown rather than guessing at a depth.
+
+    A bank written from an `a` that is still NOINFO stays NOINFO rather than
+    dropping to UNK: NOINFO means the instruction has not been reached with real
+    information yet, and this lattice only descends, so collapsing early pins
+    everything downstream to unknown for good.
+
+    Purely informative -- RAM operand names are text, so a wrong result can only
+    mislabel, never change an assembled byte."""
     rom, instrs, farcalls = dis.rom, dis.instrs, dis.farcalls
     UNK, NOINFO = None, "?"
+    OTHER = "x"          # a stack slot holding something that is not `a`
+    PUSH = {0xC5: OTHER, 0xD5: OTHER, 0xE5: OTHER, 0xF5: "a"}
+    POP = {0xC1: False, 0xD1: False, 0xE1: False, 0xF1: True}
+    SP_UNKNOWN = {0x08, 0x31, 0x33, 0x3B, 0xE8, 0xF9}
 
     def meet(x, y):
         if x is NOINFO:
@@ -270,26 +298,67 @@ def compute_wram_bank(dis):
             return x
         return x if x == y else UNK
 
+    def meet_stack(x, y):
+        if x is NOINFO:
+            return y
+        if y is NOINFO:
+            return x
+        if x is UNK or y is UNK or len(x) != len(y):
+            return UNK if x != y else x
+        return tuple(a if a == b else OTHER for a, b in zip(x, y))
+
     def transfer(off, st):
-        bank, a = st
+        bank, a, stack = st
         op = rom[off]
         if op == 0x3E:                                   # ld a, imm8
-            return (bank, rom[off + 1])
+            return (bank, rom[off + 1], stack)
+        if op == 0xF0:                                   # ldh a, [n8]
+            n = rom[off + 1]
+            if n in (HWRAMBANK_LOW, 0x70):               # the shadow, or rWBK
+                return (bank, bank if isinstance(bank, int) else UNK, stack)
+            return (bank, UNK, stack)
         if op == 0xE0:                                   # ldh [n8], a
             if rom[off + 1] == 0x70:                     # rWBK <- a
-                return (a if a is not NOINFO else UNK, a)
-            return (bank, a)                             # e.g. hWramBank shadow
+                return (a, a, stack)                     # NOINFO stays NOINFO
+            return (bank, a, stack)                      # e.g. hWramBank shadow
         if op == 0xEA and rom[off + 1] == 0x70 and rom[off + 2] == 0xff:
-            return (a if a is not NOINFO else UNK, a)    # ld [$ff70], a
-        return (bank, UNK)                               # any other op clobbers a
+            return (a, a, stack)                         # ld [$ff70], a
+        # NOINFO is the top of the lattice -- "not reached yet", not "unknown".
+        # Pushing onto it has to stay NOINFO: collapsing to UNK here would pin
+        # every instruction downstream to unknown before the real state ever
+        # arrives, and the lattice only descends.
+        if op in PUSH:
+            v = a if PUSH[op] == "a" else OTHER
+            if stack is NOINFO:
+                return (bank, a, NOINFO)
+            if stack is UNK or len(stack) >= 8:
+                return (bank, a, UNK)
+            return (bank, a, stack + (v,))
+        if op in POP:
+            if stack is NOINFO:
+                return (bank, NOINFO if POP[op] else a, NOINFO)
+            if stack is UNK or not stack:
+                return (bank, UNK if POP[op] else a, UNK)
+            v, rest = stack[-1], stack[:-1]
+            if not POP[op]:
+                return (bank, a, rest)
+            return (bank, v if isinstance(v, int) else UNK, rest)
+        if op in SP_UNKNOWN or (op & 0xC7) == 0xC7:      # add sp / ld sp / rst
+            return (bank, UNK, UNK)
+        return (bank, UNK, stack)                        # any other op clobbers a
 
+    # Address order, explicitly. The result is not fully order-independent --
+    # an instruction whose predecessors have not been visited yet can settle on
+    # UNK before the real state arrives -- so the order is part of the answer
+    # and should not be left to whatever `instrs` happens to iterate as. Walking
+    # forwards means a straight-line routine is resolved in one pass.
     IN = {}
-    work = deque(instrs)
+    work = deque(sorted(instrs))
     inq = set(instrs)
     while work:
         off = work.popleft()
         inq.discard(off)
-        out = transfer(off, IN.get(off, (NOINFO, NOINFO)))
+        out = transfer(off, IN.get(off, (NOINFO, NOINFO, NOINFO)))
         ins = instrs[off]
         edges = []
         if ins.is_call:
@@ -297,9 +366,11 @@ def compute_wram_bank(dis):
                    else target_to_offset(ins.target, off)
                    if ins.target is not None else None)
             if tgt in instrs:
-                edges.append((tgt, out))
+                # the callee starts on a stack of its own; it inherits the
+                # bank, not the caller's saved values
+                edges.append((tgt, (out[0], out[1], ())))
             if not ins.ends_flow:                        # return: bank kept, a lost
-                edges.append((off + ins.size, (out[0], UNK)))
+                edges.append((off + ins.size, (out[0], UNK, out[2])))
         else:
             if not ins.ends_flow:
                 edges.append((off + ins.size, out))
@@ -310,8 +381,9 @@ def compute_wram_bank(dis):
         for s, es in edges:
             if s not in instrs:
                 continue
-            cur = IN.get(s, (NOINFO, NOINFO))
-            new = (meet(cur[0], es[0]), meet(cur[1], es[1]))
+            cur = IN.get(s, (NOINFO, NOINFO, NOINFO))
+            new = (meet(cur[0], es[0]), meet(cur[1], es[1]),
+                   meet_stack(cur[2], es[2]))
             if new != cur:
                 IN[s] = new
                 if s not in inq:

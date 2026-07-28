@@ -4359,7 +4359,7 @@ LoadMinigameLevelSelectGfx:
 	push bc ; $6c72
 	push de ; $6c73
 	push hl ; $6c74
-	ld de, $d000 ; $6c75
+	ld de, wDecompBuffer ; $6c75
 	call DecompressDataFromBank ; $6c78
 	pop hl ; $6c7b
 	pop de ; $6c7c
@@ -4376,7 +4376,7 @@ LoadMinigameLevelSelectGfx:
 	ld a, [hl+] ; $6c89
 	ld d, [hl] ; $6c8a
 	ld e, a ; $6c8b
-	ld hl, $d000 ; $6c8c
+	ld hl, wDecompBuffer ; $6c8c
 	push af ; $6c8f
 	push bc ; $6c90
 	push de ; $6c91
