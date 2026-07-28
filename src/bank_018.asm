@@ -4,7 +4,7 @@ SECTION "ROM Bank $18", ROMX[$4000], BANK[$18]
 	farptr LoadIndexedPalette_18 ; $4002
 	farptr RenderProportionalTextAt32 ; $4004
 	farptr LoadMenuHandCursorGfx ; $4006
-	farptr StubLoadFontTiles ; $4008
+	farptr LoadFontTiles ; $4008
 	farptr DrawBox ; $400a
 	farptr FlushBgMapShadowToVram ; $400c
 	farptr WriteTilemapByteAdvance ; $400e
@@ -186,7 +186,10 @@ LoadMenuHandCursorGfx:
 	ld c, (Palette_18_42e0 - MenuHandCursorGfx) / 16 ; $4387
 	call QueueVRAMCopy ; $4389
 	ret ; $438c
-StubLoadFontTiles:
+; Copies FontTiles to $9000, 16 blocks. The leading `ret` means it never does:
+; the one caller gets a no-op, and whatever put the font there has already
+; done so by the time this is reached.
+LoadFontTiles:
 	ret ; $438d
 	ld hl, FontTiles ; $438e
 	ld de, $9000 ; $4391
@@ -735,7 +738,7 @@ InitConfirmScreen:
 	ld hl, ConfirmScreenGfx1 ; $5322
 	ld de, $d800 ; $5325
 	call DecompressData ; $5328
-	call StubLoadFontTiles ; $532b
+	call LoadFontTiles ; $532b
 	call DrawConfirmScreenBox ; $532e
 	ld hl, ConfirmScreenGfx3 ; $5331
 	ld de, $d000 ; $5334

@@ -4057,7 +4057,7 @@ Table_0b_5c4e:
 	; $5c4e, 4 bytes (bytes:4)
 	db $20, $10, $10, $20 ; 0x00
 NetGamePractice1Hook_PointEnd:
-	call Drill09JudgePointMode0 ; $5c52
+	call NetGamePractice1JudgeOnPointEnd ; $5c52
 	ld a, [wPointOutcome] ; $5c55
 	cp $04 ; $5c58
 	jr z, .netGamePractice1HandlePointEnd2 ; $5c5a
@@ -4118,13 +4118,13 @@ NetGamePractice1EvaluateResult:
 	ld a, $ff ; $5cbe
 	ret ; $5cc0
 NetGamePractice1Hook_RallyTick:
-	call StubNop_0b_5d63 ; $5cc1
+	call NetGamePractice1JudgeOnRallyTick ; $5cc1
 	ret ; $5cc4
 NetGamePractice1Hook_Bounce:
-	call Drill09JudgePointMode2 ; $5cc5
+	call NetGamePractice1JudgeOnBounce ; $5cc5
 	ret ; $5cc8
 NetGamePractice1Hook_BallHit:
-	call Drill09JudgePointMode1 ; $5cc9
+	call NetGamePractice1JudgeOnBallHit ; $5cc9
 	ld a, [wLastShotCharIndex] ; $5ccc
 	cp $01 ; $5ccf
 	jr nz, .done ; $5cd1
@@ -4182,22 +4182,25 @@ NetGamePractice1HandlePointEnd:
 	call UnregisterFrameTask ; $5d41
 	call PlayDrillPointEndSequence ; $5d44
 	ret ; $5d47
-Drill09JudgePointMode0:
+NetGamePractice1JudgeOnPointEnd:
 	ld a, $00 ; $5d48
 	call NetGamePractice1JudgePoint ; $5d4a
 	ld [wDrillPointJudgement], a ; $5d4d
 	ret ; $5d50
-Drill09JudgePointMode1:
+NetGamePractice1JudgeOnBallHit:
 	ld a, $01 ; $5d51
 	call NetGamePractice1JudgePoint ; $5d53
 	ld [wDrillPointJudgement], a ; $5d56
 	ret ; $5d59
-Drill09JudgePointMode2:
+NetGamePractice1JudgeOnBounce:
 	ld a, $02 ; $5d5a
 	call NetGamePractice1JudgePoint ; $5d5c
 	ld [wDrillPointJudgement], a ; $5d5f
 	ret ; $5d62
-StubNop_0b_5d63:
+; Judges the point on the rally-tick event -- except that the leading `ret`
+; means the body never runs. Called from NetGamePractice1Hook_RallyTick, the
+; fourth of this drill's four judges; see docs/bugs.md.
+NetGamePractice1JudgeOnRallyTick:
 	ret ; $5d63
 	ld a, $03 ; $5d64
 	call NetGamePractice1JudgePoint ; $5d66
@@ -6350,7 +6353,7 @@ EnableTargetZoneAfterDelayTask:
 	call UnregisterFrameTask ; $6bdd
 	ret ; $6be0
 StrokePractice1Hook_PointEnd:
-	call Drill15JudgePointMode0 ; $6be1
+	call StrokePractice1JudgeOnPointEnd ; $6be1
 	ld a, [wPointOutcome] ; $6be4
 	cp $05 ; $6be7
 	jr z, .eq05 ; $6be9
@@ -6408,13 +6411,13 @@ StrokePractice1EvaluateResult:
 	ld a, $ff ; $6c47
 	ret ; $6c49
 StrokePractice1Hook_RallyTick:
-	call StubNop_0b_6ceb ; $6c4a
+	call StrokePractice1JudgeOnRallyTick ; $6c4a
 	ret ; $6c4d
 StrokePractice1Hook_Bounce:
-	call Drill15JudgePointMode2 ; $6c4e
+	call StrokePractice1JudgeOnBounce ; $6c4e
 	ret ; $6c51
 StrokePractice1Hook_BallHit:
-	call Drill15JudgePointMode1 ; $6c52
+	call StrokePractice1JudgeOnBallHit ; $6c52
 	ld a, [wRallyLength] ; $6c55
 	cp $01 ; $6c58
 	ret nz ; $6c5a
@@ -6471,22 +6474,25 @@ StrokePractice1HandlePointEnd:
 	call UnregisterFrameTask ; $6cc9
 	call PlayDrillPointEndSequence ; $6ccc
 	ret ; $6ccf
-Drill15JudgePointMode0:
+StrokePractice1JudgeOnPointEnd:
 	ld a, $00 ; $6cd0
 	call StrokePractice1JudgePoint ; $6cd2
 	ld [wDrillPointJudgement], a ; $6cd5
 	ret ; $6cd8
-Drill15JudgePointMode1:
+StrokePractice1JudgeOnBallHit:
 	ld a, $01 ; $6cd9
 	call StrokePractice1JudgePoint ; $6cdb
 	ld [wDrillPointJudgement], a ; $6cde
 	ret ; $6ce1
-Drill15JudgePointMode2:
+StrokePractice1JudgeOnBounce:
 	ld a, $02 ; $6ce2
 	call StrokePractice1JudgePoint ; $6ce4
 	ld [wDrillPointJudgement], a ; $6ce7
 	ret ; $6cea
-StubNop_0b_6ceb:
+; Judges the point on the rally-tick event -- except that the leading `ret`
+; means the body never runs. Called from StrokePractice1Hook_RallyTick, the
+; fourth of this drill's four judges; see docs/bugs.md.
+StrokePractice1JudgeOnRallyTick:
 	ret ; $6ceb
 	ld a, $03 ; $6cec
 	call StrokePractice1JudgePoint ; $6cee

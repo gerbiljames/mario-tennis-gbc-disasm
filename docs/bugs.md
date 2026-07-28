@@ -113,11 +113,10 @@ store with a missing counterpart.
 
 ## Routines that return before their body
 
-Twenty-four routines in the ROM are *called* but begin with `ret`, so their
-bodies never run. Eighteen of them are one family, and they are listed here
-rather than under Bugs because what they do is coherent — but the intent behind
-them is not something the code can settle, so this section claims only what is
-observable.
+Routines in the ROM that are *called* but begin with `ret`, so their bodies
+never run. Twenty of them are one family, and they are listed here rather than
+under Bugs because what they do is coherent — but the intent behind them is not
+something the code can settle, so this section claims only what is observable.
 
 Each drill in bank `$0b` has four judging routines, one per hook, which pass an
 event code to that drill's `JudgePoint`:
@@ -133,10 +132,10 @@ event code to that drill's `JudgePoint`:
 returns early if `wDrillPointJudgement` is already set, so the first event to
 judge a point wins.
 
-Thirteen drills, 52 routines, 18 of them beginning with `ret` — and **which**
-ones varies:
+Fifteen drills, four judges each, 20 of the 60 beginning with `ret` — and
+**which** ones varies:
 
-* 7 drills disable `JudgeOnRallyTick` only (the stroke and net-game practice
+* 9 drills disable `JudgeOnRallyTick` only (the stroke and net-game practice
   drills);
 * 5 disable `JudgeOnBounce` and `JudgeOnRallyTick` (`ServiceMatch1`/`3`,
   `NetGameMatch1`/`2`/`3`);
@@ -152,6 +151,32 @@ consistent with it being deliberate; it is not proof of it, and a leading `ret`
 looks the same whether it was written as configuration or left behind by an
 edit. Nothing else in the ROM distinguishes the two.
 
-Several routines of the same shape elsewhere were named `StubNop_*` and
-`StubLoadFontTiles` by earlier passes — those names carry the same assumption
-and are worth re-examining on the same grounds.
+### The names were hiding some of them
+
+Six routines of this shape were named after the `ret` rather than the body, and
+two of those were drill judges — which is why the counts above were first
+written as thirteen drills and 52 judges instead of fifteen and 60. They are
+named for what they do now, with the leading `ret` recorded in the note:
+
+| was | is | body |
+| --- | --- | --- |
+| `StubNop_0b_5d63` | `NetGamePractice1JudgeOnRallyTick` | the drill's fourth judge |
+| `StubNop_0b_6ceb` | `StrokePractice1JudgeOnRallyTick` | the drill's fourth judge |
+| `StubLoadFontTiles` | `LoadFontTiles` | copies `FontTiles` to `$9000` |
+| `StubNop_1b_664a` | `LoadUnlockDebugNavGridGfx` | decompresses and uploads debug-screen artwork |
+| `StubAlwaysNotZero` | `CheckExpAwardAllowed` | the EXP-award gate — see below |
+| `StubNop_05_49dc` | `PagedMenuFrameTask` | a live frame task whose body has no effect |
+
+The thirty other `StubNop_*` labels have a bare `ret` for a body and keep the
+name, which for them is accurate.
+
+`CheckExpAwardAllowed` is worth its own line. `AddExpToCa00RecordChecked` calls
+it and returns on z, but it cannot return z: `xor a` / `dec a` sets the flags
+from `$ff` and the following `ld a, c` restores the caller's `a` without
+touching them. The gate always passes and the award always happens. Whatever
+condition it was meant to test is not in the ROM.
+
+`PagedMenuFrameTask` is the other interesting one: it is genuinely registered
+per frame by `RunPagedTextMenuAutoSize` and unregistered when the menu closes,
+so the plumbing around it is real — but the body reads `wMenuCursorRow` into `a`
+and then `pop af` discards it. The task runs and does nothing.

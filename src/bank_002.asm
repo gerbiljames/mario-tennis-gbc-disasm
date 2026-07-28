@@ -1687,7 +1687,12 @@ TestStorySlotFlagA:
 .zero:
 	ld a, $00 ; $4d26
 	ret ; $4d28
-StubAlwaysNotZero:
+; The gate on awarding EXP: AddExpToCa00RecordChecked calls it and returns on
+; z. It cannot return z -- `xor a` / `dec a` sets the flags from $ff and the
+; following `ld a, c` restores the caller's a without touching them -- so the
+; gate always passes and the award always happens. Whatever condition it was
+; meant to test is not in the ROM.
+CheckExpAwardAllowed:
 	push bc ; $4d29
 	ld c, a ; $4d2a
 	xor a ; $4d2b
@@ -1749,7 +1754,7 @@ ClearCa00RecordExp:
 	ld [hl+], a ; $4d6b
 	ret ; $4d6c
 AddExpToCa00RecordChecked:
-	call StubAlwaysNotZero ; $4d6d
+	call CheckExpAwardAllowed ; $4d6d
 	ret z ; $4d70
 AddExpToCa00RecordHooked:
 	call StubNop ; $4d71

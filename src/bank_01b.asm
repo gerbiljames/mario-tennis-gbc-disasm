@@ -3582,7 +3582,10 @@ LoadUnlockDebugScreenGfx:
 	ld de, $0008 ; $6643
 	call LoadPaletteShadow ; $6646
 	ret ; $6649
-StubNop_1b_664a:
+; Decompresses UnlockDebugNavGridTable to $d000, uploads it to $8500 and loads
+; its palette. The leading `ret` means it never runs -- this is debug-screen
+; artwork, so the screen presumably renders without it.
+LoadUnlockDebugNavGridGfx:
 	ret ; $664a
 	ld hl, UnlockDebugNavGridTable ; $664b
 	ld de, $d000 ; $664e
@@ -3698,7 +3701,7 @@ RunMinigameFlagsDebugScreen:
 	call BeginFadeOut ; $673c
 	call WaitFadeEnd ; $673f
 	call DisableLCDSafely ; $6742
-	call StubNop_1b_664a ; $6745
+	call LoadUnlockDebugNavGridGfx ; $6745
 	call StartUnlockDebugCursorTask ; $6748
 	call LoadUnlockDebugScreenGfx ; $674b
 	call DrawUnlockDebugMugshots ; $674e

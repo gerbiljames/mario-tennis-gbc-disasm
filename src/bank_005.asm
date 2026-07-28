@@ -1622,7 +1622,12 @@ RunPagedTextMenu:
 	pop de ; $49d9
 	pop bc ; $49da
 	ret ; $49db
-StubNop_05_49dc:
+; Registered as a per-frame task by RunPagedTextMenuAutoSize and unregistered
+; when the menu closes, so it does run every frame -- but its body reads
+; wMenuCursorRow into a and then `pop af` discards it, leaving no effect. Not
+; a bare `ret` stub: the register/unregister pair around it is real, only the
+; work is missing.
+PagedMenuFrameTask:
 	push af ; $49dc
 	push bc ; $49dd
 	push de ; $49de
@@ -1660,7 +1665,7 @@ RunPagedTextMenuAutoSize:
 	xor a ; $4a17
 	ld [w5_d846], a ; $4a18
 	ld a, $01 ; $4a1b
-	ld hl, StubNop_05_49dc ; $4a1d
+	ld hl, PagedMenuFrameTask ; $4a1d
 	call RegisterFrameTask ; $4a20
 .loop:
 	call FetchDialogueText ; $4a23
@@ -1726,7 +1731,7 @@ RunPagedTextMenuAutoSize:
 	ld [wMenuCursorRow], a ; $4a90
 	add sp, 3 ; $4a93
 	push af ; $4a95
-	ld hl, StubNop_05_49dc ; $4a96
+	ld hl, PagedMenuFrameTask ; $4a96
 	call UnregisterFrameTask ; $4a99
 	pop af ; $4a9c
 	ld b, a ; $4a9d

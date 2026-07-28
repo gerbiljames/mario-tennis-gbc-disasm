@@ -1102,7 +1102,10 @@
  "0x8d08": "StorySlotFlagAIds_02",
  "0x8d10": "TestStorySlotFlagA",
  "0x8d26": ".zero",
- "0x8d29": "StubAlwaysNotZero",
+ "0x8d29": {
+  "name": "CheckExpAwardAllowed",
+  "note": "The gate on awarding EXP: AddExpToCa00RecordChecked calls it and returns on\nz. It cannot return z -- `xor a` / `dec a` sets the flags from $ff and the\nfollowing `ld a, c` restores the caller's a without touching them -- so the\ngate always passes and the award always happens. Whatever condition it was\nmeant to test is not in the ROM."
+ },
  "0x8d30": "AddExpCapped",
  "0x8d50": "Value100000_02",
  "0x8d54": "Compare24Bit",
@@ -1940,7 +1943,10 @@
  "0x149bb": ".pageNext",
  "0x149c6": ".storePageNext",
  "0x149cc": ".done",
- "0x149dc": "StubNop_05_49dc",
+ "0x149dc": {
+  "name": "PagedMenuFrameTask",
+  "note": "Registered as a per-frame task by RunPagedTextMenuAutoSize and unregistered\nwhen the menu closes, so it does run every frame -- but its body reads\nwMenuCursorRow into a and then `pop af` discards it, leaving no effect. Not\na bare `ret` stub: the register/unregister pair around it is real, only the\nwork is missing."
+ },
  "0x149f6": "RunPagedTextMenuAutoSize",
  "0x14a23": ".loop",
  "0x14a66": ".compare",
@@ -5219,10 +5225,13 @@
  "0x2dcd7": "NetGamePractice1Table",
  "0x2dcf9": "NetGamePractice1HandlePointEnd",
  "0x2dd0a": ".recordDrillPointResultBits",
- "0x2dd48": "Drill09JudgePointMode0",
- "0x2dd51": "Drill09JudgePointMode1",
- "0x2dd5a": "Drill09JudgePointMode2",
- "0x2dd63": "StubNop_0b_5d63",
+ "0x2dd48": "NetGamePractice1JudgeOnPointEnd",
+ "0x2dd51": "NetGamePractice1JudgeOnBallHit",
+ "0x2dd5a": "NetGamePractice1JudgeOnBounce",
+ "0x2dd63": {
+  "name": "NetGamePractice1JudgeOnRallyTick",
+  "note": "Judges the point on the rally-tick event -- except that the leading `ret`\nmeans the body never runs. Called from NetGamePractice1Hook_RallyTick, the\nfourth of this drill's four judges; see docs/bugs.md."
+ },
  "0x2dd6d": "NetGamePractice1JudgePoint",
  "0x2dd7f": ".rally1",
  "0x2dd8a": ".result0",
@@ -5559,10 +5568,13 @@
  "0x2ec5f": "StrokePractice1Table",
  "0x2ec81": "StrokePractice1HandlePointEnd",
  "0x2ec92": ".recordDrillPointResultBits",
- "0x2ecd0": "Drill15JudgePointMode0",
- "0x2ecd9": "Drill15JudgePointMode1",
- "0x2ece2": "Drill15JudgePointMode2",
- "0x2eceb": "StubNop_0b_6ceb",
+ "0x2ecd0": "StrokePractice1JudgeOnPointEnd",
+ "0x2ecd9": "StrokePractice1JudgeOnBallHit",
+ "0x2ece2": "StrokePractice1JudgeOnBounce",
+ "0x2eceb": {
+  "name": "StrokePractice1JudgeOnRallyTick",
+  "note": "Judges the point on the rally-tick event -- except that the leading `ret`\nmeans the body never runs. Called from StrokePractice1Hook_RallyTick, the\nfourth of this drill's four judges; see docs/bugs.md."
+ },
  "0x2ecf5": "StrokePractice1JudgePoint",
  "0x2ed05": ".rally1",
  "0x2ed10": ".result0",
@@ -9250,7 +9262,10 @@
  "0x60365": ".attrPlane",
  "0x60377": ".done",
  "0x6037c": "LoadMenuHandCursorGfx",
- "0x6038d": "StubLoadFontTiles",
+ "0x6038d": {
+  "name": "LoadFontTiles",
+  "note": "Copies FontTiles to $9000, 16 blocks. The leading `ret` means it never does:\nthe one caller gets a no-op, and whatever put the font there has already\ndone so by the time this is reached."
+ },
  "0x6039a": "RenderProportionalTextAt32",
  "0x603a2": "DrawStringToTilemap",
  "0x603a6": "WriteTilemapByteAdvance",
@@ -10234,7 +10249,10 @@
  "0x6e5fa": "LoadUnlockDebugNavGrid",
  "0x6e609": "LoadUnlockDebugRosterTable",
  "0x6e618": "LoadUnlockDebugScreenGfx",
- "0x6e64a": "StubNop_1b_664a",
+ "0x6e64a": {
+  "name": "LoadUnlockDebugNavGridGfx",
+  "note": "Decompresses UnlockDebugNavGridTable to $d000, uploads it to $8500 and loads\nits palette. The leading `ret` means it never runs -- this is debug-screen\nartwork, so the screen presumably renders without it."
+ },
  "0x6e671": "UpdateBobbingDecorSprite",
  "0x6e681": "StartUnlockDebugCursorTask",
  "0x6e68d": "UpdateUnlockDebugCursorTask",
