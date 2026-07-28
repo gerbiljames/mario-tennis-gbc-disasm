@@ -1799,19 +1799,19 @@ SinglesRankingEntryTable:
 	dw $002a ; record 10
 	dw $0027 ; record 11
 SinglesRankingEntryTable1:
-	; $5576, 24 bytes (records:2)
-	dw $d021 ; record 0
-	dw $d081 ; record 1
-	dw $d0e1 ; record 2
-	dw $d141 ; record 3
-	dw $d1a1 ; record 4
-	dw $d201 ; record 5
-	dw $d02e ; record 6
-	dw $d08e ; record 7
-	dw $d0ee ; record 8
-	dw $d14e ; record 9
-	dw $d1ae ; record 10
-	dw $d20e ; record 11
+	; $5576, 24 bytes (ram_ptrs:3)
+	dw wShadowTilemap + 1 * TILEMAP_WIDTH + 1 ; record 0
+	dw wShadowTilemap + 4 * TILEMAP_WIDTH + 1 ; record 1
+	dw wShadowTilemap + 7 * TILEMAP_WIDTH + 1 ; record 2
+	dw wShadowTilemap + 10 * TILEMAP_WIDTH + 1 ; record 3
+	dw wShadowTilemap + 13 * TILEMAP_WIDTH + 1 ; record 4
+	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 5
+	dw wShadowTilemap + 1 * TILEMAP_WIDTH + 14 ; record 6
+	dw wShadowTilemap + 4 * TILEMAP_WIDTH + 14 ; record 7
+	dw wShadowTilemap + 7 * TILEMAP_WIDTH + 14 ; record 8
+	dw wShadowTilemap + 10 * TILEMAP_WIDTH + 14 ; record 9
+	dw wShadowTilemap + 13 * TILEMAP_WIDTH + 14 ; record 10
+	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 14 ; record 11
 ClearSinglesRankingNameRects:
 	push af ; $558e
 	push bc ; $558f
@@ -1928,19 +1928,19 @@ DoublesRankingEntryTable:
 	dw $004c ; record 11
 	dw $002b ; record 12
 DoublesRankingEntryTable1:
-	; $5641, 24 bytes (records:2)
-	dw $d041 ; record 0
-	dw $d081 ; record 1
-	dw $d0e1 ; record 2
-	dw $d121 ; record 3
-	dw $d181 ; record 4
-	dw $d1c1 ; record 5
-	dw $d04e ; record 6
-	dw $d08e ; record 7
-	dw $d0ee ; record 8
-	dw $d12e ; record 9
-	dw $d18e ; record 10
-	dw $d1ce ; record 11
+	; $5641, 24 bytes (ram_ptrs:3)
+	dw wShadowTilemap + 2 * TILEMAP_WIDTH + 1 ; record 0
+	dw wShadowTilemap + 4 * TILEMAP_WIDTH + 1 ; record 1
+	dw wShadowTilemap + 7 * TILEMAP_WIDTH + 1 ; record 2
+	dw wShadowTilemap + 9 * TILEMAP_WIDTH + 1 ; record 3
+	dw wShadowTilemap + 12 * TILEMAP_WIDTH + 1 ; record 4
+	dw wShadowTilemap + 14 * TILEMAP_WIDTH + 1 ; record 5
+	dw wShadowTilemap + 2 * TILEMAP_WIDTH + 14 ; record 6
+	dw wShadowTilemap + 4 * TILEMAP_WIDTH + 14 ; record 7
+	dw wShadowTilemap + 7 * TILEMAP_WIDTH + 14 ; record 8
+	dw wShadowTilemap + 9 * TILEMAP_WIDTH + 14 ; record 9
+	dw wShadowTilemap + 12 * TILEMAP_WIDTH + 14 ; record 10
+	dw wShadowTilemap + 14 * TILEMAP_WIDTH + 14 ; record 11
 ClearDoublesRankingNameRects:
 	push af ; $5659
 	push bc ; $565a

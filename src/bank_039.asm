@@ -3081,13 +3081,13 @@ FillMenuGridCellTile:
 	pop af ; $6deb
 	ret ; $6dec
 FillMenuGridCellTileTable:
-	; $6ded, 12 bytes (records:2)
-	dw $d482 ; record 0
-	dw $d488 ; record 1
-	dw $d48e ; record 2
-	dw $d525 ; record 3
-	dw $d52b ; record 4
-	dw $d52b ; record 5
+	; $6ded, 12 bytes (ram_ptrs:3)
+	dw wShadowAttrmap + 4 * TILEMAP_WIDTH + 2 ; record 0
+	dw wShadowAttrmap + 4 * TILEMAP_WIDTH + 8 ; record 1
+	dw wShadowAttrmap + 4 * TILEMAP_WIDTH + 14 ; record 2
+	dw wShadowAttrmap + 9 * TILEMAP_WIDTH + 5 ; record 3
+	dw wShadowAttrmap + 9 * TILEMAP_WIDTH + 11 ; record 4
+	dw wShadowAttrmap + 9 * TILEMAP_WIDTH + 11 ; record 5
 MoveMinigameGridCursor:
 	ld a, [wMenuCursorY] ; $6df9
 	or a ; $6dfc

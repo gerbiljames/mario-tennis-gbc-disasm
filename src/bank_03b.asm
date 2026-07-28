@@ -2926,11 +2926,11 @@ DrawRingShotModeTab:
 	wram_bank ; $5449
 	ret ; $544d
 RingShotModeTabTable:
-	; $544e, 8 bytes (records:2)
-	dw $d055 ; record 0
-	dw $d095 ; record 1
-	dw $d0d5 ; record 2
-	dw $d015 ; record 3
+	; $544e, 8 bytes (ram_ptrs:3)
+	dw wShadowTilemap + 2 * TILEMAP_WIDTH + 21 ; record 0
+	dw wShadowTilemap + 4 * TILEMAP_WIDTH + 21 ; record 1
+	dw wShadowTilemap + 6 * TILEMAP_WIDTH + 21 ; record 2
+	dw wShadowTilemap + 21 ; record 3
 FlushRingShotWindowToVram:
 	ld hl, wShadowTilemap + 1 * TILEMAP_WIDTH ; $5456
 	ld de, $9820 ; $5459
@@ -3087,12 +3087,12 @@ DrawRingShotClearMarkRow:
 	pop af ; $5562
 	ret ; $5563
 RingShotClearMarkRowTable:
-	; $5564, 10 bytes (records:2)
-	dw $d0c4 ; record 0
-	dw $d104 ; record 1
-	dw $d144 ; record 2
-	dw $d184 ; record 3
-	dw $d1c4 ; record 4
+	; $5564, 10 bytes (ram_ptrs:3)
+	dw wShadowTilemap + 6 * TILEMAP_WIDTH + 4 ; record 0
+	dw wShadowTilemap + 8 * TILEMAP_WIDTH + 4 ; record 1
+	dw wShadowTilemap + 10 * TILEMAP_WIDTH + 4 ; record 2
+	dw wShadowTilemap + 12 * TILEMAP_WIDTH + 4 ; record 3
+	dw wShadowTilemap + 14 * TILEMAP_WIDTH + 4 ; record 4
 DrawRingShotMarkCell:
 	push af ; $556e
 	push bc ; $556f
@@ -3118,9 +3118,9 @@ DrawRingShotMarkCell:
 	pop af ; $5589
 	ret ; $558a
 RingShotMarkCellTable:
-	; $558b, 4 bytes (records:2)
-	dw $d115 ; record 0
-	dw $d117 ; record 1
+	; $558b, 4 bytes (ram_ptrs:3)
+	dw wShadowTilemap + 8 * TILEMAP_WIDTH + 21 ; record 0
+	dw wShadowTilemap + 8 * TILEMAP_WIDTH + 23 ; record 1
 RingShotScoreDrawTask:
 	ld a, [wMenuCursorY] ; $558f
 	ld hl, $db00 ; $5592
@@ -3727,17 +3727,17 @@ FillMainMenuCellHighlight:
 	pop af ; $5a41
 	ret ; $5a42
 FillMainMenuCellHighlightTable:
-	; $5a43, 20 bytes (records:2)
-	dw $d461 ; record 0
-	dw $d467 ; record 1
-	dw $d46d ; record 2
-	dw $d4e2 ; record 3
-	dw $d4e8 ; record 4
-	dw $d4ee ; record 5
-	dw $d561 ; record 6
-	dw $d567 ; record 7
-	dw $d56d ; record 8
-	dw $d507 ; record 9
+	; $5a43, 20 bytes (ram_ptrs:3)
+	dw wShadowAttrmap + 3 * TILEMAP_WIDTH + 1 ; record 0
+	dw wShadowAttrmap + 3 * TILEMAP_WIDTH + 7 ; record 1
+	dw wShadowAttrmap + 3 * TILEMAP_WIDTH + 13 ; record 2
+	dw wShadowAttrmap + 7 * TILEMAP_WIDTH + 2 ; record 3
+	dw wShadowAttrmap + 7 * TILEMAP_WIDTH + 8 ; record 4
+	dw wShadowAttrmap + 7 * TILEMAP_WIDTH + 14 ; record 5
+	dw wShadowAttrmap + 11 * TILEMAP_WIDTH + 1 ; record 6
+	dw wShadowAttrmap + 11 * TILEMAP_WIDTH + 7 ; record 7
+	dw wShadowAttrmap + 11 * TILEMAP_WIDTH + 13 ; record 8
+	dw wShadowAttrmap + 8 * TILEMAP_WIDTH + 7 ; record 9
 LoadMainMenuItemPalette:
 	ld hl, MainMenuItemPalettePtrs ; $5a57
 	add a ; $5a5a
@@ -3972,16 +3972,16 @@ DrawMainMenuCaption:
 	wram_bank ; $5bfe
 	ret ; $5c02
 MainMenuCaptionTable:
-	; $5c03, 18 bytes (records:2)
-	dw $d201 ; record 0
-	dw $d201 ; record 1
-	dw $d201 ; record 2
-	dw $d201 ; record 3
-	dw $d201 ; record 4
-	dw $d201 ; record 5
-	dw $d201 ; record 6
-	dw $d201 ; record 7
-	dw $d201 ; record 8
+	; $5c03, 18 bytes (ram_ptrs:3)
+	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 0
+	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 1
+	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 2
+	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 3
+	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 4
+	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 5
+	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 6
+	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 7
+	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 8
 MainMenuCaptionTable1:
 	; $5c15, 18 bytes (records:2)
 	dw $007d ; record 0
@@ -4593,14 +4593,14 @@ FillMatchFormatOptionCell:
 	pop af ; $6083
 	ret ; $6084
 FillMatchFormatOptionCellTable:
-	; $6085, 14 bytes (records:2)
-	dw $d463 ; record 0
-	dw $d46c ; record 1
-	dw $d4e3 ; record 2
-	dw $d4ec ; record 3
-	dw $d561 ; record 4
-	dw $d567 ; record 5
-	dw $d56d ; record 6
+	; $6085, 14 bytes (ram_ptrs:3)
+	dw wShadowAttrmap + 3 * TILEMAP_WIDTH + 3 ; record 0
+	dw wShadowAttrmap + 3 * TILEMAP_WIDTH + 12 ; record 1
+	dw wShadowAttrmap + 7 * TILEMAP_WIDTH + 3 ; record 2
+	dw wShadowAttrmap + 7 * TILEMAP_WIDTH + 12 ; record 3
+	dw wShadowAttrmap + 11 * TILEMAP_WIDTH + 1 ; record 4
+	dw wShadowAttrmap + 11 * TILEMAP_WIDTH + 7 ; record 5
+	dw wShadowAttrmap + 11 * TILEMAP_WIDTH + 13 ; record 6
 MatchFormatOptionCellTable:
 	; $6093, 7 bytes (bytes:8)
 	db $0c, $0c, $0e, $0e, $0f, $0f, $0f ; 0x00
@@ -4776,10 +4776,10 @@ RenderMatchFormatOptionText:
 	farcall RenderTextToBuffer64 ; $61e5
 	ret ; $61e8
 	ret ; $61e9
-	; $61ea, 6 bytes (records:2)
-	dw $d201 ; record 0
-	dw $d201 ; record 1
-	dw $d201 ; record 2
+	; $61ea, 6 bytes (ram_ptrs:3)
+	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 0
+	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 1
+	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 2
 RunMinigameSelect:
 	ld hl, rIE ; $61f0
 	res 2, [hl] ; $61f3
@@ -5266,16 +5266,16 @@ RenderMinigameNameText:
 	farcall RenderTextToBuffer64 ; $65d6
 	ret ; $65d9
 RenderMinigameNameTextTable:
-	; $65da, 18 bytes (records:2)
-	dw $d201 ; record 0
-	dw $d201 ; record 1
-	dw $d201 ; record 2
-	dw $d201 ; record 3
-	dw $d201 ; record 4
-	dw $d201 ; record 5
-	dw $d201 ; record 6
-	dw $d201 ; record 7
-	dw $d201 ; record 8
+	; $65da, 18 bytes (ram_ptrs:3)
+	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 0
+	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 1
+	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 2
+	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 3
+	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 4
+	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 5
+	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 6
+	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 7
+	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 8
 DrawMinigameSelectGrid9:
 	wram_bank $03 ; $65ec
 	ld b, $00 ; $65f2
@@ -5345,16 +5345,16 @@ FillMinigameSelectCell:
 	pop af ; $665e
 	ret ; $665f
 FillMinigameSelectCellTable:
-	; $6660, 18 bytes (records:2)
-	dw $d462 ; record 0
-	dw $d468 ; record 1
-	dw $d46e ; record 2
-	dw $d4e2 ; record 3
-	dw $d4e8 ; record 4
-	dw $d4ee ; record 5
-	dw $d562 ; record 6
-	dw $d568 ; record 7
-	dw $d56e ; record 8
+	; $6660, 18 bytes (ram_ptrs:3)
+	dw wShadowAttrmap + 3 * TILEMAP_WIDTH + 2 ; record 0
+	dw wShadowAttrmap + 3 * TILEMAP_WIDTH + 8 ; record 1
+	dw wShadowAttrmap + 3 * TILEMAP_WIDTH + 14 ; record 2
+	dw wShadowAttrmap + 7 * TILEMAP_WIDTH + 2 ; record 3
+	dw wShadowAttrmap + 7 * TILEMAP_WIDTH + 8 ; record 4
+	dw wShadowAttrmap + 7 * TILEMAP_WIDTH + 14 ; record 5
+	dw wShadowAttrmap + 11 * TILEMAP_WIDTH + 2 ; record 6
+	dw wShadowAttrmap + 11 * TILEMAP_WIDTH + 8 ; record 7
+	dw wShadowAttrmap + 11 * TILEMAP_WIDTH + 14 ; record 8
 LoadMinigameCharPalette:
 	ld c, a ; $6672
 	call GetMarioCastCharAtGridSlot ; $6673
@@ -5979,12 +5979,12 @@ FillSavedDataSourceCell:
 	pop af ; $6b42
 	ret ; $6b43
 FillSavedDataSourceCellTable:
-	; $6b44, 10 bytes (records:2)
-	dw $d482 ; record 0
-	dw $d488 ; record 1
-	dw $d48e ; record 2
-	dw $d523 ; record 3
-	dw $d52b ; record 4
+	; $6b44, 10 bytes (ram_ptrs:3)
+	dw wShadowAttrmap + 4 * TILEMAP_WIDTH + 2 ; record 0
+	dw wShadowAttrmap + 4 * TILEMAP_WIDTH + 8 ; record 1
+	dw wShadowAttrmap + 4 * TILEMAP_WIDTH + 14 ; record 2
+	dw wShadowAttrmap + 9 * TILEMAP_WIDTH + 3 ; record 3
+	dw wShadowAttrmap + 9 * TILEMAP_WIDTH + 11 ; record 4
 LoadSavedDataSourceCellPalette:
 	ld hl, SavedDataSourceCellPalettePtrs ; $6b4e
 	add a ; $6b51
@@ -6688,12 +6688,12 @@ FillEraseSavedDataCell:
 	pop af ; $70bf
 	ret ; $70c0
 FillEraseSavedDataCellTable:
-	; $70c1, 10 bytes (records:2)
-	dw $d482 ; record 0
-	dw $d488 ; record 1
-	dw $d48e ; record 2
-	dw $d523 ; record 3
-	dw $d52b ; record 4
+	; $70c1, 10 bytes (ram_ptrs:3)
+	dw wShadowAttrmap + 4 * TILEMAP_WIDTH + 2 ; record 0
+	dw wShadowAttrmap + 4 * TILEMAP_WIDTH + 8 ; record 1
+	dw wShadowAttrmap + 4 * TILEMAP_WIDTH + 14 ; record 2
+	dw wShadowAttrmap + 9 * TILEMAP_WIDTH + 3 ; record 3
+	dw wShadowAttrmap + 9 * TILEMAP_WIDTH + 11 ; record 4
 LoadEraseSavedDataCellPalette:
 	ld hl, EraseSavedDataCellPalettePtrs ; $70cb
 	add a ; $70ce
@@ -7185,13 +7185,13 @@ FillN64RecordTypeCell:
 	pop af ; $744f
 	ret ; $7450
 FillN64RecordTypeCellTable:
-	; $7451, 12 bytes (records:2)
-	dw $d4e1 ; record 0
-	dw $d4e7 ; record 1
-	dw $d4ed ; record 2
-	dw $d561 ; record 3
-	dw $d567 ; record 4
-	dw $d56d ; record 5
+	; $7451, 12 bytes (ram_ptrs:3)
+	dw wShadowAttrmap + 7 * TILEMAP_WIDTH + 1 ; record 0
+	dw wShadowAttrmap + 7 * TILEMAP_WIDTH + 7 ; record 1
+	dw wShadowAttrmap + 7 * TILEMAP_WIDTH + 13 ; record 2
+	dw wShadowAttrmap + 11 * TILEMAP_WIDTH + 1 ; record 3
+	dw wShadowAttrmap + 11 * TILEMAP_WIDTH + 7 ; record 4
+	dw wShadowAttrmap + 11 * TILEMAP_WIDTH + 13 ; record 5
 LoadN64RecordTypeCellPalette:
 	ld hl, N64RecordTypeCellPalettePtrs ; $745d
 	add a ; $7460
@@ -7789,11 +7789,11 @@ WriteBracketEntrantName:
 	pop af ; $78e2
 	ret ; $78e3
 WriteBracketEntrantNameTable:
-	; $78e4, 8 bytes (records:2)
-	dw $d129 ; record 0
-	dw $d169 ; record 1
-	dw $d1a9 ; record 2
-	dw $d1e9 ; record 3
+	; $78e4, 8 bytes (ram_ptrs:3)
+	dw wShadowTilemap + 9 * TILEMAP_WIDTH + 9 ; record 0
+	dw wShadowTilemap + 11 * TILEMAP_WIDTH + 9 ; record 1
+	dw wShadowTilemap + 13 * TILEMAP_WIDTH + 9 ; record 2
+	dw wShadowTilemap + 15 * TILEMAP_WIDTH + 9 ; record 3
 WriteBracketDoublesNames:
 	ld a, [wDataScreenPage] ; $78ec
 	cp $01 ; $78ef
@@ -7902,29 +7902,29 @@ HighlightBracketPlayerRow:
 	farcall FillTilemapRect ; $79b2
 	ret ; $79b5
 HighlightBracketPlayerRowTable:
-	; $79b6, 10 bytes (records:2)
-	dw $0000 ; record 0
-	dw $d509 ; record 1
-	dw $d549 ; record 2
-	dw $d589 ; record 3
-	dw $d5c9 ; record 4
+	; $79b6, 10 bytes (ram_ptrs:3:NO_BOX)
+	dw NO_BOX ; record 0
+	dw wShadowAttrmap + 8 * TILEMAP_WIDTH + 9 ; record 1
+	dw wShadowAttrmap + 10 * TILEMAP_WIDTH + 9 ; record 2
+	dw wShadowAttrmap + 12 * TILEMAP_WIDTH + 9 ; record 3
+	dw wShadowAttrmap + 14 * TILEMAP_WIDTH + 9 ; record 4
 BracketPlayerRowTable0:
-	; $79c0, 10 bytes (records:2)
-	dw $0000 ; record 0
-	dw $d525 ; record 1
-	dw $d565 ; record 2
-	dw $d5a5 ; record 3
-	dw $d5e5 ; record 4
+	; $79c0, 10 bytes (ram_ptrs:3:NO_BOX)
+	dw NO_BOX ; record 0
+	dw wShadowAttrmap + 9 * TILEMAP_WIDTH + 5 ; record 1
+	dw wShadowAttrmap + 11 * TILEMAP_WIDTH + 5 ; record 2
+	dw wShadowAttrmap + 13 * TILEMAP_WIDTH + 5 ; record 3
+	dw wShadowAttrmap + 15 * TILEMAP_WIDTH + 5 ; record 4
 BracketPlayerRowTable1:
-	; $79ca, 6 bytes (records:2)
-	dw $0000 ; record 0
-	dw $d509 ; record 1
-	dw $d589 ; record 2
+	; $79ca, 6 bytes (ram_ptrs:3:NO_BOX)
+	dw NO_BOX ; record 0
+	dw wShadowAttrmap + 8 * TILEMAP_WIDTH + 9 ; record 1
+	dw wShadowAttrmap + 12 * TILEMAP_WIDTH + 9 ; record 2
 BracketPlayerRowTable2:
-	; $79d0, 6 bytes (records:2)
-	dw $0000 ; record 0
-	dw $d525 ; record 1
-	dw $d5a5 ; record 2
+	; $79d0, 6 bytes (ram_ptrs:3:NO_BOX)
+	dw NO_BOX ; record 0
+	dw wShadowAttrmap + 9 * TILEMAP_WIDTH + 5 ; record 1
+	dw wShadowAttrmap + 13 * TILEMAP_WIDTH + 5 ; record 2
 BracketHighlightBlinkTask:
 	ld hl, $79e9 ; $79d6
 	ldh a, [hVBlankCounter] ; $79d9

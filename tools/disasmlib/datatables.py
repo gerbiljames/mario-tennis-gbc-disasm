@@ -574,6 +574,40 @@ def render_pointer_words(rom, start, end, bank, labels, spec):
     return out
 
 
+def render_ram_ptrs(rom, start, end, ramnames, ramscoped, wram_bank, zero_name):
+    """A dw table whose words are RAM addresses rather than ROM pointers.
+
+    `render_pointer_words` only resolves ROM labels, and the scoped RAM names
+    it would need cannot resolve themselves here: a `wram_bank` scope is a
+    compute_wram_bank fact about a *code* site, and a data word has no
+    dataflow. So the spec states the bank -- `ram_ptrs:<bank>[:<zero name>]` --
+    and every word resolves against it. rgbasm folds the result back to the
+    same value, so `make compare` still checks the arithmetic, and a screen's
+    cell table stops reading as unrelated addresses.
+
+    Bank `0` asserts nothing (WRAM bank 0 is not selectable: writing 0 to rWBK
+    picks bank 1). Use it for an unbanked WRAM0 table, or where the union that
+    covers the addresses is scoped by the referencing code's ROM bank instead
+    -- that scope matches on the word's own offset and needs no assertion.
+
+    A word that resolves to nothing stays numeric; that is the signal the
+    declared bank is wrong, or that the table is not all addresses."""
+    out = []
+    for r in range((end - start) // 2):
+        ro = start + r * 2
+        w = rom[ro] | (rom[ro + 1] << 8)
+        if w == 0 and zero_name:
+            ref = zero_name
+        else:
+            ref = ramnames.get(w) if ramnames else None
+            if not ref and ramscoped:
+                ref = ramscoped.resolve(w, ro, wram_bank=wram_bank)
+        out.append(f"\tdw {ref or f'${w:04x}'} ; record {r}")
+    if (end - start) % 2:
+        out.append(f"\tdb ${rom[end - 1]:02x}")
+    return out
+
+
 def render_slot_records(rom, start, end, nwords, slot_ref):
     """A record table of (bank<<8|slot) words into other banks' $4000 tables.
     Each record renders as a `dslot` line of slot labels, so the words track

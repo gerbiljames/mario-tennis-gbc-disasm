@@ -8,6 +8,14 @@
 ; that as `$9800 + VRAM_BANK1` rather than hiding the bank inside a literal.
 def VRAM_BANK1 equ $2000
 
+; --- Absent cell in a table of tilemap addresses ---
+; The character-select PlayerSlotBoxAddrs* tables hold one shadow-tilemap cell
+; per player slot, and a layout that does not show a slot stores zero for it.
+; Nothing checks the fetched address, so the zero is a placeholder the code
+; relies on never selecting rather than a guard value -- which is exactly why
+; it wants a name instead of a bare $0000.
+def NO_BOX equ $0000
+
 ; --- Joypad buttons (standard GB layout) ---
 ; The per-character input byte ($df1f, built by ReadCharPadInput) and the raw
 ; joypad shadow use the standard layout: buttons in the low nibble, d-pad in the

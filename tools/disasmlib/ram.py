@@ -157,20 +157,24 @@ class ScopedRamNames:
             if size > 1:
                 self.sized.append((addr, size, matchers, name, stride))
 
-    def _match(self, matchers, off):
+    def _match(self, matchers, off, wram_bank=None):
+        at = self.bank_at.get(off) if wram_bank is None else wram_bank
         for rng, wb in matchers:
             if rng is not None and not (rng[0] <= off < rng[1]):
                 continue
-            if wb is not None and self.bank_at.get(off) != wb:
+            if wb is not None and at != wb:
                 continue
             return True
         return False
 
-    def resolve(self, addr, off):
+    def resolve(self, addr, off, wram_bank=None):
+        """`wram_bank` asserts the bank instead of asking compute_wram_bank.
+        A data word has no dataflow to read, so a table that holds RAM
+        addresses states its bank in its render spec (see render_ram_ptrs)."""
         e = self.by_addr.get(addr)
         if e:
             for matchers, name in e["scoped"]:
-                if self._match(matchers, off):
+                if self._match(matchers, off, wram_bank):
                     return name
             if e["default"] and not any(lo <= off < hi for lo, hi in e["mask"]):
                 return e["default"]
@@ -178,7 +182,8 @@ class ScopedRamNames:
         # ram_map.json expansion; an interior byte that is itself an explicit
         # symbol matched above and returned before reaching here)
         for base, size, matchers, name, stride in self.sized:
-            if base < addr < base + size and self._match(matchers, off):
+            if base < addr < base + size \
+                    and self._match(matchers, off, wram_bank):
                 return grid_offset(name, addr - base, stride)
         for base, size, mask, name, stride in self.sized_default:
             if base < addr < base + size \

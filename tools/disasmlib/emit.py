@@ -28,7 +28,7 @@ from .datatables import (render_actor_list, render_actor_script,
                          render_map_table, render_menu_def,
                          render_mugshot_ptr_table, render_object_header,
                          render_number_words, render_pointer_words,
-                         render_rect_pair,
+                         render_ram_ptrs, render_rect_pair,
                          render_rect_ptrs, render_rules_pages,
                          render_sprite_anim, render_text_ids,
                          render_slot_records, render_story_locations,
@@ -966,6 +966,11 @@ class Emitter:
         if spec in ("records:2", "mode_hooks", "minigame_configs"):
             return render_pointer_words(self.rom, start, end, bank,
                                         self.ptr_names, spec)
+        if spec.startswith("ram_ptrs:"):
+            parts = spec.split(":")
+            return render_ram_ptrs(self.rom, start, end, self.ramnames,
+                                   self.ramscoped, int(parts[1], 0),
+                                   parts[2] if len(parts) > 2 else None)
         if spec.startswith("words:"):
             return render_number_words(self.rom, start, end,
                                        int(spec.split(":")[1]))

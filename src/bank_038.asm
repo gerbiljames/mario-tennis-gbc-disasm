@@ -2694,11 +2694,11 @@ ClearPlayerSlotPortrait:
 .done:
 	ret ; $5609
 Data_38_560a:
-	; $560a, 8 bytes (records:2)
-	dw $d0ce ; record 0
-	dw $d0d0 ; record 1
-	dw $d12e ; record 2
-	dw $d130 ; record 3
+	; $560a, 8 bytes (ram_ptrs:3)
+	dw wShadowTilemap + 6 * TILEMAP_WIDTH + 14 ; record 0
+	dw wShadowTilemap + 6 * TILEMAP_WIDTH + 16 ; record 1
+	dw wShadowTilemap + 9 * TILEMAP_WIDTH + 14 ; record 2
+	dw wShadowTilemap + 9 * TILEMAP_WIDTH + 16 ; record 3
 DrawPlayerSlotPortrait:
 	ld hl, w3_da00 ; $5612
 	ld a, b ; $5615
@@ -2752,11 +2752,11 @@ DrawPlayerSlotPortrait:
 .done:
 	ret ; $5671
 Data_38_5672:
-	; $5672, 8 bytes (records:2)
-	dw $d0ce ; record 0
-	dw $d0d0 ; record 1
-	dw $d12e ; record 2
-	dw $d130 ; record 3
+	; $5672, 8 bytes (ram_ptrs:3)
+	dw wShadowTilemap + 6 * TILEMAP_WIDTH + 14 ; record 0
+	dw wShadowTilemap + 6 * TILEMAP_WIDTH + 16 ; record 1
+	dw wShadowTilemap + 9 * TILEMAP_WIDTH + 14 ; record 2
+	dw wShadowTilemap + 9 * TILEMAP_WIDTH + 16 ; record 3
 DrawPlayerSlotLeftHandedMark:
 	ld a, [wCharSelectSlot] ; $567a
 	ld hl, wCharSelectSlotLeftHanded ; $567d
@@ -2825,47 +2825,47 @@ PlayerSlotBoxAddrPtrs_38:
 	dw PlayerSlotBoxAddrs4 ; record 4
 	dw PlayerSlotBoxAddrs5 ; record 5
 PlayerSlotBoxAddrs0:
-	; $56d5, 10 bytes (records:2)
-	dw $d0d0 ; record 0
-	dw $0000 ; record 1
-	dw $d130 ; record 2
-	dw $0000 ; record 3
-	dw $0000 ; record 4
+	; $56d5, 10 bytes (ram_ptrs:3:NO_BOX)
+	dw wShadowTilemap + 6 * TILEMAP_WIDTH + 16 ; record 0
+	dw NO_BOX ; record 1
+	dw wShadowTilemap + 9 * TILEMAP_WIDTH + 16 ; record 2
+	dw NO_BOX ; record 3
+	dw NO_BOX ; record 4
 PlayerSlotBoxAddrs1:
-	; $56df, 10 bytes (records:2)
-	dw $d0cd ; record 0
-	dw $d0d1 ; record 1
-	dw $d12d ; record 2
-	dw $d131 ; record 3
-	dw $0000 ; record 4
+	; $56df, 10 bytes (ram_ptrs:3:NO_BOX)
+	dw wShadowTilemap + 6 * TILEMAP_WIDTH + 13 ; record 0
+	dw wShadowTilemap + 6 * TILEMAP_WIDTH + 17 ; record 1
+	dw wShadowTilemap + 9 * TILEMAP_WIDTH + 13 ; record 2
+	dw wShadowTilemap + 9 * TILEMAP_WIDTH + 17 ; record 3
+	dw NO_BOX ; record 4
 PlayerSlotBoxAddrs2:
-	; $56e9, 10 bytes (records:2)
-	dw $d0d0 ; record 0
-	dw $0000 ; record 1
-	dw $0000 ; record 2
-	dw $0000 ; record 3
-	dw $0000 ; record 4
+	; $56e9, 10 bytes (ram_ptrs:3:NO_BOX)
+	dw wShadowTilemap + 6 * TILEMAP_WIDTH + 16 ; record 0
+	dw NO_BOX ; record 1
+	dw NO_BOX ; record 2
+	dw NO_BOX ; record 3
+	dw NO_BOX ; record 4
 PlayerSlotBoxAddrs3:
-	; $56f3, 10 bytes (records:2)
-	dw $0000 ; record 0
-	dw $0000 ; record 1
-	dw $d130 ; record 2
-	dw $0000 ; record 3
-	dw $0000 ; record 4
+	; $56f3, 10 bytes (ram_ptrs:3:NO_BOX)
+	dw NO_BOX ; record 0
+	dw NO_BOX ; record 1
+	dw wShadowTilemap + 9 * TILEMAP_WIDTH + 16 ; record 2
+	dw NO_BOX ; record 3
+	dw NO_BOX ; record 4
 PlayerSlotBoxAddrs4:
-	; $56fd, 10 bytes (records:2)
-	dw $d0cd ; record 0
-	dw $d0d1 ; record 1
-	dw $0000 ; record 2
-	dw $0000 ; record 3
-	dw $0000 ; record 4
+	; $56fd, 10 bytes (ram_ptrs:3:NO_BOX)
+	dw wShadowTilemap + 6 * TILEMAP_WIDTH + 13 ; record 0
+	dw wShadowTilemap + 6 * TILEMAP_WIDTH + 17 ; record 1
+	dw NO_BOX ; record 2
+	dw NO_BOX ; record 3
+	dw NO_BOX ; record 4
 PlayerSlotBoxAddrs5:
-	; $5707, 11 bytes (records:2)
-	dw $0000 ; record 0
-	dw $0000 ; record 1
-	dw $d12d ; record 2
-	dw $d131 ; record 3
-	dw $0000 ; record 4
+	; $5707, 11 bytes (ram_ptrs:3:NO_BOX)
+	dw NO_BOX ; record 0
+	dw NO_BOX ; record 1
+	dw wShadowTilemap + 9 * TILEMAP_WIDTH + 13 ; record 2
+	dw wShadowTilemap + 9 * TILEMAP_WIDTH + 17 ; record 3
+	dw NO_BOX ; record 4
 	db $c9
 WriteCharPortraitTiles:
 	ld a, b ; $5712

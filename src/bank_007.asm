@@ -2612,12 +2612,12 @@ ApplyShotRecoil:
 .done:
 	ret ; $54c9
 ShotRecoilVarPtrs_07:
-	; $54ca, 10 bytes (records:2)
-	dw $df6b ; record 0
-	dw $df6d ; record 1
-	dw $df6c ; record 2
-	dw $df6b ; record 3
-	dw $df6c ; record 4
+	; $54ca, 10 bytes (ram_ptrs:0)
+	dw wGroundStrokeSpeedIndex ; record 0
+	dw wReachSpeedIndex ; record 1
+	dw wSmashServeSpeedIndex ; record 2
+	dw wGroundStrokeSpeedIndex ; record 3
+	dw wSmashServeSpeedIndex ; record 4
 ShotRecoilTable_07:
 	; $54d4, 10 bytes (bytes:10)
 	db $58, $50, $48, $40, $38, $30, $28, $20, $18, $10 ; 0x00
@@ -3798,11 +3798,11 @@ LoadCharacterAttributes:
 	call OverrideCharStatsForDebug ; $5c3e
 	ret ; $5c41
 CharAttrStructPtrs_07:
-	; $5c42, 8 bytes (records:2)
-	dw $ca00 ; record 0
-	dw $ca80 ; record 1
-	dw $ca40 ; record 2
-	dw $cac0 ; record 3
+	; $5c42, 8 bytes (ram_ptrs:0)
+	dw wPlayer1MainName ; record 0
+	dw wPlayer2MainName ; record 1
+	dw wPlayer1PartnerName ; record 2
+	dw wPlayer2PartnerName ; record 3
 CharStatTable_07_5c4a:
 	; $5c4a, 20 bytes (records:2)
 	dw $0a00 ; record 0

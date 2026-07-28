@@ -114,9 +114,9 @@ RecordDrillPointResultBits:
 	ld [hl], a ; $40ba
 	ret ; $40bb
 DrillPointResultBitsTable:
-	; $40bc, 4 bytes (records:2)
-	dw $c2fc ; record 0
-	dw $c2fd ; record 1
+	; $40bc, 4 bytes (ram_ptrs:0)
+	dw wDrillShotResultBits ; record 0
+	dw wDrillShotResultBits + 1 ; record 1
 CountDrillShotSuccesses:
 	push bc ; $40c0
 	push hl ; $40c1
