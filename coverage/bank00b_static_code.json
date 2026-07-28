@@ -1,5 +1,5 @@
 {
- "_comment": "Static code-entry seeds for bank $0b (minigame object bank): fall-through code heads, and behavior code entries pointed by 16-byte object-template headers ($5e95/$6dae). Flat = 0x0b*0x4000 + (cpu-0x4000).",
+ "_comment": "Static code-entry seeds for bank $0b (minigame object bank): fall-through code heads, and behavior code entries pointed by 16-byte object-template headers ($5e95/$6dae). Flat = 0x0b*0x4000 + (cpu-0x4000). Corrected 2026-07-28: 0x2deab was removed -- it is NetGamePractice2Hooks, a 16-byte mode_hooks table, not a behaviour entry. Seeding it as code beat the hook-table inference that renders its siblings NetGamePractice1Hooks and NetGamePractice3Hooks correctly.",
  "rom": [
   180416,
   180477,
@@ -20,7 +20,6 @@
   182553,
   182711,
   188069,
-  188075,
   188109,
   191934,
   191940,

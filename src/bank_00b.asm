@@ -4384,18 +4384,15 @@ NetGamePractice2DrillInit:
 	ld [wDrillIsPracticeLesson], a ; $5ea7
 	ret ; $5eaa
 NetGamePractice2Hooks:
-	call $d15e ; $5eab
-	ld e, [hl] ; $5eae
-	ld a, [$bb5e] ; $5eaf
-	ld e, [hl] ; $5eb2
-	add e ; $5eb3
-	ld e, a ; $5eb4
-	ld a, a ; $5eb5
-	ld e, a ; $5eb6
-	ld a, e ; $5eb7
-	ld e, a ; $5eb8
-	xor [hl] ; $5eb9
-	inc bc ; $5eba
+	; $5eab, 16 bytes (mode_hooks)
+	dw NetGamePractice2Hook_PerFrame ; record 0
+	dw NetGamePractice2Hook_PointStart ; record 1
+	dw NetGamePractice2Hook_PointEnd ; record 2
+	dw NetGamePractice2Hook_MinigameStart ; record 3
+	dw NetGamePractice2Hook_BallHit ; record 4
+	dw NetGamePractice2Hook_Bounce ; record 5
+	dw NetGamePractice2Hook_RallyTick ; record 6
+	dw RetStub ; record 7
 NetGamePractice2Hook_MinigameStart:
 	xor a ; $5ebb
 	ld [wDrillCounters + 3], a ; $5ebc
