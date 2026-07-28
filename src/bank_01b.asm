@@ -5404,7 +5404,7 @@ ScrollMinigameDataList:
 	call RedrawMinigameDataRows ; $74c6
 	ret ; $74c9
 LoadMinigameDataState:
-	farcall BuildStarCharUnlockMask ; $74ca
+	farcall BuildMarioCastUnlockMask ; $74ca
 	call LoadMinigameClearFlags ; $74cd
 	call LoadMinigameStarFlags ; $74d0
 	call LoadMinigameHighScores ; $74d3
@@ -5587,7 +5587,7 @@ DrawMinigameDataMugshotsScrolled:
 	ld b, $00 ; $7611
 .loop:
 	push bc ; $7613
-	farcall GetUnlockedStarCharAtGridSlot ; $7614
+	farcall GetUnlockedMarioCastCharAtGridSlot ; $7614
 	pop bc ; $7617
 	cp $15 ; $7618
 	jr nz, .ne15 ; $761a
@@ -5616,7 +5616,7 @@ DrawMinigameDataMugshotsStatic:
 	ld b, $00 ; $763f
 .loop:
 	push bc ; $7641
-	farcall GetUnlockedStarCharAtGridSlot ; $7642
+	farcall GetUnlockedMarioCastCharAtGridSlot ; $7642
 	pop bc ; $7645
 	cp $15 ; $7646
 	jr nz, .ne15 ; $7648
@@ -5957,7 +5957,7 @@ CheckMinigameDataScrollable:
 	push de ; $7880
 	push hl ; $7881
 	ld c, $04 ; $7882
-	farcall GetUnlockedStarCharAtGridSlot ; $7884
+	farcall GetUnlockedMarioCastCharAtGridSlot ; $7884
 	cp $15 ; $7887
 	jr nz, .scrollable ; $7889
 	pop hl ; $788b

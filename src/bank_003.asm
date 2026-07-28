@@ -25,8 +25,8 @@ SECTION "ROM Bank $03", ROMX[$4000], BANK[$03]
 	farptr ReadMinigameRecord ; $402c
 	farptr ApplyN64RecordsUnlockFlags ; $402e
 	farptr UpdateUnlockablesSaveBlock ; $4030
-	farptr ReadStarVictoryGrid ; $4032
-	farptr WriteStarVictoryGrid ; $4034
+	farptr ReadMarioCastVictoryGrid ; $4032
+	farptr WriteMarioCastVictoryGrid ; $4034
 	farptr RunScrollingTextScreen ; $4036
 	farptr SetupSceneAnimationPalettes ; $4038
 	farptr UpdateSceneAnimation ; $403a
@@ -2839,7 +2839,7 @@ InitAllMinigameRecordBlocks:
 	pop bc ; $5226
 	pop af ; $5227
 	ret ; $5228
-ReadStarVictoryGrid:
+ReadMarioCastVictoryGrid:
 	push af ; $5229
 	push bc ; $522a
 	push de ; $522b
@@ -2857,7 +2857,7 @@ ReadStarVictoryGrid:
 	pop bc ; $523d
 	pop af ; $523e
 	ret ; $523f
-WriteStarVictoryGrid:
+WriteMarioCastVictoryGrid:
 	push bc ; $5240
 	push de ; $5241
 	push hl ; $5242

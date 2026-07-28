@@ -2213,8 +2213,8 @@ wCpuDifficultyCursor:: db
 	ds 9
 ; [4 bytes] CPU difficulty chosen per player slot; ApplyCpuDifficultyToCharRecords copies it into the match character records
 wCharSelectSlotDifficulty:: ds 4
-; [4 bytes] Star-character flag per player slot; ApplyStarFlagsToCharRecords copies it to $ca0e/$ca4e/$ca8e/$cace
-wCharSelectSlotStar:: ds 4
+; [4 bytes] Left-handed flag per player slot, toggled with START on the character grid (only the nine Mario-cast characters may be toggled). ApplyHandednessToCharRecords copies it to the four match records' +$0e, which LoadCharacterAttributes turns into wCharMirrorAttrMask -- the OAM X-flip plus the forehand/backhand swap in SelectForehandBackhand
+wCharSelectSlotLeftHanded:: ds 4
 ; [8-bit] Link character-select: result byte ProcessLinkSelectCommand leaves for commands $24-$27
 wLinkSelectCmdResult:: db
 ; [8-bit] Link character-select: CPU difficulty for the link match, stepped by HandleLinkCpuDifficultyInput

@@ -22,9 +22,9 @@ SECTION "ROM Bank $3b", ROMX[$4000], BANK[$3b]
 	farptr MoveSavedDataPickerCursor ; $4026
 	farptr LoadChartWindowTiles ; $4028
 	farptr DrawChartCharIcon ; $402a
-	farptr BuildStarCharUnlockMask ; $402c
-	farptr GetUnlockedStarCharAtGridSlot ; $402e
-	farptr RunStarCharExhibResults ; $4030
+	farptr BuildMarioCastUnlockMask ; $402c
+	farptr GetUnlockedMarioCastCharAtGridSlot ; $402e
+	farptr RunMarioCastExhibResults ; $4030
 	farptr RecordExhibitionVictory ; $4032
 	farptr ApplyUnlockEverythingCheat ; $4034
 	farptr RenderMatchFormatOptionText ; $4036
@@ -4786,7 +4786,7 @@ RunMinigameSelect:
 	sound $08 ; $61f5
 	xor a ; $61f7
 	ld [$cb70], a ; $61f8
-	call BuildStarCharUnlockMask ; $61fb
+	call BuildMarioCastUnlockMask ; $61fb
 	call LoadMinigameSelectGfx ; $61fe
 	wram_bank $03 ; $6201
 	call CheckMinigameGridExpanded ; $6207
@@ -4856,7 +4856,7 @@ RunMinigameSelect:
 	ld c, $03 ; $628c
 	call GetMenuCursorCellIndex ; $628e
 	ld c, a ; $6291
-	call GetUnlockedStarCharAtGridSlot ; $6292
+	call GetUnlockedMarioCastCharAtGridSlot ; $6292
 	cp $15 ; $6295
 	jr nz, .playSfx ; $6297
 	sound $61 ; $6299
@@ -4910,7 +4910,7 @@ LoadMinigameSelectGfx:
 	ld c, $00 ; $62f8
 .loop:
 	push bc ; $62fa
-	call GetUnlockedStarCharAtGridSlot ; $62fb
+	call GetUnlockedMarioCastCharAtGridSlot ; $62fb
 	ld b, a ; $62fe
 	ld de, $d000 ; $62ff
 	farcall DecompressCharacterPortrait ; $6302
@@ -5193,7 +5193,7 @@ OverrideMinigameCursorIfLocked:
 	ld c, $03 ; $6550
 	call GetMenuCursorCellIndex ; $6552
 	ld c, a ; $6555
-	call GetUnlockedStarCharAtGridSlot ; $6556
+	call GetUnlockedMarioCastCharAtGridSlot ; $6556
 	cp $15 ; $6559
 	jr z, .eq15 ; $655b
 	pop de ; $655d
@@ -5235,7 +5235,7 @@ RenderMinigameNameText:
 	call GetMenuCursorCellIndex ; $65a8
 	push af ; $65ab
 	ld c, a ; $65ac
-	call GetUnlockedStarCharAtGridSlot ; $65ad
+	call GetUnlockedMarioCastCharAtGridSlot ; $65ad
 	cp $15 ; $65b0
 	jr nz, .restore ; $65b2
 	pop af ; $65b4
@@ -5357,18 +5357,18 @@ FillMinigameSelectCellTable:
 	dw $d56e ; record 8
 LoadMinigameCharPalette:
 	ld c, a ; $6672
-	call GetStarCharAtGridSlot ; $6673
+	call GetMarioCastCharAtGridSlot ; $6673
 	farcall GetCharPaletteIndex ; $6676
 	ld d, $04 ; $6679
 	farcall LoadIndexedPalette_18 ; $667b
 	ret ; $667e
-BuildStarCharUnlockMask:
+BuildMarioCastUnlockMask:
 	ld c, $00 ; $667f
 	ld b, $00 ; $6681
 .loop:
 	ld a, c ; $6683
 	add a ; $6684
-	ld hl, StarCharUnlockMaskTable ; $6685
+	ld hl, MarioCastUnlockMaskTable ; $6685
 	add l ; $6688
 	ld l, a ; $6689
 	jr nc, .read ; $668a
@@ -5394,7 +5394,7 @@ BuildStarCharUnlockMask:
 	ld a, b ; $66a4
 	ld [$cb5d], a ; $66a5
 	ret ; $66a8
-StarCharUnlockMaskTable:
+MarioCastUnlockMaskTable:
 	; $66a9, 12 bytes (records:2)
 	dw $01e0 ; record 0
 	dw $01a0 ; record 1
@@ -5402,8 +5402,8 @@ StarCharUnlockMaskTable:
 	dw $0160 ; record 3
 	dw $0140 ; record 4
 	dw $01c0 ; record 5
-GetUnlockedStarCharAtGridSlot:
-	call GetStarCharAtGridSlot ; $66b5
+GetUnlockedMarioCastCharAtGridSlot:
+	call GetMarioCastCharAtGridSlot ; $66b5
 	cp $17 ; $66b8
 	ret z ; $66ba
 	cp $19 ; $66bb
@@ -5412,7 +5412,7 @@ GetUnlockedStarCharAtGridSlot:
 	ret z ; $66c0
 	ld d, a ; $66c1
 	sub $1a ; $66c2
-	ld hl, UnlockedStarCharAtGridSlotTable ; $66c4
+	ld hl, UnlockedMarioCastCharAtGridSlotTable ; $66c4
 	add l ; $66c7
 	ld l, a ; $66c8
 	jr nc, .readMask ; $66c9
@@ -5427,11 +5427,11 @@ GetUnlockedStarCharAtGridSlot:
 .unlocked:
 	ld a, d ; $66d6
 	ret ; $66d7
-UnlockedStarCharAtGridSlotTable:
+UnlockedMarioCastCharAtGridSlotTable:
 	; $66d8, 6 bytes (bytes:8)
 	db $01, $02, $04, $08, $10, $20 ; 0x00
-GetStarCharAtGridSlot:
-	ld hl, StarCharAtGridSlotTable ; $66de
+GetMarioCastCharAtGridSlot:
+	ld hl, MarioCastCharAtGridSlotTable ; $66de
 	ld a, c ; $66e1
 	add l ; $66e2
 	ld l, a ; $66e3
@@ -5440,14 +5440,14 @@ GetStarCharAtGridSlot:
 .read:
 	ld a, [hl] ; $66e7
 	ret ; $66e8
-StarCharAtGridSlotTable:
+MarioCastCharAtGridSlotTable:
 	; $66e9, 9 bytes (bytes:3)
 	db $1a, $17, $1f ; 0x00
 	db $19, $1c, $18 ; 0x03
 	db $1e, $1b, $1d ; 0x06
 CheckMinigameGridExpanded:
 	ld c, $06 ; $66f2
-	call GetUnlockedStarCharAtGridSlot ; $66f4
+	call GetUnlockedMarioCastCharAtGridSlot ; $66f4
 	cp $15 ; $66f7
 	jr nz, .expanded ; $66f9
 	xor a ; $66fb
@@ -7940,10 +7940,10 @@ BracketHighlightBlinkTask:
 BracketHighlightBlinkTaskPalettes:
 	; $79f1, 8 bytes (bytes:8)
 	db $f9, $67, $00, $00, $98, $00, $1f, $03 ; 0x00
-RunStarCharExhibResults:
+RunMarioCastExhibResults:
 	sound $04 ; $79f9
 	call DisableLCDSafely ; $79fb
-	call BuildStarCharExhibScreen ; $79fe
+	call BuildMarioCastExhibScreen ; $79fe
 	ld a, $01 ; $7a01
 	ld [wAnimatedTileSet], a ; $7a03
 	ld a, $03 ; $7a06
@@ -7952,7 +7952,7 @@ RunStarCharExhibResults:
 	ld hl, UpdateAnimatedTilesTask_3b ; $7a0d
 	call RegisterFrameTask ; $7a10
 	ld a, $01 ; $7a13
-	ld hl, StarChartScrollArrowsTask ; $7a15
+	ld hl, MarioCastChartScrollArrowsTask ; $7a15
 	call RegisterFrameTask ; $7a18
 	call EnableLCD ; $7a1b
 	script_fade_in $10 ; $7a1e
@@ -7962,13 +7962,13 @@ RunStarCharExhibResults:
 	call AdvanceFrame ; $7a2c
 	ldh a, [hInputPressed] ; $7a2f
 	ld [wMenuInputPressed], a ; $7a31
-	call CheckStarChartExpanded ; $7a34
+	call CheckMarioCastChartExpanded ; $7a34
 	or a ; $7a37
-	jr z, .scrollStarChartCursorSmall ; $7a38
-	call ScrollStarChartCursorFull ; $7a3a
+	jr z, .scrollMarioCastChartCursorSmall ; $7a38
+	call ScrollMarioCastChartCursorFull ; $7a3a
 	jr .checkMenuInputPressed ; $7a3d
-.scrollStarChartCursorSmall:
-	call ScrollStarChartCursorSmall ; $7a3f
+.scrollMarioCastChartCursorSmall:
+	call ScrollMarioCastChartCursorSmall ; $7a3f
 .checkMenuInputPressed:
 	ld a, [wMenuInputPressed] ; $7a42
 	bit PADB_A, a ; $7a45
@@ -7991,11 +7991,11 @@ RunStarCharExhibResults:
 	call ClearFrameTasks ; $7a67
 	ld a, $ff ; $7a6a
 	ret ; $7a6c
-StarChartScrollArrowsTask:
+MarioCastChartScrollArrowsTask:
 	ldh a, [hWramBank] ; $7a6d
 	push af ; $7a6f
 	wram_bank $03 ; $7a70
-	call CheckStarChartExpanded ; $7a76
+	call CheckMarioCastChartExpanded ; $7a76
 	or a ; $7a79
 	jr z, .checkMenuCursorY3 ; $7a7a
 	ld a, [wMenuCursorX] ; $7a7c
@@ -8069,7 +8069,7 @@ StarChartScrollArrowsTask:
 	pop af ; $7b0b
 	wram_bank ; $7b0c
 	ret ; $7b10
-BuildStarCharExhibScreen:
+BuildMarioCastExhibScreen:
 	wram_bank $03 ; $7b11
 	xor a ; $7b17
 	ld [wN64ExhibCursorRow], a ; $7b18
@@ -8084,14 +8084,14 @@ BuildStarCharExhibScreen:
 	ld c, $0f ; $7b31
 	farcall LoadIndexedPalette ; $7b33
 	wram_bank $03 ; $7b36
-	call BuildStarChartColumnList ; $7b3c
-	call LoadStarCharExhibGrid ; $7b3f
-	call ApplyStarChartReducedLayout ; $7b42
+	call BuildMarioCastChartColumnList ; $7b3c
+	call LoadMarioCastExhibGrid ; $7b3f
+	call ApplyMarioCastChartReducedLayout ; $7b42
 	call InitChartRowFlags ; $7b45
-	call RedrawStarChartWindow ; $7b48
+	call RedrawMarioCastChartWindow ; $7b48
 	farcall QueueWram3MapToVRAM ; $7b4b
 	ret ; $7b4e
-ScrollStarChartCursorFull:
+ScrollMarioCastChartCursorFull:
 	ld a, [wMenuInputPressed] ; $7b4f
 	bit PADB_LEFT, a ; $7b52
 	jr z, .checkMenuCursorX ; $7b54
@@ -8101,8 +8101,8 @@ ScrollStarChartCursorFull:
 	dec a ; $7b5c
 	ld [wMenuCursorX], a ; $7b5d
 	sound $5e ; $7b60
-	call RedrawStarChartWindow ; $7b62
-	call FlushStarChartWindowToVram ; $7b65
+	call RedrawMarioCastChartWindow ; $7b62
+	call FlushMarioCastChartWindowToVram ; $7b65
 	jr .done ; $7b68
 .checkMenuCursorX:
 	bit 4, a ; $7b6a
@@ -8113,8 +8113,8 @@ ScrollStarChartCursorFull:
 	inc a ; $7b75
 	ld [wMenuCursorX], a ; $7b76
 	sound $5e ; $7b79
-	call RedrawStarChartWindow ; $7b7b
-	call FlushStarChartWindowToVram ; $7b7e
+	call RedrawMarioCastChartWindow ; $7b7b
+	call FlushMarioCastChartWindowToVram ; $7b7e
 	jr .done ; $7b81
 .bit4Clear:
 	bit 6, a ; $7b83
@@ -8125,8 +8125,8 @@ ScrollStarChartCursorFull:
 	dec a ; $7b8d
 	ld [wMenuCursorY], a ; $7b8e
 	sound $5e ; $7b91
-	call RedrawStarChartWindow ; $7b93
-	call FlushStarChartWindowToVram ; $7b96
+	call RedrawMarioCastChartWindow ; $7b93
+	call FlushMarioCastChartWindowToVram ; $7b96
 	jr .done ; $7b99
 .bit6Clear:
 	bit 7, a ; $7b9b
@@ -8137,12 +8137,12 @@ ScrollStarChartCursorFull:
 	inc a ; $7ba6
 	ld [wMenuCursorY], a ; $7ba7
 	sound $5e ; $7baa
-	call RedrawStarChartWindow ; $7bac
-	call FlushStarChartWindowToVram ; $7baf
+	call RedrawMarioCastChartWindow ; $7bac
+	call FlushMarioCastChartWindowToVram ; $7baf
 	jr .done ; $7bb2
 .done:
 	ret ; $7bb4
-ScrollStarChartCursorSmall:
+ScrollMarioCastChartCursorSmall:
 	ld a, [wMenuInputPressed] ; $7bb5
 	bit PADB_UP, a ; $7bb8
 	jr z, .checkMenuCursorY ; $7bba
@@ -8152,8 +8152,8 @@ ScrollStarChartCursorSmall:
 	dec a ; $7bc2
 	ld [wMenuCursorY], a ; $7bc3
 	sound $5e ; $7bc6
-	call RedrawStarChartWindow ; $7bc8
-	call FlushStarChartWindowToVram ; $7bcb
+	call RedrawMarioCastChartWindow ; $7bc8
+	call FlushMarioCastChartWindowToVram ; $7bcb
 	jr .done ; $7bce
 .checkMenuCursorY:
 	bit 7, a ; $7bd0
@@ -8164,14 +8164,14 @@ ScrollStarChartCursorSmall:
 	inc a ; $7bdb
 	ld [wMenuCursorY], a ; $7bdc
 	sound $5e ; $7bdf
-	call RedrawStarChartWindow ; $7be1
-	call FlushStarChartWindowToVram ; $7be4
+	call RedrawMarioCastChartWindow ; $7be1
+	call FlushMarioCastChartWindowToVram ; $7be4
 	jr .done ; $7be7
 .done:
 	ret ; $7be9
-RedrawStarChartWindow:
+RedrawMarioCastChartWindow:
 	wram_bank $03 ; $7bea
-	call CheckStarChartExpanded ; $7bf0
+	call CheckMarioCastChartExpanded ; $7bf0
 	or a ; $7bf3
 	jr z, .compact ; $7bf4
 	ld bc, wShadowTilemap + 5 * TILEMAP_WIDTH + 4 ; $7bf6
@@ -8254,7 +8254,7 @@ RedrawStarChartWindow:
 	call DrawChartCellRows ; $7c7d
 .done:
 	ret ; $7c80
-FlushStarChartWindowToVram:
+FlushMarioCastChartWindowToVram:
 	ld hl, wShadowTilemap + 5 * TILEMAP_WIDTH ; $7c81
 	ld de, $98a0 ; $7c84
 	ld c, $08 ; $7c87
@@ -8282,10 +8282,10 @@ FlushStarChartWindowToVram:
 	ld c, $04 ; $7cc4
 	call QueueVRAMCopy ; $7cc6
 	ret ; $7cc9
-BuildStarChartColumnList:
+BuildMarioCastChartColumnList:
 	ld c, $00 ; $7cca
 .loop:
-	ld hl, StarChartColumnListTable ; $7ccc
+	ld hl, MarioCastChartColumnListTable ; $7ccc
 	ld a, c ; $7ccf
 	add a ; $7cd0
 	add l ; $7cd1
@@ -8305,7 +8305,7 @@ BuildStarChartColumnList:
 	ld b, $10 ; $7ce4
 	jr .step2 ; $7ce6
 .step:
-	ld hl, StarChartColumnTable ; $7ce8
+	ld hl, MarioCastChartColumnTable ; $7ce8
 	ld a, c ; $7ceb
 	add l ; $7cec
 	ld l, a ; $7ced
@@ -8327,7 +8327,7 @@ BuildStarChartColumnList:
 	cp $09 ; $7cfe
 	jr nz, .loop ; $7d00
 	ret ; $7d02
-StarChartColumnListTable:
+MarioCastChartColumnListTable:
 	; $7d03, 18 bytes (records:2)
 	dw $01c0 ; record 0
 	dw $ffff ; record 1
@@ -8338,17 +8338,17 @@ StarChartColumnListTable:
 	dw $01a0 ; record 6
 	dw $0140 ; record 7
 	dw $0180 ; record 8
-StarChartColumnTable:
+MarioCastChartColumnTable:
 	; $7d15, 9 bytes (bytes:3)
 	db $00, $01, $02 ; 0x00
 	db $03, $04, $05 ; 0x03
 	db $07, $08, $0c ; 0x06
-LoadStarCharExhibGrid:
+LoadMarioCastExhibGrid:
 	ldh a, [hWramBank] ; $7d1e
 	push af ; $7d20
 	wram_bank $03 ; $7d21
 	ld hl, w3_d900 ; $7d27
-	farcall ReadStarVictoryGrid ; $7d2a
+	farcall ReadMarioCastVictoryGrid ; $7d2a
 	ld hl, w3_d900 ; $7d2d
 	ld de, $db00 ; $7d30
 	ld c, $00 ; $7d33
@@ -8395,13 +8395,13 @@ RecordExhibitionVictory:
 	or a ; $7d80
 	jr z, .restore ; $7d81
 	ld a, [wPlayer1CurrentMainCharacter] ; $7d83
-	call GetStarCharIndex ; $7d86
+	call GetMarioCastIndex ; $7d86
 	ld d, a ; $7d89
 	ld a, [wPlayer2CurrentMainCharacter] ; $7d8a
-	call GetStarCharIndex ; $7d8d
+	call GetMarioCastIndex ; $7d8d
 	ld e, a ; $7d90
 	ld hl, w3_d900 ; $7d91
-	farcall ReadStarVictoryGrid ; $7d94
+	farcall ReadMarioCastVictoryGrid ; $7d94
 	ld a, d ; $7d97
 	add a ; $7d98
 	add a ; $7d99
@@ -8422,9 +8422,9 @@ RecordExhibitionVictory:
 	cp d ; $7dae
 	jr c, .restore ; $7daf
 	ld [hl], a ; $7db1
-	call UpdateStarUnlocks ; $7db2
+	call UpdateMarioCastUnlocks ; $7db2
 	ld hl, w3_d900 ; $7db5
-	farcall WriteStarVictoryGrid ; $7db8
+	farcall WriteMarioCastVictoryGrid ; $7db8
 .step2:
 	jr nz, .step2 ; $7dbb
 .restore:
@@ -8454,9 +8454,9 @@ VictoryScoreTable:
 VictoryScoreTable1:
 	; $7ddd, 4 bytes (bytes:4)
 	db $02, $04, $06, $08 ; 0x00
-GetStarCharIndex:
+GetMarioCastIndex:
 	sub $17 ; $7de1
-	ld hl, StarCharOrderTable ; $7de3
+	ld hl, MarioCastOrderTable ; $7de3
 	add l ; $7de6
 	ld l, a ; $7de7
 	jr nc, .read ; $7de8
@@ -8464,12 +8464,12 @@ GetStarCharIndex:
 .read:
 	ld a, [hl] ; $7deb
 	ret ; $7dec
-StarCharOrderTable:
+MarioCastOrderTable:
 	; $7ded, 9 bytes (bytes:3)
 	db $01, $05, $03 ; 0x00
 	db $00, $07, $04 ; 0x03
 	db $08, $06, $02 ; 0x06
-UpdateStarUnlocks:
+UpdateMarioCastUnlocks:
 	ld c, $00 ; $7df6
 .loop:
 	ld hl, w3_d900 ; $7df8
@@ -8507,7 +8507,7 @@ UpdateStarUnlocks:
 	jr nz, .loop ; $7e22
 .done:
 	ret ; $7e24
-CheckStarChartExpanded:
+CheckMarioCastChartExpanded:
 	ldh a, [hWramBank] ; $7e25
 	push af ; $7e27
 	push bc ; $7e28
@@ -8526,7 +8526,7 @@ CheckStarChartExpanded:
 	wram_bank ; $7e3d
 	xor a ; $7e41
 	ret ; $7e42
-ApplyStarChartReducedLayout:
+ApplyMarioCastChartReducedLayout:
 	push af ; $7e43
 	push bc ; $7e44
 	push de ; $7e45
@@ -8534,12 +8534,12 @@ ApplyStarChartReducedLayout:
 	ldh a, [hWramBank] ; $7e47
 	push af ; $7e49
 	wram_bank $03 ; $7e4a
-	call CheckStarChartExpanded ; $7e50
+	call CheckMarioCastChartExpanded ; $7e50
 	or a ; $7e53
 	jr nz, .restore ; $7e54
-	call CopyStarChartReducedTilemap ; $7e56
-	call FixupStarChartHeaderRow ; $7e59
-	call CompactStarChartRows ; $7e5c
+	call CopyMarioCastChartReducedTilemap ; $7e56
+	call FixupMarioCastChartHeaderRow ; $7e59
+	call CompactMarioCastChartRows ; $7e5c
 .restore:
 	pop af ; $7e5f
 	wram_bank ; $7e60
@@ -8548,7 +8548,7 @@ ApplyStarChartReducedLayout:
 	pop bc ; $7e66
 	pop af ; $7e67
 	ret ; $7e68
-CopyStarChartReducedTilemap:
+CopyMarioCastChartReducedTilemap:
 	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH + 1 ; $7e69
 	ld de, wShadowTilemap + 4 * TILEMAP_WIDTH + 1 ; $7e6c
 	ld b, $12 ; $7e6f
@@ -8560,11 +8560,11 @@ CopyStarChartReducedTilemap:
 	ld c, $0c ; $7e7e
 	farcall CopyTilemapRect ; $7e80
 	ret ; $7e83
-FixupStarChartHeaderRow:
+FixupMarioCastChartHeaderRow:
 	ld a, [$dc06] ; $7e84
 	ld [$dc05], a ; $7e87
 	ret ; $7e8a
-CompactStarChartRows:
+CompactMarioCastChartRows:
 	ld hl, $db50 ; $7e8b
 	ld de, $db40 ; $7e8e
 	ld bc, $0010 ; $7e91

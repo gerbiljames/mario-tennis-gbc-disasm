@@ -1930,7 +1930,7 @@ RunExhibitionCharSelectScreen:
 	call WaitFadeEnd ; $4f1a
 	call ResolveSelectedCharIds ; $4f1d
 	call InitMatchCharsFromSelection ; $4f20
-	call ApplyStarFlagsToCharRecords ; $4f23
+	call ApplyHandednessToCharRecords ; $4f23
 	call ApplyCpuDifficultyToCharRecords ; $4f26
 	farcall InitDefaultMatchSettings ; $4f29
 	call ClearFrameTasks ; $4f2c
@@ -2245,7 +2245,7 @@ HandleCharGridButtons:
 	bit 1, a ; $52c0
 	jr nz, .cancel ; $52c2
 	bit 3, a ; $52c4
-	jr nz, .checkStar ; $52c6
+	jr nz, .toggleHandedness ; $52c6
 	ret ; $52c8
 .confirm:
 	call ConfirmCharGridSelection ; $52c9
@@ -2253,7 +2253,7 @@ HandleCharGridButtons:
 .cancel:
 	call CancelCharGridSelection ; $52cd
 	ret ; $52d0
-.checkStar:
+.toggleHandedness:
 	call GetGridSlotFromCursor ; $52d1
 	ld b, a ; $52d4
 	ld hl, w3_da00 ; $52d5
@@ -2328,12 +2328,12 @@ ConfirmCharGridSelection:
 	cp $01 ; $534b
 	jr nz, .drawPortrait ; $534d
 	ld a, [wCharSelectSlot] ; $534f
-	ld hl, wCharSelectSlotStar ; $5352
+	ld hl, wCharSelectSlotLeftHanded ; $5352
 	add l ; $5355
 	ld l, a ; $5356
-	jr nc, .markStar ; $5357
+	jr nc, .markLeftHanded ; $5357
 	inc h ; $5359
-.markStar:
+.markLeftHanded:
 	ld a, $01 ; $535a
 	ld [hl], a ; $535c
 .drawPortrait:
@@ -2428,7 +2428,7 @@ CancelCharGridSelection:
 .refresh:
 	xor a ; $53fb
 	ld [hl], a ; $53fc
-	ld hl, wCharSelectSlotStar ; $53fd
+	ld hl, wCharSelectSlotLeftHanded ; $53fd
 	ld a, [wCharSelectSlot] ; $5400
 	add l ; $5403
 	ld l, a ; $5404
@@ -2726,7 +2726,7 @@ DrawPlayerSlotPortrait:
 	ld e, l ; $5631
 	dec c ; $5632
 	call WriteCharPortraitTiles ; $5633
-	call DrawPlayerSlotStarMark ; $5636
+	call DrawPlayerSlotLeftHandedMark ; $5636
 	call DrawPlayerSlotDifficultyMark ; $5639
 	ld a, [wCharSelectSlot] ; $563c
 	cp $02 ; $563f
@@ -2757,9 +2757,9 @@ Data_38_5672:
 	dw $d0d0 ; record 1
 	dw $d12e ; record 2
 	dw $d130 ; record 3
-DrawPlayerSlotStarMark:
+DrawPlayerSlotLeftHandedMark:
 	ld a, [wCharSelectSlot] ; $567a
-	ld hl, wCharSelectSlotStar ; $567d
+	ld hl, wCharSelectSlotLeftHanded ; $567d
 	add l ; $5680
 	ld l, a ; $5681
 	jr nc, .read ; $5682
@@ -3339,7 +3339,7 @@ InitCharGridState:
 	call FillCharGridPaletteIndices ; $5a67
 	call AddCreatedCharsToCharGrid ; $5a6a
 	call CompactRosterGridEntries ; $5a6d
-	call CompactStarGridEntries ; $5a70
+	call CompactMarioCastGridEntries ; $5a70
 	call CountCharGridEntries ; $5a73
 	call SetCharGridPageCount ; $5a76
 	call BuildVisiblePageSpriteList ; $5a79
@@ -4235,32 +4235,32 @@ IsCreatedCharId:
 .no:
 	xor a ; $601a
 	ret ; $601b
-ApplyStarFlagsToCharRecords:
+ApplyHandednessToCharRecords:
 	ldh a, [hWramBank] ; $601c
 	push af ; $601e
 	wram_bank $03 ; $601f
 	ld a, [wPlayer1MainLeftHanded] ; $6025
 	or a ; $6028
 	jr nz, .slot2 ; $6029
-	ld a, [wCharSelectSlotStar] ; $602b
+	ld a, [wCharSelectSlotLeftHanded] ; $602b
 	ld [wPlayer1MainLeftHanded], a ; $602e
 .slot2:
 	ld a, [wPlayer1PartnerLeftHanded] ; $6031
 	or a ; $6034
 	jr nz, .slot3 ; $6035
-	ld a, [wCharSelectSlotStar + 1] ; $6037
+	ld a, [wCharSelectSlotLeftHanded + 1] ; $6037
 	ld [wPlayer1PartnerLeftHanded], a ; $603a
 .slot3:
 	ld a, [wPlayer2MainLeftHanded] ; $603d
 	or a ; $6040
 	jr nz, .slot4 ; $6041
-	ld a, [wCharSelectSlotStar + 2] ; $6043
+	ld a, [wCharSelectSlotLeftHanded + 2] ; $6043
 	ld [wPlayer2MainLeftHanded], a ; $6046
 .slot4:
 	ld a, [wPlayer2PartnerLeftHanded] ; $6049
 	or a ; $604c
 	jr nz, .done ; $604d
-	ld a, [wCharSelectSlotStar + 3] ; $604f
+	ld a, [wCharSelectSlotLeftHanded + 3] ; $604f
 	ld [wPlayer2PartnerLeftHanded], a ; $6052
 .done:
 	pop af ; $6055
@@ -4419,7 +4419,7 @@ CompactRosterGridEntries:
 	ld [hl+], a ; $6143
 	ld [hl+], a ; $6144
 	ret ; $6145
-CompactStarGridEntries:
+CompactMarioCastGridEntries:
 	ld hl, w3_da00 ; $6146
 	ld c, $00 ; $6149
 .scanLoop:
@@ -4547,39 +4547,48 @@ CharGridPageCountTable:
 NeedsCpuDifficultyPrompt:
 	call IsMarioCastCharacter ; $61f7
 	or a ; $61fa
-	jr z, .notStar ; $61fb
+	jr z, .notMarioCast ; $61fb
 	ld a, [wCharSelectSlot] ; $61fd
 	or a ; $6200
-	jr z, .notStar ; $6201
+	jr z, .notMarioCast ; $6201
 	ld a, $01 ; $6203
 	ret ; $6205
-.notStar:
+.notMarioCast:
 	xor a ; $6206
 	ret ; $6207
 ; Returns 1 for character ids $17-$1f. Those are the nine Mario-series
 ; characters: id = bank $30 string index - 27 puts them at indices 50-58,
-; Luigi through Peach, and GetStarCharIndex ($3b:$7de1) does `sub $17` into a
+; Luigi through Peach, and GetMarioCastIndex ($3b:$7de1) does `sub $17` into a
 ; nine-entry table, so the block is exactly those ids and nothing else.
 ;
-; Nothing in the game's own text calls them star characters -- the only "star"
-; strings in the ROM belong to Shooting Star and the Perfect Shot panels -- so
-; the surrounding Star* labels (GetStarCharIndex, StarCharOrderTable,
-; UpdateStarUnlocks, Read/WriteStarVictoryGrid, CheckStarCharacterEquipCategory,
-; ApplyStarFlagsToCharRecords) and wCharSelectSlotStar all name the same nine
-; and are candidates for the same correction.
+; What it gates is handedness. Both character grids reach their .toggleHandedness
+; branch on `bit 3` (START) and refuse the toggle unless this returns 1, so only
+; the Mario cast may be flipped; created characters set handedness at name entry
+; instead (wCharSelectHandedness). The prompt row the grid draws is text 30:118
+; "START: Change Hands", and DrawCharSelectSlotLabel swaps the word in it for one
+; of three pre-rendered labels on $df00's three values -- 30:150/151/152 are
+; "START: Right-Handed", "START: Left-Handed" and "START: Change Hands".
+; On confirm the slot's wCharSelectSlotLeftHanded is set, and
+; ApplyHandednessToCharRecords copies it to the match record's +$0e, which
+; LoadCharacterAttributes turns into wCharMirrorAttrMask: the OAM X-flip bit plus
+; the forehand/backhand swap in SelectForehandBackhand.
 ;
-; The flag it gates is not a badge either: it reaches the on-court character
-; record at +$0e, which LoadCharacterAttributes turns into wCharMirrorAttrMask
-; ($20, the OAM X-flip).
+; Nothing in the game's own text calls these characters star characters -- the
+; only "star" strings in the ROM belong to Shooting Star, the Perfect Shot panels
+; and Star Court -- so the whole family was renamed on 2026-07-28: the routines
+; and tables about the nine became MarioCast*, and the ones about the flag became
+; *Handedness*/*LeftHanded*. The minigame completion stars (DrawMinigameStarMarks,
+; LoadMinigameStarFlags, DrawStarLegendMark) are a genuinely unrelated star and
+; kept their names.
 IsMarioCastCharacter:
 	ld a, c ; $6208
 	cp $17 ; $6209
-	jr c, .notStar ; $620b
+	jr c, .notMarioCast ; $620b
 	cp $20 ; $620d
-	jr nc, .notStar ; $620f
+	jr nc, .notMarioCast ; $620f
 	ld a, $01 ; $6211
 	ret ; $6213
-.notStar:
+.notMarioCast:
 	xor a ; $6214
 	ret ; $6215
 RunCpuDifficultySubmenu:
@@ -4615,7 +4624,7 @@ RunCpuDifficultySubmenu:
 .clearDifficulty:
 	xor a ; $6259
 	ld [hl], a ; $625a
-	ld hl, wCharSelectSlotStar ; $625b
+	ld hl, wCharSelectSlotLeftHanded ; $625b
 	ld a, [wCharSelectSlot] ; $625e
 	add l ; $6261
 	ld l, a ; $6262
@@ -4941,7 +4950,7 @@ RunLinkCharSelectScreen:
 	call EnableTimerInterrupt ; $64de
 	call ResolveSelectedCharIds ; $64e1
 	call InitLinkMatchCharsFromSelection ; $64e4
-	call ApplyStarFlagsToCharRecords ; $64e7
+	call ApplyHandednessToCharRecords ; $64e7
 	call ApplyCpuDifficultyToCharRecords ; $64ea
 	ldh a, [hLinkState] ; $64ed
 	cp $01 ; $64ef
@@ -5015,7 +5024,7 @@ ProcessLinkSelectCommand:
 	cp $05 ; $657e
 	jr z, .markOwnSlot ; $6580
 	ld a, [wCharSelectRemoteSlot] ; $6582
-	ld hl, wCharSelectSlotStar + 2 ; $6585
+	ld hl, wCharSelectSlotLeftHanded + 2 ; $6585
 	add l ; $6588
 	ld l, a ; $6589
 	jr nc, .markSlotTaken ; $658a
@@ -5025,7 +5034,7 @@ ProcessLinkSelectCommand:
 	jr .applySelection ; $658f
 .markOwnSlot:
 	ld a, [wCharSelectRemoteSlot] ; $6591
-	ld hl, wCharSelectSlotStar ; $6594
+	ld hl, wCharSelectSlotLeftHanded ; $6594
 	add l ; $6597
 	ld l, a ; $6598
 	jr nc, .markOwnSlotTaken ; $6599
@@ -5167,12 +5176,12 @@ ApplyRemoteCharCancel:
 	xor a ; $6691
 	ld [hl], a ; $6692
 	ld a, [wCharSelectRemoteSlot] ; $6693
-	ld hl, wCharSelectSlotStar + 2 ; $6696
+	ld hl, wCharSelectSlotLeftHanded + 2 ; $6696
 	add l ; $6699
 	ld l, a ; $669a
-	jr nc, .clearStar ; $669b
+	jr nc, .clearLeftHanded ; $669b
 	inc h ; $669d
-.clearStar:
+.clearLeftHanded:
 	xor a ; $669e
 	ld [hl], a ; $669f
 	jr .retreatSlot ; $66a0
@@ -5187,12 +5196,12 @@ ApplyRemoteCharCancel:
 	xor a ; $66ad
 	ld [hl], a ; $66ae
 	ld a, [wCharSelectRemoteSlot] ; $66af
-	ld hl, wCharSelectSlotStar ; $66b2
+	ld hl, wCharSelectSlotLeftHanded ; $66b2
 	add l ; $66b5
 	ld l, a ; $66b6
-	jr nc, .clearOwnStar ; $66b7
+	jr nc, .clearOwnLeftHanded ; $66b7
 	inc h ; $66b9
-.clearOwnStar:
+.clearOwnLeftHanded:
 	xor a ; $66ba
 	ld [hl], a ; $66bb
 .retreatSlot:
@@ -5254,7 +5263,7 @@ HandleLinkGridButtons:
 	bit 1, a ; $672d
 	jr nz, .cancel ; $672f
 	bit 3, a ; $6731
-	jr nz, .checkStar ; $6733
+	jr nz, .toggleHandedness ; $6733
 	ret ; $6735
 .confirm:
 	call ConfirmLinkGridSelection ; $6736
@@ -5262,7 +5271,7 @@ HandleLinkGridButtons:
 .cancel:
 	call CancelLinkGridSelection ; $673a
 	ret ; $673d
-.checkStar:
+.toggleHandedness:
 	call GetGridSlotFromCursor ; $673e
 	ld b, a ; $6741
 	ld hl, $da00 ; $6742
@@ -5323,9 +5332,9 @@ ConfirmLinkGridSelection:
 	add a ; $67a7
 	add l ; $67a8
 	ld l, a ; $67a9
-	jr nc, .markStar ; $67aa
+	jr nc, .markLeftHanded ; $67aa
 	inc h ; $67ac
-.markStar:
+.markLeftHanded:
 	ld a, [hl] ; $67ad
 	cp $ff ; $67ae
 	jr z, .allSlotsFilled ; $67b0
@@ -5337,7 +5346,7 @@ ConfirmLinkGridSelection:
 	cp $01 ; $67bc
 	jr nz, .emptyCell ; $67be
 	ld a, [wCharSelectSlot] ; $67c0
-	ld hl, wCharSelectSlotStar ; $67c3
+	ld hl, wCharSelectSlotLeftHanded ; $67c3
 	add l ; $67c6
 	ld l, a ; $67c7
 	jr nc, .drawPortrait ; $67c8
@@ -5430,7 +5439,7 @@ CancelLinkGridSelection:
 .redraw:
 	xor a ; $6864
 	ld [hl], a ; $6865
-	ld hl, wCharSelectSlotStar ; $6866
+	ld hl, wCharSelectSlotLeftHanded ; $6866
 	ld a, [wCharSelectSlot] ; $6869
 	add l ; $686c
 	ld l, a ; $686d
@@ -5467,7 +5476,7 @@ DrawRemoteSlotPortrait:
 	ld b, l ; $68a5
 	ld c, h ; $68a6
 	call WriteCharPortraitTiles ; $68a7
-	call DrawRemoteSlotStarMark ; $68aa
+	call DrawRemoteSlotLeftHandedMark ; $68aa
 	ld a, [wCharSelectMode] ; $68ad
 	cp $03 ; $68b0
 	jr z, .slot0 ; $68b2
@@ -5495,31 +5504,31 @@ DrawRemoteSlotPortrait:
 	pop af ; $68e6
 	wram_bank ; $68e7
 	ret ; $68eb
-DrawRemoteSlotStarMark:
+DrawRemoteSlotLeftHandedMark:
 	ld a, [wCharSelectMode] ; $68ec
 	cp $03 ; $68ef
 	jr z, .checkOwnSlot ; $68f1
 	cp $05 ; $68f3
 	jr z, .checkOwnSlot ; $68f5
 	ld a, [wCharSelectRemoteSlot] ; $68f7
-	ld hl, wCharSelectSlotStar + 2 ; $68fa
+	ld hl, wCharSelectSlotLeftHanded + 2 ; $68fa
 	add l ; $68fd
 	ld l, a ; $68fe
-	jr nc, .checkStar ; $68ff
+	jr nc, .checkLeftHanded ; $68ff
 	inc h ; $6901
-.checkStar:
+.checkLeftHanded:
 	ld a, [hl] ; $6902
 	or a ; $6903
 	ret z ; $6904
 	jr .draw ; $6905
 .checkOwnSlot:
 	ld a, [wCharSelectRemoteSlot] ; $6907
-	ld hl, wCharSelectSlotStar ; $690a
+	ld hl, wCharSelectSlotLeftHanded ; $690a
 	add l ; $690d
 	ld l, a ; $690e
-	jr nc, .checkOwnStar ; $690f
+	jr nc, .checkOwnLeftHanded ; $690f
 	inc h ; $6911
-.checkOwnStar:
+.checkOwnLeftHanded:
 	ld a, [hl] ; $6912
 	or a ; $6913
 	ret z ; $6914
@@ -5965,7 +5974,7 @@ StubNop_38_6bc0:
 	ret ; $6bc0
 StubNop_38_6bc1:
 	ret ; $6bc1
-CheckStarCharacterEquipCategory:
+CheckMarioCastEquipCategory:
 	call IsMarioCastCharacter ; $6bc2
 	or a ; $6bc5
 	jr z, .returnFalse ; $6bc6

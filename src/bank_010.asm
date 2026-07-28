@@ -1760,7 +1760,7 @@ RunSavedDataMenuFlow:
 	ld c, $10 ; $53e5
 	call BeginFadeOut ; $53e7
 	call WaitFadeEnd ; $53ea
-	farcall RunStarCharExhibResults ; $53ed
+	farcall RunMarioCastExhibResults ; $53ed
 	ld c, $10 ; $53f0
 	call BeginFadeOut ; $53f2
 	call WaitFadeEnd ; $53f5
