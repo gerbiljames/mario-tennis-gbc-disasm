@@ -6332,3 +6332,36 @@ lines. Then the right move is to generate once, commit that as the source of
 truth, and keep the generator as a verifier. Until then every improvement is
 retroactive across the whole tree, which is the entire value of the arrangement
 -- and the missing comment channel was the one real argument on the other side.
+
+
+## The drill judges are per-event (2026-07-28)
+
+`<Drill>JudgeShot0`-`3` were named on the assumption that the 0-3 they pass to
+`JudgePoint` is a shot index. It is an *event* code, and the mapping is exact
+across all 52 call sites: each drill has four of these routines, one per hook —
+`Hook_PointEnd` passes 0, `Hook_BallHit` 1, `Hook_Bounce` 2, `Hook_RallyTick` 3.
+They are `JudgeOnPointEnd` / `JudgeOnBallHit` / `JudgeOnBounce` /
+`JudgeOnRallyTick` now.
+
+The claim built on the old names was wrong as well as the names. `docs/bugs.md`
+said "the same pair is stubbed in every drill, so a drill only ever judges shots
+0 and 1". It is neither the same pair nor every drill: of 13 drills, 7 disable
+`JudgeOnRallyTick` only, 5 disable `JudgeOnBounce` and `JudgeOnRallyTick`, and
+`ServiceMatch2` disables `JudgeOnBounce` while leaving `JudgeOnRallyTick` live.
+No drill disables `PointEnd` or `BallHit`.
+
+With the right names that reads as a per-drill choice of which events may score
+a point — a sensible thing to vary between a serve drill and a stroke drill.
+That is *consistent with* deliberate stubbing and does not establish it: a
+leading `ret` looks identical whether it was written as configuration or left
+behind by an edit, and nothing in the ROM distinguishes the two. `docs/bugs.md`
+records the behaviour and stops asserting the intent, and its section heading
+changed from "Stubs — deliberate, not defects" to "Routines that return before
+their body".
+
+Worth generalising: the wrong name made the wrong conclusion easy. "JudgeShot2"
+invites "the second shot is not judged", which is a claim about gameplay;
+"JudgeOnBounce" invites "this drill does not judge on a bounce", which is a
+claim about configuration. The `StubNop_*` and `StubLoadFontTiles` names from
+earlier passes encode the same assumption and are flagged in `docs/bugs.md` as
+worth re-examining on the same grounds.
