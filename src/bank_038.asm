@@ -3887,19 +3887,19 @@ BuildCreatedCharRecords:
 	ld [hl], a ; $5ddc
 	ld hl, $0003 ; $5ddd
 	add hl, bc ; $5de0
-	ld a, [$c938] ; $5de1
+	ld a, [wStoryMainCharSpinLevel] ; $5de1
 	ld [hl], a ; $5de4
 	ld hl, $0004 ; $5de5
 	add hl, bc ; $5de8
-	ld a, [$c939] ; $5de9
+	ld a, [wStoryMainCharPowerLevel] ; $5de9
 	ld [hl], a ; $5dec
 	ld hl, $0005 ; $5ded
 	add hl, bc ; $5df0
-	ld a, [$c93a] ; $5df1
+	ld a, [wStoryMainCharControlLevel] ; $5df1
 	ld [hl], a ; $5df4
 	ld hl, $0006 ; $5df5
 	add hl, bc ; $5df8
-	ld a, [$c93b] ; $5df9
+	ld a, [wStoryMainCharSpeedLevel] ; $5df9
 	ld [hl], a ; $5dfc
 	push bc ; $5dfd
 	ld a, $07 ; $5dfe
@@ -3926,19 +3926,19 @@ BuildCreatedCharRecords:
 	ld [hl], a ; $5e26
 	ld hl, $0003 ; $5e27
 	add hl, bc ; $5e2a
-	ld a, [$c978] ; $5e2b
+	ld a, [wStoryPartnerCharSpinLevel] ; $5e2b
 	ld [hl], a ; $5e2e
 	ld hl, $0004 ; $5e2f
 	add hl, bc ; $5e32
-	ld a, [$c979] ; $5e33
+	ld a, [wStoryPartnerCharPowerLevel] ; $5e33
 	ld [hl], a ; $5e36
 	ld hl, $0005 ; $5e37
 	add hl, bc ; $5e3a
-	ld a, [$c97a] ; $5e3b
+	ld a, [wStoryPartnerCharControlLevel] ; $5e3b
 	ld [hl], a ; $5e3e
 	ld hl, $0006 ; $5e3f
 	add hl, bc ; $5e42
-	ld a, [$c97b] ; $5e43
+	ld a, [wStoryPartnerCharSpeedLevel] ; $5e43
 	ld [hl], a ; $5e46
 	push bc ; $5e47
 	ld a, $07 ; $5e48
@@ -4880,7 +4880,7 @@ RunLinkCharSelectScreen:
 	ldh [hLinkRemoteInputBuf], a ; $6453
 	ldh [hLinkRemoteInput], a ; $6455
 	ld [wLinkSelectCmdResult], a ; $6457
-	ld [$cb72], a ; $645a
+	ld [wLinkSelectStartupFrames], a ; $645a
 	ld a, $01 ; $645d
 	ld hl, TickMenuBgScrollTask_38 ; $645f
 	call RegisterFrameTask ; $6462
@@ -6326,11 +6326,11 @@ RetreatLinkGridSelection:
 	ld a, $01 ; $6e01
 	ret ; $6e03
 WaitLinkSelectStartupFrames:
-	ld a, [$cb72] ; $6e04
+	ld a, [wLinkSelectStartupFrames] ; $6e04
 	cp $03 ; $6e07
 	jr z, .yes ; $6e09
 	inc a ; $6e0b
-	ld [$cb72], a ; $6e0c
+	ld [wLinkSelectStartupFrames], a ; $6e0c
 	xor a ; $6e0f
 	ret ; $6e10
 .yes:
@@ -7257,8 +7257,8 @@ ExchangeLinkUnlockFlags:
 	jr nz, .send ; $762b
 	call WaitVBlank ; $762d
 .send:
-	ld hl, $cb55 ; $7630
-	ld de, $cb59 ; $7633
+	ld hl, wLinkUnlockFlagsRecv ; $7630
+	ld de, wLinkUnlockFlagsSend ; $7633
 	ld c, $04 ; $7636
 	farcall ExchangeLinkDataBlock ; $7638
 	xor a ; $763b
@@ -7303,17 +7303,17 @@ StoreLinkMatchCharInfo:
 	ld de, wCreatedCharRecords + 2 ; $7677
 	add hl, de ; $767a
 	ld a, [hl] ; $767b
-	ld [$c8ba], a ; $767c
+	ld [wLinkMatchCharLevel], a ; $767c
 .restore:
 	pop af ; $767f
 	wram_bank ; $7680
 	pop af ; $7684
 	ret ; $7685
 PackUnlockFlagsForLink:
-	ld hl, $cb59 ; $7686
+	ld hl, wLinkUnlockFlagsSend ; $7686
 	ld bc, $0004 ; $7689
 	call ClearBytes ; $768c
-	ld hl, $cb55 ; $768f
+	ld hl, wLinkUnlockFlagsRecv ; $768f
 	ld bc, $0004 ; $7692
 	call ClearBytes ; $7695
 	ld c, $00 ; $7698
@@ -7333,7 +7333,7 @@ PackUnlockFlagsForLink:
 	ld a, c ; $76ab
 	cp $08 ; $76ac
 	jr nz, .charLoop ; $76ae
-	ld hl, $cb59 ; $76b0
+	ld hl, wLinkUnlockFlagsSend ; $76b0
 	ld [hl], d ; $76b3
 	ld hl, $d848 ; $76b4
 	ld a, [hl] ; $76b7
@@ -7341,7 +7341,7 @@ PackUnlockFlagsForLink:
 	jr z, .storeCharFlags ; $76b9
 	ld a, $01 ; $76bb
 .storeCharFlags:
-	ld hl, $cb5a ; $76bd
+	ld hl, wLinkUnlockFlagsSend + 1 ; $76bd
 	ld [hl], a ; $76c0
 	ld c, $00 ; $76c1
 	ld b, $01 ; $76c3
@@ -7360,7 +7360,7 @@ PackUnlockFlagsForLink:
 	ld a, c ; $76d4
 	cp $08 ; $76d5
 	jr nz, .courtLoop ; $76d7
-	ld hl, $cb5b ; $76d9
+	ld hl, wLinkUnlockFlagsSend + 2 ; $76d9
 	ld [hl], d ; $76dc
 	ld c, $00 ; $76dd
 	ld b, $01 ; $76df
@@ -7379,14 +7379,14 @@ PackUnlockFlagsForLink:
 	ld a, c ; $76f0
 	cp $08 ; $76f1
 	jr nz, .itemLoop ; $76f3
-	ld hl, $cb5c ; $76f5
+	ld hl, wLinkUnlockFlagsSend + 3 ; $76f5
 	ld [hl], d ; $76f8
 	ret ; $76f9
 UnpackUnlockFlagsFromLink:
 	ld hl, $d840 ; $76fa
 	ld bc, $0028 ; $76fd
 	call ClearBytes ; $7700
-	ld hl, $cb59 ; $7703
+	ld hl, wLinkUnlockFlagsSend ; $7703
 	ld b, $01 ; $7706
 	ld c, $00 ; $7708
 .charBitLoop:
@@ -7410,14 +7410,14 @@ UnpackUnlockFlagsFromLink:
 	ld a, c ; $771f
 	cp $08 ; $7720
 	jr nz, .charBitLoop ; $7722
-	ld a, [$cb5a] ; $7724
+	ld a, [wLinkUnlockFlagsSend + 1] ; $7724
 	or a ; $7727
 	jr z, .courtFlags ; $7728
 	ld hl, $d848 ; $772a
 	ld a, $01 ; $772d
 	ld [hl], a ; $772f
 .courtFlags:
-	ld hl, $cb5b ; $7730
+	ld hl, wLinkUnlockFlagsSend + 2 ; $7730
 	ld b, $01 ; $7733
 	ld c, $00 ; $7735
 .courtBitLoop:
@@ -7441,7 +7441,7 @@ UnpackUnlockFlagsFromLink:
 	ld a, c ; $774c
 	cp $08 ; $774d
 	jr nz, .courtBitLoop ; $774f
-	ld hl, $cb5c ; $7751
+	ld hl, wLinkUnlockFlagsSend + 3 ; $7751
 	ld b, $01 ; $7754
 	ld c, $00 ; $7756
 .itemFlags:
@@ -7467,8 +7467,8 @@ UnpackUnlockFlagsFromLink:
 	jr nz, .itemFlags ; $7770
 	ret ; $7772
 MergeLinkUnlockFlags:
-	ld hl, $cb59 ; $7773
-	ld de, $cb55 ; $7776
+	ld hl, wLinkUnlockFlagsSend ; $7773
+	ld de, wLinkUnlockFlagsRecv ; $7776
 	ld c, $00 ; $7779
 .loop:
 	ld a, [hl] ; $777b

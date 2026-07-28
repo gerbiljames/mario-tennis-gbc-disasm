@@ -1280,7 +1280,7 @@ RunTitleAndMainMenuLoop:
 	call WaitFadeEnd ; $4f79
 .menuLoop:
 	xor a ; $4f7c
-	ld [$cb22], a ; $4f7d
+	ld [wUnusedMenuCursor], a ; $4f7d
 	ld [wSavedDataMenuCursor], a ; $4f80
 	ld [wN64TransferMenuCursor], a ; $4f83
 	ld [wSubMenuCursor], a ; $4f86
@@ -1419,7 +1419,7 @@ MatchSelectHandlersBHandler0:
 	call RestoreGameTimer ; $50ab
 	farcall SaveStorySlotWithTimer ; $50ae
 	call GetStoryContinueDestination ; $50b1
-	ld [$cb74], a ; $50b4
+	ld [wMatchSelectSubState], a ; $50b4
 	cp $04 ; $50b7
 	jr z, .continueStory ; $50b9
 	farcall RunPlayAlonePartnerMenu ; $50bb
@@ -1430,7 +1430,7 @@ MatchSelectHandlersBHandler0:
 	jp RunTitleAndMainMenuLoop.menuLoop ; $50c7
 .continueStory:
 	call GetStoryContinueDestination ; $50ca
-	ld [$cb74], a ; $50cd
+	ld [wMatchSelectSubState], a ; $50cd
 	call RestoreGameTimer ; $50d0
 	ld a, $00 ; $50d3
 	ld [wGameMode], a ; $50d5
@@ -1441,7 +1441,7 @@ MatchSelectHandlersBHandler0:
 	farcall SaveStorySlotWithTimer ; $50e2
 	test_flag FLAG_DEBUG_SKIP_LOCATION_EXIT ; $50e5
 	jr nz, .loadSlot ; $50e8
-	ld a, [$cb74] ; $50ea
+	ld a, [wMatchSelectSubState] ; $50ea
 	ld a, a ; $50ed
 	ld [wUnusedExitLocationMirror], a ; $50ee
 	ld [wStoryModeExitLocationRequest], a ; $50f1
@@ -1479,7 +1479,7 @@ MatchSelectHandlersBHandler3:
 	pop af ; $5136
 .noSlot:
 	xor a ; $5137
-	ld [$c8a8], a ; $5138
+	ld [wVictoryScoreTableAlt], a ; $5138
 	ld a, $03 ; $513b
 	ld [wCurrentStorySlot], a ; $513d
 	farcall InitStoryModeState ; $5140
@@ -1558,7 +1558,7 @@ MatchSelectHandlersBHandler3:
 	or a ; $51f2
 	jr z, .done ; $51f3
 	ld a, $01 ; $51f5
-	ld [$c8a8], a ; $51f7
+	ld [wVictoryScoreTableAlt], a ; $51f7
 	farcall WriteExhibitionSaveBlock ; $51fa
 .done:
 	ld a, $01 ; $51fd

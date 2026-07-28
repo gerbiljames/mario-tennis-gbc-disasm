@@ -2055,7 +2055,7 @@ RunRacketShoesChoiceMenu:
 	ld b, $01 ; $4eba
 	ld c, $01 ; $4ebc
 	farcall LoadMenuSpritePalettePair ; $4ebe
-	ld a, [$cb24] ; $4ec1
+	ld a, [wRacketShoesTabIndex] ; $4ec1
 	ld c, a ; $4ec4
 	ld b, $02 ; $4ec5
 	call SetMenuCursorFromIndex_3e ; $4ec7
@@ -2093,7 +2093,7 @@ RunRacketShoesChoiceMenu:
 	ld [wMenuSlideDirection], a ; $4f10
 	ld c, $02 ; $4f13
 	call GetMenuCursorIndex_3e ; $4f15
-	ld [$cb24], a ; $4f18
+	ld [wRacketShoesTabIndex], a ; $4f18
 	ret ; $4f1b
 .playSfx2:
 	sound $62 ; $4f1c

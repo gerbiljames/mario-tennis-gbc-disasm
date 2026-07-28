@@ -1285,13 +1285,36 @@
   "note": "[16-bit] Target zone depth bound 2 (world units)",
   "size": 2
  },
+ "0xc798": {
+  "name": "wDrillGate1",
+  "note": "[4 bytes] First drill gate: two 16-bit coordinates, +$00 from hl and +$02 from de at SetBallGatePoint1. DidBallCrossGate tests the ball against the pair each frame and QueueDrillMarker1_0b draws the marker there",
+  "size": 4
+ },
+ "0xc79c": {
+  "name": "wDrillGate2",
+  "note": "[4 bytes] The second gate, set and tested the same way",
+  "size": 4
+ },
  "0xc7a5": {
   "name": "wMinigameShotRoll",
   "note": "[8-bit] Random roll SelectRandomMinigameShot and SelectRandomTreasureBoxTargetZone keep while they walk their weight tables to pick the next shot or target zone"
  },
+ "0xc7a6": {
+  "name": "wTargetTileHit",
+  "note": "[8-bit] Set when the ball lands on a target tile and read by ProcessTargetTileHit, which clears it as it scores the hit"
+ },
+ "0xc7a7": {
+  "name": "wMinigameServeState",
+  "note": "[8-bit] Where the minigame is in its serve: StartMinigameMatch seeds it, DrawMinigameScoreHud and LaunchMinigameServe branch on it"
+ },
  "0xc7a8": {
   "name": "wAiServeSkipToss",
   "note": "[8-bit] Nonzero makes AiServePressToss release the serve immediately instead of running the wAiServeStyle toss table - the plain feed the coach's practice drills want. The bank $0b drill hooks set it at point start and clear it around RunMinigameMatch"
+ },
+ "0xc7b0": {
+  "name": "wMinigamePointTable",
+  "note": "[16-bit] Pointer to the layout table for the current minigame point, set by SetMinigamePointTable and walked by LoadMinigamePointLayout and RunMinigamePointLoop",
+  "size": 2
  },
  "0xc7b2": {
   "name": "wModeHookTable",
@@ -1306,6 +1329,11 @@
  "0xc7b5": {
   "name": "wAiServeAimOverride",
   "note": "[8-bit] Aim AiApplyServeAim must use for the next serve; $ff (set by RunMatch) means pick one at random from Data_08_7b0b. The drill point-start hooks write a specific aim so a lesson always serves where the script needs it"
+ },
+ "0xc7b6": {
+  "name": "wAiServeTargetX",
+  "note": "[16-bit] Spot the serving CPU is walking to. Zero means \"not chosen yet\", which is what makes AiServeWalkToSpot roll a new one; the drill runner clears it before each match",
+  "size": 2
  },
  "0xc7b8": {
   "name": "wMinigameUsesTennisMachine",
@@ -1420,6 +1448,10 @@
   "note": "[8-bit] Story Mode - Main Character Speed Level",
   "size": 1
  },
+ "0xc83c": {
+  "name": "wMainCharEquipmentBits",
+  "note": "[8-bit] Equipment nibbles for the main character, cleaned up by RefreshMainCharacterStats before the stats are recomputed: a low nibble of 3 drops the low nibble, a high nibble of 1 drops the high one"
+ },
  "0xc858": {
   "name": "wStoryModePartnerCharacterLevel",
   "note": "[8-bit] Story Mode - Partner Character Level (0x01-0x63)",
@@ -1505,6 +1537,26 @@
   "note": "[8-bit] Story Mode - Partner Character Speed Level",
   "size": 1
  },
+ "0xc880": {
+  "name": "wStorySaveSignature",
+  "note": "[4 bytes] Signature identifying a story save, so two slots can be told apart. CacheStorySlotSummaries copies each slot's into $d400 + slot * 4, CheckStorySignatureCollision compares them and GenerateUniqueStorySaveSignature rerolls from wStoryRandomBytes until no slot matches",
+  "size": 4
+ },
+ "0xc884": {
+  "name": "wStorySlotBlockTag",
+  "note": "[3 bytes] Tag InitStoryModeState stamps on a fresh story slot: $56 then two zero bytes",
+  "size": 3
+ },
+ "0xc88e": {
+  "name": "wSavedGameTimer",
+  "note": "[4 bytes] Copy of wGameTimer taken by SaveGameTimer with interrupts off, so a screen that stops the clock can put it back exactly (RestoreGameTimer)",
+  "size": 4
+ },
+ "0xc890": {
+  "name": "wCharDataSyncValues",
+  "note": "[2 bytes] The pair CharDataValuesSyncTask pushes into the character-data screen at $d14c when $d149 is clear; it uses wGameTimer + 2 instead when it is set",
+  "size": 2
+ },
  "0xc8a3": {
   "name": "wSoundOptionBits",
   "note": "[8-bit] Sound options from the pause menu. Bit 0 is music on/off: ToggleMusicSetting flips just that bit and SyncBGMEnableFlag mirrors it into hMusic bit 0, stopping the BGM when it goes clear. The remaining bits are preserved by both"
@@ -1527,6 +1579,10 @@
   "name": "wKeepMatchStatsFlag",
   "note": "[8-bit] Nonzero makes ResetMatchState skip clearing the per-character match stats (set by MatchQuitMenu_SaveAndQuit so a resumed match keeps its stats); cleared after use"
  },
+ "0xc8a8": {
+  "name": "wVictoryScoreTableAlt",
+  "note": "[8-bit] Nonzero selects VictoryScoreTable1 over VictoryScoreTable in GetVictoryScore. Set on two paths of the match-select handler"
+ },
  "0xc8a9": {
   "name": "wStoryReturnLocation",
   "note": "[8-bit] Location SaveStoryReturnPoint recorded to come back to. Called with b = $ff it snapshots the live position instead of a fixed door"
@@ -1540,6 +1596,16 @@
   "note": "[5 bytes] Player X, Y and facing saved with the return point, in the wStoryModeSpawnPosition layout it is copied back into",
   "size": 5
  },
+ "0xc8b1": {
+  "name": "wPendingExpExhibition",
+  "note": "[16-bit] EXP an exhibition match earned, parked here by AwardExhibitionMatchExp and applied by ApplyPendingExpAwards once the results screens are done",
+  "size": 2
+ },
+ "0xc8b3": {
+  "name": "wPendingExpLinked",
+  "note": "[16-bit] The same for a linked-play match (AwardLinkedPlayMatchExp)",
+  "size": 2
+ },
  "0xc8b5": {
   "name": "wMatchSlotCharRefs",
   "note": "[4 bytes] One byte per player slot naming the character the suspended or link match was set up with, copied out of wCharSelectSlotChars by StoreLinkMatchCharInfo (or out of the exhibition save block by CopyExhibitionCharSlotIds). Bit 7 marks a created story character and the low bits then say which story slot it came from",
@@ -1548,6 +1614,15 @@
  "0xc8b9": {
   "name": "wLinkMatchRole",
   "note": "[8-bit] Copy of hLinkState taken by StoreLinkMatchCharInfo when the link match's characters are committed. The results and EXP screens turn it back into a WRAM bank with `srl a / add a, $04`, i.e. which per-character struct is the local player's"
+ },
+ "0xc8ba": {
+  "name": "wLinkMatchCharLevel",
+  "note": "[8-bit] Byte at +$02 of the chosen created-character record, taken by StoreLinkMatchCharInfo before the link match and read back by the EXP screen panels"
+ },
+ "0xc8bb": {
+  "name": "wStoryRandomBytes",
+  "note": "[4 bytes] Rolling random bytes RollStoryRandomByte stirs; GenerateUniqueStorySaveSignature copies them into wStorySaveSignature",
+  "size": 4
  },
  "0xc8c0": {
   "name": "wCharacter1ServiceAces",
@@ -1618,6 +1693,10 @@
   "name": "wCharacter2DoubleFaults",
   "note": "[8-bit] Character 2 Double Faults",
   "size": 1
+ },
+ "0xc8cf": {
+  "name": "wPrevCourtPos",
+  "note": "[8-bit] wCharCourtPos as it was last frame. CheckServerEndChanged swaps the new value in and raises wChangeEndsPending when bit 1 differs, which is the ends-change; UpdateViewFlipState reads it for the flipped-court view"
  },
  "0xc8d0": {
   "name": "wCharacter3ServiceAces",
@@ -1834,6 +1913,32 @@
   "name": "wStoryMainCharExpTier",
   "note": "[8-bit] EXP tier of the story main character's record ($c900 + $18, the same field LoadCharacterAttributes turns into wCharExpTier for an on-court character). ScaleExpByPlayerLevel averages it with wStoryPartnerCharExpTier and compares the result against $0a to decide whether match EXP is scaled down"
  },
+ "0xc920": {
+  "name": "wStoryMainCharStats",
+  "note": "[11 bytes] The eleven 0-9 stats of the story main character's record ($c900 + $20), in the wStoryModeMainCharacter*Stat order: Top, Slice, Serve, Stroke, Volley, Angle, Placement, Speed, Dash, Reaction, Stop",
+  "size": 11
+ },
+ "0xc92c": {
+  "name": "wStoryMainCharExp",
+  "note": "[16-bit] EXP in the story main character's record ($c900 + $2c)",
+  "size": 2
+ },
+ "0xc938": {
+  "name": "wStoryMainCharSpinLevel",
+  "note": "[8-bit] Spin level in the story main character's record ($c900 + $38); the four levels shown on character select run from here"
+ },
+ "0xc939": {
+  "name": "wStoryMainCharPowerLevel",
+  "note": "[8-bit] Power level, the record's +$39"
+ },
+ "0xc93a": {
+  "name": "wStoryMainCharControlLevel",
+  "note": "[8-bit] Control level, the record's +$3a"
+ },
+ "0xc93b": {
+  "name": "wStoryMainCharSpeedLevel",
+  "note": "[8-bit] Speed level, the record's +$3b"
+ },
  "0xc93c": {
   "name": "wEquippedRacket",
   "note": "[Lower4] Equipped Racket\n\n0x0 - Normal Racket\n0x1 - Large Racket\n0x2 - Small Racket\n0x3 - Iron Racket\n0x4 - Gold Racket\n0x5 - Silver Racket\n0x6 - Drive Racket\n\n[Upper4] Equipped Shoes\n\n0x0 - Normal Shoes\n0x1 - Iron Shoes\n0x2 - Light Shoes"
@@ -1866,6 +1971,37 @@
  "0xc958": {
   "name": "wStoryPartnerCharExpTier",
   "note": "[8-bit] EXP tier of the story partner's record ($c940 + $18), the partner half of wStoryMainCharExpTier"
+ },
+ "0xc96c": {
+  "name": "wStoryPartnerCharExp",
+  "note": "[16-bit] EXP in the story partner's record ($c940 + $2c)",
+  "size": 2
+ },
+ "0xc978": {
+  "name": "wStoryPartnerCharSpinLevel",
+  "note": "[8-bit] Spin level in the story partner's record ($c940 + $38)"
+ },
+ "0xc979": {
+  "name": "wStoryPartnerCharPowerLevel",
+  "note": "[8-bit] Power level, the record's +$39"
+ },
+ "0xc97a": {
+  "name": "wStoryPartnerCharControlLevel",
+  "note": "[8-bit] Control level, the record's +$3a"
+ },
+ "0xc97b": {
+  "name": "wStoryPartnerCharSpeedLevel",
+  "note": "[8-bit] Speed level, the record's +$3b"
+ },
+ "0xc9b0": {
+  "name": "wPendingExpStory",
+  "note": "[16-bit] EXP a story match earned, the third of the pending awards alongside wPendingExpExhibition and wPendingExpLinked. ApplyPendingExpAwards adds it to wPendingExpTrophy, scales the total by the player level and folds in the trophy awards",
+  "size": 2
+ },
+ "0xc9b2": {
+  "name": "wPendingExpTrophy",
+  "note": "[16-bit] The trophy half of the same pending award, summed with wPendingExpStory before scaling. ValidateN64TransferRecord and the debug stats screen address the pair as the head of the N64 transfer record that wN64TransferMarker ends",
+  "size": 2
  },
  "0xc9b4": {
   "name": "wN64TransferMarker",
@@ -2026,6 +2162,10 @@
   "name": "wPlayer2MainLeftHanded",
   "note": "[8-bit] Mirror flag of the player-2 main character (see wPlayer1MainLeftHanded)"
  },
+ "0xca8f": {
+  "name": "wPlayer2MainInitByte",
+  "note": "[8-bit] Last byte of BooBlastInitParams, stored into the CPU character record at +$0f as the minigame is set up. Nothing reads it back"
+ },
  "0xca98": {
   "name": "wPlayer2MainExpTier",
   "note": "[8-bit] EXP tier of the player-2 main character (see wPlayer1PartnerExpTier)"
@@ -2085,6 +2225,14 @@
   "name": "wRasterScrollX",
   "note": "[8-bit] rSCX the LCD STAT handler applies inside a scanline band, giving the results and cutscene screens a horizontally offset strip. The band's first and last lines live in the two bytes after it, which the credits and window-slide code reuse as a 16-bit camera offset instead - the STAT handler is not running then"
  },
+ "0xcb02": {
+  "name": "wRasterScrollStartLY",
+  "note": "[8-bit] Scanline at which LCDStatHandler starts applying wRasterScrollX to rSCX -- the top of the split"
+ },
+ "0xcb03": {
+  "name": "wRasterScrollEndLY",
+  "note": "[8-bit] Scanline at which it puts rSCX back to 0, ending the split. The win/lose screen, the ending credits and the intro cutscene each set their own pair"
+ },
  "0xcb04": {
   "name": "wMenuCursorX",
   "note": "[8-bit] Menu cursor column; MoveMenuCursor wraps it at the column count in b",
@@ -2106,6 +2254,14 @@
  "0xcb08": {
   "name": "wMenuCursorLockFlags",
   "note": "[8-bit] Menu cursor lock flags: bit 0 / bit 1 freeze the primary / secondary cursor's movement (set on confirm) in the shared menu-input handler"
+ },
+ "0xcb09": {
+  "name": "wAnimatedTileFrame",
+  "note": "[8-bit] Animation step for the current tile set, advanced whenever wAnimatedTileTimer wraps; its low nibble picks the frame"
+ },
+ "0xcb0a": {
+  "name": "wAnimatedTileTimer",
+  "note": "[8-bit] Frame counter UpdateAnimatedTiles runs against wAnimatedTilePeriod; the tiles only change on the tick where it reaches zero"
  },
  "0xcb0b": {
   "name": "wAnimatedTileSet",
@@ -2179,9 +2335,25 @@
   "name": "wSubMenuCursor",
   "note": "[8-bit] Saved cursor cell shared by the N64 record-type menu and the two court-select menus in bank $3e"
  },
+ "0xcb1f": {
+  "name": "wUnlockDebugSelection",
+  "note": "[8-bit] Selected entry on the minigame-flags debug screen, passed to UpdateUnlockDebugSelection by address"
+ },
  "0xcb20": {
   "name": "wSelectedMinigame",
   "note": "[8-bit] Minigame chosen on the minigame-select screen; RunMinigameModeFlow turns it into the config-table row (index * 3 + wMinigameLevel) and RunMinigameRulesPages picks the rules pages from it"
+ },
+ "0xcb22": {
+  "name": "wUnusedMenuCursor",
+  "note": "[8-bit] Zeroed with the other menu cursors each time the main menu loop restarts. Nothing reads it"
+ },
+ "0xcb24": {
+  "name": "wRacketShoesTabIndex",
+  "note": "[8-bit] Tab the racket/shoes choice menu was left on, so reopening it puts the cursor back"
+ },
+ "0xcb25": {
+  "name": "wSavedDataTypeTabIndex",
+  "note": "[8-bit] The same for the saved-data type select"
  },
  "0xcb26": {
   "name": "wPauseMenuWindowId",
@@ -2203,6 +2375,14 @@
   "name": "wPauseMenuOptionBits",
   "note": "[8-bit] Pause-menu options state: the low nibble holds the per-option toggle bits the music/sound rows flip, bit 5 gates DrawPauseMenuSettingValues, and bits 6-7 are set once a row has been visited. Cleared by ResetPauseMenuState"
  },
+ "0xcb2b": {
+  "name": "wPauseMenuIsMinigame",
+  "note": "[8-bit] Written as the pause menu opens and read by RunMinigameModePauseMenu, which is how the shared window knows which pause menu it is running"
+ },
+ "0xcb2c": {
+  "name": "wSuppressMinigamePauseFlag",
+  "note": "[8-bit] When nonzero the minigame pause menu is built without setting FLAG_MINIGAME_PAUSE_MENU_OPEN, which is what keeps the scroll-arrow task off that variant"
+ },
  "0xcb2d": {
   "name": "wTennisDictScrollTop",
   "note": "[8-bit] Study Vocabulary / Tennis Dictionary screen (bank $3f): index of the first entry shown in the 6-row scrolling term list. Absolute entry = ($cb2d + $cb2e) mod $cb2f (Func_3f_517b, $3f:$5181). Advanced/wrapped against $cb2f when the cursor runs off the top/bottom ($3f:$56d6-$56e2, $3f:$5700-$570c), recomputed by the page-jump helpers Func_3f_5192/Func_3f_520f, and used as the render start in Func_3f_5261 ($3f:$528d). Cleared on screen entry at $3f:$40c8."
@@ -2214,6 +2394,11 @@
  "0xcb2f": {
   "name": "wTennisDictEntryCount",
   "note": "[8-bit] Study Vocabulary screen (bank $3f): number of list entries that pass the current category filter. Computed by Func_3f_50f7 ($3f:$5102-$5116) by counting bytes of SelectionMaskGrid_3f_539e that AND with $cb32 (up to the $40 terminator), and used as the wrap modulus for the scroll offset ($3f:$5181, $3f:$5700, $3f:$51ac)."
+ },
+ "0xcb30": {
+  "name": "wTennisDictListEnd",
+  "note": "[16-bit] Address of the $40 terminator FindTennisDictionaryListEnd found in the selection grid, stored **high byte first** -- +$00 is h and +$01 is l. WrapTennisDictionaryScanToEnd reads it back the same way to wrap a scan round to the last entry",
+  "size": 2
  },
  "0xcb32": {
   "name": "wTennisDictCategoryMask",
@@ -2246,6 +2431,10 @@
  "0xcb3d": {
   "name": "wTennisDictAnimTimer",
   "note": "[8-bit] Frames left in the current wTennisDictAnimState; $b4 on a restart and $ff for the long idle"
+ },
+ "0xcb3e": {
+  "name": "wTennisDictScrollTimer",
+  "note": "[8-bit] Second animation counter for the tennis-dictionary screen, stepped only while wTennisDictFlags bit 1 is set and bit 0 is clear -- the list is scrolling and not yet settled. TennisDictionaryScreen seeds it when the screen opens"
  },
  "0xcb3f": {
   "name": "wCutsceneStep",
@@ -2284,6 +2473,11 @@
   "name": "wCutsceneSpriteBY",
   "note": "[8-bit] Y of the intro cutscene's second sprite group"
  },
+ "0xcb48": {
+  "name": "wCutsceneScrollAccum",
+  "note": "[16-bit] Running scroll position for the intro cutscene: UpdateCutsceneScrollY subtracts this frame's CutsceneScrollYTable entry from it each tick, and QueueScrollingSprite places sprites against it",
+  "size": 2
+ },
  "0xcb4a": {
   "name": "wIntroCutsceneScrollY",
   "note": "[16-bit] Intro cutscene (bank $6b): world-space vertical scroll/camera position, little-endian. Initialised to $0120 at the start of scenes 00/12/19 ($6b:$41bf, $6b:$4916, $6b:$4c65) and decremented every frame by the per-frame delta table at $6b:$4cc1 indexed by wCutsceneStepTimer ($6b:$4caa-$4cbd). Consumers: ApplyCutsceneScrollToSpriteX ($6b:$5191) subtracts it from the sprite base coordinate that QueueSpriteTemplate treats as Y (the sp+0 slot, $00:$1ebf - so despite the existing label it is the Y axis), and SetCameraYFromScrollPos ($6b:$60d5) shifts it left 5 into wCameraY. $6b:$60fe uses ($cb48 - $cb4a) as the on-screen Y of the object drawn by QueueIntroSpriteBlock.",
@@ -2321,6 +2515,28 @@
   "name": "wUnlockedCourtMask",
   "note": "[8-bit] Bitmask of the five unlockable bonus courts (court ids 4-8; courts 0-3 are always available per IsCourtUnlocked $3e:$697b). Built from the save flags by ComputeUnlockedCourtFlags ($3e:$69a0-$69c9, one bit per row of the 5-entry table at $3e:$69ca) and cleared at $10:$5174. Passed in b to StoreCourtUnlockBits ($3e:$695a), which explodes it into the five per-court bytes at $d000 in WRAM bank $02; also decides whether the 9-court or the 4-court select menu runs ($10:$5199, $38:$7489) and is the payload of link block $26 ($38:$759c)."
  },
+ "0xcb55": {
+  "name": "wLinkUnlockFlagsRecv",
+  "note": "[4 bytes] The other Game Boy's packed unlock flags, filled by the ExchangeLinkDataBlock that sends wLinkUnlockFlagsSend. MergeLinkUnlockFlags folds the two together so both sides end up with the union of what each has unlocked",
+  "size": 4
+ },
+ "0xcb59": {
+  "name": "wLinkUnlockFlagsSend",
+  "note": "[4 bytes] This side's unlock flags, packed one bit per character by PackUnlockFlagsForLink before the exchange",
+  "size": 4
+ },
+ "0xcb5d": {
+  "name": "wMarioCastUnlockMask",
+  "note": "[8-bit] One bit per Mario-cast grid slot, built by BuildMarioCastUnlockMask from six passes and read by GetUnlockedMarioCastCharAtGridSlot to skip locked slots"
+ },
+ "0xcb5e": {
+  "name": "wCompanionActorSlot",
+  "note": "[8-bit] Actor slot SpawnCompanionActor is filling -- 3 in doubles, $ff in singles, which is how it knows to skip attaching the step-mover"
+ },
+ "0xcb5f": {
+  "name": "wOverworldEnterFlag",
+  "note": "[8-bit] Written as RunStoryModeOverworld starts and read by nothing"
+ },
  "0xcb60": {
   "name": "wCutsceneSlideTimer",
   "note": "[8-bit] Frame counter of bank $03's scrolling story cutscene. AnimateWindowSlideUpTask increments it and drives rWY from $90 minus its low 6 bits, sliding the window up; UpdateSceneAnimation takes its low 2 bits as the gate that steps the cutscene's animation frame"
@@ -2337,6 +2553,11 @@
  "0xcb63": {
   "name": "wDebugCharViewerIndex",
   "note": "[8-bit] Debug character viewer (Func_1a_67d4): cursor index 0-15 within the current page - LEFT/RIGHT step by 1 and wrap inside the current row of 8 ($1a:$691b-$692d, $1a:$6934-$6945), UP/DOWN step by 8 and roll into $cb62 ($1a:$694c, $1a:$6979). Selected character id = ($cb62 << 4) + $cb63 ($1a:$69d8). Also indexes the cursor-sprite position table at $1a:$6b0f ($1a:$6af9)."
+ },
+ "0xcb64": {
+  "name": "wDigitSpriteSlots",
+  "note": "[7 bytes] Per-digit working bytes for the number-sprite drawer, cleared by InitNumberSpriteGfx alongside wDigitSpriteTileBase and wDigitSpriteAttr",
+  "size": 7
  },
  "0xcb6b": {
   "name": "wDigitSpriteTileBase",
@@ -2355,9 +2576,25 @@
   "note": "[16-bit] Rules/briefing screens: base text id of the minigame's rules pages, taken from MinigameRulesTextIdBases_17 ($17:$6fdb) at $17:$6fc6. Each page offset from the minigame's MinigameRulesPageLists_17 row is added to it ($17:$70ef) and the result rendered through PrepareGlyphBuffer / RenderProportionalTextAt.",
   "size": 2
  },
+ "0xcb70": {
+  "name": "wMinigameSelectUnused",
+  "note": "[8-bit] Written twice by RunMinigameSelect and read by nothing"
+ },
  "0xcb71": {
   "name": "wCheatUnlockTriggered",
   "note": "[8-bit] Set to 1 once the cheat code has been matched and TriggerCheatUnlock has run, which stops UpdateCheatCodeEntry accepting any more input. The title and main-menu loops clear it when they re-enter"
+ },
+ "0xcb72": {
+  "name": "wLinkSelectStartupFrames",
+  "note": "[8-bit] Frames the link character-select screen waits before it accepts input; WaitLinkSelectStartupFrames counts it down"
+ },
+ "0xcb73": {
+  "name": "wMatchWinLoseState",
+  "note": "[8-bit] Which stage RunMatchWinLoseScreen is in, set as the screen opens and branched on twice as it plays out"
+ },
+ "0xcb74": {
+  "name": "wMatchSelectSubState",
+  "note": "[8-bit] Sub-state of the first match-select handler, set on two paths and read back once"
  },
  "0xcb75": {
   "name": "wTextRowNextTile",
@@ -2371,6 +2608,14 @@
  "0xcb78": {
   "name": "wGlyphStampEnabled",
   "note": "[8-bit] Nonzero when the text being rendered belongs to a window other than wMenuWindowId, which is the condition StampGlyphTileAtPen requires before it writes a glyph tile through wGlyphTileWritePtr. Menu text goes through the tilemap alone"
+ },
+ "0xcbf0": {
+  "name": "wCourtSceneGfxStepsLeft",
+  "note": "[8-bit] Court-scene graphics still to queue; the loader decrements it each pass and stops once it hits zero"
+ },
+ "0xcbf1": {
+  "name": "wCourtSceneGfxCursor",
+  "note": "[8-bit] Byte offset into SpriteList_0a_62eb, advanced 4 at a time (one record) and wrapped to 0 when the record reads $ff"
  },
  "0xcc00": {
   "name": "wDebugTextBuffer",

@@ -1373,7 +1373,7 @@ CheckServerEndChanged:
 	wram_bank $04 ; $4c19
 	ld a, [wCharCourtPos] ; $4c1f
 	ld b, a ; $4c22
-	ld hl, $c8cf ; $4c23
+	ld hl, wPrevCourtPos ; $4c23
 	ld a, [hl] ; $4c26
 	ld [hl], b ; $4c27
 	xor b ; $4c28
@@ -1388,7 +1388,7 @@ UpdateViewFlipState:
 	ld a, [wCourtViewOption] ; $4c35
 	and a ; $4c38
 	jr z, .store ; $4c39
-	ld a, [$c8cf] ; $4c3b
+	ld a, [wPrevCourtPos] ; $4c3b
 	and $02 ; $4c3e
 	jr z, .store ; $4c40
 	ld c, $01 ; $4c42
@@ -5054,7 +5054,7 @@ RunMinigamePointLoop:
 	ld a, [wMatchAbortFlag] ; $660e
 	and $80 ; $6611
 	jr nz, .done ; $6613
-	ld hl, $c7b0 ; $6615
+	ld hl, wMinigamePointTable ; $6615
 	ld a, [hl+] ; $6618
 	ld h, [hl] ; $6619
 	ld l, a ; $661a
@@ -5106,7 +5106,7 @@ LoadMinigamePointLayout:
 	ld e, l ; $666b
 	ld d, h ; $666c
 	push hl ; $666d
-	ld hl, $c7b0 ; $666e
+	ld hl, wMinigamePointTable ; $666e
 	ld a, [hl+] ; $6671
 	ld h, [hl] ; $6672
 	ld l, a ; $6673
@@ -5206,7 +5206,7 @@ SetModeHookTable:
 	ret ; $6727
 SetMinigamePointTable:
 	push hl ; $6728
-	ld hl, $c7b0 ; $6729
+	ld hl, wMinigamePointTable ; $6729
 	ld a, e ; $672c
 	ld [hl+], a ; $672d
 	ld [hl], d ; $672e
@@ -5215,11 +5215,11 @@ SetMinigamePointTable:
 SetBallGatePoint1:
 	ld c, l ; $6731
 	ld b, h ; $6732
-	ld hl, $c79a ; $6733
+	ld hl, wDrillGate1 + 2 ; $6733
 	ld a, e ; $6736
 	ld [hl+], a ; $6737
 	ld [hl], d ; $6738
-	ld hl, $c798 ; $6739
+	ld hl, wDrillGate1 ; $6739
 	ld a, c ; $673c
 	ld [hl+], a ; $673d
 	ld [hl], b ; $673e
@@ -5227,11 +5227,11 @@ SetBallGatePoint1:
 SetBallGatePoint2:
 	ld c, l ; $6740
 	ld b, h ; $6741
-	ld hl, $c79e ; $6742
+	ld hl, wDrillGate2 + 2 ; $6742
 	ld a, e ; $6745
 	ld [hl+], a ; $6746
 	ld [hl], d ; $6747
-	ld hl, $c79c ; $6748
+	ld hl, wDrillGate2 ; $6748
 	ld a, c ; $674b
 	ld [hl+], a ; $674c
 	ld [hl], b ; $674d
@@ -5261,7 +5261,7 @@ SetTargetZoneCorner2:
 	ld [hl], b ; $676b
 	ret ; $676c
 DidBallCrossGate:
-	ld hl, $c79a ; $676d
+	ld hl, wDrillGate1 + 2 ; $676d
 	ld a, [hl+] ; $6770
 	ld b, [hl] ; $6771
 	ld c, a ; $6772
@@ -5289,7 +5289,7 @@ DidBallCrossGate:
 	xor d ; $678c
 	bit 7, a ; $678d
 	jr z, .no ; $678f
-	ld hl, $c798 ; $6791
+	ld hl, wDrillGate1 ; $6791
 	ld a, [hl+] ; $6794
 	ld d, [hl] ; $6795
 	ld e, a ; $6796
@@ -5305,7 +5305,7 @@ DidBallCrossGate:
 	ld h, a ; $67a2
 	bit 7, h ; $67a3
 	jr nz, .no ; $67a5
-	ld hl, $c79c ; $67a7
+	ld hl, wDrillGate2 ; $67a7
 	ld a, [hl+] ; $67aa
 	ld d, [hl] ; $67ab
 	ld e, a ; $67ac
@@ -8147,7 +8147,7 @@ AiServeWalkToSpot:
 	ld a, [wCharAnimId] ; $7a02
 	cp $10 ; $7a05
 	ret nz ; $7a07
-	ld hl, $c7b6 ; $7a08
+	ld hl, wAiServeTargetX ; $7a08
 	ld a, [hl+] ; $7a0b
 	ld b, [hl] ; $7a0c
 	ld c, a ; $7a0d

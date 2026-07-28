@@ -1054,7 +1054,22 @@ ENDU
 
 ; [8-bit] Nonzero draws the 4-corner court target zone (training drills)
 wTargetZoneEnabled:: db
-	ds 3
+
+; The last three bytes of the $c780 mode-local scratch block, which sit
+; above wTargetZoneEnabled and so need a union of their own. The minigame
+; target code and the scoreboard both own them, in different modes.
+UNION
+; minigame targets (banks $0a/$0d)
+; [8-bit] Type of the target the ball just hit, an index into MinigameTargetTypeScores; $ff means the hit scores nothing
+wMinigameHitTargetType:: db
+; [8-bit] Set by the deflect hit-test and cleared by ScoreMinigameTargetHitOrDeflectBall once the hit has been scored
+wMinigameHitPending:: db
+	ds 1
+NEXTU
+; scoreboard (bank $18)
+; [3 bytes] Three values SetupScoreboardDisplay draws as 6x2 tile blocks, each fetched through GetTextSlotPointer. The minigame code uses the first two of the same bytes for its hit bookkeeping
+wScorePanelValues:: ds 3
+ENDU
 
 ; [16-bit] Target zone X bound 1 (world units)
 wTargetZoneX1:: dw
@@ -1067,7 +1082,12 @@ wTargetZoneX2:: dw
 
 ; [16-bit] Target zone depth bound 2 (world units)
 wTargetZoneDepth2:: dw
-	ds 8
+
+; [4 bytes] First drill gate: two 16-bit coordinates, +$00 from hl and +$02 from de at SetBallGatePoint1. DidBallCrossGate tests the ball against the pair each frame and QueueDrillMarker1_0b draws the marker there
+wDrillGate1:: ds 4
+
+; [4 bytes] The second gate, set and tested the same way
+wDrillGate2:: ds 4
 
 ; Mode-local scratch, the first five bytes above $c780. Scoped to the
 ; minigame banks; bank $1b loads its 32-byte character-select nav grid over
@@ -1081,11 +1101,19 @@ wMinigameTargetsAltMode:: db
 
 ; [8-bit] Random roll SelectRandomMinigameShot and SelectRandomTreasureBoxTargetZone keep while they walk their weight tables to pick the next shot or target zone
 wMinigameShotRoll:: db
-	ds 2
+
+; [8-bit] Set when the ball lands on a target tile and read by ProcessTargetTileHit, which clears it as it scores the hit
+wTargetTileHit:: db
+
+; [8-bit] Where the minigame is in its serve: StartMinigameMatch seeds it, DrawMinigameScoreHud and LaunchMinigameServe branch on it
+wMinigameServeState:: db
 
 ; [8-bit] Nonzero makes AiServePressToss release the serve immediately instead of running the wAiServeStyle toss table - the plain feed the coach's practice drills want. The bank $0b drill hooks set it at point start and clear it around RunMinigameMatch
 wAiServeSkipToss:: db
-	ds 9
+	ds 7
+
+; [16-bit] Pointer to the layout table for the current minigame point, set by SetMinigamePointTable and walked by LoadMinigamePointLayout and RunMinigamePointLoop
+wMinigamePointTable:: dw
 
 ; [16-bit] Pointer to the current game mode's callback table (indexed by CallModeHook)
 wModeHookTable:: dw
@@ -1095,7 +1123,9 @@ wModeHookBank:: db
 
 ; [8-bit] Aim AiApplyServeAim must use for the next serve; $ff (set by RunMatch) means pick one at random from Data_08_7b0b. The drill point-start hooks write a specific aim so a lesson always serves where the script needs it
 wAiServeAimOverride:: db
-	ds 2
+
+; [16-bit] Spot the serving CPU is walking to. Zero means "not chosen yet", which is what makes AiServeWalkToSpot roll a new one; the drill runner clears it before each match
+wAiServeTargetX:: dw
 
 ; [8-bit] Set to 1 by the InitMinigame_* routines whose ball is fed by the tennis machine (Tennis Machine 1-4, Target Shot, Shooting Star, Treasure Box, Medallion Match). The shared match engine reads it for the scoreboard layout, the point reset and the serve phase
 wMinigameUsesTennisMachine:: db
@@ -1197,7 +1227,10 @@ wStoryModeMainCharacterControlLevel:: db
 
 ; [8-bit] Story Mode - Main Character Speed Level
 wStoryModeMainCharacterSpeedLevel:: db
-	ds 28
+
+; [8-bit] Equipment nibbles for the main character, cleaned up by RefreshMainCharacterStats before the stats are recomputed: a low nibble of 3 drops the low nibble, a high nibble of 1 drops the high one
+wMainCharEquipmentBits:: db
+	ds 27
 
 ; [8-bit] Story Mode - Partner Character Level (0x01-0x63)
 wStoryModePartnerCharacterLevel:: db
@@ -1252,7 +1285,21 @@ wStoryModePartnerCharacterControlLevel:: db
 
 ; [8-bit] Story Mode - Partner Character Speed Level
 wStoryModePartnerCharacterSpeedLevel:: db
-	ds 39
+	ds 4
+
+; [4 bytes] Signature identifying a story save, so two slots can be told apart. CacheStorySlotSummaries copies each slot's into $d400 + slot * 4, CheckStorySignatureCollision compares them and GenerateUniqueStorySaveSignature rerolls from wStoryRandomBytes until no slot matches
+wStorySaveSignature:: ds 4
+
+; [3 bytes] Tag InitStoryModeState stamps on a fresh story slot: $56 then two zero bytes
+wStorySlotBlockTag:: ds 3
+	ds 7
+
+; [4 bytes] Copy of wGameTimer taken by SaveGameTimer with interrupts off, so a screen that stops the clock can put it back exactly (RestoreGameTimer)
+wSavedGameTimer:: dw
+
+; [2 bytes] The pair CharDataValuesSyncTask pushes into the character-data screen at $d14c when $d149 is clear; it uses wGameTimer + 2 instead when it is set
+wCharDataSyncValues:: dw
+	ds 17
 
 ; [8-bit] Sound options from the pause menu. Bit 0 is music on/off: ToggleMusicSetting flips just that bit and SyncBGMEnableFlag mirrors it into hMusic bit 0, stopping the BGM when it goes clear. The remaining bits are preserved by both
 wSoundOptionBits:: db
@@ -1283,7 +1330,9 @@ wGameMode:: db
 
 ; [8-bit] Nonzero makes ResetMatchState skip clearing the per-character match stats (set by MatchQuitMenu_SaveAndQuit so a resumed match keeps its stats); cleared after use
 wKeepMatchStatsFlag:: db
-	ds 1
+
+; [8-bit] Nonzero selects VictoryScoreTable1 over VictoryScoreTable in GetVictoryScore. Set on two paths of the match-select handler
+wVictoryScoreTableAlt:: db
 
 ; [8-bit] Location SaveStoryReturnPoint recorded to come back to. Called with b = $ff it snapshots the live position instead of a fixed door
 wStoryReturnLocation:: db
@@ -1293,14 +1342,26 @@ wStoryReturnEntryPoint:: db
 
 ; [5 bytes] Player X, Y and facing saved with the return point, in the wStoryModeSpawnPosition layout it is copied back into
 wStoryReturnPosition:: ds 5
-	ds 5
+	ds 1
+
+; [16-bit] EXP an exhibition match earned, parked here by AwardExhibitionMatchExp and applied by ApplyPendingExpAwards once the results screens are done
+wPendingExpExhibition:: dw
+
+; [16-bit] The same for a linked-play match (AwardLinkedPlayMatchExp)
+wPendingExpLinked:: dw
 
 ; [4 bytes] One byte per player slot naming the character the suspended or link match was set up with, copied out of wCharSelectSlotChars by StoreLinkMatchCharInfo (or out of the exhibition save block by CopyExhibitionCharSlotIds). Bit 7 marks a created story character and the low bits then say which story slot it came from
 wMatchSlotCharRefs:: ds 4
 
 ; [8-bit] Copy of hLinkState taken by StoreLinkMatchCharInfo when the link match's characters are committed. The results and EXP screens turn it back into a WRAM bank with `srl a / add a, $04`, i.e. which per-character struct is the local player's
 wLinkMatchRole:: db
-	ds 6
+
+; [8-bit] Byte at +$02 of the chosen created-character record, taken by StoreLinkMatchCharInfo before the link match and read back by the EXP screen panels
+wLinkMatchCharLevel:: db
+
+; [4 bytes] Rolling random bytes RollStoryRandomByte stirs; GenerateUniqueStorySaveSignature copies them into wStorySaveSignature
+wStoryRandomBytes:: ds 4
+	ds 1
 
 ; [8-bit] Character 1 Service Aces
 wCharacter1ServiceAces:: db
@@ -1344,7 +1405,9 @@ wCharacter2Faults:: db
 
 ; [8-bit] Character 2 Double Faults
 wCharacter2DoubleFaults:: db
-	ds 1
+
+; [8-bit] wCharCourtPos as it was last frame. CheckServerEndChanged swaps the new value in and raises wChangeEndsPending when bit 1 differs, which is the ends-change; UpdateViewFlipState reads it for the flipped-court view
+wPrevCourtPos:: db
 
 ; [8-bit] Character 3 Service Aces
 wCharacter3ServiceAces:: db
@@ -1600,7 +1663,27 @@ wStoryModeMainCharacterLeftHanded:: db
 
 ; [8-bit] EXP tier of the story main character's record ($c900 + $18, the same field LoadCharacterAttributes turns into wCharExpTier for an on-court character). ScaleExpByPlayerLevel averages it with wStoryPartnerCharExpTier and compares the result against $0a to decide whether match EXP is scaled down
 wStoryMainCharExpTier:: db
-	ds 35
+	ds 7
+
+; [11 bytes] The eleven 0-9 stats of the story main character's record ($c900 + $20), in the wStoryModeMainCharacter*Stat order: Top, Slice, Serve, Stroke, Volley, Angle, Placement, Speed, Dash, Reaction, Stop
+wStoryMainCharStats:: ds 11
+	ds 1
+
+; [16-bit] EXP in the story main character's record ($c900 + $2c)
+wStoryMainCharExp:: dw
+	ds 10
+
+; [8-bit] Spin level in the story main character's record ($c900 + $38); the four levels shown on character select run from here
+wStoryMainCharSpinLevel:: db
+
+; [8-bit] Power level, the record's +$39
+wStoryMainCharPowerLevel:: db
+
+; [8-bit] Control level, the record's +$3a
+wStoryMainCharControlLevel:: db
+
+; [8-bit] Speed level, the record's +$3b
+wStoryMainCharSpeedLevel:: db
 
 ; [Lower4] Equipped Racket
 ;
@@ -1639,7 +1722,30 @@ wStoryModePartnerCharacterLeftHanded:: db
 
 ; [8-bit] EXP tier of the story partner's record ($c940 + $18), the partner half of wStoryMainCharExpTier
 wStoryPartnerCharExpTier:: db
-	ds 91
+	ds 19
+
+; [16-bit] EXP in the story partner's record ($c940 + $2c)
+wStoryPartnerCharExp:: dw
+	ds 10
+
+; [8-bit] Spin level in the story partner's record ($c940 + $38)
+wStoryPartnerCharSpinLevel:: db
+
+; [8-bit] Power level, the record's +$39
+wStoryPartnerCharPowerLevel:: db
+
+; [8-bit] Control level, the record's +$3a
+wStoryPartnerCharControlLevel:: db
+
+; [8-bit] Speed level, the record's +$3b
+wStoryPartnerCharSpeedLevel:: db
+	ds 52
+
+; [16-bit] EXP a story match earned, the third of the pending awards alongside wPendingExpExhibition and wPendingExpLinked. ApplyPendingExpAwards adds it to wPendingExpTrophy, scales the total by the player level and folds in the trophy awards
+wPendingExpStory:: dw
+
+; [16-bit] The trophy half of the same pending award, summed with wPendingExpStory before scaling. ValidateN64TransferRecord and the debug stats screen address the pair as the head of the N64 transfer record that wN64TransferMarker ends
+wPendingExpTrophy:: dw
 
 ; [8-bit] Marker byte of the N64 transfer record at $c9b0: ValidateN64TransferRecord ($02:$4044) rejects the record unless it reads exactly $64, then checksums the bytes around it
 wN64TransferMarker:: db
@@ -1871,7 +1977,10 @@ wPlayer2MainPalette:: db
 
 ; [8-bit] Mirror flag of the player-2 main character (see wPlayer1MainLeftHanded)
 wPlayer2MainLeftHanded:: db
-	ds 9
+
+; [8-bit] Last byte of BooBlastInitParams, stored into the CPU character record at +$0f as the minigame is set up. Nothing reads it back
+wPlayer2MainInitByte:: db
+	ds 8
 
 ; [8-bit] EXP tier of the player-2 main character (see wPlayer1PartnerExpTier)
 wPlayer2MainExpTier:: db
@@ -1919,7 +2028,12 @@ wStoryCharacterSlot:: db
 
 ; [8-bit] rSCX the LCD STAT handler applies inside a scanline band, giving the results and cutscene screens a horizontally offset strip. The band's first and last lines live in the two bytes after it, which the credits and window-slide code reuse as a 16-bit camera offset instead - the STAT handler is not running then
 wRasterScrollX:: db
-	ds 2
+
+; [8-bit] Scanline at which LCDStatHandler starts applying wRasterScrollX to rSCX -- the top of the split
+wRasterScrollStartLY:: db
+
+; [8-bit] Scanline at which it puts rSCX back to 0, ending the split. The win/lose screen, the ending credits and the intro cutscene each set their own pair
+wRasterScrollEndLY:: db
 
 ; [8-bit] Menu cursor column; MoveMenuCursor wraps it at the column count in b
 wMenuCursorX:: db
@@ -1935,7 +2049,12 @@ wMenuCursor2Y:: db
 
 ; [8-bit] Menu cursor lock flags: bit 0 / bit 1 freeze the primary / secondary cursor's movement (set on confirm) in the shared menu-input handler
 wMenuCursorLockFlags:: db
-	ds 2
+
+; [8-bit] Animation step for the current tile set, advanced whenever wAnimatedTileTimer wraps; its low nibble picks the frame
+wAnimatedTileFrame:: db
+
+; [8-bit] Frame counter UpdateAnimatedTiles runs against wAnimatedTilePeriod; the tiles only change on the tick where it reaches zero
+wAnimatedTileTimer:: db
 
 ; [8-bit] Which animated-tile set the shared UpdateAnimatedTiles frame task ($39:$4342) cycles: masked with $03 and used as the index into the two pointer tables at $39:$4403 and $39:$440b. Written (values $00-$03 only) by the screen setup routines that install the task: $10:$4f92 (main menu, 0), $17:$44a6/$44f5 (court diagram, 0), $17:$6f4c (1), $1b:$73e7 (1), $1e:$7333 (1), $3b:$44b3/$496d/$4d03/$5151 (0), $3b:$7a03 (star-chart results, 1), $3e:$49f7/$4abc/$4c2b (link screens, 0), $16:$4a18/$4a30 (match result: 2 on win, 3 on lose, alongside the matching palette load).
 wAnimatedTileSet:: db
@@ -1987,11 +2106,23 @@ wN64TransferMenuCursor:: db
 
 ; [8-bit] Saved cursor cell shared by the N64 record-type menu and the two court-select menus in bank $3e
 wSubMenuCursor:: db
-	ds 1
+
+; [8-bit] Selected entry on the minigame-flags debug screen, passed to UpdateUnlockDebugSelection by address
+wUnlockDebugSelection:: db
 
 ; [8-bit] Minigame chosen on the minigame-select screen; RunMinigameModeFlow turns it into the config-table row (index * 3 + wMinigameLevel) and RunMinigameRulesPages picks the rules pages from it
 wSelectedMinigame:: db
-	ds 5
+	ds 1
+
+; [8-bit] Zeroed with the other menu cursors each time the main menu loop restarts. Nothing reads it
+wUnusedMenuCursor:: db
+	ds 1
+
+; [8-bit] Tab the racket/shoes choice menu was left on, so reopening it puts the cursor back
+wRacketShoesTabIndex:: db
+
+; [8-bit] The same for the saved-data type select
+wSavedDataTypeTabIndex:: db
 
 ; [8-bit] Window handle owned by bank $1a's menu code. Stored from the return value of CreateMenuWindowFromText ($1a:$403c) and CreateWindow ($1a:$43c0), then passed in a to RunMenuSelectionShared ($1a:$404b), CloseWindow ($1a:$4070, $1a:$444d), WriteStringToWindow ($1a:$43df/$43f9) and GetWindowStructPtr ($1a:$4149).
 wPauseMenuWindowId:: db
@@ -2007,7 +2138,12 @@ wMenuKeepOpenRowMask:: db
 
 ; [8-bit] Pause-menu options state: the low nibble holds the per-option toggle bits the music/sound rows flip, bit 5 gates DrawPauseMenuSettingValues, and bits 6-7 are set once a row has been visited. Cleared by ResetPauseMenuState
 wPauseMenuOptionBits:: db
-	ds 2
+
+; [8-bit] Written as the pause menu opens and read by RunMinigameModePauseMenu, which is how the shared window knows which pause menu it is running
+wPauseMenuIsMinigame:: db
+
+; [8-bit] When nonzero the minigame pause menu is built without setting FLAG_MINIGAME_PAUSE_MENU_OPEN, which is what keeps the scroll-arrow task off that variant
+wSuppressMinigamePauseFlag:: db
 
 ; [8-bit] Study Vocabulary / Tennis Dictionary screen (bank $3f): index of the first entry shown in the 6-row scrolling term list. Absolute entry = ($cb2d + $cb2e) mod $cb2f (Func_3f_517b, $3f:$5181). Advanced/wrapped against $cb2f when the cursor runs off the top/bottom ($3f:$56d6-$56e2, $3f:$5700-$570c), recomputed by the page-jump helpers Func_3f_5192/Func_3f_520f, and used as the render start in Func_3f_5261 ($3f:$528d). Cleared on screen entry at $3f:$40c8.
 wTennisDictScrollTop:: db
@@ -2017,7 +2153,9 @@ wTennisDictCursorRow:: db
 
 ; [8-bit] Study Vocabulary screen (bank $3f): number of list entries that pass the current category filter. Computed by Func_3f_50f7 ($3f:$5102-$5116) by counting bytes of SelectionMaskGrid_3f_539e that AND with $cb32 (up to the $40 terminator), and used as the wrap modulus for the scroll offset ($3f:$5181, $3f:$5700, $3f:$51ac).
 wTennisDictEntryCount:: db
-	ds 2
+
+; [16-bit] Address of the $40 terminator FindTennisDictionaryListEnd found in the selection grid, stored **high byte first** -- +$00 is h and +$01 is l. WrapTennisDictionaryScanToEnd reads it back the same way to wrap a scan round to the last entry
+wTennisDictListEnd:: dw
 
 ; [8-bit] Study Vocabulary screen (bank $3f): category filter mask. Set from the screen mode at $3f:$40be - $01/$02/$04/$08/$10 for modes 0-4, $1f (all categories) for mode 5 and any other value. Every list walk ANDs it against the per-entry category byte in SelectionMaskGrid_3f_539e to decide whether an entry is listed ($3f:$5102, $3f:$5295, $3f:$5339, $3f:$5422, $3f:$547c, $3f:$51a5, $3f:$522f, $3f:$5625).
 wTennisDictCategoryMask:: db
@@ -2044,7 +2182,9 @@ wTennisDictSpritePhase:: db
 
 ; [8-bit] Frames left in the current wTennisDictAnimState; $b4 on a restart and $ff for the long idle
 wTennisDictAnimTimer:: db
-	ds 1
+
+; [8-bit] Second animation counter for the tennis-dictionary screen, stepped only while wTennisDictFlags bit 1 is set and bit 0 is clear -- the list is scrolling and not yet settled. TennisDictionaryScreen seeds it when the screen opens
+wTennisDictScrollTimer:: db
 
 ; [8-bit] Bank $6b cutscene driver (intro/title/award ceremony): current step index, dispatched through the per-scene jumptable
 wCutsceneStep:: db
@@ -2072,7 +2212,9 @@ wCutsceneSpriteBX:: db
 
 ; [8-bit] Y of the intro cutscene's second sprite group
 wCutsceneSpriteBY:: db
-	ds 2
+
+; [16-bit] Running scroll position for the intro cutscene: UpdateCutsceneScrollY subtracts this frame's CutsceneScrollYTable entry from it each tick, and QueueScrollingSprite places sprites against it
+wCutsceneScrollAccum:: dw
 
 ; [16-bit] Intro cutscene (bank $6b): world-space vertical scroll/camera position, little-endian. Initialised to $0120 at the start of scenes 00/12/19 ($6b:$41bf, $6b:$4916, $6b:$4c65) and decremented every frame by the per-frame delta table at $6b:$4cc1 indexed by wCutsceneStepTimer ($6b:$4caa-$4cbd). Consumers: ApplyCutsceneScrollToSpriteX ($6b:$5191) subtracts it from the sprite base coordinate that QueueSpriteTemplate treats as Y (the sp+0 slot, $00:$1ebf - so despite the existing label it is the Y axis), and SetCameraYFromScrollPos ($6b:$60d5) shifts it left 5 into wCameraY. $6b:$60fe uses ($cb48 - $cb4a) as the on-screen Y of the object drawn by QueueIntroSpriteBlock.
 wIntroCutsceneScrollY:: dw
@@ -2101,7 +2243,21 @@ wLinkPartnerCourtMask:: db
 
 ; [8-bit] Bitmask of the five unlockable bonus courts (court ids 4-8; courts 0-3 are always available per IsCourtUnlocked $3e:$697b). Built from the save flags by ComputeUnlockedCourtFlags ($3e:$69a0-$69c9, one bit per row of the 5-entry table at $3e:$69ca) and cleared at $10:$5174. Passed in b to StoreCourtUnlockBits ($3e:$695a), which explodes it into the five per-court bytes at $d000 in WRAM bank $02; also decides whether the 9-court or the 4-court select menu runs ($10:$5199, $38:$7489) and is the payload of link block $26 ($38:$759c).
 wUnlockedCourtMask:: db
-	ds 11
+
+; [4 bytes] The other Game Boy's packed unlock flags, filled by the ExchangeLinkDataBlock that sends wLinkUnlockFlagsSend. MergeLinkUnlockFlags folds the two together so both sides end up with the union of what each has unlocked
+wLinkUnlockFlagsRecv:: ds 4
+
+; [4 bytes] This side's unlock flags, packed one bit per character by PackUnlockFlagsForLink before the exchange
+wLinkUnlockFlagsSend:: ds 4
+
+; [8-bit] One bit per Mario-cast grid slot, built by BuildMarioCastUnlockMask from six passes and read by GetUnlockedMarioCastCharAtGridSlot to skip locked slots
+wMarioCastUnlockMask:: db
+
+; [8-bit] Actor slot SpawnCompanionActor is filling -- 3 in doubles, $ff in singles, which is how it knows to skip attaching the step-mover
+wCompanionActorSlot:: db
+
+; [8-bit] Written as RunStoryModeOverworld starts and read by nothing
+wOverworldEnterFlag:: db
 
 ; [8-bit] Frame counter of bank $03's scrolling story cutscene. AnimateWindowSlideUpTask increments it and drives rWY from $90 minus its low 6 bits, sliding the window up; UpdateSceneAnimation takes its low 2 bits as the gate that steps the cutscene's animation frame
 wCutsceneSlideTimer:: db
@@ -2114,7 +2270,9 @@ wDebugCharViewerPage:: db
 
 ; [8-bit] Debug character viewer (Func_1a_67d4): cursor index 0-15 within the current page - LEFT/RIGHT step by 1 and wrap inside the current row of 8 ($1a:$691b-$692d, $1a:$6934-$6945), UP/DOWN step by 8 and roll into $cb62 ($1a:$694c, $1a:$6979). Selected character id = ($cb62 << 4) + $cb63 ($1a:$69d8). Also indexes the cursor-sprite position table at $1a:$6b0f ($1a:$6af9).
 wDebugCharViewerIndex:: db
-	ds 7
+
+; [7 bytes] Per-digit working bytes for the number-sprite drawer, cleared by InitNumberSpriteGfx alongside wDigitSpriteTileBase and wDigitSpriteAttr
+wDigitSpriteSlots:: ds 7
 
 ; [8-bit] First tile of the loaded digit sprite set; DrawDigitSprite_39 forms the tile as digit * 2 + this, so the narrow and wide digit sets can share one drawer
 wDigitSpriteTileBase:: db
@@ -2127,11 +2285,21 @@ wStorySceneAssetIndex:: db
 
 ; [16-bit] Rules/briefing screens: base text id of the minigame's rules pages, taken from MinigameRulesTextIdBases_17 ($17:$6fdb) at $17:$6fc6. Each page offset from the minigame's MinigameRulesPageLists_17 row is added to it ($17:$70ef) and the result rendered through PrepareGlyphBuffer / RenderProportionalTextAt.
 wRulesPageTextIdBase:: dw
-	ds 1
+
+; [8-bit] Written twice by RunMinigameSelect and read by nothing
+wMinigameSelectUnused:: db
 
 ; [8-bit] Set to 1 once the cheat code has been matched and TriggerCheatUnlock has run, which stops UpdateCheatCodeEntry accepting any more input. The title and main-menu loops clear it when they re-enter
 wCheatUnlockTriggered:: db
-	ds 3
+
+; [8-bit] Frames the link character-select screen waits before it accepts input; WaitLinkSelectStartupFrames counts it down
+wLinkSelectStartupFrames:: db
+
+; [8-bit] Which stage RunMatchWinLoseScreen is in, set as the screen opens and branched on twice as it plays out
+wMatchWinLoseState:: db
+
+; [8-bit] Sub-state of the first match-select handler, set on two paths and read back once
+wMatchSelectSubState:: db
 
 ; [8-bit] Next window tile id the text engine will stamp into the shadow tilemap. A row starts at wGlyphRowStartCol + $80 and the cell loop increments it per cell before writing it back, so a wrapped row carries on where the previous one stopped
 wTextRowNextTile:: db
@@ -2141,7 +2309,14 @@ wGlyphTileWritePtr:: dw
 
 ; [8-bit] Nonzero when the text being rendered belongs to a window other than wMenuWindowId, which is the condition StampGlyphTileAtPen requires before it writes a glyph tile through wGlyphTileWritePtr. Menu text goes through the tilemap alone
 wGlyphStampEnabled:: db
-	ds 135
+	ds 119
+
+; [8-bit] Court-scene graphics still to queue; the loader decrements it each pass and stops once it hits zero
+wCourtSceneGfxStepsLeft:: db
+
+; [8-bit] Byte offset into SpriteList_0a_62eb, advanced 4 at a time (one record) and wrapped to 0 when the record reads $ff
+wCourtSceneGfxCursor:: db
+	ds 14
 
 ; [576 bytes] Debug text console tilemap buffer, DMAed to $9d00 rows when active
 wDebugTextBuffer:: ds 576

@@ -241,7 +241,7 @@ UpdateAnimatedTiles:
 	push hl ; $4345
 	ldh a, [hWramBank] ; $4346
 	push af ; $4348
-	ld a, [$cb0a] ; $4349
+	ld a, [wAnimatedTileTimer] ; $4349
 	inc a ; $434c
 	ld c, a ; $434d
 	ld a, [wAnimatedTilePeriod] ; $434e
@@ -258,13 +258,13 @@ UpdateAnimatedTiles:
 	jr c, .storeCounter ; $435c
 	xor a ; $435e
 .storeCounter:
-	ld [$cb0a], a ; $435f
+	ld [wAnimatedTileTimer], a ; $435f
 	or a ; $4362
 	jp nz, .done ; $4363
 	wram_bank $02 ; $4366
-	ld a, [$cb09] ; $436c
+	ld a, [wAnimatedTileFrame] ; $436c
 	inc a ; $436f
-	ld [$cb09], a ; $4370
+	ld [wAnimatedTileFrame], a ; $4370
 	and $0f ; $4373
 	rlca ; $4375
 	push af ; $4376
@@ -3216,7 +3216,7 @@ InitNumberSpriteGfx:
 	push bc ; $6ec1
 	push de ; $6ec2
 	push hl ; $6ec3
-	ld hl, $cb64 ; $6ec4
+	ld hl, wDigitSpriteSlots ; $6ec4
 	ld bc, $0007 ; $6ec7
 	call ClearBytes ; $6eca
 	xor a ; $6ecd
@@ -3263,12 +3263,12 @@ DrawDecimalNumberSprites_39:
 	push af ; $6f16
 	wram_bank $02 ; $6f17
 	push de ; $6f1d
-	ld de, $cb64 ; $6f1e
+	ld de, wDigitSpriteSlots ; $6f1e
 	ld a, $00 ; $6f21
 	call FormatDecimalNumber ; $6f23
 	pop de ; $6f26
 	ld b, $00 ; $6f27
-	ld hl, $cb64 ; $6f29
+	ld hl, wDigitSpriteSlots ; $6f29
 .lenLoop:
 	ld a, [hl] ; $6f2c
 	or a ; $6f2d

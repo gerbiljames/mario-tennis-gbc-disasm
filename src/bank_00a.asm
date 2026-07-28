@@ -2245,7 +2245,7 @@ DrawPlayerPositionDebugOverlay:
 	ret ; $4f2b
 RunStoryModeOverworld:
 	xor a ; $4f2c
-	ld [$cb5f], a ; $4f2d
+	ld [wOverworldEnterFlag], a ; $4f2d
 .restart:
 	call ClearFrameTasks ; $4f30
 	ld a, $01 ; $4f33
@@ -4743,12 +4743,12 @@ UpdateCameraFromPlayer:
 	ld a, d ; $6298
 	ld [hl], a ; $6299
 	ret ; $629a
-	ld a, [$cbf0] ; $629b
+	ld a, [wCourtSceneGfxStepsLeft] ; $629b
 	or a ; $629e
 	jr nz, .done ; $629f
 .checkScrollX:
 	ld hl, SpriteList_0a_62eb ; $62a1
-	ld a, [$cbf1] ; $62a4
+	ld a, [wCourtSceneGfxCursor] ; $62a4
 	add l ; $62a7
 	ld l, a ; $62a8
 	ld a, h ; $62a9
@@ -4758,7 +4758,7 @@ UpdateCameraFromPlayer:
 	cp $ff ; $62ae
 	jr nz, .checkScrollY ; $62b0
 	xor a ; $62b2
-	ld [$cbf1], a ; $62b3
+	ld [wCourtSceneGfxCursor], a ; $62b3
 	jr .checkScrollX ; $62b6
 .checkScrollY:
 	ld b, a ; $62b8
@@ -4790,13 +4790,13 @@ UpdateCameraFromPlayer:
 	pop de ; $62d8
 	pop bc ; $62d9
 	call QueueVRAMCopy ; $62da
-	ld a, [$cbf1] ; $62dd
+	ld a, [wCourtSceneGfxCursor] ; $62dd
 	add $04 ; $62e0
-	ld [$cbf1], a ; $62e2
+	ld [wCourtSceneGfxCursor], a ; $62e2
 	pop af ; $62e5
 .done:
 	dec a ; $62e6
-	ld [$cbf0], a ; $62e7
+	ld [wCourtSceneGfxStepsLeft], a ; $62e7
 	ret ; $62ea
 SpriteList_0a_62eb:
 	; $62eb, 13 bytes (records:4)
@@ -5250,7 +5250,7 @@ InitMinigameTargets:
 	ld a, $01 ; $65a4
 	ld [wMinigameTargetsActive], a ; $65a6
 	ld a, $ff ; $65a9
-	ld [$c78d], a ; $65ab
+	ld [wMinigameHitTargetType], a ; $65ab
 	ret ; $65ae
 ActivateMinigameTarget:
 	ld hl, $0004 ; $65af
@@ -6166,14 +6166,14 @@ HandleMinigameTargetHitAlt:
 	ld a, $20 ; $6de8
 	ld [wMinigameTargetWork + 2], a ; $6dea
 	ld a, [wMinigameTargetWork + 1] ; $6ded
-	ld [$c78d], a ; $6df0
+	ld [wMinigameHitTargetType], a ; $6df0
 	ret ; $6df3
 CheckBallHitsMinigameTargetAlt:
 	ld a, [wBallCrossedNetFlag] ; $6df4
 	and a ; $6df7
 	ret z ; $6df8
 	ld a, $01 ; $6df9
-	ld [$c78e], a ; $6dfb
+	ld [wMinigameHitPending], a ; $6dfb
 	ld hl, wBallHistory + 30 ; $6dfe
 	ld a, [hl+] ; $6e01
 	ld d, [hl] ; $6e02
@@ -6280,8 +6280,8 @@ RunEndingCreditsSequence:
 	clear_flag FLAG_VRAM_UPDATE_BUSY ; $6eb3
 	clear_flag FLAG_ACTORS_FROZEN ; $6eb6
 	xor a ; $6eb9
-	ld [$cb02], a ; $6eba
-	ld [$cb03], a ; $6ebd
+	ld [wRasterScrollStartLY], a ; $6eba
+	ld [wRasterScrollEndLY], a ; $6ebd
 	call RunStoryLocation ; $6ec0
 	test_flag FLAG_ENDING_CREDITS_PENDING ; $6ec3
 	jr nz, .fadeOut ; $6ec6

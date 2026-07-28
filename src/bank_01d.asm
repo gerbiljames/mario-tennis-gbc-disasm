@@ -1061,7 +1061,7 @@ CharDataValuesSyncTask:
 	ld a, [$d149] ; $48cd
 	or a ; $48d0
 	jr nz, .nonZero ; $48d1
-	ld hl, $c890 ; $48d3
+	ld hl, wCharDataSyncValues ; $48d3
 	jr .step2 ; $48d6
 .nonZero:
 	ld hl, wGameTimer + 2 ; $48d8
@@ -3537,7 +3537,7 @@ RunExpDistributionFlow:
 .loop2:
 	wram_bank $06 ; $6873
 	ld hl, wExpScreenCharStats + 12 ; $6879
-	ld de, $c92c ; $687c
+	ld de, wStoryMainCharExp ; $687c
 	ld a, [hl+] ; $687f
 	ld [de], a ; $6880
 	inc de ; $6881
@@ -3547,7 +3547,7 @@ RunExpDistributionFlow:
 	ld a, [hl] ; $6885
 	ld [de], a ; $6886
 	ld hl, wExpScreenCharStats + 27 ; $6887
-	ld de, $c96c ; $688a
+	ld de, wStoryPartnerCharExp ; $688a
 	ld a, [hl+] ; $688d
 	ld [de], a ; $688e
 	inc de ; $688f

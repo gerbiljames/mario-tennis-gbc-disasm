@@ -6391,7 +6391,7 @@ SaveGameTimer:
 	push de ; $2453
 	push hl ; $2454
 	ld hl, wGameTimer ; $2455
-	ld de, $c88e ; $2458
+	ld de, wSavedGameTimer ; $2458
 	di ; $245b
 	ld a, [hl+] ; $245c
 	ld [de], a ; $245d
@@ -6415,7 +6415,7 @@ RestoreGameTimer:
 	push de ; $246e
 	push hl ; $246f
 	ld de, wGameTimer ; $2470
-	ld hl, $c88e ; $2473
+	ld hl, wSavedGameTimer ; $2473
 	di ; $2476
 	ld a, [hl+] ; $2477
 	ld [de], a ; $2478
@@ -7012,14 +7012,14 @@ TimerHandler:
 LCDStatHandler:
 	push af ; $27f5
 	push bc ; $27f6
-	ld a, [$cb02] ; $27f7
+	ld a, [wRasterScrollStartLY] ; $27f7
 	ld b, a ; $27fa
 	ldh a, [rLY] ; $27fb
 	cp b ; $27fd
 	jr c, .restore ; $27fe
 	ld a, [wRasterScrollX] ; $2800
 	ldh [rSCX], a ; $2803
-	ld a, [$cb03] ; $2805
+	ld a, [wRasterScrollEndLY] ; $2805
 	ld b, a ; $2808
 	ldh a, [rLY] ; $2809
 	cp b ; $280b

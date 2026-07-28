@@ -803,7 +803,7 @@ RunMatchWinLoseScreen:
 	ld [wResultScreenWon], a ; $449b
 	ld [wResultScreenMode], a ; $449e
 	ld a, [wMatchWinLoseFlag] ; $44a1
-	ld [$cb73], a ; $44a4
+	ld [wMatchWinLoseState], a ; $44a4
 	call MaybeInvertMatchWinLoseFlag ; $44a7
 	ld a, $ff ; $44aa
 	ld a, [wMatchWinLoseFlag] ; $44ac
@@ -830,9 +830,9 @@ RunMatchWinLoseScreen:
 	ld hl, rIE ; $44de
 	set 1, [hl] ; $44e1
 	ld a, $48 ; $44e3
-	ld [$cb02], a ; $44e5
+	ld [wRasterScrollStartLY], a ; $44e5
 	ld a, $57 ; $44e8
-	ld [$cb03], a ; $44ea
+	ld [wRasterScrollEndLY], a ; $44ea
 	xor a ; $44ed
 	ld [wRasterScrollX], a ; $44ee
 	ld a, $01 ; $44f1
@@ -867,7 +867,7 @@ RunMatchWinLoseScreen:
 	res 1, [hl] ; $452d
 	ld a, $03 ; $452f
 	ld [wAnimatedTilePeriod], a ; $4531
-	ld a, [$cb73] ; $4534
+	ld a, [wMatchWinLoseState] ; $4534
 	ld [wMatchWinLoseFlag], a ; $4537
 	ret ; $453a
 .bit4Set:
@@ -879,7 +879,7 @@ RunMatchWinLoseScreen:
 	call ClearFrameTasks ; $4548
 	call RunMatchStatsScreen ; $454b
 	push af ; $454e
-	ld a, [$cb73] ; $454f
+	ld a, [wMatchWinLoseState] ; $454f
 	ld [wMatchWinLoseFlag], a ; $4552
 	pop af ; $4555
 	cp $ff ; $4556

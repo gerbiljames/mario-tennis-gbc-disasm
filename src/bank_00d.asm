@@ -862,19 +862,19 @@ StartMinigameMatch:
 	ld a, $04 ; $46be
 	ld [$df6a], a ; $46c0
 	xor a ; $46c3
-	ld [$c7a7], a ; $46c4
+	ld [wMinigameServeState], a ; $46c4
 	ld a, [wCharId] ; $46c7
 	cp $15 ; $46ca
 	jr nz, .countdown ; $46cc
 	ld a, $01 ; $46ce
-	ld [$c7a7], a ; $46d0
+	ld [wMinigameServeState], a ; $46d0
 .countdown:
 	call PlayMinigameCountdown ; $46d3
 	ret ; $46d6
 DrawMinigameScoreHud:
 	ld de, $8403 ; $46d7
 	call DrawMinigameScore ; $46da
-	ld a, [$c7a7] ; $46dd
+	ld a, [wMinigameServeState] ; $46dd
 	and a ; $46e0
 	jr z, .done ; $46e1
 	ldh a, [hWramBank] ; $46e3
@@ -910,7 +910,7 @@ LaunchMinigameServe:
 	farcall SetCharAnimation ; $471a
 	pop af ; $471d
 	wram_bank ; $471e
-	ld a, [$c7a7] ; $4722
+	ld a, [wMinigameServeState] ; $4722
 	and a ; $4725
 	jr z, .launch ; $4726
 	ld a, $0f ; $4728
@@ -2684,15 +2684,15 @@ CopyMinigameTilemapBlock:
 	farcall FlushTilemapToVram ; $55c6
 	ret ; $55c9
 ScoreMinigameTargetHitOrDeflectBall:
-	ld hl, $c78e ; $55ca
+	ld hl, wMinigameHitPending ; $55ca
 	ld a, [hl] ; $55cd
 	and a ; $55ce
 	ret z ; $55cf
 	ld [hl], $00 ; $55d0
-	ld a, [$c78d] ; $55d2
+	ld a, [wMinigameHitTargetType] ; $55d2
 	cp $ff ; $55d5
 	jr z, MinigameTargetTypeScores.eqff ; $55d7
-	ld a, [$c78d] ; $55d9
+	ld a, [wMinigameHitTargetType] ; $55d9
 	add LOW(MinigameTargetTypeScores) ; $55dc
 	ld l, a ; $55de
 	adc HIGH(MinigameTargetTypeScores) ; $55df
@@ -2702,7 +2702,7 @@ ScoreMinigameTargetHitOrDeflectBall:
 	ld d, $00 ; $55e4
 	call AddToMinigameScore ; $55e6
 	ld a, $ff ; $55e9
-	ld [$c78d], a ; $55eb
+	ld [wMinigameHitTargetType], a ; $55eb
 	call IsMinigameTargetReached ; $55ee
 	and a ; $55f1
 	ret z ; $55f2
@@ -2752,7 +2752,7 @@ InitMinigame_BooBlast:
 	ld a, [hl+] ; $5649
 	ld [wExhibitionModeCPUMainCharacterDifficulty], a ; $564a
 	ld a, [hl+] ; $564d
-	ld [$ca8f], a ; $564e
+	ld [wPlayer2MainInitByte], a ; $564e
 	ret ; $5651
 BooBlastInitParams:
 	; $5652, 6 bytes (bytes:6)
@@ -3165,7 +3165,7 @@ ProcessTargetTileHit:
 	pop af ; $58fb
 	wram_bank ; $58fc
 	sound $97 ; $5900
-	ld a, [$c7a6] ; $5902
+	ld a, [wTargetTileHit] ; $5902
 	inc a ; $5905
 	ld e, a ; $5906
 	ld d, $00 ; $5907
@@ -3180,7 +3180,7 @@ ProcessTargetTileHit:
 	call AreAllTargetsHit ; $5918
 	and a ; $591b
 	ret z ; $591c
-	ld hl, $c7a6 ; $591d
+	ld hl, wTargetTileHit ; $591d
 	ld a, [hl] ; $5920
 	cp $09 ; $5921
 	jr nc, .ge09 ; $5923

@@ -6899,3 +6899,50 @@ the story character record's unnamed fields at `$c8xx`/`$c9xx`, and the menu and
 cutscene bytes at `$cbxx` — each needing its own owner established first. The
 banked halves ($dxxx immediates, ~3,000 references) are dominated by screen
 tilemap buffers and remain a separate problem.
+
+## WRAM0 down to eleven addresses (2026-07-28)
+
+Continuing the bare-reference pass: **81 addresses / 213 references → 11 / 23**.
+Combined with the previous session that is 135 → 11, and what is left is not
+work still to do — it is nine deliberate cases and two genuine oddities.
+
+The three clusters that remained were all screen and mode state, and reading
+them went the same way each time: find the one routine that writes a byte,
+find the one that reads it, and the name follows.
+
+- **`$cbxx`, the menu and cutscene band.** `$cb02`/`$cb03` are the raster
+  split's start and end scanlines — `LCDStatHandler` applies `wRasterScrollX`
+  between them, and the win/lose screen, the ending credits and the intro each
+  set their own pair. `$cb55`/`$cb59` are the two sides of the link unlock-flag
+  exchange, `$cb48` the intro's scroll accumulator, `$cb30` the tennis
+  dictionary's list-end pointer — **stored high byte first**, which is worth a
+  note because nothing else in the ROM does that.
+- **`$c7xx`, per-mode scratch.** `$c798` and `$c79c` are the two drill gates,
+  four bytes each. Naming them as *pairs* rather than four coordinates is
+  deliberate: `SetBallGatePoint1` takes one point in `hl` and one in `de` and
+  nothing in the routine says which axis is which, so the block gets a name and
+  the offsets do not.
+- **`$c9xx`, the story character records.** `$c920`, `$c92c` and `$c938-$c93b`
+  are the stats, EXP and four levels of the record at `$c900` — the same field
+  offsets already named on the `$c800` copy, which is how they were recognised.
+  `$c9b0`/`$c9b2` turned out to be the story and trophy halves of the pending
+  EXP award, completing the set with `wPendingExpExhibition` and
+  `wPendingExpLinked` from the previous pass.
+
+### What is left, and why
+
+| | |
+|---|---|
+| `$c000`, `$c350` | not addresses — a `SetBallVelocityPolar` magnitude and a `dec bc` timeout, both already in `RAM_IMM_IS_CONSTANT` |
+| `$c2b2` x3 | bank `$14`/`$15` sites, where the scoped variants win over `wMapScratch` and those two screens' own layouts apply |
+| `$c780`, `$c783`, `$c78b`, `$c7a0` | mode-local scratch referenced from a mode with no named variant — the union's whole point is that those stay numeric |
+| `$c706`, `$c709` | the debug colour-component viewer formats digits over `wDebugWarpEntryPoint` and its neighbours; there is no symbol to give them that would not lie about the bytes underneath |
+| `$cfb3`, `$cff0` | the dictionary index cursor walks these `$40` at a time, straight out of WRAM0 and on into banked WRAM. A WRAM0 name would describe only the first row |
+
+Two guards were needed along the way. `ram_map/ram_unions conflict: $c78c` —
+extending the `$c780` mode-scratch union to cover its last three bytes ran into
+`wTargetZoneEnabled`, a global name sitting in the middle, so those three got a
+union of their own. And rgbasm caught `wTennisDictSpriteTimer already defined`:
+`$cb3e` is a *second* animation counter three bytes above the first, and the
+obvious name was taken. Both failures were loud, which is the point of having
+them.

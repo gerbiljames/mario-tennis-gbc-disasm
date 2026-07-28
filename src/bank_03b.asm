@@ -3837,11 +3837,11 @@ BuildSaveSlotSummaries:
 	pop bc ; $5b1b
 	ld hl, $000f ; $5b1c
 	add hl, bc ; $5b1f
-	ld a, [$c891] ; $5b20
+	ld a, [wSavedGameTimer + 3] ; $5b20
 	ld [hl], a ; $5b23
 	ld hl, $000e ; $5b24
 	add hl, bc ; $5b27
-	ld a, [$c890] ; $5b28
+	ld a, [wCharDataSyncValues] ; $5b28
 	ld [hl], a ; $5b2b
 	ld hl, $0010 ; $5b2c
 	add hl, bc ; $5b2f
@@ -4785,7 +4785,7 @@ RunMinigameSelect:
 	res 2, [hl] ; $61f3
 	sound $08 ; $61f5
 	xor a ; $61f7
-	ld [$cb70], a ; $61f8
+	ld [wMinigameSelectUnused], a ; $61f8
 	call BuildMarioCastUnlockMask ; $61fb
 	call LoadMinigameSelectGfx ; $61fe
 	wram_bank $03 ; $6201
@@ -4879,7 +4879,7 @@ RunMinigameSelect:
 	ld a, $01 ; $62b9
 	ld [wMenuSlideDirection], a ; $62bb
 	xor a ; $62be
-	ld [$cb70], a ; $62bf
+	ld [wMinigameSelectUnused], a ; $62bf
 	ld c, $03 ; $62c2
 	call GetMenuCursorCellIndex ; $62c4
 	ld [wSelectedMinigame], a ; $62c7
@@ -5392,7 +5392,7 @@ BuildMarioCastUnlockMask:
 	jr .loop ; $66a2
 .eq06:
 	ld a, b ; $66a4
-	ld [$cb5d], a ; $66a5
+	ld [wMarioCastUnlockMask], a ; $66a5
 	ret ; $66a8
 MarioCastUnlockMaskTable:
 	; $66a9, 12 bytes (records:2)
@@ -5419,7 +5419,7 @@ GetUnlockedMarioCastCharAtGridSlot:
 	inc h ; $66cb
 .readMask:
 	ld b, [hl] ; $66cc
-	ld a, [$cb5d] ; $66cd
+	ld a, [wMarioCastUnlockMask] ; $66cd
 	and b ; $66d0
 	jr nz, .unlocked ; $66d1
 	ld a, $15 ; $66d3
@@ -8435,7 +8435,7 @@ RecordExhibitionVictory:
 GetVictoryScore:
 	ld b, a ; $7dc4
 	ld hl, VictoryScoreTable ; $7dc5
-	ld a, [$c8a8] ; $7dc8
+	ld a, [wVictoryScoreTableAlt] ; $7dc8
 	or a ; $7dcb
 	jr z, .zero ; $7dcc
 	ld hl, VictoryScoreTable1 ; $7dce

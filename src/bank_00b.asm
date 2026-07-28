@@ -959,11 +959,11 @@ QueueDrillMarker1_0b:
 	and a ; $46a3
 	ret z ; $46a4
 	ld bc, $0000 ; $46a5
-	ld hl, $c79a ; $46a8
+	ld hl, wDrillGate1 + 2 ; $46a8
 	ld a, [hl+] ; $46ab
 	ld d, [hl] ; $46ac
 	ld e, a ; $46ad
-	ld hl, $c798 ; $46ae
+	ld hl, wDrillGate1 ; $46ae
 	ld a, [hl+] ; $46b1
 	ld h, [hl] ; $46b2
 	ld l, a ; $46b3
@@ -978,11 +978,11 @@ QueueDrillMarker2_0b:
 	and a ; $46c7
 	ret z ; $46c8
 	ld bc, $0000 ; $46c9
-	ld hl, $c79e ; $46cc
+	ld hl, wDrillGate2 + 2 ; $46cc
 	ld a, [hl+] ; $46cf
 	ld d, [hl] ; $46d0
 	ld e, a ; $46d1
-	ld hl, $c79c ; $46d2
+	ld hl, wDrillGate2 ; $46d2
 	ld a, [hl+] ; $46d5
 QueueDrillSprite_0b:
 	ld h, [hl] ; $46d6
@@ -1031,7 +1031,7 @@ RunTrainingDrillByID:
 	ld a, $ff ; $472e
 	ld [wAiServeAimOverride], a ; $4730
 	xor a ; $4733
-	ld hl, $c7b6 ; $4734
+	ld hl, wAiServeTargetX ; $4734
 	ld [hl+], a ; $4737
 	ld [hl], a ; $4738
 	ld [wAiServeSkipToss], a ; $4739
@@ -1043,7 +1043,7 @@ RunTrainingDrillByID:
 	ld a, $ff ; $4744
 	ld [wAiServeAimOverride], a ; $4746
 	xor a ; $4749
-	ld hl, $c7b6 ; $474a
+	ld hl, wAiServeTargetX ; $474a
 	ld [hl+], a ; $474d
 	ld [hl], a ; $474e
 	ld [wAiServeSkipToss], a ; $474f

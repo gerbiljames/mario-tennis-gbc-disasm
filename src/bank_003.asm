@@ -5587,14 +5587,14 @@ AnimateWindowSlideUpTask:
 	ldh a, [hScrollY] ; $72c7
 	add c ; $72c9
 	ldh [hScrollY], a ; $72ca
-	ld hl, $cb02 ; $72cc
+	ld hl, wRasterScrollStartLY ; $72cc
 	ld a, [hl+] ; $72cf
 	ld h, [hl] ; $72d0
 	ld l, a ; $72d1
 	add hl, de ; $72d2
 	ld d, h ; $72d3
 	ld e, l ; $72d4
-	ld hl, $cb02 ; $72d5
+	ld hl, wRasterScrollStartLY ; $72d5
 	ld a, e ; $72d8
 	ld [hl+], a ; $72d9
 	ld [hl], d ; $72da

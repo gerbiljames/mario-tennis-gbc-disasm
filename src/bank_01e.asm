@@ -1650,7 +1650,7 @@ DrawExpSinglesPlayerPanel:
 	cp $02 ; $564b
 	jr nz, .ne02 ; $564d
 	ld bc, wPlayer2MainName ; $564f
-	ld a, [$c8ba] ; $5652
+	ld a, [wLinkMatchCharLevel] ; $5652
 	ld [wPlayer2MainExpTier], a ; $5655
 .ne02:
 	push bc ; $5658
@@ -1725,7 +1725,7 @@ DrawExpDoublesPlayerPanel:
 	cp $02 ; $570d
 	jr nz, .copyStringToTextBuffer ; $570f
 	ld bc, wPlayer2MainName ; $5711
-	ld a, [$c8ba] ; $5714
+	ld a, [wLinkMatchCharLevel] ; $5714
 	ld [wPlayer2MainExpTier], a ; $5717
 .copyStringToTextBuffer:
 	push bc ; $571a
@@ -2881,7 +2881,7 @@ Data_1e_695b:
 AwardExhibitionMatchExp:
 	ld d, h ; $6967
 	ld e, l ; $6968
-	ld hl, $c8b1 ; $6969
+	ld hl, wPendingExpExhibition ; $6969
 	ld a, e ; $696c
 	ld [hl+], a ; $696d
 	ld [hl], d ; $696e
@@ -2891,7 +2891,7 @@ AwardExhibitionMatchExp:
 	call ShowExpAwardForExhibition ; $6976
 	ld a, [wCurrentStorySlot] ; $6979
 	push af ; $697c
-	ld hl, $c8b1 ; $697d
+	ld hl, wPendingExpExhibition ; $697d
 	ld a, [hl+] ; $6980
 	ld h, [hl] ; $6981
 	ld l, a ; $6982
@@ -2902,7 +2902,7 @@ AwardExhibitionMatchExp:
 	farcall CheckStorySlot ; $698d
 	ld d, h ; $6990
 	ld e, l ; $6991
-	ld hl, $c8b1 ; $6992
+	ld hl, wPendingExpExhibition ; $6992
 	ld a, [hl+] ; $6995
 	ld h, [hl] ; $6996
 	ld l, a ; $6997
@@ -2912,7 +2912,7 @@ AwardExhibitionMatchExp:
 .noCarry:
 	ld d, h ; $699e
 	ld e, l ; $699f
-	ld hl, $c8b1 ; $69a0
+	ld hl, wPendingExpExhibition ; $69a0
 	ld a, e ; $69a3
 	ld [hl+], a ; $69a4
 	ld [hl], d ; $69a5
@@ -2926,7 +2926,7 @@ AwardExhibitionMatchExp:
 AwardLinkedPlayMatchExp:
 	ld d, h ; $69b4
 	ld e, l ; $69b5
-	ld hl, $c8b3 ; $69b6
+	ld hl, wPendingExpLinked ; $69b6
 	ld a, e ; $69b9
 	ld [hl+], a ; $69ba
 	ld [hl], d ; $69bb
@@ -2962,7 +2962,7 @@ AwardLinkedPlayMatchExp:
 	and $03 ; $69ef
 	ld [wCurrentStorySlot], a ; $69f1
 	farcall CheckStorySlot ; $69f4
-	ld hl, $c8b3 ; $69f7
+	ld hl, wPendingExpLinked ; $69f7
 	ld a, [hl+] ; $69fa
 	ld h, [hl] ; $69fb
 	ld l, a ; $69fc
@@ -2972,7 +2972,7 @@ AwardLinkedPlayMatchExp:
 .noCarry:
 	ld d, h ; $6a03
 	ld e, l ; $6a04
-	ld hl, $c8b3 ; $6a05
+	ld hl, wPendingExpLinked ; $6a05
 	ld a, e ; $6a08
 	ld [hl+], a ; $6a09
 	ld [hl], d ; $6a0a
@@ -3143,11 +3143,11 @@ ApplyPendingExpAwards:
 	push af ; $6b07
 	ld a, $00 ; $6b08
 	ld [wGameMode], a ; $6b0a
-	ld hl, $c9b0 ; $6b0d
+	ld hl, wPendingExpStory ; $6b0d
 	ld a, [hl+] ; $6b10
 	ld d, [hl] ; $6b11
 	ld e, a ; $6b12
-	ld hl, $c9b2 ; $6b13
+	ld hl, wPendingExpTrophy ; $6b13
 	ld a, [hl+] ; $6b16
 	ld h, [hl] ; $6b17
 	ld l, a ; $6b18
@@ -3161,7 +3161,7 @@ ApplyPendingExpAwards:
 	jr c, .sumAwards ; $6b25
 	ld d, h ; $6b27
 	ld e, l ; $6b28
-	ld hl, $c8b1 ; $6b29
+	ld hl, wPendingExpExhibition ; $6b29
 	ld a, [hl+] ; $6b2c
 	ld h, [hl] ; $6b2d
 	ld l, a ; $6b2e
@@ -3169,7 +3169,7 @@ ApplyPendingExpAwards:
 	jr c, .sumAwards ; $6b30
 	ld d, h ; $6b32
 	ld e, l ; $6b33
-	ld hl, $c8b3 ; $6b34
+	ld hl, wPendingExpLinked ; $6b34
 	ld a, [hl+] ; $6b37
 	ld h, [hl] ; $6b38
 	ld l, a ; $6b39
@@ -3183,11 +3183,11 @@ ApplyPendingExpAwards:
 	jp z, .restore2 ; $6b42
 	push hl ; $6b45
 	farcall ClearDrillResultBuffer ; $6b46
-	ld hl, $c9b0 ; $6b49
+	ld hl, wPendingExpStory ; $6b49
 	ld a, [hl+] ; $6b4c
 	ld d, [hl] ; $6b4d
 	ld e, a ; $6b4e
-	ld hl, $c9b2 ; $6b4f
+	ld hl, wPendingExpTrophy ; $6b4f
 	ld a, [hl+] ; $6b52
 	ld h, [hl] ; $6b53
 	ld l, a ; $6b54
@@ -3208,7 +3208,7 @@ ApplyPendingExpAwards:
 	ld c, $00 ; $6b6b
 	farcall RecordDrillResult ; $6b6d
 .award2:
-	ld hl, $c8b1 ; $6b70
+	ld hl, wPendingExpExhibition ; $6b70
 	ld a, [hl+] ; $6b73
 	ld d, [hl] ; $6b74
 	ld e, a ; $6b75
@@ -3219,7 +3219,7 @@ ApplyPendingExpAwards:
 	ld c, $00 ; $6b7c
 	farcall RecordDrillResult ; $6b7e
 .award3:
-	ld hl, $c8b3 ; $6b81
+	ld hl, wPendingExpLinked ; $6b81
 	ld a, [hl+] ; $6b84
 	ld d, [hl] ; $6b85
 	ld e, a ; $6b86
@@ -3264,16 +3264,16 @@ ApplyPendingExpAwards:
 	farcall CharDataScreen_Show ; $6bcc
 	call ApplyStatGapProgressFlag ; $6bcf
 	xor a ; $6bd2
-	ld hl, $c9b0 ; $6bd3
+	ld hl, wPendingExpStory ; $6bd3
 	ld [hl+], a ; $6bd6
 	ld [hl], a ; $6bd7
-	ld hl, $c9b2 ; $6bd8
+	ld hl, wPendingExpTrophy ; $6bd8
 	ld [hl+], a ; $6bdb
 	ld [hl], a ; $6bdc
-	ld hl, $c8b1 ; $6bdd
+	ld hl, wPendingExpExhibition ; $6bdd
 	ld [hl+], a ; $6be0
 	ld [hl], a ; $6be1
-	ld hl, $c8b3 ; $6be2
+	ld hl, wPendingExpLinked ; $6be2
 	ld [hl+], a ; $6be5
 	ld [hl], a ; $6be6
 	pop af ; $6be7
@@ -3376,9 +3376,9 @@ ApplyStatGapProgressFlag:
 	jr nz, .isWonSeniorSinglesRank1 ; $6c65
 	ret ; $6c67
 .isWonSeniorSinglesRank1:
-	ld a, [$c939] ; $6c68
+	ld a, [wStoryMainCharPowerLevel] ; $6c68
 	ld b, a ; $6c6b
-	ld a, [$c938] ; $6c6c
+	ld a, [wStoryMainCharSpinLevel] ; $6c6c
 	sub b ; $6c6f
 	bit 7, a ; $6c70
 	ret nz ; $6c72

@@ -286,7 +286,7 @@ IntroCutsceneState00Init_6b:
 	ld a, $24 ; $41ae
 	ld [wCameraY + 1], a ; $41b0
 	ld de, $015c ; $41b3
-	ld hl, $cb48 ; $41b6
+	ld hl, wCutsceneScrollAccum ; $41b6
 	ld a, e ; $41b9
 	ld [hl+], a ; $41ba
 	ld [hl], d ; $41bb
@@ -593,9 +593,9 @@ IntroCutsceneState05Init_6b:
 	ld hl, rIE ; $4568
 	set 1, [hl] ; $456b
 	ld a, $44 ; $456d
-	ld [$cb02], a ; $456f
+	ld [wRasterScrollStartLY], a ; $456f
 	ld a, $78 ; $4572
-	ld [$cb03], a ; $4574
+	ld [wRasterScrollEndLY], a ; $4574
 	xor a ; $4577
 	ld [wRasterScrollX], a ; $4578
 	ld a, $01 ; $457b
@@ -948,7 +948,7 @@ IntroCutsceneState12Init_6b:
 	ld [wCutsceneSpriteAnimTick], a ; $4904
 	ld [wCutsceneSpriteAnimFrame], a ; $4907
 	ld de, $015c ; $490a
-	ld hl, $cb48 ; $490d
+	ld hl, wCutsceneScrollAccum ; $490d
 	ld a, e ; $4910
 	ld [hl+], a ; $4911
 	ld [hl], d ; $4912
@@ -1227,7 +1227,7 @@ IntroCutsceneState19Init_6b:
 	ld [wCutsceneSpriteAnimTick], a ; $4c53
 	ld [wCutsceneSpriteAnimFrame], a ; $4c56
 	ld de, $015c ; $4c59
-	ld hl, $cb48 ; $4c5c
+	ld hl, wCutsceneScrollAccum ; $4c5c
 	ld a, e ; $4c5f
 	ld [hl+], a ; $4c60
 	ld [hl], d ; $4c61
@@ -1294,7 +1294,7 @@ UpdateCutsceneScrollY:
 	inc h ; $4d6b
 .read:
 	ld e, [hl] ; $4d6c
-	ld hl, $cb48 ; $4d6d
+	ld hl, wCutsceneScrollAccum ; $4d6d
 	ld a, [hl+] ; $4d70
 	ld h, [hl] ; $4d71
 	ld l, a ; $4d72
@@ -1306,9 +1306,9 @@ UpdateCutsceneScrollY:
 	sbc d ; $4d79
 	ld h, a ; $4d7a
 	ld a, h ; $4d7b
-	ld [$cb49], a ; $4d7c
+	ld [wCutsceneScrollAccum + 1], a ; $4d7c
 	ld a, l ; $4d7f
-	ld [$cb48], a ; $4d80
+	ld [wCutsceneScrollAccum], a ; $4d80
 	ret ; $4d83
 CutsceneScrollYTable:
 	INCBIN "data/bank_06b/d_4d84.bin" ; $4d84, 169 bytes
@@ -1849,7 +1849,7 @@ QueueScrollingSprite:
 	ld a, [hl+] ; $60fb
 	ld d, [hl] ; $60fc
 	ld e, a ; $60fd
-	ld hl, $cb48 ; $60fe
+	ld hl, wCutsceneScrollAccum ; $60fe
 	ld a, [hl+] ; $6101
 	ld h, [hl] ; $6102
 	ld l, a ; $6103

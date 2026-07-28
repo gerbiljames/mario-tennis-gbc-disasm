@@ -3103,6 +3103,49 @@
      }
     }
    ]
+  },
+  {
+   "start": "0xc78d",
+   "end": "0xc790",
+   "comment": "The last three bytes of the $c780 mode-local scratch block, which sit\nabove wTargetZoneEnabled and so need a union of their own. The minigame\ntarget code and the scoreboard both own them, in different modes.",
+   "variants": [
+    {
+     "context": "minigame targets (banks $0a/$0d)",
+     "scopes": [
+      {
+       "bank": "0x0a"
+      },
+      {
+       "bank": "0x0d"
+      }
+     ],
+     "symbols": {
+      "0xc78d": {
+       "name": "wMinigameHitTargetType",
+       "note": "[8-bit] Type of the target the ball just hit, an index into MinigameTargetTypeScores; $ff means the hit scores nothing"
+      },
+      "0xc78e": {
+       "name": "wMinigameHitPending",
+       "note": "[8-bit] Set by the deflect hit-test and cleared by ScoreMinigameTargetHitOrDeflectBall once the hit has been scored"
+      }
+     }
+    },
+    {
+     "context": "scoreboard (bank $18)",
+     "scopes": [
+      {
+       "bank": "0x18"
+      }
+     ],
+     "symbols": {
+      "0xc78d": {
+       "name": "wScorePanelValues",
+       "note": "[3 bytes] Three values SetupScoreboardDisplay draws as 6x2 tile blocks, each fetched through GetTextSlotPointer. The minigame code uses the first two of the same bytes for its hit bookkeeping",
+       "size": 3
+      }
+     }
+    }
+   ]
   }
  ]
 }

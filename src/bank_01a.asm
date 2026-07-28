@@ -19,11 +19,11 @@ RunMinigameModePauseMenu:
 	call RestoreMessageSpeed ; $4020
 	pop af ; $4023
 	wram_bank ; $4024
-	ld a, [$cb2b] ; $4028
+	ld a, [wPauseMenuIsMinigame] ; $4028
 	ret ; $402b
 RunPauseMenuWindow:
 	xor a ; $402c
-	ld [$cb2b], a ; $402d
+	ld [wPauseMenuIsMinigame], a ; $402d
 	wram_bank $05 ; $4030
 	farcall CreateMenuWindowFromText ; $4036
 	set_flag FLAG_VRAM_UPDATE_BUSY ; $4039
@@ -248,7 +248,7 @@ ToggleMusicSettingThunk:
 	jp RunPauseMenuWindow.menuLoop ; $41d3
 Label_1a_41d6:
 	xor a ; $41d6
-	ld [$cb2c], a ; $41d7
+	ld [wSuppressMinigamePauseFlag], a ; $41d7
 	jp RestoreMessageSpeed.scriptShowSpeakerDialogueRestoreBG ; $41da
 MusicSettingPtrs:
 	; $41dd, 4 bytes (records:2)
@@ -411,7 +411,7 @@ RestoreMessageSpeed:
 	call BuildMinigameModePauseMenu ; $431b
 	ld a, $03 ; $431e
 	ld [wMenuInitialRow], a ; $4320
-	ld a, [$cb2c] ; $4323
+	ld a, [wSuppressMinigamePauseFlag] ; $4323
 	and a ; $4326
 	jr nz, .runPauseMenuWindow ; $4327
 	set_flag FLAG_MINIGAME_PAUSE_MENU_OPEN ; $4329
@@ -441,7 +441,7 @@ RestoreMessageSpeed:
 	call BuildMinigameModePauseMenu ; $4366
 	ld a, $03 ; $4369
 	ld [wMenuInitialRow], a ; $436b
-	ld a, [$cb2c] ; $436e
+	ld a, [wSuppressMinigamePauseFlag] ; $436e
 	and a ; $4371
 	jr nz, .runPauseMenuWindow2 ; $4372
 	set_flag FLAG_MINIGAME_PAUSE_MENU_OPEN ; $4374
@@ -488,7 +488,7 @@ RunDebugExpEditor:
 	farcall StubNop_05_4626 ; $43c6
 	ld c, $00 ; $43c9
 .loop:
-	ld hl, $c92c ; $43cb
+	ld hl, wStoryMainCharExp ; $43cb
 	ld a, [hl+] ; $43ce
 	ld h, [hl] ; $43cf
 	ld l, a ; $43d0
@@ -499,7 +499,7 @@ RunDebugExpEditor:
 	ld de, $0801 ; $43dc
 	ld a, [wPauseMenuWindowId] ; $43df
 	farcall WriteStringToWindow ; $43e2
-	ld hl, $c96c ; $43e5
+	ld hl, wStoryPartnerCharExp ; $43e5
 	ld a, [hl+] ; $43e8
 	ld h, [hl] ; $43e9
 	ld l, a ; $43ea
@@ -551,13 +551,13 @@ RunDebugExpEditor:
 	jp z, .loop ; $444a
 	ld a, [wPauseMenuWindowId] ; $444d
 	farcall CloseWindow ; $4450
-	ld hl, $c92c ; $4453
+	ld hl, wStoryMainCharExp ; $4453
 	ld a, [hl+] ; $4456
 	ld d, [hl] ; $4457
 	ld e, a ; $4458
 	ld l, $00 ; $4459
 	call ResetCharDataScreenAnim ; $445b
-	ld hl, $c96c ; $445e
+	ld hl, wStoryPartnerCharExp ; $445e
 	ld a, [hl+] ; $4461
 	ld d, [hl] ; $4462
 	ld e, a ; $4463
@@ -3869,7 +3869,7 @@ CharDataScreen_BuildStats:
 	or a ; $7ad2
 	ret z ; $7ad3
 	farcall RecomputeStatsWithoutRacket ; $7ad4
-	ld hl, $c920 ; $7ad7
+	ld hl, wStoryMainCharStats ; $7ad7
 	ld de, $d0a0 ; $7ada
 	ld a, [hl+] ; $7add
 	ld [de], a ; $7ade

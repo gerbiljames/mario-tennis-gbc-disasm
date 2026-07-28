@@ -772,15 +772,15 @@ LoadScorePanelValue:
 StubNop_18_5379:
 	ret ; $5379
 SetupScoreboardDisplay:
-	ld a, [$c78d] ; $537a
+	ld a, [wScorePanelValues] ; $537a
 	call GetTextSlotPointer ; $537d
 	ld de, $d84b ; $5380
 	call DrawTileBlock6x2ToTilemap ; $5383
-	ld a, [$c78e] ; $5386
+	ld a, [wScorePanelValues + 1] ; $5386
 	call GetTextSlotPointer ; $5389
 	ld de, $d88b ; $538c
 	call DrawTileBlock6x2ToTilemap ; $538f
-	ld a, [$c78f] ; $5392
+	ld a, [wScorePanelValues + 2] ; $5392
 	call GetTextSlotPointer ; $5395
 	ld de, $d8cb ; $5398
 	call DrawTileBlock6x2ToTilemap ; $539b

@@ -167,7 +167,7 @@ TennisDictionaryScreen:
 	ld [wTennisDictFlags], a ; $40c5
 	ld [wTennisDictScrollTop], a ; $40c8
 	ld [wTennisDictCursorRow], a ; $40cb
-	ld [$cb3e], a ; $40ce
+	ld [wTennisDictScrollTimer], a ; $40ce
 	ld a, $08 ; $40d1
 	ld [wTennisDictSpriteTimer], a ; $40d3
 	ld a, $00 ; $40d6
@@ -775,9 +775,9 @@ UpdateTennisDictionarySprites:
 	ld a, [wTennisDictFlags] ; $4f8c
 	bit 0, a ; $4f8f
 	jr nz, .checkTennisDictCursorRow ; $4f91
-	ld a, [$cb3e] ; $4f93
+	ld a, [wTennisDictScrollTimer] ; $4f93
 	inc a ; $4f96
-	ld [$cb3e], a ; $4f97
+	ld [wTennisDictScrollTimer], a ; $4f97
 .checkTennisDictCursorRow:
 	ld a, [wTennisDictCursorRow] ; $4f9a
 	ld b, a ; $4f9d
@@ -793,7 +793,7 @@ UpdateTennisDictionarySprites:
 	add $14 ; $4fa9
 	ld e, a ; $4fab
 	ld hl, TennisDictionarySprites0 ; $4fac
-	ld a, [$cb3e] ; $4faf
+	ld a, [wTennisDictScrollTimer] ; $4faf
 	and $0f ; $4fb2
 	add l ; $4fb4
 	ld l, a ; $4fb5
@@ -906,9 +906,9 @@ FindTennisDictionaryListEnd:
 	jr nz, .loop ; $5128
 	dec hl ; $512a
 	ld a, h ; $512b
-	ld [$cb30], a ; $512c
+	ld [wTennisDictListEnd], a ; $512c
 	ld a, l ; $512f
-	ld [$cb31], a ; $5130
+	ld [wTennisDictListEnd + 1], a ; $5130
 	ret ; $5133
 GetTennisDictionaryEntryIndex:
 	ld d, $00 ; $5134
@@ -993,9 +993,9 @@ WrapTennisDictionaryScanToEnd:
 	ld a, [wTennisDictEntryCount] ; $51ac
 	dec a ; $51af
 	ld c, a ; $51b0
-	ld a, [$cb30] ; $51b1
+	ld a, [wTennisDictListEnd] ; $51b1
 	ld h, a ; $51b4
-	ld a, [$cb31] ; $51b5
+	ld a, [wTennisDictListEnd + 1] ; $51b5
 	ld l, a ; $51b8
 	dec hl ; $51b9
 	pop af ; $51ba

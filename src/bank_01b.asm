@@ -3297,7 +3297,7 @@ RunDebugSaveDataFlow:
 	jp .loop ; $638b
 .eq01:
 	ld a, $00 ; $638e
-	ld [$cb1f], a ; $6390
+	ld [wUnlockDebugSelection], a ; $6390
 	farcall RunMinigameFlagsDebugScreen ; $6393
 	jp .loop ; $6396
 .clearFrameTasks:
@@ -3305,7 +3305,7 @@ RunDebugSaveDataFlow:
 	farcall ValidateN64TransferRecord ; $639c
 	or a ; $639f
 	jr z, .showNoN64DataFoundScreen ; $63a0
-	ld hl, $c9b0 ; $63a2
+	ld hl, wPendingExpStory ; $63a2
 	ld a, [hl+] ; $63a5
 	ld d, [hl] ; $63a6
 	ld e, a ; $63a7
@@ -3325,7 +3325,7 @@ RunDebugSaveDataFlow:
 	ld c, $00 ; $63c6
 	farcall CharDataScreen_Show ; $63c8
 .step4:
-	ld hl, $c9b2 ; $63cb
+	ld hl, wPendingExpTrophy ; $63cb
 	ld a, [hl+] ; $63ce
 	ld d, [hl] ; $63cf
 	ld e, a ; $63d0
@@ -3346,7 +3346,7 @@ RunDebugSaveDataFlow:
 	farcall CharDataScreen_Show ; $63f1
 .step5:
 	xor a ; $63f4
-	ld hl, $c9b0 ; $63f5
+	ld hl, wPendingExpStory ; $63f5
 	ld [hl+], a ; $63f8
 	ld [hl+], a ; $63f9
 	ld [hl+], a ; $63fa
@@ -3692,7 +3692,7 @@ RunMinigameFlagsDebugScreen:
 	call ClearFrameTasks ; $6722
 	call LoadUnlockDebugNavGrid ; $6725
 	call LoadUnlockDebugRosterTable ; $6728
-	ld hl, $cb1f ; $672b
+	ld hl, wUnlockDebugSelection ; $672b
 	call UpdateUnlockDebugSelection ; $672e
 	ld a, [wCharSelectChar] ; $6731
 	ld [wCharSelectPrevChar], a ; $6734
@@ -3736,14 +3736,14 @@ RunMinigameFlagsDebugScreen:
 	jr .loop ; $6794
 .playSfx2:
 	sound $5f ; $6796
-	ld hl, $cb1f ; $6798
+	ld hl, wUnlockDebugSelection ; $6798
 	jr .beginFadeOut ; $679b
 .checkInputRisingEdge:
 	ldh a, [hInputRisingEdge] ; $679d
 	and PADF_B ; $679f
 	jr z, .checkInputRisingEdge2 ; $67a1
 	sound $62 ; $67a3
-	ld hl, $cb1f ; $67a5
+	ld hl, wUnlockDebugSelection ; $67a5
 	ld a, $00 ; $67a8
 	ld [hl], a ; $67aa
 	ld a, $ff ; $67ab
@@ -5000,7 +5000,7 @@ RunSavedDataTypeSelect:
 	ld b, $01 ; $7177
 	ld c, $01 ; $7179
 	farcall LoadMenuSpritePalettePair ; $717b
-	ld a, [$cb25] ; $717e
+	ld a, [wSavedDataTypeTabIndex] ; $717e
 	ld c, a ; $7181
 	ld b, $02 ; $7182
 	call SetMenuCursorFromIndex ; $7184
@@ -5042,7 +5042,7 @@ RunSavedDataTypeSelect:
 	ld [wMenuSlideDirection], a ; $71db
 	ld c, $02 ; $71de
 	call GetMenuCursorIndex ; $71e0
-	ld [$cb25], a ; $71e3
+	ld [wSavedDataTypeTabIndex], a ; $71e3
 	ret ; $71e6
 .playSfx2:
 	sound $62 ; $71e7

@@ -1822,7 +1822,7 @@ ComputeSpriteScrollOffset:
 	ld e, a ; $4a52
 	test_flag FLAG_ENDING_CREDITS_RUNNING ; $4a53
 	jr z, .clamp ; $4a56
-	ld hl, $cb02 ; $4a58
+	ld hl, wRasterScrollStartLY ; $4a58
 	ld a, [hl+] ; $4a5b
 	ld h, [hl] ; $4a5c
 	ld l, a ; $4a5d
@@ -2462,10 +2462,10 @@ SpawnCompanionActor:
 	ld hl, PartnerActorList_04_4ef8 ; $4f36
 	ld a, $ff ; $4f39
 .spawn:
-	ld [$cb5e], a ; $4f3b
+	ld [wCompanionActorSlot], a ; $4f3b
 	ldh a, [hRomBank] ; $4f3e
 	call SpawnActorFromTemplate ; $4f40
-	ld a, [$cb5e] ; $4f43
+	ld a, [wCompanionActorSlot] ; $4f43
 	cp $ff ; $4f46
 	jr z, .done ; $4f48
 	ld de, wActors ; $4f4a

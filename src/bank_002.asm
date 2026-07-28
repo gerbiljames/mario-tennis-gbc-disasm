@@ -38,7 +38,7 @@ ValidateN64TransferRecord:
 	ld a, [wN64TransferMarker] ; $4044
 	cp $64 ; $4047
 	jr nz, .returnZero ; $4049
-	ld hl, $c9b0 ; $404b
+	ld hl, wPendingExpStory ; $404b
 	ld a, [hl+] ; $404e
 	add [hl] ; $404f
 	inc l ; $4050
@@ -282,7 +282,7 @@ InitStoryModeState:
 	farcall InitDefaultMatchSettings ; $4244
 	clear_flag $01, 6 ; $4247
 	set_flag $01, 7 ; $424a
-	ld hl, $c884 ; $424d
+	ld hl, wStorySlotBlockTag ; $424d
 	xor a ; $4250
 	ld [hl], $56 ; $4251
 	inc hl ; $4253
@@ -319,7 +319,7 @@ CacheStorySlotSummaries:
 	farcall CheckStorySlot ; $4281
 	cp $fe ; $4284
 	jr z, .eqfe ; $4286
-	ld hl, $c880 ; $4288
+	ld hl, wStorySaveSignature ; $4288
 	ld de, $d400 ; $428b
 	call Copy4Bytes ; $428e
 .eqfe:
@@ -328,7 +328,7 @@ CacheStorySlotSummaries:
 	farcall CheckStorySlot ; $4296
 	cp $fe ; $4299
 	jr z, .eqfe2 ; $429b
-	ld hl, $c880 ; $429d
+	ld hl, wStorySaveSignature ; $429d
 	ld de, $d404 ; $42a0
 	call Copy4Bytes ; $42a3
 .eqfe2:
@@ -337,7 +337,7 @@ CacheStorySlotSummaries:
 	farcall CheckStorySlot ; $42ab
 	cp $fe ; $42ae
 	jr z, .restore ; $42b0
-	ld hl, $c880 ; $42b2
+	ld hl, wStorySaveSignature ; $42b2
 	ld de, $d408 ; $42b5
 	call Copy4Bytes ; $42b8
 .restore:
@@ -370,7 +370,7 @@ CheckStorySignatureCollision:
 	ldh a, [hWramBank] ; $42d8
 	push af ; $42da
 	wram_bank $06 ; $42db
-	ld hl, $c880 ; $42e1
+	ld hl, wStorySaveSignature ; $42e1
 	ld a, [hl+] ; $42e4
 	or [hl] ; $42e5
 	inc hl ; $42e6
@@ -379,7 +379,7 @@ CheckStorySignatureCollision:
 	or [hl] ; $42e9
 	ld a, $ff ; $42ea
 	jr z, .step ; $42ec
-	ld de, $c880 ; $42ee
+	ld de, wStorySaveSignature ; $42ee
 	ld hl, $d400 ; $42f1
 	call CompareNextByte ; $42f4
 	jr z, .step ; $42f7
@@ -389,7 +389,7 @@ CheckStorySignatureCollision:
 	jr z, .step ; $4301
 	call CompareNextByte ; $4303
 	jr z, .step ; $4306
-	ld de, $c880 ; $4308
+	ld de, wStorySaveSignature ; $4308
 	ld hl, $d404 ; $430b
 	call CompareNextByte ; $430e
 	jr z, .step ; $4311
@@ -399,7 +399,7 @@ CheckStorySignatureCollision:
 	jr z, .step ; $431b
 	call CompareNextByte ; $431d
 	jr z, .step ; $4320
-	ld de, $c880 ; $4322
+	ld de, wStorySaveSignature ; $4322
 	ld hl, $d408 ; $4325
 	call CompareNextByte ; $4328
 	jr z, .step ; $432b
@@ -430,7 +430,7 @@ RollStoryRandomByte:
 	push bc ; $434f
 	push de ; $4350
 	push hl ; $4351
-	ld de, $c8bb ; $4352
+	ld de, wStoryRandomBytes ; $4352
 	add e ; $4355
 	ld e, a ; $4356
 	jr nc, .advanceRandomSeed ; $4357
@@ -449,8 +449,8 @@ GenerateUniqueStorySaveSignature:
 	push bc ; $4365
 	push de ; $4366
 	push hl ; $4367
-	ld hl, $c8bb ; $4368
-	ld de, $c880 ; $436b
+	ld hl, wStoryRandomBytes ; $4368
+	ld de, wStorySaveSignature ; $436b
 	ld a, [hl+] ; $436e
 	ld [de], a ; $436f
 	inc de ; $4370
@@ -469,16 +469,16 @@ GenerateUniqueStorySaveSignature:
 	jr z, .restore ; $437e
 	call AdvanceRandomSeed ; $4380
 	ld a, h ; $4383
-	ld [$c880], a ; $4384
+	ld [wStorySaveSignature], a ; $4384
 	call AdvanceRandomSeed ; $4387
 	ld a, h ; $438a
-	ld [$c881], a ; $438b
+	ld [wStorySaveSignature + 1], a ; $438b
 	call AdvanceRandomSeed ; $438e
 	ld a, h ; $4391
-	ld [$c882], a ; $4392
+	ld [wStorySaveSignature + 2], a ; $4392
 	call AdvanceRandomSeed ; $4395
 	ld a, h ; $4398
-	ld [$c883], a ; $4399
+	ld [wStorySaveSignature + 3], a ; $4399
 	jr .loop ; $439c
 .restore:
 	pop hl ; $439e
@@ -1062,7 +1062,7 @@ RefreshMainCharacterStats:
 	ld de, wStorySlotData ; $4798
 	ld c, $08 ; $479b
 	call CopyMemoryFast ; $479d
-	ld a, [$c83c] ; $47a0
+	ld a, [wMainCharEquipmentBits] ; $47a0
 	ld b, a ; $47a3
 	and $0f ; $47a4
 	cp $03 ; $47a6
@@ -1081,7 +1081,7 @@ RefreshMainCharacterStats:
 	ld b, a ; $47ba
 .store:
 	ld a, b ; $47bb
-	ld [$c83c], a ; $47bc
+	ld [wMainCharEquipmentBits], a ; $47bc
 	ld bc, wStorySlotData ; $47bf
 	call RecomputeCharacterStats ; $47c2
 	ret ; $47c5
@@ -2012,20 +2012,20 @@ DebugStoryStatsScreen:
 	or a ; $4feb
 	jr z, .printString ; $4fec
 	push de ; $4fee
-	ld hl, $c9b0 ; $4fef
+	ld hl, wPendingExpStory ; $4fef
 	ld a, [hl+] ; $4ff2
 	ld h, [hl] ; $4ff3
 	ld l, a ; $4ff4
 	ld de, $0210 ; $4ff5
 	call PrintDecimalWord ; $4ff8
-	ld hl, $c9b2 ; $4ffb
+	ld hl, wPendingExpTrophy ; $4ffb
 	ld a, [hl+] ; $4ffe
 	ld h, [hl] ; $4fff
 	ld l, a ; $5000
 	ld de, $0a10 ; $5001
 	call PrintDecimalWord ; $5004
 	pop de ; $5007
-	ld hl, $c9b0 ; $5008
+	ld hl, wPendingExpStory ; $5008
 	xor a ; $500b
 	ld [hl+], a ; $500c
 	ld [hl+], a ; $500d
