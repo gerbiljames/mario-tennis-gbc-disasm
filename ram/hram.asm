@@ -143,7 +143,13 @@ hLinkTxByte:: db
 
 ; [8-bit] Serial link state/role (0 = idle, 1/2 = connected roles); gates the encode/decode paths
 hLinkState:: db
-	ds 5
+
+; [8-bit] Link error flags beside hLinkState. AdvanceFrame tests the top three bits while hLinkCounter is nonzero and jumps to LinkErrorReset if any is set -- but nothing in the ROM ever sets them, so the check never fires; InitSerialLink and ResetSerialState only clear it
+hLinkErrorFlags:: db
+
+; [8-bit] Cleared by InitSerialLink and ResetSerialState and read by nothing else
+hUnusedLinkByte:: db
+	ds 3
 
 ; [8-bit] Serial link exchange/frame counter; increments per exchange and caps at 8
 hLinkCounter:: db
@@ -160,6 +166,10 @@ hMusic:: db
 ; sound driver, the sprite queue and the story actor engine reuse the same
 ; bytes (they never run concurrently). Only proven consumers are named;
 ; sites outside every variant's scope keep the numeric address.
+; $ffe9 is a fourth tenant the match renderer reads (`and $0f` to index an
+; animation table, `and $01` to blink) and that every subsystem here only
+; ever clears -- nothing increments it, so what it reads is left over from
+; whichever ran last. Unnamed until that is understood.
 UNION
 ; serial-link input slots (default: link-aware match/menu code in many banks)
 	ds 3
@@ -169,15 +179,38 @@ hLinkInput:: db
 hLinkRemoteInput:: db
 ; [8-bit] Buffered remote input from the previous exchange (double-buffered on the slave side)
 hLinkRemoteInputBuf:: db
-	ds 1
+; [8-bit] Local input byte queued for transmission. PrepareLinkInputPayload loads it from hInputPressed and PrepareLinkStatePayload from ComposeLinkStateByte; SerialEncodeInput drains it a few bits per frame (all four low bits -> $3f, else bit 3 -> $30, bit 2 -> $0c, else the low pair) and stores the remainder back, so a burst of presses is sent over several frames
+hLinkTxInput:: db
 ; [8-bit] Set to 1 by SerialHandler when a byte completes; WaitSerialTransfer spins on it and AdvanceFrame's link wait clears it after pairing it with hVBlankOccurred
 hLinkTransferDone:: db
 ; [8-bit] Non-zero while a serial block exchange runs (UpdateLinkSession, ResyncLinkSession, ExchangeLinkBlockToWram5 set it; the link menus clear it when done). AdvanceFrame skips the SELECT+START debug single-step while it is set
 hLinkExchangeActive:: db
-	ds 10
+; [8-bit] Cleared by InitSerialLink and ResetSerialState; no other serial-path site touches it (the sound driver owns the same byte as hSndPortamentoTimer)
+hUnusedLinkSlot:: db
+; [8-bit] Written with hLinkLastRxByte by both ExchangeLinkFrameByte routines and read by nothing
+hLinkLastRxMirror:: db
+; [8-bit] Previous frame byte received. ExchangeLinkFrameByteMaster/Slave compare the new byte against it: equal means the peer retransmitted, which steps hLinkCounter and re-inits the link on the second repeat
+hLinkLastRxByte:: db
+; [8-bit] Top two bits of the last transmitted byte, inverted (`and $c0 / xor $c0`) by PrepareLinkStatePayload and PrepareLinkInputPayload and OR'd into every byte SerialEncodeInput sends. Alternating them is what lets the peer tell a fresh frame from a repeat
+hLinkTxSeqBits:: db
+; [8-bit] Which record of LinkStateBytePtrs_07 ComposeLinkStateByte builds the transmitted state byte from; the match and story pause menus and ResetMatchState set it as the screen changes, so the link sends the payload the current screen expects
+hLinkPayloadKind:: db
+; [8-bit] One-deep history of hLinkRemoteInputBuf on the slave decode path: SerialDecodeInput swaps the two so a dropped frame can fall back to the previous remote input
+hLinkRemoteInputPrev:: db
+; [8-bit] Nonzero makes a slave (hLinkState $02) wait for hLinkTxPending to clear before sending, so it never gets ahead of the master
+hLinkAckRequired:: db
+; [8-bit] The byte handed to the serial port, held until SerialHandler sees the transfer finish and clears it; the slave's ack wait spins on it
+hLinkTxPending:: db
+; [8-bit] Bit queue SerialHandler shifts left once per serial interrupt. A set top bit on entry means the byte that just arrived is not payload, so rSB is not latched into hLinkRxByte; a bit shifted out suppresses hLinkTransferDone for that interrupt. Seeded with $40 when a transfer is queued
+hLinkShiftQueue:: db
+; [8-bit] Players currently joined to the link session. AdvanceLinkPlayerCount steps it against wMatchIsDoubles + 1 as peers join and leave
+hLinkPlayerCount:: db
 ; [8-bit] Remote player's cursor page in the link character grid, written beside wMenuCursor2X/Y and read by GetGridSlotFromLinkCursor and the MoveLinkCursor* handlers
 hLinkCursorPage:: db
-	ds 12
+	ds 3
+; [8-bit] Nonzero makes VBlankHandler return immediately, doing no palette, OAM or tilemap work. The link resync sets it while it busy-waits on the serial line and clears it when the session is back in step
+hVBlankSuppressed:: db
+	ds 8
 NEXTU
 ; sound driver (bank 0, $3373-$3ddf)
 ; [16-bit] Current channel's script/state pointer, copied from the channel struct each update (borrows the sprite-queue bytes; RunSoundEngine save/restores them)

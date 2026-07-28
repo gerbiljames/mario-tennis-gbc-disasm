@@ -4853,7 +4853,7 @@ RunLinkCharSelectScreen:
 	farcall RunLinkCommandFrame ; $643d
 	pop af ; $6440
 	xor a, a ; $6441
-	ldh [$ffe2], a ; $6442
+	ldh [hLinkPlayerCount], a ; $6442
 	call InitCharGridState ; $6444
 	xor a, a ; $6447
 	ldh [$ffe4], a ; $6448

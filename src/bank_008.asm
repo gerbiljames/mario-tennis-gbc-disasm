@@ -153,7 +153,7 @@ ResetMatchState:
 	xor a, a ; $413e
 	ldh [$ffe9], a ; $413f
 	xor a, a ; $4141
-	ldh [$ffdd], a ; $4142
+	ldh [hLinkPayloadKind], a ; $4142
 	ret ; $4144
 InitMatchScene:
 	call ClearFrameTasks ; $4145
@@ -1459,7 +1459,7 @@ ResetPointState:
 	ld [wMatchAbortFlag], a ; $4cd8
 	ld [wPointOutcomeSide], a ; $4cdb
 	ld [wPointOutcome], a ; $4cde
-	ldh [$ffdd], a ; $4ce1
+	ldh [hLinkPayloadKind], a ; $4ce1
 	ld [wPauseDisabled], a ; $4ce3
 	ld a, $01 ; $4ce6
 	ld [wOffscreenArrowsEnabled], a ; $4ce8
@@ -1949,11 +1949,11 @@ ComputePairSpread:
 	add hl, de ; $509b
 	sra h ; $509c
 	rr l ; $509e
-	ld bc, rJOYP ; $50a0
+	ld bc, $ff00 ; $50a0
 	add hl, bc ; $50a3
 	ld c, l ; $50a4
 	ld b, h ; $50a5
-	ld hl, rJOYP ; $50a6
+	ld hl, $ff00 ; $50a6
 	add hl, bc ; $50a9
 	bit 7, h ; $50aa
 	jr z, .compare ; $50ac
@@ -2322,7 +2322,7 @@ StartLandingMarker:
 	sub a, h ; $530e
 	ld h, a ; $530f
 .checkDepth:
-	ld bc, rJOYP ; $5310
+	ld bc, $ff00 ; $5310
 	add hl, bc ; $5313
 	bit 7, h ; $5314
 	pop hl ; $5316
@@ -3197,7 +3197,7 @@ HandleBallNetCrossing:
 	xor a, a ; $58f8
 	ld [hl+], a ; $58f9
 	ld [hl+], a ; $58fa
-	ld de, hPeakLY ; $58fb
+	ld de, $ffa0 ; $58fb
 	ld a, e ; $58fe
 	ld [hl+], a ; $58ff
 	ld [hl], d ; $5900
@@ -6480,7 +6480,7 @@ CheckBallContactWindow:
 	sub a, h ; $6fb5
 	ld h, a ; $6fb6
 .checkHeight:
-	ld de, hPeakLY ; $6fb7
+	ld de, $ffa0 ; $6fb7
 	add hl, de ; $6fba
 	ret c ; $6fbb
 	ld hl, wCharReachX ; $6fbc
@@ -7053,7 +7053,7 @@ StepCharMovement:
 	call AddDEToMem24IntoBC ; $735a
 	bit 7, b ; $735d
 	jr nz, .farSide ; $735f
-	ld hl, rWBK ; $7361
+	ld hl, $ff70 ; $7361
 	add hl, bc ; $7364
 	jr nc, .blockDepth ; $7365
 	ld hl, $f920 ; $7367
@@ -7095,7 +7095,7 @@ StepCharMovement:
 	call AddDEToMem24IntoBC ; $73a8
 	bit 7, b ; $73ab
 	jr nz, .unclampedFarSide ; $73ad
-	ld hl, rWBK ; $73af
+	ld hl, $ff70 ; $73af
 	add hl, bc ; $73b2
 	jr nc, .doneUnclamped ; $73b3
 	jr .applyDepthUnclamped ; $73b5
@@ -8072,7 +8072,7 @@ AiRushToBallLanding:
 	push hl ; $797d
 	ld l, e ; $797e
 	ld h, d ; $797f
-	ld bc, rJOYP ; $7980
+	ld bc, $ff00 ; $7980
 	add hl, bc ; $7983
 	bit 7, h ; $7984
 	jr z, .setTarget ; $7986

@@ -29,6 +29,34 @@ RAM_IMM_IS_CONSTANT = {
 }
 
 
+# The same hazard, but a property of the *address* rather than of a site: these
+# HRAM bytes are only ever reached with `ldh`, so every `ld rr, n16` equal to one
+# is the negative constant it looks like -- $ffe0 is -32 (one tilemap row back,
+# which is why it turns up in every blit and slide loop), $ffc0 -64, $ffa0 -96,
+# $ffdf -33, $fffd -3 (hRandomSeed + 1, an interior byte). All 43 sites feed
+# `add hl, rr` or get stored as a 16-bit delta; not one is dereferenced. Keeping the list by address rather than by offset means a
+# newly carved blit loop cannot quietly acquire a link-engine name.
+# Not every HRAM address belongs here: `ld hl, hActorPtr` is a real pointer
+# setup at 82 sites, so this stays curated per address.
+RAM_IMM_NEVER = {0xffa0, 0xffc0, 0xffdf, 0xffe0, 0xfffd}
+
+
+# The same hazard once more, for hardware register names. `ld hl, rIE` is a real
+# pointer setup at 74 sites (the code then `set`s or `res`s a bit through it), so
+# this cannot be an address rule -- rLCDC appears in both roles. These 18 sites
+# load the register address as an addend instead: $ff00 is -256, $ff40 -192,
+# $ff70 -144, each immediately followed by `add hl, rr`. Keyed by flat offset,
+# like RAM_IMM_IS_CONSTANT.
+HWADDR_IMM_IS_CONSTANT = {
+    0x17455,
+    0x1d2dd,
+    0x210a0, 0x210a6, 0x21310, 0x23361, 0x233af, 0x23980,
+    0x35251, 0x35281, 0x352d8, 0x352ee, 0x3574e, 0x357b3,
+    0x35c21, 0x35e29, 0x35e93,
+    0x926ea,
+}
+
+
 # Sites whose 8-bit immediate is the *low byte* of an $ffxx address, because
 # the code reaches it through `ldh [c]` rather than by naming it: `ld c, $80` is
 # the destination hOAMDMARoutine is copied to, and `ld c, $6b`/`ld c, $30` are
@@ -100,14 +128,14 @@ def render_operand(ins, off, labels, hwregs, ramnames, data_labels=None,
                 return f"ld {m.group(1)}, {name}"
             # Same for curated RAM symbols: a word immediate equal to a
             # named RAM address is a pointer setup, not a constant.
-            if off not in RAM_IMM_IS_CONSTANT:
+            if off not in RAM_IMM_IS_CONSTANT and imm not in RAM_IMM_NEVER:
                 if ramnames and imm in ramnames:
                     return f"ld {m.group(1)}, {ramnames[imm]}"
                 if ramscoped:
                     sn = ramscoped.resolve(imm, off)
                     if sn:
                         return f"ld {m.group(1)}, {sn}"
-    if "$ff" in text and hwregs:
+    if "$ff" in text and hwregs and off not in HWADDR_IMM_IS_CONSTANT:
         m = HWADDR_RE.search(text)
         if m:
             addr = int(m.group(0)[1:], 16)

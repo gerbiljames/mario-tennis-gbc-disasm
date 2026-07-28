@@ -2003,5 +2003,13 @@
  "0xcb6c": {
   "name": "wDigitSpriteAttr",
   "note": "[8-bit] OAM attribute DrawDigitSprite_39 queues digits with"
+ },
+ "0xffc3": {
+  "name": "hLinkErrorFlags",
+  "note": "[8-bit] Link error flags beside hLinkState. AdvanceFrame tests the top three bits while hLinkCounter is nonzero and jumps to LinkErrorReset if any is set -- but nothing in the ROM ever sets them, so the check never fires; InitSerialLink and ResetSerialState only clear it"
+ },
+ "0xffc4": {
+  "name": "hUnusedLinkByte",
+  "note": "[8-bit] Cleared by InitSerialLink and ResetSerialState and read by nothing else"
  }
 }

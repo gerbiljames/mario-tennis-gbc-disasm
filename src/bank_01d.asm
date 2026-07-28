@@ -2117,7 +2117,7 @@ SlideToMainCharStatPage:
 	farcall FlushCharDataTilemapsFar ; $51ad
 	wram_bank $06 ; $51b0
 	ld hl, $d145 ; $51b6
-	ld de, hPeakLY ; $51b9
+	ld de, $ffa0 ; $51b9
 	ld a, e ; $51bc
 	ld [hl+], a ; $51bd
 	ld [hl], d ; $51be
@@ -2139,7 +2139,7 @@ SlideToMainCharStatPage:
 	farcall FlushCharDataTilemapsFar ; $51e6
 	wram_bank $06 ; $51e9
 	ld hl, $d145 ; $51ef
-	ld de, hLinkRxByte ; $51f2
+	ld de, $ffc0 ; $51f2
 	ld a, e ; $51f5
 	ld [hl+], a ; $51f6
 	ld [hl], d ; $51f7
@@ -2211,7 +2211,7 @@ SlideFromMainCharStatPage:
 	farcall FlushCharDataTilemapsFar ; $529e
 	wram_bank $06 ; $52a1
 	ld hl, $d145 ; $52a7
-	ld de, hLinkRxByte ; $52aa
+	ld de, $ffc0 ; $52aa
 	ld a, e ; $52ad
 	ld [hl+], a ; $52ae
 	ld [hl], d ; $52af
@@ -2233,7 +2233,7 @@ SlideFromMainCharStatPage:
 	farcall FlushCharDataTilemapsFar ; $52d7
 	wram_bank $06 ; $52da
 	ld hl, $d145 ; $52e0
-	ld de, hPeakLY ; $52e3
+	ld de, $ffa0 ; $52e3
 	ld a, e ; $52e6
 	ld [hl+], a ; $52e7
 	ld [hl], d ; $52e8
@@ -2395,7 +2395,7 @@ SlideToPartnerStatPage:
 	ld [hl+], a ; $548c
 	ld [hl], d ; $548d
 	ld hl, $d147 ; $548e
-	ld de, hLinkRxByte ; $5491
+	ld de, $ffc0 ; $5491
 	ld a, e ; $5494
 	ld [hl+], a ; $5495
 	ld [hl], d ; $5496
@@ -2429,7 +2429,7 @@ SlideToPartnerStatPage:
 	ld [hl+], a ; $54e9
 	ld [hl], d ; $54ea
 	ld hl, $d147 ; $54eb
-	ld de, hPeakLY ; $54ee
+	ld de, $ffa0 ; $54ee
 	ld a, e ; $54f1
 	ld [hl+], a ; $54f2
 	ld [hl], d ; $54f3
@@ -2620,7 +2620,7 @@ SlideFromPartnerStatPage:
 	farcall FlushCharDataTilemapsFar ; $56e1
 	wram_bank $06 ; $56e4
 	ld hl, $d147 ; $56ea
-	ld de, hPeakLY ; $56ed
+	ld de, $ffa0 ; $56ed
 	ld a, e ; $56f0
 	ld [hl+], a ; $56f1
 	ld [hl], d ; $56f2
@@ -2654,7 +2654,7 @@ SlideFromPartnerStatPage:
 	farcall FlushCharDataTilemapsFar ; $573e
 	wram_bank $06 ; $5741
 	ld hl, $d147 ; $5747
-	ld de, hLinkRxByte ; $574a
+	ld de, $ffc0 ; $574a
 	ld a, e ; $574d
 	ld [hl+], a ; $574e
 	ld [hl], d ; $574f

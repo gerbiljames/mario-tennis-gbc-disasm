@@ -799,7 +799,7 @@
   {
    "start": "0xffd0",
    "end": "0xfff0",
-   "comment": "Shared HRAM scratch pool: the serial-link input path, the bank-0\nsound driver, the sprite queue and the story actor engine reuse the same\nbytes (they never run concurrently). Only proven consumers are named;\nsites outside every variant's scope keep the numeric address.",
+   "comment": "Shared HRAM scratch pool: the serial-link input path, the bank-0\nsound driver, the sprite queue and the story actor engine reuse the same\nbytes (they never run concurrently). Only proven consumers are named;\nsites outside every variant's scope keep the numeric address.\n$ffe9 is a fourth tenant the match renderer reads (`and $0f` to index an\nanimation table, `and $01` to blink) and that every subsystem here only\never clears -- nothing increments it, so what it reads is left over from\nwhichever ran last. Unnamed until that is understood.",
    "variants": [
     {
      "context": "serial-link input slots (default: link-aware match/menu code in many banks)",
@@ -828,6 +828,54 @@
       "0xffe3": {
        "name": "hLinkCursorPage",
        "note": "[8-bit] Remote player's cursor page in the link character grid, written beside wMenuCursor2X/Y and read by GetGridSlotFromLinkCursor and the MoveLinkCursor* handlers"
+      },
+      "0xffd6": {
+       "name": "hLinkTxInput",
+       "note": "[8-bit] Local input byte queued for transmission. PrepareLinkInputPayload loads it from hInputPressed and PrepareLinkStatePayload from ComposeLinkStateByte; SerialEncodeInput drains it a few bits per frame (all four low bits -> $3f, else bit 3 -> $30, bit 2 -> $0c, else the low pair) and stores the remainder back, so a burst of presses is sent over several frames"
+      },
+      "0xffd9": {
+       "name": "hUnusedLinkSlot",
+       "note": "[8-bit] Cleared by InitSerialLink and ResetSerialState; no other serial-path site touches it (the sound driver owns the same byte as hSndPortamentoTimer)"
+      },
+      "0xffda": {
+       "name": "hLinkLastRxMirror",
+       "note": "[8-bit] Written with hLinkLastRxByte by both ExchangeLinkFrameByte routines and read by nothing"
+      },
+      "0xffdb": {
+       "name": "hLinkLastRxByte",
+       "note": "[8-bit] Previous frame byte received. ExchangeLinkFrameByteMaster/Slave compare the new byte against it: equal means the peer retransmitted, which steps hLinkCounter and re-inits the link on the second repeat"
+      },
+      "0xffdc": {
+       "name": "hLinkTxSeqBits",
+       "note": "[8-bit] Top two bits of the last transmitted byte, inverted (`and $c0 / xor $c0`) by PrepareLinkStatePayload and PrepareLinkInputPayload and OR'd into every byte SerialEncodeInput sends. Alternating them is what lets the peer tell a fresh frame from a repeat"
+      },
+      "0xffdd": {
+       "name": "hLinkPayloadKind",
+       "note": "[8-bit] Which record of LinkStateBytePtrs_07 ComposeLinkStateByte builds the transmitted state byte from; the match and story pause menus and ResetMatchState set it as the screen changes, so the link sends the payload the current screen expects"
+      },
+      "0xffde": {
+       "name": "hLinkRemoteInputPrev",
+       "note": "[8-bit] One-deep history of hLinkRemoteInputBuf on the slave decode path: SerialDecodeInput swaps the two so a dropped frame can fall back to the previous remote input"
+      },
+      "0xffdf": {
+       "name": "hLinkAckRequired",
+       "note": "[8-bit] Nonzero makes a slave (hLinkState $02) wait for hLinkTxPending to clear before sending, so it never gets ahead of the master"
+      },
+      "0xffe0": {
+       "name": "hLinkTxPending",
+       "note": "[8-bit] The byte handed to the serial port, held until SerialHandler sees the transfer finish and clears it; the slave's ack wait spins on it"
+      },
+      "0xffe1": {
+       "name": "hLinkShiftQueue",
+       "note": "[8-bit] Bit queue SerialHandler shifts left once per serial interrupt. A set top bit on entry means the byte that just arrived is not payload, so rSB is not latched into hLinkRxByte; a bit shifted out suppresses hLinkTransferDone for that interrupt. Seeded with $40 when a transfer is queued"
+      },
+      "0xffe2": {
+       "name": "hLinkPlayerCount",
+       "note": "[8-bit] Players currently joined to the link session. AdvanceLinkPlayerCount steps it against wMatchIsDoubles + 1 as peers join and leave"
+      },
+      "0xffe7": {
+       "name": "hVBlankSuppressed",
+       "note": "[8-bit] Nonzero makes VBlankHandler return immediately, doing no palette, OAM or tilemap work. The link resync sets it while it busy-waits on the serial line and clears it when the session is back in step"
       }
      }
     },

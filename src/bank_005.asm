@@ -8194,7 +8194,7 @@ UploadGlyphBufferFull:
 	ld hl, $ac00 ; $7451
 .pushPageDests:
 	push hl ; $7454
-	ld de, rJOYP ; $7455
+	ld de, $ff00 ; $7455
 	add hl, de ; $7458
 	push hl ; $7459
 	add hl, de ; $745a

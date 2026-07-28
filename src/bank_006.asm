@@ -50,7 +50,7 @@ RunMinigameEndMenu:
 RunMatchPauseMenu:
 	ldh a, [hWramBank] ; $4074
 	push af ; $4076
-	ldh a, [$ffdd] ; $4077
+	ldh a, [hLinkPayloadKind] ; $4077
 	push af ; $4079
 	farcall StepMatchFrame ; $407a
 	farcall StepMatchFrame ; $407d
@@ -58,7 +58,7 @@ RunMatchPauseMenu:
 	xor a, a ; $4082
 	ld [wMatchMenuSelection], a ; $4083
 	ld a, $02 ; $4086
-	ldh [$ffdd], a ; $4088
+	ldh [hLinkPayloadKind], a ; $4088
 	call PrepareScoreboardGfx ; $408a
 	farcall StepMatchFrame ; $408d
 	call LoadScoreboardModeGfx ; $4090
@@ -114,7 +114,7 @@ MatchPauseMenu_AfterItem:
 	farcall StepMatchFrame ; $4101
 	farcall StepMatchFrame ; $4104
 	pop af ; $4107
-	ldh [$ffdd], a ; $4108
+	ldh [hLinkPayloadKind], a ; $4108
 	pop af ; $410a
 	wram_bank ; $410b
 	ret ; $410f
@@ -2842,14 +2842,14 @@ RunStoryModeMenu:
 	ldh a, [hWramBank] ; $6e17
 	push af ; $6e19
 	farcall StopSceneTileAnimations ; $6e1a
-	ldh a, [$ffdd] ; $6e1d
+	ldh a, [hLinkPayloadKind] ; $6e1d
 	push af ; $6e1f
 	call AdvanceFrame ; $6e20
 	sound $63 ; $6e23
 	xor a, a ; $6e25
 	ld [wMatchMenuSelection], a ; $6e26
 	ld a, $02 ; $6e29
-	ldh [$ffdd], a ; $6e2b
+	ldh [hLinkPayloadKind], a ; $6e2b
 	farcall InitTextWindows ; $6e2d
 	ld a, $81 ; $6e30
 	ld [wWindowTileAttr], a ; $6e32
@@ -2905,7 +2905,7 @@ StoryPauseMenu_AfterItem:
 	clear_flag FLAG_HIDE_OVERWORLD_ACTORS ; $6e9d
 	farcall LoadMenuFontGfxStaged ; $6ea0
 	pop af ; $6ea3
-	ldh [$ffdd], a ; $6ea4
+	ldh [hLinkPayloadKind], a ; $6ea4
 	farcall InitTextWindows ; $6ea6
 	farcall InitSceneTileAnimations ; $6ea9
 	pop af ; $6eac
@@ -2916,7 +2916,7 @@ StoryPauseMenu_AfterItem:
 	cp a, $ff ; $6eb3
 	jp z, RunStoryModeMenu.loop ; $6eb5
 	pop af ; $6eb8
-	ldh [$ffdd], a ; $6eb9
+	ldh [hLinkPayloadKind], a ; $6eb9
 	clear_flag FLAG_HIDE_OVERWORLD_ACTORS ; $6ebb
 	farcall InitSceneTileAnimations ; $6ebe
 	pop af ; $6ec1

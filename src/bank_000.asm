@@ -6058,7 +6058,7 @@ BlitBGRowFrom64:
 	and a, $3f ; $2264
 	jr nz, .nextCell ; $2266
 	ld a, c ; $2268
-	ld bc, hLinkRxByte ; $2269
+	ld bc, $ffc0 ; $2269
 	add hl, bc ; $226c
 	ld c, a ; $226d
 .nextCell:
@@ -6079,7 +6079,7 @@ BlitBGRowFrom64:
 	and a, $3f ; $2284
 	jr nz, .nextCell2 ; $2286
 	ld a, c ; $2288
-	ld bc, hLinkRxByte ; $2289
+	ld bc, $ffc0 ; $2289
 	add hl, bc ; $228c
 	ld c, a ; $228d
 .nextCell2:
@@ -6700,7 +6700,7 @@ AdvanceFrame:
 	ldh a, [hLinkCounter] ; $2635
 	or a, a ; $2637
 	jr z, .linkOk ; $2638
-	ldh a, [$ffc3] ; $263a
+	ldh a, [hLinkErrorFlags] ; $263a
 	and a, $e0 ; $263c
 	jp nz, LinkErrorReset ; $263e
 .linkOk:
@@ -6884,7 +6884,7 @@ WaitFrames:
 	ret ; $2748
 VBlankHandler:
 	push af ; $2749
-	ldh a, [$ffe7] ; $274a
+	ldh a, [hVBlankSuppressed] ; $274a
 	or a, a ; $274c
 	jp nz, .restore ; $274d
 	push bc ; $2750
@@ -7077,7 +7077,7 @@ SerialHandler:
 	push bc ; $2862
 	push de ; $2863
 	push hl ; $2864
-	ldh a, [$ffe1] ; $2865
+	ldh a, [hLinkShiftQueue] ; $2865
 	add a, a ; $2867
 	jr c, .carry ; $2868
 	ldh a, [rSB] ; $286a
@@ -7094,23 +7094,23 @@ SerialHandler:
 	pop af ; $287a
 	reti ; $287b
 .ne01:
-	ldh a, [$ffdf] ; $287c
+	ldh a, [hLinkAckRequired] ; $287c
 	or a, a ; $287e
 	jr z, .step4 ; $287f
-	ldh a, [$ffe0] ; $2881
+	ldh a, [hLinkTxPending] ; $2881
 	or a, a ; $2883
 	jr z, .zero ; $2884
 	xor a, a ; $2886
-	ldh [$ffe0], a ; $2887
+	ldh [hLinkTxPending], a ; $2887
 	jr .step4 ; $2889
 .zero:
-	ldh a, [$ffe1] ; $288b
+	ldh a, [hLinkShiftQueue] ; $288b
 	ld a, $40 ; $288d
-	ldh [$ffe1], a ; $288f
+	ldh [hLinkShiftQueue], a ; $288f
 .step4:
-	ldh a, [$ffe1] ; $2891
+	ldh a, [hLinkShiftQueue] ; $2891
 	add a, a ; $2893
-	ldh [$ffe1], a ; $2894
+	ldh [hLinkShiftQueue], a ; $2894
 	jr c, .restore ; $2896
 	ld a, $01 ; $2898
 	ldh [hLinkTransferDone], a ; $289a
@@ -7149,55 +7149,55 @@ InitSerialLink:
 	ldh [rSC], a ; $28ca
 	xor a, a ; $28cc
 	ldh [hLinkState], a ; $28cd
-	ldh [$ffc3], a ; $28cf
-	ldh [$ffc4], a ; $28d1
+	ldh [hLinkErrorFlags], a ; $28cf
+	ldh [hUnusedLinkByte], a ; $28d1
 	ldh [hLinkCounter], a ; $28d3
 	ldh [hLinkInput], a ; $28d5
 	ldh [hLinkRemoteInput], a ; $28d7
 	ldh [hLinkRemoteInputBuf], a ; $28d9
-	ldh [$ffd6], a ; $28db
+	ldh [hLinkTxInput], a ; $28db
 	ldh [hLinkTransferDone], a ; $28dd
 	ldh [hLinkExchangeActive], a ; $28df
-	ldh [$ffdc], a ; $28e1
-	ldh [$ffd9], a ; $28e3
-	ldh [$ffda], a ; $28e5
-	ldh [$ffdb], a ; $28e7
-	ldh [$ffdd], a ; $28e9
-	ldh [$ffde], a ; $28eb
-	ldh [$ffdf], a ; $28ed
-	ldh [$ffe1], a ; $28ef
-	ldh [$ffe2], a ; $28f1
-	ldh [$ffe7], a ; $28f3
+	ldh [hLinkTxSeqBits], a ; $28e1
+	ldh [hUnusedLinkSlot], a ; $28e3
+	ldh [hLinkLastRxMirror], a ; $28e5
+	ldh [hLinkLastRxByte], a ; $28e7
+	ldh [hLinkPayloadKind], a ; $28e9
+	ldh [hLinkRemoteInputPrev], a ; $28eb
+	ldh [hLinkAckRequired], a ; $28ed
+	ldh [hLinkShiftQueue], a ; $28ef
+	ldh [hLinkPlayerCount], a ; $28f1
+	ldh [hVBlankSuppressed], a ; $28f3
 	ldh [$ffe9], a ; $28f5
 	ret ; $28f7
 ResetSerialState:
 	xor a, a ; $28f8
 	ldh [hLinkRxByte], a ; $28f9
 	ldh [hLinkTxByte], a ; $28fb
-	ldh [$ffc3], a ; $28fd
-	ldh [$ffc4], a ; $28ff
+	ldh [hLinkErrorFlags], a ; $28fd
+	ldh [hUnusedLinkByte], a ; $28ff
 	ldh [hLinkCounter], a ; $2901
 	ldh [hLinkInput], a ; $2903
 	ldh [hLinkRemoteInput], a ; $2905
 	ldh [hLinkRemoteInputBuf], a ; $2907
-	ldh [$ffd6], a ; $2909
+	ldh [hLinkTxInput], a ; $2909
 	ldh [hLinkTransferDone], a ; $290b
-	ldh [$ffdc], a ; $290d
-	ldh [$ffd9], a ; $290f
-	ldh [$ffda], a ; $2911
-	ldh [$ffdb], a ; $2913
-	ldh [$ffdd], a ; $2915
-	ldh [$ffde], a ; $2917
-	ldh [$ffe1], a ; $2919
-	ldh [$ffdf], a ; $291b
-	ldh [$ffe2], a ; $291d
-	ldh [$ffe7], a ; $291f
+	ldh [hLinkTxSeqBits], a ; $290d
+	ldh [hUnusedLinkSlot], a ; $290f
+	ldh [hLinkLastRxMirror], a ; $2911
+	ldh [hLinkLastRxByte], a ; $2913
+	ldh [hLinkPayloadKind], a ; $2915
+	ldh [hLinkRemoteInputPrev], a ; $2917
+	ldh [hLinkShiftQueue], a ; $2919
+	ldh [hLinkAckRequired], a ; $291b
+	ldh [hLinkPlayerCount], a ; $291d
+	ldh [hVBlankSuppressed], a ; $291f
 	ldh [$ffe9], a ; $2921
 	ret ; $2923
 SerialEncodeInput:
 	push bc ; $2924
 	push hl ; $2925
-	ldh a, [$ffd6] ; $2926
+	ldh a, [hLinkTxInput] ; $2926
 	ld b, a ; $2928
 	and a, $0f ; $2929
 	cp a, $0f ; $292b
@@ -7233,7 +7233,7 @@ SerialEncodeInput:
 .storeQueue:
 	ld c, a ; $2958
 	ld a, b ; $2959
-	ldh [$ffd6], a ; $295a
+	ldh [hLinkTxInput], a ; $295a
 	ldh a, [hLinkState] ; $295c
 	cp a, $01 ; $295e
 	jr z, .checkSlaveWait ; $2960
@@ -7242,12 +7242,12 @@ SerialEncodeInput:
 	sound $72 ; $2966
 	xor a, a ; $2968
 	ldh [hLinkRemoteInputBuf], a ; $2969
-	ldh [$ffd6], a ; $296b
+	ldh [hLinkTxInput], a ; $296b
 	ld a, $c0 ; $296d
 	ldh [hLinkTxByte], a ; $296f
 	call LinkErrorReset ; $2971
 .checkSlaveWait:
-	ldh a, [$ffdf] ; $2974
+	ldh a, [hLinkAckRequired] ; $2974
 	or a, a ; $2976
 	jr z, .send ; $2977
 	ldh a, [hLinkState] ; $2979
@@ -7258,15 +7258,15 @@ SerialEncodeInput:
 	nop ; $2980
 	nop ; $2981
 	di ; $2982
-	ldh a, [$ffe0] ; $2983
+	ldh a, [hLinkTxPending] ; $2983
 	or a, a ; $2985
 	jr nz, .waitAck ; $2986
 .send:
-	ldh a, [$ffdc] ; $2988
+	ldh a, [hLinkTxSeqBits] ; $2988
 	or a, c ; $298a
 	di ; $298b
 	ldh [hLinkTxByte], a ; $298c
-	ldh [$ffe0], a ; $298e
+	ldh [hLinkTxPending], a ; $298e
 	ei ; $2990
 	pop hl ; $2991
 	pop bc ; $2992
@@ -7324,10 +7324,10 @@ SerialDecodeInput:
 .asSlave:
 	ldh a, [hLinkRemoteInputBuf] ; $29e0
 	ld b, a ; $29e2
-	ldh a, [$ffde] ; $29e3
+	ldh a, [hLinkRemoteInputPrev] ; $29e3
 	ldh [hLinkRemoteInputBuf], a ; $29e5
 	ld a, b ; $29e7
-	ldh [$ffde], a ; $29e8
+	ldh [hLinkRemoteInputPrev], a ; $29e8
 	ldh a, [hLinkRemoteInput] ; $29ea
 	or a, a ; $29ec
 	jr nz, .storeInput ; $29ed
@@ -9762,7 +9762,7 @@ TickVolumeSlide:
 	ld b, a ; $3980
 	ldh a, [hSndVolSlideReload] ; $3981
 	ldh [hSndVolSlideTimer], a ; $3983
-	ld hl, hSndVolSlide ; $3985
+	ld hl, $ffe0 ; $3985
 	ld a, [hl] ; $3988
 	bit 7, a ; $3989
 	jr nz, .bump ; $398b

@@ -2291,7 +2291,7 @@ AdvanceTargetActorState:
 	ld h, $00 ; $524d
 	ld l, a ; $524f
 	add hl, hl ; $5250
-	ld de, rJOYP ; $5251
+	ld de, $ff00 ; $5251
 	add hl, de ; $5254
 	ld de, $fdc0 ; $5255
 	call SetMinigameActorWorldPos ; $5258
@@ -2317,7 +2317,7 @@ AdvanceTargetActorState:
 	ld h, $00 ; $527d
 	ld l, a ; $527f
 	add hl, hl ; $5280
-	ld de, rJOYP ; $5281
+	ld de, $ff00 ; $5281
 	add hl, de ; $5284
 	ld de, $fdc0 ; $5285
 	call SetMinigameActorWorldPos ; $5288
@@ -2378,7 +2378,7 @@ IsBallInHitZone:
 	sub a, h ; $52d6
 	ld h, a ; $52d7
 .positive2:
-	ld de, rJOYP ; $52d8
+	ld de, $ff00 ; $52d8
 	add hl, de ; $52db
 	jr c, .returnZero ; $52dc
 	ld hl, wBallHeight ; $52de
@@ -2394,7 +2394,7 @@ IsBallInHitZone:
 	sub a, h ; $52ec
 	ld h, a ; $52ed
 .positive3:
-	ld de, rLCDC ; $52ee
+	ld de, $ff40 ; $52ee
 	add hl, de ; $52f1
 	jr c, .returnZero ; $52f2
 	ld a, $01 ; $52f4
@@ -2898,7 +2898,7 @@ AdvanceMinigameScriptState:
 	ld h, $00 ; $574a
 	ld l, a ; $574c
 	add hl, hl ; $574d
-	ld de, rJOYP ; $574e
+	ld de, $ff00 ; $574e
 	add hl, de ; $5751
 	ld de, $0000 ; $5752
 	call SetMinigameActorWorldPos ; $5755
@@ -2972,7 +2972,7 @@ IsBallWithinTargetZone:
 	sub a, h ; $57b1
 	ld h, a ; $57b2
 .positive3:
-	ld de, rJOYP ; $57b3
+	ld de, $ff00 ; $57b3
 	add hl, de ; $57b6
 	jr c, .returnZero ; $57b7
 	ld a, $01 ; $57b9
@@ -3542,7 +3542,7 @@ IsBallInTreasureBoxHitZone:
 	sub a, h ; $5be7
 	ld h, a ; $5be8
 .positive:
-	ld de, hPeakLY ; $5be9
+	ld de, $ffa0 ; $5be9
 	add hl, de ; $5bec
 	jr c, .returnZero ; $5bed
 	ld hl, wMinigameSceneActor + 8 ; $5bef
@@ -3584,7 +3584,7 @@ IsBallInTreasureBoxHitZone:
 	sub a, h ; $5c1f
 	ld h, a ; $5c20
 .positive3:
-	ld de, rLCDC ; $5c21
+	ld de, $ff40 ; $5c21
 	add hl, de ; $5c24
 	jr c, .returnZero ; $5c25
 	ld a, $01 ; $5c27
@@ -3778,7 +3778,7 @@ SpawnMedallionMatchTargets:
 	ld bc, wMinigameActors + 32 ; $5d8a
 	ld a, $02 ; $5d8d
 	call InitMedallionMatchTargetActor ; $5d8f
-	ld hl, hLinkRxByte ; $5d92
+	ld hl, $ffc0 ; $5d92
 	ld de, rJOYP ; $5d95
 	ld bc, wMinigameActors + 48 ; $5d98
 	ld a, $03 ; $5d9b
@@ -3859,7 +3859,7 @@ AdvanceMedallionMatchActorState:
 	ld h, $00 ; $5e25
 	ld l, a ; $5e27
 	add hl, hl ; $5e28
-	ld bc, rJOYP ; $5e29
+	ld bc, $ff00 ; $5e29
 	add hl, bc ; $5e2c
 	call SetMinigameActorWorldPos ; $5e2d
 	jp AdvanceMedallionMatchActorState ; $5e30
@@ -3893,7 +3893,7 @@ IsBallInMedallionMatchHitZone:
 	sub a, h ; $5e59
 	ld h, a ; $5e5a
 .positive:
-	ld de, hPeakLY ; $5e5b
+	ld de, $ffa0 ; $5e5b
 	add hl, de ; $5e5e
 	jr c, .returnZero ; $5e5f
 	ld hl, wMinigameSceneActor + 8 ; $5e61
@@ -3935,7 +3935,7 @@ IsBallInMedallionMatchHitZone:
 	sub a, h ; $5e91
 	ld h, a ; $5e92
 .positive3:
-	ld de, rLCDC ; $5e93
+	ld de, $ff40 ; $5e93
 	add hl, de ; $5e96
 	jr c, .returnZero ; $5e97
 	ld a, $01 ; $5e99

@@ -1215,7 +1215,7 @@ ActorScriptOp_Step:
 	ld e, a ; $46c3
 	ld c, d ; $46c4
 	push de ; $46c5
-	ld de, hRandomSeed + 1 ; $46c6
+	ld de, $fffd ; $46c6
 	add hl, de ; $46c9
 	ld a, [hl+] ; $46ca
 	ld d, [hl] ; $46cb

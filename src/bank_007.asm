@@ -980,7 +980,7 @@ SendByteAwaitReplyMaster:
 SendByteGetReplySlave:
 	push bc ; $4624
 	di ; $4625
-	ldh [$ffe0], a ; $4626
+	ldh [hLinkTxPending], a ; $4626
 	ldh [hLinkTxByte], a ; $4628
 	ldh a, [rIF] ; $462a
 	and a, $f7 ; $462c
@@ -1086,7 +1086,7 @@ ExchangeLinkFrameByteMaster:
 .resetLink:
 	call LinkErrorReset ; $46c4
 .checkDuplicate:
-	ldh a, [$ffdb] ; $46c7
+	ldh a, [hLinkLastRxByte] ; $46c7
 	cp a, b ; $46c9
 	jr nz, .store ; $46ca
 	and a, $3f ; $46cc
@@ -1103,8 +1103,8 @@ ExchangeLinkFrameByteMaster:
 	call LinkErrorReset ; $46e3
 .store:
 	ld a, b ; $46e6
-	ldh [$ffdb], a ; $46e7
-	ldh [$ffda], a ; $46e9
+	ldh [hLinkLastRxByte], a ; $46e7
+	ldh [hLinkLastRxMirror], a ; $46e9
 	xor a, a ; $46eb
 	ldh [hLinkCounter], a ; $46ec
 	ret ; $46ee
@@ -1129,15 +1129,15 @@ ExchangeLinkFrameByteSlave:
 .resetLinkAgain:
 	call LinkErrorReset ; $470f
 .checkDuplicate:
-	ldh a, [$ffdb] ; $4712
+	ldh a, [hLinkLastRxByte] ; $4712
 	cp a, b ; $4714
 	jr nz, .store ; $4715
 	and a, $3f ; $4717
 	jr .resetLink ; $4719
 .store:
 	ld a, b ; $471b
-	ldh [$ffdb], a ; $471c
-	ldh [$ffda], a ; $471e
+	ldh [hLinkLastRxByte], a ; $471c
+	ldh [hLinkLastRxMirror], a ; $471e
 	xor a, a ; $4720
 	ldh [hLinkCounter], a ; $4721
 	ei ; $4723
@@ -1351,7 +1351,7 @@ UpdateLinkSession:
 	call LinkErrorReset ; $486e
 .asMaster:
 	ld a, $40 ; $4871
-	ldh [$ffdc], a ; $4873
+	ldh [hLinkTxSeqBits], a ; $4873
 	call ShortDelay ; $4875
 	call ShortDelay ; $4878
 	call ShortDelay ; $487b
@@ -1373,14 +1373,14 @@ UpdateLinkSession:
 	xor a, a ; $48a7
 	ldh [hLinkTransferDone], a ; $48a8
 	ld a, $80 ; $48aa
-	ldh [$ffdc], a ; $48ac
+	ldh [hLinkTxSeqBits], a ; $48ac
 .encode:
 	xor a, a ; $48ae
-	ldh [$ffe2], a ; $48af
+	ldh [hLinkPlayerCount], a ; $48af
 	call SerialEncodeInput ; $48b1
 	farcall PrimeSlaveSerialReply ; $48b4
 	xor a, a ; $48b7
-	ldh [$ffde], a ; $48b8
+	ldh [hLinkRemoteInputPrev], a ; $48b8
 	ld hl, wCharInputSource ; $48ba
 	wram_bank $04 ; $48bd
 	ld [hl], $05 ; $48c3
@@ -1391,7 +1391,7 @@ UpdateLinkSession:
 	ldh [hLinkRxByte], a ; $48d4
 	ldh [hLinkTransferDone], a ; $48d6
 	ld a, $01 ; $48d8
-	ldh [$ffdf], a ; $48da
+	ldh [hLinkAckRequired], a ; $48da
 	call EnableLCD ; $48dc
 .frameLoop:
 	xor a, a ; $48df
@@ -1572,15 +1572,15 @@ PrepareLinkStatePayload:
 	ldh a, [hLinkTxByte] ; $49f8
 	and a, $c0 ; $49fa
 	xor a, $c0 ; $49fc
-	ldh [$ffdc], a ; $49fe
-	ldh a, [$ffd6] ; $4a00
+	ldh [hLinkTxSeqBits], a ; $49fe
+	ldh a, [hLinkTxInput] ; $4a00
 	ldh [hLinkRemoteInputBuf], a ; $4a02
 	call ReadJoypadThunk ; $4a04
 	ldh a, [hPlayerInputFlags] ; $4a07
 	and a, $f0 ; $4a09
 	ld c, a ; $4a0b
 	call ComposeLinkStateByte ; $4a0c
-	ldh [$ffd6], a ; $4a0f
+	ldh [hLinkTxInput], a ; $4a0f
 	pop af ; $4a11
 	ret ; $4a12
 PrepareLinkInputPayload:
@@ -1588,12 +1588,12 @@ PrepareLinkInputPayload:
 	ldh a, [hLinkTxByte] ; $4a14
 	and a, $c0 ; $4a16
 	xor a, $c0 ; $4a18
-	ldh [$ffdc], a ; $4a1a
-	ldh a, [$ffd6] ; $4a1c
+	ldh [hLinkTxSeqBits], a ; $4a1a
+	ldh a, [hLinkTxInput] ; $4a1c
 	ldh [hLinkRemoteInputBuf], a ; $4a1e
 	call ReadJoypadThunk ; $4a20
 	ldh a, [hInputPressed] ; $4a23
-	ldh [$ffd6], a ; $4a25
+	ldh [hLinkTxInput], a ; $4a25
 	pop af ; $4a27
 	ret ; $4a28
 AwaitSerialByte:
@@ -1639,7 +1639,7 @@ ResyncLinkSession:
 	ei ; $4a5b
 	call DisableLCDSafely ; $4a5c
 	ld a, $01 ; $4a5f
-	ldh [$ffe7], a ; $4a61
+	ldh [hVBlankSuppressed], a ; $4a61
 	ld a, $01 ; $4a63
 	ldh [hLinkExchangeActive], a ; $4a65
 	farcall ExchangeLinkReadySignal ; $4a67
@@ -1651,7 +1651,7 @@ ResyncLinkSession:
 	call LinkErrorReset ; $4a74
 .asMaster:
 	ld a, $40 ; $4a77
-	ldh [$ffdc], a ; $4a79
+	ldh [hLinkTxSeqBits], a ; $4a79
 	call ShortDelay ; $4a7b
 	call ShortDelay ; $4a7e
 	call ShortDelay ; $4a81
@@ -1662,17 +1662,17 @@ ResyncLinkSession:
 	xor a, a ; $4a8c
 	ldh [hLinkTransferDone], a ; $4a8d
 	ld a, $80 ; $4a8f
-	ldh [$ffdc], a ; $4a91
+	ldh [hLinkTxSeqBits], a ; $4a91
 .encode:
 	call SerialEncodeInput ; $4a93
 	farcall PrimeSlaveSerialReply ; $4a96
 	xor a, a ; $4a99
-	ldh [$ffde], a ; $4a9a
+	ldh [hLinkRemoteInputPrev], a ; $4a9a
 	ld a, $01 ; $4a9c
-	ldh [$ffdf], a ; $4a9e
+	ldh [hLinkAckRequired], a ; $4a9e
 	call EnableLCD ; $4aa0
 	xor a, a ; $4aa3
-	ldh [$ffe7], a ; $4aa4
+	ldh [hVBlankSuppressed], a ; $4aa4
 	ldh [$ffe9], a ; $4aa6
 	ret ; $4aa8
 ResyncLinkSessionWithTimer:
@@ -1684,7 +1684,7 @@ ResyncLinkSessionWithTimer:
 	ldh [rIE], a ; $4ab1
 	ei ; $4ab3
 	ld a, $01 ; $4ab4
-	ldh [$ffe7], a ; $4ab6
+	ldh [hVBlankSuppressed], a ; $4ab6
 	ld a, $01 ; $4ab8
 	ldh [hLinkExchangeActive], a ; $4aba
 	farcall ExchangeLinkReadySignal ; $4abc
@@ -1696,7 +1696,7 @@ ResyncLinkSessionWithTimer:
 	call LinkErrorReset ; $4ac9
 .asMaster:
 	ld a, $40 ; $4acc
-	ldh [$ffdc], a ; $4ace
+	ldh [hLinkTxSeqBits], a ; $4ace
 	call ShortDelay ; $4ad0
 	call ShortDelay ; $4ad3
 	call ShortDelay ; $4ad6
@@ -1707,17 +1707,17 @@ ResyncLinkSessionWithTimer:
 	xor a, a ; $4ae1
 	ldh [hLinkTransferDone], a ; $4ae2
 	ld a, $80 ; $4ae4
-	ldh [$ffdc], a ; $4ae6
+	ldh [hLinkTxSeqBits], a ; $4ae6
 .encode:
 	call SerialEncodeInput ; $4ae8
 	farcall PrimeSlaveSerialReply ; $4aeb
 	xor a, a ; $4aee
-	ldh [$ffde], a ; $4aef
+	ldh [hLinkRemoteInputPrev], a ; $4aef
 	ld a, $01 ; $4af1
-	ldh [$ffdf], a ; $4af3
+	ldh [hLinkAckRequired], a ; $4af3
 	call EnableTimerInterrupt ; $4af5
 	xor a, a ; $4af8
-	ldh [$ffe7], a ; $4af9
+	ldh [hVBlankSuppressed], a ; $4af9
 	ldh [$ffe9], a ; $4afb
 	ret ; $4afd
 TryLinkHandshakeSlave:
@@ -1733,7 +1733,7 @@ TryLinkHandshakeSlave:
 	ldh [hLinkTransferDone], a ; $4b0c
 	ld a, $c2 ; $4b0e
 	ldh [hLinkTxByte], a ; $4b10
-	ldh [$ffe0], a ; $4b12
+	ldh [hLinkTxPending], a ; $4b12
 	ei ; $4b14
 	call AwaitSerialByte ; $4b15
 	jr c, .failed ; $4b18
@@ -1899,7 +1899,7 @@ RunLinkCommandFrameSlave:
 SerialEncodeCommand:
 	push bc ; $4c24
 	push hl ; $4c25
-	ldh a, [$ffd6] ; $4c26
+	ldh a, [hLinkTxInput] ; $4c26
 	ld b, a ; $4c28
 	push hl ; $4c29
 	push de ; $4c2a
@@ -1915,12 +1915,12 @@ SerialEncodeCommand:
 	sound $72 ; $4c3b
 	xor a, a ; $4c3d
 	ldh [hLinkRemoteInputBuf], a ; $4c3e
-	ldh [$ffd6], a ; $4c40
+	ldh [hLinkTxInput], a ; $4c40
 	ld a, $c0 ; $4c42
 	ldh [hLinkTxByte], a ; $4c44
 	call LinkErrorReset ; $4c46
 .checkSlaveWait:
-	ldh a, [$ffdf] ; $4c49
+	ldh a, [hLinkAckRequired] ; $4c49
 	or a, a ; $4c4b
 	jr z, .send ; $4c4c
 	ldh a, [hLinkState] ; $4c4e
@@ -1931,15 +1931,15 @@ SerialEncodeCommand:
 	nop ; $4c55
 	nop ; $4c56
 	di ; $4c57
-	ldh a, [$ffe0] ; $4c58
+	ldh a, [hLinkTxPending] ; $4c58
 	or a, a ; $4c5a
 	jr nz, .waitAck ; $4c5b
 .send:
-	ldh a, [$ffdc] ; $4c5d
+	ldh a, [hLinkTxSeqBits] ; $4c5d
 	or a, c ; $4c5f
 	di ; $4c60
 	ldh [hLinkTxByte], a ; $4c61
-	ldh [$ffe0], a ; $4c63
+	ldh [hLinkTxPending], a ; $4c63
 	ei ; $4c65
 	pop hl ; $4c66
 	pop bc ; $4c67
@@ -1974,10 +1974,10 @@ SerialDecodeCommand:
 .asSlave:
 	ldh a, [hLinkRemoteInputBuf] ; $4c96
 	ld b, a ; $4c98
-	ldh a, [$ffde] ; $4c99
+	ldh a, [hLinkRemoteInputPrev] ; $4c99
 	ldh [hLinkRemoteInputBuf], a ; $4c9b
 	ld a, b ; $4c9d
-	ldh [$ffde], a ; $4c9e
+	ldh [hLinkRemoteInputPrev], a ; $4c9e
 	ldh a, [hLinkRemoteInput] ; $4ca0
 	or a, a ; $4ca2
 	jr z, .useBuffered ; $4ca3
@@ -1995,12 +1995,12 @@ AdvanceLinkPlayerCount:
 	ld a, [wMatchIsDoubles] ; $4cb1
 	inc a ; $4cb4
 	ld b, a ; $4cb5
-	ldh a, [$ffe2] ; $4cb6
+	ldh a, [hLinkPlayerCount] ; $4cb6
 	cp a, b ; $4cb8
-	ldh a, [$ffd6] ; $4cb9
+	ldh a, [hLinkTxInput] ; $4cb9
 	jr c, .maskHigh ; $4cbb
 	and a, $0f ; $4cbd
-	ldh [$ffd6], a ; $4cbf
+	ldh [hLinkTxInput], a ; $4cbf
 	jr .checkJoin ; $4cc1
 .maskHigh:
 	ld c, a ; $4cc3
@@ -2010,20 +2010,20 @@ AdvanceLinkPlayerCount:
 .checkJoin:
 	bit 0, a ; $4cc9
 	jr z, .checkLeave ; $4ccb
-	ldh a, [$ffe2] ; $4ccd
+	ldh a, [hLinkPlayerCount] ; $4ccd
 	cp a, b ; $4ccf
 	jr nc, .done ; $4cd0
 	inc a ; $4cd2
-	ldh [$ffe2], a ; $4cd3
+	ldh [hLinkPlayerCount], a ; $4cd3
 	jr .done ; $4cd5
 .checkLeave:
 	bit 1, a ; $4cd7
 	jr z, .done ; $4cd9
-	ldh a, [$ffe2] ; $4cdb
+	ldh a, [hLinkPlayerCount] ; $4cdb
 	or a, a ; $4cdd
 	jr z, .done ; $4cde
 	dec a ; $4ce0
-	ldh [$ffe2], a ; $4ce1
+	ldh [hLinkPlayerCount], a ; $4ce1
 .done:
 	ret ; $4ce3
 DecodeLinkCommandCode:
@@ -2048,7 +2048,7 @@ DecodeLinkCommandCode:
 ComposeLinkStateByte:
 	push bc ; $4cfe
 	push hl ; $4cff
-	ldh a, [$ffdd] ; $4d00
+	ldh a, [hLinkPayloadKind] ; $4d00
 	add a, a ; $4d02
 	add a, a ; $4d03
 	ld hl, LinkStateBytePtrs_07 ; $4d04
@@ -2313,7 +2313,7 @@ LoadShotPlacementEntry:
 FinalizeShotSpeed:
 	call AddPlayerMomentumToShot ; $52d7
 	call ApplyCharFlagShotSpeedPenalty ; $52da
-	ld hl, rJOYP ; $52dd
+	ld hl, $ff00 ; $52dd
 	add hl, bc ; $52e0
 	bit 7, h ; $52e1
 	jr z, .store ; $52e3
@@ -3293,7 +3293,7 @@ RaiseBallHeightForLob:
 	add hl, de ; $58a2
 	bit 7, h ; $58a3
 	jr nz, .raise ; $58a5
-	ld de, hPeakLY ; $58a7
+	ld de, $ffa0 ; $58a7
 	ld hl, wBallHeight ; $58aa
 	ld a, e ; $58ad
 	ld [hl+], a ; $58ae
