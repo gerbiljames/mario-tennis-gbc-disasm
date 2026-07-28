@@ -259,6 +259,70 @@ def union_banks(variants, ubank):
 HWRAMBANK_LOW = 0x96
 
 
+def load_traced_wram_banks(coverage_paths):
+    """WRAM banks actually observed at each executed instruction, from the
+    `rom_wram_bank` masks a v3+ connector writes beside `rom` in a coverage
+    dump (bit N set = bank N was selected there at least once).
+
+    This is the one thing the static analysis cannot supply. compute_wram_bank
+    is context-insensitive, so a routine reached from several banked callers
+    resolves to nothing however carefully it tracks the save/restore idiom --
+    and that is most of what is left unnamed. A trace answers per site.
+
+    It is evidence, not proof: a site observed with one bank may run with
+    another on a path the session never took, so a single observed bank means
+    "no counter-example yet", not "provably always". Older dumps have no masks
+    and contribute nothing.
+
+    Returns {flat offset -> set of banks}."""
+    seen = {}
+    for path in coverage_paths:
+        try:
+            data = json.loads(Path(path).read_text())
+        except (OSError, ValueError):
+            continue
+        rom = data.get("rom") or []
+        masks = data.get("rom_wram_bank") or []
+        if len(masks) != len(rom):
+            continue
+        for off, mask in zip(rom, masks):
+            if not mask:
+                continue
+            banks = {b for b in range(1, 8) if mask & (1 << b)}
+            if banks:
+                seen.setdefault(off, set()).update(banks)
+    return seen
+
+
+def merge_traced_wram_banks(bank_at, traced):
+    """Fold observed banks into the static result. An observation only fills a
+    gap -- where the static analysis already proved a bank, that proof stands,
+    and a disagreement is reported rather than silently resolved either way:
+    one of the two is wrong and a name is riding on it.
+
+    Sites observed under more than one bank stay unresolved, which is the
+    honest answer and the same one the static analysis gives."""
+    added = conflicts = 0
+    for off, banks in traced.items():
+        if len(banks) != 1:
+            continue
+        b = next(iter(banks))
+        have = bank_at.get(off)
+        if have is None:
+            bank_at[off] = b
+            added += 1
+        elif have != b:
+            conflicts += 1
+            if conflicts <= 5:
+                print(f"warning: traced WRAM bank {b} at ${off:05x} but the "
+                      f"dataflow proved {have}", file=sys.stderr)
+    if traced:
+        print(f"traced wram banks: {len(traced)} instructions observed, "
+              f"{added} resolved that the dataflow could not"
+              + (f", {conflicts} disagreements" if conflicts else ""))
+    return bank_at
+
+
 def compute_wram_bank(dis):
     """Forward CFG dataflow computing, per instruction, the WRAM bank
     ($ff70/rSVBK) provably selected on entry -- or absent when unknown or

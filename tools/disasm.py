@@ -25,7 +25,9 @@ from disasmlib.config import (load_const_defs, load_flag_names, load_hwregs,
                               load_offset_map)
 from disasmlib.emit import emit
 from disasmlib.textids import text_id_load_sites
-from disasmlib.ram import compute_wram_bank, load_ram_map, load_ram_unions
+from disasmlib.ram import (compute_wram_bank, load_ram_map,
+                           load_ram_unions, load_traced_wram_banks,
+                           merge_traced_wram_banks)
 
 
 def parse_args(argv=None):
@@ -61,7 +63,8 @@ def main(argv=None):
 
     flag_names, flag_raw_sites = load_flag_names(args.flags)
     unions_by_region, ramscoped = load_ram_unions(args.ram_unions)
-    ramscoped.bank_at = compute_wram_bank(dis)
+    ramscoped.bank_at = merge_traced_wram_banks(
+        compute_wram_bank(dis), load_traced_wram_banks(args.coverage))
     ramnames = load_ram_map(args.ram_map, unions_by_region, ramscoped, dis)
 
     # `ld hl, id` sites that reach a text-id consumer render as the
