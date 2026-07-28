@@ -4524,14 +4524,14 @@ ShowRulesScreen:
 	push af ; $6f1b
 	wram_bank $03 ; $6f1c
 	pop af ; $6f22
-	ld [w3_dc01], a ; $6f23
+	ld [wRulesPageListId], a ; $6f23
 	ld a, [wMinigameLevel] ; $6f26
-	ld [w3_dc06], a ; $6f29
+	ld [wRulesMinigameLevel], a ; $6f29
 	xor a, a ; $6f2c
-	ld [w3_dc02], a ; $6f2d
-	ld [w3_dc03], a ; $6f30
-	ld [w3_dc04], a ; $6f33
-	ld [w3_dc05], a ; $6f36
+	ld [wRulesExitCode], a ; $6f2d
+	ld [wRulesAnimEnabled], a ; $6f30
+	ld [wRulesAnimCounter], a ; $6f33
+	ld [wRulesIsMinigame], a ; $6f36
 	ld [wRulesScreenAnimFrame], a ; $6f39
 	ld c, $20 ; $6f3c
 	call BeginFadeOut ; $6f3e
@@ -4553,15 +4553,15 @@ ShowRulesScreen:
 	ld hl, AdvanceRulesScreenAnimFrame ; $6f6f
 	call RegisterFrameTask ; $6f72
 	ld a, $01 ; $6f75
-	ld [w3_dc03], a ; $6f77
+	ld [wRulesAnimEnabled], a ; $6f77
 	xor a, a ; $6f7a
-	ld [w3_dc04], a ; $6f7b
+	ld [wRulesAnimCounter], a ; $6f7b
 	call RunMinigameRulesPages ; $6f7e
 	ld c, $20 ; $6f81
 	call BeginFadeOut ; $6f83
 	call WaitFadeEnd ; $6f86
 	call ClearFrameTasks ; $6f89
-	ld a, [w3_dc02] ; $6f8c
+	ld a, [wRulesExitCode] ; $6f8c
 	ret ; $6f8f
 	ret ; $6f90
 RunMinigameRulesPages:
@@ -4595,7 +4595,7 @@ RunMinigameRulesPages:
 	ld [hl+], a ; $6fca
 	ld [hl], d ; $6fcb
 	ld hl, MinigameRulesPageLists_17 ; $6fcc
-	ld a, [w3_dc01] ; $6fcf
+	ld a, [wRulesPageListId] ; $6fcf
 	call MinigameRulesPageLoop ; $6fd2
 	pop af ; $6fd5
 	wram_bank ; $6fd6
@@ -4728,10 +4728,10 @@ MinigameRulesPageLoop:
 	ld hl, RulesScreenTiles ; $7126
 	call UnregisterFrameTask ; $7129
 	ld a, $01 ; $712c
-	ld [w3_dc03], a ; $712e
-	ld [w3_dc05], a ; $7131
+	ld [wRulesAnimEnabled], a ; $712e
+	ld [wRulesIsMinigame], a ; $7131
 	xor a, a ; $7134
-	ld [w3_dc04], a ; $7135
+	ld [wRulesAnimCounter], a ; $7135
 	pop hl ; $7138
 	jp .loop ; $7139
 .playSfx2:
@@ -4741,7 +4741,7 @@ MinigameRulesPageLoop:
 	ld hl, RulesScreenTiles ; $7144
 	call UnregisterFrameTask ; $7147
 	ld a, $ff ; $714a
-	ld [w3_dc02], a ; $714c
+	ld [wRulesExitCode], a ; $714c
 	pop hl ; $714f
 .playSfx3:
 	sound $60 ; $7150
@@ -4835,10 +4835,10 @@ PrepareRulesPageTilemap:
 	ld c, $0d ; $721c
 	ld h, $20 ; $721e
 	farcall FillTilemapRect ; $7220
-	ld a, [w3_dc05] ; $7223
+	ld a, [wRulesIsMinigame] ; $7223
 	or a, a ; $7226
 	jr nz, .nonZero ; $7227
-	ld a, [w3_dc06] ; $7229
+	ld a, [wRulesMinigameLevel] ; $7229
 	add a, $03 ; $722c
 	ld h, a ; $722e
 	ld de, $d482 ; $722f
@@ -4857,7 +4857,7 @@ PrepareRulesPageTilemap:
 	wram_bank ; $7248
 	ret ; $724c
 QueueRulesPageToVRAM:
-	ld a, [w3_dc05] ; $724d
+	ld a, [wRulesIsMinigame] ; $724d
 	or a, a ; $7250
 	jr nz, .nonZero ; $7251
 	ld hl, $d080 ; $7253
@@ -5023,10 +5023,10 @@ AdvanceRulesScreenAnimFrame:
 	ldh a, [hWramBank] ; $7420
 	push af ; $7422
 	wram_bank $03 ; $7423
-	ld a, [w3_dc04] ; $7429
+	ld a, [wRulesAnimCounter] ; $7429
 	inc a ; $742c
-	ld [w3_dc04], a ; $742d
-	ld a, [w3_dc03] ; $7430
+	ld [wRulesAnimCounter], a ; $742d
+	ld a, [wRulesAnimEnabled] ; $7430
 	or a, a ; $7433
 	jr z, .zero ; $7434
 	ldh a, [hVBlankCounter] ; $7436
@@ -5060,14 +5060,14 @@ AdvanceRulesScreenAnimFrame:
 	ld [wRulesScreenAnimFrame], a ; $7463
 	jr .step2 ; $7466
 .step2:
-	ld a, [w3_dc03] ; $7468
+	ld a, [wRulesAnimEnabled] ; $7468
 	or a, a ; $746b
 	jr z, .restore ; $746c
-	ld a, [w3_dc04] ; $746e
+	ld a, [wRulesAnimCounter] ; $746e
 	cp a, $ff ; $7471
 	jr nz, .restore ; $7473
 	xor a, a ; $7475
-	ld [w3_dc03], a ; $7476
+	ld [wRulesAnimEnabled], a ; $7476
 .restore:
 	pop af ; $7479
 	wram_bank ; $747a

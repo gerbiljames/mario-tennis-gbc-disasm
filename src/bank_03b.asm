@@ -864,44 +864,44 @@ ScrollN64ExhibDataCursor:
 	ld a, [wMenuInputPressed] ; $450d
 	bit PADB_LEFT, a ; $4510
 	jr z, .step ; $4512
-	ld a, [w3_dc12] ; $4514
+	ld a, [wN64ExhibPage] ; $4514
 	or a, a ; $4517
 	jr z, .done ; $4518
 	dec a ; $451a
-	ld [w3_dc12], a ; $451b
+	ld [wN64ExhibPage], a ; $451b
 	sound $5e ; $451e
 	call RedrawN64ExhibDataWindow ; $4520
 	jr .done ; $4523
 .step:
 	bit 4, a ; $4525
 	jr z, .bit4Clear ; $4527
-	ld a, [w3_dc12] ; $4529
+	ld a, [wN64ExhibPage] ; $4529
 	cp a, $09 ; $452c
 	jr z, .done ; $452e
 	inc a ; $4530
-	ld [w3_dc12], a ; $4531
+	ld [wN64ExhibPage], a ; $4531
 	sound $5e ; $4534
 	call RedrawN64ExhibDataWindow ; $4536
 	jr .done ; $4539
 .bit4Clear:
 	bit 6, a ; $453b
 	jr z, .bit6Clear ; $453d
-	ld a, [w3_dc13] ; $453f
+	ld a, [wN64ExhibCursorRow] ; $453f
 	or a, a ; $4542
 	jr z, .done ; $4543
 	dec a ; $4545
-	ld [w3_dc13], a ; $4546
+	ld [wN64ExhibCursorRow], a ; $4546
 	sound $5e ; $4549
 	call RedrawN64ExhibDataWindow ; $454b
 	jr .done ; $454e
 .bit6Clear:
 	bit 7, a ; $4550
 	jr z, .done ; $4552
-	ld a, [w3_dc13] ; $4554
+	ld a, [wN64ExhibCursorRow] ; $4554
 	cp a, $0c ; $4557
 	jr z, .done ; $4559
 	inc a ; $455b
-	ld [w3_dc13], a ; $455c
+	ld [wN64ExhibCursorRow], a ; $455c
 	sound $5e ; $455f
 	call RedrawN64ExhibDataWindow ; $4561
 	jr .done ; $4564
@@ -911,7 +911,7 @@ N64ExhibScrollArrowsTask:
 	ldh a, [hWramBank] ; $4567
 	push af ; $4569
 	wram_bank $03 ; $456a
-	ld a, [w3_dc12] ; $4570
+	ld a, [wN64ExhibPage] ; $4570
 	cp a, $09 ; $4573
 	jr z, .eq09 ; $4575
 	ld de, $932f ; $4577
@@ -922,7 +922,7 @@ N64ExhibScrollArrowsTask:
 	ld h, $00 ; $4583
 	farcall QueueStackedSpritePair ; $4585
 .eq09:
-	ld a, [w3_dc12] ; $4588
+	ld a, [wN64ExhibPage] ; $4588
 	or a, a ; $458b
 	jr z, .zero ; $458c
 	ld de, $082f ; $458e
@@ -933,7 +933,7 @@ N64ExhibScrollArrowsTask:
 	ld h, $01 ; $459a
 	farcall QueueStackedSpritePair ; $459c
 .zero:
-	ld a, [w3_dc13] ; $459f
+	ld a, [wN64ExhibCursorRow] ; $459f
 	or a, a ; $45a2
 	jr z, .zero2 ; $45a3
 	ld de, $0a20 ; $45a5
@@ -944,7 +944,7 @@ N64ExhibScrollArrowsTask:
 	ld h, $02 ; $45b1
 	farcall QueueStackedSpritePair ; $45b3
 .zero2:
-	ld a, [w3_dc13] ; $45b6
+	ld a, [wN64ExhibCursorRow] ; $45b6
 	cp a, $0c ; $45b9
 	jr z, .restore ; $45bb
 	ld de, $0a78 ; $45bd
@@ -961,8 +961,8 @@ N64ExhibScrollArrowsTask:
 BuildN64ExhibDataScreen:
 	wram_bank $03 ; $45d4
 	xor a, a ; $45da
-	ld [w3_dc13], a ; $45db
-	ld [w3_dc12], a ; $45de
+	ld [wN64ExhibCursorRow], a ; $45db
+	ld [wN64ExhibPage], a ; $45de
 	ld c, $0c ; $45e1
 	farcall LoadScreenAssetRecord ; $45e3
 	ld de, $aac0 ; $45e6
@@ -978,10 +978,10 @@ BuildN64ExhibDataScreen:
 	jr nz, .buildN64ExhibColumnList ; $4602
 	call BuildN64ExhibColumnList ; $4604
 	call InitChartRowFlags ; $4607
-	ld hl, w3_dc01 ; $460a
+	ld hl, $dc01 ; $460a
 	ld bc, $d0e2 ; $460d
 	call DrawChartIconColumn ; $4610
-	ld hl, w3_dc01 ; $4613
+	ld hl, $dc01 ; $4613
 	ld bc, $d0a4 ; $4616
 	ld a, $07 ; $4619
 	call DrawChartIconRow ; $461b
@@ -993,8 +993,8 @@ BuildN64ExhibDataScreen:
 	ret ; $462c
 RedrawN64ExhibDataWindow:
 	wram_bank $03 ; $462d
-	ld a, [w3_dc12] ; $4633
-	ld hl, w3_dc01 ; $4636
+	ld a, [wN64ExhibPage] ; $4633
+	ld hl, $dc01 ; $4636
 	add a, l ; $4639
 	ld l, a ; $463a
 	jr nc, .drawRow ; $463b
@@ -1003,8 +1003,8 @@ RedrawN64ExhibDataWindow:
 	ld bc, $d0a4 ; $463e
 	ld a, $07 ; $4641
 	call DrawChartIconRow ; $4643
-	ld a, [w3_dc13] ; $4646
-	ld hl, w3_dc01 ; $4649
+	ld a, [wN64ExhibCursorRow] ; $4646
+	ld hl, $dc01 ; $4649
 	add a, l ; $464c
 	ld l, a ; $464d
 	jr nc, .drawColumn ; $464e
@@ -1012,7 +1012,7 @@ RedrawN64ExhibDataWindow:
 .drawColumn:
 	ld bc, $d0e2 ; $4651
 	call DrawChartIconColumn ; $4654
-	ld a, [w3_dc13] ; $4657
+	ld a, [wN64ExhibCursorRow] ; $4657
 	ld hl, $db00 ; $465a
 	ld de, $0010 ; $465d
 .rowSeekLoop:
@@ -1022,7 +1022,7 @@ RedrawN64ExhibDataWindow:
 	dec a ; $4664
 	jr .rowSeekLoop ; $4665
 .rowFound:
-	ld a, [w3_dc12] ; $4667
+	ld a, [wN64ExhibPage] ; $4667
 	add a, l ; $466a
 	ld l, a ; $466b
 	jr nc, .drawCells ; $466c
@@ -1169,7 +1169,7 @@ ChartCellMarkTable:
 BuildN64ExhibColumnList:
 	wram_bank $03 ; $4743
 	ld hl, N64ExhibColumn ; $4749
-	ld de, w3_dc01 ; $474c
+	ld de, $dc01 ; $474c
 	ld bc, $0001 ; $474f
 	call CopyMemoryFast ; $4752
 	ld hl, $da58 ; $4755
@@ -1178,13 +1178,13 @@ BuildN64ExhibColumnList:
 	and a, $01 ; $475a
 	jr nz, .maskSet ; $475c
 	ld a, $10 ; $475e
-	ld [w3_dc0f], a ; $4760
+	ld [$dc0f], a ; $4760
 .maskSet:
 	ld a, b ; $4763
 	and a, $02 ; $4764
 	jr nz, .buildN64ExhibResultsGrid ; $4766
 	ld a, $10 ; $4768
-	ld [w3_dc10], a ; $476a
+	ld [$dc10], a ; $476a
 .buildN64ExhibResultsGrid:
 	call BuildN64ExhibResultsGrid ; $476d
 	ret ; $4770
@@ -2665,13 +2665,13 @@ LoadN64RingShotRecords:
 	and a, $01 ; $5258
 	jr nz, .maskSet ; $525a
 	ld a, $10 ; $525c
-	ld [w3_dc4e], a ; $525e
+	ld [$dc4e], a ; $525e
 .maskSet:
 	ld a, b ; $5261
 	and a, $02 ; $5262
 	jr nz, .maskSet2 ; $5264
 	ld a, $10 ; $5266
-	ld [w3_dc4f], a ; $5268
+	ld [$dc4f], a ; $5268
 .maskSet2:
 	ld hl, $db00 ; $526b
 	ld bc, $0140 ; $526e
@@ -8072,8 +8072,8 @@ StarChartScrollArrowsTask:
 BuildStarCharExhibScreen:
 	wram_bank $03 ; $7b11
 	xor a, a ; $7b17
-	ld [w3_dc13], a ; $7b18
-	ld [w3_dc12], a ; $7b1b
+	ld [wN64ExhibCursorRow], a ; $7b18
+	ld [wN64ExhibPage], a ; $7b1b
 	ld c, $0c ; $7b1e
 	farcall LoadScreenAssetRecord ; $7b20
 	ld de, $aac0 ; $7b23
@@ -8176,7 +8176,7 @@ RedrawStarChartWindow:
 	jr z, .compact ; $7bf4
 	ld bc, $d0a4 ; $7bf6
 	ld a, [wMenuCursorX] ; $7bf9
-	ld hl, w3_dc01 ; $7bfc
+	ld hl, $dc01 ; $7bfc
 	add a, l ; $7bff
 	ld l, a ; $7c00
 	jr nc, .wideRow ; $7c01
@@ -8185,7 +8185,7 @@ RedrawStarChartWindow:
 	ld a, $07 ; $7c04
 	call DrawChartIconRow ; $7c06
 	ld a, [wMenuCursorY] ; $7c09
-	ld hl, w3_dc01 ; $7c0c
+	ld hl, $dc01 ; $7c0c
 	add a, l ; $7c0f
 	ld l, a ; $7c10
 	jr nc, .wideColumn ; $7c11
@@ -8216,7 +8216,7 @@ RedrawStarChartWindow:
 .compact:
 	ld bc, $d0a6 ; $7c3c
 	ld a, [wMenuCursorX] ; $7c3f
-	ld hl, w3_dc01 ; $7c42
+	ld hl, $dc01 ; $7c42
 	add a, l ; $7c45
 	ld l, a ; $7c46
 	jr nc, .compactRow ; $7c47
@@ -8225,7 +8225,7 @@ RedrawStarChartWindow:
 	ld a, $05 ; $7c4a
 	call DrawChartIconRow ; $7c4c
 	ld a, [wMenuCursorY] ; $7c4f
-	ld hl, w3_dc01 ; $7c52
+	ld hl, $dc01 ; $7c52
 	add a, l ; $7c55
 	ld l, a ; $7c56
 	jr nc, .compactColumn ; $7c57
@@ -8314,7 +8314,7 @@ BuildStarChartColumnList:
 .readB:
 	ld b, [hl] ; $7cf1
 .step2:
-	ld hl, w3_dc01 ; $7cf2
+	ld hl, $dc01 ; $7cf2
 	ld a, c ; $7cf5
 	add a, l ; $7cf6
 	ld l, a ; $7cf7
@@ -8512,7 +8512,7 @@ CheckStarChartExpanded:
 	push af ; $7e27
 	push bc ; $7e28
 	ld b, $10 ; $7e29
-	ld a, [w3_dc07] ; $7e2b
+	ld a, [$dc07] ; $7e2b
 	cp a, $10 ; $7e2e
 	jr z, .notExpanded ; $7e30
 	pop bc ; $7e32
@@ -8561,8 +8561,8 @@ CopyStarChartReducedTilemap:
 	farcall CopyTilemapRect ; $7e80
 	ret ; $7e83
 FixupStarChartHeaderRow:
-	ld a, [w3_dc06] ; $7e84
-	ld [w3_dc05], a ; $7e87
+	ld a, [$dc06] ; $7e84
+	ld [$dc05], a ; $7e87
 	ret ; $7e8a
 CompactStarChartRows:
 	ld hl, $db50 ; $7e8b

@@ -630,7 +630,7 @@ ShowMinigamePointResult:
 	ret ; $443f
 ClearMinigameActors:
 	wram_bank $04 ; $4440
-	ld hl, $dc00 ; $4446
+	ld hl, wMinigameActors ; $4446
 	ld c, $07 ; $4449
 	call ClearMemory16 ; $444b
 	ret ; $444e
@@ -686,7 +686,7 @@ SetMinigameActorPosition:
 SetMinigameActorWorldPos:
 	ld c, l ; $449a
 	ld b, h ; $449b
-	ld hl, $dc76 ; $449c
+	ld hl, wMinigameSceneActor + 6 ; $449c
 	ld a, c ; $449f
 	ld [hl+], a ; $44a0
 	ld a, b ; $44a1
@@ -701,7 +701,7 @@ SetMinigameActorWorldPos:
 	farcall ProjectWorldToScreen_08 ; $44ac
 	ld e, l ; $44af
 	ld d, h ; $44b0
-	ld hl, $dc7a ; $44b1
+	ld hl, wMinigameSceneActor + 10 ; $44b1
 	ld a, e ; $44b4
 	ld [hl+], a ; $44b5
 	ld a, d ; $44b6
@@ -713,7 +713,7 @@ SetMinigameActorWorldPos:
 	ret ; $44bc
 UpdateMinigameActors:
 	wram_bank $04 ; $44bd
-	ld hl, $dc00 ; $44c3
+	ld hl, wMinigameActors ; $44c3
 	ld c, $07 ; $44c6
 .actorLoop:
 	call UpdateMinigameActor ; $44c8
@@ -730,16 +730,16 @@ UpdateMinigameActor:
 	push de ; $44d8
 	push hl ; $44d9
 	push hl ; $44da
-	ld de, $dc70 ; $44db
+	ld de, wMinigameSceneActor ; $44db
 	ld c, $01 ; $44de
 	call CopyMemoryFast ; $44e0
-	ld hl, $dc7e ; $44e3
+	ld hl, wMinigameSceneActor + 14 ; $44e3
 	ld a, [hl+] ; $44e6
 	ld h, [hl] ; $44e7
 	ld l, a ; $44e8
 	call JumpToHL ; $44e9
 	pop de ; $44ec
-	ld hl, $dc70 ; $44ed
+	ld hl, wMinigameSceneActor ; $44ed
 	ld c, $01 ; $44f0
 	call CopyMemoryFast ; $44f2
 	pop hl ; $44f5
@@ -2252,11 +2252,11 @@ ShootingStarHook_BallHit:
 InitBallTargetActor:
 	call ClearMinigameActors ; $5205
 	ld de, ShootingStarTargetActorHandler ; $5208
-	ld bc, $dc00 ; $520b
+	ld bc, wMinigameActors ; $520b
 	call SetMinigameActorHandler ; $520e
 	ld hl, $0000 ; $5211
 	ld de, $fdc0 ; $5214
-	ld bc, $dc00 ; $5217
+	ld bc, wMinigameActors ; $5217
 	call SetMinigameActorPosition ; $521a
 	ret ; $521d
 ResetTargetHitState:
@@ -2269,10 +2269,10 @@ ResetTargetHitState:
 	xor a, a ; $5228
 	ld [wMinigameHitScored], a ; $5229
 	xor a, a ; $522c
-	ld [$dc02], a ; $522d
+	ld [wMinigameActors + 2], a ; $522d
 	ret ; $5230
 ShootingStarTargetActorHandler:
-	ld a, [$dc72] ; $5231
+	ld a, [wMinigameSceneActor + 2] ; $5231
 	rst Rst00 ; $5234
 	dw AdvanceTargetActorState.advanceMatchRng ; $5235 jumptable
 	dw AdvanceTargetActorState.drawTargetReticleSprite ; $5237 jumptable
@@ -2280,11 +2280,11 @@ ShootingStarTargetActorHandler:
 	dw AdvanceTargetActorState.drawTargetReticleSprite2 ; $523b jumptable
 	dw RetStub ; $523d jumptable
 AdvanceTargetActorState:
-	ld hl, $dc72 ; $523f
+	ld hl, wMinigameSceneActor + 2 ; $523f
 	inc [hl] ; $5242
 	ret ; $5243
 .advanceMatchRng:
-	ld a, [$dc73] ; $5244
+	ld a, [wMinigameSceneActor + 3] ; $5244
 	and a, a ; $5247
 	jr z, .zero ; $5248
 	farcall AdvanceMatchRng ; $524a
@@ -2297,7 +2297,7 @@ AdvanceTargetActorState:
 	call SetMinigameActorWorldPos ; $5258
 .zero:
 	xor a, a ; $525b
-	ld [$dc73], a ; $525c
+	ld [wMinigameSceneActor + 3], a ; $525c
 	call AdvanceTargetActorState ; $525f
 .drawTargetReticleSprite:
 	call DrawTargetReticleSprite ; $5262
@@ -2308,7 +2308,7 @@ AdvanceTargetActorState:
 	jp AdvanceTargetActorState ; $526d
 .drawTargetHitCountdown:
 	call DrawTargetHitCountdown ; $5270
-	ld hl, $dc73 ; $5273
+	ld hl, wMinigameSceneActor + 3 ; $5273
 	dec [hl] ; $5276
 	ld a, [hl] ; $5277
 	and a, a ; $5278
@@ -2329,7 +2329,7 @@ IsBallInHitZone:
 	ld a, [wLastShotCharIndex] ; $5292
 	and a, $01 ; $5295
 	jp nz, .returnZero ; $5297
-	ld hl, $dc76 ; $529a
+	ld hl, wMinigameSceneActor + 6 ; $529a
 	ld a, [hl+] ; $529d
 	ld d, [hl] ; $529e
 	ld e, a ; $529f
@@ -2355,7 +2355,7 @@ IsBallInHitZone:
 	ld de, $ff80 ; $52b6
 	add hl, de ; $52b9
 	jr c, .returnZero ; $52ba
-	ld hl, $dc78 ; $52bc
+	ld hl, wMinigameSceneActor + 8 ; $52bc
 	ld a, [hl+] ; $52bf
 	ld d, [hl] ; $52c0
 	ld e, a ; $52c1
@@ -2404,13 +2404,13 @@ IsBallInHitZone:
 	ret ; $52f8
 AwardHitScore:
 	ld a, $10 ; $52f9
-	ld [$dc73], a ; $52fb
+	ld [wMinigameSceneActor + 3], a ; $52fb
 	ld hl, $0001 ; $52fe
 	ld a, [wCurrentShotType] ; $5301
 	cp a, SHOTTYPE_SMASH ; $5304
 	jr nz, .step ; $5306
 	ld a, $20 ; $5308
-	ld [$dc73], a ; $530a
+	ld [wMinigameSceneActor + 3], a ; $530a
 	ld hl, $0007 ; $530d
 .step:
 	ld a, $01 ; $5310
@@ -2479,11 +2479,11 @@ TargetReticleAnimFrames:
 DrawTargetHitCountdown:
 	call ProjectMinigameWorldPosition ; $539e
 	ld c, $3c ; $53a1
-	ld a, [$dc73] ; $53a3
+	ld a, [wMinigameSceneActor + 3] ; $53a3
 	call QueueMinigameHitBurst ; $53a6
 	ret ; $53a9
 ProjectMinigameWorldPosition:
-	ld hl, $dc7a ; $53aa
+	ld hl, wMinigameSceneActor + 10 ; $53aa
 	ld a, [hl+] ; $53ad
 	ld e, a ; $53ae
 	ld a, [hl+] ; $53af
@@ -2797,15 +2797,15 @@ BooBlastHook_BallHit:
 InitMinigameControllerActor:
 	call ClearMinigameActors ; $5691
 	ld de, BooBlastControllerActorHandler ; $5694
-	ld bc, $dc00 ; $5697
+	ld bc, wMinigameActors ; $5697
 	call SetMinigameActorHandler ; $569a
 	ld hl, $0000 ; $569d
 	ld de, $0000 ; $56a0
-	ld bc, $dc00 ; $56a3
+	ld bc, wMinigameActors ; $56a3
 	call SetMinigameActorPosition ; $56a6
 	ret ; $56a9
 DisableMinigameControllerActor:
-	ld hl, $dc00 ; $56aa
+	ld hl, wMinigameActors ; $56aa
 	res 0, [hl] ; $56ad
 	ret ; $56af
 InitBooBlastScore:
@@ -2864,10 +2864,10 @@ UpdateBooBlastHitStreak:
 	xor a, a ; $5710
 	ld [wMinigameHitScored], a ; $5711
 	xor a, a ; $5714
-	ld [$dc02], a ; $5715
+	ld [wMinigameActors + 2], a ; $5715
 	ret ; $5718
 BooBlastControllerActorHandler:
-	ld a, [$dc72] ; $5719
+	ld a, [wMinigameSceneActor + 2] ; $5719
 	rst Rst00 ; $571c
 	dw AdvanceMinigameScriptState.advanceMinigameScriptState ; $571d jumptable
 	dw AdvanceMinigameScriptState.drawBooBlastTargetSprite ; $571f jumptable
@@ -2875,7 +2875,7 @@ BooBlastControllerActorHandler:
 	dw AdvanceMinigameScriptState.drawBooBlastTargetSprite2 ; $5723 jumptable
 	dw RetStub ; $5725 jumptable
 AdvanceMinigameScriptState:
-	ld hl, $dc72 ; $5727
+	ld hl, wMinigameSceneActor + 2 ; $5727
 	inc [hl] ; $572a
 	ret ; $572b
 .advanceMinigameScriptState:
@@ -2889,7 +2889,7 @@ AdvanceMinigameScriptState:
 	jp AdvanceMinigameScriptState ; $573a
 .drawBooBlastHitBurst:
 	call DrawBooBlastHitBurst ; $573d
-	ld hl, $dc73 ; $5740
+	ld hl, wMinigameSceneActor + 3 ; $5740
 	dec [hl] ; $5743
 	ld a, [hl] ; $5744
 	and a, a ; $5745
@@ -2907,7 +2907,7 @@ AdvanceMinigameScriptState:
 	call DrawBooBlastTargetSprite ; $575b
 	ret ; $575e
 IsBallWithinTargetZone:
-	ld hl, $dc76 ; $575f
+	ld hl, wMinigameSceneActor + 6 ; $575f
 	ld a, [hl+] ; $5762
 	ld d, [hl] ; $5763
 	ld e, a ; $5764
@@ -2933,7 +2933,7 @@ IsBallWithinTargetZone:
 	ld de, $ff80 ; $577b
 	add hl, de ; $577e
 	jr c, .returnZero ; $577f
-	ld hl, $dc78 ; $5781
+	ld hl, wMinigameSceneActor + 8 ; $5781
 	ld a, [hl+] ; $5784
 	ld d, [hl] ; $5785
 	ld e, a ; $5786
@@ -2982,7 +2982,7 @@ IsBallWithinTargetZone:
 	ret ; $57bd
 ScoreBallHit:
 	ld a, $10 ; $57be
-	ld [$dc73], a ; $57c0
+	ld [wMinigameSceneActor + 3], a ; $57c0
 	ld a, $01 ; $57c3
 	ld [wMinigameHitScored], a ; $57c5
 	sound $86 ; $57c8
@@ -3041,11 +3041,11 @@ BooBlastTargetAnimFrames:
 DrawBooBlastHitBurst:
 	call ProjectBallSprite ; $583c
 	ld c, $3c ; $583f
-	ld a, [$dc73] ; $5841
+	ld a, [wMinigameSceneActor + 3] ; $5841
 	call QueueMinigameHitBurst ; $5844
 	ret ; $5847
 ProjectBallSprite:
-	ld hl, $dc7a ; $5848
+	ld hl, wMinigameSceneActor + 10 ; $5848
 	ld a, [hl+] ; $584b
 	ld e, a ; $584c
 	ld a, [hl+] ; $584d
@@ -3288,7 +3288,7 @@ TreasureBoxHook_MinigameStart:
 	ld a, $01 ; $5a08
 	ld [wTargetZoneEnabled], a ; $5a0a
 	ld de, TreasureBoxTargetActorHandler ; $5a0d
-	ld bc, $dc00 ; $5a10
+	ld bc, wMinigameActors ; $5a10
 	call SetMinigameActorHandler ; $5a13
 	ret ; $5a16
 TreasureBoxHook_PerFrame:
@@ -3374,7 +3374,7 @@ SelectRandomTreasureBoxTargetZone:
 	xor a, a ; $5a9c
 	ld [wMinigameHitScored], a ; $5a9d
 	xor a, a ; $5aa0
-	ld [$dc02], a ; $5aa1
+	ld [wMinigameActors + 2], a ; $5aa1
 	ret ; $5aa4
 TreasureBoxZonePoolsByLevel:
 	; $5aa5, 6 bytes (records:2)
@@ -3390,7 +3390,7 @@ TreasureBoxZonePool1:
 StubNop_0d_5acb:
 	ret ; $5acb
 TreasureBoxTargetActorHandler:
-	ld a, [$dc72] ; $5acc
+	ld a, [wMinigameSceneActor + 2] ; $5acc
 	rst Rst00 ; $5acf
 	dw AdvanceTreasureBoxActorState.step ; $5ad0 jumptable
 	dw AdvanceTreasureBoxActorState.drawTreasureBoxSprite ; $5ad2 jumptable
@@ -3398,7 +3398,7 @@ TreasureBoxTargetActorHandler:
 	dw AdvanceTreasureBoxActorState.done ; $5ad6 jumptable
 	dw RetStub ; $5ad8 jumptable
 AdvanceTreasureBoxActorState:
-	ld hl, $dc72 ; $5ada
+	ld hl, wMinigameSceneActor + 2 ; $5ada
 	inc [hl] ; $5add
 	ret ; $5ade
 .step:
@@ -3423,7 +3423,7 @@ AdvanceTreasureBoxActorState:
 	inc h ; $5b00
 .read:
 	ld a, [hl] ; $5b01
-	ld [$dc71], a ; $5b02
+	ld [wMinigameSceneActor + 1], a ; $5b02
 	ld a, [wMinigameShotRoll] ; $5b05
 	add a, a ; $5b08
 	add a, LOW(TreasureBoxSpawnPointsByZone) ; $5b09
@@ -3464,7 +3464,7 @@ AdvanceTreasureBoxActorState:
 	jp AdvanceTreasureBoxActorState ; $5b3a
 .drawTreasureBoxHitCountdown:
 	call DrawTreasureBoxHitCountdown ; $5b3d
-	ld hl, $dc73 ; $5b40
+	ld hl, wMinigameSceneActor + 3 ; $5b40
 	dec [hl] ; $5b43
 	ld a, [hl] ; $5b44
 	and a, a ; $5b45
@@ -3519,7 +3519,7 @@ IsBallInTreasureBoxHitZone:
 	ld a, [wLastShotCharIndex] ; $5bc5
 	and a, $01 ; $5bc8
 	jp nz, .returnZero ; $5bca
-	ld hl, $dc76 ; $5bcd
+	ld hl, wMinigameSceneActor + 6 ; $5bcd
 	ld a, [hl+] ; $5bd0
 	ld d, [hl] ; $5bd1
 	ld e, a ; $5bd2
@@ -3545,7 +3545,7 @@ IsBallInTreasureBoxHitZone:
 	ld de, hPeakLY ; $5be9
 	add hl, de ; $5bec
 	jr c, .returnZero ; $5bed
-	ld hl, $dc78 ; $5bef
+	ld hl, wMinigameSceneActor + 8 ; $5bef
 	ld a, [hl+] ; $5bf2
 	ld d, [hl] ; $5bf3
 	ld e, a ; $5bf4
@@ -3594,7 +3594,7 @@ IsBallInTreasureBoxHitZone:
 	ret ; $5c2b
 AwardTreasureBoxHitScore:
 	ld a, $10 ; $5c2c
-	ld [$dc73], a ; $5c2e
+	ld [wMinigameSceneActor + 3], a ; $5c2e
 	ld a, $01 ; $5c31
 	ld [wMinigameHitScored], a ; $5c33
 	ld a, [wMinigameHitStreak] ; $5c36
@@ -3605,7 +3605,7 @@ AwardTreasureBoxHitScore:
 	ld d, a ; $5c3f
 	ld a, [de] ; $5c40
 	call PlaySoundManaged ; $5c41
-	ld a, [$dc71] ; $5c44
+	ld a, [wMinigameSceneActor + 1] ; $5c44
 	add a, LOW(TreasureBoxValuesByType) ; $5c47
 	ld l, a ; $5c49
 	adc a, HIGH(TreasureBoxValuesByType) ; $5c4a
@@ -3649,7 +3649,7 @@ DrawTreasureBoxSprite:
 	call ProjectTreasureBoxWorldPosition ; $5c89
 	ld c, $30 ; $5c8c
 	call QueueSprite16 ; $5c8e
-	ld a, [$dc71] ; $5c91
+	ld a, [wMinigameSceneActor + 1] ; $5c91
 	ld b, a ; $5c94
 	ld hl, wTreasureBoxState ; $5c95
 	ld a, [hl] ; $5c98
@@ -3674,11 +3674,11 @@ TreasureBoxSpriteAnimFrames:
 DrawTreasureBoxHitCountdown:
 	call ProjectTreasureBoxWorldPosition ; $5ccb
 	ld c, $3c ; $5cce
-	ld a, [$dc73] ; $5cd0
+	ld a, [wMinigameSceneActor + 3] ; $5cd0
 	call QueueMinigameHitBurstFirstFour ; $5cd3
 	ret ; $5cd6
 ProjectTreasureBoxWorldPosition:
-	ld hl, $dc7a ; $5cd7
+	ld hl, wMinigameSceneActor + 10 ; $5cd7
 	ld a, [hl+] ; $5cda
 	ld e, a ; $5cdb
 	ld a, [hl+] ; $5cdc
@@ -3765,32 +3765,32 @@ SpawnMedallionMatchTargets:
 	call ClearMinigameActors ; $5d65
 	ld hl, $0040 ; $5d68
 	ld de, rJOYP ; $5d6b
-	ld bc, $dc00 ; $5d6e
+	ld bc, wMinigameActors ; $5d6e
 	ld a, $00 ; $5d71
 	call InitMedallionMatchTargetActor ; $5d73
 	ld hl, $0080 ; $5d76
 	ld de, $fe40 ; $5d79
-	ld bc, $dc10 ; $5d7c
+	ld bc, wMinigameActors + 16 ; $5d7c
 	ld a, $01 ; $5d7f
 	call InitMedallionMatchTargetActor ; $5d81
 	ld hl, $00c0 ; $5d84
 	ld de, $fd80 ; $5d87
-	ld bc, $dc20 ; $5d8a
+	ld bc, wMinigameActors + 32 ; $5d8a
 	ld a, $02 ; $5d8d
 	call InitMedallionMatchTargetActor ; $5d8f
 	ld hl, hLinkRxByte ; $5d92
 	ld de, rJOYP ; $5d95
-	ld bc, $dc30 ; $5d98
+	ld bc, wMinigameActors + 48 ; $5d98
 	ld a, $03 ; $5d9b
 	call InitMedallionMatchTargetActor ; $5d9d
 	ld hl, $ff80 ; $5da0
 	ld de, $fe40 ; $5da3
-	ld bc, $dc40 ; $5da6
+	ld bc, wMinigameActors + 64 ; $5da6
 	ld a, $04 ; $5da9
 	call InitMedallionMatchTargetActor ; $5dab
 	ld hl, rLCDC ; $5dae
 	ld de, $fd80 ; $5db1
-	ld bc, $dc50 ; $5db4
+	ld bc, wMinigameActors + 80 ; $5db4
 	ld a, $05 ; $5db7
 	call InitMedallionMatchTargetActor ; $5db9
 	ret ; $5dbc
@@ -3816,15 +3816,15 @@ ResetMedallionMatchHitState:
 	xor a, a ; $5dd6
 	ld [wMinigameHitStreak], a ; $5dd7
 	xor a, a ; $5dda
-	ld [$dc02], a ; $5ddb
-	ld [$dc12], a ; $5dde
-	ld [$dc22], a ; $5de1
-	ld [$dc32], a ; $5de4
-	ld [$dc42], a ; $5de7
-	ld [$dc52], a ; $5dea
+	ld [wMinigameActors + 2], a ; $5ddb
+	ld [wMinigameActors + 18], a ; $5dde
+	ld [wMinigameActors + 34], a ; $5de1
+	ld [wMinigameActors + 50], a ; $5de4
+	ld [wMinigameActors + 66], a ; $5de7
+	ld [wMinigameActors + 82], a ; $5dea
 	ret ; $5ded
 MedallionMatchTargetActorHandler:
-	ld a, [$dc72] ; $5dee
+	ld a, [wMinigameSceneActor + 2] ; $5dee
 	rst Rst00 ; $5df1
 	dw AdvanceMedallionMatchActorState.advanceMedallionMatchActorState ; $5df2 jumptable
 	dw AdvanceMedallionMatchActorState.drawMedallionMatchSprite ; $5df4 jumptable
@@ -3832,7 +3832,7 @@ MedallionMatchTargetActorHandler:
 	dw AdvanceMedallionMatchActorState.drawMedallionMatchSprite2 ; $5df8 jumptable
 	dw RetStub ; $5dfa jumptable
 AdvanceMedallionMatchActorState:
-	ld hl, $dc72 ; $5dfc
+	ld hl, wMinigameSceneActor + 2 ; $5dfc
 	inc [hl] ; $5dff
 	ret ; $5e00
 .advanceMedallionMatchActorState:
@@ -3846,12 +3846,12 @@ AdvanceMedallionMatchActorState:
 	jp AdvanceMedallionMatchActorState ; $5e0f
 .drawMedallionMatchHitCountdown:
 	call DrawMedallionMatchHitCountdown ; $5e12
-	ld hl, $dc73 ; $5e15
+	ld hl, wMinigameSceneActor + 3 ; $5e15
 	dec [hl] ; $5e18
 	ld a, [hl] ; $5e19
 	and a, a ; $5e1a
 	ret nz ; $5e1b
-	ld hl, $dc78 ; $5e1c
+	ld hl, wMinigameSceneActor + 8 ; $5e1c
 	ld a, [hl+] ; $5e1f
 	ld d, [hl] ; $5e20
 	ld e, a ; $5e21
@@ -3870,7 +3870,7 @@ IsBallInMedallionMatchHitZone:
 	ld a, [wLastShotCharIndex] ; $5e37
 	and a, $01 ; $5e3a
 	jp nz, .returnZero ; $5e3c
-	ld hl, $dc76 ; $5e3f
+	ld hl, wMinigameSceneActor + 6 ; $5e3f
 	ld a, [hl+] ; $5e42
 	ld d, [hl] ; $5e43
 	ld e, a ; $5e44
@@ -3896,7 +3896,7 @@ IsBallInMedallionMatchHitZone:
 	ld de, hPeakLY ; $5e5b
 	add hl, de ; $5e5e
 	jr c, .returnZero ; $5e5f
-	ld hl, $dc78 ; $5e61
+	ld hl, wMinigameSceneActor + 8 ; $5e61
 	ld a, [hl+] ; $5e64
 	ld d, [hl] ; $5e65
 	ld e, a ; $5e66
@@ -3945,13 +3945,13 @@ IsBallInMedallionMatchHitZone:
 	ret ; $5e9d
 AwardMedallionMatchHitScore:
 	ld a, $10 ; $5e9e
-	ld [$dc73], a ; $5ea0
+	ld [wMinigameSceneActor + 3], a ; $5ea0
 	ld hl, $0001 ; $5ea3
 	ld a, [wCurrentShotType] ; $5ea6
 	cp a, SHOTTYPE_SMASH ; $5ea9
 	jr nz, .step ; $5eab
 	ld a, $20 ; $5ead
-	ld [$dc73], a ; $5eaf
+	ld [wMinigameSceneActor + 3], a ; $5eaf
 	ld hl, $0002 ; $5eb2
 .step:
 	ld a, [wMinigameHitStreak] ; $5eb5
@@ -3990,7 +3990,7 @@ MedallionMatchHitStreakMultipliers:
 DrawMedallionMatchSprite:
 	call ProjectMedallionMatchWorldPosition ; $5ef2
 	ldh a, [hVBlankCounter] ; $5ef5
-	ld hl, $dc7a ; $5ef7
+	ld hl, wMinigameSceneActor + 10 ; $5ef7
 	add a, [hl] ; $5efa
 	srl a ; $5efb
 	srl a ; $5efd
@@ -4010,11 +4010,11 @@ MedallionMatchSpriteAnimFrames:
 DrawMedallionMatchHitCountdown:
 	call ProjectMedallionMatchWorldPosition ; $5f13
 	ld c, $3c ; $5f16
-	ld a, [$dc73] ; $5f18
+	ld a, [wMinigameSceneActor + 3] ; $5f18
 	call QueueMinigameHitBurstFirstTwo ; $5f1b
 	ret ; $5f1e
 ProjectMedallionMatchWorldPosition:
-	ld hl, $dc7a ; $5f1f
+	ld hl, wMinigameSceneActor + 10 ; $5f1f
 	ld a, [hl+] ; $5f22
 	ld e, a ; $5f23
 	ld a, [hl+] ; $5f24

@@ -1949,40 +1949,38 @@ w3_da00:: db
 w3_da01:: db
 	ds 510
 
-; Rules-screen animation state (WRAM bank $03), owned by the bank $17
-; rules screen.
+; Screen state in WRAM bank $03 at $dc00. Bank $17's rules screen and bank
+; $3b's N64 exhibition-data screen each keep their own bytes here, so the
+; variants are scoped to the owning ROM bank. Bank $0d keeps its minigame
+; actor records at the same addresses in WRAM bank $04 -- a separate union.
+UNION
+; rules screen (bank $17)
+	ds 1
+; [8-bit] Which rules page-list the screen is showing, from a at ShowRulesScreen; MinigameRulesPageLoop indexes MinigameRulesPageLists_17 with it
+wRulesPageListId:: db
+; [8-bit] Value ShowRulesScreen returns once the page loop finishes
+wRulesExitCode:: db
+; [8-bit] Nonzero lets AdvanceRulesScreenAnimFrame run; cleared while a page transition is in progress
+wRulesAnimEnabled:: db
+; [8-bit] Frame counter AdvanceRulesScreenAnimFrame increments, wrapping at $ff
+wRulesAnimCounter:: db
+; [8-bit] 0 for the minigame rules (PrepareRulesPageTilemap then reads wRulesMinigameLevel), nonzero for the match and training rules
+wRulesIsMinigame:: db
+; [8-bit] Copy of wMinigameLevel taken on entry, so the rules page matches the level being played
+wRulesMinigameLevel:: db
+	ds 13
+NEXTU
+; N64 exhibition data (bank $3b)
+	ds 18
+; [8-bit] Page of the N64 exhibition-data screen; N64ExhibScrollArrowsTask picks the arrows from it
+wN64ExhibPage:: db
+; [8-bit] Cursor row within the page, stepped by ScrollN64ExhibDataCursor
+wN64ExhibCursorRow:: db
+NEXTU
 ; rules screen (bank $17)
 ; [8-bit] Frame AdvanceRulesScreenAnimFrame steps; DrawRulesScreenCharacters indexes RulesScreenCharactersTable0-2 with it
 wRulesScreenAnimFrame:: db
-
-w3_dc01:: db
-
-w3_dc02:: db
-
-w3_dc03:: db
-
-w3_dc04:: db
-
-w3_dc05:: db
-
-w3_dc06:: db
-
-w3_dc07:: db
-	ds 7
-
-w3_dc0f:: db
-
-w3_dc10:: db
-	ds 1
-
-w3_dc12:: db
-
-w3_dc13:: db
-	ds 58
-
-w3_dc4e:: db
-
-w3_dc4f:: db
+ENDU
 
 
 SECTION "WRAMX bank 4", WRAMX[$d000], BANK[4]
@@ -2034,7 +2032,30 @@ wPlayerMoving:: db
 ; [8-bit] ROM bank of the actor script currently executing, taken from the actor's field +$22. Every ActorScriptOp_* passes it to FarReadByte / FarReadWord / CallHLInBankA to reach the script bytes
 wActorScriptBank:: db
 
-	ds 505
+	ds 264
+
+; Minigame actor records (WRAM bank $04), owned by bank $0d. The bank is
+; earned from the dispatcher rather than the references: bank $08's
+; RunMinigamePointLoop and UpdateMatchFrame select bank $04 before
+; CallModeHook, and ClearMinigameActors / SetMinigameActorHandler /
+; SetMinigameActorPosition each select it again, but the hooks are reached
+; through a far pointer so compute_wram_bank cannot follow the edge.
+; minigames (bank $0d)
+; [112 bytes] Seven 16-byte actor records, cleared as a block by
+; ClearMinigameActors. Fields, addressed through bc by the helpers:
+; +$00 flags (bit 0 = enabled, bit 1 = has a handler), +$02 state,
+; +$03 timer, +$06 world X (16-bit), +$08 world depth (16-bit),
+; +$0a projected screen X (16-bit), +$0c projected screen Y (16-bit),
+; +$0e handler pointer.
+wMinigameActors:: ds 112
+; [16 bytes] The eighth record, same layout, left out of the
+; ClearMinigameActors block. It is the object the minigame itself drives --
+; the shot target, the Boo, the treasure box -- and the only record the
+; code addresses by literal address rather than through bc, which is why
+; its fields show up as wMinigameSceneActor + n.
+wMinigameSceneActor:: ds 16
+
+	ds 113
 
 w4_dcf1:: db
 

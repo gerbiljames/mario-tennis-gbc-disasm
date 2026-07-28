@@ -1148,9 +1148,61 @@
   },
   {
    "start": "0xdc00",
-   "end": "0xdc01",
-   "comment": "Rules-screen animation state (WRAM bank $03), owned by the bank $17\nrules screen.",
+   "end": "0xdc14",
+   "comment": "Screen state in WRAM bank $03 at $dc00. Bank $17's rules screen and bank\n$3b's N64 exhibition-data screen each keep their own bytes here, so the\nvariants are scoped to the owning ROM bank. Bank $0d keeps its minigame\nactor records at the same addresses in WRAM bank $04 -- a separate union.",
    "variants": [
+    {
+     "context": "rules screen (bank $17)",
+     "scopes": [
+      {
+       "bank": "0x17"
+      }
+     ],
+     "symbols": {
+      "0xdc01": {
+       "name": "wRulesPageListId",
+       "note": "[8-bit] Which rules page-list the screen is showing, from a at ShowRulesScreen; MinigameRulesPageLoop indexes MinigameRulesPageLists_17 with it"
+      },
+      "0xdc02": {
+       "name": "wRulesExitCode",
+       "note": "[8-bit] Value ShowRulesScreen returns once the page loop finishes"
+      },
+      "0xdc03": {
+       "name": "wRulesAnimEnabled",
+       "note": "[8-bit] Nonzero lets AdvanceRulesScreenAnimFrame run; cleared while a page transition is in progress"
+      },
+      "0xdc04": {
+       "name": "wRulesAnimCounter",
+       "note": "[8-bit] Frame counter AdvanceRulesScreenAnimFrame increments, wrapping at $ff"
+      },
+      "0xdc05": {
+       "name": "wRulesIsMinigame",
+       "note": "[8-bit] 0 for the minigame rules (PrepareRulesPageTilemap then reads wRulesMinigameLevel), nonzero for the match and training rules"
+      },
+      "0xdc06": {
+       "name": "wRulesMinigameLevel",
+       "note": "[8-bit] Copy of wMinigameLevel taken on entry, so the rules page matches the level being played"
+      }
+     }
+    },
+    {
+     "context": "N64 exhibition data (bank $3b)",
+     "scopes": [
+      {
+       "bank": "0x3b"
+      }
+     ],
+     "symbols": {
+      "0xdc12": {
+       "name": "wN64ExhibPage",
+       "note": "[8-bit] Page of the N64 exhibition-data screen; N64ExhibScrollArrowsTask picks the arrows from it"
+      },
+      "0xdc13": {
+       "name": "wN64ExhibCursorRow",
+       "note": "[8-bit] Cursor row within the page, stepped by ScrollN64ExhibDataCursor"
+      }
+     }
+    },
     {
      "context": "rules screen (bank $17)",
      "scopes": [
@@ -1165,7 +1217,8 @@
       }
      }
     }
-   ]
+   ],
+   "wram_bank": "0x03"
   },
   {
    "start": "0xd810",
@@ -1868,6 +1921,34 @@
     }
    ],
    "wram_bank": "0x05"
+  },
+  {
+   "start": "0xdc00",
+   "wram_bank": "0x04",
+   "end": "0xdc80",
+   "comment": "Minigame actor records (WRAM bank $04), owned by bank $0d. The bank is\nearned from the dispatcher rather than the references: bank $08's\nRunMinigamePointLoop and UpdateMatchFrame select bank $04 before\nCallModeHook, and ClearMinigameActors / SetMinigameActorHandler /\nSetMinigameActorPosition each select it again, but the hooks are reached\nthrough a far pointer so compute_wram_bank cannot follow the edge.",
+   "variants": [
+    {
+     "context": "minigames (bank $0d)",
+     "scopes": [
+      {
+       "bank": "0x0d"
+      }
+     ],
+     "symbols": {
+      "0xdc00": {
+       "name": "wMinigameActors",
+       "note": "[112 bytes] Seven 16-byte actor records, cleared as a block by\nClearMinigameActors. Fields, addressed through bc by the helpers:\n+$00 flags (bit 0 = enabled, bit 1 = has a handler), +$02 state,\n+$03 timer, +$06 world X (16-bit), +$08 world depth (16-bit),\n+$0a projected screen X (16-bit), +$0c projected screen Y (16-bit),\n+$0e handler pointer.",
+       "size": 112
+      },
+      "0xdc70": {
+       "name": "wMinigameSceneActor",
+       "note": "[16 bytes] The eighth record, same layout, left out of the\nClearMinigameActors block. It is the object the minigame itself drives --\nthe shot target, the Boo, the treasure box -- and the only record the\ncode addresses by literal address rather than through bc, which is why\nits fields show up as wMinigameSceneActor + n.",
+       "size": 16
+      }
+     }
+    }
+   ]
   }
  ]
 }
