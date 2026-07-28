@@ -1026,7 +1026,7 @@ StubNop_1b_4e80:
 ShowRankingBoard:
 	wram_bank $03 ; $4e81
 	xor a ; $4e87
-	ld [w3_d85a], a ; $4e88
+	ld [wRankingBoardSilent], a ; $4e88
 	ld a, b ; $4e8b
 	ld [wRankingBoardDoubles], a ; $4e8c
 	ld a, c ; $4e8f
@@ -1038,7 +1038,7 @@ ShowRankingBoard:
 	xor a ; $4e9b
 	ld [wRankingBoardMode], a ; $4e9c
 	ld a, $01 ; $4e9f
-	ld [w3_d85a], a ; $4ea1
+	ld [wRankingBoardSilent], a ; $4ea1
 .checkFanfare:
 	ld a, [wRankingBoardMode] ; $4ea4
 	cp $01 ; $4ea7
@@ -1064,7 +1064,7 @@ ShowRankingBoard:
 	ld a, [wRankingBoardMode] ; $4ed8
 	or a ; $4edb
 	jr nz, .fadeOut ; $4edc
-	ld a, [w3_d85a] ; $4ede
+	ld a, [wRankingBoardSilent] ; $4ede
 	or a ; $4ee1
 	jr nz, .fadeOut ; $4ee2
 	sound $7f ; $4ee4
@@ -1086,8 +1086,8 @@ BuildRankingBoardScreen:
 	farcall PrepareGlyphBuffer ; $4f06
 	wram_bank $03 ; $4f09
 	xor a ; $4f0f
-	ld [w3_d855], a ; $4f10
-	ld [w3_d858], a ; $4f13
+	ld [wRankingBannerAnimFrame], a ; $4f10
+	ld [wRankingAnimStateDone], a ; $4f13
 	ld hl, wRankingMarkerSlots ; $4f16
 	ld bc, $0053 ; $4f19
 	call ClearBytes ; $4f1c
@@ -1156,7 +1156,7 @@ LoadRankingBoardTiles:
 	wram_bank ; $4fec
 	ret ; $4ff0
 DispatchRankingBoardAnim:
-	ld a, [w3_d85a] ; $4ff1
+	ld a, [wRankingBoardSilent] ; $4ff1
 	or a ; $4ff4
 	ret nz ; $4ff5
 	ld a, [wRankingBoardMode] ; $4ff6
@@ -1348,7 +1348,7 @@ RankingBoardAnimState_5077_1b:
 	call WaitFramesCmd ; $5163
 	db $1e ; $5166 inline arg
 	ld a, $01 ; $5167
-	ld [$d858], a ; $5169
+	ld [wRankingAnimStateDone], a ; $5169
 	jp RankingBoardAnimNop_1b ; $516c
 RankingBoardAnimState_516f_1b:
 	ld a, $01 ; $516f
@@ -1452,7 +1452,7 @@ RankingBoardAnimState_516f_1b:
 	call WaitFramesCmd ; $5267
 	db $1e ; $526a inline arg
 	ld a, $01 ; $526b
-	ld [$d858], a ; $526d
+	ld [wRankingAnimStateDone], a ; $526d
 	jp RankingBoardAnimNop_1b ; $5270
 RankingBoardAnimState_5273_1b:
 	ld a, $01 ; $5273
@@ -1500,7 +1500,7 @@ RankingBoardAnimState_5273_1b:
 	call WaitFramesCmd ; $52df
 	db $1e ; $52e2 inline arg
 	ld a, $01 ; $52e3
-	ld [$d858], a ; $52e5
+	ld [wRankingAnimStateDone], a ; $52e5
 	jp RankingBoardAnimNop_1b ; $52e8
 RankingBoardAnimState_52eb_1b:
 	ld a, $01 ; $52eb
@@ -1509,7 +1509,7 @@ RankingBoardAnimState_52eb_1b:
 	call WaitFramesCmd ; $52f3
 	db $8c ; $52f6 inline arg
 	ld a, $01 ; $52f7
-	ld [$d858], a ; $52f9
+	ld [wRankingAnimStateDone], a ; $52f9
 	jp RankingBoardAnimNop_1b ; $52fc
 RankingBoardAnimState_52ff_1b:
 	call WaitFramesCmd ; $52ff
@@ -2312,13 +2312,13 @@ PushRankingBoardTilemapRows:
 	ret ; $5910
 	ret ; $5911
 RankingBoardAnimTask_1b:
-	ld a, [$d855] ; $5912
+	ld a, [wRankingBannerAnimFrame] ; $5912
 	or a ; $5915
 	jr nz, .nonZero ; $5916
 	ld a, $a0 ; $5918
-	ld [$d856], a ; $591a
+	ld [wRankingBannerX], a ; $591a
 .nonZero:
-	ld a, [$d855] ; $591d
+	ld a, [wRankingBannerAnimFrame] ; $591d
 	ld hl, RankingBoardAnimTaskTable ; $5920
 	add l ; $5923
 	ld l, a ; $5924
@@ -2326,9 +2326,9 @@ RankingBoardAnimTask_1b:
 	inc h ; $5927
 .read:
 	ld b, [hl] ; $5928
-	ld a, [$d856] ; $5929
+	ld a, [wRankingBannerX] ; $5929
 	add b ; $592c
-	ld [$d856], a ; $592d
+	ld [wRankingBannerX], a ; $592d
 	ld hl, SpriteTemplate_1b_595a ; $5930
 	ld e, $40 ; $5933
 	ld a, [wRankingBoardDoubles] ; $5935
@@ -2336,14 +2336,14 @@ RankingBoardAnimTask_1b:
 	jr z, .zero ; $5939
 	ld e, $50 ; $593b
 .zero:
-	ld a, [$d856] ; $593d
+	ld a, [wRankingBannerX] ; $593d
 	ld d, a ; $5940
 	ld c, $10 ; $5941
 	ld b, $0c ; $5943
 	call QueueSpriteTemplate ; $5945
-	ld a, [$d855] ; $5948
+	ld a, [wRankingBannerAnimFrame] ; $5948
 	inc a ; $594b
-	ld [$d855], a ; $594c
+	ld [wRankingBannerAnimFrame], a ; $594c
 	cp $87 ; $594f
 	jr nz, .done ; $5951
 	ld hl, RankingBoardAnimTask_1b ; $5953
@@ -2364,7 +2364,7 @@ SpriteTemplate_1b_595a:
 RankingBoardAnimTaskTable:
 	INCBIN "data/bank_01b/d_597b.bin" ; $597b, 137 bytes
 RankingCursorBobTask:
-	ld a, [$d855] ; $5a04
+	ld a, [wRankingBannerAnimFrame] ; $5a04
 	or a ; $5a07
 	jr nz, .nonZero ; $5a08
 .nonZero:
@@ -3058,9 +3058,9 @@ RunNewGameSetup:
 .loop:
 	push af ; $61d8
 	farcall LoadCharacterRecordToBuffer ; $61d9
-	ld a, [w1_d58e] ; $61dc
+	ld a, [wCharRecordBuffer + 14] ; $61dc
 	ld [hl+], a ; $61df
-	ld a, [w1_d58c] ; $61e0
+	ld a, [wCharRecordBuffer + 12] ; $61e0
 	ld [hl+], a ; $61e3
 	pop af ; $61e4
 	inc a ; $61e5
@@ -3637,7 +3637,7 @@ UpdateUnlockDebugSelectedMugshot:
 	jr .registerFrameTask ; $66b4
 .registerFrameTask2:
 	ld a, $20 ; $66b6
-	ld [$d58b], a ; $66b8
+	ld [wCharRecordBuffer + 11], a ; $66b8
 .registerFrameTask:
 	ld a, $0a ; $66bb
 	ld hl, UpdateUnlockDebugStatOnChange ; $66bd
@@ -3661,7 +3661,7 @@ DrawUnlockDebugMugshots:
 	farcall LoadCharacterRecordToBuffer ; $66de
 	farcall CheckUnlockFlag ; $66e1
 	jr z, .step ; $66e4
-	ld a, [$d58b] ; $66e6
+	ld a, [wCharRecordBuffer + 11] ; $66e6
 	farcall LoadCharMugshotToBuffer ; $66e9
 	ld a, [hl] ; $66ec
 	ld de, $0002 ; $66ed
@@ -3670,7 +3670,7 @@ DrawUnlockDebugMugshots:
 	ld a, [hl] ; $66f6
 	ld de, $0006 ; $66f7
 	call GetUnlockDebugRosterField ; $66fa
-	ld a, [w1_d58c] ; $66fd
+	ld a, [wCharRecordBuffer + 12] ; $66fd
 	farcall SetMugshotAttrs ; $6700
 .step:
 	ld a, $08 ; $6703
@@ -3684,7 +3684,7 @@ DrawUnlockDebugMugshots:
 	jr nz, .loop ; $670d
 	ld a, [wCharSelectChar] ; $670f
 	farcall LoadCharacterRecordToBuffer ; $6712
-	ld a, [$d58b] ; $6715
+	ld a, [wCharRecordBuffer + 11] ; $6715
 	farcall StubNop_1b_4e43 ; $6718
 	ret ; $671b
 RunMinigameFlagsDebugScreen:
@@ -3806,7 +3806,7 @@ MoveUnlockDebugCursor:
 	jr .storeCharSelectCol ; $6817
 .storeCharSelectCol2:
 	ld a, $20 ; $6819
-	ld [$d58b], a ; $681b
+	ld [wCharRecordBuffer + 11], a ; $681b
 .storeCharSelectCol:
 	ld a, d ; $681e
 	ld [wCharSelectCol], a ; $681f
@@ -4010,9 +4010,9 @@ RunStoryDataConfirmMenu:
 	call WaitFadeEnd ; $69a5
 	wram_bank $07 ; $69a8
 	xor a ; $69ae
-	ld [w7_db26], a ; $69af
+	ld [wStubbedPromptTaskState], a ; $69af
 	ld a, $0c ; $69b2
-	ld [w7_db27], a ; $69b4
+	ld [wStubbedPromptTaskState + 1], a ; $69b4
 	ld a, $01 ; $69b7
 	ld hl, StubNop_1b_69d6 ; $69b9
 	call RegisterFrameTask ; $69bc

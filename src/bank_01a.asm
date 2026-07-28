@@ -674,7 +674,7 @@ ShowExpGainScreen:
 	pop de ; $4564
 	push de ; $4565
 	wram_bank $06 ; $4566
-	ld hl, $d230 ; $456c
+	ld hl, wExpAwardTotal ; $456c
 	ld a, e ; $456f
 	ld [hl+], a ; $4570
 	ld [hl], d ; $4571
@@ -699,20 +699,20 @@ ShowExpGainScreen:
 	push hl ; $4588
 	push de ; $4589
 	ld a, l ; $458a
-	ld [w6_d254], a ; $458b
+	ld [wExpAwardSlot], a ; $458b
 	ld de, $0000 ; $458e
 	farcall GetExpRemainingToNextLevel ; $4591
 	ld d, h ; $4594
 	ld e, l ; $4595
-	ld hl, $d23c ; $4596
+	ld hl, wExpToNextLevel ; $4596
 	ld a, e ; $4599
 	ld [hl+], a ; $459a
 	ld [hl], d ; $459b
-	ld hl, $d242 ; $459c
+	ld hl, wExpToNextDisplayed ; $459c
 	ld a, e ; $459f
 	ld [hl+], a ; $45a0
 	ld [hl], d ; $45a1
-	ld hl, $d23e ; $45a2
+	ld hl, wExpToNextSprite ; $45a2
 	ld a, $68 ; $45a5
 	ld [hl+], a ; $45a7
 	ld a, $84 ; $45a8
@@ -722,7 +722,7 @@ ShowExpGainScreen:
 	ld a, $08 ; $45ae
 	ld [hl+], a ; $45b0
 	xor a ; $45b1
-	ld [w6_d23b], a ; $45b2
+	ld [wExpLevelUpQueued], a ; $45b2
 	ld [$d151], a ; $45b5
 	wram_bank $01 ; $45b8
 	ld hl, $d000 ; $45be
@@ -751,7 +751,7 @@ ShowExpGainScreen:
 	ld a, h ; $45fc
 	sub $04 ; $45fd
 	jp z, .finish ; $45ff
-	ld hl, $d230 ; $4602
+	ld hl, wExpAwardTotal ; $4602
 	ld a, [hl+] ; $4605
 	ld h, [hl] ; $4606
 	ld l, a ; $4607
@@ -760,10 +760,10 @@ ShowExpGainScreen:
 	jp z, .finish ; $460a
 .fillLoop:
 	call AdvanceExpGaugeFill ; $460d
-	ld a, [w6_d238] ; $4610
+	ld a, [wExpCountDone] ; $4610
 	and a ; $4613
 	jr nz, .levelUp ; $4614
-	ld a, [w6_d239] ; $4616
+	ld a, [wExpCountFastForward] ; $4616
 	and a ; $4619
 	jr nz, .gaugeFull ; $461a
 	ldh a, [hPlayerInputFlags] ; $461c
@@ -775,17 +775,17 @@ ShowExpGainScreen:
 	jr .fillLoop ; $4628
 .gaugeFull:
 	ld a, $01 ; $462a
-	ld [w6_d239], a ; $462c
+	ld [wExpCountFastForward], a ; $462c
 	sound $5f ; $462f
 	call AdvanceExpGaugeFill ; $4631
-	ld hl, $d230 ; $4634
+	ld hl, wExpAwardTotal ; $4634
 	ld a, [hl+] ; $4637
 	ld h, [hl] ; $4638
 	ld l, a ; $4639
 	ld de, $fc18 ; $463a
 	add hl, de ; $463d
 	jr nc, .nextFrame ; $463e
-	ld hl, $d230 ; $4640
+	ld hl, wExpAwardTotal ; $4640
 	ld a, [hl+] ; $4643
 	ld h, [hl] ; $4644
 	ld l, a ; $4645
@@ -824,11 +824,11 @@ ShowExpGainScreen:
 	ld c, $fc ; $4692
 .storeScroll:
 	ld a, c ; $4694
-	ld hl, w6_d23a ; $4695
+	ld hl, wExpNumberSpriteShiftX ; $4695
 	ld [hl], a ; $4698
 	ld b, $28 ; $4699
 .bonusWaitLoop:
-	ld hl, w6_d23a ; $469b
+	ld hl, wExpNumberSpriteShiftX ; $469b
 	ld a, [hl] ; $469e
 	and a ; $469f
 	jr z, .bonusFrame ; $46a0
@@ -852,20 +852,20 @@ ShowExpGainScreen:
 	ld a, [hl+] ; $46c2
 	ld d, [hl] ; $46c3
 	ld e, a ; $46c4
-	ld hl, $d230 ; $46c5
+	ld hl, wExpAwardTotal ; $46c5
 	ld a, [hl+] ; $46c8
 	ld h, [hl] ; $46c9
 	ld l, a ; $46ca
 	add hl, de ; $46cb
 	ld d, h ; $46cc
 	ld e, l ; $46cd
-	ld hl, $d230 ; $46ce
+	ld hl, wExpAwardTotal ; $46ce
 	ld a, e ; $46d1
 	ld [hl+], a ; $46d2
 	ld [hl], d ; $46d3
 	xor a ; $46d4
 	ld [$c36f], a ; $46d5
-	ld [w6_d238], a ; $46d8
+	ld [wExpCountDone], a ; $46d8
 	jp .fillLoop ; $46db
 .finish:
 	wram_bank $06 ; $46de
@@ -876,11 +876,11 @@ ShowExpGainScreen:
 	ld c, $fc ; $46ec
 .storeFinalScroll:
 	ld a, c ; $46ee
-	ld hl, w6_d23a ; $46ef
+	ld hl, wExpNumberSpriteShiftX ; $46ef
 	ld [hl], a ; $46f2
 	ld b, $f0 ; $46f3
 .finalWaitLoop:
-	ld hl, w6_d23a ; $46f5
+	ld hl, wExpNumberSpriteShiftX ; $46f5
 	ld a, [hl] ; $46f8
 	and a ; $46f9
 	jr z, .finalFrame ; $46fa
@@ -908,14 +908,14 @@ ShowExpGainScreen:
 	wram_bank ; $4723
 	pop bc ; $4727
 	wram_bank $06 ; $4728
-	ld hl, $d230 ; $472e
+	ld hl, wExpAwardTotal ; $472e
 	ld a, [hl+] ; $4731
 	ld d, [hl] ; $4732
 	ld e, a ; $4733
 	ld a, d ; $4734
 	or e ; $4735
 	ret z ; $4736
-	ld a, [w6_d254] ; $4737
+	ld a, [wExpAwardSlot] ; $4737
 	farcall AddPlayerExp ; $473a
 	ret ; $473d
 .queueVRAMCopy:
@@ -1914,18 +1914,18 @@ SignExtendModifierByte:
 	ret ; $4e64
 ExpScreenNumberTask:
 	wram_bank $06 ; $4e65
-	ld hl, $d232 ; $4e6b
+	ld hl, wExpAwardCounted ; $4e6b
 	ld a, [hl+] ; $4e6e
 	ld h, [hl] ; $4e6f
 	ld l, a ; $4e70
-	ld de, $d24e ; $4e71
+	ld de, wExpCountedDigits ; $4e71
 	ld a, $05 ; $4e74
 	call FormatDecimalNumberUnsigned ; $4e76
-	ld hl, $d234 ; $4e79
+	ld hl, wExpCountedSprite ; $4e79
 	ld d, [hl] ; $4e7c
 	inc hl ; $4e7d
 	ld e, [hl] ; $4e7e
-	ld hl, $d24e ; $4e7f
+	ld hl, wExpCountedDigits ; $4e7f
 	ld a, $05 ; $4e82
 	call QueueNumberSpritesShifted ; $4e84
 	wram_bank $06 ; $4e87
@@ -1949,56 +1949,56 @@ ExpScreenNumberTask:
 	ld a, [$d000] ; $4ea6
 	and a ; $4ea9
 	jp nz, .nonZero ; $4eaa
-	ld a, [w6_d23b] ; $4ead
+	ld a, [wExpLevelUpQueued] ; $4ead
 	and a ; $4eb0
 	ret nz ; $4eb1
-	ld hl, $d242 ; $4eb2
+	ld hl, wExpToNextDisplayed ; $4eb2
 	ld a, [hl+] ; $4eb5
 	ld h, [hl] ; $4eb6
 	ld l, a ; $4eb7
 	ld a, h ; $4eb8
 	or l ; $4eb9
 	jr z, .step2 ; $4eba
-	ld de, $d244 ; $4ebc
+	ld de, wExpToNextDigits ; $4ebc
 	ld a, $05 ; $4ebf
 	call FormatDecimalNumberUnsigned ; $4ec1
-	ld hl, $d23e ; $4ec4
+	ld hl, wExpToNextSprite ; $4ec4
 	ld d, [hl] ; $4ec7
 	inc hl ; $4ec8
 	ld e, [hl] ; $4ec9
-	ld hl, $d244 ; $4eca
+	ld hl, wExpToNextDigits ; $4eca
 	ld a, $05 ; $4ecd
 	call QueueNumberSprites ; $4ecf
 	ret ; $4ed2
 .step2:
-	ld a, [w6_d23b] ; $4ed3
+	ld a, [wExpLevelUpQueued] ; $4ed3
 	and a ; $4ed6
 	ret nz ; $4ed7
 	ld a, [$d151] ; $4ed8
 	or $80 ; $4edb
 	ld [$d151], a ; $4edd
 	ld a, $01 ; $4ee0
-	ld [w6_d23b], a ; $4ee2
+	ld [wExpLevelUpQueued], a ; $4ee2
 .nonZero:
-	ld hl, $d23c ; $4ee5
+	ld hl, wExpToNextLevel ; $4ee5
 	ld a, [hl+] ; $4ee8
 	ld h, [hl] ; $4ee9
 	ld l, a ; $4eea
-	ld de, $d244 ; $4eeb
+	ld de, wExpToNextDigits ; $4eeb
 	ld a, $05 ; $4eee
 	call FormatDecimalNumberUnsigned ; $4ef0
-	ld hl, $d23e ; $4ef3
+	ld hl, wExpToNextSprite ; $4ef3
 	ld d, [hl] ; $4ef6
 	inc hl ; $4ef7
 	ld e, [hl] ; $4ef8
-	ld hl, $d244 ; $4ef9
+	ld hl, wExpToNextDigits ; $4ef9
 	ld a, $05 ; $4efc
 	call QueueNumberSprites ; $4efe
 	ret ; $4f01
 QueueNumberSpritesShifted:
 	push af ; $4f02
 	push de ; $4f03
-	ld a, [w6_d23a] ; $4f04
+	ld a, [wExpNumberSpriteShiftX] ; $4f04
 	add d ; $4f07
 	ld d, a ; $4f08
 	push hl ; $4f09
@@ -2009,12 +2009,12 @@ QueueNumberSpritesShifted:
 	sub $10 ; $4f10
 	add a ; $4f12
 	ld b, a ; $4f13
-	ld a, [w6_d236] ; $4f14
+	ld a, [wExpCountedSprite + 2] ; $4f14
 	ld c, a ; $4f17
 	ld a, b ; $4f18
 	add c ; $4f19
 	ld c, a ; $4f1a
-	ld a, [w6_d237] ; $4f1b
+	ld a, [wExpCountedSprite + 3] ; $4f1b
 	ld b, a ; $4f1e
 	call QueueSprite ; $4f1f
 .restore:
@@ -2032,10 +2032,10 @@ QueueNumberSpritesShifted:
 	ret ; $4f2f
 AdvanceExpGaugeFill:
 	wram_bank $06 ; $4f30
-	ld a, [w6_d238] ; $4f36
+	ld a, [wExpCountDone] ; $4f36
 	and a ; $4f39
 	jr nz, .updateRemaining ; $4f3a
-	ld hl, $d232 ; $4f3c
+	ld hl, wExpAwardCounted ; $4f3c
 	ld a, [hl+] ; $4f3f
 	ld d, [hl] ; $4f40
 	ld e, a ; $4f41
@@ -2044,7 +2044,7 @@ AdvanceExpGaugeFill:
 	ld a, e ; $4f44
 	ld [hl+], a ; $4f45
 	ld [hl], d ; $4f46
-	ld hl, $d230 ; $4f47
+	ld hl, wExpAwardTotal ; $4f47
 	ld a, [hl+] ; $4f4a
 	ld h, [hl] ; $4f4b
 	ld l, a ; $4f4c
@@ -2058,13 +2058,13 @@ AdvanceExpGaugeFill:
 	or l ; $4f54
 	jr nz, .updateRemaining ; $4f55
 	ld a, $01 ; $4f57
-	ld [w6_d238], a ; $4f59
+	ld [wExpCountDone], a ; $4f59
 .updateRemaining:
-	ld hl, $d232 ; $4f5c
+	ld hl, wExpAwardCounted ; $4f5c
 	ld a, [hl+] ; $4f5f
 	ld b, [hl] ; $4f60
 	ld c, a ; $4f61
-	ld hl, $d23c ; $4f62
+	ld hl, wExpToNextLevel ; $4f62
 	ld a, [hl+] ; $4f65
 	ld h, [hl] ; $4f66
 	ld l, a ; $4f67
@@ -2078,14 +2078,14 @@ AdvanceExpGaugeFill:
 	jr nz, .clampToZero ; $4f70
 	ld d, h ; $4f72
 	ld e, l ; $4f73
-	ld hl, $d242 ; $4f74
+	ld hl, wExpToNextDisplayed ; $4f74
 	ld a, e ; $4f77
 	ld [hl+], a ; $4f78
 	ld [hl], d ; $4f79
 	ret ; $4f7a
 .clampToZero:
 	xor a ; $4f7b
-	ld hl, $d242 ; $4f7c
+	ld hl, wExpToNextDisplayed ; $4f7c
 	ld [hl+], a ; $4f7f
 	ld [hl+], a ; $4f80
 	ret ; $4f81
@@ -2100,12 +2100,12 @@ QueueNumberSprites:
 	sub $10 ; $4f8b
 	add a ; $4f8d
 	ld b, a ; $4f8e
-	ld a, [w6_d236] ; $4f8f
+	ld a, [wExpCountedSprite + 2] ; $4f8f
 	ld c, a ; $4f92
 	ld a, b ; $4f93
 	add c ; $4f94
 	ld c, a ; $4f95
-	ld a, [w6_d237] ; $4f96
+	ld a, [wExpCountedSprite + 3] ; $4f96
 	ld b, a ; $4f99
 	call QueueSprite ; $4f9a
 .restore:
@@ -2236,7 +2236,7 @@ ResetCharDataScreenAnim:
 	ld a, $01 ; $50a3
 	call ShowExpGainScreen ; $50a5
 	wram_bank $06 ; $50a8
-	ld a, [w6_d23b] ; $50ae
+	ld a, [wExpLevelUpQueued] ; $50ae
 	and a ; $50b1
 	jr z, .restore ; $50b2
 	wram_bank $06 ; $50b4

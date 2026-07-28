@@ -2024,12 +2024,16 @@ wDebugTextBuffer:: ds 576
 
 SECTION "WRAMX bank 1", WRAMX[$d000], BANK[1]
 
-	ds 1420
+	ds 1408
 
-w1_d58c:: db
-	ds 1
-
-w1_d58e:: db
+; Character-record scratch. LoadCharacterRecordToBuffer writes $d580 in
+; whichever WRAM bank the caller left selected, so the address belongs to
+; no one bank; this names the bank $01 copy, which is the only one the
+; dataflow can prove (bank $1b selects it before filling the new-game
+; roster). The bank $18 and $38 callers keep the numeric address.
+; character record buffer (bank $1b)
+; [128 bytes] Copy of a character record that LoadCharacterRecordToBuffer takes from wPlayer2MainName, so a caller can read one character's fields without disturbing the live records. +$0b is the id CheckCharacterUnlocked tests against $ff, and RunNewGameSetup reads +$0c and +$0e for each of the four starting characters
+wCharRecordBuffer:: ds 128
 
 
 SECTION "WRAMX bank 3", WRAMX[$d000], BANK[3]
@@ -2249,24 +2253,48 @@ ENDU
 
 	ds 22
 
-w3_d855:: db
-	ds 2
-
-w3_d858:: db
+; Ranking-board banner animation (WRAM bank $03), owned by bank $1b and
+; scoped to its ranking-board code range like the $d800 block below it.
+; ranking board (bank $1b)
+; [8-bit] Frame counter for the sliding banner sprite. RankingBoardAnimTask_1b indexes RankingBoardAnimTaskTable with it for this frame's X delta, and unregisters itself once it reaches $87
+wRankingBannerAnimFrame:: db
+; [8-bit] X the banner sprite is drawn at, seeded to $a0 on frame 0 and advanced by the table delta every frame after
+wRankingBannerX:: db
 	ds 1
+; [8-bit] Set to 1 at the end of each ranking-board animation state, which is how the state machine knows the current step has played out
+wRankingAnimStateDone:: db
+	ds 1
+; [8-bit] Set when ShowRankingBoard is called with mode $03, which it then rewrites to $00. It suppresses the board's entrance animation (DispatchRankingBoardAnim returns at once) and the closing jingle -- the quiet variant used when the board is shown as part of a longer sequence
+wRankingBoardSilent:: db
 
-w3_d85a:: db
 	ds 165
 
-w3_d900:: db
+; Screen-sized buffers in WRAM bank $03 that three unrelated screens keep
+; at the same addresses, so the variants are scoped to the owning ROM bank.
+; Bank $3b's copy is the largest and covers the whole span; the other two
+; sit inside it.
+UNION
+; created characters and the character grid (bank $38)
+; [$c0 bytes] Six $20-byte records for the player-created characters, built by BuildCreatedCharRecords from the save and walked by DrawCreatedCharStats (which seeks with a $20 stride). A record whose first byte is $ff ends the list
+wCreatedCharRecords:: ds 192
+	ds 64
+; [$80 bytes] The character-select grid as 32 four-byte entries, cleared when the screen opens and filled by BuildCharUnlockFlags. AddCreatedCharsToCharGrid appends the created characters from $da24 on, four bytes per slot
+wCharGridEntries:: ds 128
+	ds 128
+NEXTU
+; N64 transfer records (bank $3b)
+; [512 bytes] Image of save block $0b, the N64 (Transfer Pak) records, read here by ReadN64RecordsSaveBlock for the trophies screen and the ring-shot and star-victory grids. Same block the bank $03 engine stages at wSaveBlockBuffer in WRAM bank $07 -- this is the screen's own copy
+wN64RecordsBlock:: ds 512
+NEXTU
+; screen sequences (bank $18)
+	ds 256
+; [8-bit] Cleared as the ending sequence enters its third scene and stepped through the scenes that follow
+wEndingSceneStep:: db
+; [8-bit] Frame counter each PlayScreenSequence* routine runs from 0 to $fa while its screen scrolls, then fades out
+wScreenSequenceTimer:: db
+ENDU
 
-w3_d901:: db
-	ds 254
-
-w3_da00:: db
-
-w3_da01:: db
-	ds 510
+	ds 256
 
 ; Screen state in WRAM bank $03 at $dc00. Bank $17's rules screen and bank
 ; $3b's N64 exhibition-data screen each keep their own bytes here, so the
@@ -2301,11 +2329,13 @@ NEXTU
 wRulesScreenAnimFrame:: db
 ENDU
 
-	ds 58
+	ds 44
 
-w3_dc4e:: db
-
-w3_dc4f:: db
+; Ring-shot entry list (WRAM bank $03), owned by the bank $3b N64 records
+; screen and scoped to that bank.
+; ring-shot results (bank $3b)
+; [16 bytes] The ring-shot rows to show, copied from the N64RingShot table and then patched: an entry becomes $10 (the blank row) when the matching bit in the N64 records block is clear, so a course the player never transferred is left out
+wRingShotEntryList:: ds 16
 
 
 SECTION "WRAMX bank 4", WRAMX[$d000], BANK[4]
@@ -2816,6 +2846,10 @@ wExpScreenCharStats:: ds 30
 
 ; Scrolling text screen (the staff-roll style crawl), WRAM bank $06,
 ; owned by bank $03's RunScrollingTextScreen.
+; The EXP award screen (bank $1a) overlays the same bytes with its gauge
+; state, and banks $1c/$1d put the character-data screen's $40-byte stat
+; blocks at $d240/$d280/$d2d0 -- those stay numeric, being neither.
+UNION
 ; scrolling text screen (bank $03)
 ; [8-bit] Frames until the crawl scrolls one line; reloaded with 2 each time it hits 0
 wScrollTextDelay:: db
@@ -2825,23 +2859,38 @@ wScrollTextDelayReload:: db
 wScrollTextId:: dw
 ; [8-bit] Set once the last line has scrolled off, which stops the scroll without leaving the loop
 wScrollTextDone:: db
-
+	ds 37
+NEXTU
+; EXP award screen (bank $1a)
+; [16-bit] EXP being awarded, the target the gauge counts up to
+wExpAwardTotal:: dw
+; [16-bit] EXP counted so far. AdvanceExpGaugeFill increments it once per tick and sets wExpCountDone when it reaches wExpAwardTotal
+wExpAwardCounted:: dw
+; [4 bytes] How the counted number is drawn: +$00 X, +$01 Y, +$02 first digit tile ("0"; a digit adds its value * 2), +$03 OAM attribute
+wExpCountedSprite:: ds 4
+; [8-bit] Set once wExpAwardCounted has reached the total; the fill loop leaves and the level-up path runs
+wExpCountDone:: db
+; [8-bit] Set when the player presses A or B during the count, which switches the gauge to the fast path
+wExpCountFastForward:: db
+; [8-bit] Added to the X of every digit QueueNumberSpritesShifted draws, which is how the counted number slides while the gauge fills
+wExpNumberSpriteShiftX:: db
+; [8-bit] Latched once the EXP-to-next-level figure reaches zero, so the level-up is requested exactly once
+wExpLevelUpQueued:: db
+; [16-bit] EXP still needed for the next level, seeded from GetExpRemainingToNextLevel and counted down alongside the gauge
+wExpToNextLevel:: dw
+; [4 bytes] The same X/Y/tile/attribute record for the EXP-to-next-level number
+wExpToNextSprite:: ds 4
+; [16-bit] The value actually shown for EXP-to-next; reaching zero is what sets wExpLevelUpQueued
+wExpToNextDisplayed:: dw
+; [5 bytes] Decimal digits of wExpToNextDisplayed, formatted unsigned to five places
+wExpToNextDigits:: ds 5
+	ds 5
+; [5 bytes] Decimal digits of wExpAwardCounted, formatted the same way
+wExpCountedDigits:: ds 5
 	ds 1
-
-w6_d236:: db
-
-w6_d237:: db
-
-w6_d238:: db
-
-w6_d239:: db
-
-w6_d23a:: db
-
-w6_d23b:: db
-	ds 24
-
-w6_d254:: db
+; [8-bit] Which character record the award belongs to, kept so the screen can hand it to AddPlayerExp once the count finishes
+wExpAwardSlot:: db
+ENDU
 
 
 SECTION "WRAMX bank 7", WRAMX[$d000], BANK[7]
@@ -2932,9 +2981,11 @@ ENDU
 
 	ds 38
 
-w7_db26:: db
+; State for a frame task that was stubbed out (WRAM bank $07).
+; story-data confirm menu (bank $1b)
+; [2 bytes] RunStoryDataConfirmMenu selects WRAM bank $07, clears +$00, sets +$01 to $0c and registers StubNop_1b_69d6 as a per-frame task. That task's body is a bare ret, so nothing ever reads either byte -- the register/unregister pair around the prompt is real, only the work is missing
+wStubbedPromptTaskState:: dw
 
-w7_db27:: db
 	ds 728
 
 ; Match ball sprite slots (WRAM bank 4 only), alongside the per-character

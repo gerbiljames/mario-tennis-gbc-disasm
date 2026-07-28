@@ -1860,7 +1860,7 @@ RunExhibitionCharSelectScreen:
 	farcall LoadMenuFontGfx ; $4e79
 	xor a ; $4e7c
 	ld [wCharSelectRemoteSlot], a ; $4e7d
-	ld hl, w3_da00 ; $4e80
+	ld hl, wCharGridEntries ; $4e80
 	ld bc, $0080 ; $4e83
 	call ClearBytes ; $4e86
 	call BuildCharUnlockFlags ; $4e89
@@ -2256,7 +2256,7 @@ HandleCharGridButtons:
 .toggleHandedness:
 	call GetGridSlotFromCursor ; $52d1
 	ld b, a ; $52d4
-	ld hl, w3_da00 ; $52d5
+	ld hl, wCharGridEntries ; $52d5
 	add a ; $52d8
 	add a ; $52d9
 	add l ; $52da
@@ -2299,7 +2299,7 @@ ConfirmCharGridSelection:
 	jr nz, .emptyCell ; $531e
 	call GetGridSlotFromCursor ; $5320
 	ld b, a ; $5323
-	ld hl, w3_da00 ; $5324
+	ld hl, wCharGridEntries ; $5324
 	add a ; $5327
 	add a ; $5328
 	add l ; $5329
@@ -2351,7 +2351,7 @@ ConfirmCharGridSelection:
 	call BuildVisiblePageSpriteList ; $5370
 	call GetGridSlotFromCursor ; $5373
 	ld b, a ; $5376
-	ld hl, w3_da00 ; $5377
+	ld hl, wCharGridEntries ; $5377
 	add a ; $537a
 	add a ; $537b
 	add l ; $537c
@@ -2406,7 +2406,7 @@ CancelCharGridSelection:
 	ld a, [hl] ; $53d8
 	ld b, $00 ; $53d9
 	ld [hl], b ; $53db
-	ld hl, w3_da00 ; $53dc
+	ld hl, wCharGridEntries ; $53dc
 	add a ; $53df
 	add a ; $53e0
 	add l ; $53e1
@@ -2700,7 +2700,7 @@ Data_38_560a:
 	dw wShadowTilemap + 9 * TILEMAP_WIDTH + 14 ; record 2
 	dw wShadowTilemap + 9 * TILEMAP_WIDTH + 16 ; record 3
 DrawPlayerSlotPortrait:
-	ld hl, w3_da00 ; $5612
+	ld hl, wCharGridEntries ; $5612
 	ld a, b ; $5615
 	add a ; $5616
 	add a ; $5617
@@ -2957,7 +2957,7 @@ RefreshCharInfoPanel:
 	ld c, a ; $5790
 	add a ; $5791
 	add a ; $5792
-	ld hl, w3_da00 ; $5793
+	ld hl, wCharGridEntries ; $5793
 	add l ; $5796
 	ld l, a ; $5797
 	jr nc, .readSlot ; $5798
@@ -3010,7 +3010,7 @@ DrawCreatedCharStats:
 	wram_bank $03 ; $57e4
 	ld a, c ; $57ea
 	ld de, $0020 ; $57eb
-	ld hl, w3_d900 ; $57ee
+	ld hl, wCreatedCharRecords ; $57ee
 .seekRecord:
 	or a ; $57f1
 	jr z, .drawStats ; $57f2
@@ -3457,7 +3457,7 @@ CharUnlockFlagsTable1:
 BuildCharGridFromUnlockFlags:
 	ld a, $01 ; $5b43
 	ld [wCharGridBuilt], a ; $5b45
-	ld de, w3_da00 ; $5b48
+	ld de, wCharGridEntries ; $5b48
 	ld c, $00 ; $5b4b
 .flagLoop:
 	ld a, [hl+] ; $5b4d
@@ -3500,7 +3500,7 @@ CharGridFromUnlockFlagsTable:
 	db $05, $06, $07, $08, $09, $0a, $0b, $0c, $0d, $0e, $0f, $10, $11, $12, $13, $ff ; 0x10
 	db $ff, $ff, $ff, $c9 ; 0x20
 FillCharGridPaletteIndices:
-	ld hl, w3_da00 ; $5bb7
+	ld hl, wCharGridEntries ; $5bb7
 	ld c, $00 ; $5bba
 	ld b, $00 ; $5bbc
 .loop:
@@ -3532,13 +3532,13 @@ AddCreatedCharsToCharGrid:
 	wram_bank $03 ; $5bdc
 	ld c, $00 ; $5be2
 	ld b, $00 ; $5be4
-	ld hl, w3_d900 ; $5be6
+	ld hl, wCreatedCharRecords ; $5be6
 .slotLoop:
 	ld a, [hl] ; $5be9
 	cp $ff ; $5bea
 	jr z, .storeCount ; $5bec
 	push hl ; $5bee
-	ld hl, $da24 ; $5bef
+	ld hl, wCharGridEntries + 36 ; $5bef
 	ld a, b ; $5bf2
 	add a ; $5bf3
 	add a ; $5bf4
@@ -3567,7 +3567,7 @@ AddCreatedCharsToCharGrid:
 	ld de, $0020 ; $5c0b
 	add hl, de ; $5c0e
 	push hl ; $5c0f
-	ld hl, $da24 ; $5c10
+	ld hl, wCharGridEntries + 36 ; $5c10
 	ld a, b ; $5c13
 	add $03 ; $5c14
 	add a ; $5c16
@@ -3731,7 +3731,7 @@ BuildVisiblePageSpriteList:
 	ldh a, [hWramBank] ; $5ce9
 	push af ; $5ceb
 	wram_bank $03 ; $5cec
-	ld hl, w3_da00 ; $5cf2
+	ld hl, wCharGridEntries ; $5cf2
 	ld a, [wCharGridPage] ; $5cf5
 	ld bc, $000c ; $5cf8
 .seekPage:
@@ -3807,7 +3807,7 @@ TestAndSetGridEntryTaken:
 	pop bc ; $5d5e
 	ret ; $5d5f
 GetGridEntryTakenPtr:
-	ld hl, w3_da00 ; $5d60
+	ld hl, wCharGridEntries ; $5d60
 	ld a, c ; $5d63
 	ld bc, $000c ; $5d64
 .rowLoop:
@@ -3845,10 +3845,10 @@ BuildCreatedCharRecords:
 	ldh a, [hWramBank] ; $5d87
 	push af ; $5d89
 	wram_bank $03 ; $5d8a
-	ld hl, w3_d900 ; $5d90
+	ld hl, wCreatedCharRecords ; $5d90
 	ld bc, $00c0 ; $5d93
 	call ClearBytes ; $5d96
-	ld bc, w3_d900 ; $5d99
+	ld bc, wCreatedCharRecords ; $5d99
 	ld a, $80 ; $5d9c
 .charLoop:
 	push af ; $5d9e
@@ -3976,7 +3976,7 @@ ResolveSelectedCharIds:
 	cp $ff ; $5e7d
 	jr z, .done ; $5e7f
 	push hl ; $5e81
-	ld hl, w3_da00 ; $5e82
+	ld hl, wCharGridEntries ; $5e82
 	add a ; $5e85
 	add a ; $5e86
 	add l ; $5e87
@@ -4339,7 +4339,7 @@ CachedStorySlotNameTable:
 	; $60e6, 6 bytes (bytes:6)
 	db $00, $d0, $00, $d1, $00, $d2 ; 0x00
 CompactRosterGridEntries:
-	ld hl, $da24 ; $60ec
+	ld hl, wCharGridEntries + 36 ; $60ec
 	ld c, $00 ; $60ef
 .scanLoop:
 	ld a, [hl] ; $60f1
@@ -4420,7 +4420,7 @@ CompactRosterGridEntries:
 	ld [hl+], a ; $6144
 	ret ; $6145
 CompactMarioCastGridEntries:
-	ld hl, w3_da00 ; $6146
+	ld hl, wCharGridEntries ; $6146
 	ld c, $00 ; $6149
 .scanLoop:
 	ld a, [hl] ; $614b
@@ -4488,7 +4488,7 @@ CompactMarioCastGridEntries:
 	jr nz, .scanLoop ; $618f
 	ret ; $6191
 CountCharGridEntries:
-	ld hl, $da24 ; $6192
+	ld hl, wCharGridEntries + 36 ; $6192
 	ld c, $00 ; $6195
 	ld b, $00 ; $6197
 .countLoop:
@@ -4508,7 +4508,7 @@ CountCharGridEntries:
 	jr nz, .countLoop ; $61a8
 	ld a, b ; $61aa
 	ld [wCharGridEntryCount], a ; $61ab
-	ld hl, w3_da00 ; $61ae
+	ld hl, wCharGridEntries ; $61ae
 	ld c, $00 ; $61b1
 	ld b, $00 ; $61b3
 .countPageLoop:
@@ -4635,7 +4635,7 @@ RunCpuDifficultySubmenu:
 	ld a, [hl] ; $6273
 	ld b, $00 ; $6274
 	ld [hl], b ; $6276
-	ld hl, w3_da00 ; $6277
+	ld hl, wCharGridEntries ; $6277
 	add a ; $627a
 	add a ; $627b
 	add l ; $627c
@@ -5266,7 +5266,7 @@ HandleLinkGridButtons:
 .toggleHandedness:
 	call GetGridSlotFromCursor ; $673e
 	ld b, a ; $6741
-	ld hl, $da00 ; $6742
+	ld hl, wCharGridEntries ; $6742
 	add a ; $6745
 	add a ; $6746
 	add l ; $6747
@@ -5319,7 +5319,7 @@ ConfirmLinkGridSelection:
 	sound $5f ; $679d
 	call GetGridSlotFromCursor ; $679f
 	ld b, a ; $67a2
-	ld hl, w3_da00 ; $67a3
+	ld hl, wCharGridEntries ; $67a3
 	add a ; $67a6
 	add a ; $67a7
 	add l ; $67a8
@@ -5409,7 +5409,7 @@ CancelLinkGridSelection:
 	ld a, [hl] ; $6841
 	ld b, $00 ; $6842
 	ld [hl], b ; $6844
-	ld hl, w3_da00 ; $6845
+	ld hl, wCharGridEntries ; $6845
 	add a ; $6848
 	add a ; $6849
 	add l ; $684a
@@ -5723,7 +5723,7 @@ RemotePlayerSlotList1:
 	; $6a37, 5 bytes (bytes:5)
 	db $ff, $00, $01, $02, $ff ; 0x00
 	call GetGridSlotFromCursor ; $6a3c
-	ld hl, $da00 ; $6a3f
+	ld hl, wCharGridEntries ; $6a3f
 	add a ; $6a42
 	add a ; $6a43
 	add l ; $6a44
@@ -5741,7 +5741,7 @@ SetGridEntryTakenByCharId:
 	ret ; $6a51
 .search:
 	ld c, $00 ; $6a52
-	ld hl, $da00 ; $6a54
+	ld hl, wCharGridEntries ; $6a54
 .searchLoop:
 	ld a, [hl] ; $6a57
 	cp d ; $6a58
@@ -6055,7 +6055,7 @@ GetGridSlotFromLinkCursor:
 	ret ; $6c63
 GetLinkCursorSelectionCode:
 	call GetGridSlotFromLinkCursor ; $6c64
-	ld hl, w3_da00 ; $6c67
+	ld hl, wCharGridEntries ; $6c67
 	add a ; $6c6a
 	add a ; $6c6b
 	add l ; $6c6c
@@ -6270,7 +6270,7 @@ RetreatLinkGridSelection:
 	ld a, [hl] ; $6dac
 	ld b, $00 ; $6dad
 	ld [hl], b ; $6daf
-	ld hl, $da00 ; $6db0
+	ld hl, wCharGridEntries ; $6db0
 	add a ; $6db3
 	add a ; $6db4
 	add l ; $6db5
@@ -6297,7 +6297,7 @@ RetreatLinkGridSelection:
 	jr nz, .done ; $6dd7
 	call GetGridSlotFromCursor ; $6dd9
 	ld b, a ; $6ddc
-	ld hl, $da00 ; $6ddd
+	ld hl, wCharGridEntries ; $6ddd
 	add a ; $6de0
 	add a ; $6de1
 	add l ; $6de2
@@ -6966,7 +6966,7 @@ RunLinkMatchSequence:
 	ldh a, [hWramBank] ; $741b
 	push af ; $741d
 	wram_bank $03 ; $741e
-	ld hl, w3_da00 ; $7424
+	ld hl, wCharGridEntries ; $7424
 	ld bc, $0080 ; $7427
 	call ClearBytes ; $742a
 	call BuildCharUnlockFlags ; $742d
@@ -7300,7 +7300,7 @@ StoreLinkMatchCharInfo:
 	add hl, hl ; $7674
 	add hl, hl ; $7675
 	add hl, hl ; $7676
-	ld de, $d902 ; $7677
+	ld de, wCreatedCharRecords + 2 ; $7677
 	add hl, de ; $767a
 	ld a, [hl] ; $767b
 	ld [$c8ba], a ; $767c

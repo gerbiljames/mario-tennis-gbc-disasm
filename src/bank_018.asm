@@ -1030,7 +1030,7 @@ DrawThreeOptionLabels:
 	ld de, $d9e1 ; $5551
 	call CopyBytes11 ; $5554
 	ld hl, ThreeOptionLabelsData2 ; $5557
-	ld de, $da01 ; $555a
+	ld de, wScreenSequenceTimer ; $555a
 	call CopyBytes11 ; $555d
 	ret ; $5560
 DrawYesNoLabels:
@@ -1044,7 +1044,7 @@ DrawYesNoLabels:
 	ld de, $d9e1 ; $5576
 	call CopyBytes11 ; $5579
 	ld hl, YesNoLabels1 ; $557c
-	ld de, $da01 ; $557f
+	ld de, wScreenSequenceTimer ; $557f
 	call CopyBytes11 ; $5582
 	ret ; $5585
 DrawTileBlock6x2ToTilemap:
@@ -1447,12 +1447,12 @@ PlayScreenSequence0:
 	call WaitFadeEnd ; $76c2
 	wram_bank $03 ; $76c5
 	xor a ; $76cb
-	ld [w3_da01], a ; $76cc
+	ld [wScreenSequenceTimer], a ; $76cc
 .scrollLoop:
 	call AdvanceFrame ; $76cf
-	ld a, [w3_da01] ; $76d2
+	ld a, [wScreenSequenceTimer] ; $76d2
 	inc a ; $76d5
-	ld [w3_da01], a ; $76d6
+	ld [wScreenSequenceTimer], a ; $76d6
 	cp $fa ; $76d9
 	jr nz, .scrollLoop ; $76db
 	farcall InitGrayscalePaletteFade ; $76dd
@@ -1558,15 +1558,15 @@ PlayScreenSequence1:
 	call WaitFadeEnd ; $77db
 	wram_bank $03 ; $77de
 	xor a ; $77e4
-	ld [w3_da01], a ; $77e5
+	ld [wScreenSequenceTimer], a ; $77e5
 .scrollLoop:
 	call AdvanceFrame ; $77e8
 	ldh a, [hVBlankCounter] ; $77eb
 	and $03 ; $77ed
 	jr nz, .scrollLoop ; $77ef
-	ld a, [w3_da01] ; $77f1
+	ld a, [wScreenSequenceTimer] ; $77f1
 	inc a ; $77f4
-	ld [w3_da01], a ; $77f5
+	ld [wScreenSequenceTimer], a ; $77f5
 	cp $af ; $77f8
 	jr nz, .scrollLoop ; $77fa
 	ld c, $01 ; $77fc
@@ -1725,7 +1725,7 @@ PlayScreenSequence2:
 .scene3:
 	wram_bank $03 ; $798a
 	xor a ; $7990
-	ld [w3_da00], a ; $7991
+	ld [wEndingSceneStep], a ; $7991
 	call ClearFrameTasks ; $7994
 	call ResetScrollAndCamera ; $7997
 	call DisableLCDSafely ; $799a
@@ -1738,12 +1738,12 @@ PlayScreenSequence2:
 	call WaitFadeEnd ; $79b1
 	wram_bank $03 ; $79b4
 	xor a ; $79ba
-	ld [w3_da01], a ; $79bb
+	ld [wScreenSequenceTimer], a ; $79bb
 .scene4:
 	call AdvanceFrame ; $79be
-	ld a, [w3_da01] ; $79c1
+	ld a, [wScreenSequenceTimer] ; $79c1
 	inc a ; $79c4
-	ld [w3_da01], a ; $79c5
+	ld [wScreenSequenceTimer], a ; $79c5
 	cp $b4 ; $79c8
 	jr nz, .scene4 ; $79ca
 	ld a, $01 ; $79cc
@@ -1834,7 +1834,7 @@ TaskFadeInPalette_18:
 	ldh a, [hWramBank] ; $7a81
 	push af ; $7a83
 	wram_bank $03 ; $7a84
-	ld a, [w3_da00] ; $7a8a
+	ld a, [wEndingSceneStep] ; $7a8a
 	cp $10 ; $7a8d
 	jr z, .alt2 ; $7a8f
 	add a ; $7a91
@@ -1851,9 +1851,9 @@ TaskFadeInPalette_18:
 	ldh a, [hVBlankCounter] ; $7aa2
 	and $03 ; $7aa4
 	jr nz, .alt2 ; $7aa6
-	ld a, [w3_da00] ; $7aa8
+	ld a, [wEndingSceneStep] ; $7aa8
 	inc a ; $7aab
-	ld [w3_da00], a ; $7aac
+	ld [wEndingSceneStep], a ; $7aac
 .alt2:
 	pop af ; $7aaf
 	wram_bank ; $7ab0

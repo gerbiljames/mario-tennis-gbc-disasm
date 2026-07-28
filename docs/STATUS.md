@@ -6792,3 +6792,54 @@ three `w3_*` names, go back to being one union.
 `RunStoryDataConfirmMenu` sets to 0 and `$0c` before registering a frame task
 whose body is `ret`. Nothing reads them, and with the task stubbed out nothing
 ever will, so they keep their auto-names.
+
+## No auto-named WRAM address is left (2026-07-28)
+
+`w<bank>_<addr>` is the generator's name for a banked-WRAM byte whose purpose
+is unknown but whose WRAM bank every reference agrees on. **The count is now
+zero**, down from 36 — and 36 was itself up from 17, because fixing the
+union-span bug in the pass above surfaced 20 that had been suppressed.
+
+### WRAM bank $04 — the actor array
+
+`$d000` is `wActors`: **24 records of `ACTOR_SIZE`**, the array `SpawnActor`
+allocates from. `GetActorStateAddr` turns an actor id into a slot with two
+`srl h / rra` pairs — id * 64 — and the per-frame loop walks it with
+`ld de, $0040 / add hl, de`. Five auto-names were the same field in four
+different actors: `w4_d037`, `w4_d077`, `w4_d0b7`, `w4_d0f7` are
+`wActors + n * ACTOR_SIZE + 55` for n = 0-3, which is what
+`SetupCharViewerScene` sets on the four characters it poses.
+
+The rest of the bank was the actor engine's plumbing:
+
+| | |
+|---|---|
+| `$da00` `wNearbyActorList` | pointers to the live nearby slots, zero-terminated |
+| `$dac0` `wActorTemplate` | one `map_actor` record staged out of ROM |
+| `$dad0` `wActorObjDef` | the 16-byte object definition, then distributed into the slot |
+| `$dae0`/`$dae2` `wActorScreenOrigin*` | negated camera + shake, added to get a screen coordinate |
+| `$dcf0` `wMinigameTargetWork` | the target record being updated, the `wObjSlotWork` pattern again |
+
+Naming `wActors` also exposed a **false name**: the debug character viewer's
+union variant was scoped by ROM range alone, so `wCharViewerRow` was rendering
+at `$d000` inside `SetupCharViewerScene` — which selects WRAM bank `$04` to
+place its actors. Its scope now requires the WRAM bank over that part of the
+range. Same lesson as the glyph/save overlay, from the opposite direction.
+
+### The other thirty
+
+| bank | what it turned out to be |
+|---|---|
+| `$06` | the **EXP award screen** at `$d230-$d259`: the gauge total and running count, the level-up latch, and two four-byte `{X, Y, first digit tile, attribute}` records that say how each number is drawn as sprites |
+| `$03` | `wCreatedCharRecords`/`wCharGridEntries` (bank `$38`), `wN64RecordsBlock` (bank `$3b`, the screen's own copy of save block `$0b`), the ranking-board banner animation, `wRingShotEntryList`, two screen-sequence counters in bank `$18` |
+| `$01` | `wCharRecordBuffer`, the 128-byte character-record copy `LoadCharacterRecordToBuffer` makes |
+| `$07` | `wStubbedPromptTaskState` — two bytes `RunStoryDataConfirmMenu` sets before registering a frame task whose body is `ret` |
+
+Three of these needed the overlay treatment: `$d900-$daff` in WRAM bank `$03`
+is three different screens' buffers, and `$d230` is the scrolling-text screen
+*and* the EXP gauge, with banks `$1c`/`$1d` putting `$40`-byte stat blocks over
+the top of both — those stay numeric, being neither.
+
+Where the evidence ran out the name says so rather than guessing:
+`wStubbedPromptTaskState`, and `wPlayerObjDefPending` in bank `$04`, are written
+and never read. That is a fact about the ROM, and it is worth more than a `ds 1`.

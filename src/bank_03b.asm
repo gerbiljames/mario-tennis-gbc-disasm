@@ -1172,7 +1172,7 @@ BuildN64ExhibColumnList:
 	ld de, $dc01 ; $474c
 	ld bc, $0001 ; $474f
 	call CopyMemoryFast ; $4752
-	ld hl, $da58 ; $4755
+	ld hl, wN64RecordsBlock + 344 ; $4755
 	ld a, [hl] ; $4758
 	ld b, a ; $4759
 	and $01 ; $475a
@@ -1246,7 +1246,7 @@ DecodeN64ExhibResultsRow:
 	push de ; $47ce
 	push hl ; $47cf
 	push de ; $47d0
-	ld hl, $d9d8 ; $47d1
+	ld hl, wN64RecordsBlock + 216 ; $47d1
 	ld a, b ; $47d4
 	add a ; $47d5
 	add a ; $47d6
@@ -1413,7 +1413,7 @@ ExpandByteToBitArray:
 	pop hl ; $48b6
 	ret ; $48b7
 	wram_bank $03 ; $48b8
-	ld hl, $d9d8 ; $48be
+	ld hl, wN64RecordsBlock + 216 ; $48be
 	ld c, $00 ; $48c1
 .loopB:
 	ld a, $2c ; $48c3
@@ -1504,10 +1504,10 @@ ReadN64RecordsSaveBlock:
 	ldh a, [hWramBank] ; $4940
 	push af ; $4942
 	wram_bank $03 ; $4943
-	ld hl, w3_d900 ; $4949
+	ld hl, wN64RecordsBlock ; $4949
 	ld bc, $0020 ; $494c
 	call ClearMemory16 ; $494f
-	ld hl, w3_d900 ; $4952
+	ld hl, wN64RecordsBlock ; $4952
 	ld b, $0b ; $4955
 	farcall ReadSaveBlock ; $4957
 	ld b, a ; $495a
@@ -1526,8 +1526,8 @@ RunTrophiesScreen:
 	ld hl, UpdateAnimatedTilesTask_3b ; $4972
 	call RegisterFrameTask ; $4975
 	xor a ; $4978
-	ld [$d901], a ; $4979
-	ld [$d900], a ; $497c
+	ld [wN64RecordsBlock + 1], a ; $4979
+	ld [wN64RecordsBlock], a ; $497c
 	call EnableLCD ; $497f
 	script_fade_in $10 ; $4982
 	call WaitFadeEnd ; $4987
@@ -1547,14 +1547,14 @@ RunTrophiesScreen:
 	jr nz, .bit4Set ; $49a9
 	jr .loop ; $49ab
 .bit5Set:
-	ld a, [w3_d901] ; $49ad
+	ld a, [wN64RecordsBlock + 1] ; $49ad
 	inc a ; $49b0
-	ld [w3_d901], a ; $49b1
+	ld [wN64RecordsBlock + 1], a ; $49b1
 	jr .loop ; $49b4
 .bit4Set:
-	ld a, [w3_d900] ; $49b6
+	ld a, [wN64RecordsBlock] ; $49b6
 	inc a ; $49b9
-	ld [w3_d900], a ; $49ba
+	ld [wN64RecordsBlock], a ; $49ba
 	jr .loop ; $49bd
 .checkTrophiesCheatCode:
 	bit 2, a ; $49bf
@@ -1751,10 +1751,10 @@ DrawTrophiesCharSprite:
 	ret ; $4b18
 CheckTrophiesCheatCode:
 	sound $22 ; $4b19
-	ld a, [w3_d900] ; $4b1b
+	ld a, [wN64RecordsBlock] ; $4b1b
 	cp $0c ; $4b1e
 	jp nz, .saveStorySlot ; $4b20
-	ld a, [w3_d901] ; $4b23
+	ld a, [wN64RecordsBlock + 1] ; $4b23
 	cp $22 ; $4b26
 	jp nz, .saveStorySlot ; $4b28
 	call ApplyUnlockEverythingCheat ; $4b2b
@@ -2069,7 +2069,7 @@ LoadN64TnmtDataRecords:
 	ld bc, $0010 ; $4e14
 	call CopyMemoryBC ; $4e17
 	call ReadN64RecordsSaveBlock ; $4e1a
-	ld hl, $da58 ; $4e1d
+	ld hl, wN64RecordsBlock + 344 ; $4e1d
 	ld a, [hl] ; $4e20
 	ld b, a ; $4e21
 	and $01 ; $4e22
@@ -2096,7 +2096,7 @@ N64TnmtData:
 	db $00, $01, $02, $03, $04, $05, $06, $07, $08, $09, $0a, $0b, $0c, $0d, $0e, $0f ; 0x00
 BuildN64TnmtTrophyGrid:
 	ld de, $d830 ; $4e54
-	ld hl, $d908 ; $4e57
+	ld hl, wN64RecordsBlock + 8 ; $4e57
 	ld c, $00 ; $4e5a
 .loop:
 	ld b, c ; $4e5c
@@ -2124,7 +2124,7 @@ GetN64CharTrophyRowPtr:
 	inc h ; $4e7c
 .read:
 	ld a, [hl] ; $4e7d
-	ld hl, $d908 ; $4e7e
+	ld hl, wN64RecordsBlock + 8 ; $4e7e
 	add l ; $4e81
 	ld l, a ; $4e82
 	jr nc, .done ; $4e83
@@ -2620,7 +2620,7 @@ DrawRingShotRowIcons:
 	ldh a, [hWramBank] ; $5206
 	push af ; $5208
 	wram_bank $03 ; $5209
-	ld hl, $dc40 ; $520f
+	ld hl, wRingShotEntryList ; $520f
 	ld a, [wMenuCursorY] ; $5212
 	add l ; $5215
 	ld l, a ; $5216
@@ -2656,22 +2656,22 @@ LoadN64RingShotRecords:
 	wram_bank $03 ; $523e
 	call ReadN64RecordsSaveBlock ; $5244
 	ld hl, N64RingShot ; $5247
-	ld de, $dc40 ; $524a
+	ld de, wRingShotEntryList ; $524a
 	ld bc, $0010 ; $524d
 	call CopyMemoryBC ; $5250
-	ld hl, $da58 ; $5253
+	ld hl, wN64RecordsBlock + 344 ; $5253
 	ld a, [hl] ; $5256
 	ld b, a ; $5257
 	and $01 ; $5258
 	jr nz, .maskSet ; $525a
 	ld a, $10 ; $525c
-	ld [w3_dc4e], a ; $525e
+	ld [wRingShotEntryList + 14], a ; $525e
 .maskSet:
 	ld a, b ; $5261
 	and $02 ; $5262
 	jr nz, .maskSet2 ; $5264
 	ld a, $10 ; $5266
-	ld [w3_dc4f], a ; $5268
+	ld [wRingShotEntryList + 15], a ; $5268
 .maskSet2:
 	ld hl, $db00 ; $526b
 	ld bc, $0140 ; $526e
@@ -2683,35 +2683,35 @@ N64RingShot:
 	db $00, $01, $02, $03, $04, $05, $06, $07, $08, $09, $0a, $0b, $0c, $0d, $0e, $0f ; 0x00
 SeedDefaultRingShotRecords:
 	ld hl, DefaultRingShot0 ; $5288
-	ld de, $d918 ; $528b
+	ld de, wN64RecordsBlock + 24 ; $528b
 	ld bc, $0010 ; $528e
 	call CopyMemoryBC ; $5291
 	ld hl, DefaultRingShot0 ; $5294
-	ld de, $d928 ; $5297
+	ld de, wN64RecordsBlock + 40 ; $5297
 	ld bc, $0010 ; $529a
 	call CopyMemoryBC ; $529d
 	ld hl, DefaultRingShot0 ; $52a0
-	ld de, $d938 ; $52a3
+	ld de, wN64RecordsBlock + 56 ; $52a3
 	ld bc, $0010 ; $52a6
 	call CopyMemoryBC ; $52a9
 	ld hl, DefaultRingShot0 ; $52ac
-	ld de, $d948 ; $52af
+	ld de, wN64RecordsBlock + 72 ; $52af
 	ld bc, $0010 ; $52b2
 	call CopyMemoryBC ; $52b5
 	ld hl, DefaultRingShot1 ; $52b8
-	ld de, $d958 ; $52bb
+	ld de, wN64RecordsBlock + 88 ; $52bb
 	ld bc, $0020 ; $52be
 	call CopyMemoryBC ; $52c1
 	ld hl, DefaultRingShot1 ; $52c4
-	ld de, $d978 ; $52c7
+	ld de, wN64RecordsBlock + 120 ; $52c7
 	ld bc, $0020 ; $52ca
 	call CopyMemoryBC ; $52cd
 	ld hl, DefaultRingShot1 ; $52d0
-	ld de, $d998 ; $52d3
+	ld de, wN64RecordsBlock + 152 ; $52d3
 	ld bc, $0020 ; $52d6
 	call CopyMemoryBC ; $52d9
 	ld hl, DefaultRingShot1 ; $52dc
-	ld de, $d9b8 ; $52df
+	ld de, wN64RecordsBlock + 184 ; $52df
 	ld bc, $0020 ; $52e2
 	call CopyMemoryBC ; $52e5
 	ret ; $52e8
@@ -2778,7 +2778,7 @@ CopyRingShotCharScores:
 	add a ; $536d
 	add a ; $536e
 	add a ; $536f
-	ld hl, $d958 ; $5370
+	ld hl, wN64RecordsBlock + 88 ; $5370
 	add l ; $5373
 	ld l, a ; $5374
 	jr nc, .gotPtr ; $5375
@@ -2812,7 +2812,7 @@ DecodeRingShotCharClears:
 	ld a, b ; $5392
 	add a ; $5393
 	add a ; $5394
-	ld hl, $d918 ; $5395
+	ld hl, wN64RecordsBlock + 24 ; $5395
 	add l ; $5398
 	ld l, a ; $5399
 	jr nc, .gotPtr ; $539a
@@ -8347,9 +8347,9 @@ LoadMarioCastExhibGrid:
 	ldh a, [hWramBank] ; $7d1e
 	push af ; $7d20
 	wram_bank $03 ; $7d21
-	ld hl, w3_d900 ; $7d27
+	ld hl, wN64RecordsBlock ; $7d27
 	farcall ReadMarioCastVictoryGrid ; $7d2a
-	ld hl, w3_d900 ; $7d2d
+	ld hl, wN64RecordsBlock ; $7d2d
 	ld de, $db00 ; $7d30
 	ld c, $00 ; $7d33
 .loop:
@@ -8400,7 +8400,7 @@ RecordExhibitionVictory:
 	ld a, [wPlayer2CurrentMainCharacter] ; $7d8a
 	call GetMarioCastIndex ; $7d8d
 	ld e, a ; $7d90
-	ld hl, w3_d900 ; $7d91
+	ld hl, wN64RecordsBlock ; $7d91
 	farcall ReadMarioCastVictoryGrid ; $7d94
 	ld a, d ; $7d97
 	add a ; $7d98
@@ -8408,7 +8408,7 @@ RecordExhibitionVictory:
 	add a ; $7d9a
 	add d ; $7d9b
 	add e ; $7d9c
-	ld hl, w3_d900 ; $7d9d
+	ld hl, wN64RecordsBlock ; $7d9d
 	add l ; $7da0
 	ld l, a ; $7da1
 	jr nc, .checkExhibitionModeCPUMainCharacterDifficulty ; $7da2
@@ -8423,7 +8423,7 @@ RecordExhibitionVictory:
 	jr c, .restore ; $7daf
 	ld [hl], a ; $7db1
 	call UpdateMarioCastUnlocks ; $7db2
-	ld hl, w3_d900 ; $7db5
+	ld hl, wN64RecordsBlock ; $7db5
 	farcall WriteMarioCastVictoryGrid ; $7db8
 .step2:
 	jr nz, .step2 ; $7dbb
@@ -8472,7 +8472,7 @@ MarioCastOrderTable:
 UpdateMarioCastUnlocks:
 	ld c, $00 ; $7df6
 .loop:
-	ld hl, w3_d900 ; $7df8
+	ld hl, wN64RecordsBlock ; $7df8
 	ld a, c ; $7dfb
 	add a ; $7dfc
 	add a ; $7dfd

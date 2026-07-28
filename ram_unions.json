@@ -2058,8 +2058,8 @@
   {
    "start": "0xd230",
    "wram_bank": "0x06",
-   "end": "0xd235",
-   "comment": "Scrolling text screen (the staff-roll style crawl), WRAM bank $06,\nowned by bank $03's RunScrollingTextScreen.",
+   "end": "0xd25a",
+   "comment": "Scrolling text screen (the staff-roll style crawl), WRAM bank $06,\nowned by bank $03's RunScrollingTextScreen.\nThe EXP award screen (bank $1a) overlays the same bytes with its gauge\nstate, and banks $1c/$1d put the character-data screen's $40-byte stat\nblocks at $d240/$d280/$d2d0 -- those stay numeric, being neither.",
    "variants": [
     {
      "context": "scrolling text screen (bank $03)",
@@ -2085,6 +2085,77 @@
       "0xd234": {
        "name": "wScrollTextDone",
        "note": "[8-bit] Set once the last line has scrolled off, which stops the scroll without leaving the loop"
+      }
+     }
+    },
+    {
+     "context": "EXP award screen (bank $1a)",
+     "scopes": [
+      {
+       "bank": "0x1a",
+       "wram_bank": "0x06"
+      }
+     ],
+     "symbols": {
+      "0xd230": {
+       "name": "wExpAwardTotal",
+       "note": "[16-bit] EXP being awarded, the target the gauge counts up to",
+       "size": 2
+      },
+      "0xd232": {
+       "name": "wExpAwardCounted",
+       "note": "[16-bit] EXP counted so far. AdvanceExpGaugeFill increments it once per tick and sets wExpCountDone when it reaches wExpAwardTotal",
+       "size": 2
+      },
+      "0xd234": {
+       "name": "wExpCountedSprite",
+       "note": "[4 bytes] How the counted number is drawn: +$00 X, +$01 Y, +$02 first digit tile (\"0\"; a digit adds its value * 2), +$03 OAM attribute",
+       "size": 4
+      },
+      "0xd238": {
+       "name": "wExpCountDone",
+       "note": "[8-bit] Set once wExpAwardCounted has reached the total; the fill loop leaves and the level-up path runs"
+      },
+      "0xd239": {
+       "name": "wExpCountFastForward",
+       "note": "[8-bit] Set when the player presses A or B during the count, which switches the gauge to the fast path"
+      },
+      "0xd23a": {
+       "name": "wExpNumberSpriteShiftX",
+       "note": "[8-bit] Added to the X of every digit QueueNumberSpritesShifted draws, which is how the counted number slides while the gauge fills"
+      },
+      "0xd23b": {
+       "name": "wExpLevelUpQueued",
+       "note": "[8-bit] Latched once the EXP-to-next-level figure reaches zero, so the level-up is requested exactly once"
+      },
+      "0xd23c": {
+       "name": "wExpToNextLevel",
+       "note": "[16-bit] EXP still needed for the next level, seeded from GetExpRemainingToNextLevel and counted down alongside the gauge",
+       "size": 2
+      },
+      "0xd23e": {
+       "name": "wExpToNextSprite",
+       "note": "[4 bytes] The same X/Y/tile/attribute record for the EXP-to-next-level number",
+       "size": 4
+      },
+      "0xd242": {
+       "name": "wExpToNextDisplayed",
+       "note": "[16-bit] The value actually shown for EXP-to-next; reaching zero is what sets wExpLevelUpQueued",
+       "size": 2
+      },
+      "0xd244": {
+       "name": "wExpToNextDigits",
+       "note": "[5 bytes] Decimal digits of wExpToNextDisplayed, formatted unsigned to five places",
+       "size": 5
+      },
+      "0xd24e": {
+       "name": "wExpCountedDigits",
+       "note": "[5 bytes] Decimal digits of wExpAwardCounted, formatted the same way",
+       "size": 5
+      },
+      "0xd254": {
+       "name": "wExpAwardSlot",
+       "note": "[8-bit] Which character record the award belongs to, kept so the screen can hand it to AddPlayerExp once the count finishes"
       }
      }
     }
@@ -2714,6 +2785,173 @@
        "name": "wMinigameTargetWork",
        "note": "[16 bytes] +$00 flags (bit 0 live, bit 1 moving toward the goal), +$02 delay counter the update ticks down, +$06/+$08 current position, +$0a/+$0c goal position. MoveMinigameTargetTowardGoal steps the current position toward the goal $10 units at a time",
        "size": 16
+      }
+     }
+    }
+   ]
+  },
+  {
+   "start": "0xd855",
+   "wram_bank": "0x03",
+   "end": "0xd85b",
+   "comment": "Ranking-board banner animation (WRAM bank $03), owned by bank $1b and\nscoped to its ranking-board code range like the $d800 block below it.",
+   "variants": [
+    {
+     "context": "ranking board (bank $1b)",
+     "scopes": [
+      {
+       "bank": "0x1b",
+       "start": "0x4e00",
+       "end": "0x6000"
+      }
+     ],
+     "symbols": {
+      "0xd855": {
+       "name": "wRankingBannerAnimFrame",
+       "note": "[8-bit] Frame counter for the sliding banner sprite. RankingBoardAnimTask_1b indexes RankingBoardAnimTaskTable with it for this frame's X delta, and unregisters itself once it reaches $87"
+      },
+      "0xd856": {
+       "name": "wRankingBannerX",
+       "note": "[8-bit] X the banner sprite is drawn at, seeded to $a0 on frame 0 and advanced by the table delta every frame after"
+      },
+      "0xd858": {
+       "name": "wRankingAnimStateDone",
+       "note": "[8-bit] Set to 1 at the end of each ranking-board animation state, which is how the state machine knows the current step has played out"
+      },
+      "0xd85a": {
+       "name": "wRankingBoardSilent",
+       "note": "[8-bit] Set when ShowRankingBoard is called with mode $03, which it then rewrites to $00. It suppresses the board's entrance animation (DispatchRankingBoardAnim returns at once) and the closing jingle -- the quiet variant used when the board is shown as part of a longer sequence"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "start": "0xd900",
+   "wram_bank": "0x03",
+   "end": "0xdb00",
+   "comment": "Screen-sized buffers in WRAM bank $03 that three unrelated screens keep\nat the same addresses, so the variants are scoped to the owning ROM bank.\nBank $3b's copy is the largest and covers the whole span; the other two\nsit inside it.",
+   "variants": [
+    {
+     "context": "created characters and the character grid (bank $38)",
+     "scopes": [
+      {
+       "bank": "0x38"
+      }
+     ],
+     "symbols": {
+      "0xd900": {
+       "name": "wCreatedCharRecords",
+       "note": "[$c0 bytes] Six $20-byte records for the player-created characters, built by BuildCreatedCharRecords from the save and walked by DrawCreatedCharStats (which seeks with a $20 stride). A record whose first byte is $ff ends the list",
+       "size": 192
+      },
+      "0xda00": {
+       "name": "wCharGridEntries",
+       "note": "[$80 bytes] The character-select grid as 32 four-byte entries, cleared when the screen opens and filled by BuildCharUnlockFlags. AddCreatedCharsToCharGrid appends the created characters from $da24 on, four bytes per slot",
+       "size": 128
+      }
+     }
+    },
+    {
+     "context": "N64 transfer records (bank $3b)",
+     "scopes": [
+      {
+       "bank": "0x3b"
+      }
+     ],
+     "symbols": {
+      "0xd900": {
+       "name": "wN64RecordsBlock",
+       "note": "[512 bytes] Image of save block $0b, the N64 (Transfer Pak) records, read here by ReadN64RecordsSaveBlock for the trophies screen and the ring-shot and star-victory grids. Same block the bank $03 engine stages at wSaveBlockBuffer in WRAM bank $07 -- this is the screen's own copy",
+       "size": 512
+      }
+     }
+    },
+    {
+     "context": "screen sequences (bank $18)",
+     "scopes": [
+      {
+       "bank": "0x18"
+      }
+     ],
+     "symbols": {
+      "0xda00": {
+       "name": "wEndingSceneStep",
+       "note": "[8-bit] Cleared as the ending sequence enters its third scene and stepped through the scenes that follow"
+      },
+      "0xda01": {
+       "name": "wScreenSequenceTimer",
+       "note": "[8-bit] Frame counter each PlayScreenSequence* routine runs from 0 to $fa while its screen scrolls, then fades out"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "start": "0xdc40",
+   "wram_bank": "0x03",
+   "end": "0xdc50",
+   "comment": "Ring-shot entry list (WRAM bank $03), owned by the bank $3b N64 records\nscreen and scoped to that bank.",
+   "variants": [
+    {
+     "context": "ring-shot results (bank $3b)",
+     "scopes": [
+      {
+       "bank": "0x3b"
+      }
+     ],
+     "symbols": {
+      "0xdc40": {
+       "name": "wRingShotEntryList",
+       "note": "[16 bytes] The ring-shot rows to show, copied from the N64RingShot table and then patched: an entry becomes $10 (the blank row) when the matching bit in the N64 records block is clear, so a course the player never transferred is left out",
+       "size": 16
+      }
+     }
+    }
+   ]
+  },
+  {
+   "start": "0xd580",
+   "wram_bank": "0x01",
+   "end": "0xd600",
+   "comment": "Character-record scratch. LoadCharacterRecordToBuffer writes $d580 in\nwhichever WRAM bank the caller left selected, so the address belongs to\nno one bank; this names the bank $01 copy, which is the only one the\ndataflow can prove (bank $1b selects it before filling the new-game\nroster). The bank $18 and $38 callers keep the numeric address.",
+   "variants": [
+    {
+     "context": "character record buffer (bank $1b)",
+     "scopes": [
+      {
+       "bank": "0x1b",
+       "wram_bank": "0x01"
+      }
+     ],
+     "symbols": {
+      "0xd580": {
+       "name": "wCharRecordBuffer",
+       "note": "[128 bytes] Copy of a character record that LoadCharacterRecordToBuffer takes from wPlayer2MainName, so a caller can read one character's fields without disturbing the live records. +$0b is the id CheckCharacterUnlocked tests against $ff, and RunNewGameSetup reads +$0c and +$0e for each of the four starting characters",
+       "size": 128
+      }
+     }
+    }
+   ]
+  },
+  {
+   "start": "0xdb26",
+   "wram_bank": "0x07",
+   "end": "0xdb28",
+   "comment": "State for a frame task that was stubbed out (WRAM bank $07).",
+   "variants": [
+    {
+     "context": "story-data confirm menu (bank $1b)",
+     "scopes": [
+      {
+       "bank": "0x1b"
+      }
+     ],
+     "symbols": {
+      "0xdb26": {
+       "name": "wStubbedPromptTaskState",
+       "note": "[2 bytes] RunStoryDataConfirmMenu selects WRAM bank $07, clears +$00, sets +$01 to $0c and registers StubNop_1b_69d6 as a per-frame task. That task's body is a bare ret, so nothing ever reads either byte -- the register/unregister pair around the prompt is real, only the work is missing",
+       "size": 2
       }
      }
     }
