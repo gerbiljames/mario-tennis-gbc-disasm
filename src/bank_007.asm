@@ -2785,7 +2785,7 @@ ShotTypePresets_07:
 	db $54, $04, $03, $a0, $02 ; record 14
 GetShotAimOffsetForSide:
 	ld hl, CourtSideOffsets_07_563e ; $55e9
-	ld a, [$c7b9] ; $55ec
+	ld a, [wMinigameUsesWall] ; $55ec
 	and a, a ; $55ef
 	jr nz, .readAim ; $55f0
 	ld a, [wCharCourtPos] ; $55f2

@@ -1862,5 +1862,89 @@
  "0xc2ff": {
   "name": "wDrillPointJudgement",
   "note": "[8-bit] Result of judging the current drill point, 0 until judged. Each drill's JudgeShot0-3 stores the value its JudgePoint returns, and JudgePoint returns early while this is already nonzero so the first judgement of a point wins"
+ },
+ "0xc29b": {
+  "name": "wStoryLocationBank",
+  "note": "[8-bit] ROM bank of the current story location's header and script data: the high byte of the far pointer at $c282, taken by LoadStoryLocationHeader. Every consumer (LoadStoryEntryPointRecord, FindStoryScriptEntry, GetTileTriggerAtPlayer, RunNpcInteraction, RunLocationExit, ...) passes it to FarReadByte or a farcall"
+ },
+ "0xc2da": {
+  "name": "wStoryScriptRan",
+  "note": "[8-bit] Set to 1 by RunStoryScriptOrDialogue whenever it dispatches a location script; the overworld frame loop clears it before checking for an interaction and stops looking for further triggers this frame once it is set"
+ },
+ "0xc329": {
+  "name": "wMapScrollMinX",
+  "note": "[8-bit] Lowest camera X (in tiles) the overworld scroll clamp allows; set to 0 by InitSceneScroll"
+ },
+ "0xc32a": {
+  "name": "wMapScrollMinY",
+  "note": "[8-bit] Lowest camera Y (in tiles) the overworld scroll clamp allows"
+ },
+ "0xc32b": {
+  "name": "wMapWidthTiles",
+  "note": "[8-bit] Map width in tiles; the camera clamp stops at this minus $14 (the 20-tile screen width), so the X limit is the last fully visible column"
+ },
+ "0xc32c": {
+  "name": "wMapHeightTiles",
+  "note": "[8-bit] Map height in tiles; the camera clamp stops at this minus $12 (18 rows)"
+ },
+ "0xc3bb": {
+  "name": "wGlyphRowStartCol",
+  "note": "[8-bit] Tilemap cell column the current glyph row starts at. InitGlyphStreamForWindow seeds wGlyphPenX from it (column * $80, the sub-pixel scale) and StartGlyphStreamRow reloads both from the pen at each row break"
+ },
+ "0xc3bc": {
+  "name": "wGlyphFlushedCol",
+  "note": "[8-bit] Tilemap cell column already flushed out of the glyph buffer; StampGlyphTileAtPen subtracts it from the pen's column to find how far the write pointer has to advance"
+ },
+ "0xc8a5": {
+  "name": "wSaveAndQuitRequest",
+  "note": "[8-bit] Set to 1 by the Save & Quit entries of the match and story pause menus (MatchQuitMenu_SaveAndQuit, StoryPauseMenu_SaveQuit, and the story menu's confirm prompt), each of which also calls SaveStoryReturnPoint. The post-match code in bank $10 branches on it to show the results screen and save the slot, then clears it beside wKeepMatchStatsFlag"
+ },
+ "0xc8b9": {
+  "name": "wLinkMatchRole",
+  "note": "[8-bit] Copy of hLinkState taken by StoreLinkMatchCharInfo when the link match's characters are committed. The results and EXP screens turn it back into a WRAM bank with `srl a / add a, $04`, i.e. which per-character struct is the local player's"
+ },
+ "0xc8f5": {
+  "name": "wMatchContext",
+  "note": "[8-bit] What kind of match is running: 0 = exhibition (cleared by RestoreOverworldAfterMatch), 1 = story match (InitStoryMatchSettings), 2 = minigame/drill (InitMinigameMatchSettings, RunDoublesDrillMatch). SelectScoreboardLayout forces the doubles scoreboard and InitViewFlipPreference forces the fixed court view when it is 2"
+ },
+ "0xcb2a": {
+  "name": "wPauseMenuOptionBits",
+  "note": "[8-bit] Pause-menu options state: the low nibble holds the per-option toggle bits the music/sound rows flip, bit 5 gates DrawPauseMenuSettingValues, and bits 6-7 are set once a row has been visited. Cleared by ResetPauseMenuState"
+ },
+ "0xc7b8": {
+  "name": "wMinigameUsesTennisMachine",
+  "note": "[8-bit] Set to 1 by the InitMinigame_* routines whose ball is fed by the tennis machine (Tennis Machine 1-4, Target Shot, Shooting Star, Treasure Box, Medallion Match). The shared match engine reads it for the scoreboard layout, the point reset and the serve phase"
+ },
+ "0xc7b9": {
+  "name": "wMinigameUsesWall",
+  "note": "[8-bit] Set to 1 by the InitMinigame_* routines played against the wall (Wall Practice 1-4, Banana Bunch, Perfect Shot, Fruit Fantasy); read by SelectScoreboardLayout, HandleBallNetCrossing and the serve positioning"
+ },
+ "0xc7ba": {
+  "name": "wMinigameIsBooBlast",
+  "note": "[8-bit] Set to 1 by InitMinigame_BooBlast"
+ },
+ "0xc7bb": {
+  "name": "wDrillIsPracticeLesson",
+  "note": "[8-bit] Set to 1 by the bank $0b Service/NetGame practice drills (the coach lessons). RecordDrillPointResultBits stores the per-point result differently while it is set, and SelectScoreboardLayout picks layout 3"
+ },
+ "0xc7bc": {
+  "name": "wMinigameHighScoreMode",
+  "note": "[8-bit] Set to 1 when the minigame is being played for a high score: the InitMinigame_*HighScore entries set it outright, and the ordinary minigames set it when wMinigameLevel is 2 (the third level). SelectScoreboardLayout picks layout 7"
+ },
+ "0xcb44": {
+  "name": "wCutsceneSpriteAX",
+  "note": "[8-bit] X of the intro cutscene's first sprite group; the state Update routines walk it and QueueCutsceneSpriteGroupA adds each template's offset to it"
+ },
+ "0xcb45": {
+  "name": "wCutsceneSpriteAY",
+  "note": "[8-bit] Y of the intro cutscene's first sprite group"
+ },
+ "0xcb46": {
+  "name": "wCutsceneSpriteBX",
+  "note": "[8-bit] X of the intro cutscene's second sprite group (QueueCutsceneSpriteGroupB)"
+ },
+ "0xcb47": {
+  "name": "wCutsceneSpriteBY",
+  "note": "[8-bit] Y of the intro cutscene's second sprite group"
  }
 }

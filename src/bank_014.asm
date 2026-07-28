@@ -238,13 +238,13 @@ TennisMachineRoomTile01_14:
 	db $12, $13, $14, $15, $1a, $1a, $1a, $1a ; 0x00
 TennisMachineRoomInitScript_14:
 	ld a, $26 ; $4278
-	ld [$c329], a ; $427a
+	ld [wMapScrollMinX], a ; $427a
 	ld a, $23 ; $427d
-	ld [$c32a], a ; $427f
+	ld [wMapScrollMinY], a ; $427f
 	ld a, $40 ; $4282
-	ld [$c32b], a ; $4284
+	ld [wMapWidthTiles], a ; $4284
 	ld a, $3c ; $4287
-	ld [$c32c], a ; $4289
+	ld [wMapHeightTiles], a ; $4289
 	call DisableLCDSafely ; $428c
 	ld a, $00 ; $428f
 	farcall CopyScrolledSceneTilemapToVram ; $4291
@@ -3162,7 +3162,7 @@ MapScriptNop_14:
 	ret ; $78d9
 MapScriptClearActiveFlag_14:
 	xor a, a ; $78da
-	ld [$c2da], a ; $78db
+	ld [wStoryScriptRan], a ; $78db
 	ret ; $78de
 MapScriptPlaySoundA2_14:
 	sound $a2 ; $78df

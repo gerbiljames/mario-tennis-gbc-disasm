@@ -752,7 +752,7 @@ InitConfirmScreen:
 	call LoadMenuHandCursorGfx ; $5354
 	call LoadConfirmScreenSpriteGfx ; $5357
 	call SetupScoreboardDisplay ; $535a
-	ld hl, $c7bc ; $535d
+	ld hl, wMinigameHighScoreMode ; $535d
 	ld b, [hl] ; $5360
 	call StubNop_18_5379 ; $5361
 	ret ; $5364

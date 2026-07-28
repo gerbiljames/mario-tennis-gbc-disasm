@@ -998,13 +998,13 @@ WallPracticeLevelLockedScript:
 WallPracticeRoomInitScript_12:
 	farcall WaitPlayerMoveDone ; $4f03
 	ld a, $00 ; $4f06
-	ld [$c329], a ; $4f08
+	ld [wMapScrollMinX], a ; $4f08
 	ld a, $27 ; $4f0b
-	ld [$c32a], a ; $4f0d
+	ld [wMapScrollMinY], a ; $4f0d
 	ld a, $18 ; $4f10
-	ld [$c32b], a ; $4f12
+	ld [wMapWidthTiles], a ; $4f12
 	ld a, $3c ; $4f15
-	ld [$c32c], a ; $4f17
+	ld [wMapHeightTiles], a ; $4f17
 	call DisableLCDSafely ; $4f1a
 	ld a, $00 ; $4f1d
 	farcall CopyScrolledSceneTilemapToVram ; $4f1f
@@ -3872,7 +3872,7 @@ ActorScript_12_7a93:
 MapScriptNop_12:
 	ret ; $7ab1
 	xor a, a ; $7ab2
-	ld [$c2da], a ; $7ab3
+	ld [wStoryScriptRan], a ; $7ab3
 	ret ; $7ab6
 	sound $a2 ; $7ab7
 	ret ; $7ab9

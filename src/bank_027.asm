@@ -541,13 +541,13 @@ End12PrincipalsOfficeTileTriggers_27:
 	ds 1, $ff ; $4c60, fill
 End12PrincipalsOfficeInitScript_27:
 	ld a, $16 ; $4c61
-	ld [$c329], a ; $4c63
+	ld [wMapScrollMinX], a ; $4c63
 	ld a, $28 ; $4c66
-	ld [$c32a], a ; $4c68
+	ld [wMapScrollMinY], a ; $4c68
 	ld a, $40 ; $4c6b
-	ld [$c32b], a ; $4c6d
+	ld [wMapWidthTiles], a ; $4c6d
 	ld a, $3e ; $4c70
-	ld [$c32c], a ; $4c72
+	ld [wMapHeightTiles], a ; $4c72
 	call DisableLCDSafely ; $4c75
 	ld a, $00 ; $4c78
 	farcall CopyScrolledSceneTilemapToVram ; $4c7a
@@ -1617,13 +1617,13 @@ ComputeMachineCourtProgress_27:
 	ret ; $626f
 .eq01:
 	ld a, $26 ; $6270
-	ld [$c329], a ; $6272
+	ld [wMapScrollMinX], a ; $6272
 	ld a, $23 ; $6275
-	ld [$c32a], a ; $6277
+	ld [wMapScrollMinY], a ; $6277
 	ld a, $40 ; $627a
-	ld [$c32b], a ; $627c
+	ld [wMapWidthTiles], a ; $627c
 	ld a, $3c ; $627f
-	ld [$c32c], a ; $6281
+	ld [wMapHeightTiles], a ; $6281
 	call DisableLCDSafely ; $6284
 	ld a, $00 ; $6287
 	farcall CopyScrolledSceneTilemapToVram ; $6289

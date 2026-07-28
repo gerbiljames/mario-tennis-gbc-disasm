@@ -67,7 +67,10 @@ wStoryModeEntryPoint:: db
 
 ; [5 bytes] Story Mode - player spawn/return buffer: X (16-bit), Y (16-bit), facing; filled from the matched entry-point record or backed up from wStoryModePlayersXPosition before a submode
 wStoryModeSpawnPosition:: ds 5
-	ds 5
+
+; [8-bit] ROM bank of the current story location's header and script data: the high byte of the far pointer at $c282, taken by LoadStoryLocationHeader. Every consumer (LoadStoryEntryPointRecord, FindStoryScriptEntry, GetTileTriggerAtPlayer, RunNpcInteraction, RunLocationExit, ...) passes it to FarReadByte or a farcall
+wStoryLocationBank:: db
+	ds 4
 
 ; [8-bit] Story Mode - queued tile trigger-script id (behavior-map cell with low nibble 1 stores its high nibble here); nonzero makes the overworld loop run RunQueuedTriggerScript
 wStoryModeTriggerScript:: db
@@ -115,7 +118,11 @@ wStoryModeShowLocationName:: db
 
 ; [16-bit] Story Mode - text id of the current location's name, passed in hl to ShowLocationNamePopup when wStoryModeShowLocationName is set
 wStoryModeLocationNameTextId:: dw
-	ds 8
+	ds 2
+
+; [8-bit] Set to 1 by RunStoryScriptOrDialogue whenever it dispatches a location script; the overworld frame loop clears it before checking for an interaction and stops looking for further triggers this frame once it is set
+wStoryScriptRan:: db
+	ds 5
 
 ; [8-bit] Frames left before a drill point gives up: UpdateDrillAbortCountdown decrements it each frame while wDrillAbortCountdownActive is set and wPointOutcome is still 0, and sets wMatchAbortFlag when it reaches 0. The point start hooks load it with $0a
 wDrillAbortCountdown:: db
@@ -166,7 +173,19 @@ wBGRowBlitDest:: dw
 
 ; [8-bit] Tilemap column for the queued BG column blit
 wBGColumnBlitX:: db
-	ds 5
+
+; [8-bit] Lowest camera X (in tiles) the overworld scroll clamp allows; set to 0 by InitSceneScroll
+wMapScrollMinX:: db
+
+; [8-bit] Lowest camera Y (in tiles) the overworld scroll clamp allows
+wMapScrollMinY:: db
+
+; [8-bit] Map width in tiles; the camera clamp stops at this minus $14 (the 20-tile screen width), so the X limit is the last fully visible column
+wMapWidthTiles:: db
+
+; [8-bit] Map height in tiles; the camera clamp stops at this minus $12 (18 rows)
+wMapHeightTiles:: db
+	ds 1
 
 ; [8-bit] Current story-cutscene scene index; indexes SceneGfxSlotTable (index*16) and drives LoadAndDisplayScene / InitSceneTileAnimations
 wCurrentScene:: db
@@ -262,7 +281,14 @@ wWindowTileAttr:: db
 
 ; [16-bit] Glyph-stream horizontal pen position (sub-pixel fixed point); advanced per glyph by DrawStreamGlyph
 wGlyphPenX:: dw
-	ds 73
+	ds 2
+
+; [8-bit] Tilemap cell column the current glyph row starts at. InitGlyphStreamForWindow seeds wGlyphPenX from it (column * $80, the sub-pixel scale) and StartGlyphStreamRow reloads both from the pen at each row break
+wGlyphRowStartCol:: db
+
+; [8-bit] Tilemap cell column already flushed out of the glyph buffer; StampGlyphTileAtPen subtracts it from the pen's column to find how far the write pointer has to advance
+wGlyphFlushedCol:: db
+	ds 69
 
 ; [16-bit] Ball X position, integer part (lateral, signed)
 wBallX:: dw
@@ -656,6 +682,7 @@ wDebugFlagByte:: db
 
 ; Mode-local scratch ($c780-$c78f is reused by each game mode;
 ; only proven consumers are named, sites in other modes stay numeric)
+UNION
 ; character select (bank $1b)
 	ds 1
 ; [8-bit] Character id under the char-select cursor, looked up from the roster grid at $c7a0 by UpdateCharSelectSelection
@@ -666,8 +693,30 @@ wCharSelectPrevChar:: db
 wCharSelectCol:: db
 ; [8-bit] Char-select cursor row in the roster grid
 wCharSelectRow:: db
+	ds 6
+NEXTU
+; minigames (bank $0d)
+; [16-bit] Serves the minigame has launched. LaunchMinigameServe increments it and derives the ball speed from it (count / 10, capped at $19), so the feed speeds up as the round goes on
+wMinigameServeCount:: dw
+; [16-bit] Points the floating score popup shows; AwardHitScore and the per-minigame scorers store the award here before calling AddToMinigameScore
+wScorePopupValue:: dw
+; [8-bit] Ball speed LaunchMinigameServe passed to LaunchBall for this serve
+wMinigameServeSpeed:: db
+; [8-bit] Which serve the tennis machine plays next; the machine hooks advance it by 1 or 2 per point and wrap it, and ApplyMinigameCharTargetFromTable indexes the aim table with it
+wMinigameServeSlot:: db
+; [8-bit] wMinigameServeSlot / 3, taken by LaunchMinigameServe and read back by LaunchBall
+wMinigameServeGroup:: db
+; [8-bit] Frames left on the score popup, seeded with $10 by StartScorePopup; UpdateScorePopup ticks it and also uses it as the popup's rise offset
+wScorePopupTimer:: db
+; [8-bit] Set while a hit is being scored; ResetTargetHitState only clears the streak when it finds this clear, which is what keeps a streak alive across the points of one rally
+wMinigameHitScored:: db
+; [8-bit] Consecutive scoring hits, stepped by IncrementCappedCounter (b is the cap). AwardHitScore indexes both a sound table and a score table with it, so a longer streak is worth more and sounds different
+wMinigameHitStreak:: db
+; [8-bit] Treasure Box actor state, stepped by AdvanceTreasureBoxActorState and used by DrawTreasureBoxSprite to pick the frame
+wTreasureBoxState:: db
+ENDU
 
-	ds 7
+	ds 1
 
 ; [8-bit] Nonzero draws the 4-corner court target zone (training drills)
 wTargetZoneEnabled:: db
@@ -691,7 +740,23 @@ wModeHookTable:: dw
 
 ; [8-bit] ROM bank of the mode callback table (0 = no hooks registered)
 wModeHookBank:: db
-	ds 75
+	ds 3
+
+; [8-bit] Set to 1 by the InitMinigame_* routines whose ball is fed by the tennis machine (Tennis Machine 1-4, Target Shot, Shooting Star, Treasure Box, Medallion Match). The shared match engine reads it for the scoreboard layout, the point reset and the serve phase
+wMinigameUsesTennisMachine:: db
+
+; [8-bit] Set to 1 by the InitMinigame_* routines played against the wall (Wall Practice 1-4, Banana Bunch, Perfect Shot, Fruit Fantasy); read by SelectScoreboardLayout, HandleBallNetCrossing and the serve positioning
+wMinigameUsesWall:: db
+
+; [8-bit] Set to 1 by InitMinigame_BooBlast
+wMinigameIsBooBlast:: db
+
+; [8-bit] Set to 1 by the bank $0b Service/NetGame practice drills (the coach lessons). RecordDrillPointResultBits stores the per-point result differently while it is set, and SelectScoreboardLayout picks layout 3
+wDrillIsPracticeLesson:: db
+
+; [8-bit] Set to 1 when the minigame is being played for a high score: the InitMinigame_*HighScore entries set it outright, and the ordinary minigames set it when wMinigameLevel is 2 (the third level). SelectScoreboardLayout picks layout 7
+wMinigameHighScoreMode:: db
+	ds 67
 
 ; [buffer] Base of the story-slot state image (WRAM $c800-$caff): the live region holding the wStoryModeMainCharacter*/wGameMode/match-settings/roster fields, saved wholesale as save block 2N (see docs/save_format.md) and reloaded from it on slot load
 wStorySlotData:: db
@@ -813,7 +878,9 @@ wStoryModePartnerCharacterSpeedLevel:: db
 ; 0x01 - Normal
 ; 0x02 - Slow
 wMessageSpeed:: db
-	ds 1
+
+; [8-bit] Set to 1 by the Save & Quit entries of the match and story pause menus (MatchQuitMenu_SaveAndQuit, StoryPauseMenu_SaveQuit, and the story menu's confirm prompt), each of which also calls SaveStoryReturnPoint. The post-match code in bank $10 branches on it to show the results screen and save the slot, then clears it beside wKeepMatchStatsFlag
+wSaveAndQuitRequest:: db
 
 ; [8-bit] Game Mode
 ;
@@ -831,7 +898,11 @@ wGameMode:: db
 
 ; [8-bit] Nonzero makes ResetMatchState skip clearing the per-character match stats (set by MatchQuitMenu_SaveAndQuit so a resumed match keeps its stats); cleared after use
 wKeepMatchStatsFlag:: db
-	ds 24
+	ds 17
+
+; [8-bit] Copy of hLinkState taken by StoreLinkMatchCharInfo when the link match's characters are committed. The results and EXP screens turn it back into a WRAM bank with `srl a / add a, $04`, i.e. which per-character struct is the local player's
+wLinkMatchRole:: db
+	ds 6
 
 ; [8-bit] Character 1 Service Aces
 wCharacter1ServiceAces:: db
@@ -1015,7 +1086,9 @@ wOnCourtCharCount:: db
 ; 0x17 - Two-On-One
 ; 0x18 - Training Court (Match)
 wCurrentlyUsedCourt:: db
-	ds 1
+
+; [8-bit] What kind of match is running: 0 = exhibition (cleared by RestoreOverworldAfterMatch), 1 = story match (InitStoryMatchSettings), 2 = minigame/drill (InitMinigameMatchSettings, RunDoublesDrillMatch). SelectScoreboardLayout forces the doubles scoreboard and InitViewFlipPreference forces the fixed court view when it is 2
+wMatchContext:: db
 
 ; [16-bit BE] Current Minigame/Story Match
 ;
@@ -1417,7 +1490,10 @@ wMenuAdjustRowMask:: db
 
 ; [8-bit] Per-row mask (same bit7-present + rotate-by-row encoding as $cb28) of menu rows that must NOT close the menu window when chosen: after RunMenuSelectionShared returns, $1a:$4057-$406e tests the bit for the chosen row and jumps past the CloseWindow call at $1a:$4070 when set. Written with the same values as $cb28 ($83 at $1a:$424e, $8c at $1a:$4389); cleared at $1a:$409c.
 wMenuKeepOpenRowMask:: db
-	ds 3
+
+; [8-bit] Pause-menu options state: the low nibble holds the per-option toggle bits the music/sound rows flip, bit 5 gates DrawPauseMenuSettingValues, and bits 6-7 are set once a row has been visited. Cleared by ResetPauseMenuState
+wPauseMenuOptionBits:: db
+	ds 2
 
 ; [8-bit] Study Vocabulary / Tennis Dictionary screen (bank $3f): index of the first entry shown in the 6-row scrolling term list. Absolute entry = ($cb2d + $cb2e) mod $cb2f (Func_3f_517b, $3f:$5181). Advanced/wrapped against $cb2f when the cursor runs off the top/bottom ($3f:$56d6-$56e2, $3f:$5700-$570c), recomputed by the page-jump helpers Func_3f_5192/Func_3f_520f, and used as the render start in Func_3f_5261 ($3f:$528d). Cleared on screen entry at $3f:$40c8.
 wTennisDictScrollTop:: db
@@ -1452,7 +1528,20 @@ wIntroCutsceneCheck:: db
 
 ; [8-bit] Bank $6b cutscene driver: accumulated horizontal pan position, copied to hScrollX each frame
 wCutsceneScrollX:: db
-	ds 7
+	ds 1
+
+; [8-bit] X of the intro cutscene's first sprite group; the state Update routines walk it and QueueCutsceneSpriteGroupA adds each template's offset to it
+wCutsceneSpriteAX:: db
+
+; [8-bit] Y of the intro cutscene's first sprite group
+wCutsceneSpriteAY:: db
+
+; [8-bit] X of the intro cutscene's second sprite group (QueueCutsceneSpriteGroupB)
+wCutsceneSpriteBX:: db
+
+; [8-bit] Y of the intro cutscene's second sprite group
+wCutsceneSpriteBY:: db
+	ds 2
 
 ; [16-bit] Intro cutscene (bank $6b): world-space vertical scroll/camera position, little-endian. Initialised to $0120 at the start of scenes 00/12/19 ($6b:$41bf, $6b:$4916, $6b:$4c65) and decremented every frame by the per-frame delta table at $6b:$4cc1 indexed by wCutsceneStepTimer ($6b:$4caa-$4cbd). Consumers: ApplyCutsceneScrollToSpriteX ($6b:$5191) subtracts it from the sprite base coordinate that QueueSpriteTemplate treats as Y (the sp+0 slot, $00:$1ebf - so despite the existing label it is the Y axis), and SetCameraYFromScrollPos ($6b:$60d5) shifts it left 5 into wCameraY. $6b:$60fe uses ($cb48 - $cb4a) as the on-screen Y of the object drawn by QueueIntroSpriteBlock.
 wIntroCutsceneScrollY:: dw
@@ -1803,19 +1892,23 @@ w4_dada:: db
 w4_dadb:: db
 	ds 14
 
-w4_daea:: db
+; Overworld actor engine scratch (WRAM bank $04), owned by the bank $04
+; actor-script VM. Scoped to that bank as well as to the WRAM bank: the
+; VM selects the bank once on entry, so most references cannot prove it.
+; actor engine (bank $04)
+; [8-bit] Heading the D-pad asks the overworld player to walk in ($40 per quarter turn, matching the FACE_* encoding). UpdatePlayerControl also writes it to actor field +$34, then probes $20/$40/$e0/$c0 away from it to slide along a blocked wall
+wPlayerMoveAngle:: db
 	ds 1
+; [8-bit] Heading actually walked this frame, 0 when the move was blocked
+wPlayerMoveAngleApplied:: db
+; [8-bit] Previous frame's wPlayerMoveAngleApplied, saved before it is recomputed
+wPlayerMoveAnglePrev:: db
+; [8-bit] Cleared when no direction is held, so the walk animation stops
+wPlayerMoving:: db
+	ds 8
+; [8-bit] ROM bank of the actor script currently executing, taken from the actor's field +$22. Every ActorScriptOp_* passes it to FarReadByte / FarReadWord / CallHLInBankA to reach the script bytes
+wActorScriptBank:: db
 
-w4_daec:: db
-
-w4_daed:: db
-
-w4_daee:: db
-
-w4_daef:: db
-	ds 7
-
-w4_daf7:: db
 	ds 505
 
 w4_dcf1:: db
@@ -1867,7 +1960,9 @@ SECTION "WRAMX bank 5", WRAMX[$d000], BANK[5]
 	ds 16
 ; [8-bit] Window struct index AllocWindowStruct handed out for the window being built, $ff when none was free; CreateMenuWindowFromText passes it to SetWindowTextId / SetWindowState and returns it
 wWindowId:: db
-	ds 3
+; [8-bit] Window struct index the glyph stream is rendering into, set by RedrawWindowText / RenderWindowTextToCompletion. InitGlyphStreamForWindow, DrawWindowGlyphRun, FlushGlyphRow and UploadLastGlyphTiles all resolve the window through it
+wGlyphWindowId:: db
+	ds 2
 ; [8-bit] Window struct index of the dialogue window currently on screen, stored by CreateDialogueWindow. RedrawActiveTextWindow, RenderActiveWindowText, CloseActiveDialogueWindow and the speaker-dialogue helpers all address the window through it
 wDialogueWindowId:: db
 ; [8-bit] Dialogue window top-left tilemap column (wrapped to $1f)

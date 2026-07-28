@@ -1078,7 +1078,7 @@ CopyTilesAndAttrsRun:
 	jr nz, CopyTilesAndAttrsRun ; $498c
 	ret ; $498e
 InitResultsScreenCharacters:
-	ld a, [$c8b9] ; $498f
+	ld a, [wLinkMatchRole] ; $498f
 	srl a ; $4992
 	add a, $04 ; $4994
 	ld a, a ; $4996
@@ -1093,7 +1093,7 @@ InitResultsScreenCharacters:
 	ld e, a ; $49ab
 	jr .initChar ; $49ac
 .nonZero:
-	ld a, [$c8b9] ; $49ae
+	ld a, [wLinkMatchRole] ; $49ae
 	srl a ; $49b1
 	or a, a ; $49b3
 	jr nz, .checkPlayer2CurrentMainCharacter ; $49b4
@@ -1136,7 +1136,7 @@ InitResultsScreenCharacters:
 	test_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $4a06
 	ret z ; $4a09
 .nonZero2:
-	ld a, [$c8b9] ; $4a0a
+	ld a, [wLinkMatchRole] ; $4a0a
 	srl a ; $4a0d
 	add a, $06 ; $4a0f
 	ld a, a ; $4a11
@@ -1151,7 +1151,7 @@ InitResultsScreenCharacters:
 	ld e, a ; $4a26
 	jr .initChar2 ; $4a27
 .nonZero3:
-	ld a, [$c8b9] ; $4a29
+	ld a, [wLinkMatchRole] ; $4a29
 	srl a ; $4a2c
 	or a, a ; $4a2e
 	jr nz, .checkPlayer2CurrentPartnerCharacter ; $4a2f
@@ -1646,7 +1646,7 @@ DrawExpSinglesPlayerPanel:
 	ld c, $01 ; $5640
 	call FillTilemapRun ; $5642
 	ld bc, $ca00 ; $5645
-	ld a, [$c8b9] ; $5648
+	ld a, [wLinkMatchRole] ; $5648
 	cp a, $02 ; $564b
 	jr nz, .ne02 ; $564d
 	ld bc, $ca80 ; $564f
@@ -1721,7 +1721,7 @@ DrawExpDoublesPlayerPanel:
 	jr .copyStringToTextBuffer ; $5705
 .nonZero:
 	ld bc, $ca00 ; $5707
-	ld a, [$c8b9] ; $570a
+	ld a, [wLinkMatchRole] ; $570a
 	cp a, $02 ; $570d
 	jr nz, .copyStringToTextBuffer ; $570f
 	ld bc, $ca80 ; $5711
@@ -1797,7 +1797,7 @@ DrawExpDoublesPartnerPanel:
 	jr .copyStringToTextBuffer ; $57ca
 .nonZero:
 	ld bc, $ca40 ; $57cc
-	ld a, [$c8b9] ; $57cf
+	ld a, [wLinkMatchRole] ; $57cf
 	cp a, $02 ; $57d2
 	jr nz, .copyStringToTextBuffer ; $57d4
 	ld bc, $cac0 ; $57d6
@@ -1920,7 +1920,7 @@ FillTilemapRun:
 	ret ; $5913
 DrawExpScreenCharSprites:
 	ld b, $04 ; $5914
-	ld a, [$c8b9] ; $5916
+	ld a, [wLinkMatchRole] ; $5916
 	or a, a ; $5919
 	jr z, .zero ; $591a
 	srl a ; $591c
@@ -2388,7 +2388,7 @@ ProcessMatchRewards:
 	ld a, [wPointWinLoseFlag] ; $65b2
 	cp a, $01 ; $65b5
 	jp nz, .getScoreBonus ; $65b7
-	ld a, [$c7bc] ; $65ba
+	ld a, [wMinigameHighScoreMode] ; $65ba
 	or a, a ; $65bd
 	jr z, .getFirstClearRewardExp ; $65be
 	ld a, [wGameMode] ; $65c0
@@ -2461,7 +2461,7 @@ ProcessMatchRewards:
 	call AwardExhibitionMatchExp ; $6640
 	ret ; $6643
 .eq09:
-	ld a, [$c8b9] ; $6644
+	ld a, [wLinkMatchRole] ; $6644
 	cp a, $02 ; $6647
 	jr z, .eq02 ; $6649
 	wram_bank $04 ; $664b
@@ -2679,7 +2679,7 @@ MatchStatsRewardTable5:
 	db $01, $02, $03, $03, $04, $04, $05, $00 ; 0x00
 GetScoreBonus:
 	ld de, $0000 ; $6807
-	ld a, [$c7bc] ; $680a
+	ld a, [wMinigameHighScoreMode] ; $680a
 	or a, a ; $680d
 	ret z ; $680e
 	push hl ; $680f
@@ -2931,7 +2931,7 @@ AwardLinkedPlayMatchExp:
 	ld [hl+], a ; $69ba
 	ld [hl], d ; $69bb
 	ld hl, $c8b5 ; $69bc
-	ld a, [$c8b9] ; $69bf
+	ld a, [wLinkMatchRole] ; $69bf
 	srl a ; $69c2
 	sla a ; $69c4
 	add a, l ; $69c6
@@ -2948,7 +2948,7 @@ AwardLinkedPlayMatchExp:
 	ld a, [wCurrentStorySlot] ; $69d7
 	push af ; $69da
 	ld hl, $c8b5 ; $69db
-	ld a, [$c8b9] ; $69de
+	ld a, [wLinkMatchRole] ; $69de
 	and a, $03 ; $69e1
 	srl a ; $69e3
 	sla a ; $69e5
@@ -4678,7 +4678,7 @@ DrawProgressListRows:
 	jr nz, .loop ; $74ef
 .eqff:
 	ld a, $70 ; $74f1
-	ld [$c3bb], a ; $74f3
+	ld [wGlyphRowStartCol], a ; $74f3
 	farcall UploadGlyphBuffer ; $74f6
 	ret ; $74f9
 LoadGameProgressScreenAssets:

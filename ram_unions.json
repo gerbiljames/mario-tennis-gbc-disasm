@@ -85,7 +85,7 @@
   },
   {
    "start": "0xc780",
-   "end": "0xc785",
+   "end": "0xc78b",
    "comment": "Mode-local scratch ($c780-$c78f is reused by each game mode;\nonly proven consumers are named, sites in other modes stay numeric)",
    "variants": [
     {
@@ -111,6 +111,54 @@
       "0xc784": {
        "name": "wCharSelectRow",
        "note": "[8-bit] Char-select cursor row in the roster grid"
+      }
+     }
+    },
+    {
+     "context": "minigames (bank $0d)",
+     "scopes": [
+      {
+       "bank": "0x0d"
+      }
+     ],
+     "symbols": {
+      "0xc780": {
+       "name": "wMinigameServeCount",
+       "note": "[16-bit] Serves the minigame has launched. LaunchMinigameServe increments it and derives the ball speed from it (count / 10, capped at $19), so the feed speeds up as the round goes on",
+       "size": 2
+      },
+      "0xc782": {
+       "name": "wScorePopupValue",
+       "note": "[16-bit] Points the floating score popup shows; AwardHitScore and the per-minigame scorers store the award here before calling AddToMinigameScore",
+       "size": 2
+      },
+      "0xc784": {
+       "name": "wMinigameServeSpeed",
+       "note": "[8-bit] Ball speed LaunchMinigameServe passed to LaunchBall for this serve"
+      },
+      "0xc785": {
+       "name": "wMinigameServeSlot",
+       "note": "[8-bit] Which serve the tennis machine plays next; the machine hooks advance it by 1 or 2 per point and wrap it, and ApplyMinigameCharTargetFromTable indexes the aim table with it"
+      },
+      "0xc786": {
+       "name": "wMinigameServeGroup",
+       "note": "[8-bit] wMinigameServeSlot / 3, taken by LaunchMinigameServe and read back by LaunchBall"
+      },
+      "0xc787": {
+       "name": "wScorePopupTimer",
+       "note": "[8-bit] Frames left on the score popup, seeded with $10 by StartScorePopup; UpdateScorePopup ticks it and also uses it as the popup's rise offset"
+      },
+      "0xc788": {
+       "name": "wMinigameHitScored",
+       "note": "[8-bit] Set while a hit is being scored; ResetTargetHitState only clears the streak when it finds this clear, which is what keeps a streak alive across the points of one rally"
+      },
+      "0xc789": {
+       "name": "wMinigameHitStreak",
+       "note": "[8-bit] Consecutive scoring hits, stepped by IncrementCappedCounter (b is the cap). AwardHitScore indexes both a sound table and a score table with it, so a longer streak is worth more and sounds different"
+      },
+      "0xc78a": {
+       "name": "wTreasureBoxState",
+       "note": "[8-bit] Treasure Box actor state, stepped by AdvanceTreasureBoxActorState and used by DrawTreasureBoxSprite to pick the frame"
       }
      }
     }
@@ -1115,6 +1163,10 @@
       "0xd83e": {
        "name": "wMenuDepth",
        "note": "[8-bit] Number of menus currently stacked; indexes wMenuStack"
+      },
+      "0xd821": {
+       "name": "wGlyphWindowId",
+       "note": "[8-bit] Window struct index the glyph stream is rendering into, set by RedrawWindowText / RenderWindowTextToCompletion. InitGlyphStreamForWindow, DrawWindowGlyphRun, FlushGlyphRow and UploadLastGlyphTiles all resolve the window through it"
       }
      }
     },
@@ -1289,6 +1341,47 @@
        "name": "wCharDataChoiceLog",
        "note": "[100 bytes] One byte per level-up taken on this visit: the wCharDataPage the player confirmed. Cleared by WriteCharStatsToDisplayBuffer before the screen opens",
        "size": 100
+      }
+     }
+    }
+   ]
+  },
+  {
+   "start": "0xdaea",
+   "wram_bank": "0x04",
+   "end": "0xdaf8",
+   "comment": "Overworld actor engine scratch (WRAM bank $04), owned by the bank $04\nactor-script VM. Scoped to that bank as well as to the WRAM bank: the\nVM selects the bank once on entry, so most references cannot prove it.",
+   "variants": [
+    {
+     "context": "actor engine (bank $04)",
+     "scopes": [
+      {
+       "bank": "0x04"
+      },
+      {
+       "wram_bank": "0x04"
+      }
+     ],
+     "symbols": {
+      "0xdaea": {
+       "name": "wPlayerMoveAngle",
+       "note": "[8-bit] Heading the D-pad asks the overworld player to walk in ($40 per quarter turn, matching the FACE_* encoding). UpdatePlayerControl also writes it to actor field +$34, then probes $20/$40/$e0/$c0 away from it to slide along a blocked wall"
+      },
+      "0xdaec": {
+       "name": "wPlayerMoveAngleApplied",
+       "note": "[8-bit] Heading actually walked this frame, 0 when the move was blocked"
+      },
+      "0xdaed": {
+       "name": "wPlayerMoveAnglePrev",
+       "note": "[8-bit] Previous frame's wPlayerMoveAngleApplied, saved before it is recomputed"
+      },
+      "0xdaee": {
+       "name": "wPlayerMoving",
+       "note": "[8-bit] Cleared when no direction is held, so the walk animation stops"
+      },
+      "0xdaf7": {
+       "name": "wActorScriptBank",
+       "note": "[8-bit] ROM bank of the actor script currently executing, taken from the actor's field +$22. Every ActorScriptOp_* passes it to FarReadByte / FarReadWord / CallHLInBankA to reach the script bytes"
       }
      }
     }

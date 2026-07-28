@@ -80,7 +80,7 @@ RecordDrillPointResultBits:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $4088
 	ld b, a ; $408b
 	ld hl, DrillPointResultBitsTable ; $408c
-	ld a, [$c7bb] ; $408f
+	ld a, [wDrillIsPracticeLesson] ; $408f
 	or a, a ; $4092
 	jr nz, .storeBits ; $4093
 	ld a, b ; $4095
@@ -1985,7 +1985,7 @@ ServicePractice1Drill:
 	db $00, $00
 ServicePractice1DrillInit:
 	ld a, $01 ; $4df2
-	ld [$c7bb], a ; $4df4
+	ld [wDrillIsPracticeLesson], a ; $4df4
 	ret ; $4df7
 ServicePractice1Hooks:
 	; $4df8, 16 bytes (mode_hooks)
@@ -2181,7 +2181,7 @@ ServicePractice2Drill:
 	db $00, $00
 ServicePractice2DrillInit:
 	ld a, $01 ; $4f79
-	ld [$c7bb], a ; $4f7b
+	ld [wDrillIsPracticeLesson], a ; $4f7b
 	ret ; $4f7e
 ServicePractice2Hooks:
 	; $4f7f, 16 bytes (mode_hooks)
@@ -2501,7 +2501,7 @@ ServicePractice3Drill:
 	db $00, $00
 ServicePractice3DrillInit:
 	ld a, $01 ; $51dd
-	ld [$c7bb], a ; $51df
+	ld [wDrillIsPracticeLesson], a ; $51df
 	ret ; $51e2
 ServicePractice3Hooks:
 	; $51e3, 16 bytes (mode_hooks)
@@ -2517,7 +2517,7 @@ ServicePractice3Hook_MinigameStart:
 	ld a, $04 ; $51f3
 	ld [wDrillCounters + 1], a ; $51f5
 	ld a, $01 ; $51f8
-	ld [$c7bb], a ; $51fa
+	ld [wDrillIsPracticeLesson], a ; $51fa
 	ret ; $51fd
 ServicePractice3Hook_PerFrame:
 	call UpdateDrillAbortCountdown ; $51fe
@@ -3990,7 +3990,7 @@ NetGamePractice1Drill:
 	db $00, $00
 NetGamePractice1DrillInit:
 	ld a, $01 ; $5bea
-	ld [$c7bb], a ; $5bec
+	ld [wDrillIsPracticeLesson], a ; $5bec
 	ret ; $5bef
 NetGamePractice1Hooks:
 	; $5bf0, 16 bytes (mode_hooks)
@@ -4010,7 +4010,7 @@ NetGamePractice1Hook_MinigameStart:
 	ld a, $04 ; $5c0a
 	ld [wDrillCounters + 5], a ; $5c0c
 	ld a, $01 ; $5c0f
-	ld [$c7bb], a ; $5c11
+	ld [wDrillIsPracticeLesson], a ; $5c11
 	ret ; $5c14
 NetGamePractice1Hook_PerFrame:
 	call UpdateDrillAbortCountdown ; $5c15
@@ -4381,7 +4381,7 @@ NetGamePractice2Drill:
 	db $00, $00
 NetGamePractice2DrillInit:
 	ld a, $01 ; $5ea5
-	ld [$c7bb], a ; $5ea7
+	ld [wDrillIsPracticeLesson], a ; $5ea7
 	ret ; $5eaa
 NetGamePractice2Hooks:
 	call $d15e ; $5eab
@@ -4403,7 +4403,7 @@ NetGamePractice2Hook_MinigameStart:
 	ld a, $04 ; $5ec2
 	ld [wDrillCounters + 5], a ; $5ec4
 	ld a, $01 ; $5ec7
-	ld [$c7bb], a ; $5ec9
+	ld [wDrillIsPracticeLesson], a ; $5ec9
 	ret ; $5ecc
 NetGamePractice2Hook_PerFrame:
 	call UpdateDrillAbortCountdown ; $5ecd
@@ -4768,7 +4768,7 @@ NetGamePractice3Drill:
 	db $00, $00
 NetGamePractice3DrillInit:
 	ld a, $01 ; $615e
-	ld [$c7bb], a ; $6160
+	ld [wDrillIsPracticeLesson], a ; $6160
 	ret ; $6163
 NetGamePractice3Hooks:
 	; $6164, 16 bytes (mode_hooks)
@@ -4787,7 +4787,7 @@ NetGamePractice3Hook_MinigameStart:
 	ld a, $04 ; $617b
 	ld [wDrillCounters + 5], a ; $617d
 	ld a, $01 ; $6180
-	ld [$c7bb], a ; $6182
+	ld [wDrillIsPracticeLesson], a ; $6182
 	ret ; $6185
 NetGamePractice3Hook_PerFrame:
 	call UpdateDrillAbortCountdown ; $6186
@@ -6279,7 +6279,7 @@ StrokePractice1Drill:
 	db $00, $00
 StrokePractice1DrillInit:
 	ld a, $01 ; $6b6d
-	ld [$c7bb], a ; $6b6f
+	ld [wDrillIsPracticeLesson], a ; $6b6f
 	ret ; $6b72
 StrokePractice1Hooks:
 	; $6b73, 16 bytes (mode_hooks)
@@ -6293,7 +6293,7 @@ StrokePractice1Hooks:
 	dw RetStub ; record 7
 StrokePractice1Hook_MinigameStart:
 	ld a, $01 ; $6b83
-	ld [$c7bb], a ; $6b85
+	ld [wDrillIsPracticeLesson], a ; $6b85
 	xor a, a ; $6b88
 	ld [wDrillCounters + 2], a ; $6b89
 	ld [wDrillCounters + 1], a ; $6b8c
@@ -6609,7 +6609,7 @@ StrokePractice2Drill:
 	db $00, $00
 StrokePractice2DrillInit:
 	ld a, $01 ; $6dbe
-	ld [$c7bb], a ; $6dc0
+	ld [wDrillIsPracticeLesson], a ; $6dc0
 	ret ; $6dc3
 StrokePractice2Hooks:
 	call c, $e06d ; $6dc4
@@ -6939,7 +6939,7 @@ StrokePractice3Drill:
 	db $00, $00
 StrokePractice3DrillInit:
 	ld a, $01 ; $701e
-	ld [$c7bb], a ; $7020
+	ld [wDrillIsPracticeLesson], a ; $7020
 	ret ; $7023
 StrokePractice3Hooks:
 	; $7024, 16 bytes (mode_hooks)
@@ -6953,7 +6953,7 @@ StrokePractice3Hooks:
 	dw RetStub ; record 7
 StrokePractice3Hook_MinigameStart:
 	ld a, $01 ; $7034
-	ld [$c7bb], a ; $7036
+	ld [wDrillIsPracticeLesson], a ; $7036
 	xor a, a ; $7039
 	ld [wDrillCounters + 2], a ; $703a
 	ld [wDrillCounters + 1], a ; $703d
@@ -7252,7 +7252,7 @@ StrokePractice3Cases2:
 	ret ; $7257
 RunDoublesDrillMatch:
 	xor a, a ; $7258
-	ld [$c8f5], a ; $7259
+	ld [wMatchContext], a ; $7259
 	ld a, $08 ; $725c
 	ld [wGameMode], a ; $725e
 	ld a, $02 ; $7261

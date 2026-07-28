@@ -642,7 +642,7 @@ InitViewFlipPreference:
 	ld a, [wGameMode] ; $450e
 	cp a, $09 ; $4511
 	jr z, .storeFlip ; $4513
-	ld a, [$c8f5] ; $4515
+	ld a, [wMatchContext] ; $4515
 	cp a, $02 ; $4518
 	jr z, .storeFlip ; $451a
 	ld a, [wGameMode] ; $451c
@@ -670,7 +670,7 @@ ApplyMatchBgmPreference:
 	call ResumeBGM ; $4547
 	ret ; $454a
 SelectScoreboardLayout:
-	ld a, [$c8f5] ; $454b
+	ld a, [wMatchContext] ; $454b
 	cp a, $02 ; $454e
 	jr z, .doubles ; $4550
 	ld a, [wOnCourtCharCount] ; $4552
@@ -680,21 +680,21 @@ SelectScoreboardLayout:
 	ret ; $455c
 .doubles:
 	ld b, $03 ; $455d
-	ld a, [$c7bb] ; $455f
+	ld a, [wDrillIsPracticeLesson] ; $455f
 	and a, a ; $4562
 	jr nz, .done ; $4563
 	ld b, $07 ; $4565
-	ld a, [$c7bc] ; $4567
+	ld a, [wMinigameHighScoreMode] ; $4567
 	and a, a ; $456a
 	jr nz, .done ; $456b
 	ld b, $06 ; $456d
-	ld a, [$c7b9] ; $456f
+	ld a, [wMinigameUsesWall] ; $456f
 	and a, a ; $4572
 	jr nz, .done ; $4573
-	ld a, [$c7b8] ; $4575
+	ld a, [wMinigameUsesTennisMachine] ; $4575
 	and a, a ; $4578
 	jr nz, .done ; $4579
-	ld a, [$c7ba] ; $457b
+	ld a, [wMinigameIsBooBlast] ; $457b
 	and a, a ; $457e
 	jr nz, .done ; $457f
 	ld b, $04 ; $4581
@@ -979,7 +979,7 @@ RunMatchPlayLoop:
 	ld a, [wGameMode] ; $4714
 	cp a, $02 ; $4717
 	jr z, .markChangeEnds ; $4719
-	ld a, [$c8f5] ; $471b
+	ld a, [wMatchContext] ; $471b
 	and a, a ; $471e
 	jr nz, .setLoop ; $471f
 .markChangeEnds:
@@ -1464,7 +1464,7 @@ ResetPointState:
 	ld a, $01 ; $4ce6
 	ld [wOffscreenArrowsEnabled], a ; $4ce8
 	call ResetBallState ; $4ceb
-	ld a, [$c7b8] ; $4cee
+	ld a, [wMinigameUsesTennisMachine] ; $4cee
 	and a, a ; $4cf1
 	ret nz ; $4cf2
 	call ResetCameraForServe ; $4cf3
@@ -3056,7 +3056,7 @@ HandleBallNetCrossing:
 	jp z, .done ; $5822
 	ld a, $01 ; $5825
 	ld [wBallCrossedNetFlag], a ; $5827
-	ld a, [$c7b9] ; $582a
+	ld a, [wMinigameUsesWall] ; $582a
 	and a, a ; $582d
 	jr nz, .done ; $582e
 	ld hl, wNetHeight ; $5830
@@ -4412,7 +4412,7 @@ Data_08_6107:
 	dw $0300, $0180 ; record 3
 PlayCourtIntro:
 	ld b, $44 ; $6117
-	ld a, [$c8f5] ; $6119
+	ld a, [wMatchContext] ; $6119
 	and a, a ; $611c
 	jr z, .playFanfare ; $611d
 	ld b, $45 ; $611f
@@ -4422,7 +4422,7 @@ PlayCourtIntro:
 	ld a, [wGameMode] ; $6125
 	cp a, $02 ; $6128
 	jr z, .panCamera ; $612a
-	ld a, [$c8f5] ; $612c
+	ld a, [wMatchContext] ; $612c
 	and a, a ; $612f
 	jr nz, .done ; $6130
 .panCamera:
@@ -4836,7 +4836,7 @@ DrawBallAndEffects:
 	call CallModeHook ; $6425
 	ret ; $6428
 DrawActorsByDepth:
-	ld a, [$c7b8] ; $6429
+	ld a, [wMinigameUsesTennisMachine] ; $6429
 	and a, a ; $642c
 	jr nz, .done ; $642d
 	ld hl, wCharDepthKey ; $642f
@@ -4967,7 +4967,7 @@ DrawStandingShadowSlot:
 InitMinigameMatchSettings:
 	call InitDefaultMatchSettings ; $6544
 	ld a, $02 ; $6547
-	ld [$c8f5], a ; $6549
+	ld [wMatchContext], a ; $6549
 	ld a, $01 ; $654c
 	ld [$c7bd], a ; $654e
 	ld a, $ff ; $6551
@@ -5039,7 +5039,7 @@ RunMinigamePointLoop:
 	ld a, [wMatchAbortFlag] ; $65ec
 	and a, $80 ; $65ef
 	jr nz, .done ; $65f1
-	ld a, [$c7b8] ; $65f3
+	ld a, [wMinigameUsesTennisMachine] ; $65f3
 	and a, a ; $65f6
 	jr nz, .playPoint ; $65f7
 	ld hl, SetCharStateFromServeRole ; $65f9
@@ -5767,13 +5767,13 @@ CharServeInitPhase:
 	ld hl, wCharFlags ; $6aff
 	res 0, [hl] ; $6b02
 	res 1, [hl] ; $6b04
-	ld a, [$c7b8] ; $6b06
+	ld a, [wMinigameUsesTennisMachine] ; $6b06
 	and a, a ; $6b09
 	jr nz, .startAnim ; $6b0a
-	ld a, [$c7b9] ; $6b0c
+	ld a, [wMinigameUsesWall] ; $6b0c
 	and a, a ; $6b0f
 	jr nz, .startAnim ; $6b10
-	ld a, [$c7ba] ; $6b12
+	ld a, [wMinigameIsBooBlast] ; $6b12
 	and a, a ; $6b15
 	jr nz, .startAnim ; $6b16
 	ldh a, [hWramBank] ; $6b18
@@ -6832,7 +6832,7 @@ ApplyCharMovementInput:
 .done:
 	ret ; $71dc
 HandleServePositioning:
-	ld a, [$c7b9] ; $71dd
+	ld a, [wMinigameUsesWall] ; $71dd
 	and a, a ; $71e0
 	jr nz, .receiver ; $71e1
 	ld a, [wCharInputBits] ; $71e3

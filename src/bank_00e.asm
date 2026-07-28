@@ -3709,7 +3709,7 @@ MapScriptNop_0e:
 	ret ; $7c96
 MapScriptClearActiveFlag_0e:
 	xor a, a ; $7c97
-	ld [$c2da], a ; $7c98
+	ld [wStoryScriptRan], a ; $7c98
 	ret ; $7c9b
 MapScriptPlaySoundA2_0e:
 	sound $a2 ; $7c9c

@@ -184,7 +184,7 @@ SpawnGameScoreDisplayObjs:
 	call LoadObjTemplate_09 ; $418c
 	ret ; $418f
 DismissGameScoreDisplayObjs:
-	ld a, [$c7bb] ; $4190
+	ld a, [wDrillIsPracticeLesson] ; $4190
 	and a, a ; $4193
 	jr nz, .doubles ; $4194
 	ld hl, ObjTemplates_09_41bc ; $4196

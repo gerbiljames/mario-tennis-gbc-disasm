@@ -1674,7 +1674,7 @@ MaybeInvertMatchWinLoseFlag:
 	ld a, [wGameMode] ; $5c11
 	cp a, $09 ; $5c14
 	ret nz ; $5c16
-	ld a, [$c8b9] ; $5c17
+	ld a, [wLinkMatchRole] ; $5c17
 	cp a, $01 ; $5c1a
 	jr nz, .compare ; $5c1c
 	ret ; $5c1e
@@ -2098,7 +2098,7 @@ LoadResultScreenPortraits:
 	ld a, [wGameMode] ; $5feb
 	cp a, $09 ; $5fee
 	jr nz, .checkPlayer1CurrentMainCharacter ; $5ff0
-	ld a, [$c8b9] ; $5ff2
+	ld a, [wLinkMatchRole] ; $5ff2
 	cp a, $02 ; $5ff5
 	jr z, .checkPlayer1CurrentMainCharacter2 ; $5ff7
 .checkPlayer1CurrentMainCharacter:

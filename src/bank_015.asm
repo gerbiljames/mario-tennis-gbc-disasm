@@ -4553,7 +4553,7 @@ ActorScript_15_7d77:
 MapScriptNop_15:
 	ret ; $7d95
 	xor a, a ; $7d96
-	ld [$c2da], a ; $7d97
+	ld [wStoryScriptRan], a ; $7d97
 	ret ; $7d9a
 	sound $a2 ; $7d9b
 	ret ; $7d9d

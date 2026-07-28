@@ -1896,9 +1896,9 @@ LoadOverworldSpriteDef:
 	and a, PADF_START ; $4ba7
 	jp z, .checkInputPressed ; $4ba9
 	sound $62 ; $4bac
-	ld a, [$cb2a] ; $4bae
+	ld a, [wPauseMenuOptionBits] ; $4bae
 	and a, $f0 ; $4bb1
-	ld [$cb2a], a ; $4bb3
+	ld [wPauseMenuOptionBits], a ; $4bb3
 	ld a, $ff ; $4bb6
 	jp .store ; $4bb8
 .checkInputPressed:
@@ -1906,9 +1906,9 @@ LoadOverworldSpriteDef:
 	and a, PADF_B ; $4bbd
 	jp z, .isCursorOnAdjustRow2 ; $4bbf
 	sound $62 ; $4bc2
-	ld a, [$cb2a] ; $4bc4
+	ld a, [wPauseMenuOptionBits] ; $4bc4
 	and a, $f0 ; $4bc7
-	ld [$cb2a], a ; $4bc9
+	ld [wPauseMenuOptionBits], a ; $4bc9
 	ld a, $ff ; $4bcc
 	jp .store ; $4bce
 .isCursorOnAdjustRow2:
@@ -1922,19 +1922,19 @@ LoadOverworldSpriteDef:
 	ldh a, [hInputPressed] ; $4bdb
 	and a, PADF_LEFT ; $4bdd
 	jp z, .zero ; $4bdf
-	ld a, [$cb2a] ; $4be2
+	ld a, [wPauseMenuOptionBits] ; $4be2
 	and a, $f0 ; $4be5
 	or a, $01 ; $4be7
-	ld [$cb2a], a ; $4be9
+	ld [wPauseMenuOptionBits], a ; $4be9
 	jr .restore2 ; $4bec
 .zero:
 	ldh a, [hInputPressed] ; $4bee
 	and a, PADF_RIGHT ; $4bf0
 	jr z, .restore ; $4bf2
-	ld a, [$cb2a] ; $4bf4
+	ld a, [wPauseMenuOptionBits] ; $4bf4
 	and a, $f0 ; $4bf7
 	or a, $02 ; $4bf9
-	ld [$cb2a], a ; $4bfb
+	ld [wPauseMenuOptionBits], a ; $4bfb
 	jr .restore2 ; $4bfe
 .restore:
 	pop hl ; $4c00
@@ -2243,12 +2243,12 @@ RenderTextString:
 	xor a, a ; $4e37
 	ld [$d84f], a ; $4e38
 .zero:
-	ld a, [$d821] ; $4e3b
+	ld a, [wGlyphWindowId] ; $4e3b
 	or a, a ; $4e3e
 	jr nz, .initGlyphStreamForWindow ; $4e3f
 	xor a, a ; $4e41
-	ld [$c3bb], a ; $4e42
-	ld [$c3bc], a ; $4e45
+	ld [wGlyphRowStartCol], a ; $4e42
+	ld [wGlyphFlushedCol], a ; $4e45
 .initGlyphStreamForWindow:
 	call InitGlyphStreamForWindow ; $4e48
 	call RedrawActiveTextWindow ; $4e4b
@@ -3955,8 +3955,8 @@ ShowSpeakerDialogue:
 	cp a, $ff ; $5860
 	jr nz, .loop ; $5862
 	xor a, a ; $5864
-	ld [$c3bb], a ; $5865
-	ld [$c3bc], a ; $5868
+	ld [wGlyphRowStartCol], a ; $5865
+	ld [wGlyphFlushedCol], a ; $5868
 	ldh a, [hWramBank] ; $586b
 	push af ; $586d
 	wram_bank $07 ; $586e
@@ -3969,8 +3969,8 @@ ShowSpeakerDialogue:
 	call RestoreShadowTilemap ; $5885
 .loop:
 	xor a, a ; $5888
-	ld [$c3bb], a ; $5889
-	ld [$c3bc], a ; $588c
+	ld [wGlyphRowStartCol], a ; $5889
+	ld [wGlyphFlushedCol], a ; $588c
 	ldh a, [hWramBank] ; $588f
 	push af ; $5891
 	wram_bank $07 ; $5892
@@ -4045,8 +4045,8 @@ ShowSpeakerDialogueRestoreBG:
 	cp a, $ff ; $5931
 	jr nz, .loop ; $5933
 	xor a, a ; $5935
-	ld [$c3bb], a ; $5936
-	ld [$c3bc], a ; $5939
+	ld [wGlyphRowStartCol], a ; $5936
+	ld [wGlyphFlushedCol], a ; $5939
 	ldh a, [hWramBank] ; $593c
 	push af ; $593e
 	wram_bank $07 ; $593f
@@ -4058,8 +4058,8 @@ ShowSpeakerDialogueRestoreBG:
 	call OpenSpeechBubble ; $5953
 .loop:
 	xor a, a ; $5956
-	ld [$c3bb], a ; $5957
-	ld [$c3bc], a ; $595a
+	ld [wGlyphRowStartCol], a ; $5957
+	ld [wGlyphFlushedCol], a ; $595a
 	ldh a, [hWramBank] ; $595d
 	push af ; $595f
 	wram_bank $07 ; $5960
@@ -4127,8 +4127,8 @@ ShowDialogueAtPosition:
 	call RefreshShadowTilemapFromMapBuffer ; $59ef
 .loop:
 	xor a, a ; $59f2
-	ld [$c3bb], a ; $59f3
-	ld [$c3bc], a ; $59f6
+	ld [wGlyphRowStartCol], a ; $59f3
+	ld [wGlyphFlushedCol], a ; $59f6
 	ldh a, [hWramBank] ; $59f9
 	push af ; $59fb
 	wram_bank $07 ; $59fc
@@ -4919,7 +4919,7 @@ Label_05_5ecd:
 	sla l ; $5ef8
 	rl h ; $5efa
 	ld a, h ; $5efc
-	ld [$c3bb], a ; $5efd
+	ld [wGlyphRowStartCol], a ; $5efd
 	pop de ; $5f00
 	pop bc ; $5f01
 	call SaveGlyphPenColumns ; $5f02
@@ -4941,7 +4941,7 @@ StampGlyphTileAtPen:
 	ld a, [hl+] ; $5f1a
 	ld d, [hl] ; $5f1b
 	ld e, a ; $5f1c
-	ld a, [$c3bc] ; $5f1d
+	ld a, [wGlyphFlushedCol] ; $5f1d
 	ld b, a ; $5f20
 	ld hl, wGlyphPenX ; $5f21
 	ld a, [hl+] ; $5f24
@@ -5369,11 +5369,11 @@ RedrawWindowText:
 	ld a, [wDialogueWindowId] ; $61b0
 	cp a, b ; $61b3
 	jr nz, .getWindowStructPtr ; $61b4
-	ld [$d821], a ; $61b6
+	ld [wGlyphWindowId], a ; $61b6
 .loop:
 	xor a, a ; $61b9
-	ld [$c3bb], a ; $61ba
-	ld [$c3bc], a ; $61bd
+	ld [wGlyphRowStartCol], a ; $61ba
+	ld [wGlyphFlushedCol], a ; $61bd
 	ldh a, [hWramBank] ; $61c0
 	push af ; $61c2
 	wram_bank $07 ; $61c3
@@ -5476,7 +5476,7 @@ RenderWindowTextToCompletion:
 	ld a, [wDialogueWindowId] ; $6277
 	cp a, b ; $627a
 	jr nz, .getWindowStructPtr ; $627b
-	ld [$d821], a ; $627d
+	ld [wGlyphWindowId], a ; $627d
 .loop:
 	ld a, [wDialogueWindowId] ; $6280
 	call DrawTextWindowFrame ; $6283
@@ -7358,7 +7358,7 @@ DrawTextWindowFrame:
 	ld a, [wShadowTilemapBank] ; $6fb9
 	ld a, a ; $6fbc
 	wram_bank ; $6fbd
-	ld a, [$c3bb] ; $6fc1
+	ld a, [wGlyphRowStartCol] ; $6fc1
 	add a, $80 ; $6fc4
 	ld [$cb75], a ; $6fc6
 	push hl ; $6fc9
@@ -7946,8 +7946,8 @@ PrepareGlyphBuffer:
 	call ResetGlyphStream ; $72f8
 	jr .done ; $72fb
 .keepBuffer:
-	ld a, [$c3bb] ; $72fd
-	ld [$c3bc], a ; $7300
+	ld a, [wGlyphRowStartCol] ; $72fd
+	ld [wGlyphFlushedCol], a ; $7300
 .done:
 	pop af ; $7303
 	wram_bank ; $7304
@@ -8132,7 +8132,7 @@ ClearWindowGlyphTiles:
 	push de ; $73e6
 	push hl ; $73e7
 	wram_bank $05 ; $73e8
-	ld a, [$d821] ; $73ee
+	ld a, [wGlyphWindowId] ; $73ee
 	farcall GetWindowStructPtr ; $73f1
 	inc hl ; $73f4
 	inc hl ; $73f5
@@ -8149,7 +8149,7 @@ ClearWindowGlyphTiles:
 	call MulHLByA ; $7402
 	ld b, l ; $7405
 	ld de, $d300 ; $7406
-	ld a, [$c3bb] ; $7409
+	ld a, [wGlyphRowStartCol] ; $7409
 	ld l, a ; $740c
 	ld h, $00 ; $740d
 	add hl, hl ; $740f
@@ -8280,7 +8280,7 @@ DrawWindowGlyphRun:
 	push af ; $74e4
 	push hl ; $74e5
 	wram_bank $05 ; $74e6
-	ld a, [$d821] ; $74ec
+	ld a, [wGlyphWindowId] ; $74ec
 	farcall GetWindowStructPtr ; $74ef
 	inc hl ; $74f2
 	inc hl ; $74f3
@@ -8328,10 +8328,10 @@ InitGlyphStreamForWindow:
 	push af ; $7533
 	wram_bank $05 ; $7534
 	ld de, $0000 ; $753a
-	ld a, [$d821] ; $753d
+	ld a, [wGlyphWindowId] ; $753d
 	or a, a ; $7540
 	jr z, .zero ; $7541
-	ld a, [$c3bb] ; $7543
+	ld a, [wGlyphRowStartCol] ; $7543
 	ld d, a ; $7546
 	ld e, $00 ; $7547
 	sra d ; $7549
@@ -8341,7 +8341,7 @@ InitGlyphStreamForWindow:
 	ld [hl], e ; $7550
 	inc hl ; $7551
 	ld [hl], d ; $7552
-	ld a, [$d821] ; $7553
+	ld a, [wGlyphWindowId] ; $7553
 	farcall GetWindowStructPtr ; $7556
 	inc hl ; $7559
 	inc hl ; $755a
@@ -8350,10 +8350,10 @@ InitGlyphStreamForWindow:
 	dec a ; $755d
 	ld d, a ; $755e
 	ld e, a ; $755f
-	ld a, [$d821] ; $7560
+	ld a, [wGlyphWindowId] ; $7560
 	or a, a ; $7563
 	jr z, .zero2 ; $7564
-	ld a, [$c3bb] ; $7566
+	ld a, [wGlyphRowStartCol] ; $7566
 	add a, e ; $7569
 	ld e, a ; $756a
 .zero2:
@@ -8417,7 +8417,7 @@ DrawStreamGlyph:
 	sla e ; $75c9
 	rl d ; $75cb
 	ld a, d ; $75cd
-	ld [$c3bb], a ; $75ce
+	ld [wGlyphRowStartCol], a ; $75ce
 	pop af ; $75d1
 	wram_bank ; $75d2
 	pop hl ; $75d6
@@ -8448,8 +8448,8 @@ StartGlyphStreamRow:
 	sla e ; $75f7
 	rl d ; $75f9
 	ld a, d ; $75fb
-	ld [$c3bb], a ; $75fc
-	ld [$c3bc], a ; $75ff
+	ld [wGlyphRowStartCol], a ; $75fc
+	ld [wGlyphFlushedCol], a ; $75ff
 	pop hl ; $7602
 	pop de ; $7603
 	pop bc ; $7604
@@ -8460,7 +8460,7 @@ UploadLastGlyphTiles:
 	push bc ; $7608
 	push de ; $7609
 	push hl ; $760a
-	ld a, [$d821] ; $760b
+	ld a, [wGlyphWindowId] ; $760b
 	ld b, a ; $760e
 	ld a, [wWindowId] ; $760f
 	cp a, b ; $7612
@@ -8498,7 +8498,7 @@ UploadLastGlyphTiles:
 .zero:
 	ld b, $7f ; $7644
 .step3:
-	ld a, [$c3bb] ; $7646
+	ld a, [wGlyphRowStartCol] ; $7646
 	cp a, b ; $7649
 	jr nc, .restore2 ; $764a
 	ld hl, wGlyphPenX ; $764c
@@ -8572,7 +8572,7 @@ DrawInlineGlyph:
 	ld a, c ; $76ac
 	add a, b ; $76ad
 	ld [$c3ba], a ; $76ae
-	ld [$c3bb], a ; $76b1
+	ld [wGlyphRowStartCol], a ; $76b1
 	jr .step3 ; $76b4
 .drawGlyph:
 	push af ; $76b6
@@ -8674,7 +8674,7 @@ InitGlyphStreamAt:
 .step:
 	ld b, e ; $774f
 	ld e, $00 ; $7750
-	ld hl, $c3bb ; $7752
+	ld hl, wGlyphRowStartCol ; $7752
 	ld [hl], d ; $7755
 	inc hl ; $7756
 	ld [hl], d ; $7757
@@ -8706,7 +8706,7 @@ SaveGlyphPenColumns:
 	ld a, [wMenuWindowId] ; $777b
 	cp a, b ; $777e
 	jr z, .restore ; $777f
-	ld hl, $c3bb ; $7781
+	ld hl, wGlyphRowStartCol ; $7781
 	ld a, [hl+] ; $7784
 	ld b, [hl] ; $7785
 	ld c, a ; $7786
@@ -8737,7 +8737,7 @@ UploadGlyphBuffer:
 FlushGlyphRow:
 	push af ; $77a3
 	push bc ; $77a4
-	ld a, [$d821] ; $77a5
+	ld a, [wGlyphWindowId] ; $77a5
 	ld b, a ; $77a8
 	ld a, [wDialogueWindowId] ; $77a9
 	cp a, b ; $77ac
@@ -8760,12 +8760,12 @@ FlushGlyphRow:
 	ld b, [hl] ; $77cb
 	inc hl ; $77cc
 	ld c, [hl] ; $77cd
-	ld a, [$c3bb] ; $77ce
-	ld [$c3bc], a ; $77d1
+	ld a, [wGlyphRowStartCol] ; $77ce
+	ld [wGlyphFlushedCol], a ; $77d1
 	ld a, c ; $77d4
 	add a, b ; $77d5
 	ld [hl], a ; $77d6
-	ld [$c3bb], a ; $77d7
+	ld [wGlyphRowStartCol], a ; $77d7
 	pop bc ; $77da
 	pop af ; $77db
 	ret ; $77dc
@@ -8786,7 +8786,7 @@ UploadGlyphBufferQueued:
 .zero:
 	ld b, $80 ; $77f7
 .step2:
-	ld a, [$c3bb] ; $77f9
+	ld a, [wGlyphRowStartCol] ; $77f9
 	inc a ; $77fc
 	cp a, b ; $77fd
 	jr c, .countLeft ; $77fe
@@ -8862,7 +8862,7 @@ UploadGlyphBufferDMA:
 	push hl ; $7869
 	ldh a, [hWramBank] ; $786a
 	push af ; $786c
-	ld a, [$c3bb] ; $786d
+	ld a, [wGlyphRowStartCol] ; $786d
 	inc a ; $7870
 	ld b, a ; $7871
 	wram_bank $07 ; $7872

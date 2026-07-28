@@ -116,7 +116,7 @@ InitMinigameScore:
 	ld hl, wMinigamesCurrentScore ; $40d0
 	ld [hl+], a ; $40d3
 	ld [hl+], a ; $40d4
-	ld hl, $c780 ; $40d5
+	ld hl, wMinigameServeCount ; $40d5
 	ld [hl+], a ; $40d8
 	ld [hl+], a ; $40d9
 	ld a, [wMinigameLevel] ; $40da
@@ -252,7 +252,7 @@ MinigameDefaultRecordValuePointers:
 	dw MinigameDefaultRecordValue09 ; record 9
 	dw MinigameDefaultRecordValue10 ; record 10
 IncrementCappedCounter:
-	ld hl, $c789 ; $41cb
+	ld hl, wMinigameHitStreak ; $41cb
 	ld a, [hl] ; $41ce
 	cp a, b ; $41cf
 	ret nc ; $41d0
@@ -328,13 +328,13 @@ StartScorePopup:
 	pop af ; $422c
 	wram_bank ; $422d
 	ld a, $10 ; $4231
-	ld [$c787], a ; $4233
+	ld [wScorePopupTimer], a ; $4233
 	ret ; $4236
 UpdateScorePopup:
-	ld a, [$c787] ; $4237
+	ld a, [wScorePopupTimer] ; $4237
 	and a, a ; $423a
 	ret z ; $423b
-	ld hl, $c787 ; $423c
+	ld hl, wScorePopupTimer ; $423c
 	call TickTimer ; $423f
 	ld hl, $c7a2 ; $4242
 	ld a, [hl+] ; $4245
@@ -345,11 +345,11 @@ UpdateScorePopup:
 	ld h, [hl] ; $424c
 	ld l, a ; $424d
 	farcall ApplyCameraProjection ; $424e
-	ld a, [$c787] ; $4251
+	ld a, [wScorePopupTimer] ; $4251
 	add a, e ; $4254
 	add a, $e8 ; $4255
 	ld e, a ; $4257
-	ld hl, $c782 ; $4258
+	ld hl, wScorePopupValue ; $4258
 	ld a, [hl+] ; $425b
 	ld h, [hl] ; $425c
 	ld l, a ; $425d
@@ -576,7 +576,7 @@ ShowPointOutcomeBanner:
 .done:
 	ret ; $43de
 DetermineMinigamePointResult:
-	ld a, [$c7bc] ; $43df
+	ld a, [wMinigameHighScoreMode] ; $43df
 	and a, a ; $43e2
 	jr nz, .isMinigameScoreLimitReached ; $43e3
 	ld a, [wPointOutcome] ; $43e5
@@ -752,7 +752,7 @@ MinigameConfig_TennisMachine1:
 	db $15, $0a, $02, $06, $12, $1e, $00, $80, $15, $45, $bd, $40, $0a, $45, $00, $00 ; 0x00
 InitMinigame_TennisMachine1:
 	ld a, $01 ; $450a
-	ld [$c7b8], a ; $450c
+	ld [wMinigameUsesTennisMachine], a ; $450c
 	ld a, $00 ; $450f
 	ld [wMinigameLevel], a ; $4511
 	ret ; $4514
@@ -768,7 +768,7 @@ MinigameHooks_TennisMachine1:
 	dw RetStub ; record 7
 TennisMachine1Hook_MinigameStart:
 	ld a, $01 ; $4525
-	ld [$c785], a ; $4527
+	ld [wMinigameServeSlot], a ; $4527
 	call StartMinigameMatch ; $452a
 	ret ; $452d
 TennisMachine1Hook_PerFrame:
@@ -854,7 +854,7 @@ StartMinigameMatch:
 	ld a, $05 ; $46a5
 	farcall SetCharState ; $46a7
 	wram_bank $05 ; $46aa
-	ld a, [$c785] ; $46b0
+	ld a, [wMinigameServeSlot] ; $46b0
 	call GetMinigameCharCoordsEntry ; $46b3
 	farcall SetCharPosAndTarget ; $46b6
 	ld a, $06 ; $46b9
@@ -888,7 +888,7 @@ DrawMinigameScoreHud:
 	ret ; $46f6
 LaunchMinigameServe:
 	ld b, $19 ; $46f7
-	ld hl, $c780 ; $46f9
+	ld hl, wMinigameServeCount ; $46f9
 	ld a, [hl+] ; $46fc
 	ld h, [hl] ; $46fd
 	ld l, a ; $46fe
@@ -902,7 +902,7 @@ LaunchMinigameServe:
 	ld b, l ; $470a
 .gotSpeed:
 	ld a, b ; $470b
-	ld [$c784], a ; $470c
+	ld [wMinigameServeSpeed], a ; $470c
 	ldh a, [hWramBank] ; $470f
 	push af ; $4711
 	wram_bank $05 ; $4712
@@ -916,23 +916,23 @@ LaunchMinigameServe:
 	ld a, $0f ; $4728
 	farcall StepMatchFrames ; $472a
 .launch:
-	ld hl, $c780 ; $472d
+	ld hl, wMinigameServeCount ; $472d
 	ld a, [hl+] ; $4730
 	ld d, [hl] ; $4731
 	ld e, a ; $4732
 	inc de ; $4733
-	ld hl, $c780 ; $4734
+	ld hl, wMinigameServeCount ; $4734
 	ld a, e ; $4737
 	ld [hl+], a ; $4738
 	ld [hl], d ; $4739
 	call LaunchBall ; $473a
-	ld a, [$c785] ; $473d
+	ld a, [wMinigameServeSlot] ; $473d
 	ld l, a ; $4740
 	ld h, $00 ; $4741
 	ld de, $0003 ; $4743
 	call DivHLByDE ; $4746
 	ld a, l ; $4749
-	ld [$c786], a ; $474a
+	ld [wMinigameServeGroup], a ; $474a
 	call ApplyMinigameCharTargetFromTable ; $474d
 	ret ; $4750
 AwardMinigamePointAndEnd:
@@ -953,7 +953,7 @@ EndMinigamePoint:
 	farcall ResolvePointWinner ; $4773
 	add a, a ; $4776
 	jr c, .resolve ; $4777
-	ld a, [$c784] ; $4779
+	ld a, [wMinigameServeSpeed] ; $4779
 	add a, a ; $477c
 	add a, a ; $477d
 	add a, LOW(Data_0d_4547) ; $477e
@@ -1035,7 +1035,7 @@ LaunchBall:
 	wram_bank $05 ; $4815
 	ld a, $20 ; $481b
 	ld [$df4b], a ; $481d
-	ld a, [$c784] ; $4820
+	ld a, [wMinigameServeSpeed] ; $4820
 	add a, a ; $4823
 	add a, a ; $4824
 	add a, LOW(Data_0d_4548) ; $4825
@@ -1049,7 +1049,7 @@ LaunchBall:
 	ld [wReachSpeedIndex], a ; $4831
 	ld [wSlicePlacementIndex], a ; $4834
 	ld [wTopspinPlacementIndex], a ; $4837
-	ld a, [$c784] ; $483a
+	ld a, [wMinigameServeSpeed] ; $483a
 	add a, a ; $483d
 	add a, a ; $483e
 	add a, LOW(MinigameShotDifficultyRamp) ; $483f
@@ -1082,7 +1082,7 @@ LaunchBall:
 	and a, $0f ; $4865
 	ld [$df17], a ; $4867
 	farcall SelectRallyShotType ; $486a
-	ld a, [$c786] ; $486d
+	ld a, [wMinigameServeGroup] ; $486d
 	add a, LOW(MinigameBallLaunchSpeeds) ; $4870
 	ld l, a ; $4872
 	adc a, HIGH(MinigameBallLaunchSpeeds) ; $4873
@@ -1090,7 +1090,7 @@ LaunchBall:
 	ld h, a ; $4876
 	ld a, [hl] ; $4877
 	ld [$df69], a ; $4878
-	ld a, [$c786] ; $487b
+	ld a, [wMinigameServeGroup] ; $487b
 	add a, a ; $487e
 	add a, LOW(MinigameBallLaunchHeights) ; $487f
 	ld l, a ; $4881
@@ -1128,7 +1128,7 @@ ApplyMinigameCharTargetFromTable:
 	ldh a, [hWramBank] ; $48b6
 	push af ; $48b8
 	wram_bank $05 ; $48b9
-	ld a, [$c785] ; $48bf
+	ld a, [wMinigameServeSlot] ; $48bf
 	call GetMinigameCharCoordsEntry ; $48c2
 	farcall SetCharTarget ; $48c5
 	pop af ; $48c8
@@ -1226,7 +1226,7 @@ MinigameConfig_TennisMachine2:
 	db $15, $0a, $02, $06, $13, $1e, $00, $80, $74, $49, $bd, $40, $69, $49, $00, $00 ; 0x00
 InitMinigame_TennisMachine2:
 	ld a, $01 ; $4969
-	ld [$c7b8], a ; $496b
+	ld [wMinigameUsesTennisMachine], a ; $496b
 	ld a, $01 ; $496e
 	ld [wMinigameLevel], a ; $4970
 	ret ; $4973
@@ -1242,7 +1242,7 @@ MinigameHooks_TennisMachine2:
 	dw RetStub ; record 7
 TennisMachine2Hook_MinigameStart:
 	ld a, $01 ; $4984
-	ld [$c785], a ; $4986
+	ld [wMinigameServeSlot], a ; $4986
 	call StartMinigameMatch ; $4989
 	ret ; $498c
 TennisMachine2Hook_PerFrame:
@@ -1252,7 +1252,7 @@ TennisMachine2Hook_PointStart:
 	farcall AdvanceMatchRng ; $4991
 	and a, $01 ; $4994
 	inc a ; $4996
-	ld hl, $c785 ; $4997
+	ld hl, wMinigameServeSlot ; $4997
 	add a, [hl] ; $499a
 	cp a, $03 ; $499b
 	jr c, .store ; $499d
@@ -1289,7 +1289,7 @@ MinigameConfig_TennisMachine3:
 	nop ; $49c5
 InitMinigame_TennisMachine3:
 	ld a, $01 ; $49c6
-	ld [$c7b8], a ; $49c8
+	ld [wMinigameUsesTennisMachine], a ; $49c8
 	ld a, $02 ; $49cb
 	ld [wMinigameLevel], a ; $49cd
 	ret ; $49d0
@@ -1305,7 +1305,7 @@ MinigameHooks_TennisMachine3:
 	dw RetStub ; record 7
 TennisMachine3Hook_MinigameStart:
 	ld a, $04 ; $49e1
-	ld [$c785], a ; $49e3
+	ld [wMinigameServeSlot], a ; $49e3
 	call StartMinigameMatch ; $49e6
 	ret ; $49e9
 TennisMachine3Hook_PerFrame:
@@ -1315,7 +1315,7 @@ TennisMachine3Hook_PointStart:
 	farcall AdvanceMatchRng ; $49ee
 	and a, $03 ; $49f1
 	inc a ; $49f3
-	ld hl, $c785 ; $49f4
+	ld hl, wMinigameServeSlot ; $49f4
 	add a, [hl] ; $49f7
 	cp a, $06 ; $49f8
 	jr c, .store ; $49fa
@@ -1352,7 +1352,7 @@ MinigameConfig_TennisMachine4:
 	nop ; $4a22
 InitMinigame_TennisMachine4:
 	ld a, $01 ; $4a23
-	ld [$c7b8], a ; $4a25
+	ld [wMinigameUsesTennisMachine], a ; $4a25
 	ld a, $03 ; $4a28
 	ld [wMinigameLevel], a ; $4a2a
 	ret ; $4a2d
@@ -1368,7 +1368,7 @@ MinigameHooks_TennisMachine4:
 	dw RetStub ; record 7
 TennisMachine4Hook_MinigameStart:
 	ld a, $04 ; $4a3e
-	ld [$c785], a ; $4a40
+	ld [wMinigameServeSlot], a ; $4a40
 	call StartMinigameMatch ; $4a43
 	ret ; $4a46
 TennisMachine4Hook_PerFrame:
@@ -1378,7 +1378,7 @@ TennisMachine4Hook_PointStart:
 	farcall AdvanceMatchRng ; $4a4b
 	and a, $07 ; $4a4e
 	inc a ; $4a50
-	ld hl, $c785 ; $4a51
+	ld hl, wMinigameServeSlot ; $4a51
 	add a, [hl] ; $4a54
 	cp a, $09 ; $4a55
 	jr c, .store ; $4a57
@@ -1416,7 +1416,7 @@ MinigameConfig_WallPractice1:
 	nop ; $4a7f
 InitMinigame_WallPractice1:
 	ld a, $01 ; $4a80
-	ld [$c7b9], a ; $4a82
+	ld [wMinigameUsesWall], a ; $4a82
 	ld a, $00 ; $4a85
 	ld [wMinigameLevel], a ; $4a87
 	farcall InitMinigameTargets ; $4a8a
@@ -1623,7 +1623,7 @@ MinigameConfig_WallPractice2:
 	db $00, $0b, $01, $07, $17, $1f, $00, $80, $1b, $4c, $b4, $40, $08, $4c, $00, $00 ; 0x00
 InitMinigame_WallPractice2:
 	ld a, $01 ; $4c08
-	ld [$c7b9], a ; $4c0a
+	ld [wMinigameUsesWall], a ; $4c0a
 	ld a, $01 ; $4c0d
 	ld [wMinigameLevel], a ; $4c0f
 	farcall InitMinigameTargets ; $4c12
@@ -1675,7 +1675,7 @@ MinigameConfig_WallPractice3:
 	nop ; $4c52
 InitMinigame_WallPractice3:
 	ld a, $01 ; $4c53
-	ld [$c7b9], a ; $4c55
+	ld [wMinigameUsesWall], a ; $4c55
 	ld a, $02 ; $4c58
 	ld [wMinigameLevel], a ; $4c5a
 	farcall InitMinigameTargets ; $4c5d
@@ -1727,7 +1727,7 @@ MinigameConfig_WallPractice4:
 	nop ; $4c9d
 InitMinigame_WallPractice4:
 	ld a, $01 ; $4c9e
-	ld [$c7b9], a ; $4ca0
+	ld [wMinigameUsesWall], a ; $4ca0
 	ld a, $03 ; $4ca3
 	ld [wMinigameLevel], a ; $4ca5
 	farcall InitMinigameTargets ; $4ca8
@@ -1767,9 +1767,9 @@ MinigameConfig_TennisMachineHighScore:
 	db $15, $0a, $02, $06, $1a, $1e, $00, $80, $f9, $4c, $bd, $40, $e9, $4c, $00, $00 ; 0x00
 InitMinigame_TennisMachineHighScore:
 	ld a, $01 ; $4ce9
-	ld [$c7b8], a ; $4ceb
+	ld [wMinigameUsesTennisMachine], a ; $4ceb
 	ld a, $01 ; $4cee
-	ld [$c7bc], a ; $4cf0
+	ld [wMinigameHighScoreMode], a ; $4cf0
 	ld a, $04 ; $4cf3
 	ld [wMinigameLevel], a ; $4cf5
 	ret ; $4cf8
@@ -1785,7 +1785,7 @@ MinigameHooks_TennisMachineHighScore:
 	dw RetStub ; record 7
 TennisMachineHighScoreHook_MinigameStart:
 	ld a, $04 ; $4d09
-	ld [$c785], a ; $4d0b
+	ld [wMinigameServeSlot], a ; $4d0b
 	call StartMinigameMatch ; $4d0e
 	ret ; $4d11
 TennisMachineHighScoreHook_PerFrame:
@@ -1795,7 +1795,7 @@ TennisMachineHighScoreHook_PointStart:
 	farcall AdvanceMatchRng ; $4d16
 	and a, $07 ; $4d19
 	inc a ; $4d1b
-	ld hl, $c785 ; $4d1c
+	ld hl, wMinigameServeSlot ; $4d1c
 	add a, [hl] ; $4d1f
 	cp a, $09 ; $4d20
 	jr c, .store ; $4d22
@@ -1833,9 +1833,9 @@ MinigameConfig_WallPracticeHighScore:
 	nop ; $4d4a
 InitMinigame_WallPracticeHighScore:
 	ld a, $01 ; $4d4b
-	ld [$c7bc], a ; $4d4d
+	ld [wMinigameHighScoreMode], a ; $4d4d
 	ld a, $01 ; $4d50
-	ld [$c7b9], a ; $4d52
+	ld [wMinigameUsesWall], a ; $4d52
 	ld a, $04 ; $4d55
 	ld [wMinigameLevel], a ; $4d57
 	farcall InitMinigameTargets ; $4d5a
@@ -1887,12 +1887,12 @@ MinigameConfig_TargetShot:
 	nop ; $4d9a
 InitMinigame_TargetShot:
 	ld a, $01 ; $4d9b
-	ld [$c7b8], a ; $4d9d
+	ld [wMinigameUsesTennisMachine], a ; $4d9d
 	ld a, [wMinigameLevel] ; $4da0
 	cp a, $02 ; $4da3
 	jr nz, .done ; $4da5
 	ld a, $01 ; $4da7
-	ld [$c7bc], a ; $4da9
+	ld [wMinigameHighScoreMode], a ; $4da9
 .done:
 	ret ; $4dac
 MinigameHooks_TargetShot:
@@ -1907,7 +1907,7 @@ MinigameHooks_TargetShot:
 	dw RetStub ; record 7
 TargetShotHook_MinigameStart:
 	ld a, $01 ; $4dbd
-	ld [$c785], a ; $4dbf
+	ld [wMinigameServeSlot], a ; $4dbf
 	call StartMinigameMatch ; $4dc2
 	ld a, $01 ; $4dc5
 	ld [wTargetZoneEnabled], a ; $4dc7
@@ -1921,7 +1921,7 @@ TargetShotHook_PointStart:
 	farcall AdvanceMatchRng ; $4dd5
 	and a, $01 ; $4dd8
 	inc a ; $4dda
-	ld hl, $c785 ; $4ddb
+	ld hl, wMinigameServeSlot ; $4ddb
 	add a, [hl] ; $4dde
 	cp a, $03 ; $4ddf
 	jr c, .store ; $4de1
@@ -1948,7 +1948,7 @@ TargetShotHook_Bounce:
 	call LookupMinigameShotResult ; $4e03
 	ld d, $00 ; $4e06
 	ld e, a ; $4e08
-	ld hl, $c782 ; $4e09
+	ld hl, wScorePopupValue ; $4e09
 	ld a, e ; $4e0c
 	ld [hl+], a ; $4e0d
 	ld [hl], d ; $4e0e
@@ -2192,12 +2192,12 @@ MinigameConfig_ShootingStar:
 	db $15, $10, $02, $08, $1d, $19, $00, $17, $b6, $51, $bd, $40, $a4, $51, $00, $00 ; 0x00
 InitMinigame_ShootingStar:
 	ld a, $01 ; $51a4
-	ld [$c7b8], a ; $51a6
+	ld [wMinigameUsesTennisMachine], a ; $51a6
 	ld a, [wMinigameLevel] ; $51a9
 	cp a, $02 ; $51ac
 	jr nz, .done ; $51ae
 	ld a, $01 ; $51b0
-	ld [$c7bc], a ; $51b2
+	ld [wMinigameHighScoreMode], a ; $51b2
 .done:
 	ret ; $51b5
 MinigameHooks_ShootingStar:
@@ -2213,7 +2213,7 @@ MinigameHooks_ShootingStar:
 ShootingStarHook_MinigameStart:
 	call InitBallTargetActor ; $51c6
 	ld a, $01 ; $51c9
-	ld [$c785], a ; $51cb
+	ld [wMinigameServeSlot], a ; $51cb
 	call StartMinigameMatch ; $51ce
 	ret ; $51d1
 ShootingStarHook_PerFrame:
@@ -2228,7 +2228,7 @@ ShootingStarHook_PointStart:
 	farcall AdvanceMatchRng ; $51e0
 	and a, $01 ; $51e3
 	inc a ; $51e5
-	ld hl, $c785 ; $51e6
+	ld hl, wMinigameServeSlot ; $51e6
 	add a, [hl] ; $51e9
 	cp a, $03 ; $51ea
 	jr c, .store ; $51ec
@@ -2260,14 +2260,14 @@ InitBallTargetActor:
 	call SetMinigameActorPosition ; $521a
 	ret ; $521d
 ResetTargetHitState:
-	ld a, [$c788] ; $521e
+	ld a, [wMinigameHitScored] ; $521e
 	and a, a ; $5221
 	jr nz, .nonZero ; $5222
 	xor a, a ; $5224
-	ld [$c789], a ; $5225
+	ld [wMinigameHitStreak], a ; $5225
 .nonZero:
 	xor a, a ; $5228
-	ld [$c788], a ; $5229
+	ld [wMinigameHitScored], a ; $5229
 	xor a, a ; $522c
 	ld [$dc02], a ; $522d
 	ret ; $5230
@@ -2414,8 +2414,8 @@ AwardHitScore:
 	ld hl, $0007 ; $530d
 .step:
 	ld a, $01 ; $5310
-	ld [$c788], a ; $5312
-	ld a, [$c789] ; $5315
+	ld [wMinigameHitScored], a ; $5312
+	ld a, [wMinigameHitStreak] ; $5315
 	add a, $4f ; $5318
 	ld e, a ; $531a
 	adc a, $53 ; $531b
@@ -2423,7 +2423,7 @@ AwardHitScore:
 	ld d, a ; $531e
 	ld a, [de] ; $531f
 	call PlaySoundManaged ; $5320
-	ld a, [$c789] ; $5323
+	ld a, [wMinigameHitStreak] ; $5323
 	add a, $57 ; $5326
 	ld e, a ; $5328
 	adc a, $53 ; $5329
@@ -2433,7 +2433,7 @@ AwardHitScore:
 	call MulHLByA ; $532e
 	ld e, l ; $5331
 	ld d, h ; $5332
-	ld hl, $c782 ; $5333
+	ld hl, wScorePopupValue ; $5333
 	ld a, e ; $5336
 	ld [hl+], a ; $5337
 	ld [hl], d ; $5338
@@ -2495,7 +2495,7 @@ ProjectMinigameWorldPosition:
 	ld l, e ; $53b5
 	ld h, d ; $53b6
 	farcall ApplyCameraProjection ; $53b7
-	ld a, [$c789] ; $53ba
+	ld a, [wMinigameHitStreak] ; $53ba
 	add a, LOW(MinigameTargetSpriteOamAttrByHitStreak) ; $53bd
 	ld l, a ; $53bf
 	adc a, HIGH(MinigameTargetSpriteOamAttrByHitStreak) ; $53c0
@@ -2597,12 +2597,12 @@ InitMinigame_BananaBunch:
 	ld a, $01 ; $5504
 	ld [$c7a4], a ; $5506
 	ld a, $01 ; $5509
-	ld [$c7b9], a ; $550b
+	ld [wMinigameUsesWall], a ; $550b
 	ld a, [wMinigameLevel] ; $550e
 	cp a, $02 ; $5511
 	jr nz, .done ; $5513
 	ld a, $01 ; $5515
-	ld [$c7bc], a ; $5517
+	ld [wMinigameHighScoreMode], a ; $5517
 .done:
 	ret ; $551a
 MinigameHooks_BananaBunch:
@@ -2733,12 +2733,12 @@ MinigameConfig_BooBlast:
 	db $17, $12, $02, $08, $1c, $11, $00, $1a, $58, $56, $c6, $40, $25, $56, $00, $00 ; 0x00
 InitMinigame_BooBlast:
 	ld a, $01 ; $5625
-	ld [$c7ba], a ; $5627
+	ld [wMinigameIsBooBlast], a ; $5627
 	ld a, [wMinigameLevel] ; $562a
 	cp a, $02 ; $562d
 	jr nz, .ne02 ; $562f
 	ld a, $01 ; $5631
-	ld [$c7bc], a ; $5633
+	ld [wMinigameHighScoreMode], a ; $5633
 .ne02:
 	ld hl, BooBlastInitParams ; $5636
 	ld a, [hl+] ; $5639
@@ -2846,23 +2846,23 @@ UpdateBooBlastHitStreak:
 	ld a, [wLastShotCharIndex] ; $56f0
 	and a, $01 ; $56f3
 	jr nz, .maskSet ; $56f5
-	ld a, [$c788] ; $56f7
+	ld a, [wMinigameHitScored] ; $56f7
 	and a, a ; $56fa
 	jr z, .step3 ; $56fb
 	jr .incrementCappedCounter ; $56fd
 .maskSet:
-	ld a, [$c788] ; $56ff
+	ld a, [wMinigameHitScored] ; $56ff
 	and a, a ; $5702
 	jr nz, .incrementCappedCounter ; $5703
 	xor a, a ; $5705
-	ld [$c789], a ; $5706
+	ld [wMinigameHitStreak], a ; $5706
 	jr .step3 ; $5709
 .incrementCappedCounter:
 	ld b, $07 ; $570b
 	call IncrementCappedCounter ; $570d
 .step3:
 	xor a, a ; $5710
-	ld [$c788], a ; $5711
+	ld [wMinigameHitScored], a ; $5711
 	xor a, a ; $5714
 	ld [$dc02], a ; $5715
 	ret ; $5718
@@ -2984,9 +2984,9 @@ ScoreBallHit:
 	ld a, $10 ; $57be
 	ld [$dc73], a ; $57c0
 	ld a, $01 ; $57c3
-	ld [$c788], a ; $57c5
+	ld [wMinigameHitScored], a ; $57c5
 	sound $86 ; $57c8
-	ld a, [$c789] ; $57ca
+	ld a, [wMinigameHitStreak] ; $57ca
 	add a, $f5 ; $57cd
 	ld e, a ; $57cf
 	adc a, $57 ; $57d0
@@ -2997,7 +2997,7 @@ ScoreBallHit:
 	call MulHLByA ; $57d8
 	ld e, l ; $57db
 	ld d, h ; $57dc
-	ld hl, $c782 ; $57dd
+	ld hl, wScorePopupValue ; $57dd
 	ld a, e ; $57e0
 	ld [hl+], a ; $57e1
 	ld [hl], d ; $57e2
@@ -3057,7 +3057,7 @@ ProjectBallSprite:
 	ld l, e ; $5853
 	ld h, d ; $5854
 	farcall ApplyCameraProjection ; $5855
-	ld a, [$c789] ; $5858
+	ld a, [wMinigameHitStreak] ; $5858
 	add a, $66 ; $585b
 	ld l, a ; $585d
 	adc a, $58 ; $585e
@@ -3088,12 +3088,12 @@ MinigameConfig_PerfectShot:
 	nop ; $587d
 InitMinigame_PerfectShot:
 	ld a, $01 ; $587e
-	ld [$c7b9], a ; $5880
+	ld [wMinigameUsesWall], a ; $5880
 	ld a, [wMinigameLevel] ; $5883
 	cp a, $02 ; $5886
 	jr nz, .initMinigameTargets ; $5888
 	ld a, $01 ; $588a
-	ld [$c7bc], a ; $588c
+	ld [wMinigameHighScoreMode], a ; $588c
 .initMinigameTargets:
 	farcall InitMinigameTargets ; $588f
 	ld a, [wMinigameLevel] ; $5892
@@ -3262,12 +3262,12 @@ MinigameConfig_TreasureBox:
 	db $1b, $14, $02, $08, $22, $14, $00, $1e, $ed, $59, $bd, $40, $db, $59, $00, $00 ; 0x00
 InitMinigame_TreasureBox:
 	ld a, $01 ; $59db
-	ld [$c7b8], a ; $59dd
+	ld [wMinigameUsesTennisMachine], a ; $59dd
 	ld a, [wMinigameLevel] ; $59e0
 	cp a, $02 ; $59e3
 	jr nz, .done ; $59e5
 	ld a, $01 ; $59e7
-	ld [$c7bc], a ; $59e9
+	ld [wMinigameHighScoreMode], a ; $59e9
 .done:
 	ret ; $59ec
 MinigameHooks_TreasureBox:
@@ -3283,7 +3283,7 @@ MinigameHooks_TreasureBox:
 TreasureBoxHook_MinigameStart:
 	call ClearMinigameActors ; $59fd
 	ld a, $01 ; $5a00
-	ld [$c785], a ; $5a02
+	ld [wMinigameServeSlot], a ; $5a02
 	call StartMinigameMatch ; $5a05
 	ld a, $01 ; $5a08
 	ld [wTargetZoneEnabled], a ; $5a0a
@@ -3303,7 +3303,7 @@ TreasureBoxHook_PointStart:
 	farcall AdvanceMatchRng ; $5a25
 	and a, $01 ; $5a28
 	inc a ; $5a2a
-	ld hl, $c785 ; $5a2b
+	ld hl, wMinigameServeSlot ; $5a2b
 	add a, [hl] ; $5a2e
 	cp a, $03 ; $5a2f
 	jr c, .store ; $5a31
@@ -3329,7 +3329,7 @@ TreasureBoxHook_Bounce:
 	cp a, $06 ; $5a53
 	ret nz ; $5a55
 	ld de, $0001 ; $5a56
-	ld hl, $c782 ; $5a59
+	ld hl, wScorePopupValue ; $5a59
 	ld a, e ; $5a5c
 	ld [hl+], a ; $5a5d
 	ld [hl], d ; $5a5e
@@ -3365,14 +3365,14 @@ SelectRandomTreasureBoxTargetZone:
 	ld [$c7a5], a ; $5a89
 	ld a, [$c7a5] ; $5a8c
 	call LoadTargetZoneConfig ; $5a8f
-	ld a, [$c788] ; $5a92
+	ld a, [wMinigameHitScored] ; $5a92
 	and a, a ; $5a95
 	jr nz, .nonZero ; $5a96
 	xor a, a ; $5a98
-	ld [$c789], a ; $5a99
+	ld [wMinigameHitStreak], a ; $5a99
 .nonZero:
 	xor a, a ; $5a9c
-	ld [$c788], a ; $5a9d
+	ld [wMinigameHitScored], a ; $5a9d
 	xor a, a ; $5aa0
 	ld [$dc02], a ; $5aa1
 	ret ; $5aa4
@@ -3403,8 +3403,8 @@ AdvanceTreasureBoxActorState:
 	ret ; $5ade
 .step:
 	xor a, a ; $5adf
-	ld [$c78a], a ; $5ae0
-	ld hl, $c780 ; $5ae3
+	ld [wTreasureBoxState], a ; $5ae0
+	ld hl, wMinigameServeCount ; $5ae3
 	ld a, [hl+] ; $5ae6
 	ld h, [hl] ; $5ae7
 	ld l, a ; $5ae8
@@ -3596,8 +3596,8 @@ AwardTreasureBoxHitScore:
 	ld a, $10 ; $5c2c
 	ld [$dc73], a ; $5c2e
 	ld a, $01 ; $5c31
-	ld [$c788], a ; $5c33
-	ld a, [$c789] ; $5c36
+	ld [wMinigameHitScored], a ; $5c33
+	ld a, [wMinigameHitStreak] ; $5c36
 	add a, $81 ; $5c39
 	ld e, a ; $5c3b
 	adc a, $5c ; $5c3c
@@ -3613,7 +3613,7 @@ AwardTreasureBoxHitScore:
 	ld h, a ; $5c4d
 	ld l, [hl] ; $5c4e
 	ld h, $00 ; $5c4f
-	ld a, [$c789] ; $5c51
+	ld a, [wMinigameHitStreak] ; $5c51
 	add a, $85 ; $5c54
 	ld e, a ; $5c56
 	adc a, $5c ; $5c57
@@ -3623,7 +3623,7 @@ AwardTreasureBoxHitScore:
 	call MulHLByA ; $5c5c
 	ld e, l ; $5c5f
 	ld d, h ; $5c60
-	ld hl, $c782 ; $5c61
+	ld hl, wScorePopupValue ; $5c61
 	ld a, e ; $5c64
 	ld [hl+], a ; $5c65
 	ld [hl], d ; $5c66
@@ -3651,7 +3651,7 @@ DrawTreasureBoxSprite:
 	call QueueSprite16 ; $5c8e
 	ld a, [$dc71] ; $5c91
 	ld b, a ; $5c94
-	ld hl, $c78a ; $5c95
+	ld hl, wTreasureBoxState ; $5c95
 	ld a, [hl] ; $5c98
 	inc [hl] ; $5c99
 	and a, $1f ; $5c9a
@@ -3697,12 +3697,12 @@ MinigameConfig_MedallionMatch:
 	db $17, $15, $02, $08, $23, $19, $00, $1b, $0c, $5d, $bd, $40, $fa, $5c, $00, $00 ; 0x00
 InitMinigame_MedallionMatch:
 	ld a, $01 ; $5cfa
-	ld [$c7b8], a ; $5cfc
+	ld [wMinigameUsesTennisMachine], a ; $5cfc
 	ld a, [wMinigameLevel] ; $5cff
 	cp a, $02 ; $5d02
 	jr nz, .done ; $5d04
 	ld a, $01 ; $5d06
-	ld [$c7bc], a ; $5d08
+	ld [wMinigameHighScoreMode], a ; $5d08
 .done:
 	ret ; $5d0b
 MinigameHooks_MedallionMatch:
@@ -3718,7 +3718,7 @@ MinigameHooks_MedallionMatch:
 MedallionMatchHook_MinigameStart:
 	call SpawnMedallionMatchTargets ; $5d1c
 	ld a, $01 ; $5d1f
-	ld [$c785], a ; $5d21
+	ld [wMinigameServeSlot], a ; $5d21
 	call StartMinigameMatch ; $5d24
 	xor a, a ; $5d27
 	ld [wStandingShadowsEnabled], a ; $5d28
@@ -3739,7 +3739,7 @@ MedallionMatchHook_PointStart:
 	farcall AdvanceMatchRng ; $5d3d
 	and a, $01 ; $5d40
 	inc a ; $5d42
-	ld hl, $c785 ; $5d43
+	ld hl, wMinigameServeSlot ; $5d43
 	add a, [hl] ; $5d46
 	cp a, $03 ; $5d47
 	jr c, .store ; $5d49
@@ -3814,7 +3814,7 @@ InitMedallionMatchTargetActor:
 	ret ; $5dd5
 ResetMedallionMatchHitState:
 	xor a, a ; $5dd6
-	ld [$c789], a ; $5dd7
+	ld [wMinigameHitStreak], a ; $5dd7
 	xor a, a ; $5dda
 	ld [$dc02], a ; $5ddb
 	ld [$dc12], a ; $5dde
@@ -3954,7 +3954,7 @@ AwardMedallionMatchHitScore:
 	ld [$dc73], a ; $5eaf
 	ld hl, $0002 ; $5eb2
 .step:
-	ld a, [$c789] ; $5eb5
+	ld a, [wMinigameHitStreak] ; $5eb5
 	add a, $e4 ; $5eb8
 	ld e, a ; $5eba
 	adc a, $5e ; $5ebb
@@ -3962,7 +3962,7 @@ AwardMedallionMatchHitScore:
 	ld d, a ; $5ebe
 	ld a, [de] ; $5ebf
 	call PlaySoundManaged ; $5ec0
-	ld a, [$c789] ; $5ec3
+	ld a, [wMinigameHitStreak] ; $5ec3
 	add a, $ec ; $5ec6
 	ld e, a ; $5ec8
 	adc a, $5e ; $5ec9
@@ -3972,13 +3972,13 @@ AwardMedallionMatchHitScore:
 	call MulHLByA ; $5ece
 	ld e, l ; $5ed1
 	ld d, h ; $5ed2
-	ld hl, $c782 ; $5ed3
+	ld hl, wScorePopupValue ; $5ed3
 	ld a, e ; $5ed6
 	ld [hl+], a ; $5ed7
 	ld [hl], d ; $5ed8
 	call AddToMinigameScore ; $5ed9
 	call StartScorePopup ; $5edc
-	ld hl, $c789 ; $5edf
+	ld hl, wMinigameHitStreak ; $5edf
 	inc [hl] ; $5ee2
 	ret ; $5ee3
 MedallionMatchHitStreakSounds:
@@ -4038,12 +4038,12 @@ InitMinigame_FruitFantasy:
 	ld a, $01 ; $5f4a
 	ld [$c7a4], a ; $5f4c
 	ld a, $01 ; $5f4f
-	ld [$c7b9], a ; $5f51
+	ld [wMinigameUsesWall], a ; $5f51
 	ld a, [wMinigameLevel] ; $5f54
 	cp a, $02 ; $5f57
 	jr nz, .done ; $5f59
 	ld a, $01 ; $5f5b
-	ld [$c7bc], a ; $5f5d
+	ld [wMinigameHighScoreMode], a ; $5f5d
 .done:
 	ret ; $5f60
 MinigameHooks_FruitFantasy:

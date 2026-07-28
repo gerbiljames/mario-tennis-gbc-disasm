@@ -30,7 +30,7 @@ Everything below is **committed** (HEAD `6153064`); the whole history
 rebuilds byte-perfect. Per-bank progress at any time: `python3
 tools/progress.py` (proven-code bytes, fill runs, label counts, human-named
 counts) and `tools/progress.py --unnamed <bank>` to list still-auto-named
-symbols. **19,921 of 21,568 labels are human-named** (see the caveat in the
+symbols. **19,920 of 21,679 labels are human-named** (see the caveat in the
 auto-split section below) (up from 4,816 on 2026-07-23); what is left is
 data blobs.
 
@@ -5665,3 +5665,132 @@ are a related judgement call left alone: there `c` is a channel-1 register
 index that `wSndRegBase` is added to, not an address being used as one.
 
 `make compare` OK, `make check` clean.
+
+
+## The screens were all sharing one block of RAM (2026-07-28)
+
+Splitting WRAMX by bank left 3,496 raw `[$xxxx]` WRAM operands in `src/`, and
+the shape of what was left only became visible once the layout said which bank
+each address belonged to. They are **not one variable each**. Two blocks --
+`$d000`-`$d3ff` and `$d800`-`$d83f` in WRAM bank `$03`, and the same addresses
+again in banks `$05` and `$06` -- are *screen-local scratch*: every full-screen
+UI in the game reuses them for whatever it needs, and the same byte is a
+different variable in each bank and often in each screen of the same bank.
+
+`ld hl, $d800` appears in ten ROM banks. In bank `$38` it is the name being
+typed; in bank `$3e` the list of rackets you own; in bank `$18` an object
+array; in bank `$1b` a decompression staging area. Bank `$17` writes
+`$d810`-`$d82e` as a sprite parameter block, bank `$16` uses `$d810` as a digit
+buffer, bank `$05` keeps the menu cursor at `$d830`. None of that is visible
+from an address.
+
+**So the names are scoped to the owning ROM bank, not the WRAM bank.** That is
+the opposite of what the previous pass concluded for `wSndChannels` and
+`wExpScreenCharStats`, and for a specific reason: those subsystems select their
+WRAM bank at the reference, so `compute_wram_bank` proves it. A screen selects
+its bank once, in a callee -- `LoadCourtDiagramScreen` does `wram_bank $03` and
+returns, so the bank is not provable anywhere in `ShowCourtDiagramTestScreen`
+even though every `[$d81x]` in it is bank `$03`. A `{"bank": "0x17"}` scope
+names all 527 of them; `{"wram_bank": "0x03"}` would name almost none. Where
+one ROM bank runs several screens the scope narrows further to a code range
+(`{"bank": "0x3e", "start": "0x5400", "end": "0x5c00"}` for equipment select,
+so the erase-data screen's own use of `$d800` two thousand bytes earlier is
+left alone).
+
+### What the blocks turned out to be
+
+**Drill briefings (bank `$17`, WRAM bank `$03`).** `ShowCourtDiagramTestScreen`
+is a debug screen that walks the whole block: it seeds a pair of bytes, then
+registers the drawer that reads them as a frame task, over and over. That makes
+the layout read straight off:
+
+```
+        ld a, $50
+        ld [wBriefingPlayerX], a
+        ld a, $40
+        ld [wBriefingPlayerY], a
+        ld a, $01
+        ld hl, DrawBriefingPlayerSprite
+        call RegisterFrameTask
+```
+
+Eleven such pairs (player, opponent, ball, two poles, four markers, the swing
+animation, the target bracket), plus the flip selectors that pick each marker's
+OAM attribute, `wBriefingBracketWidth`/`Height` -- the four corner sprites sit
+at X, X+width+3 and Y, Y+height-5 -- and the `wBriefingAnimTimer` /
+`wBriefingAnimStep` pair that every `DrillBriefing_*` sequence ticks at `$78`
+frames and wraps `and $03`.
+
+**Window and menu engine (bank `$05`, WRAM bank `$05`).** `wMenuStack` at
+`$d832` is the find here: six two-byte frames indexed by `wMenuDepth * 2`,
+holding `[wMenuRowCount << 4 | cursor row, window id]`. Pushing is three
+instructions in `CreateMenuWindowFromText`; the unwind reads back the packed
+byte, `and $0f` for the cursor and four `sra a` for the row count. That is how
+backing out of a submenu puts the cursor back where its parent left it, and it
+is invisible while the addresses are numeric. Beside it:
+`wDialogueWindow{Id,Col,Row,Width,Height}`, `wGlyphWindowId`, and
+`wTextRedrawGuard`, which is why `TextCmdDelay30` can call
+`RedrawActiveTextWindow` without recursing through its own delay.
+
+**Character-data screen (WRAM bank `$06`).** `wCharDataStats` is eleven bytes
+loaded from story-record `+$20`-`$2a` with 1 added to each, in the order
+`wStoryModeMainCharacterTopStat` onwards; `wCharDataStatDeltas` is eleven more
+right after it, filled by `ComputeLevelUpStatDeltas`, one up/down arrow each.
+`wCharDataChoiceLog` is 100 bytes recording which of the four stats the player
+picked at every level-up of the visit, appended one byte at a time by the input
+loop.
+
+**Character-select grid (bank `$38`)**, **equipment select (bank `$3e`)**,
+**match results (bank `$16`)**, **name entry (bank `$38`, `$6e00`-`$7500`)`**
+and the **ranking board** each got their own variant of whichever half they
+use.
+
+### Two corrections the pass forced
+
+`wResultScreenMode` was scoped `{"wram_bank": "0x03"}` and nothing else. That
+is a *nine-bank* claim: `$d801` renders as `wResultScreenMode` anywhere WRAM
+bank `$03` is provable, and banks `$00`, `$18`, `$1a`, `$38`, `$39`, `$3b`,
+`$3e`, `$6b` and `$1b` all mean something else by it -- bank `$1b`'s ranking
+board reads it as "singles or doubles". It is scoped to bank `$16` now. The
+general rule that came out of it: a `wram_bank`-only scope is right for a
+subsystem that owns its bank outright, and wrong for a block that many
+subsystems share, which is most of `$d000`-`$d8ff`.
+
+The other is a generator hazard. A union that *overlaps* another union does not
+error -- `_group_by_bank` buckets them by bank and `_emit_section` fills the gap
+after each one from its own `end`, so the second union's symbols are emitted
+after the first instead of inside it. `wCharDataChoiceLog`'s 100 bytes span
+`$d038`, where the trophy-EXP union already sat, and the result was
+`wTrophyExpGroup` landing at `$d08e`, everything after it shifted up 86 bytes,
+and **369 changed ROM bytes** in five banks. RAM metadata is not assembled, but
+the symbol *values* are, so a layout mistake is a real byte mistake. `make
+compare` caught it immediately; the two are now one union with the accumulator
+as a bank-`$1e` variant.
+
+### WRAM0 as well
+
+The same pass took the flat region while the call sites were open.
+`wMapSceneStage` (462 references) is the biggest single name in the ROM's RAM:
+each story location's init script derives it from the save flags
+(`SetupCenterCourtSceneVariant`, `ComputeIslandOpenRound`,
+`SetStoryRankSceneIndex`, ...) and every NPC at that location indexes its own
+per-stage text-id table with it, which is the whole mechanism by which one NPC
+says a different line as the story advances.
+
+The bank `$0b` drill block came with it -- `wDrillTargetZoneHitBits` and
+`wDrillGateCrossBits` (one bit per point of the drill),
+`wDrillShotResultBits` (two bits per shot, which bank `$06` draws as the
+scoreboard pip rows), `wDrillMessageId`, and `wDrillLessonResult`, which is how
+the bank `$15` training-court coaches know which follow-up line to speak after
+a lesson -- along with the minigame-kind flags at `$c7b8`-`$c7bc` that the
+shared match engine branches on (`wMinigameUsesTennisMachine`,
+`wMinigameUsesWall`, `wMinigameHighScoreMode`, ...), the bank `$0d` minigame
+scratch (`wMinigameHitStreak`, which indexes both a sound table and a score
+table so a longer streak sounds different and is worth more), the overworld
+camera clamp (`wMapWidthTiles`/`wMapHeightTiles`, confirmed by the `- $14` and
+`- $12` the clamp subtracts for the 20x18 screen), and `wActorScriptBank`,
+which every `ActorScriptOp_*` passes to `FarReadByte`.
+
+Raw `[$xxxx]` WRAM operands in `src/`: **3,496 -> 1,653**, over 483 distinct
+addresses, and 400 more addresses moved from the generator's `w<bank>_<addr>`
+placeholder to a real name. `make compare` OK, `make check` clean.

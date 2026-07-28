@@ -127,7 +127,7 @@ MatchPauseMenu_CheckRules:
 	ld a, [wGameMode] ; $411d
 	cp a, $08 ; $4120
 	jp z, ShowMinigameRulesPages ; $4122
-	ld a, [$c8f5] ; $4125
+	ld a, [wMatchContext] ; $4125
 	cp a, $02 ; $4128
 	jp z, ShowTrainingRulesPages ; $412a
 	jr ShowMatchRulesPages ; $412d
@@ -492,7 +492,7 @@ MatchPauseMenu_SaveQuit:
 	ld h, a ; $446e
 	ld a, [hl] ; $446f
 	ld [wPauseMenuId], a ; $4470
-	ld a, [$c7bb] ; $4473
+	ld a, [wDrillIsPracticeLesson] ; $4473
 	and a, a ; $4476
 	jr z, .getMatchMenuItemCount ; $4477
 	ld a, $08 ; $4479
@@ -529,7 +529,7 @@ MatchQuitMenu_ReturnToGame:
 MatchQuitMenu_SaveAndQuit:
 	ld a, $01 ; $44b2
 	ld [wKeepMatchStatsFlag], a ; $44b4
-	ld [$c8a5], a ; $44b7
+	ld [wSaveAndQuitRequest], a ; $44b7
 	ld a, $ff ; $44ba
 	ld [wMatchAbortFlag], a ; $44bc
 	ld [wMatchFramesAbort], a ; $44bf
@@ -1182,7 +1182,7 @@ PrepareScoreboardGfx:
 	wram_bank $04 ; $495e
 	farcall ReloadCharFrameGfx ; $4964
 	farcall StepMatchFrame ; $4967
-	ld a, [$c8f5] ; $496a
+	ld a, [wMatchContext] ; $496a
 	cp a, $02 ; $496d
 	jr z, .eq02 ; $496f
 	ld a, [wPlayer1GamesWon] ; $4971
@@ -1642,7 +1642,7 @@ ScoreboardSpriteTemplatePointers:
 	add a, $18 ; $50c5
 	ld e, a ; $50c7
 	call AdjustSpriteCoordsForScroll ; $50c8
-	ld a, [$c7bc] ; $50cb
+	ld a, [wMinigameHighScoreMode] ; $50cb
 	and a, a ; $50ce
 	ld hl, wMinigameHighScore ; $50cf
 	jr nz, .read ; $50d2
@@ -3122,7 +3122,7 @@ StoryPauseMenu_SaveQuit:
 	cp a, $01 ; $7056
 	jr z, StoryPauseMenu_ReturnToMainMenu ; $7058
 	ld a, $01 ; $705a
-	ld [$c8a5], a ; $705c
+	ld [wSaveAndQuitRequest], a ; $705c
 	ld a, [wMessageSpeed] ; $705f
 	res 7, a ; $7062
 	ld [wMessageSpeed], a ; $7064

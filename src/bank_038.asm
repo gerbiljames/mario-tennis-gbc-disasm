@@ -7272,7 +7272,7 @@ StoreLinkMatchCharInfo:
 	ld a, [hl+] ; $765f
 	ld [de], a ; $7660
 	ldh a, [hLinkState] ; $7661
-	ld [$c8b9], a ; $7663
+	ld [wLinkMatchRole], a ; $7663
 	ld a, [$c8b7] ; $7666
 	bit 7, a ; $7669
 	jr z, .restore ; $766b

@@ -918,13 +918,13 @@ SetupDormRoomSceneVariant:
 	script_null_script $04 ; $5184
 	set_flag FLAG_TEMP_SCENE_VARIANT_A ; $5189
 	ld a, $02 ; $518c
-	ld [$c329], a ; $518e
+	ld [wMapScrollMinX], a ; $518e
 	ld a, $02 ; $5191
-	ld [$c32a], a ; $5193
+	ld [wMapScrollMinY], a ; $5193
 	ld a, $16 ; $5196
-	ld [$c32b], a ; $5198
+	ld [wMapWidthTiles], a ; $5198
 	ld a, $14 ; $519b
-	ld [$c32c], a ; $519d
+	ld [wMapHeightTiles], a ; $519d
 	call DisableLCDSafely ; $51a0
 	ld a, $00 ; $51a3
 	farcall CopyScrolledSceneTilemapToVram ; $51a5
@@ -3589,7 +3589,7 @@ ActorScript_13_7b2f:
 MapScriptNop_13:
 	ret ; $7b4d
 	xor a, a ; $7b4e
-	ld [$c2da], a ; $7b4f
+	ld [wStoryScriptRan], a ; $7b4f
 	ret ; $7b52
 	sound $a2 ; $7b53
 	ret ; $7b55

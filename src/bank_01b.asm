@@ -3999,7 +3999,7 @@ RunStoryDataConfirmMenu:
 	call WaitFadeEnd ; $698d
 	call DisableLCDSafely ; $6990
 	xor a, a ; $6993
-	ld [$c7bc], a ; $6994
+	ld [wMinigameHighScoreMode], a ; $6994
 	ld [$c7c8], a ; $6997
 	farcall ForceFlushBgMapToVram ; $699a
 	call EnableLCD ; $699d
@@ -4027,7 +4027,7 @@ StubNop_1b_69d6:
 	ret ; $69d6
 	ret ; $69d7
 	ret ; $69d8
-	ld hl, $c7bc ; $69d9
+	ld hl, wMinigameHighScoreMode ; $69d9
 	ld [hl], $01 ; $69dc
 	wram_bank $01 ; $69de
 	ld c, $20 ; $69e4

@@ -1339,13 +1339,13 @@ MatchSelectHandlersBHandler0:
 	call DisableLCDSafely ; $4fef
 	farcall ResetScreenAndTextWindows ; $4ff2
 	call EnableLCD ; $4ff5
-	ld a, [$c8a5] ; $4ff8
+	ld a, [wSaveAndQuitRequest] ; $4ff8
 	or a, a ; $4ffb
 	jr nz, .checkMatchResult ; $4ffc
 	script_fade_in $10 ; $4ffe
 	call WaitFadeEnd ; $5003
 .checkMatchResult:
-	ld a, [$c8a5] ; $5006
+	ld a, [wSaveAndQuitRequest] ; $5006
 	or a, a ; $5009
 	jp z, .clearMatchState ; $500a
 	ld c, $00 ; $500d
@@ -1358,7 +1358,7 @@ MatchSelectHandlersBHandler0:
 	cp a, $ff ; $501b
 	jp z, RunTitleAndMainMenuLoop.redrawMenu ; $501d
 	xor a, a ; $5020
-	ld [$c8a5], a ; $5021
+	ld [wSaveAndQuitRequest], a ; $5021
 	farcall SaveStorySlotWithTimer ; $5024
 	ld a, [wKeepMatchStatsFlag] ; $5027
 	or a, a ; $502a
@@ -1414,7 +1414,7 @@ MatchSelectHandlersBHandler0:
 	call WaitFadeEnd ; $50a1
 .clearMatchState:
 	xor a, a ; $50a4
-	ld [$c8a5], a ; $50a5
+	ld [wSaveAndQuitRequest], a ; $50a5
 	ld [wKeepMatchStatsFlag], a ; $50a8
 	call RestoreGameTimer ; $50ab
 	farcall SaveStorySlotWithTimer ; $50ae
@@ -1457,7 +1457,7 @@ MatchSelectHandlersBHandler3:
 	farcall ReadExhibitionSaveBlock ; $5103
 	bit 7, a ; $5106
 	jr nz, .noSlot ; $5108
-	ld a, [$c8a5] ; $510a
+	ld a, [wSaveAndQuitRequest] ; $510a
 	or a, a ; $510d
 	jr z, .noSlot ; $510e
 	ld c, $00 ; $5110
@@ -1549,12 +1549,12 @@ MatchSelectHandlersBHandler3:
 	ld a, $03 ; $51db
 	ld [wCurrentStorySlot], a ; $51dd
 	xor a, a ; $51e0
-	ld [$c8a5], a ; $51e1
+	ld [wSaveAndQuitRequest], a ; $51e1
 	farcall WriteExhibitionSaveBlock ; $51e4
 	ld a, $04 ; $51e7
 	ld [wGameMode], a ; $51e9
 	farcall RunMatch ; $51ec
-	ld a, [$c8a5] ; $51ef
+	ld a, [wSaveAndQuitRequest] ; $51ef
 	or a, a ; $51f2
 	jr z, .done ; $51f3
 	ld a, $01 ; $51f5
@@ -1950,7 +1950,7 @@ Label_10_5565:
 	ret ; $55b5
 .runMatch:
 	farcall RunMatch ; $55b6
-	ld a, [$c8a5] ; $55b9
+	ld a, [wSaveAndQuitRequest] ; $55b9
 	or a, a ; $55bc
 	jr z, .matchFinished ; $55bd
 	farcall SaveStorySlotWithTimer ; $55bf
@@ -2186,7 +2186,7 @@ ConfirmDiscardSuspendedExhibMatch:
 	farcall ReadExhibitionSaveBlock ; $578c
 	bit 7, a ; $578f
 	jr nz, .done ; $5791
-	ld a, [$c8a5] ; $5793
+	ld a, [wSaveAndQuitRequest] ; $5793
 	or a, a ; $5796
 	jr z, .done ; $5797
 	ld a, [wCurrentStorySlot] ; $5799
@@ -2230,7 +2230,7 @@ ConfirmDiscardSuspendedExhibMatch:
 	or a, a ; $57dc
 	jr z, .discarded ; $57dd
 	xor a, a ; $57df
-	ld [$c8a5], a ; $57e0
+	ld [wSaveAndQuitRequest], a ; $57e0
 	ld [wKeepMatchStatsFlag], a ; $57e3
 	farcall WriteExhibitionSaveBlock ; $57e6
 	pop bc ; $57e9
@@ -2512,13 +2512,13 @@ CafeteriaInitScript_10:
 	sra a ; $5a58
 	ld [wMapSceneStage2], a ; $5a5a
 	ld a, $22 ; $5a5d
-	ld [$c329], a ; $5a5f
+	ld [wMapScrollMinX], a ; $5a5f
 	ld a, $26 ; $5a62
-	ld [$c32a], a ; $5a64
+	ld [wMapScrollMinY], a ; $5a64
 	ld a, $40 ; $5a67
-	ld [$c32b], a ; $5a69
+	ld [wMapWidthTiles], a ; $5a69
 	ld a, $3e ; $5a6c
-	ld [$c32c], a ; $5a6e
+	ld [wMapHeightTiles], a ; $5a6e
 	call DisableLCDSafely ; $5a71
 	ld a, $00 ; $5a74
 	farcall CopyScrolledSceneTilemapToVram ; $5a76
@@ -3408,13 +3408,13 @@ AcademyWingInitScript_10:
 	script_set_position $03, $19a0, $32c0 ; $64a5
 .stage5:
 	ld a, $16 ; $64b0
-	ld [$c329], a ; $64b2
+	ld [wMapScrollMinX], a ; $64b2
 	ld a, $28 ; $64b5
-	ld [$c32a], a ; $64b7
+	ld [wMapScrollMinY], a ; $64b7
 	ld a, $40 ; $64ba
-	ld [$c32b], a ; $64bc
+	ld [wMapWidthTiles], a ; $64bc
 	ld a, $3e ; $64bf
-	ld [$c32c], a ; $64c1
+	ld [wMapHeightTiles], a ; $64c1
 	call DisableLCDSafely ; $64c4
 	ld a, $00 ; $64c7
 	farcall CopyScrolledSceneTilemapToVram ; $64c9
@@ -4731,7 +4731,7 @@ MapScriptNop_10:
 	ret ; $7bf9
 MapScriptClearActiveFlag_10:
 	xor a, a ; $7bfa
-	ld [$c2da], a ; $7bfb
+	ld [wStoryScriptRan], a ; $7bfb
 	ret ; $7bfe
 	sound $a2 ; $7bff
 	ret ; $7c01

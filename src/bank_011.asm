@@ -3428,7 +3428,7 @@ ActorScript_11_7bbd:
 MapScriptNop_11:
 	ret ; $7bd1
 	xor a, a ; $7bd2
-	ld [$c2da], a ; $7bd3
+	ld [wStoryScriptRan], a ; $7bd3
 	ret ; $7bd6
 	sound $a2 ; $7bd7
 	ret ; $7bd9

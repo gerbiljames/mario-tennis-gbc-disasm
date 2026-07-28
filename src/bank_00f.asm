@@ -3278,7 +3278,7 @@ ActorScript_0f_7b75:
 	as_jump .L1
 	ret ; $7b7f
 	xor a, a ; $7b80
-	ld [$c2da], a ; $7b81
+	ld [wStoryScriptRan], a ; $7b81
 	ret ; $7b84
 	sound $a2 ; $7b85
 	ret ; $7b87

@@ -82,7 +82,7 @@ ResetPauseMenuState:
 	xor a, a ; $4092
 	ld [wMenuInitialRow], a ; $4093
 	ld [wMenuAdjustRowMask], a ; $4096
-	ld [$cb2a], a ; $4099
+	ld [wPauseMenuOptionBits], a ; $4099
 	ld [wMenuKeepOpenRowMask], a ; $409c
 	ret ; $409f
 DrawPauseMenuSettingValues:
@@ -90,7 +90,7 @@ DrawPauseMenuSettingValues:
 	push bc ; $40a1
 	push de ; $40a2
 	push hl ; $40a3
-	ld a, [$cb2a] ; $40a4
+	ld a, [wPauseMenuOptionBits] ; $40a4
 	bit 5, a ; $40a7
 	jr nz, .checkMessageSpeed ; $40a9
 	pop hl ; $40ab
@@ -255,7 +255,7 @@ MusicSettingPtrs:
 	dw Label_1a_41e1 ; record 0
 	dw Label_1a_420f ; record 1
 Label_1a_41e1:
-	ld a, [$cb2a] ; $41e1
+	ld a, [wPauseMenuOptionBits] ; $41e1
 	and a, $0f ; $41e4
 	jr z, .storeMenuInitialRow ; $41e6
 	cp a, $03 ; $41e8
@@ -268,16 +268,16 @@ Label_1a_41e1:
 .bit0Clear:
 	set 0, a ; $41f6
 .storeMenuInitialRow:
-	ld a, [$cb2a] ; $41f8
+	ld a, [wPauseMenuOptionBits] ; $41f8
 	or a, $c0 ; $41fb
-	ld [$cb2a], a ; $41fd
+	ld [wPauseMenuOptionBits], a ; $41fd
 	ld a, [$d830] ; $4200
 	ld [wMenuInitialRow], a ; $4203
 	ld bc, MusicSettingPtrs ; $4206
 	ld a, [wPauseMenuWindowId] ; $4209
 	jp RunPauseMenuWindow.menuLoop ; $420c
 Label_1a_420f:
-	ld a, [$cb2a] ; $420f
+	ld a, [wPauseMenuOptionBits] ; $420f
 	and a, $0f ; $4212
 	and a, a ; $4214
 	jr z, .storeMenuInitialRow2 ; $4215
@@ -291,9 +291,9 @@ Label_1a_420f:
 .bit1Clear:
 	set 1, a ; $4225
 .storeMenuInitialRow2:
-	ld a, [$cb2a] ; $4227
+	ld a, [wPauseMenuOptionBits] ; $4227
 	or a, $c0 ; $422a
-	ld [$cb2a], a ; $422c
+	ld [wPauseMenuOptionBits], a ; $422c
 	ld a, [$d830] ; $422f
 	ld [wMenuInitialRow], a ; $4232
 	ld bc, MusicSettingPtrs ; $4235
@@ -301,7 +301,7 @@ Label_1a_420f:
 	jp RunPauseMenuWindow.menuLoop ; $423b
 	call ResetPauseMenuState ; $423e
 	ld a, $c0 ; $4241
-	ld [$cb2a], a ; $4243
+	ld [wPauseMenuOptionBits], a ; $4243
 	ld hl, wMenuAdjustRowMask ; $4246
 	ld [hl], $83 ; $4249
 	ld hl, wMenuKeepOpenRowMask ; $424b
@@ -312,12 +312,12 @@ Label_1a_420f:
 	set_flag FLAG_PAUSE_OPTIONS_MENU_OPEN ; $4259
 	call RunPauseMenuWindow ; $425c
 	call ResetPauseMenuState ; $425f
-	ld hl, $cb2a ; $4262
+	ld hl, wPauseMenuOptionBits ; $4262
 	set 7, [hl] ; $4265
 	clear_flag FLAG_PAUSE_OPTIONS_MENU_OPEN ; $4267
 	ret ; $426a
 AdjustMessageSpeedSetting:
-	ld a, [$cb2a] ; $426b
+	ld a, [wPauseMenuOptionBits] ; $426b
 	and a, $0f ; $426e
 	cp a, $02 ; $4270
 	jr z, .playSfx2 ; $4272
@@ -390,7 +390,7 @@ RestoreMessageSpeed:
 	and a, a ; $42e9
 	jr nz, .compare ; $42ea
 	ld a, $01 ; $42ec
-	ld [$c8a5], a ; $42ee
+	ld [wSaveAndQuitRequest], a ; $42ee
 	ld a, [wMessageSpeed] ; $42f1
 	res 7, a ; $42f4
 	ld [wMessageSpeed], a ; $42f6
@@ -451,7 +451,7 @@ RestoreMessageSpeed:
 BuildMinigameModePauseMenu:
 	call ResetPauseMenuState ; $437c
 	ld a, $a0 ; $437f
-	ld [$cb2a], a ; $4381
+	ld [wPauseMenuOptionBits], a ; $4381
 	ld a, $8c ; $4384
 	ld [wMenuAdjustRowMask], a ; $4386
 	ld [wMenuKeepOpenRowMask], a ; $4389
