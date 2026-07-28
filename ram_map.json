@@ -345,6 +345,10 @@
   "note": "[16-bit] Glyph-stream horizontal pen position (sub-pixel fixed point); advanced per glyph by DrawStreamGlyph",
   "size": 2
  },
+ "0xc3ba": {
+  "name": "wTextRowColumn",
+  "note": "[8-bit] Column the current text row starts at, the window's x plus its indent. InitGlyphStreamAt stores the same value into wGlyphRowStartCol, and the row-flush path passes this copy as the destination column alongside the row in c"
+ },
  "0xc402": {
   "name": "wBallX",
   "note": "[16-bit] Ball X position, integer part (lateral, signed)",
@@ -929,7 +933,8 @@
  },
  "0xc600": {
   "name": "wTextBuffer",
-  "note": "Dialogue string buffer (160 bytes); text-bank fetch routines copy string N here when called with a = 0"
+  "note": "Dialogue string buffer (160 bytes); text-bank fetch routines copy string N here when called with a = 0",
+  "size": 160
  },
  "0xc6c0": {
   "name": "wInlineTextBuffer",
@@ -1013,6 +1018,10 @@
   "name": "wTargetZoneDepth2",
   "note": "[16-bit] Target zone depth bound 2 (world units)",
   "size": 2
+ },
+ "0xc7a8": {
+  "name": "wAiServeSkipToss",
+  "note": "[8-bit] Nonzero makes AiServePressToss release the serve immediately instead of running the wAiServeStyle toss table - the plain feed the coach's practice drills want. The bank $0b drill hooks set it at point start and clear it around RunMinigameMatch"
  },
  "0xc7b2": {
   "name": "wModeHookTable",
@@ -1880,6 +1889,10 @@
   "name": "wTennisDictCategoryMask",
   "note": "[8-bit] Study Vocabulary screen (bank $3f): category filter mask. Set from the screen mode at $3f:$40be - $01/$02/$04/$08/$10 for modes 0-4, $1f (all categories) for mode 5 and any other value. Every list walk ANDs it against the per-entry category byte in SelectionMaskGrid_3f_539e to decide whether an entry is listed ($3f:$5102, $3f:$5295, $3f:$5339, $3f:$5422, $3f:$547c, $3f:$51a5, $3f:$522f, $3f:$5625)."
  },
+ "0xcb33": {
+  "name": "wTennisDictSingleEntry",
+  "note": "[8-bit] Set to 1 in the two Study Vocabulary modes ($05 and $06) that show one fixed entry rather than the scrolling list, which is what makes the description path skip GetTennisDictionarySelectedIndex"
+ },
  "0xcb34": {
   "name": "wTennisDictMode",
   "note": "[8-bit] Study Vocabulary screen (bank $3f): the mode argument passed in a to TennisDictionaryScreen, stored at $3f:$4082. Modes 0-5 pick the category mask in $cb32 and open the term list directly; mode 6 (the only value used in the retail flow, $10:$54b8) opens the 9-cell category index page instead - checked at $3f:$40f0, $3f:$412a, $3f:$4ed4 (index-page sprite animation) and $3f:$56ab (B-button return code $10 vs $01)."
@@ -1887,6 +1900,14 @@
  "0xcb37": {
   "name": "wTennisDictFlags",
   "note": "[8-bit] Study Vocabulary screen (bank $3f) display flags, cleared at $3f:$40c5. bit 0 = a description window is open: set at $3f:$5620 before CreateDialogueWindow, cleared at $3f:$5699/$413a, and freezes the hand-cursor animation counter $cb3e ($3f:$4f8c). bit 1 = the scrolling term list is on screen (set $3f:$414d/$41d0, cleared $3f:$421a for the index page); gates drawing of the cursor sprites ($3f:$4f85) and shifts the index-page sprites by $10 px ($3f:$4f1f/$4f3a/$4f55/$4f70). bit 2 / bit 3 = flash the left / right page arrow this frame - set on LEFT ($3f:$571b) and RIGHT ($3f:$5731), drawn from SpriteTemplate_3f_5006 at X $18 / $88 ($3f:$4fc9/$4fdc), and both cleared at the top of every input tick ($3f:$560a)."
+ },
+ "0xcb39": {
+  "name": "wTennisDictSpriteTimer",
+  "note": "[8-bit] Eight-frame divider for the Study Vocabulary demo sprite: UpdateTennisDictionarySprites counts it down, reloads $08 and steps wTennisDictSpritePhase each time it reaches zero"
+ },
+ "0xcb3a": {
+  "name": "wTennisDictSpritePhase",
+  "note": "[8-bit] Phase 0-15 of the Study Vocabulary demo sprite animation, wrapped at $10"
  },
  "0xcb3f": {
   "name": "wCutsceneStep",
@@ -1937,6 +1958,10 @@
  "0xcb54": {
   "name": "wUnlockedCourtMask",
   "note": "[8-bit] Bitmask of the five unlockable bonus courts (court ids 4-8; courts 0-3 are always available per IsCourtUnlocked $3e:$697b). Built from the save flags by ComputeUnlockedCourtFlags ($3e:$69a0-$69c9, one bit per row of the 5-entry table at $3e:$69ca) and cleared at $10:$5174. Passed in b to StoreCourtUnlockBits ($3e:$695a), which explodes it into the five per-court bytes at $d000 in WRAM bank $02; also decides whether the 9-court or the 4-court select menu runs ($10:$5199, $38:$7489) and is the payload of link block $26 ($38:$759c)."
+ },
+ "0xcb60": {
+  "name": "wCutsceneSlideTimer",
+  "note": "[8-bit] Frame counter of bank $03's scrolling story cutscene. AnimateWindowSlideUpTask increments it and drives rWY from $90 minus its low 6 bits, sliding the window up; UpdateSceneAnimation takes its low 2 bits as the gate that steps the cutscene's animation frame"
  },
  "0xcb61": {
   "name": "wBgMapShadowDirty",

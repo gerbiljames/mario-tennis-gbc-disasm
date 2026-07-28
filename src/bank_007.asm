@@ -1465,7 +1465,7 @@ ExchangeLinkBlockToWram5:
 	call ExchangeHandshakeBlockSlave ; $494f
 .copyToWram:
 	wram_bank $05 ; $4952
-	ld hl, $c650 ; $4958
+	ld hl, wTextBuffer + 80 ; $4958
 	ld c, $28 ; $495b
 	call PackNibblesToBytes ; $495d
 	ld a, $01 ; $4960

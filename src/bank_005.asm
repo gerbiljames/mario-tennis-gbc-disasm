@@ -8407,7 +8407,7 @@ DrawStreamGlyph:
 	rr e ; $75af
 	ld a, c ; $75b1
 	add b ; $75b2
-	ld [$c3ba], a ; $75b3
+	ld [wTextRowColumn], a ; $75b3
 	jr .step2 ; $75b6
 .ne01:
 	push af ; $75b8
@@ -8445,7 +8445,7 @@ StartGlyphStreamRow:
 	rr e ; $75ea
 	ld a, c ; $75ec
 	add b ; $75ed
-	ld [$c3ba], a ; $75ee
+	ld [wTextRowColumn], a ; $75ee
 	ld hl, wGlyphPenX ; $75f1
 	ld a, e ; $75f4
 	ld [hl+], a ; $75f5
@@ -8576,7 +8576,7 @@ DrawInlineGlyph:
 	rr e ; $76aa
 	ld a, c ; $76ac
 	add b ; $76ad
-	ld [$c3ba], a ; $76ae
+	ld [wTextRowColumn], a ; $76ae
 	ld [wGlyphRowStartCol], a ; $76b1
 	jr .step3 ; $76b4
 .drawGlyph:
@@ -8663,7 +8663,7 @@ InitGlyphStreamAt:
 	ld [hl+], a ; $7733
 	ld [hl], a ; $7734
 	ld [wTextRowNextTile], a ; $7735
-	ld a, [$c3ba] ; $7738
+	ld a, [wTextRowColumn] ; $7738
 	ld d, a ; $773b
 	ld e, c ; $773c
 	ld a, [wMenuWindowId] ; $773d

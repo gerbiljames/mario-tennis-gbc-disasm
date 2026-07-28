@@ -432,7 +432,10 @@ wWindowTileAttr:: db
 
 ; [16-bit] Glyph-stream horizontal pen position (sub-pixel fixed point); advanced per glyph by DrawStreamGlyph
 wGlyphPenX:: dw
-	ds 2
+	ds 1
+
+; [8-bit] Column the current text row starts at, the window's x plus its indent. InitGlyphStreamAt stores the same value into wGlyphRowStartCol, and the row-flush path passes this copy as the destination column alongside the row in c
+wTextRowColumn:: db
 
 ; [8-bit] Tilemap cell column the current glyph row starts at. InitGlyphStreamForWindow seeds wGlyphPenX from it (column * $80, the sub-pixel scale) and StartGlyphStreamRow reloads both from the pen at each row break
 wGlyphRowStartCol:: db
@@ -856,8 +859,8 @@ wDebugMatchFlags:: db
 	ds 273
 
 ; Dialogue string buffer (160 bytes); text-bank fetch routines copy string N here when called with a = 0
-wTextBuffer:: db
-	ds 191
+wTextBuffer:: ds 160
+	ds 32
 
 ; 32-byte staging buffer for inline text args (player name, arg strings, short texts) rendered via RenderInlineString
 wInlineTextBuffer:: ds 32
@@ -951,6 +954,11 @@ NEXTU
 	ds 11
 ; [8-bit] Set while the serve gate is still standing: RecordGateCrossOnServe clears it once the serve has passed through (and records the bit in wDrillGateCrossBits), and QueueDrillMarker1/2 only draw the gate markers while it is set
 wDrillGateActive:: db
+NEXTU
+; scoreboard (bank $18)
+	ds 10
+; [8-bit] wStoryMainCharExpTier as LoadScorePanelValue copied it for the scoreboard, so DrawScoreNumbersTask draws from a snapshot rather than the live value
+wScorePanelExpTier:: db
 ENDU
 
 ; [8-bit] Nonzero draws the 4-corner court target zone (training drills)
@@ -972,7 +980,11 @@ wTargetZoneDepth2:: dw
 
 ; [8-bit] Random roll SelectRandomMinigameShot and SelectRandomTreasureBoxTargetZone keep while they walk their weight tables to pick the next shot or target zone
 wMinigameShotRoll:: db
-	ds 12
+	ds 2
+
+; [8-bit] Nonzero makes AiServePressToss release the serve immediately instead of running the wAiServeStyle toss table - the plain feed the coach's practice drills want. The bank $0b drill hooks set it at point start and clear it around RunMinigameMatch
+wAiServeSkipToss:: db
+	ds 9
 
 ; [16-bit] Pointer to the current game mode's callback table (indexed by CallModeHook)
 wModeHookTable:: dw
@@ -1884,7 +1896,9 @@ wTennisDictEntryCount:: db
 
 ; [8-bit] Study Vocabulary screen (bank $3f): category filter mask. Set from the screen mode at $3f:$40be - $01/$02/$04/$08/$10 for modes 0-4, $1f (all categories) for mode 5 and any other value. Every list walk ANDs it against the per-entry category byte in SelectionMaskGrid_3f_539e to decide whether an entry is listed ($3f:$5102, $3f:$5295, $3f:$5339, $3f:$5422, $3f:$547c, $3f:$51a5, $3f:$522f, $3f:$5625).
 wTennisDictCategoryMask:: db
-	ds 1
+
+; [8-bit] Set to 1 in the two Study Vocabulary modes ($05 and $06) that show one fixed entry rather than the scrolling list, which is what makes the description path skip GetTennisDictionarySelectedIndex
+wTennisDictSingleEntry:: db
 
 ; [8-bit] Study Vocabulary screen (bank $3f): the mode argument passed in a to TennisDictionaryScreen, stored at $3f:$4082. Modes 0-5 pick the category mask in $cb32 and open the term list directly; mode 6 (the only value used in the retail flow, $10:$54b8) opens the 9-cell category index page instead - checked at $3f:$40f0, $3f:$412a, $3f:$4ed4 (index-page sprite animation) and $3f:$56ab (B-button return code $10 vs $01).
 wTennisDictMode:: db
@@ -1895,7 +1909,13 @@ wTennisDictFlags:: db
 
 ; [8-bit] Animation state of the tennis-dictionary mascot: 3 and 4 alternate on a wTennisDictAnimTimer expiry, and StartTennisDictionaryAnim restarts it from the VBlank counter's low bits so the pose varies
 wTennisDictAnimState:: db
-	ds 4
+
+; [8-bit] Eight-frame divider for the Study Vocabulary demo sprite: UpdateTennisDictionarySprites counts it down, reloads $08 and steps wTennisDictSpritePhase each time it reaches zero
+wTennisDictSpriteTimer:: db
+
+; [8-bit] Phase 0-15 of the Study Vocabulary demo sprite animation, wrapped at $10
+wTennisDictSpritePhase:: db
+	ds 2
 
 ; [8-bit] Frames left in the current wTennisDictAnimState; $b4 on a restart and $ff for the long idle
 wTennisDictAnimTimer:: db
@@ -1956,7 +1976,10 @@ wLinkPartnerCourtMask:: db
 
 ; [8-bit] Bitmask of the five unlockable bonus courts (court ids 4-8; courts 0-3 are always available per IsCourtUnlocked $3e:$697b). Built from the save flags by ComputeUnlockedCourtFlags ($3e:$69a0-$69c9, one bit per row of the 5-entry table at $3e:$69ca) and cleared at $10:$5174. Passed in b to StoreCourtUnlockBits ($3e:$695a), which explodes it into the five per-court bytes at $d000 in WRAM bank $02; also decides whether the 9-court or the 4-court select menu runs ($10:$5199, $38:$7489) and is the payload of link block $26 ($38:$759c).
 wUnlockedCourtMask:: db
-	ds 12
+	ds 11
+
+; [8-bit] Frame counter of bank $03's scrolling story cutscene. AnimateWindowSlideUpTask increments it and drives rWY from $90 minus its low 6 bits, sliding the window up; UpdateSceneAnimation takes its low 2 bits as the gate that steps the cutscene's animation frame
+wCutsceneSlideTimer:: db
 
 ; Dirty flags for the bank $18 BG map shadow buffers: low nibble set -> queue $d800->$9800 tilemap copy, high nibble -> $dc00->VRAM1 $9800 attrmap copy (FlushBgMapShadowToVram clears it).
 wBgMapShadowDirty:: db

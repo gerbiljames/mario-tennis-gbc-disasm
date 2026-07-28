@@ -4100,7 +4100,7 @@ UpdateSceneAnimation:
 	call LoadCutsceneAnimFrameGfx_24_2C ; $5b62
 	call LoadCutsceneAnimFrameGfx_2D_35 ; $5b65
 	wram_bank $06 ; $5b68
-	ld a, [$cb60] ; $5b6e
+	ld a, [wCutsceneSlideTimer] ; $5b6e
 	and $03 ; $5b71
 	jr nz, .restore ; $5b73
 	ld a, [$d000] ; $5b75
@@ -5512,7 +5512,7 @@ PlayScrollingStoryCutscene:
 	wram_bank $06 ; $702c
 	xor a ; $7032
 	ld [$d000], a ; $7033
-	ld [$cb60], a ; $7036
+	ld [wCutsceneSlideTimer], a ; $7036
 	pop af ; $7039
 	push af ; $703a
 	ld [$d1fe], a ; $703b
@@ -5599,9 +5599,9 @@ AnimateWindowSlideUpTask:
 	ld [hl+], a ; $72d9
 	ld [hl], d ; $72da
 .maskSet:
-	ld a, [$cb60] ; $72db
+	ld a, [wCutsceneSlideTimer] ; $72db
 	inc a ; $72de
-	ld [$cb60], a ; $72df
+	ld [wCutsceneSlideTimer], a ; $72df
 	and $3f ; $72e2
 	ld b, a ; $72e4
 	ld a, $90 ; $72e5

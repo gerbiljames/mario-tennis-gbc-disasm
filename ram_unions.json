@@ -175,6 +175,20 @@
        "note": "[8-bit] Set while the serve gate is still standing: RecordGateCrossOnServe clears it once the serve has passed through (and records the bit in wDrillGateCrossBits), and QueueDrillMarker1/2 only draw the gate markers while it is set"
       }
      }
+    },
+    {
+     "context": "scoreboard (bank $18)",
+     "scopes": [
+      {
+       "bank": "0x18"
+      }
+     ],
+     "symbols": {
+      "0xc78a": {
+       "name": "wScorePanelExpTier",
+       "note": "[8-bit] wStoryMainCharExpTier as LoadScorePanelValue copied it for the scoreboard, so DrawScoreNumbersTask draws from a snapshot rather than the live value"
+      }
+     }
     }
    ]
   },

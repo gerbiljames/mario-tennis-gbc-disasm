@@ -866,7 +866,7 @@ RunMatchMenu:
 	ld [hl+], a ; $473d
 	ld [hl], d ; $473e
 	ld a, $40 ; $473f
-	ld hl, $c3ba ; $4741
+	ld hl, wTextRowColumn ; $4741
 	ld [hl+], a ; $4744
 	ld [hl+], a ; $4745
 	ld [hl+], a ; $4746

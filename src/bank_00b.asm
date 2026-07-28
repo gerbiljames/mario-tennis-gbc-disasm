@@ -1034,7 +1034,7 @@ RunTrainingDrillByID:
 	ld hl, $c7b6 ; $4734
 	ld [hl+], a ; $4737
 	ld [hl], a ; $4738
-	ld [$c7a8], a ; $4739
+	ld [wAiServeSkipToss], a ; $4739
 	farcall RunMinigameMatch ; $473c
 .afterMatch:
 	xor a ; $473f
@@ -1046,7 +1046,7 @@ RunTrainingDrillByID:
 	ld hl, $c7b6 ; $474a
 	ld [hl+], a ; $474d
 	ld [hl], a ; $474e
-	ld [$c7a8], a ; $474f
+	ld [wAiServeSkipToss], a ; $474f
 	ld a, [wMatchRetryRequest] ; $4752
 	or a ; $4755
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $4756
@@ -5185,7 +5185,7 @@ StrokeMatch1Hook_PointStart:
 	xor a ; $6437
 	ld [wDrillPointJudgement], a ; $6438
 	ld a, $01 ; $643b
-	ld [$c7a8], a ; $643d
+	ld [wAiServeSkipToss], a ; $643d
 	ret ; $6440
 StrokeMatch1Hook_PointEnd:
 	call StrokeMatch1JudgeOnPointEnd ; $6441

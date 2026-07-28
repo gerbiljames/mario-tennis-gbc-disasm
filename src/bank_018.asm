@@ -767,7 +767,7 @@ DrawConfirmScreenBox:
 	ret ; $5371
 LoadScorePanelValue:
 	ld a, [wStoryMainCharExpTier] ; $5372
-	ld [$c78a], a ; $5375
+	ld [wScorePanelExpTier], a ; $5375
 	ret ; $5378
 StubNop_18_5379:
 	ret ; $5379
@@ -793,7 +793,7 @@ SetupScoreboardDisplay:
 	call RegisterFrameTask ; $53af
 	ret ; $53b2
 DrawScoreNumbersTask:
-	ld a, [$c78a] ; $53b3
+	ld a, [wScorePanelExpTier] ; $53b3
 	ld h, $00 ; $53b6
 	ld l, a ; $53b8
 	ld de, $4404 ; $53b9

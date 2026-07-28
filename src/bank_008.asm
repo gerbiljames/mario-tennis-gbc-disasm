@@ -8207,7 +8207,7 @@ AiServeSteerToSpot:
 AiServePressToss:
 	ld hl, wCharInputBits ; $7a5f
 	set 0, [hl] ; $7a62
-	ld a, [$c7a8] ; $7a64
+	ld a, [wAiServeSkipToss] ; $7a64
 	and a ; $7a67
 	jr nz, .release ; $7a68
 	ld a, [wServeFaultFlag] ; $7a6a

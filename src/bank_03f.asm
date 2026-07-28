@@ -157,19 +157,19 @@ TennisDictionaryScreen:
 	jr .store ; $40b3
 .eq05:
 	ld a, $01 ; $40b5
-	ld [$cb33], a ; $40b7
+	ld [wTennisDictSingleEntry], a ; $40b7
 	ld a, $1f ; $40ba
 	jr .store ; $40bc
 .store:
 	ld [wTennisDictCategoryMask], a ; $40be
 	xor a ; $40c1
-	ld [$cb3a], a ; $40c2
+	ld [wTennisDictSpritePhase], a ; $40c2
 	ld [wTennisDictFlags], a ; $40c5
 	ld [wTennisDictScrollTop], a ; $40c8
 	ld [wTennisDictCursorRow], a ; $40cb
 	ld [$cb3e], a ; $40ce
 	ld a, $08 ; $40d1
-	ld [$cb39], a ; $40d3
+	ld [wTennisDictSpriteTimer], a ; $40d3
 	ld a, $00 ; $40d6
 	ld [wTennisDictAnimState], a ; $40d8
 	ld a, $b4 ; $40db
@@ -177,7 +177,7 @@ TennisDictionaryScreen:
 	call LoadTennisDictionaryScreen ; $40e0
 	wram_bank $06 ; $40e3
 	xor a ; $40e9
-	ld [$cb33], a ; $40ea
+	ld [wTennisDictSingleEntry], a ; $40ea
 	ld a, [wTennisDictMode] ; $40ed
 	cp $06 ; $40f0
 	jr z, .disableLCDSafely ; $40f2
@@ -187,7 +187,7 @@ TennisDictionaryScreen:
 	cp $05 ; $40fd
 	jr nz, .disableLCDSafely ; $40ff
 	ld a, $01 ; $4101
-	ld [$cb33], a ; $4103
+	ld [wTennisDictSingleEntry], a ; $4103
 .disableLCDSafely:
 	call DisableLCDSafely ; $4106
 	farcall LoadMenuTilesA ; $4109
@@ -663,19 +663,19 @@ UpdateTennisDictionarySprites:
 	ld a, [wTennisDictMode] ; $4ed4
 	cp $06 ; $4ed7
 	jp nz, .checkTennisDictFlags ; $4ed9
-	ld a, [$cb39] ; $4edc
+	ld a, [wTennisDictSpriteTimer] ; $4edc
 	dec a ; $4edf
-	ld [$cb39], a ; $4ee0
+	ld [wTennisDictSpriteTimer], a ; $4ee0
 	jr nz, .countLeft ; $4ee3
 	ld a, $08 ; $4ee5
-	ld [$cb39], a ; $4ee7
-	ld a, [$cb3a] ; $4eea
+	ld [wTennisDictSpriteTimer], a ; $4ee7
+	ld a, [wTennisDictSpritePhase] ; $4eea
 	inc a ; $4eed
 	cp $10 ; $4eee
 	jr nz, .store ; $4ef0
 	xor a ; $4ef2
 .store:
-	ld [$cb3a], a ; $4ef3
+	ld [wTennisDictSpritePhase], a ; $4ef3
 .countLeft:
 	ld hl, TennisDictionarySprites1 ; $4ef6
 	ld a, [wTennisDictAnimState] ; $4ef9
@@ -688,7 +688,7 @@ UpdateTennisDictionarySprites:
 	jr nc, .gotPtr ; $4f02
 	inc h ; $4f04
 .gotPtr:
-	ld a, [$cb3a] ; $4f05
+	ld a, [wTennisDictSpritePhase] ; $4f05
 	add l ; $4f08
 	ld l, a ; $4f09
 	jr nc, .read ; $4f0a
@@ -1182,7 +1182,7 @@ DrawTennisDictionaryList:
 	ld a, $0c ; $52c4
 	ld [$c3b9], a ; $52c6
 	ld a, $36 ; $52c9
-	ld hl, $c3ba ; $52cb
+	ld hl, wTextRowColumn ; $52cb
 	ld [hl+], a ; $52ce
 	ld [hl+], a ; $52cf
 	ld [hl+], a ; $52d0
@@ -1599,7 +1599,7 @@ HandleTennisDictionaryListInput:
 	ld [wTennisDictFlags], a ; $5622
 	ld a, [wTennisDictCategoryMask] ; $5625
 	ld b, a ; $5628
-	ld a, [$cb33] ; $5629
+	ld a, [wTennisDictSingleEntry] ; $5629
 	cp $01 ; $562c
 	jr z, .getTennisDictionarySelectedIndex ; $562e
 	call GetTennisDictionarySelectedIndex ; $5630

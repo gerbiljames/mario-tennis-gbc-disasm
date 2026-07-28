@@ -2103,7 +2103,7 @@ DrawExpTotalDigits:
 	ld a, $04 ; $5a5a
 	ld de, wTextBuffer ; $5a5c
 	call FormatDecimalNumberUnsigned ; $5a5f
-	ld a, [$c604] ; $5a62
+	ld a, [wTextBuffer + 4] ; $5a62
 	or a ; $5a65
 	jr nz, .checkTextBuffer ; $5a66
 	ld a, [wTextBuffer] ; $5a68
@@ -2113,21 +2113,21 @@ DrawExpTotalDigits:
 	ld de, $6b77 ; $5a72
 	call QueueSprite ; $5a75
 .eq20:
-	ld a, [$c601] ; $5a78
+	ld a, [wTextBuffer + 1] ; $5a78
 	cp $20 ; $5a7b
 	jr z, .eq202 ; $5a7d
 	call GetDigitSpriteTile ; $5a7f
 	ld de, $7377 ; $5a82
 	call QueueSprite ; $5a85
 .eq202:
-	ld a, [$c602] ; $5a88
+	ld a, [wTextBuffer + 2] ; $5a88
 	cp $20 ; $5a8b
 	jr z, .eq203 ; $5a8d
 	call GetDigitSpriteTile ; $5a8f
 	ld de, $7b77 ; $5a92
 	call QueueSprite ; $5a95
 .eq203:
-	ld a, [$c603] ; $5a98
+	ld a, [wTextBuffer + 3] ; $5a98
 	cp $20 ; $5a9b
 	jr z, .done ; $5a9d
 	call GetDigitSpriteTile ; $5a9f
@@ -2143,28 +2143,28 @@ DrawExpTotalDigits:
 	ld de, $6777 ; $5ab3
 	call QueueSprite ; $5ab6
 .eq204:
-	ld a, [$c601] ; $5ab9
+	ld a, [wTextBuffer + 1] ; $5ab9
 	cp $20 ; $5abc
 	jr z, .eq205 ; $5abe
 	call GetDigitSpriteTile ; $5ac0
 	ld de, $6f77 ; $5ac3
 	call QueueSprite ; $5ac6
 .eq205:
-	ld a, [$c602] ; $5ac9
+	ld a, [wTextBuffer + 2] ; $5ac9
 	cp $20 ; $5acc
 	jr z, .eq206 ; $5ace
 	call GetDigitSpriteTile ; $5ad0
 	ld de, $7777 ; $5ad3
 	call QueueSprite ; $5ad6
 .eq206:
-	ld a, [$c603] ; $5ad9
+	ld a, [wTextBuffer + 3] ; $5ad9
 	cp $20 ; $5adc
 	jr z, .eq207 ; $5ade
 	call GetDigitSpriteTile ; $5ae0
 	ld de, $7f77 ; $5ae3
 	call QueueSprite ; $5ae6
 .eq207:
-	ld a, [$c604] ; $5ae9
+	ld a, [wTextBuffer + 4] ; $5ae9
 	cp $20 ; $5aec
 	jr z, .doneB ; $5aee
 	call GetDigitSpriteTile ; $5af0
