@@ -75,6 +75,7 @@
  "0x067a": "FarCopyBytes",
  "0x06ac": "CopyOAMDMARoutineToHRAM",
  "0x06b3": ".loop",
+ "0x06ba": "OAMDMARoutine",
  "0x06c0": ".loopB",
  "0x06c4": "JumpTableDispatch",
  "0x06cb": ".read",

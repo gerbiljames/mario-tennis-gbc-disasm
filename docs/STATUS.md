@@ -5598,3 +5598,70 @@ No `compute_sram_bank` to match `compute_wram_bank`, and no case for one yet:
 exactly one unnamed `$axxx` address is referenced by a direct operand in the
 whole ROM. The save engine reaches SRAM through `hl`, the same reason shadow
 OAM never appeared in the unnamed counts.
+
+## The DMA routine's ROM copy (2026-07-28)
+
+`hOAMDMARoutine` named the HRAM destination but not the source. The ten bytes
+at ROM0 `$06ba` -- data to their only reader, which copies them into HRAM to be
+executed there -- had no label, so the copy read `ld hl, $06ba` and the call
+read `call $ff80`. Both ends are symbolic now:
+
+```
+CopyOAMDMARoutineToHRAM:
+        ld c, $80
+        ld b, $0a
+        ld hl, OAMDMARoutine
+...
+        ldh [hOAMDMARoutine + 1], a
+        call hOAMDMARoutine
+```
+
+Two mechanisms, because the two operand forms deserve different trust:
+
+* `IMM_CODE_POINTERS` (`operands.py`) is curated per site, like
+  `ROM0_FAR_POINTERS` and `RAM_IMM_IS_CONSTANT` beside it. A word immediate
+  that equals some routine's address is usually a constant -- `$ff80` is -128 at
+  thirteen sites in this same ROM -- so a code label is never inferred into one.
+* A **branch** target that is not a ROM offset now resolves against the RAM
+  names generally, no curation. `call`/`jp` operands are unambiguous in a way
+  immediates are not: the operand is always an address, and no ROM offset can
+  collide because `target_to_offset` resolves those first. `call $ff80` was the
+  only such site in the ROM, which is why the diff is three lines.
+
+### The destination was hiding in the same routine
+
+`ld c, $80` is the other half of the same copy -- the routine reaches its
+destination through `ldh [c]`, so the address is never written down and `$80`
+is `LOW(hOAMDMARoutine)`. `LOW_BYTE_SITES` renders it, and a sweep for the
+shape found the whole class is five instructions in the ROM, all in bank `$00`:
+
+| site | was | is |
+| --- | --- | --- |
+| `$028b` | `ld c, $6b` | `LOW(rOBPD)` -- 64 bytes out through the palette port |
+| `$06ac` | `ld c, $80` | `LOW(hOAMDMARoutine)` |
+| `$354c`, `$3690` | `ld c, $30` | `LOW(_AUD3WAVERAM)` -- 16 bytes of wave pattern |
+| `$2592` | `ld c, $80` | left numeric |
+
+`$2592` is the interesting one. `SoftReset` sets `c` to `$80` and `b` to `$70`
+and walks `ldh [c]` over all of HRAM; the first byte it clears *is*
+`hOAMDMARoutine`, so `LOW(hOAMDMARoutine)` would assemble correctly and read as
+a claim the code does not make. It stays `$80`. That asymmetry is why these are
+curated rather than inferred from the `ld c, N` ... `ldh [c]` shape, which is
+otherwise perfectly detectable -- the byte cannot say which symbol it is the low
+half of, and at one site in five the honest answer is "none of them".
+
+This is a different mechanism from `_resolve_split_base` in `emit.py`, which
+rewrites the `add a, LOW(x)` / `adc a, HIGH(x)` pair: there the two halves
+corroborate each other into a full address, which is what lets that one be
+inferred from shape. Here the high half is implicit in the `ldh`, so there is
+nothing to corroborate.
+
+Still not done: `ld b, $0a` would read better as
+`OAMDMARoutineEnd - OAMDMARoutine` (pokecrystal's idiom, and recomputed layout
+rather than a magic length), but `labels.json` is one name per address and
+`$06c4` is already `JumpTableDispatch`, so there is nowhere to put the end
+label. The sound driver's `ld c, $12` / `ld c, $11` (`rAUD1ENV` / `rAUD1LEN`)
+are a related judgement call left alone: there `c` is a channel-1 register
+index that `wSndRegBase` is added to, not an address being used as one.
+
+`make compare` OK, `make check` clean.

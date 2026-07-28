@@ -267,7 +267,7 @@ LoadBGPaletteData:
 LoadOBJPaletteData:
 	ld a, $80 ; $0287
 	ldh [rOBPI], a ; $0289
-	ld c, $6b ; $028b
+	ld c, LOW(rOBPD) ; $028b
 .step:
 	ld b, $08 ; $028d
 .loop:
@@ -1072,9 +1072,9 @@ FarCopyBytes:
 	pop af ; $06aa
 	ret ; $06ab
 CopyOAMDMARoutineToHRAM:
-	ld c, $80 ; $06ac
+	ld c, LOW(hOAMDMARoutine) ; $06ac
 	ld b, $0a ; $06ae
-	ld hl, $06ba ; $06b0
+	ld hl, OAMDMARoutine ; $06b0
 .loop:
 	ld a, [hl+] ; $06b3
 	ldh [c], a ; $06b4
@@ -1082,6 +1082,7 @@ CopyOAMDMARoutineToHRAM:
 	dec b ; $06b6
 	jr nz, .loop ; $06b7
 	ret ; $06b9
+OAMDMARoutine:
 	ld a, $c0 ; $06ba
 	ldh [rDMA], a ; $06bc
 	ld a, $28 ; $06be
@@ -6926,7 +6927,7 @@ VBlankHandler:
 	ld a, [wSpriteBufferPage] ; $278e
 	xor a, $05 ; $2791
 	ldh [hOAMDMARoutine + 1], a ; $2793
-	call $ff80 ; $2795
+	call hOAMDMARoutine ; $2795
 	call ProcessBGBlitQueue ; $2798
 	or a, a ; $279b
 	jr nz, .nonZero ; $279c
@@ -9100,7 +9101,7 @@ UpdateSoundChannels:
 	ld l, a ; $3549
 	pop de ; $354a
 	add hl, de ; $354b
-	ld c, $30 ; $354c
+	ld c, LOW(_AUD3WAVERAM) ; $354c
 	ld b, $10 ; $354e
 .loop6:
 	ld a, [hl+] ; $3550
@@ -9303,7 +9304,7 @@ RunSoundChannelScript:
 	ld l, a ; $368d
 	pop de ; $368e
 	add hl, de ; $368f
-	ld c, $30 ; $3690
+	ld c, LOW(_AUD3WAVERAM) ; $3690
 	ld b, $10 ; $3692
 .waveCopyLoop:
 	ld a, [hl+] ; $3694

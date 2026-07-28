@@ -29,6 +29,28 @@ RAM_IMM_IS_CONSTANT = {
 }
 
 
+# Sites whose 8-bit immediate is the *low byte* of an $ffxx address, because
+# the code reaches it through `ldh [c]` rather than by naming it: `ld c, $80` is
+# the destination hOAMDMARoutine is copied to, and `ld c, $6b`/`ld c, $30` are
+# the palette-data and wave-RAM ports. Curated because the byte alone cannot say
+# which symbol it is the low half of -- SoftReset's `ld c, $80` walks all of
+# HRAM from $ff80 rather than addressing the DMA routine, so it is not here.
+LOW_BYTE_SITES = {
+    0x0028b: "rOBPD",             # 64 bytes out through the OBJ palette port
+    0x006ac: "hOAMDMARoutine",    # copy destination, 10 bytes
+    0x0354c: "_AUD3WAVERAM",      # 16 bytes of wave pattern
+    0x03690: "_AUD3WAVERAM",
+}
+
+
+# Sites whose word immediate is the address of *code*: the ten bytes at
+# OAMDMARoutine are data to their only reader, which copies them into HRAM to be
+# executed there, so the label of the code is the operand. Curated per site for
+# the same reason as ROM0_FAR_POINTERS -- a word that happens to equal some
+# routine's address is usually a constant, so this is never inferred.
+IMM_CODE_POINTERS = {0x006b0}
+
+
 def render_operand(ins, off, labels, hwregs, ramnames, data_labels=None,
                    ramscoped=None, constants=None, scopes=None):
     text = ins.text
@@ -51,6 +73,12 @@ def render_operand(ins, off, labels, hwregs, ramnames, data_labels=None,
         m = IMM8_RE.search(text)
         if m:
             return text[:m.start()] + name
+    # An 8-bit immediate that is the low half of an address the code never
+    # names, because it addresses through `ldh [c]`.
+    if off in LOW_BYTE_SITES and ins.target is None:
+        m = IMM8_RE.search(text)
+        if m:
+            return text[:m.start()] + f"LOW({LOW_BYTE_SITES[off]})"
     # A 16-bit immediate load whose value points at a named data region is a
     # pointer setup; inline the label. Bounded to data_labels (curated data
     # offsets) so numeric constants that alias code addresses are untouched.
@@ -67,6 +95,9 @@ def render_operand(ins, off, labels, hwregs, ramnames, data_labels=None,
                 flat = base + (imm - 0x4000)
             if flat in data_labels:
                 return f"ld {m.group(1)}, {data_labels[flat]}"
+            if off in IMM_CODE_POINTERS and flat in labels:
+                name = scopes.ref(flat, off) if scopes else labels[flat]
+                return f"ld {m.group(1)}, {name}"
             # Same for curated RAM symbols: a word immediate equal to a
             # named RAM address is a pointer setup, not a constant.
             if off not in RAM_IMM_IS_CONSTANT:
@@ -98,5 +129,11 @@ def render_operand(ins, off, labels, hwregs, ramnames, data_labels=None,
     if t is not None and t in labels:
         name = scopes.ref(t, off) if scopes else labels[t]
         return text.replace("{target}", name)
+    # A call/jp whose target is RAM runs code that was copied there (the OAM DMA
+    # routine in HRAM), so the RAM symbol is the operand. Unambiguous in a way
+    # the immediate forms are not: a branch target is always an address, and no
+    # ROM offset can collide because target_to_offset resolves those first.
+    if t is None and ramnames and ins.target in ramnames:
+        return text.replace("{target}", ramnames[ins.target])
     width = 2 if text.startswith("rst") else 4
     return text.replace("{target}", f"${ins.target:0{width}x}")
