@@ -6221,3 +6221,48 @@ The value cannot say, because `$a000` is *both* the SRAM base and VRAM bank 1's
 Fourteen exclusions instead of four hundred inclusions, and the check that the
 split is right is independent of the compare: bank `$03` has zero conversions and
 `FetchSRAMText` is untouched.
+
+
+## $2000 is the mapper, not the VRAM bank (2026-07-28)
+
+A reasonable guess, given the bank encoding above, is that the ROM's raw
+`$2000`s are the VRAM bank offset. They are not: **57 of the 99 are
+`ld [$2000], a`**, the MBC5 ROM bank register. Only 3 are the VRAM offset --
+`ld hl, $2000 / add hl, de` in the tilemap and glyph upload paths, where `de` is
+already a VRAM address -- and the rest are world coordinates in actor scripts.
+
+Counting the other command windows, 136 writes to the mapper were rendering as
+stores to ROM addresses. A write through a bracket operand below `$8000` is
+never a memory store: ROM space *is* the MBC's command interface. No instruction
+in the ROM reads a bracket operand from that range, so matching the write form
+alone is enough, and the windows name themselves:
+
+| | | |
+| --- | --- | --- |
+| `[$0000]` | 29 | `rRAMG` -- cartridge RAM gate |
+| `[$2000]` | 57 | `rROMB0` -- ROM bank |
+| `[$4000]` | 49 | `rRAMB` -- RAM bank |
+
+so the bank-switch idiom reads `ldh [hRomBank], a` / `ld [rROMB0], a`.
+
+### The 136th write is a bug in the shipped game
+
+`ConvertColorToGrayscale` (bank `$1d`) splits a CGB colour into red at `$d000`,
+green at `$d001`, and blue at -- `$0002`. It then reads all three back to
+average them:
+
+```
+        ld a, [$d000]
+        ld hl, $d001
+        add [hl]
+        inc hl          ; -> $d002
+        add [hl]
+        srl a
+```
+
+The blue channel never reaches `$d002`. The average is red plus green plus
+whatever was already in `$d002`, and the write lands on the cartridge-RAM gate
+instead, where its low nibble incidentally toggles SRAM access. It is a `d`
+dropped from `$d002` in the original source, and it renders as
+`ld [rRAMG + 2], a` now -- visibly wrong, rather than looking like an ordinary
+store to a low address.
