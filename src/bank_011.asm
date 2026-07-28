@@ -39,13 +39,13 @@ CenterCourtNpc03_11:
 	script_set_text Text_1f_80 ; $4082
 	test_flag FLAG_DOUBLES ; $4088
 	jr nz, .isDoubles ; $408b
-	ld a, [$c2b0] ; $408d
+	ld a, [wMapSceneStage] ; $408d
 	cp a, $03 ; $4090
 	jr nz, .speak ; $4092
 	script_set_text Text_1f_91 ; $4094
 	jr .speak ; $409a
 .isDoubles:
-	ld a, [$c2b0] ; $409c
+	ld a, [wMapSceneStage] ; $409c
 	cp a, $06 ; $409f
 	jr nz, .speak ; $40a1
 	script_set_text Text_1f_91 ; $40a3
@@ -56,7 +56,7 @@ CenterCourtNpc04_11:
 	test_flag FLAG_DOUBLES ; $40af
 	jr z, .altText ; $40b2
 	script_set_text Text_1f_96 ; $40b4
-	ld a, [$c2b0] ; $40ba
+	ld a, [wMapSceneStage] ; $40ba
 	cp a, $06 ; $40bd
 	jr nz, .done ; $40bf
 	script_set_text Text_1f_101 ; $40c1
@@ -74,7 +74,7 @@ CenterCourtNpc04_11:
 	script_speak $04 ; $40e7
 	ret ; $40ec
 .speak:
-	ld a, [$c2b0] ; $40ed
+	ld a, [wMapSceneStage] ; $40ed
 	cp a, $03 ; $40f0
 	jr nz, .done ; $40f2
 	farcall AdvanceDialogueTextCursor ; $40f4
@@ -83,7 +83,7 @@ CenterCourtNpc04_11:
 	script_speak $04 ; $40fa
 	ret ; $40ff
 CenterCourtNpc05_11:
-	ld a, [$c2b0] ; $4100
+	ld a, [wMapSceneStage] ; $4100
 	add a, a ; $4103
 	add a, LOW(CenterCourtNpc05TextIds) ; $4104
 	ld l, a ; $4106
@@ -94,7 +94,7 @@ CenterCourtNpc05_11:
 	ld h, [hl] ; $410c
 	ld l, a ; $410d
 	farcall InitDialogueTextCursor ; $410e
-	ld a, [$c2b0] ; $4111
+	ld a, [wMapSceneStage] ; $4111
 	cp a, $03 ; $4114
 	jr z, .eq03 ; $4116
 	script_speak $05 ; $4118
@@ -121,7 +121,7 @@ CenterCourtNpc05TextIds:
 	dw Text_1f_99 ; record 5
 	dw Text_1f_102 ; record 6
 CenterCourtNpc06_11:
-	ld a, [$c2b0] ; $414a
+	ld a, [wMapSceneStage] ; $414a
 	add a, a ; $414d
 	add a, LOW(CenterCourtNpc06TextIds) ; $414e
 	ld l, a ; $4150
@@ -172,13 +172,13 @@ CenterCourtInitScript_11:
 	ret ; $41b5
 SetupCenterCourtSceneVariant:
 	ld a, $00 ; $41b6
-	ld [$c2b0], a ; $41b8
+	ld [wMapSceneStage], a ; $41b8
 	test_flag FLAG_DOUBLES ; $41bb
 	jr nz, .doneEarly ; $41be
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_SEMIFINAL ; $41c0
 	jr z, .stage1 ; $41c3
 	ld a, $03 ; $41c5
-	ld [$c2b0], a ; $41c7
+	ld [wMapSceneStage], a ; $41c7
 	ldh a, [hRomBank] ; $41ca
 	ld hl, CenterCourtSceneVariantActors_11 ; $41cc
 	farcall ScriptRespawnLocationActors ; $41cf
@@ -188,20 +188,20 @@ SetupCenterCourtSceneVariant:
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_2 ; $41d6
 	jr z, .stage2 ; $41d9
 	ld a, $02 ; $41db
-	ld [$c2b0], a ; $41dd
+	ld [wMapSceneStage], a ; $41dd
 	ret ; $41e0
 .stage2:
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_1 ; $41e1
 	jr z, .stage3 ; $41e4
 	ld a, $01 ; $41e6
-	ld [$c2b0], a ; $41e8
+	ld [wMapSceneStage], a ; $41e8
 .stage3:
 	ret ; $41eb
 .doneEarly:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_SEMIFINAL ; $41ec
 	jr z, .stage4 ; $41ef
 	ld a, $06 ; $41f1
-	ld [$c2b0], a ; $41f3
+	ld [wMapSceneStage], a ; $41f3
 	ldh a, [hRomBank] ; $41f6
 	ld hl, CenterCourtSceneVariantActors_11 ; $41f8
 	farcall ScriptRespawnLocationActors ; $41fb
@@ -211,11 +211,11 @@ SetupCenterCourtSceneVariant:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_ROUND_1 ; $4202
 	jr z, .done ; $4205
 	ld a, $05 ; $4207
-	ld [$c2b0], a ; $4209
+	ld [wMapSceneStage], a ; $4209
 	ret ; $420c
 .done:
 	ld a, $04 ; $420d
-	ld [$c2b0], a ; $420f
+	ld [wMapSceneStage], a ; $420f
 	ret ; $4212
 CenterCourtSceneVariantActors_11:
 	; $4213, 234 bytes (map_actors)
@@ -370,7 +370,7 @@ AcademyArrivalExitTriggers_11:
 	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_11, $05, $0f
 	db $ff
 AcademyArrivalNpc03_11:
-	ld a, [$c2b0] ; $459d
+	ld a, [wMapSceneStage] ; $459d
 	add a, a ; $45a0
 	add a, LOW(AcademyArrivalNpc03TextIds) ; $45a1
 	ld l, a ; $45a3
@@ -381,7 +381,7 @@ AcademyArrivalNpc03_11:
 	ld h, [hl] ; $45a9
 	ld l, a ; $45aa
 	farcall InitDialogueTextCursor ; $45ab
-	ld a, [$c2b0] ; $45ae
+	ld a, [wMapSceneStage] ; $45ae
 	cp a, $08 ; $45b1
 	jr nc, .altText ; $45b3
 	cp a, $04 ; $45b5
@@ -416,7 +416,7 @@ AcademyArrivalNpc03TextIds:
 	dw Text_36_76 ; record 8
 	dw Text_36_76 ; record 9
 AcademyArrivalNpc04_11:
-	ld a, [$c2b0] ; $45f5
+	ld a, [wMapSceneStage] ; $45f5
 	add a, a ; $45f8
 	add a, LOW(AcademyArrivalNpc04TextIds) ; $45f9
 	ld l, a ; $45fb
@@ -442,7 +442,7 @@ AcademyArrivalNpc04TextIds:
 	dw Text_36_77 ; record 8
 	dw Text_36_77 ; record 9
 AcademyArrivalNpc05_11:
-	ld a, [$c2b0] ; $4620
+	ld a, [wMapSceneStage] ; $4620
 	sra a ; $4623
 	add a, a ; $4625
 	add a, LOW(AcademyArrivalNpc05TextIds) ; $4626
@@ -1145,7 +1145,7 @@ EnableAcademyCampusExit:
 	farcall WriteBehaviorMapCell ; $54a2
 	ret ; $54a5
 MoveCampusGateGuardAside:
-	ld a, [$c2b0] ; $54a6
+	ld a, [wMapSceneStage] ; $54a6
 	cp a, $06 ; $54a9
 	jr c, .done ; $54ab
 	script_set_position $14, $1500, $3000 ; $54ad
@@ -3634,7 +3634,7 @@ ComputeRankingProgressIndex:
 	jr z, .store ; $7db4
 	ld a, $08 ; $7db6
 .store:
-	ld [$c2b0], a ; $7db8
+	ld [wMapSceneStage], a ; $7db8
 	ret ; $7dbb
 .doubles:
 	ld a, $01 ; $7dbc
@@ -3667,7 +3667,7 @@ ComputeRankingProgressIndex:
 	jr z, .storeIsland ; $7df8
 	inc a ; $7dfa
 .storeIsland:
-	ld [$c2b0], a ; $7dfb
+	ld [wMapSceneStage], a ; $7dfb
 	ret ; $7dfe
 .doublesIsland:
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $7dff

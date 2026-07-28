@@ -147,7 +147,7 @@ TrainingGymExit03_0e:
 	script_wait_frames $0a ; $439e
 	ret ; $43a5
 TrainingGymNpc03_0e:
-	ld a, [$c2b0] ; $43a6
+	ld a, [wMapSceneStage] ; $43a6
 	add a, a ; $43a9
 	add a, LOW(TrainingGymNpc03TextIds) ; $43aa
 	ld l, a ; $43ac
@@ -173,7 +173,7 @@ TrainingGymNpc03TextIds:
 	dw Text_35_219 ; record 8
 	dw Text_35_219 ; record 9
 TrainingGymNpc04_0e:
-	ld a, [$c2b0] ; $43d1
+	ld a, [wMapSceneStage] ; $43d1
 	sra a ; $43d4
 	add a, a ; $43d6
 	add a, LOW(TrainingGymNpc04TextIds) ; $43d7
@@ -195,7 +195,7 @@ TrainingGymNpc04TextIds:
 	dw Text_35_205 ; record 3
 	dw Text_35_220 ; record 4
 TrainingGymNpc05_0e:
-	ld a, [$c2b0] ; $43f4
+	ld a, [wMapSceneStage] ; $43f4
 	add a, a ; $43f7
 	add a, LOW(TrainingGymNpc05TextIds) ; $43f8
 	ld l, a ; $43fa
@@ -221,7 +221,7 @@ TrainingGymNpc05TextIds:
 	dw Text_35_221 ; record 8
 	dw Text_35_221 ; record 9
 TrainingGymNpc06_0e:
-	ld a, [$c2b0] ; $441f
+	ld a, [wMapSceneStage] ; $441f
 	add a, a ; $4422
 	add a, LOW(TrainingGymNpc06TextIds) ; $4423
 	ld l, a ; $4425
@@ -247,7 +247,7 @@ TrainingGymNpc06TextIds:
 	dw Text_35_222 ; record 8
 	dw Text_35_222 ; record 9
 TrainingGymNpc07_0e:
-	ld a, [$c2b0] ; $444a
+	ld a, [wMapSceneStage] ; $444a
 	sra a ; $444d
 	cp a, $03 ; $444f
 	jr z, TrainingGymNpc07TextIds.speak ; $4451
@@ -284,7 +284,7 @@ TrainingGymNpc07TextIds:
 	script_speak $07 ; $448f
 	ret ; $4494
 TrainingGymNpc08_0e:
-	ld a, [$c2b0] ; $4495
+	ld a, [wMapSceneStage] ; $4495
 	sra a ; $4498
 	add a, a ; $449a
 	add a, LOW(TrainingGymNpc08TextIds) ; $449b
@@ -306,7 +306,7 @@ TrainingGymNpc08TextIds:
 	dw Text_35_213 ; record 3
 	dw Text_35_224 ; record 4
 TrainingGymNpc09_0e:
-	ld a, [$c2b0] ; $44b8
+	ld a, [wMapSceneStage] ; $44b8
 	sra a ; $44bb
 	add a, a ; $44bd
 	add a, LOW(TrainingGymNpc09TextIds) ; $44be
@@ -328,7 +328,7 @@ TrainingGymNpc09TextIds:
 	dw Text_35_214 ; record 3
 	dw Text_35_225 ; record 4
 TrainingGymNpc0A_0e:
-	ld a, [$c2b0] ; $44db
+	ld a, [wMapSceneStage] ; $44db
 	add a, a ; $44de
 	add a, LOW(TrainingGymNpc0ATextIds) ; $44df
 	ld l, a ; $44e1
@@ -354,7 +354,7 @@ TrainingGymNpc0ATextIds:
 	dw Text_35_226 ; record 8
 	dw Text_35_227 ; record 9
 TrainingGymNpc0B_0e:
-	ld a, [$c2b0] ; $4506
+	ld a, [wMapSceneStage] ; $4506
 	add a, a ; $4509
 	add a, LOW(TrainingGymNpc0BTextIds) ; $450a
 	ld l, a ; $450c
@@ -380,7 +380,7 @@ TrainingGymNpc0BTextIds:
 	dw Text_35_228 ; record 8
 	dw Text_35_229 ; record 9
 TrainingGymNpc0C_0e:
-	ld a, [$c2b0] ; $4531
+	ld a, [wMapSceneStage] ; $4531
 	sra a ; $4534
 	add a, a ; $4536
 	add a, LOW(TrainingGymNpc0CTextIds) ; $4537
@@ -422,7 +422,7 @@ TrainingGymFacingScripts_0e:
 	db $ff
 TrainingGymFacing01_0e:
 	ld a, $0b ; $45be
-	ld [$c2b1], a ; $45c0
+	ld [wMapSceneStage2], a ; $45c0
 	script_player_speed $0040 ; $45c3
 	script_move_player $0d00, $1300 ; $45c9
 	farcall WaitPlayerMoveDone ; $45d3
@@ -430,7 +430,7 @@ TrainingGymFacing01_0e:
 	ret ; $45d9
 TrainingGymFacing02_0e:
 	ld a, $0c ; $45da
-	ld [$c2b1], a ; $45dc
+	ld [wMapSceneStage2], a ; $45dc
 	script_player_speed $0040 ; $45df
 	script_move_player $0d00, $1300 ; $45e5
 	farcall WaitPlayerMoveDone ; $45ef
@@ -500,7 +500,7 @@ TrainingGymInitScript_0e:
 .done:
 	ret ; $4680
 SetupGymActorsForProgress:
-	ld a, [$c2b0] ; $4681
+	ld a, [wMapSceneStage] ; $4681
 	sra a ; $4684
 	cp a, $01 ; $4686
 	jr z, .stage1 ; $4688
@@ -1296,7 +1296,7 @@ PrepareEquipmentSelectScreen:
 	ld [wWaterSpriteMinigameFlag], a ; $4eb5
 	ld a, $11 ; $4eb8
 	ld [wStoryModeCurrentLocation], a ; $4eba
-	ld a, [$c2b1] ; $4ebd
+	ld a, [wMapSceneStage2] ; $4ebd
 	ld [wStoryModeEntryPoint], a ; $4ec0
 	ld a, $ff ; $4ec3
 	ld [wUnusedExitLocationMirror], a ; $4ec5
@@ -1335,12 +1335,12 @@ RestoreScreenAfterEquipSelect:
 	call EnableLCD ; $4f19
 	ret ; $4f1c
 .advanceStage:
-	ld a, [$c2b1] ; $4f1d
+	ld a, [wMapSceneStage2] ; $4f1d
 	add a, $02 ; $4f20
-	ld [$c2b1], a ; $4f22
+	ld [wMapSceneStage2], a ; $4f22
 	ld a, $11 ; $4f25
 	ld [wStoryModeCurrentLocation], a ; $4f27
-	ld a, [$c2b1] ; $4f2a
+	ld a, [wMapSceneStage2] ; $4f2a
 	ld [wStoryModeEntryPoint], a ; $4f2d
 	ld a, $ff ; $4f30
 	ld [wUnusedExitLocationMirror], a ; $4f32
@@ -1425,14 +1425,14 @@ InitEquipmentHandoutDialogue:
 	ret ; $4fbe
 RepairCounterReturnA:
 	ld a, $0b ; $4fbf
-	ld [$c2b1], a ; $4fc1
+	ld [wMapSceneStage2], a ; $4fc1
 	script_face_toward ACTOR_PLAYER, $0e ; $4fc4
 	script_set_position ACTOR_PARTNER, $0f00, $0f00 ; $4fcc
 	jp RepairCounterCheckEquipChanged ; $4fd7
 	ret ; $4fda
 RepairCounterReturnB:
 	ld a, $0c ; $4fdb
-	ld [$c2b1], a ; $4fdd
+	ld [wMapSceneStage2], a ; $4fdd
 	farcall WaitPlayerMoveDone ; $4fe0
 	script_player_speed $00f0 ; $4fe3
 	script_move_player $0d00, $1100 ; $4fe9
@@ -1500,13 +1500,13 @@ RepairCounterCheckEquipChanged:
 	jp RepairCounterFarewell ; $509c
 RepairCounterChangedReturnA:
 	ld a, $0b ; $509f
-	ld [$c2b1], a ; $50a1
+	ld [wMapSceneStage2], a ; $50a1
 	script_set_position ACTOR_PARTNER, $0f00, $0f00 ; $50a4
 	jp RepairCounterReopenServiceMenu ; $50af
 	ret ; $50b2
 RepairCounterChangedReturnB:
 	ld a, $0c ; $50b3
-	ld [$c2b1], a ; $50b5
+	ld [wMapSceneStage2], a ; $50b5
 	farcall WaitPlayerMoveDone ; $50b8
 	script_player_speed $00f0 ; $50bb
 	script_move_player $0d00, $1300 ; $50c1
@@ -1684,7 +1684,7 @@ MarioWorldNpc12Mario_0e:
 	ret ; $5399
 MarioWorldNpc11_0e:
 	ld hl, $308f ; $539a
-	ld a, [$c2b0] ; $539d
+	ld a, [wMapSceneStage] ; $539d
 	add a, l ; $53a0
 	ld l, a ; $53a1
 	jr nc, .speak ; $53a2
@@ -1695,7 +1695,7 @@ MarioWorldNpc11_0e:
 	ret ; $53ad
 MarioWorldNpc0BLuigi_0e:
 	ld hl, $3093 ; $53ae
-	ld a, [$c2b0] ; $53b1
+	ld a, [wMapSceneStage] ; $53b1
 	add a, l ; $53b4
 	ld l, a ; $53b5
 	jr nc, .speak ; $53b6
@@ -1726,7 +1726,7 @@ MarioWorldNpc0D_0e:
 	ret ; $53f9
 MarioWorldNpc0FBowser_0e:
 	ld hl, $309b ; $53fa
-	ld a, [$c2b0] ; $53fd
+	ld a, [wMapSceneStage] ; $53fd
 	add a, l ; $5400
 	ld l, a ; $5401
 	jr nc, .speak ; $5402
@@ -1737,7 +1737,7 @@ MarioWorldNpc0FBowser_0e:
 	ret ; $540d
 MarioWorldNpc10Wario_0e:
 	ld hl, $309f ; $540e
-	ld a, [$c2b0] ; $5411
+	ld a, [wMapSceneStage] ; $5411
 	add a, l ; $5414
 	ld l, a ; $5415
 	jr nc, .speak ; $5416
@@ -1748,7 +1748,7 @@ MarioWorldNpc10Wario_0e:
 	ret ; $5421
 MarioWorldNpc0EWaluigi_0e:
 	ld hl, $30a3 ; $5422
-	ld a, [$c2b0] ; $5425
+	ld a, [wMapSceneStage] ; $5425
 	add a, l ; $5428
 	ld l, a ; $5429
 	jr nc, .speak ; $542a
@@ -1848,7 +1848,7 @@ ComputeMarioWorldProgressIndex:
 	jr z, .loop ; $5567
 	inc a ; $5569
 .loop:
-	ld [$c2b0], a ; $556a
+	ld [wMapSceneStage], a ; $556a
 	ret ; $556d
 .doublesStage:
 	ld a, $02 ; $556e
@@ -2591,7 +2591,7 @@ PromptExhibitionMatch:
 	farcall EndCutsceneScriptMode ; $6640
 	ret ; $6643
 .accepted:
-	ld a, [$c2b0] ; $6644
+	ld a, [wMapSceneStage] ; $6644
 	and a, $01 ; $6647
 	jr z, .startMatchScene ; $6649
 	farcall AdvanceDialogueTextCursor ; $664b
@@ -3159,7 +3159,7 @@ UpdateStarWarpSprite:
 	ld a, $fc ; $7228
 	add a, d ; $722a
 	ld d, a ; $722b
-	ld hl, $d040 ; $722c
+	ld hl, wCharDataChoiceLog + 22 ; $722c
 	ld a, e ; $722f
 	ld [hl+], a ; $7230
 	ld [hl], d ; $7231
@@ -3219,9 +3219,9 @@ UpdateStarWarpTrailSparkles:
 	adc a, $d0 ; $727e
 	sub a, l ; $7280
 	ld h, a ; $7281
-	ld a, [$d040] ; $7282
+	ld a, [wCharDataChoiceLog + 22] ; $7282
 	ld [hl+], a ; $7285
-	ld a, [w6_d041] ; $7286
+	ld a, [wCharDataChoiceLog + 23] ; $7286
 	ld [hl], a ; $7289
 	dec hl ; $728a
 	push hl ; $728b
@@ -3915,7 +3915,7 @@ ComputeTrainingGymProgressIndex:
 	jr z, .store ; $7e79
 	ld a, $08 ; $7e7b
 .store:
-	ld [$c2b0], a ; $7e7d
+	ld [wMapSceneStage], a ; $7e7d
 	ret ; $7e80
 .doubles:
 	ld a, $01 ; $7e81
@@ -3948,7 +3948,7 @@ ComputeTrainingGymProgressIndex:
 	jr z, .storeIsland ; $7ebd
 	inc a ; $7ebf
 .storeIsland:
-	ld [$c2b0], a ; $7ec0
+	ld [wMapSceneStage], a ; $7ec0
 	ret ; $7ec3
 .doublesIsland:
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $7ec4

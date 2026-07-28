@@ -1982,7 +1982,7 @@ InitObjectSceneA:
 	ldh a, [hWramBank] ; $7bce
 	push af ; $7bd0
 	wram_bank $03 ; $7bd1
-	ld hl, w3_d800 ; $7bd7
+	ld hl, wScreenScratch ; $7bd7
 	ld bc, $0100 ; $7bda
 	call ClearBytes ; $7bdd
 	call PopulateObjectArrayA ; $7be0
@@ -2013,7 +2013,7 @@ ObjectSceneATilesPalettes:
 PopulateObjectArrayA:
 	ld c, $00 ; $7c27
 	ld hl, ObjectSpawnTable_18_7c53 ; $7c29
-	ld de, w3_d800 ; $7c2c
+	ld de, wScreenScratch ; $7c2c
 .spawnLoop:
 	push af ; $7c2f
 	push bc ; $7c30
@@ -2065,7 +2065,7 @@ InitObjectSceneB:
 	ldh a, [hWramBank] ; $7d03
 	push af ; $7d05
 	wram_bank $03 ; $7d06
-	ld hl, w3_d800 ; $7d0c
+	ld hl, wScreenScratch ; $7d0c
 	ld bc, $0100 ; $7d0f
 	call ClearBytes ; $7d12
 	call PopulateObjectArrayB ; $7d15
@@ -2093,7 +2093,7 @@ Palette_18_7d44:
 PopulateObjectArrayB:
 	ld c, $00 ; $7d5c
 	ld hl, ObjectSpawnTable_18_7d88 ; $7d5e
-	ld de, w3_d800 ; $7d61
+	ld de, wScreenScratch ; $7d61
 .spawnLoop:
 	push af ; $7d64
 	push bc ; $7d65

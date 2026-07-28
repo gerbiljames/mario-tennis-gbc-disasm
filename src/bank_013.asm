@@ -297,9 +297,9 @@ AcademyCourtsTourCutscene:
 	script_move_player $3600, $0d00 ; $4587
 	farcall WaitPlayerMoveDone ; $4591
 	ld a, $50 ; $4594
-	ld [$c2b0], a ; $4596
+	ld [wMapSceneStage], a ; $4596
 	ld a, $48 ; $4599
-	ld [$c2b1], a ; $459b
+	ld [wMapSceneStage2], a ; $459b
 	ld a, $01 ; $459e
 	ld hl, AnimateTourPointerSprite_13 ; $45a0
 	call RegisterFrameTask ; $45a3
@@ -323,9 +323,9 @@ AcademyCourtsTourCutscene:
 	script_move_player $2a00, $0d00 ; $460e
 	farcall WaitPlayerMoveDone ; $4618
 	ld a, $20 ; $461b
-	ld [$c2b0], a ; $461d
+	ld [wMapSceneStage], a ; $461d
 	ld a, $48 ; $4620
-	ld [$c2b1], a ; $4622
+	ld [wMapSceneStage2], a ; $4622
 	ld a, $01 ; $4625
 	ld hl, AnimateTourPointerSprite_13 ; $4627
 	call RegisterFrameTask ; $462a
@@ -595,13 +595,13 @@ QueueTourPointerSprite_13:
 	call QueueSpriteTemplate ; $4d06
 	ret ; $4d09
 AnimateTourPointerSprite_13:
-	ld a, [$c2b0] ; $4d0a
+	ld a, [wMapSceneStage] ; $4d0a
 	ld d, a ; $4d0d
 	ldh a, [hVBlankCounter] ; $4d0e
 	srl a ; $4d10
 	and a, $07 ; $4d12
 	ld e, a ; $4d14
-	ld a, [$c2b1] ; $4d15
+	ld a, [wMapSceneStage2] ; $4d15
 	add a, $08 ; $4d18
 	sub a, e ; $4d1a
 	ld e, a ; $4d1b
@@ -3788,7 +3788,7 @@ ActorScript_13_7cf5:
 	jr z, .loop ; $7d30
 	ld a, $08 ; $7d32
 .loop:
-	ld [$c2b0], a ; $7d34
+	ld [wMapSceneStage], a ; $7d34
 	ret ; $7d37
 .isDoubles:
 	ld a, $01 ; $7d38
@@ -3822,7 +3822,7 @@ ComputeStoryRankTier_13:
 	jr z, .loop ; $7d74
 	inc a ; $7d76
 .loop:
-	ld [$c2b0], a ; $7d77
+	ld [wMapSceneStage], a ; $7d77
 	ret ; $7d7a
 .checkFlag:
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $7d7b

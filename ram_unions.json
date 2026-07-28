@@ -714,46 +714,83 @@
    ]
   },
   {
-   "start": "0xd038",
-   "end": "0xd039",
-   "comment": "Trophy EXP accumulator state (WRAM bank $06), used only by\nComputeTrophyExpForGroup in bank $1e; scoped so the same offset in other\nWRAM banks keeps its numeric address.",
+   "start": "0xd800",
+   "end": "0xd810",
+   "comment": "Screen-local scratch in WRAM bank $03, low half. Like the $d810 block above\neach full-screen UI reuses these bytes, so the variants are scoped to the\nowning ROM bank (and, where one bank runs several screens, to that screen's\ncode range).",
    "variants": [
     {
-     "context": "trophy EXP (bank $1e)",
+     "context": "equipment select (bank $3e, $5400-$5c00)",
      "scopes": [
       {
-       "wram_bank": "0x06"
+       "bank": "0x3e",
+       "start": "0x5400",
+       "end": "0x5c00"
       }
      ],
      "symbols": {
-      "0xd038": {
-       "name": "wTrophyExpGroup",
-       "note": "[8-bit] Character group being totalled; indexes TrophyExpForGroupTable0-4 and selects the row GetTrophyExpValue reads"
+      "0xd800": {
+       "name": "wEquipItemList",
+       "note": "[8 bytes] Item ids the player owns, compacted by BuildOwnedItemList from wEquipOwnedMap; the cursor indexes this list",
+       "size": 8
+      },
+      "0xd808": {
+       "name": "wEquipOwnedMap",
+       "note": "[8 bytes] One byte per item slot: 0 not owned, 1 owned, 2 owned and equipped. MarkOwnedRackets / MarkOwnedShoes fill it from the save data",
+       "size": 8
       }
      }
-    }
-   ]
-  },
-  {
-   "start": "0xd801",
-   "end": "0xd802",
-   "comment": "Match result-screen mode (WRAM bank $03), stored on entry by the bank\n$16 result screens and read back by their portrait and palette code.",
-   "variants": [
+    },
+    {
+     "context": "name entry (bank $38, $6e00-$7500)",
+     "scopes": [
+      {
+       "bank": "0x38",
+       "start": "0x6e00",
+       "end": "0x7500"
+      }
+     ],
+     "symbols": {
+      "0xd800": {
+       "name": "wNameEntryBuffer",
+       "note": "[8 bytes] Name being typed, terminated by $00; AppendCharToName / DeleteLastNameChar edit it and RunNameEntryScreen copies it into the character record on accept ($de is the blank-cell filler)",
+       "size": 8
+      }
+     }
+    },
     {
      "context": "match results (bank $16)",
+     "scopes": [
+      {
+       "bank": "0x16"
+      }
+     ],
+     "symbols": {
+      "0xd800": {
+       "name": "wResultScreenWon",
+       "note": "[8-bit] 1 if the player won the match just played, 0 if not; written beside wResultScreenMode by RunMatchWinLoseScreen and used by LoadWinLoseScreenAssets / LoadResultScreenTileGraphics to pick the graphics set"
+      },
+      "0xd801": {
+       "name": "wResultScreenMode",
+       "note": "[8-bit] Stored from a by RunMatchWinLoseScreen and RunMatchStatsScreen; SetWinLosePortraitPaletteAttrs and LoadResultPortraitSlot branch on it"
+      }
+     }
+    },
+    {
+     "context": "screen scratch (any other screen, where WRAM bank $03 is provable)",
      "scopes": [
       {
        "wram_bank": "0x03"
       }
      ],
      "symbols": {
-      "0xd801": {
-       "name": "wResultScreenMode",
-       "note": "[8-bit] Stored from a by RunMatchWinLoseScreen and RunMatchStatsScreen; SetWinLosePortraitPaletteAttrs and LoadResultPortraitSlot branch on it"
+      "0xd800": {
+       "name": "wScreenScratch",
+       "note": "[8-bit] Base of the screen-local scratch block in WRAM bank $03. Screens\nwith no named variant here still use it as their working buffer -- an\nobject array (bank $18), a decompression staging area (banks $1b/$39), a\ncursor or mode byte (banks $3b/$6b) -- so this only records where the\nblock starts. Sites whose WRAM bank compute_wram_bank cannot prove keep\nthe bare address."
       }
      }
     }
-   ]
+   ],
+   "wram_bank": "0x03"
   },
   {
    "start": "0xdc00",
@@ -771,6 +808,487 @@
       "0xdc00": {
        "name": "wRulesScreenAnimFrame",
        "note": "[8-bit] Frame AdvanceRulesScreenAnimFrame steps; DrawRulesScreenCharacters indexes RulesScreenCharactersTable0-2 with it"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "start": "0xd810",
+   "wram_bank": "0x03",
+   "end": "0xd83f",
+   "comment": "Screen-local state in WRAM bank $03: each full-screen UI reuses these\nbytes for its own purpose, so the variants are scoped to the ROM bank\nthat owns the screen rather than to the WRAM bank -- banks $16/$17/$38\nall select WRAM bank $03 here, and most sites select it in a callee so\ncompute_wram_bank cannot prove it at the reference.",
+   "variants": [
+    {
+     "context": "drill briefings (bank $17)",
+     "scopes": [
+      {
+       "bank": "0x17"
+      }
+     ],
+     "symbols": {
+      "0xd810": {
+       "name": "wBriefingPlayerX",
+       "note": "[8-bit] Drill-briefing diagram: player sprite X, queued by DrawBriefingPlayerSprite (d = X, e = Y in QueueSprite)"
+      },
+      "0xd811": {
+       "name": "wBriefingPlayerY",
+       "note": "[8-bit] Drill-briefing diagram: player sprite Y"
+      },
+      "0xd812": {
+       "name": "wBriefingOpponentX",
+       "note": "[8-bit] Drill-briefing diagram: opponent sprite X, queued by DrawBriefingOpponentSprite"
+      },
+      "0xd813": {
+       "name": "wBriefingOpponentY",
+       "note": "[8-bit] Drill-briefing diagram: opponent sprite Y"
+      },
+      "0xd814": {
+       "name": "wBriefingSwingX",
+       "note": "[8-bit] Drill-briefing diagram: swing-animation sprite X, queued by DrawBriefingSwingAnim"
+      },
+      "0xd815": {
+       "name": "wBriefingSwingY",
+       "note": "[8-bit] Drill-briefing diagram: swing-animation sprite Y"
+      },
+      "0xd816": {
+       "name": "wBriefingSpinMarkerX",
+       "note": "[8-bit] Drill-briefing diagram: spin-serve marker X, queued by DrawSpinServeBriefingMarker"
+      },
+      "0xd817": {
+       "name": "wBriefingSpinMarkerY",
+       "note": "[8-bit] Drill-briefing diagram: spin-serve marker Y"
+      },
+      "0xd818": {
+       "name": "wBriefingRotMarkerX",
+       "note": "[8-bit] Drill-briefing diagram: rotatable marker X, queued by DrawBriefingMarkerRotated"
+      },
+      "0xd819": {
+       "name": "wBriefingRotMarkerY",
+       "note": "[8-bit] Drill-briefing diagram: rotatable marker Y"
+      },
+      "0xd81a": {
+       "name": "wBriefingPole1X",
+       "note": "[8-bit] Drill-briefing diagram: first pole sprite X, queued by DrawBriefingPoleSprites"
+      },
+      "0xd81b": {
+       "name": "wBriefingPole1Y",
+       "note": "[8-bit] Drill-briefing diagram: first pole sprite Y"
+      },
+      "0xd81c": {
+       "name": "wBriefingHMarkerX",
+       "note": "[8-bit] Drill-briefing diagram: horizontal marker X, queued by DrawBriefingMarkerHFlip (jiggles by 1px on hVBlankCounter bit 4)"
+      },
+      "0xd81d": {
+       "name": "wBriefingHMarkerY",
+       "note": "[8-bit] Drill-briefing diagram: horizontal marker Y"
+      },
+      "0xd81e": {
+       "name": "wBriefingBallX",
+       "note": "[8-bit] Drill-briefing diagram: ball sprite X, queued by DrawBriefingBallSprite"
+      },
+      "0xd81f": {
+       "name": "wBriefingBallY",
+       "note": "[8-bit] Drill-briefing diagram: ball sprite Y"
+      },
+      "0xd820": {
+       "name": "wBriefingPole2X",
+       "note": "[8-bit] Drill-briefing diagram: second pole sprite X (same drawer as wBriefingPole1X)"
+      },
+      "0xd821": {
+       "name": "wBriefingPole2Y",
+       "note": "[8-bit] Drill-briefing diagram: second pole sprite Y"
+      },
+      "0xd822": {
+       "name": "wBriefingSwingFrame",
+       "note": "[8-bit] Drill-briefing diagram: swing-animation frame (0-9); indexes BriefingSwingAnimTable0 for the base tile, and < 6 selects the 5-sprite racket template"
+      },
+      "0xd823": {
+       "name": "wBriefingVMarkerX",
+       "note": "[8-bit] Drill-briefing diagram: vertical marker X, queued by DrawBriefingMarkerVFlip"
+      },
+      "0xd824": {
+       "name": "wBriefingVMarkerY",
+       "note": "[8-bit] Drill-briefing diagram: vertical marker Y"
+      },
+      "0xd825": {
+       "name": "wBriefingVMarkerUpright",
+       "note": "[8-bit] Drill-briefing diagram: 1 draws the vertical marker upright (OAM attr $09), anything else Y-flipped ($49)"
+      },
+      "0xd826": {
+       "name": "wBriefingSpinMarkerUnflipped",
+       "note": "[8-bit] Drill-briefing diagram: 1 draws the spin-serve marker unflipped (OAM attr $09), anything else X-flipped ($29)"
+      },
+      "0xd827": {
+       "name": "wBriefingRotMarkerDir",
+       "note": "[8-bit] Drill-briefing diagram: rotatable marker orientation (0-3); indexes BriefingMarkerRotatedTable, the four flip combinations of OAM attr $x9"
+      },
+      "0xd828": {
+       "name": "wBriefingBracketX",
+       "note": "[8-bit] Drill-briefing diagram: target-bracket top-left X; DrawBriefingTargetBrackets draws the four corners at X, X+width+3"
+      },
+      "0xd829": {
+       "name": "wBriefingBracketY",
+       "note": "[8-bit] Drill-briefing diagram: target-bracket top-left Y; corners sit at Y and Y+height-5"
+      },
+      "0xd82a": {
+       "name": "wBriefingBracketWidth",
+       "note": "[8-bit] Drill-briefing diagram: target-bracket width in pixels (corner offset is width+3)"
+      },
+      "0xd82b": {
+       "name": "wBriefingBracketHeight",
+       "note": "[8-bit] Drill-briefing diagram: target-bracket height in pixels (corner offset is height-5)"
+      },
+      "0xd82c": {
+       "name": "wBriefingAnimTimer",
+       "note": "[8-bit] Drill-briefing animation frame timer; each briefing's *_TickAnim increments it and calls *_AdvanceAnim at $78 (120 frames)"
+      },
+      "0xd82d": {
+       "name": "wBriefingHMarkerUnflipped",
+       "note": "[8-bit] Drill-briefing diagram: 1 draws the horizontal marker unflipped (OAM attr $09), anything else X-flipped ($29)"
+      },
+      "0xd82e": {
+       "name": "wBriefingAnimStep",
+       "note": "[8-bit] Drill-briefing animation step; each briefing's *_AdvanceAnim wraps it (and a & $03) and indexes its 4-byte-per-step position table with it"
+      },
+      "0xd830": {
+       "name": "wBriefingTargetPalette",
+       "note": "[8 bytes] Drill-briefing target palette scratch: CycleDiagramTargetPaletteData copied here, colour 2 ($d834) replaced with the cycling colour, then uploaded by LoadPaletteShadow",
+       "size": 8
+      }
+     }
+    },
+    {
+     "context": "character-select grid (bank $38)",
+     "scopes": [
+      {
+       "bank": "0x38"
+      }
+     ],
+     "symbols": {
+      "0xd811": {
+       "name": "wCharGridPage",
+       "note": "[8-bit] Character-select grid: top row currently shown (wMenuCursorX/Y address the cell within it); MoveCharGridCursor* wrap it and rebuild the page sprite list"
+      },
+      "0xd812": {
+       "name": "wCharGridPageCount",
+       "note": "[8-bit] Character-select grid: number of pages, looked up from wCharGridEntryCount through CharGridPageCountTable"
+      },
+      "0xd813": {
+       "name": "wCharSelectMode",
+       "note": "[8-bit] Character-select mode id stored on entry by RunExhibitionCharSelectScreen / RunLinkCharSelectScreen; picks the slot-box table and the starting slot (3 and 5 start at slot 2)"
+      },
+      "0xd814": {
+       "name": "wCharSelectSlot",
+       "note": "[8-bit] Character-select: player slot being chosen (0-3); $04 means every slot is filled and the screen shows the wait banner"
+      },
+      "0xd815": {
+       "name": "wCharSelectExitCode",
+       "note": "[8-bit] Character-select result polled by the frame loop: 0 keep running, 1 finished, 2 cancelled out"
+      },
+      "0xd816": {
+       "name": "wCharSelectSlotChars",
+       "note": "[4 bytes] Character id chosen for each player slot ($ff = empty); ResolveSelectedCharIds and InitMatchCharsFromSelection read it",
+       "size": 4
+      },
+      "0xd81a": {
+       "name": "wCharGridEntryCount",
+       "note": "[8-bit] Character-select grid: roster entries present from $da24 on (CountCharGridEntries)"
+      },
+      "0xd81b": {
+       "name": "wCharGridPrevPage",
+       "note": "[8-bit] Character-select grid: page saved when a left/right wrap jumps to the roster pages"
+      },
+      "0xd81c": {
+       "name": "wCharGridBuilt",
+       "note": "[8-bit] Set to 1 by BuildCharGridFromUnlockFlags once the grid has been populated"
+      },
+      "0xd81d": {
+       "name": "wCharSelectRemoteSlot",
+       "note": "[8-bit] Link character-select: slot the remote player is choosing; Advance/RetreatRemotePlayerSlot step it"
+      },
+      "0xd81f": {
+       "name": "wCharSelectRemoteChars",
+       "note": "[2 bytes] Link character-select: character ids the remote player has locked in (slots 2 and 3)",
+       "size": 2
+      },
+      "0xd821": {
+       "name": "wLinkSelectCmdChar",
+       "note": "[8-bit] Link character-select: character id carried by the last received select command"
+      },
+      "0xd822": {
+       "name": "wLinkSelectSlotState",
+       "note": "[8-bit] Link character-select slot bookkeeping, reset when a selection is retreated"
+      },
+      "0xd823": {
+       "name": "wCharGridCreatedCount",
+       "note": "[8-bit] Character-select grid: entries present in the nine created-character rows at $da00 (counted alongside wCharGridEntryCount)"
+      },
+      "0xd824": {
+       "name": "wCpuDifficultyPrompt",
+       "note": "[8-bit] Set when the slot just filled needs the CPU-difficulty submenu; the frame loop runs RunCpuDifficultySubmenu instead of normal input while it is set"
+      },
+      "0xd825": {
+       "name": "wCpuDifficultyPanelOpen",
+       "note": "[8-bit] Set once OpenCpuDifficultyPanel has drawn the panel, so the submenu only opens it on the first pass"
+      },
+      "0xd826": {
+       "name": "wCpuDifficultyCursor",
+       "note": "[8-bit] Cursor value in the CPU-difficulty submenu; stored into wCharSelectSlotDifficulty on confirm"
+      },
+      "0xd830": {
+       "name": "wCharSelectSlotDifficulty",
+       "note": "[4 bytes] CPU difficulty chosen per player slot; ApplyCpuDifficultyToCharRecords copies it into the match character records",
+       "size": 4
+      },
+      "0xd834": {
+       "name": "wCharSelectSlotStar",
+       "note": "[4 bytes] Star-character flag per player slot; ApplyStarFlagsToCharRecords copies it to $ca0e/$ca4e/$ca8e/$cace",
+       "size": 4
+      },
+      "0xd838": {
+       "name": "wLinkSelectCmdResult",
+       "note": "[8-bit] Link character-select: result byte ProcessLinkSelectCommand leaves for commands $24-$27"
+      },
+      "0xd839": {
+       "name": "wLinkCpuDifficulty",
+       "note": "[8-bit] Link character-select: CPU difficulty for the link match, stepped by HandleLinkCpuDifficultyInput"
+      }
+     }
+    },
+    {
+     "context": "window / menu engine (bank $05, WRAM bank $05)",
+     "scopes": [
+      {
+       "bank": "0x05"
+      },
+      {
+       "wram_bank": "0x05"
+      }
+     ],
+     "symbols": {
+      "0xd820": {
+       "name": "wWindowId",
+       "note": "[8-bit] Window struct index AllocWindowStruct handed out for the window being built, $ff when none was free; CreateMenuWindowFromText passes it to SetWindowTextId / SetWindowState and returns it"
+      },
+      "0xd824": {
+       "name": "wDialogueWindowId",
+       "note": "[8-bit] Window struct index of the dialogue window currently on screen, stored by CreateDialogueWindow. RedrawActiveTextWindow, RenderActiveWindowText, CloseActiveDialogueWindow and the speaker-dialogue helpers all address the window through it"
+      },
+      "0xd825": {
+       "name": "wDialogueWindowCol",
+       "note": "[8-bit] Dialogue window top-left tilemap column (wrapped to $1f)"
+      },
+      "0xd826": {
+       "name": "wDialogueWindowRow",
+       "note": "[8-bit] Dialogue window top-left tilemap row (wrapped to $1f)"
+      },
+      "0xd827": {
+       "name": "wDialogueWindowHeight",
+       "note": "[8-bit] Dialogue window height in cells, from b at CreateDialogueWindow"
+      },
+      "0xd828": {
+       "name": "wDialogueWindowWidth",
+       "note": "[8-bit] Dialogue window width in cells, from c at CreateDialogueWindow"
+      },
+      "0xd829": {
+       "name": "wTextRedrawGuard",
+       "note": "[8-bit] Re-entrancy guard around RedrawActiveTextWindow: the delay/wait text commands only redraw while it is 0, and set it for the duration of their own redraw"
+      },
+      "0xd82f": {
+       "name": "wMenuWindowId",
+       "note": "[8-bit] Window struct index of the menu window CreateMenuWindowFromText just built (a copy of wWindowId taken as the menu is pushed)"
+      },
+      "0xd830": {
+       "name": "wMenuCursorRow",
+       "note": "[8-bit] Row the menu cursor sits on; RunMenuSelection steps it against wMenuRowCount and returns it as the chosen entry"
+      },
+      "0xd831": {
+       "name": "wMenuRowCount",
+       "note": "[8-bit] Number of selectable rows in the current menu, derived from MeasureTextDimensions ((lines - 1) / 2)"
+      },
+      "0xd832": {
+       "name": "wMenuStack",
+       "note": "[12 bytes] Six two-byte frames, one per nested menu, indexed by wMenuDepth * 2: [wMenuRowCount << 4 | saved wMenuCursorRow, window id]. Pushed by CreateMenuWindowFromText and unwound when a menu is cancelled",
+       "size": 12
+      },
+      "0xd83e": {
+       "name": "wMenuDepth",
+       "note": "[8-bit] Number of menus currently stacked; indexes wMenuStack"
+      }
+     }
+    },
+    {
+     "context": "equipment select (bank $3e, $5400-$5c00)",
+     "scopes": [
+      {
+       "bank": "0x3e",
+       "start": "0x5400",
+       "end": "0x5c00"
+      }
+     ],
+     "symbols": {
+      "0xd810": {
+       "name": "wEquipItemCount",
+       "note": "[8-bit] Number of entries BuildOwnedItemList put in wEquipItemList"
+      },
+      "0xd811": {
+       "name": "wEquipEquippedIndex",
+       "note": "[8-bit] Index within wEquipItemList of the item currently equipped (the slot BuildOwnedItemList saw marked 2)"
+      },
+      "0xd812": {
+       "name": "wEquipSelectExitTimer",
+       "note": "[8-bit] 0 while the screen is running; once a choice is made it counts up each frame and the screen fades out at $14"
+      },
+      "0xd813": {
+       "name": "wEquipItemKind",
+       "note": "[8-bit] 0 = rackets, 1 = shoes; selects the icon set, the info panel and which stat-modifier table GetItemStatModListPtr reads"
+      },
+      "0xd814": {
+       "name": "wEquipStatRowSet",
+       "note": "[8-bit] Which row-address table GetStatModRowAddr uses for the stat-modifier panel; both loaders set it to 0"
+      }
+     }
+    },
+    {
+     "context": "match results (bank $16)",
+     "scopes": [
+      {
+       "bank": "0x16"
+      }
+     ],
+     "symbols": {
+      "0xd810": {
+       "name": "wStatsPrintBuffer",
+       "note": "[8 bytes] Digit scratch PrintSinglesMatchStats / PrintDoublesMatchStats hand to PrintNumberRightAligned as bc while writing each stat into the shadow tilemap",
+       "size": 8
+      }
+     }
+    }
+   ]
+  },
+  {
+   "start": "0xd004",
+   "wram_bank": "0x06",
+   "end": "0xd02a",
+   "comment": "Character-data (level-up) screen working set, WRAM bank $06, shared by\nthe bank $1a/$1c/$1d screen code. The debug character viewer in bank\n$1a borrows the first two bytes for its own cursor, so it gets its own\nvariant scoped to its code range.",
+   "variants": [
+    {
+     "context": "debug character viewer (bank $1a, $6800-$7000)",
+     "scopes": [
+      {
+       "bank": "0x1a",
+       "start": "0x6800",
+       "end": "0x7000"
+      }
+     ],
+     "symbols": {
+      "0xd004": {
+       "name": "wCharViewerPalette",
+       "note": "[8-bit] Palette index the debug character viewer is showing, from GetCharPaletteIndex"
+      },
+      "0xd005": {
+       "name": "wCharViewerPose",
+       "note": "[8-bit] Animation/pose index the debug character viewer is showing, stepped by RunCharViewerInputLoop"
+      }
+     }
+    },
+    {
+     "context": "character-data screen (WRAM bank $06)",
+     "scopes": [
+      {
+       "wram_bank": "0x06"
+      }
+     ],
+     "symbols": {
+      "0xd004": {
+       "name": "wCharDataLevel",
+       "note": "[8-bit] Level the character-data screen is committing; WriteCharStatsToDisplayBuffer stores it back into record +$18 (wStoryModeMainCharacterLevel)"
+      },
+      "0xd005": {
+       "name": "wCharDataNewLevels",
+       "note": "[4 bytes] Spin/Power/Control/Speed levels the screen is committing; WriteCharStatsToDisplayBuffer stores them back into record +$38-$3b",
+       "size": 4
+      },
+      "0xd009": {
+       "name": "wCharDataPointsLeft",
+       "note": "[8-bit] Unspent level-up points on the character-data screen, copied in from $d003 and decremented by CharDataScreen_InputLoop after each LevelUpPlayer"
+      },
+      "0xd00a": {
+       "name": "wCharDataLevels",
+       "note": "[4 bytes] Spin/Power/Control/Speed levels as loaded from record +$38-$3b (LoadCharStats / LoadCharStatsWithLevelUpDeltas)",
+       "size": 4
+      },
+      "0xd00e": {
+       "name": "wCharDataStats",
+       "note": "[11 bytes] The eleven displayed stats, loaded from record +$20-$2a with 1 added to each (Top, Slice, Serve, Stroke, Volley, Angle, Placement, Speed, Dash, Reaction, Stop -- the order of wStoryModeMainCharacterTopStat onwards)",
+       "size": 11
+      },
+      "0xd019": {
+       "name": "wCharDataStatDeltas",
+       "note": "[11 bytes] Per-stat change the pending level-up would apply, filled by ComputeLevelUpStatDeltas (or cleared when wCharDataPage is $04); DrawStatArrowIndicators turns each into an up/down arrow beside its stat",
+       "size": 11
+      },
+      "0xd024": {
+       "name": "wCharDataPage",
+       "note": "[8-bit] Which of the four level-up choices the cursor is on, or $04 for the confirm cell; CharDataScreen_DrawPageColumns and DrawStatValueSprites both key off it"
+      },
+      "0xd025": {
+       "name": "wCharDataConfirmState",
+       "note": "[8-bit] Step of the confirm prompt (RunCharDataConfirmScreen); DrawCharDataPromptCursor draws the cursor from it"
+      },
+      "0xd026": {
+       "name": "wCharDataRevealTimer",
+       "note": "[8-bit] AnimateCharDataStatsReveal countdown between stat rows; CharDataScreen_InitState seeds it with $0a"
+      },
+      "0xd027": {
+       "name": "wCharDataRevealStep",
+       "note": "[8-bit] AnimateCharDataStatsReveal step; CharDataScreen_InitState seeds it with $03"
+      },
+      "0xd028": {
+       "name": "wCharDataLevelPreview",
+       "note": "[8-bit] 0 while the allocation page is live: DrawStatValueSprites then draws the level one higher, in palette $0f, to preview the level about to be gained. CharDataScreen_InitState sets it to $03 on re-entry and CharDataScreen_Show clears it"
+      },
+      "0xd029": {
+       "name": "wCharDataChoiceCount",
+       "note": "[8-bit] Number of entries written to wCharDataChoiceLog so far; also the write index"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "start": "0xd02a",
+   "wram_bank": "0x06",
+   "end": "0xd08e",
+   "comment": "Character-data level-up log (WRAM bank $06). ComputeTrophyExpForGroup in\nbank $1e uses one byte inside the same range for its own accumulator, so\nit keeps the variant it had; the log covers the rest.",
+   "variants": [
+    {
+     "context": "trophy EXP (bank $1e)",
+     "scopes": [
+      {
+       "bank": "0x1e"
+      }
+     ],
+     "symbols": {
+      "0xd038": {
+       "name": "wTrophyExpGroup",
+       "note": "[8-bit] Character group being totalled; indexes TrophyExpForGroupTable0-4 and selects the row GetTrophyExpValue reads"
+      }
+     }
+    },
+    {
+     "context": "character-data screen (WRAM bank $06)",
+     "scopes": [
+      {
+       "wram_bank": "0x06"
+      }
+     ],
+     "symbols": {
+      "0xd02a": {
+       "name": "wCharDataChoiceLog",
+       "note": "[100 bytes] One byte per level-up taken on this visit: the wCharDataPage the player confirmed. Cleared by WriteCharStatsToDisplayBuffer before the screen opens",
+       "size": 100
       }
      }
     }

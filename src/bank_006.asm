@@ -1238,14 +1238,14 @@ DrawScoreboardDrillResultRows:
 	ld de, $0504 ; $49d5
 	ld c, $04 ; $49d8
 	call DrawScoreboardEmptyPips ; $49da
-	ld a, [$c2fd] ; $49dd
+	ld a, [wDrillShotResultBits + 1] ; $49dd
 	ld c, a ; $49e0
 	call DrawScoreboardPackedPips ; $49e1
 DrawScoreboardDrillResultRow:
 	ld de, $0502 ; $49e4
 	ld c, $04 ; $49e7
 	call DrawScoreboardEmptyPips ; $49e9
-	ld a, [$c2fc] ; $49ec
+	ld a, [wDrillShotResultBits] ; $49ec
 	ld c, a ; $49ef
 	call DrawScoreboardPackedPips ; $49f0
 	ret ; $49f3

@@ -1670,7 +1670,7 @@ AnimateLinkErrorPalette:
 	push af ; $4b39
 	wram_bank $03 ; $4b3a
 	ld hl, LinkErrorPalette_3e ; $4b40
-	ld de, w3_d800 ; $4b43
+	ld de, wScreenScratch ; $4b43
 	ld bc, $0008 ; $4b46
 	call CopyMemoryBC ; $4b49
 	ldh a, [hVBlankCounter] ; $4b4c
@@ -1698,11 +1698,11 @@ AnimateLinkErrorPalette:
 	ld a, [hl+] ; $4b6b
 	ld d, [hl] ; $4b6c
 	ld e, a ; $4b6d
-	ld hl, w3_d802 ; $4b6e
+	ld hl, $d802 ; $4b6e
 	ld [hl], e ; $4b71
 	inc hl ; $4b72
 	ld [hl], d ; $4b73
-	ld hl, w3_d800 ; $4b74
+	ld hl, wScreenScratch ; $4b74
 	ld de, $0301 ; $4b77
 	call LoadPaletteShadow ; $4b7a
 	pop af ; $4b7d
@@ -1772,7 +1772,7 @@ RunEraseDataConfirmMenu:
 	res 2, [hl] ; $4c15
 	wram_bank $03 ; $4c17
 	ld a, b ; $4c1d
-	ld [w3_d800], a ; $4c1e
+	ld [wScreenScratch], a ; $4c1e
 	call DisableLCDSafely ; $4c21
 	call ClearFrameTasks ; $4c24
 	call LoadEraseDataConfirmScreen ; $4c27
@@ -1888,7 +1888,7 @@ LoadEraseDataConfirmScreen:
 	farcall LoadMenuSpritePalettePair ; $4d32
 	farcall PrepareGlyphBuffer ; $4d35
 	wram_bank $03 ; $4d38
-	ld a, [w3_d800] ; $4d3e
+	ld a, [wScreenScratch] ; $4d3e
 	cp a, $02 ; $4d41
 	jr nz, .compare ; $4d43
 	ld hl, $00dd ; $4d45
@@ -1997,7 +1997,7 @@ AnimateEraseConfirmPalette:
 	push af ; $4e36
 	wram_bank $03 ; $4e37
 	ld hl, EraseConfirmPalette_3e ; $4e3d
-	ld de, w3_d810 ; $4e40
+	ld de, $d810 ; $4e40
 	ld bc, $0008 ; $4e43
 	call CopyMemoryBC ; $4e46
 	ldh a, [hVBlankCounter] ; $4e49
@@ -2025,11 +2025,11 @@ AnimateEraseConfirmPalette:
 	ld a, [hl+] ; $4e68
 	ld d, [hl] ; $4e69
 	ld e, a ; $4e6a
-	ld hl, w3_d814 ; $4e6b
+	ld hl, $d814 ; $4e6b
 	ld [hl], e ; $4e6e
 	inc hl ; $4e6f
 	ld [hl], d ; $4e70
-	ld hl, w3_d810 ; $4e71
+	ld hl, $d810 ; $4e71
 	ld de, $0401 ; $4e74
 	call LoadPaletteShadow ; $4e77
 	pop af ; $4e7a
@@ -2739,7 +2739,7 @@ DrawEquipmentStatusScreen:
 	call LoadEquipmentStatusWindows ; $53cf
 	farcall PrepareGlyphBuffer ; $53d2
 	wram_bank $03 ; $53d5
-	ld hl, w3_d800 ; $53db
+	ld hl, wScreenScratch ; $53db
 	ld bc, $0003 ; $53de
 	call ClearMemory16 ; $53e1
 	call DrawEquippedRacketPanel ; $53e4
@@ -2791,12 +2791,12 @@ SetEquipmentStatusAttrRects:
 	ret ; $5457
 DrawEquippedRacketPanel:
 	ld a, $00 ; $5458
-	ld [w3_d813], a ; $545a
+	ld [wEquipItemKind], a ; $545a
 	call MarkOwnedRackets ; $545d
 	call BuildOwnedItemList ; $5460
 	ld a, $01 ; $5463
-	ld [w3_d814], a ; $5465
-	ld a, [w3_d811] ; $5468
+	ld [wEquipStatRowSet], a ; $5465
+	ld a, [wEquipEquippedIndex] ; $5468
 	ld [wMenuCursorX], a ; $546b
 	call GetEquippedItemId ; $546e
 	ld c, a ; $5471
@@ -2809,16 +2809,16 @@ DrawEquippedRacketPanel:
 	call DrawEquippedItemStatMods ; $5482
 	ret ; $5485
 DrawEquippedShoesPanel:
-	ld hl, w3_d800 ; $5486
+	ld hl, wEquipItemList ; $5486
 	ld bc, $0003 ; $5489
 	call ClearMemory16 ; $548c
 	ld a, $01 ; $548f
-	ld [w3_d813], a ; $5491
+	ld [wEquipItemKind], a ; $5491
 	call MarkOwnedShoes ; $5494
 	call BuildOwnedItemList ; $5497
 	ld a, $02 ; $549a
-	ld [w3_d814], a ; $549c
-	ld a, [w3_d811] ; $549f
+	ld [wEquipStatRowSet], a ; $549c
+	ld a, [wEquipEquippedIndex] ; $549f
 	ld [wMenuCursorX], a ; $54a2
 	call GetEquippedItemId ; $54a5
 	ld c, a ; $54a8
@@ -2844,11 +2844,11 @@ RunRacketSelectScreen:
 	call WaitFadeEnd ; $54db
 .loop:
 	call HandleEquipSelectInput ; $54de
-	ld a, [$d812] ; $54e1
+	ld a, [wEquipSelectExitTimer] ; $54e1
 	or a, a ; $54e4
 	jr z, .advanceFrame ; $54e5
 	inc a ; $54e7
-	ld [$d812], a ; $54e8
+	ld [wEquipSelectExitTimer], a ; $54e8
 	cp a, $14 ; $54eb
 	jr nc, .ge14 ; $54ed
 .advanceFrame:
@@ -2878,13 +2878,13 @@ LoadRacketSelectScreen:
 	ld b, $07 ; $551a
 	call SetMenuCursorFromIndex_3e ; $551c
 	wram_bank $03 ; $551f
-	ld hl, w3_d800 ; $5525
+	ld hl, wEquipItemList ; $5525
 	ld bc, $0002 ; $5528
 	call ClearMemory16 ; $552b
 	ld a, $00 ; $552e
-	ld [w3_d813], a ; $5530
+	ld [wEquipItemKind], a ; $5530
 	ld a, $00 ; $5533
-	ld [w3_d814], a ; $5535
+	ld [wEquipStatRowSet], a ; $5535
 	call MarkOwnedRackets ; $5538
 	call BuildOwnedItemList ; $553b
 	call DrawOwnedItemIcons ; $553e
@@ -2901,8 +2901,8 @@ LoadRacketSelectScreen:
 Palette_3e_555b:
 	INCLUDE "data/bank_03e/palettes_555b.asm" ; $555b, 8 bytes (palettes)
 DrawOwnedItemIcons:
-	ld hl, w3_d800 ; $5563
-	ld a, [w3_d810] ; $5566
+	ld hl, wEquipItemList ; $5563
+	ld a, [wEquipItemCount] ; $5566
 	ld b, a ; $5569
 	ld de, $d027 ; $556a
 .loop:
@@ -2922,7 +2922,7 @@ DrawItemIcon2x2:
 	push de ; $557c
 	push hl ; $557d
 	ld hl, $d240 ; $557e
-	ld a, [w3_d813] ; $5581
+	ld a, [wEquipItemKind] ; $5581
 	or a, a ; $5584
 	jr z, .gotBase ; $5585
 	ld hl, $d280 ; $5587
@@ -2963,19 +2963,19 @@ HandleEquipSelectInput:
 	jr nz, .playSfx ; $55ba
 	jr .moveMenuCursorGrid ; $55bc
 .step:
-	ld a, [$d812] ; $55be
+	ld a, [wEquipSelectExitTimer] ; $55be
 	or a, a ; $55c1
 	jr nz, .moveMenuCursorGrid ; $55c2
 	sound $60 ; $55c4
 	ld a, $01 ; $55c6
-	ld [$d812], a ; $55c8
-	ld a, [$d810] ; $55cb
+	ld [wEquipSelectExitTimer], a ; $55c8
+	ld a, [wEquipItemCount] ; $55cb
 	ld c, a ; $55ce
 	call GetMenuCursorIndex_3e ; $55cf
-	ld [$d811], a ; $55d2
+	ld [wEquipEquippedIndex], a ; $55d2
 	call GetEquippedItemId ; $55d5
 	ld b, a ; $55d8
-	ld a, [$d813] ; $55d9
+	ld a, [wEquipItemKind] ; $55d9
 	cp a, $00 ; $55dc
 	ld a, b ; $55de
 	jr z, .checkEquippedRacket ; $55df
@@ -2996,10 +2996,10 @@ HandleEquipSelectInput:
 .playSfx:
 	sound $62 ; $55f9
 	ld a, $44 ; $55fb
-	ld [$d812], a ; $55fd
+	ld [wEquipSelectExitTimer], a ; $55fd
 	ret ; $5600
 .moveMenuCursorGrid:
-	ld a, [$d810] ; $5601
+	ld a, [wEquipItemCount] ; $5601
 	ld b, a ; $5604
 	ld c, $01 ; $5605
 	call MoveMenuCursorGrid_3e ; $5607
@@ -3007,7 +3007,7 @@ HandleEquipSelectInput:
 	jr z, .done ; $560b
 	sound $5e ; $560d
 	call ClearEquipSelectTextRows ; $560f
-	ld a, [$d813] ; $5612
+	ld a, [wEquipItemKind] ; $5612
 	or a, a ; $5615
 	jr z, .drawRacketInfoPanel ; $5616
 	call DrawShoesInfoPanel ; $5618
@@ -3048,11 +3048,11 @@ RunShoesSelectScreen:
 	call WaitFadeEnd ; $5663
 .loop:
 	call HandleEquipSelectInput ; $5666
-	ld a, [$d812] ; $5669
+	ld a, [wEquipSelectExitTimer] ; $5669
 	or a, a ; $566c
 	jr z, .advanceFrame ; $566d
 	inc a ; $566f
-	ld [$d812], a ; $5670
+	ld [wEquipSelectExitTimer], a ; $5670
 	cp a, $14 ; $5673
 	jr nc, .ge14 ; $5675
 .advanceFrame:
@@ -3094,13 +3094,13 @@ LoadShoesSelectScreen:
 	ld b, $07 ; $56c3
 	call SetMenuCursorFromIndex_3e ; $56c5
 	wram_bank $03 ; $56c8
-	ld hl, w3_d800 ; $56ce
+	ld hl, wEquipItemList ; $56ce
 	ld bc, $0002 ; $56d1
 	call ClearMemory16 ; $56d4
 	ld a, $01 ; $56d7
-	ld [w3_d813], a ; $56d9
+	ld [wEquipItemKind], a ; $56d9
 	ld a, $00 ; $56dc
-	ld [w3_d814], a ; $56de
+	ld [wEquipStatRowSet], a ; $56de
 	call MarkOwnedShoes ; $56e1
 	call BuildOwnedItemList ; $56e4
 	call DrawOwnedItemIcons ; $56e7
@@ -3132,13 +3132,13 @@ DrawShoesInfoPanel:
 	ret ; $5724
 BuildOwnedItemList:
 	xor a, a ; $5725
-	ld [w3_d811], a ; $5726
-	ld [w3_d810], a ; $5729
-	ld hl, w3_d800 ; $572c
+	ld [wEquipEquippedIndex], a ; $5726
+	ld [wEquipItemCount], a ; $5729
+	ld hl, wEquipItemList ; $572c
 	ld bc, $0008 ; $572f
 	call ClearBytes ; $5732
-	ld hl, $d808 ; $5735
-	ld de, w3_d800 ; $5738
+	ld hl, wEquipOwnedMap ; $5735
+	ld de, wEquipItemList ; $5738
 	ld c, $00 ; $573b
 	ld b, $00 ; $573d
 .scanLoop:
@@ -3148,7 +3148,7 @@ BuildOwnedItemList:
 	cp a, $01 ; $5743
 	jr z, .append ; $5745
 	ld a, b ; $5747
-	ld [w3_d811], a ; $5748
+	ld [wEquipEquippedIndex], a ; $5748
 .append:
 	ld a, c ; $574b
 	ld [de], a ; $574c
@@ -3160,13 +3160,13 @@ BuildOwnedItemList:
 	cp a, $08 ; $5751
 	jr nz, .scanLoop ; $5753
 	ld a, b ; $5755
-	ld [w3_d810], a ; $5756
+	ld [wEquipItemCount], a ; $5756
 	ret ; $5759
 MarkOwnedRackets:
-	ld hl, $d808 ; $575a
+	ld hl, wEquipOwnedMap ; $575a
 	ld bc, $0008 ; $575d
 	call ClearBytes ; $5760
-	ld hl, $d808 ; $5763
+	ld hl, wEquipOwnedMap ; $5763
 	ld a, $01 ; $5766
 	ld [hl+], a ; $5768
 	ld c, $00 ; $5769
@@ -3195,7 +3195,7 @@ MarkOwnedRackets:
 	jr nz, .loop ; $5787
 	ld a, [wEquippedRacket] ; $5789
 	and a, $0f ; $578c
-	ld hl, $d808 ; $578e
+	ld hl, wEquipOwnedMap ; $578e
 	add a, l ; $5791
 	ld l, a ; $5792
 	jr nc, .gotPtr2 ; $5793
@@ -3211,10 +3211,10 @@ RacketItemTiles_3e:
 	; $57a2, 6 bytes (bytes:6)
 	db $61, $62, $63, $65, $64, $66 ; 0x00
 MarkOwnedShoes:
-	ld hl, $d808 ; $57a8
+	ld hl, wEquipOwnedMap ; $57a8
 	ld bc, $0008 ; $57ab
 	call ClearBytes ; $57ae
-	ld hl, $d808 ; $57b1
+	ld hl, wEquipOwnedMap ; $57b1
 	ld a, $01 ; $57b4
 	ld [hl+], a ; $57b6
 	ld c, $00 ; $57b7
@@ -3244,7 +3244,7 @@ MarkOwnedShoes:
 	ld a, [wEquippedRacket] ; $57d7
 	and a, $f0 ; $57da
 	swap a ; $57dc
-	ld hl, $d808 ; $57de
+	ld hl, wEquipOwnedMap ; $57de
 	add a, l ; $57e1
 	ld l, a ; $57e2
 	jr nc, .gotPtr2 ; $57e3
@@ -3346,7 +3346,7 @@ FlushEquipSelectTextRows:
 	push af ; $58bb
 	push bc ; $58bc
 	ld hl, EquipSelectTextRowPtrs_3e ; $58bd
-	ld a, [$d813] ; $58c0
+	ld a, [wEquipItemKind] ; $58c0
 	or a, a ; $58c3
 	jr z, .zero ; $58c4
 	ld hl, EquipSelectTextRows_3e ; $58c6
@@ -3380,10 +3380,10 @@ EquipSelectTextRows_3e:
 GetHoveredItemId:
 	push bc ; $594a
 	push hl ; $594b
-	ld a, [w3_d810] ; $594c
+	ld a, [wEquipItemCount] ; $594c
 	ld c, a ; $594f
 	call GetMenuCursorIndex_3e ; $5950
-	ld hl, w3_d800 ; $5953
+	ld hl, wEquipItemList ; $5953
 	add a, l ; $5956
 	ld l, a ; $5957
 	jr nc, .read ; $5958
@@ -3395,8 +3395,8 @@ GetHoveredItemId:
 	ret ; $595e
 GetEquippedItemId:
 	push hl ; $595f
-	ld a, [w3_d811] ; $5960
-	ld hl, w3_d800 ; $5963
+	ld a, [wEquipEquippedIndex] ; $5960
+	ld hl, wEquipItemList ; $5963
 	add a, l ; $5966
 	ld l, a ; $5967
 	jr nc, .read ; $5968
@@ -3488,7 +3488,7 @@ EquippedItemMarkerSpriteTask:
 	ldh a, [hWramBank] ; $59eb
 	push af ; $59ed
 	wram_bank $03 ; $59ee
-	ld a, [w3_d811] ; $59f4
+	ld a, [wEquipEquippedIndex] ; $59f4
 	ld hl, EquippedMarkerYPositions_3e ; $59f7
 	add a, l ; $59fa
 	ld l, a ; $59fb
@@ -3544,7 +3544,7 @@ GetItemStatModListPtr:
 	push af ; $5a44
 	push bc ; $5a45
 	ld hl, ItemStatModListPtrPtrs ; $5a46
-	ld a, [w3_d813] ; $5a49
+	ld a, [wEquipItemKind] ; $5a49
 	or a, a ; $5a4c
 	jr z, .zero ; $5a4d
 	ld hl, ItemStatModListPtrTable ; $5a4f
@@ -3675,7 +3675,7 @@ WriteStatModValueTiles:
 	ld [hl], a ; $5b3c
 	ret ; $5b3d
 GetStatModRowAddr:
-	ld a, [w3_d814] ; $5b3e
+	ld a, [wEquipStatRowSet] ; $5b3e
 	add a, a ; $5b41
 	ld hl, StatModRowAddrPtrs ; $5b42
 	add a, l ; $5b45

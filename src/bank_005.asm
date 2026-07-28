@@ -476,7 +476,7 @@ RedrawActiveTextWindow:
 	ret nz ; $42f4
 	push af ; $42f5
 	push bc ; $42f6
-	ld a, [$d824] ; $42f7
+	ld a, [wDialogueWindowId] ; $42f7
 	call RedrawWindowRowsPaddedThunk ; $42fa
 	pop bc ; $42fd
 	pop af ; $42fe
@@ -845,7 +845,7 @@ RunFixedTextMenu:
 	call StubNop_05_4626 ; $451d
 	call RunMenuSelection ; $4520
 	ld h, a ; $4523
-	ld a, [$d82f] ; $4524
+	ld a, [wMenuWindowId] ; $4524
 	call CloseWindow ; $4527
 	ld a, [$d863] ; $452a
 	call CloseWindow ; $452d
@@ -996,26 +996,26 @@ DrawTileAttrRect:
 	ld a, [de] ; $45da
 	and a, $02 ; $45db
 	jr z, .restore ; $45dd
-	ld a, [$d83e] ; $45df
+	ld a, [wMenuDepth] ; $45df
 	or a, a ; $45e2
 	jr z, .zero ; $45e3
 	dec a ; $45e5
-	ld hl, $d832 ; $45e6
+	ld hl, wMenuStack ; $45e6
 	sla a ; $45e9
 	ld c, a ; $45eb
 	ld b, $00 ; $45ec
 	add hl, bc ; $45ee
 	ld a, [hl] ; $45ef
 	and a, $0f ; $45f0
-	ld [$d830], a ; $45f2
+	ld [wMenuCursorRow], a ; $45f2
 .zero:
-	ld a, [$d83e] ; $45f5
+	ld a, [wMenuDepth] ; $45f5
 	dec a ; $45f8
-	ld [$d83e], a ; $45f9
+	ld [wMenuDepth], a ; $45f9
 	cp a, $ff ; $45fc
 	jr z, .restore ; $45fe
-	ld a, [$d83e] ; $4600
-	ld hl, $d832 ; $4603
+	ld a, [wMenuDepth] ; $4600
+	ld hl, wMenuStack ; $4603
 	sla a ; $4606
 	ld c, a ; $4608
 	ld b, $00 ; $4609
@@ -1026,11 +1026,11 @@ DrawTileAttrRect:
 	sra a ; $4611
 	sra a ; $4613
 	and a, $0f ; $4615
-	ld [$d831], a ; $4617
+	ld [wMenuRowCount], a ; $4617
 	inc hl ; $461a
 	ld a, [hl] ; $461b
 	and a, $0f ; $461c
-	ld [$d82f], a ; $461e
+	ld [wMenuWindowId], a ; $461e
 .restore:
 	pop af ; $4621
 	pop de ; $4622
@@ -1108,12 +1108,12 @@ CreateWindow:
 CreateDialogueWindow:
 	push hl ; $4688
 	ld a, b ; $4689
-	ld [$d827], a ; $468a
+	ld [wDialogueWindowHeight], a ; $468a
 	ld a, c ; $468d
-	ld [$d828], a ; $468e
+	ld [wDialogueWindowWidth], a ; $468e
 	push de ; $4691
 	call CreateWindowFromScreenRect ; $4692
-	ld [$d824], a ; $4695
+	ld [wDialogueWindowId], a ; $4695
 	pop de ; $4698
 	push af ; $4699
 	ld h, d ; $469a
@@ -1122,11 +1122,11 @@ CreateDialogueWindow:
 	ld a, h ; $469f
 	add a, d ; $46a0
 	and a, $1f ; $46a1
-	ld [$d825], a ; $46a3
+	ld [wDialogueWindowCol], a ; $46a3
 	ld a, l ; $46a6
 	add a, e ; $46a7
 	and a, $1f ; $46a8
-	ld [$d826], a ; $46aa
+	ld [wDialogueWindowRow], a ; $46aa
 	pop af ; $46ad
 	pop hl ; $46ae
 	ret ; $46af
@@ -1153,7 +1153,7 @@ CreateMenuWindowFromText:
 	ld a, c ; $46d0
 	dec a ; $46d1
 	sra a ; $46d2
-	ld [$d831], a ; $46d4
+	ld [wMenuRowCount], a ; $46d4
 	ld a, b ; $46d7
 	srl b ; $46d8
 	srl b ; $46da
@@ -1166,50 +1166,50 @@ CreateMenuWindowFromText:
 	inc b ; $46e4
 	inc b ; $46e5
 	call AllocWindowStruct ; $46e6
-	ld a, [$d820] ; $46e9
+	ld a, [wWindowId] ; $46e9
 	cp a, $ff ; $46ec
 	jp z, .done ; $46ee
-	ld a, [$d820] ; $46f1
+	ld a, [wWindowId] ; $46f1
 	ld b, a ; $46f4
 	call SetWindowTextId ; $46f5
-	ld a, [$d820] ; $46f8
+	ld a, [wWindowId] ; $46f8
 	ld b, $02 ; $46fb
 	call SetWindowState ; $46fd
-	ld a, [w5_d83e] ; $4700
+	ld a, [wMenuDepth] ; $4700
 	cp a, $ff ; $4703
 	jr z, .noCursorEntry ; $4705
-	ld hl, $d832 ; $4707
+	ld hl, wMenuStack ; $4707
 	sla a ; $470a
 	ld c, a ; $470c
 	ld b, $00 ; $470d
 	add hl, bc ; $470f
-	ld a, [w5_d830] ; $4710
+	ld a, [wMenuCursorRow] ; $4710
 	ld b, a ; $4713
 	ld a, [hl] ; $4714
 	and a, $f0 ; $4715
 	or a, b ; $4717
 	ld [hl], a ; $4718
 .noCursorEntry:
-	ld a, [w5_d83e] ; $4719
+	ld a, [wMenuDepth] ; $4719
 	inc a ; $471c
-	ld [w5_d83e], a ; $471d
-	ld hl, $d832 ; $4720
+	ld [wMenuDepth], a ; $471d
+	ld hl, wMenuStack ; $4720
 	sla a ; $4723
 	ld c, a ; $4725
 	ld b, $00 ; $4726
 	add hl, bc ; $4728
-	ld a, [$d831] ; $4729
+	ld a, [wMenuRowCount] ; $4729
 	sla a ; $472c
 	sla a ; $472e
 	sla a ; $4730
 	sla a ; $4732
 	ld [hl+], a ; $4734
-	ld a, [$d820] ; $4735
-	ld [w5_d82f], a ; $4738
+	ld a, [wWindowId] ; $4735
+	ld [wMenuWindowId], a ; $4738
 	ld [hl], a ; $473b
 	xor a, a ; $473c
-	ld [w5_d830], a ; $473d
-	ld a, [$d820] ; $4740
+	ld [wMenuCursorRow], a ; $473d
+	ld a, [wWindowId] ; $4740
 .done:
 	pop hl ; $4743
 	pop de ; $4744
@@ -1219,7 +1219,7 @@ CreateMenuWindowPaged:
 	call CreateMenuWindowFromText ; $4747
 	push af ; $474a
 	push bc ; $474b
-	ld a, [$d820] ; $474c
+	ld a, [wWindowId] ; $474c
 	ld b, $03 ; $474f
 	call SetWindowState ; $4751
 	pop bc ; $4754
@@ -1273,7 +1273,7 @@ RunMenuSelection:
 	ld hl, $d842 ; $4794
 	ld [hl+], a ; $4797
 	ld [hl], a ; $4798
-	ld a, [w5_d82f] ; $4799
+	ld a, [wMenuWindowId] ; $4799
 	call GetWindowStructPtr ; $479c
 	ld d, [hl] ; $479f
 	inc hl ; $47a0
@@ -1284,7 +1284,7 @@ RunMenuSelection:
 	push bc ; $47a5
 	push de ; $47a6
 	push hl ; $47a7
-	ld a, [w5_d830] ; $47a8
+	ld a, [wMenuCursorRow] ; $47a8
 	sla a ; $47ab
 	add a, e ; $47ad
 	ld e, a ; $47ae
@@ -1302,7 +1302,7 @@ RunMenuSelection:
 	pop de ; $47c3
 	pop bc ; $47c4
 	pop af ; $47c5
-	ld a, [w5_d830] ; $47c6
+	ld a, [wMenuCursorRow] ; $47c6
 	ld b, a ; $47c9
 .inputLoop:
 	call AdvanceFrame ; $47ca
@@ -1315,7 +1315,7 @@ RunMenuSelection:
 	dec b ; $47d9
 	bit 7, b ; $47da
 	jr z, .moveCursor ; $47dc
-	ld a, [$d831] ; $47de
+	ld a, [wMenuRowCount] ; $47de
 	dec a ; $47e1
 	ld b, a ; $47e2
 	jr .moveCursor ; $47e3
@@ -1323,7 +1323,7 @@ RunMenuSelection:
 	ldh a, [hInputPressed] ; $47e5
 	and a, PADF_DOWN ; $47e7
 	jp z, .checkStart ; $47e9
-	ld a, [$d831] ; $47ec
+	ld a, [wMenuRowCount] ; $47ec
 	ld c, a ; $47ef
 	inc b ; $47f0
 	ld a, b ; $47f1
@@ -1379,11 +1379,11 @@ RunMenuSelection:
 	pop hl ; $4838
 	pop de ; $4839
 	ld a, b ; $483a
-	ld [w5_d830], a ; $483b
+	ld [wMenuCursorRow], a ; $483b
 	jr .checkStart ; $483e
 .confirm:
 	ld a, b ; $4840
-	ld [w5_d830], a ; $4841
+	ld [wMenuCursorRow], a ; $4841
 	sound $5f ; $4844
 	push af ; $4846
 	push bc ; $4847
@@ -1392,12 +1392,12 @@ RunMenuSelection:
 	ld hl, AnimateTextArrowTask ; $484a
 	call UnregisterFrameTask ; $484d
 	call AdvanceFrame ; $4850
-	ld a, [w5_d830] ; $4853
+	ld a, [wMenuCursorRow] ; $4853
 	sla a ; $4856
 	inc a ; $4858
 	ld e, a ; $4859
 	ld d, $01 ; $485a
-	ld a, [w5_d82f] ; $485c
+	ld a, [wMenuWindowId] ; $485c
 	ld c, $0d ; $485f
 	ld b, $80 ; $4861
 	call WriteWindowCellTileAttr ; $4863
@@ -1440,7 +1440,7 @@ RunMenuSelection:
 	jp z, .inputLoop ; $48aa
 	ld a, $fd ; $48ad
 .cancel:
-	ld [w5_d830], a ; $48af
+	ld [wMenuCursorRow], a ; $48af
 	push af ; $48b2
 	push bc ; $48b3
 	push de ; $48b4
@@ -1448,11 +1448,11 @@ RunMenuSelection:
 	ld hl, AnimateTextArrowTask ; $48b6
 	call UnregisterFrameTask ; $48b9
 	call AdvanceFrame ; $48bc
-	ld a, [w5_d83e] ; $48bf
+	ld a, [wMenuDepth] ; $48bf
 	or a, a ; $48c2
 	jr z, .restored ; $48c3
 	dec a ; $48c5
-	ld hl, $d832 ; $48c6
+	ld hl, wMenuStack ; $48c6
 	sla a ; $48c9
 	ld c, a ; $48cb
 	ld b, $00 ; $48cc
@@ -1572,10 +1572,10 @@ RunPagedTextMenu:
 	call RenderMenuWindowText ; $4980
 	call RunMenuSelection ; $4983
 	push af ; $4986
-	ld a, [w5_d82f] ; $4987
+	ld a, [wMenuWindowId] ; $4987
 	call CloseWindow ; $498a
 	ld a, $ff ; $498d
-	ld [w5_d82f], a ; $498f
+	ld [wMenuWindowId], a ; $498f
 	pop af ; $4992
 	cp a, $7f ; $4993
 	jr nc, .checkCancel ; $4995
@@ -1612,7 +1612,7 @@ RunPagedTextMenu:
 	ld [w5_d846], a ; $49c6
 	jp .pageLoop ; $49c9
 .done:
-	ld [w5_d830], a ; $49cc
+	ld [wMenuCursorRow], a ; $49cc
 	add sp, 3 ; $49cf
 	ld b, a ; $49d1
 	pop af ; $49d2
@@ -1630,7 +1630,7 @@ StubNop_05_49dc:
 	ldh a, [hWramBank] ; $49e0
 	push af ; $49e2
 	wram_bank $05 ; $49e3
-	ld a, [w5_d830] ; $49e9
+	ld a, [wMenuCursorRow] ; $49e9
 	pop af ; $49ec
 	wram_bank ; $49ed
 	pop hl ; $49f1
@@ -1683,10 +1683,10 @@ RunPagedTextMenuAutoSize:
 	call StubNop_05_4626 ; $4a44
 	call RunMenuSelection ; $4a47
 	push af ; $4a4a
-	ld a, [w5_d82f] ; $4a4b
+	ld a, [wMenuWindowId] ; $4a4b
 	call CloseWindow ; $4a4e
 	ld a, $ff ; $4a51
-	ld [w5_d82f], a ; $4a53
+	ld [wMenuWindowId], a ; $4a53
 	pop af ; $4a56
 	cp a, $7f ; $4a57
 	jr nc, .compare ; $4a59
@@ -1723,7 +1723,7 @@ RunPagedTextMenuAutoSize:
 	ld [w5_d846], a ; $4a8a
 	jp .loop ; $4a8d
 .store3:
-	ld [w5_d830], a ; $4a90
+	ld [wMenuCursorRow], a ; $4a90
 	add sp, 3 ; $4a93
 	push af ; $4a95
 	ld hl, StubNop_05_49dc ; $4a96
@@ -1751,7 +1751,7 @@ RunMenuSelectionShared:
 	ld hl, $d842 ; $4abd
 	ld [hl+], a ; $4ac0
 	ld [hl], a ; $4ac1
-	ld a, [w5_d82f] ; $4ac2
+	ld a, [wMenuWindowId] ; $4ac2
 	call GetWindowStructPtr ; $4ac5
 	ld d, [hl] ; $4ac8
 	inc hl ; $4ac9
@@ -1763,10 +1763,10 @@ RunMenuSelectionShared:
 	push de ; $4acf
 	push hl ; $4ad0
 	ld a, [wMenuInitialRow] ; $4ad1
-	ld [w5_d830], a ; $4ad4
+	ld [wMenuCursorRow], a ; $4ad4
 	xor a, a ; $4ad7
 	ld [wMenuInitialRow], a ; $4ad8
-	ld a, [w5_d830] ; $4adb
+	ld a, [wMenuCursorRow] ; $4adb
 	sla a ; $4ade
 	add a, e ; $4ae0
 	ld e, a ; $4ae1
@@ -1784,7 +1784,7 @@ RunMenuSelectionShared:
 	pop de ; $4af6
 	pop bc ; $4af7
 	pop af ; $4af8
-	ld a, [w5_d830] ; $4af9
+	ld a, [wMenuCursorRow] ; $4af9
 	ld b, a ; $4afc
 .loop:
 	call AdvanceFrame ; $4afd
@@ -1796,7 +1796,7 @@ RunMenuSelectionShared:
 	dec b ; $4b0b
 	bit 7, b ; $4b0c
 	jr z, .playSfx ; $4b0e
-	ld a, [$d831] ; $4b10
+	ld a, [wMenuRowCount] ; $4b10
 	dec a ; $4b13
 	ld b, a ; $4b14
 	jr .playSfx ; $4b15
@@ -1804,7 +1804,7 @@ RunMenuSelectionShared:
 	ldh a, [hInputPressed] ; $4b17
 	and a, PADF_DOWN ; $4b19
 	jp z, LoadOverworldSpriteDef.checkInputRisingEdge ; $4b1b
-	ld a, [$d831] ; $4b1e
+	ld a, [wMenuRowCount] ; $4b1e
 	ld c, a ; $4b21
 	inc b ; $4b22
 	ld a, b ; $4b23
@@ -1861,7 +1861,7 @@ LoadOverworldSpriteDef:
 	pop hl ; $4b6a
 	pop de ; $4b6b
 	ld a, b ; $4b6c
-	ld [w5_d830], a ; $4b6d
+	ld [wMenuCursorRow], a ; $4b6d
 	jr .checkInputRisingEdge ; $4b70
 .isCursorOnAdjustRow:
 	call IsCursorOnAdjustRow ; $4b72
@@ -1869,7 +1869,7 @@ LoadOverworldSpriteDef:
 	jr nz, RunMenuSelectionShared.loop ; $4b76
 	sound $5f ; $4b78
 	ld a, b ; $4b7a
-	ld [w5_d830], a ; $4b7b
+	ld [wMenuCursorRow], a ; $4b7b
 	push af ; $4b7e
 	push bc ; $4b7f
 	push de ; $4b80
@@ -1877,12 +1877,12 @@ LoadOverworldSpriteDef:
 	ld hl, AnimateMenuScrollArrowsTask ; $4b82
 	call UnregisterFrameTask ; $4b85
 	call AdvanceFrame ; $4b88
-	ld a, [w5_d830] ; $4b8b
+	ld a, [wMenuCursorRow] ; $4b8b
 	sla a ; $4b8e
 	inc a ; $4b90
 	ld e, a ; $4b91
 	ld d, $01 ; $4b92
-	ld a, [w5_d82f] ; $4b94
+	ld a, [wMenuWindowId] ; $4b94
 	ld c, $0d ; $4b97
 	ld b, $80 ; $4b99
 	call WriteWindowCellTileAttr ; $4b9b
@@ -1960,14 +1960,14 @@ LoadOverworldSpriteDef:
 	jp z, RunMenuSelectionShared.loop ; $4c26
 	ld a, $fd ; $4c29
 .store:
-	ld [w5_d830], a ; $4c2b
+	ld [wMenuCursorRow], a ; $4c2b
 	jr .unregisterFrameTask ; $4c2e
 .restore2:
 	pop hl ; $4c30
 	pop de ; $4c31
 	pop bc ; $4c32
 	pop af ; $4c33
-	ld a, [w5_d830] ; $4c34
+	ld a, [wMenuCursorRow] ; $4c34
 .unregisterFrameTask:
 	push af ; $4c37
 	push bc ; $4c38
@@ -1976,11 +1976,11 @@ LoadOverworldSpriteDef:
 	ld hl, AnimateMenuScrollArrowsTask ; $4c3b
 	call UnregisterFrameTask ; $4c3e
 	call AdvanceFrame ; $4c41
-	ld a, [w5_d83e] ; $4c44
+	ld a, [wMenuDepth] ; $4c44
 	or a, a ; $4c47
 	jr z, .restore3 ; $4c48
 	dec a ; $4c4a
-	ld hl, $d832 ; $4c4b
+	ld hl, wMenuStack ; $4c4b
 	sla a ; $4c4e
 	ld c, a ; $4c50
 	ld b, $00 ; $4c51
@@ -2017,7 +2017,7 @@ IsCursorOnAdjustRow:
 	jr z, .restore ; $4c7c
 	and a, $7f ; $4c7e
 	ld b, a ; $4c80
-	ld a, [w5_d830] ; $4c81
+	ld a, [wMenuCursorRow] ; $4c81
 	inc a ; $4c84
 .loop:
 	rrc b ; $4c85
@@ -2043,7 +2043,7 @@ AnimateMenuScrollArrowsTask:
 	jr z, .checkFlag ; $4ca8
 	and a, $7f ; $4caa
 	ld b, a ; $4cac
-	ld a, [w5_d830] ; $4cad
+	ld a, [wMenuCursorRow] ; $4cad
 	inc a ; $4cb0
 .loop:
 	rrc b ; $4cb1
@@ -2151,7 +2151,7 @@ AnimateMenuScrollArrowsTask:
 	ld l, $20 ; $4d75
 	ld de, $0b03 ; $4d77
 	farcall QueueWindowTileWrite ; $4d7a
-	ld a, [w5_d830] ; $4d7d
+	ld a, [wMenuCursorRow] ; $4d7d
 	and a, a ; $4d80
 	jr nz, .getMenuCursorBlinkPhase ; $4d81
 	call GetMenuCursorBlinkPhase ; $4d83
@@ -2184,7 +2184,7 @@ AnimateMenuScrollArrowsTask:
 	ld l, $20 ; $4dc5
 	ld de, $0d07 ; $4dc7
 	farcall QueueWindowTileWrite ; $4dca
-	ld a, [w5_d830] ; $4dcd
+	ld a, [wMenuCursorRow] ; $4dcd
 	cp a, $03 ; $4dd0
 	jr z, .getMenuCursorBlinkPhase2 ; $4dd2
 	call GetMenuCursorBlinkPhase ; $4dd4
@@ -2398,14 +2398,14 @@ TextCmdNextGlyphStreamRow:
 	ret ; $4f31
 TextCmdDelay30:
 	push af ; $4f32
-	ld a, [$d829] ; $4f33
+	ld a, [wTextRedrawGuard] ; $4f33
 	or a, a ; $4f36
 	jr nz, .nonZero ; $4f37
 	ld a, $01 ; $4f39
-	ld [$d829], a ; $4f3b
+	ld [wTextRedrawGuard], a ; $4f3b
 	call RedrawActiveTextWindow ; $4f3e
 	xor a, a ; $4f41
-	ld [$d829], a ; $4f42
+	ld [wTextRedrawGuard], a ; $4f42
 .nonZero:
 	ld a, $1e ; $4f45
 .loop:
@@ -2417,14 +2417,14 @@ TextCmdDelay30:
 TextCmdDelay15Skippable:
 	push af ; $4f4f
 	push bc ; $4f50
-	ld a, [$d829] ; $4f51
+	ld a, [wTextRedrawGuard] ; $4f51
 	or a, a ; $4f54
 	jr nz, .nonZero ; $4f55
 	ld a, $01 ; $4f57
-	ld [$d829], a ; $4f59
+	ld [wTextRedrawGuard], a ; $4f59
 	call RedrawActiveTextWindow ; $4f5c
 	xor a, a ; $4f5f
-	ld [$d829], a ; $4f60
+	ld [wTextRedrawGuard], a ; $4f60
 .nonZero:
 	ld b, $0f ; $4f63
 .loop:
@@ -2488,7 +2488,7 @@ GetTextContinueArrowCell:
 	push af ; $4fc9
 	push bc ; $4fca
 	push hl ; $4fcb
-	ld a, [$d824] ; $4fcc
+	ld a, [wDialogueWindowId] ; $4fcc
 	call GetWindowStructPtr ; $4fcf
 	ld d, [hl] ; $4fd2
 	inc hl ; $4fd3
@@ -2547,14 +2547,14 @@ TextContinueArrowBlinkTask:
 WaitTextAdvanceInput:
 	push af ; $501d
 	push bc ; $501e
-	ld a, [$d829] ; $501f
+	ld a, [wTextRedrawGuard] ; $501f
 	or a, a ; $5022
 	jr nz, .redrawActiveTextWindow ; $5023
 	ld a, $01 ; $5025
-	ld [$d829], a ; $5027
+	ld [wTextRedrawGuard], a ; $5027
 	call RedrawActiveTextWindow ; $502a
 	xor a, a ; $502d
-	ld [$d829], a ; $502e
+	ld [wTextRedrawGuard], a ; $502e
 .redrawActiveTextWindow:
 	call RedrawActiveTextWindow ; $5031
 	test_flag FLAG_CUTSCENE_FAST_FORWARD ; $5034
@@ -2586,14 +2586,14 @@ WaitTextAdvanceInput:
 TextCmdDelay150Skippable:
 	push af ; $5064
 	push bc ; $5065
-	ld a, [$d829] ; $5066
+	ld a, [wTextRedrawGuard] ; $5066
 	or a, a ; $5069
 	jr nz, .nonZero ; $506a
 	ld a, $01 ; $506c
-	ld [$d829], a ; $506e
+	ld [wTextRedrawGuard], a ; $506e
 	call RedrawActiveTextWindow ; $5071
 	xor a, a ; $5074
-	ld [$d829], a ; $5075
+	ld [wTextRedrawGuard], a ; $5075
 .nonZero:
 	ld b, $96 ; $5078
 .loop:
@@ -3544,7 +3544,7 @@ SetActiveWindowTextId:
 	xor a, a ; $55e8
 	call AddTextIdOffset ; $55e9
 	push hl ; $55ec
-	ld a, [$d824] ; $55ed
+	ld a, [wDialogueWindowId] ; $55ed
 	ld b, a ; $55f0
 	call SetWindowTextId ; $55f1
 	pop hl ; $55f4
@@ -3613,7 +3613,7 @@ RenderWindowText:
 RenderActiveWindowText:
 	push af ; $5648
 	push bc ; $5649
-	ld a, [$d824] ; $564a
+	ld a, [wDialogueWindowId] ; $564a
 	ld b, a ; $564d
 	call RenderWindowText ; $564e
 	pop bc ; $5651
@@ -3735,7 +3735,7 @@ FitWindowToText:
 	sla e ; $56ff
 	inc e ; $5701
 	push de ; $5702
-	ld a, [$d824] ; $5703
+	ld a, [wDialogueWindowId] ; $5703
 	cp a, $ff ; $5706
 	jr nz, .placeWindow ; $5708
 	xor a, a ; $570a
@@ -3752,22 +3752,22 @@ FitWindowToText:
 	ld h, b ; $5719
 	ld l, c ; $571a
 	pop bc ; $571b
-	ld a, [$d827] ; $571c
+	ld a, [wDialogueWindowHeight] ; $571c
 	sub a, b ; $571f
 	srl a ; $5720
 	ld d, a ; $5722
-	ld a, [$d825] ; $5723
+	ld a, [wDialogueWindowCol] ; $5723
 WaitActorsIdleTimeout:
 	add a, d ; $5726
 	ld d, a ; $5727
-	ld a, [$d828] ; $5728
+	ld a, [wDialogueWindowWidth] ; $5728
 	sub a, c ; $572b
 	srl a ; $572c
 	ld e, a ; $572e
-	ld a, [$d826] ; $572f
+	ld a, [wDialogueWindowRow] ; $572f
 	add a, e ; $5732
 	ld e, a ; $5733
-	ld a, [$d824] ; $5734
+	ld a, [wDialogueWindowId] ; $5734
 	call GetWindowStructPtr ; $5737
 	call SetWindowRect ; $573a
 	ld [$d867], a ; $573d
@@ -3850,7 +3850,7 @@ DelayTextCharacter:
 	ldh a, [hWramBank] ; $57a0
 	push af ; $57a2
 	wram_bank $05 ; $57a3
-	ld a, [$d829] ; $57a9
+	ld a, [wTextRedrawGuard] ; $57a9
 	or a, a ; $57ac
 	ld b, a ; $57ad
 	jr z, .restore ; $57ae
@@ -3898,23 +3898,23 @@ ApplyMessageSpeed:
 	bit 7, a ; $57f4
 	jr z, .speed1 ; $57f6
 	xor a, a ; $57f8
-	ld [$d829], a ; $57f9
+	ld [wTextRedrawGuard], a ; $57f9
 	jr .store ; $57fc
 .speed1:
 	or a, a ; $57fe
 	jr nz, .speed2 ; $57ff
 	ld a, $00 ; $5801
-	ld [$d829], a ; $5803
+	ld [wTextRedrawGuard], a ; $5803
 	jr .store ; $5806
 .speed2:
 	cp a, $01 ; $5808
 	jr nz, .speed3 ; $580a
 	ld a, $02 ; $580c
-	ld [$d829], a ; $580e
+	ld [wTextRedrawGuard], a ; $580e
 	jr .store ; $5811
 .speed3:
 	ld a, $04 ; $5813
-	ld [$d829], a ; $5815
+	ld [wTextRedrawGuard], a ; $5815
 .store:
 	pop af ; $5818
 	wram_bank ; $5819
@@ -3951,7 +3951,7 @@ ShowSpeakerDialogue:
 .negative:
 	ld a, b ; $5859
 	ld [w5_d862], a ; $585a
-	ld a, [$d824] ; $585d
+	ld a, [wDialogueWindowId] ; $585d
 	cp a, $ff ; $5860
 	jr nz, .loop ; $5862
 	xor a, a ; $5864
@@ -3979,7 +3979,7 @@ ShowSpeakerDialogue:
 	pop af ; $589e
 	wram_bank ; $589f
 	call SetActiveWindowTextId ; $58a3
-	ld a, [$d824] ; $58a6
+	ld a, [wDialogueWindowId] ; $58a6
 	set_flag FLAG_TEXT_RENDER_ACTIVE ; $58a9
 	call DrawTextWindowFrame ; $58ac
 	clear_flag FLAG_TEXT_RENDER_ACTIVE ; $58af
@@ -3988,15 +3988,15 @@ ShowSpeakerDialogue:
 	ld a, [wTextPageBreakRequest] ; $58b8
 	or a, a ; $58bb
 	jr z, .zero ; $58bc
-	ld a, [$d824] ; $58be
+	ld a, [wDialogueWindowId] ; $58be
 	call RestoreTilemapUnderWindow ; $58c1
 	call FitWindowToText ; $58c4
 	jr .loop ; $58c7
 .zero:
-	ld a, [$d824] ; $58c9
+	ld a, [wDialogueWindowId] ; $58c9
 	call CloseWindow ; $58cc
 	ld a, $ff ; $58cf
-	ld [$d824], a ; $58d1
+	ld [wDialogueWindowId], a ; $58d1
 	xor a, a ; $58d4
 	ld [wTextArgStringWriteIndex], a ; $58d5
 	ld [$d866], a ; $58d8
@@ -4041,7 +4041,7 @@ ShowSpeakerDialogueRestoreBG:
 .negative:
 	ld a, b ; $592a
 	ld [w5_d862], a ; $592b
-	ld a, [$d824] ; $592e
+	ld a, [wDialogueWindowId] ; $592e
 	cp a, $ff ; $5931
 	jr nz, .loop ; $5933
 	xor a, a ; $5935
@@ -4069,7 +4069,7 @@ ShowSpeakerDialogueRestoreBG:
 	wram_bank ; $596d
 	call SetActiveWindowTextId ; $5971
 	call RestoreShadowTilemap ; $5974
-	ld a, [$d824] ; $5977
+	ld a, [wDialogueWindowId] ; $5977
 	set_flag FLAG_TEXT_RENDER_ACTIVE ; $597a
 	call DrawTextWindowFrame ; $597d
 	clear_flag FLAG_TEXT_RENDER_ACTIVE ; $5980
@@ -4120,7 +4120,7 @@ ShowDialogueAtPosition:
 	ld a, b ; $59de
 	ld [w5_d862], a ; $59df
 	call ApplyMessageSpeed ; $59e2
-	ld a, [$d824] ; $59e5
+	ld a, [wDialogueWindowId] ; $59e5
 	cp a, $ff ; $59e8
 	jr nz, .loop ; $59ea
 	call OpenDialogueWindowCentered ; $59ec
@@ -4137,7 +4137,7 @@ ShowDialogueAtPosition:
 	pop af ; $5a08
 	wram_bank ; $5a09
 	call SetActiveWindowTextId ; $5a0d
-	ld a, [$d824] ; $5a10
+	ld a, [wDialogueWindowId] ; $5a10
 	set_flag FLAG_TEXT_RENDER_ACTIVE ; $5a13
 	call DrawTextWindowFrame ; $5a16
 	clear_flag FLAG_TEXT_RENDER_ACTIVE ; $5a19
@@ -4146,10 +4146,10 @@ ShowDialogueAtPosition:
 	ld a, [wTextPageBreakRequest] ; $5a22
 	or a, a ; $5a25
 	jr nz, .loop ; $5a26
-	ld a, [$d824] ; $5a28
+	ld a, [wDialogueWindowId] ; $5a28
 	call CloseWindow ; $5a2b
 	ld a, $ff ; $5a2e
-	ld [$d824], a ; $5a30
+	ld [wDialogueWindowId], a ; $5a30
 	xor a, a ; $5a33
 	ld [wTextArgStringWriteIndex], a ; $5a34
 	ld [$d866], a ; $5a37
@@ -4184,7 +4184,7 @@ DrawDialogueAtPosition:
 	call GetSpeakerVoice ; $5a6b
 .store:
 	ld [w5_d862], a ; $5a6e
-	ld a, [$d824] ; $5a71
+	ld a, [wDialogueWindowId] ; $5a71
 	cp a, $ff ; $5a74
 	jr nz, .loop ; $5a76
 	call OpenDialogueWindowCentered ; $5a78
@@ -4206,10 +4206,10 @@ CloseActiveDialogueWindow:
 	ldh a, [hWramBank] ; $5a94
 	push af ; $5a96
 	wram_bank $05 ; $5a97
-	ld a, [$d824] ; $5a9d
+	ld a, [wDialogueWindowId] ; $5a9d
 	call CloseWindow ; $5aa0
 	ld a, $ff ; $5aa3
-	ld [$d824], a ; $5aa5
+	ld [wDialogueWindowId], a ; $5aa5
 	pop af ; $5aa8
 	wram_bank ; $5aa9
 	pop af ; $5aad
@@ -4270,14 +4270,14 @@ OpenSpeechBubble:
 	xor a, a ; $5b0d
 	ld [$d866], a ; $5b0e
 	ld [$d868], a ; $5b11
-	ld a, [$d824] ; $5b14
+	ld a, [wDialogueWindowId] ; $5b14
 	call GetWindowStructPtr ; $5b17
 	wram_bank $05 ; $5b1a
-	ld a, [$d825] ; $5b20
+	ld a, [wDialogueWindowCol] ; $5b20
 	add a, $08 ; $5b23
 	and a, $1f ; $5b25
 	ld d, a ; $5b27
-	ld a, [$d826] ; $5b28
+	ld a, [wDialogueWindowRow] ; $5b28
 	add a, $02 ; $5b2b
 	and a, $1f ; $5b2d
 	ld e, a ; $5b2f
@@ -4295,18 +4295,18 @@ OpenSpeechBubble:
 	dec hl ; $5b3f
 	call RestoreShadowTilemap ; $5b40
 	push af ; $5b43
-	ld a, [$d820] ; $5b44
+	ld a, [wWindowId] ; $5b44
 	call SaveWindowStruct ; $5b47
 	pop af ; $5b4a
 .loop:
 	push af ; $5b4b
-	ld a, [$d820] ; $5b4c
+	ld a, [wWindowId] ; $5b4c
 	call GetWindowStructPtr ; $5b4f
 	call SetWindowRect ; $5b52
-	ld a, [$d820] ; $5b55
+	ld a, [wWindowId] ; $5b55
 	call DrawTextWindowFrame ; $5b58
 	ld hl, $dc78 ; $5b5b
-	ld a, [$d820] ; $5b5e
+	ld a, [wWindowId] ; $5b5e
 	call RedrawWindowRowsPadded ; $5b61
 	ld a, d ; $5b64
 	cp a, [hl] ; $5b65
@@ -4351,7 +4351,7 @@ OpenSpeechBubble:
 	pop af ; $5b91
 	dec a ; $5b92
 	jr nz, .loop ; $5b93
-	ld a, [$d824] ; $5b95
+	ld a, [wDialogueWindowId] ; $5b95
 	call RestoreWindowStruct ; $5b98
 	pop hl ; $5b9b
 	pop de ; $5b9c
@@ -4373,7 +4373,7 @@ OpenDialogueWindowCentered:
 	call FetchDialogueText ; $5bb1
 	call FitWindowToText ; $5bb4
 	pop de ; $5bb7
-	ld a, [$d824] ; $5bb8
+	ld a, [wDialogueWindowId] ; $5bb8
 	call GetWindowStructPtr ; $5bbb
 	inc hl ; $5bbe
 	inc hl ; $5bbf
@@ -4415,7 +4415,7 @@ OpenDialogueWindowCentered:
 	inc hl ; $5bee
 	ld c, [hl] ; $5bef
 	pop hl ; $5bf0
-	ld a, [$d820] ; $5bf1
+	ld a, [wWindowId] ; $5bf1
 	call DrawTextWindowFrame ; $5bf4
 	pop hl ; $5bf7
 	pop de ; $5bf8
@@ -4774,9 +4774,9 @@ RenderProportionalTextAt:
 	ld hl, wTextBuffer ; $5e09
 	xor a, a ; $5e0c
 	ld [$cb78], a ; $5e0d
-	ld a, [$d820] ; $5e10
+	ld a, [wWindowId] ; $5e10
 	ld b, a ; $5e13
-	ld a, [w5_d82f] ; $5e14
+	ld a, [wMenuWindowId] ; $5e14
 	cp a, b ; $5e17
 	jr z, .markerChecked ; $5e18
 	ld a, $01 ; $5e1a
@@ -5350,7 +5350,7 @@ CreateWindowWithTextId:
 	ld b, a ; $6192
 	call SetWindowTextId ; $6193
 .negative:
-	ld a, [$d820] ; $6196
+	ld a, [wWindowId] ; $6196
 	ld b, a ; $6199
 	pop af ; $619a
 	wram_bank ; $619b
@@ -5366,7 +5366,7 @@ RedrawWindowText:
 	ldh a, [hWramBank] ; $61a7
 	push af ; $61a9
 	wram_bank $05 ; $61aa
-	ld a, [$d824] ; $61b0
+	ld a, [wDialogueWindowId] ; $61b0
 	cp a, b ; $61b3
 	jr nz, .getWindowStructPtr ; $61b4
 	ld [$d821], a ; $61b6
@@ -5381,7 +5381,7 @@ RedrawWindowText:
 	call UploadGlyphTilesPartial ; $61cc
 	pop af ; $61cf
 	wram_bank ; $61d0
-	ld a, [$d824] ; $61d4
+	ld a, [wDialogueWindowId] ; $61d4
 	push af ; $61d7
 	call GetWindowStructPtr ; $61d8
 	ld bc, $0006 ; $61db
@@ -5393,7 +5393,7 @@ RedrawWindowText:
 	pop af ; $61e5
 	call DrawTextWindowFrame ; $61e6
 	call RenderActiveWindowText ; $61e9
-	ld a, [$d824] ; $61ec
+	ld a, [wDialogueWindowId] ; $61ec
 	call RestoreTilemapUnderWindow ; $61ef
 	ld a, [wTextPageBreakRequest] ; $61f2
 	or a, a ; $61f5
@@ -5473,12 +5473,12 @@ RenderWindowTextToCompletion:
 	ldh a, [hWramBank] ; $626e
 	push af ; $6270
 	wram_bank $05 ; $6271
-	ld a, [$d824] ; $6277
+	ld a, [wDialogueWindowId] ; $6277
 	cp a, b ; $627a
 	jr nz, .getWindowStructPtr ; $627b
 	ld [$d821], a ; $627d
 .loop:
-	ld a, [$d824] ; $6280
+	ld a, [wDialogueWindowId] ; $6280
 	call DrawTextWindowFrame ; $6283
 	call RenderActiveWindowText ; $6286
 	ld a, [wTextPageBreakRequest] ; $6289
@@ -5560,22 +5560,22 @@ ShowDialogueCentered:
 	ld [w5_d868], a ; $6303
 	call AddTextIdOffset ; $6306
 	call ApplyMessageSpeed ; $6309
-	ld a, [$d824] ; $630c
+	ld a, [wDialogueWindowId] ; $630c
 	cp a, $ff ; $630f
 	jr nz, .loop ; $6311
 	call OpenCenteredDialogueWindow ; $6313
 .loop:
 	call SetActiveWindowTextId ; $6316
-	ld a, [$d824] ; $6319
+	ld a, [wDialogueWindowId] ; $6319
 	call RedrawWindowText ; $631c
 	call RedrawWindowRowsThunk ; $631f
 	ld a, [wTextPageBreakRequest] ; $6322
 	or a, a ; $6325
 	jr nz, .loop ; $6326
-	ld a, [$d824] ; $6328
+	ld a, [wDialogueWindowId] ; $6328
 	call CloseWindowAlt ; $632b
 	ld a, $ff ; $632e
-	ld [$d824], a ; $6330
+	ld [wDialogueWindowId], a ; $6330
 	xor a, a ; $6333
 	ld [wTextArgStringWriteIndex], a ; $6334
 	ld [w5_d866], a ; $6337
@@ -5603,7 +5603,7 @@ OpenCenteredDialogueWindow:
 	pop hl ; $635f
 	call FetchDialogueText ; $6360
 	pop de ; $6363
-	ld a, [$d824] ; $6364
+	ld a, [wDialogueWindowId] ; $6364
 	call GetWindowStructPtr ; $6367
 	inc hl ; $636a
 	inc hl ; $636b
@@ -5622,7 +5622,7 @@ OpenCenteredDialogueWindow:
 	dec hl ; $637a
 	ld [hl-], a ; $637b
 	ld [hl], d ; $637c
-	ld a, [$d824] ; $637d
+	ld a, [wDialogueWindowId] ; $637d
 	call DrawTextWindowFrame ; $6380
 	pop hl ; $6383
 	pop de ; $6384
@@ -7073,9 +7073,9 @@ ResetTextWindowState:
 	ld a, $80 ; $6e31
 	ld [wWindowTileAttr], a ; $6e33
 	ld a, $ff ; $6e36
-	ld [$d824], a ; $6e38
+	ld [wDialogueWindowId], a ; $6e38
 	ld a, $fe ; $6e3b
-	ld [w5_d82f], a ; $6e3d
+	ld [wMenuWindowId], a ; $6e3d
 	pop hl ; $6e40
 	pop de ; $6e41
 	pop bc ; $6e42
@@ -7097,10 +7097,10 @@ CreateWindowFromScreenRect:
 	add a, e ; $6e5a
 	ld e, a ; $6e5b
 	call AllocWindowStruct ; $6e5c
-	ld a, [$d820] ; $6e5f
+	ld a, [wWindowId] ; $6e5f
 	cp a, $ff ; $6e62
 	jr z, .done ; $6e64
-	ld a, [$d820] ; $6e66
+	ld a, [wWindowId] ; $6e66
 .done:
 	pop hl ; $6e69
 	pop de ; $6e6a
@@ -7114,7 +7114,7 @@ AllocWindowStruct:
 	call AllocWindowId ; $6e76
 	cp a, $ff ; $6e79
 	jr z, .restore ; $6e7b
-	ld [$d820], a ; $6e7d
+	ld [wWindowId], a ; $6e7d
 	add a, a ; $6e80
 	add a, a ; $6e81
 	add a, a ; $6e82
@@ -7821,13 +7821,13 @@ RenderMenuWindowText:
 	push bc ; $7233
 	push de ; $7234
 	push hl ; $7235
-	ld a, [$d82f] ; $7236
+	ld a, [wMenuWindowId] ; $7236
 	or a, a ; $7239
 	jr nz, .draw ; $723a
 	call PrepareGlyphBuffer ; $723c
 .draw:
 	set_flag FLAG_TEXT_RENDER_ACTIVE ; $723f
-	ld a, [$d82f] ; $7242
+	ld a, [wMenuWindowId] ; $7242
 	call DrawTextWindowFrame ; $7245
 	clear_flag FLAG_TEXT_RENDER_ACTIVE ; $7248
 	farcall GetWindowStructPtr ; $724b
@@ -7878,7 +7878,7 @@ RenderTextAtWindowCell:
 	ldh a, [hWramBank] ; $7280
 	push af ; $7282
 	wram_bank $05 ; $7283
-	ld a, [w5_d82f] ; $7289
+	ld a, [wMenuWindowId] ; $7289
 	ld c, a ; $728c
 	ld a, [wShadowTilemapBank] ; $728d
 	ld a, a ; $7290
@@ -7902,7 +7902,7 @@ RenderTextAtWindowCell:
 	call UploadGlyphBuffer ; $72aa
 	pop af ; $72ad
 	wram_bank ; $72ae
-	ld a, [$d82f] ; $72b2
+	ld a, [wMenuWindowId] ; $72b2
 	call RedrawWindowRows ; $72b5
 	pop hl ; $72b8
 	pop de ; $72b9
@@ -8462,11 +8462,11 @@ UploadLastGlyphTiles:
 	push hl ; $760a
 	ld a, [$d821] ; $760b
 	ld b, a ; $760e
-	ld a, [$d820] ; $760f
+	ld a, [wWindowId] ; $760f
 	cp a, b ; $7612
 	jr nz, .restore ; $7613
 	ld b, a ; $7615
-	ld a, [$d824] ; $7616
+	ld a, [wDialogueWindowId] ; $7616
 	cp a, b ; $7619
 	jr z, .checkMessageSpeed ; $761a
 	pop hl ; $761c
@@ -8661,9 +8661,9 @@ InitGlyphStreamAt:
 	ld a, [$c3ba] ; $7738
 	ld d, a ; $773b
 	ld e, c ; $773c
-	ld a, [w5_d82f] ; $773d
+	ld a, [wMenuWindowId] ; $773d
 	ld b, a ; $7740
-	ld a, [$d820] ; $7741
+	ld a, [wWindowId] ; $7741
 	cp a, b ; $7744
 	jr nz, .step ; $7745
 	test_flag FLAG_TEMP_WIDE_GLYPH_STREAM ; $7747
@@ -8701,9 +8701,9 @@ SaveGlyphPenColumns:
 	push af ; $7774
 	push bc ; $7775
 	push hl ; $7776
-	ld a, [$d820] ; $7777
+	ld a, [wWindowId] ; $7777
 	ld b, a ; $777a
-	ld a, [$d82f] ; $777b
+	ld a, [wMenuWindowId] ; $777b
 	cp a, b ; $777e
 	jr z, .restore ; $777f
 	ld hl, $c3bb ; $7781
@@ -8739,7 +8739,7 @@ FlushGlyphRow:
 	push bc ; $77a4
 	ld a, [$d821] ; $77a5
 	ld b, a ; $77a8
-	ld a, [$d824] ; $77a9
+	ld a, [wDialogueWindowId] ; $77a9
 	cp a, b ; $77ac
 	jr nz, .uploadGlyphBufferQueued ; $77ad
 	ld a, [wMessageSpeed] ; $77af

@@ -1017,7 +1017,7 @@ LoadStadiumBgGraphics:
 	ld de, $d000 ; $4c69
 	call DecompressDataFromBank ; $4c6c
 	ld hl, $3c0a ; $4c6f -> DataPtr_StadiumTilemap
-	ld de, w3_d800 ; $4c72
+	ld de, wScreenScratch ; $4c72
 	call DecompressDataFromBank ; $4c75
 	ld hl, $3c0c ; $4c78 -> DataPtr_StadiumAttrmap
 	ld de, $d400 ; $4c7b
@@ -1056,7 +1056,7 @@ FlushWram3MapRows:
 	ld de, $b800 ; $4ccc
 	call QueueVRAMCopy ; $4ccf
 	ld c, $06 ; $4cd2
-	ld hl, w3_d060 ; $4cd4
+	ld hl, $d060 ; $4cd4
 	ld de, $9860 ; $4cd7
 	call QueueVRAMCopy ; $4cda
 	ld c, $06 ; $4cdd
@@ -1093,7 +1093,7 @@ FlushWram3MapRows:
 	ld de, $b800 ; $4d2e
 	call QueueVRAMCopy ; $4d31
 	ld c, $06 ; $4d34
-	ld hl, w3_d080 ; $4d36
+	ld hl, $d080 ; $4d36
 	ld de, $9880 ; $4d39
 	call QueueVRAMCopy ; $4d3c
 	ld c, $06 ; $4d3f
@@ -1122,7 +1122,7 @@ FlushWram3MapRows:
 	ld de, $b800 ; $4d79
 	call QueueVRAMCopy ; $4d7c
 	ld c, $06 ; $4d7f
-	ld hl, w3_d080 ; $4d81
+	ld hl, $d080 ; $4d81
 	ld de, $9880 ; $4d84
 	call QueueVRAMCopy ; $4d87
 	ld c, $06 ; $4d8a
@@ -1175,7 +1175,7 @@ RestoreMenuBgAndDrawPanel:
 	push bc ; $4df0
 	push de ; $4df1
 	push hl ; $4df2
-	ld hl, w3_d800 ; $4df3
+	ld hl, wScreenScratch ; $4df3
 	ld de, $d000 ; $4df6
 	ld b, $14 ; $4df9
 	ld c, $10 ; $4dfb

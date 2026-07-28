@@ -45,7 +45,7 @@ TennisMachineRoomExitTriggers_14:
 	map_script $04, FACEMASK_ANY, $0000, MapScriptNop_14, $11, $03
 	db $ff
 TennisMachineRoomNpc03_14:
-	ld a, [$c2b0] ; $408f
+	ld a, [wMapSceneStage] ; $408f
 	add a, a ; $4092
 	add a, LOW(TennisMachineRoomNpc03TextIds) ; $4093
 	ld l, a ; $4095
@@ -68,7 +68,7 @@ TennisMachineRoomNpc03TextIds:
 	dw Text_6e_207 ; record 5
 	dw Text_6e_214 ; record 6
 TennisMachineRoomNpc04_14:
-	ld a, [$c2b0] ; $40b4
+	ld a, [wMapSceneStage] ; $40b4
 	add a, a ; $40b7
 	add a, LOW(TennisMachineRoomNpc04TextIds) ; $40b8
 	ld l, a ; $40ba
@@ -79,7 +79,7 @@ TennisMachineRoomNpc04_14:
 	ld h, [hl] ; $40c0
 	ld l, a ; $40c1
 	farcall InitDialogueTextCursor ; $40c2
-	ld a, [$c2b0] ; $40c5
+	ld a, [wMapSceneStage] ; $40c5
 	cp a, $01 ; $40c8
 	jr z, .eq01 ; $40ca
 	jr .speak ; $40cc
@@ -284,7 +284,7 @@ MachineCourtResultScene:
 	ld a, [wPointWinLoseFlag] ; $430c
 	cp a, $01 ; $430f
 	jr z, .done ; $4311
-	ld a, [$c2b0] ; $4313
+	ld a, [wMapSceneStage] ; $4313
 	ld a, a ; $4316
 	rst Rst00 ; $4317
 	dw MachineLevel1FailedPrompt ; $4318 jumptable
@@ -295,7 +295,7 @@ MachineCourtResultScene:
 	dw MachineExpertResultScene ; $4322 jumptable
 	dw MachineExpertResultScene ; $4324 jumptable
 .done:
-	ld a, [$c2b0] ; $4326
+	ld a, [wMapSceneStage] ; $4326
 	dec a ; $4329
 	ld a, a ; $432a
 	rst Rst00 ; $432b
@@ -363,12 +363,12 @@ ComputeMachineCourtProgress:
 	jr z, .machineCourtStartLevelScene ; $4425
 	ld a, $06 ; $4427
 .machineCourtStartLevelScene:
-	ld [$c2b0], a ; $4429
+	ld [wMapSceneStage], a ; $4429
 	ret ; $442c
 TennisMachineRoomNpc05_14:
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $442d
 	jp nz, MachineCourtStartLevelScene ; $4430
-	ld a, [$c2b0] ; $4433
+	ld a, [wMapSceneStage] ; $4433
 	add a, a ; $4436
 	add a, LOW(TennisMachineRoomNpc05TextIds) ; $4437
 	ld l, a ; $4439
@@ -379,7 +379,7 @@ TennisMachineRoomNpc05_14:
 	ld h, [hl] ; $443f
 	ld l, a ; $4440
 	farcall InitDialogueTextCursor ; $4441
-	ld a, [$c2b0] ; $4444
+	ld a, [wMapSceneStage] ; $4444
 	cp a, $05 ; $4447
 	jr c, .prompt ; $4449
 	ldh a, [hWramBank] ; $444b
@@ -406,7 +406,7 @@ TennisMachineRoomNpc05_14:
 	jr nz, .accepted ; $4488
 	set_flag FLAG_TEMP_SCENE_VARIANT_A ; $448a
 	farcall AdvanceDialogueTextCursor ; $448d
-	ld a, [$c2b0] ; $4490
+	ld a, [wMapSceneStage] ; $4490
 	and a, a ; $4493
 	jr nz, .declined ; $4494
 	script_speak $05 ; $4496
@@ -426,7 +426,7 @@ TennisMachineRoomNpc05_14:
 	and a, a ; $44c6
 	jp z, MachineCourtStartLevelScene.speak ; $44c7
 .done:
-	ld a, [$c2b0] ; $44ca
+	ld a, [wMapSceneStage] ; $44ca
 	add a, a ; $44cd
 	add a, LOW(TennisMachineRoomNpc05TextIds) ; $44ce
 	ld l, a ; $44d0
@@ -460,7 +460,7 @@ MachineCourtStartLevelScene:
 	script_wait_move ACTOR_PLAYER ; $4552
 	script_face ACTOR_PLAYER, FACE_UP ; $4557
 	script_wait_frames $0a ; $455e
-	ld a, [$c2b0] ; $4565
+	ld a, [wMapSceneStage] ; $4565
 	cp a, $04 ; $4568
 	jr c, .lt04 ; $456a
 	script_set_text Text_6e_204 ; $456c
@@ -477,7 +477,7 @@ MachineCourtStartLevelScene:
 	ld a, $ff ; $458c
 	ld [wUnusedExitLocationMirror], a ; $458e
 	ld [wStoryModeExitLocationRequest], a ; $4591
-	ld a, [$c2b0] ; $4594
+	ld a, [wMapSceneStage] ; $4594
 	add a, LOW(Data_14_45f8) ; $4597
 	ld l, a ; $4599
 	adc a, HIGH(Data_14_45f8) ; $459a
@@ -949,7 +949,7 @@ Court2Npc03_14:
 	script_speak $03 ; $4b67
 	ret ; $4b6c
 Court2Npc04_14:
-	ld a, [$c2b0] ; $4b6d
+	ld a, [wMapSceneStage] ; $4b6d
 	add a, a ; $4b70
 	add a, LOW(Court2Npc04TextIds) ; $4b71
 	ld l, a ; $4b73
@@ -972,7 +972,7 @@ Court2Npc04TextIds:
 	dw Text_1f_146 ; record 5
 	dw Text_1f_151 ; record 6
 Court2Npc05_14:
-	ld a, [$c2b0] ; $4b92
+	ld a, [wMapSceneStage] ; $4b92
 	add a, a ; $4b95
 	add a, LOW(Court2Npc05TextIds) ; $4b96
 	ld l, a ; $4b98
@@ -995,7 +995,7 @@ Court2Npc05TextIds:
 	dw Text_1f_155 ; record 5
 	dw Text_1f_157 ; record 6
 Court2Npc06_14:
-	ld a, [$c2b0] ; $4bb7
+	ld a, [wMapSceneStage] ; $4bb7
 	add a, a ; $4bba
 	add a, LOW(Court2Npc06TextIds) ; $4bbb
 	ld l, a ; $4bbd
@@ -1029,7 +1029,7 @@ Court2SpectatorChat_14:
 	jp nz, Court2SpectatorsRepeatChat ; $4bef
 	set_flag FLAG_COURT2_SPECTATORS_TALKED_SINGLES ; $4bf2
 .step:
-	ld a, [$c2b0] ; $4bf5
+	ld a, [wMapSceneStage] ; $4bf5
 	add a, a ; $4bf8
 	add a, LOW(Court2SpectatorChatTextIds) ; $4bf9
 	ld l, a ; $4bfb
@@ -1121,13 +1121,13 @@ Court2Npc0A_14:
 	script_set_text Text_1f_106 ; $4dcc
 	test_flag FLAG_DOUBLES ; $4dd2
 	jr nz, .isDoubles ; $4dd5
-	ld a, [$c2b0] ; $4dd7
+	ld a, [wMapSceneStage] ; $4dd7
 	cp a, $03 ; $4dda
 	jr nz, .speak ; $4ddc
 	script_set_text Text_1f_113 ; $4dde
 	jr .speak ; $4de4
 .isDoubles:
-	ld a, [$c2b0] ; $4de6
+	ld a, [wMapSceneStage] ; $4de6
 	cp a, $06 ; $4de9
 	jr nz, .speak ; $4deb
 	script_set_text Text_1f_113 ; $4ded
@@ -1165,7 +1165,7 @@ Court2InitScript_14:
 	ret ; $4e5f
 InitCourt2SceneVariant:
 	ld a, $00 ; $4e60
-	ld [$c2b0], a ; $4e62
+	ld [wMapSceneStage], a ; $4e62
 	test_flag FLAG_DOUBLES ; $4e65
 	jr nz, .doubles ; $4e68
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_SEMIFINAL ; $4e6a
@@ -1186,7 +1186,7 @@ InitCourt2SceneVariant:
 	jr z, .stage4 ; $4e8a
 	ld a, $01 ; $4e8c
 .stage3:
-	ld [$c2b0], a ; $4e8e
+	ld [wMapSceneStage], a ; $4e8e
 .stage4:
 	ret ; $4e91
 .doubles:
@@ -1278,7 +1278,7 @@ Court1Npc04_14:
 	script_speak $04 ; $5076
 	ret ; $507b
 Court1Npc05_14:
-	ld a, [$c2b0] ; $507c
+	ld a, [wMapSceneStage] ; $507c
 	add a, a ; $507f
 	add a, LOW(Court1Npc05TextIds) ; $5080
 	ld l, a ; $5082
@@ -1301,7 +1301,7 @@ Court1Npc05TextIds:
 	dw Text_1f_141 ; record 5
 	dw Text_1f_143 ; record 6
 Court1Npc06_14:
-	ld a, [$c2b0] ; $50a1
+	ld a, [wMapSceneStage] ; $50a1
 	add a, a ; $50a4
 	add a, LOW(Court1Npc06TextIds) ; $50a5
 	ld l, a ; $50a7
@@ -1349,13 +1349,13 @@ Court1InitScript_14:
 	ret ; $5104
 InitCourt1SceneVariant:
 	ld a, $00 ; $5105
-	ld [$c2b0], a ; $5107
+	ld [wMapSceneStage], a ; $5107
 	test_flag FLAG_DOUBLES ; $510a
 	jr nz, .doubles ; $510d
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_SEMIFINAL ; $510f
 	jr z, .stage1 ; $5112
 	ld a, $03 ; $5114
-	ld [$c2b0], a ; $5116
+	ld [wMapSceneStage], a ; $5116
 	ldh a, [hRomBank] ; $5119
 	ld hl, Court1ActorsAlt_14 ; $511b
 	farcall ScriptRespawnLocationActors ; $511e
@@ -1365,20 +1365,20 @@ InitCourt1SceneVariant:
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_2 ; $5125
 	jr z, .stage2 ; $5128
 	ld a, $02 ; $512a
-	ld [$c2b0], a ; $512c
+	ld [wMapSceneStage], a ; $512c
 	ret ; $512f
 .stage2:
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_1 ; $5130
 	jr z, .stage3 ; $5133
 	ld a, $01 ; $5135
-	ld [$c2b0], a ; $5137
+	ld [wMapSceneStage], a ; $5137
 .stage3:
 	ret ; $513a
 .doubles:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_SEMIFINAL ; $513b
 	jr z, .doublesStage2 ; $513e
 	ld a, $06 ; $5140
-	ld [$c2b0], a ; $5142
+	ld [wMapSceneStage], a ; $5142
 	ldh a, [hRomBank] ; $5145
 	ld hl, Court1ActorsAlt_14 ; $5147
 	farcall ScriptRespawnLocationActors ; $514a
@@ -1388,11 +1388,11 @@ InitCourt1SceneVariant:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_ROUND_1 ; $5151
 	jr z, .done ; $5154
 	ld a, $05 ; $5156
-	ld [$c2b0], a ; $5158
+	ld [wMapSceneStage], a ; $5158
 	ret ; $515b
 .done:
 	ld a, $04 ; $515c
-	ld [$c2b0], a ; $515e
+	ld [wMapSceneStage], a ; $515e
 	ret ; $5161
 Court1ActorsAlt_14:
 	; $5162, 66 bytes (map_actors)
@@ -1503,9 +1503,9 @@ IslandSkyInitScript_14:
 	call LoadWaterSplashObjGfx_14 ; $530c
 	call EnableLCD ; $530f
 	ld a, $50 ; $5312
-	ld [$c2b0], a ; $5314
+	ld [wMapSceneStage], a ; $5314
 	ld a, $88 ; $5317
-	ld [$c2b1], a ; $5319
+	ld [wMapSceneStage2], a ; $5319
 	ld a, $01 ; $531c
 	ld hl, QueuePlaneSpriteByHeight_14 ; $531e
 	call RegisterFrameTask ; $5321
@@ -1542,9 +1542,9 @@ IslandSkyInitScript_14:
 	script_fade_in $04 ; $5387
 	call WaitFadeEnd ; $538c
 	ld a, $3b ; $538f
-	ld [$c2b0], a ; $5391
+	ld [wMapSceneStage], a ; $5391
 	ld a, $a8 ; $5394
-	ld [$c2b1], a ; $5396
+	ld [wMapSceneStage2], a ; $5396
 	jp .afterFlight ; $5399
 .fadeIn:
 	xor a, a ; $539c
@@ -1558,9 +1558,9 @@ IslandSkyInitScript_14:
 .planeLoop:
 	script_wait_frames $06 ; $53be
 	call PlayPlaneMoveSfx_14 ; $53c5
-	ld a, [$c2b1] ; $53c8
+	ld a, [wMapSceneStage2] ; $53c8
 	inc a ; $53cb
-	ld [$c2b1], a ; $53cc
+	ld [wMapSceneStage2], a ; $53cc
 	dec h ; $53cf
 	jr nz, .planeLoop ; $53d0
 	ld h, $08 ; $53d2
@@ -1570,25 +1570,25 @@ IslandSkyInitScript_14:
 	ld a, h ; $53de
 	and a, $01 ; $53df
 	jr z, .advanceStage ; $53e1
-	ld a, [$c2b0] ; $53e3
+	ld a, [wMapSceneStage] ; $53e3
 	dec a ; $53e6
-	ld [$c2b0], a ; $53e7
+	ld [wMapSceneStage], a ; $53e7
 .advanceStage:
-	ld a, [$c2b1] ; $53ea
+	ld a, [wMapSceneStage2] ; $53ea
 	inc a ; $53ed
-	ld [$c2b1], a ; $53ee
+	ld [wMapSceneStage2], a ; $53ee
 	dec h ; $53f1
 	jr nz, .planeLoop2 ; $53f2
 	ld h, $08 ; $53f4
 .checkStage:
 	script_wait_frames $04 ; $53f6
 	call PlayPlaneMoveSfx_14 ; $53fd
-	ld a, [$c2b0] ; $5400
+	ld a, [wMapSceneStage] ; $5400
 	dec a ; $5403
-	ld [$c2b0], a ; $5404
-	ld a, [$c2b1] ; $5407
+	ld [wMapSceneStage], a ; $5404
+	ld a, [wMapSceneStage2] ; $5407
 	inc a ; $540a
-	ld [$c2b1], a ; $540b
+	ld [wMapSceneStage2], a ; $540b
 	dec h ; $540e
 	jr nz, .checkStage ; $540f
 	script_player_speed $0012 ; $5411
@@ -1600,13 +1600,13 @@ IslandSkyInitScript_14:
 	ld a, h ; $542a
 	and a, $01 ; $542b
 	jr z, .landed ; $542d
-	ld a, [$c2b0] ; $542f
+	ld a, [wMapSceneStage] ; $542f
 	dec a ; $5432
-	ld [$c2b0], a ; $5433
+	ld [wMapSceneStage], a ; $5433
 .landed:
-	ld a, [$c2b1] ; $5436
+	ld a, [wMapSceneStage2] ; $5436
 	inc a ; $5439
-	ld [$c2b1], a ; $543a
+	ld [wMapSceneStage2], a ; $543a
 	dec h ; $543d
 	jr nz, .descend ; $543e
 .afterFlight:
@@ -1615,44 +1615,44 @@ IslandSkyInitScript_14:
 	script_wait_frames $03 ; $5442
 	inc h ; $5449
 	call PlayPlaneMoveSfx_14 ; $544a
-	ld a, [$c2b1] ; $544d
+	ld a, [wMapSceneStage2] ; $544d
 	inc a ; $5450
-	ld [$c2b1], a ; $5451
+	ld [wMapSceneStage2], a ; $5451
 	and a, $03 ; $5454
 	cp a, $03 ; $5456
 	jr nz, .placeDoubles ; $5458
-	ld a, [$c2b0] ; $545a
+	ld a, [wMapSceneStage] ; $545a
 	dec a ; $545d
-	ld [$c2b0], a ; $545e
+	ld [wMapSceneStage], a ; $545e
 .placeDoubles:
-	ld a, [$c2b0] ; $5461
+	ld a, [wMapSceneStage] ; $5461
 	cp a, $20 ; $5464
 	jr nz, .placeActors ; $5466
 	ld h, $08 ; $5468
 .walkOff:
 	script_wait_frames $04 ; $546a
 	call PlayPlaneMoveSfx_14 ; $5471
-	ld a, [$c2b1] ; $5474
+	ld a, [wMapSceneStage2] ; $5474
 	inc a ; $5477
-	ld [$c2b1], a ; $5478
+	ld [wMapSceneStage2], a ; $5478
 	dec h ; $547b
 	jr nz, .walkOff ; $547c
 	sound $7b ; $547e
 	ld h, $08 ; $5480
 .speak:
 	script_wait_frames $06 ; $5482
-	ld a, [$c2b1] ; $5489
+	ld a, [wMapSceneStage2] ; $5489
 	inc a ; $548c
-	ld [$c2b1], a ; $548d
+	ld [wMapSceneStage2], a ; $548d
 	dec h ; $5490
 	jr nz, .speak ; $5491
 	sound $7d ; $5493
 	ld h, $04 ; $5495
 .speakDoubles:
 	script_wait_frames $08 ; $5497
-	ld a, [$c2b1] ; $549e
+	ld a, [wMapSceneStage2] ; $549e
 	inc a ; $54a1
-	ld [$c2b1], a ; $54a2
+	ld [wMapSceneStage2], a ; $54a2
 	dec h ; $54a5
 	jr nz, .speakDoubles ; $54a6
 	ld a, [wStoryModeEntryPoint] ; $54a8
@@ -1802,7 +1802,7 @@ LoadPlaneObjGfx_14:
 QueuePlaneSpriteByHeight_14:
 	call GetSceneObjectScreenPos_14 ; $5e9c
 	ld b, $00 ; $5e9f
-	ld a, [$c2b1] ; $5ea1
+	ld a, [wMapSceneStage2] ; $5ea1
 	sub a, $88 ; $5ea4
 	cp a, $0a ; $5ea6
 	jr c, .queueSpriteTemplate ; $5ea8
@@ -2093,9 +2093,9 @@ QueuePlaneSpriteByFrameCounter_14:
 	call LoadPlaneObjGfx2_14 ; $6291
 	call EnableLCD ; $6294
 	ld a, $20 ; $6297
-	ld [$c2b0], a ; $6299
+	ld [wMapSceneStage], a ; $6299
 	ld a, $28 ; $629c
-	ld [$c2b1], a ; $629e
+	ld [wMapSceneStage2], a ; $629e
 	ld a, $00 ; $62a1
 	ld [$c2b2], a ; $62a3
 	ld a, $01 ; $62a6
@@ -2119,9 +2119,9 @@ QueuePlaneSpriteByFrameCounter_14:
 .planeLoop:
 	script_wait_frames $06 ; $62f4
 	call PlayPlaneMoveSfx_14 ; $62fb
-	ld a, [$c2b1] ; $62fe
+	ld a, [wMapSceneStage2] ; $62fe
 	dec a ; $6301
-	ld [$c2b1], a ; $6302
+	ld [wMapSceneStage2], a ; $6302
 	call AdvancePlaneFrameCounter_14 ; $6305
 	dec h ; $6308
 	jr nz, .planeLoop ; $6309
@@ -2132,13 +2132,13 @@ QueuePlaneSpriteByFrameCounter_14:
 	ld a, h ; $6317
 	and a, $01 ; $6318
 	jr z, .planeArrived ; $631a
-	ld a, [$c2b0] ; $631c
+	ld a, [wMapSceneStage] ; $631c
 	inc a ; $631f
-	ld [$c2b0], a ; $6320
+	ld [wMapSceneStage], a ; $6320
 .planeArrived:
-	ld a, [$c2b1] ; $6323
+	ld a, [wMapSceneStage2] ; $6323
 	dec a ; $6326
-	ld [$c2b1], a ; $6327
+	ld [wMapSceneStage2], a ; $6327
 	call AdvancePlaneFrameCounter_14 ; $632a
 	dec h ; $632d
 	jr nz, .planeLoop2 ; $632e
@@ -2146,12 +2146,12 @@ QueuePlaneSpriteByFrameCounter_14:
 .descend:
 	script_wait_frames $04 ; $6332
 	call PlayPlaneMoveSfx_14 ; $6339
-	ld a, [$c2b0] ; $633c
+	ld a, [wMapSceneStage] ; $633c
 	inc a ; $633f
-	ld [$c2b0], a ; $6340
-	ld a, [$c2b1] ; $6343
+	ld [wMapSceneStage], a ; $6340
+	ld a, [wMapSceneStage2] ; $6343
 	dec a ; $6346
-	ld [$c2b1], a ; $6347
+	ld [wMapSceneStage2], a ; $6347
 	call AdvancePlaneFrameCounter_14 ; $634a
 	dec h ; $634d
 	jr nz, .descend ; $634e
@@ -2164,13 +2164,13 @@ QueuePlaneSpriteByFrameCounter_14:
 	ld a, h ; $6369
 	and a, $01 ; $636a
 	jr z, .disembark ; $636c
-	ld a, [$c2b0] ; $636e
+	ld a, [wMapSceneStage] ; $636e
 	inc a ; $6371
-	ld [$c2b0], a ; $6372
+	ld [wMapSceneStage], a ; $6372
 .disembark:
-	ld a, [$c2b1] ; $6375
+	ld a, [wMapSceneStage2] ; $6375
 	dec a ; $6378
-	ld [$c2b1], a ; $6379
+	ld [wMapSceneStage2], a ; $6379
 	call AdvancePlaneFrameCounter_14 ; $637c
 	dec h ; $637f
 	jr nz, .land ; $6380
@@ -2179,27 +2179,27 @@ QueuePlaneSpriteByFrameCounter_14:
 	script_wait_frames $03 ; $6384
 	inc h ; $638b
 	call PlayPlaneMoveSfx_14 ; $638c
-	ld a, [$c2b1] ; $638f
+	ld a, [wMapSceneStage2] ; $638f
 	dec a ; $6392
-	ld [$c2b1], a ; $6393
+	ld [wMapSceneStage2], a ; $6393
 	and a, $03 ; $6396
 	cp a, $03 ; $6398
 	jr nz, .speak ; $639a
-	ld a, [$c2b0] ; $639c
+	ld a, [wMapSceneStage] ; $639c
 	inc a ; $639f
-	ld [$c2b0], a ; $63a0
+	ld [wMapSceneStage], a ; $63a0
 .speak:
 	call AdvancePlaneFrameCounter_14 ; $63a3
-	ld a, [$c2b0] ; $63a6
+	ld a, [wMapSceneStage] ; $63a6
 	cp a, $50 ; $63a9
 	jr nz, .walkOff ; $63ab
 	ld h, $08 ; $63ad
 .speakDoubles:
 	script_wait_frames $04 ; $63af
 	call PlayPlaneMoveSfx_14 ; $63b6
-	ld a, [$c2b1] ; $63b9
+	ld a, [wMapSceneStage2] ; $63b9
 	dec a ; $63bc
-	ld [$c2b1], a ; $63bd
+	ld [wMapSceneStage2], a ; $63bd
 	call AdvancePlaneFrameCounter_14 ; $63c0
 	dec h ; $63c3
 	jr nz, .speakDoubles ; $63c4
@@ -2207,9 +2207,9 @@ QueuePlaneSpriteByFrameCounter_14:
 .fadeOut:
 	script_wait_frames $06 ; $63c8
 	call PlayPlaneMoveSfx_14 ; $63cf
-	ld a, [$c2b1] ; $63d2
+	ld a, [wMapSceneStage2] ; $63d2
 	dec a ; $63d5
-	ld [$c2b1], a ; $63d6
+	ld [wMapSceneStage2], a ; $63d6
 	call AdvancePlaneFrameCounter_14 ; $63d9
 	dec h ; $63dc
 	jr nz, .fadeOut ; $63dd
@@ -2217,9 +2217,9 @@ QueuePlaneSpriteByFrameCounter_14:
 .done:
 	script_wait_frames $08 ; $63e1
 	call PlayPlaneMoveSfx_14 ; $63e8
-	ld a, [$c2b1] ; $63eb
+	ld a, [wMapSceneStage2] ; $63eb
 	dec a ; $63ee
-	ld [$c2b1], a ; $63ef
+	ld [wMapSceneStage2], a ; $63ef
 	call AdvancePlaneFrameCounter_14 ; $63f2
 	dec h ; $63f5
 	jr nz, .done ; $63f6
@@ -2574,9 +2574,9 @@ AdvanceFirework1Ascent_14:
 	call LoadIslandSkyEffectObjGfx_14 ; $6f81
 	call EnableLCD ; $6f84
 	ld a, $50 ; $6f87
-	ld [$c2b0], a ; $6f89
+	ld [wMapSceneStage], a ; $6f89
 	ld a, $88 ; $6f8c
-	ld [$c2b1], a ; $6f8e
+	ld [wMapSceneStage2], a ; $6f8e
 	ld a, $01 ; $6f91
 	ld hl, QueuePlaneSpriteByHeight_14 ; $6f93
 	call RegisterFrameTask ; $6f96
@@ -2603,35 +2603,35 @@ AdvanceFirework1Ascent_14:
 .planeLoop:
 	script_wait_frames $06 ; $6fe4
 	call PlayPlaneMoveSfx_14 ; $6feb
-	ld a, [$c2b1] ; $6fee
+	ld a, [wMapSceneStage2] ; $6fee
 	inc a ; $6ff1
-	ld [$c2b1], a ; $6ff2
+	ld [wMapSceneStage2], a ; $6ff2
 	dec h ; $6ff5
 	jr nz, .planeLoop ; $6ff6
 	ld h, $08 ; $6ff8
 .planeArrived:
 	script_wait_frames $04 ; $6ffa
 	call PlayPlaneMoveSfx_14 ; $7001
-	ld a, [$c2b1] ; $7004
+	ld a, [wMapSceneStage2] ; $7004
 	inc a ; $7007
-	ld [$c2b1], a ; $7008
+	ld [wMapSceneStage2], a ; $7008
 	and a, $01 ; $700b
 	ld b, a ; $700d
-	ld a, [$c2b0] ; $700e
+	ld a, [wMapSceneStage] ; $700e
 	add a, b ; $7011
-	ld [$c2b0], a ; $7012
+	ld [wMapSceneStage], a ; $7012
 	dec h ; $7015
 	jr nz, .planeArrived ; $7016
 	ld h, $18 ; $7018
 .descend:
 	script_wait_frames $03 ; $701a
 	call PlayPlaneMoveSfx_14 ; $7021
-	ld a, [$c2b1] ; $7024
+	ld a, [wMapSceneStage2] ; $7024
 	inc a ; $7027
-	ld [$c2b1], a ; $7028
-	ld a, [$c2b0] ; $702b
+	ld [wMapSceneStage2], a ; $7028
+	ld a, [wMapSceneStage] ; $702b
 	inc a ; $702e
-	ld [$c2b0], a ; $702f
+	ld [wMapSceneStage], a ; $702f
 	dec h ; $7032
 	jr nz, .descend ; $7033
 	script_player_speed $0012 ; $7035
@@ -2640,29 +2640,29 @@ AdvanceFirework1Ascent_14:
 .land:
 	script_wait_frames $02 ; $7047
 	call PlayPlaneMoveSfx_14 ; $704e
-	ld a, [$c2b0] ; $7051
+	ld a, [wMapSceneStage] ; $7051
 	inc a ; $7054
-	ld [$c2b0], a ; $7055
+	ld [wMapSceneStage], a ; $7055
 	and a, $01 ; $7058
 	ld b, a ; $705a
-	ld a, [$c2b1] ; $705b
+	ld a, [wMapSceneStage2] ; $705b
 	add a, b ; $705e
-	ld [$c2b1], a ; $705f
+	ld [wMapSceneStage2], a ; $705f
 	dec h ; $7062
 	jr nz, .land ; $7063
 	ld h, $20 ; $7065
 .disembark:
 	script_wait_frames $02 ; $7067
 	call PlayPlaneMoveSfx_14 ; $706e
-	ld a, [$c2b0] ; $7071
+	ld a, [wMapSceneStage] ; $7071
 	inc a ; $7074
-	ld [$c2b0], a ; $7075
+	ld [wMapSceneStage], a ; $7075
 	and a, $03 ; $7078
 	cp a, $03 ; $707a
 	jr nz, .walkOff ; $707c
-	ld a, [$c2b1] ; $707e
+	ld a, [wMapSceneStage2] ; $707e
 	inc a ; $7081
-	ld [$c2b1], a ; $7082
+	ld [wMapSceneStage2], a ; $7082
 .walkOff:
 	dec h ; $7085
 	jr nz, .disembark ; $7086
@@ -2679,7 +2679,7 @@ AdvanceFirework1Ascent_14:
 	ld a, $04 ; $70aa
 	ld [wWaterSpriteMinigameSwingCount], a ; $70ac
 	ld a, $a8 ; $70af
-	ld [$c2b1], a ; $70b1
+	ld [wMapSceneStage2], a ; $70b1
 	ld a, $01 ; $70b4
 	ld hl, QueueDistantPlaneSprite_14 ; $70b6
 	call RegisterFrameTask ; $70b9
@@ -2687,12 +2687,12 @@ AdvanceFirework1Ascent_14:
 .speak:
 	script_wait_frames $02 ; $70be
 	call PlayPlaneMoveSfx_14 ; $70c5
-	ld a, [$c2b1] ; $70c8
+	ld a, [wMapSceneStage2] ; $70c8
 	dec a ; $70cb
-	ld [$c2b1], a ; $70cc
-	ld a, [$c2b0] ; $70cf
+	ld [wMapSceneStage2], a ; $70cc
+	ld a, [wMapSceneStage] ; $70cf
 	dec a ; $70d2
-	ld [$c2b0], a ; $70d3
+	ld [wMapSceneStage], a ; $70d3
 	ld a, h ; $70d6
 	cp a, $1e ; $70d7
 	jr nz, .speakDoubles ; $70d9
@@ -2895,12 +2895,12 @@ QueueDistantPlaneSprite_14:
 GetSceneObjectScreenPos_14:
 	ldh a, [hScrollX] ; $756d
 	ld b, a ; $756f
-	ld a, [$c2b0] ; $7570
+	ld a, [wMapSceneStage] ; $7570
 	sub a, b ; $7573
 	ld d, a ; $7574
 	ldh a, [hScrollY] ; $7575
 	ld b, a ; $7577
-	ld a, [$c2b1] ; $7578
+	ld a, [wMapSceneStage2] ; $7578
 	sub a, b ; $757b
 	ld e, a ; $757c
 	ret ; $757d
@@ -2969,9 +2969,9 @@ QueueTwinkleSprite_14:
 	ld a, $08 ; $7723
 	ld [wWaterSpriteMinigameSwingCount], a ; $7725
 	ld a, $54 ; $7728
-	ld [$c2b0], a ; $772a
+	ld [wMapSceneStage], a ; $772a
 	ld a, $58 ; $772d
-	ld [$c2b1], a ; $772f
+	ld [wMapSceneStage2], a ; $772f
 	ld a, $01 ; $7732
 	ld hl, QueueDistantPlaneSprite_14 ; $7734
 	call RegisterFrameTask ; $7737
@@ -2979,12 +2979,12 @@ QueueTwinkleSprite_14:
 .fadeIn:
 	script_wait_frames $02 ; $773c
 	call PlayPlaneMoveSfx_14 ; $7743
-	ld a, [$c2b1] ; $7746
+	ld a, [wMapSceneStage2] ; $7746
 	inc a ; $7749
-	ld [$c2b1], a ; $774a
-	ld a, [$c2b0] ; $774d
+	ld [wMapSceneStage2], a ; $774a
+	ld a, [wMapSceneStage] ; $774d
 	inc a ; $7750
-	ld [$c2b0], a ; $7751
+	ld [wMapSceneStage], a ; $7751
 	ld a, h ; $7754
 	cp a, $2d ; $7755
 	jr nz, .fireworkLoop ; $7757
@@ -3005,9 +3005,9 @@ QueueTwinkleSprite_14:
 	jr nz, .burst ; $7784
 	call LoadPlaneObjGfx2_14 ; $7786
 	ld a, $a4 ; $7789
-	ld [$c2b0], a ; $778b
+	ld [wMapSceneStage], a ; $778b
 	ld a, $c6 ; $778e
-	ld [$c2b1], a ; $7790
+	ld [wMapSceneStage2], a ; $7790
 	ld a, $3c ; $7793
 	ld [$c2b2], a ; $7795
 	ld a, $01 ; $7798
@@ -3017,15 +3017,15 @@ QueueTwinkleSprite_14:
 .nextBurst:
 	script_wait_frames $02 ; $77a2
 	call PlayPlaneMoveSfx_14 ; $77a9
-	ld a, [$c2b0] ; $77ac
+	ld a, [wMapSceneStage] ; $77ac
 	dec a ; $77af
-	ld [$c2b0], a ; $77b0
+	ld [wMapSceneStage], a ; $77b0
 	and a, $03 ; $77b3
 	cp a, $03 ; $77b5
 	jr nz, .finale ; $77b7
-	ld a, [$c2b1] ; $77b9
+	ld a, [wMapSceneStage2] ; $77b9
 	dec a ; $77bc
-	ld [$c2b1], a ; $77bd
+	ld [wMapSceneStage2], a ; $77bd
 .finale:
 	call AdvancePlaneFrameCounter2_14 ; $77c0
 	dec h ; $77c3
@@ -3034,14 +3034,14 @@ QueueTwinkleSprite_14:
 .finaleLoop:
 	script_wait_frames $02 ; $77c8
 	call PlayPlaneMoveSfx_14 ; $77cf
-	ld a, [$c2b0] ; $77d2
+	ld a, [wMapSceneStage] ; $77d2
 	dec a ; $77d5
-	ld [$c2b0], a ; $77d6
+	ld [wMapSceneStage], a ; $77d6
 	and a, $01 ; $77d9
 	ld b, a ; $77db
-	ld a, [$c2b1] ; $77dc
+	ld a, [wMapSceneStage2] ; $77dc
 	sub a, b ; $77df
-	ld [$c2b1], a ; $77e0
+	ld [wMapSceneStage2], a ; $77e0
 	call AdvancePlaneFrameCounter2_14 ; $77e3
 	dec h ; $77e6
 	jr nz, .finaleLoop ; $77e7
@@ -3050,12 +3050,12 @@ QueueTwinkleSprite_14:
 .speak:
 	script_wait_frames $03 ; $77f5
 	call PlayPlaneMoveSfx_14 ; $77fc
-	ld a, [$c2b1] ; $77ff
+	ld a, [wMapSceneStage2] ; $77ff
 	dec a ; $7802
-	ld [$c2b1], a ; $7803
-	ld a, [$c2b0] ; $7806
+	ld [wMapSceneStage2], a ; $7803
+	ld a, [wMapSceneStage] ; $7806
 	dec a ; $7809
-	ld [$c2b0], a ; $780a
+	ld [wMapSceneStage], a ; $780a
 	call AdvancePlaneFrameCounter2_14 ; $780d
 	dec h ; $7810
 	jr nz, .speak ; $7811
@@ -3063,14 +3063,14 @@ QueueTwinkleSprite_14:
 .fadeOut:
 	script_wait_frames $04 ; $7815
 	call PlayPlaneMoveSfx_14 ; $781c
-	ld a, [$c2b1] ; $781f
+	ld a, [wMapSceneStage2] ; $781f
 	dec a ; $7822
-	ld [$c2b1], a ; $7823
+	ld [wMapSceneStage2], a ; $7823
 	and a, $01 ; $7826
 	ld b, a ; $7828
-	ld a, [$c2b0] ; $7829
+	ld a, [wMapSceneStage] ; $7829
 	sub a, b ; $782c
-	ld [$c2b0], a ; $782d
+	ld [wMapSceneStage], a ; $782d
 	call AdvancePlaneFrameCounter2_14 ; $7830
 	dec h ; $7833
 	jr nz, .fadeOut ; $7834
@@ -3078,9 +3078,9 @@ QueueTwinkleSprite_14:
 .done:
 	script_wait_frames $06 ; $7838
 	call PlayPlaneMoveSfx_14 ; $783f
-	ld a, [$c2b1] ; $7842
+	ld a, [wMapSceneStage2] ; $7842
 	dec a ; $7845
-	ld [$c2b1], a ; $7846
+	ld [wMapSceneStage2], a ; $7846
 	call AdvancePlaneFrameCounter2_14 ; $7849
 	dec h ; $784c
 	jr nz, .done ; $784d
@@ -3362,7 +3362,7 @@ ActorScript_14_78e7:
 	jr z, .loop ; $7abc
 	ld a, $08 ; $7abe
 .loop:
-	ld [$c2b0], a ; $7ac0
+	ld [wMapSceneStage], a ; $7ac0
 	ret ; $7ac3
 .isDoubles:
 	ld a, $01 ; $7ac4
@@ -3395,7 +3395,7 @@ ActorScript_14_78e7:
 	jr z, .loopB ; $7b00
 	inc a ; $7b02
 .loopB:
-	ld [$c2b0], a ; $7b03
+	ld [wMapSceneStage], a ; $7b03
 	ret ; $7b06
 .checkFlag:
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $7b07

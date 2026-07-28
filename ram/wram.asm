@@ -81,7 +81,14 @@ wStoryModeInteractRequest:: db
 
 ; [8-bit] Story Mode - set to 1 on a Start-press in the overworld; opens the story-mode menu (RunStoryModeMenu)
 wStoryModeMenuRequest:: db
-	ds 14
+	ds 10
+
+; [8-bit] Scene stage of the story location that is currently loaded. Each map's init script derives it from the save flags (SetupCenterCourtSceneVariant, InitCourt1SceneVariant, ComputeIslandOpenRound, SetStoryRankSceneIndex, ...) and the location's NPC scripts index their per-stage text-id tables with it, so one NPC speaks a different line as the story advances. Values are per location. $c2b0-$c2bf is the location's scratch block as a whole: the bank $14 island-sky and firework cutscenes borrow it for sprite positions and timers once a map is loaded, and the water-sprite minigame keeps its counters at $c2b4-$c2ba
+wMapSceneStage:: db
+
+; [8-bit] Second per-location scene stage, alongside wMapSceneStage; set by the map init scripts (CafeteriaInitScript_10, RestaurantInitScript_10, TrainingCourtReentryDispatch, the challenger result scenes) and read by the same location's NPC scripts to pick a text id
+wMapSceneStage2:: db
+	ds 2
 
 ; [16-bit] Water Sprite Minigame - Timer (Frames)
 wWaterSpriteMinigameTimer:: dw
@@ -108,7 +115,44 @@ wStoryModeShowLocationName:: db
 
 ; [16-bit] Story Mode - text id of the current location's name, passed in hl to ShowLocationNamePopup when wStoryModeShowLocationName is set
 wStoryModeLocationNameTextId:: dw
-	ds 72
+	ds 8
+
+; [8-bit] Frames left before a drill point gives up: UpdateDrillAbortCountdown decrements it each frame while wDrillAbortCountdownActive is set and wPointOutcome is still 0, and sets wMatchAbortFlag when it reaches 0. The point start hooks load it with $0a
+wDrillAbortCountdown:: db
+
+; [8-bit] Nonzero enables wDrillAbortCountdown; cleared at point start and set once the drill is waiting for the shot that ends the point
+wDrillAbortCountdownActive:: db
+
+; [8-bit] Cleared by ServiceMatch2Hook_PointStart and read by nothing
+wUnusedDrillPointStartByte:: db
+
+; [8-bit] Why the coach's drill ended, written by each ServicePractice*/NetGamePractice* EvaluateResult (0 = passed, 1 = no points won, 2 = double fault, 3 = target missed, 4+ = partial, offset by wStoryModeMainCharacterLeftHanded). The bank $15 training-court coaches dispatch their follow-up dialogue on it
+wDrillLessonResult:: db
+
+; [8-bit] One bit per point of the drill, set by RecordDrillTargetZoneHit when the ball bounced inside the target zone; CountDrillResultBitsSet and CheckDrillTargetZoneMissed read it back
+wDrillTargetZoneHitBits:: db
+
+; [8-bit] One bit per point of the drill, set by RecordGateCrossOnServe when the serve passed through the gate; counted by CountDrillResultBitsSetAlt
+wDrillGateCrossBits:: db
+
+; [8-bit] Queued drill message: index into DrillMessageTextIds_0b, $ff = say nothing. The Queue*/Set*Message helpers pick it from the point outcome and the serving player; ShowQueuedDrillMessage defaults it to $6c and shows it
+wDrillMessageId:: db
+
+; [9 bytes] Per-drill counter scratch. Each drill's hooks clear the subset it needs at MinigameStart/PointStart and step them with `ld hl, $c2ex / inc [hl]`; the successful-shot counts land in wPlayer1PointsWon/wPlayer2PointsWon at point end, and the EvaluateResult helpers compare them against 4 (the four shots of a drill)
+wDrillCounters:: ds 9
+	ds 8
+
+; [2 bytes] Indexed by wCurrentServingPlayer: 0 until the serve has been judged, then +1/-1 from CheckDrillTargetZoneMissed
+wDrillServeTargetResult:: dw
+	ds 2
+
+; [2 bytes] Two bits per shot of the point, one byte per side; RecordDrillPointResultBits rotates wPointWinLoseFlag into the byte DrillPointResultBitsTable selects, CountDrillShotSuccesses counts the pairs equal to 1, and bank $06's DrawScoreboardPackedPips draws them as the scoreboard pip rows
+wDrillShotResultBits:: dw
+	ds 1
+
+; [8-bit] Result of judging the current drill point, 0 until judged. Each drill's JudgeShot0-3 stores the value its JudgePoint returns, and JudgePoint returns early while this is already nonzero so the first judgement of a point wins
+wDrillPointJudgement:: db
+	ds 32
 
 ; [16-bit] BG scroll-buffer camera X (tiles<<3?)
 wCameraX:: dw
@@ -1465,22 +1509,7 @@ w1_d58e:: db
 
 SECTION "WRAMX bank 3", WRAMX[$d000], BANK[3]
 
-	ds 51
-
-w3_d033:: db
-	ds 31
-
-w3_d053:: db
-	ds 12
-
-w3_d060:: db
-	ds 18
-
-w3_d073:: db
-	ds 12
-
-w3_d080:: db
-	ds 18
+	ds 147
 
 w3_d093:: db
 	ds 58
@@ -1516,88 +1545,176 @@ w3_d310:: db
 w3_d320:: db
 	ds 1247
 
-w3_d800:: db
-
-; Match result-screen mode (WRAM bank $03), stored on entry by the bank
-; $16 result screens and read back by their portrait and palette code.
+; Screen-local scratch in WRAM bank $03, low half. Like the $d810 block above
+; each full-screen UI reuses these bytes, so the variants are scoped to the
+; owning ROM bank (and, where one bank runs several screens, to that screen's
+; code range).
+UNION
+; equipment select (bank $3e, $5400-$5c00)
+; [8 bytes] Item ids the player owns, compacted by BuildOwnedItemList from wEquipOwnedMap; the cursor indexes this list
+wEquipItemList:: ds 8
+; [8 bytes] One byte per item slot: 0 not owned, 1 owned, 2 owned and equipped. MarkOwnedRackets / MarkOwnedShoes fill it from the save data
+wEquipOwnedMap:: ds 8
+NEXTU
+; name entry (bank $38, $6e00-$7500)
+; [8 bytes] Name being typed, terminated by $00; AppendCharToName / DeleteLastNameChar edit it and RunNameEntryScreen copies it into the character record on accept ($de is the blank-cell filler)
+wNameEntryBuffer:: ds 8
+NEXTU
 ; match results (bank $16)
+; [8-bit] 1 if the player won the match just played, 0 if not; written beside wResultScreenMode by RunMatchWinLoseScreen and used by LoadWinLoseScreenAssets / LoadResultScreenTileGraphics to pick the graphics set
+wResultScreenWon:: db
 ; [8-bit] Stored from a by RunMatchWinLoseScreen and RunMatchStatsScreen; SetWinLosePortraitPaletteAttrs and LoadResultPortraitSlot branch on it
 wResultScreenMode:: db
+NEXTU
+; screen scratch (any other screen, where WRAM bank $03 is provable)
+; [8-bit] Base of the screen-local scratch block in WRAM bank $03. Screens
+; with no named variant here still use it as their working buffer -- an
+; object array (bank $18), a decompression staging area (banks $1b/$39), a
+; cursor or mode byte (banks $3b/$6b) -- so this only records where the
+; block starts. Sites whose WRAM bank compute_wram_bank cannot prove keep
+; the bare address.
+wScreenScratch:: db
+ENDU
 
-w3_d802:: db
+; Screen-local state in WRAM bank $03: each full-screen UI reuses these
+; bytes for its own purpose, so the variants are scoped to the ROM bank
+; that owns the screen rather than to the WRAM bank -- banks $16/$17/$38
+; all select WRAM bank $03 here, and most sites select it in a callee so
+; compute_wram_bank cannot prove it at the reference.
+UNION
+; drill briefings (bank $17)
+; [8-bit] Drill-briefing diagram: player sprite X, queued by DrawBriefingPlayerSprite (d = X, e = Y in QueueSprite)
+wBriefingPlayerX:: db
+; [8-bit] Drill-briefing diagram: player sprite Y
+wBriefingPlayerY:: db
+; [8-bit] Drill-briefing diagram: opponent sprite X, queued by DrawBriefingOpponentSprite
+wBriefingOpponentX:: db
+; [8-bit] Drill-briefing diagram: opponent sprite Y
+wBriefingOpponentY:: db
+; [8-bit] Drill-briefing diagram: swing-animation sprite X, queued by DrawBriefingSwingAnim
+wBriefingSwingX:: db
+; [8-bit] Drill-briefing diagram: swing-animation sprite Y
+wBriefingSwingY:: db
+; [8-bit] Drill-briefing diagram: spin-serve marker X, queued by DrawSpinServeBriefingMarker
+wBriefingSpinMarkerX:: db
+; [8-bit] Drill-briefing diagram: spin-serve marker Y
+wBriefingSpinMarkerY:: db
+; [8-bit] Drill-briefing diagram: rotatable marker X, queued by DrawBriefingMarkerRotated
+wBriefingRotMarkerX:: db
+; [8-bit] Drill-briefing diagram: rotatable marker Y
+wBriefingRotMarkerY:: db
+; [8-bit] Drill-briefing diagram: first pole sprite X, queued by DrawBriefingPoleSprites
+wBriefingPole1X:: db
+; [8-bit] Drill-briefing diagram: first pole sprite Y
+wBriefingPole1Y:: db
+; [8-bit] Drill-briefing diagram: horizontal marker X, queued by DrawBriefingMarkerHFlip (jiggles by 1px on hVBlankCounter bit 4)
+wBriefingHMarkerX:: db
+; [8-bit] Drill-briefing diagram: horizontal marker Y
+wBriefingHMarkerY:: db
+; [8-bit] Drill-briefing diagram: ball sprite X, queued by DrawBriefingBallSprite
+wBriefingBallX:: db
+; [8-bit] Drill-briefing diagram: ball sprite Y
+wBriefingBallY:: db
+; [8-bit] Drill-briefing diagram: second pole sprite X (same drawer as wBriefingPole1X)
+wBriefingPole2X:: db
+; [8-bit] Drill-briefing diagram: second pole sprite Y
+wBriefingPole2Y:: db
+; [8-bit] Drill-briefing diagram: swing-animation frame (0-9); indexes BriefingSwingAnimTable0 for the base tile, and < 6 selects the 5-sprite racket template
+wBriefingSwingFrame:: db
+; [8-bit] Drill-briefing diagram: vertical marker X, queued by DrawBriefingMarkerVFlip
+wBriefingVMarkerX:: db
+; [8-bit] Drill-briefing diagram: vertical marker Y
+wBriefingVMarkerY:: db
+; [8-bit] Drill-briefing diagram: 1 draws the vertical marker upright (OAM attr $09), anything else Y-flipped ($49)
+wBriefingVMarkerUpright:: db
+; [8-bit] Drill-briefing diagram: 1 draws the spin-serve marker unflipped (OAM attr $09), anything else X-flipped ($29)
+wBriefingSpinMarkerUnflipped:: db
+; [8-bit] Drill-briefing diagram: rotatable marker orientation (0-3); indexes BriefingMarkerRotatedTable, the four flip combinations of OAM attr $x9
+wBriefingRotMarkerDir:: db
+; [8-bit] Drill-briefing diagram: target-bracket top-left X; DrawBriefingTargetBrackets draws the four corners at X, X+width+3
+wBriefingBracketX:: db
+; [8-bit] Drill-briefing diagram: target-bracket top-left Y; corners sit at Y and Y+height-5
+wBriefingBracketY:: db
+; [8-bit] Drill-briefing diagram: target-bracket width in pixels (corner offset is width+3)
+wBriefingBracketWidth:: db
+; [8-bit] Drill-briefing diagram: target-bracket height in pixels (corner offset is height-5)
+wBriefingBracketHeight:: db
+; [8-bit] Drill-briefing animation frame timer; each briefing's *_TickAnim increments it and calls *_AdvanceAnim at $78 (120 frames)
+wBriefingAnimTimer:: db
+; [8-bit] Drill-briefing diagram: 1 draws the horizontal marker unflipped (OAM attr $09), anything else X-flipped ($29)
+wBriefingHMarkerUnflipped:: db
+; [8-bit] Drill-briefing animation step; each briefing's *_AdvanceAnim wraps it (and a & $03) and indexes its 4-byte-per-step position table with it
+wBriefingAnimStep:: db
+	ds 1
+; [8 bytes] Drill-briefing target palette scratch: CycleDiagramTargetPaletteData copied here, colour 2 ($d834) replaced with the cycling colour, then uploaded by LoadPaletteShadow
+wBriefingTargetPalette:: ds 8
+	ds 7
+NEXTU
+; character-select grid (bank $38)
+	ds 1
+; [8-bit] Character-select grid: top row currently shown (wMenuCursorX/Y address the cell within it); MoveCharGridCursor* wrap it and rebuild the page sprite list
+wCharGridPage:: db
+; [8-bit] Character-select grid: number of pages, looked up from wCharGridEntryCount through CharGridPageCountTable
+wCharGridPageCount:: db
+; [8-bit] Character-select mode id stored on entry by RunExhibitionCharSelectScreen / RunLinkCharSelectScreen; picks the slot-box table and the starting slot (3 and 5 start at slot 2)
+wCharSelectMode:: db
+; [8-bit] Character-select: player slot being chosen (0-3); $04 means every slot is filled and the screen shows the wait banner
+wCharSelectSlot:: db
+; [8-bit] Character-select result polled by the frame loop: 0 keep running, 1 finished, 2 cancelled out
+wCharSelectExitCode:: db
+; [4 bytes] Character id chosen for each player slot ($ff = empty); ResolveSelectedCharIds and InitMatchCharsFromSelection read it
+wCharSelectSlotChars:: ds 4
+; [8-bit] Character-select grid: roster entries present from $da24 on (CountCharGridEntries)
+wCharGridEntryCount:: db
+; [8-bit] Character-select grid: page saved when a left/right wrap jumps to the roster pages
+wCharGridPrevPage:: db
+; [8-bit] Set to 1 by BuildCharGridFromUnlockFlags once the grid has been populated
+wCharGridBuilt:: db
+; [8-bit] Link character-select: slot the remote player is choosing; Advance/RetreatRemotePlayerSlot step it
+wCharSelectRemoteSlot:: db
+	ds 1
+; [2 bytes] Link character-select: character ids the remote player has locked in (slots 2 and 3)
+wCharSelectRemoteChars:: dw
+; [8-bit] Link character-select: character id carried by the last received select command
+wLinkSelectCmdChar:: db
+; [8-bit] Link character-select slot bookkeeping, reset when a selection is retreated
+wLinkSelectSlotState:: db
+; [8-bit] Character-select grid: entries present in the nine created-character rows at $da00 (counted alongside wCharGridEntryCount)
+wCharGridCreatedCount:: db
+; [8-bit] Set when the slot just filled needs the CPU-difficulty submenu; the frame loop runs RunCpuDifficultySubmenu instead of normal input while it is set
+wCpuDifficultyPrompt:: db
+; [8-bit] Set once OpenCpuDifficultyPanel has drawn the panel, so the submenu only opens it on the first pass
+wCpuDifficultyPanelOpen:: db
+; [8-bit] Cursor value in the CPU-difficulty submenu; stored into wCharSelectSlotDifficulty on confirm
+wCpuDifficultyCursor:: db
 	ds 9
+; [4 bytes] CPU difficulty chosen per player slot; ApplyCpuDifficultyToCharRecords copies it into the match character records
+wCharSelectSlotDifficulty:: ds 4
+; [4 bytes] Star-character flag per player slot; ApplyStarFlagsToCharRecords copies it to $ca0e/$ca4e/$ca8e/$cace
+wCharSelectSlotStar:: ds 4
+; [8-bit] Link character-select: result byte ProcessLinkSelectCommand leaves for commands $24-$27
+wLinkSelectCmdResult:: db
+; [8-bit] Link character-select: CPU difficulty for the link match, stepped by HandleLinkCpuDifficultyInput
+wLinkCpuDifficulty:: db
+NEXTU
+; equipment select (bank $3e, $5400-$5c00)
+; [8-bit] Number of entries BuildOwnedItemList put in wEquipItemList
+wEquipItemCount:: db
+; [8-bit] Index within wEquipItemList of the item currently equipped (the slot BuildOwnedItemList saw marked 2)
+wEquipEquippedIndex:: db
+; [8-bit] 0 while the screen is running; once a choice is made it counts up each frame and the screen fades out at $14
+wEquipSelectExitTimer:: db
+; [8-bit] 0 = rackets, 1 = shoes; selects the icon set, the info panel and which stat-modifier table GetItemStatModListPtr reads
+wEquipItemKind:: db
+; [8-bit] Which row-address table GetStatModRowAddr uses for the stat-modifier panel; both loaders set it to 0
+wEquipStatRowSet:: db
+NEXTU
+; match results (bank $16)
+; [8 bytes] Digit scratch PrintSinglesMatchStats / PrintDoublesMatchStats hand to PrintNumberRightAligned as bc while writing each stat into the shadow tilemap
+wStatsPrintBuffer:: ds 8
+ENDU
 
-w3_d80c:: db
-
-w3_d80d:: db
-
-w3_d80e:: db
-
-w3_d80f:: db
-
-w3_d810:: db
-
-w3_d811:: db
-
-w3_d812:: db
-
-w3_d813:: db
-
-w3_d814:: db
-
-w3_d815:: db
-
-w3_d816:: db
-
-w3_d817:: db
-
-w3_d818:: db
-
-w3_d819:: db
-
-w3_d81a:: db
-
-w3_d81b:: db
-
-w3_d81c:: db
-
-w3_d81d:: db
-
-w3_d81e:: db
-
-w3_d81f:: db
-	ds 3
-
-w3_d823:: db
-	ds 3
-
-w3_d827:: db
-
-w3_d828:: db
-	ds 1
-
-w3_d82a:: db
-
-w3_d82b:: db
-	ds 1
-
-w3_d82d:: db
-	ds 4
-
-w3_d832:: db
-
-w3_d833:: db
-
-w3_d834:: db
-
-w3_d835:: db
-
-w3_d836:: db
-
-w3_d837:: db
-
-w3_d838:: db
-	ds 28
+	ds 22
 
 w3_d855:: db
 	ds 2
@@ -1656,16 +1773,7 @@ w3_dc4f:: db
 
 SECTION "WRAMX bank 4", WRAMX[$d000], BANK[4]
 
-	ds 50
-
-w4_d032:: db
-	ds 4
-
-w4_d037:: db
-	ds 63
-
-w4_d077:: db
-	ds 63
+	ds 183
 
 w4_d0b7:: db
 	ds 63
@@ -1748,14 +1856,42 @@ wBallTrailSlots:: ds 20
 
 SECTION "WRAMX bank 5", WRAMX[$d000], BANK[5]
 
-	ds 2095
+	ds 2064
 
-w5_d82f:: db
+; Screen-local state in WRAM bank $03: each full-screen UI reuses these
+; bytes for its own purpose, so the variants are scoped to the ROM bank
+; that owns the screen rather than to the WRAM bank -- banks $16/$17/$38
+; all select WRAM bank $03 here, and most sites select it in a callee so
+; compute_wram_bank cannot prove it at the reference.
+; window / menu engine (bank $05, WRAM bank $05)
+	ds 16
+; [8-bit] Window struct index AllocWindowStruct handed out for the window being built, $ff when none was free; CreateMenuWindowFromText passes it to SetWindowTextId / SetWindowState and returns it
+wWindowId:: db
+	ds 3
+; [8-bit] Window struct index of the dialogue window currently on screen, stored by CreateDialogueWindow. RedrawActiveTextWindow, RenderActiveWindowText, CloseActiveDialogueWindow and the speaker-dialogue helpers all address the window through it
+wDialogueWindowId:: db
+; [8-bit] Dialogue window top-left tilemap column (wrapped to $1f)
+wDialogueWindowCol:: db
+; [8-bit] Dialogue window top-left tilemap row (wrapped to $1f)
+wDialogueWindowRow:: db
+; [8-bit] Dialogue window height in cells, from b at CreateDialogueWindow
+wDialogueWindowHeight:: db
+; [8-bit] Dialogue window width in cells, from c at CreateDialogueWindow
+wDialogueWindowWidth:: db
+; [8-bit] Re-entrancy guard around RedrawActiveTextWindow: the delay/wait text commands only redraw while it is 0, and set it for the duration of their own redraw
+wTextRedrawGuard:: db
+	ds 5
+; [8-bit] Window struct index of the menu window CreateMenuWindowFromText just built (a copy of wWindowId taken as the menu is pushed)
+wMenuWindowId:: db
+; [8-bit] Row the menu cursor sits on; RunMenuSelection steps it against wMenuRowCount and returns it as the chosen entry
+wMenuCursorRow:: db
+; [8-bit] Number of selectable rows in the current menu, derived from MeasureTextDimensions ((lines - 1) / 2)
+wMenuRowCount:: db
+; [12 bytes] Six two-byte frames, one per nested menu, indexed by wMenuDepth * 2: [wMenuRowCount << 4 | saved wMenuCursorRow, window id]. Pushed by CreateMenuWindowFromText and unwound when a menu is cancelled
+wMenuStack:: ds 12
+; [8-bit] Number of menus currently stacked; indexes wMenuStack
+wMenuDepth:: db
 
-w5_d830:: db
-	ds 13
-
-w5_d83e:: db
 	ds 2
 
 ; WRAM5: frame counter for the text continue-arrow blink task (bit 4 selects tile)
@@ -1842,90 +1978,59 @@ SECTION "WRAMX bank 6", WRAMX[$d000], BANK[6]
 
 	ds 4
 
-w6_d004:: db
+; Character-data (level-up) screen working set, WRAM bank $06, shared by
+; the bank $1a/$1c/$1d screen code. The debug character viewer in bank
+; $1a borrows the first two bytes for its own cursor, so it gets its own
+; variant scoped to its code range.
+UNION
+; debug character viewer (bank $1a, $6800-$7000)
+; [8-bit] Palette index the debug character viewer is showing, from GetCharPaletteIndex
+wCharViewerPalette:: db
+; [8-bit] Animation/pose index the debug character viewer is showing, stepped by RunCharViewerInputLoop
+wCharViewerPose:: db
+	ds 36
+NEXTU
+; character-data screen (WRAM bank $06)
+; [8-bit] Level the character-data screen is committing; WriteCharStatsToDisplayBuffer stores it back into record +$18 (wStoryModeMainCharacterLevel)
+wCharDataLevel:: db
+; [4 bytes] Spin/Power/Control/Speed levels the screen is committing; WriteCharStatsToDisplayBuffer stores them back into record +$38-$3b
+wCharDataNewLevels:: ds 4
+; [8-bit] Unspent level-up points on the character-data screen, copied in from $d003 and decremented by CharDataScreen_InputLoop after each LevelUpPlayer
+wCharDataPointsLeft:: db
+; [4 bytes] Spin/Power/Control/Speed levels as loaded from record +$38-$3b (LoadCharStats / LoadCharStatsWithLevelUpDeltas)
+wCharDataLevels:: ds 4
+; [11 bytes] The eleven displayed stats, loaded from record +$20-$2a with 1 added to each (Top, Slice, Serve, Stroke, Volley, Angle, Placement, Speed, Dash, Reaction, Stop -- the order of wStoryModeMainCharacterTopStat onwards)
+wCharDataStats:: ds 11
+; [11 bytes] Per-stat change the pending level-up would apply, filled by ComputeLevelUpStatDeltas (or cleared when wCharDataPage is $04); DrawStatArrowIndicators turns each into an up/down arrow beside its stat
+wCharDataStatDeltas:: ds 11
+; [8-bit] Which of the four level-up choices the cursor is on, or $04 for the confirm cell; CharDataScreen_DrawPageColumns and DrawStatValueSprites both key off it
+wCharDataPage:: db
+; [8-bit] Step of the confirm prompt (RunCharDataConfirmScreen); DrawCharDataPromptCursor draws the cursor from it
+wCharDataConfirmState:: db
+; [8-bit] AnimateCharDataStatsReveal countdown between stat rows; CharDataScreen_InitState seeds it with $0a
+wCharDataRevealTimer:: db
+; [8-bit] AnimateCharDataStatsReveal step; CharDataScreen_InitState seeds it with $03
+wCharDataRevealStep:: db
+; [8-bit] 0 while the allocation page is live: DrawStatValueSprites then draws the level one higher, in palette $0f, to preview the level about to be gained. CharDataScreen_InitState sets it to $03 on re-entry and CharDataScreen_Show clears it
+wCharDataLevelPreview:: db
+; [8-bit] Number of entries written to wCharDataChoiceLog so far; also the write index
+wCharDataChoiceCount:: db
+ENDU
 
-w6_d005:: db
-
-w6_d006:: db
-
-w6_d007:: db
-
-w6_d008:: db
-
-w6_d009:: db
-
-w6_d00a:: db
-
-w6_d00b:: db
-
-w6_d00c:: db
-
-w6_d00d:: db
-
-w6_d00e:: db
-
-w6_d00f:: db
-
-w6_d010:: db
-
-w6_d011:: db
-
-w6_d012:: db
-	ds 2
-
-w6_d015:: db
-
-w6_d016:: db
-
-w6_d017:: db
-
-w6_d018:: db
-
-w6_d019:: db
-
-w6_d01a:: db
-
-w6_d01b:: db
-
-w6_d01c:: db
-
-w6_d01d:: db
-
-w6_d01e:: db
-
-w6_d01f:: db
-	ds 1
-
-w6_d021:: db
-
-w6_d022:: db
-
-w6_d023:: db
-
-w6_d024:: db
-
-w6_d025:: db
-
-w6_d026:: db
-
-w6_d027:: db
-
-w6_d028:: db
-
-w6_d029:: db
-	ds 14
-
-; Trophy EXP accumulator state (WRAM bank $06), used only by
-; ComputeTrophyExpForGroup in bank $1e; scoped so the same offset in other
-; WRAM banks keeps its numeric address.
+; Character-data level-up log (WRAM bank $06). ComputeTrophyExpForGroup in
+; bank $1e uses one byte inside the same range for its own accumulator, so
+; it keeps the variant it had; the log covers the rest.
+UNION
 ; trophy EXP (bank $1e)
+	ds 14
 ; [8-bit] Character group being totalled; indexes TrophyExpForGroupTable0-4 and selects the row GetTrophyExpValue reads
 wTrophyExpGroup:: db
-
-	ds 8
-
-w6_d041:: db
-	ds 76
+	ds 85
+NEXTU
+; character-data screen (WRAM bank $06)
+; [100 bytes] One byte per level-up taken on this visit: the wCharDataPage the player confirmed. Cleared by WriteCharStatsToDisplayBuffer before the screen opens
+wCharDataChoiceLog:: ds 100
+ENDU
 
 w6_d08e:: db
 

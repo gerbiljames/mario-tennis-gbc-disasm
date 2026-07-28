@@ -133,7 +133,7 @@ RunSinglesMatchListMenu:
 	farcall RunPagedTextMenu ; $419d
 	cp a, $ff ; $41a0
 	jp z, RunDoublesMatchListMenu.done ; $41a2
-	ld [$c2b0], a ; $41a5
+	ld [wMapSceneStage], a ; $41a5
 	ld hl, wStoryModePlayersXPosition ; $41a8
 	ld de, wStoryModeSpawnPosition ; $41ab
 	ld bc, $0005 ; $41ae
@@ -143,7 +143,7 @@ RunSinglesMatchListMenu:
 	ld [wUnusedExitLocationMirror], a ; $41b9
 	ld [wStoryModeExitLocationRequest], a ; $41bc
 	farcall InitStoryMatchSettings ; $41bf
-	ld a, [$c2b0] ; $41c2
+	ld a, [wMapSceneStage] ; $41c2
 	add a, a ; $41c5
 	add a, LOW(Data_10_4220) ; $41c6
 	ld l, a ; $41c8
@@ -164,7 +164,7 @@ RunDoublesMatchListMenu:
 	farcall RunPagedTextMenu ; $41e2
 	cp a, $ff ; $41e5
 	jp z, .done ; $41e7
-	ld [$c2b0], a ; $41ea
+	ld [wMapSceneStage], a ; $41ea
 	ld hl, wStoryModePlayersXPosition ; $41ed
 	ld de, wStoryModeSpawnPosition ; $41f0
 	ld bc, $0005 ; $41f3
@@ -174,7 +174,7 @@ RunDoublesMatchListMenu:
 	ld [wUnusedExitLocationMirror], a ; $41fe
 	ld [wStoryModeExitLocationRequest], a ; $4201
 	farcall InitStoryMatchSettings ; $4204
-	ld a, [$c2b0] ; $4207
+	ld a, [wMapSceneStage] ; $4207
 	add a, a ; $420a
 	add a, LOW(Data_10_4246) ; $420b
 	ld l, a ; $420d
@@ -2109,7 +2109,7 @@ CopyExhibitionCharSlotIds:
 	ldh a, [hWramBank] ; $56fd
 	push af ; $56ff
 	wram_bank $03 ; $5700
-	ld hl, w3_d816 ; $5706
+	ld hl, $d816 ; $5706
 	ld de, $c8b5 ; $5709
 	ld a, [hl+] ; $570c
 	ld [de], a ; $570d
@@ -2274,7 +2274,7 @@ CafeteriaExitTriggers_10:
 	map_script $03, FACEMASK_ANY, $0000, MapExitWalkCurveLeft_10, $0d, $02
 	db $ff
 CafeteriaNpc03_10:
-	ld a, [$c2b0] ; $5882
+	ld a, [wMapSceneStage] ; $5882
 	add a, a ; $5885
 	add a, LOW(CafeteriaNpc03TextIds) ; $5886
 	ld l, a ; $5888
@@ -2300,7 +2300,7 @@ CafeteriaNpc03TextIds:
 	dw Text_33_218 ; record 8
 	dw Text_33_218 ; record 9
 CafeteriaNpc04_10:
-	ld a, [$c2b1] ; $58ad
+	ld a, [wMapSceneStage2] ; $58ad
 	add a, a ; $58b0
 	add a, LOW(CafeteriaNpc04TextIds) ; $58b1
 	ld l, a ; $58b3
@@ -2311,10 +2311,10 @@ CafeteriaNpc04_10:
 	ld h, [hl] ; $58b9
 	ld l, a ; $58ba
 	farcall InitDialogueTextCursor ; $58bb
-	ld a, [$c2b1] ; $58be
+	ld a, [wMapSceneStage2] ; $58be
 	cp a, $03 ; $58c1
 	jr c, .speak ; $58c3
-	ld a, [$c2b1] ; $58c5
+	ld a, [wMapSceneStage2] ; $58c5
 	cp a, $04 ; $58c8
 	jr z, .prompt ; $58ca
 	ld a, $04 ; $58cc
@@ -2329,7 +2329,7 @@ CafeteriaNpc04_10:
 	script_speak $04 ; $58e4
 	ret ; $58e9
 .prompt:
-	ld a, [$c2b0] ; $58ea
+	ld a, [wMapSceneStage] ; $58ea
 	cp a, $09 ; $58ed
 	jr nz, .askQuestion ; $58ef
 	farcall AdvanceDialogueTextCursor ; $58f1
@@ -2356,7 +2356,7 @@ CafeteriaNpc04TextIds:
 	dw Text_33_184 ; record 3
 	dw Text_33_219 ; record 4
 CafeteriaNpc05_10:
-	ld a, [$c2b1] ; $592b
+	ld a, [wMapSceneStage2] ; $592b
 	add a, a ; $592e
 	add a, LOW(CafeteriaNpc05TextIds) ; $592f
 	ld l, a ; $5931
@@ -2367,7 +2367,7 @@ CafeteriaNpc05_10:
 	ld h, [hl] ; $5937
 	ld l, a ; $5938
 	farcall InitDialogueTextCursor ; $5939
-	ld a, [$c2b1] ; $593c
+	ld a, [wMapSceneStage2] ; $593c
 	cp a, $01 ; $593f
 	jr nz, .speak ; $5941
 	ld a, $05 ; $5943
@@ -2389,7 +2389,7 @@ CafeteriaNpc05TextIds:
 	dw Text_33_187 ; record 3
 	dw Text_33_223 ; record 4
 CafeteriaNpc06_10:
-	ld a, [$c2b0] ; $596b
+	ld a, [wMapSceneStage] ; $596b
 	add a, a ; $596e
 	add a, LOW(CafeteriaNpc06TextIds) ; $596f
 	ld l, a ; $5971
@@ -2415,7 +2415,7 @@ CafeteriaNpc06TextIds:
 	dw Text_33_188 ; record 8
 	dw Text_33_189 ; record 9
 CafeteriaNpc07_10:
-	ld a, [$c2b0] ; $5996
+	ld a, [wMapSceneStage] ; $5996
 	add a, a ; $5999
 	add a, LOW(CafeteriaNpc07TextIds) ; $599a
 	ld l, a ; $599c
@@ -2441,7 +2441,7 @@ CafeteriaNpc07TextIds:
 	dw Text_33_190 ; record 8
 	dw Text_33_191 ; record 9
 CafeteriaNpc08_10:
-	ld a, [$c2b0] ; $59c1
+	ld a, [wMapSceneStage] ; $59c1
 	add a, a ; $59c4
 	add a, LOW(CafeteriaNpc08TextIds) ; $59c5
 	ld l, a ; $59c7
@@ -2467,7 +2467,7 @@ CafeteriaNpc08TextIds:
 	dw Text_33_224 ; record 8
 	dw Text_33_193 ; record 9
 CafeteriaNpc09_10:
-	ld a, [$c2b0] ; $59ec
+	ld a, [wMapSceneStage] ; $59ec
 	add a, a ; $59ef
 	add a, LOW(CafeteriaNpc09TextIds) ; $59f0
 	ld l, a ; $59f2
@@ -2508,9 +2508,9 @@ CafeteriaTileTriggers_10:
 	ds 1, $ff ; $5a51, fill
 CafeteriaInitScript_10:
 	call SetStoryDialogueStage_10 ; $5a52
-	ld a, [$c2b0] ; $5a55
+	ld a, [wMapSceneStage] ; $5a55
 	sra a ; $5a58
-	ld [$c2b1], a ; $5a5a
+	ld [wMapSceneStage2], a ; $5a5a
 	ld a, $22 ; $5a5d
 	ld [$c329], a ; $5a5f
 	ld a, $26 ; $5a62
@@ -2584,7 +2584,7 @@ RestaurantExit01_10:
 	clear_flag FLAG_RESTAURANT_NPC08_MOVED ; $5bee
 	ret ; $5bf1
 RestaurantNpc03_10:
-	ld a, [$c2b1] ; $5bf2
+	ld a, [wMapSceneStage2] ; $5bf2
 	add a, a ; $5bf5
 	add a, LOW(RestaurantNpc03TextIds) ; $5bf6
 	ld l, a ; $5bf8
@@ -2595,7 +2595,7 @@ RestaurantNpc03_10:
 	ld h, [hl] ; $5bfe
 	ld l, a ; $5bff
 	farcall InitDialogueTextCursor ; $5c00
-	ld a, [$c2b0] ; $5c03
+	ld a, [wMapSceneStage] ; $5c03
 	cp a, $03 ; $5c06
 	jr nz, .speak ; $5c08
 	farcall AdvanceDialogueTextCursor ; $5c0a
@@ -2610,7 +2610,7 @@ RestaurantNpc03TextIds:
 	dw Text_33_153 ; record 3
 	dw Text_33_196 ; record 4
 RestaurantNpc04_10:
-	ld a, [$c2b1] ; $5c1d
+	ld a, [wMapSceneStage2] ; $5c1d
 	add a, a ; $5c20
 	add a, LOW(RestaurantNpc04TextIds) ; $5c21
 	ld l, a ; $5c23
@@ -2632,7 +2632,7 @@ RestaurantNpc04TextIds:
 	dw Text_33_197 ; record 4
 RestaurantNpc05_10:
 	script_face_toward ACTOR_PLAYER, $05 ; $5c3e
-	ld a, [$c2b0] ; $5c46
+	ld a, [wMapSceneStage] ; $5c46
 	add a, a ; $5c49
 	add a, LOW(RestaurantNpc05TextIds) ; $5c4a
 	ld l, a ; $5c4c
@@ -2670,7 +2670,7 @@ RestaurantNpc05TextIds:
 RestaurantNpc06_10:
 	script_set_anim $06, $04 ; $5cb0
 	script_wait_idle $06 ; $5cb7
-	ld a, [$c2b1] ; $5cbc
+	ld a, [wMapSceneStage2] ; $5cbc
 	add a, a ; $5cbf
 	add a, LOW(TextIds_10_5cfb) ; $5cc0
 	ld l, a ; $5cc2
@@ -2681,14 +2681,14 @@ RestaurantNpc06_10:
 	ld h, [hl] ; $5cc8
 	ld l, a ; $5cc9
 	farcall InitDialogueTextCursor ; $5cca
-	ld a, [$c2b0] ; $5ccd
+	ld a, [wMapSceneStage] ; $5ccd
 	cp a, $05 ; $5cd0
 	jr nz, .speak ; $5cd2
 	farcall AdvanceDialogueTextCursor ; $5cd4
 	farcall AdvanceDialogueTextCursor ; $5cd7
 .speak:
 	script_speak $06 ; $5cda
-	ld a, [$c2b1] ; $5cdf
+	ld a, [wMapSceneStage2] ; $5cdf
 	cp a, $00 ; $5ce2
 	jr nz, .animate ; $5ce4
 	call RestaurantShowActor11NearPlayer_10 ; $5ce6
@@ -2709,7 +2709,7 @@ RestaurantNpc12_10:
 	jp nz, .speak ; $5d08
 	script_set_anim $12, $03 ; $5d0b
 	script_wait_idle $12 ; $5d12
-	ld a, [$c2b1] ; $5d17
+	ld a, [wMapSceneStage2] ; $5d17
 	add a, a ; $5d1a
 	add a, LOW(RestaurantNpc12TextIds) ; $5d1b
 	ld l, a ; $5d1d
@@ -2734,7 +2734,7 @@ RestaurantNpc12_10:
 	script_move_angle $12, FACE_UP, $0100 ; $5d75
 	call SetRestaurantNpc12StageFlag_10 ; $5d7f
 	script_face_toward ACTOR_PLAYER, $12 ; $5d82
-	ld a, [$c2b1] ; $5d8a
+	ld a, [wMapSceneStage2] ; $5d8a
 	add a, a ; $5d8d
 	add a, LOW(RestaurantNpc12TextIds) ; $5d8e
 	ld l, a ; $5d90
@@ -2757,7 +2757,7 @@ RestaurantNpc12_10:
 	ret ; $5db5
 .speak:
 	script_face_toward ACTOR_PLAYER, $12 ; $5db6
-	ld a, [$c2b1] ; $5dbe
+	ld a, [wMapSceneStage2] ; $5dbe
 	add a, a ; $5dc1
 	add a, LOW(RestaurantNpc12TextIds) ; $5dc2
 	ld l, a ; $5dc4
@@ -2788,7 +2788,7 @@ RestaurantNpc08FaceDown_10:
 RestaurantNpc08_10:
 	test_flag FLAG_RESTAURANT_NPC08_MOVED ; $5de9
 	jr nz, .speak ; $5dec
-	ld a, [$c2b1] ; $5dee
+	ld a, [wMapSceneStage2] ; $5dee
 	add a, a ; $5df1
 	add a, LOW(RestaurantNpc08TextIds) ; $5df2
 	ld l, a ; $5df4
@@ -2817,7 +2817,7 @@ RestaurantNpc08_10:
 	clear_flag FLAG_TEMP_SCENE_VARIANT_B ; $5e58
 	ret ; $5e5b
 .speak:
-	ld a, [$c2b1] ; $5e5c
+	ld a, [wMapSceneStage2] ; $5e5c
 	add a, a ; $5e5f
 	add a, LOW(RestaurantNpc08TextIds) ; $5e60
 	ld l, a ; $5e62
@@ -2845,7 +2845,7 @@ RestaurantNpc08TextIds:
 	dw Text_33_166 ; record 3
 	dw Text_33_206 ; record 4
 RestaurantNpc09_10:
-	ld a, [$c2b0] ; $5e8b
+	ld a, [wMapSceneStage] ; $5e8b
 	add a, a ; $5e8e
 	add a, LOW(RestaurantNpc09TextIds) ; $5e8f
 	ld l, a ; $5e91
@@ -2856,7 +2856,7 @@ RestaurantNpc09_10:
 	ld h, [hl] ; $5e97
 	ld l, a ; $5e98
 	farcall InitDialogueTextCursor ; $5e99
-	ld a, [$c2b0] ; $5e9c
+	ld a, [wMapSceneStage] ; $5e9c
 	cp a, $06 ; $5e9f
 	jr nc, .altText ; $5ea1
 	script_speak $09 ; $5ea3
@@ -2894,7 +2894,7 @@ RestaurantNpc09TextIds:
 	dw Text_33_208 ; record 9
 RestaurantNpc0A_10:
 	script_face_toward ACTOR_PLAYER, $0a ; $5ef2
-	ld a, [$c2b0] ; $5efa
+	ld a, [wMapSceneStage] ; $5efa
 	add a, a ; $5efd
 	add a, LOW(RestaurantNpc0ATextIds) ; $5efe
 	ld l, a ; $5f00
@@ -2905,7 +2905,7 @@ RestaurantNpc0A_10:
 	ld h, [hl] ; $5f06
 	ld l, a ; $5f07
 	farcall InitDialogueTextCursor ; $5f08
-	ld a, [$c2b0] ; $5f0b
+	ld a, [wMapSceneStage] ; $5f0b
 	cp a, $06 ; $5f0e
 	jr nc, .speak ; $5f10
 	ld a, $0a ; $5f12
@@ -2932,7 +2932,7 @@ RestaurantNpc0ATextIds:
 	dw Text_33_209 ; record 8
 	dw Text_33_209 ; record 9
 RestaurantNpc0B_10:
-	ld a, [$c2b1] ; $5f44
+	ld a, [wMapSceneStage2] ; $5f44
 	add a, a ; $5f47
 	add a, LOW(RestaurantNpc0BTextIds) ; $5f48
 	ld l, a ; $5f4a
@@ -2943,7 +2943,7 @@ RestaurantNpc0B_10:
 	ld h, [hl] ; $5f50
 	ld l, a ; $5f51
 	farcall InitDialogueTextCursor ; $5f52
-	ld a, [$c2b0] ; $5f55
+	ld a, [wMapSceneStage] ; $5f55
 	cp a, $01 ; $5f58
 	jr nz, .speak ; $5f5a
 	farcall AdvanceDialogueTextCursor ; $5f5c
@@ -2958,7 +2958,7 @@ RestaurantNpc0BTextIds:
 	dw Text_33_173 ; record 3
 	dw Text_33_210 ; record 4
 RestaurantNpc0C_10:
-	ld a, [$c2b1] ; $5f6f
+	ld a, [wMapSceneStage2] ; $5f6f
 	add a, a ; $5f72
 	add a, LOW(RestaurantNpc0CTextIds) ; $5f73
 	ld l, a ; $5f75
@@ -2969,7 +2969,7 @@ RestaurantNpc0C_10:
 	ld h, [hl] ; $5f7b
 	ld l, a ; $5f7c
 	farcall InitDialogueTextCursor ; $5f7d
-	ld a, [$c2b1] ; $5f80
+	ld a, [wMapSceneStage2] ; $5f80
 	cp a, $00 ; $5f83
 	jr z, .speak ; $5f85
 	cp a, $03 ; $5f87
@@ -2982,13 +2982,13 @@ RestaurantNpc0C_10:
 	and a, a ; $5f9d
 	jr z, .speak ; $5f9e
 	farcall AdvanceDialogueTextCursor ; $5fa0
-	ld a, [$c2b0] ; $5fa3
+	ld a, [wMapSceneStage] ; $5fa3
 	cp a, $05 ; $5fa6
 	jr nz, .speak ; $5fa8
 	farcall AdvanceDialogueTextCursor ; $5faa
 	jr .speak ; $5fad
 .ge03:
-	ld a, [$c2b0] ; $5faf
+	ld a, [wMapSceneStage] ; $5faf
 	and a, $01 ; $5fb2
 	jr z, .speak ; $5fb4
 	farcall AdvanceDialogueTextCursor ; $5fb6
@@ -3003,7 +3003,7 @@ RestaurantNpc0CTextIds:
 	dw Text_33_174 ; record 3
 	dw Text_33_211 ; record 4
 RestaurantNpc0D_10:
-	ld a, [$c2b1] ; $5fc9
+	ld a, [wMapSceneStage2] ; $5fc9
 	add a, a ; $5fcc
 	add a, LOW(RestaurantNpc0DTextIds) ; $5fcd
 	ld l, a ; $5fcf
@@ -3014,7 +3014,7 @@ RestaurantNpc0D_10:
 	ld h, [hl] ; $5fd5
 	ld l, a ; $5fd6
 	farcall InitDialogueTextCursor ; $5fd7
-	ld a, [$c2b1] ; $5fda
+	ld a, [wMapSceneStage2] ; $5fda
 	cp a, $03 ; $5fdd
 	jr nz, .advanceDialogueTextCursor ; $5fdf
 	ld a, $0d ; $5fe1
@@ -3026,7 +3026,7 @@ RestaurantNpc0D_10:
 	jr z, .advanceDialogueTextCursor ; $5ff4
 	farcall AdvanceDialogueTextCursor ; $5ff6
 .advanceDialogueTextCursor:
-	ld a, [$c2b0] ; $5ff9
+	ld a, [wMapSceneStage] ; $5ff9
 	cp a, $03 ; $5ffc
 	jr nz, .speak ; $5ffe
 	farcall AdvanceDialogueTextCursor ; $6000
@@ -3041,7 +3041,7 @@ RestaurantNpc0DTextIds:
 	dw Text_33_176 ; record 3
 	dw Text_33_213 ; record 4
 RestaurantNpc0E_10:
-	ld a, [$c2b1] ; $6013
+	ld a, [wMapSceneStage2] ; $6013
 	add a, a ; $6016
 	add a, LOW(RestaurantNpc0ETextIds) ; $6017
 	ld l, a ; $6019
@@ -3062,7 +3062,7 @@ RestaurantNpc0ETextIds:
 	dw Text_33_179 ; record 3
 	dw Text_33_214 ; record 4
 RestaurantNpc0F_10:
-	ld a, [$c2b1] ; $6034
+	ld a, [wMapSceneStage2] ; $6034
 	add a, a ; $6037
 	add a, LOW(RestaurantNpc0FTextIds) ; $6038
 	ld l, a ; $603a
@@ -3083,7 +3083,7 @@ RestaurantNpc0FTextIds:
 	dw Text_33_180 ; record 3
 	dw Text_33_215 ; record 4
 RestaurantNpc10_10:
-	ld a, [$c2b1] ; $6055
+	ld a, [wMapSceneStage2] ; $6055
 	add a, a ; $6058
 	add a, LOW(RestaurantNpc10TextIds) ; $6059
 	ld l, a ; $605b
@@ -3127,9 +3127,9 @@ RestaurantTileTriggers_10:
 	ds 1, $ff ; $60f0, fill
 RestaurantInitScript_10:
 	call SetStoryDialogueStage_10 ; $60f1
-	ld a, [$c2b0] ; $60f4
+	ld a, [wMapSceneStage] ; $60f4
 	sra a ; $60f7
-	ld [$c2b1], a ; $60f9
+	ld [wMapSceneStage2], a ; $60f9
 	call RestaurantRestoreNpc12Position_10 ; $60fc
 	call RestaurantRestoreNpc08Position_10 ; $60ff
 	ret ; $6102
@@ -3147,7 +3147,7 @@ RestaurantRestoreNpc12Position_10:
 .done:
 	ret ; $612b
 TestRestaurantNpc12StageFlag_10:
-	ld a, [$c2b1] ; $612c
+	ld a, [wMapSceneStage2] ; $612c
 	add a, a ; $612f
 	add a, $50 ; $6130
 	ld l, a ; $6132
@@ -3160,7 +3160,7 @@ TestRestaurantNpc12StageFlag_10:
 	call TestGameFlagByNumber ; $613a
 	ret ; $613d
 SetRestaurantNpc12StageFlag_10:
-	ld a, [$c2b1] ; $613e
+	ld a, [wMapSceneStage2] ; $613e
 	add a, a ; $6141
 	add a, $50 ; $6142
 	ld l, a ; $6144
@@ -3302,7 +3302,7 @@ AcademyWingFacingScripts_10:
 	map_script $02, FACEMASK_ANY, $0000, AcademyWingFacing02_10, $00, $00
 	db $ff
 AcademyWingFacing02_10:
-	ld a, [$c2b0] ; $62d0
+	ld a, [wMapSceneStage] ; $62d0
 	cp a, $01 ; $62d3
 	jr nz, AcademyWingFacing01_10 ; $62d5
 	farcall BeginCutsceneScriptMode ; $62d7
@@ -3383,7 +3383,7 @@ AcademyWingInitScript_10:
 	script_set_position $06, $0100, $0100 ; $6457
 .byStage:
 	call SetAcademyWingDialogueStage_10 ; $6462
-	ld a, [$c2b0] ; $6465
+	ld a, [wMapSceneStage] ; $6465
 	cp a, $03 ; $6468
 	jr nz, .stage4 ; $646a
 	ldh a, [hRomBank] ; $646c
@@ -3402,7 +3402,7 @@ AcademyWingInitScript_10:
 	script_set_position $03, $1d00, $3000 ; $648c
 	script_face $03, FACE_UP ; $6497
 .stage4:
-	ld a, [$c2b0] ; $649e
+	ld a, [wMapSceneStage] ; $649e
 	cp a, $01 ; $64a1
 	jr nz, .stage5 ; $64a3
 	script_set_position $03, $19a0, $32c0 ; $64a5
@@ -4084,7 +4084,7 @@ ActorScript_10_741c:
 	as_wait_move
 	as_halt
 AcademyWingInstallDoorTriggers_10:
-	ld a, [$c2b0] ; $7429
+	ld a, [wMapSceneStage] ; $7429
 	cp a, $03 ; $742c
 	jr nz, .done ; $742e
 	ld a, $11 ; $7430
@@ -4136,7 +4136,7 @@ SetAcademyWingDialogueStage_10:
 	jr z, .step ; $74a1
 	ld a, $03 ; $74a3
 .step:
-	ld [$c2b0], a ; $74a5
+	ld [wMapSceneStage], a ; $74a5
 	ret ; $74a8
 AcademyMainBldgMapScripts_10:
 	; $74a9, 14 bytes (map_tree)
@@ -4205,7 +4205,7 @@ AcademyMainBldgExitTriggers_10:
 	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_10, $07, $0f
 	db $ff
 AcademyMainBldgNpc03_10:
-	ld a, [$c2b0] ; $75e7
+	ld a, [wMapSceneStage] ; $75e7
 	sra a ; $75ea
 	add a, a ; $75ec
 	add a, LOW(AcademyMainBldgNpc03TextIds) ; $75ed
@@ -4217,7 +4217,7 @@ AcademyMainBldgNpc03_10:
 	ld h, [hl] ; $75f5
 	ld l, a ; $75f6
 	farcall InitDialogueTextCursor ; $75f7
-	ld a, [$c2b0] ; $75fa
+	ld a, [wMapSceneStage] ; $75fa
 	sra a ; $75fd
 	cp a, $03 ; $75ff
 	jr z, .eq03 ; $7601
@@ -4243,7 +4243,7 @@ AcademyMainBldgNpc03TextIds:
 	dw Text_30_452 ; record 3
 	dw Text_30_457 ; record 4
 AcademyMainBldgNpc04_10:
-	ld a, [$c2b0] ; $7631
+	ld a, [wMapSceneStage] ; $7631
 	sra a ; $7634
 	add a, a ; $7636
 	add a, LOW(AcademyMainBldgNpc04TextIds) ; $7637
@@ -4271,7 +4271,7 @@ AcademyMainBldgNpc05_10:
 	test_flag FLAG_DOUBLES ; $7666
 	jr nz, AcademyMainBldgNpc05TextIds.setText ; $7669
 	script_speak $05 ; $766b
-	ld a, [$c2b0] ; $7670
+	ld a, [wMapSceneStage] ; $7670
 	sra a ; $7673
 	add a, a ; $7675
 	add a, LOW(AcademyMainBldgNpc05TextIds) ; $7676
@@ -4319,7 +4319,7 @@ AcademyMainBldgNpc05TextIds2:
 	dw Text_30_473 ; record 3
 	dw Text_30_474 ; record 4
 AcademyMainBldgNpc06_10:
-	ld a, [$c2b0] ; $76d1
+	ld a, [wMapSceneStage] ; $76d1
 	sra a ; $76d4
 	add a, a ; $76d6
 	add a, LOW(AcademyMainBldgNpc06TextIds) ; $76d7
@@ -4353,7 +4353,7 @@ AcademyMainBldgTileTriggers_10:
 	ds 1, $ff ; $7716, fill
 AcademyMainBldgInitScript_10:
 	call SetStoryDialogueStage_10 ; $7717
-	ld a, [$c2b0] ; $771a
+	ld a, [wMapSceneStage] ; $771a
 	sra a ; $771d
 	cp a, $02 ; $771f
 	jr nz, .ne02 ; $7721
@@ -4930,7 +4930,7 @@ SetStoryDialogueStage_10:
 	jr z, .store ; $7ddc
 	ld a, $08 ; $7dde
 .store:
-	ld [$c2b0], a ; $7de0
+	ld [wMapSceneStage], a ; $7de0
 	ret ; $7de3
 .doublesStage:
 	ld a, $01 ; $7de4
@@ -4963,7 +4963,7 @@ SetStoryDialogueStage_10:
 	jr z, .storeIsland ; $7e20
 	inc a ; $7e22
 .storeIsland:
-	ld [$c2b0], a ; $7e23
+	ld [wMapSceneStage], a ; $7e23
 	ret ; $7e26
 .doublesIsland:
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $7e27

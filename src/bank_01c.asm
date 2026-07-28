@@ -65,7 +65,7 @@ CharDataScreen_Show:
 	call AnimateCharDataStatsReveal ; $4092
 	wram_bank $06 ; $4095
 	xor a, a ; $409b
-	ld [w6_d028], a ; $409c
+	ld [wCharDataLevelPreview], a ; $409c
 	call CharDataScreen_DrawPageColumns ; $409f
 	call FlushCharDataTilemaps ; $40a2
 	ld a, $01 ; $40a5
@@ -123,12 +123,12 @@ CharDataScreen_InitState:
 	inc a ; $411a
 	ld [$d142], a ; $411b
 	ld a, $04 ; $411e
-	ld [w6_d024], a ; $4120
+	ld [wCharDataPage], a ; $4120
 	ld a, $0a ; $4123
-	ld [w6_d026], a ; $4125
+	ld [wCharDataRevealTimer], a ; $4125
 	ld a, $03 ; $4128
-	ld [w6_d027], a ; $412a
-	ld [w6_d028], a ; $412d
+	ld [wCharDataRevealStep], a ; $412a
+	ld [wCharDataLevelPreview], a ; $412d
 	ld a, [w6_d0b6] ; $4130
 	or a, a ; $4133
 	ret nz ; $4134
@@ -149,7 +149,7 @@ CharDataScreen_InitState:
 	ld h, a ; $414c
 	pop af ; $414d
 	ld a, [hl] ; $414e
-	ld [w6_d004], a ; $414f
+	ld [wCharDataLevel], a ; $414f
 	push af ; $4152
 	ld hl, wStoryModeNameOfMainCharacter ; $4153
 	ld a, [wStoryCharacterSlot] ; $4156
@@ -165,8 +165,8 @@ CharDataScreen_InitState:
 	ld h, a ; $4165
 	pop af ; $4166
 	ld a, [hl] ; $4167
-	ld [w6_d005], a ; $4168
-	ld [w6_d00a], a ; $416b
+	ld [wCharDataNewLevels], a ; $4168
+	ld [wCharDataLevels], a ; $416b
 	push af ; $416e
 	ld hl, wStoryModeNameOfMainCharacter ; $416f
 	ld a, [wStoryCharacterSlot] ; $4172
@@ -182,8 +182,8 @@ CharDataScreen_InitState:
 	ld h, a ; $4181
 	pop af ; $4182
 	ld a, [hl] ; $4183
-	ld [w6_d006], a ; $4184
-	ld [w6_d00b], a ; $4187
+	ld [wCharDataNewLevels + 1], a ; $4184
+	ld [wCharDataLevels + 1], a ; $4187
 	push af ; $418a
 	ld hl, wStoryModeNameOfMainCharacter ; $418b
 	ld a, [wStoryCharacterSlot] ; $418e
@@ -199,8 +199,8 @@ CharDataScreen_InitState:
 	ld h, a ; $419d
 	pop af ; $419e
 	ld a, [hl] ; $419f
-	ld [w6_d007], a ; $41a0
-	ld [w6_d00c], a ; $41a3
+	ld [wCharDataNewLevels + 2], a ; $41a0
+	ld [wCharDataLevels + 2], a ; $41a3
 	push af ; $41a6
 	ld hl, wStoryModeNameOfMainCharacter ; $41a7
 	ld a, [wStoryCharacterSlot] ; $41aa
@@ -216,8 +216,8 @@ CharDataScreen_InitState:
 	ld h, a ; $41b9
 	pop af ; $41ba
 	ld a, [hl] ; $41bb
-	ld [w6_d008], a ; $41bc
-	ld [w6_d00d], a ; $41bf
+	ld [wCharDataNewLevels + 3], a ; $41bc
+	ld [wCharDataLevels + 3], a ; $41bf
 .loop:
 	ld a, [wStoryCharacterSlot] ; $41c2
 	farcall HasReachedNextLevelExp ; $41c5
@@ -336,9 +336,9 @@ CharDataScreen_DrawStats:
 .statsReady:
 	farcall CharDataScreen_BuildStats ; $4305
 	wram_bank $06 ; $4308
-	ld a, [w6_d00e] ; $430e
+	ld a, [wCharDataStats] ; $430e
 	ld c, a ; $4311
-	ld a, [w6_d019] ; $4312
+	ld a, [wCharDataStatDeltas] ; $4312
 	add a, c ; $4315
 	push af ; $4316
 	ld h, $00 ; $4317
@@ -353,9 +353,9 @@ CharDataScreen_DrawStats:
 	ld de, $d256 ; $432b
 	call CharDataScreen_DrawStatBar ; $432e
 	wram_bank $06 ; $4331
-	ld a, [w6_d00f] ; $4337
+	ld a, [wCharDataStats + 1] ; $4337
 	ld c, a ; $433a
-	ld a, [w6_d01a] ; $433b
+	ld a, [wCharDataStatDeltas + 1] ; $433b
 	add a, c ; $433e
 	push af ; $433f
 	ld h, $00 ; $4340
@@ -370,9 +370,9 @@ CharDataScreen_DrawStats:
 	ld de, $d26a ; $4354
 	call CharDataScreen_DrawStatBar ; $4357
 	wram_bank $06 ; $435a
-	ld a, [w6_d010] ; $4360
+	ld a, [wCharDataStats + 2] ; $4360
 	ld c, a ; $4363
-	ld a, [w6_d01b] ; $4364
+	ld a, [wCharDataStatDeltas + 2] ; $4364
 	add a, c ; $4367
 	push af ; $4368
 	ld h, $00 ; $4369
@@ -387,9 +387,9 @@ CharDataScreen_DrawStats:
 	ld de, $d296 ; $437d
 	call CharDataScreen_DrawStatBar ; $4380
 	wram_bank $06 ; $4383
-	ld a, [w6_d011] ; $4389
+	ld a, [wCharDataStats + 3] ; $4389
 	ld c, a ; $438c
-	ld a, [w6_d01c] ; $438d
+	ld a, [wCharDataStatDeltas + 3] ; $438d
 	add a, c ; $4390
 	push af ; $4391
 	ld h, $00 ; $4392
@@ -404,9 +404,9 @@ CharDataScreen_DrawStats:
 	ld de, $d2aa ; $43a6
 	call CharDataScreen_DrawStatBar ; $43a9
 	wram_bank $06 ; $43ac
-	ld a, [w6_d012] ; $43b2
+	ld a, [wCharDataStats + 4] ; $43b2
 	ld c, a ; $43b5
-	ld a, [w6_d01d] ; $43b6
+	ld a, [wCharDataStatDeltas + 4] ; $43b6
 	add a, c ; $43b9
 	push af ; $43ba
 	ld h, $00 ; $43bb
@@ -421,9 +421,9 @@ CharDataScreen_DrawStats:
 	ld de, $d2be ; $43cf
 	call CharDataScreen_DrawStatBar ; $43d2
 	wram_bank $06 ; $43d5
-	ld a, [$d013] ; $43db
+	ld a, [wCharDataStats + 5] ; $43db
 	ld c, a ; $43de
-	ld a, [w6_d01e] ; $43df
+	ld a, [wCharDataStatDeltas + 5] ; $43df
 	add a, c ; $43e2
 	push af ; $43e3
 	ld h, $00 ; $43e4
@@ -438,9 +438,9 @@ CharDataScreen_DrawStats:
 	ld de, $d2e6 ; $43f8
 	call CharDataScreen_DrawStatBar ; $43fb
 	wram_bank $06 ; $43fe
-	ld a, [$d014] ; $4404
+	ld a, [wCharDataStats + 6] ; $4404
 	ld c, a ; $4407
-	ld a, [w6_d01f] ; $4408
+	ld a, [wCharDataStatDeltas + 6] ; $4408
 	add a, c ; $440b
 	push af ; $440c
 	ld h, $00 ; $440d
@@ -455,9 +455,9 @@ CharDataScreen_DrawStats:
 	ld de, $d2fa ; $4421
 	call CharDataScreen_DrawStatBar ; $4424
 	wram_bank $06 ; $4427
-	ld a, [w6_d015] ; $442d
+	ld a, [wCharDataStats + 7] ; $442d
 	ld c, a ; $4430
-	ld a, [$d020] ; $4431
+	ld a, [wCharDataStatDeltas + 7] ; $4431
 	add a, c ; $4434
 	push af ; $4435
 	ld h, $00 ; $4436
@@ -472,9 +472,9 @@ CharDataScreen_DrawStats:
 	ld de, $d326 ; $444a
 	call CharDataScreen_DrawStatBar ; $444d
 	wram_bank $06 ; $4450
-	ld a, [w6_d016] ; $4456
+	ld a, [wCharDataStats + 8] ; $4456
 	ld c, a ; $4459
-	ld a, [w6_d021] ; $445a
+	ld a, [wCharDataStatDeltas + 8] ; $445a
 	add a, c ; $445d
 	push af ; $445e
 	ld h, $00 ; $445f
@@ -489,9 +489,9 @@ CharDataScreen_DrawStats:
 	ld de, $d33a ; $4473
 	call CharDataScreen_DrawStatBar ; $4476
 	wram_bank $06 ; $4479
-	ld a, [w6_d017] ; $447f
+	ld a, [wCharDataStats + 9] ; $447f
 	ld c, a ; $4482
-	ld a, [w6_d022] ; $4483
+	ld a, [wCharDataStatDeltas + 9] ; $4483
 	add a, c ; $4486
 	push af ; $4487
 	ld h, $00 ; $4488
@@ -506,9 +506,9 @@ CharDataScreen_DrawStats:
 	ld de, $d34e ; $449c
 	call CharDataScreen_DrawStatBar ; $449f
 	wram_bank $06 ; $44a2
-	ld a, [w6_d018] ; $44a8
+	ld a, [wCharDataStats + 10] ; $44a8
 	ld c, a ; $44ab
-	ld a, [w6_d023] ; $44ac
+	ld a, [wCharDataStatDeltas + 10] ; $44ac
 	add a, c ; $44af
 	push af ; $44b0
 	ld h, $00 ; $44b1
@@ -778,7 +778,7 @@ AnimateCharDataStatsReveal:
 	call BlitTilemapRunsFromTable ; $46a8
 	wram_bank $06 ; $46ab
 	ld a, $09 ; $46b1
-	ld [w6_d026], a ; $46b3
+	ld [wCharDataRevealTimer], a ; $46b3
 	call FlushCharDataTilemaps ; $46b6
 	call RestoreCharDataScreenRow ; $46b9
 	ld hl, CharDataBand0RunsStep2_1c ; $46bc
@@ -795,7 +795,7 @@ AnimateCharDataStatsReveal:
 	call BlitTilemapRunsFromTable ; $46dd
 	wram_bank $06 ; $46e0
 	ld a, $07 ; $46e6
-	ld [w6_d026], a ; $46e8
+	ld [wCharDataRevealTimer], a ; $46e8
 	call FlushCharDataTilemaps ; $46eb
 	call RestoreCharDataScreenRow ; $46ee
 	ld hl, CharDataBand0RunsStep3_1c ; $46f1
@@ -812,7 +812,7 @@ AnimateCharDataStatsReveal:
 	call BlitTilemapRunsFromTable ; $4712
 	wram_bank $06 ; $4715
 	ld a, $05 ; $471b
-	ld [w6_d026], a ; $471d
+	ld [wCharDataRevealTimer], a ; $471d
 	call FlushCharDataTilemaps ; $4720
 	call RestoreCharDataScreenRow ; $4723
 	ld hl, CharDataBand0RunsStep4_1c ; $4726
@@ -829,7 +829,7 @@ AnimateCharDataStatsReveal:
 	call BlitTilemapRunsFromTable ; $4747
 	wram_bank $06 ; $474a
 	ld a, $03 ; $4750
-	ld [w6_d026], a ; $4752
+	ld [wCharDataRevealTimer], a ; $4752
 	call FlushCharDataTilemaps ; $4755
 	call RestoreCharDataScreenRow ; $4758
 	ld hl, CharDataBand0RunsStep5_1c ; $475b
@@ -846,7 +846,7 @@ AnimateCharDataStatsReveal:
 	call BlitTilemapRunsFromTable ; $477c
 	wram_bank $06 ; $477f
 	ld a, $02 ; $4785
-	ld [w6_d026], a ; $4787
+	ld [wCharDataRevealTimer], a ; $4787
 	call FlushCharDataTilemaps ; $478a
 	call RestoreCharDataScreenRow ; $478d
 	ld hl, CharDataBand0RunsStep6_1c ; $4790
@@ -863,7 +863,7 @@ AnimateCharDataStatsReveal:
 	call BlitTilemapRunsFromTable ; $47b1
 	wram_bank $06 ; $47b4
 	ld a, $01 ; $47ba
-	ld [w6_d026], a ; $47bc
+	ld [wCharDataRevealTimer], a ; $47bc
 	call FlushCharDataTilemaps ; $47bf
 	call RestoreCharDataScreenRow ; $47c2
 	ld hl, CharDataBand0RunsStep7_1c ; $47c5
@@ -882,7 +882,7 @@ AnimateCharDataStatsReveal:
 	ld hl, $d142 ; $47ef
 	dec [hl] ; $47f2
 	xor a, a ; $47f3
-	ld [w6_d026], a ; $47f4
+	ld [wCharDataRevealTimer], a ; $47f4
 	call FlushCharDataTilemaps ; $47f7
 	call WaitFramesCmd ; $47fa
 	db $06 ; $47fd inline arg
@@ -906,7 +906,7 @@ AnimateCharDataStatsReveal:
 	call BlitTilemapRunsFromTable ; $4831
 	wram_bank $06 ; $4834
 	ld a, $02 ; $483a
-	ld [w6_d027], a ; $483c
+	ld [wCharDataRevealStep], a ; $483c
 	call FlushCharDataTilemaps ; $483f
 	ld hl, CharDataBand6RunsStep2_1c ; $4842
 	ld bc, $d3a0 ; $4845
@@ -916,7 +916,7 @@ AnimateCharDataStatsReveal:
 	call BlitTilemapRunsFromTable ; $4851
 	wram_bank $06 ; $4854
 	ld a, $01 ; $485a
-	ld [w6_d027], a ; $485c
+	ld [wCharDataRevealStep], a ; $485c
 	call FlushCharDataTilemaps ; $485f
 	ld hl, CharDataBand6RunsStep3_1c ; $4862
 	ld bc, $d3a0 ; $4865
@@ -926,7 +926,7 @@ AnimateCharDataStatsReveal:
 	call BlitTilemapRunsFromTable ; $4871
 	wram_bank $06 ; $4874
 	xor a, a ; $487a
-	ld [w6_d027], a ; $487b
+	ld [wCharDataRevealStep], a ; $487b
 	call FlushCharDataTilemaps ; $487e
 	ret ; $4881
 DrawCharStatsAndFlush:
@@ -1090,7 +1090,7 @@ FlushCharDataTilemapChunk:
 WriteCharStatsToDisplayBuffer:
 	wram_bank $06 ; $49eb
 	ld a, [$d003] ; $49f1
-	ld [w6_d009], a ; $49f4
+	ld [wCharDataPointsLeft], a ; $49f4
 	push af ; $49f7
 	ld hl, wStoryModeNameOfMainCharacter ; $49f8
 	ld a, [wStoryCharacterSlot] ; $49fb
@@ -1105,7 +1105,7 @@ WriteCharStatsToDisplayBuffer:
 	adc a, $00 ; $4a08
 	ld h, a ; $4a0a
 	pop af ; $4a0b
-	ld a, [w6_d004] ; $4a0c
+	ld a, [wCharDataLevel] ; $4a0c
 	ld [hl], a ; $4a0f
 	push af ; $4a10
 	ld hl, wStoryModeNameOfMainCharacter ; $4a11
@@ -1121,9 +1121,9 @@ WriteCharStatsToDisplayBuffer:
 	adc a, $00 ; $4a21
 	ld h, a ; $4a23
 	pop af ; $4a24
-	ld a, [w6_d005] ; $4a25
+	ld a, [wCharDataNewLevels] ; $4a25
 	ld [hl], a ; $4a28
-	ld [w6_d00a], a ; $4a29
+	ld [wCharDataLevels], a ; $4a29
 	push af ; $4a2c
 	ld hl, wStoryModeNameOfMainCharacter ; $4a2d
 	ld a, [wStoryCharacterSlot] ; $4a30
@@ -1138,9 +1138,9 @@ WriteCharStatsToDisplayBuffer:
 	adc a, $00 ; $4a3d
 	ld h, a ; $4a3f
 	pop af ; $4a40
-	ld a, [w6_d006] ; $4a41
+	ld a, [wCharDataNewLevels + 1] ; $4a41
 	ld [hl], a ; $4a44
-	ld [w6_d00b], a ; $4a45
+	ld [wCharDataLevels + 1], a ; $4a45
 	push af ; $4a48
 	ld hl, wStoryModeNameOfMainCharacter ; $4a49
 	ld a, [wStoryCharacterSlot] ; $4a4c
@@ -1155,9 +1155,9 @@ WriteCharStatsToDisplayBuffer:
 	adc a, $00 ; $4a59
 	ld h, a ; $4a5b
 	pop af ; $4a5c
-	ld a, [w6_d007] ; $4a5d
+	ld a, [wCharDataNewLevels + 2] ; $4a5d
 	ld [hl], a ; $4a60
-	ld [w6_d00c], a ; $4a61
+	ld [wCharDataLevels + 2], a ; $4a61
 	push af ; $4a64
 	ld hl, wStoryModeNameOfMainCharacter ; $4a65
 	ld a, [wStoryCharacterSlot] ; $4a68
@@ -1172,17 +1172,17 @@ WriteCharStatsToDisplayBuffer:
 	adc a, $00 ; $4a75
 	ld h, a ; $4a77
 	pop af ; $4a78
-	ld a, [w6_d008] ; $4a79
+	ld a, [wCharDataNewLevels + 3] ; $4a79
 	ld [hl], a ; $4a7c
-	ld [w6_d00d], a ; $4a7d
+	ld [wCharDataLevels + 3], a ; $4a7d
 	xor a, a ; $4a80
 	ld b, $64 ; $4a81
-	ld hl, $d02a ; $4a83
+	ld hl, wCharDataChoiceLog ; $4a83
 .loop:
 	ld [hl+], a ; $4a86
 	dec b ; $4a87
 	jr nz, .loop ; $4a88
-	ld [w6_d029], a ; $4a8a
+	ld [wCharDataChoiceCount], a ; $4a8a
 	ld a, [wStoryCharacterSlot] ; $4a8d
 	farcall RefreshPlayerStatsAndGetPtr ; $4a90
 	ret ; $4a93
@@ -1206,7 +1206,7 @@ LoadCharStatsWithLevelUpDeltas:
 	ld h, a ; $4ab2
 	pop af ; $4ab3
 	ld a, [hl] ; $4ab4
-	ld [w6_d00a], a ; $4ab5
+	ld [wCharDataLevels], a ; $4ab5
 	push af ; $4ab8
 	ld hl, wStoryModeNameOfMainCharacter ; $4ab9
 	ld a, [wStoryCharacterSlot] ; $4abc
@@ -1223,7 +1223,7 @@ LoadCharStatsWithLevelUpDeltas:
 	pop af ; $4acc
 	ld a, [hl] ; $4acd
 	inc a ; $4ace
-	ld [w6_d00e], a ; $4acf
+	ld [wCharDataStats], a ; $4acf
 	push af ; $4ad2
 	ld hl, wStoryModeNameOfMainCharacter ; $4ad3
 	ld a, [wStoryCharacterSlot] ; $4ad6
@@ -1240,7 +1240,7 @@ LoadCharStatsWithLevelUpDeltas:
 	pop af ; $4ae6
 	ld a, [hl] ; $4ae7
 	inc a ; $4ae8
-	ld [w6_d00f], a ; $4ae9
+	ld [wCharDataStats + 1], a ; $4ae9
 	push af ; $4aec
 	ld hl, wStoryModeNameOfMainCharacter ; $4aed
 	ld a, [wStoryCharacterSlot] ; $4af0
@@ -1256,7 +1256,7 @@ LoadCharStatsWithLevelUpDeltas:
 	ld h, a ; $4aff
 	pop af ; $4b00
 	ld a, [hl] ; $4b01
-	ld [w6_d00b], a ; $4b02
+	ld [wCharDataLevels + 1], a ; $4b02
 	push af ; $4b05
 	ld hl, wStoryModeNameOfMainCharacter ; $4b06
 	ld a, [wStoryCharacterSlot] ; $4b09
@@ -1273,7 +1273,7 @@ LoadCharStatsWithLevelUpDeltas:
 	pop af ; $4b19
 	ld a, [hl] ; $4b1a
 	inc a ; $4b1b
-	ld [w6_d010], a ; $4b1c
+	ld [wCharDataStats + 2], a ; $4b1c
 	push af ; $4b1f
 	ld hl, wStoryModeNameOfMainCharacter ; $4b20
 	ld a, [wStoryCharacterSlot] ; $4b23
@@ -1290,7 +1290,7 @@ LoadCharStatsWithLevelUpDeltas:
 	pop af ; $4b33
 	ld a, [hl] ; $4b34
 	inc a ; $4b35
-	ld [w6_d011], a ; $4b36
+	ld [wCharDataStats + 3], a ; $4b36
 	push af ; $4b39
 	ld hl, wStoryModeNameOfMainCharacter ; $4b3a
 	ld a, [wStoryCharacterSlot] ; $4b3d
@@ -1307,7 +1307,7 @@ LoadCharStatsWithLevelUpDeltas:
 	pop af ; $4b4d
 	ld a, [hl] ; $4b4e
 	inc a ; $4b4f
-	ld [w6_d012], a ; $4b50
+	ld [wCharDataStats + 4], a ; $4b50
 	push af ; $4b53
 	ld hl, wStoryModeNameOfMainCharacter ; $4b54
 	ld a, [wStoryCharacterSlot] ; $4b57
@@ -1323,7 +1323,7 @@ LoadCharStatsWithLevelUpDeltas:
 	ld h, a ; $4b66
 	pop af ; $4b67
 	ld a, [hl] ; $4b68
-	ld [w6_d00c], a ; $4b69
+	ld [wCharDataLevels + 2], a ; $4b69
 	push af ; $4b6c
 	ld hl, wStoryModeNameOfMainCharacter ; $4b6d
 	ld a, [wStoryCharacterSlot] ; $4b70
@@ -1340,7 +1340,7 @@ LoadCharStatsWithLevelUpDeltas:
 	pop af ; $4b80
 	ld a, [hl] ; $4b81
 	inc a ; $4b82
-	ld [$d013], a ; $4b83
+	ld [wCharDataStats + 5], a ; $4b83
 	push af ; $4b86
 	ld hl, wStoryModeNameOfMainCharacter ; $4b87
 	ld a, [wStoryCharacterSlot] ; $4b8a
@@ -1357,7 +1357,7 @@ LoadCharStatsWithLevelUpDeltas:
 	pop af ; $4b9a
 	ld a, [hl] ; $4b9b
 	inc a ; $4b9c
-	ld [$d014], a ; $4b9d
+	ld [wCharDataStats + 6], a ; $4b9d
 	push af ; $4ba0
 	ld hl, wStoryModeNameOfMainCharacter ; $4ba1
 	ld a, [wStoryCharacterSlot] ; $4ba4
@@ -1373,7 +1373,7 @@ LoadCharStatsWithLevelUpDeltas:
 	ld h, a ; $4bb3
 	pop af ; $4bb4
 	ld a, [hl] ; $4bb5
-	ld [w6_d00d], a ; $4bb6
+	ld [wCharDataLevels + 3], a ; $4bb6
 	push af ; $4bb9
 	ld hl, wStoryModeNameOfMainCharacter ; $4bba
 	ld a, [wStoryCharacterSlot] ; $4bbd
@@ -1390,7 +1390,7 @@ LoadCharStatsWithLevelUpDeltas:
 	pop af ; $4bcd
 	ld a, [hl] ; $4bce
 	inc a ; $4bcf
-	ld [w6_d015], a ; $4bd0
+	ld [wCharDataStats + 7], a ; $4bd0
 	push af ; $4bd3
 	ld hl, wStoryModeNameOfMainCharacter ; $4bd4
 	ld a, [wStoryCharacterSlot] ; $4bd7
@@ -1407,7 +1407,7 @@ LoadCharStatsWithLevelUpDeltas:
 	pop af ; $4be7
 	ld a, [hl] ; $4be8
 	inc a ; $4be9
-	ld [w6_d016], a ; $4bea
+	ld [wCharDataStats + 8], a ; $4bea
 	push af ; $4bed
 	ld hl, wStoryModeNameOfMainCharacter ; $4bee
 	ld a, [wStoryCharacterSlot] ; $4bf1
@@ -1424,7 +1424,7 @@ LoadCharStatsWithLevelUpDeltas:
 	pop af ; $4c01
 	ld a, [hl] ; $4c02
 	inc a ; $4c03
-	ld [w6_d017], a ; $4c04
+	ld [wCharDataStats + 9], a ; $4c04
 	push af ; $4c07
 	ld hl, wStoryModeNameOfMainCharacter ; $4c08
 	ld a, [wStoryCharacterSlot] ; $4c0b
@@ -1441,18 +1441,18 @@ LoadCharStatsWithLevelUpDeltas:
 	pop af ; $4c1b
 	ld a, [hl] ; $4c1c
 	inc a ; $4c1d
-	ld [w6_d018], a ; $4c1e
-	ld a, [w6_d024] ; $4c21
+	ld [wCharDataStats + 10], a ; $4c1e
+	ld a, [wCharDataPage] ; $4c21
 	cp a, $04 ; $4c24
 	jr z, .eq04 ; $4c26
 	ld d, a ; $4c28
-	ld hl, w6_d019 ; $4c29
+	ld hl, wCharDataStatDeltas ; $4c29
 	ld a, [wStoryCharacterSlot] ; $4c2c
 	farcall ComputeLevelUpStatDeltas ; $4c2f
 	ret ; $4c32
 .eq04:
 	xor a, a ; $4c33
-	ld hl, w6_d019 ; $4c34
+	ld hl, wCharDataStatDeltas ; $4c34
 	ld [hl+], a ; $4c37
 	ld [hl+], a ; $4c38
 	ld [hl+], a ; $4c39
@@ -1482,7 +1482,7 @@ LoadCharStats:
 	ld h, a ; $4c5c
 	pop af ; $4c5d
 	ld a, [hl] ; $4c5e
-	ld [w6_d00a], a ; $4c5f
+	ld [wCharDataLevels], a ; $4c5f
 	push af ; $4c62
 	ld hl, wStoryModeNameOfMainCharacter ; $4c63
 	ld a, [wStoryCharacterSlot] ; $4c66
@@ -1499,7 +1499,7 @@ LoadCharStats:
 	pop af ; $4c76
 	ld a, [hl] ; $4c77
 	inc a ; $4c78
-	ld [w6_d00e], a ; $4c79
+	ld [wCharDataStats], a ; $4c79
 	push af ; $4c7c
 	ld hl, wStoryModeNameOfMainCharacter ; $4c7d
 	ld a, [wStoryCharacterSlot] ; $4c80
@@ -1516,7 +1516,7 @@ LoadCharStats:
 	pop af ; $4c90
 	ld a, [hl] ; $4c91
 	inc a ; $4c92
-	ld [w6_d00f], a ; $4c93
+	ld [wCharDataStats + 1], a ; $4c93
 	push af ; $4c96
 	ld hl, wStoryModeNameOfMainCharacter ; $4c97
 	ld a, [wStoryCharacterSlot] ; $4c9a
@@ -1532,7 +1532,7 @@ LoadCharStats:
 	ld h, a ; $4ca9
 	pop af ; $4caa
 	ld a, [hl] ; $4cab
-	ld [w6_d00b], a ; $4cac
+	ld [wCharDataLevels + 1], a ; $4cac
 	push af ; $4caf
 	ld hl, wStoryModeNameOfMainCharacter ; $4cb0
 	ld a, [wStoryCharacterSlot] ; $4cb3
@@ -1549,7 +1549,7 @@ LoadCharStats:
 	pop af ; $4cc3
 	ld a, [hl] ; $4cc4
 	inc a ; $4cc5
-	ld [w6_d010], a ; $4cc6
+	ld [wCharDataStats + 2], a ; $4cc6
 	push af ; $4cc9
 	ld hl, wStoryModeNameOfMainCharacter ; $4cca
 	ld a, [wStoryCharacterSlot] ; $4ccd
@@ -1566,7 +1566,7 @@ LoadCharStats:
 	pop af ; $4cdd
 	ld a, [hl] ; $4cde
 	inc a ; $4cdf
-	ld [w6_d011], a ; $4ce0
+	ld [wCharDataStats + 3], a ; $4ce0
 	push af ; $4ce3
 	ld hl, wStoryModeNameOfMainCharacter ; $4ce4
 	ld a, [wStoryCharacterSlot] ; $4ce7
@@ -1583,7 +1583,7 @@ LoadCharStats:
 	pop af ; $4cf7
 	ld a, [hl] ; $4cf8
 	inc a ; $4cf9
-	ld [w6_d012], a ; $4cfa
+	ld [wCharDataStats + 4], a ; $4cfa
 	push af ; $4cfd
 	ld hl, wStoryModeNameOfMainCharacter ; $4cfe
 	ld a, [wStoryCharacterSlot] ; $4d01
@@ -1599,7 +1599,7 @@ LoadCharStats:
 	ld h, a ; $4d10
 	pop af ; $4d11
 	ld a, [hl] ; $4d12
-	ld [w6_d00c], a ; $4d13
+	ld [wCharDataLevels + 2], a ; $4d13
 	push af ; $4d16
 	ld hl, wStoryModeNameOfMainCharacter ; $4d17
 	ld a, [wStoryCharacterSlot] ; $4d1a
@@ -1616,7 +1616,7 @@ LoadCharStats:
 	pop af ; $4d2a
 	ld a, [hl] ; $4d2b
 	inc a ; $4d2c
-	ld [$d013], a ; $4d2d
+	ld [wCharDataStats + 5], a ; $4d2d
 	push af ; $4d30
 	ld hl, wStoryModeNameOfMainCharacter ; $4d31
 	ld a, [wStoryCharacterSlot] ; $4d34
@@ -1633,7 +1633,7 @@ LoadCharStats:
 	pop af ; $4d44
 	ld a, [hl] ; $4d45
 	inc a ; $4d46
-	ld [$d014], a ; $4d47
+	ld [wCharDataStats + 6], a ; $4d47
 	push af ; $4d4a
 	ld hl, wStoryModeNameOfMainCharacter ; $4d4b
 	ld a, [wStoryCharacterSlot] ; $4d4e
@@ -1649,7 +1649,7 @@ LoadCharStats:
 	ld h, a ; $4d5d
 	pop af ; $4d5e
 	ld a, [hl] ; $4d5f
-	ld [w6_d00d], a ; $4d60
+	ld [wCharDataLevels + 3], a ; $4d60
 	push af ; $4d63
 	ld hl, wStoryModeNameOfMainCharacter ; $4d64
 	ld a, [wStoryCharacterSlot] ; $4d67
@@ -1666,7 +1666,7 @@ LoadCharStats:
 	pop af ; $4d77
 	ld a, [hl] ; $4d78
 	inc a ; $4d79
-	ld [w6_d015], a ; $4d7a
+	ld [wCharDataStats + 7], a ; $4d7a
 	push af ; $4d7d
 	ld hl, wStoryModeNameOfMainCharacter ; $4d7e
 	ld a, [wStoryCharacterSlot] ; $4d81
@@ -1683,7 +1683,7 @@ LoadCharStats:
 	pop af ; $4d91
 	ld a, [hl] ; $4d92
 	inc a ; $4d93
-	ld [w6_d016], a ; $4d94
+	ld [wCharDataStats + 8], a ; $4d94
 	push af ; $4d97
 	ld hl, wStoryModeNameOfMainCharacter ; $4d98
 	ld a, [wStoryCharacterSlot] ; $4d9b
@@ -1700,7 +1700,7 @@ LoadCharStats:
 	pop af ; $4dab
 	ld a, [hl] ; $4dac
 	inc a ; $4dad
-	ld [w6_d017], a ; $4dae
+	ld [wCharDataStats + 9], a ; $4dae
 	push af ; $4db1
 	ld hl, wStoryModeNameOfMainCharacter ; $4db2
 	ld a, [wStoryCharacterSlot] ; $4db5
@@ -1717,8 +1717,8 @@ LoadCharStats:
 	pop af ; $4dc5
 	ld a, [hl] ; $4dc6
 	inc a ; $4dc7
-	ld [w6_d018], a ; $4dc8
-	ld hl, w6_d019 ; $4dcb
+	ld [wCharDataStats + 10], a ; $4dc8
+	ld hl, wCharDataStatDeltas ; $4dcb
 	ld b, $0b ; $4dce
 	xor a, a ; $4dd0
 .clearLoop:
@@ -1728,7 +1728,7 @@ LoadCharStats:
 	ret ; $4dd5
 CharDataScreen_DrawPageColumns:
 	wram_bank $06 ; $4dd6
-	ld a, [w6_d024] ; $4ddc
+	ld a, [wCharDataPage] ; $4ddc
 	rlca ; $4ddf
 	push af ; $4de0
 	rlca ; $4de1
@@ -1767,7 +1767,7 @@ CharDataScreen_DrawPageColumns:
 	and a, $01 ; $4e0a
 	jr nz, .nextRow ; $4e0c
 	wram_bank $06 ; $4e0e
-	ld a, [w6_d024] ; $4e14
+	ld a, [wCharDataPage] ; $4e14
 	cp a, $04 ; $4e17
 	jr z, .nextRow ; $4e19
 	dec de ; $4e1b
@@ -1802,12 +1802,12 @@ Data_1c_4e4a:
 DrawStatValueSprites:
 	wram_bank $06 ; $4e54
 	ld b, $0e ; $4e5a
-	ld a, [w6_d00a] ; $4e5c
+	ld a, [wCharDataLevels] ; $4e5c
 	ld l, a ; $4e5f
-	ld a, [w6_d028] ; $4e60
+	ld a, [wCharDataLevelPreview] ; $4e60
 	or a, a ; $4e63
 	jr nz, .digits1 ; $4e64
-	ld a, [w6_d024] ; $4e66
+	ld a, [wCharDataPage] ; $4e66
 	or a, a ; $4e69
 	jr nz, .digits1 ; $4e6a
 	inc l ; $4e6c
@@ -1851,12 +1851,12 @@ DrawStatValueSprites:
 	call QueueSprite ; $4eb0
 .stat2:
 	ld b, $0e ; $4eb3
-	ld a, [w6_d00b] ; $4eb5
+	ld a, [wCharDataLevels + 1] ; $4eb5
 	ld l, a ; $4eb8
-	ld a, [w6_d028] ; $4eb9
+	ld a, [wCharDataLevelPreview] ; $4eb9
 	or a, a ; $4ebc
 	jr nz, .digits2 ; $4ebd
-	ld a, [w6_d024] ; $4ebf
+	ld a, [wCharDataPage] ; $4ebf
 	cp a, $01 ; $4ec2
 	jr nz, .digits2 ; $4ec4
 	inc l ; $4ec6
@@ -1900,12 +1900,12 @@ DrawStatValueSprites:
 	call QueueSprite ; $4f0d
 .stat3:
 	ld b, $0e ; $4f10
-	ld a, [w6_d00c] ; $4f12
+	ld a, [wCharDataLevels + 2] ; $4f12
 	ld l, a ; $4f15
-	ld a, [w6_d028] ; $4f16
+	ld a, [wCharDataLevelPreview] ; $4f16
 	or a, a ; $4f19
 	jr nz, .digits3 ; $4f1a
-	ld a, [w6_d024] ; $4f1c
+	ld a, [wCharDataPage] ; $4f1c
 	cp a, $02 ; $4f1f
 	jr nz, .digits3 ; $4f21
 	inc l ; $4f23
@@ -1949,12 +1949,12 @@ DrawStatValueSprites:
 	call QueueSprite ; $4f6a
 .stat4:
 	ld b, $0e ; $4f6d
-	ld a, [w6_d00d] ; $4f6f
+	ld a, [wCharDataLevels + 3] ; $4f6f
 	ld l, a ; $4f72
-	ld a, [w6_d028] ; $4f73
+	ld a, [wCharDataLevelPreview] ; $4f73
 	or a, a ; $4f76
 	jr nz, .digits4 ; $4f77
-	ld a, [w6_d024] ; $4f79
+	ld a, [wCharDataPage] ; $4f79
 	cp a, $03 ; $4f7c
 	jr nz, .digits4 ; $4f7e
 	inc l ; $4f80
@@ -2009,7 +2009,7 @@ GetStatDigitSpritePos:
 	ld a, [hl+] ; $4fd6
 	ld h, [hl] ; $4fd7
 	ld l, a ; $4fd8
-	ld a, [w6_d026] ; $4fd9
+	ld a, [wCharDataRevealTimer] ; $4fd9
 	rlca ; $4fdc
 	add a, l ; $4fdd
 	ld l, a ; $4fde
@@ -2027,7 +2027,7 @@ RadialOffsetRamps_1c:
 	INCBIN "data/bank_01c/d_4fe9.bin" ; $4fe9, 96 bytes
 DrawRemainingPointsSprite:
 	wram_bank $06 ; $5049
-	ld a, [w6_d009] ; $504f
+	ld a, [wCharDataPointsLeft] ; $504f
 	cp a, $0a ; $5052
 	jr c, .lt0a ; $5054
 	ld h, $00 ; $5056
@@ -2061,7 +2061,7 @@ DrawRemainingPointsSprite:
 	call QueueSprite ; $5090
 	ret ; $5093
 OffsetStatSpriteX:
-	ld a, [w6_d027] ; $5094
+	ld a, [wCharDataRevealStep] ; $5094
 	rlca ; $5097
 	rlca ; $5098
 	rlca ; $5099
@@ -2115,7 +2115,7 @@ CharDataScreen_InputLoop:
 	jp CharDataScreen_InputLoop ; $50f6
 .pressB:
 	wram_bank $06 ; $50f9
-	ld a, [w6_d024] ; $50ff
+	ld a, [wCharDataPage] ; $50ff
 	cp a, $04 ; $5102
 	jr nz, .selectConfirmCell ; $5104
 	call ApplyCharStatLevelUp ; $5106
@@ -2125,7 +2125,7 @@ CharDataScreen_InputLoop:
 	ret ; $510f
 .selectConfirmCell:
 	ld a, $04 ; $5110
-	ld [w6_d024], a ; $5112
+	ld [wCharDataPage], a ; $5112
 	call RestoreCharDataScreenRow ; $5115
 	call LoadCharStats ; $5118
 	call CharDataScreen_DrawStats ; $511b
@@ -2135,7 +2135,7 @@ CharDataScreen_InputLoop:
 	jp nz, CharDataScreen_InputLoop ; $5127
 .pressA:
 	wram_bank $06 ; $512a
-	ld a, [w6_d024] ; $5130
+	ld a, [wCharDataPage] ; $5130
 	cp a, $04 ; $5133
 	jp z, CharDataScreen_InputLoop ; $5135
 	sound $5f ; $5138
@@ -2143,20 +2143,20 @@ CharDataScreen_InputLoop:
 	ld a, [wStoryCharacterSlot] ; $513b
 	farcall LevelUpPlayer ; $513e
 	wram_bank $06 ; $5141
-	ld hl, w6_d009 ; $5147
+	ld hl, wCharDataPointsLeft ; $5147
 	dec [hl] ; $514a
-	ld a, [w6_d029] ; $514b
+	ld a, [wCharDataChoiceCount] ; $514b
 	add a, $2a ; $514e
 	ld l, a ; $5150
 	adc a, $d0 ; $5151
 	sub a, l ; $5153
 	ld h, a ; $5154
-	ld a, [w6_d024] ; $5155
+	ld a, [wCharDataPage] ; $5155
 	ld [hl], a ; $5158
-	ld hl, w6_d029 ; $5159
+	ld hl, wCharDataChoiceCount ; $5159
 	inc [hl] ; $515c
 	ld a, $04 ; $515d
-	ld [w6_d024], a ; $515f
+	ld [wCharDataPage], a ; $515f
 	test_flag FLAG_CHAR_DATA_START_EXITS ; $5162
 	jr nz, .checkStatCap ; $5165
 	ld a, [wStoryCharacterSlot] ; $5167
@@ -2209,9 +2209,9 @@ CharDataScreen_InputLoop:
 	call BlitTilemapRunsFromTable ; $51d1
 	wram_bank $06 ; $51d4
 	ld a, $01 ; $51da
-	ld [w6_d027], a ; $51dc
-	ld [w6_d025], a ; $51df
-	ld [w6_d028], a ; $51e2
+	ld [wCharDataRevealStep], a ; $51dc
+	ld [wCharDataConfirmState], a ; $51df
+	ld [wCharDataLevelPreview], a ; $51e2
 	call FlushCharDataTilemaps ; $51e5
 	call RestoreCharDataScreenRow ; $51e8
 	call DrawCharStatRows ; $51eb
@@ -2223,11 +2223,11 @@ CharDataScreen_InputLoop:
 	call BlitTilemapRunsFromTable ; $51fd
 	wram_bank $06 ; $5200
 	ld a, $02 ; $5206
-	ld [w6_d027], a ; $5208
+	ld [wCharDataRevealStep], a ; $5208
 	call FlushCharDataTilemaps ; $520b
 	wram_bank $06 ; $520e
 	ld a, $03 ; $5214
-	ld [w6_d027], a ; $5216
+	ld [wCharDataRevealStep], a ; $5216
 	ld hl, DrawRemainingPointsSprite ; $5219
 	call UnregisterFrameTask ; $521c
 	call RestoreCharDataScreenRow ; $521f
@@ -2281,13 +2281,13 @@ CharDataScreen_InputLoop:
 	and a, $c0 ; $52a1
 	jr z, .confirmLoop ; $52a3
 	sound $5e ; $52a5
-	ld a, [w6_d025] ; $52a7
+	ld a, [wCharDataConfirmState] ; $52a7
 	xor a, $01 ; $52aa
-	ld [w6_d025], a ; $52ac
+	ld [wCharDataConfirmState], a ; $52ac
 	jr .confirmLoop ; $52af
 .confirmA:
 	wram_bank $06 ; $52b1
-	ld a, [w6_d025] ; $52b7
+	ld a, [wCharDataConfirmState] ; $52b7
 	or a, a ; $52ba
 	jr nz, .cancel ; $52bb
 	sound $5f ; $52bd
@@ -2327,7 +2327,7 @@ CharDataScreen_InputLoop:
 	call FlushCharDataTilemaps ; $531a
 	wram_bank $06 ; $531d
 	ld a, $03 ; $5323
-	ld [w6_d027], a ; $5325
+	ld [wCharDataRevealStep], a ; $5325
 	call FlushCharDataTilemaps ; $5328
 	ld a, $01 ; $532b
 	ld hl, DrawRemainingPointsSprite ; $532d
@@ -2342,7 +2342,7 @@ CharDataScreen_InputLoop:
 	call BlitTilemapRunsFromTable ; $5348
 	wram_bank $06 ; $534b
 	ld a, $02 ; $5351
-	ld [w6_d027], a ; $5353
+	ld [wCharDataRevealStep], a ; $5353
 	call FlushCharDataTilemaps ; $5356
 	call RestoreCharDataScreenRow ; $5359
 	call DrawCharStatRows ; $535c
@@ -2354,12 +2354,12 @@ CharDataScreen_InputLoop:
 	call BlitTilemapRunsFromTable ; $536e
 	wram_bank $06 ; $5371
 	ld a, $01 ; $5377
-	ld [w6_d027], a ; $5379
+	ld [wCharDataRevealStep], a ; $5379
 	call FlushCharDataTilemaps ; $537c
 	wram_bank $06 ; $537f
 	xor a, a ; $5385
-	ld [w6_d028], a ; $5386
-	ld [w6_d027], a ; $5389
+	ld [wCharDataLevelPreview], a ; $5386
+	ld [wCharDataRevealStep], a ; $5389
 	call RestoreCharDataScreenRow ; $538c
 	call DrawCharStatsAndFlush ; $538f
 	call CharDataScreen_DrawPageColumns ; $5392
@@ -2370,7 +2370,7 @@ CharDataScreen_InputLoop:
 	jp CharDataScreen_InputLoop ; $53a0
 DrawConfirmSelectionCursor:
 	wram_bank $06 ; $53a3
-	ld a, [w6_d025] ; $53a9
+	ld a, [wCharDataConfirmState] ; $53a9
 	or a, a ; $53ac
 	jr nz, .nonZero ; $53ad
 	ld bc, $0fd4 ; $53af
@@ -2384,7 +2384,7 @@ DrawConfirmSelectionCursor:
 	ret ; $53c2
 MoveCharDataScreenSelection:
 	wram_bank $06 ; $53c3
-	ld a, [w6_d024] ; $53c9
+	ld a, [wCharDataPage] ; $53c9
 	add a, l ; $53cc
 	ld l, a ; $53cd
 	jr nc, .readTarget ; $53ce
@@ -2393,7 +2393,7 @@ MoveCharDataScreenSelection:
 	ld a, [hl] ; $53d1
 	cp a, $ff ; $53d2
 	ret z ; $53d4
-	ld [w6_d024], a ; $53d5
+	ld [wCharDataPage], a ; $53d5
 	sound $5e ; $53d8
 	cp a, $04 ; $53da
 	jr z, .redraw ; $53dc
@@ -2414,11 +2414,11 @@ MoveCharDataScreenSelection:
 	ret ; $5403
 ApplyCharStatLevelUp:
 	wram_bank $06 ; $5404
-	ld a, [w6_d029] ; $540a
+	ld a, [wCharDataChoiceCount] ; $540a
 	or a, a ; $540d
 	ret z ; $540e
 	sound $62 ; $540f
-	ld hl, w6_d009 ; $5411
+	ld hl, wCharDataPointsLeft ; $5411
 	inc [hl] ; $5414
 	push af ; $5415
 	ld hl, wStoryModeNameOfMainCharacter ; $5416
@@ -2434,7 +2434,7 @@ ApplyCharStatLevelUp:
 	adc a, $00 ; $5426
 	ld h, a ; $5428
 	pop af ; $5429
-	ld a, [w6_d004] ; $542a
+	ld a, [wCharDataLevel] ; $542a
 	ld [hl], a ; $542d
 	push af ; $542e
 	ld hl, wStoryModeNameOfMainCharacter ; $542f
@@ -2450,9 +2450,9 @@ ApplyCharStatLevelUp:
 	adc a, $00 ; $543f
 	ld h, a ; $5441
 	pop af ; $5442
-	ld a, [w6_d005] ; $5443
+	ld a, [wCharDataNewLevels] ; $5443
 	ld [hl], a ; $5446
-	ld [w6_d00a], a ; $5447
+	ld [wCharDataLevels], a ; $5447
 	push af ; $544a
 	ld hl, wStoryModeNameOfMainCharacter ; $544b
 	ld a, [wStoryCharacterSlot] ; $544e
@@ -2467,9 +2467,9 @@ ApplyCharStatLevelUp:
 	adc a, $00 ; $545b
 	ld h, a ; $545d
 	pop af ; $545e
-	ld a, [w6_d006] ; $545f
+	ld a, [wCharDataNewLevels + 1] ; $545f
 	ld [hl], a ; $5462
-	ld [w6_d00b], a ; $5463
+	ld [wCharDataLevels + 1], a ; $5463
 	push af ; $5466
 	ld hl, wStoryModeNameOfMainCharacter ; $5467
 	ld a, [wStoryCharacterSlot] ; $546a
@@ -2484,9 +2484,9 @@ ApplyCharStatLevelUp:
 	adc a, $00 ; $5477
 	ld h, a ; $5479
 	pop af ; $547a
-	ld a, [w6_d007] ; $547b
+	ld a, [wCharDataNewLevels + 2] ; $547b
 	ld [hl], a ; $547e
-	ld [w6_d00c], a ; $547f
+	ld [wCharDataLevels + 2], a ; $547f
 	push af ; $5482
 	ld hl, wStoryModeNameOfMainCharacter ; $5483
 	ld a, [wStoryCharacterSlot] ; $5486
@@ -2501,12 +2501,12 @@ ApplyCharStatLevelUp:
 	adc a, $00 ; $5493
 	ld h, a ; $5495
 	pop af ; $5496
-	ld a, [w6_d008] ; $5497
+	ld a, [wCharDataNewLevels + 3] ; $5497
 	ld [hl], a ; $549a
-	ld [w6_d00d], a ; $549b
+	ld [wCharDataLevels + 3], a ; $549b
 	ld a, [wStoryCharacterSlot] ; $549e
 	farcall RefreshPlayerStatsAndGetPtr ; $54a1
-	ld a, [w6_d029] ; $54a4
+	ld a, [wCharDataChoiceCount] ; $54a4
 	ld c, a ; $54a7
 	ld b, $00 ; $54a8
 .loop:
@@ -2527,11 +2527,11 @@ ApplyCharStatLevelUp:
 	inc b ; $54bf
 	jr .loop ; $54c0
 .countDone:
-	ld a, [w6_d029] ; $54c2
+	ld a, [wCharDataChoiceCount] ; $54c2
 	dec a ; $54c5
-	ld [w6_d029], a ; $54c6
+	ld [wCharDataChoiceCount], a ; $54c6
 	ld a, $04 ; $54c9
-	ld [w6_d024], a ; $54cb
+	ld [wCharDataPage], a ; $54cb
 	call RestoreCharDataScreenRow ; $54ce
 	call LoadCharStats ; $54d1
 	call CharDataScreen_DrawStats ; $54d4
@@ -2543,42 +2543,42 @@ ApplyCharStatLevelUp:
 SelectCharDataConfirmSlot:
 	wram_bank $06 ; $54e3
 	ld a, $04 ; $54e9
-	ld [w6_d024], a ; $54eb
+	ld [wCharDataPage], a ; $54eb
 	call WriteCharStatsToDisplayBuffer ; $54ee
 	ret ; $54f1
 DrawStatArrowIndicators:
 	wram_bank $06 ; $54f2
-	ld a, [w6_d019] ; $54f8
+	ld a, [wCharDataStatDeltas] ; $54f8
 	ld de, $4c24 ; $54fb
 	call QueueStatChangeArrow ; $54fe
-	ld a, [w6_d01a] ; $5501
+	ld a, [wCharDataStatDeltas + 1] ; $5501
 	ld de, $4c34 ; $5504
 	call QueueStatChangeArrow ; $5507
-	ld a, [w6_d01b] ; $550a
+	ld a, [wCharDataStatDeltas + 2] ; $550a
 	ld de, $4c4c ; $550d
 	call QueueStatChangeArrow ; $5510
-	ld a, [w6_d01c] ; $5513
+	ld a, [wCharDataStatDeltas + 3] ; $5513
 	ld de, $4c5c ; $5516
 	call QueueStatChangeArrow ; $5519
-	ld a, [w6_d01d] ; $551c
+	ld a, [wCharDataStatDeltas + 4] ; $551c
 	ld de, $4c6c ; $551f
 	call QueueStatChangeArrow ; $5522
-	ld a, [w6_d01e] ; $5525
+	ld a, [wCharDataStatDeltas + 5] ; $5525
 	ld de, $9c24 ; $5528
 	call QueueStatChangeArrow ; $552b
-	ld a, [w6_d01f] ; $552e
+	ld a, [wCharDataStatDeltas + 6] ; $552e
 	ld de, $9c34 ; $5531
 	call QueueStatChangeArrow ; $5534
-	ld a, [$d020] ; $5537
+	ld a, [wCharDataStatDeltas + 7] ; $5537
 	ld de, $9c4c ; $553a
 	call QueueStatChangeArrow ; $553d
-	ld a, [w6_d021] ; $5540
+	ld a, [wCharDataStatDeltas + 8] ; $5540
 	ld de, $9c5c ; $5543
 	call QueueStatChangeArrow ; $5546
-	ld a, [w6_d022] ; $5549
+	ld a, [wCharDataStatDeltas + 9] ; $5549
 	ld de, $9c6c ; $554c
 	call QueueStatChangeArrow ; $554f
-	ld a, [w6_d023] ; $5552
+	ld a, [wCharDataStatDeltas + 10] ; $5552
 	ld de, $9c7c ; $5555
 	call QueueStatChangeArrow ; $5558
 	ret ; $555b
@@ -2616,7 +2616,7 @@ SetupCharDataScreen:
 	call BlitTilemapRunsFromTable ; $55a1
 	wram_bank $06 ; $55a4
 	xor a, a ; $55aa
-	ld [w6_d026], a ; $55ab
+	ld [wCharDataRevealTimer], a ; $55ab
 	wram_bank $03 ; $55ae
 	ld hl, $d000 ; $55b4
 	ld de, $9800 ; $55b7
@@ -2629,10 +2629,10 @@ SetupCharDataScreen:
 	call QueueVRAMCopy ; $55cd
 	wram_bank $06 ; $55d0
 	ld a, $03 ; $55d6
-	ld [w6_d027], a ; $55d8
+	ld [wCharDataRevealStep], a ; $55d8
 	ld a, $01 ; $55db
-	ld [w6_d025], a ; $55dd
-	ld [w6_d028], a ; $55e0
+	ld [wCharDataConfirmState], a ; $55dd
+	ld [wCharDataLevelPreview], a ; $55e0
 	call EnableLCD ; $55e3
 	call AdvanceFrame ; $55e6
 	ld a, $01 ; $55e9
@@ -3211,7 +3211,7 @@ BackupCharData:
 	ld de, $d0b7 ; $7309
 	ld bc, $0006 ; $730c
 	call CopyMemoryBC ; $730f
-	ld hl, w6_d029 ; $7312
+	ld hl, wCharDataChoiceCount ; $7312
 	ld de, $d0bd ; $7315
 	ld bc, $0065 ; $7318
 	call CopyMemoryBC ; $731b
@@ -3223,7 +3223,7 @@ RestoreCharData:
 	ld bc, $0006 ; $732b
 	call CopyMemoryBC ; $732e
 	ld hl, $d0bd ; $7331
-	ld de, w6_d029 ; $7334
+	ld de, wCharDataChoiceCount ; $7334
 	ld bc, $0065 ; $7337
 	call CopyMemoryBC ; $733a
 	ld a, $01 ; $733d
@@ -3231,7 +3231,7 @@ RestoreCharData:
 	xor a, a ; $7342
 	ld [wStoryCharacterSlot], a ; $7343
 	ld a, [$d003] ; $7346
-	ld [w6_d009], a ; $7349
+	ld [wCharDataPointsLeft], a ; $7349
 	push af ; $734c
 	ld hl, wStoryModeNameOfMainCharacter ; $734d
 	ld a, [wStoryCharacterSlot] ; $7350
@@ -3246,7 +3246,7 @@ RestoreCharData:
 	adc a, $00 ; $735d
 	ld h, a ; $735f
 	pop af ; $7360
-	ld a, [w6_d004] ; $7361
+	ld a, [wCharDataLevel] ; $7361
 	ld [hl], a ; $7364
 	push af ; $7365
 	ld hl, wStoryModeNameOfMainCharacter ; $7366
@@ -3262,9 +3262,9 @@ RestoreCharData:
 	adc a, $00 ; $7376
 	ld h, a ; $7378
 	pop af ; $7379
-	ld a, [w6_d005] ; $737a
+	ld a, [wCharDataNewLevels] ; $737a
 	ld [hl], a ; $737d
-	ld [w6_d00a], a ; $737e
+	ld [wCharDataLevels], a ; $737e
 	push af ; $7381
 	ld hl, wStoryModeNameOfMainCharacter ; $7382
 	ld a, [wStoryCharacterSlot] ; $7385
@@ -3279,9 +3279,9 @@ RestoreCharData:
 	adc a, $00 ; $7392
 	ld h, a ; $7394
 	pop af ; $7395
-	ld a, [w6_d006] ; $7396
+	ld a, [wCharDataNewLevels + 1] ; $7396
 	ld [hl], a ; $7399
-	ld [w6_d00b], a ; $739a
+	ld [wCharDataLevels + 1], a ; $739a
 	push af ; $739d
 	ld hl, wStoryModeNameOfMainCharacter ; $739e
 	ld a, [wStoryCharacterSlot] ; $73a1
@@ -3296,9 +3296,9 @@ RestoreCharData:
 	adc a, $00 ; $73ae
 	ld h, a ; $73b0
 	pop af ; $73b1
-	ld a, [w6_d007] ; $73b2
+	ld a, [wCharDataNewLevels + 2] ; $73b2
 	ld [hl], a ; $73b5
-	ld [w6_d00c], a ; $73b6
+	ld [wCharDataLevels + 2], a ; $73b6
 	push af ; $73b9
 	ld hl, wStoryModeNameOfMainCharacter ; $73ba
 	ld a, [wStoryCharacterSlot] ; $73bd
@@ -3313,14 +3313,14 @@ RestoreCharData:
 	adc a, $00 ; $73ca
 	ld h, a ; $73cc
 	pop af ; $73cd
-	ld a, [w6_d008] ; $73ce
+	ld a, [wCharDataNewLevels + 3] ; $73ce
 	ld [hl], a ; $73d1
-	ld [w6_d00d], a ; $73d2
+	ld [wCharDataLevels + 3], a ; $73d2
 	xor a, a ; $73d5
 	farcall RefreshPlayerStatsAndGetPtr ; $73d6
 	wram_bank $06 ; $73d9
-	ld hl, $d02a ; $73df
-	ld a, [w6_d029] ; $73e2
+	ld hl, wCharDataChoiceLog ; $73df
+	ld a, [wCharDataChoiceCount] ; $73e2
 	ld b, a ; $73e5
 .loop:
 	ld a, [hl+] ; $73e6

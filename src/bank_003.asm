@@ -5729,7 +5729,7 @@ DrawCutsceneTextLines:
 .mulHLByA:
 	call MulHLByA ; $7418
 .step:
-	ld de, $d063 ; $741b
+	ld de, wCharDataChoiceLog + 57 ; $741b
 	add hl, de ; $741e
 	ld d, h ; $741f
 	ld e, l ; $7420

@@ -372,7 +372,7 @@ IntroCutsceneState01Init_6b:
 	call QueueVRAMCopy ; $4284
 	wram_bank $03 ; $4287
 	ld hl, IntroCutsceneState01InitGfx1 ; $428d -> DataPtr_IntroSwingTilemap
-	ld de, w3_d800 ; $4290
+	ld de, wScreenScratch ; $4290
 	call DecompressDataFromBank ; $4293
 	ld hl, IntroCutsceneState01InitGfx2 ; $4296 -> DataPtr_IntroSwingAttrmap
 	ld de, wRulesScreenAnimFrame ; $4299
@@ -483,7 +483,7 @@ IntroCutsceneState03Init_6b:
 	call QueueVRAMCopy ; $4416
 	wram_bank $03 ; $4419
 	ld hl, IntroCutsceneState03InitGfx1 ; $441f -> DataPtr_IntroCloseupTilemap
-	ld de, w3_d800 ; $4422
+	ld de, wScreenScratch ; $4422
 	call DecompressDataFromBank ; $4425
 	ld hl, IntroCutsceneState03InitGfx2 ; $4428 -> DataPtr_IntroCloseupAttrmap
 	ld de, wRulesScreenAnimFrame ; $442b
@@ -625,7 +625,7 @@ IntroCutsceneState05Exit_6b:
 	ldh a, [hWramBank] ; $45ba
 	push af ; $45bc
 	wram_bank $03 ; $45bd
-	ld hl, w3_d060 ; $45c3
+	ld hl, $d060 ; $45c3
 	ld de, $9860 ; $45c6
 	ld c, $0c ; $45c9
 	call QueueVRAMCopy ; $45cb
@@ -2235,11 +2235,11 @@ RunTitleScreen:
 	xor a, a ; $75b8
 	ldh [hScrollX], a ; $75b9
 	ldh [hScrollY], a ; $75bb
-	ld [w3_d800], a ; $75bd
-	ld [wResultScreenMode], a ; $75c0
-	ld [w3_d802], a ; $75c3
+	ld [wScreenScratch], a ; $75bd
+	ld [$d801], a ; $75c0
+	ld [$d802], a ; $75c3
 	ld a, $98 ; $75c6
-	ld [w3_d800], a ; $75c8
+	ld [wScreenScratch], a ; $75c8
 	ld c, $7f ; $75cb
 	call BeginFadeOut ; $75cd
 	call WaitFadeEnd ; $75d0
@@ -2294,7 +2294,7 @@ RunTitleScreen:
 	call WaitFadeEnd ; $7651
 	wram_bank $03 ; $7654
 	ld a, $9f ; $765a
-	ld [w3_d800], a ; $765c
+	ld [wScreenScratch], a ; $765c
 .loop:
 	call StepTitleSpriteAnimation ; $765f
 	call AdvanceFrame ; $7662
@@ -2306,9 +2306,9 @@ RunTitleScreen:
 	ldh a, [hVBlankCounter] ; $766f
 	and a, $07 ; $7671
 	jr nz, .loop ; $7673
-	ld a, [w3_d800] ; $7675
+	ld a, [wScreenScratch] ; $7675
 	inc a ; $7678
-	ld [w3_d800], a ; $7679
+	ld [wScreenScratch], a ; $7679
 	jr z, .playSfx2 ; $767c
 	jr .loop ; $767e
 .playSfx:
@@ -2341,7 +2341,7 @@ QueueTitleSprite:
 	ldh a, [hWramBank] ; $76b6
 	push af ; $76b8
 	wram_bank $03 ; $76b9
-	ld a, [wResultScreenMode] ; $76bf
+	ld a, [$d801] ; $76bf
 	ld hl, TitleSpriteTable0 ; $76c2
 	add a, l ; $76c5
 	ld l, a ; $76c6
@@ -2349,7 +2349,7 @@ QueueTitleSprite:
 	inc h ; $76c9
 .read:
 	ld c, [hl] ; $76ca
-	ld a, [wResultScreenMode] ; $76cb
+	ld a, [$d801] ; $76cb
 	ld hl, TitleSpriteTable1 ; $76ce
 	add a, l ; $76d1
 	ld l, a ; $76d2
@@ -2383,29 +2383,29 @@ SpriteTemplate_6b_76f6:
 	oam_sprite $10, $50, $12, $00
 	oam_sprite_end
 StepTitleSpriteAnimation:
-	ld a, [w3_d802] ; $771f
+	ld a, [$d802] ; $771f
 	or a, a ; $7722
 	jr z, .zero ; $7723
 	inc a ; $7725
-	ld [w3_d802], a ; $7726
+	ld [$d802], a ; $7726
 	cp a, $10 ; $7729
 	jr nz, .done ; $772b
 	xor a, a ; $772d
-	ld [w3_d802], a ; $772e
+	ld [$d802], a ; $772e
 	ret ; $7731
 .zero:
 	ldh a, [hVBlankCounter] ; $7732
 	and a, $07 ; $7734
 	cp a, $07 ; $7736
 	jr nz, .done ; $7738
-	ld a, [wResultScreenMode] ; $773a
+	ld a, [$d801] ; $773a
 	inc a ; $773d
 	and a, $07 ; $773e
-	ld [wResultScreenMode], a ; $7740
+	ld [$d801], a ; $7740
 	cp a, $07 ; $7743
 	jr nz, .done ; $7745
 	ld a, $01 ; $7747
-	ld [w3_d802], a ; $7749
+	ld [$d802], a ; $7749
 .done:
 	ret ; $774c
 	ret ; $774d

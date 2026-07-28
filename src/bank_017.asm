@@ -857,32 +857,32 @@ ShowCourtDiagramTestScreen:
 	script_fade_in $10 ; $4505
 	call WaitFadeEnd ; $450a
 	ld a, $50 ; $450d
-	ld [$d810], a ; $450f
+	ld [wBriefingPlayerX], a ; $450f
 	ld a, $40 ; $4512
-	ld [$d811], a ; $4514
+	ld [wBriefingPlayerY], a ; $4514
 	ld a, $01 ; $4517
 	ld hl, DrawBriefingPlayerSprite ; $4519
 	call RegisterFrameTask ; $451c
 	ld a, $30 ; $451f
-	ld [$d812], a ; $4521
+	ld [wBriefingOpponentX], a ; $4521
 	ld a, $20 ; $4524
-	ld [$d813], a ; $4526
+	ld [wBriefingOpponentY], a ; $4526
 	ld a, $01 ; $4529
 	ld hl, DrawBriefingOpponentSprite ; $452b
 	call RegisterFrameTask ; $452e
 	ld a, $60 ; $4531
-	ld [$d81e], a ; $4533
+	ld [wBriefingBallX], a ; $4533
 	ld a, $30 ; $4536
-	ld [$d81f], a ; $4538
+	ld [wBriefingBallY], a ; $4538
 	ld a, $01 ; $453b
 	ld hl, DrawBriefingBallSprite ; $453d
 	call RegisterFrameTask ; $4540
 	ld a, $01 ; $4543
-	ld [$d82d], a ; $4545
+	ld [wBriefingHMarkerUnflipped], a ; $4545
 	ld a, $60 ; $4548
-	ld [$d81c], a ; $454a
+	ld [wBriefingHMarkerX], a ; $454a
 	ld a, $40 ; $454d
-	ld [$d81d], a ; $454f
+	ld [wBriefingHMarkerY], a ; $454f
 	ld a, $01 ; $4552
 	ld hl, DrawBriefingMarkerHFlip ; $4554
 	call RegisterFrameTask ; $4557
@@ -894,60 +894,60 @@ ShowCourtDiagramTestScreen:
 	ld hl, UpdateAnimatedTilesTask_17 ; $4568
 	call RegisterFrameTask ; $456b
 	ld a, $09 ; $456e
-	ld [$d822], a ; $4570
+	ld [wBriefingSwingFrame], a ; $4570
 	ld a, $40 ; $4573
-	ld [$d814], a ; $4575
+	ld [wBriefingSwingX], a ; $4575
 	ld a, $32 ; $4578
-	ld [$d815], a ; $457a
+	ld [wBriefingSwingY], a ; $457a
 	ld a, $01 ; $457d
 	ld hl, DrawBriefingSwingAnim ; $457f
 	call RegisterFrameTask ; $4582
 	ld a, $40 ; $4585
-	ld [$d81a], a ; $4587
+	ld [wBriefingPole1X], a ; $4587
 	ld a, $20 ; $458a
-	ld [$d81b], a ; $458c
+	ld [wBriefingPole1Y], a ; $458c
 	ld a, $50 ; $458f
-	ld [$d820], a ; $4591
+	ld [wBriefingPole2X], a ; $4591
 	ld a, $20 ; $4594
-	ld [$d821], a ; $4596
+	ld [wBriefingPole2Y], a ; $4596
 	ld a, $01 ; $4599
 	ld hl, DrawBriefingPoleSprites ; $459b
 	call RegisterFrameTask ; $459e
 	ld a, $01 ; $45a1
-	ld [$d825], a ; $45a3
+	ld [wBriefingVMarkerUpright], a ; $45a3
 	ld a, $30 ; $45a6
-	ld [$d823], a ; $45a8
+	ld [wBriefingVMarkerX], a ; $45a8
 	ld a, $20 ; $45ab
-	ld [$d824], a ; $45ad
+	ld [wBriefingVMarkerY], a ; $45ad
 	ld a, $01 ; $45b0
 	ld hl, DrawBriefingMarkerVFlip ; $45b2
 	call RegisterFrameTask ; $45b5
 	ld a, $01 ; $45b8
-	ld [$d826], a ; $45ba
+	ld [wBriefingSpinMarkerUnflipped], a ; $45ba
 	ld a, $20 ; $45bd
-	ld [$d816], a ; $45bf
+	ld [wBriefingSpinMarkerX], a ; $45bf
 	ld a, $40 ; $45c2
-	ld [$d817], a ; $45c4
+	ld [wBriefingSpinMarkerY], a ; $45c4
 	ld a, $01 ; $45c7
 	ld hl, DrawSpinServeBriefingMarker ; $45c9
 	call RegisterFrameTask ; $45cc
 	ld a, $03 ; $45cf
-	ld [$d827], a ; $45d1
+	ld [wBriefingRotMarkerDir], a ; $45d1
 	ld a, $10 ; $45d4
-	ld [$d818], a ; $45d6
+	ld [wBriefingRotMarkerX], a ; $45d6
 	ld a, $10 ; $45d9
-	ld [$d819], a ; $45db
+	ld [wBriefingRotMarkerY], a ; $45db
 	ld a, $01 ; $45de
 	ld hl, DrawBriefingMarkerRotated ; $45e0
 	call RegisterFrameTask ; $45e3
 	ld a, $18 ; $45e6
-	ld [$d82a], a ; $45e8
+	ld [wBriefingBracketWidth], a ; $45e8
 	ld a, $08 ; $45eb
-	ld [$d82b], a ; $45ed
+	ld [wBriefingBracketHeight], a ; $45ed
 	ld a, $20 ; $45f0
-	ld [$d828], a ; $45f2
+	ld [wBriefingBracketX], a ; $45f2
 	ld a, $40 ; $45f5
-	ld [$d829], a ; $45f7
+	ld [wBriefingBracketY], a ; $45f7
 	ld a, $01 ; $45fa
 	ld hl, DrawBriefingTargetBrackets ; $45fc
 	call RegisterFrameTask ; $45ff
@@ -968,9 +968,9 @@ ShowCourtDiagramTestScreen:
 	ld hl, $00e4 ; $4628
 	call DrawBriefingCaption ; $462b
 	ld a, $70 ; $462e
-	ld [$d81c], a ; $4630
+	ld [wBriefingHMarkerX], a ; $4630
 	ld a, $20 ; $4633
-	ld [$d81d], a ; $4635
+	ld [wBriefingHMarkerY], a ; $4635
 	ld a, $01 ; $4638
 	ld hl, DrawBriefingMarkerHFlip ; $463a
 	call RegisterFrameTask ; $463d
@@ -1002,7 +1002,7 @@ CycleDiagramTargetPalette:
 	push af ; $4678
 	wram_bank $03 ; $4679
 	ld hl, CycleDiagramTargetPaletteData ; $467f
-	ld de, $d830 ; $4682
+	ld de, wBriefingTargetPalette ; $4682
 	ld bc, $0008 ; $4685
 	call CopyMemoryBC ; $4688
 	ldh a, [hVBlankCounter] ; $468b
@@ -1030,11 +1030,11 @@ CycleDiagramTargetPalette:
 	ld a, [hl+] ; $46aa
 	ld d, [hl] ; $46ab
 	ld e, a ; $46ac
-	ld hl, w3_d834 ; $46ad
+	ld hl, wBriefingTargetPalette + 4 ; $46ad
 	ld [hl], e ; $46b0
 	inc hl ; $46b1
 	ld [hl], d ; $46b2
-	ld hl, $d830 ; $46b3
+	ld hl, wBriefingTargetPalette ; $46b3
 	ld de, $0201 ; $46b6
 	call LoadPaletteShadow ; $46b9
 	pop af ; $46bc
@@ -1061,9 +1061,9 @@ DrawBriefingPlayerSprite:
 	ldh a, [hWramBank] ; $46e2
 	push af ; $46e4
 	wram_bank $03 ; $46e5
-	ld a, [w3_d810] ; $46eb
+	ld a, [wBriefingPlayerX] ; $46eb
 	ld d, a ; $46ee
-	ld a, [w3_d811] ; $46ef
+	ld a, [wBriefingPlayerY] ; $46ef
 	ld e, a ; $46f2
 	ld hl, SpriteTemplate_17_4703 ; $46f3
 	ld b, $08 ; $46f6
@@ -1081,9 +1081,9 @@ DrawBriefingOpponentSprite:
 	ldh a, [hWramBank] ; $470c
 	push af ; $470e
 	wram_bank $03 ; $470f
-	ld a, [w3_d812] ; $4715
+	ld a, [wBriefingOpponentX] ; $4715
 	ld d, a ; $4718
-	ld a, [w3_d813] ; $4719
+	ld a, [wBriefingOpponentY] ; $4719
 	ld e, a ; $471c
 	ld hl, SpriteTemplate_17_472d ; $471d
 	ld b, $08 ; $4720
@@ -1101,9 +1101,9 @@ DrawBriefingBallSprite:
 	ldh a, [hWramBank] ; $4736
 	push af ; $4738
 	wram_bank $03 ; $4739
-	ld a, [w3_d81e] ; $473f
+	ld a, [wBriefingBallX] ; $473f
 	ld d, a ; $4742
-	ld a, [w3_d81f] ; $4743
+	ld a, [wBriefingBallY] ; $4743
 	ld e, a ; $4746
 	ld c, $6e ; $4747
 	ld b, $09 ; $4749
@@ -1116,19 +1116,19 @@ DrawBriefingMarkerHFlip:
 	push af ; $4756
 	wram_bank $03 ; $4757
 	ld b, $09 ; $475d
-	ld a, [w3_d82d] ; $475f
+	ld a, [wBriefingHMarkerUnflipped] ; $475f
 	cp a, $01 ; $4762
 	jr z, .eq01 ; $4764
 	ld b, $29 ; $4766
 .eq01:
-	ld a, [w3_d81c] ; $4768
+	ld a, [wBriefingHMarkerX] ; $4768
 	ld d, a ; $476b
 	ldh a, [hVBlankCounter] ; $476c
 	and a, $10 ; $476e
 	jr z, .maskClear ; $4770
 	inc d ; $4772
 .maskClear:
-	ld a, [w3_d81d] ; $4773
+	ld a, [wBriefingHMarkerY] ; $4773
 	ld e, a ; $4776
 	ld c, $60 ; $4777
 	ld hl, SpriteTemplate_17_4785 ; $4779
@@ -1145,7 +1145,7 @@ DrawBriefingSwingAnim:
 	ldh a, [hWramBank] ; $478e
 	push af ; $4790
 	wram_bank $03 ; $4791
-	ld a, [$d822] ; $4797
+	ld a, [wBriefingSwingFrame] ; $4797
 	ld hl, BriefingSwingAnimTable0 ; $479a
 	add a, l ; $479d
 	ld l, a ; $479e
@@ -1154,14 +1154,14 @@ DrawBriefingSwingAnim:
 .read:
 	ld c, [hl] ; $47a2
 	ld hl, BriefingSwingAnimTable1 ; $47a3
-	ld a, [$d822] ; $47a6
+	ld a, [wBriefingSwingFrame] ; $47a6
 	cp a, $06 ; $47a9
 	jr nc, .ge06 ; $47ab
 	ld hl, SpriteTemplate_17_47cd ; $47ad
 .ge06:
-	ld a, [w3_d814] ; $47b0
+	ld a, [wBriefingSwingX] ; $47b0
 	ld d, a ; $47b3
-	ld a, [w3_d815] ; $47b4
+	ld a, [wBriefingSwingY] ; $47b4
 	ld e, a ; $47b7
 	ld b, $09 ; $47b8
 	call QueueSpriteTemplate ; $47ba
@@ -1186,16 +1186,16 @@ DrawBriefingPoleSprites:
 	ldh a, [hWramBank] ; $47ef
 	push af ; $47f1
 	wram_bank $03 ; $47f2
-	ld a, [w3_d81a] ; $47f8
+	ld a, [wBriefingPole1X] ; $47f8
 	ld d, a ; $47fb
-	ld a, [w3_d81b] ; $47fc
+	ld a, [wBriefingPole1Y] ; $47fc
 	ld e, a ; $47ff
 	ld c, $6a ; $4800
 	ld b, $09 ; $4802
 	call QueueSprite ; $4804
-	ld a, [$d820] ; $4807
+	ld a, [wBriefingPole2X] ; $4807
 	ld d, a ; $480a
-	ld a, [$d821] ; $480b
+	ld a, [wBriefingPole2Y] ; $480b
 	ld e, a ; $480e
 	ld c, $6a ; $480f
 	ld b, $09 ; $4811
@@ -1209,14 +1209,14 @@ DrawBriefingMarkerVFlip:
 	wram_bank $03 ; $481f
 	ld c, $70 ; $4825
 	ld b, $09 ; $4827
-	ld a, [$d825] ; $4829
+	ld a, [wBriefingVMarkerUpright] ; $4829
 	cp a, $01 ; $482c
 	jr z, .eq01 ; $482e
 	ld b, $49 ; $4830
 .eq01:
-	ld a, [w3_d823] ; $4832
+	ld a, [wBriefingVMarkerX] ; $4832
 	ld d, a ; $4835
-	ld a, [$d824] ; $4836
+	ld a, [wBriefingVMarkerY] ; $4836
 	ld e, a ; $4839
 	call QueueSprite ; $483a
 	pop af ; $483d
@@ -1228,14 +1228,14 @@ DrawSpinServeBriefingMarker:
 	wram_bank $03 ; $4846
 	ld c, $64 ; $484c
 	ld b, $09 ; $484e
-	ld a, [$d826] ; $4850
+	ld a, [wBriefingSpinMarkerUnflipped] ; $4850
 	cp a, $01 ; $4853
 	jr z, .eq01 ; $4855
 	ld b, $29 ; $4857
 .eq01:
-	ld a, [w3_d816] ; $4859
+	ld a, [wBriefingSpinMarkerX] ; $4859
 	ld d, a ; $485c
-	ld a, [w3_d817] ; $485d
+	ld a, [wBriefingSpinMarkerY] ; $485d
 	ld e, a ; $4860
 	ld hl, SpriteTemplate_17_486d ; $4861
 	call QueueSpriteTemplate ; $4864
@@ -1252,7 +1252,7 @@ DrawBriefingMarkerRotated:
 	push af ; $4878
 	wram_bank $03 ; $4879
 	ld hl, BriefingMarkerRotatedTable ; $487f
-	ld a, [w3_d827] ; $4882
+	ld a, [wBriefingRotMarkerDir] ; $4882
 	add a, l ; $4885
 	ld l, a ; $4886
 	jr nc, .read ; $4887
@@ -1260,9 +1260,9 @@ DrawBriefingMarkerRotated:
 .read:
 	ld b, [hl] ; $488a
 	ld c, $68 ; $488b
-	ld a, [w3_d818] ; $488d
+	ld a, [wBriefingRotMarkerX] ; $488d
 	ld d, a ; $4890
-	ld a, [w3_d819] ; $4891
+	ld a, [wBriefingRotMarkerY] ; $4891
 	ld e, a ; $4894
 	call QueueSprite ; $4895
 	pop af ; $4898
@@ -1290,14 +1290,14 @@ DrawBriefingTargetBrackets:
 	ldh a, [hWramBank] ; $48c1
 	push af ; $48c3
 	wram_bank $03 ; $48c4
-	ld a, [w3_d828] ; $48ca
+	ld a, [wBriefingBracketX] ; $48ca
 	ld d, a ; $48cd
 	ldh a, [hVBlankCounter] ; $48ce
 	and a, $10 ; $48d0
 	jr z, .maskClear ; $48d2
 	inc d ; $48d4
 .maskClear:
-	ld a, [$d829] ; $48d5
+	ld a, [wBriefingBracketY] ; $48d5
 	ld e, a ; $48d8
 	ldh a, [hVBlankCounter] ; $48d9
 	and a, $10 ; $48db
@@ -1307,10 +1307,10 @@ DrawBriefingTargetBrackets:
 	ld c, $6c ; $48e0
 	ld b, $0a ; $48e2
 	call QueueSprite ; $48e4
-	ld a, [w3_d82a] ; $48e7
+	ld a, [wBriefingBracketWidth] ; $48e7
 	add a, $03 ; $48ea
 	ld b, a ; $48ec
-	ld a, [w3_d828] ; $48ed
+	ld a, [wBriefingBracketX] ; $48ed
 	add a, b ; $48f0
 	ld d, a ; $48f1
 	ldh a, [hVBlankCounter] ; $48f2
@@ -1318,7 +1318,7 @@ DrawBriefingTargetBrackets:
 	jr z, .maskClear3 ; $48f6
 	dec d ; $48f8
 .maskClear3:
-	ld a, [$d829] ; $48f9
+	ld a, [wBriefingBracketY] ; $48f9
 	ld e, a ; $48fc
 	ldh a, [hVBlankCounter] ; $48fd
 	and a, $10 ; $48ff
@@ -1328,10 +1328,10 @@ DrawBriefingTargetBrackets:
 	ld c, $6c ; $4904
 	ld b, $2a ; $4906
 	call QueueSprite ; $4908
-	ld a, [w3_d82a] ; $490b
+	ld a, [wBriefingBracketWidth] ; $490b
 	add a, $03 ; $490e
 	ld b, a ; $4910
-	ld a, [w3_d828] ; $4911
+	ld a, [wBriefingBracketX] ; $4911
 	add a, b ; $4914
 	ld d, a ; $4915
 	ldh a, [hVBlankCounter] ; $4916
@@ -1339,10 +1339,10 @@ DrawBriefingTargetBrackets:
 	jr z, .maskClear5 ; $491a
 	dec d ; $491c
 .maskClear5:
-	ld a, [w3_d82b] ; $491d
+	ld a, [wBriefingBracketHeight] ; $491d
 	sub a, $05 ; $4920
 	ld b, a ; $4922
-	ld a, [$d829] ; $4923
+	ld a, [wBriefingBracketY] ; $4923
 	add a, b ; $4926
 	ld e, a ; $4927
 	ldh a, [hVBlankCounter] ; $4928
@@ -1353,17 +1353,17 @@ DrawBriefingTargetBrackets:
 	ld c, $6c ; $492f
 	ld b, $6a ; $4931
 	call QueueSprite ; $4933
-	ld a, [w3_d828] ; $4936
+	ld a, [wBriefingBracketX] ; $4936
 	ld d, a ; $4939
 	ldh a, [hVBlankCounter] ; $493a
 	and a, $10 ; $493c
 	jr z, .maskClear7 ; $493e
 	inc d ; $4940
 .maskClear7:
-	ld a, [w3_d82b] ; $4941
+	ld a, [wBriefingBracketHeight] ; $4941
 	sub a, $05 ; $4944
 	ld b, a ; $4946
-	ld a, [$d829] ; $4947
+	ld a, [wBriefingBracketY] ; $4947
 	add a, b ; $494a
 	ld e, a ; $494b
 	ldh a, [hVBlankCounter] ; $494c
@@ -1645,7 +1645,7 @@ Palette_17_5567:
 	INCLUDE "data/bank_017/palettes_5567.asm" ; $5567, 24 bytes (palettes)
 DrillBriefing_ServeToTargets:
 	ld a, $03 ; $557f
-	ld [$d82e], a ; $5581
+	ld [wBriefingAnimStep], a ; $5581
 	call ServeToTargetsBriefing_AdvanceAnim ; $5584
 	ld a, $01 ; $5587
 	ld hl, DrawBriefingPlayerSprite ; $5589
@@ -1665,8 +1665,8 @@ DrillBriefing_ServeToTargets:
 	ld hl, $1ab0 ; $55af
 	call DrawBriefingCaption ; $55b2
 	xor a, a ; $55b5
-	ld [$d82c], a ; $55b6
-	ld [$d82e], a ; $55b9
+	ld [wBriefingAnimTimer], a ; $55b6
+	ld [wBriefingAnimStep], a ; $55b9
 .loop:
 	call ServeToTargetsBriefing_TickAnim ; $55bc
 	ld c, $00 ; $55bf
@@ -1678,7 +1678,7 @@ DrillBriefing_ServeToTargets:
 	ld hl, UpdateAnimatedTilesTask_17 ; $55cd
 	call RegisterFrameTask ; $55d0
 	ld a, $03 ; $55d3
-	ld [$d82e], a ; $55d5
+	ld [wBriefingAnimStep], a ; $55d5
 	call ServeToTargetsBriefing_AdvanceAnim ; $55d8
 	ld a, $01 ; $55db
 	ld hl, DrawBriefingPlayerSprite ; $55dd
@@ -1690,17 +1690,17 @@ DrillBriefing_ServeToTargets:
 	ld hl, CycleDiagramTargetPalette ; $55ed
 	call RegisterFrameTask ; $55f0
 	ld a, $00 ; $55f3
-	ld [$d82a], a ; $55f5
+	ld [wBriefingBracketWidth], a ; $55f5
 	ld a, $00 ; $55f8
-	ld [$d82b], a ; $55fa
+	ld [wBriefingBracketHeight], a ; $55fa
 	ld a, $01 ; $55fd
 	ld hl, DrawBriefingTargetBrackets ; $55ff
 	call RegisterFrameTask ; $5602
 	ld hl, $1ab1 ; $5605
 	call DrawBriefingCaption ; $5608
 	xor a, a ; $560b
-	ld [$d82c], a ; $560c
-	ld [$d82e], a ; $560f
+	ld [wBriefingAnimTimer], a ; $560c
+	ld [wBriefingAnimStep], a ; $560f
 .loopB:
 	call ServeToTargetsBriefing_TickAnim ; $5612
 	ld c, $00 ; $5615
@@ -1712,34 +1712,34 @@ DrillBriefing_ServeToTargets:
 	ld hl, UpdateAnimatedTilesTask_17 ; $5623
 	call RegisterFrameTask ; $5626
 	ld a, $54 ; $5629
-	ld [$d810], a ; $562b
+	ld [wBriefingPlayerX], a ; $562b
 	ld a, $44 ; $562e
-	ld [$d811], a ; $5630
+	ld [wBriefingPlayerY], a ; $5630
 	ld a, $01 ; $5633
 	ld hl, DrawBriefingPlayerSprite ; $5635
 	call RegisterFrameTask ; $5638
 	ld a, $4e ; $563b
-	ld [$d81e], a ; $563d
+	ld [wBriefingBallX], a ; $563d
 	ld a, $38 ; $5640
-	ld [$d81f], a ; $5642
+	ld [wBriefingBallY], a ; $5642
 	ld a, $01 ; $5645
 	ld hl, DrawBriefingBallSprite ; $5647
 	call RegisterFrameTask ; $564a
 	ld a, $00 ; $564d
-	ld [$d82d], a ; $564f
+	ld [wBriefingHMarkerUnflipped], a ; $564f
 	ld a, $3a ; $5652
-	ld [$d81c], a ; $5654
+	ld [wBriefingHMarkerX], a ; $5654
 	ld a, $24 ; $5657
-	ld [$d81d], a ; $5659
+	ld [wBriefingHMarkerY], a ; $5659
 	ld a, $01 ; $565c
 	ld hl, DrawBriefingMarkerHFlip ; $565e
 	call RegisterFrameTask ; $5661
 	ld a, $03 ; $5664
-	ld [$d827], a ; $5666
+	ld [wBriefingRotMarkerDir], a ; $5666
 	ld a, $52 ; $5669
-	ld [$d818], a ; $566b
+	ld [wBriefingRotMarkerX], a ; $566b
 	ld a, $40 ; $566e
-	ld [$d819], a ; $5670
+	ld [wBriefingRotMarkerY], a ; $5670
 	ld a, $01 ; $5673
 	ld hl, DrawBriefingMarkerRotated ; $5675
 	call RegisterFrameTask ; $5678
@@ -1749,13 +1749,13 @@ DrillBriefing_ServeToTargets:
 	ld hl, CycleDiagramTargetPalette ; $5682
 	call RegisterFrameTask ; $5685
 	ld a, $00 ; $5688
-	ld [$d82a], a ; $568a
+	ld [wBriefingBracketWidth], a ; $568a
 	ld a, $00 ; $568d
-	ld [$d82b], a ; $568f
+	ld [wBriefingBracketHeight], a ; $568f
 	ld a, $40 ; $5692
-	ld [$d828], a ; $5694
+	ld [wBriefingBracketX], a ; $5694
 	ld a, $24 ; $5697
-	ld [$d829], a ; $5699
+	ld [wBriefingBracketY], a ; $5699
 	ld a, $01 ; $569c
 	ld hl, DrawBriefingTargetBrackets ; $569e
 	call RegisterFrameTask ; $56a1
@@ -1767,7 +1767,7 @@ DrillBriefing_ServeToTargets:
 	ld hl, UpdateAnimatedTilesTask_17 ; $56b2
 	call RegisterFrameTask ; $56b5
 	ld a, $03 ; $56b8
-	ld [$d82e], a ; $56ba
+	ld [wBriefingAnimStep], a ; $56ba
 	call ServeToTargetsBriefing_AdvanceAnim ; $56bd
 	ld a, $01 ; $56c0
 	ld hl, DrawBriefingPlayerSprite ; $56c2
@@ -1782,17 +1782,17 @@ DrillBriefing_ServeToTargets:
 	ld hl, CycleDiagramTargetPalette ; $56da
 	call RegisterFrameTask ; $56dd
 	ld a, $00 ; $56e0
-	ld [$d82a], a ; $56e2
+	ld [wBriefingBracketWidth], a ; $56e2
 	ld a, $00 ; $56e5
-	ld [$d82b], a ; $56e7
+	ld [wBriefingBracketHeight], a ; $56e7
 	ld a, $01 ; $56ea
 	ld hl, DrawBriefingTargetBrackets ; $56ec
 	call RegisterFrameTask ; $56ef
 	ld hl, $1ab3 ; $56f2
 	call DrawBriefingCaption ; $56f5
 	xor a, a ; $56f8
-	ld [$d82c], a ; $56f9
-	ld [$d82e], a ; $56fc
+	ld [wBriefingAnimTimer], a ; $56f9
+	ld [wBriefingAnimStep], a ; $56fc
 .loop2:
 	call ServeToTargetsBriefing_TickAnim ; $56ff
 	ld c, $01 ; $5702
@@ -1802,19 +1802,19 @@ DrillBriefing_ServeToTargets:
 	call ClearFrameTasks ; $570b
 	ret ; $570e
 ServeToTargetsBriefing_TickAnim:
-	ld a, [$d82c] ; $570f
+	ld a, [wBriefingAnimTimer] ; $570f
 	inc a ; $5712
-	ld [$d82c], a ; $5713
+	ld [wBriefingAnimTimer], a ; $5713
 	cp a, $78 ; $5716
 	jr nc, ServeToTargetsBriefing_AdvanceAnim ; $5718
 	ret ; $571a
 ServeToTargetsBriefing_AdvanceAnim:
 	xor a, a ; $571b
-	ld [$d82c], a ; $571c
-	ld a, [$d82e] ; $571f
+	ld [wBriefingAnimTimer], a ; $571c
+	ld a, [wBriefingAnimStep] ; $571f
 	inc a ; $5722
 	and a, $03 ; $5723
-	ld [$d82e], a ; $5725
+	ld [wBriefingAnimStep], a ; $5725
 	sla a ; $5728
 	sla a ; $572a
 	ld c, a ; $572c
@@ -1828,9 +1828,9 @@ ServeToTargetsBriefing_AdvanceAnim:
 	inc hl ; $5736
 	ld b, [hl] ; $5737
 	ld a, a ; $5738
-	ld [$d810], a ; $5739
+	ld [wBriefingPlayerX], a ; $5739
 	ld a, b ; $573c
-	ld [$d811], a ; $573d
+	ld [wBriefingPlayerY], a ; $573d
 	ld a, c ; $5740
 	add a, LOW(Data_17_5807) ; $5741
 	ld l, a ; $5743
@@ -1842,9 +1842,9 @@ ServeToTargetsBriefing_AdvanceAnim:
 	inc hl ; $574a
 	ld b, [hl] ; $574b
 	ld a, a ; $574c
-	ld [$d828], a ; $574d
+	ld [wBriefingBracketX], a ; $574d
 	ld a, b ; $5750
-	ld [$d829], a ; $5751
+	ld [wBriefingBracketY], a ; $5751
 	ld a, c ; $5754
 	add a, LOW(Data_17_57cb) ; $5755
 	ld l, a ; $5757
@@ -1856,17 +1856,17 @@ ServeToTargetsBriefing_AdvanceAnim:
 	inc hl ; $575e
 	ld b, [hl] ; $575f
 	ld a, a ; $5760
-	ld [$d81e], a ; $5761
+	ld [wBriefingBallX], a ; $5761
 	ld a, b ; $5764
-	ld [$d81f], a ; $5765
-	ld a, [$d82e] ; $5768
+	ld [wBriefingBallY], a ; $5765
+	ld a, [wBriefingAnimStep] ; $5768
 	add a, LOW(Data_17_57db) ; $576b
 	ld l, a ; $576d
 	adc a, HIGH(Data_17_57db) ; $576e
 	sub a, l ; $5770
 	ld h, a ; $5771
 	ld a, [hl] ; $5772
-	ld [$d82d], a ; $5773
+	ld [wBriefingHMarkerUnflipped], a ; $5773
 	ld a, c ; $5776
 	add a, LOW(Data_17_57df) ; $5777
 	ld l, a ; $5779
@@ -1878,17 +1878,17 @@ ServeToTargetsBriefing_AdvanceAnim:
 	inc hl ; $5780
 	ld b, [hl] ; $5781
 	ld a, a ; $5782
-	ld [$d81c], a ; $5783
+	ld [wBriefingHMarkerX], a ; $5783
 	ld a, b ; $5786
-	ld [$d81d], a ; $5787
-	ld a, [$d82e] ; $578a
+	ld [wBriefingHMarkerY], a ; $5787
+	ld a, [wBriefingAnimStep] ; $578a
 	add a, LOW(Data_17_57ef) ; $578d
 	ld l, a ; $578f
 	adc a, HIGH(Data_17_57ef) ; $5790
 	sub a, l ; $5792
 	ld h, a ; $5793
 	ld a, [hl] ; $5794
-	ld [$d827], a ; $5795
+	ld [wBriefingRotMarkerDir], a ; $5795
 	ld a, c ; $5798
 	add a, LOW(Data_17_57f3) ; $5799
 	ld l, a ; $579b
@@ -1900,10 +1900,10 @@ ServeToTargetsBriefing_AdvanceAnim:
 	inc hl ; $57a2
 	ld b, [hl] ; $57a3
 	ld a, a ; $57a4
-	ld [$d818], a ; $57a5
+	ld [wBriefingRotMarkerX], a ; $57a5
 	ld a, b ; $57a8
-	ld [$d819], a ; $57a9
-	ld a, [$d82e] ; $57ac
+	ld [wBriefingRotMarkerY], a ; $57a9
+	ld a, [wBriefingAnimStep] ; $57ac
 	add a, LOW(Data_17_5803) ; $57af
 	ld l, a ; $57b1
 	adc a, HIGH(Data_17_5803) ; $57b2
@@ -1938,7 +1938,7 @@ Data_17_5807:
 	INCBIN "data/bank_017/d_5807.bin" ; $5807, 16 bytes
 DrillBriefing_SpinServe:
 	ld a, $03 ; $5817
-	ld [$d82e], a ; $5819
+	ld [wBriefingAnimStep], a ; $5819
 	call SpinServeBriefing_AdvanceAnim ; $581c
 	ld a, $01 ; $581f
 	ld hl, DrawBriefingPlayerSprite ; $5821
@@ -1958,8 +1958,8 @@ DrillBriefing_SpinServe:
 	ld hl, $1ab4 ; $5847
 	call DrawBriefingCaption ; $584a
 	xor a, a ; $584d
-	ld [$d82c], a ; $584e
-	ld [$d82e], a ; $5851
+	ld [wBriefingAnimTimer], a ; $584e
+	ld [wBriefingAnimStep], a ; $5851
 .loop:
 	call SpinServeBriefing_TickAnim ; $5854
 	ld c, $00 ; $5857
@@ -1971,7 +1971,7 @@ DrillBriefing_SpinServe:
 	ld hl, UpdateAnimatedTilesTask_17 ; $5865
 	call RegisterFrameTask ; $5868
 	ld a, $03 ; $586b
-	ld [$d82e], a ; $586d
+	ld [wBriefingAnimStep], a ; $586d
 	call SpinServeBriefing_AdvanceAnim ; $5870
 	ld a, $01 ; $5873
 	ld hl, DrawBriefingPlayerSprite ; $5875
@@ -1983,17 +1983,17 @@ DrillBriefing_SpinServe:
 	ld hl, CycleDiagramTargetPalette ; $5885
 	call RegisterFrameTask ; $5888
 	ld a, $00 ; $588b
-	ld [$d82a], a ; $588d
+	ld [wBriefingBracketWidth], a ; $588d
 	ld a, $00 ; $5890
-	ld [$d82b], a ; $5892
+	ld [wBriefingBracketHeight], a ; $5892
 	ld a, $01 ; $5895
 	ld hl, DrawBriefingTargetBrackets ; $5897
 	call RegisterFrameTask ; $589a
 	ld hl, $1ab5 ; $589d
 	call DrawBriefingCaption ; $58a0
 	xor a, a ; $58a3
-	ld [$d82c], a ; $58a4
-	ld [$d82e], a ; $58a7
+	ld [wBriefingAnimTimer], a ; $58a4
+	ld [wBriefingAnimStep], a ; $58a7
 .loopB:
 	call SpinServeBriefing_TickAnim ; $58aa
 	ld c, $00 ; $58ad
@@ -2005,34 +2005,34 @@ DrillBriefing_SpinServe:
 	ld hl, UpdateAnimatedTilesTask_17 ; $58bb
 	call RegisterFrameTask ; $58be
 	ld a, $52 ; $58c1
-	ld [$d810], a ; $58c3
+	ld [wBriefingPlayerX], a ; $58c3
 	ld a, $44 ; $58c6
-	ld [$d811], a ; $58c8
+	ld [wBriefingPlayerY], a ; $58c8
 	ld a, $01 ; $58cb
 	ld hl, DrawBriefingPlayerSprite ; $58cd
 	call RegisterFrameTask ; $58d0
 	ld a, $4e ; $58d3
-	ld [$d81e], a ; $58d5
+	ld [wBriefingBallX], a ; $58d5
 	ld a, $38 ; $58d8
-	ld [$d81f], a ; $58da
+	ld [wBriefingBallY], a ; $58da
 	ld a, $01 ; $58dd
 	ld hl, DrawBriefingBallSprite ; $58df
 	call RegisterFrameTask ; $58e2
 	ld a, $00 ; $58e5
-	ld [$d82d], a ; $58e7
+	ld [wBriefingHMarkerUnflipped], a ; $58e7
 	ld a, $3a ; $58ea
-	ld [$d81c], a ; $58ec
+	ld [wBriefingHMarkerX], a ; $58ec
 	ld a, $24 ; $58ef
-	ld [$d81d], a ; $58f1
+	ld [wBriefingHMarkerY], a ; $58f1
 	ld a, $01 ; $58f4
 	ld hl, DrawBriefingMarkerHFlip ; $58f6
 	call RegisterFrameTask ; $58f9
 	ld a, $03 ; $58fc
-	ld [$d827], a ; $58fe
+	ld [wBriefingRotMarkerDir], a ; $58fe
 	ld a, $52 ; $5901
-	ld [$d818], a ; $5903
+	ld [wBriefingRotMarkerX], a ; $5903
 	ld a, $40 ; $5906
-	ld [$d819], a ; $5908
+	ld [wBriefingRotMarkerY], a ; $5908
 	ld a, $01 ; $590b
 	ld hl, DrawBriefingMarkerRotated ; $590d
 	call RegisterFrameTask ; $5910
@@ -2042,13 +2042,13 @@ DrillBriefing_SpinServe:
 	ld hl, CycleDiagramTargetPalette ; $591a
 	call RegisterFrameTask ; $591d
 	ld a, $00 ; $5920
-	ld [$d82a], a ; $5922
+	ld [wBriefingBracketWidth], a ; $5922
 	ld a, $00 ; $5925
-	ld [$d82b], a ; $5927
+	ld [wBriefingBracketHeight], a ; $5927
 	ld a, $40 ; $592a
-	ld [$d828], a ; $592c
+	ld [wBriefingBracketX], a ; $592c
 	ld a, $24 ; $592f
-	ld [$d829], a ; $5931
+	ld [wBriefingBracketY], a ; $5931
 	ld a, $01 ; $5934
 	ld hl, DrawBriefingTargetBrackets ; $5936
 	call RegisterFrameTask ; $5939
@@ -2060,34 +2060,34 @@ DrillBriefing_SpinServe:
 	ld hl, UpdateAnimatedTilesTask_17 ; $594a
 	call RegisterFrameTask ; $594d
 	ld a, $52 ; $5950
-	ld [$d810], a ; $5952
+	ld [wBriefingPlayerX], a ; $5952
 	ld a, $44 ; $5955
-	ld [$d811], a ; $5957
+	ld [wBriefingPlayerY], a ; $5957
 	ld a, $01 ; $595a
 	ld hl, DrawBriefingPlayerSprite ; $595c
 	call RegisterFrameTask ; $595f
 	ld a, $46 ; $5962
-	ld [$d81e], a ; $5964
+	ld [wBriefingBallX], a ; $5964
 	ld a, $28 ; $5967
-	ld [$d81f], a ; $5969
+	ld [wBriefingBallY], a ; $5969
 	ld a, $01 ; $596c
 	ld hl, DrawBriefingBallSprite ; $596e
 	call RegisterFrameTask ; $5971
 	ld a, $03 ; $5974
-	ld [$d827], a ; $5976
+	ld [wBriefingRotMarkerDir], a ; $5976
 	ld a, $49 ; $5979
-	ld [$d818], a ; $597b
+	ld [wBriefingRotMarkerX], a ; $597b
 	ld a, $2f ; $597e
-	ld [$d819], a ; $5980
+	ld [wBriefingRotMarkerY], a ; $5980
 	ld a, $01 ; $5983
 	ld hl, DrawBriefingMarkerRotated ; $5985
 	call RegisterFrameTask ; $5988
 	ld a, $01 ; $598b
-	ld [$d826], a ; $598d
+	ld [wBriefingSpinMarkerUnflipped], a ; $598d
 	ld a, $30 ; $5990
-	ld [$d816], a ; $5992
+	ld [wBriefingSpinMarkerX], a ; $5992
 	ld a, $22 ; $5995
-	ld [$d817], a ; $5997
+	ld [wBriefingSpinMarkerY], a ; $5997
 	ld a, $01 ; $599a
 	ld hl, DrawSpinServeBriefingMarker ; $599c
 	call RegisterFrameTask ; $599f
@@ -2104,7 +2104,7 @@ DrillBriefing_SpinServe:
 	ld hl, UpdateAnimatedTilesTask_17 ; $59bd
 	call RegisterFrameTask ; $59c0
 	ld a, $00 ; $59c3
-	ld [$d82e], a ; $59c5
+	ld [wBriefingAnimStep], a ; $59c5
 	call SpinServeBriefing_AdvanceAnim2 ; $59c8
 	ld a, $01 ; $59cb
 	ld hl, DrawBriefingPlayerSprite ; $59cd
@@ -2132,8 +2132,8 @@ DrillBriefing_SpinServe:
 .drawBriefingCaption:
 	call DrawBriefingCaption ; $5a07
 	xor a, a ; $5a0a
-	ld [$d82c], a ; $5a0b
-	ld [$d82e], a ; $5a0e
+	ld [wBriefingAnimTimer], a ; $5a0b
+	ld [wBriefingAnimStep], a ; $5a0e
 .loop2:
 	call SpinServeBriefing_TickAnim2 ; $5a11
 	ld c, $00 ; $5a14
@@ -2145,7 +2145,7 @@ DrillBriefing_SpinServe:
 	ld hl, UpdateAnimatedTilesTask_17 ; $5a22
 	call RegisterFrameTask ; $5a25
 	ld a, $03 ; $5a28
-	ld [$d82e], a ; $5a2a
+	ld [wBriefingAnimStep], a ; $5a2a
 	call SpinServeBriefing_AdvanceAnim ; $5a2d
 	ld a, $01 ; $5a30
 	ld hl, DrawBriefingPlayerSprite ; $5a32
@@ -2165,8 +2165,8 @@ DrillBriefing_SpinServe:
 	ld hl, $1aba ; $5a58
 	call DrawBriefingCaption ; $5a5b
 	xor a, a ; $5a5e
-	ld [$d82c], a ; $5a5f
-	ld [$d82e], a ; $5a62
+	ld [wBriefingAnimTimer], a ; $5a5f
+	ld [wBriefingAnimStep], a ; $5a62
 .loop3:
 	call SpinServeBriefing_TickAnim ; $5a65
 	ld c, $01 ; $5a68
@@ -2176,19 +2176,19 @@ DrillBriefing_SpinServe:
 	call ClearFrameTasks ; $5a71
 	ret ; $5a74
 SpinServeBriefing_TickAnim:
-	ld a, [$d82c] ; $5a75
+	ld a, [wBriefingAnimTimer] ; $5a75
 	inc a ; $5a78
-	ld [$d82c], a ; $5a79
+	ld [wBriefingAnimTimer], a ; $5a79
 	cp a, $78 ; $5a7c
 	jr nc, SpinServeBriefing_AdvanceAnim ; $5a7e
 	ret ; $5a80
 SpinServeBriefing_AdvanceAnim:
 	xor a, a ; $5a81
-	ld [$d82c], a ; $5a82
-	ld a, [$d82e] ; $5a85
+	ld [wBriefingAnimTimer], a ; $5a82
+	ld a, [wBriefingAnimStep] ; $5a85
 	inc a ; $5a88
 	and a, $03 ; $5a89
-	ld [$d82e], a ; $5a8b
+	ld [wBriefingAnimStep], a ; $5a8b
 	sla a ; $5a8e
 	sla a ; $5a90
 	ld c, a ; $5a92
@@ -2202,9 +2202,9 @@ SpinServeBriefing_AdvanceAnim:
 	inc hl ; $5a9c
 	ld b, [hl] ; $5a9d
 	ld a, a ; $5a9e
-	ld [$d810], a ; $5a9f
+	ld [wBriefingPlayerX], a ; $5a9f
 	ld a, b ; $5aa2
-	ld [$d811], a ; $5aa3
+	ld [wBriefingPlayerY], a ; $5aa3
 	ld a, c ; $5aa6
 	add a, LOW(Data_17_5c31) ; $5aa7
 	ld l, a ; $5aa9
@@ -2216,9 +2216,9 @@ SpinServeBriefing_AdvanceAnim:
 	inc hl ; $5ab0
 	ld b, [hl] ; $5ab1
 	ld a, a ; $5ab2
-	ld [$d828], a ; $5ab3
+	ld [wBriefingBracketX], a ; $5ab3
 	ld a, b ; $5ab6
-	ld [$d829], a ; $5ab7
+	ld [wBriefingBracketY], a ; $5ab7
 	ld a, c ; $5aba
 	add a, LOW(Data_17_5bf5) ; $5abb
 	ld l, a ; $5abd
@@ -2230,17 +2230,17 @@ SpinServeBriefing_AdvanceAnim:
 	inc hl ; $5ac4
 	ld b, [hl] ; $5ac5
 	ld a, a ; $5ac6
-	ld [$d81e], a ; $5ac7
+	ld [wBriefingBallX], a ; $5ac7
 	ld a, b ; $5aca
-	ld [$d81f], a ; $5acb
-	ld a, [$d82e] ; $5ace
+	ld [wBriefingBallY], a ; $5acb
+	ld a, [wBriefingAnimStep] ; $5ace
 	add a, LOW(Data_17_5c05) ; $5ad1
 	ld l, a ; $5ad3
 	adc a, HIGH(Data_17_5c05) ; $5ad4
 	sub a, l ; $5ad6
 	ld h, a ; $5ad7
 	ld a, [hl] ; $5ad8
-	ld [$d82d], a ; $5ad9
+	ld [wBriefingHMarkerUnflipped], a ; $5ad9
 	ld a, c ; $5adc
 	add a, LOW(Data_17_5c09) ; $5add
 	ld l, a ; $5adf
@@ -2252,17 +2252,17 @@ SpinServeBriefing_AdvanceAnim:
 	inc hl ; $5ae6
 	ld b, [hl] ; $5ae7
 	ld a, a ; $5ae8
-	ld [$d81c], a ; $5ae9
+	ld [wBriefingHMarkerX], a ; $5ae9
 	ld a, b ; $5aec
-	ld [$d81d], a ; $5aed
-	ld a, [$d82e] ; $5af0
+	ld [wBriefingHMarkerY], a ; $5aed
+	ld a, [wBriefingAnimStep] ; $5af0
 	add a, LOW(Data_17_5c19) ; $5af3
 	ld l, a ; $5af5
 	adc a, HIGH(Data_17_5c19) ; $5af6
 	sub a, l ; $5af8
 	ld h, a ; $5af9
 	ld a, [hl] ; $5afa
-	ld [$d827], a ; $5afb
+	ld [wBriefingRotMarkerDir], a ; $5afb
 	ld a, c ; $5afe
 	add a, LOW(Data_17_5c1d) ; $5aff
 	ld l, a ; $5b01
@@ -2274,10 +2274,10 @@ SpinServeBriefing_AdvanceAnim:
 	inc hl ; $5b08
 	ld b, [hl] ; $5b09
 	ld a, a ; $5b0a
-	ld [$d818], a ; $5b0b
+	ld [wBriefingRotMarkerX], a ; $5b0b
 	ld a, b ; $5b0e
-	ld [$d819], a ; $5b0f
-	ld a, [$d82e] ; $5b12
+	ld [wBriefingRotMarkerY], a ; $5b0f
+	ld a, [wBriefingAnimStep] ; $5b12
 	add a, LOW(Data_17_5c2d) ; $5b15
 	ld l, a ; $5b17
 	adc a, HIGH(Data_17_5c2d) ; $5b18
@@ -2287,18 +2287,18 @@ SpinServeBriefing_AdvanceAnim:
 	call DrawDiagramTargetOverlay ; $5b1d
 	ret ; $5b20
 SpinServeBriefing_TickAnim2:
-	ld a, [$d82c] ; $5b21
+	ld a, [wBriefingAnimTimer] ; $5b21
 	inc a ; $5b24
-	ld [$d82c], a ; $5b25
+	ld [wBriefingAnimTimer], a ; $5b25
 	cp a, $78 ; $5b28
 	jr nc, SpinServeBriefing_AdvanceAnim2 ; $5b2a
 	ret ; $5b2c
 SpinServeBriefing_AdvanceAnim2:
 	xor a, a ; $5b2d
-	ld [$d82c], a ; $5b2e
-	ld a, [$d82e] ; $5b31
+	ld [wBriefingAnimTimer], a ; $5b2e
+	ld a, [wBriefingAnimStep] ; $5b31
 	xor a, $01 ; $5b34
-	ld [$d82e], a ; $5b36
+	ld [wBriefingAnimStep], a ; $5b36
 	sla a ; $5b39
 	sla a ; $5b3b
 	ld c, a ; $5b3d
@@ -2312,9 +2312,9 @@ SpinServeBriefing_AdvanceAnim2:
 	inc hl ; $5b47
 	ld b, [hl] ; $5b48
 	ld a, a ; $5b49
-	ld [$d810], a ; $5b4a
+	ld [wBriefingPlayerX], a ; $5b4a
 	ld a, b ; $5b4d
-	ld [$d811], a ; $5b4e
+	ld [wBriefingPlayerY], a ; $5b4e
 	ld a, c ; $5b51
 	add a, LOW(Data_17_5c41) ; $5b52
 	ld l, a ; $5b54
@@ -2326,17 +2326,17 @@ SpinServeBriefing_AdvanceAnim2:
 	inc hl ; $5b5b
 	ld b, [hl] ; $5b5c
 	ld a, a ; $5b5d
-	ld [$d81e], a ; $5b5e
+	ld [wBriefingBallX], a ; $5b5e
 	ld a, b ; $5b61
-	ld [$d81f], a ; $5b62
-	ld a, [$d82e] ; $5b65
+	ld [wBriefingBallY], a ; $5b62
+	ld a, [wBriefingAnimStep] ; $5b65
 	add a, LOW(Data_17_5c19) ; $5b68
 	ld l, a ; $5b6a
 	adc a, HIGH(Data_17_5c19) ; $5b6b
 	sub a, l ; $5b6d
 	ld h, a ; $5b6e
 	ld a, [hl] ; $5b6f
-	ld [$d827], a ; $5b70
+	ld [wBriefingRotMarkerDir], a ; $5b70
 	ld a, c ; $5b73
 	add a, LOW(Data_17_5c49) ; $5b74
 	ld l, a ; $5b76
@@ -2348,17 +2348,17 @@ SpinServeBriefing_AdvanceAnim2:
 	inc hl ; $5b7d
 	ld b, [hl] ; $5b7e
 	ld a, a ; $5b7f
-	ld [$d818], a ; $5b80
+	ld [wBriefingRotMarkerX], a ; $5b80
 	ld a, b ; $5b83
-	ld [$d819], a ; $5b84
-	ld a, [$d82e] ; $5b87
+	ld [wBriefingRotMarkerY], a ; $5b84
+	ld a, [wBriefingAnimStep] ; $5b87
 	add a, LOW(Data_17_5c51) ; $5b8a
 	ld l, a ; $5b8c
 	adc a, HIGH(Data_17_5c51) ; $5b8d
 	sub a, l ; $5b8f
 	ld h, a ; $5b90
 	ld a, [hl] ; $5b91
-	ld [$d826], a ; $5b92
+	ld [wBriefingSpinMarkerUnflipped], a ; $5b92
 	ld a, c ; $5b95
 	add a, LOW(Data_17_5c53) ; $5b96
 	ld l, a ; $5b98
@@ -2370,16 +2370,16 @@ SpinServeBriefing_AdvanceAnim2:
 	inc hl ; $5b9f
 	ld b, [hl] ; $5ba0
 	ld a, a ; $5ba1
-	ld [$d816], a ; $5ba2
+	ld [wBriefingSpinMarkerX], a ; $5ba2
 	ld a, b ; $5ba5
-	ld [$d817], a ; $5ba6
+	ld [wBriefingSpinMarkerY], a ; $5ba6
 	ld b, $00 ; $5ba9
 	ld a, [wStoryModeMainCharacterLeftHanded] ; $5bab
 	and a, a ; $5bae
 	jr z, .zero ; $5baf
 	ld b, $02 ; $5bb1
 .zero:
-	ld a, [$d82e] ; $5bb3
+	ld a, [wBriefingAnimStep] ; $5bb3
 	add a, b ; $5bb6
 	add a, LOW(Data_17_5c5b) ; $5bb7
 	ld l, a ; $5bb9
@@ -2387,7 +2387,7 @@ SpinServeBriefing_AdvanceAnim2:
 	sub a, l ; $5bbc
 	ld h, a ; $5bbd
 	ld a, [hl] ; $5bbe
-	ld [$d822], a ; $5bbf
+	ld [wBriefingSwingFrame], a ; $5bbf
 	ld a, c ; $5bc2
 	add a, LOW(Data_17_5c5f) ; $5bc3
 	ld l, a ; $5bc5
@@ -2399,10 +2399,10 @@ SpinServeBriefing_AdvanceAnim2:
 	inc hl ; $5bcc
 	ld b, [hl] ; $5bcd
 	ld a, a ; $5bce
-	ld [$d814], a ; $5bcf
+	ld [wBriefingSwingX], a ; $5bcf
 	ld a, b ; $5bd2
-	ld [$d815], a ; $5bd3
-	ld a, [$d82e] ; $5bd6
+	ld [wBriefingSwingY], a ; $5bd3
+	ld a, [wBriefingAnimStep] ; $5bd6
 	add a, LOW(Data_17_5c2d) ; $5bd9
 	ld l, a ; $5bdb
 	adc a, HIGH(Data_17_5c2d) ; $5bdc
@@ -2450,7 +2450,7 @@ Data_17_5c5f:
 	INCLUDE "data/bank_017/text_5c5f.asm" ; $5c5f, 8 bytes
 DrillBriefing_ServeThroughPoles:
 	ld a, $03 ; $5c67
-	ld [$d82e], a ; $5c69
+	ld [wBriefingAnimStep], a ; $5c69
 	call PoleServeBriefing_AdvanceAnim ; $5c6c
 	ld a, $01 ; $5c6f
 	ld hl, DrawBriefingPlayerSprite ; $5c71
@@ -2470,8 +2470,8 @@ DrillBriefing_ServeThroughPoles:
 	ld hl, $1abb ; $5c97
 	call DrawBriefingCaption ; $5c9a
 	xor a, a ; $5c9d
-	ld [$d82c], a ; $5c9e
-	ld [$d82e], a ; $5ca1
+	ld [wBriefingAnimTimer], a ; $5c9e
+	ld [wBriefingAnimStep], a ; $5ca1
 .loop:
 	call PoleServeBriefing_TickAnim ; $5ca4
 	ld c, $00 ; $5ca7
@@ -2483,7 +2483,7 @@ DrillBriefing_ServeThroughPoles:
 	ld hl, UpdateAnimatedTilesTask_17 ; $5cb5
 	call RegisterFrameTask ; $5cb8
 	ld a, $03 ; $5cbb
-	ld [$d82e], a ; $5cbd
+	ld [wBriefingAnimStep], a ; $5cbd
 	call PoleServeBriefing_AdvanceAnim2 ; $5cc0
 	ld a, $01 ; $5cc3
 	ld hl, DrawBriefingPlayerSprite ; $5cc5
@@ -2495,20 +2495,20 @@ DrillBriefing_ServeThroughPoles:
 	ld hl, CycleDiagramTargetPalette ; $5cd5
 	call RegisterFrameTask ; $5cd8
 	ld a, $00 ; $5cdb
-	ld [$d82a], a ; $5cdd
+	ld [wBriefingBracketWidth], a ; $5cdd
 	ld a, $00 ; $5ce0
-	ld [$d82b], a ; $5ce2
+	ld [wBriefingBracketHeight], a ; $5ce2
 	ld a, $01 ; $5ce5
 	ld hl, DrawBriefingTargetBrackets ; $5ce7
 	call RegisterFrameTask ; $5cea
 	ld hl, $1abc ; $5ced
 	call DrawBriefingCaption ; $5cf0
 	xor a, a ; $5cf3
-	ld [$d82c], a ; $5cf4
-	ld [$d82e], a ; $5cf7
+	ld [wBriefingAnimTimer], a ; $5cf4
+	ld [wBriefingAnimStep], a ; $5cf7
 .loopB:
 	call PoleServeBriefing_TickAnim2 ; $5cfa
-	ld a, [$d82e] ; $5cfd
+	ld a, [wBriefingAnimStep] ; $5cfd
 	sla a ; $5d00
 	sla a ; $5d02
 	add a, LOW(DrillBriefing_ServeThroughPolesTable) ; $5d04
@@ -2521,9 +2521,9 @@ DrillBriefing_ServeThroughPoles:
 	inc hl ; $5d0d
 	ld b, [hl] ; $5d0e
 	ld a, a ; $5d0f
-	ld [$d810], a ; $5d10
+	ld [wBriefingPlayerX], a ; $5d10
 	ld a, b ; $5d13
-	ld [$d811], a ; $5d14
+	ld [wBriefingPlayerY], a ; $5d14
 	ld c, $00 ; $5d17
 	call AdvanceFrameCheckInput ; $5d19
 	and a, a ; $5d1c
@@ -2533,17 +2533,17 @@ DrillBriefing_ServeThroughPoles:
 	ld hl, UpdateAnimatedTilesTask_17 ; $5d25
 	call RegisterFrameTask ; $5d28
 	ld a, $03 ; $5d2b
-	ld [$d82e], a ; $5d2d
+	ld [wBriefingAnimStep], a ; $5d2d
 	call PoleServeBriefing_AdvanceAnim2 ; $5d30
 	ld a, $01 ; $5d33
 	ld hl, DrawBriefingPlayerSprite ; $5d35
 	call RegisterFrameTask ; $5d38
 	ld a, $00 ; $5d3b
-	ld [$d82d], a ; $5d3d
+	ld [wBriefingHMarkerUnflipped], a ; $5d3d
 	ld a, $4b ; $5d40
-	ld [$d81c], a ; $5d42
+	ld [wBriefingHMarkerX], a ; $5d42
 	ld a, $36 ; $5d45
-	ld [$d81d], a ; $5d47
+	ld [wBriefingHMarkerY], a ; $5d47
 	ld a, $01 ; $5d4a
 	ld hl, DrawBriefingMarkerHFlip ; $5d4c
 	call RegisterFrameTask ; $5d4f
@@ -2554,9 +2554,9 @@ DrillBriefing_ServeThroughPoles:
 	ld hl, CycleDiagramTargetPalette ; $5d5c
 	call RegisterFrameTask ; $5d5f
 	ld a, $00 ; $5d62
-	ld [$d82a], a ; $5d64
+	ld [wBriefingBracketWidth], a ; $5d64
 	ld a, $00 ; $5d67
-	ld [$d82b], a ; $5d69
+	ld [wBriefingBracketHeight], a ; $5d69
 	ld a, $01 ; $5d6c
 	ld hl, DrawBriefingTargetBrackets ; $5d6e
 	call RegisterFrameTask ; $5d71
@@ -2568,7 +2568,7 @@ DrillBriefing_ServeThroughPoles:
 	ld hl, UpdateAnimatedTilesTask_17 ; $5d82
 	call RegisterFrameTask ; $5d85
 	ld a, $03 ; $5d88
-	ld [$d82e], a ; $5d8a
+	ld [wBriefingAnimStep], a ; $5d8a
 	call PoleServeBriefing_AdvanceAnim2 ; $5d8d
 	ld a, $01 ; $5d90
 	ld hl, DrawBriefingPlayerSprite ; $5d92
@@ -2580,9 +2580,9 @@ DrillBriefing_ServeThroughPoles:
 	ld hl, CycleDiagramTargetPalette ; $5da2
 	call RegisterFrameTask ; $5da5
 	ld a, $00 ; $5da8
-	ld [$d82a], a ; $5daa
+	ld [wBriefingBracketWidth], a ; $5daa
 	ld a, $00 ; $5dad
-	ld [$d82b], a ; $5daf
+	ld [wBriefingBracketHeight], a ; $5daf
 	ld a, $01 ; $5db2
 	ld hl, DrawBriefingTargetBrackets ; $5db4
 	call RegisterFrameTask ; $5db7
@@ -2597,19 +2597,19 @@ DrillBriefing_ServeThroughPoles:
 	call ClearFrameTasks ; $5dcc
 	ret ; $5dcf
 PoleServeBriefing_TickAnim:
-	ld a, [$d82c] ; $5dd0
+	ld a, [wBriefingAnimTimer] ; $5dd0
 	inc a ; $5dd3
-	ld [$d82c], a ; $5dd4
+	ld [wBriefingAnimTimer], a ; $5dd4
 	cp a, $78 ; $5dd7
 	jr nc, PoleServeBriefing_AdvanceAnim ; $5dd9
 	ret ; $5ddb
 PoleServeBriefing_AdvanceAnim:
 	xor a, a ; $5ddc
-	ld [$d82c], a ; $5ddd
-	ld a, [$d82e] ; $5de0
+	ld [wBriefingAnimTimer], a ; $5ddd
+	ld a, [wBriefingAnimStep] ; $5de0
 	inc a ; $5de3
 	and a, $03 ; $5de4
-	ld [$d82e], a ; $5de6
+	ld [wBriefingAnimStep], a ; $5de6
 	sla a ; $5de9
 	sla a ; $5deb
 	ld c, a ; $5ded
@@ -2623,9 +2623,9 @@ PoleServeBriefing_AdvanceAnim:
 	inc hl ; $5df7
 	ld b, [hl] ; $5df8
 	ld a, a ; $5df9
-	ld [$d810], a ; $5dfa
+	ld [wBriefingPlayerX], a ; $5dfa
 	ld a, b ; $5dfd
-	ld [$d811], a ; $5dfe
+	ld [wBriefingPlayerY], a ; $5dfe
 	ld a, c ; $5e01
 	add a, LOW(Data_17_5f26) ; $5e02
 	ld l, a ; $5e04
@@ -2637,17 +2637,17 @@ PoleServeBriefing_AdvanceAnim:
 	inc hl ; $5e0b
 	ld b, [hl] ; $5e0c
 	ld a, a ; $5e0d
-	ld [$d81e], a ; $5e0e
+	ld [wBriefingBallX], a ; $5e0e
 	ld a, b ; $5e11
-	ld [$d81f], a ; $5e12
-	ld a, [$d82e] ; $5e15
+	ld [wBriefingBallY], a ; $5e12
+	ld a, [wBriefingAnimStep] ; $5e15
 	add a, LOW(Data_17_5f36) ; $5e18
 	ld l, a ; $5e1a
 	adc a, HIGH(Data_17_5f36) ; $5e1b
 	sub a, l ; $5e1d
 	ld h, a ; $5e1e
 	ld a, [hl] ; $5e1f
-	ld [$d82d], a ; $5e20
+	ld [wBriefingHMarkerUnflipped], a ; $5e20
 	ld a, c ; $5e23
 	add a, LOW(Data_17_5f3a) ; $5e24
 	ld l, a ; $5e26
@@ -2659,17 +2659,17 @@ PoleServeBriefing_AdvanceAnim:
 	inc hl ; $5e2d
 	ld b, [hl] ; $5e2e
 	ld a, a ; $5e2f
-	ld [$d81c], a ; $5e30
+	ld [wBriefingHMarkerX], a ; $5e30
 	ld a, b ; $5e33
-	ld [$d81d], a ; $5e34
-	ld a, [$d82e] ; $5e37
+	ld [wBriefingHMarkerY], a ; $5e34
+	ld a, [wBriefingAnimStep] ; $5e37
 	add a, LOW(Data_17_5f5a) ; $5e3a
 	ld l, a ; $5e3c
 	adc a, HIGH(Data_17_5f5a) ; $5e3d
 	sub a, l ; $5e3f
 	ld h, a ; $5e40
 	ld a, [hl] ; $5e41
-	ld [$d827], a ; $5e42
+	ld [wBriefingRotMarkerDir], a ; $5e42
 	ld a, c ; $5e45
 	add a, LOW(Data_17_5f5e) ; $5e46
 	ld l, a ; $5e48
@@ -2681,10 +2681,10 @@ PoleServeBriefing_AdvanceAnim:
 	inc hl ; $5e4f
 	ld b, [hl] ; $5e50
 	ld a, a ; $5e51
-	ld [$d818], a ; $5e52
+	ld [wBriefingRotMarkerX], a ; $5e52
 	ld a, b ; $5e55
-	ld [$d819], a ; $5e56
-	ld a, [$d82e] ; $5e59
+	ld [wBriefingRotMarkerY], a ; $5e56
+	ld a, [wBriefingAnimStep] ; $5e59
 	add a, LOW(Data_17_5f6e) ; $5e5c
 	ld l, a ; $5e5e
 	adc a, HIGH(Data_17_5f6e) ; $5e5f
@@ -2694,19 +2694,19 @@ PoleServeBriefing_AdvanceAnim:
 	call DrawDiagramTargetOverlay ; $5e64
 	ret ; $5e67
 PoleServeBriefing_TickAnim2:
-	ld a, [$d82c] ; $5e68
+	ld a, [wBriefingAnimTimer] ; $5e68
 	inc a ; $5e6b
-	ld [$d82c], a ; $5e6c
+	ld [wBriefingAnimTimer], a ; $5e6c
 	cp a, $78 ; $5e6f
 	jr nc, PoleServeBriefing_AdvanceAnim2 ; $5e71
 	ret ; $5e73
 PoleServeBriefing_AdvanceAnim2:
 	xor a, a ; $5e74
-	ld [$d82c], a ; $5e75
-	ld a, [$d82e] ; $5e78
+	ld [wBriefingAnimTimer], a ; $5e75
+	ld a, [wBriefingAnimStep] ; $5e78
 	inc a ; $5e7b
 	and a, $03 ; $5e7c
-	ld [$d82e], a ; $5e7e
+	ld [wBriefingAnimStep], a ; $5e7e
 	sla a ; $5e81
 	sla a ; $5e83
 	ld c, a ; $5e85
@@ -2720,9 +2720,9 @@ PoleServeBriefing_AdvanceAnim2:
 	inc hl ; $5e8f
 	ld b, [hl] ; $5e90
 	ld a, a ; $5e91
-	ld [$d810], a ; $5e92
+	ld [wBriefingPlayerX], a ; $5e92
 	ld a, b ; $5e95
-	ld [$d811], a ; $5e96
+	ld [wBriefingPlayerY], a ; $5e96
 	ld a, c ; $5e99
 	add a, LOW(Data_17_5f72) ; $5e9a
 	ld l, a ; $5e9c
@@ -2734,9 +2734,9 @@ PoleServeBriefing_AdvanceAnim2:
 	inc hl ; $5ea3
 	ld b, [hl] ; $5ea4
 	ld a, a ; $5ea5
-	ld [$d828], a ; $5ea6
+	ld [wBriefingBracketX], a ; $5ea6
 	ld a, b ; $5ea9
-	ld [$d829], a ; $5eaa
+	ld [wBriefingBracketY], a ; $5eaa
 	ld a, c ; $5ead
 	add a, LOW(Data_17_5f82) ; $5eae
 	ld l, a ; $5eb0
@@ -2748,9 +2748,9 @@ PoleServeBriefing_AdvanceAnim2:
 	inc hl ; $5eb7
 	ld b, [hl] ; $5eb8
 	ld a, a ; $5eb9
-	ld [$d81a], a ; $5eba
+	ld [wBriefingPole1X], a ; $5eba
 	ld a, b ; $5ebd
-	ld [$d81b], a ; $5ebe
+	ld [wBriefingPole1Y], a ; $5ebe
 	ld a, c ; $5ec1
 	add a, LOW(Data_17_5f82) ; $5ec2
 	ld l, a ; $5ec4
@@ -2759,17 +2759,17 @@ PoleServeBriefing_AdvanceAnim2:
 	ld h, a ; $5ec8
 	ld a, [hl] ; $5ec9
 	add a, $08 ; $5eca
-	ld [$d820], a ; $5ecc
-	ld a, [$d81b] ; $5ecf
-	ld [$d821], a ; $5ed2
-	ld a, [$d82e] ; $5ed5
+	ld [wBriefingPole2X], a ; $5ecc
+	ld a, [wBriefingPole1Y] ; $5ecf
+	ld [wBriefingPole2Y], a ; $5ed2
+	ld a, [wBriefingAnimStep] ; $5ed5
 	add a, LOW(Data_17_5f36) ; $5ed8
 	ld l, a ; $5eda
 	adc a, HIGH(Data_17_5f36) ; $5edb
 	sub a, l ; $5edd
 	ld h, a ; $5ede
 	ld a, [hl] ; $5edf
-	ld [$d82d], a ; $5ee0
+	ld [wBriefingHMarkerUnflipped], a ; $5ee0
 	ld a, c ; $5ee3
 	add a, LOW(Data_17_5f4a) ; $5ee4
 	ld l, a ; $5ee6
@@ -2781,10 +2781,10 @@ PoleServeBriefing_AdvanceAnim2:
 	inc hl ; $5eed
 	ld b, [hl] ; $5eee
 	ld a, a ; $5eef
-	ld [$d81c], a ; $5ef0
+	ld [wBriefingHMarkerX], a ; $5ef0
 	ld a, b ; $5ef3
-	ld [$d81d], a ; $5ef4
-	ld a, [$d82e] ; $5ef7
+	ld [wBriefingHMarkerY], a ; $5ef4
+	ld a, [wBriefingAnimStep] ; $5ef7
 	add a, LOW(Data_17_5f6e) ; $5efa
 	ld l, a ; $5efc
 	adc a, HIGH(Data_17_5f6e) ; $5efd
@@ -2825,41 +2825,41 @@ Data_17_5f82:
 	INCLUDE "data/bank_017/text_5f82.asm" ; $5f82, 16 bytes
 DrillBriefing_ServeAndVolley:
 	ld a, $52 ; $5f92
-	ld [$d810], a ; $5f94
+	ld [wBriefingPlayerX], a ; $5f94
 	ld a, $44 ; $5f97
-	ld [$d811], a ; $5f99
+	ld [wBriefingPlayerY], a ; $5f99
 	ld a, $01 ; $5f9c
 	ld hl, DrawBriefingPlayerSprite ; $5f9e
 	call RegisterFrameTask ; $5fa1
 	ld a, $34 ; $5fa4
-	ld [$d812], a ; $5fa6
+	ld [wBriefingOpponentX], a ; $5fa6
 	ld a, $06 ; $5fa9
-	ld [$d813], a ; $5fab
+	ld [wBriefingOpponentY], a ; $5fab
 	ld a, $01 ; $5fae
 	ld hl, DrawBriefingOpponentSprite ; $5fb0
 	call RegisterFrameTask ; $5fb3
 	ld a, $4e ; $5fb6
-	ld [$d81e], a ; $5fb8
+	ld [wBriefingBallX], a ; $5fb8
 	ld a, $38 ; $5fbb
-	ld [$d81f], a ; $5fbd
+	ld [wBriefingBallY], a ; $5fbd
 	ld a, $01 ; $5fc0
 	ld hl, DrawBriefingBallSprite ; $5fc2
 	call RegisterFrameTask ; $5fc5
 	ld a, $00 ; $5fc8
-	ld [$d82d], a ; $5fca
+	ld [wBriefingHMarkerUnflipped], a ; $5fca
 	ld a, $3a ; $5fcd
-	ld [$d81c], a ; $5fcf
+	ld [wBriefingHMarkerX], a ; $5fcf
 	ld a, $3c ; $5fd2
-	ld [$d81d], a ; $5fd4
+	ld [wBriefingHMarkerY], a ; $5fd4
 	ld a, $01 ; $5fd7
 	ld hl, DrawBriefingMarkerHFlip ; $5fd9
 	call RegisterFrameTask ; $5fdc
 	ld a, $03 ; $5fdf
-	ld [$d827], a ; $5fe1
+	ld [wBriefingRotMarkerDir], a ; $5fe1
 	ld a, $52 ; $5fe4
-	ld [$d818], a ; $5fe6
+	ld [wBriefingRotMarkerX], a ; $5fe6
 	ld a, $40 ; $5fe9
-	ld [$d819], a ; $5feb
+	ld [wBriefingRotMarkerY], a ; $5feb
 	ld a, $01 ; $5fee
 	ld hl, DrawBriefingMarkerRotated ; $5ff0
 	call RegisterFrameTask ; $5ff3
@@ -2877,7 +2877,7 @@ DrillBriefing_ServeAndVolley:
 	call RegisterFrameTask ; $6014
 	call DrawDiagramTargetOverlay ; $6017
 	ld a, $03 ; $601a
-	ld [$d82e], a ; $601c
+	ld [wBriefingAnimStep], a ; $601c
 	call ServeAndVolleyBriefing_AdvanceAnim ; $601f
 	ld a, $01 ; $6022
 	ld hl, DrawBriefingPlayerSprite ; $6024
@@ -2898,9 +2898,9 @@ DrillBriefing_ServeAndVolley:
 	ld hl, DrawBriefingMarkerVFlip ; $604c
 	call RegisterFrameTask ; $604f
 	ld a, $0d ; $6052
-	ld [$d82a], a ; $6054
+	ld [wBriefingBracketWidth], a ; $6054
 	ld a, $0f ; $6057
-	ld [$d82b], a ; $6059
+	ld [wBriefingBracketHeight], a ; $6059
 	ld a, $01 ; $605c
 	ld hl, DrawBriefingTargetBrackets ; $605e
 	call RegisterFrameTask ; $6061
@@ -2912,7 +2912,7 @@ DrillBriefing_ServeAndVolley:
 	ld hl, UpdateAnimatedTilesTask_17 ; $6072
 	call RegisterFrameTask ; $6075
 	ld a, $03 ; $6078
-	ld [$d82e], a ; $607a
+	ld [wBriefingAnimStep], a ; $607a
 	call ServeAndVolleyBriefing_AdvanceAnim ; $607d
 	ld a, $01 ; $6080
 	ld hl, DrawBriefingPlayerSprite ; $6082
@@ -2933,17 +2933,17 @@ DrillBriefing_ServeAndVolley:
 	ld hl, DrawBriefingMarkerVFlip ; $60aa
 	call RegisterFrameTask ; $60ad
 	ld a, $0d ; $60b0
-	ld [$d82a], a ; $60b2
+	ld [wBriefingBracketWidth], a ; $60b2
 	ld a, $0f ; $60b5
-	ld [$d82b], a ; $60b7
+	ld [wBriefingBracketHeight], a ; $60b7
 	ld a, $01 ; $60ba
 	ld hl, DrawBriefingTargetBrackets ; $60bc
 	call RegisterFrameTask ; $60bf
 	ld hl, $1ac1 ; $60c2
 	call DrawBriefingCaption ; $60c5
 	xor a, a ; $60c8
-	ld [$d82c], a ; $60c9
-	ld [$d82e], a ; $60cc
+	ld [wBriefingAnimTimer], a ; $60c9
+	ld [wBriefingAnimStep], a ; $60cc
 .loop:
 	call ServeAndVolleyBriefing_TickAnim ; $60cf
 	ld c, $01 ; $60d2
@@ -2953,19 +2953,19 @@ DrillBriefing_ServeAndVolley:
 	call ClearFrameTasks ; $60db
 	ret ; $60de
 ServeAndVolleyBriefing_TickAnim:
-	ld a, [$d82c] ; $60df
+	ld a, [wBriefingAnimTimer] ; $60df
 	inc a ; $60e2
-	ld [$d82c], a ; $60e3
+	ld [wBriefingAnimTimer], a ; $60e3
 	cp a, $78 ; $60e6
 	jp nc, ServeAndVolleyBriefing_AdvanceAnim ; $60e8
 	ret ; $60eb
 ServeAndVolleyBriefing_AdvanceAnim:
 	xor a, a ; $60ec
-	ld [$d82c], a ; $60ed
-	ld a, [$d82e] ; $60f0
+	ld [wBriefingAnimTimer], a ; $60ed
+	ld a, [wBriefingAnimStep] ; $60f0
 	inc a ; $60f3
 	and a, $03 ; $60f4
-	ld [$d82e], a ; $60f6
+	ld [wBriefingAnimStep], a ; $60f6
 	sla a ; $60f9
 	sla a ; $60fb
 	ld c, a ; $60fd
@@ -2979,9 +2979,9 @@ ServeAndVolleyBriefing_AdvanceAnim:
 	inc hl ; $6107
 	ld b, [hl] ; $6108
 	ld a, a ; $6109
-	ld [$d810], a ; $610a
+	ld [wBriefingPlayerX], a ; $610a
 	ld a, b ; $610d
-	ld [$d811], a ; $610e
+	ld [wBriefingPlayerY], a ; $610e
 	ld a, c ; $6111
 	add a, LOW(Data_17_61c4) ; $6112
 	ld l, a ; $6114
@@ -2993,9 +2993,9 @@ ServeAndVolleyBriefing_AdvanceAnim:
 	inc hl ; $611b
 	ld b, [hl] ; $611c
 	ld a, a ; $611d
-	ld [$d812], a ; $611e
+	ld [wBriefingOpponentX], a ; $611e
 	ld a, b ; $6121
-	ld [$d813], a ; $6122
+	ld [wBriefingOpponentY], a ; $6122
 	ld a, c ; $6125
 	add a, LOW(Data_17_6220) ; $6126
 	ld l, a ; $6128
@@ -3007,9 +3007,9 @@ ServeAndVolleyBriefing_AdvanceAnim:
 	inc hl ; $612f
 	ld b, [hl] ; $6130
 	ld a, a ; $6131
-	ld [$d828], a ; $6132
+	ld [wBriefingBracketX], a ; $6132
 	ld a, b ; $6135
-	ld [$d829], a ; $6136
+	ld [wBriefingBracketY], a ; $6136
 	ld a, c ; $6139
 	add a, LOW(Data_17_61d4) ; $613a
 	ld l, a ; $613c
@@ -3021,17 +3021,17 @@ ServeAndVolleyBriefing_AdvanceAnim:
 	inc hl ; $6143
 	ld b, [hl] ; $6144
 	ld a, a ; $6145
-	ld [$d81e], a ; $6146
+	ld [wBriefingBallX], a ; $6146
 	ld a, b ; $6149
-	ld [$d81f], a ; $614a
-	ld a, [$d82e] ; $614d
+	ld [wBriefingBallY], a ; $614a
+	ld a, [wBriefingAnimStep] ; $614d
 	add a, LOW(Data_17_61e4) ; $6150
 	ld l, a ; $6152
 	adc a, HIGH(Data_17_61e4) ; $6153
 	sub a, l ; $6155
 	ld h, a ; $6156
 	ld a, [hl] ; $6157
-	ld [$d82d], a ; $6158
+	ld [wBriefingHMarkerUnflipped], a ; $6158
 	ld a, c ; $615b
 	add a, LOW(Data_17_61e8) ; $615c
 	ld l, a ; $615e
@@ -3043,17 +3043,17 @@ ServeAndVolleyBriefing_AdvanceAnim:
 	inc hl ; $6165
 	ld b, [hl] ; $6166
 	ld a, a ; $6167
-	ld [$d81c], a ; $6168
+	ld [wBriefingHMarkerX], a ; $6168
 	ld a, b ; $616b
-	ld [$d81d], a ; $616c
-	ld a, [$d82e] ; $616f
+	ld [wBriefingHMarkerY], a ; $616c
+	ld a, [wBriefingAnimStep] ; $616f
 	add a, LOW(Data_17_61f8) ; $6172
 	ld l, a ; $6174
 	adc a, HIGH(Data_17_61f8) ; $6175
 	sub a, l ; $6177
 	ld h, a ; $6178
 	ld a, [hl] ; $6179
-	ld [$d827], a ; $617a
+	ld [wBriefingRotMarkerDir], a ; $617a
 	ld a, c ; $617d
 	add a, LOW(Data_17_61fc) ; $617e
 	ld l, a ; $6180
@@ -3065,17 +3065,17 @@ ServeAndVolleyBriefing_AdvanceAnim:
 	inc hl ; $6187
 	ld b, [hl] ; $6188
 	ld a, a ; $6189
-	ld [$d818], a ; $618a
+	ld [wBriefingRotMarkerX], a ; $618a
 	ld a, b ; $618d
-	ld [$d819], a ; $618e
-	ld a, [$d82e] ; $6191
+	ld [wBriefingRotMarkerY], a ; $618e
+	ld a, [wBriefingAnimStep] ; $6191
 	add a, LOW(Data_17_620c) ; $6194
 	ld l, a ; $6196
 	adc a, HIGH(Data_17_620c) ; $6197
 	sub a, l ; $6199
 	ld h, a ; $619a
 	ld a, [hl] ; $619b
-	ld [$d825], a ; $619c
+	ld [wBriefingVMarkerUpright], a ; $619c
 	ld a, c ; $619f
 	add a, LOW(Data_17_6210) ; $61a0
 	ld l, a ; $61a2
@@ -3087,9 +3087,9 @@ ServeAndVolleyBriefing_AdvanceAnim:
 	inc hl ; $61a9
 	ld b, [hl] ; $61aa
 	ld a, a ; $61ab
-	ld [$d823], a ; $61ac
+	ld [wBriefingVMarkerX], a ; $61ac
 	ld a, b ; $61af
-	ld [$d824], a ; $61b0
+	ld [wBriefingVMarkerY], a ; $61b0
 	ret ; $61b3
 ServeAndVolleyBriefing_AdvanceAnimTable:
 	; $61b4, 16 bytes (records:2)
@@ -3121,52 +3121,52 @@ Data_17_6220:
 	INCBIN "data/bank_017/d_6220.bin" ; $6220, 16 bytes
 DrillBriefing_ServeAndSmash:
 	ld a, $55 ; $6230
-	ld [$d810], a ; $6232
+	ld [wBriefingPlayerX], a ; $6232
 	ld a, $44 ; $6235
-	ld [$d811], a ; $6237
+	ld [wBriefingPlayerY], a ; $6237
 	ld a, $01 ; $623a
 	ld hl, DrawBriefingPlayerSprite ; $623c
 	call RegisterFrameTask ; $623f
 	ld a, $34 ; $6242
-	ld [$d812], a ; $6244
+	ld [wBriefingOpponentX], a ; $6244
 	ld a, $06 ; $6247
-	ld [$d813], a ; $6249
+	ld [wBriefingOpponentY], a ; $6249
 	ld a, $01 ; $624c
 	ld hl, DrawBriefingOpponentSprite ; $624e
 	call RegisterFrameTask ; $6251
 	ld a, $4e ; $6254
-	ld [$d81e], a ; $6256
+	ld [wBriefingBallX], a ; $6256
 	ld a, $38 ; $6259
-	ld [$d81f], a ; $625b
+	ld [wBriefingBallY], a ; $625b
 	ld a, $01 ; $625e
 	ld hl, DrawBriefingBallSprite ; $6260
 	call RegisterFrameTask ; $6263
 	ld a, $00 ; $6266
-	ld [$d82d], a ; $6268
+	ld [wBriefingHMarkerUnflipped], a ; $6268
 	ld a, $3a ; $626b
-	ld [$d81c], a ; $626d
+	ld [wBriefingHMarkerX], a ; $626d
 	ld a, $20 ; $6270
-	ld [$d81d], a ; $6272
+	ld [wBriefingHMarkerY], a ; $6272
 	ld a, $01 ; $6275
 	ld hl, DrawBriefingMarkerHFlip ; $6277
 	call RegisterFrameTask ; $627a
 	ld a, $03 ; $627d
-	ld [$d827], a ; $627f
+	ld [wBriefingRotMarkerDir], a ; $627f
 	ld a, $52 ; $6282
-	ld [$d818], a ; $6284
+	ld [wBriefingRotMarkerX], a ; $6284
 	ld a, $40 ; $6287
-	ld [$d819], a ; $6289
+	ld [wBriefingRotMarkerY], a ; $6289
 	ld a, $01 ; $628c
 	ld hl, DrawBriefingMarkerRotated ; $628e
 	call RegisterFrameTask ; $6291
 	ld a, $0d ; $6294
-	ld [$d82a], a ; $6296
+	ld [wBriefingBracketWidth], a ; $6296
 	ld a, $00 ; $6299
-	ld [$d82b], a ; $629b
+	ld [wBriefingBracketHeight], a ; $629b
 	ld a, $3e ; $629e
-	ld [$d828], a ; $62a0
+	ld [wBriefingBracketX], a ; $62a0
 	ld a, $22 ; $62a3
-	ld [$d829], a ; $62a5
+	ld [wBriefingBracketY], a ; $62a5
 	ld a, $01 ; $62a8
 	ld hl, DrawBriefingTargetBrackets ; $62aa
 	call RegisterFrameTask ; $62ad
@@ -3178,25 +3178,25 @@ DrillBriefing_ServeAndSmash:
 	ld hl, UpdateAnimatedTilesTask_17 ; $62be
 	call RegisterFrameTask ; $62c1
 	ld a, $55 ; $62c4
-	ld [$d810], a ; $62c6
+	ld [wBriefingPlayerX], a ; $62c6
 	ld a, $44 ; $62c9
-	ld [$d811], a ; $62cb
+	ld [wBriefingPlayerY], a ; $62cb
 	ld a, $01 ; $62ce
 	ld hl, DrawBriefingPlayerSprite ; $62d0
 	call RegisterFrameTask ; $62d3
 	ld a, $34 ; $62d6
-	ld [$d812], a ; $62d8
+	ld [wBriefingOpponentX], a ; $62d8
 	ld a, $06 ; $62db
-	ld [$d813], a ; $62dd
+	ld [wBriefingOpponentY], a ; $62dd
 	ld a, $01 ; $62e0
 	ld hl, DrawBriefingOpponentSprite ; $62e2
 	call RegisterFrameTask ; $62e5
 	ld a, $00 ; $62e8
-	ld [$d82d], a ; $62ea
+	ld [wBriefingHMarkerUnflipped], a ; $62ea
 	ld a, $3a ; $62ed
-	ld [$d81c], a ; $62ef
+	ld [wBriefingHMarkerX], a ; $62ef
 	ld a, $3c ; $62f2
-	ld [$d81d], a ; $62f4
+	ld [wBriefingHMarkerY], a ; $62f4
 	ld a, $01 ; $62f7
 	ld hl, DrawBriefingMarkerHFlip ; $62f9
 	call RegisterFrameTask ; $62fc
@@ -3214,50 +3214,50 @@ DrillBriefing_ServeAndSmash:
 	call RegisterFrameTask ; $631d
 	call DrawDiagramTargetOverlay ; $6320
 	ld a, $52 ; $6323
-	ld [$d810], a ; $6325
+	ld [wBriefingPlayerX], a ; $6325
 	ld a, $30 ; $6328
-	ld [$d811], a ; $632a
+	ld [wBriefingPlayerY], a ; $632a
 	ld a, $01 ; $632d
 	ld hl, DrawBriefingPlayerSprite ; $632f
 	call RegisterFrameTask ; $6332
 	ld a, $34 ; $6335
-	ld [$d812], a ; $6337
+	ld [wBriefingOpponentX], a ; $6337
 	ld a, $06 ; $633a
-	ld [$d813], a ; $633c
+	ld [wBriefingOpponentY], a ; $633c
 	ld a, $01 ; $633f
 	ld hl, DrawBriefingOpponentSprite ; $6341
 	call RegisterFrameTask ; $6344
 	ld a, $5d ; $6347
-	ld [$d81e], a ; $6349
+	ld [wBriefingBallX], a ; $6349
 	ld a, $1b ; $634c
-	ld [$d81f], a ; $634e
+	ld [wBriefingBallY], a ; $634e
 	ld a, $01 ; $6351
 	ld hl, DrawBriefingBallSprite ; $6353
 	call RegisterFrameTask ; $6356
 	ld a, $01 ; $6359
-	ld [$d827], a ; $635b
+	ld [wBriefingRotMarkerDir], a ; $635b
 	ld a, $46 ; $635e
-	ld [$d818], a ; $6360
+	ld [wBriefingRotMarkerX], a ; $6360
 	ld a, $16 ; $6363
-	ld [$d819], a ; $6365
+	ld [wBriefingRotMarkerY], a ; $6365
 	ld a, $01 ; $6368
 	ld hl, DrawBriefingMarkerRotated ; $636a
 	call RegisterFrameTask ; $636d
 	ld a, $00 ; $6370
-	ld [$d825], a ; $6372
+	ld [wBriefingVMarkerUpright], a ; $6372
 	ld a, $5b ; $6375
-	ld [$d823], a ; $6377
+	ld [wBriefingVMarkerX], a ; $6377
 	ld a, $21 ; $637a
-	ld [$d824], a ; $637c
+	ld [wBriefingVMarkerY], a ; $637c
 	ld a, $01 ; $637f
 	ld hl, DrawBriefingMarkerVFlip ; $6381
 	call RegisterFrameTask ; $6384
 	ld a, $04 ; $6387
-	ld [$d822], a ; $6389
+	ld [wBriefingSwingFrame], a ; $6389
 	ld a, $2d ; $638c
-	ld [$d814], a ; $638e
+	ld [wBriefingSwingX], a ; $638e
 	ld a, $30 ; $6391
-	ld [$d815], a ; $6393
+	ld [wBriefingSwingY], a ; $6393
 	ld a, $01 ; $6396
 	ld hl, DrawBriefingSwingAnim ; $6398
 	call RegisterFrameTask ; $639b
@@ -3269,60 +3269,60 @@ DrillBriefing_ServeAndSmash:
 	ld hl, UpdateAnimatedTilesTask_17 ; $63ac
 	call RegisterFrameTask ; $63af
 	ld a, $55 ; $63b2
-	ld [$d810], a ; $63b4
+	ld [wBriefingPlayerX], a ; $63b4
 	ld a, $44 ; $63b7
-	ld [$d811], a ; $63b9
+	ld [wBriefingPlayerY], a ; $63b9
 	ld a, $01 ; $63bc
 	ld hl, DrawBriefingPlayerSprite ; $63be
 	call RegisterFrameTask ; $63c1
 	ld a, $34 ; $63c4
-	ld [$d812], a ; $63c6
+	ld [wBriefingOpponentX], a ; $63c6
 	ld a, $06 ; $63c9
-	ld [$d813], a ; $63cb
+	ld [wBriefingOpponentY], a ; $63cb
 	ld a, $01 ; $63ce
 	ld hl, DrawBriefingOpponentSprite ; $63d0
 	call RegisterFrameTask ; $63d3
 	ld a, $50 ; $63d6
-	ld [$d81e], a ; $63d8
+	ld [wBriefingBallX], a ; $63d8
 	ld a, $37 ; $63db
-	ld [$d81f], a ; $63dd
+	ld [wBriefingBallY], a ; $63dd
 	ld a, $01 ; $63e0
 	ld hl, DrawBriefingBallSprite ; $63e2
 	call RegisterFrameTask ; $63e5
 	ld a, $03 ; $63e8
-	ld [$d827], a ; $63ea
+	ld [wBriefingRotMarkerDir], a ; $63ea
 	ld a, $54 ; $63ed
-	ld [$d818], a ; $63ef
+	ld [wBriefingRotMarkerX], a ; $63ef
 	ld a, $3d ; $63f2
-	ld [$d819], a ; $63f4
+	ld [wBriefingRotMarkerY], a ; $63f4
 	ld a, $01 ; $63f7
 	ld hl, DrawBriefingMarkerRotated ; $63f9
 	call RegisterFrameTask ; $63fc
 	ld a, $0d ; $63ff
-	ld [$d82a], a ; $6401
+	ld [wBriefingBracketWidth], a ; $6401
 	ld a, $00 ; $6404
-	ld [$d82b], a ; $6406
+	ld [wBriefingBracketHeight], a ; $6406
 	ld a, $3e ; $6409
-	ld [$d828], a ; $640b
+	ld [wBriefingBracketX], a ; $640b
 	ld a, $22 ; $640e
-	ld [$d829], a ; $6410
+	ld [wBriefingBracketY], a ; $6410
 	ld a, $01 ; $6413
 	ld hl, DrawBriefingTargetBrackets ; $6415
 	call RegisterFrameTask ; $6418
 	ld hl, $1ac5 ; $641b
 	call DrawBriefingCaption ; $641e
 .loop:
-	ld a, [$d82c] ; $6421
+	ld a, [wBriefingAnimTimer] ; $6421
 	inc a ; $6424
-	ld [$d82c], a ; $6425
+	ld [wBriefingAnimTimer], a ; $6425
 	cp a, $78 ; $6428
 	jp c, .lt78 ; $642a
 	xor a, a ; $642d
-	ld [$d82c], a ; $642e
-	ld a, [$d82e] ; $6431
+	ld [wBriefingAnimTimer], a ; $642e
+	ld a, [wBriefingAnimStep] ; $6431
 	inc a ; $6434
 	and a, $03 ; $6435
-	ld [$d82e], a ; $6437
+	ld [wBriefingAnimStep], a ; $6437
 	sla a ; $643a
 	sla a ; $643c
 	ld c, a ; $643e
@@ -3336,9 +3336,9 @@ DrillBriefing_ServeAndSmash:
 	inc hl ; $6448
 	ld b, [hl] ; $6449
 	ld a, a ; $644a
-	ld [$d810], a ; $644b
+	ld [wBriefingPlayerX], a ; $644b
 	ld a, b ; $644e
-	ld [$d811], a ; $644f
+	ld [wBriefingPlayerY], a ; $644f
 	ld a, c ; $6452
 	add a, LOW(Data_17_64cd) ; $6453
 	ld l, a ; $6455
@@ -3350,9 +3350,9 @@ DrillBriefing_ServeAndSmash:
 	inc hl ; $645c
 	ld b, [hl] ; $645d
 	ld a, a ; $645e
-	ld [$d812], a ; $645f
+	ld [wBriefingOpponentX], a ; $645f
 	ld a, b ; $6462
-	ld [$d813], a ; $6463
+	ld [wBriefingOpponentY], a ; $6463
 	ld a, c ; $6466
 	add a, LOW(Data_17_6529) ; $6467
 	ld l, a ; $6469
@@ -3364,9 +3364,9 @@ DrillBriefing_ServeAndSmash:
 	inc hl ; $6470
 	ld b, [hl] ; $6471
 	ld a, a ; $6472
-	ld [$d828], a ; $6473
+	ld [wBriefingBracketX], a ; $6473
 	ld a, b ; $6476
-	ld [$d829], a ; $6477
+	ld [wBriefingBracketY], a ; $6477
 	ld a, c ; $647a
 	add a, LOW(Data_17_64dd) ; $647b
 	ld l, a ; $647d
@@ -3378,17 +3378,17 @@ DrillBriefing_ServeAndSmash:
 	inc hl ; $6484
 	ld b, [hl] ; $6485
 	ld a, a ; $6486
-	ld [$d81e], a ; $6487
+	ld [wBriefingBallX], a ; $6487
 	ld a, b ; $648a
-	ld [$d81f], a ; $648b
-	ld a, [$d82e] ; $648e
+	ld [wBriefingBallY], a ; $648b
+	ld a, [wBriefingAnimStep] ; $648e
 	add a, LOW(Data_17_6501) ; $6491
 	ld l, a ; $6493
 	adc a, HIGH(Data_17_6501) ; $6494
 	sub a, l ; $6496
 	ld h, a ; $6497
 	ld a, [hl] ; $6498
-	ld [$d827], a ; $6499
+	ld [wBriefingRotMarkerDir], a ; $6499
 	ld a, c ; $649c
 	add a, LOW(Data_17_6505) ; $649d
 	ld l, a ; $649f
@@ -3400,9 +3400,9 @@ DrillBriefing_ServeAndSmash:
 	inc hl ; $64a6
 	ld b, [hl] ; $64a7
 	ld a, a ; $64a8
-	ld [$d818], a ; $64a9
+	ld [wBriefingRotMarkerX], a ; $64a9
 	ld a, b ; $64ac
-	ld [$d819], a ; $64ad
+	ld [wBriefingRotMarkerY], a ; $64ad
 .lt78:
 	ld c, $01 ; $64b0
 	call AdvanceFrameCheckInput ; $64b2
@@ -3432,52 +3432,52 @@ Data_17_6529:
 	INCLUDE "data/bank_017/text_6529.asm" ; $6529, 16 bytes
 DrillBriefing_ServeAndSmash2:
 	ld a, $55 ; $6539
-	ld [$d810], a ; $653b
+	ld [wBriefingPlayerX], a ; $653b
 	ld a, $44 ; $653e
-	ld [$d811], a ; $6540
+	ld [wBriefingPlayerY], a ; $6540
 	ld a, $01 ; $6543
 	ld hl, DrawBriefingPlayerSprite ; $6545
 	call RegisterFrameTask ; $6548
 	ld a, $34 ; $654b
-	ld [$d812], a ; $654d
+	ld [wBriefingOpponentX], a ; $654d
 	ld a, $06 ; $6550
-	ld [$d813], a ; $6552
+	ld [wBriefingOpponentY], a ; $6552
 	ld a, $01 ; $6555
 	ld hl, DrawBriefingOpponentSprite ; $6557
 	call RegisterFrameTask ; $655a
 	ld a, $4e ; $655d
-	ld [$d81e], a ; $655f
+	ld [wBriefingBallX], a ; $655f
 	ld a, $38 ; $6562
-	ld [$d81f], a ; $6564
+	ld [wBriefingBallY], a ; $6564
 	ld a, $01 ; $6567
 	ld hl, DrawBriefingBallSprite ; $6569
 	call RegisterFrameTask ; $656c
 	ld a, $00 ; $656f
-	ld [$d82d], a ; $6571
+	ld [wBriefingHMarkerUnflipped], a ; $6571
 	ld a, $3a ; $6574
-	ld [$d81c], a ; $6576
+	ld [wBriefingHMarkerX], a ; $6576
 	ld a, $20 ; $6579
-	ld [$d81d], a ; $657b
+	ld [wBriefingHMarkerY], a ; $657b
 	ld a, $01 ; $657e
 	ld hl, DrawBriefingMarkerHFlip ; $6580
 	call RegisterFrameTask ; $6583
 	ld a, $03 ; $6586
-	ld [$d827], a ; $6588
+	ld [wBriefingRotMarkerDir], a ; $6588
 	ld a, $52 ; $658b
-	ld [$d818], a ; $658d
+	ld [wBriefingRotMarkerX], a ; $658d
 	ld a, $40 ; $6590
-	ld [$d819], a ; $6592
+	ld [wBriefingRotMarkerY], a ; $6592
 	ld a, $01 ; $6595
 	ld hl, DrawBriefingMarkerRotated ; $6597
 	call RegisterFrameTask ; $659a
 	ld a, $0d ; $659d
-	ld [$d82a], a ; $659f
+	ld [wBriefingBracketWidth], a ; $659f
 	ld a, $00 ; $65a2
-	ld [$d82b], a ; $65a4
+	ld [wBriefingBracketHeight], a ; $65a4
 	ld a, $3e ; $65a7
-	ld [$d828], a ; $65a9
+	ld [wBriefingBracketX], a ; $65a9
 	ld a, $22 ; $65ac
-	ld [$d829], a ; $65ae
+	ld [wBriefingBracketY], a ; $65ae
 	ld a, $01 ; $65b1
 	ld hl, DrawBriefingTargetBrackets ; $65b3
 	call RegisterFrameTask ; $65b6
@@ -3489,25 +3489,25 @@ DrillBriefing_ServeAndSmash2:
 	ld hl, UpdateAnimatedTilesTask_17 ; $65c7
 	call RegisterFrameTask ; $65ca
 	ld a, $55 ; $65cd
-	ld [$d810], a ; $65cf
+	ld [wBriefingPlayerX], a ; $65cf
 	ld a, $44 ; $65d2
-	ld [$d811], a ; $65d4
+	ld [wBriefingPlayerY], a ; $65d4
 	ld a, $01 ; $65d7
 	ld hl, DrawBriefingPlayerSprite ; $65d9
 	call RegisterFrameTask ; $65dc
 	ld a, $34 ; $65df
-	ld [$d812], a ; $65e1
+	ld [wBriefingOpponentX], a ; $65e1
 	ld a, $06 ; $65e4
-	ld [$d813], a ; $65e6
+	ld [wBriefingOpponentY], a ; $65e6
 	ld a, $01 ; $65e9
 	ld hl, DrawBriefingOpponentSprite ; $65eb
 	call RegisterFrameTask ; $65ee
 	ld a, $00 ; $65f1
-	ld [$d82d], a ; $65f3
+	ld [wBriefingHMarkerUnflipped], a ; $65f3
 	ld a, $3a ; $65f6
-	ld [$d81c], a ; $65f8
+	ld [wBriefingHMarkerX], a ; $65f8
 	ld a, $3c ; $65fb
-	ld [$d81d], a ; $65fd
+	ld [wBriefingHMarkerY], a ; $65fd
 	ld a, $01 ; $6600
 	ld hl, DrawBriefingMarkerHFlip ; $6602
 	call RegisterFrameTask ; $6605
@@ -3525,50 +3525,50 @@ DrillBriefing_ServeAndSmash2:
 	call RegisterFrameTask ; $6626
 	call DrawDiagramTargetOverlay ; $6629
 	ld a, $52 ; $662c
-	ld [$d810], a ; $662e
+	ld [wBriefingPlayerX], a ; $662e
 	ld a, $30 ; $6631
-	ld [$d811], a ; $6633
+	ld [wBriefingPlayerY], a ; $6633
 	ld a, $01 ; $6636
 	ld hl, DrawBriefingPlayerSprite ; $6638
 	call RegisterFrameTask ; $663b
 	ld a, $34 ; $663e
-	ld [$d812], a ; $6640
+	ld [wBriefingOpponentX], a ; $6640
 	ld a, $06 ; $6643
-	ld [$d813], a ; $6645
+	ld [wBriefingOpponentY], a ; $6645
 	ld a, $01 ; $6648
 	ld hl, DrawBriefingOpponentSprite ; $664a
 	call RegisterFrameTask ; $664d
 	ld a, $5d ; $6650
-	ld [$d81e], a ; $6652
+	ld [wBriefingBallX], a ; $6652
 	ld a, $1b ; $6655
-	ld [$d81f], a ; $6657
+	ld [wBriefingBallY], a ; $6657
 	ld a, $01 ; $665a
 	ld hl, DrawBriefingBallSprite ; $665c
 	call RegisterFrameTask ; $665f
 	ld a, $01 ; $6662
-	ld [$d827], a ; $6664
+	ld [wBriefingRotMarkerDir], a ; $6664
 	ld a, $46 ; $6667
-	ld [$d818], a ; $6669
+	ld [wBriefingRotMarkerX], a ; $6669
 	ld a, $16 ; $666c
-	ld [$d819], a ; $666e
+	ld [wBriefingRotMarkerY], a ; $666e
 	ld a, $01 ; $6671
 	ld hl, DrawBriefingMarkerRotated ; $6673
 	call RegisterFrameTask ; $6676
 	ld a, $00 ; $6679
-	ld [$d825], a ; $667b
+	ld [wBriefingVMarkerUpright], a ; $667b
 	ld a, $5b ; $667e
-	ld [$d823], a ; $6680
+	ld [wBriefingVMarkerX], a ; $6680
 	ld a, $21 ; $6683
-	ld [$d824], a ; $6685
+	ld [wBriefingVMarkerY], a ; $6685
 	ld a, $01 ; $6688
 	ld hl, DrawBriefingMarkerVFlip ; $668a
 	call RegisterFrameTask ; $668d
 	ld a, $05 ; $6690
-	ld [$d822], a ; $6692
+	ld [wBriefingSwingFrame], a ; $6692
 	ld a, $2d ; $6695
-	ld [$d814], a ; $6697
+	ld [wBriefingSwingX], a ; $6697
 	ld a, $30 ; $669a
-	ld [$d815], a ; $669c
+	ld [wBriefingSwingY], a ; $669c
 	ld a, $01 ; $669f
 	ld hl, DrawBriefingSwingAnim ; $66a1
 	call RegisterFrameTask ; $66a4
@@ -3580,60 +3580,60 @@ DrillBriefing_ServeAndSmash2:
 	ld hl, UpdateAnimatedTilesTask_17 ; $66b5
 	call RegisterFrameTask ; $66b8
 	ld a, $55 ; $66bb
-	ld [$d810], a ; $66bd
+	ld [wBriefingPlayerX], a ; $66bd
 	ld a, $44 ; $66c0
-	ld [$d811], a ; $66c2
+	ld [wBriefingPlayerY], a ; $66c2
 	ld a, $01 ; $66c5
 	ld hl, DrawBriefingPlayerSprite ; $66c7
 	call RegisterFrameTask ; $66ca
 	ld a, $34 ; $66cd
-	ld [$d812], a ; $66cf
+	ld [wBriefingOpponentX], a ; $66cf
 	ld a, $06 ; $66d2
-	ld [$d813], a ; $66d4
+	ld [wBriefingOpponentY], a ; $66d4
 	ld a, $01 ; $66d7
 	ld hl, DrawBriefingOpponentSprite ; $66d9
 	call RegisterFrameTask ; $66dc
 	ld a, $50 ; $66df
-	ld [$d81e], a ; $66e1
+	ld [wBriefingBallX], a ; $66e1
 	ld a, $37 ; $66e4
-	ld [$d81f], a ; $66e6
+	ld [wBriefingBallY], a ; $66e6
 	ld a, $01 ; $66e9
 	ld hl, DrawBriefingBallSprite ; $66eb
 	call RegisterFrameTask ; $66ee
 	ld a, $03 ; $66f1
-	ld [$d827], a ; $66f3
+	ld [wBriefingRotMarkerDir], a ; $66f3
 	ld a, $54 ; $66f6
-	ld [$d818], a ; $66f8
+	ld [wBriefingRotMarkerX], a ; $66f8
 	ld a, $3d ; $66fb
-	ld [$d819], a ; $66fd
+	ld [wBriefingRotMarkerY], a ; $66fd
 	ld a, $01 ; $6700
 	ld hl, DrawBriefingMarkerRotated ; $6702
 	call RegisterFrameTask ; $6705
 	ld a, $0d ; $6708
-	ld [$d82a], a ; $670a
+	ld [wBriefingBracketWidth], a ; $670a
 	ld a, $00 ; $670d
-	ld [$d82b], a ; $670f
+	ld [wBriefingBracketHeight], a ; $670f
 	ld a, $3e ; $6712
-	ld [$d828], a ; $6714
+	ld [wBriefingBracketX], a ; $6714
 	ld a, $22 ; $6717
-	ld [$d829], a ; $6719
+	ld [wBriefingBracketY], a ; $6719
 	ld a, $01 ; $671c
 	ld hl, DrawBriefingTargetBrackets ; $671e
 	call RegisterFrameTask ; $6721
 	ld hl, $1ac9 ; $6724
 	call DrawBriefingCaption ; $6727
 .loop:
-	ld a, [$d82c] ; $672a
+	ld a, [wBriefingAnimTimer] ; $672a
 	inc a ; $672d
-	ld [$d82c], a ; $672e
+	ld [wBriefingAnimTimer], a ; $672e
 	cp a, $78 ; $6731
 	jp c, .lt78 ; $6733
 	xor a, a ; $6736
-	ld [$d82c], a ; $6737
-	ld a, [$d82e] ; $673a
+	ld [wBriefingAnimTimer], a ; $6737
+	ld a, [wBriefingAnimStep] ; $673a
 	inc a ; $673d
 	and a, $03 ; $673e
-	ld [$d82e], a ; $6740
+	ld [wBriefingAnimStep], a ; $6740
 	sla a ; $6743
 	sla a ; $6745
 	ld c, a ; $6747
@@ -3647,9 +3647,9 @@ DrillBriefing_ServeAndSmash2:
 	inc hl ; $6751
 	ld b, [hl] ; $6752
 	ld a, a ; $6753
-	ld [$d810], a ; $6754
+	ld [wBriefingPlayerX], a ; $6754
 	ld a, b ; $6757
-	ld [$d811], a ; $6758
+	ld [wBriefingPlayerY], a ; $6758
 	ld a, c ; $675b
 	add a, LOW(Data_17_67d6) ; $675c
 	ld l, a ; $675e
@@ -3661,9 +3661,9 @@ DrillBriefing_ServeAndSmash2:
 	inc hl ; $6765
 	ld b, [hl] ; $6766
 	ld a, a ; $6767
-	ld [$d812], a ; $6768
+	ld [wBriefingOpponentX], a ; $6768
 	ld a, b ; $676b
-	ld [$d813], a ; $676c
+	ld [wBriefingOpponentY], a ; $676c
 	ld a, c ; $676f
 	add a, LOW(Data_17_6832) ; $6770
 	ld l, a ; $6772
@@ -3675,9 +3675,9 @@ DrillBriefing_ServeAndSmash2:
 	inc hl ; $6779
 	ld b, [hl] ; $677a
 	ld a, a ; $677b
-	ld [$d828], a ; $677c
+	ld [wBriefingBracketX], a ; $677c
 	ld a, b ; $677f
-	ld [$d829], a ; $6780
+	ld [wBriefingBracketY], a ; $6780
 	ld a, c ; $6783
 	add a, LOW(Data_17_67e6) ; $6784
 	ld l, a ; $6786
@@ -3689,17 +3689,17 @@ DrillBriefing_ServeAndSmash2:
 	inc hl ; $678d
 	ld b, [hl] ; $678e
 	ld a, a ; $678f
-	ld [$d81e], a ; $6790
+	ld [wBriefingBallX], a ; $6790
 	ld a, b ; $6793
-	ld [$d81f], a ; $6794
-	ld a, [$d82e] ; $6797
+	ld [wBriefingBallY], a ; $6794
+	ld a, [wBriefingAnimStep] ; $6797
 	add a, LOW(Data_17_680a) ; $679a
 	ld l, a ; $679c
 	adc a, HIGH(Data_17_680a) ; $679d
 	sub a, l ; $679f
 	ld h, a ; $67a0
 	ld a, [hl] ; $67a1
-	ld [$d827], a ; $67a2
+	ld [wBriefingRotMarkerDir], a ; $67a2
 	ld a, c ; $67a5
 	add a, LOW(Data_17_680e) ; $67a6
 	ld l, a ; $67a8
@@ -3711,9 +3711,9 @@ DrillBriefing_ServeAndSmash2:
 	inc hl ; $67af
 	ld b, [hl] ; $67b0
 	ld a, a ; $67b1
-	ld [$d818], a ; $67b2
+	ld [wBriefingRotMarkerX], a ; $67b2
 	ld a, b ; $67b5
-	ld [$d819], a ; $67b6
+	ld [wBriefingRotMarkerY], a ; $67b6
 .lt78:
 	ld c, $01 ; $67b9
 	call AdvanceFrameCheckInput ; $67bb
@@ -3743,32 +3743,32 @@ Data_17_6832:
 	INCLUDE "data/bank_017/text_6832.asm" ; $6832, 16 bytes
 DrillBriefing_ReturnToTarget:
 	ld a, $55 ; $6842
-	ld [$d810], a ; $6844
+	ld [wBriefingPlayerX], a ; $6844
 	ld a, $44 ; $6847
-	ld [$d811], a ; $6849
+	ld [wBriefingPlayerY], a ; $6849
 	ld a, $01 ; $684c
 	ld hl, DrawBriefingPlayerSprite ; $684e
 	call RegisterFrameTask ; $6851
 	ld a, $3a ; $6854
-	ld [$d812], a ; $6856
+	ld [wBriefingOpponentX], a ; $6856
 	ld a, $03 ; $6859
-	ld [$d813], a ; $685b
+	ld [wBriefingOpponentY], a ; $685b
 	ld a, $01 ; $685e
 	ld hl, DrawBriefingOpponentSprite ; $6860
 	call RegisterFrameTask ; $6863
 	ld a, $54 ; $6866
-	ld [$d81e], a ; $6868
+	ld [wBriefingBallX], a ; $6868
 	ld a, $28 ; $686b
-	ld [$d81f], a ; $686d
+	ld [wBriefingBallY], a ; $686d
 	ld a, $01 ; $6870
 	ld hl, DrawBriefingBallSprite ; $6872
 	call RegisterFrameTask ; $6875
 	ld a, $01 ; $6878
-	ld [$d827], a ; $687a
+	ld [wBriefingRotMarkerDir], a ; $687a
 	ld a, $4c ; $687d
-	ld [$d818], a ; $687f
+	ld [wBriefingRotMarkerX], a ; $687f
 	ld a, $16 ; $6882
-	ld [$d819], a ; $6884
+	ld [wBriefingRotMarkerY], a ; $6884
 	ld a, $01 ; $6887
 	ld hl, DrawBriefingMarkerRotated ; $6889
 	call RegisterFrameTask ; $688c
@@ -3780,7 +3780,7 @@ DrillBriefing_ReturnToTarget:
 	ld hl, UpdateAnimatedTilesTask_17 ; $689d
 	call RegisterFrameTask ; $68a0
 	ld a, $03 ; $68a3
-	ld [$d82e], a ; $68a5
+	ld [wBriefingAnimStep], a ; $68a5
 	call ReturnToTargetBriefing_AdvanceAnim ; $68a8
 	ld a, $01 ; $68ab
 	ld hl, DrawBriefingPlayerSprite ; $68ad
@@ -3798,9 +3798,9 @@ DrillBriefing_ReturnToTarget:
 	ld hl, DrawBriefingMarkerRotated ; $68cd
 	call RegisterFrameTask ; $68d0
 	ld a, $0d ; $68d3
-	ld [$d82a], a ; $68d5
+	ld [wBriefingBracketWidth], a ; $68d5
 	ld a, $09 ; $68d8
-	ld [$d82b], a ; $68da
+	ld [wBriefingBracketHeight], a ; $68da
 	ld a, $01 ; $68dd
 	ld hl, DrawBriefingTargetBrackets ; $68df
 	call RegisterFrameTask ; $68e2
@@ -3812,7 +3812,7 @@ DrillBriefing_ReturnToTarget:
 	ld hl, UpdateAnimatedTilesTask_17 ; $68f3
 	call RegisterFrameTask ; $68f6
 	ld a, $03 ; $68f9
-	ld [$d82e], a ; $68fb
+	ld [wBriefingAnimStep], a ; $68fb
 	call ReturnToTargetBriefing_AdvanceAnim ; $68fe
 	ld a, $01 ; $6901
 	ld hl, DrawBriefingPlayerSprite ; $6903
@@ -3830,17 +3830,17 @@ DrillBriefing_ReturnToTarget:
 	ld hl, DrawBriefingMarkerRotated ; $6923
 	call RegisterFrameTask ; $6926
 	ld a, $0d ; $6929
-	ld [$d82a], a ; $692b
+	ld [wBriefingBracketWidth], a ; $692b
 	ld a, $09 ; $692e
-	ld [$d82b], a ; $6930
+	ld [wBriefingBracketHeight], a ; $6930
 	ld a, $01 ; $6933
 	ld hl, DrawBriefingTargetBrackets ; $6935
 	call RegisterFrameTask ; $6938
 	ld hl, $1c05 ; $693b
 	call DrawBriefingCaption ; $693e
 	xor a, a ; $6941
-	ld [$d82c], a ; $6942
-	ld [$d82e], a ; $6945
+	ld [wBriefingAnimTimer], a ; $6942
+	ld [wBriefingAnimStep], a ; $6945
 .loop:
 	call ReturnToTargetBriefing_TickAnim ; $6948
 	ld c, $01 ; $694b
@@ -3850,19 +3850,19 @@ DrillBriefing_ReturnToTarget:
 	call ClearFrameTasks ; $6954
 	ret ; $6957
 ReturnToTargetBriefing_TickAnim:
-	ld a, [$d82c] ; $6958
+	ld a, [wBriefingAnimTimer] ; $6958
 	inc a ; $695b
-	ld [$d82c], a ; $695c
+	ld [wBriefingAnimTimer], a ; $695c
 	cp a, $78 ; $695f
 	jp nc, ReturnToTargetBriefing_AdvanceAnim ; $6961
 	ret ; $6964
 ReturnToTargetBriefing_AdvanceAnim:
 	xor a, a ; $6965
-	ld [$d82c], a ; $6966
-	ld a, [$d82e] ; $6969
+	ld [wBriefingAnimTimer], a ; $6966
+	ld a, [wBriefingAnimStep] ; $6969
 	inc a ; $696c
 	and a, $03 ; $696d
-	ld [$d82e], a ; $696f
+	ld [wBriefingAnimStep], a ; $696f
 	sla a ; $6972
 	sla a ; $6974
 	ld c, a ; $6976
@@ -3876,9 +3876,9 @@ ReturnToTargetBriefing_AdvanceAnim:
 	inc hl ; $6980
 	ld b, [hl] ; $6981
 	ld a, a ; $6982
-	ld [$d810], a ; $6983
+	ld [wBriefingPlayerX], a ; $6983
 	ld a, b ; $6986
-	ld [$d811], a ; $6987
+	ld [wBriefingPlayerY], a ; $6987
 	ld a, c ; $698a
 	add a, LOW(Data_17_6a1b) ; $698b
 	ld l, a ; $698d
@@ -3890,9 +3890,9 @@ ReturnToTargetBriefing_AdvanceAnim:
 	inc hl ; $6994
 	ld b, [hl] ; $6995
 	ld a, a ; $6996
-	ld [$d812], a ; $6997
+	ld [wBriefingOpponentX], a ; $6997
 	ld a, b ; $699a
-	ld [$d813], a ; $699b
+	ld [wBriefingOpponentY], a ; $699b
 	ld a, c ; $699e
 	add a, LOW(Data_17_6a63) ; $699f
 	ld l, a ; $69a1
@@ -3904,9 +3904,9 @@ ReturnToTargetBriefing_AdvanceAnim:
 	inc hl ; $69a8
 	ld b, [hl] ; $69a9
 	ld a, a ; $69aa
-	ld [$d828], a ; $69ab
+	ld [wBriefingBracketX], a ; $69ab
 	ld a, b ; $69ae
-	ld [$d829], a ; $69af
+	ld [wBriefingBracketY], a ; $69af
 	ld a, c ; $69b2
 	add a, LOW(Data_17_6a2b) ; $69b3
 	ld l, a ; $69b5
@@ -3918,17 +3918,17 @@ ReturnToTargetBriefing_AdvanceAnim:
 	inc hl ; $69bc
 	ld b, [hl] ; $69bd
 	ld a, a ; $69be
-	ld [$d81e], a ; $69bf
+	ld [wBriefingBallX], a ; $69bf
 	ld a, b ; $69c2
-	ld [$d81f], a ; $69c3
-	ld a, [$d82e] ; $69c6
+	ld [wBriefingBallY], a ; $69c3
+	ld a, [wBriefingAnimStep] ; $69c6
 	add a, LOW(Data_17_6a3b) ; $69c9
 	ld l, a ; $69cb
 	adc a, HIGH(Data_17_6a3b) ; $69cc
 	sub a, l ; $69ce
 	ld h, a ; $69cf
 	ld a, [hl] ; $69d0
-	ld [$d82d], a ; $69d1
+	ld [wBriefingHMarkerUnflipped], a ; $69d1
 	ld a, c ; $69d4
 	add a, LOW(Data_17_6a3f) ; $69d5
 	ld l, a ; $69d7
@@ -3940,17 +3940,17 @@ ReturnToTargetBriefing_AdvanceAnim:
 	inc hl ; $69de
 	ld b, [hl] ; $69df
 	ld a, a ; $69e0
-	ld [$d81c], a ; $69e1
+	ld [wBriefingHMarkerX], a ; $69e1
 	ld a, b ; $69e4
-	ld [$d81d], a ; $69e5
-	ld a, [$d82e] ; $69e8
+	ld [wBriefingHMarkerY], a ; $69e5
+	ld a, [wBriefingAnimStep] ; $69e8
 	add a, LOW(Data_17_6a4f) ; $69eb
 	ld l, a ; $69ed
 	adc a, HIGH(Data_17_6a4f) ; $69ee
 	sub a, l ; $69f0
 	ld h, a ; $69f1
 	ld a, [hl] ; $69f2
-	ld [$d827], a ; $69f3
+	ld [wBriefingRotMarkerDir], a ; $69f3
 	ld a, c ; $69f6
 	add a, LOW(Data_17_6a53) ; $69f7
 	ld l, a ; $69f9
@@ -3962,9 +3962,9 @@ ReturnToTargetBriefing_AdvanceAnim:
 	inc hl ; $6a00
 	ld b, [hl] ; $6a01
 	ld a, a ; $6a02
-	ld [$d818], a ; $6a03
+	ld [wBriefingRotMarkerX], a ; $6a03
 	ld a, b ; $6a06
-	ld [$d819], a ; $6a07
+	ld [wBriefingRotMarkerY], a ; $6a07
 	ret ; $6a0a
 ReturnToTargetBriefing_AdvanceAnimTable:
 	; $6a0b, 16 bytes (records:2)
@@ -3992,32 +3992,32 @@ Data_17_6a63:
 	INCBIN "data/bank_017/d_6a63.bin" ; $6a63, 16 bytes
 DrillBriefing_ReturnLob:
 	ld a, $55 ; $6a73
-	ld [$d810], a ; $6a75
+	ld [wBriefingPlayerX], a ; $6a75
 	ld a, $44 ; $6a78
-	ld [$d811], a ; $6a7a
+	ld [wBriefingPlayerY], a ; $6a7a
 	ld a, $01 ; $6a7d
 	ld hl, DrawBriefingPlayerSprite ; $6a7f
 	call RegisterFrameTask ; $6a82
 	ld a, $3a ; $6a85
-	ld [$d812], a ; $6a87
+	ld [wBriefingOpponentX], a ; $6a87
 	ld a, $03 ; $6a8a
-	ld [$d813], a ; $6a8c
+	ld [wBriefingOpponentY], a ; $6a8c
 	ld a, $01 ; $6a8f
 	ld hl, DrawBriefingOpponentSprite ; $6a91
 	call RegisterFrameTask ; $6a94
 	ld a, $56 ; $6a97
-	ld [$d81e], a ; $6a99
+	ld [wBriefingBallX], a ; $6a99
 	ld a, $28 ; $6a9c
-	ld [$d81f], a ; $6a9e
+	ld [wBriefingBallY], a ; $6a9e
 	ld a, $01 ; $6aa1
 	ld hl, DrawBriefingBallSprite ; $6aa3
 	call RegisterFrameTask ; $6aa6
 	ld a, $01 ; $6aa9
-	ld [$d827], a ; $6aab
+	ld [wBriefingRotMarkerDir], a ; $6aab
 	ld a, $4c ; $6aae
-	ld [$d818], a ; $6ab0
+	ld [wBriefingRotMarkerX], a ; $6ab0
 	ld a, $16 ; $6ab3
-	ld [$d819], a ; $6ab5
+	ld [wBriefingRotMarkerY], a ; $6ab5
 	ld a, $01 ; $6ab8
 	ld hl, DrawBriefingMarkerRotated ; $6aba
 	call RegisterFrameTask ; $6abd
@@ -4029,7 +4029,7 @@ DrillBriefing_ReturnLob:
 	ld hl, UpdateAnimatedTilesTask_17 ; $6ace
 	call RegisterFrameTask ; $6ad1
 	ld a, $03 ; $6ad4
-	ld [$d82e], a ; $6ad6
+	ld [wBriefingAnimStep], a ; $6ad6
 	call ReturnLobBriefing_AdvanceAnim ; $6ad9
 	ld a, $01 ; $6adc
 	ld hl, DrawBriefingPlayerSprite ; $6ade
@@ -4050,9 +4050,9 @@ DrillBriefing_ReturnLob:
 	ld hl, DrawBriefingSwingAnim ; $6b06
 	call RegisterFrameTask ; $6b09
 	ld a, $0d ; $6b0c
-	ld [$d82a], a ; $6b0e
+	ld [wBriefingBracketWidth], a ; $6b0e
 	ld a, $09 ; $6b11
-	ld [$d82b], a ; $6b13
+	ld [wBriefingBracketHeight], a ; $6b13
 	ld a, $01 ; $6b16
 	ld hl, DrawBriefingTargetBrackets ; $6b18
 	call RegisterFrameTask ; $6b1b
@@ -4064,7 +4064,7 @@ DrillBriefing_ReturnLob:
 	ld hl, UpdateAnimatedTilesTask_17 ; $6b2c
 	call RegisterFrameTask ; $6b2f
 	ld a, $03 ; $6b32
-	ld [$d82e], a ; $6b34
+	ld [wBriefingAnimStep], a ; $6b34
 	call ReturnLobBriefing_AdvanceAnim ; $6b37
 	ld a, $01 ; $6b3a
 	ld hl, DrawBriefingPlayerSprite ; $6b3c
@@ -4085,17 +4085,17 @@ DrillBriefing_ReturnLob:
 	ld hl, DrawBriefingSwingAnim ; $6b64
 	call RegisterFrameTask ; $6b67
 	ld a, $0d ; $6b6a
-	ld [$d82a], a ; $6b6c
+	ld [wBriefingBracketWidth], a ; $6b6c
 	ld a, $09 ; $6b6f
-	ld [$d82b], a ; $6b71
+	ld [wBriefingBracketHeight], a ; $6b71
 	ld a, $01 ; $6b74
 	ld hl, DrawBriefingTargetBrackets ; $6b76
 	call RegisterFrameTask ; $6b79
 	ld hl, $1c08 ; $6b7c
 	call DrawBriefingCaption ; $6b7f
 	xor a, a ; $6b82
-	ld [$d82c], a ; $6b83
-	ld [$d82e], a ; $6b86
+	ld [wBriefingAnimTimer], a ; $6b83
+	ld [wBriefingAnimStep], a ; $6b86
 .loop:
 	call ReturnLobBriefing_TickAnim ; $6b89
 	ld c, $01 ; $6b8c
@@ -4105,19 +4105,19 @@ DrillBriefing_ReturnLob:
 	call ClearFrameTasks ; $6b95
 	ret ; $6b98
 ReturnLobBriefing_TickAnim:
-	ld a, [$d82c] ; $6b99
+	ld a, [wBriefingAnimTimer] ; $6b99
 	inc a ; $6b9c
-	ld [$d82c], a ; $6b9d
+	ld [wBriefingAnimTimer], a ; $6b9d
 	cp a, $78 ; $6ba0
 	jp nc, ReturnLobBriefing_AdvanceAnim ; $6ba2
 	ret ; $6ba5
 ReturnLobBriefing_AdvanceAnim:
 	xor a, a ; $6ba6
-	ld [$d82c], a ; $6ba7
-	ld a, [$d82e] ; $6baa
+	ld [wBriefingAnimTimer], a ; $6ba7
+	ld a, [wBriefingAnimStep] ; $6baa
 	inc a ; $6bad
 	and a, $03 ; $6bae
-	ld [$d82e], a ; $6bb0
+	ld [wBriefingAnimStep], a ; $6bb0
 	sla a ; $6bb3
 	sla a ; $6bb5
 	ld c, a ; $6bb7
@@ -4131,9 +4131,9 @@ ReturnLobBriefing_AdvanceAnim:
 	inc hl ; $6bc1
 	ld b, [hl] ; $6bc2
 	ld a, a ; $6bc3
-	ld [$d810], a ; $6bc4
+	ld [wBriefingPlayerX], a ; $6bc4
 	ld a, b ; $6bc7
-	ld [$d811], a ; $6bc8
+	ld [wBriefingPlayerY], a ; $6bc8
 	ld a, c ; $6bcb
 	add a, LOW(Data_17_6c7e) ; $6bcc
 	ld l, a ; $6bce
@@ -4145,9 +4145,9 @@ ReturnLobBriefing_AdvanceAnim:
 	inc hl ; $6bd5
 	ld b, [hl] ; $6bd6
 	ld a, a ; $6bd7
-	ld [$d812], a ; $6bd8
+	ld [wBriefingOpponentX], a ; $6bd8
 	ld a, b ; $6bdb
-	ld [$d813], a ; $6bdc
+	ld [wBriefingOpponentY], a ; $6bdc
 	ld a, c ; $6bdf
 	add a, LOW(Data_17_6cc6) ; $6be0
 	ld l, a ; $6be2
@@ -4159,9 +4159,9 @@ ReturnLobBriefing_AdvanceAnim:
 	inc hl ; $6be9
 	ld b, [hl] ; $6bea
 	ld a, a ; $6beb
-	ld [$d828], a ; $6bec
+	ld [wBriefingBracketX], a ; $6bec
 	ld a, b ; $6bef
-	ld [$d829], a ; $6bf0
+	ld [wBriefingBracketY], a ; $6bf0
 	ld a, c ; $6bf3
 	add a, LOW(Data_17_6c8e) ; $6bf4
 	ld l, a ; $6bf6
@@ -4173,17 +4173,17 @@ ReturnLobBriefing_AdvanceAnim:
 	inc hl ; $6bfd
 	ld b, [hl] ; $6bfe
 	ld a, a ; $6bff
-	ld [$d81e], a ; $6c00
+	ld [wBriefingBallX], a ; $6c00
 	ld a, b ; $6c03
-	ld [$d81f], a ; $6c04
-	ld a, [$d82e] ; $6c07
+	ld [wBriefingBallY], a ; $6c04
+	ld a, [wBriefingAnimStep] ; $6c07
 	add a, LOW(Data_17_6c9e) ; $6c0a
 	ld l, a ; $6c0c
 	adc a, HIGH(Data_17_6c9e) ; $6c0d
 	sub a, l ; $6c0f
 	ld h, a ; $6c10
 	ld a, [hl] ; $6c11
-	ld [$d82d], a ; $6c12
+	ld [wBriefingHMarkerUnflipped], a ; $6c12
 	ld a, c ; $6c15
 	add a, LOW(Data_17_6ca2) ; $6c16
 	ld l, a ; $6c18
@@ -4195,17 +4195,17 @@ ReturnLobBriefing_AdvanceAnim:
 	inc hl ; $6c1f
 	ld b, [hl] ; $6c20
 	ld a, a ; $6c21
-	ld [$d81c], a ; $6c22
+	ld [wBriefingHMarkerX], a ; $6c22
 	ld a, b ; $6c25
-	ld [$d81d], a ; $6c26
-	ld a, [$d82e] ; $6c29
+	ld [wBriefingHMarkerY], a ; $6c26
+	ld a, [wBriefingAnimStep] ; $6c29
 	add a, LOW(Data_17_6cb2) ; $6c2c
 	ld l, a ; $6c2e
 	adc a, HIGH(Data_17_6cb2) ; $6c2f
 	sub a, l ; $6c31
 	ld h, a ; $6c32
 	ld a, [hl] ; $6c33
-	ld [$d827], a ; $6c34
+	ld [wBriefingRotMarkerDir], a ; $6c34
 	ld a, c ; $6c37
 	add a, LOW(Data_17_6cb6) ; $6c38
 	ld l, a ; $6c3a
@@ -4217,17 +4217,17 @@ ReturnLobBriefing_AdvanceAnim:
 	inc hl ; $6c41
 	ld b, [hl] ; $6c42
 	ld a, a ; $6c43
-	ld [$d818], a ; $6c44
+	ld [wBriefingRotMarkerX], a ; $6c44
 	ld a, b ; $6c47
-	ld [$d819], a ; $6c48
-	ld a, [$d82e] ; $6c4b
+	ld [wBriefingRotMarkerY], a ; $6c48
+	ld a, [wBriefingAnimStep] ; $6c4b
 	add a, LOW(Data_17_6cd6) ; $6c4e
 	ld l, a ; $6c50
 	adc a, HIGH(Data_17_6cd6) ; $6c51
 	sub a, l ; $6c53
 	ld h, a ; $6c54
 	ld a, [hl] ; $6c55
-	ld [$d822], a ; $6c56
+	ld [wBriefingSwingFrame], a ; $6c56
 	ld a, c ; $6c59
 	add a, LOW(Data_17_6cda) ; $6c5a
 	ld l, a ; $6c5c
@@ -4239,9 +4239,9 @@ ReturnLobBriefing_AdvanceAnim:
 	inc hl ; $6c63
 	ld b, [hl] ; $6c64
 	ld a, a ; $6c65
-	ld [$d814], a ; $6c66
+	ld [wBriefingSwingX], a ; $6c66
 	ld a, b ; $6c69
-	ld [$d815], a ; $6c6a
+	ld [wBriefingSwingY], a ; $6c6a
 	ret ; $6c6d
 ReturnLobBriefing_AdvanceAnimTable:
 	; $6c6e, 16 bytes (records:2)
@@ -4273,32 +4273,32 @@ Data_17_6cda:
 	INCLUDE "data/bank_017/text_6cda.asm" ; $6cda, 16 bytes
 DrillBriefing_ReturnDownLine:
 	ld a, $55 ; $6cea
-	ld [$d810], a ; $6cec
+	ld [wBriefingPlayerX], a ; $6cec
 	ld a, $44 ; $6cef
-	ld [$d811], a ; $6cf1
+	ld [wBriefingPlayerY], a ; $6cf1
 	ld a, $01 ; $6cf4
 	ld hl, DrawBriefingPlayerSprite ; $6cf6
 	call RegisterFrameTask ; $6cf9
 	ld a, $3a ; $6cfc
-	ld [$d812], a ; $6cfe
+	ld [wBriefingOpponentX], a ; $6cfe
 	ld a, $03 ; $6d01
-	ld [$d813], a ; $6d03
+	ld [wBriefingOpponentY], a ; $6d03
 	ld a, $01 ; $6d06
 	ld hl, DrawBriefingOpponentSprite ; $6d08
 	call RegisterFrameTask ; $6d0b
 	ld a, $54 ; $6d0e
-	ld [$d81e], a ; $6d10
+	ld [wBriefingBallX], a ; $6d10
 	ld a, $28 ; $6d13
-	ld [$d81f], a ; $6d15
+	ld [wBriefingBallY], a ; $6d15
 	ld a, $01 ; $6d18
 	ld hl, DrawBriefingBallSprite ; $6d1a
 	call RegisterFrameTask ; $6d1d
 	ld a, $01 ; $6d20
-	ld [$d827], a ; $6d22
+	ld [wBriefingRotMarkerDir], a ; $6d22
 	ld a, $4c ; $6d25
-	ld [$d818], a ; $6d27
+	ld [wBriefingRotMarkerX], a ; $6d27
 	ld a, $16 ; $6d2a
-	ld [$d819], a ; $6d2c
+	ld [wBriefingRotMarkerY], a ; $6d2c
 	ld a, $01 ; $6d2f
 	ld hl, DrawBriefingMarkerRotated ; $6d31
 	call RegisterFrameTask ; $6d34
@@ -4310,7 +4310,7 @@ DrillBriefing_ReturnDownLine:
 	ld hl, UpdateAnimatedTilesTask_17 ; $6d45
 	call RegisterFrameTask ; $6d48
 	ld a, $03 ; $6d4b
-	ld [$d82e], a ; $6d4d
+	ld [wBriefingAnimStep], a ; $6d4d
 	call ReturnDownLineBriefing_AdvanceAnim ; $6d50
 	ld a, $01 ; $6d53
 	ld hl, DrawBriefingPlayerSprite ; $6d55
@@ -4328,9 +4328,9 @@ DrillBriefing_ReturnDownLine:
 	ld hl, DrawBriefingMarkerVFlip ; $6d75
 	call RegisterFrameTask ; $6d78
 	ld a, $00 ; $6d7b
-	ld [$d82a], a ; $6d7d
+	ld [wBriefingBracketWidth], a ; $6d7d
 	ld a, $09 ; $6d80
-	ld [$d82b], a ; $6d82
+	ld [wBriefingBracketHeight], a ; $6d82
 	ld a, $01 ; $6d85
 	ld hl, DrawBriefingTargetBrackets ; $6d87
 	call RegisterFrameTask ; $6d8a
@@ -4342,7 +4342,7 @@ DrillBriefing_ReturnDownLine:
 	ld hl, UpdateAnimatedTilesTask_17 ; $6d9b
 	call RegisterFrameTask ; $6d9e
 	ld a, $03 ; $6da1
-	ld [$d82e], a ; $6da3
+	ld [wBriefingAnimStep], a ; $6da3
 	call ReturnDownLineBriefing_AdvanceAnim ; $6da6
 	ld a, $01 ; $6da9
 	ld hl, DrawBriefingPlayerSprite ; $6dab
@@ -4360,17 +4360,17 @@ DrillBriefing_ReturnDownLine:
 	ld hl, DrawBriefingMarkerVFlip ; $6dcb
 	call RegisterFrameTask ; $6dce
 	ld a, $00 ; $6dd1
-	ld [$d82a], a ; $6dd3
+	ld [wBriefingBracketWidth], a ; $6dd3
 	ld a, $09 ; $6dd6
-	ld [$d82b], a ; $6dd8
+	ld [wBriefingBracketHeight], a ; $6dd8
 	ld a, $01 ; $6ddb
 	ld hl, DrawBriefingTargetBrackets ; $6ddd
 	call RegisterFrameTask ; $6de0
 	ld hl, $1c0b ; $6de3
 	call DrawBriefingCaption ; $6de6
 	xor a, a ; $6de9
-	ld [$d82c], a ; $6dea
-	ld [$d82e], a ; $6ded
+	ld [wBriefingAnimTimer], a ; $6dea
+	ld [wBriefingAnimStep], a ; $6ded
 .loop:
 	call ReturnDownLineBriefing_TickAnim ; $6df0
 	ld c, $01 ; $6df3
@@ -4380,19 +4380,19 @@ DrillBriefing_ReturnDownLine:
 	call ClearFrameTasks ; $6dfc
 	ret ; $6dff
 ReturnDownLineBriefing_TickAnim:
-	ld a, [$d82c] ; $6e00
+	ld a, [wBriefingAnimTimer] ; $6e00
 	inc a ; $6e03
-	ld [$d82c], a ; $6e04
+	ld [wBriefingAnimTimer], a ; $6e04
 	cp a, $78 ; $6e07
 	jp nc, ReturnDownLineBriefing_AdvanceAnim ; $6e09
 	ret ; $6e0c
 ReturnDownLineBriefing_AdvanceAnim:
 	xor a, a ; $6e0d
-	ld [$d82c], a ; $6e0e
-	ld a, [$d82e] ; $6e11
+	ld [wBriefingAnimTimer], a ; $6e0e
+	ld a, [wBriefingAnimStep] ; $6e11
 	inc a ; $6e14
 	and a, $03 ; $6e15
-	ld [$d82e], a ; $6e17
+	ld [wBriefingAnimStep], a ; $6e17
 	sla a ; $6e1a
 	sla a ; $6e1c
 	ld c, a ; $6e1e
@@ -4406,9 +4406,9 @@ ReturnDownLineBriefing_AdvanceAnim:
 	inc hl ; $6e28
 	ld b, [hl] ; $6e29
 	ld a, a ; $6e2a
-	ld [$d810], a ; $6e2b
+	ld [wBriefingPlayerX], a ; $6e2b
 	ld a, b ; $6e2e
-	ld [$d811], a ; $6e2f
+	ld [wBriefingPlayerY], a ; $6e2f
 	ld a, c ; $6e32
 	add a, LOW(Data_17_6ec3) ; $6e33
 	ld l, a ; $6e35
@@ -4420,9 +4420,9 @@ ReturnDownLineBriefing_AdvanceAnim:
 	inc hl ; $6e3c
 	ld b, [hl] ; $6e3d
 	ld a, a ; $6e3e
-	ld [$d812], a ; $6e3f
+	ld [wBriefingOpponentX], a ; $6e3f
 	ld a, b ; $6e42
-	ld [$d813], a ; $6e43
+	ld [wBriefingOpponentY], a ; $6e43
 	ld a, c ; $6e46
 	add a, LOW(Data_17_6f0b) ; $6e47
 	ld l, a ; $6e49
@@ -4434,9 +4434,9 @@ ReturnDownLineBriefing_AdvanceAnim:
 	inc hl ; $6e50
 	ld b, [hl] ; $6e51
 	ld a, a ; $6e52
-	ld [$d828], a ; $6e53
+	ld [wBriefingBracketX], a ; $6e53
 	ld a, b ; $6e56
-	ld [$d829], a ; $6e57
+	ld [wBriefingBracketY], a ; $6e57
 	ld a, c ; $6e5a
 	add a, LOW(Data_17_6ed3) ; $6e5b
 	ld l, a ; $6e5d
@@ -4448,17 +4448,17 @@ ReturnDownLineBriefing_AdvanceAnim:
 	inc hl ; $6e64
 	ld b, [hl] ; $6e65
 	ld a, a ; $6e66
-	ld [$d81e], a ; $6e67
+	ld [wBriefingBallX], a ; $6e67
 	ld a, b ; $6e6a
-	ld [$d81f], a ; $6e6b
-	ld a, [$d82e] ; $6e6e
+	ld [wBriefingBallY], a ; $6e6b
+	ld a, [wBriefingAnimStep] ; $6e6e
 	add a, LOW(Data_17_6ee3) ; $6e71
 	ld l, a ; $6e73
 	adc a, HIGH(Data_17_6ee3) ; $6e74
 	sub a, l ; $6e76
 	ld h, a ; $6e77
 	ld a, [hl] ; $6e78
-	ld [$d82d], a ; $6e79
+	ld [wBriefingHMarkerUnflipped], a ; $6e79
 	ld a, c ; $6e7c
 	add a, LOW(Data_17_6ee7) ; $6e7d
 	ld l, a ; $6e7f
@@ -4470,17 +4470,17 @@ ReturnDownLineBriefing_AdvanceAnim:
 	inc hl ; $6e86
 	ld b, [hl] ; $6e87
 	ld a, a ; $6e88
-	ld [$d81c], a ; $6e89
+	ld [wBriefingHMarkerX], a ; $6e89
 	ld a, b ; $6e8c
-	ld [$d81d], a ; $6e8d
-	ld a, [$d82e] ; $6e90
+	ld [wBriefingHMarkerY], a ; $6e8d
+	ld a, [wBriefingAnimStep] ; $6e90
 	add a, LOW(Data_17_6ef7) ; $6e93
 	ld l, a ; $6e95
 	adc a, HIGH(Data_17_6ef7) ; $6e96
 	sub a, l ; $6e98
 	ld h, a ; $6e99
 	ld a, [hl] ; $6e9a
-	ld [$d825], a ; $6e9b
+	ld [wBriefingVMarkerUpright], a ; $6e9b
 	ld a, c ; $6e9e
 	add a, LOW(Data_17_6efb) ; $6e9f
 	ld l, a ; $6ea1
@@ -4492,9 +4492,9 @@ ReturnDownLineBriefing_AdvanceAnim:
 	inc hl ; $6ea8
 	ld b, [hl] ; $6ea9
 	ld a, a ; $6eaa
-	ld [$d823], a ; $6eab
+	ld [wBriefingVMarkerX], a ; $6eab
 	ld a, b ; $6eae
-	ld [$d824], a ; $6eaf
+	ld [wBriefingVMarkerY], a ; $6eaf
 	ret ; $6eb2
 ReturnDownLineBriefing_AdvanceAnimTable:
 	; $6eb3, 16 bytes (records:2)
@@ -4860,13 +4860,13 @@ QueueRulesPageToVRAM:
 	ld a, [w3_dc05] ; $724d
 	or a, a ; $7250
 	jr nz, .nonZero ; $7251
-	ld hl, w3_d080 ; $7253
+	ld hl, $d080 ; $7253
 	ld de, $9880 ; $7256
 	ld c, $0a ; $7259
 	call QueueVRAMCopy ; $725b
 	jr .queueVRAMCopy ; $725e
 .nonZero:
-	ld hl, w3_d060 ; $7260
+	ld hl, $d060 ; $7260
 	ld de, $9860 ; $7263
 	ld c, $0a ; $7266
 	call QueueVRAMCopy ; $7268

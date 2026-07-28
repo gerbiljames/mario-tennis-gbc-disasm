@@ -1579,7 +1579,7 @@ RunTrophiesScreen:
 BuildTrophiesScreen:
 	wram_bank $03 ; $49e5
 	call DecodeTrophyCounts ; $49eb
-	ld a, [w3_d819] ; $49ee
+	ld a, [$d819] ; $49ee
 	or a, a ; $49f1
 	jr nz, .nonZero ; $49f2
 	ld c, $0e ; $49f4
@@ -1591,7 +1591,7 @@ BuildTrophiesScreen:
 .drawTrophiesWonRows:
 	wram_bank $03 ; $4a00
 	call DrawTrophiesWonRows ; $4a06
-	ld a, [w3_d819] ; $4a09
+	ld a, [$d819] ; $4a09
 	or a, a ; $4a0c
 	jr nz, .nonZero2 ; $4a0d
 	ld a, [wStoryModeMainCharacterOverworldSprite] ; $4a0f
@@ -1636,17 +1636,17 @@ BuildTrophiesScreen:
 	farcall QueueWram3MapToVRAM ; $4a6d
 	ret ; $4a70
 DrawTrophiesWonRows:
-	ld a, [w3_d819] ; $4a71
+	ld a, [$d819] ; $4a71
 	or a, a ; $4a74
 	jr nz, .nonZero ; $4a75
-	ld hl, w3_d800 ; $4a77
+	ld hl, wScreenScratch ; $4a77
 	ld de, $d105 ; $4a7a
 	call DrawTrophyRowPair ; $4a7d
 	ld de, $d145 ; $4a80
 	call DrawTrophyRowPair ; $4a83
 	ret ; $4a86
 .nonZero:
-	ld hl, w3_d800 ; $4a87
+	ld hl, wScreenScratch ; $4a87
 	ld de, $d0c5 ; $4a8a
 	call DrawTrophyRowPair ; $4a8d
 	ld de, $d105 ; $4a90
@@ -1870,10 +1870,10 @@ ApplyUnlockEverythingCheat:
 	ret ; $4c52
 DecodeTrophyCounts:
 	wram_bank $03 ; $4c53
-	ld hl, w3_d800 ; $4c59
+	ld hl, wScreenScratch ; $4c59
 	ld bc, $0018 ; $4c5c
 	call ClearBytes ; $4c5f
-	ld de, w3_d800 ; $4c62
+	ld de, wScreenScratch ; $4c62
 	ld a, [$c9b5] ; $4c65
 	and a, $03 ; $4c68
 	ld b, a ; $4c6a
@@ -1884,14 +1884,14 @@ DecodeTrophyCounts:
 	and a, $03 ; $4c76
 	ld b, a ; $4c78
 	call FillTrophyCountCells ; $4c79
-	ld de, w3_d80c ; $4c7c
+	ld de, $d80c ; $4c7c
 	ld a, [$c9b5] ; $4c7f
 	srl a ; $4c82
 	srl a ; $4c84
 	and a, $03 ; $4c86
 	ld b, a ; $4c88
 	call FillTrophyCountCells ; $4c89
-	ld de, w3_d80f ; $4c8c
+	ld de, $d80f ; $4c8c
 	ld a, [$c9b5] ; $4c8f
 	swap a ; $4c92
 	srl a ; $4c94
@@ -1910,14 +1910,14 @@ DecodeTrophyCounts:
 	and a, $03 ; $4cb2
 	ld b, a ; $4cb4
 	call FillTrophyCountCells ; $4cb5
-	ld de, w3_d812 ; $4cb8
+	ld de, $d812 ; $4cb8
 	ld a, [$c9b6] ; $4cbb
 	srl a ; $4cbe
 	srl a ; $4cc0
 	and a, $03 ; $4cc2
 	ld b, a ; $4cc4
 	call FillTrophyCountCells ; $4cc5
-	ld de, w3_d815 ; $4cc8
+	ld de, $d815 ; $4cc8
 	ld a, [$c9b6] ; $4ccb
 	swap a ; $4cce
 	srl a ; $4cd0
@@ -1925,22 +1925,22 @@ DecodeTrophyCounts:
 	and a, $03 ; $4cd4
 	ld b, a ; $4cd6
 	call FillTrophyCountCells ; $4cd7
-	ld a, [w3_d80c] ; $4cda
+	ld a, [$d80c] ; $4cda
 	or a, a ; $4cdd
 	jr nz, .step ; $4cde
-	ld a, [w3_d80f] ; $4ce0
+	ld a, [$d80f] ; $4ce0
 	or a, a ; $4ce3
 	jr nz, .step ; $4ce4
-	ld a, [w3_d812] ; $4ce6
+	ld a, [$d812] ; $4ce6
 	or a, a ; $4ce9
 	jr nz, .step ; $4cea
-	ld a, [w3_d815] ; $4cec
+	ld a, [$d815] ; $4cec
 	or a, a ; $4cef
 	jr nz, .step ; $4cf0
 	jr .done ; $4cf2
 .step:
 	ld a, $01 ; $4cf4
-	ld [w3_d819], a ; $4cf6
+	ld [$d819], a ; $4cf6
 .done:
 	ret ; $4cf9
 RunN64TnmtData:
@@ -1989,47 +1989,47 @@ ScrollN64TnmtDataCursor:
 	ld a, [wMenuInputPressed] ; $4d5d
 	bit PADB_LEFT, a ; $4d60
 	jr z, .step ; $4d62
-	ld a, [wResultScreenMode] ; $4d64
+	ld a, [$d801] ; $4d64
 	or a, a ; $4d67
 	jr z, .done ; $4d68
 	xor a, a ; $4d6a
-	ld [wResultScreenMode], a ; $4d6b
+	ld [$d801], a ; $4d6b
 	sound $5e ; $4d6e
 	call RedrawN64TnmtDataWindow ; $4d70
 	jr .done ; $4d73
 .step:
 	bit 4, a ; $4d75
 	jr z, .bit4Clear ; $4d77
-	ld a, [w3_d800] ; $4d79
+	ld a, [wScreenScratch] ; $4d79
 	or a, a ; $4d7c
 	jr z, .done ; $4d7d
-	ld a, [wResultScreenMode] ; $4d7f
+	ld a, [$d801] ; $4d7f
 	or a, a ; $4d82
 	jr nz, .done ; $4d83
 	ld a, $01 ; $4d85
-	ld [wResultScreenMode], a ; $4d87
+	ld [$d801], a ; $4d87
 	sound $5e ; $4d8a
 	call RedrawN64TnmtDataWindow ; $4d8c
 	jr .done ; $4d8f
 .bit4Clear:
 	bit 6, a ; $4d91
 	jr z, .bit6Clear ; $4d93
-	ld a, [w3_d802] ; $4d95
+	ld a, [$d802] ; $4d95
 	or a, a ; $4d98
 	jr z, .done ; $4d99
 	dec a ; $4d9b
-	ld [w3_d802], a ; $4d9c
+	ld [$d802], a ; $4d9c
 	sound $5e ; $4d9f
 	call RedrawN64TnmtDataWindow ; $4da1
 	jr .done ; $4da4
 .bit6Clear:
 	bit 7, a ; $4da6
 	jr z, .done ; $4da8
-	ld a, [w3_d802] ; $4daa
+	ld a, [$d802] ; $4daa
 	cp a, $0b ; $4dad
 	jr z, .done ; $4daf
 	inc a ; $4db1
-	ld [w3_d802], a ; $4db2
+	ld [$d802], a ; $4db2
 	sound $5e ; $4db5
 	call RedrawN64TnmtDataWindow ; $4db7
 	jr .done ; $4dba
@@ -2040,11 +2040,11 @@ BuildN64TnmtDataScreen:
 	farcall LoadScreenAssetRecord ; $4dbf
 	wram_bank $03 ; $4dc2
 	xor a, a ; $4dc8
-	ld [w3_d800], a ; $4dc9
+	ld [wScreenScratch], a ; $4dc9
 	ld a, $00 ; $4dcc
-	ld [wResultScreenMode], a ; $4dce
+	ld [$d801], a ; $4dce
 	ld a, $00 ; $4dd1
-	ld [w3_d802], a ; $4dd3
+	ld [$d802], a ; $4dd3
 	call LoadN64TnmtDataRecords ; $4dd6
 	wram_bank $03 ; $4dd9
 	ld de, $aac0 ; $4ddf
@@ -2061,11 +2061,11 @@ BuildN64TnmtDataScreen:
 	ret ; $4dfe
 LoadN64TnmtDataRecords:
 	wram_bank $03 ; $4dff
-	ld hl, w3_d800 ; $4e05
+	ld hl, wScreenScratch ; $4e05
 	ld bc, $0080 ; $4e08
 	call ClearMemory16 ; $4e0b
 	ld hl, N64TnmtData ; $4e0e
-	ld de, w3_d810 ; $4e11
+	ld de, $d810 ; $4e11
 	ld bc, $0010 ; $4e14
 	call CopyMemoryBC ; $4e17
 	call ReadN64RecordsSaveBlock ; $4e1a
@@ -2075,20 +2075,20 @@ LoadN64TnmtDataRecords:
 	and a, $01 ; $4e22
 	jr nz, .maskSet ; $4e24
 	ld a, $10 ; $4e26
-	ld [w3_d81e], a ; $4e28
+	ld [$d81e], a ; $4e28
 .maskSet:
 	ld a, b ; $4e2b
 	and a, $02 ; $4e2c
 	jr nz, .buildN64TnmtTrophyGrid ; $4e2e
 	ld a, $10 ; $4e30
-	ld [w3_d81f], a ; $4e32
+	ld [$d81f], a ; $4e32
 .buildN64TnmtTrophyGrid:
 	call BuildN64TnmtTrophyGrid ; $4e35
 	call CheckN64TnmtSecondPage ; $4e38
 	or a, a ; $4e3b
 	jr z, .done ; $4e3c
 	ld a, $01 ; $4e3e
-	ld [w3_d800], a ; $4e40
+	ld [wScreenScratch], a ; $4e40
 .done:
 	ret ; $4e43
 N64TnmtData:
@@ -2194,7 +2194,7 @@ FillTrophyCountCells:
 	pop de ; $4ee1
 	ret ; $4ee2
 CheckN64TnmtSecondPage:
-	ld hl, w3_d832 ; $4ee3
+	ld hl, $d832 ; $4ee3
 	ld c, $00 ; $4ee6
 	ld de, $000c ; $4ee8
 .loop:
@@ -2207,7 +2207,7 @@ CheckN64TnmtSecondPage:
 	ld c, a ; $4ef2
 	cp a, $0e ; $4ef3
 	jr nz, .loop ; $4ef5
-	ld hl, w3_d835 ; $4ef7
+	ld hl, $d835 ; $4ef7
 	ld c, $00 ; $4efa
 	ld de, $000c ; $4efc
 .loopB:
@@ -2221,7 +2221,7 @@ CheckN64TnmtSecondPage:
 	cp a, $10 ; $4f07
 	jr nz, .loopB ; $4f09
 .zero:
-	ld hl, w3_d835 ; $4f0b
+	ld hl, $d835 ; $4f0b
 	ld c, $00 ; $4f0e
 	ld de, $000c ; $4f10
 .loop2:
@@ -2234,7 +2234,7 @@ CheckN64TnmtSecondPage:
 	ld c, a ; $4f1a
 	cp a, $0e ; $4f1b
 	jr nz, .loop2 ; $4f1d
-	ld hl, w3_d832 ; $4f1f
+	ld hl, $d832 ; $4f1f
 	ld c, $00 ; $4f22
 	ld de, $000c ; $4f24
 .loop3:
@@ -2267,8 +2267,8 @@ DrawN64TnmtRowIcons:
 	ldh a, [hWramBank] ; $4f49
 	push af ; $4f4b
 	wram_bank $03 ; $4f4c
-	ld hl, w3_d810 ; $4f52
-	ld a, [w3_d802] ; $4f55
+	ld hl, $d810 ; $4f52
+	ld a, [$d802] ; $4f55
 	add a, l ; $4f58
 	ld l, a ; $4f59
 	jr nc, .gotPtr ; $4f5a
@@ -2303,7 +2303,7 @@ DrawN64TnmtPageLabels:
 	ldh a, [hWramBank] ; $4f81
 	push af ; $4f83
 	wram_bank $03 ; $4f84
-	ld a, [wResultScreenMode] ; $4f8a
+	ld a, [$d801] ; $4f8a
 	or a, a ; $4f8d
 	jr nz, .nonZero ; $4f8e
 	ld hl, $d240 ; $4f90
@@ -2354,7 +2354,7 @@ DrawN64TnmtPageLabels:
 	ret ; $4fff
 DrawN64TnmtTrophyRows:
 	wram_bank $03 ; $5000
-	ld a, [w3_d802] ; $5006
+	ld a, [$d802] ; $5006
 	add a, a ; $5009
 	ld b, a ; $500a
 	add a, a ; $500b
@@ -2366,7 +2366,7 @@ DrawN64TnmtTrophyRows:
 	jr nc, .gotPtr ; $5013
 	inc h ; $5015
 .gotPtr:
-	ld a, [wResultScreenMode] ; $5016
+	ld a, [$d801] ; $5016
 	or a, a ; $5019
 	jr z, .drawN64TnmtTrophyRow ; $501a
 	ld a, $06 ; $501c
@@ -2488,10 +2488,10 @@ N64TnmtScrollArrowsTask:
 	ldh a, [hWramBank] ; $50d6
 	push af ; $50d8
 	wram_bank $03 ; $50d9
-	ld a, [w3_d800] ; $50df
+	ld a, [wScreenScratch] ; $50df
 	or a, a ; $50e2
 	jr z, .applyCursorBounceX ; $50e3
-	ld a, [wResultScreenMode] ; $50e5
+	ld a, [$d801] ; $50e5
 	or a, a ; $50e8
 	jr nz, .applyCursorBounceX ; $50e9
 	ld de, $932f ; $50eb
@@ -2502,7 +2502,7 @@ N64TnmtScrollArrowsTask:
 	ld h, $00 ; $50f7
 	farcall QueueStackedSpritePair ; $50f9
 .applyCursorBounceX:
-	ld a, [wResultScreenMode] ; $50fc
+	ld a, [$d801] ; $50fc
 	or a, a ; $50ff
 	jr z, .zero ; $5100
 	ld de, $202f ; $5102
@@ -2513,7 +2513,7 @@ N64TnmtScrollArrowsTask:
 	ld h, $01 ; $510e
 	farcall QueueStackedSpritePair ; $5110
 .zero:
-	ld a, [w3_d802] ; $5113
+	ld a, [$d802] ; $5113
 	or a, a ; $5116
 	jr z, .zero2 ; $5117
 	ld de, $0c32 ; $5119
@@ -2524,7 +2524,7 @@ N64TnmtScrollArrowsTask:
 	ld h, $02 ; $5125
 	farcall QueueStackedSpritePair ; $5127
 .zero2:
-	ld a, [w3_d802] ; $512a
+	ld a, [$d802] ; $512a
 	cp a, $0b ; $512d
 	jr z, .restore ; $512f
 	ld de, $0c88 ; $5131
@@ -7580,9 +7580,9 @@ N64TransferItemCursorSpriteTaskTable1:
 ShowTournamentBracket:
 	wram_bank $03 ; $775d
 	ld a, b ; $7763
-	ld [w3_d800], a ; $7764
+	ld [wScreenScratch], a ; $7764
 	ld a, c ; $7767
-	ld [wResultScreenMode], a ; $7768
+	ld [$d801], a ; $7768
 	call DisableLCDSafely ; $776b
 	call BuildTournamentBracketScreen ; $776e
 	call EnableLCD ; $7771
@@ -7610,7 +7610,7 @@ ShowTournamentBracket:
 	call WaitFadeEnd ; $77a3
 	ret ; $77a6
 BuildTournamentBracketScreen:
-	ld a, [w3_d800] ; $77a7
+	ld a, [wScreenScratch] ; $77a7
 	or a, a ; $77aa
 	jr nz, .nonZero ; $77ab
 	ld c, $25 ; $77ad
@@ -7648,7 +7648,7 @@ ClearTournamentBracketAttrs:
 	farcall FillTilemapRect ; $7800
 	ret ; $7803
 DrawTournamentBracketNameBoxes:
-	ld a, [w3_d800] ; $7804
+	ld a, [wScreenScratch] ; $7804
 	or a, a ; $7807
 	jr nz, .nonZero ; $7808
 	ld de, $d109 ; $780a
@@ -7695,7 +7695,7 @@ DrawTournamentBracketNameBoxes:
 	farcall FillTilemapRect ; $7868
 	ret ; $786b
 WriteBracketSinglesNames:
-	ld a, [wResultScreenMode] ; $786c
+	ld a, [$d801] ; $786c
 	ld hl, WriteBracketSinglesNamesPtrs ; $786f
 	add a, a ; $7872
 	add a, l ; $7873
@@ -7795,7 +7795,7 @@ WriteBracketEntrantNameTable:
 	dw $d1a9 ; record 2
 	dw $d1e9 ; record 3
 WriteBracketDoublesNames:
-	ld a, [wResultScreenMode] ; $78ec
+	ld a, [$d801] ; $78ec
 	cp a, $01 ; $78ef
 	jr nz, .ne01 ; $78f1
 	ld hl, wStoryModeNameOfMainCharacter ; $78f3
@@ -7830,10 +7830,10 @@ WriteBracketDoublesNames:
 	farcall RenderTextToBuffer64 ; $7941
 	ret ; $7944
 HighlightBracketPlayerRow:
-	ld a, [w3_d800] ; $7945
+	ld a, [wScreenScratch] ; $7945
 	or a, a ; $7948
 	jr nz, .nonZero ; $7949
-	ld a, [wResultScreenMode] ; $794b
+	ld a, [$d801] ; $794b
 	ld hl, HighlightBracketPlayerRowTable ; $794e
 	add a, a ; $7951
 	add a, l ; $7952
@@ -7848,7 +7848,7 @@ HighlightBracketPlayerRow:
 	ld c, $02 ; $795c
 	ld h, $05 ; $795e
 	farcall FillTilemapRect ; $7960
-	ld a, [wResultScreenMode] ; $7963
+	ld a, [$d801] ; $7963
 	ld hl, BracketPlayerRowTable0 ; $7966
 	add a, a ; $7969
 	add a, l ; $796a
@@ -7861,7 +7861,7 @@ HighlightBracketPlayerRow:
 	ld e, a ; $7971
 	ld b, $02 ; $7972
 	ld c, $02 ; $7974
-	ld a, [wResultScreenMode] ; $7976
+	ld a, [$d801] ; $7976
 	cp a, $04 ; $7979
 	jr nz, .ne04 ; $797b
 	ld c, $01 ; $797d
@@ -7870,7 +7870,7 @@ HighlightBracketPlayerRow:
 	farcall FillTilemapRect ; $7981
 	ret ; $7984
 .nonZero:
-	ld a, [wResultScreenMode] ; $7985
+	ld a, [$d801] ; $7985
 	ld hl, BracketPlayerRowTable1 ; $7988
 	add a, a ; $798b
 	add a, l ; $798c
@@ -7885,7 +7885,7 @@ HighlightBracketPlayerRow:
 	ld c, $04 ; $7996
 	ld h, $05 ; $7998
 	farcall FillTilemapRect ; $799a
-	ld a, [wResultScreenMode] ; $799d
+	ld a, [$d801] ; $799d
 	ld hl, BracketPlayerRowTable2 ; $79a0
 	add a, a ; $79a3
 	add a, l ; $79a4

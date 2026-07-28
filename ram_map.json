@@ -1807,5 +1807,60 @@
   "name": "hIsCGB",
   "note": "[8-bit] 1 = running on Game Boy Color hardware",
   "size": 1
+ },
+ "0xc2b0": {
+  "name": "wMapSceneStage",
+  "note": "[8-bit] Scene stage of the story location that is currently loaded. Each map's init script derives it from the save flags (SetupCenterCourtSceneVariant, InitCourt1SceneVariant, ComputeIslandOpenRound, SetStoryRankSceneIndex, ...) and the location's NPC scripts index their per-stage text-id tables with it, so one NPC speaks a different line as the story advances. Values are per location. $c2b0-$c2bf is the location's scratch block as a whole: the bank $14 island-sky and firework cutscenes borrow it for sprite positions and timers once a map is loaded, and the water-sprite minigame keeps its counters at $c2b4-$c2ba"
+ },
+ "0xc2b1": {
+  "name": "wMapSceneStage2",
+  "note": "[8-bit] Second per-location scene stage, alongside wMapSceneStage; set by the map init scripts (CafeteriaInitScript_10, RestaurantInitScript_10, TrainingCourtReentryDispatch, the challenger result scenes) and read by the same location's NPC scripts to pick a text id"
+ },
+ "0xc2e0": {
+  "name": "wDrillAbortCountdown",
+  "note": "[8-bit] Frames left before a drill point gives up: UpdateDrillAbortCountdown decrements it each frame while wDrillAbortCountdownActive is set and wPointOutcome is still 0, and sets wMatchAbortFlag when it reaches 0. The point start hooks load it with $0a"
+ },
+ "0xc2e1": {
+  "name": "wDrillAbortCountdownActive",
+  "note": "[8-bit] Nonzero enables wDrillAbortCountdown; cleared at point start and set once the drill is waiting for the shot that ends the point"
+ },
+ "0xc2e2": {
+  "name": "wUnusedDrillPointStartByte",
+  "note": "[8-bit] Cleared by ServiceMatch2Hook_PointStart and read by nothing"
+ },
+ "0xc2e3": {
+  "name": "wDrillLessonResult",
+  "note": "[8-bit] Why the coach's drill ended, written by each ServicePractice*/NetGamePractice* EvaluateResult (0 = passed, 1 = no points won, 2 = double fault, 3 = target missed, 4+ = partial, offset by wStoryModeMainCharacterLeftHanded). The bank $15 training-court coaches dispatch their follow-up dialogue on it"
+ },
+ "0xc2e4": {
+  "name": "wDrillTargetZoneHitBits",
+  "note": "[8-bit] One bit per point of the drill, set by RecordDrillTargetZoneHit when the ball bounced inside the target zone; CountDrillResultBitsSet and CheckDrillTargetZoneMissed read it back"
+ },
+ "0xc2e5": {
+  "name": "wDrillGateCrossBits",
+  "note": "[8-bit] One bit per point of the drill, set by RecordGateCrossOnServe when the serve passed through the gate; counted by CountDrillResultBitsSetAlt"
+ },
+ "0xc2e6": {
+  "name": "wDrillMessageId",
+  "note": "[8-bit] Queued drill message: index into DrillMessageTextIds_0b, $ff = say nothing. The Queue*/Set*Message helpers pick it from the point outcome and the serving player; ShowQueuedDrillMessage defaults it to $6c and shows it"
+ },
+ "0xc2e7": {
+  "name": "wDrillCounters",
+  "note": "[9 bytes] Per-drill counter scratch. Each drill's hooks clear the subset it needs at MinigameStart/PointStart and step them with `ld hl, $c2ex / inc [hl]`; the successful-shot counts land in wPlayer1PointsWon/wPlayer2PointsWon at point end, and the EvaluateResult helpers compare them against 4 (the four shots of a drill)",
+  "size": 9
+ },
+ "0xc2f8": {
+  "name": "wDrillServeTargetResult",
+  "note": "[2 bytes] Indexed by wCurrentServingPlayer: 0 until the serve has been judged, then +1/-1 from CheckDrillTargetZoneMissed",
+  "size": 2
+ },
+ "0xc2fc": {
+  "name": "wDrillShotResultBits",
+  "note": "[2 bytes] Two bits per shot of the point, one byte per side; RecordDrillPointResultBits rotates wPointWinLoseFlag into the byte DrillPointResultBitsTable selects, CountDrillShotSuccesses counts the pairs equal to 1, and bank $06's DrawScoreboardPackedPips draws them as the scoreboard pip rows",
+  "size": 2
+ },
+ "0xc2ff": {
+  "name": "wDrillPointJudgement",
+  "note": "[8-bit] Result of judging the current drill point, 0 until judged. Each drill's JudgeShot0-3 stores the value its JudgePoint returns, and JudgePoint returns early while this is already nonzero so the first judgement of a point wins"
  }
 }

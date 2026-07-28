@@ -285,23 +285,23 @@ RunDialogueYesNoPrompt:
 	push af ; $41fb
 	wram_bank $05 ; $41fc
 	call FindDialogueChoiceMarker ; $4202
-	ld a, [$d829] ; $4205
+	ld a, [wTextRedrawGuard] ; $4205
 	push af ; $4208
 	xor a, a ; $4209
-	ld [$d829], a ; $420a
+	ld [wTextRedrawGuard], a ; $420a
 	call ShowYesNoPromptWindow ; $420d
 	farcall RenderMenuWindowText ; $4210
 	farcall RunMenuSelection ; $4213
 	ld b, a ; $4216
 	call FindDialogueChoiceMarker ; $4217
-	ld a, [w5_d82f] ; $421a
+	ld a, [wMenuWindowId] ; $421a
 	farcall CloseWindow ; $421d
 	xor a, a ; $4220
 	ld [w5_d84f], a ; $4221
 	ld a, $ff ; $4224
-	ld [w5_d82f], a ; $4226
+	ld [wMenuWindowId], a ; $4226
 	pop af ; $4229
-	ld [$d829], a ; $422a
+	ld [wTextRedrawGuard], a ; $422a
 	pop af ; $422d
 	wram_bank ; $422e
 	ld a, b ; $4232
@@ -1813,7 +1813,7 @@ RunClearStatusSetupMenu:
 	farcall RenderMenuWindowText ; $4c13
 	farcall RunMenuSelection ; $4c16
 	ld [wCharPosX], a ; $4c19
-	ld a, [w5_d82f] ; $4c1c
+	ld a, [wMenuWindowId] ; $4c1c
 	farcall CloseWindow ; $4c1f
 	ld a, [wCharPosX] ; $4c22
 	cp a, $ff ; $4c25
@@ -1852,7 +1852,7 @@ RunClearStatusSetupMenu:
 	farcall RenderMenuWindowText ; $4c6c
 	farcall RunMenuSelection ; $4c6f
 	ld [wCharPosX + 2], a ; $4c72
-	ld a, [w5_d82f] ; $4c75
+	ld a, [wMenuWindowId] ; $4c75
 	farcall CloseWindow ; $4c78
 	ld a, [wCharPosX + 2] ; $4c7b
 	cp a, $ff ; $4c7e
@@ -1873,7 +1873,7 @@ RunClearStatusSetupMenu:
 	farcall RenderMenuWindowText ; $4ca5
 	farcall RunMenuSelection ; $4ca8
 	ld [wCharPosDepth], a ; $4cab
-	ld a, [w5_d82f] ; $4cae
+	ld a, [wMenuWindowId] ; $4cae
 	farcall CloseWindow ; $4cb1
 	ld a, [wCharPosDepth] ; $4cb4
 	cp a, $ff ; $4cb7
@@ -1916,7 +1916,7 @@ RunClearStatusSetupMenu:
 	farcall RenderMenuWindowText ; $4d01
 	farcall RunMenuSelection ; $4d04
 	ld [wCharPosDepth + 1], a ; $4d07
-	ld a, [w5_d82f] ; $4d0a
+	ld a, [wMenuWindowId] ; $4d0a
 	farcall CloseWindow ; $4d0d
 	ld a, [wCharPosDepth + 1] ; $4d10
 	cp a, $ff ; $4d13

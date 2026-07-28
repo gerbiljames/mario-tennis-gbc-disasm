@@ -345,7 +345,7 @@ WallPracticeRoomExitTriggers_12:
 	map_script $05, FACEMASK_ANY, $0000, MapScriptNop_12, $11, $02
 	db $ff
 WallPracticeRoomNpc03_12:
-	ld a, [$c2b0] ; $471f
+	ld a, [wMapSceneStage] ; $471f
 	add a, a ; $4722
 	add a, LOW(WallPracticeRoomNpc03TextIds) ; $4723
 	ld l, a ; $4725
@@ -356,7 +356,7 @@ WallPracticeRoomNpc03_12:
 	ld h, [hl] ; $472b
 	ld l, a ; $472c
 	farcall InitDialogueTextCursor ; $472d
-	ld a, [$c2b0] ; $4730
+	ld a, [wMapSceneStage] ; $4730
 	ld a, a ; $4733
 	rst Rst00 ; $4734
 	dw WallPracticeRoomNpc03_12.altText ; $4735 jumptable
@@ -393,7 +393,7 @@ WallPracticeRoomNpc03TextIds:
 	dw Text_36_21 ; record 5
 	dw Text_36_44 ; record 6
 WallPracticeRoomNpc04_12:
-	ld a, [$c2b0] ; $4781
+	ld a, [wMapSceneStage] ; $4781
 	add a, a ; $4784
 	add a, LOW(WallPracticeRoomNpc04TextIds) ; $4785
 	ld l, a ; $4787
@@ -416,7 +416,7 @@ WallPracticeRoomNpc04TextIds:
 	dw Text_36_22 ; record 5
 	dw Text_36_45 ; record 6
 WallPracticeRoomNpc05_12:
-	ld a, [$c2b0] ; $47a6
+	ld a, [wMapSceneStage] ; $47a6
 	add a, a ; $47a9
 	add a, LOW(WallPracticeRoomNpc05TextIds) ; $47aa
 	ld l, a ; $47ac
@@ -427,7 +427,7 @@ WallPracticeRoomNpc05_12:
 	ld h, [hl] ; $47b2
 	ld l, a ; $47b3
 	farcall InitDialogueTextCursor ; $47b4
-	ld a, [$c2b0] ; $47b7
+	ld a, [wMapSceneStage] ; $47b7
 	cp a, $04 ; $47ba
 	jr c, .face ; $47bc
 	script_speak $05 ; $47be
@@ -449,7 +449,7 @@ WallPracticeRoomNpc05TextIds:
 	dw Text_36_23 ; record 5
 	dw Text_36_46 ; record 6
 WallPracticeRoomNpc06_12:
-	ld a, [$c2b0] ; $47f3
+	ld a, [wMapSceneStage] ; $47f3
 	add a, a ; $47f6
 	add a, LOW(WallPracticeRoomNpc06TextIds) ; $47f7
 	ld l, a ; $47f9
@@ -697,7 +697,7 @@ WallPracticeLevelResultScript:
 	ld a, [wPointWinLoseFlag] ; $4ab9
 	cp a, $01 ; $4abc
 	jp nz, .checkLevel ; $4abe
-	ld a, [$c2b0] ; $4ac1
+	ld a, [wMapSceneStage] ; $4ac1
 	sub a, $01 ; $4ac4
 	ld a, a ; $4ac6
 	rst Rst00 ; $4ac7
@@ -706,7 +706,7 @@ WallPracticeLevelResultScript:
 	dw WallPracticeLevelResultScriptTextIds.variant2 ; $4acc jumptable
 	dw WallPracticeLevelResultScriptTextIds.variant1 ; $4ace jumptable
 .checkLevel:
-	ld a, [$c2b0] ; $4ad0
+	ld a, [wMapSceneStage] ; $4ad0
 	cp a, $04 ; $4ad3
 	jp z, WallPracticeScoreRetryPrompt ; $4ad5
 	script_fade_in $06 ; $4ad8
@@ -1035,7 +1035,7 @@ WallPracticeRoomInitScript_12:
 	ld [wStoryModeShowLocationName], a ; $4f78
 	jp WallPracticeExitCourtScript ; $4f7b
 .showResult:
-	ld a, [$c2b0] ; $4f7e
+	ld a, [wMapSceneStage] ; $4f7e
 	cp a, $05 ; $4f81
 	jp nc, WallPracticeMasterResultScript ; $4f83
 	jp WallPracticeLevelResultScript ; $4f86
@@ -1139,7 +1139,7 @@ SetupWallPracticeLevelSigns:
 	jr z, .step ; $50c4
 	ld a, $06 ; $50c6
 .step:
-	ld [$c2b0], a ; $50c8
+	ld [wMapSceneStage], a ; $50c8
 	ret ; $50cb
 WallPracticeRoomNpc07_12:
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $50cc
@@ -1148,7 +1148,7 @@ WallPracticeRoomNpc07_12:
 	script_speak $07 ; $50d7
 	ret ; $50dc
 .scoreLine:
-	ld a, [$c2b0] ; $50dd
+	ld a, [wMapSceneStage] ; $50dd
 	add a, a ; $50e0
 	add a, LOW(WallPracticeRoomNpc07TextIds) ; $50e1
 	ld l, a ; $50e3
@@ -1159,7 +1159,7 @@ WallPracticeRoomNpc07_12:
 	ld h, [hl] ; $50e9
 	ld l, a ; $50ea
 	farcall InitDialogueTextCursor ; $50eb
-	ld a, [$c2b0] ; $50ee
+	ld a, [wMapSceneStage] ; $50ee
 	cp a, $05 ; $50f1
 	jr nz, .prompt ; $50f3
 	ldh a, [hWramBank] ; $50f5
@@ -1182,7 +1182,7 @@ WallPracticeRoomNpc07_12:
 	script_wait_frames $05 ; $511c
 	and a, a ; $5123
 	jp z, .doublesDeclined ; $5124
-	ld a, [$c2b0] ; $5127
+	ld a, [wMapSceneStage] ; $5127
 	add a, a ; $512a
 	add a, LOW(WallPracticeRoomNpc07TextIds2) ; $512b
 	ld l, a ; $512d
@@ -1200,7 +1200,7 @@ WallPracticeRoomNpc07_12:
 	script_wait_frames $05 ; $5143
 	and a, a ; $514a
 	jp nz, .declined ; $514b
-	ld a, [$c2b0] ; $514e
+	ld a, [wMapSceneStage] ; $514e
 	and a, a ; $5151
 	jp z, .speakDeclined ; $5152
 	script_move_target $07, $0300, $3700 ; $5155
@@ -1284,7 +1284,7 @@ LaunchWallPracticeMinigame:
 	ld a, $ff ; $529f
 	ld [wUnusedExitLocationMirror], a ; $52a1
 	ld [wStoryModeExitLocationRequest], a ; $52a4
-	ld a, [$c2b0] ; $52a7
+	ld a, [wMapSceneStage] ; $52a7
 	add a, LOW(Data_12_52b9) ; $52aa
 	ld l, a ; $52ac
 	adc a, HIGH(Data_12_52b9) ; $52ad
@@ -1389,7 +1389,7 @@ SeniorCourtExit01_12:
 	script_wait_frames $1e ; $55ad
 	ret ; $55b4
 .loop:
-	ld a, [$c2b1] ; $55b5
+	ld a, [wMapSceneStage2] ; $55b5
 	sub a, $09 ; $55b8
 	add a, a ; $55ba
 	add a, LOW(SeniorCourtExit01TextIds) ; $55bb
@@ -1420,7 +1420,7 @@ SeniorCourtExit01TextIds:
 	dw Text_34_176 ; record 4
 	dw Text_34_186 ; record 5
 SeniorCourtNpc03_12:
-	ld a, [$c2b1] ; $55e8
+	ld a, [wMapSceneStage2] ; $55e8
 	cp a, $02 ; $55eb
 	jr c, SeniorCourtNpc03FaceUpFlag0000_12.checkDoubles ; $55ed
 	cp a, $09 ; $55ef
@@ -1428,7 +1428,7 @@ SeniorCourtNpc03_12:
 	call SeniorRankOfferScenePrep ; $55f3
 	ret ; $55f6
 SeniorCourtNpc03FaceUpFlag0000_12:
-	ld a, [$c2b1] ; $55f7
+	ld a, [wMapSceneStage2] ; $55f7
 	cp a, $02 ; $55fa
 	jr c, .checkDoubles ; $55fc
 	cp a, $09 ; $55fe
@@ -1540,7 +1540,7 @@ SeniorCourtNpc03FaceUpFlag0840_12:
 	farcall AttachActorStepMover ; $581c
 	ret ; $581f
 SeniorCourtNpc04_12:
-	ld a, [$c2b1] ; $5820
+	ld a, [wMapSceneStage2] ; $5820
 	add a, a ; $5823
 	add a, LOW(SeniorCourtNpc04TextIds) ; $5824
 	ld l, a ; $5826
@@ -1552,12 +1552,12 @@ SeniorCourtNpc04_12:
 	ld l, a ; $582d
 	farcall InitDialogueTextCursor ; $582e
 	script_speak $04 ; $5831
-	ld a, [$c2b1] ; $5836
+	ld a, [wMapSceneStage2] ; $5836
 	cp a, $02 ; $5839
 	jr nc, .ge02 ; $583b
 	jr .done ; $583d
 .ge02:
-	ld a, [$c2b1] ; $583f
+	ld a, [wMapSceneStage2] ; $583f
 	cp a, $06 ; $5842
 	jr c, .done ; $5844
 .done:
@@ -1574,7 +1574,7 @@ SeniorCourtNpc04TextIds:
 	dw Text_34_85 ; record 7
 	dw Text_34_86 ; record 8
 SeniorCourtNpc05_12:
-	ld a, [$c2b1] ; $5859
+	ld a, [wMapSceneStage2] ; $5859
 	add a, a ; $585c
 	add a, LOW(TextIds_12_5895) ; $585d
 	ld l, a ; $585f
@@ -1585,7 +1585,7 @@ SeniorCourtNpc05_12:
 	ld h, [hl] ; $5865
 	ld l, a ; $5866
 	farcall InitDialogueTextCursor ; $5867
-	ld a, [$c2b1] ; $586a
+	ld a, [wMapSceneStage2] ; $586a
 	cp a, $04 ; $586d
 	jr z, .eq04 ; $586f
 	script_speak $05 ; $5871
@@ -1620,7 +1620,7 @@ TextIds_12_5895:
 	dw Text_34_177 ; record 13
 	dw Text_34_186 ; record 14
 SeniorCourtNpc06_12:
-	ld a, [$c2b1] ; $58b3
+	ld a, [wMapSceneStage2] ; $58b3
 	add a, a ; $58b6
 	add a, LOW(TextIds_12_58f8) ; $58b7
 	ld l, a ; $58b9
@@ -1631,7 +1631,7 @@ SeniorCourtNpc06_12:
 	ld h, [hl] ; $58bf
 	ld l, a ; $58c0
 	farcall InitDialogueTextCursor ; $58c1
-	ld a, [$c2b1] ; $58c4
+	ld a, [wMapSceneStage2] ; $58c4
 	cp a, $06 ; $58c7
 	jr z, .eq06 ; $58c9
 	script_speak $06 ; $58cb
@@ -1670,7 +1670,7 @@ TextIds_12_58f8:
 	dw Text_34_178 ; record 13
 	dw Text_34_187 ; record 14
 SeniorCourtNpc07_12:
-	ld a, [$c2b1] ; $5916
+	ld a, [wMapSceneStage2] ; $5916
 	add a, a ; $5919
 	add a, LOW(SeniorCourtNpc07TextIds) ; $591a
 	ld l, a ; $591c
@@ -1701,7 +1701,7 @@ SeniorCourtNpc07TextIds:
 	dw Text_34_179 ; record 13
 	dw Text_34_188 ; record 14
 SeniorCourtNpc08_12:
-	ld a, [$c2b1] ; $594b
+	ld a, [wMapSceneStage2] ; $594b
 	add a, a ; $594e
 	add a, LOW(SeniorCourtNpc08TextIds) ; $594f
 	ld l, a ; $5951
@@ -1712,7 +1712,7 @@ SeniorCourtNpc08_12:
 	ld h, [hl] ; $5957
 	ld l, a ; $5958
 	farcall InitDialogueTextCursor ; $5959
-	ld a, [$c2b1] ; $595c
+	ld a, [wMapSceneStage2] ; $595c
 	cp a, $02 ; $595f
 	jr z, .speak ; $5961
 	jr nc, .altText ; $5963
@@ -1784,7 +1784,7 @@ SeniorCourtNpc08TextIds:
 	dw Text_34_180 ; record 13
 	dw Text_34_189 ; record 14
 SeniorCourtNpc09_12:
-	ld a, [$c2b1] ; $5a49
+	ld a, [wMapSceneStage2] ; $5a49
 	add a, a ; $5a4c
 	add a, LOW(SeniorCourtNpc09TextIds) ; $5a4d
 	ld l, a ; $5a4f
@@ -1795,7 +1795,7 @@ SeniorCourtNpc09_12:
 	ld h, [hl] ; $5a55
 	ld l, a ; $5a56
 	farcall InitDialogueTextCursor ; $5a57
-	ld a, [$c2b1] ; $5a5a
+	ld a, [wMapSceneStage2] ; $5a5a
 	cp a, $02 ; $5a5d
 	jr nc, .speak ; $5a5f
 	script_face $09, FACE_DOWN ; $5a61
@@ -1820,7 +1820,7 @@ SeniorCourtNpc09TextIds:
 	dw Text_34_181 ; record 13
 	dw Text_34_190 ; record 14
 SeniorCourtNpc0A_12:
-	ld a, [$c2b1] ; $5a8c
+	ld a, [wMapSceneStage2] ; $5a8c
 	add a, a ; $5a8f
 	add a, LOW(SeniorCourtNpc0ATextIds) ; $5a90
 	ld l, a ; $5a92
@@ -1831,7 +1831,7 @@ SeniorCourtNpc0A_12:
 	ld h, [hl] ; $5a98
 	ld l, a ; $5a99
 	farcall InitDialogueTextCursor ; $5a9a
-	ld a, [$c2b1] ; $5a9d
+	ld a, [wMapSceneStage2] ; $5a9d
 	cp a, $06 ; $5aa0
 	jr z, .altText ; $5aa2
 	script_speak $0a ; $5aa4
@@ -1906,7 +1906,7 @@ SeniorCourtNpc0ATextIds:
 	dw Text_34_182 ; record 13
 	dw Text_34_191 ; record 14
 SeniorCourtNpc0B_12:
-	ld a, [$c2b1] ; $5b93
+	ld a, [wMapSceneStage2] ; $5b93
 	add a, a ; $5b96
 	add a, LOW(SeniorCourtNpc0BTextIds) ; $5b97
 	ld l, a ; $5b99
@@ -1917,7 +1917,7 @@ SeniorCourtNpc0B_12:
 	ld h, [hl] ; $5b9f
 	ld l, a ; $5ba0
 	farcall InitDialogueTextCursor ; $5ba1
-	ld a, [$c2b1] ; $5ba4
+	ld a, [wMapSceneStage2] ; $5ba4
 	cp a, $0c ; $5ba7
 	jr c, .speak ; $5ba9
 	test_flag FLAG_DOUBLES ; $5bab
@@ -1950,7 +1950,7 @@ SeniorCourtNpc0C_12:
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $5bdd
 	or a, a ; $5be0
 	jr nz, .nonZero ; $5be1
-	ld a, [$c2b1] ; $5be3
+	ld a, [wMapSceneStage2] ; $5be3
 	add a, a ; $5be6
 	add a, LOW(Data_12_5c2f) ; $5be7
 	ld l, a ; $5be9
@@ -1964,7 +1964,7 @@ SeniorCourtNpc0C_12:
 	script_speak $0c ; $5bf4
 	ret ; $5bf9
 .nonZero:
-	ld a, [$c2b1] ; $5bfa
+	ld a, [wMapSceneStage2] ; $5bfa
 	add a, a ; $5bfd
 	add a, LOW(SeniorCourtNpc0CTextIds) ; $5bfe
 	ld l, a ; $5c00
@@ -2036,7 +2036,7 @@ SeniorCourtTile01_12:
 SeniorCourtInitScript_12:
 	call ComputeSeniorCourtStageB ; $5d1c
 	call ComputeSeniorCourtStage ; $5d1f
-	ld a, [$c2b1] ; $5d22
+	ld a, [wMapSceneStage2] ; $5d22
 	cp a, $02 ; $5d25
 	jr nc, .fromMatch ; $5d27
 	ld b, $00 ; $5d29
@@ -2086,7 +2086,7 @@ SeniorCourtInitScript_12:
 	farcall ScriptRespawnLocationActors ; $5db9
 	jr .placeActors ; $5dbc
 SeniorCourtPositionActorsByProgressB:
-	ld a, [$c2b1] ; $5dbe
+	ld a, [wMapSceneStage2] ; $5dbe
 	cp a, $0b ; $5dc1
 	jr c, .checkDoubles ; $5dc3
 	cp a, $0d ; $5dc5
@@ -2100,14 +2100,14 @@ SeniorCourtPositionActorsByProgressB:
 .checkDoubles:
 	test_flag FLAG_DOUBLES ; $5ddc
 	jr nz, .doubles ; $5ddf
-	ld a, [$c2b1] ; $5de1
+	ld a, [wMapSceneStage2] ; $5de1
 	cp a, $09 ; $5de4
 	jr c, .done ; $5de6
 	script_set_position $04, $3f00, $3f00 ; $5de8
 .done:
 	ret ; $5df3
 .doubles:
-	ld a, [$c2b1] ; $5df4
+	ld a, [wMapSceneStage2] ; $5df4
 	cp a, $0a ; $5df7
 	jr c, .done ; $5df9
 	script_set_position $04, $3f00, $3f00 ; $5dfb
@@ -2116,19 +2116,19 @@ SeniorCourtPositionActorsByProgressB:
 SeniorCourtPositionActorsByProgressA:
 	test_flag FLAG_DOUBLES ; $5e12
 	jr nz, .isDoubles ; $5e15
-	ld a, [$c2b1] ; $5e17
+	ld a, [wMapSceneStage2] ; $5e17
 	cp a, $03 ; $5e1a
 	jr c, .checkStage9 ; $5e1c
 	script_set_position $07, $1b00, $0d00 ; $5e1e
 	script_face $07, FACE_LEFT ; $5e29
 .checkStage9:
-	ld a, [$c2b1] ; $5e30
+	ld a, [wMapSceneStage2] ; $5e30
 	cp a, $09 ; $5e33
 	jr c, .done ; $5e35
 .done:
 	ret ; $5e37
 .isDoubles:
-	ld a, [$c2b1] ; $5e38
+	ld a, [wMapSceneStage2] ; $5e38
 	cp a, $07 ; $5e3b
 	jr c, .checkStage10 ; $5e3d
 	cp a, $09 ; $5e3f
@@ -2140,7 +2140,7 @@ SeniorCourtPositionActorsByProgressA:
 	script_null_script $08 ; $5e67
 	script_set_anim $08, $01 ; $5e6c
 .checkStage10:
-	ld a, [$c2b1] ; $5e73
+	ld a, [wMapSceneStage2] ; $5e73
 	cp a, $0a ; $5e76
 	jr c, .checkStage9 ; $5e78
 	script_set_position $04, $3f00, $3f00 ; $5e7a
@@ -2285,7 +2285,7 @@ SeniorDoublesRankOfferScene:
 StartSeniorRankingMatch:
 	script_set_speed ACTOR_PLAYER, $0020 ; $60a0
 	script_set_speed ACTOR_PARTNER, $0020 ; $60a8
-	ld a, [$c2b1] ; $60b0
+	ld a, [wMapSceneStage2] ; $60b0
 	sub a, $02 ; $60b3
 	rst Rst00 ; $60b5
 	dw StartSeniorRankingMatch.rank4 ; $60b6 jumptable
@@ -2480,7 +2480,7 @@ StartSeniorCourtPairBRally:
 	script_set_actor_script $10, ActorScript_12_7bf0 ; $64d2
 	ret ; $64dd
 RunSeniorRankingMatchIntro:
-	ld a, [$c2b1] ; $64de
+	ld a, [wMapSceneStage2] ; $64de
 	sub a, $02 ; $64e1
 	add a, a ; $64e3
 	add a, LOW(SeniorRankingMatchIntroPtrs) ; $64e4
@@ -2734,7 +2734,7 @@ SeniorSinglesRank1Intro:
 	script_face $04, FACE_UP ; $6a39
 	ret ; $6a40
 ResumeSeniorOpponentScripts:
-	ld a, [$c2b1] ; $6a41
+	ld a, [wMapSceneStage2] ; $6a41
 	sub a, $02 ; $6a44
 	add a, a ; $6a46
 	add a, LOW(ResumeSeniorOpponentScriptsPtrs) ; $6a47
@@ -3085,7 +3085,7 @@ SeniorMatchVictorySceneDispatch:
 	xor a, a ; $6ded
 	ld [wStoryModeShowLocationName], a ; $6dee
 	script_null_script ACTOR_PLAYER_SHADOW ; $6df1
-	ld a, [$c2b1] ; $6df6
+	ld a, [wMapSceneStage2] ; $6df6
 	sub a, $02 ; $6df9
 	add a, a ; $6dfb
 	add a, LOW(SeniorMatchVictorySceneDispatchPtrs) ; $6dfc
@@ -3516,7 +3516,7 @@ ComputeSeniorCourtStage:
 	jr z, .loop ; $778b
 	ld a, $0d ; $778d
 .loop:
-	ld [$c2b1], a ; $778f
+	ld [wMapSceneStage2], a ; $778f
 	ret ; $7792
 .isDoubles:
 	ld a, $01 ; $7793
@@ -4079,7 +4079,7 @@ ComputeSeniorCourtStageB:
 	jr z, .store ; $7c94
 	ld a, $08 ; $7c96
 .store:
-	ld [$c2b0], a ; $7c98
+	ld [wMapSceneStage], a ; $7c98
 	ret ; $7c9b
 .doubles:
 	ld a, $01 ; $7c9c
@@ -4112,7 +4112,7 @@ ComputeSeniorCourtStageB:
 	jr z, .storeIsland ; $7cd8
 	inc a ; $7cda
 .storeIsland:
-	ld [$c2b0], a ; $7cdb
+	ld [wMapSceneStage], a ; $7cdb
 	ret ; $7cde
 .doublesIsland:
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $7cdf

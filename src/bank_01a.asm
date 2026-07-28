@@ -44,7 +44,7 @@ RunPauseMenuWindow:
 	jr z, .checkEnabled ; $405c
 	and a, $7f ; $405e
 	ld b, a ; $4060
-	ld a, [w5_d830] ; $4061
+	ld a, [wMenuCursorRow] ; $4061
 	inc a ; $4064
 .rotateLoop:
 	rrc b ; $4065
@@ -988,7 +988,7 @@ ExpScreenDrawTask:
 	call QueueVRAMCopy ; $47cd
 	wram_bank $03 ; $47d0
 	ld a, $20 ; $47d6
-	ld hl, w3_d800 ; $47d8
+	ld hl, wScreenScratch ; $47d8
 	ld b, $40 ; $47db
 .loopB:
 	ld [hl+], a ; $47dd
@@ -996,7 +996,7 @@ ExpScreenDrawTask:
 	jr nz, .loopB ; $47df
 	ld a, $03 ; $47e1
 	call DrawExpScreenCaption ; $47e3
-	ld hl, w3_d800 ; $47e6
+	ld hl, wScreenScratch ; $47e6
 	ld de, $99e0 ; $47e9
 	ld c, $04 ; $47ec
 	call QueueVRAMCopy ; $47ee
@@ -2171,7 +2171,7 @@ DrawExpScreenCaption:
 .caption3:
 	wram_bank $03 ; $5018
 	ld hl, $04f2 ; $501e
-	ld de, w3_d82b ; $5021
+	ld de, $d82b ; $5021
 	ld c, $20 ; $5024
 	farcall RenderProportionalTextAt ; $5026
 	sound $73 ; $5029
@@ -3140,10 +3140,10 @@ InitCharViewerState:
 	ld [$d001], a ; $6c12
 	ld [$d000], a ; $6c15
 	ld [$d003], a ; $6c18
-	ld [w6_d005], a ; $6c1b
+	ld [wCharViewerPose], a ; $6c1b
 	ld a, [$d002] ; $6c1e
 	farcall GetCharPaletteIndex ; $6c21
-	ld [w6_d004], a ; $6c24
+	ld [wCharViewerPalette], a ; $6c24
 	ret ; $6c27
 DrawCharViewerCursorSprite:
 	wram_bank $06 ; $6c28
@@ -3233,7 +3233,7 @@ RunCharViewerInputLoop:
 	ld a, [$d000] ; $6cfb
 	xor a, $01 ; $6cfe
 	ld [$d000], a ; $6d00
-	ld a, [w6_d004] ; $6d03
+	ld a, [wCharViewerPalette] ; $6d03
 	ld [$d001], a ; $6d06
 	jp .refresh ; $6d09
 .upWrapToChar:
@@ -3262,7 +3262,7 @@ RunCharViewerInputLoop:
 	ld a, [$d000] ; $6d49
 	xor a, $01 ; $6d4c
 	ld [$d000], a ; $6d4e
-	ld a, [w6_d004] ; $6d51
+	ld a, [wCharViewerPalette] ; $6d51
 	ld [$d001], a ; $6d54
 	jp .refresh ; $6d57
 .downWrapToChar:
@@ -3351,7 +3351,7 @@ RunCharViewerInputLoop:
 	jr .refresh ; $6e10
 .selectPalette:
 	ld a, [$d001] ; $6e12
-	ld [w6_d004], a ; $6e15
+	ld [wCharViewerPalette], a ; $6e15
 	call ApplyCharViewerPalette ; $6e18
 	jr .refresh ; $6e1b
 .exit:
@@ -3362,16 +3362,16 @@ RunCharViewerInputLoop:
 	call AdvanceFrame ; $6e23
 	jp RunCharViewerInputLoop ; $6e26
 .prevPose:
-	ld a, [w6_d005] ; $6e29
+	ld a, [wCharViewerPose] ; $6e29
 	dec a ; $6e2c
 	and a, $07 ; $6e2d
-	ld [w6_d005], a ; $6e2f
+	ld [wCharViewerPose], a ; $6e2f
 	jp RunCharViewerInputLoop ; $6e32
 .nextPose:
-	ld a, [w6_d005] ; $6e35
+	ld a, [wCharViewerPose] ; $6e35
 	inc a ; $6e38
 	and a, $07 ; $6e39
-	ld [w6_d005], a ; $6e3b
+	ld [wCharViewerPose], a ; $6e3b
 	jp RunCharViewerInputLoop ; $6e3e
 RefreshCharViewerSelection:
 	wram_bank $02 ; $6e41
@@ -3432,7 +3432,7 @@ RefreshCharViewerSelection:
 	ld c, $04 ; $6e9b
 	call QueueVRAMCopy ; $6e9d
 	wram_bank $06 ; $6ea0
-	ld a, [w6_d004] ; $6ea6
+	ld a, [wCharViewerPalette] ; $6ea6
 	add a, $c8 ; $6ea9
 	ld l, a ; $6eab
 	adc a, $d1 ; $6eac
@@ -3538,8 +3538,8 @@ SetupCharViewerScene:
 	ld bc, $d0c0 ; $6f87
 	farcall SetActorAnimationChecked ; $6f8a
 	ld a, $07 ; $6f8d
-	ld [w4_d037], a ; $6f8f
-	ld [w4_d077], a ; $6f92
+	ld [$d037], a ; $6f8f
+	ld [$d077], a ; $6f92
 	ld [w4_d0b7], a ; $6f95
 	ld [w4_d0f7], a ; $6f98
 	wram_bank $06 ; $6f9b
@@ -3583,7 +3583,7 @@ DrawCharViewerCharSprite:
 	ld c, l ; $702e
 	farcall StepCharAnimation ; $702f
 	wram_bank $06 ; $7032
-	ld a, [w6_d005] ; $7038
+	ld a, [wCharDataNewLevels] ; $7038
 	ld d, a ; $703b
 	wram_bank $04 ; $703c
 	push de ; $7042
@@ -3658,10 +3658,10 @@ LoadCharViewerMugshot:
 	ret ; $70bf
 ApplyCharViewerPalette:
 	wram_bank $06 ; $70c0
-	ld a, [w6_d004] ; $70c6
+	ld a, [wCharDataLevel] ; $70c6
 	ld de, $0701 ; $70c9
 	farcall LoadIndexedPaletteThunk ; $70cc
-	ld a, [w6_d004] ; $70cf
+	ld a, [wCharDataLevel] ; $70cf
 	ld de, $0f01 ; $70d2
 	farcall LoadIndexedPaletteThunk ; $70d5
 	ret ; $70d8
@@ -3720,7 +3720,7 @@ RunCharDataConfirmScreen:
 	call WaitFadeEnd ; $79ba
 	wram_bank $06 ; $79bd
 	ld a, $01 ; $79c3
-	ld [w6_d025], a ; $79c5
+	ld [wCharDataConfirmState], a ; $79c5
 .loop:
 	call DrawCharDataPromptCursor ; $79c8
 	call AdvanceFrame ; $79cb
@@ -3732,13 +3732,13 @@ RunCharDataConfirmScreen:
 	and a, $c0 ; $79d8
 	jr z, .loop ; $79da
 	sound $5e ; $79dc
-	ld a, [w6_d025] ; $79de
+	ld a, [wCharDataConfirmState] ; $79de
 	xor a, $01 ; $79e1
-	ld [w6_d025], a ; $79e3
+	ld [wCharDataConfirmState], a ; $79e3
 	jr .loop ; $79e6
 .step:
 	wram_bank $06 ; $79e8
-	ld a, [w6_d025] ; $79ee
+	ld a, [wCharDataConfirmState] ; $79ee
 	or a, a ; $79f1
 	jr nz, .beginFadeOut2 ; $79f2
 	sound $5f ; $79f4
@@ -3746,7 +3746,7 @@ RunCharDataConfirmScreen:
 .beginFadeOut2:
 	wram_bank $06 ; $79f8
 	ld a, $01 ; $79fe
-	ld [w6_d025], a ; $7a00
+	ld [wCharDataConfirmState], a ; $7a00
 	sound $62 ; $7a03
 .beginFadeOut:
 	ld c, $10 ; $7a05
@@ -3755,11 +3755,11 @@ RunCharDataConfirmScreen:
 	farcall StopCharDataValuesSyncTask ; $7a0d
 	farcall StopCharDataScreenAnimTask ; $7a10
 	wram_bank $06 ; $7a13
-	ld a, [w6_d025] ; $7a19
+	ld a, [wCharDataConfirmState] ; $7a19
 	ret ; $7a1c
 DrawCharDataPromptCursor:
 	wram_bank $06 ; $7a1d
-	ld a, [w6_d025] ; $7a23
+	ld a, [wCharDataConfirmState] ; $7a23
 	or a, a ; $7a26
 	jr nz, .nonZero ; $7a27
 	ld bc, $0fd4 ; $7a29
@@ -3905,67 +3905,67 @@ CharDataScreen_BuildStats:
 	ld [de], a ; $7afc
 	ld hl, w6_d0a0 ; $7afd
 	ld c, [hl] ; $7b00
-	ld a, [w6_d00e] ; $7b01
+	ld a, [wCharDataStats] ; $7b01
 	dec a ; $7b04
 	sub a, c ; $7b05
 	ld [w6_d0ab], a ; $7b06
 	ld hl, w6_d0a1 ; $7b09
 	ld c, [hl] ; $7b0c
-	ld a, [w6_d00f] ; $7b0d
+	ld a, [wCharDataStats + 1] ; $7b0d
 	dec a ; $7b10
 	sub a, c ; $7b11
 	ld [w6_d0ac], a ; $7b12
 	ld hl, w6_d0a2 ; $7b15
 	ld c, [hl] ; $7b18
-	ld a, [w6_d010] ; $7b19
+	ld a, [wCharDataStats + 2] ; $7b19
 	dec a ; $7b1c
 	sub a, c ; $7b1d
 	ld [w6_d0ad], a ; $7b1e
 	ld hl, w6_d0a3 ; $7b21
 	ld c, [hl] ; $7b24
-	ld a, [w6_d011] ; $7b25
+	ld a, [wCharDataStats + 3] ; $7b25
 	dec a ; $7b28
 	sub a, c ; $7b29
 	ld [w6_d0ae], a ; $7b2a
 	ld hl, w6_d0a4 ; $7b2d
 	ld c, [hl] ; $7b30
-	ld a, [w6_d012] ; $7b31
+	ld a, [wCharDataStats + 4] ; $7b31
 	dec a ; $7b34
 	sub a, c ; $7b35
 	ld [w6_d0af], a ; $7b36
 	ld hl, w6_d0a5 ; $7b39
 	ld c, [hl] ; $7b3c
-	ld a, [$d013] ; $7b3d
+	ld a, [wCharDataStats + 5] ; $7b3d
 	dec a ; $7b40
 	sub a, c ; $7b41
 	ld [w6_d0b0], a ; $7b42
 	ld hl, w6_d0a6 ; $7b45
 	ld c, [hl] ; $7b48
-	ld a, [$d014] ; $7b49
+	ld a, [wCharDataStats + 6] ; $7b49
 	dec a ; $7b4c
 	sub a, c ; $7b4d
 	ld [w6_d0b1], a ; $7b4e
 	ld hl, w6_d0a7 ; $7b51
 	ld c, [hl] ; $7b54
-	ld a, [w6_d015] ; $7b55
+	ld a, [wCharDataStats + 7] ; $7b55
 	dec a ; $7b58
 	sub a, c ; $7b59
 	ld [w6_d0b2], a ; $7b5a
 	ld hl, w6_d0a8 ; $7b5d
 	ld c, [hl] ; $7b60
-	ld a, [w6_d016] ; $7b61
+	ld a, [wCharDataStats + 8] ; $7b61
 	dec a ; $7b64
 	sub a, c ; $7b65
 	ld [w6_d0b3], a ; $7b66
 	ld hl, w6_d0a9 ; $7b69
 	ld c, [hl] ; $7b6c
-	ld a, [w6_d017] ; $7b6d
+	ld a, [wCharDataStats + 9] ; $7b6d
 	dec a ; $7b70
 	sub a, c ; $7b71
 	ld [w6_d0b4], a ; $7b72
 	ld hl, w6_d0aa ; $7b75
 	ld c, [hl] ; $7b78
-	ld a, [w6_d018] ; $7b79
+	ld a, [wCharDataStats + 10] ; $7b79
 	dec a ; $7b7c
 	sub a, c ; $7b7d
 	ld [w6_d0b5], a ; $7b7e
@@ -4028,7 +4028,7 @@ DrawStatChangeArrows:
 	push af ; $7c0a
 	ld a, [w6_d0a0] ; $7c0b
 	ld l, a ; $7c0e
-	ld a, [w6_d019] ; $7c0f
+	ld a, [wCharDataStatDeltas] ; $7c0f
 	add a, l ; $7c12
 	ld de, $142c ; $7c13
 	call ComputeStatArrowSpriteX ; $7c16
@@ -4050,7 +4050,7 @@ DrawStatChangeArrows:
 	push af ; $7c37
 	ld a, [w6_d0a1] ; $7c38
 	ld l, a ; $7c3b
-	ld a, [w6_d01a] ; $7c3c
+	ld a, [wCharDataStatDeltas + 1] ; $7c3c
 	add a, l ; $7c3f
 	ld de, $143c ; $7c40
 	call ComputeStatArrowSpriteX ; $7c43
@@ -4072,7 +4072,7 @@ DrawStatChangeArrows:
 	push af ; $7c64
 	ld a, [w6_d0a2] ; $7c65
 	ld l, a ; $7c68
-	ld a, [w6_d01b] ; $7c69
+	ld a, [wCharDataStatDeltas + 2] ; $7c69
 	add a, l ; $7c6c
 	ld de, $1454 ; $7c6d
 	call ComputeStatArrowSpriteX ; $7c70
@@ -4094,7 +4094,7 @@ DrawStatChangeArrows:
 	push af ; $7c91
 	ld a, [w6_d0a3] ; $7c92
 	ld l, a ; $7c95
-	ld a, [w6_d01c] ; $7c96
+	ld a, [wCharDataStatDeltas + 3] ; $7c96
 	add a, l ; $7c99
 	ld de, $1464 ; $7c9a
 	call ComputeStatArrowSpriteX ; $7c9d
@@ -4116,7 +4116,7 @@ DrawStatChangeArrows:
 	push af ; $7cbe
 	ld a, [w6_d0a4] ; $7cbf
 	ld l, a ; $7cc2
-	ld a, [w6_d01d] ; $7cc3
+	ld a, [wCharDataStatDeltas + 4] ; $7cc3
 	add a, l ; $7cc6
 	ld de, $1474 ; $7cc7
 	call ComputeStatArrowSpriteX ; $7cca
@@ -4138,7 +4138,7 @@ DrawStatChangeArrows:
 	push af ; $7ceb
 	ld a, [w6_d0a5] ; $7cec
 	ld l, a ; $7cef
-	ld a, [w6_d01e] ; $7cf0
+	ld a, [wCharDataStatDeltas + 5] ; $7cf0
 	add a, l ; $7cf3
 	ld de, StatChangeArrows0 ; $7cf4
 	call ComputeStatArrowSpriteX ; $7cf7
@@ -4160,7 +4160,7 @@ DrawStatChangeArrows:
 	push af ; $7d18
 	ld a, [w6_d0a6] ; $7d19
 	ld l, a ; $7d1c
-	ld a, [w6_d01f] ; $7d1d
+	ld a, [wCharDataStatDeltas + 6] ; $7d1d
 	add a, l ; $7d20
 	ld de, StatChangeArrows1 ; $7d21
 	call ComputeStatArrowSpriteX ; $7d24
@@ -4182,7 +4182,7 @@ DrawStatChangeArrows:
 	push af ; $7d45
 	ld a, [w6_d0a7] ; $7d46
 	ld l, a ; $7d49
-	ld a, [$d020] ; $7d4a
+	ld a, [wCharDataStatDeltas + 7] ; $7d4a
 	add a, l ; $7d4d
 	ld de, StatChangeArrows2 ; $7d4e
 	call ComputeStatArrowSpriteX ; $7d51
@@ -4204,7 +4204,7 @@ DrawStatChangeArrows:
 	push af ; $7d72
 	ld a, [w6_d0a8] ; $7d73
 	ld l, a ; $7d76
-	ld a, [w6_d021] ; $7d77
+	ld a, [wCharDataStatDeltas + 8] ; $7d77
 	add a, l ; $7d7a
 	ld de, StatChangeArrows3 ; $7d7b
 	call ComputeStatArrowSpriteX ; $7d7e
@@ -4226,7 +4226,7 @@ DrawStatChangeArrows:
 	push af ; $7d9f
 	ld a, [w6_d0a9] ; $7da0
 	ld l, a ; $7da3
-	ld a, [w6_d022] ; $7da4
+	ld a, [wCharDataStatDeltas + 9] ; $7da4
 	add a, l ; $7da7
 	ld de, StatChangeArrows4 ; $7da8
 	call ComputeStatArrowSpriteX ; $7dab
@@ -4248,7 +4248,7 @@ DrawStatChangeArrows:
 	push af ; $7dcc
 	ld a, [w6_d0aa] ; $7dcd
 	ld l, a ; $7dd0
-	ld a, [w6_d023] ; $7dd1
+	ld a, [wCharDataStatDeltas + 10] ; $7dd1
 	add a, l ; $7dd4
 	ld de, StatChangeArrows5 ; $7dd5
 	call ComputeStatArrowSpriteX ; $7dd8

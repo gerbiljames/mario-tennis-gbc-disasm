@@ -1613,7 +1613,7 @@ ComputeMachineCourtProgress_27:
 	ld a, $04 ; $6269
 	ld b, a ; $626b
 .store:
-	ld [$c2b0], a ; $626c
+	ld [wMapSceneStage], a ; $626c
 	ret ; $626f
 .eq01:
 	ld a, $26 ; $6270
@@ -2883,7 +2883,7 @@ SetStoryRankSceneIndex:
 	jr z, .store ; $7a68
 	ld a, $08 ; $7a6a
 .store:
-	ld [$c2b0], a ; $7a6c
+	ld [wMapSceneStage], a ; $7a6c
 	ret ; $7a6f
 .doubles:
 	ld a, $01 ; $7a70
@@ -2917,7 +2917,7 @@ SetStoryRankTier:
 	jr z, .store ; $7aac
 	inc a ; $7aae
 .store:
-	ld [$c2b0], a ; $7aaf
+	ld [wMapSceneStage], a ; $7aaf
 	ret ; $7ab2
 .doubles:
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $7ab3

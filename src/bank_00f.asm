@@ -36,10 +36,10 @@ SmallCharTestEntryPoints_0f:
 	db $ff
 SmallCharTestExitTriggers_0f:
 	ds 1, $ff ; $40cf, fill
-	ld hl, $c2b0 ; $40d0
+	ld hl, wMapSceneStage ; $40d0
 	ld a, [hl] ; $40d3
 	dec a ; $40d4
-	ld hl, $c2b1 ; $40d5
+	ld hl, wMapSceneStage2 ; $40d5
 	add a, a ; $40d8
 	jr nc, .checkMax ; $40d9
 	ld a, [hl] ; $40db
@@ -53,15 +53,15 @@ SmallCharTestExitTriggers_0f:
 .compare:
 	cp a, $29 ; $40e4
 	jr nc, .loop ; $40e6
-	ld hl, $c2b1 ; $40e8
+	ld hl, wMapSceneStage2 ; $40e8
 	ld a, [hl] ; $40eb
 .loop:
-	ld hl, $c2b0 ; $40ec
+	ld hl, wMapSceneStage ; $40ec
 	ld [hl], a ; $40ef
 	call SetPlayerActorObjectDef ; $40f0
 	ret ; $40f3
 SmallCharTestNpc03_0f:
-	ld hl, $c2b0 ; $40f4
+	ld hl, wMapSceneStage ; $40f4
 	ld a, [hl] ; $40f7
 	inc [hl] ; $40f8
 	and a, $03 ; $40f9
@@ -69,10 +69,10 @@ SmallCharTestNpc03_0f:
 	call SetPlayerActorObjectDef ; $40fd
 	ret ; $4100
 SmallCharTestNpc04_0f:
-	ld hl, $c2b0 ; $4101
+	ld hl, wMapSceneStage ; $4101
 	ld a, [hl] ; $4104
 	inc a ; $4105
-	ld hl, $c2b1 ; $4106
+	ld hl, wMapSceneStage2 ; $4106
 	add a, a ; $4109
 	jr nc, .checkMax ; $410a
 	ld a, [hl] ; $410c
@@ -89,7 +89,7 @@ SmallCharTestNpc04_0f:
 	ld hl, $002a ; $4119
 	ld a, l ; $411c
 	jr SmallCharTestExitTriggers_0f.loop ; $411d
-	ld hl, $c2b0 ; $411f
+	ld hl, wMapSceneStage ; $411f
 	ld [hl], a ; $4122
 	call SetPlayerActorObjectDef ; $4123
 	ret ; $4126
@@ -126,9 +126,9 @@ SmallCharTestTileTriggers_0f:
 	db $ff
 SmallCharTestInitScript_0f:
 	xor a, a ; $41a4
-	ld [$c2b0], a ; $41a5
+	ld [wMapSceneStage], a ; $41a5
 	farcall GetObjectDefCount ; $41a8
-	ld [$c2b1], a ; $41ab
+	ld [wMapSceneStage2], a ; $41ab
 	ld a, $01 ; $41ae
 	ld hl, SmallCharTestButtonTask_0f ; $41b0
 	call RegisterFrameTask ; $41b3
@@ -1609,7 +1609,7 @@ TournamentTileTriggers_0f:
 	db $ff
 TournamentTile0E_0f:
 	ld a, $01 ; $61b7
-	ld [$c2b1], a ; $61b9
+	ld [wMapSceneStage2], a ; $61b9
 	script_null_script ACTOR_PARTNER ; $61bc
 	script_set_actor_script ACTOR_PLAYER, ActorScript_0f_61e0 ; $61c1
 	script_set_actor_script ACTOR_PARTNER, ActorScript_0f_61eb ; $61cc
@@ -1630,7 +1630,7 @@ ActorScript_0f_61eb:
 	as_halt
 TournamentTile0F_0f:
 	ld a, $00 ; $61f6
-	ld [$c2b1], a ; $61f8
+	ld [wMapSceneStage2], a ; $61f8
 	script_set_actor_script ACTOR_PLAYER, ActorScript_0f_61eb ; $61fb
 	script_wait_actor_script ACTOR_PLAYER ; $6206
 	call IslandOpenRoundCallCutscene ; $620b
@@ -1647,7 +1647,7 @@ TournamentInitScript_0f:
 	test_flag FLAG_ISLAND_OPEN_IN_PROGRESS ; $6221
 	jp z, .notInProgress ; $6224
 	call ComputeIslandOpenRound ; $6227
-	ld a, [$c2b0] ; $622a
+	ld a, [wMapSceneStage] ; $622a
 	and a, a ; $622d
 	jr nz, .singles ; $622e
 	ldh a, [hRomBank] ; $6230
@@ -1953,7 +1953,7 @@ IslandOpenArrivalCutscene:
 	script_move_player $1c00, $1d00 ; $65ac
 	farcall WaitPlayerMoveDone ; $65b6
 	ld a, $00 ; $65b9
-	ld [$c2b0], a ; $65bb
+	ld [wMapSceneStage], a ; $65bb
 	farcall SaveStorySlotWithTimer ; $65be
 	ret ; $65c1
 IslandOpenRoundActors_0f:
@@ -1974,39 +1974,39 @@ ComputeIslandOpenRound:
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_SEMIFINAL ; $6614
 	jr z, .checkRound2 ; $6617
 	ld a, $03 ; $6619
-	ld [$c2b0], a ; $661b
+	ld [wMapSceneStage], a ; $661b
 	ret ; $661e
 .checkRound2:
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_2 ; $661f
 	jr z, .checkRound1 ; $6622
 	ld a, $02 ; $6624
-	ld [$c2b0], a ; $6626
+	ld [wMapSceneStage], a ; $6626
 	ret ; $6629
 .checkRound1:
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_1 ; $662a
 	jr z, .round0 ; $662d
 	ld a, $01 ; $662f
-	ld [$c2b0], a ; $6631
+	ld [wMapSceneStage], a ; $6631
 	ret ; $6634
 .round0:
 	ld a, $00 ; $6635
-	ld [$c2b0], a ; $6637
+	ld [wMapSceneStage], a ; $6637
 	ret ; $663a
 .doubles:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_SEMIFINAL ; $663b
 	jr z, .doublesCheckRound2 ; $663e
 	ld a, $03 ; $6640
-	ld [$c2b0], a ; $6642
+	ld [wMapSceneStage], a ; $6642
 	ret ; $6645
 .doublesCheckRound2:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_ROUND_1 ; $6646
 	jr z, .round0 ; $6649
 	ld a, $02 ; $664b
-	ld [$c2b0], a ; $664d
+	ld [wMapSceneStage], a ; $664d
 	ret ; $6650
 LoadIslandOpenRoundNpcs:
 	ld a, $00 ; $6651
-	ld [$c2b0], a ; $6653
+	ld [wMapSceneStage], a ; $6653
 	test_flag FLAG_DOUBLES ; $6656
 	jr nz, LoadIslandOpenRoundNpcsDoubles ; $6659
 	ld a, $f1 ; $665b
@@ -2022,7 +2022,7 @@ LoadIslandOpenRoundNpcs:
 	ld de, $000c ; $6674
 	farcall WriteStoryStateWord ; $6677
 	ld a, $03 ; $667a
-	ld [$c2b0], a ; $667c
+	ld [wMapSceneStage], a ; $667c
 	ret ; $667f
 .round2:
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_2 ; $6680
@@ -2034,7 +2034,7 @@ LoadIslandOpenRoundNpcs:
 	ld de, $000c ; $6690
 	farcall WriteStoryStateWord ; $6693
 	ld a, $02 ; $6696
-	ld [$c2b0], a ; $6698
+	ld [wMapSceneStage], a ; $6698
 	ret ; $669b
 .round1:
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_1 ; $669c
@@ -2046,7 +2046,7 @@ LoadIslandOpenRoundNpcs:
 	ld de, $000c ; $66ac
 	farcall WriteStoryStateWord ; $66af
 	ld a, $01 ; $66b2
-	ld [$c2b0], a ; $66b4
+	ld [wMapSceneStage], a ; $66b4
 .done:
 	ret ; $66b7
 LoadIslandOpenRoundNpcsDoubles:
@@ -2067,7 +2067,7 @@ LoadIslandOpenRoundNpcsDoubles:
 	ld de, $000c ; $66da
 	farcall WriteStoryStateWord ; $66dd
 	ld a, $03 ; $66e0
-	ld [$c2b0], a ; $66e2
+	ld [wMapSceneStage], a ; $66e2
 	ret ; $66e5
 .round2:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_ROUND_1 ; $66e6
@@ -2079,7 +2079,7 @@ LoadIslandOpenRoundNpcsDoubles:
 	ld de, $000c ; $66f6
 	farcall WriteStoryStateWord ; $66f9
 	ld a, $02 ; $66fc
-	ld [$c2b0], a ; $66fe
+	ld [wMapSceneStage], a ; $66fe
 	ret ; $6701
 .round1:
 	ldh a, [hRomBank] ; $6702
@@ -2397,7 +2397,7 @@ TournamentNpc03_0f:
 	ret ; $6f5c
 .altLine:
 	ld hl, $24ae ; $6f5d
-	ld a, [$c2b0] ; $6f60
+	ld a, [wMapSceneStage] ; $6f60
 	add a, l ; $6f63
 	ld l, a ; $6f64
 	jr nc, .setCursor ; $6f65
@@ -2408,7 +2408,7 @@ TournamentNpc03_0f:
 	ret ; $6f70
 TournamentNpc04_0f:
 	ld hl, $24b2 ; $6f71
-	ld a, [$c2b0] ; $6f74
+	ld a, [wMapSceneStage] ; $6f74
 	add a, l ; $6f77
 	ld l, a ; $6f78
 	jr nc, .setCursor ; $6f79
@@ -2464,7 +2464,7 @@ IslandOpenRoundCallCutscene:
 	script_set_anim $04, $03 ; $7086
 	script_wait_idle $04 ; $708d
 	script_move_target $05, $1000, $1700 ; $7092
-	ld a, [$c2b0] ; $709d
+	ld a, [wMapSceneStage] ; $709d
 	cp a, $03 ; $70a0
 	jr z, .partnerReady ; $70a2
 	script_move_target $04, $1800, $1700 ; $70a4
@@ -2655,14 +2655,14 @@ GetIslandOpenRoundParams:
 	test_flag FLAG_DOUBLES ; $7416
 	jr nz, .doubles ; $7419
 	ld b, $00 ; $741b
-	ld a, [$c2b0] ; $741d
+	ld a, [wMapSceneStage] ; $741d
 	inc a ; $7420
 	ld c, a ; $7421
 	ld d, $00 ; $7422
 	ret ; $7424
 .doubles:
 	ld b, $01 ; $7425
-	ld a, [$c2b0] ; $7427
+	ld a, [wMapSceneStage] ; $7427
 	inc a ; $742a
 	cp a, $03 ; $742b
 	jr c, .store ; $742d
@@ -2684,7 +2684,7 @@ ShowTournamentRankingBoard_0f:
 	farcall ShowRankingBoard ; $7449
 	ret ; $744c
 QueueUpcomingRoundNameText:
-	ld a, [$c2b0] ; $744d
+	ld a, [wMapSceneStage] ; $744d
 	ld hl, $2861 ; $7450
 	add a, l ; $7453
 	ld l, a ; $7454
@@ -2755,7 +2755,7 @@ IslandOpenSinglesMatchReturn:
 	ld [hl], a ; $74d8
 	script_fade_in $04 ; $74d9
 	call WaitFadeEnd ; $74de
-	ld a, [$c2b0] ; $74e1
+	ld a, [wMapSceneStage] ; $74e1
 	add a, a ; $74e4
 	add a, LOW(Data_0f_7699) ; $74e5
 	ld l, a ; $74e7
@@ -2784,7 +2784,7 @@ IslandOpenSinglesMatchReturn:
 	script_speak $04 ; $7557
 	call IslandOpenBreakCutscene ; $755c
 	script_set_text Text_25_73 ; $755f
-	ld a, [$c2b0] ; $7565
+	ld a, [wMapSceneStage] ; $7565
 	dec a ; $7568
 	ld hl, $2862 ; $7569
 	add a, l ; $756c
@@ -2821,7 +2821,7 @@ IslandOpenRoundScriptsSingles_0f:
 	db $ff
 IslandOpenRoundSinglesNpc04_0f:
 	script_set_text Text_25_73 ; $762e
-	ld a, [$c2b0] ; $7634
+	ld a, [wMapSceneStage] ; $7634
 	dec a ; $7637
 	ld hl, $2862 ; $7638
 	add a, l ; $763b
@@ -2833,7 +2833,7 @@ IslandOpenRoundSinglesNpc04_0f:
 	script_speak $04 ; $7643
 	ret ; $7648
 IslandOpenRoundSinglesNpc03_0f:
-	ld a, [$c2b0] ; $7649
+	ld a, [wMapSceneStage] ; $7649
 	add a, a ; $764c
 	add a, LOW(Data_0f_7699) ; $764d
 	ld l, a ; $764f
@@ -2849,7 +2849,7 @@ IslandOpenRoundSinglesNpc03_0f:
 	script_speak $03 ; $7666
 	ret ; $766b
 IslandOpenRoundSinglesNpc05_0f:
-	ld a, [$c2b0] ; $766c
+	ld a, [wMapSceneStage] ; $766c
 	dec a ; $766f
 	add a, a ; $7670
 	add a, LOW(Data_0f_7691) ; $7671
@@ -2919,7 +2919,7 @@ Data_0f_7699:
 	script_face_toward ACTOR_PLAYER, ACTOR_PARTNER ; $7732
 	script_fade_in $04 ; $773a
 	call WaitFadeEnd ; $773f
-	ld a, [$c2b0] ; $7742
+	ld a, [wMapSceneStage] ; $7742
 	dec a ; $7745
 	add a, a ; $7746
 	add a, LOW(IslandOpenRoundSinglesNpc05TextIds) ; $7747
@@ -2969,7 +2969,7 @@ Data_0f_7699:
 	script_face_toward ACTOR_PLAYER, $04 ; $77f0
 	script_face $03, FACE_RIGHT ; $77f8
 	script_set_text Text_25_73 ; $77ff
-	ld a, [$c2b0] ; $7805
+	ld a, [wMapSceneStage] ; $7805
 	dec a ; $7808
 	ld hl, $2862 ; $7809
 	add a, l ; $780c
@@ -3010,7 +3010,7 @@ IslandOpenRoundScriptsDoubles_0f:
 	db $ff
 IslandOpenRoundDoublesNpc04_0f:
 	script_set_text Text_25_73 ; $78b1
-	ld a, [$c2b0] ; $78b7
+	ld a, [wMapSceneStage] ; $78b7
 	dec a ; $78ba
 	ld hl, $2862 ; $78bb
 	add a, l ; $78be
@@ -3022,7 +3022,7 @@ IslandOpenRoundDoublesNpc04_0f:
 	script_speak $04 ; $78c6
 	ret ; $78cb
 IslandOpenRoundDoublesNpc03_0f:
-	ld a, [$c2b0] ; $78cc
+	ld a, [wMapSceneStage] ; $78cc
 	dec a ; $78cf
 	add a, a ; $78d0
 	add a, LOW(IslandOpenRoundDoublesNpc03TextIds) ; $78d1
@@ -3045,7 +3045,7 @@ IslandOpenRoundDoublesNpc03TextIds:
 QueueFinishedRoundNameText:
 	test_flag FLAG_DOUBLES ; $78ec
 	jr nz, .doubles ; $78ef
-	ld a, [$c2b0] ; $78f1
+	ld a, [wMapSceneStage] ; $78f1
 	dec a ; $78f4
 	ld hl, $2861 ; $78f5
 	add a, l ; $78f8
@@ -3056,7 +3056,7 @@ QueueFinishedRoundNameText:
 	call QueueShortText ; $78fd
 	ret ; $7900
 .doubles:
-	ld a, [$c2b0] ; $7901
+	ld a, [wMapSceneStage] ; $7901
 	dec a ; $7904
 	ld hl, $2865 ; $7905
 	add a, l ; $7908
@@ -3088,7 +3088,7 @@ IslandOpenBreakCutscene:
 	script_speak $06 ; $7995
 	script_set_anim $06, $03 ; $799a
 	script_wait_idle $06 ; $79a1
-	ld a, [$c2b0] ; $79a6
+	ld a, [wMapSceneStage] ; $79a6
 	ld hl, $2861 ; $79a9
 	add a, l ; $79ac
 	ld l, a ; $79ad
@@ -3476,7 +3476,7 @@ ActorScript_0f_7b8d:
 	jr z, .loop ; $7d62
 	ld a, $08 ; $7d64
 .loop:
-	ld [$c2b0], a ; $7d66
+	ld [wMapSceneStage], a ; $7d66
 	ret ; $7d69
 .doubles:
 	ld a, $01 ; $7d6a
@@ -3509,7 +3509,7 @@ ActorScript_0f_7b8d:
 	jr z, .loopB ; $7da6
 	inc a ; $7da8
 .loopB:
-	ld [$c2b0], a ; $7da9
+	ld [wMapSceneStage], a ; $7da9
 	ret ; $7dac
 .doublesIsland:
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $7dad
