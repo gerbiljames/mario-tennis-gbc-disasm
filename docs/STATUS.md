@@ -26,7 +26,7 @@ shape, not *twins*, and the shot banks are near-identical copies of each
 other, so a routine only one bank failed to execute reads as ordinary data
 until you diff it against its siblings.
 
-Everything below is **committed** (HEAD `d26eeb8`); the whole history
+Everything below is **committed** (HEAD `a8cd0d2`); the whole history
 rebuilds byte-perfect. Per-bank progress at any time: `python3
 tools/progress.py` (proven-code bytes, fill runs, label counts, human-named
 counts) and `tools/progress.py --unnamed <bank>` to list still-auto-named
@@ -4572,7 +4572,7 @@ from clean throughout.
 
 ## Repo state
 
-All work is committed (HEAD `d26eeb8`); every commit rebuilds byte-perfect.
+All work is committed (HEAD `a8cd0d2`); every commit rebuilds byte-perfect.
 Gitignored: baserom.gbc, data/, build/, tools/rgbds/, *.o, *.gbc, *.sav.
 
 ## Tail calls, and three tables that lied about their length (2026-07-26)
@@ -4841,7 +4841,7 @@ file. Their internal jump targets take bank `$16`'s local names, so
 
 The fourth, `$38:$6bc2`, needs no twin: its three `jr z` branches all land
 exactly on `$6bd5`, which was already carved, and it ends in `ret`. It calls
-`IsStarCharacter` and then gates on `$d814` -- the equipment-panel category
+`IsMarioCastCharacter` and then gates on `$d814` -- the equipment-panel category
 that bank `$3e` sets to `$01` for rackets and `$02` for shoes -- so it is
 `CheckStarCharacterEquipCategory`, with `$6bd5` as its `.returnFalse` tail.
 
@@ -6449,10 +6449,26 @@ for itself: `ApplyMatchSettingsExpBonus` scores one step for the low nibble bein
 `$03` and another for the high nibble being `$01`, and **two steps double the
 match EXP** (one step adds a half).
 
-`IsStarCharacter` is a misnomer worth recording: it returns true for character
-ids `$17`-`$1f`, and `id = bank $30 string index - 27` puts those at indices
-50-58 -- Luigi through Peach, the nine Mario-series characters. It gates
-`wCharSelectSlotStar`, which reaches the records as `+$0e`, the X-flip.
+`IsStarCharacter` was a misnomer, and is now **`IsMarioCastCharacter`**. It
+returns true for character ids `$17`-`$1f`, and `id = bank $30 string index - 27`
+puts those at indices 50-58 -- Luigi through Peach, the nine Mario-series
+characters. `GetStarCharIndex` corroborates the extent independently: it does
+`sub $17` into a nine-entry table, so the block is exactly those ids.
+
+Two things make "star" the wrong word rather than a synonym. **The game never
+uses it**: every `star` string in the ROM belongs to Shooting Star or the
+Perfect Shot panels. And **the flag it gates is not a badge** -- it reaches the
+on-court record at `+$0e`, which `LoadCharacterAttributes` turns into
+`wCharMirrorAttrMask` (`$20`, the OAM X-flip).
+
+The rest of the family names the same nine and is a candidate for the same
+correction, left alone for now: `GetStarCharIndex`, `StarCharOrderTable`,
+`UpdateStarUnlocks`, `Read`/`WriteStarVictoryGrid` (a 9x9 chart in save block
+`$3e` of who has beaten whom, one full row unlocking
+`SAVEFLAG_COURT_WAREHOUSE`), `CheckStarCharacterEquipCategory`,
+`ApplyStarFlagsToCharRecords`, and `wCharSelectSlotStar`. The reasoning is on
+the renamed label as a `labels.json` note, so it renders above the function in
+`src/bank_038.asm` rather than living only here.
 
 ### Screen shake, and a second clock
 
