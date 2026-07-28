@@ -6438,7 +6438,7 @@ to gender and handedness) settles the shared `$40`-byte layout:
 | `+$00` | display name, 7 bytes | `DrawSinglesPlayerNames` copies it through `CopyStringToTextBuffer` |
 | `+$0b` | character id | already named `wPlayer1CurrentMainCharacter` etc. |
 | `+$0c` | palette index | `LoadIndexedPalette_18`, and `SetupCharacterSprite` with `+3` |
-| `+$0e` | mirrored / left-handed | becomes `wCharMirrorAttrMask` = `$20`, the OAM X-flip bit |
+| `+$0e` | left-handed | becomes `wCharMirrorAttrMask`: the `$20` OAM X-flip *and* the forehand/backhand swap |
 | `+$18` | EXP tier | `ld [wCharExpTier], a` |
 | `+$1b`-`+$1e` | four AI personality parameters | written from the CPU-difficulty row |
 | `+$1f` | difficulty | already named `wExhibitionMode*Difficulty` |
@@ -6449,26 +6449,54 @@ for itself: `ApplyMatchSettingsExpBonus` scores one step for the low nibble bein
 `$03` and another for the high nibble being `$01`, and **two steps double the
 match EXP** (one step adds a half).
 
-`IsStarCharacter` was a misnomer, and is now **`IsMarioCastCharacter`**. It
-returns true for character ids `$17`-`$1f`, and `id = bank $30 string index - 27`
-puts those at indices 50-58 -- Luigi through Peach, the nine Mario-series
-characters. `GetStarCharIndex` corroborates the extent independently: it does
-`sub $17` into a nine-entry table, so the block is exactly those ids.
+### The `Star*` family was two things, and neither was a star (2026-07-28)
 
-Two things make "star" the wrong word rather than a synonym. **The game never
-uses it**: every `star` string in the ROM belongs to Shooting Star or the
-Perfect Shot panels. And **the flag it gates is not a badge** -- it reaches the
-on-court record at `+$0e`, which `LoadCharacterAttributes` turns into
-`wCharMirrorAttrMask` (`$20`, the OAM X-flip).
+`IsStarCharacter` returns true for character ids `$17`-`$1f`, and
+`id = bank $30 string index - 27` puts those at indices 50-58 -- Luigi through
+Peach, the nine Mario-series characters. `GetStarCharIndex` corroborates the
+extent independently: it does `sub $17` into a nine-entry table, so the block is
+exactly those ids and nothing else. It is `IsMarioCastCharacter` now.
 
-The rest of the family names the same nine and is a candidate for the same
-correction, left alone for now: `GetStarCharIndex`, `StarCharOrderTable`,
-`UpdateStarUnlocks`, `Read`/`WriteStarVictoryGrid` (a 9x9 chart in save block
-`$3e` of who has beaten whom, one full row unlocking
-`SAVEFLAG_COURT_WAREHOUSE`), `CheckStarCharacterEquipCategory`,
-`ApplyStarFlagsToCharRecords`, and `wCharSelectSlotStar`. The reasoning is on
-the renamed label as a `labels.json` note, so it renders above the function in
-`src/bank_038.asm` rather than living only here.
+Renaming it exposed a bigger family -- 43 labels plus a RAM symbol -- and
+following it through showed the prefix had been carrying **two unrelated
+meanings**:
+
+* **who**: the nine transfer-pak characters. `GetMarioCastIndex`,
+  `MarioCastOrderTable`, `Get`/`GetUnlockedMarioCastCharAtGridSlot` and their
+  tables, `BuildMarioCastUnlockMask`, `UpdateMarioCastUnlocks`,
+  `Read`/`WriteMarioCastVictoryGrid` (a 9x9 chart in save block `$3e` of who has
+  beaten whom, one full row unlocking `SAVEFLAG_COURT_WAREHOUSE`),
+  `CompactMarioCastGridEntries`, `CheckMarioCastEquipCategory`, the three
+  `*MarioCastExhib*` screen builders, and the thirteen `MarioCastChart*`
+  routines that draw and scroll it.
+* **what**: a **handedness** flag. `wCharSelectSlotStar` is
+  `wCharSelectSlotLeftHanded`, `ApplyStarFlagsToCharRecords` is
+  `ApplyHandednessToCharRecords`, and the two `Draw*SlotStarMark` routines are
+  `Draw*SlotLeftHandedMark`.
+
+The second half is the part worth recording, because the mechanic was not
+visible under the old name. Both character grids reach their toggle on
+`bit 3` -- START -- and refuse it unless `IsMarioCastCharacter` returns 1, so
+**only the Mario cast can be flipped left-handed**; created characters set
+handedness at name entry instead. The prompt row the grid draws is text
+`30:118` "START: Change Hands", and `DrawCharSelectSlotLabel` swaps a word in it
+for one of three pre-rendered labels on `$df00`'s three values -- `30:150`,
+`30:151`, `30:152` being "START: Right-Handed", "START: Left-Handed" and
+"START: Change Hands". On confirm the flag reaches the match record's `+$0e`,
+which becomes `wCharMirrorAttrMask`: the OAM X-flip bit *and* the
+forehand/backhand swap in `SelectForehandBackhand`.
+
+Two guards on the sweep. The game's own text never calls those characters star
+characters -- every `star` string in the ROM belongs to Shooting Star, the
+Perfect Shot panels or Star Court -- but there **is** a genuine star elsewhere:
+`LoadMinigameStarFlags` reads nine save flags into `$d812` and
+`DrawMinigameStarMarks`/`DrawStarLegendMark` draw a cleared-mark per minigame
+row. That group, `ShootingStar*`, `StarWarp*`, `StarCourt*` and
+`StarPatternBg*` kept their names. A blind `s/Star/MarioCast/` would have
+renamed 40 identifiers that were right.
+
+The reasoning lives on `IsMarioCastCharacter` as a `labels.json` note, so it
+renders above the function in `src/bank_038.asm` rather than only here.
 
 ### Screen shake, and a second clock
 
