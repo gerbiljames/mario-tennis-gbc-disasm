@@ -1433,7 +1433,7 @@ SetCharFacingFromCourtPos:
 	sub a, l ; $4ca1
 	ld h, a ; $4ca2
 	ld a, [hl] ; $4ca3
-	ld [$df0c], a ; $4ca4
+	ld [wCharBaseFacing], a ; $4ca4
 	ld [wCharFacingDesired], a ; $4ca7
 	ld [wCharFacingShown], a ; $4caa
 	ret ; $4cad
@@ -4248,7 +4248,7 @@ StartCharChangeoverWalk:
 PlaceCharAtBasePosition:
 	call GetCharBaseCourtPosition ; $6003
 	call SetCharPosAndTarget ; $6006
-	ld a, [$df0c] ; $6009
+	ld a, [wCharBaseFacing] ; $6009
 	call SetCharFacing ; $600c
 	ret ; $600f
 WalkCharsOffCourt:
@@ -4290,7 +4290,7 @@ ParkCharOffCourt:
 	call SetCharPosAndTarget ; $605f
 	ret ; $6062
 CheckAllCharsPhaseDone:
-	ld de, $df19 ; $6063
+	ld de, wCharStatePhase ; $6063
 	ld b, $ff ; $6066
 	ld a, [wOnCourtCharCountMinus1] ; $6068
 	rst Rst00 ; $606b
@@ -5020,12 +5020,12 @@ ShowMatchResultScreens:
 RunMinigamePointLoop:
 	wram_bank $04 ; $65be
 	ld a, $00 ; $65c4
-	ld [$df7f], a ; $65c6
+	ld [wAiPositionStrategy], a ; $65c6
 	xor a, a ; $65c9
-	ld [$df79], a ; $65ca
-	ld [$df7a], a ; $65cd
+	ld [wAiReactionDelayNear], a ; $65ca
+	ld [wAiReactionDelayFar], a ; $65cd
 	ld a, $00 ; $65d0
-	ld [$df7c], a ; $65d2
+	ld [wAiAimAwayChance], a ; $65d2
 	ld d, $03 ; $65d5
 	call CallModeHook ; $65d7
 	ld a, [wMatchAbortFlag] ; $65da
@@ -5424,11 +5424,11 @@ IsBallInTargetZone:
 InitChar:
 	ld [wCharIndex], a ; $684a
 	ld a, d ; $684d
-	ld [$df78], a ; $684e
-	ld a, [$df78] ; $6851
+	ld [wCharId], a ; $684e
+	ld a, [wCharId] ; $6851
 	farcall RemapExtendedCharId ; $6854
-	ld [$df7e], a ; $6857
-	ld a, [$df7e] ; $685a
+	ld [wCharSpriteSetId], a ; $6857
+	ld a, [wCharSpriteSetId] ; $685a
 	farcall LookupCharSpriteSet ; $685d
 	ld d, a ; $6860
 	ld a, e ; $6861
@@ -5527,7 +5527,7 @@ UpdateAllChars:
 	ret ; $6956
 	ret ; $6957
 UpdateChar:
-	ld a, [wCharActive] ; $6958
+	ld a, [wCharObjectBank] ; $6958
 	and a, a ; $695b
 	ret z ; $695c
 	call UpdateCharBallGeometry ; $695d
@@ -5589,39 +5589,39 @@ SetCharTarget:
 	ld [hl], $00 ; $69bf
 	ret ; $69c1
 ReloadCharFrameGfx:
-	ld a, [$df37] ; $69c2
+	ld a, [wCharSpriteAttr] ; $69c2
 	and a, $07 ; $69c5
 	add a, $08 ; $69c7
 	ld d, a ; $69c9
-	ld a, [$df3a] ; $69ca
+	ld a, [wCharGfxBank] ; $69ca
 	ld b, a ; $69cd
 	ld hl, $0110 ; $69ce
 	call FarCallVector ; $69d1
 	ret ; $69d4
 LoadCharChargeFlashGfx:
-	ld a, [$df37] ; $69d5
+	ld a, [wCharSpriteAttr] ; $69d5
 	and a, $07 ; $69d8
 	add a, $08 ; $69da
 	ld d, a ; $69dc
-	ld a, [$df3a] ; $69dd
+	ld a, [wCharGfxBank] ; $69dd
 	add a, $08 ; $69e0
 	ld b, a ; $69e2
 	ld hl, $0110 ; $69e3
 	call FarCallVector ; $69e6
 	ret ; $69e9
 SetCharAnimation:
-	ld hl, $df2e ; $69ea
+	ld hl, wCharAnimId ; $69ea
 	ld a, [hl] ; $69ed
 	cp a, d ; $69ee
 	ret z ; $69ef
 	ld [hl], d ; $69f0
 	xor a, a ; $69f1
-	ld [$df2f], a ; $69f2
-	ld hl, $df37 ; $69f5
+	ld [wCharAnimDelay], a ; $69f2
+	ld hl, wCharSpriteAttr ; $69f5
 	ld a, [hl] ; $69f8
 	and a, $0f ; $69f9
 	ld [hl], a ; $69fb
-	ld hl, $df28 ; $69fc
+	ld hl, wCharAnimTablePtr ; $69fc
 	ld a, [hl+] ; $69ff
 	ld h, [hl] ; $6a00
 	ld l, a ; $6a01
@@ -5632,13 +5632,13 @@ SetCharAnimation:
 	jr nc, .readAnimPtr ; $6a06
 	inc h ; $6a08
 .readAnimPtr:
-	ld a, [wCharActive] ; $6a09
+	ld a, [wCharObjectBank] ; $6a09
 	call FarReadWordDI ; $6a0c
-	ld hl, $df2a ; $6a0f
+	ld hl, wCharAnimScriptBase ; $6a0f
 	ld a, c ; $6a12
 	ld [hl+], a ; $6a13
 	ld [hl], b ; $6a14
-	ld hl, $df2c ; $6a15
+	ld hl, wCharAnimScriptPtr ; $6a15
 	ld a, c ; $6a18
 	ld [hl+], a ; $6a19
 	ld [hl], b ; $6a1a
@@ -5649,9 +5649,9 @@ SetCharState:
 	xor a, a ; $6a20
 	ld [hl+], a ; $6a21
 	ld [hl+], a ; $6a22
-	ld hl, $df10 ; $6a23
+	ld hl, wCharFreezeTimer ; $6a23
 	ld [hl+], a ; $6a26
-	ld hl, $df12 ; $6a27
+	ld hl, wAiActionTimer ; $6a27
 	ld [hl+], a ; $6a2a
 	ret ; $6a2b
 SetCharFacing:
@@ -5682,14 +5682,14 @@ ForEachCharBank:
 UpdateCharStateMachine:
 	xor a, a ; $6a62
 	ld [$df56], a ; $6a63
-	ld hl, $df10 ; $6a66
+	ld hl, wCharFreezeTimer ; $6a66
 	ld a, [hl] ; $6a69
 	and a, a ; $6a6a
 	jr z, .dispatch ; $6a6b
 	dec [hl] ; $6a6d
 	ret ; $6a6e
 .dispatch:
-	ld hl, $df11 ; $6a6f
+	ld hl, wCharShotComboTimer ; $6a6f
 	ld a, [hl] ; $6a72
 	and a, a ; $6a73
 	jr z, .runState ; $6a74
@@ -5706,12 +5706,12 @@ UpdateCharStateMachine:
 	dw CharWalkState ; $6a87 jumptable
 	dw CharPointEndState ; $6a89 jumptable
 AdvanceCharStatePhase:
-	ld hl, $df19 ; $6a8b
+	ld hl, wCharStatePhase ; $6a8b
 	inc [hl] ; $6a8e
 .done:
 	ret ; $6a8f
 CharRallyEndState:
-	ld a, [$df2e] ; $6a90
+	ld a, [wCharAnimId] ; $6a90
 	cp a, $05 ; $6a93
 	jr z, .clearShot ; $6a95
 	cp a, $06 ; $6a97
@@ -5730,27 +5730,27 @@ CharRallyEndState:
 	bit 2, [hl] ; $6ab2
 	jr nz, .clearShot ; $6ab4
 	xor a, a ; $6ab6
-	ld [$df16], a ; $6ab7
-	ld [$df17], a ; $6aba
-	ld [$df4f], a ; $6abd
-	ld [$df4b], a ; $6ac0
+	ld [wCharShotButton1], a ; $6ab7
+	ld [wCharShotButton2], a ; $6aba
+	ld [wCharLastShotButton], a ; $6abd
+	ld [wCharSwingFrames], a ; $6ac0
 	ld hl, wCharFlags ; $6ac3
 	res 0, [hl] ; $6ac6
 	res 1, [hl] ; $6ac8
 	res 5, [hl] ; $6aca
-	ld hl, $df19 ; $6acc
+	ld hl, wCharStatePhase ; $6acc
 	inc [hl] ; $6acf
 .clearShot:
 	xor a, a ; $6ad0
-	ld [$df16], a ; $6ad1
-	ld [$df17], a ; $6ad4
+	ld [wCharShotButton1], a ; $6ad1
+	ld [wCharShotButton2], a ; $6ad4
 	ld [$df5a], a ; $6ad7
 	xor a, a ; $6ada
-	ld [$df51], a ; $6adb
+	ld [wCharChargeFlashOn], a ; $6adb
 	call EndChargeFlash ; $6ade
 	ret ; $6ae1
 CharServeState:
-	ld a, [$df19] ; $6ae2
+	ld a, [wCharStatePhase] ; $6ae2
 	rst Rst00 ; $6ae5
 	dw CharServeInitPhase ; $6ae6 jumptable
 	dw CharServeInitPhase.waitAnim ; $6ae8 jumptable
@@ -5761,9 +5761,9 @@ CharServeState:
 CharServeInitPhase:
 	call ResetBallState ; $6af2
 	xor a, a ; $6af5
-	ld [$df16], a ; $6af6
-	ld [$df17], a ; $6af9
-	ld [$df4f], a ; $6afc
+	ld [wCharShotButton1], a ; $6af6
+	ld [wCharShotButton2], a ; $6af9
+	ld [wCharLastShotButton], a ; $6afc
 	ld hl, wCharFlags ; $6aff
 	res 0, [hl] ; $6b02
 	res 1, [hl] ; $6b04
@@ -5785,14 +5785,14 @@ CharServeInitPhase:
 .startAnim:
 	ld d, $11 ; $6b29
 	call SetCharAnimation ; $6b2b
-	ld hl, $df19 ; $6b2e
+	ld hl, wCharStatePhase ; $6b2e
 	inc [hl] ; $6b31
 	ret ; $6b32
 .waitAnim:
-	ld a, [$df2e] ; $6b33
+	ld a, [wCharAnimId] ; $6b33
 	cp a, $10 ; $6b36
 	jr nz, .done ; $6b38
-	ld hl, $df19 ; $6b3a
+	ld hl, wCharStatePhase ; $6b3a
 	inc [hl] ; $6b3d
 .done:
 	ret ; $6b3e
@@ -5827,7 +5827,7 @@ CharServeTossPhase:
 	wram_bank ; $6b7f
 	ld d, $0f ; $6b83
 	call SetCharAnimation ; $6b85
-	ld hl, $df19 ; $6b88
+	ld hl, wCharStatePhase ; $6b88
 	inc [hl] ; $6b8b
 .done:
 	ret ; $6b8c
@@ -5835,7 +5835,7 @@ CharServeSwingWindowPhase:
 	ld hl, wBallVelocityHeight + 1 ; $6b8d
 	bit 7, [hl] ; $6b90
 	jr nz, .checkButton ; $6b92
-	ld hl, $df70 ; $6b94
+	ld hl, wCharReachHeight ; $6b94
 	ld a, [hl+] ; $6b97
 	ld b, [hl] ; $6b98
 	ld c, a ; $6b99
@@ -5845,7 +5845,7 @@ CharServeSwingWindowPhase:
 	ld l, a ; $6b9f
 	add hl, bc ; $6ba0
 	jr nc, .checkButton ; $6ba1
-	ld hl, $df19 ; $6ba3
+	ld hl, wCharStatePhase ; $6ba3
 	ld [hl], $00 ; $6ba6
 	ret ; $6ba8
 .checkButton:
@@ -5853,10 +5853,10 @@ CharServeSwingWindowPhase:
 	and a, a ; $6bac
 	jr z, .done ; $6bad
 	ld a, $07 ; $6baf
-	ld [$df15], a ; $6bb1
+	ld [wCharSwingAnim], a ; $6bb1
 	ld d, a ; $6bb4
 	call SetCharAnimation ; $6bb5
-	ld hl, $df19 ; $6bb8
+	ld hl, wCharStatePhase ; $6bb8
 	inc [hl] ; $6bbb
 	ld hl, wCourtViewLocked ; $6bbc
 	set 1, [hl] ; $6bbf
@@ -5864,18 +5864,18 @@ CharServeSwingWindowPhase:
 	ret ; $6bc1
 CharServeStrikePhase:
 	call BufferShotButtonPress ; $6bc2
-	ld a, [$df11] ; $6bc5
+	ld a, [wCharShotComboTimer] ; $6bc5
 	and a, a ; $6bc8
 	jr nz, .done ; $6bc9
 	call CaptureServeAim ; $6bcb
 	call SelectServeShotType ; $6bce
 	farcall ExecuteShot ; $6bd1
-	ld hl, $df19 ; $6bd4
+	ld hl, wCharStatePhase ; $6bd4
 	inc [hl] ; $6bd7
 .done:
 	ret ; $6bd8
 .dispatch:
-	ld a, [$df19] ; $6bd9
+	ld a, [wCharStatePhase] ; $6bd9
 	rst Rst00 ; $6bdc
 	dw CharRallyEndState ; $6bdd jumptable
 	dw CharServeStrikePhase.runMovement ; $6bdf jumptable
@@ -5885,7 +5885,7 @@ CharServeStrikePhase:
 	call UpdateCharRunAnimation ; $6be6
 	ret ; $6be9
 CharRallyState:
-	ld a, [$df19] ; $6bea
+	ld a, [wCharStatePhase] ; $6bea
 	rst Rst00 ; $6bed
 	dw CharRallyEndState ; $6bee jumptable
 	dw CharRallyReadyPhase ; $6bf0 jumptable
@@ -5901,7 +5901,7 @@ CharRallyReadyPhase:
 	and a, a ; $6c06
 	jr z, .done ; $6c07
 	call SelectForehandBackhand ; $6c09
-	ld hl, $df15 ; $6c0c
+	ld hl, wCharSwingAnim ; $6c0c
 	ld a, $08 ; $6c0f
 	add a, [hl] ; $6c11
 	ld d, a ; $6c12
@@ -5909,69 +5909,69 @@ CharRallyReadyPhase:
 	ld hl, wCharFlags ; $6c16
 	set 5, [hl] ; $6c19
 	xor a, a ; $6c1b
-	ld [$df4b], a ; $6c1c
+	ld [wCharSwingFrames], a ; $6c1c
 	ld [$df4d], a ; $6c1f
 	ld [$df4e], a ; $6c22
 	ld a, $01 ; $6c25
-	ld [$df51], a ; $6c27
-	ld hl, $df19 ; $6c2a
+	ld [wCharChargeFlashOn], a ; $6c27
+	ld hl, wCharStatePhase ; $6c2a
 	inc [hl] ; $6c2d
 .done:
 	ret ; $6c2e
 CharSwingWindupPhase:
-	ld hl, $df4b ; $6c2f
+	ld hl, wCharSwingFrames ; $6c2f
 	inc [hl] ; $6c32
 	call ApplyCharMovementInput ; $6c33
 	call BufferShotButtonPress ; $6c36
 	call CheckSwingRelease ; $6c39
 	and a, a ; $6c3c
 	jr nz, .abort ; $6c3d
-	ld hl, $df50 ; $6c3f
+	ld hl, wCharBallReachFlags ; $6c3f
 	bit 0, [hl] ; $6c42
 	jr nz, .startSwing ; $6c44
 	ret ; $6c46
 .startSwing:
 	call StartCharSwing ; $6c47
-	ld hl, $df15 ; $6c4a
+	ld hl, wCharSwingAnim ; $6c4a
 	ld d, [hl] ; $6c4d
 	call SetCharAnimation ; $6c4e
 	sound $59 ; $6c51
 	xor a, a ; $6c53
-	ld [$df51], a ; $6c54
+	ld [wCharChargeFlashOn], a ; $6c54
 	call EndChargeFlash ; $6c57
-	ld hl, $df19 ; $6c5a
+	ld hl, wCharStatePhase ; $6c5a
 	inc [hl] ; $6c5d
 	ret ; $6c5e
 .abort:
 	ld hl, wCharFlags ; $6c5f
 	res 5, [hl] ; $6c62
 	xor a, a ; $6c64
-	ld [$df51], a ; $6c65
+	ld [wCharChargeFlashOn], a ; $6c65
 	call EndChargeFlash ; $6c68
 	xor a, a ; $6c6b
-	ld [$df16], a ; $6c6c
-	ld [$df17], a ; $6c6f
-	ld [$df4f], a ; $6c72
-	ld hl, $df19 ; $6c75
+	ld [wCharShotButton1], a ; $6c6c
+	ld [wCharShotButton2], a ; $6c6f
+	ld [wCharLastShotButton], a ; $6c72
+	ld hl, wCharStatePhase ; $6c75
 	dec [hl] ; $6c78
 	ret ; $6c79
 CharSwingContactPhase:
-	ld hl, $df4b ; $6c7a
+	ld hl, wCharSwingFrames ; $6c7a
 	inc [hl] ; $6c7d
 	call ApplyCharMovementInput ; $6c7e
 	call CaptureShotAim ; $6c81
 	call ResetSwingAnimation ; $6c84
-	ld hl, $df50 ; $6c87
+	ld hl, wCharBallReachFlags ; $6c87
 	bit 1, [hl] ; $6c8a
 	jr z, .done ; $6c8c
 	call SelectRallyShotType ; $6c8e
 	farcall ExecuteShot ; $6c91
-	ld hl, $df19 ; $6c94
+	ld hl, wCharStatePhase ; $6c94
 	inc [hl] ; $6c97
 .done:
 	ret ; $6c98
 ResetSwingAnimation:
-	ld a, [$df2e] ; $6c99
+	ld a, [wCharAnimId] ; $6c99
 	cp a, $08 ; $6c9c
 	jr z, .toIdle ; $6c9e
 	cp a, $0c ; $6ca0
@@ -5984,21 +5984,21 @@ ResetSwingAnimation:
 	ld d, $01 ; $6cad
 	call SetCharAnimation ; $6caf
 .checkAnim:
-	ld a, [$df2e] ; $6cb2
+	ld a, [wCharAnimId] ; $6cb2
 	cp a, $01 ; $6cb5
 	jr nz, .done ; $6cb7
 	xor a, a ; $6cb9
-	ld [$df19], a ; $6cba
+	ld [wCharStatePhase], a ; $6cba
 .done:
 	ret ; $6cbd
 CharStandbyState:
-	ld a, [$df19] ; $6cbe
+	ld a, [wCharStatePhase] ; $6cbe
 	rst Rst00 ; $6cc1
 	dw CharRallyEndState ; $6cc2 jumptable
 	dw CharAwaitServeState.checkInput ; $6cc4 jumptable
 	dw AdvanceCharStatePhase.done ; $6cc6 jumptable
 CharAwaitServeState:
-	ld a, [$df19] ; $6cc8
+	ld a, [wCharStatePhase] ; $6cc8
 	rst Rst00 ; $6ccb
 	dw CharRallyEndState ; $6ccc jumptable
 	dw CharAwaitServeState.startServe ; $6cce jumptable
@@ -6038,12 +6038,12 @@ CharAwaitServeState:
 .done:
 	ret ; $6d0d
 CharWalkState:
-	ld a, [$df19] ; $6d0e
+	ld a, [wCharStatePhase] ; $6d0e
 	rst Rst00 ; $6d11
 	dw CharWalkToTargetPhase ; $6d12 jumptable
 	dw AdvanceCharStatePhase.done ; $6d14 jumptable
 CharPointEndState:
-	ld a, [$df19] ; $6d16
+	ld a, [wCharStatePhase] ; $6d16
 	rst Rst00 ; $6d19
 	dw CharRallyEndState ; $6d1a jumptable
 	dw CharWalkToTargetPhase ; $6d1c jumptable
@@ -6063,7 +6063,7 @@ CharPointReactionPhase:
 .setAnim:
 	call SetCharAnimation ; $6d36
 .advance:
-	ld hl, $df19 ; $6d39
+	ld hl, wCharStatePhase ; $6d39
 	inc [hl] ; $6d3c
 	ret ; $6d3d
 CharWalkToTargetPhase:
@@ -6084,7 +6084,7 @@ UpdateCharRunAnimation:
 	call SetCharAnimation ; $6d56
 	ret ; $6d59
 StartCharSwing:
-	ld a, [$df90] ; $6d5a
+	ld a, [wCharSwingAttrWord] ; $6d5a
 	bit 7, a ; $6d5d
 	call PredictBallLateralOffset ; $6d5f
 	bit 7, h ; $6d62
@@ -6098,11 +6098,11 @@ StartCharSwing:
 	bit PADB_LEFT, a ; $6d72
 	jr z, .checkHeight ; $6d74
 .checkReach:
-	ld a, [$df72] ; $6d76
+	ld a, [wCharReachX] ; $6d76
 	ld e, a ; $6d79
-	ld a, [$df73] ; $6d7a
+	ld a, [wCharReachX + 1] ; $6d7a
 	ld d, a ; $6d7d
-	ld a, [$df50] ; $6d7e
+	ld a, [wCharBallReachFlags] ; $6d7e
 	bit 4, a ; $6d81
 	ld bc, $fff0 ; $6d83
 	jr nz, .absOffset ; $6d86
@@ -6135,7 +6135,7 @@ StartCharSwing:
 	add hl, hl ; $6da7
 	ld c, l ; $6da8
 	ld b, h ; $6da9
-	ld hl, $df70 ; $6daa
+	ld hl, wCharReachHeight ; $6daa
 	ld a, [hl+] ; $6dad
 	ld d, [hl] ; $6dae
 	ld e, a ; $6daf
@@ -6159,14 +6159,14 @@ StartCharSwing:
 	add hl, bc ; $6dc9
 	bit 7, h ; $6dca
 	jr z, .swingGround ; $6dcc
-	ld hl, $df15 ; $6dce
+	ld hl, wCharSwingAnim ; $6dce
 	ld [hl], $07 ; $6dd1
 .swingGround:
 	jr .startSwing ; $6dd3
 .jumpSmash:
 	ld hl, wCharFlags ; $6dd5
 	set 2, [hl] ; $6dd8
-	ld hl, $df74 ; $6dda
+	ld hl, wCharSmashJumpSpeed ; $6dda
 	ld a, [hl+] ; $6ddd
 	ld d, [hl] ; $6dde
 	ld e, a ; $6ddf
@@ -6180,12 +6180,12 @@ StartCharSwing:
 	ld a, e ; $6de9
 	ld [hl+], a ; $6dea
 	ld [hl], d ; $6deb
-	ld hl, $df15 ; $6dec
+	ld hl, wCharSwingAnim ; $6dec
 	ld [hl], $08 ; $6def
 	sound $5c ; $6df1
 	ret ; $6df3
 .dive:
-	ld hl, $df15 ; $6df4
+	ld hl, wCharSwingAnim ; $6df4
 	ld [hl], $12 ; $6df7
 	ld d, $00 ; $6df9
 	ld a, [wCharInputBits] ; $6dfb
@@ -6198,7 +6198,7 @@ StartCharSwing:
 	ld hl, wCharFlags ; $6e08
 	set 1, [hl] ; $6e0b
 	res 5, [hl] ; $6e0d
-	ld hl, $df76 ; $6e0f
+	ld hl, wCharDiveSpeed ; $6e0f
 	ld a, [hl+] ; $6e12
 	ld h, [hl] ; $6e13
 	ld l, a ; $6e14
@@ -6219,10 +6219,10 @@ StartCharSwing:
 .startSwing:
 	xor a, a ; $6e2c
 	ld [$df4c], a ; $6e2d
-	ld a, [$df4b] ; $6e30
+	ld a, [wCharSwingFrames] ; $6e30
 	cp a, $05 ; $6e33
 	jr nc, .chargedSwing ; $6e35
-	ld hl, $df15 ; $6e37
+	ld hl, wCharSwingAnim ; $6e37
 	ld a, $04 ; $6e3a
 	add a, [hl] ; $6e3c
 	ld [hl], a ; $6e3d
@@ -6232,7 +6232,7 @@ StartCharSwing:
 	ret ; $6e43
 SelectForehandBackhand:
 	call PredictBallLateralOffset ; $6e44
-	ld a, [$df94] ; $6e47
+	ld a, [wCharMirrorAttrMask] ; $6e47
 	and a, a ; $6e4a
 	jr z, .compareSide ; $6e4b
 	ld a, h ; $6e4d
@@ -6244,11 +6244,11 @@ SelectForehandBackhand:
 	bit 7, a ; $6e54
 	jr nz, .backhand ; $6e56
 	ld a, $05 ; $6e58
-	ld [$df15], a ; $6e5a
+	ld [wCharSwingAnim], a ; $6e5a
 	ret ; $6e5d
 .backhand:
 	ld a, $06 ; $6e5e
-	ld [$df15], a ; $6e60
+	ld [wCharSwingAnim], a ; $6e60
 	ret ; $6e63
 UpdateCharBallGeometry:
 	ld de, wBallX ; $6e64
@@ -6306,18 +6306,18 @@ UpdateCharBallGeometry:
 	jr c, .storeFlags ; $6eab
 	set 4, a ; $6ead
 .storeFlags:
-	ld [$df50], a ; $6eaf
+	ld [wCharBallReachFlags], a ; $6eaf
 	call CheckBallInSwingRange ; $6eb2
-	ld hl, $df50 ; $6eb5
+	ld hl, wCharBallReachFlags ; $6eb5
 	bit 0, [hl] ; $6eb8
 	ret z ; $6eba
 	call CheckBallContactWindow ; $6ebb
-	ld hl, $df50 ; $6ebe
+	ld hl, wCharBallReachFlags ; $6ebe
 	bit 1, [hl] ; $6ec1
 	ret z ; $6ec3
 	ret ; $6ec4
 CheckCharBallContact:
-	ld a, [$df16] ; $6ec5
+	ld a, [wCharShotButton1] ; $6ec5
 	and a, a ; $6ec8
 	ret nz ; $6ec9
 	ld a, [wCharState] ; $6eca
@@ -6342,7 +6342,7 @@ CheckCharBallContact:
 	ld de, $fff0 ; $6ee5
 	add hl, de ; $6ee8
 	ret c ; $6ee9
-	ld hl, $df72 ; $6eea
+	ld hl, wCharReachX ; $6eea
 	ld a, [hl+] ; $6eed
 	ld h, [hl] ; $6eee
 	ld l, a ; $6eef
@@ -6369,7 +6369,7 @@ CheckCharBallContact:
 	sbc a, d ; $6f07
 	ld h, a ; $6f08
 	ret nc ; $6f09
-	ld hl, $df70 ; $6f0a
+	ld hl, wCharReachHeight ; $6f0a
 	ld a, [hl+] ; $6f0d
 	ld h, [hl] ; $6f0e
 	ld l, a ; $6f0f
@@ -6395,7 +6395,7 @@ CheckCharBallContact:
 	sbc a, d ; $6f26
 	ld h, a ; $6f27
 	ret nc ; $6f28
-	ld hl, $df50 ; $6f29
+	ld hl, wCharBallReachFlags ; $6f29
 	set 2, [hl] ; $6f2c
 	ld a, $01 ; $6f2e
 	ld [wBallTouchCharFlag], a ; $6f30
@@ -6483,7 +6483,7 @@ CheckBallContactWindow:
 	ld de, hPeakLY ; $6fb7
 	add hl, de ; $6fba
 	ret c ; $6fbb
-	ld hl, $df72 ; $6fbc
+	ld hl, wCharReachX ; $6fbc
 	ld a, [hl+] ; $6fbf
 	ld h, [hl] ; $6fc0
 	ld l, a ; $6fc1
@@ -6503,7 +6503,7 @@ CheckBallContactWindow:
 	ld d, h ; $6fd7
 	jr .checkX ; $6fd8
 .checkState:
-	ld a, [$df2e] ; $6fda
+	ld a, [wCharAnimId] ; $6fda
 	cp a, $05 ; $6fdd
 	jr z, .checkX ; $6fdf
 	cp a, $06 ; $6fe1
@@ -6533,7 +6533,7 @@ CheckBallContactWindow:
 	sbc a, d ; $7001
 	ld h, a ; $7002
 	ret nc ; $7003
-	ld hl, $df70 ; $7004
+	ld hl, wCharReachHeight ; $7004
 	ld a, [hl+] ; $7007
 	ld h, [hl] ; $7008
 	ld l, a ; $7009
@@ -6560,7 +6560,7 @@ CheckBallContactWindow:
 	sbc a, d ; $7021
 	ld h, a ; $7022
 	ret nc ; $7023
-	ld hl, $df50 ; $7024
+	ld hl, wCharBallReachFlags ; $7024
 	set 1, [hl] ; $7027
 	ret ; $7029
 CheckBallInSwingRange:
@@ -6580,7 +6580,7 @@ CheckBallInSwingRange:
 	ld de, $ff60 ; $703a
 	add hl, de ; $703d
 	ret c ; $703e
-	ld hl, $df72 ; $703f
+	ld hl, wCharReachX ; $703f
 	ld a, [hl+] ; $7042
 	ld h, [hl] ; $7043
 	ld l, a ; $7044
@@ -6611,38 +6611,38 @@ CheckBallInSwingRange:
 	sbc a, d ; $7062
 	ld h, a ; $7063
 	ret nc ; $7064
-	ld hl, $df50 ; $7065
+	ld hl, wCharBallReachFlags ; $7065
 	set 0, [hl] ; $7068
 	ret ; $706a
 SelectServeShotType:
-	ld a, [$df16] ; $706b
+	ld a, [wCharShotButton1] ; $706b
 	add a, LOW(Data_08_707a) ; $706e
 	ld l, a ; $7070
 	adc a, HIGH(Data_08_707a) ; $7071
 	sub a, l ; $7073
 	ld h, a ; $7074
 	ld a, [hl] ; $7075
-	ld [$df14], a ; $7076
+	ld [wCharShotType], a ; $7076
 	ret ; $7079
 Data_08_707a:
 	; $707a, 4 bytes (enum:SHOTTYPE:4)
 	db SHOTTYPE_SERVE_TOPSPIN, SHOTTYPE_SERVE_TOPSPIN, SHOTTYPE_SERVE_SLICE, SHOTTYPE_SERVE_FLAT ; 0x00
 SelectRallyShotType:
-	ld a, [$df17] ; $707e
+	ld a, [wCharShotButton2] ; $707e
 	add a, a ; $7081
 	add a, a ; $7082
 	ld d, a ; $7083
-	ld a, [$df16] ; $7084
+	ld a, [wCharShotButton1] ; $7084
 	add a, d ; $7087
 	ld e, a ; $7088
 	ld d, $00 ; $7089
-	ld hl, $df50 ; $708b
+	ld hl, wCharBallReachFlags ; $708b
 	bit 4, [hl] ; $708e
 	jr z, RallyShotTypeTable0.neutralTable ; $7090
 	ld hl, RallyShotTypeTable0 ; $7092
 	add hl, de ; $7095
 	ld a, [hl] ; $7096
-	ld [$df14], a ; $7097
+	ld [wCharShotType], a ; $7097
 	ret ; $709a
 RallyShotTypeTable0:
 	; $709b, 16 bytes (enum:SHOTTYPE:4)
@@ -6654,7 +6654,7 @@ RallyShotTypeTable0:
 	ld hl, RallyShotTypeTable1 ; $70ab
 	add hl, de ; $70ae
 	ld a, [hl] ; $70af
-	ld [$df14], a ; $70b0
+	ld [wCharShotType], a ; $70b0
 	ret ; $70b3
 RallyShotTypeTable1:
 	; $70b4, 16 bytes (enum:SHOTTYPE:4)
@@ -6720,35 +6720,35 @@ BufferShotButtonPress:
 	ld b, a ; $7118
 	cp a, PADF_A | PADF_B ; $7119
 	jr z, .done ; $711b
-	ld a, [$df11] ; $711d
+	ld a, [wCharShotComboTimer] ; $711d
 	and a, a ; $7120
 	jr z, .startSwing ; $7121
-	ld a, [$df4f] ; $7123
+	ld a, [wCharLastShotButton] ; $7123
 	cp a, b ; $7126
 	jr z, .startSwing ; $7127
 	ld b, $03 ; $7129
 	jr .done ; $712b
 .startSwing:
 	ld a, b ; $712d
-	ld [$df4f], a ; $712e
+	ld [wCharLastShotButton], a ; $712e
 	ld a, $05 ; $7131
-	ld [$df11], a ; $7133
-	ld a, [$df16] ; $7136
+	ld [wCharShotComboTimer], a ; $7133
+	ld a, [wCharShotButton1] ; $7136
 	and a, a ; $7139
 	jr z, .done ; $713a
-	ld a, [$df17] ; $713c
+	ld a, [wCharShotButton2] ; $713c
 	and a, a ; $713f
 	jr z, .storeShot ; $7140
 	ret ; $7142
 .storeShot:
 	ld a, b ; $7143
-	ld [$df17], a ; $7144
+	ld [wCharShotButton2], a ; $7144
 	xor a, a ; $7147
-	ld [$df11], a ; $7148
+	ld [wCharShotComboTimer], a ; $7148
 	ret ; $714b
 .done:
 	ld a, b ; $714c
-	ld [$df16], a ; $714d
+	ld [wCharShotButton1], a ; $714d
 	ret ; $7150
 CaptureServeAim:
 	ld a, [wCharInputBits] ; $7151
@@ -6761,7 +6761,7 @@ CaptureServeAim:
 	ld b, $00 ; $7160
 .store:
 	ld a, b ; $7162
-	ld [$df4a], a ; $7163
+	ld [wCharAimOffset], a ; $7163
 	ret ; $7166
 CaptureShotAim:
 	ld a, [wCharInputBits] ; $7167
@@ -6776,23 +6776,23 @@ CaptureShotAim:
 	jr .aimCentre ; $717a
 .aimFarLeft:
 	ld a, $fe ; $717c
-	ld [$df4a], a ; $717e
+	ld [wCharAimOffset], a ; $717e
 	ret ; $7181
 .aimLeft:
 	ld a, $ff ; $7182
-	ld [$df4a], a ; $7184
+	ld [wCharAimOffset], a ; $7184
 	ret ; $7187
 .aimCentre:
 	ld a, $00 ; $7188
-	ld [$df4a], a ; $718a
+	ld [wCharAimOffset], a ; $718a
 	ret ; $718d
 .aimRight:
 	ld a, $01 ; $718e
-	ld [$df4a], a ; $7190
+	ld [wCharAimOffset], a ; $7190
 	ret ; $7193
 .aimFarRight:
 	ld a, $02 ; $7194
-	ld [$df4a], a ; $7196
+	ld [wCharAimOffset], a ; $7196
 	ret ; $7199
 ApplyCharMovementInput:
 	ld a, [wCharInputBits] ; $719a
@@ -6821,13 +6821,13 @@ ApplyCharMovementInput:
 	ld a, [wCharInputBits] ; $71c4
 	and a, PADF_RIGHT | PADF_LEFT ; $71c7
 	jr z, .checkVertical ; $71c9
-	ld hl, $df50 ; $71cb
+	ld hl, wCharBallReachFlags ; $71cb
 	set 6, [hl] ; $71ce
 .checkVertical:
 	ld a, [wCharInputBits] ; $71d0
 	and a, PADF_UP | PADF_DOWN ; $71d3
 	jr z, .done ; $71d5
-	ld hl, $df50 ; $71d7
+	ld hl, wCharBallReachFlags ; $71d7
 	set 7, [hl] ; $71da
 .done:
 	ret ; $71dc
@@ -7122,11 +7122,11 @@ UpdateCharVelocityFromInput:
 	jp nz, .clearAxisFlags ; $73d9
 	jr .stepX ; $73dc
 .clearAxisFlags:
-	ld hl, $df50 ; $73de
+	ld hl, wCharBallReachFlags ; $73de
 	res 6, [hl] ; $73e1
 	res 7, [hl] ; $73e3
 .stepX:
-	ld hl, $df50 ; $73e5
+	ld hl, wCharBallReachFlags ; $73e5
 	bit 6, [hl] ; $73e8
 	jr z, .decelX ; $73ea
 	call AccelerateCharX ; $73ec
@@ -7134,7 +7134,7 @@ UpdateCharVelocityFromInput:
 .decelX:
 	call DecelerateCharX ; $73f1
 .stepDepth:
-	ld hl, $df50 ; $73f4
+	ld hl, wCharBallReachFlags ; $73f4
 	bit 7, [hl] ; $73f7
 	jr z, .decelDepth ; $73f9
 	call AccelerateCharDepth ; $73fb
@@ -7142,17 +7142,17 @@ UpdateCharVelocityFromInput:
 .decelDepth:
 	call DecelerateCharDepth ; $7400
 .clampX:
-	ld hl, $df50 ; $7403
+	ld hl, wCharBallReachFlags ; $7403
 	bit 6, [hl] ; $7406
 	jr z, .clampDepth ; $7408
 	call ClampCharXSpeed ; $740a
 .clampDepth:
-	ld hl, $df50 ; $740d
+	ld hl, wCharBallReachFlags ; $740d
 	bit 7, [hl] ; $7410
 	jr z, .markMoving ; $7412
 	call ClampCharDepthSpeed ; $7414
 .markMoving:
-	ld hl, $df50 ; $7417
+	ld hl, wCharBallReachFlags ; $7417
 	res 6, [hl] ; $741a
 	res 7, [hl] ; $741c
 	ld hl, wCharFlags ; $741e
@@ -7170,7 +7170,7 @@ UpdateCharVelocityFromInput:
 	ld a, [wCharInputBits] ; $7433
 	and a, $f0 ; $7436
 	jr nz, .done ; $7438
-	ld a, [$df0c] ; $743a
+	ld a, [wCharBaseFacing] ; $743a
 	ld [wCharFacingDesired], a ; $743d
 .done:
 	ret ; $7440
@@ -7479,18 +7479,18 @@ EaseCharFacing:
 	ld [hl], a ; $75e6
 	ret ; $75e7
 UpdateCharFacingOctant:
-	ld a, [$df2e] ; $75e8
+	ld a, [wCharAnimId] ; $75e8
 	cp a, $02 ; $75eb
 	jr z, .mirrored ; $75ed
 	cp a, $01 ; $75ef
 	jr z, .mirrored ; $75f1
 	cp a, $12 ; $75f3
 	jr z, .easeToShown ; $75f5
-	ld a, [$df0c] ; $75f7
+	ld a, [wCharBaseFacing] ; $75f7
 	jr .toOctant ; $75fa
 .easeToShown:
 	ld a, [wCharFacingShown] ; $75fc
-	ld hl, $df0c ; $75ff
+	ld hl, wCharBaseFacing ; $75ff
 	sub a, [hl] ; $7602
 	sra a ; $7603
 	add a, [hl] ; $7605
@@ -7504,17 +7504,17 @@ UpdateCharFacingOctant:
 	rlca ; $760f
 	and a, $07 ; $7610
 	ld d, a ; $7612
-	ld hl, $df32 ; $7613
+	ld hl, wCharFacingOctant ; $7613
 	ld a, [hl] ; $7616
 	cp a, d ; $7617
 	jr z, .store ; $7618
 	ld [hl], d ; $761a
-	ld hl, $df30 ; $761b
+	ld hl, wCharSpriteDirty ; $761b
 	set 6, [hl] ; $761e
 .store:
 	ret ; $7620
 ReloadCharFacingTiles:
-	ld hl, $df30 ; $7621
+	ld hl, wCharSpriteDirty ; $7621
 	bit 6, [hl] ; $7624
 	ret z ; $7626
 	res 6, [hl] ; $7627
@@ -7525,7 +7525,7 @@ ReloadCharFacingTiles:
 	sub a, l ; $762f
 	ld h, a ; $7630
 	ld d, [hl] ; $7631
-	ld a, [$df33] ; $7632
+	ld a, [wCharAnimFrame] ; $7632
 	ld e, a ; $7635
 	add a, a ; $7636
 	add a, a ; $7637
@@ -7541,10 +7541,10 @@ Data_08_7643:
 	; $7643, 8 bytes (bytes:8)
 	db $02, $03, $04, $03, $02, $01, $00, $01 ; 0x00
 UpdateChargeFlash:
-	ld a, [$df51] ; $764b
+	ld a, [wCharChargeFlashOn] ; $764b
 	and a, a ; $764e
 	ret z ; $764f
-	ld a, [$df4b] ; $7650
+	ld a, [wCharSwingFrames] ; $7650
 	cp a, $14 ; $7653
 	ret c ; $7655
 	and a, $04 ; $7656
@@ -7600,26 +7600,26 @@ BuildCharSpriteSlots:
 	ld a, h ; $76a7
 	add a, $80 ; $76a8
 	ld [wCharDepthKey], a ; $76aa
-	ld a, [$df32] ; $76ad
+	ld a, [wCharFacingOctant] ; $76ad
 	add a, LOW(Data_08_76fc) ; $76b0
 	ld l, a ; $76b2
 	adc a, HIGH(Data_08_76fc) ; $76b3
 	sub a, l ; $76b5
 	ld h, a ; $76b6
-	ld a, [$df37] ; $76b7
+	ld a, [wCharSpriteAttr] ; $76b7
 	or a, $08 ; $76ba
 	xor a, [hl] ; $76bc
 	ld b, a ; $76bd
-	ld a, [$df36] ; $76be
+	ld a, [wCharTileBase] ; $76be
 	ld c, a ; $76c1
-	ld a, [$df32] ; $76c2
+	ld a, [wCharFacingOctant] ; $76c2
 	cp a, $02 ; $76c5
 	jr z, .mirrorSprite ; $76c7
 	cp a, $06 ; $76c9
 	jr z, .mirrorSprite ; $76cb
 	jr .store ; $76cd
 .mirrorSprite:
-	ld a, [$df94] ; $76cf
+	ld a, [wCharMirrorAttrMask] ; $76cf
 	xor a, b ; $76d2
 	ld b, a ; $76d3
 .store:
@@ -7680,7 +7680,7 @@ DrawOffscreenCharArrow:
 	jr nz, .queue ; $772e
 	ld e, $90 ; $7730
 .queue:
-	ld a, [$df37] ; $7732
+	ld a, [wCharSpriteAttr] ; $7732
 	ld b, a ; $7735
 	res 5, b ; $7736
 	ld a, [wCharIndex] ; $7738
@@ -7745,15 +7745,15 @@ BuildAirborneShadowSlot:
 	ld [hl], d ; $778f
 	ret ; $7790
 StepCharAnimation:
-	ld a, [$df2f] ; $7791
+	ld a, [wCharAnimDelay] ; $7791
 	and a, a ; $7794
 	jr nz, .keepFrame ; $7795
 .nextCommand:
-	ld hl, $df2c ; $7797
+	ld hl, wCharAnimScriptPtr ; $7797
 	ld a, [hl+] ; $779a
 	ld h, [hl] ; $779b
 	ld l, a ; $779c
-	ld a, [wCharActive] ; $779d
+	ld a, [wCharObjectBank] ; $779d
 	call FarReadWordDI ; $77a0
 	ld e, c ; $77a3
 	ld d, b ; $77a4
@@ -7767,27 +7767,27 @@ StepCharAnimation:
 	cp a, $fb ; $77b2
 	jr z, .toggleFlip ; $77b4
 	ld a, $ff ; $77b6
-	ld [$df2f], a ; $77b8
+	ld [wCharAnimDelay], a ; $77b8
 	jr .keepFrame ; $77bb
 .jumpToFrames:
-	ld hl, $df2a ; $77bd
+	ld hl, wCharAnimScriptBase ; $77bd
 	ld a, [hl+] ; $77c0
 	add a, d ; $77c1
-	ld [$df2c], a ; $77c2
+	ld [wCharAnimScriptPtr], a ; $77c2
 	ld a, [hl+] ; $77c5
 	adc a, $00 ; $77c6
-	ld [$df2d], a ; $77c8
+	ld [wCharAnimScriptPtr + 1], a ; $77c8
 	jr .nextCommand ; $77cb
 .setAnimation:
 	call SetCharAnimation ; $77cd
 	jr .nextCommand ; $77d0
 .toggleFlip:
-	ld hl, $df37 ; $77d2
+	ld hl, wCharSpriteAttr ; $77d2
 	ld a, [hl] ; $77d5
 	and a, $0f ; $77d6
 	xor a, d ; $77d8
 	ld [hl], a ; $77d9
-	ld hl, $df2c ; $77da
+	ld hl, wCharAnimScriptPtr ; $77da
 	ld a, [hl] ; $77dd
 	add a, $02 ; $77de
 	ld [hl+], a ; $77e0
@@ -7796,8 +7796,8 @@ StepCharAnimation:
 	jr .nextCommand ; $77e4
 .setDelay:
 	ld a, d ; $77e6
-	ld [$df2f], a ; $77e7
-	ld hl, $df2c ; $77ea
+	ld [wCharAnimDelay], a ; $77e7
+	ld hl, wCharAnimScriptPtr ; $77ea
 	ld a, [hl] ; $77ed
 	add a, $02 ; $77ee
 	ld [hl+], a ; $77f0
@@ -7805,17 +7805,17 @@ StepCharAnimation:
 	inc [hl] ; $77f3
 	jr .storeFrame ; $77f4
 .keepFrame:
-	ld a, [$df33] ; $77f6
+	ld a, [wCharAnimFrame] ; $77f6
 	ld e, a ; $77f9
 .storeFrame:
-	ld hl, $df2f ; $77fa
+	ld hl, wCharAnimDelay ; $77fa
 	dec [hl] ; $77fd
-	ld hl, $df33 ; $77fe
+	ld hl, wCharAnimFrame ; $77fe
 	ld a, [hl] ; $7801
 	cp a, e ; $7802
 	jr z, .done ; $7803
 	ld [hl], e ; $7805
-	ld hl, $df30 ; $7806
+	ld hl, wCharSpriteDirty ; $7806
 	set 6, [hl] ; $7809
 .done:
 	ret ; $780b
@@ -7878,7 +7878,7 @@ ReadCharPadInput:
 	ld [wCharInputBits], a ; $785f
 	ret ; $7862
 Label_08_7863:
-	ld hl, $df12 ; $7863
+	ld hl, wAiActionTimer ; $7863
 	ld a, [hl] ; $7866
 	and a, a ; $7867
 	jr z, .player2 ; $7868
@@ -8053,7 +8053,7 @@ AiSteerTowardBall:
 	ld [wCharInputBits], a ; $7964
 	ret ; $7967
 AiAdvancePhase:
-	ld hl, $df1a ; $7968
+	ld hl, wAiPhase ; $7968
 	inc [hl] ; $796b
 AiPhaseNoop:
 	ret ; $796c
@@ -8130,7 +8130,7 @@ ReturnOne_08:
 	ld a, $01 ; $79ef
 	ret ; $79f1
 AiServeState:
-	ld a, [$df1a] ; $79f2
+	ld a, [wAiPhase] ; $79f2
 	rst Rst00 ; $79f5
 	dw AiServeWalkToSpot ; $79f6 jumptable
 	dw AiServeSteerToSpot ; $79f8 jumptable
@@ -8139,7 +8139,7 @@ AiServeState:
 	dw AiServeApplyAim ; $79fe jumptable
 	dw AiPhaseNoop ; $7a00 jumptable
 AiServeWalkToSpot:
-	ld a, [$df2e] ; $7a02
+	ld a, [wCharAnimId] ; $7a02
 	cp a, $10 ; $7a05
 	ret nz ; $7a07
 	ld hl, $c7b6 ; $7a08
@@ -8194,7 +8194,7 @@ AiServeSteerToSpot:
 	call CheckCharNearTarget ; $7a50
 	and a, a ; $7a53
 	jr z, .done ; $7a54
-	ld hl, $df12 ; $7a56
+	ld hl, wAiActionTimer ; $7a56
 	ld [hl], $19 ; $7a59
 	jp AiAdvancePhase ; $7a5b
 .done:
@@ -8208,7 +8208,7 @@ AiServePressToss:
 	ld a, [wServeFaultFlag] ; $7a6a
 	and a, a ; $7a6d
 	jr nz, .release ; $7a6e
-	ld a, [$df7d] ; $7a70
+	ld a, [wAiServeStyle] ; $7a70
 	and a, $0f ; $7a73
 	add a, a ; $7a75
 	add a, LOW(ServePressTossPtrs) ; $7a76
@@ -8230,11 +8230,11 @@ AiServePressToss:
 	and a, a ; $7a8b
 	jr z, .release ; $7a8c
 	ld a, $23 ; $7a8e
-	ld [$df12], a ; $7a90
+	ld [wAiActionTimer], a ; $7a90
 	jr .done ; $7a93
 .release:
 	ld a, $32 ; $7a95
-	ld [$df12], a ; $7a97
+	ld [wAiActionTimer], a ; $7a97
 .done:
 	jp AiAdvancePhase ; $7a9a
 ServePressTossPtrs:
@@ -8270,7 +8270,7 @@ ServePressToss3:
 AiServeStrike:
 	call AiPickServeButtons ; $7add
 	call AiPressFirstShotButton ; $7ae0
-	ld hl, $df1a ; $7ae3
+	ld hl, wAiPhase ; $7ae3
 	inc [hl] ; $7ae6
 AiServeApplyAim:
 	call AiApplyServeAim ; $7ae7
@@ -8303,7 +8303,7 @@ Data_08_7b0b:
 AiMaybeAimAwayFromChar:
 	ld c, a ; $7b13
 	call AdvanceMatchRng ; $7b14
-	ld hl, $df7c ; $7b17
+	ld hl, wAiAimAwayChance ; $7b17
 	cp a, [hl] ; $7b1a
 	ld b, $00 ; $7b1b
 	jr nc, AiAimAwayFromChar.applyAim ; $7b1d
@@ -8359,7 +8359,7 @@ AiPickServeButtons:
 	sub a, l ; $7b6c
 	ld h, a ; $7b6d
 	ld a, [hl] ; $7b6e
-	ld [$df58], a ; $7b6f
+	ld [wAiShotButtons], a ; $7b6f
 	ret ; $7b72
 Data_08_7b73:
 	; $7b73, 8 bytes (bytes:8)
@@ -8369,12 +8369,12 @@ AiPickShotButtons:
 	and a, a ; $7b7e
 	jr z, .maybeCharge ; $7b7f
 	ld b, $30 ; $7b81
-	ld a, [$df7d] ; $7b83
+	ld a, [wAiServeStyle] ; $7b83
 	farcall DoesCharGroupRowContain ; $7b86
 	and a, a ; $7b89
 	jr z, .maybeCharge ; $7b8a
 	ld a, $30 ; $7b8c
-	ld [$df58], a ; $7b8e
+	ld [wAiShotButtons], a ; $7b8e
 	ret ; $7b91
 .maybeCharge:
 	call AdvanceMatchRng ; $7b92
@@ -8398,7 +8398,7 @@ AiPickShotButtons:
 	bit 7, h ; $7bad
 	jr nz, .done ; $7baf
 	ld b, $12 ; $7bb1
-	ld a, [$df7d] ; $7bb3
+	ld a, [wAiServeStyle] ; $7bb3
 	farcall DoesCharGroupRowContain ; $7bb6
 	and a, a ; $7bb9
 	jr z, .done ; $7bba
@@ -8439,18 +8439,18 @@ AiPickShotButtons:
 	jr z, .done ; $7bf8
 .pressShot:
 	ld a, $12 ; $7bfa
-	ld [$df58], a ; $7bfc
+	ld [wAiShotButtons], a ; $7bfc
 	ret ; $7bff
 .done:
 	call AdvanceMatchRng ; $7c00
 	and a, $0f ; $7c03
 	ld b, a ; $7c05
-	ld a, [$df7d] ; $7c06
+	ld a, [wAiServeStyle] ; $7c06
 	farcall GetCharGroupEntry ; $7c09
-	ld [$df58], a ; $7c0c
+	ld [wAiShotButtons], a ; $7c0c
 	ret ; $7c0f
 AiPressFirstShotButton:
-	ld a, [$df58] ; $7c10
+	ld a, [wAiShotButtons] ; $7c10
 	swap a ; $7c13
 	and a, $0f ; $7c15
 	ld b, a ; $7c17
@@ -8461,7 +8461,7 @@ AiPressFirstShotButton:
 	ld [hl], a ; $7c1f
 	ret ; $7c20
 AiPressSecondShotButton:
-	ld a, [$df58] ; $7c21
+	ld a, [wAiShotButtons] ; $7c21
 	and a, $0f ; $7c24
 	ld b, a ; $7c26
 	ld hl, wCharInputBits ; $7c27
@@ -8554,13 +8554,13 @@ PredictBallXAtDepth:
 	add hl, de ; $7ca2
 	ret ; $7ca3
 AiRecoverStateSingles:
-	ld a, [$df1a] ; $7ca4
+	ld a, [wAiPhase] ; $7ca4
 	rst Rst00 ; $7ca7
 	dw AiChooseHomePosition ; $7ca8 jumptable
 	dw AiReturnToPositionPhase ; $7caa jumptable
 	dw AiPhaseNoop ; $7cac jumptable
 AiChooseHomePosition:
-	ld a, [$df7f] ; $7cae
+	ld a, [wAiPositionStrategy] ; $7cae
 	rst Rst00 ; $7cb1
 	dw AiChooseHomePosition.baseline ; $7cb2 jumptable
 	dw AiChooseHomePosition.net ; $7cb4 jumptable
@@ -8608,7 +8608,7 @@ AiReturnToPositionPhase:
 .done:
 	ret ; $7cf9
 AiRallyStateSingles:
-	ld a, [$df1a] ; $7cfa
+	ld a, [wAiPhase] ; $7cfa
 	rst Rst00 ; $7cfd
 	dw AiSetReactionDelay ; $7cfe jumptable
 	dw AiChoosePositionByStrategy ; $7d00 jumptable
@@ -8617,19 +8617,19 @@ AiRallyStateSingles:
 	dw AiSwingControlSingles ; $7d06 jumptable
 	dw AiPhaseNoop ; $7d08 jumptable
 AiSetReactionDelay:
-	ld a, [$df50] ; $7d0a
+	ld a, [wCharBallReachFlags] ; $7d0a
 	bit 4, a ; $7d0d
-	ld hl, $df7a ; $7d0f
+	ld hl, wAiReactionDelayFar ; $7d0f
 	jr z, .randomize ; $7d12
-	ld hl, $df79 ; $7d14
+	ld hl, wAiReactionDelayNear ; $7d14
 .randomize:
 	call AdvanceMatchRng ; $7d17
 	and a, $03 ; $7d1a
 	add a, [hl] ; $7d1c
-	ld [$df12], a ; $7d1d
+	ld [wAiActionTimer], a ; $7d1d
 	jp AiAdvancePhase ; $7d20
 AiChoosePositionByStrategy:
-	ld a, [$df7f] ; $7d23
+	ld a, [wAiPositionStrategy] ; $7d23
 	rst Rst00 ; $7d26
 	dw AiChoosePositionByStrategy.behindLanding ; $7d27 jumptable
 	dw AiChoosePositionByStrategy.adaptive ; $7d29 jumptable
@@ -8658,7 +8658,7 @@ AiChoosePositionByStrategy:
 .nearNet:
 	jp AiInterceptNearNet ; $7d55
 .adaptive:
-	ld hl, $df50 ; $7d58
+	ld hl, wCharBallReachFlags ; $7d58
 	bit 4, [hl] ; $7d5b
 	jr z, .adaptiveLob ; $7d5d
 	call AiIsIncomingDropOrLobShot ; $7d5f
@@ -8683,7 +8683,7 @@ AiTrackBallPhase:
 	call CheckCharNearTarget ; $7d85
 	and a, a ; $7d88
 	jr nz, .advance ; $7d89
-	ld hl, $df50 ; $7d8b
+	ld hl, wCharBallReachFlags ; $7d8b
 	bit 0, [hl] ; $7d8e
 	jr nz, .advance ; $7d90
 	ret ; $7d92
@@ -8695,12 +8695,12 @@ AiTrackBallPhase:
 	call SetCharTargetMirrored ; $7d9f
 	ret ; $7da2
 .advance:
-	ld a, [$df7b] ; $7da3
+	ld a, [wAiTrackingParam] ; $7da3
 	ld [$df59], a ; $7da6
-	ld hl, $df1a ; $7da9
+	ld hl, wAiPhase ; $7da9
 	inc [hl] ; $7dac
 AiWaitThenPickShot:
-	ld hl, $df50 ; $7dad
+	ld hl, wCharBallReachFlags ; $7dad
 	bit 0, [hl] ; $7db0
 	jr nz, .pickShot ; $7db2
 	ld hl, $df59 ; $7db4
@@ -8719,12 +8719,12 @@ AiSwingControlSingles:
 	ld a, [$df13] ; $7dcb
 	and a, a ; $7dce
 	jr nz, .checkSwing ; $7dcf
-	ld a, [$df17] ; $7dd1
+	ld a, [wCharShotButton2] ; $7dd1
 	and a, a ; $7dd4
 	jr nz, .checkSwing ; $7dd5
 	call AiPressSecondShotButton ; $7dd7
 .checkSwing:
-	ld hl, $df50 ; $7dda
+	ld hl, wCharBallReachFlags ; $7dda
 	bit 1, [hl] ; $7ddd
 	jr nz, .partnerCheck ; $7ddf
 	call AiSteerTowardBall ; $7de1
@@ -8736,13 +8736,13 @@ AiSwingControlSingles:
 	call AiMaybeAimAwayFromChar ; $7dec
 	jp AiAdvancePhase ; $7def
 AiRecoverStateNetPlayer:
-	ld a, [$df1a] ; $7df2
+	ld a, [wAiPhase] ; $7df2
 	rst Rst00 ; $7df5
 	dw AiTrackBallTargetX ; $7df6 jumptable
 	dw AiReturnToPositionPhase ; $7df8 jumptable
 	dw AiPhaseNoop ; $7dfa jumptable
 AiRecoverStateBaseliner:
-	ld a, [$df1a] ; $7dfc
+	ld a, [wAiPhase] ; $7dfc
 	rst Rst00 ; $7dff
 	dw AiAdvancePhase ; $7e00 jumptable
 	dw AiBaselinerShadowPartner ; $7e02 jumptable
@@ -8789,7 +8789,7 @@ AiBaselinerShadowPartner:
 	call SetCharTargetMirrored ; $7e4c
 	jp AiAdvancePhase ; $7e4f
 AiRallyStateNetPlayer:
-	ld a, [$df1a] ; $7e52
+	ld a, [wAiPhase] ; $7e52
 	rst Rst00 ; $7e55
 	dw AiRallyStateBaseliner.checkRally ; $7e56 jumptable
 	dw AiRallyStateBaseliner.predictLanding ; $7e58 jumptable
@@ -8801,7 +8801,7 @@ AiRallyStateNetPlayer:
 	dw AiPhaseNoop ; $7e64 jumptable
 	dw AiNetPlayerPoachCheck ; $7e66 jumptable
 AiRallyStateBaseliner:
-	ld a, [$df1a] ; $7e68
+	ld a, [wAiPhase] ; $7e68
 	rst Rst00 ; $7e6b
 	dw AiRallyStateBaseliner.setTarget ; $7e6c jumptable
 	dw AiRallyStateBaseliner.done ; $7e6e jumptable
@@ -8818,10 +8818,10 @@ AiRallyStateBaseliner:
 	ret c ; $7e83
 	call AdvanceMatchRng ; $7e84
 	and a, $03 ; $7e87
-	ld hl, $df79 ; $7e89
+	ld hl, wAiReactionDelayNear ; $7e89
 	add a, [hl] ; $7e8c
-	ld [$df12], a ; $7e8d
-	ld a, [$df7b] ; $7e90
+	ld [wAiActionTimer], a ; $7e8d
+	ld a, [wAiTrackingParam] ; $7e90
 	ld [$df59], a ; $7e93
 	jp AiAdvancePhase ; $7e96
 .predictLanding:
@@ -8830,15 +8830,15 @@ AiRallyStateBaseliner:
 	call PredictBallXAtDepth ; $7e9f
 	ld de, $0180 ; $7ea2
 	call SetCharTargetMirrored ; $7ea5
-	ld a, [$df7b] ; $7ea8
+	ld a, [wAiTrackingParam] ; $7ea8
 	ld [$df59], a ; $7eab
 	jp AiAdvancePhase ; $7eae
 .setTarget:
 	call AdvanceMatchRng ; $7eb1
 	and a, $03 ; $7eb4
-	ld hl, $df7a ; $7eb6
+	ld hl, wAiReactionDelayFar ; $7eb6
 	add a, [hl] ; $7eb9
-	ld [$df12], a ; $7eba
+	ld [wAiActionTimer], a ; $7eba
 	jp AiAdvancePhase ; $7ebd
 .done:
 	ld de, $0460 ; $7ec0
@@ -8855,7 +8855,7 @@ AiDoublesTrackBallPhase:
 	call CheckCharNearTarget ; $7eda
 	and a, a ; $7edd
 	jr nz, .advance ; $7ede
-	ld hl, $df50 ; $7ee0
+	ld hl, wCharBallReachFlags ; $7ee0
 	bit 0, [hl] ; $7ee3
 	jr nz, .advance ; $7ee5
 	ldh a, [hWramBank] ; $7ee7
@@ -8866,7 +8866,7 @@ AiDoublesTrackBallPhase:
 	call CharIndexToWramBank ; $7ef1
 	ld a, a ; $7ef4
 	wram_bank ; $7ef5
-	ld a, [$df16] ; $7ef9
+	ld a, [wCharShotButton1] ; $7ef9
 	ld b, a ; $7efc
 	pop af ; $7efd
 	wram_bank ; $7efe
@@ -8878,7 +8878,7 @@ AiDoublesTrackBallPhase:
 	jp AiAdvancePhase ; $7f07
 .poachCheck:
 	ld a, $08 ; $7f0a
-	ld [$df1a], a ; $7f0c
+	ld [wAiPhase], a ; $7f0c
 	jr AiNetPlayerPoachCheck ; $7f0f
 AiNetPlayerPoachCheck:
 	ld a, [wCharServeRole] ; $7f11
@@ -8889,11 +8889,11 @@ AiNetPlayerPoachCheck:
 	jr z, .checkSide ; $7f1d
 	ld a, [wCharIndex] ; $7f1f
 .checkSide:
-	ld hl, $df50 ; $7f22
+	ld hl, wCharBallReachFlags ; $7f22
 	bit 0, [hl] ; $7f25
 	jr z, .checkDistance ; $7f27
 	ld a, $03 ; $7f29
-	ld [$df1a], a ; $7f2b
+	ld [wAiPhase], a ; $7f2b
 	jp AiWaitThenPickShot ; $7f2e
 .checkDistance:
 	ldh a, [hWramBank] ; $7f31
@@ -8951,19 +8951,19 @@ AiNetPlayerPoachCheck:
 	pop de ; $7f80
 	call SetCharTarget ; $7f81
 	ld a, $02 ; $7f84
-	ld [$df1a], a ; $7f86
+	ld [wAiPhase], a ; $7f86
 .done:
 	ret ; $7f89
 AiSwingControlDoubles:
 	ld a, [$df13] ; $7f8a
 	and a, a ; $7f8d
 	jr nz, .checkPartner ; $7f8e
-	ld a, [$df17] ; $7f90
+	ld a, [wCharShotButton2] ; $7f90
 	and a, a ; $7f93
 	jr nz, .checkPartner ; $7f94
 	call AiPressSecondShotButton ; $7f96
 .checkPartner:
-	ld hl, $df50 ; $7f99
+	ld hl, wCharBallReachFlags ; $7f99
 	bit 1, [hl] ; $7f9c
 	jr nz, .swing ; $7f9e
 	call AiSteerTowardBall ; $7fa0

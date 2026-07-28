@@ -8190,23 +8190,23 @@ GetPerspectiveScale:
 .checkRomBank:
 	ldh a, [hRomBank] ; $2e6b
 	push af ; $2e6d
-	ld a, [$df22] ; $2e6e
+	ld a, [wCharObjectBank] ; $2e6e
 	ldh [hRomBank], a ; $2e71
 	ld [$2000], a ; $2e73
-	ld hl, $df38 ; $2e76
+	ld hl, wCharShadowTablePtr ; $2e76
 	ld a, [hl+] ; $2e79
 	ld h, [hl] ; $2e7a
 	ld l, a ; $2e7b
 	add hl, de ; $2e7c
 	add hl, de ; $2e7d
 	ld a, [hl+] ; $2e7e
-	ld [$df1b], a ; $2e7f
+	ld [wCharSpriteFrame], a ; $2e7f
 	ld a, [hl+] ; $2e82
-	ld [$df1c], a ; $2e83
+	ld [wCharSpriteFrame + 1], a ; $2e83
 	ld a, [hl+] ; $2e86
-	ld [$df1d], a ; $2e87
+	ld [wCharSpriteFrame + 2], a ; $2e87
 	ld c, [hl] ; $2e8a
-	ld hl, $df24 ; $2e8b
+	ld hl, wCharFrameTablePtr ; $2e8b
 	ld a, [hl+] ; $2e8e
 	ld h, [hl] ; $2e8f
 	ld l, a ; $2e90
@@ -8214,9 +8214,9 @@ GetPerspectiveScale:
 	ld a, [hl+] ; $2e92
 	ld h, [hl] ; $2e93
 	ld l, a ; $2e94
-	ld a, [$df26] ; $2e95
+	ld a, [wCharFrameVramDest] ; $2e95
 	ld e, a ; $2e98
-	ld a, [$df27] ; $2e99
+	ld a, [wCharFrameVramDest + 1] ; $2e99
 	ld d, a ; $2e9c
 	ld a, [wStandingShadowsEnabled] ; $2e9d
 	and a, a ; $2ea0
@@ -8233,7 +8233,7 @@ GetPerspectiveScale:
 	call QueueVRAMCopy ; $2eaf
 	pop hl ; $2eb2
 	pop de ; $2eb3
-	ld a, [$df1d] ; $2eb4
+	ld a, [wCharSpriteFrame + 2] ; $2eb4
 	and a, a ; $2eb7
 	jr z, .zero ; $2eb8
 	ld bc, $0100 ; $2eba

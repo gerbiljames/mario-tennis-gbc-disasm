@@ -110,34 +110,34 @@ LoadOnCourtCharacterGfx:
 	dw LoadOnCourtCharacterGfx.char2 ; $40c7 jumptable
 .char2:
 	wram_bank $06 ; $40c9
-	ld a, [$df7e] ; $40cf
+	ld a, [wCharSpriteSetId] ; $40cf
 	ld de, $8100 ; $40d2
 	farcall LoadOnCourtCharTilesA ; $40d5
-	ld a, [$df7e] ; $40d8
+	ld a, [wCharSpriteSetId] ; $40d8
 	ld de, $8140 ; $40db
 	farcall LoadOnCourtCharTilesB ; $40de
 .char3:
 	wram_bank $07 ; $40e1
-	ld a, [$df7e] ; $40e7
+	ld a, [wCharSpriteSetId] ; $40e7
 	ld de, $8180 ; $40ea
 	farcall LoadOnCourtCharTilesA ; $40ed
-	ld a, [$df7e] ; $40f0
+	ld a, [wCharSpriteSetId] ; $40f0
 	ld de, $81c0 ; $40f3
 	farcall LoadOnCourtCharTilesB ; $40f6
 .char4:
 	wram_bank $05 ; $40f9
-	ld a, [$df7e] ; $40ff
+	ld a, [wCharSpriteSetId] ; $40ff
 	ld de, $8080 ; $4102
 	farcall LoadOnCourtCharTilesA ; $4105
-	ld a, [$df7e] ; $4108
+	ld a, [wCharSpriteSetId] ; $4108
 	ld de, $80c0 ; $410b
 	farcall LoadOnCourtCharTilesB ; $410e
 .done:
 	wram_bank $04 ; $4111
-	ld a, [$df7e] ; $4117
+	ld a, [wCharSpriteSetId] ; $4117
 	ld de, $8000 ; $411a
 	farcall LoadOnCourtCharTilesA ; $411d
-	ld a, [$df7e] ; $4120
+	ld a, [wCharSpriteSetId] ; $4120
 	ld de, $8040 ; $4123
 	farcall LoadOnCourtCharTilesB ; $4126
 	ret ; $4129
@@ -650,9 +650,9 @@ FinishObjSlotUpdate:
 	farcall FindServerCharBank ; $471e
 	ld a, b ; $4721
 	wram_bank ; $4722
-	ld a, [$df53] ; $4726
+	ld a, [wCharScreenX] ; $4726
 	ld d, a ; $4729
-	ld a, [$df54] ; $472a
+	ld a, [wCharScreenY] ; $472a
 	ld e, a ; $472d
 	wram_bank $04 ; $472e
 	ld a, [w4_ddfa] ; $4734

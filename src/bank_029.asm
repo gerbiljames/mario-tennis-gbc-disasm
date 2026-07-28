@@ -194,7 +194,7 @@ SetBallTargetByPrediction_29:
 	pop hl ; $40dc
 	farcall SetBallVelocityPolar ; $40dd
 	ld de, $fd40 ; $40e0
-	ld a, [$df0a] ; $40e3
+	ld a, [wCharCourtPos] ; $40e3
 	and a, $02 ; $40e6
 	jr z, .maskClear ; $40e8
 	xor a, a ; $40ea
@@ -463,10 +463,10 @@ ShotBallPathServeTopspin:
 	farcall ComputeShotPlacement ; $5e9d
 	ld hl, BallPosData_29 ; $5ea0
 	ld bc, ShotBallPathServeTopspinTable ; $5ea3
-	ld a, [$df6e] ; $5ea6
+	ld a, [wTopspinPlacementIndex] ; $5ea6
 	call LookupBallPosByShotIndex_29 ; $5ea9
 	ld bc, $5ed3 ; $5eac
-	ld a, [$df6c] ; $5eaf
+	ld a, [wSmashServeSpeedIndex] ; $5eaf
 	call LookupBallPosByShotIndex_29 ; $5eb2
 	ld bc, $5ee7 ; $5eb5
 	call LookupBallPosByHeight_29 ; $5eb8

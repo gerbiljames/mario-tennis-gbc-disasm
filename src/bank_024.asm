@@ -199,7 +199,7 @@ SetBallVelocityFromEntry4_24:
 	pop hl ; $40e8
 	farcall SetBallVelocityPolar ; $40e9
 	ld de, $fd40 ; $40ec
-	ld a, [$df0a] ; $40ef
+	ld a, [wCharCourtPos] ; $40ef
 	and a, $02 ; $40f2
 	jr z, .maskClear ; $40f4
 	xor a, a ; $40f6
@@ -495,7 +495,7 @@ ShotBallPathLob:
 	farcall ComputeShotPlacement ; $4589
 	ld hl, BallPosDataLob_24 ; $458c
 	ld bc, BallPosBlockOffsetsLob_24 ; $458f
-	ld a, [$df92] ; $4592
+	ld a, [wLobPlacementIndex] ; $4592
 	call LookupBallPosByShotIndex_24 ; $4595
 	call ApplyBallTrajectoryCapped_24 ; $4598
 	ret ; $459b
@@ -509,7 +509,7 @@ ShotBallPathDrop:
 	ld bc, BallPosAimOffsetsDrop_24 ; $51a6
 	call LookupBallPosByAim_24 ; $51a9
 	ld bc, BallPosBlockOffsetsDrop_24 ; $51ac
-	ld a, [$df93] ; $51af
+	ld a, [wDropPlacementIndex] ; $51af
 	call LookupBallPosByShotIndex_24 ; $51b2
 	call ApplyBallTrajectoryCapped_24 ; $51b5
 	ret ; $51b8
@@ -643,7 +643,7 @@ ShotBallPathSmash:
 	rr c ; $66c3
 	add hl, bc ; $66c5
 	call AngleFromVector16 ; $66c6
-	ld a, [$df6c] ; $66c9
+	ld a, [wSmashServeSpeedIndex] ; $66c9
 	add a, a ; $66cc
 	add a, LOW(SmashVelocityBySpeed_24) ; $66cd
 	ld l, a ; $66cf

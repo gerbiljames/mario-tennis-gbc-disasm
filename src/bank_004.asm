@@ -1995,7 +1995,7 @@ LoadActorObjectDef:
 	ret ; $4b67
 SetupCharSpriteFromObjectDef:
 	ld a, d ; $4b68
-	ld [$df21], a ; $4b69
+	ld [wCharObjectDefId], a ; $4b69
 	add a, a ; $4b6c
 	add a, LOW(ObjectIdList_04_4f75) ; $4b6d
 	ld l, a ; $4b6f
@@ -2006,29 +2006,29 @@ SetupCharSpriteFromObjectDef:
 	ld h, [hl] ; $4b75
 	ld l, a ; $4b76
 	ld a, h ; $4b77
-	ld [$df22], a ; $4b78
+	ld [wCharObjectBank], a ; $4b78
 	ld de, $dad0 ; $4b7b
 	ld bc, $0010 ; $4b7e
 	call CopyDataFromBank ; $4b81
 	ld a, [$dad0] ; $4b84
-	ld [$df37], a ; $4b87
-	ld [$df3a], a ; $4b8a
-	ld hl, $df24 ; $4b8d
+	ld [wCharSpriteAttr], a ; $4b87
+	ld [wCharGfxBank], a ; $4b8a
+	ld hl, wCharFrameTablePtr ; $4b8d
 	ld a, [$dad4] ; $4b90
 	ld [hl+], a ; $4b93
 	ld a, [$dad5] ; $4b94
 	ld [hl+], a ; $4b97
-	ld hl, $df28 ; $4b98
+	ld hl, wCharAnimTablePtr ; $4b98
 	ld a, [$dad6] ; $4b9b
 	ld [hl+], a ; $4b9e
 	ld a, [$dad7] ; $4b9f
 	ld [hl+], a ; $4ba2
-	ld hl, $df38 ; $4ba3
+	ld hl, wCharShadowTablePtr ; $4ba3
 	ld a, [$dada] ; $4ba6
 	ld [hl+], a ; $4ba9
 	ld a, [$dadb] ; $4baa
 	ld [hl+], a ; $4bad
-	ld hl, $df32 ; $4bae
+	ld hl, wCharFacingOctant ; $4bae
 	ld a, $ff ; $4bb1
 	ld [hl+], a ; $4bb3
 	ld [hl+], a ; $4bb4
@@ -2053,7 +2053,7 @@ SetActorAnimation:
 	ld hl, $002f ; $4bd0
 	add hl, bc ; $4bd3
 	ld [hl], $00 ; $4bd4
-	ld hl, $df37 ; $4bd6
+	ld hl, wCharSpriteAttr ; $4bd6
 	ld a, [hl] ; $4bd9
 	and a, $0f ; $4bda
 	ld [hl], a ; $4bdc

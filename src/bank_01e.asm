@@ -1083,7 +1083,7 @@ InitResultsScreenCharacters:
 	add a, $04 ; $4994
 	ld a, a ; $4996
 	wram_bank ; $4997
-	ld bc, $df00 ; $499b
+	ld bc, wCharPosX ; $499b
 	ld a, [wGameMode] ; $499e
 	or a, a ; $49a1
 	jr nz, .nonZero ; $49a2
@@ -1113,15 +1113,15 @@ InitResultsScreenCharacters:
 	ld a, $00 ; $49ca
 	farcall InitChar ; $49cc
 	ld a, $0f ; $49cf
-	ld [$df37], a ; $49d1
+	ld [wCharSpriteAttr], a ; $49d1
 	ld de, $a000 ; $49d4
-	ld hl, $df26 ; $49d7
+	ld hl, wCharFrameVramDest ; $49d7
 	ld a, e ; $49da
 	ld [hl+], a ; $49db
 	ld [hl], d ; $49dc
-	ld hl, $df36 ; $49dd
+	ld hl, wCharTileBase ; $49dd
 	ld [hl], $00 ; $49e0
-	ld bc, $df00 ; $49e2
+	ld bc, wCharPosX ; $49e2
 	ld d, $03 ; $49e5
 	farcall SetCharAnimation ; $49e7
 	pop af ; $49ea
@@ -1141,7 +1141,7 @@ InitResultsScreenCharacters:
 	add a, $06 ; $4a0f
 	ld a, a ; $4a11
 	wram_bank ; $4a12
-	ld bc, $df00 ; $4a16
+	ld bc, wCharPosX ; $4a16
 	ld a, [wGameMode] ; $4a19
 	or a, a ; $4a1c
 	jr nz, .nonZero3 ; $4a1d
@@ -1171,15 +1171,15 @@ InitResultsScreenCharacters:
 	ld a, $02 ; $4a45
 	farcall InitChar ; $4a47
 	ld a, $0e ; $4a4a
-	ld [$df37], a ; $4a4c
+	ld [wCharSpriteAttr], a ; $4a4c
 	ld de, $a100 ; $4a4f
-	ld hl, $df26 ; $4a52
+	ld hl, wCharFrameVramDest ; $4a52
 	ld a, e ; $4a55
 	ld [hl+], a ; $4a56
 	ld [hl], d ; $4a57
-	ld hl, $df36 ; $4a58
+	ld hl, wCharTileBase ; $4a58
 	ld [hl], $10 ; $4a5b
-	ld bc, $df00 ; $4a5d
+	ld bc, wCharPosX ; $4a5d
 	ld d, $03 ; $4a60
 	farcall SetCharAnimation ; $4a62
 	pop af ; $4a65
@@ -1206,7 +1206,7 @@ DrawResultsCharSprites:
 	ret ; $4aa7
 UpdateResultsCharSprite:
 	push af ; $4aa8
-	ld hl, $df00 ; $4aa9
+	ld hl, wCharPosX ; $4aa9
 	ld b, h ; $4aac
 	ld c, l ; $4aad
 	farcall StepCharAnimation ; $4aae
@@ -1236,7 +1236,7 @@ UpdateResultsCharSprite:
 	xor a, b ; $4ad3
 	ld b, a ; $4ad4
 .zero:
-	ld hl, $df36 ; $4ad5
+	ld hl, wCharTileBase ; $4ad5
 	ld a, [hl+] ; $4ad8
 	ld c, a ; $4ad9
 	ld a, [hl] ; $4ada
@@ -1262,9 +1262,9 @@ UpdateResultsCharSprite:
 	ld e, $56 ; $4af7
 .step5:
 	ld a, d ; $4af9
-	ld [$df53], a ; $4afa
+	ld [wCharScreenX], a ; $4afa
 	ld a, e ; $4afd
-	ld [$df54], a ; $4afe
+	ld [wCharScreenY], a ; $4afe
 	pop hl ; $4b01
 	add hl, hl ; $4b02
 	add hl, hl ; $4b03
@@ -1272,7 +1272,7 @@ UpdateResultsCharSprite:
 	pop bc ; $4b05
 	pop af ; $4b06
 	push hl ; $4b07
-	ld hl, $df80 ; $4b08
+	ld hl, wCharSpriteSlot ; $4b08
 	ld a, c ; $4b0b
 	ld [hl+], a ; $4b0c
 	ld a, b ; $4b0d
@@ -1281,11 +1281,11 @@ UpdateResultsCharSprite:
 	ld [hl+], a ; $4b10
 	ld a, d ; $4b11
 	ld [hl+], a ; $4b12
-	ld a, [$df1d] ; $4b13
+	ld a, [wCharSpriteFrame + 2] ; $4b13
 	ld [hl+], a ; $4b16
-	ld a, [$df1c] ; $4b17
+	ld a, [wCharSpriteFrame + 1] ; $4b17
 	ld [hl+], a ; $4b1a
-	ld a, [$df1b] ; $4b1b
+	ld a, [wCharSpriteFrame] ; $4b1b
 	ld [hl+], a ; $4b1e
 	pop af ; $4b1f
 	add a, $80 ; $4b20
@@ -1932,7 +1932,7 @@ DrawExpScreenCharSprites:
 	wram_bank ; $5922
 	xor a, a ; $5926
 	call UpdateExpScreenCharSprite ; $5927
-	ld hl, $df80 ; $592a
+	ld hl, wCharSpriteSlot ; $592a
 	farcall DrawCharSprite ; $592d
 	wram_bank $04 ; $5930
 	pop bc ; $5936
@@ -1944,27 +1944,27 @@ DrawExpScreenCharSprites:
 	wram_bank ; $593e
 	ld a, $01 ; $5942
 	call UpdateExpScreenCharSprite ; $5944
-	ld hl, $df80 ; $5947
+	ld hl, wCharSpriteSlot ; $5947
 	farcall DrawCharSprite ; $594a
 	wram_bank $04 ; $594d
 	ret ; $5953
 UpdateExpScreenCharSprite:
 	push af ; $5954
-	ld hl, $df00 ; $5955
+	ld hl, wCharPosX ; $5955
 	ld b, h ; $5958
 	ld c, l ; $5959
 	farcall StepCharAnimation ; $595a
 	ld d, $00 ; $595d
 	ld a, d ; $595f
-	ld [$df32], a ; $5960
+	ld [wCharFacingOctant], a ; $5960
 	farcall ReloadCharFacingTiles ; $5963
-	ld a, [$df32] ; $5966
+	ld a, [wCharFacingOctant] ; $5966
 	add a, LOW(Data_1e_59b3) ; $5969
 	ld l, a ; $596b
 	adc a, HIGH(Data_1e_59b3) ; $596c
 	sub a, l ; $596e
 	ld h, a ; $596f
-	ld a, [$df37] ; $5970
+	ld a, [wCharSpriteAttr] ; $5970
 	or a, $08 ; $5973
 	xor a, [hl] ; $5975
 	ld b, a ; $5976
@@ -1983,7 +1983,7 @@ UpdateExpScreenCharSprite:
 	xor a, b ; $5989
 	ld b, a ; $598a
 .zero:
-	ld a, [$df36] ; $598b
+	ld a, [wCharTileBase] ; $598b
 	ld c, a ; $598e
 	pop af ; $598f
 	or a, a ; $5990
@@ -2001,7 +2001,7 @@ UpdateExpScreenCharSprite:
 	ld d, $5c ; $59a4
 	ld e, $66 ; $59a6
 .step5:
-	ld hl, $df80 ; $59a8
+	ld hl, wCharSpriteSlot ; $59a8
 	ld a, c ; $59ab
 	ld [hl+], a ; $59ac
 	ld a, b ; $59ad
@@ -2728,7 +2728,7 @@ GetScoreBonus:
 	pop hl ; $684f
 	ret ; $6850
 ComputeMatchStatsReward:
-	ld a, [$df78] ; $6851
+	ld a, [wCharId] ; $6851
 	cp a, $04 ; $6854
 	ret nc ; $6856
 	push hl ; $6857
@@ -2854,9 +2854,9 @@ GetPlayerExpTier:
 	ld c, a ; $693c
 	ret ; $693d
 LookupExpTierForChar:
-	ld a, [$df95] ; $693e
+	ld a, [wCharExpTier] ; $693e
 	ld c, a ; $6941
-	ld a, [$df78] ; $6942
+	ld a, [wCharId] ; $6942
 	cp a, $04 ; $6945
 	jr nc, Data_1e_695b.ge04 ; $6947
 	ld l, c ; $6949
@@ -4335,7 +4335,7 @@ InitGameProgressScreen:
 	ld [wMenuWindowId], a ; $72a0
 	ld a, $ff ; $72a3
 	ld c, $30 ; $72a5
-	ld hl, $df70 ; $72a7
+	ld hl, wCharReachHeight ; $72a7
 .loop:
 	ld [hl+], a ; $72aa
 	dec c ; $72ab
@@ -4552,7 +4552,7 @@ RunRewardCategoryList:
 .storeState:
 	ld e, a ; $7435
 	pop af ; $7436
-	ld hl, $df10 ; $7437
+	ld hl, wCharFreezeTimer ; $7437
 	add a, l ; $743a
 	ld l, a ; $743b
 	jr nc, .writeSlot ; $743c
@@ -4594,8 +4594,8 @@ RewardCategoryEntryList5_1e:
 BuildVisibleProgressEntryList:
 	ld c, $00 ; $747c
 	ld b, $00 ; $747e
-	ld hl, $df10 ; $7480
-	ld de, $df70 ; $7483
+	ld hl, wCharFreezeTimer ; $7480
+	ld de, wCharReachHeight ; $7483
 .loop:
 	ld a, [hl+] ; $7486
 	or a, a ; $7487
@@ -4627,7 +4627,7 @@ BuildProgressEntryEarnedTable:
 	ret ; $74a9
 GetProgressEntryEarned:
 	push hl ; $74aa
-	ld hl, $df40 ; $74ab
+	ld hl, wCharVelX ; $74ab
 	add a, l ; $74ae
 	ld l, a ; $74af
 	jr nc, .read ; $74b0
@@ -4647,7 +4647,7 @@ DrawProgressListRows:
 	ld d, h ; $74c3
 	ld e, l ; $74c4
 	ld a, [wCharPosDepth + 2] ; $74c5
-	ld hl, $df70 ; $74c8
+	ld hl, wCharReachHeight ; $74c8
 	add a, l ; $74cb
 	ld l, a ; $74cc
 	jr nc, .gotPtr ; $74cd
@@ -4893,22 +4893,22 @@ DrawProgressEntryTrophyIcon:
 	ret ; $7a8c
 DrawProgressScreenSprites:
 	xor a, a ; $7a8d
-	ld [$df07], a ; $7a8e
-	ld [$df08], a ; $7a91
-	ld a, [$df03] ; $7a94
+	ld [wCharPosHeight + 1], a ; $7a8e
+	ld [wCharPosHeight + 2], a ; $7a91
+	ld a, [wCharPosDepth] ; $7a94
 	sub a, $07 ; $7a97
 	ld b, a ; $7a99
-	ld a, [$df05] ; $7a9a
+	ld a, [wCharPosDepth + 2] ; $7a9a
 	or a, a ; $7a9d
 	jr z, .compare ; $7a9e
-	ld [$df07], a ; $7aa0
+	ld [wCharPosHeight + 1], a ; $7aa0
 .compare:
 	cp a, b ; $7aa3
 	jr nc, .nonZero ; $7aa4
 	ld a, $01 ; $7aa6
-	ld [$df08], a ; $7aa8
+	ld [wCharPosHeight + 2], a ; $7aa8
 .nonZero:
-	ld a, [$df07] ; $7aab
+	ld a, [wCharPosHeight + 1] ; $7aab
 	or a, a ; $7aae
 	jr z, .zero ; $7aaf
 	ld d, $0a ; $7ab1
@@ -4920,7 +4920,7 @@ DrawProgressScreenSprites:
 	ld h, $02 ; $7abe
 	farcall QueueStackedSpritePair ; $7ac0
 .zero:
-	ld a, [$df08] ; $7ac3
+	ld a, [wCharPosHeight + 2] ; $7ac3
 	or a, a ; $7ac6
 	jr z, .zero2 ; $7ac7
 	ld d, $0a ; $7ac9
@@ -4932,8 +4932,8 @@ DrawProgressScreenSprites:
 	ld h, $03 ; $7ad6
 	farcall QueueStackedSpritePair ; $7ad8
 .zero2:
-	ld hl, $df70 ; $7adb
-	ld a, [$df05] ; $7ade
+	ld hl, wCharReachHeight ; $7adb
+	ld a, [wCharPosDepth + 2] ; $7ade
 	add a, l ; $7ae1
 	ld l, a ; $7ae2
 	jr nc, .gotPtr ; $7ae3

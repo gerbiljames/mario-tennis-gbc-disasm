@@ -863,7 +863,7 @@ StartMinigameMatch:
 	ld [$df6a], a ; $46c0
 	xor a, a ; $46c3
 	ld [$c7a7], a ; $46c4
-	ld a, [$df78] ; $46c7
+	ld a, [wCharId] ; $46c7
 	cp a, $15 ; $46ca
 	jr nz, .countdown ; $46cc
 	ld a, $01 ; $46ce
@@ -1016,7 +1016,7 @@ FreezeMinigameOpponentOnReturn:
 	push af ; $47eb
 	wram_bank $05 ; $47ec
 	ld a, $28 ; $47f2
-	ld [$df10], a ; $47f4
+	ld [wCharFreezeTimer], a ; $47f4
 	pop af ; $47f7
 	wram_bank ; $47f8
 .done:
@@ -1034,7 +1034,7 @@ LaunchBall:
 	push af ; $4814
 	wram_bank $05 ; $4815
 	ld a, $20 ; $481b
-	ld [$df4b], a ; $481d
+	ld [wCharSwingFrames], a ; $481d
 	ld a, [wMinigameServeSpeed] ; $4820
 	add a, a ; $4823
 	add a, a ; $4824
@@ -1077,10 +1077,10 @@ LaunchBall:
 	ld a, [hl] ; $485c
 	swap a ; $485d
 	and a, $0f ; $485f
-	ld [$df16], a ; $4861
+	ld [wCharShotButton1], a ; $4861
 	ld a, [hl] ; $4864
 	and a, $0f ; $4865
-	ld [$df17], a ; $4867
+	ld [wCharShotButton2], a ; $4867
 	farcall SelectRallyShotType ; $486a
 	ld a, [wMinigameServeGroup] ; $486d
 	add a, LOW(MinigameBallLaunchSpeeds) ; $4870
@@ -1117,7 +1117,7 @@ LaunchBall:
 	sub a, l ; $48a2
 	ld h, a ; $48a3
 	ld a, [hl] ; $48a4
-	ld [$df4a], a ; $48a5
+	ld [wCharAimOffset], a ; $48a5
 	ld hl, $073c ; $48a8
 	call FarCallVector ; $48ab
 	sound $76 ; $48ae

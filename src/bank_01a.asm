@@ -3553,13 +3553,13 @@ SetupCharViewerScene:
 	ld a, $00 ; $6fb6
 	farcall InitChar ; $6fb8
 	ld a, $07 ; $6fbb
-	ld [$df37], a ; $6fbd
+	ld [wCharSpriteAttr], a ; $6fbd
 	ld de, $8600 ; $6fc0
-	ld hl, $df26 ; $6fc3
+	ld hl, wCharFrameVramDest ; $6fc3
 	ld a, e ; $6fc6
 	ld [hl+], a ; $6fc7
 	ld [hl], d ; $6fc8
-	ld hl, $df36 ; $6fc9
+	ld hl, wCharTileBase ; $6fc9
 	ld [hl], $60 ; $6fcc
 	ret ; $6fce
 CharViewerSceneActors_1a:
@@ -3596,7 +3596,7 @@ DrawCharViewerCharSprite:
 	sub a, l ; $704d
 	ld h, a ; $704e
 	ld b, [hl] ; $704f
-	ld hl, $df36 ; $7050
+	ld hl, wCharTileBase ; $7050
 	ld a, [hl+] ; $7053
 	ld c, a ; $7054
 	ld a, [hl] ; $7055

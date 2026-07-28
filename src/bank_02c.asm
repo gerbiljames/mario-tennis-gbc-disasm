@@ -195,7 +195,7 @@ SetBallVelocityFromEntry4_2c:
 	pop hl ; $40e0
 	farcall SetBallVelocityPolar ; $40e1
 	ld de, $fd40 ; $40e4
-	ld a, [$df0a] ; $40e7
+	ld a, [wCharCourtPos] ; $40e7
 	and a, $02 ; $40ea
 	jr z, .maskClear ; $40ec
 	xor a, a ; $40ee

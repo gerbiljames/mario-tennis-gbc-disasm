@@ -2462,13 +2462,13 @@ ExecuteShot:
 	ld [wLastShotCharIndex], a ; $53be
 	ld a, [wCharServeRole] ; $53c1
 	ld [wLastShotServeRole], a ; $53c4
-	ld a, [$df4a] ; $53c7
+	ld a, [wCharAimOffset] ; $53c7
 	ld [$c4a4], a ; $53ca
-	ld a, [$df14] ; $53cd
+	ld a, [wCharShotType] ; $53cd
 	ld [wCurrentShotType], a ; $53d0
-	ld a, [$df16] ; $53d3
+	ld a, [wCharShotButton1] ; $53d3
 	swap a ; $53d6
-	ld hl, $df17 ; $53d8
+	ld hl, wCharShotButton2 ; $53d8
 	or a, [hl] ; $53db
 	ld [$c490], a ; $53dc
 	ld a, [wBallCourtQuadrant] ; $53df
@@ -2478,7 +2478,7 @@ ExecuteShot:
 	ld [$c4a6], a ; $53e9
 	ld [wFallbackTrajectoryFlag], a ; $53ec
 	ld b, $00 ; $53ef
-	ld a, [$df15] ; $53f1
+	ld a, [wCharSwingAnim] ; $53f1
 	cp a, $06 ; $53f4
 	jr nz, .checkShot0a ; $53f6
 	inc b ; $53f8
@@ -2487,7 +2487,7 @@ ExecuteShot:
 	jr nz, .checkLeftHanded ; $53fb
 	inc b ; $53fd
 .checkLeftHanded:
-	ld a, [$df94] ; $53fe
+	ld a, [wCharMirrorAttrMask] ; $53fe
 	and a, a ; $5401
 	jr z, .checkServe ; $5402
 	inc b ; $5404
@@ -2500,7 +2500,7 @@ ExecuteShot:
 	ld a, b ; $540d
 	and a, $01 ; $540e
 	ld [wShotAimMirror], a ; $5410
-	ld a, [$df4b] ; $5413
+	ld a, [wCharSwingFrames] ; $5413
 	cp a, $3f ; $5416
 	jr c, .storeCharge ; $5418
 	ld a, $3f ; $541a
@@ -2546,7 +2546,7 @@ ExecuteShot:
 ShotRecoilFrameTask:
 	call ApplyShotRecoil ; $5463
 	xor a, a ; $5466
-	ld [$df4b], a ; $5467
+	ld [wCharSwingFrames], a ; $5467
 	ret ; $546a
 ApplyShotRecoil:
 	ld hl, wCharFlags ; $546b
@@ -2799,7 +2799,7 @@ GetShotAimOffsetForSide:
 	sub a, l ; $55ff
 	ld h, a ; $5600
 .readAim:
-	ld a, [$df4a] ; $5601
+	ld a, [wCharAimOffset] ; $5601
 	inc a ; $5604
 	add a, a ; $5605
 	add a, l ; $5606
@@ -2855,7 +2855,7 @@ ComputeShotTargetX:
 	and a, a ; $5649
 	jr z, GetShotAimOffsetForSide ; $564a
 	call ComputeAimBaseOffset ; $564c
-	ld a, [$df4a] ; $564f
+	ld a, [wCharAimOffset] ; $564f
 	add a, $02 ; $5652
 	and a, $07 ; $5654
 	ld a, a ; $5656
@@ -3413,7 +3413,7 @@ ExecuteShotSmash:
 ExecuteShotNeutral:
 	call CheckBallInSmashRange ; $59a8
 	jr z, .neutralShot ; $59ab
-	ld a, [$df15] ; $59ad
+	ld a, [wCharSwingAnim] ; $59ad
 	cp a, $07 ; $59b0
 	jr z, ExecuteShotSmash ; $59b2
 	cp a, $08 ; $59b4
@@ -3504,10 +3504,10 @@ SetupCharacterSprite:
 	farcall SetupCharSpriteFromObjectDef ; $5a71
 	pop de ; $5a74
 	ld a, e ; $5a75
-	ld [$df3a], a ; $5a76
+	ld [wCharGfxBank], a ; $5a76
 	ld a, [wCharIndex] ; $5a79
 	add a, $04 ; $5a7c
-	ld [$df37], a ; $5a7e
+	ld [wCharSpriteAttr], a ; $5a7e
 	ld a, [wCharIndex] ; $5a81
 	add a, LOW(Data_07_5aaf) ; $5a84
 	ld l, a ; $5a86
@@ -3515,7 +3515,7 @@ SetupCharacterSprite:
 	sub a, l ; $5a89
 	ld h, a ; $5a8a
 	ld a, [hl] ; $5a8b
-	ld [$df36], a ; $5a8c
+	ld [wCharTileBase], a ; $5a8c
 	ld a, [wCharIndex] ; $5a8f
 	add a, a ; $5a92
 	add a, LOW(CharFrameGfxDest_07) ; $5a93
@@ -3526,7 +3526,7 @@ SetupCharacterSprite:
 	ld a, [hl+] ; $5a9a
 	ld d, [hl] ; $5a9b
 	ld e, a ; $5a9c
-	ld hl, $df26 ; $5a9d
+	ld hl, wCharFrameVramDest ; $5a9d
 	ld a, e ; $5aa0
 	ld [hl+], a ; $5aa1
 	ld [hl], d ; $5aa2
@@ -3560,7 +3560,7 @@ LoadCharacterAttributes:
 	add hl, bc ; $5acb
 	ld c, l ; $5acc
 	ld b, h ; $5acd
-	ld hl, $df70 ; $5ace
+	ld hl, wCharReachHeight ; $5ace
 	ld a, c ; $5ad1
 	ld [hl+], a ; $5ad2
 	ld [hl], b ; $5ad3
@@ -3569,7 +3569,7 @@ LoadCharacterAttributes:
 	ld a, [hl+] ; $5ad8
 	ld b, [hl] ; $5ad9
 	ld c, a ; $5ada
-	ld hl, $df72 ; $5adb
+	ld hl, wCharReachX ; $5adb
 	ld a, c ; $5ade
 	ld [hl+], a ; $5adf
 	ld [hl], b ; $5ae0
@@ -3582,7 +3582,7 @@ LoadCharacterAttributes:
 	add hl, bc ; $5aeb
 	ld c, l ; $5aec
 	ld b, h ; $5aed
-	ld hl, $df74 ; $5aee
+	ld hl, wCharSmashJumpSpeed ; $5aee
 	ld a, c ; $5af1
 	ld [hl+], a ; $5af2
 	ld [hl], b ; $5af3
@@ -3591,7 +3591,7 @@ LoadCharacterAttributes:
 	ld a, [hl+] ; $5af8
 	ld b, [hl] ; $5af9
 	ld c, a ; $5afa
-	ld hl, $df76 ; $5afb
+	ld hl, wCharDiveSpeed ; $5afb
 	ld a, c ; $5afe
 	ld [hl+], a ; $5aff
 	ld [hl], b ; $5b00
@@ -3600,14 +3600,14 @@ LoadCharacterAttributes:
 	ld a, [hl+] ; $5b05
 	ld b, [hl] ; $5b06
 	ld c, a ; $5b07
-	ld hl, $df90 ; $5b08
+	ld hl, wCharSwingAttrWord ; $5b08
 	ld a, c ; $5b0b
 	ld [hl+], a ; $5b0c
 	ld [hl], b ; $5b0d
 	ld hl, $0018 ; $5b0e
 	add hl, de ; $5b11
 	ld a, [hl] ; $5b12
-	ld [$df95], a ; $5b13
+	ld [wCharExpTier], a ; $5b13
 	ld b, $00 ; $5b16
 	ld hl, $000e ; $5b18
 	add hl, de ; $5b1b
@@ -3617,7 +3617,7 @@ LoadCharacterAttributes:
 	ld b, $20 ; $5b20
 .storeHandedness:
 	ld a, b ; $5b22
-	ld [$df94], a ; $5b23
+	ld [wCharMirrorAttrMask], a ; $5b23
 	ld hl, $0027 ; $5b26
 	add hl, de ; $5b29
 	ld a, [hl] ; $5b2a
@@ -3749,36 +3749,36 @@ LoadCharacterAttributes:
 	ld hl, $000f ; $5be9
 	add hl, de ; $5bec
 	ld a, [hl] ; $5bed
-	ld [$df7f], a ; $5bee
+	ld [wAiPositionStrategy], a ; $5bee
 	ld hl, $001b ; $5bf1
 	add hl, de ; $5bf4
 	ld a, [hl] ; $5bf5
-	ld [$df79], a ; $5bf6
+	ld [wAiReactionDelayNear], a ; $5bf6
 	ld hl, $001c ; $5bf9
 	add hl, de ; $5bfc
 	ld a, [hl] ; $5bfd
-	ld [$df7a], a ; $5bfe
+	ld [wAiReactionDelayFar], a ; $5bfe
 	ld hl, $001d ; $5c01
 	add hl, de ; $5c04
 	ld a, [hl] ; $5c05
-	ld [$df7b], a ; $5c06
+	ld [wAiTrackingParam], a ; $5c06
 	ld hl, $001e ; $5c09
 	add hl, de ; $5c0c
 	ld a, [hl] ; $5c0d
-	ld [$df7c], a ; $5c0e
+	ld [wAiAimAwayChance], a ; $5c0e
 	ld hl, $001f ; $5c11
 	add hl, de ; $5c14
 	ld a, [hl] ; $5c15
-	ld [$df7d], a ; $5c16
+	ld [wAiServeStyle], a ; $5c16
 	ld a, $00 ; $5c19
-	ld hl, $df91 ; $5c1b
+	ld hl, wCharSwingAttrWord + 1 ; $5c1b
 	bit 0, [hl] ; $5c1e
 	jr z, .storeLobIndex ; $5c20
 	ld a, $01 ; $5c22
 .storeLobIndex:
 	ld [wLobPlacementIndex], a ; $5c24
 	ld a, $00 ; $5c27
-	ld hl, $df91 ; $5c29
+	ld hl, wCharSwingAttrWord + 1 ; $5c29
 	bit 1, [hl] ; $5c2c
 	jr z, .storeDropIndex ; $5c2e
 	ld a, $01 ; $5c30
@@ -3851,19 +3851,19 @@ CharStatPresets_07:
 OverrideCharStatsForDebug:
 	push af ; $5cf4
 	ld a, $04 ; $5cf5
-	ld [$df79], a ; $5cf7
+	ld [wAiReactionDelayNear], a ; $5cf7
 	ld a, $04 ; $5cfa
-	ld [$df7a], a ; $5cfc
+	ld [wAiReactionDelayFar], a ; $5cfc
 	ld a, $00 ; $5cff
-	ld [$df7b], a ; $5d01
+	ld [wAiTrackingParam], a ; $5d01
 	ld a, $ff ; $5d04
-	ld [$df7c], a ; $5d06
+	ld [wAiAimAwayChance], a ; $5d06
 	ld a, $02 ; $5d09
-	ld [$df7d], a ; $5d0b
+	ld [wAiServeStyle], a ; $5d0b
 	ld a, $00 ; $5d0e
 	ld [$df6a], a ; $5d10
 	ld a, $01 ; $5d13
-	ld [$df7f], a ; $5d15
+	ld [wAiPositionStrategy], a ; $5d15
 	ld a, $01 ; $5d18
 	ld a, $01 ; $5d1a
 	pop af ; $5d1c

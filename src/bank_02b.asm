@@ -194,7 +194,7 @@ SetBallTargetByPrediction_2b:
 	pop hl ; $40dc
 	farcall SetBallVelocityPolar ; $40dd
 	ld de, $fd40 ; $40e0
-	ld a, [$df0a] ; $40e3
+	ld a, [wCharCourtPos] ; $40e3
 	and a, $02 ; $40e6
 	jr z, .maskClear ; $40e8
 	xor a, a ; $40ea
@@ -488,7 +488,7 @@ ShotBallPathServeFlat:
 	xor a, a ; $5ea6
 	call LookupBallPosByShotIndex_2b ; $5ea7
 	ld bc, BallPosSubOffsets_2b ; $5eaa
-	ld a, [$df6c] ; $5ead
+	ld a, [wSmashServeSpeedIndex] ; $5ead
 	call LookupBallPosByShotIndex_2b ; $5eb0
 	ld bc, BallPosHeightOffsets_2b ; $5eb3
 	call LookupBallPosByHeight_2b ; $5eb6

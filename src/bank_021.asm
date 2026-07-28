@@ -193,7 +193,7 @@ SetBallVelocityFromEntry4_21:
 	pop hl ; $40dc
 	farcall SetBallVelocityPolar ; $40dd
 	ld de, $fd40 ; $40e0
-	ld a, [$df0a] ; $40e3
+	ld a, [wCharCourtPos] ; $40e3
 	and a, $02 ; $40e6
 	jr z, .maskClear ; $40e8
 	xor a, a ; $40ea
@@ -488,7 +488,7 @@ ShotBallPathPowerSlice:
 	ld bc, BallPosHeightOffsets_21 ; $7e84
 	call LookupBallPosByHeight_21 ; $7e87
 	ld bc, BallPosBlockOffsets_21 ; $7e8a
-	ld a, [$df6f] ; $7e8d
+	ld a, [wSlicePlacementIndex] ; $7e8d
 	call LookupBallPosByShotIndex_21 ; $7e90
 	pop bc ; $7e93
 	call ApplyBallTrajectory_21 ; $7e94
