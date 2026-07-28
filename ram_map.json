@@ -6,7 +6,7 @@
  },
  "0xc0a0": {
   "name": "wVRAMCopyQueue",
-  "note": "[80 bytes] VBlank VRAM copy queue: 10 x 8-byte entries [rom bank, wram bank, size hi, size lo, vbk, dest hi, dest lo, src?]; processed by ProcessVRAMCopyQueues",
+  "note": "[80 bytes] VBlank VRAM copy queue: 10 x 8-byte entries, one per pending transfer. A slot is the five CGB VDMA registers plus the two banks needed to reach the source: [rom bank (0 = slot free), wram bank, src hi, src lo, vbk, dest hi, dest lo, length in 16-byte blocks - 1]. ProcessVRAMCopyQueues banks in the source, writes +$02..+$06 straight through to $ff51-$ff54 and rVBK, and writing +$07 to $ff55 starts the transfer; it clears +$00 as it consumes the slot",
   "size": 80
  },
  "0xc0f0": {

@@ -6,7 +6,7 @@ SECTION "WRAM0 $c000", WRAM0[$c000]
 ; [160 bytes] Shadow OAM: 40 x 4-byte entries [y, x, tile, attr], copied to $fe00 every frame by hOAMDMARoutine (which sources page $c0). Cleared as its own unit by the boot path (ld hl, $c000 / ld c, $0a / ClearMemory16); only ever written through pointers, never by a direct [$c0xx] operand
 wShadowOAM:: ds 160
 
-; [80 bytes] VBlank VRAM copy queue: 10 x 8-byte entries [rom bank, wram bank, size hi, size lo, vbk, dest hi, dest lo, src?]; processed by ProcessVRAMCopyQueues
+; [80 bytes] VBlank VRAM copy queue: 10 x 8-byte entries, one per pending transfer. A slot is the five CGB VDMA registers plus the two banks needed to reach the source: [rom bank (0 = slot free), wram bank, src hi, src lo, vbk, dest hi, dest lo, length in 16-byte blocks - 1]. ProcessVRAMCopyQueues banks in the source, writes +$02..+$06 straight through to $ff51-$ff54 and rVBK, and writing +$07 to $ff55 starts the transfer; it clears +$00 as it consumes the slot
 wVRAMCopyQueue:: ds 80
 
 ; [4 bytes] Play timer: frames (0-59), seconds, minutes, hours (caps at 99)
