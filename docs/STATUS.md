@@ -6119,3 +6119,55 @@ they stand) and `.checkExit` checks no exit (it is the draw path that anchors to
 the server); `.freeSlot` frees nothing, it steps the curve, and `.keepSlot`
 advances the sub-state. A name that survived because nobody could read the code
 around it is worth re-checking once the code becomes readable.
+
+
+## Sweeping for the last raw addresses (2026-07-28)
+
+Counting `[$xxxx]` operands only ever measured one of three forms. A sweep over
+all of them -- bracket, `ldh`, and `ld rr, $xxxx` -- puts the remaining raw
+addresses in their real proportions, and two of the three turn out to be
+*correctly* raw.
+
+| form | count | what it is |
+| --- | --- | --- |
+| bracket | 997 | genuinely unnamed WRAM variables (`WRAM0` 507, `WRAMX` 490) |
+| `ldh` | 0 | HRAM is fully named |
+| `ld rr, n16` | 2,358 | WRAM bases where the bank is not provable -- `$d000` is seven different buffers |
+| | 875 | VRAM and VRAM-bank-1 destinations, not RAM at all |
+| | 109 | HRAM/IO values used as negative constants (see `RAM_IMM_NEVER`) |
+
+**HRAM finished.** 47 references over 12 addresses: `hDebugStepPaused` (distinct
+from the existing `hDebugStepMode`, which is the master enable SELECT cycles
+1-3 while paused), `hSavedIE`, `DivAHLByDE`'s three scratch bytes -- the
+dividend's high byte and the quotient bytes collected at bit 15 and bit 7, which
+is why the result comes back as `a:hl` like the dividend went in -- the
+nibble-block transfer's accumulator, offset and checksum, `hLinkPhaseDelay`, and
+`hSoundEngineBusy`, a re-entrancy guard that works only because `RunSoundEngine`
+saves and restores the pool around itself.
+
+One mechanism gap surfaced: a **default** variant's multi-byte field never
+interior-expanded, because `load_ram_unions` did not pass the size to
+`ScopedRamNames.add` for defaults. `hLinkBlockChecksum`'s second byte stayed
+numeric. Defaults register sized entries now, masked the same way their base is.
+
+### Two of the last "addresses" were not addresses
+
+`ldh [$ff0e], a` in bank `$0f` is two argument bytes of a `clear_flag` decoded
+as an instruction, and `ld a, [$bb5e]` in bank `$0b` is two bytes of
+`NetGamePractice2Hooks`, a `mode_hooks` table. Both were caused by
+**hand-authored coverage seeds**, and in opposite ways:
+
+* `bank00f_static_code.json` seeded `$76ea`, *one byte into* a `clear_flag`'s
+  argument, and nothing seeded the `rst` at `$76e9` -- which is a real entry
+  point, the target of `jp z, $76e9`. Moving that seed back one byte makes the
+  pair read as the two `clear_flag`s they are.
+* `bank00b_static_code.json` seeded `$5eab` as a behaviour entry when it is the
+  hook table itself. A code seed beats the hook-table inference, so the one
+  table rendered as instructions while its two siblings rendered as `dw` rows.
+  Dropping the entry was the whole fix.
+
+Both are the trap STATUS already records for bank `$0d`: a nonsense decode is as
+likely to come from a seed file as from descent, and `make compare` cannot see
+either, because the bytes are identical whichever way they are rendered. The
+bank `$0b` fix drops the instruction count by 12 and code bytes by 16 -- the
+direction that says false code was removed rather than real code lost.
