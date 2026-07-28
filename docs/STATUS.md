@@ -6059,3 +6059,45 @@ appears in both roles. Those 18 sites are curated by offset in
 Nothing of this shape is left in the ROM: no `ld rr, <name>` is followed by
 `add hl, rr`. That check is cheap and worth re-running after any pass that names
 a round address.
+
+
+## The object slots FinishObjSlotUpdate works on (2026-07-28)
+
+`FinishObjSlotUpdate` addressed one 16-byte record entirely by literal --
+`$ddf0` through `$ddff`, thirty-odd operands -- and the five slots it is copied
+to and from were literals too. The reason it reads that way is an indirection
+worth writing down:
+
+```
+ProcessObjSlot:   copy wObjSlot<n> -> wObjSlotWork
+                  push DrawObjSlot as the return address
+                  jp [wObjSlotWork + 8]      ; the slot's handler
+FinishObjSlotUpdate:
+                  copy wObjSlotWork -> wObjSlot<n>
+```
+
+Every handler therefore addresses one *fixed* record rather than indexing `bc`,
+which is why the whole subsystem read as a pile of unrelated addresses instead
+of a struct. `UpdateAllObjSprites` walks five of them at `$dd80`-`$ddcf` --
+serve indicators, the court banner, the point-situation banner, special-shot
+effects -- and each spawner claims a fixed slot.
+
+The record: id (`$ff` = free), a draw flag, the `QueueSpriteTemplate` arguments
+(template pointer, attribute, base tile), an X/Y offset pair, the handler
+pointer, a second X/Y pair the move curve drives, a handler sub-state, a curve
+step and curve id, and an anchor byte choosing between drawing at the offsets as
+they stand and adding the serving character's `wCharScreenX`/`Y` first.
+`GetNextMoveCurveValue` walks `MoveCurveTable_09` until it hits `$80` (hold) or
+`$81`, and writing `$ff` into the working copy's `+$00` is how it frees the slot.
+
+Scoped to banks `$08`/`$09` as well as WRAM bank `$04`: the spawners pass a slot
+base in `bc` without selecting the bank at the reference, and `$ddd0`-`$ddef`
+just above the slots belongs to the bank `$18`/`$1b` menu screens.
+
+**Four local labels were renamed on the strength of it**, which is the part
+worth noting. They were descent-time guesses, and the record contradicts them:
+`.applyCurve` applies no curve (it is the draw path that uses the offsets as
+they stand) and `.checkExit` checks no exit (it is the draw path that anchors to
+the server); `.freeSlot` frees nothing, it steps the curve, and `.keepSlot`
+advances the sub-state. A name that survived because nobody could read the code
+around it is worth re-checking once the code becomes readable.
