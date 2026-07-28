@@ -6022,11 +6022,29 @@ Three of the cleared bytes are dead, and saying so is worth as much as a name:
 `hLinkErrorFlags` at `$ffc3` is read once -- `AdvanceFrame` tests its top three
 bits and resets the link if any is set -- but nothing in the ROM ever sets them.
 
-`$ffe9` stays numeric. It is a *fourth* tenant: the match renderer reads it with
-`and $0f` to index an animation table and `and $01` to blink, and every
-subsystem in the pool only ever clears it. Nothing increments it, so what the
-renderer reads is whatever the last subsystem left behind. That is more useful
-left visible than named.
+`$ffe9` is `hMatchFrameCounter`, and getting there took a correction. It looked
+like a byte every subsystem clears and none increments -- so, the reasoning went,
+what the match renderer reads with `and $0f` and `and $01` is whatever the last
+subsystem left behind, and that is more honest left visible than named.
+
+Both halves of that were wrong. It *is* incremented, four times over: bank `$08`'s
+local frame driver does it after `AdvanceFrame` + `UpdateMatchFrame`, and all
+three link frame drivers in bank `$07` do it too, so the count advances
+identically whether the match is local or linked. The increments use
+`ld hl, $ffe9` / `inc [hl]`, and the search that missed them had only covered the
+`ldh` and `[$ffe9]` forms -- the same bare-`ld rr, n16` blind spot as the
+immediates above, this time causing a miss rather than a false name.
+
+The "left over" half was wrong for a better reason. `RunSoundEngine` copies all
+32 bytes of the pool out to `$d000` in WRAM bank `$07` on entry and copies them
+back on exit. The pool is *context-switched*, not merely time-shared, so a value
+living here survives an audio update untouched -- which is what lets a counter
+live in it at all.
+
+The readers are cheap periodic effects: `and $0f` cycles the landing marker's
+16-frame animation, and `and $01` draws the ground shadow and the
+offscreen-character arrow on alternate frames, the usual Game Boy way to fake a
+translucent sprite.
 
 ### Naming a round address, again
 
