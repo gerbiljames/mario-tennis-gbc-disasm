@@ -379,13 +379,13 @@ RecordGateCrossOnServe:
 	ld a, [wRallyLength] ; $4233
 	cp a, $01 ; $4236
 	ret nz ; $4238
-	ld a, [$c78b] ; $4239
+	ld a, [wDrillGateActive] ; $4239
 	or a, a ; $423c
 	ret z ; $423d
 	farcall DidBallCrossGate ; $423e
 	ret z ; $4241
 	xor a, a ; $4242
-	ld [$c78b], a ; $4243
+	ld [wDrillGateActive], a ; $4243
 	ld a, [wTotalPointsScoredInCurrentGame] ; $4246
 	ld b, a ; $4249
 	inc b ; $424a
@@ -955,7 +955,7 @@ Unused_0b_469e:
 	; $469e, 2 bytes (bytes:2)
 	db $00, $02 ; 0x00
 QueueDrillMarker1_0b:
-	ld a, [$c78b] ; $46a0
+	ld a, [wDrillGateActive] ; $46a0
 	and a, a ; $46a3
 	ret z ; $46a4
 	ld bc, $0000 ; $46a5
@@ -974,7 +974,7 @@ QueueDrillMarker1_0b:
 	call QueueSpriteTemplate ; $46c0
 	ret ; $46c3
 QueueDrillMarker2_0b:
-	ld a, [$c78b] ; $46c4
+	ld a, [wDrillGateActive] ; $46c4
 	and a, a ; $46c7
 	ret z ; $46c8
 	ld bc, $0000 ; $46c9
@@ -1120,11 +1120,11 @@ ClearBGForDrillResult:
 	call FillMemoryBC_0b ; $47e9
 	wram_bank $03 ; $47ec
 	ld a, $20 ; $47f2
-	ld hl, $d000 ; $47f4
+	ld hl, wShadowTilemap ; $47f4
 	ld bc, $0500 ; $47f7
 	call FillMemoryBC_0b ; $47fa
 	wram_bank $03 ; $47fd
-	ld hl, $d000 ; $4803
+	ld hl, wShadowTilemap ; $4803
 	ld de, $9800 ; $4806
 	ld c, $24 ; $4809
 	call QueueVRAMCopy ; $480b
@@ -1414,7 +1414,7 @@ ServiceMatch2Hook_PointStart:
 	ld a, $0a ; $49f9
 	ld [wDrillAbortCountdown], a ; $49fb
 	ld a, $01 ; $49fe
-	ld [$c78b], a ; $4a00
+	ld [wDrillGateActive], a ; $4a00
 	ld hl, DrillPositions_0b_4a6a ; $4a03
 	call IndexDrillTableByPoint ; $4a06
 	ld a, [wTotalPointsScoredInCurrentGame] ; $4a09
@@ -1646,9 +1646,9 @@ ServiceMatch2Cases1:
 	farcall DidBallCrossGate ; $4ba9
 	jr z, ServiceMatch2Cases2.storeMatchAbortFlag ; $4bac
 	xor a, a ; $4bae
-	ld [$c78b], a ; $4baf
+	ld [wDrillGateActive], a ; $4baf
 	xor a, a ; $4bb2
-	ld [$c78b], a ; $4bb3
+	ld [wDrillGateActive], a ; $4bb3
 	xor a, a ; $4bb6
 	ret ; $4bb7
 .dispatchResult:
@@ -2541,7 +2541,7 @@ ServicePractice3Hook_PointStart:
 	ld hl, ServicePractice3TargetZones ; $5221
 	call SetDrillTargetZoneForPoint ; $5224
 	ld a, $01 ; $5227
-	ld [$c78b], a ; $5229
+	ld [wDrillGateActive], a ; $5229
 	ld hl, DrillPositions_0b_52e0 ; $522c
 	call IndexDrillTableByPoint ; $522f
 	xor a, a ; $5232

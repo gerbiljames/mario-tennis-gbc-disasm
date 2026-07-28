@@ -422,7 +422,7 @@ SetBallTargetFromAim_2c:
 	add hl, hl ; $423c
 	ld a, h ; $423d
 	and a, $1f ; $423e
-	ld [$c472], a ; $4240
+	ld [wShotAimRow], a ; $4240
 	add a, a ; $4243
 	pop hl ; $4244
 	pop de ; $4245

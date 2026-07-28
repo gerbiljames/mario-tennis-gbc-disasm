@@ -1484,7 +1484,7 @@ CopyMapToScrollBuffers:
 	call CopyMemoryFast ; $08c9
 	wram_bank $03 ; $08cc
 	ld hl, wTextBuffer ; $08d2
-	ld de, $d000 ; $08d5
+	ld de, wShadowTilemap ; $08d5
 	call CopyMapRows32To64 ; $08d8
 	wram_bank $01 ; $08db
 	ld hl, $d600 ; $08e1

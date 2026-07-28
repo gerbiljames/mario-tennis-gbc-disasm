@@ -429,7 +429,11 @@ wBallGroundProjX:: dw
 
 ; [16-bit] Projected screen-space Y of the ball's ground position (companion to wBallGroundProjX, from the bc return of ProjectWorldToScreen at $08:$526d).
 wBallGroundProjY:: dw
-	ds 8
+	ds 2
+
+; [8-bit] Aim row (0-$1f) the shot banks derive from the ball's angle to index their per-aim target tables. Written by every bank's SetBallTargetFromAim and read by nothing -- the value is used from a, so this is a leftover store
+wShotAimRow:: db
+	ds 5
 
 ; [16-bit] Camera X offset added before the <<3 screen projection (Func_08_59bb)
 wCameraOffsetX:: dw
@@ -731,7 +735,7 @@ wCharSelectPrevChar:: db
 wCharSelectCol:: db
 ; [8-bit] Char-select cursor row in the roster grid
 wCharSelectRow:: db
-	ds 6
+	ds 7
 NEXTU
 ; minigames (bank $0d)
 ; [16-bit] Serves the minigame has launched. LaunchMinigameServe increments it and derives the ball speed from it (count / 10, capped at $19), so the feed speeds up as the round goes on
@@ -752,9 +756,12 @@ wMinigameHitScored:: db
 wMinigameHitStreak:: db
 ; [8-bit] Treasure Box actor state, stepped by AdvanceTreasureBoxActorState and used by DrawTreasureBoxSprite to pick the frame
 wTreasureBoxState:: db
+NEXTU
+; training drills (bank $0b)
+	ds 11
+; [8-bit] Set while the serve gate is still standing: RecordGateCrossOnServe clears it once the serve has passed through (and records the bit in wDrillGateCrossBits), and QueueDrillMarker1/2 only draw the gate markers while it is set
+wDrillGateActive:: db
 ENDU
-
-	ds 1
 
 ; [8-bit] Nonzero draws the 4-corner court target zone (training drills)
 wTargetZoneEnabled:: db
@@ -1518,7 +1525,24 @@ wMenuBgScrollAttr:: dw
 
 ; [8-bit] Which lane TickMenuBgScroll queues this tick; it alternates 0/1
 wMenuBgScrollLane:: db
-	ds 12
+	ds 1
+
+; [8-bit] Cell index the main-menu cursor was last left on, so the menu reopens where you were; RunMainMenu restores it through SetMenuCursorFromCellIndex and stores it back on exit. Cleared with the other saved cursors when a new game starts
+wMainMenuCursor:: db
+
+; [8-bit] Saved cursor cell for the saved-data source menu (RunSavedDataSourceSelect)
+wSavedDataMenuCursor:: db
+
+; [8-bit] Saved cursor cell for the N64 transfer item menu (RunN64TransferItemSelect)
+wN64TransferMenuCursor:: db
+
+; [8-bit] Saved cursor cell shared by the N64 record-type menu and the two court-select menus in bank $3e
+wSubMenuCursor:: db
+	ds 1
+
+; [8-bit] Minigame chosen on the minigame-select screen; RunMinigameModeFlow turns it into the config-table row (index * 3 + wMinigameLevel) and RunMinigameRulesPages picks the rules pages from it
+wSelectedMinigame:: db
+	ds 5
 
 ; [8-bit] Window handle owned by bank $1a's menu code. Stored from the return value of CreateMenuWindowFromText ($1a:$403c) and CreateWindow ($1a:$43c0), then passed in a to RunMenuSelectionShared ($1a:$404b), CloseWindow ($1a:$4070, $1a:$444d), WriteStringToWindow ($1a:$43df/$43f9) and GetWindowStructPtr ($1a:$4149).
 wPauseMenuWindowId:: db
@@ -1556,7 +1580,14 @@ wTennisDictMode:: db
 
 ; [8-bit] Study Vocabulary screen (bank $3f) display flags, cleared at $3f:$40c5. bit 0 = a description window is open: set at $3f:$5620 before CreateDialogueWindow, cleared at $3f:$5699/$413a, and freezes the hand-cursor animation counter $cb3e ($3f:$4f8c). bit 1 = the scrolling term list is on screen (set $3f:$414d/$41d0, cleared $3f:$421a for the index page); gates drawing of the cursor sprites ($3f:$4f85) and shifts the index-page sprites by $10 px ($3f:$4f1f/$4f3a/$4f55/$4f70). bit 2 / bit 3 = flash the left / right page arrow this frame - set on LEFT ($3f:$571b) and RIGHT ($3f:$5731), drawn from SpriteTemplate_3f_5006 at X $18 / $88 ($3f:$4fc9/$4fdc), and both cleared at the top of every input tick ($3f:$560a).
 wTennisDictFlags:: db
-	ds 7
+
+; [8-bit] Animation state of the tennis-dictionary mascot: 3 and 4 alternate on a wTennisDictAnimTimer expiry, and StartTennisDictionaryAnim restarts it from the VBlank counter's low bits so the pose varies
+wTennisDictAnimState:: db
+	ds 4
+
+; [8-bit] Frames left in the current wTennisDictAnimState; $b4 on a restart and $ff for the long idle
+wTennisDictAnimTimer:: db
+	ds 1
 
 ; [8-bit] Bank $6b cutscene driver (intro/title/award ceremony): current step index, dispatched through the per-scene jumptable
 wCutsceneStep:: db
@@ -1639,7 +1670,18 @@ w1_d58e:: db
 
 SECTION "WRAMX bank 3", WRAMX[$d000], BANK[3]
 
-	ds 147
+; Screen tilemap buffer, WRAM bank $03. The full-screen UIs assemble
+; their BG map here and QueueVRAMCopy it to $9800; wShadowTilemapBank /
+; wShadowTilemapPtr point the text engine at it. Rows are $20 cells
+; apart, so a cell is $d000 + row * $20 + column -- which is why so many
+; $d0xx-$d3xx addresses in the screen banks are literal cell addresses
+; and stay numeric. Only the base is named.
+; screen tilemap (any bank, where WRAM bank $03 is provable)
+; [8-bit] First cell of the screen tilemap buffer ($d000-$d3ff, 32 x 32 cells). The attribute plane is the same offset in the WRAM bank the screen pairs with it (bank $02 for the screens that upload to $b800)
+wShadowTilemap:: db
+	ds 3
+
+	ds 143
 
 w3_d093:: db
 	ds 58
@@ -2136,21 +2178,39 @@ w5_dc70:: db
 
 SECTION "WRAMX bank 6", WRAMX[$d000], BANK[6]
 
-	ds 4
-
 ; Character-data (level-up) screen working set, WRAM bank $06, shared by
-; the bank $1a/$1c/$1d screen code. The debug character viewer in bank
-; $1a borrows the first two bytes for its own cursor, so it gets its own
-; variant scoped to its code range.
+; the bank $1a/$1c/$1d screen code. The first four bytes are a smaller
+; scratch that three screens overlay -- the debug character viewer, the
+; results continue prompt and the character-data screen itself -- so those
+; get their own range-scoped variants ahead of it.
 UNION
 ; debug character viewer (bank $1a, $6800-$7000)
+; [8-bit] Which row of the debug character viewer the cursor is on, toggled with `xor $01`: 0 = the character grid, 1 = the palette row
+wCharViewerRow:: db
+; [8-bit] Cursor index within the current row; up/down step it by $0b, the grid width
+wCharViewerCursor:: db
+; [8-bit] Character the viewer is showing, chosen by RunCharViewerSelectGrid and turned into wCharViewerPalette by GetCharPaletteIndex
+wCharViewerCharId:: db
+; [8-bit] Grid cursor saved while the palette row has focus, so switching rows comes back to the same character
+wCharViewerSavedCursor:: db
 ; [8-bit] Palette index the debug character viewer is showing, from GetCharPaletteIndex
 wCharViewerPalette:: db
 ; [8-bit] Animation/pose index the debug character viewer is showing, stepped by RunCharViewerInputLoop
 wCharViewerPose:: db
 	ds 36
 NEXTU
+; results continue prompt (bank $1e)
+; [8-bit] Which continue prompt is up, stored from c by InitResultsPromptState
+wContinuePromptKind:: db
+; [8-bit] Cursor row, toggled 0/1 by up and down; picks which of the two cursor sprites DrawContinuePromptCursor queues
+wContinuePromptRow:: db
+; [8-bit] Which page of the prompt text is showing (RefreshContinuePromptText)
+wContinuePromptPage:: db
+; [8-bit] What the prompt returned: 1 confirm, $ff cancel, or wContinuePromptPage - 1
+wContinuePromptResult:: db
+NEXTU
 ; character-data screen (WRAM bank $06)
+	ds 4
 ; [8-bit] Level the character-data screen is committing; WriteCharStatsToDisplayBuffer stores it back into record +$18 (wStoryModeMainCharacterLevel)
 wCharDataLevel:: db
 ; [4 bytes] Spin/Power/Control/Speed levels the screen is committing; WriteCharStatsToDisplayBuffer stores them back into record +$38-$3b

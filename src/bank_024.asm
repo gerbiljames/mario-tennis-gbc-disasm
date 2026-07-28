@@ -427,7 +427,7 @@ LookupBallPosByAim_24:
 	add hl, hl ; $4244
 	ld a, h ; $4245
 	and a, $1f ; $4246
-	ld [$c472], a ; $4248
+	ld [wShotAimRow], a ; $4248
 	add a, a ; $424b
 	pop hl ; $424c
 	pop de ; $424d

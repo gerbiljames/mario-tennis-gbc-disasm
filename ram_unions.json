@@ -85,7 +85,7 @@
   },
   {
    "start": "0xc780",
-   "end": "0xc78b",
+   "end": "0xc78c",
    "comment": "Mode-local scratch ($c780-$c78f is reused by each game mode;\nonly proven consumers are named, sites in other modes stay numeric)",
    "variants": [
     {
@@ -159,6 +159,20 @@
       "0xc78a": {
        "name": "wTreasureBoxState",
        "note": "[8-bit] Treasure Box actor state, stepped by AdvanceTreasureBoxActorState and used by DrawTreasureBoxSprite to pick the frame"
+      }
+     }
+    },
+    {
+     "context": "training drills (bank $0b)",
+     "scopes": [
+      {
+       "bank": "0x0b"
+      }
+     ],
+     "symbols": {
+      "0xc78b": {
+       "name": "wDrillGateActive",
+       "note": "[8-bit] Set while the serve gate is still standing: RecordGateCrossOnServe clears it once the serve has passed through (and records the bit in wDrillGateCrossBits), and QueueDrillMarker1/2 only draw the gate markers while it is set"
       }
      }
     }
@@ -1512,10 +1526,10 @@
    ]
   },
   {
-   "start": "0xd004",
+   "start": "0xd000",
    "wram_bank": "0x06",
    "end": "0xd02a",
-   "comment": "Character-data (level-up) screen working set, WRAM bank $06, shared by\nthe bank $1a/$1c/$1d screen code. The debug character viewer in bank\n$1a borrows the first two bytes for its own cursor, so it gets its own\nvariant scoped to its code range.",
+   "comment": "Character-data (level-up) screen working set, WRAM bank $06, shared by\nthe bank $1a/$1c/$1d screen code. The first four bytes are a smaller\nscratch that three screens overlay -- the debug character viewer, the\nresults continue prompt and the character-data screen itself -- so those\nget their own range-scoped variants ahead of it.",
    "variants": [
     {
      "context": "debug character viewer (bank $1a, $6800-$7000)",
@@ -1534,6 +1548,50 @@
       "0xd005": {
        "name": "wCharViewerPose",
        "note": "[8-bit] Animation/pose index the debug character viewer is showing, stepped by RunCharViewerInputLoop"
+      },
+      "0xd000": {
+       "name": "wCharViewerRow",
+       "note": "[8-bit] Which row of the debug character viewer the cursor is on, toggled with `xor $01`: 0 = the character grid, 1 = the palette row"
+      },
+      "0xd001": {
+       "name": "wCharViewerCursor",
+       "note": "[8-bit] Cursor index within the current row; up/down step it by $0b, the grid width"
+      },
+      "0xd002": {
+       "name": "wCharViewerCharId",
+       "note": "[8-bit] Character the viewer is showing, chosen by RunCharViewerSelectGrid and turned into wCharViewerPalette by GetCharPaletteIndex"
+      },
+      "0xd003": {
+       "name": "wCharViewerSavedCursor",
+       "note": "[8-bit] Grid cursor saved while the palette row has focus, so switching rows comes back to the same character"
+      }
+     }
+    },
+    {
+     "context": "results continue prompt (bank $1e)",
+     "scopes": [
+      {
+       "bank": "0x1e",
+       "start": "0x4000",
+       "end": "0x4d00"
+      }
+     ],
+     "symbols": {
+      "0xd000": {
+       "name": "wContinuePromptKind",
+       "note": "[8-bit] Which continue prompt is up, stored from c by InitResultsPromptState"
+      },
+      "0xd001": {
+       "name": "wContinuePromptRow",
+       "note": "[8-bit] Cursor row, toggled 0/1 by up and down; picks which of the two cursor sprites DrawContinuePromptCursor queues"
+      },
+      "0xd002": {
+       "name": "wContinuePromptPage",
+       "note": "[8-bit] Which page of the prompt text is showing (RefreshContinuePromptText)"
+      },
+      "0xd003": {
+       "name": "wContinuePromptResult",
+       "note": "[8-bit] What the prompt returned: 1 confirm, $ff cancel, or wContinuePromptPage - 1"
       }
      }
     },
@@ -1758,6 +1816,28 @@
       "0xc2ba": {
        "name": "wSwingContestHudMode",
        "note": "[8-bit] Which HUD panels QueueWaterSpriteMinigameHudPanels draws"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "start": "0xd000",
+   "wram_bank": "0x03",
+   "end": "0xd004",
+   "comment": "Screen tilemap buffer, WRAM bank $03. The full-screen UIs assemble\ntheir BG map here and QueueVRAMCopy it to $9800; wShadowTilemapBank /\nwShadowTilemapPtr point the text engine at it. Rows are $20 cells\napart, so a cell is $d000 + row * $20 + column -- which is why so many\n$d0xx-$d3xx addresses in the screen banks are literal cell addresses\nand stay numeric. Only the base is named.",
+   "variants": [
+    {
+     "context": "screen tilemap (any bank, where WRAM bank $03 is provable)",
+     "scopes": [
+      {
+       "wram_bank": "0x03"
+      }
+     ],
+     "symbols": {
+      "0xd000": {
+       "name": "wShadowTilemap",
+       "note": "[8-bit] First cell of the screen tilemap buffer ($d000-$d3ff, 32 x 32 cells). The attribute plane is the same offset in the WRAM bank the screen pairs with it (bank $02 for the screens that upload to $b800)"
       }
      }
     }

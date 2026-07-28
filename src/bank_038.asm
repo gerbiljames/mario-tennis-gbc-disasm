@@ -1004,7 +1004,7 @@ MatchTypeOptionBoxesTable2:
 	db $58, $08, $58, $38, $58, $68, $c9, $c9 ; 0x00
 SetupMatchTypeMenuScreen:
 	ld b, $01 ; $460f
-	ld a, [$cb1b] ; $4611
+	ld a, [wMainMenuCursor] ; $4611
 	ld c, a ; $4614
 	call SetMenuCursorFromLinearIndex ; $4615
 	ld c, $00 ; $4618

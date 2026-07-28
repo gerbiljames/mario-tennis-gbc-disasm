@@ -126,7 +126,7 @@ LoadScreenAssetRecord:
 	ld h, [hl] ; $40bb
 	ld l, a ; $40bc
 	wram_bank $03 ; $40bd
-	ld de, $d000 ; $40c3
+	ld de, wShadowTilemap ; $40c3
 	call DecompressDataFromBank ; $40c6
 	pop hl ; $40c9
 	inc hl ; $40ca
@@ -225,7 +225,7 @@ ScreenAssetRecordTable:
 	dslot DataPtr_AwardCeremonyTiles, DataPtr_AwardCeremonyTilesAlias1, DataPtr_AwardCeremonyTilesAlias2, DataPtr_AwardCeremonyTilesAlias3 ; record 69
 QueueWram3MapToVRAM:
 	wram_bank $03 ; $4325
-	ld hl, $d000 ; $432b
+	ld hl, wShadowTilemap ; $432b
 	ld de, $9800 ; $432e
 	ld c, $40 ; $4331
 	call QueueVRAMCopy ; $4333
@@ -1014,7 +1014,7 @@ LoadStadiumBgGraphics:
 	call QueueVRAMCopy ; $4c5d
 	wram_bank $03 ; $4c60
 	ld hl, $3c0a ; $4c66 -> DataPtr_StadiumTilemap
-	ld de, $d000 ; $4c69
+	ld de, wShadowTilemap ; $4c69
 	call DecompressDataFromBank ; $4c6c
 	ld hl, $3c0a ; $4c6f -> DataPtr_StadiumTilemap
 	ld de, wScreenScratch ; $4c72
@@ -1048,7 +1048,7 @@ FlushWram3MapRows:
 	or a, a ; $4cb9
 	jr nz, .mode1 ; $4cba
 	ld c, $04 ; $4cbc
-	ld hl, $d000 ; $4cbe
+	ld hl, wShadowTilemap ; $4cbe
 	ld de, $9800 ; $4cc1
 	call QueueVRAMCopy ; $4cc4
 	ld c, $04 ; $4cc7
@@ -1085,7 +1085,7 @@ FlushWram3MapRows:
 	cp a, $01 ; $4d1a
 	jr nz, .mode2 ; $4d1c
 	ld c, $04 ; $4d1e
-	ld hl, $d000 ; $4d20
+	ld hl, wShadowTilemap ; $4d20
 	ld de, $9800 ; $4d23
 	call QueueVRAMCopy ; $4d26
 	ld c, $04 ; $4d29
@@ -1114,7 +1114,7 @@ FlushWram3MapRows:
 	cp a, $02 ; $4d65
 	jr nz, .mode3 ; $4d67
 	ld c, $04 ; $4d69
-	ld hl, $d000 ; $4d6b
+	ld hl, wShadowTilemap ; $4d6b
 	ld de, $9800 ; $4d6e
 	call QueueVRAMCopy ; $4d71
 	ld c, $04 ; $4d74
@@ -1141,7 +1141,7 @@ FlushWram3MapRows:
 	jr .done ; $4dae
 .mode3:
 	ld c, $04 ; $4db0
-	ld hl, $d000 ; $4db2
+	ld hl, wShadowTilemap ; $4db2
 	ld de, $9800 ; $4db5
 	call QueueVRAMCopy ; $4db8
 	ld c, $04 ; $4dbb
@@ -1176,7 +1176,7 @@ RestoreMenuBgAndDrawPanel:
 	push de ; $4df1
 	push hl ; $4df2
 	ld hl, wScreenScratch ; $4df3
-	ld de, $d000 ; $4df6
+	ld de, wShadowTilemap ; $4df6
 	ld b, $14 ; $4df9
 	ld c, $10 ; $4dfb
 	call CopyTilemapRect ; $4dfd

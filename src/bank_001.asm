@@ -28,7 +28,7 @@ RunDebugTestMenu:
 	ld c, $00 ; $403d
 	call ClearMemory16 ; $403f
 	wram_bank $03 ; $4042
-	ld hl, $d000 ; $4048
+	ld hl, wShadowTilemap ; $4048
 	ld c, $00 ; $404b
 	call ClearMemory16 ; $404d
 	wram_bank $04 ; $4050

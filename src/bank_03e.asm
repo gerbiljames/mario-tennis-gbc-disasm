@@ -3081,7 +3081,7 @@ LoadShoesSelectScreen:
 	call LoadEquipSelectCommon ; $569e
 	wram_bank $03 ; $56a1
 	ld hl, $d340 ; $56a7
-	ld de, $d000 ; $56aa
+	ld de, wShadowTilemap ; $56aa
 	ld b, $14 ; $56ad
 	ld c, $04 ; $56af
 	farcall CopyTilemapRect ; $56b1
@@ -3737,7 +3737,7 @@ RunCourtSelect4Menu:
 	ld a, [wMenuSlideDirection] ; $5bb6
 	ld b, a ; $5bb9
 	call OpenCourtSelect4Panel ; $5bba
-	ld a, [$cb1e] ; $5bbd
+	ld a, [wSubMenuCursor] ; $5bbd
 	ld c, a ; $5bc0
 	ld b, $02 ; $5bc1
 	call SetMenuCursorFromIndex_3e ; $5bc3
@@ -3809,7 +3809,7 @@ RunLinkCourtSelect4Menu:
 	ld a, [wMenuSlideDirection] ; $5c59
 	ld b, a ; $5c5c
 	call OpenCourtSelect4Panel ; $5c5d
-	ld a, [$cb1e] ; $5c60
+	ld a, [wSubMenuCursor] ; $5c60
 	ld c, a ; $5c63
 	ld b, $02 ; $5c64
 	call SetMenuCursorFromIndex_3e ; $5c66
@@ -4654,7 +4654,7 @@ RunLinkCourtSelect9Menu:
 	ld a, [wMenuSlideDirection] ; $65f6
 	ld b, a ; $65f9
 	call OpenCourtSelect9Panel ; $65fa
-	ld a, [$cb1e] ; $65fd
+	ld a, [wSubMenuCursor] ; $65fd
 	ld c, a ; $6600
 	ld b, $03 ; $6601
 	call SetMenuCursorFromIndex_3e ; $6603

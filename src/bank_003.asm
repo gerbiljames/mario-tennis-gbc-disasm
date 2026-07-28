@@ -3951,7 +3951,7 @@ RunScrollingTextScreen:
 	ld h, [hl] ; $5a26
 	ld l, a ; $5a27
 	wram_bank $03 ; $5a28
-	ld de, $d000 ; $5a2e
+	ld de, wShadowTilemap ; $5a2e
 	ld c, $10 ; $5a31
 	farcall FetchAndDrawDialogueText ; $5a33
 	call TestTextEndMarker ; $5a36
@@ -3966,7 +3966,7 @@ RunScrollingTextScreen:
 	call GetScrollTextRowVramAddr ; $5a4c
 	push de ; $5a4f
 	wram_bank $03 ; $5a50
-	ld hl, $d000 ; $5a56
+	ld hl, wShadowTilemap ; $5a56
 	ld c, $02 ; $5a59
 	call QueueVRAMCopy ; $5a5b
 	pop de ; $5a5e
@@ -3999,7 +3999,7 @@ RunScrollingTextScreen:
 	wram_bank $03 ; $5a87
 	xor a, a ; $5a8d
 	ld b, $40 ; $5a8e
-	ld hl, $d000 ; $5a90
+	ld hl, wShadowTilemap ; $5a90
 .loopB:
 	ld [hl+], a ; $5a93
 	inc b ; $5a94
@@ -4036,9 +4036,9 @@ InitScrollingTextScreen:
 	wram_bank $03 ; $5adc
 	ld bc, $0400 ; $5ae2
 	ld d, $20 ; $5ae5
-	ld hl, $d000 ; $5ae7
+	ld hl, wShadowTilemap ; $5ae7
 	call FillMemoryBC ; $5aea
-	ld hl, $d000 ; $5aed
+	ld hl, wShadowTilemap ; $5aed
 	ld de, $9800 ; $5af0
 	ld c, $40 ; $5af3
 	call QueueVRAMCopy ; $5af5
@@ -4069,7 +4069,7 @@ GetScrollTextRowVramAddr:
 	ld e, l ; $5b18
 	ret ; $5b19
 TestTextEndMarker:
-	ld a, [$d000] ; $5b1a
+	ld a, [wShadowTilemap] ; $5b1a
 	sub a, $23 ; $5b1d
 	ret ; $5b1f
 ScrollTextPalette_03:
@@ -5913,7 +5913,7 @@ ShowStoryResultScreen:
 	ld b, $00 ; $7531
 	call FillMemoryDE ; $7533
 	wram_bank $03 ; $7536
-	ld hl, $d000 ; $753c
+	ld hl, wShadowTilemap ; $753c
 	ld de, $0240 ; $753f
 	ld b, $20 ; $7542
 	call FillMemoryDE ; $7544
@@ -5931,7 +5931,7 @@ ShowStoryResultScreen:
 	ld c, $24 ; $756b
 	call QueueVRAMCopy ; $756d
 	wram_bank $03 ; $7570
-	ld hl, $d000 ; $7576
+	ld hl, wShadowTilemap ; $7576
 	ld de, $9800 ; $7579
 	ld c, $24 ; $757c
 	call QueueVRAMCopy ; $757e

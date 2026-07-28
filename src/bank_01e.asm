@@ -71,15 +71,15 @@ ShowMatchResultsScreen:
 	ld a, [hl+] ; $40a5
 	ld h, [hl] ; $40a6
 	ld l, a ; $40a7
-	ld a, [$d003] ; $40a8
+	ld a, [wContinuePromptResult] ; $40a8
 	ret ; $40ab
 InitResultsPromptState:
 	wram_bank $06 ; $40ac
 	ld a, c ; $40b2
-	ld [$d000], a ; $40b3
+	ld [wContinuePromptKind], a ; $40b3
 	xor a, a ; $40b6
-	ld [$d001], a ; $40b7
-	ld [$d002], a ; $40ba
+	ld [wContinuePromptRow], a ; $40b7
+	ld [wContinuePromptPage], a ; $40ba
 	ret ; $40bd
 BuildResultsScreenTilemap:
 	call LoadResultsScreenGraphics ; $40be
@@ -94,12 +94,12 @@ BuildResultsScreenTilemap:
 	call BuildResultsScreenPanels ; $40d9
 	call DrawPlayerNameAndLevel ; $40dc
 	wram_bank $03 ; $40df
-	ld hl, $d000 ; $40e5
+	ld hl, wContinuePromptKind ; $40e5
 	ld de, $9800 ; $40e8
 	ld c, $24 ; $40eb
 	call QueueVRAMCopy ; $40ed
 	wram_bank $02 ; $40f0
-	ld hl, $d000 ; $40f6
+	ld hl, wContinuePromptKind ; $40f6
 	ld de, $b800 ; $40f9
 	ld c, $24 ; $40fc
 	call QueueVRAMCopy ; $40fe
@@ -114,9 +114,9 @@ LoadResultsScreenGraphics:
 	call LoadPaletteShadow ; $4114
 	wram_bank $01 ; $4117
 	ld hl, ResultsScreenGfx_1e ; $411d
-	ld de, $d000 ; $4120
+	ld de, wContinuePromptKind ; $4120
 	call DecompressData ; $4123
-	ld hl, $d000 ; $4126
+	ld hl, wContinuePromptKind ; $4126
 	ld de, $b000 ; $4129
 	ld c, $80 ; $412c
 	call QueueVRAMCopy ; $412e
@@ -126,23 +126,23 @@ LoadResultsScreenGraphics:
 	call QueueVRAMCopy ; $4139
 	wram_bank $01 ; $413c
 	ld hl, ResultsScreenTilemap_1e ; $4142
-	ld de, $d000 ; $4145
+	ld de, wContinuePromptKind ; $4145
 	call DecompressData ; $4148
-	ld hl, $d000 ; $414b
+	ld hl, wContinuePromptKind ; $414b
 	ld bc, $0240 ; $414e
 	call ResultsCopyToTilemap ; $4151
 	wram_bank $01 ; $4154
 	ld hl, ResultsScreenAttrmap_1e ; $415a
-	ld de, $d000 ; $415d
+	ld de, wContinuePromptKind ; $415d
 	call DecompressData ; $4160
-	ld hl, $d000 ; $4163
+	ld hl, wContinuePromptKind ; $4163
 	ld bc, $0240 ; $4166
 	call ResultsCopyToAttrmap ; $4169
 	wram_bank $01 ; $416c
 	ld hl, PanelFrameGfx_1e ; $4172
-	ld de, $d000 ; $4175
+	ld de, wContinuePromptKind ; $4175
 	call DecompressData ; $4178
-	ld hl, $d000 ; $417b
+	ld hl, wContinuePromptKind ; $417b
 	ld de, $9000 ; $417e
 	ld c, $10 ; $4181
 	call QueueVRAMCopy ; $4183
@@ -172,7 +172,7 @@ ResultsCopyToAttrmap:
 BuildResultsScreenPanels:
 	wram_bank $03 ; $41b1
 	ld a, $02 ; $41b7
-	ld [$d000], a ; $41b9
+	ld [wContinuePromptKind], a ; $41b9
 	ld a, $04 ; $41bc
 	ld [$d013], a ; $41be
 	ld a, $07 ; $41c1
@@ -180,7 +180,7 @@ BuildResultsScreenPanels:
 	ld a, $09 ; $41c6
 	ld [w3_d093], a ; $41c8
 	ld a, $03 ; $41cb
-	ld hl, $d001 ; $41cd
+	ld hl, wContinuePromptRow ; $41cd
 	ld c, $12 ; $41d0
 	call FillMemoryC ; $41d2
 	ld a, $08 ; $41d5
@@ -207,7 +207,7 @@ BuildResultsScreenPanels:
 	call FillMemoryC ; $420c
 	wram_bank $02 ; $420f
 	xor a, a ; $4215
-	ld hl, $d000 ; $4216
+	ld hl, wContinuePromptKind ; $4216
 	ld c, $a0 ; $4219
 	call FillMemoryC ; $421b
 	ld hl, $d041 ; $421e
@@ -323,19 +323,19 @@ BuildResultsScreenPanels:
 LoadSinglesLabelTiles:
 	wram_bank $01 ; $433a
 	ld hl, ResultsSinglesLabelTilemap_1e ; $4340
-	ld de, $d000 ; $4343
+	ld de, wContinuePromptKind ; $4343
 	call DecompressData ; $4346
 	ret ; $4349
 LoadDoublesLabelTiles:
 	wram_bank $01 ; $434a
 	ld hl, ResultsDoublesLabelTilemap_1e ; $4350
-	ld de, $d000 ; $4353
+	ld de, wContinuePromptKind ; $4353
 	call DecompressData ; $4356
 	ret ; $4359
 DrawResultsNameLabelRows:
 	or a, a ; $435a
 	jr nz, .doublesLayout ; $435b
-	ld hl, $d000 ; $435d
+	ld hl, wContinuePromptKind ; $435d
 	ld de, $d160 ; $4360
 	ld c, $07 ; $4363
 	call CopyLabelTilesToTilemap ; $4365
@@ -356,7 +356,7 @@ DrawResultsNameLabelRows:
 	ld [$d1a6], a ; $4392
 	ret ; $4395
 .doublesLayout:
-	ld hl, $d000 ; $4396
+	ld hl, wContinuePromptKind ; $4396
 	ld de, $d120 ; $4399
 	ld c, $07 ; $439c
 	call CopyLabelTilesToTilemap ; $439e
@@ -983,12 +983,12 @@ DrawPlayerNameAndLevel:
 	ret z ; $48a0
 	wram_bank $01 ; $48a1
 	ld hl, ResultsPlayerPanelTilemap_1e ; $48a7
-	ld de, $d000 ; $48aa
+	ld de, wContinuePromptKind ; $48aa
 	call DecompressData ; $48ad
 	ld hl, ResultsPlayerPanelAttrmap_1e ; $48b0
 	ld de, $d0c8 ; $48b3
 	call DecompressData ; $48b6
-	ld hl, $d000 ; $48b9
+	ld hl, wContinuePromptKind ; $48b9
 	ld de, $d0a0 ; $48bc
 	ld c, $08 ; $48bf
 	call CopyTilesAndAttrsRun ; $48c1
@@ -1129,7 +1129,7 @@ InitResultsScreenCharacters:
 	ld de, $0f01 ; $49ee
 	farcall LoadIndexedPaletteThunk ; $49f1
 	wram_bank $06 ; $49f4
-	ld a, [$d000] ; $49fa
+	ld a, [wContinuePromptKind] ; $49fa
 	or a, a ; $49fd
 	jr nz, .nonZero2 ; $49fe
 	wram_bank $04 ; $4a00
@@ -1309,7 +1309,7 @@ RunContinuePrompt:
 	jr RunContinuePrompt ; $4b44
 DrawContinuePromptCursor:
 	wram_bank $06 ; $4b46
-	ld a, [$d001] ; $4b4c
+	ld a, [wContinuePromptRow] ; $4b4c
 	or a, a ; $4b4f
 	jr nz, .nonZero ; $4b50
 	ld de, $7a3c ; $4b52
@@ -1323,64 +1323,64 @@ DrawContinuePromptCursor:
 .playSfx:
 	sound $5e ; $4b61
 	wram_bank $06 ; $4b63
-	ld a, [$d001] ; $4b69
+	ld a, [wContinuePromptRow] ; $4b69
 	xor a, $01 ; $4b6c
-	ld [$d001], a ; $4b6e
+	ld [wContinuePromptRow], a ; $4b6e
 	jr RunContinuePrompt ; $4b71
 .playSfx2:
 	sound $5f ; $4b73
 	wram_bank $06 ; $4b75
-	ld a, [$d002] ; $4b7b
+	ld a, [wContinuePromptPage] ; $4b7b
 	or a, a ; $4b7e
 	jr nz, .nonZero2 ; $4b7f
-	ld a, [$d001] ; $4b81
+	ld a, [wContinuePromptRow] ; $4b81
 	or a, a ; $4b84
 	jr z, .zero ; $4b85
 	ld a, $01 ; $4b87
-	ld [$d002], a ; $4b89
+	ld [wContinuePromptPage], a ; $4b89
 	call RefreshContinuePromptText ; $4b8c
 	jr RunContinuePrompt ; $4b8f
 .nonZero2:
-	ld a, [$d001] ; $4b91
+	ld a, [wContinuePromptRow] ; $4b91
 	or a, a ; $4b94
 	jr z, .zero2 ; $4b95
 .loop:
 	xor a, a ; $4b97
-	ld [$d002], a ; $4b98
+	ld [wContinuePromptPage], a ; $4b98
 	call RefreshContinuePromptText ; $4b9b
 	jr RunContinuePrompt ; $4b9e
 .zero:
 	ld a, $01 ; $4ba0
-	ld [$d003], a ; $4ba2
+	ld [wContinuePromptResult], a ; $4ba2
 	ret ; $4ba5
 .zero2:
-	ld a, [$d002] ; $4ba6
+	ld a, [wContinuePromptPage] ; $4ba6
 	add a, $ff ; $4ba9
-	ld [$d003], a ; $4bab
+	ld [wContinuePromptResult], a ; $4bab
 	ret ; $4bae
 .playSfx3:
 	sound $62 ; $4baf
 	wram_bank $06 ; $4bb1
-	ld a, [$d002] ; $4bb7
+	ld a, [wContinuePromptPage] ; $4bb7
 	or a, a ; $4bba
 	jr nz, .nonZero3 ; $4bbb
 	ld a, $ff ; $4bbd
-	ld [$d003], a ; $4bbf
+	ld [wContinuePromptResult], a ; $4bbf
 	ld a, $00 ; $4bc2
 	ld [wMenuSlideDirection], a ; $4bc4
 	ret ; $4bc7
 .nonZero3:
 	jr .loop ; $4bc8
 RefreshContinuePromptText:
-	ld a, [$d002] ; $4bca
+	ld a, [wContinuePromptPage] ; $4bca
 	or a, a ; $4bcd
 	jr nz, .nonZero ; $4bce
 	xor a, a ; $4bd0
-	ld [$d001], a ; $4bd1
+	ld [wContinuePromptRow], a ; $4bd1
 	call ClearContinuePromptRows ; $4bd4
 	ld hl, wCharDataChoiceLog + 23 ; $4bd7
 	call DrawContinuePromptText ; $4bda
-	ld hl, $d000 ; $4bdd
+	ld hl, wContinuePromptKind ; $4bdd
 	ld de, $9800 ; $4be0
 	ld c, $08 ; $4be3
 	call QueueVRAMCopy ; $4be5
@@ -1388,13 +1388,13 @@ RefreshContinuePromptText:
 	ret ; $4bee
 .nonZero:
 	ld a, $01 ; $4bef
-	ld [$d001], a ; $4bf1
+	ld [wContinuePromptRow], a ; $4bf1
 	call ClearContinuePromptRows ; $4bf4
 	ld hl, wCharDataStatDeltas + 8 ; $4bf7
 	call DrawSaveWarningTextLine1 ; $4bfa
 	ld hl, wCharDataChoiceLog + 55 ; $4bfd
 	call DrawSaveWarningTextLine2 ; $4c00
-	ld hl, $d000 ; $4c03
+	ld hl, wContinuePromptKind ; $4c03
 	ld de, $9800 ; $4c06
 	ld c, $08 ; $4c09
 	call QueueVRAMCopy ; $4c0b
@@ -1403,7 +1403,7 @@ RefreshContinuePromptText:
 ClearContinuePromptRows:
 	wram_bank $03 ; $4c15
 	ld a, $03 ; $4c1b
-	ld hl, $d001 ; $4c1d
+	ld hl, wContinuePromptRow ; $4c1d
 	ld c, $12 ; $4c20
 	call FillMemoryC ; $4c22
 	ld a, $20 ; $4c25
@@ -1520,7 +1520,7 @@ BuildExpAwardScreenTilemap:
 	call LoadExpAwardScreenGraphics ; $54f5
 	call DrawExpAwardScreenPanels ; $54f8
 	wram_bank $03 ; $54fb
-	ld hl, $d000 ; $5501
+	ld hl, wShadowTilemap ; $5501
 	ld de, $9800 ; $5504
 	ld c, $24 ; $5507
 	call QueueVRAMCopy ; $5509
@@ -2205,7 +2205,7 @@ BeginNextExpAward:
 	ld [hl+], a ; $5b39
 	ld [hl], b ; $5b3a
 	wram_bank $03 ; $5b3b
-	ld hl, $d000 ; $5b41
+	ld hl, wShadowTilemap ; $5b41
 	ld de, $9800 ; $5b44
 	ld c, $08 ; $5b47
 	call QueueVRAMCopy ; $5b49

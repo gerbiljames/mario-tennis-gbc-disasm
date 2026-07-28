@@ -902,7 +902,7 @@ IntroCutsceneState11Init_6b:
 	ld hl, rLCDC ; $4891
 	set 3, [hl] ; $4894
 	wram_bank $03 ; $4896
-	ld hl, $d000 ; $489c
+	ld hl, wShadowTilemap ; $489c
 	ld de, $9c00 ; $489f
 	ld c, $40 ; $48a2
 	call QueueVRAMCopy ; $48a4
@@ -1700,7 +1700,7 @@ InitCutsceneSceneA:
 	call DecompressData ; $5436
 	wram_bank $03 ; $5439
 	ld hl, CutsceneSceneAGfx2 ; $543f
-	ld de, $d000 ; $5442
+	ld de, wShadowTilemap ; $5442
 	call DecompressData ; $5445
 	xor a, a ; $5448
 	ld [wCameraY], a ; $5449
@@ -1734,7 +1734,7 @@ InitCutsceneSceneB:
 	call DecompressData ; $5498
 	wram_bank $03 ; $549b
 	ld hl, CutsceneSceneBGfx0 ; $54a1
-	ld de, $d000 ; $54a4
+	ld de, wShadowTilemap ; $54a4
 	call DecompressData ; $54a7
 	xor a, a ; $54aa
 	ld [wCameraY], a ; $54ab
@@ -1765,7 +1765,7 @@ InitCutsceneSceneC:
 	call DecompressData ; $54f3
 	wram_bank $03 ; $54f6
 	ld hl, CutsceneSceneBGfx0 ; $54fc
-	ld de, $d000 ; $54ff
+	ld de, wShadowTilemap ; $54ff
 	call DecompressData ; $5502
 	ld hl, Palette_6b_5d25 ; $5505
 	ld de, $0008 ; $5508
@@ -1929,7 +1929,7 @@ InitTitleSceneGraphics:
 	call DecompressData ; $61b6
 	wram_bank $03 ; $61b9
 	ld hl, TitleSceneGraphicsGfx1 ; $61bf
-	ld de, $d000 ; $61c2
+	ld de, wShadowTilemap ; $61c2
 	call DecompressData ; $61c5
 	ld hl, Palette_6b_7043 ; $61c8
 	ld de, $0008 ; $61cb

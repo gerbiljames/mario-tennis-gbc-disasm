@@ -236,7 +236,7 @@ CharDataScreen_BuildTilemap:
 	call CharDataScreen_DrawStats ; $41df
 	call CharDataScreen_DrawPortrait ; $41e2
 	wram_bank $03 ; $41e5
-	ld hl, $d000 ; $41eb
+	ld hl, wShadowTilemap ; $41eb
 	ld de, $9800 ; $41ee
 	ld c, $24 ; $41f1
 	call QueueVRAMCopy ; $41f3
@@ -958,7 +958,7 @@ DrawCharStatRows:
 	ret ; $48c8
 BackupCharDataScreenRow:
 	wram_bank $03 ; $48c9
-	ld hl, $d000 ; $48cf
+	ld hl, wShadowTilemap ; $48cf
 	ld de, $d430 ; $48d2
 	ld c, $24 ; $48d5
 	call CopyMemoryFast ; $48d7
@@ -971,7 +971,7 @@ BackupCharDataScreenRow:
 RestoreCharDataScreenRow:
 	wram_bank $03 ; $48ec
 	ld hl, $d430 ; $48f2
-	ld de, $d000 ; $48f5
+	ld de, wShadowTilemap ; $48f5
 	ld c, $24 ; $48f8
 	call CopyMemoryFast ; $48fa
 	wram_bank $02 ; $48fd
@@ -1076,7 +1076,7 @@ FlushCharDataTilemapChunk:
 	ret ; $49c4
 .queueVRAMCopy:
 	wram_bank $03 ; $49c5
-	ld hl, $d000 ; $49cb
+	ld hl, wShadowTilemap ; $49cb
 	ld de, $9800 ; $49ce
 	ld c, $0e ; $49d1
 	call QueueVRAMCopy ; $49d3
@@ -2618,7 +2618,7 @@ SetupCharDataScreen:
 	xor a, a ; $55aa
 	ld [wCharDataRevealTimer], a ; $55ab
 	wram_bank $03 ; $55ae
-	ld hl, $d000 ; $55b4
+	ld hl, wShadowTilemap ; $55b4
 	ld de, $9800 ; $55b7
 	ld c, $24 ; $55ba
 	call QueueVRAMCopy ; $55bc

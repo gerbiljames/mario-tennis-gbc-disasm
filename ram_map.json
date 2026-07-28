@@ -1947,5 +1947,37 @@
  "0xc7b5": {
   "name": "wAiServeAimOverride",
   "note": "[8-bit] Aim AiApplyServeAim must use for the next serve; $ff (set by RunMatch) means pick one at random from Data_08_7b0b. The drill point-start hooks write a specific aim so a lesson always serves where the script needs it"
+ },
+ "0xcb1b": {
+  "name": "wMainMenuCursor",
+  "note": "[8-bit] Cell index the main-menu cursor was last left on, so the menu reopens where you were; RunMainMenu restores it through SetMenuCursorFromCellIndex and stores it back on exit. Cleared with the other saved cursors when a new game starts"
+ },
+ "0xcb1c": {
+  "name": "wSavedDataMenuCursor",
+  "note": "[8-bit] Saved cursor cell for the saved-data source menu (RunSavedDataSourceSelect)"
+ },
+ "0xcb1d": {
+  "name": "wN64TransferMenuCursor",
+  "note": "[8-bit] Saved cursor cell for the N64 transfer item menu (RunN64TransferItemSelect)"
+ },
+ "0xcb1e": {
+  "name": "wSubMenuCursor",
+  "note": "[8-bit] Saved cursor cell shared by the N64 record-type menu and the two court-select menus in bank $3e"
+ },
+ "0xcb20": {
+  "name": "wSelectedMinigame",
+  "note": "[8-bit] Minigame chosen on the minigame-select screen; RunMinigameModeFlow turns it into the config-table row (index * 3 + wMinigameLevel) and RunMinigameRulesPages picks the rules pages from it"
+ },
+ "0xcb38": {
+  "name": "wTennisDictAnimState",
+  "note": "[8-bit] Animation state of the tennis-dictionary mascot: 3 and 4 alternate on a wTennisDictAnimTimer expiry, and StartTennisDictionaryAnim restarts it from the VBlank counter's low bits so the pose varies"
+ },
+ "0xcb3d": {
+  "name": "wTennisDictAnimTimer",
+  "note": "[8-bit] Frames left in the current wTennisDictAnimState; $b4 on a restart and $ff for the long idle"
+ },
+ "0xc472": {
+  "name": "wShotAimRow",
+  "note": "[8-bit] Aim row (0-$1f) the shot banks derive from the ball's angle to index their per-aim target tables. Written by every bank's SetBallTargetFromAim and read by nothing -- the value is used from a, so this is a leftover store"
  }
 }

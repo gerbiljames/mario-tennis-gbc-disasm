@@ -171,9 +171,9 @@ TennisDictionaryScreen:
 	ld a, $08 ; $40d1
 	ld [$cb39], a ; $40d3
 	ld a, $00 ; $40d6
-	ld [$cb38], a ; $40d8
+	ld [wTennisDictAnimState], a ; $40d8
 	ld a, $b4 ; $40db
-	ld [$cb3d], a ; $40dd
+	ld [wTennisDictAnimTimer], a ; $40dd
 	call LoadTennisDictionaryScreen ; $40e0
 	wram_bank $06 ; $40e3
 	xor a, a ; $40e9
@@ -482,7 +482,7 @@ LoadTennisDictionaryScreen:
 .decompressData:
 	wram_bank $03 ; $43cd
 	ld hl, TennisDictionaryListData ; $43d3
-	ld de, $d000 ; $43d6
+	ld de, wShadowTilemap ; $43d6
 	call DecompressData ; $43d9
 	wram_bank $03 ; $43dc
 	ld c, $0e ; $43e2
@@ -603,25 +603,25 @@ TennisDictionaryTilesA400:
 TennisDictionaryPalettes:
 	INCLUDE "data/bank_03f/palettes_4e39.asm" ; $4e39, 48 bytes (palettes)
 EndTennisDictionaryAnim:
-	ld a, [$cb38] ; $4e69
+	ld a, [wTennisDictAnimState] ; $4e69
 	cp a, $03 ; $4e6c
 	jr nc, .done ; $4e6e
 	ld a, $04 ; $4e70
-	ld [$cb38], a ; $4e72
+	ld [wTennisDictAnimState], a ; $4e72
 	ld a, $ff ; $4e75
-	ld [$cb3d], a ; $4e77
+	ld [wTennisDictAnimTimer], a ; $4e77
 .done:
 	ret ; $4e7a
 StartTennisDictionaryAnim:
 	ld a, $b4 ; $4e7b
-	ld [$cb3d], a ; $4e7d
+	ld [wTennisDictAnimTimer], a ; $4e7d
 	ldh a, [hVBlankCounter] ; $4e80
 	and a, $03 ; $4e82
 	cp a, $03 ; $4e84
 	jr nz, .store ; $4e86
 	xor a, a ; $4e88
 .store:
-	ld [$cb38], a ; $4e89
+	ld [wTennisDictAnimState], a ; $4e89
 	ret ; $4e8c
 UpdateTennisDictionarySprites:
 	ldh a, [hWramBank] ; $4e8d
@@ -636,29 +636,29 @@ UpdateTennisDictionarySprites:
 	sound $5f ; $4e9f
 	call StartTennisDictionaryAnim ; $4ea1
 .notTextWaitingForButton:
-	ld a, [$cb38] ; $4ea4
+	ld a, [wTennisDictAnimState] ; $4ea4
 	cp a, $04 ; $4ea7
 	jr nz, .compare ; $4ea9
-	ld a, [$cb3d] ; $4eab
+	ld a, [wTennisDictAnimTimer] ; $4eab
 	dec a ; $4eae
-	ld [$cb3d], a ; $4eaf
+	ld [wTennisDictAnimTimer], a ; $4eaf
 	jr nz, .checkTennisDictMode ; $4eb2
 	ld a, $03 ; $4eb4
-	ld [$cb38], a ; $4eb6
+	ld [wTennisDictAnimState], a ; $4eb6
 	jr .checkTennisDictMode ; $4eb9
 .compare:
 	cp a, $03 ; $4ebb
 	jr nz, .ne03 ; $4ebd
 	jr .checkTennisDictMode ; $4ebf
 .ne03:
-	ld a, [$cb3d] ; $4ec1
+	ld a, [wTennisDictAnimTimer] ; $4ec1
 	dec a ; $4ec4
-	ld [$cb3d], a ; $4ec5
+	ld [wTennisDictAnimTimer], a ; $4ec5
 	jr nz, .checkTennisDictMode ; $4ec8
 	ld a, $04 ; $4eca
-	ld [$cb38], a ; $4ecc
+	ld [wTennisDictAnimState], a ; $4ecc
 	ld a, $ff ; $4ecf
-	ld [$cb3d], a ; $4ed1
+	ld [wTennisDictAnimTimer], a ; $4ed1
 .checkTennisDictMode:
 	ld a, [wTennisDictMode] ; $4ed4
 	cp a, $06 ; $4ed7
@@ -678,7 +678,7 @@ UpdateTennisDictionarySprites:
 	ld [$cb3a], a ; $4ef3
 .countLeft:
 	ld hl, TennisDictionarySprites1 ; $4ef6
-	ld a, [$cb38] ; $4ef9
+	ld a, [wTennisDictAnimState] ; $4ef9
 	add a, a ; $4efc
 	add a, a ; $4efd
 	add a, a ; $4efe

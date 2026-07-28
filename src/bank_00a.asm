@@ -1942,11 +1942,11 @@ ClearBgTilemaps:
 	call FillMemoryFast ; $4d3d
 	wram_bank $03 ; $4d40
 	ld a, $20 ; $4d46
-	ld hl, $d000 ; $4d48
+	ld hl, wShadowTilemap ; $4d48
 	ld bc, $0500 ; $4d4b
 	call FillMemoryFast ; $4d4e
 	wram_bank $03 ; $4d51
-	ld hl, $d000 ; $4d57
+	ld hl, wShadowTilemap ; $4d57
 	ld de, $9800 ; $4d5a
 	ld c, $24 ; $4d5d
 	call QueueVRAMCopy ; $4d5f
@@ -3558,7 +3558,7 @@ LoadStorySceneGraphics:
 	call DecompressDataFromBank ; $58d9
 	wram_bank $03 ; $58dc
 	pop hl ; $58e2
-	ld de, $d000 ; $58e3
+	ld de, wShadowTilemap ; $58e3
 	call DecompressDataFromBank ; $58e6
 	wram_bank $01 ; $58e9
 	pop hl ; $58ef
@@ -4003,7 +4003,7 @@ LoadSceneGraphicsDirect:
 	call DecompressDataFromBank ; $5db4
 	wram_bank $03 ; $5db7
 	pop hl ; $5dbd
-	ld de, $d000 ; $5dbe
+	ld de, wShadowTilemap ; $5dbe
 	call DecompressDataFromBank ; $5dc1
 	pop hl ; $5dc4
 	wram_bank $01 ; $5dc5

@@ -3493,11 +3493,11 @@ ClearScreenMaps:
 	call FillBytesWithValue ; $652f
 	wram_bank $03 ; $6532
 	ld a, $20 ; $6538
-	ld hl, $d000 ; $653a
+	ld hl, wShadowTilemap ; $653a
 	ld bc, $0500 ; $653d
 	call FillBytesWithValue ; $6540
 	wram_bank $03 ; $6543
-	ld hl, $d000 ; $6549
+	ld hl, wShadowTilemap ; $6549
 	ld de, $9800 ; $654c
 	ld c, $24 ; $654f
 	call QueueVRAMCopy ; $6551

@@ -1257,10 +1257,10 @@ RunTitleAndMainMenuLoop:
 .newGame:
 	farcall InitDefaultMatchSettings ; $4f3c
 	xor a, a ; $4f3f
-	ld [$cb1b], a ; $4f40
-	ld [$cb1c], a ; $4f43
-	ld [$cb1d], a ; $4f46
-	ld [$cb1e], a ; $4f49
+	ld [wMainMenuCursor], a ; $4f40
+	ld [wSavedDataMenuCursor], a ; $4f43
+	ld [wN64TransferMenuCursor], a ; $4f46
+	ld [wSubMenuCursor], a ; $4f49
 	ld [wMatchFormatDoubles], a ; $4f4c
 	ld [wMatchFormatGames], a ; $4f4f
 	ld [wMatchFormatSets], a ; $4f52
@@ -1281,9 +1281,9 @@ RunTitleAndMainMenuLoop:
 .menuLoop:
 	xor a, a ; $4f7c
 	ld [$cb22], a ; $4f7d
-	ld [$cb1c], a ; $4f80
-	ld [$cb1d], a ; $4f83
-	ld [$cb1e], a ; $4f86
+	ld [wSavedDataMenuCursor], a ; $4f80
+	ld [wN64TransferMenuCursor], a ; $4f83
+	ld [wSubMenuCursor], a ; $4f86
 	ld [wMatchFormatDoubles], a ; $4f89
 	ld [wMatchFormatGames], a ; $4f8c
 	ld [wMatchFormatSets], a ; $4f8f
@@ -1581,7 +1581,7 @@ RunMinigameModeFlow:
 .levelMenu:
 	ld a, $03 ; $5229
 	ld [wCurrentStorySlot], a ; $522b
-	ld a, [$cb20] ; $522e
+	ld a, [wSelectedMinigame] ; $522e
 	ld c, a ; $5231
 	farcall RunMinigameLevelSelect ; $5232
 	cp a, $ff ; $5235
@@ -1591,7 +1591,7 @@ RunMinigameModeFlow:
 	jp RunMinigameModeFlow ; $523e
 .startMinigame:
 	ld [wMinigameLevel], a ; $5241
-	ld a, [$cb20] ; $5244
+	ld a, [wSelectedMinigame] ; $5244
 	ld b, a ; $5247
 	add a, a ; $5248
 	add a, b ; $5249
@@ -1610,7 +1610,7 @@ RunMinigameModeFlow:
 	ld [wMenuSlideDirection], a ; $5269
 	jr .levelMenu ; $526c
 .done:
-	ld a, [$cb20] ; $526e
+	ld a, [wSelectedMinigame] ; $526e
 	call GetMinigameDrillId ; $5271
 	farcall RunTrainingDrillByID ; $5274
 	ld a, $01 ; $5277
@@ -1888,7 +1888,7 @@ Label_10_54f6:
 	ld a, $00 ; $5517
 	farcall EraseStorySlotSaveData ; $5519
 	xor a, a ; $551c
-	ld [$cb1b], a ; $551d
+	ld [wMainMenuCursor], a ; $551d
 .redrawAfterErase:
 	call DisableLCDSafely ; $5520
 	farcall LoadMenuFontGfx ; $5523
@@ -1932,7 +1932,7 @@ Label_10_5565:
 	ld a, $00 ; $5586
 	ld [wMenuSlideDirection], a ; $5588
 	xor a, a ; $558b
-	ld [$cb1b], a ; $558c
+	ld [wMainMenuCursor], a ; $558c
 	jp RunEraseSavedDataFlow ; $558f
 .reinitSram:
 	farcall ReinitSaveRamPreservingBlock6 ; $5592
@@ -1944,8 +1944,8 @@ Label_10_5565:
 	ld a, $00 ; $55a6
 	ld [wMenuSlideDirection], a ; $55a8
 	xor a, a ; $55ab
-	ld [$cb1b], a ; $55ac
-	ld [$cb20], a ; $55af
+	ld [wMainMenuCursor], a ; $55ac
+	ld [wSelectedMinigame], a ; $55af
 	jp RunEraseSavedDataFlow ; $55b2
 	ret ; $55b5
 .runMatch:

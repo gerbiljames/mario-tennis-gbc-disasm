@@ -4568,7 +4568,7 @@ RunMinigameRulesPages:
 	ldh a, [hWramBank] ; $6f91
 	push af ; $6f93
 	wram_bank $03 ; $6f94
-	ld a, [$cb20] ; $6f9a
+	ld a, [wSelectedMinigame] ; $6f9a
 	inc a ; $6f9d
 	inc a ; $6f9e
 	farcall ReadMinigameRecord ; $6f9f
@@ -4579,7 +4579,7 @@ RunMinigameRulesPages:
 	ld l, a ; $6fad
 	wram_bank $03 ; $6fae
 	farcall PushTextArgNumber ; $6fb4
-	ld a, [$cb20] ; $6fb7
+	ld a, [wSelectedMinigame] ; $6fb7
 	ld hl, MinigameRulesTextIdBases_17 ; $6fba
 	add a, a ; $6fbd
 	add a, l ; $6fbe

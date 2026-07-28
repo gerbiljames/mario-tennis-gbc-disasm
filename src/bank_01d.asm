@@ -133,7 +133,7 @@ BuildCharDataScreenPages:
 	ld bc, $d390 ; $414c
 	call ApplyTilemapPatchList ; $414f
 	wram_bank $03 ; $4152
-	ld hl, $d000 ; $4158
+	ld hl, wShadowTilemap ; $4158
 	ld de, $9800 ; $415b
 	ld c, $24 ; $415e
 	call QueueVRAMCopy ; $4160
@@ -1209,7 +1209,7 @@ SaveWorkTilemapToPage:
 	dec a ; $4a1a
 	jr z, .page1 ; $4a1b
 	wram_bank $03 ; $4a1d
-	ld hl, $d000 ; $4a23
+	ld hl, wShadowTilemap ; $4a23
 	ld de, $dc60 ; $4a26
 	ld c, $24 ; $4a29
 	call CopyMemoryFast ; $4a2b
@@ -1221,7 +1221,7 @@ SaveWorkTilemapToPage:
 	ret ; $4a3f
 .page1:
 	wram_bank $03 ; $4a40
-	ld hl, $d000 ; $4a46
+	ld hl, wShadowTilemap ; $4a46
 	ld de, $da20 ; $4a49
 	ld c, $24 ; $4a4c
 	call CopyMemoryFast ; $4a4e
@@ -1233,7 +1233,7 @@ SaveWorkTilemapToPage:
 	ret ; $4a62
 .page2:
 	wram_bank $03 ; $4a63
-	ld hl, $d000 ; $4a69
+	ld hl, wShadowTilemap ; $4a69
 	ld de, $d7e0 ; $4a6c
 	ld c, $24 ; $4a6f
 	call CopyMemoryFast ; $4a71
@@ -1245,7 +1245,7 @@ SaveWorkTilemapToPage:
 	ret ; $4a85
 .page3:
 	wram_bank $03 ; $4a86
-	ld hl, $d000 ; $4a8c
+	ld hl, wShadowTilemap ; $4a8c
 	ld de, $d5a0 ; $4a8f
 	ld c, $24 ; $4a92
 	call CopyMemoryFast ; $4a94
@@ -1258,7 +1258,7 @@ SaveWorkTilemapToPage:
 LoadBasePageIntoWorkTilemap:
 	wram_bank $03 ; $4aa9
 	ld hl, $d5a0 ; $4aaf
-	ld de, $d000 ; $4ab2
+	ld de, wShadowTilemap ; $4ab2
 	ld c, $24 ; $4ab5
 	call CopyMemoryFast ; $4ab7
 	wram_bank $02 ; $4aba
@@ -3216,7 +3216,7 @@ BuildCharDataConfirmScreen:
 	call ApplyTilemapPatchList ; $5bba
 	call DrawCharDataConfirmPrompt ; $5bbd
 	wram_bank $03 ; $5bc0
-	ld hl, $d000 ; $5bc6
+	ld hl, wShadowTilemap ; $5bc6
 	ld de, $9800 ; $5bc9
 	ld c, $24 ; $5bcc
 	call QueueVRAMCopy ; $5bce
@@ -3733,7 +3733,7 @@ BuildExpDistributionScreen:
 	ld c, $06 ; $6a7c
 	call QueueVRAMCopy ; $6a7e
 	wram_bank $03 ; $6a81
-	ld hl, $d000 ; $6a87
+	ld hl, wShadowTilemap ; $6a87
 	ld de, $9800 ; $6a8a
 	ld c, $24 ; $6a8d
 	call QueueVRAMCopy ; $6a8f

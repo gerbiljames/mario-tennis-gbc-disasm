@@ -3184,7 +3184,7 @@ RunMainMenu:
 	ld c, $01 ; $55ea
 	farcall LoadMenuSpritePalettePair ; $55ec
 	ld b, $03 ; $55ef
-	ld a, [$cb1b] ; $55f1
+	ld a, [wMainMenuCursor] ; $55f1
 	ld c, a ; $55f4
 	call SetMenuCursorFromCellIndex ; $55f5
 	ld a, $00 ; $55f8
@@ -3244,7 +3244,7 @@ RunMainMenu:
 	jr nz, .storeMenuSlideDirection ; $5675
 	ld c, $03 ; $5677
 	call GetMenuCursorCellIndex ; $5679
-	ld [$cb1b], a ; $567c
+	ld [wMainMenuCursor], a ; $567c
 	call TryMainMenuLinkHandshake ; $567f
 	jp c, RunMainMenu ; $5682
 .storeMenuSlideDirection:
@@ -3252,7 +3252,7 @@ RunMainMenu:
 	ld [wMenuSlideDirection], a ; $5687
 	ld c, $03 ; $568a
 	call GetMenuCursorCellIndex ; $568c
-	ld [$cb1b], a ; $568f
+	ld [wMainMenuCursor], a ; $568f
 	call MapMainMenuCursorToItemId ; $5692
 	ret ; $5695
 .playSfx2:
@@ -4805,7 +4805,7 @@ RunMinigameSelect:
 	ld b, $01 ; $6220
 	ld c, $01 ; $6222
 	farcall LoadMenuSpritePalettePair ; $6224
-	ld a, [$cb20] ; $6227
+	ld a, [wSelectedMinigame] ; $6227
 	ld c, a ; $622a
 	ld b, $03 ; $622b
 	call SetMenuCursorFromCellIndex ; $622d
@@ -4882,7 +4882,7 @@ RunMinigameSelect:
 	ld [$cb70], a ; $62bf
 	ld c, $03 ; $62c2
 	call GetMenuCursorCellIndex ; $62c4
-	ld [$cb20], a ; $62c7
+	ld [wSelectedMinigame], a ; $62c7
 	ret ; $62ca
 .playSfx2:
 	sound $62 ; $62cb
@@ -5560,7 +5560,7 @@ RunSavedDataSourceSelect:
 	ld a, [wMenuSlideDirection] ; $67c1
 	ld b, a ; $67c4
 	farcall SavedDataPickerSlideIn ; $67c5
-	ld a, [$cb1c] ; $67c8
+	ld a, [wSavedDataMenuCursor] ; $67c8
 	ld c, a ; $67cb
 	ld b, $03 ; $67cc
 	call SetMenuCursorFromCellIndex ; $67ce
@@ -5630,7 +5630,7 @@ RunSavedDataSourceSelect:
 	ld [wMenuSlideDirection], a ; $684b
 	ld c, $03 ; $684e
 	call GetMenuCursorCellIndex ; $6850
-	ld [$cb1c], a ; $6853
+	ld [wSavedDataMenuCursor], a ; $6853
 	ret ; $6856
 .playSfx3:
 	sound $62 ; $6857
@@ -6836,7 +6836,7 @@ RunN64RecordTypeSelect:
 	ld a, [wMenuSlideDirection] ; $71ca
 	ld b, a ; $71cd
 	call N64RecordTypeSlideIn ; $71ce
-	ld a, [$cb1e] ; $71d1
+	ld a, [wSubMenuCursor] ; $71d1
 	ld c, a ; $71d4
 	ld b, $03 ; $71d5
 	call SetMenuCursorFromCellIndex ; $71d7
@@ -6874,7 +6874,7 @@ RunN64RecordTypeSelect:
 	ld [wMenuSlideDirection], a ; $7220
 	ld c, $03 ; $7223
 	call GetMenuCursorCellIndex ; $7225
-	ld [$cb1e], a ; $7228
+	ld [wSubMenuCursor], a ; $7228
 	ret ; $722b
 .playSfx2:
 	sound $62 ; $722c
@@ -7258,7 +7258,7 @@ RunN64TransferItemSelect:
 	ld b, $01 ; $74d9
 	ld c, $01 ; $74db
 	farcall LoadMenuSpritePalettePair ; $74dd
-	ld a, [$cb1d] ; $74e0
+	ld a, [wN64TransferMenuCursor] ; $74e0
 	ld c, a ; $74e3
 	ld b, $02 ; $74e4
 	call SetMenuCursorFromCellIndex ; $74e6
@@ -7296,7 +7296,7 @@ RunN64TransferItemSelect:
 	ld [wMenuSlideDirection], a ; $752f
 	ld c, $02 ; $7532
 	call GetMenuCursorCellIndex ; $7534
-	ld [$cb1d], a ; $7537
+	ld [wN64TransferMenuCursor], a ; $7537
 	ret ; $753a
 .playSfx2:
 	sound $62 ; $753b
