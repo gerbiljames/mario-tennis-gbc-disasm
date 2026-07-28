@@ -3197,22 +3197,22 @@ BuildCharDataConfirmScreen:
 	call QueueVRAMCopy ; $5b81
 	call BuildCharStatDisplay ; $5b84
 	ld hl, CharDataConfirmScreenTilemapPatch0 ; $5b87
-	ld bc, wDecompBuffer + 36 * TILE_SIZE ; $5b8a
+	ld bc, wScreenAttrmap + 18 * TILEMAP_WIDTH ; $5b8a
 	call ApplyTilemapPatchList ; $5b8d
 	ld hl, CharDataConfirmScreenTilemapPatch1 ; $5b90
-	ld bc, wDecompBuffer + 40 * TILE_SIZE ; $5b93
+	ld bc, wScreenAttrmap + 20 * TILEMAP_WIDTH ; $5b93
 	call ApplyTilemapPatchList ; $5b96
 	ld hl, CharDataConfirmScreenTilemapPatch2 ; $5b99
-	ld bc, wDecompBuffer + 45 * TILE_SIZE ; $5b9c
+	ld bc, wScreenAttrmap + 22 * TILEMAP_WIDTH + 16 ; $5b9c
 	call ApplyTilemapPatchList ; $5b9f
 	ld hl, CharDataConfirmScreenTilemapPatch3 ; $5ba2
-	ld bc, wDecompBuffer + 49 * TILE_SIZE ; $5ba5
+	ld bc, wScreenAttrmap + 24 * TILEMAP_WIDTH + 16 ; $5ba5
 	call ApplyTilemapPatchList ; $5ba8
 	ld hl, CharDataConfirmScreenTilemapPatch4 ; $5bab
-	ld bc, wDecompBuffer + 55 * TILE_SIZE ; $5bae
+	ld bc, wScreenAttrmap + 27 * TILEMAP_WIDTH + 16 ; $5bae
 	call ApplyTilemapPatchList ; $5bb1
 	ld hl, CharDataConfirmScreenTilemapPatch5 ; $5bb4
-	ld bc, wDecompBuffer + 85 * TILE_SIZE ; $5bb7
+	ld bc, $d550 ; $5bb7
 	call ApplyTilemapPatchList ; $5bba
 	call DrawCharDataConfirmPrompt ; $5bbd
 	wram_bank $03 ; $5bc0
@@ -3245,7 +3245,7 @@ InitCharDataScreenVideo:
 	ret ; $5c0a
 DrawCharDataConfirmPrompt:
 	ld hl, CharDataConfirmPromptTilemapPatch ; $5c0b
-	ld bc, wDecompBuffer + 88 * TILE_SIZE ; $5c0e
+	ld bc, $d580 ; $5c0e
 	call ApplyTilemapPatchList ; $5c11
 	ret ; $5c14
 StartCharDataValuesSyncTask:

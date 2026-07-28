@@ -1749,7 +1749,7 @@ TickCharSelectIdleAnim:
 	call GetSelectedCharWramBank ; $4d9b
 	ld a, b ; $4d9e
 	wram_bank ; $4d9f
-	ld bc, $df00 ; $4da3
+	ld bc, wCharPosX ; $4da3
 	ld hl, $002e ; $4da6
 	add hl, bc ; $4da9
 	ld a, [hl] ; $4daa

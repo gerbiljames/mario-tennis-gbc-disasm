@@ -3300,45 +3300,45 @@ CreateEquipCaptionWindow:
 	farcall RedrawWindowRows ; $5850
 	ret ; $5853
 ClearEquipSelectTextRows:
-	ld de, $d1a0 ; $5854
+	ld de, wShadowTilemap + 13 * TILEMAP_WIDTH ; $5854
 	ld b, $14 ; $5857
 	ld c, $01 ; $5859
 	ld h, $03 ; $585b
 	farcall FillTilemapRect ; $585d
 	ld a, $02 ; $5860
-	ld [$d1a0], a ; $5862
+	ld [wShadowTilemap + 13 * TILEMAP_WIDTH], a ; $5862
 	ld a, $04 ; $5865
-	ld [$d1b3], a ; $5867
-	ld de, $d1c1 ; $586a
+	ld [wShadowTilemap + 13 * TILEMAP_WIDTH + 19], a ; $5867
+	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH + 1 ; $586a
 	ld b, $12 ; $586d
 	ld c, $03 ; $586f
 	ld h, $20 ; $5871
 	farcall FillTilemapRect ; $5873
-	ld de, $d080 ; $5876
+	ld de, wShadowTilemap + 4 * TILEMAP_WIDTH ; $5876
 	ld b, $14 ; $5879
 	ld c, $01 ; $587b
 	ld h, $03 ; $587d
 	farcall FillTilemapRect ; $587f
 	ld a, $02 ; $5882
-	ld [$d080], a ; $5884
+	ld [wShadowTilemap + 4 * TILEMAP_WIDTH], a ; $5884
 	ld a, $04 ; $5887
-	ld [$d093], a ; $5889
-	ld de, $d0a1 ; $588c
+	ld [wShadowTilemap + 4 * TILEMAP_WIDTH + 19], a ; $5889
+	ld de, wShadowTilemap + 5 * TILEMAP_WIDTH + 1 ; $588c
 	ld b, $12 ; $588f
 	ld c, $07 ; $5891
 	ld h, $20 ; $5893
 	farcall FillTilemapRect ; $5895
 	ret ; $5898
 FlushEquipSelectTextRows:
-	ld hl, $d080 ; $5899
+	ld hl, wShadowTilemap + 4 * TILEMAP_WIDTH ; $5899
 	ld de, $9880 ; $589c
 	ld c, $10 ; $589f
 	call QueueVRAMCopy ; $58a1
-	ld hl, $d1a0 ; $58a4
+	ld hl, wShadowTilemap + 13 * TILEMAP_WIDTH ; $58a4
 	ld de, $99a0 ; $58a7
 	ld c, $08 ; $58aa
 	call QueueVRAMCopy ; $58ac
-	ld hl, $d4a0 ; $58af
+	ld hl, wShadowAttrmap + 5 * TILEMAP_WIDTH ; $58af
 	ld de, $98a0 + VRAM_BANK1 ; $58b2
 	ld c, $04 ; $58b5
 	call QueueVRAMCopy ; $58b7

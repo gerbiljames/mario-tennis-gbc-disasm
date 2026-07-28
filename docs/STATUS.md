@@ -7493,3 +7493,28 @@ The static analysis is now the fallback and the trace is the authority, for the
 inference from a CFG known to be incomplete, the other is a record of what
 happened. Every further session both extends the coverage and re-audits the
 59,815 sites the dataflow still claims on its own.
+
+## Third session: the trophies, the dictionary, the equipment screens (2026-07-29)
+
+More driving -- clear status and the trophy list, the racket/shoes equipment
+screens, the tennis dictionary and its entries, the file select, story mode as
+far as name entry. **32,333 instructions observed, 6,853 resolved, 1,203
+corrected.**
+
+The corrections are now the interesting half, because they keep landing on
+operands that had a *plausible* name rather than no name:
+
+| site | was | is |
+|---|---|---|
+| bank `$1d` patch lists | `wDecompBuffer + 36 * TILE_SIZE` | `wScreenAttrmap + 18 * TILEMAP_WIDTH` |
+| bank `$3e` equipment | numeric `$d1a0` | `wShadowTilemap + 13 * TILEMAP_WIDTH` |
+
+The first is the one to look at twice. Those `ApplyTilemapPatchList` arguments
+were rendering as offsets into the WRAM bank `$01` decompression buffer -- a
+sensible-looking name, wrong by a whole bank. They are attribute-plane cells,
+and now they read as the row and column they are.
+
+That is the third time in three sessions that observation has replaced a
+confident name rather than filled a blank, and it is the argument for keeping
+this up: the value of a trace is not only the operands it names, it is the
+operands it un-names.
