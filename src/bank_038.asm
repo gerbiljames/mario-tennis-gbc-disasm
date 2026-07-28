@@ -11,7 +11,7 @@ SECTION "ROM Bank $38", ROMX[$4000], BANK[$38]
 	farptr RunLinkMatchSequenceAlias1, RunLinkMatchSequence ; $4010
 	farptr ApplySpriteBobOffsetX ; $4012
 	farptr ApplySpriteBobOffsetY ; $4014
-	farptr IsStarCharacter ; $4016
+	farptr IsMarioCastCharacter ; $4016
 DrawSelectedOptionBox:
 	push de ; $4018
 	push bc ; $4019
@@ -2266,7 +2266,7 @@ HandleCharGridButtons:
 .readCharId:
 	ld a, [hl] ; $52df
 	ld c, a ; $52e0
-	call IsStarCharacter ; $52e1
+	call IsMarioCastCharacter ; $52e1
 	or a ; $52e4
 	jr z, .done ; $52e5
 	sound $5e ; $52e7
@@ -2321,7 +2321,7 @@ ConfirmCharGridSelection:
 	ld [hl], b ; $533f
 	ld a, c ; $5340
 	ld c, a ; $5341
-	call IsStarCharacter ; $5342
+	call IsMarioCastCharacter ; $5342
 	or a ; $5345
 	jr z, .drawPortrait ; $5346
 	ld a, [$df00] ; $5348
@@ -4545,7 +4545,7 @@ CharGridPageCountTable:
 	db $05, $05, $05, $05, $05, $05, $05, $06, $06, $06, $07, $07, $07, $08, $08, $08 ; 0x00
 	db $09, $09, $09, $0a, $0a, $0a, $0b, $0b, $0b, $0c, $0c, $0c ; 0x10
 NeedsCpuDifficultyPrompt:
-	call IsStarCharacter ; $61f7
+	call IsMarioCastCharacter ; $61f7
 	or a ; $61fa
 	jr z, .notStar ; $61fb
 	ld a, [wCharSelectSlot] ; $61fd
@@ -4556,7 +4556,22 @@ NeedsCpuDifficultyPrompt:
 .notStar:
 	xor a ; $6206
 	ret ; $6207
-IsStarCharacter:
+; Returns 1 for character ids $17-$1f. Those are the nine Mario-series
+; characters: id = bank $30 string index - 27 puts them at indices 50-58,
+; Luigi through Peach, and GetStarCharIndex ($3b:$7de1) does `sub $17` into a
+; nine-entry table, so the block is exactly those ids and nothing else.
+;
+; Nothing in the game's own text calls them star characters -- the only "star"
+; strings in the ROM belong to Shooting Star and the Perfect Shot panels -- so
+; the surrounding Star* labels (GetStarCharIndex, StarCharOrderTable,
+; UpdateStarUnlocks, Read/WriteStarVictoryGrid, CheckStarCharacterEquipCategory,
+; ApplyStarFlagsToCharRecords) and wCharSelectSlotStar all name the same nine
+; and are candidates for the same correction.
+;
+; The flag it gates is not a badge either: it reaches the on-court character
+; record at +$0e, which LoadCharacterAttributes turns into wCharMirrorAttrMask
+; ($20, the OAM X-flip).
+IsMarioCastCharacter:
 	ld a, c ; $6208
 	cp $17 ; $6209
 	jr c, .notStar ; $620b
@@ -4991,7 +5006,7 @@ ProcessLinkSelectCommand:
 	jp z, .done ; $656a
 	ld a, [wLinkSelectCmdChar] ; $656d
 	ld c, a ; $6570
-	call IsStarCharacter ; $6571
+	call IsMarioCastCharacter ; $6571
 	or a ; $6574
 	jr z, .applySelection ; $6575
 	ld a, [wCharSelectMode] ; $6577
@@ -5260,7 +5275,7 @@ HandleLinkGridButtons:
 .readCharId:
 	ld a, [hl] ; $674c
 	ld c, a ; $674d
-	call IsStarCharacter ; $674e
+	call IsMarioCastCharacter ; $674e
 	or a ; $6751
 	jr z, .done ; $6752
 	sound $5e ; $6754
@@ -5315,7 +5330,7 @@ ConfirmLinkGridSelection:
 	cp $ff ; $67ae
 	jr z, .allSlotsFilled ; $67b0
 	ld c, a ; $67b2
-	call IsStarCharacter ; $67b3
+	call IsMarioCastCharacter ; $67b3
 	or a ; $67b6
 	jr z, .emptyCell ; $67b7
 	ld a, [$df00] ; $67b9
@@ -5951,7 +5966,7 @@ StubNop_38_6bc0:
 StubNop_38_6bc1:
 	ret ; $6bc1
 CheckStarCharacterEquipCategory:
-	call IsStarCharacter ; $6bc2
+	call IsMarioCastCharacter ; $6bc2
 	or a ; $6bc5
 	jr z, .returnFalse ; $6bc6
 	ld a, [wCharSelectSlot] ; $6bc8

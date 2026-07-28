@@ -8386,12 +8386,12 @@ RecordExhibitionVictory:
 	jr nz, .restore ; $7d6d
 	ld a, [wPlayer1CurrentMainCharacter] ; $7d6f
 	ld c, a ; $7d72
-	farcall IsStarCharacter ; $7d73
+	farcall IsMarioCastCharacter ; $7d73
 	or a ; $7d76
 	jr z, .restore ; $7d77
 	ld a, [wPlayer2CurrentMainCharacter] ; $7d79
 	ld c, a ; $7d7c
-	farcall IsStarCharacter ; $7d7d
+	farcall IsMarioCastCharacter ; $7d7d
 	or a ; $7d80
 	jr z, .restore ; $7d81
 	ld a, [wPlayer1CurrentMainCharacter] ; $7d83

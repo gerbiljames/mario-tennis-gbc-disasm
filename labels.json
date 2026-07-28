@@ -12827,7 +12827,10 @@
  "0xe21db": "CharGridPageCountTable",
  "0xe21f7": "NeedsCpuDifficultyPrompt",
  "0xe2206": ".notStar",
- "0xe2208": "IsStarCharacter",
+ "0xe2208": {
+  "name": "IsMarioCastCharacter",
+  "note": "Returns 1 for character ids $17-$1f. Those are the nine Mario-series\ncharacters: id = bank $30 string index - 27 puts them at indices 50-58,\nLuigi through Peach, and GetStarCharIndex ($3b:$7de1) does `sub $17` into a\nnine-entry table, so the block is exactly those ids and nothing else.\n\nNothing in the game's own text calls them star characters -- the only \"star\"\nstrings in the ROM belong to Shooting Star and the Perfect Shot panels -- so\nthe surrounding Star* labels (GetStarCharIndex, StarCharOrderTable,\nUpdateStarUnlocks, Read/WriteStarVictoryGrid, CheckStarCharacterEquipCategory,\nApplyStarFlagsToCharRecords) and wCharSelectSlotStar all name the same nine\nand are candidates for the same correction.\n\nThe flag it gates is not a badge either: it reaches the on-court character\nrecord at +$0e, which LoadCharacterAttributes turns into wCharMirrorAttrMask\n($20, the OAM X-flip)."
+ },
  "0xe2214": ".notStar",
  "0xe2216": "RunCpuDifficultySubmenu",
  "0xe2230": ".inputLoop",
