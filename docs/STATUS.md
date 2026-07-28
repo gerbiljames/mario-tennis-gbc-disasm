@@ -6245,7 +6245,7 @@ alone is enough, and the windows name themselves:
 
 so the bank-switch idiom reads `ldh [hRomBank], a` / `ld [rROMB0], a`.
 
-### The 136th write is a bug in the shipped game
+### The 136th write is a bug in the shipped game (already known)
 
 `ConvertColorToGrayscale` (bank `$1d`) splits a CGB colour into red at `$d000`,
 green at `$d001`, and blue at -- `$0002`. It then reads all three back to
@@ -6266,3 +6266,9 @@ instead, where its low nibble incidentally toggles SRAM access. It is a `d`
 dropped from `$d002` in the original source, and it renders as
 `ld [rRAMG + 2], a` now -- visibly wrong, rather than looking like an ordinary
 store to a low address.
+
+This was **already recorded**, in the 2026-07-17 naming pass far above, which
+called the write a no-op. It is not: `$0000-$1fff` is the cartridge-RAM gate, so
+the write sets it to the blue value's low nibble, and the effect is benign only
+because the save engine re-enables SRAM before touching it. Game defects now
+live in `docs/bugs.md` rather than scattered through this log.
