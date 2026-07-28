@@ -4490,7 +4490,7 @@ UpdateActorTileAnimState_10:
 	rr l ; $79eb
 	srl h ; $79ed
 	rr l ; $79ef
-	ld bc, $d000 ; $79f1
+	ld bc, wActors ; $79f1
 	add hl, bc ; $79f4
 	ld b, h ; $79f5
 	ld c, l ; $79f6
@@ -4556,7 +4556,7 @@ UpdateActorTileAnimState_10:
 	rr l ; $7a61
 	srl h ; $7a63
 	rr l ; $7a65
-	ld bc, $d000 ; $7a67
+	ld bc, wActors ; $7a67
 	add hl, bc ; $7a6a
 	ld b, h ; $7a6b
 	ld c, l ; $7a6c

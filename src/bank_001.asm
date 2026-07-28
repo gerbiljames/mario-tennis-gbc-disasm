@@ -32,7 +32,7 @@ RunDebugTestMenu:
 	ld c, $00 ; $404b
 	call ClearMemory16 ; $404d
 	wram_bank $04 ; $4050
-	ld hl, $d000 ; $4056
+	ld hl, wActors ; $4056
 	ld c, $00 ; $4059
 	call ClearMemory16 ; $405b
 	wram_bank $05 ; $405e

@@ -27,7 +27,7 @@ SECTION "ROM Bank $04", ROMX[$4000], BANK[$04]
 	farptr LookupTileId ; $4030
 ClearActorSlots:
 	wram_bank $04 ; $4032
-	ld hl, $d000 ; $4038
+	ld hl, wActors ; $4038
 	ld c, $60 ; $403b
 	call ClearMemory16 ; $403d
 	ret ; $4040
@@ -45,7 +45,7 @@ SpawnActor:
 	push de ; $4056
 	push hl ; $4057
 	wram_bank $04 ; $4058
-	ld hl, $d000 ; $405e
+	ld hl, wActors ; $405e
 	ld c, $18 ; $4061
 .findSlot:
 	inc hl ; $4063
@@ -328,7 +328,7 @@ ActorScript_Deactivate:
 	as_halt
 UpdateActors:
 	wram_bank $04 ; $41e7
-	ld hl, $d000 ; $41ed
+	ld hl, wActors ; $41ed
 	ld c, $18 ; $41f0
 .actorLoop:
 	inc hl ; $41f2
@@ -354,11 +354,11 @@ UpdateActors:
 	add hl, de ; $4212
 	dec c ; $4213
 	jr nz, .actorLoop ; $4214
-	ld hl, $d00c ; $4216
+	ld hl, wActors + 12 ; $4216
 	ld de, wStoryModePlayersXPosition ; $4219
 	ld bc, $0004 ; $421c
 	call CopyMemoryBC ; $421f
-	ld a, [w4_d032] ; $4222
+	ld a, [wActors + 50] ; $4222
 	ld [wStoryModePlayerFacing], a ; $4225
 	ret ; $4228
 StepActorScript:
@@ -1812,7 +1812,7 @@ ComputeSpriteScrollOffset:
 	ld h, a ; $4a44
 	ld c, l ; $4a45
 	ld b, h ; $4a46
-	ld hl, $dae0 ; $4a47
+	ld hl, wActorScreenOriginX ; $4a47
 	ld a, c ; $4a4a
 	ld [hl+], a ; $4a4b
 	ld [hl], b ; $4a4c
@@ -1851,7 +1851,7 @@ ComputeSpriteScrollOffset:
 	ld h, a ; $4a78
 	ld c, l ; $4a79
 	ld b, h ; $4a7a
-	ld hl, $dae2 ; $4a7b
+	ld hl, wActorScreenOriginY ; $4a7b
 	ld a, c ; $4a7e
 	ld [hl+], a ; $4a7f
 	ld [hl], b ; $4a80
@@ -1861,7 +1861,7 @@ DrawActors:
 	ret nz ; $4a85
 	wram_bank $04 ; $4a86
 	call ComputeSpriteScrollOffset ; $4a8c
-	ld bc, $d000 ; $4a8f
+	ld bc, wActors ; $4a8f
 	ld e, $18 ; $4a92
 .actorLoop:
 	inc c ; $4a94
@@ -1925,35 +1925,35 @@ LoadActorObjectDef:
 	ld a, h ; $4ae5
 	ld [de], a ; $4ae6
 	push bc ; $4ae7
-	ld de, w4_dad0 ; $4ae8
+	ld de, wActorObjDef ; $4ae8
 	ld bc, $0010 ; $4aeb
 	call CopyDataFromBank ; $4aee
 	pop bc ; $4af1
-	ld a, [w4_dad0] ; $4af2
+	ld a, [wActorObjDef] ; $4af2
 	ld hl, $0037 ; $4af5
 	add hl, bc ; $4af8
 	ld [hl], a ; $4af9
-	ld a, [w4_dad1] ; $4afa
+	ld a, [wActorObjDef + 1] ; $4afa
 	ld hl, $0035 ; $4afd
 	add hl, bc ; $4b00
 	ld [hl], a ; $4b01
 	ld hl, $0024 ; $4b02
 	add hl, bc ; $4b05
-	ld a, [w4_dad4] ; $4b06
+	ld a, [wActorObjDef + 4] ; $4b06
 	ld [hl+], a ; $4b09
-	ld a, [w4_dad5] ; $4b0a
+	ld a, [wActorObjDef + 5] ; $4b0a
 	ld [hl+], a ; $4b0d
 	ld hl, $0028 ; $4b0e
 	add hl, bc ; $4b11
-	ld a, [w4_dad6] ; $4b12
+	ld a, [wActorObjDef + 6] ; $4b12
 	ld [hl+], a ; $4b15
-	ld a, [w4_dad7] ; $4b16
+	ld a, [wActorObjDef + 7] ; $4b16
 	ld [hl+], a ; $4b19
 	ld hl, $0038 ; $4b1a
 	add hl, bc ; $4b1d
-	ld a, [w4_dada] ; $4b1e
+	ld a, [wActorObjDef + 10] ; $4b1e
 	ld [hl+], a ; $4b21
-	ld a, [w4_dadb] ; $4b22
+	ld a, [wActorObjDef + 11] ; $4b22
 	ld [hl+], a ; $4b25
 	ld hl, $0037 ; $4b26
 	add hl, bc ; $4b29
@@ -1962,7 +1962,7 @@ LoadActorObjectDef:
 	jr nz, .initFields ; $4b2d
 	ld [hl], $02 ; $4b2f
 	push bc ; $4b31
-	ld hl, $dad8 ; $4b32
+	ld hl, wActorObjDef + 8 ; $4b32
 	ld a, [hl+] ; $4b35
 	ld h, [hl] ; $4b36
 	ld l, a ; $4b37
@@ -1971,10 +1971,10 @@ LoadActorObjectDef:
 	ld e, a ; $4b3b
 	ld d, b ; $4b3c
 	ld a, [de] ; $4b3d
-	ld de, w4_dad0 ; $4b3e
+	ld de, wActorObjDef ; $4b3e
 	ld bc, $0008 ; $4b41
 	call FarCopyBytes ; $4b44
-	ld hl, w4_dad0 ; $4b47
+	ld hl, wActorObjDef ; $4b47
 	ld de, $0a01 ; $4b4a
 	call LoadPalettesMasterOnly ; $4b4d
 	pop bc ; $4b50
@@ -2007,26 +2007,26 @@ SetupCharSpriteFromObjectDef:
 	ld l, a ; $4b76
 	ld a, h ; $4b77
 	ld [wCharObjectBank], a ; $4b78
-	ld de, $dad0 ; $4b7b
+	ld de, wActorObjDef ; $4b7b
 	ld bc, $0010 ; $4b7e
 	call CopyDataFromBank ; $4b81
-	ld a, [$dad0] ; $4b84
+	ld a, [wActorObjDef] ; $4b84
 	ld [wCharSpriteAttr], a ; $4b87
 	ld [wCharGfxBank], a ; $4b8a
 	ld hl, wCharFrameTablePtr ; $4b8d
-	ld a, [$dad4] ; $4b90
+	ld a, [wActorObjDef + 4] ; $4b90
 	ld [hl+], a ; $4b93
-	ld a, [$dad5] ; $4b94
+	ld a, [wActorObjDef + 5] ; $4b94
 	ld [hl+], a ; $4b97
 	ld hl, wCharAnimTablePtr ; $4b98
-	ld a, [$dad6] ; $4b9b
+	ld a, [wActorObjDef + 6] ; $4b9b
 	ld [hl+], a ; $4b9e
-	ld a, [$dad7] ; $4b9f
+	ld a, [wActorObjDef + 7] ; $4b9f
 	ld [hl+], a ; $4ba2
 	ld hl, wCharShadowTablePtr ; $4ba3
-	ld a, [$dada] ; $4ba6
+	ld a, [wActorObjDef + 10] ; $4ba6
 	ld [hl+], a ; $4ba9
-	ld a, [$dadb] ; $4baa
+	ld a, [wActorObjDef + 11] ; $4baa
 	ld [hl+], a ; $4bad
 	ld hl, wCharFacingOctant ; $4bae
 	ld a, $ff ; $4bb1
@@ -2275,15 +2275,15 @@ SpawnActorsFromList:
 	ld a, b ; $4d05
 .spawnLoop:
 	push af ; $4d06
-	ld de, $dac0 ; $4d07
+	ld de, wActorTemplate ; $4d07
 	ld bc, $000e ; $4d0a
 	call FarCopyBytes ; $4d0d
-	ld a, [w4_dac9] ; $4d10
+	ld a, [wActorTemplate + 9] ; $4d10
 	inc a ; $4d13
 	jr z, .done ; $4d14
 	pop af ; $4d16
 	push hl ; $4d17
-	ld hl, $dac0 ; $4d18
+	ld hl, wActorTemplate ; $4d18
 	call SpawnActorFromTemplate ; $4d1b
 	pop hl ; $4d1e
 	jr .spawnLoop ; $4d1f
@@ -2395,10 +2395,10 @@ SpawnMainCharacterActor:
 	call SpawnActorFromTemplate ; $4e89
 	pop bc ; $4e8c
 	ld a, c ; $4e8d
-	ld [$d014], a ; $4e8e
+	ld [wActors + 20], a ; $4e8e
 	ld [wPlayerMoveAngle], a ; $4e91
 	pop hl ; $4e94
-	ld bc, $d000 ; $4e95
+	ld bc, wActors ; $4e95
 	call SetActorPosition ; $4e98
 	push de ; $4e9b
 	push hl ; $4e9c
@@ -2407,7 +2407,7 @@ SpawnMainCharacterActor:
 	call SpawnActor ; $4ea2
 	ld a, $01 ; $4ea5
 	call SetActorMode ; $4ea7
-	ld de, $d000 ; $4eaa
+	ld de, wActors ; $4eaa
 	call AttachActorWaypointFollower ; $4ead
 	pop hl ; $4eb0
 	pop de ; $4eb1
@@ -2415,7 +2415,7 @@ SpawnMainCharacterActor:
 	ld hl, wStoryModeMainCharacterOverworldSpriteColor ; $4eb5
 	ld a, [hl] ; $4eb8
 	add $03 ; $4eb9
-	ld bc, $d000 ; $4ebb
+	ld bc, wActors ; $4ebb
 	ld hl, $0037 ; $4ebe
 	add hl, bc ; $4ec1
 	ld [hl], a ; $4ec2
@@ -2468,9 +2468,9 @@ SpawnCompanionActor:
 	ld a, [$cb5e] ; $4f43
 	cp $ff ; $4f46
 	jr z, .done ; $4f48
-	ld de, $d000 ; $4f4a
+	ld de, wActors ; $4f4a
 	call AttachActorStepMover ; $4f4d
-	ld de, $d000 ; $4f50
+	ld de, wActors ; $4f50
 	ld hl, $0014 ; $4f53
 	add hl, de ; $4f56
 	ld a, [hl] ; $4f57
@@ -3104,7 +3104,7 @@ IsPointNearPlayer:
 	push hl ; $537c
 	ld c, l ; $537d
 	ld b, h ; $537e
-	ld hl, $d00a ; $537f
+	ld hl, wActors + 10 ; $537f
 	ld a, [hl+] ; $5382
 	ld h, [hl] ; $5383
 	ld l, a ; $5384
@@ -3132,7 +3132,7 @@ IsPointNearPlayer:
 	call GetSquareOfByte ; $539e
 	ld e, l ; $53a1
 	ld d, h ; $53a2
-	ld hl, $d008 ; $53a3
+	ld hl, wActors + 8 ; $53a3
 	ld a, [hl+] ; $53a6
 	ld h, [hl] ; $53a7
 	ld l, a ; $53a8
@@ -3187,7 +3187,7 @@ FindActorAtPoint:
 	ld [hl+], a ; $53e4
 	ld a, d ; $53e5
 	ld [hl+], a ; $53e6
-	ld hl, $da00 ; $53e7
+	ld hl, wNearbyActorList ; $53e7
 .actorLoop:
 	ld a, [hl+] ; $53ea
 	ld c, a ; $53eb
@@ -3279,8 +3279,8 @@ BuildNearbyActorList:
 	push bc ; $5457
 	push de ; $5458
 	push hl ; $5459
-	ld hl, $da00 ; $545a
-	ld bc, $d000 ; $545d
+	ld hl, wNearbyActorList ; $545a
+	ld bc, wActors ; $545d
 	ld a, $18 ; $5460
 .actorLoop:
 	push af ; $5462
@@ -3298,7 +3298,7 @@ BuildNearbyActorList:
 	add hl, bc ; $5475
 	bit 3, [hl] ; $5476
 	jr z, .done ; $5478
-	ld hl, $d00e ; $547a
+	ld hl, wActors + 14 ; $547a
 	ld a, [hl+] ; $547d
 	ld d, [hl] ; $547e
 	ld e, a ; $547f
@@ -3325,7 +3325,7 @@ BuildNearbyActorList:
 	ld a, h ; $5497
 	and $fe ; $5498
 	jr nz, .done ; $549a
-	ld hl, $d00c ; $549c
+	ld hl, wActors + 12 ; $549c
 	ld a, [hl+] ; $549f
 	ld d, [hl] ; $54a0
 	ld e, a ; $54a1
@@ -3380,8 +3380,8 @@ BuildActorQueryList:
 	push bc ; $54d8
 	push de ; $54d9
 	push hl ; $54da
-	ld hl, $da00 ; $54db
-	ld bc, $d000 ; $54de
+	ld hl, wNearbyActorList ; $54db
+	ld bc, wActors ; $54de
 	ld a, $18 ; $54e1
 .actorLoop:
 	push af ; $54e3
@@ -3457,7 +3457,7 @@ DrawActorSprite:
 	ld hl, $0030 ; $5542
 	add hl, bc ; $5545
 	res 7, [hl] ; $5546
-	ld hl, $dae2 ; $5548
+	ld hl, wActorScreenOriginY ; $5548
 	ld a, [hl+] ; $554b
 	ld d, [hl] ; $554c
 	ld e, a ; $554d
@@ -3515,7 +3515,7 @@ DrawActorSprite:
 	add hl, hl ; $558e
 	ld e, h ; $558f
 	push de ; $5590
-	ld hl, $dae0 ; $5591
+	ld hl, wActorScreenOriginX ; $5591
 	ld a, [hl+] ; $5594
 	ld d, [hl] ; $5595
 	ld e, a ; $5596

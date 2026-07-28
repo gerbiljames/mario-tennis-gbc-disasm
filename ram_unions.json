@@ -1680,7 +1680,7 @@
    "start": "0xd000",
    "wram_bank": "0x06",
    "end": "0xd02a",
-   "comment": "Character-data (level-up) screen working set, WRAM bank $06, shared by\nthe bank $1a/$1c/$1d screen code. The first four bytes are a smaller\nscratch that three screens overlay -- the debug character viewer, the\nresults continue prompt and the character-data screen itself -- so those\nget their own range-scoped variants ahead of it.",
+   "comment": "Character-data (level-up) screen working set, WRAM bank $06, shared by\nthe bank $1a/$1c/$1d screen code. The first four bytes are a smaller\nscratch that three screens overlay -- the debug character viewer, the\nresults continue prompt and the character-data screen itself -- so those\nget their own range-scoped variants ahead of it.\nThe viewer's scope stops at SetupCharViewerScene and resumes inside it\nonly where WRAM bank $06 is provable: that routine selects bank $04 to\nplace the four actors it poses, where $d000 is wActors, not a cursor.",
    "variants": [
     {
      "context": "debug character viewer (bank $1a, $6800-$7000)",
@@ -1688,7 +1688,13 @@
       {
        "bank": "0x1a",
        "start": "0x6800",
-       "end": "0x7000"
+       "end": "0x6f3d"
+      },
+      {
+       "bank": "0x1a",
+       "start": "0x6f3d",
+       "end": "0x7000",
+       "wram_bank": "0x06"
       }
      ],
      "symbols": {
@@ -2578,6 +2584,136 @@
        "name": "wSaveBlockBuffer",
        "note": "[512 bytes] Image of whichever $200-byte block the save engine is working on: the story slot block for ReadCurrentSlotBlock / WriteCurrentSlotBlock (ids from StorySlotBlockIds_03), and block $0b for the N64 transfer records. ApplyN64RecordsUnlockFlags and UpdateUnlockablesSaveBlock address the unlock bytes at +$00-$07 directly",
        "size": 512
+      }
+     }
+    }
+   ]
+  },
+  {
+   "start": "0xd000",
+   "wram_bank": "0x04",
+   "end": "0xd600",
+   "comment": "Overworld / story actor slots (WRAM bank $04): 24 records of ACTOR_SIZE\nbytes, the array SpawnActor allocates from and the bank $04 engine walks\nonce a frame. Scoped to a provable WRAM bank $04 -- $d000 is eight\ndifferent things and seven ROM banks reach the array, so nothing but the\ndataflow can say which one a literal means.\nRecord fields are addressed as offsets (`ld hl, $00xx / add hl, bc`), not\nas absolute addresses, so they are not RAM symbols; the layout is in\ndocs/actor_script.md and the field-size table the script opcodes use is\nActorFieldTypeTable_04.",
+   "variants": [
+    {
+     "context": "overworld actors (WRAM bank $04)",
+     "scopes": [
+      {
+       "wram_bank": "0x04"
+      }
+     ],
+     "symbols": {
+      "0xd000": {
+       "name": "wActors",
+       "note": "[24 x ACTOR_SIZE] Actor slots. +$00 script pointer, +$02 its bank, +$03 wait counter, +$05 flags (bit 0 paused, bit 7 moving), +$08/+$0a move target, +$0c/+$0e position, +$21 object id, +$30 flags (bit 7 = live), +$32 facing. A slot is free when +$01 is zero",
+       "size": 1536,
+       "stride": [
+        "ACTOR_SIZE",
+        "0x40"
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "start": "0xda00",
+   "wram_bank": "0x04",
+   "end": "0xda32",
+   "comment": "List of actor slots near the player (WRAM bank $04), rebuilt by\nBuildNearbyActorList. Scoped to the bank $04 actor engine as well as to\nthe WRAM bank: banks $18/$1b/$28/$38 keep unrelated screen state at the\nsame addresses in WRAM bank $03.",
+   "variants": [
+    {
+     "context": "actor engine (bank $04)",
+     "scopes": [
+      {
+       "bank": "0x04",
+       "wram_bank": "0x04"
+      },
+      {
+       "bank": "0x04"
+      }
+     ],
+     "symbols": {
+      "0xda00": {
+       "name": "wNearbyActorList",
+       "note": "[up to 24 x 2 bytes + terminator] Pointers to the live actor slots BuildNearbyActorList selected -- those with a nonzero +$01, +$30 bit 7 set and +$05 bit 3 set, close enough to the player. A zero word ends the list, which is how FindActorAtPoint and the proximity searches stop",
+       "size": 50
+      }
+     }
+    }
+   ]
+  },
+  {
+   "start": "0xdac0",
+   "wram_bank": "0x04",
+   "end": "0xdaea",
+   "comment": "Actor-engine staging buffers (WRAM bank $04), owned by bank $04. Two ROM\nrecords are copied through here rather than read in place, because both\nlive in whichever bank the caller was running and the engine wants them\nat a fixed address.",
+   "variants": [
+    {
+     "context": "actor engine (bank $04)",
+     "scopes": [
+      {
+       "bank": "0x04",
+       "wram_bank": "0x04"
+      },
+      {
+       "bank": "0x04"
+      },
+      {
+       "bank": "0x0f"
+      }
+     ],
+     "symbols": {
+      "0xdac0": {
+       "name": "wActorTemplate",
+       "note": "[14 bytes] One map_actor record, copied out of the ROM list by SpawnActorsFromList and handed to SpawnActorFromTemplate. +$09 (the obj_id byte) reads $ff on the entry that terminates the list",
+       "size": 14
+      },
+      "0xdad0": {
+       "name": "wActorObjDef",
+       "note": "[16 bytes] The object-definition record LoadActorObjectDef copies in from the ObjectIdList_04_4f75 entry, then distributes into the slot: +$00 to +$37, +$01 to +$35, +$04/+$05 to +$24, +$06/+$07 to +$28, +$0a/+$0b to +$38, and +$08 as a far pointer to palette data when +$00 came out $63. The palette path reuses the first 8 bytes as the copy destination",
+       "size": 16
+      },
+      "0xdae0": {
+       "name": "wActorScreenOriginX",
+       "note": "[16-bit] Negated camera X plus screen shake, recomputed each frame. DrawActorSprite adds it to an actor position to get a screen coordinate, which is why it is stored already negated",
+       "size": 2
+      },
+      "0xdae2": {
+       "name": "wActorScreenOriginY",
+       "note": "[16-bit] The same for Y, from wCameraY and wScreenShakeOffsetY (plus the $cb02 offset while the ending credits run)",
+       "size": 2
+      },
+      "0xdae9": {
+       "name": "wPlayerObjDefPending",
+       "note": "[8-bit] Cleared by SetPlayerActorObjectDef before it reloads actor 0's object definition. Nothing reads it"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "start": "0xdcf0",
+   "wram_bank": "0x04",
+   "end": "0xdd00",
+   "comment": "Working copy of the minigame target actor being updated (WRAM bank $04),\nthe same pattern as wObjSlotWork: UpdateMinigameTarget copies the slot in,\nruns its script, movement, draw and hit checks against this one fixed\nrecord, and copies it back. Owned by bank $0a.",
+   "variants": [
+    {
+     "context": "minigame targets (bank $0a)",
+     "scopes": [
+      {
+       "bank": "0x0a",
+       "wram_bank": "0x04"
+      },
+      {
+       "bank": "0x0a"
+      }
+     ],
+     "symbols": {
+      "0xdcf0": {
+       "name": "wMinigameTargetWork",
+       "note": "[16 bytes] +$00 flags (bit 0 live, bit 1 moving toward the goal), +$02 delay counter the update ticks down, +$06/+$08 current position, +$0a/+$0c goal position. MoveMinigameTargetTowardGoal steps the current position toward the goal $10 units at a time",
+       "size": 16
       }
      }
     }

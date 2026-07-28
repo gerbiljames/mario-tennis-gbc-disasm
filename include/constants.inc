@@ -16,6 +16,13 @@ def VRAM_BANK1 equ $2000
 ; it wants a name instead of a bare $0000.
 def NO_BOX equ $0000
 
+; --- Overworld actor slot stride ---
+; wActors is 24 records of this size in WRAM bank $04. The engine walks them
+; with `ld de, $0040 / add hl, de`, and SpawnActor turns an actor id into a
+; slot with two `srl h / rra` pairs -- id * 64 -- so the stride is the one
+; number that ties an actor id to an address.
+def ACTOR_SIZE equ $40
+
 ; --- Joypad buttons (standard GB layout) ---
 ; The per-character input byte ($df1f, built by ReadCharPadInput) and the raw
 ; joypad shadow use the standard layout: buttons in the low nibble, d-pad in the

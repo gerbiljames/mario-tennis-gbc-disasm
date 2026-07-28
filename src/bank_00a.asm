@@ -154,7 +154,7 @@ EndCutsceneScriptMode:
 	ldh a, [hWramBank] ; $4122
 	push af ; $4124
 	wram_bank $04 ; $4125
-	ld a, [$d014] ; $412b
+	ld a, [wActors + 20] ; $412b
 	ld [wPlayerMoveAngle], a ; $412e
 	pop af ; $4131
 	wram_bank ; $4132
@@ -1305,7 +1305,7 @@ SetPlayerMoveSpeed:
 	push af ; $47a3
 	push hl ; $47a4
 	wram_bank $04 ; $47a5
-	ld hl, $d046 ; $47ab
+	ld hl, wActors + 1 * ACTOR_SIZE + 6 ; $47ab
 	ld a, c ; $47ae
 	ld [hl+], a ; $47af
 	ld [hl], b ; $47b0
@@ -1413,7 +1413,7 @@ MovePlayerToActor:
 	ld b, h ; $484a
 	ld c, l ; $484b
 	ld d, a ; $484c
-	ld hl, $d040 ; $484d
+	ld hl, wActors + 1 * ACTOR_SIZE ; $484d
 	ld a, l ; $4850
 	ldh [hActorPtr], a ; $4851
 	ld a, h ; $4853
@@ -2340,11 +2340,11 @@ RunStoryLocation:
 	call CheckStoryEventRequests ; $4ffb
 	and a ; $4ffe
 	jp z, .waitForEvent ; $4fff
-	ld bc, $d000 ; $5002
+	ld bc, wActors ; $5002
 	ld hl, ActorScript_0a_4766 ; $5005
 	ldh a, [hRomBank] ; $5008
 	farcall SetActorScript ; $500a
-	ld hl, $d000 ; $500d
+	ld hl, wActors ; $500d
 	ld de, $0018 ; $5010
 	add hl, de ; $5013
 	ld [hl], $01 ; $5014
@@ -2441,7 +2441,7 @@ RunStoryLocation:
 	jp .frameLoop ; $50c7
 .waitForEvent:
 	call WaitFadeEnd ; $50ca
-	ld bc, $d000 ; $50cd
+	ld bc, wActors ; $50cd
 	farcall AttachActorControllerScript ; $50d0
 .eventWaitLoop:
 	call AdvanceFrame ; $50d3
@@ -2649,7 +2649,7 @@ GetFacingTileInteractionId:
 	push bc ; $5200
 	push de ; $5201
 	push hl ; $5202
-	ld hl, $d000 ; $5203
+	ld hl, wActors ; $5203
 	ld de, $01c0 ; $5206
 	ld a, $00 ; $5209
 	call GetPointAheadOfActor ; $520b
@@ -2677,7 +2677,7 @@ FindActorFacingPlayer:
 	push hl ; $5229
 	wram_bank $04 ; $522a
 	farcall BuildActorQueryList ; $5230
-	ld hl, $d000 ; $5233
+	ld hl, wActors ; $5233
 	ld de, $01c0 ; $5236
 	ld a, $00 ; $5239
 	call GetPointAheadOfActor ; $523b
@@ -2689,7 +2689,7 @@ FindActorFacingPlayer:
 	pop de ; $5246
 	cp $0c ; $5247
 	jr nz, .query ; $5249
-	ld hl, $d000 ; $524b
+	ld hl, wActors ; $524b
 	ld de, $03c0 ; $524e
 	ld a, $00 ; $5251
 	call GetPointAheadOfActor ; $5253
@@ -2697,14 +2697,14 @@ FindActorFacingPlayer:
 	farcall FindActorAtPoint ; $5256
 	and a ; $5259
 	jr nz, .done ; $525a
-	ld hl, $d000 ; $525c
+	ld hl, wActors ; $525c
 	ld de, $0180 ; $525f
 	ld a, $f0 ; $5262
 	call GetPointAheadOfActor ; $5264
 	farcall FindActorAtPoint ; $5267
 	and a ; $526a
 	jr nz, .done ; $526b
-	ld hl, $d000 ; $526d
+	ld hl, wActors ; $526d
 	ld de, $0180 ; $5270
 	ld a, $10 ; $5273
 	call GetPointAheadOfActor ; $5275
@@ -2822,7 +2822,7 @@ GetTileTriggerAtPlayer:
 	push bc ; $5369
 	push de ; $536a
 	push hl ; $536b
-	ld bc, $d000 ; $536c
+	ld bc, wActors ; $536c
 	ld hl, $000d ; $536f
 	add hl, bc ; $5372
 	ld d, [hl] ; $5373
@@ -2964,9 +2964,9 @@ RunStoryScriptOrDialogue:
 	farcall BeginCutsceneScriptMode ; $543c
 	push hl ; $543f
 	wram_bank $04 ; $5440
-	ld hl, $d030 ; $5446
+	ld hl, wActors + 48 ; $5446
 	res 0, [hl] ; $5449
-	ld hl, $d014 ; $544b
+	ld hl, wActors + 20 ; $544b
 	ld a, [wPlayerMoveAngle] ; $544e
 	ld [hl], a ; $5451
 	pop hl ; $5452
@@ -4153,7 +4153,7 @@ GetCollisionMapCellAddr:
 	ld c, d ; $5ef0
 	sra c ; $5ef1
 	add hl, bc ; $5ef3
-	ld bc, $d000 ; $5ef4
+	ld bc, wActors ; $5ef4
 	add hl, bc ; $5ef7
 	pop de ; $5ef8
 	pop bc ; $5ef9
@@ -4675,7 +4675,7 @@ GetSceneTilemapAddr:
 	ret ; $6234
 UpdateCameraFromPlayer:
 	wram_bank $04 ; $6235
-	ld hl, $d00c ; $623b
+	ld hl, wActors + 12 ; $623b
 	ld a, [hl+] ; $623e
 	ld b, [hl] ; $623f
 	ld c, a ; $6240
@@ -5286,10 +5286,10 @@ UpdateMinigameTarget:
 	push de ; $65dd
 	push hl ; $65de
 	push hl ; $65df
-	ld de, $dcf0 ; $65e0
+	ld de, wMinigameTargetWork ; $65e0
 	ld c, $01 ; $65e3
 	call CopyMemoryFast ; $65e5
-	ld hl, w4_dcf2 ; $65e8
+	ld hl, wMinigameTargetWork + 2 ; $65e8
 	ld a, [hl] ; $65eb
 	and a ; $65ec
 	jr z, .hit ; $65ed
@@ -5310,7 +5310,7 @@ UpdateMinigameTarget:
 	call HandleMinigameTargetHitAlt ; $660d
 .done:
 	pop de ; $6610
-	ld hl, $dcf0 ; $6611
+	ld hl, wMinigameTargetWork ; $6611
 	ld c, $01 ; $6614
 	call CopyMemoryFast ; $6616
 	pop hl ; $6619
@@ -5319,14 +5319,14 @@ UpdateMinigameTarget:
 	pop af ; $661c
 	ret ; $661d
 MoveMinigameTargetTowardGoal:
-	ld hl, $dcf0 ; $661e
+	ld hl, wMinigameTargetWork ; $661e
 	bit 1, [hl] ; $6621
 	ret z ; $6623
-	ld hl, $dcf6 ; $6624
+	ld hl, wMinigameTargetWork + 6 ; $6624
 	ld a, [hl+] ; $6627
 	ld d, [hl] ; $6628
 	ld e, a ; $6629
-	ld hl, $dcfa ; $662a
+	ld hl, wMinigameTargetWork + 10 ; $662a
 	ld a, [hl+] ; $662d
 	ld h, [hl] ; $662e
 	ld l, a ; $662f
@@ -5349,7 +5349,7 @@ MoveMinigameTargetTowardGoal:
 	sub d ; $6645
 	ld d, a ; $6646
 .stepX:
-	ld hl, $dcf6 ; $6647
+	ld hl, wMinigameTargetWork + 6 ; $6647
 	ld a, [hl] ; $664a
 	add e ; $664b
 	ld [hl+], a ; $664c
@@ -5357,11 +5357,11 @@ MoveMinigameTargetTowardGoal:
 	adc d ; $664e
 	ld [hl+], a ; $664f
 .depthAxis:
-	ld hl, $dcf8 ; $6650
+	ld hl, wMinigameTargetWork + 8 ; $6650
 	ld a, [hl+] ; $6653
 	ld d, [hl] ; $6654
 	ld e, a ; $6655
-	ld hl, $dcfc ; $6656
+	ld hl, wMinigameTargetWork + 12 ; $6656
 	ld a, [hl+] ; $6659
 	ld h, [hl] ; $665a
 	ld l, a ; $665b
@@ -5384,7 +5384,7 @@ MoveMinigameTargetTowardGoal:
 	sub d ; $6671
 	ld d, a ; $6672
 .stepDepth:
-	ld hl, $dcf8 ; $6673
+	ld hl, wMinigameTargetWork + 8 ; $6673
 	ld a, [hl] ; $6676
 	add e ; $6677
 	ld [hl+], a ; $6678
@@ -5392,11 +5392,11 @@ MoveMinigameTargetTowardGoal:
 	adc d ; $667a
 	ld [hl+], a ; $667b
 .checkArrived:
-	ld hl, $dcf6 ; $667c
+	ld hl, wMinigameTargetWork + 6 ; $667c
 	ld a, [hl+] ; $667f
 	ld d, [hl] ; $6680
 	ld e, a ; $6681
-	ld hl, $dcfa ; $6682
+	ld hl, wMinigameTargetWork + 10 ; $6682
 	ld a, [hl+] ; $6685
 	ld h, [hl] ; $6686
 	ld l, a ; $6687
@@ -5409,11 +5409,11 @@ MoveMinigameTargetTowardGoal:
 	ld a, h ; $668e
 	or l ; $668f
 	jr nz, .done ; $6690
-	ld hl, $dcf8 ; $6692
+	ld hl, wMinigameTargetWork + 8 ; $6692
 	ld a, [hl+] ; $6695
 	ld d, [hl] ; $6696
 	ld e, a ; $6697
-	ld hl, $dcfc ; $6698
+	ld hl, wMinigameTargetWork + 12 ; $6698
 	ld a, [hl+] ; $669b
 	ld h, [hl] ; $669c
 	ld l, a ; $669d
@@ -5426,23 +5426,23 @@ MoveMinigameTargetTowardGoal:
 	ld a, h ; $66a4
 	or l ; $66a5
 	jr nz, .done ; $66a6
-	ld hl, $dcf0 ; $66a8
+	ld hl, wMinigameTargetWork ; $66a8
 	res 1, [hl] ; $66ab
 .done:
 	ret ; $66ad
 DrawMinigameTarget:
-	ld hl, $dcf8 ; $66ae
+	ld hl, wMinigameTargetWork + 8 ; $66ae
 	ld a, [hl+] ; $66b1
 	ld b, [hl] ; $66b2
 	ld c, a ; $66b3
-	ld hl, $dcf6 ; $66b4
+	ld hl, wMinigameTargetWork + 6 ; $66b4
 	ld a, [hl+] ; $66b7
 	ld h, [hl] ; $66b8
 	ld l, a ; $66b9
 	farcall ApplyCameraProjection ; $66ba
 	ld c, e ; $66bd
 	ld b, d ; $66be
-	ld a, [w4_dcf2] ; $66bf
+	ld a, [wMinigameTargetWork + 2] ; $66bf
 	and $0f ; $66c2
 	jr z, .readSprite ; $66c4
 	add LOW(Data_0a_66fe) ; $66c6
@@ -5453,7 +5453,7 @@ DrawMinigameTarget:
 	ld a, [hl] ; $66cd
 	ld h, $00 ; $66ce
 	ld l, a ; $66d0
-	ld a, [w4_dcf1] ; $66d1
+	ld a, [wMinigameTargetWork + 1] ; $66d1
 	rrca ; $66d4
 	rrca ; $66d5
 	and $c0 ; $66d6
@@ -5465,7 +5465,7 @@ DrawMinigameTarget:
 	add l ; $66df
 	ld d, a ; $66e0
 .readSprite:
-	ld a, [w4_dcf1] ; $66e1
+	ld a, [wMinigameTargetWork + 1] ; $66e1
 	add a ; $66e4
 	add LOW(Table_0a_66f6) ; $66e5
 	ld l, a ; $66e7
@@ -5489,14 +5489,14 @@ SpriteTemplate_0a_670e:
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
 HandleMinigameTargetHit:
-	ld hl, $dcf0 ; $6717
+	ld hl, wMinigameTargetWork ; $6717
 	bit 2, [hl] ; $671a
 	ret z ; $671c
 	res 2, [hl] ; $671d
 	sound $77 ; $671f
 	ld a, $20 ; $6721
-	ld [w4_dcf2], a ; $6723
-	ld a, [w4_dcf1] ; $6726
+	ld [wMinigameTargetWork + 2], a ; $6723
+	ld a, [wMinigameTargetWork + 1] ; $6726
 	call DeflectBallOffMinigameTarget ; $6729
 	ret ; $672c
 CheckBallHitsMinigameTarget:
@@ -5507,7 +5507,7 @@ CheckBallHitsMinigameTarget:
 	ld a, [hl+] ; $6735
 	ld d, [hl] ; $6736
 	ld e, a ; $6737
-	ld hl, $dcf6 ; $6738
+	ld hl, wMinigameTargetWork + 6 ; $6738
 	ld a, [hl+] ; $673b
 	ld h, [hl] ; $673c
 	ld l, a ; $673d
@@ -5527,7 +5527,7 @@ CheckBallHitsMinigameTarget:
 	ld a, [hl+] ; $6753
 	ld d, [hl] ; $6754
 	ld e, a ; $6755
-	ld hl, $dcf8 ; $6756
+	ld hl, wMinigameTargetWork + 8 ; $6756
 	ld a, [hl+] ; $6759
 	ld h, [hl] ; $675a
 	ld l, a ; $675b
@@ -5543,7 +5543,7 @@ CheckBallHitsMinigameTarget:
 	add hl, de ; $6769
 	bit 7, h ; $676a
 	jr nz, .done ; $676c
-	ld hl, $dcf0 ; $676e
+	ld hl, wMinigameTargetWork ; $676e
 	set 2, [hl] ; $6771
 .done:
 	ret ; $6773
@@ -5679,7 +5679,7 @@ MinigameTargetOp_01:
 	ld a, [de] ; $681e
 	inc de ; $681f
 	dec a ; $6820
-	ld [$dcf3], a ; $6821
+	ld [wMinigameTargetWork + 3], a ; $6821
 	xor a ; $6824
 	ret ; $6825
 MinigameTargetOp_02:
@@ -5708,7 +5708,7 @@ MinigameTargetOp_03:
 	pop de ; $683e
 	ret ; $683f
 MinigameTargetOp_04:
-	ld hl, $dcf0 ; $6840
+	ld hl, wMinigameTargetWork ; $6840
 	bit 1, [hl] ; $6843
 	jr nz, .apply ; $6845
 	inc de ; $6847
@@ -5721,7 +5721,7 @@ MinigameTargetOp_05:
 	inc de ; $684d
 	ld l, e ; $684e
 	ld h, d ; $684f
-	ld de, $dcf6 ; $6850
+	ld de, wMinigameTargetWork + 6 ; $6850
 	ld a, [hl+] ; $6853
 	ld [de], a ; $6854
 	inc de ; $6855
@@ -5736,7 +5736,7 @@ MinigameTargetOp_05:
 	inc de ; $685e
 	ld e, l ; $685f
 	ld d, h ; $6860
-	ld hl, $dcf0 ; $6861
+	ld hl, wMinigameTargetWork ; $6861
 	res 1, [hl] ; $6864
 	ld a, $01 ; $6866
 	ret ; $6868
@@ -5756,30 +5756,30 @@ MinigameTargetOp_06:
 	call VectorFromLengthAndAngle ; $6875
 	ld c, l ; $6878
 	ld b, h ; $6879
-	ld hl, $dcf6 ; $687a
+	ld hl, wMinigameTargetWork + 6 ; $687a
 	ld a, [hl+] ; $687d
 	ld h, [hl] ; $687e
 	ld l, a ; $687f
 	add hl, bc ; $6880
 	ld c, l ; $6881
 	ld b, h ; $6882
-	ld hl, $dcfa ; $6883
+	ld hl, wMinigameTargetWork + 10 ; $6883
 	ld a, c ; $6886
 	ld [hl+], a ; $6887
 	ld [hl], b ; $6888
-	ld hl, $dcf8 ; $6889
+	ld hl, wMinigameTargetWork + 8 ; $6889
 	ld a, [hl+] ; $688c
 	ld h, [hl] ; $688d
 	ld l, a ; $688e
 	add hl, de ; $688f
 	ld e, l ; $6890
 	ld d, h ; $6891
-	ld hl, $dcfc ; $6892
+	ld hl, wMinigameTargetWork + 12 ; $6892
 	ld a, e ; $6895
 	ld [hl+], a ; $6896
 	ld [hl], d ; $6897
 	pop de ; $6898
-	ld hl, $dcf0 ; $6899
+	ld hl, wMinigameTargetWork ; $6899
 	set 1, [hl] ; $689c
 	ld a, $01 ; $689e
 	ret ; $68a0
@@ -5787,28 +5787,28 @@ MinigameTargetOp_07:
 	inc de ; $68a1
 	ld a, [de] ; $68a2
 	inc de ; $68a3
-	ld [$dcf1], a ; $68a4
+	ld [wMinigameTargetWork + 1], a ; $68a4
 	ld a, $01 ; $68a7
 	ret ; $68a9
 MinigameTargetOp_08:
 	inc de ; $68aa
 	ld a, [de] ; $68ab
 	inc de ; $68ac
-	ld hl, $dcf1 ; $68ad
+	ld hl, wMinigameTargetWork + 1 ; $68ad
 	add [hl] ; $68b0
 	and $03 ; $68b1
 	ld [hl], a ; $68b3
 	ld a, $01 ; $68b4
 	ret ; $68b6
 RunMinigameTargetScript:
-	ld hl, $dcf3 ; $68b7
+	ld hl, wMinigameTargetWork + 3 ; $68b7
 	ld a, [hl] ; $68ba
 	and a ; $68bb
 	jr z, .runScript ; $68bc
 	dec [hl] ; $68be
 	ret ; $68bf
 .runScript:
-	ld hl, $dcf4 ; $68c0
+	ld hl, wMinigameTargetWork + 4 ; $68c0
 	ld a, [hl+] ; $68c3
 	ld d, [hl] ; $68c4
 	ld e, a ; $68c5
@@ -5827,7 +5827,7 @@ RunMinigameTargetScript:
 	ld l, a ; $68d5
 	jp hl ; $68d6
 MinigameTargetScriptOpReturn:
-	ld hl, $dcf4 ; $68d7
+	ld hl, wMinigameTargetWork + 4 ; $68d7
 	ld [hl], e ; $68da
 	inc hl ; $68db
 	ld [hl], d ; $68dc
@@ -6105,18 +6105,18 @@ SpawnMinigameTargetsFromList:
 .done:
 	ret ; $6d6d
 DrawMinigameTargetAlt:
-	ld hl, $dcf8 ; $6d6e
+	ld hl, wMinigameTargetWork + 8 ; $6d6e
 	ld a, [hl+] ; $6d71
 	ld b, [hl] ; $6d72
 	ld c, a ; $6d73
-	ld hl, $dcf6 ; $6d74
+	ld hl, wMinigameTargetWork + 6 ; $6d74
 	ld a, [hl+] ; $6d77
 	ld h, [hl] ; $6d78
 	ld l, a ; $6d79
 	farcall ApplyCameraProjection ; $6d7a
 	ld c, e ; $6d7d
 	ld b, d ; $6d7e
-	ld a, [w4_dcf2] ; $6d7f
+	ld a, [wMinigameTargetWork + 2] ; $6d7f
 	and $0f ; $6d82
 	jr z, .readSprite ; $6d84
 	add LOW(Data_0a_6dad) ; $6d86
@@ -6128,7 +6128,7 @@ DrawMinigameTargetAlt:
 	add d ; $6d8e
 	ld d, a ; $6d8f
 .readSprite:
-	ld a, [w4_dcf1] ; $6d90
+	ld a, [wMinigameTargetWork + 1] ; $6d90
 	add a ; $6d93
 	add LOW(Table_0a_6da5) ; $6d94
 	ld l, a ; $6d96
@@ -6158,14 +6158,14 @@ SpriteTemplate_0a_6dbd:
 	oam_sprite $20, $20, $0e, $00
 	oam_sprite_end
 HandleMinigameTargetHitAlt:
-	ld hl, $dcf0 ; $6dde
+	ld hl, wMinigameTargetWork ; $6dde
 	bit 2, [hl] ; $6de1
 	ret z ; $6de3
 	res 2, [hl] ; $6de4
 	sound $97 ; $6de6
 	ld a, $20 ; $6de8
-	ld [w4_dcf2], a ; $6dea
-	ld a, [w4_dcf1] ; $6ded
+	ld [wMinigameTargetWork + 2], a ; $6dea
+	ld a, [wMinigameTargetWork + 1] ; $6ded
 	ld [$c78d], a ; $6df0
 	ret ; $6df3
 CheckBallHitsMinigameTargetAlt:
@@ -6178,7 +6178,7 @@ CheckBallHitsMinigameTargetAlt:
 	ld a, [hl+] ; $6e01
 	ld d, [hl] ; $6e02
 	ld e, a ; $6e03
-	ld hl, $dcf6 ; $6e04
+	ld hl, wMinigameTargetWork + 6 ; $6e04
 	ld a, [hl+] ; $6e07
 	ld h, [hl] ; $6e08
 	ld l, a ; $6e09
@@ -6198,7 +6198,7 @@ CheckBallHitsMinigameTargetAlt:
 	ld a, [hl+] ; $6e1f
 	ld d, [hl] ; $6e20
 	ld e, a ; $6e21
-	ld hl, $dcf8 ; $6e22
+	ld hl, wMinigameTargetWork + 8 ; $6e22
 	ld a, [hl+] ; $6e25
 	ld h, [hl] ; $6e26
 	ld l, a ; $6e27
@@ -6214,7 +6214,7 @@ CheckBallHitsMinigameTargetAlt:
 	add hl, de ; $6e35
 	bit 7, h ; $6e36
 	jr nz, .done ; $6e38
-	ld hl, $dcf0 ; $6e3a
+	ld hl, wMinigameTargetWork ; $6e3a
 	set 2, [hl] ; $6e3d
 .done:
 	ret ; $6e3f
@@ -6326,7 +6326,7 @@ RunEndingCreditsSequence:
 	ret ; $6f1c
 FreezeAllActors:
 	wram_bank $04 ; $6f1d
-	ld de, $d000 ; $6f23
+	ld de, wActors ; $6f23
 	ld c, $18 ; $6f26
 .actorLoop:
 	inc e ; $6f28

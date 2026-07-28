@@ -143,9 +143,9 @@ SmallCharTestButtonTask_0f:
 SetPlayerActorObjectDef:
 	ld d, a ; $41c5
 	wram_bank $04 ; $41c6
-	ld hl, $dae9 ; $41cc
+	ld hl, wPlayerObjDefPending ; $41cc
 	ld [hl], $00 ; $41cf
-	ld bc, $d000 ; $41d1
+	ld bc, wActors ; $41d1
 	farcall LoadActorObjectDefIfValid ; $41d4
 	call RestorePalettesFromMaster ; $41d7
 	ret ; $41da
@@ -1734,7 +1734,7 @@ SetActorDrawModeFromSceneTile_0f:
 	rr l ; $632b
 	srl h ; $632d
 	rr l ; $632f
-	ld bc, $d000 ; $6331
+	ld bc, wActors ; $6331
 	add hl, bc ; $6334
 	ld b, h ; $6335
 	ld c, l ; $6336
@@ -1800,7 +1800,7 @@ SetActorDrawModeFromSceneTile_0f:
 	rr l ; $63a1
 	srl h ; $63a3
 	rr l ; $63a5
-	ld bc, $d000 ; $63a7
+	ld bc, wActors ; $63a7
 	add hl, bc ; $63aa
 	ld b, h ; $63ab
 	ld c, l ; $63ac

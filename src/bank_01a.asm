@@ -3520,28 +3520,28 @@ SetupCharViewerScene:
 	ldh a, [hRomBank] ; $6f53
 	ld hl, CharViewerSceneActors_1a ; $6f55
 	farcall SpawnActorsFromList ; $6f58
-	ld bc, wCharViewerRow ; $6f5b
+	ld bc, wActors ; $6f5b
 	farcall LoadActorObjectDefIfValid ; $6f5e
-	ld bc, $d040 ; $6f61
+	ld bc, wActors + 1 * ACTOR_SIZE ; $6f61
 	farcall LoadActorObjectDefIfValid ; $6f64
-	ld bc, $d080 ; $6f67
+	ld bc, wActors + 2 * ACTOR_SIZE ; $6f67
 	farcall LoadActorObjectDefIfValid ; $6f6a
-	ld bc, $d0c0 ; $6f6d
+	ld bc, wActors + 3 * ACTOR_SIZE ; $6f6d
 	farcall LoadActorObjectDefIfValid ; $6f70
 	ld d, $01 ; $6f73
-	ld bc, wCharViewerRow ; $6f75
+	ld bc, wActors ; $6f75
 	farcall SetActorAnimationChecked ; $6f78
-	ld bc, $d040 ; $6f7b
+	ld bc, wActors + 1 * ACTOR_SIZE ; $6f7b
 	farcall SetActorAnimationChecked ; $6f7e
-	ld bc, $d080 ; $6f81
+	ld bc, wActors + 2 * ACTOR_SIZE ; $6f81
 	farcall SetActorAnimationChecked ; $6f84
-	ld bc, $d0c0 ; $6f87
+	ld bc, wActors + 3 * ACTOR_SIZE ; $6f87
 	farcall SetActorAnimationChecked ; $6f8a
 	ld a, $07 ; $6f8d
-	ld [w4_d037], a ; $6f8f
-	ld [w4_d077], a ; $6f92
-	ld [w4_d0b7], a ; $6f95
-	ld [w4_d0f7], a ; $6f98
+	ld [wActors + 55], a ; $6f8f
+	ld [wActors + 1 * ACTOR_SIZE + 55], a ; $6f92
+	ld [wActors + 2 * ACTOR_SIZE + 55], a ; $6f95
+	ld [wActors + 3 * ACTOR_SIZE + 55], a ; $6f98
 	wram_bank $06 ; $6f9b
 	ld a, [wCharViewerCharId] ; $6fa1
 	ld [wMatchPlayerChar], a ; $6fa4

@@ -1358,7 +1358,7 @@ RunPlayDoublesTodayPrompt:
 	script_get_actor_state $03 ; $5723
 	ld c, l ; $5728
 	ld b, h ; $5729
-	ld de, $d000 ; $572a
+	ld de, wActors ; $572a
 	farcall AttachActorStepMover ; $572d
 	script_get_actor_state $03 ; $5730
 	ld c, l ; $5735
@@ -1440,7 +1440,7 @@ RunPlayDoublesTodayPrompt:
 	script_get_actor_state $03 ; $583d
 	ld c, l ; $5842
 	ld b, h ; $5843
-	ld de, $d000 ; $5844
+	ld de, wActors ; $5844
 	farcall AttachActorStepMover ; $5847
 	script_get_actor_state $03 ; $584a
 	ld c, l ; $584f

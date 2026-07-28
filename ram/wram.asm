@@ -2310,44 +2310,48 @@ w3_dc4f:: db
 
 SECTION "WRAMX bank 4", WRAMX[$d000], BANK[4]
 
-	ds 50
+; Overworld / story actor slots (WRAM bank $04): 24 records of ACTOR_SIZE
+; bytes, the array SpawnActor allocates from and the bank $04 engine walks
+; once a frame. Scoped to a provable WRAM bank $04 -- $d000 is eight
+; different things and seven ROM banks reach the array, so nothing but the
+; dataflow can say which one a literal means.
+; Record fields are addressed as offsets (`ld hl, $00xx / add hl, bc`), not
+; as absolute addresses, so they are not RAM symbols; the layout is in
+; docs/actor_script.md and the field-size table the script opcodes use is
+; ActorFieldTypeTable_04.
+; overworld actors (WRAM bank $04)
+; [24 x ACTOR_SIZE] Actor slots. +$00 script pointer, +$02 its bank, +$03 wait counter, +$05 flags (bit 0 paused, bit 7 moving), +$08/+$0a move target, +$0c/+$0e position, +$21 object id, +$30 flags (bit 7 = live), +$32 facing. A slot is free when +$01 is zero
+wActors:: ds 1536
 
-w4_d032:: db
-	ds 4
+	ds 1024
 
-w4_d037:: db
-	ds 63
+; List of actor slots near the player (WRAM bank $04), rebuilt by
+; BuildNearbyActorList. Scoped to the bank $04 actor engine as well as to
+; the WRAM bank: banks $18/$1b/$28/$38 keep unrelated screen state at the
+; same addresses in WRAM bank $03.
+; actor engine (bank $04)
+; [up to 24 x 2 bytes + terminator] Pointers to the live actor slots BuildNearbyActorList selected -- those with a nonzero +$01, +$30 bit 7 set and +$05 bit 3 set, close enough to the player. A zero word ends the list, which is how FindActorAtPoint and the proximity searches stop
+wNearbyActorList:: ds 50
 
-w4_d077:: db
-	ds 63
+	ds 142
 
-w4_d0b7:: db
-	ds 63
-
-w4_d0f7:: db
-	ds 2513
-
-w4_dac9:: db
-	ds 6
-
-w4_dad0:: db
-
-w4_dad1:: db
+; Actor-engine staging buffers (WRAM bank $04), owned by bank $04. Two ROM
+; records are copied through here rather than read in place, because both
+; live in whichever bank the caller was running and the engine wants them
+; at a fixed address.
+; actor engine (bank $04)
+; [14 bytes] One map_actor record, copied out of the ROM list by SpawnActorsFromList and handed to SpawnActorFromTemplate. +$09 (the obj_id byte) reads $ff on the entry that terminates the list
+wActorTemplate:: ds 14
 	ds 2
-
-w4_dad4:: db
-
-w4_dad5:: db
-
-w4_dad6:: db
-
-w4_dad7:: db
-	ds 2
-
-w4_dada:: db
-
-w4_dadb:: db
-	ds 14
+; [16 bytes] The object-definition record LoadActorObjectDef copies in from the ObjectIdList_04_4f75 entry, then distributes into the slot: +$00 to +$37, +$01 to +$35, +$04/+$05 to +$24, +$06/+$07 to +$28, +$0a/+$0b to +$38, and +$08 as a far pointer to palette data when +$00 came out $63. The palette path reuses the first 8 bytes as the copy destination
+wActorObjDef:: ds 16
+; [16-bit] Negated camera X plus screen shake, recomputed each frame. DrawActorSprite adds it to an actor position to get a screen coordinate, which is why it is stored already negated
+wActorScreenOriginX:: dw
+; [16-bit] The same for Y, from wCameraY and wScreenShakeOffsetY (plus the $cb02 offset while the ending credits run)
+wActorScreenOriginY:: dw
+	ds 5
+; [8-bit] Cleared by SetPlayerActorObjectDef before it reloads actor 0's object definition. Nothing reads it
+wPlayerObjDefPending:: db
 
 ; Overworld actor engine scratch (WRAM bank $04), owned by the bank $04
 ; actor-script VM. Scoped to that bank as well as to the WRAM bank: the
@@ -2389,12 +2393,15 @@ wMinigameActors:: ds 112
 ; its fields show up as wMinigameSceneActor + n.
 wMinigameSceneActor:: ds 16
 
-	ds 113
+	ds 112
 
-w4_dcf1:: db
-
-w4_dcf2:: db
-	ds 13
+; Working copy of the minigame target actor being updated (WRAM bank $04),
+; the same pattern as wObjSlotWork: UpdateMinigameTarget copies the slot in,
+; runs its script, movement, draw and hit checks against this one fixed
+; record, and copies it back. Owned by bank $0a.
+; minigame targets (bank $0a)
+; [16 bytes] +$00 flags (bit 0 live, bit 1 moving toward the goal), +$02 delay counter the update ticks down, +$06/+$08 current position, +$0a/+$0c goal position. MoveMinigameTargetTowardGoal steps the current position toward the goal $10 units at a time
+wMinigameTargetWork:: ds 16
 
 ; Match ball-visuals history ring (WRAM bank 4 only); shared renderer
 ; state, so scoped by the selected WRAM bank plus the bank-$08 renderer.
@@ -2715,6 +2722,9 @@ SECTION "WRAMX bank 6", WRAMX[$d000], BANK[6]
 ; scratch that three screens overlay -- the debug character viewer, the
 ; results continue prompt and the character-data screen itself -- so those
 ; get their own range-scoped variants ahead of it.
+; The viewer's scope stops at SetupCharViewerScene and resumes inside it
+; only where WRAM bank $06 is provable: that routine selects bank $04 to
+; place the four actors it poses, where $d000 is wActors, not a cursor.
 UNION
 ; debug character viewer (bank $1a, $6800-$7000)
 ; [8-bit] Which row of the debug character viewer the cursor is on, toggled with `xor $01`: 0 = the character grid, 1 = the palette row
