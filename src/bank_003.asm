@@ -4027,9 +4027,9 @@ InitScrollingTextScreen:
 	wram_bank $02 ; $5ac0
 	ld bc, $0400 ; $5ac6
 	ld d, $00 ; $5ac9
-	ld hl, $d000 ; $5acb
+	ld hl, wScreenAttrmap ; $5acb
 	call FillMemoryBC ; $5ace
-	ld hl, $d000 ; $5ad1
+	ld hl, wScreenAttrmap ; $5ad1
 	ld de, $b800 ; $5ad4
 	ld c, $40 ; $5ad7
 	call QueueVRAMCopy ; $5ad9
@@ -5908,7 +5908,7 @@ ShowStoryResultScreen:
 	ldh a, [hWramBank] ; $7522
 	push af ; $7524
 	wram_bank $02 ; $7525
-	ld hl, $d000 ; $752b
+	ld hl, wScreenAttrmap ; $752b
 	ld de, $0240 ; $752e
 	ld b, $00 ; $7531
 	call FillMemoryDE ; $7533
@@ -5926,7 +5926,7 @@ ShowStoryResultScreen:
 	ld bc, $0020 ; $7559
 	farcall FetchAndDrawDialogueText ; $755c
 	wram_bank $02 ; $755f
-	ld hl, $d000 ; $7565
+	ld hl, wScreenAttrmap ; $7565
 	ld de, $b800 ; $7568
 	ld c, $24 ; $756b
 	call QueueVRAMCopy ; $756d

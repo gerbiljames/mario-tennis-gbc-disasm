@@ -1696,7 +1696,7 @@ InitCutsceneSceneA:
 	call QueueVRAMCopy ; $5427
 	wram_bank $02 ; $542a
 	ld hl, CutsceneSceneAGfx1 ; $5430
-	ld de, $d000 ; $5433
+	ld de, wScreenAttrmap ; $5433
 	call DecompressData ; $5436
 	wram_bank $03 ; $5439
 	ld hl, CutsceneSceneAGfx2 ; $543f
@@ -1730,7 +1730,7 @@ InitCutsceneSceneB:
 	call QueueVRAMCopy ; $5489
 	wram_bank $02 ; $548c
 	ld hl, CutsceneSceneBGfx1 ; $5492
-	ld de, $d000 ; $5495
+	ld de, wScreenAttrmap ; $5495
 	call DecompressData ; $5498
 	wram_bank $03 ; $549b
 	ld hl, CutsceneSceneBGfx0 ; $54a1
@@ -1761,7 +1761,7 @@ InitCutsceneSceneC:
 	call QueueVRAMCopy ; $54e4
 	wram_bank $02 ; $54e7
 	ld hl, CutsceneSceneBGfx1 ; $54ed
-	ld de, $d000 ; $54f0
+	ld de, wScreenAttrmap ; $54f0
 	call DecompressData ; $54f3
 	wram_bank $03 ; $54f6
 	ld hl, CutsceneSceneBGfx0 ; $54fc
@@ -1925,7 +1925,7 @@ InitTitleSceneGraphics:
 	call QueueVRAMCopy ; $61a7
 	wram_bank $02 ; $61aa
 	ld hl, TitleSceneGraphicsGfx2 ; $61b0
-	ld de, $d000 ; $61b3
+	ld de, wScreenAttrmap ; $61b3
 	call DecompressData ; $61b6
 	wram_bank $03 ; $61b9
 	ld hl, TitleSceneGraphicsGfx1 ; $61bf

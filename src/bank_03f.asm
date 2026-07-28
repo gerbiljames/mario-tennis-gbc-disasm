@@ -353,7 +353,7 @@ LoadTennisDictionaryAssetsDefault:
 	call LoadPalettesMasterOnly ; $428a
 	wram_bank $02 ; $428d
 	ld hl, TennisDictionaryListDataDefault ; $4293
-	ld de, $d000 ; $4296
+	ld de, wScreenAttrmap ; $4296
 	call DecompressData ; $4299
 	call ClearTennisDictionaryTilemap ; $429c
 	ret ; $429f
@@ -375,7 +375,7 @@ LoadTennisDictionaryAssetsChar6:
 	call LoadPalettesMasterOnly ; $42cb
 	wram_bank $02 ; $42ce
 	ld hl, TennisDictionaryListDataChar6 ; $42d4
-	ld de, $d000 ; $42d7
+	ld de, wScreenAttrmap ; $42d7
 	call DecompressData ; $42da
 	ret ; $42dd
 ClearTennisDictionaryTilemap:

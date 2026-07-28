@@ -3194,6 +3194,103 @@
      }
     }
    ]
+  },
+  {
+   "start": "0xd000",
+   "wram_bank": "0x02",
+   "end": "0xe000",
+   "comment": "WRAM bank $02 holds tilemap planes, and until now not one byte of it had\na name -- it was the only WRAMX bank with no SECTION at all. Three\nsubsystems use it three different ways, so $d000 is a tile plane, an\nattribute plane or a 64-wide scroll buffer depending on who is asking:\nthe match keeps the court tilemap and attrmap here as a pair, the\noverworld builds two of its four wide scroll planes here, and every\nfull-screen UI uses $d000 as the attribute half of the tilemap whose\ntile half is wShadowTilemap in WRAM bank $03.\nEvery scope carries wram_bank $02 as well as its ROM bank, and the common\nscreen case is scoped rather than a default. A default variant here was\nthe first thing tried and it was wrong twice over: it named the bank $07\nsave-editor window at $d300 as an attribute cell, and bank $08 reaches\nboth this bank and WRAM bank $04 -- RefreshCourtScoreboard's $de9x bytes\nare not court planes at all.",
+   "variants": [
+    {
+     "context": "match court planes (bank $08)",
+     "scopes": [
+      {
+       "bank": "0x08",
+       "wram_bank": "0x02"
+      }
+     ],
+     "symbols": {
+      "0xd000": {
+       "name": "wCourtTilemap",
+       "note": "[1024 bytes] The court tilemap the match renders from; UploadCourtTilemap sends it to $9800 in VRAM bank 0. Held in WRAM bank $02 rather than the usual $03 because the match owns bank $03 for other things",
+       "size": 1024,
+       "stride": [
+        "TILEMAP_WIDTH",
+        "0x20"
+       ]
+      },
+      "0xd400": {
+       "name": "wCourtAttrmap",
+       "note": "[1024 bytes] Its CGB attribute plane, cell for cell, uploaded to $9800 in VRAM bank 1 by UploadCourtAttrmap",
+       "size": 1024,
+       "stride": [
+        "TILEMAP_WIDTH",
+        "0x20"
+       ]
+      },
+      "0xd800": {
+       "name": "wCourtTilemapSaved",
+       "note": "[1024 bytes] Copy of the court tilemap taken when the players change ends. SnapshotCourtTilemaps copies it back over wCourtTilemap to restore the un-flipped view",
+       "size": 1024,
+       "stride": [
+        "TILEMAP_WIDTH",
+        "0x20"
+       ]
+      },
+      "0xdc00": {
+       "name": "wCourtAttrmapSaved",
+       "note": "[1024 bytes] The attribute half of the same snapshot",
+       "size": 1024,
+       "stride": [
+        "TILEMAP_WIDTH",
+        "0x20"
+       ]
+      }
+     }
+    },
+    {
+     "context": "overworld scroll buffers (bank 0)",
+     "scopes": [
+      {
+       "bank": "0x00",
+       "start": "0x086c",
+       "end": "0x090c",
+       "wram_bank": "0x02"
+      }
+     ],
+     "symbols": {
+      "0xd000": {
+       "name": "wMapScrollPlane0",
+       "note": "[1024 bytes] One of the four 64-wide planes CopyMapToScrollBuffers expands the map into, 16 rows of 64 cells. The narrow source comes from wDecompBuffer in WRAM bank $01 through wTextBuffer, a row block at a time",
+       "size": 1024
+      },
+      "0xd800": {
+       "name": "wMapScrollPlane1",
+       "note": "[1024 bytes] The second plane, built the same way and then immediately cleared -- 2048 bytes of it, twice what was written. wScreenScratch in WRAM bank $03 gets the same treatment, so two of the four planes are assembled and thrown away",
+       "size": 1024
+      }
+     }
+    },
+    {
+     "context": "screen attribute plane",
+     "scopes": [
+      {
+       "wram_bank": "0x02"
+      }
+     ],
+     "symbols": {
+      "0xd000": {
+       "name": "wScreenAttrmap",
+       "note": "[1024 bytes] CGB attributes for the full-screen UIs, cell for cell with wShadowTilemap in WRAM bank $03 -- the pair is what FlushCharDataTilemapChunk sends to $99e0 in VRAM banks 0 and 1. Seventeen ROM banks write cells here, which is why it is the default rather than a scoped variant. The page images the character-data screens patch from sit above it and keep their numeric addresses, being cells in two banks at once",
+       "size": 1024,
+       "stride": [
+        "TILEMAP_WIDTH",
+        "0x20"
+       ]
+      }
+     }
+    }
+   ]
   }
  ]
 }

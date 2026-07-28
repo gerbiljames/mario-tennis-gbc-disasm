@@ -5059,7 +5059,7 @@ StoreCourtUnlockBits:
 	push af ; $695c
 	wram_bank $02 ; $695d
 	ld c, $00 ; $6963
-	ld hl, $d000 ; $6965
+	ld hl, wScreenAttrmap ; $6965
 .loop:
 	ld a, b ; $6968
 	and $01 ; $6969
@@ -5085,7 +5085,7 @@ IsCourtUnlocked:
 	wram_bank $02 ; $6986
 	ld a, b ; $698c
 	sub $04 ; $698d
-	ld hl, $d000 ; $698f
+	ld hl, wScreenAttrmap ; $698f
 	add l ; $6992
 	ld l, a ; $6993
 	jr nc, .read ; $6994

@@ -7058,3 +7058,48 @@ already carries a bank-`$06` variant because the EXP award screen reuses those
 bytes. A new union there would have emitted both and overrun the bank; instead
 the run stopped with `ram_unions overlap: $d145-$d149 and $d100-$d21a`, and the
 offsets went into the variant that was already the right home for them.
+
+## WRAM bank $02 had no SECTION at all (2026-07-28)
+
+Of the seven WRAMX banks, `$02` was the only one with **no section in
+`ram/wram.asm`** — zero symbols, zero named bytes, 162 bare references from
+seventeen ROM banks. It was the most unknown bank by the plain measure, and the
+reason it had stayed that way is that `$d000` means three different things.
+
+| who | `$d000` | `$d400` | `$d800` | `$dc00` |
+|---|---|---|---|---|
+| the match (bank `$08`) | court tilemap | court attrmap | saved tilemap | saved attrmap |
+| the overworld (bank 0) | 64-wide scroll plane | — | second scroll plane | — |
+| every full-screen UI | attribute plane paired with `wShadowTilemap` in bank `$03` | page storage | | |
+
+The match pair is proven by `UploadCourtTilemap` sending `$d000` to `$9800` in
+VRAM bank 0 and `UploadCourtAttrmap` sending `$d400` to the same address in bank
+1, with `SnapshotCourtTilemaps` copying `$d800`/`$dc00` back over both when the
+players change ends. The screen pairing is proven by `FlushCharDataTilemapChunk`
+sending `wShadowTilemap + 15 * TILEMAP_WIDTH` (bank `$03`) and `$d1e0` (bank
+`$02`) to `$99e0` in VRAM banks 0 and 1. 141 references now render as cells.
+
+### The default variant was wrong, twice over
+
+The obvious shape was a **default** variant for the common screen case with the
+match and overworld scoped over it. It assembled, it was byte-perfect, and it
+was wrong — a default variant applies outside every *ROM range* the other
+variants claim, and carries no WRAM-bank constraint at all. So it named:
+
+- bank `$03`'s debug save-editor window at `$d300` — which is WRAM bank `$07`,
+  the glyph buffer, identified two passes ago — as an attribute cell;
+- and, via a whole-bank-`$08` scope on the match variant,
+  `RefreshCourtScoreboard`'s `$de9x` bytes as `wCourtAttrmapSaved`, when bank
+  `$08` reaches WRAM bank `$04` there. The give-away was `ld de, wObjSlot1 + 10`
+  rendering in the same instruction pair: two symbols from two different WRAM
+  banks, side by side, both claiming to be right.
+
+The fix is the rule this pass has now hit four times: **every scope carries both
+halves**, and the common case is scoped on `wram_bank` rather than left as a
+default. That drops the reach from 419 references to 141 — and the 141 are the
+ones where the bank is actually provable.
+
+Worth stating plainly, because it is counter-intuitive: a default variant is
+*less* safe than a scoped one, not more. It is the right tool only where the
+alternatives are also scoped by ROM range and the whole union sits in one WRAM
+bank by construction — `wMapScratch` qualifies, this did not.

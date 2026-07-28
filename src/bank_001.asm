@@ -24,7 +24,7 @@ RunDebugTestMenu:
 	ld c, $00 ; $402f
 	call ClearMemory16 ; $4031
 	wram_bank $02 ; $4034
-	ld hl, $d000 ; $403a
+	ld hl, wScreenAttrmap ; $403a
 	ld c, $00 ; $403d
 	call ClearMemory16 ; $403f
 	wram_bank $03 ; $4042

@@ -2901,7 +2901,7 @@ LoadCharViewerGridTilemap:
 	ld bc, $0240 ; $6a15
 	call CopyBank1ToBank2Buffer ; $6a18
 	wram_bank $02 ; $6a1b
-	ld hl, $d021 ; $6a21
+	ld hl, wScreenAttrmap + 1 * TILEMAP_WIDTH + 1 ; $6a21
 	ld c, $10 ; $6a24
 .loop:
 	push hl ; $6a26
@@ -3076,7 +3076,7 @@ LoadCharViewerScreenGfx:
 	ld bc, $0240 ; $6bad
 	call CopyBank1ToBank2Buffer ; $6bb0
 	wram_bank $02 ; $6bb3
-	ld hl, $d1e1 ; $6bb9
+	ld hl, wScreenAttrmap + 15 * TILEMAP_WIDTH + 1 ; $6bb9
 	xor a ; $6bbc
 	ld [hl+], a ; $6bbd
 	ld [hl+], a ; $6bbe
@@ -3094,7 +3094,7 @@ LoadCharViewerScreenGfx:
 	ld [hl+], a ; $6bca
 	ld [hl+], a ; $6bcb
 	ld [hl+], a ; $6bcc
-	ld hl, $d201 ; $6bcd
+	ld hl, wScreenAttrmap + 16 * TILEMAP_WIDTH + 1 ; $6bcd
 	ld [hl+], a ; $6bd0
 	ld [hl+], a ; $6bd1
 	ld [hl+], a ; $6bd2
@@ -3376,7 +3376,7 @@ RunCharViewerInputLoop:
 RefreshCharViewerSelection:
 	wram_bank $02 ; $6e41
 	ld a, $09 ; $6e47
-	ld hl, $d128 ; $6e49
+	ld hl, wScreenAttrmap + 9 * TILEMAP_WIDTH + 8 ; $6e49
 	ld [hl+], a ; $6e4c
 	ld [hl+], a ; $6e4d
 	ld [hl+], a ; $6e4e
@@ -3388,7 +3388,7 @@ RefreshCharViewerSelection:
 	ld [hl+], a ; $6e54
 	ld [hl+], a ; $6e55
 	ld [hl+], a ; $6e56
-	ld hl, $d148 ; $6e57
+	ld hl, wScreenAttrmap + 10 * TILEMAP_WIDTH + 8 ; $6e57
 	ld [hl+], a ; $6e5a
 	ld [hl+], a ; $6e5b
 	ld [hl+], a ; $6e5c
@@ -3400,7 +3400,7 @@ RefreshCharViewerSelection:
 	ld [hl+], a ; $6e62
 	ld [hl+], a ; $6e63
 	ld [hl+], a ; $6e64
-	ld hl, $d1c8 ; $6e65
+	ld hl, wScreenAttrmap + 14 * TILEMAP_WIDTH + 8 ; $6e65
 	ld [hl+], a ; $6e68
 	ld [hl+], a ; $6e69
 	ld [hl+], a ; $6e6a
@@ -3427,7 +3427,7 @@ RefreshCharViewerSelection:
 	wram_bank $02 ; $6e8c
 	ld a, $08 ; $6e92
 	ld [hl], a ; $6e94
-	ld hl, $d120 ; $6e95
+	ld hl, wScreenAttrmap + 9 * TILEMAP_WIDTH ; $6e95
 	ld de, $9920 + VRAM_BANK1 ; $6e98
 	ld c, $04 ; $6e9b
 	call QueueVRAMCopy ; $6e9d
@@ -3441,7 +3441,7 @@ RefreshCharViewerSelection:
 	wram_bank $02 ; $6eb0
 	ld a, $08 ; $6eb6
 	ld [hl], a ; $6eb8
-	ld hl, $d1c0 ; $6eb9
+	ld hl, wScreenAttrmap + 14 * TILEMAP_WIDTH ; $6eb9
 	ld de, $99c0 + VRAM_BANK1 ; $6ebc
 	ld c, $02 ; $6ebf
 	call QueueVRAMCopy ; $6ec1
@@ -3708,7 +3708,7 @@ RunCharDataConfirmScreen:
 	ld c, $24 ; $7993
 	call QueueVRAMCopy ; $7995
 	wram_bank $02 ; $7998
-	ld hl, $d000 ; $799e
+	ld hl, wScreenAttrmap ; $799e
 	ld de, $9800 + VRAM_BANK1 ; $79a1
 	ld c, $24 ; $79a4
 	call QueueVRAMCopy ; $79a6

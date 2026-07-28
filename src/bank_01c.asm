@@ -241,7 +241,7 @@ CharDataScreen_BuildTilemap:
 	ld c, $24 ; $41f1
 	call QueueVRAMCopy ; $41f3
 	wram_bank $02 ; $41f6
-	ld hl, $d000 ; $41fc
+	ld hl, wScreenAttrmap ; $41fc
 	ld de, $9800 + VRAM_BANK1 ; $41ff
 	ld c, $24 ; $4202
 	call QueueVRAMCopy ; $4204
@@ -963,7 +963,7 @@ BackupCharDataScreenRow:
 	ld c, $24 ; $48d5
 	call CopyMemoryFast ; $48d7
 	wram_bank $02 ; $48da
-	ld hl, $d000 ; $48e0
+	ld hl, wScreenAttrmap ; $48e0
 	ld de, $d430 ; $48e3
 	ld c, $24 ; $48e6
 	call CopyMemoryFast ; $48e8
@@ -976,7 +976,7 @@ RestoreCharDataScreenRow:
 	call CopyMemoryFast ; $48fa
 	wram_bank $02 ; $48fd
 	ld hl, $d430 ; $4903
-	ld de, $d000 ; $4906
+	ld de, wScreenAttrmap ; $4906
 	ld c, $24 ; $4909
 	call CopyMemoryFast ; $490b
 	ret ; $490e
@@ -1055,7 +1055,7 @@ FlushCharDataTilemapChunk:
 	ld c, $06 ; $4985
 	call QueueVRAMCopy ; $4987
 	wram_bank $02 ; $498a
-	ld hl, $d1e0 ; $4990
+	ld hl, wScreenAttrmap + 15 * TILEMAP_WIDTH ; $4990
 	ld de, $99e0 + VRAM_BANK1 ; $4993
 	ld c, $06 ; $4996
 	call QueueVRAMCopy ; $4998
@@ -1068,7 +1068,7 @@ FlushCharDataTilemapChunk:
 	ld c, $10 ; $49ab
 	call QueueVRAMCopy ; $49ad
 	wram_bank $02 ; $49b0
-	ld hl, $d0e0 ; $49b6
+	ld hl, wScreenAttrmap + 7 * TILEMAP_WIDTH ; $49b6
 	ld de, $98e0 + VRAM_BANK1 ; $49b9
 	ld c, $10 ; $49bc
 	call QueueVRAMCopy ; $49be
@@ -1081,7 +1081,7 @@ FlushCharDataTilemapChunk:
 	ld c, $0e ; $49d1
 	call QueueVRAMCopy ; $49d3
 	wram_bank $02 ; $49d6
-	ld hl, $d000 ; $49dc
+	ld hl, wScreenAttrmap ; $49dc
 	ld de, $9800 + VRAM_BANK1 ; $49df
 	ld c, $0e ; $49e2
 	call QueueVRAMCopy ; $49e4
@@ -2623,7 +2623,7 @@ SetupCharDataScreen:
 	ld c, $24 ; $55ba
 	call QueueVRAMCopy ; $55bc
 	wram_bank $02 ; $55bf
-	ld hl, $d000 ; $55c5
+	ld hl, wScreenAttrmap ; $55c5
 	ld de, $9800 + VRAM_BANK1 ; $55c8
 	ld c, $24 ; $55cb
 	call QueueVRAMCopy ; $55cd

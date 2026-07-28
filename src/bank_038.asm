@@ -6341,7 +6341,7 @@ RunNameEntryScreen:
 	ld [wStoryCharacterSlot], a ; $6e15
 	wram_bank $02 ; $6e18
 	ld a, c ; $6e1e
-	ld [$d001], a ; $6e1f
+	ld [wScreenAttrmap + 1], a ; $6e1f
 	call DisableLCDSafely ; $6e22
 	call ClearFrameTasks ; $6e25
 	call SetupNameEntryScreen ; $6e28
@@ -6542,7 +6542,7 @@ SetupNameEntryScreen:
 	ldh a, [hWramBank] ; $6fed
 	push af ; $6fef
 	wram_bank $02 ; $6ff0
-	ld a, [$d001] ; $6ff6
+	ld a, [wScreenAttrmap + 1] ; $6ff6
 	farcall LoadCharMugshotToBuffer ; $6ff9
 	ld de, $9200 + VRAM_BANK1 ; $6ffc
 	farcall CopyMugshotBufferToVram ; $6fff
@@ -6570,7 +6570,7 @@ SetupNameEntryScreen:
 	push af ; $7038
 	wram_bank $02 ; $7039
 	xor a ; $703f
-	ld [$d000], a ; $7040
+	ld [wScreenAttrmap], a ; $7040
 	wram_bank $03 ; $7043
 	call GetActiveStoryNameBuffer ; $7049
 	ld h, b ; $704c
@@ -6766,7 +6766,7 @@ AppendCharToName:
 	ld d, a ; $72cd
 	ld hl, NameEntryCharset_38 ; $72ce
 	wram_bank $02 ; $72d1
-	ld a, [$d000] ; $72d7
+	ld a, [wScreenAttrmap] ; $72d7
 	or a ; $72da
 	jr z, .indexCharset ; $72db
 	ld hl, NameEntryCharset_38 ; $72dd

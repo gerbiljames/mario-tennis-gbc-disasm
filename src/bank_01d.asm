@@ -138,7 +138,7 @@ BuildCharDataScreenPages:
 	ld c, $24 ; $415e
 	call QueueVRAMCopy ; $4160
 	wram_bank $02 ; $4163
-	ld hl, $d000 ; $4169
+	ld hl, wScreenAttrmap ; $4169
 	ld de, $9800 + VRAM_BANK1 ; $416c
 	ld c, $24 ; $416f
 	call QueueVRAMCopy ; $4171
@@ -1214,7 +1214,7 @@ SaveWorkTilemapToPage:
 	ld c, $24 ; $4a29
 	call CopyMemoryFast ; $4a2b
 	wram_bank $02 ; $4a2e
-	ld hl, $d000 ; $4a34
+	ld hl, wScreenAttrmap ; $4a34
 	ld de, $dc60 ; $4a37
 	ld c, $24 ; $4a3a
 	call CopyMemoryFast ; $4a3c
@@ -1226,7 +1226,7 @@ SaveWorkTilemapToPage:
 	ld c, $24 ; $4a4c
 	call CopyMemoryFast ; $4a4e
 	wram_bank $02 ; $4a51
-	ld hl, $d000 ; $4a57
+	ld hl, wScreenAttrmap ; $4a57
 	ld de, $da20 ; $4a5a
 	ld c, $24 ; $4a5d
 	call CopyMemoryFast ; $4a5f
@@ -1238,7 +1238,7 @@ SaveWorkTilemapToPage:
 	ld c, $24 ; $4a6f
 	call CopyMemoryFast ; $4a71
 	wram_bank $02 ; $4a74
-	ld hl, $d000 ; $4a7a
+	ld hl, wScreenAttrmap ; $4a7a
 	ld de, $d7e0 ; $4a7d
 	ld c, $24 ; $4a80
 	call CopyMemoryFast ; $4a82
@@ -1250,7 +1250,7 @@ SaveWorkTilemapToPage:
 	ld c, $24 ; $4a92
 	call CopyMemoryFast ; $4a94
 	wram_bank $02 ; $4a97
-	ld hl, $d000 ; $4a9d
+	ld hl, wScreenAttrmap ; $4a9d
 	ld de, $d5a0 ; $4aa0
 	ld c, $24 ; $4aa3
 	call CopyMemoryFast ; $4aa5
@@ -1263,7 +1263,7 @@ LoadBasePageIntoWorkTilemap:
 	call CopyMemoryFast ; $4ab7
 	wram_bank $02 ; $4aba
 	ld hl, $d5a0 ; $4ac0
-	ld de, $d000 ; $4ac3
+	ld de, wScreenAttrmap ; $4ac3
 	ld c, $24 ; $4ac6
 	call CopyMemoryFast ; $4ac8
 	ret ; $4acb
@@ -3221,7 +3221,7 @@ BuildCharDataConfirmScreen:
 	ld c, $24 ; $5bcc
 	call QueueVRAMCopy ; $5bce
 	wram_bank $02 ; $5bd1
-	ld hl, $d000 ; $5bd7
+	ld hl, wScreenAttrmap ; $5bd7
 	ld de, $9800 + VRAM_BANK1 ; $5bda
 	ld c, $24 ; $5bdd
 	call QueueVRAMCopy ; $5bdf
@@ -3738,7 +3738,7 @@ BuildExpDistributionScreen:
 	ld c, $24 ; $6a8d
 	call QueueVRAMCopy ; $6a8f
 	wram_bank $02 ; $6a92
-	ld hl, $d000 ; $6a98
+	ld hl, wScreenAttrmap ; $6a98
 	ld de, $9800 + VRAM_BANK1 ; $6a9b
 	ld c, $24 ; $6a9e
 	call QueueVRAMCopy ; $6aa0
@@ -5171,7 +5171,7 @@ UploadExpPromptWindowRows:
 	ld c, $0c ; $7511
 	call QueueVRAMCopy ; $7513
 	wram_bank $02 ; $7516
-	ld hl, $d180 ; $751c
+	ld hl, wScreenAttrmap + 12 * TILEMAP_WIDTH ; $751c
 	ld de, $9980 + VRAM_BANK1 ; $751f
 	ld c, $0c ; $7522
 	call QueueVRAMCopy ; $7524
@@ -5197,7 +5197,7 @@ UploadExpPromptWindowRowsClosing:
 	ld c, $0c ; $7551
 	call QueueVRAMCopy ; $7553
 	wram_bank $02 ; $7556
-	ld hl, $d180 ; $755c
+	ld hl, wScreenAttrmap + 12 * TILEMAP_WIDTH ; $755c
 	ld de, $9980 + VRAM_BANK1 ; $755f
 	ld c, $0c ; $7562
 	call QueueVRAMCopy ; $7564

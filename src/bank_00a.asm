@@ -1937,7 +1937,7 @@ ClearBgTilemaps:
 	call DisableLCDSafely ; $4d2c
 	wram_bank $02 ; $4d2f
 	ld a, $00 ; $4d35
-	ld hl, $d000 ; $4d37
+	ld hl, wScreenAttrmap ; $4d37
 	ld bc, $0500 ; $4d3a
 	call FillMemoryFast ; $4d3d
 	wram_bank $03 ; $4d40
@@ -1951,7 +1951,7 @@ ClearBgTilemaps:
 	ld c, $24 ; $4d5d
 	call QueueVRAMCopy ; $4d5f
 	wram_bank $02 ; $4d62
-	ld hl, $d000 ; $4d68
+	ld hl, wScreenAttrmap ; $4d68
 	ld de, $9800 + VRAM_BANK1 ; $4d6b
 	ld c, $24 ; $4d6e
 	call QueueVRAMCopy ; $4d70
@@ -3554,7 +3554,7 @@ LoadStorySceneGraphics:
 	call DecompressDataFromBank ; $58cc
 	wram_bank $02 ; $58cf
 	pop hl ; $58d5
-	ld de, $d000 ; $58d6
+	ld de, wScreenAttrmap ; $58d6
 	call DecompressDataFromBank ; $58d9
 	wram_bank $03 ; $58dc
 	pop hl ; $58e2
@@ -3999,7 +3999,7 @@ LoadSceneGraphicsDirect:
 	call DecompressDataFromBank ; $5da7
 	wram_bank $02 ; $5daa
 	pop hl ; $5db0
-	ld de, $d000 ; $5db1
+	ld de, wScreenAttrmap ; $5db1
 	call DecompressDataFromBank ; $5db4
 	wram_bank $03 ; $5db7
 	pop hl ; $5dbd
@@ -4879,13 +4879,13 @@ LoadCourtSceneGraphics:
 	ld de, $d800 ; $6374
 	call DecompressDataFromBank ; $6377
 	pop hl ; $637a
-	ld de, $d000 ; $637b
+	ld de, wScreenAttrmap ; $637b
 	ld bc, $0040 ; $637e
 	call CopyDataFromBank ; $6381
-	ld hl, $d010 ; $6384
+	ld hl, wScreenAttrmap + 16 ; $6384
 	ld de, $0206 ; $6387
 	call LoadPaletteShadow ; $638a
-	ld hl, $d028 ; $638d
+	ld hl, wScreenAttrmap + 1 * TILEMAP_WIDTH + 8 ; $638d
 	ld de, $0b01 ; $6390
 	call LoadPaletteShadow ; $6393
 	pop hl ; $6396

@@ -2367,6 +2367,46 @@ wTextTileBuffer:: ds 2048
 ENDU
 
 
+SECTION "WRAMX bank 2", WRAMX[$d000], BANK[2]
+
+; WRAM bank $02 holds tilemap planes, and until now not one byte of it had
+; a name -- it was the only WRAMX bank with no SECTION at all. Three
+; subsystems use it three different ways, so $d000 is a tile plane, an
+; attribute plane or a 64-wide scroll buffer depending on who is asking:
+; the match keeps the court tilemap and attrmap here as a pair, the
+; overworld builds two of its four wide scroll planes here, and every
+; full-screen UI uses $d000 as the attribute half of the tilemap whose
+; tile half is wShadowTilemap in WRAM bank $03.
+; Every scope carries wram_bank $02 as well as its ROM bank, and the common
+; screen case is scoped rather than a default. A default variant here was
+; the first thing tried and it was wrong twice over: it named the bank $07
+; save-editor window at $d300 as an attribute cell, and bank $08 reaches
+; both this bank and WRAM bank $04 -- RefreshCourtScoreboard's $de9x bytes
+; are not court planes at all.
+UNION
+; match court planes (bank $08)
+; [1024 bytes] The court tilemap the match renders from; UploadCourtTilemap sends it to $9800 in VRAM bank 0. Held in WRAM bank $02 rather than the usual $03 because the match owns bank $03 for other things
+wCourtTilemap:: ds 1024
+; [1024 bytes] Its CGB attribute plane, cell for cell, uploaded to $9800 in VRAM bank 1 by UploadCourtAttrmap
+wCourtAttrmap:: ds 1024
+; [1024 bytes] Copy of the court tilemap taken when the players change ends. SnapshotCourtTilemaps copies it back over wCourtTilemap to restore the un-flipped view
+wCourtTilemapSaved:: ds 1024
+; [1024 bytes] The attribute half of the same snapshot
+wCourtAttrmapSaved:: ds 1024
+NEXTU
+; overworld scroll buffers (bank 0)
+; [1024 bytes] One of the four 64-wide planes CopyMapToScrollBuffers expands the map into, 16 rows of 64 cells. The narrow source comes from wDecompBuffer in WRAM bank $01 through wTextBuffer, a row block at a time
+wMapScrollPlane0:: ds 1024
+	ds 1024
+; [1024 bytes] The second plane, built the same way and then immediately cleared -- 2048 bytes of it, twice what was written. wScreenScratch in WRAM bank $03 gets the same treatment, so two of the four planes are assembled and thrown away
+wMapScrollPlane1:: ds 1024
+NEXTU
+; screen attribute plane
+; [1024 bytes] CGB attributes for the full-screen UIs, cell for cell with wShadowTilemap in WRAM bank $03 -- the pair is what FlushCharDataTilemapChunk sends to $99e0 in VRAM banks 0 and 1. Seventeen ROM banks write cells here, which is why it is the default rather than a scoped variant. The page images the character-data screens patch from sit above it and keep their numeric addresses, being cells in two banks at once
+wScreenAttrmap:: ds 1024
+ENDU
+
+
 SECTION "WRAMX bank 3", WRAMX[$d000], BANK[3]
 
 ; Screen tilemap buffers, WRAM bank $03. The full-screen UIs assemble their

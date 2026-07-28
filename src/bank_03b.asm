@@ -6120,10 +6120,10 @@ LoadN64RecordsToWram2:
 	ldh a, [hWramBank] ; $6c3d
 	push af ; $6c3f
 	wram_bank $02 ; $6c40
-	ld hl, $d000 ; $6c46
+	ld hl, wScreenAttrmap ; $6c46
 	ld bc, $0020 ; $6c49
 	call ClearMemory16 ; $6c4c
-	ld hl, $d000 ; $6c4f
+	ld hl, wScreenAttrmap ; $6c4f
 	ld b, $0b ; $6c52
 	farcall ReadSaveBlock ; $6c54
 	pop af ; $6c57
@@ -6133,9 +6133,9 @@ CheckN64DataPresent:
 	ldh a, [hWramBank] ; $6c5d
 	push af ; $6c5f
 	wram_bank $02 ; $6c60
-	ld a, [$d000] ; $6c66
+	ld a, [wScreenAttrmap] ; $6c66
 	ld b, a ; $6c69
-	ld a, [$d001] ; $6c6a
+	ld a, [wScreenAttrmap + 1] ; $6c6a
 	or b ; $6c6d
 	jr z, .restore ; $6c6e
 	pop af ; $6c70

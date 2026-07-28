@@ -3488,7 +3488,7 @@ ClearScreenMaps:
 	call DisableLCDSafely ; $651e
 	wram_bank $02 ; $6521
 	ld a, $00 ; $6527
-	ld hl, $d000 ; $6529
+	ld hl, wScreenAttrmap ; $6529
 	ld bc, $0500 ; $652c
 	call FillBytesWithValue ; $652f
 	wram_bank $03 ; $6532
@@ -3502,7 +3502,7 @@ ClearScreenMaps:
 	ld c, $24 ; $654f
 	call QueueVRAMCopy ; $6551
 	wram_bank $02 ; $6554
-	ld hl, $d000 ; $655a
+	ld hl, wScreenAttrmap ; $655a
 	ld de, $9800 + VRAM_BANK1 ; $655d
 	ld c, $24 ; $6560
 	call QueueVRAMCopy ; $6562
@@ -4243,12 +4243,12 @@ RunMinigameLevelSelect:
 	push af ; $6b9e
 	wram_bank $02 ; $6b9f
 	ld a, c ; $6ba5
-	ld [$d000], a ; $6ba6
+	ld [wScreenAttrmap], a ; $6ba6
 	xor a ; $6ba9
-	ld [$d001], a ; $6baa
+	ld [wScreenAttrmap + 1], a ; $6baa
 	call CountClearedMinigameLevels ; $6bad
 	call LoadMinigameLevelSelectGfx ; $6bb0
-	ld a, [$d001] ; $6bb3
+	ld a, [wScreenAttrmap + 1] ; $6bb3
 	cp $02 ; $6bb6
 	jr z, .runMinigameLevelSelect3 ; $6bb8
 	call RunMinigameLevelSelect2 ; $6bba
@@ -4257,7 +4257,7 @@ RunMinigameLevelSelect:
 	call RunMinigameLevelSelect3 ; $6bbf
 .step:
 	wram_bank $02 ; $6bc2
-	ld a, [$d003] ; $6bc8
+	ld a, [wScreenAttrmap + 3] ; $6bc8
 	ld c, a ; $6bcb
 	pop af ; $6bcc
 	wram_bank ; $6bcd
@@ -4265,7 +4265,7 @@ RunMinigameLevelSelect:
 	ret ; $6bd2
 CountClearedMinigameLevels:
 	ld c, $00 ; $6bd3
-	ld a, [$d000] ; $6bd5
+	ld a, [wScreenAttrmap] ; $6bd5
 	add a ; $6bd8
 	ld hl, ClearedMinigameLevelsTable ; $6bd9
 	add l ; $6bdc
@@ -4295,8 +4295,8 @@ CountClearedMinigameLevels:
 	inc c ; $6bf9
 .countDone:
 	ld a, c ; $6bfa
-	ld [$d001], a ; $6bfb
-	ld a, [$d001] ; $6bfe
+	ld [wScreenAttrmap + 1], a ; $6bfb
+	ld a, [wScreenAttrmap + 1] ; $6bfe
 	ld hl, CountClearedMinigameLevelsTable ; $6c01
 	add l ; $6c04
 	ld l, a ; $6c05
@@ -4304,7 +4304,7 @@ CountClearedMinigameLevels:
 	inc h ; $6c08
 .readB:
 	ld a, [hl] ; $6c09
-	ld [$d002], a ; $6c0a
+	ld [wScreenAttrmap + 2], a ; $6c0a
 	ret ; $6c0d
 CountClearedMinigameLevelsTable:
 	; $6c0e, 3 bytes (bytes:3)
@@ -4394,7 +4394,7 @@ LoadMinigameLevelSelectGfx:
 	ldh a, [hWramBank] ; $6ca3
 	push af ; $6ca5
 	wram_bank $02 ; $6ca6
-	ld a, [$d001] ; $6cac
+	ld a, [wScreenAttrmap + 1] ; $6cac
 	ld b, a ; $6caf
 	pop af ; $6cb0
 	wram_bank ; $6cb1
@@ -4418,7 +4418,7 @@ LoadMinigameLevelSelectGfx:
 	ldh a, [hWramBank] ; $6cd2
 	push af ; $6cd4
 	wram_bank $02 ; $6cd5
-	ld a, [$d001] ; $6cdb
+	ld a, [wScreenAttrmap + 1] ; $6cdb
 	ld b, a ; $6cde
 	pop af ; $6cdf
 	wram_bank ; $6ce0
@@ -4471,7 +4471,7 @@ DrawMinigameLevelDescription:
 	ldh a, [hWramBank] ; $6d3d
 	push af ; $6d3f
 	wram_bank $02 ; $6d40
-	ld a, [$d001] ; $6d46
+	ld a, [wScreenAttrmap + 1] ; $6d46
 	or a ; $6d49
 	jr nz, .getMenuCursorIndex ; $6d4a
 	ld c, $03 ; $6d4c
@@ -4588,7 +4588,7 @@ GetMinigameLevelColumnCount:
 	ldh a, [hWramBank] ; $6e1d
 	push af ; $6e1f
 	wram_bank $02 ; $6e20
-	ld a, [$d002] ; $6e26
+	ld a, [wScreenAttrmap + 2] ; $6e26
 	ld b, a ; $6e29
 	pop af ; $6e2a
 	wram_bank ; $6e2b
@@ -4608,7 +4608,7 @@ RunMinigameLevelSelect2:
 	ld c, $01 ; $6e4d
 	farcall LoadMenuSpritePalettePair ; $6e4f
 	wram_bank $02 ; $6e52
-	ld a, [$d001] ; $6e58
+	ld a, [wScreenAttrmap + 1] ; $6e58
 	ld c, a ; $6e5b
 	ld b, $02 ; $6e5c
 	call SetMenuCursorFromIndex ; $6e5e
@@ -4642,7 +4642,7 @@ RunMinigameLevelSelect2:
 	or a ; $6ea2
 	jr z, .playSfx ; $6ea3
 	wram_bank $02 ; $6ea5
-	ld a, [$d001] ; $6eab
+	ld a, [wScreenAttrmap + 1] ; $6eab
 	or a ; $6eae
 	jr nz, .playSfx ; $6eaf
 	sound $61 ; $6eb1
@@ -4660,7 +4660,7 @@ RunMinigameLevelSelect2:
 	wram_bank $02 ; $6ecf
 	ld c, $03 ; $6ed5
 	call GetMenuCursorIndex ; $6ed7
-	ld [$d003], a ; $6eda
+	ld [wScreenAttrmap + 3], a ; $6eda
 	ret ; $6edd
 .playSfx2:
 	sound $62 ; $6ede
@@ -4674,7 +4674,7 @@ RunMinigameLevelSelect2:
 	ld [wMenuSlideDirection], a ; $6ef5
 	wram_bank $02 ; $6ef8
 	ld a, $ff ; $6efe
-	ld [$d003], a ; $6f00
+	ld [wScreenAttrmap + 3], a ; $6f00
 	ret ; $6f03
 RedrawMinigameLevelSelect2:
 	wram_bank $03 ; $6f04
@@ -4810,7 +4810,7 @@ RunMinigameLevelSelect3:
 	ld c, $01 ; $6fee
 	farcall LoadMenuSpritePalettePair ; $6ff0
 	wram_bank $02 ; $6ff3
-	ld a, [$d001] ; $6ff9
+	ld a, [wScreenAttrmap + 1] ; $6ff9
 	ld c, a ; $6ffc
 	ld b, $03 ; $6ffd
 	call SetMenuCursorFromIndex ; $6fff
@@ -4851,7 +4851,7 @@ RunMinigameLevelSelect3:
 	wram_bank $02 ; $7058
 	ld c, $03 ; $705e
 	call GetMenuCursorIndex ; $7060
-	ld [$d003], a ; $7063
+	ld [wScreenAttrmap + 3], a ; $7063
 	ret ; $7066
 .playSfx2:
 	sound $62 ; $7067
@@ -4865,7 +4865,7 @@ RunMinigameLevelSelect3:
 	ld [wMenuSlideDirection], a ; $707e
 	wram_bank $02 ; $7081
 	ld a, $ff ; $7087
-	ld [$d003], a ; $7089
+	ld [wScreenAttrmap + 3], a ; $7089
 	ret ; $708c
 RedrawMinigameLevelSelect3:
 	wram_bank $03 ; $708d

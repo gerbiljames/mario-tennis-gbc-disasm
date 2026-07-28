@@ -210,7 +210,7 @@ BuildResultsScreenPanels:
 	ld hl, wContinuePromptKind ; $4216
 	ld c, $a0 ; $4219
 	call FillMemoryC ; $421b
-	ld hl, $d041 ; $421e
+	ld hl, wScreenAttrmap + 2 * TILEMAP_WIDTH + 1 ; $421e
 	call DrawContinuePromptText ; $4221
 	wram_bank $03 ; $4224
 	ld a, $02 ; $422a
@@ -249,7 +249,7 @@ BuildResultsScreenPanels:
 	call FillMemoryC ; $427f
 	wram_bank $02 ; $4282
 	xor a ; $4288
-	ld hl, $d1a0 ; $4289
+	ld hl, wScreenAttrmap + 13 * TILEMAP_WIDTH ; $4289
 	ld c, $a0 ; $428c
 	call FillMemoryC ; $428e
 	wram_bank $03 ; $4291
@@ -294,16 +294,16 @@ BuildResultsScreenPanels:
 	call FetchAndDrawDialogueText ; $42ef
 	wram_bank $02 ; $42f2
 	xor a ; $42f8
-	ld hl, $d0ce ; $42f9
+	ld hl, wScreenAttrmap + 6 * TILEMAP_WIDTH + 14 ; $42f9
 	ld c, $06 ; $42fc
 	call FillMemoryC ; $42fe
-	ld hl, $d0ee ; $4301
+	ld hl, wScreenAttrmap + 7 * TILEMAP_WIDTH + 14 ; $4301
 	ld c, $06 ; $4304
 	call FillMemoryC ; $4306
-	ld hl, $d10e ; $4309
+	ld hl, wScreenAttrmap + 8 * TILEMAP_WIDTH + 14 ; $4309
 	ld c, $06 ; $430c
 	call FillMemoryC ; $430e
-	ld hl, $d12e ; $4311
+	ld hl, wScreenAttrmap + 9 * TILEMAP_WIDTH + 14 ; $4311
 	ld c, $06 ; $4314
 	call FillMemoryC ; $4316
 	ld a, [wGameMode] ; $4319
@@ -336,10 +336,10 @@ DrawResultsNameLabelRows:
 	or a ; $435a
 	jr nz, .doublesLayout ; $435b
 	ld hl, wContinuePromptKind ; $435d
-	ld de, $d160 ; $4360
+	ld de, wScreenAttrmap + 11 * TILEMAP_WIDTH ; $4360
 	ld c, $07 ; $4363
 	call CopyLabelTilesToTilemap ; $4365
-	ld de, $d180 ; $4368
+	ld de, wScreenAttrmap + 12 * TILEMAP_WIDTH ; $4368
 	ld c, $07 ; $436b
 	call CopyLabelTilesToTilemap ; $436d
 	wram_bank $03 ; $4370
@@ -353,14 +353,14 @@ DrawResultsNameLabelRows:
 	ld [wShadowTilemap + 13 * TILEMAP_WIDTH + 6], a ; $4387
 	wram_bank $02 ; $438a
 	ld a, $08 ; $4390
-	ld [$d1a6], a ; $4392
+	ld [wScreenAttrmap + 13 * TILEMAP_WIDTH + 6], a ; $4392
 	ret ; $4395
 .doublesLayout:
 	ld hl, wContinuePromptKind ; $4396
-	ld de, $d120 ; $4399
+	ld de, wScreenAttrmap + 9 * TILEMAP_WIDTH ; $4399
 	ld c, $07 ; $439c
 	call CopyLabelTilesToTilemap ; $439e
-	ld de, $d140 ; $43a1
+	ld de, wScreenAttrmap + 10 * TILEMAP_WIDTH ; $43a1
 	ld c, $07 ; $43a4
 	call CopyLabelTilesToTilemap ; $43a6
 	wram_bank $03 ; $43a9
@@ -391,14 +391,14 @@ DrawResultsNameLabelRows:
 	ld [wShadowTilemap + 11 * TILEMAP_WIDTH + 6], a ; $43ed
 	wram_bank $02 ; $43f0
 	xor a ; $43f6
-	ld hl, $d160 ; $43f7
+	ld hl, wScreenAttrmap + 11 * TILEMAP_WIDTH ; $43f7
 	ld c, $14 ; $43fa
 	call FillMemoryC ; $43fc
-	ld hl, $d180 ; $43ff
+	ld hl, wScreenAttrmap + 12 * TILEMAP_WIDTH ; $43ff
 	ld c, $14 ; $4402
 	call FillMemoryC ; $4404
 	ld a, $08 ; $4407
-	ld [$d166], a ; $4409
+	ld [wScreenAttrmap + 11 * TILEMAP_WIDTH + 6], a ; $4409
 	ret ; $440c
 CopyLabelTilesToTilemap:
 	wram_bank $01 ; $440d
@@ -424,9 +424,9 @@ CopyLabelTilesToTilemap:
 	ld [wShadowTilemap + 13 * TILEMAP_WIDTH], a ; $4443
 	wram_bank $02 ; $4446
 	xor a ; $444c
-	ld [$d1a0], a ; $444d
+	ld [wScreenAttrmap + 13 * TILEMAP_WIDTH], a ; $444d
 	ld a, $08 ; $4450
-	ld [$d1a6], a ; $4452
+	ld [wScreenAttrmap + 13 * TILEMAP_WIDTH + 6], a ; $4452
 	wram_bank $03 ; $4455
 	ld a, $08 ; $445b
 	ld [wShadowTilemap + 13 * TILEMAP_WIDTH + 6], a ; $445d
@@ -443,13 +443,13 @@ DrawStoryResultsHeader:
 	cp $1d ; $446e
 	jr z, .altPosition ; $4470
 	ld hl, $04d8 ; $4472
-	ld de, $d1c3 ; $4475
+	ld de, wScreenAttrmap + 14 * TILEMAP_WIDTH + 3 ; $4475
 	ld bc, $0020 ; $4478
 	call DrawProportionalTextLine ; $447b
 	jr .drawOpponentName ; $447e
 .skyScene:
 	ld hl, $04d9 ; $4480
-	ld de, $d1c2 ; $4483
+	ld de, wScreenAttrmap + 14 * TILEMAP_WIDTH + 2 ; $4483
 	ld bc, $0020 ; $4486
 	call DrawProportionalTextLine ; $4489
 .drawOpponentName:
@@ -459,7 +459,7 @@ DrawStoryResultsHeader:
 	adc $01 ; $4492
 	sub l ; $4494
 	ld h, a ; $4495
-	ld de, $d204 ; $4496
+	ld de, wScreenAttrmap + 16 * TILEMAP_WIDTH + 4 ; $4496
 	ld bc, $0020 ; $4499
 	call DrawProportionalTextLine ; $449c
 	ret ; $449f
@@ -469,7 +469,7 @@ DrawStoryResultsHeader:
 	adc $01 ; $44a3
 	sub l ; $44a5
 	ld h, a ; $44a6
-	ld de, $d1e7 ; $44a7
+	ld de, wScreenAttrmap + 15 * TILEMAP_WIDTH + 7 ; $44a7
 	ld bc, $0020 ; $44aa
 	call DrawProportionalTextLine ; $44ad
 	ret ; $44b0
@@ -661,45 +661,45 @@ WriteTextToTilemap:
 DrawSinglesPlayerNames:
 	ld hl, wPlayer1MainName ; $4606
 	call CopyStringToTextBuffer ; $4609
-	ld de, $d1c3 ; $460c
+	ld de, wScreenAttrmap + 14 * TILEMAP_WIDTH + 3 ; $460c
 	call ShiftDestForLongName ; $460f
 	ld bc, $0020 ; $4612
 	call WriteTextToTilemap ; $4615
 	ld hl, Text_31_215 ; $4618
-	ld de, $d1c9 ; $461b
+	ld de, wScreenAttrmap + 14 * TILEMAP_WIDTH + 9 ; $461b
 	ld bc, $0020 ; $461e
 	call FetchAndDrawDialogueText ; $4621
 	ld hl, wPlayer2MainName ; $4624
 	call CopyStringToTextBuffer ; $4627
-	ld de, $d1cc ; $462a
+	ld de, wScreenAttrmap + 14 * TILEMAP_WIDTH + 12 ; $462a
 	ld bc, $0020 ; $462d
 	call WriteTextToTilemap ; $4630
 	ret ; $4633
 DrawDoublesPlayerNames:
 	ld hl, wPlayer1MainName ; $4634
 	call CopyStringToTextBuffer ; $4637
-	ld de, $d183 ; $463a
+	ld de, wScreenAttrmap + 12 * TILEMAP_WIDTH + 3 ; $463a
 	call ShiftDestForLongName ; $463d
 	ld bc, $0020 ; $4640
 	call WriteTextToTilemap ; $4643
 	ld hl, wPlayer1PartnerName ; $4646
 	call CopyStringToTextBuffer ; $4649
-	ld de, $d1c3 ; $464c
+	ld de, wScreenAttrmap + 14 * TILEMAP_WIDTH + 3 ; $464c
 	call ShiftDestForLongName ; $464f
 	ld bc, $0020 ; $4652
 	call WriteTextToTilemap ; $4655
 	ld hl, Text_31_215 ; $4658
-	ld de, $d1a9 ; $465b
+	ld de, wScreenAttrmap + 13 * TILEMAP_WIDTH + 9 ; $465b
 	ld bc, $0020 ; $465e
 	call FetchAndDrawDialogueText ; $4661
 	ld hl, wPlayer2MainName ; $4664
 	call CopyStringToTextBuffer ; $4667
-	ld de, $d18c ; $466a
+	ld de, wScreenAttrmap + 12 * TILEMAP_WIDTH + 12 ; $466a
 	ld bc, $0020 ; $466d
 	call WriteTextToTilemap ; $4670
 	ld hl, wPlayer2PartnerName ; $4673
 	call CopyStringToTextBuffer ; $4676
-	ld de, $d1cc ; $4679
+	ld de, wScreenAttrmap + 14 * TILEMAP_WIDTH + 12 ; $4679
 	ld bc, $0020 ; $467c
 	call WriteTextToTilemap ; $467f
 	ret ; $4682
@@ -730,31 +730,31 @@ ShiftDestForLongName:
 	ret ; $46a3
 DrawSetsGamesScore:
 	ld hl, Text_31_225 ; $46a4
-	ld de, $d202 ; $46a7
+	ld de, wScreenAttrmap + 16 * TILEMAP_WIDTH + 2 ; $46a7
 	ld bc, $0020 ; $46aa
 	call FetchAndDrawDialogueText ; $46ad
 	ld a, [wPlayer1SetsWon] ; $46b0
-	ld de, $d206 ; $46b3
+	ld de, wScreenAttrmap + 16 * TILEMAP_WIDTH + 6 ; $46b3
 	call FormatAndDrawNumber ; $46b6
 	ld hl, Text_31_227 ; $46b9
-	ld de, $d207 ; $46bc
+	ld de, wScreenAttrmap + 16 * TILEMAP_WIDTH + 7 ; $46bc
 	ld bc, $0020 ; $46bf
 	call FetchAndDrawDialogueText ; $46c2
 	ld a, [wPlayer2SetsWon] ; $46c5
-	ld de, $d208 ; $46c8
+	ld de, wScreenAttrmap + 16 * TILEMAP_WIDTH + 8 ; $46c8
 	call FormatAndDrawNumber ; $46cb
 	ld hl, Text_31_226 ; $46ce
-	ld de, $d20b ; $46d1
+	ld de, wScreenAttrmap + 16 * TILEMAP_WIDTH + 11 ; $46d1
 	ld bc, $0020 ; $46d4
 	call FetchAndDrawDialogueText ; $46d7
 	ld a, [wPlayer1GamesWon] ; $46da
-	ld de, $d20f ; $46dd
+	ld de, wScreenAttrmap + 16 * TILEMAP_WIDTH + 15 ; $46dd
 	call FormatAndDrawNumber ; $46e0
 	ld hl, Text_31_227 ; $46e3
-	ld de, $d210 ; $46e6
+	ld de, wScreenAttrmap + 16 * TILEMAP_WIDTH + 16 ; $46e6
 	call FetchAndDrawDialogueText ; $46e9
 	ld a, [wPlayer2GamesWon] ; $46ec
-	ld de, $d211 ; $46ef
+	ld de, wScreenAttrmap + 16 * TILEMAP_WIDTH + 17 ; $46ef
 	call FormatAndDrawNumber ; $46f2
 	ret ; $46f5
 FormatAndDrawNumber:
@@ -800,7 +800,7 @@ DrawClassNameLabel:
 .varsity:
 	ld hl, $04dc ; $473c
 .draw:
-	ld de, $d1c1 ; $473f
+	ld de, wScreenAttrmap + 14 * TILEMAP_WIDTH + 1 ; $473f
 	ld bc, $0020 ; $4742
 	call DrawProportionalTextLine ; $4745
 	ret ; $4748
@@ -873,7 +873,7 @@ DrawRankMatchLabel:
 	ld h, a ; $47c6
 	farcall PushTextArgNumber ; $47c7
 	ld hl, $04dd ; $47ca
-	ld de, $d1ca ; $47cd
+	ld de, wScreenAttrmap + 14 * TILEMAP_WIDTH + 10 ; $47cd
 	ld bc, $0020 ; $47d0
 	call DrawProportionalTextLine ; $47d3
 	ret ; $47d6
@@ -897,7 +897,7 @@ DrawRankMatchLabel:
 	ret ; $47f3
 DrawTournamentRoundLabel:
 	ld hl, $04de ; $47f4
-	ld de, $d1c1 ; $47f7
+	ld de, wScreenAttrmap + 14 * TILEMAP_WIDTH + 1 ; $47f7
 	ld bc, $0020 ; $47fa
 	call DrawProportionalTextLine ; $47fd
 	ld hl, wTextBuffer ; $4800
@@ -931,21 +931,21 @@ DrawTournamentRoundLabel:
 	ld h, a ; $4836
 	farcall PushTextArgNumber ; $4837
 	ld hl, $04df ; $483a
-	ld de, $d1ca ; $483d
+	ld de, wScreenAttrmap + 14 * TILEMAP_WIDTH + 10 ; $483d
 	ld bc, $0020 ; $4840
 	call DrawProportionalTextLine ; $4843
 	ret ; $4846
 .clearRoundLabelRow:
 	call ClearRoundLabelRow ; $4847
 	ld hl, $04e6 ; $484a
-	ld de, $d1c9 ; $484d
+	ld de, wScreenAttrmap + 14 * TILEMAP_WIDTH + 9 ; $484d
 	ld bc, $0020 ; $4850
 	call DrawProportionalTextLine ; $4853
 	ret ; $4856
 .clearRoundLabelRow2:
 	call ClearRoundLabelRow ; $4857
 	ld hl, $04e5 ; $485a
-	ld de, $d1ca ; $485d
+	ld de, wScreenAttrmap + 14 * TILEMAP_WIDTH + 10 ; $485d
 	ld bc, $0020 ; $4860
 	call DrawProportionalTextLine ; $4863
 	ret ; $4866
@@ -967,13 +967,13 @@ ClearRoundLabelRow:
 	ret ; $4880
 DrawPracticeMatchLabel:
 	ld hl, $04e0 ; $4881
-	ld de, $d1cb ; $4884
+	ld de, wScreenAttrmap + 14 * TILEMAP_WIDTH + 11 ; $4884
 	ld bc, $0020 ; $4887
 	call DrawProportionalTextLine ; $488a
 	ret ; $488d
 DrawMarioExhibitionLabel:
 	ld hl, $04ea ; $488e
-	ld de, $d1c1 ; $4891
+	ld de, wScreenAttrmap + 14 * TILEMAP_WIDTH + 1 ; $4891
 	ld bc, $0020 ; $4894
 	call DrawProportionalTextLine ; $4897
 	ret ; $489a
@@ -1035,13 +1035,13 @@ DrawPlayerNameAndLevel:
 	call WriteTextToTilemap ; $4936
 	wram_bank $02 ; $4939
 	ld a, $04 ; $493f
-	ld hl, $d0a0 ; $4941
+	ld hl, wScreenAttrmap + 5 * TILEMAP_WIDTH ; $4941
 	call Fill7Bytes ; $4944
-	ld hl, $d0c0 ; $4947
+	ld hl, wScreenAttrmap + 6 * TILEMAP_WIDTH ; $4947
 	call Fill7Bytes ; $494a
-	ld hl, $d0e0 ; $494d
+	ld hl, wScreenAttrmap + 7 * TILEMAP_WIDTH ; $494d
 	call Fill7Bytes ; $4950
-	ld hl, $d100 ; $4953
+	ld hl, wScreenAttrmap + 8 * TILEMAP_WIDTH ; $4953
 	call Fill7Bytes ; $4956
 	ret ; $4959
 Fill7Bytes:
@@ -1525,7 +1525,7 @@ BuildExpAwardScreenTilemap:
 	ld c, $24 ; $5507
 	call QueueVRAMCopy ; $5509
 	wram_bank $02 ; $550c
-	ld hl, $d000 ; $5512
+	ld hl, wScreenAttrmap ; $5512
 	ld de, $9800 + VRAM_BANK1 ; $5515
 	ld c, $24 ; $5518
 	call QueueVRAMCopy ; $551a
@@ -2210,7 +2210,7 @@ BeginNextExpAward:
 	ld c, $08 ; $5b47
 	call QueueVRAMCopy ; $5b49
 	wram_bank $02 ; $5b4c
-	ld hl, $d000 ; $5b52
+	ld hl, wScreenAttrmap ; $5b52
 	ld de, $9800 + VRAM_BANK1 ; $5b55
 	ld c, $08 ; $5b58
 	call QueueVRAMCopy ; $5b5a

@@ -1762,7 +1762,7 @@ LoadMatchMenuItemGfx:
 	ld a, [hl+] ; $5221
 	ld h, [hl] ; $5222
 	ld l, a ; $5223
-	ld de, $d000 ; $5224
+	ld de, wScreenAttrmap ; $5224
 	ldh a, [hWramBank] ; $5227
 	push af ; $5229
 	wram_bank $01 ; $522a
