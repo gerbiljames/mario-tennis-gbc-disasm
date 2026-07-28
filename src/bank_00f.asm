@@ -1000,7 +1000,7 @@ AwardsCeremonyInitScript_0f:
 	ld a, [hl+] ; $560c
 	ld b, [hl] ; $560d
 	ld c, a ; $560e
-	ld hl, wWaterSpriteMinigameTimer ; $560f
+	ld hl, $c2b4 ; $560f
 	ld a, [hl+] ; $5612
 	ld d, [hl] ; $5613
 	ld e, a ; $5614
@@ -1480,7 +1480,7 @@ SavePlayerActorPosition:
 	ld a, [hl+] ; $5f70
 	ld d, [hl] ; $5f71
 	ld e, a ; $5f72
-	ld hl, wWaterSpriteMinigameTimer ; $5f73
+	ld hl, $c2b4 ; $5f73
 	ld a, e ; $5f76
 	ld [hl+], a ; $5f77
 	ld [hl], d ; $5f78

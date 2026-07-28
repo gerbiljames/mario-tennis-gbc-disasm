@@ -73,21 +73,6 @@
   "name": "wStoryModeMenuRequest",
   "note": "[8-bit] Story Mode - set to 1 on a Start-press in the overworld; opens the story-mode menu (RunStoryModeMenu)"
  },
- "0xc2b4": {
-  "name": "wWaterSpriteMinigameTimer",
-  "note": "[16-bit] Water Sprite Minigame - Timer (Frames)",
-  "size": 2
- },
- "0xc2b6": {
-  "name": "wWaterSpriteMinigameSwingCount",
-  "note": "[16-bit] Water Sprite Minigame - Swing Count",
-  "size": 2
- },
- "0xc2ba": {
-  "name": "wWaterSpriteMinigameFlag",
-  "note": "[8-bit] Water Sprite Minigame Flag (0x17 when in minigame)",
-  "size": 1
- },
  "0xc2d0": {
   "name": "wStoryModePlayersXPosition",
   "note": "[16-bit] Story Mode - Player's X Position",

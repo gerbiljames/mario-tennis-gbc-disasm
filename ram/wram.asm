@@ -91,18 +91,47 @@ wMapSceneStage:: db
 
 ; [8-bit] Second per-location scene stage, alongside wMapSceneStage; set by the map init scripts (CafeteriaInitScript_10, RestaurantInitScript_10, TrainingCourtReentryDispatch, the challenger result scenes) and read by the same location's NPC scripts to pick a text id
 wMapSceneStage2:: db
+
+; Story-script scratch, second half ($c2b0-$c2bf as a whole is the
+; current location's scratch block; wMapSceneStage and wMapSceneStage2
+; are its first two bytes). Two consumers overlay it: bank $14's island
+; cutscenes keep two sprite slots here as parallel byte arrays, and bank
+; $15's water-sprite swing contest keeps 16-bit counters over the same
+; bytes. The three wWaterSpriteMinigame* names that used to sit here in
+; ram_map.json were global, so they also labelled the generic scratch use
+; in banks $0e/$0f/$10/$13, which is what STATUS flagged as mis-scoped.
+UNION
+; island cutscene sprite slots (bank $14, $5300-$6600)
+; [2 bytes] World X of cutscene sprite slot 0 and slot 1; the drawers subtract hScrollX to get the OAM X. The plane sequence has no second object and borrows slot 0's byte as its frame counter (AdvancePlaneFrameCounter_14)
+wCutsceneObjX:: dw
+; [2 bytes] World Y of the two cutscene sprite slots
+wCutsceneObjY:: dw
+; [2 bytes] Animation phase of each slot: the splash's rise/fall step and the firework's burst step, both used to index the frame tables
+wCutsceneObjPhase:: dw
+; [2 bytes] Per-slot frame timer -- the splash's hit counter (0-8) and the firework's countdown to the next burst frame
+wCutsceneObjTimer:: dw
+; [2 bytes] Per-slot phase limit, rerolled from the RNG when a splash respawns
+wCutsceneObjLimit:: dw
+; [2 bytes] Frames left in the rise, counted down by AdvanceWaterSplash0Rise_14 / AdvanceWaterSplash1Rise_14, which also lift wCutsceneObjY by 2 each frame
+wCutsceneObjRiseTimer:: dw
+; [2 bytes] Per-slot active flag; 0 means the object is still rising and the hit test is skipped
+wCutsceneObjActive:: dw
+NEXTU
+; water-sprite swing contest (bank $15)
 	ds 2
+; [16-bit] Frames left in the swing contest; WaterSpriteSwingCountTask counts it down and ends the contest at 0
+wSwingContestTimer:: dw
+; [16-bit] Swings counted so far, incremented on each A/B press and printed by PrintHexWord as the contest runs
+wSwingContestSwings:: dw
+; [8-bit] A/B rising edge from the previous frame, so one press counts once
+wSwingContestPrevInput:: db
+; [8-bit] 2 once a swing has been registered, 1 on the frame after -- which is how the swing animation is triggered exactly once
+wSwingContestSwingState:: db
+; [8-bit] Which HUD panels QueueWaterSpriteMinigameHudPanels draws
+wSwingContestHudMode:: db
+ENDU
 
-; [16-bit] Water Sprite Minigame - Timer (Frames)
-wWaterSpriteMinigameTimer:: dw
-
-; [16-bit] Water Sprite Minigame - Swing Count
-wWaterSpriteMinigameSwingCount:: dw
-	ds 2
-
-; [8-bit] Water Sprite Minigame Flag (0x17 when in minigame)
-wWaterSpriteMinigameFlag:: db
-	ds 21
+	ds 16
 
 ; [16-bit] Story Mode - Player's X Position
 wStoryModePlayersXPosition:: dw

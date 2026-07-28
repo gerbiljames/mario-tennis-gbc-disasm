@@ -1897,7 +1897,7 @@ ComputeEmoteActorPosition_13:
 	add hl, de ; $5c1d
 	ld e, l ; $5c1e
 	ld d, h ; $5c1f
-	ld hl, wWaterSpriteMinigameFlag ; $5c20
+	ld hl, $c2ba ; $5c20
 	ld a, e ; $5c23
 	ld [hl+], a ; $5c24
 	ld [hl], d ; $5c25
@@ -1907,7 +1907,7 @@ PlaceEmoteActorAtComputedPosition_13:
 	ld a, [hl+] ; $5c2a
 	ld b, [hl] ; $5c2b
 	ld c, a ; $5c2c
-	ld hl, wWaterSpriteMinigameFlag ; $5c2d
+	ld hl, $c2ba ; $5c2d
 	ld a, [hl+] ; $5c30
 	ld d, [hl] ; $5c31
 	ld e, a ; $5c32
@@ -1940,7 +1940,7 @@ PlaceRoommateAtPlayerTarget_13:
 	add hl, de ; $5c5d
 	ld e, l ; $5c5e
 	ld d, h ; $5c5f
-	ld hl, wWaterSpriteMinigameFlag ; $5c60
+	ld hl, $c2ba ; $5c60
 	ld a, e ; $5c63
 	ld [hl+], a ; $5c64
 	ld [hl], d ; $5c65
@@ -1948,7 +1948,7 @@ PlaceRoommateAtPlayerTarget_13:
 	ld a, [hl+] ; $5c69
 	ld b, [hl] ; $5c6a
 	ld c, a ; $5c6b
-	ld hl, wWaterSpriteMinigameFlag ; $5c6c
+	ld hl, $c2ba ; $5c6c
 	ld a, [hl+] ; $5c6f
 	ld d, [hl] ; $5c70
 	ld e, a ; $5c71

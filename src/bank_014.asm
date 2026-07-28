@@ -1681,29 +1681,29 @@ IslandSkyInitScript_14:
 	ret ; $54de
 .setLocation:
 	ld a, $40 ; $54df
-	ld [$c2b2], a ; $54e1
+	ld [wCutsceneObjX], a ; $54e1
 	ld a, $00 ; $54e4
-	ld [wWaterSpriteMinigameTimer], a ; $54e6
+	ld [wCutsceneObjY], a ; $54e6
 	xor a, a ; $54e9
-	ld [wWaterSpriteMinigameSwingCount], a ; $54ea
+	ld [wCutsceneObjPhase], a ; $54ea
 	ld a, $10 ; $54ed
-	ld [$c2bc], a ; $54ef
+	ld [wCutsceneObjRiseTimer], a ; $54ef
 	ld a, $00 ; $54f2
-	ld [$c2be], a ; $54f4
+	ld [wCutsceneObjActive], a ; $54f4
 	ld a, $01 ; $54f7
 	ld hl, UpdateWaterSplash0_14 ; $54f9
 	call RegisterFrameTask ; $54fc
 	script_wait_frames $0a ; $54ff
 	ld a, $50 ; $5506
-	ld [$c2b3], a ; $5508
+	ld [wCutsceneObjX + 1], a ; $5508
 	ld a, $02 ; $550b
-	ld [wWaterSpriteMinigameTimer + 1], a ; $550d
+	ld [wCutsceneObjY + 1], a ; $550d
 	xor a, a ; $5510
-	ld [wWaterSpriteMinigameSwingCount + 1], a ; $5511
+	ld [wCutsceneObjPhase + 1], a ; $5511
 	ld a, $10 ; $5514
-	ld [$c2bd], a ; $5516
+	ld [wCutsceneObjRiseTimer + 1], a ; $5516
 	ld a, $00 ; $5519
-	ld [$c2bf], a ; $551b
+	ld [wCutsceneObjActive + 1], a ; $551b
 	ld a, $01 ; $551e
 	ld hl, UpdateWaterSplash1_14 ; $5520
 	call RegisterFrameTask ; $5523
@@ -1734,8 +1734,8 @@ IslandSkyInitScript_14:
 	cp a, $0c ; $55ee
 	jr nz, .done ; $55f0
 	ld a, $01 ; $55f2
-	ld [$c2be], a ; $55f4
-	ld [$c2bf], a ; $55f7
+	ld [wCutsceneObjActive], a ; $55f4
+	ld [wCutsceneObjActive + 1], a ; $55f7
 	ld a, $01 ; $55fa
 	ld [wUnusedExitLocationMirror], a ; $55fc
 	ld [wStoryModeExitLocationRequest], a ; $55ff
@@ -1853,84 +1853,84 @@ LoadWaterSplashObjGfx_14:
 UpdateWaterSplash0_14:
 	ldh a, [hScrollX] ; $60c4
 	ld b, a ; $60c6
-	ld a, [$c2b2] ; $60c7
+	ld a, [wCutsceneObjX] ; $60c7
 	sub a, b ; $60ca
 	ld d, a ; $60cb
-	ld a, [$c2be] ; $60cc
+	ld a, [wCutsceneObjActive] ; $60cc
 	and a, a ; $60cf
 	jr nz, .checkHit ; $60d0
 	call AdvanceWaterSplash0Rise_14 ; $60d2
 .checkHit:
 	ldh a, [hScrollY] ; $60d5
 	ld b, a ; $60d7
-	ld a, [wWaterSpriteMinigameTimer] ; $60d8
+	ld a, [wCutsceneObjY] ; $60d8
 	add a, $20 ; $60db
 	sub a, b ; $60dd
 	ld e, a ; $60de
-	ld a, [$c2be] ; $60df
+	ld a, [wCutsceneObjActive] ; $60df
 	and a, a ; $60e2
 	jp z, .hit ; $60e3
-	ld a, [wWaterSpriteMinigameFlag] ; $60e6
+	ld a, [wCutsceneObjLimit] ; $60e6
 	ld b, a ; $60e9
-	ld a, [wWaterSpriteMinigameSwingCount] ; $60ea
+	ld a, [wCutsceneObjPhase] ; $60ea
 	cp a, $14 ; $60ed
 	jr c, .respawn ; $60ef
 	cp a, b ; $60f1
 	jr c, .done ; $60f2
 .hit:
-	ld a, [$c2bc] ; $60f4
+	ld a, [wCutsceneObjRiseTimer] ; $60f4
 	and a, a ; $60f7
 	jr z, .scorePoint ; $60f8
 	ld a, $08 ; $60fa
-	ld [$c2b8], a ; $60fc
+	ld [wCutsceneObjTimer], a ; $60fc
 	ld a, $00 ; $60ff
-	ld [wWaterSpriteMinigameSwingCount], a ; $6101
+	ld [wCutsceneObjPhase], a ; $6101
 	jp .respawn ; $6104
 .scorePoint:
-	ld a, [$c2b8] ; $6107
+	ld a, [wCutsceneObjTimer] ; $6107
 	inc a ; $610a
-	ld [$c2b8], a ; $610b
+	ld [wCutsceneObjTimer], a ; $610b
 	cp a, $08 ; $610e
 	jr c, .advance ; $6110
 	cp a, $08 ; $6112
 	jr z, .playSfx ; $6114
 	sound $7e ; $6116
 .playSfx:
-	ld a, [$c2b2] ; $6118
+	ld a, [wCutsceneObjX] ; $6118
 	inc a ; $611b
-	ld [$c2b2], a ; $611c
+	ld [wCutsceneObjX], a ; $611c
 	xor a, a ; $611f
-	ld [$c2b8], a ; $6120
-	ld a, [wWaterSpriteMinigameSwingCount] ; $6123
+	ld [wCutsceneObjTimer], a ; $6120
+	ld a, [wCutsceneObjPhase] ; $6123
 	add a, $04 ; $6126
-	ld [wWaterSpriteMinigameSwingCount], a ; $6128
+	ld [wCutsceneObjPhase], a ; $6128
 .advance:
-	ld a, [wWaterSpriteMinigameFlag] ; $612b
+	ld a, [wCutsceneObjLimit] ; $612b
 	ld b, a ; $612e
-	ld a, [wWaterSpriteMinigameSwingCount] ; $612f
+	ld a, [wCutsceneObjPhase] ; $612f
 	cp a, $14 ; $6132
 	jr c, .respawn ; $6134
 	cp a, b ; $6136
 	jr c, .done ; $6137
 	xor a, a ; $6139
-	ld [wWaterSpriteMinigameSwingCount], a ; $613a
+	ld [wCutsceneObjPhase], a ; $613a
 	call AdvanceRandomSeed ; $613d
 	ld a, l ; $6140
 	and a, $0f ; $6141
 	add a, a ; $6143
 	add a, $40 ; $6144
-	ld [$c2b2], a ; $6146
+	ld [wCutsceneObjX], a ; $6146
 	ld a, h ; $6149
 	and a, $3c ; $614a
-	ld [wWaterSpriteMinigameFlag], a ; $614c
+	ld [wCutsceneObjLimit], a ; $614c
 	ld a, h ; $614f
 	and a, $0f ; $6150
-	ld [wWaterSpriteMinigameTimer], a ; $6152
+	ld [wCutsceneObjY], a ; $6152
 	ld a, $10 ; $6155
-	ld [$c2bc], a ; $6157
+	ld [wCutsceneObjRiseTimer], a ; $6157
 	jr .done ; $615a
 .respawn:
-	ld a, [wWaterSpriteMinigameSwingCount] ; $615c
+	ld a, [wCutsceneObjPhase] ; $615c
 	add a, $20 ; $615f
 	ld c, a ; $6161
 	ld hl, SpriteTemplate_14_6090 ; $6162
@@ -1939,97 +1939,97 @@ UpdateWaterSplash0_14:
 .done:
 	ret ; $616a
 AdvanceWaterSplash0Rise_14:
-	ld a, [$c2bc] ; $616b
+	ld a, [wCutsceneObjRiseTimer] ; $616b
 	and a, a ; $616e
 	jr z, .done ; $616f
 	dec a ; $6171
-	ld [$c2bc], a ; $6172
-	ld a, [wWaterSpriteMinigameTimer] ; $6175
+	ld [wCutsceneObjRiseTimer], a ; $6172
+	ld a, [wCutsceneObjY] ; $6175
 	sub a, $02 ; $6178
-	ld [wWaterSpriteMinigameTimer], a ; $617a
+	ld [wCutsceneObjY], a ; $617a
 .done:
 	ret ; $617d
 UpdateWaterSplash1_14:
 	ldh a, [hScrollX] ; $617e
 	ld b, a ; $6180
-	ld a, [$c2b3] ; $6181
+	ld a, [wCutsceneObjX + 1] ; $6181
 	sub a, b ; $6184
 	ld d, a ; $6185
-	ld a, [$c2bf] ; $6186
+	ld a, [wCutsceneObjActive + 1] ; $6186
 	and a, a ; $6189
 	jr nz, .checkHit ; $618a
 	call AdvanceWaterSplash1Rise_14 ; $618c
 .checkHit:
 	ldh a, [hScrollY] ; $618f
 	ld b, a ; $6191
-	ld a, [wWaterSpriteMinigameTimer + 1] ; $6192
+	ld a, [wCutsceneObjY + 1] ; $6192
 	add a, $20 ; $6195
 	sub a, b ; $6197
 	ld e, a ; $6198
-	ld a, [$c2bf] ; $6199
+	ld a, [wCutsceneObjActive + 1] ; $6199
 	and a, a ; $619c
 	jp z, .hit ; $619d
-	ld a, [$c2bb] ; $61a0
+	ld a, [wCutsceneObjLimit + 1] ; $61a0
 	ld b, a ; $61a3
-	ld a, [wWaterSpriteMinigameSwingCount + 1] ; $61a4
+	ld a, [wCutsceneObjPhase + 1] ; $61a4
 	cp a, $14 ; $61a7
 	jr c, .respawn ; $61a9
 	cp a, b ; $61ab
 	jr c, .done ; $61ac
 .hit:
-	ld a, [$c2bd] ; $61ae
+	ld a, [wCutsceneObjRiseTimer + 1] ; $61ae
 	and a, a ; $61b1
 	jr z, .scorePoint ; $61b2
 	ld a, $08 ; $61b4
-	ld [$c2b9], a ; $61b6
+	ld [wCutsceneObjTimer + 1], a ; $61b6
 	ld a, $00 ; $61b9
-	ld [wWaterSpriteMinigameSwingCount + 1], a ; $61bb
+	ld [wCutsceneObjPhase + 1], a ; $61bb
 	jp .respawn ; $61be
 .scorePoint:
-	ld a, [$c2b9] ; $61c1
+	ld a, [wCutsceneObjTimer + 1] ; $61c1
 	inc a ; $61c4
-	ld [$c2b9], a ; $61c5
+	ld [wCutsceneObjTimer + 1], a ; $61c5
 	cp a, $08 ; $61c8
 	jr c, .advance ; $61ca
 	cp a, $08 ; $61cc
 	jr z, .playSfx ; $61ce
 	sound $7e ; $61d0
 .playSfx:
-	ld a, [$c2b3] ; $61d2
+	ld a, [wCutsceneObjX + 1] ; $61d2
 	inc a ; $61d5
-	ld [$c2b3], a ; $61d6
+	ld [wCutsceneObjX + 1], a ; $61d6
 	xor a, a ; $61d9
-	ld [$c2b9], a ; $61da
-	ld a, [wWaterSpriteMinigameSwingCount + 1] ; $61dd
+	ld [wCutsceneObjTimer + 1], a ; $61da
+	ld a, [wCutsceneObjPhase + 1] ; $61dd
 	add a, $04 ; $61e0
-	ld [wWaterSpriteMinigameSwingCount + 1], a ; $61e2
+	ld [wCutsceneObjPhase + 1], a ; $61e2
 .advance:
-	ld a, [$c2bb] ; $61e5
+	ld a, [wCutsceneObjLimit + 1] ; $61e5
 	ld b, a ; $61e8
-	ld a, [wWaterSpriteMinigameSwingCount + 1] ; $61e9
+	ld a, [wCutsceneObjPhase + 1] ; $61e9
 	cp a, $14 ; $61ec
 	jr c, .respawn ; $61ee
 	cp a, b ; $61f0
 	jr c, .done ; $61f1
 	xor a, a ; $61f3
-	ld [wWaterSpriteMinigameSwingCount + 1], a ; $61f4
+	ld [wCutsceneObjPhase + 1], a ; $61f4
 	call AdvanceRandomSeed ; $61f7
 	ld a, l ; $61fa
 	and a, $0f ; $61fb
 	add a, a ; $61fd
 	add a, $40 ; $61fe
-	ld [$c2b3], a ; $6200
+	ld [wCutsceneObjX + 1], a ; $6200
 	ld a, l ; $6203
 	and a, $3f ; $6204
-	ld [$c2bb], a ; $6206
+	ld [wCutsceneObjLimit + 1], a ; $6206
 	ld a, h ; $6209
 	and a, $0f ; $620a
-	ld [wWaterSpriteMinigameTimer + 1], a ; $620c
+	ld [wCutsceneObjY + 1], a ; $620c
 	ld a, $10 ; $620f
-	ld [$c2bd], a ; $6211
+	ld [wCutsceneObjRiseTimer + 1], a ; $6211
 	jr .done ; $6214
 .respawn:
-	ld a, [wWaterSpriteMinigameSwingCount + 1] ; $6216
+	ld a, [wCutsceneObjPhase + 1] ; $6216
 	add a, $20 ; $6219
 	ld c, a ; $621b
 	ld hl, SpriteTemplate_14_6090 ; $621c
@@ -2038,14 +2038,14 @@ UpdateWaterSplash1_14:
 .done:
 	ret ; $6224
 AdvanceWaterSplash1Rise_14:
-	ld a, [$c2bd] ; $6225
+	ld a, [wCutsceneObjRiseTimer + 1] ; $6225
 	and a, a ; $6228
 	jr z, .done ; $6229
 	dec a ; $622b
-	ld [$c2bd], a ; $622c
-	ld a, [wWaterSpriteMinigameTimer + 1] ; $622f
+	ld [wCutsceneObjRiseTimer + 1], a ; $622c
+	ld a, [wCutsceneObjY + 1] ; $622f
 	sub a, $02 ; $6232
-	ld [wWaterSpriteMinigameTimer + 1], a ; $6234
+	ld [wCutsceneObjY + 1], a ; $6234
 .done:
 	ret ; $6237
 LoadPlaneObjGfx2_14:
@@ -2065,7 +2065,7 @@ LoadPlaneObjGfx2_14:
 QueuePlaneSpriteByFrameCounter_14:
 	call GetSceneObjectScreenPos_14 ; $625b
 	ld b, $10 ; $625e
-	ld a, [$c2b2] ; $6260
+	ld a, [wCutsceneObjX] ; $6260
 	cp a, $14 ; $6263
 	jr c, .queue ; $6265
 	ld b, $20 ; $6267
@@ -2097,7 +2097,7 @@ QueuePlaneSpriteByFrameCounter_14:
 	ld a, $28 ; $629c
 	ld [wMapSceneStage2], a ; $629e
 	ld a, $00 ; $62a1
-	ld [$c2b2], a ; $62a3
+	ld [wCutsceneObjX], a ; $62a3
 	ld a, $01 ; $62a6
 	ld hl, QueuePlaneSpriteByFrameCounter_14 ; $62a8
 	call RegisterFrameTask ; $62ab
@@ -2238,9 +2238,9 @@ QueuePlaneSpriteByFrameCounter_14:
 	ld [wStoryModeExitLocationRequest], a ; $641b
 	ret ; $641e
 AdvancePlaneFrameCounter_14:
-	ld a, [$c2b2] ; $641f
+	ld a, [wCutsceneObjX] ; $641f
 	inc a ; $6422
-	ld [$c2b2], a ; $6423
+	ld [wCutsceneObjX], a ; $6423
 	ret ; $6426
 LoadFireworkObjGfx_14:
 	ldh a, [hWramBank] ; $6427
@@ -2257,51 +2257,51 @@ LoadFireworkObjGfx_14:
 	wram_bank ; $6445
 	ret ; $6449
 UpdateFirework0_14:
-	ld a, [wWaterSpriteMinigameSwingCount] ; $644a
+	ld a, [wCutsceneObjPhase] ; $644a
 	cp a, $04 ; $644d
 	jp nc, .done ; $644f
-	ld a, [wWaterSpriteMinigameSwingCount] ; $6452
+	ld a, [wCutsceneObjPhase] ; $6452
 	and a, a ; $6455
 	jr nz, .draw ; $6456
 	call AdvanceFirework0Ascent_14 ; $6458
 .draw:
 	ldh a, [hScrollX] ; $645b
 	ld b, a ; $645d
-	ld a, [$c2b2] ; $645e
+	ld a, [wCutsceneObjX] ; $645e
 	sub a, b ; $6461
 	ld d, a ; $6462
 	ldh a, [hScrollY] ; $6463
 	ld b, a ; $6465
-	ld a, [wWaterSpriteMinigameTimer] ; $6466
+	ld a, [wCutsceneObjY] ; $6466
 	sub a, b ; $6469
 	ld e, a ; $646a
-	ld a, [$c2b8] ; $646b
+	ld a, [wCutsceneObjTimer] ; $646b
 	dec a ; $646e
-	ld [$c2b8], a ; $646f
+	ld [wCutsceneObjTimer], a ; $646f
 	and a, a ; $6472
 	jp nz, .burstSprite ; $6473
-	ld a, [wWaterSpriteMinigameSwingCount] ; $6476
+	ld a, [wCutsceneObjPhase] ; $6476
 	inc a ; $6479
-	ld [wWaterSpriteMinigameSwingCount], a ; $647a
+	ld [wCutsceneObjPhase], a ; $647a
 	cp a, $04 ; $647d
 	jp nc, .done ; $647f
-	ld a, [wWaterSpriteMinigameSwingCount] ; $6482
+	ld a, [wCutsceneObjPhase] ; $6482
 	add a, LOW(Table_14_64d5) ; $6485
 	ld l, a ; $6487
 	adc a, HIGH(Table_14_64d5) ; $6488
 	sub a, l ; $648a
 	ld h, a ; $648b
 	ld a, [hl] ; $648c
-	ld [$c2b8], a ; $648d
-	ld a, [wWaterSpriteMinigameSwingCount] ; $6490
+	ld [wCutsceneObjTimer], a ; $648d
+	ld a, [wCutsceneObjPhase] ; $6490
 	cp a, $01 ; $6493
 	jr nz, .burstSprite ; $6495
-	ld a, [$c2b8] ; $6497
+	ld a, [wCutsceneObjTimer] ; $6497
 	cp a, $0c ; $649a
 	jr nz, .burstSprite ; $649c
 	sound $81 ; $649e
 .burstSprite:
-	ld a, [wWaterSpriteMinigameSwingCount] ; $64a0
+	ld a, [wCutsceneObjPhase] ; $64a0
 	add a, LOW(Data_14_64d9) ; $64a3
 	ld l, a ; $64a5
 	adc a, HIGH(Data_14_64d9) ; $64a6
@@ -2310,7 +2310,7 @@ UpdateFirework0_14:
 	ld a, [hl] ; $64aa
 	add a, $10 ; $64ab
 	ld c, a ; $64ad
-	ld a, [$c2b8] ; $64ae
+	ld a, [wCutsceneObjTimer] ; $64ae
 	srl a ; $64b1
 	and a, $03 ; $64b3
 	inc a ; $64b5
@@ -2321,7 +2321,7 @@ UpdateFirework0_14:
 	ret ; $64bd
 AdvanceFirework0Ascent_14:
 	ld b, $03 ; $64be
-	ld a, [$c2b8] ; $64c0
+	ld a, [wCutsceneObjTimer] ; $64c0
 	cp a, $14 ; $64c3
 	jr nc, .checkWaterSpriteMinigameTimer ; $64c5
 	dec b ; $64c7
@@ -2329,9 +2329,9 @@ AdvanceFirework0Ascent_14:
 	jr nc, .checkWaterSpriteMinigameTimer ; $64ca
 	dec b ; $64cc
 .checkWaterSpriteMinigameTimer:
-	ld a, [wWaterSpriteMinigameTimer] ; $64cd
+	ld a, [wCutsceneObjY] ; $64cd
 	sub a, b ; $64d0
-	ld [wWaterSpriteMinigameTimer], a ; $64d1
+	ld [wCutsceneObjY], a ; $64d1
 	ret ; $64d4
 Table_14_64d5:
 	; $64d5, 4 bytes (bytes:4)
@@ -2363,89 +2363,89 @@ Data_14_64dd:
 	farcall WaitPlayerMoveDone ; $6532
 	script_wait_frames $32 ; $6535
 	ld a, $50 ; $653c
-	ld [$c2b3], a ; $653e
+	ld [wCutsceneObjX + 1], a ; $653e
 	ld a, $28 ; $6541
-	ld [wWaterSpriteMinigameTimer + 1], a ; $6543
+	ld [wCutsceneObjY + 1], a ; $6543
 	ld a, $00 ; $6546
-	ld [wWaterSpriteMinigameSwingCount + 1], a ; $6548
+	ld [wCutsceneObjPhase + 1], a ; $6548
 	ld a, $1e ; $654b
-	ld [$c2b9], a ; $654d
+	ld [wCutsceneObjTimer + 1], a ; $654d
 	ld a, $01 ; $6550
 	ld hl, UpdateFirework1_14 ; $6552
 	call RegisterFrameTask ; $6555
 	script_wait_frames $50 ; $6558
 	ld a, $40 ; $655f
-	ld [$c2b2], a ; $6561
+	ld [wCutsceneObjX], a ; $6561
 	ld a, $20 ; $6564
-	ld [wWaterSpriteMinigameTimer], a ; $6566
+	ld [wCutsceneObjY], a ; $6566
 	ld a, $00 ; $6569
-	ld [wWaterSpriteMinigameSwingCount], a ; $656b
+	ld [wCutsceneObjPhase], a ; $656b
 	ld a, $1e ; $656e
-	ld [$c2b8], a ; $6570
+	ld [wCutsceneObjTimer], a ; $6570
 	ld a, $01 ; $6573
 	ld hl, UpdateFirework0_14 ; $6575
 	call RegisterFrameTask ; $6578
 	script_wait_frames $50 ; $657b
 	ld a, $48 ; $6582
-	ld [$c2b3], a ; $6584
+	ld [wCutsceneObjX + 1], a ; $6584
 	ld a, $28 ; $6587
-	ld [wWaterSpriteMinigameTimer + 1], a ; $6589
+	ld [wCutsceneObjY + 1], a ; $6589
 	ld a, $00 ; $658c
-	ld [wWaterSpriteMinigameSwingCount + 1], a ; $658e
+	ld [wCutsceneObjPhase + 1], a ; $658e
 	ld a, $1e ; $6591
-	ld [$c2b9], a ; $6593
+	ld [wCutsceneObjTimer + 1], a ; $6593
 	script_wait_frames $28 ; $6596
 	ld a, $38 ; $659d
-	ld [$c2b2], a ; $659f
+	ld [wCutsceneObjX], a ; $659f
 	ld a, $20 ; $65a2
-	ld [wWaterSpriteMinigameTimer], a ; $65a4
+	ld [wCutsceneObjY], a ; $65a4
 	ld a, $00 ; $65a7
-	ld [wWaterSpriteMinigameSwingCount], a ; $65a9
+	ld [wCutsceneObjPhase], a ; $65a9
 	ld a, $1e ; $65ac
-	ld [$c2b8], a ; $65ae
+	ld [wCutsceneObjTimer], a ; $65ae
 	script_wait_frames $28 ; $65b1
 	ld a, $50 ; $65b8
-	ld [$c2b3], a ; $65ba
+	ld [wCutsceneObjX + 1], a ; $65ba
 	ld a, $28 ; $65bd
-	ld [wWaterSpriteMinigameTimer + 1], a ; $65bf
+	ld [wCutsceneObjY + 1], a ; $65bf
 	ld a, $00 ; $65c2
-	ld [wWaterSpriteMinigameSwingCount + 1], a ; $65c4
+	ld [wCutsceneObjPhase + 1], a ; $65c4
 	ld a, $19 ; $65c7
-	ld [$c2b9], a ; $65c9
+	ld [wCutsceneObjTimer + 1], a ; $65c9
 	script_wait_frames $28 ; $65cc
 	ld a, $38 ; $65d3
-	ld [$c2b2], a ; $65d5
+	ld [wCutsceneObjX], a ; $65d5
 	ld a, $20 ; $65d8
-	ld [wWaterSpriteMinigameTimer], a ; $65da
+	ld [wCutsceneObjY], a ; $65da
 	ld a, $00 ; $65dd
-	ld [wWaterSpriteMinigameSwingCount], a ; $65df
+	ld [wCutsceneObjPhase], a ; $65df
 	ld a, $1a ; $65e2
-	ld [$c2b8], a ; $65e4
+	ld [wCutsceneObjTimer], a ; $65e4
 	script_wait_frames $28 ; $65e7
 	ld a, $58 ; $65ee
-	ld [$c2b3], a ; $65f0
+	ld [wCutsceneObjX + 1], a ; $65f0
 	ld a, $28 ; $65f3
-	ld [wWaterSpriteMinigameTimer + 1], a ; $65f5
+	ld [wCutsceneObjY + 1], a ; $65f5
 	ld a, $00 ; $65f8
-	ld [wWaterSpriteMinigameSwingCount + 1], a ; $65fa
+	ld [wCutsceneObjPhase + 1], a ; $65fa
 	ld a, $1c ; $65fd
-	ld [$c2b9], a ; $65ff
+	ld [wCutsceneObjTimer + 1], a ; $65ff
 	script_wait_frames $28 ; $6602
 	ld a, $40 ; $6609
 	ld [$c2b2], a ; $660b
 	ld a, $20 ; $660e
-	ld [wWaterSpriteMinigameTimer], a ; $6610
+	ld [$c2b4], a ; $6610
 	ld a, $00 ; $6613
-	ld [wWaterSpriteMinigameSwingCount], a ; $6615
+	ld [$c2b6], a ; $6615
 	ld a, $16 ; $6618
 	ld [$c2b8], a ; $661a
 	script_wait_frames $32 ; $661d
 	ld a, $48 ; $6624
 	ld [$c2b3], a ; $6626
 	ld a, $28 ; $6629
-	ld [wWaterSpriteMinigameTimer + 1], a ; $662b
+	ld [$c2b5], a ; $662b
 	ld a, $00 ; $662e
-	ld [wWaterSpriteMinigameSwingCount + 1], a ; $6630
+	ld [$c2b7], a ; $6630
 	ld a, $1c ; $6633
 	ld [$c2b9], a ; $6635
 	script_wait_frames $48 ; $6638
@@ -2492,10 +2492,10 @@ SpriteTemplate_14_6e80:
 FireworkObjPalettes_14:
 	INCLUDE "data/bank_014/palettes_6ea1.asm" ; $6ea1, 79 bytes (palettes)
 UpdateFirework1_14:
-	ld a, [wWaterSpriteMinigameSwingCount + 1] ; $6ef0
+	ld a, [$c2b7] ; $6ef0
 	cp a, $04 ; $6ef3
 	jp nc, .done ; $6ef5
-	ld a, [wWaterSpriteMinigameSwingCount + 1] ; $6ef8
+	ld a, [$c2b7] ; $6ef8
 	and a, a ; $6efb
 	jr nz, .draw ; $6efc
 	call AdvanceFirework1Ascent_14 ; $6efe
@@ -2507,7 +2507,7 @@ UpdateFirework1_14:
 	ld d, a ; $6f08
 	ldh a, [hScrollY] ; $6f09
 	ld b, a ; $6f0b
-	ld a, [wWaterSpriteMinigameTimer + 1] ; $6f0c
+	ld a, [$c2b5] ; $6f0c
 	sub a, b ; $6f0f
 	ld e, a ; $6f10
 	ld a, [$c2b9] ; $6f11
@@ -2515,12 +2515,12 @@ UpdateFirework1_14:
 	ld [$c2b9], a ; $6f15
 	and a, a ; $6f18
 	jp nz, .burstSprite ; $6f19
-	ld a, [wWaterSpriteMinigameSwingCount + 1] ; $6f1c
+	ld a, [$c2b7] ; $6f1c
 	inc a ; $6f1f
-	ld [wWaterSpriteMinigameSwingCount + 1], a ; $6f20
+	ld [$c2b7], a ; $6f20
 	cp a, $04 ; $6f23
 	jp nc, .done ; $6f25
-	ld a, [wWaterSpriteMinigameSwingCount + 1] ; $6f28
+	ld a, [$c2b7] ; $6f28
 	add a, LOW(Table_14_64d5) ; $6f2b
 	ld l, a ; $6f2d
 	adc a, HIGH(Table_14_64d5) ; $6f2e
@@ -2528,7 +2528,7 @@ UpdateFirework1_14:
 	ld h, a ; $6f31
 	ld a, [hl] ; $6f32
 	ld [$c2b9], a ; $6f33
-	ld a, [wWaterSpriteMinigameSwingCount + 1] ; $6f36
+	ld a, [$c2b7] ; $6f36
 	cp a, $01 ; $6f39
 	jr nz, .burstSprite ; $6f3b
 	ld a, [$c2b9] ; $6f3d
@@ -2536,7 +2536,7 @@ UpdateFirework1_14:
 	jr nz, .burstSprite ; $6f42
 	sound $81 ; $6f44
 .burstSprite:
-	ld a, [wWaterSpriteMinigameSwingCount + 1] ; $6f46
+	ld a, [$c2b7] ; $6f46
 	add a, LOW(Data_14_64dd) ; $6f49
 	ld l, a ; $6f4b
 	adc a, HIGH(Data_14_64dd) ; $6f4c
@@ -2564,9 +2564,9 @@ AdvanceFirework1Ascent_14:
 	jr nc, .store ; $6f70
 	dec b ; $6f72
 .store:
-	ld a, [wWaterSpriteMinigameTimer + 1] ; $6f73
+	ld a, [$c2b5] ; $6f73
 	sub a, b ; $6f76
-	ld [wWaterSpriteMinigameTimer + 1], a ; $6f77
+	ld [$c2b5], a ; $6f77
 	ret ; $6f7a
 .loadScene:
 	call DisableLCDSafely ; $6f7b
@@ -2581,7 +2581,7 @@ AdvanceFirework1Ascent_14:
 	ld hl, QueuePlaneSpriteByHeight_14 ; $6f93
 	call RegisterFrameTask ; $6f96
 	ld a, $00 ; $6f99
-	ld [wWaterSpriteMinigameFlag], a ; $6f9b
+	ld [$c2ba], a ; $6f9b
 	ld [$c2bb], a ; $6f9e
 	ld [$c2be], a ; $6fa1
 	ld a, $01 ; $6fa4
@@ -2677,7 +2677,7 @@ AdvanceFirework1Ascent_14:
 	script_move_player $0b00, $0d00 ; $709d
 	call LoadDistantPlaneObjGfx_14 ; $70a7
 	ld a, $04 ; $70aa
-	ld [wWaterSpriteMinigameSwingCount], a ; $70ac
+	ld [$c2b6], a ; $70ac
 	ld a, $a8 ; $70af
 	ld [wMapSceneStage2], a ; $70b1
 	ld a, $01 ; $70b4
@@ -2697,7 +2697,7 @@ AdvanceFirework1Ascent_14:
 	cp a, $1e ; $70d7
 	jr nz, .speakDoubles ; $70d9
 	ld a, $00 ; $70db
-	ld [wWaterSpriteMinigameSwingCount], a ; $70dd
+	ld [$c2b6], a ; $70dd
 .speakDoubles:
 	dec h ; $70e0
 	jr nz, .speak ; $70e1
@@ -2826,17 +2826,17 @@ AnimateIslandSkyEffectSprites_14:
 	ld a, [$c2be] ; $73eb
 	and a, a ; $73ee
 	jr nz, .nonZero ; $73ef
-	ld a, [wWaterSpriteMinigameFlag] ; $73f1
+	ld a, [$c2ba] ; $73f1
 	inc a ; $73f4
-	ld [wWaterSpriteMinigameFlag], a ; $73f5
+	ld [$c2ba], a ; $73f5
 .nonZero:
-	ld a, [wWaterSpriteMinigameFlag] ; $73f8
+	ld a, [$c2ba] ; $73f8
 	swap a ; $73fb
 	and a, $03 ; $73fd
 	cp a, $03 ; $73ff
 	jr nz, .ne03 ; $7401
 	ld a, $00 ; $7403
-	ld [wWaterSpriteMinigameFlag], a ; $7405
+	ld [$c2ba], a ; $7405
 .ne03:
 	inc a ; $7408
 	ld b, a ; $7409
@@ -2853,7 +2853,7 @@ AnimateIslandSkyEffectSprites_14:
 	ld e, a ; $741a
 	ld c, $20 ; $741b
 	ld hl, SpriteTemplate_14_7371 ; $741d
-	ld a, [wWaterSpriteMinigameFlag] ; $7420
+	ld a, [$c2ba] ; $7420
 	swap a ; $7423
 	and a, $03 ; $7425
 	inc a ; $7427
@@ -2885,7 +2885,7 @@ LoadDistantPlaneObjGfx_14:
 	ret ; $755b
 QueueDistantPlaneSprite_14:
 	call GetSceneObjectScreenPos_14 ; $755c
-	ld a, [wWaterSpriteMinigameSwingCount] ; $755f
+	ld a, [$c2b6] ; $755f
 	ld c, a ; $7562
 	ld c, a ; $7563
 	ld hl, SpriteTemplate_14_7530 ; $7564
@@ -2935,7 +2935,7 @@ QueueTwinkleSprite_14:
 	ld a, $58 ; $76b5
 	sub a, b ; $76b7
 	ld e, a ; $76b8
-	ld a, [wWaterSpriteMinigameSwingCount] ; $76b9
+	ld a, [$c2b6] ; $76b9
 	ld c, a ; $76bc
 	ld hl, SpriteTemplate_14_7530 ; $76bd
 	ld b, $08 ; $76c0
@@ -2947,7 +2947,7 @@ QueueTwinkleSprite_14:
 	call LoadTwinkleObjGfx_14 ; $76cc
 	call EnableLCD ; $76cf
 	ld a, $00 ; $76d2
-	ld [wWaterSpriteMinigameFlag], a ; $76d4
+	ld [$c2ba], a ; $76d4
 	ld [$c2bb], a ; $76d7
 	ld a, $01 ; $76da
 	ld hl, AnimateIslandSkyEffectSprites_14 ; $76dc
@@ -2967,7 +2967,7 @@ QueueTwinkleSprite_14:
 	script_wait_frames $1e ; $7719
 	call LoadDistantPlaneObjGfx_14 ; $7720
 	ld a, $08 ; $7723
-	ld [wWaterSpriteMinigameSwingCount], a ; $7725
+	ld [$c2b6], a ; $7725
 	ld a, $54 ; $7728
 	ld [wMapSceneStage], a ; $772a
 	ld a, $58 ; $772d
@@ -2989,7 +2989,7 @@ QueueTwinkleSprite_14:
 	cp a, $2d ; $7755
 	jr nz, .fireworkLoop ; $7757
 	ld a, $0c ; $7759
-	ld [wWaterSpriteMinigameSwingCount], a ; $775b
+	ld [$c2b6], a ; $775b
 .fireworkLoop:
 	dec h ; $775e
 	jr nz, .fadeIn ; $775f
@@ -3104,7 +3104,7 @@ AdvancePlaneFrameCounter2_14:
 	ret ; $787a
 PlayTwinkleAnimation_14:
 	xor a, a ; $787b
-	ld [wWaterSpriteMinigameSwingCount], a ; $787c
+	ld [$c2b6], a ; $787c
 	call AdvanceFrame ; $787f
 	ld a, $01 ; $7882
 	ld hl, QueueTwinkleSprite_14 ; $7884
@@ -3113,9 +3113,9 @@ PlayTwinkleAnimation_14:
 	ld h, $04 ; $788c
 .loop:
 	script_wait_frames $04 ; $788e
-	ld a, [wWaterSpriteMinigameSwingCount] ; $7895
+	ld a, [$c2b6] ; $7895
 	add a, $04 ; $7898
-	ld [wWaterSpriteMinigameSwingCount], a ; $789a
+	ld [$c2b6], a ; $789a
 	dec h ; $789d
 	jr nz, .loop ; $789e
 	ld hl, QueueTwinkleSprite_14 ; $78a0

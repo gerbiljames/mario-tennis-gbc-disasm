@@ -3209,7 +3209,7 @@ RestaurantShowActor11NearPlayer_10:
 	add hl, de ; $6184
 	ld e, l ; $6185
 	ld d, h ; $6186
-	ld hl, wWaterSpriteMinigameFlag ; $6187
+	ld hl, $c2ba ; $6187
 	ld a, e ; $618a
 	ld [hl+], a ; $618b
 	ld [hl], d ; $618c
@@ -3217,7 +3217,7 @@ RestaurantShowActor11NearPlayer_10:
 	ld a, [hl+] ; $6190
 	ld b, [hl] ; $6191
 	ld c, a ; $6192
-	ld hl, wWaterSpriteMinigameFlag ; $6193
+	ld hl, $c2ba ; $6193
 	ld a, [hl+] ; $6196
 	ld d, [hl] ; $6197
 	ld e, a ; $6198

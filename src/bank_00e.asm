@@ -985,7 +985,7 @@ ActorScript_0e_4a80:
 	ld a, [hl+] ; $4c42
 	ld d, [hl] ; $4c43
 	ld e, a ; $4c44
-	ld hl, wWaterSpriteMinigameTimer ; $4c45
+	ld hl, $c2b4 ; $4c45
 	ld a, e ; $4c48
 	ld [hl+], a ; $4c49
 	ld [hl], d ; $4c4a
@@ -1015,7 +1015,7 @@ ActorScript_0e_4a80:
 	ld a, [hl+] ; $4c70
 	ld d, [hl] ; $4c71
 	ld e, a ; $4c72
-	ld hl, wWaterSpriteMinigameSwingCount ; $4c73
+	ld hl, $c2b6 ; $4c73
 	ld a, e ; $4c76
 	ld [hl+], a ; $4c77
 	ld [hl], d ; $4c78
@@ -1037,7 +1037,7 @@ ActorScript_0e_4a80:
 	ld a, [hl+] ; $4c99
 	ld d, [hl] ; $4c9a
 	ld e, a ; $4c9b
-	ld hl, wWaterSpriteMinigameTimer ; $4c9c
+	ld hl, $c2b4 ; $4c9c
 	ld a, e ; $4c9f
 	ld [hl+], a ; $4ca0
 	ld [hl], d ; $4ca1
@@ -1067,7 +1067,7 @@ ActorScript_0e_4a80:
 	ld a, [hl+] ; $4cc7
 	ld d, [hl] ; $4cc8
 	ld e, a ; $4cc9
-	ld hl, wWaterSpriteMinigameSwingCount ; $4cca
+	ld hl, $c2b6 ; $4cca
 	ld a, e ; $4ccd
 	ld [hl+], a ; $4cce
 	ld [hl], d ; $4ccf
@@ -1089,7 +1089,7 @@ ActorScript_0e_4a80:
 	ld a, [hl+] ; $4cf0
 	ld d, [hl] ; $4cf1
 	ld e, a ; $4cf2
-	ld hl, wWaterSpriteMinigameTimer ; $4cf3
+	ld hl, $c2b4 ; $4cf3
 	ld a, e ; $4cf6
 	ld [hl+], a ; $4cf7
 	ld [hl], d ; $4cf8
@@ -1119,7 +1119,7 @@ ActorScript_0e_4a80:
 	ld a, [hl+] ; $4d1e
 	ld d, [hl] ; $4d1f
 	ld e, a ; $4d20
-	ld hl, wWaterSpriteMinigameSwingCount ; $4d21
+	ld hl, $c2b6 ; $4d21
 	ld a, e ; $4d24
 	ld [hl+], a ; $4d25
 	ld [hl], d ; $4d26
@@ -1134,7 +1134,7 @@ ActorScript_0e_4a80:
 	ld a, $00 ; $4d39
 	ret ; $4d3b
 .checkTimer:
-	ld hl, wWaterSpriteMinigameTimer ; $4d3c
+	ld hl, $c2b4 ; $4d3c
 	ld a, [hl+] ; $4d3f
 	ld d, [hl] ; $4d40
 	ld e, a ; $4d41
@@ -1164,7 +1164,7 @@ ActorScript_0e_4a80:
 	ld a, [hl+] ; $4d60
 	ld d, [hl] ; $4d61
 	ld e, a ; $4d62
-	ld hl, wWaterSpriteMinigameSwingCount ; $4d63
+	ld hl, $c2b6 ; $4d63
 	ld a, [hl+] ; $4d66
 	ld h, [hl] ; $4d67
 	ld l, a ; $4d68
@@ -1293,7 +1293,7 @@ RepairCounterServiceMenu:
 	ret ; $4eb1
 PrepareEquipmentSelectScreen:
 	ld a, [wEquippedRacket] ; $4eb2
-	ld [wWaterSpriteMinigameFlag], a ; $4eb5
+	ld [$c2ba], a ; $4eb5
 	ld a, $11 ; $4eb8
 	ld [wStoryModeCurrentLocation], a ; $4eba
 	ld a, [wMapSceneStage2] ; $4ebd
@@ -1441,7 +1441,7 @@ RepairCounterReturnB:
 	jp RepairCounterCheckEquipChanged ; $5001
 	ret ; $5004
 CompareEquippedRacketToMinigameFlag:
-	ld a, [wWaterSpriteMinigameFlag] ; $5005
+	ld a, [$c2ba] ; $5005
 	ld b, a ; $5008
 	ld a, [wEquippedRacket] ; $5009
 	cp a, b ; $500c
@@ -1479,7 +1479,7 @@ RepairCounterCheckEquipChanged:
 	jp RepairCounterServiceMenu.loop ; $5053
 .repairRacket:
 	ld a, [wEquippedRacket] ; $5056
-	ld [wWaterSpriteMinigameFlag], a ; $5059
+	ld [$c2ba], a ; $5059
 	call InitEquipmentHandoutDialogue ; $505c
 	script_speak $0e ; $505f
 	call ShowEquipChangeConfirmation ; $5064
@@ -2551,7 +2551,7 @@ PromptExhibitionMatch:
 	script_move_player $1200, $0d00 ; $65dd
 	farcall WaitPlayerMoveDone ; $65e7
 	ld a, $02 ; $65ea
-	ld [wWaterSpriteMinigameTimer], a ; $65ec
+	ld [$c2b4], a ; $65ec
 	ld hl, $c2b2 ; $65ef
 	ld de, $3083 ; $65f2
 	ld a, e ; $65f5
@@ -2560,7 +2560,7 @@ PromptExhibitionMatch:
 	test_flag FLAG_DOUBLES ; $65f8
 	jr z, .prompt ; $65fb
 	ld a, $05 ; $65fd
-	ld [wWaterSpriteMinigameTimer], a ; $65ff
+	ld [$c2b4], a ; $65ff
 	ld hl, $c2b2 ; $6602
 	ld de, $3089 ; $6605
 	ld a, e ; $6608
@@ -2607,7 +2607,7 @@ PromptExhibitionMatch:
 	jr z, .storeSelection ; $6667
 	add a, $03 ; $6669
 .storeSelection:
-	ld [wWaterSpriteMinigameTimer], a ; $666b
+	ld [$c2b4], a ; $666b
 .startMatchScene:
 	ld hl, $c2b2 ; $666e
 	ld a, [hl+] ; $6671
@@ -2732,7 +2732,7 @@ PromptExhibitionMatch:
 	call PlayStarWarpTransition ; $696d
 	ld a, $1c ; $6970
 	ld [wStoryModeCurrentLocation], a ; $6972
-	ld a, [wWaterSpriteMinigameTimer] ; $6975
+	ld a, [$c2b4] ; $6975
 	ld [wStoryModeEntryPoint], a ; $6978
 	ld a, $ff ; $697b
 	ld [wUnusedExitLocationMirror], a ; $697d
@@ -3380,7 +3380,7 @@ ExhibitionMatchIntroCutscene:
 	ld [wStoryModeShowLocationName], a ; $76fc
 	ld a, [wStoryModeEntryPoint] ; $76ff
 	dec a ; $7702
-	ld [wWaterSpriteMinigameTimer], a ; $7703
+	ld [$c2b4], a ; $7703
 	test_flag FLAG_DOUBLES ; $7706
 	jp nz, .startMatch ; $7709
 	script_set_speed $0e, $0014 ; $770c
@@ -3589,7 +3589,7 @@ PrepareStoryMatch:
 	ld [wUnusedExitLocationMirror], a ; $7b8b
 	ld [wStoryModeExitLocationRequest], a ; $7b8e
 	farcall InitStoryMatchSettings ; $7b91
-	ld a, [wWaterSpriteMinigameTimer] ; $7b94
+	ld a, [$c2b4] ; $7b94
 	add a, a ; $7b97
 	add a, LOW(Data_0e_7bac) ; $7b98
 	ld l, a ; $7b9a
