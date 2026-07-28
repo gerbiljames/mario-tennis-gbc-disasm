@@ -3067,11 +3067,11 @@ PlayStarWarpTransition:
 	ld de, $0901 ; $7156
 	call LoadPaletteShadow ; $7159
 	ld hl, StarWarpTiles ; $715c
-	ld de, $a000 ; $715f
+	ld de, $8000 + VRAM_BANK1 ; $715f
 	ld c, (StarWarpSparkleTiles - StarWarpTiles) / 16 ; $7162
 	call QueueVRAMCopy ; $7164
 	ld hl, StarWarpSparkleTiles ; $7167
-	ld de, $a180 ; $716a
+	ld de, $8180 + VRAM_BANK1 ; $716a
 	ld c, (StarWarpFrameSprites - StarWarpSparkleTiles) / 16 ; $716d
 	call QueueVRAMCopy ; $716f
 	wram_bank $06 ; $7172

@@ -1,6 +1,13 @@
 ; Game constants. Hand-maintained (not generated). Preincluded for every bank
 ; via the Makefile PRELUDE, alongside hardware.inc / macros.inc.
 
+; --- VRAM bank in a copy destination ---
+; QueueVRAMCopy takes its destination in de and carries the VRAM bank in bit 13
+; of it: `bit 5, d` selects rVBK, and `res 5, d` recovers the real address. So a
+; destination of $b800 means $9800 in VRAM bank 1, and the disassembly writes
+; that as `$9800 + VRAM_BANK1` rather than hiding the bank inside a literal.
+def VRAM_BANK1 equ $2000
+
 ; --- Joypad buttons (standard GB layout) ---
 ; The per-character input byte ($df1f, built by ReadCharPadInput) and the raw
 ; joypad shadow use the standard layout: buttons in the low nibble, d-pad in the

@@ -31,7 +31,7 @@ ShowCharDataScreen:
 	ld de, $d000 ; $4046
 	call DecompressData ; $4049
 	ld hl, $d000 ; $404c
-	ld de, $a600 ; $404f
+	ld de, $8600 + VRAM_BANK1 ; $404f
 	ld c, $14 ; $4052
 	call QueueVRAMCopy ; $4054
 	farcall InitMenuBgScroll ; $4057
@@ -139,7 +139,7 @@ BuildCharDataScreenPages:
 	call QueueVRAMCopy ; $4160
 	wram_bank $02 ; $4163
 	ld hl, $d000 ; $4169
-	ld de, $b800 ; $416c
+	ld de, $9800 + VRAM_BANK1 ; $416c
 	ld c, $24 ; $416f
 	call QueueVRAMCopy ; $4171
 	ret ; $4174
@@ -149,7 +149,7 @@ LoadCharDataScreenPageGraphics:
 	ld de, $d000 ; $417e
 	call DecompressData ; $4181
 	ld hl, $d000 ; $4184
-	ld de, $a140 ; $4187
+	ld de, $8140 + VRAM_BANK1 ; $4187
 	ld c, $0a ; $418a
 	call QueueVRAMCopy ; $418c
 	wram_bank $01 ; $418f
@@ -157,7 +157,7 @@ LoadCharDataScreenPageGraphics:
 	ld de, $d000 ; $4198
 	call DecompressData ; $419b
 	ld hl, $d000 ; $419e
-	ld de, $a1e0 ; $41a1
+	ld de, $81e0 + VRAM_BANK1 ; $41a1
 	ld c, $0a ; $41a4
 	call QueueVRAMCopy ; $41a6
 	wram_bank $01 ; $41a9
@@ -165,7 +165,7 @@ LoadCharDataScreenPageGraphics:
 	ld de, $d000 ; $41b2
 	call DecompressData ; $41b5
 	ld hl, $d000 ; $41b8
-	ld de, $a280 ; $41bb
+	ld de, $8280 + VRAM_BANK1 ; $41bb
 	ld c, $08 ; $41be
 	call QueueVRAMCopy ; $41c0
 	wram_bank $01 ; $41c3
@@ -173,7 +173,7 @@ LoadCharDataScreenPageGraphics:
 	ld de, $d000 ; $41cc
 	call DecompressData ; $41cf
 	ld hl, $d000 ; $41d2
-	ld de, $a300 ; $41d5
+	ld de, $8300 + VRAM_BANK1 ; $41d5
 	ld c, $08 ; $41d8
 	call QueueVRAMCopy ; $41da
 	wram_bank $01 ; $41dd
@@ -265,14 +265,14 @@ LoadCharDataScreenPageGraphics:
 	ld de, $d000 ; $4306
 	call DecompressData ; $4309
 	ld hl, $d000 ; $430c
-	ld de, $a380 ; $430f
+	ld de, $8380 + VRAM_BANK1 ; $430f
 	ld c, $14 ; $4312
 	call QueueVRAMCopy ; $4314
 	ld hl, CharDataScreenPageGfx13 ; $4317
 	ld de, $d000 ; $431a
 	call DecompressData ; $431d
 	ld hl, $d000 ; $4320
-	ld de, $a4c0 ; $4323
+	ld de, $84c0 + VRAM_BANK1 ; $4323
 	ld c, $14 ; $4326
 	call QueueVRAMCopy ; $4328
 	wram_bank $01 ; $432b
@@ -327,15 +327,15 @@ LoadCharDataScreenPageGraphics:
 	ld de, $d000 ; $4397
 	farcall DecompressCharMugshot ; $439a
 	ld hl, $d000 ; $439d
-	ld de, $b200 ; $43a0
+	ld de, $9200 + VRAM_BANK1 ; $43a0
 	ld c, $03 ; $43a3
 	call QueueVRAMCopy ; $43a5
 	ld hl, $d030 ; $43a8
-	ld de, $b300 ; $43ab
+	ld de, $9300 + VRAM_BANK1 ; $43ab
 	ld c, $03 ; $43ae
 	call QueueVRAMCopy ; $43b0
 	ld hl, $d060 ; $43b3
-	ld de, $b400 ; $43b6
+	ld de, $9400 + VRAM_BANK1 ; $43b6
 	ld c, $03 ; $43b9
 	call QueueVRAMCopy ; $43bb
 	ld a, $01 ; $43be
@@ -376,15 +376,15 @@ LoadCharDataScreenPageGraphics:
 	ld de, $d000 ; $43fb
 	farcall DecompressCharMugshot ; $43fe
 	ld hl, $d000 ; $4401
-	ld de, $b230 ; $4404
+	ld de, $9230 + VRAM_BANK1 ; $4404
 	ld c, $03 ; $4407
 	call QueueVRAMCopy ; $4409
 	ld hl, $d030 ; $440c
-	ld de, $b330 ; $440f
+	ld de, $9330 + VRAM_BANK1 ; $440f
 	ld c, $03 ; $4412
 	call QueueVRAMCopy ; $4414
 	ld hl, $d060 ; $4417
-	ld de, $b430 ; $441a
+	ld de, $9430 + VRAM_BANK1 ; $441a
 	ld c, $03 ; $441d
 	call QueueVRAMCopy ; $441f
 	ret ; $4422
@@ -3184,15 +3184,15 @@ BuildCharDataConfirmScreen:
 	ld de, $d000 ; $5b5d
 	farcall DecompressCharMugshot ; $5b60
 	ld hl, $d000 ; $5b63
-	ld de, $b200 ; $5b66
+	ld de, $9200 + VRAM_BANK1 ; $5b66
 	ld c, $03 ; $5b69
 	call QueueVRAMCopy ; $5b6b
 	ld hl, $d030 ; $5b6e
-	ld de, $b300 ; $5b71
+	ld de, $9300 + VRAM_BANK1 ; $5b71
 	ld c, $03 ; $5b74
 	call QueueVRAMCopy ; $5b76
 	ld hl, $d060 ; $5b79
-	ld de, $b400 ; $5b7c
+	ld de, $9400 + VRAM_BANK1 ; $5b7c
 	ld c, $03 ; $5b7f
 	call QueueVRAMCopy ; $5b81
 	call BuildCharStatDisplay ; $5b84
@@ -3222,7 +3222,7 @@ BuildCharDataConfirmScreen:
 	call QueueVRAMCopy ; $5bce
 	wram_bank $02 ; $5bd1
 	ld hl, $d000 ; $5bd7
-	ld de, $b800 ; $5bda
+	ld de, $9800 + VRAM_BANK1 ; $5bda
 	ld c, $24 ; $5bdd
 	call QueueVRAMCopy ; $5bdf
 	ret ; $5be2
@@ -3678,7 +3678,7 @@ BuildExpDistributionScreen:
 	ld de, $d000 ; $69cb
 	call DecompressData ; $69ce
 	ld hl, $d000 ; $69d1
-	ld de, $a160 ; $69d4
+	ld de, $8160 + VRAM_BANK1 ; $69d4
 	ld c, $02 ; $69d7
 	call QueueVRAMCopy ; $69d9
 	wram_bank $01 ; $69dc
@@ -3686,7 +3686,7 @@ BuildExpDistributionScreen:
 	ld de, $d000 ; $69e5
 	call DecompressData ; $69e8
 	ld hl, $d000 ; $69eb
-	ld de, $a180 ; $69ee
+	ld de, $8180 + VRAM_BANK1 ; $69ee
 	ld c, $14 ; $69f1
 	call QueueVRAMCopy ; $69f3
 	wram_bank $01 ; $69f6
@@ -3694,7 +3694,7 @@ BuildExpDistributionScreen:
 	ld de, $d000 ; $69ff
 	call DecompressData ; $6a02
 	ld hl, $d000 ; $6a05
-	ld de, $a2c0 ; $6a08
+	ld de, $82c0 + VRAM_BANK1 ; $6a08
 	ld c, $18 ; $6a0b
 	call QueueVRAMCopy ; $6a0d
 	wram_bank $01 ; $6a10
@@ -3702,7 +3702,7 @@ BuildExpDistributionScreen:
 	ld de, $d000 ; $6a19
 	call DecompressData ; $6a1c
 	ld hl, $d000 ; $6a1f
-	ld de, $a440 ; $6a22
+	ld de, $8440 + VRAM_BANK1 ; $6a22
 	ld c, $18 ; $6a25
 	call QueueVRAMCopy ; $6a27
 	ld hl, ExpDistributionScreenPalettes ; $6a2a
@@ -3713,7 +3713,7 @@ BuildExpDistributionScreen:
 	ld de, $d000 ; $6a3c
 	call DecompressData ; $6a3f
 	ld hl, $d000 ; $6a42
-	ld de, $a000 ; $6a45
+	ld de, $8000 + VRAM_BANK1 ; $6a45
 	ld c, $0c ; $6a48
 	call QueueVRAMCopy ; $6a4a
 	wram_bank $01 ; $6a4d
@@ -3721,7 +3721,7 @@ BuildExpDistributionScreen:
 	ld de, $d000 ; $6a56
 	call DecompressData ; $6a59
 	ld hl, $d000 ; $6a5c
-	ld de, $a0c0 ; $6a5f
+	ld de, $80c0 + VRAM_BANK1 ; $6a5f
 	ld c, $04 ; $6a62
 	call QueueVRAMCopy ; $6a64
 	wram_bank $01 ; $6a67
@@ -3729,7 +3729,7 @@ BuildExpDistributionScreen:
 	ld de, $d000 ; $6a70
 	call DecompressData ; $6a73
 	ld hl, $d000 ; $6a76
-	ld de, $a100 ; $6a79
+	ld de, $8100 + VRAM_BANK1 ; $6a79
 	ld c, $06 ; $6a7c
 	call QueueVRAMCopy ; $6a7e
 	wram_bank $03 ; $6a81
@@ -3739,7 +3739,7 @@ BuildExpDistributionScreen:
 	call QueueVRAMCopy ; $6a8f
 	wram_bank $02 ; $6a92
 	ld hl, $d000 ; $6a98
-	ld de, $b800 ; $6a9b
+	ld de, $9800 + VRAM_BANK1 ; $6a9b
 	ld c, $24 ; $6a9e
 	call QueueVRAMCopy ; $6aa0
 	ret ; $6aa3
@@ -5165,7 +5165,7 @@ UploadExpPromptWindowRows:
 	call QueueVRAMCopy ; $7513
 	wram_bank $02 ; $7516
 	ld hl, $d180 ; $751c
-	ld de, $b980 ; $751f
+	ld de, $9980 + VRAM_BANK1 ; $751f
 	ld c, $0c ; $7522
 	call QueueVRAMCopy ; $7524
 	ret ; $7527
@@ -5191,7 +5191,7 @@ UploadExpPromptWindowRowsClosing:
 	call QueueVRAMCopy ; $7553
 	wram_bank $02 ; $7556
 	ld hl, $d180 ; $755c
-	ld de, $b980 ; $755f
+	ld de, $9980 + VRAM_BANK1 ; $755f
 	ld c, $0c ; $7562
 	call QueueVRAMCopy ; $7564
 	ret ; $7567

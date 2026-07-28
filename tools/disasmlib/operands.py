@@ -15,6 +15,12 @@ LDIMM_RE = re.compile(r"^ld (hl|de|bc), \$([0-9a-f]{1,4})$")
 ROM0_FAR_POINTERS = {0x0153}
 
 IMM8_RE = re.compile(r"\$[0-9a-f]{1,2}$")
+IMM16_RE = re.compile(r"^ld (bc|de|hl), \$([0-9a-f]{4})$")
+
+# The one site outside bank $03 that loads a real SRAM address: FetchSRAMText
+# reads text out of the save at $a800. Bank $03 (the save engine) is excluded
+# wholesale by its flat range.
+SRAM_IMM_SITES = {0x16d49}
 
 
 # Sites where a word immediate that happens to equal a named RAM address is an
@@ -136,6 +142,19 @@ def render_operand(ins, off, labels, hwregs, ramnames, data_labels=None,
                     sn = ramscoped.resolve(imm, off)
                     if sn:
                         return f"ld {m.group(1)}, {sn}"
+    # A word immediate in $a000-$bfff handed to the graphics code is a VRAM
+    # destination with the bank folded into bit 13 (see QueueVRAMCopy), not an
+    # SRAM address. The value cannot say which: $a000 is both the SRAM base and
+    # VRAM bank 1's $8000. What decides it is that *only bank $03 ever enables
+    # SRAM* -- every `ld a, $0a` / `ld [$0000], a` in the ROM is in the save
+    # engine -- so everywhere else the range is VRAM. Rendering it as
+    # `$9800 + VRAM_BANK1` puts the bank back in the operand, and rgbasm folds
+    # it to the same word.
+    m = IMM16_RE.search(text) if "ld " in text else None
+    if m and off not in SRAM_IMM_SITES and not (0x0c000 <= off < 0x10000):
+        imm = int(m.group(2), 16)
+        if 0xa000 <= imm < 0xc000:
+            return f"ld {m.group(1)}, ${imm - 0x2000:04x} + VRAM_BANK1"
     if "$ff" in text and hwregs and off not in HWADDR_IMM_IS_CONSTANT:
         m = HWADDR_RE.search(text)
         if m:

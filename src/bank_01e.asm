@@ -100,7 +100,7 @@ BuildResultsScreenTilemap:
 	call QueueVRAMCopy ; $40ed
 	wram_bank $02 ; $40f0
 	ld hl, wContinuePromptKind ; $40f6
-	ld de, $b800 ; $40f9
+	ld de, $9800 + VRAM_BANK1 ; $40f9
 	ld c, $24 ; $40fc
 	call QueueVRAMCopy ; $40fe
 	farcall UploadGlyphBuffer ; $4101
@@ -117,11 +117,11 @@ LoadResultsScreenGraphics:
 	ld de, wContinuePromptKind ; $4120
 	call DecompressData ; $4123
 	ld hl, wContinuePromptKind ; $4126
-	ld de, $b000 ; $4129
+	ld de, $9000 + VRAM_BANK1 ; $4129
 	ld c, $80 ; $412c
 	call QueueVRAMCopy ; $412e
 	ld hl, $d800 ; $4131
-	ld de, $a800 ; $4134
+	ld de, $8800 + VRAM_BANK1 ; $4134
 	ld c, $80 ; $4137
 	call QueueVRAMCopy ; $4139
 	wram_bank $01 ; $413c
@@ -1114,7 +1114,7 @@ InitResultsScreenCharacters:
 	farcall InitChar ; $49cc
 	ld a, $0f ; $49cf
 	ld [wCharSpriteAttr], a ; $49d1
-	ld de, $a000 ; $49d4
+	ld de, $8000 + VRAM_BANK1 ; $49d4
 	ld hl, wCharFrameVramDest ; $49d7
 	ld a, e ; $49da
 	ld [hl+], a ; $49db
@@ -1172,7 +1172,7 @@ InitResultsScreenCharacters:
 	farcall InitChar ; $4a47
 	ld a, $0e ; $4a4a
 	ld [wCharSpriteAttr], a ; $4a4c
-	ld de, $a100 ; $4a4f
+	ld de, $8100 + VRAM_BANK1 ; $4a4f
 	ld hl, wCharFrameVramDest ; $4a52
 	ld a, e ; $4a55
 	ld [hl+], a ; $4a56
@@ -1526,7 +1526,7 @@ BuildExpAwardScreenTilemap:
 	call QueueVRAMCopy ; $5509
 	wram_bank $02 ; $550c
 	ld hl, $d000 ; $5512
-	ld de, $b800 ; $5515
+	ld de, $9800 + VRAM_BANK1 ; $5515
 	ld c, $24 ; $5518
 	call QueueVRAMCopy ; $551a
 	ret ; $551d
@@ -1539,11 +1539,11 @@ LoadExpAwardScreenGraphics:
 	ld de, $d000 ; $5530
 	call DecompressData ; $5533
 	ld hl, $d000 ; $5536
-	ld de, $b000 ; $5539
+	ld de, $9000 + VRAM_BANK1 ; $5539
 	ld c, $80 ; $553c
 	call QueueVRAMCopy ; $553e
 	ld hl, $d800 ; $5541
-	ld de, $a800 ; $5544
+	ld de, $8800 + VRAM_BANK1 ; $5544
 	ld c, $80 ; $5547
 	call QueueVRAMCopy ; $5549
 	wram_bank $01 ; $554c
@@ -1576,7 +1576,7 @@ LoadExpAwardScreenGraphics:
 	ld de, $d000 ; $55a8
 	call DecompressData ; $55ab
 	ld hl, $d000 ; $55ae
-	ld de, $a6c0 ; $55b1
+	ld de, $86c0 + VRAM_BANK1 ; $55b1
 	ld c, $14 ; $55b4
 	call QueueVRAMCopy ; $55b6
 	ret ; $55b9
@@ -2211,7 +2211,7 @@ BeginNextExpAward:
 	call QueueVRAMCopy ; $5b49
 	wram_bank $02 ; $5b4c
 	ld hl, $d000 ; $5b52
-	ld de, $b800 ; $5b55
+	ld de, $9800 + VRAM_BANK1 ; $5b55
 	ld c, $08 ; $5b58
 	call QueueVRAMCopy ; $5b5a
 	ld a, $01 ; $5b5d
@@ -4694,7 +4694,7 @@ LoadGameProgressScreenTiles:
 	ld de, $d000 ; $7510
 	call DecompressData ; $7513
 	ld hl, $d000 ; $7516
-	ld de, $b000 ; $7519
+	ld de, $9000 + VRAM_BANK1 ; $7519
 	ld c, $20 ; $751c
 	call QueueVRAMCopy ; $751e
 	ld hl, GameProgressHeaderTilemap_1e ; $7521
@@ -4726,7 +4726,7 @@ LoadGameProgressScreenTiles:
 	dec c ; $7555
 	jr nz, .loop ; $7556
 	ld hl, $d000 ; $7558
-	ld de, $b800 ; $755b
+	ld de, $9800 + VRAM_BANK1 ; $755b
 	ld c, $06 ; $755e
 	call QueueVRAMCopy ; $7560
 	ld hl, Palettes_1e_7700 ; $7563
@@ -4736,15 +4736,15 @@ LoadGameProgressScreenTiles:
 	pop af ; $756d
 	wram_bank ; $756e
 	ld hl, GameProgressScreenTiles0 ; $7572
-	ld de, $a000 ; $7575
+	ld de, $8000 + VRAM_BANK1 ; $7575
 	ld c, (Palettes_1e_7810 - GameProgressScreenTiles0) / 16 ; $7578
 	call QueueVRAMCopy ; $757a
 	ld hl, GameProgressScreenTiles2 ; $757d
-	ld de, $a100 ; $7580
+	ld de, $8100 + VRAM_BANK1 ; $7580
 	ld c, $04 ; $7583
 	call QueueVRAMCopy ; $7585
 	ld hl, GameProgressScreenTiles1 ; $7588
-	ld de, $a200 ; $758b
+	ld de, $8200 + VRAM_BANK1 ; $758b
 	ld c, (GameProgressScreenTiles2 - GameProgressScreenTiles1) / 16 ; $758e
 	call QueueVRAMCopy ; $7590
 	ld hl, Palettes_1e_7810 ; $7593

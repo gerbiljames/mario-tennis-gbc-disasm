@@ -341,11 +341,11 @@ LoadTennisDictionaryAssetsDefault:
 	ld de, $d000 ; $4268
 	call DecompressDataFromBank ; $426b
 	ld hl, $d000 ; $426e
-	ld de, $b000 ; $4271
+	ld de, $9000 + VRAM_BANK1 ; $4271
 	ld c, $80 ; $4274
 	call QueueVRAMCopy ; $4276
 	ld hl, $d800 ; $4279
-	ld de, $a800 ; $427c
+	ld de, $8800 + VRAM_BANK1 ; $427c
 	ld c, $80 ; $427f
 	call QueueVRAMCopy ; $4281
 	ld hl, TennisDictionaryPalettesDefault ; $4284
@@ -363,11 +363,11 @@ LoadTennisDictionaryAssetsChar6:
 	ld de, $d000 ; $42a9
 	call DecompressDataFromBank ; $42ac
 	ld hl, $d000 ; $42af
-	ld de, $b000 ; $42b2
+	ld de, $9000 + VRAM_BANK1 ; $42b2
 	ld c, $80 ; $42b5
 	call QueueVRAMCopy ; $42b7
 	ld hl, $d800 ; $42ba
-	ld de, $a800 ; $42bd
+	ld de, $8800 + VRAM_BANK1 ; $42bd
 	ld c, $80 ; $42c0
 	call QueueVRAMCopy ; $42c2
 	ld hl, TennisDictionaryPalettesChar6 ; $42c5
@@ -451,21 +451,21 @@ LoadTennisDictionaryScreen:
 	ld de, $d000 ; $4376
 	call DecompressData ; $4379
 	ld hl, $d000 ; $437c
-	ld de, $a000 ; $437f
+	ld de, $8000 + VRAM_BANK1 ; $437f
 	ld c, $20 ; $4382
 	call QueueVRAMCopy ; $4384
 	ld hl, TennisDictionaryTilesA200 ; $4387
 	ld de, $d000 ; $438a
 	call DecompressData ; $438d
 	ld hl, $d000 ; $4390
-	ld de, $a200 ; $4393
+	ld de, $8200 + VRAM_BANK1 ; $4393
 	ld c, $20 ; $4396
 	call QueueVRAMCopy ; $4398
 	ld hl, TennisDictionaryTilesA400 ; $439b
 	ld de, $d000 ; $439e
 	call DecompressData ; $43a1
 	ld hl, $d000 ; $43a4
-	ld de, $a400 ; $43a7
+	ld de, $8400 + VRAM_BANK1 ; $43a7
 	ld c, $20 ; $43aa
 	call QueueVRAMCopy ; $43ac
 	ld hl, TennisDictionaryPalettes ; $43af

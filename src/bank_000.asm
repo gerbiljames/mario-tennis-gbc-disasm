@@ -7425,7 +7425,7 @@ VBlankDeferredTilemapCopyTask:
 	ld a, [hl+] ; $2a83
 	ld h, [hl] ; $2a84
 	ld l, a ; $2a85
-	ld de, $b800 ; $2a86
+	ld de, $9800 + VRAM_BANK1 ; $2a86
 	ld a, [$c3a5] ; $2a89
 	ld c, a ; $2a8c
 	call QueueVRAMCopy ; $2a8d

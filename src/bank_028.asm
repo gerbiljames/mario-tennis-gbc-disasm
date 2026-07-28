@@ -59,7 +59,7 @@ LoadMatchGraphics:
 	ld de, $0002 ; $5ec2
 	call LoadPaletteShadow ; $5ec5
 	ld hl, MatchGraphicsGfx ; $5ec8
-	ld de, $a400 ; $5ecb
+	ld de, $8400 + VRAM_BANK1 ; $5ecb
 	ld c, $40 ; $5ece
 	call QueueVRAMCopy ; $5ed0
 	ld hl, MatchGfxTilesA_28 ; $5ed3
@@ -104,7 +104,7 @@ LoadMatchVariantGraphics:
 	dw LoadMatchVariantGraphics.carry ; $5f28 jumptable
 .carry:
 	ld hl, MatchGfxMapsA_28 ; $5f2a
-	ld de, $a200 ; $5f2d
+	ld de, $8200 + VRAM_BANK1 ; $5f2d
 	ld c, $20 ; $5f30
 	call QueueVRAMCopy ; $5f32
 	ret ; $5f35
@@ -119,14 +119,14 @@ LoadMatchVariantGraphics:
 	ld de, $0d03 ; $5f46
 	call LoadPaletteShadow ; $5f49
 	ld hl, MatchVariantTiles0 ; $5f4c
-	ld de, $a100 ; $5f4f
+	ld de, $8100 + VRAM_BANK1 ; $5f4f
 	ld c, (MatchVariantTiles1 - MatchVariantTiles0) / 16 ; $5f52
 	call QueueVRAMCopy ; $5f54
 	call LoadMatchSharedTiles_28 ; $5f57
 	ret ; $5f5a
 .queueVRAMCopy:
 	ld hl, MatchGfxMapsA_28 ; $5f5b
-	ld de, $a200 ; $5f5e
+	ld de, $8200 + VRAM_BANK1 ; $5f5e
 	ld c, $08 ; $5f61
 	call QueueVRAMCopy ; $5f63
 	call LoadMatchSharedTiles_28 ; $5f66
@@ -136,7 +136,7 @@ LoadMatchVariantGraphics:
 	ld de, $0e02 ; $5f6d
 	call LoadPaletteShadow ; $5f70
 	ld hl, MatchVariantTiles3 ; $5f73
-	ld de, $a3c0 ; $5f76
+	ld de, $83c0 + VRAM_BANK1 ; $5f76
 	ld c, (MatchVariantTiles4 - MatchVariantTiles3) / 16 ; $5f79
 	call QueueVRAMCopy ; $5f7b
 	call LoadMatchSharedTiles_28 ; $5f7e
@@ -146,7 +146,7 @@ LoadMatchVariantGraphics:
 	ld de, $0e02 ; $5f85
 	call LoadPaletteShadow ; $5f88
 	ld hl, MatchVariantTiles3 ; $5f8b
-	ld de, $a3c0 ; $5f8e
+	ld de, $83c0 + VRAM_BANK1 ; $5f8e
 	ld c, (MatchVariantTiles4 - MatchVariantTiles3) / 16 ; $5f91
 	call QueueVRAMCopy ; $5f93
 	call LoadMatchSharedTiles_28 ; $5f96
@@ -156,18 +156,18 @@ LoadMatchVariantGraphics:
 	ld de, $0f01 ; $5f9d
 	call LoadPaletteShadow ; $5fa0
 	ld hl, MatchVariantTiles4 ; $5fa3
-	ld de, $a200 ; $5fa6
+	ld de, $8200 + VRAM_BANK1 ; $5fa6
 	ld c, (MatchSharedTiles_28 - MatchVariantTiles4) / 16 ; $5fa9
 	call QueueVRAMCopy ; $5fab
 	ld hl, MatchVariantTiles3 ; $5fae
-	ld de, $a3c0 ; $5fb1
+	ld de, $83c0 + VRAM_BANK1 ; $5fb1
 	ld c, (MatchVariantTiles4 - MatchVariantTiles3) / 16 ; $5fb4
 	call QueueVRAMCopy ; $5fb6
 	call LoadMatchSharedTiles_28 ; $5fb9
 	ret ; $5fbc
 .queueVRAMCopy2:
 	ld hl, MatchGfxMapsA_28 ; $5fbd
-	ld de, $a200 ; $5fc0
+	ld de, $8200 + VRAM_BANK1 ; $5fc0
 	ld c, $08 ; $5fc3
 	call QueueVRAMCopy ; $5fc5
 	ld hl, MatchVariantGraphicsPalettes4 ; $5fc8
@@ -177,7 +177,7 @@ LoadMatchVariantGraphics:
 	ld de, $0f01 ; $5fd4
 	call LoadPaletteShadow ; $5fd7
 	ld hl, MatchVariantTiles3 ; $5fda
-	ld de, $a3c0 ; $5fdd
+	ld de, $83c0 + VRAM_BANK1 ; $5fdd
 	ld c, (MatchVariantTiles4 - MatchVariantTiles3) / 16 ; $5fe0
 	call QueueVRAMCopy ; $5fe2
 	call LoadMatchSharedTiles_28 ; $5fe5
@@ -187,11 +187,11 @@ LoadMatchVariantGraphics:
 	ld de, $0d03 ; $5fec
 	call LoadPaletteShadow ; $5fef
 	ld hl, MatchVariantTiles1 ; $5ff2
-	ld de, $a100 ; $5ff5
+	ld de, $8100 + VRAM_BANK1 ; $5ff5
 	ld c, $10 ; $5ff8
 	call QueueVRAMCopy ; $5ffa
 	ld hl, MatchVariantTiles2 ; $5ffd
-	ld de, $a200 ; $6000
+	ld de, $8200 + VRAM_BANK1 ; $6000
 	ld c, $10 ; $6003
 	call QueueVRAMCopy ; $6005
 	call LoadMatchSharedTiles_28 ; $6008
@@ -201,7 +201,7 @@ LoadMatchVariantGraphics:
 	ld de, $0d03 ; $600f
 	call LoadPaletteShadow ; $6012
 	ld hl, MatchVariantTiles1 ; $6015
-	ld de, $a100 ; $6018
+	ld de, $8100 + VRAM_BANK1 ; $6018
 	ld c, (MatchVariantTiles2 - MatchVariantTiles1) / 16 ; $601b
 	call QueueVRAMCopy ; $601d
 	call LoadMatchSharedTiles_28 ; $6020
@@ -221,7 +221,7 @@ LoadSpecialHitEffectTiles:
 	adc $43 ; $6037
 	sub l ; $6039
 	ld h, a ; $603a
-	ld de, $a740 ; $603b
+	ld de, $8740 + VRAM_BANK1 ; $603b
 	ld c, $04 ; $603e
 	call QueueVRAMCopy ; $6040
 	ret ; $6043
@@ -234,7 +234,7 @@ LoadBallTouchCharEffectTilesA:
 	adc $44 ; $604b
 	sub l ; $604d
 	ld h, a ; $604e
-	ld de, $a780 ; $604f
+	ld de, $8780 + VRAM_BANK1 ; $604f
 	ld c, $04 ; $6052
 	call QueueVRAMCopy ; $6054
 	ret ; $6057
@@ -247,7 +247,7 @@ LoadBallTouchCharEffectTilesB:
 	adc $45 ; $605f
 	sub l ; $6061
 	ld h, a ; $6062
-	ld de, $a7c0 ; $6063
+	ld de, $87c0 + VRAM_BANK1 ; $6063
 	ld c, $04 ; $6066
 	call QueueVRAMCopy ; $6068
 	ret ; $606b
@@ -261,7 +261,7 @@ QueueMatchSpriteFrameA:
 	ld a, [hl+] ; $6074
 	ld h, [hl] ; $6075
 	ld l, a ; $6076
-	ld de, $a300 ; $6077
+	ld de, $8300 + VRAM_BANK1 ; $6077
 	ld c, $0c ; $607a
 	call QueueVRAMCopy ; $607c
 	ret ; $607f
@@ -278,7 +278,7 @@ QueueMatchSpriteFrameB:
 	ld a, [hl+] ; $608e
 	ld h, [hl] ; $608f
 	ld l, a ; $6090
-	ld de, $a300 ; $6091
+	ld de, $8300 + VRAM_BANK1 ; $6091
 	ld c, $0c ; $6094
 	call QueueVRAMCopy ; $6096
 	ret ; $6099
@@ -307,7 +307,7 @@ LoadEffectFrameTiles_28:
 	ld h, [hl] ; $60b5
 	ld l, a ; $60b6
 	add hl, de ; $60b7
-	ld de, $a300 ; $60b8
+	ld de, $8300 + VRAM_BANK1 ; $60b8
 	ld c, $04 ; $60bb
 	call QueueVRAMCopy ; $60bd
 	ret ; $60c0

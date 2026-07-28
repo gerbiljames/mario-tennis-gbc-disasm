@@ -553,7 +553,7 @@ QueueMinigameHudVRAMCopy:
 	ld c, $0a ; $43a9
 	call QueueVRAMCopy ; $43ab
 	ld hl, $d520 ; $43ae
-	ld de, $b920 ; $43b1
+	ld de, $9920 + VRAM_BANK1 ; $43b1
 	ld c, $0a ; $43b4
 	call QueueVRAMCopy ; $43b6
 	ret ; $43b9

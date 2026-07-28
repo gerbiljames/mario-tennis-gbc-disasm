@@ -930,14 +930,14 @@ InitMatchWinLoseScreen:
 	ld de, $d000 ; $45c7
 	call DecompressData ; $45ca
 	ld hl, $d000 ; $45cd
-	ld de, $a000 ; $45d0
+	ld de, $8000 + VRAM_BANK1 ; $45d0
 	ld c, $20 ; $45d3
 	call QueueVRAMCopy ; $45d5
 	ld hl, MatchWinLoseScreenGfx1 ; $45d8
 	ld de, $d000 ; $45db
 	call DecompressData ; $45de
 	ld hl, $d000 ; $45e1
-	ld de, $a200 ; $45e4
+	ld de, $8200 + VRAM_BANK1 ; $45e4
 	ld c, $20 ; $45e7
 	call QueueVRAMCopy ; $45e9
 	ld hl, MatchWinLoseScreenPalettes ; $45ec
@@ -945,7 +945,7 @@ InitMatchWinLoseScreen:
 	call LoadPaletteShadow ; $45f2
 	ld b, $09 ; $45f5
 	ld c, $04 ; $45f7
-	ld de, $a400 ; $45f9
+	ld de, $8400 + VRAM_BANK1 ; $45f9
 	farcall LoadCompressedTileBlock ; $45fc
 	pop af ; $45ff
 	wram_bank ; $4600
@@ -1733,7 +1733,7 @@ RunMatchStatsScreen:
 InitMatchStatsScreen:
 	ld c, $23 ; $5c8a
 	farcall LoadScreenAssetRecord ; $5c8c
-	ld de, $a000 ; $5c8f
+	ld de, $8000 + VRAM_BANK1 ; $5c8f
 	ld c, $00 ; $5c92
 	ld b, $08 ; $5c94
 	farcall InitNumberSpriteGfx ; $5c96

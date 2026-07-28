@@ -242,7 +242,7 @@ CharDataScreen_BuildTilemap:
 	call QueueVRAMCopy ; $41f3
 	wram_bank $02 ; $41f6
 	ld hl, $d000 ; $41fc
-	ld de, $b800 ; $41ff
+	ld de, $9800 + VRAM_BANK1 ; $41ff
 	ld c, $24 ; $4202
 	call QueueVRAMCopy ; $4204
 	ret ; $4207
@@ -669,15 +669,15 @@ CharDataScreen_DrawPortrait:
 	ld de, $d000 ; $45d2
 	farcall DecompressCharMugshot ; $45d5
 	ld hl, $d000 ; $45d8
-	ld de, $b200 ; $45db
+	ld de, $9200 + VRAM_BANK1 ; $45db
 	ld c, $03 ; $45de
 	call QueueVRAMCopy ; $45e0
 	ld hl, $d030 ; $45e3
-	ld de, $b300 ; $45e6
+	ld de, $9300 + VRAM_BANK1 ; $45e6
 	ld c, $03 ; $45e9
 	call QueueVRAMCopy ; $45eb
 	ld hl, $d060 ; $45ee
-	ld de, $b400 ; $45f1
+	ld de, $9400 + VRAM_BANK1 ; $45f1
 	ld c, $03 ; $45f4
 	call QueueVRAMCopy ; $45f6
 	ret ; $45f9
@@ -708,7 +708,7 @@ CharDataScreenAnimTask:
 	ld h, [hl] ; $4627
 	ld l, a ; $4628
 	push hl ; $4629
-	ld de, $b2e0 ; $462a
+	ld de, $92e0 + VRAM_BANK1 ; $462a
 	ld c, $02 ; $462d
 	call QueueVRAMCopy ; $462f
 	pop hl ; $4632
@@ -718,7 +718,7 @@ CharDataScreenAnimTask:
 	jr nc, .queueVRAMCopy ; $4637
 	inc h ; $4639
 .queueVRAMCopy:
-	ld de, $b3e0 ; $463a
+	ld de, $93e0 + VRAM_BANK1 ; $463a
 	ld c, $02 ; $463d
 	call QueueVRAMCopy ; $463f
 	pop af ; $4642
@@ -731,7 +731,7 @@ CharDataScreenAnimTask:
 	ld h, [hl] ; $464b
 	ld l, a ; $464c
 	push hl ; $464d
-	ld de, $b4e0 ; $464e
+	ld de, $94e0 + VRAM_BANK1 ; $464e
 	ld c, $02 ; $4651
 	call QueueVRAMCopy ; $4653
 	pop hl ; $4656
@@ -741,7 +741,7 @@ CharDataScreenAnimTask:
 	jr nc, .queueVRAMCopy2 ; $465b
 	inc h ; $465d
 .queueVRAMCopy2:
-	ld de, $b5e0 ; $465e
+	ld de, $95e0 + VRAM_BANK1 ; $465e
 	ld c, $02 ; $4661
 	call QueueVRAMCopy ; $4663
 .nonZero:
@@ -1056,7 +1056,7 @@ FlushCharDataTilemapChunk:
 	call QueueVRAMCopy ; $4987
 	wram_bank $02 ; $498a
 	ld hl, $d1e0 ; $4990
-	ld de, $b9e0 ; $4993
+	ld de, $99e0 + VRAM_BANK1 ; $4993
 	ld c, $06 ; $4996
 	call QueueVRAMCopy ; $4998
 	call AdvanceFrame ; $499b
@@ -1069,7 +1069,7 @@ FlushCharDataTilemapChunk:
 	call QueueVRAMCopy ; $49ad
 	wram_bank $02 ; $49b0
 	ld hl, $d0e0 ; $49b6
-	ld de, $b8e0 ; $49b9
+	ld de, $98e0 + VRAM_BANK1 ; $49b9
 	ld c, $10 ; $49bc
 	call QueueVRAMCopy ; $49be
 	call AdvanceFrame ; $49c1
@@ -1082,7 +1082,7 @@ FlushCharDataTilemapChunk:
 	call QueueVRAMCopy ; $49d3
 	wram_bank $02 ; $49d6
 	ld hl, $d000 ; $49dc
-	ld de, $b800 ; $49df
+	ld de, $9800 + VRAM_BANK1 ; $49df
 	ld c, $0e ; $49e2
 	call QueueVRAMCopy ; $49e4
 	call AdvanceFrame ; $49e7
@@ -2624,7 +2624,7 @@ SetupCharDataScreen:
 	call QueueVRAMCopy ; $55bc
 	wram_bank $02 ; $55bf
 	ld hl, $d000 ; $55c5
-	ld de, $b800 ; $55c8
+	ld de, $9800 + VRAM_BANK1 ; $55c8
 	ld c, $24 ; $55cb
 	call QueueVRAMCopy ; $55cd
 	wram_bank $06 ; $55d0
@@ -3062,7 +3062,7 @@ CharDataScreen_LoadScreen:
 	ld de, $d000 ; $7131
 	call DecompressData ; $7134
 	ld hl, $d000 ; $7137
-	ld de, $a000 ; $713a
+	ld de, $8000 + VRAM_BANK1 ; $713a
 	ld c, $14 ; $713d
 	call QueueVRAMCopy ; $713f
 	farcall CharDataScreen_LoadGfx ; $7142
@@ -3071,11 +3071,11 @@ CharDataScreen_LoadScreen:
 	ld de, $d000 ; $714e
 	call DecompressData ; $7151
 	ld hl, $d000 ; $7154
-	ld de, $b000 ; $7157
+	ld de, $9000 + VRAM_BANK1 ; $7157
 	ld c, $80 ; $715a
 	call QueueVRAMCopy ; $715c
 	ld hl, $d800 ; $715f
-	ld de, $a800 ; $7162
+	ld de, $8800 + VRAM_BANK1 ; $7162
 	ld c, $80 ; $7165
 	call QueueVRAMCopy ; $7167
 	wram_bank $01 ; $716a
@@ -3363,11 +3363,11 @@ LoadCharDataScreenBgAndPalettes:
 	ld de, $d000 ; $7440
 	call DecompressData ; $7443
 	ld hl, $d000 ; $7446
-	ld de, $b000 ; $7449
+	ld de, $9000 + VRAM_BANK1 ; $7449
 	ld c, $80 ; $744c
 	call QueueVRAMCopy ; $744e
 	ld hl, $d800 ; $7451
-	ld de, $a800 ; $7454
+	ld de, $8800 + VRAM_BANK1 ; $7454
 	ld c, $80 ; $7457
 	call QueueVRAMCopy ; $7459
 	wram_bank $01 ; $745c
@@ -3424,7 +3424,7 @@ LoadCharDataScreenMugshots:
 	ld de, $d000 ; $74c9
 	farcall DecompressCharMugshot ; $74cc
 	ld hl, $d000 ; $74cf
-	ld de, $ab00 ; $74d2
+	ld de, $8b00 + VRAM_BANK1 ; $74d2
 	ld c, $09 ; $74d5
 	call QueueVRAMCopy ; $74d7
 	ld a, $01 ; $74da
@@ -3465,7 +3465,7 @@ LoadCharDataScreenMugshots:
 	ld de, $d000 ; $7517
 	farcall DecompressCharMugshot ; $751a
 	ld hl, $d000 ; $751d
-	ld de, $ac00 ; $7520
+	ld de, $8c00 + VRAM_BANK1 ; $7520
 	ld c, $09 ; $7523
 	call QueueVRAMCopy ; $7525
 	ld hl, wMasterPalettes + 16 ; $7528

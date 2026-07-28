@@ -4770,7 +4770,7 @@ LoadRulesScreen:
 	ld hl, Palette_17_7b39 ; $7183
 	ld de, $0902 ; $7186
 	call LoadPalettesImmediate ; $7189
-	ld de, $a000 ; $718c
+	ld de, $8000 + VRAM_BANK1 ; $718c
 	farcall LoadMenuArrowSpriteTiles ; $718f
 	ld b, $08 ; $7192
 	ld c, $0f ; $7194
@@ -4872,7 +4872,7 @@ QueueRulesPageToVRAM:
 	call QueueVRAMCopy ; $7268
 .queueVRAMCopy:
 	ld hl, wShadowAttrmap + 4 * TILEMAP_WIDTH ; $726b
-	ld de, $b880 ; $726e
+	ld de, $9880 + VRAM_BANK1 ; $726e
 	ld c, $02 ; $7271
 	call QueueVRAMCopy ; $7273
 	call AdvanceFrame ; $7276
@@ -4904,15 +4904,15 @@ LoadRulesBorderAnimTiles:
 	ld bc, $0012 ; $72c0
 	call QueueVRAMCopy ; $72c3
 	ld hl, $d000 ; $72c6
-	ld de, $a100 ; $72c9
+	ld de, $8100 + VRAM_BANK1 ; $72c9
 	ld bc, $0012 ; $72cc
 	call QueueVRAMCopy ; $72cf
 	ld hl, $d000 ; $72d2
-	ld de, $a340 ; $72d5
+	ld de, $8340 + VRAM_BANK1 ; $72d5
 	ld bc, $0012 ; $72d8
 	call QueueVRAMCopy ; $72db
 	ld hl, $d000 ; $72de
-	ld de, $a580 ; $72e1
+	ld de, $8580 + VRAM_BANK1 ; $72e1
 	ld bc, $0012 ; $72e4
 	call QueueVRAMCopy ; $72e7
 	ld hl, RulesBorderAnimTiles1 ; $72ea
@@ -4923,15 +4923,15 @@ LoadRulesBorderAnimTiles:
 	ld bc, $0002 ; $72f9
 	call QueueVRAMCopy ; $72fc
 	ld hl, $d000 ; $72ff
-	ld de, $a120 ; $7302
+	ld de, $8120 + VRAM_BANK1 ; $7302
 	ld bc, $0002 ; $7305
 	call QueueVRAMCopy ; $7308
 	ld hl, $d000 ; $730b
-	ld de, $a360 ; $730e
+	ld de, $8360 + VRAM_BANK1 ; $730e
 	ld bc, $0002 ; $7311
 	call QueueVRAMCopy ; $7314
 	ld hl, $d000 ; $7317
-	ld de, $a5a0 ; $731a
+	ld de, $85a0 + VRAM_BANK1 ; $731a
 	ld bc, $0002 ; $731d
 	call QueueVRAMCopy ; $7320
 	ld hl, RulesBorderAnimTiles2 ; $7323
@@ -4942,15 +4942,15 @@ LoadRulesBorderAnimTiles:
 	ld bc, $0001 ; $7332
 	call QueueVRAMCopy ; $7335
 	ld hl, $d020 ; $7338
-	ld de, $a180 ; $733b
+	ld de, $8180 + VRAM_BANK1 ; $733b
 	ld bc, $0001 ; $733e
 	call QueueVRAMCopy ; $7341
 	ld hl, $d000 ; $7344
-	ld de, $a3c0 ; $7347
+	ld de, $83c0 + VRAM_BANK1 ; $7347
 	ld bc, $0001 ; $734a
 	call QueueVRAMCopy ; $734d
 	ld hl, $d040 ; $7350
-	ld de, $a600 ; $7353
+	ld de, $8600 + VRAM_BANK1 ; $7353
 	ld bc, $0001 ; $7356
 	call QueueVRAMCopy ; $7359
 	ld hl, RulesBorderAnimTiles3 ; $735c
@@ -4969,15 +4969,15 @@ LoadRulesBorderAnimTiles:
 	ld bc, $0012 ; $7383
 	call QueueVRAMCopy ; $7386
 	ld hl, $d000 ; $7389
-	ld de, $a220 ; $738c
+	ld de, $8220 + VRAM_BANK1 ; $738c
 	ld bc, $0012 ; $738f
 	call QueueVRAMCopy ; $7392
 	ld hl, $d000 ; $7395
-	ld de, $a460 ; $7398
+	ld de, $8460 + VRAM_BANK1 ; $7398
 	ld bc, $0012 ; $739b
 	call QueueVRAMCopy ; $739e
 	ld hl, $d000 ; $73a1
-	ld de, $a6a0 ; $73a4
+	ld de, $86a0 + VRAM_BANK1 ; $73a4
 	ld bc, $0012 ; $73a7
 	call QueueVRAMCopy ; $73aa
 	ld hl, RulesBorderAnimTiles4 ; $73ad
@@ -4988,15 +4988,15 @@ LoadRulesBorderAnimTiles:
 	ld bc, $0002 ; $73bc
 	call QueueVRAMCopy ; $73bf
 	ld hl, $d000 ; $73c2
-	ld de, $a240 ; $73c5
+	ld de, $8240 + VRAM_BANK1 ; $73c5
 	ld bc, $0002 ; $73c8
 	call QueueVRAMCopy ; $73cb
 	ld hl, $d000 ; $73ce
-	ld de, $a480 ; $73d1
+	ld de, $8480 + VRAM_BANK1 ; $73d1
 	ld bc, $0002 ; $73d4
 	call QueueVRAMCopy ; $73d7
 	ld hl, $d000 ; $73da
-	ld de, $a6c0 ; $73dd
+	ld de, $86c0 + VRAM_BANK1 ; $73dd
 	ld bc, $0002 ; $73e0
 	call QueueVRAMCopy ; $73e3
 	ld hl, RulesBorderAnimTiles5 ; $73e6
@@ -5007,15 +5007,15 @@ LoadRulesBorderAnimTiles:
 	ld bc, $0001 ; $73f5
 	call QueueVRAMCopy ; $73f8
 	ld hl, $d020 ; $73fb
-	ld de, $a2a0 ; $73fe
+	ld de, $82a0 + VRAM_BANK1 ; $73fe
 	ld bc, $0001 ; $7401
 	call QueueVRAMCopy ; $7404
 	ld hl, $d000 ; $7407
-	ld de, $a4e0 ; $740a
+	ld de, $84e0 + VRAM_BANK1 ; $740a
 	ld bc, $0001 ; $740d
 	call QueueVRAMCopy ; $7410
 	ld hl, $d040 ; $7413
-	ld de, $a720 ; $7416
+	ld de, $8720 + VRAM_BANK1 ; $7416
 	ld bc, $0001 ; $7419
 	call QueueVRAMCopy ; $741c
 	ret ; $741f

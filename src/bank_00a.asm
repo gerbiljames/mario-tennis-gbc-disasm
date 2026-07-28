@@ -1952,7 +1952,7 @@ ClearBgTilemaps:
 	call QueueVRAMCopy ; $4d5f
 	wram_bank $02 ; $4d62
 	ld hl, $d000 ; $4d68
-	ld de, $b800 ; $4d6b
+	ld de, $9800 + VRAM_BANK1 ; $4d6b
 	ld c, $24 ; $4d6e
 	call QueueVRAMCopy ; $4d70
 	call EnableLCD ; $4d73
@@ -3536,11 +3536,11 @@ LoadStorySceneGraphics:
 	ld de, $d000 ; $589b
 	call DecompressDataFromBank ; $589e
 	ld hl, $d000 ; $58a1
-	ld de, $b000 ; $58a4
+	ld de, $9000 + VRAM_BANK1 ; $58a4
 	ld c, $80 ; $58a7
 	call QueueVRAMCopy ; $58a9
 	ld hl, $d800 ; $58ac
-	ld de, $a800 ; $58af
+	ld de, $8800 + VRAM_BANK1 ; $58af
 	ld c, $80 ; $58b2
 	call QueueVRAMCopy ; $58b4
 	wram_bank $06 ; $58b7
@@ -4776,7 +4776,7 @@ UpdateCameraFromPlayer:
 	add hl, hl ; $62c5
 	add hl, hl ; $62c6
 	add hl, hl ; $62c7
-	ld de, $b000 ; $62c8
+	ld de, $9000 + VRAM_BANK1 ; $62c8
 	add hl, de ; $62cb
 	push hl ; $62cc
 	ld l, b ; $62cd
@@ -4855,11 +4855,11 @@ LoadCourtSceneGraphics:
 	ld de, $d000 ; $6330
 	call DecompressDataFromBank ; $6333
 	ld hl, $d000 ; $6336
-	ld de, $b000 ; $6339
+	ld de, $9000 + VRAM_BANK1 ; $6339
 	ld c, $80 ; $633c
 	call QueueVRAMCopy ; $633e
 	ld hl, $d800 ; $6341
-	ld de, $a800 ; $6344
+	ld de, $8800 + VRAM_BANK1 ; $6344
 	ld c, $80 ; $6347
 	call QueueVRAMCopy ; $6349
 	wram_bank $04 ; $634c
@@ -5157,7 +5157,7 @@ AdvanceSceneTileAnimation:
 	add hl, hl ; $6510
 	add hl, hl ; $6511
 	add hl, hl ; $6512
-	ld de, $b000 ; $6513
+	ld de, $9000 + VRAM_BANK1 ; $6513
 	add hl, de ; $6516
 	push hl ; $6517
 	ld l, a ; $6518

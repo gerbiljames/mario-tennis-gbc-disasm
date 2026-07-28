@@ -64,7 +64,7 @@ SpawnActor:
 .initSlot:
 	ld c, l ; $4076
 	ld b, h ; $4077
-	ld de, $b000 ; $4078
+	ld de, $9000 + VRAM_BANK1 ; $4078
 	add hl, de ; $407b
 	ld e, l ; $407c
 	ld d, h ; $407d

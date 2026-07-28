@@ -170,7 +170,7 @@ FlushBgMapShadowToVram:
 	and $f0 ; $4368
 	jr z, .done ; $436a
 	ld hl, $dc00 ; $436c
-	ld de, $b800 ; $436f
+	ld de, $9800 + VRAM_BANK1 ; $436f
 	ld c, $24 ; $4372
 	call QueueVRAMCopy ; $4374
 .done:
@@ -719,11 +719,11 @@ InitConfirmScreen:
 	ld de, $d000 ; $52f4
 	call DecompressData ; $52f7
 	ld hl, $d000 ; $52fa
-	ld de, $b000 ; $52fd
+	ld de, $9000 + VRAM_BANK1 ; $52fd
 	ld c, $80 ; $5300
 	call QueueVRAMCopy ; $5302
 	ld hl, $d800 ; $5305
-	ld de, $a800 ; $5308
+	ld de, $8800 + VRAM_BANK1 ; $5308
 	ld c, $80 ; $530b
 	call QueueVRAMCopy ; $530d
 	ld hl, Palette_18_4f33 ; $5310
@@ -1148,7 +1148,7 @@ LoadConfirmScreenSpriteGfx:
 	ld de, $d000 ; $55fb
 	call DecompressData ; $55fe
 	ld hl, $d000 ; $5601
-	ld de, $a000 ; $5604
+	ld de, $8000 + VRAM_BANK1 ; $5604
 	ld c, $1c ; $5607
 	call QueueVRAMCopy ; $5609
 	ld hl, Palette_18_582d ; $560c
@@ -1158,7 +1158,7 @@ LoadConfirmScreenSpriteGfx:
 	ld de, $d000 ; $5618
 	call DecompressData ; $561b
 	ld hl, $d000 ; $561e
-	ld de, $a200 ; $5621
+	ld de, $8200 + VRAM_BANK1 ; $5621
 	ld c, $0c ; $5624
 	call QueueVRAMCopy ; $5626
 	ld hl, Palette_18_58ad ; $5629

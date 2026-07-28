@@ -1553,7 +1553,7 @@ WaterSpriteSwingCountTask:
 	ld [wSwingContestSwingState], a ; $5646
 	ret ; $5649
 WaterSpriteSwingContestScene:
-	ld de, $a100 ; $564a
+	ld de, $8100 + VRAM_BANK1 ; $564a
 	ld b, $0a ; $564d
 	ld c, $01 ; $564f
 	farcall InitNumberSpriteGfx ; $5651
@@ -1737,7 +1737,7 @@ LoadWaterSpriteMinigameHudGfx:
 	push af ; $589a
 	wram_bank $01 ; $589b
 	ld hl, WaterSpriteHudTiles_15 ; $58a1
-	ld de, $a000 ; $58a4
+	ld de, $8000 + VRAM_BANK1 ; $58a4
 	ld c, (WaterSpriteHudPalette_15 - WaterSpriteHudTiles_15) / 16 ; $58a7
 	call QueueVRAMCopy ; $58a9
 	ld hl, WaterSpriteHudPalette_15 ; $58ac

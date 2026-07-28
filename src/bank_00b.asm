@@ -1130,7 +1130,7 @@ ClearBGForDrillResult:
 	call QueueVRAMCopy ; $480b
 	wram_bank $02 ; $480e
 	ld hl, $d000 ; $4814
-	ld de, $b800 ; $4817
+	ld de, $9800 + VRAM_BANK1 ; $4817
 	ld c, $24 ; $481a
 	call QueueVRAMCopy ; $481c
 	call EnableLCD ; $481f

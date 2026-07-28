@@ -965,9 +965,9 @@ BuildN64ExhibDataScreen:
 	ld [wN64ExhibPage], a ; $45de
 	ld c, $0c ; $45e1
 	farcall LoadScreenAssetRecord ; $45e3
-	ld de, $aac0 ; $45e6
+	ld de, $8ac0 + VRAM_BANK1 ; $45e6
 	call LoadChartWindowTiles ; $45e9
-	ld de, $a000 ; $45ec
+	ld de, $8000 + VRAM_BANK1 ; $45ec
 	farcall LoadMenuArrowSpriteTiles ; $45ef
 	ld b, $08 ; $45f2
 	ld c, $0f ; $45f4
@@ -1036,7 +1036,7 @@ RedrawN64ExhibDataWindow:
 	ld c, $08 ; $467d
 	call QueueVRAMCopy ; $467f
 	ld hl, wShadowAttrmap + 5 * TILEMAP_WIDTH ; $4682
-	ld de, $b8a0 ; $4685
+	ld de, $98a0 + VRAM_BANK1 ; $4685
 	ld c, $08 ; $4688
 	call QueueVRAMCopy ; $468a
 	call AdvanceFrame ; $468d
@@ -1045,7 +1045,7 @@ RedrawN64ExhibDataWindow:
 	ld c, $08 ; $4696
 	call QueueVRAMCopy ; $4698
 	ld hl, wShadowAttrmap + 9 * TILEMAP_WIDTH ; $469b
-	ld de, $b920 ; $469e
+	ld de, $9920 + VRAM_BANK1 ; $469e
 	ld c, $08 ; $46a1
 	call QueueVRAMCopy ; $46a3
 	call AdvanceFrame ; $46a6
@@ -1054,7 +1054,7 @@ RedrawN64ExhibDataWindow:
 	ld c, $04 ; $46af
 	call QueueVRAMCopy ; $46b1
 	ld hl, wShadowAttrmap + 13 * TILEMAP_WIDTH ; $46b4
-	ld de, $b9a0 ; $46b7
+	ld de, $99a0 + VRAM_BANK1 ; $46b7
 	ld c, $04 ; $46ba
 	call QueueVRAMCopy ; $46bc
 	ret ; $46bf
@@ -2047,9 +2047,9 @@ BuildN64TnmtDataScreen:
 	ld [wDataScreenCursorRow], a ; $4dd3
 	call LoadN64TnmtDataRecords ; $4dd6
 	wram_bank $03 ; $4dd9
-	ld de, $aac0 ; $4ddf
+	ld de, $8ac0 + VRAM_BANK1 ; $4ddf
 	call LoadChartWindowTiles ; $4de2
-	ld de, $a000 ; $4de5
+	ld de, $8000 + VRAM_BANK1 ; $4de5
 	farcall LoadMenuArrowSpriteTiles ; $4de8
 	ld b, $08 ; $4deb
 	ld c, $0f ; $4ded
@@ -2462,7 +2462,7 @@ FlushN64TnmtWindowToVram:
 	ld c, $08 ; $5093
 	call QueueVRAMCopy ; $5095
 	ld hl, wShadowAttrmap + 5 * TILEMAP_WIDTH ; $5098
-	ld de, $b8a0 ; $509b
+	ld de, $98a0 + VRAM_BANK1 ; $509b
 	ld c, $08 ; $509e
 	call QueueVRAMCopy ; $50a0
 	call AdvanceFrame ; $50a3
@@ -2471,7 +2471,7 @@ FlushN64TnmtWindowToVram:
 	ld c, $08 ; $50ac
 	call QueueVRAMCopy ; $50ae
 	ld hl, wShadowAttrmap + 9 * TILEMAP_WIDTH ; $50b1
-	ld de, $b920 ; $50b4
+	ld de, $9920 + VRAM_BANK1 ; $50b4
 	ld c, $08 ; $50b7
 	call QueueVRAMCopy ; $50b9
 	call AdvanceFrame ; $50bc
@@ -2480,7 +2480,7 @@ FlushN64TnmtWindowToVram:
 	ld c, $08 ; $50c5
 	call QueueVRAMCopy ; $50c7
 	ld hl, wShadowAttrmap + 13 * TILEMAP_WIDTH ; $50ca
-	ld de, $b9a0 ; $50cd
+	ld de, $99a0 + VRAM_BANK1 ; $50cd
 	ld c, $08 ; $50d0
 	call QueueVRAMCopy ; $50d2
 	ret ; $50d5
@@ -2592,14 +2592,14 @@ BuildN64RingShotScreen:
 	wram_bank $03 ; $51bf
 	call LoadN64RingShotRecords ; $51c5
 	wram_bank $03 ; $51c8
-	ld de, $aac0 ; $51ce
+	ld de, $8ac0 + VRAM_BANK1 ; $51ce
 	call LoadChartWindowTiles ; $51d1
-	ld de, $a000 ; $51d4
+	ld de, $8000 + VRAM_BANK1 ; $51d4
 	farcall LoadMenuArrowSpriteTiles ; $51d7
 	ld b, $08 ; $51da
 	ld c, $0f ; $51dc
 	farcall LoadIndexedPalette ; $51de
-	ld de, $a100 ; $51e1
+	ld de, $8100 + VRAM_BANK1 ; $51e1
 	ld b, $09 ; $51e4
 	ld c, $00 ; $51e6
 	farcall InitNumberSpriteGfx ; $51e8
@@ -2941,7 +2941,7 @@ FlushRingShotWindowToVram:
 	ld c, $08 ; $5467
 	call QueueVRAMCopy ; $5469
 	ld hl, wShadowAttrmap + 6 * TILEMAP_WIDTH ; $546c
-	ld de, $b8c0 ; $546f
+	ld de, $98c0 + VRAM_BANK1 ; $546f
 	ld c, $08 ; $5472
 	call QueueVRAMCopy ; $5474
 	call AdvanceFrame ; $5477
@@ -2950,7 +2950,7 @@ FlushRingShotWindowToVram:
 	ld c, $0c ; $5480
 	call QueueVRAMCopy ; $5482
 	ld hl, wShadowAttrmap + 10 * TILEMAP_WIDTH ; $5485
-	ld de, $b940 ; $5488
+	ld de, $9940 + VRAM_BANK1 ; $5488
 	ld c, $0c ; $548b
 	call QueueVRAMCopy ; $548d
 	ret ; $5490
@@ -3343,7 +3343,7 @@ LoadMainMenuGfx:
 	ld [wCurrentStorySlot], a ; $571b
 	ld a, [wShadowTilemap + 24 * TILEMAP_WIDTH] ; $571e
 	farcall LoadCharMugshotToBuffer ; $5721
-	ld de, $b680 ; $5724
+	ld de, $9680 + VRAM_BANK1 ; $5724
 	farcall CopyMugshotBufferToVram ; $5727
 	call AdvanceFrame ; $572a
 	wram_bank $03 ; $572d
@@ -3351,7 +3351,7 @@ LoadMainMenuGfx:
 	ld [wCurrentStorySlot], a ; $5735
 	ld a, [wShadowTilemap + 24 * TILEMAP_WIDTH + 16] ; $5738
 	farcall LoadCharMugshotToBuffer ; $573b
-	ld de, $b710 ; $573e
+	ld de, $9710 + VRAM_BANK1 ; $573e
 	farcall CopyMugshotBufferToVram ; $5741
 	call AdvanceFrame ; $5744
 	wram_bank $03 ; $5747
@@ -3359,47 +3359,47 @@ LoadMainMenuGfx:
 	ld [wCurrentStorySlot], a ; $574f
 	ld a, [wShadowTilemap + 25 * TILEMAP_WIDTH] ; $5752
 	farcall LoadCharMugshotToBuffer ; $5755
-	ld de, $af00 ; $5758
+	ld de, $8f00 + VRAM_BANK1 ; $5758
 	farcall CopyMugshotBufferToVram ; $575b
 	call AdvanceFrame ; $575e
 	ld b, $1c ; $5761
 	ld c, $10 ; $5763
-	ld de, $a000 ; $5765
+	ld de, $8000 + VRAM_BANK1 ; $5765
 	farcall LoadCompressedTileBlock ; $5768
 	call AdvanceFrame ; $576b
 	ld b, $1d ; $576e
 	ld c, $10 ; $5770
-	ld de, $a100 ; $5772
+	ld de, $8100 + VRAM_BANK1 ; $5772
 	farcall LoadCompressedTileBlock ; $5775
 	call AdvanceFrame ; $5778
 	ld b, $1e ; $577b
 	ld c, $12 ; $577d
-	ld de, $a200 ; $577f
+	ld de, $8200 + VRAM_BANK1 ; $577f
 	farcall LoadCompressedTileBlock ; $5782
 	call AdvanceFrame ; $5785
 	ld b, $1f ; $5788
 	ld c, $10 ; $578a
-	ld de, $a320 ; $578c
+	ld de, $8320 + VRAM_BANK1 ; $578c
 	farcall LoadCompressedTileBlock ; $578f
 	call AdvanceFrame ; $5792
 	ld b, $20 ; $5795
 	ld c, $10 ; $5797
-	ld de, $a420 ; $5799
+	ld de, $8420 + VRAM_BANK1 ; $5799
 	farcall LoadCompressedTileBlock ; $579c
 	call AdvanceFrame ; $579f
 	ld b, $21 ; $57a2
 	ld c, $10 ; $57a4
-	ld de, $a520 ; $57a6
+	ld de, $8520 + VRAM_BANK1 ; $57a6
 	farcall LoadCompressedTileBlock ; $57a9
 	call AdvanceFrame ; $57ac
 	ld b, $22 ; $57af
 	ld c, $10 ; $57b1
-	ld de, $a620 ; $57b3
+	ld de, $8620 + VRAM_BANK1 ; $57b3
 	farcall LoadCompressedTileBlock ; $57b6
 	call AdvanceFrame ; $57b9
 	ld b, $1b ; $57bc
 	ld c, $04 ; $57be
-	ld de, $a720 ; $57c0
+	ld de, $8720 + VRAM_BANK1 ; $57c0
 	farcall LoadCompressedTileBlock ; $57c3
 	ld b, $08 ; $57c6
 	ld c, $10 ; $57c8
@@ -3664,15 +3664,15 @@ DrawMainMenuSelection:
 	farcall FillTilemapRect ; $59d6
 	call DrawMainMenuCaption ; $59d9
 	ld hl, wShadowAttrmap + 3 * TILEMAP_WIDTH ; $59dc
-	ld de, $b860 ; $59df
+	ld de, $9860 + VRAM_BANK1 ; $59df
 	ld c, $06 ; $59e2
 	call QueueVRAMCopy ; $59e4
 	ld hl, wShadowAttrmap + 7 * TILEMAP_WIDTH ; $59e7
-	ld de, $b8e0 ; $59ea
+	ld de, $98e0 + VRAM_BANK1 ; $59ea
 	ld c, $06 ; $59ed
 	call QueueVRAMCopy ; $59ef
 	ld hl, wShadowAttrmap + 11 * TILEMAP_WIDTH ; $59f2
-	ld de, $b960 ; $59f5
+	ld de, $9960 + VRAM_BANK1 ; $59f5
 	ld c, $06 ; $59f8
 	call QueueVRAMCopy ; $59fa
 	ld hl, wShadowTilemap + 15 * TILEMAP_WIDTH ; $59fd
@@ -4282,42 +4282,42 @@ LoadMatchFormatGfx:
 	jr nz, .loop ; $5e39
 	ld b, $23 ; $5e3b
 	ld c, $10 ; $5e3d
-	ld de, $a000 ; $5e3f
+	ld de, $8000 + VRAM_BANK1 ; $5e3f
 	farcall LoadCompressedTileBlock ; $5e42
 	call AdvanceFrame ; $5e45
 	ld b, $24 ; $5e48
 	ld c, $10 ; $5e4a
-	ld de, $a100 ; $5e4c
+	ld de, $8100 + VRAM_BANK1 ; $5e4c
 	farcall LoadCompressedTileBlock ; $5e4f
 	call AdvanceFrame ; $5e52
 	ld b, $25 ; $5e55
 	ld c, $10 ; $5e57
-	ld de, $a200 ; $5e59
+	ld de, $8200 + VRAM_BANK1 ; $5e59
 	farcall LoadCompressedTileBlock ; $5e5c
 	call AdvanceFrame ; $5e5f
 	ld b, $26 ; $5e62
 	ld c, $10 ; $5e64
-	ld de, $a300 ; $5e66
+	ld de, $8300 + VRAM_BANK1 ; $5e66
 	farcall LoadCompressedTileBlock ; $5e69
 	call AdvanceFrame ; $5e6c
 	ld b, $27 ; $5e6f
 	ld c, $10 ; $5e71
-	ld de, $a400 ; $5e73
+	ld de, $8400 + VRAM_BANK1 ; $5e73
 	farcall LoadCompressedTileBlock ; $5e76
 	call AdvanceFrame ; $5e79
 	ld b, $28 ; $5e7c
 	ld c, $10 ; $5e7e
-	ld de, $a500 ; $5e80
+	ld de, $8500 + VRAM_BANK1 ; $5e80
 	farcall LoadCompressedTileBlock ; $5e83
 	call AdvanceFrame ; $5e86
 	ld b, $29 ; $5e89
 	ld c, $10 ; $5e8b
-	ld de, $a600 ; $5e8d
+	ld de, $8600 + VRAM_BANK1 ; $5e8d
 	farcall LoadCompressedTileBlock ; $5e90
 	call AdvanceFrame ; $5e93
 	ld b, $1b ; $5e96
 	ld c, $04 ; $5e98
-	ld de, $a700 ; $5e9a
+	ld de, $8700 + VRAM_BANK1 ; $5e9a
 	farcall LoadCompressedTileBlock ; $5e9d
 	call AdvanceFrame ; $5ea0
 	ld b, $3f ; $5ea3
@@ -4613,7 +4613,7 @@ FlushMatchFormatRowToVram:
 	or a ; $609f
 	jr nz, .row1 ; $60a0
 	ld hl, wShadowAttrmap + 3 * TILEMAP_WIDTH ; $60a2
-	ld de, $b860 ; $60a5
+	ld de, $9860 + VRAM_BANK1 ; $60a5
 	ld c, $06 ; $60a8
 	call QueueVRAMCopy ; $60aa
 	jr .done ; $60ad
@@ -4621,13 +4621,13 @@ FlushMatchFormatRowToVram:
 	cp $01 ; $60af
 	jr nz, .row2 ; $60b1
 	ld hl, wShadowAttrmap + 7 * TILEMAP_WIDTH ; $60b3
-	ld de, $b8e0 ; $60b6
+	ld de, $98e0 + VRAM_BANK1 ; $60b6
 	ld c, $06 ; $60b9
 	call QueueVRAMCopy ; $60bb
 	jr .done ; $60be
 .row2:
 	ld hl, wShadowAttrmap + 11 * TILEMAP_WIDTH ; $60c0
-	ld de, $b960 ; $60c3
+	ld de, $9960 + VRAM_BANK1 ; $60c3
 	ld c, $06 ; $60c6
 	call QueueVRAMCopy ; $60c8
 .done:
@@ -4939,32 +4939,32 @@ LoadMinigameSelectGfx:
 	jr nz, .loop ; $6325
 	ld b, $33 ; $6327
 	ld c, $10 ; $6329
-	ld de, $a000 ; $632b
+	ld de, $8000 + VRAM_BANK1 ; $632b
 	farcall LoadCompressedTileBlock ; $632e
 	call AdvanceFrame ; $6331
 	ld b, $34 ; $6334
 	ld c, $10 ; $6336
-	ld de, $a100 ; $6338
+	ld de, $8100 + VRAM_BANK1 ; $6338
 	farcall LoadCompressedTileBlock ; $633b
 	call AdvanceFrame ; $633e
 	ld b, $35 ; $6341
 	ld c, $10 ; $6343
-	ld de, $a200 ; $6345
+	ld de, $8200 + VRAM_BANK1 ; $6345
 	farcall LoadCompressedTileBlock ; $6348
 	call AdvanceFrame ; $634b
 	ld b, $36 ; $634e
 	ld c, $10 ; $6350
-	ld de, $a300 ; $6352
+	ld de, $8300 + VRAM_BANK1 ; $6352
 	farcall LoadCompressedTileBlock ; $6355
 	call AdvanceFrame ; $6358
 	ld b, $37 ; $635b
 	ld c, $10 ; $635d
-	ld de, $a400 ; $635f
+	ld de, $8400 + VRAM_BANK1 ; $635f
 	farcall LoadCompressedTileBlock ; $6362
 	call AdvanceFrame ; $6365
 	ld b, $38 ; $6368
 	ld c, $10 ; $636a
-	ld de, $a500 ; $636c
+	ld de, $8500 + VRAM_BANK1 ; $636c
 	farcall LoadCompressedTileBlock ; $636f
 	call AdvanceFrame ; $6372
 	ld hl, $6d7e ; $6375 -> DataPtr_MinigameSelectIconGfx0
@@ -5002,7 +5002,7 @@ LoadMinigameSelectGfx:
 	call AdvanceFrame ; $63ce
 	ld b, $1b ; $63d1
 	ld c, $04 ; $63d3
-	ld de, $a700 ; $63d5
+	ld de, $8700 + VRAM_BANK1 ; $63d5
 	farcall LoadCompressedTileBlock ; $63d8
 	ld b, $08 ; $63db
 	ld c, $10 ; $63dd
@@ -5296,15 +5296,15 @@ DrawMinigameSelectGrid9:
 	call GetMenuCursorCellIndex ; $660d
 	call LoadMinigameCharPalette ; $6610
 	ld hl, wShadowAttrmap + 3 * TILEMAP_WIDTH ; $6613
-	ld de, $b860 ; $6616
+	ld de, $9860 + VRAM_BANK1 ; $6616
 	ld c, $06 ; $6619
 	call QueueVRAMCopy ; $661b
 	ld hl, wShadowAttrmap + 7 * TILEMAP_WIDTH ; $661e
-	ld de, $b8e0 ; $6621
+	ld de, $98e0 + VRAM_BANK1 ; $6621
 	ld c, $06 ; $6624
 	call QueueVRAMCopy ; $6626
 	ld hl, wShadowAttrmap + 11 * TILEMAP_WIDTH ; $6629
-	ld de, $b960 ; $662c
+	ld de, $9960 + VRAM_BANK1 ; $662c
 	ld c, $06 ; $662f
 	call QueueVRAMCopy ; $6631
 	ret ; $6634
@@ -5537,11 +5537,11 @@ DrawMinigameSelectGrid6:
 	call GetMenuCursorCellIndex ; $6784
 	call LoadMinigameCharPalette ; $6787
 	ld hl, wShadowAttrmap + 4 * TILEMAP_WIDTH ; $678a
-	ld de, $b880 ; $678d
+	ld de, $9880 + VRAM_BANK1 ; $678d
 	ld c, $06 ; $6790
 	call QueueVRAMCopy ; $6792
 	ld hl, wShadowAttrmap + 9 * TILEMAP_WIDTH ; $6795
-	ld de, $b920 ; $6798
+	ld de, $9920 + VRAM_BANK1 ; $6798
 	ld c, $06 ; $679b
 	call QueueVRAMCopy ; $679d
 	ret ; $67a0
@@ -5651,7 +5651,7 @@ LoadSavedDataSourceGfx:
 	ld de, $d000 ; $687a
 	call DecompressDataFromBank ; $687d
 	ld hl, $d000 ; $6880
-	ld de, $a800 ; $6883
+	ld de, $8800 + VRAM_BANK1 ; $6883
 	ld bc, $0010 ; $6886
 	call QueueVRAMCopy ; $6889
 	call AdvanceFrame ; $688c
@@ -5659,7 +5659,7 @@ LoadSavedDataSourceGfx:
 	ld de, $d000 ; $6892
 	call DecompressDataFromBank ; $6895
 	ld hl, $d000 ; $6898
-	ld de, $a900 ; $689b
+	ld de, $8900 + VRAM_BANK1 ; $689b
 	ld bc, $0010 ; $689e
 	call QueueVRAMCopy ; $68a1
 	call AdvanceFrame ; $68a4
@@ -5668,7 +5668,7 @@ LoadSavedDataSourceGfx:
 	ld [wCurrentStorySlot], a ; $68af
 	ld a, [wShadowTilemap + 24 * TILEMAP_WIDTH] ; $68b2
 	farcall LoadCharMugshotToBuffer ; $68b5
-	ld de, $b680 ; $68b8
+	ld de, $9680 + VRAM_BANK1 ; $68b8
 	farcall CopyMugshotBufferToVram ; $68bb
 	call AdvanceFrame ; $68be
 	wram_bank $03 ; $68c1
@@ -5676,7 +5676,7 @@ LoadSavedDataSourceGfx:
 	ld [wCurrentStorySlot], a ; $68c9
 	ld a, [wShadowTilemap + 24 * TILEMAP_WIDTH + 16] ; $68cc
 	farcall LoadCharMugshotToBuffer ; $68cf
-	ld de, $b710 ; $68d2
+	ld de, $9710 + VRAM_BANK1 ; $68d2
 	farcall CopyMugshotBufferToVram ; $68d5
 	call AdvanceFrame ; $68d8
 	wram_bank $03 ; $68db
@@ -5684,37 +5684,37 @@ LoadSavedDataSourceGfx:
 	ld [wCurrentStorySlot], a ; $68e3
 	ld a, [wShadowTilemap + 25 * TILEMAP_WIDTH] ; $68e6
 	farcall LoadCharMugshotToBuffer ; $68e9
-	ld de, $af00 ; $68ec
+	ld de, $8f00 + VRAM_BANK1 ; $68ec
 	farcall CopyMugshotBufferToVram ; $68ef
 	call AdvanceFrame ; $68f2
 	ld b, $2a ; $68f5
 	ld c, $10 ; $68f7
-	ld de, $a000 ; $68f9
+	ld de, $8000 + VRAM_BANK1 ; $68f9
 	farcall LoadCompressedTileBlock ; $68fc
 	call AdvanceFrame ; $68ff
 	ld b, $2b ; $6902
 	ld c, $10 ; $6904
-	ld de, $a100 ; $6906
+	ld de, $8100 + VRAM_BANK1 ; $6906
 	farcall LoadCompressedTileBlock ; $6909
 	call AdvanceFrame ; $690c
 	ld b, $2c ; $690f
 	ld c, $10 ; $6911
-	ld de, $a200 ; $6913
+	ld de, $8200 + VRAM_BANK1 ; $6913
 	farcall LoadCompressedTileBlock ; $6916
 	call AdvanceFrame ; $6919
 	ld b, $2d ; $691c
 	ld c, $10 ; $691e
-	ld de, $a300 ; $6920
+	ld de, $8300 + VRAM_BANK1 ; $6920
 	farcall LoadCompressedTileBlock ; $6923
 	call AdvanceFrame ; $6926
 	ld b, $76 ; $6929
 	ld c, $10 ; $692b
-	ld de, $a400 ; $692d
+	ld de, $8400 + VRAM_BANK1 ; $692d
 	farcall LoadCompressedTileBlock ; $6930
 	call AdvanceFrame ; $6933
 	ld b, $1b ; $6936
 	ld c, $04 ; $6938
-	ld de, $a700 ; $693a
+	ld de, $8700 + VRAM_BANK1 ; $693a
 	farcall LoadCompressedTileBlock ; $693d
 	call AdvanceFrame ; $6940
 	ld b, $42 ; $6943
@@ -5922,11 +5922,11 @@ DrawSavedDataSourceGrid:
 	farcall FillTilemapRect ; $6ae6
 	call DrawSavedDataSourceCaption ; $6ae9
 	ld hl, wShadowAttrmap + 4 * TILEMAP_WIDTH ; $6aec
-	ld de, $b880 ; $6aef
+	ld de, $9880 + VRAM_BANK1 ; $6aef
 	ld c, $06 ; $6af2
 	call QueueVRAMCopy ; $6af4
 	ld hl, wShadowAttrmap + 9 * TILEMAP_WIDTH ; $6af7
-	ld de, $b920 ; $6afa
+	ld de, $9920 + VRAM_BANK1 ; $6afa
 	ld c, $06 ; $6afd
 	call QueueVRAMCopy ; $6aff
 	ld hl, wShadowTilemap + 15 * TILEMAP_WIDTH ; $6b02
@@ -6241,7 +6241,7 @@ LoadEraseSavedDataGfx:
 	ld [wCurrentStorySlot], a ; $6d42
 	ld a, [wShadowTilemap + 24 * TILEMAP_WIDTH] ; $6d45
 	farcall LoadCharMugshotToBuffer ; $6d48
-	ld de, $b680 ; $6d4b
+	ld de, $9680 + VRAM_BANK1 ; $6d4b
 	farcall CopyMugshotBufferToVram ; $6d4e
 	call AdvanceFrame ; $6d51
 	wram_bank $03 ; $6d54
@@ -6249,7 +6249,7 @@ LoadEraseSavedDataGfx:
 	ld [wCurrentStorySlot], a ; $6d5c
 	ld a, [wShadowTilemap + 24 * TILEMAP_WIDTH + 16] ; $6d5f
 	farcall LoadCharMugshotToBuffer ; $6d62
-	ld de, $b710 ; $6d65
+	ld de, $9710 + VRAM_BANK1 ; $6d65
 	farcall CopyMugshotBufferToVram ; $6d68
 	call AdvanceFrame ; $6d6b
 	wram_bank $03 ; $6d6e
@@ -6257,7 +6257,7 @@ LoadEraseSavedDataGfx:
 	ld [wCurrentStorySlot], a ; $6d76
 	ld a, [wShadowTilemap + 25 * TILEMAP_WIDTH] ; $6d79
 	farcall LoadCharMugshotToBuffer ; $6d7c
-	ld de, $af00 ; $6d7f
+	ld de, $8f00 + VRAM_BANK1 ; $6d7f
 	farcall CopyMugshotBufferToVram ; $6d82
 	call AdvanceFrame ; $6d85
 	wram_bank $01 ; $6d88
@@ -6265,7 +6265,7 @@ LoadEraseSavedDataGfx:
 	ld de, $d000 ; $6d91
 	call DecompressDataFromBank ; $6d94
 	ld hl, $d000 ; $6d97
-	ld de, $a800 ; $6d9a
+	ld de, $8800 + VRAM_BANK1 ; $6d9a
 	ld c, $10 ; $6d9d
 	call QueueVRAMCopy ; $6d9f
 	call AdvanceFrame ; $6da2
@@ -6273,38 +6273,38 @@ LoadEraseSavedDataGfx:
 	ld de, $d000 ; $6da8
 	call DecompressDataFromBank ; $6dab
 	ld hl, $d000 ; $6dae
-	ld de, $a900 ; $6db1
+	ld de, $8900 + VRAM_BANK1 ; $6db1
 	ld c, $10 ; $6db4
 	call QueueVRAMCopy ; $6db6
 	call AdvanceFrame ; $6db9
 	ld b, $2e ; $6dbc
 	ld c, $10 ; $6dbe
-	ld de, $a000 ; $6dc0
+	ld de, $8000 + VRAM_BANK1 ; $6dc0
 	farcall LoadCompressedTileBlock ; $6dc3
 	call AdvanceFrame ; $6dc6
 	ld b, $2f ; $6dc9
 	ld c, $10 ; $6dcb
-	ld de, $a100 ; $6dcd
+	ld de, $8100 + VRAM_BANK1 ; $6dcd
 	farcall LoadCompressedTileBlock ; $6dd0
 	call AdvanceFrame ; $6dd3
 	ld b, $30 ; $6dd6
 	ld c, $10 ; $6dd8
-	ld de, $a200 ; $6dda
+	ld de, $8200 + VRAM_BANK1 ; $6dda
 	farcall LoadCompressedTileBlock ; $6ddd
 	call AdvanceFrame ; $6de0
 	ld b, $31 ; $6de3
 	ld c, $10 ; $6de5
-	ld de, $a300 ; $6de7
+	ld de, $8300 + VRAM_BANK1 ; $6de7
 	farcall LoadCompressedTileBlock ; $6dea
 	call AdvanceFrame ; $6ded
 	ld b, $32 ; $6df0
 	ld c, $10 ; $6df2
-	ld de, $a400 ; $6df4
+	ld de, $8400 + VRAM_BANK1 ; $6df4
 	farcall LoadCompressedTileBlock ; $6df7
 	call AdvanceFrame ; $6dfa
 	ld b, $1b ; $6dfd
 	ld c, $04 ; $6dff
-	ld de, $a700 ; $6e01
+	ld de, $8700 + VRAM_BANK1 ; $6e01
 	farcall LoadCompressedTileBlock ; $6e04
 	call AdvanceFrame ; $6e07
 	ld b, $41 ; $6e0a
@@ -6631,11 +6631,11 @@ DrawEraseSavedDataGrid:
 	farcall FillTilemapRect ; $7063
 	call DrawEraseSavedDataCaption ; $7066
 	ld hl, wShadowAttrmap + 4 * TILEMAP_WIDTH ; $7069
-	ld de, $b880 ; $706c
+	ld de, $9880 + VRAM_BANK1 ; $706c
 	ld c, $06 ; $706f
 	call QueueVRAMCopy ; $7071
 	ld hl, wShadowAttrmap + 9 * TILEMAP_WIDTH ; $7074
-	ld de, $b920 ; $7077
+	ld de, $9920 + VRAM_BANK1 ; $7077
 	ld c, $06 ; $707a
 	call QueueVRAMCopy ; $707c
 	ld hl, wShadowTilemap + 15 * TILEMAP_WIDTH ; $707f
@@ -6945,22 +6945,22 @@ LoadN64RecordTypeGfx:
 	jr nz, .loop ; $7290
 	ld b, $39 ; $7292
 	ld c, $10 ; $7294
-	ld de, $a000 ; $7296
+	ld de, $8000 + VRAM_BANK1 ; $7296
 	farcall LoadCompressedTileBlock ; $7299
 	call AdvanceFrame ; $729c
 	ld b, $1d ; $729f
 	ld c, $10 ; $72a1
-	ld de, $a100 ; $72a3
+	ld de, $8100 + VRAM_BANK1 ; $72a3
 	farcall LoadCompressedTileBlock ; $72a6
 	call AdvanceFrame ; $72a9
 	ld b, $3a ; $72ac
 	ld c, $10 ; $72ae
-	ld de, $a200 ; $72b0
+	ld de, $8200 + VRAM_BANK1 ; $72b0
 	farcall LoadCompressedTileBlock ; $72b3
 	call AdvanceFrame ; $72b6
 	ld b, $1b ; $72b9
 	ld c, $04 ; $72bb
-	ld de, $a700 ; $72bd
+	ld de, $8700 + VRAM_BANK1 ; $72bd
 	farcall LoadCompressedTileBlock ; $72c0
 	call AdvanceFrame ; $72c3
 	ld b, $43 ; $72c6
@@ -7142,7 +7142,7 @@ DrawN64RecordTypeGrid:
 	farcall FillTilemapRect ; $740b
 	call DrawN64RecordTypeCaption ; $740e
 	ld hl, wShadowAttrmap + 7 * TILEMAP_WIDTH ; $7411
-	ld de, $b8e0 ; $7414
+	ld de, $98e0 + VRAM_BANK1 ; $7414
 	ld c, $06 ; $7417
 	call QueueVRAMCopy ; $7419
 	ld hl, wShadowTilemap + 15 * TILEMAP_WIDTH ; $741c
@@ -7367,27 +7367,27 @@ LoadN64TransferItemGfx:
 	jr nz, .loop ; $759f
 	ld b, $3b ; $75a1
 	ld c, $10 ; $75a3
-	ld de, $a000 ; $75a5
+	ld de, $8000 + VRAM_BANK1 ; $75a5
 	farcall LoadCompressedTileBlock ; $75a8
 	call AdvanceFrame ; $75ab
 	ld b, $73 ; $75ae
 	ld c, $10 ; $75b0
-	ld de, $a100 ; $75b2
+	ld de, $8100 + VRAM_BANK1 ; $75b2
 	farcall LoadCompressedTileBlock ; $75b5
 	call AdvanceFrame ; $75b8
 	ld b, $3c ; $75bb
 	ld c, $10 ; $75bd
-	ld de, $a200 ; $75bf
+	ld de, $8200 + VRAM_BANK1 ; $75bf
 	farcall LoadCompressedTileBlock ; $75c2
 	call AdvanceFrame ; $75c5
 	ld b, $3d ; $75c8
 	ld c, $10 ; $75ca
-	ld de, $a300 ; $75cc
+	ld de, $8300 + VRAM_BANK1 ; $75cc
 	farcall LoadCompressedTileBlock ; $75cf
 	call AdvanceFrame ; $75d2
 	ld b, $1b ; $75d5
 	ld c, $04 ; $75d7
-	ld de, $a700 ; $75d9
+	ld de, $8700 + VRAM_BANK1 ; $75d9
 	farcall LoadCompressedTileBlock ; $75dc
 	call AdvanceFrame ; $75df
 	ld b, $44 ; $75e2
@@ -7449,11 +7449,11 @@ DrawN64TransferItemGrid:
 	farcall FillTilemapRect ; $7658
 	call DrawN64TransferItemCaption ; $765b
 	ld hl, wShadowAttrmap + 4 * TILEMAP_WIDTH ; $765e
-	ld de, $b880 ; $7661
+	ld de, $9880 + VRAM_BANK1 ; $7661
 	ld c, $06 ; $7664
 	call QueueVRAMCopy ; $7666
 	ld hl, wShadowAttrmap + 9 * TILEMAP_WIDTH ; $7669
-	ld de, $b920 ; $766c
+	ld de, $9920 + VRAM_BANK1 ; $766c
 	ld c, $06 ; $766f
 	call QueueVRAMCopy ; $7671
 	ld hl, wShadowTilemap + 15 * TILEMAP_WIDTH ; $7674
@@ -8076,9 +8076,9 @@ BuildStarCharExhibScreen:
 	ld [wN64ExhibPage], a ; $7b1b
 	ld c, $0c ; $7b1e
 	farcall LoadScreenAssetRecord ; $7b20
-	ld de, $aac0 ; $7b23
+	ld de, $8ac0 + VRAM_BANK1 ; $7b23
 	call LoadChartWindowTiles ; $7b26
-	ld de, $a000 ; $7b29
+	ld de, $8000 + VRAM_BANK1 ; $7b29
 	farcall LoadMenuArrowSpriteTiles ; $7b2c
 	ld b, $08 ; $7b2f
 	ld c, $0f ; $7b31
@@ -8260,7 +8260,7 @@ FlushStarChartWindowToVram:
 	ld c, $08 ; $7c87
 	call QueueVRAMCopy ; $7c89
 	ld hl, wShadowAttrmap + 5 * TILEMAP_WIDTH ; $7c8c
-	ld de, $b8a0 ; $7c8f
+	ld de, $98a0 + VRAM_BANK1 ; $7c8f
 	ld c, $08 ; $7c92
 	call QueueVRAMCopy ; $7c94
 	call AdvanceFrame ; $7c97
@@ -8269,7 +8269,7 @@ FlushStarChartWindowToVram:
 	ld c, $08 ; $7ca0
 	call QueueVRAMCopy ; $7ca2
 	ld hl, wShadowAttrmap + 9 * TILEMAP_WIDTH ; $7ca5
-	ld de, $b920 ; $7ca8
+	ld de, $9920 + VRAM_BANK1 ; $7ca8
 	ld c, $08 ; $7cab
 	call QueueVRAMCopy ; $7cad
 	call AdvanceFrame ; $7cb0
@@ -8278,7 +8278,7 @@ FlushStarChartWindowToVram:
 	ld c, $04 ; $7cb9
 	call QueueVRAMCopy ; $7cbb
 	ld hl, wShadowAttrmap + 13 * TILEMAP_WIDTH ; $7cbe
-	ld de, $b9a0 ; $7cc1
+	ld de, $99a0 + VRAM_BANK1 ; $7cc1
 	ld c, $04 ; $7cc4
 	call QueueVRAMCopy ; $7cc6
 	ret ; $7cc9

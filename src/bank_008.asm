@@ -4057,7 +4057,7 @@ UploadCourtTilemap:
 UploadCourtAttrmap:
 	wram_bank $02 ; $5e81
 	ld hl, $d400 ; $5e87
-	ld de, $b800 ; $5e8a
+	ld de, $9800 + VRAM_BANK1 ; $5e8a
 	ld c, $40 ; $5e8d
 	call QueueVRAMCopy ; $5e8f
 	ret ; $5e92
@@ -4181,7 +4181,7 @@ RefreshCourtAfterEndChange:
 	ld c, $0a ; $5f6d
 	call QueueVRAMCopy ; $5f6f
 	ld hl, $d580 ; $5f72
-	ld de, $b980 ; $5f75
+	ld de, $9980 + VRAM_BANK1 ; $5f75
 	ld c, $0a ; $5f78
 	call QueueVRAMCopy ; $5f7a
 	pop af ; $5f7d

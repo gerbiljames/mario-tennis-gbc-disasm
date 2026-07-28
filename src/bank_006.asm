@@ -737,7 +737,7 @@ FlushTilemapToVram:
 	ld c, $22 ; $460e
 	call QueueVRAMCopy ; $4610
 	pop bc ; $4613
-	ld hl, $b800 ; $4614
+	ld hl, $9800 + VRAM_BANK1 ; $4614
 	add hl, bc ; $4617
 	ld e, l ; $4618
 	ld d, h ; $4619

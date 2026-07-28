@@ -1790,7 +1790,7 @@ LoadPlaneObjGfx_14:
 	push af ; $5e7b
 	wram_bank $01 ; $5e7c
 	ld hl, PlaneObjTiles_14 ; $5e82
-	ld de, $a000 ; $5e85
+	ld de, $8000 + VRAM_BANK1 ; $5e85
 	ld c, $60 ; $5e88
 	call QueueVRAMCopy ; $5e8a
 	ld hl, IslandObjPalette_14 ; $5e8d
@@ -2053,7 +2053,7 @@ LoadPlaneObjGfx2_14:
 	push af ; $623a
 	wram_bank $01 ; $623b
 	ld hl, IslandObjTiles_14 ; $6241
-	ld de, $a000 ; $6244
+	ld de, $8000 + VRAM_BANK1 ; $6244
 	ld c, $60 ; $6247
 	call QueueVRAMCopy ; $6249
 	ld hl, IslandObjPalette_14 ; $624c
@@ -2874,7 +2874,7 @@ LoadDistantPlaneObjGfx_14:
 	push af ; $753b
 	wram_bank $01 ; $753c
 	ld hl, DistantPlaneObjGfx ; $7542
-	ld de, $a000 ; $7545
+	ld de, $8000 + VRAM_BANK1 ; $7545
 	ld c, (SpriteTemplate_14_7530 - DistantPlaneObjGfx) / 16 ; $7548
 	call QueueVRAMCopy ; $754a
 	ld hl, IslandObjPalette_14 ; $754d
@@ -2915,7 +2915,7 @@ LoadTwinkleObjGfx_14:
 	push af ; $768a
 	wram_bank $01 ; $768b
 	ld hl, TwinkleObjGfx ; $7691
-	ld de, $a000 ; $7694
+	ld de, $8000 + VRAM_BANK1 ; $7694
 	ld c, (Palette_14_7680 - TwinkleObjGfx) / 16 ; $7697
 	call QueueVRAMCopy ; $7699
 	ld hl, Palette_14_7680 ; $769c

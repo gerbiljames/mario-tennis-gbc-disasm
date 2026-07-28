@@ -1028,7 +1028,7 @@ SetupMatchTypeMenuScreen:
 	farcall RedrawWindowRows ; $4648
 	call DrawMatchTypeOptionLabel ; $464b
 	farcall QueueWram3MapToVRAM ; $464e
-	ld de, $a000 ; $4651
+	ld de, $8000 + VRAM_BANK1 ; $4651
 	farcall LoadFixedTileBlockAndPalette ; $4654
 	ld b, $08 ; $4657
 	ld c, $0d ; $4659
@@ -1412,11 +1412,11 @@ SetupCharacterSelectScreen:
 	farcall UploadGlyphBuffer ; $4a08
 	ld a, $00 ; $4a0b
 	farcall LoadCharMugshotToBuffer ; $4a0d
-	ld de, $b200 ; $4a10
+	ld de, $9200 + VRAM_BANK1 ; $4a10
 	farcall CopyMugshotBufferToVram ; $4a13
 	ld a, $01 ; $4a16
 	farcall LoadCharMugshotToBuffer ; $4a18
-	ld de, $b300 ; $4a1b
+	ld de, $9300 + VRAM_BANK1 ; $4a1b
 	farcall CopyMugshotBufferToVram ; $4a1e
 	wram_bank $02 ; $4a21
 	ld a, [wCharSelectIsPartner] ; $4a27
@@ -1424,11 +1424,11 @@ SetupCharacterSelectScreen:
 	jr z, .secondRow ; $4a2b
 	ld a, $02 ; $4a2d
 	farcall LoadCharMugshotToBuffer ; $4a2f
-	ld de, $b200 ; $4a32
+	ld de, $9200 + VRAM_BANK1 ; $4a32
 	farcall CopyMugshotBufferToVram ; $4a35
 	ld a, $03 ; $4a38
 	farcall LoadCharMugshotToBuffer ; $4a3a
-	ld de, $b300 ; $4a3d
+	ld de, $9300 + VRAM_BANK1 ; $4a3d
 	farcall CopyMugshotBufferToVram ; $4a40
 	wram_bank $03 ; $4a43
 	ld b, $03 ; $4a49
@@ -1984,7 +1984,7 @@ SetupCharGridScreen:
 	ld de, $d000 ; $4f93
 	call DecompressData ; $4f96
 	ld hl, $d000 ; $4f99
-	ld de, $a100 ; $4f9c
+	ld de, $8100 + VRAM_BANK1 ; $4f9c
 	ld c, $08 ; $4f9f
 	call QueueVRAMCopy ; $4fa1
 	ld hl, CharGridScreenGfx2 ; $4fa4
@@ -1995,7 +1995,7 @@ SetupCharGridScreen:
 	ld de, $d000 ; $4fb6
 	call DecompressData ; $4fb9
 	ld hl, $d000 ; $4fbc
-	ld de, $a200 ; $4fbf
+	ld de, $8200 + VRAM_BANK1 ; $4fbf
 	ld c, $10 ; $4fc2
 	call QueueVRAMCopy ; $4fc4
 	ld c, $01 ; $4fc7
@@ -2030,21 +2030,21 @@ SetupCharGridScreen:
 	farcall LoadCompressedTileBlock ; $5012
 	ld b, $75 ; $5015
 	ld c, $14 ; $5017
-	ld de, $a500 ; $5019
+	ld de, $8500 + VRAM_BANK1 ; $5019
 	farcall LoadCompressedTileBlock ; $501c
 	ld b, $79 ; $501f
 	ld c, $14 ; $5021
-	ld de, $a640 ; $5023
+	ld de, $8640 + VRAM_BANK1 ; $5023
 	farcall LoadCompressedTileBlock ; $5026
 	ld de, $8000 ; $5029
 	call LoadAllCharPortraitTiles ; $502c
-	ld de, $a800 ; $502f
+	ld de, $8800 + VRAM_BANK1 ; $502f
 	call LoadAllCharPortraitTiles ; $5032
 	call InitCharGridState ; $5035
 	call DrawCharGridSlotPrompt ; $5038
 	call DrawCharGridSlotIcons ; $503b
 	farcall QueueWram3MapToVRAM ; $503e
-	ld de, $a000 ; $5041
+	ld de, $8000 + VRAM_BANK1 ; $5041
 	farcall LoadFixedTileBlockAndPalette ; $5044
 	ld hl, CharGridScreenTable0 ; $5047
 	ld de, $0b05 ; $504a
@@ -2064,7 +2064,7 @@ SetupCharGridScreen:
 	ld [wMenuBgScrollAttr + 1], a ; $506e
 	ld b, $64 ; $5071
 	ld c, $14 ; $5073
-	ld de, $a300 ; $5075
+	ld de, $8300 + VRAM_BANK1 ; $5075
 	farcall LoadCompressedTileBlock ; $5078
 	farcall InitDefaultMatchSettings ; $507b
 	ret ; $507e
@@ -2678,7 +2678,7 @@ ClearPlayerSlotPortrait:
 	ld c, $04 ; $55e1
 	call QueueVRAMCopy ; $55e3
 	ld hl, wShadowAttrmap + 6 * TILEMAP_WIDTH ; $55e6
-	ld de, $b8c0 ; $55e9
+	ld de, $98c0 + VRAM_BANK1 ; $55e9
 	ld c, $04 ; $55ec
 	call QueueVRAMCopy ; $55ee
 	jr .done ; $55f1
@@ -2688,7 +2688,7 @@ ClearPlayerSlotPortrait:
 	ld c, $04 ; $55f9
 	call QueueVRAMCopy ; $55fb
 	ld hl, wShadowAttrmap + 9 * TILEMAP_WIDTH ; $55fe
-	ld de, $b920 ; $5601
+	ld de, $9920 + VRAM_BANK1 ; $5601
 	ld c, $04 ; $5604
 	call QueueVRAMCopy ; $5606
 .done:
@@ -2736,7 +2736,7 @@ DrawPlayerSlotPortrait:
 	ld c, $04 ; $5649
 	call QueueVRAMCopy ; $564b
 	ld hl, wShadowAttrmap + 6 * TILEMAP_WIDTH ; $564e
-	ld de, $b8c0 ; $5651
+	ld de, $98c0 + VRAM_BANK1 ; $5651
 	ld c, $04 ; $5654
 	call QueueVRAMCopy ; $5656
 	jr .done ; $5659
@@ -2746,7 +2746,7 @@ DrawPlayerSlotPortrait:
 	ld c, $04 ; $5661
 	call QueueVRAMCopy ; $5663
 	ld hl, wShadowAttrmap + 9 * TILEMAP_WIDTH ; $5666
-	ld de, $b920 ; $5669
+	ld de, $9920 + VRAM_BANK1 ; $5669
 	ld c, $04 ; $566c
 	call QueueVRAMCopy ; $566e
 .done:
@@ -2987,7 +2987,7 @@ RefreshCharInfoPanel:
 	ld c, $0a ; $57bd
 	call QueueVRAMCopy ; $57bf
 	ld hl, wShadowAttrmap + 16 * TILEMAP_WIDTH ; $57c2
-	ld de, $ba00 ; $57c5
+	ld de, $9a00 + VRAM_BANK1 ; $57c5
 	ld c, $02 ; $57c8
 	call QueueVRAMCopy ; $57ca
 	pop af ; $57cd
@@ -4689,7 +4689,7 @@ CloseCpuDifficultyPanel:
 	ld c, $02 ; $62fe
 	call QueueVRAMCopy ; $6300
 	ld hl, wShadowAttrmap + 14 * TILEMAP_WIDTH ; $6303
-	ld de, $b9c0 ; $6306
+	ld de, $99c0 + VRAM_BANK1 ; $6306
 	ld c, $08 ; $6309
 	call QueueVRAMCopy ; $630b
 	ret ; $630e
@@ -4780,7 +4780,7 @@ QueueCpuDifficultyPanelToVram:
 	ld c, $08 ; $63a5
 	call QueueVRAMCopy ; $63a7
 	ld hl, wShadowAttrmap + 14 * TILEMAP_WIDTH ; $63aa
-	ld de, $b9c0 ; $63ad
+	ld de, $99c0 + VRAM_BANK1 ; $63ad
 	ld c, $08 ; $63b0
 	call QueueVRAMCopy ; $63b2
 	pop af ; $63b5
@@ -5463,7 +5463,7 @@ DrawRemoteSlotPortrait:
 	ld c, $04 ; $68be
 	call QueueVRAMCopy ; $68c0
 	ld hl, wShadowAttrmap + 9 * TILEMAP_WIDTH ; $68c3
-	ld de, $b920 ; $68c6
+	ld de, $9920 + VRAM_BANK1 ; $68c6
 	ld c, $04 ; $68c9
 	call QueueVRAMCopy ; $68cb
 	jr .done ; $68ce
@@ -5473,7 +5473,7 @@ DrawRemoteSlotPortrait:
 	ld c, $04 ; $68d6
 	call QueueVRAMCopy ; $68d8
 	ld hl, wShadowAttrmap + 6 * TILEMAP_WIDTH ; $68db
-	ld de, $b8c0 ; $68de
+	ld de, $98c0 + VRAM_BANK1 ; $68de
 	ld c, $04 ; $68e1
 	call QueueVRAMCopy ; $68e3
 .done:
@@ -5568,7 +5568,7 @@ ClearRemoteSlotPortrait:
 	ld c, $04 ; $697c
 	call QueueVRAMCopy ; $697e
 	ld hl, wShadowAttrmap + 9 * TILEMAP_WIDTH ; $6981
-	ld de, $b920 ; $6984
+	ld de, $9920 + VRAM_BANK1 ; $6984
 	ld c, $04 ; $6987
 	call QueueVRAMCopy ; $6989
 	jr .done ; $698c
@@ -5578,7 +5578,7 @@ ClearRemoteSlotPortrait:
 	ld c, $04 ; $6994
 	call QueueVRAMCopy ; $6996
 	ld hl, wShadowAttrmap + 6 * TILEMAP_WIDTH ; $6999
-	ld de, $b8c0 ; $699c
+	ld de, $98c0 + VRAM_BANK1 ; $699c
 	ld c, $04 ; $699f
 	call QueueVRAMCopy ; $69a1
 .done:
@@ -6476,9 +6476,9 @@ RunNameEntryScreen:
 SetupNameEntryScreen:
 	ld b, $12 ; $6f6e
 	ld c, $02 ; $6f70
-	ld de, $a100 ; $6f72
+	ld de, $8100 + VRAM_BANK1 ; $6f72
 	farcall LoadCompressedTileBlock ; $6f75
-	ld hl, $a000 ; $6f78
+	ld hl, $8000 + VRAM_BANK1 ; $6f78
 	ld de, $0801 ; $6f7b
 	farcall LoadMenuHandCursorGfx ; $6f7e
 	ld b, $0f ; $6f81
@@ -6528,7 +6528,7 @@ SetupNameEntryScreen:
 	wram_bank $02 ; $6ff0
 	ld a, [$d001] ; $6ff6
 	farcall LoadCharMugshotToBuffer ; $6ff9
-	ld de, $b200 ; $6ffc
+	ld de, $9200 + VRAM_BANK1 ; $6ffc
 	farcall CopyMugshotBufferToVram ; $6fff
 	wram_bank $02 ; $7002
 	call GetActiveStoryNameBuffer ; $7008

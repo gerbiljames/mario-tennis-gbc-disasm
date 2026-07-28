@@ -579,7 +579,7 @@ LoadTourPointerSpriteGfx_13:
 	push af ; $4cde
 	wram_bank $01 ; $4cdf
 	ld hl, TourPointerTiles_13 ; $4ce5
-	ld de, $a000 ; $4ce8
+	ld de, $8000 + VRAM_BANK1 ; $4ce8
 	ld c, (TourPointerPalette_13 - TourPointerTiles_13) / 16 ; $4ceb
 	call QueueVRAMCopy ; $4ced
 	ld hl, TourPointerPalette_13 ; $4cf0
@@ -2536,7 +2536,7 @@ DecompressVarsityCourtTourRecords_13:
 	call DecompressData ; $6698
 	pop af ; $669b
 	push af ; $669c
-	ld hl, $a000 ; $669d
+	ld hl, $8000 + VRAM_BANK1 ; $669d
 	ld d, a ; $66a0
 	ld e, $00 ; $66a1
 	add hl, de ; $66a3

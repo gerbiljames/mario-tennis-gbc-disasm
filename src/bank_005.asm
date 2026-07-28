@@ -238,7 +238,7 @@ CopyVisibleTilemapToVRAM:
 .queueVRAMCopy:
 	call QueueVRAMCopy ; $418a
 	pop bc ; $418d
-	ld hl, $b800 ; $418e
+	ld hl, $9800 + VRAM_BANK1 ; $418e
 	add hl, bc ; $4191
 	ld d, h ; $4192
 	ld e, l ; $4193
@@ -261,7 +261,7 @@ CopyVisibleTilemapToVRAM:
 	call QueueVRAMCopy ; $41b1
 	pop af ; $41b4
 	ld hl, $d400 ; $41b5
-	ld de, $b800 ; $41b8
+	ld de, $9800 + VRAM_BANK1 ; $41b8
 	ld c, a ; $41bb
 	ld b, $00 ; $41bc
 .queueVRAMCopy2:
@@ -295,7 +295,7 @@ QueueFullAttrmapCopy:
 	ld a, b ; $41e3
 	wram_bank ; $41e4
 	ld hl, $d400 ; $41e8
-	ld de, $b800 ; $41eb
+	ld de, $9800 + VRAM_BANK1 ; $41eb
 	ld c, $40 ; $41ee
 	call QueueVRAMCopy ; $41f0
 	pop hl ; $41f3
@@ -330,7 +330,7 @@ QueueFullAttrmapCopy:
 	ld c, $02 ; $4223
 	call QueueVRAMCopy ; $4225
 	pop bc ; $4228
-	ld hl, $b800 ; $4229
+	ld hl, $9800 + VRAM_BANK1 ; $4229
 	add hl, bc ; $422c
 	ld d, h ; $422d
 	ld e, l ; $422e
@@ -376,7 +376,7 @@ CopyTilemapRowsToVRAM:
 	call QueueVRAMCopy ; $426e
 	pop bc ; $4271
 	pop af ; $4272
-	ld hl, $b800 ; $4273
+	ld hl, $9800 + VRAM_BANK1 ; $4273
 	add hl, bc ; $4276
 	ld d, h ; $4277
 	ld e, l ; $4278
@@ -8191,7 +8191,7 @@ UploadGlyphBufferFull:
 	ld a, [wWindowTileAttr] ; $744a
 	bit 3, a ; $744d
 	jr z, .pushPageDests ; $744f
-	ld hl, $ac00 ; $7451
+	ld hl, $8c00 + VRAM_BANK1 ; $7451
 .pushPageDests:
 	push hl ; $7454
 	ld de, $ff00 ; $7455
