@@ -84,7 +84,7 @@ InitDrillWorkRam:
 	wram_bank $06 ; $40d0
 	xor a ; $40d6
 	ld [wCharDataAnimCounter], a ; $40d7
-	ld [$d001], a ; $40da
+	ld [wCharDataAnimSubStep], a ; $40da
 	ld [wCharDataFlushChunk], a ; $40dd
 	ld [wCharDataPageArrowMode], a ; $40e0
 	ld [wCharDataArrowHold], a ; $40e3

@@ -113,9 +113,9 @@ CharDataScreen_InitState:
 	ld [wStoryCharacterSlot], a ; $4102
 	xor a ; $4105
 	ld [wCharDataAnimCounter], a ; $4106
-	ld [$d001], a ; $4109
+	ld [wCharDataAnimSubStep], a ; $4109
 	ld [wCharDataFlushChunk], a ; $410c
-	ld [$d09f], a ; $410f
+	ld [wCharDataRevealDone], a ; $410f
 	ld a, c ; $4112
 	ld [wCharDataStatsSlideX], a ; $4113
 	ld [wCharDataStatsSlideX + 1], a ; $4116

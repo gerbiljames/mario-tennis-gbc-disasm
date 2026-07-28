@@ -3130,7 +3130,8 @@ UNION
 ; star warp transition (bank $0e)
 ; [8-bit] Animation frame of the warp star, 0-5, stepped every other VBlank by UpdateStarWarpSprite
 wStarWarpFrame:: db
-	ds 1
+; [8-bit] How far the star has travelled along its path, stepped by two each frame. OffsetStarWarpPathPoint indexes StarWarpPathY and StarWarpPathX with it to get the point wStarWarpPathX/Y then carry
+wStarWarpPathIndex:: db
 ; [8-bit] Frames left in the transition, seeded to $5a. The wait loop starts the fade out when it reaches $1e and returns at zero
 wStarWarpCountdown:: db
 ; [16 bytes] One life counter per trail sparkle. UpdateStarWarpTrailSparkles finds the first zero, sets it to $10 and seeds that slot's position from wStarWarpPathX/Y; the positions themselves are two bytes per slot from $d014
@@ -3164,7 +3165,8 @@ NEXTU
 ; character-data screen (banks $1a/$1c/$1d)
 ; [8-bit] Free-running counter CharDataScreenAnimTask steps every frame the screen is idle; its low nibble indexes the animation table
 wCharDataAnimCounter:: db
-	ds 1
+; [8-bit] Cleared alongside wCharDataAnimCounter when the screen opens. Nothing in banks $1a/$1c/$1d reads it back -- the byte belongs to whichever screen ran before
+wCharDataAnimSubStep:: db
 ; [8-bit] Which third of the screen still needs pushing to VRAM. FlushCharDataTilemapChunk sends one chunk per call and branches on 0, 1 and 2; while it is nonzero the animation task holds off
 wCharDataFlushChunk:: db
 ; [8-bit] Points still unspent while the player is editing. It heads the six bytes BackupCharData copies out and RestoreCharData copies back -- this byte, wCharDataLevel and the four wCharDataNewLevels -- which together are everything a cancelled visit has to forget
@@ -3206,6 +3208,11 @@ wExpAwardIndex:: db
 	ds 1
 ; [8-bit] Cleared as each award begins, so the message holds for its full dwell
 wExpAwardMessageTimer:: db
+NEXTU
+; cutscene text window (bank $03)
+	ds 1
+; [8-bit] First byte of the current TextPageDescriptors_03 entry: how many rows the page scrolls by. ScrollCutsceneTextWindow masks it to two bits and treats zero as one, so a descriptor that forgets the field still scrolls a single row
+wCutsceneTextScrollRows:: db
 ENDU
 
 ; WRAM bank $06 from $d02a up, shared by four subsystems that never run at
@@ -3240,7 +3247,9 @@ NEXTU
 wCharDataChoiceLog:: ds 100
 ; [6 bytes] Scratch the character-data and EXP screens format numbers into. FormatExp24BitDecimal puts the 24-bit value's top byte at +$00 and formats the low word to five places from +$01, which is what makes the buffer six wide
 wCharDataNumberBuffer:: ds 6
-	ds 12
+	ds 11
+; [8-bit] Cleared with the rest of the screen state by CharDataScreen_InitState and read by nothing else in the character-data banks -- the byte sits between wCharDataNumberBuffer and the working palette buffer, so whichever screen ran before is what left a value in it
+wCharDataRevealDone:: db
 ; [11 bytes] The eleven stats recomputed as if no racket were equipped, so the screen can show what the equipment is worth. CharDataScreen_BuildStats fills it from wStoryMainCharStats after RecomputeStatsWithoutRacket, and leaves it alone when nothing is equipped
 wCharDataStatsNoRacket:: ds 11
 ; [11 bytes] Per-stat difference the equipped racket makes, cleared to zero before anything else so an unequipped character shows no arrows at all. DrawStatChangeArrows reads it alongside wCharDataStatsNoRacket

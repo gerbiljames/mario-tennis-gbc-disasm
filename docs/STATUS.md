@@ -7244,3 +7244,33 @@ Three guards now stand between a plausible-looking union edit and a silently
 wrong ROM: ram_map-inside-union, union-overlaps-union, and symbol-overruns-
 symbol. All three were added after the mistake they catch, and all three were
 found by a diff or a compare rather than by reading the JSON.
+
+## `$d001`, three screens deep (2026-07-28)
+
+One address, three owners, and the union model earns its keep:
+
+| bank | name | what it is |
+|---|---|---|
+| `$0e` | `wStarWarpPathIndex` | how far the star has travelled, stepped by two a frame; `OffsetStarWarpPathPoint` indexes `StarWarpPathY`/`X` with it |
+| `$03` | `wCutsceneTextScrollRows` | first byte of the current `TextPageDescriptors_03` entry — how many rows the page scrolls. `ScrollCutsceneTextWindow` masks it to two bits and reads zero as one, so a descriptor that forgets the field still scrolls a single row |
+| `$1a`/`$1c`/`$1d` | `wCharDataAnimSubStep` | cleared at screen open and read by nothing in those banks |
+
+That takes bank `$06`'s direct accesses to **15 references at a single address**,
+`$d000` — and those are almost all argument addresses: `BlitCutsceneTextWindow`
+loads `$d000` twice as source and destination and then reads it under WRAM bank
+`$01` and writes it under bank `$05`, so neither operand belongs to bank `$06`
+at all. Bank `$06` is done as far as names can take it.
+
+### One thing left open, deliberately
+
+Bank `$1e`'s continue prompt draws text at `$d021`, `$d041` and `$d061` — 32
+bytes apart, so rows 1, 2 and 3 of a tilemap buffer at `$d000` — and then
+uploads 128 bytes from `$d000` to `$9800`. But `$d000-$d003` already carry
+`wContinuePromptKind`, `wContinuePromptRow`, `wContinuePromptPage` and
+`wContinuePromptResult`, written as ordinary state in the same routine. Both
+readings cannot be right: either those four names are wrong, or the prompt
+uploads its own state bytes as the first four tiles of row 0.
+
+Three references are not worth guessing over, so they keep their numeric
+addresses until someone establishes which it is. Naming them either way would
+bury the question.

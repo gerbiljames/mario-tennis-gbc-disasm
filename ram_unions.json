@@ -1594,6 +1594,10 @@
        "name": "wStarWarpFrame",
        "note": "[8-bit] Animation frame of the warp star, 0-5, stepped every other VBlank by UpdateStarWarpSprite"
       },
+      "0xd001": {
+       "name": "wStarWarpPathIndex",
+       "note": "[8-bit] How far the star has travelled along its path, stepped by two each frame. OffsetStarWarpPathPoint indexes StarWarpPathY and StarWarpPathX with it to get the point wStarWarpPathX/Y then carry"
+      },
       "0xd002": {
        "name": "wStarWarpCountdown",
        "note": "[8-bit] Frames left in the transition, seeded to $5a. The wait loop starts the fade out when it reaches $1e and returns at zero"
@@ -1696,6 +1700,10 @@
        "name": "wCharDataAnimCounter",
        "note": "[8-bit] Free-running counter CharDataScreenAnimTask steps every frame the screen is idle; its low nibble indexes the animation table"
       },
+      "0xd001": {
+       "name": "wCharDataAnimSubStep",
+       "note": "[8-bit] Cleared alongside wCharDataAnimCounter when the screen opens. Nothing in banks $1a/$1c/$1d reads it back -- the byte belongs to whichever screen ran before"
+      },
       "0xd002": {
        "name": "wCharDataFlushChunk",
        "note": "[8-bit] Which third of the screen still needs pushing to VRAM. FlushCharDataTilemapChunk sends one chunk per call and branches on 0, 1 and 2; while it is nonzero the animation task holds off"
@@ -1786,6 +1794,21 @@
        "note": "[8-bit] Cleared as each award begins, so the message holds for its full dwell"
       }
      }
+    },
+    {
+     "context": "cutscene text window (bank $03)",
+     "scopes": [
+      {
+       "bank": "0x03",
+       "wram_bank": "0x06"
+      }
+     ],
+     "symbols": {
+      "0xd001": {
+       "name": "wCutsceneTextScrollRows",
+       "note": "[8-bit] First byte of the current TextPageDescriptors_03 entry: how many rows the page scrolls by. ScrollCutsceneTextWindow masks it to two bits and treats zero as one, so a descriptor that forgets the field still scrolls a single row"
+      }
+     }
     }
    ]
   },
@@ -1870,6 +1893,10 @@
        "name": "wCharDataNumberBuffer",
        "note": "[6 bytes] Scratch the character-data and EXP screens format numbers into. FormatExp24BitDecimal puts the 24-bit value's top byte at +$00 and formats the low word to five places from +$01, which is what makes the buffer six wide",
        "size": 6
+      },
+      "0xd09f": {
+       "name": "wCharDataRevealDone",
+       "note": "[8-bit] Cleared with the rest of the screen state by CharDataScreen_InitState and read by nothing else in the character-data banks -- the byte sits between wCharDataNumberBuffer and the working palette buffer, so whichever screen ran before is what left a value in it"
       },
       "0xd0a0": {
        "name": "wCharDataStatsNoRacket",

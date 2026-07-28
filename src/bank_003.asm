@@ -5667,7 +5667,7 @@ DrawCutsceneTextPage:
 .gotPtr:
 	wram_bank $06 ; $734b
 	ld a, [hl] ; $7351
-	ld [$d001], a ; $7352
+	ld [wCutsceneTextScrollRows], a ; $7352
 	ld b, a ; $7355
 	inc hl ; $7356
 	ld c, $00 ; $7357
@@ -5774,7 +5774,7 @@ ScrollCutsceneTextWindow:
 	ldh a, [hWramBank] ; $7456
 	push af ; $7458
 	wram_bank $06 ; $7459
-	ld a, [$d001] ; $745f
+	ld a, [wCutsceneTextScrollRows] ; $745f
 	and $03 ; $7462
 	jr nz, .maskSet ; $7464
 	ld a, $01 ; $7466

@@ -3164,7 +3164,7 @@ UpdateStarWarpSprite:
 	ld [hl+], a ; $7230
 	ld [hl], d ; $7231
 	call UpdateStarWarpTrailSparkles ; $7232
-	ld hl, $d001 ; $7235
+	ld hl, wStarWarpPathIndex ; $7235
 	ld a, [hl] ; $7238
 	inc a ; $7239
 	inc a ; $723a
@@ -3178,7 +3178,7 @@ UpdateStarWarpSprite:
 	call UnregisterFrameTask ; $7246
 	ret ; $7249
 OffsetStarWarpPathPoint:
-	ld a, [$d001] ; $724a
+	ld a, [wStarWarpPathIndex] ; $724a
 	add LOW(StarWarpPathY) ; $724d
 	ld l, a ; $724f
 	adc HIGH(StarWarpPathY) ; $7250
@@ -3187,7 +3187,7 @@ OffsetStarWarpPathPoint:
 	ld a, [hl] ; $7254
 	add d ; $7255
 	ld d, a ; $7256
-	ld a, [$d001] ; $7257
+	ld a, [wStarWarpPathIndex] ; $7257
 	add LOW(StarWarpPathX) ; $725a
 	ld l, a ; $725c
 	adc HIGH(StarWarpPathX) ; $725d
