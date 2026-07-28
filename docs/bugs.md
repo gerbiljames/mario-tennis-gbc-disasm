@@ -12,8 +12,10 @@ only the first is one:
 * **Bugs** — the code does something other than what it plainly intends.
 * **Dead stores** — a value is written and never read. Harmless, but usually the
   fossil of an edit, and occasionally the visible half of a bug.
-* **Stubs** — code deliberately disabled, most often by inserting a `ret` at the
-  top of a routine rather than deleting it. Not defects.
+* **Routines that return before their body** — a `ret` at the top of a called
+  routine. The effect is observable; whether it was written as configuration or
+  left behind by an edit generally is not, so they are recorded rather than
+  judged.
 
 Cross-references point at `docs/STATUS.md` where a find is written up in more
 detail.
@@ -131,11 +133,17 @@ event code to that drill's `JudgePoint`:
 returns early if `wDrillPointJudgement` is already set, so the first event to
 judge a point wins.
 
-18 of the 52 begin with `ret`, and **which** ones varies by drill:
+Thirteen drills, 52 routines, 18 of them beginning with `ret` — and **which**
+ones varies:
 
-* most drills disable only `JudgeOnRallyTick`;
-* the serve and net-game match drills disable `JudgeOnBounce` as well;
-* `ServiceMatch2` disables `JudgeOnBounce` but leaves `JudgeOnRallyTick` live.
+* 7 drills disable `JudgeOnRallyTick` only (the stroke and net-game practice
+  drills);
+* 5 disable `JudgeOnBounce` and `JudgeOnRallyTick` (`ServiceMatch1`/`3`,
+  `NetGameMatch1`/`2`/`3`);
+* 1 disables `JudgeOnBounce` while leaving `JudgeOnRallyTick` live
+  (`ServiceMatch2`).
+
+No drill disables `JudgeOnPointEnd` or `JudgeOnBallHit`.
 
 So the effect is a per-drill choice of which events are allowed to score a
 point, which is a sensible thing to vary between a serve drill and a stroke
