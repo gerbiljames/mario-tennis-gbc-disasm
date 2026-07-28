@@ -585,6 +585,13 @@ UpdateAllObjSprites:
 	call ProcessObjSlot ; $46b0
 	ret ; $46b3
 	ret ; $46b4
+; Runs one match object slot. It copies the slot into wObjSlotWork, pushes
+; DrawObjSlot as the return address and `jp`s to the slot's handler at +$08;
+; FinishObjSlotUpdate then copies the working record back.
+;
+; That indirection is why every handler addresses one fixed record instead of
+; indexing bc, and why the subsystem reads as a pile of absolute addresses. A
+; slot whose +$00 is $ff is free.
 ProcessObjSlot:
 	ld hl, $0000 ; $46b5
 	add hl, bc ; $46b8
@@ -612,6 +619,12 @@ DrawObjSlot:
 	jr z, FinishObjSlotUpdate.drawAtOffset ; $46db
 	cp $01 ; $46dd
 	jr z, FinishObjSlotUpdate.drawOnServer ; $46df
+; Tail of every object-slot handler: steps the curve counter and copies
+; wObjSlotWork back to the slot ProcessObjSlot pushed.
+;
+; Its two entry points are the draw paths, chosen by the record's anchor byte:
+; .drawAtOffset uses the stored X/Y as they stand, .drawOnServer adds the
+; serving character's wCharScreenX/Y first.
 FinishObjSlotUpdate:
 	ld hl, wObjSlotWork + 13 ; $46e1
 	ld a, [hl] ; $46e4
@@ -698,6 +711,11 @@ FinishObjSlotUpdate:
 	inc [hl] ; $4780
 .done:
 	ret ; $4781
+; Advances an object along its move curve. wObjSlotWork + 14 selects the curve
+; in MoveCurveTable_09 and + 13 is the step within it. Two terminators: $80
+; holds the object where it is, $81 ends the sequence and frees the slot by
+; writing $ff to the record's +$00. Returns nz while the curve is still
+; producing values.
 GetNextMoveCurveValue:
 	ld a, [wObjSlotWork + 14] ; $4782
 	add a ; $4785

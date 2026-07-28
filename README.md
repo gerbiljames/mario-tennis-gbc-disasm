@@ -81,7 +81,12 @@ assets outside the tree and copy them in, or do not re-run extraction.
 - `data.manifest` — offset/length list consumed by `tools/extract.py` to
   slice the base ROM into `data/` (gitignored).
 - `labels.json` — symbol name overrides (`{"0x1234": "SomeName"}`, keys are
-  flat ROM offsets) applied on regeneration. A name beginning with a dot
+  flat ROM offsets) applied on regeneration. A value may instead be
+  `{"name": ..., "note": ...}`; the note is rendered as a comment block
+  immediately above the label, which is where an explanation of a routine
+  belongs — what it does, what its arguments mean, what is wrong with it.
+  Newlines in the note become separate comment lines and a blank line becomes
+  a bare `;`. A name beginning with a dot
   (`".copyLoop"`) is an RGBDS local label: it names a jump target *inside* a
   function, scoped to the function it sits in. The emitter writes `.copyLoop:`
   at the definition and spells references from other functions
@@ -147,7 +152,9 @@ needs no log files:
    ```
 
 Regeneration overwrites `src/`, so durable annotations belong in
-`labels.json` (names) or in the generator, not in hand-edits to `src/`.
+`labels.json` (names, and prose via its `note` field), `ram_map.json` /
+`ram_unions.json` (RAM symbols and their notes), or the generator — not in
+hand-edits to `src/`.
 
 Note on the tracer's address format: raw coverage values are **flat ROM
 offsets** (`banked` pairs reassemble as `tag*0x10000 + value`); values at

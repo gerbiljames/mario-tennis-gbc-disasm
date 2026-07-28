@@ -4738,6 +4738,13 @@ GrayscalePaletteColorInPlace:
 	ld [hl+], a ; $720d
 	ld [hl], d ; $720e
 	ret ; $720f
+; Averages a CGB colour's three components into a grey.
+;
+; Buggy in the shipped game: the blue component is stored to $0002 instead of
+; $d002, so $d002 is never written and the average is red plus green plus a
+; stale byte. The stray write lands on the MBC cartridge-RAM gate, which is
+; harmless only because the save engine re-enables SRAM before using it.
+; See docs/bugs.md.
 ConvertColorToGrayscale:
 	push hl ; $7210
 	ldh a, [hWramBank] ; $7211

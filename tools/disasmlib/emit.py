@@ -186,11 +186,11 @@ def bank_end_fill(cpu, length):
 def emit(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables=None,
          curated=None, ramscoped=None, constants=None, const_defs=None,
          ptr_sites=None, ptr_data_targets=None, flag_names=None,
-         flag_raw_sites=None):
+         flag_raw_sites=None, label_notes=None):
     """Write srcdir/bank_*.asm, the generated include/*.inc, and the manifest."""
     Emitter(dis, labels, hwregs, ramnames, srcdir, manifest_path, data_tables,
             curated, ramscoped, constants, const_defs, ptr_sites,
-            ptr_data_targets, flag_names, flag_raw_sites).run()
+            ptr_data_targets, flag_names, flag_raw_sites, label_notes).run()
 
 
 class Emitter:
@@ -205,9 +205,10 @@ class Emitter:
                  data_tables=None, curated=None, ramscoped=None,
                  constants=None, const_defs=None, ptr_sites=None,
                  ptr_data_targets=None, flag_names=None,
-                 flag_raw_sites=None):
+                 flag_raw_sites=None, label_notes=None):
         self.dis = dis
         self.rom = dis.rom
+        self.label_notes = label_notes or {}
         # The cut points emit is about to name are globals like any other, so
         # LabelScopes has to see them before it decides which global each local
         # label binds to. Without this a cut landing between a curated local
@@ -583,6 +584,7 @@ class Emitter:
     def _emit_instruction(self, off):
         dis, rom = self.dis, self.rom
         if off in self.def_labels:
+            self._emit_label_note(off)
             self.lines.append(f"{self.def_labels[off]}:")
         ins = dis.instrs[off]
         cpu = offset_to_cpu(off)
@@ -1012,9 +1014,23 @@ class Emitter:
     # ---- output helpers --------------------------------------------------
 
     def _label_line(self, off):
-        """The offset's label, unless the previous line already declared it."""
+        """The offset's label, unless the previous line already declared it.
+
+        A curated note is emitted immediately above it, so the explanation of a
+        routine sits on the routine. Only when the label is actually written --
+        emitting the comment first and then finding the label already there
+        would leave it orphaned above unrelated code."""
         if off in self.labels and self.lines[-1] != f"{self.labels[off]}:":
+            self._emit_label_note(off)
             self.lines.append(f"{self.labels[off]}:")
+
+    def _emit_label_note(self, off):
+        """A curated labels.json note, as a comment block above its label."""
+        note = self.label_notes.get(off)
+        if not note:
+            return
+        for ln in note.split("\n"):
+            self.lines.append(f"; {ln}".rstrip() if ln.strip() else ";")
 
     def _auto_name(self, off):
         """The name a pointer target carries: its curated label if it has one,

@@ -55,13 +55,35 @@ def load_flag_names(path):
             {int(o, 0) for o in raw.get("_raw_sites", {})})
 
 
+def _label_entries(path):
+    if not Path(path).exists():
+        return {}
+    return json.loads(Path(path).read_text())
+
+
 def load_label_overrides(path):
-    """labels.json verbatim ({"0x1234": "Name"}, string keys); {} if absent.
+    """labels.json as {"0x1234": "Name"}, string keys; {} if absent.
+
+    A value may be the bare name or {"name": ..., "note": ...} -- the note is
+    dropped here so every consumer keeps seeing a plain name, and
+    load_label_notes reads the other half.
 
     The keys stay strings: overrides are matched by name (curated helper
     lookups) as often as by offset, and the offset conversion is one call away
     where it is needed.
     """
-    if not Path(path).exists():
-        return {}
-    return json.loads(Path(path).read_text())
+    return {k: (v["name"] if isinstance(v, dict) else v)
+            for k, v in _label_entries(path).items()}
+
+
+def load_label_notes(path):
+    """{flat offset: note} for the labels.json entries that carry prose.
+
+    A note is what the address comment and the name together cannot say: why a
+    routine exists, what its arguments mean, what is wrong with it. The emitter
+    renders it as a comment block above the label, the same way ram_map.json
+    notes appear above a RAM symbol -- so an explanation lives at the point of
+    use rather than in the changelog.
+    """
+    return {int(k, 0): v["note"] for k, v in _label_entries(path).items()
+            if isinstance(v, dict) and v.get("note")}

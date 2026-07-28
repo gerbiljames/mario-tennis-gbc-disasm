@@ -1263,6 +1263,10 @@ ServiceMatch1JudgeShot1:
 	call ServiceMatch1JudgePoint ; $4907
 	ld [wDrillPointJudgement], a ; $490a
 	ret ; $490d
+; Deliberately stubbed: the leading `ret` means the body never runs, so this
+; drill never judges its third shot. The same pair is stubbed in every drill --
+; twenty routines -- so a drill only ever judges shots 0 and 1. See
+; docs/bugs.md.
 ServiceMatch1JudgeShot2:
 	ret ; $490e
 	ld a, $02 ; $490f

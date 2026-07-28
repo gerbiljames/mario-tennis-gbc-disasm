@@ -21,7 +21,8 @@ sys.path.insert(0, str(Path(__file__).parent))
 
 from disasmlib import pipeline
 from disasmlib.config import (load_const_defs, load_flag_names, load_hwregs,
-                              load_label_overrides, load_offset_map)
+                              load_label_notes, load_label_overrides,
+                              load_offset_map)
 from disasmlib.emit import emit
 from disasmlib.textids import text_id_load_sites
 from disasmlib.ram import compute_wram_bank, load_ram_map, load_ram_unions
@@ -74,7 +75,8 @@ def main(argv=None):
     emit(dis, labels, load_hwregs(args.hardware_inc), ramnames, args.srcdir,
          args.manifest, data_tables, set(overrides.values()), ramscoped,
          constants, load_const_defs(args.constants_inc),
-         ptr_sites, ptr_data_targets, flag_names, flag_raw_sites)
+         ptr_sites, ptr_data_targets, flag_names, flag_raw_sites,
+         load_label_notes(args.labels))
 
 
 if __name__ == "__main__":

@@ -659,6 +659,16 @@ QueueVRAMCopyFromBank:
 	ldh [hRomBank], a ; $047a
 	ld [rROMB0], a ; $047c
 	ret ; $047f
+; The only way anything reaches VRAM: 613 call sites, and not one direct
+; `ld [$8xxx], a` in the ROM. hl = source, de = destination, c = length in
+; 16-byte blocks.
+;
+; The VRAM bank rides in bit 13 of the destination -- `bit 5, d` selects it and
+; `res 5, d` recovers the address -- so a destination of $9800 + VRAM_BANK1 is
+; $9800 in bank 1. With the LCD off the transfer starts immediately as a GDMA;
+; with it on the request goes into wVRAMCopyQueue for ProcessVRAMCopyQueues to
+; run in VBlank. Ten slots; on overflow it sets hVRAMQueueDirty and, in debug
+; step mode, plays a sound so an overrun is audible.
 QueueVRAMCopy:
 	ldh a, [rLCDC] ; $0480
 	add a ; $0482
@@ -788,6 +798,11 @@ QueueBGTileWrite:
 	ld a, $01 ; $0529
 	ldh [hVRAMQueueDirty], a ; $052b
 	ret ; $052d
+; Drains wVRAMCopyQueue in VBlank. A slot is the five CGB VDMA registers plus
+; the two banks needed to reach the source, so the body is mostly a straight
+; copy into $ff51-$ff55; writing the length to $ff55 is what starts each
+; transfer. Slot +$00 doubles as the in-use flag and is cleared as the slot is
+; consumed.
 ProcessVRAMCopyQueues:
 	ldh a, [hVRAMQueueDirty] ; $052e
 	or a ; $0530
@@ -6692,6 +6707,14 @@ SoftReset:
 	call InitSerialLink ; $2629
 	farcall RunDebugTestMenu ; $262c
 	stop ; $262f
+; Waits for the next frame, and hosts the debug single-stepper: with
+; hDebugStepMode enabled, holding SELECT+START sets hDebugStepPaused and the
+; routine spins in a second frame-wait until START releases it, SELECT cycling
+; hDebugStepMode 1-3 while paused.
+;
+; The link-error check at the top is dead. Nothing in the ROM ever sets the top
+; bits of hLinkErrorFlags -- both writes to it are `xor a` clears -- so the
+; `jp nz, LinkErrorReset` is unreachable. See docs/bugs.md.
 AdvanceFrame:
 	push af ; $2631
 	push bc ; $2632
@@ -7194,6 +7217,12 @@ ResetSerialState:
 	ldh [hVBlankSuppressed], a ; $291f
 	ldh [hMatchFrameCounter], a ; $2921
 	ret ; $2923
+; Sends the local player's input over the link, a few bits per frame.
+; hLinkTxInput holds what is still owed: the whole low nibble goes as $3f, else
+; bit 3 as $30, else bit 2 as $0c, else the low pair -- and the remainder is
+; stored back, so a burst of presses is spread over several frames rather than
+; dropped. hLinkTxSeqBits is OR'd into every byte sent and inverted each frame,
+; which is how the peer tells a fresh frame from a repeat.
 SerialEncodeInput:
 	push bc ; $2924
 	push hl ; $2925
@@ -8830,6 +8859,12 @@ StartSoundChannel:
 	ld [hl+], a ; $3370
 	ld [hl+], a ; $3371
 	ret ; $3372
+; Runs the sound driver over a 32-byte window of HRAM ($ffd0-$ffef) that four
+; other subsystems also use. It copies the whole window out to $d000 in WRAM
+; bank $07 on entry and copies it back on exit, so the pool is context-switched
+; rather than merely time-shared: a value living there survives an audio update
+; untouched. That is what lets hMatchFrameCounter and hSoundEngineBusy share
+; bytes with the driver's channel state.
 RunSoundEngine:
 	wram_bank $07 ; $3373
 	ld hl, hSndScriptPtr ; $3379

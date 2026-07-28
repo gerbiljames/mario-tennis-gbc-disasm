@@ -3540,6 +3540,13 @@ CharFrameGfxDest_07:
 	dw $a300 ; record 3
 Data_07_5aaf:
 	INCBIN "data/bank_007/d_5aaf.bin" ; $5aaf, 4 bytes
+; Copies one character's attribute record into the per-character struct: the
+; reach box CheckCharBallContact tests against, the jump-smash and dive speeds,
+; and the six AI parameters at record +$0f and +$1b-$1f -- home-position
+; strategy, the two reaction delays, ball tracking, aim-away chance and serve
+; style. Those six are exactly the block OverrideCharStatsForDebug rewrites,
+; which is the corroboration that they are the AI's personality and not
+; physics.
 LoadCharacterAttributes:
 	ld a, [wCharIndex] ; $5ab3
 	add a ; $5ab6
