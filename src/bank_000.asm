@@ -1492,9 +1492,9 @@ CopyMapToScrollBuffers:
 	call CopyMemoryFast ; $08e9
 	wram_bank $03 ; $08ec
 	ld hl, wTextBuffer ; $08f2
-	ld de, $d800 ; $08f5
+	ld de, w3_d800 ; $08f5
 	call CopyMapRows32To64 ; $08f8
-	ld hl, $d800 ; $08fb
+	ld hl, w3_d800 ; $08fb
 	ld c, $80 ; $08fe
 	call ClearMemory16 ; $0900
 	pop af ; $0903
@@ -6608,7 +6608,7 @@ SoftReset:
 	ld sp, $d000 ; $2582
 	call DisableLCDSafely ; $2585
 	di ; $2588
-	ld hl, $c000 ; $2589
+	ld hl, wShadowOAM ; $2589
 	ld c, $ff ; $258c
 	call ClearMemory16 ; $258e
 	xor a, a ; $2591
@@ -6925,7 +6925,7 @@ VBlankHandler:
 .checkSpriteBufferPage:
 	ld a, [wSpriteBufferPage] ; $278e
 	xor a, $05 ; $2791
-	ldh [$ff81], a ; $2793
+	ldh [hOAMDMARoutine + 1], a ; $2793
 	call $ff80 ; $2795
 	call ProcessBGBlitQueue ; $2798
 	or a, a ; $279b

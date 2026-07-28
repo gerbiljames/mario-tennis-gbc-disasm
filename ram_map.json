@@ -1,4 +1,9 @@
 {
+ "0xc000": {
+  "name": "wShadowOAM",
+  "note": "[160 bytes] Shadow OAM: 40 x 4-byte entries [y, x, tile, attr], copied to $fe00 every frame by hOAMDMARoutine (which sources page $c0). Cleared as its own unit by the boot path (ld hl, $c000 / ld c, $0a / ClearMemory16); only ever written through pointers, never by a direct [$c0xx] operand",
+  "size": 160
+ },
  "0xc0a0": {
   "name": "wVRAMCopyQueue",
   "note": "[80 bytes] VBlank VRAM copy queue: 10 x 8-byte entries [rom bank, wram bank, size hi, size lo, vbk, dest hi, dest lo, src?]; processed by ProcessVRAMCopyQueues",
@@ -1545,53 +1550,68 @@
   "size": 576
  },
  "0xd841": {
+  "wram_bank": "0x05",
   "name": "wTextArrowBlinkCounter",
   "note": "WRAM5: frame counter for the text continue-arrow blink task (bit 4 selects tile)",
   "size": 1
  },
  "0xd847": {
+  "wram_bank": "0x05",
   "name": "wTextArgStringWriteIndex",
   "note": "WRAM5: write index into wTextArgStringQueue (max 16)",
   "size": 1
  },
  "0xd849": {
+  "wram_bank": "0x05",
   "name": "wTextArgShortTextWriteIndex",
   "note": "WRAM5: write index for the short-text-id arg queue",
   "size": 1
  },
  "0xd84a": {
+  "wram_bank": "0x05",
   "name": "wTextArgStringCount",
   "note": "WRAM5: count of queued arg strings (mirrors wTextArgStringWriteIndex)",
   "size": 1
  },
  "0xd850": {
+  "wram_bank": "0x05",
   "name": "wTextPageBreakRequest",
   "note": "WRAM5: set by TextCmdWaitButtonPage; TextInterpreterLoop saves resume offset to $d84e/f and returns",
   "size": 1
  },
  "0xd864": {
+  "wram_bank": "0x05",
   "name": "wGlyphVramDest",
   "note": "WRAM5: current VRAM destination address for glyph tiles (lo/hi)",
   "size": 2
  },
  "0xd869": {
+  "wram_bank": "0x05",
   "name": "wTextStreamPtr",
   "note": "WRAM5: current read pointer into the text byte stream",
   "size": 2
  },
  "0xd880": {
+  "wram_bank": "0x05",
   "name": "wShortTextBuffer",
   "note": "Short string buffer (16 bytes); text-bank fetch routines copy here when called with a != 0"
  },
  "0xd8b0": {
+  "wram_bank": "0x05",
   "name": "wTextArgStringQueue",
   "note": "WRAM5: 16 x 2-byte string pointers queued by PushTextArgString (hi nibble = WRAM bank tag)",
   "size": 32
  },
  "0xd8d0": {
+  "wram_bank": "0x05",
   "name": "wTextArgNumberQueue",
   "note": "WRAM5: 16 x 2-byte values queued by PushTextArgNumber for TextCmdPrintArgNumber",
   "size": 32
+ },
+ "0xff80": {
+  "name": "hOAMDMARoutine",
+  "note": "[10 bytes] OAM DMA trampoline, copied here from ROM0 $06ba by CopyOAMDMARoutineToHRAM: ld a, $c0 / ldh [rDMA], a / 40-iteration wait / ret. Must live in HRAM because the bus is unusable during the transfer",
+  "size": 10
  },
  "0xff8a": {
   "name": "hScrollY",

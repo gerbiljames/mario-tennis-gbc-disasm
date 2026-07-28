@@ -2109,7 +2109,7 @@ CopyExhibitionCharSlotIds:
 	ldh a, [hWramBank] ; $56fd
 	push af ; $56ff
 	wram_bank $03 ; $5700
-	ld hl, $d816 ; $5706
+	ld hl, w3_d816 ; $5706
 	ld de, $c8b5 ; $5709
 	ld a, [hl+] ; $570c
 	ld [de], a ; $570d

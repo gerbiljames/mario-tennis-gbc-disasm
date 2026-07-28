@@ -67,7 +67,7 @@ ShowMatchResultsScreen:
 	call UnregisterFrameTask ; $4096
 	farcall LoadMenuFontGfx ; $4099
 	wram_bank $06 ; $409c
-	ld hl, $d005 ; $40a2
+	ld hl, w6_d005 ; $40a2
 	ld a, [hl+] ; $40a5
 	ld h, [hl] ; $40a6
 	ld l, a ; $40a7
@@ -176,9 +176,9 @@ BuildResultsScreenPanels:
 	ld a, $04 ; $41bc
 	ld [$d013], a ; $41be
 	ld a, $07 ; $41c1
-	ld [$d080], a ; $41c3
+	ld [w3_d080], a ; $41c3
 	ld a, $09 ; $41c6
-	ld [$d093], a ; $41c8
+	ld [w3_d093], a ; $41c8
 	ld a, $03 ; $41cb
 	ld hl, $d001 ; $41cd
 	ld c, $12 ; $41d0
@@ -190,11 +190,11 @@ BuildResultsScreenPanels:
 	ld a, $05 ; $41df
 	ld [$d020], a ; $41e1
 	ld [$d040], a ; $41e4
-	ld [$d060], a ; $41e7
+	ld [w3_d060], a ; $41e7
 	ld a, $06 ; $41ea
-	ld [$d033], a ; $41ec
-	ld [$d053], a ; $41ef
-	ld [$d073], a ; $41f2
+	ld [w3_d033], a ; $41ec
+	ld [w3_d053], a ; $41ef
+	ld [w3_d073], a ; $41f2
 	ld a, $20 ; $41f5
 	ld hl, $d021 ; $41f7
 	ld c, $12 ; $41fa
@@ -218,9 +218,9 @@ BuildResultsScreenPanels:
 	ld a, $04 ; $422f
 	ld [$d1b3], a ; $4231
 	ld a, $07 ; $4234
-	ld [$d220], a ; $4236
+	ld [w3_d220], a ; $4236
 	ld a, $09 ; $4239
-	ld [$d233], a ; $423b
+	ld [w3_d233], a ; $423b
 	ld a, $03 ; $423e
 	ld hl, $d1a1 ; $4240
 	ld c, $12 ; $4243
@@ -254,9 +254,9 @@ BuildResultsScreenPanels:
 	call FillMemoryC ; $428e
 	wram_bank $03 ; $4291
 	ld a, $02 ; $4297
-	ld [$d0ce], a ; $4299
+	ld [w3_d0ce], a ; $4299
 	ld a, $04 ; $429c
-	ld [$d0d3], a ; $429e
+	ld [w3_d0d3], a ; $429e
 	ld a, $07 ; $42a1
 	ld [$d12e], a ; $42a3
 	ld a, $09 ; $42a6
@@ -274,14 +274,14 @@ BuildResultsScreenPanels:
 	ld [hl+], a ; $42bb
 	ld [hl+], a ; $42bc
 	ld a, $05 ; $42bd
-	ld [$d0ee], a ; $42bf
+	ld [w3_d0ee], a ; $42bf
 	ld [$d10e], a ; $42c2
 	ld a, $06 ; $42c5
-	ld [$d0f3], a ; $42c7
+	ld [w3_d0f3], a ; $42c7
 	ld [$d113], a ; $42ca
 	xor a, a ; $42cd
-	ld [$d0ef], a ; $42ce
-	ld [$d0f2], a ; $42d1
+	ld [w3_d0ef], a ; $42ce
+	ld [w3_d0f2], a ; $42d1
 	ld [$d10f], a ; $42d4
 	ld [$d112], a ; $42d7
 	ld hl, Text_31_213 ; $42da
@@ -1378,7 +1378,7 @@ RefreshContinuePromptText:
 	xor a, a ; $4bd0
 	ld [$d001], a ; $4bd1
 	call ClearContinuePromptRows ; $4bd4
-	ld hl, $d041 ; $4bd7
+	ld hl, w6_d041 ; $4bd7
 	call DrawContinuePromptText ; $4bda
 	ld hl, $d000 ; $4bdd
 	ld de, $9800 ; $4be0
@@ -1390,7 +1390,7 @@ RefreshContinuePromptText:
 	ld a, $01 ; $4bef
 	ld [$d001], a ; $4bf1
 	call ClearContinuePromptRows ; $4bf4
-	ld hl, $d021 ; $4bf7
+	ld hl, w6_d021 ; $4bf7
 	call DrawSaveWarningTextLine1 ; $4bfa
 	ld hl, $d061 ; $4bfd
 	call DrawSaveWarningTextLine2 ; $4c00
@@ -1481,7 +1481,7 @@ ShowExpAwardScreen:
 	ld hl, DrawExpTotalDigits ; $54a8
 	call UnregisterFrameTask ; $54ab
 	wram_bank $06 ; $54ae
-	ld hl, $d005 ; $54b4
+	ld hl, w6_d005 ; $54b4
 	ld a, [hl+] ; $54b7
 	ld h, [hl] ; $54b8
 	ld l, a ; $54b9
@@ -1489,7 +1489,7 @@ ShowExpAwardScreen:
 InitExpAwardScreenState:
 	wram_bank $06 ; $54bb
 	xor a, a ; $54c1
-	ld hl, $d004 ; $54c2
+	ld hl, w6_d004 ; $54c2
 	ld d, $05 ; $54c5
 	call FillMemoryD ; $54c7
 	ld a, $20 ; $54ca
@@ -2015,7 +2015,7 @@ Data_1e_59b3:
 	db $00, $00, $00, $20, $20, $20, $00, $00 ; 0x00
 DrawNextExpAwardMessage:
 	wram_bank $06 ; $59bb
-	ld a, [$d024] ; $59c1
+	ld a, [w6_d024] ; $59c1
 	cp a, $05 ; $59c4
 	jr z, .uploadGlyphBuffer ; $59c6
 	rlca ; $59c8
@@ -2031,7 +2031,7 @@ DrawNextExpAwardMessage:
 	dec hl ; $59d5
 	ld c, [hl] ; $59d6
 	push bc ; $59d7
-	ld a, [$d024] ; $59d8
+	ld a, [w6_d024] ; $59d8
 	add a, $5c ; $59db
 	ld l, a ; $59dd
 	adc a, $d1 ; $59de
@@ -2039,7 +2039,7 @@ DrawNextExpAwardMessage:
 	ld h, a ; $59e1
 	ld a, [hl] ; $59e2
 	ld d, a ; $59e3
-	ld a, [$d024] ; $59e4
+	ld a, [w6_d024] ; $59e4
 	rlca ; $59e7
 	add a, LOW(Data_1e_5a44) ; $59e8
 	ld l, a ; $59ea
@@ -2058,19 +2058,19 @@ DrawNextExpAwardMessage:
 	push hl ; $59f8
 	call DrawExpMessageWindow ; $59f9
 	wram_bank $06 ; $59fc
-	ld hl, $d005 ; $5a02
+	ld hl, w6_d005 ; $5a02
 	ld a, [hl+] ; $5a05
 	ld d, [hl] ; $5a06
 	or a, d ; $5a07
 	jr z, .drawProportionalTextLine ; $5a08
 	ld hl, $04c8 ; $5a0a
-	ld de, $d022 ; $5a0d
+	ld de, w6_d022 ; $5a0d
 	ld bc, $0020 ; $5a10
 	call DrawProportionalTextLine ; $5a13
 	jr .restore ; $5a16
 .drawProportionalTextLine:
 	ld hl, $04c7 ; $5a18
-	ld de, $d022 ; $5a1b
+	ld de, w6_d022 ; $5a1b
 	ld bc, $0020 ; $5a1e
 	call DrawProportionalTextLine ; $5a21
 .restore:
@@ -2083,9 +2083,9 @@ DrawNextExpAwardMessage:
 	ld a, $01 ; $5a32
 	ret ; $5a34
 .zero:
-	ld a, [$d024] ; $5a35
+	ld a, [w6_d024] ; $5a35
 	inc a ; $5a38
-	ld [$d024], a ; $5a39
+	ld [w6_d024], a ; $5a39
 	jp DrawNextExpAwardMessage ; $5a3c
 .uploadGlyphBuffer:
 	farcall UploadGlyphBuffer ; $5a3f
@@ -2096,7 +2096,7 @@ Data_1e_5a44:
 	db $c9, $04, $ca, $04, $cb, $04, $cc, $04, $d1, $04 ; 0x00
 DrawExpTotalDigits:
 	wram_bank $06 ; $5a4e
-	ld hl, $d005 ; $5a54
+	ld hl, w6_d005 ; $5a54
 	ld a, [hl+] ; $5a57
 	ld h, [hl] ; $5a58
 	ld l, a ; $5a59
@@ -2195,12 +2195,12 @@ BeginNextExpAward:
 	sound $00 ; $5b20
 	sound $0b ; $5b22
 	wram_bank $06 ; $5b24
-	ld a, [$d024] ; $5b2a
+	ld a, [w6_d024] ; $5b2a
 	inc a ; $5b2d
-	ld [$d024], a ; $5b2e
+	ld [w6_d024], a ; $5b2e
 	xor a, a ; $5b31
-	ld [$d026], a ; $5b32
-	ld hl, $d007 ; $5b35
+	ld [w6_d026], a ; $5b32
+	ld hl, w6_d007 ; $5b35
 	ld a, c ; $5b38
 	ld [hl+], a ; $5b39
 	ld [hl], b ; $5b3a
@@ -2223,7 +2223,7 @@ BeginNextExpAward:
 	ret ; $5b65
 CountUpExpTotal:
 	wram_bank $06 ; $5b66
-	ld hl, $d007 ; $5b6c
+	ld hl, w6_d007 ; $5b6c
 	ld a, [hl+] ; $5b6f
 	ld d, [hl] ; $5b70
 	ld e, a ; $5b71
@@ -2243,7 +2243,7 @@ CountUpExpTotal:
 	ld a, e ; $5b89
 	ld [hl+], a ; $5b8a
 	ld [hl], d ; $5b8b
-	ld hl, $d005 ; $5b8c
+	ld hl, w6_d005 ; $5b8c
 	ld a, [hl+] ; $5b8f
 	ld d, [hl] ; $5b90
 	ld e, a ; $5b91
@@ -2255,14 +2255,14 @@ CountUpExpTotal:
 	sound $5e ; $5b97
 	jr CountUpExpTotal ; $5b99
 .step:
-	ld hl, $d005 ; $5b9b
+	ld hl, w6_d005 ; $5b9b
 	ld a, [hl+] ; $5b9e
 	ld h, [hl] ; $5b9f
 	ld l, a ; $5ba0
 	add hl, de ; $5ba1
 	ld d, h ; $5ba2
 	ld e, l ; $5ba3
-	ld hl, $d005 ; $5ba4
+	ld hl, w6_d005 ; $5ba4
 	ld a, e ; $5ba7
 	ld [hl+], a ; $5ba8
 	ld [hl], d ; $5ba9
@@ -3929,7 +3929,7 @@ ComputeTrophyExpAwards:
 	ld hl, $0000 ; $7007
 	call ComputeTrophyExpGroup0 ; $700a
 	push hl ; $700d
-	ld hl, $d028 ; $700e
+	ld hl, w6_d028 ; $700e
 	ld a, c ; $7011
 	ld [hl+], a ; $7012
 	ld [hl], b ; $7013
@@ -3992,7 +3992,7 @@ ComputeTrophyExpAwards:
 	ldh a, [hWramBank] ; $7065
 	push af ; $7067
 	wram_bank $06 ; $7068
-	ld hl, $d028 ; $706e
+	ld hl, w6_d028 ; $706e
 	ld a, [hl+] ; $7071
 	ld d, [hl] ; $7072
 	ld e, a ; $7073
@@ -4332,7 +4332,7 @@ InitGameProgressScreen:
 	ld [wShadowTilemapBank], a ; $7298
 	ld a, $00 ; $729b
 	ld [wWindowTileAttr], a ; $729d
-	ld [$d82f], a ; $72a0
+	ld [w5_d82f], a ; $72a0
 	ld a, $ff ; $72a3
 	ld c, $30 ; $72a5
 	ld hl, $df70 ; $72a7

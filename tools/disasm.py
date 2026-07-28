@@ -61,7 +61,7 @@ def main(argv=None):
     flag_names, flag_raw_sites = load_flag_names(args.flags)
     unions_by_region, ramscoped = load_ram_unions(args.ram_unions)
     ramscoped.bank_at = compute_wram_bank(dis)
-    ramnames = load_ram_map(args.ram_map, unions_by_region)
+    ramnames = load_ram_map(args.ram_map, unions_by_region, ramscoped, dis)
 
     # `ld hl, id` sites that reach a text-id consumer render as the
     # Text_<bank>_<index> constant; a curated constants.json entry still wins.

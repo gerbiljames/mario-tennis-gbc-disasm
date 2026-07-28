@@ -155,7 +155,7 @@ EndCutsceneScriptMode:
 	push af ; $4124
 	wram_bank $04 ; $4125
 	ld a, [$d014] ; $412b
-	ld [$daea], a ; $412e
+	ld [w4_daea], a ; $412e
 	pop af ; $4131
 	wram_bank ; $4132
 	pop hl ; $4136
@@ -191,9 +191,9 @@ InitDialogueTextCursor:
 	wram_bank $05 ; $415a
 	farcall SetActiveWindowTextId ; $4160
 	ld a, l ; $4163
-	ld [$d852], a ; $4164
+	ld [w5_d852], a ; $4164
 	ld a, h ; $4167
-	ld [$d853], a ; $4168
+	ld [w5_d853], a ; $4168
 	pop af ; $416b
 	wram_bank ; $416c
 	pop af ; $4170
@@ -205,7 +205,7 @@ AdvanceDialogueTextCursor:
 	ldh a, [hWramBank] ; $4175
 	push af ; $4177
 	wram_bank $05 ; $4178
-	ld hl, $d852 ; $417e
+	ld hl, w5_d852 ; $417e
 	ld a, [hl+] ; $4181
 	ld d, [hl] ; $4182
 	ld e, a ; $4183
@@ -228,7 +228,7 @@ ScriptShowSpeakerDialogue:
 	push af ; $4197
 	call WaitPlayerMoveDone ; $4198
 	wram_bank $05 ; $419b
-	ld hl, $d852 ; $41a1
+	ld hl, w5_d852 ; $41a1
 	ld a, [hl+] ; $41a4
 	ld h, [hl] ; $41a5
 	ld l, a ; $41a6
@@ -239,9 +239,9 @@ ScriptShowSpeakerDialogue:
 .advanceTextId:
 	inc hl ; $41b0
 	ld a, l ; $41b1
-	ld [$d852], a ; $41b2
+	ld [w5_d852], a ; $41b2
 	ld a, h ; $41b5
-	ld [$d853], a ; $41b6
+	ld [w5_d853], a ; $41b6
 	pop af ; $41b9
 	wram_bank ; $41ba
 	pop hl ; $41be
@@ -255,9 +255,9 @@ ScriptShowSpeakerDialogueRestoreBG:
 	push af ; $41c6
 	call WaitPlayerMoveDone ; $41c7
 	wram_bank $05 ; $41ca
-	ld a, [$d852] ; $41d0
+	ld a, [w5_d852] ; $41d0
 	ld l, a ; $41d3
-	ld a, [$d853] ; $41d4
+	ld a, [w5_d853] ; $41d4
 	ld h, a ; $41d7
 	test_flag FLAG_CUTSCENE_FAST_FORWARD ; $41d8
 	jr nz, .advanceTextId ; $41db
@@ -266,9 +266,9 @@ ScriptShowSpeakerDialogueRestoreBG:
 .advanceTextId:
 	inc hl ; $41e1
 	ld a, l ; $41e2
-	ld [$d852], a ; $41e3
+	ld [w5_d852], a ; $41e3
 	ld a, h ; $41e6
-	ld [$d853], a ; $41e7
+	ld [w5_d853], a ; $41e7
 	pop af ; $41ea
 	wram_bank ; $41eb
 	pop hl ; $41ef
@@ -294,12 +294,12 @@ RunDialogueYesNoPrompt:
 	farcall RunMenuSelection ; $4213
 	ld b, a ; $4216
 	call FindDialogueChoiceMarker ; $4217
-	ld a, [$d82f] ; $421a
+	ld a, [w5_d82f] ; $421a
 	farcall CloseWindow ; $421d
 	xor a, a ; $4220
-	ld [$d84f], a ; $4221
+	ld [w5_d84f], a ; $4221
 	ld a, $ff ; $4224
-	ld [$d82f], a ; $4226
+	ld [w5_d82f], a ; $4226
 	pop af ; $4229
 	ld [$d829], a ; $422a
 	pop af ; $422d
@@ -316,7 +316,7 @@ ShowYesNoPromptWindow:
 	push hl ; $423a
 	ldh a, [hWramBank] ; $423b
 	push af ; $423d
-	ld a, [$d851] ; $423e
+	ld a, [w5_d851] ; $423e
 	ld b, a ; $4241
 	and a, $7f ; $4242
 	ld e, a ; $4244
@@ -370,7 +370,7 @@ FindDialogueChoiceMarker:
 	push bc ; $4292
 	push de ; $4293
 	push hl ; $4294
-	ld hl, $d852 ; $4295
+	ld hl, w5_d852 ; $4295
 	ld a, [hl+] ; $4298
 	ld h, [hl] ; $4299
 	ld l, a ; $429a
@@ -401,9 +401,9 @@ FindDialogueChoiceMarker:
 	or a, e ; $42bf
 	jr z, .done ; $42c0
 	ld a, e ; $42c2
-	ld [$d84e], a ; $42c3
+	ld [w5_d84e], a ; $42c3
 	ld a, d ; $42c6
-	ld [$d84f], a ; $42c7
+	ld [w5_d84f], a ; $42c7
 .done:
 	pop hl ; $42ca
 	pop de ; $42cb
@@ -433,18 +433,18 @@ ScriptSkipSpeakerDialogue:
 	ldh a, [hWramBank] ; $42eb
 	push af ; $42ed
 	wram_bank $05 ; $42ee
-	ld a, [$d852] ; $42f4
+	ld a, [w5_d852] ; $42f4
 	ld l, a ; $42f7
-	ld a, [$d853] ; $42f8
+	ld a, [w5_d853] ; $42f8
 	ld h, a ; $42fb
 	test_flag FLAG_CUTSCENE_FAST_FORWARD ; $42fc
 	jr nz, .advanceTextId ; $42ff
 .advanceTextId:
 	inc hl ; $4301
 	ld a, l ; $4302
-	ld [$d852], a ; $4303
+	ld [w5_d852], a ; $4303
 	ld a, h ; $4306
-	ld [$d853], a ; $4307
+	ld [w5_d853], a ; $4307
 	pop af ; $430a
 	wram_bank ; $430b
 	pop hl ; $430f
@@ -1813,7 +1813,7 @@ RunClearStatusSetupMenu:
 	farcall RenderMenuWindowText ; $4c13
 	farcall RunMenuSelection ; $4c16
 	ld [wCharPosX], a ; $4c19
-	ld a, [$d82f] ; $4c1c
+	ld a, [w5_d82f] ; $4c1c
 	farcall CloseWindow ; $4c1f
 	ld a, [wCharPosX] ; $4c22
 	cp a, $ff ; $4c25
@@ -1852,7 +1852,7 @@ RunClearStatusSetupMenu:
 	farcall RenderMenuWindowText ; $4c6c
 	farcall RunMenuSelection ; $4c6f
 	ld [wCharPosX + 2], a ; $4c72
-	ld a, [$d82f] ; $4c75
+	ld a, [w5_d82f] ; $4c75
 	farcall CloseWindow ; $4c78
 	ld a, [wCharPosX + 2] ; $4c7b
 	cp a, $ff ; $4c7e
@@ -1873,7 +1873,7 @@ RunClearStatusSetupMenu:
 	farcall RenderMenuWindowText ; $4ca5
 	farcall RunMenuSelection ; $4ca8
 	ld [wCharPosDepth], a ; $4cab
-	ld a, [$d82f] ; $4cae
+	ld a, [w5_d82f] ; $4cae
 	farcall CloseWindow ; $4cb1
 	ld a, [wCharPosDepth] ; $4cb4
 	cp a, $ff ; $4cb7
@@ -1916,7 +1916,7 @@ RunClearStatusSetupMenu:
 	farcall RenderMenuWindowText ; $4d01
 	farcall RunMenuSelection ; $4d04
 	ld [wCharPosDepth + 1], a ; $4d07
-	ld a, [$d82f] ; $4d0a
+	ld a, [w5_d82f] ; $4d0a
 	farcall CloseWindow ; $4d0d
 	ld a, [wCharPosDepth + 1] ; $4d10
 	cp a, $ff ; $4d13
@@ -2382,14 +2382,14 @@ RunStoryLocation:
 	jr z, .runInteract ; $5051
 	ld [hl], $00 ; $5053
 	wram_bank $04 ; $5055
-	ld a, [$daec] ; $505b
+	ld a, [w4_daec] ; $505b
 	and a, a ; $505e
 	jr z, .runInteract ; $505f
-	ld hl, $daed ; $5061
-	ld a, [$daec] ; $5064
+	ld hl, w4_daed ; $5061
+	ld a, [w4_daec] ; $5064
 	cp a, [hl] ; $5067
 	jr nz, .runInteract ; $5068
-	ld hl, $daee ; $506a
+	ld hl, w4_daee ; $506a
 	ld a, [hl] ; $506d
 	cp a, $1e ; $506e
 	jr c, .runInteract ; $5070
@@ -2883,7 +2883,7 @@ CheckTriggerFacingMask:
 	ld a, b ; $53c7
 	cp a, $ff ; $53c8
 	jr z, .done ; $53ca
-	ld a, [$daea] ; $53cc
+	ld a, [w4_daea] ; $53cc
 	rlca ; $53cf
 	rlca ; $53d0
 	and a, $03 ; $53d1
@@ -2967,7 +2967,7 @@ RunStoryScriptOrDialogue:
 	ld hl, $d030 ; $5446
 	res 0, [hl] ; $5449
 	ld hl, $d014 ; $544b
-	ld a, [$daea] ; $544e
+	ld a, [w4_daea] ; $544e
 	ld [hl], a ; $5451
 	pop hl ; $5452
 	ld a, [$c29b] ; $5453
@@ -3097,7 +3097,7 @@ RunNpcInteraction:
 	ld hl, $0014 ; $5525
 	add hl, de ; $5528
 	ld c, [hl] ; $5529
-	ld a, [$daea] ; $552a
+	ld a, [w4_daea] ; $552a
 	add a, $80 ; $552d
 	ld [hl], a ; $552f
 .runScript:
@@ -5289,7 +5289,7 @@ UpdateMinigameTarget:
 	ld de, $dcf0 ; $65e0
 	ld c, $01 ; $65e3
 	call CopyMemoryFast ; $65e5
-	ld hl, $dcf2 ; $65e8
+	ld hl, w4_dcf2 ; $65e8
 	ld a, [hl] ; $65eb
 	and a, a ; $65ec
 	jr z, .hit ; $65ed
@@ -5442,7 +5442,7 @@ DrawMinigameTarget:
 	farcall ApplyCameraProjection ; $66ba
 	ld c, e ; $66bd
 	ld b, d ; $66be
-	ld a, [$dcf2] ; $66bf
+	ld a, [w4_dcf2] ; $66bf
 	and a, $0f ; $66c2
 	jr z, .readSprite ; $66c4
 	add a, LOW(Data_0a_66fe) ; $66c6
@@ -5453,7 +5453,7 @@ DrawMinigameTarget:
 	ld a, [hl] ; $66cd
 	ld h, $00 ; $66ce
 	ld l, a ; $66d0
-	ld a, [$dcf1] ; $66d1
+	ld a, [w4_dcf1] ; $66d1
 	rrca ; $66d4
 	rrca ; $66d5
 	and a, $c0 ; $66d6
@@ -5465,7 +5465,7 @@ DrawMinigameTarget:
 	add a, l ; $66df
 	ld d, a ; $66e0
 .readSprite:
-	ld a, [$dcf1] ; $66e1
+	ld a, [w4_dcf1] ; $66e1
 	add a, a ; $66e4
 	add a, LOW(Table_0a_66f6) ; $66e5
 	ld l, a ; $66e7
@@ -5495,8 +5495,8 @@ HandleMinigameTargetHit:
 	res 2, [hl] ; $671d
 	sound $77 ; $671f
 	ld a, $20 ; $6721
-	ld [$dcf2], a ; $6723
-	ld a, [$dcf1] ; $6726
+	ld [w4_dcf2], a ; $6723
+	ld a, [w4_dcf1] ; $6726
 	call DeflectBallOffMinigameTarget ; $6729
 	ret ; $672c
 CheckBallHitsMinigameTarget:
@@ -6116,7 +6116,7 @@ DrawMinigameTargetAlt:
 	farcall ApplyCameraProjection ; $6d7a
 	ld c, e ; $6d7d
 	ld b, d ; $6d7e
-	ld a, [$dcf2] ; $6d7f
+	ld a, [w4_dcf2] ; $6d7f
 	and a, $0f ; $6d82
 	jr z, .readSprite ; $6d84
 	add a, LOW(Data_0a_6dad) ; $6d86
@@ -6128,7 +6128,7 @@ DrawMinigameTargetAlt:
 	add a, d ; $6d8e
 	ld d, a ; $6d8f
 .readSprite:
-	ld a, [$dcf1] ; $6d90
+	ld a, [w4_dcf1] ; $6d90
 	add a, a ; $6d93
 	add a, LOW(Table_0a_6da5) ; $6d94
 	ld l, a ; $6d96
@@ -6164,8 +6164,8 @@ HandleMinigameTargetHitAlt:
 	res 2, [hl] ; $6de4
 	sound $97 ; $6de6
 	ld a, $20 ; $6de8
-	ld [$dcf2], a ; $6dea
-	ld a, [$dcf1] ; $6ded
+	ld [w4_dcf2], a ; $6dea
+	ld a, [w4_dcf1] ; $6ded
 	ld [$c78d], a ; $6df0
 	ret ; $6df3
 CheckBallHitsMinigameTargetAlt:

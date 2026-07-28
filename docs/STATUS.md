@@ -5374,3 +5374,227 @@ Navigation notes for next time: a button held across `step_frames` can register
 as two presses in menus (an 8-frame A press walked past the screen I wanted),
 so tap with 2-3 frames; and `pause_emulation` does not survive very long steps,
 where the emulator free-runs anyway.
+
+## The two blocks that were used but never named (2026-07-28)
+
+`ram/wram.asm` opened at `$c0a0` and `ram/hram.asm` at `$ff8a`. Neither was a
+region base -- both were just the lowest address anyone had named, and the gap
+below each was in constant use.
+
+`$c000`-`$c09f` is **shadow OAM**, and the DMA trampoline names the page. Ten
+bytes at ROM0 `$06ba` are copied into `$ff80` by `CopyOAMDMARoutineToHRAM`:
+
+```
+        ld a, $c0
+        ldh [rDMA], a
+        ld a, $28      ; 40-iteration wait
+```
+
+The length is confirmed independently by the boot path, which clears the
+buffer as its own unit (`ld hl, $c000` / `ld c, $0a` / `ClearMemory16` = 10 x
+16 = 160 bytes = 40 OAM entries) separately from the `ld c, $ff` bulk clear of
+`$c000`-`$cfef`. So `wShadowOAM` (160 bytes) and `hOAMDMARoutine` (10 bytes).
+
+Neither had shown up in the unnamed-address counts, because shadow OAM is only
+ever written through pointers -- there is not one direct `[$c0xx]` operand in
+the ROM.
+
+**Naming them found the double buffer.** With `$ff80` symbolic, the VBlank path
+reads:
+
+```
+        ld a, [wSpriteBufferPage]
+        xor a, $05
+        ldh [hOAMDMARoutine + 1], a
+        call $ff80
+```
+
+which patches the trampoline's `ld a, $c0` operand in place every frame,
+toggling the DMA source between page `$c0` and page `$c5`. There is a second
+160-byte OAM buffer at `$c500`, and `wSpriteBufferPage` is its selector.
+
+### Round addresses are constants more often than pointers
+
+The first regen renamed 16 sites and **13 were wrong**. `operands.py` treats a
+word immediate equal to a named RAM address as a pointer setup, which is right
+for `ld hl, DataTable` and wrong for `$ff80`, which is -128:
+
+```
+        ld de, $ff80
+        add hl, de
+        jr c, .returnZero      ; a range clamp, not a pointer
+```
+
+Eleven of those, plus the stat-page scroll offsets stored beside `ld de,
+$0060`, plus `ld bc, $c000` at `08:$6b5e`, which is a `SetBallVelocityPolar`
+magnitude. `RAM_IMM_IS_CONSTANT` in `tools/disasmlib/operands.py` lists the 13
+flat offsets that must stay numeric -- keyed by exact instruction offset, the
+same shape as `ROM0_FAR_POINTERS`. The bracket form `[$xxxx]` is safe; the bare
+`ld rr, n16` form is the one to audit after naming any round address.
+
+### Sections start at region bases now
+
+`write_ram_layout` used to open each SECTION at its first named symbol, so
+naming a lower address moved the SECTION directive -- which is what `$c0a0`
+and `$ff8a` were. It now always emits the region's own base address and a
+leading `ds` for the gap. SRAM went from `SECTION "SRAM $a020"` to `$a000` +
+`ds 32`, and WRAMX from `$d038` to `$d000` + `ds 56`; the symbol addresses are
+unchanged and the ROM still compares byte-identical.
+
+RAM metadata is not assembled, so none of this moves a byte: `make compare` is
+OK and `make check` passes 619 lz / 13 text / 4,908 regions. Identification is
+unchanged too -- these 170 bytes were already understood, just not symbolic.
+The 660 genuinely unidentified addresses (376 of them in WRAMX) still stand.
+
+## Banked WRAM names itself now (2026-07-28)
+
+`../pokecrystal` names banked WRAM it has not identified `w3_d000`, `w4_d000`,
+`w5_dc00` -- bank plus address. The address alone is ambiguous (`$d000` is
+eight different variables, one per WRAM bank), so the bank belongs in the name
+even when the purpose is not known. We had the bank for a lot of addresses and
+were throwing it away: every unidentified banked address rendered as a bare
+`$d82e`.
+
+`compute_wram_bank` already proves the bank at most sites. Across every
+`[$dxxx]` operand no curated entry claims:
+
+```
+unnamed WRAMX addresses referenced: 388
+  every site agrees on one bank : 205
+  one bank + some unknown sites :  84
+  sites disagree (multi-bank)   :  24
+  bank never provable           :  75
+```
+
+`auto_banked_wram_names` (in `disasmlib/ram.py`) names the 289 with a single
+provable bank, minus the 92 that fall inside a curated union's span, leaving
+**197 addresses auto-named, covering 929 references**: bank 3: 72, bank 6: 72,
+bank 4: 26, bank 5: 23, banks 1/7: 2 each. They are generator output, not
+metadata -- derived from the dataflow, regenerated every run, and a curated
+name in `ram_map.json`/`ram_unions.json` always wins because covered addresses
+are skipped.
+
+Three deliberate restrictions:
+
+* **Only the `[$dxxx]` operand form.** A word immediate that equals a RAM
+  address is more often arithmetic -- the lesson `RAM_IMM_IS_CONSTANT` records.
+* **Addresses whose sites disagree stay numeric.** All 24 of them: `$df7e`,
+  `$df82`, `$df83` are claimed by banks 4, 5, 6 *and* 7, which is the
+  per-character struct -- they are new fields of it, not new variables.
+  `$d000`-`$d003` are mostly bank 6 but have bank 1/2/3 sites, and
+  `$d820`-`$d831` split between 5 and 3. Those want a human.
+* **Registered scoped, not globally.** A site whose bank is not provable still
+  renders the bare address. 64 addresses therefore appear both ways in the
+  source (`ld a, [w3_d811]` in one place, `ld a, [$d811]` in another, 530 such
+  references): the raw spelling marks exactly where the dataflow gives out.
+
+Distinct raw WRAMX addresses in `src/`: 398 -> 265.
+
+**The actor block is bank 6, mostly.** STATUS said naming the `$d000`-`$d029`
+actor record "needs the actor engine's WRAM bank pinned first". Every provable
+site on `$d004`-`$d029` says bank 6, and those are named now -- but `$d000`
+through `$d003` are exactly the contested ones (43 bank-6 references against 5
+from bank 2, 2 from bank 1, 2 from bank 3), so the record's first four bytes
+are reached from more than one bank and the question is only half answered.
+
+The 92 skipped addresses are the next increment: they sit inside curated union
+spans (mostly `$d100`-`$d21a`, where the bank-6 EXP-screen variant is one
+symbol wide against the sound engine's seventeen), so naming them means
+extending those union variants by hand rather than auto-generating into a
+UNION block, where a symbol would belong to one variant instead of all of them.
+
+`make compare` OK, `make check` clean -- RAM naming is text and cannot move a
+byte.
+
+## One SECTION per WRAM bank (2026-07-28)
+
+Auto-naming 197 banked addresses made `ram/wram.asm` harder to read, not
+easier: one address-ordered list from `$d000` to `$dfff` interleaving six
+banks, where `w3_d814` sits between `w6_d80f` and `w5_d820` and nothing groups
+them. WRAMX is emitted one SECTION per WRAM bank now:
+
+```
+SECTION "WRAMX bank 1", WRAMX[$d000], BANK[1]
+SECTION "WRAMX bank 3", WRAMX[$d000], BANK[3]
+SECTION "WRAMX bank 4", WRAMX[$d000], BANK[4]
+SECTION "WRAMX bank 5", WRAMX[$d000], BANK[5]
+SECTION "WRAMX bank 6", WRAMX[$d000], BANK[6]
+SECTION "WRAMX bank 7", WRAMX[$d000], BANK[7]
+SECTION "WRAMX banks 4-7", WRAMX[$df00]
+```
+
+Each bank's section owns the whole region and opens at `$d000`; RGBDS is happy
+to place several WRAMX sections at the same address in different banks, which
+is exactly what the hardware does.
+
+**A union whose variants sit in different banks now splits across them.**
+`$d100`-`$d21a` was a UNION only because the sound engine (bank 7) and
+`wExpScreenCharStats` (bank 6) overlap in address. Once the banks separate
+them the addresses no longer collide, so each side keeps only its own variants
+and lands in its own section. That was the one union that existed purely as a
+bank artifact.
+
+**What cannot be split stays honest.** The per-character struct
+`$df00`-`$df96` is one copy in each of banks 4-7 simultaneously -- 34 symbols,
+and RGBDS has no way to say "this address, in four banks". It goes to a
+`BANK`-less section that the linker parks in a free bank, with a comment saying
+why. The same applies to the ROM-scoped `wTextArgFetchBuffer` variant. This
+section opens at its first symbol rather than `$d000` so it fits alongside a
+banked section instead of competing for a whole bank.
+
+The bank comes from `wram_bank` on the `ram_map.json` entry (added to the ten
+text-engine symbols, all WRAM 5), from a union variant's `wram_bank` scope, or
+from the dataflow for an auto-named symbol. A WRAMX entry with no bank now
+warns -- there are none.
+
+Byte-identical, `make check` clean. Note that a bank recorded here is not
+checked by anything: nothing in the source calls `BANK()`, so a wrong
+`wram_bank` places a section silently. It has to be earned from
+`compute_wram_bank` or a hook capture, same standard as a name.
+
+Following from that: **`UNION` is now emitted only for a range that actually
+has overlapping variants.** A range left with one -- either it always had one,
+or splitting by WRAM bank gave each bank its own -- emits its symbols plainly.
+Eleven of the fourteen blocks were single-variant wrappers declaring an overlay
+of one thing against nothing. Three real overlays remain, and all three are
+genuine: the `$ffb0`-`$ffb3` HRAM pointer scratch, the shared HRAM scratch pool
+(serial/sound/sprite/actor), and `$df00`-`$df96`, where the per-character
+struct and the menus' `wTextArgFetchBuffer` really do share bytes.
+
+The scoping is untouched by this -- it lives in `ScopedRamNames` and decides
+which name renders at a site. `UNION` was only ever the layout half, i.e. how
+overlapping variants share addresses; a single variant never needed it.
+
+## SRAM is banked too (2026-07-28)
+
+`SRAM is 4 banks of 8 KiB` (docs/save_format.md), selected exactly the way WRAM
+is -- `ldh [hSramBank], a` beside `ld [$4000], a`, the MBC RAM-bank register --
+and the block directory stores an SRAM bank per block, so `$a000` means four
+different things. The layout said nothing about it.
+
+`BANK_KEY` now names the json field that gives a symbol's bank per region
+(`wram_bank` for WRAMX, `sram_bank` for SRAM), and everything downstream --
+grouping, the per-bank SECTION, the missing-bank warning -- is driven off that
+map rather than off `mem == "WRAMX"`. SRAM emits as:
+
+```
+SECTION "SRAM bank 0", SRAM[$a000], BANK[0]
+```
+
+The bank sits on the *union*, not on a scope, and that difference is real: a
+`wram_bank` scope both places the section and narrows which sites the name
+renders at, because `compute_wram_bank` proves the bank per site. Nothing
+proves the SRAM bank per site -- the save engine sets it by hand around each
+block copy -- so `sram_bank` only names the section. Inventing an
+`sram_bank` *scope* would imply a matcher that does not exist.
+
+All six SRAM symbols are the bank-0 header, flag array and block directory, so
+there is one section today. The point is the other three banks: the directory
+addresses blocks in banks 0-3 (and nominally 4-14, which the MBC masks back
+down), and when those blocks get named they will land in their own sections
+instead of colliding at `$a000` with the header.
+
+No `compute_sram_bank` to match `compute_wram_bank`, and no case for one yet:
+exactly one unnamed `$axxx` address is referenced by a direct operand in the
+whole ROM. The save engine reaches SRAM through `hl`, the same reason shadow
+OAM never appeared in the unnamed counts.

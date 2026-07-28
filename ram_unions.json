@@ -2,6 +2,7 @@
  "unions": [
   {
    "start": "0xa020",
+   "sram_bank": "0x00",
    "end": "0xa03f",
    "comment": "Battery-save header fields (SRAM bank 0), owned by the bank $03 save\nengine; scoped so unrelated $a0xx literals in other banks stay numeric",
    "variants": [
@@ -33,6 +34,7 @@
   },
   {
    "start": "0xa040",
+   "sram_bank": "0x00",
    "end": "0xa060",
    "comment": "Global save-flag array (SRAM bank 0), owned by the bank $03 save\nengine; scoped so unrelated $a0xx literals in other banks (VRAM-bank-1\ncopy destinations) stay numeric",
    "variants": [
@@ -60,6 +62,7 @@
   },
   {
    "start": "0xa060",
+   "sram_bank": "0x00",
    "end": "0xa76f",
    "comment": "Save block directory: 113 16-byte entries (see docs/save_format.md);\nentry = valid, SRAM bank, offset, length, checksum, tag",
    "variants": [

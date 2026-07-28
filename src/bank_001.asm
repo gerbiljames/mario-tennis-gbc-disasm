@@ -43,7 +43,7 @@ RunDebugTestMenu:
 	ld hl, $d000 ; $4072
 	ld c, $00 ; $4075
 	call ClearMemory16 ; $4077
-	ld hl, $c000 ; $407a
+	ld hl, wShadowOAM ; $407a
 	ld c, $0a ; $407d
 	call ClearMemory16 ; $407f
 	call ClearDebugTextBuffer ; $4082

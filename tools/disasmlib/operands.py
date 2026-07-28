@@ -17,6 +17,18 @@ ROM0_FAR_POINTERS = {0x0153}
 IMM8_RE = re.compile(r"\$[0-9a-f]{1,2}$")
 
 
+# Sites where a word immediate that happens to equal a named RAM address is an
+# arithmetic constant, not a pointer setup. $ff80 is -128 (range clamps that
+# `add hl, de` then test bit 7, and the stat-page scroll offsets stored beside
+# `ld de, $0060`); $c000 at 08:$6b5e is a SetBallVelocityPolar magnitude.
+# Keyed by flat offset, so only these exact instructions stay numeric.
+RAM_IMM_IS_CONSTANT = {
+    0x010dc, 0x084ce, 0x212fb, 0x22b5e,
+    0x352b6, 0x3577b, 0x35c0b, 0x35da0, 0x35e7d,
+    0x75165, 0x75337, 0x75542, 0x75699,
+}
+
+
 def render_operand(ins, off, labels, hwregs, ramnames, data_labels=None,
                    ramscoped=None, constants=None, scopes=None):
     text = ins.text
@@ -57,12 +69,13 @@ def render_operand(ins, off, labels, hwregs, ramnames, data_labels=None,
                 return f"ld {m.group(1)}, {data_labels[flat]}"
             # Same for curated RAM symbols: a word immediate equal to a
             # named RAM address is a pointer setup, not a constant.
-            if ramnames and imm in ramnames:
-                return f"ld {m.group(1)}, {ramnames[imm]}"
-            if ramscoped:
-                sn = ramscoped.resolve(imm, off)
-                if sn:
-                    return f"ld {m.group(1)}, {sn}"
+            if off not in RAM_IMM_IS_CONSTANT:
+                if ramnames and imm in ramnames:
+                    return f"ld {m.group(1)}, {ramnames[imm]}"
+                if ramscoped:
+                    sn = ramscoped.resolve(imm, off)
+                    if sn:
+                        return f"ld {m.group(1)}, {sn}"
     if "$ff" in text and hwregs:
         m = HWADDR_RE.search(text)
         if m:

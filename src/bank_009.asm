@@ -655,19 +655,19 @@ FinishObjSlotUpdate:
 	ld a, [$df54] ; $472a
 	ld e, a ; $472d
 	wram_bank $04 ; $472e
-	ld a, [$ddfa] ; $4734
+	ld a, [w4_ddfa] ; $4734
 	ld hl, $ddf6 ; $4737
 	add a, [hl] ; $473a
 	add a, d ; $473b
 	ld d, a ; $473c
-	ld a, [$ddfb] ; $473d
+	ld a, [w4_ddfb] ; $473d
 	ld hl, $ddf7 ; $4740
 	add a, [hl] ; $4743
 	add a, e ; $4744
 	ld e, a ; $4745
-	ld a, [$ddf4] ; $4746
+	ld a, [w4_ddf4] ; $4746
 	ld b, a ; $4749
-	ld a, [$ddf5] ; $474a
+	ld a, [w4_ddf5] ; $474a
 	ld c, a ; $474d
 	ld hl, $ddf2 ; $474e
 	ld a, [hl+] ; $4751

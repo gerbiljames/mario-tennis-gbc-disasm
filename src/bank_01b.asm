@@ -1026,21 +1026,21 @@ StubNop_1b_4e80:
 ShowRankingBoard:
 	wram_bank $03 ; $4e81
 	xor a, a ; $4e87
-	ld [$d85a], a ; $4e88
+	ld [w3_d85a], a ; $4e88
 	ld a, b ; $4e8b
-	ld [$d800], a ; $4e8c
+	ld [w3_d800], a ; $4e8c
 	ld a, c ; $4e8f
 	ld [wResultScreenMode], a ; $4e90
 	ld a, d ; $4e93
-	ld [$d802], a ; $4e94
+	ld [w3_d802], a ; $4e94
 	cp a, $03 ; $4e97
 	jr nz, .checkFanfare ; $4e99
 	xor a, a ; $4e9b
-	ld [$d802], a ; $4e9c
+	ld [w3_d802], a ; $4e9c
 	ld a, $01 ; $4e9f
-	ld [$d85a], a ; $4ea1
+	ld [w3_d85a], a ; $4ea1
 .checkFanfare:
-	ld a, [$d802] ; $4ea4
+	ld a, [w3_d802] ; $4ea4
 	cp a, $01 ; $4ea7
 	jr nz, .checkSecondFanfare ; $4ea9
 	sound $2b ; $4eab
@@ -1061,10 +1061,10 @@ ShowRankingBoard:
 	db $1e ; $4ed2 inline arg
 	call WaitForAOrBPress ; $4ed3
 	ld c, $20 ; $4ed6
-	ld a, [$d802] ; $4ed8
+	ld a, [w3_d802] ; $4ed8
 	or a, a ; $4edb
 	jr nz, .fadeOut ; $4edc
-	ld a, [$d85a] ; $4ede
+	ld a, [w3_d85a] ; $4ede
 	or a, a ; $4ee1
 	jr nz, .fadeOut ; $4ee2
 	sound $7f ; $4ee4
@@ -1086,14 +1086,14 @@ BuildRankingBoardScreen:
 	farcall PrepareGlyphBuffer ; $4f06
 	wram_bank $03 ; $4f09
 	xor a, a ; $4f0f
-	ld [$d855], a ; $4f10
-	ld [$d858], a ; $4f13
+	ld [w3_d855], a ; $4f10
+	ld [w3_d858], a ; $4f13
 	ld hl, $d803 ; $4f16
 	ld bc, $0053 ; $4f19
 	call ClearBytes ; $4f1c
 	call ClearRankingMarkerSlots ; $4f1f
 	call LoadRankingMarkerCoords ; $4f22
-	ld a, [$d800] ; $4f25
+	ld a, [w3_d800] ; $4f25
 	or a, a ; $4f28
 	jr z, .zero ; $4f29
 	ld c, $2a ; $4f2b
@@ -1116,7 +1116,7 @@ BuildRankingBoardScreen:
 	ld a, $01 ; $4f5b
 	ld hl, DrawRankingMarkersTask ; $4f5d
 	call RegisterFrameTask ; $4f60
-	ld a, [$d802] ; $4f63
+	ld a, [w3_d802] ; $4f63
 	cp a, $02 ; $4f66
 	jr nz, .queueWram3MapToVRAM ; $4f68
 	ld a, $01 ; $4f6a
@@ -1156,16 +1156,16 @@ LoadRankingBoardTiles:
 	wram_bank ; $4fec
 	ret ; $4ff0
 DispatchRankingBoardAnim:
-	ld a, [$d85a] ; $4ff1
+	ld a, [w3_d85a] ; $4ff1
 	or a, a ; $4ff4
 	ret nz ; $4ff5
-	ld a, [$d802] ; $4ff6
+	ld a, [w3_d802] ; $4ff6
 	cp a, $02 ; $4ff9
 	ret z ; $4ffb
-	ld a, [$d800] ; $4ffc
+	ld a, [w3_d800] ; $4ffc
 	or a, a ; $4fff
 	jr nz, .nonZero2 ; $5000
-	ld a, [$d802] ; $5002
+	ld a, [w3_d802] ; $5002
 	or a, a ; $5005
 	jr nz, .nonZero ; $5006
 	ld a, [wResultScreenMode] ; $5008
@@ -1194,7 +1194,7 @@ DispatchRankingBoardAnim:
 	ld l, a ; $5026
 	jp hl ; $5027
 .nonZero2:
-	ld a, [$d802] ; $5028
+	ld a, [w3_d802] ; $5028
 	or a, a ; $502b
 	jr nz, .nonZero3 ; $502c
 	ld a, [wResultScreenMode] ; $502e
@@ -2682,11 +2682,11 @@ ClearRankingMarkerSlots:
 	call ClearBytes ; $5c37
 	ret ; $5c3a
 LoadRankingMarkerCoords:
-	ld a, [$d800] ; $5c3b
+	ld a, [w3_d800] ; $5c3b
 	or a, a ; $5c3e
 	jr nz, .nonZero ; $5c3f
 	ld hl, RankingMarkerCoordsTable ; $5c41
-	ld a, [$d802] ; $5c44
+	ld a, [w3_d802] ; $5c44
 	or a, a ; $5c47
 	jr z, .zero ; $5c48
 	ld hl, RankingMarkerCoordsTable0 ; $5c4a
@@ -2711,7 +2711,7 @@ LoadRankingMarkerCoords:
 	ret ; $5c66
 .nonZero:
 	ld hl, $5e21 ; $5c67
-	ld a, [$d802] ; $5c6a
+	ld a, [w3_d802] ; $5c6a
 	or a, a ; $5c6d
 	jr z, .zero2 ; $5c6e
 	ld hl, RankingMarkerCoordsTable1 ; $5c70
@@ -3058,9 +3058,9 @@ RunNewGameSetup:
 .loop:
 	push af ; $61d8
 	farcall LoadCharacterRecordToBuffer ; $61d9
-	ld a, [$d58e] ; $61dc
+	ld a, [w1_d58e] ; $61dc
 	ld [hl+], a ; $61df
-	ld a, [$d58c] ; $61e0
+	ld a, [w1_d58c] ; $61e0
 	ld [hl+], a ; $61e3
 	pop af ; $61e4
 	inc a ; $61e5
@@ -3430,7 +3430,7 @@ RunLevelUpStatusTrophiesMenu:
 	ld c, $20 ; $64a1
 	call BeginFadeOut ; $64a3
 	call WaitFadeEnd ; $64a6
-	ld a, [$d82f] ; $64a9
+	ld a, [w5_d82f] ; $64a9
 	farcall CloseWindow ; $64ac
 	pop af ; $64af
 	wram_bank ; $64b0
@@ -3475,7 +3475,7 @@ RunDebugSaveDataMenu:
 	ld c, $20 ; $6506
 	call BeginFadeOut ; $6508
 	call WaitFadeEnd ; $650b
-	ld a, [$d82f] ; $650e
+	ld a, [w5_d82f] ; $650e
 	farcall CloseWindow ; $6511
 	pop af ; $6514
 	wram_bank ; $6515
@@ -3667,7 +3667,7 @@ DrawUnlockDebugMugshots:
 	ld a, [hl] ; $66f6
 	ld de, $0006 ; $66f7
 	call GetUnlockDebugRosterField ; $66fa
-	ld a, [$d58c] ; $66fd
+	ld a, [w1_d58c] ; $66fd
 	farcall SetMugshotAttrs ; $6700
 .step:
 	ld a, $08 ; $6703
@@ -4007,9 +4007,9 @@ RunStoryDataConfirmMenu:
 	call WaitFadeEnd ; $69a5
 	wram_bank $07 ; $69a8
 	xor a, a ; $69ae
-	ld [$db26], a ; $69af
+	ld [w7_db26], a ; $69af
 	ld a, $0c ; $69b2
-	ld [$db27], a ; $69b4
+	ld [w7_db27], a ; $69b4
 	ld a, $01 ; $69b7
 	ld hl, StubNop_1b_69d6 ; $69b9
 	call RegisterFrameTask ; $69bc
@@ -5454,11 +5454,11 @@ MinigameClearFlagsTable:
 	dw $0620 ; record 7
 	dw $0680 ; record 8
 LoadMinigameStarFlags:
-	ld hl, $d812 ; $751f
+	ld hl, w3_d812 ; $751f
 	ld bc, $0009 ; $7522
 	call ClearBytes ; $7525
 	ld c, $00 ; $7528
-	ld hl, $d812 ; $752a
+	ld hl, w3_d812 ; $752a
 .loop:
 	ld a, c ; $752d
 	add a, a ; $752e
@@ -5500,14 +5500,14 @@ MinigameStarFlagsTable:
 LoadMinigameHighScores:
 	ldh a, [hWramBank] ; $7560
 	push af ; $7562
-	ld hl, $d81b ; $7563
+	ld hl, w3_d81b ; $7563
 	ld bc, $0012 ; $7566
 	call ClearBytes ; $7569
 	ld de, SAVEFLAG_CLEARED_TWO_ON_ONE_3 ; $756c
 	farcall TestSaveFlag ; $756f
 	jr z, .readMinigameRecord ; $7572
 	ld a, $01 ; $7574
-	ld hl, $d82b ; $7576
+	ld hl, w3_d82b ; $7576
 	ld [hl+], a ; $7579
 	ld [hl], a ; $757a
 .readMinigameRecord:
@@ -5523,7 +5523,7 @@ LoadMinigameHighScores:
 	ld d, [hl] ; $758d
 	ld e, a ; $758e
 	wram_bank $03 ; $758f
-	ld hl, $d81b ; $7595
+	ld hl, w3_d81b ; $7595
 	ld a, c ; $7598
 	add a, a ; $7599
 	add a, l ; $759a
@@ -5743,7 +5743,7 @@ DrawMinigameClearMarks:
 	jr nz, .loop ; $7716
 	ret ; $7718
 DrawMinigameStarMarks:
-	ld hl, $d812 ; $7719
+	ld hl, w3_d812 ; $7719
 	ld a, [wMenuCursorY] ; $771c
 	add a, l ; $771f
 	ld l, a ; $7720
@@ -5768,7 +5768,7 @@ DrawMinigameSpecialMark:
 	ld a, [wMenuCursorY] ; $7737
 	cp a, $04 ; $773a
 	ret nz ; $773c
-	ld hl, $d82b ; $773d
+	ld hl, w3_d82b ; $773d
 	ld a, [hl+] ; $7740
 	ld b, [hl] ; $7741
 	or a, b ; $7742
@@ -5855,7 +5855,7 @@ ClearMinigameMarkColumns:
 	ld c, $0a ; $77db
 	farcall CopyTilemapRect ; $77dd
 	ld hl, $d095 ; $77e0
-	ld de, $d0ce ; $77e3
+	ld de, w3_d0ce ; $77e3
 	ld b, $02 ; $77e6
 	ld c, $0a ; $77e8
 	farcall CopyTilemapRect ; $77ea
@@ -5866,7 +5866,7 @@ ClearMinigameMarkColumns:
 	farcall CopyTilemapRect ; $77f7
 	ret ; $77fa
 DrawStarLegendMark:
-	ld hl, $d812 ; $77fb
+	ld hl, w3_d812 ; $77fb
 	ld c, $00 ; $77fe
 .loop:
 	ld a, [hl+] ; $7800
@@ -5924,7 +5924,7 @@ DrawMinigameHighScoreNumber:
 	ld d, [hl] ; $7856
 	ld e, a ; $7857
 	ld a, c ; $7858
-	ld hl, $d812 ; $7859
+	ld hl, w3_d812 ; $7859
 	add a, l ; $785c
 	ld l, a ; $785d
 	jr nc, .readB ; $785e
@@ -5935,7 +5935,7 @@ DrawMinigameHighScoreNumber:
 	ret z ; $7863
 	ld a, c ; $7864
 	add a, a ; $7865
-	ld hl, $d81b ; $7866
+	ld hl, w3_d81b ; $7866
 	add a, l ; $7869
 	ld l, a ; $786a
 	jr nc, .read2 ; $786b
@@ -5972,12 +5972,12 @@ CompactMinigameDataRows:
 	ldh a, [hWramBank] ; $7896
 	push af ; $7898
 	wram_bank $03 ; $7899
-	ld a, [$d80e] ; $789f
-	ld [$d80d], a ; $78a2
-	ld a, [$d817] ; $78a5
-	ld [$d816], a ; $78a8
+	ld a, [w3_d80e] ; $789f
+	ld [w3_d80d], a ; $78a2
+	ld a, [w3_d817] ; $78a5
+	ld [w3_d816], a ; $78a8
 	ld a, [$d825] ; $78ab
-	ld [$d823], a ; $78ae
+	ld [w3_d823], a ; $78ae
 	ld a, [$d826] ; $78b1
 	ld [$d824], a ; $78b4
 	pop af ; $78b7

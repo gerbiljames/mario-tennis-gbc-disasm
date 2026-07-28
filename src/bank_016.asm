@@ -800,7 +800,7 @@ RunMatchWinLoseScreen:
 .checkMatchWinLoseFlag:
 	xor a, a ; $449a
 .store:
-	ld [$d800], a ; $449b
+	ld [w3_d800], a ; $449b
 	ld [wResultScreenMode], a ; $449e
 	ld a, [wMatchWinLoseFlag] ; $44a1
 	ld [$cb73], a ; $44a4
@@ -976,7 +976,7 @@ DiagramTargetBracketsSpriteTask:
 MatchWinLoseScreenPalettes:
 	INCBIN "data/bank_016/d_48f4.bin" ; $48f4, 24 bytes
 LoadWinLoseScreenAssets:
-	ld a, [$d800] ; $490c
+	ld a, [w3_d800] ; $490c
 	or a, a ; $490f
 	jr z, .zero ; $4910
 	ld c, $14 ; $4912
@@ -1496,7 +1496,7 @@ LoadResultScreenTileGraphics:
 	ld de, $9000 ; $4e2c
 	call DecompressData ; $4e2f
 .loadMatchResultGfxSet:
-	ld a, [$d800] ; $4e32
+	ld a, [w3_d800] ; $4e32
 	or a, a ; $4e35
 	jr z, LoadMatchResultGfxSet ; $4e36
 	ld hl, MatchResultGfxA2 ; $4e38
@@ -1816,73 +1816,73 @@ PrintSinglesMatchStats:
 	ld a, [wCharacter1ServiceAces] ; $5d43
 	ld h, $00 ; $5d46
 	ld l, a ; $5d48
-	ld bc, $d810 ; $5d49
+	ld bc, w3_d810 ; $5d49
 	ld de, $d163 ; $5d4c
 	farcall PrintNumberRightAligned ; $5d4f
 	ld a, [wCharacter1SmashAces] ; $5d52
 	ld h, $00 ; $5d55
 	ld l, a ; $5d57
-	ld bc, $d810 ; $5d58
+	ld bc, w3_d810 ; $5d58
 	ld de, $d183 ; $5d5b
 	farcall PrintNumberRightAligned ; $5d5e
 	ld a, [wCharacter1ReturnAces] ; $5d61
 	ld h, $00 ; $5d64
 	ld l, a ; $5d66
-	ld bc, $d810 ; $5d67
+	ld bc, w3_d810 ; $5d67
 	ld de, $d1a3 ; $5d6a
 	farcall PrintNumberRightAligned ; $5d6d
 	ld a, [wCharacter1LobShotWinners] ; $5d70
 	ld h, $00 ; $5d73
 	ld l, a ; $5d75
-	ld bc, $d810 ; $5d76
+	ld bc, w3_d810 ; $5d76
 	ld de, $d1c3 ; $5d79
 	farcall PrintNumberRightAligned ; $5d7c
 	ld a, [wCharacter1DropShotWinners] ; $5d7f
 	ld h, $00 ; $5d82
 	ld l, a ; $5d84
-	ld bc, $d810 ; $5d85
+	ld bc, w3_d810 ; $5d85
 	ld de, $d1e3 ; $5d88
 	farcall PrintNumberRightAligned ; $5d8b
 	ld a, [wCharacter1DoubleFaults] ; $5d8e
 	ld h, $00 ; $5d91
 	ld l, a ; $5d93
-	ld bc, $d810 ; $5d94
+	ld bc, w3_d810 ; $5d94
 	ld de, $d203 ; $5d97
 	farcall PrintNumberRightAligned ; $5d9a
 	ld a, [wCharacter2ServiceAces] ; $5d9d
 	ld h, $00 ; $5da0
 	ld l, a ; $5da2
-	ld bc, $d810 ; $5da3
+	ld bc, w3_d810 ; $5da3
 	ld de, $d170 ; $5da6
 	farcall PrintNumberRightAligned ; $5da9
 	ld a, [wCharacter2SmashAces] ; $5dac
 	ld h, $00 ; $5daf
 	ld l, a ; $5db1
-	ld bc, $d810 ; $5db2
+	ld bc, w3_d810 ; $5db2
 	ld de, $d190 ; $5db5
 	farcall PrintNumberRightAligned ; $5db8
 	ld a, [wCharacter2ReturnAces] ; $5dbb
 	ld h, $00 ; $5dbe
 	ld l, a ; $5dc0
-	ld bc, $d810 ; $5dc1
+	ld bc, w3_d810 ; $5dc1
 	ld de, $d1b0 ; $5dc4
 	farcall PrintNumberRightAligned ; $5dc7
 	ld a, [wCharacter2LobShotWinners] ; $5dca
 	ld h, $00 ; $5dcd
 	ld l, a ; $5dcf
-	ld bc, $d810 ; $5dd0
+	ld bc, w3_d810 ; $5dd0
 	ld de, $d1d0 ; $5dd3
 	farcall PrintNumberRightAligned ; $5dd6
 	ld a, [wCharacter2DropShotWinners] ; $5dd9
 	ld h, $00 ; $5ddc
 	ld l, a ; $5dde
-	ld bc, $d810 ; $5ddf
+	ld bc, w3_d810 ; $5ddf
 	ld de, $d1f0 ; $5de2
 	farcall PrintNumberRightAligned ; $5de5
 	ld a, [wCharacter2DoubleFaults] ; $5de8
 	ld h, $00 ; $5deb
 	ld l, a ; $5ded
-	ld bc, $d810 ; $5dee
+	ld bc, w3_d810 ; $5dee
 	ld de, $d210 ; $5df1
 	farcall PrintNumberRightAligned ; $5df4
 	ret ; $5df7
@@ -1890,145 +1890,145 @@ PrintDoublesMatchStats:
 	ld a, [wCharacter1ServiceAces] ; $5df8
 	ld h, $00 ; $5dfb
 	ld l, a ; $5dfd
-	ld bc, $d810 ; $5dfe
+	ld bc, w3_d810 ; $5dfe
 	ld de, $d162 ; $5e01
 	farcall PrintNumberRightAligned ; $5e04
 	ld a, [wCharacter1SmashAces] ; $5e07
 	ld h, $00 ; $5e0a
 	ld l, a ; $5e0c
-	ld bc, $d810 ; $5e0d
+	ld bc, w3_d810 ; $5e0d
 	ld de, $d182 ; $5e10
 	farcall PrintNumberRightAligned ; $5e13
 	ld a, [wCharacter1ReturnAces] ; $5e16
 	ld h, $00 ; $5e19
 	ld l, a ; $5e1b
-	ld bc, $d810 ; $5e1c
+	ld bc, w3_d810 ; $5e1c
 	ld de, $d1a2 ; $5e1f
 	farcall PrintNumberRightAligned ; $5e22
 	ld a, [wCharacter1LobShotWinners] ; $5e25
 	ld h, $00 ; $5e28
 	ld l, a ; $5e2a
-	ld bc, $d810 ; $5e2b
+	ld bc, w3_d810 ; $5e2b
 	ld de, $d1c2 ; $5e2e
 	farcall PrintNumberRightAligned ; $5e31
 	ld a, [wCharacter1DropShotWinners] ; $5e34
 	ld h, $00 ; $5e37
 	ld l, a ; $5e39
-	ld bc, $d810 ; $5e3a
+	ld bc, w3_d810 ; $5e3a
 	ld de, $d1e2 ; $5e3d
 	farcall PrintNumberRightAligned ; $5e40
 	ld a, [wCharacter1DoubleFaults] ; $5e43
 	ld h, $00 ; $5e46
 	ld l, a ; $5e48
-	ld bc, $d810 ; $5e49
+	ld bc, w3_d810 ; $5e49
 	ld de, $d202 ; $5e4c
 	farcall PrintNumberRightAligned ; $5e4f
 	ld a, [wCharacter3ServiceAces] ; $5e52
 	ld h, $00 ; $5e55
 	ld l, a ; $5e57
-	ld bc, $d810 ; $5e58
+	ld bc, w3_d810 ; $5e58
 	ld de, $d165 ; $5e5b
 	farcall PrintNumberRightAligned ; $5e5e
 	ld a, [wCharacter3SmashAces] ; $5e61
 	ld h, $00 ; $5e64
 	ld l, a ; $5e66
-	ld bc, $d810 ; $5e67
+	ld bc, w3_d810 ; $5e67
 	ld de, $d185 ; $5e6a
 	farcall PrintNumberRightAligned ; $5e6d
 	ld a, [wCharacter3ReturnAces] ; $5e70
 	ld h, $00 ; $5e73
 	ld l, a ; $5e75
-	ld bc, $d810 ; $5e76
+	ld bc, w3_d810 ; $5e76
 	ld de, $d1a5 ; $5e79
 	farcall PrintNumberRightAligned ; $5e7c
 	ld a, [wCharacter3LobShotWinners] ; $5e7f
 	ld h, $00 ; $5e82
 	ld l, a ; $5e84
-	ld bc, $d810 ; $5e85
+	ld bc, w3_d810 ; $5e85
 	ld de, $d1c5 ; $5e88
 	farcall PrintNumberRightAligned ; $5e8b
 	ld a, [wCharacter3DropShotWinners] ; $5e8e
 	ld h, $00 ; $5e91
 	ld l, a ; $5e93
-	ld bc, $d810 ; $5e94
+	ld bc, w3_d810 ; $5e94
 	ld de, $d1e5 ; $5e97
 	farcall PrintNumberRightAligned ; $5e9a
 	ld a, [wCharacter3DoubleFaults] ; $5e9d
 	ld h, $00 ; $5ea0
 	ld l, a ; $5ea2
-	ld bc, $d810 ; $5ea3
+	ld bc, w3_d810 ; $5ea3
 	ld de, $d205 ; $5ea6
 	farcall PrintNumberRightAligned ; $5ea9
 	ld a, [wCharacter2ServiceAces] ; $5eac
 	ld h, $00 ; $5eaf
 	ld l, a ; $5eb1
-	ld bc, $d810 ; $5eb2
+	ld bc, w3_d810 ; $5eb2
 	ld de, $d16f ; $5eb5
 	farcall PrintNumberRightAligned ; $5eb8
 	ld a, [wCharacter2SmashAces] ; $5ebb
 	ld h, $00 ; $5ebe
 	ld l, a ; $5ec0
-	ld bc, $d810 ; $5ec1
+	ld bc, w3_d810 ; $5ec1
 	ld de, $d18f ; $5ec4
 	farcall PrintNumberRightAligned ; $5ec7
 	ld a, [wCharacter2ReturnAces] ; $5eca
 	ld h, $00 ; $5ecd
 	ld l, a ; $5ecf
-	ld bc, $d810 ; $5ed0
+	ld bc, w3_d810 ; $5ed0
 	ld de, $d1af ; $5ed3
 	farcall PrintNumberRightAligned ; $5ed6
 	ld a, [wCharacter2LobShotWinners] ; $5ed9
 	ld h, $00 ; $5edc
 	ld l, a ; $5ede
-	ld bc, $d810 ; $5edf
+	ld bc, w3_d810 ; $5edf
 	ld de, $d1cf ; $5ee2
 	farcall PrintNumberRightAligned ; $5ee5
 	ld a, [wCharacter2DropShotWinners] ; $5ee8
 	ld h, $00 ; $5eeb
 	ld l, a ; $5eed
-	ld bc, $d810 ; $5eee
+	ld bc, w3_d810 ; $5eee
 	ld de, $d1ef ; $5ef1
 	farcall PrintNumberRightAligned ; $5ef4
 	ld a, [wCharacter2DoubleFaults] ; $5ef7
 	ld h, $00 ; $5efa
 	ld l, a ; $5efc
-	ld bc, $d810 ; $5efd
+	ld bc, w3_d810 ; $5efd
 	ld de, $d20f ; $5f00
 	farcall PrintNumberRightAligned ; $5f03
 	ld a, [wCharacter4ServiceAces] ; $5f06
 	ld h, $00 ; $5f09
 	ld l, a ; $5f0b
-	ld bc, $d810 ; $5f0c
+	ld bc, w3_d810 ; $5f0c
 	ld de, $d172 ; $5f0f
 	farcall PrintNumberRightAligned ; $5f12
 	ld a, [wCharacter4SmashAces] ; $5f15
 	ld h, $00 ; $5f18
 	ld l, a ; $5f1a
-	ld bc, $d810 ; $5f1b
+	ld bc, w3_d810 ; $5f1b
 	ld de, $d192 ; $5f1e
 	farcall PrintNumberRightAligned ; $5f21
 	ld a, [wCharacter4ReturnAces] ; $5f24
 	ld h, $00 ; $5f27
 	ld l, a ; $5f29
-	ld bc, $d810 ; $5f2a
+	ld bc, w3_d810 ; $5f2a
 	ld de, $d1b2 ; $5f2d
 	farcall PrintNumberRightAligned ; $5f30
 	ld a, [wPlayer4LobShotWinners] ; $5f33
 	ld h, $00 ; $5f36
 	ld l, a ; $5f38
-	ld bc, $d810 ; $5f39
+	ld bc, w3_d810 ; $5f39
 	ld de, $d1d2 ; $5f3c
 	farcall PrintNumberRightAligned ; $5f3f
 	ld a, [wCharacter4DropShotWinners] ; $5f42
 	ld h, $00 ; $5f45
 	ld l, a ; $5f47
-	ld bc, $d810 ; $5f48
+	ld bc, w3_d810 ; $5f48
 	ld de, $d1f2 ; $5f4b
 	farcall PrintNumberRightAligned ; $5f4e
 	ld a, [wCharacter4DoubleFaults] ; $5f51
 	ld h, $00 ; $5f54
 	ld l, a ; $5f56
-	ld bc, $d810 ; $5f57
+	ld bc, w3_d810 ; $5f57
 	ld de, $d212 ; $5f5a
 	farcall PrintNumberRightAligned ; $5f5d
 	ret ; $5f60
@@ -2059,7 +2059,7 @@ CopyMatchStatsHeaderRects:
 	call TestGameFlagByNumber ; $5f95
 	ret nz ; $5f98
 	ld hl, $d240 ; $5f99
-	ld de, $d080 ; $5f9c
+	ld de, w3_d080 ; $5f9c
 	ld b, $08 ; $5f9f
 	ld c, $04 ; $5fa1
 	farcall CopyTilemapRect ; $5fa3

@@ -864,44 +864,44 @@ ScrollN64ExhibDataCursor:
 	ld a, [wMenuInputPressed] ; $450d
 	bit PADB_LEFT, a ; $4510
 	jr z, .step ; $4512
-	ld a, [$dc12] ; $4514
+	ld a, [w3_dc12] ; $4514
 	or a, a ; $4517
 	jr z, .done ; $4518
 	dec a ; $451a
-	ld [$dc12], a ; $451b
+	ld [w3_dc12], a ; $451b
 	sound $5e ; $451e
 	call RedrawN64ExhibDataWindow ; $4520
 	jr .done ; $4523
 .step:
 	bit 4, a ; $4525
 	jr z, .bit4Clear ; $4527
-	ld a, [$dc12] ; $4529
+	ld a, [w3_dc12] ; $4529
 	cp a, $09 ; $452c
 	jr z, .done ; $452e
 	inc a ; $4530
-	ld [$dc12], a ; $4531
+	ld [w3_dc12], a ; $4531
 	sound $5e ; $4534
 	call RedrawN64ExhibDataWindow ; $4536
 	jr .done ; $4539
 .bit4Clear:
 	bit 6, a ; $453b
 	jr z, .bit6Clear ; $453d
-	ld a, [$dc13] ; $453f
+	ld a, [w3_dc13] ; $453f
 	or a, a ; $4542
 	jr z, .done ; $4543
 	dec a ; $4545
-	ld [$dc13], a ; $4546
+	ld [w3_dc13], a ; $4546
 	sound $5e ; $4549
 	call RedrawN64ExhibDataWindow ; $454b
 	jr .done ; $454e
 .bit6Clear:
 	bit 7, a ; $4550
 	jr z, .done ; $4552
-	ld a, [$dc13] ; $4554
+	ld a, [w3_dc13] ; $4554
 	cp a, $0c ; $4557
 	jr z, .done ; $4559
 	inc a ; $455b
-	ld [$dc13], a ; $455c
+	ld [w3_dc13], a ; $455c
 	sound $5e ; $455f
 	call RedrawN64ExhibDataWindow ; $4561
 	jr .done ; $4564
@@ -911,7 +911,7 @@ N64ExhibScrollArrowsTask:
 	ldh a, [hWramBank] ; $4567
 	push af ; $4569
 	wram_bank $03 ; $456a
-	ld a, [$dc12] ; $4570
+	ld a, [w3_dc12] ; $4570
 	cp a, $09 ; $4573
 	jr z, .eq09 ; $4575
 	ld de, $932f ; $4577
@@ -922,7 +922,7 @@ N64ExhibScrollArrowsTask:
 	ld h, $00 ; $4583
 	farcall QueueStackedSpritePair ; $4585
 .eq09:
-	ld a, [$dc12] ; $4588
+	ld a, [w3_dc12] ; $4588
 	or a, a ; $458b
 	jr z, .zero ; $458c
 	ld de, $082f ; $458e
@@ -933,7 +933,7 @@ N64ExhibScrollArrowsTask:
 	ld h, $01 ; $459a
 	farcall QueueStackedSpritePair ; $459c
 .zero:
-	ld a, [$dc13] ; $459f
+	ld a, [w3_dc13] ; $459f
 	or a, a ; $45a2
 	jr z, .zero2 ; $45a3
 	ld de, $0a20 ; $45a5
@@ -944,7 +944,7 @@ N64ExhibScrollArrowsTask:
 	ld h, $02 ; $45b1
 	farcall QueueStackedSpritePair ; $45b3
 .zero2:
-	ld a, [$dc13] ; $45b6
+	ld a, [w3_dc13] ; $45b6
 	cp a, $0c ; $45b9
 	jr z, .restore ; $45bb
 	ld de, $0a78 ; $45bd
@@ -961,8 +961,8 @@ N64ExhibScrollArrowsTask:
 BuildN64ExhibDataScreen:
 	wram_bank $03 ; $45d4
 	xor a, a ; $45da
-	ld [$dc13], a ; $45db
-	ld [$dc12], a ; $45de
+	ld [w3_dc13], a ; $45db
+	ld [w3_dc12], a ; $45de
 	ld c, $0c ; $45e1
 	farcall LoadScreenAssetRecord ; $45e3
 	ld de, $aac0 ; $45e6
@@ -978,10 +978,10 @@ BuildN64ExhibDataScreen:
 	jr nz, .buildN64ExhibColumnList ; $4602
 	call BuildN64ExhibColumnList ; $4604
 	call InitChartRowFlags ; $4607
-	ld hl, $dc01 ; $460a
+	ld hl, w3_dc01 ; $460a
 	ld bc, $d0e2 ; $460d
 	call DrawChartIconColumn ; $4610
-	ld hl, $dc01 ; $4613
+	ld hl, w3_dc01 ; $4613
 	ld bc, $d0a4 ; $4616
 	ld a, $07 ; $4619
 	call DrawChartIconRow ; $461b
@@ -993,8 +993,8 @@ BuildN64ExhibDataScreen:
 	ret ; $462c
 RedrawN64ExhibDataWindow:
 	wram_bank $03 ; $462d
-	ld a, [$dc12] ; $4633
-	ld hl, $dc01 ; $4636
+	ld a, [w3_dc12] ; $4633
+	ld hl, w3_dc01 ; $4636
 	add a, l ; $4639
 	ld l, a ; $463a
 	jr nc, .drawRow ; $463b
@@ -1003,8 +1003,8 @@ RedrawN64ExhibDataWindow:
 	ld bc, $d0a4 ; $463e
 	ld a, $07 ; $4641
 	call DrawChartIconRow ; $4643
-	ld a, [$dc13] ; $4646
-	ld hl, $dc01 ; $4649
+	ld a, [w3_dc13] ; $4646
+	ld hl, w3_dc01 ; $4649
 	add a, l ; $464c
 	ld l, a ; $464d
 	jr nc, .drawColumn ; $464e
@@ -1012,7 +1012,7 @@ RedrawN64ExhibDataWindow:
 .drawColumn:
 	ld bc, $d0e2 ; $4651
 	call DrawChartIconColumn ; $4654
-	ld a, [$dc13] ; $4657
+	ld a, [w3_dc13] ; $4657
 	ld hl, $db00 ; $465a
 	ld de, $0010 ; $465d
 .rowSeekLoop:
@@ -1022,7 +1022,7 @@ RedrawN64ExhibDataWindow:
 	dec a ; $4664
 	jr .rowSeekLoop ; $4665
 .rowFound:
-	ld a, [$dc12] ; $4667
+	ld a, [w3_dc12] ; $4667
 	add a, l ; $466a
 	ld l, a ; $466b
 	jr nc, .drawCells ; $466c
@@ -1169,7 +1169,7 @@ ChartCellMarkTable:
 BuildN64ExhibColumnList:
 	wram_bank $03 ; $4743
 	ld hl, N64ExhibColumn ; $4749
-	ld de, $dc01 ; $474c
+	ld de, w3_dc01 ; $474c
 	ld bc, $0001 ; $474f
 	call CopyMemoryFast ; $4752
 	ld hl, $da58 ; $4755
@@ -1178,13 +1178,13 @@ BuildN64ExhibColumnList:
 	and a, $01 ; $475a
 	jr nz, .maskSet ; $475c
 	ld a, $10 ; $475e
-	ld [$dc0f], a ; $4760
+	ld [w3_dc0f], a ; $4760
 .maskSet:
 	ld a, b ; $4763
 	and a, $02 ; $4764
 	jr nz, .buildN64ExhibResultsGrid ; $4766
 	ld a, $10 ; $4768
-	ld [$dc10], a ; $476a
+	ld [w3_dc10], a ; $476a
 .buildN64ExhibResultsGrid:
 	call BuildN64ExhibResultsGrid ; $476d
 	ret ; $4770
@@ -1504,10 +1504,10 @@ ReadN64RecordsSaveBlock:
 	ldh a, [hWramBank] ; $4940
 	push af ; $4942
 	wram_bank $03 ; $4943
-	ld hl, $d900 ; $4949
+	ld hl, w3_d900 ; $4949
 	ld bc, $0020 ; $494c
 	call ClearMemory16 ; $494f
-	ld hl, $d900 ; $4952
+	ld hl, w3_d900 ; $4952
 	ld b, $0b ; $4955
 	farcall ReadSaveBlock ; $4957
 	ld b, a ; $495a
@@ -1547,14 +1547,14 @@ RunTrophiesScreen:
 	jr nz, .bit4Set ; $49a9
 	jr .loop ; $49ab
 .bit5Set:
-	ld a, [$d901] ; $49ad
+	ld a, [w3_d901] ; $49ad
 	inc a ; $49b0
-	ld [$d901], a ; $49b1
+	ld [w3_d901], a ; $49b1
 	jr .loop ; $49b4
 .bit4Set:
-	ld a, [$d900] ; $49b6
+	ld a, [w3_d900] ; $49b6
 	inc a ; $49b9
-	ld [$d900], a ; $49ba
+	ld [w3_d900], a ; $49ba
 	jr .loop ; $49bd
 .checkTrophiesCheatCode:
 	bit 2, a ; $49bf
@@ -1579,7 +1579,7 @@ RunTrophiesScreen:
 BuildTrophiesScreen:
 	wram_bank $03 ; $49e5
 	call DecodeTrophyCounts ; $49eb
-	ld a, [$d819] ; $49ee
+	ld a, [w3_d819] ; $49ee
 	or a, a ; $49f1
 	jr nz, .nonZero ; $49f2
 	ld c, $0e ; $49f4
@@ -1591,7 +1591,7 @@ BuildTrophiesScreen:
 .drawTrophiesWonRows:
 	wram_bank $03 ; $4a00
 	call DrawTrophiesWonRows ; $4a06
-	ld a, [$d819] ; $4a09
+	ld a, [w3_d819] ; $4a09
 	or a, a ; $4a0c
 	jr nz, .nonZero2 ; $4a0d
 	ld a, [wStoryModeMainCharacterOverworldSprite] ; $4a0f
@@ -1636,17 +1636,17 @@ BuildTrophiesScreen:
 	farcall QueueWram3MapToVRAM ; $4a6d
 	ret ; $4a70
 DrawTrophiesWonRows:
-	ld a, [$d819] ; $4a71
+	ld a, [w3_d819] ; $4a71
 	or a, a ; $4a74
 	jr nz, .nonZero ; $4a75
-	ld hl, $d800 ; $4a77
+	ld hl, w3_d800 ; $4a77
 	ld de, $d105 ; $4a7a
 	call DrawTrophyRowPair ; $4a7d
 	ld de, $d145 ; $4a80
 	call DrawTrophyRowPair ; $4a83
 	ret ; $4a86
 .nonZero:
-	ld hl, $d800 ; $4a87
+	ld hl, w3_d800 ; $4a87
 	ld de, $d0c5 ; $4a8a
 	call DrawTrophyRowPair ; $4a8d
 	ld de, $d105 ; $4a90
@@ -1751,10 +1751,10 @@ DrawTrophiesCharSprite:
 	ret ; $4b18
 CheckTrophiesCheatCode:
 	sound $22 ; $4b19
-	ld a, [$d900] ; $4b1b
+	ld a, [w3_d900] ; $4b1b
 	cp a, $0c ; $4b1e
 	jp nz, .saveStorySlot ; $4b20
-	ld a, [$d901] ; $4b23
+	ld a, [w3_d901] ; $4b23
 	cp a, $22 ; $4b26
 	jp nz, .saveStorySlot ; $4b28
 	call ApplyUnlockEverythingCheat ; $4b2b
@@ -1870,10 +1870,10 @@ ApplyUnlockEverythingCheat:
 	ret ; $4c52
 DecodeTrophyCounts:
 	wram_bank $03 ; $4c53
-	ld hl, $d800 ; $4c59
+	ld hl, w3_d800 ; $4c59
 	ld bc, $0018 ; $4c5c
 	call ClearBytes ; $4c5f
-	ld de, $d800 ; $4c62
+	ld de, w3_d800 ; $4c62
 	ld a, [$c9b5] ; $4c65
 	and a, $03 ; $4c68
 	ld b, a ; $4c6a
@@ -1884,14 +1884,14 @@ DecodeTrophyCounts:
 	and a, $03 ; $4c76
 	ld b, a ; $4c78
 	call FillTrophyCountCells ; $4c79
-	ld de, $d80c ; $4c7c
+	ld de, w3_d80c ; $4c7c
 	ld a, [$c9b5] ; $4c7f
 	srl a ; $4c82
 	srl a ; $4c84
 	and a, $03 ; $4c86
 	ld b, a ; $4c88
 	call FillTrophyCountCells ; $4c89
-	ld de, $d80f ; $4c8c
+	ld de, w3_d80f ; $4c8c
 	ld a, [$c9b5] ; $4c8f
 	swap a ; $4c92
 	srl a ; $4c94
@@ -1910,14 +1910,14 @@ DecodeTrophyCounts:
 	and a, $03 ; $4cb2
 	ld b, a ; $4cb4
 	call FillTrophyCountCells ; $4cb5
-	ld de, $d812 ; $4cb8
+	ld de, w3_d812 ; $4cb8
 	ld a, [$c9b6] ; $4cbb
 	srl a ; $4cbe
 	srl a ; $4cc0
 	and a, $03 ; $4cc2
 	ld b, a ; $4cc4
 	call FillTrophyCountCells ; $4cc5
-	ld de, $d815 ; $4cc8
+	ld de, w3_d815 ; $4cc8
 	ld a, [$c9b6] ; $4ccb
 	swap a ; $4cce
 	srl a ; $4cd0
@@ -1925,22 +1925,22 @@ DecodeTrophyCounts:
 	and a, $03 ; $4cd4
 	ld b, a ; $4cd6
 	call FillTrophyCountCells ; $4cd7
-	ld a, [$d80c] ; $4cda
+	ld a, [w3_d80c] ; $4cda
 	or a, a ; $4cdd
 	jr nz, .step ; $4cde
-	ld a, [$d80f] ; $4ce0
+	ld a, [w3_d80f] ; $4ce0
 	or a, a ; $4ce3
 	jr nz, .step ; $4ce4
-	ld a, [$d812] ; $4ce6
+	ld a, [w3_d812] ; $4ce6
 	or a, a ; $4ce9
 	jr nz, .step ; $4cea
-	ld a, [$d815] ; $4cec
+	ld a, [w3_d815] ; $4cec
 	or a, a ; $4cef
 	jr nz, .step ; $4cf0
 	jr .done ; $4cf2
 .step:
 	ld a, $01 ; $4cf4
-	ld [$d819], a ; $4cf6
+	ld [w3_d819], a ; $4cf6
 .done:
 	ret ; $4cf9
 RunN64TnmtData:
@@ -2000,7 +2000,7 @@ ScrollN64TnmtDataCursor:
 .step:
 	bit 4, a ; $4d75
 	jr z, .bit4Clear ; $4d77
-	ld a, [$d800] ; $4d79
+	ld a, [w3_d800] ; $4d79
 	or a, a ; $4d7c
 	jr z, .done ; $4d7d
 	ld a, [wResultScreenMode] ; $4d7f
@@ -2014,22 +2014,22 @@ ScrollN64TnmtDataCursor:
 .bit4Clear:
 	bit 6, a ; $4d91
 	jr z, .bit6Clear ; $4d93
-	ld a, [$d802] ; $4d95
+	ld a, [w3_d802] ; $4d95
 	or a, a ; $4d98
 	jr z, .done ; $4d99
 	dec a ; $4d9b
-	ld [$d802], a ; $4d9c
+	ld [w3_d802], a ; $4d9c
 	sound $5e ; $4d9f
 	call RedrawN64TnmtDataWindow ; $4da1
 	jr .done ; $4da4
 .bit6Clear:
 	bit 7, a ; $4da6
 	jr z, .done ; $4da8
-	ld a, [$d802] ; $4daa
+	ld a, [w3_d802] ; $4daa
 	cp a, $0b ; $4dad
 	jr z, .done ; $4daf
 	inc a ; $4db1
-	ld [$d802], a ; $4db2
+	ld [w3_d802], a ; $4db2
 	sound $5e ; $4db5
 	call RedrawN64TnmtDataWindow ; $4db7
 	jr .done ; $4dba
@@ -2040,11 +2040,11 @@ BuildN64TnmtDataScreen:
 	farcall LoadScreenAssetRecord ; $4dbf
 	wram_bank $03 ; $4dc2
 	xor a, a ; $4dc8
-	ld [$d800], a ; $4dc9
+	ld [w3_d800], a ; $4dc9
 	ld a, $00 ; $4dcc
 	ld [wResultScreenMode], a ; $4dce
 	ld a, $00 ; $4dd1
-	ld [$d802], a ; $4dd3
+	ld [w3_d802], a ; $4dd3
 	call LoadN64TnmtDataRecords ; $4dd6
 	wram_bank $03 ; $4dd9
 	ld de, $aac0 ; $4ddf
@@ -2061,11 +2061,11 @@ BuildN64TnmtDataScreen:
 	ret ; $4dfe
 LoadN64TnmtDataRecords:
 	wram_bank $03 ; $4dff
-	ld hl, $d800 ; $4e05
+	ld hl, w3_d800 ; $4e05
 	ld bc, $0080 ; $4e08
 	call ClearMemory16 ; $4e0b
 	ld hl, N64TnmtData ; $4e0e
-	ld de, $d810 ; $4e11
+	ld de, w3_d810 ; $4e11
 	ld bc, $0010 ; $4e14
 	call CopyMemoryBC ; $4e17
 	call ReadN64RecordsSaveBlock ; $4e1a
@@ -2075,20 +2075,20 @@ LoadN64TnmtDataRecords:
 	and a, $01 ; $4e22
 	jr nz, .maskSet ; $4e24
 	ld a, $10 ; $4e26
-	ld [$d81e], a ; $4e28
+	ld [w3_d81e], a ; $4e28
 .maskSet:
 	ld a, b ; $4e2b
 	and a, $02 ; $4e2c
 	jr nz, .buildN64TnmtTrophyGrid ; $4e2e
 	ld a, $10 ; $4e30
-	ld [$d81f], a ; $4e32
+	ld [w3_d81f], a ; $4e32
 .buildN64TnmtTrophyGrid:
 	call BuildN64TnmtTrophyGrid ; $4e35
 	call CheckN64TnmtSecondPage ; $4e38
 	or a, a ; $4e3b
 	jr z, .done ; $4e3c
 	ld a, $01 ; $4e3e
-	ld [$d800], a ; $4e40
+	ld [w3_d800], a ; $4e40
 .done:
 	ret ; $4e43
 N64TnmtData:
@@ -2194,7 +2194,7 @@ FillTrophyCountCells:
 	pop de ; $4ee1
 	ret ; $4ee2
 CheckN64TnmtSecondPage:
-	ld hl, $d832 ; $4ee3
+	ld hl, w3_d832 ; $4ee3
 	ld c, $00 ; $4ee6
 	ld de, $000c ; $4ee8
 .loop:
@@ -2207,7 +2207,7 @@ CheckN64TnmtSecondPage:
 	ld c, a ; $4ef2
 	cp a, $0e ; $4ef3
 	jr nz, .loop ; $4ef5
-	ld hl, $d835 ; $4ef7
+	ld hl, w3_d835 ; $4ef7
 	ld c, $00 ; $4efa
 	ld de, $000c ; $4efc
 .loopB:
@@ -2221,7 +2221,7 @@ CheckN64TnmtSecondPage:
 	cp a, $10 ; $4f07
 	jr nz, .loopB ; $4f09
 .zero:
-	ld hl, $d835 ; $4f0b
+	ld hl, w3_d835 ; $4f0b
 	ld c, $00 ; $4f0e
 	ld de, $000c ; $4f10
 .loop2:
@@ -2234,7 +2234,7 @@ CheckN64TnmtSecondPage:
 	ld c, a ; $4f1a
 	cp a, $0e ; $4f1b
 	jr nz, .loop2 ; $4f1d
-	ld hl, $d832 ; $4f1f
+	ld hl, w3_d832 ; $4f1f
 	ld c, $00 ; $4f22
 	ld de, $000c ; $4f24
 .loop3:
@@ -2267,8 +2267,8 @@ DrawN64TnmtRowIcons:
 	ldh a, [hWramBank] ; $4f49
 	push af ; $4f4b
 	wram_bank $03 ; $4f4c
-	ld hl, $d810 ; $4f52
-	ld a, [$d802] ; $4f55
+	ld hl, w3_d810 ; $4f52
+	ld a, [w3_d802] ; $4f55
 	add a, l ; $4f58
 	ld l, a ; $4f59
 	jr nc, .gotPtr ; $4f5a
@@ -2354,7 +2354,7 @@ DrawN64TnmtPageLabels:
 	ret ; $4fff
 DrawN64TnmtTrophyRows:
 	wram_bank $03 ; $5000
-	ld a, [$d802] ; $5006
+	ld a, [w3_d802] ; $5006
 	add a, a ; $5009
 	ld b, a ; $500a
 	add a, a ; $500b
@@ -2488,7 +2488,7 @@ N64TnmtScrollArrowsTask:
 	ldh a, [hWramBank] ; $50d6
 	push af ; $50d8
 	wram_bank $03 ; $50d9
-	ld a, [$d800] ; $50df
+	ld a, [w3_d800] ; $50df
 	or a, a ; $50e2
 	jr z, .applyCursorBounceX ; $50e3
 	ld a, [wResultScreenMode] ; $50e5
@@ -2513,7 +2513,7 @@ N64TnmtScrollArrowsTask:
 	ld h, $01 ; $510e
 	farcall QueueStackedSpritePair ; $5110
 .zero:
-	ld a, [$d802] ; $5113
+	ld a, [w3_d802] ; $5113
 	or a, a ; $5116
 	jr z, .zero2 ; $5117
 	ld de, $0c32 ; $5119
@@ -2524,7 +2524,7 @@ N64TnmtScrollArrowsTask:
 	ld h, $02 ; $5125
 	farcall QueueStackedSpritePair ; $5127
 .zero2:
-	ld a, [$d802] ; $512a
+	ld a, [w3_d802] ; $512a
 	cp a, $0b ; $512d
 	jr z, .restore ; $512f
 	ld de, $0c88 ; $5131
@@ -2665,13 +2665,13 @@ LoadN64RingShotRecords:
 	and a, $01 ; $5258
 	jr nz, .maskSet ; $525a
 	ld a, $10 ; $525c
-	ld [$dc4e], a ; $525e
+	ld [w3_dc4e], a ; $525e
 .maskSet:
 	ld a, b ; $5261
 	and a, $02 ; $5262
 	jr nz, .maskSet2 ; $5264
 	ld a, $10 ; $5266
-	ld [$dc4f], a ; $5268
+	ld [w3_dc4f], a ; $5268
 .maskSet2:
 	ld hl, $db00 ; $526b
 	ld bc, $0140 ; $526e
@@ -3341,7 +3341,7 @@ LoadMainMenuGfx:
 	wram_bank $03 ; $5713
 	ld a, $00 ; $5719
 	ld [wCurrentStorySlot], a ; $571b
-	ld a, [$d300] ; $571e
+	ld a, [w3_d300] ; $571e
 	farcall LoadCharMugshotToBuffer ; $5721
 	ld de, $b680 ; $5724
 	farcall CopyMugshotBufferToVram ; $5727
@@ -3349,7 +3349,7 @@ LoadMainMenuGfx:
 	wram_bank $03 ; $572d
 	ld a, $01 ; $5733
 	ld [wCurrentStorySlot], a ; $5735
-	ld a, [$d310] ; $5738
+	ld a, [w3_d310] ; $5738
 	farcall LoadCharMugshotToBuffer ; $573b
 	ld de, $b710 ; $573e
 	farcall CopyMugshotBufferToVram ; $5741
@@ -3357,7 +3357,7 @@ LoadMainMenuGfx:
 	wram_bank $03 ; $5747
 	ld a, $02 ; $574d
 	ld [wCurrentStorySlot], a ; $574f
-	ld a, [$d320] ; $5752
+	ld a, [w3_d320] ; $5752
 	farcall LoadCharMugshotToBuffer ; $5755
 	ld de, $af00 ; $5758
 	farcall CopyMugshotBufferToVram ; $575b
@@ -3632,7 +3632,7 @@ DrawMainMenuSelection:
 	add a, a ; $5997
 	add a, a ; $5998
 	add a, a ; $5999
-	ld bc, $d300 ; $599a
+	ld bc, w3_d300 ; $599a
 	add a, c ; $599d
 	ld c, a ; $599e
 	jr nc, .gotPtr ; $599f
@@ -3785,10 +3785,10 @@ BuildSaveSlotSummaries:
 	ldh a, [hWramBank] ; $5aac
 	push af ; $5aae
 	wram_bank $03 ; $5aaf
-	ld hl, $d300 ; $5ab5
+	ld hl, w3_d300 ; $5ab5
 	ld bc, $0003 ; $5ab8
 	call ClearMemory16 ; $5abb
-	ld bc, $d300 ; $5abe
+	ld bc, w3_d300 ; $5abe
 	ld a, $80 ; $5ac1
 .loop:
 	push af ; $5ac3
@@ -3871,7 +3871,7 @@ DrawMainMenuCaption:
 	add a, a ; $5b5a
 	add a, a ; $5b5b
 	add a, a ; $5b5c
-	ld bc, $d300 ; $5b5d
+	ld bc, w3_d300 ; $5b5d
 	add a, c ; $5b60
 	ld c, a ; $5b61
 	jr nc, .gotPtr ; $5b62
@@ -5604,7 +5604,7 @@ RunSavedDataSourceSelect:
 	add a, a ; $6820
 	add a, a ; $6821
 	add a, a ; $6822
-	ld bc, $d300 ; $6823
+	ld bc, w3_d300 ; $6823
 	add a, c ; $6826
 	ld c, a ; $6827
 	jr nc, .gotPtr ; $6828
@@ -5666,7 +5666,7 @@ LoadSavedDataSourceGfx:
 	wram_bank $03 ; $68a7
 	ld a, $00 ; $68ad
 	ld [wCurrentStorySlot], a ; $68af
-	ld a, [$d300] ; $68b2
+	ld a, [w3_d300] ; $68b2
 	farcall LoadCharMugshotToBuffer ; $68b5
 	ld de, $b680 ; $68b8
 	farcall CopyMugshotBufferToVram ; $68bb
@@ -5674,7 +5674,7 @@ LoadSavedDataSourceGfx:
 	wram_bank $03 ; $68c1
 	ld a, $01 ; $68c7
 	ld [wCurrentStorySlot], a ; $68c9
-	ld a, [$d310] ; $68cc
+	ld a, [w3_d310] ; $68cc
 	farcall LoadCharMugshotToBuffer ; $68cf
 	ld de, $b710 ; $68d2
 	farcall CopyMugshotBufferToVram ; $68d5
@@ -5682,7 +5682,7 @@ LoadSavedDataSourceGfx:
 	wram_bank $03 ; $68db
 	ld a, $02 ; $68e1
 	ld [wCurrentStorySlot], a ; $68e3
-	ld a, [$d320] ; $68e6
+	ld a, [w3_d320] ; $68e6
 	farcall LoadCharMugshotToBuffer ; $68e9
 	ld de, $af00 ; $68ec
 	farcall CopyMugshotBufferToVram ; $68ef
@@ -5890,7 +5890,7 @@ DrawSavedDataSourceGrid:
 	add a, a ; $6aa7
 	add a, a ; $6aa8
 	add a, a ; $6aa9
-	ld bc, $d300 ; $6aaa
+	ld bc, w3_d300 ; $6aaa
 	add a, c ; $6aad
 	ld c, a ; $6aae
 	jr nc, .gotPtr ; $6aaf
@@ -6029,7 +6029,7 @@ DrawSavedDataSourceCaption:
 	add a, a ; $6b98
 	add a, a ; $6b99
 	add a, a ; $6b9a
-	ld bc, $d300 ; $6b9b
+	ld bc, w3_d300 ; $6b9b
 	add a, c ; $6b9e
 	ld c, a ; $6b9f
 	jr nc, .gotPtr ; $6ba0
@@ -6194,7 +6194,7 @@ RunEraseSavedDataSelect:
 	add a, a ; $6ce6
 	add a, a ; $6ce7
 	add a, a ; $6ce8
-	ld bc, $d300 ; $6ce9
+	ld bc, w3_d300 ; $6ce9
 	add a, c ; $6cec
 	ld c, a ; $6ced
 	jr nc, .gotPtr ; $6cee
@@ -6239,7 +6239,7 @@ LoadEraseSavedDataGfx:
 	wram_bank $03 ; $6d3a
 	ld a, $00 ; $6d40
 	ld [wCurrentStorySlot], a ; $6d42
-	ld a, [$d300] ; $6d45
+	ld a, [w3_d300] ; $6d45
 	farcall LoadCharMugshotToBuffer ; $6d48
 	ld de, $b680 ; $6d4b
 	farcall CopyMugshotBufferToVram ; $6d4e
@@ -6247,7 +6247,7 @@ LoadEraseSavedDataGfx:
 	wram_bank $03 ; $6d54
 	ld a, $01 ; $6d5a
 	ld [wCurrentStorySlot], a ; $6d5c
-	ld a, [$d310] ; $6d5f
+	ld a, [w3_d310] ; $6d5f
 	farcall LoadCharMugshotToBuffer ; $6d62
 	ld de, $b710 ; $6d65
 	farcall CopyMugshotBufferToVram ; $6d68
@@ -6255,7 +6255,7 @@ LoadEraseSavedDataGfx:
 	wram_bank $03 ; $6d6e
 	ld a, $02 ; $6d74
 	ld [wCurrentStorySlot], a ; $6d76
-	ld a, [$d320] ; $6d79
+	ld a, [w3_d320] ; $6d79
 	farcall LoadCharMugshotToBuffer ; $6d7c
 	ld de, $af00 ; $6d7f
 	farcall CopyMugshotBufferToVram ; $6d82
@@ -6599,7 +6599,7 @@ DrawEraseSavedDataGrid:
 	add a, a ; $7024
 	add a, a ; $7025
 	add a, a ; $7026
-	ld bc, $d300 ; $7027
+	ld bc, w3_d300 ; $7027
 	add a, c ; $702a
 	ld c, a ; $702b
 	jr nc, .gotPtr ; $702c
@@ -6738,7 +6738,7 @@ DrawEraseSavedDataCaption:
 	add a, a ; $7115
 	add a, a ; $7116
 	add a, a ; $7117
-	ld bc, $d300 ; $7118
+	ld bc, w3_d300 ; $7118
 	add a, c ; $711b
 	ld c, a ; $711c
 	jr nc, .gotPtr ; $711d
@@ -7580,7 +7580,7 @@ N64TransferItemCursorSpriteTaskTable1:
 ShowTournamentBracket:
 	wram_bank $03 ; $775d
 	ld a, b ; $7763
-	ld [$d800], a ; $7764
+	ld [w3_d800], a ; $7764
 	ld a, c ; $7767
 	ld [wResultScreenMode], a ; $7768
 	call DisableLCDSafely ; $776b
@@ -7610,7 +7610,7 @@ ShowTournamentBracket:
 	call WaitFadeEnd ; $77a3
 	ret ; $77a6
 BuildTournamentBracketScreen:
-	ld a, [$d800] ; $77a7
+	ld a, [w3_d800] ; $77a7
 	or a, a ; $77aa
 	jr nz, .nonZero ; $77ab
 	ld c, $25 ; $77ad
@@ -7648,7 +7648,7 @@ ClearTournamentBracketAttrs:
 	farcall FillTilemapRect ; $7800
 	ret ; $7803
 DrawTournamentBracketNameBoxes:
-	ld a, [$d800] ; $7804
+	ld a, [w3_d800] ; $7804
 	or a, a ; $7807
 	jr nz, .nonZero ; $7808
 	ld de, $d109 ; $780a
@@ -7830,7 +7830,7 @@ WriteBracketDoublesNames:
 	farcall RenderTextToBuffer64 ; $7941
 	ret ; $7944
 HighlightBracketPlayerRow:
-	ld a, [$d800] ; $7945
+	ld a, [w3_d800] ; $7945
 	or a, a ; $7948
 	jr nz, .nonZero ; $7949
 	ld a, [wResultScreenMode] ; $794b
@@ -8072,8 +8072,8 @@ StarChartScrollArrowsTask:
 BuildStarCharExhibScreen:
 	wram_bank $03 ; $7b11
 	xor a, a ; $7b17
-	ld [$dc13], a ; $7b18
-	ld [$dc12], a ; $7b1b
+	ld [w3_dc13], a ; $7b18
+	ld [w3_dc12], a ; $7b1b
 	ld c, $0c ; $7b1e
 	farcall LoadScreenAssetRecord ; $7b20
 	ld de, $aac0 ; $7b23
@@ -8176,7 +8176,7 @@ RedrawStarChartWindow:
 	jr z, .compact ; $7bf4
 	ld bc, $d0a4 ; $7bf6
 	ld a, [wMenuCursorX] ; $7bf9
-	ld hl, $dc01 ; $7bfc
+	ld hl, w3_dc01 ; $7bfc
 	add a, l ; $7bff
 	ld l, a ; $7c00
 	jr nc, .wideRow ; $7c01
@@ -8185,7 +8185,7 @@ RedrawStarChartWindow:
 	ld a, $07 ; $7c04
 	call DrawChartIconRow ; $7c06
 	ld a, [wMenuCursorY] ; $7c09
-	ld hl, $dc01 ; $7c0c
+	ld hl, w3_dc01 ; $7c0c
 	add a, l ; $7c0f
 	ld l, a ; $7c10
 	jr nc, .wideColumn ; $7c11
@@ -8216,7 +8216,7 @@ RedrawStarChartWindow:
 .compact:
 	ld bc, $d0a6 ; $7c3c
 	ld a, [wMenuCursorX] ; $7c3f
-	ld hl, $dc01 ; $7c42
+	ld hl, w3_dc01 ; $7c42
 	add a, l ; $7c45
 	ld l, a ; $7c46
 	jr nc, .compactRow ; $7c47
@@ -8225,7 +8225,7 @@ RedrawStarChartWindow:
 	ld a, $05 ; $7c4a
 	call DrawChartIconRow ; $7c4c
 	ld a, [wMenuCursorY] ; $7c4f
-	ld hl, $dc01 ; $7c52
+	ld hl, w3_dc01 ; $7c52
 	add a, l ; $7c55
 	ld l, a ; $7c56
 	jr nc, .compactColumn ; $7c57
@@ -8314,7 +8314,7 @@ BuildStarChartColumnList:
 .readB:
 	ld b, [hl] ; $7cf1
 .step2:
-	ld hl, $dc01 ; $7cf2
+	ld hl, w3_dc01 ; $7cf2
 	ld a, c ; $7cf5
 	add a, l ; $7cf6
 	ld l, a ; $7cf7
@@ -8347,9 +8347,9 @@ LoadStarCharExhibGrid:
 	ldh a, [hWramBank] ; $7d1e
 	push af ; $7d20
 	wram_bank $03 ; $7d21
-	ld hl, $d900 ; $7d27
+	ld hl, w3_d900 ; $7d27
 	farcall ReadStarVictoryGrid ; $7d2a
-	ld hl, $d900 ; $7d2d
+	ld hl, w3_d900 ; $7d2d
 	ld de, $db00 ; $7d30
 	ld c, $00 ; $7d33
 .loop:
@@ -8400,7 +8400,7 @@ RecordExhibitionVictory:
 	ld a, [wPlayer2CurrentMainCharacter] ; $7d8a
 	call GetStarCharIndex ; $7d8d
 	ld e, a ; $7d90
-	ld hl, $d900 ; $7d91
+	ld hl, w3_d900 ; $7d91
 	farcall ReadStarVictoryGrid ; $7d94
 	ld a, d ; $7d97
 	add a, a ; $7d98
@@ -8408,7 +8408,7 @@ RecordExhibitionVictory:
 	add a, a ; $7d9a
 	add a, d ; $7d9b
 	add a, e ; $7d9c
-	ld hl, $d900 ; $7d9d
+	ld hl, w3_d900 ; $7d9d
 	add a, l ; $7da0
 	ld l, a ; $7da1
 	jr nc, .checkExhibitionModeCPUMainCharacterDifficulty ; $7da2
@@ -8423,7 +8423,7 @@ RecordExhibitionVictory:
 	jr c, .restore ; $7daf
 	ld [hl], a ; $7db1
 	call UpdateStarUnlocks ; $7db2
-	ld hl, $d900 ; $7db5
+	ld hl, w3_d900 ; $7db5
 	farcall WriteStarVictoryGrid ; $7db8
 .step2:
 	jr nz, .step2 ; $7dbb
@@ -8472,7 +8472,7 @@ StarCharOrderTable:
 UpdateStarUnlocks:
 	ld c, $00 ; $7df6
 .loop:
-	ld hl, $d900 ; $7df8
+	ld hl, w3_d900 ; $7df8
 	ld a, c ; $7dfb
 	add a, a ; $7dfc
 	add a, a ; $7dfd
@@ -8512,7 +8512,7 @@ CheckStarChartExpanded:
 	push af ; $7e27
 	push bc ; $7e28
 	ld b, $10 ; $7e29
-	ld a, [$dc07] ; $7e2b
+	ld a, [w3_dc07] ; $7e2b
 	cp a, $10 ; $7e2e
 	jr z, .notExpanded ; $7e30
 	pop bc ; $7e32
@@ -8561,8 +8561,8 @@ CopyStarChartReducedTilemap:
 	farcall CopyTilemapRect ; $7e80
 	ret ; $7e83
 FixupStarChartHeaderRow:
-	ld a, [$dc06] ; $7e84
-	ld [$dc05], a ; $7e87
+	ld a, [w3_dc06] ; $7e84
+	ld [w3_dc05], a ; $7e87
 	ret ; $7e8a
 CompactStarChartRows:
 	ld hl, $db50 ; $7e8b

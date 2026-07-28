@@ -824,7 +824,7 @@ ShowDrillMessageByIndex:
 	ldh a, [hWramBank] ; $45a1
 	push af ; $45a3
 	wram_bank $05 ; $45a4
-	ld a, [$d86f] ; $45aa
+	ld a, [w5_d86f] ; $45aa
 	ld e, a ; $45ad
 	pop af ; $45ae
 	wram_bank ; $45af

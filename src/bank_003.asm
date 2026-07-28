@@ -3932,13 +3932,13 @@ RunScrollingTextScreen:
 	call WaitFadeEnd ; $59fc
 .loop:
 	wram_bank $06 ; $59ff
-	ld a, [$d230] ; $5a05
+	ld a, [w6_d230] ; $5a05
 	dec a ; $5a08
-	ld [$d230], a ; $5a09
+	ld [w6_d230], a ; $5a09
 	jr nz, .checkDebugStepMode ; $5a0c
 	ld a, $02 ; $5a0e
-	ld [$d230], a ; $5a10
-	ld a, [$d234] ; $5a13
+	ld [w6_d230], a ; $5a10
+	ld a, [w6_d234] ; $5a13
 	and a, a ; $5a16
 	jr nz, .checkDebugStepMode ; $5a17
 	ldh a, [hScrollY] ; $5a19
@@ -3959,7 +3959,7 @@ RunScrollingTextScreen:
 	jr nz, .nonZero ; $5a3a
 	wram_bank $06 ; $5a3c
 	ld a, $01 ; $5a42
-	ld [$d234], a ; $5a44
+	ld [w6_d234], a ; $5a44
 	jr .checkDebugStepMode ; $5a47
 .nonZero:
 	ld de, $0090 ; $5a49
@@ -3987,7 +3987,7 @@ RunScrollingTextScreen:
 	ldh a, [hDebugStepMode] ; $5a73
 	or a, a ; $5a75
 	jr nz, .nonZero2 ; $5a76
-	ld a, [$d234] ; $5a78
+	ld a, [w6_d234] ; $5a78
 	and a, a ; $5a7b
 	jr z, .advanceFrame ; $5a7c
 .nonZero2:
@@ -4014,7 +4014,7 @@ RunScrollingTextScreen:
 	ret ; $5aa8
 InitScrollingTextScreen:
 	wram_bank $06 ; $5aa9
-	ld hl, $d230 ; $5aaf
+	ld hl, w6_d230 ; $5aaf
 	ld a, $02 ; $5ab2
 	ld [hl+], a ; $5ab4
 	ld [hl+], a ; $5ab5
@@ -4023,7 +4023,7 @@ InitScrollingTextScreen:
 	ld [hl+], a ; $5aba
 	ld [hl], d ; $5abb
 	xor a, a ; $5abc
-	ld [$d234], a ; $5abd
+	ld [w6_d234], a ; $5abd
 	wram_bank $02 ; $5ac0
 	ld bc, $0400 ; $5ac6
 	ld d, $00 ; $5ac9
@@ -5996,7 +5996,7 @@ BackupMasterPalettes:
 	dec b ; $75f4
 	jr nz, .loop ; $75f5
 	ld hl, wMasterPalettes ; $75f7
-	ld de, $d0a0 ; $75fa
+	ld de, w6_d0a0 ; $75fa
 	ld b, $80 ; $75fd
 .loopB:
 	ld a, [hl+] ; $75ff
@@ -6006,7 +6006,7 @@ BackupMasterPalettes:
 	jr nz, .loopB ; $7603
 	ret ; $7605
 ClearWorkingPaletteBuffer:
-	ld hl, $d0a0 ; $7606
+	ld hl, w6_d0a0 ; $7606
 	ld b, $40 ; $7609
 	ld de, $0000 ; $760b
 .loop:
@@ -6018,7 +6018,7 @@ ClearWorkingPaletteBuffer:
 	jr nz, .loop ; $7613
 	ret ; $7615
 DesaturateWorkingPalettes:
-	ld hl, $d0a0 ; $7616
+	ld hl, w6_d0a0 ; $7616
 	ld de, $d1f2 ; $7619
 	ld b, $40 ; $761c
 .loop:
@@ -6246,7 +6246,7 @@ AnimatePaletteFadeToTarget:
 StepPaletteColorsTowardTarget:
 	ld a, b ; $7764
 	ld [$d1f1], a ; $7765
-	ld hl, $d0a0 ; $7768
+	ld hl, w6_d0a0 ; $7768
 	call AdvanceToPaletteEntry ; $776b
 	ld d, h ; $776e
 	ld e, l ; $776f
@@ -6336,7 +6336,7 @@ SnapPalettesToTarget:
 	and a, a ; $77ea
 	jr z, .restore ; $77eb
 	ld c, b ; $77ed
-	ld hl, $d0a0 ; $77ee
+	ld hl, w6_d0a0 ; $77ee
 	call AdvanceToPaletteEntry ; $77f1
 	ld d, h ; $77f4
 	ld e, l ; $77f5

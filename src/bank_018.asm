@@ -1444,12 +1444,12 @@ PlayScreenSequence0:
 	call WaitFadeEnd ; $76c2
 	wram_bank $03 ; $76c5
 	xor a, a ; $76cb
-	ld [$da01], a ; $76cc
+	ld [w3_da01], a ; $76cc
 .scrollLoop:
 	call AdvanceFrame ; $76cf
-	ld a, [$da01] ; $76d2
+	ld a, [w3_da01] ; $76d2
 	inc a ; $76d5
-	ld [$da01], a ; $76d6
+	ld [w3_da01], a ; $76d6
 	cp a, $fa ; $76d9
 	jr nz, .scrollLoop ; $76db
 	farcall InitGrayscalePaletteFade ; $76dd
@@ -1555,15 +1555,15 @@ PlayScreenSequence1:
 	call WaitFadeEnd ; $77db
 	wram_bank $03 ; $77de
 	xor a, a ; $77e4
-	ld [$da01], a ; $77e5
+	ld [w3_da01], a ; $77e5
 .scrollLoop:
 	call AdvanceFrame ; $77e8
 	ldh a, [hVBlankCounter] ; $77eb
 	and a, $03 ; $77ed
 	jr nz, .scrollLoop ; $77ef
-	ld a, [$da01] ; $77f1
+	ld a, [w3_da01] ; $77f1
 	inc a ; $77f4
-	ld [$da01], a ; $77f5
+	ld [w3_da01], a ; $77f5
 	cp a, $af ; $77f8
 	jr nz, .scrollLoop ; $77fa
 	ld c, $01 ; $77fc
@@ -1722,7 +1722,7 @@ PlayScreenSequence2:
 .scene3:
 	wram_bank $03 ; $798a
 	xor a, a ; $7990
-	ld [$da00], a ; $7991
+	ld [w3_da00], a ; $7991
 	call ClearFrameTasks ; $7994
 	call ResetScrollAndCamera ; $7997
 	call DisableLCDSafely ; $799a
@@ -1735,12 +1735,12 @@ PlayScreenSequence2:
 	call WaitFadeEnd ; $79b1
 	wram_bank $03 ; $79b4
 	xor a, a ; $79ba
-	ld [$da01], a ; $79bb
+	ld [w3_da01], a ; $79bb
 .scene4:
 	call AdvanceFrame ; $79be
-	ld a, [$da01] ; $79c1
+	ld a, [w3_da01] ; $79c1
 	inc a ; $79c4
-	ld [$da01], a ; $79c5
+	ld [w3_da01], a ; $79c5
 	cp a, $b4 ; $79c8
 	jr nz, .scene4 ; $79ca
 	ld a, $01 ; $79cc
@@ -1831,7 +1831,7 @@ TaskFadeInPalette_18:
 	ldh a, [hWramBank] ; $7a81
 	push af ; $7a83
 	wram_bank $03 ; $7a84
-	ld a, [$da00] ; $7a8a
+	ld a, [w3_da00] ; $7a8a
 	cp a, $10 ; $7a8d
 	jr z, .alt2 ; $7a8f
 	add a, a ; $7a91
@@ -1848,9 +1848,9 @@ TaskFadeInPalette_18:
 	ldh a, [hVBlankCounter] ; $7aa2
 	and a, $03 ; $7aa4
 	jr nz, .alt2 ; $7aa6
-	ld a, [$da00] ; $7aa8
+	ld a, [w3_da00] ; $7aa8
 	inc a ; $7aab
-	ld [$da00], a ; $7aac
+	ld [w3_da00], a ; $7aac
 .alt2:
 	pop af ; $7aaf
 	wram_bank ; $7ab0
@@ -1982,7 +1982,7 @@ InitObjectSceneA:
 	ldh a, [hWramBank] ; $7bce
 	push af ; $7bd0
 	wram_bank $03 ; $7bd1
-	ld hl, $d800 ; $7bd7
+	ld hl, w3_d800 ; $7bd7
 	ld bc, $0100 ; $7bda
 	call ClearBytes ; $7bdd
 	call PopulateObjectArrayA ; $7be0
@@ -2013,7 +2013,7 @@ ObjectSceneATilesPalettes:
 PopulateObjectArrayA:
 	ld c, $00 ; $7c27
 	ld hl, ObjectSpawnTable_18_7c53 ; $7c29
-	ld de, $d800 ; $7c2c
+	ld de, w3_d800 ; $7c2c
 .spawnLoop:
 	push af ; $7c2f
 	push bc ; $7c30
@@ -2065,7 +2065,7 @@ InitObjectSceneB:
 	ldh a, [hWramBank] ; $7d03
 	push af ; $7d05
 	wram_bank $03 ; $7d06
-	ld hl, $d800 ; $7d0c
+	ld hl, w3_d800 ; $7d0c
 	ld bc, $0100 ; $7d0f
 	call ClearBytes ; $7d12
 	call PopulateObjectArrayB ; $7d15
@@ -2093,7 +2093,7 @@ Palette_18_7d44:
 PopulateObjectArrayB:
 	ld c, $00 ; $7d5c
 	ld hl, ObjectSpawnTable_18_7d88 ; $7d5e
-	ld de, $d800 ; $7d61
+	ld de, w3_d800 ; $7d61
 .spawnLoop:
 	push af ; $7d64
 	push bc ; $7d65

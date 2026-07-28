@@ -1175,7 +1175,7 @@ CreateMenuWindowFromText:
 	ld a, [$d820] ; $46f8
 	ld b, $02 ; $46fb
 	call SetWindowState ; $46fd
-	ld a, [$d83e] ; $4700
+	ld a, [w5_d83e] ; $4700
 	cp a, $ff ; $4703
 	jr z, .noCursorEntry ; $4705
 	ld hl, $d832 ; $4707
@@ -1183,16 +1183,16 @@ CreateMenuWindowFromText:
 	ld c, a ; $470c
 	ld b, $00 ; $470d
 	add hl, bc ; $470f
-	ld a, [$d830] ; $4710
+	ld a, [w5_d830] ; $4710
 	ld b, a ; $4713
 	ld a, [hl] ; $4714
 	and a, $f0 ; $4715
 	or a, b ; $4717
 	ld [hl], a ; $4718
 .noCursorEntry:
-	ld a, [$d83e] ; $4719
+	ld a, [w5_d83e] ; $4719
 	inc a ; $471c
-	ld [$d83e], a ; $471d
+	ld [w5_d83e], a ; $471d
 	ld hl, $d832 ; $4720
 	sla a ; $4723
 	ld c, a ; $4725
@@ -1205,10 +1205,10 @@ CreateMenuWindowFromText:
 	sla a ; $4732
 	ld [hl+], a ; $4734
 	ld a, [$d820] ; $4735
-	ld [$d82f], a ; $4738
+	ld [w5_d82f], a ; $4738
 	ld [hl], a ; $473b
 	xor a, a ; $473c
-	ld [$d830], a ; $473d
+	ld [w5_d830], a ; $473d
 	ld a, [$d820] ; $4740
 .done:
 	pop hl ; $4743
@@ -1267,13 +1267,13 @@ RunMenuSelection:
 	push af ; $4784
 	wram_bank $05 ; $4785
 	xor a, a ; $478b
-	ld [$d844], a ; $478c
-	ld [$d845], a ; $478f
+	ld [w5_d844], a ; $478c
+	ld [w5_d845], a ; $478f
 	ld a, $ff ; $4792
 	ld hl, $d842 ; $4794
 	ld [hl+], a ; $4797
 	ld [hl], a ; $4798
-	ld a, [$d82f] ; $4799
+	ld a, [w5_d82f] ; $4799
 	call GetWindowStructPtr ; $479c
 	ld d, [hl] ; $479f
 	inc hl ; $47a0
@@ -1284,7 +1284,7 @@ RunMenuSelection:
 	push bc ; $47a5
 	push de ; $47a6
 	push hl ; $47a7
-	ld a, [$d830] ; $47a8
+	ld a, [w5_d830] ; $47a8
 	sla a ; $47ab
 	add a, e ; $47ad
 	ld e, a ; $47ae
@@ -1302,7 +1302,7 @@ RunMenuSelection:
 	pop de ; $47c3
 	pop bc ; $47c4
 	pop af ; $47c5
-	ld a, [$d830] ; $47c6
+	ld a, [w5_d830] ; $47c6
 	ld b, a ; $47c9
 .inputLoop:
 	call AdvanceFrame ; $47ca
@@ -1355,7 +1355,7 @@ RunMenuSelection:
 	add hl, de ; $4819
 	ld d, h ; $481a
 	ld e, l ; $481b
-	ld hl, $d844 ; $481c
+	ld hl, w5_d844 ; $481c
 	ld a, e ; $481f
 	ld [hl+], a ; $4820
 	ld a, d ; $4821
@@ -1379,11 +1379,11 @@ RunMenuSelection:
 	pop hl ; $4838
 	pop de ; $4839
 	ld a, b ; $483a
-	ld [$d830], a ; $483b
+	ld [w5_d830], a ; $483b
 	jr .checkStart ; $483e
 .confirm:
 	ld a, b ; $4840
-	ld [$d830], a ; $4841
+	ld [w5_d830], a ; $4841
 	sound $5f ; $4844
 	push af ; $4846
 	push bc ; $4847
@@ -1392,12 +1392,12 @@ RunMenuSelection:
 	ld hl, AnimateTextArrowTask ; $484a
 	call UnregisterFrameTask ; $484d
 	call AdvanceFrame ; $4850
-	ld a, [$d830] ; $4853
+	ld a, [w5_d830] ; $4853
 	sla a ; $4856
 	inc a ; $4858
 	ld e, a ; $4859
 	ld d, $01 ; $485a
-	ld a, [$d82f] ; $485c
+	ld a, [w5_d82f] ; $485c
 	ld c, $0d ; $485f
 	ld b, $80 ; $4861
 	call WriteWindowCellTileAttr ; $4863
@@ -1440,7 +1440,7 @@ RunMenuSelection:
 	jp z, .inputLoop ; $48aa
 	ld a, $fd ; $48ad
 .cancel:
-	ld [$d830], a ; $48af
+	ld [w5_d830], a ; $48af
 	push af ; $48b2
 	push bc ; $48b3
 	push de ; $48b4
@@ -1448,7 +1448,7 @@ RunMenuSelection:
 	ld hl, AnimateTextArrowTask ; $48b6
 	call UnregisterFrameTask ; $48b9
 	call AdvanceFrame ; $48bc
-	ld a, [$d83e] ; $48bf
+	ld a, [w5_d83e] ; $48bf
 	or a, a ; $48c2
 	jr z, .restored ; $48c3
 	dec a ; $48c5
@@ -1517,18 +1517,18 @@ AnimateTextArrowTask:
 	ld a, [wTextArrowBlinkCounter] ; $4921
 	inc a ; $4924
 	ld [wTextArrowBlinkCounter], a ; $4925
-	ld a, [$d844] ; $4928
+	ld a, [w5_d844] ; $4928
 	or a, a ; $492b
 	jr z, .restore ; $492c
 	ld e, a ; $492e
-	ld a, [$d845] ; $492f
+	ld a, [w5_d845] ; $492f
 	ld d, a ; $4932
 	ld a, $20 ; $4933
 	ld l, a ; $4935
 	ld h, $80 ; $4936
 	call QueueBGTileWrite ; $4938
 	xor a, a ; $493b
-	ld [$d844], a ; $493c
+	ld [w5_d844], a ; $493c
 .restore:
 	pop hl ; $493f
 	pop de ; $4940
@@ -1555,13 +1555,13 @@ RunPagedTextMenu:
 	ld [hl], a ; $495e
 	wram_bank $05 ; $495f
 	xor a, a ; $4965
-	ld [$d846], a ; $4966
+	ld [w5_d846], a ; $4966
 .pageLoop:
 	ld hl, sp + 0 ; $4969
 	ld b, [hl] ; $496b
 	ld hl, sp + 1 ; $496c
 	ld c, [hl] ; $496e
-	ld a, [$d846] ; $496f
+	ld a, [w5_d846] ; $496f
 	ld h, $00 ; $4972
 	ld l, a ; $4974
 	add hl, bc ; $4975
@@ -1572,15 +1572,15 @@ RunPagedTextMenu:
 	call RenderMenuWindowText ; $4980
 	call RunMenuSelection ; $4983
 	push af ; $4986
-	ld a, [$d82f] ; $4987
+	ld a, [w5_d82f] ; $4987
 	call CloseWindow ; $498a
 	ld a, $ff ; $498d
-	ld [$d82f], a ; $498f
+	ld [w5_d82f], a ; $498f
 	pop af ; $4992
 	cp a, $7f ; $4993
 	jr nc, .checkCancel ; $4995
 	ld b, a ; $4997
-	ld a, [$d846] ; $4998
+	ld a, [w5_d846] ; $4998
 	sla a ; $499b
 	sla a ; $499d
 	add a, b ; $499f
@@ -1590,7 +1590,7 @@ RunPagedTextMenu:
 	jr z, .done ; $49a4
 	cp a, $fe ; $49a6
 	jr nz, .pageNext ; $49a8
-	ld a, [$d846] ; $49aa
+	ld a, [w5_d846] ; $49aa
 	dec a ; $49ad
 	cp a, $ff ; $49ae
 	jr nz, .storePagePrev ; $49b0
@@ -1598,10 +1598,10 @@ RunPagedTextMenu:
 	ld a, [hl] ; $49b4
 	dec a ; $49b5
 .storePagePrev:
-	ld [$d846], a ; $49b6
+	ld [w5_d846], a ; $49b6
 	jr .pageLoop ; $49b9
 .pageNext:
-	ld a, [$d846] ; $49bb
+	ld a, [w5_d846] ; $49bb
 	inc a ; $49be
 	ld hl, sp + 2 ; $49bf
 	ld b, [hl] ; $49c1
@@ -1609,10 +1609,10 @@ RunPagedTextMenu:
 	jr c, .storePageNext ; $49c3
 	xor a, a ; $49c5
 .storePageNext:
-	ld [$d846], a ; $49c6
+	ld [w5_d846], a ; $49c6
 	jp .pageLoop ; $49c9
 .done:
-	ld [$d830], a ; $49cc
+	ld [w5_d830], a ; $49cc
 	add sp, 3 ; $49cf
 	ld b, a ; $49d1
 	pop af ; $49d2
@@ -1630,7 +1630,7 @@ StubNop_05_49dc:
 	ldh a, [hWramBank] ; $49e0
 	push af ; $49e2
 	wram_bank $05 ; $49e3
-	ld a, [$d830] ; $49e9
+	ld a, [w5_d830] ; $49e9
 	pop af ; $49ec
 	wram_bank ; $49ed
 	pop hl ; $49f1
@@ -1658,7 +1658,7 @@ RunPagedTextMenuAutoSize:
 	ld [hl], a ; $4a10
 	wram_bank $05 ; $4a11
 	xor a, a ; $4a17
-	ld [$d846], a ; $4a18
+	ld [w5_d846], a ; $4a18
 	ld a, $01 ; $4a1b
 	ld hl, StubNop_05_49dc ; $4a1d
 	call RegisterFrameTask ; $4a20
@@ -1673,7 +1673,7 @@ RunPagedTextMenuAutoSize:
 	ld b, [hl] ; $4a31
 	ld hl, sp + 1 ; $4a32
 	ld c, [hl] ; $4a34
-	ld a, [$d846] ; $4a35
+	ld a, [w5_d846] ; $4a35
 	ld h, $00 ; $4a38
 	ld l, a ; $4a3a
 	add hl, bc ; $4a3b
@@ -1683,15 +1683,15 @@ RunPagedTextMenuAutoSize:
 	call StubNop_05_4626 ; $4a44
 	call RunMenuSelection ; $4a47
 	push af ; $4a4a
-	ld a, [$d82f] ; $4a4b
+	ld a, [w5_d82f] ; $4a4b
 	call CloseWindow ; $4a4e
 	ld a, $ff ; $4a51
-	ld [$d82f], a ; $4a53
+	ld [w5_d82f], a ; $4a53
 	pop af ; $4a56
 	cp a, $7f ; $4a57
 	jr nc, .compare ; $4a59
 	ld b, a ; $4a5b
-	ld a, [$d846] ; $4a5c
+	ld a, [w5_d846] ; $4a5c
 	sla a ; $4a5f
 	sla a ; $4a61
 	add a, b ; $4a63
@@ -1701,7 +1701,7 @@ RunPagedTextMenuAutoSize:
 	jr z, .store3 ; $4a68
 	cp a, $fe ; $4a6a
 	jr nz, .nefe ; $4a6c
-	ld a, [$d846] ; $4a6e
+	ld a, [w5_d846] ; $4a6e
 	dec a ; $4a71
 	cp a, $ff ; $4a72
 	jr nz, .store ; $4a74
@@ -1709,10 +1709,10 @@ RunPagedTextMenuAutoSize:
 	ld a, [hl] ; $4a78
 	dec a ; $4a79
 .store:
-	ld [$d846], a ; $4a7a
+	ld [w5_d846], a ; $4a7a
 	jr .loop ; $4a7d
 .nefe:
-	ld a, [$d846] ; $4a7f
+	ld a, [w5_d846] ; $4a7f
 	inc a ; $4a82
 	ld hl, sp + 2 ; $4a83
 	ld b, [hl] ; $4a85
@@ -1720,10 +1720,10 @@ RunPagedTextMenuAutoSize:
 	jr c, .store2 ; $4a87
 	xor a, a ; $4a89
 .store2:
-	ld [$d846], a ; $4a8a
+	ld [w5_d846], a ; $4a8a
 	jp .loop ; $4a8d
 .store3:
-	ld [$d830], a ; $4a90
+	ld [w5_d830], a ; $4a90
 	add sp, 3 ; $4a93
 	push af ; $4a95
 	ld hl, StubNop_05_49dc ; $4a96
@@ -1745,13 +1745,13 @@ RunMenuSelectionShared:
 	push af ; $4aad
 	wram_bank $05 ; $4aae
 	xor a, a ; $4ab4
-	ld [$d844], a ; $4ab5
-	ld [$d845], a ; $4ab8
+	ld [w5_d844], a ; $4ab5
+	ld [w5_d845], a ; $4ab8
 	ld a, $ff ; $4abb
 	ld hl, $d842 ; $4abd
 	ld [hl+], a ; $4ac0
 	ld [hl], a ; $4ac1
-	ld a, [$d82f] ; $4ac2
+	ld a, [w5_d82f] ; $4ac2
 	call GetWindowStructPtr ; $4ac5
 	ld d, [hl] ; $4ac8
 	inc hl ; $4ac9
@@ -1763,10 +1763,10 @@ RunMenuSelectionShared:
 	push de ; $4acf
 	push hl ; $4ad0
 	ld a, [wMenuInitialRow] ; $4ad1
-	ld [$d830], a ; $4ad4
+	ld [w5_d830], a ; $4ad4
 	xor a, a ; $4ad7
 	ld [wMenuInitialRow], a ; $4ad8
-	ld a, [$d830] ; $4adb
+	ld a, [w5_d830] ; $4adb
 	sla a ; $4ade
 	add a, e ; $4ae0
 	ld e, a ; $4ae1
@@ -1784,7 +1784,7 @@ RunMenuSelectionShared:
 	pop de ; $4af6
 	pop bc ; $4af7
 	pop af ; $4af8
-	ld a, [$d830] ; $4af9
+	ld a, [w5_d830] ; $4af9
 	ld b, a ; $4afc
 .loop:
 	call AdvanceFrame ; $4afd
@@ -1836,7 +1836,7 @@ RunMenuSelectionShared:
 	add hl, de ; $4b4b
 	ld d, h ; $4b4c
 	ld e, l ; $4b4d
-	ld hl, $d844 ; $4b4e
+	ld hl, w5_d844 ; $4b4e
 	ld a, e ; $4b51
 	ld [hl+], a ; $4b52
 	ld a, d ; $4b53
@@ -1861,7 +1861,7 @@ LoadOverworldSpriteDef:
 	pop hl ; $4b6a
 	pop de ; $4b6b
 	ld a, b ; $4b6c
-	ld [$d830], a ; $4b6d
+	ld [w5_d830], a ; $4b6d
 	jr .checkInputRisingEdge ; $4b70
 .isCursorOnAdjustRow:
 	call IsCursorOnAdjustRow ; $4b72
@@ -1869,7 +1869,7 @@ LoadOverworldSpriteDef:
 	jr nz, RunMenuSelectionShared.loop ; $4b76
 	sound $5f ; $4b78
 	ld a, b ; $4b7a
-	ld [$d830], a ; $4b7b
+	ld [w5_d830], a ; $4b7b
 	push af ; $4b7e
 	push bc ; $4b7f
 	push de ; $4b80
@@ -1877,12 +1877,12 @@ LoadOverworldSpriteDef:
 	ld hl, AnimateMenuScrollArrowsTask ; $4b82
 	call UnregisterFrameTask ; $4b85
 	call AdvanceFrame ; $4b88
-	ld a, [$d830] ; $4b8b
+	ld a, [w5_d830] ; $4b8b
 	sla a ; $4b8e
 	inc a ; $4b90
 	ld e, a ; $4b91
 	ld d, $01 ; $4b92
-	ld a, [$d82f] ; $4b94
+	ld a, [w5_d82f] ; $4b94
 	ld c, $0d ; $4b97
 	ld b, $80 ; $4b99
 	call WriteWindowCellTileAttr ; $4b9b
@@ -1960,14 +1960,14 @@ LoadOverworldSpriteDef:
 	jp z, RunMenuSelectionShared.loop ; $4c26
 	ld a, $fd ; $4c29
 .store:
-	ld [$d830], a ; $4c2b
+	ld [w5_d830], a ; $4c2b
 	jr .unregisterFrameTask ; $4c2e
 .restore2:
 	pop hl ; $4c30
 	pop de ; $4c31
 	pop bc ; $4c32
 	pop af ; $4c33
-	ld a, [$d830] ; $4c34
+	ld a, [w5_d830] ; $4c34
 .unregisterFrameTask:
 	push af ; $4c37
 	push bc ; $4c38
@@ -1976,7 +1976,7 @@ LoadOverworldSpriteDef:
 	ld hl, AnimateMenuScrollArrowsTask ; $4c3b
 	call UnregisterFrameTask ; $4c3e
 	call AdvanceFrame ; $4c41
-	ld a, [$d83e] ; $4c44
+	ld a, [w5_d83e] ; $4c44
 	or a, a ; $4c47
 	jr z, .restore3 ; $4c48
 	dec a ; $4c4a
@@ -2017,7 +2017,7 @@ IsCursorOnAdjustRow:
 	jr z, .restore ; $4c7c
 	and a, $7f ; $4c7e
 	ld b, a ; $4c80
-	ld a, [$d830] ; $4c81
+	ld a, [w5_d830] ; $4c81
 	inc a ; $4c84
 .loop:
 	rrc b ; $4c85
@@ -2043,7 +2043,7 @@ AnimateMenuScrollArrowsTask:
 	jr z, .checkFlag ; $4ca8
 	and a, $7f ; $4caa
 	ld b, a ; $4cac
-	ld a, [$d830] ; $4cad
+	ld a, [w5_d830] ; $4cad
 	inc a ; $4cb0
 .loop:
 	rrc b ; $4cb1
@@ -2108,33 +2108,33 @@ AnimateMenuScrollArrowsTask:
 	ld a, [wTextArrowBlinkCounter] ; $4d20
 	inc a ; $4d23
 	ld [wTextArrowBlinkCounter], a ; $4d24
-	ld a, [$d845] ; $4d27
+	ld a, [w5_d845] ; $4d27
 	or a, a ; $4d2a
 	jr z, .done ; $4d2b
 	ld d, a ; $4d2d
-	ld a, [$d844] ; $4d2e
+	ld a, [w5_d844] ; $4d2e
 	ld e, a ; $4d31
 	ld a, $20 ; $4d32
 	ld l, a ; $4d34
 	ld h, $80 ; $4d35
 	call QueueBGTileWrite ; $4d37
 	xor a, a ; $4d3a
-	ld [$d845], a ; $4d3b
+	ld [w5_d845], a ; $4d3b
 .done:
 	ret ; $4d3e
 .step5:
-	ld a, [$d845] ; $4d3f
+	ld a, [w5_d845] ; $4d3f
 	or a, a ; $4d42
 	jr z, .zero2 ; $4d43
 	ld d, a ; $4d45
-	ld a, [$d844] ; $4d46
+	ld a, [w5_d844] ; $4d46
 	ld e, a ; $4d49
 	ld a, $20 ; $4d4a
 	ld l, a ; $4d4c
 	ld h, $80 ; $4d4d
 	call QueueBGTileWrite ; $4d4f
 	xor a, a ; $4d52
-	ld [$d845], a ; $4d53
+	ld [w5_d845], a ; $4d53
 .zero2:
 	wram_bank $05 ; $4d56
 	ld hl, wTextArrowBlinkCounter ; $4d5c
@@ -2151,7 +2151,7 @@ AnimateMenuScrollArrowsTask:
 	ld l, $20 ; $4d75
 	ld de, $0b03 ; $4d77
 	farcall QueueWindowTileWrite ; $4d7a
-	ld a, [$d830] ; $4d7d
+	ld a, [w5_d830] ; $4d7d
 	and a, a ; $4d80
 	jr nz, .getMenuCursorBlinkPhase ; $4d81
 	call GetMenuCursorBlinkPhase ; $4d83
@@ -2184,7 +2184,7 @@ AnimateMenuScrollArrowsTask:
 	ld l, $20 ; $4dc5
 	ld de, $0d07 ; $4dc7
 	farcall QueueWindowTileWrite ; $4dca
-	ld a, [$d830] ; $4dcd
+	ld a, [w5_d830] ; $4dcd
 	cp a, $03 ; $4dd0
 	jr z, .getMenuCursorBlinkPhase2 ; $4dd2
 	call GetMenuCursorBlinkPhase ; $4dd4
@@ -2734,15 +2734,15 @@ PushTextArgNumber:
 	wram_bank $05 ; $514e
 	ld d, h ; $5154
 	ld e, l ; $5155
-	ld a, [$d848] ; $5156
+	ld a, [w5_d848] ; $5156
 	cp a, $10 ; $5159
 	jr z, .done ; $515b
 	ld b, $00 ; $515d
 	ld c, a ; $515f
 	sla c ; $5160
 	inc a ; $5162
-	ld [$d848], a ; $5163
-	ld [$d84b], a ; $5166
+	ld [w5_d848], a ; $5163
+	ld [w5_d84b], a ; $5166
 	ld hl, wTextArgNumberQueue ; $5169
 	add hl, bc ; $516c
 	ld [hl], e ; $516d
@@ -2772,7 +2772,7 @@ PushTextArgShortTextId:
 	ld c, a ; $5191
 	inc a ; $5192
 	ld [wTextArgShortTextWriteIndex], a ; $5193
-	ld [$d84c], a ; $5196
+	ld [w5_d84c], a ; $5196
 	ld hl, $d8f0 ; $5199
 	add hl, bc ; $519c
 	ld [hl], d ; $519d
@@ -2848,11 +2848,11 @@ MeasureNextArgStringWidth:
 	push bc ; $51fe
 	push hl ; $51ff
 	wram_bank $05 ; $5200
-	ld a, [$d866] ; $5206
+	ld a, [w5_d866] ; $5206
 	ld b, $00 ; $5209
 	ld c, a ; $520b
 	inc a ; $520c
-	ld [$d866], a ; $520d
+	ld [w5_d866], a ; $520d
 	sla c ; $5210
 	ld hl, wTextArgStringQueue ; $5212
 	add hl, bc ; $5215
@@ -2986,16 +2986,16 @@ TextCmdPrintArgNumber:
 	ldh a, [hWramBank] ; $52cf
 	push af ; $52d1
 	wram_bank $05 ; $52d2
-	ld a, [$d84b] ; $52d8
+	ld a, [w5_d84b] ; $52d8
 	ld b, a ; $52db
-	ld a, [$d848] ; $52dc
+	ld a, [w5_d848] ; $52dc
 	cp a, b ; $52df
 	jr z, .restore ; $52e0
 	ld b, $00 ; $52e2
 	ld c, a ; $52e4
 	sla c ; $52e5
 	inc a ; $52e7
-	ld [$d848], a ; $52e8
+	ld [w5_d848], a ; $52e8
 	ld hl, wTextArgNumberQueue ; $52eb
 	add hl, bc ; $52ee
 	ld c, [hl] ; $52ef
@@ -3145,7 +3145,7 @@ Unused_05_SetTextVar:
 	push af ; $53b5
 	wram_bank $05 ; $53b6
 	ld a, b ; $53bc
-	ld [$d85d], a ; $53bd
+	ld [w5_d85d], a ; $53bd
 	pop af ; $53c0
 	wram_bank ; $53c1
 	pop hl ; $53c5
@@ -3860,7 +3860,7 @@ DelayTextCharacter:
 	ld b, $04 ; $57b5
 	jr .waitFrame ; $57b7
 .checkSpeed:
-	ld a, [$d862] ; $57b9
+	ld a, [w5_d862] ; $57b9
 	cp a, $08 ; $57bc
 	jr z, .waitFrame ; $57be
 	push bc ; $57c0
@@ -3930,18 +3930,18 @@ ShowSpeakerDialogue:
 	wram_bank $05 ; $5826
 	xor a, a ; $582c
 	ld [wTextArgStringWriteIndex], a ; $582d
-	ld [$d866], a ; $5830
-	ld [$d848], a ; $5833
-	ld [$d867], a ; $5836
+	ld [w5_d866], a ; $5830
+	ld [w5_d848], a ; $5833
+	ld [w5_d867], a ; $5836
 	ld [wTextArgShortTextWriteIndex], a ; $5839
-	ld [$d868], a ; $583c
+	ld [w5_d868], a ; $583c
 	call AddTextIdOffset ; $583f
 	ld a, b ; $5842
 	cp a, $ff ; $5843
 	jr nz, .store ; $5845
 	ld a, $00 ; $5847
 .store:
-	ld [$d851], a ; $5849
+	ld [w5_d851], a ; $5849
 	call ApplyMessageSpeed ; $584c
 	bit 7, a ; $584f
 	ld b, $08 ; $5851
@@ -3950,7 +3950,7 @@ ShowSpeakerDialogue:
 	ld b, a ; $5858
 .negative:
 	ld a, b ; $5859
-	ld [$d862], a ; $585a
+	ld [w5_d862], a ; $585a
 	ld a, [$d824] ; $585d
 	cp a, $ff ; $5860
 	jr nz, .loop ; $5862
@@ -4020,18 +4020,18 @@ ShowSpeakerDialogueRestoreBG:
 	wram_bank $05 ; $58f7
 	xor a, a ; $58fd
 	ld [wTextArgStringWriteIndex], a ; $58fe
-	ld [$d866], a ; $5901
-	ld [$d848], a ; $5904
-	ld [$d867], a ; $5907
+	ld [w5_d866], a ; $5901
+	ld [w5_d848], a ; $5904
+	ld [w5_d867], a ; $5907
 	ld [wTextArgShortTextWriteIndex], a ; $590a
-	ld [$d868], a ; $590d
+	ld [w5_d868], a ; $590d
 	call AddTextIdOffset ; $5910
 	ld a, b ; $5913
 	cp a, $ff ; $5914
 	jr nz, .store ; $5916
 	ld a, $00 ; $5918
 .store:
-	ld [$d851], a ; $591a
+	ld [w5_d851], a ; $591a
 	call ApplyMessageSpeed ; $591d
 	bit 7, a ; $5920
 	ld b, $08 ; $5922
@@ -4040,7 +4040,7 @@ ShowSpeakerDialogueRestoreBG:
 	ld b, a ; $5929
 .negative:
 	ld a, b ; $592a
-	ld [$d862], a ; $592b
+	ld [w5_d862], a ; $592b
 	ld a, [$d824] ; $592e
 	cp a, $ff ; $5931
 	jr nz, .loop ; $5933
@@ -4104,11 +4104,11 @@ ShowDialogueAtPosition:
 	wram_bank $05 ; $59b7
 	xor a, a ; $59bd
 	ld [wTextArgStringWriteIndex], a ; $59be
-	ld [$d866], a ; $59c1
-	ld [$d848], a ; $59c4
-	ld [$d867], a ; $59c7
+	ld [w5_d866], a ; $59c1
+	ld [w5_d848], a ; $59c4
+	ld [w5_d867], a ; $59c7
 	ld [wTextArgShortTextWriteIndex], a ; $59ca
-	ld [$d868], a ; $59cd
+	ld [w5_d868], a ; $59cd
 	call AddTextIdOffset ; $59d0
 	ld a, b ; $59d3
 	bit 7, a ; $59d4
@@ -4118,7 +4118,7 @@ ShowDialogueAtPosition:
 	ld b, a ; $59dd
 .applyMessageSpeed:
 	ld a, b ; $59de
-	ld [$d862], a ; $59df
+	ld [w5_d862], a ; $59df
 	call ApplyMessageSpeed ; $59e2
 	ld a, [$d824] ; $59e5
 	cp a, $ff ; $59e8
@@ -4183,7 +4183,7 @@ DrawDialogueAtPosition:
 	jr nz, .store ; $5a69
 	call GetSpeakerVoice ; $5a6b
 .store:
-	ld [$d862], a ; $5a6e
+	ld [w5_d862], a ; $5a6e
 	ld a, [$d824] ; $5a71
 	cp a, $ff ; $5a74
 	jr nz, .loop ; $5a76
@@ -4257,7 +4257,7 @@ OpenSpeechBubble:
 .step2:
 	wram_bank $05 ; $5aee
 	ld a, b ; $5af4
-	ld [$d85c], a ; $5af5
+	ld [w5_d85c], a ; $5af5
 	pop af ; $5af8
 	wram_bank ; $5af9
 	ld b, $14 ; $5afd
@@ -4429,7 +4429,7 @@ MeasureDialogueWidthTiles:
 	wram_bank $05 ; $5c00
 	call FetchDialogueText ; $5c06
 	call FitWindowToText ; $5c09
-	ld a, [$d854] ; $5c0c
+	ld a, [w5_d854] ; $5c0c
 	ld b, a ; $5c0f
 	pop af ; $5c10
 	wram_bank ; $5c11
@@ -4746,11 +4746,11 @@ RenderProportionalTextAt:
 	call AddTextIdOffset ; $5dd1
 	xor a, a ; $5dd4
 	ld [wTextArgStringWriteIndex], a ; $5dd5
-	ld [$d866], a ; $5dd8
-	ld [$d848], a ; $5ddb
-	ld [$d867], a ; $5dde
+	ld [w5_d866], a ; $5dd8
+	ld [w5_d848], a ; $5ddb
+	ld [w5_d867], a ; $5dde
 	ld [wTextArgShortTextWriteIndex], a ; $5de1
-	ld [$d868], a ; $5de4
+	ld [w5_d868], a ; $5de4
 	ld a, [wShadowTilemapPtr + 1] ; $5de7
 	add a, $03 ; $5dea
 	cp a, d ; $5dec
@@ -4776,7 +4776,7 @@ RenderProportionalTextAt:
 	ld [$cb78], a ; $5e0d
 	ld a, [$d820] ; $5e10
 	ld b, a ; $5e13
-	ld a, [$d82f] ; $5e14
+	ld a, [w5_d82f] ; $5e14
 	cp a, b ; $5e17
 	jr z, .markerChecked ; $5e18
 	ld a, $01 ; $5e1a
@@ -4905,11 +4905,11 @@ Label_05_5ecd:
 	xor a, a ; $5ed7
 	ld [$c362], a ; $5ed8
 	ld [wTextArgStringWriteIndex], a ; $5edb
-	ld [$d866], a ; $5ede
-	ld [$d848], a ; $5ee1
-	ld [$d867], a ; $5ee4
+	ld [w5_d866], a ; $5ede
+	ld [w5_d848], a ; $5ee1
+	ld [w5_d867], a ; $5ee4
 	ld [wTextArgShortTextWriteIndex], a ; $5ee7
-	ld [$d868], a ; $5eea
+	ld [w5_d868], a ; $5eea
 	pop af ; $5eed
 	wram_bank ; $5eee
 	ld hl, wGlyphPenX ; $5ef2
@@ -5553,11 +5553,11 @@ ShowDialogueCentered:
 	wram_bank $05 ; $62ed
 	xor a, a ; $62f3
 	ld [wTextArgStringWriteIndex], a ; $62f4
-	ld [$d866], a ; $62f7
-	ld [$d848], a ; $62fa
-	ld [$d867], a ; $62fd
+	ld [w5_d866], a ; $62f7
+	ld [w5_d848], a ; $62fa
+	ld [w5_d867], a ; $62fd
 	ld [wTextArgShortTextWriteIndex], a ; $6300
-	ld [$d868], a ; $6303
+	ld [w5_d868], a ; $6303
 	call AddTextIdOffset ; $6306
 	call ApplyMessageSpeed ; $6309
 	ld a, [$d824] ; $630c
@@ -5578,11 +5578,11 @@ ShowDialogueCentered:
 	ld [$d824], a ; $6330
 	xor a, a ; $6333
 	ld [wTextArgStringWriteIndex], a ; $6334
-	ld [$d866], a ; $6337
-	ld [$d848], a ; $633a
-	ld [$d867], a ; $633d
+	ld [w5_d866], a ; $6337
+	ld [w5_d848], a ; $633a
+	ld [w5_d867], a ; $633d
 	ld [wTextArgShortTextWriteIndex], a ; $6340
-	ld [$d868], a ; $6343
+	ld [w5_d868], a ; $6343
 	pop af ; $6346
 	wram_bank ; $6347
 	pop de ; $634b
@@ -5667,7 +5667,7 @@ OpenCenteredDialogueWindow:
 .step2:
 	wram_bank $05 ; $63c3
 	ld a, b ; $63c9
-	ld [$d85c], a ; $63ca
+	ld [w5_d85c], a ; $63ca
 	pop af ; $63cd
 	wram_bank ; $63ce
 	ld d, $00 ; $63d2
@@ -6835,11 +6835,11 @@ WriteStringToTilemapStreamed:
 	call AddTextIdOffset ; $6c87
 	xor a, a ; $6c8a
 	ld [wTextArgStringWriteIndex], a ; $6c8b
-	ld [$d866], a ; $6c8e
-	ld [$d848], a ; $6c91
-	ld [$d867], a ; $6c94
+	ld [w5_d866], a ; $6c8e
+	ld [w5_d848], a ; $6c91
+	ld [w5_d867], a ; $6c94
 	ld [wTextArgShortTextWriteIndex], a ; $6c97
-	ld [$d868], a ; $6c9a
+	ld [w5_d868], a ; $6c9a
 	ld a, e ; $6c9d
 	ld [wGlyphVramDest], a ; $6c9e
 	ld a, d ; $6ca1
@@ -6917,11 +6917,11 @@ WriteStringToTilemapStreamed:
 	xor a, a ; $6d0b
 	ld [$c362], a ; $6d0c
 	ld [wTextArgStringWriteIndex], a ; $6d0f
-	ld [$d866], a ; $6d12
-	ld [$d848], a ; $6d15
-	ld [$d867], a ; $6d18
+	ld [w5_d866], a ; $6d12
+	ld [w5_d848], a ; $6d15
+	ld [w5_d867], a ; $6d18
 	ld [wTextArgShortTextWriteIndex], a ; $6d1b
-	ld [$d868], a ; $6d1e
+	ld [w5_d868], a ; $6d1e
 	pop af ; $6d21
 	wram_bank ; $6d22
 	pop hl ; $6d26
@@ -7075,7 +7075,7 @@ ResetTextWindowState:
 	ld a, $ff ; $6e36
 	ld [$d824], a ; $6e38
 	ld a, $fe ; $6e3b
-	ld [$d82f], a ; $6e3d
+	ld [w5_d82f], a ; $6e3d
 	pop hl ; $6e40
 	pop de ; $6e41
 	pop bc ; $6e42
@@ -7141,7 +7141,7 @@ AllocWindowId:
 	push bc ; $6e97
 	push de ; $6e98
 	ld b, $07 ; $6e99
-	ld a, [$dc70] ; $6e9b
+	ld a, [w5_dc70] ; $6e9b
 	ld c, $01 ; $6e9e
 .loop:
 	rrca ; $6ea0
@@ -7152,9 +7152,9 @@ AllocWindowId:
 	ld a, $ff ; $6ea8
 	jr .restore ; $6eaa
 .step:
-	ld a, [$dc70] ; $6eac
+	ld a, [w5_dc70] ; $6eac
 	or a, c ; $6eaf
-	ld [$dc70], a ; $6eb0
+	ld [w5_dc70], a ; $6eb0
 	ld a, $07 ; $6eb3
 	sub a, b ; $6eb5
 .restore:
@@ -7878,7 +7878,7 @@ RenderTextAtWindowCell:
 	ldh a, [hWramBank] ; $7280
 	push af ; $7282
 	wram_bank $05 ; $7283
-	ld a, [$d82f] ; $7289
+	ld a, [w5_d82f] ; $7289
 	ld c, a ; $728c
 	ld a, [wShadowTilemapBank] ; $728d
 	ld a, a ; $7290
@@ -8661,7 +8661,7 @@ InitGlyphStreamAt:
 	ld a, [$c3ba] ; $7738
 	ld d, a ; $773b
 	ld e, c ; $773c
-	ld a, [$d82f] ; $773d
+	ld a, [w5_d82f] ; $773d
 	ld b, a ; $7740
 	ld a, [$d820] ; $7741
 	cp a, b ; $7744

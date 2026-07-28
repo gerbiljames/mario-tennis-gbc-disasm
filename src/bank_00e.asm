@@ -3221,7 +3221,7 @@ UpdateStarWarpTrailSparkles:
 	ld h, a ; $7281
 	ld a, [$d040] ; $7282
 	ld [hl+], a ; $7285
-	ld a, [$d041] ; $7286
+	ld a, [w6_d041] ; $7286
 	ld [hl], a ; $7289
 	dec hl ; $728a
 	push hl ; $728b

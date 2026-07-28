@@ -1030,7 +1030,7 @@ CycleDiagramTargetPalette:
 	ld a, [hl+] ; $46aa
 	ld d, [hl] ; $46ab
 	ld e, a ; $46ac
-	ld hl, $d834 ; $46ad
+	ld hl, w3_d834 ; $46ad
 	ld [hl], e ; $46b0
 	inc hl ; $46b1
 	ld [hl], d ; $46b2
@@ -1061,9 +1061,9 @@ DrawBriefingPlayerSprite:
 	ldh a, [hWramBank] ; $46e2
 	push af ; $46e4
 	wram_bank $03 ; $46e5
-	ld a, [$d810] ; $46eb
+	ld a, [w3_d810] ; $46eb
 	ld d, a ; $46ee
-	ld a, [$d811] ; $46ef
+	ld a, [w3_d811] ; $46ef
 	ld e, a ; $46f2
 	ld hl, SpriteTemplate_17_4703 ; $46f3
 	ld b, $08 ; $46f6
@@ -1081,9 +1081,9 @@ DrawBriefingOpponentSprite:
 	ldh a, [hWramBank] ; $470c
 	push af ; $470e
 	wram_bank $03 ; $470f
-	ld a, [$d812] ; $4715
+	ld a, [w3_d812] ; $4715
 	ld d, a ; $4718
-	ld a, [$d813] ; $4719
+	ld a, [w3_d813] ; $4719
 	ld e, a ; $471c
 	ld hl, SpriteTemplate_17_472d ; $471d
 	ld b, $08 ; $4720
@@ -1101,9 +1101,9 @@ DrawBriefingBallSprite:
 	ldh a, [hWramBank] ; $4736
 	push af ; $4738
 	wram_bank $03 ; $4739
-	ld a, [$d81e] ; $473f
+	ld a, [w3_d81e] ; $473f
 	ld d, a ; $4742
-	ld a, [$d81f] ; $4743
+	ld a, [w3_d81f] ; $4743
 	ld e, a ; $4746
 	ld c, $6e ; $4747
 	ld b, $09 ; $4749
@@ -1116,19 +1116,19 @@ DrawBriefingMarkerHFlip:
 	push af ; $4756
 	wram_bank $03 ; $4757
 	ld b, $09 ; $475d
-	ld a, [$d82d] ; $475f
+	ld a, [w3_d82d] ; $475f
 	cp a, $01 ; $4762
 	jr z, .eq01 ; $4764
 	ld b, $29 ; $4766
 .eq01:
-	ld a, [$d81c] ; $4768
+	ld a, [w3_d81c] ; $4768
 	ld d, a ; $476b
 	ldh a, [hVBlankCounter] ; $476c
 	and a, $10 ; $476e
 	jr z, .maskClear ; $4770
 	inc d ; $4772
 .maskClear:
-	ld a, [$d81d] ; $4773
+	ld a, [w3_d81d] ; $4773
 	ld e, a ; $4776
 	ld c, $60 ; $4777
 	ld hl, SpriteTemplate_17_4785 ; $4779
@@ -1159,9 +1159,9 @@ DrawBriefingSwingAnim:
 	jr nc, .ge06 ; $47ab
 	ld hl, SpriteTemplate_17_47cd ; $47ad
 .ge06:
-	ld a, [$d814] ; $47b0
+	ld a, [w3_d814] ; $47b0
 	ld d, a ; $47b3
-	ld a, [$d815] ; $47b4
+	ld a, [w3_d815] ; $47b4
 	ld e, a ; $47b7
 	ld b, $09 ; $47b8
 	call QueueSpriteTemplate ; $47ba
@@ -1186,9 +1186,9 @@ DrawBriefingPoleSprites:
 	ldh a, [hWramBank] ; $47ef
 	push af ; $47f1
 	wram_bank $03 ; $47f2
-	ld a, [$d81a] ; $47f8
+	ld a, [w3_d81a] ; $47f8
 	ld d, a ; $47fb
-	ld a, [$d81b] ; $47fc
+	ld a, [w3_d81b] ; $47fc
 	ld e, a ; $47ff
 	ld c, $6a ; $4800
 	ld b, $09 ; $4802
@@ -1214,7 +1214,7 @@ DrawBriefingMarkerVFlip:
 	jr z, .eq01 ; $482e
 	ld b, $49 ; $4830
 .eq01:
-	ld a, [$d823] ; $4832
+	ld a, [w3_d823] ; $4832
 	ld d, a ; $4835
 	ld a, [$d824] ; $4836
 	ld e, a ; $4839
@@ -1233,9 +1233,9 @@ DrawSpinServeBriefingMarker:
 	jr z, .eq01 ; $4855
 	ld b, $29 ; $4857
 .eq01:
-	ld a, [$d816] ; $4859
+	ld a, [w3_d816] ; $4859
 	ld d, a ; $485c
-	ld a, [$d817] ; $485d
+	ld a, [w3_d817] ; $485d
 	ld e, a ; $4860
 	ld hl, SpriteTemplate_17_486d ; $4861
 	call QueueSpriteTemplate ; $4864
@@ -1252,7 +1252,7 @@ DrawBriefingMarkerRotated:
 	push af ; $4878
 	wram_bank $03 ; $4879
 	ld hl, BriefingMarkerRotatedTable ; $487f
-	ld a, [$d827] ; $4882
+	ld a, [w3_d827] ; $4882
 	add a, l ; $4885
 	ld l, a ; $4886
 	jr nc, .read ; $4887
@@ -1260,9 +1260,9 @@ DrawBriefingMarkerRotated:
 .read:
 	ld b, [hl] ; $488a
 	ld c, $68 ; $488b
-	ld a, [$d818] ; $488d
+	ld a, [w3_d818] ; $488d
 	ld d, a ; $4890
-	ld a, [$d819] ; $4891
+	ld a, [w3_d819] ; $4891
 	ld e, a ; $4894
 	call QueueSprite ; $4895
 	pop af ; $4898
@@ -1290,7 +1290,7 @@ DrawBriefingTargetBrackets:
 	ldh a, [hWramBank] ; $48c1
 	push af ; $48c3
 	wram_bank $03 ; $48c4
-	ld a, [$d828] ; $48ca
+	ld a, [w3_d828] ; $48ca
 	ld d, a ; $48cd
 	ldh a, [hVBlankCounter] ; $48ce
 	and a, $10 ; $48d0
@@ -1307,10 +1307,10 @@ DrawBriefingTargetBrackets:
 	ld c, $6c ; $48e0
 	ld b, $0a ; $48e2
 	call QueueSprite ; $48e4
-	ld a, [$d82a] ; $48e7
+	ld a, [w3_d82a] ; $48e7
 	add a, $03 ; $48ea
 	ld b, a ; $48ec
-	ld a, [$d828] ; $48ed
+	ld a, [w3_d828] ; $48ed
 	add a, b ; $48f0
 	ld d, a ; $48f1
 	ldh a, [hVBlankCounter] ; $48f2
@@ -1328,10 +1328,10 @@ DrawBriefingTargetBrackets:
 	ld c, $6c ; $4904
 	ld b, $2a ; $4906
 	call QueueSprite ; $4908
-	ld a, [$d82a] ; $490b
+	ld a, [w3_d82a] ; $490b
 	add a, $03 ; $490e
 	ld b, a ; $4910
-	ld a, [$d828] ; $4911
+	ld a, [w3_d828] ; $4911
 	add a, b ; $4914
 	ld d, a ; $4915
 	ldh a, [hVBlankCounter] ; $4916
@@ -1339,7 +1339,7 @@ DrawBriefingTargetBrackets:
 	jr z, .maskClear5 ; $491a
 	dec d ; $491c
 .maskClear5:
-	ld a, [$d82b] ; $491d
+	ld a, [w3_d82b] ; $491d
 	sub a, $05 ; $4920
 	ld b, a ; $4922
 	ld a, [$d829] ; $4923
@@ -1353,14 +1353,14 @@ DrawBriefingTargetBrackets:
 	ld c, $6c ; $492f
 	ld b, $6a ; $4931
 	call QueueSprite ; $4933
-	ld a, [$d828] ; $4936
+	ld a, [w3_d828] ; $4936
 	ld d, a ; $4939
 	ldh a, [hVBlankCounter] ; $493a
 	and a, $10 ; $493c
 	jr z, .maskClear7 ; $493e
 	inc d ; $4940
 .maskClear7:
-	ld a, [$d82b] ; $4941
+	ld a, [w3_d82b] ; $4941
 	sub a, $05 ; $4944
 	ld b, a ; $4946
 	ld a, [$d829] ; $4947
@@ -4524,14 +4524,14 @@ ShowRulesScreen:
 	push af ; $6f1b
 	wram_bank $03 ; $6f1c
 	pop af ; $6f22
-	ld [$dc01], a ; $6f23
+	ld [w3_dc01], a ; $6f23
 	ld a, [wMinigameLevel] ; $6f26
-	ld [$dc06], a ; $6f29
+	ld [w3_dc06], a ; $6f29
 	xor a, a ; $6f2c
-	ld [$dc02], a ; $6f2d
-	ld [$dc03], a ; $6f30
-	ld [$dc04], a ; $6f33
-	ld [$dc05], a ; $6f36
+	ld [w3_dc02], a ; $6f2d
+	ld [w3_dc03], a ; $6f30
+	ld [w3_dc04], a ; $6f33
+	ld [w3_dc05], a ; $6f36
 	ld [wRulesScreenAnimFrame], a ; $6f39
 	ld c, $20 ; $6f3c
 	call BeginFadeOut ; $6f3e
@@ -4553,15 +4553,15 @@ ShowRulesScreen:
 	ld hl, AdvanceRulesScreenAnimFrame ; $6f6f
 	call RegisterFrameTask ; $6f72
 	ld a, $01 ; $6f75
-	ld [$dc03], a ; $6f77
+	ld [w3_dc03], a ; $6f77
 	xor a, a ; $6f7a
-	ld [$dc04], a ; $6f7b
+	ld [w3_dc04], a ; $6f7b
 	call RunMinigameRulesPages ; $6f7e
 	ld c, $20 ; $6f81
 	call BeginFadeOut ; $6f83
 	call WaitFadeEnd ; $6f86
 	call ClearFrameTasks ; $6f89
-	ld a, [$dc02] ; $6f8c
+	ld a, [w3_dc02] ; $6f8c
 	ret ; $6f8f
 	ret ; $6f90
 RunMinigameRulesPages:
@@ -4595,7 +4595,7 @@ RunMinigameRulesPages:
 	ld [hl+], a ; $6fca
 	ld [hl], d ; $6fcb
 	ld hl, MinigameRulesPageLists_17 ; $6fcc
-	ld a, [$dc01] ; $6fcf
+	ld a, [w3_dc01] ; $6fcf
 	call MinigameRulesPageLoop ; $6fd2
 	pop af ; $6fd5
 	wram_bank ; $6fd6
@@ -4728,10 +4728,10 @@ MinigameRulesPageLoop:
 	ld hl, RulesScreenTiles ; $7126
 	call UnregisterFrameTask ; $7129
 	ld a, $01 ; $712c
-	ld [$dc03], a ; $712e
-	ld [$dc05], a ; $7131
+	ld [w3_dc03], a ; $712e
+	ld [w3_dc05], a ; $7131
 	xor a, a ; $7134
-	ld [$dc04], a ; $7135
+	ld [w3_dc04], a ; $7135
 	pop hl ; $7138
 	jp .loop ; $7139
 .playSfx2:
@@ -4741,7 +4741,7 @@ MinigameRulesPageLoop:
 	ld hl, RulesScreenTiles ; $7144
 	call UnregisterFrameTask ; $7147
 	ld a, $ff ; $714a
-	ld [$dc02], a ; $714c
+	ld [w3_dc02], a ; $714c
 	pop hl ; $714f
 .playSfx3:
 	sound $60 ; $7150
@@ -4835,10 +4835,10 @@ PrepareRulesPageTilemap:
 	ld c, $0d ; $721c
 	ld h, $20 ; $721e
 	farcall FillTilemapRect ; $7220
-	ld a, [$dc05] ; $7223
+	ld a, [w3_dc05] ; $7223
 	or a, a ; $7226
 	jr nz, .nonZero ; $7227
-	ld a, [$dc06] ; $7229
+	ld a, [w3_dc06] ; $7229
 	add a, $03 ; $722c
 	ld h, a ; $722e
 	ld de, $d482 ; $722f
@@ -4857,16 +4857,16 @@ PrepareRulesPageTilemap:
 	wram_bank ; $7248
 	ret ; $724c
 QueueRulesPageToVRAM:
-	ld a, [$dc05] ; $724d
+	ld a, [w3_dc05] ; $724d
 	or a, a ; $7250
 	jr nz, .nonZero ; $7251
-	ld hl, $d080 ; $7253
+	ld hl, w3_d080 ; $7253
 	ld de, $9880 ; $7256
 	ld c, $0a ; $7259
 	call QueueVRAMCopy ; $725b
 	jr .queueVRAMCopy ; $725e
 .nonZero:
-	ld hl, $d060 ; $7260
+	ld hl, w3_d060 ; $7260
 	ld de, $9860 ; $7263
 	ld c, $0a ; $7266
 	call QueueVRAMCopy ; $7268
@@ -5023,10 +5023,10 @@ AdvanceRulesScreenAnimFrame:
 	ldh a, [hWramBank] ; $7420
 	push af ; $7422
 	wram_bank $03 ; $7423
-	ld a, [$dc04] ; $7429
+	ld a, [w3_dc04] ; $7429
 	inc a ; $742c
-	ld [$dc04], a ; $742d
-	ld a, [$dc03] ; $7430
+	ld [w3_dc04], a ; $742d
+	ld a, [w3_dc03] ; $7430
 	or a, a ; $7433
 	jr z, .zero ; $7434
 	ldh a, [hVBlankCounter] ; $7436
@@ -5060,14 +5060,14 @@ AdvanceRulesScreenAnimFrame:
 	ld [wRulesScreenAnimFrame], a ; $7463
 	jr .step2 ; $7466
 .step2:
-	ld a, [$dc03] ; $7468
+	ld a, [w3_dc03] ; $7468
 	or a, a ; $746b
 	jr z, .restore ; $746c
-	ld a, [$dc04] ; $746e
+	ld a, [w3_dc04] ; $746e
 	cp a, $ff ; $7471
 	jr nz, .restore ; $7473
 	xor a, a ; $7475
-	ld [$dc03], a ; $7476
+	ld [w3_dc03], a ; $7476
 .restore:
 	pop af ; $7479
 	wram_bank ; $747a
