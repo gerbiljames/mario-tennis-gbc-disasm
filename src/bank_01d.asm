@@ -89,12 +89,12 @@ InitDrillWorkRam:
 	ld [$d142], a ; $40e0
 	ld [$d143], a ; $40e3
 	ld [$d144], a ; $40e6
-	ld hl, $d145 ; $40e9
+	ld hl, wCharDataStatsSlideX ; $40e9
 	ld de, $00a8 ; $40ec
 	ld a, e ; $40ef
 	ld [hl+], a ; $40f0
 	ld [hl], d ; $40f1
-	ld hl, $d147 ; $40f2
+	ld hl, wCharDataValuesSlideX ; $40f2
 	ld de, $0000 ; $40f5
 	ld a, e ; $40f8
 	ld [hl+], a ; $40f9
@@ -950,7 +950,7 @@ FormatExp24BitDecimal:
 	ret z ; $482b
 	ld c, a ; $482c
 .loop:
-	ld de, $d093 ; $482d
+	ld de, wCharDataNumberBuffer + 5 ; $482d
 	ld a, [de] ; $4830
 	sub $20 ; $4831
 	jr z, .zero ; $4833
@@ -967,7 +967,7 @@ FormatExp24BitDecimal:
 .lt0a:
 	add $30 ; $4844
 	ld [de], a ; $4846
-	ld de, $d092 ; $4847
+	ld de, wCharDataNumberBuffer + 4 ; $4847
 	ld a, [de] ; $484a
 	add [hl] ; $484b
 	ld b, a ; $484c
@@ -989,7 +989,7 @@ FormatExp24BitDecimal:
 .lt0a2:
 	add $30 ; $4863
 	ld [de], a ; $4865
-	ld de, $d091 ; $4866
+	ld de, wCharDataNumberBuffer + 3 ; $4866
 	ld a, [de] ; $4869
 	add [hl] ; $486a
 	ld b, a ; $486b
@@ -1011,7 +1011,7 @@ FormatExp24BitDecimal:
 .lt0a3:
 	add $30 ; $4882
 	ld [de], a ; $4884
-	ld de, $d090 ; $4885
+	ld de, wCharDataNumberBuffer + 2 ; $4885
 	ld a, [de] ; $4888
 	add [hl] ; $4889
 	ld b, a ; $488a
@@ -1083,14 +1083,14 @@ CharDataValuesSyncTask:
 	jr z, .eq20 ; $48f6
 	call GetCharDataDigitSprite ; $48f8
 	ld de, $5d88 ; $48fb
-	ld hl, $d147 ; $48fe
+	ld hl, wCharDataValuesSlideX ; $48fe
 	call ApplySlideOffsetToSpriteX ; $4901
 	call QueueSprite ; $4904
 .eq20:
 	ld a, [wCharDataNumberBuffer + 1] ; $4907
 	call GetCharDataDigitSprite ; $490a
 	ld de, $6588 ; $490d
-	ld hl, $d147 ; $4910
+	ld hl, wCharDataValuesSlideX ; $4910
 	call ApplySlideOffsetToSpriteX ; $4913
 	call QueueSprite ; $4916
 	ld a, [$d14c] ; $4919
@@ -1108,13 +1108,13 @@ CharDataValuesSyncTask:
 .getCharDataDigitSprite:
 	call GetCharDataDigitSprite ; $4932
 	ld de, $7488 ; $4935
-	ld hl, $d147 ; $4938
+	ld hl, wCharDataValuesSlideX ; $4938
 	call ApplySlideOffsetToSpriteX ; $493b
 	call QueueSprite ; $493e
 	ld a, [wCharDataNumberBuffer + 1] ; $4941
 	call GetCharDataDigitSprite ; $4944
 	ld de, $7c88 ; $4947
-	ld hl, $d147 ; $494a
+	ld hl, wCharDataValuesSlideX ; $494a
 	call ApplySlideOffsetToSpriteX ; $494d
 	call QueueSprite ; $4950
 	wram_bank $06 ; $4953
@@ -1123,7 +1123,7 @@ CharDataValuesSyncTask:
 	jr z, .eq203 ; $495e
 	call GetSummaryExpDigitSprite ; $4960
 	ld de, $0864 ; $4963
-	ld hl, $d147 ; $4966
+	ld hl, wCharDataValuesSlideX ; $4966
 	call ApplySlideOffsetToSpriteX ; $4969
 	call QueueSprite ; $496c
 .eq203:
@@ -1132,7 +1132,7 @@ CharDataValuesSyncTask:
 	jr z, .eq204 ; $4974
 	call GetSummaryExpDigitSprite ; $4976
 	ld de, $0d64 ; $4979
-	ld hl, $d147 ; $497c
+	ld hl, wCharDataValuesSlideX ; $497c
 	call ApplySlideOffsetToSpriteX ; $497f
 	call QueueSprite ; $4982
 .eq204:
@@ -1141,7 +1141,7 @@ CharDataValuesSyncTask:
 	jr z, .eq205 ; $498a
 	call GetSummaryExpDigitSprite ; $498c
 	ld de, $1264 ; $498f
-	ld hl, $d147 ; $4992
+	ld hl, wCharDataValuesSlideX ; $4992
 	call ApplySlideOffsetToSpriteX ; $4995
 	call QueueSprite ; $4998
 .eq205:
@@ -1150,7 +1150,7 @@ CharDataValuesSyncTask:
 	jr z, .eq206 ; $49a0
 	call GetSummaryExpDigitSprite ; $49a2
 	ld de, $5864 ; $49a5
-	ld hl, $d147 ; $49a8
+	ld hl, wCharDataValuesSlideX ; $49a8
 	call ApplySlideOffsetToSpriteX ; $49ab
 	call QueueSprite ; $49ae
 .eq206:
@@ -1159,7 +1159,7 @@ CharDataValuesSyncTask:
 	jr z, .eq207 ; $49b6
 	call GetSummaryExpDigitSprite ; $49b8
 	ld de, $5d64 ; $49bb
-	ld hl, $d147 ; $49be
+	ld hl, wCharDataValuesSlideX ; $49be
 	call ApplySlideOffsetToSpriteX ; $49c1
 	call QueueSprite ; $49c4
 .eq207:
@@ -1168,7 +1168,7 @@ CharDataValuesSyncTask:
 	jr z, .checkEquippedRacket ; $49cc
 	call GetSummaryExpDigitSprite ; $49ce
 	ld de, $6264 ; $49d1
-	ld hl, $d147 ; $49d4
+	ld hl, wCharDataValuesSlideX ; $49d4
 	call ApplySlideOffsetToSpriteX ; $49d7
 	call QueueSprite ; $49da
 .checkEquippedRacket:
@@ -1179,7 +1179,7 @@ CharDataValuesSyncTask:
 	ld b, $0e ; $49e5
 	ld c, $d6 ; $49e7
 	ld de, $303c ; $49e9
-	ld hl, $d147 ; $49ec
+	ld hl, wCharDataValuesSlideX ; $49ec
 	call ApplySlideOffsetToSpriteX ; $49ef
 	call QueueSprite ; $49f2
 .restore:
@@ -1189,7 +1189,7 @@ CharDataValuesSyncTask:
 	ld b, $0e ; $49fa
 	ld c, $d8 ; $49fc
 	ld de, $383c ; $49fe
-	ld hl, $d147 ; $4a01
+	ld hl, wCharDataValuesSlideX ; $4a01
 	call ApplySlideOffsetToSpriteX ; $4a04
 	call QueueSprite ; $4a07
 .done:
@@ -2034,7 +2034,7 @@ SlideToMainCharStatPage:
 	call ApplyTilemapPatchList ; $50c9
 	farcall FlushCharDataTilemapsFar ; $50cc
 	wram_bank $06 ; $50cf
-	ld hl, $d147 ; $50d5
+	ld hl, wCharDataValuesSlideX ; $50d5
 	ld de, $0020 ; $50d8
 	ld a, e ; $50db
 	ld [hl+], a ; $50dc
@@ -2054,12 +2054,12 @@ SlideToMainCharStatPage:
 	call ApplyTilemapPatchList ; $5102
 	farcall FlushCharDataTilemapsFar ; $5105
 	wram_bank $06 ; $5108
-	ld hl, $d145 ; $510e
+	ld hl, wCharDataStatsSlideX ; $510e
 	ld de, $ff60 ; $5111
 	ld a, e ; $5114
 	ld [hl+], a ; $5115
 	ld [hl], d ; $5116
-	ld hl, $d147 ; $5117
+	ld hl, wCharDataValuesSlideX ; $5117
 	ld de, $0040 ; $511a
 	ld a, e ; $511d
 	ld [hl+], a ; $511e
@@ -2085,12 +2085,12 @@ SlideToMainCharStatPage:
 	call ApplyTilemapPatchList ; $5156
 	farcall FlushCharDataTilemapsFar ; $5159
 	wram_bank $06 ; $515c
-	ld hl, $d145 ; $5162
+	ld hl, wCharDataStatsSlideX ; $5162
 	ld de, $ff80 ; $5165
 	ld a, e ; $5168
 	ld [hl+], a ; $5169
 	ld [hl], d ; $516a
-	ld hl, $d147 ; $516b
+	ld hl, wCharDataValuesSlideX ; $516b
 	ld de, $0060 ; $516e
 	ld a, e ; $5171
 	ld [hl+], a ; $5172
@@ -2116,12 +2116,12 @@ SlideToMainCharStatPage:
 	call ApplyTilemapPatchList ; $51aa
 	farcall FlushCharDataTilemapsFar ; $51ad
 	wram_bank $06 ; $51b0
-	ld hl, $d145 ; $51b6
+	ld hl, wCharDataStatsSlideX ; $51b6
 	ld de, $ffa0 ; $51b9
 	ld a, e ; $51bc
 	ld [hl+], a ; $51bd
 	ld [hl], d ; $51be
-	ld hl, $d147 ; $51bf
+	ld hl, wCharDataValuesSlideX ; $51bf
 	ld de, $0080 ; $51c2
 	ld a, e ; $51c5
 	ld [hl+], a ; $51c6
@@ -2138,12 +2138,12 @@ SlideToMainCharStatPage:
 	call ApplyTilemapPatchList ; $51e3
 	farcall FlushCharDataTilemapsFar ; $51e6
 	wram_bank $06 ; $51e9
-	ld hl, $d145 ; $51ef
+	ld hl, wCharDataStatsSlideX ; $51ef
 	ld de, $ffc0 ; $51f2
 	ld a, e ; $51f5
 	ld [hl+], a ; $51f6
 	ld [hl], d ; $51f7
-	ld hl, $d147 ; $51f8
+	ld hl, wCharDataValuesSlideX ; $51f8
 	ld de, $00a0 ; $51fb
 	ld a, e ; $51fe
 	ld [hl+], a ; $51ff
@@ -2160,12 +2160,12 @@ SlideToMainCharStatPage:
 	call ApplyTilemapPatchList ; $521c
 	farcall FlushCharDataTilemapsFar ; $521f
 	wram_bank $06 ; $5222
-	ld hl, $d145 ; $5228
+	ld hl, wCharDataStatsSlideX ; $5228
 	ld de, $ffe0 ; $522b
 	ld a, e ; $522e
 	ld [hl+], a ; $522f
 	ld [hl], d ; $5230
-	ld hl, $d147 ; $5231
+	ld hl, wCharDataValuesSlideX ; $5231
 	ld de, $00a8 ; $5234
 	ld a, e ; $5237
 	ld [hl+], a ; $5238
@@ -2182,7 +2182,7 @@ SlideToMainCharStatPage:
 	call ApplyTilemapPatchList ; $5255
 	farcall FlushCharDataTilemapsFar ; $5258
 	wram_bank $06 ; $525b
-	ld hl, $d145 ; $5261
+	ld hl, wCharDataStatsSlideX ; $5261
 	xor a ; $5264
 	ld [hl+], a ; $5265
 	ld [hl], a ; $5266
@@ -2193,7 +2193,7 @@ SlideFromMainCharStatPage:
 	or a ; $526e
 	jr nz, SlideFromMainCharStatPage ; $526f
 	wram_bank $06 ; $5271
-	ld hl, $d145 ; $5277
+	ld hl, wCharDataStatsSlideX ; $5277
 	ld de, $ffe0 ; $527a
 	ld a, e ; $527d
 	ld [hl+], a ; $527e
@@ -2210,12 +2210,12 @@ SlideFromMainCharStatPage:
 	call ApplyTilemapPatchList ; $529b
 	farcall FlushCharDataTilemapsFar ; $529e
 	wram_bank $06 ; $52a1
-	ld hl, $d145 ; $52a7
+	ld hl, wCharDataStatsSlideX ; $52a7
 	ld de, $ffc0 ; $52aa
 	ld a, e ; $52ad
 	ld [hl+], a ; $52ae
 	ld [hl], d ; $52af
-	ld hl, $d147 ; $52b0
+	ld hl, wCharDataValuesSlideX ; $52b0
 	ld de, $00a0 ; $52b3
 	ld a, e ; $52b6
 	ld [hl+], a ; $52b7
@@ -2232,12 +2232,12 @@ SlideFromMainCharStatPage:
 	call ApplyTilemapPatchList ; $52d4
 	farcall FlushCharDataTilemapsFar ; $52d7
 	wram_bank $06 ; $52da
-	ld hl, $d145 ; $52e0
+	ld hl, wCharDataStatsSlideX ; $52e0
 	ld de, $ffa0 ; $52e3
 	ld a, e ; $52e6
 	ld [hl+], a ; $52e7
 	ld [hl], d ; $52e8
-	ld hl, $d147 ; $52e9
+	ld hl, wCharDataValuesSlideX ; $52e9
 	ld de, $0080 ; $52ec
 	ld a, e ; $52ef
 	ld [hl+], a ; $52f0
@@ -2263,12 +2263,12 @@ SlideFromMainCharStatPage:
 	call ApplyTilemapPatchList ; $5328
 	farcall FlushCharDataTilemapsFar ; $532b
 	wram_bank $06 ; $532e
-	ld hl, $d145 ; $5334
+	ld hl, wCharDataStatsSlideX ; $5334
 	ld de, $ff80 ; $5337
 	ld a, e ; $533a
 	ld [hl+], a ; $533b
 	ld [hl], d ; $533c
-	ld hl, $d147 ; $533d
+	ld hl, wCharDataValuesSlideX ; $533d
 	ld de, $0060 ; $5340
 	ld a, e ; $5343
 	ld [hl+], a ; $5344
@@ -2294,12 +2294,12 @@ SlideFromMainCharStatPage:
 	call ApplyTilemapPatchList ; $537c
 	farcall FlushCharDataTilemapsFar ; $537f
 	wram_bank $06 ; $5382
-	ld hl, $d145 ; $5388
+	ld hl, wCharDataStatsSlideX ; $5388
 	ld de, $ff60 ; $538b
 	ld a, e ; $538e
 	ld [hl+], a ; $538f
 	ld [hl], d ; $5390
-	ld hl, $d147 ; $5391
+	ld hl, wCharDataValuesSlideX ; $5391
 	ld de, $0040 ; $5394
 	ld a, e ; $5397
 	ld [hl+], a ; $5398
@@ -2319,12 +2319,12 @@ SlideFromMainCharStatPage:
 	call ApplyTilemapPatchList ; $53be
 	farcall FlushCharDataTilemapsFar ; $53c1
 	wram_bank $06 ; $53c4
-	ld hl, $d145 ; $53ca
+	ld hl, wCharDataStatsSlideX ; $53ca
 	ld de, $00a8 ; $53cd
 	ld a, e ; $53d0
 	ld [hl+], a ; $53d1
 	ld [hl], d ; $53d2
-	ld hl, $d147 ; $53d3
+	ld hl, wCharDataValuesSlideX ; $53d3
 	ld de, $0010 ; $53d6
 	ld a, e ; $53d9
 	ld [hl+], a ; $53da
@@ -2344,7 +2344,7 @@ SlideFromMainCharStatPage:
 	call ApplyTilemapPatchList ; $5400
 	farcall FlushCharDataTilemapsFar ; $5403
 	wram_bank $06 ; $5406
-	ld hl, $d147 ; $540c
+	ld hl, wCharDataValuesSlideX ; $540c
 	xor a ; $540f
 	ld [hl+], a ; $5410
 	ld [hl], a ; $5411
@@ -2369,7 +2369,7 @@ SlideToPartnerStatPage:
 	or a ; $5443
 	jr nz, SlideToPartnerStatPage ; $5444
 	wram_bank $06 ; $5446
-	ld hl, $d147 ; $544c
+	ld hl, wCharDataValuesSlideX ; $544c
 	ld de, $ffe0 ; $544f
 	ld a, e ; $5452
 	ld [hl+], a ; $5453
@@ -2389,12 +2389,12 @@ SlideToPartnerStatPage:
 	call ApplyTilemapPatchList ; $5479
 	farcall FlushCharDataTilemapsFar ; $547c
 	wram_bank $06 ; $547f
-	ld hl, $d145 ; $5485
+	ld hl, wCharDataStatsSlideX ; $5485
 	ld de, $00a0 ; $5488
 	ld a, e ; $548b
 	ld [hl+], a ; $548c
 	ld [hl], d ; $548d
-	ld hl, $d147 ; $548e
+	ld hl, wCharDataValuesSlideX ; $548e
 	ld de, $ffc0 ; $5491
 	ld a, e ; $5494
 	ld [hl+], a ; $5495
@@ -2423,12 +2423,12 @@ SlideToPartnerStatPage:
 	call ApplyTilemapPatchList ; $54d6
 	farcall FlushCharDataTilemapsFar ; $54d9
 	wram_bank $06 ; $54dc
-	ld hl, $d145 ; $54e2
+	ld hl, wCharDataStatsSlideX ; $54e2
 	ld de, $0080 ; $54e5
 	ld a, e ; $54e8
 	ld [hl+], a ; $54e9
 	ld [hl], d ; $54ea
-	ld hl, $d147 ; $54eb
+	ld hl, wCharDataValuesSlideX ; $54eb
 	ld de, $ffa0 ; $54ee
 	ld a, e ; $54f1
 	ld [hl+], a ; $54f2
@@ -2454,12 +2454,12 @@ SlideToPartnerStatPage:
 	call ApplyTilemapPatchList ; $552a
 	farcall FlushCharDataTilemapsFar ; $552d
 	wram_bank $06 ; $5530
-	ld hl, $d145 ; $5536
+	ld hl, wCharDataStatsSlideX ; $5536
 	ld de, $0060 ; $5539
 	ld a, e ; $553c
 	ld [hl+], a ; $553d
 	ld [hl], d ; $553e
-	ld hl, $d147 ; $553f
+	ld hl, wCharDataValuesSlideX ; $553f
 	ld de, $ff80 ; $5542
 	ld a, e ; $5545
 	ld [hl+], a ; $5546
@@ -2485,12 +2485,12 @@ SlideToPartnerStatPage:
 	call ApplyTilemapPatchList ; $557e
 	farcall FlushCharDataTilemapsFar ; $5581
 	wram_bank $06 ; $5584
-	ld hl, $d145 ; $558a
+	ld hl, wCharDataStatsSlideX ; $558a
 	ld de, $0040 ; $558d
 	ld a, e ; $5590
 	ld [hl+], a ; $5591
 	ld [hl], d ; $5592
-	ld hl, $d147 ; $5593
+	ld hl, wCharDataValuesSlideX ; $5593
 	ld de, $ff60 ; $5596
 	ld a, e ; $5599
 	ld [hl+], a ; $559a
@@ -2507,12 +2507,12 @@ SlideToPartnerStatPage:
 	call ApplyTilemapPatchList ; $55b7
 	farcall FlushCharDataTilemapsFar ; $55ba
 	wram_bank $06 ; $55bd
-	ld hl, $d145 ; $55c3
+	ld hl, wCharDataStatsSlideX ; $55c3
 	ld de, $0020 ; $55c6
 	ld a, e ; $55c9
 	ld [hl+], a ; $55ca
 	ld [hl], d ; $55cb
-	ld hl, $d147 ; $55cc
+	ld hl, wCharDataValuesSlideX ; $55cc
 	ld de, $00a8 ; $55cf
 	ld a, e ; $55d2
 	ld [hl+], a ; $55d3
@@ -2529,7 +2529,7 @@ SlideToPartnerStatPage:
 	call ApplyTilemapPatchList ; $55f0
 	farcall FlushCharDataTilemapsFar ; $55f3
 	wram_bank $06 ; $55f6
-	ld hl, $d145 ; $55fc
+	ld hl, wCharDataStatsSlideX ; $55fc
 	xor a ; $55ff
 	ld [hl+], a ; $5600
 	ld [hl], a ; $5601
@@ -2540,7 +2540,7 @@ SlideFromPartnerStatPage:
 	or a ; $5609
 	jr nz, SlideFromPartnerStatPage ; $560a
 	wram_bank $06 ; $560c
-	ld hl, $d145 ; $5612
+	ld hl, wCharDataStatsSlideX ; $5612
 	ld de, $0020 ; $5615
 	ld a, e ; $5618
 	ld [hl+], a ; $5619
@@ -2557,12 +2557,12 @@ SlideFromPartnerStatPage:
 	call ApplyTilemapPatchList ; $5636
 	farcall FlushCharDataTilemapsFar ; $5639
 	wram_bank $06 ; $563c
-	ld hl, $d147 ; $5642
+	ld hl, wCharDataValuesSlideX ; $5642
 	ld de, $ff60 ; $5645
 	ld a, e ; $5648
 	ld [hl+], a ; $5649
 	ld [hl], d ; $564a
-	ld hl, $d145 ; $564b
+	ld hl, wCharDataStatsSlideX ; $564b
 	ld de, $0040 ; $564e
 	ld a, e ; $5651
 	ld [hl+], a ; $5652
@@ -2588,12 +2588,12 @@ SlideFromPartnerStatPage:
 	call ApplyTilemapPatchList ; $568a
 	farcall FlushCharDataTilemapsFar ; $568d
 	wram_bank $06 ; $5690
-	ld hl, $d147 ; $5696
+	ld hl, wCharDataValuesSlideX ; $5696
 	ld de, $ff80 ; $5699
 	ld a, e ; $569c
 	ld [hl+], a ; $569d
 	ld [hl], d ; $569e
-	ld hl, $d145 ; $569f
+	ld hl, wCharDataStatsSlideX ; $569f
 	ld de, $0060 ; $56a2
 	ld a, e ; $56a5
 	ld [hl+], a ; $56a6
@@ -2619,12 +2619,12 @@ SlideFromPartnerStatPage:
 	call ApplyTilemapPatchList ; $56de
 	farcall FlushCharDataTilemapsFar ; $56e1
 	wram_bank $06 ; $56e4
-	ld hl, $d147 ; $56ea
+	ld hl, wCharDataValuesSlideX ; $56ea
 	ld de, $ffa0 ; $56ed
 	ld a, e ; $56f0
 	ld [hl+], a ; $56f1
 	ld [hl], d ; $56f2
-	ld hl, $d145 ; $56f3
+	ld hl, wCharDataStatsSlideX ; $56f3
 	ld de, $0080 ; $56f6
 	ld a, e ; $56f9
 	ld [hl+], a ; $56fa
@@ -2653,12 +2653,12 @@ SlideFromPartnerStatPage:
 	call ApplyTilemapPatchList ; $573b
 	farcall FlushCharDataTilemapsFar ; $573e
 	wram_bank $06 ; $5741
-	ld hl, $d147 ; $5747
+	ld hl, wCharDataValuesSlideX ; $5747
 	ld de, $ffc0 ; $574a
 	ld a, e ; $574d
 	ld [hl+], a ; $574e
 	ld [hl], d ; $574f
-	ld hl, $d145 ; $5750
+	ld hl, wCharDataStatsSlideX ; $5750
 	ld de, $00a0 ; $5753
 	ld a, e ; $5756
 	ld [hl+], a ; $5757
@@ -2678,12 +2678,12 @@ SlideFromPartnerStatPage:
 	call ApplyTilemapPatchList ; $577d
 	farcall FlushCharDataTilemapsFar ; $5780
 	wram_bank $06 ; $5783
-	ld hl, $d147 ; $5789
+	ld hl, wCharDataValuesSlideX ; $5789
 	ld de, $ffe0 ; $578c
 	ld a, e ; $578f
 	ld [hl+], a ; $5790
 	ld [hl], d ; $5791
-	ld hl, $d145 ; $5792
+	ld hl, wCharDataStatsSlideX ; $5792
 	ld de, $00a8 ; $5795
 	ld a, e ; $5798
 	ld [hl+], a ; $5799
@@ -2703,7 +2703,7 @@ SlideFromPartnerStatPage:
 	call ApplyTilemapPatchList ; $57bf
 	farcall FlushCharDataTilemapsFar ; $57c2
 	wram_bank $06 ; $57c5
-	ld hl, $d147 ; $57cb
+	ld hl, wCharDataValuesSlideX ; $57cb
 	xor a ; $57ce
 	ld [hl+], a ; $57cf
 	ld [hl], a ; $57d0
@@ -2728,7 +2728,7 @@ DrawCharStatDigitsTask:
 	ld c, a ; $57f5
 	ld de, $051c ; $57f6
 	xor a ; $57f9
-	ld hl, $d145 ; $57fa
+	ld hl, wCharDataStatsSlideX ; $57fa
 	call ApplySlideOffsetToSpriteX ; $57fd
 	call QueueSprite ; $5800
 	pop bc ; $5803
@@ -2738,7 +2738,7 @@ DrawCharStatDigitsTask:
 	ld c, a ; $580a
 	ld de, $0c1c ; $580b
 	xor a ; $580e
-	ld hl, $d145 ; $580f
+	ld hl, wCharDataStatsSlideX ; $580f
 	call ApplySlideOffsetToSpriteX ; $5812
 	call QueueSprite ; $5815
 	jr .stat2 ; $5818
@@ -2748,7 +2748,7 @@ DrawCharStatDigitsTask:
 	ld c, a ; $581c
 	ld de, $091c ; $581d
 	xor a ; $5820
-	ld hl, $d145 ; $5821
+	ld hl, wCharDataStatsSlideX ; $5821
 	call ApplySlideOffsetToSpriteX ; $5824
 	call QueueSprite ; $5827
 .stat2:
@@ -2770,7 +2770,7 @@ DrawCharStatDigitsTask:
 	ld c, a ; $5847
 	ld de, $0544 ; $5848
 	ld a, $01 ; $584b
-	ld hl, $d145 ; $584d
+	ld hl, wCharDataStatsSlideX ; $584d
 	call ApplySlideOffsetToSpriteX ; $5850
 	call QueueSprite ; $5853
 	pop bc ; $5856
@@ -2780,7 +2780,7 @@ DrawCharStatDigitsTask:
 	ld c, a ; $585d
 	ld de, $0c44 ; $585e
 	ld a, $01 ; $5861
-	ld hl, $d145 ; $5863
+	ld hl, wCharDataStatsSlideX ; $5863
 	call ApplySlideOffsetToSpriteX ; $5866
 	call QueueSprite ; $5869
 	jr .stat3 ; $586c
@@ -2790,7 +2790,7 @@ DrawCharStatDigitsTask:
 	ld c, a ; $5870
 	ld de, $0944 ; $5871
 	ld a, $01 ; $5874
-	ld hl, $d145 ; $5876
+	ld hl, wCharDataStatsSlideX ; $5876
 	call ApplySlideOffsetToSpriteX ; $5879
 	call QueueSprite ; $587c
 .stat3:
@@ -2812,7 +2812,7 @@ DrawCharStatDigitsTask:
 	ld c, a ; $589c
 	ld de, $551c ; $589d
 	ld a, $02 ; $58a0
-	ld hl, $d145 ; $58a2
+	ld hl, wCharDataStatsSlideX ; $58a2
 	call ApplySlideOffsetToSpriteX ; $58a5
 	call QueueSprite ; $58a8
 	pop bc ; $58ab
@@ -2822,7 +2822,7 @@ DrawCharStatDigitsTask:
 	ld c, a ; $58b2
 	ld de, $5c1c ; $58b3
 	ld a, $02 ; $58b6
-	ld hl, $d145 ; $58b8
+	ld hl, wCharDataStatsSlideX ; $58b8
 	call ApplySlideOffsetToSpriteX ; $58bb
 	call QueueSprite ; $58be
 	jr .stat4 ; $58c1
@@ -2832,7 +2832,7 @@ DrawCharStatDigitsTask:
 	ld c, a ; $58c5
 	ld de, $591c ; $58c6
 	ld a, $02 ; $58c9
-	ld hl, $d145 ; $58cb
+	ld hl, wCharDataStatsSlideX ; $58cb
 	call ApplySlideOffsetToSpriteX ; $58ce
 	call QueueSprite ; $58d1
 .stat4:
@@ -2854,7 +2854,7 @@ DrawCharStatDigitsTask:
 	ld c, a ; $58f1
 	ld de, $5544 ; $58f2
 	ld a, $03 ; $58f5
-	ld hl, $d145 ; $58f7
+	ld hl, wCharDataStatsSlideX ; $58f7
 	call ApplySlideOffsetToSpriteX ; $58fa
 	call QueueSprite ; $58fd
 	pop bc ; $5900
@@ -2864,7 +2864,7 @@ DrawCharStatDigitsTask:
 	ld c, a ; $5907
 	ld de, $5c44 ; $5908
 	ld a, $03 ; $590b
-	ld hl, $d145 ; $590d
+	ld hl, wCharDataStatsSlideX ; $590d
 	call ApplySlideOffsetToSpriteX ; $5910
 	call QueueSprite ; $5913
 	jr .getCharDataDigitSprite ; $5916
@@ -2874,7 +2874,7 @@ DrawCharStatDigitsTask:
 	ld c, a ; $591a
 	ld de, $5944 ; $591b
 	ld a, $03 ; $591e
-	ld hl, $d145 ; $5920
+	ld hl, wCharDataStatsSlideX ; $5920
 	call ApplySlideOffsetToSpriteX ; $5923
 	call QueueSprite ; $5926
 .getCharDataDigitSprite:
@@ -2883,7 +2883,7 @@ DrawCharStatDigitsTask:
 	jr z, .eq20 ; $592e
 	call GetCharDataDigitSprite ; $5930
 	ld de, $2984 ; $5933
-	ld hl, $d145 ; $5936
+	ld hl, wCharDataStatsSlideX ; $5936
 	call ApplySlideOffsetToSpriteX ; $5939
 	call QueueSprite ; $593c
 .eq20:
@@ -2892,7 +2892,7 @@ DrawCharStatDigitsTask:
 	jr z, .eq202 ; $5944
 	call GetCharDataDigitSprite ; $5946
 	ld de, $3184 ; $5949
-	ld hl, $d145 ; $594c
+	ld hl, wCharDataStatsSlideX ; $594c
 	call ApplySlideOffsetToSpriteX ; $594f
 	call QueueSprite ; $5952
 .eq202:
@@ -2901,7 +2901,7 @@ DrawCharStatDigitsTask:
 	jr z, .eq203 ; $595a
 	call GetCharDataDigitSprite ; $595c
 	ld de, $3984 ; $595f
-	ld hl, $d145 ; $5962
+	ld hl, wCharDataStatsSlideX ; $5962
 	call ApplySlideOffsetToSpriteX ; $5965
 	call QueueSprite ; $5968
 .eq203:
@@ -2910,14 +2910,14 @@ DrawCharStatDigitsTask:
 	jr z, .eq204 ; $5970
 	call GetCharDataDigitSprite ; $5972
 	ld de, $4184 ; $5975
-	ld hl, $d145 ; $5978
+	ld hl, wCharDataStatsSlideX ; $5978
 	call ApplySlideOffsetToSpriteX ; $597b
 	call QueueSprite ; $597e
 .eq204:
 	ld a, [$d141] ; $5981
 	call GetCharDataDigitSprite ; $5984
 	ld de, $4984 ; $5987
-	ld hl, $d145 ; $598a
+	ld hl, wCharDataStatsSlideX ; $598a
 	call ApplySlideOffsetToSpriteX ; $598d
 	call QueueSprite ; $5990
 	farcall DrawStatChangeArrows ; $5993
@@ -4218,7 +4218,7 @@ DrawExpScreenLevelNumber:
 	or a ; $6df0
 	jr nz, .nonZero ; $6df1
 	ld a, [wExpScreenCharStats] ; $6df3
-	ld de, $d091 ; $6df6
+	ld de, wCharDataNumberBuffer + 3 ; $6df6
 	jr .clearExpScreenLevelDigits ; $6df9
 .nonZero:
 	ld a, [wExpScreenCharStats + 15] ; $6dfb
@@ -4361,7 +4361,7 @@ DrawExpScreenLevelBar:
 	jr c, .lt642 ; $6edc
 	xor a ; $6ede
 	ld [wExpScreenCharStats + 18], a ; $6edf
-	ld de, $d147 ; $6ee2
+	ld de, wCharDataValuesSlideX ; $6ee2
 	jr .step4 ; $6ee5
 .lt642:
 	ld hl, wExpScreenCharStats + 19 ; $6ee7
@@ -4375,7 +4375,7 @@ DrawExpScreenLevelBar:
 	ld b, $40 ; $6ef3
 	call ScaleValueToBar ; $6ef5
 	ld [wExpScreenCharStats + 18], a ; $6ef8
-	ld de, $d147 ; $6efb
+	ld de, wCharDataValuesSlideX ; $6efb
 .step4:
 	ld b, a ; $6efe
 	ld c, $08 ; $6eff
@@ -5365,7 +5365,7 @@ DrawExpToNextLevelTask:
 	ld de, $1f2f ; $76ac
 	call QueueSprite ; $76af
 .eq202:
-	ld a, [$d090] ; $76b2
+	ld a, [wCharDataNumberBuffer + 2] ; $76b2
 	call GetExpScreenDigitSprite ; $76b5
 	ld de, $262f ; $76b8
 	call QueueSprite ; $76bb
@@ -5400,7 +5400,7 @@ DrawExpToNextLevelTask:
 	ld de, $1f62 ; $76ff
 	call QueueSprite ; $7702
 .eq204:
-	ld a, [$d090] ; $7705
+	ld a, [wCharDataNumberBuffer + 2] ; $7705
 	call GetExpScreenDigitSprite ; $7708
 	ld de, $2662 ; $770b
 	call QueueSprite ; $770e

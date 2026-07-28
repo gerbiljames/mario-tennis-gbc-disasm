@@ -5996,7 +5996,7 @@ BackupMasterPalettes:
 	dec b ; $75f4
 	jr nz, .loop ; $75f5
 	ld hl, wMasterPalettes ; $75f7
-	ld de, $d0a0 ; $75fa
+	ld de, wCharDataStatsNoRacket ; $75fa
 	ld b, $80 ; $75fd
 .loopB:
 	ld a, [hl+] ; $75ff
@@ -6006,7 +6006,7 @@ BackupMasterPalettes:
 	jr nz, .loopB ; $7603
 	ret ; $7605
 ClearWorkingPaletteBuffer:
-	ld hl, $d0a0 ; $7606
+	ld hl, wCharDataStatsNoRacket ; $7606
 	ld b, $40 ; $7609
 	ld de, $0000 ; $760b
 .loop:
@@ -6018,7 +6018,7 @@ ClearWorkingPaletteBuffer:
 	jr nz, .loop ; $7613
 	ret ; $7615
 DesaturateWorkingPalettes:
-	ld hl, $d0a0 ; $7616
+	ld hl, wCharDataStatsNoRacket ; $7616
 	ld de, $d1f2 ; $7619
 	ld b, $40 ; $761c
 .loop:
@@ -6246,7 +6246,7 @@ AnimatePaletteFadeToTarget:
 StepPaletteColorsTowardTarget:
 	ld a, b ; $7764
 	ld [$d1f1], a ; $7765
-	ld hl, $d0a0 ; $7768
+	ld hl, wCharDataStatsNoRacket ; $7768
 	call AdvanceToPaletteEntry ; $776b
 	ld d, h ; $776e
 	ld e, l ; $776f
@@ -6336,7 +6336,7 @@ SnapPalettesToTarget:
 	and a ; $77ea
 	jr z, .restore ; $77eb
 	ld c, b ; $77ed
-	ld hl, $d0a0 ; $77ee
+	ld hl, wCharDataStatsNoRacket ; $77ee
 	call AdvanceToPaletteEntry ; $77f1
 	ld d, h ; $77f4
 	ld e, l ; $77f5

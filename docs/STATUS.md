@@ -7000,3 +7000,61 @@ screens looks like a tilemap cell, but `ApplyTilemapPatchList` selects WRAM bank
 from the patch list, in whatever bank the caller left. So `$d7e0`, `$d8e0`,
 `$d9e0` and the `$da20`-`$de60` run are arrays of patch bytes in bank `$06`,
 and segmenting them is its own pass rather than a name.
+
+## Bank $06, and a third of it is not bank $06 (2026-07-28)
+
+WRAM bank `$06` is the character-data and EXP screens' working set — banks
+`$1a`, `$1c` and `$1d`. The survey put 685 bare references there. **About 240 of
+them are not in bank `$06` at all**, and finding that out was most of the work.
+
+`ld bc, $d7e0` in `SlideToMainCharStatPage` looks like a variable. It is an
+*argument*. `ApplyTilemapPatchList` takes a destination offset from its ROM
+patch list and a source cell in `bc`, and its copy loop is this:
+
+```
+.copyLoop:
+	wram_bank $03      ; tile plane
+	ld a, [hl]
+	ld [de], a
+	wram_bank $02      ; attribute plane
+	ld a, [hl+]
+	ld [de], a
+	inc de
+```
+
+The **same** source and destination addresses are read and written in two
+different WRAM banks, one for each plane. So `$d7e0` denotes a cell in bank
+`$03` *and* the matching cell in bank `$02`, and the `wram_bank $06` earlier in
+the routine is there only because the temporary pointer it parks lives in bank
+`$06` — which is exactly why `compute_wram_bank` attributes the call sites to
+bank `$06` and why they must not be named as bank `$06` variables.
+
+The same holds for `ld de, $d251` in `CharDataScreen_DrawStats`: a cell address
+handed to a drawing routine that picks the bank itself.
+
+**What that reveals is the screen's geometry.** `FlushCharDataTilemapChunk`
+copies `wShadowTilemap + 15 * TILEMAP_WIDTH` to `$99e0` and `$d1e0` in bank `$02`
+to the same address in VRAM bank 1 — so the visible map is 32 wide at `$d000`,
+tiles in bank `$03` and attributes in bank `$02`, and `$d251` is row 18 column
+17. The page images the slide animation patches from sit above them, up past
+`$d800` in both banks. That is a real layout finding; it is not a set of names,
+because the union model keys a symbol to one bank and these operands mean two.
+
+### What was named
+
+| | |
+|---|---|
+| `$d08e` `wCharDataNumberBuffer` | declared 2 bytes, actually **6** — `FormatExp24BitDecimal` puts a 24-bit value's top byte at +$00 and formats the low word to five places from +$01 |
+| `$d0a0` `wCharDataStatsNoRacket` | the eleven stats recomputed as if nothing were equipped |
+| `$d0ab` `wCharDataRacketDeltas` | what the racket is worth per stat, cleared first so an unequipped character shows no arrows |
+| `$d145`/`$d147` | the two page-slide X offsets, one for the stat digits and one for the value column |
+
+685 → 543 references, and roughly 240 of what remains is the argument-address
+case above.
+
+**The overlap guard added in the previous pass paid for itself immediately.**
+`$d145` sits inside the `$d100-$d21a` union — the sound engine's WRAM, which
+already carries a bank-`$06` variant because the EXP award screen reuses those
+bytes. A new union there would have emitted both and overrun the bank; instead
+the run stopped with `ram_unions overlap: $d145-$d149 and $d100-$d21a`, and the
+offsets went into the variant that was already the right home for them.

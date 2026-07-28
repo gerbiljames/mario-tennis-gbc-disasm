@@ -195,7 +195,7 @@
   {
    "start": "0xd100",
    "end": "0xd21a",
-   "comment": "Sound-engine WRAM (bank $07), used only by the bank-0 audio driver;\nscoped to the driver's code range so the same $d1xx/$d2xx offsets\nin other WRAM banks keep their numeric address.\nThe EXP award screen reuses the same bytes from WRAM bank $06, which the\nbank $1a/$1d code selects explicitly with `wram_bank $06`.",
+   "comment": "Sound-engine WRAM (bank $07), used only by the bank-0 audio driver;\nscoped to the driver's code range so the same $d1xx/$d2xx offsets\nin other WRAM banks keep their numeric address.\nThe EXP award screen reuses the same bytes from WRAM bank $06, which the\nbank $1a/$1d code selects explicitly with `wram_bank $06`.\nThat variant is where the character-data screen keeps its page-slide\noffsets, which is the same overlay seen from the other side.",
    "variants": [
     {
      "context": "sound engine (bank 0)",
@@ -281,13 +281,23 @@
      }
     },
     {
-     "context": "EXP award screen (banks $1a/$1d)",
+     "context": "character-data and EXP screens (banks $1a/$1c/$1d)",
      "scopes": [
       {
        "wram_bank": "0x06"
       }
      ],
      "symbols": {
+      "0xd145": {
+       "name": "wCharDataStatsSlideX",
+       "note": "[16-bit] X offset the stat digits are drawn at while a page slides. The Slide*StatPage routines step it and DrawCharStatDigitsTask hands it to ApplySlideOffsetToSpriteX for every digit it queues",
+       "size": 2
+      },
+      "0xd147": {
+       "name": "wCharDataValuesSlideX",
+       "note": "[16-bit] The same offset for the value column, stepped in step with wCharDataStatsSlideX and applied by CharDataValuesSyncTask -- two offsets because the two columns slide in and out at different times",
+       "size": 2
+      },
       "0xd161": {
        "name": "wExpScreenCharStats",
        "size": 30,
@@ -1855,8 +1865,18 @@
       },
       "0xd08e": {
        "name": "wCharDataNumberBuffer",
-       "note": "[2 bytes] Two-digit scratch every stat on the character-data screen is formatted into: FormatDecimalNumberUnsigned writes it, then CharDataScreen_WriteStatNumber copies the digits into the tilemap",
-       "size": 2
+       "note": "[6 bytes] Scratch the character-data and EXP screens format numbers into. FormatExp24BitDecimal puts the 24-bit value's top byte at +$00 and formats the low word to five places from +$01, which is what makes the buffer six wide",
+       "size": 6
+      },
+      "0xd0a0": {
+       "name": "wCharDataStatsNoRacket",
+       "note": "[11 bytes] The eleven stats recomputed as if no racket were equipped, so the screen can show what the equipment is worth. CharDataScreen_BuildStats fills it from wStoryMainCharStats after RecomputeStatsWithoutRacket, and leaves it alone when nothing is equipped",
+       "size": 11
+      },
+      "0xd0ab": {
+       "name": "wCharDataRacketDeltas",
+       "note": "[11 bytes] Per-stat difference the equipped racket makes, cleared to zero before anything else so an unequipped character shows no arrows at all. DrawStatChangeArrows reads it alongside wCharDataStatsNoRacket",
+       "size": 11
       },
       "0xd0b6": {
        "name": "wCharDataViewOnly",

@@ -3153,9 +3153,13 @@ NEXTU
 ; character-data screen (WRAM bank $06)
 ; [100 bytes] One byte per level-up taken on this visit: the wCharDataPage the player confirmed. Cleared by WriteCharStatsToDisplayBuffer before the screen opens
 wCharDataChoiceLog:: ds 100
-; [2 bytes] Two-digit scratch every stat on the character-data screen is formatted into: FormatDecimalNumberUnsigned writes it, then CharDataScreen_WriteStatNumber copies the digits into the tilemap
-wCharDataNumberBuffer:: dw
-	ds 38
+; [6 bytes] Scratch the character-data and EXP screens format numbers into. FormatExp24BitDecimal puts the 24-bit value's top byte at +$00 and formats the low word to five places from +$01, which is what makes the buffer six wide
+wCharDataNumberBuffer:: ds 6
+	ds 12
+; [11 bytes] The eleven stats recomputed as if no racket were equipped, so the screen can show what the equipment is worth. CharDataScreen_BuildStats fills it from wStoryMainCharStats after RecomputeStatsWithoutRacket, and leaves it alone when nothing is equipped
+wCharDataStatsNoRacket:: ds 11
+; [11 bytes] Per-stat difference the equipped racket makes, cleared to zero before anything else so an unequipped character shows no arrows at all. DrawStatChangeArrows reads it alongside wCharDataStatsNoRacket
+wCharDataRacketDeltas:: ds 11
 ; [8-bit] Nonzero opens the character-data screen read-only: CharDataScreen_Show skips the allocation flow, LoadCharStatsWithLevelUpDeltas returns without computing deltas, and the input loop will not spend a point. Set by RunExpDistributionFlow and RestoreCharData
 wCharDataViewOnly:: db
 ENDU
@@ -3167,8 +3171,15 @@ ENDU
 ; in other WRAM banks keep their numeric address.
 ; The EXP award screen reuses the same bytes from WRAM bank $06, which the
 ; bank $1a/$1d code selects explicitly with `wram_bank $06`.
-; EXP award screen (banks $1a/$1d)
-	ds 97
+; That variant is where the character-data screen keeps its page-slide
+; offsets, which is the same overlay seen from the other side.
+; character-data and EXP screens (banks $1a/$1c/$1d)
+	ds 69
+; [16-bit] X offset the stat digits are drawn at while a page slides. The Slide*StatPage routines step it and DrawCharStatDigitsTask hands it to ApplySlideOffsetToSpriteX for every digit it queues
+wCharDataStatsSlideX:: dw
+; [16-bit] The same offset for the value column, stepped in step with wCharDataStatsSlideX and applied by CharDataValuesSyncTask -- two offsets because the two columns slide in and out at different times
+wCharDataValuesSlideX:: dw
+	ds 24
 ; [2 x 15 bytes] Per-character record the EXP award screen works on, selected by wStoryCharacterSlot (slot 0 at +0, slot 1 at +15). InitExpScreenCharStats fills $d161-$d16f; +8 is the 16-bit total CheckExpLevelUp/Down compare, and DrawExpScreenLevelNumber, DrawExpScreenLevelBar and the SweepExpBarMarker routines read +0 and +3
 wExpScreenCharStats:: ds 30
 	ds 155
@@ -3241,6 +3252,8 @@ wSndHramSave:: ds 32
 ; in other WRAM banks keep their numeric address.
 ; The EXP award screen reuses the same bytes from WRAM bank $06, which the
 ; bank $1a/$1d code selects explicitly with `wram_bank $06`.
+; That variant is where the character-data screen keeps its page-slide
+; offsets, which is the same overlay seen from the other side.
 ; sound engine (bank 0)
 ; [192 bytes] Six 32-byte channel state blocks (channels 0-1 music, 2-5 SFX); the active channel's block is mirrored into HRAM $ffd0 each pass, first word = script pointer ($ffff = idle)
 wSndChannels:: ds 192

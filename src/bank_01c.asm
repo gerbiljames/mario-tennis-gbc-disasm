@@ -117,8 +117,8 @@ CharDataScreen_InitState:
 	ld [$d002], a ; $410c
 	ld [$d09f], a ; $410f
 	ld a, c ; $4112
-	ld [$d145], a ; $4113
-	ld [$d146], a ; $4116
+	ld [wCharDataStatsSlideX], a ; $4113
+	ld [wCharDataStatsSlideX + 1], a ; $4116
 	inc a ; $4119
 	inc a ; $411a
 	ld [$d142], a ; $411b
