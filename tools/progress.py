@@ -59,6 +59,8 @@ def main():
     labp = Path(args.labels)
     if labp.exists():
         for k, v in json.loads(labp.read_text()).items():
+            if isinstance(v, dict):
+                v = v.get("name", "")
             if v.startswith("."):
                 curated_locals.add(int(k, 0))
 

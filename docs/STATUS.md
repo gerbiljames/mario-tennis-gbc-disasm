@@ -26,11 +26,11 @@ shape, not *twins*, and the shot banks are near-identical copies of each
 other, so a routine only one bank failed to execute reads as ordinary data
 until you diff it against its siblings.
 
-Everything below is **committed** (HEAD `c4f3b4e`); the whole history
+Everything below is **committed** (HEAD `b4f2d24`); the whole history
 rebuilds byte-perfect. Per-bank progress at any time: `python3
 tools/progress.py` (proven-code bytes, fill runs, label counts, human-named
 counts) and `tools/progress.py --unnamed <bank>` to list still-auto-named
-symbols. **19,920 of 21,679 labels are human-named** (see the caveat in the
+symbols. **19,921 of 21,680 labels are human-named** (see the caveat in the
 auto-split section below) (up from 4,816 on 2026-07-23); what is left is
 data blobs.
 
@@ -4572,7 +4572,7 @@ from clean throughout.
 
 ## Repo state
 
-All work is committed (HEAD `c4f3b4e`); every commit rebuilds byte-perfect.
+All work is committed (HEAD `b4f2d24`); every commit rebuilds byte-perfect.
 Gitignored: baserom.gbc, data/, build/, tools/rgbds/, *.o, *.gbc, *.sav.
 
 ## Tail calls, and three tables that lied about their length (2026-07-26)
@@ -6394,3 +6394,120 @@ cannot return z**: `xor a` / `dec a` sets the flags from `$ff` and the following
 **`PagedMenuFrameTask` runs and does nothing**: it is genuinely registered and
 unregistered as a per-frame task, so the plumbing is real, but the body reads
 `wMenuCursorRow` into `a` and `pop af` discards it.
+
+
+## The other half of the RAM map (2026-07-28)
+
+The HRAM sweep finished HRAM; the same sweep counted **507 bracket references
+over 202 unnamed WRAM0 addresses**, which is the biggest single block of raw
+addresses left in the source. WRAM0 (`$c000-$cfff`) is unbanked, so unlike
+`$dxxx` it takes plain `ram_map.json` names with no scope machinery -- the work
+is entirely in reading the code and being sure. **111 addresses named across
+five passes; 507 references are now 154 over 71 addresses.** Every pass
+regenerated, `make compare`d OK and passed `make check`.
+
+Some of it was structure that the *macro comments already documented* while the
+RAM side had no names at all. `include/macros.inc` has said since the map-tree
+work that "each story location owns a 7-word directory (a map_tree) copied to
+`$c286`" and has spelled out both record layouts (`map_entry id, facing, x, y,
+arrival_script`; `map_script id, facing_mask, flag_cond, handler, arg0, arg1`).
+Naming `wMapEntryPointsPtr` … `wMapInitScriptPtr` and `wStoryMapRecord` makes
+the bank `$0a` overworld engine read as the table walker it is:
+
+| was | is |
+| --- | --- |
+| `ld hl, $c286` | `ld hl, wMapEntryPointsPtr` |
+| `ld de, $c2c0` … `call FarCopyBytes` | `ld de, wStoryMapRecord` |
+| `ld hl, $c2c4` | `ld hl, wStoryMapRecord + 4` |
+
+`wStoryMapRecord` is deliberately one 8-byte array rather than eight fields: the
+two record shapes disagree about `+4`-`+7` (a `map_entry`'s Y and arrival script
+against a `map_script`'s handler and its two argument bytes), so interior
+offsets are the honest rendering.
+
+### The four on-court character records
+
+`CharAttrStructPtrs_07` is `dw $ca00, $ca80, $ca40, $cac0` -- player-1 main,
+player-2 main, player-1 partner, player-2 partner -- and `LoadCharacterAttributes`
+already carried a prose note describing what it copies out of them. Cross-reading
+that against the story character records at `$c900`/`$c940` (already named down
+to gender and handedness) settles the shared `$40`-byte layout:
+
+| offset | field | how it was proven |
+| --- | --- | --- |
+| `+$00` | display name, 7 bytes | `DrawSinglesPlayerNames` copies it through `CopyStringToTextBuffer` |
+| `+$0b` | character id | already named `wPlayer1CurrentMainCharacter` etc. |
+| `+$0c` | palette index | `LoadIndexedPalette_18`, and `SetupCharacterSprite` with `+3` |
+| `+$0e` | mirrored / left-handed | becomes `wCharMirrorAttrMask` = `$20`, the OAM X-flip bit |
+| `+$18` | EXP tier | `ld [wCharExpTier], a` |
+| `+$1b`-`+$1e` | four AI personality parameters | written from the CPU-difficulty row |
+| `+$1f` | difficulty | already named `wExhibitionMode*Difficulty` |
+| `+$3c` | equipment nibbles | `ApplyMatchSettingsExpBonus` |
+
+That last one is a gameplay finding rather than a rename. The handicap gear pays
+for itself: `ApplyMatchSettingsExpBonus` scores one step for the low nibble being
+`$03` and another for the high nibble being `$01`, and **two steps double the
+match EXP** (one step adds a half).
+
+`IsStarCharacter` is a misnomer worth recording: it returns true for character
+ids `$17`-`$1f`, and `id = bank $30 string index - 27` puts those at indices
+50-58 -- Luigi through Peach, the nine Mario-series characters. It gates
+`wCharSelectSlotStar`, which reaches the records as `+$0e`, the X-flip.
+
+### Screen shake, and a second clock
+
+Two subsystems were entirely anonymous. **Screen shake** is `SetScreenShake`
+(magnitude `$ff` = off, otherwise clamped to 1-3) plus `UpdateScreenShake`,
+which turns the magnitude into a mask of that many bits, ANDs it with a fresh
+random word and signs each half: `wScreenShakeOffsetX`/`Y` then bias `hScrollX`
+and `hScrollY` in `UpdateSceneScroll`, and bank `$04`'s
+`ComputeSpriteScrollOffset` sign-extends the same two bytes so objects shake
+with the background.
+
+**A second clock** sits right after `wGameTimer`: `wSecondaryTimer` (frames,
+seconds, minutes) ticked by `TickSecondaryTimer` while `wSecondaryTimerMode`
+reads exactly 1, saturating at 9:59 rather than wrapping. The same three bytes
+are run *downwards* by a stranded routine at `$00:$240a` -- no label, nothing
+references it -- which plays `sound $af` per second and `sound $b0` at zero, and
+writes `$ff` into the mode byte on expiry. A countdown timer that shipped
+unreachable.
+
+### Write-only is a common shape here
+
+Naming forced the question "what reads this?" more often than expected, and the
+answer is frequently *nothing*. `$c458`-`$c45f` is the shot-speed sum broken
+into its four terms -- the ball's contribution, the striker's momentum, the
+charge bonus, and the clamped result -- each stored by the routine that computes
+it and never read back. So are `wLastShotAimOffset`, `wLastShotWasPowerShot`,
+`wBallOutOfBoundsBits`, `wMatchEndLinkState` and `wRallyNetFrames`. They are
+named for what they hold, with "write-only" in the note; the `wUnused*`
+convention is kept for bytes whose *only* interest is that nothing reads them.
+
+### Shared scratch, again
+
+The `$dxxx` screens taught that a block of RAM can mean different things in
+different banks. WRAM0 does it too, and three blocks had to be left partly
+numeric rather than named wrongly:
+
+* `$c700-$c709` is `wDebugMenuWindowId`/`wDebugWarpWindowId` in one debug
+  submenu, the `"RRRGGGBBB"` decimal buffer in the colour editor, and a save
+  slot for eight bytes of `wCharPosX` in the stats editor. `$c703` is both the
+  warp menu's cursor row and the green component's string, so it stays numeric.
+* `$cb02`/`$cb03` are the LCD STAT handler's scanline band bounds in banks
+  `$00`/`$16`/`$6b` and a 16-bit camera offset in banks `$03`/`$04`/`$0a`. Only
+  `$cb01` -- always the `rSCX` value -- is named.
+* `$c780-$c78c` was already a `ram_unions.json` mode-local union; the scoreboard's
+  use of `$c78a` went in as a bank `$18` variant rather than a global name, and
+  the generator caught the attempt to do it globally (`ram_map/ram_unions
+  conflict: $c78a inside union $c780-$c78c`) before it could render.
+
+### A size field worth eight references
+
+`wTextBuffer` had the note "(160 bytes)" and no `size`, so `[$c601]`-`[$c604]`
+rendered as bare addresses in the EXP digit drawing. Setting `"size": 160`
+renders them `wTextBuffer + 1` … `+ 4` and cost nothing else. Worth checking the
+rest of the map for notes that describe a length the `size` field does not.
+
+`tools/progress.py` also crashed on start since labels.json entries gained
+prose: it reads the values as strings to find curated `.local` names, and a
+`{"name": …, "note": …}` value is a dict. It unwraps both shapes now.
