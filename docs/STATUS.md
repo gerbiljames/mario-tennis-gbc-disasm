@@ -6171,3 +6171,53 @@ likely to come from a seed file as from descent, and `make compare` cannot see
 either, because the bytes are identical whichever way they are rendered. The
 bank `$0b` fix drops the instruction count by 12 and code bytes by 16 -- the
 direction that says false code was removed rather than real code lost.
+
+
+## Putting the VRAM bank back in the operand (2026-07-28)
+
+VRAM is reached through exactly one door -- `QueueVRAMCopy`, 613 call sites, and
+**not one direct `ld [$8xxx], a` in the ROM**. It takes source in `hl`,
+destination in `de`, length in `c` as 16-byte blocks, and branches on the LCD:
+off, it starts a GDMA immediately; on, it takes a slot in `wVRAMCopyQueue` for
+`ProcessVRAMCopyQueues` to drain in VBlank. A slot turns out to be literally the
+five CGB VDMA registers plus the two banks needed to reach the source, and
+writing the last byte to `$ff55` is what starts the transfer -- the note that
+called `+$02`/`+$03` the size and `+$07` "src?" had those backwards.
+
+The interesting part is the destination. **The VRAM bank rides in bit 13 of it**:
+
+```
+        bit 5, d           ; bit 13 of de
+        jr z, .setVramBank
+        res 5, d           ; clear it -> the real VRAM address
+        inc a              ; ...and select VRAM bank 1
+```
+
+So `$b800` means `$9800` in bank 1, and roughly half the graphics traffic is
+bank 1 -- attributes and the second tile bank. 418 sites now render as
+`$9800 + VRAM_BANK1`, which rgbasm folds to the same word. (A folded expression
+again rather than a macro: RGBDS has no expression-returning macro, the same
+constraint the tilemap coordinates ran into.)
+
+### Three ways to decide which immediates get it
+
+The value cannot say, because `$a000` is *both* the SRAM base and VRAM bank 1's
+`$8000`, and `make compare` cannot referee -- it assembles the same either way.
+
+* **A call-site peephole** -- an `ld rr, $[ab]xxx` followed by a call to a known
+  VRAM helper -- catches 374 of 434 and misses a whole class: destinations that
+  are *computed*. `CopyVisibleTilemapToVRAM` does `ld hl, $b800 / add hl, bc /
+  ld d, h / ld e, l`, and bank `$13` does `ld hl, $a000 / add hl, de`; both are
+  as much VRAM addresses as the direct ones, and no forward scan for a call
+  finds them.
+* **Curating the 418 VRAM sites** by offset works but grows with every carve.
+* **Curating the SRAM sites instead** is the one that holds, and it holds for a
+  reason that is a property of the ROM rather than of the code shape: *only bank
+  `$03` ever enables SRAM*. Every `ld a, $0a` / `ld [$0000], a` in the game is in
+  the save engine, so outside it the range cannot be SRAM. The exception list is
+  bank `$03`'s flat range plus one offset -- `FetchSRAMText` at `$05:$6d49`,
+  which reads text out of the save at `$a800` while bank `$03` has SRAM enabled.
+
+Fourteen exclusions instead of four hundred inclusions, and the check that the
+split is right is independent of the compare: bank `$03` has zero conversions and
+`FetchSRAMText` is untouched.
