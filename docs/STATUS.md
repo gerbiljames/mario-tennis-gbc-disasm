@@ -5996,3 +5996,66 @@ maths table in a banked ROM is safe by accident. ROM0 is where the eagerness
 bites, and it bites hardest on small values -- which is exactly what a lookup
 table near zero is made of. A sweep for the signature (a `records:2` table where
 fewer than a quarter of the rows resolve) finds no others.
+
+
+## The serial link's half of the shared HRAM pool (2026-07-28)
+
+`InitSerialLink` and `ResetSerialState` clear 22 bytes each, and 14 of them read
+as bare addresses. Not because they were unnamed -- the `$ffd0` pool's
+sound-driver variant owns every one of them -- but because the serial path is a
+*separate tenant* of the same bytes and had no names of its own. The pool's
+variants named the sound driver's view and left the link's view literal.
+
+Named into the serial (default) variant: `hLinkTxInput`, which
+`SerialEncodeInput` drains a few bits per frame (all four low bits -> `$3f`,
+else bit 3 -> `$30`, bit 2 -> `$0c`, else the low pair) so a burst of presses is
+sent over several frames; `hLinkTxSeqBits`, the two top bits inverted each frame
+and OR'd into every transmitted byte, which is how the peer tells a fresh frame
+from a repeat; `hLinkLastRxByte`, which `ExchangeLinkFrameByte*` compares
+against for exactly that; `hLinkPayloadKind`, set by the match and story pause
+menus so the link sends the payload the current screen expects;
+`hLinkPlayerCount`; and `hVBlankSuppressed`, which the resync sets so
+`VBlankHandler` does nothing at all while it busy-waits on the serial line.
+
+Three of the cleared bytes are dead, and saying so is worth as much as a name:
+`hUnusedLinkByte` and `hUnusedLinkSlot` are written and never read, and
+`hLinkErrorFlags` at `$ffc3` is read once -- `AdvanceFrame` tests its top three
+bits and resets the link if any is set -- but nothing in the ROM ever sets them.
+
+`$ffe9` stays numeric. It is a *fourth* tenant: the match renderer reads it with
+`and $0f` to index an animation table and `and $01` to blink, and every
+subsystem in the pool only ever clears it. Nothing increments it, so what the
+renderer reads is whatever the last subsystem left behind. That is more useful
+left visible than named.
+
+### Naming a round address, again
+
+`RAM_IMM_IS_CONSTANT` exists because a word immediate equal to a named RAM
+address is usually a pointer setup and sometimes a number. Naming `$ffe0` found
+the limit of doing that per site: `$ffe0` is -32, *one tilemap row back*, and it
+appears in every blit and slide loop in the game. Twelve new false names
+appeared the moment `hLinkTxPending` existed, and a newly carved blit loop would
+have quietly acquired more.
+
+`RAM_IMM_NEVER` keys the rule by address instead, for the HRAM bytes whose every
+immediate is arithmetic: `$ffa0` (-96), `$ffc0` (-64), `$ffdf` (-33), `$ffe0`
+(-32), `$fffd` (-3, an interior byte of `hRandomSeed`). All 43 sites feed
+`add hl, rr` or get stored as a 16-bit delta; not one is dereferenced. It has to
+stay curated per address rather than become a blanket HRAM rule, because
+`ld hl, hActorPtr` is a genuine pointer setup at 82 sites.
+
+**Three of those five were already wrong before this pass** -- `hPeakLY`,
+`hLinkRxByte` and `hLinkAckRequired` were rendering at 30 arithmetic sites. The
+audit rule stated when `RAM_IMM_IS_CONSTANT` was introduced ("the bracket form
+is safe; the bare `ld rr, n16` form is what to audit after naming a round
+address") was only ever run against the addresses being named at the time, so
+the class kept growing quietly.
+
+The hardware-register renderer had the same defect, and there an address rule
+cannot work: `ld hl, rIE` is a real pointer setup at 74 sites, and `rLCDC`
+appears in both roles. Those 18 sites are curated by offset in
+`HWADDR_IMM_IS_CONSTANT` -- `ld de, rJOYP` was -256 and `ld hl, rWBK` -144.
+
+Nothing of this shape is left in the ROM: no `ld rr, <name>` is followed by
+`add hl, rr`. That check is cheap and worth re-running after any pass that names
+a round address.
