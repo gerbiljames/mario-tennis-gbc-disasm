@@ -900,7 +900,7 @@ InitMatchWinLoseScreen:
 	ldh [hScrollY], a ; $4577
 	call LoadWinLoseScreenAssets ; $4579
 	wram_bank $03 ; $457c
-	ld de, $d560 ; $4582
+	ld de, wShadowAttrmap + 11 * TILEMAP_WIDTH ; $4582
 	ld b, $14 ; $4585
 	ld c, $05 ; $4587
 	ld h, $0a ; $4589
@@ -991,23 +991,23 @@ LoadWinLoseScreenAssets:
 	call TestGameFlagByNumber ; $4923
 	jr nz, .done ; $4926
 	wram_bank $03 ; $4928
-	ld hl, $d280 ; $492e
-	ld de, $d08b ; $4931
+	ld hl, wShadowTilemap + 20 * TILEMAP_WIDTH ; $492e
+	ld de, wShadowTilemap + 4 * TILEMAP_WIDTH + 11 ; $4931
 	ld b, $09 ; $4934
 	ld c, $05 ; $4936
 	farcall CopyTilemapRect ; $4938
-	ld hl, $d680 ; $493b
-	ld de, $d48b ; $493e
+	ld hl, wShadowAttrmap + 20 * TILEMAP_WIDTH ; $493b
+	ld de, wShadowAttrmap + 4 * TILEMAP_WIDTH + 11 ; $493e
 	ld b, $09 ; $4941
 	ld c, $05 ; $4943
 	farcall CopyTilemapRect ; $4945
-	ld hl, $d289 ; $4948
-	ld de, $d161 ; $494b
+	ld hl, wShadowTilemap + 20 * TILEMAP_WIDTH + 9 ; $4948
+	ld de, wShadowTilemap + 11 * TILEMAP_WIDTH + 1 ; $494b
 	ld b, $08 ; $494e
 	ld c, $05 ; $4950
 	farcall CopyTilemapRect ; $4952
-	ld hl, $d689 ; $4955
-	ld de, $d561 ; $4958
+	ld hl, wShadowAttrmap + 20 * TILEMAP_WIDTH + 9 ; $4955
+	ld de, wShadowAttrmap + 11 * TILEMAP_WIDTH + 1 ; $4958
 	ld b, $08 ; $495b
 	ld c, $05 ; $495d
 	farcall CopyTilemapRect ; $495f
@@ -1020,34 +1020,34 @@ SetWinLosePortraitPaletteAttrs:
 	ld de, $002f ; $4969
 	call TestGameFlagByNumber ; $496c
 	jr z, .zero ; $496f
-	ld de, $d48b ; $4971
+	ld de, wShadowAttrmap + 4 * TILEMAP_WIDTH + 11 ; $4971
 	ld b, $04 ; $4974
 	ld c, $04 ; $4976
 	ld h, $0c ; $4978
 	farcall FillTilemapRect ; $497a
-	ld de, $d48f ; $497d
+	ld de, wShadowAttrmap + 4 * TILEMAP_WIDTH + 15 ; $497d
 	ld b, $04 ; $4980
 	ld c, $04 ; $4982
 	ld h, $0d ; $4984
 	farcall FillTilemapRect ; $4986
-	ld de, $d582 ; $4989
+	ld de, wShadowAttrmap + 12 * TILEMAP_WIDTH + 2 ; $4989
 	ld b, $03 ; $498c
 	ld c, $03 ; $498e
 	ld h, $0e ; $4990
 	farcall FillTilemapRect ; $4992
-	ld de, $d585 ; $4995
+	ld de, wShadowAttrmap + 12 * TILEMAP_WIDTH + 5 ; $4995
 	ld b, $03 ; $4998
 	ld c, $03 ; $499a
 	ld h, $0f ; $499c
 	farcall FillTilemapRect ; $499e
 	jr .done ; $49a1
 .zero:
-	ld de, $d48d ; $49a3
+	ld de, wShadowAttrmap + 4 * TILEMAP_WIDTH + 13 ; $49a3
 	ld b, $04 ; $49a6
 	ld c, $04 ; $49a8
 	ld h, $0c ; $49aa
 	farcall FillTilemapRect ; $49ac
-	ld de, $d583 ; $49af
+	ld de, wShadowAttrmap + 12 * TILEMAP_WIDTH + 3 ; $49af
 	ld b, $03 ; $49b2
 	ld c, $03 ; $49b4
 	ld h, $0e ; $49b6
@@ -1058,34 +1058,34 @@ SetWinLosePortraitPaletteAttrs:
 	ld de, $002f ; $49bc
 	call TestGameFlagByNumber ; $49bf
 	jr z, .fillTilemapRect ; $49c2
-	ld de, $d4ac ; $49c4
+	ld de, wShadowAttrmap + 5 * TILEMAP_WIDTH + 12 ; $49c4
 	ld b, $03 ; $49c7
 	ld c, $03 ; $49c9
 	ld h, $0c ; $49cb
 	farcall FillTilemapRect ; $49cd
-	ld de, $d4af ; $49d0
+	ld de, wShadowAttrmap + 5 * TILEMAP_WIDTH + 15 ; $49d0
 	ld b, $03 ; $49d3
 	ld c, $03 ; $49d5
 	ld h, $0d ; $49d7
 	farcall FillTilemapRect ; $49d9
-	ld de, $d582 ; $49dc
+	ld de, wShadowAttrmap + 12 * TILEMAP_WIDTH + 2 ; $49dc
 	ld b, $03 ; $49df
 	ld c, $03 ; $49e1
 	ld h, $0e ; $49e3
 	farcall FillTilemapRect ; $49e5
-	ld de, $d585 ; $49e8
+	ld de, wShadowAttrmap + 12 * TILEMAP_WIDTH + 5 ; $49e8
 	ld b, $03 ; $49eb
 	ld c, $03 ; $49ed
 	ld h, $0f ; $49ef
 	farcall FillTilemapRect ; $49f1
 	jr .doneB ; $49f4
 .fillTilemapRect:
-	ld de, $d4ad ; $49f6
+	ld de, wShadowAttrmap + 5 * TILEMAP_WIDTH + 13 ; $49f6
 	ld b, $03 ; $49f9
 	ld c, $03 ; $49fb
 	ld h, $0c ; $49fd
 	farcall FillTilemapRect ; $49ff
-	ld de, $d583 ; $4a02
+	ld de, wShadowAttrmap + 12 * TILEMAP_WIDTH + 3 ; $4a02
 	ld b, $03 ; $4a05
 	ld c, $03 ; $4a07
 	ld h, $0e ; $4a09
@@ -1123,8 +1123,8 @@ AdjustResultTilemapForLoss:
 	ld a, [wMatchWinLoseFlag] ; $4a56
 	cp a, $ff ; $4a59
 	jr nz, .done ; $4a5b
-	ld hl, $d240 ; $4a5d
-	ld de, $d120 ; $4a60
+	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH ; $4a5d
+	ld de, wShadowTilemap + 9 * TILEMAP_WIDTH ; $4a60
 	ld b, $20 ; $4a63
 	ld c, $02 ; $4a65
 	farcall CopyTilemapRect ; $4a67
@@ -1474,12 +1474,12 @@ Table_16_4dee:
 	; $4dee, 16 bytes (bytes:16)
 	db $00, $01, $02, $03, $04, $05, $06, $06, $06, $05, $04, $03, $02, $01, $00, $00 ; 0x00
 LoadResultScreenTileGraphics:
-	ld de, $d400 ; $4dfe
+	ld de, wShadowAttrmap ; $4dfe
 	ld b, $14 ; $4e01
 	ld c, $02 ; $4e03
 	ld h, $0b ; $4e05
 	farcall FillTilemapRect ; $4e07
-	ld de, $d600 ; $4e0a
+	ld de, wShadowAttrmap + 16 * TILEMAP_WIDTH ; $4e0a
 	ld b, $14 ; $4e0d
 	ld c, $02 ; $4e0f
 	ld h, $0b ; $4e11
@@ -1752,7 +1752,7 @@ InitMatchStatsScreen:
 	wram_bank $03 ; $5cb5
 	call CopyMatchStatsHeaderRects ; $5cbb
 	call LoadResultScreenTileGraphics ; $5cbe
-	ld de, $d600 ; $5cc1
+	ld de, wShadowAttrmap + 16 * TILEMAP_WIDTH ; $5cc1
 	ld b, $14 ; $5cc4
 	ld c, $02 ; $5cc6
 	ld h, $08 ; $5cc8
@@ -1767,34 +1767,34 @@ SetMatchStatsPortraitPaletteAttrs:
 	ld de, $002f ; $5cdc
 	call TestGameFlagByNumber ; $5cdf
 	jr z, .fillTilemapRect ; $5ce2
-	ld de, $d481 ; $5ce4
+	ld de, wShadowAttrmap + 4 * TILEMAP_WIDTH + 1 ; $5ce4
 	ld b, $03 ; $5ce7
 	ld c, $03 ; $5ce9
 	ld h, $0c ; $5ceb
 	farcall FillTilemapRect ; $5ced
-	ld de, $d484 ; $5cf0
+	ld de, wShadowAttrmap + 4 * TILEMAP_WIDTH + 4 ; $5cf0
 	ld b, $03 ; $5cf3
 	ld c, $03 ; $5cf5
 	ld h, $0d ; $5cf7
 	farcall FillTilemapRect ; $5cf9
-	ld de, $d48d ; $5cfc
+	ld de, wShadowAttrmap + 4 * TILEMAP_WIDTH + 13 ; $5cfc
 	ld b, $03 ; $5cff
 	ld c, $03 ; $5d01
 	ld h, $0e ; $5d03
 	farcall FillTilemapRect ; $5d05
-	ld de, $d490 ; $5d08
+	ld de, wShadowAttrmap + 4 * TILEMAP_WIDTH + 16 ; $5d08
 	ld b, $03 ; $5d0b
 	ld c, $03 ; $5d0d
 	ld h, $0f ; $5d0f
 	farcall FillTilemapRect ; $5d11
 	jr .done ; $5d14
 .fillTilemapRect:
-	ld de, $d482 ; $5d16
+	ld de, wShadowAttrmap + 4 * TILEMAP_WIDTH + 2 ; $5d16
 	ld b, $03 ; $5d19
 	ld c, $03 ; $5d1b
 	ld h, $0c ; $5d1d
 	farcall FillTilemapRect ; $5d1f
-	ld de, $d48e ; $5d22
+	ld de, wShadowAttrmap + 4 * TILEMAP_WIDTH + 14 ; $5d22
 	ld b, $03 ; $5d25
 	ld c, $03 ; $5d27
 	ld h, $0e ; $5d29
@@ -1817,73 +1817,73 @@ PrintSinglesMatchStats:
 	ld h, $00 ; $5d46
 	ld l, a ; $5d48
 	ld bc, wStatsPrintBuffer ; $5d49
-	ld de, $d163 ; $5d4c
+	ld de, wShadowTilemap + 11 * TILEMAP_WIDTH + 3 ; $5d4c
 	farcall PrintNumberRightAligned ; $5d4f
 	ld a, [wCharacter1SmashAces] ; $5d52
 	ld h, $00 ; $5d55
 	ld l, a ; $5d57
 	ld bc, wStatsPrintBuffer ; $5d58
-	ld de, $d183 ; $5d5b
+	ld de, wShadowTilemap + 12 * TILEMAP_WIDTH + 3 ; $5d5b
 	farcall PrintNumberRightAligned ; $5d5e
 	ld a, [wCharacter1ReturnAces] ; $5d61
 	ld h, $00 ; $5d64
 	ld l, a ; $5d66
 	ld bc, wStatsPrintBuffer ; $5d67
-	ld de, $d1a3 ; $5d6a
+	ld de, wShadowTilemap + 13 * TILEMAP_WIDTH + 3 ; $5d6a
 	farcall PrintNumberRightAligned ; $5d6d
 	ld a, [wCharacter1LobShotWinners] ; $5d70
 	ld h, $00 ; $5d73
 	ld l, a ; $5d75
 	ld bc, wStatsPrintBuffer ; $5d76
-	ld de, $d1c3 ; $5d79
+	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH + 3 ; $5d79
 	farcall PrintNumberRightAligned ; $5d7c
 	ld a, [wCharacter1DropShotWinners] ; $5d7f
 	ld h, $00 ; $5d82
 	ld l, a ; $5d84
 	ld bc, wStatsPrintBuffer ; $5d85
-	ld de, $d1e3 ; $5d88
+	ld de, wShadowTilemap + 15 * TILEMAP_WIDTH + 3 ; $5d88
 	farcall PrintNumberRightAligned ; $5d8b
 	ld a, [wCharacter1DoubleFaults] ; $5d8e
 	ld h, $00 ; $5d91
 	ld l, a ; $5d93
 	ld bc, wStatsPrintBuffer ; $5d94
-	ld de, $d203 ; $5d97
+	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 3 ; $5d97
 	farcall PrintNumberRightAligned ; $5d9a
 	ld a, [wCharacter2ServiceAces] ; $5d9d
 	ld h, $00 ; $5da0
 	ld l, a ; $5da2
 	ld bc, wStatsPrintBuffer ; $5da3
-	ld de, $d170 ; $5da6
+	ld de, wShadowTilemap + 11 * TILEMAP_WIDTH + 16 ; $5da6
 	farcall PrintNumberRightAligned ; $5da9
 	ld a, [wCharacter2SmashAces] ; $5dac
 	ld h, $00 ; $5daf
 	ld l, a ; $5db1
 	ld bc, wStatsPrintBuffer ; $5db2
-	ld de, $d190 ; $5db5
+	ld de, wShadowTilemap + 12 * TILEMAP_WIDTH + 16 ; $5db5
 	farcall PrintNumberRightAligned ; $5db8
 	ld a, [wCharacter2ReturnAces] ; $5dbb
 	ld h, $00 ; $5dbe
 	ld l, a ; $5dc0
 	ld bc, wStatsPrintBuffer ; $5dc1
-	ld de, $d1b0 ; $5dc4
+	ld de, wShadowTilemap + 13 * TILEMAP_WIDTH + 16 ; $5dc4
 	farcall PrintNumberRightAligned ; $5dc7
 	ld a, [wCharacter2LobShotWinners] ; $5dca
 	ld h, $00 ; $5dcd
 	ld l, a ; $5dcf
 	ld bc, wStatsPrintBuffer ; $5dd0
-	ld de, $d1d0 ; $5dd3
+	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH + 16 ; $5dd3
 	farcall PrintNumberRightAligned ; $5dd6
 	ld a, [wCharacter2DropShotWinners] ; $5dd9
 	ld h, $00 ; $5ddc
 	ld l, a ; $5dde
 	ld bc, wStatsPrintBuffer ; $5ddf
-	ld de, $d1f0 ; $5de2
+	ld de, wShadowTilemap + 15 * TILEMAP_WIDTH + 16 ; $5de2
 	farcall PrintNumberRightAligned ; $5de5
 	ld a, [wCharacter2DoubleFaults] ; $5de8
 	ld h, $00 ; $5deb
 	ld l, a ; $5ded
 	ld bc, wStatsPrintBuffer ; $5dee
-	ld de, $d210 ; $5df1
+	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 16 ; $5df1
 	farcall PrintNumberRightAligned ; $5df4
 	ret ; $5df7
 PrintDoublesMatchStats:
@@ -1891,164 +1891,164 @@ PrintDoublesMatchStats:
 	ld h, $00 ; $5dfb
 	ld l, a ; $5dfd
 	ld bc, wStatsPrintBuffer ; $5dfe
-	ld de, $d162 ; $5e01
+	ld de, wShadowTilemap + 11 * TILEMAP_WIDTH + 2 ; $5e01
 	farcall PrintNumberRightAligned ; $5e04
 	ld a, [wCharacter1SmashAces] ; $5e07
 	ld h, $00 ; $5e0a
 	ld l, a ; $5e0c
 	ld bc, wStatsPrintBuffer ; $5e0d
-	ld de, $d182 ; $5e10
+	ld de, wShadowTilemap + 12 * TILEMAP_WIDTH + 2 ; $5e10
 	farcall PrintNumberRightAligned ; $5e13
 	ld a, [wCharacter1ReturnAces] ; $5e16
 	ld h, $00 ; $5e19
 	ld l, a ; $5e1b
 	ld bc, wStatsPrintBuffer ; $5e1c
-	ld de, $d1a2 ; $5e1f
+	ld de, wShadowTilemap + 13 * TILEMAP_WIDTH + 2 ; $5e1f
 	farcall PrintNumberRightAligned ; $5e22
 	ld a, [wCharacter1LobShotWinners] ; $5e25
 	ld h, $00 ; $5e28
 	ld l, a ; $5e2a
 	ld bc, wStatsPrintBuffer ; $5e2b
-	ld de, $d1c2 ; $5e2e
+	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH + 2 ; $5e2e
 	farcall PrintNumberRightAligned ; $5e31
 	ld a, [wCharacter1DropShotWinners] ; $5e34
 	ld h, $00 ; $5e37
 	ld l, a ; $5e39
 	ld bc, wStatsPrintBuffer ; $5e3a
-	ld de, $d1e2 ; $5e3d
+	ld de, wShadowTilemap + 15 * TILEMAP_WIDTH + 2 ; $5e3d
 	farcall PrintNumberRightAligned ; $5e40
 	ld a, [wCharacter1DoubleFaults] ; $5e43
 	ld h, $00 ; $5e46
 	ld l, a ; $5e48
 	ld bc, wStatsPrintBuffer ; $5e49
-	ld de, $d202 ; $5e4c
+	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 2 ; $5e4c
 	farcall PrintNumberRightAligned ; $5e4f
 	ld a, [wCharacter3ServiceAces] ; $5e52
 	ld h, $00 ; $5e55
 	ld l, a ; $5e57
 	ld bc, wStatsPrintBuffer ; $5e58
-	ld de, $d165 ; $5e5b
+	ld de, wShadowTilemap + 11 * TILEMAP_WIDTH + 5 ; $5e5b
 	farcall PrintNumberRightAligned ; $5e5e
 	ld a, [wCharacter3SmashAces] ; $5e61
 	ld h, $00 ; $5e64
 	ld l, a ; $5e66
 	ld bc, wStatsPrintBuffer ; $5e67
-	ld de, $d185 ; $5e6a
+	ld de, wShadowTilemap + 12 * TILEMAP_WIDTH + 5 ; $5e6a
 	farcall PrintNumberRightAligned ; $5e6d
 	ld a, [wCharacter3ReturnAces] ; $5e70
 	ld h, $00 ; $5e73
 	ld l, a ; $5e75
 	ld bc, wStatsPrintBuffer ; $5e76
-	ld de, $d1a5 ; $5e79
+	ld de, wShadowTilemap + 13 * TILEMAP_WIDTH + 5 ; $5e79
 	farcall PrintNumberRightAligned ; $5e7c
 	ld a, [wCharacter3LobShotWinners] ; $5e7f
 	ld h, $00 ; $5e82
 	ld l, a ; $5e84
 	ld bc, wStatsPrintBuffer ; $5e85
-	ld de, $d1c5 ; $5e88
+	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH + 5 ; $5e88
 	farcall PrintNumberRightAligned ; $5e8b
 	ld a, [wCharacter3DropShotWinners] ; $5e8e
 	ld h, $00 ; $5e91
 	ld l, a ; $5e93
 	ld bc, wStatsPrintBuffer ; $5e94
-	ld de, $d1e5 ; $5e97
+	ld de, wShadowTilemap + 15 * TILEMAP_WIDTH + 5 ; $5e97
 	farcall PrintNumberRightAligned ; $5e9a
 	ld a, [wCharacter3DoubleFaults] ; $5e9d
 	ld h, $00 ; $5ea0
 	ld l, a ; $5ea2
 	ld bc, wStatsPrintBuffer ; $5ea3
-	ld de, $d205 ; $5ea6
+	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 5 ; $5ea6
 	farcall PrintNumberRightAligned ; $5ea9
 	ld a, [wCharacter2ServiceAces] ; $5eac
 	ld h, $00 ; $5eaf
 	ld l, a ; $5eb1
 	ld bc, wStatsPrintBuffer ; $5eb2
-	ld de, $d16f ; $5eb5
+	ld de, wShadowTilemap + 11 * TILEMAP_WIDTH + 15 ; $5eb5
 	farcall PrintNumberRightAligned ; $5eb8
 	ld a, [wCharacter2SmashAces] ; $5ebb
 	ld h, $00 ; $5ebe
 	ld l, a ; $5ec0
 	ld bc, wStatsPrintBuffer ; $5ec1
-	ld de, $d18f ; $5ec4
+	ld de, wShadowTilemap + 12 * TILEMAP_WIDTH + 15 ; $5ec4
 	farcall PrintNumberRightAligned ; $5ec7
 	ld a, [wCharacter2ReturnAces] ; $5eca
 	ld h, $00 ; $5ecd
 	ld l, a ; $5ecf
 	ld bc, wStatsPrintBuffer ; $5ed0
-	ld de, $d1af ; $5ed3
+	ld de, wShadowTilemap + 13 * TILEMAP_WIDTH + 15 ; $5ed3
 	farcall PrintNumberRightAligned ; $5ed6
 	ld a, [wCharacter2LobShotWinners] ; $5ed9
 	ld h, $00 ; $5edc
 	ld l, a ; $5ede
 	ld bc, wStatsPrintBuffer ; $5edf
-	ld de, $d1cf ; $5ee2
+	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH + 15 ; $5ee2
 	farcall PrintNumberRightAligned ; $5ee5
 	ld a, [wCharacter2DropShotWinners] ; $5ee8
 	ld h, $00 ; $5eeb
 	ld l, a ; $5eed
 	ld bc, wStatsPrintBuffer ; $5eee
-	ld de, $d1ef ; $5ef1
+	ld de, wShadowTilemap + 15 * TILEMAP_WIDTH + 15 ; $5ef1
 	farcall PrintNumberRightAligned ; $5ef4
 	ld a, [wCharacter2DoubleFaults] ; $5ef7
 	ld h, $00 ; $5efa
 	ld l, a ; $5efc
 	ld bc, wStatsPrintBuffer ; $5efd
-	ld de, $d20f ; $5f00
+	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 15 ; $5f00
 	farcall PrintNumberRightAligned ; $5f03
 	ld a, [wCharacter4ServiceAces] ; $5f06
 	ld h, $00 ; $5f09
 	ld l, a ; $5f0b
 	ld bc, wStatsPrintBuffer ; $5f0c
-	ld de, $d172 ; $5f0f
+	ld de, wShadowTilemap + 11 * TILEMAP_WIDTH + 18 ; $5f0f
 	farcall PrintNumberRightAligned ; $5f12
 	ld a, [wCharacter4SmashAces] ; $5f15
 	ld h, $00 ; $5f18
 	ld l, a ; $5f1a
 	ld bc, wStatsPrintBuffer ; $5f1b
-	ld de, $d192 ; $5f1e
+	ld de, wShadowTilemap + 12 * TILEMAP_WIDTH + 18 ; $5f1e
 	farcall PrintNumberRightAligned ; $5f21
 	ld a, [wCharacter4ReturnAces] ; $5f24
 	ld h, $00 ; $5f27
 	ld l, a ; $5f29
 	ld bc, wStatsPrintBuffer ; $5f2a
-	ld de, $d1b2 ; $5f2d
+	ld de, wShadowTilemap + 13 * TILEMAP_WIDTH + 18 ; $5f2d
 	farcall PrintNumberRightAligned ; $5f30
 	ld a, [wPlayer4LobShotWinners] ; $5f33
 	ld h, $00 ; $5f36
 	ld l, a ; $5f38
 	ld bc, wStatsPrintBuffer ; $5f39
-	ld de, $d1d2 ; $5f3c
+	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH + 18 ; $5f3c
 	farcall PrintNumberRightAligned ; $5f3f
 	ld a, [wCharacter4DropShotWinners] ; $5f42
 	ld h, $00 ; $5f45
 	ld l, a ; $5f47
 	ld bc, wStatsPrintBuffer ; $5f48
-	ld de, $d1f2 ; $5f4b
+	ld de, wShadowTilemap + 15 * TILEMAP_WIDTH + 18 ; $5f4b
 	farcall PrintNumberRightAligned ; $5f4e
 	ld a, [wCharacter4DoubleFaults] ; $5f51
 	ld h, $00 ; $5f54
 	ld l, a ; $5f56
 	ld bc, wStatsPrintBuffer ; $5f57
-	ld de, $d212 ; $5f5a
+	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 18 ; $5f5a
 	farcall PrintNumberRightAligned ; $5f5d
 	ret ; $5f60
 ClearMatchStatsNumberArea:
-	ld de, $d561 ; $5f61
+	ld de, wShadowAttrmap + 11 * TILEMAP_WIDTH + 1 ; $5f61
 	ld b, $05 ; $5f64
 	ld c, $06 ; $5f66
 	ld h, $00 ; $5f68
 	farcall FillTilemapRect ; $5f6a
-	ld de, $d56e ; $5f6d
+	ld de, wShadowAttrmap + 11 * TILEMAP_WIDTH + 14 ; $5f6d
 	ld b, $05 ; $5f70
 	ld c, $06 ; $5f72
 	ld h, $00 ; $5f74
 	farcall FillTilemapRect ; $5f76
-	ld de, $d161 ; $5f79
+	ld de, wShadowTilemap + 11 * TILEMAP_WIDTH + 1 ; $5f79
 	ld b, $05 ; $5f7c
 	ld c, $06 ; $5f7e
 	ld h, $20 ; $5f80
 	farcall FillTilemapRect ; $5f82
-	ld de, $d16e ; $5f85
+	ld de, wShadowTilemap + 11 * TILEMAP_WIDTH + 14 ; $5f85
 	ld b, $05 ; $5f88
 	ld c, $06 ; $5f8a
 	ld h, $20 ; $5f8c
@@ -2058,23 +2058,23 @@ CopyMatchStatsHeaderRects:
 	ld de, $002f ; $5f92
 	call TestGameFlagByNumber ; $5f95
 	ret nz ; $5f98
-	ld hl, $d240 ; $5f99
-	ld de, $d080 ; $5f9c
+	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH ; $5f99
+	ld de, wShadowTilemap + 4 * TILEMAP_WIDTH ; $5f9c
 	ld b, $08 ; $5f9f
 	ld c, $04 ; $5fa1
 	farcall CopyTilemapRect ; $5fa3
-	ld hl, $d24c ; $5fa6
-	ld de, $d08c ; $5fa9
+	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH + 12 ; $5fa6
+	ld de, wShadowTilemap + 4 * TILEMAP_WIDTH + 12 ; $5fa9
 	ld b, $08 ; $5fac
 	ld c, $04 ; $5fae
 	farcall CopyTilemapRect ; $5fb0
-	ld hl, $d640 ; $5fb3
-	ld de, $d480 ; $5fb6
+	ld hl, wShadowAttrmap + 18 * TILEMAP_WIDTH ; $5fb3
+	ld de, wShadowAttrmap + 4 * TILEMAP_WIDTH ; $5fb6
 	ld b, $08 ; $5fb9
 	ld c, $04 ; $5fbb
 	farcall CopyTilemapRect ; $5fbd
-	ld hl, $d64c ; $5fc0
-	ld de, $d48c ; $5fc3
+	ld hl, wShadowAttrmap + 18 * TILEMAP_WIDTH + 12 ; $5fc0
+	ld de, wShadowAttrmap + 4 * TILEMAP_WIDTH + 12 ; $5fc3
 	ld b, $08 ; $5fc6
 	ld c, $04 ; $5fc8
 	farcall CopyTilemapRect ; $5fca

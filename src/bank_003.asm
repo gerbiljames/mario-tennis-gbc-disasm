@@ -3932,13 +3932,13 @@ RunScrollingTextScreen:
 	call WaitFadeEnd ; $59fc
 .loop:
 	wram_bank $06 ; $59ff
-	ld a, [w6_d230] ; $5a05
+	ld a, [wScrollTextDelay] ; $5a05
 	dec a ; $5a08
-	ld [w6_d230], a ; $5a09
+	ld [wScrollTextDelay], a ; $5a09
 	jr nz, .checkDebugStepMode ; $5a0c
 	ld a, $02 ; $5a0e
-	ld [w6_d230], a ; $5a10
-	ld a, [w6_d234] ; $5a13
+	ld [wScrollTextDelay], a ; $5a10
+	ld a, [wScrollTextDone] ; $5a13
 	and a, a ; $5a16
 	jr nz, .checkDebugStepMode ; $5a17
 	ldh a, [hScrollY] ; $5a19
@@ -3946,7 +3946,7 @@ RunScrollingTextScreen:
 	ldh [hScrollY], a ; $5a1c
 	and a, $07 ; $5a1e
 	jr nz, .checkDebugStepMode ; $5a20
-	ld hl, $d232 ; $5a22
+	ld hl, wScrollTextId ; $5a22
 	ld a, [hl+] ; $5a25
 	ld h, [hl] ; $5a26
 	ld l, a ; $5a27
@@ -3959,7 +3959,7 @@ RunScrollingTextScreen:
 	jr nz, .nonZero ; $5a3a
 	wram_bank $06 ; $5a3c
 	ld a, $01 ; $5a42
-	ld [w6_d234], a ; $5a44
+	ld [wScrollTextDone], a ; $5a44
 	jr .checkDebugStepMode ; $5a47
 .nonZero:
 	ld de, $0090 ; $5a49
@@ -3971,7 +3971,7 @@ RunScrollingTextScreen:
 	call QueueVRAMCopy ; $5a5b
 	pop de ; $5a5e
 	wram_bank $06 ; $5a5f
-	ld hl, $d232 ; $5a65
+	ld hl, wScrollTextId ; $5a65
 	ld b, h ; $5a68
 	ld c, l ; $5a69
 	ld a, [hl+] ; $5a6a
@@ -3987,7 +3987,7 @@ RunScrollingTextScreen:
 	ldh a, [hDebugStepMode] ; $5a73
 	or a, a ; $5a75
 	jr nz, .nonZero2 ; $5a76
-	ld a, [w6_d234] ; $5a78
+	ld a, [wScrollTextDone] ; $5a78
 	and a, a ; $5a7b
 	jr z, .advanceFrame ; $5a7c
 .nonZero2:
@@ -4014,7 +4014,7 @@ RunScrollingTextScreen:
 	ret ; $5aa8
 InitScrollingTextScreen:
 	wram_bank $06 ; $5aa9
-	ld hl, w6_d230 ; $5aaf
+	ld hl, wScrollTextDelay ; $5aaf
 	ld a, $02 ; $5ab2
 	ld [hl+], a ; $5ab4
 	ld [hl+], a ; $5ab5
@@ -4023,7 +4023,7 @@ InitScrollingTextScreen:
 	ld [hl+], a ; $5aba
 	ld [hl], d ; $5abb
 	xor a, a ; $5abc
-	ld [w6_d234], a ; $5abd
+	ld [wScrollTextDone], a ; $5abd
 	wram_bank $02 ; $5ac0
 	ld bc, $0400 ; $5ac6
 	ld d, $00 ; $5ac9
@@ -5918,11 +5918,11 @@ ShowStoryResultScreen:
 	ld b, $20 ; $7542
 	call FillMemoryDE ; $7544
 	ld hl, Text_5e_320 ; $7547
-	ld de, $d0c0 ; $754a
+	ld de, wShadowTilemap + 6 * TILEMAP_WIDTH ; $754a
 	ld bc, $0020 ; $754d
 	farcall FetchAndDrawDialogueText ; $7550
 	ld hl, Text_5e_322 ; $7553
-	ld de, $d180 ; $7556
+	ld de, wShadowTilemap + 12 * TILEMAP_WIDTH ; $7556
 	ld bc, $0020 ; $7559
 	farcall FetchAndDrawDialogueText ; $755c
 	wram_bank $02 ; $755f
@@ -5996,7 +5996,7 @@ BackupMasterPalettes:
 	dec b ; $75f4
 	jr nz, .loop ; $75f5
 	ld hl, wMasterPalettes ; $75f7
-	ld de, w6_d0a0 ; $75fa
+	ld de, $d0a0 ; $75fa
 	ld b, $80 ; $75fd
 .loopB:
 	ld a, [hl+] ; $75ff
@@ -6006,7 +6006,7 @@ BackupMasterPalettes:
 	jr nz, .loopB ; $7603
 	ret ; $7605
 ClearWorkingPaletteBuffer:
-	ld hl, w6_d0a0 ; $7606
+	ld hl, $d0a0 ; $7606
 	ld b, $40 ; $7609
 	ld de, $0000 ; $760b
 .loop:
@@ -6018,7 +6018,7 @@ ClearWorkingPaletteBuffer:
 	jr nz, .loop ; $7613
 	ret ; $7615
 DesaturateWorkingPalettes:
-	ld hl, w6_d0a0 ; $7616
+	ld hl, $d0a0 ; $7616
 	ld de, $d1f2 ; $7619
 	ld b, $40 ; $761c
 .loop:
@@ -6246,7 +6246,7 @@ AnimatePaletteFadeToTarget:
 StepPaletteColorsTowardTarget:
 	ld a, b ; $7764
 	ld [$d1f1], a ; $7765
-	ld hl, w6_d0a0 ; $7768
+	ld hl, $d0a0 ; $7768
 	call AdvanceToPaletteEntry ; $776b
 	ld d, h ; $776e
 	ld e, l ; $776f
@@ -6336,7 +6336,7 @@ SnapPalettesToTarget:
 	and a, a ; $77ea
 	jr z, .restore ; $77eb
 	ld c, b ; $77ed
-	ld hl, w6_d0a0 ; $77ee
+	ld hl, $d0a0 ; $77ee
 	call AdvanceToPaletteEntry ; $77f1
 	ld d, h ; $77f4
 	ld e, l ; $77f5

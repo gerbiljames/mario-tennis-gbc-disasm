@@ -518,7 +518,7 @@ LoadTennisDictionaryScreen:
 	dec c ; $4412
 	jr nz, .loopB ; $4413
 	ld c, $0b ; $4415
-	ld hl, $d052 ; $4417
+	ld hl, wShadowTilemap + 2 * TILEMAP_WIDTH + 18 ; $4417
 .loop2:
 	ld [hl+], a ; $441a
 	inc a ; $441b
@@ -526,7 +526,7 @@ LoadTennisDictionaryScreen:
 	jr nz, .loop2 ; $441d
 	add a, $05 ; $441f
 	ld c, $0b ; $4421
-	ld hl, $d092 ; $4423
+	ld hl, wShadowTilemap + 4 * TILEMAP_WIDTH + 18 ; $4423
 .loop3:
 	ld [hl+], a ; $4426
 	inc a ; $4427
@@ -1217,7 +1217,7 @@ DrawTennisDictionaryList:
 	inc b ; $52f5
 	push de ; $52f6
 	push bc ; $52f7
-	ld de, $d0d0 ; $52f8
+	ld de, wShadowTilemap + 6 * TILEMAP_WIDTH + 16 ; $52f8
 .rowLoop:
 	ld a, $80 ; $52fb
 	add a, e ; $52fd
@@ -1283,7 +1283,7 @@ DrawTennisDictionaryLetterLabels:
 .gotPtr:
 	push de ; $5366
 	ld c, $40 ; $5367
-	ld de, $d050 ; $5369
+	ld de, wShadowTilemap + 2 * TILEMAP_WIDTH + 16 ; $5369
 	farcall RenderTextToBuffer64 ; $536c
 	pop de ; $536f
 	ld a, d ; $5370
@@ -1298,12 +1298,12 @@ DrawTennisDictionaryLetterLabels:
 	jr nc, .renderTextToBuffer64 ; $537c
 	inc h ; $537e
 .renderTextToBuffer64:
-	ld de, $d05e ; $537f
+	ld de, wShadowTilemap + 2 * TILEMAP_WIDTH + 30 ; $537f
 	farcall RenderTextToBuffer64 ; $5382
 	ld a, $06 ; $5385
-	ld [$d040], a ; $5387
+	ld [wShadowTilemap + 2 * TILEMAP_WIDTH], a ; $5387
 .loopB:
-	ld hl, $d050 ; $538a
+	ld hl, wShadowTilemap + 2 * TILEMAP_WIDTH + 16 ; $538a
 	ld de, $9830 ; $538d
 	ld c, $01 ; $5390
 	call QueueVRAMCopy ; $5392

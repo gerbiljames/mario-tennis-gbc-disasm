@@ -786,7 +786,7 @@ CopyDecimalStringToTilemap:
 	ret ; $446f
 WriteDecimalDigitTile:
 	push hl ; $4470
-	ld hl, $d240 ; $4471
+	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH ; $4471
 	sub a, $30 ; $4474
 	jr c, .skipOperand ; $4476
 	add a, $30 ; $4478
@@ -1040,18 +1040,18 @@ SetupMatchTypeMenuScreen:
 RefreshMatchTypeLabelRow:
 	sound $5e ; $4666
 	wram_bank $03 ; $4668
-	ld de, $d1e1 ; $466e
+	ld de, wShadowTilemap + 15 * TILEMAP_WIDTH + 1 ; $466e
 	ld b, $12 ; $4671
 	ld c, $01 ; $4673
 	ld h, $03 ; $4675
 	farcall FillTilemapRect ; $4677
-	ld de, $d201 ; $467a
+	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $467a
 	ld b, $12 ; $467d
 	ld c, $01 ; $467f
 	ld h, $20 ; $4681
 	farcall FillTilemapRect ; $4683
 	call DrawMatchTypeOptionLabel ; $4686
-	ld hl, $d1e0 ; $4689
+	ld hl, wShadowTilemap + 15 * TILEMAP_WIDTH ; $4689
 	ld de, $99e0 ; $468c
 	ld c, $04 ; $468f
 	call QueueVRAMCopy ; $4691
@@ -1433,12 +1433,12 @@ SetupCharacterSelectScreen:
 	wram_bank $03 ; $4a43
 	ld b, $03 ; $4a49
 	ld c, $03 ; $4a4b
-	ld de, $d506 ; $4a4d
+	ld de, wShadowAttrmap + 8 * TILEMAP_WIDTH + 6 ; $4a4d
 	ld h, $0e ; $4a50
 	farcall FillTilemapRect ; $4a52
 	ld b, $03 ; $4a55
 	ld c, $03 ; $4a57
-	ld de, $d50e ; $4a59
+	ld de, wShadowAttrmap + 8 * TILEMAP_WIDTH + 14 ; $4a59
 	ld h, $0f ; $4a5c
 	farcall FillTilemapRect ; $4a5e
 .secondRow:
@@ -1498,20 +1498,20 @@ DrawCharacterSelectPrompt:
 	jr nz, .altRow ; $4ae0
 	wram_bank $03 ; $4ae2
 	ld hl, $0075 ; $4ae8
-	ld de, $d061 ; $4aeb
+	ld de, wShadowTilemap + 3 * TILEMAP_WIDTH + 1 ; $4aeb
 	ld c, $12 ; $4aee
 	farcall RenderProportionalTextAt ; $4af0
 	jr .nextRow ; $4af3
 .altRow:
 	wram_bank $03 ; $4af5
 	ld hl, $0077 ; $4afb
-	ld de, $d062 ; $4afe
+	ld de, wShadowTilemap + 3 * TILEMAP_WIDTH + 2 ; $4afe
 	ld c, $12 ; $4b01
 	farcall RenderProportionalTextAt ; $4b03
 .nextRow:
 	wram_bank $03 ; $4b06
 	ld hl, $0076 ; $4b0c
-	ld de, $d201 ; $4b0f
+	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $4b0f
 	ld c, $12 ; $4b12
 	farcall RenderProportionalTextAt ; $4b14
 	pop af ; $4b17
@@ -2375,7 +2375,7 @@ ConfirmCharGridSelection:
 	ld [wCharSelectExitCode], a ; $5399
 .done:
 	call DrawCharGridSlotPrompt ; $539c
-	ld hl, $d040 ; $539f
+	ld hl, wShadowTilemap + 2 * TILEMAP_WIDTH ; $539f
 	ld de, $9840 ; $53a2
 	ld c, $04 ; $53a5
 	call QueueVRAMCopy ; $53a7
@@ -2440,7 +2440,7 @@ CancelCharGridSelection:
 	call ClearPlayerSlotPortrait ; $540a
 	call BuildVisiblePageSpriteList ; $540d
 	call DrawCharGridSlotPrompt ; $5410
-	ld hl, $d040 ; $5413
+	ld hl, wShadowTilemap + 2 * TILEMAP_WIDTH ; $5413
 	ld de, $9840 ; $5416
 	ld c, $04 ; $5419
 	call QueueVRAMCopy ; $541b
@@ -2453,12 +2453,12 @@ DrawCharGridSlotPrompt:
 	cp a, $ff ; $542d
 	ret z ; $542f
 	wram_bank $03 ; $5430
-	ld de, $d041 ; $5436
+	ld de, wShadowTilemap + 2 * TILEMAP_WIDTH + 1 ; $5436
 	ld b, $12 ; $5439
 	ld c, $01 ; $543b
 	ld h, $03 ; $543d
 	farcall FillTilemapRect ; $543f
-	ld de, $d061 ; $5442
+	ld de, wShadowTilemap + 3 * TILEMAP_WIDTH + 1 ; $5442
 	ld b, $12 ; $5445
 	ld c, $01 ; $5447
 	ld h, $20 ; $5449
@@ -2467,7 +2467,7 @@ DrawCharGridSlotPrompt:
 	or a, a ; $5451
 	jr z, .promptFromTable ; $5452
 	ld hl, Text_30_149 ; $5454
-	ld de, $d061 ; $5457
+	ld de, wShadowTilemap + 3 * TILEMAP_WIDTH + 1 ; $5457
 	ld c, $20 ; $545a
 	farcall RenderTextToBuffer64 ; $545c
 	ret ; $545f
@@ -2490,7 +2490,7 @@ DrawCharGridSlotPrompt:
 	ld a, [hl+] ; $547a
 	ld h, [hl] ; $547b
 	ld l, a ; $547c
-	ld de, $d061 ; $547d
+	ld de, wShadowTilemap + 3 * TILEMAP_WIDTH + 1 ; $547d
 	ld c, $20 ; $5480
 	farcall RenderTextToBuffer64 ; $5482
 	ret ; $5485
@@ -2673,21 +2673,21 @@ ClearPlayerSlotPortrait:
 	ld a, [wCharSelectSlot] ; $55d4
 	cp a, $02 ; $55d7
 	jr nc, .slot0 ; $55d9
-	ld hl, $d0c0 ; $55db
+	ld hl, wShadowTilemap + 6 * TILEMAP_WIDTH ; $55db
 	ld de, $98c0 ; $55de
 	ld c, $04 ; $55e1
 	call QueueVRAMCopy ; $55e3
-	ld hl, $d4c0 ; $55e6
+	ld hl, wShadowAttrmap + 6 * TILEMAP_WIDTH ; $55e6
 	ld de, $b8c0 ; $55e9
 	ld c, $04 ; $55ec
 	call QueueVRAMCopy ; $55ee
 	jr .done ; $55f1
 .slot0:
-	ld hl, $d120 ; $55f3
+	ld hl, wShadowTilemap + 9 * TILEMAP_WIDTH ; $55f3
 	ld de, $9920 ; $55f6
 	ld c, $04 ; $55f9
 	call QueueVRAMCopy ; $55fb
-	ld hl, $d520 ; $55fe
+	ld hl, wShadowAttrmap + 9 * TILEMAP_WIDTH ; $55fe
 	ld de, $b920 ; $5601
 	ld c, $04 ; $5604
 	call QueueVRAMCopy ; $5606
@@ -2731,21 +2731,21 @@ DrawPlayerSlotPortrait:
 	ld a, [wCharSelectSlot] ; $563c
 	cp a, $02 ; $563f
 	jr nc, .slot0 ; $5641
-	ld hl, $d0c0 ; $5643
+	ld hl, wShadowTilemap + 6 * TILEMAP_WIDTH ; $5643
 	ld de, $98c0 ; $5646
 	ld c, $04 ; $5649
 	call QueueVRAMCopy ; $564b
-	ld hl, $d4c0 ; $564e
+	ld hl, wShadowAttrmap + 6 * TILEMAP_WIDTH ; $564e
 	ld de, $b8c0 ; $5651
 	ld c, $04 ; $5654
 	call QueueVRAMCopy ; $5656
 	jr .done ; $5659
 .slot0:
-	ld hl, $d120 ; $565b
+	ld hl, wShadowTilemap + 9 * TILEMAP_WIDTH ; $565b
 	ld de, $9920 ; $565e
 	ld c, $04 ; $5661
 	call QueueVRAMCopy ; $5663
-	ld hl, $d520 ; $5666
+	ld hl, wShadowAttrmap + 9 * TILEMAP_WIDTH ; $5666
 	ld de, $b920 ; $5669
 	ld c, $04 ; $566c
 	call QueueVRAMCopy ; $566e
@@ -2937,12 +2937,12 @@ RefreshCharInfoPanel:
 	ldh a, [hWramBank] ; $5762
 	push af ; $5764
 	wram_bank $03 ; $5765
-	ld de, $d181 ; $576b
+	ld de, wShadowTilemap + 12 * TILEMAP_WIDTH + 1 ; $576b
 	ld b, $12 ; $576e
 	ld c, $01 ; $5770
 	ld h, $03 ; $5772
 	farcall FillTilemapRect ; $5774
-	ld de, $d1a1 ; $5777
+	ld de, wShadowTilemap + 13 * TILEMAP_WIDTH + 1 ; $5777
 	ld b, $12 ; $577a
 	ld c, $04 ; $577c
 	ld h, $20 ; $577e
@@ -2982,11 +2982,11 @@ RefreshCharInfoPanel:
 	pop bc ; $57b3
 	call DrawCharSelectSlotLabel ; $57b4
 .done:
-	ld hl, $d180 ; $57b7
+	ld hl, wShadowTilemap + 12 * TILEMAP_WIDTH ; $57b7
 	ld de, $9980 ; $57ba
 	ld c, $0a ; $57bd
 	call QueueVRAMCopy ; $57bf
-	ld hl, $d600 ; $57c2
+	ld hl, wShadowAttrmap + 16 * TILEMAP_WIDTH ; $57c2
 	ld de, $ba00 ; $57c5
 	ld c, $02 ; $57c8
 	call QueueVRAMCopy ; $57ca
@@ -3029,85 +3029,85 @@ DrawCreatedCharStats:
 	push hl ; $5803
 	ld hl, $0007 ; $5804
 	add hl, bc ; $5807
-	ld de, $d1a3 ; $5808
+	ld de, wShadowTilemap + 13 * TILEMAP_WIDTH + 3 ; $5808
 	call CopyStringToTilemap ; $580b
 	pop hl ; $580e
 	pop de ; $580f
 	pop bc ; $5810
 	pop af ; $5811
 	ld a, $4c ; $5812
-	ld [$d1ab], a ; $5814
+	ld [wShadowTilemap + 13 * TILEMAP_WIDTH + 11], a ; $5814
 	ld a, $56 ; $5817
-	ld [$d1ac], a ; $5819
+	ld [wShadowTilemap + 13 * TILEMAP_WIDTH + 12], a ; $5819
 	ld hl, $0002 ; $581c
 	add hl, bc ; $581f
 	ld l, [hl] ; $5820
 	ld h, $00 ; $5821
-	ld de, $d1ae ; $5823
+	ld de, wShadowTilemap + 13 * TILEMAP_WIDTH + 14 ; $5823
 	ld a, $02 ; $5826
 	call DrawDecimalNumber ; $5828
 	ld a, $1d ; $582b
-	ld [$d1e2], a ; $582d
+	ld [wShadowTilemap + 15 * TILEMAP_WIDTH + 2], a ; $582d
 	ld a, $1e ; $5830
-	ld [$d1e3], a ; $5832
+	ld [wShadowTilemap + 15 * TILEMAP_WIDTH + 3], a ; $5832
 	ld a, $1f ; $5835
-	ld [$d1e4], a ; $5837
+	ld [wShadowTilemap + 15 * TILEMAP_WIDTH + 4], a ; $5837
 	ld hl, $0003 ; $583a
 	add hl, bc ; $583d
 	ld l, [hl] ; $583e
 	ld h, $00 ; $583f
-	ld de, $d1e7 ; $5841
+	ld de, wShadowTilemap + 15 * TILEMAP_WIDTH + 7 ; $5841
 	ld a, $02 ; $5844
 	call DrawDecimalNumber ; $5846
 	ld hl, $0004 ; $5849
 	add hl, bc ; $584c
 	ld l, [hl] ; $584d
 	ld h, $00 ; $584e
-	ld de, $d1ef ; $5850
+	ld de, wShadowTilemap + 15 * TILEMAP_WIDTH + 15 ; $5850
 	ld a, $02 ; $5853
 	call DrawDecimalNumber ; $5855
 	ld a, $14 ; $5858
-	ld [$d1ea], a ; $585a
+	ld [wShadowTilemap + 15 * TILEMAP_WIDTH + 10], a ; $585a
 	ld a, $15 ; $585d
-	ld [$d1eb], a ; $585f
+	ld [wShadowTilemap + 15 * TILEMAP_WIDTH + 11], a ; $585f
 	ld a, $16 ; $5862
-	ld [$d1ec], a ; $5864
+	ld [wShadowTilemap + 15 * TILEMAP_WIDTH + 12], a ; $5864
 	ld a, $17 ; $5867
-	ld [$d1ed], a ; $5869
+	ld [wShadowTilemap + 15 * TILEMAP_WIDTH + 13], a ; $5869
 	ld a, $18 ; $586c
-	ld [$d202], a ; $586e
+	ld [wShadowTilemap + 16 * TILEMAP_WIDTH + 2], a ; $586e
 	ld a, $19 ; $5871
-	ld [$d203], a ; $5873
+	ld [wShadowTilemap + 16 * TILEMAP_WIDTH + 3], a ; $5873
 	ld a, $1a ; $5876
-	ld [$d204], a ; $5878
+	ld [wShadowTilemap + 16 * TILEMAP_WIDTH + 4], a ; $5878
 	ld a, $1b ; $587b
-	ld [$d205], a ; $587d
+	ld [wShadowTilemap + 16 * TILEMAP_WIDTH + 5], a ; $587d
 	ld a, $1c ; $5880
-	ld [$d206], a ; $5882
+	ld [wShadowTilemap + 16 * TILEMAP_WIDTH + 6], a ; $5882
 	ld hl, $0005 ; $5885
 	add hl, bc ; $5888
 	ld l, [hl] ; $5889
 	ld h, $00 ; $588a
-	ld de, $d207 ; $588c
+	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 7 ; $588c
 	ld a, $02 ; $588f
 	call DrawDecimalNumber ; $5891
 	ld a, $10 ; $5894
-	ld [$d20a], a ; $5896
+	ld [wShadowTilemap + 16 * TILEMAP_WIDTH + 10], a ; $5896
 	ld a, $11 ; $5899
-	ld [$d20b], a ; $589b
+	ld [wShadowTilemap + 16 * TILEMAP_WIDTH + 11], a ; $589b
 	ld a, $12 ; $589e
-	ld [$d20c], a ; $58a0
+	ld [wShadowTilemap + 16 * TILEMAP_WIDTH + 12], a ; $58a0
 	ld a, $13 ; $58a3
-	ld [$d20d], a ; $58a5
+	ld [wShadowTilemap + 16 * TILEMAP_WIDTH + 13], a ; $58a5
 	ld hl, $0006 ; $58a8
 	add hl, bc ; $58ab
 	ld l, [hl] ; $58ac
 	ld h, $00 ; $58ad
-	ld de, $d20f ; $58af
+	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 15 ; $58af
 	ld a, $02 ; $58b2
 	call DrawDecimalNumber ; $58b4
 .drawName:
-	ld de, $d601 ; $58b7
+	ld de, wShadowAttrmap + 16 * TILEMAP_WIDTH + 1 ; $58b7
 	ld h, $00 ; $58ba
 	ld b, $12 ; $58bc
 	ld c, $01 ; $58be
@@ -3128,7 +3128,7 @@ DrawCharNameAndType:
 	jr nc, .drawName ; $58d4
 	inc h ; $58d6
 .drawName:
-	ld de, $d1a6 ; $58d7
+	ld de, wShadowTilemap + 13 * TILEMAP_WIDTH + 6 ; $58d7
 	ld c, $20 ; $58da
 	farcall RenderTextToBuffer64 ; $58dc
 	pop bc ; $58df
@@ -3146,7 +3146,7 @@ DrawCharNameAndType:
 	jr nc, .drawType ; $58ef
 	inc h ; $58f1
 .drawType:
-	ld de, $d1e3 ; $58f2
+	ld de, wShadowTilemap + 15 * TILEMAP_WIDTH + 3 ; $58f2
 	ld c, $20 ; $58f5
 	farcall RenderTextToBuffer64 ; $58f7
 	ret ; $58fa
@@ -3161,13 +3161,13 @@ DrawCharSelectSlotLabel:
 	ld a, [$df00] ; $5922
 	or a, a ; $5925
 	jr nz, .slot2 ; $5926
-	ld hl, $d340 ; $5928
-	ld de, $d204 ; $592b
+	ld hl, wShadowTilemap + 26 * TILEMAP_WIDTH ; $5928
+	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 4 ; $592b
 	ld b, $05 ; $592e
 	ld c, $01 ; $5930
 	farcall CopyTilemapRect ; $5932
-	ld hl, $d34a ; $5935
-	ld de, $d209 ; $5938
+	ld hl, wShadowTilemap + 26 * TILEMAP_WIDTH + 10 ; $5935
+	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 9 ; $5938
 	ld b, $05 ; $593b
 	ld c, $01 ; $593d
 	farcall CopyTilemapRect ; $593f
@@ -3175,30 +3175,30 @@ DrawCharSelectSlotLabel:
 .slot2:
 	cp a, $01 ; $5944
 	jr nz, .slot3 ; $5946
-	ld hl, $d340 ; $5948
-	ld de, $d204 ; $594b
+	ld hl, wShadowTilemap + 26 * TILEMAP_WIDTH ; $5948
+	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 4 ; $594b
 	ld b, $05 ; $594e
 	ld c, $01 ; $5950
 	farcall CopyTilemapRect ; $5952
-	ld hl, $d345 ; $5955
-	ld de, $d209 ; $5958
+	ld hl, wShadowTilemap + 26 * TILEMAP_WIDTH + 5 ; $5955
+	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 9 ; $5958
 	ld b, $05 ; $595b
 	ld c, $01 ; $595d
 	farcall CopyTilemapRect ; $595f
 	jr .drawName ; $5962
 .slot3:
-	ld hl, $d340 ; $5964
-	ld de, $d204 ; $5967
+	ld hl, wShadowTilemap + 26 * TILEMAP_WIDTH ; $5964
+	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 4 ; $5967
 	ld b, $05 ; $596a
 	ld c, $01 ; $596c
 	farcall CopyTilemapRect ; $596e
-	ld hl, $d34f ; $5971
-	ld de, $d209 ; $5974
+	ld hl, wShadowTilemap + 26 * TILEMAP_WIDTH + 15 ; $5971
+	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 9 ; $5974
 	ld b, $08 ; $5977
 	ld c, $01 ; $5979
 	farcall CopyTilemapRect ; $597b
 .drawName:
-	ld de, $d601 ; $597e
+	ld de, wShadowAttrmap + 16 * TILEMAP_WIDTH + 1 ; $597e
 	ld h, $08 ; $5981
 	ld b, $12 ; $5983
 	ld c, $01 ; $5985
@@ -3856,7 +3856,7 @@ BuildCreatedCharRecords:
 	farcall CheckCharacterUnlocked ; $5da2
 	ld hl, $0000 ; $5da5
 	add hl, bc ; $5da8
-	ld a, [$d58b] ; $5da9
+	ld a, [wShadowAttrmap + 12 * TILEMAP_WIDTH + 11] ; $5da9
 	cp a, $04 ; $5dac
 	jr c, .createdChar ; $5dae
 	ld a, $ff ; $5db0
@@ -4656,7 +4656,7 @@ RunCpuDifficultySubmenu:
 	ld [wCharSelectExitCode], a ; $62b1
 .advanceSlot:
 	call DrawCharGridSlotPrompt ; $62b4
-	ld hl, $d040 ; $62b7
+	ld hl, wShadowTilemap + 2 * TILEMAP_WIDTH ; $62b7
 	ld de, $9840 ; $62ba
 	ld c, $04 ; $62bd
 	call QueueVRAMCopy ; $62bf
@@ -4668,27 +4668,27 @@ CloseCpuDifficultyPanel:
 	xor a, a ; $62c8
 	ld [wCpuDifficultyPanelOpen], a ; $62c9
 	ld [wCpuDifficultyPrompt], a ; $62cc
-	ld hl, $d2c0 ; $62cf
-	ld de, $d1c0 ; $62d2
+	ld hl, wShadowTilemap + 22 * TILEMAP_WIDTH ; $62cf
+	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH ; $62d2
 	ld b, $14 ; $62d5
 	ld c, $04 ; $62d7
 	farcall CopyTilemapRect ; $62d9
-	ld hl, $d6c0 ; $62dc
-	ld de, $d5c0 ; $62df
+	ld hl, wShadowAttrmap + 22 * TILEMAP_WIDTH ; $62dc
+	ld de, wShadowAttrmap + 14 * TILEMAP_WIDTH ; $62df
 	ld b, $14 ; $62e2
 	ld c, $04 ; $62e4
 	farcall CopyTilemapRect ; $62e6
-	ld de, $d5c1 ; $62e9
+	ld de, wShadowAttrmap + 14 * TILEMAP_WIDTH + 1 ; $62e9
 	ld b, $12 ; $62ec
 	ld c, $03 ; $62ee
 	ld h, $00 ; $62f0
 	farcall FillTilemapRect ; $62f2
 	call RefreshCharInfoPanel ; $62f5
-	ld hl, w3_d220 ; $62f8
+	ld hl, wShadowTilemap + 17 * TILEMAP_WIDTH ; $62f8
 	ld de, $9a20 ; $62fb
 	ld c, $02 ; $62fe
 	call QueueVRAMCopy ; $6300
-	ld hl, $d5c0 ; $6303
+	ld hl, wShadowAttrmap + 14 * TILEMAP_WIDTH ; $6303
 	ld de, $b9c0 ; $6306
 	ld c, $08 ; $6309
 	call QueueVRAMCopy ; $630b
@@ -4758,13 +4758,13 @@ OpenCpuDifficultyPanel:
 	ldh a, [hWramBank] ; $636d
 	push af ; $636f
 	wram_bank $03 ; $6370
-	ld hl, $d240 ; $6376
-	ld de, $d1c0 ; $6379
+	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH ; $6376
+	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH ; $6379
 	ld b, $14 ; $637c
 	ld c, $04 ; $637e
 	farcall CopyTilemapRect ; $6380
-	ld hl, $d640 ; $6383
-	ld de, $d5c0 ; $6386
+	ld hl, wShadowAttrmap + 18 * TILEMAP_WIDTH ; $6383
+	ld de, wShadowAttrmap + 14 * TILEMAP_WIDTH ; $6386
 	ld b, $14 ; $6389
 	ld c, $04 ; $638b
 	farcall CopyTilemapRect ; $638d
@@ -4775,11 +4775,11 @@ QueueCpuDifficultyPanelToVram:
 	ldh a, [hWramBank] ; $6396
 	push af ; $6398
 	wram_bank $03 ; $6399
-	ld hl, $d1c0 ; $639f
+	ld hl, wShadowTilemap + 14 * TILEMAP_WIDTH ; $639f
 	ld de, $99c0 ; $63a2
 	ld c, $08 ; $63a5
 	call QueueVRAMCopy ; $63a7
-	ld hl, $d5c0 ; $63aa
+	ld hl, wShadowAttrmap + 14 * TILEMAP_WIDTH ; $63aa
 	ld de, $b9c0 ; $63ad
 	ld c, $08 ; $63b0
 	call QueueVRAMCopy ; $63b2
@@ -5353,7 +5353,7 @@ ConfirmLinkGridSelection:
 	jr nz, .done ; $67ef
 .done:
 	call DrawCharGridSlotPrompt ; $67f1
-	ld hl, $d040 ; $67f4
+	ld hl, wShadowTilemap + 2 * TILEMAP_WIDTH ; $67f4
 	ld de, $9840 ; $67f7
 	ld c, $04 ; $67fa
 	call QueueVRAMCopy ; $67fc
@@ -5427,7 +5427,7 @@ CancelLinkGridSelection:
 	call ClearPlayerSlotPortrait ; $6873
 	call BuildVisiblePageSpriteList ; $6876
 	call DrawCharGridSlotPrompt ; $6879
-	ld hl, $d040 ; $687c
+	ld hl, wShadowTilemap + 2 * TILEMAP_WIDTH ; $687c
 	ld de, $9840 ; $687f
 	ld c, $04 ; $6882
 	call QueueVRAMCopy ; $6884
@@ -5458,21 +5458,21 @@ DrawRemoteSlotPortrait:
 	jr z, .slot0 ; $68b2
 	cp a, $05 ; $68b4
 	jr z, .slot0 ; $68b6
-	ld hl, $d120 ; $68b8
+	ld hl, wShadowTilemap + 9 * TILEMAP_WIDTH ; $68b8
 	ld de, $9920 ; $68bb
 	ld c, $04 ; $68be
 	call QueueVRAMCopy ; $68c0
-	ld hl, $d520 ; $68c3
+	ld hl, wShadowAttrmap + 9 * TILEMAP_WIDTH ; $68c3
 	ld de, $b920 ; $68c6
 	ld c, $04 ; $68c9
 	call QueueVRAMCopy ; $68cb
 	jr .done ; $68ce
 .slot0:
-	ld hl, $d0c0 ; $68d0
+	ld hl, wShadowTilemap + 6 * TILEMAP_WIDTH ; $68d0
 	ld de, $98c0 ; $68d3
 	ld c, $04 ; $68d6
 	call QueueVRAMCopy ; $68d8
-	ld hl, $d4c0 ; $68db
+	ld hl, wShadowAttrmap + 6 * TILEMAP_WIDTH ; $68db
 	ld de, $b8c0 ; $68de
 	ld c, $04 ; $68e1
 	call QueueVRAMCopy ; $68e3
@@ -5563,21 +5563,21 @@ ClearRemoteSlotPortrait:
 	jr z, .slot0 ; $6970
 	cp a, $05 ; $6972
 	jr z, .slot0 ; $6974
-	ld hl, $d120 ; $6976
+	ld hl, wShadowTilemap + 9 * TILEMAP_WIDTH ; $6976
 	ld de, $9920 ; $6979
 	ld c, $04 ; $697c
 	call QueueVRAMCopy ; $697e
-	ld hl, $d520 ; $6981
+	ld hl, wShadowAttrmap + 9 * TILEMAP_WIDTH ; $6981
 	ld de, $b920 ; $6984
 	ld c, $04 ; $6987
 	call QueueVRAMCopy ; $6989
 	jr .done ; $698c
 .slot0:
-	ld hl, $d0c0 ; $698e
+	ld hl, wShadowTilemap + 6 * TILEMAP_WIDTH ; $698e
 	ld de, $98c0 ; $6991
 	ld c, $04 ; $6994
 	call QueueVRAMCopy ; $6996
-	ld hl, $d4c0 ; $6999
+	ld hl, wShadowAttrmap + 6 * TILEMAP_WIDTH ; $6999
 	ld de, $b8c0 ; $699c
 	ld c, $04 ; $699f
 	call QueueVRAMCopy ; $69a1
@@ -5998,7 +5998,7 @@ RunLinkCpuDifficultySubmenu:
 	call DrawPlayerSlotPortrait ; $6c20
 .storeDifficulty:
 	call DrawCharGridSlotPrompt ; $6c23
-	ld hl, $d040 ; $6c26
+	ld hl, wShadowTilemap + 2 * TILEMAP_WIDTH ; $6c26
 	ld de, $9840 ; $6c29
 	ld c, $04 ; $6c2c
 	call QueueVRAMCopy ; $6c2e
@@ -6459,7 +6459,7 @@ RunNameEntryScreen:
 	ld bc, $000b ; $6f42
 	call CopyMemoryBC ; $6f45
 	call DrawEnteredName ; $6f48
-	ld hl, $d0a0 ; $6f4b
+	ld hl, wShadowTilemap + 5 * TILEMAP_WIDTH ; $6f4b
 	ld de, $98a0 ; $6f4e
 	ld c, $04 ; $6f51
 	call QueueVRAMCopy ; $6f53
@@ -6610,7 +6610,7 @@ DrawEnterNameLabel:
 	push af ; $715b
 	wram_bank $03 ; $715c
 	ld hl, EnterNameText_38 ; $7162
-	ld de, $d061 ; $7165
+	ld de, wShadowTilemap + 3 * TILEMAP_WIDTH + 1 ; $7165
 	call CopyStringToTilemap ; $7168
 	pop af ; $716b
 	wram_bank ; $716c
@@ -6623,7 +6623,7 @@ DrawNameEntryCharGrid:
 	wram_bank $03 ; $717f
 	ld c, $05 ; $7185
 	ld b, $03 ; $7187
-	ld de, $d121 ; $7189
+	ld de, wShadowTilemap + 9 * TILEMAP_WIDTH + 1 ; $7189
 .lowerCase:
 	ld a, $20 ; $718c
 	ld [de], a ; $718e
@@ -6718,7 +6718,7 @@ DrawEnteredName:
 	push af ; $7291
 	wram_bank $03 ; $7292
 	ld a, $20 ; $7298
-	ld hl, $d0c7 ; $729a
+	ld hl, wShadowTilemap + 6 * TILEMAP_WIDTH + 7 ; $729a
 	ld [hl+], a ; $729d
 	ld [hl+], a ; $729e
 	ld [hl+], a ; $729f
@@ -6727,7 +6727,7 @@ DrawEnteredName:
 	ld [hl+], a ; $72a2
 	ld [hl+], a ; $72a3
 	ld hl, wNameEntryBuffer ; $72a4
-	ld de, $d0c7 ; $72a7
+	ld de, wShadowTilemap + 6 * TILEMAP_WIDTH + 7 ; $72a7
 	call CopyStringToTilemap ; $72aa
 	pop af ; $72ad
 	wram_bank ; $72ae
@@ -6790,7 +6790,7 @@ AppendCharToName:
 .queueVram:
 	ld [hl], d ; $7311
 	call DrawEnteredName ; $7312
-	ld hl, $d0a0 ; $7315
+	ld hl, wShadowTilemap + 5 * TILEMAP_WIDTH ; $7315
 	ld de, $98a0 ; $7318
 	ld c, $04 ; $731b
 	call QueueVRAMCopy ; $731d
@@ -6832,7 +6832,7 @@ DeleteLastNameChar:
 	cp a, $df ; $7361
 	jr z, .deleteChar ; $7363
 	call DrawEnteredName ; $7365
-	ld hl, $d0a0 ; $7368
+	ld hl, wShadowTilemap + 5 * TILEMAP_WIDTH ; $7368
 	ld de, $98a0 ; $736b
 	ld c, $04 ; $736e
 	call QueueVRAMCopy ; $7370

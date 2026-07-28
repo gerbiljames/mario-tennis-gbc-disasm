@@ -1676,64 +1676,27 @@ wGlyphTileWritePtr:: dw
 wDebugTextBuffer:: ds 576
 
 
-SECTION "WRAMX bank 1", WRAMX[$d000], BANK[1]
-
-	ds 1420
-
-w1_d58c:: db
-	ds 1
-
-w1_d58e:: db
-
-
 SECTION "WRAMX bank 3", WRAMX[$d000], BANK[3]
 
-; Screen tilemap buffer, WRAM bank $03. The full-screen UIs assemble
-; their BG map here and QueueVRAMCopy it to $9800; wShadowTilemapBank /
-; wShadowTilemapPtr point the text engine at it. Rows are $20 cells
-; apart, so a cell is $d000 + row * $20 + column -- which is why so many
-; $d0xx-$d3xx addresses in the screen banks are literal cell addresses
-; and stay numeric. Only the base is named.
+; Screen tilemap buffers, WRAM bank $03. The full-screen UIs assemble their
+; BG map at $d000 and its CGB attributes at $d400 -- 32 x 32 cells each, rows
+; TILEMAP_WIDTH apart, of which the top-left 20 x 18 is on screen -- then
+; QueueVRAMCopy them to $9800 in VRAM banks 0 and 1. Not every screen pairs
+; the planes this way: the bank $03 cutscenes keep the attribute plane at
+; $d000 in WRAM bank $02 instead, which is why these names are scoped to a
+; provable WRAM bank $03 rather than to the addresses.
+; wShadowTilemapBank / wShadowTilemapPtr point the text engine at whichever
+; bank the current screen uses ($03 for screens, $05 for text windows, $02 for
+; the match). Cell addresses render as `base + row * TILEMAP_WIDTH + column`,
+; which is what they are.
 ; screen tilemap (any bank, where WRAM bank $03 is provable)
-; [8-bit] First cell of the screen tilemap buffer ($d000-$d3ff, 32 x 32 cells). The attribute plane is the same offset in the WRAM bank the screen pairs with it (bank $02 for the screens that upload to $b800)
-wShadowTilemap:: db
-	ds 3
-
-	ds 143
-
-w3_d093:: db
-	ds 58
-
-w3_d0ce:: db
-	ds 4
-
-w3_d0d3:: db
-	ds 26
-
-w3_d0ee:: db
-
-w3_d0ef:: db
-	ds 2
-
-w3_d0f2:: db
-
-w3_d0f3:: db
-	ds 300
-
-w3_d220:: db
-	ds 18
-
-w3_d233:: db
-	ds 204
-
-w3_d300:: db
-	ds 15
-
-w3_d310:: db
-	ds 15
-
-w3_d320:: db
-	ds 1247
+; [1024 bytes] BG tile map the screen is being assembled into, 32 x 32 cells
+; with rows TILEMAP_WIDTH apart; CopyTilemapRect steps rows by $0020
+wShadowTilemap:: ds 1024
+; [1024 bytes] CGB attribute plane for wShadowTilemap, same geometry $400
+; higher; SetWinLosePortraitPaletteAttrs writes $d48b for the cell whose
+; tile byte is $d08b
+wShadowAttrmap:: ds 1024
 
 ; Screen-local scratch in WRAM bank $03, low half. Like the $d810 block above
 ; each full-screen UI reuses these bytes, so the variants are scoped to the
@@ -1985,13 +1948,7 @@ ENDU
 
 SECTION "WRAMX bank 4", WRAMX[$d000], BANK[4]
 
-	ds 183
-
-w4_d0b7:: db
-	ds 63
-
-w4_d0f7:: db
-	ds 2513
+	ds 2761
 
 w4_dac9:: db
 	ds 6
@@ -2282,75 +2239,26 @@ wCharDataLevelPreview:: db
 wCharDataChoiceCount:: db
 ENDU
 
-; Character-data level-up log (WRAM bank $06). ComputeTrophyExpForGroup in
-; bank $1e uses one byte inside the same range for its own accumulator, so
-; it keeps the variant it had; the log covers the rest.
+; Character-data level-up log and the screen's scratch above it (WRAM bank
+; $06). ComputeTrophyExpForGroup in bank $1e uses one byte inside the log's
+; span for its own accumulator, so it keeps the variant it had.
 UNION
 ; trophy EXP (bank $1e)
 	ds 14
 ; [8-bit] Character group being totalled; indexes TrophyExpForGroupTable0-4 and selects the row GetTrophyExpValue reads
 wTrophyExpGroup:: db
-	ds 85
+	ds 126
 NEXTU
 ; character-data screen (WRAM bank $06)
 ; [100 bytes] One byte per level-up taken on this visit: the wCharDataPage the player confirmed. Cleared by WriteCharStatsToDisplayBuffer before the screen opens
 wCharDataChoiceLog:: ds 100
+; [2 bytes] Two-digit scratch every stat on the character-data screen is formatted into: FormatDecimalNumberUnsigned writes it, then CharDataScreen_WriteStatNumber copies the digits into the tilemap
+wCharDataNumberBuffer:: dw
+	ds 38
+; [8-bit] Nonzero opens the character-data screen read-only: CharDataScreen_Show skips the allocation flow, LoadCharStatsWithLevelUpDeltas returns without computing deltas, and the input loop will not spend a point. Set by RunExpDistributionFlow and RestoreCharData
+wCharDataViewOnly:: db
 ENDU
 
-w6_d08e:: db
-
-w6_d08f:: db
-
-w6_d090:: db
-	ds 14
-
-w6_d09f:: db
-
-w6_d0a0:: db
-
-w6_d0a1:: db
-
-w6_d0a2:: db
-
-w6_d0a3:: db
-
-w6_d0a4:: db
-
-w6_d0a5:: db
-
-w6_d0a6:: db
-
-w6_d0a7:: db
-
-w6_d0a8:: db
-
-w6_d0a9:: db
-
-w6_d0aa:: db
-
-w6_d0ab:: db
-
-w6_d0ac:: db
-
-w6_d0ad:: db
-
-w6_d0ae:: db
-
-w6_d0af:: db
-
-w6_d0b0:: db
-
-w6_d0b1:: db
-
-w6_d0b2:: db
-
-w6_d0b3:: db
-
-w6_d0b4:: db
-
-w6_d0b5:: db
-
-w6_d0b6:: db
 	ds 73
 
 ; Sound-engine WRAM (bank $07), used only by the bank-0 audio driver;
@@ -2366,26 +2274,17 @@ wExpScreenCharStats:: ds 30
 
 	ds 22
 
-w6_d230:: db
-	ds 3
-
-w6_d234:: db
-	ds 1
-
-w6_d236:: db
-
-w6_d237:: db
-
-w6_d238:: db
-
-w6_d239:: db
-
-w6_d23a:: db
-
-w6_d23b:: db
-	ds 24
-
-w6_d254:: db
+; Scrolling text screen (the staff-roll style crawl), WRAM bank $06,
+; owned by bank $03's RunScrollingTextScreen.
+; scrolling text screen (bank $03)
+; [8-bit] Frames until the crawl scrolls one line; reloaded with 2 each time it hits 0
+wScrollTextDelay:: db
+; [8-bit] The value it reloads with, seeded alongside it
+wScrollTextDelayReload:: db
+; [16-bit] Text id the crawl is rendering, seeded with $1863
+wScrollTextId:: dw
+; [8-bit] Set once the last line has scrolled off, which stops the scroll without leaving the loop
+wScrollTextDone:: db
 
 
 SECTION "WRAMX bank 7", WRAMX[$d000], BANK[7]

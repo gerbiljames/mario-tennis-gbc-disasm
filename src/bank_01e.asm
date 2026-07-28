@@ -174,35 +174,35 @@ BuildResultsScreenPanels:
 	ld a, $02 ; $41b7
 	ld [wContinuePromptKind], a ; $41b9
 	ld a, $04 ; $41bc
-	ld [$d013], a ; $41be
+	ld [wShadowTilemap + 19], a ; $41be
 	ld a, $07 ; $41c1
-	ld [$d080], a ; $41c3
+	ld [wShadowTilemap + 4 * TILEMAP_WIDTH], a ; $41c3
 	ld a, $09 ; $41c6
-	ld [w3_d093], a ; $41c8
+	ld [wShadowTilemap + 4 * TILEMAP_WIDTH + 19], a ; $41c8
 	ld a, $03 ; $41cb
 	ld hl, wContinuePromptRow ; $41cd
 	ld c, $12 ; $41d0
 	call FillMemoryC ; $41d2
 	ld a, $08 ; $41d5
-	ld hl, $d081 ; $41d7
+	ld hl, wShadowTilemap + 4 * TILEMAP_WIDTH + 1 ; $41d7
 	ld c, $12 ; $41da
 	call FillMemoryC ; $41dc
 	ld a, $05 ; $41df
-	ld [$d020], a ; $41e1
-	ld [$d040], a ; $41e4
-	ld [$d060], a ; $41e7
+	ld [wShadowTilemap + 1 * TILEMAP_WIDTH], a ; $41e1
+	ld [wShadowTilemap + 2 * TILEMAP_WIDTH], a ; $41e4
+	ld [wShadowTilemap + 3 * TILEMAP_WIDTH], a ; $41e7
 	ld a, $06 ; $41ea
-	ld [$d033], a ; $41ec
-	ld [$d053], a ; $41ef
-	ld [$d073], a ; $41f2
+	ld [wShadowTilemap + 1 * TILEMAP_WIDTH + 19], a ; $41ec
+	ld [wShadowTilemap + 2 * TILEMAP_WIDTH + 19], a ; $41ef
+	ld [wShadowTilemap + 3 * TILEMAP_WIDTH + 19], a ; $41f2
 	ld a, $20 ; $41f5
-	ld hl, $d021 ; $41f7
+	ld hl, wShadowTilemap + 1 * TILEMAP_WIDTH + 1 ; $41f7
 	ld c, $12 ; $41fa
 	call FillMemoryC ; $41fc
-	ld hl, $d041 ; $41ff
+	ld hl, wShadowTilemap + 2 * TILEMAP_WIDTH + 1 ; $41ff
 	ld c, $12 ; $4202
 	call FillMemoryC ; $4204
-	ld hl, $d061 ; $4207
+	ld hl, wShadowTilemap + 3 * TILEMAP_WIDTH + 1 ; $4207
 	ld c, $12 ; $420a
 	call FillMemoryC ; $420c
 	wram_bank $02 ; $420f
@@ -214,37 +214,37 @@ BuildResultsScreenPanels:
 	call DrawContinuePromptText ; $4221
 	wram_bank $03 ; $4224
 	ld a, $02 ; $422a
-	ld [$d1a0], a ; $422c
+	ld [wShadowTilemap + 13 * TILEMAP_WIDTH], a ; $422c
 	ld a, $04 ; $422f
-	ld [$d1b3], a ; $4231
+	ld [wShadowTilemap + 13 * TILEMAP_WIDTH + 19], a ; $4231
 	ld a, $07 ; $4234
-	ld [w3_d220], a ; $4236
+	ld [wShadowTilemap + 17 * TILEMAP_WIDTH], a ; $4236
 	ld a, $09 ; $4239
-	ld [w3_d233], a ; $423b
+	ld [wShadowTilemap + 17 * TILEMAP_WIDTH + 19], a ; $423b
 	ld a, $03 ; $423e
-	ld hl, $d1a1 ; $4240
+	ld hl, wShadowTilemap + 13 * TILEMAP_WIDTH + 1 ; $4240
 	ld c, $12 ; $4243
 	call FillMemoryC ; $4245
 	ld a, $08 ; $4248
-	ld hl, $d221 ; $424a
+	ld hl, wShadowTilemap + 17 * TILEMAP_WIDTH + 1 ; $424a
 	ld c, $12 ; $424d
 	call FillMemoryC ; $424f
 	ld a, $05 ; $4252
-	ld [$d1c0], a ; $4254
-	ld [$d1e0], a ; $4257
-	ld [$d200], a ; $425a
+	ld [wShadowTilemap + 14 * TILEMAP_WIDTH], a ; $4254
+	ld [wShadowTilemap + 15 * TILEMAP_WIDTH], a ; $4257
+	ld [wShadowTilemap + 16 * TILEMAP_WIDTH], a ; $425a
 	ld a, $06 ; $425d
-	ld [$d1d3], a ; $425f
-	ld [$d1f3], a ; $4262
-	ld [$d213], a ; $4265
+	ld [wShadowTilemap + 14 * TILEMAP_WIDTH + 19], a ; $425f
+	ld [wShadowTilemap + 15 * TILEMAP_WIDTH + 19], a ; $4262
+	ld [wShadowTilemap + 16 * TILEMAP_WIDTH + 19], a ; $4265
 	ld a, $20 ; $4268
-	ld hl, $d1c1 ; $426a
+	ld hl, wShadowTilemap + 14 * TILEMAP_WIDTH + 1 ; $426a
 	ld c, $12 ; $426d
 	call FillMemoryC ; $426f
-	ld hl, $d1e1 ; $4272
+	ld hl, wShadowTilemap + 15 * TILEMAP_WIDTH + 1 ; $4272
 	ld c, $12 ; $4275
 	call FillMemoryC ; $4277
-	ld hl, $d201 ; $427a
+	ld hl, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $427a
 	ld c, $12 ; $427d
 	call FillMemoryC ; $427f
 	wram_bank $02 ; $4282
@@ -254,42 +254,42 @@ BuildResultsScreenPanels:
 	call FillMemoryC ; $428e
 	wram_bank $03 ; $4291
 	ld a, $02 ; $4297
-	ld [w3_d0ce], a ; $4299
+	ld [wShadowTilemap + 6 * TILEMAP_WIDTH + 14], a ; $4299
 	ld a, $04 ; $429c
-	ld [w3_d0d3], a ; $429e
+	ld [wShadowTilemap + 6 * TILEMAP_WIDTH + 19], a ; $429e
 	ld a, $07 ; $42a1
-	ld [$d12e], a ; $42a3
+	ld [wShadowTilemap + 9 * TILEMAP_WIDTH + 14], a ; $42a3
 	ld a, $09 ; $42a6
-	ld [$d133], a ; $42a8
+	ld [wShadowTilemap + 9 * TILEMAP_WIDTH + 19], a ; $42a8
 	ld a, $03 ; $42ab
-	ld hl, $d0cf ; $42ad
+	ld hl, wShadowTilemap + 6 * TILEMAP_WIDTH + 15 ; $42ad
 	ld [hl+], a ; $42b0
 	ld [hl+], a ; $42b1
 	ld [hl+], a ; $42b2
 	ld [hl+], a ; $42b3
 	ld a, $08 ; $42b4
-	ld hl, $d12f ; $42b6
+	ld hl, wShadowTilemap + 9 * TILEMAP_WIDTH + 15 ; $42b6
 	ld [hl+], a ; $42b9
 	ld [hl+], a ; $42ba
 	ld [hl+], a ; $42bb
 	ld [hl+], a ; $42bc
 	ld a, $05 ; $42bd
-	ld [w3_d0ee], a ; $42bf
-	ld [$d10e], a ; $42c2
+	ld [wShadowTilemap + 7 * TILEMAP_WIDTH + 14], a ; $42bf
+	ld [wShadowTilemap + 8 * TILEMAP_WIDTH + 14], a ; $42c2
 	ld a, $06 ; $42c5
-	ld [w3_d0f3], a ; $42c7
-	ld [$d113], a ; $42ca
+	ld [wShadowTilemap + 7 * TILEMAP_WIDTH + 19], a ; $42c7
+	ld [wShadowTilemap + 8 * TILEMAP_WIDTH + 19], a ; $42ca
 	xor a, a ; $42cd
-	ld [w3_d0ef], a ; $42ce
-	ld [w3_d0f2], a ; $42d1
-	ld [$d10f], a ; $42d4
-	ld [$d112], a ; $42d7
+	ld [wShadowTilemap + 7 * TILEMAP_WIDTH + 15], a ; $42ce
+	ld [wShadowTilemap + 7 * TILEMAP_WIDTH + 18], a ; $42d1
+	ld [wShadowTilemap + 8 * TILEMAP_WIDTH + 15], a ; $42d4
+	ld [wShadowTilemap + 8 * TILEMAP_WIDTH + 18], a ; $42d7
 	ld hl, Text_31_213 ; $42da
-	ld de, $d0f0 ; $42dd
+	ld de, wShadowTilemap + 7 * TILEMAP_WIDTH + 16 ; $42dd
 	ld bc, $0020 ; $42e0
 	call FetchAndDrawDialogueText ; $42e3
 	ld hl, Text_31_214 ; $42e6
-	ld de, $d110 ; $42e9
+	ld de, wShadowTilemap + 8 * TILEMAP_WIDTH + 16 ; $42e9
 	ld bc, $0020 ; $42ec
 	call FetchAndDrawDialogueText ; $42ef
 	wram_bank $02 ; $42f2
@@ -344,13 +344,13 @@ DrawResultsNameLabelRows:
 	call CopyLabelTilesToTilemap ; $436d
 	wram_bank $03 ; $4370
 	ld a, $20 ; $4376
-	ld hl, $d1a1 ; $4378
+	ld hl, wShadowTilemap + 13 * TILEMAP_WIDTH + 1 ; $4378
 	ld c, $05 ; $437b
 	call FillMemoryC ; $437d
 	ld a, $05 ; $4380
-	ld [$d1a0], a ; $4382
+	ld [wShadowTilemap + 13 * TILEMAP_WIDTH], a ; $4382
 	ld a, $08 ; $4385
-	ld [$d1a6], a ; $4387
+	ld [wShadowTilemap + 13 * TILEMAP_WIDTH + 6], a ; $4387
 	wram_bank $02 ; $438a
 	ld a, $08 ; $4390
 	ld [$d1a6], a ; $4392
@@ -365,30 +365,30 @@ DrawResultsNameLabelRows:
 	call CopyLabelTilesToTilemap ; $43a6
 	wram_bank $03 ; $43a9
 	ld a, $20 ; $43af
-	ld hl, $d181 ; $43b1
+	ld hl, wShadowTilemap + 12 * TILEMAP_WIDTH + 1 ; $43b1
 	ld c, $12 ; $43b4
 	call FillMemoryC ; $43b6
-	ld hl, $d1a1 ; $43b9
+	ld hl, wShadowTilemap + 13 * TILEMAP_WIDTH + 1 ; $43b9
 	ld c, $12 ; $43bc
 	call FillMemoryC ; $43be
-	ld hl, $d161 ; $43c1
+	ld hl, wShadowTilemap + 11 * TILEMAP_WIDTH + 1 ; $43c1
 	ld c, $05 ; $43c4
 	call FillMemoryC ; $43c6
 	ld a, $04 ; $43c9
-	ld [$d173], a ; $43cb
+	ld [wShadowTilemap + 11 * TILEMAP_WIDTH + 19], a ; $43cb
 	ld a, $03 ; $43ce
-	ld hl, $d167 ; $43d0
+	ld hl, wShadowTilemap + 11 * TILEMAP_WIDTH + 7 ; $43d0
 	ld c, $0c ; $43d3
 	call FillMemoryC ; $43d5
 	ld a, $05 ; $43d8
-	ld [$d160], a ; $43da
-	ld [$d180], a ; $43dd
-	ld [$d1a0], a ; $43e0
+	ld [wShadowTilemap + 11 * TILEMAP_WIDTH], a ; $43da
+	ld [wShadowTilemap + 12 * TILEMAP_WIDTH], a ; $43dd
+	ld [wShadowTilemap + 13 * TILEMAP_WIDTH], a ; $43e0
 	ld a, $06 ; $43e3
-	ld [$d193], a ; $43e5
-	ld [$d1b3], a ; $43e8
+	ld [wShadowTilemap + 12 * TILEMAP_WIDTH + 19], a ; $43e5
+	ld [wShadowTilemap + 13 * TILEMAP_WIDTH + 19], a ; $43e8
 	ld a, $08 ; $43eb
-	ld [$d166], a ; $43ed
+	ld [wShadowTilemap + 11 * TILEMAP_WIDTH + 6], a ; $43ed
 	wram_bank $02 ; $43f0
 	xor a, a ; $43f6
 	ld hl, $d160 ; $43f7
@@ -416,12 +416,12 @@ CopyLabelTilesToTilemap:
 	ret ; $442a
 	wram_bank $03 ; $442b
 	ld a, $20 ; $4431
-	ld hl, $d1a1 ; $4433
+	ld hl, wShadowTilemap + 13 * TILEMAP_WIDTH + 1 ; $4433
 	ld c, $05 ; $4436
 	call FillMemoryC ; $4438
 	wram_bank $03 ; $443b
 	ld a, $05 ; $4441
-	ld [$d1a0], a ; $4443
+	ld [wShadowTilemap + 13 * TILEMAP_WIDTH], a ; $4443
 	wram_bank $02 ; $4446
 	xor a, a ; $444c
 	ld [$d1a0], a ; $444d
@@ -429,7 +429,7 @@ CopyLabelTilesToTilemap:
 	ld [$d1a6], a ; $4452
 	wram_bank $03 ; $4455
 	ld a, $08 ; $445b
-	ld [$d1a6], a ; $445d
+	ld [wShadowTilemap + 13 * TILEMAP_WIDTH + 6], a ; $445d
 	ret ; $4460
 FillMemoryC:
 	ld [hl+], a ; $4461
@@ -881,7 +881,7 @@ DrawRankMatchLabel:
 	ldh a, [hWramBank] ; $47d7
 	push af ; $47d9
 	wram_bank $03 ; $47da
-	ld hl, $d1ca ; $47e0
+	ld hl, wShadowTilemap + 14 * TILEMAP_WIDTH + 10 ; $47e0
 	ld a, $20 ; $47e3
 	ld [hl+], a ; $47e5
 	ld [hl+], a ; $47e6
@@ -952,8 +952,8 @@ DrawTournamentRoundLabel:
 ClearRoundLabelRow:
 	wram_bank $03 ; $4867
 	ld a, $03 ; $486d
-	ld [$d1aa], a ; $486f
-	ld hl, $d1ca ; $4872
+	ld [wShadowTilemap + 13 * TILEMAP_WIDTH + 10], a ; $486f
+	ld hl, wShadowTilemap + 14 * TILEMAP_WIDTH + 10 ; $4872
 	ld a, $20 ; $4875
 	ld [hl+], a ; $4877
 	ld [hl+], a ; $4878
@@ -1006,21 +1006,21 @@ DrawPlayerNameAndLevel:
 	call CopyTilesAndAttrsRun ; $48e1
 	wram_bank $03 ; $48e4
 	ld a, $20 ; $48ea
-	ld hl, $d0a0 ; $48ec
+	ld hl, wShadowTilemap + 5 * TILEMAP_WIDTH ; $48ec
 	call Fill7Bytes ; $48ef
-	ld hl, $d0c0 ; $48f2
+	ld hl, wShadowTilemap + 6 * TILEMAP_WIDTH ; $48f2
 	call Fill7Bytes ; $48f5
-	ld hl, $d0e0 ; $48f8
+	ld hl, wShadowTilemap + 7 * TILEMAP_WIDTH ; $48f8
 	call Fill7Bytes ; $48fb
-	ld hl, $d100 ; $48fe
+	ld hl, wShadowTilemap + 8 * TILEMAP_WIDTH ; $48fe
 	call Fill7Bytes ; $4901
 	ld hl, wStoryModeNameOfMainCharacter ; $4904
 	call CopyStringToTextBuffer ; $4907
-	ld de, $d0c0 ; $490a
+	ld de, wShadowTilemap + 6 * TILEMAP_WIDTH ; $490a
 	ld bc, $0020 ; $490d
 	call WriteTextToTilemap ; $4910
 	ld hl, Text_31_228 ; $4913
-	ld de, $d101 ; $4916
+	ld de, wShadowTilemap + 8 * TILEMAP_WIDTH + 1 ; $4916
 	ld bc, $0020 ; $4919
 	call FetchAndDrawDialogueText ; $491c
 	ld a, [$c918] ; $491f
@@ -1030,7 +1030,7 @@ DrawPlayerNameAndLevel:
 	ld de, wTextBuffer ; $4927
 	call FormatDecimalNumberUnsigned ; $492a
 	ld hl, wTextBuffer ; $492d
-	ld de, $d104 ; $4930
+	ld de, wShadowTilemap + 8 * TILEMAP_WIDTH + 4 ; $4930
 	ld bc, $0020 ; $4933
 	call WriteTextToTilemap ; $4936
 	wram_bank $02 ; $4939
@@ -1407,13 +1407,13 @@ ClearContinuePromptRows:
 	ld c, $12 ; $4c20
 	call FillMemoryC ; $4c22
 	ld a, $20 ; $4c25
-	ld hl, $d021 ; $4c27
+	ld hl, wShadowTilemap + 1 * TILEMAP_WIDTH + 1 ; $4c27
 	ld c, $12 ; $4c2a
 	call FillMemoryC ; $4c2c
-	ld hl, $d041 ; $4c2f
+	ld hl, wShadowTilemap + 2 * TILEMAP_WIDTH + 1 ; $4c2f
 	ld c, $12 ; $4c32
 	call FillMemoryC ; $4c34
-	ld hl, $d061 ; $4c37
+	ld hl, wShadowTilemap + 3 * TILEMAP_WIDTH + 1 ; $4c37
 	ld c, $12 ; $4c3a
 	call FillMemoryC ; $4c3c
 	ret ; $4c3f

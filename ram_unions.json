@@ -1715,8 +1715,8 @@
   {
    "start": "0xd02a",
    "wram_bank": "0x06",
-   "end": "0xd08e",
-   "comment": "Character-data level-up log (WRAM bank $06). ComputeTrophyExpForGroup in\nbank $1e uses one byte inside the same range for its own accumulator, so\nit keeps the variant it had; the log covers the rest.",
+   "end": "0xd0b7",
+   "comment": "Character-data level-up log and the screen's scratch above it (WRAM bank\n$06). ComputeTrophyExpForGroup in bank $1e uses one byte inside the log's\nspan for its own accumulator, so it keeps the variant it had.",
    "variants": [
     {
      "context": "trophy EXP (bank $1e)",
@@ -1744,6 +1744,15 @@
        "name": "wCharDataChoiceLog",
        "note": "[100 bytes] One byte per level-up taken on this visit: the wCharDataPage the player confirmed. Cleared by WriteCharStatsToDisplayBuffer before the screen opens",
        "size": 100
+      },
+      "0xd08e": {
+       "name": "wCharDataNumberBuffer",
+       "note": "[2 bytes] Two-digit scratch every stat on the character-data screen is formatted into: FormatDecimalNumberUnsigned writes it, then CharDataScreen_WriteStatNumber copies the digits into the tilemap",
+       "size": 2
+      },
+      "0xd0b6": {
+       "name": "wCharDataViewOnly",
+       "note": "[8-bit] Nonzero opens the character-data screen read-only: CharDataScreen_Show skips the allocation flow, LoadCharStatsWithLevelUpDeltas returns without computing deltas, and the input loop will not spend a point. Set by RunExpDistributionFlow and RestoreCharData"
       }
      }
     }
@@ -1881,8 +1890,8 @@
   {
    "start": "0xd000",
    "wram_bank": "0x03",
-   "end": "0xd004",
-   "comment": "Screen tilemap buffer, WRAM bank $03. The full-screen UIs assemble\ntheir BG map here and QueueVRAMCopy it to $9800; wShadowTilemapBank /\nwShadowTilemapPtr point the text engine at it. Rows are $20 cells\napart, so a cell is $d000 + row * $20 + column -- which is why so many\n$d0xx-$d3xx addresses in the screen banks are literal cell addresses\nand stay numeric. Only the base is named.",
+   "end": "0xd800",
+   "comment": "Screen tilemap buffers, WRAM bank $03. The full-screen UIs assemble their\nBG map at $d000 and its CGB attributes at $d400 -- 32 x 32 cells each, rows\nTILEMAP_WIDTH apart, of which the top-left 20 x 18 is on screen -- then\nQueueVRAMCopy them to $9800 in VRAM banks 0 and 1. Not every screen pairs\nthe planes this way: the bank $03 cutscenes keep the attribute plane at\n$d000 in WRAM bank $02 instead, which is why these names are scoped to a\nprovable WRAM bank $03 rather than to the addresses.\nwShadowTilemapBank / wShadowTilemapPtr point the text engine at whichever\nbank the current screen uses ($03 for screens, $05 for text windows, $02 for\nthe match). Cell addresses render as `base + row * TILEMAP_WIDTH + column`,\nwhich is what they are.",
    "variants": [
     {
      "context": "screen tilemap (any bank, where WRAM bank $03 is provable)",
@@ -1894,7 +1903,21 @@
      "symbols": {
       "0xd000": {
        "name": "wShadowTilemap",
-       "note": "[8-bit] First cell of the screen tilemap buffer ($d000-$d3ff, 32 x 32 cells). The attribute plane is the same offset in the WRAM bank the screen pairs with it (bank $02 for the screens that upload to $b800)"
+       "note": "[1024 bytes] BG tile map the screen is being assembled into, 32 x 32 cells\nwith rows TILEMAP_WIDTH apart; CopyTilemapRect steps rows by $0020",
+       "size": 1024,
+       "stride": [
+        "TILEMAP_WIDTH",
+        "0x20"
+       ]
+      },
+      "0xd400": {
+       "name": "wShadowAttrmap",
+       "note": "[1024 bytes] CGB attribute plane for wShadowTilemap, same geometry $400\nhigher; SetWinLosePortraitPaletteAttrs writes $d48b for the cell whose\ntile byte is $d08b",
+       "size": 1024,
+       "stride": [
+        "TILEMAP_WIDTH",
+        "0x20"
+       ]
       }
      }
     }
@@ -1945,6 +1968,41 @@
        "name": "wMinigameSceneActor",
        "note": "[16 bytes] The eighth record, same layout, left out of the\nClearMinigameActors block. It is the object the minigame itself drives --\nthe shot target, the Boo, the treasure box -- and the only record the\ncode addresses by literal address rather than through bc, which is why\nits fields show up as wMinigameSceneActor + n.",
        "size": 16
+      }
+     }
+    }
+   ]
+  },
+  {
+   "start": "0xd230",
+   "wram_bank": "0x06",
+   "end": "0xd235",
+   "comment": "Scrolling text screen (the staff-roll style crawl), WRAM bank $06,\nowned by bank $03's RunScrollingTextScreen.",
+   "variants": [
+    {
+     "context": "scrolling text screen (bank $03)",
+     "scopes": [
+      {
+       "bank": "0x03"
+      }
+     ],
+     "symbols": {
+      "0xd230": {
+       "name": "wScrollTextDelay",
+       "note": "[8-bit] Frames until the crawl scrolls one line; reloaded with 2 each time it hits 0"
+      },
+      "0xd231": {
+       "name": "wScrollTextDelayReload",
+       "note": "[8-bit] The value it reloads with, seeded alongside it"
+      },
+      "0xd232": {
+       "name": "wScrollTextId",
+       "note": "[16-bit] Text id the crawl is rendering, seeded with $1863",
+       "size": 2
+      },
+      "0xd234": {
+       "name": "wScrollTextDone",
+       "note": "[8-bit] Set once the last line has scrolled off, which stops the scroll without leaving the loop"
       }
      }
     }

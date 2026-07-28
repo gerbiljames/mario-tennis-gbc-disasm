@@ -470,7 +470,7 @@ BuildCharDataSummaryFields:
 	ld h, $00 ; $44b1
 	ld l, a ; $44b3
 	ld a, $02 ; $44b4
-	ld de, w6_d08e ; $44b6
+	ld de, wCharDataNumberBuffer ; $44b6
 	call FormatDecimalNumberUnsigned ; $44b9
 	ld de, $d3db ; $44bc
 	farcall CharDataScreen_WriteStatNumber ; $44bf
@@ -493,7 +493,7 @@ BuildCharDataSummaryFields:
 	ld h, $00 ; $44de
 	ld l, a ; $44e0
 	ld a, $02 ; $44e1
-	ld de, w6_d08e ; $44e3
+	ld de, wCharDataNumberBuffer ; $44e3
 	call FormatDecimalNumberUnsigned ; $44e6
 	ld de, $d3f9 ; $44e9
 	farcall CharDataScreen_WriteStatNumber ; $44ec
@@ -516,7 +516,7 @@ BuildCharDataSummaryFields:
 	ld h, $00 ; $450b
 	ld l, a ; $450d
 	ld a, $02 ; $450e
-	ld de, w6_d08e ; $4510
+	ld de, wCharDataNumberBuffer ; $4510
 	call FormatDecimalNumberUnsigned ; $4513
 	ld de, $d403 ; $4516
 	farcall CharDataScreen_WriteStatNumber ; $4519
@@ -539,7 +539,7 @@ BuildCharDataSummaryFields:
 	ld h, $00 ; $4538
 	ld l, a ; $453a
 	ld a, $02 ; $453b
-	ld de, w6_d08e ; $453d
+	ld de, wCharDataNumberBuffer ; $453d
 	call FormatDecimalNumberUnsigned ; $4540
 	ld de, $d40d ; $4543
 	farcall CharDataScreen_WriteStatNumber ; $4546
@@ -562,7 +562,7 @@ BuildCharDataSummaryFields:
 	ld h, $00 ; $4565
 	ld l, a ; $4567
 	ld a, $02 ; $4568
-	ld de, w6_d08e ; $456a
+	ld de, wCharDataNumberBuffer ; $456a
 	call FormatDecimalNumberUnsigned ; $456d
 	ld de, $d417 ; $4570
 	farcall CharDataScreen_WriteStatNumber ; $4573
@@ -573,9 +573,9 @@ BuildCharDataSummaryFields:
 	xor a, a ; $4585
 	farcall GetExpRemainingToNextLevel ; $4586
 	ld a, $03 ; $4589
-	ld de, w6_d08e ; $458b
+	ld de, wCharDataNumberBuffer ; $458b
 	call FormatDecimalNumberUnsigned ; $458e
-	ld hl, w6_d08e ; $4591
+	ld hl, wCharDataNumberBuffer ; $4591
 	ld de, $d12c ; $4594
 	ld a, [hl+] ; $4597
 	ld [de], a ; $4598
@@ -601,7 +601,7 @@ BuildCharDataSummaryFields:
 	ld h, a ; $45b8
 	pop af ; $45b9
 	call FormatExp24BitDecimal ; $45ba
-	ld hl, w6_d08e ; $45bd
+	ld hl, wCharDataNumberBuffer ; $45bd
 	ld de, $d126 ; $45c0
 	ld a, [hl] ; $45c3
 	or a, a ; $45c4
@@ -642,7 +642,7 @@ BuildCharDataSummaryFields:
 	call WriteNameStringTiles ; $45fa
 	wram_bank $03 ; $45fd
 	ld hl, CharDataSummaryFieldsTilePlot1 ; $4603
-	ld de, $d450 ; $4606
+	ld de, wShadowAttrmap + 2 * TILEMAP_WIDTH + 16 ; $4606
 	ld b, $09 ; $4609
 	call PlotTilesAtOffsets ; $460b
 	push af ; $460e
@@ -660,7 +660,7 @@ BuildCharDataSummaryFields:
 	ld h, a ; $4621
 	pop af ; $4622
 	ld a, [hl] ; $4623
-	ld hl, $d473 ; $4624
+	ld hl, wShadowAttrmap + 3 * TILEMAP_WIDTH + 19 ; $4624
 	call DrawFourTileFlagLabel ; $4627
 	wram_bank $06 ; $462a
 	push af ; $4630
@@ -681,7 +681,7 @@ BuildCharDataSummaryFields:
 	ld h, $00 ; $4646
 	ld l, a ; $4648
 	ld a, $02 ; $4649
-	ld de, w6_d08e ; $464b
+	ld de, wCharDataNumberBuffer ; $464b
 	call FormatDecimalNumberUnsigned ; $464e
 	ld de, $d46b ; $4651
 	farcall CharDataScreen_WriteStatNumber ; $4654
@@ -704,7 +704,7 @@ BuildCharDataSummaryFields:
 	ld h, $00 ; $4673
 	ld l, a ; $4675
 	ld a, $02 ; $4676
-	ld de, w6_d08e ; $4678
+	ld de, wCharDataNumberBuffer ; $4678
 	call FormatDecimalNumberUnsigned ; $467b
 	ld de, $d489 ; $467e
 	farcall CharDataScreen_WriteStatNumber ; $4681
@@ -727,7 +727,7 @@ BuildCharDataSummaryFields:
 	ld h, $00 ; $46a0
 	ld l, a ; $46a2
 	ld a, $02 ; $46a3
-	ld de, w6_d08e ; $46a5
+	ld de, wCharDataNumberBuffer ; $46a5
 	call FormatDecimalNumberUnsigned ; $46a8
 	ld de, $d493 ; $46ab
 	farcall CharDataScreen_WriteStatNumber ; $46ae
@@ -750,7 +750,7 @@ BuildCharDataSummaryFields:
 	ld h, $00 ; $46cd
 	ld l, a ; $46cf
 	ld a, $02 ; $46d0
-	ld de, w6_d08e ; $46d2
+	ld de, wCharDataNumberBuffer ; $46d2
 	call FormatDecimalNumberUnsigned ; $46d5
 	ld de, $d49d ; $46d8
 	farcall CharDataScreen_WriteStatNumber ; $46db
@@ -773,7 +773,7 @@ BuildCharDataSummaryFields:
 	ld h, $00 ; $46fa
 	ld l, a ; $46fc
 	ld a, $02 ; $46fd
-	ld de, w6_d08e ; $46ff
+	ld de, wCharDataNumberBuffer ; $46ff
 	call FormatDecimalNumberUnsigned ; $4702
 	ld de, $d4a7 ; $4705
 	farcall CharDataScreen_WriteStatNumber ; $4708
@@ -784,9 +784,9 @@ BuildCharDataSummaryFields:
 	ld a, $01 ; $471a
 	farcall GetExpRemainingToNextLevel ; $471c
 	ld a, $03 ; $471f
-	ld de, w6_d08e ; $4721
+	ld de, wCharDataNumberBuffer ; $4721
 	call FormatDecimalNumberUnsigned ; $4724
-	ld hl, w6_d08e ; $4727
+	ld hl, wCharDataNumberBuffer ; $4727
 	ld de, $d139 ; $472a
 	ld a, [hl+] ; $472d
 	ld [de], a ; $472e
@@ -812,7 +812,7 @@ BuildCharDataSummaryFields:
 	ld h, a ; $474e
 	pop af ; $474f
 	call FormatExp24BitDecimal ; $4750
-	ld hl, w6_d08e ; $4753
+	ld hl, wCharDataNumberBuffer ; $4753
 	ld de, $d133 ; $4756
 	ld a, [hl] ; $4759
 	or a, a ; $475a
@@ -938,13 +938,13 @@ FormatExp24BitDecimal:
 	ld c, a ; $4816
 	inc hl ; $4817
 	ld a, [hl] ; $4818
-	ld [w6_d08e], a ; $4819
+	ld [wCharDataNumberBuffer], a ; $4819
 	ld h, b ; $481c
 	ld l, c ; $481d
-	ld de, w6_d08f ; $481e
+	ld de, wCharDataNumberBuffer + 1 ; $481e
 	ld a, $05 ; $4821
 	call FormatDecimalNumberUnsigned ; $4823
-	ld hl, w6_d08e ; $4826
+	ld hl, wCharDataNumberBuffer ; $4826
 	ld a, [hl] ; $4829
 	and a, a ; $482a
 	ret z ; $482b
@@ -1011,7 +1011,7 @@ FormatExp24BitDecimal:
 .lt0a3:
 	add a, $30 ; $4882
 	ld [de], a ; $4884
-	ld de, w6_d090 ; $4885
+	ld de, $d090 ; $4885
 	ld a, [de] ; $4888
 	add a, [hl] ; $4889
 	ld b, a ; $488a
@@ -1033,7 +1033,7 @@ FormatExp24BitDecimal:
 .lt0a4:
 	add a, $30 ; $48a1
 	ld [de], a ; $48a3
-	ld de, w6_d08f ; $48a4
+	ld de, wCharDataNumberBuffer + 1 ; $48a4
 	ld a, [de] ; $48a7
 	add a, [hl] ; $48a8
 	ld b, a ; $48a9
@@ -1045,7 +1045,7 @@ FormatExp24BitDecimal:
 	sub a, $10 ; $48b1
 .zero5:
 	add a, $05 ; $48b3
-	ld hl, w6_d08e ; $48b5
+	ld hl, wCharDataNumberBuffer ; $48b5
 	add a, [hl] ; $48b8
 	cp a, $0a ; $48b9
 	jr c, .lt0a5 ; $48bb
@@ -1076,9 +1076,9 @@ CharDataValuesSyncTask:
 	ld h, $00 ; $48e6
 	ld l, a ; $48e8
 	ld a, $02 ; $48e9
-	ld de, w6_d08e ; $48eb
+	ld de, wCharDataNumberBuffer ; $48eb
 	call FormatDecimalNumberUnsigned ; $48ee
-	ld a, [w6_d08e] ; $48f1
+	ld a, [wCharDataNumberBuffer] ; $48f1
 	cp a, $20 ; $48f4
 	jr z, .eq20 ; $48f6
 	call GetCharDataDigitSprite ; $48f8
@@ -1087,7 +1087,7 @@ CharDataValuesSyncTask:
 	call ApplySlideOffsetToSpriteX ; $4901
 	call QueueSprite ; $4904
 .eq20:
-	ld a, [w6_d08f] ; $4907
+	ld a, [wCharDataNumberBuffer + 1] ; $4907
 	call GetCharDataDigitSprite ; $490a
 	ld de, $6588 ; $490d
 	ld hl, $d147 ; $4910
@@ -1097,9 +1097,9 @@ CharDataValuesSyncTask:
 	ld h, $00 ; $491c
 	ld l, a ; $491e
 	ld a, $02 ; $491f
-	ld de, w6_d08e ; $4921
+	ld de, wCharDataNumberBuffer ; $4921
 	call FormatDecimalNumberUnsigned ; $4924
-	ld a, [w6_d08e] ; $4927
+	ld a, [wCharDataNumberBuffer] ; $4927
 	cp a, $20 ; $492a
 	jr z, .eq202 ; $492c
 	jr .getCharDataDigitSprite ; $492e
@@ -1111,7 +1111,7 @@ CharDataValuesSyncTask:
 	ld hl, $d147 ; $4938
 	call ApplySlideOffsetToSpriteX ; $493b
 	call QueueSprite ; $493e
-	ld a, [w6_d08f] ; $4941
+	ld a, [wCharDataNumberBuffer + 1] ; $4941
 	call GetCharDataDigitSprite ; $4944
 	ld de, $7c88 ; $4947
 	ld hl, $d147 ; $494a
@@ -1234,7 +1234,7 @@ SaveWorkTilemapToPage:
 .page2:
 	wram_bank $03 ; $4a63
 	ld hl, wShadowTilemap ; $4a69
-	ld de, $d7e0 ; $4a6c
+	ld de, wShadowAttrmap + 31 * TILEMAP_WIDTH ; $4a6c
 	ld c, $24 ; $4a6f
 	call CopyMemoryFast ; $4a71
 	wram_bank $02 ; $4a74
@@ -1246,7 +1246,7 @@ SaveWorkTilemapToPage:
 .page3:
 	wram_bank $03 ; $4a86
 	ld hl, wShadowTilemap ; $4a8c
-	ld de, $d5a0 ; $4a8f
+	ld de, wShadowAttrmap + 13 * TILEMAP_WIDTH ; $4a8f
 	ld c, $24 ; $4a92
 	call CopyMemoryFast ; $4a94
 	wram_bank $02 ; $4a97
@@ -1257,7 +1257,7 @@ SaveWorkTilemapToPage:
 	ret ; $4aa8
 LoadBasePageIntoWorkTilemap:
 	wram_bank $03 ; $4aa9
-	ld hl, $d5a0 ; $4aaf
+	ld hl, wShadowAttrmap + 13 * TILEMAP_WIDTH ; $4aaf
 	ld de, wShadowTilemap ; $4ab2
 	ld c, $24 ; $4ab5
 	call CopyMemoryFast ; $4ab7
@@ -1375,14 +1375,14 @@ ApplyTilemapPatchList:
 .gotSrc:
 	wram_bank $06 ; $4bd0
 	ld a, l ; $4bd6
-	ld [w6_d08e], a ; $4bd7
+	ld [wCharDataNumberBuffer], a ; $4bd7
 	ld a, h ; $4bda
-	ld [w6_d08f], a ; $4bdb
+	ld [wCharDataNumberBuffer + 1], a ; $4bdb
 	pop hl ; $4bde
 	push bc ; $4bdf
 	inc hl ; $4be0
 	ld c, [hl] ; $4be1
-	ld hl, w6_d08e ; $4be2
+	ld hl, wCharDataNumberBuffer ; $4be2
 	ld a, [hl+] ; $4be5
 	ld h, [hl] ; $4be6
 	ld l, a ; $4be7
@@ -1937,7 +1937,7 @@ BuildCharStatDisplay:
 	ld [wCharDataStats + 10], a ; $5012
 	farcall CharDataScreen_DrawStats ; $5015
 	wram_bank $03 ; $5018
-	ld hl, $d501 ; $501e
+	ld hl, wShadowAttrmap + 8 * TILEMAP_WIDTH + 1 ; $501e
 	ld a, $a3 ; $5021
 	ld [hl+], a ; $5023
 	ld [hl+], a ; $5024
@@ -1946,7 +1946,7 @@ BuildCharStatDisplay:
 	ld [hl+], a ; $5027
 	ld [hl+], a ; $5028
 	ld [hl], a ; $5029
-	ld hl, $d50f ; $502a
+	ld hl, wShadowAttrmap + 8 * TILEMAP_WIDTH + 15 ; $502a
 	xor a, a ; $502d
 	ld [hl+], a ; $502e
 	ld [hl+], a ; $502f
@@ -2009,7 +2009,7 @@ BuildCharStatDisplay:
 	ld h, $00 ; $508a
 	ld l, a ; $508c
 	ld a, $02 ; $508d
-	ld de, w6_d08e ; $508f
+	ld de, wCharDataNumberBuffer ; $508f
 	call FormatDecimalNumberUnsigned ; $5092
 	ld de, $d519 ; $5095
 	farcall CharDataScreen_WriteStatNumber ; $5098
@@ -2718,11 +2718,11 @@ DrawCharStatDigitsTask:
 	push bc ; $57e2
 	ld h, $00 ; $57e3
 	ld a, $02 ; $57e5
-	ld de, w6_d08e ; $57e7
+	ld de, wCharDataNumberBuffer ; $57e7
 	call FormatDecimalNumberUnsigned ; $57ea
 	pop bc ; $57ed
 	push bc ; $57ee
-	ld a, [w6_d08e] ; $57ef
+	ld a, [wCharDataNumberBuffer] ; $57ef
 	sub a, $30 ; $57f2
 	rlca ; $57f4
 	ld c, a ; $57f5
@@ -2732,7 +2732,7 @@ DrawCharStatDigitsTask:
 	call ApplySlideOffsetToSpriteX ; $57fd
 	call QueueSprite ; $5800
 	pop bc ; $5803
-	ld a, [w6_d08f] ; $5804
+	ld a, [wCharDataNumberBuffer + 1] ; $5804
 	sub a, $30 ; $5807
 	rlca ; $5809
 	ld c, a ; $580a
@@ -2760,11 +2760,11 @@ DrawCharStatDigitsTask:
 	push bc ; $5834
 	ld h, $00 ; $5835
 	ld a, $02 ; $5837
-	ld de, w6_d08e ; $5839
+	ld de, wCharDataNumberBuffer ; $5839
 	call FormatDecimalNumberUnsigned ; $583c
 	pop bc ; $583f
 	push bc ; $5840
-	ld a, [w6_d08e] ; $5841
+	ld a, [wCharDataNumberBuffer] ; $5841
 	sub a, $30 ; $5844
 	rlca ; $5846
 	ld c, a ; $5847
@@ -2774,7 +2774,7 @@ DrawCharStatDigitsTask:
 	call ApplySlideOffsetToSpriteX ; $5850
 	call QueueSprite ; $5853
 	pop bc ; $5856
-	ld a, [w6_d08f] ; $5857
+	ld a, [wCharDataNumberBuffer + 1] ; $5857
 	sub a, $30 ; $585a
 	rlca ; $585c
 	ld c, a ; $585d
@@ -2802,11 +2802,11 @@ DrawCharStatDigitsTask:
 	push bc ; $5889
 	ld h, $00 ; $588a
 	ld a, $02 ; $588c
-	ld de, w6_d08e ; $588e
+	ld de, wCharDataNumberBuffer ; $588e
 	call FormatDecimalNumberUnsigned ; $5891
 	pop bc ; $5894
 	push bc ; $5895
-	ld a, [w6_d08e] ; $5896
+	ld a, [wCharDataNumberBuffer] ; $5896
 	sub a, $30 ; $5899
 	rlca ; $589b
 	ld c, a ; $589c
@@ -2816,7 +2816,7 @@ DrawCharStatDigitsTask:
 	call ApplySlideOffsetToSpriteX ; $58a5
 	call QueueSprite ; $58a8
 	pop bc ; $58ab
-	ld a, [w6_d08f] ; $58ac
+	ld a, [wCharDataNumberBuffer + 1] ; $58ac
 	sub a, $30 ; $58af
 	rlca ; $58b1
 	ld c, a ; $58b2
@@ -2844,11 +2844,11 @@ DrawCharStatDigitsTask:
 	push bc ; $58de
 	ld h, $00 ; $58df
 	ld a, $02 ; $58e1
-	ld de, w6_d08e ; $58e3
+	ld de, wCharDataNumberBuffer ; $58e3
 	call FormatDecimalNumberUnsigned ; $58e6
 	pop bc ; $58e9
 	push bc ; $58ea
-	ld a, [w6_d08e] ; $58eb
+	ld a, [wCharDataNumberBuffer] ; $58eb
 	sub a, $30 ; $58ee
 	rlca ; $58f0
 	ld c, a ; $58f1
@@ -2858,7 +2858,7 @@ DrawCharStatDigitsTask:
 	call ApplySlideOffsetToSpriteX ; $58fa
 	call QueueSprite ; $58fd
 	pop bc ; $5900
-	ld a, [w6_d08f] ; $5901
+	ld a, [wCharDataNumberBuffer + 1] ; $5901
 	sub a, $30 ; $5904
 	rlca ; $5906
 	ld c, a ; $5907
@@ -3500,7 +3500,7 @@ SpriteTemplate_1d_681b:
 RunExpDistributionFlow:
 	wram_bank $06 ; $682c
 	xor a, a ; $6832
-	ld [w6_d0b6], a ; $6833
+	ld [wCharDataViewOnly], a ; $6833
 .loop:
 	call ShowExpDistributionScreen ; $6836
 	wram_bank $06 ; $6839
@@ -3557,7 +3557,7 @@ RunExpDistributionFlow:
 	ld a, [hl] ; $6893
 	ld [de], a ; $6894
 	ld a, $01 ; $6895
-	ld [w6_d0b6], a ; $6897
+	ld [wCharDataViewOnly], a ; $6897
 	jr .loop ; $689a
 .restoreCharData:
 	farcall RestoreCharData ; $689c
@@ -3621,7 +3621,7 @@ ShowExpDistributionScreen:
 	ret ; $6933
 InitLevelUpScreenState:
 	wram_bank $06 ; $6934
-	ld a, [w6_d0b6] ; $693a
+	ld a, [wCharDataViewOnly] ; $693a
 	or a, a ; $693d
 	jr nz, .nonZero ; $693e
 	ld a, l ; $6940
@@ -3772,9 +3772,9 @@ DrawExpPoolReadout:
 	ld h, [hl] ; $6ad8
 	ld l, a ; $6ad9
 	ld a, $05 ; $6ada
-	ld de, w6_d08e ; $6adc
+	ld de, wCharDataNumberBuffer ; $6adc
 	call FormatDecimalNumberUnsigned ; $6adf
-	ld hl, w6_d08e ; $6ae2
+	ld hl, wCharDataNumberBuffer ; $6ae2
 	ld de, $d201 ; $6ae5
 	call WriteExpScreenStringTiles ; $6ae8
 	call DrawExpPoolGauge ; $6aeb
@@ -3875,7 +3875,7 @@ TilePairTable_1d_6b69:
 	db $03, $04 ; 0x10
 InitExpScreenCharStats:
 	wram_bank $06 ; $6b7b
-	ld a, [w6_d0b6] ; $6b81
+	ld a, [wCharDataViewOnly] ; $6b81
 	or a, a ; $6b84
 	jp nz, .clearStoryCharacterSlot ; $6b85
 	xor a, a ; $6b88
@@ -3921,7 +3921,7 @@ InitExpScreenCharStats:
 	ld h, $00 ; $6bcc
 	ld l, a ; $6bce
 	ld a, $02 ; $6bcf
-	ld de, w6_d08e ; $6bd1
+	ld de, wCharDataNumberBuffer ; $6bd1
 	call FormatDecimalNumberUnsigned ; $6bd4
 	ld de, wCharDataChoiceLog + 65 ; $6bd7
 	farcall CharDataScreen_WriteStatNumber ; $6bda
@@ -4007,7 +4007,7 @@ InitExpScreenCharStats:
 	ld h, $00 ; $6c6d
 	ld l, a ; $6c6f
 	ld a, $02 ; $6c70
-	ld de, w6_d08e ; $6c72
+	ld de, wCharDataNumberBuffer ; $6c72
 	call FormatDecimalNumberUnsigned ; $6c75
 	ld de, $d18b ; $6c78
 	farcall CharDataScreen_WriteStatNumber ; $6c7b
@@ -4090,7 +4090,7 @@ InitExpScreenCharStats:
 	ld h, $00 ; $6d09
 	ld l, a ; $6d0b
 	ld a, $02 ; $6d0c
-	ld de, w6_d08e ; $6d0e
+	ld de, wCharDataNumberBuffer ; $6d0e
 	call FormatDecimalNumberUnsigned ; $6d11
 	ld de, wCharDataChoiceLog + 65 ; $6d14
 	farcall CharDataScreen_WriteStatNumber ; $6d17
@@ -4132,7 +4132,7 @@ InitExpScreenCharStats:
 	ld h, $00 ; $6d58
 	ld l, a ; $6d5a
 	ld a, $02 ; $6d5b
-	ld de, w6_d08e ; $6d5d
+	ld de, wCharDataNumberBuffer ; $6d5d
 	call FormatDecimalNumberUnsigned ; $6d60
 	ld de, $d18b ; $6d63
 	farcall CharDataScreen_WriteStatNumber ; $6d66
@@ -4231,10 +4231,10 @@ DrawExpScreenLevelNumber:
 	ld h, $00 ; $6e09
 	ld l, a ; $6e0b
 	ld a, $02 ; $6e0c
-	ld de, w6_d08e ; $6e0e
+	ld de, wCharDataNumberBuffer ; $6e0e
 	call FormatDecimalNumberUnsigned ; $6e11
 	pop de ; $6e14
-	ld hl, w6_d08e ; $6e15
+	ld hl, wCharDataNumberBuffer ; $6e15
 	ld a, [hl] ; $6e18
 	cp a, $20 ; $6e19
 	jr z, .eq20 ; $6e1b
@@ -4422,11 +4422,11 @@ ExpBarFillTiles_1d:
 	db $0d, $1d, $2d, $0e, $1e, $2e, $0f, $1f, $2f ; 0x00
 RunExpDistributionLoop:
 	wram_bank $06 ; $6f3e
-	ld a, [w6_d0b6] ; $6f44
+	ld a, [wCharDataViewOnly] ; $6f44
 	or a, a ; $6f47
 	jr z, .tick ; $6f48
 	xor a, a ; $6f4a
-	ld [w6_d0b6], a ; $6f4b
+	ld [wCharDataViewOnly], a ; $6f4b
 	jp CheckExpLevelDown.step2 ; $6f4e
 .tick:
 	wram_bank $06 ; $6f51
@@ -4962,15 +4962,15 @@ UnassignExpPointFromChar:
 	ret ; $734a
 UploadExpScreenTilemapRows:
 	wram_bank $03 ; $734b
-	ld hl, $d020 ; $7351
+	ld hl, wShadowTilemap + 1 * TILEMAP_WIDTH ; $7351
 	ld de, $9820 ; $7354
 	ld c, $16 ; $7357
 	call QueueVRAMCopy ; $7359
-	ld hl, $d1a0 ; $735c
+	ld hl, wShadowTilemap + 13 * TILEMAP_WIDTH ; $735c
 	ld de, $99a0 ; $735f
 	ld c, $04 ; $7362
 	call QueueVRAMCopy ; $7364
-	ld hl, $d200 ; $7367
+	ld hl, wShadowTilemap + 16 * TILEMAP_WIDTH ; $7367
 	ld de, $9a00 ; $736a
 	ld c, $01 ; $736d
 	call QueueVRAMCopy ; $736f
@@ -5159,7 +5159,7 @@ CheckExpLevelDown:
 	jr UploadExpPromptWindowRows.loop ; $7503
 UploadExpPromptWindowRows:
 	wram_bank $03 ; $7505
-	ld hl, $d180 ; $750b
+	ld hl, wShadowTilemap + 12 * TILEMAP_WIDTH ; $750b
 	ld de, $9980 ; $750e
 	ld c, $0c ; $7511
 	call QueueVRAMCopy ; $7513
@@ -5185,7 +5185,7 @@ UploadExpPromptWindowRows:
 	jr .loop ; $7543
 UploadExpPromptWindowRowsClosing:
 	wram_bank $03 ; $7545
-	ld hl, $d180 ; $754b
+	ld hl, wShadowTilemap + 12 * TILEMAP_WIDTH ; $754b
 	ld de, $9980 ; $754e
 	ld c, $0c ; $7551
 	call QueueVRAMCopy ; $7553
@@ -5292,14 +5292,14 @@ ApplyTilemapPatchListExpScreen:
 .gotSrc:
 	wram_bank $06 ; $762a
 	ld a, l ; $7630
-	ld [w6_d08e], a ; $7631
+	ld [wCharDataNumberBuffer], a ; $7631
 	ld a, h ; $7634
-	ld [w6_d08f], a ; $7635
+	ld [wCharDataNumberBuffer + 1], a ; $7635
 	pop hl ; $7638
 	push bc ; $7639
 	inc hl ; $763a
 	ld c, [hl] ; $763b
-	ld hl, w6_d08e ; $763c
+	ld hl, wCharDataNumberBuffer ; $763c
 	ld a, [hl+] ; $763f
 	ld h, [hl] ; $7640
 	ld l, a ; $7641
@@ -5327,7 +5327,7 @@ DrawExpToNextLevelTask:
 	ret nz ; $7669
 	bit 2, a ; $766a
 	ret nz ; $766c
-	ld a, [w6_d0b6] ; $766d
+	ld a, [wCharDataViewOnly] ; $766d
 	or a, a ; $7670
 	ret nz ; $7671
 	ld a, [wStoryCharacterSlot] ; $7672
@@ -5342,23 +5342,23 @@ DrawExpToNextLevelTask:
 	ld h, [hl] ; $7688
 	ld l, a ; $7689
 	ld a, $03 ; $768a
-	ld de, w6_d08e ; $768c
+	ld de, wCharDataNumberBuffer ; $768c
 	call FormatDecimalNumberUnsigned ; $768f
-	ld a, [w6_d08e] ; $7692
+	ld a, [wCharDataNumberBuffer] ; $7692
 	cp a, $20 ; $7695
 	jr z, .eq20 ; $7697
 	call GetExpScreenDigitSprite ; $7699
 	ld de, $182f ; $769c
 	call QueueSprite ; $769f
 .eq20:
-	ld a, [w6_d08f] ; $76a2
+	ld a, [wCharDataNumberBuffer + 1] ; $76a2
 	cp a, $20 ; $76a5
 	jr z, .eq202 ; $76a7
 	call GetExpScreenDigitSprite ; $76a9
 	ld de, $1f2f ; $76ac
 	call QueueSprite ; $76af
 .eq202:
-	ld a, [w6_d090] ; $76b2
+	ld a, [$d090] ; $76b2
 	call GetExpScreenDigitSprite ; $76b5
 	ld de, $262f ; $76b8
 	call QueueSprite ; $76bb
@@ -5377,23 +5377,23 @@ DrawExpToNextLevelTask:
 	ld h, [hl] ; $76db
 	ld l, a ; $76dc
 	ld a, $03 ; $76dd
-	ld de, w6_d08e ; $76df
+	ld de, wCharDataNumberBuffer ; $76df
 	call FormatDecimalNumberUnsigned ; $76e2
-	ld a, [w6_d08e] ; $76e5
+	ld a, [wCharDataNumberBuffer] ; $76e5
 	cp a, $20 ; $76e8
 	jr z, .eq203 ; $76ea
 	call GetExpScreenDigitSprite ; $76ec
 	ld de, $1862 ; $76ef
 	call QueueSprite ; $76f2
 .eq203:
-	ld a, [w6_d08f] ; $76f5
+	ld a, [wCharDataNumberBuffer + 1] ; $76f5
 	cp a, $20 ; $76f8
 	jr z, .eq204 ; $76fa
 	call GetExpScreenDigitSprite ; $76fc
 	ld de, $1f62 ; $76ff
 	call QueueSprite ; $7702
 .eq204:
-	ld a, [w6_d090] ; $7705
+	ld a, [$d090] ; $7705
 	call GetExpScreenDigitSprite ; $7708
 	ld de, $2662 ; $770b
 	call QueueSprite ; $770e

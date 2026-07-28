@@ -1365,7 +1365,7 @@ FlushMatchRuleRowAttrs:
 	ld a, b ; $48bf
 	or a, a ; $48c0
 	jr nz, .row1 ; $48c1
-	ld hl, $d460 ; $48c3
+	ld hl, wShadowAttrmap + 3 * TILEMAP_WIDTH ; $48c3
 	ld de, $b860 ; $48c6
 	ld c, $06 ; $48c9
 	call QueueVRAMCopy ; $48cb
@@ -1373,13 +1373,13 @@ FlushMatchRuleRowAttrs:
 .row1:
 	cp a, $01 ; $48d0
 	jr nz, .row2 ; $48d2
-	ld hl, $d4e0 ; $48d4
+	ld hl, wShadowAttrmap + 7 * TILEMAP_WIDTH ; $48d4
 	ld de, $b8e0 ; $48d7
 	ld c, $06 ; $48da
 	call QueueVRAMCopy ; $48dc
 	jr .done ; $48df
 .row2:
-	ld hl, $d560 ; $48e1
+	ld hl, wShadowAttrmap + 11 * TILEMAP_WIDTH ; $48e1
 	ld de, $b960 ; $48e4
 	ld c, $06 ; $48e7
 	call QueueVRAMCopy ; $48e9
@@ -1464,22 +1464,22 @@ MatchRulesCursorTiles_3e:
 	db $00, $10, $20, $30, $40, $50, $60 ; 0x00
 DrawMatchRulesCaption:
 	wram_bank $03 ; $4982
-	ld de, $d1e0 ; $4988
+	ld de, wShadowTilemap + 15 * TILEMAP_WIDTH ; $4988
 	ld b, $14 ; $498b
 	ld c, $01 ; $498d
 	ld h, $03 ; $498f
 	farcall FillTilemapRect ; $4991
 	ld a, $02 ; $4994
-	ld [$d1e0], a ; $4996
+	ld [wShadowTilemap + 15 * TILEMAP_WIDTH], a ; $4996
 	ld a, $04 ; $4999
-	ld [$d1f3], a ; $499b
-	ld de, $d201 ; $499e
+	ld [wShadowTilemap + 15 * TILEMAP_WIDTH + 19], a ; $499b
+	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $499e
 	ld b, $12 ; $49a1
 	ld c, $01 ; $49a3
 	ld h, $20 ; $49a5
 	farcall FillTilemapRect ; $49a7
 	farcall RenderMatchFormatOptionText ; $49aa
-	ld hl, $d1e0 ; $49ad
+	ld hl, wShadowTilemap + 15 * TILEMAP_WIDTH ; $49ad
 	ld de, $99e0 ; $49b0
 	ld c, $04 ; $49b3
 	call QueueVRAMCopy ; $49b5
@@ -1655,11 +1655,11 @@ LoadLinkErrorScreen:
 	farcall PrepareGlyphBuffer ; $4b11
 	wram_bank $03 ; $4b14
 	ld hl, $012b ; $4b1a
-	ld de, $d1c1 ; $4b1d
+	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH + 1 ; $4b1d
 	ld c, $12 ; $4b20
 	farcall RenderProportionalTextAt ; $4b22
 	ld hl, $012c ; $4b25
-	ld de, $d201 ; $4b28
+	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $4b28
 	ld c, $12 ; $4b2b
 	farcall RenderProportionalTextAt ; $4b2d
 	farcall UploadGlyphBuffer ; $4b30
@@ -1730,19 +1730,19 @@ ShowLinkStatusMessage:
 	jr .renderProportionalTextAt ; $4bbf
 .zero:
 	ld hl, $0129 ; $4bc1
-	ld de, $d181 ; $4bc4
+	ld de, wShadowTilemap + 12 * TILEMAP_WIDTH + 1 ; $4bc4
 	ld c, $12 ; $4bc7
 	farcall RenderProportionalTextAt ; $4bc9
 	jr .uploadGlyphBuffer ; $4bcc
 .eq01:
 	ld hl, $012a ; $4bce
-	ld de, $d181 ; $4bd1
+	ld de, wShadowTilemap + 12 * TILEMAP_WIDTH + 1 ; $4bd1
 	ld c, $12 ; $4bd4
 	farcall RenderProportionalTextAt ; $4bd6
 	jr .uploadGlyphBuffer ; $4bd9
 .renderProportionalTextAt:
 	ld hl, $0128 ; $4bdb
-	ld de, $d181 ; $4bde
+	ld de, wShadowTilemap + 12 * TILEMAP_WIDTH + 1 ; $4bde
 	ld c, $12 ; $4be1
 	farcall RenderProportionalTextAt ; $4be3
 .uploadGlyphBuffer:
@@ -1750,19 +1750,19 @@ ShowLinkStatusMessage:
 	call FlushLinkMessageRows ; $4be9
 	ret ; $4bec
 ClearLinkMessageWindow:
-	ld de, $d161 ; $4bed
+	ld de, wShadowTilemap + 11 * TILEMAP_WIDTH + 1 ; $4bed
 	ld b, $12 ; $4bf0
 	ld c, $01 ; $4bf2
 	ld h, $03 ; $4bf4
 	farcall FillTilemapRect ; $4bf6
-	ld de, $d181 ; $4bf9
+	ld de, wShadowTilemap + 12 * TILEMAP_WIDTH + 1 ; $4bf9
 	ld b, $12 ; $4bfc
 	ld c, $05 ; $4bfe
 	ld h, $20 ; $4c00
 	farcall FillTilemapRect ; $4c02
 	ret ; $4c05
 FlushLinkMessageRows:
-	ld hl, $d160 ; $4c06
+	ld hl, wShadowTilemap + 11 * TILEMAP_WIDTH ; $4c06
 	ld de, $9960 ; $4c09
 	ld c, $0c ; $4c0c
 	call QueueVRAMCopy ; $4c0e
@@ -1848,12 +1848,12 @@ LoadEraseDataConfirmScreen:
 	ld c, $10 ; $4cc9
 	farcall LoadScreenAssetRecord ; $4ccb
 	wram_bank $03 ; $4cce
-	ld de, $d4a3 ; $4cd4
+	ld de, wShadowAttrmap + 5 * TILEMAP_WIDTH + 3 ; $4cd4
 	ld b, $0e ; $4cd7
 	ld c, $06 ; $4cd9
 	ld h, $00 ; $4cdb
 	farcall FillTilemapRect ; $4cdd
-	ld de, $d0a3 ; $4ce0
+	ld de, wShadowTilemap + 5 * TILEMAP_WIDTH + 3 ; $4ce0
 	ld b, $0e ; $4ce3
 	ld c, $06 ; $4ce5
 	ld h, $20 ; $4ce7
@@ -1892,19 +1892,19 @@ LoadEraseDataConfirmScreen:
 	cp a, $02 ; $4d41
 	jr nz, .compare ; $4d43
 	ld hl, $00dd ; $4d45
-	ld de, $d0c3 ; $4d48
+	ld de, wShadowTilemap + 6 * TILEMAP_WIDTH + 3 ; $4d48
 	ld c, $0e ; $4d4b
 	farcall RenderProportionalTextAt ; $4d4d
 	ld hl, $00de ; $4d50
-	ld de, $d103 ; $4d53
+	ld de, wShadowTilemap + 8 * TILEMAP_WIDTH + 3 ; $4d53
 	ld c, $0e ; $4d56
 	farcall RenderProportionalTextAt ; $4d58
 	ld hl, $00df ; $4d5b
-	ld de, $d1c2 ; $4d5e
+	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH + 2 ; $4d5e
 	ld c, $0e ; $4d61
 	farcall RenderProportionalTextAt ; $4d63
 	ld hl, $00dc ; $4d66
-	ld de, $d202 ; $4d69
+	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 2 ; $4d69
 	ld c, $0e ; $4d6c
 	farcall RenderProportionalTextAt ; $4d6e
 	ld b, $41 ; $4d71
@@ -1916,19 +1916,19 @@ LoadEraseDataConfirmScreen:
 	or a, a ; $4d7e
 	jr z, .zero ; $4d7f
 	ld hl, $00d8 ; $4d81
-	ld de, $d0c3 ; $4d84
+	ld de, wShadowTilemap + 6 * TILEMAP_WIDTH + 3 ; $4d84
 	ld c, $0e ; $4d87
 	farcall RenderProportionalTextAt ; $4d89
 	ld hl, $00d9 ; $4d8c
-	ld de, $d103 ; $4d8f
+	ld de, wShadowTilemap + 8 * TILEMAP_WIDTH + 3 ; $4d8f
 	ld c, $0e ; $4d92
 	farcall RenderProportionalTextAt ; $4d94
 	ld hl, $00db ; $4d97
-	ld de, $d1c2 ; $4d9a
+	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH + 2 ; $4d9a
 	ld c, $0e ; $4d9d
 	farcall RenderProportionalTextAt ; $4d9f
 	ld hl, $00dc ; $4da2
-	ld de, $d202 ; $4da5
+	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 2 ; $4da5
 	ld c, $0e ; $4da8
 	farcall RenderProportionalTextAt ; $4daa
 	ld b, $45 ; $4dad
@@ -1938,19 +1938,19 @@ LoadEraseDataConfirmScreen:
 	jr .renderProportionalTextAt ; $4db7
 .zero:
 	ld hl, $00d6 ; $4db9
-	ld de, $d0c3 ; $4dbc
+	ld de, wShadowTilemap + 6 * TILEMAP_WIDTH + 3 ; $4dbc
 	ld c, $0e ; $4dbf
 	farcall RenderProportionalTextAt ; $4dc1
 	ld hl, $00d7 ; $4dc4
-	ld de, $d103 ; $4dc7
+	ld de, wShadowTilemap + 8 * TILEMAP_WIDTH + 3 ; $4dc7
 	ld c, $0e ; $4dca
 	farcall RenderProportionalTextAt ; $4dcc
 	ld hl, $00da ; $4dcf
-	ld de, $d1c2 ; $4dd2
+	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH + 2 ; $4dd2
 	ld c, $0e ; $4dd5
 	farcall RenderProportionalTextAt ; $4dd7
 	ld hl, $00dc ; $4dda
-	ld de, $d202 ; $4ddd
+	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 2 ; $4ddd
 	ld c, $0e ; $4de0
 	farcall RenderProportionalTextAt ; $4de2
 	ld b, $46 ; $4de5
@@ -1959,11 +1959,11 @@ LoadEraseDataConfirmScreen:
 	farcall LoadCompressedTileBlock ; $4dec
 .renderProportionalTextAt:
 	ld hl, $007a ; $4def
-	ld de, $d1d0 ; $4df2
+	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH + 16 ; $4df2
 	ld c, $04 ; $4df5
 	farcall RenderProportionalTextAt ; $4df7
 	ld hl, $007b ; $4dfa
-	ld de, $d210 ; $4dfd
+	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 16 ; $4dfd
 	ld c, $04 ; $4e00
 	farcall RenderProportionalTextAt ; $4e02
 	farcall UploadGlyphBuffer ; $4e05
@@ -2214,26 +2214,26 @@ RedrawRacketShoesChoiceMenu:
 	call GetMenuCursorIndex_3e ; $4ff0
 	call SetRacketShoesChoicePalette ; $4ff3
 	wram_bank $03 ; $4ff6
-	ld de, $d1e0 ; $4ffc
+	ld de, wShadowTilemap + 15 * TILEMAP_WIDTH ; $4ffc
 	ld b, $14 ; $4fff
 	ld c, $01 ; $5001
 	ld h, $03 ; $5003
 	farcall FillTilemapRect ; $5005
 	ld a, $02 ; $5008
-	ld [$d1e0], a ; $500a
+	ld [wShadowTilemap + 15 * TILEMAP_WIDTH], a ; $500a
 	ld a, $04 ; $500d
-	ld [$d1f3], a ; $500f
-	ld de, $d201 ; $5012
+	ld [wShadowTilemap + 15 * TILEMAP_WIDTH + 19], a ; $500f
+	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $5012
 	ld b, $12 ; $5015
 	ld c, $01 ; $5017
 	ld h, $20 ; $5019
 	farcall FillTilemapRect ; $501b
 	call DrawRacketShoesChoiceCaption ; $501e
-	ld hl, $d4e0 ; $5021
+	ld hl, wShadowAttrmap + 7 * TILEMAP_WIDTH ; $5021
 	ld de, $b8e0 ; $5024
 	ld c, $06 ; $5027
 	call QueueVRAMCopy ; $5029
-	ld hl, $d1e0 ; $502c
+	ld hl, wShadowTilemap + 15 * TILEMAP_WIDTH ; $502c
 	ld de, $99e0 ; $502f
 	ld c, $04 ; $5032
 	call QueueVRAMCopy ; $5034
@@ -2282,7 +2282,7 @@ DrawRacketShoesChoiceCaption:
 	jr nc, .renderTextToBuffer64 ; $5081
 	inc h ; $5083
 .renderTextToBuffer64:
-	ld de, $d201 ; $5084
+	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $5084
 	ld c, $20 ; $5087
 	farcall RenderTextToBuffer64 ; $5089
 	pop af ; $508c
@@ -2619,26 +2619,26 @@ RedrawPlayAlonePartnerMenu:
 	call GetMenuCursorIndex_3e ; $52d8
 	call SetPlayAlonePartnerPalette ; $52db
 	wram_bank $03 ; $52de
-	ld de, $d1e0 ; $52e4
+	ld de, wShadowTilemap + 15 * TILEMAP_WIDTH ; $52e4
 	ld b, $14 ; $52e7
 	ld c, $01 ; $52e9
 	ld h, $03 ; $52eb
 	farcall FillTilemapRect ; $52ed
 	ld a, $02 ; $52f0
-	ld [$d1e0], a ; $52f2
+	ld [wShadowTilemap + 15 * TILEMAP_WIDTH], a ; $52f2
 	ld a, $04 ; $52f5
-	ld [$d1f3], a ; $52f7
-	ld de, $d201 ; $52fa
+	ld [wShadowTilemap + 15 * TILEMAP_WIDTH + 19], a ; $52f7
+	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $52fa
 	ld b, $12 ; $52fd
 	ld c, $01 ; $52ff
 	ld h, $20 ; $5301
 	farcall FillTilemapRect ; $5303
 	call DrawPlayAlonePartnerCaption ; $5306
-	ld hl, $d4e0 ; $5309
+	ld hl, wShadowAttrmap + 7 * TILEMAP_WIDTH ; $5309
 	ld de, $b8e0 ; $530c
 	ld c, $06 ; $530f
 	call QueueVRAMCopy ; $5311
-	ld hl, $d1e0 ; $5314
+	ld hl, wShadowTilemap + 15 * TILEMAP_WIDTH ; $5314
 	ld de, $99e0 ; $5317
 	ld c, $04 ; $531a
 	call QueueVRAMCopy ; $531c
@@ -2778,12 +2778,12 @@ LoadEquipmentStatusWindows:
 	ret ; $5438
 SetEquipmentStatusAttrRects:
 	wram_bank $03 ; $5439
-	ld de, $d581 ; $543f
+	ld de, wShadowAttrmap + 12 * TILEMAP_WIDTH + 1 ; $543f
 	ld b, $12 ; $5442
 	ld c, $05 ; $5444
 	ld h, $08 ; $5446
 	farcall FillTilemapRect ; $5448
-	ld de, $d461 ; $544b
+	ld de, wShadowAttrmap + 3 * TILEMAP_WIDTH + 1 ; $544b
 	ld b, $12 ; $544e
 	ld c, $05 ; $5450
 	ld h, $08 ; $5452
@@ -2800,11 +2800,11 @@ DrawEquippedRacketPanel:
 	ld [wMenuCursorX], a ; $546b
 	call GetEquippedItemId ; $546e
 	ld c, a ; $5471
-	ld de, $d025 ; $5472
+	ld de, wShadowTilemap + 1 * TILEMAP_WIDTH + 5 ; $5472
 	call DrawItemIcon2x2 ; $5475
 	call GetEquippedItemId ; $5478
 	ld c, a ; $547b
-	ld de, $d028 ; $547c
+	ld de, wShadowTilemap + 1 * TILEMAP_WIDTH + 8 ; $547c
 	call RenderRacketNameText ; $547f
 	call DrawEquippedItemStatMods ; $5482
 	ret ; $5485
@@ -2822,11 +2822,11 @@ DrawEquippedShoesPanel:
 	ld [wMenuCursorX], a ; $54a2
 	call GetEquippedItemId ; $54a5
 	ld c, a ; $54a8
-	ld de, $d145 ; $54a9
+	ld de, wShadowTilemap + 10 * TILEMAP_WIDTH + 5 ; $54a9
 	call DrawItemIcon2x2 ; $54ac
 	call GetEquippedItemId ; $54af
 	ld c, a ; $54b2
-	ld de, $d148 ; $54b3
+	ld de, wShadowTilemap + 10 * TILEMAP_WIDTH + 8 ; $54b3
 	call RenderShoesNameText ; $54b6
 	call DrawEquippedItemStatMods ; $54b9
 	ret ; $54bc
@@ -2904,7 +2904,7 @@ DrawOwnedItemIcons:
 	ld hl, wEquipItemList ; $5563
 	ld a, [wEquipItemCount] ; $5566
 	ld b, a ; $5569
-	ld de, $d027 ; $556a
+	ld de, wShadowTilemap + 1 * TILEMAP_WIDTH + 7 ; $556a
 .loop:
 	ld a, [hl+] ; $556d
 	ld c, a ; $556e
@@ -2921,11 +2921,11 @@ DrawItemIcon2x2:
 	push bc ; $557b
 	push de ; $557c
 	push hl ; $557d
-	ld hl, $d240 ; $557e
+	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH ; $557e
 	ld a, [wEquipItemKind] ; $5581
 	or a, a ; $5584
 	jr z, .gotBase ; $5585
-	ld hl, $d280 ; $5587
+	ld hl, wShadowTilemap + 20 * TILEMAP_WIDTH ; $5587
 .gotBase:
 	ld a, c ; $558a
 	add a, a ; $558b
@@ -3023,14 +3023,14 @@ DrawRacketInfoPanel:
 	call DrawHoveredItemStatMods ; $5627
 	call GetHoveredItemId ; $562a
 	ld c, a ; $562d
-	ld de, $d0a5 ; $562e
+	ld de, wShadowTilemap + 5 * TILEMAP_WIDTH + 5 ; $562e
 	push bc ; $5631
 	call DrawItemIcon2x2 ; $5632
 	pop bc ; $5635
 	push bc ; $5636
 	call RenderRacketDescText ; $5637
 	pop bc ; $563a
-	ld de, $d0a8 ; $563b
+	ld de, wShadowTilemap + 5 * TILEMAP_WIDTH + 8 ; $563b
 	call RenderRacketNameText ; $563e
 	farcall UploadGlyphBuffer ; $5641
 	ret ; $5644
@@ -3080,13 +3080,13 @@ LoadShoesSelectScreen:
 	farcall PrepareGlyphBuffer ; $569b
 	call LoadEquipSelectCommon ; $569e
 	wram_bank $03 ; $56a1
-	ld hl, $d340 ; $56a7
+	ld hl, wShadowTilemap + 26 * TILEMAP_WIDTH ; $56a7
 	ld de, wShadowTilemap ; $56aa
 	ld b, $14 ; $56ad
 	ld c, $04 ; $56af
 	farcall CopyTilemapRect ; $56b1
-	ld hl, $d740 ; $56b4
-	ld de, $d400 ; $56b7
+	ld hl, wShadowAttrmap + 26 * TILEMAP_WIDTH ; $56b4
+	ld de, wShadowAttrmap ; $56b7
 	ld b, $14 ; $56ba
 	ld c, $04 ; $56bc
 	farcall CopyTilemapRect ; $56be
@@ -3119,14 +3119,14 @@ DrawShoesInfoPanel:
 	call DrawHoveredItemStatMods ; $5707
 	call GetHoveredItemId ; $570a
 	ld c, a ; $570d
-	ld de, $d0a5 ; $570e
+	ld de, wShadowTilemap + 5 * TILEMAP_WIDTH + 5 ; $570e
 	push bc ; $5711
 	call DrawItemIcon2x2 ; $5712
 	pop bc ; $5715
 	push bc ; $5716
 	call RenderShoesDescText ; $5717
 	pop bc ; $571a
-	ld de, $d0a8 ; $571b
+	ld de, wShadowTilemap + 5 * TILEMAP_WIDTH + 8 ; $571b
 	call RenderShoesNameText ; $571e
 	farcall UploadGlyphBuffer ; $5721
 	ret ; $5724
@@ -3280,7 +3280,7 @@ CreateEquipListWindow:
 	farcall DrawTextWindowFrame ; $581f
 	farcall RedrawWindowRows ; $5822
 	wram_bank $03 ; $5825
-	ld de, $d4e1 ; $582b
+	ld de, wShadowAttrmap + 7 * TILEMAP_WIDTH + 1 ; $582b
 	ld b, $12 ; $582e
 	ld c, $05 ; $5830
 	ld h, $08 ; $5832
@@ -3445,7 +3445,7 @@ RenderRacketDescText:
 	jr nc, .gotPtr ; $59aa
 	inc h ; $59ac
 .gotPtr:
-	ld de, $d1c1 ; $59ad
+	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH + 1 ; $59ad
 	ld c, $12 ; $59b0
 	push hl ; $59b2
 	farcall RenderProportionalTextAt ; $59b3
@@ -4241,15 +4241,15 @@ RedrawCourtSelect4Menu:
 	ld b, d ; $5f87
 .drawName:
 	call DrawCourtNameTiles ; $5f88
-	ld hl, $d480 ; $5f8b
+	ld hl, wShadowAttrmap + 4 * TILEMAP_WIDTH ; $5f8b
 	ld de, $b880 ; $5f8e
 	ld c, $06 ; $5f91
 	call QueueVRAMCopy ; $5f93
-	ld hl, $d520 ; $5f96
+	ld hl, wShadowAttrmap + 9 * TILEMAP_WIDTH ; $5f96
 	ld de, $b920 ; $5f99
 	ld c, $06 ; $5f9c
 	call QueueVRAMCopy ; $5f9e
-	ld hl, $d200 ; $5fa1
+	ld hl, wShadowTilemap + 16 * TILEMAP_WIDTH ; $5fa1
 	ld de, $9a00 ; $5fa4
 	ld c, $02 ; $5fa7
 	call QueueVRAMCopy ; $5fa9
@@ -4391,7 +4391,7 @@ DrawCourtSelectTitleRow:
 	push af ; $611a
 	wram_bank $03 ; $611b
 	ld a, $12 ; $6121
-	ld hl, $d201 ; $6123
+	ld hl, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $6123
 	ld c, $20 ; $6126
 .loop:
 	ld [hl], c ; $6128
@@ -4405,19 +4405,19 @@ DrawCourtSelectTitleRow:
 	ret ; $6138
 DrawCourtSelectTitleLeft:
 	ld b, $30 ; $6139
-	ld hl, $d1e0 ; $613b
+	ld hl, wShadowTilemap + 15 * TILEMAP_WIDTH ; $613b
 	ld c, $04 ; $613e
 	farcall FillIncrementingBytes ; $6140
-	ld hl, $d200 ; $6143
+	ld hl, wShadowTilemap + 16 * TILEMAP_WIDTH ; $6143
 	ld c, $04 ; $6146
 	farcall FillIncrementingBytes ; $6148
-	ld hl, w3_d220 ; $614b
+	ld hl, wShadowTilemap + 17 * TILEMAP_WIDTH ; $614b
 	ld c, $04 ; $614e
 	farcall FillIncrementingBytes ; $6150
 	ret ; $6153
 DrawCourtSelectTitleRight:
 	ld b, $40 ; $6154
-	ld hl, $d209 ; $6156
+	ld hl, wShadowTilemap + 16 * TILEMAP_WIDTH + 9 ; $6156
 	ld c, $05 ; $6159
 	farcall FillIncrementingBytes ; $615b
 	ret ; $615e
@@ -4425,7 +4425,7 @@ FlushCourtSelectTitleRow:
 	ldh a, [hWramBank] ; $615f
 	push af ; $6161
 	wram_bank $03 ; $6162
-	ld hl, $d1e0 ; $6168
+	ld hl, wShadowTilemap + 15 * TILEMAP_WIDTH ; $6168
 	ld de, $99e0 ; $616b
 	ld bc, $0006 ; $616e
 	call QueueVRAMCopy ; $6171
@@ -4505,7 +4505,7 @@ DrawCourtNameLeft:
 	add a, b ; $64bb
 	ld b, a ; $64bc
 .fillIncrementingBytes:
-	ld hl, $d204 ; $64bd
+	ld hl, wShadowTilemap + 16 * TILEMAP_WIDTH + 4 ; $64bd
 	ld c, $05 ; $64c0
 	farcall FillIncrementingBytes ; $64c2
 	ret ; $64c5
@@ -4531,7 +4531,7 @@ DrawCourtNameRight:
 	add a, b ; $64e4
 	ld b, a ; $64e5
 .fillIncrementingBytes:
-	ld hl, $d20e ; $64e6
+	ld hl, wShadowTilemap + 16 * TILEMAP_WIDTH + 14 ; $64e6
 	ld c, $06 ; $64e9
 	farcall FillIncrementingBytes ; $64eb
 	ret ; $64ee
@@ -4942,19 +4942,19 @@ RedrawCourtSelect9Menu:
 	ld b, d ; $685a
 .drawName:
 	call DrawCourtNameTiles ; $685b
-	ld hl, $d460 ; $685e
+	ld hl, wShadowAttrmap + 3 * TILEMAP_WIDTH ; $685e
 	ld de, $b860 ; $6861
 	ld c, $06 ; $6864
 	call QueueVRAMCopy ; $6866
-	ld hl, $d4e0 ; $6869
+	ld hl, wShadowAttrmap + 7 * TILEMAP_WIDTH ; $6869
 	ld de, $b8e0 ; $686c
 	ld c, $06 ; $686f
 	call QueueVRAMCopy ; $6871
-	ld hl, $d560 ; $6874
+	ld hl, wShadowAttrmap + 11 * TILEMAP_WIDTH ; $6874
 	ld de, $b960 ; $6877
 	ld c, $06 ; $687a
 	call QueueVRAMCopy ; $687c
-	ld hl, $d200 ; $687f
+	ld hl, wShadowTilemap + 16 * TILEMAP_WIDTH ; $687f
 	ld de, $9a00 ; $6882
 	ld c, $02 ; $6885
 	call QueueVRAMCopy ; $6887

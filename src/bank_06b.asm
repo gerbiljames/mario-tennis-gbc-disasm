@@ -351,7 +351,7 @@ IntroCutsceneState01Init_6b:
 	push af ; $4247
 	wram_bank $03 ; $4248
 	ld h, $8a ; $424e
-	ld de, $d560 ; $4250
+	ld de, wShadowAttrmap + 11 * TILEMAP_WIDTH ; $4250
 	ld b, $20 ; $4253
 	ld c, $01 ; $4255
 	farcall FillTilemapRect ; $4257
@@ -462,7 +462,7 @@ IntroCutsceneState03Init_6b:
 	push af ; $43d9
 	wram_bank $03 ; $43da
 	ld h, $8a ; $43e0
-	ld de, $d560 ; $43e2
+	ld de, wShadowAttrmap + 11 * TILEMAP_WIDTH ; $43e2
 	ld b, $20 ; $43e5
 	ld c, $01 ; $43e7
 	farcall FillTilemapRect ; $43e9
@@ -574,12 +574,12 @@ IntroCutsceneState05Init_6b:
 	push af ; $4538
 	wram_bank $03 ; $4539
 	ld h, $8a ; $453f
-	ld de, $d500 ; $4541
+	ld de, wShadowAttrmap + 8 * TILEMAP_WIDTH ; $4541
 	ld b, $20 ; $4544
 	ld c, $01 ; $4546
 	farcall FillTilemapRect ; $4548
 	ld h, $8a ; $454b
-	ld de, $d5c0 ; $454d
+	ld de, wShadowAttrmap + 14 * TILEMAP_WIDTH ; $454d
 	ld b, $20 ; $4550
 	ld c, $01 ; $4552
 	farcall FillTilemapRect ; $4554
@@ -625,11 +625,11 @@ IntroCutsceneState05Exit_6b:
 	ldh a, [hWramBank] ; $45ba
 	push af ; $45bc
 	wram_bank $03 ; $45bd
-	ld hl, $d060 ; $45c3
+	ld hl, wShadowTilemap + 3 * TILEMAP_WIDTH ; $45c3
 	ld de, $9860 ; $45c6
 	ld c, $0c ; $45c9
 	call QueueVRAMCopy ; $45cb
-	ld hl, $d460 ; $45ce
+	ld hl, wShadowAttrmap + 3 * TILEMAP_WIDTH ; $45ce
 	ld de, $b860 ; $45d1
 	ld c, $0c ; $45d4
 	call QueueVRAMCopy ; $45d6
@@ -645,11 +645,11 @@ IntroCutsceneState05Exit_6b:
 	ldh a, [hWramBank] ; $45f0
 	push af ; $45f2
 	wram_bank $03 ; $45f3
-	ld hl, $d120 ; $45f9
+	ld hl, wShadowTilemap + 9 * TILEMAP_WIDTH ; $45f9
 	ld de, $9920 ; $45fc
 	ld c, $0c ; $45ff
 	call QueueVRAMCopy ; $4601
-	ld hl, $d520 ; $4604
+	ld hl, wShadowAttrmap + 9 * TILEMAP_WIDTH ; $4604
 	ld de, $b920 ; $4607
 	ld c, $0c ; $460a
 	call QueueVRAMCopy ; $460c
@@ -906,7 +906,7 @@ IntroCutsceneState11Init_6b:
 	ld de, $9c00 ; $489f
 	ld c, $40 ; $48a2
 	call QueueVRAMCopy ; $48a4
-	ld hl, $d400 ; $48a7
+	ld hl, wShadowAttrmap ; $48a7
 	ld de, $bc00 ; $48aa
 	ld c, $40 ; $48ad
 	call QueueVRAMCopy ; $48af

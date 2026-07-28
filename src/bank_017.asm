@@ -4702,7 +4702,7 @@ MinigameRulesPageLoop:
 	jr nc, .prepareGlyphBuffer ; $70f1
 	inc h ; $70f3
 .prepareGlyphBuffer:
-	ld de, $d082 ; $70f4
+	ld de, wShadowTilemap + 4 * TILEMAP_WIDTH + 2 ; $70f4
 	ld c, $20 ; $70f7
 	farcall PrepareGlyphBuffer ; $70f9
 	ld c, $10 ; $70fc
@@ -4795,7 +4795,7 @@ ClearRulesScreenTextArea:
 	ldh a, [hWramBank] ; $71bd
 	push af ; $71bf
 	wram_bank $03 ; $71c0
-	ld de, $d462 ; $71c6
+	ld de, wShadowAttrmap + 3 * TILEMAP_WIDTH + 2 ; $71c6
 	ld b, $10 ; $71c9
 	ld c, $0e ; $71cb
 	ld h, $00 ; $71cd
@@ -4808,12 +4808,12 @@ ClearRulesPageRows:
 	ldh a, [hWramBank] ; $71db
 	push af ; $71dd
 	wram_bank $03 ; $71de
-	ld de, $d062 ; $71e4
+	ld de, wShadowTilemap + 3 * TILEMAP_WIDTH + 2 ; $71e4
 	ld b, $10 ; $71e7
 	ld c, $01 ; $71e9
 	ld h, $03 ; $71eb
 	farcall FillTilemapRect ; $71ed
-	ld de, $d082 ; $71f0
+	ld de, wShadowTilemap + 4 * TILEMAP_WIDTH + 2 ; $71f0
 	ld b, $10 ; $71f3
 	ld c, $0d ; $71f5
 	ld h, $20 ; $71f7
@@ -4825,12 +4825,12 @@ PrepareRulesPageTilemap:
 	ldh a, [hWramBank] ; $7202
 	push af ; $7204
 	wram_bank $03 ; $7205
-	ld de, $d062 ; $720b
+	ld de, wShadowTilemap + 3 * TILEMAP_WIDTH + 2 ; $720b
 	ld b, $10 ; $720e
 	ld c, $01 ; $7210
 	ld h, $03 ; $7212
 	farcall FillTilemapRect ; $7214
-	ld de, $d082 ; $7217
+	ld de, wShadowTilemap + 4 * TILEMAP_WIDTH + 2 ; $7217
 	ld b, $10 ; $721a
 	ld c, $0d ; $721c
 	ld h, $20 ; $721e
@@ -4841,13 +4841,13 @@ PrepareRulesPageTilemap:
 	ld a, [wRulesMinigameLevel] ; $7229
 	add a, $03 ; $722c
 	ld h, a ; $722e
-	ld de, $d482 ; $722f
+	ld de, wShadowAttrmap + 4 * TILEMAP_WIDTH + 2 ; $722f
 	ld b, $10 ; $7232
 	ld c, $01 ; $7234
 	farcall FillTilemapRect ; $7236
 	jr .restore ; $7239
 .nonZero:
-	ld de, $d482 ; $723b
+	ld de, wShadowAttrmap + 4 * TILEMAP_WIDTH + 2 ; $723b
 	ld b, $10 ; $723e
 	ld c, $01 ; $7240
 	ld h, $00 ; $7242
@@ -4860,28 +4860,28 @@ QueueRulesPageToVRAM:
 	ld a, [wRulesIsMinigame] ; $724d
 	or a, a ; $7250
 	jr nz, .nonZero ; $7251
-	ld hl, $d080 ; $7253
+	ld hl, wShadowTilemap + 4 * TILEMAP_WIDTH ; $7253
 	ld de, $9880 ; $7256
 	ld c, $0a ; $7259
 	call QueueVRAMCopy ; $725b
 	jr .queueVRAMCopy ; $725e
 .nonZero:
-	ld hl, $d060 ; $7260
+	ld hl, wShadowTilemap + 3 * TILEMAP_WIDTH ; $7260
 	ld de, $9860 ; $7263
 	ld c, $0a ; $7266
 	call QueueVRAMCopy ; $7268
 .queueVRAMCopy:
-	ld hl, $d480 ; $726b
+	ld hl, wShadowAttrmap + 4 * TILEMAP_WIDTH ; $726b
 	ld de, $b880 ; $726e
 	ld c, $02 ; $7271
 	call QueueVRAMCopy ; $7273
 	call AdvanceFrame ; $7276
-	ld hl, $d100 ; $7279
+	ld hl, wShadowTilemap + 8 * TILEMAP_WIDTH ; $7279
 	ld de, $9900 ; $727c
 	ld c, $0a ; $727f
 	call QueueVRAMCopy ; $7281
 	call AdvanceFrame ; $7284
-	ld hl, $d1a0 ; $7287
+	ld hl, wShadowTilemap + 13 * TILEMAP_WIDTH ; $7287
 	ld de, $99a0 ; $728a
 	ld c, $08 ; $728d
 	call QueueVRAMCopy ; $728f

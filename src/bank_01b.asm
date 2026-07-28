@@ -1738,7 +1738,7 @@ DrawSinglesRankingNames:
 	wram_bank $03 ; $5514
 	call ClearSinglesRankingNameRects ; $551a
 	ld hl, wStoryModeNameOfMainCharacter ; $551d
-	ld de, $d021 ; $5520
+	ld de, wShadowTilemap + 1 * TILEMAP_WIDTH + 1 ; $5520
 	call RenderPlayerNameFitted ; $5523
 	ld b, $01 ; $5526
 .loop:
@@ -1818,7 +1818,7 @@ ClearSinglesRankingNameRects:
 	push de ; $5590
 	push hl ; $5591
 	ld b, $00 ; $5592
-	ld de, $d401 ; $5594
+	ld de, wShadowAttrmap + 1 ; $5594
 .loop:
 	push bc ; $5597
 	ld h, $00 ; $5598
@@ -1835,7 +1835,7 @@ ClearSinglesRankingNameRects:
 	ld b, a ; $55aa
 	cp a, $06 ; $55ab
 	jr nz, .loop ; $55ad
-	ld de, $d40e ; $55af
+	ld de, wShadowAttrmap + 14 ; $55af
 	ld b, $00 ; $55b2
 .loopB:
 	push bc ; $55b4
@@ -1863,10 +1863,10 @@ DrawDoublesRankingNames:
 	wram_bank $03 ; $55d4
 	call ClearDoublesRankingNameRects ; $55da
 	ld hl, wStoryModeNameOfMainCharacter ; $55dd
-	ld de, $d041 ; $55e0
+	ld de, wShadowTilemap + 2 * TILEMAP_WIDTH + 1 ; $55e0
 	call RenderPlayerNameFitted ; $55e3
 	ld hl, wStoryModeNameOfPartnerCharacter ; $55e6
-	ld de, $d081 ; $55e9
+	ld de, wShadowTilemap + 4 * TILEMAP_WIDTH + 1 ; $55e9
 	call RenderPlayerNameFitted ; $55ec
 	ld b, $02 ; $55ef
 .loop:
@@ -1947,7 +1947,7 @@ ClearDoublesRankingNameRects:
 	push de ; $565b
 	push hl ; $565c
 	ld b, $00 ; $565d
-	ld de, $d421 ; $565f
+	ld de, wShadowAttrmap + 1 * TILEMAP_WIDTH + 1 ; $565f
 .loop:
 	push bc ; $5662
 	ld h, $00 ; $5663
@@ -1964,7 +1964,7 @@ ClearDoublesRankingNameRects:
 	ld b, a ; $5675
 	cp a, $03 ; $5676
 	jr nz, .loop ; $5678
-	ld de, $d42e ; $567a
+	ld de, wShadowAttrmap + 1 * TILEMAP_WIDTH + 14 ; $567a
 	ld b, $00 ; $567d
 .loopB:
 	push bc ; $567f
@@ -3058,9 +3058,9 @@ RunNewGameSetup:
 .loop:
 	push af ; $61d8
 	farcall LoadCharacterRecordToBuffer ; $61d9
-	ld a, [w1_d58e] ; $61dc
+	ld a, [$d58e] ; $61dc
 	ld [hl+], a ; $61df
-	ld a, [w1_d58c] ; $61e0
+	ld a, [$d58c] ; $61e0
 	ld [hl+], a ; $61e3
 	pop af ; $61e4
 	inc a ; $61e5
@@ -3276,7 +3276,7 @@ RunDebugSaveDataFlow:
 	jr nz, .loop ; $6365
 	wram_bank $03 ; $6367
 	ld hl, $ca00 ; $636d
-	ld de, $d500 ; $6370
+	ld de, wShadowAttrmap + 8 * TILEMAP_WIDTH ; $6370
 	ld c, $0b ; $6373
 .loopB:
 	ld a, [hl+] ; $6375
@@ -3667,7 +3667,7 @@ DrawUnlockDebugMugshots:
 	ld a, [hl] ; $66f6
 	ld de, $0006 ; $66f7
 	call GetUnlockDebugRosterField ; $66fa
-	ld a, [w1_d58c] ; $66fd
+	ld a, [$d58c] ; $66fd
 	farcall SetMugshotAttrs ; $6700
 .step:
 	ld a, $08 ; $6703
@@ -4477,7 +4477,7 @@ DrawMinigameLevelDescription:
 	jr nz, .getMenuCursorIndex ; $6d53
 	wram_bank $03 ; $6d55
 	ld hl, $00c5 ; $6d5b
-	ld de, $d201 ; $6d5e
+	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $6d5e
 	jr .renderTextToBuffer64 ; $6d61
 .getMenuCursorIndex:
 	wram_bank $03 ; $6d63
@@ -4548,11 +4548,11 @@ FlushLevelSelectTextRows:
 	ldh a, [hWramBank] ; $6dc6
 	push af ; $6dc8
 	wram_bank $03 ; $6dc9
-	ld hl, $d4e0 ; $6dcf
+	ld hl, wShadowAttrmap + 7 * TILEMAP_WIDTH ; $6dcf
 	ld de, $b8e0 ; $6dd2
 	ld c, $06 ; $6dd5
 	call QueueVRAMCopy ; $6dd7
-	ld hl, $d1e0 ; $6dda
+	ld hl, wShadowTilemap + 15 * TILEMAP_WIDTH ; $6dda
 	ld de, $99e0 ; $6ddd
 	ld c, $04 ; $6de0
 	call QueueVRAMCopy ; $6de2
@@ -4563,16 +4563,16 @@ ClearMinigameLevelDescriptionRow:
 	ldh a, [hWramBank] ; $6deb
 	push af ; $6ded
 	wram_bank $03 ; $6dee
-	ld de, $d1e0 ; $6df4
+	ld de, wShadowTilemap + 15 * TILEMAP_WIDTH ; $6df4
 	ld b, $14 ; $6df7
 	ld c, $01 ; $6df9
 	ld h, $03 ; $6dfb
 	farcall FillTilemapRect ; $6dfd
 	ld a, $02 ; $6e00
-	ld [$d1e0], a ; $6e02
+	ld [wShadowTilemap + 15 * TILEMAP_WIDTH], a ; $6e02
 	ld a, $04 ; $6e05
-	ld [$d1f3], a ; $6e07
-	ld de, $d201 ; $6e0a
+	ld [wShadowTilemap + 15 * TILEMAP_WIDTH + 19], a ; $6e07
+	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $6e0a
 	ld b, $12 ; $6e0d
 	ld c, $01 ; $6e0f
 	ld h, $20 ; $6e11
@@ -5547,29 +5547,29 @@ RedrawMinigameDataRows:
 	call FlushMinigameDataRowsToVram ; $75b4
 	ret ; $75b7
 FlushMinigameDataRowsToVram:
-	ld hl, $d0c0 ; $75b8
+	ld hl, wShadowTilemap + 6 * TILEMAP_WIDTH ; $75b8
 	ld de, $98c0 ; $75bb
 	ld c, $08 ; $75be
 	call QueueVRAMCopy ; $75c0
-	ld hl, $d4c0 ; $75c3
+	ld hl, wShadowAttrmap + 6 * TILEMAP_WIDTH ; $75c3
 	ld de, $b8c0 ; $75c6
 	ld c, $08 ; $75c9
 	call QueueVRAMCopy ; $75cb
 	call AdvanceFrame ; $75ce
-	ld hl, $d140 ; $75d1
+	ld hl, wShadowTilemap + 10 * TILEMAP_WIDTH ; $75d1
 	ld de, $9940 ; $75d4
 	ld c, $08 ; $75d7
 	call QueueVRAMCopy ; $75d9
-	ld hl, $d540 ; $75dc
+	ld hl, wShadowAttrmap + 10 * TILEMAP_WIDTH ; $75dc
 	ld de, $b940 ; $75df
 	ld c, $08 ; $75e2
 	call QueueVRAMCopy ; $75e4
 	call AdvanceFrame ; $75e7
-	ld hl, $d1c0 ; $75ea
+	ld hl, wShadowTilemap + 14 * TILEMAP_WIDTH ; $75ea
 	ld de, $99c0 ; $75ed
 	ld c, $04 ; $75f0
 	call QueueVRAMCopy ; $75f2
-	ld hl, $d5c0 ; $75f5
+	ld hl, wShadowAttrmap + 14 * TILEMAP_WIDTH ; $75f5
 	ld de, $b9c0 ; $75f8
 	ld c, $04 ; $75fb
 	call QueueVRAMCopy ; $75fd
@@ -5804,7 +5804,7 @@ DrawMinigameMarkTile:
 	ld d, [hl] ; $7765
 	ld e, a ; $7766
 	push de ; $7767
-	ld hl, $d055 ; $7768
+	ld hl, wShadowTilemap + 2 * TILEMAP_WIDTH + 21 ; $7768
 	ld b, $02 ; $776b
 	ld c, $02 ; $776d
 	farcall CopyTilemapRect ; $776f
@@ -5813,7 +5813,7 @@ DrawMinigameMarkTile:
 	add hl, de ; $7776
 	ld d, h ; $7777
 	ld e, l ; $7778
-	ld hl, $d455 ; $7779
+	ld hl, wShadowAttrmap + 2 * TILEMAP_WIDTH + 21 ; $7779
 	ld b, $02 ; $777c
 	ld c, $02 ; $777e
 	farcall CopyTilemapRect ; $7780
@@ -5834,33 +5834,33 @@ MinigameStarRow1:
 MinigameStarRow2:
 	INCBIN "data/bank_01b/d_77a2.bin" ; $77a2, 10 bytes
 ClearMinigameMarkColumns:
-	ld hl, $d095 ; $77ac
-	ld de, $d0c6 ; $77af
+	ld hl, wShadowTilemap + 4 * TILEMAP_WIDTH + 21 ; $77ac
+	ld de, wShadowTilemap + 6 * TILEMAP_WIDTH + 6 ; $77af
 	ld b, $02 ; $77b2
 	ld c, $0a ; $77b4
 	farcall CopyTilemapRect ; $77b6
-	ld hl, $d495 ; $77b9
-	ld de, $d4c6 ; $77bc
+	ld hl, wShadowAttrmap + 4 * TILEMAP_WIDTH + 21 ; $77b9
+	ld de, wShadowAttrmap + 6 * TILEMAP_WIDTH + 6 ; $77bc
 	ld b, $02 ; $77bf
 	ld c, $0a ; $77c1
 	farcall CopyTilemapRect ; $77c3
-	ld hl, $d095 ; $77c6
-	ld de, $d0ca ; $77c9
+	ld hl, wShadowTilemap + 4 * TILEMAP_WIDTH + 21 ; $77c6
+	ld de, wShadowTilemap + 6 * TILEMAP_WIDTH + 10 ; $77c9
 	ld b, $02 ; $77cc
 	ld c, $0a ; $77ce
 	farcall CopyTilemapRect ; $77d0
-	ld hl, $d495 ; $77d3
-	ld de, $d4ca ; $77d6
+	ld hl, wShadowAttrmap + 4 * TILEMAP_WIDTH + 21 ; $77d3
+	ld de, wShadowAttrmap + 6 * TILEMAP_WIDTH + 10 ; $77d6
 	ld b, $02 ; $77d9
 	ld c, $0a ; $77db
 	farcall CopyTilemapRect ; $77dd
-	ld hl, $d095 ; $77e0
-	ld de, w3_d0ce ; $77e3
+	ld hl, wShadowTilemap + 4 * TILEMAP_WIDTH + 21 ; $77e0
+	ld de, wShadowTilemap + 6 * TILEMAP_WIDTH + 14 ; $77e3
 	ld b, $02 ; $77e6
 	ld c, $0a ; $77e8
 	farcall CopyTilemapRect ; $77ea
-	ld hl, $d495 ; $77ed
-	ld de, $d4ce ; $77f0
+	ld hl, wShadowAttrmap + 4 * TILEMAP_WIDTH + 21 ; $77ed
+	ld de, wShadowAttrmap + 6 * TILEMAP_WIDTH + 14 ; $77f0
 	ld b, $02 ; $77f3
 	ld c, $0a ; $77f5
 	farcall CopyTilemapRect ; $77f7
@@ -5879,13 +5879,13 @@ DrawStarLegendMark:
 	jr nz, .loop ; $7809
 	ret ; $780b
 .nonZero:
-	ld hl, $d016 ; $780c
-	ld de, $d08e ; $780f
+	ld hl, wShadowTilemap + 22 ; $780c
+	ld de, wShadowTilemap + 4 * TILEMAP_WIDTH + 14 ; $780f
 	ld b, $02 ; $7812
 	ld c, $02 ; $7814
 	farcall CopyTilemapRect ; $7816
-	ld hl, $d416 ; $7819
-	ld de, $d48e ; $781c
+	ld hl, wShadowAttrmap + 22 ; $7819
+	ld de, wShadowAttrmap + 4 * TILEMAP_WIDTH + 14 ; $781c
 	ld b, $02 ; $781f
 	ld c, $02 ; $7821
 	farcall CopyTilemapRect ; $7823

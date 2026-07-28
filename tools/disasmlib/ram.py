@@ -68,6 +68,37 @@ def _ds_directive(size):
     return {1: "db", 2: "dw"}.get(size, f"ds {size}")
 
 
+def _stride(e):
+    """A symbol's `stride` entry: ["CONSTANT", value]. The constant is what the
+    rendered expression multiplies by, the value is what this generator divides
+    by -- both are stated so a wrong pairing cannot hide."""
+    s = e.get("stride")
+    return (s[0], int(s[1], 0) if isinstance(s[1], str) else s[1]) if s else None
+
+
+def grid_offset(name, k, stride):
+    """Render an offset into a symbol. A `stride` entry (the tilemap buffers,
+    whose rows are TILEMAP_WIDTH apart) makes the row and column visible:
+    `wShadowTilemap + 10 * TILEMAP_WIDTH + 17` instead of `+ 337`. rgbasm folds
+    it to the same word, so `make compare` still checks the arithmetic.
+
+    A statement macro (pokecrystal's `hlcoord`) cannot serve here: these
+    addresses appear as `ld [addr], a` and inside `dw` rows as well as `ld rr,
+    addr`, and RGBDS has no expression-returning macro. An expression is the one
+    form every position accepts."""
+    if not k:
+        return name
+    if not stride:
+        return f"{name} + {k}"
+    row, col = divmod(k, stride[1])
+    parts = [name]
+    if row:
+        parts.append(f"{row} * {stride[0]}")
+    if col:
+        parts.append(str(col))
+    return " + ".join(parts)
+
+
 def _scope_to_flat(s):
     """Convert a union-variant scope ({bank[, start, end] in CPU addresses})
     to a flat-offset half-open range."""
@@ -103,10 +134,11 @@ class ScopedRamNames:
 
     def __init__(self):
         self.by_addr = {}
-        self.sized = []   # (base, size, matchers, name) for interior expansion
+        self.sized = []   # (base, size, matchers, name, stride) for interiors
         self.bank_at = {}
 
-    def add(self, addr, name, matchers, size=1, default_mask=None):
+    def add(self, addr, name, matchers, size=1, default_mask=None,
+            stride=None):
         e = self.by_addr.setdefault(addr, {"scoped": [], "default": None,
                                            "mask": []})
         if default_mask is not None:
@@ -115,7 +147,7 @@ class ScopedRamNames:
         else:
             e["scoped"].append((matchers, name))
             if size > 1:
-                self.sized.append((addr, size, matchers, name))
+                self.sized.append((addr, size, matchers, name, stride))
 
     def _match(self, matchers, off):
         for rng, wb in matchers:
@@ -137,9 +169,9 @@ class ScopedRamNames:
         # interior byte of a multi-byte scoped field -> `name + k` (mirrors the
         # ram_map.json expansion; an interior byte that is itself an explicit
         # symbol matched above and returned before reaching here)
-        for base, size, matchers, name in self.sized:
+        for base, size, matchers, name, stride in self.sized:
             if base < addr < base + size and self._match(matchers, off):
-                return f"{name} + {addr - base}"
+                return grid_offset(name, addr - base, stride)
         return None
 
 
@@ -291,7 +323,8 @@ def load_ram_unions(path):
                 if v.get("default"):
                     scoped.add(addr, name, None, default_mask=mask)
                 else:
-                    scoped.add(addr, name, matchers, ram_field_size(e))
+                    scoped.add(addr, name, matchers, ram_field_size(e),
+                               stride=_stride(e))
             wbanks = frozenset(int(s["wram_bank"], 0) for s in v.get("scopes", [])
                                if "wram_bank" in s)
             variants.append((v.get("context", ""), syms, wbanks))
