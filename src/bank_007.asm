@@ -2320,9 +2320,9 @@ FinalizeShotSpeed:
 	ld bc, $0100 ; $52e5
 .store:
 	ld a, c ; $52e8
-	ld [$c458], a ; $52e9
+	ld [wShotSpeedFinal], a ; $52e9
 	ld a, b ; $52ec
-	ld [$c459], a ; $52ed
+	ld [wShotSpeedFinal + 1], a ; $52ed
 	ret ; $52f0
 AddBallSpeedQuarter:
 	ld hl, wBallVelocityDepth ; $52f1
@@ -2374,9 +2374,9 @@ AddBallSpeedEighth:
 	ld h, a ; $5338
 .store:
 	ld a, l ; $5339
-	ld [$c45a], a ; $533a
+	ld [wShotSpeedBallTerm], a ; $533a
 	ld a, h ; $533d
-	ld [$c45b], a ; $533e
+	ld [wShotSpeedBallTerm + 1], a ; $533e
 	add hl, bc ; $5341
 	ld c, l ; $5342
 	ld b, h ; $5343
@@ -2409,9 +2409,9 @@ AddChargeSpeedBonusHalf:
 	jr .store ; $5371
 .store:
 	ld a, l ; $5373
-	ld [$c45e], a ; $5374
+	ld [wShotSpeedChargeTerm], a ; $5374
 	ld a, h ; $5377
-	ld [$c45f], a ; $5378
+	ld [wShotSpeedChargeTerm + 1], a ; $5378
 	add hl, bc ; $537b
 	ld c, l ; $537c
 	ld b, h ; $537d
@@ -2434,9 +2434,9 @@ AddPlayerMomentumToShot:
 	ld h, a ; $5395
 .store:
 	ld a, l ; $5396
-	ld [$c45c], a ; $5397
+	ld [wShotSpeedMomentumTerm], a ; $5397
 	ld a, h ; $539a
-	ld [$c45d], a ; $539b
+	ld [wShotSpeedMomentumTerm + 1], a ; $539b
 	add hl, bc ; $539e
 	ld c, l ; $539f
 	ld b, h ; $53a0
@@ -2463,19 +2463,19 @@ ExecuteShot:
 	ld a, [wCharServeRole] ; $53c1
 	ld [wLastShotServeRole], a ; $53c4
 	ld a, [wCharAimOffset] ; $53c7
-	ld [$c4a4], a ; $53ca
+	ld [wLastShotAimOffset], a ; $53ca
 	ld a, [wCharShotType] ; $53cd
 	ld [wCurrentShotType], a ; $53d0
 	ld a, [wCharShotButton1] ; $53d3
 	swap a ; $53d6
 	ld hl, wCharShotButton2 ; $53d8
 	or [hl] ; $53db
-	ld [$c490], a ; $53dc
+	ld [wLastShotButtons], a ; $53dc
 	ld a, [wBallCourtQuadrant] ; $53df
 	ld [wBallQuadrantAtHit], a ; $53e2
 	xor a ; $53e5
 	ld [wSpecialShotFlag], a ; $53e6
-	ld [$c4a6], a ; $53e9
+	ld [wLastShotWasPowerShot], a ; $53e9
 	ld [wFallbackTrajectoryFlag], a ; $53ec
 	ld b, $00 ; $53ef
 	ld a, [wCharSwingAnim] ; $53f1
@@ -3323,7 +3323,7 @@ ExecuteShotPowerTopspin:
 	bit 1, [hl] ; $58d6
 	jr nz, ExecuteShotTopspin ; $58d8
 	ld a, $01 ; $58da
-	ld [$c4a6], a ; $58dc
+	ld [wLastShotWasPowerShot], a ; $58dc
 	call NormalizeBallHeightForShot ; $58df
 	call ApplyShotTypePresets ; $58e2
 	call ComputeShotTrajectory ; $58e5
@@ -3343,7 +3343,7 @@ ExecuteShotPowerSlice:
 	bit 1, [hl] ; $5904
 	jr nz, ExecuteShotSlice ; $5906
 	ld a, $01 ; $5908
-	ld [$c4a6], a ; $590a
+	ld [wLastShotWasPowerShot], a ; $590a
 	call NormalizeBallHeightForShot ; $590d
 	call ApplyShotTypePresets ; $5910
 	call ComputeShotTrajectory ; $5913
@@ -3404,7 +3404,7 @@ ExecuteShotSmash:
 	ld a, SHOTTYPE_SMASH ; $5991
 	ld [wCurrentShotType], a ; $5993
 	ld a, $01 ; $5996
-	ld [$c4a6], a ; $5998
+	ld [wLastShotWasPowerShot], a ; $5998
 	call NormalizeBallHeightForShot ; $599b
 	call ApplyShotTypePresets ; $599e
 	call ComputeShotTrajectory ; $59a1
@@ -3451,7 +3451,7 @@ ExecuteShotServeFlat:
 	jr c, .done ; $59f6
 	ld a, $01 ; $59f8
 	ld [wSpecialShotFlag], a ; $59fa
-	ld [$c4a6], a ; $59fd
+	ld [wLastShotWasPowerShot], a ; $59fd
 .done:
 	ret ; $5a00
 SetSpecialShotFlagFromBallHeight:
@@ -3478,7 +3478,7 @@ SetSpecialShotFlagFromBallHeight:
 	ld h, a ; $5a1a
 	ld a, [hl] ; $5a1b
 	ld [wSpecialShotFlag], a ; $5a1c
-	ld [$c4a6], a ; $5a1f
+	ld [wLastShotWasPowerShot], a ; $5a1f
 	ret ; $5a22
 SpecialShotFlagTable_07:
 	; $5a23, 32 bytes (bytes:16)

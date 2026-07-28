@@ -5720,7 +5720,7 @@ DebugDrawFlagsWindow1:
 	push bc ; $6408
 	push de ; $6409
 	push hl ; $640a
-	ld hl, $c718 ; $640b
+	ld hl, wDebugFlagWindow1Id ; $640b
 	ld b, [hl] ; $640e
 	ld a, [wDebugFlagPage] ; $640f
 	add a ; $6412
@@ -5754,7 +5754,7 @@ DebugDrawFlagsWindow2:
 	push bc ; $6448
 	push de ; $6449
 	push hl ; $644a
-	ld hl, $c719 ; $644b
+	ld hl, wDebugFlagWindow2Id ; $644b
 	ld b, [hl] ; $644e
 	ld a, [wDebugFlagPage] ; $644f
 	add a ; $6452
@@ -5861,11 +5861,11 @@ DebugDrawFlagCursor:
 	inc a ; $64f9
 .lt03:
 	ld e, a ; $64fa
-	ld hl, $c718 ; $64fb
+	ld hl, wDebugFlagWindow1Id ; $64fb
 	ld a, [wDebugFlagByte] ; $64fe
 	bit 2, a ; $6501
 	jr z, .read ; $6503
-	ld hl, $c719 ; $6505
+	ld hl, wDebugFlagWindow2Id ; $6505
 .read:
 	ld a, [hl] ; $6508
 	ld bc, $800d ; $6509
@@ -5892,11 +5892,11 @@ DebugEraseFlagCursor:
 	inc a ; $652a
 .lt03:
 	ld e, a ; $652b
-	ld hl, $c718 ; $652c
+	ld hl, wDebugFlagWindow1Id ; $652c
 	ld a, [wDebugFlagByte] ; $652f
 	bit 2, a ; $6532
 	jr z, .read ; $6534
-	ld hl, $c719 ; $6536
+	ld hl, wDebugFlagWindow2Id ; $6536
 .read:
 	ld a, [hl] ; $6539
 	ld b, $80 ; $653a
@@ -5973,7 +5973,7 @@ RunDebugFlagEditor:
 	ld de, $0000 ; $65b8
 	ld bc, $1404 ; $65bb
 	call CreateWindow ; $65be
-	ld [$c717], a ; $65c1
+	ld [wDebugFlagHeaderWindowId], a ; $65c1
 	call DrawTextWindowFrame ; $65c4
 	ld hl, HexDigitHeaderRow0_05 ; $65c7
 	ld de, $0401 ; $65ca
@@ -5984,21 +5984,21 @@ RunDebugFlagEditor:
 	ld de, $0004 ; $65d9
 	ld bc, $1407 ; $65dc
 	call CreateWindow ; $65df
-	ld [$c718], a ; $65e2
+	ld [wDebugFlagWindow1Id], a ; $65e2
 	call DrawTextWindowFrame ; $65e5
 	ld de, $000b ; $65e8
 	ld bc, $1407 ; $65eb
 	call CreateWindow ; $65ee
-	ld [$c719], a ; $65f1
+	ld [wDebugFlagWindow2Id], a ; $65f1
 	call DrawTextWindowFrame ; $65f4
 	call DebugDrawFlagsWindow1 ; $65f7
 	call DebugDrawFlagsWindow2 ; $65fa
 	call DebugDrawFlagCursor ; $65fd
-	ld a, [$c717] ; $6600
+	ld a, [wDebugFlagHeaderWindowId] ; $6600
 	call RedrawWindowRows ; $6603
-	ld a, [$c718] ; $6606
+	ld a, [wDebugFlagWindow1Id] ; $6606
 	call RedrawWindowRows ; $6609
-	ld a, [$c719] ; $660c
+	ld a, [wDebugFlagWindow2Id] ; $660c
 	call RedrawWindowRows ; $660f
 	ld a, $0f ; $6612
 	ld hl, StubNop_05_6581 ; $6614
@@ -6013,9 +6013,9 @@ RunDebugFlagEditor:
 	call DebugToggleSelectedFlag ; $6626
 	call DebugDrawFlagsWindow1 ; $6629
 	call DebugDrawFlagsWindow2 ; $662c
-	ld a, [$c718] ; $662f
+	ld a, [wDebugFlagWindow1Id] ; $662f
 	call RedrawWindowRows ; $6632
-	ld a, [$c719] ; $6635
+	ld a, [wDebugFlagWindow2Id] ; $6635
 	call RedrawWindowRows ; $6638
 .checkInputRisingEdge:
 	ldh a, [hInputRisingEdge] ; $663b
@@ -6027,9 +6027,9 @@ RunDebugFlagEditor:
 	ld [wDebugFlagPage], a ; $6647
 	call DebugDrawFlagsWindow1 ; $664a
 	call DebugDrawFlagsWindow2 ; $664d
-	ld a, [$c718] ; $6650
+	ld a, [wDebugFlagWindow1Id] ; $6650
 	call RedrawWindowRows ; $6653
-	ld a, [$c719] ; $6656
+	ld a, [wDebugFlagWindow2Id] ; $6656
 	call RedrawWindowRows ; $6659
 .checkPlayerInputFlags:
 	ldh a, [hPlayerInputFlags] ; $665c
@@ -6038,21 +6038,21 @@ RunDebugFlagEditor:
 	call DebugEraseFlagCursor ; $6662
 	call DebugMoveFlagCursor ; $6665
 	call DebugDrawFlagCursor ; $6668
-	ld a, [$c717] ; $666b
+	ld a, [wDebugFlagHeaderWindowId] ; $666b
 	call RedrawWindowRows ; $666e
-	ld a, [$c718] ; $6671
+	ld a, [wDebugFlagWindow1Id] ; $6671
 	call RedrawWindowRows ; $6674
-	ld a, [$c719] ; $6677
+	ld a, [wDebugFlagWindow2Id] ; $6677
 	call RedrawWindowRows ; $667a
 .advanceFrame:
 	call AdvanceFrame ; $667d
 	jp .loop ; $6680
 .closeWindow:
-	ld a, [$c717] ; $6683
+	ld a, [wDebugFlagHeaderWindowId] ; $6683
 	call CloseWindow ; $6686
-	ld a, [$c718] ; $6689
+	ld a, [wDebugFlagWindow1Id] ; $6689
 	call CloseWindow ; $668c
-	ld a, [$c719] ; $668f
+	ld a, [wDebugFlagWindow2Id] ; $668f
 	call CloseWindow ; $6692
 	ld hl, StubNop_05_6581 ; $6695
 	call UnregisterFrameTask ; $6698
@@ -6177,7 +6177,7 @@ DebugDrawWarpMenu:
 	ld a, [wDebugWarpWindowId] ; $677e
 	call WriteStringToWindow ; $6781
 	ld de, $c720 ; $6784
-	ld a, [$c704] ; $6787
+	ld a, [wDebugWarpEntryPoint] ; $6787
 	ld h, $00 ; $678a
 	ld l, a ; $678c
 	ld a, $02 ; $678d
@@ -6208,11 +6208,11 @@ RunDebugWarpMenu:
 	wram_bank $05 ; $67c8
 	xor a ; $67ce
 	ld [$c703], a ; $67cf
-	ld [$c704], a ; $67d2
+	ld [wDebugWarpEntryPoint], a ; $67d2
 	ld a, [wStoryModeCurrentLocation] ; $67d5
 	ld [wDebugMenuWindowId], a ; $67d8
 	farcall GetStoryLocationCount ; $67db
-	ld [$c702], a ; $67de
+	ld [wDebugWarpLocationCount], a ; $67de
 	ld de, $0000 ; $67e1
 	ld bc, $1406 ; $67e4
 	call CreateWindow ; $67e7
@@ -6228,7 +6228,7 @@ RunDebugWarpMenu:
 	jr z, .checkInputPressed ; $67fd
 	ld a, [wDebugMenuWindowId] ; $67ff
 	ld [wStoryModeCurrentLocation], a ; $6802
-	ld a, [$c704] ; $6805
+	ld a, [wDebugWarpEntryPoint] ; $6805
 	ld [wStoryModeEntryPoint], a ; $6808
 	ld a, $ff ; $680b
 	ld [wUnusedExitLocationMirror], a ; $680d
@@ -6247,7 +6247,7 @@ RunDebugWarpMenu:
 	ld a, [$c703] ; $6825
 	cp $01 ; $6828
 	jr z, .eq01 ; $682a
-	ld a, [$c702] ; $682c
+	ld a, [wDebugWarpLocationCount] ; $682c
 	ld d, a ; $682f
 	ld hl, wDebugMenuWindowId ; $6830
 	ld a, [hl] ; $6833
@@ -6259,7 +6259,7 @@ RunDebugWarpMenu:
 	jr .advanceFrame ; $683e
 .eq01:
 	ld d, $10 ; $6840
-	ld hl, $c704 ; $6842
+	ld hl, wDebugWarpEntryPoint ; $6842
 	ld a, [hl] ; $6845
 	call DebugStepValueWithDpad ; $6846
 	cp [hl] ; $6849
@@ -6315,11 +6315,11 @@ DebugStepValueWithDpad:
 PaletteEditorCursorTiles_05:
 	INCBIN "data/bank_005/d_6890.bin" ; $6890, 192 bytes
 GetSelectedBGPaletteColorPtr:
-	ld hl, $c713 ; $6950
+	ld hl, wDebugPaletteIndex ; $6950
 	ld a, [hl] ; $6953
 	add a ; $6954
 	add a ; $6955
-	ld hl, $c712 ; $6956
+	ld hl, wDebugPaletteColorIndex ; $6956
 	add [hl] ; $6959
 	add a ; $695a
 	ld hl, wBGPalettes ; $695b
@@ -6369,9 +6369,9 @@ DebugDrawColorComponents:
 	ld [$c709], a ; $69a1
 	ld hl, wDebugMenuWindowId ; $69a4
 	ld de, $0102 ; $69a7
-	ld a, [$c711] ; $69aa
+	ld a, [wDebugColorEditorWindowId] ; $69aa
 	call WriteStringToWindow ; $69ad
-	ld a, [$c711] ; $69b0
+	ld a, [wDebugColorEditorWindowId] ; $69b0
 	call RedrawWindowRows ; $69b3
 	pop hl ; $69b6
 	pop de ; $69b7
@@ -6385,12 +6385,12 @@ RunDebugColorEditor:
 	ld de, $0700 ; $69c5
 	ld bc, $0b04 ; $69c8
 	farcall CreateWindow ; $69cb
-	ld [$c711], a ; $69ce
+	ld [wDebugColorEditorWindowId], a ; $69ce
 	call DrawTextWindowFrame ; $69d1
 	call RedrawWindowRows ; $69d4
 	ld hl, ColorEditorHeader_05 ; $69d7
 	ld de, $0101 ; $69da
-	ld a, [$c711] ; $69dd
+	ld a, [wDebugColorEditorWindowId] ; $69dd
 	call WriteStringToWindow ; $69e0
 	ld e, $00 ; $69e3
 	call DebugDrawColorComponents ; $69e5
@@ -6461,7 +6461,7 @@ RunDebugColorEditor:
 	call DebugDrawColorComponents ; $6a48
 	jr .loop ; $6a4b
 .closeWindow:
-	ld a, [$c711] ; $6a4d
+	ld a, [wDebugColorEditorWindowId] ; $6a4d
 	call CloseWindow ; $6a50
 	ret ; $6a53
 RunDebugPaletteViewer:
@@ -6470,8 +6470,8 @@ RunDebugPaletteViewer:
 	ld bc, $0712 ; $6a5d
 	ld a, $00 ; $6a60
 	farcall CreateWindowWithAttr ; $6a62
-	ld [$c710], a ; $6a65
-	ld a, [$c710] ; $6a68
+	ld [wDebugPaletteViewerWindowId], a ; $6a65
+	ld a, [wDebugPaletteViewerWindowId] ; $6a68
 	call DrawTextWindowFrame ; $6a6b
 	ld h, $10 ; $6a6e
 	ld de, $0101 ; $6a70
@@ -6503,7 +6503,7 @@ RunDebugPaletteViewer:
 	inc b ; $6aa0
 	dec h ; $6aa1
 	jr nz, .loopB ; $6aa2
-	ld a, [$c710] ; $6aa4
+	ld a, [wDebugPaletteViewerWindowId] ; $6aa4
 	call RedrawWindowRows ; $6aa7
 	ld a, $0f ; $6aaa
 	ld hl, DrawPaletteCursorSprites ; $6aac
@@ -6516,9 +6516,9 @@ RunDebugPaletteViewer:
 	jr z, .bit0Clear ; $6aba
 	call RunDebugColorEditor ; $6abc
 .bit0Clear:
-	ld a, [$c712] ; $6abf
+	ld a, [wDebugPaletteColorIndex] ; $6abf
 	ld d, a ; $6ac2
-	ld a, [$c713] ; $6ac3
+	ld a, [wDebugPaletteIndex] ; $6ac3
 	ld e, a ; $6ac6
 	ldh a, [hInputPressed] ; $6ac7
 	bit PADB_LEFT, a ; $6ac9
@@ -6543,14 +6543,14 @@ RunDebugPaletteViewer:
 .step5:
 	ld a, d ; $6ae5
 	and $03 ; $6ae6
-	ld [$c712], a ; $6ae8
+	ld [wDebugPaletteColorIndex], a ; $6ae8
 	ld a, e ; $6aeb
 	and $0f ; $6aec
-	ld [$c713], a ; $6aee
+	ld [wDebugPaletteIndex], a ; $6aee
 	call AdvanceFrame ; $6af1
 	jr .loop2 ; $6af4
 .closeWindow:
-	ld a, [$c710] ; $6af6
+	ld a, [wDebugPaletteViewerWindowId] ; $6af6
 	call CloseWindow ; $6af9
 	ld hl, DrawPaletteCursorSprites ; $6afc
 	call UnregisterFrameTask ; $6aff
@@ -6570,14 +6570,14 @@ DrawPaletteCursorSprites:
 	add $04 ; $6b14
 	and $07 ; $6b16
 	ld l, a ; $6b18
-	ld a, [$c712] ; $6b19
+	ld a, [wDebugPaletteColorIndex] ; $6b19
 	add a ; $6b1c
 	add a ; $6b1d
 	add a ; $6b1e
 	add $18 ; $6b1f
 	sub h ; $6b21
 	ld d, a ; $6b22
-	ld a, [$c713] ; $6b23
+	ld a, [wDebugPaletteIndex] ; $6b23
 	add a ; $6b26
 	add a ; $6b27
 	add a ; $6b28
@@ -6635,8 +6635,8 @@ StartDebugPaletteEditor:
 	ld c, (GetSelectedBGPaletteColorPtr - PaletteEditorCursorTiles_05) / 16 ; $6b72
 	call QueueVRAMCopy ; $6b74
 	xor a ; $6b77
-	ld [$c712], a ; $6b78
-	ld [$c713], a ; $6b7b
+	ld [wDebugPaletteColorIndex], a ; $6b78
+	ld [wDebugPaletteIndex], a ; $6b7b
 	call RunDebugPaletteViewer ; $6b7e
 	ret ; $6b81
 WriteStringToTilemap:

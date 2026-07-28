@@ -2405,21 +2405,21 @@ DrawDebugStatsValues:
 	ld h, [hl] ; $6b0f
 	ld l, a ; $6b10
 	call DrawDebugStatWord ; $6b11
-	ld a, [$c768] ; $6b14
+	ld a, [wDebugStatBytes] ; $6b14
 	call DrawDebugStatByte ; $6b17
-	ld a, [$c769] ; $6b1a
+	ld a, [wDebugStatBytes + 1] ; $6b1a
 	call DrawDebugStatByte ; $6b1d
-	ld a, [$c76a] ; $6b20
+	ld a, [wDebugStatBytes + 2] ; $6b20
 	call DrawDebugStatByte ; $6b23
-	ld a, [$c76b] ; $6b26
+	ld a, [wDebugStatBytes + 3] ; $6b26
 	call DrawDebugStatByte ; $6b29
-	ld a, [$c76c] ; $6b2c
+	ld a, [wDebugStatBytes + 4] ; $6b2c
 	call DrawDebugStatByte ; $6b2f
-	ld a, [$c76d] ; $6b32
+	ld a, [wDebugStatBytes + 5] ; $6b32
 	call DrawDebugStatByte ; $6b35
-	ld a, [$c76e] ; $6b38
+	ld a, [wDebugStatBytes + 6] ; $6b38
 	call DrawDebugStatByte ; $6b3b
-	ld a, [$c76f] ; $6b3e
+	ld a, [wDebugStatBytes + 7] ; $6b3e
 	call DrawDebugStatByte ; $6b41
 	ld hl, $c770 ; $6b44
 	ld a, [hl+] ; $6b47
@@ -2565,31 +2565,31 @@ AdjustSelectedDebugStat:
 	ld bc, $0010 ; $6c61
 	jp AdjustDebugStatWord ; $6c64
 .adjustDebugStatByte:
-	ld hl, $c768 ; $6c67
+	ld hl, wDebugStatBytes ; $6c67
 	ld b, $02 ; $6c6a
 	jp AdjustDebugStatByte ; $6c6c
 .adjustDebugStatByte2:
-	ld hl, $c769 ; $6c6f
+	ld hl, wDebugStatBytes + 1 ; $6c6f
 	ld b, $08 ; $6c72
 	jp AdjustDebugStatByte ; $6c74
 .adjustDebugStatByte3:
-	ld hl, $c76a ; $6c77
+	ld hl, wDebugStatBytes + 2 ; $6c77
 	ld b, $02 ; $6c7a
 	jp AdjustDebugStatByte ; $6c7c
 .adjustDebugStatDigit:
-	ld hl, $c76b ; $6c7f
+	ld hl, wDebugStatBytes + 3 ; $6c7f
 	jp AdjustDebugStatDigit ; $6c82
 .adjustDebugStatDigit2:
-	ld hl, $c76c ; $6c85
+	ld hl, wDebugStatBytes + 4 ; $6c85
 	jp AdjustDebugStatDigit ; $6c88
 .adjustDebugStatDigit3:
-	ld hl, $c76d ; $6c8b
+	ld hl, wDebugStatBytes + 5 ; $6c8b
 	jp AdjustDebugStatDigit ; $6c8e
 .adjustDebugStatDigit4:
-	ld hl, $c76e ; $6c91
+	ld hl, wDebugStatBytes + 6 ; $6c91
 	jp AdjustDebugStatDigit ; $6c94
 .adjustDebugStatDigit5:
-	ld hl, $c76f ; $6c97
+	ld hl, wDebugStatBytes + 7 ; $6c97
 	jp AdjustDebugStatDigit ; $6c9a
 AdjustDebugStatDigit:
 	ldh a, [hInputPressed] ; $6c9d

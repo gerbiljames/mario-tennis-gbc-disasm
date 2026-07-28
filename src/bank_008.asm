@@ -204,7 +204,7 @@ RunMatch:
 	ld [wMatchSimFrozen], a ; $41c9
 	call RunMatchPlayLoop ; $41cc
 	ldh a, [hLinkState] ; $41cf
-	ld [$c493], a ; $41d1
+	ld [wMatchEndLinkState], a ; $41d1
 	farcall EndLinkSession ; $41d4
 	ld a, [wGameMode] ; $41d7
 	cp $08 ; $41da
@@ -256,7 +256,7 @@ TickRallyTimers:
 	ld a, [wBallCrossedNetFlag] ; $4242
 	and a ; $4245
 	ret z ; $4246
-	ld hl, $c4b5 ; $4247
+	ld hl, wRallyNetFrames ; $4247
 	ld a, [hl] ; $424a
 	cp $64 ; $424b
 	jr nc, .checkFirstShot ; $424d
@@ -730,9 +730,9 @@ SetBallPosition:
 	ret ; $45a8
 SetBallVelocityPolar:
 	ld a, l ; $45a9
-	ld [$c474], a ; $45aa
+	ld [wBallVelocityPolarLength], a ; $45aa
 	ld a, h ; $45ad
-	ld [$c475], a ; $45ae
+	ld [wBallVelocityPolarLength + 1], a ; $45ae
 	push de ; $45b1
 	call MulSinCosSigned ; $45b2
 	ld c, l ; $45b5
@@ -823,7 +823,7 @@ UpdateBallAnglesAndSpeed:
 	call VectorLengthFromAngle ; $462e
 	ld e, l ; $4631
 	ld d, h ; $4632
-	ld hl, $c42c ; $4633
+	ld hl, wBallSpeed3D ; $4633
 	ld a, e ; $4636
 	ld [hl+], a ; $4637
 	ld [hl], d ; $4638
@@ -873,7 +873,7 @@ CheckBallOutOfBounds:
 	set 1, d ; $4670
 .done:
 	ld a, d ; $4672
-	ld [$c4b1], a ; $4673
+	ld [wBallOutOfBoundsBits], a ; $4673
 	ret ; $4676
 GetBallHeightSign:
 	ld hl, $c408 ; $4677
@@ -983,7 +983,7 @@ RunMatchPlayLoop:
 	and a ; $471e
 	jr nz, .setLoop ; $471f
 .markChangeEnds:
-	ld hl, $c4cc ; $4721
+	ld hl, wChangeoverSkipBanner ; $4721
 	ld [hl], $01 ; $4724
 .setLoop:
 	call PlaySet ; $4726
@@ -1010,7 +1010,7 @@ CheckSetComplete:
 	and a ; $474f
 	jr z, PlaySet ; $4750
 	ld a, $01 ; $4752
-	ld [$c4cc], a ; $4754
+	ld [wChangeoverSkipBanner], a ; $4754
 .done:
 	ret ; $4757
 .playGame:
@@ -1039,7 +1039,7 @@ CheckSetComplete:
 	ld [$c7bd], a ; $4784
 	call InitTiebreakPointCounter ; $4787
 	ld a, $01 ; $478a
-	ld [$c4cc], a ; $478c
+	ld [wChangeoverSkipBanner], a ; $478c
 	sound $0e ; $478f
 	ld a, $0f ; $4791
 	farcall ShowCourtBanner ; $4793
@@ -1446,7 +1446,7 @@ MoveCharToBaseCourtPosition:
 	ret ; $4cb8
 ResetPointState:
 	xor a ; $4cb9
-	ld [$c4b5], a ; $4cba
+	ld [wRallyNetFrames], a ; $4cba
 	ld [wBallBounceCount], a ; $4cbd
 	ld [wRallyLength], a ; $4cc0
 	ld [wBallHitEvent], a ; $4cc3
@@ -2679,7 +2679,7 @@ SpriteTemplate_08_55af:
 	oam_sprite $09, $01, $00, $00
 	oam_sprite_end
 ApplyBallAirDrag:
-	ld a, [$c42d] ; $55b4
+	ld a, [wBallSpeed3D + 1] ; $55b4
 	bit 7, a ; $55b7
 	jr z, .toNibble ; $55b9
 	cpl ; $55bb
@@ -4193,7 +4193,7 @@ RefreshCourtAfterEndChange:
 RunChangeoverSequence:
 	ld a, $01 ; $5f8c
 	ld [wPauseDisabled], a ; $5f8e
-	ld a, [$c4cc] ; $5f91
+	ld a, [wChangeoverSkipBanner] ; $5f91
 	and a ; $5f94
 	jr nz, .walkLoop ; $5f95
 	ld a, [wChangeEndsPending] ; $5f97
@@ -4210,7 +4210,7 @@ RunChangeoverSequence:
 	call StepMatchFrame ; $5fb1
 .done:
 	xor a ; $5fb4
-	ld [$c4cc], a ; $5fb5
+	ld [wChangeoverSkipBanner], a ; $5fb5
 	ld [wChangeEndsPending], a ; $5fb8
 	ret ; $5fbb
 WalkCharsToNewEnds:
@@ -5077,7 +5077,7 @@ PlayMinigamePoint:
 	farcall LoadServeGfx ; $6631
 	call StepMatchFrame ; $6634
 	ld a, $01 ; $6637
-	ld [$c4c5], a ; $6639
+	ld [wUnusedMinigamePointFlag], a ; $6639
 .rallyLoop:
 	call StepMatchFrame ; $663c
 	ld a, [wMatchAbortFlag] ; $663f

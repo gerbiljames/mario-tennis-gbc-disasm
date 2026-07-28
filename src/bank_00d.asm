@@ -2032,7 +2032,7 @@ LookupMinigameShotResult:
 	ld a, [wMinigameShotRoll] ; $4ea5
 	cp e ; $4ea8
 	jr nz, .loop ; $4ea9
-	ld a, [$c490] ; $4eab
+	ld a, [wLastShotButtons] ; $4eab
 	cp d ; $4eae
 	jr nz, .loop ; $4eaf
 	ld a, c ; $4eb1

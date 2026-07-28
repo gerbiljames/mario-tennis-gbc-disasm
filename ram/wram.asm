@@ -482,7 +482,10 @@ wBallVelocityHeight:: dw
 
 ; [16-bit] Magnitude of the ball's horizontal (X,depth) velocity, integer part of the 24-bit triple $c429-$c42b (fraction byte at $c429). Written by UpdateBallAnglesAndSpeed ($08:$4606) as VectorLengthFromAngle(bc=wBallHeadingAngle, hl=wBallVelocityDepth, de=wBallVelocityX); read by ApplyBallSpin ($08:$56ed) as the horizontal-speed factor of the topspin lift term.
 wBallSpeedHorizontal:: dw
-	ds 4
+
+; [16-bit] The ball's full three-dimensional speed: VectorLengthFromAngle of wBallVelocityHeight against wBallSpeedHorizontal, recomputed whenever the velocity is rebuilt. ApplyBallAirDrag reads only its high byte, takes the magnitude and uses the top nibble as the drag-table index
+wBallSpeed3D:: dw
+	ds 2
 
 ; [16-bit] World X the shot is aimed at, in the same units as wBallX. Written by ComputeShotTrajectory ($07:$5746) from ComputeShotTargetX, copied on to wBallTargetX at $07:$5863, and drawn as a world-space marker sprite at $08:$54f3 (ProjectWorldToScreen + QueueSprite). Cleared with $c432 by ResetBallState ($08:$5149).
 wShotAimTargetX:: dw
@@ -531,7 +534,19 @@ wBallTargetX:: dw
 
 ; [16-bit] Projected ball target/landing depth (companion to wBallTargetX; net at 0)
 wBallTargetDepth:: dw
-	ds 12
+	ds 4
+
+; [16-bit] Shot speed as FinalizeShotSpeed leaves it, after momentum and the character-flag penalty and clamped up to $0100. Write-only, like the three term traces above it
+wShotSpeedFinal:: dw
+
+; [16-bit] The incoming ball's contribution to the shot speed, as AddBallSpeedEighth computed it (signed, then made positive). Write-only
+wShotSpeedBallTerm:: dw
+
+; [16-bit] The striker's own depth velocity contribution, halved and signed by which end of the court the character is on (AddPlayerMomentumToShot). Write-only
+wShotSpeedMomentumTerm:: dw
+
+; [16-bit] The charge bonus AddChargeSpeedBonusHalf added, scaled $40 or $20 depending on sign. Write-only; the four traces together are the shot-speed sum broken into its terms, and nothing in the ROM reads any of them back
+wShotSpeedChargeTerm:: dw
 
 ; [16-bit] Projected X of the ball-bounce dust effect (cached at bounce time)
 wBounceEffectX:: dw
@@ -555,7 +570,11 @@ wBallGroundProjY:: dw
 
 ; [8-bit] Aim row (0-$1f) the shot banks derive from the ball's angle to index their per-aim target tables. Written by every bank's SetBallTargetFromAim and read by nothing -- the value is used from a, so this is a leftover store
 wShotAimRow:: db
-	ds 5
+	ds 1
+
+; [16-bit] The magnitude SetBallVelocityPolar was called with, saved before it is resolved into X/depth components through MulSinCosSigned. Write-only
+wBallVelocityPolarLength:: dw
+	ds 2
 
 ; [16-bit] Camera X offset added before the <<3 screen projection (Func_08_59bb)
 wCameraOffsetX:: dw
@@ -595,14 +614,18 @@ wShotTrajRowMin:: db
 
 ; [8-bit] wShotDistMax >> 6 - the last row index the trajectory search may reach. Written at $07:$57ce and re-written at $07:$5848 when wShotDistMax is shortened by the sideline clamp. Loaded into e by SeekBallTrajEntry6/4, which stops as soon as d (wShotTrajRowMin, incremented per row) reaches it.
 wShotTrajRowMax:: db
-	ds 1
+
+; [8-bit] Which shot buttons produced the swing, packed as wCharShotButton1 in the high nibble and wCharShotButton2 in the low nibble at the moment of contact. The bank $0d minigame shot tables match a required combination against it
+wLastShotButtons:: db
 
 ; [8-bit] Winning-shot type for the point just won: 0=none, 1=service ace, 2=return ace, 3=smash ace, 4=lob winner, 5=drop-shot winner. Reset to 0 in the per-point state clear ($08:$4cd5); set by the Record*Stat functions ($08:$5c5f+) which also credit the matching wCharacterN stat. The on-court winner banner is ShowCourtBanner(value+$17) at $08:$4e75, i.e. banner ids 24-28 (SERVICE/RETURN/SMASH ACE, LOB, DROP SHOT) - confirmed in-game.
 wPointWinnerShotType:: db
 
 ; [8-bit] Companion abort flag to wMatchAbortFlag ($ff set by every quit-menu action): makes StepMatchFrames return immediately and suppresses result jingles
 wMatchFramesAbort:: db
-	ds 1
+
+; [8-bit] hLinkState as it stood when RunMatchPlayLoop returned, taken just before EndLinkSession tears the session down. Write-only
+wMatchEndLinkState:: db
 
 ; [8-bit] Scoreboard layout/caption style code, 0-7. Chosen by Func_08_454b ($08:$454b) from wOnCourtCharCount (singles/doubles) or, for minigames ($c8f5 == 2), from $c7ba/$c7bb as 3/4/7. Used as an rst00 jumptable index by DrawScoreboardCaption ($06:$477a) and DrawScoreboard ($06:$49c0), as a table index at $06:$49ae and $06:$507b, and checked against 3 by the bank $09 serve-indicator spawner ($09:$4133, $09:$425a).
 wScoreboardLayout:: db
@@ -616,11 +639,16 @@ wShotRecoilVariant:: db
 
 ; [8-bit] Charge level of the shot being executed, 0-$3f. Snapshotted from the hitter's $df4b and clamped to $3f in ExecuteShot ($07:$5413-$541c). Scales the shot speed in AddChargeSpeedBonus / AddChargeSpeedBonusHalf ($07:$5345, $535c, both offsetting by $ffe0 first) and in WeakenShotByCharge / BoostShotByCharge ($07:$54de, $54ed); $08:$53f9 compares it against $3f (fully charged) to pick the special hit flash instead of the normal spark.
 wShotChargeLevel:: db
-	ds 2
+	ds 1
+
+; [8-bit] The striker's wCharAimOffset at the moment of contact, snapshotted by ExecuteShot alongside wLastShotCharIndex and wLastShotServeRole. Write-only
+wLastShotAimOffset:: db
 
 ; [8-bit] Nonzero when the shot just struck counts as a special/power hit. Cleared at the top of ExecuteShot ($07:$53e6); set to 1 at $07:$59f8 when the ball is struck above height $0140, and set from the 32-entry toss-height table at $07:$5a1c on the serve paths. Read at $08:$53f3, where it forces the special-shot flash (wSpecialHitTimer) instead of the normal swing spark, and at $08:$42d4, where a nonzero value on the first shot of the rally shows court banner $0e.
 wSpecialShotFlag:: db
-	ds 1
+
+; [8-bit] Set to 1 by each ExecuteShotPower* variant and cleared by ExecuteShot at the start of every swing, so it marks the power version of topspin/slice/flat. Write-only
+wLastShotWasPowerShot:: db
 
 ; [8-bit] 0/1 parity flag: when 1, the shot's lateral aim offsets are negated. Written by ExecuteShot ($07:$540d) as the low bit of a count of four conditions (hitter state $df15 == 6, == $0a, $df94 nonzero, wRallyLength == 0). Read by LoadShotPlacementEntry ($07:$52b5) to negate the placement entry's angle offset before storing it at $c41e, and by every court bank's SetBallVelocityFromEntry6 ($20:$406a, $2a:$40c7 and the same offsets in the other court banks) to negate the table entry's angle delta before adding it to wShotAimAngle.
 wShotAimMirror:: db
@@ -651,7 +679,9 @@ wBallTouchCharIndex:: db
 
 ; [8-bit] Which quadrant of the court the ball is currently over: bit 1 = sign of wBallDepth (which side of the net), bit 0 = sign of wBallX (which half laterally). Rebuilt every frame by StepBallPhysics ($08:$5798-$57a9) by rotating the two sign bits into b; forced to $02 by the bank $0d wall-practice setup ($0d:$480f).
 wBallCourtQuadrant:: db
-	ds 1
+
+; [8-bit] CheckBallOutOfBounds' verdict bits for the frame - which court bound the ball passed. Write-only; the caller uses the value it returns in a
+wBallOutOfBoundsBits:: db
 
 ; [8-bit] Number of bounces since the last time the ball was struck, saturating at $0a. Zeroed by HandleBallHitEvent ($08:$42c5) and by ResetPointState ($08:$4cbd); incremented by HandleBallBounceEvent ($08:$4360-$4368). Read as 'first bounce' (== 1) by EvaluateBounceOutcome ($08:$4389), the fault check ($08:$4342), the drill graders in bank $0b ($41e6, $5e55, $6d75, $721f) and $0d:$47d0.
 wBallBounceCount:: db
@@ -661,7 +691,9 @@ wBallBounceEvent:: db
 
 ; [8-bit] Set to 1 for the single frame in which the ball crosses the net plane; cleared at the top of HandleBallNetCrossing ($08:$5815) and set at $08:$5827 once the wBallDepth sign flip is detected. Read by TickRallyTimers ($08:$4242), by AiTrackBallPhase ($08:$7d77) and by the minigame target checks CheckBallHitsMinigameTarget ($0a:$672d) and CheckBallHitsMinigameTargetAlt ($0a:$6df4).
 wBallCrossedNetFlag:: db
-	ds 1
+
+; [8-bit] Frames the ball has spent past the net this point: TickRallyTimers increments it while wBallCrossedNetFlag is set and stops at $64, and ResetPointState clears it alongside wRallyLength. Nothing reads it apart from its own cap test
+wRallyNetFrames:: db
 
 ; [8-bit] Rally Length; number of times the ball was hit in the span of a point
 wRallyLength:: db
@@ -707,7 +739,9 @@ wMatchAbortFlag:: db
 
 ; [8-bit] Nonzero draws edge arrows for off-screen characters (set during the rally)
 wOffscreenArrowsEnabled:: db
-	ds 1
+
+; [8-bit] Set to 1 by PlayMinigamePoint as the rally starts and read by nothing
+wUnusedMinigamePointFlag:: db
 
 ; [8-bit] Set to 1 by ApplyFallbackBallTrajectory_24 ($24:$57ff), the shared handler the court banks jump to when the requested trajectory row is out of range; cleared at the top of ExecuteShot ($07:$53ec). Read by StartLandingMarker ($08:$52e1), which then draws the lob landing marker, and by AiIsIncomingLobShot ($08:$79e7), which treats it like SHOTTYPE_LOB.
 wFallbackTrajectoryFlag:: db
@@ -726,7 +760,9 @@ wStandingShadowsEnabled:: db
 
 ; [8-bit] Nonzero when the court view is mirrored so the human player stays on the near side. Recomputed by UpdateViewFlipState ($08:$4c33-$4c4a) as (wCourtViewOption != 0) && (bit 1 of $c8cf). FlipAllCharPositions ($08:$4c4e) skips flipping every character's court-position code when it is 0, and RefreshCourtScoreboard ($08:$5e99) picks the mirrored scoreboard column layout when it is set.
 wCourtViewFlipped:: db
-	ds 1
+
+; [8-bit] Nonzero makes RunChangeoverSequence walk the characters to their new ends without showing the CHANGE ENDS banner first. Set at the start of a set, when a set completes and when a tiebreak begins - the boundaries where the players swap ends but the mid-set announcement would be wrong - and cleared by the sequence itself
+wChangeoverSkipBanner:: db
 
 ; [8-bit] Set to 1 at $08:$4c2f when bit 1 of the game-count state $c8cf toggles, i.e. the players must change ends. RunChangeoverSequence ($08:$5f97) shows court banner $00 and walks the characters to their new ends when it is set, then clears it with $c4cc at $08:$5fb8; also cleared during match setup ($08:$4177).
 wChangeEndsPending:: db
@@ -832,7 +868,26 @@ wDebugMenuWindowId:: db
 
 ; [8-bit] Window struct index of the debug warp submenu, addressed the same way by DebugDrawWarpMenu
 wDebugWarpWindowId:: db
-	ds 18
+
+; [8-bit] Number of story locations GetStoryLocationCount reported, the upper bound RunDebugWarpMenu's location stepper wraps at
+wDebugWarpLocationCount:: db
+	ds 1
+
+; [8-bit] Entry point the debug warp menu is editing, written to wStoryModeEntryPoint when A confirms the warp. Note that $c700-$c709 is shared debug scratch: the same bytes are wDebugMenuWindowId and wDebugWarpWindowId in one submenu, the "RRRGGGBBB" decimal buffer in the colour editor, and a save slot for eight bytes of wCharPosX in the stats editor
+wDebugWarpEntryPoint:: db
+	ds 11
+
+; [8-bit] Window handle of the debug palette viewer's grid window (RunDebugPaletteViewer)
+wDebugPaletteViewerWindowId:: db
+
+; [8-bit] Window handle of the debug colour editor opened on top of the palette viewer (RunDebugColorEditor)
+wDebugColorEditorWindowId:: db
+
+; [8-bit] Which of the four colours in the selected palette the debug cursor is on, masked to $03
+wDebugPaletteColorIndex:: db
+
+; [8-bit] Which palette the debug cursor is on, masked to $0f. GetSelectedBGPaletteColorPtr indexes wBGPalettes with palette * 4 + colour, doubled, so 0-7 reach the BG palettes and 8-15 run on into wOBJPalettes
+wDebugPaletteIndex:: db
 
 ; [8-bit] Page of 64 game flags shown by the debug flag editor; the flag number DebugToggleSelectedFlag builds is page * 64 + byte * 8 + bit
 wDebugFlagPage:: db
@@ -842,7 +897,20 @@ wDebugFlagBit:: db
 
 ; [8-bit] Flag byte within the page, scaled by 8 into the flag number
 wDebugFlagByte:: db
-	ds 105
+
+; [8-bit] Window handle of the debug flag editor's two-row hex header
+wDebugFlagHeaderWindowId:: db
+
+; [8-bit] Window handle of the debug flag editor's first flag grid
+wDebugFlagWindow1Id:: db
+
+; [8-bit] Window handle of the debug flag editor's second flag grid; the editor redraws all three windows on every cursor move
+wDebugFlagWindow2Id:: db
+	ds 78
+
+; [8 bytes] The eight single-byte fields of the debug stats editor, drawn by DrawDebugStatByte and stepped in place: the first three wrap at 2, 8 and 2, the last five are decimal digits 0-9. They sit in a larger scratch block whose 16-bit fields start at $c760
+wDebugStatBytes:: ds 8
+	ds 16
 
 ; Mode-local scratch ($c780-$c78f is reused by each game mode;
 ; only proven consumers are named, sites in other modes stay numeric)
