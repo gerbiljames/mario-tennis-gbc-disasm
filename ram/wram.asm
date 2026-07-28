@@ -216,7 +216,9 @@ wMapWidthTiles:: db
 
 ; [8-bit] Map height in tiles; the camera clamp stops at this minus $12 (18 rows)
 wMapHeightTiles:: db
-	ds 1
+
+; [8-bit] Number of entries in the scrolling list a side-scrolling menu is showing; both RunMenuSelection and the scene viewer turn it into a page count with `dec a / srl a / srl a` (four entries a page). InitSceneScroll sets it to $25
+wScrollListLength:: db
 
 ; [8-bit] Current story-cutscene scene index; indexes SceneGfxSlotTable (index*16) and drives LoadAndDisplayScene / InitSceneTileAnimations
 wCurrentScene:: db
@@ -780,7 +782,11 @@ wTargetZoneX2:: dw
 
 ; [16-bit] Target zone depth bound 2 (world units)
 wTargetZoneDepth2:: dw
-	ds 26
+	ds 13
+
+; [8-bit] Random roll SelectRandomMinigameShot and SelectRandomTreasureBoxTargetZone keep while they walk their weight tables to pick the next shot or target zone
+wMinigameShotRoll:: db
+	ds 12
 
 ; [16-bit] Pointer to the current game mode's callback table (indexed by CallModeHook)
 wModeHookTable:: dw
@@ -1602,7 +1608,9 @@ wIntroCutsceneCheck:: db
 
 ; [8-bit] Bank $6b cutscene driver: accumulated horizontal pan position, copied to hScrollX each frame
 wCutsceneScrollX:: db
-	ds 1
+
+; [8-bit] Sub-state within the intro cutscene's current state; the State*Init routines seed it and the matching State*Update routines step it
+wIntroCutsceneSubState:: db
 
 ; [8-bit] X of the intro cutscene's first sprite group; the state Update routines walk it and QueueCutsceneSpriteGroupA adds each template's offset to it
 wCutsceneSpriteAX:: db
@@ -1623,7 +1631,9 @@ wIntroCutsceneScrollY:: dw
 
 ; [8-bit] Story-mode character-select screen (bank $38): handedness toggle, 0 = default, 1 = mirrored (left-handed). Cleared on entry ($38:$4815, $38:$4984, $38:$4a82) and flipped by START ($38:$48fc `xor $01`) - the on-screen prompt for that row is text 30:118 'START: Change Hands' ($38:$4b0c). When non-zero, Func_38_4bac sets bit 5 (OAM X-flip) in wCharSpriteSlot+1 for all four displayed characters ($38:$4c6f-$4ca6), and Func_38_4e23 draws the marker sprite with tile base $00 instead of $02 ($38:$4e3c). The chosen value is written into the story character record at +$0e ($38:$48ba).
 wCharSelectHandedness:: db
-	ds 1
+
+; [8-bit] Frames until the character-select portrait plays its idle animation: TickCharSelectIdleAnim counts to $0f, then switches the shown character from animation 5 to 7 and starts again
+wCharSelectIdleTimer:: db
 
 ; [8-bit] Story-mode character-select screen (bank $38): which pick is in progress - 0 = main character, 1 = partner. Stored from the b argument of RunCharacterSelectScreen ($38:$47d0; callers pass 0 at $10:$40bb and $1b:$61fa, 1 at $1b:$629b). Selects the prompt text (0 -> text 30:117 'Pick a Character' at $38:$4ae8, 1 -> text 30:119 'Choose Partner' at $38:$4afb), swaps in mugshots 2/3 and repositions the two character sprites ($38:$4a27, $38:$4c13), and is doubled into the character id: id = 2*$cb52 + cursor ($38:$4896, $38:$4958, $38:$4e09).
 wCharSelectIsPartner:: db
@@ -1643,7 +1653,13 @@ wDebugCharViewerPage:: db
 
 ; [8-bit] Debug character viewer (Func_1a_67d4): cursor index 0-15 within the current page - LEFT/RIGHT step by 1 and wrap inside the current row of 8 ($1a:$691b-$692d, $1a:$6934-$6945), UP/DOWN step by 8 and roll into $cb62 ($1a:$694c, $1a:$6979). Selected character id = ($cb62 << 4) + $cb63 ($1a:$69d8). Also indexes the cursor-sprite position table at $1a:$6b0f ($1a:$6af9).
 wDebugCharViewerIndex:: db
-	ds 9
+	ds 7
+
+; [8-bit] First tile of the loaded digit sprite set; DrawDigitSprite_39 forms the tile as digit * 2 + this, so the narrow and wide digit sets can share one drawer
+wDigitSpriteTileBase:: db
+
+; [8-bit] OAM attribute DrawDigitSprite_39 queues digits with
+wDigitSpriteAttr:: db
 
 ; [8-bit] Scene selector RunStorySceneByMode stores from c ($18:$7617); each LookupScreen<N>AssetId indexes its Screen<N>AssetIdTable with it to pick the screen's asset record
 wStorySceneAssetIndex:: db
@@ -2175,7 +2191,13 @@ wTextArgStringQueue:: ds 32
 wTextArgNumberQueue:: ds 32
 	ds 896
 
-w5_dc70:: db
+; Window-allocator slot mask (WRAM bank $05), owned by the bank $05 window
+; system. The bank $0d minigame target actors keep their own state in the
+; same $dc7x range under a WRAM bank nothing in that bank selects, so those
+; addresses stay numeric until the bank can be shown.
+; window allocator (bank $05)
+; [8-bit] One bit per window struct, set while the slot is in use. AllocWindowSlotBit scans for a clear bit and claims it; FreeWindow clears it again
+wWindowSlotMask:: db
 
 
 SECTION "WRAMX bank 6", WRAMX[$d000], BANK[6]

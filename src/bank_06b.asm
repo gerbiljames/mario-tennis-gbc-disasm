@@ -38,7 +38,7 @@ RunIntroCutscene:
 	ld [wCutsceneStepTimer], a ; $402e
 	ld [wIntroCutsceneCheck], a ; $4031
 	ld [wCutsceneScrollX], a ; $4034
-	ld [$cb43], a ; $4037
+	ld [wIntroCutsceneSubState], a ; $4037
 	ldh [hShowDebugConsole], a ; $403a
 	ld hl, rLCDC ; $403c
 	res 3, [hl] ; $403f
@@ -496,7 +496,7 @@ IntroCutsceneState03Init_6b:
 	ld a, $28 ; $443e
 	ld [wCutsceneSpriteBY], a ; $4440
 	xor a, a ; $4443
-	ld [$cb43], a ; $4444
+	ld [wIntroCutsceneSubState], a ; $4444
 	call EnableLCD ; $4447
 	script_fade_in $7f ; $444a
 	call WaitFadeEnd ; $444f
@@ -506,7 +506,7 @@ IntroCutsceneState03Exit_6b:
 	call UnregisterFrameTask ; $4458
 	xor a, a ; $445b
 	ld [wCutsceneStepTimer], a ; $445c
-	ld [$cb43], a ; $445f
+	ld [wIntroCutsceneSubState], a ; $445f
 	ldh [hScrollX], a ; $4462
 	jp DispatchCutsceneStateInit.loop2 ; $4464
 IntroCutsceneState03Update_6b:
@@ -515,9 +515,9 @@ IntroCutsceneState03Update_6b:
 	ld [wCutsceneStepTimer], a ; $446b
 	cp a, $7d ; $446e
 	jp z, DispatchCutsceneStateInit.loopB ; $4470
-	ld a, [$cb43] ; $4473
+	ld a, [wIntroCutsceneSubState] ; $4473
 	sub a, $03 ; $4476
-	ld [$cb43], a ; $4478
+	ld [wIntroCutsceneSubState], a ; $4478
 	ldh [hScrollX], a ; $447b
 	ld a, [wCutsceneSpriteBX] ; $447d
 	dec a ; $4480
@@ -1666,9 +1666,9 @@ UpdateCutsceneScroll:
 	add a, $03 ; $53de
 	ld [wCutsceneScrollX], a ; $53e0
 	ldh [hScrollX], a ; $53e3
-	ld a, [$cb43] ; $53e5
+	ld a, [wIntroCutsceneSubState] ; $53e5
 	sub a, $03 ; $53e8
-	ld [$cb43], a ; $53ea
+	ld [wIntroCutsceneSubState], a ; $53ea
 	ld [$cb01], a ; $53ed
 	ret ; $53f0
 CheckIntroSkipInput:

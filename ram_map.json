@@ -1979,5 +1979,29 @@
  "0xc472": {
   "name": "wShotAimRow",
   "note": "[8-bit] Aim row (0-$1f) the shot banks derive from the ball's angle to index their per-aim target tables. Written by every bank's SetBallTargetFromAim and read by nothing -- the value is used from a, so this is a leftover store"
+ },
+ "0xc32d": {
+  "name": "wScrollListLength",
+  "note": "[8-bit] Number of entries in the scrolling list a side-scrolling menu is showing; both RunMenuSelection and the scene viewer turn it into a page count with `dec a / srl a / srl a` (four entries a page). InitSceneScroll sets it to $25"
+ },
+ "0xc7a5": {
+  "name": "wMinigameShotRoll",
+  "note": "[8-bit] Random roll SelectRandomMinigameShot and SelectRandomTreasureBoxTargetZone keep while they walk their weight tables to pick the next shot or target zone"
+ },
+ "0xcb43": {
+  "name": "wIntroCutsceneSubState",
+  "note": "[8-bit] Sub-state within the intro cutscene's current state; the State*Init routines seed it and the matching State*Update routines step it"
+ },
+ "0xcb51": {
+  "name": "wCharSelectIdleTimer",
+  "note": "[8-bit] Frames until the character-select portrait plays its idle animation: TickCharSelectIdleAnim counts to $0f, then switches the shown character from animation 5 to 7 and starts again"
+ },
+ "0xcb6b": {
+  "name": "wDigitSpriteTileBase",
+  "note": "[8-bit] First tile of the loaded digit sprite set; DrawDigitSprite_39 forms the tile as digit * 2 + this, so the narrow and wide digit sets can share one drawer"
+ },
+ "0xcb6c": {
+  "name": "wDigitSpriteAttr",
+  "note": "[8-bit] OAM attribute DrawDigitSprite_39 queues digits with"
  }
 }

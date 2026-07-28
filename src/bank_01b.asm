@@ -5358,9 +5358,9 @@ BuildMinigameDataScreen:
 	ld c, $00 ; $7476
 	farcall InitNumberSpriteGfx ; $7478
 	ld a, $09 ; $747b
-	ld [$cb6c], a ; $747d
+	ld [wDigitSpriteAttr], a ; $747d
 	ld a, $10 ; $7480
-	ld [$cb6b], a ; $7482
+	ld [wDigitSpriteTileBase], a ; $7482
 	call CheckMinigameDataScrollable ; $7485
 	or a, a ; $7488
 	jr nz, .drawMinigameDataMugshotsScrolled ; $7489

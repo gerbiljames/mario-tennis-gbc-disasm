@@ -1842,9 +1842,9 @@ LoadEraseDataConfirmScreen:
 	ld de, $0801 ; $4cb9
 	farcall LoadMenuHandCursorGfx ; $4cbc
 	ld a, $0a ; $4cbf
-	ld [$cb6c], a ; $4cc1
+	ld [wDigitSpriteAttr], a ; $4cc1
 	ld a, $10 ; $4cc4
-	ld [$cb6b], a ; $4cc6
+	ld [wDigitSpriteTileBase], a ; $4cc6
 	ld c, $10 ; $4cc9
 	farcall LoadScreenAssetRecord ; $4ccb
 	wram_bank $03 ; $4cce

@@ -1044,7 +1044,7 @@ AllocWindowSlotBit:
 	push bc ; $4628
 	push de ; $4629
 	ld b, $07 ; $462a
-	ld a, [$dc70] ; $462c
+	ld a, [wWindowSlotMask] ; $462c
 	ld c, $01 ; $462f
 .searchLoop:
 	rrca ; $4631
@@ -1055,9 +1055,9 @@ AllocWindowSlotBit:
 	ld a, $ff ; $4639
 	jr .done ; $463b
 .claim:
-	ld a, [$dc70] ; $463d
+	ld a, [wWindowSlotMask] ; $463d
 	or a, c ; $4640
-	ld [$dc70], a ; $4641
+	ld [wWindowSlotMask], a ; $4641
 	ld a, $07 ; $4644
 	sub a, b ; $4646
 .done:
@@ -1424,7 +1424,7 @@ RunMenuSelection:
 	call GetWindowState ; $4888
 	cp a, $03 ; $488b
 	jp nz, .inputLoop ; $488d
-	ld a, [$c32d] ; $4890
+	ld a, [wScrollListLength] ; $4890
 	dec a ; $4893
 	srl a ; $4894
 	srl a ; $4896
@@ -1944,7 +1944,7 @@ LoadOverworldSpriteDef:
 	call GetWindowState ; $4c04
 	cp a, $03 ; $4c07
 	jp nz, RunMenuSelectionShared.loop ; $4c09
-	ld a, [$c32d] ; $4c0c
+	ld a, [wScrollListLength] ; $4c0c
 	dec a ; $4c0f
 	sra a ; $4c10
 	sra a ; $4c12
@@ -7141,7 +7141,7 @@ AllocWindowId:
 	push bc ; $6e97
 	push de ; $6e98
 	ld b, $07 ; $6e99
-	ld a, [w5_dc70] ; $6e9b
+	ld a, [wWindowSlotMask] ; $6e9b
 	ld c, $01 ; $6e9e
 .loop:
 	rrca ; $6ea0
@@ -7152,9 +7152,9 @@ AllocWindowId:
 	ld a, $ff ; $6ea8
 	jr .restore ; $6eaa
 .step:
-	ld a, [w5_dc70] ; $6eac
+	ld a, [wWindowSlotMask] ; $6eac
 	or a, c ; $6eaf
-	ld [w5_dc70], a ; $6eb0
+	ld [wWindowSlotMask], a ; $6eb0
 	ld a, $07 ; $6eb3
 	sub a, b ; $6eb5
 .restore:
@@ -7183,16 +7183,16 @@ FreeWindow:
 	jr .maskLoop ; $6ed0
 .clearBit:
 	ld b, a ; $6ed2
-	ld a, [$dc70] ; $6ed3
+	ld a, [wWindowSlotMask] ; $6ed3
 	and a, b ; $6ed6
 	ld a, $ff ; $6ed7
 	jr z, .restore ; $6ed9
 	ld a, b ; $6edb
 	xor a, $ff ; $6edc
 	ld b, a ; $6ede
-	ld a, [$dc70] ; $6edf
+	ld a, [wWindowSlotMask] ; $6edf
 	and a, b ; $6ee2
-	ld [$dc70], a ; $6ee3
+	ld [wWindowSlotMask], a ; $6ee3
 	ld a, d ; $6ee6
 .restore:
 	pop de ; $6ee7

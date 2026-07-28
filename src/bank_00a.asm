@@ -3595,7 +3595,7 @@ InitSceneScroll:
 	push de ; $5932
 	push hl ; $5933
 	ld a, $25 ; $5934
-	ld [$c32d], a ; $5936
+	ld [wScrollListLength], a ; $5936
 	xor a, a ; $5939
 	ldh [hScrollY], a ; $593a
 	ldh [hScrollX], a ; $593c
@@ -4051,7 +4051,7 @@ SceneViewerSelectScene:
 	ldh a, [hInputRisingEdge] ; $5e1f
 	bit PADB_B, a ; $5e21
 	ret z ; $5e23
-	ld a, [$c32d] ; $5e24
+	ld a, [wScrollListLength] ; $5e24
 	dec a ; $5e27
 	srl a ; $5e28
 	srl a ; $5e2a
@@ -4104,7 +4104,7 @@ RunSceneSelectDebugMenu:
 	push de ; $5e93
 	push hl ; $5e94
 	ld a, $08 ; $5e95
-	ld [$c32d], a ; $5e97
+	ld [wScrollListLength], a ; $5e97
 	dec a ; $5e9a
 	srl a ; $5e9b
 	srl a ; $5e9d
@@ -4384,7 +4384,7 @@ InitSceneViewer:
 	ld de, $0009 ; $603e
 	call DivHLByDE ; $6041
 	ld a, l ; $6044
-	ld [$c32d], a ; $6045
+	ld [wScrollListLength], a ; $6045
 	pop af ; $6048
 	bit 7, a ; $6049
 	jr nz, .clearScroll ; $604b
@@ -4431,7 +4431,7 @@ InitSceneViewerDefault:
 	ld de, $0009 ; $608e
 	call DivHLByDE ; $6091
 	ld a, l ; $6094
-	ld [$c32d], a ; $6095
+	ld [wScrollListLength], a ; $6095
 	ld a, $00 ; $6098
 	ld [wCurrentScene], a ; $609a
 	ld b, $00 ; $609d

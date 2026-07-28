@@ -1185,7 +1185,7 @@ RunCharacterSelectScreen:
 	xor a, a ; $4811
 	ld [$cb4f], a ; $4812
 	ld [wCharSelectHandedness], a ; $4815
-	ld [$cb51], a ; $4818
+	ld [wCharSelectIdleTimer], a ; $4818
 	call DisableLCDSafely ; $481b
 	call ClearFrameTasks ; $481e
 	call SetupCharacterSelectScreen ; $4821
@@ -1361,7 +1361,7 @@ SetupCharacterSelectScreen:
 	xor a, a ; $4980
 	ld [$cb4f], a ; $4981
 	ld [wCharSelectHandedness], a ; $4984
-	ld [$cb51], a ; $4987
+	ld [wCharSelectIdleTimer], a ; $4987
 	ld [wCameraX], a ; $498a
 	ld [wCameraX + 1], a ; $498d
 	ld [wCameraY], a ; $4990
@@ -1453,7 +1453,7 @@ SetupCharacterSelectScreen:
 	wram_bank $02 ; $4a75
 	xor a, a ; $4a7b
 	ld [$cb4f], a ; $4a7c
-	ld [$cb51], a ; $4a7f
+	ld [wCharSelectIdleTimer], a ; $4a7f
 	ld [wCharSelectHandedness], a ; $4a82
 	farcall InitMenuBgScroll ; $4a85
 	ld b, $01 ; $4a88
@@ -1481,7 +1481,7 @@ RefreshCharacterSelectHighlight:
 	push af ; $4abe
 	wram_bank $02 ; $4abf
 	xor a, a ; $4ac5
-	ld [$cb51], a ; $4ac6
+	ld [wCharSelectIdleTimer], a ; $4ac6
 	pop af ; $4ac9
 	wram_bank ; $4aca
 	ret ; $4ace
@@ -1772,13 +1772,13 @@ TickCharSelectIdleAnim:
 	ldh a, [hWramBank] ; $4dcf
 	push af ; $4dd1
 	wram_bank $02 ; $4dd2
-	ld a, [$cb51] ; $4dd8
+	ld a, [wCharSelectIdleTimer] ; $4dd8
 	inc a ; $4ddb
-	ld [$cb51], a ; $4ddc
+	ld [wCharSelectIdleTimer], a ; $4ddc
 	cp a, $0f ; $4ddf
 	jr nz, .restore ; $4de1
 	xor a, a ; $4de3
-	ld [$cb51], a ; $4de4
+	ld [wCharSelectIdleTimer], a ; $4de4
 	call GetSelectedCharWramBank ; $4de7
 	ld a, b ; $4dea
 	wram_bank ; $4deb

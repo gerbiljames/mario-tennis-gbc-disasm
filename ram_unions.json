@@ -1846,6 +1846,28 @@
      }
     }
    ]
+  },
+  {
+   "start": "0xdc70",
+   "end": "0xdc71",
+   "comment": "Window-allocator slot mask (WRAM bank $05), owned by the bank $05 window\nsystem. The bank $0d minigame target actors keep their own state in the\nsame $dc7x range under a WRAM bank nothing in that bank selects, so those\naddresses stay numeric until the bank can be shown.",
+   "variants": [
+    {
+     "context": "window allocator (bank $05)",
+     "scopes": [
+      {
+       "bank": "0x05"
+      }
+     ],
+     "symbols": {
+      "0xdc70": {
+       "name": "wWindowSlotMask",
+       "note": "[8-bit] One bit per window struct, set while the slot is in use. AllocWindowSlotBit scans for a clear bit and claims it; FreeWindow clears it again"
+      }
+     }
+    }
+   ],
+   "wram_bank": "0x05"
   }
  ]
 }

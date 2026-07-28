@@ -2604,9 +2604,9 @@ BuildN64RingShotScreen:
 	ld c, $00 ; $51e6
 	farcall InitNumberSpriteGfx ; $51e8
 	ld a, $09 ; $51eb
-	ld [$cb6c], a ; $51ed
+	ld [wDigitSpriteAttr], a ; $51ed
 	ld a, $10 ; $51f0
-	ld [$cb6b], a ; $51f2
+	ld [wDigitSpriteTileBase], a ; $51f2
 	call DrawRingShotRowIcons ; $51f5
 	call DrawRingShotModeTab ; $51f8
 	call DrawRingShotClearMarks ; $51fb

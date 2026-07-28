@@ -1558,9 +1558,9 @@ WaterSpriteSwingContestScene:
 	ld c, $01 ; $564f
 	farcall InitNumberSpriteGfx ; $5651
 	ld a, $0a ; $5654
-	ld [$cb6c], a ; $5656
+	ld [wDigitSpriteAttr], a ; $5656
 	ld a, $10 ; $5659
-	ld [$cb6b], a ; $565b
+	ld [wDigitSpriteTileBase], a ; $565b
 	call InitWaterSpriteMinigameHud ; $565e
 	script_face ACTOR_PLAYER, FACE_DOWN ; $5661
 	ld b, $20 ; $5668

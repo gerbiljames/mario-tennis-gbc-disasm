@@ -1984,10 +1984,10 @@ SelectRandomMinigameShot:
 	inc h ; $4e40
 .read:
 	ld a, [hl] ; $4e41
-	ld [$c7a5], a ; $4e42
-	ld a, [$c7a5] ; $4e45
+	ld [wMinigameShotRoll], a ; $4e42
+	ld a, [wMinigameShotRoll] ; $4e45
 	call LoadTargetZoneConfig ; $4e48
-	ld a, [$c7a5] ; $4e4b
+	ld a, [wMinigameShotRoll] ; $4e4b
 	call LoadMatchUiCourtTilemap ; $4e4e
 	call QueueMinigameHudVRAMCopy ; $4e51
 	pop af ; $4e54
@@ -2029,7 +2029,7 @@ LookupMinigameShotResult:
 	ld c, a ; $4ea2
 	ld a, [hl+] ; $4ea3
 	ld b, a ; $4ea4
-	ld a, [$c7a5] ; $4ea5
+	ld a, [wMinigameShotRoll] ; $4ea5
 	cp a, e ; $4ea8
 	jr nz, .loop ; $4ea9
 	ld a, [$c490] ; $4eab
@@ -3362,8 +3362,8 @@ SelectRandomTreasureBoxTargetZone:
 	inc h ; $5a87
 .read:
 	ld a, [hl] ; $5a88
-	ld [$c7a5], a ; $5a89
-	ld a, [$c7a5] ; $5a8c
+	ld [wMinigameShotRoll], a ; $5a89
+	ld a, [wMinigameShotRoll] ; $5a8c
 	call LoadTargetZoneConfig ; $5a8f
 	ld a, [wMinigameHitScored] ; $5a92
 	and a, a ; $5a95
@@ -3424,7 +3424,7 @@ AdvanceTreasureBoxActorState:
 .read:
 	ld a, [hl] ; $5b01
 	ld [$dc71], a ; $5b02
-	ld a, [$c7a5] ; $5b05
+	ld a, [wMinigameShotRoll] ; $5b05
 	add a, a ; $5b08
 	add a, LOW(TreasureBoxSpawnPointsByZone) ; $5b09
 	ld l, a ; $5b0b

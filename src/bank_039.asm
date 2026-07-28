@@ -3220,16 +3220,16 @@ InitNumberSpriteGfx:
 	ld bc, $0007 ; $6ec7
 	call ClearBytes ; $6eca
 	xor a, a ; $6ecd
-	ld [$cb6b], a ; $6ece
-	ld [$cb6c], a ; $6ed1
+	ld [wDigitSpriteTileBase], a ; $6ece
+	ld [wDigitSpriteAttr], a ; $6ed1
 	pop hl ; $6ed4
 	pop de ; $6ed5
 	pop bc ; $6ed6
 	pop af ; $6ed7
 	ld a, $08 ; $6ed8
-	ld [$cb6c], a ; $6eda
+	ld [wDigitSpriteAttr], a ; $6eda
 	ld a, $00 ; $6edd
-	ld [$cb6b], a ; $6edf
+	ld [wDigitSpriteTileBase], a ; $6edf
 	ld a, c ; $6ee2
 	or a, a ; $6ee3
 	jr nz, InitNumberSpriteGfxWide ; $6ee4
@@ -3302,13 +3302,13 @@ DrawDigitSprite_39:
 	push bc ; $6f50
 	push de ; $6f51
 	push hl ; $6f52
-	ld a, [$cb6b] ; $6f53
+	ld a, [wDigitSpriteTileBase] ; $6f53
 	ld b, a ; $6f56
 	ld a, c ; $6f57
 	add a, a ; $6f58
 	add a, b ; $6f59
 	ld c, a ; $6f5a
-	ld a, [$cb6c] ; $6f5b
+	ld a, [wDigitSpriteAttr] ; $6f5b
 	ld b, a ; $6f5e
 	call QueueSprite ; $6f5f
 	pop hl ; $6f62
