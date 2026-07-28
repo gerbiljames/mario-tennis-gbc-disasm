@@ -2524,13 +2524,14 @@
    "start": "0xdd80",
    "wram_bank": "0x04",
    "end": "0xddd0",
-   "comment": "Match object slots (WRAM bank $04): five 16-byte records the bank $09\nsprite engine animates along a move curve -- serve indicators, the\ncourt banner, the point-situation banner, special-shot effects.\nScoped to banks $08/$09 as well as the WRAM bank because the spawners\npass a slot base in bc without selecting the bank at the reference.\n$ddd0-$ddef above them belongs to the bank $18/$1b menu screens.",
+   "comment": "Match object slots (WRAM bank $04): five 16-byte records the bank $09\nsprite engine animates along a move curve -- serve indicators, the\ncourt banner, the point-situation banner, special-shot effects.\nScoped to banks $08/$09 as well as the WRAM bank because the spawners\npass a slot base in bc without selecting the bank at the reference.\n$ddd0-$ddef above them belongs to the bank $18/$1b menu screens.\nOnly the bank $08 scope carries wram_bank $04. Bank $08 reaches WRAM bank\n$02 as well -- RefreshCourtScoreboard's saved-court-plane addresses were\nrendering as object slots until a bank-annotated trace showed the bank --\nwhereas bank $09 is the object engine itself and never selects another.",
    "variants": [
     {
      "context": "match object slots (banks $08/$09)",
      "scopes": [
       {
-       "bank": "0x08"
+       "bank": "0x08",
+       "wram_bank": "0x04"
       },
       {
        "bank": "0x09"

@@ -4071,14 +4071,14 @@ RefreshCourtScoreboard:
 	ld hl, $de94 ; $5e9f
 	ld de, $d99a ; $5ea2
 	call CopyScoreboardTileColumn ; $5ea5
-	ld hl, $debc ; $5ea8
-	ld de, wObjSlot1 + 10 ; $5eab
+	ld hl, wCourtAttrmapSaved + 21 * TILEMAP_WIDTH + 28 ; $5ea8
+	ld de, wCourtAttrmapSaved + 12 * TILEMAP_WIDTH + 26 ; $5eab
 	call CopyScoreboardTileColumn ; $5eae
-	ld hl, $de8a ; $5eb1
-	ld de, $d984 ; $5eb4
+	ld hl, wCourtAttrmapSaved + 20 * TILEMAP_WIDTH + 10 ; $5eb1
+	ld de, wCourtTilemapSaved + 12 * TILEMAP_WIDTH + 4 ; $5eb4
 	call CopyScoreboardTileColumn ; $5eb7
-	ld hl, $deb2 ; $5eba
-	ld de, wObjSlot0 + 4 ; $5ebd
+	ld hl, wCourtAttrmapSaved + 21 * TILEMAP_WIDTH + 18 ; $5eba
+	ld de, wCourtAttrmapSaved + 12 * TILEMAP_WIDTH + 4 ; $5ebd
 	call CopyScoreboardTileColumn ; $5ec0
 	call SnapshotCourtTilemaps ; $5ec3
 	ret ; $5ec6
@@ -4087,13 +4087,13 @@ RefreshCourtScoreboardFlipped:
 	ld de, $d984 ; $5eca
 	call CopyScoreboardTileColumn ; $5ecd
 	ld hl, $dea8 ; $5ed0
-	ld de, wObjSlot0 + 4 ; $5ed3
+	ld de, $dd84 ; $5ed3
 	call CopyScoreboardTileColumn ; $5ed6
 	ld hl, $de9e ; $5ed9
 	ld de, $d99a ; $5edc
 	call CopyScoreboardTileColumn ; $5edf
 	ld hl, $dec6 ; $5ee2
-	ld de, wObjSlot1 + 10 ; $5ee5
+	ld de, $dd9a ; $5ee5
 	call CopyScoreboardTileColumn ; $5ee8
 	call SnapshotCourtTilemaps ; $5eeb
 	ret ; $5eee

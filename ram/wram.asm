@@ -2853,6 +2853,10 @@ wBallHistory:: ds 36
 ; Scoped to banks $08/$09 as well as the WRAM bank because the spawners
 ; pass a slot base in bc without selecting the bank at the reference.
 ; $ddd0-$ddef above them belongs to the bank $18/$1b menu screens.
+; Only the bank $08 scope carries wram_bank $04. Bank $08 reaches WRAM bank
+; $02 as well -- RefreshCourtScoreboard's saved-court-plane addresses were
+; rendering as object slots until a bank-annotated trace showed the bank --
+; whereas bank $09 is the object engine itself and never selects another.
 ; match object slots (banks $08/$09)
 ; [16 bytes] Match object slot 0. UpdateAllObjSprites walks the five in order; each spawner claims a fixed one (the court banner and the special-shot effect both take slot 3). Object-slot record, 16 bytes:
 ;   +$00 object id, $ff = slot free (ProcessObjSlot skips it)

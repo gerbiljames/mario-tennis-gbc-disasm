@@ -447,7 +447,7 @@ LoadCharacterRecordToBuffer:
 	push hl ; $450e
 	farcall LoadCharacterRecordToCa80 ; $450f
 	ld hl, wPlayer2MainName ; $4512
-	ld de, $d580 ; $4515
+	ld de, wShadowAttrmap + 12 * TILEMAP_WIDTH ; $4515
 	ld c, $08 ; $4518
 	call CopyMemoryFast ; $451a
 	pop hl ; $451d
@@ -464,7 +464,7 @@ LoadCharacterRecordToBuffer:
 CheckCharacterUnlocked:
 	bit 7, a ; $452a
 	jr z, .checkRange ; $452c
-	ld a, [$d58b] ; $452e
+	ld a, [wShadowAttrmap + 12 * TILEMAP_WIDTH + 11] ; $452e
 	cp $ff ; $4531
 	ret ; $4533
 .checkRange:

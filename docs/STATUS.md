@@ -7381,3 +7381,68 @@ unknown bank because they are called from several contexts. Getting past that
 needs context sensitivity -- cloning the analysis per call site -- which is a
 different piece of work. What this pass bought is that the 37% the analysis does
 resolve is now robust rather than accidental.
+
+## The tracer now records the WRAM bank, and it caught the analysis lying (2026-07-28)
+
+The static dataflow had gone as far as it usefully could: 37% of instructions,
+limited by context-insensitivity rather than by anything fixable. So the
+connector now records the fact the disassembler cannot derive.
+
+**Connector v3** (`gbc-disasm-mcp`): `TRACE_GET`/`TRACE_DUMP` carry
+`rom_wram_bank`, a bitmask per `rom` entry with bit N set if bank N was selected
+there at least once. One System Bus read per traced instruction. On this side,
+`load_traced_wram_banks` reads the masks and `merge_traced_wram_banks` folds
+single-bank observations in — filling gaps only, never overriding a static
+proof, and reporting rather than silently resolving a disagreement.
+
+**One short session** — main menu, exhibition, character select, a match —
+19,066 instructions observed, of which 12,494 ran under exactly one bank.
+**5,412 sites resolved that the dataflow could not.**
+
+### Verifying the tracer before trusting it
+
+The whole thing turns on *when* the exec callback fires. If it ran after the
+instruction, every bank would be recorded one instruction early and the data
+would be subtly wrong everywhere. `RunSoundEngine`'s `wram_bank $07` settles it:
+
+| | observed banks |
+|---|---|
+| `$3373` `ld a, $07` (before the switch) | 1,2,3,4,5,6,7 |
+| `$3377` `ldh [rWBK], a` (the switch itself) | 1,2,3,4,5,6,7 |
+| `$3379` (after) | **7** |
+
+The switch instruction still shows its callers' banks and only the instruction
+after it is pinned to 7 — so the callback fires *before* execution and the value
+recorded is the bank the instruction itself sees. That is the reading the merge
+assumes.
+
+### 142 places where the dataflow is confidently wrong
+
+With the tracer verified, a disagreement means the *static* answer is wrong.
+There are 142. They cluster in shared helpers -- `VectorFromLengthAndAngle` in
+ROM0 (25), `SetupCharGridScreen` (27), `OffsetFromBallLanding` (17) -- which
+points at the interprocedural propagation: a callee inherits the meet over the
+call sites the CFG happens to contain, and any caller the descent never found is
+silently excluded, so the meet looks unanimous when it is not.
+
+Disabling that propagation is not the answer: it costs 22,679 provable sites and
+removes only 24 of the 142. The other 118 have a cause I have not established,
+and I would rather record that than guess at it.
+
+**The blast radius today is zero, and for a reason worth naming.** Of the 142
+disagreeing sites, nine carry a RAM symbol and all nine are WRAM0 names, where
+the bank is irrelevant. Not one banked name rests on a wrong bank -- because
+every scoped union written this week carries a ROM bank *as well as* a WRAM
+bank. The rule that kept catching false names in review is also what kept an
+unsound analysis from doing damage.
+
+### It settled a question I had left open
+
+Two passes ago I could not scope `RefreshCourtScoreboard`'s `$de9x` bytes and
+wrote that they "are not court planes at all", reasoning from `ld de, wObjSlot1
++ 10` rendering beside them. The trace says the routine runs in WRAM bank `$02`
+and those addresses *are* the saved court planes -- my tentative reading was
+backwards, and `wObjSlot1 + 10` was itself the false name, from a bank-`$09`
+union variant scoped by ROM bank alone. Its bank `$08` scope now carries
+`wram_bank $04`; bank `$09` keeps the ROM-only scope, because that bank is the
+object engine and never selects another.
