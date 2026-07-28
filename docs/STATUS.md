@@ -7518,3 +7518,37 @@ That is the third time in three sessions that observation has replaced a
 confident name rather than filled a blank, and it is the argument for keeping
 this up: the value of a trace is not only the operands it names, it is the
 operands it un-names.
+
+## Story mode reached, with pause and a RAM read (2026-07-29)
+
+The name-entry keyboard had defeated three attempts at free-run speed. The fix
+was the two tools already there for it: **`pause_emulation`**, so a `step_frames`
+runs exactly the frames asked and a d-pad tap moves the cursor exactly one cell,
+and **`read_memory`**, to stop guessing the cursor position off a 160x144
+screenshot.
+
+`RunNameEntryScreen` reads `wMenuCursorY` and treats `$05` as the bottom row,
+then indexes `NameEntryBottomRowActionTable` with `wMenuCursorX`: 0-9 is DEL,
+10-14 is accept. Reading `$cb04` said X was already 10 and Y was 1 -- so the
+cursor had been on the END *column* the whole time, four rows too high. (My
+first read had been at `$cb64`, an arithmetic slip, which is why the pair looked
+stuck at zero.) Setting the pair and pressing A walked straight through.
+
+Two verifications fell out of it. `$d800` read back `AlexA6(` -- that is
+`wNameEntryBuffer`, named this week, confirmed against hardware. And holding a
+direction across consecutive `step_frames` calls counts as **one** press, not a
+repeat; a tap needs a press step and a release step.
+
+**Story mode is now traced**: the overworld, the actor engine, the map scripts,
+the speech bubbles. `wActors + 1 * ACTOR_SIZE` appears in bank `$38` where the
+address had been a bare `$d040`.
+
+Four sessions now: 37,313 distinct instructions observed, **8,921 resolved that
+the dataflow could not, 1,255 corrected**. Bare banked references are 3,034,
+from 4,300 when the banked half was first surveyed.
+
+One correction went the other way and is worth recording: `ld bc, wCharPosX`
+became `ld bc, $df00`. `$df00` is the per-character match struct in WRAM banks
+`$04-$07` and the character-select handedness byte in bank `$03`; the trace says
+that site runs in neither, so the name it had was wrong and a number is the
+honest answer until something proves otherwise.

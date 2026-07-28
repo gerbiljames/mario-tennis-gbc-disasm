@@ -1330,7 +1330,7 @@ MovePlayerToPosition:
 	ld b, h ; $47c5
 	ld c, l ; $47c6
 	ld d, a ; $47c7
-	ld hl, $d040 ; $47c8
+	ld hl, wActors + 1 * ACTOR_SIZE ; $47c8
 	ld a, l ; $47cb
 	ldh [hActorPtr], a ; $47cc
 	ld a, h ; $47ce
@@ -1458,7 +1458,7 @@ WaitPlayerMoveDone:
 	push bc ; $4893
 	push hl ; $4894
 	ld bc, $0258 ; $4895
-	ld hl, $d040 ; $4898
+	ld hl, wActors + 1 * ACTOR_SIZE ; $4898
 	ld a, l ; $489b
 	ldh [hActorPtr], a ; $489c
 	ld a, h ; $489e
@@ -2282,7 +2282,7 @@ RunStoryLocation:
 	ld l, a ; $4f77
 	ld a, [wStoryLocationBank] ; $4f78
 	call InitLocationActors ; $4f7b
-	ld hl, $d000 ; $4f7e
+	ld hl, wActors ; $4f7e
 	ld de, $0018 ; $4f81
 	add hl, de ; $4f84
 	ld [hl], $01 ; $4f85

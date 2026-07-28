@@ -595,7 +595,7 @@ LateStudentCrashCutscene:
 	farcall ScriptWaitActorJumpDone ; $48e9
 	script_move_target $11, $1800, $2000 ; $48ec
 	script_wait_frames $1e ; $48f7
-	ld bc, $d040 ; $48fe
+	ld bc, wActors + 1 * ACTOR_SIZE ; $48fe
 	script_get_actor_state $11 ; $4901
 	ld e, l ; $4906
 	ld d, h ; $4907
