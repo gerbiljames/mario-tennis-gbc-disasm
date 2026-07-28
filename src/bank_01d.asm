@@ -4764,7 +4764,7 @@ ConvertColorToGrayscale:
 	and $7c ; $7237
 	rrca ; $7239
 	rrca ; $723a
-	ld [$0002], a ; $723b
+	ld [rRAMG + 2], a ; $723b
 	ld a, [$d000] ; $723e
 	ld hl, $d001 ; $7241
 	add [hl] ; $7244

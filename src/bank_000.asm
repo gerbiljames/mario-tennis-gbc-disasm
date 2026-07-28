@@ -71,7 +71,7 @@ CallHLInBankA:
 	ld [hl], a ; $016c
 	pop af ; $016d
 	ldh [hRomBank], a ; $016e
-	ld [$2000], a ; $0170
+	ld [rROMB0], a ; $0170
 	pop hl ; $0173
 	jp hl ; $0174
 	push af ; $0175
@@ -79,7 +79,7 @@ CallHLInBankA:
 	ld hl, sp + 4 ; $0177
 	ld a, [hl] ; $0179
 	ldh [hRomBank], a ; $017a
-	ld [$2000], a ; $017c
+	ld [rROMB0], a ; $017c
 	pop hl ; $017f
 	pop af ; $0180
 	inc sp ; $0181
@@ -98,7 +98,7 @@ CallHLInBankA:
 	ld [hl], a ; $0192
 	pop af ; $0193
 	ldh [hRomBank], a ; $0194
-	ld [$2000], a ; $0196
+	ld [rROMB0], a ; $0196
 	pop hl ; $0199
 	ld a, b ; $019a
 	add a ; $019b
@@ -118,7 +118,7 @@ CallHLInBankA:
 	ld hl, sp + 4 ; $01a9
 	ld a, [hl] ; $01ab
 	ldh [hRomBank], a ; $01ac
-	ld [$2000], a ; $01ae
+	ld [rROMB0], a ; $01ae
 	pop hl ; $01b1
 	pop af ; $01b2
 	inc sp ; $01b3
@@ -140,7 +140,7 @@ FarCall:
 	ld [hl], a ; $01c5
 	ld a, [de] ; $01c6
 	ldh [hRomBank], a ; $01c7
-	ld [$2000], a ; $01c9
+	ld [rROMB0], a ; $01c9
 	inc de ; $01cc
 	ld a, [hl] ; $01cd
 	ld [hl], d ; $01ce
@@ -153,7 +153,7 @@ FarCall:
 	ld hl, sp + 4 ; $01d7
 	ld a, [hl] ; $01d9
 	ldh [hRomBank], a ; $01da
-	ld [$2000], a ; $01dc
+	ld [rROMB0], a ; $01dc
 	pop hl ; $01df
 	pop af ; $01e0
 	inc sp ; $01e1
@@ -186,11 +186,11 @@ CallVectorEntryA:
 	ld e, a ; $01ff
 	ld a, [hl] ; $0200
 	ldh [hRomBank], a ; $0201
-	ld [$2000], a ; $0203
+	ld [rROMB0], a ; $0203
 	call CallVectorEntryE ; $0206
 	pop af ; $0209
 	ldh [hRomBank], a ; $020a
-	ld [$2000], a ; $020c
+	ld [rROMB0], a ; $020c
 	pop hl ; $020f
 	inc hl ; $0210
 	inc hl ; $0211
@@ -208,7 +208,7 @@ CopyDataFromBank:
 	push af ; $021d
 	ld a, h ; $021e
 	ldh [hRomBank], a ; $021f
-	ld [$2000], a ; $0221
+	ld [rROMB0], a ; $0221
 	ld h, $40 ; $0224
 	ld a, [hl+] ; $0226
 	ld h, [hl] ; $0227
@@ -216,7 +216,7 @@ CopyDataFromBank:
 	call CopyMemoryBC ; $0229
 	pop af ; $022c
 	ldh [hRomBank], a ; $022d
-	ld [$2000], a ; $022f
+	ld [rROMB0], a ; $022f
 	pop af ; $0232
 	ret ; $0233
 DecompressDataFromBank:
@@ -225,7 +225,7 @@ DecompressDataFromBank:
 	push af ; $0237
 	ld a, h ; $0238
 	ldh [hRomBank], a ; $0239
-	ld [$2000], a ; $023b
+	ld [rROMB0], a ; $023b
 	ld h, $40 ; $023e
 	ld a, [hl+] ; $0240
 	ld h, [hl] ; $0241
@@ -233,7 +233,7 @@ DecompressDataFromBank:
 	call DecompressData ; $0243
 	pop af ; $0246
 	ldh [hRomBank], a ; $0247
-	ld [$2000], a ; $0249
+	ld [rROMB0], a ; $0249
 	pop af ; $024c
 	ret ; $024d
 ClearBothVRAMBanks:
@@ -653,11 +653,11 @@ QueueVRAMCopyFromBank:
 	push af ; $046f
 	ld a, b ; $0470
 	ldh [hRomBank], a ; $0471
-	ld [$2000], a ; $0473
+	ld [rROMB0], a ; $0473
 	call QueueVRAMCopy ; $0476
 	pop af ; $0479
 	ldh [hRomBank], a ; $047a
-	ld [$2000], a ; $047c
+	ld [rROMB0], a ; $047c
 	ret ; $047f
 QueueVRAMCopy:
 	ldh a, [rLCDC] ; $0480
@@ -805,7 +805,7 @@ ProcessVRAMCopyQueues:
 	or a ; $0541
 	jr z, .loopB ; $0542
 	ldh [hRomBank], a ; $0544
-	ld [$2000], a ; $0546
+	ld [rROMB0], a ; $0546
 	xor a ; $0549
 	ld [hl+], a ; $054a
 	ld a, [hl+] ; $054b
@@ -835,7 +835,7 @@ ProcessVRAMCopyQueues:
 	wram_bank ; $0568
 	ld a, d ; $056c
 	ldh [hRomBank], a ; $056d
-	ld [$2000], a ; $056f
+	ld [rROMB0], a ; $056f
 	ld hl, wTileWriteQueue ; $0572
 	ld c, $10 ; $0575
 .loop2:
@@ -987,11 +987,11 @@ FarReadByte:
 	push af ; $062c
 	ld a, b ; $062d
 	ldh [hRomBank], a ; $062e
-	ld [$2000], a ; $0630
+	ld [rROMB0], a ; $0630
 	ld c, [hl] ; $0633
 	pop af ; $0634
 	ldh [hRomBank], a ; $0635
-	ld [$2000], a ; $0637
+	ld [rROMB0], a ; $0637
 	ld a, c ; $063a
 	pop bc ; $063b
 	ret ; $063c
@@ -1001,24 +1001,24 @@ FarReadWord:
 	push af ; $0640
 	ld a, b ; $0641
 	ldh [hRomBank], a ; $0642
-	ld [$2000], a ; $0644
+	ld [rROMB0], a ; $0644
 	ld c, [hl] ; $0647
 	inc hl ; $0648
 	ld b, [hl] ; $0649
 	dec hl ; $064a
 	pop af ; $064b
 	ldh [hRomBank], a ; $064c
-	ld [$2000], a ; $064e
+	ld [rROMB0], a ; $064e
 	ret ; $0651
 FarReadWordDI:
 	di ; $0652
-	ld [$2000], a ; $0653
+	ld [rROMB0], a ; $0653
 	ld a, [hl+] ; $0656
 	ld c, a ; $0657
 	ld a, [hl-] ; $0658
 	ld b, a ; $0659
 	ldh a, [hRomBank] ; $065a
-	ld [$2000], a ; $065c
+	ld [rROMB0], a ; $065c
 	ei ; $065f
 	ret ; $0660
 	push bc ; $0661
@@ -1026,7 +1026,7 @@ FarReadWordDI:
 	ld b, a ; $0664
 	ld a, h ; $0665
 	ldh [hRomBank], a ; $0666
-	ld [$2000], a ; $0668
+	ld [rROMB0], a ; $0668
 	ld c, a ; $066b
 	ld h, $40 ; $066c
 	ld a, [hl+] ; $066e
@@ -1034,7 +1034,7 @@ FarReadWordDI:
 	ld l, a ; $0670
 	ld a, b ; $0671
 	ldh [hRomBank], a ; $0672
-	ld [$2000], a ; $0674
+	ld [rROMB0], a ; $0674
 	ld a, c ; $0677
 	pop bc ; $0678
 	ret ; $0679
@@ -1045,14 +1045,14 @@ FarCopyBytes:
 	ld c, a ; $067e
 	ld a, b ; $067f
 	ldh [hRomBank], a ; $0680
-	ld [$2000], a ; $0682
+	ld [rROMB0], a ; $0682
 	ld a, c ; $0685
 	pop bc ; $0686
 	push af ; $0687
 	call CopyMemoryBC ; $0688
 	pop af ; $068b
 	ldh [hRomBank], a ; $068c
-	ld [$2000], a ; $068e
+	ld [rROMB0], a ; $068e
 	ret ; $0691
 	push af ; $0692
 	push bc ; $0693
@@ -1061,14 +1061,14 @@ FarCopyBytes:
 	ld c, a ; $0697
 	ld a, b ; $0698
 	ldh [hRomBank], a ; $0699
-	ld [$2000], a ; $069b
+	ld [rROMB0], a ; $069b
 	ld a, c ; $069e
 	pop bc ; $069f
 	push af ; $06a0
 	call DecompressData ; $06a1
 	pop af ; $06a4
 	ldh [hRomBank], a ; $06a5
-	ld [$2000], a ; $06a7
+	ld [rROMB0], a ; $06a7
 	pop af ; $06aa
 	ret ; $06ab
 CopyOAMDMARoutineToHRAM:
@@ -1111,7 +1111,7 @@ FarDispatchIndexed:
 	push af ; $06d4
 	ld a, h ; $06d5
 	ldh [hRomBank], a ; $06d6
-	ld [$2000], a ; $06d8
+	ld [rROMB0], a ; $06d8
 	ld h, $40 ; $06db
 	ld a, [hl+] ; $06dd
 	ld h, [hl] ; $06de
@@ -1129,7 +1129,7 @@ FarDispatchIndexed:
 	call DecompressData ; $06eb
 	pop af ; $06ee
 	ldh [hRomBank], a ; $06ef
-	ld [$2000], a ; $06f1
+	ld [rROMB0], a ; $06f1
 	pop bc ; $06f4
 	pop af ; $06f5
 	ret ; $06f6
@@ -1143,7 +1143,7 @@ FarCopyIndexed:
 	push af ; $06fe
 	ld a, h ; $06ff
 	ldh [hRomBank], a ; $0700
-	ld [$2000], a ; $0702
+	ld [rROMB0], a ; $0702
 	ld h, $40 ; $0705
 	ld a, [hl+] ; $0707
 	ld h, [hl] ; $0708
@@ -1166,7 +1166,7 @@ FarCopyIndexed:
 	jr nz, .loop ; $0719
 	pop af ; $071b
 	ldh [hRomBank], a ; $071c
-	ld [$2000], a ; $071e
+	ld [rROMB0], a ; $071e
 	pop hl ; $0721
 	pop de ; $0722
 	pop bc ; $0723
@@ -1182,7 +1182,7 @@ FarCallIndexed1:
 	push af ; $072d
 	ld a, h ; $072e
 	ldh [hRomBank], a ; $072f
-	ld [$2000], a ; $0731
+	ld [rROMB0], a ; $0731
 	ld h, $40 ; $0734
 	ld a, [hl+] ; $0736
 	ld h, [hl] ; $0737
@@ -1200,7 +1200,7 @@ FarCallIndexed1:
 	call QueueVRAMCopy ; $0744
 	pop af ; $0747
 	ldh [hRomBank], a ; $0748
-	ld [$2000], a ; $074a
+	ld [rROMB0], a ; $074a
 	pop hl ; $074d
 	pop de ; $074e
 	pop bc ; $074f
@@ -1216,7 +1216,7 @@ FarCallIndexed2:
 	push af ; $0759
 	ld a, h ; $075a
 	ldh [hRomBank], a ; $075b
-	ld [$2000], a ; $075d
+	ld [rROMB0], a ; $075d
 	ld h, $40 ; $0760
 	ld a, [hl+] ; $0762
 	ld h, [hl] ; $0763
@@ -1234,7 +1234,7 @@ FarCallIndexed2:
 	call StartVRAMDMAFromHL ; $0770
 	pop af ; $0773
 	ldh [hRomBank], a ; $0774
-	ld [$2000], a ; $0776
+	ld [rROMB0], a ; $0776
 	pop hl ; $0779
 	pop de ; $077a
 	pop bc ; $077b
@@ -1250,7 +1250,7 @@ FarCallIndexed3:
 	push af ; $0785
 	ld a, h ; $0786
 	ldh [hRomBank], a ; $0787
-	ld [$2000], a ; $0789
+	ld [rROMB0], a ; $0789
 	ld h, $40 ; $078c
 	ld a, [hl+] ; $078e
 	ld h, [hl] ; $078f
@@ -1268,7 +1268,7 @@ FarCallIndexed3:
 	call CopyMemoryFast ; $079c
 	pop af ; $079f
 	ldh [hRomBank], a ; $07a0
-	ld [$2000], a ; $07a2
+	ld [rROMB0], a ; $07a2
 	pop hl ; $07a5
 	pop de ; $07a6
 	pop bc ; $07a7
@@ -1280,7 +1280,7 @@ FarReadPtrIndexed:
 	ld b, a ; $07ad
 	ld a, h ; $07ae
 	ldh [hRomBank], a ; $07af
-	ld [$2000], a ; $07b1
+	ld [rROMB0], a ; $07b1
 	ld c, a ; $07b4
 	ld h, $40 ; $07b5
 	ld a, [hl+] ; $07b7
@@ -1288,7 +1288,7 @@ FarReadPtrIndexed:
 	ld l, a ; $07b9
 	ld a, b ; $07ba
 	ldh [hRomBank], a ; $07bb
-	ld [$2000], a ; $07bd
+	ld [rROMB0], a ; $07bd
 	ld a, c ; $07c0
 	pop bc ; $07c1
 	jp CallHLInBankA ; $07c2
@@ -1297,7 +1297,7 @@ FarCallVector:
 	push af ; $07c7
 	ld a, h ; $07c8
 	ldh [hRomBank], a ; $07c9
-	ld [$2000], a ; $07cb
+	ld [rROMB0], a ; $07cb
 	ld h, $40 ; $07ce
 	ld a, [hl+] ; $07d0
 	ld h, [hl] ; $07d1
@@ -1305,7 +1305,7 @@ FarCallVector:
 	call JumpToHL ; $07d3
 	pop af ; $07d6
 	ldh [hRomBank], a ; $07d7
-	ld [$2000], a ; $07d9
+	ld [rROMB0], a ; $07d9
 	ret ; $07dc
 CopyMapRows32To64:
 	ld c, $10 ; $07dd
@@ -3271,14 +3271,14 @@ MulSinUnsigned:
 	ld b, a ; $1379
 	ld a, $2d ; $137a
 	ldh [hRomBank], a ; $137c
-	ld [$2000], a ; $137e
+	ld [rROMB0], a ; $137e
 	ld a, [hl+] ; $1381
 	ld h, [hl] ; $1382
 	ld l, a ; $1383
 	call MulHLByDE32 ; $1384
 	ld a, b ; $1387
 	ldh [hRomBank], a ; $1388
-	ld [$2000], a ; $138a
+	ld [rROMB0], a ; $138a
 	pop de ; $138d
 	ret ; $138e
 VectorLengthFromAngle:
@@ -3367,7 +3367,7 @@ DivBySinUnsigned:
 	ld b, a ; $13f5
 	ld a, $2d ; $13f6
 	ldh [hRomBank], a ; $13f8
-	ld [$2000], a ; $13fa
+	ld [rROMB0], a ; $13fa
 	ld a, [hl+] ; $13fd
 	ld h, [hl] ; $13fe
 	ld l, a ; $13ff
@@ -3381,7 +3381,7 @@ DivBySinUnsigned:
 	rl h ; $140c
 	ld a, b ; $140e
 	ldh [hRomBank], a ; $140f
-	ld [$2000], a ; $1411
+	ld [rROMB0], a ; $1411
 	pop de ; $1414
 	ret ; $1415
 AngleFromVector16:
@@ -4865,7 +4865,7 @@ RunFrameTasks:
 	ld d, a ; $1c1e
 	ld a, [hl] ; $1c1f
 	ldh [hRomBank], a ; $1c20
-	ld [$2000], a ; $1c22
+	ld [rROMB0], a ; $1c22
 	ld l, e ; $1c25
 	ld h, d ; $1c26
 	call JumpToHL ; $1c27
@@ -4880,7 +4880,7 @@ RunFrameTasks:
 	pop de ; $1c32
 	ld a, d ; $1c33
 	ldh [hRomBank], a ; $1c34
-	ld [$2000], a ; $1c36
+	ld [rROMB0], a ; $1c36
 	ld a, e ; $1c39
 	wram_bank ; $1c3a
 	ret ; $1c3e
@@ -6635,7 +6635,7 @@ SoftReset:
 	ldh [rWBK], a ; $25b0
 	ldh [rRP], a ; $25b2
 	xor a ; $25b4
-	ld [$0000], a ; $25b5
+	ld [rRAMG], a ; $25b5
 	call CopyOAMDMARoutineToHRAM ; $25b8
 	call ClearVRAMBank ; $25bb
 	xor a ; $25be
@@ -8018,7 +8018,7 @@ ProjectWorldToScreen:
 	push af ; $2d8e
 	ld a, $2f ; $2d8f
 	ldh [hRomBank], a ; $2d91
-	ld [$2000], a ; $2d93
+	ld [rROMB0], a ; $2d93
 	push hl ; $2d96
 	push de ; $2d97
 	ld l, e ; $2d98
@@ -8047,7 +8047,7 @@ ProjectWorldToScreen:
 	pop hl ; $2db7
 	ld a, $2e ; $2db8
 	ldh [hRomBank], a ; $2dba
-	ld [$2000], a ; $2dbc
+	ld [rROMB0], a ; $2dbc
 	push de ; $2dbf
 	push hl ; $2dc0
 	ld l, e ; $2dc1
@@ -8075,7 +8075,7 @@ ProjectWorldToScreen:
 	pop de ; $2de1
 	pop af ; $2de2
 	ldh [hRomBank], a ; $2de3
-	ld [$2000], a ; $2de5
+	ld [rROMB0], a ; $2de5
 	ret ; $2de8
 MulViewScaleA:
 	bit 7, h ; $2de9
@@ -8192,7 +8192,7 @@ GetPerspectiveScale:
 	push af ; $2e6d
 	ld a, [wCharObjectBank] ; $2e6e
 	ldh [hRomBank], a ; $2e71
-	ld [$2000], a ; $2e73
+	ld [rROMB0], a ; $2e73
 	ld hl, wCharShadowTablePtr ; $2e76
 	ld a, [hl+] ; $2e79
 	ld h, [hl] ; $2e7a
@@ -8225,7 +8225,7 @@ GetPerspectiveScale:
 .loop:
 	pop af ; $2ea6
 	ldh [hRomBank], a ; $2ea7
-	ld [$2000], a ; $2ea9
+	ld [rROMB0], a ; $2ea9
 	ret ; $2eac
 .nonZero:
 	push de ; $2ead
@@ -8723,7 +8723,7 @@ PlaySound:
 	and $0f ; $32e0
 	or $70 ; $32e2
 	ldh [hRomBank], a ; $32e4
-	ld [$2000], a ; $32e6
+	ld [rROMB0], a ; $32e6
 	ld a, [hl+] ; $32e9
 	swap a ; $32ea
 	and $0f ; $32ec
@@ -8751,7 +8751,7 @@ PlaySound:
 	ei ; $3309
 	pop af ; $330a
 	ldh [hRomBank], a ; $330b
-	ld [$2000], a ; $330d
+	ld [rROMB0], a ; $330d
 	pop hl ; $3310
 	pop de ; $3311
 	pop bc ; $3312
@@ -8864,7 +8864,7 @@ UpdateSoundChannels:
 	call CopyMemoryFast ; $33b4
 	ldh a, [hSndDataBank] ; $33b7
 	ldh [hRomBank], a ; $33b9
-	ld [$2000], a ; $33bb
+	ld [rROMB0], a ; $33bb
 	ldh a, [hSndChannelType] ; $33be
 	and $03 ; $33c0
 	ld [wSndChannelType], a ; $33c2
@@ -9025,7 +9025,7 @@ UpdateSoundChannels:
 	ldh [rAUDTERM], a ; $34d2
 	pop af ; $34d4
 	ldh [hRomBank], a ; $34d5
-	ld [$2000], a ; $34d7
+	ld [rROMB0], a ; $34d7
 	jp ApplyChannelUpdateRequest ; $34da
 .zero2:
 	ldh a, [hSndDataPtr] ; $34dd

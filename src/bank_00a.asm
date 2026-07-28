@@ -3276,7 +3276,7 @@ RunLocationExit:
 	xor a ; $5643
 	ld a, a ; $5644
 	ldh [hSramBank], a ; $5645
-	ld [$4000], a ; $5647
+	ld [rRAMB], a ; $5647
 	pop hl ; $564a
 	pop de ; $564b
 	pop bc ; $564c

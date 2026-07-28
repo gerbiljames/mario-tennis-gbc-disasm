@@ -44,7 +44,7 @@ InitSaveHeader:
 	push hl ; $404d
 	ld a, $00 ; $404e
 	ldh [hSramBank], a ; $4050
-	ld [$4000], a ; $4052
+	ld [rRAMB], a ; $4052
 	ld hl, SaveSignature ; $4055
 	ld de, sSaveSignature ; $4058
 	call CopySaveSignature ; $405b
@@ -1192,7 +1192,7 @@ WipeAllSaveRam:
 .loop:
 	ld a, e ; $47fb
 	ldh [hSramBank], a ; $47fc
-	ld [$4000], a ; $47fe
+	ld [rRAMB], a ; $47fe
 	ld bc, $0200 ; $4801
 	ld hl, $a000 ; $4804
 	xor a ; $4807
@@ -1225,7 +1225,7 @@ WipeAllSaveRam:
 ClearSaveFlagsArea:
 	xor a ; $4825
 	ldh [hSramBank], a ; $4826
-	ld [$4000], a ; $4828
+	ld [rRAMB], a ; $4828
 	ld c, $02 ; $482b
 	ld hl, sSaveFlags ; $482d
 .loop:
@@ -1254,7 +1254,7 @@ SumSaveHeaderRegion:
 	push bc ; $4846
 	xor a ; $4847
 	ldh [hSramBank], a ; $4848
-	ld [$4000], a ; $484a
+	ld [rRAMB], a ; $484a
 	ld h, a ; $484d
 	ld l, a ; $484e
 	ld de, sSaveFormatVersion ; $484f
@@ -1296,7 +1296,7 @@ UpdateSaveHeaderChecksum:
 	call CopyMemoryFast ; $4882
 	ld a, $01 ; $4885
 	ldh [hSramBank], a ; $4887
-	ld [$4000], a ; $4889
+	ld [rRAMB], a ; $4889
 	ld c, $04 ; $488c
 	pop hl ; $488e
 	pop de ; $488f
@@ -1304,7 +1304,7 @@ UpdateSaveHeaderChecksum:
 	add sp, 64 ; $4893
 	ld a, $00 ; $4895
 	ldh [hSramBank], a ; $4897
-	ld [$4000], a ; $4899
+	ld [rRAMB], a ; $4899
 	pop hl ; $489c
 	pop de ; $489d
 	pop bc ; $489e
@@ -1326,56 +1326,56 @@ MirrorSaveHeaderToBank1:
 	call CopyMemoryFast ; $48b8
 	ld a, $01 ; $48bb
 	ldh [hSramBank], a ; $48bd
-	ld [$4000], a ; $48bf
+	ld [rRAMB], a ; $48bf
 	ld hl, wTextBuffer ; $48c2
 	ld de, $a000 ; $48c5
 	ld c, $20 ; $48c8
 	call CopyMemoryFast ; $48ca
 	ld a, $00 ; $48cd
 	ldh [hSramBank], a ; $48cf
-	ld [$4000], a ; $48d1
+	ld [rRAMB], a ; $48d1
 	ld hl, sSaveBlockDirectory + 416 ; $48d4
 	ld de, wTextBuffer ; $48d7
 	ld c, $20 ; $48da
 	call CopyMemoryFast ; $48dc
 	ld a, $01 ; $48df
 	ldh [hSramBank], a ; $48e1
-	ld [$4000], a ; $48e3
+	ld [rRAMB], a ; $48e3
 	ld hl, wTextBuffer ; $48e6
 	ld de, sSaveBlockDirectory + 416 ; $48e9
 	ld c, $20 ; $48ec
 	call CopyMemoryFast ; $48ee
 	ld a, $00 ; $48f1
 	ldh [hSramBank], a ; $48f3
-	ld [$4000], a ; $48f5
+	ld [rRAMB], a ; $48f5
 	ld hl, sSaveBlockDirectory + 928 ; $48f8
 	ld de, wTextBuffer ; $48fb
 	ld c, $20 ; $48fe
 	call CopyMemoryFast ; $4900
 	ld a, $01 ; $4903
 	ldh [hSramBank], a ; $4905
-	ld [$4000], a ; $4907
+	ld [rRAMB], a ; $4907
 	ld hl, wTextBuffer ; $490a
 	ld de, sSaveBlockDirectory + 928 ; $490d
 	ld c, $20 ; $4910
 	call CopyMemoryFast ; $4912
 	ld a, $00 ; $4915
 	ldh [hSramBank], a ; $4917
-	ld [$4000], a ; $4919
+	ld [rRAMB], a ; $4919
 	ld hl, sSaveBlockDirectory + 1440 ; $491c
 	ld de, wTextBuffer ; $491f
 	ld c, $20 ; $4922
 	call CopyMemoryFast ; $4924
 	ld a, $01 ; $4927
 	ldh [hSramBank], a ; $4929
-	ld [$4000], a ; $492b
+	ld [rRAMB], a ; $492b
 	ld hl, wTextBuffer ; $492e
 	ld de, sSaveBlockDirectory + 1440 ; $4931
 	ld c, $20 ; $4934
 	call CopyMemoryFast ; $4936
 	ld a, $00 ; $4939
 	ldh [hSramBank], a ; $493b
-	ld [$4000], a ; $493d
+	ld [rRAMB], a ; $493d
 	pop hl ; $4940
 	pop de ; $4941
 	pop bc ; $4942
@@ -1407,10 +1407,10 @@ ValidateSaveRam:
 	push de ; $495e
 	push bc ; $495f
 	ld a, $0a ; $4960
-	ld [$0000], a ; $4962
+	ld [rRAMG], a ; $4962
 	ld a, $00 ; $4965
 	ldh [hSramBank], a ; $4967
-	ld [$4000], a ; $4969
+	ld [rRAMB], a ; $4969
 	ld hl, sSaveSignature ; $496c
 	ld de, SaveSignature ; $496f
 	call CompareSaveSignature ; $4972
@@ -1422,56 +1422,56 @@ ValidateSaveRam:
 .setSramBank:
 	ld a, $01 ; $4980
 	ldh [hSramBank], a ; $4982
-	ld [$4000], a ; $4984
+	ld [rRAMB], a ; $4984
 	ld hl, $a000 ; $4987
 	ld de, wTextBuffer ; $498a
 	ld c, $20 ; $498d
 	call CopyMemoryFast ; $498f
 	ld a, $00 ; $4992
 	ldh [hSramBank], a ; $4994
-	ld [$4000], a ; $4996
+	ld [rRAMB], a ; $4996
 	ld hl, wTextBuffer ; $4999
 	ld de, $a000 ; $499c
 	ld c, $20 ; $499f
 	call CopyMemoryFast ; $49a1
 	ld a, $01 ; $49a4
 	ldh [hSramBank], a ; $49a6
-	ld [$4000], a ; $49a8
+	ld [rRAMB], a ; $49a8
 	ld hl, sSaveBlockDirectory + 416 ; $49ab
 	ld de, wTextBuffer ; $49ae
 	ld c, $20 ; $49b1
 	call CopyMemoryFast ; $49b3
 	ld a, $00 ; $49b6
 	ldh [hSramBank], a ; $49b8
-	ld [$4000], a ; $49ba
+	ld [rRAMB], a ; $49ba
 	ld hl, wTextBuffer ; $49bd
 	ld de, sSaveBlockDirectory + 416 ; $49c0
 	ld c, $20 ; $49c3
 	call CopyMemoryFast ; $49c5
 	ld a, $01 ; $49c8
 	ldh [hSramBank], a ; $49ca
-	ld [$4000], a ; $49cc
+	ld [rRAMB], a ; $49cc
 	ld hl, sSaveBlockDirectory + 928 ; $49cf
 	ld de, wTextBuffer ; $49d2
 	ld c, $20 ; $49d5
 	call CopyMemoryFast ; $49d7
 	ld a, $00 ; $49da
 	ldh [hSramBank], a ; $49dc
-	ld [$4000], a ; $49de
+	ld [rRAMB], a ; $49de
 	ld hl, wTextBuffer ; $49e1
 	ld de, sSaveBlockDirectory + 928 ; $49e4
 	ld c, $20 ; $49e7
 	call CopyMemoryFast ; $49e9
 	ld a, $01 ; $49ec
 	ldh [hSramBank], a ; $49ee
-	ld [$4000], a ; $49f0
+	ld [rRAMB], a ; $49f0
 	ld hl, sSaveBlockDirectory + 1440 ; $49f3
 	ld de, wTextBuffer ; $49f6
 	ld c, $20 ; $49f9
 	call CopyMemoryFast ; $49fb
 	ld a, $00 ; $49fe
 	ldh [hSramBank], a ; $4a00
-	ld [$4000], a ; $4a02
+	ld [rRAMB], a ; $4a02
 	ld hl, wTextBuffer ; $4a05
 	ld de, sSaveBlockDirectory + 1440 ; $4a08
 	ld c, $20 ; $4a0b
@@ -1493,7 +1493,7 @@ ValidateSaveRam:
 .step2:
 	push af ; $4a32
 	xor a ; $4a33
-	ld [$0000], a ; $4a34
+	ld [rRAMG], a ; $4a34
 	pop af ; $4a37
 	pop bc ; $4a38
 	pop de ; $4a39
@@ -1501,15 +1501,15 @@ ValidateSaveRam:
 	ret ; $4a3b
 EraseAndInitSaveRam:
 	ld a, $0a ; $4a3c
-	ld [$0000], a ; $4a3e
+	ld [rRAMG], a ; $4a3e
 	ld a, $00 ; $4a41
 	ldh [hSramBank], a ; $4a43
-	ld [$4000], a ; $4a45
+	ld [rRAMB], a ; $4a45
 	call WipeAllSaveRam ; $4a48
 	call InitSaveHeader ; $4a4b
 	call MirrorSaveHeaderToBank1 ; $4a4e
 	xor a ; $4a51
-	ld [$0000], a ; $4a52
+	ld [rRAMG], a ; $4a52
 	ret ; $4a55
 CompareSaveSignature:
 	push de ; $4a56
@@ -1566,10 +1566,10 @@ WriteSaveBlock:
 	push de ; $4a8a
 	push bc ; $4a8b
 	ld a, $0a ; $4a8c
-	ld [$0000], a ; $4a8e
+	ld [rRAMG], a ; $4a8e
 	ld a, $00 ; $4a91
 	ldh [hSramBank], a ; $4a93
-	ld [$4000], a ; $4a95
+	ld [rRAMB], a ; $4a95
 	call InitSaveHeader ; $4a98
 	push de ; $4a9b
 	ld a, b ; $4a9c
@@ -1595,7 +1595,7 @@ WriteSaveBlock:
 	pop hl ; $4ab6
 	ld a, l ; $4ab7
 	ldh [hSramBank], a ; $4ab8
-	ld [$4000], a ; $4aba
+	ld [rRAMB], a ; $4aba
 	pop hl ; $4abd
 	push hl ; $4abe
 	push bc ; $4abf
@@ -1623,7 +1623,7 @@ WriteSaveBlock:
 	jr nz, .checksumLoop ; $4ad7
 	ld a, $00 ; $4ad9
 	ldh [hSramBank], a ; $4adb
-	ld [$4000], a ; $4add
+	ld [rRAMB], a ; $4add
 	pop bc ; $4ae0
 	ld a, $01 ; $4ae1
 	ld [bc], a ; $4ae3
@@ -1642,7 +1642,7 @@ WriteSaveBlock:
 	xor a ; $4af4
 	push af ; $4af5
 	xor a ; $4af6
-	ld [$0000], a ; $4af7
+	ld [rRAMG], a ; $4af7
 	pop af ; $4afa
 	pop bc ; $4afb
 	pop de ; $4afc
@@ -1675,10 +1675,10 @@ InvalidateSaveBlock:
 	push de ; $4b1d
 	push bc ; $4b1e
 	ld a, $0a ; $4b1f
-	ld [$0000], a ; $4b21
+	ld [rRAMG], a ; $4b21
 	ld a, $00 ; $4b24
 	ldh [hSramBank], a ; $4b26
-	ld [$4000], a ; $4b28
+	ld [rRAMB], a ; $4b28
 	call InitSaveHeader ; $4b2b
 	ld a, b ; $4b2e
 	call GetSaveBlockDirEntry ; $4b2f
@@ -1701,7 +1701,7 @@ InvalidateSaveBlock:
 	xor a ; $4b49
 	push af ; $4b4a
 	xor a ; $4b4b
-	ld [$0000], a ; $4b4c
+	ld [rRAMG], a ; $4b4c
 	pop af ; $4b4f
 	pop bc ; $4b50
 	pop de ; $4b51
@@ -1727,25 +1727,25 @@ ResetAllSaveBlocks:
 	ld b, $37 ; $4b7c
 	call InvalidateSaveBlock ; $4b7e
 	ld a, $0a ; $4b81
-	ld [$0000], a ; $4b83
+	ld [rRAMG], a ; $4b83
 	ld a, $00 ; $4b86
 	ldh [hSramBank], a ; $4b88
-	ld [$4000], a ; $4b8a
+	ld [rRAMB], a ; $4b8a
 	call ClearSaveFlagsArea ; $4b8d
 	call InitSaveHeader ; $4b90
 	call MirrorSaveHeaderToBank1 ; $4b93
 	xor a ; $4b96
-	ld [$0000], a ; $4b97
+	ld [rRAMG], a ; $4b97
 	ret ; $4b9a
 ReadSaveBlock:
 	push hl ; $4b9b
 	push de ; $4b9c
 	push bc ; $4b9d
 	ld a, $0a ; $4b9e
-	ld [$0000], a ; $4ba0
+	ld [rRAMG], a ; $4ba0
 	ld a, $00 ; $4ba3
 	ldh [hSramBank], a ; $4ba5
-	ld [$4000], a ; $4ba7
+	ld [rRAMB], a ; $4ba7
 	ld a, b ; $4baa
 	call GetSaveBlockDirEntry ; $4bab
 	ld a, [bc] ; $4bae
@@ -1775,7 +1775,7 @@ ReadSaveBlock:
 	pop hl ; $4bce
 	ld a, l ; $4bcf
 	ldh [hSramBank], a ; $4bd0
-	ld [$4000], a ; $4bd2
+	ld [rRAMB], a ; $4bd2
 	pop hl ; $4bd5
 	push hl ; $4bd6
 	push bc ; $4bd7
@@ -1803,7 +1803,7 @@ ReadSaveBlock:
 	jr nz, .checksumLoop ; $4bef
 	ld a, $00 ; $4bf1
 	ldh [hSramBank], a ; $4bf3
-	ld [$4000], a ; $4bf5
+	ld [rRAMB], a ; $4bf5
 	pop bc ; $4bf8
 	ld hl, $0006 ; $4bf9
 	add hl, bc ; $4bfc
@@ -1821,7 +1821,7 @@ ReadSaveBlock:
 .done:
 	push af ; $4c0a
 	xor a ; $4c0b
-	ld [$0000], a ; $4c0c
+	ld [rRAMG], a ; $4c0c
 	pop af ; $4c0f
 	pop bc ; $4c10
 	pop de ; $4c11
@@ -1832,10 +1832,10 @@ VerifySaveBlock:
 	push de ; $4c15
 	push bc ; $4c16
 	ld a, $0a ; $4c17
-	ld [$0000], a ; $4c19
+	ld [rRAMG], a ; $4c19
 	ld a, $00 ; $4c1c
 	ldh [hSramBank], a ; $4c1e
-	ld [$4000], a ; $4c20
+	ld [rRAMB], a ; $4c20
 	ld a, b ; $4c23
 	call GetSaveBlockDirEntry ; $4c24
 	ld a, [bc] ; $4c27
@@ -1865,7 +1865,7 @@ VerifySaveBlock:
 	pop hl ; $4c47
 	ld a, l ; $4c48
 	ldh [hSramBank], a ; $4c49
-	ld [$4000], a ; $4c4b
+	ld [rRAMB], a ; $4c4b
 	pop hl ; $4c4e
 	push de ; $4c4f
 	push bc ; $4c50
@@ -1875,7 +1875,7 @@ VerifySaveBlock:
 	jr z, .next ; $4c53
 	ld a, $00 ; $4c55
 	ldh [hSramBank], a ; $4c57
-	ld [$4000], a ; $4c59
+	ld [rRAMB], a ; $4c59
 	add sp, 6 ; $4c5c
 	ld a, $fd ; $4c5e
 	jp .done ; $4c60
@@ -1902,7 +1902,7 @@ VerifySaveBlock:
 	jr nz, .checksumLoop ; $4c79
 	ld a, $00 ; $4c7b
 	ldh [hSramBank], a ; $4c7d
-	ld [$4000], a ; $4c7f
+	ld [rRAMB], a ; $4c7f
 	pop bc ; $4c82
 	ld hl, $0006 ; $4c83
 	add hl, bc ; $4c86
@@ -1920,7 +1920,7 @@ VerifySaveBlock:
 .done:
 	push af ; $4c94
 	xor a ; $4c95
-	ld [$0000], a ; $4c96
+	ld [rRAMG], a ; $4c96
 	pop af ; $4c99
 	pop bc ; $4c9a
 	pop de ; $4c9b
@@ -1931,10 +1931,10 @@ ReadSaveBlockTag:
 	push de ; $4c9f
 	push bc ; $4ca0
 	ld a, $0a ; $4ca1
-	ld [$0000], a ; $4ca3
+	ld [rRAMG], a ; $4ca3
 	ld a, $00 ; $4ca6
 	ldh [hSramBank], a ; $4ca8
-	ld [$4000], a ; $4caa
+	ld [rRAMB], a ; $4caa
 	ld a, b ; $4cad
 	call GetSaveBlockDirEntry ; $4cae
 	ld a, [bc] ; $4cb1
@@ -1958,7 +1958,7 @@ ReadSaveBlockTag:
 .loopB:
 	push af ; $4cc9
 	xor a ; $4cca
-	ld [$0000], a ; $4ccb
+	ld [rRAMG], a ; $4ccb
 	pop af ; $4cce
 	pop bc ; $4ccf
 	pop de ; $4cd0
@@ -1968,10 +1968,10 @@ ReadSaveBlockTag:
 	push de ; $4cd4
 	push bc ; $4cd5
 	ld a, $0a ; $4cd6
-	ld [$0000], a ; $4cd8
+	ld [rRAMG], a ; $4cd8
 	ld a, $00 ; $4cdb
 	ldh [hSramBank], a ; $4cdd
-	ld [$4000], a ; $4cdf
+	ld [rRAMB], a ; $4cdf
 	ld a, b ; $4ce2
 	call GetSaveBlockDirEntry ; $4ce3
 	ld a, [bc] ; $4ce6
@@ -1994,7 +1994,7 @@ ReadSaveBlockTag:
 	xor a ; $4cfd
 	push af ; $4cfe
 	xor a ; $4cff
-	ld [$0000], a ; $4d00
+	ld [rRAMG], a ; $4d00
 	pop af ; $4d03
 	pop bc ; $4d04
 	pop de ; $4d05
@@ -2078,10 +2078,10 @@ TestSaveFlag:
 	push bc ; $4d88
 	ld b, a ; $4d89
 	ld a, $0a ; $4d8a
-	ld [$0000], a ; $4d8c
+	ld [rRAMG], a ; $4d8c
 	ld a, $00 ; $4d8f
 	ldh [hSramBank], a ; $4d91
-	ld [$4000], a ; $4d93
+	ld [rRAMB], a ; $4d93
 	ld hl, SaveFlagMaskTable_03 ; $4d96
 	ld a, e ; $4d99
 	rlca ; $4d9a
@@ -2100,7 +2100,7 @@ TestSaveFlag:
 	and [hl] ; $4daa
 	push af ; $4dab
 	xor a ; $4dac
-	ld [$0000], a ; $4dad
+	ld [rRAMG], a ; $4dad
 	pop af ; $4db0
 	ld a, b ; $4db1
 	pop bc ; $4db2
@@ -2111,10 +2111,10 @@ SetSaveFlag:
 	push hl ; $4db6
 	push af ; $4db7
 	ld a, $0a ; $4db8
-	ld [$0000], a ; $4dba
+	ld [rRAMG], a ; $4dba
 	ld a, $00 ; $4dbd
 	ldh [hSramBank], a ; $4dbf
-	ld [$4000], a ; $4dc1
+	ld [rRAMB], a ; $4dc1
 	ld hl, SaveFlagMaskTable_03 ; $4dc4
 	ld a, e ; $4dc7
 	rlca ; $4dc8
@@ -2134,7 +2134,7 @@ SetSaveFlag:
 	ld [hl], a ; $4dd9
 	call UpdateSaveHeaderChecksum ; $4dda
 	xor a ; $4ddd
-	ld [$0000], a ; $4dde
+	ld [rRAMG], a ; $4dde
 	pop af ; $4de1
 	pop hl ; $4de2
 	ret ; $4de3
@@ -2142,10 +2142,10 @@ ClearSaveFlag:
 	push hl ; $4de4
 	push af ; $4de5
 	ld a, $0a ; $4de6
-	ld [$0000], a ; $4de8
+	ld [rRAMG], a ; $4de8
 	ld a, $00 ; $4deb
 	ldh [hSramBank], a ; $4ded
-	ld [$4000], a ; $4def
+	ld [rRAMB], a ; $4def
 	ld hl, SaveFlagMaskTable_03 ; $4df2
 	ld a, e ; $4df5
 	rlca ; $4df6
@@ -2166,7 +2166,7 @@ ClearSaveFlag:
 	ld [hl], a ; $4e08
 	call UpdateSaveHeaderChecksum ; $4e09
 	xor a ; $4e0c
-	ld [$0000], a ; $4e0d
+	ld [rRAMG], a ; $4e0d
 	pop af ; $4e10
 	pop hl ; $4e11
 	ret ; $4e12
@@ -2176,7 +2176,7 @@ EraseStorySlotSaveData:
 	push hl ; $4e15
 	ld h, a ; $4e16
 	ld a, $0a ; $4e17
-	ld [$0000], a ; $4e19
+	ld [rRAMG], a ; $4e19
 	call InitSaveHeader ; $4e1c
 	ld a, [wCurrentStorySlot] ; $4e1f
 	cp $03 ; $4e22
@@ -2197,7 +2197,7 @@ EraseStorySlotSaveData:
 	call ClearSaveBlock ; $4e3c
 	call MirrorSaveHeaderToBank1 ; $4e3f
 	xor a ; $4e42
-	ld [$0000], a ; $4e43
+	ld [rRAMG], a ; $4e43
 	call InitCurrentSlotMinigameRecords ; $4e46
 	ld a, [wCurrentStorySlot] ; $4e49
 	or a ; $4e4c
@@ -2258,7 +2258,7 @@ ClearSaveBlockData:
 	push bc ; $4e9f
 	ld a, $00 ; $4ea0
 	ldh [hSramBank], a ; $4ea2
-	ld [$4000], a ; $4ea4
+	ld [rRAMB], a ; $4ea4
 	ld a, b ; $4ea7
 	call GetSaveBlockDirEntry ; $4ea8
 	push bc ; $4eab
@@ -2282,7 +2282,7 @@ ClearSaveBlockData:
 	pop hl ; $4ec1
 	ld a, l ; $4ec2
 	ldh [hSramBank], a ; $4ec3
-	ld [$4000], a ; $4ec5
+	ld [rRAMB], a ; $4ec5
 	pop hl ; $4ec8
 	push hl ; $4ec9
 	push bc ; $4eca
@@ -2299,7 +2299,7 @@ ClearSaveBlockData:
 	ld de, $0000 ; $4ed5
 	ld a, $00 ; $4ed8
 	ldh [hSramBank], a ; $4eda
-	ld [$4000], a ; $4edc
+	ld [rRAMB], a ; $4edc
 	pop bc ; $4edf
 	ld a, $01 ; $4ee0
 	ld [bc], a ; $4ee2
@@ -2325,7 +2325,7 @@ ClearSaveBlockData:
 	push bc ; $4ef9
 	ld a, $00 ; $4efa
 	ldh [hSramBank], a ; $4efc
-	ld [$4000], a ; $4efe
+	ld [rRAMB], a ; $4efe
 	ld a, b ; $4f01
 	call GetSaveBlockDirEntry ; $4f02
 	push bc ; $4f05
@@ -2353,7 +2353,7 @@ ClearSaveBlockData:
 	pop hl ; $4f21
 	ld a, l ; $4f22
 	ldh [hSramBank], a ; $4f23
-	ld [$4000], a ; $4f25
+	ld [rRAMB], a ; $4f25
 	pop hl ; $4f28
 	push hl ; $4f29
 	push bc ; $4f2a
@@ -2370,7 +2370,7 @@ ClearSaveBlockData:
 	ld de, $0000 ; $4f35
 	ld a, $00 ; $4f38
 	ldh [hSramBank], a ; $4f3a
-	ld [$4000], a ; $4f3c
+	ld [rRAMB], a ; $4f3c
 	pop bc ; $4f3f
 	ld a, $01 ; $4f40
 	ld [bc], a ; $4f42
@@ -2397,7 +2397,7 @@ ClearSaveBlockEntry:
 	push bc ; $4f59
 	ld a, $00 ; $4f5a
 	ldh [hSramBank], a ; $4f5c
-	ld [$4000], a ; $4f5e
+	ld [rRAMB], a ; $4f5e
 	ld a, b ; $4f61
 	call GetSaveBlockDirEntry ; $4f62
 	xor a ; $4f65
@@ -2501,12 +2501,12 @@ ClearSaveBlock11:
 	push de ; $4fff
 	push hl ; $5000
 	ld a, $0a ; $5001
-	ld [$0000], a ; $5003
+	ld [rRAMG], a ; $5003
 	ld b, $0b ; $5006
 	call ClearSaveBlockData ; $5008
 	push af ; $500b
 	xor a ; $500c
-	ld [$0000], a ; $500d
+	ld [rRAMG], a ; $500d
 	pop af ; $5010
 	pop hl ; $5011
 	pop de ; $5012

@@ -16,6 +16,11 @@ ROM0_FAR_POINTERS = {0x0153}
 
 IMM8_RE = re.compile(r"\$[0-9a-f]{1,2}$")
 IMM16_RE = re.compile(r"^ld (bc|de|hl), \$([0-9a-f]{4})$")
+MBC_WRITE_RE = re.compile(r"^ld \[\$([0-5][0-9a-f]{3})\], a$")
+
+# The MBC5 command windows, in the order a write is matched against them.
+MBC_REGS = ((0x4000, "rRAMB"), (0x3000, "rROMB1"), (0x2000, "rROMB0"),
+            (0x0000, "rRAMG"))
 
 # The one site outside bank $03 that loads a real SRAM address: FetchSRAMText
 # reads text out of the save at $a800. Bank $03 (the save engine) is excluded
@@ -161,6 +166,17 @@ def render_operand(ins, off, labels, hwregs, ramnames, data_labels=None,
             addr = int(m.group(0)[1:], 16)
             if addr in hwregs:
                 text = text.replace(m.group(0), hwregs[addr])
+    # A *write* through a bracket operand below $8000 is not a memory store at
+    # all -- ROM space is the MBC's command interface, so it always selects a
+    # bank or gates cartridge RAM. (No instruction in the ROM reads a bracket
+    # operand from this range, so restricting to the write form costs nothing.)
+    if MBC_WRITE_RE.match(text):
+        addr = int(MBC_WRITE_RE.match(text).group(1), 16)
+        for base, name in MBC_REGS:
+            if base <= addr < base + 0x2000:
+                off_in = addr - base
+                sym = name if not off_in else f"{name} + {off_in}"
+                return f"ld [{sym}], a"
     if ramnames and "[$" in text:
         m = MEMADDR_RE.search(text)
         if m:
