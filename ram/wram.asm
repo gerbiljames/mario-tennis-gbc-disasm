@@ -2340,16 +2340,31 @@ ENDU
 
 SECTION "WRAMX bank 1", WRAMX[$d000], BANK[1]
 
+; WRAM bank $01 is staging for VRAM, and almost nothing else: every screen
+; in the game decompresses into it and then QueueVRAMCopies out of it.
+; What a given offset means therefore depends on what the current screen
+; put there -- tile graphics, a tilemap plane, its attribute plane -- so
+; the two halves get names and the offsets do not. Every offset in use is a
+; whole multiple of TILE_SIZE, which is why they render as tile indices.
+; Scoped to a provable WRAM bank $01: $d000 is eight different things and
+; twenty ROM banks stage through this one.
+; The one overlay with a fixed meaning is bank $1b's character-record copy:
+; LoadCharacterRecordToBuffer writes $d580 in whichever bank the caller left
+; selected, and bank $1b selects this one, so the record lands on top of the
+; staging buffer while the new-game roster is being built.
+UNION
+; character record copy (bank $1b)
 	ds 1408
-
-; Character-record scratch. LoadCharacterRecordToBuffer writes $d580 in
-; whichever WRAM bank the caller left selected, so the address belongs to
-; no one bank; this names the bank $01 copy, which is the only one the
-; dataflow can prove (bank $1b selects it before filling the new-game
-; roster). The bank $18 and $38 callers keep the numeric address.
-; character record buffer (bank $1b)
 ; [128 bytes] Copy of a character record that LoadCharacterRecordToBuffer takes from wPlayer2MainName, so a caller can read one character's fields without disturbing the live records. +$0b is the id CheckCharacterUnlocked tests against $ff, and RunNewGameSetup reads +$0c and +$0e for each of the four starting characters
 wCharRecordBuffer:: ds 128
+	ds 2560
+NEXTU
+; VRAM staging (WRAM bank $01)
+; [2048 bytes] Where DecompressData lands and QueueVRAMCopy reads from. A screen may slice it several ways at once -- the cutscene frame loaders keep six frames at tiles 0, 4, 8, 12, 14 and 16, while the EXP screen puts a tilemap plane at tile 0 and its attributes at tile 64. CopyMapToScrollBuffers reads the map planes back out of it to expand them into WRAM bank $02
+wDecompBuffer:: ds 2048
+; [2048 bytes] The other half, where DrawStringToTileBuffer renders a string as tile data rather than as tilemap cells -- the EXP screen's captions and bonus messages are built here and uploaded like any other graphics
+wTextTileBuffer:: ds 2048
+ENDU
 
 
 SECTION "WRAMX bank 3", WRAMX[$d000], BANK[3]

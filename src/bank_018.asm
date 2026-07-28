@@ -161,7 +161,7 @@ FlushBgMapShadowToVram:
 	ld a, [wBgMapShadowDirty] ; $4353
 	and $0f ; $4356
 	jr z, .attrPlane ; $4358
-	ld hl, $d800 ; $435a
+	ld hl, wTextTileBuffer ; $435a
 	ld de, $9800 ; $435d
 	ld c, $24 ; $4360
 	call QueueVRAMCopy ; $4362
@@ -169,7 +169,7 @@ FlushBgMapShadowToVram:
 	ld a, [wBgMapShadowDirty] ; $4365
 	and $f0 ; $4368
 	jr z, .done ; $436a
-	ld hl, $dc00 ; $436c
+	ld hl, wTextTileBuffer + 64 * TILE_SIZE ; $436c
 	ld de, $9800 + VRAM_BANK1 ; $436f
 	ld c, $24 ; $4372
 	call QueueVRAMCopy ; $4374
@@ -719,13 +719,13 @@ InitConfirmScreen:
 	ld [$c783], a ; $52eb
 	ld [$c780], a ; $52ee
 	ld hl, ConfirmScreenGfx0 ; $52f1
-	ld de, $d000 ; $52f4
+	ld de, wDecompBuffer ; $52f4
 	call DecompressData ; $52f7
-	ld hl, $d000 ; $52fa
+	ld hl, wDecompBuffer ; $52fa
 	ld de, $9000 + VRAM_BANK1 ; $52fd
 	ld c, $80 ; $5300
 	call QueueVRAMCopy ; $5302
-	ld hl, $d800 ; $5305
+	ld hl, wTextTileBuffer ; $5305
 	ld de, $8800 + VRAM_BANK1 ; $5308
 	ld c, $80 ; $530b
 	call QueueVRAMCopy ; $530d
@@ -733,17 +733,17 @@ InitConfirmScreen:
 	ld de, $0008 ; $5313
 	call LoadPaletteShadow ; $5316
 	ld hl, ConfirmScreenGfx2 ; $5319
-	ld de, $dc00 ; $531c
+	ld de, wTextTileBuffer + 64 * TILE_SIZE ; $531c
 	call DecompressData ; $531f
 	ld hl, ConfirmScreenGfx1 ; $5322
-	ld de, $d800 ; $5325
+	ld de, wTextTileBuffer ; $5325
 	call DecompressData ; $5328
 	call LoadFontTiles ; $532b
 	call DrawConfirmScreenBox ; $532e
 	ld hl, ConfirmScreenGfx3 ; $5331
-	ld de, $d000 ; $5334
+	ld de, wDecompBuffer ; $5334
 	call DecompressData ; $5337
-	ld hl, $d000 ; $533a
+	ld hl, wDecompBuffer ; $533a
 	ld de, $8300 ; $533d
 	ld c, $14 ; $5340
 	call QueueVRAMCopy ; $5342
@@ -760,8 +760,8 @@ InitConfirmScreen:
 	call StubNop_18_5379 ; $5361
 	ret ; $5364
 DrawConfirmScreenBox:
-	ld hl, $d9a0 ; $5365
-	ld de, $dda0 ; $5368
+	ld hl, wTextTileBuffer + 26 * TILE_SIZE ; $5365
+	ld de, wTextTileBuffer + 90 * TILE_SIZE ; $5368
 	ld bc, $0e05 ; $536b
 	call DrawBox ; $536e
 	ret ; $5371
@@ -774,19 +774,19 @@ StubNop_18_5379:
 SetupScoreboardDisplay:
 	ld a, [wScorePanelValues] ; $537a
 	call GetTextSlotPointer ; $537d
-	ld de, $d84b ; $5380
+	ld de, wTextTileBuffer + 4 * TILE_SIZE + 11 ; $5380
 	call DrawTileBlock6x2ToTilemap ; $5383
 	ld a, [wScorePanelValues + 1] ; $5386
 	call GetTextSlotPointer ; $5389
-	ld de, $d88b ; $538c
+	ld de, wTextTileBuffer + 8 * TILE_SIZE + 11 ; $538c
 	call DrawTileBlock6x2ToTilemap ; $538f
 	ld a, [wScorePanelValues + 2] ; $5392
 	call GetTextSlotPointer ; $5395
-	ld de, $d8cb ; $5398
+	ld de, wTextTileBuffer + 12 * TILE_SIZE + 11 ; $5398
 	call DrawTileBlock6x2ToTilemap ; $539b
 	ld a, [wTargetZoneX1] ; $539e
 	call GetTextSlotPointer ; $53a1
-	ld de, $d90b ; $53a4
+	ld de, wTextTileBuffer + 16 * TILE_SIZE + 11 ; $53a4
 	call DrawTileBlock6x2ToTilemap ; $53a7
 	ld a, $0a ; $53aa
 	ld hl, DrawScoreNumbersTask ; $53ac
@@ -829,7 +829,7 @@ GetTextSlotPointer:
 	ld a, [hl+] ; $53f0
 	ld h, [hl] ; $53f1
 	ld l, a ; $53f2
-	ld de, $d800 ; $53f3
+	ld de, wTextTileBuffer ; $53f3
 	add hl, de ; $53f6
 	ret ; $53f7
 TextSlotPointerTable:
@@ -1148,9 +1148,9 @@ ClearTileVramBothBanks:
 	ret ; $55f7
 LoadConfirmScreenSpriteGfx:
 	ld hl, ConfirmScreenSpriteGfx0 ; $55f8
-	ld de, $d000 ; $55fb
+	ld de, wDecompBuffer ; $55fb
 	call DecompressData ; $55fe
-	ld hl, $d000 ; $5601
+	ld hl, wDecompBuffer ; $5601
 	ld de, $8000 + VRAM_BANK1 ; $5604
 	ld c, $1c ; $5607
 	call QueueVRAMCopy ; $5609
@@ -1158,9 +1158,9 @@ LoadConfirmScreenSpriteGfx:
 	ld de, $0c03 ; $560f
 	call LoadPalettesImmediate ; $5612
 	ld hl, ConfirmScreenSpriteGfx1 ; $5615
-	ld de, $d000 ; $5618
+	ld de, wDecompBuffer ; $5618
 	call DecompressData ; $561b
-	ld hl, $d000 ; $561e
+	ld hl, wDecompBuffer ; $561e
 	ld de, $8200 + VRAM_BANK1 ; $5621
 	ld c, $0c ; $5624
 	call QueueVRAMCopy ; $5626

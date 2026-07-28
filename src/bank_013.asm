@@ -2532,7 +2532,7 @@ DecompressVarsityCourtTourRecords_13:
 	ld a, [hl+] ; $6692
 	ld h, [hl] ; $6693
 	ld l, a ; $6694
-	ld de, $d000 ; $6695
+	ld de, wDecompBuffer ; $6695
 	call DecompressData ; $6698
 	pop af ; $669b
 	push af ; $669c
@@ -2542,7 +2542,7 @@ DecompressVarsityCourtTourRecords_13:
 	add hl, de ; $66a3
 	ld d, h ; $66a4
 	ld e, l ; $66a5
-	ld hl, $d000 ; $66a6
+	ld hl, wDecompBuffer ; $66a6
 	ld c, $10 ; $66a9
 	call QueueVRAMCopy ; $66ab
 	pop af ; $66ae

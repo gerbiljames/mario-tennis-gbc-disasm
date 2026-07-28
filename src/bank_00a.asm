@@ -3533,13 +3533,13 @@ LoadStorySceneGraphics:
 	ld a, [hl+] ; $5898
 	ld h, [hl] ; $5899
 	ld l, a ; $589a
-	ld de, $d000 ; $589b
+	ld de, wDecompBuffer ; $589b
 	call DecompressDataFromBank ; $589e
-	ld hl, $d000 ; $58a1
+	ld hl, wDecompBuffer ; $58a1
 	ld de, $9000 + VRAM_BANK1 ; $58a4
 	ld c, $80 ; $58a7
 	call QueueVRAMCopy ; $58a9
-	ld hl, $d800 ; $58ac
+	ld hl, wTextTileBuffer ; $58ac
 	ld de, $8800 + VRAM_BANK1 ; $58af
 	ld c, $80 ; $58b2
 	call QueueVRAMCopy ; $58b4
@@ -3562,10 +3562,10 @@ LoadStorySceneGraphics:
 	call DecompressDataFromBank ; $58e6
 	wram_bank $01 ; $58e9
 	pop hl ; $58ef
-	ld de, $d000 ; $58f0
+	ld de, wDecompBuffer ; $58f0
 	ld bc, $0040 ; $58f3
 	call CopyDataFromBank ; $58f6
-	ld hl, $d010 ; $58f9
+	ld hl, wDecompBuffer + 1 * TILE_SIZE ; $58f9
 	ld de, $0206 ; $58fc
 	call LoadPaletteShadow ; $58ff
 	wram_bank $06 ; $5902
@@ -3976,13 +3976,13 @@ LoadSceneGraphicsDirect:
 	ld a, [hl+] ; $5d6d
 	ld h, [hl] ; $5d6e
 	ld l, a ; $5d6f
-	ld de, $d000 ; $5d70
+	ld de, wDecompBuffer ; $5d70
 	call DecompressDataFromBank ; $5d73
-	ld hl, $d000 ; $5d76
+	ld hl, wDecompBuffer ; $5d76
 	ld de, $9000 ; $5d79
 	ld bc, $0080 ; $5d7c
 	call StartVRAMDMAFromHL ; $5d7f
-	ld hl, $d800 ; $5d82
+	ld hl, wTextTileBuffer ; $5d82
 	ld de, $8800 ; $5d85
 	ld bc, $0080 ; $5d88
 	call StartVRAMDMAFromHL ; $5d8b
@@ -4007,10 +4007,10 @@ LoadSceneGraphicsDirect:
 	call DecompressDataFromBank ; $5dc1
 	pop hl ; $5dc4
 	wram_bank $01 ; $5dc5
-	ld de, $d000 ; $5dcb
+	ld de, wDecompBuffer ; $5dcb
 	ld bc, $0040 ; $5dce
 	call CopyDataFromBank ; $5dd1
-	ld hl, $d008 ; $5dd4
+	ld hl, wDecompBuffer + 8 ; $5dd4
 	ld de, $0107 ; $5dd7
 	call LoadPalettesMasterOnly ; $5dda
 	pop hl ; $5ddd
@@ -4852,13 +4852,13 @@ LoadCourtSceneGraphics:
 	ld a, [hl+] ; $632d
 	ld h, [hl] ; $632e
 	ld l, a ; $632f
-	ld de, $d000 ; $6330
+	ld de, wDecompBuffer ; $6330
 	call DecompressDataFromBank ; $6333
-	ld hl, $d000 ; $6336
+	ld hl, wDecompBuffer ; $6336
 	ld de, $9000 + VRAM_BANK1 ; $6339
 	ld c, $80 ; $633c
 	call QueueVRAMCopy ; $633e
-	ld hl, $d800 ; $6341
+	ld hl, wTextTileBuffer ; $6341
 	ld de, $8800 + VRAM_BANK1 ; $6344
 	ld c, $80 ; $6347
 	call QueueVRAMCopy ; $6349

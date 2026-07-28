@@ -3303,7 +3303,7 @@ LoadMainMenuGfx:
 	push bc ; $56dd
 	push de ; $56de
 	push hl ; $56df
-	ld de, $d000 ; $56e0
+	ld de, wDecompBuffer ; $56e0
 	call DecompressDataFromBank ; $56e3
 	pop hl ; $56e6
 	pop de ; $56e7
@@ -3320,7 +3320,7 @@ LoadMainMenuGfx:
 	ld a, [hl+] ; $56f4
 	ld d, [hl] ; $56f5
 	ld e, a ; $56f6
-	ld hl, $d000 ; $56f7
+	ld hl, wDecompBuffer ; $56f7
 	push af ; $56fa
 	push bc ; $56fb
 	push de ; $56fc
@@ -4245,7 +4245,7 @@ LoadMatchFormatGfx:
 	push bc ; $5e05
 	push de ; $5e06
 	push hl ; $5e07
-	ld de, $d000 ; $5e08
+	ld de, wDecompBuffer ; $5e08
 	call DecompressDataFromBank ; $5e0b
 	pop hl ; $5e0e
 	pop de ; $5e0f
@@ -4262,7 +4262,7 @@ LoadMatchFormatGfx:
 	ld a, [hl+] ; $5e1c
 	ld d, [hl] ; $5e1d
 	ld e, a ; $5e1e
-	ld hl, $d000 ; $5e1f
+	ld hl, wDecompBuffer ; $5e1f
 	push af ; $5e22
 	push bc ; $5e23
 	push de ; $5e24
@@ -4912,7 +4912,7 @@ LoadMinigameSelectGfx:
 	push bc ; $62fa
 	call GetUnlockedMarioCastCharAtGridSlot ; $62fb
 	ld b, a ; $62fe
-	ld de, $d000 ; $62ff
+	ld de, wDecompBuffer ; $62ff
 	farcall DecompressCharacterPortrait ; $6302
 	pop bc ; $6305
 	push bc ; $6306
@@ -4927,7 +4927,7 @@ LoadMinigameSelectGfx:
 	ld a, [hl+] ; $6311
 	ld d, [hl] ; $6312
 	ld e, a ; $6313
-	ld hl, $d000 ; $6314
+	ld hl, wDecompBuffer ; $6314
 	ld c, $09 ; $6317
 	call QueueVRAMCopy ; $6319
 	pop bc ; $631c
@@ -4968,24 +4968,24 @@ LoadMinigameSelectGfx:
 	farcall LoadCompressedTileBlock ; $636f
 	call AdvanceFrame ; $6372
 	ld hl, $6d7e ; $6375 -> DataPtr_MinigameSelectIconGfx0
-	ld de, $d000 ; $6378
+	ld de, wDecompBuffer ; $6378
 	call DecompressDataFromBank ; $637b
-	ld hl, $d000 ; $637e
+	ld hl, wDecompBuffer ; $637e
 	ld de, $8200 ; $6381
 	ld c, $10 ; $6384
 	call QueueVRAMCopy ; $6386
 	ld hl, $6d80 ; $6389 -> DataPtr_MinigameSelectIconGfx1
-	ld de, $d400 ; $638c
+	ld de, wDecompBuffer + 64 * TILE_SIZE ; $638c
 	call DecompressDataFromBank ; $638f
-	ld hl, $d400 ; $6392
+	ld hl, wDecompBuffer + 64 * TILE_SIZE ; $6392
 	ld de, $8300 ; $6395
 	ld c, $10 ; $6398
 	call QueueVRAMCopy ; $639a
 	call AdvanceFrame ; $639d
 	ld hl, $6d82 ; $63a0 -> DataPtr_MinigameSelectIconGfx2
-	ld de, $d000 ; $63a3
+	ld de, wDecompBuffer ; $63a3
 	call DecompressDataFromBank ; $63a6
-	ld hl, $d000 ; $63a9
+	ld hl, wDecompBuffer ; $63a9
 	ld de, $8400 ; $63ac
 	ld c, $10 ; $63af
 	call QueueVRAMCopy ; $63b1
@@ -5648,17 +5648,17 @@ LoadSavedDataSourceGfx:
 	push af ; $6870
 	wram_bank $01 ; $6871
 	ld hl, $3c14 ; $6877 -> DataPtr_ModeSelectLabelTiles1
-	ld de, $d000 ; $687a
+	ld de, wDecompBuffer ; $687a
 	call DecompressDataFromBank ; $687d
-	ld hl, $d000 ; $6880
+	ld hl, wDecompBuffer ; $6880
 	ld de, $8800 + VRAM_BANK1 ; $6883
 	ld bc, $0010 ; $6886
 	call QueueVRAMCopy ; $6889
 	call AdvanceFrame ; $688c
 	ld hl, $3c20 ; $688f -> DataPtr_ModeSelectLabelTiles7
-	ld de, $d000 ; $6892
+	ld de, wDecompBuffer ; $6892
 	call DecompressDataFromBank ; $6895
-	ld hl, $d000 ; $6898
+	ld hl, wDecompBuffer ; $6898
 	ld de, $8900 + VRAM_BANK1 ; $689b
 	ld bc, $0010 ; $689e
 	call QueueVRAMCopy ; $68a1
@@ -6262,17 +6262,17 @@ LoadEraseSavedDataGfx:
 	call AdvanceFrame ; $6d85
 	wram_bank $01 ; $6d88
 	ld hl, $3d0e ; $6d8e -> DataPtr_N64TransferLabelTiles0
-	ld de, $d000 ; $6d91
+	ld de, wDecompBuffer ; $6d91
 	call DecompressDataFromBank ; $6d94
-	ld hl, $d000 ; $6d97
+	ld hl, wDecompBuffer ; $6d97
 	ld de, $8800 + VRAM_BANK1 ; $6d9a
 	ld c, $10 ; $6d9d
 	call QueueVRAMCopy ; $6d9f
 	call AdvanceFrame ; $6da2
 	ld hl, $3d10 ; $6da5 -> DataPtr_N64TransferLabelTiles1
-	ld de, $d000 ; $6da8
+	ld de, wDecompBuffer ; $6da8
 	call DecompressDataFromBank ; $6dab
-	ld hl, $d000 ; $6dae
+	ld hl, wDecompBuffer ; $6dae
 	ld de, $8900 + VRAM_BANK1 ; $6db1
 	ld c, $10 ; $6db4
 	call QueueVRAMCopy ; $6db6
@@ -6908,7 +6908,7 @@ LoadN64RecordTypeGfx:
 	push bc ; $725c
 	push de ; $725d
 	push hl ; $725e
-	ld de, $d000 ; $725f
+	ld de, wDecompBuffer ; $725f
 	call DecompressDataFromBank ; $7262
 	pop hl ; $7265
 	pop de ; $7266
@@ -6925,7 +6925,7 @@ LoadN64RecordTypeGfx:
 	ld a, [hl+] ; $7273
 	ld d, [hl] ; $7274
 	ld e, a ; $7275
-	ld hl, $d000 ; $7276
+	ld hl, wDecompBuffer ; $7276
 	push af ; $7279
 	push bc ; $727a
 	push de ; $727b
@@ -7330,7 +7330,7 @@ LoadN64TransferItemGfx:
 	push bc ; $756b
 	push de ; $756c
 	push hl ; $756d
-	ld de, $d000 ; $756e
+	ld de, wDecompBuffer ; $756e
 	call DecompressDataFromBank ; $7571
 	pop hl ; $7574
 	pop de ; $7575
@@ -7347,7 +7347,7 @@ LoadN64TransferItemGfx:
 	ld a, [hl+] ; $7582
 	ld d, [hl] ; $7583
 	ld e, a ; $7584
-	ld hl, $d000 ; $7585
+	ld hl, wDecompBuffer ; $7585
 	push af ; $7588
 	push bc ; $7589
 	push de ; $758a

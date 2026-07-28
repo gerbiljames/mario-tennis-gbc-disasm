@@ -63,13 +63,13 @@ LoadMatchGraphics:
 	ld c, $40 ; $5ece
 	call QueueVRAMCopy ; $5ed0
 	ld hl, MatchGfxTilesA_28 ; $5ed3
-	ld de, $d000 ; $5ed6
+	ld de, wDecompBuffer ; $5ed6
 	call DecompressData ; $5ed9
-	ld hl, $d000 ; $5edc
+	ld hl, wDecompBuffer ; $5edc
 	ld de, $9000 ; $5edf
 	ld c, $80 ; $5ee2
 	call QueueVRAMCopy ; $5ee4
-	ld hl, $d800 ; $5ee7
+	ld hl, wTextTileBuffer ; $5ee7
 	ld de, $8800 ; $5eea
 	ld c, $80 ; $5eed
 	call QueueVRAMCopy ; $5eef
@@ -323,9 +323,9 @@ LoadMatchStoryGfx:
 	ld de, $0002 ; $60db
 	call LoadPaletteShadow ; $60de
 	ld hl, MatchGfxTilesB_28 ; $60e1
-	ld de, $d000 ; $60e4
+	ld de, wDecompBuffer ; $60e4
 	call DecompressData ; $60e7
-	ld hl, $d000 ; $60ea
+	ld hl, wDecompBuffer ; $60ea
 	ld de, $9000 ; $60ed
 	ld c, $20 ; $60f0
 	call QueueVRAMCopy ; $60f2
@@ -336,7 +336,7 @@ LoadMatchStoryGfx:
 	call AdvanceFrame ; $60fc
 .restore:
 	pop af ; $60ff
-	ld hl, $d200 ; $6100
+	ld hl, wDecompBuffer + 32 * TILE_SIZE ; $6100
 	ld de, $9200 ; $6103
 	ld c, $20 ; $6106
 	call QueueVRAMCopy ; $6108
@@ -347,7 +347,7 @@ LoadMatchStoryGfx:
 	call AdvanceFrame ; $6112
 .restore2:
 	pop af ; $6115
-	ld hl, $d400 ; $6116
+	ld hl, wDecompBuffer + 64 * TILE_SIZE ; $6116
 	ld de, $9400 ; $6119
 	ld c, $20 ; $611c
 	call QueueVRAMCopy ; $611e
@@ -358,7 +358,7 @@ LoadMatchStoryGfx:
 	call AdvanceFrame ; $6128
 .restore3:
 	pop af ; $612b
-	ld hl, $d600 ; $612c
+	ld hl, wDecompBuffer + 96 * TILE_SIZE ; $612c
 	ld de, $9600 ; $612f
 	ld c, $20 ; $6132
 	call QueueVRAMCopy ; $6134
@@ -369,16 +369,16 @@ LoadMatchStoryGfx:
 	call AdvanceFrame ; $613e
 .restore4:
 	pop af ; $6141
-	ld hl, $d800 ; $6142
+	ld hl, wTextTileBuffer ; $6142
 	ld de, $8800 ; $6145
 	ld c, $20 ; $6148
-	ld hl, $da00 ; $614a
+	ld hl, wTextTileBuffer + 32 * TILE_SIZE ; $614a
 	ld de, $8a00 ; $614d
 	ld c, $20 ; $6150
-	ld hl, $dc00 ; $6152
+	ld hl, wTextTileBuffer + 64 * TILE_SIZE ; $6152
 	ld de, $8c00 ; $6155
 	ld c, $20 ; $6158
-	ld hl, $de00 ; $615a
+	ld hl, wTextTileBuffer + 96 * TILE_SIZE ; $615a
 	ld de, $8e00 ; $615d
 	ld c, $20 ; $6160
 	call QueueVRAMCopy ; $6162

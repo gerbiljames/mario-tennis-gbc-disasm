@@ -2927,30 +2927,6 @@
    ]
   },
   {
-   "start": "0xd580",
-   "wram_bank": "0x01",
-   "end": "0xd600",
-   "comment": "Character-record scratch. LoadCharacterRecordToBuffer writes $d580 in\nwhichever WRAM bank the caller left selected, so the address belongs to\nno one bank; this names the bank $01 copy, which is the only one the\ndataflow can prove (bank $1b selects it before filling the new-game\nroster). The bank $18 and $38 callers keep the numeric address.",
-   "variants": [
-    {
-     "context": "character record buffer (bank $1b)",
-     "scopes": [
-      {
-       "bank": "0x1b",
-       "wram_bank": "0x01"
-      }
-     ],
-     "symbols": {
-      "0xd580": {
-       "name": "wCharRecordBuffer",
-       "note": "[128 bytes] Copy of a character record that LoadCharacterRecordToBuffer takes from wPlayer2MainName, so a caller can read one character's fields without disturbing the live records. +$0b is the id CheckCharacterUnlocked tests against $ff, and RunNewGameSetup reads +$0c and +$0e for each of the four starting characters",
-       "size": 128
-      }
-     }
-    }
-   ]
-  },
-  {
    "start": "0xdb26",
    "wram_bank": "0x07",
    "end": "0xdb28",
@@ -3142,6 +3118,58 @@
        "name": "wScorePanelValues",
        "note": "[3 bytes] Three values SetupScoreboardDisplay draws as 6x2 tile blocks, each fetched through GetTextSlotPointer. The minigame code uses the first two of the same bytes for its hit bookkeeping",
        "size": 3
+      }
+     }
+    }
+   ]
+  },
+  {
+   "start": "0xd000",
+   "wram_bank": "0x01",
+   "end": "0xe000",
+   "comment": "WRAM bank $01 is staging for VRAM, and almost nothing else: every screen\nin the game decompresses into it and then QueueVRAMCopies out of it.\nWhat a given offset means therefore depends on what the current screen\nput there -- tile graphics, a tilemap plane, its attribute plane -- so\nthe two halves get names and the offsets do not. Every offset in use is a\nwhole multiple of TILE_SIZE, which is why they render as tile indices.\nScoped to a provable WRAM bank $01: $d000 is eight different things and\ntwenty ROM banks stage through this one.\nThe one overlay with a fixed meaning is bank $1b's character-record copy:\nLoadCharacterRecordToBuffer writes $d580 in whichever bank the caller left\nselected, and bank $1b selects this one, so the record lands on top of the\nstaging buffer while the new-game roster is being built.",
+   "variants": [
+    {
+     "context": "character record copy (bank $1b)",
+     "scopes": [
+      {
+       "bank": "0x1b",
+       "wram_bank": "0x01"
+      }
+     ],
+     "symbols": {
+      "0xd580": {
+       "name": "wCharRecordBuffer",
+       "note": "[128 bytes] Copy of a character record that LoadCharacterRecordToBuffer takes from wPlayer2MainName, so a caller can read one character's fields without disturbing the live records. +$0b is the id CheckCharacterUnlocked tests against $ff, and RunNewGameSetup reads +$0c and +$0e for each of the four starting characters",
+       "size": 128
+      }
+     }
+    },
+    {
+     "context": "VRAM staging (WRAM bank $01)",
+     "scopes": [
+      {
+       "wram_bank": "0x01"
+      }
+     ],
+     "symbols": {
+      "0xd000": {
+       "name": "wDecompBuffer",
+       "note": "[2048 bytes] Where DecompressData lands and QueueVRAMCopy reads from. A screen may slice it several ways at once -- the cutscene frame loaders keep six frames at tiles 0, 4, 8, 12, 14 and 16, while the EXP screen puts a tilemap plane at tile 0 and its attributes at tile 64. CopyMapToScrollBuffers reads the map planes back out of it to expand them into WRAM bank $02",
+       "size": 2048,
+       "stride": [
+        "TILE_SIZE",
+        "0x10"
+       ]
+      },
+      "0xd800": {
+       "name": "wTextTileBuffer",
+       "note": "[2048 bytes] The other half, where DrawStringToTileBuffer renders a string as tile data rather than as tilemap cells -- the EXP screen's captions and bonus messages are built here and uploaded like any other graphics",
+       "size": 2048,
+       "stride": [
+        "TILE_SIZE",
+        "0x10"
+       ]
       }
      }
     }

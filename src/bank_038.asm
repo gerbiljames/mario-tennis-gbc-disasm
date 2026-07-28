@@ -1981,9 +1981,9 @@ SetupCharGridScreen:
 	call SetMenuCursorFromLinearIndex ; $4f87
 	wram_bank $01 ; $4f8a
 	ld hl, CharGridScreenGfx1 ; $4f90
-	ld de, $d000 ; $4f93
+	ld de, wDecompBuffer ; $4f93
 	call DecompressData ; $4f96
-	ld hl, $d000 ; $4f99
+	ld hl, wDecompBuffer ; $4f99
 	ld de, $8100 + VRAM_BANK1 ; $4f9c
 	ld c, $08 ; $4f9f
 	call QueueVRAMCopy ; $4fa1
@@ -1992,9 +1992,9 @@ SetupCharGridScreen:
 	call LoadPalettesMasterOnly ; $4faa
 	wram_bank $01 ; $4fad
 	ld hl, CharGridScreenGfx3 ; $4fb3
-	ld de, $d000 ; $4fb6
+	ld de, wDecompBuffer ; $4fb6
 	call DecompressData ; $4fb9
-	ld hl, $d000 ; $4fbc
+	ld hl, wDecompBuffer ; $4fbc
 	ld de, $8200 + VRAM_BANK1 ; $4fbf
 	ld c, $10 ; $4fc2
 	call QueueVRAMCopy ; $4fc4
@@ -4278,21 +4278,21 @@ CacheStorySlotNames:
 	ld [wCurrentStorySlot], a ; $606a
 	farcall CheckStorySlot ; $606d
 	ld hl, wStoryModeNameOfMainCharacter ; $6070
-	ld de, $d000 ; $6073
+	ld de, wDecompBuffer ; $6073
 	ld bc, $0008 ; $6076
 	call CopyMemoryFast ; $6079
 	ld a, $01 ; $607c
 	ld [wCurrentStorySlot], a ; $607e
 	farcall CheckStorySlot ; $6081
 	ld hl, wStoryModeNameOfMainCharacter ; $6084
-	ld de, $d100 ; $6087
+	ld de, wDecompBuffer + 16 * TILE_SIZE ; $6087
 	ld bc, $0008 ; $608a
 	call CopyMemoryFast ; $608d
 	ld a, $02 ; $6090
 	ld [wCurrentStorySlot], a ; $6092
 	farcall CheckStorySlot ; $6095
 	ld hl, wStoryModeNameOfMainCharacter ; $6098
-	ld de, $d200 ; $609b
+	ld de, wDecompBuffer + 32 * TILE_SIZE ; $609b
 	ld bc, $0008 ; $609e
 	call CopyMemoryFast ; $60a1
 	pop af ; $60a4

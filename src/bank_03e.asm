@@ -1002,7 +1002,7 @@ LoadMatchRulesMenuGraphics:
 	push bc ; $4620
 	push de ; $4621
 	push hl ; $4622
-	ld de, $d000 ; $4623
+	ld de, wDecompBuffer ; $4623
 	call DecompressDataFromBank ; $4626
 	pop hl ; $4629
 	pop de ; $462a
@@ -1019,7 +1019,7 @@ LoadMatchRulesMenuGraphics:
 	ld a, [hl+] ; $4637
 	ld d, [hl] ; $4638
 	ld e, a ; $4639
-	ld hl, $d000 ; $463a
+	ld hl, wDecompBuffer ; $463a
 	push af ; $463d
 	push bc ; $463e
 	push de ; $463f
@@ -2127,7 +2127,7 @@ LoadRacketShoesChoiceGraphics:
 	push bc ; $4f4c
 	push de ; $4f4d
 	push hl ; $4f4e
-	ld de, $d000 ; $4f4f
+	ld de, wDecompBuffer ; $4f4f
 	call DecompressDataFromBank ; $4f52
 	pop hl ; $4f55
 	pop de ; $4f56
@@ -2144,7 +2144,7 @@ LoadRacketShoesChoiceGraphics:
 	ld a, [hl+] ; $4f63
 	ld d, [hl] ; $4f64
 	ld e, a ; $4f65
-	ld hl, $d000 ; $4f66
+	ld hl, wDecompBuffer ; $4f66
 	push af ; $4f69
 	push bc ; $4f6a
 	push de ; $4f6b
@@ -2536,7 +2536,7 @@ LoadPlayAlonePartnerGraphics:
 	push bc ; $5242
 	push de ; $5243
 	push hl ; $5244
-	ld de, $d000 ; $5245
+	ld de, wDecompBuffer ; $5245
 	call DecompressDataFromBank ; $5248
 	pop hl ; $524b
 	pop de ; $524c
@@ -2553,7 +2553,7 @@ LoadPlayAlonePartnerGraphics:
 	ld a, [hl+] ; $5259
 	ld d, [hl] ; $525a
 	ld e, a ; $525b
-	ld hl, $d000 ; $525c
+	ld hl, wDecompBuffer ; $525c
 	push af ; $525f
 	push bc ; $5260
 	push de ; $5261
@@ -3926,7 +3926,7 @@ LoadCourtSelectGraphics:
 	push de ; $5d37
 	push hl ; $5d38
 	call GetCourtThumbnailPtr ; $5d39
-	ld de, $d000 ; $5d3c
+	ld de, wDecompBuffer ; $5d3c
 	call DecompressDataFromBank ; $5d3f
 	pop hl ; $5d42
 	pop de ; $5d43
@@ -3943,7 +3943,7 @@ LoadCourtSelectGraphics:
 	ld a, [hl+] ; $5d50
 	ld d, [hl] ; $5d51
 	ld e, a ; $5d52
-	ld hl, $d000 ; $5d53
+	ld hl, wDecompBuffer ; $5d53
 	push af ; $5d56
 	push bc ; $5d57
 	push de ; $5d58
@@ -4444,27 +4444,27 @@ LoadCourtSelectTitleGfx:
 	ret ; $6191
 LoadCourtSelectTitleTiles:
 	ld hl, CourtSelectTitleTiles ; $6192
-	ld de, $d000 ; $6195
+	ld de, wDecompBuffer ; $6195
 	call DecompressData ; $6198
-	ld hl, $d000 ; $619b
+	ld hl, wDecompBuffer ; $619b
 	ld de, $9300 ; $619e
 	ld bc, $000c ; $61a1
 	call QueueVRAMCopy ; $61a4
 	ret ; $61a7
 LoadCourtSelectTitleTiles2:
 	ld hl, CourtSelectTitleTiles2Gfx ; $61a8
-	ld de, $d100 ; $61ab
+	ld de, wDecompBuffer + 16 * TILE_SIZE ; $61ab
 	call DecompressData ; $61ae
-	ld hl, $d100 ; $61b1
+	ld hl, wDecompBuffer + 16 * TILE_SIZE ; $61b1
 	ld de, $9400 ; $61b4
 	ld bc, $0005 ; $61b7
 	call QueueVRAMCopy ; $61ba
 	ret ; $61bd
 LoadCourtSelectPanelTiles:
 	ld hl, CourtSelectPanelTiles ; $61be
-	ld de, $d200 ; $61c1
+	ld de, wDecompBuffer + 32 * TILE_SIZE ; $61c1
 	call DecompressData ; $61c4
-	ld hl, $d200 ; $61c7
+	ld hl, wDecompBuffer + 32 * TILE_SIZE ; $61c7
 	ld de, $8800 ; $61ca
 	ld bc, $0037 ; $61cd
 	call QueueVRAMCopy ; $61d0

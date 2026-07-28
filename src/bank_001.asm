@@ -20,7 +20,7 @@ RunDebugTestMenu:
 	pop de ; $4022
 	call DisableLCDSafely ; $4023
 	wram_bank $01 ; $4026
-	ld hl, $d000 ; $402c
+	ld hl, wDecompBuffer ; $402c
 	ld c, $00 ; $402f
 	call ClearMemory16 ; $4031
 	wram_bank $02 ; $4034

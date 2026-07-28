@@ -6946,3 +6946,57 @@ union of their own. And rgbasm caught `wTennisDictSpriteTimer already defined`:
 `$cb3e` is a *second* animation counter three bytes above the first, and the
 obvious name was taken. Both failures were loud, which is the point of having
 them.
+
+## The banked half: WRAM bank $01 is one buffer (2026-07-28)
+
+WRAM0 done, the same census over `$dxxx` says something different. Grouping
+every bare banked reference by the WRAM bank `compute_wram_bank` can prove at
+the site gives **2,080 attributable references**, and they are not spread thin:
+
+| bank | refs | what it is |
+|---|---|---|
+| `$01` | 633 | VRAM staging — **named this pass** |
+| `$06` | 685 | the character-data / EXP screens |
+| unknown | 431 | the bank is not provable at the reference |
+| `$02` | 162 | the 64-wide scroll buffers |
+| `$03` | 131 | screen tilemaps (mostly already named) |
+| `$04`/`$05`/`$07` | 38 | the remainder of banks already done |
+
+**Bank `$01` is one buffer, and that is the whole finding.** Every screen in
+the game decompresses into it and `QueueVRAMCopy`s out of it: `ld de, $d000` /
+`DecompressData` / `ld hl, $d000` / `QueueVRAMCopy`, over and over, from twenty
+ROM banks. What an offset *means* depends on what the current screen put there
+— the cutscene loaders keep six animation frames at tiles 0, 4, 8, 12, 14 and
+16, while the EXP screen puts a tilemap plane at tile 0 and its attributes at
+tile 64 — so the two halves get names and the offsets do not. That is the
+`wMapScratch` shape again, and it cleared 633 references with two symbols.
+
+Every offset in use turned out to be a whole multiple of `TILE_SIZE`, so they
+render as tile indices rather than byte counts, which is what they are.
+
+### Two unions over the same bytes
+
+`wCharRecordBuffer` (`$d580`, bank `$01`) was already a union of its own, and it
+sits *inside* the new staging span. The layout writer checked ram_map symbols
+against union spans but never unions against each other, so it emitted both, one
+after the other, and the section grew past the end of the bank. rgbasm caught it
+— `Section "WRAMX bank 1" grew too big` — but a long way from the cause. The
+overlap check is now explicit, and the fix was to make the record copy a
+*variant* of the staging union, which is what it actually is: bank `$1b` selects
+bank `$01`, so the record lands on top of the buffer while the new-game roster
+is being built.
+
+Variant **order** then mattered for a reason worth recording: an interior byte
+resolves to whichever sized symbol was registered first, and `wDecompBuffer`
+covers everything. The narrower, doubly-scoped overlay has to come first in the
+variants list or `wCharRecordBuffer + 11` silently becomes
+`wDecompBuffer + 88 * TILE_SIZE`.
+
+### What bank $06 turned out to be
+
+Not what the reference shapes suggest. `ld bc, $d7e0` in the character-data
+screens looks like a tilemap cell, but `ApplyTilemapPatchList` selects WRAM bank
+`$06` and uses `bc` as a **source** pointer — its destination is `$d000 + de`
+from the patch list, in whatever bank the caller left. So `$d7e0`, `$d8e0`,
+`$d9e0` and the `$da20`-`$de60` run are arrays of patch bytes in bank `$06`,
+and segmenting them is its own pass rather than a name.

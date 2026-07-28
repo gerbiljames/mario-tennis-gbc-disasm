@@ -108,13 +108,13 @@ LoadScreenAssetRecord:
 	ld a, [hl+] ; $4097
 	ld h, [hl] ; $4098
 	ld l, a ; $4099
-	ld de, $d000 ; $409a
+	ld de, wDecompBuffer ; $409a
 	call DecompressDataFromBank ; $409d
-	ld hl, $d000 ; $40a0
+	ld hl, wDecompBuffer ; $40a0
 	ld de, $9000 + VRAM_BANK1 ; $40a3
 	ld c, $80 ; $40a6
 	call QueueVRAMCopy ; $40a8
-	ld hl, $d800 ; $40ab
+	ld hl, wTextTileBuffer ; $40ab
 	ld de, $8800 + VRAM_BANK1 ; $40ae
 	ld c, $80 ; $40b1
 	call QueueVRAMCopy ; $40b3
@@ -144,10 +144,10 @@ LoadScreenAssetRecord:
 	ld h, [hl] ; $40da
 	ld l, a ; $40db
 	wram_bank $01 ; $40dc
-	ld de, $d000 ; $40e2
+	ld de, wDecompBuffer ; $40e2
 	ld bc, $0040 ; $40e5
 	call CopyDataFromBank ; $40e8
-	ld hl, $d000 ; $40eb
+	ld hl, wDecompBuffer ; $40eb
 	ld de, $0008 ; $40ee
 	call LoadPaletteShadow ; $40f1
 	ret ; $40f4
@@ -296,13 +296,13 @@ UpdateAnimatedTiles:
 	ld h, [hl] ; $4397
 	ld l, a ; $4398
 	wram_bank $01 ; $4399
-	ld de, $d000 ; $439f
+	ld de, wDecompBuffer ; $439f
 	call DecompressDataFromBank ; $43a2
-	ld hl, $d000 ; $43a5
+	ld hl, wDecompBuffer ; $43a5
 	ld de, $92e0 + VRAM_BANK1 ; $43a8
 	ld c, $02 ; $43ab
 	call QueueVRAMCopy ; $43ad
-	ld hl, $d020 ; $43b0
+	ld hl, wDecompBuffer + 2 * TILE_SIZE ; $43b0
 	ld de, $93e0 + VRAM_BANK1 ; $43b3
 	ld c, $02 ; $43b6
 	call QueueVRAMCopy ; $43b8
@@ -472,9 +472,9 @@ LoadFixedTileBlockAndPalette:
 	push de ; $44d3
 	wram_bank $01 ; $44d4
 	ld hl, FixedTileBlockAndPalette ; $44da
-	ld de, $d000 ; $44dd
+	ld de, wDecompBuffer ; $44dd
 	call DecompressData ; $44e0
-	ld hl, $d000 ; $44e3
+	ld hl, wDecompBuffer ; $44e3
 	pop de ; $44e6
 	ld c, $04 ; $44e7
 	call QueueVRAMCopy ; $44e9
@@ -611,11 +611,11 @@ LoadCompressedTileBlock:
 	push de ; $469b
 	push bc ; $469c
 	wram_bank $01 ; $469d
-	ld de, $d000 ; $46a3
+	ld de, wDecompBuffer ; $46a3
 	call DecompressDataFromBank ; $46a6
 	pop bc ; $46a9
 	pop de ; $46aa
-	ld hl, $d000 ; $46ab
+	ld hl, wDecompBuffer ; $46ab
 	call QueueVRAMCopy ; $46ae
 	pop af ; $46b1
 	wram_bank ; $46b2
@@ -1002,13 +1002,13 @@ LoadStadiumBgGraphics:
 	push af ; $4c3a
 	wram_bank $01 ; $4c3b
 	ld hl, $3c08 ; $4c41 -> DataPtr_StadiumTiles
-	ld de, $d000 ; $4c44
+	ld de, wDecompBuffer ; $4c44
 	call DecompressDataFromBank ; $4c47
-	ld hl, $d000 ; $4c4a
+	ld hl, wDecompBuffer ; $4c4a
 	ld de, $9000 + VRAM_BANK1 ; $4c4d
 	ld c, $80 ; $4c50
 	call QueueVRAMCopy ; $4c52
-	ld hl, $d800 ; $4c55
+	ld hl, wTextTileBuffer ; $4c55
 	ld de, $8800 + VRAM_BANK1 ; $4c58
 	ld c, $80 ; $4c5b
 	call QueueVRAMCopy ; $4c5d
@@ -1027,10 +1027,10 @@ LoadStadiumBgGraphics:
 	call DecompressDataFromBank ; $4c87
 	wram_bank $01 ; $4c8a
 	ld hl, $3c0e ; $4c90 -> DataPtr_StadiumPalettes
-	ld de, $d000 ; $4c93
+	ld de, wDecompBuffer ; $4c93
 	ld bc, $0040 ; $4c96
 	call CopyDataFromBank ; $4c99
-	ld hl, $d000 ; $4c9c
+	ld hl, wDecompBuffer ; $4c9c
 	ld de, $0008 ; $4c9f
 	call LoadPaletteShadow ; $4ca2
 	pop af ; $4ca5
@@ -3328,7 +3328,7 @@ UpdateCheatCodeEntry:
 	jr z, .zero ; $6f7a
 	ld c, $00 ; $6f7c
 .loop:
-	ld hl, $d000 ; $6f7e
+	ld hl, wDecompBuffer ; $6f7e
 	ld a, c ; $6f81
 	add l ; $6f82
 	ld l, a ; $6f83
@@ -3361,7 +3361,7 @@ UpdateCheatCodeEntry:
 	ld b, a ; $6faa
 	ld a, [wCheatCodeLength] ; $6fab
 	and $1f ; $6fae
-	ld hl, $d000 ; $6fb0
+	ld hl, wDecompBuffer ; $6fb0
 	add l ; $6fb3
 	ld l, a ; $6fb4
 	jr nc, .store ; $6fb5
@@ -3386,7 +3386,7 @@ ResetCheatCodeBuffer:
 	wram_bank $01 ; $6fea
 	xor a ; $6ff0
 	ld [wCheatCodeLength], a ; $6ff1
-	ld hl, $d000 ; $6ff4
+	ld hl, wDecompBuffer ; $6ff4
 	ld bc, $0020 ; $6ff7
 	call ClearBytes ; $6ffa
 	pop af ; $6ffd

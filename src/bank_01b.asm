@@ -943,7 +943,7 @@ SetMugshotAttrs:
 	and $07 ; $4e1b
 	add $03 ; $4e1d
 	or $08 ; $4e1f
-	ld hl, $dc00 ; $4e21
+	ld hl, wTextTileBuffer + 64 * TILE_SIZE ; $4e21
 	add hl, de ; $4e24
 	ld de, $001d ; $4e25
 	ld [hl+], a ; $4e28
@@ -1132,23 +1132,23 @@ LoadRankingBoardTiles:
 	push af ; $4fa8
 	wram_bank $01 ; $4fa9
 	ld hl, $3f30 ; $4faf -> DataPtr_BracketCharIcon00
-	ld de, $d000 ; $4fb2
+	ld de, wDecompBuffer ; $4fb2
 	call DecompressDataFromBank ; $4fb5
-	ld hl, $d000 ; $4fb8
+	ld hl, wDecompBuffer ; $4fb8
 	ld de, $8000 + VRAM_BANK1 ; $4fbb
 	ld c, $10 ; $4fbe
 	call QueueVRAMCopy ; $4fc0
 	ld hl, $3f32 ; $4fc3 -> DataPtr_BracketCharIcon01
-	ld de, $d000 ; $4fc6
+	ld de, wDecompBuffer ; $4fc6
 	call DecompressDataFromBank ; $4fc9
-	ld hl, $d000 ; $4fcc
+	ld hl, wDecompBuffer ; $4fcc
 	ld de, $8100 + VRAM_BANK1 ; $4fcf
 	ld c, $10 ; $4fd2
 	call QueueVRAMCopy ; $4fd4
 	ld hl, $3f34 ; $4fd7 -> DataPtr_BracketCharIcon02
-	ld de, $d000 ; $4fda
+	ld de, wDecompBuffer ; $4fda
 	call DecompressDataFromBank ; $4fdd
-	ld hl, $d000 ; $4fe0
+	ld hl, wDecompBuffer ; $4fe0
 	ld de, $8200 + VRAM_BANK1 ; $4fe3
 	ld c, $10 ; $4fe6
 	call QueueVRAMCopy ; $4fe8
@@ -3564,19 +3564,19 @@ LoadUnlockDebugRosterTable:
 	db $08 ; $6616
 	db $09 ; $6617
 LoadUnlockDebugScreenGfx:
-	ld hl, $d000 ; $6618
+	ld hl, wDecompBuffer ; $6618
 	ld de, $9000 + VRAM_BANK1 ; $661b
 	ld c, $80 ; $661e
 	call QueueVRAMCopy ; $6620
-	ld hl, $d800 ; $6623
+	ld hl, wTextTileBuffer ; $6623
 	ld de, $8800 + VRAM_BANK1 ; $6626
 	ld c, $80 ; $6629
 	call QueueVRAMCopy ; $662b
 	ld hl, UnlockDebugNavGridTable ; $662e
-	ld de, $dc00 ; $6631
+	ld de, wTextTileBuffer + 64 * TILE_SIZE ; $6631
 	call DecompressData ; $6634
 	ld hl, UnlockDebugNavGridTable ; $6637
-	ld de, $d800 ; $663a
+	ld de, wTextTileBuffer ; $663a
 	call DecompressData ; $663d
 	ld hl, UnlockDebugNavGridTable ; $6640
 	ld de, $0008 ; $6643
@@ -3706,11 +3706,11 @@ RunMinigameFlagsDebugScreen:
 	call LoadUnlockDebugScreenGfx ; $674b
 	call DrawUnlockDebugMugshots ; $674e
 	call UpdateUnlockDebugSelectedMugshot ; $6751
-	ld hl, $dc00 ; $6754
+	ld hl, wTextTileBuffer + 64 * TILE_SIZE ; $6754
 	ld de, $9800 + VRAM_BANK1 ; $6757
 	ld c, $24 ; $675a
 	call QueueVRAMCopy ; $675c
-	ld hl, $d800 ; $675f
+	ld hl, wTextTileBuffer ; $675f
 	ld de, $9800 ; $6762
 	ld c, $24 ; $6765
 	call QueueVRAMCopy ; $6767
@@ -3932,9 +3932,9 @@ LoadUnlockDebugCursorGfx:
 	push af ; $68d8
 	wram_bank $01 ; $68d9
 	ld hl, UnlockDebugCursorGfx ; $68df
-	ld de, $d000 ; $68e2
+	ld de, wDecompBuffer ; $68e2
 	call DecompressData ; $68e5
-	ld hl, $d000 ; $68e8
+	ld hl, wDecompBuffer ; $68e8
 	ld de, $8500 ; $68eb
 	ld c, $02 ; $68ee
 	call QueueVRAMCopy ; $68f0
@@ -4160,32 +4160,32 @@ ShowNoN64DataFoundScreen:
 	call WaitFadeEnd ; $6ae9
 	call DisableLCDSafely ; $6aec
 	ld a, $20 ; $6aef
-	ld hl, $d862 ; $6af1
+	ld hl, wTextTileBuffer + 6 * TILE_SIZE + 2 ; $6af1
 	call FillTilemapRow17 ; $6af4
-	ld hl, $d882 ; $6af7
+	ld hl, wTextTileBuffer + 8 * TILE_SIZE + 2 ; $6af7
 	call FillTilemapRow17 ; $6afa
-	ld hl, $d8a2 ; $6afd
+	ld hl, wTextTileBuffer + 10 * TILE_SIZE + 2 ; $6afd
 	call FillTilemapRow17 ; $6b00
-	ld hl, $d8c2 ; $6b03
+	ld hl, wTextTileBuffer + 12 * TILE_SIZE + 2 ; $6b03
 	call FillTilemapRow17 ; $6b06
-	ld hl, $d8e2 ; $6b09
+	ld hl, wTextTileBuffer + 14 * TILE_SIZE + 2 ; $6b09
 	call FillTilemapRow17 ; $6b0c
 	ld a, $00 ; $6b0f
-	ld hl, $dc62 ; $6b11
+	ld hl, wTextTileBuffer + 70 * TILE_SIZE + 2 ; $6b11
 	call FillTilemapRow17 ; $6b14
-	ld hl, $dc82 ; $6b17
+	ld hl, wTextTileBuffer + 72 * TILE_SIZE + 2 ; $6b17
 	call FillTilemapRow17 ; $6b1a
-	ld hl, $dca2 ; $6b1d
+	ld hl, wTextTileBuffer + 74 * TILE_SIZE + 2 ; $6b1d
 	call FillTilemapRow17 ; $6b20
-	ld hl, $dcc2 ; $6b23
+	ld hl, wTextTileBuffer + 76 * TILE_SIZE + 2 ; $6b23
 	call FillTilemapRow17 ; $6b26
-	ld hl, $dce2 ; $6b29
+	ld hl, wTextTileBuffer + 78 * TILE_SIZE + 2 ; $6b29
 	call FillTilemapRow17 ; $6b2c
 	ld hl, $047b ; $6b2f
-	ld de, $d883 ; $6b32
+	ld de, wTextTileBuffer + 8 * TILE_SIZE + 3 ; $6b32
 	farcall RenderProportionalTextAt32 ; $6b35
 	ld hl, $047c ; $6b38
-	ld de, $d8c3 ; $6b3b
+	ld de, wTextTileBuffer + 12 * TILE_SIZE + 3 ; $6b3b
 	farcall RenderProportionalTextAt32 ; $6b3e
 	farcall ForceFlushBgMapToVram ; $6b41
 	call EnableLCD ; $6b44
@@ -5078,7 +5078,7 @@ LoadSavedDataTypeSelectGfx:
 	push bc ; $7223
 	push de ; $7224
 	push hl ; $7225
-	ld de, $d000 ; $7226
+	ld de, wDecompBuffer ; $7226
 	call DecompressDataFromBank ; $7229
 	pop hl ; $722c
 	pop de ; $722d
@@ -5095,7 +5095,7 @@ LoadSavedDataTypeSelectGfx:
 	ld a, [hl+] ; $723a
 	ld d, [hl] ; $723b
 	ld e, a ; $723c
-	ld hl, $d000 ; $723d
+	ld hl, wDecompBuffer ; $723d
 	push af ; $7240
 	push bc ; $7241
 	push de ; $7242

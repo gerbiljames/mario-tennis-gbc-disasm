@@ -2427,7 +2427,7 @@ ReinitSaveRamPreservingBlock6:
 	ldh a, [hWramBank] ; $4f81
 	push af ; $4f83
 	wram_bank $01 ; $4f84
-	ld hl, $d000 ; $4f8a
+	ld hl, wDecompBuffer ; $4f8a
 	call ReadBlock6 ; $4f8d
 	ld b, a ; $4f90
 	push bc ; $4f91
@@ -2436,7 +2436,7 @@ ReinitSaveRamPreservingBlock6:
 	ld a, b ; $4f96
 	cp $fe ; $4f97
 	jr z, .initAllMinigameRecordBlocks ; $4f99
-	ld hl, $d000 ; $4f9b
+	ld hl, wDecompBuffer ; $4f9b
 	call WriteBlock6WithBackup ; $4f9e
 .initAllMinigameRecordBlocks:
 	call InitAllMinigameRecordBlocks ; $4fa1
@@ -3215,7 +3215,7 @@ MarioGolfSignature_03:
 	; $54fd, 16 bytes (ascii)
 	db "MARIO GOLF GB CH"
 RestoreStoryBlockFromBackup:
-	ld hl, $d000 ; $550d
+	ld hl, wDecompBuffer ; $550d
 	call ReadSaveBlock ; $5510
 	cp $ff ; $5513
 	ret nz ; $5515
@@ -3226,11 +3226,11 @@ RestoreStoryBlockFromBackup:
 	call ReadSaveBlock ; $551b
 	or a ; $551e
 	jr nz, .restore ; $551f
-	ld hl, $d400 ; $5521
+	ld hl, wDecompBuffer + 64 * TILE_SIZE ; $5521
 	call ReadSaveBlockTag ; $5524
 	pop bc ; $5527
-	ld hl, $d000 ; $5528
-	ld de, $d400 ; $552b
+	ld hl, wDecompBuffer ; $5528
+	ld de, wDecompBuffer + 64 * TILE_SIZE ; $552b
 	call WriteSaveBlock ; $552e
 	ret ; $5531
 .restore:
@@ -3397,7 +3397,7 @@ RepairAllSaveSlots:
 RestoreBlock36FromBackup:
 	ld a, $36 ; $5682
 	ld b, a ; $5684
-	ld hl, $d000 ; $5685
+	ld hl, wDecompBuffer ; $5685
 	call ReadSaveBlock ; $5688
 	cp $ff ; $568b
 	ret nz ; $568d
@@ -3408,8 +3408,8 @@ RestoreBlock36FromBackup:
 	or a ; $5695
 	jr nz, .restore ; $5696
 	pop bc ; $5698
-	ld hl, $d000 ; $5699
-	ld de, $d400 ; $569c
+	ld hl, wDecompBuffer ; $5699
+	ld de, wDecompBuffer + 64 * TILE_SIZE ; $569c
 	call WriteSaveBlock ; $569f
 	ret ; $56a2
 .restore:
@@ -4139,9 +4139,9 @@ LoadCutsceneAnimFrameGfx_00_08:
 .eq00:
 	wram_bank $01 ; $5bc2
 	ld hl, CutsceneAnimFrameLZ_00 ; $5bc8
-	ld de, $d000 ; $5bcb
+	ld de, wDecompBuffer ; $5bcb
 	call DecompressData ; $5bce
-	ld hl, $d000 ; $5bd1
+	ld hl, wDecompBuffer ; $5bd1
 	ld de, $8000 ; $5bd4
 	ld c, $04 ; $5bd7
 	call QueueVRAMCopy ; $5bd9
@@ -4154,9 +4154,9 @@ LoadCutsceneAnimFrameGfx_00_08:
 .eq01:
 	wram_bank $01 ; $5bea
 	ld hl, CutsceneAnimFrameLZ_01 ; $5bf0
-	ld de, $d000 ; $5bf3
+	ld de, wDecompBuffer ; $5bf3
 	call DecompressData ; $5bf6
-	ld hl, $d000 ; $5bf9
+	ld hl, wDecompBuffer ; $5bf9
 	ld de, $8000 ; $5bfc
 	ld c, $04 ; $5bff
 	call QueueVRAMCopy ; $5c01
@@ -4169,9 +4169,9 @@ LoadCutsceneAnimFrameGfx_00_08:
 .eq02:
 	wram_bank $01 ; $5c12
 	ld hl, CutsceneAnimFrameLZ_02 ; $5c18
-	ld de, $d000 ; $5c1b
+	ld de, wDecompBuffer ; $5c1b
 	call DecompressData ; $5c1e
-	ld hl, $d000 ; $5c21
+	ld hl, wDecompBuffer ; $5c21
 	ld de, $8000 ; $5c24
 	ld c, $04 ; $5c27
 	call QueueVRAMCopy ; $5c29
@@ -4184,9 +4184,9 @@ LoadCutsceneAnimFrameGfx_00_08:
 .eq03:
 	wram_bank $01 ; $5c3a
 	ld hl, CutsceneAnimFrameLZ_03 ; $5c40
-	ld de, $d000 ; $5c43
+	ld de, wDecompBuffer ; $5c43
 	call DecompressData ; $5c46
-	ld hl, $d000 ; $5c49
+	ld hl, wDecompBuffer ; $5c49
 	ld de, $8000 ; $5c4c
 	ld c, $04 ; $5c4f
 	call QueueVRAMCopy ; $5c51
@@ -4199,9 +4199,9 @@ LoadCutsceneAnimFrameGfx_00_08:
 .eq04:
 	wram_bank $01 ; $5c62
 	ld hl, CutsceneAnimFrameLZ_04 ; $5c68
-	ld de, $d000 ; $5c6b
+	ld de, wDecompBuffer ; $5c6b
 	call DecompressData ; $5c6e
-	ld hl, $d000 ; $5c71
+	ld hl, wDecompBuffer ; $5c71
 	ld de, $8000 ; $5c74
 	ld c, $04 ; $5c77
 	call QueueVRAMCopy ; $5c79
@@ -4214,9 +4214,9 @@ LoadCutsceneAnimFrameGfx_00_08:
 .eq05:
 	wram_bank $01 ; $5c8a
 	ld hl, CutsceneAnimFrameLZ_05 ; $5c90
-	ld de, $d000 ; $5c93
+	ld de, wDecompBuffer ; $5c93
 	call DecompressData ; $5c96
-	ld hl, $d000 ; $5c99
+	ld hl, wDecompBuffer ; $5c99
 	ld de, $8000 ; $5c9c
 	ld c, $04 ; $5c9f
 	call QueueVRAMCopy ; $5ca1
@@ -4229,9 +4229,9 @@ LoadCutsceneAnimFrameGfx_00_08:
 .eq06:
 	wram_bank $01 ; $5cb2
 	ld hl, CutsceneAnimFrameLZ_06 ; $5cb8
-	ld de, $d000 ; $5cbb
+	ld de, wDecompBuffer ; $5cbb
 	call DecompressData ; $5cbe
-	ld hl, $d000 ; $5cc1
+	ld hl, wDecompBuffer ; $5cc1
 	ld de, $8000 ; $5cc4
 	ld c, $04 ; $5cc7
 	call QueueVRAMCopy ; $5cc9
@@ -4244,9 +4244,9 @@ LoadCutsceneAnimFrameGfx_00_08:
 .eq07:
 	wram_bank $01 ; $5cda
 	ld hl, CutsceneAnimFrameLZ_07 ; $5ce0
-	ld de, $d000 ; $5ce3
+	ld de, wDecompBuffer ; $5ce3
 	call DecompressData ; $5ce6
-	ld hl, $d000 ; $5ce9
+	ld hl, wDecompBuffer ; $5ce9
 	ld de, $8000 ; $5cec
 	ld c, $04 ; $5cef
 	call QueueVRAMCopy ; $5cf1
@@ -4259,9 +4259,9 @@ LoadCutsceneAnimFrameGfx_00_08:
 .eq08:
 	wram_bank $01 ; $5d02
 	ld hl, CutsceneAnimFrameLZ_08 ; $5d08
-	ld de, $d000 ; $5d0b
+	ld de, wDecompBuffer ; $5d0b
 	call DecompressData ; $5d0e
-	ld hl, $d000 ; $5d11
+	ld hl, wDecompBuffer ; $5d11
 	ld de, $8000 ; $5d14
 	ld c, $04 ; $5d17
 	call QueueVRAMCopy ; $5d19
@@ -4307,9 +4307,9 @@ LoadCutsceneAnimFrameGfx_09_11:
 .eq09:
 	wram_bank $01 ; $5d76
 	ld hl, CutsceneAnimFrameLZ_09 ; $5d7c
-	ld de, $d040 ; $5d7f
+	ld de, wDecompBuffer + 4 * TILE_SIZE ; $5d7f
 	call DecompressData ; $5d82
-	ld hl, $d040 ; $5d85
+	ld hl, wDecompBuffer + 4 * TILE_SIZE ; $5d85
 	ld de, $8040 ; $5d88
 	ld c, $04 ; $5d8b
 	call QueueVRAMCopy ; $5d8d
@@ -4322,9 +4322,9 @@ LoadCutsceneAnimFrameGfx_09_11:
 .eq0a:
 	wram_bank $01 ; $5d9e
 	ld hl, CutsceneAnimFrameLZ_0a ; $5da4
-	ld de, $d040 ; $5da7
+	ld de, wDecompBuffer + 4 * TILE_SIZE ; $5da7
 	call DecompressData ; $5daa
-	ld hl, $d040 ; $5dad
+	ld hl, wDecompBuffer + 4 * TILE_SIZE ; $5dad
 	ld de, $8040 ; $5db0
 	ld c, $04 ; $5db3
 	call QueueVRAMCopy ; $5db5
@@ -4337,9 +4337,9 @@ LoadCutsceneAnimFrameGfx_09_11:
 .eq0b:
 	wram_bank $01 ; $5dc6
 	ld hl, CutsceneAnimFrameLZ_0b ; $5dcc
-	ld de, $d040 ; $5dcf
+	ld de, wDecompBuffer + 4 * TILE_SIZE ; $5dcf
 	call DecompressData ; $5dd2
-	ld hl, $d040 ; $5dd5
+	ld hl, wDecompBuffer + 4 * TILE_SIZE ; $5dd5
 	ld de, $8040 ; $5dd8
 	ld c, $04 ; $5ddb
 	call QueueVRAMCopy ; $5ddd
@@ -4352,9 +4352,9 @@ LoadCutsceneAnimFrameGfx_09_11:
 .eq0c:
 	wram_bank $01 ; $5dee
 	ld hl, CutsceneAnimFrameLZ_0c ; $5df4
-	ld de, $d040 ; $5df7
+	ld de, wDecompBuffer + 4 * TILE_SIZE ; $5df7
 	call DecompressData ; $5dfa
-	ld hl, $d040 ; $5dfd
+	ld hl, wDecompBuffer + 4 * TILE_SIZE ; $5dfd
 	ld de, $8040 ; $5e00
 	ld c, $04 ; $5e03
 	call QueueVRAMCopy ; $5e05
@@ -4367,9 +4367,9 @@ LoadCutsceneAnimFrameGfx_09_11:
 .eq0d:
 	wram_bank $01 ; $5e16
 	ld hl, CutsceneAnimFrameLZ_0d ; $5e1c
-	ld de, $d040 ; $5e1f
+	ld de, wDecompBuffer + 4 * TILE_SIZE ; $5e1f
 	call DecompressData ; $5e22
-	ld hl, $d040 ; $5e25
+	ld hl, wDecompBuffer + 4 * TILE_SIZE ; $5e25
 	ld de, $8040 ; $5e28
 	ld c, $04 ; $5e2b
 	call QueueVRAMCopy ; $5e2d
@@ -4382,9 +4382,9 @@ LoadCutsceneAnimFrameGfx_09_11:
 .eq0e:
 	wram_bank $01 ; $5e3e
 	ld hl, CutsceneAnimFrameLZ_0e ; $5e44
-	ld de, $d040 ; $5e47
+	ld de, wDecompBuffer + 4 * TILE_SIZE ; $5e47
 	call DecompressData ; $5e4a
-	ld hl, $d040 ; $5e4d
+	ld hl, wDecompBuffer + 4 * TILE_SIZE ; $5e4d
 	ld de, $8040 ; $5e50
 	ld c, $04 ; $5e53
 	call QueueVRAMCopy ; $5e55
@@ -4397,9 +4397,9 @@ LoadCutsceneAnimFrameGfx_09_11:
 .eq0f:
 	wram_bank $01 ; $5e66
 	ld hl, CutsceneAnimFrameLZ_0f ; $5e6c
-	ld de, $d040 ; $5e6f
+	ld de, wDecompBuffer + 4 * TILE_SIZE ; $5e6f
 	call DecompressData ; $5e72
-	ld hl, $d040 ; $5e75
+	ld hl, wDecompBuffer + 4 * TILE_SIZE ; $5e75
 	ld de, $8040 ; $5e78
 	ld c, $04 ; $5e7b
 	call QueueVRAMCopy ; $5e7d
@@ -4412,9 +4412,9 @@ LoadCutsceneAnimFrameGfx_09_11:
 .eq10:
 	wram_bank $01 ; $5e8e
 	ld hl, CutsceneAnimFrameLZ_10 ; $5e94
-	ld de, $d040 ; $5e97
+	ld de, wDecompBuffer + 4 * TILE_SIZE ; $5e97
 	call DecompressData ; $5e9a
-	ld hl, $d040 ; $5e9d
+	ld hl, wDecompBuffer + 4 * TILE_SIZE ; $5e9d
 	ld de, $8040 ; $5ea0
 	ld c, $04 ; $5ea3
 	call QueueVRAMCopy ; $5ea5
@@ -4427,9 +4427,9 @@ LoadCutsceneAnimFrameGfx_09_11:
 .eq11:
 	wram_bank $01 ; $5eb6
 	ld hl, CutsceneAnimFrameLZ_11 ; $5ebc
-	ld de, $d040 ; $5ebf
+	ld de, wDecompBuffer + 4 * TILE_SIZE ; $5ebf
 	call DecompressData ; $5ec2
-	ld hl, $d040 ; $5ec5
+	ld hl, wDecompBuffer + 4 * TILE_SIZE ; $5ec5
 	ld de, $8040 ; $5ec8
 	ld c, $04 ; $5ecb
 	call QueueVRAMCopy ; $5ecd
@@ -4475,9 +4475,9 @@ LoadCutsceneAnimFrameGfx_12_1A:
 .eq12:
 	wram_bank $01 ; $5f2a
 	ld hl, CutsceneAnimFrameLZ_12 ; $5f30
-	ld de, $d080 ; $5f33
+	ld de, wDecompBuffer + 8 * TILE_SIZE ; $5f33
 	call DecompressData ; $5f36
-	ld hl, $d080 ; $5f39
+	ld hl, wDecompBuffer + 8 * TILE_SIZE ; $5f39
 	ld de, $8080 ; $5f3c
 	ld c, $04 ; $5f3f
 	call QueueVRAMCopy ; $5f41
@@ -4490,9 +4490,9 @@ LoadCutsceneAnimFrameGfx_12_1A:
 .eq13:
 	wram_bank $01 ; $5f52
 	ld hl, CutsceneAnimFrameLZ_13 ; $5f58
-	ld de, $d080 ; $5f5b
+	ld de, wDecompBuffer + 8 * TILE_SIZE ; $5f5b
 	call DecompressData ; $5f5e
-	ld hl, $d080 ; $5f61
+	ld hl, wDecompBuffer + 8 * TILE_SIZE ; $5f61
 	ld de, $8080 ; $5f64
 	ld c, $04 ; $5f67
 	call QueueVRAMCopy ; $5f69
@@ -4505,9 +4505,9 @@ LoadCutsceneAnimFrameGfx_12_1A:
 .eq14:
 	wram_bank $01 ; $5f7a
 	ld hl, CutsceneAnimFrameLZ_14 ; $5f80
-	ld de, $d080 ; $5f83
+	ld de, wDecompBuffer + 8 * TILE_SIZE ; $5f83
 	call DecompressData ; $5f86
-	ld hl, $d080 ; $5f89
+	ld hl, wDecompBuffer + 8 * TILE_SIZE ; $5f89
 	ld de, $8080 ; $5f8c
 	ld c, $04 ; $5f8f
 	call QueueVRAMCopy ; $5f91
@@ -4520,9 +4520,9 @@ LoadCutsceneAnimFrameGfx_12_1A:
 .eq15:
 	wram_bank $01 ; $5fa2
 	ld hl, CutsceneAnimFrameLZ_15 ; $5fa8
-	ld de, $d080 ; $5fab
+	ld de, wDecompBuffer + 8 * TILE_SIZE ; $5fab
 	call DecompressData ; $5fae
-	ld hl, $d080 ; $5fb1
+	ld hl, wDecompBuffer + 8 * TILE_SIZE ; $5fb1
 	ld de, $8080 ; $5fb4
 	ld c, $04 ; $5fb7
 	call QueueVRAMCopy ; $5fb9
@@ -4535,9 +4535,9 @@ LoadCutsceneAnimFrameGfx_12_1A:
 .eq16:
 	wram_bank $01 ; $5fca
 	ld hl, CutsceneAnimFrameLZ_16 ; $5fd0
-	ld de, $d080 ; $5fd3
+	ld de, wDecompBuffer + 8 * TILE_SIZE ; $5fd3
 	call DecompressData ; $5fd6
-	ld hl, $d080 ; $5fd9
+	ld hl, wDecompBuffer + 8 * TILE_SIZE ; $5fd9
 	ld de, $8080 ; $5fdc
 	ld c, $04 ; $5fdf
 	call QueueVRAMCopy ; $5fe1
@@ -4550,9 +4550,9 @@ LoadCutsceneAnimFrameGfx_12_1A:
 .eq17:
 	wram_bank $01 ; $5ff2
 	ld hl, CutsceneAnimFrameLZ_17 ; $5ff8
-	ld de, $d080 ; $5ffb
+	ld de, wDecompBuffer + 8 * TILE_SIZE ; $5ffb
 	call DecompressData ; $5ffe
-	ld hl, $d080 ; $6001
+	ld hl, wDecompBuffer + 8 * TILE_SIZE ; $6001
 	ld de, $8080 ; $6004
 	ld c, $04 ; $6007
 	call QueueVRAMCopy ; $6009
@@ -4565,9 +4565,9 @@ LoadCutsceneAnimFrameGfx_12_1A:
 .eq18:
 	wram_bank $01 ; $601a
 	ld hl, CutsceneAnimFrameLZ_18 ; $6020
-	ld de, $d080 ; $6023
+	ld de, wDecompBuffer + 8 * TILE_SIZE ; $6023
 	call DecompressData ; $6026
-	ld hl, $d080 ; $6029
+	ld hl, wDecompBuffer + 8 * TILE_SIZE ; $6029
 	ld de, $8080 ; $602c
 	ld c, $04 ; $602f
 	call QueueVRAMCopy ; $6031
@@ -4580,9 +4580,9 @@ LoadCutsceneAnimFrameGfx_12_1A:
 .eq19:
 	wram_bank $01 ; $6042
 	ld hl, CutsceneAnimFrameLZ_19 ; $6048
-	ld de, $d080 ; $604b
+	ld de, wDecompBuffer + 8 * TILE_SIZE ; $604b
 	call DecompressData ; $604e
-	ld hl, $d080 ; $6051
+	ld hl, wDecompBuffer + 8 * TILE_SIZE ; $6051
 	ld de, $8080 ; $6054
 	ld c, $04 ; $6057
 	call QueueVRAMCopy ; $6059
@@ -4595,9 +4595,9 @@ LoadCutsceneAnimFrameGfx_12_1A:
 .eq1a:
 	wram_bank $01 ; $606a
 	ld hl, CutsceneAnimFrameLZ_1a ; $6070
-	ld de, $d080 ; $6073
+	ld de, wDecompBuffer + 8 * TILE_SIZE ; $6073
 	call DecompressData ; $6076
-	ld hl, $d080 ; $6079
+	ld hl, wDecompBuffer + 8 * TILE_SIZE ; $6079
 	ld de, $8080 ; $607c
 	ld c, $04 ; $607f
 	call QueueVRAMCopy ; $6081
@@ -4643,9 +4643,9 @@ LoadCutsceneAnimFrameGfx_1B_23:
 .eq1b:
 	wram_bank $01 ; $60de
 	ld hl, CutsceneAnimFrameLZ_1b ; $60e4
-	ld de, $d0c0 ; $60e7
+	ld de, wDecompBuffer + 12 * TILE_SIZE ; $60e7
 	call DecompressData ; $60ea
-	ld hl, $d0c0 ; $60ed
+	ld hl, wDecompBuffer + 12 * TILE_SIZE ; $60ed
 	ld de, $80c0 ; $60f0
 	ld c, $02 ; $60f3
 	call QueueVRAMCopy ; $60f5
@@ -4658,9 +4658,9 @@ LoadCutsceneAnimFrameGfx_1B_23:
 .eq1c:
 	wram_bank $01 ; $6106
 	ld hl, CutsceneAnimFrameLZ_1c ; $610c
-	ld de, $d0c0 ; $610f
+	ld de, wDecompBuffer + 12 * TILE_SIZE ; $610f
 	call DecompressData ; $6112
-	ld hl, $d0c0 ; $6115
+	ld hl, wDecompBuffer + 12 * TILE_SIZE ; $6115
 	ld de, $80c0 ; $6118
 	ld c, $02 ; $611b
 	call QueueVRAMCopy ; $611d
@@ -4673,9 +4673,9 @@ LoadCutsceneAnimFrameGfx_1B_23:
 .eq1d:
 	wram_bank $01 ; $612e
 	ld hl, CutsceneAnimFrameLZ_1d ; $6134
-	ld de, $d0c0 ; $6137
+	ld de, wDecompBuffer + 12 * TILE_SIZE ; $6137
 	call DecompressData ; $613a
-	ld hl, $d0c0 ; $613d
+	ld hl, wDecompBuffer + 12 * TILE_SIZE ; $613d
 	ld de, $80c0 ; $6140
 	ld c, $02 ; $6143
 	call QueueVRAMCopy ; $6145
@@ -4688,9 +4688,9 @@ LoadCutsceneAnimFrameGfx_1B_23:
 .eq1e:
 	wram_bank $01 ; $6156
 	ld hl, CutsceneAnimFrameLZ_1e ; $615c
-	ld de, $d0c0 ; $615f
+	ld de, wDecompBuffer + 12 * TILE_SIZE ; $615f
 	call DecompressData ; $6162
-	ld hl, $d0c0 ; $6165
+	ld hl, wDecompBuffer + 12 * TILE_SIZE ; $6165
 	ld de, $80c0 ; $6168
 	ld c, $02 ; $616b
 	call QueueVRAMCopy ; $616d
@@ -4703,9 +4703,9 @@ LoadCutsceneAnimFrameGfx_1B_23:
 .eq1f:
 	wram_bank $01 ; $617e
 	ld hl, CutsceneAnimFrameLZ_1f ; $6184
-	ld de, $d0c0 ; $6187
+	ld de, wDecompBuffer + 12 * TILE_SIZE ; $6187
 	call DecompressData ; $618a
-	ld hl, $d0c0 ; $618d
+	ld hl, wDecompBuffer + 12 * TILE_SIZE ; $618d
 	ld de, $80c0 ; $6190
 	ld c, $02 ; $6193
 	call QueueVRAMCopy ; $6195
@@ -4718,9 +4718,9 @@ LoadCutsceneAnimFrameGfx_1B_23:
 .eq20:
 	wram_bank $01 ; $61a6
 	ld hl, CutsceneAnimFrameLZ_20 ; $61ac
-	ld de, $d0c0 ; $61af
+	ld de, wDecompBuffer + 12 * TILE_SIZE ; $61af
 	call DecompressData ; $61b2
-	ld hl, $d0c0 ; $61b5
+	ld hl, wDecompBuffer + 12 * TILE_SIZE ; $61b5
 	ld de, $80c0 ; $61b8
 	ld c, $02 ; $61bb
 	call QueueVRAMCopy ; $61bd
@@ -4733,9 +4733,9 @@ LoadCutsceneAnimFrameGfx_1B_23:
 .eq21:
 	wram_bank $01 ; $61ce
 	ld hl, CutsceneAnimFrameLZ_21 ; $61d4
-	ld de, $d0c0 ; $61d7
+	ld de, wDecompBuffer + 12 * TILE_SIZE ; $61d7
 	call DecompressData ; $61da
-	ld hl, $d0c0 ; $61dd
+	ld hl, wDecompBuffer + 12 * TILE_SIZE ; $61dd
 	ld de, $80c0 ; $61e0
 	ld c, $02 ; $61e3
 	call QueueVRAMCopy ; $61e5
@@ -4748,9 +4748,9 @@ LoadCutsceneAnimFrameGfx_1B_23:
 .eq22:
 	wram_bank $01 ; $61f6
 	ld hl, CutsceneAnimFrameLZ_22 ; $61fc
-	ld de, $d0c0 ; $61ff
+	ld de, wDecompBuffer + 12 * TILE_SIZE ; $61ff
 	call DecompressData ; $6202
-	ld hl, $d0c0 ; $6205
+	ld hl, wDecompBuffer + 12 * TILE_SIZE ; $6205
 	ld de, $80c0 ; $6208
 	ld c, $02 ; $620b
 	call QueueVRAMCopy ; $620d
@@ -4763,9 +4763,9 @@ LoadCutsceneAnimFrameGfx_1B_23:
 .eq23:
 	wram_bank $01 ; $621e
 	ld hl, CutsceneAnimFrameLZ_23 ; $6224
-	ld de, $d0c0 ; $6227
+	ld de, wDecompBuffer + 12 * TILE_SIZE ; $6227
 	call DecompressData ; $622a
-	ld hl, $d0c0 ; $622d
+	ld hl, wDecompBuffer + 12 * TILE_SIZE ; $622d
 	ld de, $80c0 ; $6230
 	ld c, $02 ; $6233
 	call QueueVRAMCopy ; $6235
@@ -4811,9 +4811,9 @@ LoadCutsceneAnimFrameGfx_24_2C:
 .eq24:
 	wram_bank $01 ; $6292
 	ld hl, CutsceneAnimFrameLZ_24 ; $6298
-	ld de, $d0e0 ; $629b
+	ld de, wDecompBuffer + 14 * TILE_SIZE ; $629b
 	call DecompressData ; $629e
-	ld hl, $d0e0 ; $62a1
+	ld hl, wDecompBuffer + 14 * TILE_SIZE ; $62a1
 	ld de, $80e0 ; $62a4
 	ld c, $02 ; $62a7
 	call QueueVRAMCopy ; $62a9
@@ -4826,9 +4826,9 @@ LoadCutsceneAnimFrameGfx_24_2C:
 .eq25:
 	wram_bank $01 ; $62ba
 	ld hl, CutsceneAnimFrameLZ_25 ; $62c0
-	ld de, $d0e0 ; $62c3
+	ld de, wDecompBuffer + 14 * TILE_SIZE ; $62c3
 	call DecompressData ; $62c6
-	ld hl, $d0e0 ; $62c9
+	ld hl, wDecompBuffer + 14 * TILE_SIZE ; $62c9
 	ld de, $80e0 ; $62cc
 	ld c, $02 ; $62cf
 	call QueueVRAMCopy ; $62d1
@@ -4841,9 +4841,9 @@ LoadCutsceneAnimFrameGfx_24_2C:
 .eq26:
 	wram_bank $01 ; $62e2
 	ld hl, CutsceneAnimFrameLZ_26 ; $62e8
-	ld de, $d0e0 ; $62eb
+	ld de, wDecompBuffer + 14 * TILE_SIZE ; $62eb
 	call DecompressData ; $62ee
-	ld hl, $d0e0 ; $62f1
+	ld hl, wDecompBuffer + 14 * TILE_SIZE ; $62f1
 	ld de, $80e0 ; $62f4
 	ld c, $02 ; $62f7
 	call QueueVRAMCopy ; $62f9
@@ -4856,9 +4856,9 @@ LoadCutsceneAnimFrameGfx_24_2C:
 .eq27:
 	wram_bank $01 ; $630a
 	ld hl, CutsceneAnimFrameLZ_27 ; $6310
-	ld de, $d0e0 ; $6313
+	ld de, wDecompBuffer + 14 * TILE_SIZE ; $6313
 	call DecompressData ; $6316
-	ld hl, $d0e0 ; $6319
+	ld hl, wDecompBuffer + 14 * TILE_SIZE ; $6319
 	ld de, $80e0 ; $631c
 	ld c, $02 ; $631f
 	call QueueVRAMCopy ; $6321
@@ -4871,9 +4871,9 @@ LoadCutsceneAnimFrameGfx_24_2C:
 .eq28:
 	wram_bank $01 ; $6332
 	ld hl, CutsceneAnimFrameLZ_28 ; $6338
-	ld de, $d0e0 ; $633b
+	ld de, wDecompBuffer + 14 * TILE_SIZE ; $633b
 	call DecompressData ; $633e
-	ld hl, $d0e0 ; $6341
+	ld hl, wDecompBuffer + 14 * TILE_SIZE ; $6341
 	ld de, $80e0 ; $6344
 	ld c, $02 ; $6347
 	call QueueVRAMCopy ; $6349
@@ -4886,9 +4886,9 @@ LoadCutsceneAnimFrameGfx_24_2C:
 .eq29:
 	wram_bank $01 ; $635a
 	ld hl, CutsceneAnimFrameLZ_29 ; $6360
-	ld de, $d0e0 ; $6363
+	ld de, wDecompBuffer + 14 * TILE_SIZE ; $6363
 	call DecompressData ; $6366
-	ld hl, $d0e0 ; $6369
+	ld hl, wDecompBuffer + 14 * TILE_SIZE ; $6369
 	ld de, $80e0 ; $636c
 	ld c, $02 ; $636f
 	call QueueVRAMCopy ; $6371
@@ -4901,9 +4901,9 @@ LoadCutsceneAnimFrameGfx_24_2C:
 .eq2a:
 	wram_bank $01 ; $6382
 	ld hl, CutsceneAnimFrameLZ_2a ; $6388
-	ld de, $d0e0 ; $638b
+	ld de, wDecompBuffer + 14 * TILE_SIZE ; $638b
 	call DecompressData ; $638e
-	ld hl, $d0e0 ; $6391
+	ld hl, wDecompBuffer + 14 * TILE_SIZE ; $6391
 	ld de, $80e0 ; $6394
 	ld c, $02 ; $6397
 	call QueueVRAMCopy ; $6399
@@ -4916,9 +4916,9 @@ LoadCutsceneAnimFrameGfx_24_2C:
 .eq2b:
 	wram_bank $01 ; $63aa
 	ld hl, CutsceneAnimFrameLZ_2b ; $63b0
-	ld de, $d0e0 ; $63b3
+	ld de, wDecompBuffer + 14 * TILE_SIZE ; $63b3
 	call DecompressData ; $63b6
-	ld hl, $d0e0 ; $63b9
+	ld hl, wDecompBuffer + 14 * TILE_SIZE ; $63b9
 	ld de, $80e0 ; $63bc
 	ld c, $02 ; $63bf
 	call QueueVRAMCopy ; $63c1
@@ -4931,9 +4931,9 @@ LoadCutsceneAnimFrameGfx_24_2C:
 .eq2c:
 	wram_bank $01 ; $63d2
 	ld hl, CutsceneAnimFrameLZ_2c ; $63d8
-	ld de, $d0e0 ; $63db
+	ld de, wDecompBuffer + 14 * TILE_SIZE ; $63db
 	call DecompressData ; $63de
-	ld hl, $d0e0 ; $63e1
+	ld hl, wDecompBuffer + 14 * TILE_SIZE ; $63e1
 	ld de, $80e0 ; $63e4
 	ld c, $02 ; $63e7
 	call QueueVRAMCopy ; $63e9
@@ -4979,9 +4979,9 @@ LoadCutsceneAnimFrameGfx_2D_35:
 .eq2d:
 	wram_bank $01 ; $6446
 	ld hl, CutsceneAnimFrameLZ_2d ; $644c
-	ld de, $d100 ; $644f
+	ld de, wDecompBuffer + 16 * TILE_SIZE ; $644f
 	call DecompressData ; $6452
-	ld hl, $d100 ; $6455
+	ld hl, wDecompBuffer + 16 * TILE_SIZE ; $6455
 	ld de, $8100 ; $6458
 	ld c, $02 ; $645b
 	call QueueVRAMCopy ; $645d
@@ -4994,9 +4994,9 @@ LoadCutsceneAnimFrameGfx_2D_35:
 .eq2e:
 	wram_bank $01 ; $646e
 	ld hl, CutsceneAnimFrameLZ_2e ; $6474
-	ld de, $d100 ; $6477
+	ld de, wDecompBuffer + 16 * TILE_SIZE ; $6477
 	call DecompressData ; $647a
-	ld hl, $d100 ; $647d
+	ld hl, wDecompBuffer + 16 * TILE_SIZE ; $647d
 	ld de, $8100 ; $6480
 	ld c, $02 ; $6483
 	call QueueVRAMCopy ; $6485
@@ -5009,9 +5009,9 @@ LoadCutsceneAnimFrameGfx_2D_35:
 .eq2f:
 	wram_bank $01 ; $6496
 	ld hl, CutsceneAnimFrameLZ_2f ; $649c
-	ld de, $d100 ; $649f
+	ld de, wDecompBuffer + 16 * TILE_SIZE ; $649f
 	call DecompressData ; $64a2
-	ld hl, $d100 ; $64a5
+	ld hl, wDecompBuffer + 16 * TILE_SIZE ; $64a5
 	ld de, $8100 ; $64a8
 	ld c, $02 ; $64ab
 	call QueueVRAMCopy ; $64ad
@@ -5024,9 +5024,9 @@ LoadCutsceneAnimFrameGfx_2D_35:
 .eq30:
 	wram_bank $01 ; $64be
 	ld hl, CutsceneAnimFrameLZ_30 ; $64c4
-	ld de, $d100 ; $64c7
+	ld de, wDecompBuffer + 16 * TILE_SIZE ; $64c7
 	call DecompressData ; $64ca
-	ld hl, $d100 ; $64cd
+	ld hl, wDecompBuffer + 16 * TILE_SIZE ; $64cd
 	ld de, $8100 ; $64d0
 	ld c, $02 ; $64d3
 	call QueueVRAMCopy ; $64d5
@@ -5039,9 +5039,9 @@ LoadCutsceneAnimFrameGfx_2D_35:
 .eq31:
 	wram_bank $01 ; $64e6
 	ld hl, CutsceneAnimFrameLZ_31 ; $64ec
-	ld de, $d100 ; $64ef
+	ld de, wDecompBuffer + 16 * TILE_SIZE ; $64ef
 	call DecompressData ; $64f2
-	ld hl, $d100 ; $64f5
+	ld hl, wDecompBuffer + 16 * TILE_SIZE ; $64f5
 	ld de, $8100 ; $64f8
 	ld c, $02 ; $64fb
 	call QueueVRAMCopy ; $64fd
@@ -5054,9 +5054,9 @@ LoadCutsceneAnimFrameGfx_2D_35:
 .eq32:
 	wram_bank $01 ; $650e
 	ld hl, CutsceneAnimFrameLZ_32 ; $6514
-	ld de, $d100 ; $6517
+	ld de, wDecompBuffer + 16 * TILE_SIZE ; $6517
 	call DecompressData ; $651a
-	ld hl, $d100 ; $651d
+	ld hl, wDecompBuffer + 16 * TILE_SIZE ; $651d
 	ld de, $8100 ; $6520
 	ld c, $02 ; $6523
 	call QueueVRAMCopy ; $6525
@@ -5069,9 +5069,9 @@ LoadCutsceneAnimFrameGfx_2D_35:
 .eq33:
 	wram_bank $01 ; $6536
 	ld hl, CutsceneAnimFrameLZ_33 ; $653c
-	ld de, $d100 ; $653f
+	ld de, wDecompBuffer + 16 * TILE_SIZE ; $653f
 	call DecompressData ; $6542
-	ld hl, $d100 ; $6545
+	ld hl, wDecompBuffer + 16 * TILE_SIZE ; $6545
 	ld de, $8100 ; $6548
 	ld c, $02 ; $654b
 	call QueueVRAMCopy ; $654d
@@ -5084,9 +5084,9 @@ LoadCutsceneAnimFrameGfx_2D_35:
 .eq34:
 	wram_bank $01 ; $655e
 	ld hl, CutsceneAnimFrameLZ_34 ; $6564
-	ld de, $d100 ; $6567
+	ld de, wDecompBuffer + 16 * TILE_SIZE ; $6567
 	call DecompressData ; $656a
-	ld hl, $d100 ; $656d
+	ld hl, wDecompBuffer + 16 * TILE_SIZE ; $656d
 	ld de, $8100 ; $6570
 	ld c, $02 ; $6573
 	call QueueVRAMCopy ; $6575
@@ -5099,9 +5099,9 @@ LoadCutsceneAnimFrameGfx_2D_35:
 .eq35:
 	wram_bank $01 ; $6586
 	ld hl, CutsceneAnimFrameLZ_35 ; $658c
-	ld de, $d100 ; $658f
+	ld de, wDecompBuffer + 16 * TILE_SIZE ; $658f
 	call DecompressData ; $6592
-	ld hl, $d100 ; $6595
+	ld hl, wDecompBuffer + 16 * TILE_SIZE ; $6595
 	ld de, $8100 ; $6598
 	ld c, $02 ; $659b
 	call QueueVRAMCopy ; $659d
@@ -5531,7 +5531,7 @@ PlayScrollingStoryCutscene:
 	or a ; $7055
 	jr nz, .loopB ; $7056
 	wram_bank $01 ; $7058
-	ld hl, $d000 ; $705e
+	ld hl, wDecompBuffer ; $705e
 	ld b, $20 ; $7061
 	ld de, $0300 ; $7063
 	call FillMemoryDE ; $7066

@@ -338,13 +338,13 @@ ResetTennisDictionaryScroll:
 LoadTennisDictionaryAssetsDefault:
 	wram_bank $01 ; $425f
 	ld hl, $3a02 ; $4265 -> DataPtr_TennisDictionaryListTiles
-	ld de, $d000 ; $4268
+	ld de, wDecompBuffer ; $4268
 	call DecompressDataFromBank ; $426b
-	ld hl, $d000 ; $426e
+	ld hl, wDecompBuffer ; $426e
 	ld de, $9000 + VRAM_BANK1 ; $4271
 	ld c, $80 ; $4274
 	call QueueVRAMCopy ; $4276
-	ld hl, $d800 ; $4279
+	ld hl, wTextTileBuffer ; $4279
 	ld de, $8800 + VRAM_BANK1 ; $427c
 	ld c, $80 ; $427f
 	call QueueVRAMCopy ; $4281
@@ -360,13 +360,13 @@ LoadTennisDictionaryAssetsDefault:
 LoadTennisDictionaryAssetsChar6:
 	wram_bank $01 ; $42a0
 	ld hl, $3a00 ; $42a6 -> DataPtr_TennisDictionaryTiles
-	ld de, $d000 ; $42a9
+	ld de, wDecompBuffer ; $42a9
 	call DecompressDataFromBank ; $42ac
-	ld hl, $d000 ; $42af
+	ld hl, wDecompBuffer ; $42af
 	ld de, $9000 + VRAM_BANK1 ; $42b2
 	ld c, $80 ; $42b5
 	call QueueVRAMCopy ; $42b7
-	ld hl, $d800 ; $42ba
+	ld hl, wTextTileBuffer ; $42ba
 	ld de, $8800 + VRAM_BANK1 ; $42bd
 	ld c, $80 ; $42c0
 	call QueueVRAMCopy ; $42c2
@@ -427,44 +427,44 @@ LoadTennisDictionaryScreen:
 	call FindTennisDictionaryListEnd ; $432e
 	wram_bank $01 ; $4331
 	ld hl, TennisDictionaryTiles8000 ; $4337
-	ld de, $d000 ; $433a
+	ld de, wDecompBuffer ; $433a
 	call DecompressData ; $433d
-	ld hl, $d000 ; $4340
+	ld hl, wDecompBuffer ; $4340
 	ld de, $8000 ; $4343
 	ld c, $20 ; $4346
 	call QueueVRAMCopy ; $4348
 	ld hl, TennisDictionaryTiles8200 ; $434b
-	ld de, $d000 ; $434e
+	ld de, wDecompBuffer ; $434e
 	call DecompressData ; $4351
-	ld hl, $d000 ; $4354
+	ld hl, wDecompBuffer ; $4354
 	ld de, $8200 ; $4357
 	ld c, $20 ; $435a
 	call QueueVRAMCopy ; $435c
 	ld hl, TennisDictionaryTiles8400 ; $435f
-	ld de, $d000 ; $4362
+	ld de, wDecompBuffer ; $4362
 	call DecompressData ; $4365
-	ld hl, $d000 ; $4368
+	ld hl, wDecompBuffer ; $4368
 	ld de, $8400 ; $436b
 	ld c, $20 ; $436e
 	call QueueVRAMCopy ; $4370
 	ld hl, TennisDictionaryTilesA000 ; $4373
-	ld de, $d000 ; $4376
+	ld de, wDecompBuffer ; $4376
 	call DecompressData ; $4379
-	ld hl, $d000 ; $437c
+	ld hl, wDecompBuffer ; $437c
 	ld de, $8000 + VRAM_BANK1 ; $437f
 	ld c, $20 ; $4382
 	call QueueVRAMCopy ; $4384
 	ld hl, TennisDictionaryTilesA200 ; $4387
-	ld de, $d000 ; $438a
+	ld de, wDecompBuffer ; $438a
 	call DecompressData ; $438d
-	ld hl, $d000 ; $4390
+	ld hl, wDecompBuffer ; $4390
 	ld de, $8200 + VRAM_BANK1 ; $4393
 	ld c, $20 ; $4396
 	call QueueVRAMCopy ; $4398
 	ld hl, TennisDictionaryTilesA400 ; $439b
-	ld de, $d000 ; $439e
+	ld de, wDecompBuffer ; $439e
 	call DecompressData ; $43a1
-	ld hl, $d000 ; $43a4
+	ld hl, wDecompBuffer ; $43a4
 	ld de, $8400 + VRAM_BANK1 ; $43a7
 	ld c, $20 ; $43aa
 	call QueueVRAMCopy ; $43ac

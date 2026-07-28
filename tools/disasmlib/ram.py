@@ -505,6 +505,7 @@ def write_ram_layout(regions, unions_by_region=None):
     for ri, (start, end, mem, path) in enumerate(RAM_REGIONS):
         items = [("sym", addr, name, size, note, bank)
                  for addr, name, size, note, bank in regions.get(ri, [])]
+        seen_unions = []
         for ustart, uend, comment, variants, ubank in unions_by_region.get(ri, []):
             banks = union_banks(variants, ubank)
             for addr, _name, _size, _note, bank in regions.get(ri, []):
@@ -512,6 +513,19 @@ def write_ram_layout(regions, unions_by_region=None):
                     raise SystemExit(
                         f"ram_map/ram_unions conflict: ${addr:04x} inside "
                         f"union ${ustart:04x}-${uend:04x}")
+            # Two unions over the same bytes in the same bank would both be
+            # emitted, one after the other, and the section would silently grow
+            # past the end of the bank -- rgbasm catches that, but only as a
+            # size error a long way from the cause. Overlapping variants belong
+            # in one union.
+            for ostart, oend, obanks in seen_unions:
+                if ustart < oend and ostart < uend \
+                        and (not banks or not obanks or (banks & obanks)):
+                    raise SystemExit(
+                        f"ram_unions overlap: ${ustart:04x}-${uend:04x} and "
+                        f"${ostart:04x}-${oend:04x} cover the same bytes; "
+                        f"make them variants of one union")
+            seen_unions.append((ustart, uend, banks))
             items.append(("union", ustart, uend, comment, variants, ubank))
         if not items:
             continue

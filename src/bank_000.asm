@@ -1472,7 +1472,7 @@ CopyMapToScrollBuffers:
 	ldh a, [hWramBank] ; $0870
 	push af ; $0872
 	wram_bank $01 ; $0873
-	ld hl, $d000 ; $0879
+	ld hl, wDecompBuffer ; $0879
 	ld de, wTextBuffer ; $087c
 	ld c, $20 ; $087f
 	call CopyMemoryFast ; $0881
@@ -1481,7 +1481,7 @@ CopyMapToScrollBuffers:
 	ld de, $d000 ; $088d
 	call CopyMapRows32To64 ; $0890
 	wram_bank $01 ; $0893
-	ld hl, $d200 ; $0899
+	ld hl, wDecompBuffer + 32 * TILE_SIZE ; $0899
 	ld de, wTextBuffer ; $089c
 	ld c, $20 ; $089f
 	call CopyMemoryFast ; $08a1
@@ -1493,7 +1493,7 @@ CopyMapToScrollBuffers:
 	ld c, $80 ; $08b6
 	call ClearMemory16 ; $08b8
 	wram_bank $01 ; $08bb
-	ld hl, $d400 ; $08c1
+	ld hl, wDecompBuffer + 64 * TILE_SIZE ; $08c1
 	ld de, wTextBuffer ; $08c4
 	ld c, $20 ; $08c7
 	call CopyMemoryFast ; $08c9
@@ -1502,7 +1502,7 @@ CopyMapToScrollBuffers:
 	ld de, wShadowTilemap ; $08d5
 	call CopyMapRows32To64 ; $08d8
 	wram_bank $01 ; $08db
-	ld hl, $d600 ; $08e1
+	ld hl, wDecompBuffer + 96 * TILE_SIZE ; $08e1
 	ld de, wTextBuffer ; $08e4
 	ld c, $20 ; $08e7
 	call CopyMemoryFast ; $08e9

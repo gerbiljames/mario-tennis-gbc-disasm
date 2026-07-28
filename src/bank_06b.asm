@@ -360,13 +360,13 @@ IntroCutsceneState01Init_6b:
 	farcall QueueWram3MapToVRAM ; $425f
 	wram_bank $01 ; $4262
 	ld hl, IntroCutsceneState01InitGfx0 ; $4268 -> DataPtr_IntroSwingTiles
-	ld de, $d000 ; $426b
+	ld de, wDecompBuffer ; $426b
 	call DecompressDataFromBank ; $426e
-	ld hl, $d000 ; $4271
+	ld hl, wDecompBuffer ; $4271
 	ld de, $9000 ; $4274
 	ld c, $80 ; $4277
 	call QueueVRAMCopy ; $4279
-	ld hl, $d800 ; $427c
+	ld hl, wTextTileBuffer ; $427c
 	ld de, $8800 ; $427f
 	ld c, $80 ; $4282
 	call QueueVRAMCopy ; $4284
@@ -471,13 +471,13 @@ IntroCutsceneState03Init_6b:
 	farcall QueueWram3MapToVRAM ; $43f1
 	wram_bank $01 ; $43f4
 	ld hl, IntroCutsceneState03InitGfx0 ; $43fa -> DataPtr_IntroCloseupTiles
-	ld de, $d000 ; $43fd
+	ld de, wDecompBuffer ; $43fd
 	call DecompressDataFromBank ; $4400
-	ld hl, $d000 ; $4403
+	ld hl, wDecompBuffer ; $4403
 	ld de, $9000 ; $4406
 	ld c, $80 ; $4409
 	call QueueVRAMCopy ; $440b
-	ld hl, $d800 ; $440e
+	ld hl, wTextTileBuffer ; $440e
 	ld de, $8800 ; $4411
 	ld c, $80 ; $4414
 	call QueueVRAMCopy ; $4416
@@ -997,27 +997,27 @@ IntroCutsceneState16Init_6b:
 	set 3, [hl] ; $4970
 	wram_bank $01 ; $4972
 	ld hl, IntroCutsceneState16InitGfx0 ; $4978 -> DataPtr_IntroGreatestPlayerTiles
-	ld de, $d000 ; $497b
+	ld de, wDecompBuffer ; $497b
 	call DecompressDataFromBank ; $497e
-	ld hl, $d000 ; $4981
+	ld hl, wDecompBuffer ; $4981
 	ld de, $9000 ; $4984
 	ld c, $80 ; $4987
 	call QueueVRAMCopy ; $4989
-	ld hl, $d800 ; $498c
+	ld hl, wTextTileBuffer ; $498c
 	ld de, $8800 ; $498f
 	ld c, $80 ; $4992
 	call QueueVRAMCopy ; $4994
 	ld hl, IntroCutsceneState16InitGfx1 ; $4997 -> DataPtr_IntroGreatestPlayerTilemap
-	ld de, $d000 ; $499a
+	ld de, wDecompBuffer ; $499a
 	call DecompressDataFromBank ; $499d
 	ld hl, IntroCutsceneState16InitGfx2 ; $49a0 -> DataPtr_IntroGreatestPlayerAttrmap
-	ld de, $d400 ; $49a3
+	ld de, wDecompBuffer + 64 * TILE_SIZE ; $49a3
 	call DecompressDataFromBank ; $49a6
-	ld hl, $d000 ; $49a9
+	ld hl, wDecompBuffer ; $49a9
 	ld de, $9c00 ; $49ac
 	ld c, $40 ; $49af
 	call QueueVRAMCopy ; $49b1
-	ld hl, $d400 ; $49b4
+	ld hl, wDecompBuffer + 64 * TILE_SIZE ; $49b4
 	ld de, $9c00 + VRAM_BANK1 ; $49b7
 	ld c, $40 ; $49ba
 	call QueueVRAMCopy ; $49bc
@@ -1026,13 +1026,13 @@ IntroCutsceneState16Init_6b:
 	call LoadPaletteShadow ; $49c5
 	wram_bank $01 ; $49c8
 	ld hl, IntroCutsceneState16InitGfx3 ; $49ce -> DataPtr_IntroCharactersTiles
-	ld de, $d000 ; $49d1
+	ld de, wDecompBuffer ; $49d1
 	call DecompressDataFromBank ; $49d4
-	ld hl, $d000 ; $49d7
+	ld hl, wDecompBuffer ; $49d7
 	ld de, $9000 + VRAM_BANK1 ; $49da
 	ld c, $80 ; $49dd
 	call QueueVRAMCopy ; $49df
-	ld hl, $d800 ; $49e2
+	ld hl, wTextTileBuffer ; $49e2
 	ld de, $8800 + VRAM_BANK1 ; $49e5
 	ld c, $80 ; $49e8
 	call QueueVRAMCopy ; $49ea
@@ -1052,7 +1052,7 @@ IntroCutsceneState16Init_6b:
 	call DecompressDataFromBank ; $4a1a
 	wram_bank $01 ; $4a1d
 	ld hl, CutsceneSceneAGfx0 ; $4a23
-	ld de, $d000 ; $4a26
+	ld de, wDecompBuffer ; $4a26
 	call DecompressData ; $4a29
 	xor a ; $4a2c
 	ldh [hScrollX], a ; $4a2d
@@ -1161,27 +1161,27 @@ IntroCutsceneState18Init_6b:
 	call LoadPaletteShadow ; $4b77
 	call AdvanceFrame ; $4b7a
 	wram_bank $01 ; $4b7d
-	ld hl, $d000 ; $4b83
+	ld hl, wDecompBuffer ; $4b83
 	ld de, $9000 ; $4b86
 	ld c, $20 ; $4b89
 	call QueueVRAMCopy ; $4b8b
 	call AdvanceFrame ; $4b8e
-	ld hl, $d200 ; $4b91
+	ld hl, wDecompBuffer + 32 * TILE_SIZE ; $4b91
 	ld de, $9200 ; $4b94
 	ld c, $20 ; $4b97
 	call QueueVRAMCopy ; $4b99
 	call AdvanceFrame ; $4b9c
-	ld hl, $d400 ; $4b9f
+	ld hl, wDecompBuffer + 64 * TILE_SIZE ; $4b9f
 	ld de, $9400 ; $4ba2
 	ld c, $20 ; $4ba5
 	call QueueVRAMCopy ; $4ba7
 	call AdvanceFrame ; $4baa
-	ld hl, $d600 ; $4bad
+	ld hl, wDecompBuffer + 96 * TILE_SIZE ; $4bad
 	ld de, $9600 ; $4bb0
 	ld c, $20 ; $4bb3
 	call QueueVRAMCopy ; $4bb5
 	call AdvanceFrame ; $4bb8
-	ld hl, $d800 ; $4bbb
+	ld hl, wTextTileBuffer ; $4bbb
 	ld de, $8800 ; $4bbe
 	ld c, $20 ; $4bc1
 	call QueueVRAMCopy ; $4bc3
@@ -1684,13 +1684,13 @@ InitCutsceneSceneA:
 	farcall InitTextWindows ; $5402
 	wram_bank $01 ; $5405
 	ld hl, CutsceneSceneAGfx0 ; $540b
-	ld de, $d000 ; $540e
+	ld de, wDecompBuffer ; $540e
 	call DecompressData ; $5411
-	ld hl, $d000 ; $5414
+	ld hl, wDecompBuffer ; $5414
 	ld de, $9000 ; $5417
 	ld c, $80 ; $541a
 	call QueueVRAMCopy ; $541c
-	ld hl, $d800 ; $541f
+	ld hl, wTextTileBuffer ; $541f
 	ld de, $8800 ; $5422
 	ld c, $80 ; $5425
 	call QueueVRAMCopy ; $5427
@@ -1718,13 +1718,13 @@ InitCutsceneSceneB:
 	farcall InitTextWindows ; $5464
 	wram_bank $01 ; $5467
 	ld hl, CutsceneSceneAGfx0 ; $546d
-	ld de, $d000 ; $5470
+	ld de, wDecompBuffer ; $5470
 	call DecompressData ; $5473
-	ld hl, $d000 ; $5476
+	ld hl, wDecompBuffer ; $5476
 	ld de, $9000 ; $5479
 	ld c, $80 ; $547c
 	call QueueVRAMCopy ; $547e
-	ld hl, $d800 ; $5481
+	ld hl, wTextTileBuffer ; $5481
 	ld de, $8800 ; $5484
 	ld c, $80 ; $5487
 	call QueueVRAMCopy ; $5489
@@ -1749,13 +1749,13 @@ InitCutsceneSceneC:
 	farcall InitTextWindows ; $54bf
 	wram_bank $01 ; $54c2
 	ld hl, CutsceneSceneAGfx0 ; $54c8
-	ld de, $d000 ; $54cb
+	ld de, wDecompBuffer ; $54cb
 	call DecompressData ; $54ce
-	ld hl, $d000 ; $54d1
+	ld hl, wDecompBuffer ; $54d1
 	ld de, $9000 ; $54d4
 	ld c, $80 ; $54d7
 	call QueueVRAMCopy ; $54d9
-	ld hl, $d800 ; $54dc
+	ld hl, wTextTileBuffer ; $54dc
 	ld de, $8800 ; $54df
 	ld c, $80 ; $54e2
 	call QueueVRAMCopy ; $54e4
@@ -1913,13 +1913,13 @@ InitTitleSceneGraphics:
 	farcall InitTextWindows ; $6182
 	wram_bank $01 ; $6185
 	ld hl, TitleSceneGraphicsGfx0 ; $618b
-	ld de, $d000 ; $618e
+	ld de, wDecompBuffer ; $618e
 	call DecompressData ; $6191
-	ld hl, $d000 ; $6194
+	ld hl, wDecompBuffer ; $6194
 	ld de, $9000 + VRAM_BANK1 ; $6197
 	ld c, $80 ; $619a
 	call QueueVRAMCopy ; $619c
-	ld hl, $d800 ; $619f
+	ld hl, wTextTileBuffer ; $619f
 	ld de, $8800 + VRAM_BANK1 ; $61a2
 	ld c, $80 ; $61a5
 	call QueueVRAMCopy ; $61a7
@@ -2199,13 +2199,13 @@ DecompressIntroTitleTiles:
 	push af ; $73f4
 	wram_bank $01 ; $73f5
 	ld hl, DecompressIntroTitleTiles0 ; $73fb -> DataPtr_IntroAwesomeTiles
-	ld de, $d000 ; $73fe
+	ld de, wDecompBuffer ; $73fe
 	call DecompressDataFromBank ; $7401
-	ld hl, $d000 ; $7404
+	ld hl, wDecompBuffer ; $7404
 	ld de, $9000 ; $7407
 	ld c, $80 ; $740a
 	call QueueVRAMCopy ; $740c
-	ld hl, $d800 ; $740f
+	ld hl, wTextTileBuffer ; $740f
 	ld de, $8800 ; $7412
 	ld c, $80 ; $7415
 	call QueueVRAMCopy ; $7417

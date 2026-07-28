@@ -1767,7 +1767,7 @@ LoadMatchMenuItemGfx:
 	push af ; $5229
 	wram_bank $01 ; $522a
 	call DecompressData ; $5230
-	ld hl, $d000 ; $5233
+	ld hl, wDecompBuffer ; $5233
 	ld de, $8400 ; $5236
 	ld c, $10 ; $5239
 	call QueueVRAMCopy ; $523b
@@ -1864,9 +1864,9 @@ LoadScoreboardModeGfx:
 	ld a, [hl+] ; $5caf
 	ld h, [hl] ; $5cb0
 	ld l, a ; $5cb1
-	ld de, $d000 ; $5cb2
+	ld de, wDecompBuffer ; $5cb2
 	call DecompressData ; $5cb5
-	ld hl, $d000 ; $5cb8
+	ld hl, wDecompBuffer ; $5cb8
 	ld de, $8500 ; $5cbb
 	ld c, $14 ; $5cbe
 	call QueueVRAMCopy ; $5cc0
@@ -3416,7 +3416,7 @@ LoadStoryMenuItemGfx:
 	push af ; $7293
 	wram_bank $01 ; $7294
 	call DecompressData ; $729a
-	ld hl, $d000 ; $729d
+	ld hl, wDecompBuffer ; $729d
 	ld de, $8700 ; $72a0
 	ld c, $10 ; $72a3
 	call QueueVRAMCopy ; $72a5

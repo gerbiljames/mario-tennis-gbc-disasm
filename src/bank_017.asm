@@ -4889,132 +4889,132 @@ QueueRulesPageToVRAM:
 LoadRulesBorderAnimTiles:
 	wram_bank $01 ; $7293
 	ld hl, RulesBorderAnimTiles0 ; $7299
-	ld de, $d000 ; $729c
+	ld de, wDecompBuffer ; $729c
 	call DecompressData ; $729f
-	ld hl, $d000 ; $72a2
+	ld hl, wDecompBuffer ; $72a2
 	ld de, $8000 ; $72a5
 	ld bc, $0012 ; $72a8
 	call QueueVRAMCopy ; $72ab
-	ld hl, $d000 ; $72ae
+	ld hl, wDecompBuffer ; $72ae
 	ld de, $8240 ; $72b1
 	ld bc, $0012 ; $72b4
 	call QueueVRAMCopy ; $72b7
-	ld hl, $d000 ; $72ba
+	ld hl, wDecompBuffer ; $72ba
 	ld de, $8480 ; $72bd
 	ld bc, $0012 ; $72c0
 	call QueueVRAMCopy ; $72c3
-	ld hl, $d000 ; $72c6
+	ld hl, wDecompBuffer ; $72c6
 	ld de, $8100 + VRAM_BANK1 ; $72c9
 	ld bc, $0012 ; $72cc
 	call QueueVRAMCopy ; $72cf
-	ld hl, $d000 ; $72d2
+	ld hl, wDecompBuffer ; $72d2
 	ld de, $8340 + VRAM_BANK1 ; $72d5
 	ld bc, $0012 ; $72d8
 	call QueueVRAMCopy ; $72db
-	ld hl, $d000 ; $72de
+	ld hl, wDecompBuffer ; $72de
 	ld de, $8580 + VRAM_BANK1 ; $72e1
 	ld bc, $0012 ; $72e4
 	call QueueVRAMCopy ; $72e7
 	ld hl, RulesBorderAnimTiles1 ; $72ea
-	ld de, $d000 ; $72ed
+	ld de, wDecompBuffer ; $72ed
 	call DecompressData ; $72f0
-	ld hl, $d000 ; $72f3
+	ld hl, wDecompBuffer ; $72f3
 	ld de, $84a0 ; $72f6
 	ld bc, $0002 ; $72f9
 	call QueueVRAMCopy ; $72fc
-	ld hl, $d000 ; $72ff
+	ld hl, wDecompBuffer ; $72ff
 	ld de, $8120 + VRAM_BANK1 ; $7302
 	ld bc, $0002 ; $7305
 	call QueueVRAMCopy ; $7308
-	ld hl, $d000 ; $730b
+	ld hl, wDecompBuffer ; $730b
 	ld de, $8360 + VRAM_BANK1 ; $730e
 	ld bc, $0002 ; $7311
 	call QueueVRAMCopy ; $7314
-	ld hl, $d000 ; $7317
+	ld hl, wDecompBuffer ; $7317
 	ld de, $85a0 + VRAM_BANK1 ; $731a
 	ld bc, $0002 ; $731d
 	call QueueVRAMCopy ; $7320
 	ld hl, RulesBorderAnimTiles2 ; $7323
-	ld de, $d000 ; $7326
+	ld de, wDecompBuffer ; $7326
 	call DecompressData ; $7329
-	ld hl, $d020 ; $732c
+	ld hl, wDecompBuffer + 2 * TILE_SIZE ; $732c
 	ld de, $82c0 ; $732f
 	ld bc, $0001 ; $7332
 	call QueueVRAMCopy ; $7335
-	ld hl, $d020 ; $7338
+	ld hl, wDecompBuffer + 2 * TILE_SIZE ; $7338
 	ld de, $8180 + VRAM_BANK1 ; $733b
 	ld bc, $0001 ; $733e
 	call QueueVRAMCopy ; $7341
-	ld hl, $d000 ; $7344
+	ld hl, wDecompBuffer ; $7344
 	ld de, $83c0 + VRAM_BANK1 ; $7347
 	ld bc, $0001 ; $734a
 	call QueueVRAMCopy ; $734d
-	ld hl, $d040 ; $7350
+	ld hl, wDecompBuffer + 4 * TILE_SIZE ; $7350
 	ld de, $8600 + VRAM_BANK1 ; $7353
 	ld bc, $0001 ; $7356
 	call QueueVRAMCopy ; $7359
 	ld hl, RulesBorderAnimTiles3 ; $735c
-	ld de, $d000 ; $735f
+	ld de, wDecompBuffer ; $735f
 	call DecompressData ; $7362
-	ld hl, $d000 ; $7365
+	ld hl, wDecompBuffer ; $7365
 	ld de, $8120 ; $7368
 	ld bc, $0012 ; $736b
 	call QueueVRAMCopy ; $736e
-	ld hl, $d000 ; $7371
+	ld hl, wDecompBuffer ; $7371
 	ld de, $8360 ; $7374
 	ld bc, $0012 ; $7377
 	call QueueVRAMCopy ; $737a
-	ld hl, $d000 ; $737d
+	ld hl, wDecompBuffer ; $737d
 	ld de, $85a0 ; $7380
 	ld bc, $0012 ; $7383
 	call QueueVRAMCopy ; $7386
-	ld hl, $d000 ; $7389
+	ld hl, wDecompBuffer ; $7389
 	ld de, $8220 + VRAM_BANK1 ; $738c
 	ld bc, $0012 ; $738f
 	call QueueVRAMCopy ; $7392
-	ld hl, $d000 ; $7395
+	ld hl, wDecompBuffer ; $7395
 	ld de, $8460 + VRAM_BANK1 ; $7398
 	ld bc, $0012 ; $739b
 	call QueueVRAMCopy ; $739e
-	ld hl, $d000 ; $73a1
+	ld hl, wDecompBuffer ; $73a1
 	ld de, $86a0 + VRAM_BANK1 ; $73a4
 	ld bc, $0012 ; $73a7
 	call QueueVRAMCopy ; $73aa
 	ld hl, RulesBorderAnimTiles4 ; $73ad
-	ld de, $d000 ; $73b0
+	ld de, wDecompBuffer ; $73b0
 	call DecompressData ; $73b3
-	ld hl, $d000 ; $73b6
+	ld hl, wDecompBuffer ; $73b6
 	ld de, $85c0 ; $73b9
 	ld bc, $0002 ; $73bc
 	call QueueVRAMCopy ; $73bf
-	ld hl, $d000 ; $73c2
+	ld hl, wDecompBuffer ; $73c2
 	ld de, $8240 + VRAM_BANK1 ; $73c5
 	ld bc, $0002 ; $73c8
 	call QueueVRAMCopy ; $73cb
-	ld hl, $d000 ; $73ce
+	ld hl, wDecompBuffer ; $73ce
 	ld de, $8480 + VRAM_BANK1 ; $73d1
 	ld bc, $0002 ; $73d4
 	call QueueVRAMCopy ; $73d7
-	ld hl, $d000 ; $73da
+	ld hl, wDecompBuffer ; $73da
 	ld de, $86c0 + VRAM_BANK1 ; $73dd
 	ld bc, $0002 ; $73e0
 	call QueueVRAMCopy ; $73e3
 	ld hl, RulesBorderAnimTiles5 ; $73e6
-	ld de, $d000 ; $73e9
+	ld de, wDecompBuffer ; $73e9
 	call DecompressData ; $73ec
-	ld hl, $d020 ; $73ef
+	ld hl, wDecompBuffer + 2 * TILE_SIZE ; $73ef
 	ld de, $83e0 ; $73f2
 	ld bc, $0001 ; $73f5
 	call QueueVRAMCopy ; $73f8
-	ld hl, $d020 ; $73fb
+	ld hl, wDecompBuffer + 2 * TILE_SIZE ; $73fb
 	ld de, $82a0 + VRAM_BANK1 ; $73fe
 	ld bc, $0001 ; $7401
 	call QueueVRAMCopy ; $7404
-	ld hl, $d000 ; $7407
+	ld hl, wDecompBuffer ; $7407
 	ld de, $84e0 + VRAM_BANK1 ; $740a
 	ld bc, $0001 ; $740d
 	call QueueVRAMCopy ; $7410
-	ld hl, $d040 ; $7413
+	ld hl, wDecompBuffer + 4 * TILE_SIZE ; $7413
 	ld de, $8720 + VRAM_BANK1 ; $7416
 	ld bc, $0001 ; $7419
 	call QueueVRAMCopy ; $741c
