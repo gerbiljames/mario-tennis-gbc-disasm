@@ -427,9 +427,9 @@ RunSoundTest:
 	push bc ; $6a5c
 	push de ; $6a5d
 	push hl ; $6a5e
-	ld a, [$ca00] ; $6a5f
+	ld a, [wPlayer1MainName] ; $6a5f
 	ld d, a ; $6a62
-	ld a, [$ca01] ; $6a63
+	ld a, [wPlayer1MainName + 1] ; $6a63
 	ld e, a ; $6a66
 	ld b, $00 ; $6a67
 	ldh a, [hDebugStepMode] ; $6a69

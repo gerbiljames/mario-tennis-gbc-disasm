@@ -3883,7 +3883,7 @@ BuildCreatedCharRecords:
 	ld [hl], a ; $5dd4
 	ld hl, $0002 ; $5dd5
 	add hl, bc ; $5dd8
-	ld a, [$c918] ; $5dd9
+	ld a, [wStoryMainCharExpTier] ; $5dd9
 	ld [hl], a ; $5ddc
 	ld hl, $0003 ; $5ddd
 	add hl, bc ; $5de0
@@ -3922,7 +3922,7 @@ BuildCreatedCharRecords:
 	ld [hl], a ; $5e1e
 	ld hl, $0002 ; $5e1f
 	add hl, bc ; $5e22
-	ld a, [$c958] ; $5e23
+	ld a, [wStoryPartnerCharExpTier] ; $5e23
 	ld [hl], a ; $5e26
 	ld hl, $0003 ; $5e27
 	add hl, bc ; $5e2a
@@ -4112,13 +4112,13 @@ ApplyCpuDifficultyToCharRecords:
 	ld h, [hl] ; $5f62
 	ld l, a ; $5f63
 	ld a, [hl+] ; $5f64
-	ld [$ca5b], a ; $5f65
+	ld [wPlayer1PartnerAiParams], a ; $5f65
 	ld a, [hl+] ; $5f68
-	ld [$ca5c], a ; $5f69
+	ld [wPlayer1PartnerAiParams + 1], a ; $5f69
 	ld a, [hl+] ; $5f6c
-	ld [$ca5d], a ; $5f6d
+	ld [wPlayer1PartnerAiParams + 2], a ; $5f6d
 	ld a, [hl+] ; $5f70
-	ld [$ca5e], a ; $5f71
+	ld [wPlayer1PartnerAiParams + 3], a ; $5f71
 	ld a, [hl+] ; $5f74
 	ld [wExhibitionModePlayerPartnerCharacterDifficulty], a ; $5f75
 	ld a, [wPlayer1CurrentPartnerCharacter] ; $5f78
@@ -4126,7 +4126,7 @@ ApplyCpuDifficultyToCharRecords:
 	or a ; $5f7e
 	jr nz, .slot2 ; $5f7f
 	ld a, [hl+] ; $5f81
-	ld [$ca58], a ; $5f82
+	ld [wPlayer1PartnerExpTier], a ; $5f82
 .slot2:
 	ld a, [wCharSelectSlotDifficulty + 2] ; $5f85
 	ld hl, SubHandlers_38_5feb ; $5f88
@@ -4140,13 +4140,13 @@ ApplyCpuDifficultyToCharRecords:
 	ld h, [hl] ; $5f92
 	ld l, a ; $5f93
 	ld a, [hl+] ; $5f94
-	ld [$ca9b], a ; $5f95
+	ld [wPlayer2MainAiParams], a ; $5f95
 	ld a, [hl+] ; $5f98
-	ld [$ca9c], a ; $5f99
+	ld [wPlayer2MainAiParams + 1], a ; $5f99
 	ld a, [hl+] ; $5f9c
-	ld [$ca9d], a ; $5f9d
+	ld [wPlayer2MainAiParams + 2], a ; $5f9d
 	ld a, [hl+] ; $5fa0
-	ld [$ca9e], a ; $5fa1
+	ld [wPlayer2MainAiParams + 3], a ; $5fa1
 	ld a, [hl+] ; $5fa4
 	ld [wExhibitionModeCPUMainCharacterDifficulty], a ; $5fa5
 	ld a, [wPlayer2CurrentMainCharacter] ; $5fa8
@@ -4154,7 +4154,7 @@ ApplyCpuDifficultyToCharRecords:
 	or a ; $5fae
 	jr nz, .slot3 ; $5faf
 	ld a, [hl+] ; $5fb1
-	ld [$ca98], a ; $5fb2
+	ld [wPlayer2MainExpTier], a ; $5fb2
 .slot3:
 	ld a, [wCharSelectSlotDifficulty + 3] ; $5fb5
 	ld hl, SubHandlers_38_5feb ; $5fb8
@@ -4168,13 +4168,13 @@ ApplyCpuDifficultyToCharRecords:
 	ld h, [hl] ; $5fc2
 	ld l, a ; $5fc3
 	ld a, [hl+] ; $5fc4
-	ld [$cadb], a ; $5fc5
+	ld [wPlayer2PartnerAiParams], a ; $5fc5
 	ld a, [hl+] ; $5fc8
-	ld [$cadc], a ; $5fc9
+	ld [wPlayer2PartnerAiParams + 1], a ; $5fc9
 	ld a, [hl+] ; $5fcc
-	ld [$cadd], a ; $5fcd
+	ld [wPlayer2PartnerAiParams + 2], a ; $5fcd
 	ld a, [hl+] ; $5fd0
-	ld [$cade], a ; $5fd1
+	ld [wPlayer2PartnerAiParams + 3], a ; $5fd1
 	ld a, [hl+] ; $5fd4
 	ld [wExhibitionModeCPUPartnerCharacterDifficulty], a ; $5fd5
 	ld a, [wPlayer2CurrentPartnerCharacter] ; $5fd8
@@ -4182,7 +4182,7 @@ ApplyCpuDifficultyToCharRecords:
 	or a ; $5fde
 	jr nz, .done ; $5fdf
 	ld a, [hl+] ; $5fe1
-	ld [$cad8], a ; $5fe2
+	ld [wPlayer2PartnerExpTier], a ; $5fe2
 .done:
 	pop af ; $5fe5
 	wram_bank ; $5fe6
@@ -4239,29 +4239,29 @@ ApplyStarFlagsToCharRecords:
 	ldh a, [hWramBank] ; $601c
 	push af ; $601e
 	wram_bank $03 ; $601f
-	ld a, [$ca0e] ; $6025
+	ld a, [wPlayer1MainLeftHanded] ; $6025
 	or a ; $6028
 	jr nz, .slot2 ; $6029
 	ld a, [wCharSelectSlotStar] ; $602b
-	ld [$ca0e], a ; $602e
+	ld [wPlayer1MainLeftHanded], a ; $602e
 .slot2:
-	ld a, [$ca4e] ; $6031
+	ld a, [wPlayer1PartnerLeftHanded] ; $6031
 	or a ; $6034
 	jr nz, .slot3 ; $6035
 	ld a, [wCharSelectSlotStar + 1] ; $6037
-	ld [$ca4e], a ; $603a
+	ld [wPlayer1PartnerLeftHanded], a ; $603a
 .slot3:
-	ld a, [$ca8e] ; $603d
+	ld a, [wPlayer2MainLeftHanded] ; $603d
 	or a ; $6040
 	jr nz, .slot4 ; $6041
 	ld a, [wCharSelectSlotStar + 2] ; $6043
-	ld [$ca8e], a ; $6046
+	ld [wPlayer2MainLeftHanded], a ; $6046
 .slot4:
-	ld a, [$cace] ; $6049
+	ld a, [wPlayer2PartnerLeftHanded] ; $6049
 	or a ; $604c
 	jr nz, .done ; $604d
 	ld a, [wCharSelectSlotStar + 3] ; $604f
-	ld [$cace], a ; $6052
+	ld [wPlayer2PartnerLeftHanded], a ; $6052
 .done:
 	pop af ; $6055
 	wram_bank ; $6056
@@ -7202,16 +7202,16 @@ ExchangeLinkCharSelection:
 	jr z, .checkReply ; $75e7
 	call LinkErrorReset ; $75e9
 .checkReply:
-	ld a, [$ca8a] ; $75ec
+	ld a, [wPlayer2MainLinkCourtMask] ; $75ec
 	ld [wLinkPartnerCourtMask], a ; $75ef
 	jr .retry ; $75f2
 .replyOk:
-	ld a, [$ca0a] ; $75f4
+	ld a, [wPlayer1MainLinkCourtMask] ; $75f4
 	ld [wLinkPartnerCourtMask], a ; $75f7
 .retry:
 	xor a ; $75fa
-	ld [$ca0a], a ; $75fb
-	ld [$ca8a], a ; $75fe
+	ld [wPlayer1MainLinkCourtMask], a ; $75fb
+	ld [wPlayer2MainLinkCourtMask], a ; $75fe
 .done:
 	pop bc ; $7601
 	ret ; $7602

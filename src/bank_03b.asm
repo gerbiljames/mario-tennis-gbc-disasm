@@ -1874,25 +1874,25 @@ DecodeTrophyCounts:
 	ld bc, $0018 ; $4c5c
 	call ClearBytes ; $4c5f
 	ld de, wScreenScratch ; $4c62
-	ld a, [$c9b5] ; $4c65
+	ld a, [wN64TrophyCounts] ; $4c65
 	and $03 ; $4c68
 	ld b, a ; $4c6a
 	call FillTrophyCountCells ; $4c6b
 	ld de, $d803 ; $4c6e
-	ld a, [$c9b5] ; $4c71
+	ld a, [wN64TrophyCounts] ; $4c71
 	swap a ; $4c74
 	and $03 ; $4c76
 	ld b, a ; $4c78
 	call FillTrophyCountCells ; $4c79
 	ld de, $d80c ; $4c7c
-	ld a, [$c9b5] ; $4c7f
+	ld a, [wN64TrophyCounts] ; $4c7f
 	srl a ; $4c82
 	srl a ; $4c84
 	and $03 ; $4c86
 	ld b, a ; $4c88
 	call FillTrophyCountCells ; $4c89
 	ld de, $d80f ; $4c8c
-	ld a, [$c9b5] ; $4c8f
+	ld a, [wN64TrophyCounts] ; $4c8f
 	swap a ; $4c92
 	srl a ; $4c94
 	srl a ; $4c96
@@ -1900,25 +1900,25 @@ DecodeTrophyCounts:
 	ld b, a ; $4c9a
 	call FillTrophyCountCells ; $4c9b
 	ld de, $d806 ; $4c9e
-	ld a, [$c9b6] ; $4ca1
+	ld a, [wN64TrophyCounts + 1] ; $4ca1
 	and $03 ; $4ca4
 	ld b, a ; $4ca6
 	call FillTrophyCountCells ; $4ca7
 	ld de, $d809 ; $4caa
-	ld a, [$c9b6] ; $4cad
+	ld a, [wN64TrophyCounts + 1] ; $4cad
 	swap a ; $4cb0
 	and $03 ; $4cb2
 	ld b, a ; $4cb4
 	call FillTrophyCountCells ; $4cb5
 	ld de, $d812 ; $4cb8
-	ld a, [$c9b6] ; $4cbb
+	ld a, [wN64TrophyCounts + 1] ; $4cbb
 	srl a ; $4cbe
 	srl a ; $4cc0
 	and $03 ; $4cc2
 	ld b, a ; $4cc4
 	call FillTrophyCountCells ; $4cc5
 	ld de, $d815 ; $4cc8
-	ld a, [$c9b6] ; $4ccb
+	ld a, [wN64TrophyCounts + 1] ; $4ccb
 	swap a ; $4cce
 	srl a ; $4cd0
 	srl a ; $4cd2
@@ -3824,7 +3824,7 @@ BuildSaveSlotSummaries:
 	ld [hl], a ; $5b03
 	ld hl, $0002 ; $5b04
 	add hl, bc ; $5b07
-	ld a, [$c918] ; $5b08
+	ld a, [wStoryMainCharExpTier] ; $5b08
 	ld [hl], a ; $5b0b
 	push bc ; $5b0c
 	ld a, $03 ; $5b0d

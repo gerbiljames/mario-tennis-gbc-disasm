@@ -5482,7 +5482,7 @@ InitAllChars:
 	wram_bank $06 ; $68d7
 	ld a, [wPlayer1CurrentPartnerCharacter] ; $68dd
 	ld d, a ; $68e0
-	ld a, [$ca4c] ; $68e1
+	ld a, [wPlayer1PartnerPalette] ; $68e1
 	ld e, a ; $68e4
 	ld a, $02 ; $68e5
 	call InitChar ; $68e7
@@ -5490,7 +5490,7 @@ InitAllChars:
 	wram_bank $07 ; $68ea
 	ld a, [wPlayer2CurrentPartnerCharacter] ; $68f0
 	ld d, a ; $68f3
-	ld a, [$cacc] ; $68f4
+	ld a, [wPlayer2PartnerPalette] ; $68f4
 	ld e, a ; $68f7
 	ld a, $03 ; $68f8
 	call InitChar ; $68fa
@@ -5498,7 +5498,7 @@ InitAllChars:
 	wram_bank $05 ; $68fd
 	ld a, [wPlayer2CurrentMainCharacter] ; $6903
 	ld d, a ; $6906
-	ld a, [$ca8c] ; $6907
+	ld a, [wPlayer2MainPalette] ; $6907
 	ld e, a ; $690a
 	ld a, $01 ; $690b
 	call InitChar ; $690d
@@ -5506,7 +5506,7 @@ InitAllChars:
 	wram_bank $04 ; $6910
 	ld a, [wPlayer1CurrentMainCharacter] ; $6916
 	ld d, a ; $6919
-	ld a, [$ca0c] ; $691a
+	ld a, [wPlayer1MainPalette] ; $691a
 	ld e, a ; $691d
 	ld a, $00 ; $691e
 	call InitChar ; $6920

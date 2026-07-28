@@ -1372,7 +1372,11 @@ wStoryModeGenderOfMainCharacter:: db
 
 ; [8-bit] Story Mode - nonzero when the main character plays left-handed. Written from wCharSelectHandedness at $38:$48ba (record offset +$0e) and, on the bank $02 new-game path, from bit 2 of the character id ($02:$51c5). Bank $17 uses it to swap the spin-serve briefing text between $36:696 ("serve to the right with topspin and to the left with slice") and $36:697, its mirror image.
 wStoryModeMainCharacterLeftHanded:: db
-	ds 45
+	ds 9
+
+; [8-bit] EXP tier of the story main character's record ($c900 + $18, the same field LoadCharacterAttributes turns into wCharExpTier for an on-court character). ScaleExpByPlayerLevel averages it with wStoryPartnerCharExpTier and compares the result against $0a to decide whether match EXP is scaled down
+wStoryMainCharExpTier:: db
+	ds 35
 
 ; [Lower4] Equipped Racket
 ;
@@ -1407,7 +1411,18 @@ wStoryModeGenderOfPartnerCharacter:: db
 
 ; [8-bit] Story Mode - the partner record's copy of the left-handed flag (record offset +$0e at the $40 stride); written by the same character-select path as wStoryModeMainCharacterLeftHanded.
 wStoryModePartnerCharacterLeftHanded:: db
-	ds 113
+	ds 9
+
+; [8-bit] EXP tier of the story partner's record ($c940 + $18), the partner half of wStoryMainCharExpTier
+wStoryPartnerCharExpTier:: db
+	ds 91
+
+; [8-bit] Marker byte of the N64 transfer record at $c9b0: ValidateN64TransferRecord ($02:$4044) rejects the record unless it reads exactly $64, then checksums the bytes around it
+wN64TransferMarker:: db
+
+; [2 bytes] Trophies transferred from the N64 game, packed two bits per trophy (0-3) for eight trophies. DecodeTrophyCounts ($3b:$4c53) unpacks all eight into the trophy screen's cells, and the EXP award path walks the same two bytes tier by tier to pick a TrophyExpForGroupTable row
+wN64TrophyCounts:: dw
+	ds 9
 
 ; [32 bytes] Per-story-slot progress flags, $c9c0-$c9df, saved as the story slot's +$1c0 block. rst $20/$28/$30 (SetGameFlag/ClearGameFlag/TestGameFlag, $00:$24ba/$24d4/$249f) take d = byte index, e = bit << 5 and apply mask $80 >> bit to wGameFlags[d]; the *GameFlagByNumber wrappers ($00:$24ef) take the flat flag number byte * 8 + bit instead, which is what the FLAG_* constants in include/flag_constants.inc hold (see flags.json). Nothing reads the array as bytes, so the wSinglesDoublesIndicator / wStoryMode*Flags* entries below are the same storage under the RetroAchievements names: byte $05 = doubles, $06/$07 = Island Open + Dream Match, $08-$0b = class rank wins, $0c/$0d = equipment owned, $18-$1b = training-drill clears. Bytes $1c-$1f are scratch: ClearTemporaryStoryFlags ($0a:$50e4) zeroes them on every story-location load, the way pokecrystal's first eight event flags reset on map reload.
 wGameFlags:: ds 5
@@ -1528,7 +1543,14 @@ wStoryModeMinigameCompletionFlags4:: db
 
 ; [4 bytes] wGameFlags bytes $1c-$1f (flags $e0-$ff): the temporary end of the array. ClearTemporaryStoryFlags ($0a:$50e4) zeroes all four at the top of RunStoryLocation, so anything stored here lasts only until the next location load - per-location NPC/scene-variant state ($1c) and the screen-mode bits the progress and results screens set and clear around themselves ($1f).
 wGameFlagsTemp:: ds 4
-	ds 43
+	ds 32
+
+; [7 bytes] Display name of the player-1 main character, base of its $40-byte on-court character record. The results screen draws it straight from here through CopyStringToTextBuffer, and the same record supplies the physics and AI attributes LoadCharacterAttributes copies into the character's banked struct
+wPlayer1MainName:: ds 7
+	ds 3
+
+; [8-bit] Byte +$0a of the player-1 main record, borrowed by ExchangeLinkUnlockFlags ($38:$7603) as the cell the peer's bonus-court unlock mask arrives in. Whichever of this and wPlayer2MainLinkCourtMask matches the link role is copied to wLinkPartnerCourtMask, then both are cleared
+wPlayer1MainLinkCourtMask:: db
 
 ; [8-bit] Player 1 Current Main Character
 ;
@@ -1565,11 +1587,40 @@ wGameFlagsTemp:: ds 4
 ; 0x1e - Wario
 ; 0x1f - Peach
 wPlayer1CurrentMainCharacter:: db
-	ds 63
+
+; [8-bit] Palette index of the player-1 main character: LoadResultPortraitSlot hands it to LoadIndexedPalette_18, and InitChar passes it (plus 3) to SetupCharacterSprite as the OBJ palette the character is drawn with
+wPlayer1MainPalette:: db
+	ds 1
+
+; [8-bit] Nonzero mirrors the player-1 main character: LoadCharacterAttributes turns it into wCharMirrorAttrMask ($20, the OAM X-flip bit) and the results-screen portrait code XORs the same bit in. ApplyStarFlagsToCharRecords seeds it from wCharSelectSlotStar
+wPlayer1MainLeftHanded:: db
+	ds 45
+
+; [8-bit] Equipment the player-1 main character is carrying, one nibble each (same field as wEquippedRacket in the story record). ApplyMatchSettingsExpBonus reads it for the handicap EXP bonus: low nibble $03 is worth one step, high nibble $01 another, and two steps double the match EXP
+wPlayer1MainEquipment:: db
+	ds 3
+
+; [7 bytes] Display name and record base of the player-1 partner, the doubles counterpart of wPlayer1MainName
+wPlayer1PartnerName:: ds 7
+	ds 4
 
 ; [8-bit] Player 1 Current Partner Character; for values see 0xca0b
 wPlayer1CurrentPartnerCharacter:: db
-	ds 19
+
+; [8-bit] Palette index of the player-1 partner (see wPlayer1MainPalette)
+wPlayer1PartnerPalette:: db
+	ds 1
+
+; [8-bit] Mirror flag of the player-1 partner (see wPlayer1MainLeftHanded)
+wPlayer1PartnerLeftHanded:: db
+	ds 9
+
+; [8-bit] EXP tier of the player-1 partner, record +$18. ApplyCpuDifficultyToCharRecords writes it from the difficulty row only when the slot is not a created character, so a story character keeps the tier it earned
+wPlayer1PartnerExpTier:: db
+	ds 2
+
+; [4 bytes] Four of the player-1 partner's six AI personality parameters (record +$1b-$1e; +$0f and +$1f are the other two). ApplyCpuDifficultyToCharRecords copies them out of the chosen difficulty's row, and OverrideCharStatsForDebug rewrites exactly this block
+wPlayer1PartnerAiParams:: ds 4
 
 ; [8-bit] Exhibition Mode - Player Partner Character Difficulty
 ;
@@ -1578,19 +1629,62 @@ wPlayer1CurrentPartnerCharacter:: db
 ; 0x02 - Hard
 ; 0x03 - Intense
 wExhibitionModePlayerPartnerCharacterDifficulty:: db
-	ds 43
+	ds 32
+
+; [7 bytes] Display name and record base of the player-2 main character
+wPlayer2MainName:: ds 7
+	ds 3
+
+; [8-bit] The player-2 main record's copy of the unlock-mask exchange cell (see wPlayer1MainLinkCourtMask)
+wPlayer2MainLinkCourtMask:: db
 
 ; [8-bit] Player 2 Current Main Character; for values see 0xca0b
 wPlayer2CurrentMainCharacter:: db
-	ds 19
+
+; [8-bit] Palette index of the player-2 main character (see wPlayer1MainPalette)
+wPlayer2MainPalette:: db
+	ds 1
+
+; [8-bit] Mirror flag of the player-2 main character (see wPlayer1MainLeftHanded)
+wPlayer2MainLeftHanded:: db
+	ds 9
+
+; [8-bit] EXP tier of the player-2 main character (see wPlayer1PartnerExpTier)
+wPlayer2MainExpTier:: db
+	ds 2
+
+; [4 bytes] The player-2 main character's AI parameter block (see wPlayer1PartnerAiParams). The bank $0b and $0d minigame setups write it directly to give a drill opponent a fixed personality
+wPlayer2MainAiParams:: ds 4
 
 ; [8-bit] Exhibition Mode - CPU Main Character Difficulty; for values see 0x00ca5f
 wExhibitionModeCPUMainCharacterDifficulty:: db
-	ds 43
+	ds 28
+
+; [8-bit] Equipment of the player-2 main character (see wPlayer1MainEquipment); the link-match EXP path reads it when the local player is player 2
+wPlayer2MainEquipment:: db
+	ds 3
+
+; [7 bytes] Display name and record base of the player-2 partner
+wPlayer2PartnerName:: ds 7
+	ds 4
 
 ; [8-bit] Player 2 Current Partner Character; for values see 0xca0b
 wPlayer2CurrentPartnerCharacter:: db
-	ds 19
+
+; [8-bit] Palette index of the player-2 partner (see wPlayer1MainPalette)
+wPlayer2PartnerPalette:: db
+	ds 1
+
+; [8-bit] Mirror flag of the player-2 partner (see wPlayer1MainLeftHanded)
+wPlayer2PartnerLeftHanded:: db
+	ds 9
+
+; [8-bit] EXP tier of the player-2 partner (see wPlayer1PartnerExpTier)
+wPlayer2PartnerExpTier:: db
+	ds 2
+
+; [4 bytes] The player-2 partner's AI parameter block (see wPlayer1PartnerAiParams)
+wPlayer2PartnerAiParams:: ds 4
 
 ; [8-bit] Exhibition Mode - CPU Partner Character Difficulty; for values see 0x00ca5f
 wExhibitionModeCPUPartnerCharacterDifficulty:: db

@@ -659,7 +659,7 @@ WriteTextToTilemap:
 	pop de ; $4603
 	jr .charLoop ; $4604
 DrawSinglesPlayerNames:
-	ld hl, $ca00 ; $4606
+	ld hl, wPlayer1MainName ; $4606
 	call CopyStringToTextBuffer ; $4609
 	ld de, $d1c3 ; $460c
 	call ShiftDestForLongName ; $460f
@@ -669,20 +669,20 @@ DrawSinglesPlayerNames:
 	ld de, $d1c9 ; $461b
 	ld bc, $0020 ; $461e
 	call FetchAndDrawDialogueText ; $4621
-	ld hl, $ca80 ; $4624
+	ld hl, wPlayer2MainName ; $4624
 	call CopyStringToTextBuffer ; $4627
 	ld de, $d1cc ; $462a
 	ld bc, $0020 ; $462d
 	call WriteTextToTilemap ; $4630
 	ret ; $4633
 DrawDoublesPlayerNames:
-	ld hl, $ca00 ; $4634
+	ld hl, wPlayer1MainName ; $4634
 	call CopyStringToTextBuffer ; $4637
 	ld de, $d183 ; $463a
 	call ShiftDestForLongName ; $463d
 	ld bc, $0020 ; $4640
 	call WriteTextToTilemap ; $4643
-	ld hl, $ca40 ; $4646
+	ld hl, wPlayer1PartnerName ; $4646
 	call CopyStringToTextBuffer ; $4649
 	ld de, $d1c3 ; $464c
 	call ShiftDestForLongName ; $464f
@@ -692,12 +692,12 @@ DrawDoublesPlayerNames:
 	ld de, $d1a9 ; $465b
 	ld bc, $0020 ; $465e
 	call FetchAndDrawDialogueText ; $4661
-	ld hl, $ca80 ; $4664
+	ld hl, wPlayer2MainName ; $4664
 	call CopyStringToTextBuffer ; $4667
 	ld de, $d18c ; $466a
 	ld bc, $0020 ; $466d
 	call WriteTextToTilemap ; $4670
-	ld hl, $cac0 ; $4673
+	ld hl, wPlayer2PartnerName ; $4673
 	call CopyStringToTextBuffer ; $4676
 	ld de, $d1cc ; $4679
 	ld bc, $0020 ; $467c
@@ -1023,7 +1023,7 @@ DrawPlayerNameAndLevel:
 	ld de, wShadowTilemap + 8 * TILEMAP_WIDTH + 1 ; $4916
 	ld bc, $0020 ; $4919
 	call FetchAndDrawDialogueText ; $491c
-	ld a, [$c918] ; $491f
+	ld a, [wStoryMainCharExpTier] ; $491f
 	ld h, $00 ; $4922
 	ld l, a ; $4924
 	ld a, $02 ; $4925
@@ -1099,13 +1099,13 @@ InitResultsScreenCharacters:
 	jr nz, .checkPlayer2CurrentMainCharacter ; $49b4
 	ld a, [wPlayer1CurrentMainCharacter] ; $49b6
 	ld d, a ; $49b9
-	ld a, [$ca0c] ; $49ba
+	ld a, [wPlayer1MainPalette] ; $49ba
 	ld e, a ; $49bd
 	jr .initChar ; $49be
 .checkPlayer2CurrentMainCharacter:
 	ld a, [wPlayer2CurrentMainCharacter] ; $49c0
 	ld d, a ; $49c3
-	ld a, [$ca8c] ; $49c4
+	ld a, [wPlayer2MainPalette] ; $49c4
 	ld e, a ; $49c7
 .initChar:
 	ld a, d ; $49c8
@@ -1157,13 +1157,13 @@ InitResultsScreenCharacters:
 	jr nz, .checkPlayer2CurrentPartnerCharacter ; $4a2f
 	ld a, [wPlayer1CurrentPartnerCharacter] ; $4a31
 	ld d, a ; $4a34
-	ld a, [$ca4c] ; $4a35
+	ld a, [wPlayer1PartnerPalette] ; $4a35
 	ld e, a ; $4a38
 	jr .initChar2 ; $4a39
 .checkPlayer2CurrentPartnerCharacter:
 	ld a, [wPlayer2CurrentPartnerCharacter] ; $4a3b
 	ld d, a ; $4a3e
-	ld a, [$cacc] ; $4a3f
+	ld a, [wPlayer2PartnerPalette] ; $4a3f
 	ld e, a ; $4a42
 .initChar2:
 	ld a, d ; $4a43
@@ -1225,10 +1225,10 @@ UpdateResultsCharSprite:
 	push af ; $4ac2
 	or a ; $4ac3
 	jr nz, .nonZero ; $4ac4
-	ld a, [$ca0e] ; $4ac6
+	ld a, [wPlayer1MainLeftHanded] ; $4ac6
 	jr .compare ; $4ac9
 .nonZero:
-	ld a, [$ca8e] ; $4acb
+	ld a, [wPlayer2MainLeftHanded] ; $4acb
 .compare:
 	or a ; $4ace
 	jr z, .zero ; $4acf
@@ -1645,13 +1645,13 @@ DrawExpSinglesPlayerPanel:
 	ld b, $09 ; $563e
 	ld c, $01 ; $5640
 	call FillTilemapRun ; $5642
-	ld bc, $ca00 ; $5645
+	ld bc, wPlayer1MainName ; $5645
 	ld a, [wLinkMatchRole] ; $5648
 	cp $02 ; $564b
 	jr nz, .ne02 ; $564d
-	ld bc, $ca80 ; $564f
+	ld bc, wPlayer2MainName ; $564f
 	ld a, [$c8ba] ; $5652
-	ld [$ca98], a ; $5655
+	ld [wPlayer2MainExpTier], a ; $5655
 .ne02:
 	push bc ; $5658
 	ld hl, $0000 ; $5659
@@ -1720,13 +1720,13 @@ DrawExpDoublesPlayerPanel:
 	ld bc, wStoryModeNameOfMainCharacter ; $5702
 	jr .copyStringToTextBuffer ; $5705
 .nonZero:
-	ld bc, $ca00 ; $5707
+	ld bc, wPlayer1MainName ; $5707
 	ld a, [wLinkMatchRole] ; $570a
 	cp $02 ; $570d
 	jr nz, .copyStringToTextBuffer ; $570f
-	ld bc, $ca80 ; $5711
+	ld bc, wPlayer2MainName ; $5711
 	ld a, [$c8ba] ; $5714
-	ld [$ca98], a ; $5717
+	ld [wPlayer2MainExpTier], a ; $5717
 .copyStringToTextBuffer:
 	push bc ; $571a
 	ld hl, $0000 ; $571b
@@ -1796,11 +1796,11 @@ DrawExpDoublesPartnerPanel:
 	ld bc, wStoryModeNameOfPartnerCharacter ; $57c7
 	jr .copyStringToTextBuffer ; $57ca
 .nonZero:
-	ld bc, $ca40 ; $57cc
+	ld bc, wPlayer1PartnerName ; $57cc
 	ld a, [wLinkMatchRole] ; $57cf
 	cp $02 ; $57d2
 	jr nz, .copyStringToTextBuffer ; $57d4
-	ld bc, $cac0 ; $57d6
+	ld bc, wPlayer2PartnerName ; $57d6
 .copyStringToTextBuffer:
 	push bc ; $57d9
 	ld hl, $0000 ; $57da
@@ -1972,10 +1972,10 @@ UpdateExpScreenCharSprite:
 	push af ; $5978
 	or a ; $5979
 	jr nz, .nonZero ; $597a
-	ld a, [$ca0e] ; $597c
+	ld a, [wPlayer1MainLeftHanded] ; $597c
 	jr .compare ; $597f
 .nonZero:
-	ld a, [$ca8e] ; $5981
+	ld a, [wPlayer2MainLeftHanded] ; $5981
 .compare:
 	or a ; $5984
 	jr z, .zero ; $5985
@@ -2382,7 +2382,7 @@ ProcessMatchRewards:
 	call DivAHLByE ; $65a6
 	pop de ; $65a9
 	add hl, de ; $65aa
-	ld a, [$ca3c] ; $65ab
+	ld a, [wPlayer1MainEquipment] ; $65ab
 	ld d, a ; $65ae
 	call ApplyMatchSettingsExpBonus ; $65af
 	ld a, [wPointWinLoseFlag] ; $65b2
@@ -2430,7 +2430,7 @@ ProcessMatchRewards:
 .computeMatchStatsReward:
 	wram_bank $04 ; $65f9
 	call ComputeMatchStatsReward ; $65ff
-	ld a, [$ca3c] ; $6602
+	ld a, [wPlayer1MainEquipment] ; $6602
 	ld d, a ; $6605
 	call ApplyMatchSettingsExpBonus ; $6606
 	ld de, $0000 ; $6609
@@ -2455,7 +2455,7 @@ ProcessMatchRewards:
 .eq04:
 	wram_bank $04 ; $6630
 	call ComputeMatchStatsReward ; $6636
-	ld a, [$ca3c] ; $6639
+	ld a, [wPlayer1MainEquipment] ; $6639
 	ld d, a ; $663c
 	call ApplyMatchSettingsExpBonus ; $663d
 	call AwardExhibitionMatchExp ; $6640
@@ -2466,7 +2466,7 @@ ProcessMatchRewards:
 	jr z, .eq02 ; $6649
 	wram_bank $04 ; $664b
 	call ComputeMatchStatsReward ; $6651
-	ld a, [$ca3c] ; $6654
+	ld a, [wPlayer1MainEquipment] ; $6654
 	ld d, a ; $6657
 	call ApplyMatchSettingsExpBonus ; $6658
 	ld a, [wMatchWinLoseFlag] ; $665b
@@ -2476,7 +2476,7 @@ ProcessMatchRewards:
 .eq02:
 	wram_bank $05 ; $6664
 	call ComputeMatchStatsReward ; $666a
-	ld a, [$cabc] ; $666d
+	ld a, [wPlayer2MainEquipment] ; $666d
 	ld d, a ; $6670
 	call ApplyMatchSettingsExpBonus ; $6671
 	ld a, [wMatchWinLoseFlag] ; $6674
@@ -3299,9 +3299,9 @@ ApplyPendingExpAwards:
 	xor a ; $6c07
 	ret ; $6c08
 ScaleExpByPlayerLevel:
-	ld a, [$c918] ; $6c09
+	ld a, [wStoryMainCharExpTier] ; $6c09
 	ld b, a ; $6c0c
-	ld a, [$c958] ; $6c0d
+	ld a, [wStoryPartnerCharExpTier] ; $6c0d
 	add b ; $6c10
 	srl a ; $6c11
 	cp $0a ; $6c13
@@ -4114,7 +4114,7 @@ ComputeTrophyExpForGroup:
 	ld hl, wCharDataChoiceLog + 10 ; $7123
 	ld [hl+], a ; $7126
 	ld [hl], a ; $7127
-	ld a, [$c9b5] ; $7128
+	ld a, [wN64TrophyCounts] ; $7128
 	and c ; $712b
 	cp b ; $712c
 	jr c, .tier2 ; $712d
@@ -4153,7 +4153,7 @@ ComputeTrophyExpForGroup:
 	ld [hl], b ; $7161
 	pop bc ; $7162
 .tier2:
-	ld a, [$c9b5] ; $7163
+	ld a, [wN64TrophyCounts] ; $7163
 	swap a ; $7166
 	and c ; $7168
 	cp b ; $7169
@@ -4193,7 +4193,7 @@ ComputeTrophyExpForGroup:
 	ld [hl], b ; $719e
 	pop bc ; $719f
 .tier3:
-	ld a, [$c9b6] ; $71a0
+	ld a, [wN64TrophyCounts + 1] ; $71a0
 	and c ; $71a3
 	cp b ; $71a4
 	jr c, .tier4 ; $71a5
@@ -4232,7 +4232,7 @@ ComputeTrophyExpForGroup:
 	ld [hl], b ; $71d9
 	pop bc ; $71da
 .tier4:
-	ld a, [$c9b6] ; $71db
+	ld a, [wN64TrophyCounts + 1] ; $71db
 	swap a ; $71de
 	and c ; $71e0
 	cp b ; $71e1

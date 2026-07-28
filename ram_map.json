@@ -1386,6 +1386,10 @@
   "note": "[8-bit] Story Mode - nonzero when the main character plays left-handed. Written from wCharSelectHandedness at $38:$48ba (record offset +$0e) and, on the bank $02 new-game path, from bit 2 of the character id ($02:$51c5). Bank $17 uses it to swap the spin-serve briefing text between $36:696 (\"serve to the right with topspin and to the left with slice\") and $36:697, its mirror image.",
   "size": 1
  },
+ "0xc918": {
+  "name": "wStoryMainCharExpTier",
+  "note": "[8-bit] EXP tier of the story main character's record ($c900 + $18, the same field LoadCharacterAttributes turns into wCharExpTier for an on-court character). ScaleExpByPlayerLevel averages it with wStoryPartnerCharExpTier and compares the result against $0a to decide whether match EXP is scaled down"
+ },
  "0xc93c": {
   "name": "wEquippedRacket",
   "note": "[Lower4] Equipped Racket\n\n0x0 - Normal Racket\n0x1 - Large Racket\n0x2 - Small Racket\n0x3 - Iron Racket\n0x4 - Gold Racket\n0x5 - Silver Racket\n0x6 - Drive Racket\n\n[Upper4] Equipped Shoes\n\n0x0 - Normal Shoes\n0x1 - Iron Shoes\n0x2 - Light Shoes"
@@ -1414,6 +1418,19 @@
   "name": "wStoryModePartnerCharacterLeftHanded",
   "note": "[8-bit] Story Mode - the partner record's copy of the left-handed flag (record offset +$0e at the $40 stride); written by the same character-select path as wStoryModeMainCharacterLeftHanded.",
   "size": 1
+ },
+ "0xc958": {
+  "name": "wStoryPartnerCharExpTier",
+  "note": "[8-bit] EXP tier of the story partner's record ($c940 + $18), the partner half of wStoryMainCharExpTier"
+ },
+ "0xc9b4": {
+  "name": "wN64TransferMarker",
+  "note": "[8-bit] Marker byte of the N64 transfer record at $c9b0: ValidateN64TransferRecord ($02:$4044) rejects the record unless it reads exactly $64, then checksums the bytes around it"
+ },
+ "0xc9b5": {
+  "name": "wN64TrophyCounts",
+  "note": "[2 bytes] Trophies transferred from the N64 game, packed two bits per trophy (0-3) for eight trophies. DecodeTrophyCounts ($3b:$4c53) unpacks all eight into the trophy screen's cells, and the EXP award path walks the same two bytes tier by tier to pick a TrophyExpForGroupTable row",
+  "size": 2
  },
  "0xc9c0": {
   "name": "wGameFlags",
@@ -1485,35 +1502,130 @@
   "note": "[4 bytes] wGameFlags bytes $1c-$1f (flags $e0-$ff): the temporary end of the array. ClearTemporaryStoryFlags ($0a:$50e4) zeroes all four at the top of RunStoryLocation, so anything stored here lasts only until the next location load - per-location NPC/scene-variant state ($1c) and the screen-mode bits the progress and results screens set and clear around themselves ($1f).",
   "size": 4
  },
+ "0xca00": {
+  "name": "wPlayer1MainName",
+  "note": "[7 bytes] Display name of the player-1 main character, base of its $40-byte on-court character record. The results screen draws it straight from here through CopyStringToTextBuffer, and the same record supplies the physics and AI attributes LoadCharacterAttributes copies into the character's banked struct",
+  "size": 7
+ },
+ "0xca0a": {
+  "name": "wPlayer1MainLinkCourtMask",
+  "note": "[8-bit] Byte +$0a of the player-1 main record, borrowed by ExchangeLinkUnlockFlags ($38:$7603) as the cell the peer's bonus-court unlock mask arrives in. Whichever of this and wPlayer2MainLinkCourtMask matches the link role is copied to wLinkPartnerCourtMask, then both are cleared"
+ },
  "0xca0b": {
   "name": "wPlayer1CurrentMainCharacter",
   "note": "[8-bit] Player 1 Current Main Character\n\n0x00 - Alex\n0x01 - Nina\n0x02 - Harry\n0x03 - Kate\n0x04 - Allie\n0x05 - Joy\n0x06 - Brian\n0x07 - Pam\n0x08 - Bob\n0x09 - Beth\n0x0a - Fay\n0x0b - Curt\n0x0c - Mark\n0x0d - Sean\n0x0e - Sammi\n0x0f - Elden\n0x10 - Spike\n0x11 - Emily\n0x12 - B. Coz\n0x13 - A. Coz\n0x14 - Kevin (dummied out)\n0x15 - Tennis Machine\n0x16 - Allie 2 (never shows up?)\n0x17 - Luigi\n0x18 - Donkey Kong\n0x19 - Baby Mario\n0x1a - Mario\n0x1b - Waluigi\n0x1c - Yoshi\n0x1d - Bowser\n0x1e - Wario\n0x1f - Peach",
   "size": 1
+ },
+ "0xca0c": {
+  "name": "wPlayer1MainPalette",
+  "note": "[8-bit] Palette index of the player-1 main character: LoadResultPortraitSlot hands it to LoadIndexedPalette_18, and InitChar passes it (plus 3) to SetupCharacterSprite as the OBJ palette the character is drawn with"
+ },
+ "0xca0e": {
+  "name": "wPlayer1MainLeftHanded",
+  "note": "[8-bit] Nonzero mirrors the player-1 main character: LoadCharacterAttributes turns it into wCharMirrorAttrMask ($20, the OAM X-flip bit) and the results-screen portrait code XORs the same bit in. ApplyStarFlagsToCharRecords seeds it from wCharSelectSlotStar"
+ },
+ "0xca3c": {
+  "name": "wPlayer1MainEquipment",
+  "note": "[8-bit] Equipment the player-1 main character is carrying, one nibble each (same field as wEquippedRacket in the story record). ApplyMatchSettingsExpBonus reads it for the handicap EXP bonus: low nibble $03 is worth one step, high nibble $01 another, and two steps double the match EXP"
+ },
+ "0xca40": {
+  "name": "wPlayer1PartnerName",
+  "note": "[7 bytes] Display name and record base of the player-1 partner, the doubles counterpart of wPlayer1MainName",
+  "size": 7
  },
  "0xca4b": {
   "name": "wPlayer1CurrentPartnerCharacter",
   "note": "[8-bit] Player 1 Current Partner Character; for values see 0xca0b",
   "size": 1
  },
+ "0xca4c": {
+  "name": "wPlayer1PartnerPalette",
+  "note": "[8-bit] Palette index of the player-1 partner (see wPlayer1MainPalette)"
+ },
+ "0xca4e": {
+  "name": "wPlayer1PartnerLeftHanded",
+  "note": "[8-bit] Mirror flag of the player-1 partner (see wPlayer1MainLeftHanded)"
+ },
+ "0xca58": {
+  "name": "wPlayer1PartnerExpTier",
+  "note": "[8-bit] EXP tier of the player-1 partner, record +$18. ApplyCpuDifficultyToCharRecords writes it from the difficulty row only when the slot is not a created character, so a story character keeps the tier it earned"
+ },
+ "0xca5b": {
+  "name": "wPlayer1PartnerAiParams",
+  "note": "[4 bytes] Four of the player-1 partner's six AI personality parameters (record +$1b-$1e; +$0f and +$1f are the other two). ApplyCpuDifficultyToCharRecords copies them out of the chosen difficulty's row, and OverrideCharStatsForDebug rewrites exactly this block",
+  "size": 4
+ },
  "0xca5f": {
   "name": "wExhibitionModePlayerPartnerCharacterDifficulty",
   "note": "[8-bit] Exhibition Mode - Player Partner Character Difficulty\n\n0x00 - Easy\n0x01 - Normal\n0x02 - Hard\n0x03 - Intense",
   "size": 1
+ },
+ "0xca80": {
+  "name": "wPlayer2MainName",
+  "note": "[7 bytes] Display name and record base of the player-2 main character",
+  "size": 7
+ },
+ "0xca8a": {
+  "name": "wPlayer2MainLinkCourtMask",
+  "note": "[8-bit] The player-2 main record's copy of the unlock-mask exchange cell (see wPlayer1MainLinkCourtMask)"
  },
  "0xca8b": {
   "name": "wPlayer2CurrentMainCharacter",
   "note": "[8-bit] Player 2 Current Main Character; for values see 0xca0b",
   "size": 1
  },
+ "0xca8c": {
+  "name": "wPlayer2MainPalette",
+  "note": "[8-bit] Palette index of the player-2 main character (see wPlayer1MainPalette)"
+ },
+ "0xca8e": {
+  "name": "wPlayer2MainLeftHanded",
+  "note": "[8-bit] Mirror flag of the player-2 main character (see wPlayer1MainLeftHanded)"
+ },
+ "0xca98": {
+  "name": "wPlayer2MainExpTier",
+  "note": "[8-bit] EXP tier of the player-2 main character (see wPlayer1PartnerExpTier)"
+ },
+ "0xca9b": {
+  "name": "wPlayer2MainAiParams",
+  "note": "[4 bytes] The player-2 main character's AI parameter block (see wPlayer1PartnerAiParams). The bank $0b and $0d minigame setups write it directly to give a drill opponent a fixed personality",
+  "size": 4
+ },
  "0xca9f": {
   "name": "wExhibitionModeCPUMainCharacterDifficulty",
   "note": "[8-bit] Exhibition Mode - CPU Main Character Difficulty; for values see 0x00ca5f",
   "size": 1
  },
+ "0xcabc": {
+  "name": "wPlayer2MainEquipment",
+  "note": "[8-bit] Equipment of the player-2 main character (see wPlayer1MainEquipment); the link-match EXP path reads it when the local player is player 2"
+ },
+ "0xcac0": {
+  "name": "wPlayer2PartnerName",
+  "note": "[7 bytes] Display name and record base of the player-2 partner",
+  "size": 7
+ },
  "0xcacb": {
   "name": "wPlayer2CurrentPartnerCharacter",
   "note": "[8-bit] Player 2 Current Partner Character; for values see 0xca0b",
   "size": 1
+ },
+ "0xcacc": {
+  "name": "wPlayer2PartnerPalette",
+  "note": "[8-bit] Palette index of the player-2 partner (see wPlayer1MainPalette)"
+ },
+ "0xcace": {
+  "name": "wPlayer2PartnerLeftHanded",
+  "note": "[8-bit] Mirror flag of the player-2 partner (see wPlayer1MainLeftHanded)"
+ },
+ "0xcad8": {
+  "name": "wPlayer2PartnerExpTier",
+  "note": "[8-bit] EXP tier of the player-2 partner (see wPlayer1PartnerExpTier)"
+ },
+ "0xcadb": {
+  "name": "wPlayer2PartnerAiParams",
+  "note": "[4 bytes] The player-2 partner's AI parameter block (see wPlayer1PartnerAiParams)",
+  "size": 4
  },
  "0xcadf": {
   "name": "wExhibitionModeCPUPartnerCharacterDifficulty",

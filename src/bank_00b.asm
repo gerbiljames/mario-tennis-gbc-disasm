@@ -7310,24 +7310,24 @@ RunDoublesDrillMatch:
 	ld [wMatchTypeNumberOfSets], a ; $72af
 	push hl ; $72b2
 	ld a, [hl+] ; $72b3
-	ld [$ca9b], a ; $72b4
+	ld [wPlayer2MainAiParams], a ; $72b4
 	ld a, [hl+] ; $72b7
-	ld [$ca9c], a ; $72b8
+	ld [wPlayer2MainAiParams + 1], a ; $72b8
 	ld a, [hl+] ; $72bb
-	ld [$ca9d], a ; $72bc
+	ld [wPlayer2MainAiParams + 2], a ; $72bc
 	ld a, [hl+] ; $72bf
-	ld [$ca9e], a ; $72c0
+	ld [wPlayer2MainAiParams + 3], a ; $72c0
 	ld a, [hl+] ; $72c3
 	ld [wExhibitionModeCPUMainCharacterDifficulty], a ; $72c4
 	pop hl ; $72c7
 	ld a, [hl+] ; $72c8
-	ld [$cadb], a ; $72c9
+	ld [wPlayer2PartnerAiParams], a ; $72c9
 	ld a, [hl+] ; $72cc
-	ld [$cadc], a ; $72cd
+	ld [wPlayer2PartnerAiParams + 1], a ; $72cd
 	ld a, [hl+] ; $72d0
-	ld [$cadd], a ; $72d1
+	ld [wPlayer2PartnerAiParams + 2], a ; $72d1
 	ld a, [hl+] ; $72d4
-	ld [$cade], a ; $72d5
+	ld [wPlayer2PartnerAiParams + 3], a ; $72d5
 	ld a, [hl+] ; $72d8
 	ld [wExhibitionModeCPUPartnerCharacterDifficulty], a ; $72d9
 	farcall RunMatch ; $72dc

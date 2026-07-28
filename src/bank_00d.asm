@@ -2742,13 +2742,13 @@ InitMinigame_BooBlast:
 .ne02:
 	ld hl, BooBlastInitParams ; $5636
 	ld a, [hl+] ; $5639
-	ld [$ca9b], a ; $563a
+	ld [wPlayer2MainAiParams], a ; $563a
 	ld a, [hl+] ; $563d
-	ld [$ca9c], a ; $563e
+	ld [wPlayer2MainAiParams + 1], a ; $563e
 	ld a, [hl+] ; $5641
-	ld [$ca9d], a ; $5642
+	ld [wPlayer2MainAiParams + 2], a ; $5642
 	ld a, [hl+] ; $5645
-	ld [$ca9e], a ; $5646
+	ld [wPlayer2MainAiParams + 3], a ; $5646
 	ld a, [hl+] ; $5649
 	ld [wExhibitionModeCPUMainCharacterDifficulty], a ; $564a
 	ld a, [hl+] ; $564d

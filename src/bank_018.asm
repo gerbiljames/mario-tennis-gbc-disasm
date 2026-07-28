@@ -446,7 +446,7 @@ LoadCharacterRecordToBuffer:
 	push de ; $450d
 	push hl ; $450e
 	farcall LoadCharacterRecordToCa80 ; $450f
-	ld hl, $ca80 ; $4512
+	ld hl, wPlayer2MainName ; $4512
 	ld de, $d580 ; $4515
 	ld c, $08 ; $4518
 	call CopyMemoryFast ; $451a
@@ -766,7 +766,7 @@ DrawConfirmScreenBox:
 	call DrawBox ; $536e
 	ret ; $5371
 LoadScorePanelValue:
-	ld a, [$c918] ; $5372
+	ld a, [wStoryMainCharExpTier] ; $5372
 	ld [$c78a], a ; $5375
 	ret ; $5378
 StubNop_18_5379:

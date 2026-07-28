@@ -35,7 +35,7 @@ SECTION "ROM Bank $02", ROMX[$4000], BANK[$02]
 	farptr SetStorySlotFlagA ; $4040
 	farptr TestStorySlotFlagA ; $4042
 ValidateN64TransferRecord:
-	ld a, [$c9b4] ; $4044
+	ld a, [wN64TransferMarker] ; $4044
 	cp $64 ; $4047
 	jr nz, .returnZero ; $4049
 	ld hl, $c9b0 ; $404b
@@ -2313,7 +2313,7 @@ LoadStorySlot:
 	ld a, $3f ; $5260
 	ld [wPlayer1CurrentMainCharacter], a ; $5262
 	ld a, $03 ; $5265
-	ld [$ca0c], a ; $5267
+	ld [wPlayer1MainPalette], a ; $5267
 	ld a, b ; $526a
 	ld [wCurrentStorySlot], a ; $526b
 	ret ; $526e
@@ -2365,8 +2365,8 @@ LoadCharacterRecordToCa80:
 	jr z, .positive ; $52b0
 	res 7, a ; $52b2
 	call LoadStorySlot ; $52b4
-	ld hl, $ca00 ; $52b7
-	ld de, $ca80 ; $52ba
+	ld hl, wPlayer1MainName ; $52b7
+	ld de, wPlayer2MainName ; $52ba
 	ld c, $08 ; $52bd
 	call CopyMemoryFast ; $52bf
 	jr .restore ; $52c2

@@ -3261,7 +3261,7 @@ RunDebugSaveDataFlow:
 .nonZero:
 	and $3f ; $634c
 	ld b, a ; $634e
-	ld hl, $ca00 ; $634f
+	ld hl, wPlayer1MainName ; $634f
 	ld [wCurrentStorySlot], a ; $6352
 	farcall CheckStorySlot ; $6355
 	or a ; $6358
@@ -3275,7 +3275,7 @@ RunDebugSaveDataFlow:
 	or a ; $6364
 	jr nz, .loop ; $6365
 	wram_bank $03 ; $6367
-	ld hl, $ca00 ; $636d
+	ld hl, wPlayer1MainName ; $636d
 	ld de, wShadowAttrmap + 8 * TILEMAP_WIDTH ; $6370
 	ld c, $0b ; $6373
 .loopB:
@@ -4050,7 +4050,7 @@ StubNop_1b_69d6:
 	farcall StubNop_18_5379 ; $6a08
 	call AdvanceFrame ; $6a0b
 	ret ; $6a0e
-	ld hl, $ca00 ; $6a0f
+	ld hl, wPlayer1MainName ; $6a0f
 	farcall PushTextArgString ; $6a12
 	ld de, $d9c1 ; $6a15
 	call CopyMainCharNameWithDiacritics ; $6a18

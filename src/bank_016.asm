@@ -2104,13 +2104,13 @@ LoadResultScreenPortraits:
 .checkPlayer1CurrentMainCharacter:
 	ld a, [wPlayer1CurrentMainCharacter] ; $5ff9
 	ld d, a ; $5ffc
-	ld a, [$ca0c] ; $5ffd
+	ld a, [wPlayer1MainPalette] ; $5ffd
 	ld b, a ; $6000
 	ld c, $00 ; $6001
 	call LoadResultPortraitSlot ; $6003
 	ld a, [wPlayer2CurrentMainCharacter] ; $6006
 	ld d, a ; $6009
-	ld a, [$ca8c] ; $600a
+	ld a, [wPlayer2MainPalette] ; $600a
 	ld b, a ; $600d
 	ld c, $02 ; $600e
 	call LoadResultPortraitSlot ; $6010
@@ -2119,13 +2119,13 @@ LoadResultScreenPortraits:
 	jr z, .done ; $6019
 	ld a, [wPlayer1CurrentPartnerCharacter] ; $601b
 	ld d, a ; $601e
-	ld a, [$ca4c] ; $601f
+	ld a, [wPlayer1PartnerPalette] ; $601f
 	ld b, a ; $6022
 	ld c, $01 ; $6023
 	call LoadResultPortraitSlot ; $6025
 	ld a, [wPlayer2CurrentPartnerCharacter] ; $6028
 	ld d, a ; $602b
-	ld a, [$cacc] ; $602c
+	ld a, [wPlayer2PartnerPalette] ; $602c
 	ld b, a ; $602f
 	ld c, $03 ; $6030
 	call LoadResultPortraitSlot ; $6032
@@ -2134,13 +2134,13 @@ LoadResultScreenPortraits:
 .checkPlayer1CurrentMainCharacter2:
 	ld a, [wPlayer1CurrentMainCharacter] ; $6036
 	ld d, a ; $6039
-	ld a, [$ca0c] ; $603a
+	ld a, [wPlayer1MainPalette] ; $603a
 	ld b, a ; $603d
 	ld c, $02 ; $603e
 	call LoadResultPortraitSlot ; $6040
 	ld a, [wPlayer2CurrentMainCharacter] ; $6043
 	ld d, a ; $6046
-	ld a, [$ca8c] ; $6047
+	ld a, [wPlayer2MainPalette] ; $6047
 	ld b, a ; $604a
 	ld c, $00 ; $604b
 	call LoadResultPortraitSlot ; $604d
@@ -2149,13 +2149,13 @@ LoadResultScreenPortraits:
 	jr z, .doneB ; $6056
 	ld a, [wPlayer1CurrentPartnerCharacter] ; $6058
 	ld d, a ; $605b
-	ld a, [$ca4c] ; $605c
+	ld a, [wPlayer1PartnerPalette] ; $605c
 	ld b, a ; $605f
 	ld c, $03 ; $6060
 	call LoadResultPortraitSlot ; $6062
 	ld a, [wPlayer2CurrentPartnerCharacter] ; $6065
 	ld d, a ; $6068
-	ld a, [$cacc] ; $6069
+	ld a, [wPlayer2PartnerPalette] ; $6069
 	ld b, a ; $606c
 	ld c, $01 ; $606d
 	call LoadResultPortraitSlot ; $606f
