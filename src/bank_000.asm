@@ -399,7 +399,7 @@ DisableLCDSafely:
 	bit 7, a ; $0348
 	jr z, .clearQueues ; $034a
 	ldh a, [rIE] ; $034c
-	ldh [$ff9f], a ; $034e
+	ldh [hSavedIE], a ; $034e
 	res 0, a ; $0350
 	ldh [rIE], a ; $0352
 .waitVBlank:
@@ -411,7 +411,7 @@ DisableLCDSafely:
 	ldh [rLCDC], a ; $035e
 	xor a ; $0360
 	ldh [rIF], a ; $0361
-	ldh a, [$ff9f] ; $0363
+	ldh a, [hSavedIE] ; $0363
 	ldh [rIE], a ; $0365
 .clearQueues:
 	push hl ; $0367
@@ -2660,7 +2660,7 @@ DivAHLByDE:
 	jp z, DivAHLByE ; $0eac
 .wideDivisor:
 	push bc ; $0eaf
-	ldh [$ffac], a ; $0eb0
+	ldh [hDivDividendHi], a ; $0eb0
 	xor a ; $0eb2
 	sub e ; $0eb3
 	ld c, a ; $0eb4
@@ -2677,7 +2677,7 @@ DivAHLByDE:
 .divide:
 	ld a, l ; $0ec1
 	push af ; $0ec2
-	ldh a, [$ffac] ; $0ec3
+	ldh a, [hDivDividendHi] ; $0ec3
 	push hl ; $0ec5
 	scf ; $0ec6
 	ld hl, $0000 ; $0ec7
@@ -2737,7 +2737,7 @@ DivAHLByDE:
 	dec a ; $0f08
 	add hl, de ; $0f09
 .bit15:
-	ldh [$ffae], a ; $0f0a
+	ldh [hDivQuotientHi], a ; $0f0a
 	pop af ; $0f0c
 	ld h, $00 ; $0f0d
 	scf ; $0f0f
@@ -2805,7 +2805,7 @@ DivAHLByDE:
 	dec a ; $0f5e
 	add hl, de ; $0f5f
 .bit7:
-	ldh [$ffad], a ; $0f60
+	ldh [hDivQuotientMid], a ; $0f60
 	pop af ; $0f62
 	scf ; $0f63
 	adc a ; $0f64
@@ -2873,9 +2873,9 @@ DivAHLByDE:
 	add hl, de ; $0fb3
 .done:
 	ld l, a ; $0fb4
-	ldh a, [$ffad] ; $0fb5
+	ldh a, [hDivQuotientMid] ; $0fb5
 	ld h, a ; $0fb7
-	ldh a, [$ffae] ; $0fb8
+	ldh a, [hDivQuotientHi] ; $0fb8
 	pop bc ; $0fba
 	ret ; $0fbb
 DivAHLByE:
@@ -6750,10 +6750,10 @@ AdvanceFrame:
 	cp PADF_SELECT | PADF_START ; $2693
 	jr nz, .checkStepActive ; $2695
 	ld a, $01 ; $2697
-	ldh [$ff9a], a ; $2699
+	ldh [hDebugStepPaused], a ; $2699
 	jr .stepLoop ; $269b
 .checkStepActive:
-	ldh a, [$ff9a] ; $269d
+	ldh a, [hDebugStepPaused] ; $269d
 	or a ; $269f
 	jr z, .waitFrame ; $26a0
 .stepLoop:
@@ -6775,7 +6775,7 @@ AdvanceFrame:
 	bit 2, a ; $26bb
 	jr nz, .stepWaitFrame ; $26bd
 	xor a ; $26bf
-	ldh [$ff9a], a ; $26c0
+	ldh [hDebugStepPaused], a ; $26c0
 	jr .waitFrame ; $26c2
 .stepWaitFrame:
 	ldh a, [hInputPressed] ; $26c4
@@ -8303,7 +8303,7 @@ QueueTileCopyAdvance:
 	add hl, bc ; $2f18
 	ret ; $2f19
 UpdateSoundEngine:
-	ld hl, $ffd2 ; $2f1a
+	ld hl, hSoundEngineBusy ; $2f1a
 	ld a, [hl] ; $2f1d
 	or a ; $2f1e
 	jr nz, .done ; $2f1f
@@ -8314,7 +8314,7 @@ UpdateSoundEngine:
 	pop af ; $2f29
 	wram_bank ; $2f2a
 	xor a ; $2f2e
-	ldh [$ffd2], a ; $2f2f
+	ldh [hSoundEngineBusy], a ; $2f2f
 .done:
 	ret ; $2f31
 ResumeBGM:

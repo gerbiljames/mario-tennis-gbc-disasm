@@ -880,6 +880,23 @@
       "0xffe9": {
        "name": "hMatchFrameCounter",
        "note": "[8-bit] Frames the match has simulated. Incremented once per frame by the local driver (bank $08, after AdvanceFrame + UpdateMatchFrame) and by all three link frame drivers (SyncLinkFrame, RunLinkMatchFrame, RunLinkInputFrame), so it counts the same either way; cleared by ResetMatchState and by InitSerialLink / ResetSerialState. Read only for cheap periodic effects: `and $0f` cycles the landing marker's 16-frame animation, and `and $01` draws the ground shadow and the offscreen-character arrow on alternate frames -- the usual Game Boy way to fake a translucent sprite"
+      },
+      "0xffd2": {
+       "name": "hSoundEngineBusy",
+       "note": "[8-bit] Re-entrancy guard around RunSoundEngine: UpdateSoundEngine returns immediately if it is already set, sets it, runs the engine and clears it. It survives the run because RunSoundEngine saves and restores the whole pool -- inside the engine this same byte is hSndChannelType"
+      },
+      "0xffe4": {
+       "name": "hUnusedLinkSelectByte",
+       "note": "[8-bit] Written twice by RunLinkCharSelectScreen and read by nothing. The sound driver owns the byte as hSndPeriodHi, but the pool is saved and restored around the engine, so the write neither survives nor disturbs anything"
+      },
+      "0xffe5": {
+       "name": "hLinkBlockChecksum",
+       "note": "[16-bit] Checksum ComputeNibbleBufferChecksum leaves for the block just transferred; both ends compare it after the last nibble and retry the block if it differs",
+       "size": 2
+      },
+      "0xffe8": {
+       "name": "hLinkPhaseDelay",
+       "note": "[8-bit] Backoff counter in DelayByLinkPhase: decremented each call and reset to $0f when it goes negative, so repeated retries spin for a varying number of frames instead of locking in step with the peer"
       }
      }
     },

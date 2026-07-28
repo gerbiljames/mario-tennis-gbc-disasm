@@ -141,13 +141,13 @@ ExchangeNibbleBlockMaster:
 	call LinkErrorReset ; $40f5
 .synced:
 	xor a ; $40f8
-	ldh [$ffc6], a ; $40f9
-	ldh [$ffc7], a ; $40fb
+	ldh [hLinkNibbleAccum], a ; $40f9
+	ldh [hLinkBlockOffset], a ; $40fb
 	ld de, $0000 ; $40fd
 	ld b, c ; $4100
 .nibbleLoop:
 	ld hl, $ce40 ; $4101
-	ldh a, [$ffc7] ; $4104
+	ldh a, [hLinkBlockOffset] ; $4104
 	add l ; $4106
 	ld l, a ; $4107
 	jr nc, .loadTxNibble ; $4108
@@ -179,7 +179,7 @@ ExchangeNibbleBlockMaster:
 	ld a, h ; $4136
 	push af ; $4137
 	ld hl, $cea0 ; $4138
-	ldh a, [$ffc6] ; $413b
+	ldh a, [hLinkNibbleAccum] ; $413b
 	add l ; $413d
 	ld l, a ; $413e
 	jr nc, .accumulate ; $413f
@@ -195,9 +195,9 @@ ExchangeNibbleBlockMaster:
 .nextNibble:
 	xor a ; $414b
 	ldh [hLinkCounter], a ; $414c
-	ld hl, $ffc7 ; $414e
+	ld hl, hLinkBlockOffset ; $414e
 	inc [hl] ; $4151
-	ld hl, $ffc6 ; $4152
+	ld hl, hLinkNibbleAccum ; $4152
 	inc [hl] ; $4155
 	dec b ; $4156
 	jr nz, .nibbleLoop ; $4157
@@ -214,9 +214,9 @@ ExchangeNibbleBlockMaster:
 	call LinkErrorReset ; $416e
 .compareChecksum:
 	call ExchangeChecksumMaster ; $4171
-	ldh a, [$ffe5] ; $4174
+	ldh a, [hLinkBlockChecksum] ; $4174
 	ld e, a ; $4176
-	ldh a, [$ffe6] ; $4177
+	ldh a, [hLinkBlockChecksum + 1] ; $4177
 	ld d, a ; $4179
 	push hl ; $417a
 	push de ; $417b
@@ -261,7 +261,7 @@ DelayByLinkPhase:
 	ld a, c ; $41b7
 	or b ; $41b8
 	jr nz, .spinLoop ; $41b9
-	ldh a, [$ffe8] ; $41bb
+	ldh a, [hLinkPhaseDelay] ; $41bb
 	dec a ; $41bd
 	bit 7, a ; $41be
 	jr z, .done ; $41c0
@@ -293,7 +293,7 @@ DelayByLinkPhase:
 	pop af ; $41e7
 	ld a, $0f ; $41e8
 .done:
-	ldh [$ffe8], a ; $41ea
+	ldh [hLinkPhaseDelay], a ; $41ea
 	pop bc ; $41ec
 	pop af ; $41ed
 	ret ; $41ee
@@ -341,9 +341,9 @@ ExchangeNibbleBlockSlave:
 	call LinkErrorReset ; $422c
 .synced:
 	ld a, $01 ; $422f
-	ldh [$ffc7], a ; $4231
+	ldh [hLinkBlockOffset], a ; $4231
 	xor a ; $4233
-	ldh [$ffc6], a ; $4234
+	ldh [hLinkNibbleAccum], a ; $4234
 	ld de, $0000 ; $4236
 	ld b, c ; $4239
 	dec b ; $423a
@@ -355,7 +355,7 @@ ExchangeNibbleBlockSlave:
 	xor a ; $4242
 	ldh [hLinkTransferDone], a ; $4243
 	ld hl, $ce40 ; $4245
-	ldh a, [$ffc7] ; $4248
+	ldh a, [hLinkBlockOffset] ; $4248
 	add l ; $424a
 	ld l, a ; $424b
 	jr nc, .loadTxNibble ; $424c
@@ -380,7 +380,7 @@ ExchangeNibbleBlockSlave:
 	call LinkErrorReset ; $426c
 .storeRxNibble:
 	ld hl, $cea0 ; $426f
-	ldh a, [$ffc6] ; $4272
+	ldh a, [hLinkNibbleAccum] ; $4272
 	add l ; $4274
 	ld l, a ; $4275
 	jr nc, .accumulate ; $4276
@@ -396,9 +396,9 @@ ExchangeNibbleBlockSlave:
 .nextNibble:
 	xor a ; $4282
 	ldh [hLinkCounter], a ; $4283
-	ld hl, $ffc7 ; $4285
+	ld hl, hLinkBlockOffset ; $4285
 	inc [hl] ; $4288
-	ld hl, $ffc6 ; $4289
+	ld hl, hLinkNibbleAccum ; $4289
 	inc [hl] ; $428c
 	dec b ; $428d
 	jr nz, .nibbleLoop ; $428e
@@ -422,7 +422,7 @@ ExchangeNibbleBlockSlave:
 	call LinkErrorReset ; $42ad
 .storeLastNibble:
 	ld hl, $cea0 ; $42b0
-	ldh a, [$ffc6] ; $42b3
+	ldh a, [hLinkNibbleAccum] ; $42b3
 	add l ; $42b5
 	ld l, a ; $42b6
 	jr nc, .accumulateLast ; $42b7
@@ -443,9 +443,9 @@ ExchangeNibbleBlockSlave:
 	call LinkErrorReset ; $42cc
 .compareChecksum:
 	call ExchangeChecksumSlave ; $42cf
-	ldh a, [$ffe5] ; $42d2
+	ldh a, [hLinkBlockChecksum] ; $42d2
 	ld e, a ; $42d4
-	ldh a, [$ffe6] ; $42d5
+	ldh a, [hLinkBlockChecksum + 1] ; $42d5
 	ld d, a ; $42d7
 	push hl ; $42d8
 	push de ; $42d9
@@ -637,9 +637,9 @@ ComputeNibbleBufferChecksum:
 	dec c ; $441c
 	jr nz, .sumLoop ; $441d
 	ld a, e ; $441f
-	ldh [$ffe5], a ; $4420
+	ldh [hLinkBlockChecksum], a ; $4420
 	ld a, d ; $4422
-	ldh [$ffe6], a ; $4423
+	ldh [hLinkBlockChecksum + 1], a ; $4423
 	pop hl ; $4425
 	pop de ; $4426
 	pop bc ; $4427

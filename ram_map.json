@@ -2011,5 +2011,33 @@
  "0xffc4": {
   "name": "hUnusedLinkByte",
   "note": "[8-bit] Cleared by InitSerialLink and ResetSerialState and read by nothing else"
+ },
+ "0xff9a": {
+  "name": "hDebugStepPaused",
+  "note": "[8-bit] Nonzero while the debug stepper is holding the frame. AdvanceFrame sets it when SELECT+START are held (only once hDebugStepMode has enabled stepping at all) and spins in its step loop until START clears it; SELECT while paused cycles hDebugStepMode 1-3 rather than resuming"
+ },
+ "0xff9f": {
+  "name": "hSavedIE",
+  "note": "[8-bit] rIE saved across DisableLCDSafely's VBlank wait: it masks the VBlank interrupt off, spins until rLY hits $91, turns the LCD off and restores rIE from here"
+ },
+ "0xffac": {
+  "name": "hDivDividendHi",
+  "note": "[8-bit] DivAHLByDE: high byte of the 24-bit dividend (a of a:hl), saved on entry to the wide-divisor path"
+ },
+ "0xffad": {
+  "name": "hDivQuotientMid",
+  "note": "[8-bit] DivAHLByDE: middle byte of the quotient, collected as the unrolled loop passes bit 7; the tail returns it in h"
+ },
+ "0xffae": {
+  "name": "hDivQuotientHi",
+  "note": "[8-bit] DivAHLByDE: high byte of the quotient, collected at bit 15; the tail returns it in a, so the result comes back as a:hl like the dividend went in"
+ },
+ "0xffc6": {
+  "name": "hLinkNibbleAccum",
+  "note": "[8-bit] Nibble-block transfer: the received nibble pair being assembled into a byte by ExchangeNibbleBlockMaster/Slave"
+ },
+ "0xffc7": {
+  "name": "hLinkBlockOffset",
+  "note": "[8-bit] Nibble-block transfer: byte offset into the $ce40 block buffer, stepped once per byte exchanged"
  }
 }

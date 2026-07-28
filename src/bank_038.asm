@@ -4791,7 +4791,7 @@ QueueCpuDifficultyPanelToVram:
 RunLinkCharSelectScreen:
 	xor a ; $63bd
 	ldh [hLinkExchangeActive], a ; $63be
-	ldh [$ffe4], a ; $63c0
+	ldh [hUnusedLinkSelectByte], a ; $63c0
 	ld [wMenuCursor2X], a ; $63c2
 	ld [wMenuCursor2Y], a ; $63c5
 	ldh [hLinkCursorPage], a ; $63c8
@@ -4856,7 +4856,7 @@ RunLinkCharSelectScreen:
 	ldh [hLinkPlayerCount], a ; $6442
 	call InitCharGridState ; $6444
 	xor a ; $6447
-	ldh [$ffe4], a ; $6448
+	ldh [hUnusedLinkSelectByte], a ; $6448
 	ld [wMenuCursor2X], a ; $644a
 	ld [wMenuCursor2Y], a ; $644d
 	ldh [hLinkCursorPage], a ; $6450

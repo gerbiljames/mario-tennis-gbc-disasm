@@ -135,6 +135,7 @@ class ScopedRamNames:
     def __init__(self):
         self.by_addr = {}
         self.sized = []   # (base, size, matchers, name, stride) for interiors
+        self.sized_default = []   # the same, for a default variant's fields
         self.bank_at = {}
 
     def add(self, addr, name, matchers, size=1, default_mask=None,
@@ -144,6 +145,13 @@ class ScopedRamNames:
         if default_mask is not None:
             e["default"] = name
             e["mask"] = default_mask
+            # A default variant's multi-byte field expands like any other; it
+            # just has to respect the same mask its base does, so the interior
+            # of a 16-bit default field does not claim an address inside a
+            # scoped variant's range.
+            if size > 1:
+                self.sized_default.append((addr, size, default_mask, name,
+                                           stride))
         else:
             e["scoped"].append((matchers, name))
             if size > 1:
@@ -171,6 +179,10 @@ class ScopedRamNames:
         # symbol matched above and returned before reaching here)
         for base, size, matchers, name, stride in self.sized:
             if base < addr < base + size and self._match(matchers, off):
+                return grid_offset(name, addr - base, stride)
+        for base, size, mask, name, stride in self.sized_default:
+            if base < addr < base + size \
+                    and not any(lo <= off < hi for lo, hi in mask):
                 return grid_offset(name, addr - base, stride)
         return None
 
@@ -321,7 +333,8 @@ def load_ram_unions(path):
                           f"${start:04x}-${end:04x}", file=sys.stderr)
                 syms.append((addr, name, ram_field_size(e), e.get("note", "")))
                 if v.get("default"):
-                    scoped.add(addr, name, None, default_mask=mask)
+                    scoped.add(addr, name, None, ram_field_size(e),
+                               default_mask=mask, stride=_stride(e))
                 else:
                     scoped.add(addr, name, matchers, ram_field_size(e),
                                stride=_stride(e))

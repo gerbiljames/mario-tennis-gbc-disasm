@@ -2883,7 +2883,7 @@ Data_0f_7699:
 	jr z, .prompt ; $76ae
 	ld a, [wMatchWinLoseFlag] ; $76b0
 	cp $01 ; $76b3
-	jp z, $76e9 ; $76b5
+	jp z, .wonRound ; $76b5
 .prompt:
 	call LoadIslandOpenRoundNpcs ; $76b8
 	call SetPlayerAndPartnerObjectDefs ; $76bb
@@ -2893,8 +2893,8 @@ Data_0f_7699:
 	script_face ACTOR_PARTNER, FACE_UP ; $76de
 	farcall WaitPlayerMoveDone ; $76e5
 	ret ; $76e8
-	db $ef ; $76e9
-	ldh [$ff0e], a ; $76ea
+.wonRound:
+	clear_flag FLAG_TOURNAMENT_NPC05_TALKED_DOUBLES ; $76e9
 	clear_flag FLAG_COURT2_SPECTATORS_TALKED_DOUBLES ; $76ec
 	call CheckIslandOpenVictoryTransition ; $76ef
 	and a ; $76f2

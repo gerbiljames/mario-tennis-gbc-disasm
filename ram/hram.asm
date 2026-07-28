@@ -62,7 +62,9 @@ hShowDebugConsole:: db
 
 ; [8-bit] Nonzero = VRAM copy / tile-write queues have pending entries
 hVRAMQueueDirty:: db
-	ds 1
+
+; [8-bit] Nonzero while the debug stepper is holding the frame. AdvanceFrame sets it when SELECT+START are held (only once hDebugStepMode has enabled stepping at all) and spins in its step loop until START clears it; SELECT while paused cycles hDebugStepMode 1-3 rather than resuming
+hDebugStepPaused:: db
 
 ; [8-bit] Write offset into the OAM shadow buffer (max $a0)
 hSpriteQueueIndex:: db
@@ -75,7 +77,9 @@ hPaletteDirtyFlags:: db
 
 ; [8-bit] Debug pause/frame-step mode (0 = off, 1-3)
 hDebugStepMode:: db
-	ds 1
+
+; [8-bit] rIE saved across DisableLCDSafely's VBlank wait: it masks the VBlank interrupt off, spins until rLY hits $91, turns the LCD off and restores rIE from here
+hSavedIE:: db
 
 ; [8-bit] Peak LY at end-of-frame (frame time meter shown on debug console)
 hPeakLY:: db
@@ -101,7 +105,16 @@ hMathSign:: db
 
 ; [32-bit] Full 32-bit product from MulHLByDE
 hMulResult:: ds 4
-	ds 4
+
+; [8-bit] DivAHLByDE: high byte of the 24-bit dividend (a of a:hl), saved on entry to the wide-divisor path
+hDivDividendHi:: db
+
+; [8-bit] DivAHLByDE: middle byte of the quotient, collected as the unrolled loop passes bit 7; the tail returns it in h
+hDivQuotientMid:: db
+
+; [8-bit] DivAHLByDE: high byte of the quotient, collected at bit 15; the tail returns it in a, so the result comes back as a:hl like the dividend went in
+hDivQuotientHi:: db
+	ds 1
 
 ; HRAM pointer scratch ($ffb0-$ffb3): two 16-bit slots each caller uses for
 ; its own purpose, so only proven consumers are named. Sites outside these
@@ -149,7 +162,13 @@ hLinkErrorFlags:: db
 
 ; [8-bit] Cleared by InitSerialLink and ResetSerialState and read by nothing else
 hUnusedLinkByte:: db
-	ds 3
+	ds 1
+
+; [8-bit] Nibble-block transfer: the received nibble pair being assembled into a byte by ExchangeNibbleBlockMaster/Slave
+hLinkNibbleAccum:: db
+
+; [8-bit] Nibble-block transfer: byte offset into the $ce40 block buffer, stepped once per byte exchanged
+hLinkBlockOffset:: db
 
 ; [8-bit] Serial link exchange/frame counter; increments per exchange and caps at 8
 hLinkCounter:: db
@@ -172,7 +191,9 @@ hMusic:: db
 ; the numeric address.
 UNION
 ; serial-link input slots (default: link-aware match/menu code in many banks)
-	ds 3
+	ds 2
+; [8-bit] Re-entrancy guard around RunSoundEngine: UpdateSoundEngine returns immediately if it is already set, sets it, runs the engine and clears it. It survives the run because RunSoundEngine saves and restores the whole pool -- inside the engine this same byte is hSndChannelType
+hSoundEngineBusy:: db
 ; [8-bit] Effective external input byte produced by SerialDecodeInput (local/remote merged per link role); also the scripted-input feed for demo/CPU-driven characters
 hLinkInput:: db
 ; [8-bit] Input byte decoded from the last received link frame
@@ -207,10 +228,14 @@ hLinkShiftQueue:: db
 hLinkPlayerCount:: db
 ; [8-bit] Remote player's cursor page in the link character grid, written beside wMenuCursor2X/Y and read by GetGridSlotFromLinkCursor and the MoveLinkCursor* handlers
 hLinkCursorPage:: db
-	ds 3
+; [8-bit] Written twice by RunLinkCharSelectScreen and read by nothing. The sound driver owns the byte as hSndPeriodHi, but the pool is saved and restored around the engine, so the write neither survives nor disturbs anything
+hUnusedLinkSelectByte:: db
+; [16-bit] Checksum ComputeNibbleBufferChecksum leaves for the block just transferred; both ends compare it after the last nibble and retry the block if it differs
+hLinkBlockChecksum:: dw
 ; [8-bit] Nonzero makes VBlankHandler return immediately, doing no palette, OAM or tilemap work. The link resync sets it while it busy-waits on the serial line and clears it when the session is back in step
 hVBlankSuppressed:: db
-	ds 1
+; [8-bit] Backoff counter in DelayByLinkPhase: decremented each call and reset to $0f when it goes negative, so repeated retries spin for a varying number of frames instead of locking in step with the peer
+hLinkPhaseDelay:: db
 ; [8-bit] Frames the match has simulated. Incremented once per frame by the local driver (bank $08, after AdvanceFrame + UpdateMatchFrame) and by all three link frame drivers (SyncLinkFrame, RunLinkMatchFrame, RunLinkInputFrame), so it counts the same either way; cleared by ResetMatchState and by InitSerialLink / ResetSerialState. Read only for cheap periodic effects: `and $0f` cycles the landing marker's 16-frame animation, and `and $01` draws the ground shadow and the offscreen-character arrow on alternate frames -- the usual Game Boy way to fake a translucent sprite
 hMatchFrameCounter:: db
 	ds 6

@@ -1,5 +1,5 @@
 {
- "_comment": "Static code-entry seeds for bank $0f (status-viewer menu screens; three menu trees at $4000->$4006/$41db/$5f94, same record/handler-table shape as bank $10 match-select). Entries are handler-table targets ({id,$ff,0,dw handler,...} tables at $4138/$419b/$4447/$4498/$44a2/$5b04/$60b1/$6102/$616b/$61a6/$7615), RegisterFrameTask callbacks ($41b7/$6310), and fall-through code heads verified to tile exactly into adjacent proven code. Flat = 0x0f*0x4000 + (cpu-0x4000). Second pass: $411f/$6396/$63e1/$63fa dead handler code; $6714 is six menu pages (records+handler-table pairs referenced from $6651-$6713 code) whose tables name in-bank handlers $6bda/$6bfe/$6c22/$6d67/$6d8b/$6ed0/$6ef4, plus fall-through $6f18.",
+ "_comment": "Static code-entry seeds for bank $0f (status-viewer menu screens; three menu trees at $4000->$4006/$41db/$5f94, same record/handler-table shape as bank $10 match-select). Entries are handler-table targets ({id,$ff,0,dw handler,...} tables at $4138/$419b/$4447/$4498/$44a2/$5b04/$60b1/$6102/$616b/$61a6/$7615), RegisterFrameTask callbacks ($41b7/$6310), and fall-through code heads verified to tile exactly into adjacent proven code. Flat = 0x0f*0x4000 + (cpu-0x4000). Second pass: $411f/$6396/$63e1/$63fa dead handler code; $6714 is six menu pages (records+handler-table pairs referenced from $6651-$6713 code) whose tables name in-bank handlers $6bda/$6bfe/$6c22/$6d67/$6d8b/$6ed0/$6ef4, plus fall-through $6f18. Corrected 2026-07-28: 0x3f6ea was one byte into a clear_flag's argument, so with nothing seeding the rst at 0x3f6e9 the two argument bytes decoded as `ldh [$ff0e], a`. The entry point is 0x3f6e9, the target of `jp z, $76e9`.",
  "rom": [
   245968,
   246004,
@@ -55,7 +55,7 @@
   259657,
   259692,
   259748,
-  259818,
+  259817,
   259830,
   260273,
   260300,

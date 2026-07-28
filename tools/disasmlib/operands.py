@@ -33,12 +33,13 @@ RAM_IMM_IS_CONSTANT = {
 # HRAM bytes are only ever reached with `ldh`, so every `ld rr, n16` equal to one
 # is the negative constant it looks like -- $ffe0 is -32 (one tilemap row back,
 # which is why it turns up in every blit and slide loop), $ffc0 -64, $ffa0 -96,
-# $ffdf -33, $fffd -3 (hRandomSeed + 1, an interior byte). All 43 sites feed
+# $ffdf -33, $ffe8 -24, $fffd -3 (hRandomSeed + 1, an interior byte). All 45
+# sites feed
 # `add hl, rr` or get stored as a 16-bit delta; not one is dereferenced. Keeping the list by address rather than by offset means a
 # newly carved blit loop cannot quietly acquire a link-engine name.
 # Not every HRAM address belongs here: `ld hl, hActorPtr` is a real pointer
 # setup at 82 sites, so this stays curated per address.
-RAM_IMM_NEVER = {0xffa0, 0xffc0, 0xffdf, 0xffe0, 0xfffd}
+RAM_IMM_NEVER = {0xffa0, 0xffc0, 0xffdf, 0xffe0, 0xffe8, 0xfffd}
 
 
 # The same hazard once more, for hardware register names. `ld hl, rIE` is a real
