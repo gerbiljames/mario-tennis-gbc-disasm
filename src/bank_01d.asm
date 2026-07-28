@@ -2024,7 +2024,7 @@ SlideToMainCharStatPage:
 	ld bc, $d7e0 ; $50ab
 	call ApplyTilemapPatchList ; $50ae
 	ld hl, MainCharStatPageTilemapPatch03 ; $50b1
-	ld bc, wTextArgNumberQueue + 16 ; $50b4
+	ld bc, $d8e0 ; $50b4
 	call ApplyTilemapPatchList ; $50b7
 	ld hl, MainCharStatPageTilemapPatch04 ; $50ba
 	ld bc, $d9e0 ; $50bd
@@ -2044,7 +2044,7 @@ SlideToMainCharStatPage:
 	ld bc, $d7e0 ; $50e4
 	call ApplyTilemapPatchList ; $50e7
 	ld hl, MainCharStatPageTilemapPatch06 ; $50ea
-	ld bc, wTextArgNumberQueue + 16 ; $50ed
+	ld bc, $d8e0 ; $50ed
 	call ApplyTilemapPatchList ; $50f0
 	ld hl, MainCharStatPageTilemapPatch07 ; $50f3
 	ld bc, $d9e0 ; $50f6
@@ -2069,7 +2069,7 @@ SlideToMainCharStatPage:
 	ld bc, $d7e0 ; $5126
 	call ApplyTilemapPatchList ; $5129
 	ld hl, MainCharStatPageTilemapPatch09 ; $512c
-	ld bc, wTextArgNumberQueue + 16 ; $512f
+	ld bc, $d8e0 ; $512f
 	call ApplyTilemapPatchList ; $5132
 	ld hl, MainCharStatPageTilemapPatch10 ; $5135
 	ld bc, $d9e0 ; $5138
@@ -2100,7 +2100,7 @@ SlideToMainCharStatPage:
 	ld bc, $d7e0 ; $517a
 	call ApplyTilemapPatchList ; $517d
 	ld hl, MainCharStatPageTilemapPatch12 ; $5180
-	ld bc, wTextArgNumberQueue + 16 ; $5183
+	ld bc, $d8e0 ; $5183
 	call ApplyTilemapPatchList ; $5186
 	ld hl, MainCharStatPageTilemapPatch13 ; $5189
 	ld bc, $d9e0 ; $518c
@@ -2247,7 +2247,7 @@ SlideFromMainCharStatPage:
 	ld bc, $d7e0 ; $52f8
 	call ApplyTilemapPatchList ; $52fb
 	ld hl, MainCharStatPageTilemapPatch12 ; $52fe
-	ld bc, wTextArgNumberQueue + 16 ; $5301
+	ld bc, $d8e0 ; $5301
 	call ApplyTilemapPatchList ; $5304
 	ld hl, MainCharStatPageTilemapPatch13 ; $5307
 	ld bc, $d9e0 ; $530a
@@ -2278,7 +2278,7 @@ SlideFromMainCharStatPage:
 	ld bc, $d7e0 ; $534c
 	call ApplyTilemapPatchList ; $534f
 	ld hl, MainCharStatPageTilemapPatch09 ; $5352
-	ld bc, wTextArgNumberQueue + 16 ; $5355
+	ld bc, $d8e0 ; $5355
 	call ApplyTilemapPatchList ; $5358
 	ld hl, MainCharStatPageTilemapPatch10 ; $535b
 	ld bc, $d9e0 ; $535e
@@ -2309,7 +2309,7 @@ SlideFromMainCharStatPage:
 	ld bc, $d7e0 ; $53a0
 	call ApplyTilemapPatchList ; $53a3
 	ld hl, MainCharStatPageTilemapPatch06 ; $53a6
-	ld bc, wTextArgNumberQueue + 16 ; $53a9
+	ld bc, $d8e0 ; $53a9
 	call ApplyTilemapPatchList ; $53ac
 	ld hl, MainCharStatPageTilemapPatch07 ; $53af
 	ld bc, $d9e0 ; $53b2
@@ -2334,7 +2334,7 @@ SlideFromMainCharStatPage:
 	ld bc, $d7e0 ; $53e2
 	call ApplyTilemapPatchList ; $53e5
 	ld hl, MainCharStatPageTilemapPatch03 ; $53e8
-	ld bc, wTextArgNumberQueue + 16 ; $53eb
+	ld bc, $d8e0 ; $53eb
 	call ApplyTilemapPatchList ; $53ee
 	ld hl, MainCharStatPageTilemapPatch04 ; $53f1
 	ld bc, $d9e0 ; $53f4
@@ -2353,7 +2353,7 @@ SlideFromMainCharStatPage:
 	ld bc, $d7e0 ; $5418
 	call ApplyTilemapPatchList ; $541b
 	ld hl, StatPageTilemapPatch7 ; $541e
-	ld bc, wTextArgNumberQueue + 16 ; $5421
+	ld bc, $d8e0 ; $5421
 	call ApplyTilemapPatchList ; $5424
 	ld hl, StatPageTilemapPatch8 ; $5427
 	ld bc, $d9e0 ; $542a
@@ -2379,7 +2379,7 @@ SlideToPartnerStatPage:
 	ld bc, $d7e0 ; $545b
 	call ApplyTilemapPatchList ; $545e
 	ld hl, PartnerStatPageTilemapPatch03 ; $5461
-	ld bc, wTextArgNumberQueue + 16 ; $5464
+	ld bc, $d8e0 ; $5464
 	call ApplyTilemapPatchList ; $5467
 	ld hl, PartnerStatPageTilemapPatch04 ; $546a
 	ld bc, $d9e0 ; $546d
@@ -2404,7 +2404,7 @@ SlideToPartnerStatPage:
 	ld bc, $d7e0 ; $549d
 	call ApplyTilemapPatchList ; $54a0
 	ld hl, PartnerStatPageTilemapPatch06 ; $54a3
-	ld bc, wTextArgNumberQueue + 16 ; $54a6
+	ld bc, $d8e0 ; $54a6
 	call ApplyTilemapPatchList ; $54a9
 	ld hl, PartnerStatPageTilemapPatch07 ; $54ac
 	ld bc, $d9e0 ; $54af
@@ -2438,7 +2438,7 @@ SlideToPartnerStatPage:
 	ld bc, $d7e0 ; $54fa
 	call ApplyTilemapPatchList ; $54fd
 	ld hl, PartnerStatPageTilemapPatch09 ; $5500
-	ld bc, wTextArgNumberQueue + 16 ; $5503
+	ld bc, $d8e0 ; $5503
 	call ApplyTilemapPatchList ; $5506
 	ld hl, PartnerStatPageTilemapPatch10 ; $5509
 	ld bc, $d9e0 ; $550c
@@ -2469,7 +2469,7 @@ SlideToPartnerStatPage:
 	ld bc, $d7e0 ; $554e
 	call ApplyTilemapPatchList ; $5551
 	ld hl, PartnerStatPageTilemapPatch12 ; $5554
-	ld bc, wTextArgNumberQueue + 16 ; $5557
+	ld bc, $d8e0 ; $5557
 	call ApplyTilemapPatchList ; $555a
 	ld hl, PartnerStatPageTilemapPatch13 ; $555d
 	ld bc, $d9e0 ; $5560
@@ -2572,7 +2572,7 @@ SlideFromPartnerStatPage:
 	ld bc, $d7e0 ; $565a
 	call ApplyTilemapPatchList ; $565d
 	ld hl, PartnerStatPageTilemapPatch12 ; $5660
-	ld bc, wTextArgNumberQueue + 16 ; $5663
+	ld bc, $d8e0 ; $5663
 	call ApplyTilemapPatchList ; $5666
 	ld hl, PartnerStatPageTilemapPatch13 ; $5669
 	ld bc, $d9e0 ; $566c
@@ -2603,7 +2603,7 @@ SlideFromPartnerStatPage:
 	ld bc, $d7e0 ; $56ae
 	call ApplyTilemapPatchList ; $56b1
 	ld hl, PartnerStatPageTilemapPatch09 ; $56b4
-	ld bc, wTextArgNumberQueue + 16 ; $56b7
+	ld bc, $d8e0 ; $56b7
 	call ApplyTilemapPatchList ; $56ba
 	ld hl, PartnerStatPageTilemapPatch10 ; $56bd
 	ld bc, $d9e0 ; $56c0
@@ -2634,7 +2634,7 @@ SlideFromPartnerStatPage:
 	ld bc, $d7e0 ; $5702
 	call ApplyTilemapPatchList ; $5705
 	ld hl, PartnerStatPageTilemapPatch06 ; $5708
-	ld bc, wTextArgNumberQueue + 16 ; $570b
+	ld bc, $d8e0 ; $570b
 	call ApplyTilemapPatchList ; $570e
 	ld hl, PartnerStatPageTilemapPatch07 ; $5711
 	ld bc, $d9e0 ; $5714
@@ -2668,7 +2668,7 @@ SlideFromPartnerStatPage:
 	ld bc, $d7e0 ; $575f
 	call ApplyTilemapPatchList ; $5762
 	ld hl, PartnerStatPageTilemapPatch03 ; $5765
-	ld bc, wTextArgNumberQueue + 16 ; $5768
+	ld bc, $d8e0 ; $5768
 	call ApplyTilemapPatchList ; $576b
 	ld hl, PartnerStatPageTilemapPatch04 ; $576e
 	ld bc, $d9e0 ; $5771
@@ -2693,7 +2693,7 @@ SlideFromPartnerStatPage:
 	ld bc, $d7e0 ; $57a1
 	call ApplyTilemapPatchList ; $57a4
 	ld hl, StatPageTilemapPatch7 ; $57a7
-	ld bc, wTextArgNumberQueue + 16 ; $57aa
+	ld bc, $d8e0 ; $57aa
 	call ApplyTilemapPatchList ; $57ad
 	ld hl, StatPageTilemapPatch8 ; $57b0
 	ld bc, $d9e0 ; $57b3

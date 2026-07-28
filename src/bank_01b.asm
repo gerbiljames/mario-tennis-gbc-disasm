@@ -2436,7 +2436,7 @@ StartRankingMarkerAnim0:
 	ld [hl+], a ; $5a7a
 	ld [hl], d ; $5a7b
 	xor a ; $5a7c
-	ld [wTextPageBreakRequest], a ; $5a7d
+	ld [$d850], a ; $5a7d
 	ld a, $01 ; $5a80
 	ld hl, UpdateScriptedOffsetChannel0 ; $5a82
 	call RegisterFrameTask ; $5a85
@@ -2448,7 +2448,7 @@ StartRankingMarkerAnim1:
 	ld a, c ; $5a8e
 	ld [hl+], a ; $5a8f
 	ld [hl], b ; $5a90
-	ld hl, wTextArgStringCount ; $5a91
+	ld hl, $d84a ; $5a91
 	ld a, e ; $5a94
 	ld [hl+], a ; $5a95
 	ld [hl], d ; $5a96
@@ -2497,7 +2497,7 @@ UpdateScriptedOffsetChannel0:
 	ld a, [hl+] ; $5add
 	ld d, [hl] ; $5ade
 	ld e, a ; $5adf
-	ld a, [wTextPageBreakRequest] ; $5ae0
+	ld a, [$d850] ; $5ae0
 	ld h, $00 ; $5ae3
 	ld l, a ; $5ae5
 	add hl, de ; $5ae6
@@ -2519,12 +2519,12 @@ UpdateScriptedOffsetChannel0:
 	call UnregisterFrameTask ; $5afc
 	ret ; $5aff
 .checkTextPageBreakRequest:
-	ld a, [wTextPageBreakRequest] ; $5b00
+	ld a, [$d850] ; $5b00
 	inc a ; $5b03
-	ld [wTextPageBreakRequest], a ; $5b04
+	ld [$d850], a ; $5b04
 	ret ; $5b07
 UpdateScriptedOffsetChannel1:
-	ld hl, wTextArgStringCount ; $5b08
+	ld hl, $d84a ; $5b08
 	ld a, [hl+] ; $5b0b
 	ld d, [hl] ; $5b0c
 	ld e, a ; $5b0d
@@ -4166,9 +4166,9 @@ ShowNoN64DataFoundScreen:
 	call FillTilemapRow17 ; $6afa
 	ld hl, $d8a2 ; $6afd
 	call FillTilemapRow17 ; $6b00
-	ld hl, wTextArgStringQueue + 18 ; $6b03
+	ld hl, $d8c2 ; $6b03
 	call FillTilemapRow17 ; $6b06
-	ld hl, wTextArgNumberQueue + 18 ; $6b09
+	ld hl, $d8e2 ; $6b09
 	call FillTilemapRow17 ; $6b0c
 	ld a, $00 ; $6b0f
 	ld hl, $dc62 ; $6b11
@@ -4185,7 +4185,7 @@ ShowNoN64DataFoundScreen:
 	ld de, $d883 ; $6b32
 	farcall RenderProportionalTextAt32 ; $6b35
 	ld hl, $047c ; $6b38
-	ld de, wTextArgStringQueue + 19 ; $6b3b
+	ld de, $d8c3 ; $6b3b
 	farcall RenderProportionalTextAt32 ; $6b3e
 	farcall ForceFlushBgMapToVram ; $6b41
 	call EnableLCD ; $6b44

@@ -1781,27 +1781,27 @@ QueueTennisDictionaryListRows:
 	ldh a, [hWramBank] ; $578f
 	push af ; $5791
 	wram_bank $05 ; $5792
-	ld hl, $d0b0 ; $5798
+	ld hl, wWindowShadowTilemap + 5 * TILEMAP_WIDTH + 16 ; $5798
 	ld de, $98b0 ; $579b
 	ld c, $01 ; $579e
 	call QueueVRAMCopy ; $57a0
-	ld hl, $d0f0 ; $57a3
+	ld hl, wWindowShadowTilemap + 7 * TILEMAP_WIDTH + 16 ; $57a3
 	ld de, $98f0 ; $57a6
 	ld c, $01 ; $57a9
 	call QueueVRAMCopy ; $57ab
-	ld hl, $d130 ; $57ae
+	ld hl, wWindowShadowTilemap + 9 * TILEMAP_WIDTH + 16 ; $57ae
 	ld de, $9930 ; $57b1
 	ld c, $01 ; $57b4
 	call QueueVRAMCopy ; $57b6
-	ld hl, $d170 ; $57b9
+	ld hl, wWindowShadowTilemap + 11 * TILEMAP_WIDTH + 16 ; $57b9
 	ld de, $9970 ; $57bc
 	ld c, $01 ; $57bf
 	call QueueVRAMCopy ; $57c1
-	ld hl, $d1b0 ; $57c4
+	ld hl, wWindowShadowTilemap + 13 * TILEMAP_WIDTH + 16 ; $57c4
 	ld de, $99b0 ; $57c7
 	ld c, $01 ; $57ca
 	call QueueVRAMCopy ; $57cc
-	ld hl, $d1f0 ; $57cf
+	ld hl, wWindowShadowTilemap + 15 * TILEMAP_WIDTH + 16 ; $57cf
 	ld de, $99f0 ; $57d2
 	ld c, $01 ; $57d5
 	call QueueVRAMCopy ; $57d7

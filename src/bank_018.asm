@@ -782,7 +782,7 @@ SetupScoreboardDisplay:
 	call DrawTileBlock6x2ToTilemap ; $538f
 	ld a, [$c78f] ; $5392
 	call GetTextSlotPointer ; $5395
-	ld de, wTextArgStringQueue + 27 ; $5398
+	ld de, $d8cb ; $5398
 	call DrawTileBlock6x2ToTilemap ; $539b
 	ld a, [wTargetZoneX1] ; $539e
 	call GetTextSlotPointer ; $53a1

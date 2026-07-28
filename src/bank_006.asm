@@ -3411,7 +3411,7 @@ LoadStoryMenuItemGfx:
 	ld a, [hl+] ; $728b
 	ld h, [hl] ; $728c
 	ld l, a ; $728d
-	ld de, $d000 ; $728e
+	ld de, wWindowShadowTilemap ; $728e
 	ldh a, [hWramBank] ; $7291
 	push af ; $7293
 	wram_bank $01 ; $7294

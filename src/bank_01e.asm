@@ -4323,7 +4323,7 @@ InitGameProgressScreen:
 	ldh [hScrollX], a ; $7286
 	ldh [hScrollY], a ; $7288
 	farcall ResetTextWindowState ; $728a
-	ld de, $d000 ; $728d
+	ld de, wWindowShadowTilemap ; $728d
 	ld hl, wShadowTilemapPtr ; $7290
 	ld a, e ; $7293
 	ld [hl+], a ; $7294

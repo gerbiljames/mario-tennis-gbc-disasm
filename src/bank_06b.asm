@@ -413,7 +413,7 @@ IntroCutsceneState02Init_6b:
 	ldh a, [hWramBank] ; $4326
 	push af ; $4328
 	wram_bank $03 ; $4329
-	ld hl, wShortTextBuffer ; $432f
+	ld hl, $d880 ; $432f
 	ld de, $9880 ; $4332
 	ld c, $0a ; $4335
 	call QueueVRAMCopy ; $4337
@@ -527,7 +527,7 @@ IntroCutsceneState04Init_6b:
 	ldh a, [hWramBank] ; $4487
 	push af ; $4489
 	wram_bank $03 ; $448a
-	ld hl, wShortTextBuffer ; $4490
+	ld hl, $d880 ; $4490
 	ld de, $9880 ; $4493
 	ld c, $0a ; $4496
 	call QueueVRAMCopy ; $4498
@@ -757,20 +757,20 @@ IntroCutsceneState13Init_6b:
 	ld hl, Palettes_6b_475a ; $46f6
 	ld de, $0008 ; $46f9
 	call LoadPaletteShadow ; $46fc
-	ld hl, $d0c0 ; $46ff
+	ld hl, wWindowShadowTilemap + 6 * TILEMAP_WIDTH ; $46ff
 	ld de, $98c0 ; $4702
 	ld c, $10 ; $4705
 	call QueueVRAMCopy ; $4707
-	ld hl, $d4c0 ; $470a
+	ld hl, wWindowShadowAttrmap + 6 * TILEMAP_WIDTH ; $470a
 	ld de, $98c0 + VRAM_BANK1 ; $470d
 	ld c, $10 ; $4710
 	call QueueVRAMCopy ; $4712
 	call AdvanceFrame ; $4715
-	ld hl, $d080 ; $4718
+	ld hl, wWindowShadowTilemap + 4 * TILEMAP_WIDTH ; $4718
 	ld de, $9880 ; $471b
 	ld c, $04 ; $471e
 	call QueueVRAMCopy ; $4720
-	ld hl, $d480 ; $4723
+	ld hl, wWindowShadowAttrmap + 4 * TILEMAP_WIDTH ; $4723
 	ld de, $9880 + VRAM_BANK1 ; $4726
 	ld c, $04 ; $4729
 	call QueueVRAMCopy ; $472b
@@ -1045,10 +1045,10 @@ IntroCutsceneState16Init_6b:
 	call DecompressDataFromBank ; $4a02
 	wram_bank $05 ; $4a05
 	ld hl, IntroCutsceneState16InitGfx6 ; $4a0b -> DataPtr_IntroCharactersTilemap2
-	ld de, $d000 ; $4a0e
+	ld de, wWindowShadowTilemap ; $4a0e
 	call DecompressDataFromBank ; $4a11
 	ld hl, IntroCutsceneState16InitGfx7 ; $4a14 -> DataPtr_IntroCharactersAttrmap2
-	ld de, $d400 ; $4a17
+	ld de, wWindowShadowAttrmap ; $4a17
 	call DecompressDataFromBank ; $4a1a
 	wram_bank $01 ; $4a1d
 	ld hl, CutsceneSceneAGfx0 ; $4a23
@@ -1077,7 +1077,7 @@ Palettes_6b_4a58:
 	INCLUDE "data/bank_06b/palettes_4a58.asm" ; $4a58, 64 bytes (palettes)
 IntroCutsceneState17Init_6b:
 	wram_bank $04 ; $4a98
-	ld hl, wTextArgStringQueue + 16 ; $4a9e
+	ld hl, $d8c0 ; $4a9e
 	ld de, $9cc0 ; $4aa1
 	ld c, $10 ; $4aa4
 	call QueueVRAMCopy ; $4aa6
@@ -1086,7 +1086,7 @@ IntroCutsceneState17Init_6b:
 	ld c, $10 ; $4aaf
 	call QueueVRAMCopy ; $4ab1
 	call AdvanceFrame ; $4ab4
-	ld hl, wShortTextBuffer ; $4ab7
+	ld hl, $d880 ; $4ab7
 	ld de, $9c80 ; $4aba
 	ld c, $04 ; $4abd
 	call QueueVRAMCopy ; $4abf
@@ -1115,20 +1115,20 @@ IntroCutsceneState18Init_6b:
 	ld de, $0008 ; $4af5
 	call LoadPaletteShadow ; $4af8
 	wram_bank $05 ; $4afb
-	ld hl, $d260 ; $4b01
+	ld hl, wWindowShadowTilemap + 19 * TILEMAP_WIDTH ; $4b01
 	ld de, $9e60 ; $4b04
 	ld c, $10 ; $4b07
 	call QueueVRAMCopy ; $4b09
-	ld hl, $d660 ; $4b0c
+	ld hl, wWindowShadowAttrmap + 19 * TILEMAP_WIDTH ; $4b0c
 	ld de, $9e60 + VRAM_BANK1 ; $4b0f
 	ld c, $10 ; $4b12
 	call QueueVRAMCopy ; $4b14
 	call AdvanceFrame ; $4b17
-	ld hl, $d160 ; $4b1a
+	ld hl, wWindowShadowTilemap + 11 * TILEMAP_WIDTH ; $4b1a
 	ld de, $9d60 ; $4b1d
 	ld c, $10 ; $4b20
 	call QueueVRAMCopy ; $4b22
-	ld hl, $d560 ; $4b25
+	ld hl, wWindowShadowAttrmap + 11 * TILEMAP_WIDTH ; $4b25
 	ld de, $9d60 + VRAM_BANK1 ; $4b28
 	ld c, $10 ; $4b2b
 	call QueueVRAMCopy ; $4b2d
@@ -1139,20 +1139,20 @@ IntroCutsceneState18Init_6b:
 	ld a, $08 ; $4b3a
 	ld hl, ApplyScrollYFromWram ; $4b3c
 	call RegisterFrameTask ; $4b3f
-	ld hl, $d060 ; $4b42
+	ld hl, wWindowShadowTilemap + 3 * TILEMAP_WIDTH ; $4b42
 	ld de, $9c60 ; $4b45
 	ld c, $10 ; $4b48
 	call QueueVRAMCopy ; $4b4a
-	ld hl, $d460 ; $4b4d
+	ld hl, wWindowShadowAttrmap + 3 * TILEMAP_WIDTH ; $4b4d
 	ld de, $9c60 + VRAM_BANK1 ; $4b50
 	ld c, $10 ; $4b53
 	call QueueVRAMCopy ; $4b55
 	call AdvanceFrame ; $4b58
-	ld hl, $d000 ; $4b5b
+	ld hl, wWindowShadowTilemap ; $4b5b
 	ld de, $9c00 ; $4b5e
 	ld c, $08 ; $4b61
 	call QueueVRAMCopy ; $4b63
-	ld hl, $d400 ; $4b66
+	ld hl, wWindowShadowAttrmap ; $4b66
 	ld de, $9c00 + VRAM_BANK1 ; $4b69
 	ld c, $08 ; $4b6c
 	call QueueVRAMCopy ; $4b6e
@@ -2211,10 +2211,10 @@ DecompressIntroTitleTiles:
 	call QueueVRAMCopy ; $7417
 	wram_bank $05 ; $741a
 	ld hl, DecompressIntroTitleTiles1 ; $7420
-	ld de, $d000 ; $7423
+	ld de, wWindowShadowTilemap ; $7423
 	call DecompressData ; $7426
 	ld hl, DecompressIntroTitleTiles2 ; $7429
-	ld de, $d400 ; $742c
+	ld de, wWindowShadowAttrmap ; $742c
 	call DecompressData ; $742f
 	pop af ; $7432
 	wram_bank ; $7433

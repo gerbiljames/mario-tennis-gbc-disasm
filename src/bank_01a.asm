@@ -493,9 +493,9 @@ RunDebugExpEditor:
 	ld h, [hl] ; $43cf
 	ld l, a ; $43d0
 	ld a, $04 ; $43d1
-	ld de, $d000 ; $43d3
+	ld de, wWindowShadowTilemap ; $43d3
 	call FormatDecimalNumber ; $43d6
-	ld hl, $d000 ; $43d9
+	ld hl, wWindowShadowTilemap ; $43d9
 	ld de, $0801 ; $43dc
 	ld a, [wPauseMenuWindowId] ; $43df
 	farcall WriteStringToWindow ; $43e2
@@ -504,9 +504,9 @@ RunDebugExpEditor:
 	ld h, [hl] ; $43e9
 	ld l, a ; $43ea
 	ld a, $04 ; $43eb
-	ld de, $d000 ; $43ed
+	ld de, wWindowShadowTilemap ; $43ed
 	call FormatDecimalNumber ; $43f0
-	ld hl, $d000 ; $43f3
+	ld hl, wWindowShadowTilemap ; $43f3
 	ld de, $0802 ; $43f6
 	ld a, [wPauseMenuWindowId] ; $43f9
 	farcall WriteStringToWindow ; $43fc

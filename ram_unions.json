@@ -2007,28 +2007,6 @@
    ]
   },
   {
-   "start": "0xdc70",
-   "end": "0xdc71",
-   "comment": "Window-allocator slot mask (WRAM bank $05), owned by the bank $05 window\nsystem. The bank $0d minigame target actors keep their own state in the\nsame $dc7x range under a WRAM bank nothing in that bank selects, so those\naddresses stay numeric until the bank can be shown.",
-   "variants": [
-    {
-     "context": "window allocator (bank $05)",
-     "scopes": [
-      {
-       "bank": "0x05"
-      }
-     ],
-     "symbols": {
-      "0xdc70": {
-       "name": "wWindowSlotMask",
-       "note": "[8-bit] One bit per window struct, set while the slot is in use. AllocWindowSlotBit scans for a clear bit and claims it; FreeWindow clears it again"
-      }
-     }
-    }
-   ],
-   "wram_bank": "0x05"
-  },
-  {
    "start": "0xdc00",
    "wram_bank": "0x04",
    "end": "0xdc80",
@@ -2163,6 +2141,376 @@
       "0xddf0": {
        "name": "wObjSlotWork",
        "note": "[16 bytes] The slot ProcessObjSlot is currently running, copied in from wObjSlot0-4 and copied back by FinishObjSlotUpdate. Writing $ff to +$00 here is how GetNextMoveCurveValue frees the slot when the curve hits its $81 terminator. Object-slot record, 16 bytes:\n  +$00 object id, $ff = slot free (ProcessObjSlot skips it)\n  +$01 flags; bit 0 = draw this frame\n  +$02 sprite template pointer, passed to QueueSpriteTemplate as hl\n  +$04 OAM attribute (b), +$05 base tile (c)\n  +$06 X offset, +$07 Y offset\n  +$08 handler pointer -- ProcessObjSlot `jp`s to it with DrawObjSlot\n       pushed as the return address\n  +$0a X from the move curve, +$0b Y\n  +$0c handler sub-state, an RST00 index the handler steps\n  +$0d curve step, incremented every frame by FinishObjSlotUpdate\n  +$0e curve id, indexing MoveCurveTable_09\n  +$0f anchor: 0 draws at the offsets as they stand, 1 adds the serving\n       character's wCharScreenX/Y first",
+       "size": 16
+      }
+     }
+    }
+   ]
+  },
+  {
+   "start": "0xd000",
+   "wram_bank": "0x05",
+   "end": "0xd800",
+   "comment": "Shadow tilemap for text windows (WRAM bank $05). The same 32 x 32 cell\nplane plus CGB attribute plane the full-screen UIs keep in WRAM bank\n$03, but owned by the window engine: ResetTextWindowState clears both\nand points wShadowTilemapPtr / wShadowTilemapBank at $d000 / $05, and\nthe dirty-row flusher copies changed rows out to $9800.\nScoped to a provable WRAM bank $05 alone -- bank $05 is full of $d000\nand $d400 literals that address whichever plane the current screen\nowns, and its glyph buffers live at $d300-$d7ff in WRAM bank $07.",
+   "variants": [
+    {
+     "context": "window shadow tilemap (WRAM bank $05)",
+     "scopes": [
+      {
+       "wram_bank": "0x05"
+      }
+     ],
+     "symbols": {
+      "0xd000": {
+       "name": "wWindowShadowTilemap",
+       "note": "Tile plane of the text-window shadow tilemap: 32 x 32 cells, rows TILEMAP_WIDTH apart, of which the top-left 20 x 18 is on screen",
+       "size": 1024,
+       "stride": [
+        "TILEMAP_WIDTH",
+        "0x20"
+       ]
+      },
+      "0xd400": {
+       "name": "wWindowShadowAttrmap",
+       "note": "CGB attribute plane of the text-window shadow tilemap, cell for cell with wWindowShadowTilemap and copied to $9800 in VRAM bank 1",
+       "size": 1024,
+       "stride": [
+        "TILEMAP_WIDTH",
+        "0x20"
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "start": "0xdc00",
+   "wram_bank": "0x05",
+   "end": "0xdc80",
+   "comment": "Window bookkeeping (WRAM bank $05), owned by the bank $05 window system:\nthe window struct array, the dirty-row flags that drive the shadow\ntilemap flush, and the allocator mask above them. Scoped to bank $05\nin two ranges rather than one, because WriteStringToTilemapStreamed at\n$6bf0-$6c4f keeps its own cursor at $dc05-$dc0a in *the caller's* WRAM\nbank -- it writes glyphs straight to a tilemap the caller selected --\nso those bytes are not windows and stay numeric. Banks $0d and $17/$3b\noverlay the same addresses in WRAM banks $04 and $03 (separate unions).",
+   "variants": [
+    {
+     "context": "window system (bank $05)",
+     "scopes": [
+      {
+       "bank": "0x05",
+       "start": "0x4000",
+       "end": "0x6bf0"
+      },
+      {
+       "bank": "0x05",
+       "start": "0x6c50",
+       "end": "0x8000"
+      },
+      {
+       "wram_bank": "0x05"
+      }
+     ],
+     "symbols": {
+      "0xdc00": {
+       "name": "wWindowStructs",
+       "note": "[64 bytes] Eight 8-byte window records, indexed by window id (GetWindowStructPtr masks the id to 3 bits and shifts left 3):\n  +$00 column, +$01 row (both wrapped to $1f by SetWindowRect)\n  +$02 height in cells, +$03 width in cells\n  +$04 state, read and written through GetWindowState / SetWindowState\n  +$06 text id (lo/hi), stored by SetWindowTextId; $03 in the high byte\n       is the \"no text\" sentinel RenderWindowText bails on\nAllocWindowStruct fills a free slot from de/bc, FreeWindow zeroes all\neight bytes and releases the wWindowSlotMask bit",
+       "size": 64
+      },
+      "0xdc40": {
+       "name": "wTilemapRowDirty",
+       "note": "[32 bytes] One flag per tilemap row. SetRowDirtyFlags clears the array and marks the e rows starting at d (wrapping at 32), which is how a window redraw tells the flusher which rows changed",
+       "size": 32
+      },
+      "0xdc60": {
+       "name": "wTilemapRowRuns",
+       "note": "[16 bytes] Run list BuildDirtyRowRuns folds wTilemapRowDirty into: (first row, run length) pairs terminated by $ff, with runs capped at 7 rows so one FlushDirtyRowsPerFrame pass fits in a VBlank. The flusher copies each run and waits a frame between them",
+       "size": 16
+      },
+      "0xdc70": {
+       "name": "wWindowSlotMask",
+       "note": "[8-bit] One bit per window struct, set while the slot is in use. AllocWindowSlotBit scans for a clear bit and claims it; FreeWindow clears it again"
+      },
+      "0xdc76": {
+       "name": "wShadowTilemapReadOffset",
+       "note": "[16-bit] Byte offset added to wShadowTilemapPtr by RefreshShadowTilemapFromMapBuffer when it copies rows back to the shadow tilemap. Nothing ever writes it, so it stays at the 0 ResetTextWindowState leaves behind",
+       "size": 2
+      },
+      "0xdc78": {
+       "name": "wSavedWindowStruct",
+       "note": "[8 bytes] Scratch copy of one window record. SaveWindowStruct parks the struct here so a routine can rewrite the live one and still compare against where the window started -- OpenSpeechBubble walks the bubble outward one cell at a time against the saved column",
+       "size": 8
+      }
+     }
+    }
+   ]
+  },
+  {
+   "start": "0xd841",
+   "wram_bank": "0x05",
+   "end": "0xd855",
+   "comment": "Text and dialogue engine state (WRAM bank $05), owned by the bank $05\ntext/window engine and driven from the bank $0a story scripts and the\nbank $0b drill messages. Scoped to those three ROM banks as well as to\nthe WRAM bank, because the engine selects bank $05 once on entry and\nthen saves and restores an unknown bank around its glyph-buffer work,\nso compute_wram_bank cannot prove it at every reference.\nThe scope is not decoration: bank $1b keeps its ranking-marker\nanimation channels over the same $d84x bytes in a different WRAM bank,\nand banks $18/$1a/$6b address $d8bx/$d8fx as screen tilemap cells.",
+   "variants": [
+    {
+     "context": "text and window engine (banks $05/$0a/$0b)",
+     "scopes": [
+      {
+       "bank": "0x05"
+      },
+      {
+       "bank": "0x0a"
+      },
+      {
+       "bank": "0x0b"
+      },
+      {
+       "wram_bank": "0x05"
+      }
+     ],
+     "symbols": {
+      "0xd841": {
+       "name": "wTextArrowBlinkCounter",
+       "note": "[8-bit] Frame counter for the menu-cursor arrow blink task; bit 4 selects the tile it writes ($20 blank / $0d arrow)"
+      },
+      "0xd842": {
+       "name": "wTextArrowCell",
+       "note": "[16-bit] Shadow-tilemap address of the cell the cursor arrow sits in. AnimateTextArrowTask turns it into a VRAM address (+ $3000 + $9800) and blinks the arrow there; RunMenuSelection primes it to $ffff and rewrites it every time the cursor moves",
+       "size": 2
+      },
+      "0xd844": {
+       "name": "wTextArrowEraseAddr",
+       "note": "[16-bit] VRAM address of the cell the arrow just left, handed to the blink task to overwrite with tile $20. The task clears it once erased, so a zero here is also how it knows nothing is pending -- AnimateTextArrowTask tests the low byte, AnimateMenuScrollArrowsTask the high one",
+       "size": 2
+      },
+      "0xd846": {
+       "name": "wMenuPage",
+       "note": "[8-bit] Page RunPagedTextMenu is showing; left/right step it and wrap against the page count. The entry it returns is wMenuPage * 4 + the row picked, so each page holds four rows"
+      },
+      "0xd847": {
+       "name": "wTextArgStringWriteIndex",
+       "note": "[8-bit] Cursor into wTextArgStringQueue: PushTextArgString writes at it, TextCmdPrintArgString reads at it, and the dialogue entry points reset it to 0 between messages. Stops at 16"
+      },
+      "0xd848": {
+       "name": "wTextArgNumberWriteIndex",
+       "note": "[8-bit] The same cursor for wTextArgNumberQueue, shared by PushTextArgNumber and TextCmdPrintArgNumber"
+      },
+      "0xd849": {
+       "name": "wTextArgShortTextWriteIndex",
+       "note": "[8-bit] The same cursor for wTextArgShortTextQueue, written by PushTextArgShortTextId"
+      },
+      "0xd84a": {
+       "name": "wTextArgStringCount",
+       "note": "[8-bit] How many string args were pushed. Kept in step with wTextArgStringWriteIndex while queuing and left alone when the cursor is reset, which is what makes it the limit the print command stops at"
+      },
+      "0xd84b": {
+       "name": "wTextArgNumberCount",
+       "note": "[8-bit] The same count for wTextArgNumberQueue; TextCmdPrintArgNumber prints nothing once the cursor reaches it"
+      },
+      "0xd84c": {
+       "name": "wTextArgShortTextCount",
+       "note": "[8-bit] The same count for wTextArgShortTextQueue"
+      },
+      "0xd84e": {
+       "name": "wTextResumePtr",
+       "note": "[16-bit] Text-stream pointer to pick up from instead of the start of wTextBuffer, with a nonzero high byte as the \"set\" flag that RenderTextString and FitWindowToText test and then clear. Two producers fill it: TextCmdWaitButtonPage makes TextInterpreterLoop store the byte it stopped on, and FindDialogueChoiceMarker stores the position of the $02 choice marker so the yes/no prompt measures and renders only the tail",
+       "size": 2
+      },
+      "0xd850": {
+       "name": "wTextPageBreakRequest",
+       "note": "[8-bit] Set by TextCmdWaitButtonPage; TextInterpreterLoop saves the resume offset to wTextResumePtr and returns, and the dialogue loops keep re-entering while it is set"
+      },
+      "0xd851": {
+       "name": "wDialogueSpeaker",
+       "note": "[8-bit] Who the current dialogue belongs to, as passed to ShowSpeakerDialogue ($ff becomes 0). Bit 7 set means the low bits are a literal screen row; clear means they are an actor id, and OpenSpeechBubble / ShowYesNoPromptWindow read that actor's Y against the camera to decide whether the window opens on the top or the bottom half of the screen"
+      },
+      "0xd852": {
+       "name": "wScriptDialogueTextId",
+       "note": "[16-bit] Text id the story script is up to. InitDialogueTextCursor seeds it and every Script*Dialogue call in bank $0a shows it and increments, so a cutscene walks a run of consecutive ids without naming each one",
+       "size": 2
+      },
+      "0xd854": {
+       "name": "wFitTextWidthCells",
+       "note": "[8-bit] Widest line of the measured text, rounded up to whole cells -- FitWindowToText writes it, MeasureDialogueWidthTiles returns it"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "start": "0xd85c",
+   "wram_bank": "0x05",
+   "end": "0xd880",
+   "comment": "Text and dialogue engine state (WRAM bank $05), continued -- see the\n$d841 block for the scope. The run breaks at $d855-$d85b because bank\n$1b's results screen keeps three bytes of its own there in WRAM bank\n$03, which the auto-namer can prove and this union would hide.",
+   "variants": [
+    {
+     "context": "text and window engine (banks $05/$0a/$0b)",
+     "scopes": [
+      {
+       "bank": "0x05"
+      },
+      {
+       "bank": "0x0a"
+      },
+      {
+       "bank": "0x0b"
+      },
+      {
+       "wram_bank": "0x05"
+      }
+     ],
+     "symbols": {
+      "0xd85c": {
+       "name": "wSpeechBubbleLowerHalf",
+       "note": "[8-bit] 1 when OpenSpeechBubble / OpenCenteredDialogueWindow put the window on the lower half of the screen because the speaking actor is near the top, 0 otherwise. Written by both, read by nothing"
+      },
+      "0xd85d": {
+       "name": "wUnusedTextByte",
+       "note": "[8-bit] The byte Unused_05_SetTextVar stores. Nothing reads it"
+      },
+      "0xd85f": {
+       "name": "wWindowTextEmpty",
+       "note": "[8-bit] Set to 1 when RenderWindowText bails because the window's text id has $03 in its high byte (the \"no text\" sentinel), 0 when it goes on to fetch and render. Written by nothing else and read by nothing"
+      },
+      "0xd862": {
+       "name": "wDialogueVoice",
+       "note": "[8-bit] Speaker voice for the per-character text blip: DelayTextCharacter plays sound $9a + voice * 4 + (glyph & 3) as each glyph lands. GetSpeakerVoice supplies it, and $08 means silent -- which is also what a negative message speed forces"
+      },
+      "0xd863": {
+       "name": "wFixedMenuWindowId",
+       "note": "[8-bit] Window SetFixedMenuWindowTextId built, so RunFixedTextMenu can close it alongside the menu window. Both are exported through the bank $05 farptr table and neither is called, which is just as well: SetFixedMenuWindowTextId loads hWramBank into b before calling SetWindowTextId, so the \"window id\" both routines pass around is really the WRAM bank number"
+      },
+      "0xd864": {
+       "name": "wGlyphVramDest",
+       "note": "[16-bit] Current VRAM destination address for glyph tiles (lo/hi)",
+       "size": 2
+      },
+      "0xd866": {
+       "name": "wTextArgStringMeasureIndex",
+       "note": "[8-bit] Second cursor into wTextArgStringQueue, stepped by MeasureNextArgStringWidth. FitWindowToText walks the whole message to size the window before a glyph is drawn, so the measure pass needs its own cursor per queue; the dialogue entry points reset all six together"
+      },
+      "0xd867": {
+       "name": "wTextArgNumberMeasureIndex",
+       "note": "[8-bit] The measure-pass cursor into wTextArgNumberQueue, stepped by MeasureNextArgNumberWidth"
+      },
+      "0xd868": {
+       "name": "wTextArgShortTextMeasureIndex",
+       "note": "[8-bit] The measure-pass cursor into wTextArgShortTextQueue, stepped by GetNextArgShortTextLength"
+      },
+      "0xd869": {
+       "name": "wTextStreamPtr",
+       "note": "[16-bit] Current read pointer into the text byte stream",
+       "size": 2
+      },
+      "0xd86f": {
+       "name": "wFitTextLineCount",
+       "note": "[8-bit] Number of lines the measured text came to, the companion of wFitTextWidthCells. ShowDrillMessageByIndex turns it into a window height of lines * 2 + 1"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "start": "0xd880",
+   "wram_bank": "0x05",
+   "end": "0xd890",
+   "comment": "Short-text scratch buffer (WRAM bank $05). Scoped wider than the rest of\nthe text engine because the copy into it lives in the text banks: every\nbank that holds strings ends with the same FetchShortText tail, and it\nis that tail, not the engine, that names $d880. The bank $6b intro\ncutscene addresses the same bytes as tilemap rows in WRAM banks $03/$04,\nwhich is what the scope keeps out.",
+   "variants": [
+    {
+     "context": "short-text fetch (text banks)",
+     "scopes": [
+      {
+       "bank": "0x05"
+      },
+      {
+       "bank": "0x0a"
+      },
+      {
+       "bank": "0x0b"
+      },
+      {
+       "bank": "0x1f"
+      },
+      {
+       "bank": "0x25"
+      },
+      {
+       "bank": "0x26"
+      },
+      {
+       "bank": "0x30"
+      },
+      {
+       "bank": "0x31"
+      },
+      {
+       "bank": "0x32"
+      },
+      {
+       "bank": "0x33"
+      },
+      {
+       "bank": "0x34"
+      },
+      {
+       "bank": "0x35"
+      },
+      {
+       "bank": "0x36"
+      },
+      {
+       "bank": "0x37"
+      },
+      {
+       "bank": "0x5e"
+      },
+      {
+       "bank": "0x6e"
+      },
+      {
+       "wram_bank": "0x05"
+      }
+     ],
+     "symbols": {
+      "0xd880": {
+       "name": "wShortTextBuffer",
+       "note": "[16 bytes] Short string buffer: the text-bank fetch routines copy the string here instead of into wTextBuffer when called with a != 0",
+       "size": 16
+      }
+     }
+    }
+   ]
+  },
+  {
+   "start": "0xd8b0",
+   "wram_bank": "0x05",
+   "end": "0xd900",
+   "comment": "Text-argument queues (WRAM bank $05): three parallel 16-entry rings the\ntext control codes pop from, each with a cursor, a count and a second\ncursor for the measuring pass at $d847-$d84c / $d866-$d868. Same scope as\nthe $d841 block -- banks $18/$1a/$1b/$6b address these bytes as screen\ntilemap cells in other WRAM banks.",
+   "variants": [
+    {
+     "context": "text argument queues (banks $05/$0a/$0b)",
+     "scopes": [
+      {
+       "bank": "0x05"
+      },
+      {
+       "bank": "0x0a"
+      },
+      {
+       "bank": "0x0b"
+      },
+      {
+       "wram_bank": "0x05"
+      }
+     ],
+     "symbols": {
+      "0xd8b0": {
+       "name": "wTextArgStringQueue",
+       "note": "16 x 2-byte string pointers queued by PushTextArgString. The high nibble carries a WRAM bank tag, so an argument can point into a banked buffer",
+       "size": 32
+      },
+      "0xd8d0": {
+       "name": "wTextArgNumberQueue",
+       "note": "16 x 2-byte values queued by PushTextArgNumber for TextCmdPrintArgNumber",
+       "size": 32
+      },
+      "0xd8f0": {
+       "name": "wTextArgShortTextQueue",
+       "note": "16 x 1-byte short-text ids queued by PushTextArgShortTextId; the $08 control code pops one and prints the string it names",
        "size": 16
       }
      }

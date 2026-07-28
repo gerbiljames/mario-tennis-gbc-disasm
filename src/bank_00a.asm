@@ -191,9 +191,9 @@ InitDialogueTextCursor:
 	wram_bank $05 ; $415a
 	farcall SetActiveWindowTextId ; $4160
 	ld a, l ; $4163
-	ld [w5_d852], a ; $4164
+	ld [wScriptDialogueTextId], a ; $4164
 	ld a, h ; $4167
-	ld [w5_d853], a ; $4168
+	ld [wScriptDialogueTextId + 1], a ; $4168
 	pop af ; $416b
 	wram_bank ; $416c
 	pop af ; $4170
@@ -205,7 +205,7 @@ AdvanceDialogueTextCursor:
 	ldh a, [hWramBank] ; $4175
 	push af ; $4177
 	wram_bank $05 ; $4178
-	ld hl, w5_d852 ; $417e
+	ld hl, wScriptDialogueTextId ; $417e
 	ld a, [hl+] ; $4181
 	ld d, [hl] ; $4182
 	ld e, a ; $4183
@@ -228,7 +228,7 @@ ScriptShowSpeakerDialogue:
 	push af ; $4197
 	call WaitPlayerMoveDone ; $4198
 	wram_bank $05 ; $419b
-	ld hl, w5_d852 ; $41a1
+	ld hl, wScriptDialogueTextId ; $41a1
 	ld a, [hl+] ; $41a4
 	ld h, [hl] ; $41a5
 	ld l, a ; $41a6
@@ -239,9 +239,9 @@ ScriptShowSpeakerDialogue:
 .advanceTextId:
 	inc hl ; $41b0
 	ld a, l ; $41b1
-	ld [w5_d852], a ; $41b2
+	ld [wScriptDialogueTextId], a ; $41b2
 	ld a, h ; $41b5
-	ld [w5_d853], a ; $41b6
+	ld [wScriptDialogueTextId + 1], a ; $41b6
 	pop af ; $41b9
 	wram_bank ; $41ba
 	pop hl ; $41be
@@ -255,9 +255,9 @@ ScriptShowSpeakerDialogueRestoreBG:
 	push af ; $41c6
 	call WaitPlayerMoveDone ; $41c7
 	wram_bank $05 ; $41ca
-	ld a, [w5_d852] ; $41d0
+	ld a, [wScriptDialogueTextId] ; $41d0
 	ld l, a ; $41d3
-	ld a, [w5_d853] ; $41d4
+	ld a, [wScriptDialogueTextId + 1] ; $41d4
 	ld h, a ; $41d7
 	test_flag FLAG_CUTSCENE_FAST_FORWARD ; $41d8
 	jr nz, .advanceTextId ; $41db
@@ -266,9 +266,9 @@ ScriptShowSpeakerDialogueRestoreBG:
 .advanceTextId:
 	inc hl ; $41e1
 	ld a, l ; $41e2
-	ld [w5_d852], a ; $41e3
+	ld [wScriptDialogueTextId], a ; $41e3
 	ld a, h ; $41e6
-	ld [w5_d853], a ; $41e7
+	ld [wScriptDialogueTextId + 1], a ; $41e7
 	pop af ; $41ea
 	wram_bank ; $41eb
 	pop hl ; $41ef
@@ -297,7 +297,7 @@ RunDialogueYesNoPrompt:
 	ld a, [wMenuWindowId] ; $421a
 	farcall CloseWindow ; $421d
 	xor a ; $4220
-	ld [w5_d84f], a ; $4221
+	ld [wTextResumePtr + 1], a ; $4221
 	ld a, $ff ; $4224
 	ld [wMenuWindowId], a ; $4226
 	pop af ; $4229
@@ -316,7 +316,7 @@ ShowYesNoPromptWindow:
 	push hl ; $423a
 	ldh a, [hWramBank] ; $423b
 	push af ; $423d
-	ld a, [w5_d851] ; $423e
+	ld a, [wDialogueSpeaker] ; $423e
 	ld b, a ; $4241
 	and $7f ; $4242
 	ld e, a ; $4244
@@ -370,7 +370,7 @@ FindDialogueChoiceMarker:
 	push bc ; $4292
 	push de ; $4293
 	push hl ; $4294
-	ld hl, w5_d852 ; $4295
+	ld hl, wScriptDialogueTextId ; $4295
 	ld a, [hl+] ; $4298
 	ld h, [hl] ; $4299
 	ld l, a ; $429a
@@ -401,9 +401,9 @@ FindDialogueChoiceMarker:
 	or e ; $42bf
 	jr z, .done ; $42c0
 	ld a, e ; $42c2
-	ld [w5_d84e], a ; $42c3
+	ld [wTextResumePtr], a ; $42c3
 	ld a, d ; $42c6
-	ld [w5_d84f], a ; $42c7
+	ld [wTextResumePtr + 1], a ; $42c7
 .done:
 	pop hl ; $42ca
 	pop de ; $42cb
@@ -433,18 +433,18 @@ ScriptSkipSpeakerDialogue:
 	ldh a, [hWramBank] ; $42eb
 	push af ; $42ed
 	wram_bank $05 ; $42ee
-	ld a, [w5_d852] ; $42f4
+	ld a, [wScriptDialogueTextId] ; $42f4
 	ld l, a ; $42f7
-	ld a, [w5_d853] ; $42f8
+	ld a, [wScriptDialogueTextId + 1] ; $42f8
 	ld h, a ; $42fb
 	test_flag FLAG_CUTSCENE_FAST_FORWARD ; $42fc
 	jr nz, .advanceTextId ; $42ff
 .advanceTextId:
 	inc hl ; $4301
 	ld a, l ; $4302
-	ld [w5_d852], a ; $4303
+	ld [wScriptDialogueTextId], a ; $4303
 	ld a, h ; $4306
-	ld [w5_d853], a ; $4307
+	ld [wScriptDialogueTextId + 1], a ; $4307
 	pop af ; $430a
 	wram_bank ; $430b
 	pop hl ; $430f
@@ -1801,7 +1801,7 @@ RunClearStatusSetupMenu:
 	ld a, [wCharPosDepth + 2] ; $4bf1
 	farcall DrawTextWindowFrame ; $4bf4
 	ld hl, $10e8 ; $4bf7
-	ld de, $d181 ; $4bfa
+	ld de, wWindowShadowTilemap + 12 * TILEMAP_WIDTH + 1 ; $4bfa
 	farcall RenderProportionalTextAt ; $4bfd
 	ld a, [wCharPosDepth + 2] ; $4c00
 	farcall RedrawWindowRows ; $4c03
@@ -1840,7 +1840,7 @@ RunClearStatusSetupMenu:
 	ld a, [wCharPosDepth + 2] ; $4c4a
 	farcall DrawTextWindowFrame ; $4c4d
 	ld hl, $10e4 ; $4c50
-	ld de, $d181 ; $4c53
+	ld de, wWindowShadowTilemap + 12 * TILEMAP_WIDTH + 1 ; $4c53
 	farcall RenderProportionalTextAt ; $4c56
 	ld a, [wCharPosDepth + 2] ; $4c59
 	farcall RedrawWindowRows ; $4c5c
@@ -1861,7 +1861,7 @@ RunClearStatusSetupMenu:
 	ld a, [wCharPosDepth + 2] ; $4c83
 	farcall DrawTextWindowFrame ; $4c86
 	ld hl, $10e5 ; $4c89
-	ld de, $d181 ; $4c8c
+	ld de, wWindowShadowTilemap + 12 * TILEMAP_WIDTH + 1 ; $4c8c
 	farcall RenderProportionalTextAt ; $4c8f
 	ld a, [wCharPosDepth + 2] ; $4c92
 	farcall RedrawWindowRows ; $4c95
@@ -1887,7 +1887,7 @@ RunClearStatusSetupMenu:
 	jr nc, .drawSetsOption ; $4cca
 	inc h ; $4ccc
 .drawSetsOption:
-	ld de, $d181 ; $4ccd
+	ld de, wWindowShadowTilemap + 12 * TILEMAP_WIDTH + 1 ; $4ccd
 	farcall RenderProportionalTextAt ; $4cd0
 	ld a, [wCharPosDepth + 2] ; $4cd3
 	farcall RedrawWindowRows ; $4cd6

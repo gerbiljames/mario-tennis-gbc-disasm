@@ -6637,3 +6637,101 @@ What the six tables say once they render is the screen's geometry, which was
 invisible before: singles centres one 2x2 portrait box per side at column 16,
 doubles pairs them at columns 13 and 17, rows 6 and 9 are the two sides, and the
 four link layouts light one box or one row depending on which side you are.
+
+## What was left in WRAM bank $05 (2026-07-28)
+
+Bank `$05` held 19 `w5_dxxx` auto-names and, either side of them, four gaps the
+auto-namer could not even see: a 2 KiB one at `$d000`, a 4-byte-per-window table
+at `$d800`, and everything from `$dc00` up. **All of it is the text and window
+engine**, and it now renders as 39 named symbols across five unions.
+
+**The queues came in threes.** `wTextArgStringWriteIndex` /
+`wTextArgStringCount` / `wTextArgStringQueue` were named; their two siblings
+were not, and once the three rings are side by side the layout reads itself:
+
+| | strings | numbers | short-text ids |
+| --- | --- | --- | --- |
+| cursor | `$d847` | `$d848` | `$d849` |
+| count | `$d84a` | `$d84b` | `$d84c` |
+| measure cursor | `$d866` | `$d867` | `$d868` |
+| queue | `$d8b0` (16x2) | `$d8d0` (16x2) | `$d8f0` (16x1) |
+
+The third row is the part that needed explaining. `PushTextArgNumber` writes at
+the cursor *and* keeps the count in step, which makes the two look redundant —
+until `FitWindowToText` walks the whole message to size the window before a
+glyph is drawn, popping arguments as it measures. That pass needs its own cursor
+per queue, which is why the dialogue entry points reset **six** bytes in one
+run, in the order `$d847, $d866, $d848, $d867, $d849, $d868`: three pairs, not
+two triples.
+
+**`ld bc, $d8f0` is −10000.** `MeasureNextArgNumberWidth` divides by repeated
+subtraction, and its first divisor is two instructions away from a real
+`wTextArgShortTextQueue` pointer setup in the same routine. One flat offset in
+`RAM_IMM_IS_CONSTANT` (`0x1531d`) keeps them apart.
+
+### Scoping, and four names that were wrong before
+
+The bank-`$05` text entries lived in `ram_map.json`, which is **global** — its
+`wram_bank` field picks the section to emit into, not the sites that may use the
+name. That was already leaking. Bank `$1b`'s ranking-marker animation channels
+keep four 16-bit fields over `$d840-$d853` in a different WRAM bank, and they
+were rendering as `wTextArgStringCount` and `wTextPageBreakRequest`; banks
+`$18`/`$1a`/`$1b`/`$6b` address `$d8bx`/`$d8fx`/`$d880` as tilemap cells and were
+picking up queue names. Moving the block into `ram_unions.json` under scopes
+`{bank $05, $0a, $0b}` + `{wram_bank $05}` fixes all of them and *adds*
+coverage: the engine saves and restores an unknown bank around its glyph-buffer
+work, so a WRAM-bank scope alone would have lost the reset runs at the end of
+every `Show*Dialogue`.
+
+Two details the scope had to bend around:
+
+- **`wShortTextBuffer` gets its own union.** The copy into `$d880` lives in the
+  *string* banks — `$1f`, `$25`, `$26`, `$30-$37`, `$5e`, `$6e` all end with the
+  same `FetchShortText` tail — so it is scoped to those 16 banks, not the three
+  the engine runs in. Bank `$6b`'s intro cutscene addresses the same bytes as
+  tilemap rows and is kept out.
+- **The run breaks at `$d855-$d85b`.** A union's whole span is off limits to the
+  auto-namer, and bank `$1b` keeps three provable WRAM-bank-`$03` bytes in that
+  hole. Covering them would have silently deleted `w3_d855` / `w3_d858` /
+  `w3_d85a`, so the block is split either side of it.
+
+Likewise `$dc00-$dc7f` is scoped to bank `$05` **in two ranges**:
+`WriteStringToTilemapStreamed` (`$6bf0-$6c4f`) keeps a cursor at `$dc05-$dc0a`
+in *the caller's* WRAM bank — it writes glyphs straight to a tilemap the caller
+selected — so those bytes are not windows.
+
+### The window system, which was entirely anonymous
+
+`$dc00` is `wWindowStructs`: eight 8-byte records, `GetWindowStructPtr` masking
+the id to 3 bits and shifting left 3. Column, row, height, width, state at
+`+$04`, text id at `+$06` — and `$03` in that id's high byte is a "no text"
+sentinel `RenderWindowText` bails on. Above them `wTilemapRowDirty` (32 flags,
+one per row) and `wTilemapRowRuns` (the `(row, length)` run list
+`BuildDirtyRowRuns` folds them into, runs capped at 7 so one pass fits a
+VBlank) are the whole of the shadow-tilemap flush, and `wSavedWindowStruct` at
+`$dc78` is the copy `OpenSpeechBubble` compares against while it grows the
+bubble outward a cell at a time.
+
+`$d000-$d7ff` is that shadow tilemap: the same 32x32 cell plane plus attribute
+plane the full-screen UIs keep in WRAM bank `$03`, cleared by
+`ResetTextWindowState`, which then points `wShadowTilemapPtr` /
+`wShadowTilemapBank` at `$d000` / `$05`. Scoped to a provable WRAM bank `$05`
+alone — bank `$05` is full of `$d000`/`$d400` literals that mean whichever plane
+the current screen owns. That scope turned out to name more than the engine:
+bank `$3f`'s tennis-dictionary rows, bank `$6b`'s intro tilemaps and bank
+`$1a`'s pause-menu number formatting all select bank `$05` and draw into the
+same plane.
+
+### Three bytes nothing reads
+
+`wSpeechBubbleLowerHalf` (which half of the screen the bubble landed on),
+`wWindowTextEmpty` (whether `RenderWindowText` bailed) and `wUnusedTextByte`
+(all `Unused_05_SetTextVar` does) are written and never read. Named anyway:
+"written by nothing else and read by nothing" is a fact about the ROM, and a
+`ds 1` cannot say it.
+
+`wFixedMenuWindowId` is stranger. `SetFixedMenuWindowTextId` loads `hWramBank`
+into `b` before calling `SetWindowTextId`, which takes the window id *in* `b` —
+so the id it stores, and that `RunFixedTextMenu` later passes to `CloseWindow`,
+is really the WRAM bank number. Both routines are exported through the bank
+`$05` farptr table and neither is called.

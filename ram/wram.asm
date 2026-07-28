@@ -2494,7 +2494,21 @@ wBallTrailSlots:: ds 20
 
 SECTION "WRAMX bank 5", WRAMX[$d000], BANK[5]
 
-	ds 2064
+; Shadow tilemap for text windows (WRAM bank $05). The same 32 x 32 cell
+; plane plus CGB attribute plane the full-screen UIs keep in WRAM bank
+; $03, but owned by the window engine: ResetTextWindowState clears both
+; and points wShadowTilemapPtr / wShadowTilemapBank at $d000 / $05, and
+; the dirty-row flusher copies changed rows out to $9800.
+; Scoped to a provable WRAM bank $05 alone -- bank $05 is full of $d000
+; and $d400 literals that address whichever plane the current screen
+; owns, and its glyph buffers live at $d300-$d7ff in WRAM bank $07.
+; window shadow tilemap (WRAM bank $05)
+; Tile plane of the text-window shadow tilemap: 32 x 32 cells, rows TILEMAP_WIDTH apart, of which the top-left 20 x 18 is on screen
+wWindowShadowTilemap:: ds 1024
+; CGB attribute plane of the text-window shadow tilemap, cell for cell with wWindowShadowTilemap and copied to $9800 in VRAM bank 1
+wWindowShadowAttrmap:: ds 1024
+
+	ds 16
 
 ; Screen-local state in WRAM bank $03: each full-screen UI reuses these
 ; bytes for its own purpose, so the variants are scoped to the ROM bank
@@ -2534,90 +2548,138 @@ wMenuDepth:: db
 
 	ds 2
 
-; WRAM5: frame counter for the text continue-arrow blink task (bit 4 selects tile)
+; Text and dialogue engine state (WRAM bank $05), owned by the bank $05
+; text/window engine and driven from the bank $0a story scripts and the
+; bank $0b drill messages. Scoped to those three ROM banks as well as to
+; the WRAM bank, because the engine selects bank $05 once on entry and
+; then saves and restores an unknown bank around its glyph-buffer work,
+; so compute_wram_bank cannot prove it at every reference.
+; The scope is not decoration: bank $1b keeps its ranking-marker
+; animation channels over the same $d84x bytes in a different WRAM bank,
+; and banks $18/$1a/$6b address $d8bx/$d8fx as screen tilemap cells.
+; text and window engine (banks $05/$0a/$0b)
+; [8-bit] Frame counter for the menu-cursor arrow blink task; bit 4 selects the tile it writes ($20 blank / $0d arrow)
 wTextArrowBlinkCounter:: db
-	ds 2
-
-w5_d844:: db
-
-w5_d845:: db
-
-w5_d846:: db
-
-; WRAM5: write index into wTextArgStringQueue (max 16)
+; [16-bit] Shadow-tilemap address of the cell the cursor arrow sits in. AnimateTextArrowTask turns it into a VRAM address (+ $3000 + $9800) and blinks the arrow there; RunMenuSelection primes it to $ffff and rewrites it every time the cursor moves
+wTextArrowCell:: dw
+; [16-bit] VRAM address of the cell the arrow just left, handed to the blink task to overwrite with tile $20. The task clears it once erased, so a zero here is also how it knows nothing is pending -- AnimateTextArrowTask tests the low byte, AnimateMenuScrollArrowsTask the high one
+wTextArrowEraseAddr:: dw
+; [8-bit] Page RunPagedTextMenu is showing; left/right step it and wrap against the page count. The entry it returns is wMenuPage * 4 + the row picked, so each page holds four rows
+wMenuPage:: db
+; [8-bit] Cursor into wTextArgStringQueue: PushTextArgString writes at it, TextCmdPrintArgString reads at it, and the dialogue entry points reset it to 0 between messages. Stops at 16
 wTextArgStringWriteIndex:: db
-
-w5_d848:: db
-
-; WRAM5: write index for the short-text-id arg queue
+; [8-bit] The same cursor for wTextArgNumberQueue, shared by PushTextArgNumber and TextCmdPrintArgNumber
+wTextArgNumberWriteIndex:: db
+; [8-bit] The same cursor for wTextArgShortTextQueue, written by PushTextArgShortTextId
 wTextArgShortTextWriteIndex:: db
-
-; WRAM5: count of queued arg strings (mirrors wTextArgStringWriteIndex)
+; [8-bit] How many string args were pushed. Kept in step with wTextArgStringWriteIndex while queuing and left alone when the cursor is reset, which is what makes it the limit the print command stops at
 wTextArgStringCount:: db
-
-w5_d84b:: db
-
-w5_d84c:: db
+; [8-bit] The same count for wTextArgNumberQueue; TextCmdPrintArgNumber prints nothing once the cursor reaches it
+wTextArgNumberCount:: db
+; [8-bit] The same count for wTextArgShortTextQueue
+wTextArgShortTextCount:: db
 	ds 1
-
-w5_d84e:: db
-
-w5_d84f:: db
-
-; WRAM5: set by TextCmdWaitButtonPage; TextInterpreterLoop saves resume offset to $d84e/f and returns
+; [16-bit] Text-stream pointer to pick up from instead of the start of wTextBuffer, with a nonzero high byte as the "set" flag that RenderTextString and FitWindowToText test and then clear. Two producers fill it: TextCmdWaitButtonPage makes TextInterpreterLoop store the byte it stopped on, and FindDialogueChoiceMarker stores the position of the $02 choice marker so the yes/no prompt measures and renders only the tail
+wTextResumePtr:: dw
+; [8-bit] Set by TextCmdWaitButtonPage; TextInterpreterLoop saves the resume offset to wTextResumePtr and returns, and the dialogue loops keep re-entering while it is set
 wTextPageBreakRequest:: db
+; [8-bit] Who the current dialogue belongs to, as passed to ShowSpeakerDialogue ($ff becomes 0). Bit 7 set means the low bits are a literal screen row; clear means they are an actor id, and OpenSpeechBubble / ShowYesNoPromptWindow read that actor's Y against the camera to decide whether the window opens on the top or the bottom half of the screen
+wDialogueSpeaker:: db
+; [16-bit] Text id the story script is up to. InitDialogueTextCursor seeds it and every Script*Dialogue call in bank $0a shows it and increments, so a cutscene walks a run of consecutive ids without naming each one
+wScriptDialogueTextId:: dw
+; [8-bit] Widest line of the measured text, rounded up to whole cells -- FitWindowToText writes it, MeasureDialogueWidthTiles returns it
+wFitTextWidthCells:: db
 
-w5_d851:: db
-
-w5_d852:: db
-
-w5_d853:: db
-
-w5_d854:: db
 	ds 7
 
-w5_d85c:: db
-
-w5_d85d:: db
-	ds 4
-
-w5_d862:: db
+; Text and dialogue engine state (WRAM bank $05), continued -- see the
+; $d841 block for the scope. The run breaks at $d855-$d85b because bank
+; $1b's results screen keeps three bytes of its own there in WRAM bank
+; $03, which the auto-namer can prove and this union would hide.
+; text and window engine (banks $05/$0a/$0b)
+; [8-bit] 1 when OpenSpeechBubble / OpenCenteredDialogueWindow put the window on the lower half of the screen because the speaking actor is near the top, 0 otherwise. Written by both, read by nothing
+wSpeechBubbleLowerHalf:: db
+; [8-bit] The byte Unused_05_SetTextVar stores. Nothing reads it
+wUnusedTextByte:: db
 	ds 1
-
-; WRAM5: current VRAM destination address for glyph tiles (lo/hi)
+; [8-bit] Set to 1 when RenderWindowText bails because the window's text id has $03 in its high byte (the "no text" sentinel), 0 when it goes on to fetch and render. Written by nothing else and read by nothing
+wWindowTextEmpty:: db
+	ds 2
+; [8-bit] Speaker voice for the per-character text blip: DelayTextCharacter plays sound $9a + voice * 4 + (glyph & 3) as each glyph lands. GetSpeakerVoice supplies it, and $08 means silent -- which is also what a negative message speed forces
+wDialogueVoice:: db
+; [8-bit] Window SetFixedMenuWindowTextId built, so RunFixedTextMenu can close it alongside the menu window. Both are exported through the bank $05 farptr table and neither is called, which is just as well: SetFixedMenuWindowTextId loads hWramBank into b before calling SetWindowTextId, so the "window id" both routines pass around is really the WRAM bank number
+wFixedMenuWindowId:: db
+; [16-bit] Current VRAM destination address for glyph tiles (lo/hi)
 wGlyphVramDest:: dw
-
-w5_d866:: db
-
-w5_d867:: db
-
-w5_d868:: db
-
-; WRAM5: current read pointer into the text byte stream
+; [8-bit] Second cursor into wTextArgStringQueue, stepped by MeasureNextArgStringWidth. FitWindowToText walks the whole message to size the window before a glyph is drawn, so the measure pass needs its own cursor per queue; the dialogue entry points reset all six together
+wTextArgStringMeasureIndex:: db
+; [8-bit] The measure-pass cursor into wTextArgNumberQueue, stepped by MeasureNextArgNumberWidth
+wTextArgNumberMeasureIndex:: db
+; [8-bit] The measure-pass cursor into wTextArgShortTextQueue, stepped by GetNextArgShortTextLength
+wTextArgShortTextMeasureIndex:: db
+; [16-bit] Current read pointer into the text byte stream
 wTextStreamPtr:: dw
 	ds 4
-
-w5_d86f:: db
+; [8-bit] Number of lines the measured text came to, the companion of wFitTextWidthCells. ShowDrillMessageByIndex turns it into a window height of lines * 2 + 1
+wFitTextLineCount:: db
 	ds 16
 
-; Short string buffer (16 bytes); text-bank fetch routines copy here when called with a != 0
-wShortTextBuffer:: db
-	ds 47
+; Short-text scratch buffer (WRAM bank $05). Scoped wider than the rest of
+; the text engine because the copy into it lives in the text banks: every
+; bank that holds strings ends with the same FetchShortText tail, and it
+; is that tail, not the engine, that names $d880. The bank $6b intro
+; cutscene addresses the same bytes as tilemap rows in WRAM banks $03/$04,
+; which is what the scope keeps out.
+; short-text fetch (text banks)
+; [16 bytes] Short string buffer: the text-bank fetch routines copy the string here instead of into wTextBuffer when called with a != 0
+wShortTextBuffer:: ds 16
 
-; WRAM5: 16 x 2-byte string pointers queued by PushTextArgString (hi nibble = WRAM bank tag)
+	ds 32
+
+; Text-argument queues (WRAM bank $05): three parallel 16-entry rings the
+; text control codes pop from, each with a cursor, a count and a second
+; cursor for the measuring pass at $d847-$d84c / $d866-$d868. Same scope as
+; the $d841 block -- banks $18/$1a/$1b/$6b address these bytes as screen
+; tilemap cells in other WRAM banks.
+; text argument queues (banks $05/$0a/$0b)
+; 16 x 2-byte string pointers queued by PushTextArgString. The high nibble carries a WRAM bank tag, so an argument can point into a banked buffer
 wTextArgStringQueue:: ds 32
-
-; WRAM5: 16 x 2-byte values queued by PushTextArgNumber for TextCmdPrintArgNumber
+; 16 x 2-byte values queued by PushTextArgNumber for TextCmdPrintArgNumber
 wTextArgNumberQueue:: ds 32
-	ds 896
+; 16 x 1-byte short-text ids queued by PushTextArgShortTextId; the $08 control code pops one and prints the string it names
+wTextArgShortTextQueue:: ds 16
 
-; Window-allocator slot mask (WRAM bank $05), owned by the bank $05 window
-; system. The bank $0d minigame target actors keep their own state in the
-; same $dc7x range under a WRAM bank nothing in that bank selects, so those
-; addresses stay numeric until the bank can be shown.
-; window allocator (bank $05)
+	ds 768
+
+; Window bookkeeping (WRAM bank $05), owned by the bank $05 window system:
+; the window struct array, the dirty-row flags that drive the shadow
+; tilemap flush, and the allocator mask above them. Scoped to bank $05
+; in two ranges rather than one, because WriteStringToTilemapStreamed at
+; $6bf0-$6c4f keeps its own cursor at $dc05-$dc0a in *the caller's* WRAM
+; bank -- it writes glyphs straight to a tilemap the caller selected --
+; so those bytes are not windows and stay numeric. Banks $0d and $17/$3b
+; overlay the same addresses in WRAM banks $04 and $03 (separate unions).
+; window system (bank $05)
+; [64 bytes] Eight 8-byte window records, indexed by window id (GetWindowStructPtr masks the id to 3 bits and shifts left 3):
+;   +$00 column, +$01 row (both wrapped to $1f by SetWindowRect)
+;   +$02 height in cells, +$03 width in cells
+;   +$04 state, read and written through GetWindowState / SetWindowState
+;   +$06 text id (lo/hi), stored by SetWindowTextId; $03 in the high byte
+;        is the "no text" sentinel RenderWindowText bails on
+; AllocWindowStruct fills a free slot from de/bc, FreeWindow zeroes all
+; eight bytes and releases the wWindowSlotMask bit
+wWindowStructs:: ds 64
+; [32 bytes] One flag per tilemap row. SetRowDirtyFlags clears the array and marks the e rows starting at d (wrapping at 32), which is how a window redraw tells the flusher which rows changed
+wTilemapRowDirty:: ds 32
+; [16 bytes] Run list BuildDirtyRowRuns folds wTilemapRowDirty into: (first row, run length) pairs terminated by $ff, with runs capped at 7 rows so one FlushDirtyRowsPerFrame pass fits in a VBlank. The flusher copies each run and waits a frame between them
+wTilemapRowRuns:: ds 16
 ; [8-bit] One bit per window struct, set while the slot is in use. AllocWindowSlotBit scans for a clear bit and claims it; FreeWindow clears it again
 wWindowSlotMask:: db
+	ds 5
+; [16-bit] Byte offset added to wShadowTilemapPtr by RefreshShadowTilemapFromMapBuffer when it copies rows back to the shadow tilemap. Nothing ever writes it, so it stays at the 0 ResetTextWindowState leaves behind
+wShadowTilemapReadOffset:: dw
+; [8 bytes] Scratch copy of one window record. SaveWindowStruct parks the struct here so a routine can rewrite the live one and still compare against where the window started -- OpenSpeechBubble walks the bubble outward one cell at a time against the saved column
+wSavedWindowStruct:: ds 8
 
 
 SECTION "WRAMX bank 6", WRAMX[$d000], BANK[6]

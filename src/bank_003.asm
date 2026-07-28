@@ -5536,7 +5536,7 @@ PlayScrollingStoryCutscene:
 	ld de, $0300 ; $7063
 	call FillMemoryDE ; $7066
 	wram_bank $05 ; $7069
-	ld hl, $d000 ; $706f
+	ld hl, wWindowShadowTilemap ; $706f
 	ld b, $20 ; $7072
 	ld de, $0100 ; $7074
 	call FillMemoryDE ; $7077
@@ -5857,7 +5857,7 @@ BlitCutsceneTextWindow:
 	dec b ; $74d1
 	jr nz, .loop ; $74d2
 	wram_bank $05 ; $74d4
-	ld hl, $d000 ; $74da
+	ld hl, wWindowShadowTilemap ; $74da
 	ld de, $9c00 ; $74dd
 	ld c, $10 ; $74e0
 	call QueueVRAMCopy ; $74e2
