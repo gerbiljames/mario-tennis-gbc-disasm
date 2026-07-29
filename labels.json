@@ -17634,11 +17634,19 @@
  "0x17aec0": ".loop",
  "0x17aecd": ".countDone",
  "0x17aed6": ".restore",
+ "0x17c020": {
+  "name": "ClubhouseScenePalettes",
+  "note": "Slot 1 of the clubhouse group in bank $5f's $4000 table. The bank holds\ntwo 8-slot scene groups whose roles line up by position -- 0 aux\ntilemap, 1 palettes, 2 tilemap, 3 attrmap, 4 aux tilemap, 5 aux\nattrmap, 6 spare, 7 tiles -- and both groups' slot 1 points at a\n64-byte palette set. Greens, browns and a blue sky, matching the\nscene.\n\nNo observed call site requests this slot (neither hook session asks\nbank $5f for it), so the name comes from the slot's position and the\npalette's contents, not from a caller."
+ },
  "0x17c060": "ClubhouseSceneTiles",
  "0x17c855": "ClubhouseSceneTilemap",
  "0x17cac6": "ClubhouseSceneAttrmap",
  "0x17cc13": "ClubhouseSceneAuxTilemap",
  "0x17cc3b": "ClubhouseSceneAuxAttrmap",
+ "0x17cc63": {
+  "name": "CourtyardScenePalettes",
+  "note": "Slot 1 of the courtyard group in bank $5f (see ClubhouseScenePalettes\nfor the 8-slot layout). Also reached from the clubhouse group's slot 6,\nwhich is the slot the courtyard group leaves unused -- so the clubhouse\ngroup's spare slot aliases the courtyard's palette set, which looks\nlike reuse rather than intent.\n\nPalette 1 is all black. Named from slot position and contents; no\nobserved caller."
+ },
  "0x17cca3": "CourtyardSceneTiles",
  "0x17d5f3": "CourtyardSceneTilemap",
  "0x17d7de": "CourtyardSceneAttrmap",
@@ -18284,6 +18292,10 @@
  "0x1b54f3": "IntroCharactersTiles",
  "0x1b5f18": "IntroCharactersTilemap",
  "0x1b6061": "IntroCharactersAttrmap",
+ "0x1b6104": {
+  "name": "IntroCharactersPalettes",
+  "note": "Bank $6d slot $20, immediately after IntroCharactersTiles/Tilemap/\nAttrmap ($401a/$401c/$401e). The sibling group above it is\nIntroGreatestPlayer Tiles/Tilemap/Attrmap/Palettes with the palette\nslot in exactly the same position after the attrmap, which is what\nfixes the role. Contents are character colours (red, yellow, blue, a\nskin tone) with grey filler in the three unused palettes.\n\nSlot $20 is never requested in either hook dump -- both sessions step\n$1e -> $22 -- which is why nothing named it."
+ },
  "0x1b6144": "IntroCharactersTilemap2",
  "0x1b6250": "IntroCharactersAttrmap2",
  "0x1b62d5": "TitleScreenTiles",

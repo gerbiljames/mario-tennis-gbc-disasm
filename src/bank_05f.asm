@@ -2,8 +2,8 @@ SECTION "ROM Bank $5f", ROMX[$4000], BANK[$5f]
 
 DataPtr_ClubhouseSceneAuxTilemap:
 	dw ClubhouseSceneAuxTilemap ; $4000
-DataPtr_5f_02:
-	dw Data_5f_4020 ; $4002
+DataPtr_ClubhouseScenePalettes:
+	dw ClubhouseScenePalettes ; $4002
 DataPtr_ClubhouseSceneTilemap:
 	dw ClubhouseSceneTilemap ; $4004
 DataPtr_ClubhouseSceneAttrmap:
@@ -12,14 +12,14 @@ DataPtr_ClubhouseSceneAuxTilemapAlias1:
 	dw ClubhouseSceneAuxTilemap ; $4008
 DataPtr_ClubhouseSceneAuxAttrmap:
 	dw ClubhouseSceneAuxAttrmap ; $400a
-DataPtr_Data_5f_4c63:
-	dw Data_5f_4c63 ; $400c
+DataPtr_CourtyardScenePalettes:
+	dw CourtyardScenePalettes ; $400c
 DataPtr_ClubhouseSceneTiles:
 	dw ClubhouseSceneTiles ; $400e
 DataPtr_CourtyardSceneAuxTilemap:
 	dw CourtyardSceneAuxTilemap ; $4010
-DataPtr_Data_5f_4c63Alias1:
-	dw Data_5f_4c63 ; $4012
+DataPtr_CourtyardScenePalettesAlias1:
+	dw CourtyardScenePalettes ; $4012
 DataPtr_CourtyardSceneTilemap:
 	dw CourtyardSceneTilemap ; $4014
 DataPtr_CourtyardSceneAttrmap:
@@ -32,7 +32,7 @@ DataPtr_CourtyardSceneUnusedSlot:
 	dw CourtyardSceneUnusedSlot ; $401c
 DataPtr_CourtyardSceneTiles:
 	dw CourtyardSceneTiles ; $401e
-Data_5f_4020:
+ClubhouseScenePalettes:
 	INCLUDE "data/bank_05f/palettes_4020.asm" ; $4020, 64 bytes (palettes)
 ClubhouseSceneTiles:
 	INCBIN "data/bank_05f/lz_4060.bin" ; $4060, 2037 bytes
@@ -44,7 +44,7 @@ ClubhouseSceneAuxTilemap:
 	INCBIN "data/bank_05f/d_4c13.bin" ; $4c13, 40 bytes
 ClubhouseSceneAuxAttrmap:
 	INCBIN "data/bank_05f/d_4c3b.bin" ; $4c3b, 40 bytes
-Data_5f_4c63:
+CourtyardScenePalettes:
 	INCLUDE "data/bank_05f/palettes_4c63.asm" ; $4c63, 64 bytes (palettes)
 CourtyardSceneTiles:
 	INCBIN "data/bank_05f/lz_4ca3.bin" ; $4ca3, 2384 bytes

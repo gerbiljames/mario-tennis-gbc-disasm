@@ -8033,3 +8033,79 @@ table, and 19 is not a multiple of 2 -- the boundary is in the wrong place, the
 way `$4a94` was.
 
 Autonames in `src/`: **15**, from 179. Byte-perfect throughout.
+
+## Driving the game disproved the coverage theory (2026-07-29)
+
+The previous section said the fifteen unreferenced tables needed execution
+coverage of the screens that use them. **That was wrong, and driving the game
+is what showed it.**
+
+Traced a full run into bank `$38`'s territory: main menu -> Exhibition -> play
+menu -> character select (cursor moves, the START handedness toggle, both
+player slots) -> the CPU Difficulty submenu (all four options) -> court select
+-> grass court -> match start. 14,562 ROM addresses executed, 2,019 of them in
+bank `$38`.
+
+**The regeneration produced a zero diff.** `src/` unchanged, `data.manifest`
+unchanged, bank `$38` still 13,540 bytes at 82.6%. Every address the session
+executed was already proven; the whole path -- including the grass-court init
+that the skill's open-targets list still names -- was covered by earlier
+sessions. Not one of the six bank-`$38` tables gained a reference.
+
+In hindsight the earlier search had already ruled coverage out and I misread
+what it meant. If **no instruction anywhere in the ROM** loads an address as an
+immediate -- and that search reads raw ROM bytes, so it sees unproven code
+inside blobs just as well as proven code -- then no amount of proving code can
+make a reference appear. There is no reference to find. The right conclusion
+from that search was "these are not reached by a pointer load", not "the
+pointer load is in code we have not proven yet".
+
+### The search that was actually missing
+
+Every earlier search looked for the address as the *operand of a load*. None
+looked for it as a bare `dw` word in a pointer table that is itself still an
+INCBIN blob. Searching the raw byte pair ROM-wide, and reporting which blob or
+in-source region each hit lands in, found the three that were reachable all
+along -- all in their own bank's `$4000` slot table:
+
+| was | is | evidence |
+| --- | --- | --- |
+| `Data_5f_4020` | `ClubhouseScenePalettes` | slot 1 of the clubhouse group |
+| `Data_5f_4c63` | `CourtyardScenePalettes` | slot 1 of the courtyard group |
+| `Data_6d_6104` | `IntroCharactersPalettes` | bank `$6d` slot `$20` |
+
+All three are 64-byte `palettes` blobs. Bank `$5f` holds two 8-slot scene
+groups whose roles line up by position -- aux tilemap, **palettes**, tilemap,
+attrmap, aux tilemap, aux attrmap, spare, tiles -- and *both* groups' slot 1
+points at a palette set, which is what fixes the role. Bank `$6d` settles its
+own case: the group above holds `IntroGreatestPlayer` Tiles/Tilemap/Attrmap/
+**Palettes**, so the slot sitting right after `IntroCharactersAttrmap` is that
+group's palette set. The contents agree (character colours with grey filler in
+the three unused palettes).
+
+A side finding in bank `$5f`: the clubhouse group's slot 6 -- the slot the
+courtyard group leaves unused -- points at the *courtyard's* palette set. Reuse
+rather than intent, most likely.
+
+And the reason nothing named them automatically: **no observed call site ever
+requests those slots.** Bank `$6d` slot `$20` is absent from both hook dumps,
+whose `l` values step `$1e` -> `$22` straight past it. The slots are proven (a
+pointer in a proven table extent that decodes as valid data); the request is
+not. Each name records that in its note, so the basis is position and content
+rather than a caller.
+
+### Twelve left, and what they actually are
+
+`Data_38_4971`, `_560a`, `_5672`, `_57d7`, `_5ffe`, `_7063`, `Data_27_4b41`,
+`Data_27_5570`, `Data_1b_69cd`, `Data_1b_7349`, `Data_1a_4af4`,
+`Data_6b_615e`.
+
+No immediate load, no `dw` in any bank, no byte-identical sibling, no base
+within 256 bytes that reaches them, and -- now demonstrated for the six in bank
+`$38` -- no missing coverage. What is left is one of two things, and both are
+structural rather than observational: a false boundary inside a larger object
+(`Data_38_5ffe` sits 19 bytes past a `records:2` table, and 19 is odd), or data
+nothing reads. Naming them means proving which, table by table, against the
+code that surrounds them.
+
+Autonames in `src/`: **12**, from 179. Byte-perfect; `make check` clean.

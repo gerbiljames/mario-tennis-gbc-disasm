@@ -32,8 +32,8 @@ DataPtr_IntroCharactersTilemap:
 	dw IntroCharactersTilemap ; $401c
 DataPtr_IntroCharactersAttrmap:
 	dw IntroCharactersAttrmap ; $401e
-DataPtr_6d_20:
-	dw Data_6d_6104 ; $4020
+DataPtr_IntroCharactersPalettes:
+	dw IntroCharactersPalettes ; $4020
 DataPtr_IntroCharactersTilemap2:
 	dw IntroCharactersTilemap2 ; $4022
 DataPtr_IntroCharactersAttrmap2:
@@ -179,7 +179,7 @@ IntroCharactersTilemap:
 	INCBIN "data/bank_06d/lz_5f18.bin" ; $5f18, 329 bytes
 IntroCharactersAttrmap:
 	INCBIN "data/bank_06d/lz_6061.bin" ; $6061, 163 bytes
-Data_6d_6104:
+IntroCharactersPalettes:
 	INCLUDE "data/bank_06d/palettes_6104.asm" ; $6104, 64 bytes (palettes)
 IntroCharactersTilemap2:
 	INCBIN "data/bank_06d/lz_6144.bin" ; $6144, 268 bytes
