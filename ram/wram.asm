@@ -2845,7 +2845,13 @@ wPlayerMoveAngleApplied:: db
 wPlayerMoveAnglePrev:: db
 ; [8-bit] Cleared when no direction is held, so the walk animation stops
 wPlayerMoving:: db
-	ds 8
+	ds 5
+; [8-bit] Random direction TryPickRandomReachableTarget probes in: the low byte of AdvanceRandomSeed masked with $fc, so one of 64 angles. ProjectPointFromActor casts a ray this way (first at distance $0100, then at $00e0 once the point is confirmed inside the box) to turn the angle into a candidate destination.
+wActorProbeAngle:: db
+; [8-bit] Half-width of the box ActorScriptOp_RandBox confines a random target to; the low byte of the operand word it reads with FarReadWord. TryPickRandomReachableTarget passes it to TestPointInBox as h, which is checked against the box centre's first coordinate (b +/- h vs d).
+wActorRandBoxHalfWidth:: db
+; [8-bit] Half-depth of the same box, the high byte of ActorScriptOp_RandBox's operand word. Passed to TestPointInBox as l and checked against the second coordinate (c +/- l vs e); the centre itself is the word at actor + $16.
+wActorRandBoxHalfDepth:: db
 ; [8-bit] ROM bank of the actor script currently executing, taken from the actor's field +$22. Every ActorScriptOp_* passes it to FarReadByte / FarReadWord / CallHLInBankA to reach the script bytes
 wActorScriptBank:: db
 
@@ -3067,7 +3073,11 @@ wDialogueWindowHeight:: db
 wDialogueWindowWidth:: db
 ; [8-bit] Re-entrancy guard around RedrawActiveTextWindow: the delay/wait text commands only redraw while it is 0, and set it for the duration of their own redraw
 wTextRedrawGuard:: db
-	ds 5
+; [8-bit] Column of the text-drawing cursor, 0-31. RenderTextString seeds it from d masked to $1f alongside wTextCursorRow, and TextCmdNewline reloads it into d for the GetTilemapCellAddress call that re-points the write pointer -- d is the column there, e the row (the row counter is what steps hl by $0020).
+wTextCursorColumn:: db
+; [8-bit] Row of the text-drawing cursor, 0-31. TextCmdNewline advances it by *two* rows, not one, because the font is double height; it wraps with `and $1f`. The two glyph-stream row commands at $5425/$544f compare it against a row computed from the stream offset to decide whether to step.
+wTextCursorRow:: db
+	ds 3
 ; [8-bit] Window struct index of the menu window CreateMenuWindowFromText just built (a copy of wWindowId taken as the menu is pushed)
 wMenuWindowId:: db
 ; [8-bit] Row the menu cursor sits on; RunMenuSelection steps it against wMenuRowCount and returns it as the chosen entry
@@ -3651,10 +3661,7 @@ UNION
 ; text-arg fetch buffer (menu banks reuse the idle char struct)
 ; [bank 5] Scratch buffer that PushTextArgFetchedString fills (via FetchShortTextToBuffer) with a fetched short-text string, then pushes as a text argument; overlaps the idle far-P1 character struct at $df00
 w4TextArgFetchBuffer:: db
-	ds 75
-; [8-bit] 1 when the swing was started with fewer than 5 charge frames -- a tap rather than a held swing. Cleared as the swing starts and set only on that branch; ExecuteShot copies it into wShotWasQuickSwing so the shot keeps the value
-w4CharQuickSwing:: db
-	ds 74
+	ds 150
 NEXTU
 ; match character struct (WRAM banks 4-7, and the match/shot/results banks that address it with the bank already selected)
 ; [3 bytes] Per-character banked struct (WRAM4-7): lateral X position, 24-bit fixed point (fraction byte + signed 16-bit integer part)
@@ -3683,7 +3690,8 @@ w4CharFreezeTimer:: db
 w4CharShotComboTimer:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): AI countdown -- the reaction delay AiSetReactionDelay randomises, and the hold time AiServePressToss uses to press and release the toss button
 w4AiActionTimer:: db
-	ds 1
+; [8-bit] Frames the AI holds its first shot button before adding the second. AiWaitThenPickShot sets it to 5 right after AiPressFirstShotButton; AiSwingControlSingles/Doubles will not call AiPressSecondShotButton while it is nonzero, and the per-frame tick counts it down only once wAiActionTimer ($df12) has reached 0, so the two run in sequence rather than together.
+w4AiSecondButtonDelay:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): resolved SHOTTYPE_* for the swing about to happen, looked up by SelectServeShotType / SelectRallyShotType from the two buffered buttons
 w4CharShotType:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): animation id of the swing SelectForehandBackhand picked; the windup plays it + $08 and the contact phase plays it as-is
@@ -3755,7 +3763,12 @@ w4CharWalkTargetDepth:: dw
 w4CharAimOffset:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): frames elapsed in the current swing phase, reset when the windup starts and incremented by the windup and contact phases
 w4CharSwingFrames:: db
-	ds 3
+; [8-bit] Set when this character's swing was a quick (uncharged) one. StartCharSwing writes it as the swing begins and ExecuteShot reads it back to seed wShotWasQuickSwing, which is what makes the shot resolve without a charge bonus. It was previously declared on the menu-bank variant of this union, where nothing could reach it.
+w4CharQuickSwing:: db
+; [8-bit] Shot button latched while the swing is being held, from b in CheckSwingRelease; cleared there when SELECT is down and again by CharRallyReadyPhase alongside wCharSwingFrames. Nothing ever reads it -- the byte is written on three paths and consumed on none, so it is vestigial.
+w4CharSwingHoldButton:: db
+; [8-bit] Frames the swing has been held: CheckSwingRelease increments it once per frame through `ld hl, $df4e / inc [hl]` and zeroes it on release or when SELECT is down. Write-only like wCharSwingHoldButton -- no site reads the count back, so whatever charge mechanic it fed is gone.
+w4CharSwingHoldFrames:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): shot button already recorded, so BufferShotButtonPress ignores it being held
 w4CharLastShotButton:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): result of this frame's ball-geometry tests: bit 0 = ball within swing range, bit 1 = inside the contact window, bit 4 = within normal reach (clear selects the stretching shot table). Rebuilt every frame by UpdateCharBallGeometry
@@ -3772,10 +3785,19 @@ w4CharScreenY:: db
 w4CharPointResult:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): shot buttons the AI decided to press this swing (AiPickServeButtons / AiPickShotButtons); AiPressFirstShotButton and AiPressSecondShotButton feed them into wCharInputBits one at a time
 w4AiShotButtons:: db
-	ds 15
+	ds 9
+; [16-bit LE] Top ground speed for this character, from CharStatTable_07_5c4a via attribute-struct offset $0027. ClampCharDepthSpeed multiplies it by the sine of wCharFacingDesired (MulHLBySinSigned) to get the limit along each axis, so the clamp follows the direction the character is trying to run.
+w4CharMaxSpeed:: dw
+; [16-bit LE] How hard this character accelerates, from CharStatTable_07_5c5e via attribute-struct offset $0028. AccelerateCharDepth and AccelerateCharX multiply it by the sine/cosine of wCharFacingDesired and add the result to wCharVelDepth / wCharVelX, so one value drives both axes.
+w4CharAcceleration:: dw
+; [16-bit LE] How hard this character slows when not accelerating, from CharStatTable_07_5c72 via attribute-struct offset $002a. The two brake routines negate it against bit 7 of the current velocity so it always opposes motion; one of them substitutes a flat $0040 when bit 1 of wCharFlags is clear.
+w4CharDeceleration:: dw
 ; [8-bit] Per-character banked struct (WRAM4-7): max facing change per frame, easing wCharFacingShown toward wCharFacingDesired
 w4CharFacingEaseRate:: db
-	ds 2
+; [8-bit] Scales how far this character's aim is pushed off centre: ComputeAimBaseOffset feeds it to MulHLByAFrac as the fraction applied to the base offset. From CharStatTable_07_5c90 via attribute-struct offset $0025.
+w4CharAimOffsetScale:: db
+; [8-bit] Magnitude of the random component of this character's aim: GetRandomAimJitter multiplies a fresh AdvanceMatchRng byte by it (MulHLByA). Higher means a less accurate shot. From CharStatTable_07_5c9a via attribute-struct offset $0026.
+w4CharAimJitterScale:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): speed-row index (e) into the ShotPlacementData tables for ground strokes (topspin/slice/power variants/neutral); selects bytes 4-5 -> shot speed in LoadShotPlacementEntry
 w4GroundStrokeSpeedIndex:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): speed-row index (e) into ShotPlacementData for the smash and all three serves
@@ -3850,10 +3872,7 @@ UNION
 ; text-arg fetch buffer (menu banks reuse the idle char struct)
 ; [bank 5] Scratch buffer that PushTextArgFetchedString fills (via FetchShortTextToBuffer) with a fetched short-text string, then pushes as a text argument; overlaps the idle far-P1 character struct at $df00
 w5TextArgFetchBuffer:: db
-	ds 75
-; [8-bit] 1 when the swing was started with fewer than 5 charge frames -- a tap rather than a held swing. Cleared as the swing starts and set only on that branch; ExecuteShot copies it into wShotWasQuickSwing so the shot keeps the value
-w5CharQuickSwing:: db
-	ds 74
+	ds 150
 NEXTU
 ; match character struct (WRAM banks 4-7, and the match/shot/results banks that address it with the bank already selected)
 ; [3 bytes] Per-character banked struct (WRAM4-7): lateral X position, 24-bit fixed point (fraction byte + signed 16-bit integer part)
@@ -3882,7 +3901,8 @@ w5CharFreezeTimer:: db
 w5CharShotComboTimer:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): AI countdown -- the reaction delay AiSetReactionDelay randomises, and the hold time AiServePressToss uses to press and release the toss button
 w5AiActionTimer:: db
-	ds 1
+; [8-bit] Frames the AI holds its first shot button before adding the second. AiWaitThenPickShot sets it to 5 right after AiPressFirstShotButton; AiSwingControlSingles/Doubles will not call AiPressSecondShotButton while it is nonzero, and the per-frame tick counts it down only once wAiActionTimer ($df12) has reached 0, so the two run in sequence rather than together.
+w5AiSecondButtonDelay:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): resolved SHOTTYPE_* for the swing about to happen, looked up by SelectServeShotType / SelectRallyShotType from the two buffered buttons
 w5CharShotType:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): animation id of the swing SelectForehandBackhand picked; the windup plays it + $08 and the contact phase plays it as-is
@@ -3954,7 +3974,12 @@ w5CharWalkTargetDepth:: dw
 w5CharAimOffset:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): frames elapsed in the current swing phase, reset when the windup starts and incremented by the windup and contact phases
 w5CharSwingFrames:: db
-	ds 3
+; [8-bit] Set when this character's swing was a quick (uncharged) one. StartCharSwing writes it as the swing begins and ExecuteShot reads it back to seed wShotWasQuickSwing, which is what makes the shot resolve without a charge bonus. It was previously declared on the menu-bank variant of this union, where nothing could reach it.
+w5CharQuickSwing:: db
+; [8-bit] Shot button latched while the swing is being held, from b in CheckSwingRelease; cleared there when SELECT is down and again by CharRallyReadyPhase alongside wCharSwingFrames. Nothing ever reads it -- the byte is written on three paths and consumed on none, so it is vestigial.
+w5CharSwingHoldButton:: db
+; [8-bit] Frames the swing has been held: CheckSwingRelease increments it once per frame through `ld hl, $df4e / inc [hl]` and zeroes it on release or when SELECT is down. Write-only like wCharSwingHoldButton -- no site reads the count back, so whatever charge mechanic it fed is gone.
+w5CharSwingHoldFrames:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): shot button already recorded, so BufferShotButtonPress ignores it being held
 w5CharLastShotButton:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): result of this frame's ball-geometry tests: bit 0 = ball within swing range, bit 1 = inside the contact window, bit 4 = within normal reach (clear selects the stretching shot table). Rebuilt every frame by UpdateCharBallGeometry
@@ -3971,10 +3996,19 @@ w5CharScreenY:: db
 w5CharPointResult:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): shot buttons the AI decided to press this swing (AiPickServeButtons / AiPickShotButtons); AiPressFirstShotButton and AiPressSecondShotButton feed them into wCharInputBits one at a time
 w5AiShotButtons:: db
-	ds 15
+	ds 9
+; [16-bit LE] Top ground speed for this character, from CharStatTable_07_5c4a via attribute-struct offset $0027. ClampCharDepthSpeed multiplies it by the sine of wCharFacingDesired (MulHLBySinSigned) to get the limit along each axis, so the clamp follows the direction the character is trying to run.
+w5CharMaxSpeed:: dw
+; [16-bit LE] How hard this character accelerates, from CharStatTable_07_5c5e via attribute-struct offset $0028. AccelerateCharDepth and AccelerateCharX multiply it by the sine/cosine of wCharFacingDesired and add the result to wCharVelDepth / wCharVelX, so one value drives both axes.
+w5CharAcceleration:: dw
+; [16-bit LE] How hard this character slows when not accelerating, from CharStatTable_07_5c72 via attribute-struct offset $002a. The two brake routines negate it against bit 7 of the current velocity so it always opposes motion; one of them substitutes a flat $0040 when bit 1 of wCharFlags is clear.
+w5CharDeceleration:: dw
 ; [8-bit] Per-character banked struct (WRAM4-7): max facing change per frame, easing wCharFacingShown toward wCharFacingDesired
 w5CharFacingEaseRate:: db
-	ds 2
+; [8-bit] Scales how far this character's aim is pushed off centre: ComputeAimBaseOffset feeds it to MulHLByAFrac as the fraction applied to the base offset. From CharStatTable_07_5c90 via attribute-struct offset $0025.
+w5CharAimOffsetScale:: db
+; [8-bit] Magnitude of the random component of this character's aim: GetRandomAimJitter multiplies a fresh AdvanceMatchRng byte by it (MulHLByA). Higher means a less accurate shot. From CharStatTable_07_5c9a via attribute-struct offset $0026.
+w5CharAimJitterScale:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): speed-row index (e) into the ShotPlacementData tables for ground strokes (topspin/slice/power variants/neutral); selects bytes 4-5 -> shot speed in LoadShotPlacementEntry
 w5GroundStrokeSpeedIndex:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): speed-row index (e) into ShotPlacementData for the smash and all three serves
@@ -4049,10 +4083,7 @@ UNION
 ; text-arg fetch buffer (menu banks reuse the idle char struct)
 ; [bank 5] Scratch buffer that PushTextArgFetchedString fills (via FetchShortTextToBuffer) with a fetched short-text string, then pushes as a text argument; overlaps the idle far-P1 character struct at $df00
 w6TextArgFetchBuffer:: db
-	ds 75
-; [8-bit] 1 when the swing was started with fewer than 5 charge frames -- a tap rather than a held swing. Cleared as the swing starts and set only on that branch; ExecuteShot copies it into wShotWasQuickSwing so the shot keeps the value
-w6CharQuickSwing:: db
-	ds 74
+	ds 150
 NEXTU
 ; match character struct (WRAM banks 4-7, and the match/shot/results banks that address it with the bank already selected)
 ; [3 bytes] Per-character banked struct (WRAM4-7): lateral X position, 24-bit fixed point (fraction byte + signed 16-bit integer part)
@@ -4081,7 +4112,8 @@ w6CharFreezeTimer:: db
 w6CharShotComboTimer:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): AI countdown -- the reaction delay AiSetReactionDelay randomises, and the hold time AiServePressToss uses to press and release the toss button
 w6AiActionTimer:: db
-	ds 1
+; [8-bit] Frames the AI holds its first shot button before adding the second. AiWaitThenPickShot sets it to 5 right after AiPressFirstShotButton; AiSwingControlSingles/Doubles will not call AiPressSecondShotButton while it is nonzero, and the per-frame tick counts it down only once wAiActionTimer ($df12) has reached 0, so the two run in sequence rather than together.
+w6AiSecondButtonDelay:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): resolved SHOTTYPE_* for the swing about to happen, looked up by SelectServeShotType / SelectRallyShotType from the two buffered buttons
 w6CharShotType:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): animation id of the swing SelectForehandBackhand picked; the windup plays it + $08 and the contact phase plays it as-is
@@ -4153,7 +4185,12 @@ w6CharWalkTargetDepth:: dw
 w6CharAimOffset:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): frames elapsed in the current swing phase, reset when the windup starts and incremented by the windup and contact phases
 w6CharSwingFrames:: db
-	ds 3
+; [8-bit] Set when this character's swing was a quick (uncharged) one. StartCharSwing writes it as the swing begins and ExecuteShot reads it back to seed wShotWasQuickSwing, which is what makes the shot resolve without a charge bonus. It was previously declared on the menu-bank variant of this union, where nothing could reach it.
+w6CharQuickSwing:: db
+; [8-bit] Shot button latched while the swing is being held, from b in CheckSwingRelease; cleared there when SELECT is down and again by CharRallyReadyPhase alongside wCharSwingFrames. Nothing ever reads it -- the byte is written on three paths and consumed on none, so it is vestigial.
+w6CharSwingHoldButton:: db
+; [8-bit] Frames the swing has been held: CheckSwingRelease increments it once per frame through `ld hl, $df4e / inc [hl]` and zeroes it on release or when SELECT is down. Write-only like wCharSwingHoldButton -- no site reads the count back, so whatever charge mechanic it fed is gone.
+w6CharSwingHoldFrames:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): shot button already recorded, so BufferShotButtonPress ignores it being held
 w6CharLastShotButton:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): result of this frame's ball-geometry tests: bit 0 = ball within swing range, bit 1 = inside the contact window, bit 4 = within normal reach (clear selects the stretching shot table). Rebuilt every frame by UpdateCharBallGeometry
@@ -4170,10 +4207,19 @@ w6CharScreenY:: db
 w6CharPointResult:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): shot buttons the AI decided to press this swing (AiPickServeButtons / AiPickShotButtons); AiPressFirstShotButton and AiPressSecondShotButton feed them into wCharInputBits one at a time
 w6AiShotButtons:: db
-	ds 15
+	ds 9
+; [16-bit LE] Top ground speed for this character, from CharStatTable_07_5c4a via attribute-struct offset $0027. ClampCharDepthSpeed multiplies it by the sine of wCharFacingDesired (MulHLBySinSigned) to get the limit along each axis, so the clamp follows the direction the character is trying to run.
+w6CharMaxSpeed:: dw
+; [16-bit LE] How hard this character accelerates, from CharStatTable_07_5c5e via attribute-struct offset $0028. AccelerateCharDepth and AccelerateCharX multiply it by the sine/cosine of wCharFacingDesired and add the result to wCharVelDepth / wCharVelX, so one value drives both axes.
+w6CharAcceleration:: dw
+; [16-bit LE] How hard this character slows when not accelerating, from CharStatTable_07_5c72 via attribute-struct offset $002a. The two brake routines negate it against bit 7 of the current velocity so it always opposes motion; one of them substitutes a flat $0040 when bit 1 of wCharFlags is clear.
+w6CharDeceleration:: dw
 ; [8-bit] Per-character banked struct (WRAM4-7): max facing change per frame, easing wCharFacingShown toward wCharFacingDesired
 w6CharFacingEaseRate:: db
-	ds 2
+; [8-bit] Scales how far this character's aim is pushed off centre: ComputeAimBaseOffset feeds it to MulHLByAFrac as the fraction applied to the base offset. From CharStatTable_07_5c90 via attribute-struct offset $0025.
+w6CharAimOffsetScale:: db
+; [8-bit] Magnitude of the random component of this character's aim: GetRandomAimJitter multiplies a fresh AdvanceMatchRng byte by it (MulHLByA). Higher means a less accurate shot. From CharStatTable_07_5c9a via attribute-struct offset $0026.
+w6CharAimJitterScale:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): speed-row index (e) into the ShotPlacementData tables for ground strokes (topspin/slice/power variants/neutral); selects bytes 4-5 -> shot speed in LoadShotPlacementEntry
 w6GroundStrokeSpeedIndex:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): speed-row index (e) into ShotPlacementData for the smash and all three serves
@@ -4248,10 +4294,7 @@ UNION
 ; text-arg fetch buffer (menu banks reuse the idle char struct)
 ; [bank 5] Scratch buffer that PushTextArgFetchedString fills (via FetchShortTextToBuffer) with a fetched short-text string, then pushes as a text argument; overlaps the idle far-P1 character struct at $df00
 w7TextArgFetchBuffer:: db
-	ds 75
-; [8-bit] 1 when the swing was started with fewer than 5 charge frames -- a tap rather than a held swing. Cleared as the swing starts and set only on that branch; ExecuteShot copies it into wShotWasQuickSwing so the shot keeps the value
-w7CharQuickSwing:: db
-	ds 74
+	ds 150
 NEXTU
 ; match character struct (WRAM banks 4-7, and the match/shot/results banks that address it with the bank already selected)
 ; [3 bytes] Per-character banked struct (WRAM4-7): lateral X position, 24-bit fixed point (fraction byte + signed 16-bit integer part)
@@ -4280,7 +4323,8 @@ w7CharFreezeTimer:: db
 w7CharShotComboTimer:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): AI countdown -- the reaction delay AiSetReactionDelay randomises, and the hold time AiServePressToss uses to press and release the toss button
 w7AiActionTimer:: db
-	ds 1
+; [8-bit] Frames the AI holds its first shot button before adding the second. AiWaitThenPickShot sets it to 5 right after AiPressFirstShotButton; AiSwingControlSingles/Doubles will not call AiPressSecondShotButton while it is nonzero, and the per-frame tick counts it down only once wAiActionTimer ($df12) has reached 0, so the two run in sequence rather than together.
+w7AiSecondButtonDelay:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): resolved SHOTTYPE_* for the swing about to happen, looked up by SelectServeShotType / SelectRallyShotType from the two buffered buttons
 w7CharShotType:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): animation id of the swing SelectForehandBackhand picked; the windup plays it + $08 and the contact phase plays it as-is
@@ -4352,7 +4396,12 @@ w7CharWalkTargetDepth:: dw
 w7CharAimOffset:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): frames elapsed in the current swing phase, reset when the windup starts and incremented by the windup and contact phases
 w7CharSwingFrames:: db
-	ds 3
+; [8-bit] Set when this character's swing was a quick (uncharged) one. StartCharSwing writes it as the swing begins and ExecuteShot reads it back to seed wShotWasQuickSwing, which is what makes the shot resolve without a charge bonus. It was previously declared on the menu-bank variant of this union, where nothing could reach it.
+w7CharQuickSwing:: db
+; [8-bit] Shot button latched while the swing is being held, from b in CheckSwingRelease; cleared there when SELECT is down and again by CharRallyReadyPhase alongside wCharSwingFrames. Nothing ever reads it -- the byte is written on three paths and consumed on none, so it is vestigial.
+w7CharSwingHoldButton:: db
+; [8-bit] Frames the swing has been held: CheckSwingRelease increments it once per frame through `ld hl, $df4e / inc [hl]` and zeroes it on release or when SELECT is down. Write-only like wCharSwingHoldButton -- no site reads the count back, so whatever charge mechanic it fed is gone.
+w7CharSwingHoldFrames:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): shot button already recorded, so BufferShotButtonPress ignores it being held
 w7CharLastShotButton:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): result of this frame's ball-geometry tests: bit 0 = ball within swing range, bit 1 = inside the contact window, bit 4 = within normal reach (clear selects the stretching shot table). Rebuilt every frame by UpdateCharBallGeometry
@@ -4369,10 +4418,19 @@ w7CharScreenY:: db
 w7CharPointResult:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): shot buttons the AI decided to press this swing (AiPickServeButtons / AiPickShotButtons); AiPressFirstShotButton and AiPressSecondShotButton feed them into wCharInputBits one at a time
 w7AiShotButtons:: db
-	ds 15
+	ds 9
+; [16-bit LE] Top ground speed for this character, from CharStatTable_07_5c4a via attribute-struct offset $0027. ClampCharDepthSpeed multiplies it by the sine of wCharFacingDesired (MulHLBySinSigned) to get the limit along each axis, so the clamp follows the direction the character is trying to run.
+w7CharMaxSpeed:: dw
+; [16-bit LE] How hard this character accelerates, from CharStatTable_07_5c5e via attribute-struct offset $0028. AccelerateCharDepth and AccelerateCharX multiply it by the sine/cosine of wCharFacingDesired and add the result to wCharVelDepth / wCharVelX, so one value drives both axes.
+w7CharAcceleration:: dw
+; [16-bit LE] How hard this character slows when not accelerating, from CharStatTable_07_5c72 via attribute-struct offset $002a. The two brake routines negate it against bit 7 of the current velocity so it always opposes motion; one of them substitutes a flat $0040 when bit 1 of wCharFlags is clear.
+w7CharDeceleration:: dw
 ; [8-bit] Per-character banked struct (WRAM4-7): max facing change per frame, easing wCharFacingShown toward wCharFacingDesired
 w7CharFacingEaseRate:: db
-	ds 2
+; [8-bit] Scales how far this character's aim is pushed off centre: ComputeAimBaseOffset feeds it to MulHLByAFrac as the fraction applied to the base offset. From CharStatTable_07_5c90 via attribute-struct offset $0025.
+w7CharAimOffsetScale:: db
+; [8-bit] Magnitude of the random component of this character's aim: GetRandomAimJitter multiplies a fresh AdvanceMatchRng byte by it (MulHLByA). Higher means a less accurate shot. From CharStatTable_07_5c9a via attribute-struct offset $0026.
+w7CharAimJitterScale:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): speed-row index (e) into the ShotPlacementData tables for ground strokes (topspin/slice/power variants/neutral); selects bytes 4-5 -> shot speed in LoadShotPlacementEntry
 w7GroundStrokeSpeedIndex:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): speed-row index (e) into ShotPlacementData for the smash and all three serves

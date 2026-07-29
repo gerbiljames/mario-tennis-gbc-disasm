@@ -860,7 +860,7 @@ StartMinigameMatch:
 	ld a, $06 ; $46b9
 	farcall SetCharState ; $46bb
 	ld a, $04 ; $46be
-	ld [$df6a], a ; $46c0
+	ld [wCharAimJitterScale], a ; $46c0
 	xor a ; $46c3
 	ld [wMinigameServeState], a ; $46c4
 	ld a, [wCharId] ; $46c7
@@ -1089,7 +1089,7 @@ LaunchBall:
 	sub l ; $4875
 	ld h, a ; $4876
 	ld a, [hl] ; $4877
-	ld [$df69], a ; $4878
+	ld [wCharAimOffsetScale], a ; $4878
 	ld a, [wMinigameServeGroup] ; $487b
 	add a ; $487e
 	add LOW(MinigameBallLaunchHeights) ; $487f

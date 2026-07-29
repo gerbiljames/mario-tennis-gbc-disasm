@@ -1531,9 +1531,9 @@ ActorScriptOp_RandBox:
 	ld h, d ; $4898
 	call FarReadWord ; $4899
 	ld a, c ; $489c
-	ld [$daf5], a ; $489d
+	ld [wActorRandBoxHalfWidth], a ; $489d
 	ld a, b ; $48a0
-	ld [$daf6], a ; $48a1
+	ld [wActorRandBoxHalfDepth], a ; $48a1
 	call TryPickRandomReachableTarget ; $48a4
 	and a ; $48a7
 	jr nz, .skipOperands ; $48a8
@@ -1563,7 +1563,7 @@ TryPickRandomReachableTarget:
 	call AdvanceRandomSeed ; $48ca
 	ld a, l ; $48cd
 	and $fc ; $48ce
-	ld [$daf4], a ; $48d0
+	ld [wActorProbeAngle], a ; $48d0
 	ld hl, $0100 ; $48d3
 	call ProjectPointFromActor ; $48d6
 	push de ; $48d9
@@ -1575,9 +1575,9 @@ TryPickRandomReachableTarget:
 	ld a, [hl+] ; $48e1
 	ld b, [hl] ; $48e2
 	ld c, a ; $48e3
-	ld a, [$daf5] ; $48e4
+	ld a, [wActorRandBoxHalfWidth] ; $48e4
 	ld h, a ; $48e7
-	ld a, [$daf6] ; $48e8
+	ld a, [wActorRandBoxHalfDepth] ; $48e8
 	ld l, a ; $48eb
 	call TestPointInBox ; $48ec
 	pop hl ; $48ef
@@ -1586,7 +1586,7 @@ TryPickRandomReachableTarget:
 	jr nz, .failed ; $48f2
 	push de ; $48f4
 	push hl ; $48f5
-	ld a, [$daf4] ; $48f6
+	ld a, [wActorProbeAngle] ; $48f6
 	ld bc, $00e0 ; $48f9
 	call OffsetPointByPolarVector ; $48fc
 	call IsTerrainBlockedAtPoint ; $48ff
@@ -1596,7 +1596,7 @@ TryPickRandomReachableTarget:
 	jr nz, .failed ; $4905
 	push de ; $4907
 	push hl ; $4908
-	ld a, [$daf4] ; $4909
+	ld a, [wActorProbeAngle] ; $4909
 	add $20 ; $490c
 	ld bc, $00e0 ; $490e
 	call OffsetPointByPolarVector ; $4911
@@ -1607,7 +1607,7 @@ TryPickRandomReachableTarget:
 	jr nz, .failed ; $491a
 	push de ; $491c
 	push hl ; $491d
-	ld a, [$daf4] ; $491e
+	ld a, [wActorProbeAngle] ; $491e
 	add $e0 ; $4921
 	ld bc, $00e0 ; $4923
 	call OffsetPointByPolarVector ; $4926

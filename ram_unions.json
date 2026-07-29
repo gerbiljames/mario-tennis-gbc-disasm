@@ -289,10 +289,6 @@
       "0xdf00": {
        "name": "wTextArgFetchBuffer",
        "note": "[bank 5] Scratch buffer that PushTextArgFetchedString fills (via FetchShortTextToBuffer) with a fetched short-text string, then pushes as a text argument; overlaps the idle far-P1 character struct at $df00"
-      },
-      "0xdf4c": {
-       "name": "wCharQuickSwing",
-       "note": "[8-bit] 1 when the swing was started with fewer than 5 charge frames -- a tap rather than a held swing. Cleared as the swing starts and set only on that branch; ExecuteShot copies it into wShotWasQuickSwing so the shot keeps the value"
       }
      }
     },
@@ -680,6 +676,42 @@
       "0xdf95": {
        "name": "wCharExpTier",
        "note": "[8-bit] Per-character banked struct (WRAM4-7): character class/tier from attribute record +$18; LookupExpTierForChar reads it on the EXP screen"
+      },
+      "0xdf13": {
+       "name": "wAiSecondButtonDelay",
+       "note": "[8-bit] Frames the AI holds its first shot button before adding the second. AiWaitThenPickShot sets it to 5 right after AiPressFirstShotButton; AiSwingControlSingles/Doubles will not call AiPressSecondShotButton while it is nonzero, and the per-frame tick counts it down only once wAiActionTimer ($df12) has reached 0, so the two run in sequence rather than together."
+      },
+      "0xdf62": {
+       "name": "wCharMaxSpeed",
+       "note": "[16-bit LE] Top ground speed for this character, from CharStatTable_07_5c4a via attribute-struct offset $0027. ClampCharDepthSpeed multiplies it by the sine of wCharFacingDesired (MulHLBySinSigned) to get the limit along each axis, so the clamp follows the direction the character is trying to run."
+      },
+      "0xdf64": {
+       "name": "wCharAcceleration",
+       "note": "[16-bit LE] How hard this character accelerates, from CharStatTable_07_5c5e via attribute-struct offset $0028. AccelerateCharDepth and AccelerateCharX multiply it by the sine/cosine of wCharFacingDesired and add the result to wCharVelDepth / wCharVelX, so one value drives both axes."
+      },
+      "0xdf66": {
+       "name": "wCharDeceleration",
+       "note": "[16-bit LE] How hard this character slows when not accelerating, from CharStatTable_07_5c72 via attribute-struct offset $002a. The two brake routines negate it against bit 7 of the current velocity so it always opposes motion; one of them substitutes a flat $0040 when bit 1 of wCharFlags is clear."
+      },
+      "0xdf69": {
+       "name": "wCharAimOffsetScale",
+       "note": "[8-bit] Scales how far this character's aim is pushed off centre: ComputeAimBaseOffset feeds it to MulHLByAFrac as the fraction applied to the base offset. From CharStatTable_07_5c90 via attribute-struct offset $0025."
+      },
+      "0xdf6a": {
+       "name": "wCharAimJitterScale",
+       "note": "[8-bit] Magnitude of the random component of this character's aim: GetRandomAimJitter multiplies a fresh AdvanceMatchRng byte by it (MulHLByA). Higher means a less accurate shot. From CharStatTable_07_5c9a via attribute-struct offset $0026."
+      },
+      "0xdf4c": {
+       "name": "wCharQuickSwing",
+       "note": "[8-bit] Set when this character's swing was a quick (uncharged) one. StartCharSwing writes it as the swing begins and ExecuteShot reads it back to seed wShotWasQuickSwing, which is what makes the shot resolve without a charge bonus. It was previously declared on the menu-bank variant of this union, where nothing could reach it."
+      },
+      "0xdf4d": {
+       "name": "wCharSwingHoldButton",
+       "note": "[8-bit] Shot button latched while the swing is being held, from b in CheckSwingRelease; cleared there when SELECT is down and again by CharRallyReadyPhase alongside wCharSwingFrames. Nothing ever reads it -- the byte is written on three paths and consumed on none, so it is vestigial."
+      },
+      "0xdf4e": {
+       "name": "wCharSwingHoldFrames",
+       "note": "[8-bit] Frames the swing has been held: CheckSwingRelease increments it once per frame through `ld hl, $df4e / inc [hl]` and zeroes it on release or when SELECT is down. Write-only like wCharSwingHoldButton -- no site reads the count back, so whatever charge mechanic it fed is gone."
       }
      }
     }
@@ -1528,6 +1560,14 @@
       "0xd821": {
        "name": "wGlyphWindowId",
        "note": "[8-bit] Window struct index the glyph stream is rendering into, set by RedrawWindowText / RenderWindowTextToCompletion. InitGlyphStreamForWindow, DrawWindowGlyphRun, FlushGlyphRow and UploadLastGlyphTiles all resolve the window through it"
+      },
+      "0xd82a": {
+       "name": "wTextCursorColumn",
+       "note": "[8-bit] Column of the text-drawing cursor, 0-31. RenderTextString seeds it from d masked to $1f alongside wTextCursorRow, and TextCmdNewline reloads it into d for the GetTilemapCellAddress call that re-points the write pointer -- d is the column there, e the row (the row counter is what steps hl by $0020)."
+      },
+      "0xd82b": {
+       "name": "wTextCursorRow",
+       "note": "[8-bit] Row of the text-drawing cursor, 0-31. TextCmdNewline advances it by *two* rows, not one, because the font is double height; it wraps with `and $1f`. The two glyph-stream row commands at $5425/$544f compare it against a row computed from the stream offset to decide whether to step."
       }
      }
     },
@@ -2247,6 +2287,18 @@
       "0xdaf7": {
        "name": "wActorScriptBank",
        "note": "[8-bit] ROM bank of the actor script currently executing, taken from the actor's field +$22. Every ActorScriptOp_* passes it to FarReadByte / FarReadWord / CallHLInBankA to reach the script bytes"
+      },
+      "0xdaf4": {
+       "name": "wActorProbeAngle",
+       "note": "[8-bit] Random direction TryPickRandomReachableTarget probes in: the low byte of AdvanceRandomSeed masked with $fc, so one of 64 angles. ProjectPointFromActor casts a ray this way (first at distance $0100, then at $00e0 once the point is confirmed inside the box) to turn the angle into a candidate destination."
+      },
+      "0xdaf5": {
+       "name": "wActorRandBoxHalfWidth",
+       "note": "[8-bit] Half-width of the box ActorScriptOp_RandBox confines a random target to; the low byte of the operand word it reads with FarReadWord. TryPickRandomReachableTarget passes it to TestPointInBox as h, which is checked against the box centre's first coordinate (b +/- h vs d)."
+      },
+      "0xdaf6": {
+       "name": "wActorRandBoxHalfDepth",
+       "note": "[8-bit] Half-depth of the same box, the high byte of ActorScriptOp_RandBox's operand word. Passed to TestPointInBox as l and checked against the second coordinate (c +/- l vs e); the centre itself is the word at actor + $16."
       }
      }
     }

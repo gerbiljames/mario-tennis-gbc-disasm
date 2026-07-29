@@ -5910,8 +5910,8 @@ CharRallyReadyPhase:
 	set 5, [hl] ; $6c19
 	xor a ; $6c1b
 	ld [wCharSwingFrames], a ; $6c1c
-	ld [$df4d], a ; $6c1f
-	ld [$df4e], a ; $6c22
+	ld [wCharSwingHoldButton], a ; $6c1f
+	ld [wCharSwingHoldFrames], a ; $6c22
 	ld a, $01 ; $6c25
 	ld [wCharChargeFlashOn], a ; $6c27
 	ld hl, wCharStatePhase ; $6c2a
@@ -6218,7 +6218,7 @@ StartCharSwing:
 	ret ; $6e2b
 .startSwing:
 	xor a ; $6e2c
-	ld [$df4c], a ; $6e2d
+	ld [wCharQuickSwing], a ; $6e2d
 	ld a, [wCharSwingFrames] ; $6e30
 	cp $05 ; $6e33
 	jr nc, .chargedSwing ; $6e35
@@ -6227,7 +6227,7 @@ StartCharSwing:
 	add [hl] ; $6e3c
 	ld [hl], a ; $6e3d
 	ld a, $01 ; $6e3e
-	ld [$df4c], a ; $6e40
+	ld [wCharQuickSwing], a ; $6e40
 .chargedSwing:
 	ret ; $6e43
 SelectForehandBackhand:
@@ -6930,16 +6930,16 @@ CheckSwingRelease:
 	and PADF_SELECT ; $726a
 	jr z, .tickTimer ; $726c
 	xor a ; $726e
-	ld [$df4d], a ; $726f
-	ld [$df4e], a ; $7272
+	ld [wCharSwingHoldButton], a ; $726f
+	ld [wCharSwingHoldFrames], a ; $7272
 	ld a, $01 ; $7275
 	ret ; $7277
 	ld a, b ; $7278
-	ld [$df4d], a ; $7279
+	ld [wCharSwingHoldButton], a ; $7279
 	xor a ; $727c
-	ld [$df4e], a ; $727d
+	ld [wCharSwingHoldFrames], a ; $727d
 .tickTimer:
-	ld hl, $df4e ; $7280
+	ld hl, wCharSwingHoldFrames ; $7280
 	inc [hl] ; $7283
 	xor a ; $7284
 	ret ; $7285
@@ -7175,7 +7175,7 @@ UpdateCharVelocityFromInput:
 .done:
 	ret ; $7440
 AccelerateCharDepth:
-	ld hl, $df64 ; $7441
+	ld hl, wCharAcceleration ; $7441
 	ld a, [hl+] ; $7444
 	ld h, [hl] ; $7445
 	ld l, a ; $7446
@@ -7194,7 +7194,7 @@ AccelerateCharDepth:
 	ld [hl+], a ; $7459
 	ret ; $745a
 AccelerateCharX:
-	ld hl, $df64 ; $745b
+	ld hl, wCharAcceleration ; $745b
 	ld a, [hl+] ; $745e
 	ld h, [hl] ; $745f
 	ld l, a ; $7460
@@ -7220,7 +7220,7 @@ DecelerateCharDepth:
 	ld a, d ; $747b
 	or e ; $747c
 	ret z ; $747d
-	ld hl, $df66 ; $747e
+	ld hl, wCharDeceleration ; $747e
 	ld a, [hl+] ; $7481
 	ld h, [hl] ; $7482
 	ld l, a ; $7483
@@ -7253,7 +7253,7 @@ DecelerateCharX:
 	ld a, d ; $74a7
 	or e ; $74a8
 	ret z ; $74a9
-	ld hl, $df66 ; $74aa
+	ld hl, wCharDeceleration ; $74aa
 	ld a, [hl+] ; $74ad
 	ld h, [hl] ; $74ae
 	ld l, a ; $74af
@@ -7284,7 +7284,7 @@ DecelerateCharX:
 	ld [wCharVelX + 1], a ; $74d3
 	ret ; $74d6
 ClampCharDepthSpeed:
-	ld hl, $df62 ; $74d7
+	ld hl, wCharMaxSpeed ; $74d7
 	ld a, [hl+] ; $74da
 	ld h, [hl] ; $74db
 	ld l, a ; $74dc
@@ -7890,7 +7890,7 @@ Label_08_7863:
 	dec [hl] ; $786a
 	ret ; $786b
 .player2:
-	ld hl, $df13 ; $786c
+	ld hl, wAiSecondButtonDelay ; $786c
 	ld a, [hl] ; $786f
 	and a ; $7870
 	jr z, .maskInput ; $7871
@@ -8717,11 +8717,11 @@ AiWaitThenPickShot:
 .pickShot:
 	call AiPickShotButtons ; $7dbd
 	call AiPressFirstShotButton ; $7dc0
-	ld hl, $df13 ; $7dc3
+	ld hl, wAiSecondButtonDelay ; $7dc3
 	ld [hl], $05 ; $7dc6
 	jp AiAdvancePhase ; $7dc8
 AiSwingControlSingles:
-	ld a, [$df13] ; $7dcb
+	ld a, [wAiSecondButtonDelay] ; $7dcb
 	and a ; $7dce
 	jr nz, .checkSwing ; $7dcf
 	ld a, [wCharShotButton2] ; $7dd1
@@ -8960,7 +8960,7 @@ AiNetPlayerPoachCheck:
 .done:
 	ret ; $7f89
 AiSwingControlDoubles:
-	ld a, [$df13] ; $7f8a
+	ld a, [wAiSecondButtonDelay] ; $7f8a
 	and a ; $7f8d
 	jr nz, .checkPartner ; $7f8e
 	ld a, [wCharShotButton2] ; $7f90

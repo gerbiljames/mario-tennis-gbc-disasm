@@ -2506,7 +2506,7 @@ ExecuteShot:
 	ld a, $3f ; $541a
 .storeCharge:
 	ld [wShotChargeLevel], a ; $541c
-	ld a, [$df4c] ; $541f
+	ld a, [wCharQuickSwing] ; $541f
 	ld [wShotWasQuickSwing], a ; $5422
 	ld hl, wBallVelocityX ; $5425
 	ld a, [hl+] ; $5428
@@ -2955,7 +2955,7 @@ ComputeAimBaseOffset:
 	sra h ; $56d5
 	rr l ; $56d7
 	add hl, de ; $56d9
-	ld a, [$df69] ; $56da
+	ld a, [wCharAimOffsetScale] ; $56da
 	call MulHLByAFrac ; $56dd
 	ld e, l ; $56e0
 	ld d, h ; $56e1
@@ -3000,7 +3000,7 @@ GetRandomAimJitter:
 	farcall AdvanceMatchRng ; $570d
 	ld l, a ; $5710
 	ld h, $00 ; $5711
-	ld a, [$df6a] ; $5713
+	ld a, [wCharAimJitterScale] ; $5713
 	call MulHLByA ; $5716
 	add hl, hl ; $5719
 	add hl, hl ; $571a
@@ -3667,7 +3667,7 @@ LoadCharacterAttributes:
 	ld a, [hl+] ; $5b5c
 	ld b, [hl] ; $5b5d
 	ld c, a ; $5b5e
-	ld hl, $df62 ; $5b5f
+	ld hl, wCharMaxSpeed ; $5b5f
 	ld a, c ; $5b62
 	ld [hl+], a ; $5b63
 	ld [hl], b ; $5b64
@@ -3683,7 +3683,7 @@ LoadCharacterAttributes:
 	ld a, [hl+] ; $5b72
 	ld b, [hl] ; $5b73
 	ld c, a ; $5b74
-	ld hl, $df64 ; $5b75
+	ld hl, wCharAcceleration ; $5b75
 	ld a, c ; $5b78
 	ld [hl+], a ; $5b79
 	ld [hl], b ; $5b7a
@@ -3699,7 +3699,7 @@ LoadCharacterAttributes:
 	ld a, [hl+] ; $5b88
 	ld b, [hl] ; $5b89
 	ld c, a ; $5b8a
-	ld hl, $df66 ; $5b8b
+	ld hl, wCharDeceleration ; $5b8b
 	ld a, c ; $5b8e
 	ld [hl+], a ; $5b8f
 	ld [hl], b ; $5b90
@@ -3722,7 +3722,7 @@ LoadCharacterAttributes:
 	sub l ; $5bab
 	ld h, a ; $5bac
 	ld a, [hl] ; $5bad
-	ld [$df69], a ; $5bae
+	ld [wCharAimOffsetScale], a ; $5bae
 	ld hl, $0026 ; $5bb1
 	add hl, de ; $5bb4
 	ld a, [hl] ; $5bb5
@@ -3732,7 +3732,7 @@ LoadCharacterAttributes:
 	sub l ; $5bbb
 	ld h, a ; $5bbc
 	ld a, [hl] ; $5bbd
-	ld [$df6a], a ; $5bbe
+	ld [wCharAimJitterScale], a ; $5bbe
 	ld hl, $0023 ; $5bc1
 	add hl, de ; $5bc4
 	ld a, [hl] ; $5bc5
@@ -3868,7 +3868,7 @@ OverrideCharStatsForDebug:
 	ld a, $02 ; $5d09
 	ld [wAiServeStyle], a ; $5d0b
 	ld a, $00 ; $5d0e
-	ld [$df6a], a ; $5d10
+	ld [wCharAimJitterScale], a ; $5d10
 	ld a, $01 ; $5d13
 	ld [wAiPositionStrategy], a ; $5d15
 	ld a, $01 ; $5d18

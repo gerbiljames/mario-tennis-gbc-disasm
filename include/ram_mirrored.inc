@@ -57,6 +57,9 @@ def wCharShotComboTimer equ $df11
 ; [8-bit] Per-character banked struct (WRAM4-7): AI countdown -- the reaction delay AiSetReactionDelay randomises, and the hold time AiServePressToss uses to press and release the toss button
 def wAiActionTimer equ $df12
 
+; [8-bit] Frames the AI holds its first shot button before adding the second. AiWaitThenPickShot sets it to 5 right after AiPressFirstShotButton; AiSwingControlSingles/Doubles will not call AiPressSecondShotButton while it is nonzero, and the per-frame tick counts it down only once wAiActionTimer ($df12) has reached 0, so the two run in sequence rather than together.
+def wAiSecondButtonDelay equ $df13
+
 ; [8-bit] Per-character banked struct (WRAM4-7): resolved SHOTTYPE_* for the swing about to happen, looked up by SelectServeShotType / SelectRallyShotType from the two buffered buttons
 def wCharShotType equ $df14
 
@@ -156,8 +159,14 @@ def wCharAimOffset equ $df4a
 ; [8-bit] Per-character banked struct (WRAM4-7): frames elapsed in the current swing phase, reset when the windup starts and incremented by the windup and contact phases
 def wCharSwingFrames equ $df4b
 
-; [8-bit] 1 when the swing was started with fewer than 5 charge frames -- a tap rather than a held swing. Cleared as the swing starts and set only on that branch; ExecuteShot copies it into wShotWasQuickSwing so the shot keeps the value
+; [8-bit] Set when this character's swing was a quick (uncharged) one. StartCharSwing writes it as the swing begins and ExecuteShot reads it back to seed wShotWasQuickSwing, which is what makes the shot resolve without a charge bonus. It was previously declared on the menu-bank variant of this union, where nothing could reach it.
 def wCharQuickSwing equ $df4c
+
+; [8-bit] Shot button latched while the swing is being held, from b in CheckSwingRelease; cleared there when SELECT is down and again by CharRallyReadyPhase alongside wCharSwingFrames. Nothing ever reads it -- the byte is written on three paths and consumed on none, so it is vestigial.
+def wCharSwingHoldButton equ $df4d
+
+; [8-bit] Frames the swing has been held: CheckSwingRelease increments it once per frame through `ld hl, $df4e / inc [hl]` and zeroes it on release or when SELECT is down. Write-only like wCharSwingHoldButton -- no site reads the count back, so whatever charge mechanic it fed is gone.
+def wCharSwingHoldFrames equ $df4e
 
 ; [8-bit] Per-character banked struct (WRAM4-7): shot button already recorded, so BufferShotButtonPress ignores it being held
 def wCharLastShotButton equ $df4f
@@ -180,8 +189,23 @@ def wCharPointResult equ $df57
 ; [8-bit] Per-character banked struct (WRAM4-7): shot buttons the AI decided to press this swing (AiPickServeButtons / AiPickShotButtons); AiPressFirstShotButton and AiPressSecondShotButton feed them into wCharInputBits one at a time
 def wAiShotButtons equ $df58
 
+; [16-bit LE] Top ground speed for this character, from CharStatTable_07_5c4a via attribute-struct offset $0027. ClampCharDepthSpeed multiplies it by the sine of wCharFacingDesired (MulHLBySinSigned) to get the limit along each axis, so the clamp follows the direction the character is trying to run.
+def wCharMaxSpeed equ $df62
+
+; [16-bit LE] How hard this character accelerates, from CharStatTable_07_5c5e via attribute-struct offset $0028. AccelerateCharDepth and AccelerateCharX multiply it by the sine/cosine of wCharFacingDesired and add the result to wCharVelDepth / wCharVelX, so one value drives both axes.
+def wCharAcceleration equ $df64
+
+; [16-bit LE] How hard this character slows when not accelerating, from CharStatTable_07_5c72 via attribute-struct offset $002a. The two brake routines negate it against bit 7 of the current velocity so it always opposes motion; one of them substitutes a flat $0040 when bit 1 of wCharFlags is clear.
+def wCharDeceleration equ $df66
+
 ; [8-bit] Per-character banked struct (WRAM4-7): max facing change per frame, easing wCharFacingShown toward wCharFacingDesired
 def wCharFacingEaseRate equ $df68
+
+; [8-bit] Scales how far this character's aim is pushed off centre: ComputeAimBaseOffset feeds it to MulHLByAFrac as the fraction applied to the base offset. From CharStatTable_07_5c90 via attribute-struct offset $0025.
+def wCharAimOffsetScale equ $df69
+
+; [8-bit] Magnitude of the random component of this character's aim: GetRandomAimJitter multiplies a fresh AdvanceMatchRng byte by it (MulHLByA). Higher means a less accurate shot. From CharStatTable_07_5c9a via attribute-struct offset $0026.
+def wCharAimJitterScale equ $df6a
 
 ; [8-bit] Per-character banked struct (WRAM4-7): speed-row index (e) into the ShotPlacementData tables for ground strokes (topspin/slice/power variants/neutral); selects bytes 4-5 -> shot speed in LoadShotPlacementEntry
 def wGroundStrokeSpeedIndex equ $df6b

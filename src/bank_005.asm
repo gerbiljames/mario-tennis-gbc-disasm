@@ -2259,10 +2259,10 @@ RenderTextString:
 	call RedrawActiveTextWindow ; $4e4b
 	ld a, d ; $4e4e
 	and $1f ; $4e4f
-	ld [$d82a], a ; $4e51
+	ld [wTextCursorColumn], a ; $4e51
 	ld a, e ; $4e54
 	and $1f ; $4e55
-	ld [$d82b], a ; $4e57
+	ld [wTextCursorRow], a ; $4e57
 	call GetTilemapCellAddress ; $4e5a
 TextInterpreterLoop:
 	ld a, [wTextPageBreakRequest] ; $4e5d
@@ -2339,13 +2339,13 @@ TextInterpreterLoop:
 TextCmdNewline:
 	call DrawStreamGlyph ; $4ed0
 	push af ; $4ed3
-	ld a, [$d82b] ; $4ed4
+	ld a, [wTextCursorRow] ; $4ed4
 	inc a ; $4ed7
 	inc a ; $4ed8
 	and $1f ; $4ed9
-	ld [$d82b], a ; $4edb
+	ld [wTextCursorRow], a ; $4edb
 	ld e, a ; $4ede
-	ld a, [$d82a] ; $4edf
+	ld a, [wTextCursorColumn] ; $4edf
 	ld d, a ; $4ee2
 	call GetTilemapCellAddress ; $4ee3
 	pop af ; $4ee6
@@ -3219,7 +3219,7 @@ WrapTextCellPointer:
 	srl l ; $541f
 	sra l ; $5421
 	sra l ; $5423
-	ld a, [$d82b] ; $5425
+	ld a, [wTextCursorRow] ; $5425
 	cp l ; $5428
 	jr z, .step ; $5429
 	ld a, e ; $542b
@@ -3249,7 +3249,7 @@ WrapTextCellPointerPrevRow:
 	srl l ; $5449
 	srl l ; $544b
 	srl l ; $544d
-	ld a, [$d82b] ; $544f
+	ld a, [wTextCursorRow] ; $544f
 	dec a ; $5452
 	and $1f ; $5453
 	cp l ; $5455
