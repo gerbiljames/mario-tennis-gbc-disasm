@@ -445,7 +445,22 @@ assembly-time only, so unlike an exported `::` label it has to be visible while
 each bank is assembled rather than at link time.
 
 `tools/ram_gaps.py` reports which bare `$dxxx` operands are mirrored
-candidates: one address, several banks, one routine. (The `$dfxx` match-engine structs below predate this and
+candidates: one address, several banks, one routine.
+
+### Bank-tagged copies
+
+A structure that is genuinely replicated — the match engine keeps one
+per-character struct in each of WRAM banks 4-7 — gets both forms. Each bank
+declares its own copy under a bank-tagged name (`w4CharPosX`, `w5CharPosX`, …)
+in its own `BANK[n]` section, and the untagged `wCharPosX` is the EQU the
+disassembly uses, because which copy a site means is decided by the WRAM bank
+selected at run time.
+
+The tagged labels are what put the structure in `build/mariotennis.sym`: EQUs
+do not reach the symbol file, so this is what lets an emulator debugger resolve
+the right name for whichever bank it is stopped in — 328 correct entries rather
+than 82 registered against bank 4 alone. A bank whose own section already runs
+past those addresses is skipped, since it declares them already. (The `$dfxx` match-engine structs below predate this and
 stay documentation-only, but are a candidate for per-bank `wram_bank` scoping.)
 
 | range | variant (scope) | symbols |

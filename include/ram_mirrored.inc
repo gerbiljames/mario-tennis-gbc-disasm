@@ -14,3 +14,249 @@ def wCharDataPageSlot2 equ $da20
 
 ; [576 bytes] Saved stat page, mirrored across WRAM banks $02/$03 like wCharDataPagePlane. SaveWorkTilemapToPage copies the live screen here when its selector is 0 or 3+, once per bank; the three 36-byte rows sit 8 * TILEMAP_WIDTH apart and are what MainCharStatPageTilemapPatch* patch through ApplyTilemapPatchList.
 def wCharDataPageSlot3 equ $dc60
+
+; [3 bytes] Per-character banked struct (WRAM4-7): lateral X position, 24-bit fixed point (fraction byte + signed 16-bit integer part)
+def wCharPosX equ $df00
+
+; [bank 5] Scratch buffer that PushTextArgFetchedString fills (via FetchShortTextToBuffer) with a fetched short-text string, then pushes as a text argument; overlaps the idle far-P1 character struct at $df00
+def wTextArgFetchBuffer equ $df00
+
+; [3 bytes] Per-character banked struct (WRAM4-7): depth position (toward/away from net), same 24-bit fixed-point format; the two court sides carry opposite signs
+def wCharPosDepth equ $df03
+
+; [3 bytes] Per-character banked struct (WRAM4-7): height above court, same 24-bit fixed-point format (zeroed by SetCharPosAndTarget)
+def wCharPosHeight equ $df06
+
+; [8-bit] Per-character banked struct (WRAM4-7): serve/side role code (court-position record byte 4-7); XORed with 2 on the per-point side swap, mapped through the $4fa0 table at point start
+def wCharServeRole equ $df09
+
+; [8-bit] Per-character banked struct (WRAM4-7): court position code (court-position record byte 0-3; XORed with 3 on the tiebreak side-swap)
+def wCharCourtPos equ $df0a
+
+; [8-bit] Per-character banked struct (WRAM4-7): character index 0-3 (== WRAM bank - 4); bit 0 set = far side (used by CharPointEndReaction and the edge-arrow sprite)
+def wCharIndex equ $df0b
+
+; [8-bit] Per-character banked struct (WRAM4-7): facing this character returns to for its court position, from CourtPosFacingTable_08; PlaceCharAtBasePosition and UpdateCharFacingOctant measure the displayed facing against it
+def wCharBaseFacing equ $df0c
+
+; [8-bit] Per-character banked struct (WRAM4-7): desired facing direction, eased toward by wCharFacingShown
+def wCharFacingDesired equ $df0d
+
+; [8-bit] Per-character banked struct (WRAM4-7): displayed facing, eased toward wCharFacingDesired by at most wCharFacingEaseRate per frame ($75c0)
+def wCharFacingShown equ $df0e
+
+; [8-bit] Per-character banked struct (WRAM4-7): state flags; bit 2 = airborne (set on jump $6dd5, cleared on landing; selects the shadow slot drawn)
+def wCharFlags equ $df0f
+
+; [8-bit] Per-character banked struct (WRAM4-7): frames the character is frozen for: UpdateCharStateMachine decrements it and returns without running the state, so nothing moves. SetCharState clears it, and FreezeMinigameOpponentOnReturn sets it to hold the minigame opponent still
+def wCharFreezeTimer equ $df10
+
+; [8-bit] Per-character banked struct (WRAM4-7): frames left to press a second shot button; BufferShotButtonPress seeds it with 5 on the first press and the state-machine dispatch counts it down
+def wCharShotComboTimer equ $df11
+
+; [8-bit] Per-character banked struct (WRAM4-7): AI countdown -- the reaction delay AiSetReactionDelay randomises, and the hold time AiServePressToss uses to press and release the toss button
+def wAiActionTimer equ $df12
+
+; [8-bit] Per-character banked struct (WRAM4-7): resolved SHOTTYPE_* for the swing about to happen, looked up by SelectServeShotType / SelectRallyShotType from the two buffered buttons
+def wCharShotType equ $df14
+
+; [8-bit] Per-character banked struct (WRAM4-7): animation id of the swing SelectForehandBackhand picked; the windup plays it + $08 and the contact phase plays it as-is
+def wCharSwingAnim equ $df15
+
+; [8-bit] Per-character banked struct (WRAM4-7): first shot button of the current swing (1 = A, 2 = B), 0 = none. The pair with wCharShotButton2 indexes RallyShotTypeTable0/1, which is how A+B combinations become lobs, drops and power shots
+def wCharShotButton1 equ $df16
+
+; [8-bit] Per-character banked struct (WRAM4-7): second shot button, captured while wCharShotComboTimer is still running
+def wCharShotButton2 equ $df17
+
+; [8-bit] Per-character banked struct (WRAM4-7): state-machine index (RST00 jumptable at $6a77; set via SetCharState)
+def wCharState equ $df18
+
+; [8-bit] Per-character banked struct (WRAM4-7): sub-step within wCharState; AdvanceCharStatePhase increments it and each state's phase routine dispatches on it
+def wCharStatePhase equ $df19
+
+; [8-bit] Per-character banked struct (WRAM4-7): sub-step of the AI state machine, advanced by AiAdvancePhase (the AI's own counter, separate from wCharStatePhase)
+def wAiPhase equ $df1a
+
+; [3 bytes] Per-character banked struct (WRAM4-7): current sprite frame pointer (hi/lo) + h-flip flag, consumed by DrawCharSprite ($650a)
+def wCharSpriteFrame equ $df1b
+
+; [8-bit] Which input drives this character; ReadCharInput indexes CharInputPtrs with it (pad, CPU and link handlers)
+def wCharInputSource equ $df1e
+
+; [8-bit] Input word ReadCharInput produces: held buttons in the high nibble, newly pressed in the low one (ReadCharPadInput builds it from hPlayerInputFlags and hInputRisingEdge); read with the PADB_* bits
+def wCharInputBits equ $df1f
+
+; [8-bit] Per-character banked struct (WRAM4-7): object-definition id SetupCharSpriteFromObjectDef was handed; stored and never read again
+def wCharObjectDefId equ $df21
+
+; [8-bit] Per-character banked struct (WRAM4-7): ROM bank of this character's object definition, animation scripts and frame tables. GetPerspectiveScale banks it in through hRomBank / $2000 and SetCharAnimation and StepCharAnimation pass it to FarReadWordDI. 0 means no object is loaded, which is the test UpdateChar exits on
+def wCharObjectBank equ $df22
+
+; [16-bit] Per-character banked struct (WRAM4-7): pointer (in wCharObjectBank) to the frame graphics table GetPerspectiveScale walks to find a frame's tile data
+def wCharFrameTablePtr equ $df24
+
+; [16-bit] Per-character banked struct (WRAM4-7): VRAM destination the character's frame tiles are copied to
+def wCharFrameVramDest equ $df26
+
+; [16-bit] Per-character banked struct (WRAM4-7): pointer (in wCharObjectBank) to the object's animation-pointer table; SetCharAnimation indexes it by animation id
+def wCharAnimTablePtr equ $df28
+
+; [16-bit] Per-character banked struct (WRAM4-7): start of the current animation script, which the $ff (jump) command rewinds to
+def wCharAnimScriptBase equ $df2a
+
+; [16-bit] Per-character banked struct (WRAM4-7): cursor into the current animation script. Commands are word-sized: < $f0 is [delay, frame], $ff jumps, $fe switches animation, $fb toggles the flip bits of wCharSpriteAttr
+def wCharAnimScriptPtr equ $df2c
+
+; [8-bit] Per-character banked struct (WRAM4-7): animation currently playing; SetCharAnimation returns early when asked for the one already running
+def wCharAnimId equ $df2e
+
+; [8-bit] Per-character banked struct (WRAM4-7): frames left on the current animation frame; $ff means hold it indefinitely
+def wCharAnimDelay equ $df2f
+
+; [8-bit] Per-character banked struct (WRAM4-7): sprite bookkeeping flags. Bit 6 = the frame or the facing octant changed, so ReloadCharFacingTiles must upload new tiles; it clears the bit itself
+def wCharSpriteDirty equ $df30
+
+; [8-bit] Per-character banked struct (WRAM4-7): facing octant 0-7, derived from wCharFacingShown; picks the tile row and, for octants 2 and 6, the mirrored sprite
+def wCharFacingOctant equ $df32
+
+; [8-bit] Per-character banked struct (WRAM4-7): frame id the animation script last selected
+def wCharAnimFrame equ $df33
+
+; [8-bit] Per-character banked struct (WRAM4-7): first VRAM tile of this character's sprite, from a per-character-index table
+def wCharTileBase equ $df36
+
+; [8-bit] Per-character banked struct (WRAM4-7): OAM attribute byte for the character. The low three bits are the CGB OBJ palette (wCharIndex + 4) and double as the tile-block index ReloadCharFrameGfx uploads into (& $07, + $08); the high bits are the flip bits the animation script's $fb command toggles, and SetCharAnimation clears them with `and $0f`
+def wCharSpriteAttr equ $df37
+
+; [16-bit] Per-character banked struct (WRAM4-7): pointer (in wCharObjectBank) to the per-frame shadow/scale table GetPerspectiveScale reads
+def wCharShadowTablePtr equ $df38
+
+; [8-bit] Per-character banked struct (WRAM4-7): ROM bank holding the character's frame graphics; ReloadCharFrameGfx and LoadCharChargeFlashGfx pass it to the bank $00 far-call vector at $0110
+def wCharGfxBank equ $df3a
+
+; [16-bit] Per-character banked struct (WRAM4-7): X velocity (zeroed on placement and at point end)
+def wCharVelX equ $df40
+
+; [16-bit] Per-character banked struct (WRAM4-7): depth velocity
+def wCharVelDepth equ $df42
+
+; [16-bit] Per-character banked struct (WRAM4-7): height velocity
+def wCharVelHeight equ $df44
+
+; [16-bit] Per-character banked struct (WRAM4-7): walk-target X (integer part)
+def wCharWalkTargetX equ $df46
+
+; [16-bit] Per-character banked struct (WRAM4-7): walk-target depth; MoveCharTowardTarget ($7541) walks toward it, snapping when both deltas < $18 (CheckCharNearTarget $78be)
+def wCharWalkTargetDepth equ $df48
+
+; [8-bit] Per-character banked struct (WRAM4-7): aim the player asked for with left/right at the moment of the shot, captured by CaptureServeAim / CaptureShotAim. GetShotAimOffsetForSide and ComputeShotTargetX turn it into the target's lateral offset
+def wCharAimOffset equ $df4a
+
+; [8-bit] Per-character banked struct (WRAM4-7): frames elapsed in the current swing phase, reset when the windup starts and incremented by the windup and contact phases
+def wCharSwingFrames equ $df4b
+
+; [8-bit] 1 when the swing was started with fewer than 5 charge frames -- a tap rather than a held swing. Cleared as the swing starts and set only on that branch; ExecuteShot copies it into wShotWasQuickSwing so the shot keeps the value
+def wCharQuickSwing equ $df4c
+
+; [8-bit] Per-character banked struct (WRAM4-7): shot button already recorded, so BufferShotButtonPress ignores it being held
+def wCharLastShotButton equ $df4f
+
+; [8-bit] Per-character banked struct (WRAM4-7): result of this frame's ball-geometry tests: bit 0 = ball within swing range, bit 1 = inside the contact window, bit 4 = within normal reach (clear selects the stretching shot table). Rebuilt every frame by UpdateCharBallGeometry
+def wCharBallReachFlags equ $df50
+
+; [8-bit] Per-character banked struct (WRAM4-7): set while the charge flash is playing; cleared when the swing starts or aborts
+def wCharChargeFlashOn equ $df51
+
+; [8-bit] Per-character banked struct (WRAM4-7): last projected screen X (BuildCharSpriteSlots $7672)
+def wCharScreenX equ $df53
+
+; [8-bit] Per-character banked struct (WRAM4-7): last projected screen Y
+def wCharScreenY equ $df54
+
+; [8-bit] Per-character banked struct (WRAM4-7): point result from this character's perspective (signed wPointWinLoseFlag)
+def wCharPointResult equ $df57
+
+; [8-bit] Per-character banked struct (WRAM4-7): shot buttons the AI decided to press this swing (AiPickServeButtons / AiPickShotButtons); AiPressFirstShotButton and AiPressSecondShotButton feed them into wCharInputBits one at a time
+def wAiShotButtons equ $df58
+
+; [8-bit] Per-character banked struct (WRAM4-7): max facing change per frame, easing wCharFacingShown toward wCharFacingDesired
+def wCharFacingEaseRate equ $df68
+
+; [8-bit] Per-character banked struct (WRAM4-7): speed-row index (e) into the ShotPlacementData tables for ground strokes (topspin/slice/power variants/neutral); selects bytes 4-5 -> shot speed in LoadShotPlacementEntry
+def wGroundStrokeSpeedIndex equ $df6b
+
+; [8-bit] Per-character banked struct (WRAM4-7): speed-row index (e) into ShotPlacementData for the smash and all three serves
+def wSmashServeSpeedIndex equ $df6c
+
+; [8-bit] Per-character banked struct (WRAM4-7): speed-row index (e) into ShotPlacementData for the reach (smash-range) shot variants
+def wReachSpeedIndex equ $df6d
+
+; [8-bit] Per-character banked struct (WRAM4-7): placement-row index (d) into ShotPlacementData for topspin and serve-topspin; selects bytes 0-3 -> target offsets in LoadShotPlacementEntry
+def wTopspinPlacementIndex equ $df6e
+
+; [8-bit] Per-character banked struct (WRAM4-7): placement-row index (d) into ShotPlacementData for slice and serve-slice
+def wSlicePlacementIndex equ $df6f
+
+; [16-bit] Per-character banked struct (WRAM4-7): how far above or below the character the ball may be and still be hit; CheckCharBallContact compares |wBallRelCharHeight| against it. Loaded from the character attribute record +$10, minus $10
+def wCharReachHeight equ $df70
+
+; [16-bit] Per-character banked struct (WRAM4-7): lateral reach: CheckCharBallContact compares |wBallRelCharX| * 2 against it. Attribute record +$12
+def wCharReachX equ $df72
+
+; [16-bit] Per-character banked struct (WRAM4-7): upward speed of a jump smash, negated into wCharVelHeight by StartCharSwing. Attribute record +$14, plus $0200
+def wCharSmashJumpSpeed equ $df74
+
+; [16-bit] Per-character banked struct (WRAM4-7): lunge speed of a dive, turned into wCharVelX/wCharVelDepth through VectorFromLengthAndAngleRaw at the character's facing. Attribute record +$16
+def wCharDiveSpeed equ $df76
+
+; [8-bit] Per-character banked struct (WRAM4-7): character id InitChar was handed, before RemapExtendedCharId
+def wCharId equ $df78
+
+; [8-bit] Per-character banked struct (WRAM4-7): base frames the AI waits before reacting when the ball is within normal reach; AiSetReactionDelay adds a 0-3 random and stores wAiActionTimer. Attribute record +$1b
+def wAiReactionDelayNear equ $df79
+
+; [8-bit] Per-character banked struct (WRAM4-7): same, for a ball outside normal reach (wCharBallReachFlags bit 4 clear), so a stretching return can be made deliberately slower. Attribute record +$1c
+def wAiReactionDelayFar equ $df7a
+
+; [8-bit] Per-character banked struct (WRAM4-7): how the AI chases the ball -- read by AiTrackBallPhase and the baseliner rally state. Attribute record +$1d
+def wAiTrackingParam equ $df7b
+
+; [8-bit] Per-character banked struct (WRAM4-7): RNG threshold in AiMaybeAimAwayFromChar: the AI aims away from the opponent when the roll is under it, so a higher value places more shots. Attribute record +$1e
+def wAiAimAwayChance equ $df7c
+
+; [8-bit] Per-character banked struct (WRAM4-7): AI serve/shot habit: the low nibble indexes ServePressTossPtrs for the toss timing, and AiPickShotButtons reads it too. Attribute record +$1f
+def wAiServeStyle equ $df7d
+
+; [8-bit] Per-character banked struct (WRAM4-7): character id after RemapExtendedCharId; LookupCharSpriteSet and bank $09's LoadOnCourtCharacterGfx use it to find the sprite bank
+def wCharSpriteSetId equ $df7e
+
+; [8-bit] Per-character banked struct (WRAM4-7): where the AI stands between shots (0/5 baseline, 1 net, others mid-court); an RST00 jumptable index in AiChooseHomePosition and AiChoosePositionByStrategy. Attribute record +$0f
+def wAiPositionStrategy equ $df7f
+
+; [4 bytes] Per-character banked struct (WRAM4-7): sprite-slot record [tile, attr, screenY, screenX] for the character sprite
+def wCharSpriteSlot equ $df80
+
+; [4 bytes] Per-character banked struct (WRAM4-7): sprite-slot record for the airborne shadow (tiles $50/$52/$54/$56 shrink with jump height; drawn only while wCharFlags bit 2 set)
+def wCharAirShadowSlot equ $df88
+
+; [4 bytes] Per-character banked struct (WRAM4-7): sprite-slot record for the standing shadow (tile $58; flicker-transparency while grounded)
+def wCharGroundShadowSlot equ $df8c
+
+; [16-bit] Per-character banked struct (WRAM4-7): attribute word read from the character record +$19; StartCharSwing tests bit 7 of the low byte, and bits 0 and 1 of wCharSwingAttrWord + 1 select the lob and drop placement rows
+def wCharSwingAttrWord equ $df90
+
+; [8-bit] Per-character banked struct (WRAM4-7): placement-row index (d) into ShotPlacementDataLob (set from df91 bit 0)
+def wLobPlacementIndex equ $df92
+
+; [8-bit] Per-character banked struct (WRAM4-7): placement-row index (d) into ShotPlacementDataDrop (set from df91 bit 1)
+def wDropPlacementIndex equ $df93
+
+; [8-bit] Per-character banked struct (WRAM4-7): attribute bits XORed into wCharSpriteAttr when the facing octant is 2 or 6, i.e. when the sprite is drawn mirrored
+def wCharMirrorAttrMask equ $df94
+
+; [8-bit] Per-character banked struct (WRAM4-7): character class/tier from attribute record +$18; LookupExpTierForChar reads it on the EXP screen
+def wCharExpTier equ $df95
+
+; [8-bit] Per-character banked struct (WRAM4-7): draw-order depth key ((depth*8)>>8 + $80); DrawActorsByDepth paints teammates back-to-front
+def wCharDepthKey equ $df96

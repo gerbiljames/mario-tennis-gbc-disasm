@@ -7667,3 +7667,37 @@ $d600  banks 2,3,4  from $1b:CopyMugshotBufferToVram
 The `unproven` 615 dominate, and only more coverage moves them: instruction
 coverage across the ROM is 29%, and these sites are in screens no trace has
 reached (the save editor, the exp screen, most minigames).
+
+## Bank-tagged copies, and what a symbol file can hold
+
+The per-character match struct at `$df00` lives in all of WRAM banks 4-7 at
+once, one copy per character. It used to be a single `SECTION` with no `BANK[]`,
+left for the linker to park somewhere -- and it parked it in bank 4. That was
+tidy but not true, and the symbol file showed the cost: 82 entries, every one
+tagged `04:`, so a debugger stopped with bank 6 selected could not resolve
+`wCharPosX` at all.
+
+The fix is both forms at once. Each bank declares its own copy under a
+bank-tagged name in its own `BANK[n]` section:
+
+```
+04:df00 w4CharPosX      ; near-P1
+05:df00 w5CharPosX      ; far-P1
+06:df00 w6CharPosX      ; near-partner
+07:df00 w7CharPosX      ; far-partner
+```
+
+and the untagged `wCharPosX` survives as an EQU, because which copy a site
+means is decided by the WRAM bank selected at run time. `src/*.asm` is
+unchanged -- not one operand moved -- while `build/mariotennis.sym` goes from
+82 entries that are right a quarter of the time to **328 that are always
+right**.
+
+The reservation this restores is the lesser half of it. Nothing was ever at
+risk of being placed on those bytes: every other WRAMX section fixes both its
+address and its bank, so there was no floating section for the linker to
+misplace. What the tagged labels actually buy is symbol-file coverage, which
+EQUs cannot give -- they never reach `.sym` at all. A bank whose own section
+already runs past the addresses is skipped, which is why the mirrored
+character-data pages get no such sections: banks 2 and 3 already declare those
+bytes.

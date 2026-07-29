@@ -638,7 +638,7 @@ def _short_ctx(text, width=42):
     return text if len(text) <= width else text[:width - 3].rstrip() + "..."
 
 
-def _bank_overview(gitems, mirrored, bank, mem):
+def _bank_overview(gitems, mirrored, bank, mem, extra=()):
     """A one-line-per-region summary for the head of a bank's SECTION.
 
     A bank is 4 KiB of overlapping claims -- bank $03 alone has 99 symbols in 19
@@ -660,6 +660,9 @@ def _bank_overview(gitems, mirrored, bank, mem):
         else:
             _tag, addr, name, size, _note = it
             rows.append((addr, addr + max(1, size), name))
+    for lo, hi, what, banks in extra:
+        if bank in banks:
+            rows.append((lo, hi, what))
     for addr, name, _note, size, banks in (mirrored or ()):
         if bank in banks:
             other = ", ".join(str(b) for b in sorted(banks) if b != bank)
@@ -674,6 +677,54 @@ def _bank_overview(gitems, mirrored, bank, mem):
     for lo, hi, what in rows:
         out.append(f"  ${lo:04x}-${hi - 1:04x}  {what}")
     return "\n".join(out)
+
+
+def _tag_name(name, bank):
+    """wCharPosX -> w4CharPosX: one copy per bank needs one name per bank."""
+    return f"{name[0]}{bank}{name[1:]}"
+
+
+def _tag_items(gitems, bank):
+    """A shared group's items with every symbol name tagged by bank."""
+    out = []
+    for it in gitems:
+        if it[0] == "union":
+            tag, ustart, uend, comment, variants = it[:5]
+            out.append((tag, ustart, uend, comment, [
+                (ctx, [(a, _tag_name(n, bank), sz, nt) for a, n, sz, nt in syms],
+                 *rest) for ctx, syms, *rest in variants]))
+        else:
+            tag, addr, name, size, note = it
+            out.append((tag, addr, _tag_name(name, bank), size, note))
+    return out
+
+
+def _shared_note(banks, bank):
+    return (f"One copy per character of a structure that lives in WRAM banks "
+            f"{_bank_list(banks)}\nat once. Each bank declares its own copy "
+            f"under a bank-tagged name, so the\nsymbol file resolves the right "
+            f"one whichever bank the debugger is stopped in\n-- this is bank "
+            f"{bank}'s. The disassembly itself uses the untagged name, an EQU\n"
+            f"in include/ram_mirrored.inc, because the bank is chosen at run "
+            f"time.")
+
+
+def _shared_equs(gitems, banks):
+    """The untagged names for a shared group, as mirrored-style EQU entries.
+
+    The per-bank sections above give the linker (and the symbol file) one real
+    label per copy. Source operands still need the single bank-neutral name,
+    since which copy a site means is decided by the WRAM bank selected at run
+    time -- so the untagged name survives as a constant."""
+    out = []
+    for it in gitems:
+        if it[0] == "union":
+            for _ctx, syms, *_rest in it[4]:
+                for addr, name, size, note in syms:
+                    out.append((addr, name, note, size, frozenset(banks)))
+        else:
+            out.append((it[1], it[2], it[4], it[3], frozenset(banks)))
+    return out
 
 
 def write_mirrored_include(path, syms):
@@ -872,6 +923,27 @@ def write_ram_layout(regions, unions_by_region=None, mirrored=None):
             groups = _group_by_bank(items)
         else:
             groups = {None: [it[:5] for it in items]}   # drop the bank field
+        # How far each bank's own section reaches, so a shared group can tell
+        # whether that bank already declares the bytes it wants.
+        bank_end = {}
+        for k, its in groups.items():
+            if k is SHARED:
+                continue
+            bank_end[k] = max((it[2] if it[0] == "union" else it[1] + it[3])
+                              for it in its)
+        shared_rows = []
+        if SHARED in groups and mem in BANK_KEY:
+            sits = groups[SHARED]
+            sbanks = {b for it in sits if it[0] == "union"
+                      for v in it[4] for b in v[2]}
+            lo = min(it[1] for it in sits)
+            hi = max(it[2] if it[0] == "union" else it[1] + it[3] for it in sits)
+            # name the range after its largest overlay, not its first
+            vs = [v for it in sits if it[0] == "union" for v in it[4] if v[0]]
+            ctx = (_short_ctx(max(vs, key=lambda v: len(v[1]))[0]) if vs
+                   else "shared struct")
+            shared_rows.append((lo, hi, f"{ctx}  [one copy per bank "
+                                        f"{_bank_list(sbanks)}]", sbanks))
         for key in sorted(groups, key=lambda k: (k == SHARED, k)):
             gitems = sorted(groups[key], key=lambda t: t[1])
             bank = None if key is SHARED else key
@@ -880,19 +952,28 @@ def write_ram_layout(regions, unions_by_region=None, mirrored=None):
             # symbol and stays out of the banked sections' way.
             base = gitems[0][1] if bank is None and mem in BANK_KEY else start
             title = note = None
-            if key is SHARED:
+            if key is SHARED and mem in BANK_KEY:
                 banks = sorted({b for it in gitems if it[0] == "union"
                                 for v in it[4] for b in v[2]})
-                title = f"{mem} banks {_bank_list(banks)}"
-                note = (f"Not one bank's: these addresses hold the same field in "
-                        f"WRAM banks {_bank_list(banks)}\n"
-                        f"at once (one copy per character), so the section "
-                        f"declares no BANK -- the\nlinker parks it in a free "
-                        f"one. The name resolves by the bank selected at\nthe "
-                        f"referencing site, which is what makes one name work "
-                        f"for all of them.")
-            elif mem in BANK_KEY:
-                note = _bank_overview(gitems, mirrored, bank, mem)
+                for b in banks:
+                    # Skip a bank whose own section already runs past these
+                    # addresses -- it declares them already, and a second
+                    # section over the same bytes would not link.
+                    if base < bank_end.get(b, start):
+                        continue
+                    out = []
+                    _emit_section(
+                        out, mem, base, b, _tag_items(gitems, b), end,
+                        title=f"{mem} bank {b} ${base:04x}",
+                        note=_shared_note(banks, b))
+                    files.setdefault(path, []).append(
+                        "\n".join(out).rstrip() + "\n")
+                if mirrored is not None:
+                    mirrored.extend(_shared_equs(gitems, banks))
+                continue
+            if mem in BANK_KEY:
+                note = _bank_overview(gitems, mirrored, bank, mem,
+                                      shared_rows)
             out = []
             _emit_section(out, mem, base, bank, gitems, end, title, note)
             files.setdefault(path, []).append("\n".join(out).rstrip() + "\n")
