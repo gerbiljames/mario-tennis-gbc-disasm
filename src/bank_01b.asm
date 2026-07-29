@@ -2,16 +2,16 @@ SECTION "ROM Bank $1b", ROMX[$4000], BANK[$1b]
 
 	farptr DecompressCharMugshot ; $4000
 	farptr LoadIndexedPaletteThunk ; $4002
-	farptr StubNop_1b_4e7f ; $4004
-	farptr StubNop_1b_4e80 ; $4006
-	farptr StubNop_1b_4e80Alias1, StubNop_1b_4e80 ; $4008
-	farptr StubNop_1b_4e57 ; $400a
+	farptr StubNop_1b_05 ; $4004
+	farptr StubNop_1b_06 ; $4006
+	farptr StubNop_1b_06Alias1, StubNop_1b_06 ; $4008
+	farptr StubNop_1b_04 ; $400a
 	farptr ResetMugshotPalettes_1b ; $400c
 	farptr SetMugshotAttrs ; $400e
 	farptr LoadCharMugshotToBuffer ; $4010
-	farptr StubNop_1b_4e43 ; $4012
-	farptr StubNop_1b_4e44 ; $4014
-	farptr StubNop_1b_4e45 ; $4016
+	farptr StubNop_1b_01 ; $4012
+	farptr StubNop_1b_02 ; $4014
+	farptr StubNop_1b_03 ; $4016
 	farptr CopyMugshotBufferToVram ; $4018
 	farptr ShowRankingBoard ; $401a
 	farptr UpdateCharSelectSelection ; $401c
@@ -853,7 +853,7 @@ MugshotGfxStorySlot3_1b:
 	INCBIN "data/bank_01b/lz_4bd5.bin" ; $4bd5, 153 bytes
 MugshotGfxUnknown_1b:
 	INCBIN "data/bank_01b/lz_4c6e.bin" ; $4c6e, 126 bytes
-CharMugshotGfxPointers_1b_4cec:
+CharMugshotGfxPointers:
 	; $4cec, 288 bytes (mugshot_ptr_table)
 	dw MugshotGfxAlex_1b, .unused ; $00 Alex
 	dw MugshotGfxNina_1b, .unused ; $01 Nina
@@ -928,7 +928,7 @@ CharMugshotGfxPointers_1b_4cec:
 	dw $6400, $00ff
 .trailer: ; unreferenced
 	dw $d600, $d690, $d720, $0000, $0090, $0120
-StubNop_1b_4e0c:
+StubNop_1b_00:
 	ret ; $4e0c
 ResetMugshotPalettes_1b:
 	ld a, $ff ; $4e0d
@@ -969,11 +969,11 @@ LoadCharMugshotToBuffer:
 	call DecompressCharMugshot ; $4e3e
 	pop de ; $4e41
 	ret ; $4e42
-StubNop_1b_4e43:
+StubNop_1b_01:
 	ret ; $4e43
-StubNop_1b_4e44:
+StubNop_1b_02:
 	ret ; $4e44
-StubNop_1b_4e45:
+StubNop_1b_03:
 	ret ; $4e45
 CopyMugshotBufferToVram:
 	push af ; $4e46
@@ -988,7 +988,7 @@ CopyMugshotBufferToVram:
 	pop bc ; $4e54
 	pop af ; $4e55
 	ret ; $4e56
-StubNop_1b_4e57:
+StubNop_1b_04:
 	ret ; $4e57
 LoadIndexedPaletteThunk:
 	farcall LoadIndexedPalette_18 ; $4e58
@@ -997,7 +997,7 @@ DecompressCharMugshot:
 	push af ; $4e5c
 	push de ; $4e5d
 	push hl ; $4e5e
-	call StubNop_1b_4e0c ; $4e5f
+	call StubNop_1b_00 ; $4e5f
 	cp $3f ; $4e62
 	jr nz, .gotIndex ; $4e64
 	ld b, a ; $4e66
@@ -1009,7 +1009,7 @@ DecompressCharMugshot:
 	ld h, $00 ; $4e6d
 	add hl, hl ; $4e6f
 	add hl, hl ; $4e70
-	ld bc, CharMugshotGfxPointers_1b_4cec ; $4e71
+	ld bc, CharMugshotGfxPointers ; $4e71
 	add hl, bc ; $4e74
 	ld a, [hl+] ; $4e75
 	ld h, [hl] ; $4e76
@@ -1019,9 +1019,9 @@ DecompressCharMugshot:
 	pop de ; $4e7c
 	pop af ; $4e7d
 	ret ; $4e7e
-StubNop_1b_4e7f:
+StubNop_1b_05:
 	ret ; $4e7f
-StubNop_1b_4e80:
+StubNop_1b_06:
 	ret ; $4e80
 ShowRankingBoard:
 	wram_bank $03 ; $4e81
@@ -2105,7 +2105,7 @@ HighlightRankingRow:
 	ld h, [hl] ; $575d
 	ld l, a ; $575e
 	jp hl ; $575f
-StubNop_1b_5760:
+StubNop_1b_07:
 	ret ; $5760
 RankingRowDrawHandlers_1b:
 	dw DrawRankingRow0 ; $5761 jumptable
@@ -2126,77 +2126,77 @@ DrawRankingRow0:
 	ld b, $05 ; $577f
 	ld c, $02 ; $5781
 	farcall CopyTilemapRect ; $5783
-	jp StubNop_1b_5760 ; $5786
+	jp StubNop_1b_07 ; $5786
 DrawRankingRow2:
 	ld hl, $d280 ; $5789
 	ld de, $d146 ; $578c
 	ld b, $04 ; $578f
 	ld c, $02 ; $5791
 	farcall CopyTilemapRect ; $5793
-	jp StubNop_1b_5760 ; $5796
+	jp StubNop_1b_07 ; $5796
 DrawRankingRow3:
 	ld hl, $d244 ; $5799
 	ld de, $d02a ; $579c
 	ld b, $04 ; $579f
 	ld c, $02 ; $57a1
 	farcall CopyTilemapRect ; $57a3
-	jp StubNop_1b_5760 ; $57a6
+	jp StubNop_1b_07 ; $57a6
 DrawRankingRow4:
 	ld hl, $d284 ; $57a9
 	ld de, $d14a ; $57ac
 	ld b, $04 ; $57af
 	ld c, $02 ; $57b1
 	farcall CopyTilemapRect ; $57b3
-	jp StubNop_1b_5760 ; $57b6
+	jp StubNop_1b_07 ; $57b6
 DrawRankingRow5:
 	ld hl, $d2c0 ; $57b9
 	ld de, $d026 ; $57bc
 	ld b, $04 ; $57bf
 	ld c, $07 ; $57c1
 	farcall CopyTilemapRect ; $57c3
-	jp StubNop_1b_5760 ; $57c6
+	jp StubNop_1b_07 ; $57c6
 DrawRankingRow6:
 	ld hl, $d2c8 ; $57c9
 	ld de, $d146 ; $57cc
 	ld b, $04 ; $57cf
 	ld c, $07 ; $57d1
 	farcall CopyTilemapRect ; $57d3
-	jp StubNop_1b_5760 ; $57d6
+	jp StubNop_1b_07 ; $57d6
 DrawRankingRow7:
 	ld hl, $d2c4 ; $57d9
 	ld de, $d02a ; $57dc
 	ld b, $04 ; $57df
 	ld c, $07 ; $57e1
 	farcall CopyTilemapRect ; $57e3
-	jp StubNop_1b_5760 ; $57e6
+	jp StubNop_1b_07 ; $57e6
 DrawRankingRow8:
 	ld hl, $d2cc ; $57e9
 	ld de, $d14a ; $57ec
 	ld b, $04 ; $57ef
 	ld c, $07 ; $57f1
 	farcall CopyTilemapRect ; $57f3
-	jp StubNop_1b_5760 ; $57f6
+	jp StubNop_1b_07 ; $57f6
 DrawRankingRow9:
 	ld hl, $d014 ; $57f9
 	ld de, $d026 ; $57fc
 	ld b, $04 ; $57ff
 	ld c, $10 ; $5801
 	farcall CopyTilemapRect ; $5803
-	jp StubNop_1b_5760 ; $5806
+	jp StubNop_1b_07 ; $5806
 DrawRankingRow10:
 	ld hl, $d018 ; $5809
 	ld de, $d02a ; $580c
 	ld b, $04 ; $580f
 	ld c, $10 ; $5811
 	farcall CopyTilemapRect ; $5813
-	jp StubNop_1b_5760 ; $5816
+	jp StubNop_1b_07 ; $5816
 DrawRankingRow11:
 	ld hl, $d014 ; $5819
 	ld de, $d026 ; $581c
 	ld b, $08 ; $581f
 	ld c, $10 ; $5821
 	farcall CopyTilemapRect ; $5823
-	jp StubNop_1b_5760 ; $5826
+	jp StubNop_1b_07 ; $5826
 HighlightDoublesRankingRows:
 	ld a, [wRankingBoardPlayerRow] ; $5829
 	or a ; $582c
@@ -2229,7 +2229,7 @@ HighlightDoublesRankingRow:
 	ld h, [hl] ; $5853
 	ld l, a ; $5854
 	jp hl ; $5855
-StubNop_1b_5856:
+StubNop_1b_08:
 	ret ; $5856
 RankingMarkerHandlers_1b:
 	dw DrawDoublesRankingMarker0 ; $5857 jumptable
@@ -2245,42 +2245,42 @@ DrawDoublesRankingMarker0:
 	ld b, $04 ; $586b
 	ld c, $04 ; $586d
 	farcall CopyTilemapRect ; $586f
-	jp StubNop_1b_5856 ; $5872
+	jp StubNop_1b_08 ; $5872
 DrawDoublesRankingMarker2:
 	ld hl, $d244 ; $5875
 	ld de, $d06a ; $5878
 	ld b, $04 ; $587b
 	ld c, $04 ; $587d
 	farcall CopyTilemapRect ; $587f
-	jp StubNop_1b_5856 ; $5882
+	jp StubNop_1b_08 ; $5882
 DrawDoublesRankingMarker3:
 	ld hl, $d248 ; $5885
 	ld de, $d066 ; $5888
 	ld b, $04 ; $588b
 	ld c, $07 ; $588d
 	farcall CopyTilemapRect ; $588f
-	jp StubNop_1b_5856 ; $5892
+	jp StubNop_1b_08 ; $5892
 DrawDoublesRankingMarker4:
 	ld hl, $d24c ; $5895
 	ld de, $d06a ; $5898
 	ld b, $04 ; $589b
 	ld c, $07 ; $589d
 	farcall CopyTilemapRect ; $589f
-	jp StubNop_1b_5856 ; $58a2
+	jp StubNop_1b_08 ; $58a2
 DrawDoublesRankingMarker5:
 	ld hl, $d248 ; $58a5
 	ld de, $d066 ; $58a8
 	ld b, $08 ; $58ab
 	ld c, $07 ; $58ad
 	farcall CopyTilemapRect ; $58af
-	jp StubNop_1b_5856 ; $58b2
+	jp StubNop_1b_08 ; $58b2
 DrawDoublesRankingMarker6:
 	ld hl, $d250 ; $58b5
 	ld de, $d066 ; $58b8
 	ld b, $08 ; $58bb
 	ld c, $07 ; $58bd
 	farcall CopyTilemapRect ; $58bf
-	jp StubNop_1b_5856 ; $58c2
+	jp StubNop_1b_08 ; $58c2
 PushRankingBoardTilemapRows:
 	ld hl, $d000 ; $58c5
 	ld de, $9800 ; $58c8
@@ -2922,7 +2922,7 @@ DrawCharSelectMugshots:
 	ld a, [wCharSelectChar] ; $60b0
 	farcall LoadCharacterRecordToBuffer ; $60b3
 	ld a, [$d58b] ; $60b6
-	farcall StubNop_1b_4e43 ; $60b9
+	farcall StubNop_1b_01 ; $60b9
 	ret ; $60bc
 	and $01 ; $60bd
 	ld [wTargetZoneX2], a ; $60bf
@@ -3270,7 +3270,7 @@ RunDebugSaveDataFlow:
 	jr .loop ; $635d
 .zero:
 	push bc ; $635f
-	call StubNop_1b_69d6 ; $6360
+	call StubNop_1b_09 ; $6360
 	pop bc ; $6363
 	or a ; $6364
 	jr nz, .loop ; $6365
@@ -3685,7 +3685,7 @@ DrawUnlockDebugMugshots:
 	ld a, [wCharSelectChar] ; $670f
 	farcall LoadCharacterRecordToBuffer ; $6712
 	ld a, [wCharRecordBuffer + 11] ; $6715
-	farcall StubNop_1b_4e43 ; $6718
+	farcall StubNop_1b_01 ; $6718
 	ret ; $671b
 RunMinigameFlagsDebugScreen:
 	wram_bank $01 ; $671c
@@ -3940,7 +3940,7 @@ LoadUnlockDebugCursorGfx:
 	call QueueVRAMCopy ; $68f0
 	pop af ; $68f3
 	wram_bank ; $68f4
-	ld hl, Palette_1b_6930 ; $68f8
+	ld hl, UnlockDebugCursorPalette ; $68f8
 	ld de, $0801 ; $68fb
 	call LoadPaletteShadow ; $68fe
 	ld a, $01 ; $6901
@@ -3949,7 +3949,7 @@ LoadUnlockDebugCursorGfx:
 	ret ; $6909
 UnlockDebugCursorGfx:
 	INCBIN "data/bank_01b/d_690a.bin" ; $690a, 38 bytes
-Palette_1b_6930:
+UnlockDebugCursorPalette:
 	INCLUDE "data/bank_01b/palettes_6930.asm" ; $6930, 8 bytes (palettes)
 DrawUnlockDebugFlagSprites:
 	ldh a, [hWramBank] ; $6938
@@ -4014,19 +4014,19 @@ RunStoryDataConfirmMenu:
 	ld a, $0c ; $69b2
 	ld [wStubbedPromptTaskState + 1], a ; $69b4
 	ld a, $01 ; $69b7
-	ld hl, StubNop_1b_69d6 ; $69b9
+	ld hl, StubNop_1b_09 ; $69b9
 	call RegisterFrameTask ; $69bc
 	ld b, $01 ; $69bf
 	farcall RunTwoOptionSelectB ; $69c1
 	push af ; $69c4
-	ld hl, StubNop_1b_69d6 ; $69c5
+	ld hl, StubNop_1b_09 ; $69c5
 	call UnregisterFrameTask ; $69c8
 	pop af ; $69cb
 	ret ; $69cc
 Data_1b_69cd:
 	; $69cd, 9 bytes (bytes:9)
 	db $c9, $ff, $36, $ff, $36, $ff, $36, $ff, $36 ; 0x00
-StubNop_1b_69d6:
+StubNop_1b_09:
 	ret ; $69d6
 	ret ; $69d7
 	ret ; $69d8
@@ -4038,7 +4038,7 @@ StubNop_1b_69d6:
 	call WaitFadeEnd ; $69e9
 	call DisableLCDSafely ; $69ec
 	farcall InitConfirmScreen ; $69ef
-	call StubNop_1b_6aad ; $69f2
+	call StubNop_1b_10 ; $69f2
 	farcall ForceFlushBgMapToVram ; $69f5
 	call EnableLCD ; $69f8
 	script_fade_in $20 ; $69fb
@@ -4047,7 +4047,7 @@ StubNop_1b_69d6:
 	and a ; $6a03
 	jr nz, .loop ; $6a04
 	ld b, $00 ; $6a06
-	farcall StubNop_18_5379 ; $6a08
+	farcall StubNop_18_1 ; $6a08
 	call AdvanceFrame ; $6a0b
 	ret ; $6a0e
 	ld hl, wPlayer1MainName ; $6a0f
@@ -4114,7 +4114,7 @@ QueueStoryInfoRowToVram:
 	ld c, $01 ; $6aa7
 	call QueueVRAMCopy ; $6aa9
 	ret ; $6aac
-StubNop_1b_6aad:
+StubNop_1b_10:
 	ret ; $6aad
 CopyMainCharNameWithDiacritics:
 	push de ; $6aae

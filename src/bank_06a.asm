@@ -18,7 +18,7 @@ WalkSprite_6a_00:
 	dw WalkSprite_6a_00_Gfx03 ; $4022
 	dw WalkSprite_6a_00_Gfx04 ; $4024
 	dw WalkSprite_6a_00_Gfx05 ; $4026
-Padding_6a_4028:
+Padding_6a:
 	; $4028, 8 bytes (fill)
 	ds 8, $00
 WalkSprite_6a_00_Gfx00:

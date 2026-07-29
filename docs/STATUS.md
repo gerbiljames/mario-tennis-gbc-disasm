@@ -1,4 +1,4 @@
-# Project status — 2026-07-26
+# Project status — 2026-07-29
 
 ## Where things stand
 
@@ -226,7 +226,7 @@ opens by reading `wFoo` -> `.checkFoo`; `xor a` + store -> `.clearFoo`), and
 roughly a fifth then needed a hand name. Two structural rules mattered:
 
 * **Never name a label whose enclosing global is a data symbol.** It would
-  render `DrillShotTable_0b_4b8d.rally1` -- worse than the auto name. Bank
+  render `ServiceMatch2JudgePointDrillShotTable.rally1` -- worse than the auto name. Bank
   `$0b`'s 296 stragglers were all of this shape: each drill `*JudgePoint`
   routine has its per-result case blocks *after* the table it indexes. Naming
   the block (`ServiceMatch2Cases1`, from the routine that references the
@@ -468,7 +468,7 @@ own pointer-load gate still accepts a `push de` after such a load as evidence
 
 One table came out of the wash: `CharDataPageRightTargets_1c` is 5 bytes, not
 the 69 the blob boundary implied. The 64 bytes after it are 26 words stepping
-by `$40` (`$6880`-`$7040`) that nothing in the ROM reads, now `Unused_1c_5679`.
+by `$40` (`$6880`-`$7040`) that nothing in the ROM reads, now `Unused_1c_0`.
 
 ### Bank $3e's menu tables, and two helpers hiding in them (2026-07-25)
 
@@ -728,7 +728,7 @@ chains differed in the first place). Eight record renderers moved to
 
 ### The menu mugshot table symbolicated (2026-07-25)
 
-`CharMugshotGfxPointers_1b_4cec` rendered as 72 rows of raw `dw $44b1, $4df8`
+`CharMugshotGfxPointers` rendered as 72 rows of raw `dw $44b1, $4df8`
 over one 2,107-byte `Gfx_1b_44b1` blob. It is now a `mugshot_ptr_table`: 67
 records whose word 0 names its portrait stream and whose row comment names the
 character, over 14 separately labeled LZ streams.
@@ -899,7 +899,7 @@ readable `dw` colors.
 
 **Caveat on the naming metric.** `progress.py`'s human-named count jumped
 from 6,199 to 6,332 in this pass, but the new entries are *usage-derived
-placeholders* (`Palette_18_42e0`, `Gfx_1c_7541`), not semantic names. They
+placeholders* (`MenuHandCursorPalette`, `Gfx_1c_7541`), not semantic names. They
 say what reads the data, not what it is. Treat that part of the count
 accordingly — the underlying win is that nothing is anonymous any more, so
 naming a region now means editing one `labels.json` entry rather than first
@@ -933,7 +933,7 @@ theirs declared, and `$0f`, `$10`, `$13`, `$14` and `$15` now do too — 558,
 486, 411, 438 and 419 bytes of `as_*` opcodes:
 
 ```
-ActorScript_0f_7b8d:
+ActorScript_0f_12:
 	; $7b8d, 558 bytes (actor_script)
 	as_anim $01
 	as_target_rel $0400, $0200
@@ -1112,7 +1112,7 @@ lists are 24 bytes and not 28. A new `actor_list` data-table kind renders
 them with the script pointer and facing resolved:
 
 ```
-ActorList_04_4d63:
+ActorList_04_0:
 	; $4d63, 66 bytes (actor_list)
 	dw $0000, ActorScript_Idle, $0100, $0100 ; actor 0: cond, script, x, y
 	db FACE_DOWN, $00, $01, $01, $00, $00 ; facing, -, obj def, anim, extra, -
@@ -1359,7 +1359,7 @@ the template right after the six frame pairs).
 as `as_*` opcodes consuming 438 of 438 bytes and ending flush against
 `ComputeTrainingGymProgressIndex` at `$7e5a`. It is a pool of six
 independent loops, each closed by its own back-edge `as_jump`, now six
-`actor_script` regions: `ActorScript_0e_7ca4`, `_7d0b`, `_7d72`, `_7ddb`,
+`actor_script` regions: `ActorScript_0e_23`, `_7d0b`, `_7d72`, `_7ddb`,
 `_7e3e`, `_7e4b`.
 
 The first four share one shape — `as_anim $01` → `as_target_rel ±$0400, dy`
@@ -1484,7 +1484,7 @@ inline base computes it, no register load names it, and the `ret` at
 gap between two hook handlers, so it looks like a leftover from a layout
 where each minigame's targets lived beside its own code before they were
 consolidated into the central table. Declared `records:2` as
-`Unused_0d_5d2c` so the source states that rather than leaving a mystery
+`Unused_0d` so the source states that rather than leaving a mystery
 blob; **bank `$0d` now has no INCBIN blobs at all.**
 
 The last real blob, `d_5b4b.bin` (122 bytes), is the Treasure Box spawn
@@ -1771,7 +1771,7 @@ Alex/Nina/Harry/Kate. The 28 bytes that followed were swept into the same
 blob only because the next label is 32 bytes away; nothing in the ROM
 references them and their values contradict gender for the wider roster
 (Curt, Sean, Luigi, Mario and Bowser are 1; Allie, Pam, Fay, Sammi, Emily
-and Peach are 0). They are now split off as `Unused_02_441f`.
+and Peach are 0). They are now split off as `Unused_02`.
 
 `$ffb0-$ffb3` is a pair of 16-bit HRAM slots each caller repurposes, so it
 is modeled as a `ram_unions.json` overlay rather than named globally:
@@ -1810,7 +1810,7 @@ aim-line distances computed at `$07:$5787`/`$07:$57bc` as
 
 ### Open questions from the 2026-07-24 pass
 
-* **What are the 28 bytes of `Unused_02_441f`?** Nothing references them
+* **What are the 28 bytes of `Unused_02`?** Nothing references them
   and they match no attribute I could find. Labelled unused rather than
   guessed at.
 * **The `$14` "WaterSprite" object is a plane** (settled 2026-07-24).
@@ -2086,11 +2086,11 @@ new `SetMinigameClearFlag`; `$c8f7` is the low byte of the BE
 (16 `$a800`-relative offsets), `DpadMaskToAngleTable_04` (d-pad bitmask → 8-way
 angle, $20 units), the `RankingFlagList_0a_*` `SetGameFlag` word lists, the
 `{Singles,Doubles}MatchSettingsTable_0a` 5-byte record tables (chosen by the
-category byte of `wCurrentMinigameStoryMatch`), `ObjectSpawnTable_18_7c53`
-(16 × 11-byte descriptors), `CharMugshotGfxPointers_1b_4cec`, and the
+category byte of `wCurrentMinigameStoryMatch`), `ObjectArrayASpawnTable`
+(16 × 11-byte descriptors), `CharMugshotGfxPointers`, and the
 `MatchUiTilemap{Tiles,Attrs}_0d` layer pair. Two blobs are name-only (kept as
-INCBIN): `SelectionMaskGrid_3f_539e` (a `$00`/`$40`-delimited bitmask stream,
-not fixed-stride) and `ObjectSpawnTable_18_7d88` (16 records + a mixed tail).
+INCBIN): `SelectionMaskGrid_3f` (a `$00`/`$40`-delimited bitmask stream,
+not fixed-stride) and `ObjectArrayBSpawnTable` (16 records + a mixed tail).
 Byte-perfect.
 
 The 6 bank-$1a `ld de, $64xx` "candidates" (`$642c/643c/6454/6464/6474/6484`)
@@ -2584,8 +2584,8 @@ Walked all 42 `story_location` map_scripts pointers and, recursively, every
   folds into a `script_move_target` macro. The other 226 raw `<$4000` handlers
   are dialogue/text ids (`ShowSpeakerDialogue`), correctly left literal.
 - **`map_actor` script `$11:$6e16`:** a runtime-selected variant entry point
-  absorbed into `ActorScript_11_6e07`'s run; declared `actor_script` +
-  `ActorScript_11_6e16` so the `map_actor` resolves symbolically.
+  absorbed into `ActorScript_11_28`'s run; declared `actor_script` +
+  `ActorScript_11_29` so the `map_actor` resolves symbolically.
 
 Config-only (labels.json + data_tables.json + one seed offset); byte-perfect.
 (Out of scope: 4 `map_actor` raw script refs in bank `$1a`, not reached from any
@@ -2628,7 +2628,7 @@ install/jump/call/table/`map_actor` reference (`$0e:$7ca4`, `$13:$62db`,
 `$14:$78e7`, `$15:$7a23`, `$27:$4b41`) — left unclassified pending evidence, not
 labelled on decode-shape alone. Also caught one pre-existing mislabel:
 `SceneFrameDataHi_27` ($27:$51d0) was an install target already (wrongly) named
-as frame data — renamed `ActorScript_27_51d0`. A sweep over all 238 script
+as frame data — renamed `ActorScript_27_04`. A sweep over all 238 script
 targets (map_actor objdefs + install sites, literal and label operands) confirms
 no other non-`ActorScript_` targets remain.
 
@@ -2654,7 +2654,7 @@ Every `map_actor` record's 2nd field is a pointer to an actor object-definition
 distinct objdefs are referenced across the story banks ($0e-$15/$27), all shared
 and unlabeled. Added generic labels for each (since renamed `ActorScript_bb_cccc`,
 see "Decode actor-script bytecode" above) so the records read `map_actor $0000,
-ActorScript_0f_7b57, …`; overlapping defs (e.g. `$7b2f` inside `$7b25`'s blob)
+ActorScript_0f_09, …`; overlapping defs (e.g. `$7b2f` inside `$7b25`'s blob)
 split into separate labeled blobs. Byte-perfect.
 
 ### Fix mis-seeded bank $13 map_actor lists (2026-07-19)
@@ -3541,7 +3541,7 @@ handler,$0000}`) whose handlers (`$40b0/$4195/$41da/$4450/$448d/$44cc/$4640/
 by `Func_09_4873`) was split into three blobs by two lone coverage seeds
 (`$24f99`/`$252b5`) that are data reads during the copy, not execution; added to
 `BAD_SEEDS`, it is now one `VramTileset_09` + descriptor table. Also named
-`MoveCurveTable_09`, `VramGfxPtrTable_09_616d`, `ServeGfxPtrTable_09`.
+`MoveCurveTable_09`, `VramGfxPtrTable_09`, `ServeGfxPtrTable_09`.
 
 **Bank $13 (story engine, biggest story bank) de-blobbed** (56.0% → 70.8%
 code; 29 → 16 blobs). The bulk of its "data" was **story-command handler code**
@@ -3577,7 +3577,7 @@ $5be1 2.4 KB, $75a6 1 KB) were carved into **21 exactly-bounded named streams**
 LoadPaletteShadow source and labeling each — the streams chain contiguously,
 so label-splitting yields the exact compressed length (verified against
 `tools/lz.py`, e.g. `Lz_1e_4c70` = 1455 B comp / 2816 decomp). Loaders now read
-`ld hl, Lz_1e_4c70` / `ld hl, Palettes_1e_4c40`, and palette sets render inline
+`ld hl, Lz_1e_4c70` / `ld hl, ResultsScreenPalettes`, and palette sets render inline
 as BGR555 colors. Also recovered the stranded handler code (bank-swap/VRAM
 copiers, a farcall stub) and structured three jump tables
 (`RewardSubHandlers{A,B,C}_1e`). Remaining blobs are small coordinate/OAM/
@@ -4092,7 +4092,7 @@ and decoding as nonsense, is a bank-misattributed trace line, not code.
 
 **One was actor bytecode.** `$27:$6b94` is four `actor_script` blobs
 (20/26/20/26 bytes) that the carver had not been told about; they now decode
-as ordinary `as_*` walk-and-face scripts alongside `ActorScript_27_6bf0`.
+as ordinary `as_*` walk-and-face scripts alongside `ActorScript_27_24`.
 
 **Three were genuinely graphics or data**, renamed off the misleading prefix:
 
@@ -4535,7 +4535,7 @@ Left auto (69): targets with no resolvable reference, targets whose referring
 table is itself auto-named, six whose derived name is already taken by a
 different offset, and two whose enclosing label is data rather than a routine.
 
-`Unused_1c_5679`'s 32 rows were the one group worth looking at directly.
+`Unused_1c_0`'s 32 rows were the one group worth looking at directly.
 Rendering the 64-byte payloads as 2bpp shows one image redrawn a pixel further
 along in each -- a pre-shifted sprite set, so `UnusedShiftGfx00`-`31`.
 
@@ -5167,7 +5167,7 @@ usually reaches a table not with `ld hl, table` but by adding an index to the
 address in halves:
 
 ```
-        add a, $4a      ; LOW(CharStatTable_07_5c4a)
+        add a, $4a      ; LOW(CharStatTable_07_0)
         ld l, a
         adc a, $5c      ; HIGH(...)
         sub a, l
@@ -5194,7 +5194,7 @@ a *qualified local*, which my "skip locals" test missed because it only looked
 for a leading dot. A local names a point inside a routine and is never a table
 base.
 
-Verified by moving a table: growing a blob before `CharStatTable_07_5c4a` by
+Verified by moving a table: growing a blob before `CharStatTable_07_0` by
 one byte moves it to `$5c4b`, and the assembled immediate follows, `$4a` ->
 `$4b`. Before this it would have stayed `$4a` and read one byte early, which no
 build error would have caught.
@@ -5218,11 +5218,11 @@ a review would have caught:
   a table base, so that is a false positive by construction -- and naming an
   offset inside a routine re-parents any curated local after it into a region
   whose label lines are never emitted.
-* **LabelScopes has to see the cut labels.** `Table_14_64d5` is a 12-byte table
+* **LabelScopes has to see the cut labels.** `Table_14` is a 12-byte table
   addressed at three different offsets, so the new labels split it into
-  `Table_14_64d5` / `Data_14_64d9` / `Data_14_64dd`. The curated local
+  `Table_14` / `Data_14_64d9` / `Data_14_64dd`. The curated local
   `.scriptRespawnLocationActors` that follows was still being *spelled*
-  `Table_14_64d5.scriptRespawnLocationActors`, because LabelScopes only saw the
+  `Table_14.scriptRespawnLocationActors`, because LabelScopes only saw the
   labels from naming and not the ones emit was about to generate for cut
   points. It now seeds them before resolving scopes. This was a latent bug in
   every cut label, not just these.
@@ -6622,7 +6622,7 @@ not flat arrays of addresses. `TennisDictionaryClearList`/`2` are 4-byte
 `{address, length}` records — and in WRAM bank **`$02`**, not `$03`, so a blind
 declaration would have named them wrongly twice over.
 `DiagramTargetPatchRecords_17` is 6-byte mixed records and
-`CharMugshotGfxPointers_1b_4cec` 4-byte ones.
+`CharMugshotGfxPointers` 4-byte ones.
 
 ### `NO_BOX`
 
@@ -7738,3 +7738,79 @@ at no variable at all, and any name given to it would be a fiction.
 has no "which bank?" question, and the curated arithmetic constants, which are
 not addresses. Bare banked-WRAM operands: **827 at the start of this work, 590
 now**, byte-perfect throughout.
+
+## Curated labels no longer state their own address (2026-07-29)
+
+`CharStatTable_07_5c4a` is a name that asserts where the table is. Insert
+sixteen bytes ahead of it and it is at `$5c5a`, still called `_5c4a`, and the
+name is now a lie the assembler will not catch -- the whole point of this tree
+being relocatable is that addresses move. **648 curated labels carried an
+address suffix; none do now.**
+
+Two schemes, picked per label:
+
+* **Owner-derived (229).** Where a label has exactly one distinct referencing
+  routine or table, it takes its name from that consumer -- the convention
+  already used for graphics blobs ("strip the verb from the loading function").
+  `DrillShotTable_0b_4b8d` is loaded by `ServiceMatch2JudgePoint` and nothing
+  else, so it is `ServiceMatch2JudgePointDrillShotTable`. The derivation
+  chains: the nine `SpawnMinigameTargetFormationN` routines name their pointer
+  tables `MinigameTargetFormationNScriptPtrs`, and those in turn name the 57
+  scripts they point at `MinigameTargetFormationNScriptM`, so a formation reads
+  as one family:
+
+  ```
+  MinigameTargetFormation1ScriptPtrs:
+          dw MinigameTargetFormation1Script0
+          dw MinigameTargetFormation1Script1
+          ...
+  ```
+
+* **Bank + ordinal (419).** Everything else: unreferenced blobs, labels with
+  several unrelated consumers, and the families where uniformity is worth more
+  than per-item derivation -- `ActorScript` (256), `Padding`, `StubNop`,
+  `Unused`. `ActorScript_0e_5f2a` becomes `ActorScript_0e_03`, numbered in
+  address order within its bank. The ordinal is still positional, but it is an
+  *index into a family*, which is what these are, rather than a claim about
+  where the bytes sit.
+
+### What the derivation had to be taught
+
+The naive `<owner><stem>` join produces stutter, and the stutter is where the
+information already was: `MinigameTargetFormation0` + `MinigameTargetScript`
+gives `MinigameTargetFormation0MinigameTargetScript0`. The join now drops the
+word overlap between the two -- whether it sits at the tail of the owner
+(`Player1ServeIndicatorSprite` + `SpriteTemplate` ->
+`Player1ServeIndicatorSpriteTemplate0`) or at its head (the formation case
+above, -> `...Formation0Script0`) -- and drops the noun entirely when it says
+nothing the owner does not: `LookupTileId` + `TileIdLookup` is just
+`TileIdLookup`. Plural and singular count as the same word, or
+`LoadCourtDiagramObjPalettes` would have produced
+`CourtDiagramObjPalettesPalette`.
+
+Two rules keep it honest rather than merely tidy. An owner that is itself only
+ordinal-named contributes nothing, so its dependents fall back to ordinals
+instead of inheriting a number twice (`ActorList_11_0ActorList` was the first
+draft of one of these). And any name that collides with an existing symbol
+falls back to the ordinal -- three did, including a `TitleScreenPalettes` that
+already existed.
+
+### The 38 auto-style pins are deliberately untouched
+
+`Data_14_5ed0` and its 37 siblings are curated *entries* whose value is an
+auto-style *name*: they exist to anchor a label at an offset the generator
+would not otherwise split, and the auto style is what marks them as still
+unidentified -- `tools/progress.py` counts them as unnamed, which is correct.
+Renaming them would have inflated the naming metric with fiction.
+
+### What is left
+
+408 address-suffixed labels remain in `src/`, and none of them come from
+`labels.json`: 180 are the generator's own `Data_`/`Label_` autonames, and 228
+are emitter-synthesized `SpriteTemplate_*` (136) and `OamPtrs_*` (92) in the
+walk-sprite banks, which the emitter names from the offset it split them at.
+Fixing those means giving the emitter an ordinal scheme per owning object
+header, not curating names.
+
+Byte-perfect throughout; `make check` unchanged (619 LZ streams, 13 text pools,
+4,908 regions).

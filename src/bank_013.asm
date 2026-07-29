@@ -372,10 +372,10 @@ AcademyCourtsTourCutscene:
 	ret ; $472b
 AcademyCourtsTourActors_13:
 	; $472c, 66 bytes (map_actors)
-	map_actor $0000, ActorScript_13_7b25, $fd00, $0100, FACE_DOWN, $4c, $01, $00
-	map_actor $0000, ActorScript_13_7b25, $fd00, $0100, FACE_DOWN, $4d, $01, $00
-	map_actor $0000, ActorScript_13_7b25, $fd00, $0100, FACE_DOWN, $4f, $01, $00
-	map_actor $0000, ActorScript_13_7b25, $3200, $1300, FACE_DOWN, $49, $01, $00
+	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, $4c, $01, $00
+	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, $4d, $01, $00
+	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, $4f, $01, $00
+	map_actor $0000, ActorScript_13_27, $3200, $1300, FACE_DOWN, $49, $01, $00
 	map_actor_end
 ServiceAceCoachIntroCutscene:
 	ldh a, [hRomBank] ; $476e
@@ -567,12 +567,12 @@ ServiceAceCoachIntroCutscene:
 	ret ; $4c7d
 ServiceAceCoachIntroActors_13:
 	; $4c7e, 94 bytes (map_actors)
-	map_actor $0000, ActorScript_13_7b25, $fd00, $0100, FACE_DOWN, $4c, $01, $00
-	map_actor $0000, ActorScript_13_7b25, $fd00, $0100, FACE_DOWN, $4d, $01, $00
-	map_actor $0000, ActorScript_13_7b25, $fd00, $0100, FACE_DOWN, $4f, $01, $00
-	map_actor $0000, ActorScript_13_7b25, $4100, $0d00, FACE_LEFT, $49, $01, $00
-	map_actor $0000, ActorScript_13_7b25, $1500, $0d00, FACE_DOWN, $4a, $01, $00
-	map_actor $0000, ActorScript_13_7b25, $1300, $0d00, FACE_DOWN, $4b, $01, $00
+	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, $4c, $01, $00
+	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, $4d, $01, $00
+	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, $4f, $01, $00
+	map_actor $0000, ActorScript_13_27, $4100, $0d00, FACE_LEFT, $49, $01, $00
+	map_actor $0000, ActorScript_13_27, $1500, $0d00, FACE_DOWN, $4a, $01, $00
+	map_actor $0000, ActorScript_13_27, $1300, $0d00, FACE_DOWN, $4b, $01, $00
 	map_actor_end
 LoadTourPointerSpriteGfx_13:
 	ldh a, [hWramBank] ; $4cdc
@@ -649,9 +649,9 @@ DormRoomMapScripts_13:
 	dw DormRoomInitScript_13 ; slot 6 InitScript
 DormRoomActors_13:
 	; $4e2e, 52 bytes (map_actors)
-	map_actor $0000, ActorScript_13_7b25, $0b00, $0900, FACE_DOWN, $29, $01, $00
-	map_actor $0000, ActorScript_13_585f, $0600, $1080, FACE_DOWN, $55, $01, $00
-	map_actor $0000, ActorScript_13_7b25, $2900, $2900, FACE_DOWN, $4c, $01, $00
+	map_actor $0000, ActorScript_13_27, $0b00, $0900, FACE_DOWN, $29, $01, $00
+	map_actor $0000, ActorScript_13_00, $0600, $1080, FACE_DOWN, $55, $01, $00
+	map_actor $0000, ActorScript_13_27, $2900, $2900, FACE_DOWN, $4c, $01, $00
 	map_actor_end
 DormRoomEntryPoints_13:
 	; $4e62, 49 bytes (map_entries)
@@ -1002,14 +1002,14 @@ SetRandomDormRoomNpc04Script_13:
 	ret ; $5269
 DormRoomNpc04IdleScripts_13:
 	; $526a, 16 bytes (records:2)
-	dw ActorScript_13_585f ; record 0
-	dw ActorScript_13_5877 ; record 1
-	dw ActorScript_13_5881 ; record 2
-	dw ActorScript_13_588b ; record 3
-	dw ActorScript_13_585f ; record 4
-	dw ActorScript_13_585f ; record 5
-	dw ActorScript_13_588b ; record 6
-	dw ActorScript_13_588b ; record 7
+	dw ActorScript_13_00 ; record 0
+	dw ActorScript_13_01 ; record 1
+	dw ActorScript_13_02 ; record 2
+	dw ActorScript_13_03 ; record 3
+	dw ActorScript_13_00 ; record 4
+	dw ActorScript_13_00 ; record 5
+	dw ActorScript_13_03 ; record 6
+	dw ActorScript_13_03 ; record 7
 .isDoubles:
 	script_null_script ACTOR_PARTNER ; $527a
 	script_set_position ACTOR_PARTNER, $1500, $1f00 ; $527f
@@ -1450,7 +1450,7 @@ RunPlayDoublesTodayPrompt:
 	set 4, [hl] ; $5855
 	script_face ACTOR_PLAYER, FACE_DOWN ; $5857
 	ret ; $585e
-ActorScript_13_585f:
+ActorScript_13_00:
 	; $585f, 24 bytes (actor_script)
 	as_begin_path
 .L1:
@@ -1463,17 +1463,17 @@ ActorScript_13_585f:
 	as_set_field $14, FACE_UP
 	as_wait $b4
 	as_jump .L1
-ActorScript_13_5877:
+ActorScript_13_01:
 	; $5877, 10 bytes (actor_script)
 	as_set_pos $0f40, $0ee0
 	as_set_field $14, FACE_DOWN
 	as_halt
-ActorScript_13_5881:
+ActorScript_13_02:
 	; $5881, 10 bytes (actor_script)
 	as_set_pos $1100, $0380
 	as_set_field $14, FACE_UP
 	as_halt
-ActorScript_13_588b:
+ActorScript_13_03:
 	; $588b, 51 bytes (actor_script)
 	as_set_pos $0300, $0700
 	as_set_field $14, FACE_UP
@@ -1966,46 +1966,46 @@ CourtyardMapScripts_13:
 	dw CourtyardInitScript_13 ; slot 6 InitScript
 CourtyardActors_13:
 	; $5c86, 94 bytes (map_actors)
-	map_actor $0000, ActorScript_13_7b25, $0d00, $1d00, FACE_DOWN, $4b, $01, $00
-	map_actor $0000, ActorScript_13_7b25, $0500, $1d00, FACE_RIGHT, $68, $01, $07
-	map_actor $0000, ActorScript_13_7a40, $0d00, $2300, FACE_UP, $65, $06, $03
-	map_actor $0000, ActorScript_13_7b25, $0800, $1300, FACE_UP, $67, $01, $06
-	map_actor $0000, ActorScript_13_7b2f, $0f00, $1700, FACE_DOWN, $6b, $01, $06
-	map_actor $0000, ActorScript_13_7b25, $10c0, $1a60, FACE_LEFT, $36, $01, $00
+	map_actor $0000, ActorScript_13_27, $0d00, $1d00, FACE_DOWN, $4b, $01, $00
+	map_actor $0000, ActorScript_13_27, $0500, $1d00, FACE_RIGHT, $68, $01, $07
+	map_actor $0000, ActorScript_13_20, $0d00, $2300, FACE_UP, $65, $06, $03
+	map_actor $0000, ActorScript_13_27, $0800, $1300, FACE_UP, $67, $01, $06
+	map_actor $0000, ActorScript_13_28, $0f00, $1700, FACE_DOWN, $6b, $01, $06
+	map_actor $0000, ActorScript_13_27, $10c0, $1a60, FACE_LEFT, $36, $01, $00
 	map_actor_end
 VarsityCourtActorsA_13:
 	; $5ce4, 108 bytes (map_actors)
-	map_actor $0000, ActorScript_13_7b25, $0d00, $1d00, FACE_DOWN, $4b, $01, $00
-	map_actor $0000, ActorScript_13_7b25, $0500, $1d00, FACE_RIGHT, $68, $01, $07
-	map_actor $0000, ActorScript_13_7a40, $0d00, $2300, FACE_UP, $65, $01, $03
-	map_actor $0000, ActorScript_13_7b25, $0800, $1300, FACE_UP, $67, $01, $04
-	map_actor $0000, ActorScript_13_7b2f, $0f00, $1700, FACE_DOWN, $6b, $01, $06
-	map_actor $0000, ActorScript_13_7b25, $2d00, $3d00, FACE_DOWN, $49, $01, $00
-	map_actor $0000, ActorScript_13_7b25, $10c0, $1a60, FACE_LEFT, $36, $01, $00
+	map_actor $0000, ActorScript_13_27, $0d00, $1d00, FACE_DOWN, $4b, $01, $00
+	map_actor $0000, ActorScript_13_27, $0500, $1d00, FACE_RIGHT, $68, $01, $07
+	map_actor $0000, ActorScript_13_20, $0d00, $2300, FACE_UP, $65, $01, $03
+	map_actor $0000, ActorScript_13_27, $0800, $1300, FACE_UP, $67, $01, $04
+	map_actor $0000, ActorScript_13_28, $0f00, $1700, FACE_DOWN, $6b, $01, $06
+	map_actor $0000, ActorScript_13_27, $2d00, $3d00, FACE_DOWN, $49, $01, $00
+	map_actor $0000, ActorScript_13_27, $10c0, $1a60, FACE_LEFT, $36, $01, $00
 	map_actor_end
 VarsityCourtActorsB_13:
 	; $5d50, 122 bytes (map_actors)
-	map_actor $0000, ActorScript_13_7b25, $0d00, $1d00, FACE_DOWN, $4b, $01, $00
-	map_actor $0000, ActorScript_13_7b25, $0500, $2300, FACE_UP, $68, $01, $07
-	map_actor $0000, ActorScript_13_7a40, $0d00, $2500, FACE_UP, $65, $01, $03
-	map_actor $0000, ActorScript_13_7b25, $1000, $2500, FACE_LEFT, $67, $01, $04
-	map_actor $0000, ActorScript_13_7b25, $0800, $1300, FACE_UP, $6b, $01, $06
-	map_actor $0000, ActorScript_13_7b25, $2d00, $3d00, FACE_DOWN, $49, $01, $00
-	map_actor $0000, ActorScript_13_7b25, $0500, $2100, FACE_DOWN, $4a, $01, $00
-	map_actor $0000, ActorScript_13_7b25, $10c0, $1a60, FACE_LEFT, $36, $01, $00
+	map_actor $0000, ActorScript_13_27, $0d00, $1d00, FACE_DOWN, $4b, $01, $00
+	map_actor $0000, ActorScript_13_27, $0500, $2300, FACE_UP, $68, $01, $07
+	map_actor $0000, ActorScript_13_20, $0d00, $2500, FACE_UP, $65, $01, $03
+	map_actor $0000, ActorScript_13_27, $1000, $2500, FACE_LEFT, $67, $01, $04
+	map_actor $0000, ActorScript_13_27, $0800, $1300, FACE_UP, $6b, $01, $06
+	map_actor $0000, ActorScript_13_27, $2d00, $3d00, FACE_DOWN, $49, $01, $00
+	map_actor $0000, ActorScript_13_27, $0500, $2100, FACE_DOWN, $4a, $01, $00
+	map_actor $0000, ActorScript_13_27, $10c0, $1a60, FACE_LEFT, $36, $01, $00
 	map_actor_end
 VarsityCourtActorsC_13:
 	; $5dca, 52 bytes (map_actors)
-	map_actor $0000, ActorScript_13_7a40, $1000, $1500, FACE_DOWN, $68, $01, $07
-	map_actor $0000, ActorScript_13_7a40, $0d00, $2500, FACE_UP, $65, $01, $03
-	map_actor $0000, ActorScript_13_7b25, $10c0, $1a60, FACE_LEFT, $36, $01, $00
+	map_actor $0000, ActorScript_13_20, $1000, $1500, FACE_DOWN, $68, $01, $07
+	map_actor $0000, ActorScript_13_20, $0d00, $2500, FACE_UP, $65, $01, $03
+	map_actor $0000, ActorScript_13_27, $10c0, $1a60, FACE_LEFT, $36, $01, $00
 	map_actor_end
 VarsityCourtActorsD_13:
 	; $5dfe, 66 bytes (map_actors)
-	map_actor $0000, ActorScript_13_7a40, $0d00, $1d00, FACE_DOWN, $68, $01, $07
-	map_actor $0000, ActorScript_13_7a40, $0d00, $2300, FACE_UP, $65, $01, $03
-	map_actor $0000, ActorScript_13_7b2f, $0900, $1500, FACE_DOWN, $4a, $01, $00
-	map_actor $0000, ActorScript_13_7b25, $10c0, $1a60, FACE_LEFT, $36, $01, $00
+	map_actor $0000, ActorScript_13_20, $0d00, $1d00, FACE_DOWN, $68, $01, $07
+	map_actor $0000, ActorScript_13_20, $0d00, $2300, FACE_UP, $65, $01, $03
+	map_actor $0000, ActorScript_13_28, $0900, $1500, FACE_DOWN, $4a, $01, $00
+	map_actor $0000, ActorScript_13_27, $10c0, $1a60, FACE_LEFT, $36, $01, $00
 	map_actor_end
 CourtyardEntryPoints_13:
 	; $5e40, 57 bytes (map_entries)
@@ -2065,7 +2065,7 @@ VarsityCourtANpc05_13:
 	and a ; $5f39
 	jr z, .advanceText ; $5f3a
 	script_speak $05 ; $5f3c
-	script_set_actor_script $05, ActorScript_13_7a40 ; $5f41
+	script_set_actor_script $05, ActorScript_13_20 ; $5f41
 	ret ; $5f4c
 .advanceText:
 	farcall AdvanceDialogueTextCursor ; $5f4d
@@ -2114,7 +2114,7 @@ VarsityCourtBNpc05_13:
 	and a ; $5fe9
 	jr z, .advanceText ; $5fea
 	script_speak $05 ; $5fec
-	script_set_actor_script $05, ActorScript_13_7a40 ; $5ff1
+	script_set_actor_script $05, ActorScript_13_20 ; $5ff1
 	ret ; $5ffc
 .advanceText:
 	farcall AdvanceDialogueTextCursor ; $5ffd
@@ -2144,14 +2144,14 @@ VarsityCourtCNpc03_13:
 	script_set_anim $03, $01 ; $605e
 	script_set_text Text_31_34 ; $6065
 	script_speak $03 ; $606b
-	script_set_actor_script $03, ActorScript_13_7a40 ; $6070
+	script_set_actor_script $03, ActorScript_13_20 ; $6070
 	ret ; $607b
 VarsityCourtCNpc04_13:
 	script_null_script $03 ; $607c
 	script_set_anim $04, $01 ; $6081
 	script_set_text Text_31_35 ; $6088
 	script_speak $04 ; $608e
-	script_set_actor_script $04, ActorScript_13_7a40 ; $6093
+	script_set_actor_script $04, ActorScript_13_20 ; $6093
 	ret ; $609e
 VarsityCourtNpcScriptsC_13:
 	; $609f, 25 bytes (map_scripts)
@@ -2172,7 +2172,7 @@ VarsityCourtDNpc05_13:
 	script_set_anim $05, $01 ; $60d1
 	script_set_text Text_31_40 ; $60d8
 	script_speak $05 ; $60de
-	script_set_actor_script $05, ActorScript_13_7a40 ; $60e3
+	script_set_actor_script $05, ActorScript_13_20 ; $60e3
 	ret ; $60ee
 VarsityCourtNpcScriptsD_13:
 	; $60ef, 41 bytes (map_scripts)
@@ -2187,7 +2187,7 @@ VarsityCourtENpc05_13:
 	script_set_anim $05, $01 ; $611d
 	script_set_text Text_31_45 ; $6124
 	script_speak $05 ; $612a
-	script_set_actor_script $05, ActorScript_13_7a40 ; $612f
+	script_set_actor_script $05, ActorScript_13_20 ; $612f
 	ret ; $613a
 VarsityCourtNpcScriptsE_13:
 	; $613b, 41 bytes (map_scripts)
@@ -2290,7 +2290,7 @@ SetupVarsityCourtSceneVariant:
 	farcall WriteStoryStateWord ; $6235
 	script_set_position $09, $3f00, $3f00 ; $6238
 	script_face $04, FACE_RIGHT ; $6243
-	script_set_actor_script $06, ActorScript_13_7cf5 ; $624a
+	script_set_actor_script $06, ActorScript_13_30 ; $624a
 	ld a, $18 ; $6255
 	ld d, $08 ; $6257
 	ld e, $10 ; $6259
@@ -2300,7 +2300,7 @@ SetupVarsityCourtSceneVariant:
 	ld e, $10 ; $6262
 	farcall WriteBehaviorMapCell ; $6264
 	script_set_position $07, $0f00, $1700 ; $6267
-	script_set_actor_script $07, ActorScript_13_7b2f ; $6272
+	script_set_actor_script $07, ActorScript_13_28 ; $6272
 	ret ; $627d
 .stage4:
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $627e
@@ -2340,7 +2340,7 @@ ApplyPartnerCharacterVariant_13:
 	set_flag FLAG_TEMP_SCENE_VARIANT_A ; $62d7
 .done:
 	ret ; $62da
-Table_13_62db:
+Table_13:
 	; $62db, 36 bytes (bytes:12)
 	db $0d, $12, $80, $ff, $01, $1e, $0d, $12, $60, $ff, $01, $32 ; 0x00
 	db $10, $03, $01, $1e, $10, $01, $10, $03, $01, $5a, $0c, $e9 ; 0x0c
@@ -2367,9 +2367,9 @@ CourtyardEntryWalkIn_13:
 	script_wait_move ACTOR_PARTNER ; $6329
 	ld a, [wStoryModeEntryPoint] ; $632e
 	dec a ; $6331
-	add LOW(Facings_13_6366) ; $6332
+	add LOW(CourtyardEntryWalkInFacings_13) ; $6332
 	ld l, a ; $6334
-	adc HIGH(Facings_13_6366) ; $6335
+	adc HIGH(CourtyardEntryWalkInFacings_13) ; $6335
 	sub l ; $6337
 	ld h, a ; $6338
 	ld b, [hl] ; $6339
@@ -2381,9 +2381,9 @@ CourtyardEntryWalkIn_13:
 	script_set_speed ACTOR_PLAYER, $0010 ; $6348
 	ld a, [wStoryModeEntryPoint] ; $6350
 	dec a ; $6353
-	add LOW(Facings_13_6366) ; $6354
+	add LOW(CourtyardEntryWalkInFacings_13) ; $6354
 	ld l, a ; $6356
-	adc HIGH(Facings_13_6366) ; $6357
+	adc HIGH(CourtyardEntryWalkInFacings_13) ; $6357
 	sub l ; $6359
 	ld h, a ; $635a
 	ld b, [hl] ; $635b
@@ -2393,7 +2393,7 @@ CourtyardEntryWalkIn_13:
 	farcall MoveActorByAngle ; $6362
 .done:
 	ret ; $6365
-Facings_13_6366:
+CourtyardEntryWalkInFacings_13:
 	; $6366, 6 bytes (enum:FACE:6)
 	db FACE_DOWN, FACE_DOWN, FACE_UP, FACE_UP, FACE_UP, FACE_DOWN ; 0x00
 VarsityCourtTourCutscene:
@@ -2508,10 +2508,10 @@ VarsityCourtTourCutscene:
 	ret ; $6637
 VarsityCourtTourActors_13:
 	; $6638, 66 bytes (map_actors)
-	map_actor $0000, ActorScript_13_7b25, $fd00, $0100, FACE_DOWN, $4c, $01, $00
-	map_actor $0000, ActorScript_13_7b25, $fd00, $0100, FACE_DOWN, $4d, $01, $00
-	map_actor $0000, ActorScript_13_7b25, $fd00, $0100, FACE_DOWN, $4f, $01, $00
-	map_actor $0000, ActorScript_13_7b25, $2b00, $0b00, FACE_DOWN, $49, $01, $00
+	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, $4c, $01, $00
+	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, $4d, $01, $00
+	map_actor $0000, ActorScript_13_27, $fd00, $0100, FACE_DOWN, $4f, $01, $00
+	map_actor $0000, ActorScript_13_27, $2b00, $0b00, FACE_DOWN, $49, $01, $00
 	map_actor_end
 DecompressVarsityCourtTourRecords_13:
 	ldh a, [hWramBank] ; $667a
@@ -2630,13 +2630,13 @@ SetupStoryMinigameMatch0:
 	script_set_anim $05, $01 ; $6a15
 	script_null_script $07 ; $6a1c
 	script_set_speed $07, $0018 ; $6a21
-	script_set_actor_script $03, ActorScript_13_6b19 ; $6a29
-	script_set_actor_script $06, ActorScript_13_6b31 ; $6a34
-	script_set_actor_script $07, ActorScript_13_6b47 ; $6a3f
-	script_set_actor_script $05, ActorScript_13_6b69 ; $6a4a
+	script_set_actor_script $03, ActorScript_13_04 ; $6a29
+	script_set_actor_script $06, ActorScript_13_06 ; $6a34
+	script_set_actor_script $07, ActorScript_13_08 ; $6a3f
+	script_set_actor_script $05, ActorScript_13_10 ; $6a4a
 	script_move_player $0c00, $1c00 ; $6a55
 	farcall WaitPlayerMoveDone ; $6a5f
-	script_set_actor_script ACTOR_PLAYER, ActorScript_13_6be7 ; $6a62
+	script_set_actor_script ACTOR_PLAYER, ActorScript_13_16 ; $6a62
 	script_wait_actor_script $05 ; $6a6d
 	farcall InitStoryMatchSettings ; $6a72
 	load_match_settings $000a ; $6a75
@@ -2650,12 +2650,12 @@ SetupVarsityCourtDoublesMatch_13:
 	script_set_anim $05, $01 ; $6a9b
 	script_set_anim $05, $03 ; $6aa2
 	script_wait_idle $05 ; $6aa9
-	script_set_actor_script $05, ActorScript_13_6b69 ; $6aae
-	script_set_actor_script $06, ActorScript_13_6b80 ; $6ab9
-	script_set_actor_script $07, ActorScript_13_6b47 ; $6ac4
-	script_set_actor_script ACTOR_PLAYER, ActorScript_13_6be7 ; $6acf
-	script_set_actor_script ACTOR_PARTNER, ActorScript_13_6bdc ; $6ada
-	script_set_actor_script $03, ActorScript_13_6b19 ; $6ae5
+	script_set_actor_script $05, ActorScript_13_10 ; $6aae
+	script_set_actor_script $06, ActorScript_13_11 ; $6ab9
+	script_set_actor_script $07, ActorScript_13_08 ; $6ac4
+	script_set_actor_script ACTOR_PLAYER, ActorScript_13_16 ; $6acf
+	script_set_actor_script ACTOR_PARTNER, ActorScript_13_15 ; $6ada
+	script_set_actor_script $03, ActorScript_13_04 ; $6ae5
 	script_move_player $0c00, $1c00 ; $6af0
 	farcall WaitPlayerMoveDone ; $6afa
 	script_wait_actor_script $05 ; $6afd
@@ -2664,32 +2664,32 @@ SetupVarsityCourtDoublesMatch_13:
 	farcall RunStoryMatch ; $6b12
 	farcall RestoreOverworldAfterMatch ; $6b15
 	ret ; $6b18
-ActorScript_13_6b19:
+ActorScript_13_04:
 	; $6b19, 11 bytes (actor_script)
 	as_set_target $1100, $1d00
 	as_wait_move
 	as_set_field $14, FACE_LEFT
 	as_halt
-ActorScript_13_6b24:
+ActorScript_13_05:
 	; $6b24, 13 bytes (actor_script)
 	as_anim $01
 	as_set_target $1300, $2100
 	as_wait_move
 	as_set_field $14, FACE_LEFT
 	as_halt
-ActorScript_13_6b31:
+ActorScript_13_06:
 	; $6b31, 11 bytes (actor_script)
 	as_set_target $1300, $1500
 	as_wait_move
 	as_set_field $14, FACE_LEFT
 	as_halt
-ActorScript_13_6b3c:
+ActorScript_13_07:
 	; $6b3c, 11 bytes (actor_script)
 	as_set_target $1300, $2300
 	as_wait_move
 	as_set_field $14, FACE_LEFT
 	as_halt
-ActorScript_13_6b47:
+ActorScript_13_08:
 	; $6b47, 17 bytes (actor_script)
 	as_set_target $1100, $1800
 	as_wait_move
@@ -2697,7 +2697,7 @@ ActorScript_13_6b47:
 	as_wait_move
 	as_set_field $14, FACE_LEFT
 	as_halt
-ActorScript_13_6b58:
+ActorScript_13_09:
 	; $6b58, 17 bytes (actor_script)
 	as_set_target $1100, $1300
 	as_wait_move
@@ -2705,7 +2705,7 @@ ActorScript_13_6b58:
 	as_wait_move
 	as_set_field $14, FACE_LEFT
 	as_halt
-ActorScript_13_6b69:
+ActorScript_13_10:
 	; $6b69, 23 bytes (actor_script)
 	as_set_target $0700, $2300
 	as_wait_move
@@ -2715,7 +2715,7 @@ ActorScript_13_6b69:
 	as_wait_move
 	as_set_field $14, FACE_DOWN
 	as_halt
-ActorScript_13_6b80:
+ActorScript_13_11:
 	; $6b80, 23 bytes (actor_script)
 	as_set_target $0700, $2300
 	as_wait_move
@@ -2725,7 +2725,7 @@ ActorScript_13_6b80:
 	as_wait_move
 	as_set_field $14, FACE_DOWN
 	as_halt
-ActorScript_13_6b97:
+ActorScript_13_12:
 	; $6b97, 23 bytes (actor_script)
 	as_set_target $0700, $1d00
 	as_wait_move
@@ -2735,7 +2735,7 @@ ActorScript_13_6b97:
 	as_wait_move
 	as_set_field $14, FACE_DOWN
 	as_halt
-ActorScript_13_6bae:
+ActorScript_13_13:
 	; $6bae, 23 bytes (actor_script)
 	as_set_target $0700, $2100
 	as_wait_move
@@ -2745,7 +2745,7 @@ ActorScript_13_6bae:
 	as_wait_move
 	as_set_field $14, FACE_DOWN
 	as_halt
-ActorScript_13_6bc5:
+ActorScript_13_14:
 	; $6bc5, 23 bytes (actor_script)
 	as_set_target $0700, $1f00
 	as_wait_move
@@ -2755,31 +2755,31 @@ ActorScript_13_6bc5:
 	as_wait_move
 	as_set_field $14, FACE_DOWN
 	as_halt
-ActorScript_13_6bdc:
+ActorScript_13_15:
 	; $6bdc, 11 bytes (actor_script)
 	as_set_target $0b00, $1f00
 	as_wait_move
 	as_set_field $14, FACE_UP
 	as_halt
-ActorScript_13_6be7:
+ActorScript_13_16:
 	; $6be7, 11 bytes (actor_script)
 	as_set_target $0d00, $2300
 	as_wait_move
 	as_set_field $14, FACE_UP
 	as_halt
-ActorScript_13_6bf2:
+ActorScript_13_17:
 	; $6bf2, 11 bytes (actor_script)
 	as_set_target $0500, $1d00
 	as_wait_move
 	as_set_field $14, FACE_RIGHT
 	as_halt
-ActorScript_13_6bfd:
+ActorScript_13_18:
 	; $6bfd, 11 bytes (actor_script)
 	as_set_target $0500, $2300
 	as_wait_move
 	as_set_field $14, FACE_UP
 	as_halt
-ActorScript_13_6c08:
+ActorScript_13_19:
 	; $6c08, 11 bytes (actor_script)
 	as_set_target $0500, $2100
 	as_wait_move
@@ -2855,12 +2855,12 @@ VarsityCourtANpc03_13:
 	script_set_speed ACTOR_PLAYER, $0020 ; $6d72
 	script_set_speed ACTOR_PARTNER, $0020 ; $6d7a
 	script_set_speed $07, $0018 ; $6d82
-	script_set_actor_script $04, ActorScript_13_6b97 ; $6d8a
-	script_set_actor_script ACTOR_PLAYER, ActorScript_13_6be7 ; $6d95
-	script_set_actor_script $07, ActorScript_13_6b47 ; $6da0
-	script_set_actor_script $03, ActorScript_13_6b19 ; $6dab
-	script_set_actor_script $05, ActorScript_13_6b24 ; $6db6
-	script_set_actor_script $06, ActorScript_13_6b31 ; $6dc1
+	script_set_actor_script $04, ActorScript_13_12 ; $6d8a
+	script_set_actor_script ACTOR_PLAYER, ActorScript_13_16 ; $6d95
+	script_set_actor_script $07, ActorScript_13_08 ; $6da0
+	script_set_actor_script $03, ActorScript_13_04 ; $6dab
+	script_set_actor_script $05, ActorScript_13_05 ; $6db6
+	script_set_actor_script $06, ActorScript_13_06 ; $6dc1
 	script_move_player $0c00, $1b00 ; $6dcc
 	farcall WaitPlayerMoveDone ; $6dd6
 	script_wait_actor_script $04 ; $6dd9
@@ -2968,16 +2968,16 @@ VarsityCourtBNpc03_13:
 	ld [wStoryModeExitLocationRequest], a ; $6fdc
 	script_set_speed ACTOR_PLAYER, $0020 ; $6fdf
 	script_set_speed ACTOR_PARTNER, $0020 ; $6fe7
-	script_set_actor_script $04, ActorScript_13_6bae ; $6fef
-	script_set_actor_script $09, ActorScript_13_6bc5 ; $6ffa
-	script_set_actor_script ACTOR_PLAYER, ActorScript_13_6be7 ; $7005
-	script_set_actor_script ACTOR_PARTNER, ActorScript_13_6bdc ; $7010
+	script_set_actor_script $04, ActorScript_13_13 ; $6fef
+	script_set_actor_script $09, ActorScript_13_14 ; $6ffa
+	script_set_actor_script ACTOR_PLAYER, ActorScript_13_16 ; $7005
+	script_set_actor_script ACTOR_PARTNER, ActorScript_13_15 ; $7010
 	script_null_script $07 ; $701b
 	script_set_speed $07, $0018 ; $7020
-	script_set_actor_script $03, ActorScript_13_6b19 ; $7028
-	script_set_actor_script $05, ActorScript_13_6b24 ; $7033
-	script_set_actor_script $06, ActorScript_13_6b3c ; $703e
-	script_set_actor_script $07, ActorScript_13_6b58 ; $7049
+	script_set_actor_script $03, ActorScript_13_04 ; $7028
+	script_set_actor_script $05, ActorScript_13_05 ; $7033
+	script_set_actor_script $06, ActorScript_13_07 ; $703e
+	script_set_actor_script $07, ActorScript_13_09 ; $7049
 	script_move_player $0c00, $1b00 ; $7054
 	farcall WaitPlayerMoveDone ; $705e
 	script_wait_actor_script $04 ; $7061
@@ -3016,11 +3016,11 @@ VarsityCourtBNpc03_13:
 	farcall AttachActorStepMover ; $70c5
 	ret ; $70c8
 ReturnVarsityCourtANpc04ToSpawn_13:
-	script_set_actor_script $04, ActorScript_13_6bf2 ; $70c9
+	script_set_actor_script $04, ActorScript_13_17 ; $70c9
 	ret ; $70d4
 ReturnVarsityCourtBNpcsToSpawn_13:
-	script_set_actor_script $04, ActorScript_13_6bfd ; $70d5
-	script_set_actor_script $09, ActorScript_13_6c08 ; $70e0
+	script_set_actor_script $04, ActorScript_13_18 ; $70d5
+	script_set_actor_script $09, ActorScript_13_19 ; $70e0
 	ret ; $70eb
 	wram_bank $04 ; $70ec
 	ld a, [wMatchWinLoseFlag] ; $70f2
@@ -3063,11 +3063,11 @@ SinglesTravelingTeamVictoryCutscene:
 	farcall WaitPlayerMoveDone ; $71c3
 	script_wait_frames $28 ; $71c6
 	script_move_player_to_actor ACTOR_PLAYER ; $71cd
-	script_set_actor_script $08, ActorScript_13_7a43 ; $71d4
-	script_set_actor_script $09, ActorScript_13_7aa7 ; $71df
-	script_set_actor_script $0d, ActorScript_13_7aa0 ; $71ea
+	script_set_actor_script $08, ActorScript_13_21 ; $71d4
+	script_set_actor_script $09, ActorScript_13_25 ; $71df
+	script_set_actor_script $0d, ActorScript_13_24 ; $71ea
 	script_wait_frames $0a ; $71f5
-	script_set_actor_script $03, ActorScript_13_7a7d ; $71fc
+	script_set_actor_script $03, ActorScript_13_23 ; $71fc
 	farcall WaitPlayerMoveDone ; $7207
 	script_wait_actor_script $03 ; $720a
 	script_face_toward ACTOR_PLAYER, $0d ; $720f
@@ -3150,17 +3150,17 @@ SinglesTravelingTeamVictoryCutscene:
 	ret ; $739b
 SinglesTravelingTeamActors_13:
 	; $739c, 164 bytes (map_actors)
-	map_actor $0000, ActorScript_13_7b25, $1900, $1f00, FACE_LEFT, $4b, $01, $00
-	map_actor $0000, ActorScript_13_7b25, $0b00, $1300, FACE_DOWN, $68, $01, $07
-	map_actor $0000, ActorScript_13_7b25, $1300, $2100, FACE_LEFT, $65, $01, $03
-	map_actor $0000, ActorScript_13_7b25, $1300, $2300, FACE_LEFT, $67, $01, $06
-	map_actor $0000, ActorScript_13_7b25, $1300, $1700, FACE_LEFT, $6b, $01, $06
-	map_actor $0000, ActorScript_13_7b25, $1b00, $1d00, FACE_LEFT, $49, $01, $00
-	map_actor $0000, ActorScript_13_7b25, $1900, $1d00, FACE_LEFT, $4a, $01, $00
-	map_actor $0000, ActorScript_13_7b25, $3d00, $3d00, FACE_LEFT, $53, $01, $00
-	map_actor $0000, ActorScript_13_7b25, $3d00, $3d00, FACE_LEFT, $4c, $01, $00
-	map_actor $0000, ActorScript_13_7b25, $3d00, $3d00, FACE_LEFT, $4d, $01, $00
-	map_actor $0000, ActorScript_13_7b25, $1700, $1d00, FACE_LEFT, $29, $01, $00
+	map_actor $0000, ActorScript_13_27, $1900, $1f00, FACE_LEFT, $4b, $01, $00
+	map_actor $0000, ActorScript_13_27, $0b00, $1300, FACE_DOWN, $68, $01, $07
+	map_actor $0000, ActorScript_13_27, $1300, $2100, FACE_LEFT, $65, $01, $03
+	map_actor $0000, ActorScript_13_27, $1300, $2300, FACE_LEFT, $67, $01, $06
+	map_actor $0000, ActorScript_13_27, $1300, $1700, FACE_LEFT, $6b, $01, $06
+	map_actor $0000, ActorScript_13_27, $1b00, $1d00, FACE_LEFT, $49, $01, $00
+	map_actor $0000, ActorScript_13_27, $1900, $1d00, FACE_LEFT, $4a, $01, $00
+	map_actor $0000, ActorScript_13_27, $3d00, $3d00, FACE_LEFT, $53, $01, $00
+	map_actor $0000, ActorScript_13_27, $3d00, $3d00, FACE_LEFT, $4c, $01, $00
+	map_actor $0000, ActorScript_13_27, $3d00, $3d00, FACE_LEFT, $4d, $01, $00
+	map_actor $0000, ActorScript_13_27, $1700, $1d00, FACE_LEFT, $29, $01, $00
 	map_actor_end
 RunDoublesTravelingTeamVictoryIfWon_13:
 	wram_bank $04 ; $7440
@@ -3311,10 +3311,10 @@ DoublesTravelingTeamVictoryCutscene:
 	script_facing_lock ACTOR_PLAYER, FACE_RIGHT ; $777b
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $7782
 	script_face ACTOR_PARTNER, FACE_RIGHT ; $7789
-	script_set_actor_script $08, ActorScript_13_7a43 ; $7790
-	script_set_actor_script $03, ActorScript_13_7a60 ; $779b
+	script_set_actor_script $08, ActorScript_13_21 ; $7790
+	script_set_actor_script $03, ActorScript_13_22 ; $779b
 	script_wait_frames $14 ; $77a6
-	script_set_actor_script $09, ActorScript_13_7ac9 ; $77ad
+	script_set_actor_script $09, ActorScript_13_26 ; $77ad
 	script_move_player $0b00, $1d00 ; $77b8
 	farcall WaitPlayerMoveDone ; $77c2
 	script_wait_actor_script $09 ; $77c5
@@ -3379,17 +3379,17 @@ PlayDoublesTravelingTeamScreenSequence_13:
 	ret ; $78d6
 DoublesTravelingTeamActors_13:
 	; $78d7, 164 bytes (map_actors)
-	map_actor $0000, ActorScript_13_7b25, $1900, $1d00, FACE_LEFT, $4b, $01, $00
-	map_actor $0000, ActorScript_13_7b25, $0d00, $1700, FACE_DOWN, $68, $01, $07
-	map_actor $0000, ActorScript_13_7b25, $1300, $2100, FACE_LEFT, $65, $01, $03
-	map_actor $0000, ActorScript_13_7b25, $1300, $2300, FACE_LEFT, $67, $01, $06
-	map_actor $0000, ActorScript_13_7b25, $1300, $1700, FACE_LEFT, $6b, $01, $06
-	map_actor $0000, ActorScript_13_7b25, $1700, $1d00, FACE_LEFT, $49, $01, $00
-	map_actor $0000, ActorScript_13_7b25, $0b00, $1300, FACE_DOWN, $4a, $01, $00
-	map_actor $0000, ActorScript_13_7b25, $3d00, $3d00, FACE_LEFT, $53, $01, $00
-	map_actor $0000, ActorScript_13_7b25, $3d00, $3d00, FACE_LEFT, $4c, $01, $00
-	map_actor $0000, ActorScript_13_7b25, $3d00, $3d00, FACE_LEFT, $4c, $01, $00
-	map_actor $0000, ActorScript_13_7b25, $3d00, $3d00, FACE_LEFT, $4c, $01, $00
+	map_actor $0000, ActorScript_13_27, $1900, $1d00, FACE_LEFT, $4b, $01, $00
+	map_actor $0000, ActorScript_13_27, $0d00, $1700, FACE_DOWN, $68, $01, $07
+	map_actor $0000, ActorScript_13_27, $1300, $2100, FACE_LEFT, $65, $01, $03
+	map_actor $0000, ActorScript_13_27, $1300, $2300, FACE_LEFT, $67, $01, $06
+	map_actor $0000, ActorScript_13_27, $1300, $1700, FACE_LEFT, $6b, $01, $06
+	map_actor $0000, ActorScript_13_27, $1700, $1d00, FACE_LEFT, $49, $01, $00
+	map_actor $0000, ActorScript_13_27, $0b00, $1300, FACE_DOWN, $4a, $01, $00
+	map_actor $0000, ActorScript_13_27, $3d00, $3d00, FACE_LEFT, $53, $01, $00
+	map_actor $0000, ActorScript_13_27, $3d00, $3d00, FACE_LEFT, $4c, $01, $00
+	map_actor $0000, ActorScript_13_27, $3d00, $3d00, FACE_LEFT, $4c, $01, $00
+	map_actor $0000, ActorScript_13_27, $3d00, $3d00, FACE_LEFT, $4c, $01, $00
 	map_actor_end
 DoublesTravelingTeamInitScript_13:
 	set_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $797b
@@ -3451,11 +3451,11 @@ RunTravelingTeamBracketIfWon_13:
 	farcall WaitPlayerMoveDone ; $7a39
 	call ShowStoryTournamentBracket_13 ; $7a3c
 	ret ; $7a3f
-ActorScript_13_7a40:
+ActorScript_13_20:
 	; $7a40, 3 bytes (actor_script)
 	as_anim $06
 	as_halt
-ActorScript_13_7a43:
+ActorScript_13_21:
 	; $7a43, 29 bytes (actor_script)
 	as_set_target $1100, $1d00
 	as_wait_move
@@ -3467,7 +3467,7 @@ ActorScript_13_7a43:
 	as_wait_move
 	as_set_field $14, FACE_UP
 	as_halt
-ActorScript_13_7a60:
+ActorScript_13_22:
 	; $7a60, 29 bytes (actor_script)
 	as_set_target $1100, $1d00
 	as_wait_move
@@ -3479,7 +3479,7 @@ ActorScript_13_7a60:
 	as_wait_move
 	as_set_field $14, FACE_UP
 	as_halt
-ActorScript_13_7a7d:
+ActorScript_13_23:
 	; $7a7d, 35 bytes (actor_script)
 	as_set_target $1900, $1d00
 	as_wait_move
@@ -3493,12 +3493,12 @@ ActorScript_13_7a7d:
 	as_wait_move
 	as_set_field $14, FACE_UP
 	as_halt
-ActorScript_13_7aa0:
+ActorScript_13_24:
 	; $7aa0, 7 bytes (actor_script)
 	as_set_target $0d00, $1d00
 	as_wait_move
 	as_halt
-ActorScript_13_7aa7:
+ActorScript_13_25:
 	; $7aa7, 34 bytes (actor_script)
 	as_set_target $1100, $1d00
 	as_wait_move
@@ -3511,7 +3511,7 @@ ActorScript_13_7aa7:
 	as_wait_move
 	as_set_field $14, FACE_RIGHT
 	as_halt
-ActorScript_13_7ac9:
+ActorScript_13_26:
 	; $7ac9, 23 bytes (actor_script)
 	as_set_target $0700, $1700
 	as_wait_move
@@ -3557,7 +3557,7 @@ ShowStoryTournamentBracket_13:
 	ld b, $01 ; $7b1f
 	ld c, $01 ; $7b21
 	jr .show ; $7b23
-ActorScript_13_7b25:
+ActorScript_13_27:
 	; $7b25, 10 bytes (actor_script)
 	as_halt
 	as_anim $00
@@ -3566,7 +3566,7 @@ ActorScript_13_7b25:
 	as_step
 	as_wait $01
 	as_jump .L4
-ActorScript_13_7b2f:
+ActorScript_13_28:
 	; $7b2f, 30 bytes (actor_script)
 	as_begin_path
 .L1:
@@ -3596,7 +3596,7 @@ MapScriptNop_13:
 	xor a ; $7b56
 	ld [wStoryModeShowLocationName], a ; $7b57
 	ret ; $7b5a
-ActorScript_13_7b5b:
+ActorScript_13_29:
 	; $7b5b, 410 bytes (actor_script)
 	as_anim $01
 	as_target_rel $0400, $0200
@@ -3634,7 +3634,7 @@ ActorScript_13_7b5b:
 	as_set_field $14, FACE_DOWN
 	as_anim $05
 	as_wait $4b
-	as_jump ActorScript_13_7b5b
+	as_jump ActorScript_13_29
 	as_anim $00
 	as_wait $3c
 .L67:
@@ -3756,14 +3756,14 @@ ActorScript_13_7b5b:
 	as_anim $05
 	as_wait $4b
 	as_jump .L137
-ActorScript_13_7cf5:
+ActorScript_13_30:
 	; $7cf5, 28 bytes (actor_script)
 	as_wait $f0
 	as_anim $03
 	as_wait $50
 	as_anim $03
 	as_wait $3c
-	as_jump ActorScript_13_7cf5
+	as_jump ActorScript_13_30
 .Ld:
 	as_wait $8c
 	as_anim $04

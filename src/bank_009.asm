@@ -159,7 +159,7 @@ SpawnGameScoreDisplayObjs:
 	wram_bank $04 ; $414e
 	push bc ; $4154
 	ld a, b ; $4155
-	ld hl, ObjTemplates_09_41bc ; $4156
+	ld hl, ObjTemplates_09 ; $4156
 	ld bc, wObjSlot0 ; $4159
 	call LoadObjTemplate_09 ; $415c
 	call GetPlayer1CharIconSprites ; $415f
@@ -167,7 +167,7 @@ SpawnGameScoreDisplayObjs:
 	pop bc ; $4165
 	ld a, b ; $4166
 	xor $03 ; $4167
-	ld hl, ObjTemplates_09_41bc ; $4169
+	ld hl, ObjTemplates_09 ; $4169
 	ld bc, wObjSlot1 ; $416c
 	call LoadObjTemplate_09 ; $416f
 	call GetPlayer2CharIconSprites ; $4172
@@ -187,10 +187,10 @@ DismissGameScoreDisplayObjs:
 	ld a, [wDrillIsPracticeLesson] ; $4190
 	and a ; $4193
 	jr nz, .doubles ; $4194
-	ld hl, ObjTemplates_09_41bc ; $4196
+	ld hl, ObjTemplates_09 ; $4196
 	ld bc, wObjSlot0 ; $4199
 	call StartObjExitAnim ; $419c
-	ld hl, ObjTemplates_09_41bc ; $419f
+	ld hl, ObjTemplates_09 ; $419f
 	ld bc, wObjSlot1 ; $41a2
 	call StartObjExitAnim ; $41a5
 	ld hl, SpawnGameScoreDisplayObjsObjTemplate ; $41a8
@@ -202,7 +202,7 @@ DismissGameScoreDisplayObjs:
 	ld bc, wObjSlot0 ; $41b5
 	call StartObjExitAnim ; $41b8
 	ret ; $41bb
-ObjTemplates_09_41bc:
+ObjTemplates_09:
 	; $41bc, 64 bytes (records:16)
 ; 4 records x 16 bytes
 	dw $4c50, $0000, $4764, $0001, $4764, $0003, $0066, $0000 ; record 0
@@ -804,20 +804,20 @@ VramTileset_09:
 TilesetTiles_09:
 	INCBIN "data/bank_009/d_4900.bin" ; $4900, 6144 bytes
 LoadScoreDigitGfx:
-	ld hl, VramGfxPtrTable_09_616d ; $6100
+	ld hl, VramGfxPtrTable_09 ; $6100
 	call GetGfxSourcePtr ; $6103
 	ld c, $04 ; $6106
 	call QueueVRAMCopy ; $6108
 	ret ; $610b
 LoadPlayer1PointsDigitGfx:
-	ld hl, VramGfxPtrTable_09_616d ; $610c
+	ld hl, VramGfxPtrTable_09 ; $610c
 	call GetGfxSourcePtr ; $610f
 	ld de, $8780 ; $6112
 	ld c, $04 ; $6115
 	call QueueVRAMCopy ; $6117
 	ret ; $611a
 LoadPlayer2PointsDigitGfx:
-	ld hl, VramGfxPtrTable_09_616d ; $611b
+	ld hl, VramGfxPtrTable_09 ; $611b
 	call GetGfxSourcePtr ; $611e
 	ld de, $87c0 ; $6121
 	ld c, $04 ; $6124
@@ -864,7 +864,7 @@ GetGfxSourcePtr:
 	rr c ; $6169
 	add hl, bc ; $616b
 	ret ; $616c
-VramGfxPtrTable_09_616d:
+VramGfxPtrTable_09:
 	INCBIN "data/bank_009/d_616d.bin" ; $616d, 4 bytes
 Player1ScoreDigitGfxSource:
 	INCBIN "data/bank_009/d_6171.bin" ; $6171, 4 bytes
@@ -920,10 +920,10 @@ GetPlayer1ServeIndicatorSprites:
 	ret ; $7111
 Player1ServeIndicatorSpritePtrs_09:
 	; $7112, 8 bytes (records:2)
-	dw SpriteTemplate_09_7131 ; record 0
-	dw SpriteTemplate_09_7131 ; record 1
-	dw SpriteTemplate_09_7131 ; record 2
-	dw SpriteTemplate_09_714a ; record 3
+	dw Player1ServeIndicatorSpriteTemplate0_09 ; record 0
+	dw Player1ServeIndicatorSpriteTemplate0_09 ; record 1
+	dw Player1ServeIndicatorSpriteTemplate0_09 ; record 2
+	dw Player1ServeIndicatorSpriteTemplate1_09 ; record 3
 GetPlayer2ServeIndicatorSprites:
 	ld a, [wOnCourtCharCountMinus1] ; $711a
 	add a ; $711d
@@ -938,11 +938,11 @@ GetPlayer2ServeIndicatorSprites:
 	ret ; $7128
 Player2ServeIndicatorSpritePtrs_09:
 	; $7129, 8 bytes (records:2)
-	dw SpriteTemplate_09_7163 ; record 0
-	dw SpriteTemplate_09_7163 ; record 1
-	dw SpriteTemplate_09_717c ; record 2
-	dw SpriteTemplate_09_717c ; record 3
-SpriteTemplate_09_7131:
+	dw Player2ServeIndicatorSpriteTemplate0_09 ; record 0
+	dw Player2ServeIndicatorSpriteTemplate0_09 ; record 1
+	dw Player2ServeIndicatorSpriteTemplate1_09 ; record 2
+	dw Player2ServeIndicatorSpriteTemplate1_09 ; record 3
+Player1ServeIndicatorSpriteTemplate0_09:
 	; $7131, 25 bytes (sprite_template)
 	oam_sprite $10, $08, $14, $00
 	oam_sprite $10, $10, $04, $04
@@ -951,7 +951,7 @@ SpriteTemplate_09_7131:
 	oam_sprite $10, $28, $78, $01
 	oam_sprite $10, $30, $7a, $01
 	oam_sprite_end
-SpriteTemplate_09_714a:
+Player1ServeIndicatorSpriteTemplate1_09:
 	; $714a, 25 bytes (sprite_template)
 	oam_sprite $10, $08, $04, $04
 	oam_sprite $10, $10, $06, $04
@@ -960,7 +960,7 @@ SpriteTemplate_09_714a:
 	oam_sprite $10, $28, $78, $01
 	oam_sprite $10, $30, $7a, $01
 	oam_sprite_end
-SpriteTemplate_09_7163:
+Player2ServeIndicatorSpriteTemplate0_09:
 	; $7163, 25 bytes (sprite_template)
 	oam_sprite $20, $08, $14, $00
 	oam_sprite $20, $10, $0c, $05
@@ -969,7 +969,7 @@ SpriteTemplate_09_7163:
 	oam_sprite $20, $28, $7c, $01
 	oam_sprite $20, $30, $7e, $01
 	oam_sprite_end
-SpriteTemplate_09_717c:
+Player2ServeIndicatorSpriteTemplate1_09:
 	; $717c, 25 bytes (sprite_template)
 	oam_sprite $20, $08, $0c, $05
 	oam_sprite $20, $10, $0e, $05
@@ -992,10 +992,10 @@ GetPlayer1CharIconSprites:
 	ret ; $71a3
 Player1CharIconSpritePtrs_09:
 	; $71a4, 8 bytes (records:2)
-	dw SpriteTemplate_09_71c3 ; record 0
-	dw SpriteTemplate_09_71c3 ; record 1
-	dw SpriteTemplate_09_71c3 ; record 2
-	dw SpriteTemplate_09_71cc ; record 3
+	dw Player1CharIconSpriteTemplate0_09 ; record 0
+	dw Player1CharIconSpriteTemplate0_09 ; record 1
+	dw Player1CharIconSpriteTemplate0_09 ; record 2
+	dw Player1CharIconSpriteTemplate1_09 ; record 3
 GetPlayer2CharIconSprites:
 	ld a, [wOnCourtCharCountMinus1] ; $71ac
 	add a ; $71af
@@ -1010,35 +1010,35 @@ GetPlayer2CharIconSprites:
 	ret ; $71ba
 Player2CharIconSpritePtrs_09:
 	; $71bb, 8 bytes (records:2)
-	dw SpriteTemplate_09_71dd ; record 0
-	dw SpriteTemplate_09_71dd ; record 1
-	dw SpriteTemplate_09_71e6 ; record 2
-	dw SpriteTemplate_09_71e6 ; record 3
-SpriteTemplate_09_71c3:
+	dw Player2CharIconSpriteTemplate0_09 ; record 0
+	dw Player2CharIconSpriteTemplate0_09 ; record 1
+	dw Player2CharIconSpriteTemplate1_09 ; record 2
+	dw Player2CharIconSpriteTemplate1_09 ; record 3
+Player1CharIconSpriteTemplate0_09:
 	; $71c3, 9 bytes (sprite_template)
 	oam_sprite $10, $10, $00, $04
 	oam_sprite $10, $18, $02, $04
 	oam_sprite_end
-SpriteTemplate_09_71cc:
+Player1CharIconSpriteTemplate1_09:
 	; $71cc, 17 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $04
 	oam_sprite $10, $10, $02, $04
 	oam_sprite $10, $18, $10, $06
 	oam_sprite $10, $20, $12, $06
 	oam_sprite_end
-SpriteTemplate_09_71dd:
+Player2CharIconSpriteTemplate0_09:
 	; $71dd, 9 bytes (sprite_template)
 	oam_sprite $10, $10, $08, $05
 	oam_sprite $10, $18, $0a, $05
 	oam_sprite_end
-SpriteTemplate_09_71e6:
+Player2CharIconSpriteTemplate1_09:
 	; $71e6, 17 bytes (sprite_template)
 	oam_sprite $10, $08, $08, $05
 	oam_sprite $10, $10, $0a, $05
 	oam_sprite $10, $18, $18, $07
 	oam_sprite $10, $20, $1a, $07
 	oam_sprite_end
-SpriteTemplate_09_71f7:
+SpriteTemplate_09_8:
 	; $71f7, 33 bytes (sprite_template)
 	oam_sprite $08, $18, $00, $04
 	oam_sprite $08, $20, $02, $04

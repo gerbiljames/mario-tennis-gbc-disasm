@@ -6,9 +6,9 @@ SECTION "ROM Bank $05", ROMX[$4000], BANK[$05]
 	farptr CreateDialogueWindow ; $4006
 	farptr CreateMenuWindowFromText ; $4008
 	farptr CloseActiveDialogueWindow ; $400a
-	farptr StubNop_05_4766 ; $400c
+	farptr StubNop_05_1 ; $400c
 	farptr SetWindowTextId ; $400e
-	farptr StubNop_05_4626 ; $4010
+	farptr StubNop_05_0 ; $4010
 	farptr QueueFullTilemapCopy ; $4012
 	farptr QueueFullAttrmapCopy ; $4014
 	farptr CopyVisibleTilemapToVRAM ; $4016
@@ -842,7 +842,7 @@ RunFixedTextMenu:
 	ld hl, Text_30_26 ; $4514
 	call CreateMenuWindowFromText ; $4517
 	call RestoreShadowTilemap ; $451a
-	call StubNop_05_4626 ; $451d
+	call StubNop_05_0 ; $451d
 	call RunMenuSelection ; $4520
 	ld h, a ; $4523
 	ld a, [wMenuWindowId] ; $4524
@@ -1037,7 +1037,7 @@ DrawTileAttrRect:
 	pop bc ; $4623
 	pop hl ; $4624
 	ret ; $4625
-StubNop_05_4626:
+StubNop_05_0:
 	ret ; $4626
 AllocWindowSlotBit:
 	push hl ; $4627
@@ -1237,7 +1237,7 @@ ResetWindowState:
 	ld [hl], $ff ; $4762
 	pop af ; $4764
 	ret ; $4765
-StubNop_05_4766:
+StubNop_05_1:
 	ret ; $4766
 SetWindowState:
 	call GetWindowStructPtr ; $4767
@@ -1685,7 +1685,7 @@ RunPagedTextMenuAutoSize:
 	ld e, $05 ; $4a3c
 	call CreateMenuWindowPaged ; $4a3e
 	call RestoreShadowTilemap ; $4a41
-	call StubNop_05_4626 ; $4a44
+	call StubNop_05_0 ; $4a44
 	call RunMenuSelection ; $4a47
 	push af ; $4a4a
 	ld a, [wMenuWindowId] ; $4a4b
@@ -3137,7 +3137,7 @@ PowersOfTen_05:
 	dw $0064 ; record 2
 	dw $03e8 ; record 3
 	dw $2710 ; record 4
-Unused_05_53ac:
+Unused_05:
 	ret ; $53ac
 	ret ; $53ad
 Unused_05_SetTextVar:
@@ -4196,7 +4196,7 @@ DrawDialogueAtPosition:
 .loop:
 	call SetActiveWindowTextId ; $5a7b
 	call RestoreShadowTilemap ; $5a7e
-	call StubNop_05_4626 ; $5a81
+	call StubNop_05_0 ; $5a81
 	ld a, [wTextPageBreakRequest] ; $5a84
 	or a ; $5a87
 	jr nz, .loop ; $5a88
@@ -4659,7 +4659,7 @@ AddTextIdOffset:
 	sra a ; $5d50
 	ld e, a ; $5d52
 	ld d, $00 ; $5d53
-	ld hl, WordLookupTable_05_5d99 ; $5d55
+	ld hl, AddTextIdOffsetWordLookupTable ; $5d55
 	add hl, de ; $5d58
 	ld e, [hl] ; $5d59
 	inc hl ; $5d5a
@@ -4714,7 +4714,7 @@ AddTextIdOffset:
 	pop bc ; $5d96
 	pop af ; $5d97
 	ret ; $5d98
-WordLookupTable_05_5d99:
+AddTextIdOffsetWordLookupTable:
 	; $5d99, 26 bytes (records:2)
 	dw $0230 ; record 0
 	dw $015b ; record 1
@@ -5238,7 +5238,7 @@ GetSpeakerVoice:
 	ld l, a ; $60b7
 	ld h, $00 ; $60b8
 	add hl, hl ; $60ba
-	ld de, ActorTypePropertyTable_05_60cb ; $60bb
+	ld de, SpeakerVoiceActorTypePropertyTable ; $60bb
 	add hl, de ; $60be
 	inc hl ; $60bf
 	ld b, [hl] ; $60c0
@@ -5250,7 +5250,7 @@ GetSpeakerVoice:
 	pop de ; $60c8
 	pop bc ; $60c9
 	ret ; $60ca
-ActorTypePropertyTable_05_60cb:
+SpeakerVoiceActorTypePropertyTable:
 	; $60cb, 175 bytes (bytes:2)
 	db $1e, $04 ; 0x00
 	db $1f, $03 ; 0x02
@@ -5949,7 +5949,7 @@ DebugMoveFlagCursor:
 	pop bc ; $657e
 	pop af ; $657f
 	ret ; $6580
-StubNop_05_6581:
+StubNop_05_2:
 	ret ; $6581
 HexDigitHeaderRow0_05:
 	; $6582, 16 bytes (ascii)
@@ -6001,7 +6001,7 @@ RunDebugFlagEditor:
 	ld a, [wDebugFlagWindow2Id] ; $660c
 	call RedrawWindowRows ; $660f
 	ld a, $0f ; $6612
-	ld hl, StubNop_05_6581 ; $6614
+	ld hl, StubNop_05_2 ; $6614
 	call RegisterFrameTask ; $6617
 .loop:
 	ldh a, [hInputRisingEdge] ; $661a
@@ -6054,7 +6054,7 @@ RunDebugFlagEditor:
 	call CloseWindow ; $668c
 	ld a, [wDebugFlagWindow2Id] ; $668f
 	call CloseWindow ; $6692
-	ld hl, StubNop_05_6581 ; $6695
+	ld hl, StubNop_05_2 ; $6695
 	call UnregisterFrameTask ; $6698
 	pop hl ; $669b
 	pop de ; $669c

@@ -1,6 +1,6 @@
 SECTION "ROM Bank $3b", ROMX[$4000], BANK[$3b]
 
-	farptr StubNop_3b_44a9 ; $4000
+	farptr StubNop_3b ; $4000
 	farptr RunN64ExhibData ; $4002
 	farptr RunN64ExhibDataAlias1, RunN64ExhibData ; $4004
 	farptr RunTrophiesScreen ; $4006
@@ -816,7 +816,7 @@ DrawAsciiDigitChar_3b:
 	inc de ; $44a6
 	pop hl ; $44a7
 	ret ; $44a8
-StubNop_3b_44a9:
+StubNop_3b:
 	ret ; $44a9
 RunN64ExhibData:
 	sound $04 ; $44aa

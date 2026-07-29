@@ -66,7 +66,7 @@ DrawWobblingCornerBrackets:
 ApplySpriteWobbleX_16:
 	ldh a, [hVBlankCounter] ; $4069
 	and $0f ; $406b
-	ld hl, Table_16_4083 ; $406d
+	ld hl, SpriteWobbleXTable_16 ; $406d
 	add l ; $4070
 	ld l, a ; $4071
 	jr nc, .readOffset ; $4072
@@ -86,13 +86,13 @@ ApplySpriteWobbleX_16:
 	sub b ; $4080
 	ld d, a ; $4081
 	ret ; $4082
-Table_16_4083:
+SpriteWobbleXTable_16:
 	; $4083, 16 bytes (bytes:16)
 	db $00, $00, $00, $01, $01, $01, $01, $01, $01, $01, $01, $00, $00, $00, $00, $00 ; 0x00
 ApplySpriteWobbleY_16:
 	ldh a, [hVBlankCounter] ; $4093
 	and $0f ; $4095
-	ld hl, Table_16_40ad ; $4097
+	ld hl, SpriteWobbleYTable_16 ; $4097
 	add l ; $409a
 	ld l, a ; $409b
 	jr nc, .readOffset ; $409c
@@ -112,7 +112,7 @@ ApplySpriteWobbleY_16:
 	sub b ; $40aa
 	ld e, a ; $40ab
 	ret ; $40ac
-Table_16_40ad:
+SpriteWobbleYTable_16:
 	; $40ad, 32 bytes (bytes:16)
 	db $00, $00, $00, $01, $01, $01, $01, $01, $01, $01, $01, $00, $00, $00, $00, $00 ; 0x00
 	db $d5, $c5, $0e, $00, $06, $09, $cd, $51, $1f, $c1, $d1, $d5, $c5, $78, $82, $57 ; 0x10
@@ -1462,7 +1462,7 @@ GetResultSpriteWobbleOffset:
 	ldh a, [hVBlankCounter] ; $4dde
 	srl a ; $4de0
 	and $0f ; $4de2
-	ld hl, Table_16_4dee ; $4de4
+	ld hl, ResultSpriteWobbleOffsetTable ; $4de4
 	add l ; $4de7
 	ld l, a ; $4de8
 	jr nc, .read ; $4de9
@@ -1470,7 +1470,7 @@ GetResultSpriteWobbleOffset:
 .read:
 	ld a, [hl] ; $4dec
 	ret ; $4ded
-Table_16_4dee:
+ResultSpriteWobbleOffsetTable:
 	; $4dee, 16 bytes (bytes:16)
 	db $00, $01, $02, $03, $04, $05, $06, $06, $06, $05, $04, $03, $02, $01, $00, $00 ; 0x00
 LoadResultScreenTileGraphics:

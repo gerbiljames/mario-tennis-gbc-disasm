@@ -1910,9 +1910,9 @@ LoadActorObjectDef:
 	ld [hl], d ; $4ad3
 	ld a, d ; $4ad4
 	add a ; $4ad5
-	add LOW(ObjectIdList_04_4f75) ; $4ad6
+	add LOW(ObjectIdList_04) ; $4ad6
 	ld l, a ; $4ad8
-	adc HIGH(ObjectIdList_04_4f75) ; $4ad9
+	adc HIGH(ObjectIdList_04) ; $4ad9
 	sub l ; $4adb
 	ld h, a ; $4adc
 	ld a, [hl+] ; $4add
@@ -1997,9 +1997,9 @@ SetupCharSpriteFromObjectDef:
 	ld a, d ; $4b68
 	ld [wCharObjectDefId], a ; $4b69
 	add a ; $4b6c
-	add LOW(ObjectIdList_04_4f75) ; $4b6d
+	add LOW(ObjectIdList_04) ; $4b6d
 	ld l, a ; $4b6f
-	adc HIGH(ObjectIdList_04_4f75) ; $4b70
+	adc HIGH(ObjectIdList_04) ; $4b70
 	sub l ; $4b72
 	ld h, a ; $4b73
 	ld a, [hl+] ; $4b74
@@ -2097,7 +2097,7 @@ SetActorAnimation:
 GetObjectDefCount:
 	push bc ; $4c0b
 	push hl ; $4c0c
-	ld hl, ObjectIdList_04_4f75 ; $4c0d
+	ld hl, ObjectIdList_04 ; $4c0d
 	ld c, $ff ; $4c10
 .searchLoop:
 	inc c ; $4c12
@@ -2112,7 +2112,7 @@ GetObjectDefCount:
 	ret ; $4c1c
 LookupTileId:
 	push hl ; $4c1d
-	ld hl, TileIdLookup_04_4c29 ; $4c1e
+	ld hl, TileIdLookup ; $4c1e
 	add l ; $4c21
 	ld l, a ; $4c22
 	jr nc, .read ; $4c23
@@ -2121,7 +2121,7 @@ LookupTileId:
 	ld a, [hl] ; $4c26
 	pop hl ; $4c27
 	ret ; $4c28
-TileIdLookup_04_4c29:
+TileIdLookup:
 	; $4c29, 32 bytes (bytes:8)
 	db $26, $27, $28, $29, $64, $69, $66, $6a ; 0x00
 	db $68, $6b, $65, $67, $4a, $5e, $5d, $60 ; 0x08
@@ -2298,7 +2298,7 @@ SpawnActorsFromList:
 	ret ; $4d2b
 SpawnScriptedActorScene:
 	ldh a, [hRomBank] ; $4d2c
-	ld hl, ActorList_04_4da5 ; $4d2e
+	ld hl, ActorList_04_1 ; $4d2e
 	call SpawnActorFromTemplate ; $4d31
 	call AttachActorControllerScript ; $4d34
 	ldh a, [hRomBank] ; $4d37
@@ -2310,14 +2310,14 @@ SpawnScriptedActorScene:
 	ld de, $d000 ; $4d48
 	call AttachActorWaypointFollower ; $4d4b
 	ldh a, [hRomBank] ; $4d4e
-	ld hl, ActorList_04_4e05 ; $4d50
+	ld hl, ScriptedActorSceneActorList0 ; $4d50
 	call SpawnActorFromTemplate ; $4d53
 	ld de, $d000 ; $4d56
 	call AttachActorStepMover ; $4d59
-	ld hl, ActorList_04_4e1d ; $4d5c
+	ld hl, ScriptedActorSceneActorList1 ; $4d5c
 	call SpawnActorsFromList ; $4d5f
 	ret ; $4d62
-ActorList_04_4d63:
+ActorList_04_0:
 	; $4d63, 66 bytes (actor_list)
 	dw $0000, ActorScript_Idle, $0100, $0100 ; actor 0: cond, script, x, y
 	db FACE_DOWN, $00, $01, $01, $00, $00 ; facing, -, obj def, anim, extra, -
@@ -2328,32 +2328,32 @@ ActorList_04_4d63:
 	dw $0000, ActorScript_Idle, $2200, $1900 ; actor 3: cond, script, x, y
 	db FACE_LEFT, $00, $00, $01, $00, $00 ; facing, -, obj def, anim, extra, -
 	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; list end
-ActorList_04_4da5:
+ActorList_04_1:
 	; $4da5, 24 bytes (actor_list)
 	dw $0000, ActorScript_Idle, $1900, $2500 ; actor 0: cond, script, x, y
 	db FACE_DOWN, $00, $26, $01, $00, $00 ; facing, -, obj def, anim, extra, -
 	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; list end
-ActorList_04_4dbd:
+ScriptedActorList0_04:
 	; $4dbd, 24 bytes (actor_list)
 	dw $0000, ActorScript_Idle, $1900, $2500 ; actor 0: cond, script, x, y
 	db FACE_DOWN, $00, $27, $01, $00, $00 ; facing, -, obj def, anim, extra, -
 	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; list end
-ActorList_04_4dd5:
+ScriptedActorList1_04:
 	; $4dd5, 24 bytes (actor_list)
 	dw $0000, ActorScript_Idle, $1900, $2500 ; actor 0: cond, script, x, y
 	db FACE_DOWN, $00, $28, $01, $00, $00 ; facing, -, obj def, anim, extra, -
 	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; list end
-ActorList_04_4ded:
+ScriptedActorList2_04:
 	; $4ded, 24 bytes (actor_list)
 	dw $0000, ActorScript_Idle, $1900, $2500 ; actor 0: cond, script, x, y
 	db FACE_DOWN, $00, $29, $01, $00, $00 ; facing, -, obj def, anim, extra, -
 	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; list end
-ActorList_04_4e05:
+ScriptedActorSceneActorList0:
 	; $4e05, 24 bytes (actor_list)
 	dw $0000, ActorScript_Idle, $1d00, $2900 ; actor 0: cond, script, x, y
 	db FACE_DOWN, $00, $2a, $01, $00, $00 ; facing, -, obj def, anim, extra, -
 	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; list end
-ActorList_04_4e1d:
+ScriptedActorSceneActorList1:
 	; $4e1d, 66 bytes (actor_list)
 	dw $0000, ActorScript_Idle, $1700, $1500 ; actor 0: cond, script, x, y
 	db FACE_DOWN, $00, $2a, $01, $00, $00 ; facing, -, obj def, anim, extra, -
@@ -2366,10 +2366,10 @@ ActorList_04_4e1d:
 	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; list end
 ScriptedActorListPtrs_04:
 	; $4e5f, 8 bytes (records:2)
-	dw ActorList_04_4da5 ; record 0
-	dw ActorList_04_4dbd ; record 1
-	dw ActorList_04_4dd5 ; record 2
-	dw ActorList_04_4ded ; record 3
+	dw ActorList_04_1 ; record 0
+	dw ScriptedActorList0_04 ; record 1
+	dw ScriptedActorList1_04 ; record 2
+	dw ScriptedActorList2_04 ; record 3
 	; $4e67, 4 bytes (bytes:4)
 	db $0b, $0c, $fe, $ff ; 0x00
 SpawnMainCharacterActor:
@@ -2424,17 +2424,17 @@ SpawnMainCharacterActor:
 	pop bc ; $4ec5
 	pop af ; $4ec6
 	ret ; $4ec7
-PartnerActorList_04_4ec8:
+CompanionActorPartnerActorList0:
 	; $4ec8, 24 bytes (actor_list)
 	dw $0000, ActorScript_Idle, $0100, $0100 ; actor 0: cond, script, x, y
 	db FACE_DOWN, $00, $28, $01, $00, $00 ; facing, -, obj def, anim, extra, -
 	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; list end
-PartnerActorList_04_4ee0:
+CompanionActorPartnerActorList1:
 	; $4ee0, 24 bytes (actor_list)
 	dw $0000, ActorScript_Idle, $0100, $0100 ; actor 0: cond, script, x, y
 	db FACE_DOWN, $00, $29, $01, $00, $00 ; facing, -, obj def, anim, extra, -
 	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $ff ; list end
-PartnerActorList_04_4ef8:
+CompanionActorPartnerActorList2:
 	; $4ef8, 24 bytes (actor_list)
 	dw $01e0, ActorScript_Deactivate, $0100, $0100 ; actor 0: cond, script, x, y
 	db FACE_DOWN, $00, $2f, $01, $00, $00 ; facing, -, obj def, anim, extra, -
@@ -2448,18 +2448,18 @@ SpawnCompanionActor:
 	ld a, [wStoryModeGenderOfPartnerCharacter] ; $4f1a
 	or a ; $4f1d
 	jr nz, .partnerSlot ; $4f1e
-	ld hl, PartnerActorList_04_4ec8 ; $4f20
+	ld hl, CompanionActorPartnerActorList0 ; $4f20
 	ld a, $02 ; $4f23
 	test_flag FLAG_DOUBLES ; $4f25
 	jr nz, .spawn ; $4f28
 	jr .singlesList ; $4f2a
 .partnerSlot:
-	ld hl, PartnerActorList_04_4ee0 ; $4f2c
+	ld hl, CompanionActorPartnerActorList1 ; $4f2c
 	ld a, $03 ; $4f2f
 	test_flag FLAG_DOUBLES ; $4f31
 	jr nz, .spawn ; $4f34
 .singlesList:
-	ld hl, PartnerActorList_04_4ef8 ; $4f36
+	ld hl, CompanionActorPartnerActorList2 ; $4f36
 	ld a, $ff ; $4f39
 .spawn:
 	ld [wCompanionActorSlot], a ; $4f3b
@@ -2496,7 +2496,7 @@ SpawnCompanionActor:
 	pop bc ; $4f72
 	pop af ; $4f73
 	ret ; $4f74
-ObjectIdList_04_4f75:
+ObjectIdList_04:
 	; $4f75, 236 bytes (bytes:2)
 	db $00, $40 ; 0x00
 	db $00, $41 ; 0x02

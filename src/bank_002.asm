@@ -571,7 +571,7 @@ InitPlayerRecordFromTemplate:
 StoryCharGenderTable:
 	; $441b, 4 bytes (bytes:4)
 	db $00, $01, $00, $01 ; 0x00
-Unused_02_441f:
+Unused_02:
 	; $441f, 28 bytes (bytes:16)
 	db $00, $01, $00, $00, $00, $01, $00, $01, $00, $01, $00, $00, $00, $00, $00, $01 ; 0x00
 	db $00, $01, $00, $01, $00, $00, $01, $00, $00, $01, $00, $00 ; 0x10
@@ -1765,7 +1765,7 @@ AddExpToCa00Record:
 	jp AddExpCapped ; $4d7b
 StubNop:
 	ret ; $4d7e
-Table_02_4d7f:
+Table_02:
 	; $4d7f, 16 bytes (bytes:16)
 	db $02, $02, $03, $04, $05, $07, $07, $07, $02, $02, $02, $03, $02, $02, $02, $02 ; 0x00
 AddPlayerExp:
@@ -2271,7 +2271,7 @@ DebugStoryStatsScreen:
 	jp .loop ; $51dd
 .bit2Clear:
 	bit 3, a ; $51e0
-	jr z, .label_02_513f ; $51e2
+	jr z, .skipSave ; $51e2
 	sound $5f ; $51e4
 	push de ; $51e6
 	ld hl, DebugStoryStatsScreenString1 ; $51e7
@@ -2280,7 +2280,7 @@ DebugStoryStatsScreen:
 	farcall SaveStorySlotWithTimer ; $51f0
 	pop de ; $51f3
 	jp .loopB ; $51f4
-.label_02_513f:
+.skipSave:
 	jp .loop2 ; $51f7
 MenuTilemaps_02:
 	; $51fa, 8 bytes (bytes:16)

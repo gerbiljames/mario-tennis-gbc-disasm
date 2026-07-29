@@ -2893,12 +2893,12 @@ LoadRacketSelectScreen:
 	ld c, $02 ; $5546
 	ld de, $8200 + VRAM_BANK1 ; $5548
 	farcall LoadCompressedTileBlock ; $554b
-	ld hl, Palette_3e_555b ; $554e
+	ld hl, Palette_3e ; $554e
 	ld de, $0901 ; $5551
 	call LoadPaletteShadow ; $5554
 	farcall QueueWram3MapToVRAM ; $5557
 	ret ; $555a
-Palette_3e_555b:
+Palette_3e:
 	INCLUDE "data/bank_03e/palettes_555b.asm" ; $555b, 8 bytes (palettes)
 DrawOwnedItemIcons:
 	ld hl, wEquipItemList ; $5563
@@ -3109,7 +3109,7 @@ LoadShoesSelectScreen:
 	ld c, $02 ; $56ef
 	ld de, $8200 + VRAM_BANK1 ; $56f1
 	farcall LoadCompressedTileBlock ; $56f4
-	ld hl, Palette_3e_555b ; $56f7
+	ld hl, Palette_3e ; $56f7
 	ld de, $0901 ; $56fa
 	call LoadPaletteShadow ; $56fd
 	farcall QueueWram3MapToVRAM ; $5700
@@ -3204,7 +3204,7 @@ MarkOwnedRackets:
 	ld a, $02 ; $5796
 	ld [hl], a ; $5798
 	ret ; $5799
-Unused_3e_579a:
+Unused_3e_0:
 	; $579a, 8 bytes (bytes:8)
 	db $01, $00, $00, $00, $00, $00, $00, $00 ; 0x00
 RacketItemTiles_3e:
@@ -3253,7 +3253,7 @@ MarkOwnedShoes:
 	ld a, $02 ; $57e6
 	ld [hl], a ; $57e8
 	ret ; $57e9
-Unused_3e_57ea:
+Unused_3e_1:
 	; $57ea, 8 bytes (bytes:8)
 	db $01, $00, $00, $00, $00, $00, $00, $00 ; 0x00
 ShoeItemTiles_3e:

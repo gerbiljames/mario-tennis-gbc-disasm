@@ -3169,7 +3169,7 @@ SaveSlotDebugEditor:
 	jp .loop ; $547c
 .bit2Clear:
 	bit 3, a ; $547f
-	jr z, .label_03_53c8 ; $5481
+	jr z, .skipSave ; $5481
 	sound $5f ; $5483
 	ldh a, [hPlayerInputFlags] ; $5485
 	bit PADB_A, a ; $5487
@@ -3189,7 +3189,7 @@ SaveSlotDebugEditor:
 	call InvalidateCurrentSlotBlock ; $54a6
 	jp .loop4 ; $54a9
 	db $d1 ; $54ac
-.label_03_53c8:
+.skipSave:
 	jp .loop5 ; $54ad
 SaveResultFailedString_03:
 	; $54b0, 12 bytes (ascii)

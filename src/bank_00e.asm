@@ -17,18 +17,18 @@ TrainingGymMapScripts_0e:
 	dw TrainingGymInitScript_0e ; slot 6 InitScript
 TrainingGymActors_0e:
 	; $4014, 178 bytes (map_actors)
-	map_actor $0000, ActorScript_0e_7c6e, $2500, $0d00, FACE_DOWN, $42, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $2900, $0f00, FACE_DOWN, $45, $01, $05
-	map_actor $0000, ActorScript_0e_7c6e, $2500, $1500, FACE_DOWN, $43, $01, $07
-	map_actor $0000, ActorScript_0e_7c6e, $2900, $1300, FACE_DOWN, $44, $01, $05
-	map_actor $0000, ActorScript_0e_7c6e, $2500, $0500, FACE_DOWN, $47, $01, $07
-	map_actor $0000, ActorScript_0e_7c6e, $2700, $0700, FACE_DOWN, $46, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $2900, $0500, FACE_DOWN, $47, $01, $00
-	map_actor $0000, ActorScript_0e_4712, $2100, $0c00, FACE_DOWN, $3b, $01, $00
-	map_actor $0000, ActorScript_0e_48c9, $2c00, $0b00, FACE_LEFT, $3c, $01, $00
-	map_actor $0000, ActorScript_0e_4a80, $2d60, $1700, FACE_RIGHT, $3b, $01, $06
-	map_actor $0000, ActorScript_0e_5225, $1900, $1100, FACE_UP, $39, $01, $06
-	map_actor $0000, ActorScript_0e_7c6e, $0d00, $1300, FACE_RIGHT, $39, $01, $07
+	map_actor $0000, ActorScript_0e_22, $2500, $0d00, FACE_DOWN, $42, $01, $00
+	map_actor $0000, ActorScript_0e_22, $2900, $0f00, FACE_DOWN, $45, $01, $05
+	map_actor $0000, ActorScript_0e_22, $2500, $1500, FACE_DOWN, $43, $01, $07
+	map_actor $0000, ActorScript_0e_22, $2900, $1300, FACE_DOWN, $44, $01, $05
+	map_actor $0000, ActorScript_0e_22, $2500, $0500, FACE_DOWN, $47, $01, $07
+	map_actor $0000, ActorScript_0e_22, $2700, $0700, FACE_DOWN, $46, $01, $00
+	map_actor $0000, ActorScript_0e_22, $2900, $0500, FACE_DOWN, $47, $01, $00
+	map_actor $0000, ActorScript_0e_00, $2100, $0c00, FACE_DOWN, $3b, $01, $00
+	map_actor $0000, ActorScript_0e_01, $2c00, $0b00, FACE_LEFT, $3c, $01, $00
+	map_actor $0000, ActorScript_0e_02, $2d60, $1700, FACE_RIGHT, $3b, $01, $06
+	map_actor $0000, ActorScript_0e_05, $1900, $1100, FACE_UP, $39, $01, $06
+	map_actor $0000, ActorScript_0e_22, $0d00, $1300, FACE_RIGHT, $39, $01, $07
 	map_actor_end
 TrainingGymEntryPoints_0e:
 	; $40c6, 57 bytes (map_entries)
@@ -533,7 +533,7 @@ SetupGymActorsForProgress:
 	script_set_position $09, $2500, $0700 ; $46ff
 	script_set_anim $07, $02 ; $470a
 	ret ; $4711
-ActorScript_0e_4712:
+ActorScript_0e_00:
 	; $4712, 439 bytes (actor_script)
 	as_set_target $2100, $0d00
 	as_call $4c37
@@ -680,8 +680,8 @@ ActorScript_0e_4712:
 	as_set_target $2100, $0c00
 	as_call $4c37
 	as_wait_move
-	as_jump ActorScript_0e_4712
-ActorScript_0e_48c9:
+	as_jump ActorScript_0e_00
+ActorScript_0e_01:
 	; $48c9, 439 bytes (actor_script)
 	as_set_target $2b00, $0b00
 	as_call $4c8e
@@ -828,8 +828,8 @@ ActorScript_0e_48c9:
 	as_set_target $2c00, $0b00
 	as_call $4c8e
 	as_wait_move
-	as_jump ActorScript_0e_48c9
-ActorScript_0e_4a80:
+	as_jump ActorScript_0e_01
+ActorScript_0e_02:
 	; $4a80, 439 bytes (actor_script)
 	as_set_target $2d60, $1600
 	as_call $4ce5
@@ -976,7 +976,7 @@ ActorScript_0e_4a80:
 	as_set_target $2d60, $1700
 	as_call $4ce5
 	as_wait_move
-	as_jump ActorScript_0e_4a80
+	as_jump ActorScript_0e_02
 	script_get_actor_state $0c ; $4c37
 	ld c, l ; $4c3c
 	ld b, h ; $4c3d
@@ -1565,7 +1565,7 @@ ShowEquipChangeConfirmation:
 	call MirrorPlayerSpriteIfLeftHanded ; $516a
 	script_set_anim ACTOR_PLAYER, $09 ; $516d
 	script_face ACTOR_PLAYER, FACE_DOWN ; $5174
-	script_set_actor_script ACTOR_PLAYER, ActorScript_0e_51d7 ; $517b
+	script_set_actor_script ACTOR_PLAYER, ActorScript_0e_03 ; $517b
 	script_speak $8c ; $5186
 	script_null_script ACTOR_PLAYER ; $518b
 	script_set_anim ACTOR_PLAYER, $01 ; $5190
@@ -1574,22 +1574,22 @@ ShowEquipChangeConfirmation:
 	ret ; $51a2
 .handOver:
 	script_face ACTOR_PLAYER, FACE_DOWN ; $51a3
-	script_set_actor_script ACTOR_PLAYER, ActorScript_0e_51e4 ; $51aa
+	script_set_actor_script ACTOR_PLAYER, ActorScript_0e_04 ; $51aa
 	script_speak $8c ; $51b5
 	script_null_script ACTOR_PLAYER ; $51ba
 	script_set_anim ACTOR_PLAYER, $01 ; $51bf
 	script_set_speed ACTOR_PLAYER, $0020 ; $51c6
 	script_face_toward $0e, ACTOR_PLAYER ; $51ce
 	ret ; $51d6
-ActorScript_0e_51d7:
+ActorScript_0e_03:
 	; $51d7, 13 bytes (actor_script)
 	as_anim $09
 	as_wait $1e
 	as_anim $0a
 	as_sound $91
 	as_wait $1e
-	as_jump ActorScript_0e_51d7
-ActorScript_0e_51e4:
+	as_jump ActorScript_0e_03
+ActorScript_0e_04:
 	; $51e4, 43 bytes (actor_script)
 	as_anim $0b
 	as_set_field $14, FACE_RIGHT
@@ -1607,7 +1607,7 @@ ActorScript_0e_51e4:
 	as_set_field $14, FACE_DOWN
 	as_anim $01
 	as_wait $01
-	as_jump ActorScript_0e_51e4
+	as_jump ActorScript_0e_04
 MirrorPlayerSpriteIfLeftHanded:
 	ld a, [wStoryModeMainCharacterLeftHanded] ; $520f
 	and a ; $5212
@@ -1622,7 +1622,7 @@ MirrorPlayerSpriteIfLeftHanded:
 	ld [hl], a ; $5223
 .done:
 	ret ; $5224
-ActorScript_0e_5225:
+ActorScript_0e_05:
 	; $5225, 35 bytes (actor_script)
 	as_flag $01, $05, $02
 	as_set_field $06, $0010
@@ -1647,24 +1647,24 @@ MarioWorldMapScripts_0e:
 	dw MarioWorldInitScript_0e ; slot 6 InitScript
 MarioWorldActors_0e:
 	; $5256, 262 bytes (map_actors)
-	map_actor $0000, ActorScript_0e_7c6e, $1500, $3d00, FACE_RIGHT, $4c, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $1500, $3d00, FACE_RIGHT, $53, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $1500, $3d00, FACE_RIGHT, $53, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $1500, $3d00, FACE_RIGHT, $53, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $1500, $3d00, FACE_RIGHT, $4e, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $1200, $1300, FACE_DOWN, $2e, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $1800, $1200, FACE_DOWN, $2c, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $1800, $0f40, FACE_DOWN, $6f, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $1800, $0d00, FACE_DOWN, $6d, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $1700, $1400, FACE_DOWN, $6e, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $0a00, $0f00, FACE_DOWN, $73, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $0c00, $1100, FACE_DOWN, $2b, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $0c00, $0f00, FACE_DOWN, $2d, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $0c00, $0d00, FACE_DOWN, $48, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $0e00, $0b00, FACE_DOWN, $72, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $1600, $0b00, FACE_DOWN, $2a, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $0f00, $1f00, FACE_DOWN, $70, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $1500, $1f00, FACE_DOWN, $71, $01, $00
+	map_actor $0000, ActorScript_0e_22, $1500, $3d00, FACE_RIGHT, $4c, $01, $00
+	map_actor $0000, ActorScript_0e_22, $1500, $3d00, FACE_RIGHT, $53, $01, $00
+	map_actor $0000, ActorScript_0e_22, $1500, $3d00, FACE_RIGHT, $53, $01, $00
+	map_actor $0000, ActorScript_0e_22, $1500, $3d00, FACE_RIGHT, $53, $01, $00
+	map_actor $0000, ActorScript_0e_22, $1500, $3d00, FACE_RIGHT, $4e, $01, $00
+	map_actor $0000, ActorScript_0e_22, $1200, $1300, FACE_DOWN, $2e, $01, $00
+	map_actor $0000, ActorScript_0e_22, $1800, $1200, FACE_DOWN, $2c, $01, $00
+	map_actor $0000, ActorScript_0e_22, $1800, $0f40, FACE_DOWN, $6f, $01, $00
+	map_actor $0000, ActorScript_0e_22, $1800, $0d00, FACE_DOWN, $6d, $01, $00
+	map_actor $0000, ActorScript_0e_22, $1700, $1400, FACE_DOWN, $6e, $01, $00
+	map_actor $0000, ActorScript_0e_22, $0a00, $0f00, FACE_DOWN, $73, $01, $00
+	map_actor $0000, ActorScript_0e_22, $0c00, $1100, FACE_DOWN, $2b, $01, $00
+	map_actor $0000, ActorScript_0e_22, $0c00, $0f00, FACE_DOWN, $2d, $01, $00
+	map_actor $0000, ActorScript_0e_22, $0c00, $0d00, FACE_DOWN, $48, $01, $00
+	map_actor $0000, ActorScript_0e_22, $0e00, $0b00, FACE_DOWN, $72, $01, $00
+	map_actor $0000, ActorScript_0e_22, $1600, $0b00, FACE_DOWN, $2a, $01, $00
+	map_actor $0000, ActorScript_0e_22, $0f00, $1f00, FACE_DOWN, $70, $01, $00
+	map_actor $0000, ActorScript_0e_22, $1500, $1f00, FACE_DOWN, $71, $01, $00
 	map_actor_end
 MarioWorldEntryPoints_0e:
 	; $535c, 41 bytes (map_entries)
@@ -1820,7 +1820,7 @@ MarioWorldInitScript_0e:
 .done:
 	jp MoveDoublesPartnerToPlayer.placeActors ; $5529
 	ret ; $552c
-ActorScript_0e_552d:
+ActorScript_0e_06:
 	; $552d, 24 bytes (actor_script)
 	as_set_target $1900, $0b00
 	as_wait_move
@@ -1830,7 +1830,7 @@ ActorScript_0e_552d:
 	as_wait_move
 	as_set_pos $1500, $3d00
 	as_halt
-ActorScript_0e_5545:
+ActorScript_0e_07:
 	; $5545, 24 bytes (actor_script)
 	as_set_target $1700, $0b00
 	as_wait_move
@@ -2057,22 +2057,22 @@ ExhibitionAcceptedSingles:
 	script_set_speed $0c, $0014 ; $5a61
 	script_set_speed $13, $0014 ; $5a69
 	script_set_speed ACTOR_PLAYER, $0014 ; $5a71
-	script_set_actor_script $11, ActorScript_0e_552d ; $5a79
+	script_set_actor_script $11, ActorScript_0e_06 ; $5a79
 	script_wait_frames $14 ; $5a84
-	script_set_actor_script $08, ActorScript_0e_552d ; $5a8b
+	script_set_actor_script $08, ActorScript_0e_06 ; $5a8b
 	script_wait_frames $14 ; $5a96
-	script_set_actor_script $12, ActorScript_0e_552d ; $5a9d
+	script_set_actor_script $12, ActorScript_0e_06 ; $5a9d
 	script_wait_frames $64 ; $5aa8
-	script_set_actor_script $0b, ActorScript_0e_552d ; $5aaf
-	script_set_actor_script $0a, ActorScript_0e_552d ; $5aba
-	script_set_actor_script $09, ActorScript_0e_552d ; $5ac5
-	script_set_actor_script $0c, ActorScript_0e_552d ; $5ad0
-	script_set_actor_script $0d, ActorScript_0e_552d ; $5adb
+	script_set_actor_script $0b, ActorScript_0e_06 ; $5aaf
+	script_set_actor_script $0a, ActorScript_0e_06 ; $5aba
+	script_set_actor_script $09, ActorScript_0e_06 ; $5ac5
+	script_set_actor_script $0c, ActorScript_0e_06 ; $5ad0
+	script_set_actor_script $0d, ActorScript_0e_06 ; $5adb
 	script_wait_frames $3c ; $5ae6
-	script_set_actor_script $0f, ActorScript_0e_552d ; $5aed
-	script_set_actor_script $10, ActorScript_0e_552d ; $5af8
+	script_set_actor_script $0f, ActorScript_0e_06 ; $5aed
+	script_set_actor_script $10, ActorScript_0e_06 ; $5af8
 	script_wait_frames $28 ; $5b03
-	script_set_actor_script $0e, ActorScript_0e_552d ; $5b0a
+	script_set_actor_script $0e, ActorScript_0e_06 ; $5b0a
 	script_wait_actor_script $0e ; $5b15
 	script_move_player $1200, $0d00 ; $5b1a
 	script_move_target $13, $1000, $0f00 ; $5b24
@@ -2086,9 +2086,9 @@ ExhibitionAcceptedSingles:
 	script_set_anim ACTOR_PLAYER, $03 ; $5b5e
 	script_wait_idle ACTOR_PLAYER ; $5b65
 	script_wait_frames $14 ; $5b6a
-	script_set_actor_script $13, ActorScript_0e_5545 ; $5b71
+	script_set_actor_script $13, ActorScript_0e_07 ; $5b71
 	script_wait_frames $14 ; $5b7c
-	script_set_actor_script ACTOR_PLAYER, ActorScript_0e_5545 ; $5b83
+	script_set_actor_script ACTOR_PLAYER, ActorScript_0e_07 ; $5b83
 	script_wait_frames $3c ; $5b8e
 	script_move_player $1500, $0d00 ; $5b95
 	script_wait_actor_script ACTOR_PLAYER ; $5b9f
@@ -2107,7 +2107,7 @@ MarioWorldArrivalDoubles:
 	test_flag FLAG_REACHED_MARIO_WORLD_DOUBLES ; $5bbf
 	jp nz, MoveDoublesPartnerToPlayer.doubles ; $5bc2
 .arrive:
-	script_set_actor_script ACTOR_PARTNER, ActorScript_0e_7c6e ; $5bc5
+	script_set_actor_script ACTOR_PARTNER, ActorScript_0e_22 ; $5bc5
 	script_set_position ACTOR_PLAYER, $3f00, $3f00 ; $5bd0
 	script_set_position ACTOR_PARTNER, $3f00, $3f00 ; $5bdb
 	script_fade_in $04 ; $5be6
@@ -2332,24 +2332,24 @@ ExhibitionAcceptedDoubles:
 	script_set_speed $0c, $0014 ; $6189
 	script_set_speed $13, $0014 ; $6191
 	script_set_speed ACTOR_PLAYER, $0014 ; $6199
-	script_set_actor_script $11, ActorScript_0e_552d ; $61a1
+	script_set_actor_script $11, ActorScript_0e_06 ; $61a1
 	script_wait_frames $14 ; $61ac
-	script_set_actor_script $08, ActorScript_0e_552d ; $61b3
+	script_set_actor_script $08, ActorScript_0e_06 ; $61b3
 	script_wait_frames $14 ; $61be
-	script_set_actor_script $12, ActorScript_0e_552d ; $61c5
+	script_set_actor_script $12, ActorScript_0e_06 ; $61c5
 	script_wait_frames $64 ; $61d0
-	script_set_actor_script $0b, ActorScript_0e_552d ; $61d7
-	script_set_actor_script $0a, ActorScript_0e_552d ; $61e2
-	script_set_actor_script $09, ActorScript_0e_552d ; $61ed
-	script_set_actor_script $0c, ActorScript_0e_552d ; $61f8
-	script_set_actor_script $0d, ActorScript_0e_552d ; $6203
+	script_set_actor_script $0b, ActorScript_0e_06 ; $61d7
+	script_set_actor_script $0a, ActorScript_0e_06 ; $61e2
+	script_set_actor_script $09, ActorScript_0e_06 ; $61ed
+	script_set_actor_script $0c, ActorScript_0e_06 ; $61f8
+	script_set_actor_script $0d, ActorScript_0e_06 ; $6203
 	script_wait_frames $3c ; $620e
-	script_set_actor_script $0f, ActorScript_0e_552d ; $6215
-	script_set_actor_script $10, ActorScript_0e_552d ; $6220
+	script_set_actor_script $0f, ActorScript_0e_06 ; $6215
+	script_set_actor_script $10, ActorScript_0e_06 ; $6220
 	script_wait_frames $1e ; $622b
 	script_move_target $0e, $1500, $1300 ; $6232
 	script_wait_move $0e ; $623d
-	script_set_actor_script $0e, ActorScript_0e_552d ; $6242
+	script_set_actor_script $0e, ActorScript_0e_06 ; $6242
 	script_wait_actor_script $0e ; $624d
 	script_move_player $1200, $0d00 ; $6252
 	script_move_target $13, $1000, $0f00 ; $625c
@@ -2364,11 +2364,11 @@ ExhibitionAcceptedDoubles:
 	script_set_anim ACTOR_PLAYER, $03 ; $629d
 	script_wait_idle ACTOR_PLAYER ; $62a4
 	script_wait_frames $14 ; $62a9
-	script_set_actor_script $13, ActorScript_0e_5545 ; $62b0
+	script_set_actor_script $13, ActorScript_0e_07 ; $62b0
 	script_wait_frames $14 ; $62bb
-	script_set_actor_script ACTOR_PLAYER, ActorScript_0e_5545 ; $62c2
+	script_set_actor_script ACTOR_PLAYER, ActorScript_0e_07 ; $62c2
 	script_wait_frames $32 ; $62cd
-	script_set_actor_script ACTOR_PARTNER, ActorScript_0e_5545 ; $62d4
+	script_set_actor_script ACTOR_PARTNER, ActorScript_0e_07 ; $62d4
 	script_wait_frames $3c ; $62df
 	script_move_player $1500, $0d00 ; $62e6
 	script_wait_actor_script ACTOR_PARTNER ; $62f0
@@ -2381,7 +2381,7 @@ ExhibitionAcceptedDoubles:
 	ld [wUnusedExitLocationMirror], a ; $6304
 	ld [wStoryModeExitLocationRequest], a ; $6307
 	ret ; $630a
-ActorScript_0e_630b:
+ActorScript_0e_08:
 	; $630b, 25 bytes (actor_script)
 	as_set_target $1000, $0900
 	as_wait_move
@@ -2392,7 +2392,7 @@ ActorScript_0e_630b:
 	as_set_field $14, FACE_UP
 	as_wait $1e
 	as_halt
-ActorScript_0e_6324:
+ActorScript_0e_09:
 	; $6324, 25 bytes (actor_script)
 	as_set_target $1000, $0900
 	as_wait_move
@@ -2419,23 +2419,23 @@ MarioWorldNpc08FaceDown_0e:
 	script_set_speed ACTOR_PLAYER, $0010 ; $6390
 	jp PromptExhibitionMatch ; $6398
 .doubles:
-	script_set_actor_script ACTOR_PARTNER, ActorScript_0e_7c6e ; $639b
+	script_set_actor_script ACTOR_PARTNER, ActorScript_0e_22 ; $639b
 	call MoveDoublesPartnerToPlayer ; $63a6
 	script_face $08, FACE_DOWN ; $63a9
-	script_set_actor_script ACTOR_PLAYER, ActorScript_0e_630b ; $63b0
+	script_set_actor_script ACTOR_PLAYER, ActorScript_0e_08 ; $63b0
 	script_wait_frames $14 ; $63bb
-	script_set_actor_script ACTOR_PARTNER, ActorScript_0e_6324 ; $63c2
+	script_set_actor_script ACTOR_PARTNER, ActorScript_0e_09 ; $63c2
 	script_wait_actor_script ACTOR_PLAYER ; $63cd
 	script_wait_actor_script ACTOR_PARTNER ; $63d2
 	jp PromptExhibitionMatch ; $63d7
-ActorScript_0e_63da:
+ActorScript_0e_10:
 	; $63da, 13 bytes (actor_script)
 	as_set_target $1100, $0d00
 	as_wait_move
 	as_set_field $14, FACE_UP
 	as_wait $1e
 	as_halt
-ActorScript_0e_63e7:
+ActorScript_0e_11:
 	; $63e7, 13 bytes (actor_script)
 	as_set_target $1300, $0d00
 	as_wait_move
@@ -2456,16 +2456,16 @@ MarioWorldNpc08FaceUp_0e:
 	script_face $08, FACE_DOWN ; $6435
 	jp PromptExhibitionMatch ; $643c
 .doubles:
-	script_set_actor_script ACTOR_PARTNER, ActorScript_0e_7c6e ; $643f
+	script_set_actor_script ACTOR_PARTNER, ActorScript_0e_22 ; $643f
 	call MoveDoublesPartnerToPlayer ; $644a
 	script_face $08, FACE_DOWN ; $644d
-	script_set_actor_script ACTOR_PLAYER, ActorScript_0e_63da ; $6454
+	script_set_actor_script ACTOR_PLAYER, ActorScript_0e_10 ; $6454
 	script_wait_frames $14 ; $645f
-	script_set_actor_script ACTOR_PARTNER, ActorScript_0e_63e7 ; $6466
+	script_set_actor_script ACTOR_PARTNER, ActorScript_0e_11 ; $6466
 	script_wait_actor_script ACTOR_PLAYER ; $6471
 	script_wait_actor_script ACTOR_PARTNER ; $6476
 	jp PromptExhibitionMatch ; $647b
-ActorScript_0e_647e:
+ActorScript_0e_12:
 	; $647e, 19 bytes (actor_script)
 	as_set_target $1000, $0d00
 	as_wait_move
@@ -2474,7 +2474,7 @@ ActorScript_0e_647e:
 	as_set_field $14, FACE_UP
 	as_wait $1e
 	as_halt
-ActorScript_0e_6491:
+ActorScript_0e_13:
 	; $6491, 19 bytes (actor_script)
 	as_set_target $1000, $0d00
 	as_wait_move
@@ -2496,16 +2496,16 @@ MarioWorldNpc08FaceRight_0e:
 	script_face $08, FACE_DOWN ; $64e0
 	jp PromptExhibitionMatch ; $64e7
 .doubles:
-	script_set_actor_script ACTOR_PARTNER, ActorScript_0e_7c6e ; $64ea
+	script_set_actor_script ACTOR_PARTNER, ActorScript_0e_22 ; $64ea
 	call MoveDoublesPartnerToPlayer ; $64f5
 	script_face $08, FACE_DOWN ; $64f8
-	script_set_actor_script ACTOR_PLAYER, ActorScript_0e_647e ; $64ff
+	script_set_actor_script ACTOR_PLAYER, ActorScript_0e_12 ; $64ff
 	script_wait_frames $14 ; $650a
-	script_set_actor_script ACTOR_PARTNER, ActorScript_0e_6491 ; $6511
+	script_set_actor_script ACTOR_PARTNER, ActorScript_0e_13 ; $6511
 	script_wait_actor_script ACTOR_PLAYER ; $651c
 	script_wait_actor_script ACTOR_PARTNER ; $6521
 	jp PromptExhibitionMatch ; $6526
-ActorScript_0e_6529:
+ActorScript_0e_14:
 	; $6529, 19 bytes (actor_script)
 	as_set_target $1400, $0d00
 	as_wait_move
@@ -2514,7 +2514,7 @@ ActorScript_0e_6529:
 	as_set_field $14, FACE_UP
 	as_wait $1e
 	as_halt
-ActorScript_0e_653c:
+ActorScript_0e_15:
 	; $653c, 19 bytes (actor_script)
 	as_set_target $1400, $0d00
 	as_wait_move
@@ -2536,12 +2536,12 @@ MarioWorldNpc08FaceLeft_0e:
 	script_face $08, FACE_DOWN ; $658b
 	jp PromptExhibitionMatch ; $6592
 .doubles:
-	script_set_actor_script ACTOR_PARTNER, ActorScript_0e_7c6e ; $6595
+	script_set_actor_script ACTOR_PARTNER, ActorScript_0e_22 ; $6595
 	call MoveDoublesPartnerToPlayer ; $65a0
 	script_face $08, FACE_DOWN ; $65a3
-	script_set_actor_script ACTOR_PLAYER, ActorScript_0e_6529 ; $65aa
+	script_set_actor_script ACTOR_PLAYER, ActorScript_0e_14 ; $65aa
 	script_wait_frames $14 ; $65b5
-	script_set_actor_script ACTOR_PARTNER, ActorScript_0e_653c ; $65bc
+	script_set_actor_script ACTOR_PARTNER, ActorScript_0e_15 ; $65bc
 	script_wait_actor_script ACTOR_PLAYER ; $65c7
 	script_wait_actor_script ACTOR_PARTNER ; $65cc
 	jp PromptExhibitionMatch ; $65d1
@@ -2665,11 +2665,11 @@ PromptExhibitionMatch:
 	script_wait_frames $0a ; $67af
 	script_face $11, FACE_RIGHT ; $67b6
 	script_wait_frames $14 ; $67bd
-	script_set_actor_script $12, ActorScript_0e_552d ; $67c4
+	script_set_actor_script $12, ActorScript_0e_06 ; $67c4
 	script_wait_frames $14 ; $67cf
-	script_set_actor_script $08, ActorScript_0e_552d ; $67d6
+	script_set_actor_script $08, ActorScript_0e_06 ; $67d6
 	script_wait_frames $14 ; $67e1
-	script_set_actor_script $11, ActorScript_0e_552d ; $67e8
+	script_set_actor_script $11, ActorScript_0e_06 ; $67e8
 	script_wait_frames $64 ; $67f3
 	test_flag FLAG_DOUBLES ; $67fa
 	jr nz, .doublesWalk ; $67fd
@@ -2680,22 +2680,22 @@ PromptExhibitionMatch:
 	script_move_target ACTOR_PLAYER, $1100, $0900 ; $6814
 	script_move_target ACTOR_PARTNER, $1300, $0900 ; $681f
 .crowdFollows:
-	script_set_actor_script $0b, ActorScript_0e_552d ; $682a
-	script_set_actor_script $0a, ActorScript_0e_552d ; $6835
-	script_set_actor_script $09, ActorScript_0e_552d ; $6840
-	script_set_actor_script $0c, ActorScript_0e_552d ; $684b
-	script_set_actor_script $0d, ActorScript_0e_552d ; $6856
+	script_set_actor_script $0b, ActorScript_0e_06 ; $682a
+	script_set_actor_script $0a, ActorScript_0e_06 ; $6835
+	script_set_actor_script $09, ActorScript_0e_06 ; $6840
+	script_set_actor_script $0c, ActorScript_0e_06 ; $684b
+	script_set_actor_script $0d, ActorScript_0e_06 ; $6856
 	script_wait_frames $1e ; $6861
 	script_face ACTOR_PLAYER, FACE_DOWN ; $6868
 	test_flag FLAG_DOUBLES ; $686f
 	jr z, .dismissCrowd ; $6872
 	script_face ACTOR_PARTNER, FACE_DOWN ; $6874
 .dismissCrowd:
-	script_set_actor_script $0f, ActorScript_0e_552d ; $687b
+	script_set_actor_script $0f, ActorScript_0e_06 ; $687b
 	script_wait_frames $28 ; $6886
-	script_set_actor_script $10, ActorScript_0e_552d ; $688d
+	script_set_actor_script $10, ActorScript_0e_06 ; $688d
 	script_wait_frames $14 ; $6898
-	script_set_actor_script $0e, ActorScript_0e_552d ; $689f
+	script_set_actor_script $0e, ActorScript_0e_06 ; $689f
 	script_wait_actor_script $0e ; $68aa
 	script_move_player $1200, $0d00 ; $68af
 	test_flag FLAG_DOUBLES ; $68b9
@@ -2719,13 +2719,13 @@ PromptExhibitionMatch:
 .bothReady:
 	script_wait_idle ACTOR_PLAYER ; $691e
 	script_wait_frames $14 ; $6923
-	script_set_actor_script $13, ActorScript_0e_5545 ; $692a
+	script_set_actor_script $13, ActorScript_0e_07 ; $692a
 	script_wait_frames $14 ; $6935
-	script_set_actor_script ACTOR_PLAYER, ActorScript_0e_5545 ; $693c
+	script_set_actor_script ACTOR_PLAYER, ActorScript_0e_07 ; $693c
 	test_flag FLAG_DOUBLES ; $6947
 	jr z, .leave ; $694a
 	script_wait_frames $28 ; $694c
-	script_set_actor_script ACTOR_PARTNER, ActorScript_0e_5545 ; $6953
+	script_set_actor_script ACTOR_PARTNER, ActorScript_0e_07 ; $6953
 .leave:
 	script_move_player $1500, $0d00 ; $695e
 	script_wait_actor_script ACTOR_PLAYER ; $6968
@@ -3333,20 +3333,20 @@ SpecialCourtMapScripts_0e:
 	dw SpecialCourtInitScript_0e ; slot 6 InitScript
 SpecialCourtActors_0e:
 	; $7604, 206 bytes (map_actors)
-	map_actor $0000, ActorScript_0e_7c6e, $0f00, $0500, FACE_DOWN, $2e, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $1700, $0d00, FACE_LEFT, $6d, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $1700, $0f00, FACE_LEFT, $6f, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $1700, $1100, FACE_LEFT, $2c, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $1700, $1900, FACE_LEFT, $6e, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $0480, $0f00, FACE_RIGHT, $73, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $0500, $1100, FACE_RIGHT, $2d, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $0500, $1900, FACE_RIGHT, $48, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $0500, $1b00, FACE_RIGHT, $2b, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $0d00, $0500, FACE_DOWN, $72, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $0d00, $1700, FACE_DOWN, $2a, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $0500, $1f00, FACE_UP, $70, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $0500, $0d00, FACE_RIGHT, $71, $01, $00
-	map_actor $0000, ActorScript_0e_7c6e, $1700, $1b00, FACE_LEFT, $71, $01, $00
+	map_actor $0000, ActorScript_0e_22, $0f00, $0500, FACE_DOWN, $2e, $01, $00
+	map_actor $0000, ActorScript_0e_22, $1700, $0d00, FACE_LEFT, $6d, $01, $00
+	map_actor $0000, ActorScript_0e_22, $1700, $0f00, FACE_LEFT, $6f, $01, $00
+	map_actor $0000, ActorScript_0e_22, $1700, $1100, FACE_LEFT, $2c, $01, $00
+	map_actor $0000, ActorScript_0e_22, $1700, $1900, FACE_LEFT, $6e, $01, $00
+	map_actor $0000, ActorScript_0e_22, $0480, $0f00, FACE_RIGHT, $73, $01, $00
+	map_actor $0000, ActorScript_0e_22, $0500, $1100, FACE_RIGHT, $2d, $01, $00
+	map_actor $0000, ActorScript_0e_22, $0500, $1900, FACE_RIGHT, $48, $01, $00
+	map_actor $0000, ActorScript_0e_22, $0500, $1b00, FACE_RIGHT, $2b, $01, $00
+	map_actor $0000, ActorScript_0e_22, $0d00, $0500, FACE_DOWN, $72, $01, $00
+	map_actor $0000, ActorScript_0e_22, $0d00, $1700, FACE_DOWN, $2a, $01, $00
+	map_actor $0000, ActorScript_0e_22, $0500, $1f00, FACE_UP, $70, $01, $00
+	map_actor $0000, ActorScript_0e_22, $0500, $0d00, FACE_RIGHT, $71, $01, $00
+	map_actor $0000, ActorScript_0e_22, $1700, $1b00, FACE_LEFT, $71, $01, $00
 	map_actor_end
 SpecialCourtEntryPoints_0e:
 	; $76d2, 9 bytes (map_entries)
@@ -3396,15 +3396,15 @@ ExhibitionMatchIntroCutscene:
 	script_fade_in $04 ; $776e
 	call WaitFadeEnd ; $7773
 	script_wait_move $0e ; $7776
-	script_set_actor_script $0e, ActorScript_0e_7b11 ; $777b
+	script_set_actor_script $0e, ActorScript_0e_16 ; $777b
 	script_move_target ACTOR_PLAYER, $0500, $1f00 ; $7786
 	script_wait_move ACTOR_PLAYER ; $7791
-	script_set_actor_script ACTOR_PLAYER, ActorScript_0e_7b11 ; $7796
+	script_set_actor_script ACTOR_PLAYER, ActorScript_0e_16 ; $7796
 	script_wait_frames $5a ; $77a1
 	script_move_player $0e00, $1700 ; $77a8
 	script_wait_actor_script $0e ; $77b2
 	script_set_speed $0e, $0020 ; $77b7
-	script_set_actor_script $0e, ActorScript_0e_7b24 ; $77bf
+	script_set_actor_script $0e, ActorScript_0e_17 ; $77bf
 	script_wait_actor_script $0e ; $77ca
 	script_wait_frames $3c ; $77cf
 	script_set_anim $0d, $03 ; $77d6
@@ -3478,20 +3478,20 @@ ExhibitionMatchIntroCutscene:
 	script_fade_in $04 ; $79a1
 	call WaitFadeEnd ; $79a6
 	script_wait_move $0e ; $79a9
-	script_set_actor_script $0e, ActorScript_0e_7b11 ; $79ae
+	script_set_actor_script $0e, ActorScript_0e_16 ; $79ae
 	script_move_target ACTOR_PLAYER, $0500, $1f00 ; $79b9
 	script_move_target ACTOR_PARTNER, $0500, $2100 ; $79c4
 	script_wait_move ACTOR_PLAYER ; $79cf
-	script_set_actor_script ACTOR_PLAYER, ActorScript_0e_7b11 ; $79d4
+	script_set_actor_script ACTOR_PLAYER, ActorScript_0e_16 ; $79d4
 	script_move_target ACTOR_PARTNER, $0500, $1f00 ; $79df
 	script_wait_move ACTOR_PARTNER ; $79ea
-	script_set_actor_script ACTOR_PARTNER, ActorScript_0e_7b11 ; $79ef
+	script_set_actor_script ACTOR_PARTNER, ActorScript_0e_16 ; $79ef
 	script_wait_frames $5a ; $79fa
 	script_move_player $0e00, $1700 ; $7a01
 	script_wait_actor_script $0e ; $7a0b
 	script_set_speed $0e, $0020 ; $7a10
-	script_set_actor_script $0e, ActorScript_0e_7b24 ; $7a18
-	script_set_actor_script ACTOR_PARTNER, ActorScript_0e_7c6e ; $7a23
+	script_set_actor_script $0e, ActorScript_0e_17 ; $7a18
+	script_set_actor_script ACTOR_PARTNER, ActorScript_0e_22 ; $7a23
 	script_move_target ACTOR_PARTNER, $0f00, $1b00 ; $7a2e
 	script_wait_actor_script $0e ; $7a39
 	script_wait_frames $3c ; $7a3e
@@ -3520,16 +3520,16 @@ ExhibitionMatchIntroCutscene:
 	script_set_speed ACTOR_PARTNER, $0020 ; $7ab8
 	script_set_speed $0d, $0020 ; $7ac0
 	script_set_speed $03, $0020 ; $7ac8
-	script_set_actor_script $0d, ActorScript_0e_7b2f ; $7ad0
-	script_set_actor_script $03, ActorScript_0e_7b46 ; $7adb
-	script_set_actor_script ACTOR_PLAYER, ActorScript_0e_7b5d ; $7ae6
-	script_set_actor_script ACTOR_PARTNER, ActorScript_0e_7b6e ; $7af1
+	script_set_actor_script $0d, ActorScript_0e_18 ; $7ad0
+	script_set_actor_script $03, ActorScript_0e_19 ; $7adb
+	script_set_actor_script ACTOR_PLAYER, ActorScript_0e_20 ; $7ae6
+	script_set_actor_script ACTOR_PARTNER, ActorScript_0e_21 ; $7af1
 	script_wait_actor_script $0d ; $7afc
 	script_wait_actor_script $03 ; $7b01
 	script_wait_frames $3c ; $7b06
 	call PrepareStoryMatch ; $7b0d
 	ret ; $7b10
-ActorScript_0e_7b11:
+ActorScript_0e_16:
 	; $7b11, 19 bytes (actor_script)
 	as_set_target $0500, $1f00
 	as_wait_move
@@ -3538,13 +3538,13 @@ ActorScript_0e_7b11:
 	as_set_target $0d00, $1b00
 	as_wait_move
 	as_halt
-ActorScript_0e_7b24:
+ActorScript_0e_17:
 	; $7b24, 11 bytes (actor_script)
 	as_set_target $1300, $1700
 	as_wait_move
 	as_set_field $14, FACE_LEFT
 	as_halt
-ActorScript_0e_7b2f:
+ActorScript_0e_18:
 	; $7b2f, 23 bytes (actor_script)
 	as_set_target $0900, $1700
 	as_wait_move
@@ -3554,7 +3554,7 @@ ActorScript_0e_7b2f:
 	as_wait_move
 	as_set_field $14, FACE_DOWN
 	as_halt
-ActorScript_0e_7b46:
+ActorScript_0e_19:
 	; $7b46, 23 bytes (actor_script)
 	as_set_target $0900, $1700
 	as_wait_move
@@ -3564,7 +3564,7 @@ ActorScript_0e_7b46:
 	as_wait_move
 	as_set_field $14, FACE_DOWN
 	as_halt
-ActorScript_0e_7b5d:
+ActorScript_0e_20:
 	; $7b5d, 17 bytes (actor_script)
 	as_set_target $0d00, $1d00
 	as_wait_move
@@ -3572,7 +3572,7 @@ ActorScript_0e_7b5d:
 	as_wait_move
 	as_set_field $14, FACE_UP
 	as_halt
-ActorScript_0e_7b6e:
+ActorScript_0e_21:
 	; $7b6e, 17 bytes (actor_script)
 	as_set_target $0f00, $1900
 	as_wait_move
@@ -3678,7 +3678,7 @@ HandleExhibitionMatchResult:
 	ld [wUnusedExitLocationMirror], a ; $7c67
 	ld [wStoryModeExitLocationRequest], a ; $7c6a
 	ret ; $7c6d
-ActorScript_0e_7c6e:
+ActorScript_0e_22:
 	; $7c6e, 40 bytes (actor_script)
 	as_halt
 	as_anim $00
@@ -3718,7 +3718,7 @@ MapScriptHideLocationName_0e:
 	xor a ; $7c9f
 	ld [wStoryModeShowLocationName], a ; $7ca0
 	ret ; $7ca3
-ActorScript_0e_7ca4:
+ActorScript_0e_23:
 	; $7ca4, 103 bytes (actor_script)
 	as_anim $01
 	as_target_rel $0400, $0200
@@ -3756,10 +3756,10 @@ ActorScript_0e_7ca4:
 	as_set_field $14, FACE_DOWN
 	as_anim $05
 	as_wait $4b
-	as_jump ActorScript_0e_7ca4
+	as_jump ActorScript_0e_23
 	as_anim $00
 	as_wait $3c
-ActorScript_0e_7d0b:
+ActorScript_0e_24:
 	; $7d0b, 103 bytes (actor_script)
 	as_anim $01
 	as_target_rel $fc00, $0000
@@ -3797,10 +3797,10 @@ ActorScript_0e_7d0b:
 	as_set_field $14, FACE_UP
 	as_anim $05
 	as_wait $4b
-	as_jump ActorScript_0e_7d0b
+	as_jump ActorScript_0e_24
 	as_anim $00
 	as_wait $1e
-ActorScript_0e_7d72:
+ActorScript_0e_25:
 	; $7d72, 105 bytes (actor_script)
 	as_anim $01
 	as_target_rel $0400, $0000
@@ -3838,11 +3838,11 @@ ActorScript_0e_7d72:
 	as_set_field $14, FACE_DOWN
 	as_anim $05
 	as_wait $4b
-	as_jump ActorScript_0e_7d72
+	as_jump ActorScript_0e_25
 	as_anim $00
 	as_wait $1e
 	as_wait $3c
-ActorScript_0e_7ddb:
+ActorScript_0e_26:
 	; $7ddb, 99 bytes (actor_script)
 	as_anim $01
 	as_target_rel $fc00, $fe00
@@ -3880,16 +3880,16 @@ ActorScript_0e_7ddb:
 	as_set_field $14, FACE_UP
 	as_anim $05
 	as_wait $4b
-	as_jump ActorScript_0e_7ddb
-ActorScript_0e_7e3e:
+	as_jump ActorScript_0e_26
+ActorScript_0e_27:
 	; $7e3e, 13 bytes (actor_script)
 	as_wait $f0
 	as_anim $03
 	as_wait $50
 	as_anim $03
 	as_wait $3c
-	as_jump ActorScript_0e_7e3e
-ActorScript_0e_7e4b:
+	as_jump ActorScript_0e_27
+ActorScript_0e_28:
 	; $7e4b, 15 bytes (actor_script)
 	as_wait $8c
 	as_anim $04
@@ -3897,7 +3897,7 @@ ActorScript_0e_7e4b:
 	as_anim $04
 	as_wait $8c
 	as_anim $03
-	as_jump ActorScript_0e_7e4b
+	as_jump ActorScript_0e_28
 ComputeTrainingGymProgressIndex:
 	test_flag FLAG_DOUBLES ; $7e5a
 	jr nz, .doubles ; $7e5d

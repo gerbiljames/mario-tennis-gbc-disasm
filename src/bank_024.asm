@@ -5,7 +5,7 @@ SECTION "ROM Bank $24", ROMX[$4000], BANK[$24]
 	farptr ApplyFallbackBallTrajectory_24 ; $4004
 	farptr ShotBallPathNeutral ; $4006
 	farptr ShotBallPathSmash ; $4008
-	farptr StubNop_24_6706 ; $400a
+	farptr StubNop_24 ; $400a
 	farptr ShotBallPathReach ; $400c
 BallTrajEntryPtr6_24:
 	push hl ; $400e
@@ -682,7 +682,7 @@ SmashVelocityBySpeed_24:
 	dw $fe50 ; record 7
 	dw $fee0 ; record 8
 	dw $ff70 ; record 9
-StubNop_24_6706:
+StubNop_24:
 	ret ; $6706
 BallPosDataReach_24:
 	INCBIN "data/bank_024/d_6707.bin" ; $6707, 4096 bytes

@@ -1615,14 +1615,14 @@ DrawScoreboardSprites:
 	ret ; $509b
 ScoreboardSpriteTemplatePointers:
 	; $509c, 16 bytes (records:2)
-	dw SpriteTemplate_06_50e2 ; record 0
-	dw SpriteTemplate_06_5123 ; record 1
-	dw SpriteTemplate_06_516c ; record 2
-	dw SpriteTemplate_06_51ff ; record 3
-	dw SpriteTemplate_06_51bd ; record 4
-	dw SpriteTemplate_06_51de ; record 5
-	dw SpriteTemplate_06_5210 ; record 6
-	dw SpriteTemplate_06_5210 ; record 7
+	dw ScoreboardSpriteTemplate0 ; record 0
+	dw ScoreboardSpriteTemplate1 ; record 1
+	dw ScoreboardSpriteTemplate2 ; record 2
+	dw ScoreboardSpriteTemplate5 ; record 3
+	dw ScoreboardSpriteTemplate3 ; record 4
+	dw ScoreboardSpriteTemplate4 ; record 5
+	dw ScoreboardSpriteTemplate6 ; record 6
+	dw ScoreboardSpriteTemplate6 ; record 7
 .adjustSpriteCoordsForScroll:
 	ld hl, $4c0c ; $50ac
 	add hl, de ; $50af
@@ -1655,7 +1655,7 @@ ScoreboardSpriteTemplatePointers:
 	ld a, $04 ; $50dc
 	farcall DrawNumberWithSprites ; $50de
 	ret ; $50e1
-SpriteTemplate_06_50e2:
+ScoreboardSpriteTemplate0:
 	; $50e2, 65 bytes (sprite_template)
 	oam_sprite $20, $18, $00, $04
 	oam_sprite $20, $20, $02, $04
@@ -1674,7 +1674,7 @@ SpriteTemplate_06_50e2:
 	oam_sprite $30, $80, $7c, $01
 	oam_sprite $30, $88, $7e, $01
 	oam_sprite_end
-SpriteTemplate_06_5123:
+ScoreboardSpriteTemplate1:
 	; $5123, 73 bytes (sprite_template)
 	oam_sprite $20, $18, $00, $04
 	oam_sprite $20, $20, $02, $04
@@ -1695,7 +1695,7 @@ SpriteTemplate_06_5123:
 	oam_sprite $30, $80, $7c, $01
 	oam_sprite $30, $88, $7e, $01
 	oam_sprite_end
-SpriteTemplate_06_516c:
+ScoreboardSpriteTemplate2:
 	; $516c, 81 bytes (sprite_template)
 	oam_sprite $20, $10, $00, $04
 	oam_sprite $20, $18, $02, $04
@@ -1718,7 +1718,7 @@ SpriteTemplate_06_516c:
 	oam_sprite $30, $80, $7c, $01
 	oam_sprite $30, $88, $7e, $01
 	oam_sprite_end
-SpriteTemplate_06_51bd:
+ScoreboardSpriteTemplate3:
 	; $51bd, 33 bytes (sprite_template)
 	oam_sprite $20, $18, $00, $04
 	oam_sprite $20, $20, $02, $04
@@ -1729,7 +1729,7 @@ SpriteTemplate_06_51bd:
 	oam_sprite $30, $80, $7c, $01
 	oam_sprite $30, $88, $7e, $01
 	oam_sprite_end
-SpriteTemplate_06_51de:
+ScoreboardSpriteTemplate4:
 	; $51de, 33 bytes (sprite_template)
 	oam_sprite $20, $0e, $00, $04
 	oam_sprite $20, $16, $02, $04
@@ -1740,14 +1740,14 @@ SpriteTemplate_06_51de:
 	oam_sprite $30, $80, $7c, $01
 	oam_sprite $30, $88, $7e, $01
 	oam_sprite_end
-SpriteTemplate_06_51ff:
+ScoreboardSpriteTemplate5:
 	; $51ff, 17 bytes (sprite_template)
 	oam_sprite $20, $18, $00, $04
 	oam_sprite $20, $20, $02, $04
 	oam_sprite $20, $80, $78, $01
 	oam_sprite $20, $88, $7a, $01
 	oam_sprite_end
-SpriteTemplate_06_5210:
+ScoreboardSpriteTemplate6:
 	; $5210, 9 bytes (sprite_template)
 	oam_sprite $18, $14, $00, $04
 	oam_sprite $18, $1c, $02, $04
@@ -2222,13 +2222,13 @@ MenuItemAttrRect3x2:
 	tilemap_row $00, $00, $00 ; row 0
 	tilemap_row $00, $00, $00 ; row 1
 	tilemap_end
-TextRect_06_695b:
+Unused_06_DrawMusicMenuRowTextRect:
 	; $695b, 24 bytes (tilemap:12)
 	tilemap_begin 12, 2
 	tilemap_row $49, $4a, $4b, $14, $15, $16, $17, $18, $19, $1a, $1b, $1c ; row 0
 	tilemap_row $59, $5a, $5b, $24, $25, $26, $27, $28, $29, $2a, $2b, $2c ; row 1
 	tilemap_end
-TextRectAttrs_06_6973:
+TextRectAttrs_06:
 	; $6973, 24 bytes (tilemap:12)
 	tilemap_begin 12, 2
 	tilemap_row $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; row 0
@@ -2237,12 +2237,12 @@ TextRectAttrs_06_6973:
 Unused_06_DrawMusicMenuRow:
 	ld de, $030a ; $698b
 	call GetShadowTilemapAddr ; $698e
-	ld hl, TextRect_06_695b ; $6991
+	ld hl, Unused_06_DrawMusicMenuRowTextRect ; $6991
 	ld bc, $0c02 ; $6994
 	call CopyTextRect ; $6997
 	ld de, $030a ; $699a
 	call GetShadowAttrmapAddr ; $699d
-	ld hl, TextRectAttrs_06_6973 ; $69a0
+	ld hl, TextRectAttrs_06 ; $69a0
 	ld bc, $0c02 ; $69a3
 	call CopyTextRect ; $69a6
 	ld a, [wCourtViewLocked] ; $69a9
@@ -3617,7 +3617,7 @@ StoryMenuItemRect_Items:
 	tilemap_row $12, $13, $4f ; row 0
 	tilemap_row $22, $23, $5f ; row 1
 	tilemap_end
-TextRect_06_784b:
+StoryMenuItemRowTextRect:
 	; $784b, 24 bytes (tilemap:12)
 	tilemap_begin 12, 2
 	tilemap_row $49, $4a, $4b, $14, $15, $16, $17, $18, $19, $1a, $1b, $1c ; row 0
@@ -3626,12 +3626,12 @@ TextRect_06_784b:
 DrawStoryMenuItemRow:
 	ld de, $030a ; $7863
 	call GetShadowTilemapAddr ; $7866
-	ld hl, TextRect_06_784b ; $7869
+	ld hl, StoryMenuItemRowTextRect ; $7869
 	ld bc, $0c02 ; $786c
 	call CopyTileRectToShadowTilemap ; $786f
 	ld de, $030a ; $7872
 	call GetShadowAttrmapAddr ; $7875
-	ld hl, TextRectAttrs_06_6973 ; $7878
+	ld hl, TextRectAttrs_06 ; $7878
 	ld bc, $0c02 ; $787b
 	call CopyTileRectToShadowAttrmap ; $787e
 	ret ; $7881

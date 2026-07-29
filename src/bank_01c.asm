@@ -699,9 +699,9 @@ CharDataScreenAnimTask:
 	and $0f ; $461b
 	rlca ; $461d
 	push af ; $461e
-	add LOW(Unused_1c_5679) ; $461f
+	add LOW(Unused_1c_0) ; $461f
 	ld l, a ; $4621
-	adc HIGH(Unused_1c_5679) ; $4622
+	adc HIGH(Unused_1c_0) ; $4622
 	sub l ; $4624
 	ld h, a ; $4625
 	ld a, [hl+] ; $4626
@@ -2689,7 +2689,7 @@ CharDataPageLeftTargets_1c:
 CharDataPageRightTargets_1c:
 	; $5674, 5 bytes (bytes:5)
 	db $02, $03, $ff, $ff, $03 ; 0x00
-Unused_1c_5679:
+Unused_1c_0:
 	; $5679, 32 bytes (records:2)
 	dw UnusedShiftGfx00 ; record 0
 	dw UnusedShiftGfx01 ; record 1
@@ -2865,7 +2865,7 @@ CharDataBand8RunsStep1_1c:
 	; $597b, 17 bytes (bytes:16)
 	db $00, $14, $00, $01, $00, $34, $06, $01, $00, $54, $0c, $01, $00, $74, $12, $01 ; 0x00
 	db $ff ; 0x10
-Palette_1c_598c:
+CharDataScreen_LoadScreenPalette:
 	INCLUDE "data/bank_01c/palettes_598c.asm" ; $598c, 64 bytes (palettes)
 CharDataScreenGfx0_1c:
 	INCBIN "data/bank_01c/d_59cc.bin" ; $59cc, 2618 bytes
@@ -3027,7 +3027,7 @@ UnusedShiftGfx24:
 	INCBIN "data/bank_01c/d_6e80.bin" ; $6e80, 64 bytes
 UnusedShiftGfx25:
 	INCBIN "data/bank_01c/d_6ec0.bin" ; $6ec0, 47 bytes
-Unused_1c_6eef:
+Unused_1c_1:
 	; $6eef, 17 bytes (bytes:16)
 	db $ec, $00, $00, $00, $00, $08, $07, $20, $1f, $44, $38, $0a, $71, $84, $73, $10 ; 0x00
 	db $e7 ; 0x10
@@ -3051,10 +3051,10 @@ UnusedShiftGfx31:
 CharDataScreenGfx13:
 	INCBIN "data/bank_01c/d_7080.bin" ; $7080, 150 bytes
 CharDataScreen_LoadScreen:
-	ld hl, Palette_1c_598c ; $7116
+	ld hl, CharDataScreen_LoadScreenPalette ; $7116
 	ld de, $0008 ; $7119
 	call LoadPaletteShadow ; $711c
-	ld hl, Palette_1c_598c ; $711f
+	ld hl, CharDataScreen_LoadScreenPalette ; $711f
 	ld de, $0808 ; $7122
 	call LoadPaletteShadow ; $7125
 	wram_bank $01 ; $7128
@@ -3339,10 +3339,10 @@ LoadCharDataScreenGraphics:
 	call LoadCharDataScreenMugshots ; $73f7
 	ret ; $73fa
 LoadCharDataScreenBgAndPalettes:
-	ld hl, Palette_1c_7541 ; $73fb
+	ld hl, CharDataScreenBgAndPalettes ; $73fb
 	ld de, $0008 ; $73fe
 	call LoadPaletteShadow ; $7401
-	ld hl, Palette_1c_7541 ; $7404
+	ld hl, CharDataScreenBgAndPalettes ; $7404
 	ld de, $0808 ; $7407
 	call LoadPaletteShadow ; $740a
 	wram_bank $06 ; $740d
@@ -3477,7 +3477,7 @@ LoadCharDataScreenMugshots:
 	ld hl, wMasterPalettes + 22 ; $753a
 	farcall GrayscalePaletteColorInPlace ; $753d
 	ret ; $7540
-Palette_1c_7541:
+CharDataScreenBgAndPalettes:
 	INCLUDE "data/bank_01c/palettes_7541.asm" ; $7541, 64 bytes (palettes)
 CharDataScreenBgAndPalettes0:
 	INCBIN "data/bank_01c/d_7581.bin" ; $7581, 1886 bytes

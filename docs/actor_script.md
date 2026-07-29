@@ -79,10 +79,10 @@ $2700, $1300`). `as_jump`'s operand is `target - operand_address`; the macro emi
 
 ## Example
 
-`ActorScript_0f_7a73` — a two-point patrol:
+`ActorScript_0f_08` — a two-point patrol:
 
 ```
-ActorScript_0f_7a73:
+ActorScript_0f_08:
 	as_flag $01, $05, $02
 	as_set_field $06, $0006
 .L8:
@@ -117,7 +117,7 @@ has ~20 entry points. Each entry point gets its own `ActorScript_*` label, and
 the blob splits into one `actor_script` region per label. Execution flows from
 one labelled fragment into the next (fall-through) or jumps between them: an
 `as_jump` whose target is another entry point renders as that global label
-(`as_jump ActorScript_11_5b28`) rather than a local `.L`. `decode_actor_script`
+(`as_jump ActorScript_11_04`) rather than a local `.L`. `decode_actor_script`
 accepts a jump target that is a known script label even when it lands outside the
 current segment. (`StoryCmdHandlersC_13` was originally mis-seeded as code — its
 "handlers" are script fragments, not routines; likewise `$10:$741c`.)
@@ -141,11 +141,11 @@ code or data:
 
 | Blob | Script prefix | Tail |
 |------|---------------|------|
-| `ActorScript_0f_7b75` | 10 B | 572 B |
-| `ActorScript_12_79ea` | 123 B | 3 B |
-| `ActorScript_15_7f3d` | 28 B | 71 B |
-| `ActorScript_27_5557` | 25 B | 128 B |
-| `ActorScript_27_79c4` | 133 B | 120 B |
+| `ActorScript_0f_11` | 10 B | 572 B |
+| `ActorScript_12_44` | 123 B | 3 B |
+| `ActorScript_15_25` | 28 B | 71 B |
+| `ActorScript_27_05` | 25 B | 128 B |
+| `ActorScript_27_33` | 133 B | 120 B |
 
 `decode_actor_script` in `tools/disasmlib/datatables.py` decodes the clean
 prefix and stops at the first non-opcode byte (returning `None` only if a jump

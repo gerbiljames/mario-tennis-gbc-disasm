@@ -878,7 +878,7 @@ FillBytes_3f:
 	ret ; $50f6
 CountTennisDictionaryEntries:
 	wram_bank $06 ; $50f7
-	ld hl, SelectionMaskGrid_3f_539e ; $50fd
+	ld hl, SelectionMaskGrid_3f ; $50fd
 	ld c, $00 ; $5100
 	ld a, [wTennisDictCategoryMask] ; $5102
 	ld d, a ; $5105
@@ -898,7 +898,7 @@ CountTennisDictionaryEntries:
 	ret ; $5119
 FindTennisDictionaryListEnd:
 	wram_bank $06 ; $511a
-	ld hl, SelectionMaskGrid_3f_539e ; $5120
+	ld hl, SelectionMaskGrid_3f ; $5120
 	ld c, $00 ; $5123
 .loop:
 	ld a, [hl+] ; $5125
@@ -914,7 +914,7 @@ GetTennisDictionaryEntryIndex:
 	ld d, $00 ; $5134
 	ld c, a ; $5136
 	inc c ; $5137
-	ld hl, SelectionMaskGrid_3f_539e ; $5138
+	ld hl, SelectionMaskGrid_3f ; $5138
 .loop:
 	ld a, [hl+] ; $513b
 	cp $00 ; $513c
@@ -931,7 +931,7 @@ GetTennisDictionaryEntryCategory:
 	ld d, $00 ; $514a
 	ld c, a ; $514c
 	inc c ; $514d
-	ld hl, SelectionMaskGrid_3f_539e ; $514e
+	ld hl, SelectionMaskGrid_3f ; $514e
 .loop:
 	ld a, [hl+] ; $5151
 	cp $00 ; $5152
@@ -978,7 +978,7 @@ GetTennisDictionarySelectedIndex:
 	ret ; $5191
 ScrollTennisDictionaryToPrevLetter:
 	wram_bank $06 ; $5192
-	ld hl, SelectionMaskGrid_3f_539e ; $5198
+	ld hl, SelectionMaskGrid_3f ; $5198
 	call GetTennisDictionarySelectedIndex ; $519b
 	ld b, a ; $519e
 	ld c, a ; $519f
@@ -1054,7 +1054,7 @@ WrapTennisDictionaryScanToEnd:
 	cp $40 ; $51fc
 	jr nz, .ne402 ; $51fe
 	ld c, $00 ; $5200
-	ld hl, SelectionMaskGrid_3f_539e ; $5202
+	ld hl, SelectionMaskGrid_3f ; $5202
 	jr .loop4 ; $5205
 .ne402:
 	and e ; $5207
@@ -1064,7 +1064,7 @@ WrapTennisDictionaryScanToEnd:
 	ret ; $520e
 ScrollTennisDictionaryToNextLetter:
 	wram_bank $06 ; $520f
-	ld hl, SelectionMaskGrid_3f_539e ; $5215
+	ld hl, SelectionMaskGrid_3f ; $5215
 	ld a, [wTennisDictEntryCount] ; $5218
 	ld b, a ; $521b
 	ld a, [wTennisDictCursorRow] ; $521c
@@ -1100,7 +1100,7 @@ ScrollTennisDictionaryToNextLetter:
 	ld a, c ; $5244
 	cp $40 ; $5245
 	jr nz, .loopB ; $5247
-	ld hl, SelectionMaskGrid_3f_539e ; $5249
+	ld hl, SelectionMaskGrid_3f ; $5249
 	ld d, $ff ; $524c
 .eq00:
 	inc d ; $524e
@@ -1108,7 +1108,7 @@ ScrollTennisDictionaryToNextLetter:
 	ld a, [hl+] ; $524f
 	cp $40 ; $5250
 	jr nz, .ne40 ; $5252
-	ld hl, SelectionMaskGrid_3f_539e ; $5254
+	ld hl, SelectionMaskGrid_3f ; $5254
 	ld d, $00 ; $5257
 .ne40:
 	and e ; $5259
@@ -1145,7 +1145,7 @@ DrawTennisDictionaryList:
 	ld a, [wTennisDictScrollTop] ; $528d
 	ld b, a ; $5290
 	inc b ; $5291
-	ld hl, SelectionMaskGrid_3f_539e ; $5292
+	ld hl, SelectionMaskGrid_3f ; $5292
 	ld a, [wTennisDictCategoryMask] ; $5295
 	ld e, a ; $5298
 .skipEntry:
@@ -1198,7 +1198,7 @@ DrawTennisDictionaryList:
 	jr z, .scanLoop ; $52d9
 	cp $40 ; $52db
 	jr nz, .checkMask ; $52dd
-	ld hl, SelectionMaskGrid_3f_539e ; $52df
+	ld hl, SelectionMaskGrid_3f ; $52df
 	ld c, $00 ; $52e2
 	jr .nextEntry ; $52e4
 .checkMask:
@@ -1255,7 +1255,7 @@ DrawTennisDictionaryLetterLabels:
 	inc b ; $5338
 	ld a, [wTennisDictCategoryMask] ; $5339
 	ld e, a ; $533c
-	ld hl, SelectionMaskGrid_3f_539e ; $533d
+	ld hl, SelectionMaskGrid_3f ; $533d
 	ld d, $00 ; $5340
 .loop:
 	ld a, [hl+] ; $5342
@@ -1313,12 +1313,12 @@ DrawTennisDictionaryLetterLabels:
 	jr .loopB ; $539b
 .done:
 	ret ; $539d
-SelectionMaskGrid_3f_539e:
+SelectionMaskGrid_3f:
 	INCBIN "data/bank_03f/d_539e.bin" ; $539e, 121 bytes
 SetTennisDictionaryListFromIndexRow:
 	wram_bank $06 ; $5417
 	ld c, $00 ; $541d
-	ld hl, SelectionMaskGrid_3f_539e ; $541f
+	ld hl, SelectionMaskGrid_3f ; $541f
 	ld a, [wTennisDictCategoryMask] ; $5422
 	ld e, a ; $5425
 	ld a, [wTennisDictCursorRow] ; $5426
@@ -1372,7 +1372,7 @@ SetTennisDictionaryIndexRowFromList:
 	ld b, a ; $5475
 	inc b ; $5476
 	ld c, $00 ; $5477
-	ld hl, SelectionMaskGrid_3f_539e ; $5479
+	ld hl, SelectionMaskGrid_3f ; $5479
 	ld a, [wTennisDictCategoryMask] ; $547c
 	ld e, a ; $547f
 .loop:

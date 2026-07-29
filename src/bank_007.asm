@@ -2784,7 +2784,7 @@ ShotTypePresets_07:
 	db $54, $04, $02, $a0, $02 ; record 13
 	db $54, $04, $03, $a0, $02 ; record 14
 GetShotAimOffsetForSide:
-	ld hl, CourtSideOffsets_07_563e ; $55e9
+	ld hl, ShotAimOffsetForSideCourtSideOffsets ; $55e9
 	ld a, [wMinigameUsesWall] ; $55ec
 	and a ; $55ef
 	jr nz, .readAim ; $55f0
@@ -2832,19 +2832,19 @@ GetShotAimOffsetForSide:
 	ld e, l ; $562b
 	ld d, h ; $562c
 	ret ; $562d
-CourtSideOffsets_07_562e:
+CourtSideOffsets_07_0:
 	; $562e, 8 bytes (records:2)
 	dw $fe60 ; record 0
 	dw $ff20 ; record 1
 	dw $ffdc ; record 2
 	dw $0000 ; record 3
-CourtSideOffsets_07_5636:
+CourtSideOffsets_07_1:
 	; $5636, 8 bytes (records:2)
 	dw $0024 ; record 0
 	dw $00e0 ; record 1
 	dw $01a0 ; record 2
 	dw $0000 ; record 3
-CourtSideOffsets_07_563e:
+ShotAimOffsetForSideCourtSideOffsets:
 	; $563e, 8 bytes (records:2)
 	dw $ff20 ; record 0
 	dw $0000 ; record 1
@@ -3629,9 +3629,9 @@ LoadCharacterAttributes:
 	add hl, de ; $5b29
 	ld a, [hl] ; $5b2a
 	add a ; $5b2b
-	add LOW(CharStatTable_07_5c4a) ; $5b2c
+	add LOW(CharStatTable_07_0) ; $5b2c
 	ld l, a ; $5b2e
-	adc HIGH(CharStatTable_07_5c4a) ; $5b2f
+	adc HIGH(CharStatTable_07_0) ; $5b2f
 	sub l ; $5b31
 	ld h, a ; $5b32
 	ld a, [hl+] ; $5b33
@@ -3659,9 +3659,9 @@ LoadCharacterAttributes:
 	dec a ; $5b53
 .readPlacementTable:
 	add a ; $5b54
-	add LOW(CharStatTable_07_5c4a) ; $5b55
+	add LOW(CharStatTable_07_0) ; $5b55
 	ld l, a ; $5b57
-	adc HIGH(CharStatTable_07_5c4a) ; $5b58
+	adc HIGH(CharStatTable_07_0) ; $5b58
 	sub l ; $5b5a
 	ld h, a ; $5b5b
 	ld a, [hl+] ; $5b5c
@@ -3675,9 +3675,9 @@ LoadCharacterAttributes:
 	add hl, de ; $5b68
 	ld a, [hl] ; $5b69
 	add a ; $5b6a
-	add LOW(CharStatTable_07_5c5e) ; $5b6b
+	add LOW(CharStatTable_07_1) ; $5b6b
 	ld l, a ; $5b6d
-	adc HIGH(CharStatTable_07_5c5e) ; $5b6e
+	adc HIGH(CharStatTable_07_1) ; $5b6e
 	sub l ; $5b70
 	ld h, a ; $5b71
 	ld a, [hl+] ; $5b72
@@ -3691,9 +3691,9 @@ LoadCharacterAttributes:
 	add hl, de ; $5b7e
 	ld a, [hl] ; $5b7f
 	add a ; $5b80
-	add LOW(CharStatTable_07_5c72) ; $5b81
+	add LOW(CharStatTable_07_2) ; $5b81
 	ld l, a ; $5b83
-	adc HIGH(CharStatTable_07_5c72) ; $5b84
+	adc HIGH(CharStatTable_07_2) ; $5b84
 	sub l ; $5b86
 	ld h, a ; $5b87
 	ld a, [hl+] ; $5b88
@@ -3706,9 +3706,9 @@ LoadCharacterAttributes:
 	ld hl, $0029 ; $5b91
 	add hl, de ; $5b94
 	ld a, [hl] ; $5b95
-	add LOW(CharStatTable_07_5c86) ; $5b96
+	add LOW(CharStatTable_07_3) ; $5b96
 	ld l, a ; $5b98
-	adc HIGH(CharStatTable_07_5c86) ; $5b99
+	adc HIGH(CharStatTable_07_3) ; $5b99
 	sub l ; $5b9b
 	ld h, a ; $5b9c
 	ld a, [hl] ; $5b9d
@@ -3716,9 +3716,9 @@ LoadCharacterAttributes:
 	ld hl, $0025 ; $5ba1
 	add hl, de ; $5ba4
 	ld a, [hl] ; $5ba5
-	add LOW(CharStatTable_07_5c90) ; $5ba6
+	add LOW(CharStatTable_07_4) ; $5ba6
 	ld l, a ; $5ba8
-	adc HIGH(CharStatTable_07_5c90) ; $5ba9
+	adc HIGH(CharStatTable_07_4) ; $5ba9
 	sub l ; $5bab
 	ld h, a ; $5bac
 	ld a, [hl] ; $5bad
@@ -3726,9 +3726,9 @@ LoadCharacterAttributes:
 	ld hl, $0026 ; $5bb1
 	add hl, de ; $5bb4
 	ld a, [hl] ; $5bb5
-	add LOW(CharStatTable_07_5c9a) ; $5bb6
+	add LOW(CharStatTable_07_5) ; $5bb6
 	ld l, a ; $5bb8
-	adc HIGH(CharStatTable_07_5c9a) ; $5bb9
+	adc HIGH(CharStatTable_07_5) ; $5bb9
 	sub l ; $5bbb
 	ld h, a ; $5bbc
 	ld a, [hl] ; $5bbd
@@ -3803,7 +3803,7 @@ CharAttrStructPtrs_07:
 	dw wPlayer2MainName ; record 1
 	dw wPlayer1PartnerName ; record 2
 	dw wPlayer2PartnerName ; record 3
-CharStatTable_07_5c4a:
+CharStatTable_07_0:
 	; $5c4a, 20 bytes (records:2)
 	dw $0a00 ; record 0
 	dw $0a80 ; record 1
@@ -3815,7 +3815,7 @@ CharStatTable_07_5c4a:
 	dw $0d80 ; record 7
 	dw $0e00 ; record 8
 	dw $0e80 ; record 9
-CharStatTable_07_5c5e:
+CharStatTable_07_1:
 	; $5c5e, 20 bytes (records:2)
 	dw $0030 ; record 0
 	dw $003c ; record 1
@@ -3827,7 +3827,7 @@ CharStatTable_07_5c5e:
 	dw $0084 ; record 7
 	dw $0090 ; record 8
 	dw $009c ; record 9
-CharStatTable_07_5c72:
+CharStatTable_07_2:
 	; $5c72, 20 bytes (records:2)
 	dw $0040 ; record 0
 	dw $0060 ; record 1
@@ -3839,13 +3839,13 @@ CharStatTable_07_5c72:
 	dw $0120 ; record 7
 	dw $0140 ; record 8
 	dw $0160 ; record 9
-CharStatTable_07_5c86:
+CharStatTable_07_3:
 	; $5c86, 10 bytes (bytes:10)
 	db $06, $07, $08, $09, $0a, $0b, $0c, $0e, $10, $18 ; 0x00
-CharStatTable_07_5c90:
+CharStatTable_07_4:
 	; $5c90, 10 bytes (bytes:10)
 	db $75, $84, $93, $a3, $b2, $c1, $d1, $e0, $ef, $ff ; 0x00
-CharStatTable_07_5c9a:
+CharStatTable_07_5:
 	; $5c9a, 10 bytes (bytes:10)
 	db $0c, $0b, $0a, $09, $08, $07, $06, $05, $04, $03 ; 0x00
 CharStatPresets_07:
@@ -3887,9 +3887,9 @@ OverrideCharStatsForDebug:
 	ld a, [hl+] ; $5d29
 	push hl ; $5d2a
 	add a ; $5d2b
-	add LOW(CharStatTable_07_5c4a) ; $5d2c
+	add LOW(CharStatTable_07_0) ; $5d2c
 	ld l, a ; $5d2e
-	adc HIGH(CharStatTable_07_5c4a) ; $5d2f
+	adc HIGH(CharStatTable_07_0) ; $5d2f
 	sub l ; $5d31
 	ld h, a ; $5d32
 	ld a, [hl+] ; $5d33
@@ -3904,9 +3904,9 @@ OverrideCharStatsForDebug:
 	ld a, [hl+] ; $5d3e
 	push hl ; $5d3f
 	add a ; $5d40
-	add LOW(CharStatTable_07_5c4a) ; $5d41
+	add LOW(CharStatTable_07_0) ; $5d41
 	ld l, a ; $5d43
-	adc HIGH(CharStatTable_07_5c4a) ; $5d44
+	adc HIGH(CharStatTable_07_0) ; $5d44
 	sub l ; $5d46
 	ld h, a ; $5d47
 	ld a, [hl+] ; $5d48
@@ -3921,9 +3921,9 @@ OverrideCharStatsForDebug:
 	ld a, [hl+] ; $5d53
 	push hl ; $5d54
 	add a ; $5d55
-	add LOW(CharStatTable_07_5c5e) ; $5d56
+	add LOW(CharStatTable_07_1) ; $5d56
 	ld l, a ; $5d58
-	adc HIGH(CharStatTable_07_5c5e) ; $5d59
+	adc HIGH(CharStatTable_07_1) ; $5d59
 	sub l ; $5d5b
 	ld h, a ; $5d5c
 	ld a, [hl+] ; $5d5d
@@ -3938,9 +3938,9 @@ OverrideCharStatsForDebug:
 	ld a, [hl+] ; $5d68
 	push hl ; $5d69
 	add a ; $5d6a
-	add LOW(CharStatTable_07_5c72) ; $5d6b
+	add LOW(CharStatTable_07_2) ; $5d6b
 	ld l, a ; $5d6d
-	adc HIGH(CharStatTable_07_5c72) ; $5d6e
+	adc HIGH(CharStatTable_07_2) ; $5d6e
 	sub l ; $5d70
 	ld h, a ; $5d71
 	ld a, [hl+] ; $5d72
@@ -3954,9 +3954,9 @@ OverrideCharStatsForDebug:
 	pop hl ; $5d7c
 	ld a, [hl+] ; $5d7d
 	push hl ; $5d7e
-	add LOW(CharStatTable_07_5c86) ; $5d7f
+	add LOW(CharStatTable_07_3) ; $5d7f
 	ld l, a ; $5d81
-	adc HIGH(CharStatTable_07_5c86) ; $5d82
+	adc HIGH(CharStatTable_07_3) ; $5d82
 	sub l ; $5d84
 	ld h, a ; $5d85
 	ld a, [hl] ; $5d86
@@ -3966,9 +3966,9 @@ OverrideCharStatsForDebug:
 	pop hl ; $5d8c
 	ld a, [hl+] ; $5d8d
 	push hl ; $5d8e
-	add LOW(CharStatTable_07_5c90) ; $5d8f
+	add LOW(CharStatTable_07_4) ; $5d8f
 	ld l, a ; $5d91
-	adc HIGH(CharStatTable_07_5c90) ; $5d92
+	adc HIGH(CharStatTable_07_4) ; $5d92
 	sub l ; $5d94
 	ld h, a ; $5d95
 	ld a, [hl] ; $5d96
@@ -3978,9 +3978,9 @@ OverrideCharStatsForDebug:
 	pop hl ; $5d9c
 	ld a, [hl+] ; $5d9d
 	push hl ; $5d9e
-	add LOW(CharStatTable_07_5c9a) ; $5d9f
+	add LOW(CharStatTable_07_5) ; $5d9f
 	ld l, a ; $5da1
-	adc HIGH(CharStatTable_07_5c9a) ; $5da2
+	adc HIGH(CharStatTable_07_5) ; $5da2
 	sub l ; $5da4
 	ld h, a ; $5da5
 	ld a, [hl] ; $5da6
@@ -4120,7 +4120,7 @@ RunTargetZoneTestMode_07:
 	ldh a, [hRomBank] ; $5eae
 	ld de, ModeHookTable_07 ; $5eb0
 	farcall SetModeHookTable ; $5eb3
-	ld de, MinigamePointTable_07_5ff6 ; $5eb6
+	ld de, TargetZoneTestModeMinigamePointTable_07 ; $5eb6
 	farcall SetMinigamePointTable ; $5eb9
 	ld a, $01 ; $5ebc
 	ld [wTargetZoneEnabled], a ; $5ebe
@@ -4131,7 +4131,7 @@ RunTargetZoneTestMode_07:
 	farcall RunN64ExhibData ; $5ecb
 	farcall RunMinigameMatch ; $5ece
 	ret ; $5ed1
-StubNop_07_5ed2:
+StubNop_07_0:
 	ret ; $5ed2
 ResolveTargetModePoint:
 	farcall UpdateScorePanelDisplay ; $5ed3
@@ -4157,7 +4157,7 @@ ModeHookTable_07:
 	dw RetStub ; record 3
 	dw TargetZoneBallHitHook_07 ; record 4
 	dw TargetZoneBounceHook_07 ; record 5
-	dw StubNop_07_5f24 ; record 6
+	dw StubNop_07_1 ; record 6
 	dw RetStub ; record 7
 ModeHookNop_07:
 	ret ; $5f0c
@@ -4172,7 +4172,7 @@ TargetZoneHitStopHook_07:
 	ld [wMatchSimFrozen], a ; $5f1d
 	clear_flag $0c, 4 ; $5f20
 	ret ; $5f23
-StubNop_07_5f24:
+StubNop_07_1:
 	ret ; $5f24
 TargetZoneBounceHook_07:
 	farcall IsBallInTargetZone ; $5f25
@@ -4215,7 +4215,7 @@ TargetZonePointStartHook_07:
 	ld hl, $0000 ; $5f68
 	ld de, rJOYP ; $5f6b
 	farcall SetTargetZoneCorner2 ; $5f6e
-	call StubNop_07_5ed2 ; $5f71
+	call StubNop_07_0 ; $5f71
 	ret ; $5f74
 TargetZonePointEndHook_07:
 	ld hl, $013f ; $5f75
@@ -4232,7 +4232,7 @@ TargetZonePointEndHook_07:
 	ld a, $ff ; $5f8e
 	ld [wMatchAbortFlag], a ; $5f90
 	ret ; $5f93
-MinigamePointTable_07_5f94:
+MinigamePointTable_07_0:
 	; $5f94, 32 bytes (bytes:4)
 	db $00, $09, $09, $09 ; 0x00
 	db $00, $09, $09, $09 ; 0x04
@@ -4244,7 +4244,7 @@ MinigamePointTable_07_5f94:
 	db $00, $09, $09, $09 ; 0x1c
 	; $5fb4, 1 bytes (fill)
 	ds 1, $ff
-MinigamePointTable_07_5fb5:
+MinigamePointTable_07_1:
 	; $5fb5, 64 bytes (bytes:4)
 	db $00, $03, $09, $09 ; 0x00
 	db $00, $01, $09, $09 ; 0x04
@@ -4264,7 +4264,7 @@ MinigamePointTable_07_5fb5:
 	db $01, $00, $09, $09 ; 0x3c
 	; $5ff5, 1 bytes (fill)
 	ds 1, $ff
-MinigamePointTable_07_5ff6:
+TargetZoneTestModeMinigamePointTable_07:
 	; $5ff6, 64 bytes (bytes:4)
 	db $00, $03, $09, $09 ; 0x00
 	db $00, $01, $09, $09 ; 0x04

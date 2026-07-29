@@ -240,11 +240,11 @@ IntroCutsceneState19_6b:
 	dw IntroCutsceneState19Init_6b ; record 0
 	dw IntroCutsceneState19Update_6b ; record 1
 	dw IntroCutsceneState19Exit_6b ; record 2
-Unused_6b_UpdateHandler_4159:
+Unused_6b_UpdateHandler_6b:
 	jp DispatchCutsceneStateInit.loop ; $4159
 IntroCutsceneState14Exit_6b:
 	jp DispatchCutsceneStateInit.loop2 ; $415c
-Unused_6b_ExitHandler_415f:
+Unused_6b_ExitHandler_6b:
 	xor a ; $415f
 	ld [wCutsceneStepTimer], a ; $4160
 	jp DispatchCutsceneStateInit.loop2 ; $4163
@@ -383,7 +383,7 @@ IntroCutsceneState01Init_6b:
 	call EnableLCD ; $42a7
 	script_fade_in $40 ; $42aa
 	jp DispatchCutsceneStateInit.loop ; $42af
-Palettes_6b_42b2:
+Palettes_6b_00:
 	INCLUDE "data/bank_06b/palettes_42b2.asm" ; $42b2, 64 bytes (palettes)
 IntroCutsceneState01Exit_6b:
 	ld hl, QueueCutsceneSpriteGroupA ; $42f2
@@ -402,12 +402,12 @@ IntroCutsceneState01Update_6b:
 	inc a ; $4311
 	ld [wCutsceneStepTimer], a ; $4312
 	cp $69 ; $4315
-	jr z, .label_6b_4099 ; $4317
+	jr z, .timerExpired ; $4317
 	ld a, [wCutsceneSpriteAX] ; $4319
 	inc a ; $431c
 	ld [wCutsceneSpriteAX], a ; $431d
 	jp DispatchCutsceneStateInit.loop ; $4320
-.label_6b_4099:
+.timerExpired:
 	jp DispatchCutsceneStateInit.loopB ; $4323
 IntroCutsceneState02Init_6b:
 	ldh a, [hWramBank] ; $4326
@@ -432,11 +432,11 @@ IntroCutsceneState02Init_6b:
 	call QueueVRAMCopy ; $435b
 	pop af ; $435e
 	wram_bank ; $435f
-	ld hl, Palette_6b_436f ; $4363
+	ld hl, IntroCutsceneState02InitPalette_6b ; $4363
 	ld de, $0008 ; $4366
 	call LoadPalettesImmediate ; $4369
 	jp DispatchCutsceneStateInit.loop ; $436c
-Palette_6b_436f:
+IntroCutsceneState02InitPalette_6b:
 	INCLUDE "data/bank_06b/palettes_436f.asm" ; $436f, 64 bytes (palettes)
 IntroCutsceneState02Exit_6b:
 	ld c, $06 ; $43af
@@ -450,9 +450,9 @@ IntroCutsceneState02Update_6b:
 	inc a ; $43c1
 	ld [wCutsceneStepTimer], a ; $43c2
 	cp $1e ; $43c5
-	jr z, .label_6b_4099 ; $43c7
+	jr z, .timerExpired ; $43c7
 	jp DispatchCutsceneStateInit.loop ; $43c9
-.label_6b_4099:
+.timerExpired:
 	jp DispatchCutsceneStateInit.loopB ; $43cc
 IntroCutsceneState03Init_6b:
 	call DisableLCDSafely ; $43cf
@@ -754,7 +754,7 @@ IntroCutsceneState13Init_6b:
 	ldh a, [hWramBank] ; $46ed
 	push af ; $46ef
 	wram_bank $05 ; $46f0
-	ld hl, Palettes_6b_475a ; $46f6
+	ld hl, IntroCutsceneState13InitPalettes_6b ; $46f6
 	ld de, $0008 ; $46f9
 	call LoadPaletteShadow ; $46fc
 	ld hl, wWindowShadowTilemap + 6 * TILEMAP_WIDTH ; $46ff
@@ -793,7 +793,7 @@ IntroCutsceneState13Update_6b:
 	cp $64 ; $4752
 	jp z, DispatchCutsceneStateInit.loopB ; $4754
 	jp DispatchCutsceneStateInit.loop ; $4757
-Palettes_6b_475a:
+IntroCutsceneState13InitPalettes_6b:
 	INCLUDE "data/bank_06b/palettes_475a.asm" ; $475a, 64 bytes (palettes)
 IntroCutsceneState08Init_6b:
 	call DisableLCDSafely ; $479a
@@ -923,7 +923,7 @@ IntroCutsceneState11Exit_6b:
 	ldh [hShowDebugConsole], a ; $48cc
 	ld hl, rLCDC ; $48ce
 	res 3, [hl] ; $48d1
-	ld hl, Palette_6b_5d25 ; $48d3
+	ld hl, Palette_6b_1 ; $48d3
 	ld de, $0008 ; $48d6
 	call LoadPaletteShadow ; $48d9
 	xor a ; $48dc
@@ -1021,7 +1021,7 @@ IntroCutsceneState16Init_6b:
 	ld de, $9c00 + VRAM_BANK1 ; $49b7
 	ld c, $40 ; $49ba
 	call QueueVRAMCopy ; $49bc
-	ld hl, Palettes_6b_4a58 ; $49bf
+	ld hl, IntroCutsceneState16InitPalettes_6b ; $49bf
 	ld de, $0008 ; $49c2
 	call LoadPaletteShadow ; $49c5
 	wram_bank $01 ; $49c8
@@ -1073,7 +1073,7 @@ IntroCutsceneState16Exit_6b:
 	xor a ; $4a51
 	ld [wCutsceneStepTimer], a ; $4a52
 	jp DispatchCutsceneStateInit.loop2 ; $4a55
-Palettes_6b_4a58:
+IntroCutsceneState16InitPalettes_6b:
 	INCLUDE "data/bank_06b/palettes_4a58.asm" ; $4a58, 64 bytes (palettes)
 IntroCutsceneState17Init_6b:
 	wram_bank $04 ; $4a98
@@ -1095,7 +1095,7 @@ IntroCutsceneState17Init_6b:
 	ld c, $04 ; $4ac8
 	call QueueVRAMCopy ; $4aca
 	call AdvanceFrame ; $4acd
-	ld hl, Palettes_6b_4c00 ; $4ad0
+	ld hl, Palettes_6b_03 ; $4ad0
 	ld de, $0107 ; $4ad3
 	call LoadPaletteShadow ; $4ad6
 	xor a ; $4ad9
@@ -1111,7 +1111,7 @@ IntroCutsceneState17Update_6b:
 IntroCutsceneState17Exit_6b:
 	jp DispatchCutsceneStateInit.loop2 ; $4aef
 IntroCutsceneState18Init_6b:
-	ld hl, Palettes_6b_756f ; $4af2
+	ld hl, IntroCutsceneState18InitPalettes_6b ; $4af2
 	ld de, $0008 ; $4af5
 	call LoadPaletteShadow ; $4af8
 	wram_bank $05 ; $4afb
@@ -1156,7 +1156,7 @@ IntroCutsceneState18Init_6b:
 	ld de, $9c00 + VRAM_BANK1 ; $4b69
 	ld c, $08 ; $4b6c
 	call QueueVRAMCopy ; $4b6e
-	ld hl, Palettes_6b_4c00 ; $4b71
+	ld hl, Palettes_6b_03 ; $4b71
 	ld de, $0107 ; $4b74
 	call LoadPaletteShadow ; $4b77
 	call AdvanceFrame ; $4b7a
@@ -1210,10 +1210,10 @@ IntroCutsceneState18Exit_6b:
 	ld a, $00 ; $4bf9
 	ldh [hShowDebugConsole], a ; $4bfb
 	jp DispatchCutsceneStateInit.loop2 ; $4bfd
-Palettes_6b_4c00:
+Palettes_6b_03:
 	INCLUDE "data/bank_06b/palettes_4c00.asm" ; $4c00, 56 bytes (palettes)
 IntroCutsceneState19Init_6b:
-	ld hl, Palette_6b_5d25 ; $4c38
+	ld hl, Palette_6b_1 ; $4c38
 	ld de, $0008 ; $4c3b
 	call LoadPaletteShadow ; $4c3e
 	xor a ; $4c41
@@ -1492,11 +1492,11 @@ LoadCutsceneTileset:
 	ld c, $02 ; $5248
 	ld de, $8480 + VRAM_BANK1 ; $524a
 	farcall LoadCompressedTileBlock ; $524d
-	ld hl, Palettes_6b_525a ; $5250
+	ld hl, CutsceneTilesetPalettes ; $5250
 	ld de, $0802 ; $5253
 	call LoadPaletteShadow ; $5256
 	ret ; $5259
-Palettes_6b_525a:
+CutsceneTilesetPalettes:
 	INCLUDE "data/bank_06b/palettes_525a.asm" ; $525a, 16 bytes (palettes)
 QueueCutsceneSpriteGroupA:
 	ld hl, SpriteTemplate_6b_52b6 ; $526a
@@ -1767,7 +1767,7 @@ InitCutsceneSceneC:
 	ld hl, CutsceneSceneBGfx0 ; $54fc
 	ld de, wShadowTilemap ; $54ff
 	call DecompressData ; $5502
-	ld hl, Palette_6b_5d25 ; $5505
+	ld hl, Palette_6b_1 ; $5505
 	ld de, $0008 ; $5508
 	call LoadPaletteShadow ; $550b
 	xor a ; $550e
@@ -1783,7 +1783,7 @@ CutsceneSceneBGfx0:
 	INCBIN "data/bank_06b/d_59d7.bin" ; $59d7, 512 bytes
 CutsceneSceneBGfx1:
 	INCBIN "data/bank_06b/d_5bd7.bin" ; $5bd7, 334 bytes
-Palette_6b_5d25:
+Palette_6b_1:
 	INCLUDE "data/bank_06b/palettes_5d25.asm" ; $5d25, 64 bytes (palettes)
 CutsceneSceneAGfx1:
 	INCBIN "data/bank_06b/d_5d65.bin" ; $5d65, 323 bytes
@@ -1818,11 +1818,11 @@ LoadIntroTilesAndPalette:
 	ld c, $04 ; $60b3
 	ld de, $8480 + VRAM_BANK1 ; $60b5
 	farcall LoadCompressedTileBlock ; $60b8
-	ld hl, Palettes_6b_60c5 ; $60bb
+	ld hl, IntroPalettes ; $60bb
 	ld de, $0802 ; $60be
 	call LoadPaletteShadow ; $60c1
 	ret ; $60c4
-Palettes_6b_60c5:
+IntroPalettes:
 	INCLUDE "data/bank_06b/palettes_60c5.asm" ; $60c5, 16 bytes (palettes)
 SetCameraYFromScrollPos:
 	ld hl, wIntroCutsceneScrollY ; $60d5
@@ -1931,7 +1931,7 @@ InitTitleSceneGraphics:
 	ld hl, TitleSceneGraphicsGfx1 ; $61bf
 	ld de, wShadowTilemap ; $61c2
 	call DecompressData ; $61c5
-	ld hl, Palette_6b_7043 ; $61c8
+	ld hl, TitleScenePalette ; $61c8
 	ld de, $0008 ; $61cb
 	call LoadPaletteShadow ; $61ce
 	ld a, $20 ; $61d1
@@ -1989,7 +1989,7 @@ IntroCutsceneState16InitGfx7:
 	INCBIN "data/bank_06b/d_6d24.bin" ; $6d24, 491 bytes
 TitleSceneGraphicsGfx2:
 	INCBIN "data/bank_06b/d_6f0f.bin" ; $6f0f, 308 bytes
-Palette_6b_7043:
+TitleScenePalette:
 	INCLUDE "data/bank_06b/palettes_7043.asm" ; $7043, 64 bytes (palettes)
 IntroSequenceTimerTask:
 	ld a, [wCutsceneSpriteAX] ; $7083
@@ -2014,13 +2014,13 @@ IntroSequenceTimerTask:
 	call RegisterFrameTask ; $70ab
 .done:
 	ret ; $70ae
-Palettes_6b_70af:
+BgPalette1TaskPalettes:
 	INCLUDE "data/bank_06b/palettes_70af.asm" ; $70af, 128 bytes (palettes)
-Palettes_6b_712f:
+BgPalettes2And3TaskPalettes0:
 	INCLUDE "data/bank_06b/palettes_712f.asm" ; $712f, 128 bytes (palettes)
-Palettes_6b_71af:
+BgPalettes2And3TaskPalettes1:
 	INCLUDE "data/bank_06b/palettes_71af.asm" ; $71af, 128 bytes (palettes)
-Palettes_6b_722f:
+BgPalettes4To7TaskPalettes:
 	INCLUDE "data/bank_06b/palettes_722f.asm" ; $722f, 128 bytes (palettes)
 AnimateBgPalette1Task:
 	ldh a, [hVBlankCounter] ; $72af
@@ -2035,7 +2035,7 @@ AnimateBgPalette1Task:
 	sla a ; $72c1
 	sla a ; $72c3
 	sla a ; $72c5
-	ld hl, Palettes_6b_70af ; $72c7
+	ld hl, BgPalette1TaskPalettes ; $72c7
 	add l ; $72ca
 	ld l, a ; $72cb
 	jr nc, .loadPalettesImmediate ; $72cc
@@ -2062,7 +2062,7 @@ AnimateBgPalettes2And3Task:
 	sla a ; $72f1
 	sla a ; $72f3
 	push af ; $72f5
-	ld hl, Palettes_6b_712f ; $72f6
+	ld hl, BgPalettes2And3TaskPalettes0 ; $72f6
 	add l ; $72f9
 	ld l, a ; $72fa
 	jr nc, .loadPalettesImmediate ; $72fb
@@ -2071,7 +2071,7 @@ AnimateBgPalettes2And3Task:
 	ld de, $0201 ; $72fe
 	call LoadPalettesImmediate ; $7301
 	pop af ; $7304
-	ld hl, Palettes_6b_71af ; $7305
+	ld hl, BgPalettes2And3TaskPalettes1 ; $7305
 	add l ; $7308
 	ld l, a ; $7309
 	jr nc, .loadPalettesImmediate2 ; $730a
@@ -2097,7 +2097,7 @@ CycleBgPalettes4To7Task:
 	sla a ; $732d
 	sla a ; $732f
 	sla a ; $7331
-	ld hl, Palettes_6b_722f ; $7333
+	ld hl, BgPalettes4To7TaskPalettes ; $7333
 	add l ; $7336
 	ld l, a ; $7337
 	jr nc, .loadPalettesImmediate ; $7338
@@ -2115,7 +2115,7 @@ CycleBgPalettes4To7Task:
 	sla a ; $734a
 	sla a ; $734c
 	sla a ; $734e
-	ld hl, Palettes_6b_722f ; $7350
+	ld hl, BgPalettes4To7TaskPalettes ; $7350
 	add l ; $7353
 	ld l, a ; $7354
 	jr nc, .loadPalettesImmediate2 ; $7355
@@ -2227,7 +2227,7 @@ ApplyScrollYFromWram:
 	ld a, [wCutsceneSpriteAX] ; $7569
 	ldh [hScrollY], a ; $756c
 	ret ; $756e
-Palettes_6b_756f:
+IntroCutsceneState18InitPalettes_6b:
 	INCLUDE "data/bank_06b/palettes_756f.asm" ; $756f, 64 bytes (palettes)
 RunTitleScreen:
 	call ClearFrameTasks ; $75af
@@ -2282,7 +2282,7 @@ RunTitleScreen:
 	ld b, $62 ; $762e
 	ld de, $8600 ; $7630
 	farcall LoadCompressedTileBlock ; $7633
-	ld hl, Palettes_6b_794f ; $7636
+	ld hl, Palettes_6b_11 ; $7636
 	ld de, $0801 ; $7639
 	call LoadPaletteShadow ; $763c
 	ld a, $01 ; $763f
@@ -2415,7 +2415,7 @@ TitleScreenAttrmap:
 	INCBIN "data/bank_06b/lz_7872.bin" ; $7872, 157 bytes
 TitleScreenPalettes:
 	INCLUDE "data/bank_06b/palettes_790f.asm" ; $790f, 64 bytes (palettes)
-Palettes_6b_794f:
+Palettes_6b_11:
 	INCLUDE "data/bank_06b/palettes_794f.asm" ; $794f, 8 bytes (palettes)
 AwardCeremonyTilemap:
 	INCBIN "data/bank_06b/lz_7957.bin" ; $7957, 293 bytes

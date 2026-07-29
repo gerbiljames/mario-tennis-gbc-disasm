@@ -1446,7 +1446,7 @@ WallPractice1Hook_RallyTick:
 	call AwardMinigamePointAndReflectBall ; $4aaf
 	ret ; $4ab2
 WallPractice1Hook_Bounce:
-	call StubNop_0d_4bc7 ; $4ab3
+	call StubNop_0d_0 ; $4ab3
 	ret ; $4ab6
 WallPractice1Hook_BallHit:
 	call HideLandingMarkerAndExtendSoloCourt ; $4ab7
@@ -1588,7 +1588,7 @@ ReflectBallVelocity:
 	pop af ; $4bc1
 	wram_bank ; $4bc2
 	ret ; $4bc6
-StubNop_0d_4bc7:
+StubNop_0d_0:
 	ret ; $4bc7
 HideLandingMarkerAndExtendSoloCourt:
 	xor a ; $4bc8
@@ -1653,7 +1653,7 @@ WallPractice2Hook_RallyTick:
 	call AwardMinigamePointAndReflectBall ; $4c37
 	ret ; $4c3a
 WallPractice2Hook_Bounce:
-	call StubNop_0d_4bc7 ; $4c3b
+	call StubNop_0d_0 ; $4c3b
 	ret ; $4c3e
 WallPractice2Hook_BallHit:
 	call HideLandingMarkerAndExtendSoloCourt ; $4c3f
@@ -1705,7 +1705,7 @@ WallPractice3Hook_RallyTick:
 	call AwardMinigamePointAndReflectBall ; $4c82
 	ret ; $4c85
 WallPractice3Hook_Bounce:
-	call StubNop_0d_4bc7 ; $4c86
+	call StubNop_0d_0 ; $4c86
 	ret ; $4c89
 WallPractice3Hook_BallHit:
 	call HideLandingMarkerAndExtendSoloCourt ; $4c8a
@@ -1757,7 +1757,7 @@ WallPractice4Hook_RallyTick:
 	call AwardMinigamePointAndReflectBall ; $4ccd
 	ret ; $4cd0
 WallPractice4Hook_Bounce:
-	call StubNop_0d_4bc7 ; $4cd1
+	call StubNop_0d_0 ; $4cd1
 	ret ; $4cd4
 WallPractice4Hook_BallHit:
 	call HideLandingMarkerAndExtendSoloCourt ; $4cd5
@@ -1865,7 +1865,7 @@ WallPracticeHighScoreHook_RallyTick:
 	call AwardMinigamePointAndReflectBall ; $4d7f
 	ret ; $4d82
 WallPracticeHighScoreHook_Bounce:
-	call StubNop_0d_4bc7 ; $4d83
+	call StubNop_0d_0 ; $4d83
 	ret ; $4d86
 WallPracticeHighScoreHook_BallHit:
 	call HideLandingMarkerAndExtendSoloCourt ; $4d87
@@ -2662,7 +2662,7 @@ BananaBunchHook_RallyTick:
 	call BananaBunchReflectBallAndRecordCell ; $559a
 	ret ; $559d
 BananaBunchHook_Bounce:
-	call StubNop_0d_4bc7 ; $559e
+	call StubNop_0d_0 ; $559e
 	ret ; $55a1
 BananaBunchHook_BallHit:
 	call HideLandingMarkerAndExtendSoloCourt ; $55a2
@@ -2786,10 +2786,10 @@ BooBlastHook_PointEnd:
 	call ResolveAndShowMinigamePoint ; $5681
 	ret ; $5684
 BooBlastHook_RallyTick:
-	call StubNop_0d_56ee ; $5685
+	call StubNop_0d_1 ; $5685
 	ret ; $5688
 BooBlastHook_Bounce:
-	call StubNop_0d_56ef ; $5689
+	call StubNop_0d_2 ; $5689
 	ret ; $568c
 BooBlastHook_BallHit:
 	call UpdateBooBlastHitStreak ; $568d
@@ -2838,9 +2838,9 @@ ResolveAndShowMinigamePoint:
 	pop de ; $56e9
 	call ShowMinigamePointResult ; $56ea
 	ret ; $56ed
-StubNop_0d_56ee:
+StubNop_0d_1:
 	ret ; $56ee
-StubNop_0d_56ef:
+StubNop_0d_2:
 	ret ; $56ef
 UpdateBooBlastHitStreak:
 	ld a, [wLastShotCharIndex] ; $56f0
@@ -3134,7 +3134,7 @@ PerfectShotHook_RallyTick:
 	call ProcessTargetTileHit ; $58c5
 	ret ; $58c8
 PerfectShotHook_Bounce:
-	call StubNop_0d_4bc7 ; $58c9
+	call StubNop_0d_0 ; $58c9
 	ret ; $58cc
 PerfectShotHook_BallHit:
 	call HideLandingMarkerAndExtendSoloCourt ; $58cd
@@ -3313,7 +3313,7 @@ TreasureBoxHook_PointStart:
 	call LaunchMinigameServe ; $5a36
 	ret ; $5a39
 TreasureBoxHook_PointEnd:
-	call StubNop_0d_5acb ; $5a3a
+	call StubNop_0d_3 ; $5a3a
 	call EndMinigamePoint ; $5a3d
 	ret ; $5a40
 TreasureBoxHook_RallyTick:
@@ -3387,7 +3387,7 @@ TreasureBoxZonePool0:
 TreasureBoxZonePool1:
 	; $5abb, 16 bytes (bytes:16)
 	db $00, $00, $00, $00, $01, $01, $01, $01, $04, $04, $04, $04, $02, $02, $03, $03 ; 0x00
-StubNop_0d_5acb:
+StubNop_0d_3:
 	ret ; $5acb
 TreasureBoxTargetActorHandler:
 	ld a, [wMinigameSceneActor + 2] ; $5acc
@@ -3723,7 +3723,7 @@ MedallionMatchHook_MinigameStart:
 	xor a ; $5d27
 	ld [wStandingShadowsEnabled], a ; $5d28
 	ret ; $5d2b
-Unused_0d_5d2c:
+Unused_0d:
 	; $5d2c, 6 bytes (records:2)
 	dw $0064 ; record 0
 	dw $012c ; record 1
@@ -4103,7 +4103,7 @@ FruitFantasyHook_RallyTick:
 	call FruitFantasyReflectBallAndRecordCell ; $5fe0
 	ret ; $5fe3
 FruitFantasyHook_Bounce:
-	call StubNop_0d_4bc7 ; $5fe4
+	call StubNop_0d_0 ; $5fe4
 	ret ; $5fe7
 FruitFantasyHook_BallHit:
 	call HideLandingMarkerAndExtendSoloCourt ; $5fe8

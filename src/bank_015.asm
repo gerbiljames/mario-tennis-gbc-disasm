@@ -15,17 +15,17 @@ TournamentCourtyardMapScripts_15:
 	dw TournamentCourtyardInitScript_15 ; slot 6 InitScript
 TournamentCourtyardActors_15:
 	; $4012, 164 bytes (map_actors)
-	map_actor $0000, ActorScript_15_41ba, $0900, $1d80, FACE_DOWN, $21, $01, $00
-	map_actor $0000, ActorScript_15_7d6d, $0700, $1d80, FACE_DOWN, $22, $01, $00
-	map_actor $0000, ActorScript_15_7d77, $0d00, $1b00, FACE_LEFT, $33, $01, $03
-	map_actor $0000, ActorScript_15_7d77, $1d00, $2300, FACE_UP, $34, $01, $07
-	map_actor $0000, ActorScript_15_7d6d, $1f00, $1d00, FACE_LEFT, $30, $01, $05
-	map_actor $0000, ActorScript_15_7d6d, $0b00, $2700, FACE_LEFT, $39, $01, $00
-	map_actor $0000, ActorScript_15_7d6d, $0900, $2900, FACE_UP, $3a, $01, $00
-	map_actor $0000, ActorScript_15_7d6d, $1b40, $2640, FACE_LEFT, $36, $01, $00
-	map_actor $0000, ActorScript_15_7d6d, $1cc0, $2640, FACE_LEFT, $36, $01, $00
-	map_actor $0000, ActorScript_15_7d6d, $0740, $2640, FACE_LEFT, $36, $01, $00
-	map_actor $0000, ActorScript_15_7d6d, $08c0, $2640, FACE_LEFT, $36, $01, $00
+	map_actor $0000, ActorScript_15_00, $0900, $1d80, FACE_DOWN, $21, $01, $00
+	map_actor $0000, ActorScript_15_22, $0700, $1d80, FACE_DOWN, $22, $01, $00
+	map_actor $0000, ActorScript_15_23, $0d00, $1b00, FACE_LEFT, $33, $01, $03
+	map_actor $0000, ActorScript_15_23, $1d00, $2300, FACE_UP, $34, $01, $07
+	map_actor $0000, ActorScript_15_22, $1f00, $1d00, FACE_LEFT, $30, $01, $05
+	map_actor $0000, ActorScript_15_22, $0b00, $2700, FACE_LEFT, $39, $01, $00
+	map_actor $0000, ActorScript_15_22, $0900, $2900, FACE_UP, $3a, $01, $00
+	map_actor $0000, ActorScript_15_22, $1b40, $2640, FACE_LEFT, $36, $01, $00
+	map_actor $0000, ActorScript_15_22, $1cc0, $2640, FACE_LEFT, $36, $01, $00
+	map_actor $0000, ActorScript_15_22, $0740, $2640, FACE_LEFT, $36, $01, $00
+	map_actor $0000, ActorScript_15_22, $08c0, $2640, FACE_LEFT, $36, $01, $00
 	map_actor_end
 TournamentCourtyardEntryPoints_15:
 	; $40b6, 41 bytes (map_entries)
@@ -115,7 +115,7 @@ TournamentCourtyardInitScript_15:
 	call InitTournamentSiteSceneVariant ; $41b3
 	call TournamentSiteEntryWalkIn ; $41b6
 	ret ; $41b9
-ActorScript_15_41ba:
+ActorScript_15_00:
 	; $41ba, 19 bytes (actor_script)
 	as_set_field $14, FACE_RIGHT
 	as_anim $04
@@ -123,20 +123,20 @@ ActorScript_15_41ba:
 	as_set_field $14, FACE_DOWN
 	as_anim $04
 	as_wait $78
-	as_jump ActorScript_15_41ba
+	as_jump ActorScript_15_00
 TournamentSiteRespawnActors_15:
 	; $41cd, 164 bytes (map_actors)
-	map_actor $0000, ActorScript_15_7d6d, $1200, $3400, FACE_DOWN, $63, $01, $00
-	map_actor $0000, ActorScript_15_7d6d, $1100, $3700, FACE_DOWN, $5a, $01, $00
-	map_actor $0000, ActorScript_15_7d6d, $1300, $3900, FACE_DOWN, $5b, $01, $00
-	map_actor $0000, ActorScript_15_7d6d, $1300, $3700, FACE_DOWN, $5c, $01, $00
-	map_actor $0000, ActorScript_15_41ba, $0900, $1d80, FACE_DOWN, $21, $01, $00
-	map_actor $0000, ActorScript_15_7d6d, $0700, $1d80, FACE_DOWN, $22, $01, $00
-	map_actor $0000, ActorScript_15_7d77, $0d00, $1b00, FACE_LEFT, $33, $01, $03
-	map_actor $0000, ActorScript_15_7d77, $1d00, $2300, FACE_UP, $34, $01, $07
-	map_actor $0000, ActorScript_15_7d6d, $1f00, $1d00, FACE_LEFT, $30, $01, $05
-	map_actor $0000, ActorScript_15_7d6d, $0b00, $2700, FACE_LEFT, $39, $01, $00
-	map_actor $0000, ActorScript_15_7d6d, $0900, $2900, FACE_UP, $3a, $01, $00
+	map_actor $0000, ActorScript_15_22, $1200, $3400, FACE_DOWN, $63, $01, $00
+	map_actor $0000, ActorScript_15_22, $1100, $3700, FACE_DOWN, $5a, $01, $00
+	map_actor $0000, ActorScript_15_22, $1300, $3900, FACE_DOWN, $5b, $01, $00
+	map_actor $0000, ActorScript_15_22, $1300, $3700, FACE_DOWN, $5c, $01, $00
+	map_actor $0000, ActorScript_15_00, $0900, $1d80, FACE_DOWN, $21, $01, $00
+	map_actor $0000, ActorScript_15_22, $0700, $1d80, FACE_DOWN, $22, $01, $00
+	map_actor $0000, ActorScript_15_23, $0d00, $1b00, FACE_LEFT, $33, $01, $03
+	map_actor $0000, ActorScript_15_23, $1d00, $2300, FACE_UP, $34, $01, $07
+	map_actor $0000, ActorScript_15_22, $1f00, $1d00, FACE_LEFT, $30, $01, $05
+	map_actor $0000, ActorScript_15_22, $0b00, $2700, FACE_LEFT, $39, $01, $00
+	map_actor $0000, ActorScript_15_22, $0900, $2900, FACE_UP, $3a, $01, $00
 	map_actor_end
 InitTournamentSiteSceneVariant:
 	ld a, $00 ; $4271
@@ -402,9 +402,9 @@ TournamentSiteEntryWalkIn:
 	script_wait_move ACTOR_PARTNER ; $471a
 	ld a, [wStoryModeEntryPoint] ; $471f
 	dec a ; $4722
-	add LOW(Facings_15_4757) ; $4723
+	add LOW(TournamentSiteEntryWalkInFacings) ; $4723
 	ld l, a ; $4725
-	adc HIGH(Facings_15_4757) ; $4726
+	adc HIGH(TournamentSiteEntryWalkInFacings) ; $4726
 	sub l ; $4728
 	ld h, a ; $4729
 	ld b, [hl] ; $472a
@@ -416,9 +416,9 @@ TournamentSiteEntryWalkIn:
 	script_set_speed ACTOR_PLAYER, $0010 ; $4739
 	ld a, [wStoryModeEntryPoint] ; $4741
 	dec a ; $4744
-	add LOW(Facings_15_4757) ; $4745
+	add LOW(TournamentSiteEntryWalkInFacings) ; $4745
 	ld l, a ; $4747
-	adc HIGH(Facings_15_4757) ; $4748
+	adc HIGH(TournamentSiteEntryWalkInFacings) ; $4748
 	sub l ; $474a
 	ld h, a ; $474b
 	ld b, [hl] ; $474c
@@ -428,7 +428,7 @@ TournamentSiteEntryWalkIn:
 	farcall MoveActorByAngle ; $4753
 .done:
 	ret ; $4756
-Facings_15_4757:
+TournamentSiteEntryWalkInFacings:
 	; $4757, 8 bytes (enum:FACE:8)
 	db FACE_LEFT, FACE_RIGHT, FACE_DOWN, FACE_UP, FACE_RIGHT, FACE_LEFT, FACE_UP, FACE_DOWN ; 0x00
 SetPlayerPartnerActorSprites:
@@ -465,27 +465,27 @@ TrainingCourtMapScripts_15:
 	dw TrainingCourtInitScript_15 ; slot 6 InitScript
 TrainingCourtActors_15:
 	; $47a4, 304 bytes (map_actors)
-	map_actor $0000, ActorScript_15_55e9, $0b00, $0700, FACE_DOWN, $33, $01, $03
-	map_actor $0000, ActorScript_15_55e9, $0b00, $1700, FACE_UP, $32, $01, $07
-	map_actor $0000, ActorScript_15_55e9, $0e00, $1700, FACE_UP, $34, $01, $05
-	map_actor $0000, ActorScript_15_7d6d, $1300, $0b00, FACE_LEFT, $68, $01, $00
-	map_actor $0000, ActorScript_15_7d6d, $1300, $1500, FACE_LEFT, $67, $01, $06
-	map_actor $0000, ActorScript_15_55e6, $0b00, $2100, FACE_DOWN, $34, $01, $03
-	map_actor $0000, ActorScript_15_55e6, $0d00, $2100, FACE_DOWN, $39, $01, $05
-	map_actor $0000, ActorScript_15_55e6, $0c00, $2d00, FACE_UP, $33, $01, $04
-	map_actor $0000, ActorScript_15_7f3d, $0700, $2d00, FACE_RIGHT, $6a, $01, $07
-	map_actor $0000, ActorScript_15_7d6d, $1300, $2700, FACE_DOWN, $64, $01, $06
-	map_actor $0000, ActorScript_15_7d6d, $1300, $2900, FACE_UP, $68, $01, $04
-	map_actor $0000, ActorScript_15_55e6, $3300, $2a00, FACE_UP, $39, $01, $06
-	map_actor $0000, ActorScript_15_55e6, $3500, $2400, FACE_DOWN, $32, $01, $03
-	map_actor $0000, ActorScript_15_55e6, $3500, $2a00, FACE_UP, $34, $01, $07
-	map_actor $0000, ActorScript_15_7d6d, $2d00, $2100, FACE_RIGHT, $66, $01, $07
-	map_actor $0000, ActorScript_15_7d6d, $2d00, $2900, FACE_RIGHT, $6b, $01, $07
-	map_actor $0000, ActorScript_15_55e2, $3f00, $0300, FACE_DOWN, $33, $01, $07
-	map_actor $0000, ActorScript_15_7d6d, $3f00, $0500, FACE_DOWN, $6c, $01, $00
-	map_actor $0000, ActorScript_15_7d6d, $3f00, $0700, FACE_DOWN, $35, $01, $05
-	map_actor $0000, ActorScript_15_7d6d, $3f00, $0900, FACE_DOWN, $50, $01, $00
-	map_actor $0000, ActorScript_15_7d6d, $3f00, $0b00, FACE_DOWN, $53, $01, $00
+	map_actor $0000, ActorScript_15_03, $0b00, $0700, FACE_DOWN, $33, $01, $03
+	map_actor $0000, ActorScript_15_03, $0b00, $1700, FACE_UP, $32, $01, $07
+	map_actor $0000, ActorScript_15_03, $0e00, $1700, FACE_UP, $34, $01, $05
+	map_actor $0000, ActorScript_15_22, $1300, $0b00, FACE_LEFT, $68, $01, $00
+	map_actor $0000, ActorScript_15_22, $1300, $1500, FACE_LEFT, $67, $01, $06
+	map_actor $0000, ActorScript_15_02, $0b00, $2100, FACE_DOWN, $34, $01, $03
+	map_actor $0000, ActorScript_15_02, $0d00, $2100, FACE_DOWN, $39, $01, $05
+	map_actor $0000, ActorScript_15_02, $0c00, $2d00, FACE_UP, $33, $01, $04
+	map_actor $0000, ActorScript_15_25, $0700, $2d00, FACE_RIGHT, $6a, $01, $07
+	map_actor $0000, ActorScript_15_22, $1300, $2700, FACE_DOWN, $64, $01, $06
+	map_actor $0000, ActorScript_15_22, $1300, $2900, FACE_UP, $68, $01, $04
+	map_actor $0000, ActorScript_15_02, $3300, $2a00, FACE_UP, $39, $01, $06
+	map_actor $0000, ActorScript_15_02, $3500, $2400, FACE_DOWN, $32, $01, $03
+	map_actor $0000, ActorScript_15_02, $3500, $2a00, FACE_UP, $34, $01, $07
+	map_actor $0000, ActorScript_15_22, $2d00, $2100, FACE_RIGHT, $66, $01, $07
+	map_actor $0000, ActorScript_15_22, $2d00, $2900, FACE_RIGHT, $6b, $01, $07
+	map_actor $0000, ActorScript_15_01, $3f00, $0300, FACE_DOWN, $33, $01, $07
+	map_actor $0000, ActorScript_15_22, $3f00, $0500, FACE_DOWN, $6c, $01, $00
+	map_actor $0000, ActorScript_15_22, $3f00, $0700, FACE_DOWN, $35, $01, $05
+	map_actor $0000, ActorScript_15_22, $3f00, $0900, FACE_DOWN, $50, $01, $00
+	map_actor $0000, ActorScript_15_22, $3f00, $0b00, FACE_DOWN, $53, $01, $00
 	map_actor_end
 TrainingCourtEntryPoints_15:
 	; $48d4, 57 bytes (map_entries)
@@ -614,9 +614,9 @@ TrainingCourtNpc08TextIds:
 TrainingCourtNpc09_15:
 	ld a, [wMapSceneStage] ; $49fe
 	add a ; $4a01
-	add LOW(TextIds_15_4a15) ; $4a02
+	add LOW(TrainingCourtNpc09TextIds_15) ; $4a02
 	ld l, a ; $4a04
-	adc HIGH(TextIds_15_4a15) ; $4a05
+	adc HIGH(TrainingCourtNpc09TextIds_15) ; $4a05
 	sub l ; $4a07
 	ld h, a ; $4a08
 	ld a, [hl+] ; $4a09
@@ -625,7 +625,7 @@ TrainingCourtNpc09_15:
 	farcall InitDialogueTextCursor ; $4a0c
 	script_speak $09 ; $4a0f
 	ret ; $4a14
-TextIds_15_4a15:
+TrainingCourtNpc09TextIds_15:
 	; $4a15, 10 bytes (text_ids)
 	dw Text_36_656 ; record 0
 	dw Text_36_662 ; record 1
@@ -743,9 +743,9 @@ TrainingCourtNpc0FTextIds:
 TrainingCourtNpc10_15:
 	ld a, [wMapSceneStage] ; $4ae1
 	add a ; $4ae4
-	add LOW(TextIds_15_4b17) ; $4ae5
+	add LOW(TrainingCourtNpc10TextIds_15) ; $4ae5
 	ld l, a ; $4ae7
-	adc HIGH(TextIds_15_4b17) ; $4ae8
+	adc HIGH(TrainingCourtNpc10TextIds_15) ; $4ae8
 	sub l ; $4aea
 	ld h, a ; $4aeb
 	ld a, [hl+] ; $4aec
@@ -766,7 +766,7 @@ TrainingCourtNpc10_15:
 .speak:
 	script_speak $10 ; $4b11
 	ret ; $4b16
-TextIds_15_4b17:
+TrainingCourtNpc10TextIds_15:
 	; $4b17, 10 bytes (text_ids)
 	dw Text_36_646 ; record 0
 	dw Text_36_649 ; record 1
@@ -921,11 +921,11 @@ WaterSpriteRacketRewardScene:
 	script_set_active $14, $00 ; $4df3
 	script_player_speed $0010 ; $4dfa
 	script_move_player_to_actor $14 ; $4e00
-	ld hl, Palettes_15_5950 ; $4e07
+	ld hl, WaterSpriteRacketRewardScenePalettes1 ; $4e07
 	ld de, $0206 ; $4e0a
 	call LoadPalettesImmediate ; $4e0d
 	script_wait_frames $1e ; $4e10
-	ld hl, Palettes_15_5990 ; $4e17
+	ld hl, WaterSpriteRacketRewardScenePalettes2 ; $4e17
 	ld de, $0206 ; $4e1a
 	call LoadPalettesImmediate ; $4e1d
 	sound $8a ; $4e20
@@ -1034,11 +1034,11 @@ WaterSpriteRacketRewardScene:
 	script_set_position $14, $3300, $0b00 ; $4fcf
 	script_speak $14 ; $4fda
 	script_set_position $15, $3f00, $3f00 ; $4fdf
-	ld hl, Palettes_15_5950 ; $4fea
+	ld hl, WaterSpriteRacketRewardScenePalettes1 ; $4fea
 	ld de, $0206 ; $4fed
 	call LoadPalettesImmediate ; $4ff0
 	script_wait_frames $1e ; $4ff3
-	ld hl, Palettes_15_5910 ; $4ffa
+	ld hl, WaterSpriteRacketRewardScenePalettes0 ; $4ffa
 	ld de, $0206 ; $4ffd
 	call LoadPalettesImmediate ; $5000
 	script_wait_frames $1e ; $5003
@@ -1482,18 +1482,18 @@ TrainingCourtReentryDispatch:
 	script_fade_in $04 ; $55d9
 	call WaitFadeEnd ; $55de
 	ret ; $55e1
-ActorScript_15_55e2:
+ActorScript_15_01:
 	; $55e2, 4 bytes (actor_script)
 	as_set_field $18, $0004
-ActorScript_15_55e6:
+ActorScript_15_02:
 	; $55e6, 3 bytes (actor_script)
 	as_anim $06
 	as_halt
-ActorScript_15_55e9:
+ActorScript_15_03:
 	; $55e9, 7 bytes (actor_script)
 	as_anim $08
 	as_wait $3c
-	as_jump ActorScript_15_55e9
+	as_jump ActorScript_15_03
 WaterSpriteSwingCountTask:
 	ldh a, [hInputRisingEdge] ; $55f0
 	and PADF_A | PADF_B ; $55f2
@@ -1780,13 +1780,13 @@ InitWaterSpriteMinigameHud:
 	ret ; $58f9
 	; $58fa, 6 bytes (fill)
 	ds 6, $00
-Palettes_15_5900:
+Palettes_15_0:
 	INCLUDE "data/bank_015/palettes_5900.asm" ; $5900, 16 bytes (palettes)
-Palettes_15_5910:
+WaterSpriteRacketRewardScenePalettes0:
 	INCLUDE "data/bank_015/palettes_5910.asm" ; $5910, 64 bytes (palettes)
-Palettes_15_5950:
+WaterSpriteRacketRewardScenePalettes1:
 	INCLUDE "data/bank_015/palettes_5950.asm" ; $5950, 64 bytes (palettes)
-Palettes_15_5990:
+WaterSpriteRacketRewardScenePalettes2:
 	INCLUDE "data/bank_015/palettes_5990.asm" ; $5990, 48 bytes (palettes)
 TrainingCourtIntroTourScene:
 	xor a ; $59c0
@@ -1891,17 +1891,17 @@ TrainingCourtIntroTourScene:
 	ret ; $5c4e
 TrainingCourtTourActors_15:
 	; $5c4f, 164 bytes (map_actors)
-	map_actor $0000, ActorScript_15_55e6, $3300, $2a00, FACE_UP, $39, $01, $06
-	map_actor $0000, ActorScript_15_55e6, $3500, $2300, FACE_DOWN, $32, $01, $03
-	map_actor $0000, ActorScript_15_55e6, $3500, $2a00, FACE_UP, $34, $01, $07
-	map_actor $0000, ActorScript_15_7d6d, $2d00, $2100, FACE_RIGHT, $66, $01, $07
-	map_actor $0000, ActorScript_15_55e6, $0b00, $2300, FACE_DOWN, $34, $01, $03
-	map_actor $0000, ActorScript_15_55e6, $0d00, $2300, FACE_DOWN, $39, $01, $05
-	map_actor $0000, ActorScript_15_55e6, $0c00, $2900, FACE_UP, $33, $01, $04
-	map_actor $0000, ActorScript_15_7d6d, $1300, $2700, FACE_DOWN, $64, $01, $06
-	map_actor $0000, ActorScript_15_7d6d, $1300, $2900, FACE_UP, $68, $01, $04
-	map_actor $0000, ActorScript_15_7d6d, $2d00, $2900, FACE_RIGHT, $6b, $01, $07
-	map_actor $0000, ActorScript_15_7d6d, $0100, $0100, FACE_DOWN, $49, $01, $00
+	map_actor $0000, ActorScript_15_02, $3300, $2a00, FACE_UP, $39, $01, $06
+	map_actor $0000, ActorScript_15_02, $3500, $2300, FACE_DOWN, $32, $01, $03
+	map_actor $0000, ActorScript_15_02, $3500, $2a00, FACE_UP, $34, $01, $07
+	map_actor $0000, ActorScript_15_22, $2d00, $2100, FACE_RIGHT, $66, $01, $07
+	map_actor $0000, ActorScript_15_02, $0b00, $2300, FACE_DOWN, $34, $01, $03
+	map_actor $0000, ActorScript_15_02, $0d00, $2300, FACE_DOWN, $39, $01, $05
+	map_actor $0000, ActorScript_15_02, $0c00, $2900, FACE_UP, $33, $01, $04
+	map_actor $0000, ActorScript_15_22, $1300, $2700, FACE_DOWN, $64, $01, $06
+	map_actor $0000, ActorScript_15_22, $1300, $2900, FACE_UP, $68, $01, $04
+	map_actor $0000, ActorScript_15_22, $2d00, $2900, FACE_RIGHT, $6b, $01, $07
+	map_actor $0000, ActorScript_15_22, $0100, $0100, FACE_DOWN, $49, $01, $00
 	map_actor_end
 ServeChallengerResultScene:
 	xor a ; $5cf3
@@ -2792,19 +2792,19 @@ PlayerPartnerGestureCutscene:
 WalkToServeChallengeCourtCutscene:
 	script_null_script ACTOR_PARTNER ; $668f
 	script_move_player $1800, $0f00 ; $6694
-	script_set_actor_script ACTOR_PLAYER, ActorScript_15_66d3 ; $669e
-	script_set_actor_script $06, ActorScript_15_66c8 ; $66a9
-	script_set_actor_script ACTOR_PARTNER, ActorScript_15_66e4 ; $66b4
+	script_set_actor_script ACTOR_PLAYER, ActorScript_15_05 ; $669e
+	script_set_actor_script $06, ActorScript_15_04 ; $66a9
+	script_set_actor_script ACTOR_PARTNER, ActorScript_15_06 ; $66b4
 	script_wait_actor_script ACTOR_PLAYER ; $66bf
 	call PlayerPartnerGestureCutscene ; $66c4
 	ret ; $66c7
-ActorScript_15_66c8:
+ActorScript_15_04:
 	; $66c8, 11 bytes (actor_script)
 	as_set_target $1700, $0700
 	as_wait_move
 	as_set_field $14, FACE_DOWN
 	as_halt
-ActorScript_15_66d3:
+ActorScript_15_05:
 	; $66d3, 17 bytes (actor_script)
 	as_set_target $1300, $1300
 	as_wait_move
@@ -2812,7 +2812,7 @@ ActorScript_15_66d3:
 	as_wait_move
 	as_set_field $14, FACE_UP
 	as_halt
-ActorScript_15_66e4:
+ActorScript_15_06:
 	; $66e4, 11 bytes (actor_script)
 	as_set_target $1300, $1100
 	as_wait_move
@@ -2836,7 +2836,7 @@ ServeCoachJuniorLessonScene:
 	farcall ScriptCloseDialogueWindow ; $6718
 	script_wait_frames $05 ; $671b
 	and a ; $6722
-	jr nz, ActorScript_15_66e4.loop ; $6723
+	jr nz, ActorScript_15_06.loop ; $6723
 	farcall AdvanceDialogueTextCursor ; $6725
 	ld a, $07 ; $6728
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $672a
@@ -2844,7 +2844,7 @@ ServeCoachJuniorLessonScene:
 	farcall ScriptCloseDialogueWindow ; $6730
 	script_wait_frames $05 ; $6733
 	and a ; $673a
-	jr nz, ActorScript_15_66e4.loop ; $673b
+	jr nz, ActorScript_15_06.loop ; $673b
 	farcall AdvanceDialogueTextCursor ; $673d
 	script_speak $07 ; $6740
 	call MovePartyToServeCoachSpot ; $6745
@@ -2874,7 +2874,7 @@ ServeCoachSeniorLessonScene:
 	farcall ScriptCloseDialogueWindow ; $6794
 	script_wait_frames $05 ; $6797
 	and a ; $679e
-	jp nz, ActorScript_15_66e4.loop ; $679f
+	jp nz, ActorScript_15_06.loop ; $679f
 	farcall AdvanceDialogueTextCursor ; $67a2
 	ld a, $07 ; $67a5
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $67a7
@@ -2882,7 +2882,7 @@ ServeCoachSeniorLessonScene:
 	farcall ScriptCloseDialogueWindow ; $67ad
 	script_wait_frames $05 ; $67b0
 	and a ; $67b7
-	jp nz, ActorScript_15_66e4.loop ; $67b8
+	jp nz, ActorScript_15_06.loop ; $67b8
 	farcall AdvanceDialogueTextCursor ; $67bb
 	script_speak $07 ; $67be
 	call MovePartyToServeCoachSpot ; $67c3
@@ -2912,7 +2912,7 @@ ServeCoachVarsityLessonScene:
 	farcall ScriptCloseDialogueWindow ; $6812
 	script_wait_frames $05 ; $6815
 	and a ; $681c
-	jp nz, ActorScript_15_66e4.loop ; $681d
+	jp nz, ActorScript_15_06.loop ; $681d
 	farcall AdvanceDialogueTextCursor ; $6820
 	ld a, $07 ; $6823
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $6825
@@ -2920,7 +2920,7 @@ ServeCoachVarsityLessonScene:
 	farcall ScriptCloseDialogueWindow ; $682b
 	script_wait_frames $05 ; $682e
 	and a ; $6835
-	jp nz, ActorScript_15_66e4.loop ; $6836
+	jp nz, ActorScript_15_06.loop ; $6836
 	farcall AdvanceDialogueTextCursor ; $6839
 	script_speak $07 ; $683c
 	call MovePartyToServeCoachSpot ; $6841
@@ -3100,10 +3100,10 @@ DropShotMatchChallengeScene:
 WalkToNetChallengeCourtCutscene:
 	script_null_script ACTOR_PARTNER ; $6af7
 	script_move_player $2800, $2700 ; $6afc
-	script_set_actor_script $11, ActorScript_15_6b49 ; $6b06
-	script_set_actor_script ACTOR_PLAYER, ActorScript_15_6b54 ; $6b11
+	script_set_actor_script $11, ActorScript_15_07 ; $6b06
+	script_set_actor_script ACTOR_PLAYER, ActorScript_15_08 ; $6b11
 	script_wait_frames $0a ; $6b1c
-	script_set_actor_script ACTOR_PARTNER, ActorScript_15_6b71 ; $6b23
+	script_set_actor_script ACTOR_PARTNER, ActorScript_15_09 ; $6b23
 	script_wait_actor_script ACTOR_PLAYER ; $6b2e
 	call PlayerPartnerGestureCutscene ; $6b33
 	ld a, $0f ; $6b36
@@ -3114,13 +3114,13 @@ WalkToNetChallengeCourtCutscene:
 	ld [wUnusedExitLocationMirror], a ; $6b42
 	ld [wStoryModeExitLocationRequest], a ; $6b45
 	ret ; $6b48
-ActorScript_15_6b49:
+ActorScript_15_07:
 	; $6b49, 11 bytes (actor_script)
 	as_set_target $2700, $1f00
 	as_wait_move
 	as_set_field $14, FACE_DOWN
 	as_halt
-ActorScript_15_6b54:
+ActorScript_15_08:
 	; $6b54, 29 bytes (actor_script)
 	as_set_target $2d00, $2300
 	as_wait_move
@@ -3132,7 +3132,7 @@ ActorScript_15_6b54:
 	as_wait_move
 	as_set_field $14, FACE_UP
 	as_halt
-ActorScript_15_6b71:
+ActorScript_15_09:
 	; $6b71, 29 bytes (actor_script)
 	as_set_target $2d00, $2300
 	as_wait_move
@@ -3156,7 +3156,7 @@ StrokeMatchChallengeScene:
 	farcall ScriptCloseDialogueWindow ; $6baa
 	script_wait_frames $05 ; $6bad
 	and a ; $6bb4
-	jp nz, ActorScript_15_6b71.loop ; $6bb5
+	jp nz, ActorScript_15_09.loop ; $6bb5
 	farcall AdvanceDialogueTextCursor ; $6bb8
 	ld a, $0c ; $6bbb
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $6bbd
@@ -3164,7 +3164,7 @@ StrokeMatchChallengeScene:
 	farcall ScriptCloseDialogueWindow ; $6bc3
 	script_wait_frames $05 ; $6bc6
 	and a ; $6bcd
-	jp nz, ActorScript_15_6b71.loop ; $6bce
+	jp nz, ActorScript_15_09.loop ; $6bce
 	farcall AdvanceDialogueTextCursor ; $6bd1
 	script_face $0c, FACE_RIGHT ; $6bd4
 	script_wait_frames $28 ; $6bdb
@@ -3195,7 +3195,7 @@ LobMatchChallengeScene:
 	farcall ScriptCloseDialogueWindow ; $6c52
 	script_wait_frames $05 ; $6c55
 	and a ; $6c5c
-	jp nz, ActorScript_15_6b71.loop ; $6c5d
+	jp nz, ActorScript_15_09.loop ; $6c5d
 	farcall AdvanceDialogueTextCursor ; $6c60
 	ld a, $0c ; $6c63
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $6c65
@@ -3203,7 +3203,7 @@ LobMatchChallengeScene:
 	farcall ScriptCloseDialogueWindow ; $6c6b
 	script_wait_frames $05 ; $6c6e
 	and a ; $6c75
-	jp nz, ActorScript_15_6b71.loop ; $6c76
+	jp nz, ActorScript_15_09.loop ; $6c76
 	farcall AdvanceDialogueTextCursor ; $6c79
 	script_speak $0c ; $6c7c
 	script_face $0c, FACE_RIGHT ; $6c81
@@ -3234,7 +3234,7 @@ ReturnMatchChallengeScene:
 	farcall ScriptCloseDialogueWindow ; $6cfa
 	script_wait_frames $05 ; $6cfd
 	and a ; $6d04
-	jp nz, ActorScript_15_6b71.loop ; $6d05
+	jp nz, ActorScript_15_09.loop ; $6d05
 	farcall AdvanceDialogueTextCursor ; $6d08
 	script_speak $0c ; $6d0b
 	ld a, $0c ; $6d10
@@ -3243,7 +3243,7 @@ ReturnMatchChallengeScene:
 	farcall ScriptCloseDialogueWindow ; $6d18
 	script_wait_frames $05 ; $6d1b
 	and a ; $6d22
-	jp nz, ActorScript_15_6b71.loop ; $6d23
+	jp nz, ActorScript_15_09.loop ; $6d23
 	farcall AdvanceDialogueTextCursor ; $6d26
 	script_set_anim $0c, $03 ; $6d29
 	script_wait_idle $0c ; $6d30
@@ -3399,9 +3399,9 @@ ReturnCoachPassingShotLessonScene:
 WalkToStrokeChallengeCourtCutscene:
 	script_null_script ACTOR_PARTNER ; $6f51
 	script_move_player $1800, $2700 ; $6f56
-	script_set_actor_script $0c, ActorScript_15_6f9c ; $6f60
-	script_set_actor_script ACTOR_PLAYER, ActorScript_15_6fa7 ; $6f6b
-	script_set_actor_script ACTOR_PARTNER, ActorScript_15_6fbe ; $6f76
+	script_set_actor_script $0c, ActorScript_15_10 ; $6f60
+	script_set_actor_script ACTOR_PLAYER, ActorScript_15_11 ; $6f6b
+	script_set_actor_script ACTOR_PARTNER, ActorScript_15_12 ; $6f76
 	script_wait_actor_script ACTOR_PLAYER ; $6f81
 	call PlayerPartnerGestureCutscene ; $6f86
 	ld a, $0f ; $6f89
@@ -3412,13 +3412,13 @@ WalkToStrokeChallengeCourtCutscene:
 	ld [wUnusedExitLocationMirror], a ; $6f95
 	ld [wStoryModeExitLocationRequest], a ; $6f98
 	ret ; $6f9b
-ActorScript_15_6f9c:
+ActorScript_15_10:
 	; $6f9c, 11 bytes (actor_script)
 	as_set_target $1700, $1f00
 	as_wait_move
 	as_set_field $14, FACE_DOWN
 	as_halt
-ActorScript_15_6fa7:
+ActorScript_15_11:
 	; $6fa7, 23 bytes (actor_script)
 	as_set_target $1100, $2700
 	as_wait_move
@@ -3428,7 +3428,7 @@ ActorScript_15_6fa7:
 	as_wait_move
 	as_set_field $14, FACE_UP
 	as_halt
-ActorScript_15_6fbe:
+ActorScript_15_12:
 	; $6fbe, 17 bytes (actor_script)
 	as_set_target $1100, $2900
 	as_wait_move
@@ -4298,7 +4298,7 @@ InitReturnCoachScene:
 	script_speak $0d ; $7a16
 	script_face $0d, FACE_UP ; $7a1b
 	ret ; $7a22
-Table_15_7a23:
+Table_15:
 	; $7a23, 34 bytes (bytes:17)
 	db $03, $00, $2f, $00, $01, $01, $03, $03, $00, $2f, $00, $07, $01, $03, $0c, $f1, $ff ; 0x00
 	db $03, $00, $2f, $00, $01, $01, $05, $03, $00, $2f, $00, $07, $01, $05, $0c, $f1, $ff ; 0x11
@@ -4340,9 +4340,9 @@ ServeCoachWalkToCourtAndStartLesson:
 	script_null_script ACTOR_PARTNER ; $7a96
 	script_player_speed $0020 ; $7a9b
 	script_wait_frames $14 ; $7aa1
-	script_set_actor_script $07, ActorScript_15_7b03 ; $7aa8
-	script_set_actor_script ACTOR_PLAYER, ActorScript_15_7b1a ; $7ab3
-	script_set_actor_script ACTOR_PARTNER, ActorScript_15_7b25 ; $7abe
+	script_set_actor_script $07, ActorScript_15_13 ; $7aa8
+	script_set_actor_script ACTOR_PLAYER, ActorScript_15_14 ; $7ab3
+	script_set_actor_script ACTOR_PARTNER, ActorScript_15_15 ; $7abe
 	script_move_player $1800, $0f00 ; $7ac9
 	script_wait_actor_script ACTOR_PLAYER ; $7ad3
 	farcall WaitPlayerMoveDone ; $7ad8
@@ -4359,7 +4359,7 @@ ServeCoachWalkToCourtAndStartLesson:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $7afc
 	farcall RunTrainingDrillByID ; $7aff
 	ret ; $7b02
-ActorScript_15_7b03:
+ActorScript_15_13:
 	; $7b03, 23 bytes (actor_script)
 	as_set_target $1100, $1500
 	as_wait_move
@@ -4369,13 +4369,13 @@ ActorScript_15_7b03:
 	as_wait_move
 	as_set_field $14, FACE_DOWN
 	as_halt
-ActorScript_15_7b1a:
+ActorScript_15_14:
 	; $7b1a, 11 bytes (actor_script)
 	as_set_target $1900, $1700
 	as_wait_move
 	as_set_field $14, FACE_UP
 	as_halt
-ActorScript_15_7b25:
+ActorScript_15_15:
 	; $7b25, 11 bytes (actor_script)
 	as_set_target $1300, $1500
 	as_wait_move
@@ -4384,9 +4384,9 @@ ActorScript_15_7b25:
 NetCoachWalkToCourtAndStartLesson:
 	script_player_speed $0020 ; $7b30
 	script_null_script ACTOR_PARTNER ; $7b36
-	script_set_actor_script $12, ActorScript_15_7b96 ; $7b3b
-	script_set_actor_script ACTOR_PLAYER, ActorScript_15_7bb3 ; $7b46
-	script_set_actor_script ACTOR_PARTNER, ActorScript_15_7bbe ; $7b51
+	script_set_actor_script $12, ActorScript_15_16 ; $7b3b
+	script_set_actor_script ACTOR_PLAYER, ActorScript_15_17 ; $7b46
+	script_set_actor_script ACTOR_PARTNER, ActorScript_15_18 ; $7b51
 	script_move_player $2800, $2600 ; $7b5c
 	script_wait_actor_script ACTOR_PLAYER ; $7b66
 	farcall WaitPlayerMoveDone ; $7b6b
@@ -4403,7 +4403,7 @@ NetCoachWalkToCourtAndStartLesson:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $7b8f
 	farcall RunTrainingDrillByID ; $7b92
 	ret ; $7b95
-ActorScript_15_7b96:
+ActorScript_15_16:
 	; $7b96, 29 bytes (actor_script)
 	as_set_target $2f00, $2900
 	as_wait_move
@@ -4415,13 +4415,13 @@ ActorScript_15_7b96:
 	as_wait_move
 	as_set_field $14, FACE_DOWN
 	as_halt
-ActorScript_15_7bb3:
+ActorScript_15_17:
 	; $7bb3, 11 bytes (actor_script)
 	as_set_target $2900, $2f00
 	as_wait_move
 	as_set_field $14, FACE_UP
 	as_halt
-ActorScript_15_7bbe:
+ActorScript_15_18:
 	; $7bbe, 11 bytes (actor_script)
 	as_set_target $2d00, $2d00
 	as_wait_move
@@ -4430,9 +4430,9 @@ ActorScript_15_7bbe:
 ReturnCoachWalkToCourtAndStartLesson:
 	script_null_script ACTOR_PARTNER ; $7bc9
 	script_player_speed $0020 ; $7bce
-	script_set_actor_script $0d, ActorScript_15_7c2f ; $7bd4
-	script_set_actor_script ACTOR_PLAYER, ActorScript_15_7c4c ; $7bdf
-	script_set_actor_script ACTOR_PARTNER, ActorScript_15_7c57 ; $7bea
+	script_set_actor_script $0d, ActorScript_15_19 ; $7bd4
+	script_set_actor_script ACTOR_PLAYER, ActorScript_15_20 ; $7bdf
+	script_set_actor_script ACTOR_PARTNER, ActorScript_15_21 ; $7bea
 	script_move_player $1800, $2700 ; $7bf5
 	script_wait_actor_script ACTOR_PLAYER ; $7bff
 	farcall WaitPlayerMoveDone ; $7c04
@@ -4449,7 +4449,7 @@ ReturnCoachWalkToCourtAndStartLesson:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $7c28
 	farcall RunTrainingDrillByID ; $7c2b
 	ret ; $7c2e
-ActorScript_15_7c2f:
+ActorScript_15_19:
 	; $7c2f, 29 bytes (actor_script)
 	as_set_target $1100, $2900
 	as_wait_move
@@ -4461,13 +4461,13 @@ ActorScript_15_7c2f:
 	as_wait_move
 	as_set_field $14, FACE_DOWN
 	as_halt
-ActorScript_15_7c4c:
+ActorScript_15_20:
 	; $7c4c, 11 bytes (actor_script)
 	as_set_target $1900, $2f00
 	as_wait_move
 	as_set_field $14, FACE_UP
 	as_halt
-ActorScript_15_7c57:
+ActorScript_15_21:
 	; $7c57, 11 bytes (actor_script)
 	as_set_target $1300, $2d00
 	as_wait_move
@@ -4521,7 +4521,7 @@ MovePartyToReturnCoachSpot:
 	script_set_speed ACTOR_PLAYER, $0020 ; $7d5c
 	script_set_speed ACTOR_PARTNER, $0020 ; $7d64
 	ret ; $7d6c
-ActorScript_15_7d6d:
+ActorScript_15_22:
 	; $7d6d, 10 bytes (actor_script)
 	as_halt
 	as_anim $00
@@ -4530,7 +4530,7 @@ ActorScript_15_7d6d:
 	as_step
 	as_wait $01
 	as_jump .L4
-ActorScript_15_7d77:
+ActorScript_15_23:
 	; $7d77, 30 bytes (actor_script)
 	as_begin_path
 .L1:
@@ -4560,7 +4560,7 @@ MapScriptNop_15:
 	xor a ; $7d9e
 	ld [wStoryModeShowLocationName], a ; $7d9f
 	ret ; $7da2
-ActorScript_15_7da3:
+ActorScript_15_24:
 	; $7da3, 410 bytes (actor_script)
 	as_anim $01
 	as_target_rel $0400, $0200
@@ -4598,7 +4598,7 @@ ActorScript_15_7da3:
 	as_set_field $14, FACE_DOWN
 	as_anim $05
 	as_wait $4b
-	as_jump ActorScript_15_7da3
+	as_jump ActorScript_15_24
 	as_anim $00
 	as_wait $3c
 .L67:
@@ -4720,14 +4720,14 @@ ActorScript_15_7da3:
 	as_anim $05
 	as_wait $4b
 	as_jump .L137
-ActorScript_15_7f3d:
+ActorScript_15_25:
 	; $7f3d, 28 bytes (actor_script)
 	as_wait $f0
 	as_anim $03
 	as_wait $50
 	as_anim $03
 	as_wait $3c
-	as_jump ActorScript_15_7f3d
+	as_jump ActorScript_15_25
 .Ld:
 	as_wait $8c
 	as_anim $04

@@ -3210,7 +3210,7 @@ DrawCharGridSlotIcons:
 	wram_bank $03 ; $598e
 	ld a, [wCharSelectMode] ; $5994
 	add a ; $5997
-	ld hl, SubHandlers_38_59ba ; $5998
+	ld hl, CharGridSlotIconsSubHandlers ; $5998
 	add l ; $599b
 	ld l, a ; $599c
 	jr nc, .readList ; $599d
@@ -3237,7 +3237,7 @@ DrawCharGridSlotIcons:
 	pop af ; $59b4
 	wram_bank ; $59b5
 	ret ; $59b9
-SubHandlers_38_59ba:
+CharGridSlotIconsSubHandlers:
 	; $59ba, 12 bytes (records:2)
 	dw SubHandler0 ; record 0
 	dw SubHandler1 ; record 1
@@ -4101,7 +4101,7 @@ ApplyCpuDifficultyToCharRecords:
 	push af ; $5f4e
 	wram_bank $03 ; $5f4f
 	ld a, [wCharSelectSlotDifficulty + 1] ; $5f55
-	ld hl, SubHandlers_38_5feb ; $5f58
+	ld hl, CpuDifficultyToCharRecordsSubHandlers ; $5f58
 	add a ; $5f5b
 	add l ; $5f5c
 	ld l, a ; $5f5d
@@ -4129,7 +4129,7 @@ ApplyCpuDifficultyToCharRecords:
 	ld [wPlayer1PartnerExpTier], a ; $5f82
 .slot2:
 	ld a, [wCharSelectSlotDifficulty + 2] ; $5f85
-	ld hl, SubHandlers_38_5feb ; $5f88
+	ld hl, CpuDifficultyToCharRecordsSubHandlers ; $5f88
 	add a ; $5f8b
 	add l ; $5f8c
 	ld l, a ; $5f8d
@@ -4157,7 +4157,7 @@ ApplyCpuDifficultyToCharRecords:
 	ld [wPlayer2MainExpTier], a ; $5fb2
 .slot3:
 	ld a, [wCharSelectSlotDifficulty + 3] ; $5fb5
-	ld hl, SubHandlers_38_5feb ; $5fb8
+	ld hl, CpuDifficultyToCharRecordsSubHandlers ; $5fb8
 	add a ; $5fbb
 	add l ; $5fbc
 	ld l, a ; $5fbd
@@ -4187,7 +4187,7 @@ ApplyCpuDifficultyToCharRecords:
 	pop af ; $5fe5
 	wram_bank ; $5fe6
 	ret ; $5fea
-SubHandlers_38_5feb:
+CpuDifficultyToCharRecordsSubHandlers:
 	; $5feb, 10 bytes (records:2)
 	dw SubHandler01 ; record 0
 	dw SubHandler11 ; record 1
@@ -5625,7 +5625,7 @@ GetRemoteSlotBoxAddress:
 	ld b, [hl] ; $69be
 	ld c, a ; $69bf
 	ret ; $69c0
-SubHandlers_38_69c1:
+SubHandlers_38_2:
 	; $69c1, 12 bytes (records:2)
 	dw SubHandler02 ; record 0
 	dw SubHandler02 ; record 1
@@ -5957,14 +5957,14 @@ HandleLinkCpuDifficultyInput:
 	ld [wLinkCpuDifficulty], a ; $6bb4
 	ret ; $6bb7
 .confirm:
-	call StubNop_38_6bc0 ; $6bb8
+	call StubNop_38_0 ; $6bb8
 	ret ; $6bbb
 .cancel:
-	call StubNop_38_6bc1 ; $6bbc
+	call StubNop_38_1 ; $6bbc
 	ret ; $6bbf
-StubNop_38_6bc0:
+StubNop_38_0:
 	ret ; $6bc0
-StubNop_38_6bc1:
+StubNop_38_1:
 	ret ; $6bc1
 CheckMarioCastEquipCategory:
 	call IsMarioCastCharacter ; $6bc2

@@ -2151,13 +2151,13 @@ wTennisDictScrollTop:: db
 ; [8-bit] Study Vocabulary screen (bank $3f): cursor row within the visible page. On the scrolling term list it is clamped to 0-5 ($3f:$56c6-$56f8) and scrolls $cb2d past those limits; on the 9-cell category index page it is clamped to 0-8 ($3f:$55b0-$55de). Drives the highlight row (stride $80 = 4 tilemap rows, Func_3f_54c8) and the hand-cursor sprite Y (stride $10 px, $3f:$4f9a-$4fab). Cleared at $3f:$40cb and reset to 0 by the page-jump helpers ($3f:$51a2, $3f:$522c, $3f:$5495).
 wTennisDictCursorRow:: db
 
-; [8-bit] Study Vocabulary screen (bank $3f): number of list entries that pass the current category filter. Computed by Func_3f_50f7 ($3f:$5102-$5116) by counting bytes of SelectionMaskGrid_3f_539e that AND with $cb32 (up to the $40 terminator), and used as the wrap modulus for the scroll offset ($3f:$5181, $3f:$5700, $3f:$51ac).
+; [8-bit] Study Vocabulary screen (bank $3f): number of list entries that pass the current category filter. Computed by Func_3f_50f7 ($3f:$5102-$5116) by counting bytes of SelectionMaskGrid_3f that AND with $cb32 (up to the $40 terminator), and used as the wrap modulus for the scroll offset ($3f:$5181, $3f:$5700, $3f:$51ac).
 wTennisDictEntryCount:: db
 
 ; [16-bit] Address of the $40 terminator FindTennisDictionaryListEnd found in the selection grid, stored **high byte first** -- +$00 is h and +$01 is l. WrapTennisDictionaryScanToEnd reads it back the same way to wrap a scan round to the last entry
 wTennisDictListEnd:: dw
 
-; [8-bit] Study Vocabulary screen (bank $3f): category filter mask. Set from the screen mode at $3f:$40be - $01/$02/$04/$08/$10 for modes 0-4, $1f (all categories) for mode 5 and any other value. Every list walk ANDs it against the per-entry category byte in SelectionMaskGrid_3f_539e to decide whether an entry is listed ($3f:$5102, $3f:$5295, $3f:$5339, $3f:$5422, $3f:$547c, $3f:$51a5, $3f:$522f, $3f:$5625).
+; [8-bit] Study Vocabulary screen (bank $3f): category filter mask. Set from the screen mode at $3f:$40be - $01/$02/$04/$08/$10 for modes 0-4, $1f (all categories) for mode 5 and any other value. Every list walk ANDs it against the per-entry category byte in SelectionMaskGrid_3f to decide whether an entry is listed ($3f:$5102, $3f:$5295, $3f:$5339, $3f:$5422, $3f:$547c, $3f:$51a5, $3f:$522f, $3f:$5625).
 wTennisDictCategoryMask:: db
 
 ; [8-bit] Set to 1 in the two Study Vocabulary modes ($05 and $06) that show one fixed entry rather than the scrolling list, which is what makes the description path skip GetTennisDictionarySelectedIndex
@@ -2314,7 +2314,7 @@ wGlyphStampEnabled:: db
 ; [8-bit] Court-scene graphics still to queue; the loader decrements it each pass and stops once it hits zero
 wCourtSceneGfxStepsLeft:: db
 
-; [8-bit] Byte offset into SpriteList_0a_62eb, advanced 4 at a time (one record) and wrapped to 0 when the record reads $ff
+; [8-bit] Byte offset into CameraFromPlayerSpriteList, advanced 4 at a time (one record) and wrapped to 0 when the record reads $ff
 wCourtSceneGfxCursor:: db
 	ds 14
 
@@ -2827,7 +2827,7 @@ wNearbyActorList:: ds 50
 ; [14 bytes] One map_actor record, copied out of the ROM list by SpawnActorsFromList and handed to SpawnActorFromTemplate. +$09 (the obj_id byte) reads $ff on the entry that terminates the list
 wActorTemplate:: ds 14
 	ds 2
-; [16 bytes] The object-definition record LoadActorObjectDef copies in from the ObjectIdList_04_4f75 entry, then distributes into the slot: +$00 to +$37, +$01 to +$35, +$04/+$05 to +$24, +$06/+$07 to +$28, +$0a/+$0b to +$38, and +$08 as a far pointer to palette data when +$00 came out $63. The palette path reuses the first 8 bytes as the copy destination
+; [16 bytes] The object-definition record LoadActorObjectDef copies in from the ObjectIdList_04 entry, then distributes into the slot: +$00 to +$37, +$01 to +$35, +$04/+$05 to +$24, +$06/+$07 to +$28, +$0a/+$0b to +$38, and +$08 as a far pointer to palette data when +$00 came out $63. The palette path reuses the first 8 bytes as the copy destination
 wActorObjDef:: ds 16
 ; [16-bit] Negated camera X plus screen shake, recomputed each frame. DrawActorSprite adds it to an actor position to get a screen coordinate, which is why it is stored already negated
 wActorScreenOriginX:: dw
@@ -3687,7 +3687,7 @@ ENDU
 
 ; State for a frame task that was stubbed out (WRAM bank $07).
 ; story-data confirm menu (bank $1b)
-; [2 bytes] RunStoryDataConfirmMenu selects WRAM bank $07, clears +$00, sets +$01 to $0c and registers StubNop_1b_69d6 as a per-frame task. That task's body is a bare ret, so nothing ever reads either byte -- the register/unregister pair around the prompt is real, only the work is missing
+; [2 bytes] RunStoryDataConfirmMenu selects WRAM bank $07, clears +$00, sets +$01 to $0c and registers StubNop_1b_09 as a per-frame task. That task's body is a bare ret, so nothing ever reads either byte -- the register/unregister pair around the prompt is real, only the work is missing
 wStubbedPromptTaskState:: dw
 
 	ds 728
@@ -3851,19 +3851,19 @@ w4AiTrackingCountdown:: db
 ; [8-bit] Set to 1 by CharRallyReadyPhase and cleared alongside wCharShotButton1/2 when a shot is abandoned. AiTrackBallPhase returns without steering while it is 0, so it gates AI movement toward the target on the character actually being in the rally-ready state.
 w4CharRallyReady:: db
 	ds 5
-; [16-bit LE] Speed limit along the X axis: ClampCharXSpeed multiplies it by the cosine of wCharFacingDesired, mirroring what ClampCharDepthSpeed does with wCharMaxSpeedDepth. From CharStatTable_07_5c4a indexed by attribute byte $0027 alone.
+; [16-bit LE] Speed limit along the X axis: ClampCharXSpeed multiplies it by the cosine of wCharFacingDesired, mirroring what ClampCharDepthSpeed does with wCharMaxSpeedDepth. From CharStatTable_07_0 indexed by attribute byte $0027 alone.
 w4CharMaxSpeedX:: dw
-; [16-bit LE] Speed limit along the depth axis: ClampCharDepthSpeed multiplies it by the sine of wCharFacingDesired so the clamp follows the run direction. LoadCharacterAttributes indexes CharStatTable_07_5c4a with attribute bytes $0027 + $002b summed and doubled, clamped to the table's ten entries -- the same table wCharMaxSpeedX reads, but that one uses $0027 alone, so this axis gets whatever bonus $002b carries.
+; [16-bit LE] Speed limit along the depth axis: ClampCharDepthSpeed multiplies it by the sine of wCharFacingDesired so the clamp follows the run direction. LoadCharacterAttributes indexes CharStatTable_07_0 with attribute bytes $0027 + $002b summed and doubled, clamped to the table's ten entries -- the same table wCharMaxSpeedX reads, but that one uses $0027 alone, so this axis gets whatever bonus $002b carries.
 w4CharMaxSpeedDepth:: dw
-; [16-bit LE] How hard this character accelerates, from CharStatTable_07_5c5e via attribute-struct offset $0028. AccelerateCharDepth and AccelerateCharX multiply it by the sine/cosine of wCharFacingDesired and add the result to wCharVelDepth / wCharVelX, so one value drives both axes.
+; [16-bit LE] How hard this character accelerates, from CharStatTable_07_1 via attribute-struct offset $0028. AccelerateCharDepth and AccelerateCharX multiply it by the sine/cosine of wCharFacingDesired and add the result to wCharVelDepth / wCharVelX, so one value drives both axes.
 w4CharAcceleration:: dw
-; [16-bit LE] How hard this character slows when not accelerating, from CharStatTable_07_5c72 via attribute-struct offset $002a. The two brake routines negate it against bit 7 of the current velocity so it always opposes motion; one of them substitutes a flat $0040 when bit 1 of wCharFlags is clear.
+; [16-bit LE] How hard this character slows when not accelerating, from CharStatTable_07_2 via attribute-struct offset $002a. The two brake routines negate it against bit 7 of the current velocity so it always opposes motion; one of them substitutes a flat $0040 when bit 1 of wCharFlags is clear.
 w4CharDeceleration:: dw
 ; [8-bit] Per-character banked struct (WRAM4-7): max facing change per frame, easing wCharFacingShown toward wCharFacingDesired
 w4CharFacingEaseRate:: db
-; [8-bit] Scales how far this character's aim is pushed off centre: ComputeAimBaseOffset feeds it to MulHLByAFrac as the fraction applied to the base offset. From CharStatTable_07_5c90 via attribute-struct offset $0025.
+; [8-bit] Scales how far this character's aim is pushed off centre: ComputeAimBaseOffset feeds it to MulHLByAFrac as the fraction applied to the base offset. From CharStatTable_07_4 via attribute-struct offset $0025.
 w4CharAimOffsetScale:: db
-; [8-bit] Magnitude of the random component of this character's aim: GetRandomAimJitter multiplies a fresh AdvanceMatchRng byte by it (MulHLByA). Higher means a less accurate shot. From CharStatTable_07_5c9a via attribute-struct offset $0026.
+; [8-bit] Magnitude of the random component of this character's aim: GetRandomAimJitter multiplies a fresh AdvanceMatchRng byte by it (MulHLByA). Higher means a less accurate shot. From CharStatTable_07_5 via attribute-struct offset $0026.
 w4CharAimJitterScale:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): speed-row index (e) into the ShotPlacementData tables for ground strokes (topspin/slice/power variants/neutral); selects bytes 4-5 -> shot speed in LoadShotPlacementEntry
 w4GroundStrokeSpeedIndex:: db
@@ -4070,19 +4070,19 @@ w5AiTrackingCountdown:: db
 ; [8-bit] Set to 1 by CharRallyReadyPhase and cleared alongside wCharShotButton1/2 when a shot is abandoned. AiTrackBallPhase returns without steering while it is 0, so it gates AI movement toward the target on the character actually being in the rally-ready state.
 w5CharRallyReady:: db
 	ds 5
-; [16-bit LE] Speed limit along the X axis: ClampCharXSpeed multiplies it by the cosine of wCharFacingDesired, mirroring what ClampCharDepthSpeed does with wCharMaxSpeedDepth. From CharStatTable_07_5c4a indexed by attribute byte $0027 alone.
+; [16-bit LE] Speed limit along the X axis: ClampCharXSpeed multiplies it by the cosine of wCharFacingDesired, mirroring what ClampCharDepthSpeed does with wCharMaxSpeedDepth. From CharStatTable_07_0 indexed by attribute byte $0027 alone.
 w5CharMaxSpeedX:: dw
-; [16-bit LE] Speed limit along the depth axis: ClampCharDepthSpeed multiplies it by the sine of wCharFacingDesired so the clamp follows the run direction. LoadCharacterAttributes indexes CharStatTable_07_5c4a with attribute bytes $0027 + $002b summed and doubled, clamped to the table's ten entries -- the same table wCharMaxSpeedX reads, but that one uses $0027 alone, so this axis gets whatever bonus $002b carries.
+; [16-bit LE] Speed limit along the depth axis: ClampCharDepthSpeed multiplies it by the sine of wCharFacingDesired so the clamp follows the run direction. LoadCharacterAttributes indexes CharStatTable_07_0 with attribute bytes $0027 + $002b summed and doubled, clamped to the table's ten entries -- the same table wCharMaxSpeedX reads, but that one uses $0027 alone, so this axis gets whatever bonus $002b carries.
 w5CharMaxSpeedDepth:: dw
-; [16-bit LE] How hard this character accelerates, from CharStatTable_07_5c5e via attribute-struct offset $0028. AccelerateCharDepth and AccelerateCharX multiply it by the sine/cosine of wCharFacingDesired and add the result to wCharVelDepth / wCharVelX, so one value drives both axes.
+; [16-bit LE] How hard this character accelerates, from CharStatTable_07_1 via attribute-struct offset $0028. AccelerateCharDepth and AccelerateCharX multiply it by the sine/cosine of wCharFacingDesired and add the result to wCharVelDepth / wCharVelX, so one value drives both axes.
 w5CharAcceleration:: dw
-; [16-bit LE] How hard this character slows when not accelerating, from CharStatTable_07_5c72 via attribute-struct offset $002a. The two brake routines negate it against bit 7 of the current velocity so it always opposes motion; one of them substitutes a flat $0040 when bit 1 of wCharFlags is clear.
+; [16-bit LE] How hard this character slows when not accelerating, from CharStatTable_07_2 via attribute-struct offset $002a. The two brake routines negate it against bit 7 of the current velocity so it always opposes motion; one of them substitutes a flat $0040 when bit 1 of wCharFlags is clear.
 w5CharDeceleration:: dw
 ; [8-bit] Per-character banked struct (WRAM4-7): max facing change per frame, easing wCharFacingShown toward wCharFacingDesired
 w5CharFacingEaseRate:: db
-; [8-bit] Scales how far this character's aim is pushed off centre: ComputeAimBaseOffset feeds it to MulHLByAFrac as the fraction applied to the base offset. From CharStatTable_07_5c90 via attribute-struct offset $0025.
+; [8-bit] Scales how far this character's aim is pushed off centre: ComputeAimBaseOffset feeds it to MulHLByAFrac as the fraction applied to the base offset. From CharStatTable_07_4 via attribute-struct offset $0025.
 w5CharAimOffsetScale:: db
-; [8-bit] Magnitude of the random component of this character's aim: GetRandomAimJitter multiplies a fresh AdvanceMatchRng byte by it (MulHLByA). Higher means a less accurate shot. From CharStatTable_07_5c9a via attribute-struct offset $0026.
+; [8-bit] Magnitude of the random component of this character's aim: GetRandomAimJitter multiplies a fresh AdvanceMatchRng byte by it (MulHLByA). Higher means a less accurate shot. From CharStatTable_07_5 via attribute-struct offset $0026.
 w5CharAimJitterScale:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): speed-row index (e) into the ShotPlacementData tables for ground strokes (topspin/slice/power variants/neutral); selects bytes 4-5 -> shot speed in LoadShotPlacementEntry
 w5GroundStrokeSpeedIndex:: db
@@ -4289,19 +4289,19 @@ w6AiTrackingCountdown:: db
 ; [8-bit] Set to 1 by CharRallyReadyPhase and cleared alongside wCharShotButton1/2 when a shot is abandoned. AiTrackBallPhase returns without steering while it is 0, so it gates AI movement toward the target on the character actually being in the rally-ready state.
 w6CharRallyReady:: db
 	ds 5
-; [16-bit LE] Speed limit along the X axis: ClampCharXSpeed multiplies it by the cosine of wCharFacingDesired, mirroring what ClampCharDepthSpeed does with wCharMaxSpeedDepth. From CharStatTable_07_5c4a indexed by attribute byte $0027 alone.
+; [16-bit LE] Speed limit along the X axis: ClampCharXSpeed multiplies it by the cosine of wCharFacingDesired, mirroring what ClampCharDepthSpeed does with wCharMaxSpeedDepth. From CharStatTable_07_0 indexed by attribute byte $0027 alone.
 w6CharMaxSpeedX:: dw
-; [16-bit LE] Speed limit along the depth axis: ClampCharDepthSpeed multiplies it by the sine of wCharFacingDesired so the clamp follows the run direction. LoadCharacterAttributes indexes CharStatTable_07_5c4a with attribute bytes $0027 + $002b summed and doubled, clamped to the table's ten entries -- the same table wCharMaxSpeedX reads, but that one uses $0027 alone, so this axis gets whatever bonus $002b carries.
+; [16-bit LE] Speed limit along the depth axis: ClampCharDepthSpeed multiplies it by the sine of wCharFacingDesired so the clamp follows the run direction. LoadCharacterAttributes indexes CharStatTable_07_0 with attribute bytes $0027 + $002b summed and doubled, clamped to the table's ten entries -- the same table wCharMaxSpeedX reads, but that one uses $0027 alone, so this axis gets whatever bonus $002b carries.
 w6CharMaxSpeedDepth:: dw
-; [16-bit LE] How hard this character accelerates, from CharStatTable_07_5c5e via attribute-struct offset $0028. AccelerateCharDepth and AccelerateCharX multiply it by the sine/cosine of wCharFacingDesired and add the result to wCharVelDepth / wCharVelX, so one value drives both axes.
+; [16-bit LE] How hard this character accelerates, from CharStatTable_07_1 via attribute-struct offset $0028. AccelerateCharDepth and AccelerateCharX multiply it by the sine/cosine of wCharFacingDesired and add the result to wCharVelDepth / wCharVelX, so one value drives both axes.
 w6CharAcceleration:: dw
-; [16-bit LE] How hard this character slows when not accelerating, from CharStatTable_07_5c72 via attribute-struct offset $002a. The two brake routines negate it against bit 7 of the current velocity so it always opposes motion; one of them substitutes a flat $0040 when bit 1 of wCharFlags is clear.
+; [16-bit LE] How hard this character slows when not accelerating, from CharStatTable_07_2 via attribute-struct offset $002a. The two brake routines negate it against bit 7 of the current velocity so it always opposes motion; one of them substitutes a flat $0040 when bit 1 of wCharFlags is clear.
 w6CharDeceleration:: dw
 ; [8-bit] Per-character banked struct (WRAM4-7): max facing change per frame, easing wCharFacingShown toward wCharFacingDesired
 w6CharFacingEaseRate:: db
-; [8-bit] Scales how far this character's aim is pushed off centre: ComputeAimBaseOffset feeds it to MulHLByAFrac as the fraction applied to the base offset. From CharStatTable_07_5c90 via attribute-struct offset $0025.
+; [8-bit] Scales how far this character's aim is pushed off centre: ComputeAimBaseOffset feeds it to MulHLByAFrac as the fraction applied to the base offset. From CharStatTable_07_4 via attribute-struct offset $0025.
 w6CharAimOffsetScale:: db
-; [8-bit] Magnitude of the random component of this character's aim: GetRandomAimJitter multiplies a fresh AdvanceMatchRng byte by it (MulHLByA). Higher means a less accurate shot. From CharStatTable_07_5c9a via attribute-struct offset $0026.
+; [8-bit] Magnitude of the random component of this character's aim: GetRandomAimJitter multiplies a fresh AdvanceMatchRng byte by it (MulHLByA). Higher means a less accurate shot. From CharStatTable_07_5 via attribute-struct offset $0026.
 w6CharAimJitterScale:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): speed-row index (e) into the ShotPlacementData tables for ground strokes (topspin/slice/power variants/neutral); selects bytes 4-5 -> shot speed in LoadShotPlacementEntry
 w6GroundStrokeSpeedIndex:: db
@@ -4508,19 +4508,19 @@ w7AiTrackingCountdown:: db
 ; [8-bit] Set to 1 by CharRallyReadyPhase and cleared alongside wCharShotButton1/2 when a shot is abandoned. AiTrackBallPhase returns without steering while it is 0, so it gates AI movement toward the target on the character actually being in the rally-ready state.
 w7CharRallyReady:: db
 	ds 5
-; [16-bit LE] Speed limit along the X axis: ClampCharXSpeed multiplies it by the cosine of wCharFacingDesired, mirroring what ClampCharDepthSpeed does with wCharMaxSpeedDepth. From CharStatTable_07_5c4a indexed by attribute byte $0027 alone.
+; [16-bit LE] Speed limit along the X axis: ClampCharXSpeed multiplies it by the cosine of wCharFacingDesired, mirroring what ClampCharDepthSpeed does with wCharMaxSpeedDepth. From CharStatTable_07_0 indexed by attribute byte $0027 alone.
 w7CharMaxSpeedX:: dw
-; [16-bit LE] Speed limit along the depth axis: ClampCharDepthSpeed multiplies it by the sine of wCharFacingDesired so the clamp follows the run direction. LoadCharacterAttributes indexes CharStatTable_07_5c4a with attribute bytes $0027 + $002b summed and doubled, clamped to the table's ten entries -- the same table wCharMaxSpeedX reads, but that one uses $0027 alone, so this axis gets whatever bonus $002b carries.
+; [16-bit LE] Speed limit along the depth axis: ClampCharDepthSpeed multiplies it by the sine of wCharFacingDesired so the clamp follows the run direction. LoadCharacterAttributes indexes CharStatTable_07_0 with attribute bytes $0027 + $002b summed and doubled, clamped to the table's ten entries -- the same table wCharMaxSpeedX reads, but that one uses $0027 alone, so this axis gets whatever bonus $002b carries.
 w7CharMaxSpeedDepth:: dw
-; [16-bit LE] How hard this character accelerates, from CharStatTable_07_5c5e via attribute-struct offset $0028. AccelerateCharDepth and AccelerateCharX multiply it by the sine/cosine of wCharFacingDesired and add the result to wCharVelDepth / wCharVelX, so one value drives both axes.
+; [16-bit LE] How hard this character accelerates, from CharStatTable_07_1 via attribute-struct offset $0028. AccelerateCharDepth and AccelerateCharX multiply it by the sine/cosine of wCharFacingDesired and add the result to wCharVelDepth / wCharVelX, so one value drives both axes.
 w7CharAcceleration:: dw
-; [16-bit LE] How hard this character slows when not accelerating, from CharStatTable_07_5c72 via attribute-struct offset $002a. The two brake routines negate it against bit 7 of the current velocity so it always opposes motion; one of them substitutes a flat $0040 when bit 1 of wCharFlags is clear.
+; [16-bit LE] How hard this character slows when not accelerating, from CharStatTable_07_2 via attribute-struct offset $002a. The two brake routines negate it against bit 7 of the current velocity so it always opposes motion; one of them substitutes a flat $0040 when bit 1 of wCharFlags is clear.
 w7CharDeceleration:: dw
 ; [8-bit] Per-character banked struct (WRAM4-7): max facing change per frame, easing wCharFacingShown toward wCharFacingDesired
 w7CharFacingEaseRate:: db
-; [8-bit] Scales how far this character's aim is pushed off centre: ComputeAimBaseOffset feeds it to MulHLByAFrac as the fraction applied to the base offset. From CharStatTable_07_5c90 via attribute-struct offset $0025.
+; [8-bit] Scales how far this character's aim is pushed off centre: ComputeAimBaseOffset feeds it to MulHLByAFrac as the fraction applied to the base offset. From CharStatTable_07_4 via attribute-struct offset $0025.
 w7CharAimOffsetScale:: db
-; [8-bit] Magnitude of the random component of this character's aim: GetRandomAimJitter multiplies a fresh AdvanceMatchRng byte by it (MulHLByA). Higher means a less accurate shot. From CharStatTable_07_5c9a via attribute-struct offset $0026.
+; [8-bit] Magnitude of the random component of this character's aim: GetRandomAimJitter multiplies a fresh AdvanceMatchRng byte by it (MulHLByA). Higher means a less accurate shot. From CharStatTable_07_5 via attribute-struct offset $0026.
 w7CharAimJitterScale:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): speed-row index (e) into the ShotPlacementData tables for ground strokes (topspin/slice/power variants/neutral); selects bytes 4-5 -> shot speed in LoadShotPlacementEntry
 w7GroundStrokeSpeedIndex:: db

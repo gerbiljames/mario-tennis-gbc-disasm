@@ -19,9 +19,9 @@ TennisMachineRoomMapScripts_14:
 	dw TennisMachineRoomInitScript_14 ; slot 6 InitScript
 TennisMachineRoomActors_14:
 	; $4016, 52 bytes (map_actors)
-	map_actor $0000, ActorScript_14_78b1, $2b00, $3300, FACE_RIGHT, $3d, $01, $00
-	map_actor $0000, ActorScript_14_78b1, $2b00, $3100, FACE_RIGHT, $3d, $01, $00
-	map_actor $0000, ActorScript_14_78b1, $2d00, $2b00, FACE_LEFT, $3e, $01, $00
+	map_actor $0000, ActorScript_14_2, $2b00, $3300, FACE_RIGHT, $3d, $01, $00
+	map_actor $0000, ActorScript_14_2, $2b00, $3100, FACE_RIGHT, $3d, $01, $00
+	map_actor $0000, ActorScript_14_2, $2d00, $2b00, FACE_LEFT, $3e, $01, $00
 	map_actor_end
 TennisMachineRoomEntryPoints_14:
 	; $404a, 25 bytes (map_entries)
@@ -448,7 +448,7 @@ MachineCourtStartLevelScene:
 	test_flag FLAG_DOUBLES ; $4500
 	jr z, .walkOff ; $4503
 	script_null_script ACTOR_PARTNER ; $4505
-	script_set_actor_script ACTOR_PARTNER, ActorScript_14_4808 ; $450a
+	script_set_actor_script ACTOR_PARTNER, ActorScript_14_0 ; $450a
 .walkOff:
 	script_set_speed ACTOR_PLAYER, $0020 ; $4515
 	script_move_player $3800, $3300 ; $451d
@@ -495,7 +495,7 @@ MachineCourtStartLevelScene:
 	script_face $05, FACE_DOWN ; $45be
 	script_null_script ACTOR_PARTNER ; $45c5
 	script_set_speed ACTOR_PLAYER, $0020 ; $45ca
-	script_set_actor_script ACTOR_PARTNER, ActorScript_14_4808 ; $45d2
+	script_set_actor_script ACTOR_PARTNER, ActorScript_14_0 ; $45d2
 	script_move_target ACTOR_PLAYER, $3100, $2b00 ; $45dd
 	script_wait_move ACTOR_PLAYER ; $45e8
 	script_face ACTOR_PLAYER, FACE_DOWN ; $45ed
@@ -680,7 +680,7 @@ MachineCourtRestartLevel:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $4801
 	farcall RunTrainingDrillByID ; $4804
 	ret ; $4807
-ActorScript_14_4808:
+ActorScript_14_0:
 	; $4808, 11 bytes (actor_script)
 	as_set_target $2900, $2b00
 	as_wait_move
@@ -916,23 +916,23 @@ Court2MapScripts_14:
 	dw Court2InitScript_14 ; slot 6 InitScript
 Court2Actors_14:
 	; $4a47, 248 bytes (map_actors)
-	map_actor $0000, ActorScript_14_78b1, $1d00, $1500, FACE_RIGHT, $25, $01, $00
-	map_actor $0000, ActorScript_14_78b1, $1900, $1800, FACE_DOWN, $25, $01, $00
-	map_actor $0000, ActorScript_14_78b1, $1b00, $1c00, FACE_LEFT, $30, $01, $05
-	map_actor $0000, ActorScript_14_78b1, $1b00, $1a00, FACE_LEFT, $39, $01, $05
-	map_actor $0000, ActorScript_14_78bb, $0700, $3100, FACE_RIGHT, $39, $01, $04
-	map_actor $0000, ActorScript_14_78b1, $0900, $2300, FACE_RIGHT, $39, $01, $04
-	map_actor $0000, ActorScript_14_78b1, $0b00, $2300, FACE_LEFT, $3a, $01, $00
-	map_actor $0000, ActorScript_14_78b1, $0b00, $2b00, FACE_RIGHT, $23, $01, $00
-	map_actor $0000, ActorScript_14_78b1, $0f00, $2b00, FACE_LEFT, $24, $01, $00
-	map_actor $0000, ActorScript_14_78b1, $fd00, $0100, FACE_DOWN, $4c, $01, $00
-	map_actor $0000, ActorScript_14_78b1, $fd00, $0100, FACE_DOWN, $53, $01, $00
-	map_actor $0000, ActorScript_14_78b1, $fd00, $0100, FACE_DOWN, $4d, $01, $00
-	map_actor $0000, ActorScript_14_78b1, $1b00, $0c00, FACE_LEFT, $39, $01, $00
-	map_actor $0000, ActorScript_14_78b1, $1900, $0e00, FACE_LEFT, $39, $01, $06
-	map_actor $0000, ActorScript_14_78b1, $1b00, $1000, FACE_LEFT, $3a, $01, $03
-	map_actor $0000, ActorScript_14_78b1, $0500, $1b00, FACE_RIGHT, $33, $01, $00
-	map_actor $0000, ActorScript_14_78b1, $0500, $1d00, FACE_RIGHT, $3a, $01, $04
+	map_actor $0000, ActorScript_14_2, $1d00, $1500, FACE_RIGHT, $25, $01, $00
+	map_actor $0000, ActorScript_14_2, $1900, $1800, FACE_DOWN, $25, $01, $00
+	map_actor $0000, ActorScript_14_2, $1b00, $1c00, FACE_LEFT, $30, $01, $05
+	map_actor $0000, ActorScript_14_2, $1b00, $1a00, FACE_LEFT, $39, $01, $05
+	map_actor $0000, ActorScript_14_3, $0700, $3100, FACE_RIGHT, $39, $01, $04
+	map_actor $0000, ActorScript_14_2, $0900, $2300, FACE_RIGHT, $39, $01, $04
+	map_actor $0000, ActorScript_14_2, $0b00, $2300, FACE_LEFT, $3a, $01, $00
+	map_actor $0000, ActorScript_14_2, $0b00, $2b00, FACE_RIGHT, $23, $01, $00
+	map_actor $0000, ActorScript_14_2, $0f00, $2b00, FACE_LEFT, $24, $01, $00
+	map_actor $0000, ActorScript_14_2, $fd00, $0100, FACE_DOWN, $4c, $01, $00
+	map_actor $0000, ActorScript_14_2, $fd00, $0100, FACE_DOWN, $53, $01, $00
+	map_actor $0000, ActorScript_14_2, $fd00, $0100, FACE_DOWN, $4d, $01, $00
+	map_actor $0000, ActorScript_14_2, $1b00, $0c00, FACE_LEFT, $39, $01, $00
+	map_actor $0000, ActorScript_14_2, $1900, $0e00, FACE_LEFT, $39, $01, $06
+	map_actor $0000, ActorScript_14_2, $1b00, $1000, FACE_LEFT, $3a, $01, $03
+	map_actor $0000, ActorScript_14_2, $0500, $1b00, FACE_RIGHT, $33, $01, $00
+	map_actor $0000, ActorScript_14_2, $0500, $1d00, FACE_RIGHT, $3a, $01, $04
 	map_actor_end
 Court2EntryPoints_14:
 	; $4b3f, 17 bytes (map_entries)
@@ -1209,18 +1209,18 @@ InitCourt2SceneVariant:
 	ret ; $4eb3
 Court2ActorsAlt_14:
 	; $4eb4, 178 bytes (map_actors)
-	map_actor $0000, ActorScript_14_78b1, $1d00, $1500, FACE_RIGHT, $25, $01, $00
-	map_actor $0000, ActorScript_14_78b1, $1b00, $2300, FACE_DOWN, $25, $01, $00
-	map_actor $0000, ActorScript_14_78b1, $1f00, $2d00, FACE_LEFT, $30, $01, $05
-	map_actor $0000, ActorScript_14_78bb, $1d00, $3000, FACE_UP, $39, $01, $05
-	map_actor $0000, ActorScript_14_78bb, $0700, $3100, FACE_RIGHT, $39, $01, $04
-	map_actor $0000, ActorScript_14_78b1, $0900, $2300, FACE_RIGHT, $39, $01, $04
-	map_actor $0000, ActorScript_14_78b1, $0b00, $2300, FACE_LEFT, $3a, $01, $00
-	map_actor $0000, ActorScript_14_78b1, $0b00, $2b00, FACE_RIGHT, $23, $01, $00
-	map_actor $0000, ActorScript_14_78b1, $0f00, $2b00, FACE_LEFT, $24, $01, $00
-	map_actor $0000, ActorScript_14_78b1, $fd00, $0100, FACE_DOWN, $4c, $01, $00
-	map_actor $0000, ActorScript_14_78b1, $fd00, $0100, FACE_DOWN, $53, $01, $00
-	map_actor $0000, ActorScript_14_78b1, $fd00, $0100, FACE_DOWN, $4d, $01, $00
+	map_actor $0000, ActorScript_14_2, $1d00, $1500, FACE_RIGHT, $25, $01, $00
+	map_actor $0000, ActorScript_14_2, $1b00, $2300, FACE_DOWN, $25, $01, $00
+	map_actor $0000, ActorScript_14_2, $1f00, $2d00, FACE_LEFT, $30, $01, $05
+	map_actor $0000, ActorScript_14_3, $1d00, $3000, FACE_UP, $39, $01, $05
+	map_actor $0000, ActorScript_14_3, $0700, $3100, FACE_RIGHT, $39, $01, $04
+	map_actor $0000, ActorScript_14_2, $0900, $2300, FACE_RIGHT, $39, $01, $04
+	map_actor $0000, ActorScript_14_2, $0b00, $2300, FACE_LEFT, $3a, $01, $00
+	map_actor $0000, ActorScript_14_2, $0b00, $2b00, FACE_RIGHT, $23, $01, $00
+	map_actor $0000, ActorScript_14_2, $0f00, $2b00, FACE_LEFT, $24, $01, $00
+	map_actor $0000, ActorScript_14_2, $fd00, $0100, FACE_DOWN, $4c, $01, $00
+	map_actor $0000, ActorScript_14_2, $fd00, $0100, FACE_DOWN, $53, $01, $00
+	map_actor $0000, ActorScript_14_2, $fd00, $0100, FACE_DOWN, $4d, $01, $00
 	map_actor_end
 Court2EntryWalkIn:
 	ld a, [wStoryModeEntryPoint] ; $4f66
@@ -1249,15 +1249,15 @@ Court1MapScripts_14:
 	dw Court1InitScript_14 ; slot 6 InitScript
 Court1Actors_14:
 	; $4fba, 136 bytes (map_actors)
-	map_actor $0000, ActorScript_14_78b1, $0b00, $1500, FACE_LEFT, $25, $01, $00
-	map_actor $0000, ActorScript_14_78b1, $1100, $2300, FACE_DOWN, $25, $01, $00
-	map_actor $0000, ActorScript_14_78b1, $2300, $1900, FACE_LEFT, $39, $01, $03
-	map_actor $0000, ActorScript_14_78b1, $2300, $1c00, FACE_LEFT, $32, $01, $03
-	map_actor $0000, ActorScript_14_78b1, $0e00, $0d00, FACE_RIGHT, $39, $01, $00
-	map_actor $0000, ActorScript_14_78b1, $0f00, $0f00, FACE_RIGHT, $39, $01, $06
-	map_actor $0000, ActorScript_14_78b1, $0e00, $1100, FACE_RIGHT, $3a, $01, $03
-	map_actor $0000, ActorScript_14_78b1, $2300, $0f00, FACE_LEFT, $33, $01, $00
-	map_actor $0000, ActorScript_14_78b1, $2100, $1100, FACE_LEFT, $3a, $01, $04
+	map_actor $0000, ActorScript_14_2, $0b00, $1500, FACE_LEFT, $25, $01, $00
+	map_actor $0000, ActorScript_14_2, $1100, $2300, FACE_DOWN, $25, $01, $00
+	map_actor $0000, ActorScript_14_2, $2300, $1900, FACE_LEFT, $39, $01, $03
+	map_actor $0000, ActorScript_14_2, $2300, $1c00, FACE_LEFT, $32, $01, $03
+	map_actor $0000, ActorScript_14_2, $0e00, $0d00, FACE_RIGHT, $39, $01, $00
+	map_actor $0000, ActorScript_14_2, $0f00, $0f00, FACE_RIGHT, $39, $01, $06
+	map_actor $0000, ActorScript_14_2, $0e00, $1100, FACE_RIGHT, $3a, $01, $03
+	map_actor $0000, ActorScript_14_2, $2300, $0f00, FACE_LEFT, $33, $01, $00
+	map_actor $0000, ActorScript_14_2, $2100, $1100, FACE_LEFT, $3a, $01, $04
 	map_actor_end
 Court1EntryPoints_14:
 	; $5042, 17 bytes (map_entries)
@@ -1396,10 +1396,10 @@ InitCourt1SceneVariant:
 	ret ; $5161
 Court1ActorsAlt_14:
 	; $5162, 66 bytes (map_actors)
-	map_actor $0000, ActorScript_14_78b1, $0b00, $1500, FACE_LEFT, $25, $01, $00
-	map_actor $0000, ActorScript_14_78b1, $1100, $2300, FACE_DOWN, $25, $01, $00
-	map_actor $0000, ActorScript_14_78b1, $1b00, $2300, FACE_DOWN, $39, $01, $03
-	map_actor $0000, ActorScript_14_78b1, $1d00, $2300, FACE_DOWN, $32, $01, $03
+	map_actor $0000, ActorScript_14_2, $0b00, $1500, FACE_LEFT, $25, $01, $00
+	map_actor $0000, ActorScript_14_2, $1100, $2300, FACE_DOWN, $25, $01, $00
+	map_actor $0000, ActorScript_14_2, $1b00, $2300, FACE_DOWN, $39, $01, $03
+	map_actor $0000, ActorScript_14_2, $1d00, $2300, FACE_DOWN, $32, $01, $03
 	map_actor_end
 Court1EntryWalkIn:
 	ld a, [wStoryModeEntryPoint] ; $51a4
@@ -1451,10 +1451,10 @@ IslandSkyMapScripts_14:
 	dw IslandSkyInitScript_14 ; slot 6 InitScript
 IslandSkyActors_14:
 	; $522f, 66 bytes (map_actors)
-	map_actor $0000, ActorScript_14_78b1, $0600, $2700, FACE_DOWN, $63, $01, $00
-	map_actor $0000, ActorScript_14_78b1, $0600, $2700, FACE_DOWN, $5c, $01, $00
-	map_actor $0000, ActorScript_14_78b1, $0600, $2700, FACE_DOWN, $5b, $01, $00
-	map_actor $0000, ActorScript_14_78b1, $0600, $2700, FACE_DOWN, $5a, $01, $00
+	map_actor $0000, ActorScript_14_2, $0600, $2700, FACE_DOWN, $63, $01, $00
+	map_actor $0000, ActorScript_14_2, $0600, $2700, FACE_DOWN, $5c, $01, $00
+	map_actor $0000, ActorScript_14_2, $0600, $2700, FACE_DOWN, $5b, $01, $00
+	map_actor $0000, ActorScript_14_2, $0600, $2700, FACE_DOWN, $5a, $01, $00
 	map_actor_end
 IslandSkyEntryPoints_14:
 	; $5271, 49 bytes (map_entries)
@@ -1712,13 +1712,13 @@ IslandSkyInitScript_14:
 	script_set_position $04, $0600, $2900 ; $5538
 	script_set_position $05, $0600, $2900 ; $5543
 	script_set_position $06, $0600, $2900 ; $554e
-	script_set_actor_script $03, ActorScript_14_563b ; $5559
+	script_set_actor_script $03, ActorScript_14_1 ; $5559
 	script_wait_frames $1e ; $5564
-	script_set_actor_script $04, ActorScript_14_563b ; $556b
+	script_set_actor_script $04, ActorScript_14_1 ; $556b
 	script_wait_frames $1e ; $5576
-	script_set_actor_script $05, ActorScript_14_563b ; $557d
+	script_set_actor_script $05, ActorScript_14_1 ; $557d
 	script_wait_frames $1e ; $5588
-	script_set_actor_script $06, ActorScript_14_563b ; $558f
+	script_set_actor_script $06, ActorScript_14_1 ; $558f
 	script_wait_frames $50 ; $559a
 	script_set_position ACTOR_PLAYER, $0600, $2900 ; $55a1
 	script_set_active ACTOR_PLAYER, $02 ; $55ac
@@ -1757,7 +1757,7 @@ IslandSkyInitScript_14:
 	ld [wUnusedExitLocationMirror], a ; $5634
 	ld [wStoryModeExitLocationRequest], a ; $5637
 	ret ; $563a
-ActorScript_14_563b:
+ActorScript_14_1:
 	; $563b, 21 bytes (actor_script)
 	as_set_target $0b00, $2900
 	as_wait_move
@@ -1834,7 +1834,7 @@ SpriteTemplate_14_6090:
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-Palette_14_6099:
+WaterSplashObjPalette_14:
 	INCLUDE "data/bank_014/palettes_6099.asm" ; $6099, 8 bytes (palettes)
 LoadWaterSplashObjGfx_14:
 	ldh a, [hWramBank] ; $60a1
@@ -1844,7 +1844,7 @@ LoadWaterSplashObjGfx_14:
 	ld de, $8200 ; $60ad
 	ld c, (SpriteTemplate_14_6090 - WaterSplashObjGfx) / 16 ; $60b0
 	call QueueVRAMCopy ; $60b2
-	ld hl, Palette_14_6099 ; $60b5
+	ld hl, WaterSplashObjPalette_14 ; $60b5
 	ld de, $0901 ; $60b8
 	call LoadPaletteShadow ; $60bb
 	pop af ; $60be
@@ -2286,9 +2286,9 @@ UpdateFirework0_14:
 	cp $04 ; $647d
 	jp nc, .done ; $647f
 	ld a, [wCutsceneObjPhase] ; $6482
-	add LOW(Table_14_64d5) ; $6485
+	add LOW(Table_14) ; $6485
 	ld l, a ; $6487
-	adc HIGH(Table_14_64d5) ; $6488
+	adc HIGH(Table_14) ; $6488
 	sub l ; $648a
 	ld h, a ; $648b
 	ld a, [hl] ; $648c
@@ -2333,7 +2333,7 @@ AdvanceFirework0Ascent_14:
 	sub b ; $64d0
 	ld [wCutsceneObjY], a ; $64d1
 	ret ; $64d4
-Table_14_64d5:
+Table_14:
 	; $64d5, 4 bytes (bytes:4)
 	db $00, $0c, $0e, $10 ; 0x00
 Data_14_64d9:
@@ -2521,9 +2521,9 @@ UpdateFirework1_14:
 	cp $04 ; $6f23
 	jp nc, .done ; $6f25
 	ld a, [wCutsceneObjPhase + 1] ; $6f28
-	add LOW(Table_14_64d5) ; $6f2b
+	add LOW(Table_14) ; $6f2b
 	ld l, a ; $6f2d
-	adc HIGH(Table_14_64d5) ; $6f2e
+	adc HIGH(Table_14) ; $6f2e
 	sub l ; $6f30
 	ld h, a ; $6f31
 	ld a, [hl] ; $6f32
@@ -2908,7 +2908,7 @@ GetSceneObjectScreenPos_14:
 	ds 2, $00
 TwinkleObjGfx:
 	INCBIN "data/bank_014/d_7580.bin" ; $7580, 256 bytes
-Palette_14_7680:
+TwinkleObjPalette_14:
 	INCLUDE "data/bank_014/palettes_7680.asm" ; $7680, 8 bytes (palettes)
 LoadTwinkleObjGfx_14:
 	ldh a, [hWramBank] ; $7688
@@ -2916,9 +2916,9 @@ LoadTwinkleObjGfx_14:
 	wram_bank $01 ; $768b
 	ld hl, TwinkleObjGfx ; $7691
 	ld de, $8000 + VRAM_BANK1 ; $7694
-	ld c, (Palette_14_7680 - TwinkleObjGfx) / 16 ; $7697
+	ld c, (TwinkleObjPalette_14 - TwinkleObjGfx) / 16 ; $7697
 	call QueueVRAMCopy ; $7699
-	ld hl, Palette_14_7680 ; $769c
+	ld hl, TwinkleObjPalette_14 ; $769c
 	ld de, $0801 ; $769f
 	call LoadPaletteShadow ; $76a2
 	pop af ; $76a5
@@ -3129,7 +3129,7 @@ PlayPlaneMoveSfx_14:
 	sound $7b ; $78ae
 .done:
 	ret ; $78b0
-ActorScript_14_78b1:
+ActorScript_14_2:
 	; $78b1, 10 bytes (actor_script)
 	as_halt
 	as_anim $00
@@ -3138,7 +3138,7 @@ ActorScript_14_78b1:
 	as_step
 	as_wait $01
 	as_jump .L4
-ActorScript_14_78bb:
+ActorScript_14_3:
 	; $78bb, 30 bytes (actor_script)
 	as_begin_path
 .L1:
@@ -3171,7 +3171,7 @@ MapScriptHideLocationName_14:
 	xor a ; $78e2
 	ld [wStoryModeShowLocationName], a ; $78e3
 	ret ; $78e6
-ActorScript_14_78e7:
+ActorScript_14_4:
 	; $78e7, 438 bytes (actor_script)
 	as_anim $01
 	as_target_rel $0400, $0200
@@ -3209,7 +3209,7 @@ ActorScript_14_78e7:
 	as_set_field $14, FACE_DOWN
 	as_anim $05
 	as_wait $4b
-	as_jump ActorScript_14_78e7
+	as_jump ActorScript_14_4
 	as_anim $00
 	as_wait $3c
 .L67:

@@ -30,7 +30,7 @@ SECTION "ROM Bank $18", ROMX[$4000], BANK[$18]
 	farptr InitConfirmScreen ; $4036
 	farptr SetupScoreboardDisplay ; $4038
 	farptr LoadScorePanelValue ; $403a
-	farptr StubNop_18_5379 ; $403c
+	farptr StubNop_18_1 ; $403c
 	farptr DrawDecimalNumberSprites ; $403e
 	farptr DrawYesNoLabels ; $4040
 	farptr DrawTileBlock6x2ToTilemap ; $4042
@@ -112,23 +112,23 @@ DataPtr_MatchWinLoseGfx:
 	dw MatchWinLoseGfx ; $4092
 DataPtr_CharSelectMiscGfx:
 	dw CharSelectMiscGfx ; $4094
-Padding_18_4096:
+Padding_18:
 	; $4096, 10 bytes (fill)
 	ds 10, $00
 FontTiles:
 	INCBIN "data/bank_018/d_40a0.bin" ; $40a0, 512 bytes
 MenuHandCursorGfx:
 	INCBIN "data/bank_018/d_42a0.bin" ; $42a0, 64 bytes
-Palette_18_42e0:
+MenuHandCursorPalette:
 	INCLUDE "data/bank_018/palettes_42e0.asm" ; $42e0, 32 bytes (palettes)
-Palette_18_4300:
+AllIndexedPalettes_18:
 	INCLUDE "data/bank_018/palettes_4300.asm" ; $4300, 40 bytes (palettes)
 LoadAllIndexedPalettes_18:
 	push af ; $4328
 	push bc ; $4329
 	push de ; $432a
 	push hl ; $432b
-	ld hl, Palette_18_4300 ; $432c
+	ld hl, AllIndexedPalettes_18 ; $432c
 	ld e, $05 ; $432f
 	call LoadPaletteShadow ; $4331
 	pop hl ; $4334
@@ -179,11 +179,11 @@ FlushBgMapShadowToVram:
 	ret ; $437b
 LoadMenuHandCursorGfx:
 	push hl ; $437c
-	ld hl, Palette_18_42e0 ; $437d
+	ld hl, MenuHandCursorPalette ; $437d
 	call LoadPaletteShadow ; $4380
 	pop de ; $4383
 	ld hl, MenuHandCursorGfx ; $4384
-	ld c, (Palette_18_42e0 - MenuHandCursorGfx) / 16 ; $4387
+	ld c, (MenuHandCursorPalette - MenuHandCursorGfx) / 16 ; $4387
 	call QueueVRAMCopy ; $4389
 	ret ; $438c
 ; Copies FontTiles to $9000, 16 blocks. The leading `ret` means it never does:
@@ -676,7 +676,7 @@ InitPlayerRecordForCharacter:
 	ret ; $4679
 ConfirmScreenGfx0:
 	INCBIN "data/bank_018/d_467a.bin" ; $467a, 2233 bytes
-Palette_18_4f33:
+ConfirmScreenPalette0:
 	INCLUDE "data/bank_018/palettes_4f33.asm" ; $4f33, 64 bytes (palettes)
 ConfirmScreenGfx1:
 	INCBIN "data/bank_018/d_4f73.bin" ; $4f73, 347 bytes
@@ -708,7 +708,7 @@ YesNoLabels3:
 	db $08, $08, $0e, $0e, $0e, $08, $08, $0e, $0e, $0e, $08, $08, $09, $09, $09, $09 ; 0x00
 ConfirmScreenGfx3:
 	INCBIN "data/bank_018/d_51f8.bin" ; $51f8, 206 bytes
-Palette_18_52c6:
+ConfirmScreenPalette1:
 	INCLUDE "data/bank_018/palettes_52c6.asm" ; $52c6, 24 bytes (palettes)
 InitConfirmScreen:
 	call ClearFrameTasks ; $52de
@@ -729,7 +729,7 @@ InitConfirmScreen:
 	ld de, $8800 + VRAM_BANK1 ; $5308
 	ld c, $80 ; $530b
 	call QueueVRAMCopy ; $530d
-	ld hl, Palette_18_4f33 ; $5310
+	ld hl, ConfirmScreenPalette0 ; $5310
 	ld de, $0008 ; $5313
 	call LoadPaletteShadow ; $5316
 	ld hl, ConfirmScreenGfx2 ; $5319
@@ -747,7 +747,7 @@ InitConfirmScreen:
 	ld de, $8300 ; $533d
 	ld c, $14 ; $5340
 	call QueueVRAMCopy ; $5342
-	ld hl, Palette_18_52c6 ; $5345
+	ld hl, ConfirmScreenPalette1 ; $5345
 	ld de, $0903 ; $5348
 	call LoadPaletteShadow ; $534b
 	ld hl, $8500 ; $534e
@@ -757,7 +757,7 @@ InitConfirmScreen:
 	call SetupScoreboardDisplay ; $535a
 	ld hl, wMinigameHighScoreMode ; $535d
 	ld b, [hl] ; $5360
-	call StubNop_18_5379 ; $5361
+	call StubNop_18_1 ; $5361
 	ret ; $5364
 DrawConfirmScreenBox:
 	ld hl, wTextTileBuffer + 26 * TILE_SIZE ; $5365
@@ -769,7 +769,7 @@ LoadScorePanelValue:
 	ld a, [wStoryMainCharExpTier] ; $5372
 	ld [wScorePanelExpTier], a ; $5375
 	ret ; $5378
-StubNop_18_5379:
+StubNop_18_1:
 	ret ; $5379
 SetupScoreboardDisplay:
 	ld a, [wScorePanelValues] ; $537a
@@ -1154,7 +1154,7 @@ LoadConfirmScreenSpriteGfx:
 	ld de, $8000 + VRAM_BANK1 ; $5604
 	ld c, $1c ; $5607
 	call QueueVRAMCopy ; $5609
-	ld hl, Palette_18_582d ; $560c
+	ld hl, ConfirmScreenSpritePalette0 ; $560c
 	ld de, $0c03 ; $560f
 	call LoadPalettesImmediate ; $5612
 	ld hl, ConfirmScreenSpriteGfx1 ; $5615
@@ -1164,13 +1164,13 @@ LoadConfirmScreenSpriteGfx:
 	ld de, $8200 + VRAM_BANK1 ; $5621
 	ld c, $0c ; $5624
 	call QueueVRAMCopy ; $5626
-	ld hl, Palette_18_58ad ; $5629
+	ld hl, ConfirmScreenSpritePalette1 ; $5629
 	ld de, $0801 ; $562c
 	call LoadPalettesImmediate ; $562f
 	ret ; $5632
 ConfirmScreenSpriteGfx0:
 	INCBIN "data/bank_018/d_5633.bin" ; $5633, 506 bytes
-Palette_18_582d:
+ConfirmScreenSpritePalette0:
 	INCLUDE "data/bank_018/palettes_582d.asm" ; $582d, 24 bytes (palettes)
 ConfirmScreenSpriteGfx1:
 	INCBIN "data/bank_018/d_5845.bin" ; $5845, 77 bytes
@@ -1178,18 +1178,18 @@ TwoOptionSelectBTable:
 	; $5892, 27 bytes (bytes:16)
 	db $92, $ec, $e1, $10, $6c, $7c, $d5, $e2, $92, $e8, $e7, $00, $de, $e5, $b4, $e3 ; 0x00
 	db $88, $e3, $c8, $e9, $da, $ef, $ff, $eb, $00, $00, $00 ; 0x10
-Palette_18_58ad:
+ConfirmScreenSpritePalette1:
 	INCLUDE "data/bank_018/palettes_58ad.asm" ; $58ad, 51 bytes (palettes)
 CharSelectCursorGfx:
 	INCBIN "data/bank_018/d_58e0.bin" ; $58e0, 217 bytes
-Palette_18_59b9:
+CharSelectCursorPalette:
 	INCLUDE "data/bank_018/palettes_59b9.asm" ; $59b9, 8 bytes (palettes)
 LoadCharSelectCursorGfx:
 	ld hl, CharSelectCursorGfx ; $59c1
 	ld de, $8400 ; $59c4
 	ld c, $0c ; $59c7
 	call QueueVRAMCopy ; $59c9
-	ld hl, Palette_18_59b9 ; $59cc
+	ld hl, CharSelectCursorPalette ; $59cc
 	ld de, $0a01 ; $59cf
 	call LoadPaletteShadow ; $59d2
 	ret ; $59d5
@@ -1507,11 +1507,11 @@ LoadScreen0TilesAndPalette:
 	ld c, $28 ; $7742
 	ld de, $8000 ; $7744
 	farcall LoadCompressedTileBlock ; $7747
-	ld hl, Palette_18_7754 ; $774a
+	ld hl, Screen0Palette ; $774a
 	ld de, $0801 ; $774d
 	call LoadPaletteShadow ; $7750
 	ret ; $7753
-Palette_18_7754:
+Screen0Palette:
 	INCLUDE "data/bank_018/palettes_7754.asm" ; $7754, 8 bytes (palettes)
 QueueScreen0Sprites:
 	ld hl, SpriteTemplate_18_776a ; $775c
@@ -1614,44 +1614,44 @@ FillAllBgPalettes:
 	call ResetScrollAndCamera ; $7855
 	ld c, $32 ; $7858
 	farcall LoadScreenAssetRecord ; $785a
-	ld hl, Palette_18_78a9 ; $785d
+	ld hl, AllBgPalettes ; $785d
 	ld de, $0001 ; $7860
 	call LoadPaletteShadow ; $7863
-	ld hl, Palette_18_78a9 ; $7866
+	ld hl, AllBgPalettes ; $7866
 	ld de, $0101 ; $7869
 	call LoadPaletteShadow ; $786c
-	ld hl, Palette_18_78a9 ; $786f
+	ld hl, AllBgPalettes ; $786f
 	ld de, $0201 ; $7872
 	call LoadPaletteShadow ; $7875
-	ld hl, Palette_18_78a9 ; $7878
+	ld hl, AllBgPalettes ; $7878
 	ld de, $0301 ; $787b
 	call LoadPaletteShadow ; $787e
-	ld hl, Palette_18_78a9 ; $7881
+	ld hl, AllBgPalettes ; $7881
 	ld de, $0401 ; $7884
 	call LoadPaletteShadow ; $7887
-	ld hl, Palette_18_78a9 ; $788a
+	ld hl, AllBgPalettes ; $788a
 	ld de, $0501 ; $788d
 	call LoadPaletteShadow ; $7890
-	ld hl, Palette_18_78a9 ; $7893
+	ld hl, AllBgPalettes ; $7893
 	ld de, $0601 ; $7896
 	call LoadPaletteShadow ; $7899
-	ld hl, Palette_18_78a9 ; $789c
+	ld hl, AllBgPalettes ; $789c
 	ld de, $0701 ; $789f
 	call LoadPaletteShadow ; $78a2
 	farcall QueueWram3MapToVRAM ; $78a5
 	ret ; $78a8
-Palette_18_78a9:
+AllBgPalettes:
 	INCLUDE "data/bank_018/palettes_78a9.asm" ; $78a9, 8 bytes (palettes)
 LoadScreen1ObjTiles:
 	ld b, $07 ; $78b1
 	ld c, $28 ; $78b3
 	ld de, $8000 ; $78b5
 	farcall LoadCompressedTileBlock ; $78b8
-	ld hl, Palette_18_78c5 ; $78bb
+	ld hl, Screen1ObjPalette ; $78bb
 	ld de, $0801 ; $78be
 	call LoadPaletteShadow ; $78c1
 	ret ; $78c4
-Palette_18_78c5:
+Screen1ObjPalette:
 	INCLUDE "data/bank_018/palettes_78c5.asm" ; $78c5, 8 bytes (palettes)
 QueueScreen1Sprites:
 	ld hl, SpriteTemplate_18_78db ; $78cd
@@ -1803,11 +1803,11 @@ LoadScreen2ObjTiles:
 	ld c, $14 ; $7a2f
 	ld de, $8000 ; $7a31
 	farcall LoadCompressedTileBlock ; $7a34
-	ld hl, Palette_18_7a41 ; $7a37
+	ld hl, Screen2ObjPalette ; $7a37
 	ld de, $0801 ; $7a3a
 	call LoadPaletteShadow ; $7a3d
 	ret ; $7a40
-Palette_18_7a41:
+Screen2ObjPalette:
 	INCLUDE "data/bank_018/palettes_7a41.asm" ; $7a41, 8 bytes (palettes)
 QueueScreen2Sprites:
 	ld hl, SpriteTemplate_18_7a57 ; $7a49
@@ -2015,7 +2015,7 @@ ObjectSceneATilesPalettes:
 	db $ff, $6b, $bf, $53, $9f, $02, $00, $00 ; 0x10
 PopulateObjectArrayA:
 	ld c, $00 ; $7c27
-	ld hl, ObjectSpawnTable_18_7c53 ; $7c29
+	ld hl, ObjectArrayASpawnTable ; $7c29
 	ld de, wScreenScratch ; $7c2c
 .spawnLoop:
 	push af ; $7c2f
@@ -2045,7 +2045,7 @@ PopulateObjectArrayA:
 	cp $10 ; $7c4e
 	jr nz, .spawnLoop ; $7c50
 	ret ; $7c52
-ObjectSpawnTable_18_7c53:
+ObjectArrayASpawnTable:
 	; $7c53, 176 bytes (records:11)
 ; 16 records x 11 bytes
 	db $01, $00, $14, $00, $00, $40, $a0, $00, $00, $38, $7e ; record 0
@@ -2087,15 +2087,15 @@ LoadObjectSceneBTiles:
 	ld c, $10 ; $7d32
 	ld de, $8200 ; $7d34
 	farcall LoadCompressedTileBlock ; $7d37
-	ld hl, Palette_18_7d44 ; $7d3a
+	ld hl, ObjectSceneBPalette ; $7d3a
 	ld de, $0903 ; $7d3d
 	call LoadPaletteShadow ; $7d40
 	ret ; $7d43
-Palette_18_7d44:
+ObjectSceneBPalette:
 	INCLUDE "data/bank_018/palettes_7d44.asm" ; $7d44, 24 bytes (palettes)
 PopulateObjectArrayB:
 	ld c, $00 ; $7d5c
-	ld hl, ObjectSpawnTable_18_7d88 ; $7d5e
+	ld hl, ObjectArrayBSpawnTable ; $7d5e
 	ld de, wScreenScratch ; $7d61
 .spawnLoop:
 	push af ; $7d64
@@ -2125,6 +2125,6 @@ PopulateObjectArrayB:
 	cp $10 ; $7d83
 	jr nz, .spawnLoop ; $7d85
 	ret ; $7d87
-ObjectSpawnTable_18_7d88:
+ObjectArrayBSpawnTable:
 	INCBIN "data/bank_018/d_7d88.bin" ; $7d88, 365 bytes
 	; $7ef5, 267 bytes fill to bank end (linker-padded)

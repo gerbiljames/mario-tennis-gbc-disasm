@@ -32,7 +32,7 @@ WalkSprite_71_00:
 	dw WalkSprite_71_00_Gfx03 ; $402c
 	dw WalkSprite_71_00_Gfx04 ; $402e
 	dw WalkSprite_71_00_Gfx05 ; $4030
-Padding_71_4032:
+Padding_71_00:
 	; $4032, 14 bytes (fill)
 	ds 14, $00
 WalkSprite_71_00_Gfx00:
@@ -80,7 +80,7 @@ WalkSprite_71_01:
 	dw WalkSprite_71_01_Gfx03 ; $46a5
 	dw WalkSprite_71_01_Gfx04 ; $46a7
 	dw WalkSprite_71_01_Gfx05 ; $46a9
-Padding_71_46ab:
+Padding_71_01:
 	; $46ab, 5 bytes (fill)
 	ds 5, $00
 WalkSprite_71_01_Gfx00:
@@ -128,7 +128,7 @@ WalkSprite_71_02:
 	dw WalkSprite_71_02_Gfx03 ; $4d15
 	dw WalkSprite_71_02_Gfx04 ; $4d17
 	dw WalkSprite_71_02_Gfx05 ; $4d19
-Padding_71_4d1b:
+Padding_71_02:
 	; $4d1b, 5 bytes (fill)
 	ds 5, $00
 WalkSprite_71_02_Gfx00:
@@ -176,7 +176,7 @@ WalkSprite_71_03:
 	dw WalkSprite_71_03_Gfx03 ; $5385
 	dw WalkSprite_71_03_Gfx04 ; $5387
 	dw WalkSprite_71_03_Gfx05 ; $5389
-Padding_71_538b:
+Padding_71_03:
 	; $538b, 5 bytes (fill)
 	ds 5, $00
 WalkSprite_71_03_Gfx00:
@@ -224,7 +224,7 @@ WalkSprite_71_04:
 	dw WalkSprite_71_04_Gfx03 ; $59f5
 	dw WalkSprite_71_04_Gfx04 ; $59f7
 	dw WalkSprite_71_04_Gfx05 ; $59f9
-Padding_71_59fb:
+Padding_71_04:
 	; $59fb, 5 bytes (fill)
 	ds 5, $00
 WalkSprite_71_04_Gfx00:
@@ -272,7 +272,7 @@ WalkSprite_71_05:
 	dw WalkSprite_71_05_Gfx06 ; $6065
 	dw WalkSprite_71_05_Gfx07 ; $6067
 	dw WalkSprite_71_05_Gfx08 ; $6069
-Padding_71_606b:
+Padding_71_05:
 	; $606b, 5 bytes (fill)
 	ds 5, $00
 WalkSprite_71_05_Gfx00:
@@ -331,7 +331,7 @@ WalkSprite_71_06:
 	dw WalkSprite_71_06_Gfx06 ; $69e4
 	dw WalkSprite_71_06_Gfx07 ; $69e6
 	dw WalkSprite_71_06_Gfx08 ; $69e8
-Padding_71_69ea:
+Padding_71_06:
 	; $69ea, 6 bytes (fill)
 	ds 6, $00
 WalkSprite_71_06_Gfx00:
@@ -390,7 +390,7 @@ WalkSprite_71_07:
 	dw WalkSprite_71_07_Gfx06 ; $7364
 	dw WalkSprite_71_07_Gfx07 ; $7366
 	dw WalkSprite_71_07_Gfx08 ; $7368
-Padding_71_736a:
+Padding_71_07:
 	; $736a, 6 bytes (fill)
 	ds 6, $00
 WalkSprite_71_07_Gfx00:
@@ -449,7 +449,7 @@ WalkSprite_71_08:
 	dw OamPtrs_71_7d30 ; $7ce4
 	dw OamPtrs_71_7d30 ; $7ce6
 	dw OamPtrs_71_7d30 ; $7ce8
-Padding_71_7cea:
+Padding_71_08:
 	; $7cea, 6 bytes (fill)
 	ds 6, $00
 WalkSprite_71_08_Gfx00:
@@ -470,7 +470,7 @@ WalkSprite_71_09:
 	dw .frames, OamPtrs_71_7de0, .frames ; frame array, OAM array, frame array
 .frames:
 	dw WalkSprite_71_09_Gfx00, WalkSprite_71_09_Gfx01, $0000 ; frame pointers (continue in body)
-Padding_71_7d53:
+Padding_71_09:
 	; $7d53, 13 bytes (fill)
 	ds 13, $00
 WalkSprite_71_09_Gfx00:

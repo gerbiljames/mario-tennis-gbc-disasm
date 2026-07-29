@@ -2393,7 +2393,7 @@
  },
  "0xcb2f": {
   "name": "wTennisDictEntryCount",
-  "note": "[8-bit] Study Vocabulary screen (bank $3f): number of list entries that pass the current category filter. Computed by Func_3f_50f7 ($3f:$5102-$5116) by counting bytes of SelectionMaskGrid_3f_539e that AND with $cb32 (up to the $40 terminator), and used as the wrap modulus for the scroll offset ($3f:$5181, $3f:$5700, $3f:$51ac)."
+  "note": "[8-bit] Study Vocabulary screen (bank $3f): number of list entries that pass the current category filter. Computed by Func_3f_50f7 ($3f:$5102-$5116) by counting bytes of SelectionMaskGrid_3f that AND with $cb32 (up to the $40 terminator), and used as the wrap modulus for the scroll offset ($3f:$5181, $3f:$5700, $3f:$51ac)."
  },
  "0xcb30": {
   "name": "wTennisDictListEnd",
@@ -2402,7 +2402,7 @@
  },
  "0xcb32": {
   "name": "wTennisDictCategoryMask",
-  "note": "[8-bit] Study Vocabulary screen (bank $3f): category filter mask. Set from the screen mode at $3f:$40be - $01/$02/$04/$08/$10 for modes 0-4, $1f (all categories) for mode 5 and any other value. Every list walk ANDs it against the per-entry category byte in SelectionMaskGrid_3f_539e to decide whether an entry is listed ($3f:$5102, $3f:$5295, $3f:$5339, $3f:$5422, $3f:$547c, $3f:$51a5, $3f:$522f, $3f:$5625)."
+  "note": "[8-bit] Study Vocabulary screen (bank $3f): category filter mask. Set from the screen mode at $3f:$40be - $01/$02/$04/$08/$10 for modes 0-4, $1f (all categories) for mode 5 and any other value. Every list walk ANDs it against the per-entry category byte in SelectionMaskGrid_3f to decide whether an entry is listed ($3f:$5102, $3f:$5295, $3f:$5339, $3f:$5422, $3f:$547c, $3f:$51a5, $3f:$522f, $3f:$5625)."
  },
  "0xcb33": {
   "name": "wTennisDictSingleEntry",
@@ -2615,7 +2615,7 @@
  },
  "0xcbf1": {
   "name": "wCourtSceneGfxCursor",
-  "note": "[8-bit] Byte offset into SpriteList_0a_62eb, advanced 4 at a time (one record) and wrapped to 0 when the record reads $ff"
+  "note": "[8-bit] Byte offset into CameraFromPlayerSpriteList, advanced 4 at a time (one record) and wrapped to 0 when the record reads $ff"
  },
  "0xcc00": {
   "name": "wDebugTextBuffer",

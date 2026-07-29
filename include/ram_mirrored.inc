@@ -207,25 +207,25 @@ def wAiTrackingCountdown equ $df59
 ; [8-bit] Set to 1 by CharRallyReadyPhase and cleared alongside wCharShotButton1/2 when a shot is abandoned. AiTrackBallPhase returns without steering while it is 0, so it gates AI movement toward the target on the character actually being in the rally-ready state.
 def wCharRallyReady equ $df5a
 
-; [16-bit LE] Speed limit along the X axis: ClampCharXSpeed multiplies it by the cosine of wCharFacingDesired, mirroring what ClampCharDepthSpeed does with wCharMaxSpeedDepth. From CharStatTable_07_5c4a indexed by attribute byte $0027 alone.
+; [16-bit LE] Speed limit along the X axis: ClampCharXSpeed multiplies it by the cosine of wCharFacingDesired, mirroring what ClampCharDepthSpeed does with wCharMaxSpeedDepth. From CharStatTable_07_0 indexed by attribute byte $0027 alone.
 def wCharMaxSpeedX equ $df60
 
-; [16-bit LE] Speed limit along the depth axis: ClampCharDepthSpeed multiplies it by the sine of wCharFacingDesired so the clamp follows the run direction. LoadCharacterAttributes indexes CharStatTable_07_5c4a with attribute bytes $0027 + $002b summed and doubled, clamped to the table's ten entries -- the same table wCharMaxSpeedX reads, but that one uses $0027 alone, so this axis gets whatever bonus $002b carries.
+; [16-bit LE] Speed limit along the depth axis: ClampCharDepthSpeed multiplies it by the sine of wCharFacingDesired so the clamp follows the run direction. LoadCharacterAttributes indexes CharStatTable_07_0 with attribute bytes $0027 + $002b summed and doubled, clamped to the table's ten entries -- the same table wCharMaxSpeedX reads, but that one uses $0027 alone, so this axis gets whatever bonus $002b carries.
 def wCharMaxSpeedDepth equ $df62
 
-; [16-bit LE] How hard this character accelerates, from CharStatTable_07_5c5e via attribute-struct offset $0028. AccelerateCharDepth and AccelerateCharX multiply it by the sine/cosine of wCharFacingDesired and add the result to wCharVelDepth / wCharVelX, so one value drives both axes.
+; [16-bit LE] How hard this character accelerates, from CharStatTable_07_1 via attribute-struct offset $0028. AccelerateCharDepth and AccelerateCharX multiply it by the sine/cosine of wCharFacingDesired and add the result to wCharVelDepth / wCharVelX, so one value drives both axes.
 def wCharAcceleration equ $df64
 
-; [16-bit LE] How hard this character slows when not accelerating, from CharStatTable_07_5c72 via attribute-struct offset $002a. The two brake routines negate it against bit 7 of the current velocity so it always opposes motion; one of them substitutes a flat $0040 when bit 1 of wCharFlags is clear.
+; [16-bit LE] How hard this character slows when not accelerating, from CharStatTable_07_2 via attribute-struct offset $002a. The two brake routines negate it against bit 7 of the current velocity so it always opposes motion; one of them substitutes a flat $0040 when bit 1 of wCharFlags is clear.
 def wCharDeceleration equ $df66
 
 ; [8-bit] Per-character banked struct (WRAM4-7): max facing change per frame, easing wCharFacingShown toward wCharFacingDesired
 def wCharFacingEaseRate equ $df68
 
-; [8-bit] Scales how far this character's aim is pushed off centre: ComputeAimBaseOffset feeds it to MulHLByAFrac as the fraction applied to the base offset. From CharStatTable_07_5c90 via attribute-struct offset $0025.
+; [8-bit] Scales how far this character's aim is pushed off centre: ComputeAimBaseOffset feeds it to MulHLByAFrac as the fraction applied to the base offset. From CharStatTable_07_4 via attribute-struct offset $0025.
 def wCharAimOffsetScale equ $df69
 
-; [8-bit] Magnitude of the random component of this character's aim: GetRandomAimJitter multiplies a fresh AdvanceMatchRng byte by it (MulHLByA). Higher means a less accurate shot. From CharStatTable_07_5c9a via attribute-struct offset $0026.
+; [8-bit] Magnitude of the random component of this character's aim: GetRandomAimJitter multiplies a fresh AdvanceMatchRng byte by it (MulHLByA). Higher means a less accurate shot. From CharStatTable_07_5 via attribute-struct offset $0026.
 def wCharAimJitterScale equ $df6a
 
 ; [8-bit] Per-character banked struct (WRAM4-7): speed-row index (e) into the ShotPlacementData tables for ground strokes (topspin/slice/power variants/neutral); selects bytes 4-5 -> shot speed in LoadShotPlacementEntry

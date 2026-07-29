@@ -1040,7 +1040,7 @@ CycleDiagramTargetPalette:
 	pop af ; $46bc
 	wram_bank ; $46bd
 	ret ; $46c1
-Unused_17_46c2:
+Unused_17:
 	; $46c2, 8 bytes (bytes:8)
 	db $00, $00, $f9, $67, $98, $00, $1f, $03 ; 0x00
 DiagramTargetPaletteRamp_17:
@@ -1587,7 +1587,7 @@ CourtDiagramGraphicsList:
 	db $4e, $55, $20, $87 ; 0x4c
 	db $00, $00 ; 0x50
 LoadCourtDiagramObjPalettes:
-	ld hl, Palette_17_5567 ; $4b0d
+	ld hl, CourtDiagramObjPalettes ; $4b0d
 	ld de, $0803 ; $4b10
 	call LoadPaletteShadow ; $4b13
 	ret ; $4b16
@@ -1641,7 +1641,7 @@ CourtDiagramGfx18:
 	INCBIN "data/bank_017/d_5536.bin" ; $5536, 24 bytes
 CourtDiagramGfx19:
 	INCBIN "data/bank_017/d_554e.bin" ; $554e, 25 bytes
-Palette_17_5567:
+CourtDiagramObjPalettes:
 	INCLUDE "data/bank_017/palettes_5567.asm" ; $5567, 24 bytes (palettes)
 DrillBriefing_ServeToTargets:
 	ld a, $03 ; $557f
@@ -4767,7 +4767,7 @@ LoadRulesScreen:
 	wram_bank ; $7179
 	farcall PrepareGlyphBuffer ; $717d
 	call ClearRulesScreenTextArea ; $7180
-	ld hl, Palette_17_7b39 ; $7183
+	ld hl, RulesScreenPalette ; $7183
 	ld de, $0902 ; $7186
 	call LoadPalettesImmediate ; $7189
 	ld de, $8000 + VRAM_BANK1 ; $718c
@@ -5215,6 +5215,6 @@ RulesBorderAnimTiles4:
 	INCBIN "data/bank_017/d_7af8.bin" ; $7af8, 32 bytes
 RulesBorderAnimTiles5:
 	INCBIN "data/bank_017/d_7b18.bin" ; $7b18, 33 bytes
-Palette_17_7b39:
+RulesScreenPalette:
 	INCLUDE "data/bank_017/palettes_7b39.asm" ; $7b39, 64 bytes (palettes)
 	; $7b79, 1159 bytes fill to bank end (linker-padded)

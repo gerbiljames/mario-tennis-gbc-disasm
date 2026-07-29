@@ -26,7 +26,7 @@ WalkSprite_76_00:
 	dw WalkSprite_76_00_Gfx03 ; $4026
 	dw WalkSprite_76_00_Gfx04 ; $4028
 	dw WalkSprite_76_00_Gfx05 ; $402a
-Padding_76_402c:
+Padding_76_0:
 	; $402c, 4 bytes (fill)
 	ds 4, $00
 WalkSprite_76_00_Gfx00:
@@ -74,7 +74,7 @@ WalkSprite_76_01:
 	dw WalkSprite_76_01_Gfx03 ; $4695
 	dw WalkSprite_76_01_Gfx04 ; $4697
 	dw WalkSprite_76_01_Gfx05 ; $4699
-Padding_76_469b:
+Padding_76_1:
 	; $469b, 5 bytes (fill)
 	ds 5, $00
 WalkSprite_76_01_Gfx00:
@@ -122,7 +122,7 @@ WalkSprite_76_02:
 	dw WalkSprite_76_02_Gfx07 ; $4d05
 	dw WalkSprite_76_02_Gfx08 ; $4d07
 	dw WalkSprite_76_02_Gfx09 ; $4d09
-Padding_76_4d0b:
+Padding_76_2:
 	; $4d0b, 5 bytes (fill)
 	ds 5, $00
 WalkSprite_76_02_Gfx00:
@@ -185,7 +185,7 @@ WalkSprite_76_03:
 	dw WalkSprite_76_03_Gfx03 ; $578c
 	dw WalkSprite_76_03_Gfx04 ; $578e
 	dw WalkSprite_76_03_Gfx05 ; $5790
-Padding_76_5792:
+Padding_76_3:
 	; $5792, 14 bytes (fill)
 	ds 14, $00
 WalkSprite_76_03_Gfx00:
@@ -233,7 +233,7 @@ WalkSprite_76_04:
 	dw WalkSprite_76_04_Gfx07 ; $5e05
 	dw WalkSprite_76_04_Gfx08 ; $5e07
 	dw WalkSprite_76_04_Gfx09 ; $5e09
-Padding_76_5e0b:
+Padding_76_4:
 	; $5e0b, 5 bytes (fill)
 	ds 5, $00
 WalkSprite_76_04_Gfx00:
@@ -293,7 +293,7 @@ WalkSprite_76_05:
 	dw WalkSprite_76_05_Gfx07 ; $6882
 	dw WalkSprite_76_05_Gfx08 ; $6884
 	dw WalkSprite_76_05_Gfx09 ; $6886
-Padding_76_6888:
+Padding_76_5:
 	; $6888, 8 bytes (fill)
 	ds 8, $00
 WalkSprite_76_05_Gfx00:
@@ -353,7 +353,7 @@ WalkSprite_76_06:
 	dw WalkSprite_76_06_Gfx03 ; $7302
 	dw WalkSprite_76_06_Gfx04 ; $7304
 	dw WalkSprite_76_06_Gfx05 ; $7306
-Padding_76_7308:
+Padding_76_6:
 	; $7308, 8 bytes (fill)
 	ds 8, $00
 WalkSprite_76_06_Gfx00:

@@ -128,7 +128,7 @@ Unused_01_MenuRedraw:
 	ld a, $01 ; $412b
 	ldh [hDebugStepMode], a ; $412d
 .loop2:
-	farcall StubNop_3b_44a9 ; $412f
+	farcall StubNop_3b ; $412f
 	farcall RunMatch ; $4132
 	jp .loop2 ; $4135
 .bit1Clear:
@@ -190,7 +190,7 @@ Unused_01_MatchSetup:
 	farcall RunDebugCharViewer ; $41bf
 .bit6Clear:
 	bit 7, a ; $41c2
-	jr z, Unused_01_41d6.positive ; $41c4
+	jr z, Unused_01.positive ; $41c4
 	ld a, $01 ; $41c6
 	ldh [hDebugStepMode], a ; $41c8
 	ld a, $00 ; $41ca
@@ -199,7 +199,7 @@ Unused_01_MatchSetup:
 	farcall RunIntroCutscene ; $41ce
 	farcall RunTitleScreen ; $41d1
 	jr .loop ; $41d4
-Unused_01_41d6:
+Unused_01:
 	jp RunDebugTestMenu.loop ; $41d6
 	db $18 ; $41d9
 	db $ef ; $41da
@@ -557,7 +557,7 @@ RunSoundTest:
 	pop de ; $6b2c
 	ldh a, [hInputPressed] ; $6b2d
 	bit PADB_A, a ; $6b2f
-	jr z, .label_01_6a8a ; $6b31
+	jr z, .continueLoop ; $6b31
 	bit 0, b ; $6b33
 	jr nz, .bit0Set ; $6b35
 	push af ; $6b37
@@ -576,7 +576,7 @@ RunSoundTest:
 	pop de ; $6b48
 	pop bc ; $6b49
 	pop af ; $6b4a
-	jr .label_01_6a8a ; $6b4b
+	jr .continueLoop ; $6b4b
 .bit0Set:
 	push af ; $6b4d
 	push bc ; $6b4e
@@ -594,7 +594,7 @@ RunSoundTest:
 	pop de ; $6b5e
 	pop bc ; $6b5f
 	pop af ; $6b60
-.label_01_6a8a:
+.continueLoop:
 	jp .loop ; $6b61
 SoundTestStrings_01:
 	INCLUDE "data/bank_001/sound_data_6b64.asm" ; $6b64, 6 bytes (sound_data)

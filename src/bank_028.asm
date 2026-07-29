@@ -9,7 +9,7 @@ SECTION "ROM Bank $28", ROMX[$4000], BANK[$28]
 	farptr QueueMatchSpriteFrameA ; $400c
 	farptr LoadEffectFrameTiles_28 ; $400e
 	farptr QueueMatchSpriteFrameB ; $4010
-Padding_28_4012:
+Padding_28_0:
 	; $4012, 14 bytes (fill)
 	ds 14, $00
 MatchGraphicsGfx:
@@ -390,7 +390,7 @@ LoadMatchStoryGfx:
 .restore5:
 	pop af ; $616f
 	ret ; $6170
-Padding_28_6171:
+Padding_28_1:
 	; $6171, 15 bytes (fill)
 	ds 15, $00
 MatchGfxTilesB_28:

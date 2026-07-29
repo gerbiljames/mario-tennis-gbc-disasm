@@ -478,20 +478,20 @@ LoadFixedTileBlockAndPalette:
 	pop de ; $44e6
 	ld c, $04 ; $44e7
 	call QueueVRAMCopy ; $44e9
-	ld hl, Palette_39_4516 ; $44ec
+	ld hl, FixedTileBlockPalette ; $44ec
 	ld de, $0801 ; $44ef
 	call LoadPaletteShadow ; $44f2
 	ret ; $44f5
 FixedTileBlockAndPalette:
 	INCBIN "data/bank_039/d_44f6.bin" ; $44f6, 32 bytes
-Palette_39_4516:
+FixedTileBlockPalette:
 	INCLUDE "data/bank_039/palettes_4516.asm" ; $4516, 8 bytes (palettes)
 LoadFixedBgPalette0:
 	ld de, $0001 ; $451e
-	ld hl, Palette_39_4528 ; $4521
+	ld hl, FixedBgPalette0Palette ; $4521
 	call LoadPaletteShadow ; $4524
 	ret ; $4527
-Palette_39_4528:
+FixedBgPalette0Palette:
 	INCLUDE "data/bank_039/palettes_4528.asm" ; $4528, 8 bytes (palettes)
 CopyTilemapRect:
 	push af ; $4530
@@ -3238,7 +3238,7 @@ InitNumberSpriteGfx:
 	ld c, $14 ; $6ee9
 	farcall LoadCompressedTileBlock ; $6eeb
 	pop bc ; $6eee
-	ld hl, Palette_39_6f08 ; $6eef
+	ld hl, NumberSpritePalette ; $6eef
 	ld d, b ; $6ef2
 	ld e, $01 ; $6ef3
 	call LoadPaletteShadow ; $6ef5
@@ -3252,7 +3252,7 @@ InitNumberSpriteGfxWide:
 	ld c, $0c ; $6f02
 	farcall LoadIndexedPalette ; $6f04
 	ret ; $6f07
-Palette_39_6f08:
+NumberSpritePalette:
 	INCLUDE "data/bank_039/palettes_6f08.asm" ; $6f08, 8 bytes (palettes)
 DrawDecimalNumberSprites_39:
 	push af ; $6f10

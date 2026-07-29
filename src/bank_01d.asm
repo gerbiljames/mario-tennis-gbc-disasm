@@ -1438,7 +1438,7 @@ DrawCharDataPageArrowsTask:
 	ld b, $0e ; $4c48
 	ld c, $14 ; $4c4a
 	call QueueSpriteTemplate ; $4c4c
-	ld de, SpriteTemplate_1d_6810 ; $4c4f
+	ld de, CharDataPageArrowsTaskSpriteTemplate ; $4c4f
 	call BobArrowSpriteRight ; $4c52
 	ld hl, SpriteTemplate_1d_670c ; $4c55
 	ld b, $0e ; $4c58
@@ -3480,7 +3480,7 @@ SpriteTemplate_1d_679a:
 	oam_sprite_end
 CharDataScreenPageGraphicsGfx2:
 	INCBIN "data/bank_01d/d_67ab.bin" ; $67ab, 101 bytes
-SpriteTemplate_1d_6810:
+CharDataPageArrowsTaskSpriteTemplate:
 	; $6810, 11 bytes (sprite_template)
 	oam_sprite $7f, $90, $c0, $20
 	oam_sprite_end
@@ -3809,9 +3809,9 @@ DrawExpPoolGauge:
 	ld b, a ; $6b23
 	ld a, $08 ; $6b24
 	rlca ; $6b26
-	add LOW(TilePairTable_1d_6b69) ; $6b27
+	add LOW(ExpPoolGaugeTilePairTable) ; $6b27
 	ld l, a ; $6b29
-	adc HIGH(TilePairTable_1d_6b69) ; $6b2a
+	adc HIGH(ExpPoolGaugeTilePairTable) ; $6b2a
 	sub l ; $6b2c
 	ld h, a ; $6b2d
 	ld a, [hl+] ; $6b2e
@@ -3827,9 +3827,9 @@ DrawExpPoolGauge:
 .carry:
 	add $08 ; $6b3b
 	rlca ; $6b3d
-	add LOW(TilePairTable_1d_6b69) ; $6b3e
+	add LOW(ExpPoolGaugeTilePairTable) ; $6b3e
 	ld l, a ; $6b40
-	adc HIGH(TilePairTable_1d_6b69) ; $6b41
+	adc HIGH(ExpPoolGaugeTilePairTable) ; $6b41
 	sub l ; $6b43
 	ld h, a ; $6b44
 	ld a, [hl+] ; $6b45
@@ -3842,7 +3842,7 @@ DrawExpPoolGauge:
 	ret z ; $6b4c
 	call ExpGaugePtrUpOneRow ; $6b4d
 .loopB:
-	ld hl, TilePairTable_1d_6b69 ; $6b50
+	ld hl, ExpPoolGaugeTilePairTable ; $6b50
 	ld a, [hl+] ; $6b53
 	ld [de], a ; $6b54
 	inc de ; $6b55
@@ -3862,7 +3862,7 @@ ExpGaugePtrUpOneRow:
 	jr nz, .loop ; $6b65
 	pop bc ; $6b67
 	ret ; $6b68
-TilePairTable_1d_6b69:
+ExpPoolGaugeTilePairTable:
 	; $6b69, 18 bytes (bytes:2)
 	db $11, $32 ; 0x00
 	db $07, $08 ; 0x02

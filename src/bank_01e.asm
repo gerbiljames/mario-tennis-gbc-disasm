@@ -106,10 +106,10 @@ BuildResultsScreenTilemap:
 	farcall UploadGlyphBuffer ; $4101
 	ret ; $4104
 LoadResultsScreenGraphics:
-	ld hl, Palettes_1e_4c40 ; $4105
+	ld hl, ResultsScreenPalettes ; $4105
 	ld de, $0006 ; $4108
 	call LoadPaletteShadow ; $410b
-	ld hl, Palettes_1e_4c40 ; $410e
+	ld hl, ResultsScreenPalettes ; $410e
 	ld de, $0801 ; $4111
 	call LoadPaletteShadow ; $4114
 	wram_bank $01 ; $4117
@@ -1417,7 +1417,7 @@ ClearContinuePromptRows:
 	ld c, $12 ; $4c3a
 	call FillMemoryC ; $4c3c
 	ret ; $4c3f
-Palettes_1e_4c40:
+ResultsScreenPalettes:
 	INCLUDE "data/bank_01e/palettes_4c40.asm" ; $4c40, 48 bytes (palettes)
 ResultsScreenGfx_1e:
 	INCBIN "data/bank_01e/d_4c70.bin" ; $4c70, 1455 bytes
@@ -1531,7 +1531,7 @@ BuildExpAwardScreenTilemap:
 	call QueueVRAMCopy ; $551a
 	ret ; $551d
 LoadExpAwardScreenGraphics:
-	ld hl, Palettes_1e_5be1 ; $551e
+	ld hl, ExpAwardScreenPalettes0 ; $551e
 	ld de, $0003 ; $5521
 	call LoadPaletteShadow ; $5524
 	wram_bank $01 ; $5527
@@ -1568,7 +1568,7 @@ LoadExpAwardScreenGraphics:
 	ld de, $9000 ; $558e
 	ld c, $10 ; $5591
 	call QueueVRAMCopy ; $5593
-	ld hl, Palettes_1e_6495 ; $5596
+	ld hl, ExpAwardScreenPalettes1 ; $5596
 	ld de, $0801 ; $5599
 	call LoadPaletteShadow ; $559c
 	wram_bank $01 ; $559f
@@ -2310,7 +2310,7 @@ HasPendingExpAwards:
 .returnOne:
 	ld a, $01 ; $5bde
 	ret ; $5be0
-Palettes_1e_5be1:
+ExpAwardScreenPalettes0:
 	INCLUDE "data/bank_01e/palettes_5be1.asm" ; $5be1, 24 bytes (palettes)
 ExpAwardScreenGfx_1e:
 	INCBIN "data/bank_01e/d_5bf9.bin" ; $5bf9, 1745 bytes
@@ -2318,7 +2318,7 @@ ExpAwardScreenTilemap_1e:
 	INCBIN "data/bank_01e/d_62ca.bin" ; $62ca, 389 bytes
 ExpAwardScreenAttrmap_1e:
 	INCBIN "data/bank_01e/d_644f.bin" ; $644f, 70 bytes
-Palettes_1e_6495:
+ExpAwardScreenPalettes1:
 	INCLUDE "data/bank_01e/palettes_6495.asm" ; $6495, 8 bytes (palettes)
 ExpDigitSpriteGfx_1e:
 	INCBIN "data/bank_01e/d_649d.bin" ; $649d, 150 bytes
@@ -4729,7 +4729,7 @@ LoadGameProgressScreenTiles:
 	ld de, $9800 + VRAM_BANK1 ; $755b
 	ld c, $06 ; $755e
 	call QueueVRAMCopy ; $7560
-	ld hl, Palettes_1e_7700 ; $7563
+	ld hl, GameProgressScreenPalettes0 ; $7563
 	ld d, $00 ; $7566
 	ld e, $02 ; $7568
 	call LoadPaletteShadow ; $756a
@@ -4737,7 +4737,7 @@ LoadGameProgressScreenTiles:
 	wram_bank ; $756e
 	ld hl, GameProgressScreenTiles0 ; $7572
 	ld de, $8000 + VRAM_BANK1 ; $7575
-	ld c, (Palettes_1e_7810 - GameProgressScreenTiles0) / 16 ; $7578
+	ld c, (GameProgressScreenPalettes1 - GameProgressScreenTiles0) / 16 ; $7578
 	call QueueVRAMCopy ; $757a
 	ld hl, GameProgressScreenTiles2 ; $757d
 	ld de, $8100 + VRAM_BANK1 ; $7580
@@ -4747,10 +4747,10 @@ LoadGameProgressScreenTiles:
 	ld de, $8200 + VRAM_BANK1 ; $758b
 	ld c, (GameProgressScreenTiles2 - GameProgressScreenTiles1) / 16 ; $758e
 	call QueueVRAMCopy ; $7590
-	ld hl, Palettes_1e_7810 ; $7593
+	ld hl, GameProgressScreenPalettes1 ; $7593
 	ld de, $0a01 ; $7596
 	call LoadPaletteShadow ; $7599
-	ld hl, Palettes_1e_79e0 ; $759c
+	ld hl, GameProgressScreenPalettes2 ; $759c
 	ld de, $0901 ; $759f
 	call LoadPaletteShadow ; $75a2
 	ret ; $75a5
@@ -4760,17 +4760,17 @@ GameProgressHeaderTilemap_1e:
 	INCBIN "data/bank_01e/d_7692.bin" ; $7692, 80 bytes
 GameProgressHeaderAttrmap_1e:
 	INCBIN "data/bank_01e/d_76e2.bin" ; $76e2, 30 bytes
-Palettes_1e_7700:
+GameProgressScreenPalettes0:
 	INCLUDE "data/bank_01e/palettes_7700.asm" ; $7700, 16 bytes (palettes)
 GameProgressScreenTiles0:
 	INCLUDE "data/bank_01e/palettes_7710.asm" ; $7710, 256 bytes (palettes)
-Palettes_1e_7810:
+GameProgressScreenPalettes1:
 	INCLUDE "data/bank_01e/palettes_7810.asm" ; $7810, 16 bytes (palettes)
 GameProgressScreenTiles1:
 	INCLUDE "data/bank_01e/palettes_7820.asm" ; $7820, 320 bytes (palettes)
 GameProgressScreenTiles2:
 	INCLUDE "data/bank_01e/palettes_7960.asm" ; $7960, 128 bytes (palettes)
-Palettes_1e_79e0:
+GameProgressScreenPalettes2:
 	INCLUDE "data/bank_01e/palettes_79e0.asm" ; $79e0, 8 bytes (palettes)
 FillProgressListRowTiles:
 	ld hl, wShadowTilemapPtr ; $79e8

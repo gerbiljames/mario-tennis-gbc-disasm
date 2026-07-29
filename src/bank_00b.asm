@@ -183,7 +183,7 @@ CheckTwoPointLead:
 .tied:
 	xor a ; $4119
 	ret ; $411a
-Unused_0b_411b:
+Unused_0b_0:
 	; $411b, 7 bytes (bytes:7)
 	db $df, $2a, $08, $fa, $b1, $c4, $c9 ; 0x00
 	ld hl, wBallDepth ; $4122
@@ -343,7 +343,7 @@ RecordDrillTargetZoneHit:
 	or [hl] ; $4204
 	ld [hl], a ; $4205
 	ret ; $4206
-Table_0b_4207:
+Table_0b_0:
 	; $4207, 4 bytes (bytes:4)
 	db $03, $02, $00, $01 ; 0x00
 CountDrillResultBitsSet:
@@ -492,7 +492,7 @@ StrokePracticePointTable:
 	db $01, $00, $09, $09 ; 0x1c
 	; $4341, 1 bytes (fill)
 	ds 1, $ff
-TargetPositions_0b_4342:
+TargetPositions_0b_0:
 	; $4342, 64 bytes (records:4)
 ; 16 records x 4 bytes
 	dw $fe40, $fd40 ; record 0
@@ -513,7 +513,7 @@ TargetPositions_0b_4342:
 	dw $01c0, $0000 ; record 15
 	; $4382, 2 bytes (fill)
 	ds 2, $ff
-TargetPositions_0b_4384:
+TargetPositions_0b_1:
 	; $4384, 32 bytes (records:4)
 ; 8 records x 4 bytes
 	dw $fe40, $fd40 ; record 0
@@ -951,7 +951,7 @@ DrillMessageTextIds_0b:
 	dw $2c22 ; record 106
 	dw $2c23 ; record 107
 	dw $2c24 ; record 108
-Unused_0b_469e:
+Unused_0b_1:
 	; $469e, 2 bytes (bytes:2)
 	db $00, $02 ; 0x00
 QueueDrillMarker1_0b:
@@ -998,10 +998,10 @@ DrillSpriteTemplate_0b:
 	oam_sprite $f1, $04, $00, $00
 	oam_sprite $01, $04, $02, $00
 	oam_sprite_end
-SignedTable_0b_46f1:
+SignedTable_0b_00:
 	; $46f1, 10 bytes (bytes:10)
 	db $00, $00, $ff, $00, $ff, $ff, $01, $ff, $ff, $01 ; 0x00
-SignedTable_0b_46fb:
+SignedTable_0b_01:
 	; $46fb, 10 bytes (bytes:10)
 	db $00, $00, $01, $00, $01, $01, $ff, $01, $01, $ff ; 0x00
 RunTrainingDrillByID:
@@ -1307,7 +1307,7 @@ ServiceMatch1JudgePoint:
 	dw ServiceMatch1Cases1.returnZero2 ; $493b jumptable
 .result0:
 	ld a, [wPointOutcome] ; $493d
-	ld hl, SignedTable_0b_495c ; $4940
+	ld hl, ServiceMatch1JudgePointSignedTable ; $4940
 	add l ; $4943
 	ld l, a ; $4944
 	jr nc, .readEntry1 ; $4945
@@ -1318,7 +1318,7 @@ ServiceMatch1JudgePoint:
 	ld b, $06 ; $494a
 	call QueueDrillResultMessage ; $494c
 	ld a, [wPointOutcome] ; $494f
-	ld hl, SignedTable_0b_46f1 ; $4952
+	ld hl, SignedTable_0b_00 ; $4952
 	add l ; $4955
 	ld l, a ; $4956
 	jr nc, .readEntry2 ; $4957
@@ -1326,7 +1326,7 @@ ServiceMatch1JudgePoint:
 .readEntry2:
 	ld a, [hl] ; $495a
 	ret ; $495b
-SignedTable_0b_495c:
+ServiceMatch1JudgePointSignedTable:
 	; $495c, 10 bytes (bytes:10)
 	db $ff, $ff, $02, $ff, $ff, $02, $01, $ff, $ff, $01 ; 0x00
 ServiceMatch1Cases1:
@@ -1348,7 +1348,7 @@ ServiceMatch1Cases1:
 	dw ServiceMatch1Cases2.storeMatchAbortFlag2 ; $4975 jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $4977
-	ld hl, SignedTable_0b_4996 ; $497a
+	ld hl, ServiceMatch1Cases1SignedTable ; $497a
 	add l ; $497d
 	ld l, a ; $497e
 	jr nc, .read ; $497f
@@ -1359,7 +1359,7 @@ ServiceMatch1Cases1:
 	ld b, $06 ; $4984
 	call QueueDrillResultMessage ; $4986
 	ld a, [wPointOutcome] ; $4989
-	ld hl, SignedTable_0b_46fb ; $498c
+	ld hl, SignedTable_0b_01 ; $498c
 	add l ; $498f
 	ld l, a ; $4990
 	jr nc, .readB ; $4991
@@ -1367,7 +1367,7 @@ ServiceMatch1Cases1:
 .readB:
 	ld a, [hl] ; $4994
 	ret ; $4995
-SignedTable_0b_4996:
+ServiceMatch1Cases1SignedTable:
 	; $4996, 10 bytes (bytes:10)
 	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $06, $06, $ff ; 0x00
 ServiceMatch1Cases2:
@@ -1426,11 +1426,11 @@ ServiceMatch2Hook_PointStart:
 	ld [wDrillAbortCountdown], a ; $49fb
 	ld a, $01 ; $49fe
 	ld [wDrillGateActive], a ; $4a00
-	ld hl, DrillPositions_0b_4a6a ; $4a03
+	ld hl, ServiceMatch2PointStartDrillPositions ; $4a03
 	call IndexDrillTableByPoint ; $4a06
 	ld a, [wTotalPointsScoredInCurrentGame] ; $4a09
 	srl a ; $4a0c
-	ld hl, Table_0b_4a23 ; $4a0e
+	ld hl, ServiceMatch2PointStartTable ; $4a0e
 	add l ; $4a11
 	ld l, a ; $4a12
 	jr nc, .read ; $4a13
@@ -1443,7 +1443,7 @@ ServiceMatch2Hook_PointStart:
 	xor a ; $4a1e
 	ld [wDrillPointJudgement], a ; $4a1f
 	ret ; $4a22
-Table_0b_4a23:
+ServiceMatch2PointStartTable:
 	; $4a23, 4 bytes (bytes:4)
 	db $20, $10, $10, $20 ; 0x00
 ServiceMatch2Hook_PointEnd:
@@ -1488,7 +1488,7 @@ ServiceMatch2Hook_Bounce:
 ServiceMatch2Hook_BallHit:
 	call ServiceMatch2JudgeOnBallHit ; $4a66
 	ret ; $4a69
-DrillPositions_0b_4a6a:
+ServiceMatch2PointStartDrillPositions:
 	; $4a6a, 66 bytes (records:4)
 ; 16 records x 4 bytes
 	dw $0000, $0000 ; record 0
@@ -1618,7 +1618,7 @@ ServiceMatch2JudgePoint:
 	dw ServiceMatch2Cases1.checkBallHasBouncedFlag ; $4b6c jumptable
 .result0:
 	ld a, [wPointOutcome] ; $4b6e
-	ld hl, DrillShotTable_0b_4b8d ; $4b71
+	ld hl, ServiceMatch2JudgePointDrillShotTable ; $4b71
 	add l ; $4b74
 	ld l, a ; $4b75
 	jr nc, .readEntry1 ; $4b76
@@ -1629,7 +1629,7 @@ ServiceMatch2JudgePoint:
 	ld b, $06 ; $4b7b
 	call QueueDrillResultMessage ; $4b7d
 	ld a, [wPointOutcome] ; $4b80
-	ld hl, SignedTable_0b_46f1 ; $4b83
+	ld hl, SignedTable_0b_00 ; $4b83
 	add l ; $4b86
 	ld l, a ; $4b87
 	jr nc, .readEntry2 ; $4b88
@@ -1637,7 +1637,7 @@ ServiceMatch2JudgePoint:
 .readEntry2:
 	ld a, [hl] ; $4b8b
 	ret ; $4b8c
-DrillShotTable_0b_4b8d:
+ServiceMatch2JudgePointDrillShotTable:
 	; $4b8d, 10 bytes (bytes:10)
 	db $ff, $ff, $02, $ff, $ff, $02, $01, $ff, $ff, $01 ; 0x00
 ServiceMatch2Cases1:
@@ -1672,7 +1672,7 @@ ServiceMatch2Cases1:
 	dw ServiceMatch2Cases2.storeMatchAbortFlag2 ; $4bc1 jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $4bc3
-	ld hl, DrillShotTable_0b_4be2 ; $4bc6
+	ld hl, ServiceMatch2Cases1DrillShotTable ; $4bc6
 	add l ; $4bc9
 	ld l, a ; $4bca
 	jr nc, .read ; $4bcb
@@ -1683,7 +1683,7 @@ ServiceMatch2Cases1:
 	ld b, $06 ; $4bd0
 	call QueueDrillResultMessage ; $4bd2
 	ld a, [wPointOutcome] ; $4bd5
-	ld hl, SignedTable_0b_46fb ; $4bd8
+	ld hl, SignedTable_0b_01 ; $4bd8
 	add l ; $4bdb
 	ld l, a ; $4bdc
 	jr nc, .readB ; $4bdd
@@ -1691,7 +1691,7 @@ ServiceMatch2Cases1:
 .readB:
 	ld a, [hl] ; $4be0
 	ret ; $4be1
-DrillShotTable_0b_4be2:
+ServiceMatch2Cases1DrillShotTable:
 	; $4be2, 10 bytes (bytes:10)
 	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $06, $06, $ff ; 0x00
 ServiceMatch2Cases2:
@@ -1900,7 +1900,7 @@ ServiceMatch3JudgePoint:
 	dw ServiceMatch3Cases1.returnZero2 ; $4d56 jumptable
 .result0:
 	ld a, [wPointOutcome] ; $4d58
-	ld hl, DrillShotTable_0b_4d77 ; $4d5b
+	ld hl, ServiceMatch3JudgePointDrillShotTable ; $4d5b
 	add l ; $4d5e
 	ld l, a ; $4d5f
 	jr nc, .readEntry1 ; $4d60
@@ -1911,7 +1911,7 @@ ServiceMatch3JudgePoint:
 	ld b, $06 ; $4d65
 	call QueueDrillResultMessage ; $4d67
 	ld a, [wPointOutcome] ; $4d6a
-	ld hl, SignedTable_0b_46f1 ; $4d6d
+	ld hl, SignedTable_0b_00 ; $4d6d
 	add l ; $4d70
 	ld l, a ; $4d71
 	jr nc, .readEntry2 ; $4d72
@@ -1919,7 +1919,7 @@ ServiceMatch3JudgePoint:
 .readEntry2:
 	ld a, [hl] ; $4d75
 	ret ; $4d76
-DrillShotTable_0b_4d77:
+ServiceMatch3JudgePointDrillShotTable:
 	; $4d77, 10 bytes (bytes:10)
 	db $ff, $ff, $02, $ff, $ff, $02, $01, $ff, $ff, $01 ; 0x00
 ServiceMatch3Cases1:
@@ -1941,7 +1941,7 @@ ServiceMatch3Cases1:
 	dw ServiceMatch3Cases2.storeMatchAbortFlag2 ; $4d90 jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $4d92
-	ld hl, DrillShotTable_0b_4db1 ; $4d95
+	ld hl, ServiceMatch3Cases1DrillShotTable ; $4d95
 	add l ; $4d98
 	ld l, a ; $4d99
 	jr nc, .read ; $4d9a
@@ -1952,7 +1952,7 @@ ServiceMatch3Cases1:
 	ld b, $06 ; $4d9f
 	call QueueDrillResultMessage ; $4da1
 	ld a, [wPointOutcome] ; $4da4
-	ld hl, SignedTable_0b_46fb ; $4da7
+	ld hl, SignedTable_0b_01 ; $4da7
 	add l ; $4daa
 	ld l, a ; $4dab
 	jr nc, .readB ; $4dac
@@ -1960,7 +1960,7 @@ ServiceMatch3Cases1:
 .readB:
 	ld a, [hl] ; $4daf
 	ret ; $4db0
-DrillShotTable_0b_4db1:
+ServiceMatch3Cases1DrillShotTable:
 	; $4db1, 10 bytes (bytes:10)
 	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $06, $06, $ff ; 0x00
 ServiceMatch3Cases2:
@@ -2020,7 +2020,7 @@ ServicePractice1Hook_PointStart:
 	ld [wDrillMessageId], a ; $4e16
 	ld a, $01 ; $4e19
 	ld [wTargetZoneEnabled], a ; $4e1b
-	ld hl, DrillPositions_0b_4ea0 ; $4e1e
+	ld hl, ServicePractice1PointStartDrillPositions ; $4e1e
 	call SetDrillTargetZoneForPoint ; $4e21
 	ret ; $4e24
 ServicePractice1Hook_PointEnd:
@@ -2095,7 +2095,7 @@ ServicePractice1Hook_BallHit:
 	sound $5f ; $4e9d
 .done:
 	ret ; $4e9f
-DrillPositions_0b_4ea0:
+ServicePractice1PointStartDrillPositions:
 	; $4ea0, 34 bytes (records:4)
 ; 8 records x 4 bytes
 	dw $fe50, $fd60 ; record 0
@@ -2219,7 +2219,7 @@ ServicePractice2Hook_PointStart:
 	ld [wDrillAbortCountdown], a ; $4fa2
 	ld a, $01 ; $4fa5
 	ld [wTargetZoneEnabled], a ; $4fa7
-	ld hl, DrillPositions_0b_5060 ; $4faa
+	ld hl, ServicePractice2PointStartDrillPositions ; $4faa
 	call SetDrillTargetZoneForPoint ; $4fad
 	xor a ; $4fb0
 	ld [wDrillMessageId], a ; $4fb1
@@ -2321,7 +2321,7 @@ ServicePractice2Hook_BallHit:
 	call ResetActiveCharState ; $505c
 .done:
 	ret ; $505f
-DrillPositions_0b_5060:
+ServicePractice2PointStartDrillPositions:
 	; $5060, 34 bytes (records:4)
 ; 8 records x 4 bytes
 	dw $fe50, $fd60 ; record 0
@@ -2379,7 +2379,7 @@ ServicePractice2SetupShotTarget:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $50eb
 	cp $04 ; $50ee
 	ret nc ; $50f0
-	ld hl, Table_0b_5130 ; $50f1
+	ld hl, Table_0b_2 ; $50f1
 	add l ; $50f4
 	ld l, a ; $50f5
 	jr nc, .checkStoryModeMainCharacterLeftHanded ; $50f6
@@ -2422,7 +2422,7 @@ ServicePractice2SetupShotTarget:
 	add $11 ; $512a
 	ld [wDrillMessageId], a ; $512c
 	ret ; $512f
-Table_0b_5130:
+Table_0b_2:
 	; $5130, 5 bytes (bytes:15)
 	db $0d, $0c, $0d, $0c, $0d ; 0x00
 ServicePractice2SetupShotTargetTable:
@@ -2457,7 +2457,7 @@ ServicePractice2QueueOutcomeMessage:
 	add b ; $5175
 	ld [wDrillMessageId], a ; $5176
 	ld a, [wStoryModeMainCharacterLeftHanded] ; $5179
-	ld hl, DrillShotTable_0b_51c8 ; $517c
+	ld hl, ServicePractice2QueueOutcomeMessageDrillShotTable ; $517c
 	add l ; $517f
 	ld l, a ; $5180
 	jr nc, .checkTotalPointsScoredInCurrentGame ; $5181
@@ -2502,7 +2502,7 @@ ServicePractice2QueueOutcomeMessage:
 	ld [wDrillMessageId], a ; $51c3
 	xor a ; $51c6
 	ret ; $51c7
-DrillShotTable_0b_51c8:
+ServicePractice2QueueOutcomeMessageDrillShotTable:
 	; $51c8, 5 bytes (bytes:5)
 	db $0d, $0c, $0d, $0c, $0d ; 0x00
 ServicePractice3Drill:
@@ -2553,7 +2553,7 @@ ServicePractice3Hook_PointStart:
 	call SetDrillTargetZoneForPoint ; $5224
 	ld a, $01 ; $5227
 	ld [wDrillGateActive], a ; $5229
-	ld hl, DrillPositions_0b_52e0 ; $522c
+	ld hl, ServicePractice3PointStartDrillPositions ; $522c
 	call IndexDrillTableByPoint ; $522f
 	xor a ; $5232
 	ld [wDrillMessageId], a ; $5233
@@ -2653,7 +2653,7 @@ ServicePractice3SetupShotTarget:
 	ld hl, wDrillCounters + 1 ; $52db
 	dec [hl] ; $52de
 	ret ; $52df
-DrillPositions_0b_52e0:
+ServicePractice3PointStartDrillPositions:
 	; $52e0, 34 bytes (records:4)
 ; 8 records x 4 bytes
 	dw $0000, $02a0 ; record 0
@@ -2927,7 +2927,7 @@ NetGameMatch1JudgePoint:
 	dw NetGameMatch1Cases1.returnZero2 ; $5518 jumptable
 .result0:
 	ld a, [wPointOutcome] ; $551a
-	ld hl, DrillShotTable_0b_5539 ; $551d
+	ld hl, NetGameMatch1JudgePointDrillShotTable ; $551d
 	add l ; $5520
 	ld l, a ; $5521
 	jr nc, .readEntry1 ; $5522
@@ -2938,7 +2938,7 @@ NetGameMatch1JudgePoint:
 	ld b, $0d ; $5527
 	call QueueDrillResultMessage ; $5529
 	ld a, [wPointOutcome] ; $552c
-	ld hl, SignedTable_0b_46f1 ; $552f
+	ld hl, SignedTable_0b_00 ; $552f
 	add l ; $5532
 	ld l, a ; $5533
 	jr nc, .readEntry2 ; $5534
@@ -2946,7 +2946,7 @@ NetGameMatch1JudgePoint:
 .readEntry2:
 	ld a, [hl] ; $5537
 	ret ; $5538
-DrillShotTable_0b_5539:
+NetGameMatch1JudgePointDrillShotTable:
 	; $5539, 10 bytes (bytes:10)
 	db $ff, $ff, $19, $ff, $ff, $1d, $17, $ff, $ff, $17 ; 0x00
 NetGameMatch1Cases1:
@@ -2968,7 +2968,7 @@ NetGameMatch1Cases1:
 	dw NetGameMatch1Cases2.returnZero2 ; $5552 jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $5554
-	ld hl, DrillShotTable_0b_5573 ; $5557
+	ld hl, NetGameMatch1Cases1DrillShotTable ; $5557
 	add l ; $555a
 	ld l, a ; $555b
 	jr nc, .read ; $555c
@@ -2979,7 +2979,7 @@ NetGameMatch1Cases1:
 	ld b, $0d ; $5561
 	call QueueDrillResultMessage ; $5563
 	ld a, [wPointOutcome] ; $5566
-	ld hl, SignedTable_0b_46fb ; $5569
+	ld hl, SignedTable_0b_01 ; $5569
 	add l ; $556c
 	ld l, a ; $556d
 	jr nc, .readB ; $556e
@@ -2987,7 +2987,7 @@ NetGameMatch1Cases1:
 .readB:
 	ld a, [hl] ; $5571
 	ret ; $5572
-DrillShotTable_0b_5573:
+NetGameMatch1Cases1DrillShotTable:
 	; $5573, 10 bytes (bytes:10)
 	db $ff, $ff, $ff, $ff, $17, $17, $1f, $1e, $1e, $1f ; 0x00
 NetGameMatch1Cases2:
@@ -3009,7 +3009,7 @@ NetGameMatch1Cases2:
 	dw NetGameMatch1Cases3.returnZero2 ; $558c jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $558e
-	ld hl, DrillShotTable_0b_55ad ; $5591
+	ld hl, NetGameMatch1Cases2DrillShotTable ; $5591
 	add l ; $5594
 	ld l, a ; $5595
 	jr nc, .read ; $5596
@@ -3020,7 +3020,7 @@ NetGameMatch1Cases2:
 	ld b, $0d ; $559b
 	call QueueDrillResultMessage ; $559d
 	ld a, [wPointOutcome] ; $55a0
-	ld hl, SignedTable_0b_46f1 ; $55a3
+	ld hl, SignedTable_0b_00 ; $55a3
 	add l ; $55a6
 	ld l, a ; $55a7
 	jr nc, .readB ; $55a8
@@ -3028,7 +3028,7 @@ NetGameMatch1Cases2:
 .readB:
 	ld a, [hl] ; $55ab
 	ret ; $55ac
-DrillShotTable_0b_55ad:
+NetGameMatch1Cases2DrillShotTable:
 	; $55ad, 10 bytes (bytes:10)
 	db $ff, $ff, $ff, $ff, $1d, $1d, $14, $ff, $ff, $14 ; 0x00
 NetGameMatch1Cases3:
@@ -3064,7 +3064,7 @@ NetGameMatch1Cases3:
 	dw NetGameMatch1Cases4.noAction2 ; $55e8 jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $55ea
-	ld hl, DrillShotTable_0b_5609 ; $55ed
+	ld hl, NetGameMatch1Cases3DrillShotTable ; $55ed
 	add l ; $55f0
 	ld l, a ; $55f1
 	jr nc, .read ; $55f2
@@ -3075,7 +3075,7 @@ NetGameMatch1Cases3:
 	ld b, $0d ; $55f7
 	call QueueDrillResultMessage ; $55f9
 	ld a, [wPointOutcome] ; $55fc
-	ld hl, SignedTable_0b_46fb ; $55ff
+	ld hl, SignedTable_0b_01 ; $55ff
 	add l ; $5602
 	ld l, a ; $5603
 	jr nc, .readB ; $5604
@@ -3083,7 +3083,7 @@ NetGameMatch1Cases3:
 .readB:
 	ld a, [hl] ; $5607
 	ret ; $5608
-DrillShotTable_0b_5609:
+NetGameMatch1Cases3DrillShotTable:
 	; $5609, 10 bytes (bytes:10)
 	db $ff, $ff, $ff, $ff, $14, $14, $1d, $ff, $ff, $1d ; 0x00
 NetGameMatch1Cases4:
@@ -3313,7 +3313,7 @@ NetGameMatch2JudgePoint:
 	dw NetGameMatch2Cases1.returnZero2 ; $5792 jumptable
 .result0:
 	ld a, [wPointOutcome] ; $5794
-	ld hl, DrillShotTable_0b_57b3 ; $5797
+	ld hl, NetGameMatch2JudgePointDrillShotTable ; $5797
 	add l ; $579a
 	ld l, a ; $579b
 	jr nc, .readEntry1 ; $579c
@@ -3324,7 +3324,7 @@ NetGameMatch2JudgePoint:
 	ld b, $0d ; $57a1
 	call QueueDrillResultMessage ; $57a3
 	ld a, [wPointOutcome] ; $57a6
-	ld hl, SignedTable_0b_46f1 ; $57a9
+	ld hl, SignedTable_0b_00 ; $57a9
 	add l ; $57ac
 	ld l, a ; $57ad
 	jr nc, .readEntry2 ; $57ae
@@ -3332,7 +3332,7 @@ NetGameMatch2JudgePoint:
 .readEntry2:
 	ld a, [hl] ; $57b1
 	ret ; $57b2
-DrillShotTable_0b_57b3:
+NetGameMatch2JudgePointDrillShotTable:
 	; $57b3, 10 bytes (bytes:10)
 	db $ff, $ff, $19, $ff, $ff, $1d, $18, $ff, $ff, $18 ; 0x00
 NetGameMatch2Cases1:
@@ -3354,7 +3354,7 @@ NetGameMatch2Cases1:
 	dw NetGameMatch2Cases2.returnZero2 ; $57cc jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $57ce
-	ld hl, DrillShotTable_0b_57ed ; $57d1
+	ld hl, NetGameMatch2Cases1DrillShotTable ; $57d1
 	add l ; $57d4
 	ld l, a ; $57d5
 	jr nc, .read ; $57d6
@@ -3365,7 +3365,7 @@ NetGameMatch2Cases1:
 	ld b, $0d ; $57db
 	call QueueDrillResultMessage ; $57dd
 	ld a, [wPointOutcome] ; $57e0
-	ld hl, SignedTable_0b_46fb ; $57e3
+	ld hl, SignedTable_0b_01 ; $57e3
 	add l ; $57e6
 	ld l, a ; $57e7
 	jr nc, .readB ; $57e8
@@ -3373,7 +3373,7 @@ NetGameMatch2Cases1:
 .readB:
 	ld a, [hl] ; $57eb
 	ret ; $57ec
-DrillShotTable_0b_57ed:
+NetGameMatch2Cases1DrillShotTable:
 	; $57ed, 10 bytes (bytes:10)
 	db $ff, $ff, $ff, $ff, $17, $17, $1c, $1e, $1e, $1c ; 0x00
 NetGameMatch2Cases2:
@@ -3404,7 +3404,7 @@ NetGameMatch2Cases2:
 	dw NetGameMatch2Cases3.returnZero2 ; $581a jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $581c
-	ld hl, DrillShotTable_0b_583b ; $581f
+	ld hl, NetGameMatch2Cases2DrillShotTable ; $581f
 	add l ; $5822
 	ld l, a ; $5823
 	jr nc, .read ; $5824
@@ -3415,7 +3415,7 @@ NetGameMatch2Cases2:
 	ld b, $0d ; $5829
 	call QueueDrillResultMessage ; $582b
 	ld a, [wPointOutcome] ; $582e
-	ld hl, SignedTable_0b_46f1 ; $5831
+	ld hl, SignedTable_0b_00 ; $5831
 	add l ; $5834
 	ld l, a ; $5835
 	jr nc, .readB ; $5836
@@ -3423,7 +3423,7 @@ NetGameMatch2Cases2:
 .readB:
 	ld a, [hl] ; $5839
 	ret ; $583a
-DrillShotTable_0b_583b:
+NetGameMatch2Cases2DrillShotTable:
 	; $583b, 10 bytes (bytes:10)
 	db $ff, $ff, $ff, $ff, $1d, $1d, $15, $ff, $ff, $15 ; 0x00
 NetGameMatch2Cases3:
@@ -3451,7 +3451,7 @@ NetGameMatch2Cases3:
 	dw NetGameMatch2Cases4.noAction2 ; $5863 jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $5865
-	ld hl, DrillShotTable_0b_5884 ; $5868
+	ld hl, NetGameMatch2Cases3DrillShotTable ; $5868
 	add l ; $586b
 	ld l, a ; $586c
 	jr nc, .read ; $586d
@@ -3462,7 +3462,7 @@ NetGameMatch2Cases3:
 	ld b, $0d ; $5872
 	call QueueDrillResultMessage ; $5874
 	ld a, [wPointOutcome] ; $5877
-	ld hl, SignedTable_0b_46fb ; $587a
+	ld hl, SignedTable_0b_01 ; $587a
 	add l ; $587d
 	ld l, a ; $587e
 	jr nc, .readB ; $587f
@@ -3470,7 +3470,7 @@ NetGameMatch2Cases3:
 .readB:
 	ld a, [hl] ; $5882
 	ret ; $5883
-DrillShotTable_0b_5884:
+NetGameMatch2Cases3DrillShotTable:
 	; $5884, 10 bytes (bytes:10)
 	db $ff, $ff, $ff, $ff, $15, $15, $1d, $ff, $ff, $1d ; 0x00
 NetGameMatch2Cases4:
@@ -3801,7 +3801,7 @@ NetGameMatch3JudgePoint:
 	dw NetGameMatch3Cases1.returnZero2 ; $5abd jumptable
 .result0:
 	ld a, [wPointOutcome] ; $5abf
-	ld hl, DrillShotTable_0b_5ade ; $5ac2
+	ld hl, NetGameMatch3JudgePointDrillShotTable ; $5ac2
 	add l ; $5ac5
 	ld l, a ; $5ac6
 	jr nc, .readEntry1 ; $5ac7
@@ -3812,7 +3812,7 @@ NetGameMatch3JudgePoint:
 	ld b, $0d ; $5acc
 	call QueueDrillResultMessage ; $5ace
 	ld a, [wPointOutcome] ; $5ad1
-	ld hl, SignedTable_0b_46f1 ; $5ad4
+	ld hl, SignedTable_0b_00 ; $5ad4
 	add l ; $5ad7
 	ld l, a ; $5ad8
 	jr nc, .readEntry2 ; $5ad9
@@ -3820,7 +3820,7 @@ NetGameMatch3JudgePoint:
 .readEntry2:
 	ld a, [hl] ; $5adc
 	ret ; $5add
-DrillShotTable_0b_5ade:
+NetGameMatch3JudgePointDrillShotTable:
 	; $5ade, 10 bytes (bytes:10)
 	db $ff, $ff, $19, $ff, $ff, $1d, $17, $ff, $ff, $17 ; 0x00
 NetGameMatch3Cases1:
@@ -3842,7 +3842,7 @@ NetGameMatch3Cases1:
 	dw NetGameMatch3Cases2.returnZero2 ; $5af7 jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $5af9
-	ld hl, DrillShotTable_0b_5b18 ; $5afc
+	ld hl, NetGameMatch3Cases1DrillShotTable ; $5afc
 	add l ; $5aff
 	ld l, a ; $5b00
 	jr nc, .read ; $5b01
@@ -3853,7 +3853,7 @@ NetGameMatch3Cases1:
 	ld b, $0d ; $5b06
 	call QueueDrillResultMessage ; $5b08
 	ld a, [wPointOutcome] ; $5b0b
-	ld hl, SignedTable_0b_46fb ; $5b0e
+	ld hl, SignedTable_0b_01 ; $5b0e
 	add l ; $5b11
 	ld l, a ; $5b12
 	jr nc, .readB ; $5b13
@@ -3861,7 +3861,7 @@ NetGameMatch3Cases1:
 .readB:
 	ld a, [hl] ; $5b16
 	ret ; $5b17
-DrillShotTable_0b_5b18:
+NetGameMatch3Cases1DrillShotTable:
 	; $5b18, 10 bytes (bytes:10)
 	db $ff, $ff, $ff, $ff, $17, $17, $20, $1e, $1e, $20 ; 0x00
 NetGameMatch3Cases2:
@@ -3883,7 +3883,7 @@ NetGameMatch3Cases2:
 	dw NetGameMatch3Cases3.returnZero2 ; $5b31 jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $5b33
-	ld hl, DrillShotTable_0b_5b52 ; $5b36
+	ld hl, NetGameMatch3Cases2DrillShotTable ; $5b36
 	add l ; $5b39
 	ld l, a ; $5b3a
 	jr nc, .read ; $5b3b
@@ -3894,7 +3894,7 @@ NetGameMatch3Cases2:
 	ld b, $0d ; $5b40
 	call QueueDrillResultMessage ; $5b42
 	ld a, [wPointOutcome] ; $5b45
-	ld hl, SignedTable_0b_46f1 ; $5b48
+	ld hl, SignedTable_0b_00 ; $5b48
 	add l ; $5b4b
 	ld l, a ; $5b4c
 	jr nc, .readB ; $5b4d
@@ -3902,7 +3902,7 @@ NetGameMatch3Cases2:
 .readB:
 	ld a, [hl] ; $5b50
 	ret ; $5b51
-DrillShotTable_0b_5b52:
+NetGameMatch3Cases2DrillShotTable:
 	; $5b52, 10 bytes (bytes:10)
 	db $ff, $ff, $ff, $ff, $1d, $1d, $16, $ff, $ff, $16 ; 0x00
 NetGameMatch3Cases3:
@@ -3932,7 +3932,7 @@ NetGameMatch3Cases3:
 	dw NetGameMatch3Cases4.noAction2 ; $5b7e jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $5b80
-	ld hl, DrillShotTable_0b_5b9f ; $5b83
+	ld hl, NetGameMatch3Cases3DrillShotTable ; $5b83
 	add l ; $5b86
 	ld l, a ; $5b87
 	jr nc, .read ; $5b88
@@ -3943,7 +3943,7 @@ NetGameMatch3Cases3:
 	ld b, $0d ; $5b8d
 	call QueueDrillResultMessage ; $5b8f
 	ld a, [wPointOutcome] ; $5b92
-	ld hl, SignedTable_0b_46fb ; $5b95
+	ld hl, SignedTable_0b_01 ; $5b95
 	add l ; $5b98
 	ld l, a ; $5b99
 	jr nc, .readB ; $5b9a
@@ -3951,7 +3951,7 @@ NetGameMatch3Cases3:
 .readB:
 	ld a, [hl] ; $5b9d
 	ret ; $5b9e
-DrillShotTable_0b_5b9f:
+NetGameMatch3Cases3DrillShotTable:
 	; $5b9f, 10 bytes (bytes:10)
 	db $ff, $ff, $ff, $ff, $16, $16, $1d, $ff, $ff, $1d ; 0x00
 NetGameMatch3Cases4:
@@ -4044,7 +4044,7 @@ NetGamePractice1Hook_PointStart:
 	xor a ; $5c3a
 	ld [wDrillPointJudgement], a ; $5c3b
 	ld a, [wTotalPointsScoredInCurrentGame] ; $5c3e
-	ld hl, Table_0b_5c4e ; $5c41
+	ld hl, NetGamePractice1PointStartTable ; $5c41
 	add l ; $5c44
 	ld l, a ; $5c45
 	jr nc, .read ; $5c46
@@ -4053,7 +4053,7 @@ NetGamePractice1Hook_PointStart:
 	ld a, [hl] ; $5c49
 	ld [wAiServeAimOverride], a ; $5c4a
 	ret ; $5c4d
-Table_0b_5c4e:
+NetGamePractice1PointStartTable:
 	; $5c4e, 4 bytes (bytes:4)
 	db $20, $10, $10, $20 ; 0x00
 NetGamePractice1Hook_PointEnd:
@@ -4228,7 +4228,7 @@ NetGamePractice1JudgePoint:
 	dw NetGamePractice1Cases1.returnZero2 ; $5d88 jumptable
 .result0:
 	ld a, [wPointOutcome] ; $5d8a
-	ld hl, SignedTable_0b_5da9 ; $5d8d
+	ld hl, NetGamePractice1JudgePointSignedTable ; $5d8d
 	add l ; $5d90
 	ld l, a ; $5d91
 	jr nc, .readEntry1 ; $5d92
@@ -4239,7 +4239,7 @@ NetGamePractice1JudgePoint:
 	ld b, $00 ; $5d97
 	call QueueDrillResultMessage ; $5d99
 	ld a, [wPointOutcome] ; $5d9c
-	ld hl, SignedTable_0b_46f1 ; $5d9f
+	ld hl, SignedTable_0b_00 ; $5d9f
 	add l ; $5da2
 	ld l, a ; $5da3
 	jr nc, .readEntry2 ; $5da4
@@ -4247,7 +4247,7 @@ NetGamePractice1JudgePoint:
 .readEntry2:
 	ld a, [hl] ; $5da7
 	ret ; $5da8
-SignedTable_0b_5da9:
+NetGamePractice1JudgePointSignedTable:
 	; $5da9, 10 bytes (bytes:10)
 	db $ff, $ff, $33, $ff, $ff, $38, $31, $ff, $ff, $31 ; 0x00
 NetGamePractice1Cases1:
@@ -4269,7 +4269,7 @@ NetGamePractice1Cases1:
 	dw NetGamePractice1Cases2.returnZero2 ; $5dc2 jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $5dc4
-	ld hl, SignedTable_0b_5de3 ; $5dc7
+	ld hl, NetGamePractice1Cases1SignedTable ; $5dc7
 	add l ; $5dca
 	ld l, a ; $5dcb
 	jr nc, .read ; $5dcc
@@ -4280,7 +4280,7 @@ NetGamePractice1Cases1:
 	ld b, $00 ; $5dd1
 	call QueueDrillResultMessage ; $5dd3
 	ld a, [wPointOutcome] ; $5dd6
-	ld hl, SignedTable_0b_46fb ; $5dd9
+	ld hl, SignedTable_0b_01 ; $5dd9
 	add l ; $5ddc
 	ld l, a ; $5ddd
 	jr nc, .readB ; $5dde
@@ -4288,7 +4288,7 @@ NetGamePractice1Cases1:
 .readB:
 	ld a, [hl] ; $5de1
 	ret ; $5de2
-SignedTable_0b_5de3:
+NetGamePractice1Cases1SignedTable:
 	; $5de3, 10 bytes (bytes:10)
 	db $ff, $ff, $ff, $ff, $31, $31, $3a, $31, $31, $3a ; 0x00
 NetGamePractice1Cases2:
@@ -4310,7 +4310,7 @@ NetGamePractice1Cases2:
 	dw NetGamePractice1Cases3.storeMatchAbortFlag2 ; $5dfc jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $5dfe
-	ld hl, SignedTable_0b_5e27 ; $5e01
+	ld hl, NetGamePractice1Cases2SignedTable1 ; $5e01
 	add l ; $5e04
 	ld l, a ; $5e05
 	jr nc, .read ; $5e06
@@ -4321,7 +4321,7 @@ NetGamePractice1Cases2:
 	ld b, $00 ; $5e0b
 	call QueueDrillResultMessage ; $5e0d
 	ld a, [wPointOutcome] ; $5e10
-	ld hl, SignedTable_0b_5e1d ; $5e13
+	ld hl, NetGamePractice1Cases2SignedTable0 ; $5e13
 	add l ; $5e16
 	ld l, a ; $5e17
 	jr nc, .readB ; $5e18
@@ -4329,10 +4329,10 @@ NetGamePractice1Cases2:
 .readB:
 	ld a, [hl] ; $5e1b
 	ret ; $5e1c
-SignedTable_0b_5e1d:
+NetGamePractice1Cases2SignedTable0:
 	; $5e1d, 10 bytes (bytes:10)
 	db $00, $00, $ff, $00, $ff, $ff, $ff, $ff, $ff, $ff ; 0x00
-SignedTable_0b_5e27:
+NetGamePractice1Cases2SignedTable1:
 	; $5e27, 10 bytes (bytes:10)
 	db $ff, $ff, $ff, $ff, $38, $38, $38, $ff, $ff, $38 ; 0x00
 NetGamePractice1Cases3:
@@ -4429,7 +4429,7 @@ NetGamePractice2Hook_PointStart:
 	ld [wDrillCounters + 6], a ; $5ede
 	ld a, $01 ; $5ee1
 	ld [wTargetZoneEnabled], a ; $5ee3
-	ld hl, DrillPositions_0b_5f91 ; $5ee6
+	ld hl, NetGamePractice2PointStartDrillPositions ; $5ee6
 	call SetDrillTargetZoneForPoint ; $5ee9
 	ld a, $41 ; $5eec
 	call LoadDrillOpponentChar ; $5eee
@@ -4522,7 +4522,7 @@ NetGamePractice2Hook_BallHit:
 	call ResetActiveCharState ; $5f8d
 .done:
 	ret ; $5f90
-DrillPositions_0b_5f91:
+NetGamePractice2PointStartDrillPositions:
 	; $5f91, 34 bytes (records:4)
 ; 8 records x 4 bytes
 	dw $fe50, $fd60 ; record 0
@@ -4609,7 +4609,7 @@ NetGamePractice2JudgePoint:
 	dw NetGamePractice2Cases1.returnZero ; $6042 jumptable
 .result0:
 	ld a, [wPointOutcome] ; $6044
-	ld hl, DrillShotTable_0b_6063 ; $6047
+	ld hl, NetGamePractice2JudgePointDrillShotTable ; $6047
 	add l ; $604a
 	ld l, a ; $604b
 	jr nc, .readEntry1 ; $604c
@@ -4620,7 +4620,7 @@ NetGamePractice2JudgePoint:
 	ld b, $00 ; $6051
 	call QueueDrillResultMessage ; $6053
 	ld a, [wPointOutcome] ; $6056
-	ld hl, SignedTable_0b_46f1 ; $6059
+	ld hl, SignedTable_0b_00 ; $6059
 	add l ; $605c
 	ld l, a ; $605d
 	jr nc, .readEntry2 ; $605e
@@ -4628,7 +4628,7 @@ NetGamePractice2JudgePoint:
 .readEntry2:
 	ld a, [hl] ; $6061
 	ret ; $6062
-DrillShotTable_0b_6063:
+NetGamePractice2JudgePointDrillShotTable:
 	; $6063, 10 bytes (bytes:10)
 	db $ff, $ff, $33, $ff, $ff, $3b, $31, $ff, $ff, $31 ; 0x00
 NetGamePractice2Cases1:
@@ -4673,7 +4673,7 @@ NetGamePractice2Cases1:
 	dw NetGamePractice2Cases2.returnZero2 ; $60ac jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $60ae
-	ld hl, DrillShotTable_0b_60cd ; $60b1
+	ld hl, NetGamePractice2Cases1DrillShotTable ; $60b1
 	add l ; $60b4
 	ld l, a ; $60b5
 	jr nc, .read ; $60b6
@@ -4684,7 +4684,7 @@ NetGamePractice2Cases1:
 	ld b, $00 ; $60bb
 	call QueueDrillResultMessage ; $60bd
 	ld a, [wPointOutcome] ; $60c0
-	ld hl, SignedTable_0b_46fb ; $60c3
+	ld hl, SignedTable_0b_01 ; $60c3
 	add l ; $60c6
 	ld l, a ; $60c7
 	jr nc, .readB ; $60c8
@@ -4692,7 +4692,7 @@ NetGamePractice2Cases1:
 .readB:
 	ld a, [hl] ; $60cb
 	ret ; $60cc
-DrillShotTable_0b_60cd:
+NetGamePractice2Cases1DrillShotTable:
 	; $60cd, 10 bytes (bytes:10)
 	db $ff, $ff, $ff, $ff, $31, $31, $36, $31, $31, $36 ; 0x00
 NetGamePractice2Cases2:
@@ -4723,7 +4723,7 @@ NetGamePractice2Cases2:
 	dw NetGamePractice2Cases3.storeMatchAbortFlag2 ; $60fa jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $60fc
-	ld hl, DrillShotTable_0b_611b ; $60ff
+	ld hl, NetGamePractice2Cases2DrillShotTable ; $60ff
 	add l ; $6102
 	ld l, a ; $6103
 	jr nc, .read ; $6104
@@ -4734,7 +4734,7 @@ NetGamePractice2Cases2:
 	ld b, $00 ; $6109
 	call QueueDrillResultMessage ; $610b
 	ld a, [wPointOutcome] ; $610e
-	ld hl, SignedTable_0b_46f1 ; $6111
+	ld hl, SignedTable_0b_00 ; $6111
 	add l ; $6114
 	ld l, a ; $6115
 	jr nc, .readB ; $6116
@@ -4742,7 +4742,7 @@ NetGamePractice2Cases2:
 .readB:
 	ld a, [hl] ; $6119
 	ret ; $611a
-DrillShotTable_0b_611b:
+NetGamePractice2Cases2DrillShotTable:
 	; $611b, 10 bytes (bytes:10)
 	db $ff, $ff, $ff, $ff, $37, $37, $2f, $ff, $ff, $2f ; 0x00
 NetGamePractice2Cases3:
@@ -4810,7 +4810,7 @@ NetGamePractice3Hook_PointStart:
 	ld [wDrillAbortCountdown], a ; $6190
 	ld a, $01 ; $6193
 	ld [wTargetZoneEnabled], a ; $6195
-	ld hl, DrillPositions_0b_6250 ; $6198
+	ld hl, NetGamePractice3PointStartDrillPositions ; $6198
 	call SetDrillTargetZoneForPoint ; $619b
 	ld a, $42 ; $619e
 	call LoadDrillOpponentChar ; $61a0
@@ -4910,7 +4910,7 @@ NetGamePractice3Hook_BallHit:
 	call ResetActiveCharState ; $624c
 .done:
 	ret ; $624f
-DrillPositions_0b_6250:
+NetGamePractice3PointStartDrillPositions:
 	; $6250, 34 bytes (records:4)
 ; 8 records x 4 bytes
 	dw $fe50, $fd60 ; record 0
@@ -4997,7 +4997,7 @@ NetGamePractice3JudgePoint:
 	dw NetGamePractice3Cases1.returnZero ; $6301 jumptable
 .result0:
 	ld a, [wPointOutcome] ; $6303
-	ld hl, DrillShotTable_0b_6322 ; $6306
+	ld hl, NetGamePractice3JudgePointDrillShotTable ; $6306
 	add l ; $6309
 	ld l, a ; $630a
 	jr nc, .readEntry1 ; $630b
@@ -5008,7 +5008,7 @@ NetGamePractice3JudgePoint:
 	ld b, $00 ; $6310
 	call QueueDrillResultMessage ; $6312
 	ld a, [wPointOutcome] ; $6315
-	ld hl, SignedTable_0b_46f1 ; $6318
+	ld hl, SignedTable_0b_00 ; $6318
 	add l ; $631b
 	ld l, a ; $631c
 	jr nc, .readEntry2 ; $631d
@@ -5016,7 +5016,7 @@ NetGamePractice3JudgePoint:
 .readEntry2:
 	ld a, [hl] ; $6320
 	ret ; $6321
-DrillShotTable_0b_6322:
+NetGamePractice3JudgePointDrillShotTable:
 	; $6322, 10 bytes (bytes:10)
 	db $ff, $ff, $33, $ff, $ff, $38, $31, $ff, $ff, $31 ; 0x00
 NetGamePractice3Cases1:
@@ -5057,7 +5057,7 @@ NetGamePractice3Cases1:
 	dw NetGamePractice3Cases2.returnZero2 ; $6363 jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $6365
-	ld hl, DrillShotTable_0b_6384 ; $6368
+	ld hl, NetGamePractice3Cases1DrillShotTable ; $6368
 	add l ; $636b
 	ld l, a ; $636c
 	jr nc, .read ; $636d
@@ -5068,7 +5068,7 @@ NetGamePractice3Cases1:
 	ld b, $00 ; $6372
 	call QueueDrillResultMessage ; $6374
 	ld a, [wPointOutcome] ; $6377
-	ld hl, SignedTable_0b_46fb ; $637a
+	ld hl, SignedTable_0b_01 ; $637a
 	add l ; $637d
 	ld l, a ; $637e
 	jr nc, .readB ; $637f
@@ -5076,7 +5076,7 @@ NetGamePractice3Cases1:
 .readB:
 	ld a, [hl] ; $6382
 	ret ; $6383
-DrillShotTable_0b_6384:
+NetGamePractice3Cases1DrillShotTable:
 	; $6384, 10 bytes (bytes:10)
 	db $ff, $ff, $ff, $ff, $31, $31, $39, $31, $31, $39 ; 0x00
 NetGamePractice3Cases2:
@@ -5098,7 +5098,7 @@ NetGamePractice3Cases2:
 	dw NetGamePractice3Cases3.storeMatchAbortFlag2 ; $639d jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $639f
-	ld hl, DrillShotTable_0b_63be ; $63a2
+	ld hl, NetGamePractice3Cases2DrillShotTable ; $63a2
 	add l ; $63a5
 	ld l, a ; $63a6
 	jr nc, .read ; $63a7
@@ -5109,7 +5109,7 @@ NetGamePractice3Cases2:
 	ld b, $00 ; $63ac
 	call QueueDrillResultMessage ; $63ae
 	ld a, [wPointOutcome] ; $63b1
-	ld hl, SignedTable_0b_46f1 ; $63b4
+	ld hl, SignedTable_0b_00 ; $63b4
 	add l ; $63b7
 	ld l, a ; $63b8
 	jr nc, .readB ; $63b9
@@ -5117,7 +5117,7 @@ NetGamePractice3Cases2:
 .readB:
 	ld a, [hl] ; $63bc
 	ret ; $63bd
-DrillShotTable_0b_63be:
+NetGamePractice3Cases2DrillShotTable:
 	; $63be, 10 bytes (bytes:10)
 	db $ff, $ff, $ff, $ff, $3c, $3c, $30, $ff, $ff, $30 ; 0x00
 NetGamePractice3Cases3:
@@ -5320,7 +5320,7 @@ StrokeMatch1JudgePoint:
 	dw StrokeMatch1Cases1.returnZero2 ; $6528 jumptable
 .rally1:
 	ld a, [wPointOutcome] ; $652a
-	ld hl, DrillShotTable_0b_6549 ; $652d
+	ld hl, StrokeMatch1JudgePointDrillShotTable ; $652d
 	add l ; $6530
 	ld l, a ; $6531
 	jr nc, .readEntry1 ; $6532
@@ -5339,7 +5339,7 @@ StrokeMatch1JudgePoint:
 .readEntry2:
 	ld a, [hl] ; $6547
 	ret ; $6548
-DrillShotTable_0b_6549:
+StrokeMatch1JudgePointDrillShotTable:
 	; $6549, 10 bytes (bytes:10)
 	db $ff, $ff, $63, $ff, $ff, $ff, $60, $ff, $ff, $60 ; 0x00
 StrokeMatch1Cases1:
@@ -5361,7 +5361,7 @@ StrokeMatch1Cases1:
 	dw StrokeMatch1Cases2.returnZero ; $6562 jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $6564
-	ld hl, DrillShotTable_0b_6583 ; $6567
+	ld hl, StrokeMatch1Cases1DrillShotTable ; $6567
 	add l ; $656a
 	ld l, a ; $656b
 	jr nc, .read ; $656c
@@ -5380,7 +5380,7 @@ StrokeMatch1Cases1:
 .readB:
 	ld a, [hl] ; $6581
 	ret ; $6582
-DrillShotTable_0b_6583:
+StrokeMatch1Cases1DrillShotTable:
 	; $6583, 10 bytes (bytes:10)
 	db $ff, $ff, $ff, $ff, $60, $60, $5e, $64, $64, $60 ; 0x00
 StrokeMatch1Cases2:
@@ -5421,7 +5421,7 @@ StrokeMatch1Cases2:
 	dw StrokeMatch1Cases3.returnZero ; $65c8 jumptable
 .checkPointOutcome2:
 	ld a, [wPointOutcome] ; $65ca
-	ld hl, DrillShotTable_0b_65e9 ; $65cd
+	ld hl, StrokeMatch1Cases2DrillShotTable ; $65cd
 	add l ; $65d0
 	ld l, a ; $65d1
 	jr nc, .read ; $65d2
@@ -5440,7 +5440,7 @@ StrokeMatch1Cases2:
 .readB:
 	ld a, [hl] ; $65e7
 	ret ; $65e8
-DrillShotTable_0b_65e9:
+StrokeMatch1Cases2DrillShotTable:
 	; $65e9, 10 bytes (bytes:10)
 	db $ff, $ff, $ff, $ff, $5f, $5f, $5e, $ff, $ff, $60 ; 0x00
 StrokeMatch1Cases3:
@@ -5478,7 +5478,7 @@ StrokeMatch1Cases3:
 	dw StrokeMatch1Cases4.storeMatchAbortFlag3 ; $6628 jumptable
 .checkPointOutcome2:
 	ld a, [wPointOutcome] ; $662a
-	ld hl, DrillShotTable_0b_6649 ; $662d
+	ld hl, StrokeMatch1Cases3DrillShotTable ; $662d
 	add l ; $6630
 	ld l, a ; $6631
 	jr nc, .read ; $6632
@@ -5497,7 +5497,7 @@ StrokeMatch1Cases3:
 .readB:
 	ld a, [hl] ; $6647
 	ret ; $6648
-DrillShotTable_0b_6649:
+StrokeMatch1Cases3DrillShotTable:
 	; $6649, 10 bytes (bytes:10)
 	db $ff, $ff, $ff, $ff, $5f, $5f, $5e, $ff, $ff, $60 ; 0x00
 StrokeMatch1Cases4:
@@ -5541,10 +5541,10 @@ SelectStrokeTargetTableByPoint:
 	ld a, $00 ; $6694
 	or a ; $6696
 	jr nz, .nonZero ; $6697
-	ld hl, SignedTable_0b_46fb ; $6699
+	ld hl, SignedTable_0b_01 ; $6699
 	jr .done ; $669c
 .nonZero:
-	ld hl, SignedTable_0b_46f1 ; $669e
+	ld hl, SignedTable_0b_00 ; $669e
 .done:
 	ret ; $66a1
 SelectStrokeTargetTableByPointAlt:
@@ -5553,10 +5553,10 @@ SelectStrokeTargetTableByPointAlt:
 	ld a, $00 ; $66a7
 	or a ; $66a9
 	jr nz, .nonZero ; $66aa
-	ld hl, SignedTable_0b_46f1 ; $66ac
+	ld hl, SignedTable_0b_00 ; $66ac
 	jr .done ; $66af
 .nonZero:
-	ld hl, SignedTable_0b_46fb ; $66b1
+	ld hl, SignedTable_0b_01 ; $66b1
 .done:
 	ret ; $66b4
 TestBallBounceDepth:
@@ -5777,7 +5777,7 @@ StrokeMatch2JudgePoint:
 	dw StrokeMatch2Cases1.returnZero2 ; $682d jumptable
 .result0:
 	ld a, [wPointOutcome] ; $682f
-	ld hl, DrillShotTable_0b_684e ; $6832
+	ld hl, StrokeMatch2JudgePointDrillShotTable ; $6832
 	add l ; $6835
 	ld l, a ; $6836
 	jr nc, .readEntry1 ; $6837
@@ -5788,7 +5788,7 @@ StrokeMatch2JudgePoint:
 	ld b, $0d ; $683c
 	call SetDrillMessageByServer ; $683e
 	ld a, [wPointOutcome] ; $6841
-	ld hl, SignedTable_0b_46fb ; $6844
+	ld hl, SignedTable_0b_01 ; $6844
 	add l ; $6847
 	ld l, a ; $6848
 	jr nc, .readEntry2 ; $6849
@@ -5796,7 +5796,7 @@ StrokeMatch2JudgePoint:
 .readEntry2:
 	ld a, [hl] ; $684c
 	ret ; $684d
-DrillShotTable_0b_684e:
+StrokeMatch2JudgePointDrillShotTable:
 	; $684e, 10 bytes (bytes:10)
 	db $ff, $ff, $42, $ff, $ff, $ff, $3f, $ff, $ff, $3f ; 0x00
 StrokeMatch2Cases1:
@@ -5818,7 +5818,7 @@ StrokeMatch2Cases1:
 	dw StrokeMatch2Cases2.returnZero2 ; $6867 jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $6869
-	ld hl, DrillShotTable_0b_6888 ; $686c
+	ld hl, StrokeMatch2Cases1DrillShotTable ; $686c
 	add l ; $686f
 	ld l, a ; $6870
 	jr nc, .read ; $6871
@@ -5829,7 +5829,7 @@ StrokeMatch2Cases1:
 	ld b, $0d ; $6876
 	call SetDrillMessageByServer ; $6878
 	ld a, [wPointOutcome] ; $687b
-	ld hl, SignedTable_0b_46f1 ; $687e
+	ld hl, SignedTable_0b_00 ; $687e
 	add l ; $6881
 	ld l, a ; $6882
 	jr nc, .readB ; $6883
@@ -5837,7 +5837,7 @@ StrokeMatch2Cases1:
 .readB:
 	ld a, [hl] ; $6886
 	ret ; $6887
-DrillShotTable_0b_6888:
+StrokeMatch2Cases1DrillShotTable:
 	; $6888, 10 bytes (bytes:10)
 	db $ff, $ff, $ff, $ff, $48, $48, $3d, $47, $47, $3d ; 0x00
 StrokeMatch2Cases2:
@@ -5868,7 +5868,7 @@ StrokeMatch2Cases2:
 	dw StrokeMatch2Cases3.noAction2 ; $68b5 jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $68b7
-	ld hl, DrillShotTable_0b_68d6 ; $68ba
+	ld hl, StrokeMatch2Cases2DrillShotTable ; $68ba
 	add l ; $68bd
 	ld l, a ; $68be
 	jr nc, .read ; $68bf
@@ -5879,7 +5879,7 @@ StrokeMatch2Cases2:
 	ld b, $0d ; $68c4
 	call SetDrillMessageByServer ; $68c6
 	ld a, [wPointOutcome] ; $68c9
-	ld hl, SignedTable_0b_46fb ; $68cc
+	ld hl, SignedTable_0b_01 ; $68cc
 	add l ; $68cf
 	ld l, a ; $68d0
 	jr nc, .readB ; $68d1
@@ -5887,7 +5887,7 @@ StrokeMatch2Cases2:
 .readB:
 	ld a, [hl] ; $68d4
 	ret ; $68d5
-DrillShotTable_0b_68d6:
+StrokeMatch2Cases2DrillShotTable:
 	; $68d6, 10 bytes (bytes:10)
 	db $ff, $ff, $ff, $ff, $3d, $3d, $43, $ff, $ff, $43 ; 0x00
 StrokeMatch2Cases3:
@@ -6129,7 +6129,7 @@ StrokeMatch3JudgePoint:
 	dw StrokeMatch3Cases1.returnZero2 ; $6a78 jumptable
 .result0:
 	ld a, [wPointOutcome] ; $6a7a
-	ld hl, DrillShotTable_0b_6a99 ; $6a7d
+	ld hl, StrokeMatch3JudgePointDrillShotTable ; $6a7d
 	add l ; $6a80
 	ld l, a ; $6a81
 	jr nc, .readEntry1 ; $6a82
@@ -6140,7 +6140,7 @@ StrokeMatch3JudgePoint:
 	ld b, $0d ; $6a87
 	call SetDrillMessageByServer ; $6a89
 	ld a, [wPointOutcome] ; $6a8c
-	ld hl, SignedTable_0b_46fb ; $6a8f
+	ld hl, SignedTable_0b_01 ; $6a8f
 	add l ; $6a92
 	ld l, a ; $6a93
 	jr nc, .readEntry2 ; $6a94
@@ -6148,7 +6148,7 @@ StrokeMatch3JudgePoint:
 .readEntry2:
 	ld a, [hl] ; $6a97
 	ret ; $6a98
-DrillShotTable_0b_6a99:
+StrokeMatch3JudgePointDrillShotTable:
 	; $6a99, 10 bytes (bytes:10)
 	db $ff, $ff, $42, $ff, $ff, $ff, $3f, $ff, $ff, $3f ; 0x00
 StrokeMatch3Cases1:
@@ -6170,7 +6170,7 @@ StrokeMatch3Cases1:
 	dw StrokeMatch3Cases2.returnZero2 ; $6ab2 jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $6ab4
-	ld hl, DrillShotTable_0b_6ad3 ; $6ab7
+	ld hl, StrokeMatch3Cases1DrillShotTable ; $6ab7
 	add l ; $6aba
 	ld l, a ; $6abb
 	jr nc, .read ; $6abc
@@ -6181,7 +6181,7 @@ StrokeMatch3Cases1:
 	ld b, $0d ; $6ac1
 	call SetDrillMessageByServer ; $6ac3
 	ld a, [wPointOutcome] ; $6ac6
-	ld hl, SignedTable_0b_46f1 ; $6ac9
+	ld hl, SignedTable_0b_00 ; $6ac9
 	add l ; $6acc
 	ld l, a ; $6acd
 	jr nc, .readB ; $6ace
@@ -6189,7 +6189,7 @@ StrokeMatch3Cases1:
 .readB:
 	ld a, [hl] ; $6ad1
 	ret ; $6ad2
-DrillShotTable_0b_6ad3:
+StrokeMatch3Cases1DrillShotTable:
 	; $6ad3, 10 bytes (bytes:10)
 	db $ff, $ff, $ff, $ff, $3f, $49, $3e, $47, $47, $3e ; 0x00
 StrokeMatch3Cases2:
@@ -6211,7 +6211,7 @@ StrokeMatch3Cases2:
 	dw StrokeMatch3Cases3.noAction2 ; $6aec jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $6aee
-	ld hl, DrillShotTable_0b_6b0d ; $6af1
+	ld hl, StrokeMatch3Cases2DrillShotTable ; $6af1
 	add l ; $6af4
 	ld l, a ; $6af5
 	jr nc, .read ; $6af6
@@ -6222,7 +6222,7 @@ StrokeMatch3Cases2:
 	ld b, $0d ; $6afb
 	call SetDrillMessageByServer ; $6afd
 	ld a, [wPointOutcome] ; $6b00
-	ld hl, SignedTable_0b_46fb ; $6b03
+	ld hl, SignedTable_0b_01 ; $6b03
 	add l ; $6b06
 	ld l, a ; $6b07
 	jr nc, .readB ; $6b08
@@ -6230,7 +6230,7 @@ StrokeMatch3Cases2:
 .readB:
 	ld a, [hl] ; $6b0b
 	ret ; $6b0c
-DrillShotTable_0b_6b0d:
+StrokeMatch3Cases2DrillShotTable:
 	; $6b0d, 10 bytes (bytes:10)
 	db $ff, $ff, $ff, $ff, $3e, $3e, $43, $ff, $ff, $43 ; 0x00
 StrokeMatch3Cases3:
@@ -6331,7 +6331,7 @@ StrokePractice1Hook_PointStart:
 	ld hl, EnableTargetZoneAfterDelayTask ; $6bb6
 	call RegisterFrameTask ; $6bb9
 	ld a, [wTotalPointsScoredInCurrentGame] ; $6bbc
-	ld hl, Table_0b_6bcc ; $6bbf
+	ld hl, StrokePractice1PointStartTable ; $6bbf
 	add l ; $6bc2
 	ld l, a ; $6bc3
 	jr nc, .read ; $6bc4
@@ -6340,7 +6340,7 @@ StrokePractice1Hook_PointStart:
 	ld a, [hl] ; $6bc7
 	ld [wAiServeAimOverride], a ; $6bc8
 	ret ; $6bcb
-Table_0b_6bcc:
+StrokePractice1PointStartTable:
 	; $6bcc, 4 bytes (bytes:4)
 	db $20, $10, $10, $20 ; 0x00
 EnableTargetZoneAfterDelayTask:
@@ -6519,7 +6519,7 @@ StrokePractice1JudgePoint:
 	dw StrokePractice1Cases1.returnZero2 ; $6d0e jumptable
 .result0:
 	ld a, [wPointOutcome] ; $6d10
-	ld hl, SignedTable_0b_6d2f ; $6d13
+	ld hl, StrokePractice1JudgePointSignedTable ; $6d13
 	add l ; $6d16
 	ld l, a ; $6d17
 	jr nc, .readEntry1 ; $6d18
@@ -6530,7 +6530,7 @@ StrokePractice1JudgePoint:
 	ld b, $00 ; $6d1d
 	call QueueDrillResultMessage ; $6d1f
 	ld a, [wPointOutcome] ; $6d22
-	ld hl, SignedTable_0b_46fb ; $6d25
+	ld hl, SignedTable_0b_01 ; $6d25
 	add l ; $6d28
 	ld l, a ; $6d29
 	jr nc, .readEntry2 ; $6d2a
@@ -6538,7 +6538,7 @@ StrokePractice1JudgePoint:
 .readEntry2:
 	ld a, [hl] ; $6d2d
 	ret ; $6d2e
-SignedTable_0b_6d2f:
+StrokePractice1JudgePointSignedTable:
 	; $6d2f, 10 bytes (bytes:10)
 	db $ff, $ff, $5c, $ff, $ff, $5a, $59, $ff, $ff, $59 ; 0x00
 StrokePractice1Cases1:
@@ -6560,7 +6560,7 @@ StrokePractice1Cases1:
 	dw StrokePractice1Cases2.storeMatchAbortFlag2 ; $6d48 jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $6d4a
-	ld hl, SignedTable_0b_6d69 ; $6d4d
+	ld hl, StrokePractice1Cases1SignedTable ; $6d4d
 	add l ; $6d50
 	ld l, a ; $6d51
 	jr nc, .read ; $6d52
@@ -6571,7 +6571,7 @@ StrokePractice1Cases1:
 	ld b, $00 ; $6d57
 	call QueueDrillResultMessage ; $6d59
 	ld a, [wPointOutcome] ; $6d5c
-	ld hl, SignedTable_0b_46f1 ; $6d5f
+	ld hl, SignedTable_0b_00 ; $6d5f
 	add l ; $6d62
 	ld l, a ; $6d63
 	jr nc, .readB ; $6d64
@@ -6579,7 +6579,7 @@ StrokePractice1Cases1:
 .readB:
 	ld a, [hl] ; $6d67
 	ret ; $6d68
-SignedTable_0b_6d69:
+StrokePractice1Cases1SignedTable:
 	; $6d69, 10 bytes (bytes:10)
 	db $ff, $ff, $ff, $ff, $59, $59, $57, $5d, $5d, $57 ; 0x00
 StrokePractice1Cases2:
@@ -6653,7 +6653,7 @@ StrokePractice2Hook_PointStart:
 	ld [wDrillAbortCountdown], a ; $6de6
 	xor a ; $6de9
 	ld [wTargetZoneEnabled], a ; $6dea
-	ld hl, DrillPositions_0b_6ea7 ; $6ded
+	ld hl, StrokePractice2PointStartDrillPositions ; $6ded
 	call SetDrillTargetZoneForPoint ; $6df0
 	xor a ; $6df3
 	ld [wDrillMessageId], a ; $6df4
@@ -6665,7 +6665,7 @@ StrokePractice2Hook_PointStart:
 	ld hl, StrokePractice2TargetZoneDelayTask ; $6e02
 	call RegisterFrameTask ; $6e05
 	ld a, [wTotalPointsScoredInCurrentGame] ; $6e08
-	ld hl, Table_0b_6e18 ; $6e0b
+	ld hl, StrokePractice2PointStartTable ; $6e0b
 	add l ; $6e0e
 	ld l, a ; $6e0f
 	jr nc, .read ; $6e10
@@ -6674,7 +6674,7 @@ StrokePractice2Hook_PointStart:
 	ld a, [hl] ; $6e13
 	ld [wAiServeAimOverride], a ; $6e14
 	ret ; $6e17
-Table_0b_6e18:
+StrokePractice2PointStartTable:
 	; $6e18, 4 bytes (bytes:4)
 	db $20, $10, $10, $20 ; 0x00
 StrokePractice2TargetZoneDelayTask:
@@ -6752,7 +6752,7 @@ StrokePractice2Hook_Bounce:
 StrokePractice2Hook_BallHit:
 	call StrokePractice2JudgeOnBallHit ; $6ea3
 	ret ; $6ea6
-DrillPositions_0b_6ea7:
+StrokePractice2PointStartDrillPositions:
 	; $6ea7, 34 bytes (records:4)
 ; 8 records x 4 bytes
 	dw $fe50, $fb20 ; record 0
@@ -6838,7 +6838,7 @@ StrokePractice2JudgePoint:
 	dw StrokePractice2Cases1.returnZero2 ; $6f56 jumptable
 .result0:
 	ld a, [wPointOutcome] ; $6f58
-	ld hl, DrillShotTable_0b_6f77 ; $6f5b
+	ld hl, StrokePractice2JudgePointDrillShotTable ; $6f5b
 	add l ; $6f5e
 	ld l, a ; $6f5f
 	jr nc, .readEntry1 ; $6f60
@@ -6849,7 +6849,7 @@ StrokePractice2JudgePoint:
 	ld b, $00 ; $6f65
 	call QueueDrillResultMessage ; $6f67
 	ld a, [wPointOutcome] ; $6f6a
-	ld hl, SignedTable_0b_46fb ; $6f6d
+	ld hl, SignedTable_0b_01 ; $6f6d
 	add l ; $6f70
 	ld l, a ; $6f71
 	jr nc, .readEntry2 ; $6f72
@@ -6857,7 +6857,7 @@ StrokePractice2JudgePoint:
 .readEntry2:
 	ld a, [hl] ; $6f75
 	ret ; $6f76
-DrillShotTable_0b_6f77:
+StrokePractice2JudgePointDrillShotTable:
 	; $6f77, 10 bytes (bytes:10)
 	db $ff, $ff, $5c, $ff, $ff, $5a, $59, $ff, $ff, $59 ; 0x00
 StrokePractice2Cases1:
@@ -6879,7 +6879,7 @@ StrokePractice2Cases1:
 	dw StrokePractice2Cases2.storeMatchAbortFlag2 ; $6f90 jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $6f92
-	ld hl, DrillShotTable_0b_6fb1 ; $6f95
+	ld hl, StrokePractice2Cases1DrillShotTable ; $6f95
 	add l ; $6f98
 	ld l, a ; $6f99
 	jr nc, .read ; $6f9a
@@ -6890,7 +6890,7 @@ StrokePractice2Cases1:
 	ld b, $00 ; $6f9f
 	call QueueDrillResultMessage ; $6fa1
 	ld a, [wPointOutcome] ; $6fa4
-	ld hl, SignedTable_0b_46f1 ; $6fa7
+	ld hl, SignedTable_0b_00 ; $6fa7
 	add l ; $6faa
 	ld l, a ; $6fab
 	jr nc, .readB ; $6fac
@@ -6898,7 +6898,7 @@ StrokePractice2Cases1:
 .readB:
 	ld a, [hl] ; $6faf
 	ret ; $6fb0
-DrillShotTable_0b_6fb1:
+StrokePractice2Cases1DrillShotTable:
 	; $6fb1, 10 bytes (bytes:10)
 	db $ff, $ff, $ff, $ff, $59, $59, $57, $5d, $5d, $57 ; 0x00
 StrokePractice2Cases2:
@@ -6982,7 +6982,7 @@ StrokePractice3Hook_PointStart:
 	ld [wDrillAbortCountdown], a ; $704b
 	xor a ; $704e
 	ld [wTargetZoneEnabled], a ; $704f
-	ld hl, DrillPositions_0b_7109 ; $7052
+	ld hl, StrokePractice3PointStartDrillPositions ; $7052
 	call SetDrillTargetZoneForPoint ; $7055
 	xor a ; $7058
 	ld [wDrillMessageId], a ; $7059
@@ -6994,7 +6994,7 @@ StrokePractice3Hook_PointStart:
 	ld hl, StrokePractice3TargetZoneDelayTask ; $7067
 	call RegisterFrameTask ; $706a
 	ld a, [wTotalPointsScoredInCurrentGame] ; $706d
-	ld hl, Table_0b_707d ; $7070
+	ld hl, StrokePractice3PointStartTable ; $7070
 	add l ; $7073
 	ld l, a ; $7074
 	jr nc, .read ; $7075
@@ -7003,7 +7003,7 @@ StrokePractice3Hook_PointStart:
 	ld a, [hl] ; $7078
 	ld [wAiServeAimOverride], a ; $7079
 	ret ; $707c
-Table_0b_707d:
+StrokePractice3PointStartTable:
 	; $707d, 4 bytes (bytes:4)
 	db $00, $00, $00, $00 ; 0x00
 StrokePractice3TargetZoneDelayTask:
@@ -7081,7 +7081,7 @@ StrokePractice3Hook_BallHit:
 	cp $01 ; $7105
 	ret nz ; $7107
 	ret ; $7108
-DrillPositions_0b_7109:
+StrokePractice3PointStartDrillPositions:
 	; $7109, 34 bytes (records:4)
 ; 8 records x 4 bytes
 	dw $0120, $fb20 ; record 0
@@ -7167,7 +7167,7 @@ StrokePractice3JudgePoint:
 	dw StrokePractice3Cases1.returnZero2 ; $71b8 jumptable
 .result0:
 	ld a, [wPointOutcome] ; $71ba
-	ld hl, DrillShotTable_0b_71d9 ; $71bd
+	ld hl, StrokePractice3JudgePointDrillShotTable ; $71bd
 	add l ; $71c0
 	ld l, a ; $71c1
 	jr nc, .readEntry1 ; $71c2
@@ -7178,7 +7178,7 @@ StrokePractice3JudgePoint:
 	ld b, $00 ; $71c7
 	call QueueDrillResultMessage ; $71c9
 	ld a, [wPointOutcome] ; $71cc
-	ld hl, SignedTable_0b_46fb ; $71cf
+	ld hl, SignedTable_0b_01 ; $71cf
 	add l ; $71d2
 	ld l, a ; $71d3
 	jr nc, .readEntry2 ; $71d4
@@ -7186,7 +7186,7 @@ StrokePractice3JudgePoint:
 .readEntry2:
 	ld a, [hl] ; $71d7
 	ret ; $71d8
-DrillShotTable_0b_71d9:
+StrokePractice3JudgePointDrillShotTable:
 	; $71d9, 10 bytes (bytes:10)
 	db $ff, $ff, $5c, $ff, $ff, $5a, $59, $ff, $ff, $59 ; 0x00
 StrokePractice3Cases1:
@@ -7208,7 +7208,7 @@ StrokePractice3Cases1:
 	dw StrokePractice3Cases2.storeMatchAbortFlag2 ; $71f2 jumptable
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $71f4
-	ld hl, DrillShotTable_0b_7213 ; $71f7
+	ld hl, StrokePractice3Cases1DrillShotTable ; $71f7
 	add l ; $71fa
 	ld l, a ; $71fb
 	jr nc, .read ; $71fc
@@ -7219,7 +7219,7 @@ StrokePractice3Cases1:
 	ld b, $00 ; $7201
 	call QueueDrillResultMessage ; $7203
 	ld a, [wPointOutcome] ; $7206
-	ld hl, SignedTable_0b_46f1 ; $7209
+	ld hl, SignedTable_0b_00 ; $7209
 	add l ; $720c
 	ld l, a ; $720d
 	jr nc, .readB ; $720e
@@ -7227,7 +7227,7 @@ StrokePractice3Cases1:
 .readB:
 	ld a, [hl] ; $7211
 	ret ; $7212
-DrillShotTable_0b_7213:
+StrokePractice3Cases1DrillShotTable:
 	; $7213, 10 bytes (bytes:10)
 	db $ff, $ff, $ff, $ff, $59, $59, $57, $5d, $5d, $57 ; 0x00
 StrokePractice3Cases2:

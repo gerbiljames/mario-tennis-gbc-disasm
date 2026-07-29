@@ -27,15 +27,15 @@ MatchSelectMapScripts_10:
 	dw MatchSelectInitScript_10 ; slot 6 InitScript
 MatchSelectActors_10:
 	; $401e, 136 bytes (map_actors)
-	map_actor $0000, ActorScript_10_7bd1, $0700, $1100, FACE_DOWN, $49, $01, $00
-	map_actor $0000, ActorScript_10_7bd1, $0700, $0700, FACE_LEFT, $46, $01, $03
-	map_actor $0000, ActorScript_10_7bd1, $0d00, $0700, FACE_LEFT, $47, $01, $03
-	map_actor $0000, ActorScript_10_7bd1, $0700, $0b00, FACE_DOWN, $54, $01, $03
-	map_actor $0000, ActorScript_10_7bd1, $0d00, $0b00, FACE_DOWN, $55, $01, $03
-	map_actor $0000, ActorScript_10_7bd1, $0d00, $1100, FACE_DOWN, $6c, $01, $05
-	map_actor $0000, ActorScript_10_7bd1, $0500, $0e00, FACE_DOWN, $43, $01, $03
-	map_actor $0000, ActorScript_10_7bd1, $1100, $0e00, FACE_DOWN, $43, $01, $03
-	map_actor $0000, ActorScript_10_7bd1, $1100, $0c00, FACE_DOWN, $43, $01, $03
+	map_actor $0000, ActorScript_10_2, $0700, $1100, FACE_DOWN, $49, $01, $00
+	map_actor $0000, ActorScript_10_2, $0700, $0700, FACE_LEFT, $46, $01, $03
+	map_actor $0000, ActorScript_10_2, $0d00, $0700, FACE_LEFT, $47, $01, $03
+	map_actor $0000, ActorScript_10_2, $0700, $0b00, FACE_DOWN, $54, $01, $03
+	map_actor $0000, ActorScript_10_2, $0d00, $0b00, FACE_DOWN, $55, $01, $03
+	map_actor $0000, ActorScript_10_2, $0d00, $1100, FACE_DOWN, $6c, $01, $05
+	map_actor $0000, ActorScript_10_2, $0500, $0e00, FACE_DOWN, $43, $01, $03
+	map_actor $0000, ActorScript_10_2, $1100, $0e00, FACE_DOWN, $43, $01, $03
+	map_actor $0000, ActorScript_10_2, $1100, $0c00, FACE_DOWN, $43, $01, $03
 	map_actor_end
 MatchSelectEntryPoints_10:
 	; $40a6, 9 bytes (map_entries)
@@ -584,22 +584,22 @@ Test2MapScripts_10:
 	dw Test2InitScript_10 ; slot 6 InitScript
 Test2Actors_10:
 	; $469b, 234 bytes (map_actors)
-	map_actor $0000, ActorScript_10_7bd1, $0500, $0f00, FACE_DOWN, $55, $01, $00
-	map_actor $0000, ActorScript_10_7bd1, $0500, $0500, FACE_DOWN, $27, $01, $07
-	map_actor $0000, ActorScript_10_7bd1, $0500, $0300, FACE_DOWN, $26, $01, $00
-	map_actor $0000, ActorScript_10_7bd1, $0500, $0900, FACE_DOWN, $29, $01, $05
-	map_actor $0000, ActorScript_10_7bd1, $0500, $0700, FACE_DOWN, $28, $01, $00
-	map_actor $0000, ActorScript_10_7bd1, $0500, $0d00, FACE_DOWN, $2a, $01, $07
-	map_actor $0000, ActorScript_10_7bd1, $0500, $0b00, FACE_DOWN, $2d, $01, $00
-	map_actor $0000, ActorScript_10_7bd1, $0500, $1100, FACE_DOWN, $2b, $01, $00
-	map_actor $0000, ActorScript_10_7bd1, $0d00, $0300, FACE_DOWN, $2f, $01, $00
-	map_actor $0000, ActorScript_10_7bd1, $0d00, $0500, FACE_DOWN, $2f, $01, $07
-	map_actor $0000, ActorScript_10_7bd1, $0d00, $0700, FACE_DOWN, $30, $01, $00
-	map_actor $0000, ActorScript_10_7bd1, $0d00, $0900, FACE_DOWN, $30, $01, $05
-	map_actor $0000, ActorScript_10_7bd1, $0d00, $0b00, FACE_DOWN, $2f, $01, $00
-	map_actor $0000, ActorScript_10_7bd1, $0d00, $0d00, FACE_DOWN, $2f, $01, $07
-	map_actor $0000, ActorScript_10_7bd1, $0d00, $0f00, FACE_DOWN, $30, $01, $00
-	map_actor $0000, ActorScript_10_7bd1, $0d00, $1100, FACE_DOWN, $30, $01, $00
+	map_actor $0000, ActorScript_10_2, $0500, $0f00, FACE_DOWN, $55, $01, $00
+	map_actor $0000, ActorScript_10_2, $0500, $0500, FACE_DOWN, $27, $01, $07
+	map_actor $0000, ActorScript_10_2, $0500, $0300, FACE_DOWN, $26, $01, $00
+	map_actor $0000, ActorScript_10_2, $0500, $0900, FACE_DOWN, $29, $01, $05
+	map_actor $0000, ActorScript_10_2, $0500, $0700, FACE_DOWN, $28, $01, $00
+	map_actor $0000, ActorScript_10_2, $0500, $0d00, FACE_DOWN, $2a, $01, $07
+	map_actor $0000, ActorScript_10_2, $0500, $0b00, FACE_DOWN, $2d, $01, $00
+	map_actor $0000, ActorScript_10_2, $0500, $1100, FACE_DOWN, $2b, $01, $00
+	map_actor $0000, ActorScript_10_2, $0d00, $0300, FACE_DOWN, $2f, $01, $00
+	map_actor $0000, ActorScript_10_2, $0d00, $0500, FACE_DOWN, $2f, $01, $07
+	map_actor $0000, ActorScript_10_2, $0d00, $0700, FACE_DOWN, $30, $01, $00
+	map_actor $0000, ActorScript_10_2, $0d00, $0900, FACE_DOWN, $30, $01, $05
+	map_actor $0000, ActorScript_10_2, $0d00, $0b00, FACE_DOWN, $2f, $01, $00
+	map_actor $0000, ActorScript_10_2, $0d00, $0d00, FACE_DOWN, $2f, $01, $07
+	map_actor $0000, ActorScript_10_2, $0d00, $0f00, FACE_DOWN, $30, $01, $00
+	map_actor $0000, ActorScript_10_2, $0d00, $1100, FACE_DOWN, $30, $01, $00
 	map_actor_end
 Test2EntryPoints_10:
 	; $4785, 9 bytes (map_entries)
@@ -937,7 +937,7 @@ Test2InitScript_10:
 	ldh a, [hRomBank] ; $4bb9
 	ld de, WaterSpriteModeHooks_10 ; $4bbb
 	farcall SetModeHookTable ; $4bbe
-	ld de, MinigamePointTable_10_4c13 ; $4bc1
+	ld de, Test2InitScriptMinigamePointTable_10 ; $4bc1
 	farcall SetMinigamePointTable ; $4bc4
 	ld a, $1a ; $4bc7
 	ld [wMatchPlayerChar], a ; $4bc9
@@ -987,7 +987,7 @@ Label_10_4bfd:
 	ld a, $80 ; $4c0d
 	ld [wMatchAbortFlag], a ; $4c0f
 	ret ; $4c12
-MinigamePointTable_10_4c13:
+Test2InitScriptMinigamePointTable_10:
 	; $4c13, 184 bytes (bytes:4)
 	db $00, $03, $09, $09 ; 0x00
 	db $00, $01, $09, $09 ; 0x04
@@ -2257,13 +2257,13 @@ CafeteriaMapScripts_10:
 	dw CafeteriaInitScript_10 ; slot 6 InitScript
 CafeteriaActors_10:
 	; $5804, 108 bytes (map_actors)
-	map_actor $0000, ActorScript_10_7bd1, $3b00, $3700, FACE_DOWN, $30, $01, $00
-	map_actor $0000, ActorScript_10_7bd1, $3d00, $3900, FACE_LEFT, $30, $01, $05
-	map_actor $0000, ActorScript_10_7bd1, $3d00, $3b00, FACE_LEFT, $3a, $01, $00
-	map_actor $0000, ActorScript_10_7bd1, $2f00, $3100, FACE_RIGHT, $3a, $01, $07
-	map_actor $0000, ActorScript_10_7bd1, $3300, $3100, FACE_LEFT, $3b, $01, $00
-	map_actor $0000, ActorScript_10_7bd1, $3700, $2f00, FACE_RIGHT, $3c, $01, $00
-	map_actor $0000, ActorScript_10_7bd1, $3b00, $2f00, FACE_LEFT, $3b, $01, $04
+	map_actor $0000, ActorScript_10_2, $3b00, $3700, FACE_DOWN, $30, $01, $00
+	map_actor $0000, ActorScript_10_2, $3d00, $3900, FACE_LEFT, $30, $01, $05
+	map_actor $0000, ActorScript_10_2, $3d00, $3b00, FACE_LEFT, $3a, $01, $00
+	map_actor $0000, ActorScript_10_2, $2f00, $3100, FACE_RIGHT, $3a, $01, $07
+	map_actor $0000, ActorScript_10_2, $3300, $3100, FACE_LEFT, $3b, $01, $00
+	map_actor $0000, ActorScript_10_2, $3700, $2f00, FACE_RIGHT, $3c, $01, $00
+	map_actor $0000, ActorScript_10_2, $3b00, $2f00, FACE_LEFT, $3b, $01, $04
 	map_actor_end
 CafeteriaEntryPoints_10:
 	; $5870, 9 bytes (map_entries)
@@ -2536,23 +2536,23 @@ RestaurantMapScripts_10:
 	dw RestaurantInitScript_10 ; slot 6 InitScript
 RestaurantActors_10:
 	; $5a8e, 248 bytes (map_actors)
-	map_actor $0000, ActorScript_10_7bd1, $1100, $1900, FACE_LEFT, $2f, $01, $00
-	map_actor $0000, ActorScript_10_7bd1, $2100, $1500, FACE_UP, $2f, $01, $07
-	map_actor $0000, ActorScript_10_7bd1, $1600, $1300, FACE_DOWN, $30, $01, $00
-	map_actor $0000, ActorScript_10_7bd1, $1d00, $1700, FACE_UP, $31, $01, $00
-	map_actor $0000, ActorScript_10_7bd1, $2900, $2900, FACE_RIGHT, $4c, $01, $00
-	map_actor $0000, ActorScript_10_7bd1, $2100, $1100, FACE_RIGHT, $33, $01, $00
-	map_actor $0000, ActorScript_10_7bd1, $0900, $0f00, FACE_RIGHT, $34, $01, $00
-	map_actor $0000, ActorScript_10_7bdb, $0b00, $1900, FACE_LEFT, $30, $01, $06
-	map_actor $0000, ActorScript_10_7bd1, $0d00, $0f00, FACE_LEFT, $3a, $01, $00
-	map_actor $0000, ActorScript_10_7bd1, $1500, $0b00, FACE_LEFT, $33, $01, $00
-	map_actor $0000, ActorScript_10_7bd1, $1d00, $0b00, FACE_LEFT, $3c, $01, $04
-	map_actor $0000, ActorScript_10_7bd1, $1b00, $0900, FACE_DOWN, $3b, $01, $00
-	map_actor $0000, ActorScript_10_7bd1, $1d00, $0f00, FACE_LEFT, $3c, $01, $00
-	map_actor $0000, ActorScript_10_7bd1, $1900, $0f00, FACE_RIGHT, $3b, $01, $06
-	map_actor $0000, ActorScript_10_7bd1, $2900, $2900, FACE_RIGHT, $4f, $01, $00
-	map_actor $0000, ActorScript_10_7bd1, $1b00, $1200, FACE_DOWN, $3a, $01, $00
-	map_actor $0000, ActorScript_10_7bd1, $1900, $0900, FACE_DOWN, $35, $01, $00
+	map_actor $0000, ActorScript_10_2, $1100, $1900, FACE_LEFT, $2f, $01, $00
+	map_actor $0000, ActorScript_10_2, $2100, $1500, FACE_UP, $2f, $01, $07
+	map_actor $0000, ActorScript_10_2, $1600, $1300, FACE_DOWN, $30, $01, $00
+	map_actor $0000, ActorScript_10_2, $1d00, $1700, FACE_UP, $31, $01, $00
+	map_actor $0000, ActorScript_10_2, $2900, $2900, FACE_RIGHT, $4c, $01, $00
+	map_actor $0000, ActorScript_10_2, $2100, $1100, FACE_RIGHT, $33, $01, $00
+	map_actor $0000, ActorScript_10_2, $0900, $0f00, FACE_RIGHT, $34, $01, $00
+	map_actor $0000, ActorScript_10_3, $0b00, $1900, FACE_LEFT, $30, $01, $06
+	map_actor $0000, ActorScript_10_2, $0d00, $0f00, FACE_LEFT, $3a, $01, $00
+	map_actor $0000, ActorScript_10_2, $1500, $0b00, FACE_LEFT, $33, $01, $00
+	map_actor $0000, ActorScript_10_2, $1d00, $0b00, FACE_LEFT, $3c, $01, $04
+	map_actor $0000, ActorScript_10_2, $1b00, $0900, FACE_DOWN, $3b, $01, $00
+	map_actor $0000, ActorScript_10_2, $1d00, $0f00, FACE_LEFT, $3c, $01, $00
+	map_actor $0000, ActorScript_10_2, $1900, $0f00, FACE_RIGHT, $3b, $01, $06
+	map_actor $0000, ActorScript_10_2, $2900, $2900, FACE_RIGHT, $4f, $01, $00
+	map_actor $0000, ActorScript_10_2, $1b00, $1200, FACE_DOWN, $3a, $01, $00
+	map_actor $0000, ActorScript_10_2, $1900, $0900, FACE_DOWN, $35, $01, $00
 	map_actor_end
 RestaurantEntryPoints_10:
 	; $5b86, 17 bytes (map_entries)
@@ -2672,9 +2672,9 @@ RestaurantNpc06_10:
 	script_wait_idle $06 ; $5cb7
 	ld a, [wMapSceneStage2] ; $5cbc
 	add a ; $5cbf
-	add LOW(TextIds_10_5cfb) ; $5cc0
+	add LOW(RestaurantNpc06TextIds_10) ; $5cc0
 	ld l, a ; $5cc2
-	adc HIGH(TextIds_10_5cfb) ; $5cc3
+	adc HIGH(RestaurantNpc06TextIds_10) ; $5cc3
 	sub l ; $5cc5
 	ld h, a ; $5cc6
 	ld a, [hl+] ; $5cc7
@@ -2697,7 +2697,7 @@ RestaurantNpc06_10:
 	script_wait_idle $06 ; $5cf0
 	script_speak $06 ; $5cf5
 	ret ; $5cfa
-TextIds_10_5cfb:
+RestaurantNpc06TextIds_10:
 	; $5cfb, 10 bytes (text_ids)
 	dw Text_33_38 ; record 0
 	dw Text_33_74 ; record 1
@@ -3237,10 +3237,10 @@ AcademyWingMapScripts_10:
 	dw AcademyWingInitScript_10 ; slot 6 InitScript
 AcademyWingActors_10:
 	; $61bf, 66 bytes (map_actors)
-	map_actor $0000, ActorScript_10_7bd1, $3f00, $1900, FACE_RIGHT, $63, $01, $00
-	map_actor $0000, ActorScript_10_7bd1, $1900, $3f00, FACE_RIGHT, $36, $01, $00
-	map_actor $0000, ActorScript_10_7bd1, $2700, $3240, FACE_DOWN, $74, $01, $00
-	map_actor $0000, ActorScript_10_7bd1, $2700, $30c0, FACE_DOWN, $74, $01, $00
+	map_actor $0000, ActorScript_10_2, $3f00, $1900, FACE_RIGHT, $63, $01, $00
+	map_actor $0000, ActorScript_10_2, $1900, $3f00, FACE_RIGHT, $36, $01, $00
+	map_actor $0000, ActorScript_10_2, $2700, $3240, FACE_DOWN, $74, $01, $00
+	map_actor $0000, ActorScript_10_2, $2700, $30c0, FACE_DOWN, $74, $01, $00
 	map_actor_end
 AcademyWingEntryPoints_10:
 	; $6201, 17 bytes (map_entries)
@@ -3851,15 +3851,15 @@ AcademyWingInitScript_10:
 	ret ; $6f44
 AcademyWingInitActors0_10:
 	; $6f45, 136 bytes (map_actors)
-	map_actor $0000, ActorScript_10_7bd1, $fd00, $0100, FACE_DOWN, $4e, $01, $00
-	map_actor $0000, ActorScript_10_7bd1, $fd00, $0100, FACE_DOWN, $53, $01, $00
-	map_actor $0000, ActorScript_10_7bd1, $fd00, $0100, FACE_DOWN, $51, $01, $00
-	map_actor $0000, ActorScript_10_7bd1, $2000, $2f00, FACE_DOWN, $63, $01, $00
-	map_actor $0000, ActorScript_10_7bd1, $2200, $3300, FACE_UP, $4b, $01, $00
-	map_actor $0000, ActorScript_10_7bd1, $2000, $3300, FACE_UP, $4a, $01, $00
-	map_actor $0000, ActorScript_10_7bd1, $1e00, $3300, FACE_UP, $49, $01, $00
-	map_actor $0000, ActorScript_10_7bd1, $2700, $3240, FACE_DOWN, $74, $01, $00
-	map_actor $0000, ActorScript_10_7bd1, $2700, $30c0, FACE_DOWN, $74, $01, $00
+	map_actor $0000, ActorScript_10_2, $fd00, $0100, FACE_DOWN, $4e, $01, $00
+	map_actor $0000, ActorScript_10_2, $fd00, $0100, FACE_DOWN, $53, $01, $00
+	map_actor $0000, ActorScript_10_2, $fd00, $0100, FACE_DOWN, $51, $01, $00
+	map_actor $0000, ActorScript_10_2, $2000, $2f00, FACE_DOWN, $63, $01, $00
+	map_actor $0000, ActorScript_10_2, $2200, $3300, FACE_UP, $4b, $01, $00
+	map_actor $0000, ActorScript_10_2, $2000, $3300, FACE_UP, $4a, $01, $00
+	map_actor $0000, ActorScript_10_2, $1e00, $3300, FACE_UP, $49, $01, $00
+	map_actor $0000, ActorScript_10_2, $2700, $3240, FACE_DOWN, $74, $01, $00
+	map_actor $0000, ActorScript_10_2, $2700, $30c0, FACE_DOWN, $74, $01, $00
 	map_actor_end
 .eq0f:
 	ldh a, [hRomBank] ; $6fcd
@@ -3996,8 +3996,8 @@ AcademyWingInitActors0_10:
 	script_move_target ACTOR_PARTNER, $2100, $3500 ; $7277
 	script_wait_move ACTOR_PARTNER ; $7282
 	call AcademyWingOpenDoor_10 ; $7287
-	script_set_actor_script ACTOR_PLAYER, ActorScript_10_741c ; $728a
-	script_set_actor_script ACTOR_PARTNER, ActorScript_10_741c ; $7295
+	script_set_actor_script ACTOR_PLAYER, ActorScript_10_0 ; $728a
+	script_set_actor_script ACTOR_PARTNER, ActorScript_10_0 ; $7295
 	script_wait_frames $28 ; $72a0
 	jr .academyWingCloseDoor2 ; $72a7
 .animate5:
@@ -4015,7 +4015,7 @@ AcademyWingInitActors0_10:
 	script_move_target ACTOR_PLAYER, $2100, $3700 ; $72ef
 	script_wait_move ACTOR_PLAYER ; $72fa
 	call AcademyWingOpenDoor_10 ; $72ff
-	script_set_actor_script ACTOR_PLAYER, ActorScript_10_741c ; $7302
+	script_set_actor_script ACTOR_PLAYER, ActorScript_10_0 ; $7302
 	script_wait_frames $14 ; $730d
 .academyWingCloseDoor2:
 	call AcademyWingCloseDoor_10 ; $7314
@@ -4048,11 +4048,11 @@ AcademyWingCloseDoor_10:
 	ret ; $739d
 AcademyWingInitActors1_10:
 	; $739e, 80 bytes (map_actors)
-	map_actor $0000, ActorScript_10_7bd1, $2000, $3000, FACE_DOWN, $63, $01, $00
-	map_actor $0000, ActorScript_10_7bd1, $2700, $3240, FACE_DOWN, $74, $01, $00
-	map_actor $0000, ActorScript_10_7bd1, $2700, $30c0, FACE_DOWN, $74, $01, $00
-	map_actor $0000, ActorScript_10_7bd1, $fd00, $0100, FACE_DOWN, $4c, $01, $00
-	map_actor $0000, ActorScript_10_7bd1, $fd00, $0100, FACE_DOWN, $4c, $01, $00
+	map_actor $0000, ActorScript_10_2, $2000, $3000, FACE_DOWN, $63, $01, $00
+	map_actor $0000, ActorScript_10_2, $2700, $3240, FACE_DOWN, $74, $01, $00
+	map_actor $0000, ActorScript_10_2, $2700, $30c0, FACE_DOWN, $74, $01, $00
+	map_actor $0000, ActorScript_10_2, $fd00, $0100, FACE_DOWN, $4c, $01, $00
+	map_actor $0000, ActorScript_10_2, $fd00, $0100, FACE_DOWN, $4c, $01, $00
 	map_actor_end
 SpeakNpc03SinglesOrDoublesLine_10:
 	test_flag FLAG_DOUBLES ; $73ee
@@ -4076,7 +4076,7 @@ ShowNpc03SinglesOrDoublesPrompt_10:
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $7415
 	farcall AdvanceDialogueTextCursor ; $7418
 	ret ; $741b
-ActorScript_10_741c:
+ActorScript_10_0:
 	; $741c, 13 bytes (actor_script)
 	as_set_target $2100, $3b00
 	as_wait_move
@@ -4149,10 +4149,10 @@ AcademyMainBldgMapScripts_10:
 	dw AcademyMainBldgInitScript_10 ; slot 6 InitScript
 AcademyMainBldgActors_10:
 	; $74b7, 66 bytes (map_actors)
-	map_actor $0000, ActorScript_10_7bd1, $1d00, $1780, FACE_DOWN, $3f, $01, $04
-	map_actor $0000, ActorScript_10_7bd1, $0e80, $0f00, FACE_LEFT, $40, $01, $00
-	map_actor $0000, ActorScript_10_7bd1, $0500, $0f80, FACE_DOWN, $3f, $01, $07
-	map_actor $0000, ActorScript_10_7bdb, $2800, $1e00, FACE_DOWN, $41, $01, $03
+	map_actor $0000, ActorScript_10_2, $1d00, $1780, FACE_DOWN, $3f, $01, $04
+	map_actor $0000, ActorScript_10_2, $0e80, $0f00, FACE_LEFT, $40, $01, $00
+	map_actor $0000, ActorScript_10_2, $0500, $0f80, FACE_DOWN, $3f, $01, $07
+	map_actor $0000, ActorScript_10_3, $2800, $1e00, FACE_DOWN, $41, $01, $03
 	map_actor_end
 AcademyMainBldgEntryPoints_10:
 	; $74f9, 57 bytes (map_entries)
@@ -4357,7 +4357,7 @@ AcademyMainBldgInitScript_10:
 	sra a ; $771d
 	cp $02 ; $771f
 	jr nz, .ne02 ; $7721
-	script_set_actor_script $03, ActorScript_10_7b8b ; $7723
+	script_set_actor_script $03, ActorScript_10_1 ; $7723
 .ne02:
 	ld a, $01 ; $772e
 	ld hl, UpdatePlayerPairTileAnimState_10 ; $7730
@@ -4467,11 +4467,11 @@ AcademyMainBldgNewStudentCutscene_10:
 	ret ; $797f
 AcademyMainBldgNewStudentActors_10:
 	; $7980, 80 bytes (map_actors)
-	map_actor $0000, ActorScript_10_7bd1, $2b00, $0b00, FACE_DOWN, $49, $01, $00
-	map_actor $0000, ActorScript_10_7bd1, $1d00, $1700, FACE_DOWN, $3f, $01, $04
-	map_actor $0000, ActorScript_10_7bd1, $fd00, $0100, FACE_DOWN, $4c, $01, $00
-	map_actor $0000, ActorScript_10_7bd1, $fd00, $0100, FACE_DOWN, $4d, $01, $00
-	map_actor $0000, ActorScript_10_7bd1, $fd00, $0100, FACE_DOWN, $4f, $01, $00
+	map_actor $0000, ActorScript_10_2, $2b00, $0b00, FACE_DOWN, $49, $01, $00
+	map_actor $0000, ActorScript_10_2, $1d00, $1700, FACE_DOWN, $3f, $01, $04
+	map_actor $0000, ActorScript_10_2, $fd00, $0100, FACE_DOWN, $4c, $01, $00
+	map_actor $0000, ActorScript_10_2, $fd00, $0100, FACE_DOWN, $4d, $01, $00
+	map_actor $0000, ActorScript_10_2, $fd00, $0100, FACE_DOWN, $4f, $01, $00
 	map_actor_end
 UpdatePlayerPairTileAnimState_10:
 	ld a, $00 ; $79d0
@@ -4664,7 +4664,7 @@ MapArrivalWalkPair_10:
 	script_move_angle ACTOR_PARTNER, FACE_DOWN, $0200 ; $7b80
 .done:
 	ret ; $7b8a
-ActorScript_10_7b8b:
+ActorScript_10_1:
 	; $7b8b, 43 bytes (actor_script)
 	as_set_field $06, $0018
 	as_flag $01, $05, $02
@@ -4698,7 +4698,7 @@ GetDoublesProgressStage_10:
 	inc a ; $7bcf
 .done:
 	ret ; $7bd0
-ActorScript_10_7bd1:
+ActorScript_10_2:
 	; $7bd1, 10 bytes (actor_script)
 	as_halt
 	as_anim $00
@@ -4707,7 +4707,7 @@ ActorScript_10_7bd1:
 	as_step
 	as_wait $01
 	as_jump .L4
-ActorScript_10_7bdb:
+ActorScript_10_3:
 	; $7bdb, 30 bytes (actor_script)
 	as_begin_path
 .L1:
@@ -4738,7 +4738,7 @@ MapScriptClearActiveFlag_10:
 	xor a ; $7c02
 	ld [wStoryModeShowLocationName], a ; $7c03
 	ret ; $7c06
-ActorScript_10_7c07:
+ActorScript_10_4:
 	; $7c07, 438 bytes (actor_script)
 	as_anim $01
 	as_target_rel $0400, $0200
@@ -4776,7 +4776,7 @@ ActorScript_10_7c07:
 	as_set_field $14, FACE_DOWN
 	as_anim $05
 	as_wait $4b
-	as_jump ActorScript_10_7c07
+	as_jump ActorScript_10_4
 	as_anim $00
 	as_wait $3c
 .L67:

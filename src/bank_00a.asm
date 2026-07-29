@@ -163,7 +163,7 @@ EndCutsceneScriptMode:
 	pop bc ; $4138
 	pop af ; $4139
 	ret ; $413a
-Unused_0a_413b:
+Unused_0a_0:
 	; $413b, 4 bytes (bytes:4)
 	db $0b, $0c, $fe, $ff ; 0x00
 WaitScriptFrames:
@@ -509,7 +509,7 @@ SetActorNullScript:
 	call GetActorStateAddr ; $4364
 	ld c, l ; $4367
 	ld b, h ; $4368
-	ld hl, ActorScript_0a_4766 ; $4369
+	ld hl, ActorScript_0a ; $4369
 	ldh a, [hRomBank] ; $436c
 	farcall SetActorScript ; $436e
 	ret ; $4371
@@ -1253,10 +1253,10 @@ SetActorActive:
 	pop hl ; $475c
 	pop af ; $475d
 	ret ; $475e
-Unused_0a_475f:
+Unused_0a_1:
 	; $475f, 7 bytes (bytes:7)
 	db $0c, $ff, $ff, $0b, $0c, $fe, $ff ; 0x00
-ActorScript_0a_4766:
+ActorScript_0a:
 	; $4766, 6 bytes (actor_script)
 	as_halt
 	as_set_field $20, $0000
@@ -2007,7 +2007,7 @@ SetRankingMatchClearFlags:
 	ld a, [wCharPosDepth] ; $4dbc
 	or a ; $4dbf
 	ret z ; $4dc0
-	ld hl, RankingFlagList_0a_4df2 ; $4dc1
+	ld hl, RankingFlagList_0a_0 ; $4dc1
 .setListA:
 	ld a, [hl+] ; $4dc4
 	ld d, [hl] ; $4dc5
@@ -2023,7 +2023,7 @@ SetRankingMatchClearFlags:
 	ld a, [wCharPosDepth] ; $4dd3
 	cp $01 ; $4dd6
 	ret z ; $4dd8
-	ld hl, RankingFlagList_0a_4e00 ; $4dd9
+	ld hl, RankingFlagList_0a_1 ; $4dd9
 .setListB:
 	ld a, [hl+] ; $4ddc
 	ld d, [hl] ; $4ddd
@@ -2040,9 +2040,9 @@ SetRankingMatchClearFlags:
 RankingFlagListPtrs_0a:
 	; $4dec, 6 bytes (records:2)
 	dw $0000 ; record 0
-	dw RankingFlagList_0a_4df2 ; record 1
-	dw RankingFlagList_0a_4e00 ; record 2
-RankingFlagList_0a_4df2:
+	dw RankingFlagList_0a_0 ; record 1
+	dw RankingFlagList_0a_1 ; record 2
+RankingFlagList_0a_0:
 	; $4df2, 14 bytes (records:2)
 	dw $1800 ; record 0
 	dw $1860 ; record 1
@@ -2051,7 +2051,7 @@ RankingFlagList_0a_4df2:
 	dw $1980 ; record 4
 	dw $19e0 ; record 5
 	dw $ffff ; record 6
-RankingFlagList_0a_4e00:
+RankingFlagList_0a_1:
 	; $4e00, 14 bytes (records:2)
 	dw $1820 ; record 0
 	dw $1880 ; record 1
@@ -2089,7 +2089,7 @@ SetMinigameClearFlags:
 	add c ; $4e34
 	ld c, a ; $4e35
 	inc c ; $4e36
-	ld hl, RankingFlagList_0a_4e4b ; $4e37
+	ld hl, MinigameClearFlagsRankingFlagList ; $4e37
 .setLoop:
 	ld a, [hl+] ; $4e3a
 	ld d, [hl] ; $4e3b
@@ -2104,7 +2104,7 @@ SetMinigameClearFlags:
 	jr .setLoop ; $4e48
 .done:
 	ret ; $4e4a
-RankingFlagList_0a_4e4b:
+MinigameClearFlagsRankingFlagList:
 	; $4e4b, 42 bytes (records:2)
 	dw $0000 ; record 0
 	dw $0a00 ; record 1
@@ -2148,7 +2148,7 @@ SetMinigameClearFlagsAlt:
 	add c ; $4e91
 	ld c, a ; $4e92
 	inc c ; $4e93
-	ld hl, RankingFlagList_0a_4ea8 ; $4e94
+	ld hl, MinigameClearFlagsAltRankingFlagList ; $4e94
 .setLoop:
 	ld a, [hl+] ; $4e97
 	ld d, [hl] ; $4e98
@@ -2163,7 +2163,7 @@ SetMinigameClearFlagsAlt:
 	jr .setLoop ; $4ea5
 .done:
 	ret ; $4ea7
-RankingFlagList_0a_4ea8:
+MinigameClearFlagsAltRankingFlagList:
 	; $4ea8, 34 bytes (records:2)
 	dw $0000 ; record 0
 	dw $0800 ; record 1
@@ -2183,7 +2183,7 @@ RankingFlagList_0a_4ea8:
 	dw $07a0 ; record 15
 	dw $ffff ; record 16
 GetClearStatusResultCode:
-	ld hl, IndexTable_0a_4eee ; $4eca
+	ld hl, ClearStatusResultCodeIndexTable ; $4eca
 	ld a, [wCharPosX + 2] ; $4ecd
 	ld b, a ; $4ed0
 	or a ; $4ed1
@@ -2207,7 +2207,7 @@ GetClearStatusResultCode:
 	ld a, [hl] ; $4ee9
 	ld [wCharPosHeight], a ; $4eea
 	ret ; $4eed
-IndexTable_0a_4eee:
+ClearStatusResultCodeIndexTable:
 	; $4eee, 10 bytes (bytes:10)
 	db $01, $02, $03, $00, $04, $05, $06, $06, $07, $07 ; 0x00
 ClearStatusSetupMenuEntry:
@@ -2341,7 +2341,7 @@ RunStoryLocation:
 	and a ; $4ffe
 	jp z, .waitForEvent ; $4fff
 	ld bc, wActors ; $5002
-	ld hl, ActorScript_0a_4766 ; $5005
+	ld hl, ActorScript_0a ; $5005
 	ldh a, [hRomBank] ; $5008
 	farcall SetActorScript ; $500a
 	ld hl, wActors ; $500d
@@ -2812,11 +2812,11 @@ ShowLocationNamePopup:
 	pop af ; $5335
 	ret ; $5336
 LoadStoryObjPalettes:
-	ld hl, Palettes_0a_5341 ; $5337
+	ld hl, StoryObjPalettes ; $5337
 	ld de, $0b05 ; $533a
 	call LoadPaletteShadow ; $533d
 	ret ; $5340
-Palettes_0a_5341:
+StoryObjPalettes:
 	INCLUDE "data/bank_00a/palettes_5341.asm" ; $5341, 40 bytes (palettes)
 GetTileTriggerAtPlayer:
 	push bc ; $5369
@@ -4079,7 +4079,7 @@ SceneViewerSelectScene:
 	ld a, [$d820] ; $5e5c
 	ld [$d82f], a ; $5e5f
 	farcall RestoreShadowTilemap ; $5e62
-	farcall StubNop_05_4626 ; $5e65
+	farcall StubNop_05_0 ; $5e65
 .inputLoop:
 	call AdvanceFrame ; $5e68
 	ldh a, [hPlayerInputFlags] ; $5e6b
@@ -4397,7 +4397,7 @@ InitSceneViewer:
 	ldh [hBGRowBlitPending], a ; $6057
 	farcall InitTextWindows ; $6059
 	ld a, $01 ; $605c
-	ld hl, StubNop_0a_60c1 ; $605e
+	ld hl, StubNop_0a ; $605e
 	call RegisterFrameTask ; $6061
 	ld a, [wCurrentScene] ; $6064
 	call InitSceneTileAnimations ; $6067
@@ -4406,7 +4406,7 @@ InitSceneViewer:
 	pop bc ; $606c
 	pop af ; $606d
 	ret ; $606e
-	ld hl, StubNop_0a_60c1 ; $606f
+	ld hl, StubNop_0a ; $606f
 	call UnregisterFrameTask ; $6072
 	ret ; $6075
 InitSceneViewerDefault:
@@ -4451,7 +4451,7 @@ InitSceneViewerDefault:
 	call SceneViewerSelectScene ; $60b9
 	call AdvanceFrame ; $60bc
 	jr .clearScroll ; $60bf
-StubNop_0a_60c1:
+StubNop_0a:
 	ret ; $60c1
 UpdateSceneViewerScroll:
 	ld a, [wCameraX + 1] ; $60c2
@@ -4747,7 +4747,7 @@ UpdateCameraFromPlayer:
 	or a ; $629e
 	jr nz, .done ; $629f
 .checkScrollX:
-	ld hl, SpriteList_0a_62eb ; $62a1
+	ld hl, CameraFromPlayerSpriteList ; $62a1
 	ld a, [wCourtSceneGfxCursor] ; $62a4
 	add l ; $62a7
 	ld l, a ; $62a8
@@ -4798,7 +4798,7 @@ UpdateCameraFromPlayer:
 	dec a ; $62e6
 	ld [wCourtSceneGfxStepsLeft], a ; $62e7
 	ret ; $62ea
-SpriteList_0a_62eb:
+CameraFromPlayerSpriteList:
 	; $62eb, 13 bytes (records:4)
 ; 3 records x 4 bytes
 	dw $1000, $0a50 ; record 0
@@ -5467,9 +5467,9 @@ DrawMinigameTarget:
 .readSprite:
 	ld a, [wMinigameTargetWork + 1] ; $66e1
 	add a ; $66e4
-	add LOW(Table_0a_66f6) ; $66e5
+	add LOW(MinigameTargetTable) ; $66e5
 	ld l, a ; $66e7
-	adc HIGH(Table_0a_66f6) ; $66e8
+	adc HIGH(MinigameTargetTable) ; $66e8
 	sub l ; $66ea
 	ld h, a ; $66eb
 	ld a, [hl+] ; $66ec
@@ -5478,7 +5478,7 @@ DrawMinigameTarget:
 	ld hl, SpriteTemplate_0a_670e ; $66ef
 	call QueueSpriteTemplate ; $66f2
 	ret ; $66f5
-Table_0a_66f6:
+MinigameTargetTable:
 	; $66f6, 8 bytes (bytes:8)
 	db $10, $0d, $14, $0f, $18, $0b, $1c, $0e ; 0x00
 Data_0a_66fe:
@@ -5834,119 +5834,119 @@ MinigameTargetScriptOpReturn:
 	and a ; $68dd
 	jr nz, RunMinigameTargetScript.dispatchOp ; $68de
 	ret ; $68e0
-MinigameTargetScript_0a_68e1:
+MinigameTargetFormation0Script0:
 	INCBIN "data/bank_00a/d_68e1.bin" ; $68e1, 10 bytes
-MinigameTargetScript_0a_68eb:
+MinigameTargetFormation0Script1:
 	INCBIN "data/bank_00a/d_68eb.bin" ; $68eb, 10 bytes
-MinigameTargetScript_0a_68f5:
+MinigameTargetFormation0Script2:
 	INCBIN "data/bank_00a/d_68f5.bin" ; $68f5, 10 bytes
-MinigameTargetScript_0a_68ff:
+MinigameTargetFormation0Script3:
 	INCBIN "data/bank_00a/d_68ff.bin" ; $68ff, 33 bytes
-MinigameTargetScript_0a_6920:
+MinigameTargetFormation1Script0:
 	INCBIN "data/bank_00a/d_6920.bin" ; $6920, 10 bytes
-MinigameTargetScript_0a_692a:
+MinigameTargetFormation1Script1:
 	INCBIN "data/bank_00a/d_692a.bin" ; $692a, 10 bytes
-MinigameTargetScript_0a_6934:
+MinigameTargetFormation1Script2:
 	INCBIN "data/bank_00a/d_6934.bin" ; $6934, 10 bytes
-MinigameTargetScript_0a_693e:
+MinigameTargetFormation1Script3:
 	INCBIN "data/bank_00a/d_693e.bin" ; $693e, 10 bytes
-MinigameTargetScript_0a_6948:
+MinigameTargetFormation1Script4:
 	INCBIN "data/bank_00a/d_6948.bin" ; $6948, 10 bytes
-MinigameTargetScript_0a_6952:
+MinigameTargetFormation1Script5:
 	INCBIN "data/bank_00a/d_6952.bin" ; $6952, 10 bytes
-MinigameTargetScript_0a_695c:
+MinigameTargetFormation1Script6:
 	INCBIN "data/bank_00a/d_695c.bin" ; $695c, 10 bytes
-MinigameTargetScript_0a_6966:
+MinigameTargetFormation1Script7:
 	INCBIN "data/bank_00a/d_6966.bin" ; $6966, 33 bytes
-MinigameTargetScript_0a_6987:
+MinigameTargetFormation2Script0:
 	INCBIN "data/bank_00a/d_6987.bin" ; $6987, 10 bytes
-MinigameTargetScript_0a_6991:
+MinigameTargetFormation2Script1:
 	INCBIN "data/bank_00a/d_6991.bin" ; $6991, 10 bytes
-MinigameTargetScript_0a_699b:
+MinigameTargetFormation2Script2:
 	INCBIN "data/bank_00a/d_699b.bin" ; $699b, 10 bytes
-MinigameTargetScript_0a_69a5:
+MinigameTargetFormation2Script3:
 	INCBIN "data/bank_00a/d_69a5.bin" ; $69a5, 10 bytes
-MinigameTargetScript_0a_69af:
+MinigameTargetFormation2Script4:
 	INCBIN "data/bank_00a/d_69af.bin" ; $69af, 10 bytes
-MinigameTargetScript_0a_69b9:
+MinigameTargetFormation2Script5:
 	INCBIN "data/bank_00a/d_69b9.bin" ; $69b9, 10 bytes
-MinigameTargetScript_0a_69c3:
+MinigameTargetFormation2Script6:
 	INCBIN "data/bank_00a/d_69c3.bin" ; $69c3, 10 bytes
-MinigameTargetScript_0a_69cd:
+MinigameTargetFormation2Script7:
 	INCBIN "data/bank_00a/d_69cd.bin" ; $69cd, 144 bytes
-MinigameTargetScript_0a_6a5d:
+MinigameTargetFormation3Script00:
 	INCBIN "data/bank_00a/d_6a5d.bin" ; $6a5d, 10 bytes
-MinigameTargetScript_0a_6a67:
+MinigameTargetFormation3Script01:
 	INCBIN "data/bank_00a/d_6a67.bin" ; $6a67, 10 bytes
-MinigameTargetScript_0a_6a71:
+MinigameTargetFormation3Script02:
 	INCBIN "data/bank_00a/d_6a71.bin" ; $6a71, 10 bytes
-MinigameTargetScript_0a_6a7b:
+MinigameTargetFormation3Script03:
 	INCBIN "data/bank_00a/d_6a7b.bin" ; $6a7b, 10 bytes
-MinigameTargetScript_0a_6a85:
+MinigameTargetFormation3Script04:
 	INCBIN "data/bank_00a/d_6a85.bin" ; $6a85, 10 bytes
-MinigameTargetScript_0a_6a8f:
+MinigameTargetFormation3Script05:
 	INCBIN "data/bank_00a/d_6a8f.bin" ; $6a8f, 10 bytes
-MinigameTargetScript_0a_6a99:
+MinigameTargetFormation3Script06:
 	INCBIN "data/bank_00a/d_6a99.bin" ; $6a99, 10 bytes
-MinigameTargetScript_0a_6aa3:
+MinigameTargetFormation3Script07:
 	INCBIN "data/bank_00a/d_6aa3.bin" ; $6aa3, 10 bytes
-MinigameTargetScript_0a_6aad:
+MinigameTargetFormation3Script08:
 	INCBIN "data/bank_00a/d_6aad.bin" ; $6aad, 10 bytes
-MinigameTargetScript_0a_6ab7:
+MinigameTargetFormation3Script09:
 	INCBIN "data/bank_00a/d_6ab7.bin" ; $6ab7, 10 bytes
-MinigameTargetScript_0a_6ac1:
+MinigameTargetFormation3Script10:
 	INCBIN "data/bank_00a/d_6ac1.bin" ; $6ac1, 10 bytes
-MinigameTargetScript_0a_6acb:
+MinigameTargetFormation3Script11:
 	INCBIN "data/bank_00a/d_6acb.bin" ; $6acb, 70 bytes
-MinigameTargetScript_0a_6b11:
+MinigameTargetFormation4Script00:
 	INCBIN "data/bank_00a/d_6b11.bin" ; $6b11, 10 bytes
-MinigameTargetScript_0a_6b1b:
+MinigameTargetFormation4Script01:
 	INCBIN "data/bank_00a/d_6b1b.bin" ; $6b1b, 10 bytes
-MinigameTargetScript_0a_6b25:
+MinigameTargetFormation4Script02:
 	INCBIN "data/bank_00a/d_6b25.bin" ; $6b25, 10 bytes
-MinigameTargetScript_0a_6b2f:
+MinigameTargetFormation4Script03:
 	INCBIN "data/bank_00a/d_6b2f.bin" ; $6b2f, 10 bytes
-MinigameTargetScript_0a_6b39:
+MinigameTargetFormation4Script04:
 	INCBIN "data/bank_00a/d_6b39.bin" ; $6b39, 10 bytes
-MinigameTargetScript_0a_6b43:
+MinigameTargetFormation4Script05:
 	INCBIN "data/bank_00a/d_6b43.bin" ; $6b43, 10 bytes
-MinigameTargetScript_0a_6b4d:
+MinigameTargetFormation4Script06:
 	INCBIN "data/bank_00a/d_6b4d.bin" ; $6b4d, 10 bytes
-MinigameTargetScript_0a_6b57:
+MinigameTargetFormation4Script07:
 	INCBIN "data/bank_00a/d_6b57.bin" ; $6b57, 10 bytes
-MinigameTargetScript_0a_6b61:
+MinigameTargetFormation4Script08:
 	INCBIN "data/bank_00a/d_6b61.bin" ; $6b61, 10 bytes
-MinigameTargetScript_0a_6b6b:
+MinigameTargetFormation4Script09:
 	INCBIN "data/bank_00a/d_6b6b.bin" ; $6b6b, 10 bytes
-MinigameTargetScript_0a_6b75:
+MinigameTargetFormation4Script10:
 	INCBIN "data/bank_00a/d_6b75.bin" ; $6b75, 10 bytes
-MinigameTargetScript_0a_6b7f:
+MinigameTargetFormation4Script11:
 	INCBIN "data/bank_00a/d_6b7f.bin" ; $6b7f, 42 bytes
-MinigameTargetScript_0a_6ba9:
+MinigameTargetFormation5Script0:
 	INCBIN "data/bank_00a/d_6ba9.bin" ; $6ba9, 10 bytes
-MinigameTargetScript_0a_6bb3:
+MinigameTargetFormation5Script1:
 	INCBIN "data/bank_00a/d_6bb3.bin" ; $6bb3, 35 bytes
-MinigameTargetScript_0a_6bd6:
+MinigameTargetFormation6Script0:
 	INCBIN "data/bank_00a/d_6bd6.bin" ; $6bd6, 10 bytes
-MinigameTargetScript_0a_6be0:
+MinigameTargetFormation6Script1:
 	INCBIN "data/bank_00a/d_6be0.bin" ; $6be0, 10 bytes
-MinigameTargetScript_0a_6bea:
+MinigameTargetFormation6Script2:
 	INCBIN "data/bank_00a/d_6bea.bin" ; $6bea, 38 bytes
-MinigameTargetScript_0a_6c10:
+MinigameTargetFormation7Script0:
 	INCBIN "data/bank_00a/d_6c10.bin" ; $6c10, 10 bytes
-MinigameTargetScript_0a_6c1a:
+MinigameTargetFormation7Script1:
 	INCBIN "data/bank_00a/d_6c1a.bin" ; $6c1a, 10 bytes
-MinigameTargetScript_0a_6c24:
+MinigameTargetFormation7Script2:
 	INCBIN "data/bank_00a/d_6c24.bin" ; $6c24, 10 bytes
-MinigameTargetScript_0a_6c2e:
+MinigameTargetFormation7Script3:
 	INCBIN "data/bank_00a/d_6c2e.bin" ; $6c2e, 37 bytes
-MinigameTargetScript_0a_6c53:
+MinigameTargetFormation8Script0:
 	INCBIN "data/bank_00a/d_6c53.bin" ; $6c53, 10 bytes
-MinigameTargetScript_0a_6c5d:
+MinigameTargetFormation8Script1:
 	INCBIN "data/bank_00a/d_6c5d.bin" ; $6c5d, 10 bytes
-MinigameTargetScript_0a_6c67:
+MinigameTargetFormation8Script2:
 	INCBIN "data/bank_00a/d_6c67.bin" ; $6c67, 10 bytes
-MinigameTargetScript_0a_6c71:
+MinigameTargetFormation8Script3:
 	INCBIN "data/bank_00a/d_6c71.bin" ; $6c71, 10 bytes
 SpawnMinigameTargetFormation:
 	ld a, a ; $6c7b
@@ -5961,124 +5961,124 @@ SpawnMinigameTargetFormation:
 	dw SpawnMinigameTargetFormation7 ; $6c8b jumptable
 	dw SpawnMinigameTargetFormation8 ; $6c8d jumptable
 SpawnMinigameTargetFormation0:
-	ld hl, MinigameTargetScriptPtrs_0a_6c96 ; $6c8f
+	ld hl, MinigameTargetFormation0ScriptPtrs ; $6c8f
 	call SpawnMinigameTargetsFromList ; $6c92
 	ret ; $6c95
-MinigameTargetScriptPtrs_0a_6c96:
+MinigameTargetFormation0ScriptPtrs:
 	; $6c96, 10 bytes (records:2)
-	dw MinigameTargetScript_0a_68e1 ; record 0
-	dw MinigameTargetScript_0a_68eb ; record 1
-	dw MinigameTargetScript_0a_68f5 ; record 2
-	dw MinigameTargetScript_0a_68ff ; record 3
+	dw MinigameTargetFormation0Script0 ; record 0
+	dw MinigameTargetFormation0Script1 ; record 1
+	dw MinigameTargetFormation0Script2 ; record 2
+	dw MinigameTargetFormation0Script3 ; record 3
 	dw $0000 ; record 4
 SpawnMinigameTargetFormation1:
-	ld hl, MinigameTargetScriptPtrs_0a_6ca7 ; $6ca0
+	ld hl, MinigameTargetFormation1ScriptPtrs ; $6ca0
 	call SpawnMinigameTargetsFromList ; $6ca3
 	ret ; $6ca6
-MinigameTargetScriptPtrs_0a_6ca7:
+MinigameTargetFormation1ScriptPtrs:
 	; $6ca7, 18 bytes (records:2)
-	dw MinigameTargetScript_0a_6920 ; record 0
-	dw MinigameTargetScript_0a_692a ; record 1
-	dw MinigameTargetScript_0a_6934 ; record 2
-	dw MinigameTargetScript_0a_693e ; record 3
-	dw MinigameTargetScript_0a_6948 ; record 4
-	dw MinigameTargetScript_0a_6952 ; record 5
-	dw MinigameTargetScript_0a_695c ; record 6
-	dw MinigameTargetScript_0a_6966 ; record 7
+	dw MinigameTargetFormation1Script0 ; record 0
+	dw MinigameTargetFormation1Script1 ; record 1
+	dw MinigameTargetFormation1Script2 ; record 2
+	dw MinigameTargetFormation1Script3 ; record 3
+	dw MinigameTargetFormation1Script4 ; record 4
+	dw MinigameTargetFormation1Script5 ; record 5
+	dw MinigameTargetFormation1Script6 ; record 6
+	dw MinigameTargetFormation1Script7 ; record 7
 	dw $0000 ; record 8
 SpawnMinigameTargetFormation2:
-	ld hl, MinigameTargetScriptPtrs_0a_6cc0 ; $6cb9
+	ld hl, MinigameTargetFormation2ScriptPtrs ; $6cb9
 	call SpawnMinigameTargetsFromList ; $6cbc
 	ret ; $6cbf
-MinigameTargetScriptPtrs_0a_6cc0:
+MinigameTargetFormation2ScriptPtrs:
 	; $6cc0, 18 bytes (records:2)
-	dw MinigameTargetScript_0a_6987 ; record 0
-	dw MinigameTargetScript_0a_6991 ; record 1
-	dw MinigameTargetScript_0a_699b ; record 2
-	dw MinigameTargetScript_0a_69a5 ; record 3
-	dw MinigameTargetScript_0a_69af ; record 4
-	dw MinigameTargetScript_0a_69b9 ; record 5
-	dw MinigameTargetScript_0a_69c3 ; record 6
-	dw MinigameTargetScript_0a_69cd ; record 7
+	dw MinigameTargetFormation2Script0 ; record 0
+	dw MinigameTargetFormation2Script1 ; record 1
+	dw MinigameTargetFormation2Script2 ; record 2
+	dw MinigameTargetFormation2Script3 ; record 3
+	dw MinigameTargetFormation2Script4 ; record 4
+	dw MinigameTargetFormation2Script5 ; record 5
+	dw MinigameTargetFormation2Script6 ; record 6
+	dw MinigameTargetFormation2Script7 ; record 7
 	dw $0000 ; record 8
 SpawnMinigameTargetFormation3:
-	ld hl, MinigameTargetScriptPtrs_0a_6cd9 ; $6cd2
+	ld hl, MinigameTargetFormation3ScriptPtrs ; $6cd2
 	call SpawnMinigameTargetsFromList ; $6cd5
 	ret ; $6cd8
-MinigameTargetScriptPtrs_0a_6cd9:
+MinigameTargetFormation3ScriptPtrs:
 	; $6cd9, 26 bytes (records:2)
-	dw MinigameTargetScript_0a_6a5d ; record 0
-	dw MinigameTargetScript_0a_6a67 ; record 1
-	dw MinigameTargetScript_0a_6a71 ; record 2
-	dw MinigameTargetScript_0a_6a7b ; record 3
-	dw MinigameTargetScript_0a_6a85 ; record 4
-	dw MinigameTargetScript_0a_6a8f ; record 5
-	dw MinigameTargetScript_0a_6a99 ; record 6
-	dw MinigameTargetScript_0a_6aa3 ; record 7
-	dw MinigameTargetScript_0a_6aad ; record 8
-	dw MinigameTargetScript_0a_6ab7 ; record 9
-	dw MinigameTargetScript_0a_6ac1 ; record 10
-	dw MinigameTargetScript_0a_6acb ; record 11
+	dw MinigameTargetFormation3Script00 ; record 0
+	dw MinigameTargetFormation3Script01 ; record 1
+	dw MinigameTargetFormation3Script02 ; record 2
+	dw MinigameTargetFormation3Script03 ; record 3
+	dw MinigameTargetFormation3Script04 ; record 4
+	dw MinigameTargetFormation3Script05 ; record 5
+	dw MinigameTargetFormation3Script06 ; record 6
+	dw MinigameTargetFormation3Script07 ; record 7
+	dw MinigameTargetFormation3Script08 ; record 8
+	dw MinigameTargetFormation3Script09 ; record 9
+	dw MinigameTargetFormation3Script10 ; record 10
+	dw MinigameTargetFormation3Script11 ; record 11
 	dw $0000 ; record 12
 SpawnMinigameTargetFormation4:
-	ld hl, MinigameTargetScriptPtrs_0a_6cfa ; $6cf3
+	ld hl, MinigameTargetFormation4ScriptPtrs ; $6cf3
 	call SpawnMinigameTargetsFromList ; $6cf6
 	ret ; $6cf9
-MinigameTargetScriptPtrs_0a_6cfa:
+MinigameTargetFormation4ScriptPtrs:
 	; $6cfa, 26 bytes (records:2)
-	dw MinigameTargetScript_0a_6b11 ; record 0
-	dw MinigameTargetScript_0a_6b1b ; record 1
-	dw MinigameTargetScript_0a_6b25 ; record 2
-	dw MinigameTargetScript_0a_6b2f ; record 3
-	dw MinigameTargetScript_0a_6b39 ; record 4
-	dw MinigameTargetScript_0a_6b43 ; record 5
-	dw MinigameTargetScript_0a_6b4d ; record 6
-	dw MinigameTargetScript_0a_6b57 ; record 7
-	dw MinigameTargetScript_0a_6b61 ; record 8
-	dw MinigameTargetScript_0a_6b6b ; record 9
-	dw MinigameTargetScript_0a_6b75 ; record 10
-	dw MinigameTargetScript_0a_6b7f ; record 11
+	dw MinigameTargetFormation4Script00 ; record 0
+	dw MinigameTargetFormation4Script01 ; record 1
+	dw MinigameTargetFormation4Script02 ; record 2
+	dw MinigameTargetFormation4Script03 ; record 3
+	dw MinigameTargetFormation4Script04 ; record 4
+	dw MinigameTargetFormation4Script05 ; record 5
+	dw MinigameTargetFormation4Script06 ; record 6
+	dw MinigameTargetFormation4Script07 ; record 7
+	dw MinigameTargetFormation4Script08 ; record 8
+	dw MinigameTargetFormation4Script09 ; record 9
+	dw MinigameTargetFormation4Script10 ; record 10
+	dw MinigameTargetFormation4Script11 ; record 11
 	dw $0000 ; record 12
 SpawnMinigameTargetFormation5:
-	ld hl, MinigameTargetScriptPtrs_0a_6d1b ; $6d14
+	ld hl, MinigameTargetFormation5ScriptPtrs ; $6d14
 	call SpawnMinigameTargetsFromList ; $6d17
 	ret ; $6d1a
-MinigameTargetScriptPtrs_0a_6d1b:
+MinigameTargetFormation5ScriptPtrs:
 	; $6d1b, 6 bytes (records:2)
-	dw MinigameTargetScript_0a_6ba9 ; record 0
-	dw MinigameTargetScript_0a_6bb3 ; record 1
+	dw MinigameTargetFormation5Script0 ; record 0
+	dw MinigameTargetFormation5Script1 ; record 1
 	dw $0000 ; record 2
 SpawnMinigameTargetFormation6:
-	ld hl, MinigameTargetScriptPtrs_0a_6d28 ; $6d21
+	ld hl, MinigameTargetFormation6ScriptPtrs ; $6d21
 	call SpawnMinigameTargetsFromList ; $6d24
 	ret ; $6d27
-MinigameTargetScriptPtrs_0a_6d28:
+MinigameTargetFormation6ScriptPtrs:
 	; $6d28, 8 bytes (records:2)
-	dw MinigameTargetScript_0a_6bd6 ; record 0
-	dw MinigameTargetScript_0a_6be0 ; record 1
-	dw MinigameTargetScript_0a_6bea ; record 2
+	dw MinigameTargetFormation6Script0 ; record 0
+	dw MinigameTargetFormation6Script1 ; record 1
+	dw MinigameTargetFormation6Script2 ; record 2
 	dw $0000 ; record 3
 SpawnMinigameTargetFormation7:
-	ld hl, MinigameTargetScriptPtrs_0a_6d37 ; $6d30
+	ld hl, MinigameTargetFormation7ScriptPtrs ; $6d30
 	call SpawnMinigameTargetsFromList ; $6d33
 	ret ; $6d36
-MinigameTargetScriptPtrs_0a_6d37:
+MinigameTargetFormation7ScriptPtrs:
 	; $6d37, 10 bytes (records:2)
-	dw MinigameTargetScript_0a_6c10 ; record 0
-	dw MinigameTargetScript_0a_6c1a ; record 1
-	dw MinigameTargetScript_0a_6c24 ; record 2
-	dw MinigameTargetScript_0a_6c2e ; record 3
+	dw MinigameTargetFormation7Script0 ; record 0
+	dw MinigameTargetFormation7Script1 ; record 1
+	dw MinigameTargetFormation7Script2 ; record 2
+	dw MinigameTargetFormation7Script3 ; record 3
 	dw $0000 ; record 4
 SpawnMinigameTargetFormation8:
-	ld hl, MinigameTargetScriptPtrs_0a_6d48 ; $6d41
+	ld hl, MinigameTargetFormation8ScriptPtrs ; $6d41
 	call SpawnMinigameTargetsFromList ; $6d44
 	ret ; $6d47
-MinigameTargetScriptPtrs_0a_6d48:
+MinigameTargetFormation8ScriptPtrs:
 	; $6d48, 10 bytes (records:2)
-	dw MinigameTargetScript_0a_6c53 ; record 0
-	dw MinigameTargetScript_0a_6c5d ; record 1
-	dw MinigameTargetScript_0a_6c67 ; record 2
-	dw MinigameTargetScript_0a_6c71 ; record 3
+	dw MinigameTargetFormation8Script0 ; record 0
+	dw MinigameTargetFormation8Script1 ; record 1
+	dw MinigameTargetFormation8Script2 ; record 2
+	dw MinigameTargetFormation8Script3 ; record 3
 	dw $0000 ; record 4
 SpawnMinigameTargetsFromList:
 	ld bc, $dc00 ; $6d52
@@ -6130,9 +6130,9 @@ DrawMinigameTargetAlt:
 .readSprite:
 	ld a, [wMinigameTargetWork + 1] ; $6d90
 	add a ; $6d93
-	add LOW(Table_0a_6da5) ; $6d94
+	add LOW(MinigameTargetAltTable) ; $6d94
 	ld l, a ; $6d96
-	adc HIGH(Table_0a_6da5) ; $6d97
+	adc HIGH(MinigameTargetAltTable) ; $6d97
 	sub l ; $6d99
 	ld h, a ; $6d9a
 	ld a, [hl+] ; $6d9b
@@ -6141,7 +6141,7 @@ DrawMinigameTargetAlt:
 	ld hl, SpriteTemplate_0a_6dbd ; $6d9e
 	call QueueSpriteTemplate ; $6da1
 	ret ; $6da4
-Table_0a_6da5:
+MinigameTargetAltTable:
 	; $6da5, 8 bytes (bytes:8)
 	db $10, $0f, $20, $0e, $30, $0d, $20, $0f ; 0x00
 Data_0a_6dad:
@@ -6218,7 +6218,7 @@ CheckBallHitsMinigameTargetAlt:
 	set 2, [hl] ; $6e3d
 .done:
 	ret ; $6e3f
-TileList_0a_6e40:
+EndingCreditsSequenceTileList:
 	; $6e40, 44 bytes (records:2)
 	dw $011e ; record 0
 	dw $011f ; record 1
@@ -6242,7 +6242,7 @@ TileList_0a_6e40:
 	dw $0a1d ; record 19
 	dw $011c ; record 20
 	dw $ffff ; record 21
-Palette_0a_6e6c:
+EndingCreditsSequencePalette:
 	INCLUDE "data/bank_00a/palettes_6e6c.asm" ; $6e6c, 8 bytes (palettes)
 RunEndingCreditsSequence:
 	ld c, $04 ; $6e74
@@ -6251,7 +6251,7 @@ RunEndingCreditsSequence:
 	set_flag FLAG_ENDING_CREDITS_RUNNING ; $6e7c
 	sound $2c ; $6e7f
 	farcall LoadMenuFontGfx ; $6e81
-	ld hl, Palette_0a_6e6c ; $6e84
+	ld hl, EndingCreditsSequencePalette ; $6e84
 	ld de, $0001 ; $6e87
 	call LoadPalettesMasterOnly ; $6e8a
 	xor a ; $6e8d
@@ -6260,9 +6260,9 @@ RunEndingCreditsSequence:
 	call ClearFrameTasks ; $6e91
 	ld a, [wStoryCharacterSlot] ; $6e94
 	add a ; $6e97
-	add LOW(TileList_0a_6e40) ; $6e98
+	add LOW(EndingCreditsSequenceTileList) ; $6e98
 	ld l, a ; $6e9a
-	adc HIGH(TileList_0a_6e40) ; $6e9b
+	adc HIGH(EndingCreditsSequenceTileList) ; $6e9b
 	sub l ; $6e9d
 	ld h, a ; $6e9e
 	ld a, [hl+] ; $6e9f
@@ -6347,7 +6347,7 @@ FreezeAllActors:
 	jp nz, .actorLoop ; $6f3e
 	set_flag FLAG_ACTORS_FROZEN ; $6f41
 	ret ; $6f44
-Unused_0a_6f45:
+Unused_0a_2:
 	; $6f45, 4 bytes (bytes:4)
 	db $df, $3a, $03, $c9 ; 0x00
 	; $6f49, 4279 bytes fill to bank end (linker-padded)

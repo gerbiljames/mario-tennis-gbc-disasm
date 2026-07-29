@@ -485,7 +485,7 @@ RunDebugExpEditor:
 	farcall CreateWindow ; $43bd
 	ld [wPauseMenuWindowId], a ; $43c0
 	farcall RestoreShadowTilemap ; $43c3
-	farcall StubNop_05_4626 ; $43c6
+	farcall StubNop_05_0 ; $43c6
 	ld c, $00 ; $43c9
 .loop:
 	ld hl, wStoryMainCharExp ; $43cb
@@ -511,7 +511,7 @@ RunDebugExpEditor:
 	ld a, [wPauseMenuWindowId] ; $43f9
 	farcall WriteStringToWindow ; $43fc
 	farcall RestoreShadowTilemap ; $43ff
-	farcall StubNop_05_4626 ; $4402
+	farcall StubNop_05_0 ; $4402
 	call AdvanceFrame ; $4405
 	ldh a, [hPlayerInputFlags] ; $4408
 	and PADF_A ; $440a
@@ -628,11 +628,11 @@ ShowExpGainScreen:
 	jr nz, .done ; $450e
 	call DrawExpScreenYesNoBox ; $4510
 	ld a, $0e ; $4513
-	ld hl, StubNop_1a_4779 ; $4515
+	ld hl, StubNop_1a_0 ; $4515
 	call RegisterFrameTask ; $4518
-	call StubNop_1a_4bb9 ; $451b
+	call StubNop_1a_1 ; $451b
 	jp .queueVRAMCopy ; $451e
-	call StubNop_1a_4bba ; $4521
+	call StubNop_1a_2 ; $4521
 	jp .queueVRAMCopy ; $4524
 .done:
 	pop af ; $4527
@@ -941,7 +941,7 @@ ShowExpGainScreen:
 	pop de ; $4776
 	pop bc ; $4777
 	ret ; $4778
-StubNop_1a_4779:
+StubNop_1a_0:
 	ret ; $4779
 ExpScreenDrawTask:
 	push af ; $477a
@@ -1464,9 +1464,9 @@ ClearExpScreenNameBox:
 	pop bc ; $4bb6
 	pop af ; $4bb7
 	ret ; $4bb8
-StubNop_1a_4bb9:
+StubNop_1a_1:
 	ret ; $4bb9
-StubNop_1a_4bba:
+StubNop_1a_2:
 	ret ; $4bba
 DrawPositionedStringToTileBuffer:
 	push af ; $4bbb
@@ -2618,7 +2618,7 @@ DrawExpBonusMessage:
 	and $fe ; $551d
 	ld [wExpScreenFlags], a ; $551f
 	ret ; $5522
-Padding_1a_5523:
+Padding_1a:
 	; $5523, 13 bytes (fill)
 	ds 13, $00
 ExpScreenGfx0:
@@ -2719,10 +2719,10 @@ RunDebugCharViewer:
 RunCharViewerSelectGrid:
 	wram_bank $06 ; $686c
 	xor a ; $6872
-	ld hl, Palette_1a_70d9 ; $6873
+	ld hl, Palette_1a_0 ; $6873
 	ld de, $0008 ; $6876
 	call LoadPaletteShadow ; $6879
-	ld hl, Palette_1a_70d9 ; $687c
+	ld hl, Palette_1a_0 ; $687c
 	ld de, $0808 ; $687f
 	call LoadPaletteShadow ; $6882
 	wram_bank $01 ; $6885
@@ -3046,7 +3046,7 @@ LoadCharViewerScreen:
 	call QueueVRAMCopy ; $6b51
 	ret ; $6b54
 LoadCharViewerScreenGfx:
-	ld hl, Palette_1a_70d9 ; $6b55
+	ld hl, Palette_1a_0 ; $6b55
 	ld de, $0008 ; $6b58
 	call LoadPaletteShadow ; $6b5b
 	wram_bank $01 ; $6b5e
@@ -3665,7 +3665,7 @@ ApplyCharViewerPalette:
 	ld de, $0f01 ; $70d2
 	farcall LoadIndexedPaletteThunk ; $70d5
 	ret ; $70d8
-Palette_1a_70d9:
+Palette_1a_0:
 	INCLUDE "data/bank_01a/palettes_70d9.asm" ; $70d9, 64 bytes (palettes)
 CharViewerScreenGfx0:
 	INCBIN "data/bank_01a/d_7119.bin" ; $7119, 1636 bytes
@@ -3972,7 +3972,7 @@ CharDataScreen_BuildStats:
 	farcall RefreshMainCharacterStats ; $7b81
 	ret ; $7b84
 CharDataScreen_LoadGfx:
-	ld hl, Palette_1a_7e7e ; $7b85
+	ld hl, CharDataScreen_LoadPalette ; $7b85
 	ld de, $0c02 ; $7b88
 	call LoadPaletteShadow ; $7b8b
 	wram_bank $01 ; $7b8e
@@ -4341,7 +4341,7 @@ CharDataConfirmScreenGfx1:
 	INCBIN "data/bank_01a/d_7e53.bin" ; $7e53, 34 bytes
 CharDataConfirmScreenGfx2:
 	INCBIN "data/bank_01a/d_7e75.bin" ; $7e75, 9 bytes
-Palette_1a_7e7e:
+CharDataScreen_LoadPalette:
 	INCLUDE "data/bank_01a/palettes_7e7e.asm" ; $7e7e, 16 bytes (palettes)
 CharDataScreenGfx0:
 	INCBIN "data/bank_01a/d_7e8e.bin" ; $7e8e, 11 bytes
