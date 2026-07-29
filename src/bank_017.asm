@@ -985,7 +985,7 @@ ShowCourtDiagramTestScreen:
 DrawBriefingCaption:
 	call ClearBriefingCaptionTilemap ; $4654
 	farcall PrepareGlyphBuffer ; $4657
-	ld de, $d181 ; $465a
+	ld de, wShadowTilemap + 12 * TILEMAP_WIDTH + 1 ; $465a
 	ld c, $12 ; $465d
 	farcall RenderProportionalTextAt ; $465f
 	farcall UploadGlyphBuffer ; $4662
@@ -1432,16 +1432,16 @@ ClearBriefingCaptionTilemap:
 	push bc ; $49cf
 	push de ; $49d0
 	push hl ; $49d1
-	ld de, $d160 ; $49d2
+	ld de, wShadowTilemap + 11 * TILEMAP_WIDTH ; $49d2
 	ld b, $14 ; $49d5
 	ld c, $01 ; $49d7
 	ld h, $03 ; $49d9
 	farcall FillTilemapRect ; $49db
 	ld a, $02 ; $49de
-	ld [$d160], a ; $49e0
+	ld [wShadowTilemap + 11 * TILEMAP_WIDTH], a ; $49e0
 	ld a, $04 ; $49e3
-	ld [$d173], a ; $49e5
-	ld de, $d181 ; $49e8
+	ld [wShadowTilemap + 11 * TILEMAP_WIDTH + 19], a ; $49e5
+	ld de, wShadowTilemap + 12 * TILEMAP_WIDTH + 1 ; $49e8
 	ld b, $12 ; $49eb
 	ld c, $05 ; $49ed
 	ld h, $20 ; $49ef
@@ -1452,7 +1452,7 @@ ClearBriefingCaptionTilemap:
 	pop af ; $49f7
 	ret ; $49f8
 QueueCaptionRowToVRAM:
-	ld hl, $d160 ; $49f9
+	ld hl, wShadowTilemap + 11 * TILEMAP_WIDTH ; $49f9
 	ld de, $9960 ; $49fc
 	ld c, $0c ; $49ff
 	call QueueVRAMCopy ; $4a01
@@ -1475,8 +1475,8 @@ RestoreDiagramServiceBoxes:
 	push bc ; $4a33
 	push de ; $4a34
 	push hl ; $4a35
-	ld hl, $d246 ; $4a36
-	ld de, $d067 ; $4a39
+	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH + 6 ; $4a36
+	ld de, wShadowTilemap + 3 * TILEMAP_WIDTH + 7 ; $4a39
 	ld c, $06 ; $4a3c
 	ld b, $06 ; $4a3e
 	farcall CopyTilemapRect ; $4a40
@@ -1486,7 +1486,7 @@ RestoreDiagramServiceBoxes:
 	pop af ; $4a46
 	ret ; $4a47
 QueueDiagramServiceBoxesToVRAM:
-	ld hl, $d060 ; $4a48
+	ld hl, wShadowTilemap + 3 * TILEMAP_WIDTH ; $4a48
 	ld de, $9860 ; $4a4b
 	ld c, $0c ; $4a4e
 	call QueueVRAMCopy ; $4a50
