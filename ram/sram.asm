@@ -3,6 +3,12 @@
 
 SECTION "SRAM bank 0", SRAM[$a000], BANK[0]
 
+; SRAM bank 0 at a glance -- regenerated, see ram_unions.json:
+;
+;   $a020-$a03e  save engine
+;   $a040-$a05f  save engine
+;   $a060-$a76e  save engine
+
 	ds 32
 
 ; Battery-save header fields (SRAM bank 0), owned by the bank $03 save

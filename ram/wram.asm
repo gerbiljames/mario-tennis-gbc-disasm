@@ -2340,6 +2340,10 @@ ENDU
 
 SECTION "WRAMX bank 1", WRAMX[$d000], BANK[1]
 
+; WRAMX bank 1 at a glance -- regenerated, see ram_unions.json:
+;
+;   $d000-$dfff  character record copy / VRAM staging
+
 ; WRAM bank $01 is staging for VRAM, and almost nothing else: every screen
 ; in the game decompresses into it and then QueueVRAMCopies out of it.
 ; What a given offset means therefore depends on what the current screen
@@ -2368,6 +2372,14 @@ ENDU
 
 
 SECTION "WRAMX bank 2", WRAMX[$d000], BANK[2]
+
+; WRAMX bank 2 at a glance -- regenerated, see ram_unions.json:
+;
+;   $d000-$dfff  match court planes / overworld scroll buffers / screen attribute plane
+;   $d400-$d7df  wCharDataPagePlane  [mirrored with bank 3]
+;   $d7e0-$da1f  wCharDataPageSlot1  [mirrored with bank 3]
+;   $da20-$dc5f  wCharDataPageSlot2  [mirrored with bank 3]
+;   $dc60-$de9f  wCharDataPageSlot3  [mirrored with bank 3]
 
 ; WRAM bank $02 holds tilemap planes, and until now not one byte of it had
 ; a name -- it was the only WRAMX bank with no SECTION at all. Three
@@ -2408,6 +2420,23 @@ ENDU
 
 
 SECTION "WRAMX bank 3", WRAMX[$d000], BANK[3]
+
+; WRAMX bank 3 at a glance -- regenerated, see ram_unions.json:
+;
+;   $d000-$d7ff  screen tilemap
+;   $d400-$d7df  wCharDataPagePlane  [mirrored with bank 2]
+;   $d7e0-$da1f  wCharDataPageSlot1  [mirrored with bank 2]
+;   $d800-$d80f  7 overlays: equipment select / name entry / match results / +4 more
+;   $d810-$d83e  4 overlays: drill briefings / character-select grid / equipment select / +1 more
+;   $d840-$d867  character unlock flags / ranking board
+;   $d900-$daff  created characters and the character grid / N64 transfer records / screen sequences
+;   $da20-$dc5f  wCharDataPageSlot2  [mirrored with bank 2]
+;   $db00-$dbff  chart rows
+;   $dc00-$dc13  rules screen / N64 exhibition and Mario-cast charts / rules screen
+;   $dc40-$dc4f  ring-shot results
+;   $dc60-$de9f  wCharDataPageSlot3  [mirrored with bank 2]
+;   $de00-$de00  character select
+;   $df00-$df00  character select
 
 ; Screen tilemap buffers, WRAM bank $03. The full-screen UIs assemble their
 ; BG map at $d000 and its CGB attributes at $d400 -- 32 x 32 cells each, rows
@@ -2746,6 +2775,19 @@ wCharGridHandedness:: db
 
 SECTION "WRAMX bank 4", WRAMX[$d000], BANK[4]
 
+; WRAMX bank 4 at a glance -- regenerated, see ram_unions.json:
+;
+;   $d000-$d5ff  overworld actors
+;   $da00-$da31  actor engine
+;   $dac0-$dae9  actor engine
+;   $daea-$daf7  actor engine
+;   $dc00-$dc7f  minigames
+;   $dcf0-$dcff  minigame targets
+;   $dd00-$dd23  match ball history ring
+;   $dd80-$ddcf  match object slots
+;   $ddf0-$ddff  match object slots
+;   $de00-$de1f  match ball sprite slots
+
 ; Overworld / story actor slots (WRAM bank $04): 24 records of ACTOR_SIZE
 ; bytes, the array SpawnActor allocates from and the bank $04 engine walks
 ; once a frame. Scoped to a provable WRAM bank $04 -- $d000 is eight
@@ -2974,6 +3016,15 @@ wBallTrailSlots:: ds 20
 
 SECTION "WRAMX bank 5", WRAMX[$d000], BANK[5]
 
+; WRAMX bank 5 at a glance -- regenerated, see ram_unions.json:
+;
+;   $d000-$d7ff  window shadow tilemap
+;   $d810-$d83e  window / menu engine
+;   $d841-$d87f  text and window engine
+;   $d880-$d88f  short-text fetch
+;   $d8b0-$d8ff  text argument queues
+;   $dc00-$dc7f  window system
+
 ; Shadow tilemap for text windows (WRAM bank $05). The same 32 x 32 cell
 ; plane plus CGB attribute plane the full-screen UIs keep in WRAM bank
 ; $03, but owned by the window engine: ResetTextWindowState clears both
@@ -3156,6 +3207,13 @@ wSavedWindowStruct:: ds 8
 
 
 SECTION "WRAMX bank 6", WRAMX[$d000], BANK[6]
+
+; WRAMX bank 6 at a glance -- regenerated, see ram_unions.json:
+;
+;   $d000-$d029  6 overlays: star warp transition / debug character viewer / results continue prompt / +3 more
+;   $d02a-$d219  8 overlays: star warp transition / trophy EXP awards / character-data screen / +5 more
+;   $d230-$d259  scrolling text screen / EXP award screen
+;   $d400-$d5ff  story slot signatures / unlock flags block
 
 ; Character-data (level-up) screen working set, WRAM bank $06, shared by
 ; the bank $1a/$1c/$1d screen code. The first four bytes are a smaller
@@ -3455,6 +3513,14 @@ ENDU
 
 
 SECTION "WRAMX bank 7", WRAMX[$d000], BANK[7]
+
+; WRAMX bank 7 at a glance -- regenerated, see ram_unions.json:
+;
+;   $d000-$d01f  sound driver
+;   $d02a-$d219  sound engine
+;   $d300-$daff  text glyph tiles / save-block staging
+;   $db26-$db27  story-data confirm menu
+;   $de00-$de1f  minigame record parameter
 
 ; Where the shared HRAM pool goes during an audio update (WRAM bank $07).
 ; Scoped to RunSoundEngine itself: bank $05 and the boot path also load

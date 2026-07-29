@@ -558,3 +558,23 @@ teammates whose depths are within $200 of each other get targets exactly $200
 apart, centered on the pair's midpoint but never closer than $100 to the net;
 pairs already $200+ apart keep their positions. Singles skips this entirely
 (the jumptable's count-1/count-2 slots point at a bank-0 `ret`).
+
+### Reading a bank at a glance
+
+Each banked `SECTION` in the generated `ram/*.asm` opens with a one-line-per-
+region summary. A bank is 4 KiB of overlapping claims — bank `$03` alone has 99
+symbols across 19 overlay variants — so the section body tells you what is there
+only once you have read all of it:
+
+```
+; WRAMX bank 2 at a glance -- regenerated, see ram_unions.json:
+;
+;   $d000-$dfff  match court planes / overworld scroll buffers / screen attribute plane
+;   $d400-$d7df  wCharDataPagePlane  [mirrored with bank 3]
+;   $d7e0-$da1f  wCharDataPageSlot1  [mirrored with bank 3]
+```
+
+Overlay variants collapse to their `context` strings; a range with more than
+three lists the first three and a count. This is also the only place mirrored
+structures appear in the layout at all — they allocate nothing, so no symbol in
+either bank's section would otherwise mention them.
