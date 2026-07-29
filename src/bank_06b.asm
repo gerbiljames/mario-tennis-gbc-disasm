@@ -1331,7 +1331,7 @@ QueueCutsceneAnimatedSprites:
 	call ApplyCutsceneScrollToSpriteX ; $4e44
 	ld c, $40 ; $4e47
 	ld b, $09 ; $4e49
-	ld hl, SpriteTemplate_6b_4e8e ; $4e4b
+	ld hl, QueueCutsceneAnimatedSprites_SpriteTemplate0 ; $4e4b
 	call QueueSpriteTemplate ; $4e4e
 	ld a, [wCutsceneStepTimer] ; $4e51
 	sub $20 ; $4e54
@@ -1348,7 +1348,7 @@ QueueCutsceneAnimatedSprites:
 	call ApplyCutsceneScrollToSpriteX ; $4e62
 	ld c, $44 ; $4e65
 	ld b, $09 ; $4e67
-	ld hl, SpriteTemplate_6b_4e97 ; $4e69
+	ld hl, QueueCutsceneAnimatedSprites_SpriteTemplate1 ; $4e69
 	call QueueSpriteTemplate ; $4e6c
 	ld a, [wCutsceneStepTimer] ; $4e6f
 	sub $20 ; $4e72
@@ -1365,20 +1365,20 @@ QueueCutsceneAnimatedSprites:
 	call ApplyCutsceneScrollToSpriteX ; $4e80
 	ld c, $48 ; $4e83
 	ld b, $09 ; $4e85
-	ld hl, SpriteTemplate_6b_4ea0 ; $4e87
+	ld hl, QueueCutsceneAnimatedSprites_SpriteTemplate2 ; $4e87
 	call QueueSpriteTemplate ; $4e8a
 	ret ; $4e8d
-SpriteTemplate_6b_4e8e:
+QueueCutsceneAnimatedSprites_SpriteTemplate0:
 	; $4e8e, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-SpriteTemplate_6b_4e97:
+QueueCutsceneAnimatedSprites_SpriteTemplate1:
 	; $4e97, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-SpriteTemplate_6b_4ea0:
+QueueCutsceneAnimatedSprites_SpriteTemplate2:
 	; $4ea0, 5 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite_end
@@ -1499,7 +1499,7 @@ LoadCutsceneTileset:
 CutsceneTilesetPalettes:
 	INCLUDE "data/bank_06b/palettes_525a.asm" ; $525a, 16 bytes (palettes)
 QueueCutsceneSpriteGroupA:
-	ld hl, SpriteTemplate_6b_52b6 ; $526a
+	ld hl, QueueCutsceneSpriteGroupA_SpriteTemplate0 ; $526a
 	ld a, [wCutsceneSpriteAX] ; $526d
 	ld d, $10 ; $5270
 	add d ; $5272
@@ -1510,7 +1510,7 @@ QueueCutsceneSpriteGroupA:
 	ld c, $00 ; $527b
 	ld b, $08 ; $527d
 	call QueueSpriteTemplate ; $527f
-	ld hl, SpriteTemplate_6b_52c3 ; $5282
+	ld hl, QueueCutsceneSpriteGroupA_SpriteTemplate1 ; $5282
 	ld a, [wCutsceneSpriteAX] ; $5285
 	ld d, $08 ; $5288
 	add d ; $528a
@@ -1523,7 +1523,7 @@ QueueCutsceneSpriteGroupA:
 	ld c, $06 ; $5296
 	ld b, $08 ; $5298
 	call QueueSpriteTemplate ; $529a
-	ld hl, SpriteTemplate_6b_52d8 ; $529d
+	ld hl, QueueCutsceneSpriteGroupA_SpriteTemplate2 ; $529d
 	ld a, [wCutsceneSpriteAX] ; $52a0
 	ld d, a ; $52a3
 	ld a, [wCutsceneSpriteAY] ; $52a4
@@ -1535,13 +1535,13 @@ QueueCutsceneSpriteGroupA:
 	ld b, $08 ; $52b0
 	call QueueSpriteTemplate ; $52b2
 	ret ; $52b5
-SpriteTemplate_6b_52b6:
+QueueCutsceneSpriteGroupA_SpriteTemplate0:
 	; $52b6, 13 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite $10, $18, $04, $00
 	oam_sprite_end
-SpriteTemplate_6b_52c3:
+QueueCutsceneSpriteGroupA_SpriteTemplate1:
 	; $52c3, 21 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -1549,7 +1549,7 @@ SpriteTemplate_6b_52c3:
 	oam_sprite $10, $20, $06, $00
 	oam_sprite $10, $28, $08, $00
 	oam_sprite_end
-SpriteTemplate_6b_52d8:
+QueueCutsceneSpriteGroupA_SpriteTemplate2:
 	; $52d8, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -1561,7 +1561,7 @@ SpriteTemplate_6b_52d8:
 	oam_sprite $10, $40, $0e, $00
 	oam_sprite_end
 QueueCutsceneSpriteGroupB:
-	ld hl, SpriteTemplate_6b_5360 ; $52f9
+	ld hl, QueueCutsceneSpriteGroupB_SpriteTemplate0 ; $52f9
 	ld a, [wCutsceneSpriteBX] ; $52fc
 	ld d, $18 ; $52ff
 	add d ; $5301
@@ -1572,7 +1572,7 @@ QueueCutsceneSpriteGroupB:
 	ld c, $20 ; $530a
 	ld b, $09 ; $530c
 	call QueueSpriteTemplate ; $530e
-	ld hl, SpriteTemplate_6b_536d ; $5311
+	ld hl, QueueCutsceneSpriteGroupB_SpriteTemplate1 ; $5311
 	ld a, [wCutsceneSpriteBX] ; $5314
 	ld d, $08 ; $5317
 	add d ; $5319
@@ -1585,7 +1585,7 @@ QueueCutsceneSpriteGroupB:
 	ld c, $26 ; $5325
 	ld b, $09 ; $5327
 	call QueueSpriteTemplate ; $5329
-	ld hl, SpriteTemplate_6b_5392 ; $532c
+	ld hl, QueueCutsceneSpriteGroupB_SpriteTemplate2 ; $532c
 	ld a, [wCutsceneSpriteBX] ; $532f
 	ld d, a ; $5332
 	ld a, [wCutsceneSpriteBY] ; $5333
@@ -1596,7 +1596,7 @@ QueueCutsceneSpriteGroupB:
 	ld c, $38 ; $533d
 	ld b, $09 ; $533f
 	call QueueSpriteTemplate ; $5341
-	ld hl, SpriteTemplate_6b_53b3 ; $5344
+	ld hl, QueueCutsceneSpriteGroupB_SpriteTemplate3 ; $5344
 	ld a, [wCutsceneSpriteBX] ; $5347
 	ld d, $48 ; $534a
 	add d ; $534c
@@ -1610,13 +1610,13 @@ QueueCutsceneSpriteGroupB:
 	ld b, $09 ; $535a
 	call QueueSpriteTemplate ; $535c
 	ret ; $535f
-SpriteTemplate_6b_5360:
+QueueCutsceneSpriteGroupB_SpriteTemplate0:
 	; $5360, 13 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite $10, $18, $04, $00
 	oam_sprite_end
-SpriteTemplate_6b_536d:
+QueueCutsceneSpriteGroupB_SpriteTemplate1:
 	; $536d, 37 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -1628,7 +1628,7 @@ SpriteTemplate_6b_536d:
 	oam_sprite $10, $40, $0e, $00
 	oam_sprite $10, $48, $10, $00
 	oam_sprite_end
-SpriteTemplate_6b_5392:
+QueueCutsceneSpriteGroupB_SpriteTemplate2:
 	; $5392, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -1639,7 +1639,7 @@ SpriteTemplate_6b_5392:
 	oam_sprite $10, $38, $0c, $00
 	oam_sprite $10, $40, $0e, $00
 	oam_sprite_end
-SpriteTemplate_6b_53b3:
+QueueCutsceneSpriteGroupB_SpriteTemplate3:
 	; $53b3, 5 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite_end
@@ -1885,14 +1885,14 @@ QueueIntroSpriteBlock:
 	inc h ; $612e
 .read:
 	ld c, [hl] ; $612f
-	ld hl, SpriteTemplate_6b_613d ; $6130
+	ld hl, QueueIntroSpriteBlock_SpriteTemplate ; $6130
 	ld b, $08 ; $6133
 	call QueueSpriteTemplate ; $6135
 	ret ; $6138
 IntroSpriteBlockTable:
 	; $6139, 4 bytes (bytes:4)
 	db $00, $10, $20, $30 ; 0x00
-SpriteTemplate_6b_613d:
+QueueIntroSpriteBlock_SpriteTemplate:
 	; $613d, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $20, $08, $02, $00
@@ -2358,7 +2358,7 @@ QueueTitleSprite:
 .readB:
 	ld b, [hl] ; $76d6
 	ld de, $2858 ; $76d7
-	ld hl, SpriteTemplate_6b_76f6 ; $76da
+	ld hl, QueueTitleSprite_SpriteTemplate ; $76da
 	call QueueSpriteTemplate ; $76dd
 	pop af ; $76e0
 	wram_bank ; $76e1
@@ -2369,7 +2369,7 @@ TitleSpriteTable0:
 TitleSpriteTable1:
 	; $76ee, 8 bytes (bytes:8)
 	db $08, $08, $08, $08, $00, $00, $00, $00 ; 0x00
-SpriteTemplate_6b_76f6:
+QueueTitleSprite_SpriteTemplate:
 	; $76f6, 41 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00

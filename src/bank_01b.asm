@@ -2329,7 +2329,7 @@ RankingBoardAnimTask_1b:
 	ld a, [wRankingBannerX] ; $5929
 	add b ; $592c
 	ld [wRankingBannerX], a ; $592d
-	ld hl, SpriteTemplate_1b_595a ; $5930
+	ld hl, RankingBoardAnimTask_1b_SpriteTemplate ; $5930
 	ld e, $40 ; $5933
 	ld a, [wRankingBoardDoubles] ; $5935
 	or a ; $5938
@@ -2350,7 +2350,7 @@ RankingBoardAnimTask_1b:
 	call UnregisterFrameTask ; $5956
 .done:
 	ret ; $5959
-SpriteTemplate_1b_595a:
+RankingBoardAnimTask_1b_SpriteTemplate:
 	; $595a, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -2375,12 +2375,12 @@ RankingCursorBobTask:
 	ld de, $3050 ; $5a13
 .applySpriteBobOffset:
 	farcall ApplySpriteBobOffset ; $5a16
-	ld hl, SpriteTemplate_1b_5a24 ; $5a19
+	ld hl, RankingCursorBobTask_SpriteTemplate ; $5a19
 	ld c, $20 ; $5a1c
 	ld b, $0d ; $5a1e
 	call QueueSpriteTemplate ; $5a20
 	ret ; $5a23
-SpriteTemplate_1b_5a24:
+RankingCursorBobTask_SpriteTemplate:
 	; $5a24, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -4761,7 +4761,7 @@ DrawMinigameLevelSelect2Cursor:
 	ld e, a ; $6f80
 	farcall ApplySpriteBobOffset ; $6f81
 	ld b, $08 ; $6f84
-	ld hl, SpriteTemplate_1b_6f9f ; $6f86
+	ld hl, DrawMinigameLevelSelect2Cursor_SpriteTemplate0 ; $6f86
 	push de ; $6f89
 	call QueueSpriteTemplate ; $6f8a
 	pop de ; $6f8d
@@ -4769,12 +4769,12 @@ DrawMinigameLevelSelect2Cursor:
 	add hl, de ; $6f91
 	ld d, h ; $6f92
 	ld e, l ; $6f93
-	ld hl, SpriteTemplate_1b_6fc0 ; $6f94
+	ld hl, DrawMinigameLevelSelect2Cursor_SpriteTemplate1 ; $6f94
 	ld b, $08 ; $6f97
 	ld c, $70 ; $6f99
 	call QueueSpriteTemplate ; $6f9b
 	ret ; $6f9e
-SpriteTemplate_1b_6f9f:
+DrawMinigameLevelSelect2Cursor_SpriteTemplate0:
 	; $6f9f, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -4785,7 +4785,7 @@ SpriteTemplate_1b_6f9f:
 	oam_sprite $10, $38, $0c, $00
 	oam_sprite $10, $40, $0e, $00
 	oam_sprite_end
-SpriteTemplate_1b_6fc0:
+DrawMinigameLevelSelect2Cursor_SpriteTemplate1:
 	; $6fc0, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -4952,7 +4952,7 @@ DrawMinigameLevelSelect3Cursor:
 	ld e, a ; $710b
 	farcall ApplySpriteBobOffset ; $710c
 	ld b, $08 ; $710f
-	ld hl, SpriteTemplate_1b_712a ; $7111
+	ld hl, DrawMinigameLevelSelect3Cursor_SpriteTemplate0 ; $7111
 	push de ; $7114
 	call QueueSpriteTemplate ; $7115
 	pop de ; $7118
@@ -4960,12 +4960,12 @@ DrawMinigameLevelSelect3Cursor:
 	add hl, de ; $711c
 	ld d, h ; $711d
 	ld e, l ; $711e
-	ld hl, SpriteTemplate_1b_714b ; $711f
+	ld hl, DrawMinigameLevelSelect3Cursor_SpriteTemplate1 ; $711f
 	ld b, $08 ; $7122
 	ld c, $70 ; $7124
 	call QueueSpriteTemplate ; $7126
 	ret ; $7129
-SpriteTemplate_1b_712a:
+DrawMinigameLevelSelect3Cursor_SpriteTemplate0:
 	; $712a, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -4976,7 +4976,7 @@ SpriteTemplate_1b_712a:
 	oam_sprite $10, $38, $0c, $00
 	oam_sprite $10, $40, $0e, $00
 	oam_sprite_end
-SpriteTemplate_1b_714b:
+DrawMinigameLevelSelect3Cursor_SpriteTemplate1:
 	; $714b, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -5163,13 +5163,13 @@ DrawSavedDataCursorOption0:
 	ld b, $08 ; $72ba
 	ld de, $0c50 ; $72bc
 	farcall ApplySpriteBobOffset ; $72bf
-	ld hl, SpriteTemplate_1b_72fa ; $72c2
+	ld hl, DrawSavedDataCursorOption0_SpriteTemplate ; $72c2
 	call QueueSpriteTemplate ; $72c5
 	ld b, $08 ; $72c8
 	ld c, $70 ; $72ca
 	ld de, $2448 ; $72cc
 	farcall ApplySpriteBobOffset ; $72cf
-	ld hl, SpriteTemplate_1b_7340 ; $72d2
+	ld hl, SpriteTemplate_1b ; $72d2
 	call QueueSpriteTemplate ; $72d5
 	ret ; $72d8
 DrawSavedDataCursorOption1:
@@ -5177,16 +5177,16 @@ DrawSavedDataCursorOption1:
 	ld b, $08 ; $72db
 	ld de, $5050 ; $72dd
 	farcall ApplySpriteBobOffset ; $72e0
-	ld hl, SpriteTemplate_1b_731b ; $72e3
+	ld hl, DrawSavedDataCursorOption1_SpriteTemplate ; $72e3
 	call QueueSpriteTemplate ; $72e6
 	ld b, $08 ; $72e9
 	ld c, $70 ; $72eb
 	ld de, $6c48 ; $72ed
 	farcall ApplySpriteBobOffset ; $72f0
-	ld hl, SpriteTemplate_1b_7340 ; $72f3
+	ld hl, SpriteTemplate_1b ; $72f3
 	call QueueSpriteTemplate ; $72f6
 	ret ; $72f9
-SpriteTemplate_1b_72fa:
+DrawSavedDataCursorOption0_SpriteTemplate:
 	; $72fa, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -5197,7 +5197,7 @@ SpriteTemplate_1b_72fa:
 	oam_sprite $10, $38, $0c, $00
 	oam_sprite $10, $40, $0e, $00
 	oam_sprite_end
-SpriteTemplate_1b_731b:
+DrawSavedDataCursorOption1_SpriteTemplate:
 	; $731b, 37 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -5209,7 +5209,7 @@ SpriteTemplate_1b_731b:
 	oam_sprite $10, $40, $0e, $00
 	oam_sprite $10, $48, $10, $00
 	oam_sprite_end
-SpriteTemplate_1b_7340:
+SpriteTemplate_1b:
 	; $7340, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00

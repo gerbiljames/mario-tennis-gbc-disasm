@@ -5475,7 +5475,7 @@ DrawMinigameTarget:
 	ld a, [hl+] ; $66ec
 	ld b, [hl] ; $66ed
 	ld c, a ; $66ee
-	ld hl, SpriteTemplate_0a_670e ; $66ef
+	ld hl, DrawMinigameTarget_SpriteTemplate ; $66ef
 	call QueueSpriteTemplate ; $66f2
 	ret ; $66f5
 MinigameTargetTable:
@@ -5483,7 +5483,7 @@ MinigameTargetTable:
 	db $10, $0d, $14, $0f, $18, $0b, $1c, $0e ; 0x00
 Data_0a_66fe:
 	INCBIN "data/bank_00a/d_66fe.bin" ; $66fe, 16 bytes
-SpriteTemplate_0a_670e:
+DrawMinigameTarget_SpriteTemplate:
 	; $670e, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -6138,7 +6138,7 @@ DrawMinigameTargetAlt:
 	ld a, [hl+] ; $6d9b
 	ld b, [hl] ; $6d9c
 	ld c, a ; $6d9d
-	ld hl, SpriteTemplate_0a_6dbd ; $6d9e
+	ld hl, DrawMinigameTargetAlt_SpriteTemplate ; $6d9e
 	call QueueSpriteTemplate ; $6da1
 	ret ; $6da4
 MinigameTargetAltTable:
@@ -6146,7 +6146,7 @@ MinigameTargetAltTable:
 	db $10, $0f, $20, $0e, $30, $0d, $20, $0f ; 0x00
 Data_0a_6dad:
 	INCBIN "data/bank_00a/d_6dad.bin" ; $6dad, 16 bytes
-SpriteTemplate_0a_6dbd:
+DrawMinigameTargetAlt_SpriteTemplate:
 	; $6dbd, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $20, $08, $02, $00

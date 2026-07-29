@@ -74,7 +74,7 @@ assets outside the tree and copy them in, or do not re-run extraction.
   carving at the end of a bank needs no fill-count bookkeeping. Pointer tables (`FarPtr`/`DataPtr`/jump tables) and the
   sprite/object records of the `$6a`/`$6f`/`$70`-`$77` banks — the 16-byte
   headers (`db` count/flags + `dw` body pointers), their inline `.frames`
-  pointer arrays, and the `OamPtrs` arrays they reach — render as in-source
+  pointer arrays, and the `<record>_OamPtrs` arrays they reach — render as in-source
   `dw`/`db` structure. That is layout metadata, not bulk data, so the frame
   graphics and OAM data those pointers target stay in the extracted
   (gitignored) blobs.
@@ -177,7 +177,12 @@ validated by decode-chain scoring in `tools/disasm.py`'s loader.
   for constant `h = bank, l = slot` setups, and remaining slots in proven
   table extents are accepted when their pointer decodes as a valid LZ stream
   overlapping no code. Proven blobs get `Data_`/`Lz_` labels and exact-extent
-  INCBINs (stream length for LZ, `bc` for copies).
+  INCBINs (stream length for LZ, `bc` for copies). A blob with exactly one owner
+  is named after that owner rather than after its offset — a sprite template
+  after the routine whose `ld hl` loads it
+  (`DrawMinigameTarget_SpriteTemplate`), an OAM pointer array after its object
+  header (`WalkSprite_70_00_OamPtrs`) — so no generated name states an address
+  that inserting bytes ahead of it would falsify.
 - `tools/disasmlib/` — the generator itself; `disasm.py` is only its command
   line. Three stages, in `pipeline.py` order: **analysis** (`core.py` decoding
   and descent, `slots.py` data-slot proving, `carve.py` structure carving, all

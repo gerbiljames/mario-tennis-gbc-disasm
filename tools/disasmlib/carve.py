@@ -103,7 +103,7 @@ class StructureCarvingMixin:
             if not all(astart + span <= t < rend for t in tgts):
                 continue
             del self.data_blobs[astart]
-            self.ptr_labels[astart] = f"OamPtrs_{bank:02x}_{offset_to_cpu(astart):04x}"
+            self.oam_arrays[astart] = h  # named after the header in build_labels
             for k in range(n):
                 self.ptr_words[astart + 2 * k] = (tgts[k], "")
             arrays += 1
@@ -308,6 +308,8 @@ class StructureCarvingMixin:
                         self.data_blobs[src] = (length, "sprite")
                         self.sprite_templates.add(src)
                         added += 1
+                    if length:
+                        self.sprite_template_sites.setdefault(src, set()).add(hl_end - 3)
         if added:
             print(f"sprite templates: {added} carved")
 

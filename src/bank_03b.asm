@@ -3548,7 +3548,7 @@ MainMenuCursorSpriteTask:
 	ld e, l ; $58ac
 	add d ; $58ad
 	ld d, a ; $58ae
-	ld hl, SpriteTemplate_3b_5912 ; $58af
+	ld hl, MainMenuCursorSpriteTask_SpriteTemplate ; $58af
 	ld b, $08 ; $58b2
 	ld c, $72 ; $58b4
 	call QueueSpriteTemplate ; $58b6
@@ -3587,7 +3587,7 @@ MainMenuCursorSpriteTask1:
 	db $10, $40, $0e, $00 ; 0x1c
 	db $10, $48, $10, $00 ; 0x20
 	db $80 ; 0x24
-SpriteTemplate_3b_5912:
+MainMenuCursorSpriteTask_SpriteTemplate:
 	; $5912, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -4675,7 +4675,7 @@ MatchFormatCursorSpriteTask:
 	ld e, a ; $6106
 	farcall ApplySpriteBobOffset ; $6107
 	ld b, $08 ; $610a
-	ld hl, SpriteTemplate_3b_6125 ; $610c
+	ld hl, MatchFormatCursorSpriteTask_SpriteTemplate0 ; $610c
 	push de ; $610f
 	call QueueSpriteTemplate ; $6110
 	pop de ; $6113
@@ -4683,12 +4683,12 @@ MatchFormatCursorSpriteTask:
 	add hl, de ; $6117
 	ld d, h ; $6118
 	ld e, l ; $6119
-	ld hl, SpriteTemplate_3b_6146 ; $611a
+	ld hl, MatchFormatCursorSpriteTask_SpriteTemplate1 ; $611a
 	ld b, $08 ; $611d
 	ld c, $70 ; $611f
 	call QueueSpriteTemplate ; $6121
 	ret ; $6124
-SpriteTemplate_3b_6125:
+MatchFormatCursorSpriteTask_SpriteTemplate0:
 	; $6125, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -4699,7 +4699,7 @@ SpriteTemplate_3b_6125:
 	oam_sprite $10, $38, $0c, $00
 	oam_sprite $10, $40, $0e, $00
 	oam_sprite_end
-SpriteTemplate_3b_6146:
+MatchFormatCursorSpriteTask_SpriteTemplate1:
 	; $6146, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -5126,7 +5126,7 @@ MinigameSelectCursorSpriteTask:
 .read2:
 	ld b, [hl] ; $6499
 	call OverrideMinigameCursorIfLocked ; $649a
-	ld hl, SpriteTemplate_3b_64ca ; $649d
+	ld hl, MinigameSelectCursorSpriteTask_SpriteTemplate0 ; $649d
 	push de ; $64a0
 	call QueueSpriteTemplate ; $64a1
 	pop de ; $64a4
@@ -5134,7 +5134,7 @@ MinigameSelectCursorSpriteTask:
 	add hl, de ; $64a8
 	ld d, h ; $64a9
 	ld e, l ; $64aa
-	ld hl, SpriteTemplate_3b_64eb ; $64ab
+	ld hl, MinigameSelectCursorSpriteTask_SpriteTemplate1 ; $64ab
 	ld b, $08 ; $64ae
 	ld c, $70 ; $64b0
 	call QueueSpriteTemplate ; $64b2
@@ -5154,7 +5154,7 @@ GetMinigameCursorPosTable:
 	pop bc ; $64c7
 	pop de ; $64c8
 	ret ; $64c9
-SpriteTemplate_3b_64ca:
+MinigameSelectCursorSpriteTask_SpriteTemplate0:
 	; $64ca, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -5165,7 +5165,7 @@ SpriteTemplate_3b_64ca:
 	oam_sprite $10, $38, $0c, $00
 	oam_sprite $10, $40, $0e, $00
 	oam_sprite_end
-SpriteTemplate_3b_64eb:
+MinigameSelectCursorSpriteTask_SpriteTemplate1:
 	; $64eb, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -5829,7 +5829,7 @@ SavedDataSourceCursorSpriteTask:
 	ld e, a ; $69fa
 	farcall ApplySpriteBobOffset ; $69fb
 	ld b, $08 ; $69fe
-	ld hl, SpriteTemplate_3b_6a19 ; $6a00
+	ld hl, SavedDataSourceCursorSpriteTask_SpriteTemplate0 ; $6a00
 	push de ; $6a03
 	call QueueSpriteTemplate ; $6a04
 	pop de ; $6a07
@@ -5837,12 +5837,12 @@ SavedDataSourceCursorSpriteTask:
 	add hl, de ; $6a0b
 	ld d, h ; $6a0c
 	ld e, l ; $6a0d
-	ld hl, SpriteTemplate_3b_6a3a ; $6a0e
+	ld hl, SavedDataSourceCursorSpriteTask_SpriteTemplate1 ; $6a0e
 	ld b, $08 ; $6a11
 	ld c, $70 ; $6a13
 	call QueueSpriteTemplate ; $6a15
 	ret ; $6a18
-SpriteTemplate_3b_6a19:
+SavedDataSourceCursorSpriteTask_SpriteTemplate0:
 	; $6a19, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -5853,7 +5853,7 @@ SpriteTemplate_3b_6a19:
 	oam_sprite $10, $38, $0c, $00
 	oam_sprite $10, $40, $0e, $00
 	oam_sprite_end
-SpriteTemplate_3b_6a3a:
+SavedDataSourceCursorSpriteTask_SpriteTemplate1:
 	; $6a3a, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -6538,7 +6538,7 @@ EraseSavedDataCursorSpriteTask:
 	ld e, a ; $6f79
 	farcall ApplySpriteBobOffset ; $6f7a
 	ld b, $08 ; $6f7d
-	ld hl, SpriteTemplate_3b_6f98 ; $6f7f
+	ld hl, EraseSavedDataCursorSpriteTask_SpriteTemplate0 ; $6f7f
 	push de ; $6f82
 	call QueueSpriteTemplate ; $6f83
 	pop de ; $6f86
@@ -6546,12 +6546,12 @@ EraseSavedDataCursorSpriteTask:
 	add hl, de ; $6f8a
 	ld d, h ; $6f8b
 	ld e, l ; $6f8c
-	ld hl, SpriteTemplate_3b_6fb9 ; $6f8d
+	ld hl, EraseSavedDataCursorSpriteTask_SpriteTemplate1 ; $6f8d
 	ld b, $08 ; $6f90
 	ld c, $70 ; $6f92
 	call QueueSpriteTemplate ; $6f94
 	ret ; $6f97
-SpriteTemplate_3b_6f98:
+EraseSavedDataCursorSpriteTask_SpriteTemplate0:
 	; $6f98, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -6562,7 +6562,7 @@ SpriteTemplate_3b_6f98:
 	oam_sprite $10, $38, $0c, $00
 	oam_sprite $10, $40, $0e, $00
 	oam_sprite_end
-SpriteTemplate_3b_6fb9:
+EraseSavedDataCursorSpriteTask_SpriteTemplate1:
 	; $6fb9, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -7071,7 +7071,7 @@ N64RecordTypeCursorSpriteTask:
 	ld e, a ; $736d
 	farcall ApplySpriteBobOffset ; $736e
 	ld b, $08 ; $7371
-	ld hl, SpriteTemplate_3b_738c ; $7373
+	ld hl, N64RecordTypeCursorSpriteTask_SpriteTemplate0 ; $7373
 	push de ; $7376
 	call QueueSpriteTemplate ; $7377
 	pop de ; $737a
@@ -7079,12 +7079,12 @@ N64RecordTypeCursorSpriteTask:
 	add hl, de ; $737e
 	ld d, h ; $737f
 	ld e, l ; $7380
-	ld hl, SpriteTemplate_3b_73ad ; $7381
+	ld hl, N64RecordTypeCursorSpriteTask_SpriteTemplate1 ; $7381
 	ld b, $08 ; $7384
 	ld c, $70 ; $7386
 	call QueueSpriteTemplate ; $7388
 	ret ; $738b
-SpriteTemplate_3b_738c:
+N64RecordTypeCursorSpriteTask_SpriteTemplate0:
 	; $738c, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -7095,7 +7095,7 @@ SpriteTemplate_3b_738c:
 	oam_sprite $10, $38, $0c, $00
 	oam_sprite $10, $40, $0e, $00
 	oam_sprite_end
-SpriteTemplate_3b_73ad:
+N64RecordTypeCursorSpriteTask_SpriteTemplate1:
 	; $73ad, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -7542,7 +7542,7 @@ N64TransferItemCursorSpriteTask:
 	ld e, a ; $7708
 	farcall ApplySpriteBobOffset ; $7709
 	ld b, $08 ; $770c
-	ld hl, SpriteTemplate_3b_7727 ; $770e
+	ld hl, N64TransferItemCursorSpriteTask_SpriteTemplate0 ; $770e
 	push de ; $7711
 	call QueueSpriteTemplate ; $7712
 	pop de ; $7715
@@ -7550,12 +7550,12 @@ N64TransferItemCursorSpriteTask:
 	add hl, de ; $7719
 	ld d, h ; $771a
 	ld e, l ; $771b
-	ld hl, SpriteTemplate_3b_7748 ; $771c
+	ld hl, N64TransferItemCursorSpriteTask_SpriteTemplate1 ; $771c
 	ld b, $08 ; $771f
 	ld c, $70 ; $7721
 	call QueueSpriteTemplate ; $7723
 	ret ; $7726
-SpriteTemplate_3b_7727:
+N64TransferItemCursorSpriteTask_SpriteTemplate0:
 	; $7727, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -7566,7 +7566,7 @@ SpriteTemplate_3b_7727:
 	oam_sprite $10, $38, $0c, $00
 	oam_sprite $10, $40, $0e, $00
 	oam_sprite_end
-SpriteTemplate_3b_7748:
+N64TransferItemCursorSpriteTask_SpriteTemplate1:
 	; $7748, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00

@@ -948,10 +948,10 @@ TickMenuBgScroll:
 	xor a ; $4bb4
 	ld [wMenuBgScrollLane], a ; $4bb5
 .queueSprite:
-	ld hl, SpriteTemplate_39_4bbf ; $4bb8
+	ld hl, TickMenuBgScroll_SpriteTemplate ; $4bb8
 	call QueueSpriteTemplate ; $4bbb
 	ret ; $4bbe
-SpriteTemplate_39_4bbf:
+TickMenuBgScroll_SpriteTemplate:
 	; $4bbf, 41 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00

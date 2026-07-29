@@ -7807,10 +7807,57 @@ Renaming them would have inflated the naming metric with fiction.
 
 408 address-suffixed labels remain in `src/`, and none of them come from
 `labels.json`: 180 are the generator's own `Data_`/`Label_` autonames, and 228
-are emitter-synthesized `SpriteTemplate_*` (136) and `OamPtrs_*` (92) in the
-walk-sprite banks, which the emitter names from the offset it split them at.
-Fixing those means giving the emitter an ordinal scheme per owning object
-header, not curating names.
+are synthesized by the *naming stage* -- `SpriteTemplate_*` (136, spread over
+29 banks) and `OamPtrs_*` (92, the walk-sprite banks) -- from the offset the
+blob was split at. Those want a generator change, not curation; the section
+below is that change.
 
 Byte-perfect throughout; `make check` unchanged (619 LZ streams, 13 text pools,
 4,908 regions).
+
+## The generator stops naming blobs after their offset (2026-07-29)
+
+The 228 above were the last address-suffixed names that no amount of curation
+could remove: they are minted in `build_labels`, one per carved blob, and any
+`labels.json` entry for them would be 228 hand-written names for something the
+generator can derive. It now derives it. **Non-auto address-suffixed labels in
+`src/`: 0** (180 `Func_`/`Label_`/`Data_` autonames remain, which is what
+"unnamed" looks like).
+
+One helper does both families, `name_owned` in `disasmlib/labels.py`: a blob
+with exactly one owner whose own name is not itself auto-generated becomes
+`<owner>_<stem>`, numbered when one owner holds several; everything else falls
+back to `<stem>_<bank>_<N>`. The underscore join is the convention the
+walk-sprite records already used for their `_Gfx00`/`_Oam00` blobs.
+
+* **Sprite templates** (`call QueueSpriteTemplate` operands) take the routine
+  that loads them. `carve_sprite_templates` already backtracked each call to
+  the `ld hl, imm` that set the pointer; it now records that site, and the
+  naming stage resolves it to the enclosing global code label by bisecting the
+  code labels it has assigned so far. `SpriteTemplate_0a_670e` ->
+  `DrawMinigameTarget_SpriteTemplate`. 131 of the 136 were named this way; the
+  other five were already curated.
+* **OAM pointer arrays** take their object header: `OamPtrs_70_4c40` ->
+  `WalkSprite_70_00_OamPtrs`, so the header reads
+  `dw .frames, WalkSprite_70_00_OamPtrs, .frames` and the array's own contents
+  (`WalkSprite_70_00_Oam00`...) are visibly the same record. All 92 resolved.
+
+### Where the name has to live
+
+The OAM array is the one label that is *not* in `labels`: `follow_oam_arrays`
+deletes its data blob and registers the name in `dis.ptr_labels`, because that
+is the table the object-header renderer reads to spell its own `dw`. Putting
+the derived name in `labels` alone gave a definition and a reference that
+disagreed -- a label rgbasm would not resolve. So `follow_oam_arrays` no longer
+names anything (it just records array -> header), and the naming stage writes
+into `ptr_labels`, which keeps definition and reference the same string by
+construction. The first attempt also silently did nothing at all, because
+`name_owned` skips targets that already carry a name and carve had already put
+one there.
+
+Byte-perfect, `data.manifest` unchanged (no blob boundary moved), `make check`
+clean, and `tools/progress.py` reports the same 19,921 of 21,680 named --
+`SpriteTemplate_*`/`OamPtrs_*` never matched its auto-name pattern, so the
+metric was already counting them as named. That is the argument for the change
+being a real one rather than a cosmetic one: the names were passing for
+knowledge and were not carrying any.

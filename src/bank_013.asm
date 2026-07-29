@@ -589,7 +589,7 @@ LoadTourPointerSpriteGfx_13:
 	wram_bank ; $4cfa
 	ret ; $4cfe
 QueueTourPointerSprite_13:
-	ld hl, SpriteTemplate_13_4d20 ; $4cff
+	ld hl, QueueTourPointerSprite_13_SpriteTemplate ; $4cff
 	ld c, $00 ; $4d02
 	ld b, $08 ; $4d04
 	call QueueSpriteTemplate ; $4d06
@@ -607,7 +607,7 @@ AnimateTourPointerSprite_13:
 	ld e, a ; $4d1b
 	call QueueTourPointerSprite_13 ; $4d1c
 	ret ; $4d1f
-SpriteTemplate_13_4d20:
+QueueTourPointerSprite_13_SpriteTemplate:
 	; $4d20, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00

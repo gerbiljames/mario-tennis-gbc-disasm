@@ -2505,10 +2505,10 @@ DrawCharGridWaitBanner:
 	ld b, $0f ; $549c
 	ld de, $0840 ; $549e
 	farcall ApplySpriteWaveOffset ; $54a1
-	ld hl, SpriteTemplate_38_54ab ; $54a4
+	ld hl, DrawCharGridWaitBanner_SpriteTemplate ; $54a4
 	call QueueSpriteTemplate ; $54a7
 	ret ; $54aa
-SpriteTemplate_38_54ab:
+DrawCharGridWaitBanner_SpriteTemplate:
 	; $54ab, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00

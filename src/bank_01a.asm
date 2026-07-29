@@ -967,7 +967,7 @@ ExpScreenDrawTask:
 	ld d, [hl] ; $479c
 	ld e, a ; $479d
 	ld bc, $0e00 ; $479e
-	ld hl, SpriteTemplate_1a_4840 ; $47a1
+	ld hl, ExpScreenDrawTask_SpriteTemplate ; $47a1
 	ld bc, $09c0 ; $47a4
 	ld de, $7058 ; $47a7
 	call QueueSpriteTemplate ; $47aa
@@ -1018,7 +1018,7 @@ Data_1a_4809:
 	db $2c, $7b, $30, $7b, $2f, $7b, $2a, $7b, $30, $7a, $2c, $7c, $2a, $7c, $2a, $7b ; 0x10
 	db $2c, $7b, $2c, $7b, $2c, $7b, $2c, $7b, $00, $00, $00, $00, $00, $00, $00, $00 ; 0x20
 	db $00, $00, $00, $00, $00, $00, $00 ; 0x30
-SpriteTemplate_1a_4840:
+ExpScreenDrawTask_SpriteTemplate:
 	; $4840, 17 bytes (sprite_template)
 	oam_sprite $00, $00, $00, $00
 	oam_sprite $00, $08, $02, $00

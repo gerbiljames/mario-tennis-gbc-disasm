@@ -1772,7 +1772,7 @@ PlaneObjTiles_14:
 	INCBIN "data/bank_014/d_5650.bin" ; $5650, 1024 bytes
 IslandObjTiles_14:
 	INCBIN "data/bank_014/d_5a50.bin" ; $5a50, 1024 bytes
-SpriteTemplate_14_5e50:
+SpriteTemplate_14_0:
 	; $5e50, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $20, $08, $02, $00
@@ -1821,7 +1821,7 @@ QueuePlaneSpriteByHeight_14:
 	ld b, $10 ; $5ec2
 .queueSpriteTemplate:
 	ld c, b ; $5ec4
-	ld hl, SpriteTemplate_14_5e50 ; $5ec5
+	ld hl, SpriteTemplate_14_0 ; $5ec5
 	ld b, $08 ; $5ec8
 	call QueueSpriteTemplate ; $5eca
 	ret ; $5ecd
@@ -1829,7 +1829,7 @@ QueuePlaneSpriteByHeight_14:
 	ds 2, $00
 WaterSplashObjGfx:
 	INCBIN "data/bank_014/d_5ed0.bin" ; $5ed0, 448 bytes
-SpriteTemplate_14_6090:
+SpriteTemplate_14_1:
 	; $6090, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -1842,7 +1842,7 @@ LoadWaterSplashObjGfx_14:
 	wram_bank $01 ; $60a4
 	ld hl, WaterSplashObjGfx ; $60aa
 	ld de, $8200 ; $60ad
-	ld c, (SpriteTemplate_14_6090 - WaterSplashObjGfx) / 16 ; $60b0
+	ld c, (SpriteTemplate_14_1 - WaterSplashObjGfx) / 16 ; $60b0
 	call QueueVRAMCopy ; $60b2
 	ld hl, WaterSplashObjPalette_14 ; $60b5
 	ld de, $0901 ; $60b8
@@ -1933,7 +1933,7 @@ UpdateWaterSplash0_14:
 	ld a, [wCutsceneObjPhase] ; $615c
 	add $20 ; $615f
 	ld c, a ; $6161
-	ld hl, SpriteTemplate_14_6090 ; $6162
+	ld hl, SpriteTemplate_14_1 ; $6162
 	ld b, $01 ; $6165
 	call QueueSpriteTemplate ; $6167
 .done:
@@ -2032,7 +2032,7 @@ UpdateWaterSplash1_14:
 	ld a, [wCutsceneObjPhase + 1] ; $6216
 	add $20 ; $6219
 	ld c, a ; $621b
-	ld hl, SpriteTemplate_14_6090 ; $621c
+	ld hl, SpriteTemplate_14_1 ; $621c
 	ld b, $01 ; $621f
 	call QueueSpriteTemplate ; $6221
 .done:
@@ -2083,7 +2083,7 @@ QueuePlaneSpriteByFrameCounter_14:
 	ld b, $00 ; $627f
 .queue:
 	ld c, b ; $6281
-	ld hl, SpriteTemplate_14_5e50 ; $6282
+	ld hl, SpriteTemplate_14_0 ; $6282
 	ld b, $08 ; $6285
 	call QueueSpriteTemplate ; $6287
 	ret ; $628a
@@ -2248,7 +2248,7 @@ LoadFireworkObjGfx_14:
 	wram_bank $01 ; $642a
 	ld hl, FireworkObjTiles_14 ; $6430
 	ld de, $8100 ; $6433
-	ld c, (SpriteTemplate_14_6e80 - FireworkObjTiles_14) / 16 ; $6436
+	ld c, (SpriteTemplate_14_2 - FireworkObjTiles_14) / 16 ; $6436
 	call QueueVRAMCopy ; $6438
 	ld hl, FireworkObjPalettes_14 ; $643b
 	ld de, $0904 ; $643e
@@ -2315,7 +2315,7 @@ UpdateFirework0_14:
 	and $03 ; $64b3
 	inc a ; $64b5
 	ld b, a ; $64b6
-	ld hl, SpriteTemplate_14_6e80 ; $64b7
+	ld hl, SpriteTemplate_14_2 ; $64b7
 	call QueueSpriteTemplate ; $64ba
 .done:
 	ret ; $64bd
@@ -2478,7 +2478,7 @@ FireworkMapActors_14:
 	db $00
 FireworkObjTiles_14:
 	INCBIN "data/bank_014/d_6680.bin" ; $6680, 2048 bytes
-SpriteTemplate_14_6e80:
+SpriteTemplate_14_2:
 	; $6e80, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $20, $08, $02, $00
@@ -2550,7 +2550,7 @@ UpdateFirework1_14:
 	and $03 ; $6f59
 	inc a ; $6f5b
 	ld b, a ; $6f5c
-	ld hl, SpriteTemplate_14_6e80 ; $6f5d
+	ld hl, SpriteTemplate_14_2 ; $6f5d
 	call QueueSpriteTemplate ; $6f60
 .done:
 	ret ; $6f63
@@ -2781,7 +2781,7 @@ IslandSkyTilesB_14:
 	INCBIN "data/bank_014/d_7290.bin" ; $7290, 192 bytes
 IslandSkySpriteData_14:
 	INCBIN "data/bank_014/d_7350.bin" ; $7350, 33 bytes
-SpriteTemplate_14_7371:
+AnimateIslandSkyEffectSprites_14_SpriteTemplate:
 	; $7371, 25 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $20, $08, $02, $00
@@ -2852,7 +2852,7 @@ AnimateIslandSkyEffectSprites_14:
 	sub b ; $7419
 	ld e, a ; $741a
 	ld c, $20 ; $741b
-	ld hl, SpriteTemplate_14_7371 ; $741d
+	ld hl, AnimateIslandSkyEffectSprites_14_SpriteTemplate ; $741d
 	ld a, [wCutsceneObjLimit] ; $7420
 	swap a ; $7423
 	and $03 ; $7425
@@ -2864,7 +2864,7 @@ AnimateIslandSkyEffectSprites_14:
 	ds 3, $00
 DistantPlaneObjGfx:
 	INCBIN "data/bank_014/d_7430.bin" ; $7430, 256 bytes
-SpriteTemplate_14_7530:
+SpriteTemplate_14_3:
 	; $7530, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -2875,7 +2875,7 @@ LoadDistantPlaneObjGfx_14:
 	wram_bank $01 ; $753c
 	ld hl, DistantPlaneObjGfx ; $7542
 	ld de, $8000 + VRAM_BANK1 ; $7545
-	ld c, (SpriteTemplate_14_7530 - DistantPlaneObjGfx) / 16 ; $7548
+	ld c, (SpriteTemplate_14_3 - DistantPlaneObjGfx) / 16 ; $7548
 	call QueueVRAMCopy ; $754a
 	ld hl, IslandObjPalette_14 ; $754d
 	ld de, $0801 ; $7550
@@ -2888,7 +2888,7 @@ QueueDistantPlaneSprite_14:
 	ld a, [wCutsceneObjPhase] ; $755f
 	ld c, a ; $7562
 	ld c, a ; $7563
-	ld hl, SpriteTemplate_14_7530 ; $7564
+	ld hl, SpriteTemplate_14_3 ; $7564
 	ld b, $08 ; $7567
 	call QueueSpriteTemplate ; $7569
 	ret ; $756c
@@ -2937,7 +2937,7 @@ QueueTwinkleSprite_14:
 	ld e, a ; $76b8
 	ld a, [wCutsceneObjPhase] ; $76b9
 	ld c, a ; $76bc
-	ld hl, SpriteTemplate_14_7530 ; $76bd
+	ld hl, SpriteTemplate_14_3 ; $76bd
 	ld b, $08 ; $76c0
 	call QueueSpriteTemplate ; $76c2
 	ret ; $76c5

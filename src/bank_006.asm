@@ -2257,7 +2257,7 @@ QueueMatchMenuCursorSprite:
 	add $fc ; $69b8
 	ld d, a ; $69ba
 	call AdjustSpriteCoordsForScroll ; $69bb
-	ld hl, SpriteTemplate_06_69e7 ; $69be
+	ld hl, QueueMatchMenuCursorSprite_SpriteTemplate ; $69be
 	ld bc, $0000 ; $69c1
 	call QueueSpriteTemplate ; $69c4
 	ret ; $69c7
@@ -2274,11 +2274,11 @@ DrawScoreboardModeTitle:
 	ld d, h ; $69d6
 	farcall AddBobbingOffsetYLarge ; $69d7
 	call AdjustSpriteCoordsForScroll ; $69da
-	ld hl, SpriteTemplate_06_6a10 ; $69dd
+	ld hl, DrawScoreboardModeTitle_SpriteTemplate ; $69dd
 	ld bc, $0000 ; $69e0
 	call QueueSpriteTemplate ; $69e3
 	ret ; $69e6
-SpriteTemplate_06_69e7:
+QueueMatchMenuCursorSprite_SpriteTemplate:
 	; $69e7, 41 bytes (sprite_template)
 	oam_sprite $00, $20, $64, $02
 	oam_sprite $00, $28, $66, $02
@@ -2291,7 +2291,7 @@ SpriteTemplate_06_69e7:
 	oam_sprite $10, $38, $4c, $02
 	oam_sprite $10, $40, $4e, $02
 	oam_sprite_end
-SpriteTemplate_06_6a10:
+DrawScoreboardModeTitle_SpriteTemplate:
 	; $6a10, 41 bytes (sprite_template)
 	oam_sprite $10, $08, $50, $02
 	oam_sprite $10, $10, $52, $02
@@ -3446,11 +3446,11 @@ QueueStoryMenuCursorSprite:
 	add $fc ; $72cf
 	ld d, a ; $72d1
 	call AdjustSpriteCoordsForScroll ; $72d2
-	ld hl, SpriteTemplate_06_72df ; $72d5
+	ld hl, QueueStoryMenuCursorSprite_SpriteTemplate ; $72d5
 	ld bc, $0000 ; $72d8
 	call QueueSpriteTemplate ; $72db
 	ret ; $72de
-SpriteTemplate_06_72df:
+QueueStoryMenuCursorSprite_SpriteTemplate:
 	; $72df, 41 bytes (sprite_template)
 	oam_sprite $00, $20, $64, $02
 	oam_sprite $00, $28, $66, $02

@@ -16,7 +16,7 @@ DataPtr_WalkSprite_70_06:
 	dw WalkSprite_70_06 ; $400c
 WalkSprite_70_00:
 	db $06, $04, $02, $00 ; count, flags
-	dw .frames, OamPtrs_70_4c40, .frames ; frame array, OAM array, frame array
+	dw .frames, WalkSprite_70_00_OamPtrs, .frames ; frame array, OAM array, frame array
 .frames:
 	dw WalkSprite_70_00_Gfx00, WalkSprite_70_00_Gfx01, WalkSprite_70_00_Gfx02 ; frame pointers (continue in body)
 	dw WalkSprite_70_00_Gfx02 ; $401e
@@ -58,7 +58,7 @@ WalkSprite_70_00_Gfx10:
 	INCBIN "data/bank_070/d_4a40.bin" ; $4a40, 256 bytes
 WalkSprite_70_00_Gfx11:
 	INCBIN "data/bank_070/d_4b40.bin" ; $4b40, 256 bytes
-OamPtrs_70_4c40:
+WalkSprite_70_00_OamPtrs:
 	dw WalkSprite_70_00_Oam00 ; $4c40
 	dw WalkSprite_70_00_Oam01 ; $4c42
 	dw WalkSprite_70_00_Oam02 ; $4c44
@@ -95,7 +95,7 @@ WalkSprite_70_00_Oam10:
 	INCBIN "data/bank_070/d_4ca6.bin" ; $4ca6, 11 bytes
 WalkSprite_70_01:
 	db $05, $04, $02, $00 ; count, flags
-	dw .frames, OamPtrs_70_58e0, .frames ; frame array, OAM array, frame array
+	dw .frames, WalkSprite_70_01_OamPtrs, .frames ; frame array, OAM array, frame array
 .frames:
 	dw WalkSprite_70_01_Gfx00, WalkSprite_70_01_Gfx01, WalkSprite_70_01_Gfx02 ; frame pointers (continue in body)
 	dw WalkSprite_70_01_Gfx02 ; $4cc1
@@ -137,7 +137,7 @@ WalkSprite_70_01_Gfx10:
 	INCBIN "data/bank_070/d_56e0.bin" ; $56e0, 256 bytes
 WalkSprite_70_01_Gfx11:
 	INCBIN "data/bank_070/d_57e0.bin" ; $57e0, 256 bytes
-OamPtrs_70_58e0:
+WalkSprite_70_01_OamPtrs:
 	dw WalkSprite_70_01_Oam00 ; $58e0
 	dw WalkSprite_70_01_Oam01 ; $58e2
 	dw WalkSprite_70_01_Oam02 ; $58e4
@@ -174,7 +174,7 @@ WalkSprite_70_01_Oam10:
 	INCBIN "data/bank_070/d_5946.bin" ; $5946, 11 bytes
 WalkSprite_70_02:
 	db $05, $04, $02, $00 ; count, flags
-	dw .frames, OamPtrs_70_6180, .frames ; frame array, OAM array, frame array
+	dw .frames, WalkSprite_70_02_OamPtrs, .frames ; frame array, OAM array, frame array
 .frames:
 	dw WalkSprite_70_02_Gfx00, WalkSprite_70_02_Gfx01, WalkSprite_70_02_Gfx02 ; frame pointers (continue in body)
 	dw WalkSprite_70_02_Gfx02 ; $5961
@@ -206,7 +206,7 @@ WalkSprite_70_02_Gfx06:
 	INCBIN "data/bank_070/d_5f80.bin" ; $5f80, 256 bytes
 WalkSprite_70_02_Gfx07:
 	INCBIN "data/bank_070/d_6080.bin" ; $6080, 256 bytes
-OamPtrs_70_6180:
+WalkSprite_70_02_OamPtrs:
 	dw WalkSprite_70_02_Oam00 ; $6180
 	dw WalkSprite_70_02_Oam01 ; $6182
 	dw WalkSprite_70_02_Oam02 ; $6184
@@ -232,7 +232,7 @@ WalkSprite_70_02_Oam06:
 	INCBIN "data/bank_070/d_61cf.bin" ; $61cf, 6 bytes
 WalkSprite_70_03:
 	db $04, $04, $02, $00 ; count, flags
-	dw .frames, OamPtrs_70_6a00, .frames ; frame array, OAM array, frame array
+	dw .frames, WalkSprite_70_03_OamPtrs, .frames ; frame array, OAM array, frame array
 .frames:
 	dw WalkSprite_70_03_Gfx00, WalkSprite_70_03_Gfx01, WalkSprite_70_03_Gfx02 ; frame pointers (continue in body)
 	dw WalkSprite_70_03_Gfx02 ; $61e5
@@ -264,7 +264,7 @@ WalkSprite_70_03_Gfx06:
 	INCBIN "data/bank_070/d_6800.bin" ; $6800, 256 bytes
 WalkSprite_70_03_Gfx07:
 	INCBIN "data/bank_070/d_6900.bin" ; $6900, 256 bytes
-OamPtrs_70_6a00:
+WalkSprite_70_03_OamPtrs:
 	dw WalkSprite_70_03_Oam00 ; $6a00
 	dw WalkSprite_70_03_Oam01 ; $6a02
 	dw WalkSprite_70_03_Oam02 ; $6a04
@@ -290,7 +290,7 @@ WalkSprite_70_03_Oam06:
 	INCBIN "data/bank_070/d_6a4f.bin" ; $6a4f, 6 bytes
 WalkSprite_70_04:
 	db $06, $04, $02, $00 ; count, flags
-	dw .frames, OamPtrs_70_7080, .frames ; frame array, OAM array, frame array
+	dw .frames, WalkSprite_70_04_OamPtrs, .frames ; frame array, OAM array, frame array
 .frames:
 	dw WalkSprite_70_04_Gfx00, WalkSprite_70_04_Gfx01, WalkSprite_70_04_Gfx02 ; frame pointers (continue in body)
 	dw WalkSprite_70_04_Gfx02 ; $6a65
@@ -315,7 +315,7 @@ WalkSprite_70_04_Gfx04:
 	INCBIN "data/bank_070/d_6e80.bin" ; $6e80, 256 bytes
 WalkSprite_70_04_Gfx05:
 	INCBIN "data/bank_070/d_6f80.bin" ; $6f80, 256 bytes
-OamPtrs_70_7080:
+WalkSprite_70_04_OamPtrs:
 	dw WalkSprite_70_04_Oam00 ; $7080
 	dw WalkSprite_70_04_Oam01 ; $7082
 	dw WalkSprite_70_04_Oam02 ; $7084
@@ -338,7 +338,7 @@ WalkSprite_70_04_Oam05:
 	INCBIN "data/bank_070/d_70c1.bin" ; $70c1, 12 bytes
 WalkSprite_70_05:
 	db $07, $04, $02, $00 ; count, flags
-	dw .frames, OamPtrs_70_76f0, .frames ; frame array, OAM array, frame array
+	dw .frames, WalkSprite_70_05_OamPtrs, .frames ; frame array, OAM array, frame array
 .frames:
 	dw WalkSprite_70_05_Gfx00, WalkSprite_70_05_Gfx01, WalkSprite_70_05_Gfx02 ; frame pointers (continue in body)
 	dw WalkSprite_70_05_Gfx02 ; $70dd
@@ -363,7 +363,7 @@ WalkSprite_70_05_Gfx04:
 	INCBIN "data/bank_070/d_74f0.bin" ; $74f0, 256 bytes
 WalkSprite_70_05_Gfx05:
 	INCBIN "data/bank_070/d_75f0.bin" ; $75f0, 256 bytes
-OamPtrs_70_76f0:
+WalkSprite_70_05_OamPtrs:
 	dw WalkSprite_70_05_Oam00 ; $76f0
 	dw WalkSprite_70_05_Oam01 ; $76f2
 	dw WalkSprite_70_05_Oam02 ; $76f4
@@ -386,7 +386,7 @@ WalkSprite_70_05_Oam05:
 	INCBIN "data/bank_070/d_7731.bin" ; $7731, 12 bytes
 WalkSprite_70_06:
 	db $03, $04, $02, $00 ; count, flags
-	dw .frames, OamPtrs_70_7d60, .frames ; frame array, OAM array, frame array
+	dw .frames, WalkSprite_70_06_OamPtrs, .frames ; frame array, OAM array, frame array
 .frames:
 	dw WalkSprite_70_06_Gfx00, WalkSprite_70_06_Gfx01, WalkSprite_70_06_Gfx02 ; frame pointers (continue in body)
 	dw WalkSprite_70_06_Gfx02 ; $774d
@@ -411,7 +411,7 @@ WalkSprite_70_06_Gfx04:
 	INCBIN "data/bank_070/d_7b60.bin" ; $7b60, 256 bytes
 WalkSprite_70_06_Gfx05:
 	INCBIN "data/bank_070/d_7c60.bin" ; $7c60, 256 bytes
-OamPtrs_70_7d60:
+WalkSprite_70_06_OamPtrs:
 	dw WalkSprite_70_06_Oam00 ; $7d60
 	dw WalkSprite_70_06_Oam01 ; $7d62
 	dw WalkSprite_70_06_Oam02 ; $7d64

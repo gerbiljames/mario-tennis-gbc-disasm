@@ -719,7 +719,7 @@ UpdateTennisDictionarySprites:
 	ld de, $807d ; $4f2b
 .queueSpriteTemplate:
 	push hl ; $4f2e
-	ld hl, SpriteTemplate_3f_50d0 ; $4f2f
+	ld hl, UpdateTennisDictionarySprites_SpriteTemplate2 ; $4f2f
 	call QueueSpriteTemplate ; $4f32
 	pop hl ; $4f35
 	ld a, [hl+] ; $4f36
@@ -735,7 +735,7 @@ UpdateTennisDictionarySprites:
 	ld de, $786d ; $4f46
 .queueSpriteTemplate2:
 	push hl ; $4f49
-	ld hl, SpriteTemplate_3f_50d9 ; $4f4a
+	ld hl, UpdateTennisDictionarySprites_SpriteTemplate3 ; $4f4a
 	call QueueSpriteTemplate ; $4f4d
 	pop hl ; $4f50
 	ld a, [hl+] ; $4f51
@@ -751,7 +751,7 @@ UpdateTennisDictionarySprites:
 	ld de, $787d ; $4f61
 .queueSpriteTemplate3:
 	push hl ; $4f64
-	ld hl, SpriteTemplate_3f_50d9 ; $4f65
+	ld hl, UpdateTennisDictionarySprites_SpriteTemplate3 ; $4f65
 	call QueueSpriteTemplate ; $4f68
 	pop hl ; $4f6b
 	ld a, [hl+] ; $4f6c
@@ -766,7 +766,7 @@ UpdateTennisDictionarySprites:
 .bit1Clear4:
 	ld de, $788d ; $4f7c
 .queueSpriteTemplate4:
-	ld hl, SpriteTemplate_3f_50d9 ; $4f7f
+	ld hl, UpdateTennisDictionarySprites_SpriteTemplate3 ; $4f7f
 	call QueueSpriteTemplate ; $4f82
 .checkTennisDictFlags:
 	ld a, [wTennisDictFlags] ; $4f85
@@ -803,13 +803,13 @@ UpdateTennisDictionarySprites:
 	ld a, [hl] ; $4fb9
 	add $0a ; $4fba
 	ld d, a ; $4fbc
-	ld hl, SpriteTemplate_3f_501f ; $4fbd
+	ld hl, UpdateTennisDictionarySprites_SpriteTemplate1 ; $4fbd
 	ld bc, $0b28 ; $4fc0
 	call QueueSpriteTemplate ; $4fc3
 	ld a, [wTennisDictFlags] ; $4fc6
 	bit 2, a ; $4fc9
 	jr z, .checkTennisDictFlags2 ; $4fcb
-	ld hl, SpriteTemplate_3f_5006 ; $4fcd
+	ld hl, UpdateTennisDictionarySprites_SpriteTemplate0 ; $4fcd
 	ld de, $1810 ; $4fd0
 	ld bc, $0d34 ; $4fd3
 	call QueueSpriteTemplate ; $4fd6
@@ -817,7 +817,7 @@ UpdateTennisDictionarySprites:
 	ld a, [wTennisDictFlags] ; $4fd9
 	bit 3, a ; $4fdc
 	jr z, .restore ; $4fde
-	ld hl, SpriteTemplate_3f_5006 ; $4fe0
+	ld hl, UpdateTennisDictionarySprites_SpriteTemplate0 ; $4fe0
 	ld de, $8810 ; $4fe3
 	ld bc, $0d3a ; $4fe6
 	call QueueSpriteTemplate ; $4fe9
@@ -832,7 +832,7 @@ UpdateTennisDictionarySprites:
 TennisDictionarySprites0:
 	; $4ff6, 16 bytes (bytes:16)
 	db $00, $01, $01, $02, $03, $04, $06, $08, $06, $04, $03, $02, $01, $01, $00, $00 ; 0x00
-SpriteTemplate_3f_5006:
+UpdateTennisDictionarySprites_SpriteTemplate0:
 	; $5006, 25 bytes (sprite_template)
 	oam_sprite $00, $00, $00, $00
 	oam_sprite $10, $00, $20, $00
@@ -841,7 +841,7 @@ SpriteTemplate_3f_5006:
 	oam_sprite $00, $10, $04, $00
 	oam_sprite $10, $10, $24, $00
 	oam_sprite_end
-SpriteTemplate_3f_501f:
+UpdateTennisDictionarySprites_SpriteTemplate1:
 	; $501f, 9 bytes (sprite_template)
 	oam_sprite $00, $00, $00, $00
 	oam_sprite $00, $08, $02, $00
@@ -850,12 +850,12 @@ TennisDictionarySprites1:
 	INCBIN "data/bank_03f/d_5028.bin" ; $5028, 80 bytes
 TennisDictionarySprites2:
 	INCBIN "data/bank_03f/d_5078.bin" ; $5078, 88 bytes
-SpriteTemplate_3f_50d0:
+UpdateTennisDictionarySprites_SpriteTemplate2:
 	; $50d0, 9 bytes (sprite_template)
 	oam_sprite $00, $00, $00, $00
 	oam_sprite $00, $08, $02, $00
 	oam_sprite_end
-SpriteTemplate_3f_50d9:
+UpdateTennisDictionarySprites_SpriteTemplate3:
 	; $50d9, 17 bytes (sprite_template)
 	oam_sprite $00, $00, $00, $00
 	oam_sprite $00, $08, $02, $00

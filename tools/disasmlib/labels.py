@@ -23,6 +23,75 @@ VECTOR_LABELS = {
 }
 
 
+AUTO_STEMS = ("Func_", "Label_", "Data_", "Lz_", "Fill_", "SpriteTemplate_",
+              "OamPtrs_")
+
+
+def _is_auto(name):
+    """A generated name -- one that states an address rather than a meaning."""
+    return name is not None and name.startswith(AUTO_STEMS)
+
+
+def enclosing_function_lookup(labels, dis):
+    """A `site -> owning global code label` function over `labels` as it
+    stands. Snapshotted, so later additions cannot change earlier answers."""
+    offs = sorted(off for off, n in labels.items()
+                  if off in dis.instrs and not n.startswith("."))
+
+    def owner_of(site):
+        i = bisect.bisect_right(offs, site) - 1
+        if i < 0 or offs[i] // BANK_SIZE != site // BANK_SIZE:
+            return None
+        return labels[offs[i]]
+
+    return owner_of
+
+
+def name_owned(out, targets, stem, sites, owner_of, reserved=()):
+    """Name each of `targets` after its owner rather than its address.
+
+    A target with exactly one owner whose own name is not auto-generated takes
+    `<owner>_<stem>`, numbered when one owner holds several. Everything else --
+    no owner, several owners, an owner that only states an address itself --
+    falls back to `<stem>_<bank>_<N>`, an index within the bank. Either way the
+    name carries no address, so inserting bytes ahead of it cannot make it lie.
+    """
+    owners = {}
+    for t in targets:
+        if t in out:
+            continue
+        names = {owner_of(s) for s in sites.get(t, ())}
+        names.discard(None)
+        owners[t] = names.pop() if len(names) == 1 else None
+        if _is_auto(owners[t]):
+            owners[t] = None
+    taken = set(out.values()) | set(reserved)
+    groups = {}
+    for t in sorted(owners):
+        groups.setdefault((owners[t], t // BANK_SIZE), []).append(t)
+    for (owner, bank), items in sorted(groups.items(), key=lambda g: g[0][1]):
+        if owner is None:
+            continue
+        for i, t in enumerate(items):
+            n = f"{owner}_{stem}" if len(items) == 1 else \
+                f"{owner}_{stem}{i:0{2 if len(items) >= 10 else 1}d}"
+            if n not in taken:
+                out[t] = n
+                taken.add(n)
+    rest = sorted(t for t in owners if t not in out)
+    per_bank = {}
+    for t in rest:
+        per_bank.setdefault(t // BANK_SIZE, []).append(t)
+    for bank, items in per_bank.items():
+        for i, t in enumerate(items):
+            n = f"{stem}_{bank:02x}" if len(items) == 1 else \
+                f"{stem}_{bank:02x}_{i:0{2 if len(items) >= 10 else 1}d}"
+            while n in taken:
+                n += "_"
+            out[t] = n
+            taken.add(n)
+
+
 def build_labels(dis, overrides=None, data_tables=None, ptr_sites=None):
     labels = {}
     for off, name in VECTOR_LABELS.items():
@@ -82,11 +151,20 @@ def build_labels(dis, overrides=None, data_tables=None, ptr_sites=None):
     for target in actor_handler_targets(dis, ahi):
         if target in dis.instrs and target not in labels:
             labels[target] = f"Func_{target // BANK_SIZE:02x}_{offset_to_cpu(target):04x}"
-    # Name each carved sprite-template so the `ld hl` load sites resolve to it.
-    for src in dis.sprite_templates:
-        if src not in labels:
-            labels[src] = \
-                f"SpriteTemplate_{src // BANK_SIZE:02x}_{offset_to_cpu(src):04x}"
+    # Name each carved sprite-template so the `ld hl` load sites resolve to it,
+    # after the routine that loads it where there is only one such routine.
+    name_owned(labels, dis.sprite_templates, "SpriteTemplate",
+               {src: dis.sprite_template_sites.get(src, ())
+                for src in dis.sprite_templates},
+               enclosing_function_lookup(labels, dis))
+    # An object header's OAM pointer array belongs to that record and nothing
+    # else, so it is named for the header, like the record's Gfx/Oam blobs.
+    # The name has to go back into ptr_labels: that is what the header's own
+    # `dw` reads to reference the array, so both spellings move together.
+    name_owned(dis.ptr_labels, set(dis.oam_arrays), "OamPtrs",
+               {a: (h,) for a, h in dis.oam_arrays.items()},
+               lambda header: labels.get(header),
+               reserved=set(labels.values()))
     # Same-bank pointer-load targets (`ld hl, table` etc.) that recursive descent
     # never named. Code targets (instruction starts) get a Func_ label and
     # data-table starts (data_tables keys) a Data_ label -- both reliably emitted.

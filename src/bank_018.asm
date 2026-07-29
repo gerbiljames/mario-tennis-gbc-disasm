@@ -1514,13 +1514,13 @@ LoadScreen0TilesAndPalette:
 Screen0Palette:
 	INCLUDE "data/bank_018/palettes_7754.asm" ; $7754, 8 bytes (palettes)
 QueueScreen0Sprites:
-	ld hl, SpriteTemplate_18_776a ; $775c
+	ld hl, QueueScreen0Sprites_SpriteTemplate ; $775c
 	ld de, $283a ; $775f
 	ld c, $00 ; $7762
 	ld b, $00 ; $7764
 	call QueueSpriteTemplate ; $7766
 	ret ; $7769
-SpriteTemplate_18_776a:
+QueueScreen0Sprites_SpriteTemplate:
 	; $776a, 81 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $20, $08, $02, $00
@@ -1654,13 +1654,13 @@ LoadScreen1ObjTiles:
 Screen1ObjPalette:
 	INCLUDE "data/bank_018/palettes_78c5.asm" ; $78c5, 8 bytes (palettes)
 QueueScreen1Sprites:
-	ld hl, SpriteTemplate_18_78db ; $78cd
+	ld hl, QueueScreen1Sprites_SpriteTemplate ; $78cd
 	ld de, $283a ; $78d0
 	ld c, $00 ; $78d3
 	ld b, $00 ; $78d5
 	call QueueSpriteTemplate ; $78d7
 	ret ; $78da
-SpriteTemplate_18_78db:
+QueueScreen1Sprites_SpriteTemplate:
 	; $78db, 81 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $20, $08, $02, $00
@@ -1810,13 +1810,13 @@ LoadScreen2ObjTiles:
 Screen2ObjPalette:
 	INCLUDE "data/bank_018/palettes_7a41.asm" ; $7a41, 8 bytes (palettes)
 QueueScreen2Sprites:
-	ld hl, SpriteTemplate_18_7a57 ; $7a49
+	ld hl, QueueScreen2Sprites_SpriteTemplate ; $7a49
 	ld de, $2840 ; $7a4c
 	ld c, $00 ; $7a4f
 	ld b, $00 ; $7a51
 	call QueueSpriteTemplate ; $7a53
 	ret ; $7a56
-SpriteTemplate_18_7a57:
+QueueScreen2Sprites_SpriteTemplate:
 	; $7a57, 41 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00

@@ -1065,14 +1065,14 @@ DrawBriefingPlayerSprite:
 	ld d, a ; $46ee
 	ld a, [wBriefingPlayerY] ; $46ef
 	ld e, a ; $46f2
-	ld hl, SpriteTemplate_17_4703 ; $46f3
+	ld hl, DrawBriefingPlayerSprite_SpriteTemplate ; $46f3
 	ld b, $08 ; $46f6
 	ld c, $00 ; $46f8
 	call QueueSpriteTemplate ; $46fa
 	pop af ; $46fd
 	wram_bank ; $46fe
 	ret ; $4702
-SpriteTemplate_17_4703:
+DrawBriefingPlayerSprite_SpriteTemplate:
 	; $4703, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -1085,14 +1085,14 @@ DrawBriefingOpponentSprite:
 	ld d, a ; $4718
 	ld a, [wBriefingOpponentY] ; $4719
 	ld e, a ; $471c
-	ld hl, SpriteTemplate_17_472d ; $471d
+	ld hl, DrawBriefingOpponentSprite_SpriteTemplate ; $471d
 	ld b, $08 ; $4720
 	ld c, $04 ; $4722
 	call QueueSpriteTemplate ; $4724
 	pop af ; $4727
 	wram_bank ; $4728
 	ret ; $472c
-SpriteTemplate_17_472d:
+DrawBriefingOpponentSprite_SpriteTemplate:
 	; $472d, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -1131,12 +1131,12 @@ DrawBriefingMarkerHFlip:
 	ld a, [wBriefingHMarkerY] ; $4773
 	ld e, a ; $4776
 	ld c, $60 ; $4777
-	ld hl, SpriteTemplate_17_4785 ; $4779
+	ld hl, DrawBriefingMarkerHFlip_SpriteTemplate ; $4779
 	call QueueSpriteTemplate ; $477c
 	pop af ; $477f
 	wram_bank ; $4780
 	ret ; $4784
-SpriteTemplate_17_4785:
+DrawBriefingMarkerHFlip_SpriteTemplate:
 	; $4785, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -1157,7 +1157,7 @@ DrawBriefingSwingAnim:
 	ld a, [wBriefingSwingFrame] ; $47a6
 	cp $06 ; $47a9
 	jr nc, .ge06 ; $47ab
-	ld hl, SpriteTemplate_17_47cd ; $47ad
+	ld hl, DrawBriefingSwingAnim_SpriteTemplate ; $47ad
 .ge06:
 	ld a, [wBriefingSwingX] ; $47b0
 	ld d, a ; $47b3
@@ -1171,7 +1171,7 @@ DrawBriefingSwingAnim:
 BriefingSwingAnimTable0:
 	; $47c3, 10 bytes (bytes:10)
 	db $08, $12, $1c, $36, $40, $4a, $26, $2c, $54, $5a ; 0x00
-SpriteTemplate_17_47cd:
+DrawBriefingSwingAnim_SpriteTemplate:
 	; $47cd, 21 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -1237,12 +1237,12 @@ DrawSpinServeBriefingMarker:
 	ld d, a ; $485c
 	ld a, [wBriefingSpinMarkerY] ; $485d
 	ld e, a ; $4860
-	ld hl, SpriteTemplate_17_486d ; $4861
+	ld hl, DrawSpinServeBriefingMarker_SpriteTemplate ; $4861
 	call QueueSpriteTemplate ; $4864
 	pop af ; $4867
 	wram_bank ; $4868
 	ret ; $486c
-SpriteTemplate_17_486d:
+DrawSpinServeBriefingMarker_SpriteTemplate:
 	; $486d, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -5145,7 +5145,7 @@ DrawRulesScreenCharacters:
 .readB:
 	ld b, [hl] ; $74fd
 	ld de, $7e68 ; $74fe
-	ld hl, SpriteTemplate_17_7527 ; $7501
+	ld hl, DrawRulesScreenCharacters_SpriteTemplate ; $7501
 	call QueueSpriteTemplate ; $7504
 	pop bc ; $7507
 	ld a, $12 ; $7508
@@ -5160,12 +5160,12 @@ DrawRulesScreenCharacters:
 .read2:
 	ld b, [hl] ; $7517
 	ld de, $7e68 ; $7518
-	ld hl, SpriteTemplate_17_7527 ; $751b
+	ld hl, DrawRulesScreenCharacters_SpriteTemplate ; $751b
 	call QueueSpriteTemplate ; $751e
 	pop af ; $7521
 	wram_bank ; $7522
 	ret ; $7526
-SpriteTemplate_17_7527:
+DrawRulesScreenCharacters_SpriteTemplate:
 	; $7527, 37 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $20, $08, $02, $00

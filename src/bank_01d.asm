@@ -1418,7 +1418,7 @@ DrawCharDataPageArrowsTask:
 	jr z, .countDone ; $4c1b
 	ld de, $0103 ; $4c1d
 	call BobArrowSpriteLeft ; $4c20
-	ld hl, SpriteTemplate_1d_679a ; $4c23
+	ld hl, DrawCharDataPageArrowsTask_SpriteTemplate2 ; $4c23
 	ld b, $0e ; $4c26
 	ld c, $28 ; $4c28
 	call QueueSpriteTemplate ; $4c2a
@@ -1426,7 +1426,7 @@ DrawCharDataPageArrowsTask:
 .countDone:
 	ld de, $7f03 ; $4c2e
 	call BobArrowSpriteRight ; $4c31
-	ld hl, SpriteTemplate_1d_681b ; $4c34
+	ld hl, DrawCharDataPageArrowsTask_SpriteTemplate3 ; $4c34
 	ld b, $0e ; $4c37
 	ld c, $30 ; $4c39
 	call QueueSpriteTemplate ; $4c3b
@@ -1434,13 +1434,13 @@ DrawCharDataPageArrowsTask:
 .zero:
 	ld de, $1010 ; $4c3f
 	call BobArrowSpriteLeft ; $4c42
-	ld hl, SpriteTemplate_1d_666a ; $4c45
+	ld hl, DrawCharDataPageArrowsTask_SpriteTemplate0 ; $4c45
 	ld b, $0e ; $4c48
 	ld c, $14 ; $4c4a
 	call QueueSpriteTemplate ; $4c4c
 	ld de, CharDataPageArrowsTaskSpriteTemplate ; $4c4f
 	call BobArrowSpriteRight ; $4c52
-	ld hl, SpriteTemplate_1d_670c ; $4c55
+	ld hl, DrawCharDataPageArrowsTask_SpriteTemplate1 ; $4c55
 	ld b, $0e ; $4c58
 	ld c, $1e ; $4c5a
 	call QueueSpriteTemplate ; $4c5c
@@ -3451,7 +3451,7 @@ CharDataScreenPageGfx13:
 	INCBIN "data/bank_01d/d_656f.bin" ; $656f, 117 bytes
 CharDataScreenPageGfx14:
 	INCBIN "data/bank_01d/d_65e4.bin" ; $65e4, 134 bytes
-SpriteTemplate_1d_666a:
+DrawCharDataPageArrowsTask_SpriteTemplate0:
 	; $666a, 21 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -3461,7 +3461,7 @@ SpriteTemplate_1d_666a:
 	oam_sprite_end
 CharDataScreenPageGraphicsGfx0:
 	INCBIN "data/bank_01d/d_667f.bin" ; $667f, 141 bytes
-SpriteTemplate_1d_670c:
+DrawCharDataPageArrowsTask_SpriteTemplate1:
 	; $670c, 21 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -3471,7 +3471,7 @@ SpriteTemplate_1d_670c:
 	oam_sprite_end
 CharDataScreenPageGraphicsGfx1:
 	INCBIN "data/bank_01d/d_6721.bin" ; $6721, 121 bytes
-SpriteTemplate_1d_679a:
+DrawCharDataPageArrowsTask_SpriteTemplate2:
 	; $679a, 17 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -3490,7 +3490,7 @@ CharDataPageArrowsTaskSpriteTemplate:
 	db $00
 	db $00
 	db $00
-SpriteTemplate_1d_681b:
+DrawCharDataPageArrowsTask_SpriteTemplate3:
 	; $681b, 17 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -5369,7 +5369,7 @@ DrawExpToNextLevelTask:
 	call GetExpScreenDigitSprite ; $76b5
 	ld de, $262f ; $76b8
 	call QueueSprite ; $76bb
-	ld hl, SpriteTemplate_1d_7b59 ; $76be
+	ld hl, DrawExpToNextLevelTask_SpriteTemplate0 ; $76be
 	ld bc, $0e2c ; $76c1
 	ld de, $142e ; $76c4
 	call QueueSpriteTemplate ; $76c7
@@ -5404,7 +5404,7 @@ DrawExpToNextLevelTask:
 	call GetExpScreenDigitSprite ; $7708
 	ld de, $2662 ; $770b
 	call QueueSprite ; $770e
-	ld hl, SpriteTemplate_1d_7c7d ; $7711
+	ld hl, DrawExpToNextLevelTask_SpriteTemplate1 ; $7711
 	ld bc, $0e44 ; $7714
 	ld de, $1461 ; $7717
 	call QueueSpriteTemplate ; $771a
@@ -5428,7 +5428,7 @@ DrawExpCharCursorTask:
 	inc a ; $7738
 	ld e, a ; $7739
 	ld d, $19 ; $773a
-	ld hl, SpriteTemplate_1d_7930 ; $773c
+	ld hl, DrawExpCharCursorTask_SpriteTemplate ; $773c
 	ld bc, $0e00 ; $773f
 	call QueueSpriteTemplate ; $7742
 	ret ; $7745
@@ -5442,14 +5442,14 @@ DrawExpBarFillMarkersTask:
 	ld a, [wExpScreenCharStats + 3] ; $7769
 	add d ; $776c
 	ld d, a ; $776d
-	ld hl, SpriteTemplate_1d_797a ; $776e
+	ld hl, DrawExpBarFillMarkersTask_SpriteTemplate ; $776e
 	ld bc, $0f0c ; $7771
 	call QueueSpriteTemplate ; $7774
 	ld de, $3849 ; $7777
 	ld a, [wExpScreenCharStats + 18] ; $777a
 	add d ; $777d
 	ld d, a ; $777e
-	ld hl, SpriteTemplate_1d_797a ; $777f
+	ld hl, DrawExpBarFillMarkersTask_SpriteTemplate ; $777f
 	ld bc, $0f0c ; $7782
 	call QueueSpriteTemplate ; $7785
 	ret ; $7788
@@ -5463,7 +5463,7 @@ DrawExpBarSweepSpriteTask:
 	wram_bank $06 ; $7793
 	ld a, [wExpBarMarkerX] ; $7799
 	ld d, a ; $779c
-	ld hl, SpriteTemplate_1d_79b4 ; $779d
+	ld hl, DrawExpBarSweepSpriteTask_SpriteTemplate ; $779d
 	ld bc, $0f10 ; $77a0
 	call QueueSpriteTemplate ; $77a3
 	ret ; $77a6
@@ -5507,7 +5507,7 @@ ExpDistributionScreenPalettes:
 	INCBIN "data/bank_01d/d_788f.bin" ; $788f, 24 bytes
 ExpDistributionScreenGfx8:
 	INCBIN "data/bank_01d/d_78a7.bin" ; $78a7, 137 bytes
-SpriteTemplate_1d_7930:
+DrawExpCharCursorTask_SpriteTemplate:
 	; $7930, 25 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $20, $08, $02, $00
@@ -5518,14 +5518,14 @@ SpriteTemplate_1d_7930:
 	oam_sprite_end
 ExpDistributionScreenGfx0:
 	INCBIN "data/bank_01d/d_7949.bin" ; $7949, 49 bytes
-SpriteTemplate_1d_797a:
+DrawExpBarFillMarkersTask_SpriteTemplate:
 	; $797a, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
 ExpDistributionScreenGfx1:
 	INCBIN "data/bank_01d/d_7983.bin" ; $7983, 49 bytes
-SpriteTemplate_1d_79b4:
+DrawExpBarSweepSpriteTask_SpriteTemplate:
 	; $79b4, 13 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -5535,7 +5535,7 @@ ExpDistributionScreenGfx2:
 	INCBIN "data/bank_01d/d_79c1.bin" ; $79c1, 162 bytes
 ExpDistributionScreenGfx3:
 	INCBIN "data/bank_01d/d_7a63.bin" ; $7a63, 246 bytes
-SpriteTemplate_1d_7b59:
+DrawExpToNextLevelTask_SpriteTemplate0:
 	; $7b59, 49 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $20, $08, $02, $00
@@ -5552,7 +5552,7 @@ SpriteTemplate_1d_7b59:
 	oam_sprite_end
 ExpDistributionScreenGfx4:
 	INCBIN "data/bank_01d/d_7b8a.bin" ; $7b8a, 243 bytes
-SpriteTemplate_1d_7c7d:
+DrawExpToNextLevelTask_SpriteTemplate1:
 	; $7c7d, 49 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $20, $08, $02, $00

@@ -1714,13 +1714,13 @@ DrawWaterSpriteMinigameCounters:
 	ld de, $8010 ; $57a6
 	farcall DrawDecimalNumberSprites_39 ; $57a9
 	ret ; $57ac
-SpriteTemplate_15_57ad:
+QueueWaterSpriteMinigameTimerPanel_SpriteTemplate:
 	; $57ad, 13 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite $10, $18, $04, $00
 	oam_sprite_end
-SpriteTemplate_15_57ba:
+QueueWaterSpriteMinigameCounterPanel_SpriteTemplate:
 	; $57ba, 13 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
@@ -1747,13 +1747,13 @@ LoadWaterSpriteMinigameHudGfx:
 	wram_bank ; $58b6
 	ret ; $58ba
 QueueWaterSpriteMinigameTimerPanel:
-	ld hl, SpriteTemplate_15_57ad ; $58bb
+	ld hl, QueueWaterSpriteMinigameTimerPanel_SpriteTemplate ; $58bb
 	ld c, $00 ; $58be
 	ld b, $08 ; $58c0
 	call QueueSpriteTemplate ; $58c2
 	ret ; $58c5
 QueueWaterSpriteMinigameCounterPanel:
-	ld hl, SpriteTemplate_15_57ba ; $58c6
+	ld hl, QueueWaterSpriteMinigameCounterPanel_SpriteTemplate ; $58c6
 	ld c, $06 ; $58c9
 	ld b, $08 ; $58cb
 	call QueueSpriteTemplate ; $58cd
