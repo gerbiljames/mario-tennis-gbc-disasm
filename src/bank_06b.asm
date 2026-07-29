@@ -1903,10 +1903,31 @@ QueueIntroSpriteBlock_SpriteTemplate:
 	oam_sprite $10, $20, $0c, $00
 	oam_sprite $20, $20, $0e, $00
 	oam_sprite_end
-Data_6b_615e:
-	; $615e, 30 bytes (bytes:16)
-	db $fa, $40, $cb, $fe, $14, $38, $16, $fa, $23, $c3, $b7, $28, $10, $fa, $23, $c3 ; 0x00
-	db $67, $fa, $22, $c3, $6f, $7c, $ea, $23, $c3, $7d, $ea, $22, $c3, $c9 ; 0x10
+; Returns unless wCutsceneStepTimer >= $14 and [$c323] is nonzero, then
+; loads h from [$c323] and l from [$c322] and writes both straight
+; back unchanged. **After the two guards it does nothing** -- the
+; write-back is the value just read, so the routine has no effect at
+; all. $c322 is wCameraY, so the pair reads as a 16-bit camera Y.
+;
+; Was 30 bytes of data with no proven caller; seeded as code because it
+; decodes as one complete routine ending in ret.
+RewriteCutsceneCameraY_6b:
+	ld a, [wCutsceneStepTimer] ; $615e
+	cp $14 ; $6161
+	jr c, .done ; $6163
+	ld a, [wCameraY + 1] ; $6165
+	or a ; $6168
+	jr z, .done ; $6169
+	ld a, [wCameraY + 1] ; $616b
+	ld h, a ; $616e
+	ld a, [wCameraY] ; $616f
+	ld l, a ; $6172
+	ld a, h ; $6173
+	ld [wCameraY + 1], a ; $6174
+	ld a, l ; $6177
+	ld [wCameraY], a ; $6178
+.done:
+	ret ; $617b
 InitTitleSceneGraphics:
 	call DisableLCDSafely ; $617c
 	farcall InitSceneScroll ; $617f

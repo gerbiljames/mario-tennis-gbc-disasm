@@ -4023,7 +4023,17 @@ RunStoryDataConfirmMenu:
 	call UnregisterFrameTask ; $69c8
 	pop af ; $69cb
 	ret ; $69cc
-Data_1b_69cd:
+; A lone $c9 (ret) followed by the byte pair $ff $36 four times, wedged
+; between the end of a two-option-select wrapper and the run of ret
+; bytes named StubNop_1b_09. Reads as a stub return plus filler.
+;
+; No code anywhere reaches it: no 16-bit immediate load, no add LOW/adc
+; HIGH split base, no 8-bit register pair, and no dw word -- searched over
+; the raw ROM (so unproven code inside blobs counts) for every address
+; inside it, not just its start, with cross-bank byte coincidences filtered
+; out. Driving the character-select and CPU-difficulty screens under a
+; trace added no coverage here either.
+Unused_1b_StubRetAndFill:
 	; $69cd, 9 bytes (bytes:9)
 	db $c9, $ff, $36, $ff, $36, $ff, $36, $ff, $36 ; 0x00
 StubNop_1b_09:
@@ -5214,7 +5224,18 @@ SpriteTemplate_1b:
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
-Data_1b_7349:
+; Three $50/$0c, $50/$54, $50/$5c byte pairs -- one row, three columns
+; -- followed by $00 $10 $20, in front of RedrawSavedDataTypeSelect.
+; Reads as three cursor positions plus three tile ids for that screen's
+; three options, but nothing consults it.
+;
+; No code anywhere reaches it: no 16-bit immediate load, no add LOW/adc
+; HIGH split base, no 8-bit register pair, and no dw word -- searched over
+; the raw ROM (so unproven code inside blobs counts) for every address
+; inside it, not just its start, with cross-bank byte coincidences filtered
+; out. Driving the character-select and CPU-difficulty screens under a
+; trace added no coverage here either.
+Unused_1b_SavedDataCursorCells:
 	; $7349, 9 bytes (bytes:9)
 	db $50, $0c, $50, $54, $50, $5c, $00, $10, $20 ; 0x00
 RedrawSavedDataTypeSelect:

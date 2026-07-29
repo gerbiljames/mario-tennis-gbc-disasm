@@ -8109,3 +8109,92 @@ nothing reads. Naming them means proving which, table by table, against the
 code that surrounds them.
 
 Autonames in `src/`: **12**, from 179. Byte-perfect; `make check` clean.
+
+## The last twelve: three tables were a lie, two blobs were routines (2026-07-29)
+
+**Every autoname in `src/` is gone.** The twelve that survived every search
+split three ways, and the largest group was not "unread data" at all -- it was
+data the disassembly had already claimed as *code*.
+
+### Three "SubHandlers" tables in bank $38 were never handler tables
+
+`Data_38_5ffe` was a 3-byte crumb wedged between two `SubHandler*` functions,
+19 bytes past a `records:2` table -- and 19 is odd, which is what made it worth
+pulling on. What came out is that **all three** of bank `$38`'s `SubHandlers`
+tables are pointer tables to *records*, and their thirteen "handler functions"
+were nonsense decodes standing on hand-authored static-code seeds.
+
+The discriminator is one instruction. All four candidate tables do the same
+dereference -- `ld a, [hl+]` / `ld h, [hl]` / `ld l, a` -- and then:
+
+| table | after the dereference | verdict |
+| --- | --- | --- |
+| `DrillSubHandlers_1d` | `jp hl` | **genuine** handler table |
+| `CharGridSlotIconListPtrs_38` | walks 4-byte records to `WriteSlotIconTiles` | data |
+| `CpuDifficultyParamPtrs_38` | `[hl+]` into `wPlayer*PartnerAiParams` | data |
+| `RemoteSlotBoxAddrPtrs_38` | indexes again, reads one word | data |
+
+`jp hl` means code. Reading bytes means records. Thirteen seeds removed, 108
+bytes of false code gone, and the structures now read as themselves:
+
+* **`CpuDifficultyParamPtrs_38`** -> five 6-byte records: four AI parameters,
+  the difficulty byte, and an EXP tier read only for non-created characters.
+  Records 1-4 ramp monotonically -- reaction delays 28/18/10/2, tracking
+  60/120/190/230, difficulty 0/1/2/3, tier 1/3/5/7 -- which is what names them
+  `CpuDifficultyParams{Easy,Normal,Hard,Intense}`. Slot 0 duplicates INTENSE
+  and is what an unset difficulty selects. That table is the CPU difficulty
+  submenu, in six bytes a row.
+* **`RemoteSlotBoxAddrPtrs_38`** -> `RemoteSlotBoxAddrs0-3`, `ram_ptrs`
+  tables that now render `dw wShadowTilemap + 6 * TILEMAP_WIDTH + 16` and
+  `dw NO_BOX`. It is the exact remote-player twin of the already-correct
+  `PlayerSlotBoxAddrPtrs_38` -> `PlayerSlotBoxAddrs0-5`, which is what made it
+  obvious once the fake code was out of the way.
+* **`CharGridSlotIconListPtrs_38`** -> four `$00`-terminated lists of 4-byte
+  icon records, indexed by `wCharSelectMode`.
+
+### Two blobs were complete routines
+
+* **`Data_1a_4af4`** (43 bytes) decodes as one push/pop-balanced routine that
+  walks the 32-word table immediately above it -- `c` over rows `$0b`-`$0e`,
+  `b` over columns `$01`-`$08`, 4 x 8 = exactly 32 entries -- calling
+  `WriteTileBufferCell` per cell. Now `FillTileBufferBlockFromTable_1a` and
+  `TileBufferBlockCells_1a`, with its four loop targets as locals. Its own
+  `ld hl, $4ab4` landing exactly on that previously-unnamed table is the
+  corroboration.
+* **`Data_6b_615e`** (30 bytes) decodes as a routine that guards on
+  `wCutsceneStepTimer` and `[$c323]`, then reads `$c322`/`$c323` into `hl` and
+  writes both back unchanged -- a **no-op**. Now `RewriteCutsceneCameraY_6b`,
+  and written up in `docs/bugs.md`: the read/write-back pair is what a
+  read-modify-write looks like with the modify deleted.
+
+### Nine are genuinely unread, and now say so
+
+Named for their contents under `Unused_<bank>_<what>`, each note carrying the
+negative result rather than implying a caller:
+
+| label | contents |
+| --- | --- |
+| `Unused_38_PortraitCellAddrs0` / `1` | four slot-portrait cells (rows 6/9, cols 14/16), byte-identical, one behind `ClearPlayerSlotPortrait` and one behind `DrawPlayerSlotPortrait` -- both of which reach their cells through unrolled per-slot branches instead. The live `PlayerSlotBoxAddrs0-5` family uses columns 13/17, so these read as the superseded version. |
+| `Unused_38_StatDrawOrder` | `$00 $02 $04 $01 $03 $05` -- six stat rows column-major, in front of `DrawCreatedCharStats` |
+| `Unused_38_SlotIndexOrder` | `$03 $01 $02 $00`; the palette routine above it computes its index arithmetically instead |
+| `Unused_38_NameEntryBlank` | four order bytes then ten `$3f` and a `$00` -- eleven bytes, exactly `wNameEntryBuffer`, but `SetupNameEntryScreen` copies its eleven from `GetActiveStoryNameBuffer` |
+| `Unused_27_ActorLists` | two lists of three 6-byte records, `$00`-terminated, differing in one byte |
+| `Unused_27_Record` | sixteen bytes; three words look like bank addresses but each lands mid-object, so not a pointer record. Shape only. |
+| `Unused_1b_StubRetAndFill` | a lone `ret` then `$ff $36` four times, in front of `StubNop_1b_09` |
+| `Unused_1b_SavedDataCursorCells` | three same-row cursor positions plus three tile ids, in front of `RedrawSavedDataTypeSelect` |
+
+What "unread" rests on: for every address *inside* each blob -- not just its
+start -- no 16-bit immediate load, no `add LOW`/`adc HIGH` split base, no 8-bit
+register pair in either order, and no `dw` word, searched over the raw ROM so
+that unproven code inside blobs counts too, with cross-bank byte coincidences
+filtered out. Plus, for bank `$38`, a traced play session through the screens
+that use it which added no coverage at all.
+
+### Where the naming stands
+
+**Address-suffixed labels in `src/`: 0**, from 1,056 three passes ago. The 915
+symbols `tools/progress.py` still counts as auto-named are 903 `FarPtr_`/
+`DataPtr_` slot labels, which derive from their targets' curated names by
+design, and 12 derived table names (`SpriteDesc_*`, `SoundTable_*`,
+`WalkSprites_*`). Byte-perfect throughout; `make check` clean (4,907 regions
+now -- one fewer blob, because one of them turned out to be a routine).

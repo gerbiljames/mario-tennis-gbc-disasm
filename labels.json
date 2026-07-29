@@ -9791,7 +9791,18 @@
  "0x68a90": ".loopB",
  "0x68aa1": ".eq06",
  "0x68aa4": ".eq0a",
- "0x68af4": "Data_1a_4af4",
+ "0x68ab4": {
+  "name": "TileBufferBlockCells_1a",
+  "note": "32 words walked by FillTileBufferBlockFromTable_1a, one per cell\nof the 4x8 block it fills. The values run $0b38-$0b6f\nconsecutively, so the high byte is constant and only the low byte\nvaries across the block."
+ },
+ "0x68af4": {
+  "name": "FillTileBufferBlockFromTable_1a",
+  "note": "Fills a 4-row by 8-column block of the tile buffer from\nTileBufferBlockCells_1a, the 32-word table immediately above it:\nc counts rows $0b-$0e, b counts columns $01-$08, and each iteration\nreads one word into de and calls WriteTileBufferCell. 4 x 8 is\nexactly the table's 32 entries.\n\nWas 43 bytes of INCBIN with no proven caller; seeded as code because\nit decodes as one complete push/pop-balanced routine and its\n`ld hl, $4ab4` lands exactly on that table."
+ },
+ "0x68aff": ".rowLoop",
+ "0x68b06": ".colLoop",
+ "0x68b17": ".nextRow",
+ "0x68b1a": ".done",
  "0x68b1f": "DrawExpScreenNameAndLevel",
  "0x68b38": ".zero",
  "0x68b53": ".zero2",
@@ -10440,7 +10451,10 @@
  "0x6e968": "UnlockDebugFlagSprites",
  "0x6e974": "QueueBobbingFlagSprite",
  "0x6e982": "RunStoryDataConfirmMenu",
- "0x6e9cd": "Data_1b_69cd",
+ "0x6e9cd": {
+  "name": "Unused_1b_StubRetAndFill",
+  "note": "A lone $c9 (ret) followed by the byte pair $ff $36 four times, wedged\nbetween the end of a two-option-select wrapper and the run of ret\nbytes named StubNop_1b_09. Reads as a stub return plus filler.\n\nNo code anywhere reaches it: no 16-bit immediate load, no add LOW/adc\nHIGH split base, no 8-bit register pair, and no dw word -- searched over\nthe raw ROM (so unproven code inside blobs counts) for every address\ninside it, not just its start, with cross-bank byte coincidences filtered\nout. Driving the character-select and CPU-difficulty screens under a\ntrace added no coverage here either."
+ },
  "0x6e9d6": "StubNop_1b_09",
  "0x6ea03": ".loop",
  "0x6eaa1": "QueueStoryInfoRowToVram",
@@ -10555,7 +10569,10 @@
  "0x6f2b4": ".drawSavedDataCursorOption1",
  "0x6f2b8": "DrawSavedDataCursorOption0",
  "0x6f2d9": "DrawSavedDataCursorOption1",
- "0x6f349": "Data_1b_7349",
+ "0x6f349": {
+  "name": "Unused_1b_SavedDataCursorCells",
+  "note": "Three $50/$0c, $50/$54, $50/$5c byte pairs -- one row, three columns\n-- followed by $00 $10 $20, in front of RedrawSavedDataTypeSelect.\nReads as three cursor positions plus three tile ids for that screen's\nthree options, but nothing consults it.\n\nNo code anywhere reaches it: no 16-bit immediate load, no add LOW/adc\nHIGH split base, no 8-bit register pair, and no dw word -- searched over\nthe raw ROM (so unproven code inside blobs counts) for every address\ninside it, not just its start, with cross-bank byte coincidences filtered\nout. Driving the character-select and CPU-difficulty screens under a\ntrace added no coverage here either."
+ },
  "0x6f352": "RedrawSavedDataTypeSelect",
  "0x6f35c": ".loop",
  "0x6f383": "DrawSavedDataTypeDescription",
@@ -12070,7 +12087,10 @@
  "0x9c8f0": ".setScript",
  "0x9c90c": "End16BeforeFinalsCutscene_27",
  "0x9ca88": ".face",
- "0x9cb41": "Data_27_4b41",
+ "0x9cb41": {
+  "name": "Unused_27_ActorLists",
+  "note": "Two lists of three 6-byte records, each terminated by a $00 byte, in\nthe shape of this bank's actor lists. The two differ in one byte\n(record 0 field 4 is $15 in the first list, $13 in the second), so\nthey look like two variants of the same scene population.\n\nNo code anywhere reaches it: no 16-bit immediate load, no add LOW/adc\nHIGH split base, no 8-bit register pair, and no dw word -- searched over\nthe raw ROM (so unproven code inside blobs counts) for every address\ninside it, not just its start, with cross-bank byte coincidences filtered\nout. Driving the character-select and CPU-difficulty screens under a\ntrace added no coverage here either."
+ },
  "0x9cb67": "ActorScript_27_02",
  "0x9cb80": "ActorScript_27_03",
  "0x9cbbc": "End12PrincipalsOfficeMapScripts_27",
@@ -12111,7 +12131,10 @@
  "0x9d507": "End11TrainingCourtActorsAlt_27",
  "0x9d557": "ActorScript_27_05",
  "0x9d55e": "ActorScript_27_06",
- "0x9d570": "Data_27_5570",
+ "0x9d570": {
+  "name": "Unused_27_Record",
+  "note": "Sixteen bytes: $0080, $5520, $7ea0, $4460, then $2508 four times, read\nas words. Three of those look like bank-$27 addresses but each lands\nmid-object rather than on any labelled start, so it is not a pointer\nrecord. Named for its shape only -- what it holds is not established.\n\nNo code anywhere reaches it: no 16-bit immediate load, no add LOW/adc\nHIGH split base, no 8-bit register pair, and no dw word -- searched over\nthe raw ROM (so unproven code inside blobs counts) for every address\ninside it, not just its start, with cross-bank byte coincidences filtered\nout. Driving the character-select and CPU-difficulty screens under a\ntrace added no coverage here either."
+ },
  "0x9d580": "End11TrainingCourtInitScriptPalette0_27",
  "0x9d5c0": "End11TrainingCourtInitScriptPalette1_27",
  "0x9d5f0": "End10VarsityCourtMapScripts_27",
@@ -12681,7 +12704,10 @@
  "0xe0924": "CharacterSelectScreenTable",
  "0xe092c": "LoadCharSelectCharPalettes",
  "0xe0949": "LoadHighlightedCharPalette",
- "0xe0971": "Data_38_4971",
+ "0xe0971": {
+  "name": "Unused_38_SlotIndexOrder",
+  "note": "Four bytes, $03 $01 $02 $00 -- a permutation of the four character-\nselect slots. Sits between LoadHighlightedCharPalette and\nSetupCharacterSelectScreen; the palette routine computes its own\nindex arithmetically (cursor index + partner flag, then + 4) and\nnever consults a table.\n\nNo code anywhere reaches it: no 16-bit immediate load, no add LOW/adc\nHIGH split base, no 8-bit register pair, and no dw word -- searched over\nthe raw ROM (so unproven code inside blobs counts) for every address\ninside it, not just its start, with cross-bank byte coincidences filtered\nout. Driving the character-select and CPU-difficulty screens under a\ntrace added no coverage here either."
+ },
  "0xe0975": "SetupCharacterSelectScreen",
  "0xe0a61": ".secondRow",
  "0xe0aae": "RefreshCharacterSelectHighlight",
@@ -12789,12 +12815,18 @@
  "0xe15ab": "ClearPlayerSlotPortrait",
  "0xe15f3": ".slot0",
  "0xe1609": ".done",
- "0xe160a": "Data_38_560a",
+ "0xe160a": {
+  "name": "Unused_38_PortraitCellAddrs0",
+  "note": "Four shadow-tilemap cell addresses -- rows 6 and 9, columns 14 and\n16, i.e. the four player slots -- sitting immediately behind\nClearPlayerSlotPortrait, which instead reaches its cells through\nunrolled per-slot branches with the addresses written out longhand.\nByte-identical to Unused_38_PortraitCellAddrs1 behind\nDrawPlayerSlotPortrait, which is itself evidence of copy-paste.\n\nThe live equivalent is the PlayerSlotBoxAddrs0-5 family, which uses\ncolumns 13 and 17 and pads unused slots with NO_BOX. These two read\nas the superseded version.\n\nNo code anywhere reaches it: no 16-bit immediate load, no add LOW/adc\nHIGH split base, no 8-bit register pair, and no dw word -- searched over\nthe raw ROM (so unproven code inside blobs counts) for every address\ninside it, not just its start, with cross-bank byte coincidences filtered\nout. Driving the character-select and CPU-difficulty screens under a\ntrace added no coverage here either."
+ },
  "0xe1612": "DrawPlayerSlotPortrait",
  "0xe161d": ".gotSource",
  "0xe165b": ".slot0",
  "0xe1671": ".done",
- "0xe1672": "Data_38_5672",
+ "0xe1672": {
+  "name": "Unused_38_PortraitCellAddrs1",
+  "note": "Byte-identical twin of Unused_38_PortraitCellAddrs0, behind\nDrawPlayerSlotPortrait. See that label for the full argument.\n\nNo code anywhere reaches it: no 16-bit immediate load, no add LOW/adc\nHIGH split base, no 8-bit register pair, and no dw word -- searched over\nthe raw ROM (so unproven code inside blobs counts) for every address\ninside it, not just its start, with cross-bank byte coincidences filtered\nout. Driving the character-select and CPU-difficulty screens under a\ntrace added no coverage here either."
+ },
  "0xe167a": "DrawPlayerSlotLeftHandedMark",
  "0xe1685": ".read",
  "0xe1693": "DrawPlayerSlotDifficultyMark",
@@ -12818,7 +12850,10 @@
  "0xe179b": ".readSlot",
  "0xe17aa": ".namedChar",
  "0xe17b7": ".done",
- "0xe17d7": "Data_38_57d7",
+ "0xe17d7": {
+  "name": "Unused_38_StatDrawOrder",
+  "note": "Six bytes, $00 $02 $04 $01 $03 $05 -- the six stat rows in\ncolumn-major order, sitting immediately in front of\nDrawCreatedCharStats.\n\nNo code anywhere reaches it: no 16-bit immediate load, no add LOW/adc\nHIGH split base, no 8-bit register pair, and no dw word -- searched over\nthe raw ROM (so unproven code inside blobs counts) for every address\ninside it, not just its start, with cross-bank byte coincidences filtered\nout. Driving the character-select and CPU-difficulty screens under a\ntrace added no coverage here either."
+ },
  "0xe17dd": "DrawCreatedCharStats",
  "0xe17f1": ".seekRecord",
  "0xe17f8": ".drawStats",
@@ -12836,11 +12871,14 @@
  "0xe19a0": ".readList",
  "0xe19a3": ".iconLoop",
  "0xe19b4": ".done",
- "0xe19ba": "CharGridSlotIconsSubHandlers",
- "0xe19c6": "SubHandler0",
- "0xe19cf": "SubHandler1",
- "0xe19e0": "SubHandler2",
- "0xe19e9": "SubHandler4",
+ "0xe19ba": {
+  "name": "CharGridSlotIconListPtrs_38",
+  "note": "Indexed by wCharSelectMode * 2 in DrawCharGridSlotIcons, then\ndereferenced: each target is a $00-terminated list of 4-byte icon\nrecords (count, flag, then a shadow-tilemap address) fed to\nWriteSlotIconTiles. The targets are data; they used to render as four\nSubHandler* functions because hand-authored static-code seeds pointed\nat them."
+ },
+ "0xe19c6": "CharGridSlotIconList0",
+ "0xe19cf": "CharGridSlotIconList1",
+ "0xe19e0": "CharGridSlotIconList2",
+ "0xe19e9": "CharGridSlotIconList3",
  "0xe19fa": "WriteSlotIconTiles",
  "0xe1a1b": "InitCharGridState",
  "0xe1a5c": ".slot2",
@@ -12932,14 +12970,15 @@
  "0xe1fb5": ".slot3",
  "0xe1fc1": ".readSlot3",
  "0xe1fe5": ".done",
- "0xe1feb": "CpuDifficultyToCharRecordsSubHandlers",
- "0xe1ff5": "SubHandler01",
- "0xe1ffb": "SubHandler11",
- "0xe1ffe": "Data_38_5ffe",
- "0xe2001": "SubHandler21",
- "0xe2007": "SubHandler3",
- "0xe200a": ".compare",
- "0xe200d": "SubHandler41",
+ "0xe1feb": {
+  "name": "CpuDifficultyParamPtrs_38",
+  "note": "Indexed by wCharSelectSlotDifficulty * 2 in\nApplyCpuDifficultyToCharRecords, then dereferenced to a 6-byte record:\nfour AI parameters, the difficulty byte copied to\nwExhibitionMode*CharacterDifficulty, and an EXP tier read only for\ncharacters that are not created ones.\n\nRecords 1-4 ramp monotonically -- reaction delays 28/18/10/2, tracking\n60/120/190/230, difficulty 0/1/2/3, tier 1/3/5/7 -- which is what\nidentifies them as EASY/NORMAL/HARD/INTENSE. Slot 0 duplicates\nINTENSE and is what an unset difficulty selects."
+ },
+ "0xe1ff5": "CpuDifficultyParamsUnset",
+ "0xe1ffb": "CpuDifficultyParamsEasy",
+ "0xe2001": "CpuDifficultyParamsNormal",
+ "0xe2007": "CpuDifficultyParamsHard",
+ "0xe200d": "CpuDifficultyParamsIntense",
  "0xe2013": "IsCreatedCharId",
  "0xe201a": ".no",
  "0xe201c": "ApplyHandednessToCharRecords",
@@ -13094,11 +13133,14 @@
  "0xe29aa": ".fromCallerPtr",
  "0xe29b1": ".readTable",
  "0xe29bd": ".read",
- "0xe29c1": "SubHandlers_38_2",
- "0xe29cd": "SubHandler02",
- "0xe29d7": "SubHandler22",
- "0xe29dd": "SubHandler5",
- "0xe29e7": "SubHandler42",
+ "0xe29c1": {
+  "name": "RemoteSlotBoxAddrPtrs_38",
+  "note": "The remote-player twin of PlayerSlotBoxAddrPtrs_38: indexed in\nGetRemoteSlotBoxAddress, dereferenced, then indexed again by\nwCharSelectRemoteSlot * 2 to read one shadow-tilemap address. The\ntargets are ram_ptrs tables exactly like PlayerSlotBoxAddrs0-5, with\n$0000 for slots that have no box."
+ },
+ "0xe29cd": "RemoteSlotBoxAddrs0",
+ "0xe29d7": "RemoteSlotBoxAddrs1",
+ "0xe29dd": "RemoteSlotBoxAddrs2",
+ "0xe29e7": "RemoteSlotBoxAddrs3",
  "0xe29ed": "AdvanceRemotePlayerSlot",
  "0xe29f9": ".read",
  "0xe2a00": ".loop",
@@ -13205,7 +13247,10 @@
  "0xe2ee3": ".accept",
  "0xe2f26": ".storeName",
  "0xe2f6e": "SetupNameEntryScreen",
- "0xe3063": "Data_38_7063",
+ "0xe3063": {
+  "name": "Unused_38_NameEntryBlank",
+  "note": "Four bytes ($01 $03 $02 $00, a permutation of four slots) followed by\nten $3f bytes and a $00 -- eleven bytes, exactly the size of\nwNameEntryBuffer and the length SetupNameEntryScreen copies with\n`ld bc, $000b`. It reads as a blank-name template, but that routine\ntakes its eleven bytes from GetActiveStoryNameBuffer, not from here.\n\nNo code anywhere reaches it: no 16-bit immediate load, no add LOW/adc\nHIGH split base, no 8-bit register pair, and no dw word -- searched over\nthe raw ROM (so unproven code inside blobs counts) for every address\ninside it, not just its start, with cross-bank byte coincidences filtered\nout. Driving the character-select and CPU-difficulty screens under a\ntrace added no coverage here either."
+ },
  "0xe3072": "HandleNameEntryCursorMove",
  "0xe3087": ".snapRight",
  "0xe308c": ".snapLeft",
@@ -18140,7 +18185,11 @@
  "0x1ae126": "QueueIntroSpriteBlock",
  "0x1ae12f": ".read",
  "0x1ae139": "IntroSpriteBlockTable",
- "0x1ae15e": "Data_6b_615e",
+ "0x1ae15e": {
+  "name": "RewriteCutsceneCameraY_6b",
+  "note": "Returns unless wCutsceneStepTimer >= $14 and [$c323] is nonzero, then\nloads h from [$c323] and l from [$c322] and writes both straight\nback unchanged. **After the two guards it does nothing** -- the\nwrite-back is the value just read, so the routine has no effect at\nall. $c322 is wCameraY, so the pair reads as a 16-bit camera Y.\n\nWas 30 bytes of data with no proven caller; seeded as code because it\ndecodes as one complete routine ending in ret."
+ },
+ "0x1ae17b": ".done",
  "0x1ae17c": "InitTitleSceneGraphics",
  "0x1ae1e6": "TitleSceneGraphicsGfx0",
  "0x1aec2a": "IntroCutsceneState01InitGfx0",

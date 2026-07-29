@@ -1323,6 +1323,11 @@ DrawExpScreenYesNoBox:
 	pop bc ; $4ab1
 	pop af ; $4ab2
 	ret ; $4ab3
+; 32 words walked by FillTileBufferBlockFromTable_1a, one per cell
+; of the 4x8 block it fills. The values run $0b38-$0b6f
+; consecutively, so the high byte is constant and only the low byte
+; varies across the block.
+TileBufferBlockCells_1a:
 	; $4ab4, 64 bytes (records:2)
 	dw $0b38 ; record 0
 	dw $0b39 ; record 1
@@ -1356,8 +1361,50 @@ DrawExpScreenYesNoBox:
 	dw $0b6d ; record 29
 	dw $0b6e ; record 30
 	dw $0b6f ; record 31
-Data_1a_4af4:
-	INCBIN "data/bank_01a/d_4af4.bin" ; $4af4, 43 bytes
+; Fills a 4-row by 8-column block of the tile buffer from
+; TileBufferBlockCells_1a, the 32-word table immediately above it:
+; c counts rows $0b-$0e, b counts columns $01-$08, and each iteration
+; reads one word into de and calls WriteTileBufferCell. 4 x 8 is
+; exactly the table's 32 entries.
+;
+; Was 43 bytes of INCBIN with no proven caller; seeded as code because
+; it decodes as one complete push/pop-balanced routine and its
+; `ld hl, $4ab4` lands exactly on that table.
+FillTileBufferBlockFromTable_1a:
+	push af ; $4af4
+	push bc ; $4af5
+	push de ; $4af6
+	push hl ; $4af7
+	ld c, $0b ; $4af8
+	ld a, $00 ; $4afa
+	ld hl, TileBufferBlockCells_1a ; $4afc
+.rowLoop:
+	ld a, c ; $4aff
+	cp $0f ; $4b00
+	jr z, .done ; $4b02
+	ld b, $01 ; $4b04
+.colLoop:
+	ld a, b ; $4b06
+	cp $09 ; $4b07
+	jr z, .nextRow ; $4b09
+	ld a, [hl] ; $4b0b
+	ld d, a ; $4b0c
+	inc hl ; $4b0d
+	ld a, [hl] ; $4b0e
+	ld e, a ; $4b0f
+	call WriteTileBufferCell ; $4b10
+	inc hl ; $4b13
+	inc b ; $4b14
+	jr .colLoop ; $4b15
+.nextRow:
+	inc c ; $4b17
+	jr .rowLoop ; $4b18
+.done:
+	pop hl ; $4b1a
+	pop de ; $4b1b
+	pop bc ; $4b1c
+	pop af ; $4b1d
+	ret ; $4b1e
 DrawExpScreenNameAndLevel:
 	push af ; $4b1f
 	push bc ; $4b20

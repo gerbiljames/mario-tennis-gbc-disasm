@@ -465,11 +465,26 @@ End16BeforeFinalsCutscene_27:
 	ld [wUnusedExitLocationMirror], a ; $4b3a
 	ld [wStoryModeExitLocationRequest], a ; $4b3d
 	ret ; $4b40
-Data_27_4b41:
-	; $4b41, 38 bytes (bytes:16)
-	db $04, $00, $13, $00, $15, $02, $04, $00, $13, $00, $0b, $02, $04, $00, $01, $00 ; 0x00
-	db $0b, $02, $00, $04, $00, $13, $00, $13, $02, $04, $00, $13, $00, $0b, $02, $04 ; 0x10
-	db $00, $01, $00, $0b, $02, $00 ; 0x20
+; Two lists of three 6-byte records, each terminated by a $00 byte, in
+; the shape of this bank's actor lists. The two differ in one byte
+; (record 0 field 4 is $15 in the first list, $13 in the second), so
+; they look like two variants of the same scene population.
+;
+; No code anywhere reaches it: no 16-bit immediate load, no add LOW/adc
+; HIGH split base, no 8-bit register pair, and no dw word -- searched over
+; the raw ROM (so unproven code inside blobs counts) for every address
+; inside it, not just its start, with cross-bank byte coincidences filtered
+; out. Driving the character-select and CPU-difficulty screens under a
+; trace added no coverage here either.
+Unused_27_ActorLists:
+	; $4b41, 38 bytes (bytes:6)
+	db $04, $00, $13, $00, $15, $02 ; 0x00
+	db $04, $00, $13, $00, $0b, $02 ; 0x06
+	db $04, $00, $01, $00, $0b, $02 ; 0x0c
+	db $00, $04, $00, $13, $00, $13 ; 0x12
+	db $02, $04, $00, $13, $00, $0b ; 0x18
+	db $02, $04, $00, $01, $00, $0b ; 0x1e
+	db $02, $00 ; 0x24
 ActorScript_27_02:
 	; $4b67, 25 bytes (actor_script)
 	as_set_target $1300, $1500
@@ -1000,7 +1015,18 @@ ActorScript_27_06:
 	as_halt
 	as_halt
 	as_halt
-Data_27_5570:
+; Sixteen bytes: $0080, $5520, $7ea0, $4460, then $2508 four times, read
+; as words. Three of those look like bank-$27 addresses but each lands
+; mid-object rather than on any labelled start, so it is not a pointer
+; record. Named for its shape only -- what it holds is not established.
+;
+; No code anywhere reaches it: no 16-bit immediate load, no add LOW/adc
+; HIGH split base, no 8-bit register pair, and no dw word -- searched over
+; the raw ROM (so unproven code inside blobs counts) for every address
+; inside it, not just its start, with cross-bank byte coincidences filtered
+; out. Driving the character-select and CPU-difficulty screens under a
+; trace added no coverage here either.
+Unused_27_Record:
 	; $5570, 16 bytes (bytes:16)
 	db $80, $00, $20, $55, $a0, $7e, $60, $44, $08, $25, $08, $25, $08, $25, $08, $25 ; 0x00
 End11TrainingCourtInitScriptPalette0_27:

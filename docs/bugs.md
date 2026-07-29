@@ -111,6 +111,29 @@ store with a missing counterpart.
 | `hLinkLastRxMirror` | bank `$07` | written beside `hLinkLastRxByte`, never compared |
 | `hUnusedLinkSelectByte` | bank `$38` | written twice by `RunLinkCharSelectScreen` |
 
+## A routine whose body is a no-op
+
+`RewriteCutsceneCameraY_6b` (bank `$6b`, `$615e`) guards on
+`wCutsceneStepTimer >= $14` and on `[$c323]` being nonzero, then does this:
+
+```
+        ld a, [$c323] / ld h, a       ; h = high byte
+        ld a, [$c322] / ld l, a       ; l = low byte  ($c322 = wCameraY)
+        ld a, h / ld [$c323], a       ; write h back
+        ld a, l / ld [$c322], a       ; write l back
+        ret
+```
+
+It reads the two camera bytes into `hl` and writes exactly those values back, so
+past the guards the routine has no effect whatsoever. Whatever the write-back
+was meant to transform -- a shift, an add, a clamp -- is not there.
+
+Nothing calls it in any traced run, and no proven code takes its address, so it
+may simply be an abandoned edit rather than a live no-op. It is recorded here
+because the shape is a bug's fingerprint: the read/write-back pair is what a
+read-modify-write looks like with the modify deleted. Found by seeding it as
+code, which is why it read as 30 bytes of data until 2026-07-29.
+
 ## Routines that return before their body
 
 Routines in the ROM that are *called* but begin with `ret`, so their bodies

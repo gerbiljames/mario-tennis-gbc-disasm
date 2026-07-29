@@ -1350,7 +1350,19 @@ LoadHighlightedCharPalette:
 	farcall GetCharPaletteIndex ; $496a
 	farcall LoadIndexedPalette_18 ; $496d
 	ret ; $4970
-Data_38_4971:
+; Four bytes, $03 $01 $02 $00 -- a permutation of the four character-
+; select slots. Sits between LoadHighlightedCharPalette and
+; SetupCharacterSelectScreen; the palette routine computes its own
+; index arithmetically (cursor index + partner flag, then + 4) and
+; never consults a table.
+;
+; No code anywhere reaches it: no 16-bit immediate load, no add LOW/adc
+; HIGH split base, no 8-bit register pair, and no dw word -- searched over
+; the raw ROM (so unproven code inside blobs counts) for every address
+; inside it, not just its start, with cross-bank byte coincidences filtered
+; out. Driving the character-select and CPU-difficulty screens under a
+; trace added no coverage here either.
+Unused_38_SlotIndexOrder:
 	; $4971, 4 bytes (bytes:4)
 	db $03, $01, $02, $00 ; 0x00
 SetupCharacterSelectScreen:
@@ -2693,7 +2705,24 @@ ClearPlayerSlotPortrait:
 	call QueueVRAMCopy ; $5606
 .done:
 	ret ; $5609
-Data_38_560a:
+; Four shadow-tilemap cell addresses -- rows 6 and 9, columns 14 and
+; 16, i.e. the four player slots -- sitting immediately behind
+; ClearPlayerSlotPortrait, which instead reaches its cells through
+; unrolled per-slot branches with the addresses written out longhand.
+; Byte-identical to Unused_38_PortraitCellAddrs1 behind
+; DrawPlayerSlotPortrait, which is itself evidence of copy-paste.
+;
+; The live equivalent is the PlayerSlotBoxAddrs0-5 family, which uses
+; columns 13 and 17 and pads unused slots with NO_BOX. These two read
+; as the superseded version.
+;
+; No code anywhere reaches it: no 16-bit immediate load, no add LOW/adc
+; HIGH split base, no 8-bit register pair, and no dw word -- searched over
+; the raw ROM (so unproven code inside blobs counts) for every address
+; inside it, not just its start, with cross-bank byte coincidences filtered
+; out. Driving the character-select and CPU-difficulty screens under a
+; trace added no coverage here either.
+Unused_38_PortraitCellAddrs0:
 	; $560a, 8 bytes (ram_ptrs:3)
 	dw wShadowTilemap + 6 * TILEMAP_WIDTH + 14 ; record 0
 	dw wShadowTilemap + 6 * TILEMAP_WIDTH + 16 ; record 1
@@ -2751,7 +2780,16 @@ DrawPlayerSlotPortrait:
 	call QueueVRAMCopy ; $566e
 .done:
 	ret ; $5671
-Data_38_5672:
+; Byte-identical twin of Unused_38_PortraitCellAddrs0, behind
+; DrawPlayerSlotPortrait. See that label for the full argument.
+;
+; No code anywhere reaches it: no 16-bit immediate load, no add LOW/adc
+; HIGH split base, no 8-bit register pair, and no dw word -- searched over
+; the raw ROM (so unproven code inside blobs counts) for every address
+; inside it, not just its start, with cross-bank byte coincidences filtered
+; out. Driving the character-select and CPU-difficulty screens under a
+; trace added no coverage here either.
+Unused_38_PortraitCellAddrs1:
 	; $5672, 8 bytes (ram_ptrs:3)
 	dw wShadowTilemap + 6 * TILEMAP_WIDTH + 14 ; record 0
 	dw wShadowTilemap + 6 * TILEMAP_WIDTH + 16 ; record 1
@@ -2997,7 +3035,17 @@ RefreshCharInfoPanel:
 	pop bc ; $57d4
 	pop af ; $57d5
 	ret ; $57d6
-Data_38_57d7:
+; Six bytes, $00 $02 $04 $01 $03 $05 -- the six stat rows in
+; column-major order, sitting immediately in front of
+; DrawCreatedCharStats.
+;
+; No code anywhere reaches it: no 16-bit immediate load, no add LOW/adc
+; HIGH split base, no 8-bit register pair, and no dw word -- searched over
+; the raw ROM (so unproven code inside blobs counts) for every address
+; inside it, not just its start, with cross-bank byte coincidences filtered
+; out. Driving the character-select and CPU-difficulty screens under a
+; trace added no coverage here either.
+Unused_38_StatDrawOrder:
 	; $57d7, 6 bytes (bytes:6)
 	db $00, $02, $04, $01, $03, $05 ; 0x00
 DrawCreatedCharStats:
@@ -3210,7 +3258,7 @@ DrawCharGridSlotIcons:
 	wram_bank $03 ; $598e
 	ld a, [wCharSelectMode] ; $5994
 	add a ; $5997
-	ld hl, CharGridSlotIconsSubHandlers ; $5998
+	ld hl, CharGridSlotIconListPtrs_38 ; $5998
 	add l ; $599b
 	ld l, a ; $599c
 	jr nc, .readList ; $599d
@@ -3237,50 +3285,44 @@ DrawCharGridSlotIcons:
 	pop af ; $59b4
 	wram_bank ; $59b5
 	ret ; $59b9
-CharGridSlotIconsSubHandlers:
+; Indexed by wCharSelectMode * 2 in DrawCharGridSlotIcons, then
+; dereferenced: each target is a $00-terminated list of 4-byte icon
+; records (count, flag, then a shadow-tilemap address) fed to
+; WriteSlotIconTiles. The targets are data; they used to render as four
+; SubHandler* functions because hand-authored static-code seeds pointed
+; at them.
+CharGridSlotIconListPtrs_38:
 	; $59ba, 12 bytes (records:2)
-	dw SubHandler0 ; record 0
-	dw SubHandler1 ; record 1
-	dw SubHandler2 ; record 2
-	dw SubHandler2 ; record 3
-	dw SubHandler4 ; record 4
-	dw SubHandler4 ; record 5
-SubHandler0:
-	ld bc, wDebugTextBuffer ; $59c6
-	ret nc ; $59c9
-	ld [bc], a ; $59ca
-	ld bc, $d12c ; $59cb
-	nop ; $59ce
-SubHandler1:
-	ld bc, wStoryCharacterSlot ; $59cf
-	ret nc ; $59d2
-	inc bc ; $59d3
-	ld bc, $d0cf ; $59d4
-	ld [bc], a ; $59d7
-	ld bc, $d12b ; $59d8
-	inc b ; $59db
-	ld bc, $d12f ; $59dc
-	nop ; $59df
-SubHandler2:
-	ld bc, wDebugTextBuffer ; $59e0
-	ret nc ; $59e3
-	ld [bc], a ; $59e4
-	nop ; $59e5
-	inc l ; $59e6
-	pop de ; $59e7
-	nop ; $59e8
-SubHandler4:
-	ld bc, wStoryCharacterSlot ; $59e9
-	ret nc ; $59ec
-	inc bc ; $59ed
-	ld bc, $d0cf ; $59ee
-	ld [bc], a ; $59f1
-	nop ; $59f2
-	dec hl ; $59f3
-	pop de ; $59f4
-	inc b ; $59f5
-	ld bc, $d12f ; $59f6
-	nop ; $59f9
+	dw CharGridSlotIconList0 ; record 0
+	dw CharGridSlotIconList1 ; record 1
+	dw CharGridSlotIconList2 ; record 2
+	dw CharGridSlotIconList2 ; record 3
+	dw CharGridSlotIconList3 ; record 4
+	dw CharGridSlotIconList3 ; record 5
+CharGridSlotIconList0:
+	; $59c6, 9 bytes (bytes:4)
+	db $01, $00, $cc, $d0 ; 0x00
+	db $02, $01, $2c, $d1 ; 0x04
+	db $00 ; 0x08
+CharGridSlotIconList1:
+	; $59cf, 17 bytes (bytes:4)
+	db $01, $00, $cb, $d0 ; 0x00
+	db $03, $01, $cf, $d0 ; 0x04
+	db $02, $01, $2b, $d1 ; 0x08
+	db $04, $01, $2f, $d1 ; 0x0c
+	db $00 ; 0x10
+CharGridSlotIconList2:
+	; $59e0, 9 bytes (bytes:4)
+	db $01, $00, $cc, $d0 ; 0x00
+	db $02, $00, $2c, $d1 ; 0x04
+	db $00 ; 0x08
+CharGridSlotIconList3:
+	; $59e9, 17 bytes (bytes:4)
+	db $01, $00, $cb, $d0 ; 0x00
+	db $03, $01, $cf, $d0 ; 0x04
+	db $02, $00, $2b, $d1 ; 0x08
+	db $04, $01, $2f, $d1 ; 0x0c
+	db $00 ; 0x10
 WriteSlotIconTiles:
 	push af ; $59fa
 	push bc ; $59fb
@@ -4110,7 +4152,7 @@ ApplyCpuDifficultyToCharRecords:
 	push af ; $5f4e
 	wram_bank $03 ; $5f4f
 	ld a, [wCharSelectSlotDifficulty + 1] ; $5f55
-	ld hl, CpuDifficultyToCharRecordsSubHandlers ; $5f58
+	ld hl, CpuDifficultyParamPtrs_38 ; $5f58
 	add a ; $5f5b
 	add l ; $5f5c
 	ld l, a ; $5f5d
@@ -4138,7 +4180,7 @@ ApplyCpuDifficultyToCharRecords:
 	ld [wPlayer1PartnerExpTier], a ; $5f82
 .slot2:
 	ld a, [wCharSelectSlotDifficulty + 2] ; $5f85
-	ld hl, CpuDifficultyToCharRecordsSubHandlers ; $5f88
+	ld hl, CpuDifficultyParamPtrs_38 ; $5f88
 	add a ; $5f8b
 	add l ; $5f8c
 	ld l, a ; $5f8d
@@ -4166,7 +4208,7 @@ ApplyCpuDifficultyToCharRecords:
 	ld [wPlayer2MainExpTier], a ; $5fb2
 .slot3:
 	ld a, [wCharSelectSlotDifficulty + 3] ; $5fb5
-	ld hl, CpuDifficultyToCharRecordsSubHandlers ; $5fb8
+	ld hl, CpuDifficultyParamPtrs_38 ; $5fb8
 	add a ; $5fbb
 	add l ; $5fbc
 	ld l, a ; $5fbd
@@ -4196,46 +4238,38 @@ ApplyCpuDifficultyToCharRecords:
 	pop af ; $5fe5
 	wram_bank ; $5fe6
 	ret ; $5fea
-CpuDifficultyToCharRecordsSubHandlers:
+; Indexed by wCharSelectSlotDifficulty * 2 in
+; ApplyCpuDifficultyToCharRecords, then dereferenced to a 6-byte record:
+; four AI parameters, the difficulty byte copied to
+; wExhibitionMode*CharacterDifficulty, and an EXP tier read only for
+; characters that are not created ones.
+;
+; Records 1-4 ramp monotonically -- reaction delays 28/18/10/2, tracking
+; 60/120/190/230, difficulty 0/1/2/3, tier 1/3/5/7 -- which is what
+; identifies them as EASY/NORMAL/HARD/INTENSE. Slot 0 duplicates
+; INTENSE and is what an unset difficulty selects.
+CpuDifficultyParamPtrs_38:
 	; $5feb, 10 bytes (records:2)
-	dw SubHandler01 ; record 0
-	dw SubHandler11 ; record 1
-	dw SubHandler21 ; record 2
-	dw SubHandler3 ; record 3
-	dw SubHandler41 ; record 4
-SubHandler01:
-	ld [bc], a ; $5ff5
-	ld [bc], a ; $5ff6
-	nop ; $5ff7
-	and $03 ; $5ff8
-	rlca ; $5ffa
-SubHandler11:
-	inc e ; $5ffb
-	jr SubHandler3.compare ; $5ffc
-Data_38_5ffe:
-	; $5ffe, 3 bytes (bytes:3)
-	db $3c, $00, $01 ; 0x00
-SubHandler21:
-	ld [de], a ; $6001
-	rrca ; $6002
-	add hl, bc ; $6003
-	ld a, b ; $6004
-	db $01 ; $6005
-	db $03 ; $6006
-SubHandler3:
-	ld a, [bc] ; $6007
-	add hl, bc ; $6008
-	dec b ; $6009
-.compare:
-	cp [hl] ; $600a
-	ld [bc], a ; $600b
-	dec b ; $600c
-SubHandler41:
-	ld [bc], a ; $600d
-	ld [bc], a ; $600e
-	nop ; $600f
-	and $03 ; $6010
-	rlca ; $6012
+	dw CpuDifficultyParamsUnset ; record 0
+	dw CpuDifficultyParamsEasy ; record 1
+	dw CpuDifficultyParamsNormal ; record 2
+	dw CpuDifficultyParamsHard ; record 3
+	dw CpuDifficultyParamsIntense ; record 4
+CpuDifficultyParamsUnset:
+	; $5ff5, 6 bytes (bytes:6)
+	db $02, $02, $00, $e6, $03, $07 ; 0x00
+CpuDifficultyParamsEasy:
+	; $5ffb, 6 bytes (bytes:6)
+	db $1c, $18, $0c, $3c, $00, $01 ; 0x00
+CpuDifficultyParamsNormal:
+	; $6001, 6 bytes (bytes:6)
+	db $12, $0f, $09, $78, $01, $03 ; 0x00
+CpuDifficultyParamsHard:
+	; $6007, 6 bytes (bytes:6)
+	db $0a, $09, $05, $be, $02, $05 ; 0x00
+CpuDifficultyParamsIntense:
+	; $600d, 6 bytes (bytes:6)
+	db $02, $02, $00, $e6, $03, $07 ; 0x00
 IsCreatedCharId:
 	cp $04 ; $6013
 	jr nc, .no ; $6015
@@ -5611,10 +5645,7 @@ ClearRemoteSlotPortrait:
 GetRemoteSlotBoxAddress:
 	ld a, [wCharSelectMode] ; $69a5
 	add a ; $69a8
-	db $21 ; $69a9
-.fromCallerPtr:
-	pop bc ; $69aa
-	ld l, c ; $69ab
+	ld hl, RemoteSlotBoxAddrPtrs_38 ; $69a9
 	add l ; $69ac
 	ld l, a ; $69ad
 	jr nc, .readTable ; $69ae
@@ -5634,45 +5665,43 @@ GetRemoteSlotBoxAddress:
 	ld b, [hl] ; $69be
 	ld c, a ; $69bf
 	ret ; $69c0
-SubHandlers_38_2:
+; The remote-player twin of PlayerSlotBoxAddrPtrs_38: indexed in
+; GetRemoteSlotBoxAddress, dereferenced, then indexed again by
+; wCharSelectRemoteSlot * 2 to read one shadow-tilemap address. The
+; targets are ram_ptrs tables exactly like PlayerSlotBoxAddrs0-5, with
+; $0000 for slots that have no box.
+RemoteSlotBoxAddrPtrs_38:
 	; $69c1, 12 bytes (records:2)
-	dw SubHandler02 ; record 0
-	dw SubHandler02 ; record 1
-	dw SubHandler22 ; record 2
-	dw SubHandler02 ; record 3
-	dw SubHandler42 ; record 4
-	dw SubHandler5 ; record 5
-SubHandler02:
-	ret nc ; $69cd
-	ret nc ; $69ce
-	nop ; $69cf
-	nop ; $69d0
-	nop ; $69d1
-	nop ; $69d2
-	nop ; $69d3
-	nop ; $69d4
-	nop ; $69d5
-	nop ; $69d6
-SubHandler22:
-	jr nc, GetRemoteSlotBoxAddress.fromCallerPtr ; $69d7
-	nop ; $69d9
-	nop ; $69da
-	nop ; $69db
-	nop ; $69dc
-SubHandler5:
-	call $d1d0 ; $69dd
-	ret nc ; $69e0
-	nop ; $69e1
-	nop ; $69e2
-	nop ; $69e3
-	nop ; $69e4
-	nop ; $69e5
-	nop ; $69e6
-SubHandler42:
-	dec l ; $69e7
-	pop de ; $69e8
-	ld sp, $00d1 ; $69e9
-	nop ; $69ec
+	dw RemoteSlotBoxAddrs0 ; record 0
+	dw RemoteSlotBoxAddrs0 ; record 1
+	dw RemoteSlotBoxAddrs1 ; record 2
+	dw RemoteSlotBoxAddrs0 ; record 3
+	dw RemoteSlotBoxAddrs3 ; record 4
+	dw RemoteSlotBoxAddrs2 ; record 5
+RemoteSlotBoxAddrs0:
+	; $69cd, 10 bytes (ram_ptrs:3:NO_BOX)
+	dw wShadowTilemap + 6 * TILEMAP_WIDTH + 16 ; record 0
+	dw NO_BOX ; record 1
+	dw NO_BOX ; record 2
+	dw NO_BOX ; record 3
+	dw NO_BOX ; record 4
+RemoteSlotBoxAddrs1:
+	; $69d7, 6 bytes (ram_ptrs:3:NO_BOX)
+	dw wShadowTilemap + 9 * TILEMAP_WIDTH + 16 ; record 0
+	dw NO_BOX ; record 1
+	dw NO_BOX ; record 2
+RemoteSlotBoxAddrs2:
+	; $69dd, 10 bytes (ram_ptrs:3:NO_BOX)
+	dw wShadowTilemap + 6 * TILEMAP_WIDTH + 13 ; record 0
+	dw wShadowTilemap + 6 * TILEMAP_WIDTH + 17 ; record 1
+	dw NO_BOX ; record 2
+	dw NO_BOX ; record 3
+	dw NO_BOX ; record 4
+RemoteSlotBoxAddrs3:
+	; $69e7, 6 bytes (ram_ptrs:3:NO_BOX)
+	dw wShadowTilemap + 9 * TILEMAP_WIDTH + 13 ; record 0
+	dw wShadowTilemap + 9 * TILEMAP_WIDTH + 17 ; record 1
+	dw NO_BOX ; record 2
 AdvanceRemotePlayerSlot:
 	ld a, [wCharSelectMode] ; $69ed
 	ld hl, RemotePlayerSlotLists_38 ; $69f0
@@ -6592,7 +6621,19 @@ SetupNameEntryScreen:
 	call DrawEnteredName ; $705c
 	farcall QueueWram3MapToVRAM ; $705f
 	ret ; $7062
-Data_38_7063:
+; Four bytes ($01 $03 $02 $00, a permutation of four slots) followed by
+; ten $3f bytes and a $00 -- eleven bytes, exactly the size of
+; wNameEntryBuffer and the length SetupNameEntryScreen copies with
+; `ld bc, $000b`. It reads as a blank-name template, but that routine
+; takes its eleven bytes from GetActiveStoryNameBuffer, not from here.
+;
+; No code anywhere reaches it: no 16-bit immediate load, no add LOW/adc
+; HIGH split base, no 8-bit register pair, and no dw word -- searched over
+; the raw ROM (so unproven code inside blobs counts) for every address
+; inside it, not just its start, with cross-bank byte coincidences filtered
+; out. Driving the character-select and CPU-difficulty screens under a
+; trace added no coverage here either.
+Unused_38_NameEntryBlank:
 	; $7063, 15 bytes (bytes:15)
 	db $01, $03, $02, $00, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $00 ; 0x00
 HandleNameEntryCursorMove:

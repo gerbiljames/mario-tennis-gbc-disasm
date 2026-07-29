@@ -1,5 +1,5 @@
 {
- "_comment": "Static code-entry seeds for bank $1a (status/records-viewer screen renderers): the $416c dispatch targets, frame-task callback $477a, and fall-through code heads. Flat = 0x1a*0x4000 + (cpu-0x4000).",
+ "_comment": "Static code-entry seeds for bank $1a (status/records-viewer screen renderers): the $416c dispatch targets, frame-task callback $477a, and fall-through code heads. Flat = 0x1a*0x4000 + (cpu-0x4000). | 2026-07-29: $4af4 is a complete push/pop-balanced routine that walks the 32-word table at $4ab4 and calls WriteTileBufferCell for a 4x8 block; it had no proven caller so all 43 bytes read as data.",
  "rom": [
   426358,
   426389,
@@ -9,6 +9,7 @@
   426702,
   427897,
   427898,
+  428788,
   428986,
   428987,
   429148,
