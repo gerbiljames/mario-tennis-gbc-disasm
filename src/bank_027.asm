@@ -2682,9 +2682,15 @@ ActorScript_27_29:
 	as_jump .L1
 MapScriptNop_27:
 	ret ; $7885
-Data_27_7886:
-	; $7886, 13 bytes (bytes:13)
-	db $af, $ea, $da, $c2, $c9, $cf, $a2, $c9, $af, $ea, $d5, $c2, $c9 ; 0x00
+MapScriptClearActiveFlag_27:
+	xor a ; $7886
+	ld [wStoryScriptRan], a ; $7887
+	ret ; $788a
+	sound $a2 ; $788b
+	ret ; $788d
+	xor a ; $788e
+	ld [wStoryModeShowLocationName], a ; $788f
+	ret ; $7892
 ActorScript_27_30:
 	; $7893, 99 bytes (actor_script)
 	as_anim $01

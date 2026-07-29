@@ -7958,3 +7958,78 @@ and not yet who reads it.**
 
 Human-named symbols: **20,082 of 21,680** (from 19,921). Byte-perfect
 throughout; `make check` clean.
+
+## Three of the eighteen unreferenced tables, identified (2026-07-29)
+
+"No reference in proven code" is itself a lead: if nothing proven loads the
+address, the code that does is *not proven*, so it is sitting inside a data
+blob. Two searches follow from that, and between them they resolved three of
+the eighteen -- and two of the three were not tables at all.
+
+### Search 1: the address as an immediate, anywhere in the ROM
+
+Scan all 2 MiB for every form that materialises the address -- `ld hl/de/bc,
+nn`, the `add a, LOW` / `adc a, HIGH` split-base pair, `ld l` / `ld h` -- and
+report whether each hit lands in an extracted blob or in code the disassembly
+already covers. **Thirteen of the eighteen are never loaded as an immediate
+anywhere in the ROM**, and the handful of hits that did turn up are byte
+coincidences inside graphics banks (`$01 $49 $73` reads as `ld bc, $7349`).
+
+That result is worth more than it looks: an address that is never materialised
+is not reached by a pointer load at all. It is reached as an offset from some
+other base -- which is what a false table boundary looks like, and is exactly
+how `DiagramTargetPatchRecords_17` turned out to be a record short.
+
+### Search 2: the same bytes in a sibling bank
+
+Several of these banks are near-copies of each other, so take 48 bytes of
+context around the table and look for it in all 127 other banks; where it
+turns up, report the label at the matching offset and whether the sibling
+proved those bytes as code. Two hits, both decisive:
+
+* **`Data_29_4221`** -- the same bytes sit at the same address in banks `$20`,
+  `$21`, `$22`, `$23`, `$2a`, `$2b` and `$2c`, in every one of them as proven
+  code. Decoded, it is `push hl` / `push bc` / `ld hl, wShotAimAngle` / ... /
+  `call VectorLengthFromAngle` -- the aim-row lookup that follows
+  `SetBallTargetFromAim`. Bank `$29`'s traces never entered it, so 16 bytes of
+  it read as data. Seeded, it also surfaced the jump target at `$4247`, which
+  the four twins already curate as `.readEntry`.
+* **`Data_27_7886`** -- 32 bytes matching banks `$0e`-`$13`, where they are
+  `MapScriptClearActiveFlag_10` and the two three-byte primitives after it.
+  Bank `$27` has its own `MapScriptNop_27` immediately above, so this is the
+  same trio one bank over: `MapScriptClearActiveFlag_27`, a sound-and-return,
+  and a clear-show-location-name. Three seeds, thirteen bytes of code.
+
+Nothing else has a byte-identical sibling, at 48 bytes of context or at 10.
+
+### One named from its shape
+
+**`Data_38_5b6f`** is 36 bytes of `$01` with `$00` at slots `$09`-`$0e`. It
+sits immediately in front of `CharGridFromUnlockFlagsTable`, and it is exactly
+the thing `BuildCharGridFromUnlockFlags` reads through `hl`: one byte per grid
+slot, `or a` deciding unlocked, 32 iterations. Named `CharGridUnlockMask_38`
+for that format, with a note saying so and saying that no proven code loads it,
+so *which* caller passes it -- and whether the six zeroed slots are a default
+roster or a debug one -- is not established.
+
+### What the remaining fifteen need
+
+`Data_38_4971`, `_560a`, `_5672`, `_57d7`, `_5ffe`, `_7063`, `Data_27_4b41`,
+`Data_27_5570`, `Data_1b_69cd`, `Data_1b_7349`, `Data_1a_4af4`,
+`Data_6b_615e`, and the `$4000`-slot targets `Data_5f_4020`, `Data_5f_4c63`,
+`Data_6d_6104`.
+
+Static analysis is out of moves on these: no immediate load, no sibling, and no
+base within 256 bytes whose indexing reaches them. What is left is the thing
+that proved every other byte in this disassembly -- **execution coverage**. The
+banks say which screens to drive: `$38` is character select and name entry,
+`$1b` the saved-data and unlock-debug screens, `$1a` the EXP screen, `$27` a
+training-court scene, `$6b` the intro cutscene. Proving the reader makes the
+reference appear, and then the table names itself the way the other 161 did.
+
+`Data_38_5ffe` is the one with a structural smell rather than a coverage one:
+it is 19 bytes past `CpuDifficultyToCharRecordsSubHandlers`, a `records:2`
+table, and 19 is not a multiple of 2 -- the boundary is in the wrong place, the
+way `$4a94` was.
+
+Autonames in `src/`: **15**, from 179. Byte-perfect throughout.

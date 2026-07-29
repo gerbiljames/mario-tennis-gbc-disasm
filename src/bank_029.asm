@@ -404,11 +404,38 @@ SetBallTargetFromAim_29:
 	ld [hl+], a ; $421e
 	ld [hl], d ; $421f
 	ret ; $4220
-Data_29_4221:
-	; $4221, 43 bytes (bytes:16)
-	db $e5, $c5, $21, $3a, $c4, $2a, $46, $4f, $21, $06, $c4, $2a, $56, $5f, $21, $02 ; 0x00
-	db $c4, $2a, $66, $6f, $cd, $8f, $13, $29, $7c, $e6, $1f, $ea, $72, $c4, $87, $e1 ; 0x10
-	db $d1, $85, $6f, $30, $01, $24, $2a, $66, $6f, $19, $c9 ; 0x20
+	push hl ; $4221
+	push bc ; $4222
+	ld hl, wShotAimAngle ; $4223
+	ld a, [hl+] ; $4226
+	ld b, [hl] ; $4227
+	ld c, a ; $4228
+	ld hl, wBallDepth ; $4229
+	ld a, [hl+] ; $422c
+	ld d, [hl] ; $422d
+	ld e, a ; $422e
+	ld hl, wBallX ; $422f
+	ld a, [hl+] ; $4232
+	ld h, [hl] ; $4233
+	ld l, a ; $4234
+	call VectorLengthFromAngle ; $4235
+	add hl, hl ; $4238
+	ld a, h ; $4239
+	and $1f ; $423a
+	ld [wShotAimRow], a ; $423c
+	add a ; $423f
+	pop hl ; $4240
+	pop de ; $4241
+	add l ; $4242
+	ld l, a ; $4243
+	jr nc, .readEntry ; $4244
+	inc h ; $4246
+.readEntry:
+	ld a, [hl+] ; $4247
+	ld h, [hl] ; $4248
+	ld l, a ; $4249
+	add hl, de ; $424a
+	ret ; $424b
 LookupBallPosByHeight_29:
 	ld e, l ; $424c
 	ld d, h ; $424d

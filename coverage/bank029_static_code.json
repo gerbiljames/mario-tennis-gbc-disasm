@@ -1,12 +1,13 @@
 {
- "_comment": "Static code-entry seeds for bank $29 (ball-position data bank local helpers $4002/$4102). Flat = 0x29*0x4000 + (cpu-0x4000).",
+ "_comment": "Static code-entry seeds for bank $29 (ball-position data bank local helpers $4002/$4102). Flat = 0x29*0x4000 + (cpu-0x4000). | 2026-07-29: $4221 is 16 bytes inside SetBallTargetFromAim_29 that this bank's traces never executed; banks $20/$21/$22/$23/$2a/$2b/$2c hold the same bytes at the same offset as proven code (+44 into their own copy of the routine), which is what proves it.",
  "rom": [
   671746,
   672002,
   672053,
   672093,
   672150,
-  672201
+  672201,
+  672289
  ],
  "other": []
 }

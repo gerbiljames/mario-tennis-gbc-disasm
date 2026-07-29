@@ -1,5 +1,5 @@
 {
- "_comment": "Static code-entry seeds for bank $27 stranded cutscene helper at $4ff0-$516a (reached via computed dispatch after the preceding function returns). Flat = 0x27*0x4000 + (cpu-0x4000).",
+ "_comment": "Static code-entry seeds for bank $27 stranded cutscene helper at $4ff0-$516a (reached via computed dispatch after the preceding function returns). Flat = 0x27*0x4000 + (cpu-0x4000). | 2026-07-29: $7886/$788b/$788e are this bank's copies of three map-script primitives -- clear-active-flag, a sound-and-return, and clear-show-location-name -- byte-identical to bank $10's at $7bfa/$7bff/$7c02 and to banks $0e-$13. They sit right after MapScriptNop_27 and were a 13-byte blob.",
  "rom": [
   639391,
   640765,
@@ -58,6 +58,9 @@
   651084,
   652028,
   653445,
+  653446,
+  653451,
+  653454,
   653897,
   653968
  ],

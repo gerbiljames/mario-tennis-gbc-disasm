@@ -3489,7 +3489,16 @@ BuildCharGridFromUnlockFlags:
 	cp $20 ; $5b6a
 	jr nz, .flagLoop ; $5b6c
 	ret ; $5b6e
-Data_38_5b6f:
+; A 32-entry byte mask in exactly the format BuildCharGridFromUnlockFlags
+; reads through hl -- one byte per grid slot, nonzero meaning unlocked --
+; sitting immediately in front of that routine's own
+; CharGridFromUnlockFlagsTable. Slots $09-$0e are zero and the rest are
+; $01.
+;
+; Named for its format, not its purpose: no proven code loads this
+; address, so which caller passes it (and whether the zeroed slots are a
+; default roster or a debug one) is not established.
+CharGridUnlockMask_38:
 	; $5b6f, 36 bytes (bytes:16)
 	db $01, $01, $01, $01, $01, $01, $01, $01, $01, $00, $00, $00, $00, $00, $00, $01 ; 0x00
 	db $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01, $01 ; 0x10
