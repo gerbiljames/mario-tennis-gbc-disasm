@@ -4782,7 +4782,7 @@ LoadRulesScreen:
 	ld a, $03 ; $71a3
 	ld [wShadowTilemapBank], a ; $71a5
 	ld hl, wShadowTilemapPtr ; $71a8
-	ld de, $d000 ; $71ab
+	ld de, wDecompBuffer ; $71ab
 	ld a, e ; $71ae
 	ld [hl+], a ; $71af
 	ld [hl], d ; $71b0
