@@ -128,7 +128,12 @@ def _scope_to_matcher(s, mirrored=False):
     would hand those addresses the wrong name."""
     rng = _scope_to_flat(s) if "bank" in s else None
     if mirrored:
-        return (rng, mirrored)
+        # A mirrored scope that names a wram_bank still gates on one of the
+        # set; one that names only a ROM range does not, because there the
+        # callee selects the bank and the site's own is beside the point --
+        # CharDataScreen_WriteStatNumber runs under bank $06 and writes its
+        # `de` argument under $03 and then $02.
+        return (rng, mirrored if "wram_bank" in s else None)
     wb = int(s["wram_bank"], 0) if "wram_bank" in s else None
     return (rng, wb)
 
@@ -564,8 +569,9 @@ def load_ram_unions(path):
                         f"ram_unions: mirrored variant at {u['start']} has a "
                         f"scope with no ROM bank -- it would name this address "
                         f"everywhere, in every bank")
-            if len({int(s["wram_bank"], 0) for s in v.get("scopes", [])
-                    if "wram_bank" in s}) < 2:
+            if len({int(b, 0) for b in (v.get("banks") or
+                    [x["wram_bank"] for x in v.get("scopes", [])
+                     if "wram_bank" in x])}) < 2:
                 raise SystemExit(
                     f"ram_unions: mirrored variant at {u['start']} names "
                     f"fewer than two wram_banks -- if the structure lives in "
@@ -585,8 +591,13 @@ def load_ram_unions(path):
                 ubanks.add(int(u[key], 0))
         variants = []
         for v in u["variants"]:
-            mset = frozenset(int(s["wram_bank"], 0) for s in v.get("scopes", [])
-                             if "wram_bank" in s) if v.get("mirrored") else None
+            mset = None
+            if v.get("mirrored"):
+                # `banks` states where the structure lives when the scopes are
+                # ROM ranges and so name no wram_bank themselves.
+                bs = v.get("banks") or [s["wram_bank"] for s in v.get("scopes", [])
+                                        if "wram_bank" in s]
+                mset = frozenset(int(b, 0) for b in bs)
             matchers = [_scope_to_matcher(s, mset) for s in v.get("scopes", [])]
             syms = []
             for addr_s, e in sorted(v["symbols"].items(),
@@ -604,13 +615,22 @@ def load_ram_unions(path):
                     scoped.add(addr, name, None, ram_field_size(e),
                                default_mask=mask, stride=_stride(e))
                 else:
+                    # A mirrored variant scoped only by ROM range is exempt
+                    # from the scope audit: its whole premise is that the bank
+                    # live at the site is not the bank the bytes are in, so
+                    # "names a symbol from a bank the site does not select"
+                    # describes it correctly rather than catching a mistake.
+                    rom_only = bool(mset) and not any(
+                        "wram_bank" in sc for sc in v.get("scopes", []))
                     scoped.add(addr, name, matchers, ram_field_size(e),
-                               stride=_stride(e), union_banks_=ubanks)
+                               stride=_stride(e),
+                               union_banks_=None if rom_only else ubanks)
                     if mset:
                         scoped.mirrored.append((addr, name, e.get("note", ""),
                                                 ram_field_size(e), mset))
-            wbanks = frozenset(int(s["wram_bank"], 0) for s in v.get("scopes", [])
-                               if "wram_bank" in s)
+            wbanks = mset or frozenset(
+                int(s["wram_bank"], 0) for s in v.get("scopes", [])
+                if "wram_bank" in s)
             variants.append((v.get("context", ""), syms, wbanks,
                              bool(mset)))
         for ri, (rs, re_, mem, _path) in enumerate(RAM_REGIONS):

@@ -2375,6 +2375,7 @@ SECTION "WRAMX bank 2", WRAMX[$d000], BANK[2]
 
 ; WRAMX bank 2 at a glance -- regenerated, see ram_unions.json:
 ;
+;   $d000-$d3ff  wCharDataScreenCell  [mirrored with bank 3]
 ;   $d000-$dfff  match court planes / overworld scroll buffers / screen attribute plane
 ;   $d400-$d7df  wCharDataPagePlane  [mirrored with bank 3]
 ;   $d7e0-$da1f  wCharDataPageSlot1  [mirrored with bank 3]
@@ -2423,6 +2424,7 @@ SECTION "WRAMX bank 3", WRAMX[$d000], BANK[3]
 
 ; WRAMX bank 3 at a glance -- regenerated, see ram_unions.json:
 ;
+;   $d000-$d3ff  wCharDataScreenCell  [mirrored with bank 2]
 ;   $d000-$d7ff  screen tilemap
 ;   $d400-$d7df  wCharDataPagePlane  [mirrored with bank 2]
 ;   $d7e0-$da1f  wCharDataPageSlot1  [mirrored with bank 2]

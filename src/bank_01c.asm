@@ -346,11 +346,11 @@ CharDataScreen_DrawStats:
 	ld a, $02 ; $431a
 	ld de, wCharDataNumberBuffer ; $431c
 	call FormatDecimalNumberUnsigned ; $431f
-	ld de, $d251 ; $4322
+	ld de, wCharDataScreenCell + 18 * TILEMAP_WIDTH + 17 ; $4322
 	call CharDataScreen_WriteStatNumber ; $4325
 	pop af ; $4328
 	ld c, $00 ; $4329
-	ld de, wScreenAttrmap + 18 * TILEMAP_WIDTH + 22 ; $432b
+	ld de, wCharDataScreenCell + 18 * TILEMAP_WIDTH + 22 ; $432b
 	call CharDataScreen_DrawStatBar ; $432e
 	wram_bank $06 ; $4331
 	ld a, [wCharDataStats + 1] ; $4337
@@ -363,11 +363,11 @@ CharDataScreen_DrawStats:
 	ld a, $02 ; $4343
 	ld de, wCharDataNumberBuffer ; $4345
 	call FormatDecimalNumberUnsigned ; $4348
-	ld de, $d265 ; $434b
+	ld de, wCharDataScreenCell + 19 * TILEMAP_WIDTH + 5 ; $434b
 	call CharDataScreen_WriteStatNumber ; $434e
 	pop af ; $4351
 	ld c, $01 ; $4352
-	ld de, wScreenAttrmap + 19 * TILEMAP_WIDTH + 10 ; $4354
+	ld de, wCharDataScreenCell + 19 * TILEMAP_WIDTH + 10 ; $4354
 	call CharDataScreen_DrawStatBar ; $4357
 	wram_bank $06 ; $435a
 	ld a, [wCharDataStats + 2] ; $4360
@@ -380,11 +380,11 @@ CharDataScreen_DrawStats:
 	ld a, $02 ; $436c
 	ld de, wCharDataNumberBuffer ; $436e
 	call FormatDecimalNumberUnsigned ; $4371
-	ld de, $d291 ; $4374
+	ld de, wCharDataScreenCell + 20 * TILEMAP_WIDTH + 17 ; $4374
 	call CharDataScreen_WriteStatNumber ; $4377
 	pop af ; $437a
 	ld c, $00 ; $437b
-	ld de, wScreenAttrmap + 20 * TILEMAP_WIDTH + 22 ; $437d
+	ld de, wCharDataScreenCell + 20 * TILEMAP_WIDTH + 22 ; $437d
 	call CharDataScreen_DrawStatBar ; $4380
 	wram_bank $06 ; $4383
 	ld a, [wCharDataStats + 3] ; $4389
@@ -397,11 +397,11 @@ CharDataScreen_DrawStats:
 	ld a, $02 ; $4395
 	ld de, wCharDataNumberBuffer ; $4397
 	call FormatDecimalNumberUnsigned ; $439a
-	ld de, $d2a5 ; $439d
+	ld de, wCharDataScreenCell + 21 * TILEMAP_WIDTH + 5 ; $439d
 	call CharDataScreen_WriteStatNumber ; $43a0
 	pop af ; $43a3
 	ld c, $00 ; $43a4
-	ld de, wScreenAttrmap + 21 * TILEMAP_WIDTH + 10 ; $43a6
+	ld de, wCharDataScreenCell + 21 * TILEMAP_WIDTH + 10 ; $43a6
 	call CharDataScreen_DrawStatBar ; $43a9
 	wram_bank $06 ; $43ac
 	ld a, [wCharDataStats + 4] ; $43b2
@@ -414,11 +414,11 @@ CharDataScreen_DrawStats:
 	ld a, $02 ; $43be
 	ld de, wCharDataNumberBuffer ; $43c0
 	call FormatDecimalNumberUnsigned ; $43c3
-	ld de, $d2b9 ; $43c6
+	ld de, wCharDataScreenCell + 21 * TILEMAP_WIDTH + 25 ; $43c6
 	call CharDataScreen_WriteStatNumber ; $43c9
 	pop af ; $43cc
 	ld c, $01 ; $43cd
-	ld de, wScreenAttrmap + 21 * TILEMAP_WIDTH + 30 ; $43cf
+	ld de, wCharDataScreenCell + 21 * TILEMAP_WIDTH + 30 ; $43cf
 	call CharDataScreen_DrawStatBar ; $43d2
 	wram_bank $06 ; $43d5
 	ld a, [wCharDataStats + 5] ; $43db
@@ -431,11 +431,11 @@ CharDataScreen_DrawStats:
 	ld a, $02 ; $43e7
 	ld de, wCharDataNumberBuffer ; $43e9
 	call FormatDecimalNumberUnsigned ; $43ec
-	ld de, $d2e1 ; $43ef
+	ld de, wCharDataScreenCell + 23 * TILEMAP_WIDTH + 1 ; $43ef
 	call CharDataScreen_WriteStatNumber ; $43f2
 	pop af ; $43f5
 	ld c, $00 ; $43f6
-	ld de, wScreenAttrmap + 23 * TILEMAP_WIDTH + 6 ; $43f8
+	ld de, wCharDataScreenCell + 23 * TILEMAP_WIDTH + 6 ; $43f8
 	call CharDataScreen_DrawStatBar ; $43fb
 	wram_bank $06 ; $43fe
 	ld a, [wCharDataStats + 6] ; $4404
@@ -448,11 +448,11 @@ CharDataScreen_DrawStats:
 	ld a, $02 ; $4410
 	ld de, wCharDataNumberBuffer ; $4412
 	call FormatDecimalNumberUnsigned ; $4415
-	ld de, $d2f5 ; $4418
+	ld de, wCharDataScreenCell + 23 * TILEMAP_WIDTH + 21 ; $4418
 	call CharDataScreen_WriteStatNumber ; $441b
 	pop af ; $441e
 	ld c, $01 ; $441f
-	ld de, wScreenAttrmap + 23 * TILEMAP_WIDTH + 26 ; $4421
+	ld de, wCharDataScreenCell + 23 * TILEMAP_WIDTH + 26 ; $4421
 	call CharDataScreen_DrawStatBar ; $4424
 	wram_bank $06 ; $4427
 	ld a, [wCharDataStats + 7] ; $442d
@@ -465,11 +465,11 @@ CharDataScreen_DrawStats:
 	ld a, $02 ; $4439
 	ld de, wCharDataNumberBuffer ; $443b
 	call FormatDecimalNumberUnsigned ; $443e
-	ld de, $d321 ; $4441
+	ld de, wCharDataScreenCell + 25 * TILEMAP_WIDTH + 1 ; $4441
 	call CharDataScreen_WriteStatNumber ; $4444
 	pop af ; $4447
 	ld c, $00 ; $4448
-	ld de, wScreenAttrmap + 25 * TILEMAP_WIDTH + 6 ; $444a
+	ld de, wCharDataScreenCell + 25 * TILEMAP_WIDTH + 6 ; $444a
 	call CharDataScreen_DrawStatBar ; $444d
 	wram_bank $06 ; $4450
 	ld a, [wCharDataStats + 8] ; $4456
@@ -482,11 +482,11 @@ CharDataScreen_DrawStats:
 	ld a, $02 ; $4462
 	ld de, wCharDataNumberBuffer ; $4464
 	call FormatDecimalNumberUnsigned ; $4467
-	ld de, $d335 ; $446a
+	ld de, wCharDataScreenCell + 25 * TILEMAP_WIDTH + 21 ; $446a
 	call CharDataScreen_WriteStatNumber ; $446d
 	pop af ; $4470
 	ld c, $00 ; $4471
-	ld de, wScreenAttrmap + 25 * TILEMAP_WIDTH + 26 ; $4473
+	ld de, wCharDataScreenCell + 25 * TILEMAP_WIDTH + 26 ; $4473
 	call CharDataScreen_DrawStatBar ; $4476
 	wram_bank $06 ; $4479
 	ld a, [wCharDataStats + 9] ; $447f
@@ -499,11 +499,11 @@ CharDataScreen_DrawStats:
 	ld a, $02 ; $448b
 	ld de, wCharDataNumberBuffer ; $448d
 	call FormatDecimalNumberUnsigned ; $4490
-	ld de, $d349 ; $4493
+	ld de, wCharDataScreenCell + 26 * TILEMAP_WIDTH + 9 ; $4493
 	call CharDataScreen_WriteStatNumber ; $4496
 	pop af ; $4499
 	ld c, $00 ; $449a
-	ld de, wScreenAttrmap + 26 * TILEMAP_WIDTH + 14 ; $449c
+	ld de, wCharDataScreenCell + 26 * TILEMAP_WIDTH + 14 ; $449c
 	call CharDataScreen_DrawStatBar ; $449f
 	wram_bank $06 ; $44a2
 	ld a, [wCharDataStats + 10] ; $44a8
@@ -516,7 +516,7 @@ CharDataScreen_DrawStats:
 	ld a, $02 ; $44b4
 	ld de, wCharDataNumberBuffer ; $44b6
 	call FormatDecimalNumberUnsigned ; $44b9
-	ld de, $d35d ; $44bc
+	ld de, wCharDataScreenCell + 26 * TILEMAP_WIDTH + 29 ; $44bc
 	call CharDataScreen_WriteStatNumber ; $44bf
 	pop af ; $44c2
 	ld c, $01 ; $44c3
