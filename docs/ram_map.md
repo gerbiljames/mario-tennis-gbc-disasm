@@ -407,7 +407,45 @@ proven — keep the numeric address.
 
 `wram_bank: N` is the tool for banked WRAMX (`$d000-$dfff`): the same offset
 means different things per WRAM bank, so a global `ram_map.json` name would
-leak across banks. (The `$dfxx` match-engine structs below predate this and
+leak across banks.
+
+### Mirrored variants
+
+The opposite case also occurs: one address range holding a *parallel copy* in
+each of several WRAM banks, where the address names the cell and the selected
+bank picks which copy. The character-data screen keeps its stat pages that way,
+tiles in bank `$03` and CGB attributes in bank `$02`, so a save is one copy per
+bank to the very same word:
+
+```asm
+	wram_bank $03
+	ld hl, wShadowTilemap
+	ld de, wCharDataPageSlot1
+	call CopyMemoryFast
+	wram_bank $02
+	ld hl, wScreenAttrmap
+	ld de, wCharDataPageSlot1     ; same address, other plane
+	call CopyMemoryFast
+```
+
+No per-bank name is right for that operand, and requiring a provable bank
+leaves it numeric. A variant marked `"mirrored": true` names the whole set: it
+matches when the site's bank is any of the banks its scopes list **or when the
+bank cannot be proved at all**, and still loses to a bank proved to be outside
+the set — one ROM bank often drives several WRAM banks over the same addresses.
+Because the claim is that wide, every scope must carry a ROM `bank`, and at
+least two distinct `wram_bank`s must be named; `load_ram_unions` rejects both
+mistakes.
+
+A mirrored variant **allocates nothing**. Each of its banks already declares
+those bytes in its own union, so a second allocation would double-book the
+section. It is emitted instead as an EQU into the generated
+`include/ram_mirrored.inc`, which is preincluded for every bank — an EQU is
+assembly-time only, so unlike an exported `::` label it has to be visible while
+each bank is assembled rather than at link time.
+
+`tools/ram_gaps.py` reports which bare `$dxxx` operands are mirrored
+candidates: one address, several banks, one routine. (The `$dfxx` match-engine structs below predate this and
 stay documentation-only, but are a candidate for per-bank `wram_bank` scoping.)
 
 | range | variant (scope) | symbols |

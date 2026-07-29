@@ -567,7 +567,7 @@ BuildCharDataSummaryFields:
 	ld de, $d417 ; $4570
 	farcall CharDataScreen_WriteStatNumber ; $4573
 	call ComputeExpProgressBar ; $4576
-	ld de, $d42f ; $4579
+	ld de, wCharDataPagePlane + 1 * TILEMAP_WIDTH + 15 ; $4579
 	call DrawExpProgressBarTiles ; $457c
 	wram_bank $06 ; $457f
 	xor a ; $4585
@@ -642,7 +642,7 @@ BuildCharDataSummaryFields:
 	call WriteNameStringTiles ; $45fa
 	wram_bank $03 ; $45fd
 	ld hl, CharDataSummaryFieldsTilePlot1 ; $4603
-	ld de, wShadowAttrmap + 2 * TILEMAP_WIDTH + 16 ; $4606
+	ld de, wCharDataPagePlane + 2 * TILEMAP_WIDTH + 16 ; $4606
 	ld b, $09 ; $4609
 	call PlotTilesAtOffsets ; $460b
 	push af ; $460e
@@ -660,7 +660,7 @@ BuildCharDataSummaryFields:
 	ld h, a ; $4621
 	pop af ; $4622
 	ld a, [hl] ; $4623
-	ld hl, $d473 ; $4624
+	ld hl, wCharDataPagePlane + 3 * TILEMAP_WIDTH + 19 ; $4624
 	call DrawFourTileFlagLabel ; $4627
 	wram_bank $06 ; $462a
 	push af ; $4630
@@ -778,7 +778,7 @@ BuildCharDataSummaryFields:
 	ld de, $d4a7 ; $4705
 	farcall CharDataScreen_WriteStatNumber ; $4708
 	call ComputeExpProgressBar ; $470b
-	ld de, $d4bf ; $470e
+	ld de, wCharDataPagePlane + 5 * TILEMAP_WIDTH + 31 ; $470e
 	call DrawExpProgressBarTiles ; $4711
 	wram_bank $06 ; $4714
 	ld a, $01 ; $471a
@@ -1210,59 +1210,59 @@ SaveWorkTilemapToPage:
 	jr z, .page1 ; $4a1b
 	wram_bank $03 ; $4a1d
 	ld hl, wShadowTilemap ; $4a23
-	ld de, $dc60 ; $4a26
+	ld de, wCharDataPageSlot3 ; $4a26
 	ld c, $24 ; $4a29
 	call CopyMemoryFast ; $4a2b
 	wram_bank $02 ; $4a2e
 	ld hl, wScreenAttrmap ; $4a34
-	ld de, $dc60 ; $4a37
+	ld de, wCharDataPageSlot3 ; $4a37
 	ld c, $24 ; $4a3a
 	call CopyMemoryFast ; $4a3c
 	ret ; $4a3f
 .page1:
 	wram_bank $03 ; $4a40
 	ld hl, wShadowTilemap ; $4a46
-	ld de, $da20 ; $4a49
+	ld de, wCharDataPageSlot2 ; $4a49
 	ld c, $24 ; $4a4c
 	call CopyMemoryFast ; $4a4e
 	wram_bank $02 ; $4a51
 	ld hl, wScreenAttrmap ; $4a57
-	ld de, $da20 ; $4a5a
+	ld de, wCharDataPageSlot2 ; $4a5a
 	ld c, $24 ; $4a5d
 	call CopyMemoryFast ; $4a5f
 	ret ; $4a62
 .page2:
 	wram_bank $03 ; $4a63
 	ld hl, wShadowTilemap ; $4a69
-	ld de, wShadowAttrmap + 31 * TILEMAP_WIDTH ; $4a6c
+	ld de, wCharDataPageSlot1 ; $4a6c
 	ld c, $24 ; $4a6f
 	call CopyMemoryFast ; $4a71
 	wram_bank $02 ; $4a74
 	ld hl, wScreenAttrmap ; $4a7a
-	ld de, $d7e0 ; $4a7d
+	ld de, wCharDataPageSlot1 ; $4a7d
 	ld c, $24 ; $4a80
 	call CopyMemoryFast ; $4a82
 	ret ; $4a85
 .page3:
 	wram_bank $03 ; $4a86
 	ld hl, wShadowTilemap ; $4a8c
-	ld de, wShadowAttrmap + 13 * TILEMAP_WIDTH ; $4a8f
+	ld de, wCharDataPagePlane + 13 * TILEMAP_WIDTH ; $4a8f
 	ld c, $24 ; $4a92
 	call CopyMemoryFast ; $4a94
 	wram_bank $02 ; $4a97
 	ld hl, wScreenAttrmap ; $4a9d
-	ld de, $d5a0 ; $4aa0
+	ld de, wCharDataPagePlane + 13 * TILEMAP_WIDTH ; $4aa0
 	ld c, $24 ; $4aa3
 	call CopyMemoryFast ; $4aa5
 	ret ; $4aa8
 LoadBasePageIntoWorkTilemap:
 	wram_bank $03 ; $4aa9
-	ld hl, wShadowAttrmap + 13 * TILEMAP_WIDTH ; $4aaf
+	ld hl, wCharDataPagePlane + 13 * TILEMAP_WIDTH ; $4aaf
 	ld de, wShadowTilemap ; $4ab2
 	ld c, $24 ; $4ab5
 	call CopyMemoryFast ; $4ab7
 	wram_bank $02 ; $4aba
-	ld hl, $d5a0 ; $4ac0
+	ld hl, wCharDataPagePlane + 13 * TILEMAP_WIDTH ; $4ac0
 	ld de, wScreenAttrmap ; $4ac3
 	ld c, $24 ; $4ac6
 	call CopyMemoryFast ; $4ac8
@@ -1273,10 +1273,10 @@ BuildCharDataSummaryPage:
 	ld bc, $d3c0 ; $4ad2
 	call ApplyTilemapPatchList ; $4ad5
 	ld hl, CharDataSummaryPageTilemapPatch1 ; $4ad8
-	ld bc, $d450 ; $4adb
+	ld bc, wCharDataPagePlane + 2 * TILEMAP_WIDTH + 16 ; $4adb
 	call ApplyTilemapPatchList ; $4ade
 	ld hl, CharDataSummaryPageTilemapPatch2 ; $4ae1
-	ld bc, $d4e0 ; $4ae4
+	ld bc, wCharDataPagePlane + 7 * TILEMAP_WIDTH ; $4ae4
 	call ApplyTilemapPatchList ; $4ae7
 	ret ; $4aea
 BuildMainCharStatPage:
@@ -1296,7 +1296,7 @@ BuildMainCharStatPage:
 	ld bc, $d370 ; $4b13
 	call ApplyTilemapPatchList ; $4b16
 	ld hl, MainCharStatPageTilemapPatch01 ; $4b19
-	ld bc, $d500 ; $4b1c
+	ld bc, wCharDataPagePlane + 8 * TILEMAP_WIDTH ; $4b1c
 	call ApplyTilemapPatchList ; $4b1f
 	ld hl, StatPageTilemapPatch1 ; $4b22
 	ld bc, wScreenAttrmap + 18 * TILEMAP_WIDTH ; $4b25
@@ -1311,7 +1311,7 @@ BuildMainCharStatPage:
 	ld bc, wScreenAttrmap + 24 * TILEMAP_WIDTH + 16 ; $4b40
 	call ApplyTilemapPatchList ; $4b43
 	ld hl, StatPageTilemapPatch5 ; $4b46
-	ld bc, $d530 ; $4b49
+	ld bc, wCharDataPagePlane + 9 * TILEMAP_WIDTH + 16 ; $4b49
 	call ApplyTilemapPatchList ; $4b4c
 	ret ; $4b4f
 BuildPartnerStatPage:
@@ -1346,7 +1346,7 @@ BuildPartnerStatPage:
 	ld bc, wScreenAttrmap + 24 * TILEMAP_WIDTH + 16 ; $4ba6
 	call ApplyTilemapPatchList ; $4ba9
 	ld hl, StatPageTilemapPatch5 ; $4bac
-	ld bc, $d530 ; $4baf
+	ld bc, wCharDataPagePlane + 9 * TILEMAP_WIDTH + 16 ; $4baf
 	call ApplyTilemapPatchList ; $4bb2
 	ret ; $4bb5
 ApplyTilemapPatchList:
@@ -1937,7 +1937,7 @@ BuildCharStatDisplay:
 	ld [wCharDataStats + 10], a ; $5012
 	farcall CharDataScreen_DrawStats ; $5015
 	wram_bank $03 ; $5018
-	ld hl, wShadowAttrmap + 8 * TILEMAP_WIDTH + 1 ; $501e
+	ld hl, wCharDataPagePlane + 8 * TILEMAP_WIDTH + 1 ; $501e
 	ld a, $a3 ; $5021
 	ld [hl+], a ; $5023
 	ld [hl+], a ; $5024
@@ -1946,7 +1946,7 @@ BuildCharStatDisplay:
 	ld [hl+], a ; $5027
 	ld [hl+], a ; $5028
 	ld [hl], a ; $5029
-	ld hl, wShadowAttrmap + 8 * TILEMAP_WIDTH + 15 ; $502a
+	ld hl, wCharDataPagePlane + 8 * TILEMAP_WIDTH + 15 ; $502a
 	xor a ; $502d
 	ld [hl+], a ; $502e
 	ld [hl+], a ; $502f
@@ -1956,7 +1956,7 @@ BuildCharStatDisplay:
 	ld [hl+], a ; $5033
 	ld [hl], a ; $5034
 	wram_bank $02 ; $5035
-	ld hl, $d501 ; $503b
+	ld hl, wCharDataPagePlane + 8 * TILEMAP_WIDTH + 1 ; $503b
 	ld a, $08 ; $503e
 	ld [hl+], a ; $5040
 	ld [hl+], a ; $5041
@@ -1965,7 +1965,7 @@ BuildCharStatDisplay:
 	ld [hl+], a ; $5044
 	ld [hl+], a ; $5045
 	ld [hl], a ; $5046
-	ld hl, $d50f ; $5047
+	ld hl, wCharDataPagePlane + 8 * TILEMAP_WIDTH + 15 ; $5047
 	ld [hl+], a ; $504a
 	ld [hl+], a ; $504b
 	ld [hl+], a ; $504c
@@ -1987,7 +1987,7 @@ BuildCharStatDisplay:
 	adc $00 ; $5062
 	ld h, a ; $5064
 	pop af ; $5065
-	ld de, $d50f ; $5066
+	ld de, wCharDataPagePlane + 8 * TILEMAP_WIDTH + 15 ; $5066
 	ld c, $0e ; $5069
 	call WriteNameStringTiles ; $506b
 	wram_bank $06 ; $506e
@@ -2376,13 +2376,13 @@ SlideToPartnerStatPage:
 	ld [hl], d ; $5454
 	call LoadBasePageIntoWorkTilemap ; $5455
 	ld hl, PartnerStatPageTilemapPatch02 ; $5458
-	ld bc, $d7e0 ; $545b
+	ld bc, wCharDataPageSlot1 ; $545b
 	call ApplyTilemapPatchList ; $545e
 	ld hl, PartnerStatPageTilemapPatch03 ; $5461
-	ld bc, $d8e0 ; $5464
+	ld bc, wCharDataPageSlot1 + 8 * TILEMAP_WIDTH ; $5464
 	call ApplyTilemapPatchList ; $5467
 	ld hl, PartnerStatPageTilemapPatch04 ; $546a
-	ld bc, $d9e0 ; $546d
+	ld bc, wCharDataPageSlot1 + 16 * TILEMAP_WIDTH ; $546d
 	call ApplyTilemapPatchList ; $5470
 	ld hl, DrillDisplayData_1d ; $5473
 	ld bc, wScreenAttrmap + 28 * TILEMAP_WIDTH + 16 ; $5476
@@ -2401,22 +2401,22 @@ SlideToPartnerStatPage:
 	ld [hl], d ; $5496
 	call LoadBasePageIntoWorkTilemap ; $5497
 	ld hl, PartnerStatPageTilemapPatch05 ; $549a
-	ld bc, $d7e0 ; $549d
+	ld bc, wCharDataPageSlot1 ; $549d
 	call ApplyTilemapPatchList ; $54a0
 	ld hl, PartnerStatPageTilemapPatch06 ; $54a3
-	ld bc, $d8e0 ; $54a6
+	ld bc, wCharDataPageSlot1 + 8 * TILEMAP_WIDTH ; $54a6
 	call ApplyTilemapPatchList ; $54a9
 	ld hl, PartnerStatPageTilemapPatch07 ; $54ac
-	ld bc, $d9e0 ; $54af
+	ld bc, wCharDataPageSlot1 + 16 * TILEMAP_WIDTH ; $54af
 	call ApplyTilemapPatchList ; $54b2
 	ld hl, PartnerStatPageTilemapPatch26 ; $54b5
-	ld bc, $dc60 ; $54b8
+	ld bc, wCharDataPageSlot3 ; $54b8
 	call ApplyTilemapPatchList ; $54bb
 	ld hl, PartnerStatPageTilemapPatch27 ; $54be
-	ld bc, $dd60 ; $54c1
+	ld bc, wCharDataPageSlot3 + 8 * TILEMAP_WIDTH ; $54c1
 	call ApplyTilemapPatchList ; $54c4
 	ld hl, PartnerStatPageTilemapPatch28 ; $54c7
-	ld bc, $de60 ; $54ca
+	ld bc, wCharDataPageSlot3 + 16 * TILEMAP_WIDTH ; $54ca
 	call ApplyTilemapPatchList ; $54cd
 	ld hl, StatPageTilemapPatch0 ; $54d0
 	ld bc, wScreenAttrmap + 28 * TILEMAP_WIDTH + 16 ; $54d3
@@ -2435,22 +2435,22 @@ SlideToPartnerStatPage:
 	ld [hl], d ; $54f3
 	call LoadBasePageIntoWorkTilemap ; $54f4
 	ld hl, PartnerStatPageTilemapPatch08 ; $54f7
-	ld bc, $d7e0 ; $54fa
+	ld bc, wCharDataPageSlot1 ; $54fa
 	call ApplyTilemapPatchList ; $54fd
 	ld hl, PartnerStatPageTilemapPatch09 ; $5500
-	ld bc, $d8e0 ; $5503
+	ld bc, wCharDataPageSlot1 + 8 * TILEMAP_WIDTH ; $5503
 	call ApplyTilemapPatchList ; $5506
 	ld hl, PartnerStatPageTilemapPatch10 ; $5509
-	ld bc, $d9e0 ; $550c
+	ld bc, wCharDataPageSlot1 + 16 * TILEMAP_WIDTH ; $550c
 	call ApplyTilemapPatchList ; $550f
 	ld hl, PartnerStatPageTilemapPatch23 ; $5512
-	ld bc, $dc60 ; $5515
+	ld bc, wCharDataPageSlot3 ; $5515
 	call ApplyTilemapPatchList ; $5518
 	ld hl, PartnerStatPageTilemapPatch24 ; $551b
-	ld bc, $dd60 ; $551e
+	ld bc, wCharDataPageSlot3 + 8 * TILEMAP_WIDTH ; $551e
 	call ApplyTilemapPatchList ; $5521
 	ld hl, PartnerStatPageTilemapPatch25 ; $5524
-	ld bc, $de60 ; $5527
+	ld bc, wCharDataPageSlot3 + 16 * TILEMAP_WIDTH ; $5527
 	call ApplyTilemapPatchList ; $552a
 	farcall FlushCharDataTilemapsFar ; $552d
 	wram_bank $06 ; $5530
@@ -2466,22 +2466,22 @@ SlideToPartnerStatPage:
 	ld [hl], d ; $5547
 	call LoadBasePageIntoWorkTilemap ; $5548
 	ld hl, PartnerStatPageTilemapPatch11 ; $554b
-	ld bc, $d7e0 ; $554e
+	ld bc, wCharDataPageSlot1 ; $554e
 	call ApplyTilemapPatchList ; $5551
 	ld hl, PartnerStatPageTilemapPatch12 ; $5554
-	ld bc, $d8e0 ; $5557
+	ld bc, wCharDataPageSlot1 + 8 * TILEMAP_WIDTH ; $5557
 	call ApplyTilemapPatchList ; $555a
 	ld hl, PartnerStatPageTilemapPatch13 ; $555d
-	ld bc, $d9e0 ; $5560
+	ld bc, wCharDataPageSlot1 + 16 * TILEMAP_WIDTH ; $5560
 	call ApplyTilemapPatchList ; $5563
 	ld hl, PartnerStatPageTilemapPatch20 ; $5566
-	ld bc, $dc60 ; $5569
+	ld bc, wCharDataPageSlot3 ; $5569
 	call ApplyTilemapPatchList ; $556c
 	ld hl, PartnerStatPageTilemapPatch21 ; $556f
-	ld bc, $dd60 ; $5572
+	ld bc, wCharDataPageSlot3 + 8 * TILEMAP_WIDTH ; $5572
 	call ApplyTilemapPatchList ; $5575
 	ld hl, PartnerStatPageTilemapPatch22 ; $5578
-	ld bc, $de60 ; $557b
+	ld bc, wCharDataPageSlot3 + 16 * TILEMAP_WIDTH ; $557b
 	call ApplyTilemapPatchList ; $557e
 	farcall FlushCharDataTilemapsFar ; $5581
 	wram_bank $06 ; $5584
@@ -2497,13 +2497,13 @@ SlideToPartnerStatPage:
 	ld [hl], d ; $559b
 	call LoadBasePageIntoWorkTilemap ; $559c
 	ld hl, PartnerStatPageTilemapPatch17 ; $559f
-	ld bc, $dc60 ; $55a2
+	ld bc, wCharDataPageSlot3 ; $55a2
 	call ApplyTilemapPatchList ; $55a5
 	ld hl, PartnerStatPageTilemapPatch18 ; $55a8
-	ld bc, $dd60 ; $55ab
+	ld bc, wCharDataPageSlot3 + 8 * TILEMAP_WIDTH ; $55ab
 	call ApplyTilemapPatchList ; $55ae
 	ld hl, PartnerStatPageTilemapPatch19 ; $55b1
-	ld bc, $de60 ; $55b4
+	ld bc, wCharDataPageSlot3 + 16 * TILEMAP_WIDTH ; $55b4
 	call ApplyTilemapPatchList ; $55b7
 	farcall FlushCharDataTilemapsFar ; $55ba
 	wram_bank $06 ; $55bd
@@ -2519,13 +2519,13 @@ SlideToPartnerStatPage:
 	ld [hl], d ; $55d4
 	call LoadBasePageIntoWorkTilemap ; $55d5
 	ld hl, PartnerStatPageTilemapPatch14 ; $55d8
-	ld bc, $dc60 ; $55db
+	ld bc, wCharDataPageSlot3 ; $55db
 	call ApplyTilemapPatchList ; $55de
 	ld hl, PartnerStatPageTilemapPatch15 ; $55e1
-	ld bc, $dd60 ; $55e4
+	ld bc, wCharDataPageSlot3 + 8 * TILEMAP_WIDTH ; $55e4
 	call ApplyTilemapPatchList ; $55e7
 	ld hl, PartnerStatPageTilemapPatch16 ; $55ea
-	ld bc, $de60 ; $55ed
+	ld bc, wCharDataPageSlot3 + 16 * TILEMAP_WIDTH ; $55ed
 	call ApplyTilemapPatchList ; $55f0
 	farcall FlushCharDataTilemapsFar ; $55f3
 	wram_bank $06 ; $55f6
@@ -2547,13 +2547,13 @@ SlideFromPartnerStatPage:
 	ld [hl], d ; $561a
 	call LoadBasePageIntoWorkTilemap ; $561b
 	ld hl, PartnerStatPageTilemapPatch17 ; $561e
-	ld bc, $dc60 ; $5621
+	ld bc, wCharDataPageSlot3 ; $5621
 	call ApplyTilemapPatchList ; $5624
 	ld hl, PartnerStatPageTilemapPatch18 ; $5627
-	ld bc, $dd60 ; $562a
+	ld bc, wCharDataPageSlot3 + 8 * TILEMAP_WIDTH ; $562a
 	call ApplyTilemapPatchList ; $562d
 	ld hl, PartnerStatPageTilemapPatch19 ; $5630
-	ld bc, $de60 ; $5633
+	ld bc, wCharDataPageSlot3 + 16 * TILEMAP_WIDTH ; $5633
 	call ApplyTilemapPatchList ; $5636
 	farcall FlushCharDataTilemapsFar ; $5639
 	wram_bank $06 ; $563c
@@ -2569,22 +2569,22 @@ SlideFromPartnerStatPage:
 	ld [hl], d ; $5653
 	call LoadBasePageIntoWorkTilemap ; $5654
 	ld hl, PartnerStatPageTilemapPatch11 ; $5657
-	ld bc, $d7e0 ; $565a
+	ld bc, wCharDataPageSlot1 ; $565a
 	call ApplyTilemapPatchList ; $565d
 	ld hl, PartnerStatPageTilemapPatch12 ; $5660
-	ld bc, $d8e0 ; $5663
+	ld bc, wCharDataPageSlot1 + 8 * TILEMAP_WIDTH ; $5663
 	call ApplyTilemapPatchList ; $5666
 	ld hl, PartnerStatPageTilemapPatch13 ; $5669
-	ld bc, $d9e0 ; $566c
+	ld bc, wCharDataPageSlot1 + 16 * TILEMAP_WIDTH ; $566c
 	call ApplyTilemapPatchList ; $566f
 	ld hl, PartnerStatPageTilemapPatch20 ; $5672
-	ld bc, $dc60 ; $5675
+	ld bc, wCharDataPageSlot3 ; $5675
 	call ApplyTilemapPatchList ; $5678
 	ld hl, PartnerStatPageTilemapPatch21 ; $567b
-	ld bc, $dd60 ; $567e
+	ld bc, wCharDataPageSlot3 + 8 * TILEMAP_WIDTH ; $567e
 	call ApplyTilemapPatchList ; $5681
 	ld hl, PartnerStatPageTilemapPatch22 ; $5684
-	ld bc, $de60 ; $5687
+	ld bc, wCharDataPageSlot3 + 16 * TILEMAP_WIDTH ; $5687
 	call ApplyTilemapPatchList ; $568a
 	farcall FlushCharDataTilemapsFar ; $568d
 	wram_bank $06 ; $5690
@@ -2600,22 +2600,22 @@ SlideFromPartnerStatPage:
 	ld [hl], d ; $56a7
 	call LoadBasePageIntoWorkTilemap ; $56a8
 	ld hl, PartnerStatPageTilemapPatch08 ; $56ab
-	ld bc, $d7e0 ; $56ae
+	ld bc, wCharDataPageSlot1 ; $56ae
 	call ApplyTilemapPatchList ; $56b1
 	ld hl, PartnerStatPageTilemapPatch09 ; $56b4
-	ld bc, $d8e0 ; $56b7
+	ld bc, wCharDataPageSlot1 + 8 * TILEMAP_WIDTH ; $56b7
 	call ApplyTilemapPatchList ; $56ba
 	ld hl, PartnerStatPageTilemapPatch10 ; $56bd
-	ld bc, $d9e0 ; $56c0
+	ld bc, wCharDataPageSlot1 + 16 * TILEMAP_WIDTH ; $56c0
 	call ApplyTilemapPatchList ; $56c3
 	ld hl, PartnerStatPageTilemapPatch23 ; $56c6
-	ld bc, $dc60 ; $56c9
+	ld bc, wCharDataPageSlot3 ; $56c9
 	call ApplyTilemapPatchList ; $56cc
 	ld hl, PartnerStatPageTilemapPatch24 ; $56cf
-	ld bc, $dd60 ; $56d2
+	ld bc, wCharDataPageSlot3 + 8 * TILEMAP_WIDTH ; $56d2
 	call ApplyTilemapPatchList ; $56d5
 	ld hl, PartnerStatPageTilemapPatch25 ; $56d8
-	ld bc, $de60 ; $56db
+	ld bc, wCharDataPageSlot3 + 16 * TILEMAP_WIDTH ; $56db
 	call ApplyTilemapPatchList ; $56de
 	farcall FlushCharDataTilemapsFar ; $56e1
 	wram_bank $06 ; $56e4
@@ -2631,22 +2631,22 @@ SlideFromPartnerStatPage:
 	ld [hl], d ; $56fb
 	call LoadBasePageIntoWorkTilemap ; $56fc
 	ld hl, PartnerStatPageTilemapPatch05 ; $56ff
-	ld bc, $d7e0 ; $5702
+	ld bc, wCharDataPageSlot1 ; $5702
 	call ApplyTilemapPatchList ; $5705
 	ld hl, PartnerStatPageTilemapPatch06 ; $5708
-	ld bc, $d8e0 ; $570b
+	ld bc, wCharDataPageSlot1 + 8 * TILEMAP_WIDTH ; $570b
 	call ApplyTilemapPatchList ; $570e
 	ld hl, PartnerStatPageTilemapPatch07 ; $5711
-	ld bc, $d9e0 ; $5714
+	ld bc, wCharDataPageSlot1 + 16 * TILEMAP_WIDTH ; $5714
 	call ApplyTilemapPatchList ; $5717
 	ld hl, PartnerStatPageTilemapPatch26 ; $571a
-	ld bc, $dc60 ; $571d
+	ld bc, wCharDataPageSlot3 ; $571d
 	call ApplyTilemapPatchList ; $5720
 	ld hl, PartnerStatPageTilemapPatch27 ; $5723
-	ld bc, $dd60 ; $5726
+	ld bc, wCharDataPageSlot3 + 8 * TILEMAP_WIDTH ; $5726
 	call ApplyTilemapPatchList ; $5729
 	ld hl, PartnerStatPageTilemapPatch28 ; $572c
-	ld bc, $de60 ; $572f
+	ld bc, wCharDataPageSlot3 + 16 * TILEMAP_WIDTH ; $572f
 	call ApplyTilemapPatchList ; $5732
 	ld hl, StatPageTilemapPatch0 ; $5735
 	ld bc, wScreenAttrmap + 28 * TILEMAP_WIDTH + 16 ; $5738
@@ -2665,13 +2665,13 @@ SlideFromPartnerStatPage:
 	ld [hl], d ; $5758
 	call LoadBasePageIntoWorkTilemap ; $5759
 	ld hl, PartnerStatPageTilemapPatch02 ; $575c
-	ld bc, $d7e0 ; $575f
+	ld bc, wCharDataPageSlot1 ; $575f
 	call ApplyTilemapPatchList ; $5762
 	ld hl, PartnerStatPageTilemapPatch03 ; $5765
-	ld bc, $d8e0 ; $5768
+	ld bc, wCharDataPageSlot1 + 8 * TILEMAP_WIDTH ; $5768
 	call ApplyTilemapPatchList ; $576b
 	ld hl, PartnerStatPageTilemapPatch04 ; $576e
-	ld bc, $d9e0 ; $5771
+	ld bc, wCharDataPageSlot1 + 16 * TILEMAP_WIDTH ; $5771
 	call ApplyTilemapPatchList ; $5774
 	ld hl, DrillDisplayData_1d ; $5777
 	ld bc, wScreenAttrmap + 28 * TILEMAP_WIDTH + 16 ; $577a
@@ -2690,13 +2690,13 @@ SlideFromPartnerStatPage:
 	ld [hl], d ; $579a
 	call LoadBasePageIntoWorkTilemap ; $579b
 	ld hl, StatPageTilemapPatch6 ; $579e
-	ld bc, $d7e0 ; $57a1
+	ld bc, wCharDataPageSlot1 ; $57a1
 	call ApplyTilemapPatchList ; $57a4
 	ld hl, StatPageTilemapPatch7 ; $57a7
-	ld bc, $d8e0 ; $57aa
+	ld bc, wCharDataPageSlot1 + 8 * TILEMAP_WIDTH ; $57aa
 	call ApplyTilemapPatchList ; $57ad
 	ld hl, StatPageTilemapPatch8 ; $57b0
-	ld bc, $d9e0 ; $57b3
+	ld bc, wCharDataPageSlot1 + 16 * TILEMAP_WIDTH ; $57b3
 	call ApplyTilemapPatchList ; $57b6
 	ld hl, DrillDisplayData_1d ; $57b9
 	ld bc, wScreenAttrmap + 28 * TILEMAP_WIDTH + 16 ; $57bc
@@ -3212,7 +3212,7 @@ BuildCharDataConfirmScreen:
 	ld bc, wScreenAttrmap + 27 * TILEMAP_WIDTH + 16 ; $5bae
 	call ApplyTilemapPatchList ; $5bb1
 	ld hl, CharDataConfirmScreenTilemapPatch5 ; $5bb4
-	ld bc, $d550 ; $5bb7
+	ld bc, wCharDataPagePlane + 10 * TILEMAP_WIDTH + 16 ; $5bb7
 	call ApplyTilemapPatchList ; $5bba
 	call DrawCharDataConfirmPrompt ; $5bbd
 	wram_bank $03 ; $5bc0
@@ -3245,7 +3245,7 @@ InitCharDataScreenVideo:
 	ret ; $5c0a
 DrawCharDataConfirmPrompt:
 	ld hl, CharDataConfirmPromptTilemapPatch ; $5c0b
-	ld bc, $d580 ; $5c0e
+	ld bc, wCharDataPagePlane + 12 * TILEMAP_WIDTH ; $5c0e
 	call ApplyTilemapPatchList ; $5c11
 	ret ; $5c14
 StartCharDataValuesSyncTask:

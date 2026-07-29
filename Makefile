@@ -24,7 +24,7 @@ $(ROM): $(OBJS)
 
 # hardware.inc + macros.inc are preincluded for every bank via -P instead of a
 # repeated INCLUDE at the top of each source file.
-PRELUDE := include/hardware.inc include/macros.inc include/constants.inc include/text_ids.inc include/flag_constants.inc
+PRELUDE := include/hardware.inc include/macros.inc include/constants.inc include/text_ids.inc include/flag_constants.inc include/ram_mirrored.inc
 
 build/%.o: src/%.asm $(PRELUDE) | build/rgbdscheck.o
 	$(RGBASM) -E -I include $(PRELUDE:%=-P %) -o $@ $<

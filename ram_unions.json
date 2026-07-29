@@ -2359,6 +2359,39 @@
    "comment": "Screen tilemap buffers, WRAM bank $03. The full-screen UIs assemble their\nBG map at $d000 and its CGB attributes at $d400 -- 32 x 32 cells each, rows\nTILEMAP_WIDTH apart, of which the top-left 20 x 18 is on screen -- then\nQueueVRAMCopy them to $9800 in VRAM banks 0 and 1. Not every screen pairs\nthe planes this way: the bank $03 cutscenes keep the attribute plane at\n$d000 in WRAM bank $02 instead, which is why these names are scoped to a\nprovable WRAM bank $03 rather than to the addresses.\nwShadowTilemapBank / wShadowTilemapPtr point the text engine at whichever\nbank the current screen uses ($03 for screens, $05 for text windows, $02 for\nthe match). Cell addresses render as `base + row * TILEMAP_WIDTH + column`,\nwhich is what they are.",
    "variants": [
     {
+     "context": "character-data screen page plane (mirrored across WRAM banks $02/$03)",
+     "mirrored": true,
+     "scopes": [
+      {
+       "bank": "0x1a",
+       "wram_bank": "0x02"
+      },
+      {
+       "bank": "0x1a",
+       "wram_bank": "0x03"
+      },
+      {
+       "bank": "0x1d",
+       "wram_bank": "0x02"
+      },
+      {
+       "bank": "0x1d",
+       "wram_bank": "0x03"
+      }
+     ],
+     "symbols": {
+      "0xd400": {
+       "name": "wCharDataPagePlane",
+       "note": "[992 bytes] Base stat-page rows for the character-data screen, one 31 x 32 cell plane in *each* of WRAM banks $02 and $03: bank $03 holds the tile half, bank $02 the CGB attribute half, cell for cell at the same addresses. LoadBasePageIntoWorkTilemap copies a row from here to the live screen twice, once per bank, which is why the two `ld hl` operands of that pair are the same word. Not an attribute map, despite falling where wShadowAttrmap sits for every other screen; the page slots proper start at wCharDataPageSlot1.",
+       "size": 992,
+       "stride": [
+        "TILEMAP_WIDTH",
+        "0x20"
+       ]
+      }
+     }
+    },
+    {
      "context": "screen tilemap (any bank, where WRAM bank $03 is provable)",
      "scopes": [
       {
@@ -3739,6 +3772,64 @@
        "name": "wChartRows",
        "note": "[256 bytes, of $110 used] The decoded chart. InitChartRowFlags writes 1 to the head of each of the 16 rows, stepping 17 at a time; BuildN64ExhibResultsGrid and DecodeN64ExhibResultsRow fill the cells behind them from the N64 records block",
        "size": 256
+      }
+     }
+    }
+   ]
+  },
+  {
+   "start": "0xd7e0",
+   "end": "0xdea0",
+   "comment": "Saved character-data stat pages. Three 576-byte slots, each a parallel copy\nin WRAM banks $02 and $03 (tiles and CGB attributes), so an address here\nnames the cell and the selected bank picks the plane. Declared mirrored:\nit allocates nothing, because both banks already declare these bytes.",
+   "variants": [
+    {
+     "context": "character-data stat pages (mirrored across WRAM banks $02/$03)",
+     "mirrored": true,
+     "scopes": [
+      {
+       "bank": "0x1a",
+       "wram_bank": "0x02"
+      },
+      {
+       "bank": "0x1a",
+       "wram_bank": "0x03"
+      },
+      {
+       "bank": "0x1d",
+       "wram_bank": "0x02"
+      },
+      {
+       "bank": "0x1d",
+       "wram_bank": "0x03"
+      }
+     ],
+     "symbols": {
+      "0xd7e0": {
+       "name": "wCharDataPageSlot1",
+       "note": "[576 bytes] Saved stat page, mirrored across WRAM banks $02/$03 like wCharDataPagePlane. SaveWorkTilemapToPage copies the live screen here when its selector is 2, once per bank; the three 36-byte rows sit 8 * TILEMAP_WIDTH apart and are what MainCharStatPageTilemapPatch* patch through ApplyTilemapPatchList.",
+       "size": 576,
+       "stride": [
+        "TILEMAP_WIDTH",
+        "0x20"
+       ]
+      },
+      "0xda20": {
+       "name": "wCharDataPageSlot2",
+       "note": "[576 bytes] Saved stat page, mirrored across WRAM banks $02/$03 like wCharDataPagePlane. SaveWorkTilemapToPage copies the live screen here when its selector is 1, once per bank; the three 36-byte rows sit 8 * TILEMAP_WIDTH apart and are what MainCharStatPageTilemapPatch* patch through ApplyTilemapPatchList.",
+       "size": 576,
+       "stride": [
+        "TILEMAP_WIDTH",
+        "0x20"
+       ]
+      },
+      "0xdc60": {
+       "name": "wCharDataPageSlot3",
+       "note": "[576 bytes] Saved stat page, mirrored across WRAM banks $02/$03 like wCharDataPagePlane. SaveWorkTilemapToPage copies the live screen here when its selector is 0 or 3+, once per bank; the three 36-byte rows sit 8 * TILEMAP_WIDTH apart and are what MainCharStatPageTilemapPatch* patch through ApplyTilemapPatchList.",
+       "size": 576,
+       "stride": [
+        "TILEMAP_WIDTH",
+        "0x20"
+       ]
       }
      }
     }

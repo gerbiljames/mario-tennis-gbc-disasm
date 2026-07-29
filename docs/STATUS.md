@@ -26,7 +26,7 @@ shape, not *twins*, and the shot banks are near-identical copies of each
 other, so a routine only one bank failed to execute reads as ordinary data
 until you diff it against its siblings.
 
-Everything below is **committed** (HEAD `82c8ce8`); the whole history
+Everything below is **committed** (HEAD `PENDING`); the whole history
 rebuilds byte-perfect. Per-bank progress at any time: `python3
 tools/progress.py` (proven-code bytes, fill runs, label counts, human-named
 counts) and `tools/progress.py --unnamed <bank>` to list still-auto-named
@@ -7594,3 +7594,76 @@ That is the fourth guard of this kind: ram_map-inside-union, union-overlaps-
 union, symbol-overruns-symbol, and now scope-names-the-wrong-bank. Each was
 added after the mistake it catches, and each turns a class of silent error into
 a line of output.
+
+## Mirrored WRAM structures
+
+Some structures are not one bank's, and not several banks' separately: they are
+one address range holding a *parallel copy* in each of several WRAM banks. The
+character-data screen keeps its stat pages this way -- tiles in bank `$03`,
+CGB attributes in bank `$02` -- so saving a page is one copy per bank to the
+very same word:
+
+```asm
+	wram_bank $03
+	ld hl, wShadowTilemap
+	ld de, wCharDataPageSlot1
+	call CopyMemoryFast
+	wram_bank $02
+	ld hl, wScreenAttrmap
+	ld de, wCharDataPageSlot1     ; same address, other plane
+	call CopyMemoryFast
+```
+
+Before this pass the first `ld de` rendered as `wShadowAttrmap + 31 *
+TILEMAP_WIDTH` and the second stayed a bare `$d7e0`, which read as two
+unrelated addresses and hid the one fact that matters. Neither name was right:
+that range is not an attribute map at all, it is page storage that happens to
+sit where `wShadowAttrmap` sits on every other screen.
+
+A variant marked `"mirrored": true` names the whole set. It matches when the
+site's bank is any of the banks its scopes list **or when the bank cannot be
+proved**, and still loses to a bank proved to be outside the set -- ROM bank
+`$1d` alone drives WRAM banks 2, 3 and 6 over these same addresses, so dropping
+the constraint outright would hand `$d4xx` the wrong name. Because the claim is
+that wide, every scope must carry a ROM `bank` and at least two distinct
+`wram_bank`s must be named; both mistakes are rejected at load.
+
+The subtle part is that a mirrored variant **allocates nothing**. Each of its
+banks already declares those bytes in its own union, so the first attempt --
+filing it under one bank's SECTION -- tripped the union-overlap guard, exactly
+as it should have. It is emitted instead as an EQU into the generated
+`include/ram_mirrored.inc`, preincluded for every bank, because an EQU is
+assembly-time only and unlike an exported `::` label has to be visible while
+each bank is assembled.
+
+Two declarations (the base plane, and three 576-byte page slots at `$d7e0`,
+`$da20`, `$dc60` whose rows sit `8 * TILEMAP_WIDTH` apart) took the bare
+banked-WRAM operand count from **827 to 745**, byte-perfect throughout.
+
+## What is left, and which fix each part wants
+
+`tools/ram_gaps.py` splits every remaining bare `$dxxx` operand into buckets,
+because each wants a different fix and the split is what makes the rest
+mechanical:
+
+| bucket | count | the fix |
+|---|---|---|
+| unproven | 615 | no trace covers the site and the dataflow cannot pin the bank -- nothing to name it from |
+| unclaimed | 70 | bank proved, nothing names the address yet: ordinary naming work, bank already settled |
+| rom-scoped | 30 | a variant covers it in the proven bank but is scoped to other ROM banks -- widen it, or add a variant if it is a different subsystem's overlay |
+| mirrored | 30 | genuinely several banks at once: declare a mirrored variant |
+
+The tool also lists mirrored candidates directly -- one address, several
+observed banks, one routine -- which is how the page slots were found:
+
+```
+$d000  banks 2,6  from $1d:ApplyTilemapPatchList
+$da20  banks 2,3  from $1d:SaveWorkTilemapToPage
+$dc60  banks 2,3  from $1d:SaveWorkTilemapToPage
+$d580  banks 1,2,3  from $18:LoadCharacterRecordToBuffer
+$d600  banks 2,3,4  from $1b:CopyMugshotBufferToVram
+```
+
+The `unproven` 615 dominate, and only more coverage moves them: instruction
+coverage across the ROM is 29%, and these sites are in screens no trace has
+reached (the save editor, the exp screen, most minigames).

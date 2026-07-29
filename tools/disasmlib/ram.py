@@ -111,14 +111,24 @@ def _scope_to_flat(s):
     return (bank * BANK_SIZE, (bank + 1) * BANK_SIZE)
 
 
-def _scope_to_matcher(s):
+def _scope_to_matcher(s, mirrored=False):
     """A union-variant scope -> (flat_range_or_None, wram_bank_or_None). `bank`
     (with optional start/end) constrains the *referencing code's* ROM location;
     `wram_bank` constrains the WRAM bank provably selected there (see
     compute_wram_bank). Either may be given; a site matches when every present
     constraint holds. A scope with neither would match everywhere -- rejected by
-    load_ram_unions."""
+    load_ram_unions.
+
+    A `mirrored` variant widens the WRAM constraint to the *set* of banks its
+    scopes name: those banks hold parallel copies of one structure, so the name
+    is right whichever is live and a site resolves even where the bank is not
+    provable. It still loses to a bank proved to be outside the set -- one ROM
+    bank often drives several WRAM banks over the same addresses (bank $1d
+    reaches $d4xx in banks 2, 3 and 6), so dropping the constraint outright
+    would hand those addresses the wrong name."""
     rng = _scope_to_flat(s) if "bank" in s else None
+    if mirrored:
+        return (rng, mirrored)
     wb = int(s["wram_bank"], 0) if "wram_bank" in s else None
     return (rng, wb)
 
@@ -137,6 +147,9 @@ class ScopedRamNames:
         self.sized = []   # (base, size, matchers, name, stride) for interiors
         self.sized_default = []   # the same, for a default variant's fields
         self.bank_at = {}
+        # (addr, name, note) for mirrored variants' symbols, which are emitted
+        # as EQUs rather than allocated in any one bank's SECTION
+        self.mirrored = []
         # (addr, size, matchers, name, banks the union declares) for scoped
         # symbols, so audit_rom_only_scopes can check them after bank_at fills
         self.audit = []
@@ -167,7 +180,12 @@ class ScopedRamNames:
         for rng, wb in matchers:
             if rng is not None and not (rng[0] <= off < rng[1]):
                 continue
-            if wb is not None and at != wb:
+            # a mirrored variant's banks (a set) mean the same structure, so an
+            # unprovable bank is no obstacle; a single bank must be proved.
+            if isinstance(wb, frozenset):
+                if at is not None and at not in wb:
+                    continue
+            elif wb is not None and at != wb:
                 continue
             return True
         return False
@@ -251,6 +269,11 @@ def union_banks(variants, ubank):
     where the span has to be treated as claiming every bank."""
     banks = set()
     for v in variants:
+        # A mirrored variant claims no storage of its own, so it must not make
+        # the union collide with the per-bank unions that do declare these
+        # bytes -- naming them from a second bank is the whole point.
+        if len(v) > 3 and v[3]:
+            continue
         banks |= (v[2] or ({ubank} if ubank is not None else set()))
     return banks
 
@@ -531,6 +554,22 @@ def load_ram_unions(path):
                     print(f"warning: {path}: union {u['start']} scope {s} has "
                           f"neither bank nor wram_bank (matches everywhere)",
                           file=sys.stderr)
+            if not v.get("mirrored"):
+                continue
+            # A mirrored variant resolves without a provable bank, so the ROM
+            # range is the only thing keeping it off unrelated code.
+            for s in v.get("scopes", []):
+                if "bank" not in s:
+                    raise SystemExit(
+                        f"ram_unions: mirrored variant at {u['start']} has a "
+                        f"scope with no ROM bank -- it would name this address "
+                        f"everywhere, in every bank")
+            if len({int(s["wram_bank"], 0) for s in v.get("scopes", [])
+                    if "wram_bank" in s}) < 2:
+                raise SystemExit(
+                    f"ram_unions: mirrored variant at {u['start']} names "
+                    f"fewer than two wram_banks -- if the structure lives in "
+                    f"one bank, scope it to that bank instead")
         # default variant applies outside every scoped variant's ROM ranges
         # (wram_bank-only scopes contribute no ROM mask)
         mask = [m[0] for v in u["variants"]
@@ -546,7 +585,9 @@ def load_ram_unions(path):
                 ubanks.add(int(u[key], 0))
         variants = []
         for v in u["variants"]:
-            matchers = [_scope_to_matcher(s) for s in v.get("scopes", [])]
+            mset = frozenset(int(s["wram_bank"], 0) for s in v.get("scopes", [])
+                             if "wram_bank" in s) if v.get("mirrored") else None
+            matchers = [_scope_to_matcher(s, mset) for s in v.get("scopes", [])]
             syms = []
             for addr_s, e in sorted(v["symbols"].items(),
                                     key=lambda kv: int(kv[0], 0)):
@@ -565,9 +606,12 @@ def load_ram_unions(path):
                 else:
                     scoped.add(addr, name, matchers, ram_field_size(e),
                                stride=_stride(e), union_banks_=ubanks)
+                    if mset:
+                        scoped.mirrored.append((addr, name, e.get("note", "")))
             wbanks = frozenset(int(s["wram_bank"], 0) for s in v.get("scopes", [])
                                if "wram_bank" in s)
-            variants.append((v.get("context", ""), syms, wbanks))
+            variants.append((v.get("context", ""), syms, wbanks,
+                             bool(mset)))
         for ri, (rs, re_, mem, _path) in enumerate(RAM_REGIONS):
             if rs <= start < re_:
                 # SRAM's bank is a property of the range, not of a scope: the
@@ -587,6 +631,31 @@ def load_ram_unions(path):
     return unions_by_region, scoped
 
 
+def write_mirrored_include(path, syms):
+    """Emit the mirrored variants' symbols as EQUs.
+
+    They cannot be SECTION symbols. A mirrored structure is one address range
+    holding a parallel copy in each of several WRAM banks, and every one of
+    those banks already declares the bytes in its own union -- allocating them
+    again under a second name would either double-book the section or push
+    everything after it to the wrong address. An EQU names the address without
+    claiming storage, which is exactly what a second view of it is.
+
+    That makes this a preincluded file rather than part of ram.asm: an EQU is
+    assembly-time only, so unlike an exported `::` label it has to be visible
+    while each bank is assembled, not merely at link time."""
+    out = ["; Mirrored RAM symbols from ram_unions.json: one address range that\n"
+           "; holds a parallel copy in each of several WRAM banks, so the address\n"
+           "; names the cell and the selected bank picks which copy.\n"
+           "; Regenerated by tools/disasm.py; do not edit by hand.", ""]
+    for addr, name, note in sorted(syms):
+        for ln in (note or "").split("\n"):
+            out.append(f"; {ln}".rstrip() if ln.strip() else ";")
+        out.append(f"def {name} equ ${addr:04x}")
+        out.append("")
+    Path(path).write_text("\n".join(out).rstrip() + "\n")
+
+
 def _emit_union_block(out, start, end, comment, variants):
     """A scoped range from ram_unions.json. UNION/NEXTU is only how *overlapping*
     variants share addresses, so a range left with one variant -- either it
@@ -598,7 +667,7 @@ def _emit_union_block(out, start, end, comment, variants):
     overlay = len(variants) > 1
     if overlay:
         out.append("UNION")
-    for vi, (context, syms, _wbanks) in enumerate(variants):
+    for vi, (context, syms, _wbanks, *_rest) in enumerate(variants):
         if vi:
             out.append("NEXTU")
         if context:
@@ -646,6 +715,12 @@ def _group_by_bank(items):
             by_bank = {}
             for v in variants:
                 banks = v[2] or ({ubank} if ubank is not None else set())
+                # A mirrored variant allocates nothing: the bytes it names are
+                # already declared by each bank's own union, and it is only
+                # another way to address them. It leaves as an EQU instead (see
+                # write_mirrored_include).
+                if len(v) > 3 and v[3]:
+                    continue
                 if len(banks) != 1:
                     by_bank = None
                     break
@@ -721,6 +796,11 @@ def write_ram_layout(regions, unions_by_region=None):
                  for addr, name, size, note, bank in regions.get(ri, [])]
         seen_unions = []
         for ustart, uend, comment, variants, ubank in unions_by_region.get(ri, []):
+            # A union with nothing but mirrored variants emits no storage at
+            # all -- it renames bytes the per-bank unions already declare -- so
+            # it neither collides with them nor belongs in the layout.
+            if variants and all(len(v) > 3 and v[3] for v in variants):
+                continue
             banks = union_banks(variants, ubank)
             for addr, _name, _size, _note, bank in regions.get(ri, []):
                 if ustart <= addr < uend and (not banks or bank in banks):

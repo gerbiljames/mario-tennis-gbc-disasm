@@ -234,14 +234,14 @@ ShowGameProgressScreenThunk:
 	jp RunPauseMenuWindow.done ; $41af
 AdjustMessageSpeedSettingThunk:
 	call AdjustMessageSpeedSetting ; $41b2
-	ld a, [$d830] ; $41b5
+	ld a, [wCharDataPageSlot1 + 2 * TILEMAP_WIDTH + 16] ; $41b5
 	ld [wMenuInitialRow], a ; $41b8
 	ld bc, MessageSpeedSettingPtrs ; $41bb
 	ld a, [wPauseMenuWindowId] ; $41be
 	jp RunPauseMenuWindow.menuLoop ; $41c1
 ToggleMusicSettingThunk:
 	call ToggleMusicSetting ; $41c4
-	ld a, [$d830] ; $41c7
+	ld a, [wCharDataPageSlot1 + 2 * TILEMAP_WIDTH + 16] ; $41c7
 	ld [wMenuInitialRow], a ; $41ca
 	ld bc, MessageSpeedSettingPtrs ; $41cd
 	ld a, [wPauseMenuWindowId] ; $41d0
@@ -271,7 +271,7 @@ Label_1a_41e1:
 	ld a, [wPauseMenuOptionBits] ; $41f8
 	or $c0 ; $41fb
 	ld [wPauseMenuOptionBits], a ; $41fd
-	ld a, [$d830] ; $4200
+	ld a, [wCharDataPageSlot1 + 2 * TILEMAP_WIDTH + 16] ; $4200
 	ld [wMenuInitialRow], a ; $4203
 	ld bc, MusicSettingPtrs ; $4206
 	ld a, [wPauseMenuWindowId] ; $4209
@@ -294,7 +294,7 @@ Label_1a_420f:
 	ld a, [wPauseMenuOptionBits] ; $4227
 	or $c0 ; $422a
 	ld [wPauseMenuOptionBits], a ; $422c
-	ld a, [$d830] ; $422f
+	ld a, [wCharDataPageSlot1 + 2 * TILEMAP_WIDTH + 16] ; $422f
 	ld [wMenuInitialRow], a ; $4232
 	ld bc, MusicSettingPtrs ; $4235
 	ld a, [wPauseMenuWindowId] ; $4238
@@ -976,13 +976,13 @@ ExpScreenDrawTask:
 	jr z, .restore ; $47b2
 	wram_bank $02 ; $47b4
 	ld a, $01 ; $47ba
-	ld hl, $d800 ; $47bc
+	ld hl, wCharDataPageSlot1 + 1 * TILEMAP_WIDTH ; $47bc
 	ld b, $40 ; $47bf
 .loop:
 	ld [hl+], a ; $47c1
 	dec b ; $47c2
 	jr nz, .loop ; $47c3
-	ld hl, $d800 ; $47c5
+	ld hl, wCharDataPageSlot1 + 1 * TILEMAP_WIDTH ; $47c5
 	ld de, $99e0 + VRAM_BANK1 ; $47c8
 	ld c, $04 ; $47cb
 	call QueueVRAMCopy ; $47cd
@@ -1314,7 +1314,7 @@ DrawExpScreenYesNoBox:
 	inc c ; $4aa1
 	jr .loop ; $4aa2
 .eq0a:
-	ld de, $d4c2 ; $4aa4
+	ld de, wCharDataPagePlane + 6 * TILEMAP_WIDTH + 2 ; $4aa4
 	ld hl, $04eb ; $4aa7
 	ld c, $20 ; $4aaa
 	farcall RenderProportionalTextAt ; $4aac
@@ -2171,7 +2171,7 @@ DrawExpScreenCaption:
 .caption3:
 	wram_bank $03 ; $5018
 	ld hl, $04f2 ; $501e
-	ld de, $d82b ; $5021
+	ld de, wCharDataPageSlot1 + 2 * TILEMAP_WIDTH + 11 ; $5021
 	ld c, $20 ; $5024
 	farcall RenderProportionalTextAt ; $5026
 	sound $73 ; $5029
