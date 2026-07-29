@@ -2319,6 +2319,18 @@
       "0xdaf6": {
        "name": "wActorRandBoxHalfDepth",
        "note": "[8-bit] Half-depth of the same box, the high byte of ActorScriptOp_RandBox's operand word. Passed to TestPointInBox as l and checked against the second coordinate (c +/- l vs e); the centre itself is the word at actor + $16."
+      },
+      "0xdaef": {
+       "name": "wActorProbeRange",
+       "note": "[8-bit] How far ahead GetPointAheadOfActorRanged probes: multiplied by 32 (five `add a`) and added to the facing nibble to index ActorMoveVectors_04, so it selects which 32-byte range row of that table the direction vector is read from. The unranged entry point next to it hard-codes $40 instead."
+      },
+      "0xdaf0": {
+       "name": "wActorQueryPointX",
+       "note": "[16-bit LE] First coordinate of the point FindActorAtPoint is searching at, stashed from hl before it walks wNearbyActorList."
+      },
+      "0xdaf2": {
+       "name": "wActorQueryPointY",
+       "note": "[16-bit LE] Second coordinate of the same query point, stashed from de. The actor loop reads it back into de for each candidate, comparing against the word at actor + $0e."
       }
      }
     }

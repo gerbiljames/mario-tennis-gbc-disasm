@@ -2671,7 +2671,7 @@ GetPointAheadOfActorRanged:
 	rrca ; $50de
 	and $1c ; $50df
 	ld d, a ; $50e1
-	ld a, [$daef] ; $50e2
+	ld a, [wActorProbeRange] ; $50e2
 	add a ; $50e5
 	add a ; $50e6
 	add a ; $50e7
@@ -2859,7 +2859,7 @@ UpdatePlayerControl:
 	test_flag FLAG_PLAYER_RUNNING ; $51f5
 	jr z, .checkBlocked ; $51f8
 	ld a, $01 ; $51fa
-	ld [$daef], a ; $51fc
+	ld [wActorProbeRange], a ; $51fc
 	ld de, $0040 ; $51ff
 	ld hl, $0006 ; $5202
 	add hl, bc ; $5205
@@ -2880,7 +2880,7 @@ UpdatePlayerControl:
 	cp $0b ; $521c
 	jr nz, .slideX ; $521e
 	ld a, $02 ; $5220
-	ld [$daef], a ; $5222
+	ld [wActorProbeRange], a ; $5222
 	ld de, $0010 ; $5225
 	ld hl, $0006 ; $5228
 	add hl, bc ; $522b
@@ -2890,7 +2890,7 @@ UpdatePlayerControl:
 	jr .slideDepth ; $522f
 .slideX:
 	xor a ; $5231
-	ld [$daef], a ; $5232
+	ld [wActorProbeRange], a ; $5232
 	ld de, $0020 ; $5235
 	ld hl, $0006 ; $5238
 	add hl, bc ; $523b
@@ -3178,7 +3178,7 @@ FindActorAtPoint:
 	push hl ; $53d9
 	ld c, l ; $53da
 	ld b, h ; $53db
-	ld hl, $daf0 ; $53dc
+	ld hl, wActorQueryPointX ; $53dc
 	ld a, c ; $53df
 	ld [hl+], a ; $53e0
 	ld a, b ; $53e1
@@ -3196,7 +3196,7 @@ FindActorAtPoint:
 	and a ; $53ee
 	jr z, .done ; $53ef
 	push hl ; $53f1
-	ld hl, $daf2 ; $53f2
+	ld hl, wActorQueryPointY ; $53f2
 	ld a, [hl+] ; $53f5
 	ld d, [hl] ; $53f6
 	ld e, a ; $53f7
@@ -3226,7 +3226,7 @@ FindActorAtPoint:
 	ld a, l ; $5413
 	call GetSquareOfByte ; $5414
 	push hl ; $5417
-	ld hl, $daf0 ; $5418
+	ld hl, wActorQueryPointX ; $5418
 	ld a, [hl+] ; $541b
 	ld d, [hl] ; $541c
 	ld e, a ; $541d

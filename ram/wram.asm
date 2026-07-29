@@ -2850,7 +2850,12 @@ wPlayerMoveAngleApplied:: db
 wPlayerMoveAnglePrev:: db
 ; [8-bit] Cleared when no direction is held, so the walk animation stops
 wPlayerMoving:: db
-	ds 5
+; [8-bit] How far ahead GetPointAheadOfActorRanged probes: multiplied by 32 (five `add a`) and added to the facing nibble to index ActorMoveVectors_04, so it selects which 32-byte range row of that table the direction vector is read from. The unranged entry point next to it hard-codes $40 instead.
+wActorProbeRange:: db
+; [16-bit LE] First coordinate of the point FindActorAtPoint is searching at, stashed from hl before it walks wNearbyActorList.
+wActorQueryPointX:: dw
+; [16-bit LE] Second coordinate of the same query point, stashed from de. The actor loop reads it back into de for each candidate, comparing against the word at actor + $0e.
+wActorQueryPointY:: dw
 ; [8-bit] Random direction TryPickRandomReachableTarget probes in: the low byte of AdvanceRandomSeed masked with $fc, so one of 64 angles. ProjectPointFromActor casts a ray this way (first at distance $0100, then at $00e0 once the point is confirmed inside the box) to turn the angle into a candidate destination.
 wActorProbeAngle:: db
 ; [8-bit] Half-width of the box ActorScriptOp_RandBox confines a random target to; the low byte of the operand word it reads with FarReadWord. TryPickRandomReachableTarget passes it to TestPointInBox as h, which is checked against the box centre's first coordinate (b +/- h vs d).

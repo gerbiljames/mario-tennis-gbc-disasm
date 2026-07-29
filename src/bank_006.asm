@@ -748,7 +748,7 @@ FlushTilemapToVram:
 	ret ; $4623
 GetShadowTilemapAddr:
 	call GetScrolledTilemapOffset ; $4624
-	ld de, wScreenAttrmap ; $4627
+	ld de, $d000 ; $4627
 	add hl, de ; $462a
 	ld e, l ; $462b
 	ld d, h ; $462c

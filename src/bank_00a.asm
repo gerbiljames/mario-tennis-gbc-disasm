@@ -4209,7 +4209,7 @@ GetBehaviorMapCellAddr:
 	ld c, d ; $5f44
 	sra c ; $5f45
 	add hl, bc ; $5f47
-	ld bc, $d400 ; $5f48
+	ld bc, wActors + 16 * ACTOR_SIZE ; $5f48
 	add hl, bc ; $5f4b
 	pop de ; $5f4c
 	pop bc ; $5f4d
@@ -4669,7 +4669,7 @@ GetSceneTilemapAddr:
 	ld l, h ; $622b
 	ld h, $00 ; $622c
 	add hl, bc ; $622e
-	ld bc, $d000 ; $622f
+	ld bc, wActors ; $622f
 	add hl, bc ; $6232
 	pop bc ; $6233
 	ret ; $6234
