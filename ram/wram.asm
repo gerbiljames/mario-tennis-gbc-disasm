@@ -3162,9 +3162,10 @@ SECTION "WRAMX bank 6", WRAMX[$d000], BANK[6]
 ; scratch that three screens overlay -- the debug character viewer, the
 ; results continue prompt and the character-data screen itself -- so those
 ; get their own range-scoped variants ahead of it.
-; The viewer's scope stops at SetupCharViewerScene and resumes inside it
-; only where WRAM bank $06 is provable: that routine selects bank $04 to
-; place the four actors it poses, where $d000 is wActors, not a cursor.
+; Every scope carries wram_bank $06. The viewer and the continue prompt both
+; started with ROM-range-only scopes and both were naming other banks' bytes
+; at $d000 -- the results screen's tilemap planes, the viewer's actors --
+; which the scope audit found once traced banks made the sites provable.
 UNION
 ; star warp transition (bank $0e)
 ; [8-bit] Animation frame of the warp star, 0-5, stepped every other VBlank by UpdateStarWarpSprite

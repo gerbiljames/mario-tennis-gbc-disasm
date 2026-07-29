@@ -7552,3 +7552,45 @@ became `ld bc, $df00`. `$df00` is the per-character match struct in WRAM banks
 `$04-$07` and the character-select handedness byte in bank `$03`; the trace says
 that site runs in neither, so the name it had was wrong and a number is the
 honest answer until something proves otherwise.
+
+## A check, not an abstraction (2026-07-29)
+
+The recurring problem all week has been a union variant scoped by ROM bank
+alone: it matches every site in that bank whatever WRAM bank is selected there.
+Four false names came from it, each caught by hand or by a trace. The obvious
+response is a better way to *express* multi-bank structures -- the per-character
+struct at `$df00` declares its four banks plus sixteen ROM banks as twenty
+separate scopes, which is verbose and easy to get wrong.
+
+Measuring first said otherwise. Of the references naming a field of that struct:
+353 sit where WRAM bank 4-7 is provable, **0 sit where another bank is
+provable**, and 458 rest on the ROM-bank scopes at sites where the bank cannot
+be proved. Those scopes are load-bearing -- deleting them would cost 458 real
+names -- and they are not currently lying. The verbosity is a wart; the hazard
+is latent.
+
+So the useful thing was not a new abstraction but a **check**:
+`audit_rom_only_scopes` reports any scoped symbol that renders where the
+provable WRAM bank is not one its union claims. It only fires where the bank is
+*provable*, so it stays silent about the sites a ROM-only scope legitimately
+covers, and every hit is either a false name or a bank set that wants widening.
+Traced banks are what give it teeth -- before this week most of these sites had
+no provable bank at all.
+
+It found **36 false references on the first run**, in two variants that had
+never been suspected:
+
+| symbol | was naming |
+|---|---|
+| `wContinuePromptKind` (bank `$06`) | the results screen's tilemap planes in banks `$01`, `$02`, `$03` |
+| `wCharViewerRow` (bank `$06`) | the same, in the debug character viewer |
+
+Adding `wram_bank $06` to both scopes fixed all 36, and **not one became a bare
+number** -- every single one resolved to the name it should always have had:
+`wDecompBuffer`, `wScreenAttrmap`, `wShadowTilemap`. The audit is clean now, and
+it runs on every regeneration.
+
+That is the fourth guard of this kind: ram_map-inside-union, union-overlaps-
+union, symbol-overruns-symbol, and now scope-names-the-wrong-bank. Each was
+added after the mistake it catches, and each turns a class of silent error into
+a line of output.

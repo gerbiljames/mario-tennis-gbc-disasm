@@ -94,12 +94,12 @@ BuildResultsScreenTilemap:
 	call BuildResultsScreenPanels ; $40d9
 	call DrawPlayerNameAndLevel ; $40dc
 	wram_bank $03 ; $40df
-	ld hl, wContinuePromptKind ; $40e5
+	ld hl, wShadowTilemap ; $40e5
 	ld de, $9800 ; $40e8
 	ld c, $24 ; $40eb
 	call QueueVRAMCopy ; $40ed
 	wram_bank $02 ; $40f0
-	ld hl, wContinuePromptKind ; $40f6
+	ld hl, wScreenAttrmap ; $40f6
 	ld de, $9800 + VRAM_BANK1 ; $40f9
 	ld c, $24 ; $40fc
 	call QueueVRAMCopy ; $40fe
@@ -114,9 +114,9 @@ LoadResultsScreenGraphics:
 	call LoadPaletteShadow ; $4114
 	wram_bank $01 ; $4117
 	ld hl, ResultsScreenGfx_1e ; $411d
-	ld de, wContinuePromptKind ; $4120
+	ld de, wDecompBuffer ; $4120
 	call DecompressData ; $4123
-	ld hl, wContinuePromptKind ; $4126
+	ld hl, wDecompBuffer ; $4126
 	ld de, $9000 + VRAM_BANK1 ; $4129
 	ld c, $80 ; $412c
 	call QueueVRAMCopy ; $412e
@@ -126,23 +126,23 @@ LoadResultsScreenGraphics:
 	call QueueVRAMCopy ; $4139
 	wram_bank $01 ; $413c
 	ld hl, ResultsScreenTilemap_1e ; $4142
-	ld de, wContinuePromptKind ; $4145
+	ld de, wDecompBuffer ; $4145
 	call DecompressData ; $4148
-	ld hl, wContinuePromptKind ; $414b
+	ld hl, wDecompBuffer ; $414b
 	ld bc, $0240 ; $414e
 	call ResultsCopyToTilemap ; $4151
 	wram_bank $01 ; $4154
 	ld hl, ResultsScreenAttrmap_1e ; $415a
-	ld de, wContinuePromptKind ; $415d
+	ld de, wDecompBuffer ; $415d
 	call DecompressData ; $4160
-	ld hl, wContinuePromptKind ; $4163
+	ld hl, wDecompBuffer ; $4163
 	ld bc, $0240 ; $4166
 	call ResultsCopyToAttrmap ; $4169
 	wram_bank $01 ; $416c
 	ld hl, PanelFrameGfx_1e ; $4172
-	ld de, wContinuePromptKind ; $4175
+	ld de, wDecompBuffer ; $4175
 	call DecompressData ; $4178
-	ld hl, wContinuePromptKind ; $417b
+	ld hl, wDecompBuffer ; $417b
 	ld de, $9000 ; $417e
 	ld c, $10 ; $4181
 	call QueueVRAMCopy ; $4183
@@ -172,7 +172,7 @@ ResultsCopyToAttrmap:
 BuildResultsScreenPanels:
 	wram_bank $03 ; $41b1
 	ld a, $02 ; $41b7
-	ld [wContinuePromptKind], a ; $41b9
+	ld [wShadowTilemap], a ; $41b9
 	ld a, $04 ; $41bc
 	ld [wShadowTilemap + 19], a ; $41be
 	ld a, $07 ; $41c1
@@ -180,7 +180,7 @@ BuildResultsScreenPanels:
 	ld a, $09 ; $41c6
 	ld [wShadowTilemap + 4 * TILEMAP_WIDTH + 19], a ; $41c8
 	ld a, $03 ; $41cb
-	ld hl, wContinuePromptRow ; $41cd
+	ld hl, wShadowTilemap + 1 ; $41cd
 	ld c, $12 ; $41d0
 	call FillMemoryC ; $41d2
 	ld a, $08 ; $41d5
@@ -207,7 +207,7 @@ BuildResultsScreenPanels:
 	call FillMemoryC ; $420c
 	wram_bank $02 ; $420f
 	xor a ; $4215
-	ld hl, wContinuePromptKind ; $4216
+	ld hl, wScreenAttrmap ; $4216
 	ld c, $a0 ; $4219
 	call FillMemoryC ; $421b
 	ld hl, wScreenAttrmap + 2 * TILEMAP_WIDTH + 1 ; $421e
@@ -323,19 +323,19 @@ BuildResultsScreenPanels:
 LoadSinglesLabelTiles:
 	wram_bank $01 ; $433a
 	ld hl, ResultsSinglesLabelTilemap_1e ; $4340
-	ld de, wContinuePromptKind ; $4343
+	ld de, wDecompBuffer ; $4343
 	call DecompressData ; $4346
 	ret ; $4349
 LoadDoublesLabelTiles:
 	wram_bank $01 ; $434a
 	ld hl, ResultsDoublesLabelTilemap_1e ; $4350
-	ld de, wContinuePromptKind ; $4353
+	ld de, wDecompBuffer ; $4353
 	call DecompressData ; $4356
 	ret ; $4359
 DrawResultsNameLabelRows:
 	or a ; $435a
 	jr nz, .doublesLayout ; $435b
-	ld hl, wContinuePromptKind ; $435d
+	ld hl, wScreenAttrmap ; $435d
 	ld de, wScreenAttrmap + 11 * TILEMAP_WIDTH ; $4360
 	ld c, $07 ; $4363
 	call CopyLabelTilesToTilemap ; $4365
@@ -356,7 +356,7 @@ DrawResultsNameLabelRows:
 	ld [wScreenAttrmap + 13 * TILEMAP_WIDTH + 6], a ; $4392
 	ret ; $4395
 .doublesLayout:
-	ld hl, wContinuePromptKind ; $4396
+	ld hl, wScreenAttrmap ; $4396
 	ld de, wScreenAttrmap + 9 * TILEMAP_WIDTH ; $4399
 	ld c, $07 ; $439c
 	call CopyLabelTilesToTilemap ; $439e
@@ -983,12 +983,12 @@ DrawPlayerNameAndLevel:
 	ret z ; $48a0
 	wram_bank $01 ; $48a1
 	ld hl, ResultsPlayerPanelTilemap_1e ; $48a7
-	ld de, wContinuePromptKind ; $48aa
+	ld de, wDecompBuffer ; $48aa
 	call DecompressData ; $48ad
 	ld hl, ResultsPlayerPanelAttrmap_1e ; $48b0
 	ld de, wDecompBuffer + 12 * TILE_SIZE + 8 ; $48b3
 	call DecompressData ; $48b6
-	ld hl, wContinuePromptKind ; $48b9
+	ld hl, wDecompBuffer ; $48b9
 	ld de, wDecompBuffer + 10 * TILE_SIZE ; $48bc
 	ld c, $08 ; $48bf
 	call CopyTilesAndAttrsRun ; $48c1
@@ -1403,7 +1403,7 @@ RefreshContinuePromptText:
 ClearContinuePromptRows:
 	wram_bank $03 ; $4c15
 	ld a, $03 ; $4c1b
-	ld hl, wContinuePromptRow ; $4c1d
+	ld hl, wShadowTilemap + 1 ; $4c1d
 	ld c, $12 ; $4c20
 	call FillMemoryC ; $4c22
 	ld a, $20 ; $4c25

@@ -1584,7 +1584,7 @@
    "start": "0xd000",
    "wram_bank": "0x06",
    "end": "0xd02a",
-   "comment": "Character-data (level-up) screen working set, WRAM bank $06, shared by\nthe bank $1a/$1c/$1d screen code. The first four bytes are a smaller\nscratch that three screens overlay -- the debug character viewer, the\nresults continue prompt and the character-data screen itself -- so those\nget their own range-scoped variants ahead of it.\nThe viewer's scope stops at SetupCharViewerScene and resumes inside it\nonly where WRAM bank $06 is provable: that routine selects bank $04 to\nplace the four actors it poses, where $d000 is wActors, not a cursor.",
+   "comment": "Character-data (level-up) screen working set, WRAM bank $06, shared by\nthe bank $1a/$1c/$1d screen code. The first four bytes are a smaller\nscratch that three screens overlay -- the debug character viewer, the\nresults continue prompt and the character-data screen itself -- so those\nget their own range-scoped variants ahead of it.\nEvery scope carries wram_bank $06. The viewer and the continue prompt both\nstarted with ROM-range-only scopes and both were naming other banks' bytes\nat $d000 -- the results screen's tilemap planes, the viewer's actors --\nwhich the scope audit found once traced banks made the sites provable.",
    "variants": [
     {
      "context": "star warp transition (bank $0e)",
@@ -1620,7 +1620,8 @@
       {
        "bank": "0x1a",
        "start": "0x6800",
-       "end": "0x6f3d"
+       "end": "0x6f3d",
+       "wram_bank": "0x06"
       },
       {
        "bank": "0x1a",
@@ -1662,7 +1663,8 @@
       {
        "bank": "0x1e",
        "start": "0x4000",
-       "end": "0x4d00"
+       "end": "0x4d00",
+       "wram_bank": "0x06"
       }
      ],
      "symbols": {

@@ -137,9 +137,12 @@ class ScopedRamNames:
         self.sized = []   # (base, size, matchers, name, stride) for interiors
         self.sized_default = []   # the same, for a default variant's fields
         self.bank_at = {}
+        # (addr, size, matchers, name, banks the union declares) for scoped
+        # symbols, so audit_rom_only_scopes can check them after bank_at fills
+        self.audit = []
 
     def add(self, addr, name, matchers, size=1, default_mask=None,
-            stride=None):
+            stride=None, union_banks_=None):
         e = self.by_addr.setdefault(addr, {"scoped": [], "default": None,
                                            "mask": []})
         if default_mask is not None:
@@ -156,6 +159,8 @@ class ScopedRamNames:
             e["scoped"].append((matchers, name))
             if size > 1:
                 self.sized.append((addr, size, matchers, name, stride))
+            if union_banks_ is not None:
+                self.audit.append((addr, size, matchers, name, union_banks_))
 
     def _match(self, matchers, off, wram_bank=None):
         at = self.bank_at.get(off) if wram_bank is None else wram_bank
@@ -466,6 +471,51 @@ def compute_wram_bank(dis):
     return {o: st[0] for o, st in IN.items() if isinstance(st[0], int)}
 
 
+def audit_rom_only_scopes(dis, scoped):
+    """Report scoped symbols that render at a site whose provable WRAM bank is
+    not one the union claims.
+
+    A union variant scoped by ROM bank alone matches every site in that bank,
+    whatever WRAM bank is selected there -- which is how four separate false
+    names got into this project before a bank-annotated trace exposed them.
+    Those scopes are not simply wrong: hundreds of references depend on them
+    where the bank cannot be proved, and dropping them would lose real names.
+    So the check is not "forbid the scope", it is "tell me when one of them
+    lands somewhere the bank says it should not".
+
+    Only fires where the bank is *provable*, so it is silent about the sites
+    the scope legitimately covers. Every hit is either a false name or a bank
+    set that needs widening -- both worth a human."""
+    if not scoped.audit:
+        return 0
+    by_addr = {}
+    for addr, size, matchers, name, banks in scoped.audit:
+        if not banks:
+            continue
+        for k in range(size):
+            by_addr.setdefault(addr + k, []).append((matchers, name, banks))
+    hits = []
+    for off, ins in dis.instrs.items():
+        at = scoped.bank_at.get(off)
+        if not isinstance(at, int):
+            continue
+        for m in re.finditer(r"\$(d[0-9a-f]{3})", ins.text):
+            for matchers, name, banks in by_addr.get(int(m.group(1), 16), ()):
+                if at in banks:
+                    continue
+                if scoped._match(matchers, off):
+                    hits.append((off, name, at, sorted(banks)))
+                    break
+    for off, name, at, banks in hits[:8]:
+        print(f"warning: {name} renders at ${off:05x} where WRAM bank {at} is "
+              f"provable, but its union declares bank(s) "
+              f"{','.join(str(b) for b in banks)}", file=sys.stderr)
+    if hits:
+        print(f"scope audit: {len(hits)} references name a symbol from a bank "
+              f"the site does not select")
+    return len(hits)
+
+
 def load_ram_unions(path):
     """Load ram_unions.json: address ranges reused by several subsystems
     (RGBDS UNION/NEXTU overlays). Returns (unions_by_region, ScopedRamNames)."""
@@ -486,6 +536,14 @@ def load_ram_unions(path):
         mask = [m[0] for v in u["variants"]
                 for m in (_scope_to_matcher(s) for s in v.get("scopes", []))
                 if m[0] is not None]
+        # The WRAM banks this union claims, from its variants' wram_bank scopes
+        # plus the bank it is filed under. Needed before the symbols are added
+        # so each one can be audited against it later.
+        ubanks = {int(s["wram_bank"], 0) for v in u["variants"]
+                  for s in v.get("scopes", []) if "wram_bank" in s}
+        for key in (BANK_KEY.get(mem) for _s, _e, mem, _p in RAM_REGIONS):
+            if key and key in u:
+                ubanks.add(int(u[key], 0))
         variants = []
         for v in u["variants"]:
             matchers = [_scope_to_matcher(s) for s in v.get("scopes", [])]
@@ -506,7 +564,7 @@ def load_ram_unions(path):
                                default_mask=mask, stride=_stride(e))
                 else:
                     scoped.add(addr, name, matchers, ram_field_size(e),
-                               stride=_stride(e))
+                               stride=_stride(e), union_banks_=ubanks)
             wbanks = frozenset(int(s["wram_bank"], 0) for s in v.get("scopes", [])
                                if "wram_bank" in s)
             variants.append((v.get("context", ""), syms, wbanks))

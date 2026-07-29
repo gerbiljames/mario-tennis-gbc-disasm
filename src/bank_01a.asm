@@ -2727,9 +2727,9 @@ RunCharViewerSelectGrid:
 	call LoadPaletteShadow ; $6882
 	wram_bank $01 ; $6885
 	ld hl, CharViewerScreenGfx0 ; $688b
-	ld de, wCharViewerRow ; $688e
+	ld de, wDecompBuffer ; $688e
 	call DecompressData ; $6891
-	ld hl, wCharViewerRow ; $6894
+	ld hl, wDecompBuffer ; $6894
 	ld de, $9000 + VRAM_BANK1 ; $6897
 	ld c, $80 ; $689a
 	call QueueVRAMCopy ; $689c
@@ -2741,12 +2741,12 @@ RunCharViewerSelectGrid:
 	ld a, [wDebugCharViewerPage] ; $68ad
 	call DrawCharViewerPageNames ; $68b0
 	wram_bank $03 ; $68b3
-	ld hl, wCharViewerRow ; $68b9
+	ld hl, wShadowTilemap ; $68b9
 	ld de, $9800 ; $68bc
 	ld c, $24 ; $68bf
 	call QueueVRAMCopy ; $68c1
 	wram_bank $02 ; $68c4
-	ld hl, wCharViewerRow ; $68ca
+	ld hl, wScreenAttrmap ; $68ca
 	ld de, $9800 + VRAM_BANK1 ; $68cd
 	ld c, $24 ; $68d0
 	call QueueVRAMCopy ; $68d2
@@ -2888,16 +2888,16 @@ RunCharViewerSelectGrid:
 LoadCharViewerGridTilemap:
 	wram_bank $01 ; $69eb
 	ld hl, CharViewerGridTilemap0 ; $69f1
-	ld de, wCharViewerRow ; $69f4
+	ld de, wDecompBuffer ; $69f4
 	call DecompressData ; $69f7
-	ld hl, wCharViewerRow ; $69fa
+	ld hl, wDecompBuffer ; $69fa
 	ld bc, $0240 ; $69fd
 	call CopyBank1ToBank3Buffer ; $6a00
 	wram_bank $01 ; $6a03
 	ld hl, CharViewerGridTilemap1 ; $6a09
-	ld de, wCharViewerRow ; $6a0c
+	ld de, wDecompBuffer ; $6a0c
 	call DecompressData ; $6a0f
-	ld hl, wCharViewerRow ; $6a12
+	ld hl, wDecompBuffer ; $6a12
 	ld bc, $0240 ; $6a15
 	call CopyBank1ToBank2Buffer ; $6a18
 	wram_bank $02 ; $6a1b
@@ -3035,12 +3035,12 @@ Data_1a_6b0f:
 LoadCharViewerScreen:
 	call LoadCharViewerScreenGfx ; $6b2f
 	wram_bank $03 ; $6b32
-	ld hl, wCharViewerRow ; $6b38
+	ld hl, wShadowTilemap ; $6b38
 	ld de, $9800 ; $6b3b
 	ld c, $24 ; $6b3e
 	call QueueVRAMCopy ; $6b40
 	wram_bank $02 ; $6b43
-	ld hl, wCharViewerRow ; $6b49
+	ld hl, wScreenAttrmap ; $6b49
 	ld de, $9800 + VRAM_BANK1 ; $6b4c
 	ld c, $24 ; $6b4f
 	call QueueVRAMCopy ; $6b51
@@ -3051,9 +3051,9 @@ LoadCharViewerScreenGfx:
 	call LoadPaletteShadow ; $6b5b
 	wram_bank $01 ; $6b5e
 	ld hl, CharViewerScreenGfx0 ; $6b64
-	ld de, wCharViewerRow ; $6b67
+	ld de, wDecompBuffer ; $6b67
 	call DecompressData ; $6b6a
-	ld hl, wCharViewerRow ; $6b6d
+	ld hl, wDecompBuffer ; $6b6d
 	ld de, $9000 + VRAM_BANK1 ; $6b70
 	ld c, $80 ; $6b73
 	call QueueVRAMCopy ; $6b75
@@ -3063,16 +3063,16 @@ LoadCharViewerScreenGfx:
 	call QueueVRAMCopy ; $6b80
 	wram_bank $01 ; $6b83
 	ld hl, CharViewerScreenGfx1 ; $6b89
-	ld de, wCharViewerRow ; $6b8c
+	ld de, wDecompBuffer ; $6b8c
 	call DecompressData ; $6b8f
-	ld hl, wCharViewerRow ; $6b92
+	ld hl, wDecompBuffer ; $6b92
 	ld bc, $0240 ; $6b95
 	call CopyBank1ToBank3Buffer ; $6b98
 	wram_bank $01 ; $6b9b
 	ld hl, CharViewerScreenGfx2 ; $6ba1
-	ld de, wCharViewerRow ; $6ba4
+	ld de, wDecompBuffer ; $6ba4
 	call DecompressData ; $6ba7
-	ld hl, wCharViewerRow ; $6baa
+	ld hl, wDecompBuffer ; $6baa
 	ld bc, $0240 ; $6bad
 	call CopyBank1ToBank2Buffer ; $6bb0
 	wram_bank $02 ; $6bb3
