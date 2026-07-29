@@ -3045,10 +3045,12 @@ SECTION "WRAMX bank 5", WRAMX[$d000], BANK[5]
 ; WRAMX bank 5 at a glance -- regenerated, see ram_unions.json:
 ;
 ;   $d000-$d7ff  window shadow tilemap
+;   $d800-$d80f  window / menu engine
 ;   $d810-$d83e  window / menu engine
 ;   $d841-$d87f  text and window engine
 ;   $d880-$d88f  short-text fetch
 ;   $d8b0-$d8ff  text argument queues
+;   $da80-$db07  scene tile animations
 ;   $dc00-$dc7f  window system
 ;   $df00-$df96  match character struct  [one copy per bank 4-7]
 
@@ -3066,7 +3068,11 @@ wWindowShadowTilemap:: ds 1024
 ; CGB attribute plane of the text-window shadow tilemap, cell for cell with wWindowShadowTilemap and copied to $9800 in VRAM bank 1
 wWindowShadowAttrmap:: ds 1024
 
-	ds 16
+; Window-fit table, WRAM bank $05: four 4-byte entries FitWindowToText indexes
+; with a window id shifted twice, reading the first word of the entry.
+; window / menu engine (bank $05)
+; [16 bytes] Four 4-byte entries. FitWindowToText turns a window id into an offset with two `sla a` and reads the entry's first word into hl before centring the text against wDialogueWindowWidth / Height. ResetTextWindowState clears it along with the rest of $d800-$dfff in this bank.
+wWindowFitTable:: ds 16
 
 ; Screen-local state in WRAM bank $03: each full-screen UI reuses these
 ; bytes for its own purpose, so the variants are scoped to the ROM bank
@@ -3079,7 +3085,9 @@ wWindowShadowAttrmap:: ds 1024
 wWindowId:: db
 ; [8-bit] Window struct index the glyph stream is rendering into, set by RedrawWindowText / RenderWindowTextToCompletion. InitGlyphStreamForWindow, DrawWindowGlyphRun, FlushGlyphRow and UploadLastGlyphTiles all resolve the window through it
 wGlyphWindowId:: db
-	ds 2
+; [8-bit] While nonzero the glyph buffer survives: PrepareGlyphBuffer only calls ClearGlyphBuffer and ResetGlyphStream when it reads 0, and DrawTileAttrRect decrements it as it tears a window down. No site in bank $05 ever increments it, so whatever raises the count does so from another engine's variant of this byte.
+wGlyphBufferHoldCount:: db
+	ds 1
 ; [8-bit] Window struct index of the dialogue window currently on screen, stored by CreateDialogueWindow. RedrawActiveTextWindow, RenderActiveWindowText, CloseActiveDialogueWindow and the speaker-dialogue helpers all address the window through it
 wDialogueWindowId:: db
 ; [8-bit] Dialogue window top-left tilemap column (wrapped to $1f)
@@ -3204,7 +3212,17 @@ wTextArgNumberQueue:: ds 32
 ; 16 x 1-byte short-text ids queued by PushTextArgShortTextId; the $08 control code pops one and prints the string it names
 wTextArgShortTextQueue:: ds 16
 
-	ds 768
+	ds 384
+
+; Scene tile-animation record, WRAM bank $05: an $88-byte slot InitSceneTileAnimations
+; copies in before building its animation slots.
+; scene tile animations (bank $0a)
+; [8 bytes] Header of the tile-animation record InitSceneTileAnimations copies from the scene slot; the entry list follows at wSceneTileAnimEntries.
+wSceneTileAnimHeader:: ds 8
+; [128 bytes] The scene's tile-animation entries. InitSceneTileAnimations tests the first byte against $fe and skips building any slots when the list is empty.
+wSceneTileAnimEntries:: ds 128
+
+	ds 248
 
 ; Window bookkeeping (WRAM bank $05), owned by the bank $05 window system:
 ; the window struct array, the dirty-row flags that drive the shadow
@@ -3245,6 +3263,8 @@ SECTION "WRAMX bank 6", WRAMX[$d000], BANK[6]
 ;   $d02a-$d219  8 overlays: star warp transition / trophy EXP awards / character-data screen / +5 more
 ;   $d230-$d259  scrolling text screen / EXP award screen
 ;   $d400-$d5ff  story slot signatures / unlock flags block
+;   $d800-$dbff  story scene load
+;   $dc08-$dc8f  story scene load
 ;   $df00-$df96  match character struct  [one copy per bank 4-7]
 
 ; Character-data (level-up) screen working set, WRAM bank $06, shared by
@@ -3542,6 +3562,21 @@ NEXTU
 ; [512 bytes] Image of save block $0b read by ReadUnlockFlagsSaveBlock for the minigame-flags debug screen -- the same block bank $3b stages at wN64RecordsBlock in WRAM bank $03 and the bank $03 engine at wSaveBlockBuffer in bank $07
 wUnlockFlagsBlock:: ds 512
 ENDU
+
+	ds 512
+
+; Story-scene decompression scratch, WRAM bank $06.
+; story scene load (bank $0a)
+; [1024 bytes] Third decompression destination of LoadStorySceneGraphics, and the only one nothing lands in: the `ld de, $d800` that selects it is overwritten by the next `ld de, $d400` before any call, so the store is dead. Its two live siblings decompress into $d400 and $d000 of this bank, and the planes after those go to wScreenAttrmap and the bank $03 tilemap.
+wStorySceneUnusedBuffer:: ds 1024
+
+	ds 8
+
+; Story-scene record, WRAM bank $06: the $88-byte slot LoadStorySceneGraphics
+; copies out of the scene table before handing the scene to the overworld engine.
+; story scene load (bank $0a)
+; [136 bytes] The current story scene's record, copied here from its slot with CopyDataFromBank. The loader reads four bytes at +2 straight back out into wMapScrollMinX, wMapScrollMinY, wMapWidthTiles and wMapHeightTiles, so the first fields are the map's scroll bounds and tile dimensions.
+wStorySceneRecord:: ds 136
 
 
 SECTION "WRAMX bank 7", WRAMX[$d000], BANK[7]

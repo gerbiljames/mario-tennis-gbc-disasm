@@ -3545,7 +3545,7 @@ LoadStorySceneGraphics:
 	call QueueVRAMCopy ; $58b4
 	wram_bank $06 ; $58b7
 	pop hl ; $58bd
-	ld de, $d800 ; $58be
+	ld de, wStorySceneUnusedBuffer ; $58be
 	pop hl ; $58c1
 	ld de, $d400 ; $58c2
 	call DecompressDataFromBank ; $58c5
@@ -3570,10 +3570,10 @@ LoadStorySceneGraphics:
 	call LoadPaletteShadow ; $58ff
 	wram_bank $06 ; $5902
 	pop hl ; $5908
-	ld de, $dc08 ; $5909
+	ld de, wStorySceneRecord ; $5909
 	ld bc, $0088 ; $590c
 	call CopyDataFromBank ; $590f
-	ld hl, $dc0a ; $5912
+	ld hl, wStorySceneRecord + 2 ; $5912
 	ld a, [hl+] ; $5915
 	ld [wMapScrollMinX], a ; $5916
 	ld a, [hl+] ; $5919
@@ -3988,7 +3988,7 @@ LoadSceneGraphicsDirect:
 	call StartVRAMDMAFromHL ; $5d8b
 	wram_bank $06 ; $5d8e
 	pop hl ; $5d94
-	ld de, $d800 ; $5d95
+	ld de, wStorySceneUnusedBuffer ; $5d95
 	call DecompressDataFromBank ; $5d98
 	pop hl ; $5d9b
 	pop hl ; $5d9c
@@ -4922,10 +4922,10 @@ InitSceneTileAnimations:
 	ld [hl+], a ; $63be
 	ld a, $00 ; $63bf
 	call GetSceneSlotPtr ; $63c1
-	ld de, $da80 ; $63c4
+	ld de, wSceneTileAnimHeader ; $63c4
 	ld bc, $0088 ; $63c7
 	call CopyDataFromBank ; $63ca
-	ld hl, $da88 ; $63cd
+	ld hl, wSceneTileAnimEntries ; $63cd
 	ld a, [hl] ; $63d0
 	cp $fe ; $63d1
 	jr nz, .buildSlots ; $63d3
@@ -5114,7 +5114,7 @@ AdvanceSceneTileAnimation:
 	ld a, [hl] ; $64cd
 	ld [wSceneTileAnimCursor], a ; $64ce
 .applyFrame:
-	ld hl, $da88 ; $64d1
+	ld hl, wSceneTileAnimEntries ; $64d1
 	ld a, [wSceneTileAnimCursor] ; $64d4
 	ld c, a ; $64d7
 	ld b, $00 ; $64d8

@@ -1584,6 +1584,10 @@
       "0xd82b": {
        "name": "wTextCursorRow",
        "note": "[8-bit] Row of the text-drawing cursor, 0-31. TextCmdNewline advances it by *two* rows, not one, because the font is double height; it wraps with `and $1f`. The two glyph-stream row commands at $5425/$544f compare it against a row computed from the stream offset to decide whether to step."
+      },
+      "0xd822": {
+       "name": "wGlyphBufferHoldCount",
+       "note": "[8-bit] While nonzero the glyph buffer survives: PrepareGlyphBuffer only calls ClearGlyphBuffer and ResetGlyphStream when it reads 0, and DrawTileAttrRect decrements it as it tears a window down. No site in bank $05 ever increments it, so whatever raises the count does so from another engine's variant of this byte."
       }
      }
     },
@@ -3789,6 +3793,11 @@
        "bank": "0x08",
        "start": "0x5ee5",
        "end": "0x5ee8"
+      },
+      {
+       "bank": "0x08",
+       "start": "0x5ea2",
+       "end": "0x5ea5"
       }
      ],
      "symbols": {
@@ -4076,6 +4085,107 @@
         "TILEMAP_WIDTH",
         "0x20"
        ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "start": "0xdc08",
+   "end": "0xdc90",
+   "wram_bank": "0x06",
+   "comment": "Story-scene record, WRAM bank $06: the $88-byte slot LoadStorySceneGraphics\ncopies out of the scene table before handing the scene to the overworld engine.",
+   "variants": [
+    {
+     "context": "story scene load (bank $0a)",
+     "scopes": [
+      {
+       "bank": "0x0a",
+       "wram_bank": "0x06"
+      }
+     ],
+     "symbols": {
+      "0xdc08": {
+       "name": "wStorySceneRecord",
+       "note": "[136 bytes] The current story scene's record, copied here from its slot with CopyDataFromBank. The loader reads four bytes at +2 straight back out into wMapScrollMinX, wMapScrollMinY, wMapWidthTiles and wMapHeightTiles, so the first fields are the map's scroll bounds and tile dimensions.",
+       "size": 136
+      }
+     }
+    }
+   ]
+  },
+  {
+   "start": "0xda80",
+   "end": "0xdb08",
+   "wram_bank": "0x05",
+   "comment": "Scene tile-animation record, WRAM bank $05: an $88-byte slot InitSceneTileAnimations\ncopies in before building its animation slots.",
+   "variants": [
+    {
+     "context": "scene tile animations (bank $0a)",
+     "scopes": [
+      {
+       "bank": "0x0a",
+       "wram_bank": "0x05"
+      }
+     ],
+     "symbols": {
+      "0xda80": {
+       "name": "wSceneTileAnimHeader",
+       "note": "[8 bytes] Header of the tile-animation record InitSceneTileAnimations copies from the scene slot; the entry list follows at wSceneTileAnimEntries.",
+       "size": 8
+      },
+      "0xda88": {
+       "name": "wSceneTileAnimEntries",
+       "note": "[128 bytes] The scene's tile-animation entries. InitSceneTileAnimations tests the first byte against $fe and skips building any slots when the list is empty.",
+       "size": 128
+      }
+     }
+    }
+   ]
+  },
+  {
+   "start": "0xd800",
+   "end": "0xd810",
+   "wram_bank": "0x05",
+   "comment": "Window-fit table, WRAM bank $05: four 4-byte entries FitWindowToText indexes\nwith a window id shifted twice, reading the first word of the entry.",
+   "variants": [
+    {
+     "context": "window / menu engine (bank $05)",
+     "scopes": [
+      {
+       "bank": "0x05",
+       "wram_bank": "0x05"
+      }
+     ],
+     "symbols": {
+      "0xd800": {
+       "name": "wWindowFitTable",
+       "note": "[16 bytes] Four 4-byte entries. FitWindowToText turns a window id into an offset with two `sla a` and reads the entry's first word into hl before centring the text against wDialogueWindowWidth / Height. ResetTextWindowState clears it along with the rest of $d800-$dfff in this bank.",
+       "size": 16
+      }
+     }
+    }
+   ]
+  },
+  {
+   "start": "0xd800",
+   "end": "0xdc00",
+   "wram_bank": "0x06",
+   "comment": "Story-scene decompression scratch, WRAM bank $06.",
+   "variants": [
+    {
+     "context": "story scene load (bank $0a)",
+     "scopes": [
+      {
+       "bank": "0x0a",
+       "wram_bank": "0x06"
+      }
+     ],
+     "symbols": {
+      "0xd800": {
+       "name": "wStorySceneUnusedBuffer",
+       "note": "[1024 bytes] Third decompression destination of LoadStorySceneGraphics, and the only one nothing lands in: the `ld de, $d800` that selects it is overwritten by the next `ld de, $d400` before any call, so the store is dead. Its two live siblings decompress into $d400 and $d000 of this bank, and the planes after those go to wScreenAttrmap and the bank $03 tilemap.",
+       "size": 1024
       }
      }
     }

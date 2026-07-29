@@ -7701,3 +7701,40 @@ EQUs cannot give -- they never reach `.sym` at all. A bank whose own section
 already runs past the addresses is skipped, which is why the mirrored
 character-data pages get no such sections: banks 2 and 3 already declare those
 bytes.
+
+## The unclaimed bucket, emptied
+
+`unclaimed` -- an address whose WRAM bank is proved but which nothing names --
+is now **0**, down from 70. What the work turned up is worth more than the
+count:
+
+- **Ten "bank $06 variables" were not variables at all.** `CharDataScreen_-`
+  `WriteStatNumber` writes its `de` argument under bank `$03` and then `$02`,
+  so the bank live at the call site (`$06`, the screen's own working set)
+  describes the caller and not the operand. The same holds for `DrawStatBar`
+  and the tilemap-patch routines: 33 references were screen cells all along.
+- **`CopyScoreboardTileColumn` reads under bank `$04` and writes under `$02`.**
+  Neither operand belongs to the call site's bank, and three `ld hl` operands
+  were already rendering as `wCourtAttrmapSaved` cells when they are scoreboard
+  columns in a different bank entirely. That one was a wrong name, not a
+  missing one.
+- **`wCharQuickSwing` was declared on a menu-bank variant** of the character
+  struct, where no site could reach it -- it rendered nowhere in the ROM.
+- **Three bytes are vestigial**: `$df4d`, `$df4e` and `$df55` are written on
+  three paths each and read on none. They are named for what the writes do,
+  with the absence of any reader recorded.
+- **`$d8f0` at `00:$199d` and `00:$1a40` is -10000**, not an address; it sits
+  beside the `ld bc, $2710` it pairs with. Curated numeric, like the twin site
+  already listed in `RAM_IMM_IS_CONSTANT`.
+
+Two addresses are identified but deliberately left numeric. `$cfb3` and
+`$cff0` in the tennis dictionary are *pre-step* bases: their loops add `$80`
+and `$40` before storing, so the first byte actually written is at `$d033` and
+`$d030` -- `wShadowTilemap + 1 * TILEMAP_WIDTH + 19` and `+ 16` under the
+`wram_bank $03` set two instructions earlier. The operand points below `$d000`,
+at no variable at all, and any name given to it would be a fiction.
+
+`tools/ram_gaps.py` now also excludes WRAM0, which is not bank-switched and so
+has no "which bank?" question, and the curated arithmetic constants, which are
+not addresses. Bare banked-WRAM operands: **827 at the start of this work, 590
+now**, byte-perfect throughout.

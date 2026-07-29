@@ -990,9 +990,9 @@ DrawTileAttrRect:
 .gotPtr:
 	ld d, h ; $45d1
 	ld e, l ; $45d2
-	ld a, [$d822] ; $45d3
+	ld a, [wGlyphBufferHoldCount] ; $45d3
 	dec a ; $45d6
-	ld [$d822], a ; $45d7
+	ld [wGlyphBufferHoldCount], a ; $45d7
 	ld a, [de] ; $45da
 	and $02 ; $45db
 	jr z, .restore ; $45dd
@@ -3749,7 +3749,7 @@ FitWindowToText:
 	sla a ; $570d
 	ld b, $00 ; $570f
 	ld c, a ; $5711
-	ld hl, $d800 ; $5712
+	ld hl, wWindowFitTable ; $5712
 	add hl, bc ; $5715
 	ld c, [hl] ; $5716
 	inc hl ; $5717
@@ -7065,7 +7065,7 @@ ResetTextWindowState:
 	ld hl, wWindowShadowTilemap ; $6e13
 	ld c, $80 ; $6e16
 	call ClearMemory16 ; $6e18
-	ld hl, $d800 ; $6e1b
+	ld hl, wWindowFitTable ; $6e1b
 	ld c, $80 ; $6e1e
 	call ClearMemory16 ; $6e20
 	ld de, wWindowShadowTilemap ; $6e23
@@ -7943,7 +7943,7 @@ PrepareGlyphBuffer:
 	ldh a, [hWramBank] ; $72e0
 	push af ; $72e2
 	wram_bank $05 ; $72e3
-	ld a, [$d822] ; $72e9
+	ld a, [wGlyphBufferHoldCount] ; $72e9
 	or a ; $72ec
 	jr nz, .keepBuffer ; $72ed
 	wram_bank $07 ; $72ef

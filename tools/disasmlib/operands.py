@@ -32,13 +32,13 @@ SRAM_IMM_SITES = {0x16d49}
 # arithmetic constant, not a pointer setup. $ff80 is -128 (range clamps that
 # `add hl, de` then test bit 7, and the stat-page scroll offsets stored beside
 # `ld de, $0060`); $c000 at 08:$6b5e is a SetBallVelocityPolar magnitude.
-# $d8f0 at 05:$531d is -10000, the first divisor MeasureNextArgNumberWidth
-# subtracts, and it sits two instructions from a real wTextArgShortTextQueue
+# $d8f0 at 05:$531d and 00:$199d is -10000, the divisor MeasureNextArgNumberWidth
+# and FormatDecimalNumberUnsigned subtract (each sits beside a `ld bc, $2710`), and it sits two instructions from a real wTextArgShortTextQueue
 # pointer setup in the same routine.
 # $c350 at 00:$282f is WaitSerialTransfer's timeout, counted down with `dec bc`.
 # Keyed by flat offset, so only these exact instructions stay numeric.
 RAM_IMM_IS_CONSTANT = {
-    0x0282f, 0x010dc, 0x084ce, 0x1531d, 0x212fb, 0x22b5e,
+    0x0199d, 0x01a40, 0x0282f, 0x010dc, 0x084ce, 0x1531d, 0x212fb, 0x22b5e,
     0x352b6, 0x3577b, 0x35c0b, 0x35da0, 0x35e7d,
     0x75165, 0x75337, 0x75542, 0x75699,
 }

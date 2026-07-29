@@ -4069,7 +4069,7 @@ RefreshCourtScoreboard:
 	and a ; $5e9c
 	jr nz, RefreshCourtScoreboardFlipped ; $5e9d
 	ld hl, wScoreboardColumnTiles + 20 ; $5e9f
-	ld de, $d99a ; $5ea2
+	ld de, wCourtTilemapSaved + 12 * TILEMAP_WIDTH + 26 ; $5ea2
 	call CopyScoreboardTileColumn ; $5ea5
 	ld hl, wScoreboardColumnAttrs + 20 ; $5ea8
 	ld de, wCourtAttrmapSaved + 12 * TILEMAP_WIDTH + 26 ; $5eab

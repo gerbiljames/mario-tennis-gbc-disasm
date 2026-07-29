@@ -32,9 +32,12 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from disasmlib.ram import load_traced_wram_banks, ram_field_size
+from disasmlib.operands import RAM_IMM_IS_CONSTANT
 
 OFF = re.compile(r";\s*\$([0-9a-f]{4})\s*$")
-ADDR = re.compile(r"\$([cd][0-9a-f]{3})\b")
+# WRAM0 ($c000-$cfff) is not bank-switched -- it is ram_map.json's, and a
+# "which bank?" question does not apply to it.
+ADDR = re.compile(r"\$(d[0-9a-f]{3})\b")
 BANK = re.compile(r"bank_([0-9a-f]{3})\.asm")
 ROUTINE = re.compile(r"^([A-Za-z_][\w.]*):")
 
@@ -69,6 +72,8 @@ def scan_sites():
             if not OFF.search(line.rstrip()):
                 continue
             at = flat(rom_bank, int(OFF.search(line.rstrip()).group(1), 16))
+            if at in RAM_IMM_IS_CONSTANT:
+                continue   # a curated arithmetic constant, not an address
             for a in ADDR.finditer(line.split(";")[0]):
                 sites.append((int(a.group(1), 16), at, rom_bank, routine))
     return sites
