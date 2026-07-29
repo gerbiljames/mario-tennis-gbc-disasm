@@ -4792,7 +4792,7 @@ RenderProportionalTextAt:
 .charLoop:
 	ld a, [hl] ; $5e24
 	cp $20 ; $5e25
-	jr nc, Label_05_5e82.glyph ; $5e27
+	jr nc, ProportionalTextCodeHandler5_05.glyph ; $5e27
 	push hl ; $5e29
 	push af ; $5e2a
 	add a ; $5e2b
@@ -4809,23 +4809,23 @@ RenderProportionalTextAt:
 	jp hl ; $5e38
 ProportionalTextCodeHandlers_05:
 	; $5e39, 32 bytes (records:2)
-	dw Label_05_5ecd ; record 0
-	dw Label_05_5e72 ; record 1
-	dw Label_05_5ecd ; record 2
-	dw Label_05_5ecd ; record 3
-	dw Label_05_5e7b ; record 4
-	dw Label_05_5e82 ; record 5
-	dw Label_05_5e82 ; record 6
-	dw Label_05_5e7b ; record 7
-	dw Label_05_5e7b ; record 8
-	dw Label_05_5e7b ; record 9
-	dw Label_05_5e82 ; record 10
-	dw Label_05_5e7b ; record 11
-	dw Label_05_5e82 ; record 12
-	dw Label_05_5e82 ; record 13
-	dw Label_05_5e59 ; record 14
-	dw Label_05_5e82 ; record 15
-Label_05_5e59:
+	dw ProportionalTextCodeHandler0_05 ; record 0
+	dw ProportionalTextCodeHandler1_05 ; record 1
+	dw ProportionalTextCodeHandler0_05 ; record 2
+	dw ProportionalTextCodeHandler0_05 ; record 3
+	dw ProportionalTextCodeHandler4_05 ; record 4
+	dw ProportionalTextCodeHandler5_05 ; record 5
+	dw ProportionalTextCodeHandler5_05 ; record 6
+	dw ProportionalTextCodeHandler4_05 ; record 7
+	dw ProportionalTextCodeHandler4_05 ; record 8
+	dw ProportionalTextCodeHandler4_05 ; record 9
+	dw ProportionalTextCodeHandler5_05 ; record 10
+	dw ProportionalTextCodeHandler4_05 ; record 11
+	dw ProportionalTextCodeHandler5_05 ; record 12
+	dw ProportionalTextCodeHandler5_05 ; record 13
+	dw ProportionalTextCodeHandler14_05 ; record 14
+	dw ProportionalTextCodeHandler5_05 ; record 15
+ProportionalTextCodeHandler14_05:
 	pop hl ; $5e59
 	inc hl ; $5e5a
 	push af ; $5e5b
@@ -4838,18 +4838,18 @@ Label_05_5e59:
 	call DispatchControlCode ; $5e6c
 	inc hl ; $5e6f
 	jr RenderProportionalTextAt.charLoop ; $5e70
-Label_05_5e72:
+ProportionalTextCodeHandler1_05:
 	pop hl ; $5e72
 	ld a, $0d ; $5e73
 	call DispatchControlCode ; $5e75
 	inc hl ; $5e78
 	jr RenderProportionalTextAt.charLoop ; $5e79
-Label_05_5e7b:
+ProportionalTextCodeHandler4_05:
 	pop hl ; $5e7b
 	call DispatchControlCode ; $5e7c
 	inc hl ; $5e7f
 	jr RenderProportionalTextAt.charLoop ; $5e80
-Label_05_5e82:
+ProportionalTextCodeHandler5_05:
 	pop hl ; $5e82
 .glyph:
 	push af ; $5e83
@@ -4902,7 +4902,7 @@ Label_05_5e82:
 	ld e, l ; $5ec8
 	pop hl ; $5ec9
 	jp RenderProportionalTextAt.charLoop ; $5eca
-Label_05_5ecd:
+ProportionalTextCodeHandler0_05:
 	pop hl ; $5ecd
 	ldh a, [hWramBank] ; $5ece
 	push af ; $5ed0

@@ -1450,9 +1450,9 @@ BobArrowSpriteLeft:
 	ld a, [wCharDataArrowPhase] ; $4c66
 	rrca ; $4c69
 	and $0f ; $4c6a
-	add LOW(Data_1d_4c9c) ; $4c6c
+	add LOW(CharDataArrowBobOffsetTable_1d) ; $4c6c
 	ld l, a ; $4c6e
-	adc HIGH(Data_1d_4c9c) ; $4c6f
+	adc HIGH(CharDataArrowBobOffsetTable_1d) ; $4c6f
 	sub l ; $4c71
 	ld h, a ; $4c72
 	ld a, [hl] ; $4c73
@@ -1471,9 +1471,9 @@ BobArrowSpriteRight:
 	ld a, [wCharDataArrowPhase] ; $4c86
 	rrca ; $4c89
 	and $0f ; $4c8a
-	add LOW(Data_1d_4c9c) ; $4c8c
+	add LOW(CharDataArrowBobOffsetTable_1d) ; $4c8c
 	ld l, a ; $4c8e
-	adc HIGH(Data_1d_4c9c) ; $4c8f
+	adc HIGH(CharDataArrowBobOffsetTable_1d) ; $4c8f
 	sub l ; $4c91
 	ld h, a ; $4c92
 	ld a, [hl] ; $4c93
@@ -1483,7 +1483,7 @@ BobArrowSpriteRight:
 	add d ; $4c99
 	ld d, a ; $4c9a
 	ret ; $4c9b
-Data_1d_4c9c:
+CharDataArrowBobOffsetTable_1d:
 	; $4c9c, 16 bytes (bytes:16)
 	db $00, $01, $02, $03, $04, $05, $06, $06, $06, $05, $04, $03, $02, $01, $00, $00 ; 0x00
 RunDrillResultInputLoop:
@@ -3006,9 +3006,9 @@ DrawExpProgressBarTiles:
 	ld b, a ; $5a0a
 	ld a, $08 ; $5a0b
 	rlca ; $5a0d
-	add LOW(Data_1d_5a51) ; $5a0e
+	add LOW(DrawExpProgressBarTilesTable) ; $5a0e
 	ld l, a ; $5a10
-	adc HIGH(Data_1d_5a51) ; $5a11
+	adc HIGH(DrawExpProgressBarTilesTable) ; $5a11
 	sub l ; $5a13
 	ld h, a ; $5a14
 	ld a, [hl+] ; $5a15
@@ -3028,9 +3028,9 @@ DrawExpProgressBarTiles:
 .carry:
 	add $08 ; $5a25
 	rlca ; $5a27
-	add LOW(Data_1d_5a51) ; $5a28
+	add LOW(DrawExpProgressBarTilesTable) ; $5a28
 	ld l, a ; $5a2a
-	adc HIGH(Data_1d_5a51) ; $5a2b
+	adc HIGH(DrawExpProgressBarTilesTable) ; $5a2b
 	sub l ; $5a2d
 	ld h, a ; $5a2e
 	ld a, [hl+] ; $5a2f
@@ -3047,9 +3047,9 @@ DrawExpProgressBarTiles:
 .zero:
 	ld a, $08 ; $5a3b
 	rlca ; $5a3d
-	add LOW(Data_1d_5a51) ; $5a3e
+	add LOW(DrawExpProgressBarTilesTable) ; $5a3e
 	ld l, a ; $5a40
-	adc HIGH(Data_1d_5a51) ; $5a41
+	adc HIGH(DrawExpProgressBarTilesTable) ; $5a41
 	sub l ; $5a43
 	ld h, a ; $5a44
 	ld a, [hl+] ; $5a45
@@ -3063,7 +3063,7 @@ DrawExpProgressBarTiles:
 	ld a, [hl] ; $5a4e
 	ld [de], a ; $5a4f
 	ret ; $5a50
-Data_1d_5a51:
+DrawExpProgressBarTilesTable:
 	; $5a51, 18 bytes (bytes:16)
 	db $f9, $fa, $e1, $f1, $e2, $f2, $e3, $f3, $e4, $f4, $e5, $f5, $e6, $f6, $e7, $f7 ; 0x00
 	db $e8, $f8 ; 0x10
@@ -5419,9 +5419,9 @@ GetExpScreenDigitSprite:
 DrawExpCharCursorTask:
 	wram_bank $06 ; $7727
 	ld a, [wExpCursorSlide] ; $772d
-	add LOW(Data_1d_7746) ; $7730
+	add LOW(DrawExpCharCursorTaskTable) ; $7730
 	ld l, a ; $7732
-	adc HIGH(Data_1d_7746) ; $7733
+	adc HIGH(DrawExpCharCursorTaskTable) ; $7733
 	sub l ; $7735
 	ld h, a ; $7736
 	ld a, [hl] ; $7737
@@ -5432,7 +5432,7 @@ DrawExpCharCursorTask:
 	ld bc, $0e00 ; $773f
 	call QueueSpriteTemplate ; $7742
 	ret ; $7745
-Data_1d_7746:
+DrawExpCharCursorTaskTable:
 	; $7746, 26 bytes (bytes:16)
 	db $00, $01, $02, $03, $04, $06, $08, $0a, $0d, $11, $16, $1d, $24, $2b, $32, $37 ; 0x00
 	db $3b, $3e, $40, $42, $44, $45, $46, $47, $48, $00 ; 0x10

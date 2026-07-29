@@ -347,9 +347,9 @@ AddBobbingOffsetXY:
 	push hl ; $4445
 	ldh a, [hVBlankCounter] ; $4446
 	and $0f ; $4448
-	add LOW(Data_18_4468) ; $444a
+	add LOW(AddBobbingOffsetXYTable) ; $444a
 	ld l, a ; $444c
-	adc HIGH(Data_18_4468) ; $444d
+	adc HIGH(AddBobbingOffsetXYTable) ; $444d
 	sub l ; $444f
 	ld h, a ; $4450
 	ld a, [hl] ; $4451
@@ -358,9 +358,9 @@ AddBobbingOffsetXY:
 	ldh a, [hVBlankCounter] ; $4454
 	add $04 ; $4456
 	and $0f ; $4458
-	add LOW(Data_18_4468) ; $445a
+	add LOW(AddBobbingOffsetXYTable) ; $445a
 	ld l, a ; $445c
-	adc HIGH(Data_18_4468) ; $445d
+	adc HIGH(AddBobbingOffsetXYTable) ; $445d
 	sub l ; $445f
 	ld h, a ; $4460
 	ld a, [hl] ; $4461
@@ -370,7 +370,7 @@ AddBobbingOffsetXY:
 	pop af ; $4465
 	pop hl ; $4466
 	ret ; $4467
-Data_18_4468:
+AddBobbingOffsetXYTable:
 	; $4468, 16 bytes (bytes:16)
 	db $00, $01, $01, $01, $02, $02, $03, $04, $03, $02, $02, $01, $01, $01, $00, $00 ; 0x00
 AddBobbingOffsetY:
@@ -378,9 +378,9 @@ AddBobbingOffsetY:
 	push hl ; $4479
 	ldh a, [hVBlankCounter] ; $447a
 	and $0f ; $447c
-	add LOW(Data_18_448b) ; $447e
+	add LOW(AddBobbingOffsetYTable) ; $447e
 	ld l, a ; $4480
-	adc HIGH(Data_18_448b) ; $4481
+	adc HIGH(AddBobbingOffsetYTable) ; $4481
 	sub l ; $4483
 	ld h, a ; $4484
 	ld a, [hl] ; $4485
@@ -389,7 +389,7 @@ AddBobbingOffsetY:
 	pop af ; $4488
 	pop hl ; $4489
 	ret ; $448a
-Data_18_448b:
+AddBobbingOffsetYTable:
 	; $448b, 16 bytes (bytes:16)
 	db $00, $01, $01, $02, $03, $04, $06, $08, $06, $04, $03, $02, $01, $01, $00, $00 ; 0x00
 AddBobbingOffsetYLarge:
@@ -397,9 +397,9 @@ AddBobbingOffsetYLarge:
 	push hl ; $449c
 	ldh a, [hVBlankCounter] ; $449d
 	and $3f ; $449f
-	add LOW(Data_18_44ae) ; $44a1
+	add LOW(AddBobbingOffsetYLargeTable) ; $44a1
 	ld l, a ; $44a3
-	adc HIGH(Data_18_44ae) ; $44a4
+	adc HIGH(AddBobbingOffsetYLargeTable) ; $44a4
 	sub l ; $44a6
 	ld h, a ; $44a7
 	ld a, [hl] ; $44a8
@@ -408,7 +408,7 @@ AddBobbingOffsetYLarge:
 	pop af ; $44ab
 	pop hl ; $44ac
 	ret ; $44ad
-Data_18_44ae:
+AddBobbingOffsetYLargeTable:
 	; $44ae, 64 bytes (bytes:16)
 	db $00, $00, $00, $01, $01, $01, $02, $02, $02, $03, $03, $03, $03, $03, $03, $03 ; 0x00
 	db $03, $03, $03, $03, $03, $03, $03, $03, $02, $02, $02, $01, $01, $01, $00, $00 ; 0x10

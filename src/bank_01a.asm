@@ -204,12 +204,12 @@ GetTilemapBufferCellDest:
 	ret ; $416b
 MessageSpeedSettingPtrs:
 	; $416c, 10 bytes (records:2)
-	dw Label_1a_4176 ; record 0
+	dw MessageSpeedSettingHandler0 ; record 0
 	dw ShowGameProgressScreenThunk ; record 1
 	dw AdjustMessageSpeedSettingThunk ; record 2
 	dw ToggleMusicSettingThunk ; record 3
-	dw Label_1a_41d6 ; record 4
-Label_1a_4176:
+	dw MessageSpeedSettingHandler4 ; record 4
+MessageSpeedSettingHandler0:
 	ld a, $01 ; $4176
 	farcall ShowCharDataScreen ; $4178
 	ld hl, wStoryModePlayersXPosition ; $417b
@@ -246,15 +246,15 @@ ToggleMusicSettingThunk:
 	ld bc, MessageSpeedSettingPtrs ; $41cd
 	ld a, [wPauseMenuWindowId] ; $41d0
 	jp RunPauseMenuWindow.menuLoop ; $41d3
-Label_1a_41d6:
+MessageSpeedSettingHandler4:
 	xor a ; $41d6
 	ld [wSuppressMinigamePauseFlag], a ; $41d7
 	jp RestoreMessageSpeed.scriptShowSpeakerDialogueRestoreBG ; $41da
 MusicSettingPtrs:
 	; $41dd, 4 bytes (records:2)
-	dw Label_1a_41e1 ; record 0
-	dw Label_1a_420f ; record 1
-Label_1a_41e1:
+	dw MusicSettingHandler0 ; record 0
+	dw MusicSettingHandler1 ; record 1
+MusicSettingHandler0:
 	ld a, [wPauseMenuOptionBits] ; $41e1
 	and $0f ; $41e4
 	jr z, .storeMenuInitialRow ; $41e6
@@ -276,7 +276,7 @@ Label_1a_41e1:
 	ld bc, MusicSettingPtrs ; $4206
 	ld a, [wPauseMenuWindowId] ; $4209
 	jp RunPauseMenuWindow.menuLoop ; $420c
-Label_1a_420f:
+MusicSettingHandler1:
 	ld a, [wPauseMenuOptionBits] ; $420f
 	and $0f ; $4212
 	and a ; $4214
@@ -958,9 +958,9 @@ ExpScreenDrawTask:
 .checkStoryModeMainCharacterOverworldSprite:
 	ld a, [wStoryModeMainCharacterOverworldSprite] ; $4790
 	rlca ; $4793
-	add LOW(Data_1a_4809) ; $4794
+	add LOW(ExpScreenDrawTaskTable) ; $4794
 	ld l, a ; $4796
-	adc HIGH(Data_1a_4809) ; $4797
+	adc HIGH(ExpScreenDrawTaskTable) ; $4797
 	sub l ; $4799
 	ld h, a ; $479a
 	ld a, [hl+] ; $479b
@@ -1012,7 +1012,7 @@ ExpScreenDrawTask:
 	pop bc ; $4806
 	pop af ; $4807
 	ret ; $4808
-Data_1a_4809:
+ExpScreenDrawTaskTable:
 	; $4809, 55 bytes (bytes:16)
 	db $2c, $7b, $2e, $7b, $2d, $7b, $2e, $79, $2a, $7b, $2f, $7a, $30, $7b, $2e, $7a ; 0x00
 	db $2c, $7b, $30, $7b, $2f, $7b, $2a, $7b, $30, $7a, $2c, $7c, $2a, $7c, $2a, $7b ; 0x10
@@ -3016,9 +3016,9 @@ DrawCharViewerGridCursor:
 	ret z ; $6af8
 	ld a, [wDebugCharViewerIndex] ; $6af9
 	rlca ; $6afc
-	add LOW(Data_1a_6b0f) ; $6afd
+	add LOW(DrawCharViewerGridCursorTable) ; $6afd
 	ld l, a ; $6aff
-	adc HIGH(Data_1a_6b0f) ; $6b00
+	adc HIGH(DrawCharViewerGridCursorTable) ; $6b00
 	sub l ; $6b02
 	ld h, a ; $6b03
 	ld a, [hl+] ; $6b04
@@ -3028,7 +3028,7 @@ DrawCharViewerGridCursor:
 	ld c, $88 ; $6b09
 	call QueueSprite ; $6b0b
 	ret ; $6b0e
-Data_1a_6b0f:
+DrawCharViewerGridCursorTable:
 	; $6b0f, 32 bytes (bytes:16)
 	db $14, $13, $24, $13, $34, $13, $44, $13, $54, $13, $64, $13, $74, $13, $84, $13 ; 0x00
 	db $14, $53, $24, $53, $34, $53, $44, $53, $54, $53, $64, $53, $74, $53, $84, $53 ; 0x10
@@ -3152,9 +3152,9 @@ DrawCharViewerCursorSprite:
 	jr nz, .nonZero ; $6c32
 	ld a, [wCharViewerCursor] ; $6c34
 	rlca ; $6c37
-	add LOW(Data_1a_6c69) ; $6c38
+	add LOW(DrawCharViewerCursorSpriteTable0) ; $6c38
 	ld l, a ; $6c3a
-	adc HIGH(Data_1a_6c69) ; $6c3b
+	adc HIGH(DrawCharViewerCursorSpriteTable0) ; $6c3b
 	sub l ; $6c3d
 	ld h, a ; $6c3e
 	ld a, [hl+] ; $6c3f
@@ -3164,9 +3164,9 @@ DrawCharViewerCursorSprite:
 .nonZero:
 	ld a, [wCharViewerCursor] ; $6c44
 	rlca ; $6c47
-	add LOW(Data_1a_6c95) ; $6c48
+	add LOW(DrawCharViewerCursorSpriteTable1) ; $6c48
 	ld l, a ; $6c4a
-	adc HIGH(Data_1a_6c95) ; $6c4b
+	adc HIGH(DrawCharViewerCursorSpriteTable1) ; $6c4b
 	sub l ; $6c4d
 	ld h, a ; $6c4e
 	ld a, [hl+] ; $6c4f
@@ -3186,12 +3186,12 @@ DrawCharViewerCursorSprite:
 	ld c, $82 ; $6c63
 	call QueueSprite ; $6c65
 	ret ; $6c68
-Data_1a_6c69:
+DrawCharViewerCursorSpriteTable0:
 	; $6c69, 44 bytes (bytes:16)
 	db $50, $38, $50, $40, $50, $48, $50, $50, $50, $58, $50, $60, $50, $68, $50, $70 ; 0x00
 	db $50, $78, $50, $80, $50, $88, $58, $38, $58, $40, $58, $48, $58, $50, $58, $58 ; 0x10
 	db $58, $60, $58, $68, $58, $70, $58, $78, $58, $80, $58, $88 ; 0x20
-Data_1a_6c95:
+DrawCharViewerCursorSpriteTable1:
 	INCBIN "data/bank_01a/d_6c95.bin" ; $6c95, 10 bytes
 RunCharViewerInputLoop:
 	call DrawCharViewerCharSprite ; $6c9f
@@ -3590,9 +3590,9 @@ DrawCharViewerCharSprite:
 	farcall ReloadCharFacingTiles ; $7043
 	pop de ; $7046
 	ld a, d ; $7047
-	add LOW(Data_1a_708e) ; $7048
+	add LOW(DrawCharViewerCharSprite_CharScreenPosTable) ; $7048
 	ld l, a ; $704a
-	adc HIGH(Data_1a_708e) ; $704b
+	adc HIGH(DrawCharViewerCharSprite_CharScreenPosTable) ; $704b
 	sub l ; $704d
 	ld h, a ; $704e
 	ld b, [hl] ; $704f
@@ -3637,7 +3637,7 @@ DrawCharViewerCharSprite:
 	ld hl, wCharSpriteSlot ; $7087
 	farcall DrawCharSprite ; $708a
 	ret ; $708d
-Data_1a_708e:
+DrawCharViewerCharSprite_CharScreenPosTable:
 	; $708e, 8 bytes (bytes:8)
 	db $00, $00, $00, $20, $20, $20, $00, $00 ; 0x00
 LoadCharViewerMugshot:
@@ -4310,16 +4310,16 @@ ComputeStatArrowSpriteX:
 	add d ; $7e26
 	ld d, a ; $7e27
 	ld a, h ; $7e28
-	add LOW(Data_1a_7e34) ; $7e29
+	add LOW(ComputeStatArrowSpriteXTable) ; $7e29
 	ld l, a ; $7e2b
-	adc HIGH(Data_1a_7e34) ; $7e2c
+	adc HIGH(ComputeStatArrowSpriteXTable) ; $7e2c
 	sub l ; $7e2e
 	ld h, a ; $7e2f
 	ld a, [hl] ; $7e30
 	add d ; $7e31
 	ld d, a ; $7e32
 	ret ; $7e33
-Data_1a_7e34:
+ComputeStatArrowSpriteXTable:
 	; $7e34, 4 bytes (bytes:4)
 	db $f0, $f8, $00, $08 ; 0x00
 OffsetStatArrowSpriteX:

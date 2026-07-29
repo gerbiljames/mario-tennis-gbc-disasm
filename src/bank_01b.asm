@@ -4457,9 +4457,9 @@ LoadMinigameLevelSelectGfx:
 	ret ; $6d2c
 MinigameLevelSelectGfxTable:
 	; $6d2d, 8 bytes (records:2)
-	dw Label_1b_6d8a ; record 0
-	dw Label_1b_6d8c ; record 1
-	dw Label_1b_6d8e ; record 2
+	dw MinigameLevelSelectGfxHandler0 ; record 0
+	dw MinigameLevelSelectGfxHandler1 ; record 1
+	dw MinigameLevelSelectGfxHandler2 ; record 2
 	dw MinigameLevelSelectGfxTable0 ; record 3
 MinigameLevelSelectTable:
 	; $6d35, 8 bytes (records:2)
@@ -4507,11 +4507,11 @@ DrawMinigameLevelDescription:
 	ld c, $20 ; $6d84
 	farcall RenderTextToBuffer64 ; $6d86
 	pop af ; $6d89
-Label_1b_6d8a:
+MinigameLevelSelectGfxHandler0:
 	ldh [hWramBank], a ; $6d8a
-Label_1b_6d8c:
+MinigameLevelSelectGfxHandler1:
 	ldh [rWBK], a ; $6d8c
-Label_1b_6d8e:
+MinigameLevelSelectGfxHandler2:
 	ret ; $6d8e
 MinigameLevelDescriptionTable:
 	; $6d8f, 1 bytes (bytes:6)

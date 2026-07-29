@@ -792,9 +792,9 @@ TennisMachine1Hook_BallHit:
 MinigameShotDifficultyRamp:
 	; $4546, 1 bytes (bytes:4)
 	db $01 ; 0x00
-Data_0d_4547:
+EndMinigamePoint_PointOutcomeTable:
 	db $01 ; $4547
-Data_0d_4548:
+LaunchBallTable:
 	INCBIN "data/bank_00d/d_4548.bin" ; $4548, 102 bytes
 MinigameShotIntervalByTempo:
 	; $45ae, 5 bytes (bytes:5)
@@ -956,9 +956,9 @@ EndMinigamePoint:
 	ld a, [wMinigameServeSpeed] ; $4779
 	add a ; $477c
 	add a ; $477d
-	add LOW(Data_0d_4547) ; $477e
+	add LOW(EndMinigamePoint_PointOutcomeTable) ; $477e
 	ld l, a ; $4780
-	adc HIGH(Data_0d_4547) ; $4781
+	adc HIGH(EndMinigamePoint_PointOutcomeTable) ; $4781
 	sub l ; $4783
 	ld h, a ; $4784
 	ld a, [hl] ; $4785
@@ -1038,9 +1038,9 @@ LaunchBall:
 	ld a, [wMinigameServeSpeed] ; $4820
 	add a ; $4823
 	add a ; $4824
-	add LOW(Data_0d_4548) ; $4825
+	add LOW(LaunchBallTable) ; $4825
 	ld l, a ; $4827
-	adc HIGH(Data_0d_4548) ; $4828
+	adc HIGH(LaunchBallTable) ; $4828
 	sub l ; $482a
 	ld h, a ; $482b
 	ld a, [hl] ; $482c

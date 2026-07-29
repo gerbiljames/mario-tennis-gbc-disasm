@@ -478,9 +478,9 @@ MachineCourtStartLevelScene:
 	ld [wUnusedExitLocationMirror], a ; $458e
 	ld [wStoryModeExitLocationRequest], a ; $4591
 	ld a, [wMapSceneStage] ; $4594
-	add LOW(Data_14_45f8) ; $4597
+	add LOW(MachineCourtStartLevelSceneTable) ; $4597
 	ld l, a ; $4599
-	adc HIGH(Data_14_45f8) ; $459a
+	adc HIGH(MachineCourtStartLevelSceneTable) ; $459a
 	sub l ; $459c
 	ld h, a ; $459d
 	ld a, [hl] ; $459e
@@ -501,7 +501,7 @@ MachineCourtStartLevelScene:
 	script_face ACTOR_PLAYER, FACE_DOWN ; $45ed
 	set_flag FLAG_PRACTICE_ROOM_SESSION_ACTIVE ; $45f4
 	ret ; $45f7
-Data_14_45f8:
+MachineCourtStartLevelSceneTable:
 	; $45f8, 8 bytes (bytes:16)
 	db $12, $13, $14, $15, $1a, $1a, $1a, $c9 ; 0x00
 TennisMachineRoomNpc05TextIds:
@@ -1487,7 +1487,7 @@ IslandSkyInitScript_14:
 	cp $02 ; $52e6
 	jp z, QueuePlaneSpriteByFrameCounter_14.loadScene ; $52e8
 	cp $08 ; $52eb
-	jp z, Data_14_64dd.scriptRespawnLocationActors ; $52ed
+	jp z, UpdateFirework1_14Table.scriptRespawnLocationActors ; $52ed
 	cp $0e ; $52f0
 	jp z, QueueTwinkleSprite_14.queue ; $52f2
 	cp $0f ; $52f5
@@ -2302,9 +2302,9 @@ UpdateFirework0_14:
 	sound $81 ; $649e
 .burstSprite:
 	ld a, [wCutsceneObjPhase] ; $64a0
-	add LOW(Data_14_64d9) ; $64a3
+	add LOW(UpdateFirework0_14Table) ; $64a3
 	ld l, a ; $64a5
-	adc HIGH(Data_14_64d9) ; $64a6
+	adc HIGH(UpdateFirework0_14Table) ; $64a6
 	sub l ; $64a8
 	ld h, a ; $64a9
 	ld a, [hl] ; $64aa
@@ -2336,9 +2336,9 @@ AdvanceFirework0Ascent_14:
 Table_14:
 	; $64d5, 4 bytes (bytes:4)
 	db $00, $0c, $0e, $10 ; 0x00
-Data_14_64d9:
+UpdateFirework0_14Table:
 	INCBIN "data/bank_014/d_64d9.bin" ; $64d9, 4 bytes
-Data_14_64dd:
+UpdateFirework1_14Table:
 	INCBIN "data/bank_014/d_64dd.bin" ; $64dd, 4 bytes
 .scriptRespawnLocationActors:
 	ldh a, [hRomBank] ; $64e1
@@ -2537,9 +2537,9 @@ UpdateFirework1_14:
 	sound $81 ; $6f44
 .burstSprite:
 	ld a, [wCutsceneObjPhase + 1] ; $6f46
-	add LOW(Data_14_64dd) ; $6f49
+	add LOW(UpdateFirework1_14Table) ; $6f49
 	ld l, a ; $6f4b
-	adc HIGH(Data_14_64dd) ; $6f4c
+	adc HIGH(UpdateFirework1_14Table) ; $6f4c
 	sub l ; $6f4e
 	ld h, a ; $6f4f
 	ld a, [hl] ; $6f50

@@ -3628,14 +3628,14 @@ NetGameMatch3HandlePointEnd:
 	ret ; $5993
 	ld a, [wPointOutcome] ; $5994
 	cp $01 ; $5997
-	jp z, Data_0b_59b4.checkPointWinLoseFlag ; $5999
+	jp z, NetGameMatch3HandlePointEndTable.checkPointWinLoseFlag ; $5999
 	cp $03 ; $599c
-	jp z, Data_0b_59b4.checkPointWinLoseFlag ; $599e
+	jp z, NetGameMatch3HandlePointEndTable.checkPointWinLoseFlag ; $599e
 	ld a, [wRallyLength] ; $59a1
 	dec a ; $59a4
 	and $03 ; $59a5
 	add a ; $59a7
-	ld hl, Data_0b_59b4 ; $59a8
+	ld hl, NetGameMatch3HandlePointEndTable ; $59a8
 	add l ; $59ab
 	ld l, a ; $59ac
 	jr nc, .read ; $59ad
@@ -3645,11 +3645,11 @@ NetGameMatch3HandlePointEnd:
 	ld h, [hl] ; $59b1
 	ld l, a ; $59b2
 	jp hl ; $59b3
-Data_0b_59b4:
-	dw Data_0b_59b4.queueDrillResultMessage ; $59b4 jumptable
-	dw Data_0b_59b4.queueDrillResultMessage3 ; $59b6 jumptable
-	dw Data_0b_59b4.queueDrillResultMessage2 ; $59b8 jumptable
-	dw Data_0b_59b4.queueDrillResultMessage4 ; $59ba jumptable
+NetGameMatch3HandlePointEndTable:
+	dw NetGameMatch3HandlePointEndTable.queueDrillResultMessage ; $59b4 jumptable
+	dw NetGameMatch3HandlePointEndTable.queueDrillResultMessage3 ; $59b6 jumptable
+	dw NetGameMatch3HandlePointEndTable.queueDrillResultMessage2 ; $59b8 jumptable
+	dw NetGameMatch3HandlePointEndTable.queueDrillResultMessage4 ; $59ba jumptable
 .queueDrillResultMessage:
 	ld a, $17 ; $59bc
 	ld b, $0d ; $59be

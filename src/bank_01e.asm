@@ -1215,9 +1215,9 @@ UpdateResultsCharSprite:
 	farcall ReloadCharFacingTiles ; $4ab4
 	pop de ; $4ab7
 	ld a, d ; $4ab8
-	add LOW(Data_1e_4b24) ; $4ab9
+	add LOW(UpdateResultsCharSpriteTable) ; $4ab9
 	ld l, a ; $4abb
-	adc HIGH(Data_1e_4b24) ; $4abc
+	adc HIGH(UpdateResultsCharSpriteTable) ; $4abc
 	sub l ; $4abe
 	ld h, a ; $4abf
 	ld b, [hl] ; $4ac0
@@ -1291,7 +1291,7 @@ UpdateResultsCharSprite:
 	add $80 ; $4b20
 	ld [hl+], a ; $4b22
 	ret ; $4b23
-Data_1e_4b24:
+UpdateResultsCharSpriteTable:
 	; $4b24, 8 bytes (bytes:8)
 	db $00, $00, $00, $20, $20, $20, $00, $00 ; 0x00
 RunContinuePrompt:
@@ -1959,9 +1959,9 @@ UpdateExpScreenCharSprite:
 	ld [wCharFacingOctant], a ; $5960
 	farcall ReloadCharFacingTiles ; $5963
 	ld a, [wCharFacingOctant] ; $5966
-	add LOW(Data_1e_59b3) ; $5969
+	add LOW(UpdateExpScreenCharSpriteTable) ; $5969
 	ld l, a ; $596b
-	adc HIGH(Data_1e_59b3) ; $596c
+	adc HIGH(UpdateExpScreenCharSpriteTable) ; $596c
 	sub l ; $596e
 	ld h, a ; $596f
 	ld a, [wCharSpriteAttr] ; $5970
@@ -2010,7 +2010,7 @@ UpdateExpScreenCharSprite:
 	ld [hl+], a ; $59b0
 	ld [hl], d ; $59b1
 	ret ; $59b2
-Data_1e_59b3:
+UpdateExpScreenCharSpriteTable:
 	; $59b3, 8 bytes (bytes:8)
 	db $00, $00, $00, $20, $20, $20, $00, $00 ; 0x00
 DrawNextExpAwardMessage:
@@ -2041,9 +2041,9 @@ DrawNextExpAwardMessage:
 	ld d, a ; $59e3
 	ld a, [wExpAwardIndex] ; $59e4
 	rlca ; $59e7
-	add LOW(Data_1e_5a44) ; $59e8
+	add LOW(DrawNextExpAwardMessageTable) ; $59e8
 	ld l, a ; $59ea
-	adc HIGH(Data_1e_5a44) ; $59eb
+	adc HIGH(DrawNextExpAwardMessageTable) ; $59eb
 	sub l ; $59ed
 	ld h, a ; $59ee
 	ld a, [hl+] ; $59ef
@@ -2091,7 +2091,7 @@ DrawNextExpAwardMessage:
 	farcall UploadGlyphBuffer ; $5a3f
 	xor a ; $5a42
 	ret ; $5a43
-Data_1e_5a44:
+DrawNextExpAwardMessageTable:
 	; $5a44, 10 bytes (bytes:10)
 	db $c9, $04, $ca, $04, $cb, $04, $cc, $04, $d1, $04 ; 0x00
 DrawExpTotalDigits:
@@ -2858,21 +2858,21 @@ LookupExpTierForChar:
 	ld c, a ; $6941
 	ld a, [wCharId] ; $6942
 	cp $04 ; $6945
-	jr nc, Data_1e_695b.ge04 ; $6947
+	jr nc, LookupExpTierForCharTable.ge04 ; $6947
 	ld l, c ; $6949
 	xor a ; $694a
 	ld h, a ; $694b
 	ld e, $0a ; $694c
 	call DivAHLByE ; $694e
 	ld a, l ; $6951
-	add LOW(Data_1e_695b) ; $6952
+	add LOW(LookupExpTierForCharTable) ; $6952
 	ld l, a ; $6954
-	adc HIGH(Data_1e_695b) ; $6955
+	adc HIGH(LookupExpTierForCharTable) ; $6955
 	sub l ; $6957
 	ld h, a ; $6958
 	ld c, [hl] ; $6959
 	ret ; $695a
-Data_1e_695b:
+LookupExpTierForCharTable:
 	; $695b, 10 bytes (bytes:10)
 	db $00, $01, $02, $03, $04, $04, $05, $05, $06, $06 ; 0x00
 .ge04:

@@ -7861,3 +7861,100 @@ clean, and `tools/progress.py` reports the same 19,921 of 21,680 named --
 metric was already counting them as named. That is the argument for the change
 being a real one rather than a cosmetic one: the names were passing for
 knowledge and were not carrying any.
+
+## The autonames, identified (2026-07-29)
+
+179 labels in `src/` still carried the generator's own `Data_`/`Label_` name.
+**161 of them are now named, and three of them were not data at all.** What is
+left is 18, and they are all the same shape -- see the end of this section.
+
+### The `Label_*` were all dispatch slots (25 of 25)
+
+Every one was a `dw` in a named pointer table, so each names itself from the
+table and its slot index: `ProportionalTextCodeHandler4_05` (which serves slots
+4, 7, 8, 9 and 11 of `ProportionalTextCodeHandlers_05`),
+`CharInputHandler1_08`, `EraseSavedDataFlowHandler0_10`,
+`MessageSpeedSettingHandler4`, `MinigameLevelSelectGfxHandler0`.
+
+`WaterSpriteModeHooks_10`'s six got role names instead of indices, because
+`CallModeHook`'s slot roles are established: `WaterSpriteHook_Frame`,
+`_PointStart`, `_PointEnd`, `_BallHit`, `_Bounce`, `_RallyTick`. Three of them
+are the consecutive `ret` bytes at `$4be8`, `$4be9` and `$4bea` -- three
+separate one-byte stubs, because a table slot needs its own address even when
+the hook does nothing.
+
+### Bank $17 was 76 of the 179, and one pattern
+
+The drill-briefing animations are driven by per-step tables, one table per
+animated element, indexed by `wBriefingAnimStep`. Each table's meaning is
+whatever field the routine stores its value into, so the name comes from
+there -- `SpinServeBriefing_AdvanceAnim_BracketPosTable` is read into
+`wBriefingBracketX`/`Y`, `..._HMarkerUnflippedTable` into
+`wBriefingHMarkerUnflipped`. Where both animation phases of a briefing share
+one table the phase drops out of the name
+(`SpinServeBriefing_RotMarkerDirTable`). The three tables whose value goes
+straight to `DrawDiagramTargetOverlay` in `b` rather than into a variable are
+`..._TargetOverlayTable`. 72 named this way.
+
+A side finding: several of those tables render as `INCLUDE
+"data/bank_017/text_*.asm"`, i.e. the text classifier claimed them. They are
+16-byte coordinate tables whose bytes pair up as `<value>, $00`, which is
+exactly what an ASCII string with `$00` terminators looks like. Byte-identical
+either way, but `tools/strings.py` will list them as game text, and they should
+be declared `bytes:4`.
+
+### The other 52 name themselves from their one consumer
+
+A blob read by exactly one routine takes that routine's name, plus the field it
+feeds when the value has a single destination: `SelectServeShotType_-`
+`CharShotTypeTable`, `SetupCharacterSprite_CharTileBaseTable`,
+`DrawLandingMarkerTable`. Where the value fans out to several variables the
+field says nothing about the table, so the routine name carries it alone
+(`LaunchBallTable`, `LoadCourtSceneDataTable`).
+
+Four are read by two routines each, and are named for their content instead:
+`DpadToFacingTable_08` (d-pad nibble -> `wCharFacingDesired`, `$ff` meaning "no
+change"), `AngleToDpadTable_08` (the 16 coarse angles from
+`AngleFromVectorCoarse` back into `wCharInputBits`),
+`CharDataArrowBobOffsetTable_1d`, `IslandOpenSinglesStageTextPtrs_0f`.
+
+### Three were code, and one table was a record short
+
+* **`$43b9` and `$43cb`** are the two-instruction prologues (`ld d, $00` /
+  `ld a, c`) of twin linear-index-to-grid divides. The loops that follow were
+  already proven code; the entries were never executed, so three bytes of each
+  routine sat in front of it as a `bytes:3` blob. Seeded as code, they are now
+  `SetMenuCursorFromLinearIndex_17` (remainder -> `wMenuCursorX`, quotient ->
+  `wMenuCursorY`) and `WriteGridPosFromLinearIndex_17` (same divide, stored
+  through the caller's `hl`).
+* **`$4a1b`** was a 23-byte blob that decodes as `ld c, $04` / `ld b, $09` /
+  `ld hl, $4a29` / `ld de, $2020` / `call QueueSpriteTemplate` / `ret`,
+  followed at `$4a29` by two `oam_sprite` records and an `$80` terminator.
+  Seeding the entry was enough: the sprite-template carver found the call,
+  and the naming pass named the list after the routine
+  (`QueueSpritePair_17_SpriteTemplate`). None of the three has a proven caller,
+  which is recorded in each one's note rather than guessed at.
+* **`$4a94`** was five bytes after `DiagramTargetPatchRecords_17`, which was
+  declared as five 6-byte records. Six records is 36 bytes and reaches exactly
+  to `DecompressGraphicsList` at `$4a99`; the sixth record reads
+  `dw $d300, $d0e7, $0206`, in the pattern of its five siblings. Dropping the
+  boundary makes the table whole.
+
+### The 18 that are left, and why
+
+Every one is a table declared in `data_tables.json` whose reader is not in
+proven code: `Data_38_4971`, `Data_38_560a`, `Data_38_5672`, `Data_38_57d7`,
+`Data_38_5b6f`, `Data_38_5ffe`, `Data_38_7063`, `Data_27_4b41`,
+`Data_27_5570`, `Data_27_7886`, `Data_1b_69cd`, `Data_1b_7349`,
+`Data_1a_4af4`, `Data_29_4221`, `Data_6b_615e`, plus `Data_5f_4020`,
+`Data_5f_4c63` and `Data_6d_6104`, which are `$4000`-slot targets in data banks.
+
+The searches that found the other 161 all come up empty on these: no `ld hl`,
+no `dw`, no `add LOW`/`adc HIGH` pair, and no raw `$xxxx` immediate anywhere in
+any bank. Their extents were established by an earlier structural pass without
+a reader being recorded, so naming them would be naming a guess. They are the
+honest remainder: **the places where the disassembly knows the shape of the data
+and not yet who reads it.**
+
+Human-named symbols: **20,082 of 21,680** (from 19,921). Byte-perfect
+throughout; `make check` clean.

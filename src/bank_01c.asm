@@ -563,9 +563,9 @@ CharDataScreen_DrawStatBar:
 .altTable:
 	ld a, b ; $4515
 	rlca ; $4516
-	add LOW(Data_1c_456e) ; $4517
+	add LOW(CharDataScreen_DrawStatBarTable0) ; $4517
 	ld l, a ; $4519
-	adc HIGH(Data_1c_456e) ; $451a
+	adc HIGH(CharDataScreen_DrawStatBarTable0) ; $451a
 	sub l ; $451c
 	ld h, a ; $451d
 	ld a, [hl+] ; $451e
@@ -591,9 +591,9 @@ CharDataScreen_DrawStatBar:
 	wram_bank $02 ; $4536
 	ld a, b ; $453c
 	rlca ; $453d
-	add LOW(Data_1c_4584) ; $453e
+	add LOW(CharDataScreen_DrawStatBarTable1) ; $453e
 	ld l, a ; $4540
-	adc HIGH(Data_1c_4584) ; $4541
+	adc HIGH(CharDataScreen_DrawStatBarTable1) ; $4541
 	sub l ; $4543
 	ld h, a ; $4544
 	ld a, [hl+] ; $4545
@@ -628,9 +628,9 @@ CharDataScreen_DrawStatBarPtrs:
 	dw CharDataScreenStatBar08 ; record 8
 	dw CharDataScreenStatBar09 ; record 9
 	dw CharDataScreenStatBar10 ; record 10
-Data_1c_456e:
+CharDataScreen_DrawStatBarTable0:
 	INCBIN "data/bank_01c/d_456e.bin" ; $456e, 22 bytes
-Data_1c_4584:
+CharDataScreen_DrawStatBarTable1:
 	INCBIN "data/bank_01c/d_4584.bin" ; $4584, 22 bytes
 CharDataScreen_DrawPortrait:
 	push af ; $459a
@@ -722,9 +722,9 @@ CharDataScreenAnimTask:
 	ld c, $02 ; $463d
 	call QueueVRAMCopy ; $463f
 	pop af ; $4642
-	add LOW(Data_1c_5699) ; $4643
+	add LOW(CharDataScreenAnimTask_CharDataFlushChunkTable) ; $4643
 	ld l, a ; $4645
-	adc HIGH(Data_1c_5699) ; $4646
+	adc HIGH(CharDataScreenAnimTask_CharDataFlushChunkTable) ; $4646
 	sub l ; $4648
 	ld h, a ; $4649
 	ld a, [hl+] ; $464a
@@ -1732,9 +1732,9 @@ CharDataScreen_DrawPageColumns:
 	rlca ; $4ddf
 	push af ; $4de0
 	rlca ; $4de1
-	add LOW(Data_1c_4e36) ; $4de2
+	add LOW(CharDataScreen_DrawPageColumnsTable0) ; $4de2
 	ld l, a ; $4de4
-	adc HIGH(Data_1c_4e36) ; $4de5
+	adc HIGH(CharDataScreen_DrawPageColumnsTable0) ; $4de5
 	sub l ; $4de7
 	ld h, a ; $4de8
 	ld a, [hl+] ; $4de9
@@ -1745,9 +1745,9 @@ CharDataScreen_DrawPageColumns:
 	ld b, [hl] ; $4dee
 	ld c, a ; $4def
 	pop af ; $4df0
-	add LOW(Data_1c_4e4a) ; $4df1
+	add LOW(CharDataScreen_DrawPageColumnsTable1) ; $4df1
 	ld l, a ; $4df3
-	adc HIGH(Data_1c_4e4a) ; $4df4
+	adc HIGH(CharDataScreen_DrawPageColumnsTable1) ; $4df4
 	sub l ; $4df6
 	ld h, a ; $4df7
 	ld a, [hl+] ; $4df8
@@ -1790,14 +1790,14 @@ CharDataScreen_DrawPageColumns:
 	dec c ; $4e32
 	jr nz, .rowLoop ; $4e33
 	ret ; $4e35
-Data_1c_4e36:
+CharDataScreen_DrawPageColumnsTable0:
 	; $4e36, 20 bytes (bytes:4)
 	db $60, $d0, $05, $0a ; 0x00
 	db $00, $d1, $07, $0a ; 0x04
 	db $6a, $d0, $05, $0a ; 0x08
 	db $0a, $d1, $09, $0a ; 0x0c
 	db $e0, $d1, $03, $0a ; 0x10
-Data_1c_4e4a:
+CharDataScreen_DrawPageColumnsTable1:
 	INCBIN "data/bank_01c/d_4e4a.bin" ; $4e4a, 10 bytes
 DrawStatValueSprites:
 	wram_bank $06 ; $4e54
@@ -2707,7 +2707,7 @@ Unused_1c_0:
 	dw UnusedShiftGfx13 ; record 13
 	dw UnusedShiftGfx14 ; record 14
 	dw UnusedShiftGfx15 ; record 15
-Data_1c_5699:
+CharDataScreenAnimTask_CharDataFlushChunkTable:
 	INCBIN "data/bank_01c/d_5699.bin" ; $5699, 32 bytes
 CharDataBand0RunsStep7_1c:
 	; $56b9, 22 bytes (bytes:16)

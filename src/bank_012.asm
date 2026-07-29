@@ -1285,16 +1285,16 @@ LaunchWallPracticeMinigame:
 	ld [wUnusedExitLocationMirror], a ; $52a1
 	ld [wStoryModeExitLocationRequest], a ; $52a4
 	ld a, [wMapSceneStage] ; $52a7
-	add LOW(Data_12_52b9) ; $52aa
+	add LOW(LaunchWallPracticeMinigameTable) ; $52aa
 	ld l, a ; $52ac
-	adc HIGH(Data_12_52b9) ; $52ad
+	adc HIGH(LaunchWallPracticeMinigameTable) ; $52ad
 	sub l ; $52af
 	ld h, a ; $52b0
 	ld a, [hl] ; $52b1
 	farcall RunTrainingDrillByID ; $52b2
 	farcall EndCutsceneScriptMode ; $52b5
 	ret ; $52b8
-Data_12_52b9:
+LaunchWallPracticeMinigameTable:
 	; $52b9, 7 bytes (bytes:16)
 	db $16, $17, $18, $19, $1b, $1b, $1b ; 0x00
 RestoreWallPracticeRoomActors:
@@ -1952,9 +1952,9 @@ SeniorCourtNpc0C_12:
 	jr nz, .nonZero ; $5be1
 	ld a, [wMapSceneStage2] ; $5be3
 	add a ; $5be6
-	add LOW(Data_12_5c2f) ; $5be7
+	add LOW(SeniorCourtNpc0C_12Table) ; $5be7
 	ld l, a ; $5be9
-	adc HIGH(Data_12_5c2f) ; $5bea
+	adc HIGH(SeniorCourtNpc0C_12Table) ; $5bea
 	sub l ; $5bec
 	ld h, a ; $5bed
 	ld a, [hl+] ; $5bee
@@ -1994,7 +1994,7 @@ SeniorCourtNpc0CTextIds:
 	dw Text_34_175 ; record 12
 	dw Text_34_184 ; record 13
 	dw Text_34_186 ; record 14
-Data_12_5c2f:
+SeniorCourtNpc0C_12Table:
 	INCBIN "data/bank_012/d_5c2f.bin" ; $5c2f, 30 bytes
 SeniorCourtNpcScripts_12:
 	; $5c4d, 121 bytes (map_scripts)

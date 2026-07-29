@@ -253,9 +253,9 @@ LoadBallTouchCharEffectTilesB:
 	ret ; $606b
 QueueMatchSpriteFrameA:
 	add a ; $606c
-	add LOW(Data_28_6080) ; $606d
+	add LOW(QueueMatchSpriteFrameATable) ; $606d
 	ld l, a ; $606f
-	adc HIGH(Data_28_6080) ; $6070
+	adc HIGH(QueueMatchSpriteFrameATable) ; $6070
 	sub l ; $6072
 	ld h, a ; $6073
 	ld a, [hl+] ; $6074
@@ -265,14 +265,14 @@ QueueMatchSpriteFrameA:
 	ld c, $0c ; $607a
 	call QueueVRAMCopy ; $607c
 	ret ; $607f
-Data_28_6080:
+QueueMatchSpriteFrameATable:
 	; $6080, 6 bytes (bytes:6)
 	db $30, $52, $f0, $52, $b0, $53 ; 0x00
 QueueMatchSpriteFrameB:
 	add a ; $6086
-	add LOW(Data_28_609a) ; $6087
+	add LOW(QueueMatchSpriteFrameBTable) ; $6087
 	ld l, a ; $6089
-	adc HIGH(Data_28_609a) ; $608a
+	adc HIGH(QueueMatchSpriteFrameBTable) ; $608a
 	sub l ; $608c
 	ld h, a ; $608d
 	ld a, [hl+] ; $608e
@@ -282,7 +282,7 @@ QueueMatchSpriteFrameB:
 	ld c, $0c ; $6094
 	call QueueVRAMCopy ; $6096
 	ret ; $6099
-Data_28_609a:
+QueueMatchSpriteFrameBTable:
 	; $609a, 6 bytes (bytes:6)
 	db $f0, $5b, $b0, $5c, $70, $5d ; 0x00
 LoadEffectFrameTiles_28:
@@ -298,9 +298,9 @@ LoadEffectFrameTiles_28:
 	ld d, h ; $60aa
 	ld a, b ; $60ab
 	add a ; $60ac
-	add LOW(Data_28_60c1) ; $60ad
+	add LOW(LoadEffectFrameTiles_28Table) ; $60ad
 	ld l, a ; $60af
-	adc HIGH(Data_28_60c1) ; $60b0
+	adc HIGH(LoadEffectFrameTiles_28Table) ; $60b0
 	sub l ; $60b2
 	ld h, a ; $60b3
 	ld a, [hl+] ; $60b4
@@ -311,7 +311,7 @@ LoadEffectFrameTiles_28:
 	ld c, $04 ; $60bb
 	call QueueVRAMCopy ; $60bd
 	ret ; $60c0
-Data_28_60c1:
+LoadEffectFrameTiles_28Table:
 	; $60c1, 8 bytes (bytes:8)
 	db $d0, $56, $10, $58, $50, $59, $90, $5a ; 0x00
 LoadMatchStoryGfx:

@@ -3509,9 +3509,9 @@ SetupCharacterSprite:
 	add $04 ; $5a7c
 	ld [wCharSpriteAttr], a ; $5a7e
 	ld a, [wCharIndex] ; $5a81
-	add LOW(Data_07_5aaf) ; $5a84
+	add LOW(SetupCharacterSprite_CharTileBaseTable) ; $5a84
 	ld l, a ; $5a86
-	adc HIGH(Data_07_5aaf) ; $5a87
+	adc HIGH(SetupCharacterSprite_CharTileBaseTable) ; $5a87
 	sub l ; $5a89
 	ld h, a ; $5a8a
 	ld a, [hl] ; $5a8b
@@ -3538,7 +3538,7 @@ CharFrameGfxDest_07:
 	dw $a100 ; record 1
 	dw $a200 ; record 2
 	dw $a300 ; record 3
-Data_07_5aaf:
+SetupCharacterSprite_CharTileBaseTable:
 	INCBIN "data/bank_007/d_5aaf.bin" ; $5aaf, 4 bytes
 ; Copies one character's attribute record into the per-character struct: the
 ; reach box CheckCharBallContact tests against, the jump-smash and dive speeds,

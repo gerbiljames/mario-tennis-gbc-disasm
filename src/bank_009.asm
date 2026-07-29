@@ -831,7 +831,7 @@ LoadPlayer1ScoreDigitGfx:
 	call QueueVRAMCopy ; $6135
 	ret ; $6138
 LoadPlayer2ScoreDigitGfx:
-	ld hl, Data_09_6175 ; $6139
+	ld hl, LoadPlayer2ScoreDigitGfxTable ; $6139
 	call GetGfxSourcePtr ; $613c
 	ld de, $8340 ; $613f
 	ld c, $04 ; $6142
@@ -868,7 +868,7 @@ VramGfxPtrTable_09:
 	INCBIN "data/bank_009/d_616d.bin" ; $616d, 4 bytes
 Player1ScoreDigitGfxSource:
 	INCBIN "data/bank_009/d_6171.bin" ; $6171, 4 bytes
-Data_09_6175:
+LoadPlayer2ScoreDigitGfxTable:
 	INCBIN "data/bank_009/d_6175.bin" ; $6175, 2635 bytes
 DeuceAdvantageTiles:
 	INCBIN "data/bank_009/d_6bc0.bin" ; $6bc0, 128 bytes

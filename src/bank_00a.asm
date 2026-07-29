@@ -5445,9 +5445,9 @@ DrawMinigameTarget:
 	ld a, [wMinigameTargetWork + 2] ; $66bf
 	and $0f ; $66c2
 	jr z, .readSprite ; $66c4
-	add LOW(Data_0a_66fe) ; $66c6
+	add LOW(DrawMinigameTargetTable) ; $66c6
 	ld l, a ; $66c8
-	adc HIGH(Data_0a_66fe) ; $66c9
+	adc HIGH(DrawMinigameTargetTable) ; $66c9
 	sub l ; $66cb
 	ld h, a ; $66cc
 	ld a, [hl] ; $66cd
@@ -5481,7 +5481,7 @@ DrawMinigameTarget:
 MinigameTargetTable:
 	; $66f6, 8 bytes (bytes:8)
 	db $10, $0d, $14, $0f, $18, $0b, $1c, $0e ; 0x00
-Data_0a_66fe:
+DrawMinigameTargetTable:
 	INCBIN "data/bank_00a/d_66fe.bin" ; $66fe, 16 bytes
 DrawMinigameTarget_SpriteTemplate:
 	; $670e, 9 bytes (sprite_template)
@@ -6119,9 +6119,9 @@ DrawMinigameTargetAlt:
 	ld a, [wMinigameTargetWork + 2] ; $6d7f
 	and $0f ; $6d82
 	jr z, .readSprite ; $6d84
-	add LOW(Data_0a_6dad) ; $6d86
+	add LOW(DrawMinigameTargetAltTable) ; $6d86
 	ld l, a ; $6d88
-	adc HIGH(Data_0a_6dad) ; $6d89
+	adc HIGH(DrawMinigameTargetAltTable) ; $6d89
 	sub l ; $6d8b
 	ld h, a ; $6d8c
 	ld a, [hl] ; $6d8d
@@ -6144,7 +6144,7 @@ DrawMinigameTargetAlt:
 MinigameTargetAltTable:
 	; $6da5, 8 bytes (bytes:8)
 	db $10, $0f, $20, $0e, $30, $0d, $20, $0f ; 0x00
-Data_0a_6dad:
+DrawMinigameTargetAltTable:
 	INCBIN "data/bank_00a/d_6dad.bin" ; $6dad, 16 bytes
 DrawMinigameTargetAlt_SpriteTemplate:
 	; $6dbd, 33 bytes (sprite_template)

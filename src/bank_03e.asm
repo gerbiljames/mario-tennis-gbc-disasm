@@ -3574,8 +3574,8 @@ ItemStatModListPtrPtrs:
 ItemStatModListPtrTable:
 	; $5a6d, 6 bytes (records:2)
 	dw ItemStatModList0 ; record 0
-	dw Data_3e_5ab6 ; record 1
-	dw Data_3e_5ac1 ; record 2
+	dw ItemStatModListTable0 ; record 1
+	dw ItemStatModListTable1 ; record 2
 ItemStatModList0:
 	; $5a73, 7 bytes (bytes:8)
 	db $fe, $fe, $fe, $fe, $0a, $fe, $ff ; 0x00
@@ -3593,9 +3593,9 @@ ItemStatModList5:
 	INCBIN "data/bank_03e/d_5aa6.bin" ; $5aa6, 9 bytes
 ItemStatModList6:
 	INCBIN "data/bank_03e/d_5aaf.bin" ; $5aaf, 7 bytes
-Data_3e_5ab6:
+ItemStatModListTable0:
 	INCBIN "data/bank_03e/d_5ab6.bin" ; $5ab6, 11 bytes
-Data_3e_5ac1:
+ItemStatModListTable1:
 	INCBIN "data/bank_03e/d_5ac1.bin" ; $5ac1, 9 bytes
 DrawStatModLabel:
 	push af ; $5aca

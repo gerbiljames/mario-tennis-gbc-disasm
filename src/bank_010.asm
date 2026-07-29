@@ -145,9 +145,9 @@ RunSinglesMatchListMenu:
 	farcall InitStoryMatchSettings ; $41bf
 	ld a, [wMapSceneStage] ; $41c2
 	add a ; $41c5
-	add LOW(Data_10_4220) ; $41c6
+	add LOW(RunSinglesMatchListMenuTable) ; $41c6
 	ld l, a ; $41c8
-	adc HIGH(Data_10_4220) ; $41c9
+	adc HIGH(RunSinglesMatchListMenuTable) ; $41c9
 	sub l ; $41cb
 	ld h, a ; $41cc
 	ld a, [hl+] ; $41cd
@@ -176,9 +176,9 @@ RunDoublesMatchListMenu:
 	farcall InitStoryMatchSettings ; $4204
 	ld a, [wMapSceneStage] ; $4207
 	add a ; $420a
-	add LOW(Data_10_4246) ; $420b
+	add LOW(RunDoublesMatchListMenuTable) ; $420b
 	ld l, a ; $420d
-	adc HIGH(Data_10_4246) ; $420e
+	adc HIGH(RunDoublesMatchListMenuTable) ; $420e
 	sub l ; $4210
 	ld h, a ; $4211
 	ld a, [hl+] ; $4212
@@ -190,7 +190,7 @@ RunDoublesMatchListMenu:
 	ret ; $421e
 .done:
 	ret ; $421f
-Data_10_4220:
+RunSinglesMatchListMenuTable:
 	dw LoadMatchSinglesJunior4 ; $4220
 	dw LoadMatchSinglesJunior3 ; $4222
 	dw LoadMatchSinglesJunior2 ; $4224
@@ -210,7 +210,7 @@ Data_10_4220:
 	dw LoadMatchSinglesDreamHard ; $4240
 	dw LoadMatchSinglesDreamIntense ; $4242
 	dw LoadMatchSinglesDreamMax ; $4244
-Data_10_4246:
+RunDoublesMatchListMenuTable:
 	dw LoadMatchDoublesJunior3 ; $4246
 	dw LoadMatchDoublesJunior2 ; $4248
 	dw LoadMatchDoublesJunior1 ; $424a
@@ -948,21 +948,21 @@ Test2InitScript_10:
 	ret ; $4bd7
 WaterSpriteModeHooks_10:
 	; $4bd8, 16 bytes (mode_hooks)
-	dw Label_10_4be8 ; record 0
-	dw Label_10_4bfc ; record 1
-	dw Label_10_4bfd ; record 2
+	dw WaterSpriteHook_Frame ; record 0
+	dw WaterSpriteHook_PointStart ; record 1
+	dw WaterSpriteHook_PointEnd ; record 2
 	dw RetStub ; record 3
-	dw Label_10_4beb ; record 4
-	dw Label_10_4bea ; record 5
-	dw Label_10_4be9 ; record 6
+	dw WaterSpriteHook_BallHit ; record 4
+	dw WaterSpriteHook_Bounce ; record 5
+	dw WaterSpriteHook_RallyTick ; record 6
 	dw RetStub ; record 7
-Label_10_4be8:
+WaterSpriteHook_Frame:
 	ret ; $4be8
-Label_10_4be9:
+WaterSpriteHook_RallyTick:
 	ret ; $4be9
-Label_10_4bea:
+WaterSpriteHook_Bounce:
 	ret ; $4bea
-Label_10_4beb:
+WaterSpriteHook_BallHit:
 	ld a, [wRallyLength] ; $4beb
 	cp $02 ; $4bee
 	jr c, .done ; $4bf0
@@ -972,9 +972,9 @@ Label_10_4beb:
 	inc [hl] ; $4bfa
 .done:
 	ret ; $4bfb
-Label_10_4bfc:
+WaterSpriteHook_PointStart:
 	ret ; $4bfc
-Label_10_4bfd:
+WaterSpriteHook_PointEnd:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $4bfd
 	bit 0, a ; $4c00
 	ret nz ; $4c02
@@ -1363,7 +1363,7 @@ MatchSelectHandlersBHandler0:
 	ld a, [wKeepMatchStatsFlag] ; $5027
 	or a ; $502a
 	jr z, .restoreReturnPoint ; $502b
-	jp Label_10_5565.runMatch ; $502d
+	jp EraseSavedDataFlowHandler4_10.runMatch ; $502d
 .restoreReturnPoint:
 	farcall RestoreStoryReturnPoint ; $5030
 	ld b, $0a ; $5033
@@ -1863,12 +1863,12 @@ RunEraseSavedDataFlow:
 	jp hl ; $54eb
 EraseSavedDataFlowHandlers_10:
 	; $54ec, 10 bytes (records:2)
-	dw Label_10_54f6 ; record 0
-	dw Label_10_54f6 ; record 1
-	dw Label_10_54f6 ; record 2
-	dw Label_10_5539 ; record 3
-	dw Label_10_5565 ; record 4
-Label_10_54f6:
+	dw EraseSavedDataFlowHandler0_10 ; record 0
+	dw EraseSavedDataFlowHandler0_10 ; record 1
+	dw EraseSavedDataFlowHandler0_10 ; record 2
+	dw EraseSavedDataFlowHandler3_10 ; record 3
+	dw EraseSavedDataFlowHandler4_10 ; record 4
+EraseSavedDataFlowHandler0_10:
 	ld a, b ; $54f6
 	ld [wCurrentStorySlot], a ; $54f7
 	farcall CheckStorySlot ; $54fa
@@ -1898,7 +1898,7 @@ Label_10_54f6:
 	ld a, $00 ; $5531
 	ld [wMenuSlideDirection], a ; $5533
 	jp RunEraseSavedDataFlow ; $5536
-Label_10_5539:
+EraseSavedDataFlowHandler3_10:
 	ld c, $10 ; $5539
 	call BeginFadeOut ; $553b
 	call WaitFadeEnd ; $553e
@@ -1916,7 +1916,7 @@ Label_10_5539:
 	ld a, $00 ; $555d
 	ld [wMenuSlideDirection], a ; $555f
 	jp RunEraseSavedDataFlow ; $5562
-Label_10_5565:
+EraseSavedDataFlowHandler4_10:
 	ld c, $10 ; $5565
 	call BeginFadeOut ; $5567
 	call WaitFadeEnd ; $556a

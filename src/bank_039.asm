@@ -825,16 +825,16 @@ QueueStackedSpritePair:
 ApplySpriteWaveOffset:
 	ldh a, [hVBlankCounter] ; $4a75
 	and $3f ; $4a77
-	add LOW(Data_39_4a84) ; $4a79
+	add LOW(ApplySpriteWaveOffsetTable) ; $4a79
 	ld l, a ; $4a7b
-	adc HIGH(Data_39_4a84) ; $4a7c
+	adc HIGH(ApplySpriteWaveOffsetTable) ; $4a7c
 	sub l ; $4a7e
 	ld h, a ; $4a7f
 	ld a, [hl] ; $4a80
 	add e ; $4a81
 	ld e, a ; $4a82
 	ret ; $4a83
-Data_39_4a84:
+ApplySpriteWaveOffsetTable:
 	; $4a84, 64 bytes (bytes:16)
 	db $00, $00, $00, $01, $01, $01, $02, $02, $02, $03, $03, $03, $03, $03, $03, $03 ; 0x00
 	db $03, $03, $03, $03, $03, $03, $03, $03, $02, $02, $02, $01, $01, $01, $00, $00 ; 0x10
@@ -843,16 +843,16 @@ Data_39_4a84:
 ApplySpriteBobOffset:
 	ldh a, [hVBlankCounter] ; $4ac4
 	and $3f ; $4ac6
-	add LOW(Data_39_4ad3) ; $4ac8
+	add LOW(ApplySpriteBobOffsetTable) ; $4ac8
 	ld l, a ; $4aca
-	adc HIGH(Data_39_4ad3) ; $4acb
+	adc HIGH(ApplySpriteBobOffsetTable) ; $4acb
 	sub l ; $4acd
 	ld h, a ; $4ace
 	ld a, [hl] ; $4acf
 	add e ; $4ad0
 	ld e, a ; $4ad1
 	ret ; $4ad2
-Data_39_4ad3:
+ApplySpriteBobOffsetTable:
 	; $4ad3, 64 bytes (bytes:16)
 	db $00, $00, $00, $00, $00, $01, $01, $01, $01, $01, $01, $01, $02, $02, $02, $02 ; 0x00
 	db $02, $02, $02, $02, $02, $02, $01, $01, $01, $01, $01, $00, $00, $00, $00, $00 ; 0x10

@@ -3591,9 +3591,9 @@ PrepareStoryMatch:
 	farcall InitStoryMatchSettings ; $7b91
 	ld a, [wMapScratch + 2] ; $7b94
 	add a ; $7b97
-	add LOW(Data_0e_7bac) ; $7b98
+	add LOW(PrepareStoryMatchTable) ; $7b98
 	ld l, a ; $7b9a
-	adc HIGH(Data_0e_7bac) ; $7b9b
+	adc HIGH(PrepareStoryMatchTable) ; $7b9b
 	sub l ; $7b9d
 	ld h, a ; $7b9e
 	ld a, [hl+] ; $7b9f
@@ -3603,7 +3603,7 @@ PrepareStoryMatch:
 	farcall RunStoryMatch ; $7ba5
 	farcall RestoreOverworldAfterMatch ; $7ba8
 	ret ; $7bab
-Data_0e_7bac:
+PrepareStoryMatchTable:
 	dw LoadExhibitionMatchSettings0 ; $7bac
 	dw LoadExhibitionMatchSettings1 ; $7bae
 	dw LoadExhibitionMatchSettings2 ; $7bb0
