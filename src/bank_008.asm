@@ -4068,32 +4068,32 @@ RefreshCourtScoreboard:
 	ld a, [wCourtViewFlipped] ; $5e99
 	and a ; $5e9c
 	jr nz, RefreshCourtScoreboardFlipped ; $5e9d
-	ld hl, $de94 ; $5e9f
+	ld hl, wScoreboardColumnTiles + 20 ; $5e9f
 	ld de, $d99a ; $5ea2
 	call CopyScoreboardTileColumn ; $5ea5
-	ld hl, wCourtAttrmapSaved + 21 * TILEMAP_WIDTH + 28 ; $5ea8
+	ld hl, wScoreboardColumnAttrs + 20 ; $5ea8
 	ld de, wCourtAttrmapSaved + 12 * TILEMAP_WIDTH + 26 ; $5eab
 	call CopyScoreboardTileColumn ; $5eae
-	ld hl, wCourtAttrmapSaved + 20 * TILEMAP_WIDTH + 10 ; $5eb1
+	ld hl, wScoreboardColumnTiles + 10 ; $5eb1
 	ld de, wCourtTilemapSaved + 12 * TILEMAP_WIDTH + 4 ; $5eb4
 	call CopyScoreboardTileColumn ; $5eb7
-	ld hl, wCourtAttrmapSaved + 21 * TILEMAP_WIDTH + 18 ; $5eba
+	ld hl, wScoreboardColumnAttrs + 10 ; $5eba
 	ld de, wCourtAttrmapSaved + 12 * TILEMAP_WIDTH + 4 ; $5ebd
 	call CopyScoreboardTileColumn ; $5ec0
 	call SnapshotCourtTilemaps ; $5ec3
 	ret ; $5ec6
 RefreshCourtScoreboardFlipped:
-	ld hl, $de80 ; $5ec7
-	ld de, $d984 ; $5eca
+	ld hl, wScoreboardColumnTiles ; $5ec7
+	ld de, wCourtTilemapSaved + 12 * TILEMAP_WIDTH + 4 ; $5eca
 	call CopyScoreboardTileColumn ; $5ecd
-	ld hl, $dea8 ; $5ed0
-	ld de, $dd84 ; $5ed3
+	ld hl, wScoreboardColumnAttrs ; $5ed0
+	ld de, wCourtAttrmapSaved + 12 * TILEMAP_WIDTH + 4 ; $5ed3
 	call CopyScoreboardTileColumn ; $5ed6
-	ld hl, $de9e ; $5ed9
-	ld de, $d99a ; $5edc
+	ld hl, wScoreboardColumnTiles + 30 ; $5ed9
+	ld de, wCourtTilemapSaved + 12 * TILEMAP_WIDTH + 26 ; $5edc
 	call CopyScoreboardTileColumn ; $5edf
-	ld hl, $dec6 ; $5ee2
-	ld de, $dd9a ; $5ee5
+	ld hl, wScoreboardColumnAttrs + 30 ; $5ee2
+	ld de, wCourtAttrmapSaved + 12 * TILEMAP_WIDTH + 26 ; $5ee5
 	call CopyScoreboardTileColumn ; $5ee8
 	call SnapshotCourtTilemaps ; $5eeb
 	ret ; $5eee
@@ -5585,7 +5585,7 @@ SetCharTarget:
 	ld a, c ; $69b9
 	ld [hl+], a ; $69ba
 	ld [hl], b ; $69bb
-	ld hl, $df55 ; $69bc
+	ld hl, wCharWalkTargetFlag ; $69bc
 	ld [hl], $00 ; $69bf
 	ret ; $69c1
 ReloadCharFrameGfx:
@@ -5744,7 +5744,7 @@ CharRallyEndState:
 	xor a ; $6ad0
 	ld [wCharShotButton1], a ; $6ad1
 	ld [wCharShotButton2], a ; $6ad4
-	ld [$df5a], a ; $6ad7
+	ld [wCharRallyReady], a ; $6ad7
 	xor a ; $6ada
 	ld [wCharChargeFlashOn], a ; $6adb
 	call EndChargeFlash ; $6ade
@@ -5894,7 +5894,7 @@ CharRallyState:
 	dw AdvanceCharStatePhase.done ; $6bf6 jumptable
 CharRallyReadyPhase:
 	ld a, $01 ; $6bf8
-	ld [$df5a], a ; $6bfa
+	ld [wCharRallyReady], a ; $6bfa
 	call ApplyCharMovementInput ; $6bfd
 	call UpdateCharRunAnimation ; $6c00
 	call BufferShotButtonPress ; $6c03
@@ -7284,7 +7284,7 @@ DecelerateCharX:
 	ld [wCharVelX + 1], a ; $74d3
 	ret ; $74d6
 ClampCharDepthSpeed:
-	ld hl, wCharMaxSpeed ; $74d7
+	ld hl, wCharMaxSpeedDepth ; $74d7
 	ld a, [hl+] ; $74da
 	ld h, [hl] ; $74db
 	ld l, a ; $74dc
@@ -7327,7 +7327,7 @@ ClampCharDepthSpeed:
 .done:
 	ret ; $750b
 ClampCharXSpeed:
-	ld hl, $df60 ; $750c
+	ld hl, wCharMaxSpeedX ; $750c
 	ld a, [hl+] ; $750f
 	ld h, [hl] ; $7510
 	ld l, a ; $7511
@@ -8533,7 +8533,7 @@ SetCharTargetMirrored:
 	ld [hl+], a ; $7c7f
 	ld [hl], d ; $7c80
 	xor a ; $7c81
-	ld [$df55], a ; $7c82
+	ld [wCharWalkTargetFlag], a ; $7c82
 	ret ; $7c85
 PredictBallXAtDepth:
 	ld hl, wShotAimAngle ; $7c86
@@ -8681,7 +8681,7 @@ AiTrackBallPhase:
 	ld a, [wBallCrossedNetFlag] ; $7d77
 	and b ; $7d7a
 	jr nz, .trackBall ; $7d7b
-	ld a, [$df5a] ; $7d7d
+	ld a, [wCharRallyReady] ; $7d7d
 	and a ; $7d80
 	ret z ; $7d81
 	call AiSteerTowardTarget ; $7d82
@@ -8701,14 +8701,14 @@ AiTrackBallPhase:
 	ret ; $7da2
 .advance:
 	ld a, [wAiTrackingParam] ; $7da3
-	ld [$df59], a ; $7da6
+	ld [wAiTrackingCountdown], a ; $7da6
 	ld hl, wAiPhase ; $7da9
 	inc [hl] ; $7dac
 AiWaitThenPickShot:
 	ld hl, wCharBallReachFlags ; $7dad
 	bit 0, [hl] ; $7db0
 	jr nz, .pickShot ; $7db2
-	ld hl, $df59 ; $7db4
+	ld hl, wAiTrackingCountdown ; $7db4
 	ld a, [hl] ; $7db7
 	and a ; $7db8
 	jr z, .pickShot ; $7db9
@@ -8827,7 +8827,7 @@ AiRallyStateBaseliner:
 	add [hl] ; $7e8c
 	ld [wAiActionTimer], a ; $7e8d
 	ld a, [wAiTrackingParam] ; $7e90
-	ld [$df59], a ; $7e93
+	ld [wAiTrackingCountdown], a ; $7e93
 	jp AiAdvancePhase ; $7e96
 .predictLanding:
 	ld de, $0180 ; $7e99
@@ -8836,7 +8836,7 @@ AiRallyStateBaseliner:
 	ld de, $0180 ; $7ea2
 	call SetCharTargetMirrored ; $7ea5
 	ld a, [wAiTrackingParam] ; $7ea8
-	ld [$df59], a ; $7eab
+	ld [wAiTrackingCountdown], a ; $7eab
 	jp AiAdvancePhase ; $7eae
 .setTarget:
 	call AdvanceMatchRng ; $7eb1
@@ -8853,7 +8853,7 @@ AiRallyStateBaseliner:
 	call SetCharTargetMirrored ; $7ecc
 	jp AiAdvancePhase ; $7ecf
 AiDoublesTrackBallPhase:
-	ld a, [$df5a] ; $7ed2
+	ld a, [wCharRallyReady] ; $7ed2
 	and a ; $7ed5
 	ret z ; $7ed6
 	call AiSteerTowardTarget ; $7ed7

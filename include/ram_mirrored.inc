@@ -12,8 +12,14 @@ def wCharDataPagePlane equ $d400
 ; [576 bytes] Saved stat page, mirrored across WRAM banks $02/$03 like wCharDataPagePlane. SaveWorkTilemapToPage copies the live screen here when its selector is 2, once per bank; the three 36-byte rows sit 8 * TILEMAP_WIDTH apart and are what MainCharStatPageTilemapPatch* patch through ApplyTilemapPatchList.
 def wCharDataPageSlot1 equ $d7e0
 
+; [1024 bytes] Tile plane of the intro cutscene's character artwork, decompressed here from DataPtr_IntroCharactersTilemap. Rows are TILEMAP_WIDTH apart; the state inits QueueVRAMCopy slices of it ($d880 and $d8c0, 4 and 6 rows in) to $9c80/$9cc0 in VRAM bank 0, pairing each with the same offset of wIntroCharactersAttrmap into VRAM bank 1.
+def wIntroCharactersTilemap equ $d800
+
 ; [576 bytes] Saved stat page, mirrored across WRAM banks $02/$03 like wCharDataPagePlane. SaveWorkTilemapToPage copies the live screen here when its selector is 1, once per bank; the three 36-byte rows sit 8 * TILEMAP_WIDTH apart and are what MainCharStatPageTilemapPatch* patch through ApplyTilemapPatchList.
 def wCharDataPageSlot2 equ $da20
+
+; [1024 bytes] CGB attribute plane for wIntroCharactersTilemap, cell for cell, from DataPtr_IntroCharactersAttrmap. Every copy out of it targets VRAM bank 1 at the address its tile-plane twin goes to in bank 0.
+def wIntroCharactersAttrmap equ $dc00
 
 ; [576 bytes] Saved stat page, mirrored across WRAM banks $02/$03 like wCharDataPagePlane. SaveWorkTilemapToPage copies the live screen here when its selector is 0 or 3+, once per bank; the three 36-byte rows sit 8 * TILEMAP_WIDTH apart and are what MainCharStatPageTilemapPatch* patch through ApplyTilemapPatchList.
 def wCharDataPageSlot3 equ $dc60
@@ -186,14 +192,26 @@ def wCharScreenX equ $df53
 ; [8-bit] Per-character banked struct (WRAM4-7): last projected screen Y
 def wCharScreenY equ $df54
 
+; [8-bit] Zeroed immediately after each write of wCharWalkTargetX / wCharWalkTargetDepth, on both paths that set a walk target. Nothing reads it -- the two writes are the only references in the ROM -- so whatever it once qualified about the target is gone.
+def wCharWalkTargetFlag equ $df55
+
 ; [8-bit] Per-character banked struct (WRAM4-7): point result from this character's perspective (signed wPointWinLoseFlag)
 def wCharPointResult equ $df57
 
 ; [8-bit] Per-character banked struct (WRAM4-7): shot buttons the AI decided to press this swing (AiPickServeButtons / AiPickShotButtons); AiPressFirstShotButton and AiPressSecondShotButton feed them into wCharInputBits one at a time
 def wAiShotButtons equ $df58
 
-; [16-bit LE] Top ground speed for this character, from CharStatTable_07_5c4a via attribute-struct offset $0027. ClampCharDepthSpeed multiplies it by the sine of wCharFacingDesired (MulHLBySinSigned) to get the limit along each axis, so the clamp follows the direction the character is trying to run.
-def wCharMaxSpeed equ $df62
+; [8-bit] Working countdown seeded from wAiTrackingParam every time the AI advances a phase after fixing a target. AiWaitThenPickShot decrements it once per frame and will not pick a shot until it reaches 0 (or until bit 0 of wCharBallReachFlags says the ball is already in reach), so a larger tracking parameter makes the character commit later.
+def wAiTrackingCountdown equ $df59
+
+; [8-bit] Set to 1 by CharRallyReadyPhase and cleared alongside wCharShotButton1/2 when a shot is abandoned. AiTrackBallPhase returns without steering while it is 0, so it gates AI movement toward the target on the character actually being in the rally-ready state.
+def wCharRallyReady equ $df5a
+
+; [16-bit LE] Speed limit along the X axis: ClampCharXSpeed multiplies it by the cosine of wCharFacingDesired, mirroring what ClampCharDepthSpeed does with wCharMaxSpeedDepth. From CharStatTable_07_5c4a indexed by attribute byte $0027 alone.
+def wCharMaxSpeedX equ $df60
+
+; [16-bit LE] Speed limit along the depth axis: ClampCharDepthSpeed multiplies it by the sine of wCharFacingDesired so the clamp follows the run direction. LoadCharacterAttributes indexes CharStatTable_07_5c4a with attribute bytes $0027 + $002b summed and doubled, clamped to the table's ten entries -- the same table wCharMaxSpeedX reads, but that one uses $0027 alone, so this axis gets whatever bonus $002b carries.
+def wCharMaxSpeedDepth equ $df62
 
 ; [16-bit LE] How hard this character accelerates, from CharStatTable_07_5c5e via attribute-struct offset $0028. AccelerateCharDepth and AccelerateCharX multiply it by the sine/cosine of wCharFacingDesired and add the result to wCharVelDepth / wCharVelX, so one value drives both axes.
 def wCharAcceleration equ $df64

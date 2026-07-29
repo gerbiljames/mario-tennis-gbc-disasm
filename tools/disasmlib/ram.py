@@ -119,10 +119,12 @@ def _scope_to_matcher(s, mirrored=False):
     constraint holds. A scope with neither would match everywhere -- rejected by
     load_ram_unions.
 
-    A `mirrored` variant widens the WRAM constraint to the *set* of banks its
-    scopes name: those banks hold parallel copies of one structure, so the name
-    is right whichever is live and a site resolves even where the bank is not
-    provable. It still loses to a bank proved to be outside the set -- one ROM
+    A `mirrored` variant names bytes it does not allocate, because another
+    union already declares them -- either the banks hold parallel copies of one
+    structure, or a second subsystem overlays the same bank at another time. It
+    widens the WRAM constraint to the *set* of banks the variant names, so the
+    name is right whichever is live and a site resolves even where the bank is
+    not provable. It still loses to a bank proved to be outside the set -- one ROM
     bank often drives several WRAM banks over the same addresses (bank $1d
     reaches $d4xx in banks 2, 3 and 6), so dropping the constraint outright
     would hand those addresses the wrong name."""
@@ -569,13 +571,12 @@ def load_ram_unions(path):
                         f"ram_unions: mirrored variant at {u['start']} has a "
                         f"scope with no ROM bank -- it would name this address "
                         f"everywhere, in every bank")
-            if len({int(b, 0) for b in (v.get("banks") or
-                    [x["wram_bank"] for x in v.get("scopes", [])
-                     if "wram_bank" in x])}) < 2:
+            if not (v.get("banks") or [x for x in v.get("scopes", [])
+                                       if "wram_bank" in x]):
                 raise SystemExit(
-                    f"ram_unions: mirrored variant at {u['start']} names "
-                    f"fewer than two wram_banks -- if the structure lives in "
-                    f"one bank, scope it to that bank instead")
+                    f"ram_unions: mirrored variant at {u['start']} names no "
+                    f"wram_bank -- say which bank(s) the bytes are in, in a "
+                    f"`banks` field or on the scopes")
         # default variant applies outside every scoped variant's ROM ranges
         # (wram_bank-only scopes contribute no ROM mask)
         mask = [m[0] for v in u["variants"]
@@ -615,13 +616,16 @@ def load_ram_unions(path):
                     scoped.add(addr, name, None, ram_field_size(e),
                                default_mask=mask, stride=_stride(e))
                 else:
-                    # A mirrored variant scoped only by ROM range is exempt
-                    # from the scope audit: its whole premise is that the bank
-                    # live at the site is not the bank the bytes are in, so
-                    # "names a symbol from a bank the site does not select"
-                    # describes it correctly rather than catching a mistake.
-                    rom_only = bool(mset) and not any(
-                        "wram_bank" in sc for sc in v.get("scopes", []))
+                    # A scope that pins an explicit instruction range and
+                    # names no wram_bank is exempt from the scope audit: it is
+                    # how a callee-selected argument is declared, so "names a
+                    # symbol from a bank the site does not select" describes it
+                    # exactly rather than catching a mistake. Whole-bank scopes
+                    # are still audited -- that looseness is what the guard was
+                    # added for, and it has caught real errors there.
+                    rom_only = any("bank" in sc and "wram_bank" not in sc
+                                   and "start" in sc
+                                   for sc in v.get("scopes", []))
                     scoped.add(addr, name, matchers, ram_field_size(e),
                                stride=_stride(e),
                                union_banks_=None if rom_only else ubanks)

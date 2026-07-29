@@ -2780,15 +2780,18 @@ SECTION "WRAMX bank 4", WRAMX[$d000], BANK[4]
 ; WRAMX bank 4 at a glance -- regenerated, see ram_unions.json:
 ;
 ;   $d000-$d5ff  overworld actors
+;   $d800-$dbff  wIntroCharactersTilemap  [mirrored with bank ]
 ;   $da00-$da31  actor engine
 ;   $dac0-$dae9  actor engine
 ;   $daea-$daf7  actor engine
 ;   $dc00-$dc7f  minigames
+;   $dc00-$dfff  wIntroCharactersAttrmap  [mirrored with bank ]
 ;   $dcf0-$dcff  minigame targets
 ;   $dd00-$dd23  match ball history ring
 ;   $dd80-$ddcf  match object slots
 ;   $ddf0-$ddff  match object slots
 ;   $de00-$de1f  match ball sprite slots
+;   $de80-$decf  court scoreboard columns
 ;   $df00-$df96  match character struct  [one copy per bank 4-7]
 
 ; Overworld / story actor slots (WRAM bank $04): 24 records of ACTOR_SIZE
@@ -3021,6 +3024,20 @@ wBallSlot:: ds 4
 wBallShadowSlot:: ds 4
 ; [20 bytes] Five match sprite-slot records (WRAM bank 4): ball-trail afterimages (tile = ball tile + 8) fed from the history ring; slots 3-5 only when wBallTrailColor is nonzero (BuildBallTrailSlots)
 wBallTrailSlots:: ds 20
+
+	ds 96
+
+; Pre-rendered scoreboard columns for the flipped court, WRAM bank $04.
+; LoadCourtSceneGraphics copies two $28-byte blocks here out of the scene
+; record; RefreshCourtScoreboardFlipped feeds them to CopyScoreboardTileColumn,
+; which reads its source under bank $04 and writes its destination under bank
+; $02 -- which is why the court planes it writes into are named from a ROM
+; range rather than a provable WRAM bank.
+; court scoreboard columns (banks $08/$0a)
+; [40 bytes] Tile half of the scoreboard columns for a court played from the far side. RefreshCourtScoreboardFlipped copies it, and the row 30 bytes in ($de9e), into wCourtTilemapSaved; the middle offset $de94 is the second column it draws.
+wScoreboardColumnTiles:: ds 40
+; [40 bytes] CGB attribute half of the same columns, laid out cell for cell with wScoreboardColumnTiles and copied into wCourtAttrmapSaved by the same routine.
+wScoreboardColumnAttrs:: ds 40
 
 
 SECTION "WRAMX bank 5", WRAMX[$d000], BANK[5]
@@ -3782,14 +3799,22 @@ w4CharChargeFlashOn:: db
 w4CharScreenX:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): last projected screen Y
 w4CharScreenY:: db
-	ds 2
+; [8-bit] Zeroed immediately after each write of wCharWalkTargetX / wCharWalkTargetDepth, on both paths that set a walk target. Nothing reads it -- the two writes are the only references in the ROM -- so whatever it once qualified about the target is gone.
+w4CharWalkTargetFlag:: db
+	ds 1
 ; [8-bit] Per-character banked struct (WRAM4-7): point result from this character's perspective (signed wPointWinLoseFlag)
 w4CharPointResult:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): shot buttons the AI decided to press this swing (AiPickServeButtons / AiPickShotButtons); AiPressFirstShotButton and AiPressSecondShotButton feed them into wCharInputBits one at a time
 w4AiShotButtons:: db
-	ds 9
-; [16-bit LE] Top ground speed for this character, from CharStatTable_07_5c4a via attribute-struct offset $0027. ClampCharDepthSpeed multiplies it by the sine of wCharFacingDesired (MulHLBySinSigned) to get the limit along each axis, so the clamp follows the direction the character is trying to run.
-w4CharMaxSpeed:: dw
+; [8-bit] Working countdown seeded from wAiTrackingParam every time the AI advances a phase after fixing a target. AiWaitThenPickShot decrements it once per frame and will not pick a shot until it reaches 0 (or until bit 0 of wCharBallReachFlags says the ball is already in reach), so a larger tracking parameter makes the character commit later.
+w4AiTrackingCountdown:: db
+; [8-bit] Set to 1 by CharRallyReadyPhase and cleared alongside wCharShotButton1/2 when a shot is abandoned. AiTrackBallPhase returns without steering while it is 0, so it gates AI movement toward the target on the character actually being in the rally-ready state.
+w4CharRallyReady:: db
+	ds 5
+; [16-bit LE] Speed limit along the X axis: ClampCharXSpeed multiplies it by the cosine of wCharFacingDesired, mirroring what ClampCharDepthSpeed does with wCharMaxSpeedDepth. From CharStatTable_07_5c4a indexed by attribute byte $0027 alone.
+w4CharMaxSpeedX:: dw
+; [16-bit LE] Speed limit along the depth axis: ClampCharDepthSpeed multiplies it by the sine of wCharFacingDesired so the clamp follows the run direction. LoadCharacterAttributes indexes CharStatTable_07_5c4a with attribute bytes $0027 + $002b summed and doubled, clamped to the table's ten entries -- the same table wCharMaxSpeedX reads, but that one uses $0027 alone, so this axis gets whatever bonus $002b carries.
+w4CharMaxSpeedDepth:: dw
 ; [16-bit LE] How hard this character accelerates, from CharStatTable_07_5c5e via attribute-struct offset $0028. AccelerateCharDepth and AccelerateCharX multiply it by the sine/cosine of wCharFacingDesired and add the result to wCharVelDepth / wCharVelX, so one value drives both axes.
 w4CharAcceleration:: dw
 ; [16-bit LE] How hard this character slows when not accelerating, from CharStatTable_07_5c72 via attribute-struct offset $002a. The two brake routines negate it against bit 7 of the current velocity so it always opposes motion; one of them substitutes a flat $0040 when bit 1 of wCharFlags is clear.
@@ -3993,14 +4018,22 @@ w5CharChargeFlashOn:: db
 w5CharScreenX:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): last projected screen Y
 w5CharScreenY:: db
-	ds 2
+; [8-bit] Zeroed immediately after each write of wCharWalkTargetX / wCharWalkTargetDepth, on both paths that set a walk target. Nothing reads it -- the two writes are the only references in the ROM -- so whatever it once qualified about the target is gone.
+w5CharWalkTargetFlag:: db
+	ds 1
 ; [8-bit] Per-character banked struct (WRAM4-7): point result from this character's perspective (signed wPointWinLoseFlag)
 w5CharPointResult:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): shot buttons the AI decided to press this swing (AiPickServeButtons / AiPickShotButtons); AiPressFirstShotButton and AiPressSecondShotButton feed them into wCharInputBits one at a time
 w5AiShotButtons:: db
-	ds 9
-; [16-bit LE] Top ground speed for this character, from CharStatTable_07_5c4a via attribute-struct offset $0027. ClampCharDepthSpeed multiplies it by the sine of wCharFacingDesired (MulHLBySinSigned) to get the limit along each axis, so the clamp follows the direction the character is trying to run.
-w5CharMaxSpeed:: dw
+; [8-bit] Working countdown seeded from wAiTrackingParam every time the AI advances a phase after fixing a target. AiWaitThenPickShot decrements it once per frame and will not pick a shot until it reaches 0 (or until bit 0 of wCharBallReachFlags says the ball is already in reach), so a larger tracking parameter makes the character commit later.
+w5AiTrackingCountdown:: db
+; [8-bit] Set to 1 by CharRallyReadyPhase and cleared alongside wCharShotButton1/2 when a shot is abandoned. AiTrackBallPhase returns without steering while it is 0, so it gates AI movement toward the target on the character actually being in the rally-ready state.
+w5CharRallyReady:: db
+	ds 5
+; [16-bit LE] Speed limit along the X axis: ClampCharXSpeed multiplies it by the cosine of wCharFacingDesired, mirroring what ClampCharDepthSpeed does with wCharMaxSpeedDepth. From CharStatTable_07_5c4a indexed by attribute byte $0027 alone.
+w5CharMaxSpeedX:: dw
+; [16-bit LE] Speed limit along the depth axis: ClampCharDepthSpeed multiplies it by the sine of wCharFacingDesired so the clamp follows the run direction. LoadCharacterAttributes indexes CharStatTable_07_5c4a with attribute bytes $0027 + $002b summed and doubled, clamped to the table's ten entries -- the same table wCharMaxSpeedX reads, but that one uses $0027 alone, so this axis gets whatever bonus $002b carries.
+w5CharMaxSpeedDepth:: dw
 ; [16-bit LE] How hard this character accelerates, from CharStatTable_07_5c5e via attribute-struct offset $0028. AccelerateCharDepth and AccelerateCharX multiply it by the sine/cosine of wCharFacingDesired and add the result to wCharVelDepth / wCharVelX, so one value drives both axes.
 w5CharAcceleration:: dw
 ; [16-bit LE] How hard this character slows when not accelerating, from CharStatTable_07_5c72 via attribute-struct offset $002a. The two brake routines negate it against bit 7 of the current velocity so it always opposes motion; one of them substitutes a flat $0040 when bit 1 of wCharFlags is clear.
@@ -4204,14 +4237,22 @@ w6CharChargeFlashOn:: db
 w6CharScreenX:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): last projected screen Y
 w6CharScreenY:: db
-	ds 2
+; [8-bit] Zeroed immediately after each write of wCharWalkTargetX / wCharWalkTargetDepth, on both paths that set a walk target. Nothing reads it -- the two writes are the only references in the ROM -- so whatever it once qualified about the target is gone.
+w6CharWalkTargetFlag:: db
+	ds 1
 ; [8-bit] Per-character banked struct (WRAM4-7): point result from this character's perspective (signed wPointWinLoseFlag)
 w6CharPointResult:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): shot buttons the AI decided to press this swing (AiPickServeButtons / AiPickShotButtons); AiPressFirstShotButton and AiPressSecondShotButton feed them into wCharInputBits one at a time
 w6AiShotButtons:: db
-	ds 9
-; [16-bit LE] Top ground speed for this character, from CharStatTable_07_5c4a via attribute-struct offset $0027. ClampCharDepthSpeed multiplies it by the sine of wCharFacingDesired (MulHLBySinSigned) to get the limit along each axis, so the clamp follows the direction the character is trying to run.
-w6CharMaxSpeed:: dw
+; [8-bit] Working countdown seeded from wAiTrackingParam every time the AI advances a phase after fixing a target. AiWaitThenPickShot decrements it once per frame and will not pick a shot until it reaches 0 (or until bit 0 of wCharBallReachFlags says the ball is already in reach), so a larger tracking parameter makes the character commit later.
+w6AiTrackingCountdown:: db
+; [8-bit] Set to 1 by CharRallyReadyPhase and cleared alongside wCharShotButton1/2 when a shot is abandoned. AiTrackBallPhase returns without steering while it is 0, so it gates AI movement toward the target on the character actually being in the rally-ready state.
+w6CharRallyReady:: db
+	ds 5
+; [16-bit LE] Speed limit along the X axis: ClampCharXSpeed multiplies it by the cosine of wCharFacingDesired, mirroring what ClampCharDepthSpeed does with wCharMaxSpeedDepth. From CharStatTable_07_5c4a indexed by attribute byte $0027 alone.
+w6CharMaxSpeedX:: dw
+; [16-bit LE] Speed limit along the depth axis: ClampCharDepthSpeed multiplies it by the sine of wCharFacingDesired so the clamp follows the run direction. LoadCharacterAttributes indexes CharStatTable_07_5c4a with attribute bytes $0027 + $002b summed and doubled, clamped to the table's ten entries -- the same table wCharMaxSpeedX reads, but that one uses $0027 alone, so this axis gets whatever bonus $002b carries.
+w6CharMaxSpeedDepth:: dw
 ; [16-bit LE] How hard this character accelerates, from CharStatTable_07_5c5e via attribute-struct offset $0028. AccelerateCharDepth and AccelerateCharX multiply it by the sine/cosine of wCharFacingDesired and add the result to wCharVelDepth / wCharVelX, so one value drives both axes.
 w6CharAcceleration:: dw
 ; [16-bit LE] How hard this character slows when not accelerating, from CharStatTable_07_5c72 via attribute-struct offset $002a. The two brake routines negate it against bit 7 of the current velocity so it always opposes motion; one of them substitutes a flat $0040 when bit 1 of wCharFlags is clear.
@@ -4415,14 +4456,22 @@ w7CharChargeFlashOn:: db
 w7CharScreenX:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): last projected screen Y
 w7CharScreenY:: db
-	ds 2
+; [8-bit] Zeroed immediately after each write of wCharWalkTargetX / wCharWalkTargetDepth, on both paths that set a walk target. Nothing reads it -- the two writes are the only references in the ROM -- so whatever it once qualified about the target is gone.
+w7CharWalkTargetFlag:: db
+	ds 1
 ; [8-bit] Per-character banked struct (WRAM4-7): point result from this character's perspective (signed wPointWinLoseFlag)
 w7CharPointResult:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): shot buttons the AI decided to press this swing (AiPickServeButtons / AiPickShotButtons); AiPressFirstShotButton and AiPressSecondShotButton feed them into wCharInputBits one at a time
 w7AiShotButtons:: db
-	ds 9
-; [16-bit LE] Top ground speed for this character, from CharStatTable_07_5c4a via attribute-struct offset $0027. ClampCharDepthSpeed multiplies it by the sine of wCharFacingDesired (MulHLBySinSigned) to get the limit along each axis, so the clamp follows the direction the character is trying to run.
-w7CharMaxSpeed:: dw
+; [8-bit] Working countdown seeded from wAiTrackingParam every time the AI advances a phase after fixing a target. AiWaitThenPickShot decrements it once per frame and will not pick a shot until it reaches 0 (or until bit 0 of wCharBallReachFlags says the ball is already in reach), so a larger tracking parameter makes the character commit later.
+w7AiTrackingCountdown:: db
+; [8-bit] Set to 1 by CharRallyReadyPhase and cleared alongside wCharShotButton1/2 when a shot is abandoned. AiTrackBallPhase returns without steering while it is 0, so it gates AI movement toward the target on the character actually being in the rally-ready state.
+w7CharRallyReady:: db
+	ds 5
+; [16-bit LE] Speed limit along the X axis: ClampCharXSpeed multiplies it by the cosine of wCharFacingDesired, mirroring what ClampCharDepthSpeed does with wCharMaxSpeedDepth. From CharStatTable_07_5c4a indexed by attribute byte $0027 alone.
+w7CharMaxSpeedX:: dw
+; [16-bit LE] Speed limit along the depth axis: ClampCharDepthSpeed multiplies it by the sine of wCharFacingDesired so the clamp follows the run direction. LoadCharacterAttributes indexes CharStatTable_07_5c4a with attribute bytes $0027 + $002b summed and doubled, clamped to the table's ten entries -- the same table wCharMaxSpeedX reads, but that one uses $0027 alone, so this axis gets whatever bonus $002b carries.
+w7CharMaxSpeedDepth:: dw
 ; [16-bit LE] How hard this character accelerates, from CharStatTable_07_5c5e via attribute-struct offset $0028. AccelerateCharDepth and AccelerateCharX multiply it by the sine/cosine of wCharFacingDesired and add the result to wCharVelDepth / wCharVelX, so one value drives both axes.
 w7CharAcceleration:: dw
 ; [16-bit LE] How hard this character slows when not accelerating, from CharStatTable_07_5c72 via attribute-struct offset $002a. The two brake routines negate it against bit 7 of the current velocity so it always opposes motion; one of them substitutes a flat $0040 when bit 1 of wCharFlags is clear.

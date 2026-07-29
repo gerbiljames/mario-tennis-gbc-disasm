@@ -3637,7 +3637,7 @@ LoadCharacterAttributes:
 	ld a, [hl+] ; $5b33
 	ld b, [hl] ; $5b34
 	ld c, a ; $5b35
-	ld hl, $df60 ; $5b36
+	ld hl, wCharMaxSpeedX ; $5b36
 	ld a, c ; $5b39
 	ld [hl+], a ; $5b3a
 	ld [hl], b ; $5b3b
@@ -3667,7 +3667,7 @@ LoadCharacterAttributes:
 	ld a, [hl+] ; $5b5c
 	ld b, [hl] ; $5b5d
 	ld c, a ; $5b5e
-	ld hl, wCharMaxSpeed ; $5b5f
+	ld hl, wCharMaxSpeedDepth ; $5b5f
 	ld a, c ; $5b62
 	ld [hl+], a ; $5b63
 	ld [hl], b ; $5b64

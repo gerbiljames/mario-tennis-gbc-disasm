@@ -682,8 +682,8 @@
        "note": "[8-bit] Frames the AI holds its first shot button before adding the second. AiWaitThenPickShot sets it to 5 right after AiPressFirstShotButton; AiSwingControlSingles/Doubles will not call AiPressSecondShotButton while it is nonzero, and the per-frame tick counts it down only once wAiActionTimer ($df12) has reached 0, so the two run in sequence rather than together."
       },
       "0xdf62": {
-       "name": "wCharMaxSpeed",
-       "note": "[16-bit LE] Top ground speed for this character, from CharStatTable_07_5c4a via attribute-struct offset $0027. ClampCharDepthSpeed multiplies it by the sine of wCharFacingDesired (MulHLBySinSigned) to get the limit along each axis, so the clamp follows the direction the character is trying to run."
+       "name": "wCharMaxSpeedDepth",
+       "note": "[16-bit LE] Speed limit along the depth axis: ClampCharDepthSpeed multiplies it by the sine of wCharFacingDesired so the clamp follows the run direction. LoadCharacterAttributes indexes CharStatTable_07_5c4a with attribute bytes $0027 + $002b summed and doubled, clamped to the table's ten entries -- the same table wCharMaxSpeedX reads, but that one uses $0027 alone, so this axis gets whatever bonus $002b carries."
       },
       "0xdf64": {
        "name": "wCharAcceleration",
@@ -712,6 +712,22 @@
       "0xdf4e": {
        "name": "wCharSwingHoldFrames",
        "note": "[8-bit] Frames the swing has been held: CheckSwingRelease increments it once per frame through `ld hl, $df4e / inc [hl]` and zeroes it on release or when SELECT is down. Write-only like wCharSwingHoldButton -- no site reads the count back, so whatever charge mechanic it fed is gone."
+      },
+      "0xdf60": {
+       "name": "wCharMaxSpeedX",
+       "note": "[16-bit LE] Speed limit along the X axis: ClampCharXSpeed multiplies it by the cosine of wCharFacingDesired, mirroring what ClampCharDepthSpeed does with wCharMaxSpeedDepth. From CharStatTable_07_5c4a indexed by attribute byte $0027 alone."
+      },
+      "0xdf55": {
+       "name": "wCharWalkTargetFlag",
+       "note": "[8-bit] Zeroed immediately after each write of wCharWalkTargetX / wCharWalkTargetDepth, on both paths that set a walk target. Nothing reads it -- the two writes are the only references in the ROM -- so whatever it once qualified about the target is gone."
+      },
+      "0xdf59": {
+       "name": "wAiTrackingCountdown",
+       "note": "[8-bit] Working countdown seeded from wAiTrackingParam every time the AI advances a phase after fixing a target. AiWaitThenPickShot decrements it once per frame and will not pick a shot until it reaches 0 (or until bit 0 of wCharBallReachFlags says the ball is already in reach), so a larger tracking parameter makes the character commit later."
+      },
+      "0xdf5a": {
+       "name": "wCharRallyReady",
+       "note": "[8-bit] Set to 1 by CharRallyReadyPhase and cleared alongside wCharShotButton1/2 when a shot is abandoned. AiTrackBallPhase returns without steering while it is 0, so it gates AI movement toward the target on the character actually being in the rally-ready state."
       }
      }
     }
@@ -3669,6 +3685,79 @@
    ]
   },
   {
+   "start": "0xde80",
+   "end": "0xded0",
+   "wram_bank": "0x04",
+   "comment": "Pre-rendered scoreboard columns for the flipped court, WRAM bank $04.\nLoadCourtSceneGraphics copies two $28-byte blocks here out of the scene\nrecord; RefreshCourtScoreboardFlipped feeds them to CopyScoreboardTileColumn,\nwhich reads its source under bank $04 and writes its destination under bank\n$02 -- which is why the court planes it writes into are named from a ROM\nrange rather than a provable WRAM bank.",
+   "variants": [
+    {
+     "context": "court scoreboard columns (banks $08/$0a)",
+     "scopes": [
+      {
+       "bank": "0x08",
+       "wram_bank": "0x04"
+      },
+      {
+       "bank": "0x0a",
+       "wram_bank": "0x04"
+      },
+      {
+       "bank": "0x08",
+       "start": "0x5e9f",
+       "end": "0x5ea2"
+      },
+      {
+       "bank": "0x08",
+       "start": "0x5ea8",
+       "end": "0x5eab"
+      },
+      {
+       "bank": "0x08",
+       "start": "0x5eb1",
+       "end": "0x5eb4"
+      },
+      {
+       "bank": "0x08",
+       "start": "0x5eba",
+       "end": "0x5ebd"
+      },
+      {
+       "bank": "0x08",
+       "start": "0x5ec7",
+       "end": "0x5eca"
+      },
+      {
+       "bank": "0x08",
+       "start": "0x5ed0",
+       "end": "0x5ed3"
+      },
+      {
+       "bank": "0x08",
+       "start": "0x5ed9",
+       "end": "0x5edc"
+      },
+      {
+       "bank": "0x08",
+       "start": "0x5ee2",
+       "end": "0x5ee5"
+      }
+     ],
+     "symbols": {
+      "0xde80": {
+       "name": "wScoreboardColumnTiles",
+       "note": "[40 bytes] Tile half of the scoreboard columns for a court played from the far side. RefreshCourtScoreboardFlipped copies it, and the row 30 bytes in ($de9e), into wCourtTilemapSaved; the middle offset $de94 is the second column it draws.",
+       "size": 40
+      },
+      "0xdea8": {
+       "name": "wScoreboardColumnAttrs",
+       "note": "[40 bytes] CGB attribute half of the same columns, laid out cell for cell with wScoreboardColumnTiles and copied into wCourtAttrmapSaved by the same routine.",
+       "size": 40
+      }
+     }
+    }
+   ]
+  },
+  {
    "start": "0xd000",
    "wram_bank": "0x02",
    "end": "0xe000",
@@ -3680,6 +3769,26 @@
       {
        "bank": "0x08",
        "wram_bank": "0x02"
+      },
+      {
+       "bank": "0x08",
+       "start": "0x5eca",
+       "end": "0x5ecd"
+      },
+      {
+       "bank": "0x08",
+       "start": "0x5ed3",
+       "end": "0x5ed6"
+      },
+      {
+       "bank": "0x08",
+       "start": "0x5edc",
+       "end": "0x5edf"
+      },
+      {
+       "bank": "0x08",
+       "start": "0x5ee5",
+       "end": "0x5ee8"
       }
      ],
      "symbols": {
@@ -3924,6 +4033,45 @@
        "name": "wCharDataPageSlot3",
        "note": "[576 bytes] Saved stat page, mirrored across WRAM banks $02/$03 like wCharDataPagePlane. SaveWorkTilemapToPage copies the live screen here when its selector is 0 or 3+, once per bank; the three 36-byte rows sit 8 * TILEMAP_WIDTH apart and are what MainCharStatPageTilemapPatch* patch through ApplyTilemapPatchList.",
        "size": 576,
+       "stride": [
+        "TILEMAP_WIDTH",
+        "0x20"
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "start": "0xd800",
+   "end": "0xe000",
+   "comment": "Intro-cutscene tilemap planes, WRAM bank $04. Bank $6b decompresses the\ncutscene's tile map to $d800 and its CGB attribute map to $dc00, then\nQueueVRAMCopies matching offsets to the same VRAM address in banks 0 and 1.\nDeclared mirrored so it names these bytes without allocating them: the match\nengine's ball history, sprite and object slots already declare this range in\nWRAM bank $04, and the cutscene simply owns it at a different time.",
+   "variants": [
+    {
+     "context": "intro cutscene (bank $6b)",
+     "mirrored": true,
+     "banks": [
+      "0x04"
+     ],
+     "scopes": [
+      {
+       "bank": "0x6b"
+      }
+     ],
+     "symbols": {
+      "0xd800": {
+       "name": "wIntroCharactersTilemap",
+       "note": "[1024 bytes] Tile plane of the intro cutscene's character artwork, decompressed here from DataPtr_IntroCharactersTilemap. Rows are TILEMAP_WIDTH apart; the state inits QueueVRAMCopy slices of it ($d880 and $d8c0, 4 and 6 rows in) to $9c80/$9cc0 in VRAM bank 0, pairing each with the same offset of wIntroCharactersAttrmap into VRAM bank 1.",
+       "size": 1024,
+       "stride": [
+        "TILEMAP_WIDTH",
+        "0x20"
+       ]
+      },
+      "0xdc00": {
+       "name": "wIntroCharactersAttrmap",
+       "note": "[1024 bytes] CGB attribute plane for wIntroCharactersTilemap, cell for cell, from DataPtr_IntroCharactersAttrmap. Every copy out of it targets VRAM bank 1 at the address its tile-plane twin goes to in bank 0.",
+       "size": 1024,
        "stride": [
         "TILEMAP_WIDTH",
         "0x20"

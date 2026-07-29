@@ -413,20 +413,20 @@ IntroCutsceneState02Init_6b:
 	ldh a, [hWramBank] ; $4326
 	push af ; $4328
 	wram_bank $03 ; $4329
-	ld hl, $d880 ; $432f
+	ld hl, wIntroCharactersTilemap + 4 * TILEMAP_WIDTH ; $432f
 	ld de, $9880 ; $4332
 	ld c, $0a ; $4335
 	call QueueVRAMCopy ; $4337
-	ld hl, $dc80 ; $433a
+	ld hl, wIntroCharactersAttrmap + 4 * TILEMAP_WIDTH ; $433a
 	ld de, $9880 + VRAM_BANK1 ; $433d
 	ld c, $0a ; $4340
 	call QueueVRAMCopy ; $4342
 	call AdvanceFrame ; $4345
-	ld hl, $d920 ; $4348
+	ld hl, wIntroCharactersTilemap + 9 * TILEMAP_WIDTH ; $4348
 	ld de, $9920 ; $434b
 	ld c, $0a ; $434e
 	call QueueVRAMCopy ; $4350
-	ld hl, $dd20 ; $4353
+	ld hl, wIntroCharactersAttrmap + 9 * TILEMAP_WIDTH ; $4353
 	ld de, $9920 + VRAM_BANK1 ; $4356
 	ld c, $0a ; $4359
 	call QueueVRAMCopy ; $435b
@@ -527,20 +527,20 @@ IntroCutsceneState04Init_6b:
 	ldh a, [hWramBank] ; $4487
 	push af ; $4489
 	wram_bank $03 ; $448a
-	ld hl, $d880 ; $4490
+	ld hl, wIntroCharactersTilemap + 4 * TILEMAP_WIDTH ; $4490
 	ld de, $9880 ; $4493
 	ld c, $0a ; $4496
 	call QueueVRAMCopy ; $4498
-	ld hl, $dc80 ; $449b
+	ld hl, wIntroCharactersAttrmap + 4 * TILEMAP_WIDTH ; $449b
 	ld de, $9880 + VRAM_BANK1 ; $449e
 	ld c, $0a ; $44a1
 	call QueueVRAMCopy ; $44a3
 	call AdvanceFrame ; $44a6
-	ld hl, $d920 ; $44a9
+	ld hl, wIntroCharactersTilemap + 9 * TILEMAP_WIDTH ; $44a9
 	ld de, $9920 ; $44ac
 	ld c, $0a ; $44af
 	call QueueVRAMCopy ; $44b1
-	ld hl, $dd20 ; $44b4
+	ld hl, wIntroCharactersAttrmap + 9 * TILEMAP_WIDTH ; $44b4
 	ld de, $9920 + VRAM_BANK1 ; $44b7
 	ld c, $0a ; $44ba
 	call QueueVRAMCopy ; $44bc
@@ -1038,10 +1038,10 @@ IntroCutsceneState16Init_6b:
 	call QueueVRAMCopy ; $49ea
 	wram_bank $04 ; $49ed
 	ld hl, IntroCutsceneState16InitGfx4 ; $49f3 -> DataPtr_IntroCharactersTilemap
-	ld de, $d800 ; $49f6
+	ld de, wIntroCharactersTilemap ; $49f6
 	call DecompressDataFromBank ; $49f9
 	ld hl, IntroCutsceneState16InitGfx5 ; $49fc -> DataPtr_IntroCharactersAttrmap
-	ld de, $dc00 ; $49ff
+	ld de, wIntroCharactersAttrmap ; $49ff
 	call DecompressDataFromBank ; $4a02
 	wram_bank $05 ; $4a05
 	ld hl, IntroCutsceneState16InitGfx6 ; $4a0b -> DataPtr_IntroCharactersTilemap2
@@ -1077,20 +1077,20 @@ Palettes_6b_4a58:
 	INCLUDE "data/bank_06b/palettes_4a58.asm" ; $4a58, 64 bytes (palettes)
 IntroCutsceneState17Init_6b:
 	wram_bank $04 ; $4a98
-	ld hl, $d8c0 ; $4a9e
+	ld hl, wIntroCharactersTilemap + 6 * TILEMAP_WIDTH ; $4a9e
 	ld de, $9cc0 ; $4aa1
 	ld c, $10 ; $4aa4
 	call QueueVRAMCopy ; $4aa6
-	ld hl, $dcc0 ; $4aa9
+	ld hl, wIntroCharactersAttrmap + 6 * TILEMAP_WIDTH ; $4aa9
 	ld de, $9cc0 + VRAM_BANK1 ; $4aac
 	ld c, $10 ; $4aaf
 	call QueueVRAMCopy ; $4ab1
 	call AdvanceFrame ; $4ab4
-	ld hl, $d880 ; $4ab7
+	ld hl, wIntroCharactersTilemap + 4 * TILEMAP_WIDTH ; $4ab7
 	ld de, $9c80 ; $4aba
 	ld c, $04 ; $4abd
 	call QueueVRAMCopy ; $4abf
-	ld hl, $dc80 ; $4ac2
+	ld hl, wIntroCharactersAttrmap + 4 * TILEMAP_WIDTH ; $4ac2
 	ld de, $9c80 + VRAM_BANK1 ; $4ac5
 	ld c, $04 ; $4ac8
 	call QueueVRAMCopy ; $4aca

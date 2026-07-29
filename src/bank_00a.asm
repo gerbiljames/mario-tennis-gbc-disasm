@@ -4864,11 +4864,11 @@ LoadCourtSceneGraphics:
 	call QueueVRAMCopy ; $6349
 	wram_bank $04 ; $634c
 	pop hl ; $6352
-	ld de, $dea8 ; $6353
+	ld de, wScoreboardColumnAttrs ; $6353
 	ld bc, $0028 ; $6356
 	call CopyDataFromBank ; $6359
 	pop hl ; $635c
-	ld de, $de80 ; $635d
+	ld de, wScoreboardColumnTiles ; $635d
 	ld bc, $0028 ; $6360
 	call CopyDataFromBank ; $6363
 	wram_bank $02 ; $6366
