@@ -3,8 +3,10 @@
 
 Proven-code bytes come from data.manifest (everything not extracted as a
 data blob is disassembled code); label naming progress comes from the
-linker symbol file, splitting auto-generated names (Func_xx_xxxx,
-Label_xx_xxxx, FarPtr_xx_xx) from human-assigned ones.
+linker symbol file, in three buckets: names that still state only an address
+and so need work (`auto`), names the generator derives from something already
+named and that nobody should edit (`derived`), and human-assigned ones
+(`named`).
 """
 import argparse
 import json
@@ -13,9 +15,20 @@ import sys
 from pathlib import Path
 
 BANK_SIZE = 0x4000
+# Still says nothing but where it is, so it is work to be done. A slot label
+# counts here only while it exposes an address -- a numeric slot, or one whose
+# target is itself auto-named -- which is how a future unnamed target puts its
+# slot back on the worklist by itself.
 AUTO_RE = re.compile(
     r"^(?:Func|Label|Data|Lz|Text)_[0-9a-f]{2}_[0-9a-f]{4}$"
-    r"|^(?:FarPtr|DataPtr)_"  # incl. slot names derived from curated targets
+    r"|^(?:FarPtr|DataPtr)_[0-9a-f]{2}_[0-9a-f]{2,4}$"
+    r"|^(?:FarPtr|DataPtr)_(?:Func|Label|Data|Lz|Text|Fill)_[0-9a-f]{2}_[0-9a-f]{4}")
+# Generated, but carries its meaning: a $4000 slot spelled after its curated
+# target (`FarPtr_RunDebugTestMenu`), or a structure named for what it is and
+# which bank it is in (`SoundTable_78`). Renaming these is wrong -- a slot name
+# is re-derived on every regeneration, so the target is what you name.
+DERIVED_RE = re.compile(
+    r"^(?:FarPtr|DataPtr)_"
     r"|^Sprite(?:Desc|Frames|Anims)_[0-9a-f]{2}$"
     r"|^(?:SoundTable|WalkSprites)_[0-9a-f]{2}$")
 
@@ -28,7 +41,11 @@ def main():
     ap.add_argument("--all", action="store_true",
                     help="include banks with no proven code")
     ap.add_argument("--unnamed", metavar="BANK",
-                    help="list auto-named symbols in the given bank (hex)")
+                    help="list the given bank's symbols that still need a name "
+                         "(hex bank; excludes generator-derived names, which "
+                         "are fixed by naming their target instead)")
+    ap.add_argument("--derived", metavar="BANK",
+                    help="list the given bank's generator-derived names (hex)")
     args = ap.parse_args()
 
     data_bytes = {}
@@ -86,32 +103,44 @@ def main():
         print(f"note: {args.sym} not found (run make); "
               "label columns omitted", file=sys.stderr)
 
-    if args.unnamed is not None:
-        bank = int(args.unnamed, 16)
+    for opt, want in ((args.unnamed, AUTO_RE), (args.derived, DERIVED_RE)):
+        if opt is None:
+            continue
+        bank = int(opt, 16)
         for addr, name in sorted(syms.get(bank, [])):
-            if AUTO_RE.match(name):
+            if want is AUTO_RE and AUTO_RE.match(name):
+                print(f"{bank:02x}:{addr:04x} {name}")
+            elif want is DERIVED_RE and not AUTO_RE.match(name) \
+                    and DERIVED_RE.match(name):
                 print(f"{bank:02x}:{addr:04x} {name}")
         return
 
     print(f"{'bank':>4}  {'code bytes':>13}  {'code%':>6}  {'fill':>5}  "
-          f"{'labels':>6}  {'named':>5}")
-    tot_code = tot_fill = tot_labels = tot_named = 0
+          f"{'labels':>6}  {'named':>5}  {'derived':>7}  {'auto':>4}")
+    tot_code = tot_fill = tot_labels = tot_named = tot_derived = tot_auto = 0
     for bank in range(nbanks):
         fill = fill_bytes.get(bank, 0)
         code = BANK_SIZE - data_bytes.get(bank, 0) - fill
         labels = syms[bank]
-        named = [n for _a, n in labels if not AUTO_RE.match(n)]
+        auto = [n for _a, n in labels if AUTO_RE.match(n)]
+        derived = [n for _a, n in labels
+                   if not AUTO_RE.match(n) and DERIVED_RE.match(n)]
+        named = len(labels) - len(auto) - len(derived)
         tot_code += code
         tot_fill += fill
         tot_labels += len(labels)
-        tot_named += len(named)
+        tot_named += named
+        tot_derived += len(derived)
+        tot_auto += len(auto)
         if code == 0 and not args.all:
             continue
         print(f"{bank:>4x}  {code:>5}/{BANK_SIZE}  {code/BANK_SIZE:>6.1%}  "
-              f"{fill:>5}  {len(labels):>6}  {len(named):>5}")
+              f"{fill:>5}  {len(labels):>6}  {named:>5}  {len(derived):>7}  "
+              f"{len(auto):>4}")
     total = nbanks * BANK_SIZE
     print(f"{'all':>4}  {tot_code:>5}/{total}  {tot_code/total:>6.1%}  "
-          f"{tot_fill:>5}  {tot_labels:>6}  {tot_named:>5}")
+          f"{tot_fill:>5}  {tot_labels:>6}  {tot_named:>5}  {tot_derived:>7}  "
+          f"{tot_auto:>4}")
 
 
 if __name__ == "__main__":

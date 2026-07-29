@@ -30,9 +30,12 @@ Everything below is **committed** (HEAD `b7ac6d1`); the whole history
 rebuilds byte-perfect. Per-bank progress at any time: `python3
 tools/progress.py` (proven-code bytes, fill runs, label counts, human-named
 counts) and `tools/progress.py --unnamed <bank>` to list still-auto-named
-symbols. **19,921 of 21,680 labels are human-named** (see the caveat in the
-auto-split section below) (up from 4,816 on 2026-07-23); what is left is
-data blobs.
+symbols. **20,103 of 21,683 labels are human-named** (up from 4,816 on
+2026-07-23), and the remaining 1,580 are all generator-*derived* names --
+`$4000` slot labels spelled after their curated target (`FarPtr_RunDebugTestMenu`)
+and structures named for what they are (`SoundTable_78`). **No symbol anywhere
+in `src/` states only an address any more**: `tools/progress.py`'s `auto` column
+is 0, and `--unnamed <bank>` returns nothing for every bank.
 
 ### Local labels inside functions (2026-07-26)
 
@@ -8198,3 +8201,42 @@ symbols `tools/progress.py` still counts as auto-named are 903 `FarPtr_`/
 design, and 12 derived table names (`SpriteDesc_*`, `SoundTable_*`,
 `WalkSprites_*`). Byte-perfect throughout; `make check` clean (4,907 regions
 now -- one fewer blob, because one of them turned out to be a routine).
+
+## The naming metric was counting finished work as unfinished (2026-07-30)
+
+`tools/progress.py` had one `AUTO_RE` doing two jobs: computing the
+`named` column and driving `--unnamed <bank>`, the naming worklist. It matched
+`^(?:FarPtr|DataPtr)_` unconditionally, with a comment admitting the clause
+covered "slot names derived from curated targets".
+
+That was fair when most targets were unnamed. It is not fair now. Of the 1,580
+symbols the regex flagged, **1,568 are slot labels spelled after a curated
+target** (`FarPtr_RunDebugTestMenu`, `DataPtr_ClubhouseScenePalettes`) and 12 are
+structures named for what they are (`SoundTable_0c`, `WalkSprites_6a`). Zero
+still stated only an address. So the worklist had become 1,580 entries of pure
+noise -- and worse, entries **nobody is allowed to action**: a slot label is
+re-derived from its target on every regeneration, so the only way to change one
+is to name its target. The metric was pointing at work that does not exist and
+hiding the fact that the real work had run out.
+
+Rather than delete the clause, the regex is split in two, because the two
+groups need different treatment:
+
+* `AUTO_RE` -- still says nothing but where it is. Address-suffixed names, plus
+  a slot label **only while it exposes an address**: a numeric slot
+  (`DataPtr_5f_02`) or one derived from an auto-named target
+  (`DataPtr_Data_5f_4c63`). That condition is what makes the worklist
+  self-maintaining: a future pass that carves a new unnamed target puts the
+  slot back on it automatically, with no regex edit.
+* `DERIVED_RE` -- generated but carrying its meaning. Reported in a new
+  `derived` column instead of being folded into the unnamed remainder.
+
+The `named` figure is unchanged by this -- it already excluded both groups --
+so the series in this document stays comparable: 21,683 labels = 20,103 named +
+1,580 derived + **0 auto**. What changes is that the remainder is now labelled
+honestly, `--unnamed` is empty for every bank (which is the true state), and
+`--derived <bank>` exists for looking at the other group.
+
+Seventeen representative names were checked against both patterns, including
+the regressions that matter: `DataPtr_5f_02`, `DataPtr_Data_5f_4c63` and
+`FarPtr_Func_10_4abc` must all still count as work, and do.
