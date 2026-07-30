@@ -126,26 +126,40 @@ def render_actor_script(rom, start, end, bank, labels):
 
 
 def render_sprite_anim(rom, start, end):
-    """A character animation script: 2-byte entries, low byte a frame index or
-    a command ($ff loop, $fe switch animation, $fb flip), high byte its
-    operand. Returns None when the region is not an even number of entries or
-    holds a command the interpreters do not implement, so a mis-declared
+    """A character animation script: mostly 2-byte entries, low byte a frame
+    index or a command ($ff loop, $fe switch animation, $fb flip), high byte its
+    operand.
+
+    The hold command is one byte, not two. Both interpreters
+    (StepCharAnimation $08:$77a8, AdvanceActorAnimation $04) fall through every
+    command test to "set the delay to $ff and keep the current frame" without
+    reading an operand, so any $f0-$fd other than $fb ends the script on the
+    frame it is showing. That is why 211 of the 570 declared scripts used to
+    fall back to `db`: a one-byte command leaves the rest of the region at an
+    odd offset, and a script that is *only* a hold is an odd length outright.
+
+    Still returns None for anything it cannot account for, so a mis-declared
     region falls back to plain bytes rather than rendering a lie."""
-    if (end - start) % 2:
-        return None
     out = []
-    for off in range(start, end, 2):
-        op, arg = rom[off], rom[off + 1]
+    off = start
+    while off < end:
+        op = rom[off]
+        if 0xF0 <= op <= 0xFD and op != 0xFB:
+            out.append(f"\tanim_hold ${op:02x}")
+            off += 1
+            continue
+        if off + 1 >= end:
+            return None
+        arg = rom[off + 1]
         if op < 0xF0:
             out.append(f"\tanim_frame ${op:02x}, ${arg:02x}")
         elif op == 0xFF:
             out.append(f"\tanim_loop ${arg:02x}")
         elif op == 0xFE:
             out.append(f"\tanim_set ${arg:02x}")
-        elif op == 0xFB:
+        else:  # $fb
             out.append(f"\tanim_flip ${arg:02x}")
-        else:
-            return None
+        off += 2
     return out
 
 

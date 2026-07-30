@@ -292,8 +292,8 @@ PamSpriteAnims:
 	dw PamSpriteAnim18 ; $7f48
 PamSpriteAnim00:
 	; $7f4a, 3 bytes (sprite_anim)
-	db $00
-	db $ff, $fd
+	anim_frame $00, $ff
+	anim_hold $fd
 PamSpriteAnim01:
 	; $7f4d, 10 bytes (sprite_anim)
 	anim_frame $02, $0c
@@ -343,7 +343,9 @@ PamSpriteAnim07:
 	anim_set $01
 PamSpriteAnim08:
 	; $7f8f, 5 bytes (sprite_anim)
-	db $15, $04, $16, $14, $fd
+	anim_frame $15, $04
+	anim_frame $16, $14
+	anim_hold $fd
 PamSpriteAnim09:
 	; $7f94, 4 bytes (sprite_anim)
 	anim_frame $06, $19
@@ -358,19 +360,24 @@ PamSpriteAnim11:
 	anim_set $01
 PamSpriteAnim12:
 	; $7fa0, 3 bytes (sprite_anim)
-	db $15, $18, $fd
+	anim_frame $15, $18
+	anim_hold $fd
 PamSpriteAnim13:
 	; $7fa3, 3 bytes (sprite_anim)
-	db $05, $ff, $fd
+	anim_frame $05, $ff
+	anim_hold $fd
 PamSpriteAnim14:
 	; $7fa6, 3 bytes (sprite_anim)
-	db $08, $ff, $fd
+	anim_frame $08, $ff
+	anim_hold $fd
 PamSpriteAnim15:
 	; $7fa9, 3 bytes (sprite_anim)
-	db $0b, $ff, $fd
+	anim_frame $0b, $ff
+	anim_hold $fd
 PamSpriteAnim16:
 	; $7fac, 3 bytes (sprite_anim)
-	db $0e, $ff, $fd
+	anim_frame $0e, $ff
+	anim_hold $fd
 PamSpriteAnim17:
 	; $7faf, 12 bytes (sprite_anim)
 	anim_frame $0f, $07

@@ -971,7 +971,7 @@ PlaceDormRoomArrivalActors_13:
 	script_get_actor_state $03 ; $5233
 	ld c, l ; $5238
 	ld b, h ; $5239
-	ld de, $d000 ; $523a
+	ld de, wActors ; $523a
 	farcall AttachActorStepMover ; $523d
 	script_get_actor_state $03 ; $5240
 	ld c, l ; $5245

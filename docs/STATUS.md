@@ -178,7 +178,7 @@ actors, and `StepCharAnimation` (bank `$08`) for on-court characters -- only
 the latter implements `$fb`, which is why the flip command appears in the
 character banks and not in the overworld ones. Decoded, `AlexSpriteAnim01` is
 `02 0c 04 06 03 0c 04 07 ff 00` = frames 2,4,3,4 held 12/6/12/7 frames, looping
-from the top. All 570 now render as `anim_*` macros rather than `INCBIN`
+from the top. 569 of the 570 render as `anim_*` macros rather than `INCBIN`
 (`sprite_anim` spec + macros in `macros.py`), so an animation reads directly:
 
 ```
@@ -9859,3 +9859,97 @@ a reference against the source rather than trusting it:
 
 The first three are applied; the doc now carries the corrected values with their
 addresses.
+
+## The animation scripts have a fifth command, and it is one byte (2026-07-30)
+
+`render_sprite_anim` parsed 2-byte entries and returned `None` on anything else,
+so **211 of the 570 declared scripts fell back to plain `db`** — and this
+document claimed all 570 rendered as macros, which had been wrong since the
+`sprite_anim` spec landed.
+
+The missing command is the fall-through case in both interpreters. After
+testing `$ff`, `$fe` and `$fb`, `StepCharAnimation` (`$08:$77a8`) does
+`ld a, $ff / ld [wCharAnimDelay], a / jr .keepFrame` — it sets the delay to its
+maximum and keeps the current frame **without reading an operand**. So any
+`$f0`-`$fd` other than `$fb` is a *one-byte* "hold this frame forever". That is
+exactly why so many scripts failed to parse: a one-byte command leaves the rest
+of the region at an odd offset, and a script that ends in a hold is an odd
+length outright. `include/macros.inc` had described the behaviour in prose all
+along; nothing implemented it.
+
+With `anim_hold` added, **569 of 570 render as macros** and the build stays
+byte-perfect. The standing pose now reads as what it is:
+
+```
+AlexSpriteAnim00:
+        anim_frame $00, $ff
+        anim_hold $fd
+```
+
+which is `CHARANIM_STAND` from the constants work an hour earlier — the two
+passes met in the middle without either knowing about the other.
+
+**The one script that still falls back is a finding, not a gap.**
+`SeanSpriteAnim04` is declared 8 bytes and holds `1a 14 | 1b 14 | 1c 14 | fd`,
+i.e. seven bytes of script and a trailing `$00` pad. The renderer refusing it is
+the designed behaviour — it returns `None` rather than inventing a reading — and
+the declared extent is what is one byte long, the same shape as the `map_actor`
+extents recorded earlier.
+
+## A fourth driving session: the status and trophy screens (2026-07-30)
+
+Six dumps, all with their masks intact this time (the sanitiser filtered `rom`
+and `rom_wram_bank` in lockstep and asserted equal lengths per file — the check
+that a previous session's loss made mandatory).
+
+```
+                    before   after
+bare $dxxx operands    345     344
+  unproven             343     316
+  rom-scoped             2      28
+```
+
+**27 of the 343 unproven sites moved**, 26 into `rom-scoped` and one to a name
+outright. Traced sites went 66,167 → 68,201 and dataflow-beating resolutions
+18,966 → 19,370. The new `rom-scoped` cluster is `$d803`-`$d82b` in WRAM bank 3,
+referenced from ROM banks `$1b` and `$3b` — exactly the trophy and N64 screens
+the session drove.
+
+Screens reached: the character/partner data pages, the **game-progress
+checklist** (which turns out to *be* the "trophies" screen — `RunTrophiesScreen`
+/ `DecodeTrophyCounts` in bank `$3b` draw a scrollable cleared-tournament list,
+not a trophy case), the N64 tournament-data star chart, the Mario-cast
+exhibition and mini-game data screens, the equipment screens, and the
+Dictionary.
+
+### Why the doubles EXP panels stayed unreachable, with the reason nailed down
+
+`DrawExpDoublesPlayerPanel`/`PartnerPanel` are gated by `FLAG_DOUBLES` tested
+once at the results screen's setup (`$1e:$4022`) and latched into
+`FLAG_TEMP_RESULTS_SCREEN_OPEN` for the rest of that screen's life — and
+exhibition matches do not route through that flow at all, which is gated deeper
+by `wSaveAndQuitRequest` coming from real match completion. So it needs a
+completed **story** doubles match, not merely a doubles match.
+
+The Flags editor settled why this save cannot provide one: flags 59-63 are set
+(Dream Match Singles, all Island Open Singles rounds) and 52-55 are clear — the
+save completed the singles campaign and none of the doubles equivalents.
+
+### The Flags editor's layout, which is the reusable part
+
+Confirmed by poking a known bit and reopening: the grid pages in rows of 16
+flags, each row-group `N?` covering flags `16N`..`16N+15` as two sub-lines
+(columns `0`-`7` = byte `2N`, columns `8`-`F` = byte `2N+1`), with column
+position being the bit **MSB-first** — column 0 is mask `$80` — the same bit
+order as the `test_flag`/`set_flag` encoding. A circled glyph means set. The
+screen is **drawn once on open, not live**, so a `write_memory` poke only shows
+after backing out and reopening.
+
+### Save status
+
+Written to twice, with no content change intended. `RunSavedDataMenuFlow`'s
+racket- and shoes-select screens both `farcall SaveStorySlot` **unconditionally
+on return**, even when the player only views and cancels — worth knowing before
+any future session browses the equipment menu. The session's calibration poke of
+`FLAG_DOUBLES` had self-cleared before the final save, which was verified by
+reading the byte immediately before backing out.

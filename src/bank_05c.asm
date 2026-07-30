@@ -292,8 +292,8 @@ DKSpriteAnims:
 	dw DKSpriteAnim18 ; $7f48
 DKSpriteAnim00:
 	; $7f4a, 3 bytes (sprite_anim)
-	db $00
-	db $ff, $fd
+	anim_frame $00, $ff
+	anim_hold $fd
 DKSpriteAnim01:
 	; $7f4d, 10 bytes (sprite_anim)
 	anim_frame $02, $0c
@@ -357,7 +357,9 @@ DKSpriteAnim07:
 	anim_set $01
 DKSpriteAnim08:
 	; $7fab, 5 bytes (sprite_anim)
-	db $15, $04, $16, $14, $fd
+	anim_frame $15, $04
+	anim_frame $16, $14
+	anim_hold $fd
 DKSpriteAnim09:
 	; $7fb0, 4 bytes (sprite_anim)
 	anim_frame $06, $19
@@ -372,19 +374,24 @@ DKSpriteAnim11:
 	anim_set $01
 DKSpriteAnim12:
 	; $7fbc, 3 bytes (sprite_anim)
-	db $15, $18, $fd
+	anim_frame $15, $18
+	anim_hold $fd
 DKSpriteAnim13:
 	; $7fbf, 3 bytes (sprite_anim)
-	db $05, $ff, $fd
+	anim_frame $05, $ff
+	anim_hold $fd
 DKSpriteAnim14:
 	; $7fc2, 3 bytes (sprite_anim)
-	db $08, $ff, $fd
+	anim_frame $08, $ff
+	anim_hold $fd
 DKSpriteAnim15:
 	; $7fc5, 3 bytes (sprite_anim)
-	db $0b, $ff, $fd
+	anim_frame $0b, $ff
+	anim_hold $fd
 DKSpriteAnim16:
 	; $7fc8, 3 bytes (sprite_anim)
-	db $0e, $ff, $fd
+	anim_frame $0e, $ff
+	anim_hold $fd
 DKSpriteAnim17:
 	; $7fcb, 12 bytes (sprite_anim)
 	anim_frame $0f, $07

@@ -292,8 +292,8 @@ LuigiSpriteAnims:
 	dw LuigiSpriteAnim18 ; $7f48
 LuigiSpriteAnim00:
 	; $7f4a, 3 bytes (sprite_anim)
-	db $00
-	db $ff, $fd
+	anim_frame $00, $ff
+	anim_hold $fd
 LuigiSpriteAnim01:
 	; $7f4d, 10 bytes (sprite_anim)
 	anim_frame $02, $0c
@@ -337,7 +337,9 @@ LuigiSpriteAnim07:
 	anim_set $01
 LuigiSpriteAnim08:
 	; $7f83, 5 bytes (sprite_anim)
-	db $15, $04, $16, $14, $fd
+	anim_frame $15, $04
+	anim_frame $16, $14
+	anim_hold $fd
 LuigiSpriteAnim09:
 	; $7f88, 4 bytes (sprite_anim)
 	anim_frame $06, $19
@@ -352,19 +354,24 @@ LuigiSpriteAnim11:
 	anim_set $01
 LuigiSpriteAnim12:
 	; $7f94, 3 bytes (sprite_anim)
-	db $15, $18, $fd
+	anim_frame $15, $18
+	anim_hold $fd
 LuigiSpriteAnim13:
 	; $7f97, 3 bytes (sprite_anim)
-	db $05, $ff, $fd
+	anim_frame $05, $ff
+	anim_hold $fd
 LuigiSpriteAnim14:
 	; $7f9a, 3 bytes (sprite_anim)
-	db $08, $ff, $fd
+	anim_frame $08, $ff
+	anim_hold $fd
 LuigiSpriteAnim15:
 	; $7f9d, 3 bytes (sprite_anim)
-	db $0b, $ff, $fd
+	anim_frame $0b, $ff
+	anim_hold $fd
 LuigiSpriteAnim16:
 	; $7fa0, 3 bytes (sprite_anim)
-	db $0e, $ff, $fd
+	anim_frame $0e, $ff
+	anim_hold $fd
 LuigiSpriteAnim17:
 	; $7fa3, 12 bytes (sprite_anim)
 	anim_frame $0f, $07

@@ -292,8 +292,8 @@ PeachSpriteAnims:
 	dw PeachSpriteAnim18 ; $7f48
 PeachSpriteAnim00:
 	; $7f4a, 3 bytes (sprite_anim)
-	db $00
-	db $ff, $fd
+	anim_frame $00, $ff
+	anim_hold $fd
 PeachSpriteAnim01:
 	; $7f4d, 10 bytes (sprite_anim)
 	anim_frame $02, $0c
@@ -355,7 +355,9 @@ PeachSpriteAnim07:
 	anim_set $01
 PeachSpriteAnim08:
 	; $7fa7, 5 bytes (sprite_anim)
-	db $15, $04, $16, $14, $fd
+	anim_frame $15, $04
+	anim_frame $16, $14
+	anim_hold $fd
 PeachSpriteAnim09:
 	; $7fac, 4 bytes (sprite_anim)
 	anim_frame $06, $19
@@ -370,19 +372,24 @@ PeachSpriteAnim11:
 	anim_set $01
 PeachSpriteAnim12:
 	; $7fb8, 3 bytes (sprite_anim)
-	db $15, $18, $fd
+	anim_frame $15, $18
+	anim_hold $fd
 PeachSpriteAnim13:
 	; $7fbb, 3 bytes (sprite_anim)
-	db $05, $ff, $fd
+	anim_frame $05, $ff
+	anim_hold $fd
 PeachSpriteAnim14:
 	; $7fbe, 3 bytes (sprite_anim)
-	db $08, $ff, $fd
+	anim_frame $08, $ff
+	anim_hold $fd
 PeachSpriteAnim15:
 	; $7fc1, 3 bytes (sprite_anim)
-	db $0b, $ff, $fd
+	anim_frame $0b, $ff
+	anim_hold $fd
 PeachSpriteAnim16:
 	; $7fc4, 3 bytes (sprite_anim)
-	db $0e, $ff, $fd
+	anim_frame $0e, $ff
+	anim_hold $fd
 PeachSpriteAnim17:
 	; $7fc7, 12 bytes (sprite_anim)
 	anim_frame $0f, $07

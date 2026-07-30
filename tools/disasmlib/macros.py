@@ -236,6 +236,11 @@ ENDM
 MACRO anim_flip      ; $fb XOR the sprite's flip bits with \\1 (match characters only)
 	db $fb, \\1
 ENDM
+; $f0-$fd (except $fb): set the frame delay to $ff and keep the current frame,
+; i.e. hold it forever. One byte -- neither interpreter reads an operand.
+MACRO anim_hold
+	db \\1
+ENDM
 MACRO as_jump        ; $0c jump to `target` (signed rel16, relative to the operand)
 	db $0c
 	dw \\1 - @

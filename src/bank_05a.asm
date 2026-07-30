@@ -292,8 +292,8 @@ BallMachineSpriteAnims:
 	dw BallMachineSpriteAnim18 ; $7f48
 BallMachineSpriteAnim00:
 	; $7f4a, 3 bytes (sprite_anim)
-	db $00
-	db $ff, $fd
+	anim_frame $00, $ff
+	anim_hold $fd
 BallMachineSpriteAnim01:
 	; $7f4d, 10 bytes (sprite_anim)
 	anim_frame $02, $05
@@ -330,7 +330,9 @@ BallMachineSpriteAnim07:
 	anim_set $01
 BallMachineSpriteAnim08:
 	; $7f75, 5 bytes (sprite_anim)
-	db $15, $04, $16, $14, $fd
+	anim_frame $15, $04
+	anim_frame $16, $14
+	anim_hold $fd
 BallMachineSpriteAnim09:
 	; $7f7a, 4 bytes (sprite_anim)
 	anim_frame $06, $19
@@ -345,19 +347,24 @@ BallMachineSpriteAnim11:
 	anim_set $01
 BallMachineSpriteAnim12:
 	; $7f86, 3 bytes (sprite_anim)
-	db $15, $18, $fd
+	anim_frame $15, $18
+	anim_hold $fd
 BallMachineSpriteAnim13:
 	; $7f89, 3 bytes (sprite_anim)
-	db $05, $ff, $fd
+	anim_frame $05, $ff
+	anim_hold $fd
 BallMachineSpriteAnim14:
 	; $7f8c, 3 bytes (sprite_anim)
-	db $08, $ff, $fd
+	anim_frame $08, $ff
+	anim_hold $fd
 BallMachineSpriteAnim15:
 	; $7f8f, 3 bytes (sprite_anim)
-	db $0b, $ff, $fd
+	anim_frame $0b, $ff
+	anim_hold $fd
 BallMachineSpriteAnim16:
 	; $7f92, 3 bytes (sprite_anim)
-	db $0e, $ff, $fd
+	anim_frame $0e, $ff
+	anim_hold $fd
 BallMachineSpriteAnim17:
 	; $7f95, 12 bytes (sprite_anim)
 	anim_frame $0f, $07

@@ -292,8 +292,8 @@ BowserSpriteAnims:
 	dw BowserSpriteAnim18 ; $7f48
 BowserSpriteAnim00:
 	; $7f4a, 3 bytes (sprite_anim)
-	db $00
-	db $ff, $fd
+	anim_frame $00, $ff
+	anim_hold $fd
 BowserSpriteAnim01:
 	; $7f4d, 10 bytes (sprite_anim)
 	anim_frame $02, $0c
@@ -341,7 +341,9 @@ BowserSpriteAnim07:
 	anim_set $01
 BowserSpriteAnim08:
 	; $7f8b, 5 bytes (sprite_anim)
-	db $15, $04, $16, $14, $fd
+	anim_frame $15, $04
+	anim_frame $16, $14
+	anim_hold $fd
 BowserSpriteAnim09:
 	; $7f90, 4 bytes (sprite_anim)
 	anim_frame $06, $19
@@ -356,19 +358,24 @@ BowserSpriteAnim11:
 	anim_set $01
 BowserSpriteAnim12:
 	; $7f9c, 3 bytes (sprite_anim)
-	db $15, $18, $fd
+	anim_frame $15, $18
+	anim_hold $fd
 BowserSpriteAnim13:
 	; $7f9f, 3 bytes (sprite_anim)
-	db $05, $ff, $fd
+	anim_frame $05, $ff
+	anim_hold $fd
 BowserSpriteAnim14:
 	; $7fa2, 3 bytes (sprite_anim)
-	db $08, $ff, $fd
+	anim_frame $08, $ff
+	anim_hold $fd
 BowserSpriteAnim15:
 	; $7fa5, 3 bytes (sprite_anim)
-	db $0b, $ff, $fd
+	anim_frame $0b, $ff
+	anim_hold $fd
 BowserSpriteAnim16:
 	; $7fa8, 3 bytes (sprite_anim)
-	db $0e, $ff, $fd
+	anim_frame $0e, $ff
+	anim_hold $fd
 BowserSpriteAnim17:
 	; $7fab, 12 bytes (sprite_anim)
 	anim_frame $0f, $07

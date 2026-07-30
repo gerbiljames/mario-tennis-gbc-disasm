@@ -292,8 +292,8 @@ AllieSpriteAnims:
 	dw AllieSpriteAnim18 ; $7f48
 AllieSpriteAnim00:
 	; $7f4a, 3 bytes (sprite_anim)
-	db $00
-	db $ff, $fd
+	anim_frame $00, $ff
+	anim_hold $fd
 AllieSpriteAnim01:
 	; $7f4d, 10 bytes (sprite_anim)
 	anim_frame $02, $0c
@@ -343,7 +343,9 @@ AllieSpriteAnim07:
 	anim_set $01
 AllieSpriteAnim08:
 	; $7f8f, 5 bytes (sprite_anim)
-	db $15, $04, $16, $14, $fd
+	anim_frame $15, $04
+	anim_frame $16, $14
+	anim_hold $fd
 AllieSpriteAnim09:
 	; $7f94, 4 bytes (sprite_anim)
 	anim_frame $06, $19
@@ -358,19 +360,24 @@ AllieSpriteAnim11:
 	anim_set $01
 AllieSpriteAnim12:
 	; $7fa0, 3 bytes (sprite_anim)
-	db $15, $18, $fd
+	anim_frame $15, $18
+	anim_hold $fd
 AllieSpriteAnim13:
 	; $7fa3, 3 bytes (sprite_anim)
-	db $05, $ff, $fd
+	anim_frame $05, $ff
+	anim_hold $fd
 AllieSpriteAnim14:
 	; $7fa6, 3 bytes (sprite_anim)
-	db $08, $ff, $fd
+	anim_frame $08, $ff
+	anim_hold $fd
 AllieSpriteAnim15:
 	; $7fa9, 3 bytes (sprite_anim)
-	db $0b, $ff, $fd
+	anim_frame $0b, $ff
+	anim_hold $fd
 AllieSpriteAnim16:
 	; $7fac, 3 bytes (sprite_anim)
-	db $0e, $ff, $fd
+	anim_frame $0e, $ff
+	anim_hold $fd
 AllieSpriteAnim17:
 	; $7faf, 12 bytes (sprite_anim)
 	anim_frame $0f, $07

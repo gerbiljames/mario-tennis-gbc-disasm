@@ -292,8 +292,8 @@ BCozSpriteAnims:
 	dw BCozSpriteAnim18 ; $7f48
 BCozSpriteAnim00:
 	; $7f4a, 3 bytes (sprite_anim)
-	db $00
-	db $ff, $fd
+	anim_frame $00, $ff
+	anim_hold $fd
 BCozSpriteAnim01:
 	; $7f4d, 10 bytes (sprite_anim)
 	anim_frame $02, $0c
@@ -348,7 +348,9 @@ BCozSpriteAnim07:
 	anim_set $01
 BCozSpriteAnim08:
 	; $7f99, 5 bytes (sprite_anim)
-	db $15, $04, $16, $14, $fd
+	anim_frame $15, $04
+	anim_frame $16, $14
+	anim_hold $fd
 BCozSpriteAnim09:
 	; $7f9e, 4 bytes (sprite_anim)
 	anim_frame $06, $19
@@ -363,19 +365,24 @@ BCozSpriteAnim11:
 	anim_set $01
 BCozSpriteAnim12:
 	; $7faa, 3 bytes (sprite_anim)
-	db $15, $18, $fd
+	anim_frame $15, $18
+	anim_hold $fd
 BCozSpriteAnim13:
 	; $7fad, 3 bytes (sprite_anim)
-	db $05, $ff, $fd
+	anim_frame $05, $ff
+	anim_hold $fd
 BCozSpriteAnim14:
 	; $7fb0, 3 bytes (sprite_anim)
-	db $08, $ff, $fd
+	anim_frame $08, $ff
+	anim_hold $fd
 BCozSpriteAnim15:
 	; $7fb3, 3 bytes (sprite_anim)
-	db $0b, $ff, $fd
+	anim_frame $0b, $ff
+	anim_hold $fd
 BCozSpriteAnim16:
 	; $7fb6, 3 bytes (sprite_anim)
-	db $0e, $ff, $fd
+	anim_frame $0e, $ff
+	anim_hold $fd
 BCozSpriteAnim17:
 	; $7fb9, 12 bytes (sprite_anim)
 	anim_frame $0f, $07

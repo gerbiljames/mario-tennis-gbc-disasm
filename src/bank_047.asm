@@ -292,8 +292,8 @@ SeanSpriteAnims:
 	dw SeanSpriteAnim18 ; $7f48
 SeanSpriteAnim00:
 	; $7f4a, 3 bytes (sprite_anim)
-	db $00
-	db $ff, $fd
+	anim_frame $00, $ff
+	anim_hold $fd
 SeanSpriteAnim01:
 	; $7f4d, 10 bytes (sprite_anim)
 	anim_frame $02, $0c
@@ -333,7 +333,9 @@ SeanSpriteAnim07:
 	anim_set $01
 SeanSpriteAnim08:
 	; $7f81, 5 bytes (sprite_anim)
-	db $15, $04, $16, $14, $fd
+	anim_frame $15, $04
+	anim_frame $16, $14
+	anim_hold $fd
 SeanSpriteAnim09:
 	; $7f86, 4 bytes (sprite_anim)
 	anim_frame $06, $19
@@ -348,19 +350,24 @@ SeanSpriteAnim11:
 	anim_set $01
 SeanSpriteAnim12:
 	; $7f92, 3 bytes (sprite_anim)
-	db $15, $18, $fd
+	anim_frame $15, $18
+	anim_hold $fd
 SeanSpriteAnim13:
 	; $7f95, 3 bytes (sprite_anim)
-	db $05, $ff, $fd
+	anim_frame $05, $ff
+	anim_hold $fd
 SeanSpriteAnim14:
 	; $7f98, 3 bytes (sprite_anim)
-	db $08, $ff, $fd
+	anim_frame $08, $ff
+	anim_hold $fd
 SeanSpriteAnim15:
 	; $7f9b, 3 bytes (sprite_anim)
-	db $0b, $ff, $fd
+	anim_frame $0b, $ff
+	anim_hold $fd
 SeanSpriteAnim16:
 	; $7f9e, 3 bytes (sprite_anim)
-	db $0e, $ff, $fd
+	anim_frame $0e, $ff
+	anim_hold $fd
 SeanSpriteAnim17:
 	; $7fa1, 12 bytes (sprite_anim)
 	anim_frame $0f, $07

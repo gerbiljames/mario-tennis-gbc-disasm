@@ -292,8 +292,8 @@ BethSpriteAnims:
 	dw BethSpriteAnim18 ; $7f48
 BethSpriteAnim00:
 	; $7f4a, 3 bytes (sprite_anim)
-	db $00
-	db $ff, $fd
+	anim_frame $00, $ff
+	anim_hold $fd
 BethSpriteAnim01:
 	; $7f4d, 10 bytes (sprite_anim)
 	anim_frame $02, $0c
@@ -340,7 +340,9 @@ BethSpriteAnim07:
 	anim_set $01
 BethSpriteAnim08:
 	; $7f89, 5 bytes (sprite_anim)
-	db $15, $04, $16, $14, $fd
+	anim_frame $15, $04
+	anim_frame $16, $14
+	anim_hold $fd
 BethSpriteAnim09:
 	; $7f8e, 4 bytes (sprite_anim)
 	anim_frame $06, $19
@@ -355,19 +357,24 @@ BethSpriteAnim11:
 	anim_set $01
 BethSpriteAnim12:
 	; $7f9a, 3 bytes (sprite_anim)
-	db $15, $18, $fd
+	anim_frame $15, $18
+	anim_hold $fd
 BethSpriteAnim13:
 	; $7f9d, 3 bytes (sprite_anim)
-	db $05, $ff, $fd
+	anim_frame $05, $ff
+	anim_hold $fd
 BethSpriteAnim14:
 	; $7fa0, 3 bytes (sprite_anim)
-	db $08, $ff, $fd
+	anim_frame $08, $ff
+	anim_hold $fd
 BethSpriteAnim15:
 	; $7fa3, 3 bytes (sprite_anim)
-	db $0b, $ff, $fd
+	anim_frame $0b, $ff
+	anim_hold $fd
 BethSpriteAnim16:
 	; $7fa6, 3 bytes (sprite_anim)
-	db $0e, $ff, $fd
+	anim_frame $0e, $ff
+	anim_hold $fd
 BethSpriteAnim17:
 	; $7fa9, 12 bytes (sprite_anim)
 	anim_frame $0f, $07

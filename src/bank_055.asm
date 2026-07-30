@@ -292,8 +292,8 @@ WarioSpriteAnims:
 	dw WarioSpriteAnim18 ; $7f48
 WarioSpriteAnim00:
 	; $7f4a, 3 bytes (sprite_anim)
-	db $00
-	db $ff, $fd
+	anim_frame $00, $ff
+	anim_hold $fd
 WarioSpriteAnim01:
 	; $7f4d, 10 bytes (sprite_anim)
 	anim_frame $02, $0c
@@ -335,7 +335,9 @@ WarioSpriteAnim07:
 	anim_set $01
 WarioSpriteAnim08:
 	; $7f7f, 5 bytes (sprite_anim)
-	db $15, $04, $16, $14, $fd
+	anim_frame $15, $04
+	anim_frame $16, $14
+	anim_hold $fd
 WarioSpriteAnim09:
 	; $7f84, 4 bytes (sprite_anim)
 	anim_frame $06, $19
@@ -350,19 +352,24 @@ WarioSpriteAnim11:
 	anim_set $01
 WarioSpriteAnim12:
 	; $7f90, 3 bytes (sprite_anim)
-	db $15, $18, $fd
+	anim_frame $15, $18
+	anim_hold $fd
 WarioSpriteAnim13:
 	; $7f93, 3 bytes (sprite_anim)
-	db $05, $ff, $fd
+	anim_frame $05, $ff
+	anim_hold $fd
 WarioSpriteAnim14:
 	; $7f96, 3 bytes (sprite_anim)
-	db $08, $ff, $fd
+	anim_frame $08, $ff
+	anim_hold $fd
 WarioSpriteAnim15:
 	; $7f99, 3 bytes (sprite_anim)
-	db $0b, $ff, $fd
+	anim_frame $0b, $ff
+	anim_hold $fd
 WarioSpriteAnim16:
 	; $7f9c, 3 bytes (sprite_anim)
-	db $0e, $ff, $fd
+	anim_frame $0e, $ff
+	anim_hold $fd
 WarioSpriteAnim17:
 	; $7f9f, 12 bytes (sprite_anim)
 	anim_frame $0f, $07
