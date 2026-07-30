@@ -1119,17 +1119,18 @@ From `include/flag_constants.inc` (bits of `wGameFlags`, `$c9c0`):
 `EntryPoint` → `Start` (`$00:$2578`, which records `hIsCGB`) → `SoftReset`
 (`$00:$2582`). `SoftReset` re-initialises the stack, LCD, HRAM, VRAM, the OAM
 DMA stub, the sound engine and the serial link, sets `wSpriteBufferPage = $c0`,
-and ends with `farcall RunDebugTestMenu` (`$00:$262c`); the `stop` that follows
+and ends with `farcall InitAndRunGame` (`$00:$262c`); the `stop` that follows
 is unreachable because that call never returns.
 
-`RunDebugTestMenu` (`$01:$4018`) clears every WRAM bank in turn, loads the
+`InitAndRunGame` (`$01:$4018`) clears every WRAM bank in turn, loads the
 shared menu font and OBJ palettes, validates and repairs SRAM, initialises story
 and match state, enables the LCD, fades in, and calls
 `farcall RunStoryModeOverworld` with `wStoryModeCurrentLocation = 0` and
 `wStoryModeEntryPoint = $0a` (`$01:$40a5`-`$40af`). Only if that returns does the
 build-stamp screen at `.loopB` (`$01:$40b2`) appear, which waits for A or START
 and re-enters the overworld. So the routine is the game's boot manager first and
-a debug harness second.
+a debug harness second -- and the harness half is unreachable, since the
+overworld call never returns. It was called `RunDebugTestMenu` until 2026-07-30.
 
 ### Things this document could not establish
 

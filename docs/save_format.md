@@ -153,9 +153,9 @@ flags `$07c0/$0140/$0160/$0180/$01a0` at boot.
 
 96 bytes at 2:`$06c0`; the used portion is a 9×9 byte matrix indexed
 `[player star char][opponent star char]` (stride 9) holding the best
-victory score per pairing. Read/written via `ReadStarVictoryGrid` /
-`WriteStarVictoryGrid` (03:5229/5240, staged at WRAM3 `$d900`) from
-`RecordExhibitionVictory` / `LoadStarCharExhibGrid` (bank $3b), which
+victory score per pairing. Read/written via `ReadMarioCastVictoryGrid` /
+`WriteMarioCastVictoryGrid` (03:5229/5240, staged at WRAM3 `$d900`) from
+`RecordExhibitionVictory` / `LoadMarioCastExhibGrid` (bank $3b), which
 drive the star-rank unlock logic after exhibition wins.
 
 ## WRAM staging buffers

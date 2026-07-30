@@ -11,8 +11,12 @@ Six logical channels share the four hardware channels. Each channel owns a
 32-byte state block in WRAM bank $07:
 
 - `wSndChannels` (`$d100`, 6 × `$20` bytes). First word = script pointer
-  (`$ffff` ⇒ channel idle). Channels 0–1 carry music, 2–5 carry SFX
-  (`CheckSfxChannelsIdle`/`StopAllSound` only touch `$d140`+).
+  (`$ffff` ⇒ channel idle). **Channels 0–1 carry sound effects and 2–5 carry
+  music** — `CheckMusicChannelsIdle`/`StopMusic` walk four blocks from
+  `wSndChannels + 64` (`$d140`, i.e. channel 2), while the effect half of
+  `PlaySound` clears blocks 0 and 1 before its table lookup. (This document said
+  the opposite until 2026-07-30, following two index-table labels that were
+  themselves swapped; see docs/STATUS.md.)
 - `wSndLoopSlots` (`$d1c0`) — per-channel loop bookkeeping resolved by
   `GetChannelLoopSlot`.
 
@@ -132,6 +136,7 @@ it expires, stepping the script via `RunSoundChannelScript`:
 ## Entry points
 
 - `PlaySound` (`$3297`) / `PlaySoundManaged` (`$3024`) — start a sound/song by id.
-- `StopAllSound` (`$3129`), `SetMusicMuted` (`$2f86`).
+- `StopMusic` (`$3129`) — stops the four *music* channels only; effects keep
+  playing, and sound id `$50` is what silences those. `SetMusicMuted` (`$2f86`).
 - `RunSoundEngine` (`$3373`) — per-tick driver (called from `UpdateSoundEngine`
   `$2f1a` and the timer handler when the LCD is off).

@@ -9238,3 +9238,49 @@ otherwise-unenterable screen needs (`wCurrentStorySlot` + `CheckStorySlot` +
 `b`/`c` before `ShowTournamentBracket`; `wCurrentMinigameStoryMatch`,
 `wMatchWinLoseFlag` and four character ids before `RunMatchWinLoseScreen`), which
 makes it a recipe list for setting up those screens by hand.
+
+## The docs had rotted before the ink dried (2026-07-30)
+
+Nine symbols were renamed this session, three reference documents were written
+before those renames landed, and two older docs had been carrying dead
+references for longer than that. A citation sweep over every file in `docs/`
+(excluding this one, which is a historical log and should keep the names it used
+at the time) found and fixed them.
+
+The one that mattered was not a name at all. **`docs/sound_engine.md` had the
+channel roles backwards** — "Channels 0–1 carry music, 2–5 carry SFX" — which is
+the same swap the ROM0 labels had, and for the same reason: the document was
+written from `SfxIndexTable`/`MusicIndexTable` when those two labels were the
+wrong way round. Corrected, with the direction now stated from the code that
+proves it (`CheckMusicChannelsIdle`/`StopMusic` walk four blocks from
+`wSndChannels + 64`, i.e. channel 2, while the effect half of `PlaySound` clears
+blocks 0 and 1). `docs/bank0_notes.md` had the matching claim that `StopAllSound`
+"silences all sound channels"; it stops the music half only, and id `$50` is what
+stops the effects.
+
+Two references pointed at symbols that do not exist:
+
+* `docs/save_format.md` cited `ReadStarVictoryGrid` / `WriteStarVictoryGrid` /
+  `LoadStarCharExhibGrid`. Those are pre-rename names; the routines at the
+  addresses the doc gives are `ReadMarioCastVictoryGrid`,
+  `WriteMarioCastVictoryGrid` and `LoadMarioCastExhibGrid`. The addresses were
+  right, which is what made the fix mechanical — a reference with an address
+  survives a rename in a way a bare name does not.
+* `docs/bugs.md` described `DrawTileAttrRect`'s only reference as the directory
+  slot `FarPtr_DrawTileAttrRect`. The substance is right but that spelling
+  appears nowhere: a bank's `$4000` directory renders as `farptr <target>` macro
+  calls, and `FarPtr_*` labels are the *other* convention, for `$4000`
+  pointer-table slots. Now cited as `farptr DrawTileAttrRect` at `$05:$4020`.
+
+`RunDebugTestMenu` → `InitAndRunGame` was updated in `story_mode.md` and
+`screens_and_ui.md`. Worth noting that both docs described that routine
+*correctly* — one calls it "the game's boot manager first and a debug harness
+second" — while the label said otherwise. Two independent readers got the
+behaviour right and neither questioned the name, which is a reasonable argument
+for citing addresses alongside names everywhere.
+
+The sweep is cheap to repeat: extract every `` `Symbol` `` from each doc and
+check it against the labels in `src/`, `labels.json`, `include/*.inc` and
+`ram/*.asm`. Everything still unresolved afterwards is a macro name, a data-spec
+kind, a deliberate placeholder (`FetchDialogueText_XX`), a third-party RAM note,
+or an ordinary English word in backticks.

@@ -28,11 +28,11 @@ Related references: [`actor_script.md`](actor_script.md) (the actor bytecode),
 
 ## Entry and top-level flow
 
-Boot reaches `RunDebugTestMenu` (`$01:$4018`, from `$00:$262c`), which
+Boot reaches `InitAndRunGame` (`$01:$4018`, from `$00:$262c`), which
 initialises SRAM and story state and then does this:
 
 ```
-ld hl, wStoryModeCurrentLocation / ld [hl], $00
+ld hl, wStoryModeCurrentLocation / ld [hl], STORYLOC_MAIN_MENU
 ld hl, wStoryModeEntryPoint      / ld [hl], $0a
 farcall RunStoryModeOverworld
 ```

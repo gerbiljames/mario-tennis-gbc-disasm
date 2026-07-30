@@ -314,9 +314,9 @@ and continuing the current one:
 
 `wGlyphBufferHoldCount` (`$d822`, WRAM bank `$05`) has exactly one producer:
 `DrawTileAttrRect` (`$05:$4552`) decrements it at `$45d3`. `DrawTileAttrRect`
-has no callers — it appears in the bank `$05` `$4000` directory as
-`FarPtr_DrawTileAttrRect` and there is no `farcall DrawTileAttrRect` anywhere in
-the ROM, and the only indexed slot references (`dslot`) are data pointers in
+has no callers — it appears in the bank `$05` `$4000` directory only, as the
+`farptr DrawTileAttrRect` slot at `$05:$4020`, and there is no
+`farcall DrawTileAttrRect` anywhere in the ROM, and the only indexed slot references (`dslot`) are data pointers in
 banks `$0a` and `$039`. Nothing increments the count at all.
 
 So the count is whatever `ResetTextWindowState`'s block clear left, i.e. 0,
