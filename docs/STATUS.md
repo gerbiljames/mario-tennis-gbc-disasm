@@ -9745,9 +9745,22 @@ which is what the in-game A+B+SELECT+START combo jumps to (`$00:$27bd`), so
 outside it. Writing `$fffe = 0` and hitting the reset combo should therefore
 land in the lockout screen on real CGB hardware emulation.
 
-Attempting it is what took the connector down (a traced `step_frames` timed out
-mid-call and the Lua accept loop stopped; `ss` shows the listener with a pending
-connection and a zero backlog, the documented signature). It needs a Lua reload
-in BizHawk before any further driving. Nothing was lost — `trace_start` resets
-the buffer, but the previous session's coverage was already dumped and
-committed.
+**The lever is confirmed, and its coverage is not capturable this way.** Setting
+the byte and hitting the combo does reach the screen: `ShowDmgLockoutScreen` ends
+in `.loop: call AdvanceFrame / jr .loop` and never returns, so the game hangs on
+it -- which is exactly what an observer reports as a crash, and recovering by
+power-cycling is what put `hIsCGB` back to `$01`.
+
+What cannot be done is *tracing* it. A traced `step_frames` that crosses
+`SoftReset` kills the Lua connector, reproduced twice out of two attempts: under
+hooks the reset path clears every WRAM bank, validates SRAM and LZ-decompresses
+the screen, far more work than the step timeout allows, and once the step times
+out the accept loop stops -- the listener keeps a pending connection with a zero
+backlog while BizHawk is still alive, and only a Lua Console reload recovers it,
+losing the trace buffer with it.
+
+So the six operands in `ShowDmgLockoutScreen` need either an untraced reset
+followed by a trace that starts *inside* the screen -- too late, since the setup
+code is what references them -- or a capture path that survives a reset. They are
+parked, not solved. The rule worth keeping is narrower than this screen: **do not
+trace across a reset.**
