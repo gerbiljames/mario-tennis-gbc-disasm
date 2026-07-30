@@ -2,8 +2,8 @@
 
 ## Where things stand
 
-**~161.0K instructions / 425,889 bytes of proven code+structured source
-(20.3% of the 2 MiB ROM) disassembled; everything rebuilds byte-perfect**
+**~161.0K instructions / 422,043 bytes of proven code+structured source
+(20.1% of the 2 MiB ROM) disassembled; everything rebuilds byte-perfect**
 (`make compare` → OK against SHA-1
 `414ba58340a27fc27b127bc01455b32764151ff0`). 59 of 128 banks contain
 code; the other 69 are data (graphics/audio/tilemaps/text) — but most of that
@@ -30,7 +30,7 @@ Everything below is **committed** (HEAD `d3da0d9`); the whole history
 rebuilds byte-perfect. Per-bank progress at any time: `python3
 tools/progress.py` (proven-code bytes, fill runs, label counts, human-named
 counts) and `tools/progress.py --unnamed <bank>` to list still-auto-named
-symbols. **20,103 of 21,683 labels are human-named** (up from 4,816 on
+symbols. **20,114 of 21,694 labels are human-named** (up from 4,816 on
 2026-07-23), and the remaining 1,580 are all generator-*derived* names --
 `$4000` slot labels spelled after their curated target (`FarPtr_RunDebugTestMenu`)
 and structures named for what they are (`SoundTable_78`). **No symbol anywhere
@@ -8610,3 +8610,251 @@ this bank — `SfxIndexTable` sitting next to `MusicIndexTable` above `PlaySound
 reads perfectly well until you check which one the `jr c` actually takes. What
 forced the check was needing to state, in `constants.inc`, *which id range is
 which*: a constant has to commit to a claim that a label can leave vague.
+
+## The location ids came out of the tables, not the code (2026-07-30)
+
+The `STORYLOC_*` pass left 23 of its 42 constants with **no site anywhere in
+`src/`** — a def with nothing to name. That was not a gap in the site rule; it
+is where location transitions actually live. `RunLocationExit` (`$0a:$5637`)
+copies a `map_script` record's `arg0` into `wStoryModeCurrentLocation` and
+`arg1` into `wStoryModeEntryPoint`, so most of the game's map graph is **data**,
+in the ExitTriggers tables. Two renderers later, **41 of the 42 constants have a
+site and the STORYLOC site count is 103 → 232**.
+
+### A spec that covers four roles cannot name a field
+
+`map_scripts` is one spec used for four of the seven `map_tree` slots
+(ExitTriggers, NpcScripts, FacingScripts, TileTriggers — 137 tables), and
+`arg0` is a location id in exactly one of them; in the others it is whatever the
+record's handler reads it as. So the *slot* is now part of the declaration:
+`map_scripts:exit`, a `role` parameter on `render_map_table`. Role `exit` names
+`arg0` `STORYLOC_*`; there is no other role, and an unrecognised one raises
+rather than rendering silently.
+
+Which tables get the role is **derived, not listed**. A `map_tree` declares its
+slots in a fixed order, so the word at `+2` of any of the 42 trees is that
+location's ExitTriggers table by construction. Following those words gives 38
+`map_scripts` tables (108 records) and 4 pointers to a lone `$ff` — the empty
+list, correctly not a declared table. Every one of the 38 already had an
+`*ExitTriggers*` name, which is a check on the derivation rather than a reason
+to have hand-listed them.
+
+`arg1` is deliberately **not** named. It indexes the *destination's* `map_entry`
+list — a different id space that happens to overlap the location ids ($0f is the
+commonest value, 21 records) — and this is the same trap that made a whole-table
+`enum:STORYLOC:2` wrong for the ending playlist, because `render_enum_table`
+names every byte in a row.
+
+### The ending playlist is a location list
+
+`EndingCreditsSequenceTileList` (`$0a:$6e40`) holds no tiles: 21
+`(location, entry point)` pairs plus an `$ffff` terminator, walked by
+`RunEndingCreditsSequence` (`$6e9f`-`$6eb0`), which stores byte 0 into
+`wStoryModeCurrentLocation` and byte 1 into `wStoryModeEntryPoint` — the same
+pair `RunLocationExit` builds, stored directly. Renamed
+**`EndingCutsceneLocationList`**, and a small `location_entries` spec renders it
+as the twelve bank-`$27` "End\*" rooms plus Island Sky, Center Court, Peach's
+Castle and Special Court, in order. Two rooms appear twice with different entry
+points (`END7_TRAINING_CTR`, `END11_TRAINING_COURT`), which is what the second
+`arg1` column is for.
+
+That leaves **one** siteless constant: `STORYLOC_SMALL_CHAR_TEST` (`$02`). No
+code writes it, no ExitTriggers record targets it, and its own ExitTriggers slot
+is the empty `$ff` — the debug map is reachable only by writing the variable.
+
+### Two community RAM notes corrected in the source
+
+`ram_map.json` feeds `ram/wram.asm`'s comments, so the two errors the constants
+pass found were contradicting `include/constants.inc` inside the generated
+source. Both are now fixed *and* attributed: the note is quoted as wrong rather
+than silently rewritten, because `docs/ram_map.md` is the downloaded
+RetroAchievements archive and stays verbatim.
+
+* `wStoryModeCurrentLocation` `$1c` is **Special Court**, not "Castle Court".
+  `LoadStoryLocationHeader`'s `$0179 + id` lands on the string "Special Court"
+  (and there is no "Castle Court" string in the ROM at all); the note's own BGM
+  list puts Castle Court's music `$12` on `$1d`, whose record selects it.
+* `wGameMode` **`$09` is the link-cable versus match**, missing from the note
+  entirely. `ScoreboardModeGfxPointers` record 9 is
+  `ScoreboardModeGfx_LinkedMatch` — the scoreboard word-art spells the mode out
+  — and bank `$38` sets the mode one instruction after
+  `farcall RunLinkCharSelectScreen`.
+
+### $ffff is not rIE
+
+Eight `ld bc/de, $ffff` sites rendered as `ld bc, rIE`, because `$ffff` is the
+register's address. None of the eight dereferences the pair, so all eight are
+now in `HWADDR_IMM_IS_CONSTANT`: two are the `b = $ff` "no door, save the
+*current* location and position" sentinel `SaveStoryReturnPoint` tests, two seed
+a loop counter that `inc bc`/`inc c` lifts to 0 before first use, one is the
+`(-1, -1)` cursor delta whose sibling call sites pass `$0101` and `$1008`, and
+three are a saturated 16-bit result. Only two are the sentinel, so it stays a
+literal rather than earning a name.
+
+### One recommended rename declined
+
+`DrawMarioExhibitionResultsHeader` (`$1e:$4336`) *is* the mode-`$0a` handler and
+mode `$0a` *is* the match `RewardFlagListMode{0,1}_1e` rows 22-24 tag with
+`FLAG_WON_DREAM_MATCH_*` — `Singles/DoublesMatchSettingsTable_0a` records 22-24
+are the only mode-`$0a` rows and they select BGM `$29`, "Dream Match" in the RA
+BGM list. But the rename to `DrawDreamMatchResultsHeader` was **not** applied,
+because the existing name is the better-sourced one: the routine's own body calls
+`DrawMarioExhibitionLabel`, which draws text id `$04ea` = string `$31`:234,
+literally **"Mario Exhibition"**, and nothing else in the ROM draws it. "Dream
+Match" appears in no string in the ROM; it comes from the RetroAchievements flag
+notes. The suspicion that the name was copied from the scoreboard art mode `$04`
+shares does not survive `git log`: `DrawMarioExhibitionLabel` predates the
+header's name. `GAMEMODE_DREAM_MATCH` and `FLAG_WON_DREAM_MATCH_*` are the
+community wording for the same mode; the two vocabularies coexisting is worth
+knowing, but it is not a reason to overwrite the game's own.
+
+## Ten defects in the shipped game (2026-07-30)
+
+`docs/bugs.md` goes from 205 lines to 519. The file's three-way split — bugs,
+dead stores, and routines that return before their body — is unchanged; the new
+entries append into it. What makes the yield possible is that every reference to
+every address can now be enumerated, so "nothing reads this" and "nothing can
+reach this" become searches rather than hunches.
+
+Five of the seven bugs were verified independently against the source before the
+entries were accepted, because `docs/bugs.md` is only worth having if a future
+session can trust it. Two are worth restating here.
+
+**`UpdateScreenShake` (`$0a:$4908`) never negates the shake.** It builds a mask
+from the magnitude, takes a random byte, and then:
+
+```
+        ld a, h
+        and c                   ; <- clears carry
+        jr nc, .negate          ; so this is unconditional
+        cpl                     ; unreachable
+        inc a                   ; unreachable
+.negate:
+        ld [wScreenShakeOffsetX], a
+```
+
+`and` fixes carry at 0, so both negation arms are dead and the offsets are
+always `0..mask` — the view shakes in **one direction only**, with mean
+`+mask/2` instead of being centred on zero. That the intent was signed is not a
+guess: both consumers sign-extend the bytes (`ComputeSpriteScrollOffset` tests
+`bit 7, l` and loads `ld h, $ff`), which makes those sign-extension arms dead
+too. No reordering fixes it; the `and` is what destroys the carry the branch
+wants.
+
+**`LoadMenuTilesBStaged` (`$01:$5095`) uploads its own machine code to VRAM.**
+The staged loader splits the 96 font tiles into three 32-tile chunks with an
+`AdvanceFrame` between them — correct — and then does:
+
+```
+        ld hl, MenuFontPalettes_01   ; $5010, 64 bytes of palette data
+        ld de, $8e00
+        ld c, $20                    ; 32 tiles = 512 bytes
+        call QueueVRAMCopy
+```
+
+`MenuFontPalettes_01` is a real palette (`LoadMenuFontPalette` hands it to
+`LoadPaletteShadow`), and 512 bytes from `$5010` runs to `$5210` — 64 bytes of
+palette followed by 448 bytes of *executable code*, including
+`LoadMenuFontPalette` at `$5050` and this routine itself at `$5095`. Meanwhile
+the fourth upload its non-staged twin `LoadMenuTilesB` performs —
+`MenuFontFillTiles_01` to `$8800` — never happens. The edit is legible in the
+destination run `$9200, $9400, $9600, … $8e00`: the survivor kept the wrong
+source label and the wrong destination. It is live code, reached through
+`LoadMenuFontGfxStaged` (farptr slot `$4014`, farcalled from `$06:$6ea0`).
+
+The other five bugs: a discarded `farcall ReadCollisionMapCell` return value
+(`$04:$5215` overwrites it with `ld a, $00` before testing it, so terrain type
+`$0b` — half-speed ground — never engages anywhere in story mode, while the
+sibling consumer 300 bytes later uses the value correctly); the white fade,
+which cannot be selected because the only writer that sets bit 7 of
+`hFadeState` sits in an unlabelled fragment at `$00:$1d0f` that nothing
+references and that is preceded by an unconditional `jr`, so every fade in the
+game is a fade to black; a missing `jr nz` after the debug console's
+`bit PADB_SELECT, a` (`$00:$18bc`); an unconditional debug `PrintHexByte` in
+`ReadBehaviorMapCell` (`$0a:$5f65`), on the overworld movement path; and a
+glyph-buffer "keep" branch (`$05:$72e9`) that is dead because its counter's only
+producer, `DrawTileAttrRect`, has no callers at all.
+
+### The nulls are the other half of the result
+
+A sweep that only reports hits cannot be distinguished from a sweep that got
+lucky, so the searches that found nothing are recorded too:
+
+* **Stores to `$0000`-`$7fff`** — the grayscale bug's signature. 138 absolute
+  writes, every one accounted for (57 `rROMB0` in the bank-switch layer, 77
+  `rRAMG`/`rRAMB` in the save engine, the known `rRAMG + 2`, and two
+  `ld [$xxxx], sp` that are data mis-decoded as code), plus 2,653 low
+  immediates into `hl`/`de`/`bc` swept for the indirect form: **zero** stores
+  through a low pointer. That lead is exhausted — the grayscale write is the
+  only instance in the ROM.
+* **Carry-flag dead branches.** Dataflow over ~1.03M lines: 5,040
+  carry-clearing ops, 655 `jr c`, 1,365 `jr nc`. Yield: the two
+  `UpdateScreenShake` sites and nothing else. 0 of 75 `cp $00` are followed by
+  a carry branch; no `and`/`or`/`xor` → `jr c`; no `scf` → `jr nc`.
+* **Impossible comparisons against the four newly closed id spaces.** For
+  `wGameMode`, all 16 writers and every `cp` were enumerated: written set =
+  compared set = `$00`-`$0a`, with nothing compared-but-never-written and no
+  comparison at or above 11. That makes `constants.inc`'s "closed" claim
+  load-bearing rather than decorative. `STORYLOC_*`, `CHAR_*` and the court ids
+  are null too — the court ids have no `cp` anywhere in the ROM.
+* **Signed/unsigned on the negated court limits**, which `match_engine.md`
+  flagged as a worry: all five readers checked against their writers, and every
+  one either absolutes first or tests `bit 7, h`. The worry does not cash out.
+* **`ret`-first routines with a live body**: 103 of 13,237 labels start with an
+  unconditional `ret`, 74 with empty bodies, and of the 28 with real bodies all
+  but one were already known or are missing labels rather than early returns.
+
+### Two candidates were refuted, and both refutations are findings
+
+**The unreachable queue tail at `$00:$0595` has no consequence.** It is a
+*compaction*: given a slot base and the count of slots left, it steps to the
+next 8-byte boundary, copies the remaining entries down to the front of
+`wVRAMCopyQueue` and re-terminates — "this slot is empty, close the hole". The
+hole cannot occur, because `QueueVRAMCopy` fills the first free slot scanning
+`l = $a0, $a8, … $e8` in order and the drain consumes from slot 0 zeroing as it
+goes, so the queue is always packed from the front. The code is redundant as
+well as unreachable, which is why it belongs in the UI reference as dead
+framework rather than in `bugs.md`.
+
+**`CopyMapToScrollBuffers`' over-long clears are the initialisation the caller
+depends on**, not collateral damage. The expected finding was that the second
+1024 bytes of each `ClearMemory16` trample `wCharDataPageSlot2`/`3`; in fact
+`ShowExpGainScreen` draws into exactly those bytes afterwards and needs them
+zeroed. So the entry that survives is about the *expansions* — `CopyMapRows32To64`
+writes 1024 bytes per plane and the clear immediately zeroes 2048 from the same
+base, discarding 3,072 bytes of copying per call — and not about the clear.
+
+### Disassembly defects the sweep turned up on the way
+
+Not game bugs, so recorded here rather than in `bugs.md`:
+
+* **Two data blobs decode as code in bank `$0d`** (`ld [$191f], sp` at `$4d8e`
+  inside `MinigameConfig_TargetShot`; `ld [$2010], sp` at `$57f8`). Opcode `$08`
+  in a config table; both want `db`/`dw`.
+* **Five missing labels in the story banks' map-script no-op template.** The
+  template is four handlers — bare `ret`; `xor a`/store/`ret`; `sound $a2`/`ret`;
+  `xor a`/store/`ret` — and banks `$0e`/`$14` label all four while `$10`-`$13`,
+  `$15` and `$27` label only the first. That makes `MapScriptNop_11` and its
+  siblings *look* like routines that return before their body when they are
+  nothing of the kind. Related: the three follow-on handlers have zero
+  references in all nine story banks; only the leading `ret` is ever selected.
+* **Seven unlabelled orphan fragments inside `StubNop_1b_09`'s span**
+  (`$1b:$69d9`-`$6aa0`, ~76 instructions): a near-duplicate of
+  `RunStoryDataConfirmMenu`, five confirm-screen text draws, and an `hh:mm:ss`
+  renderer of `wGameTimer`. The label itself is three one-byte `ret`s used as a
+  no-op frame task, so the span wants splitting, not renaming.
+* **`SceneGfxSlotTable` slots 4 and 5** are named `*AuxTilemap`/`*AuxAttrmap`
+  but hold the collision and behaviour maps.
+* Three `ld a, a` no-ops (`$0a:$5644`, `$0a:$5f67`, `$0b:$444e`) sitting exactly
+  where an operand-carrying instruction would have been — edit residue, not
+  decode errors.
+
+### Open, and worth a future pass
+
+Fourteen sites branch to the label immediately following them — two wasted bytes
+each, a strong fossil signal. Five were read by hand and none had an observable
+effect, but several are `test_flag FLAG_DOUBLES` or `FLAG_TEMP_SCENE_VARIANT_A`
+gates, which would mean a scene that should differ between singles and doubles
+no longer does. `$08:$6514` (`CheckBallContactWindow`, the fourth arm of a
+four-way animation test whose other three arms do skip work) is the one to read
+first.

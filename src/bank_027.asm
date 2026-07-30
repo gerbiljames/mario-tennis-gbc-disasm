@@ -68,8 +68,8 @@ End17AwardCeremonyEntryPoints_27:
 	map_entry $01, FACE_UP, $0c00, $1100, $0000
 	db $ff
 End17AwardCeremonyExitTriggers_27:
-	; $4193, 9 bytes (map_scripts)
-	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_27, $08, $06
+	; $4193, 9 bytes (map_scripts:exit)
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_RESTAURANT_PLAZA, $06
 	db $ff
 End17AwardCeremonyNpcScripts_27:
 	ds 1, $ff ; $419c, fill
@@ -295,8 +295,8 @@ End16BeforeFinalsEntryPoints_27:
 	map_entry $01, FACE_UP, $1c00, $2300, $0000
 	db $ff
 End16BeforeFinalsExitTriggers_27:
-	; $46f1, 9 bytes (map_scripts)
-	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_27, $18, $01
+	; $46f1, 9 bytes (map_scripts:exit)
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_CENTER_COURT, $01
 	db $ff
 End16BeforeFinalsNpcScripts_27:
 	ds 1, $ff ; $46fa, fill
@@ -545,8 +545,8 @@ End12PrincipalsOfficeEntryPoints_27:
 	map_entry $02, FACE_LEFT, $1f00, $3b00, $0000
 	db $ff
 End12PrincipalsOfficeExitTriggers_27:
-	; $4c55, 9 bytes (map_scripts)
-	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_27, $14, $01
+	; $4c55, 9 bytes (map_scripts:exit)
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_ACADEMY_ENTRANCE, $01
 	db $ff
 End12PrincipalsOfficeNpcScripts_27:
 	ds 1, $ff ; $4c5e, fill
@@ -832,8 +832,8 @@ End11TrainingCourtEntryPoints_27:
 	map_entry $02, FACE_UP, $1800, $1100, $0000
 	db $ff
 End11TrainingCourtExitTriggers_27:
-	; $5264, 9 bytes (map_scripts)
-	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_27, $08, $00
+	; $5264, 9 bytes (map_scripts:exit)
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_RESTAURANT_PLAZA, $00
 	db $ff
 End11TrainingCourtNpcScripts_27:
 	ds 1, $ff ; $526d, fill
@@ -1050,8 +1050,8 @@ End10VarsityCourtEntryPoints_27:
 	map_entry $01, FACE_UP, $0f00, $1f00, $0000
 	db $ff
 End10VarsityCourtExitTriggers_27:
-	; $5611, 9 bytes (map_scripts)
-	map_script $01, FACEMASK_ANY, $0000, $0000, $25, $01
+	; $5611, 9 bytes (map_scripts:exit)
+	map_script $01, FACEMASK_ANY, $0000, $0000, STORYLOC_END10_VARSITY_COURT, $01
 	db $ff
 End10VarsityCourtNpcScripts_27:
 	ds 1, $ff ; $561a, fill
@@ -1455,8 +1455,8 @@ End8SrCourtEntryPoints_27:
 	map_entry $01, FACE_UP, $2400, $1500, $0000
 	db $ff
 End8SrCourtExitTriggers_27:
-	; $5ecc, 9 bytes (map_scripts)
-	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_27, $24, $01
+	; $5ecc, 9 bytes (map_scripts:exit)
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_END8_SR_COURT, $01
 	db $ff
 End8SrCourtNpcScripts_27:
 	ds 1, $ff ; $5ed5, fill
@@ -1602,9 +1602,9 @@ End7TrainingCtrEntryPoints_27:
 	map_entry $02, FACE_UP, $1600, $1800, $0000
 	db $ff
 End7TrainingCtrExitTriggers_27:
-	; $61ee, 17 bytes (map_scripts)
-	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_27, $11, $03
-	map_script $04, FACEMASK_ANY, $0000, MapScriptNop_27, $11, $03
+	; $61ee, 17 bytes (map_scripts:exit)
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_TRAINING_CENTER, $03
+	map_script $04, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_TRAINING_CENTER, $03
 	db $ff
 End7TrainingCtrNpcScripts_27:
 	ds 1, $ff ; $61ff, fill
@@ -1765,9 +1765,9 @@ End5ServiceAceEntryPoints_27:
 	map_entry $02, FACE_DOWN, $0500, $1700, $0000
 	db $ff
 End5ServiceAceExitTriggers_27:
-	; $655e, 17 bytes (map_scripts)
-	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_27, $22, $01
-	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_27, $0e, $01
+	; $655e, 17 bytes (map_scripts:exit)
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_END5_SERVICE_ACE, $01
+	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_CAFETERIA, $01
 	db $ff
 End5ServiceAceCutscene_27:
 	farcall BeginCutsceneScriptMode ; $656f
@@ -1855,9 +1855,9 @@ End4JrCourtEntryPoints_27:
 	map_entry $01, FACE_UP, $1300, $2100, $0000
 	db $ff, $c9
 End4JrCourtExitTriggers_27:
-	; $67e4, 17 bytes (map_scripts)
-	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_27, $08, $05
-	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_27, $0b, $0f
+	; $67e4, 17 bytes (map_scripts:exit)
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_RESTAURANT_PLAZA, $05
+	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_JUNIOR_CLASS_COURT_SINGLES, $0f
 	db $ff
 End4JrCourtNpcScripts_27:
 	ds 1, $ff ; $67f5, fill
@@ -2273,16 +2273,16 @@ EndRestaurantEntEntryPoints_27:
 	map_entry $01, FACE_DOWN, $0700, $0840, $0000
 	db $ff
 EndRestaurantEntExitTriggers_27:
-	; $6f00, 73 bytes (map_scripts)
-	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_27, $09, $01
-	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_27, $0d, $01
-	map_script $03, FACEMASK_ANY, $0000, MapScriptNop_27, $10, $01
-	map_script $04, FACEMASK_ANY, $0000, MapScriptNop_27, $07, $02
-	map_script $05, FACEMASK_ANY, $0000, MapScriptNop_27, $0b, $01
-	map_script $06, FACEMASK_ANY, $0000, MapScriptNop_27, $0f, $01
-	map_script $0d, FACEMASK_ANY, $0000, MapScriptNop_27, $0c, $01
-	map_script $0e, FACEMASK_ANY, $0000, MapScriptNop_27, $09, $0f
-	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_27, $0f, $0f
+	; $6f00, 73 bytes (map_scripts:exit)
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_DORM_ENTRANCE, $01
+	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_RESTAURANT, $01
+	map_script $03, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_SENIOR_CLASS_COURT, $01
+	map_script $04, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_COURTYARD, $02
+	map_script $05, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_JUNIOR_CLASS_COURT_SINGLES, $01
+	map_script $06, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_TRAINING_COURT, $01
+	map_script $0d, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_JUNIOR_CLASS_COURT_DOUBLES, $01
+	map_script $0e, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_DORM_ENTRANCE, $0f
+	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_TRAINING_COURT, $0f
 	db $ff
 EndRestaurantEntNpcScripts_27:
 	ds 1, $ff ; $6f49, fill
@@ -2420,12 +2420,12 @@ End1MainBldgEntryPoints_27:
 	map_entry $0f, FACE_UP, $1800, $2f00, $0000
 	db $ff
 End1MainBldgExitTriggers_27:
-	; $72d0, 41 bytes (map_scripts)
-	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_27, $05, $01
-	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_27, $1b, $01
-	map_script $03, FACEMASK_ANY, $0000, MapScriptNop_27, $1b, $0f
-	map_script $05, FACEMASK_ANY, $0000, MapScriptNop_27, $1e, $02
-	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_27, $05, $0f
+	; $72d0, 41 bytes (map_scripts:exit)
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_ACADEMY_MAIN_BLDG, $01
+	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_ISLAND_SKY, $01
+	map_script $03, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_ISLAND_SKY, $0f
+	map_script $05, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_END1_MAIN_BLDG, $02
+	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_27, STORYLOC_ACADEMY_MAIN_BLDG, $0f
 	db $ff
 End1MainBldgNpcScripts_27:
 	ds 1, $ff ; $72f9, fill

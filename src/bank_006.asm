@@ -3126,7 +3126,7 @@ StoryPauseMenu_SaveQuit:
 	ld a, [wMessageSpeed] ; $705f
 	res 7, a ; $7062
 	ld [wMessageSpeed], a ; $7064
-	ld bc, rIE ; $7067
+	ld bc, $ffff ; $7067
 	farcall SaveStoryReturnPoint ; $706a
 	farcall SaveStorySlotWithTimer ; $706d
 	ld a, STORYLOC_MAIN_MENU ; $7070

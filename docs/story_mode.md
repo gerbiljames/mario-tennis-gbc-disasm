@@ -568,7 +568,7 @@ Open, 3 practice, 5 training-court minigames, 6 tennis machine, 7 wall practice,
 
 `RunEndingCreditsSequence` (`$0a:$6e74`) is a driver *over* `RunStoryLocation`.
 It sets `FLAG_ENDING_CREDITS_RUNNING` (which suppresses BGM and the menu font
-load in the location loader) and walks `EndingCreditsSequenceTileList`
+load in the location loader) and walks `EndingCutsceneLocationList`
 (`$0a:$6e40`), a 21-record list of (location, entry point) pairs: the twelve
 bank-`$27` "End*" rooms plus Island Sky, Center Court, Peach's Castle and Special
 Court. For each it calls `RunStoryLocation`, then — unless
@@ -784,9 +784,10 @@ these are fixed in the source; several are candidates for `bugs.md`.
   two back out. In practice the level-99 requirement is well under 65536, so the
   truncation never bites.
 * **`ld a, [wStoryCharacterSlot]` doubles as the ending-scene index** in
-  `RunEndingCreditsSequence`, and the list it indexes is named
-  `EndingCreditsSequenceTileList` although it holds (location, entry point)
-  pairs, not tiles. The `byte0 == 0` branch at `$0a:$6ea4`-`$6eab` computes
+  `RunEndingCreditsSequence`, and the list it indexes,
+  `EndingCutsceneLocationList`, holds (location, entry point) pairs -- it was
+  called `EndingCreditsSequenceTileList` until 2026-07-30 and holds no tiles.
+  The `byte0 == 0` branch at `$0a:$6ea4`-`$6eab` computes
   `sprite * 2` and then discards it by reloading `a`; no record in the table has
   a zero first byte, so the branch is unreachable.
 * **Not established:** whether completing story mode directly grants any

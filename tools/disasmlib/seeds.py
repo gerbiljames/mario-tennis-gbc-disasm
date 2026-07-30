@@ -318,11 +318,12 @@ def map_script_code_targets(rom, data_tables):
     recursive descent never gives them a label; seeding them lets the record
     macros reference the handler by name instead of a bare address."""
     for start, spec in data_tables.items():
-        if spec not in ("map_scripts", "map_entries"):
+        kind = spec.partition(":")[0]  # `map_scripts:<slot role>`
+        if kind not in ("map_scripts", "map_entries"):
             continue
         bank = start // BANK_SIZE
         base = bank * BANK_SIZE
-        pfield = 4 if spec == "map_scripts" else 6  # handler / arrival script
+        pfield = 4 if kind == "map_scripts" else 6  # handler / arrival script
         p = start
         # tables are $ff-terminated; cap the walk at the bank end for safety
         while p + 8 <= base + BANK_SIZE and rom[p] != 0xFF:

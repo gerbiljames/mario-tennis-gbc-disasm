@@ -25,7 +25,8 @@ from .constants import CHAR_ROSTER, is_splittable
 from .datatables import (render_actor_list, render_actor_script,
                          render_drill_definition, render_enum_table,
                          render_flag_ids, render_save_flag_ids,
-                         render_gfx_ptr_table, render_lz_ptr_table,
+                         render_gfx_ptr_table, render_location_entries,
+                         render_lz_ptr_table,
                          render_map_table, render_menu_def,
                          render_mugshot_ptr_table, render_object_header,
                          render_number_words, render_pointer_words,
@@ -923,7 +924,13 @@ class Emitter:
         blob or in an unclassified run. Returns lines, or None if `spec` is not
         one of them."""
         if spec.startswith("map_"):
-            return render_map_table(spec, self.rom, start, end, bank, self.labels)
+            kind, _, role = spec.partition(":")
+            return render_map_table(kind, self.rom, start, end, bank,
+                                    self.labels, role or None,
+                                    self._enum_values("STORYLOC"))
+        if spec == "location_entries":
+            return render_location_entries(self.rom, start, end,
+                                           self._enum_values("STORYLOC"))
         if spec == "tilemap_scripts":
             return render_tilemap_scripts(self.rom, start, end)
         if spec == "flag_ids":

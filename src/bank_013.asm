@@ -121,16 +121,16 @@ RestaurantPlazaArrivalWalkIn_13:
 .done:
 	ret ; $4235
 RestaurantPlazaExitTriggers_13:
-	; $4236, 73 bytes (map_scripts)
-	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_13, $09, $01
-	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_13, $0d, $01
-	map_script $03, FACEMASK_ANY, $0000, MapScriptNop_13, $10, $01
-	map_script $04, FACEMASK_ANY, $0000, MapScriptNop_13, $07, $02
-	map_script $05, FACEMASK_ANY, $0000, MapScriptNop_13, $0b, $01
-	map_script $06, FACEMASK_ANY, $0000, MapScriptNop_13, $0f, $01
-	map_script $0d, FACEMASK_ANY, $0000, MapScriptNop_13, $0c, $01
-	map_script $0e, FACEMASK_ANY, $0000, MapScriptNop_13, $09, $0f
-	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_13, $0f, $0f
+	; $4236, 73 bytes (map_scripts:exit)
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_13, STORYLOC_DORM_ENTRANCE, $01
+	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_13, STORYLOC_RESTAURANT, $01
+	map_script $03, FACEMASK_ANY, $0000, MapScriptNop_13, STORYLOC_SENIOR_CLASS_COURT, $01
+	map_script $04, FACEMASK_ANY, $0000, MapScriptNop_13, STORYLOC_COURTYARD, $02
+	map_script $05, FACEMASK_ANY, $0000, MapScriptNop_13, STORYLOC_JUNIOR_CLASS_COURT_SINGLES, $01
+	map_script $06, FACEMASK_ANY, $0000, MapScriptNop_13, STORYLOC_TRAINING_COURT, $01
+	map_script $0d, FACEMASK_ANY, $0000, MapScriptNop_13, STORYLOC_JUNIOR_CLASS_COURT_DOUBLES, $01
+	map_script $0e, FACEMASK_ANY, $0000, MapScriptNop_13, STORYLOC_DORM_ENTRANCE, $0f
+	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_13, STORYLOC_TRAINING_COURT, $0f
 	db $ff
 	script_set_text Text_35_48 ; $427f
 	script_speak ACTOR_PLAYER ; $4285
@@ -663,9 +663,9 @@ DormRoomEntryPoints_13:
 	map_entry $0f, FACE_UP, $0b00, $0d00, $0000
 	db $ff
 DormRoomExitTriggers_13:
-	; $4e93, 17 bytes (map_scripts)
-	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_13, $09, $02
-	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_13, $00, $01
+	; $4e93, 17 bytes (map_scripts:exit)
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_13, STORYLOC_DORM_ENTRANCE, $02
+	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_13, STORYLOC_MAIN_MENU, $01
 	db $ff
 DormRoomNpc04_13:
 	call AdvanceRandomSeed ; $4ea4
@@ -2018,13 +2018,13 @@ CourtyardEntryPoints_13:
 	map_entry $0f, FACE_UP, $2200, $2f00, $0000
 	db $ff
 CourtyardExitTriggers_13:
-	; $5e79, 49 bytes (map_scripts)
-	map_script $01, FACEMASK_ANY, $0000, $0000, $11, $01
-	map_script $02, FACEMASK_ANY, $0000, $0000, $08, $04
-	map_script $03, FACEMASK_ANY, $0000, $0000, $05, $02
-	map_script $0a, FACEMASK_ANY, $0000, MapScriptNop_13, $00, $0a
-	map_script $0e, FACEMASK_ANY, $0000, $0000, $07, $0e
-	map_script $0f, FACEMASK_ANY, $0000, $0000, $08, $0f
+	; $5e79, 49 bytes (map_scripts:exit)
+	map_script $01, FACEMASK_ANY, $0000, $0000, STORYLOC_TRAINING_CENTER, $01
+	map_script $02, FACEMASK_ANY, $0000, $0000, STORYLOC_RESTAURANT_PLAZA, $04
+	map_script $03, FACEMASK_ANY, $0000, $0000, STORYLOC_ACADEMY_MAIN_BLDG, $02
+	map_script $0a, FACEMASK_ANY, $0000, MapScriptNop_13, STORYLOC_MAIN_MENU, $0a
+	map_script $0e, FACEMASK_ANY, $0000, $0000, STORYLOC_COURTYARD, $0e
+	map_script $0f, FACEMASK_ANY, $0000, $0000, STORYLOC_RESTAURANT_PLAZA, $0f
 	db $ff
 CourtyardNpc03_13:
 	script_set_text Text_30_527 ; $5eaa

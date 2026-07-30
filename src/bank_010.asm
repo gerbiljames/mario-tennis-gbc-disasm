@@ -606,15 +606,15 @@ Test2EntryPoints_10:
 	map_entry $01, FACE_DOWN, $0900, $0d00, $0000
 	db $ff
 Test2ExitTriggers_10:
-	; $478e, 65 bytes (map_scripts)
-	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_10, $0f, $0b
-	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_10, $0f, $0c
-	map_script $03, FACEMASK_ANY, $0000, MapScriptNop_10, $0f, $0d
-	map_script $04, FACEMASK_ANY, $0000, MapScriptNop_10, $0b, $0f
-	map_script $05, FACEMASK_ANY, $0000, MapScriptNop_10, $0c, $0f
-	map_script $06, FACEMASK_ANY, $0000, MapScriptNop_10, $10, $01
-	map_script $07, FACEMASK_ANY, $0000, MapScriptNop_10, $07, $01
-	map_script $08, FACEMASK_ANY, $0000, MapScriptNop_10, $00, $01
+	; $478e, 65 bytes (map_scripts:exit)
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_10, STORYLOC_TRAINING_COURT, $0b
+	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_10, STORYLOC_TRAINING_COURT, $0c
+	map_script $03, FACEMASK_ANY, $0000, MapScriptNop_10, STORYLOC_TRAINING_COURT, $0d
+	map_script $04, FACEMASK_ANY, $0000, MapScriptNop_10, STORYLOC_JUNIOR_CLASS_COURT_SINGLES, $0f
+	map_script $05, FACEMASK_ANY, $0000, MapScriptNop_10, STORYLOC_JUNIOR_CLASS_COURT_DOUBLES, $0f
+	map_script $06, FACEMASK_ANY, $0000, MapScriptNop_10, STORYLOC_SENIOR_CLASS_COURT, $01
+	map_script $07, FACEMASK_ANY, $0000, MapScriptNop_10, STORYLOC_COURTYARD, $01
+	map_script $08, FACEMASK_ANY, $0000, MapScriptNop_10, STORYLOC_MAIN_MENU, $01
 	db $ff
 	ld hl, wStoryModePlayersXPosition ; $47cf
 	ld de, wStoryModeSpawnPosition ; $47d2
@@ -1055,8 +1055,8 @@ DevelopmentEntryPoints_10:
 	map_entry $01, FACE_DOWN, $0900, $0900, $0000
 	db $ff
 DevelopmentExitTriggers_10:
-	; $4cf6, 9 bytes (map_scripts)
-	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_10, $01, $01
+	; $4cf6, 9 bytes (map_scripts:exit)
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_10, STORYLOC_DEVELOPMENT, $01
 	db $ff
 DevelopmentRespawnActors_10:
 	ld c, $10 ; $4cff
@@ -1174,12 +1174,12 @@ MainMenuEntryPoints_10:
 	map_entry $01, FACE_DOWN, $ff00, $ff00, $0000
 	db $ff
 MainMenuExitTriggers_10:
-	; $4e8d, 41 bytes (map_scripts)
-	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_10, $14, $0f
-	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_10, $0a, $01
-	map_script $03, FACEMASK_ANY, $0000, MapScriptNop_10, $04, $01
-	map_script $04, FACEMASK_ANY, $0000, MapScriptNop_10, $06, $0f
-	map_script $05, FACEMASK_ANY, $0000, MapScriptNop_10, $1d, $0f
+	; $4e8d, 41 bytes (map_scripts:exit)
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_10, STORYLOC_ACADEMY_ENTRANCE, $0f
+	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_10, STORYLOC_DORM_ROOM, $01
+	map_script $03, FACEMASK_ANY, $0000, MapScriptNop_10, STORYLOC_TEST_2, $01
+	map_script $04, FACEMASK_ANY, $0000, MapScriptNop_10, STORYLOC_ACADEMY_WING, $0f
+	map_script $05, FACEMASK_ANY, $0000, MapScriptNop_10, STORYLOC_PEACHS_CASTLE, $0f
 	db $ff
 MainMenuNpcScripts_10:
 	ds 1, $ff ; $4eb6, fill
@@ -2270,8 +2270,8 @@ CafeteriaEntryPoints_10:
 	map_entry $01, FACE_DOWN, $2700, $3700, $0000
 	db $ff
 CafeteriaExitTriggers_10:
-	; $5879, 9 bytes (map_scripts)
-	map_script $03, FACEMASK_ANY, $0000, MapExitWalkCurveLeft_10, $0d, $02
+	; $5879, 9 bytes (map_scripts:exit)
+	map_script $03, FACEMASK_ANY, $0000, MapExitWalkCurveLeft_10, STORYLOC_RESTAURANT, $02
 	db $ff
 CafeteriaNpc03_10:
 	ld a, [wMapSceneStage] ; $5882
@@ -2576,9 +2576,9 @@ RestaurantArrival01_10:
 .done:
 	ret ; $5bdc
 RestaurantExitTriggers_10:
-	; $5bdd, 17 bytes (map_scripts)
-	map_script $01, FACEMASK_ANY, $0000, RestaurantExit01_10, $08, $02
-	map_script $02, FACEMASK_ANY, $0000, MapExitWalkCurveRight_10, $0e, $01
+	; $5bdd, 17 bytes (map_scripts:exit)
+	map_script $01, FACEMASK_ANY, $0000, RestaurantExit01_10, STORYLOC_RESTAURANT_PLAZA, $02
+	map_script $02, FACEMASK_ANY, $0000, MapExitWalkCurveRight_10, STORYLOC_CAFETERIA, $01
 	db $ff
 RestaurantExit01_10:
 	clear_flag FLAG_RESTAURANT_NPC08_MOVED ; $5bee
@@ -3248,12 +3248,12 @@ AcademyWingEntryPoints_10:
 	map_entry $0f, FACE_UP, $2000, $3400, MapScriptNop_10
 	db $ff
 AcademyWingExitTriggers_10:
-	; $6212, 41 bytes (map_scripts)
-	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_10, $14, $01
-	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_10, $07, $03
-	map_script $03, FACEMASK_ANY, $0000, MapExitWalkCurveRight_10, $05, $04
-	map_script $04, FACEMASK_ANY, $0000, MapExitWalkCurveLeft_10, $05, $03
-	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_10, $07, $0f
+	; $6212, 41 bytes (map_scripts:exit)
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_10, STORYLOC_ACADEMY_ENTRANCE, $01
+	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_10, STORYLOC_COURTYARD, $03
+	map_script $03, FACEMASK_ANY, $0000, MapExitWalkCurveRight_10, STORYLOC_ACADEMY_MAIN_BLDG, $04
+	map_script $04, FACEMASK_ANY, $0000, MapExitWalkCurveLeft_10, STORYLOC_ACADEMY_MAIN_BLDG, $03
+	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_10, STORYLOC_COURTYARD, $0f
 	db $ff
 AcademyWingNpc03_10:
 	script_face_toward ACTOR_PLAYER, $03 ; $623b
@@ -4197,12 +4197,12 @@ AcademyMainBldgArrival01_10:
 .done:
 	ret ; $75bd
 AcademyMainBldgExitTriggers_10:
-	; $75be, 41 bytes (map_scripts)
-	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_10, $14, $01
-	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_10, $07, $03
-	map_script $03, FACEMASK_ANY, $0000, MapExitWalkCurveRight_10, $06, $01
-	map_script $04, FACEMASK_ANY, $0000, MapExitWalkCurveLeft_10, $05, $03
-	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_10, $07, $0f
+	; $75be, 41 bytes (map_scripts:exit)
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_10, STORYLOC_ACADEMY_ENTRANCE, $01
+	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_10, STORYLOC_COURTYARD, $03
+	map_script $03, FACEMASK_ANY, $0000, MapExitWalkCurveRight_10, STORYLOC_ACADEMY_WING, $01
+	map_script $04, FACEMASK_ANY, $0000, MapExitWalkCurveLeft_10, STORYLOC_ACADEMY_MAIN_BLDG, $03
+	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_10, STORYLOC_COURTYARD, $0f
 	db $ff
 AcademyMainBldgNpc03_10:
 	ld a, [wMapSceneStage] ; $75e7

@@ -279,7 +279,12 @@ ENDM
 ; Story-script record (8 bytes, table terminated by $ff). FindStoryScriptEntry
 ; ($0a:$53e4) matches `id` (and `facing_mask`, a FACEMASK_* constant in
 ; constants.inc, against the actor's facing), checks `flag_cond`, then runs
-; `handler` with the two arg bytes.
+; `handler` with the two arg bytes. What the args mean belongs to the map_tree
+; slot the table sits in, not to the record: in an ExitTriggers table (slot 1)
+; RunLocationExit ($0a:$5637) copies `arg0` into wStoryModeCurrentLocation --
+; a STORYLOC_* id -- and `arg1` into wStoryModeEntryPoint, which indexes the
+; destination's own map_entry list. In the other three slots they are whatever
+; the handler reads them as.
 ; Usage: map_script id, facing_mask, flag_cond, handler, arg0, arg1
 MACRO map_script
 	db \1, \2

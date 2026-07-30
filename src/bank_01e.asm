@@ -3195,11 +3195,11 @@ ApplyPendingExpAwards:
 	ld d, h ; $6b56
 	ld e, l ; $6b57
 	jr nc, .scaleExpByPlayerLevel ; $6b58
-	ld de, rIE ; $6b5a
+	ld de, $ffff ; $6b5a
 .scaleExpByPlayerLevel:
 	call ScaleExpByPlayerLevel ; $6b5d
 	jr nc, .recordDrillResult ; $6b60
-	ld de, rIE ; $6b62
+	ld de, $ffff ; $6b62
 .recordDrillResult:
 	ld a, d ; $6b65
 	or e ; $6b66

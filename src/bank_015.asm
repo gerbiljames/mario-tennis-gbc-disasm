@@ -36,11 +36,11 @@ TournamentCourtyardEntryPoints_15:
 	map_entry $0f, FACE_UP, $1100, $3900, $0000
 	db $ff
 TournamentCourtyardExitTriggers_15:
-	; $40df, 33 bytes (map_scripts)
-	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_15, $16, $02
-	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_15, $17, $02
-	map_script $03, FACEMASK_ANY, $0000, MapScriptNop_15, $19, $05
-	map_script $04, FACEMASK_ANY, $0000, MapScriptNop_15, $1b, $02
+	; $40df, 33 bytes (map_scripts:exit)
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_15, STORYLOC_COURT_1, $02
+	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_15, STORYLOC_COURT_2, $02
+	map_script $03, FACEMASK_ANY, $0000, MapScriptNop_15, STORYLOC_TOURNAMENT, $05
+	map_script $04, FACEMASK_ANY, $0000, MapScriptNop_15, STORYLOC_ISLAND_SKY, $02
 	db $ff
 TournamentCourtyardNpc05_15:
 	ld a, [wMapSceneStage] ; $4100
@@ -515,9 +515,9 @@ TrainingCourtArrival01_15:
 .done:
 	ret ; $4955
 TrainingCourtExitTriggers_15:
-	; $4956, 17 bytes (map_scripts)
-	map_script $01, FACEMASK_ANY, $0000, ClearTrainingCourtNpcFlags, $08, $06
-	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_15, $08, $0e
+	; $4956, 17 bytes (map_scripts:exit)
+	map_script $01, FACEMASK_ANY, $0000, ClearTrainingCourtNpcFlags, STORYLOC_RESTAURANT_PLAZA, $06
+	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_15, STORYLOC_RESTAURANT_PLAZA, $0e
 	db $ff
 ClearTrainingCourtNpcFlags:
 	clear_flag FLAG_SERVE_CHALLENGER_DEFEATED ; $4967

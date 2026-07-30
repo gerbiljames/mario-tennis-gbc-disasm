@@ -61,10 +61,10 @@ DormEntranceArrival01_12:
 .done:
 	ret ; $40fa
 DormEntranceExitTriggers_12:
-	; $40fb, 25 bytes (map_scripts)
-	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_12, $0a, $02
-	map_script $03, FACEMASK_ANY, $0000, MapScriptNop_12, $08, $01
-	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_12, $0a, $0f
+	; $40fb, 25 bytes (map_scripts:exit)
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_12, STORYLOC_DORM_ROOM, $02
+	map_script $03, FACEMASK_ANY, $0000, MapScriptNop_12, STORYLOC_RESTAURANT_PLAZA, $01
+	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_12, STORYLOC_DORM_ROOM, $0f
 	db $ff
 DormEntranceNpcScripts_12:
 	ds 1, $ff ; $4114, fill
@@ -341,8 +341,8 @@ WallPracticeRoomArrival01_12:
 .done:
 	ret ; $4715
 WallPracticeRoomExitTriggers_12:
-	; $4716, 9 bytes (map_scripts)
-	map_script $05, FACEMASK_ANY, $0000, MapScriptNop_12, $11, $02
+	; $4716, 9 bytes (map_scripts:exit)
+	map_script $05, FACEMASK_ANY, $0000, MapScriptNop_12, STORYLOC_TRAINING_CENTER, $02
 	db $ff
 WallPracticeRoomNpc03_12:
 	ld a, [wMapSceneStage] ; $471f
@@ -1376,9 +1376,9 @@ SeniorCourtEntryPoints_12:
 	map_entry $09, FACE_UP, $0b00, $1900, $0000
 	db $ff
 SeniorCourtExitTriggers_12:
-	; $5580, 17 bytes (map_scripts)
-	map_script $01, FACEMASK_ANY, $0000, SeniorCourtExit01_12, $08, $03
-	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_12, $10, $0f
+	; $5580, 17 bytes (map_scripts:exit)
+	map_script $01, FACEMASK_ANY, $0000, SeniorCourtExit01_12, STORYLOC_RESTAURANT_PLAZA, $03
+	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_12, STORYLOC_SENIOR_CLASS_COURT, $0f
 	db $ff
 SeniorCourtExit01_12:
 	clear_flag FLAG_SENIOR_COURT_TILE01_TRIGGERED ; $5591

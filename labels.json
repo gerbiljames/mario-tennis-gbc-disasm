@@ -4712,7 +4712,7 @@
  "0x2adde": "HandleMinigameTargetHitAlt",
  "0x2adf4": "CheckBallHitsMinigameTargetAlt",
  "0x2ae3f": ".done",
- "0x2ae40": "EndingCreditsSequenceTileList",
+ "0x2ae40": "EndingCutsceneLocationList",
  "0x2ae6c": "EndingCreditsSequencePalette",
  "0x2ae74": "RunEndingCreditsSequence",
  "0x2ae91": ".sceneLoop",

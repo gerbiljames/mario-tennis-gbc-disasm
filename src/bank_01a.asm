@@ -394,7 +394,7 @@ RestoreMessageSpeed:
 	ld a, [wMessageSpeed] ; $42f1
 	res 7, a ; $42f4
 	ld [wMessageSpeed], a ; $42f6
-	ld bc, rIE ; $42f9
+	ld bc, $ffff ; $42f9
 	farcall SaveStoryReturnPoint ; $42fc
 	farcall SaveStorySlotWithTimer ; $42ff
 	ld a, STORYLOC_MAIN_MENU ; $4302

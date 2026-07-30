@@ -101,10 +101,10 @@ TrainingGymArrival03_0e:
 	script_copy_scene_rect $3d, $0c, $14, $0a, $02, $02 ; $4267
 	ret ; $4276
 TrainingGymExitTriggers_0e:
-	; $4277, 25 bytes (map_scripts)
-	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_0e, $07, $01
-	map_script $03, FACEMASK_ANY, $0000, TrainingGymExit03_0e, $12, $01
-	map_script $02, FACEMASK_ANY, $0000, TrainingGymExit02_0e, $13, $01
+	; $4277, 25 bytes (map_scripts:exit)
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_0e, STORYLOC_COURTYARD, $01
+	map_script $03, FACEMASK_ANY, $0000, TrainingGymExit03_0e, STORYLOC_TENNIS_MACHINE_ROOM, $01
+	map_script $02, FACEMASK_ANY, $0000, TrainingGymExit02_0e, STORYLOC_WALL_PRACTICE_ROOM, $01
 	db $ff
 TrainingGymExit02_0e:
 	script_face ACTOR_PLAYER, FACE_UP ; $4290
@@ -1675,8 +1675,8 @@ MarioWorldEntryPoints_0e:
 	map_entry $0f, FACE_UP, $1200, $0800, $0000
 	db $ff
 MarioWorldExitTriggers_0e:
-	; $5385, 9 bytes (map_scripts)
-	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_0e, $1b, $0e
+	; $5385, 9 bytes (map_scripts:exit)
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_0e, STORYLOC_ISLAND_SKY, $0e
 	db $ff
 MarioWorldNpc12Mario_0e:
 	script_set_text Text_5e_142 ; $538e
@@ -3353,8 +3353,8 @@ SpecialCourtEntryPoints_0e:
 	map_entry $01, FACE_UP, $0500, $2100, $0000
 	db $ff
 SpecialCourtExitTriggers_0e:
-	; $76db, 9 bytes (map_scripts)
-	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_0e, $08, $06
+	; $76db, 9 bytes (map_scripts:exit)
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_0e, STORYLOC_RESTAURANT_PLAZA, $06
 	db $ff
 SpecialCourtNpcScripts_0e:
 	ds 1, $ff ; $76e4, fill

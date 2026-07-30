@@ -200,12 +200,27 @@ def render_actor_list(rom, seg, end, bank, labels):
     return out
 
 
-def render_map_table(spec, rom, seg, end, bank, labels):
+def render_map_table(spec, rom, seg, end, bank, labels, role=None,
+                     loc_names=None):
     """Render a story-mode map-script sub-table (map_actor/map_entry/
     map_script) as macro calls. Pointer fields (actor object defs, entry
     arrival scripts, script handlers/conditions) resolve to same-bank labels;
     positions and ids stay literal. Records run until the table's terminator
-    ($ff), which plus any padding is emitted as raw db."""
+    ($ff), which plus any padding is emitted as raw db.
+
+    One spec, `map_scripts`, covers four of the seven map_tree slots, and what
+    a record's two trailing argument bytes mean is the slot's business, not the
+    spec's -- so the slot is declared as a `role` (`map_scripts:exit`). Only
+    role `exit` is defined: a map_tree's slot 1 is its ExitTriggers table by
+    construction (MAP_TREE_SLOTS), and RunLocationExit ($0a:$5637) copies such
+    a record's `arg0` straight into wStoryModeCurrentLocation, so that byte is
+    a location id and nothing else. `arg1` goes to wStoryModeEntryPoint, an
+    index into the *destination's* map_entry list -- a different id space, so it
+    stays numeric."""
+    if role not in (None, "exit"):
+        raise ValueError(f"unknown map table role {role!r}")
+    if role == "exit" and not loc_names:
+        raise ValueError("map_scripts:exit needs the STORYLOC_* name map")
     base = bank * BANK_SIZE
 
     def word(o):
@@ -260,8 +275,11 @@ def render_map_table(spec, rom, seg, end, bank, labels):
             handler = sym(p + 4)
             if handler.startswith("$"):
                 handler = text_id_name(word(p + 4)) or handler
+            arg0 = f"${rom[p + 6]:02x}"
+            if role == "exit":
+                arg0 = loc_names.get(rom[p + 6], arg0)
             out.append(f"\tmap_script ${rom[p]:02x}, {facemask(rom[p + 1])}, "
-                       f"{sym(p + 2)}, {handler}, ${rom[p + 6]:02x}, "
+                       f"{sym(p + 2)}, {handler}, {arg0}, "
                        f"${rom[p + 7]:02x}")
             p += 8
     while p < end:
@@ -649,6 +667,28 @@ def render_story_locations(rom, start, end, slot_ref):
     tail = (end - start) % 6
     if tail:
         out.append("\tdb " + ", ".join(f"${x:02x}" for x in rom[end - tail:end]))
+    return out
+
+
+def render_location_entries(rom, start, end, loc_names):
+    """2-byte (location id, entry point) records, ended by a $ff first byte.
+
+    The same pair RunLocationExit builds from an ExitTriggers record, but stored
+    directly: RunEndingCreditsSequence's walker ($0a:$6e9f-$6eb0) reads byte 0
+    into wStoryModeCurrentLocation and byte 1 into wStoryModeEntryPoint. Only
+    byte 0 is a STORYLOC_* id -- byte 1 indexes the destination's own map_entry
+    list, so it stays numeric."""
+    out, p, n = [], start, 0
+    while p + 2 <= end and rom[p] != 0xFF:
+        loc = loc_names.get(rom[p], f"${rom[p]:02x}")
+        out.append(f"\tdb {loc}, ${rom[p + 1]:02x} ; {n}")
+        p += 2
+        n += 1
+    while p < end:
+        k = min(end - p, 8)
+        out.append("\tdb " + ", ".join(f"${rom[p + i]:02x}" for i in range(k))
+                   + (" ; list end" if p == start + n * 2 else ""))
+        p += k
     return out
 
 

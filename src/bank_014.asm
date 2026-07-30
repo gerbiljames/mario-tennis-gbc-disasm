@@ -41,8 +41,8 @@ TennisMachineRoomArrival01_14:
 .done:
 	ret ; $4085
 TennisMachineRoomExitTriggers_14:
-	; $4086, 9 bytes (map_scripts)
-	map_script $04, FACEMASK_ANY, $0000, MapScriptNop_14, $11, $03
+	; $4086, 9 bytes (map_scripts:exit)
+	map_script $04, FACEMASK_ANY, $0000, MapScriptNop_14, STORYLOC_TRAINING_CENTER, $03
 	db $ff
 TennisMachineRoomNpc03_14:
 	ld a, [wMapSceneStage] ; $408f
@@ -940,9 +940,9 @@ Court2EntryPoints_14:
 	map_entry $02, FACE_LEFT, $2500, $2500, $0000
 	db $ff
 Court2ExitTriggers_14:
-	; $4b50, 17 bytes (map_scripts)
-	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_14, $19, $03
-	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_14, $15, $02
+	; $4b50, 17 bytes (map_scripts:exit)
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_14, STORYLOC_TOURNAMENT, $03
+	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_14, STORYLOC_TOURNAMENT_COURTYARD, $02
 	db $ff
 Court2Npc03_14:
 	script_set_text Text_1f_145 ; $4b61
@@ -1265,9 +1265,9 @@ Court1EntryPoints_14:
 	map_entry $02, FACE_RIGHT, $0300, $2500, $0000
 	db $ff
 Court1ExitTriggers_14:
-	; $5053, 17 bytes (map_scripts)
-	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_14, $19, $04
-	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_14, $15, $01
+	; $5053, 17 bytes (map_scripts:exit)
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_14, STORYLOC_TOURNAMENT, $04
+	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_14, STORYLOC_TOURNAMENT_COURTYARD, $01
 	db $ff
 Court1Npc03_14:
 	script_set_text Text_1f_132 ; $5064
@@ -1466,8 +1466,8 @@ IslandSkyEntryPoints_14:
 	map_entry $0f, FACE_DOWN, $0c00, $1200, $0000
 	db $ff
 IslandSkyExitTriggers_14:
-	; $52a2, 9 bytes (map_scripts)
-	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_14, $08, $06
+	; $52a2, 9 bytes (map_scripts:exit)
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_14, STORYLOC_RESTAURANT_PLAZA, $06
 	db $ff
 	ret ; $52ab
 IslandSkyNpcScripts_14:

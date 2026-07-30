@@ -4371,7 +4371,7 @@ InitSceneViewer:
 	dec a ; $602b
 	ld [wUnusedPrevSceneIndex], a ; $602c
 	ld hl, SceneGfxSlotTable ; $602f
-	ld bc, rIE ; $6032
+	ld bc, $ffff ; $6032
 .slotLoop:
 	inc bc ; $6035
 	ld a, [hl+] ; $6036
@@ -4418,7 +4418,7 @@ InitSceneViewerDefault:
 	ldh [hScrollY], a ; $607b
 	ldh [hScrollX], a ; $607d
 	ld hl, SceneGfxSlotTable ; $607f
-	ld bc, rIE ; $6082
+	ld bc, $ffff ; $6082
 .slotLoop:
 	inc c ; $6085
 	ld a, [hl+] ; $6086
@@ -6218,30 +6218,30 @@ CheckBallHitsMinigameTargetAlt:
 	set 2, [hl] ; $6e3d
 .done:
 	ret ; $6e3f
-EndingCreditsSequenceTileList:
-	; $6e40, 44 bytes (records:2)
-	dw $011e ; record 0
-	dw $011f ; record 1
-	dw $0120 ; record 2
-	dw $0121 ; record 3
-	dw $0122 ; record 4
-	dw $0226 ; record 5
-	dw $0123 ; record 6
-	dw $0124 ; record 7
-	dw $0223 ; record 8
-	dw $0125 ; record 9
-	dw $0126 ; record 10
-	dw $0127 ; record 11
-	dw $021e ; record 12
-	dw $0c1b ; record 13
-	dw $0f18 ; record 14
-	dw $0128 ; record 15
-	dw $0129 ; record 16
-	dw $0227 ; record 17
-	dw $0d1b ; record 18
-	dw $0a1d ; record 19
-	dw $011c ; record 20
-	dw $ffff ; record 21
+EndingCutsceneLocationList:
+	; $6e40, 44 bytes (location_entries)
+	db STORYLOC_END1_MAIN_BLDG, $01 ; 0
+	db STORYLOC_END_RESTAURANT_ENT, $01 ; 1
+	db STORYLOC_END3_DORM_ENT, $01 ; 2
+	db STORYLOC_END4_JR_COURT, $01 ; 3
+	db STORYLOC_END5_SERVICE_ACE, $01 ; 4
+	db STORYLOC_END11_TRAINING_COURT, $02 ; 5
+	db STORYLOC_END7_TRAINING_CTR, $01 ; 6
+	db STORYLOC_END8_SR_COURT, $01 ; 7
+	db STORYLOC_END7_TRAINING_CTR, $02 ; 8
+	db STORYLOC_END10_VARSITY_COURT, $01 ; 9
+	db STORYLOC_END11_TRAINING_COURT, $01 ; 10
+	db STORYLOC_END12_PRINCIPALS_OFFICE, $01 ; 11
+	db STORYLOC_END1_MAIN_BLDG, $02 ; 12
+	db STORYLOC_ISLAND_SKY, $0c ; 13
+	db STORYLOC_CENTER_COURT, $0f ; 14
+	db STORYLOC_END16_BEFORE_FINALS, $01 ; 15
+	db STORYLOC_END17_AWARD_CEREMONY, $01 ; 16
+	db STORYLOC_END12_PRINCIPALS_OFFICE, $02 ; 17
+	db STORYLOC_ISLAND_SKY, $0d ; 18
+	db STORYLOC_PEACHS_CASTLE, $0a ; 19
+	db STORYLOC_SPECIAL_COURT, $01 ; 20
+	db $ff, $ff ; list end
 EndingCreditsSequencePalette:
 	INCLUDE "data/bank_00a/palettes_6e6c.asm" ; $6e6c, 8 bytes (palettes)
 RunEndingCreditsSequence:
@@ -6260,9 +6260,9 @@ RunEndingCreditsSequence:
 	call ClearFrameTasks ; $6e91
 	ld a, [wStoryCharacterSlot] ; $6e94
 	add a ; $6e97
-	add LOW(EndingCreditsSequenceTileList) ; $6e98
+	add LOW(EndingCutsceneLocationList) ; $6e98
 	ld l, a ; $6e9a
-	adc HIGH(EndingCreditsSequenceTileList) ; $6e9b
+	adc HIGH(EndingCutsceneLocationList) ; $6e9b
 	sub l ; $6e9d
 	ld h, a ; $6e9e
 	ld a, [hl+] ; $6e9f

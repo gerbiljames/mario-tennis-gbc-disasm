@@ -8058,7 +8058,7 @@ PlotGlyphRow:
 	and $07 ; $737f
 	ld c, a ; $7381
 	push de ; $7382
-	ld de, rIE ; $7383
+	ld de, $ffff ; $7383
 	push bc ; $7386
 	or a ; $7387
 	ld a, b ; $7388

@@ -1538,12 +1538,12 @@ TournamentEntryPoints_0f:
 	map_entry $0f, FACE_UP, $1b00, $3100, $0000
 	db $ff
 TournamentExitTriggers_0f:
-	; $60b1, 41 bytes (map_scripts)
-	map_script $01, FACEMASK_ANY, $0000, TournamentExit_0f, $18, $01
-	map_script $02, FACEMASK_ANY, $0000, TournamentExit_0f, $18, $02
-	map_script $03, FACEMASK_ANY, $0000, TournamentExit_0f, $17, $01
-	map_script $04, FACEMASK_ANY, $0000, TournamentExit_0f, $16, $01
-	map_script $05, FACEMASK_ANY, $0000, TournamentExit_0f, $15, $03
+	; $60b1, 41 bytes (map_scripts:exit)
+	map_script $01, FACEMASK_ANY, $0000, TournamentExit_0f, STORYLOC_CENTER_COURT, $01
+	map_script $02, FACEMASK_ANY, $0000, TournamentExit_0f, STORYLOC_CENTER_COURT, $02
+	map_script $03, FACEMASK_ANY, $0000, TournamentExit_0f, STORYLOC_COURT_2, $01
+	map_script $04, FACEMASK_ANY, $0000, TournamentExit_0f, STORYLOC_COURT_1, $01
+	map_script $05, FACEMASK_ANY, $0000, TournamentExit_0f, STORYLOC_TOURNAMENT_COURTYARD, $03
 	db $ff
 TournamentExit_0f:
 	clear_flag FLAG_ISLAND_OPEN_IN_PROGRESS ; $60da

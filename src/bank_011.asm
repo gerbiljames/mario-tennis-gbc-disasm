@@ -31,9 +31,9 @@ CenterCourtEntryPoints_11:
 	map_entry $0f, FACE_UP, $0c00, $3100, $0000
 	db $ff
 CenterCourtExitTriggers_11:
-	; $4071, 17 bytes (map_scripts)
-	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_11, $19, $01
-	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_11, $19, $02
+	; $4071, 17 bytes (map_scripts:exit)
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_11, STORYLOC_TOURNAMENT, $01
+	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_11, STORYLOC_TOURNAMENT, $02
 	db $ff
 CenterCourtNpc03_11:
 	script_set_text Text_1f_80 ; $4082
@@ -363,11 +363,11 @@ AcademyArrivalArrival01_11:
 .done:
 	ret ; $457b
 AcademyArrivalExitTriggers_11:
-	; $457c, 33 bytes (map_scripts)
-	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_11, $05, $01
-	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_11, $1b, $01
-	map_script $03, FACEMASK_ANY, $0000, MapScriptNop_11, $1b, $0f
-	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_11, $05, $0f
+	; $457c, 33 bytes (map_scripts:exit)
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_11, STORYLOC_ACADEMY_MAIN_BLDG, $01
+	map_script $02, FACEMASK_ANY, $0000, MapScriptNop_11, STORYLOC_ISLAND_SKY, $01
+	map_script $03, FACEMASK_ANY, $0000, MapScriptNop_11, STORYLOC_ISLAND_SKY, $0f
+	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_11, STORYLOC_ACADEMY_MAIN_BLDG, $0f
 	db $ff
 AcademyArrivalNpc03_11:
 	ld a, [wMapSceneStage] ; $459d
@@ -1183,9 +1183,9 @@ JuniorClassCourtDoublesEntryPoints_11:
 	map_entry $09, FACE_UP, $3700, $1900, $0000
 	db $ff
 JuniorClassCourtDoublesExitTriggers_11:
-	; $559f, 17 bytes (map_scripts)
-	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_11, $08, $05
-	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_11, $0c, $0f
+	; $559f, 17 bytes (map_scripts:exit)
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_11, STORYLOC_RESTAURANT_PLAZA, $05
+	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_11, STORYLOC_JUNIOR_CLASS_COURT_DOUBLES, $0f
 	db $ff
 JuniorClassCourtDoublesNpc04_11:
 	script_set_text Text_32_105 ; $55b0
@@ -2296,9 +2296,9 @@ JuniorClassCourtSinglesEntryPoints_11:
 	map_entry $09, FACE_UP, $2d00, $1900, $0000
 	db $ff, $c9
 JuniorClassCourtSinglesExitTriggers_11:
-	; $692c, 17 bytes (map_scripts)
-	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_11, $08, $05
-	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_11, $0b, $0f
+	; $692c, 17 bytes (map_scripts:exit)
+	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_11, STORYLOC_RESTAURANT_PLAZA, $05
+	map_script $0f, FACEMASK_ANY, $0000, MapScriptNop_11, STORYLOC_JUNIOR_CLASS_COURT_SINGLES, $0f
 	db $ff
 JuniorClassCourtSinglesNpc03FaceUp_11:
 	script_set_speed ACTOR_PLAYER, $0008 ; $693d

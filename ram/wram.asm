@@ -70,9 +70,11 @@ wMasterPalettes:: ds 128
 ; 0x19 - Tournament
 ; 0x1a - Awards Ceremony
 ; 0x1b - Plane Cutscene
-; 0x1c - Castle Court
+; 0x1c - Special Court
 ; 0x1d - Peach's Castle
 ; 0x1e-0x29 - Final Credits Sequence
+;
+; The RetroAchievements note this list comes from says "Castle Court" for 0x1c; that is a mix-up with the adjacent id and is corrected above. LoadStoryLocationHeader ($0a:$5142) computes the location popup's text id as $0179 + id, which makes 0x1c the string "Special Court" and 0x1d "Peach's Castle" (there is no "Castle Court" string in the ROM); the note's own BGM list puts Castle Court's music (0x12) on 0x1d, and 0x1c's story_location record selects BGM 0x08. The full space is 0x00-0x29, one record each in StoryLocationTable_0a; see the STORYLOC_* defs in include/constants.inc for the game's own wording of every id, including the 0x01-0x04 debug maps the note omits
 wStoryModeCurrentLocation:: db
 
 ; [8-bit] Scene id of the loaded story location, byte 1 of its story_location record. Passed in a to LoadStorySceneGraphics, which indexes SceneGfxSlotTable with it
@@ -1325,7 +1327,10 @@ wSaveAndQuitRequest:: db
 ; 0x06 - Story Mode - Tennis Machine
 ; 0x07 - Story Mode - Wall Practice
 ; 0x08 - Mario Minigames
+; 0x09 - Link-cable Versus Match
 ; 0x0a - Story Mode - Dream Match
+;
+; The RetroAchievements note this list comes from omits 0x09; it is added above. Bank $38 sets it at $7448, one instruction after farcall RunLinkCharSelectScreen; ScoreboardModeGfxPointers record 9 is ScoreboardModeGfx_LinkedMatch, i.e. the scoreboard word-art for the mode spells it out; and every mode-0x09 test in banks $06/$08/$16/$1e either reads wLinkMatchRole immediately or bypasses the story/save path. The space is exactly 0x00-0x0a: SaveQuitMenuIdByGameMode ($06:$44f3) and ScoreboardModeGfxPointers ($06:$5cc9) both index it unguarded and both hold 11 entries. See the GAMEMODE_* defs in include/constants.inc
 wGameMode:: db
 
 ; [8-bit] Nonzero makes ResetMatchState skip clearing the per-character match stats (set by MatchQuitMenu_SaveAndQuit so a resumed match keeps its stats); cleared after use

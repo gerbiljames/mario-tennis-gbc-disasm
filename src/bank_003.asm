@@ -3110,7 +3110,7 @@ SaveSlotDebugEditor:
 .moveSaveEditorCursor:
 	bit 5, a ; $540c
 	jr z, .bit5Clear ; $540e
-	ld bc, rIE ; $5410
+	ld bc, $ffff ; $5410
 	call MoveSaveEditorCursor ; $5413
 	jr z, .loop4 ; $5416
 	jp .loopB ; $5418

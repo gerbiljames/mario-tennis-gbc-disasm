@@ -59,10 +59,17 @@ RAM_IMM_NEVER = {0xffa0, 0xffc0, 0xffdf, 0xffe0, 0xffe8, 0xfffd}
 
 # The same hazard once more, for hardware register names. `ld hl, rIE` is a real
 # pointer setup at 74 sites (the code then `set`s or `res`s a bit through it), so
-# this cannot be an address rule -- rLCDC appears in both roles. These 18 sites
+# this cannot be an address rule -- rLCDC appears in both roles. These sites
 # load the register address as an addend instead: $ff00 is -256, $ff40 -192,
 # $ff70 -144, each immediately followed by `add hl, rr`. Keyed by flat offset,
 # like RAM_IMM_IS_CONSTANT.
+# The second group is rIE, i.e. $ffff, loaded into bc or de -- a pair the code
+# never dereferences, so none of them is the register: two are the b = $ff
+# "no door, save the current location and position" sentinel SaveStoryReturnPoint
+# ($0a:$527f) tests, two seed a loop counter that `inc bc`/`inc c` lifts to 0 on
+# the first pass, one is the (-1, -1) cursor delta MoveSaveEditorCursor's sibling
+# call sites pass as $0101 and $1008, and three are the saturated 16-bit result
+# $ffff (a bit accumulator, and two overflow branches feeding ScaleExpByPlayerLevel).
 HWADDR_IMM_IS_CONSTANT = {
     0x17455,
     0x1d2dd,
@@ -70,6 +77,10 @@ HWADDR_IMM_IS_CONSTANT = {
     0x35251, 0x35281, 0x352d8, 0x352ee, 0x3574e, 0x357b3,
     0x35c21, 0x35e29, 0x35e93,
     0x926ea,
+    0x1b067, 0x682f9,          # SaveStoryReturnPoint b = $ff sentinel
+    0x2a032, 0x2a082,          # loop counters, incremented before first use
+    0x0d410,                   # MoveSaveEditorCursor delta (-1, -1)
+    0x17383, 0x7ab5a, 0x7ab62,  # saturated $ffff
 }
 
 
