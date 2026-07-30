@@ -9994,3 +9994,64 @@ remaining `unproven` operands are in code that cannot execute**. Any future
 session should subtract them before judging a driving run — and the shape is now
 familiar enough to look for deliberately: unlabelled code between a `ret` and the
 next label, attributed to whichever label precedes it.
+
+## Sweeping for stranded code, and the real denominator (2026-07-30)
+
+Two unreachable families turned up this week by accident — bank `$1b`'s
+confirm screen and bank `$03`'s superseded save-repair routines — both found
+only because someone chased an operand into them. The shape is mechanical
+enough to search for: **unlabelled code immediately after an unconditional
+terminator**, which the emitter therefore attributes to whatever label precedes
+it. Descent creates a label for every reference it finds, so "no label of its
+own" already means "nothing the descent could see reaches it".
+
+Sweeping all 128 banks for runs of three or more instructions starting right
+after a `ret`/`reti`/unconditional `jp`/`jr`, with no global *or* local label at
+the entry:
+
+```
+stranded runs found                        273
+bare $dxxx operands inside them             15
+runs carrying those operands                  9
+of those 9, zero reference-shaped hits        7
+```
+
+The two families already named do not appear, because naming them gave their
+code labels — which is the check that the sweep measures what it claims to.
+
+**So the denominator is now known.** With the 29 operands already confirmed
+unreachable (11 in bank `$1b`, 18 in bank `$03`) and at most 15 more here,
+**at most 44 of the 316 remaining `unproven` operands — under 14% — are in code
+that cannot execute.** The other ~272 are genuinely reachable, so driving is
+still the right tool for them; it just is not the tool for these.
+
+The nine candidates, largest first, for a pass that wants to name them:
+
+| site | instructions | operands | attributed to |
+| --- | --- | --- | --- |
+| `$05:$41f8` | 36 | 2 | `QueueFullAttrmapCopy` |
+| `$1b:$60bd` | 34 | 2 | `DrawCharSelectMugshots` |
+| `$0b:$412f` | 19 | 1 | `Unused_0b_0` |
+| `$1b:$664b` | 14 | 2 | `LoadUnlockDebugNavGridGfx` |
+| `$38:$6920` | 11 | 1 | `DrawRemoteSlotLeftHandedMark` |
+| `$17:$4a05`/`$4a06` | 9/8 | 2 each | `QueueCaptionRowToVRAM` |
+| `$0a:$5e52` | 8 | 2 | `SceneViewerSelectScene` |
+| `$1e:$7a30` | 5 | 1 | `FillProgressListRowAttrs` |
+
+Spot-checked `$05:$41f8`: a real routine (`push af / ld a, b / wram_bank /
+pop af / and $1f`) beginning one byte after `QueueFullAttrmapCopy`'s `ret`, with
+no label. They are not artefacts.
+
+Two caveats on the sweep, so nobody over-reads it. The reference test cannot see
+a target reached through a computed jump or an unfollowed data table, so a
+zero-hit run is *strong* evidence rather than proof — the bank `$03` case needed
+a manual pass to reject five coincidences (`41 56` inside the ASCII `"SAVED"`,
+an `ld a, [hl+]` / `ld d, [hl]` pair, an `ld hl` operand byte). And ROM0's
+stranded runs sit near the RST and interrupt vectors, which are reached by
+mechanisms a `call`/`jp` scan does not model; they carry no WRAM operands, so
+they do not affect the count either way.
+
+The 273 runs are themselves the larger prize: most carry no `$dxxx` operand at
+all, so `ram_gaps.py` never mentions them, but they are unlabelled code
+attributed to a neighbour — the same reason `RestoreStoryBlockFromBackup` looked
+half-analysed when it was complete.
