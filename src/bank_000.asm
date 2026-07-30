@@ -8552,7 +8552,7 @@ WaitJingleEnd:
 	pop af ; $305b
 	ret ; $305c
 ResumeBGMAfterJingle:
-	call CheckSfxChannelsIdle ; $305d
+	call CheckMusicChannelsIdle ; $305d
 	ret nz ; $3060
 	ldh a, [hActiveJingle] ; $3061
 	or a ; $3063
@@ -8658,7 +8658,7 @@ ApplyChannelUpdateRequest:
 	xor a ; $310b
 	ld [wSndUpdateReqAck], a ; $310c
 	ret ; $310f
-CheckSfxChannelsIdle:
+CheckMusicChannelsIdle:
 	wram_bank $07 ; $3110
 	ld hl, wSndChannels + 64 ; $3116
 	ld de, $0020 ; $3119
@@ -8674,7 +8674,7 @@ CheckSfxChannelsIdle:
 	dec b ; $3125
 	jr nz, .loop ; $3126
 	ret ; $3128
-StopAllSound:
+StopMusic:
 	push af ; $3129
 	push bc ; $312a
 	push de ; $312b
@@ -8698,20 +8698,20 @@ StopAllSound:
 	pop bc ; $314e
 	pop af ; $314f
 	ret ; $3150
-SfxIndexTable:
-	INCLUDE "data/bank_000/sound_index_3151.asm" ; $3151, 100 bytes (sound_index)
 MusicIndexTable:
+	INCLUDE "data/bank_000/sound_index_3151.asm" ; $3151, 100 bytes (sound_index)
+SfxIndexTable:
 	INCLUDE "data/bank_000/sound_index_31b5.asm" ; $31b5, 226 bytes (sound_index)
 PlaySound:
 	and a ; $3297
-	jp z, StopAllSound ; $3298
+	jp z, StopMusic ; $3298
 	push bc ; $329b
 	push de ; $329c
 	push hl ; $329d
-	ld hl, SfxIndexTable ; $329e
+	ld hl, MusicIndexTable ; $329e
 	cp $50 ; $32a1
-	jr c, .sfx ; $32a3
-	ld hl, MusicIndexTable ; $32a5
+	jr c, .music ; $32a3
+	ld hl, SfxIndexTable ; $32a5
 	push af ; $32a8
 	push hl ; $32a9
 	wram_bank $07 ; $32aa
@@ -8733,8 +8733,8 @@ PlaySound:
 	pop de ; $32cc
 	pop bc ; $32cd
 	ret ; $32ce
-.sfx:
-	call StopAllSound ; $32cf
+.music:
+	call StopMusic ; $32cf
 .lookupEntry:
 	dec a ; $32d2
 	add a ; $32d3
