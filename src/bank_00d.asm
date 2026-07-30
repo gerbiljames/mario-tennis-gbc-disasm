@@ -885,13 +885,13 @@ StartMinigameMatch:
 	ld hl, $0000 ; $469c
 	ld de, $0480 ; $469f
 	farcall SetCharPosAndTarget ; $46a2
-	ld a, $05 ; $46a5
+	ld a, CHARSTATE_STANDBY ; $46a5
 	farcall SetCharState ; $46a7
 	wram_bank $05 ; $46aa
 	ld a, [wMinigameServeSlot] ; $46b0
 	call GetMinigameCharCoordsEntry ; $46b3
 	farcall SetCharPosAndTarget ; $46b6
-	ld a, $06 ; $46b9
+	ld a, CHARSTATE_WALK ; $46b9
 	farcall SetCharState ; $46bb
 	ld a, $04 ; $46be
 	ld [wCharAimJitterScale], a ; $46c0
@@ -940,7 +940,7 @@ LaunchMinigameServe:
 	ldh a, [hWramBank] ; $470f
 	push af ; $4711
 	wram_bank $05 ; $4712
-	ld d, $05 ; $4718
+	ld d, CHARANIM_FOREHAND ; $4718
 	farcall SetCharAnimation ; $471a
 	pop af ; $471d
 	wram_bank ; $471e
@@ -979,7 +979,7 @@ EndMinigamePoint:
 	ldh a, [hWramBank] ; $475d
 	push af ; $475f
 	wram_bank $04 ; $4760
-	ld a, $05 ; $4766
+	ld a, CHARSTATE_STANDBY ; $4766
 	farcall SetCharState ; $4768
 	pop af ; $476b
 	wram_bank ; $476c
@@ -1542,7 +1542,7 @@ HandleMinigamePointEnd:
 	ldh a, [hWramBank] ; $4b29
 	push af ; $4b2b
 	wram_bank $04 ; $4b2c
-	ld a, $05 ; $4b32
+	ld a, CHARSTATE_STANDBY ; $4b32
 	farcall SetCharState ; $4b34
 	pop af ; $4b37
 	wram_bank ; $4b38
@@ -1617,7 +1617,7 @@ ReflectBallVelocity:
 	ldh a, [hWramBank] ; $4bb3
 	push af ; $4bb5
 	wram_bank $04 ; $4bb6
-	ld a, $01 ; $4bbc
+	ld a, CHARSTATE_RALLY ; $4bbc
 	farcall SetCharState ; $4bbe
 	pop af ; $4bc1
 	wram_bank ; $4bc2

@@ -2032,7 +2032,7 @@ SetupCharSpriteFromObjectDef:
 	ld a, $ff ; $4bb1
 	ld [hl+], a ; $4bb3
 	ld [hl+], a ; $4bb4
-	ld d, $01 ; $4bb5
+	ld d, CHARANIM_IDLE ; $4bb5
 	farcall SetCharAnimation ; $4bb7
 	ret ; $4bba
 SetActorAnimationChecked:

@@ -669,7 +669,7 @@ match-relevant fields are:
 
 | Bit | Meaning | Read by |
 |---|---|---|
-| 0 | struck by the ball (stunned) | `$08:$73d7` — kills steering |
+| 0 | movement input suspended (`CHARB_RECOIL`) | `$08:$73d7` — kills steering. Its dominant writer is `ApplyShotRecoil` (`$07:$546e`), which runs after *every* stroke as `ExecuteShot`'s return address — not just on a body hit — and `CharRallyEndState` clearing it is what restores steering when the swing animation ends |
 | 1 | diving | widens the contact box (`$08:$6fc7`), flat brake (`$74b3`), freezes facing ease (`$75c3`), `-$0c00` shot speed (`$07:$53a2`), disables power strokes |
 | 2 | airborne | jump physics, shadow selection |
 | 4 | moving | run animation |
@@ -731,9 +731,13 @@ Two tables drive transitions:
 - `ServeRoleCharStateTable_08` (`$08:$4fa0`) maps serve role → state at the
   start of each point: role 0 → 3 (serve), role 1 → 5, role 2 → 4, role 3 → 5.
 - `SetCharStateOnBallHitTable` (`$08:$431e`), applied to **all four** characters
-  on every ball hit, swaps states 1 and 2 and leaves 0/6/7 alone. So the
-  fundamental rhythm is: whoever hit goes to recovery, everyone else goes to
-  rally-ready, and both phase counters restart.
+  on every ball hit, is `00 02 01 02 02 01 06 07`: it swaps 1 and 2, and also
+  maps 3 → 2 (the server drops into recovery), 4 → 2 and 5 → 1, leaving only
+  0/6/7 alone. So the fundamental rhythm is: whoever hit goes to recovery,
+  everyone else goes to rally-ready, and both phase counters restart.
+  Note that states 2 (`CHARSTATE_RECOVER`) and 4 (`CHARSTATE_AWAIT_SERVE`) are
+  reached *only* through this table and `ServeRoleCharStateTable_08` — no
+  instruction anywhere writes either value.
 
 `CharRallyEndState` (`$08:$6a90`) is phase 0 of states 1, 2, 4, 5 and 7 rather
 than a state of its own. It waits for the swing/dive animation to finish, clears
@@ -817,7 +821,9 @@ Three nested boxes, all rebuilt or tested each frame:
 | Test | Addr | Depth | Lateral | Height | Result |
 |---|---|---|---|---|---|
 | `CheckBallInSwingRange` | `$08:$702a` | `< $a0` | `< 1.5 × wCharReachX` | — | bit 0 — "you may start a swing" |
-| `CheckBallContactWindow` | `$08:$6fa7` | `< $60` | `< wCharReachX` (`1.125 ×` while diving) | `< 2 × wCharReachHeight` | bit 1 — "the racket connects" |
+| `CheckBallContactWindow` | `$08:$6fa7` | `< $60` | `< wCharReachX` (`1.25 ×` while diving) | `< 2 × wCharReachHeight` | bit 1 — "the racket connects" |
+
+Note that `CheckBallContactWindow`'s four-way animation-id test (`$08:$6fda`-`$6feb`) has **no effect**: all four `jr z` targets are `.checkX`, which is also the fall-through, so the contact box does not vary by animation state. See `docs/bugs.md`.
 | `CheckCharBallContact` | `$08:$6ec5` | `< $10` | `2 × |relX| < wCharReachX` | `< wCharReachHeight` | bit 2 — the ball hit your body |
 
 `CharSwingWindupPhase` waits on bit 0 before `StartCharSwing`;

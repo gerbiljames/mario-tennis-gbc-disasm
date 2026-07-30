@@ -9788,3 +9788,74 @@ That is the second defect this week found in code that only the unreachable
 debug harness can run, after the `$1b` confirm screen — a reminder that "no
 observable consequence" and "no defect" are different findings, and the file
 records which one applies.
+
+## The on-court character's state and animation ids (2026-07-30)
+
+`constants.json` goes 530 → 638 and `include/constants.inc` gains 34 defs in
+three families: `CHARANIM_*` (48 sites), `CHARB_*` (45) and `CHARSTATE_*` (15).
+
+The first question — are `wCharAnimId` and `wCharSwingAnim` two id spaces? —
+resolved the other way from how it was posed. They are **one** space:
+`SetCharAnimation` (`$08:$69ea`) takes the id in `d`, stores it in
+`wCharAnimId`, and `wCharSwingAnim` is copied straight into it
+(`ld hl, wCharSwingAnim / ld d, [hl] / call SetCharAnimation` at `$08:$6c4a`).
+
+### The names come from the animation scripts, not from inference
+
+`SetCharAnimation` indexes `wCharAnimTablePtr`, which
+`SetupCharSpriteFromObjectDef` fills from the object definition's `+6/+7` word —
+for a match character that is `<Char>SpriteAnims`, the 19-entry table at the head
+of every character bank. So an id *is* `<Char>SpriteAnim00`-`18` and the space is
+exactly `$00`-`$12`. The debug character viewer's input table confirms it
+independently by feeding `SetCharAnimation` the identity list `$00`..`$12`.
+
+Two arithmetic rules in bank `$08` generate most of the table, and each is
+matched by a structural rule in the scripts themselves:
+
+| rule | code | what the scripts show |
+| --- | --- | --- |
+| `swing + $08` = the held "ready" pose | `ld a, $08 / add [hl]` at `$08:$6c0f` | `Anim0d/0e/0f` are each one frame held with delay `$ff`, and that frame is the one immediately *before* the corresponding swing's frames |
+| `swing + $04` = the quick, uncharged variant | `ld a, $04 / add [hl]` at `$08:$6e37` | `Anim09/0a/0b/0c` are each the *first frame only* of `Anim05/06/07/08`, held longer, then `anim_set $01` back to idle |
+
+That is what makes `CharRallyEndState`'s otherwise-odd membership test over
+`$05 $06 $07 $09 $0a $0b $12` legible: it is "a ground swing or a dive is still
+playing", all three strokes in both charged and quick form, plus the dive. The
+smash (`$08`) is absent only because the next instruction tests the airborne
+flag instead — the smash script holds its last frame until the character lands.
+
+One id breaks the pattern and is named from its own evidence:
+`CHARANIM_SERVE_READY` (`$10`) is not `smash + $08`, it is a serve-specific pose
+that `CharServeInitPhase.waitAnim` and `AiServeWalkToSpot` both block on.
+
+### Two states are unreachable from any instruction
+
+`CHARSTATE_RECOVER` (2) and `CHARSTATE_AWAIT_SERVE` (4) have **zero** instruction
+sites: they are only ever entered through `SetCharStateOnBallHitTable` and
+`ServeRoleCharStateTable_08`, and `render_operand` rewrites instruction operands
+only — a `db` row cannot carry a constant. They are defined anyway so the enum is
+complete, which the file already does for 79 other members.
+
+### Five corrections to `docs/match_engine.md`
+
+The doc is a week old and already had errors, which is the argument for checking
+a reference against the source rather than trusting it:
+
+* **`wCharFlags` bit 0 is not "struck by the ball (stunned)".** The doc listed
+  only the body-hit writer; the dominant one is `ApplyShotRecoil` (`$07:$546e`),
+  pushed as `ExecuteShot`'s return address so it runs after *every* stroke. The
+  bit means "movement input suspended".
+* **The dive reach multiplier is `1.25 ×`, not `1.125 ×`** — `$08:$6fcb` copies
+  `de` to `hl`, shifts `de` right *twice*, and adds.
+* **`SetCharStateOnBallHitTable` is `00 02 01 02 02 01 06 07`** — it does not
+  merely swap 1 and 2; it also maps 3 → 2, 4 → 2 and 5 → 1, leaving only
+  0/6/7 alone.
+* **`CheckBallContactWindow`'s animation test is dead code** — independently
+  rederived here, having been found by the collapsed-branch sweep from the other
+  direction. Two agents converging on it from unrelated starting points is worth
+  more than either finding alone.
+* The doc never explained the seven-member set or what `$09`/`$0a`/`$0b` are;
+  its "animation `$0a`" condition in the shot section is the quick backhand, not
+  a separate case.
+
+The first three are applied; the doc now carries the corrected values with their
+addresses.

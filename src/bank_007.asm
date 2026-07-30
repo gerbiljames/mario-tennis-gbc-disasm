@@ -2443,7 +2443,7 @@ AddPlayerMomentumToShot:
 	ret ; $53a1
 ApplyCharFlagShotSpeedPenalty:
 	ld hl, wCharFlags ; $53a2
-	bit 1, [hl] ; $53a5
+	bit CHARB_DIVING, [hl] ; $53a5
 	jr z, .done ; $53a7
 	ld hl, $f400 ; $53a9
 	add hl, bc ; $53ac
@@ -2479,11 +2479,11 @@ ExecuteShot:
 	ld [wFallbackTrajectoryFlag], a ; $53ec
 	ld b, $00 ; $53ef
 	ld a, [wCharSwingAnim] ; $53f1
-	cp $06 ; $53f4
+	cp CHARANIM_BACKHAND ; $53f4
 	jr nz, .checkShot0a ; $53f6
 	inc b ; $53f8
 .checkShot0a:
-	cp $0a ; $53f9
+	cp CHARANIM_BACKHAND_QUICK ; $53f9
 	jr nz, .checkLeftHanded ; $53fb
 	inc b ; $53fd
 .checkLeftHanded:
@@ -2550,8 +2550,8 @@ ShotRecoilFrameTask:
 	ret ; $546a
 ApplyShotRecoil:
 	ld hl, wCharFlags ; $546b
-	set 0, [hl] ; $546e
-	res 5, [hl] ; $5470
+	set CHARB_RECOIL, [hl] ; $546e
+	res CHARB_CHARGING, [hl] ; $5470
 	ld a, [wShotRecoilVariant] ; $5472
 	add a ; $5475
 	add LOW(ShotRecoilVarPtrs_07) ; $5476
@@ -2593,7 +2593,7 @@ ApplyShotRecoil:
 	ld [hl+], a ; $54aa
 	ld [hl], d ; $54ab
 	ld hl, wCharFlags ; $54ac
-	bit 1, [hl] ; $54af
+	bit CHARB_DIVING, [hl] ; $54af
 	jr nz, .done ; $54b1
 	ld hl, wCharVelX ; $54b3
 	ld a, [hl+] ; $54b6
@@ -3320,7 +3320,7 @@ ExecuteShotTopspin:
 	ret ; $58d2
 ExecuteShotPowerTopspin:
 	ld hl, wCharFlags ; $58d3
-	bit 1, [hl] ; $58d6
+	bit CHARB_DIVING, [hl] ; $58d6
 	jr nz, ExecuteShotTopspin ; $58d8
 	ld a, $01 ; $58da
 	ld [wLastShotWasPowerShot], a ; $58dc
@@ -3340,7 +3340,7 @@ ExecuteShotSlice:
 	ret ; $5900
 ExecuteShotPowerSlice:
 	ld hl, wCharFlags ; $5901
-	bit 1, [hl] ; $5904
+	bit CHARB_DIVING, [hl] ; $5904
 	jr nz, ExecuteShotSlice ; $5906
 	ld a, $01 ; $5908
 	ld [wLastShotWasPowerShot], a ; $590a
@@ -3414,9 +3414,9 @@ ExecuteShotNeutral:
 	call CheckBallInSmashRange ; $59a8
 	jr z, .neutralShot ; $59ab
 	ld a, [wCharSwingAnim] ; $59ad
-	cp $07 ; $59b0
+	cp CHARANIM_OVERHEAD ; $59b0
 	jr z, ExecuteShotSmash ; $59b2
-	cp $08 ; $59b4
+	cp CHARANIM_SMASH ; $59b4
 	jr z, ExecuteShotSmash ; $59b6
 .neutralShot:
 	call NormalizeBallHeightForShot ; $59b8

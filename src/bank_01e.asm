@@ -1122,7 +1122,7 @@ InitResultsScreenCharacters:
 	ld hl, wCharTileBase ; $49dd
 	ld [hl], $00 ; $49e0
 	ld bc, wCharPosX ; $49e2
-	ld d, $03 ; $49e5
+	ld d, CHARANIM_CELEBRATE ; $49e5
 	farcall SetCharAnimation ; $49e7
 	pop af ; $49ea
 	farcall GetCharPaletteIndex ; $49eb
@@ -1180,7 +1180,7 @@ InitResultsScreenCharacters:
 	ld hl, wCharTileBase ; $4a58
 	ld [hl], $10 ; $4a5b
 	ld bc, wCharPosX ; $4a5d
-	ld d, $03 ; $4a60
+	ld d, CHARANIM_CELEBRATE ; $4a60
 	farcall SetCharAnimation ; $4a62
 	pop af ; $4a65
 	farcall GetCharPaletteIndex ; $4a66

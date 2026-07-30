@@ -1710,21 +1710,21 @@ UpdateCharSelectCharSprite:
 	ret ; $4d13
 SetCharSelectAnimations:
 	wram_bank $04 ; $4d14
-	ld d, $00 ; $4d1a
+	ld d, CHARANIM_STAND ; $4d1a
 	farcall SetCharAnimation ; $4d1c
 	wram_bank $05 ; $4d1f
-	ld d, $00 ; $4d25
+	ld d, CHARANIM_STAND ; $4d25
 	farcall SetCharAnimation ; $4d27
 	wram_bank $06 ; $4d2a
-	ld d, $00 ; $4d30
+	ld d, CHARANIM_STAND ; $4d30
 	farcall SetCharAnimation ; $4d32
 	wram_bank $07 ; $4d35
-	ld d, $00 ; $4d3b
+	ld d, CHARANIM_STAND ; $4d3b
 	farcall SetCharAnimation ; $4d3d
 	call GetSelectedCharWramBank ; $4d40
 	ld a, b ; $4d43
 	wram_bank ; $4d44
-	ld d, $05 ; $4d48
+	ld d, CHARANIM_FOREHAND ; $4d48
 	farcall SetCharAnimation ; $4d4a
 	wram_bank $04 ; $4d4d
 	ldh a, [hWramBank] ; $4d53
@@ -1779,7 +1779,7 @@ TickCharSelectIdleAnim:
 	ld a, d ; $4dc5
 	and $1f ; $4dc6
 	jr nz, .done ; $4dc8
-	ld d, $05 ; $4dca
+	ld d, CHARANIM_FOREHAND ; $4dca
 	farcall SetCharAnimation ; $4dcc
 	ldh a, [hWramBank] ; $4dcf
 	push af ; $4dd1
@@ -1794,7 +1794,7 @@ TickCharSelectIdleAnim:
 	call GetSelectedCharWramBank ; $4de7
 	ld a, b ; $4dea
 	wram_bank ; $4deb
-	ld d, $07 ; $4def
+	ld d, CHARANIM_OVERHEAD ; $4def
 	farcall SetCharAnimation ; $4df1
 .restore:
 	pop af ; $4df4

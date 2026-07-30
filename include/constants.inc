@@ -606,3 +606,78 @@ def SFX_SCORE_STEP4          equ $bd
 def SFX_SCORE_STEP5          equ $bc
 def SFX_SCORE_STEP6          equ $bb
 def SFX_SCORE_STEP7          equ $ba
+
+; --- On-court character animation ids (wCharAnimId $df2e, wCharSwingAnim $df15) ---
+; One id space, not two. SetCharAnimation ($08:$69ea) stores its argument in
+; wCharAnimId and indexes wCharAnimTablePtr by it; that table is the 19-entry
+; <Char>SpriteAnims list every character bank ($40-$5d) opens with, so an id is
+; a direct index into <Char>SpriteAnim00-18 and the space is exactly $00-$12.
+; wCharSwingAnim is not a separate encoding -- it is the id of the swing being
+; built, copied into wCharAnimId by CharSwingWindupPhase ($08:$6c4a). The debug
+; character viewer confirms the range: CharViewerInputLoopTable ($1a:$792f)
+; feeds SetCharAnimation an identity list $00..$12.
+;
+; Two structural rules generate most of the table, and both are visible in the
+; scripts themselves (Alex's, but every character bank is laid out identically):
+;   swing + $08 = the held "ready" pose  -- CharRallyReadyPhase ($08:$6c0f)
+;                 plays `wCharSwingAnim + $08` while the button is down, and
+;                 SpriteAnim0d/0e/0f are each a single frame, held with delay
+;                 $ff, that is the frame immediately before SpriteAnim05/06/07.
+;   swing + $04 = the quick (uncharged) variant -- StartCharSwing.startSwing
+;                 ($08:$6e37) adds 4 when fewer than 5 windup frames elapsed,
+;                 and SpriteAnim09/0a/0b/0c are each the *first* frame of
+;                 SpriteAnim05/06/07/08 alone before chaining back to idle.
+; That is why CharRallyEndState ($08:$6a90) tests the seven-value set
+; $05 $06 $07 $09 $0a $0b $12: it is "a ground swing or a dive is still
+; playing", i.e. all four strokes in both their charged and quick forms, plus
+; the dive. The smash is missing from the set only because the airborne bit
+; ($df0f bit 2) is tested on the next line and covers it.
+def CHARANIM_STAND           equ $00 ; frame 0, held; the parked pose on the character-select screen
+def CHARANIM_IDLE            equ $01 ; the ready bob; UpdateCharRunAnimation's not-moving case, and what every swing chains back to
+def CHARANIM_RUN             equ $02 ; UpdateCharRunAnimation's moving case (wCharFlags bit 4)
+def CHARANIM_CELEBRATE       equ $03 ; CharPointReactionPhase, wCharPointResult >= 0; also both characters on the results screen ($1e:$49e5)
+def CHARANIM_DEJECTED        equ $04 ; CharPointReactionPhase, wCharPointResult < 0
+def CHARANIM_FOREHAND        equ $05 ; SelectForehandBackhand ($08:$6e58)
+def CHARANIM_BACKHAND        equ $06 ; SelectForehandBackhand ($08:$6e5e); ExecuteShot counts it toward wShotAimMirror
+def CHARANIM_OVERHEAD        equ $07 ; the high ground stroke ($08:$6dd1) and the serve swing ($08:$6baf)
+def CHARANIM_SMASH           equ $08 ; the jumping smash ($08:$6def); the script holds its last frame until the character lands
+def CHARANIM_FOREHAND_QUICK  equ $09
+def CHARANIM_BACKHAND_QUICK  equ $0a ; counted toward wShotAimMirror alongside $06
+def CHARANIM_OVERHEAD_QUICK  equ $0b
+def CHARANIM_SMASH_QUICK     equ $0c ; only ResetSwingAnimation and the debug viewer reach it -- StartCharSwing returns before the +$04 step on the smash path
+def CHARANIM_FOREHAND_READY  equ $0d
+def CHARANIM_BACKHAND_READY  equ $0e
+def CHARANIM_OVERHEAD_READY  equ $0f ; also the serve toss pose (CharServeTossPhase, $08:$6b83)
+def CHARANIM_SERVE_READY     equ $10 ; held serve stance; CharServeInitPhase.waitAnim and AiServeWalkToSpot both block until it is current
+def CHARANIM_SERVE_PREP      equ $11 ; the pre-serve flourish, which ends in an anim_set to $10
+def CHARANIM_DIVE            equ $12 ; StartCharSwing.dive ($08:$6df7)
+
+; --- On-court character state (wCharState, $df18) ---
+; The index UpdateCharStateMachine ($08:$6a62) dispatches on through the
+; 8-entry jumptable at $08:$6a7b; SetCharState ($08:$6a1c) is the only writer
+; and zeroes wCharStatePhase/wAiPhase with it. The names are the handler labels
+; that jumptable points at. The AI's three parallel tables ($08:$7886/$789a/
+; $78ae) index the same value and only implement slots 1, 2 and 3.
+; Two data tables map into this space and cannot carry the names, being `db`
+; rows rather than instructions: ServeRoleCharStateTable_08 ($08:$4fa0) is
+; serve role -> state at the start of a point ($03 $05 $04 $05), and
+; SetCharStateOnBallHitTable ($08:$431e) is the state every character is
+; remapped through on every strike ($00 $02 $01 $02 $02 $01 $06 $07).
+def CHARSTATE_INERT          equ 0 ; slot points at the shared `ret` -- InitChar, ResetCharForPoint, and a character the ball hits
+def CHARSTATE_RALLY          equ 1 ; CharRallyState: ready -> windup -> contact
+def CHARSTATE_RECOVER        equ 2 ; CharServeStrikePhase.dispatch: let the swing finish, then movement only. Whoever struck the ball is put here
+def CHARSTATE_SERVE          equ 3 ; CharServeState: indicator, toss, swing window, strike
+def CHARSTATE_AWAIT_SERVE    equ 4 ; CharAwaitServeState
+def CHARSTATE_STANDBY        equ 5 ; CharStandbyState: end-state, then state 4's movement phase
+def CHARSTATE_WALK           equ 6 ; CharWalkState: the scripted changeover and walk-off walks
+def CHARSTATE_POINT_END      equ 7 ; CharPointEndState: walk to target, then the win/lose reaction
+
+; --- On-court character flags (wCharFlags, $df0f) ---
+; Bit indices only: every one of the 40 sites is a `bit`/`res`/`set`, so the
+; masks would have no user. Bits 3 and 7 are never touched.
+def CHARB_RECOIL             equ 0 ; set by ApplyShotRecoil ($07:$546e) after every stroke and by CheckCharBallContact on a body hit; UpdateCharVelocityFromInput ($08:$73d7) is the only reader and drops the steering intent
+def CHARB_DIVING             equ 1 ; StartCharSwing.dive sets it. Widens the contact window to 1.25x wCharReachX, flattens the brake, freezes the facing ease, costs -$0c00 shot speed, and turns both power strokes back into their base shots
+def CHARB_AIRBORNE           equ 2 ; set for the smash jump, cleared by StepCharJumpPhysics on landing; also picks the airborne shadow over the ground one
+def CHARB_MOVING             equ 4 ; the velocity came out nonzero this frame (or MoveCharTowardTarget stepped); UpdateCharRunAnimation reads it to choose run over idle
+def CHARB_CHARGING           equ 5 ; a swing is winding up: StepCharMovement ($08:$72ed) shifts both velocities right 3, so speed / 8
+def CHARB_MOVE_BLOCKED       equ 6 ; StepCharMovement refused an axis at the court bound instead of clamping it. Written at four sites and read at none

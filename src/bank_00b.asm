@@ -218,7 +218,7 @@ ResetActiveCharState:
 	ldh a, [hWramBank] ; $414b
 	push af ; $414d
 	wram_bank $05 ; $414e
-	ld a, $00 ; $4154
+	ld a, CHARSTATE_INERT ; $4154
 	farcall SetCharState ; $4156
 	pop af ; $4159
 	wram_bank ; $415a
