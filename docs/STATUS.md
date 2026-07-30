@@ -9616,3 +9616,76 @@ unidentified until a real ranking match is driven to its end. The twelve `End*`
 rooms were reached as bare per-room loads rather than through
 `RunEndingCreditsSequence`, so the credits captions and cross-room chaining did
 not run.
+
+## The twelve actionable sites, worked (2026-07-30)
+
+The recovered WRAM-bank masks turned two actionable sites into twelve. Ten are
+now named; the two that remain are the ones a previous pass deliberately left,
+and nothing about this work changes their reason.
+
+```
+                    before   after
+bare $dxxx operands    355     345
+  unproven             343     343
+  unclaimed              8       0
+  mirrored               2       0
+  rom-scoped             2       2
+```
+
+### The eight unclaimed were one subsystem
+
+All eight — `$db10` (five sites), `$db12` (two) and `$d900` — are
+`UpdateSceneTileAnimations` (`$0a:$6460`), which selects WRAM bank `$05` itself
+at `$6474`. They are the three variables of one loop: seed a cursor with a
+buffer base, fetch a 2-byte far source pointer out of the scene's slot 6 record,
+`FarCopyBytes` the tile data to the cursor, `QueueVRAMCopy` it out, advance the
+cursor by the length copied. So `wSceneTileAnimBuffer`,
+`wSceneTileAnimBufferPtr` and `wSceneTileAnimSrcPtr`.
+
+Two things kept this honest. First, **all eight `$d9xx`/`$dbxx` references in
+bank `$0a` are these sites**, so a `{bank $0a, wram_bank $05}` scope captures
+them and nothing else — and because the routine selects the bank itself, both
+halves are provable and the scope stays inside the audit rather than needing the
+exempt form.
+
+Second, the generator refused the first attempt: `ram_unions overlap:
+$da80-$db08 and $d900-$dc00 cover the same bytes`. That existing union is
+`wSceneTileAnimHeader`/`wSceneTileAnimEntries` — *the same subsystem*, under the
+same scope, put there by an earlier pass. The two pointers belong in it, so it
+widened to `$db14` instead, and only the buffer needed a span of its own. The
+overlap check turned a clumsy declaration into the right one.
+
+The buffer's extent is not proven — no length for it appears anywhere — so it is
+declared as "at most `$180` bytes, bounded by `wSceneTileAnimHeader` above it",
+which is a fact rather than a guess.
+
+### Both mirrored candidates were single-bank after all
+
+Neither is really mirrored; both are the documented trap that **the bank live at
+an operand need not be the bank it means**, and both were rendering bare because
+the recovered trace observed two banks at them.
+
+* **`$0a:$4898`** loads the actor slot-1 pointer and only executes
+  `wram_bank $04` **two instructions later**, so the bank seen at the operand is
+  whatever the caller had. It is `wActors + 1 * ACTOR_SIZE`, and the name it
+  briefly lost was right.
+* **`$0a:$622f`** is in `GetSceneTilemapAddr`, which returns `base + cell`
+  *without dereferencing anything*, so no bank is live at it at all. Its caller
+  `CopySceneTilemapRect` selects `wram_bank $02` and then copies with a `$40`
+  row stride — the 64-wide map buffer's geometry. It is **`wMapBuffer64`**, and
+  the `wActors` it used to say was a false name: the same error class as
+  `GetCollisionMapCellAddr`'s base, which said `wActors` until earlier today.
+
+Both are pinned with per-site scopes, which the new specificity ordering makes
+the top tier precisely so that a site whose bank the code contradicts can be
+stated outright.
+
+### The two left, and why
+
+`$1e:$54ec`'s `$d000` and `$d004` stay numeric. `InitExpAwardScreenState` fills
+`$d004`-`$d027` with a pattern that fits the character-data block exactly at its
+zero runs and not at all at its `$20`/`$30` runs, and fits right-aligned digit
+strings except that the routine which formats those writes somewhere else. The
+missing evidence is a *consumer*: nothing in bank `$1e` reads `$d009`-`$d023`,
+and no other bank references them. More coverage does not help — the question is
+semantic, not a bank question — so they stay honestly numeric.

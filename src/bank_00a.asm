@@ -1458,7 +1458,7 @@ WaitPlayerMoveDone:
 	push bc ; $4893
 	push hl ; $4894
 	ld bc, $0258 ; $4895
-	ld hl, $d040 ; $4898
+	ld hl, wActors + 1 * ACTOR_SIZE ; $4898
 	ld a, l ; $489b
 	ldh [hActorPtr], a ; $489c
 	ld a, h ; $489e
@@ -4669,7 +4669,7 @@ GetSceneTilemapAddr:
 	ld l, h ; $622b
 	ld h, $00 ; $622c
 	add hl, bc ; $622e
-	ld bc, $d000 ; $622f
+	ld bc, wMapBuffer64 ; $622f
 	add hl, bc ; $6232
 	pop bc ; $6233
 	ret ; $6234
@@ -5052,8 +5052,8 @@ UpdateSceneTileAnimations:
 	ldh a, [hWramBank] ; $6471
 	push af ; $6473
 	wram_bank $05 ; $6474
-	ld de, $d900 ; $647a
-	ld hl, $db10 ; $647d
+	ld de, wSceneTileAnimBuffer ; $647a
+	ld hl, wSceneTileAnimBufferPtr ; $647d
 	ld a, e ; $6480
 	ld [hl+], a ; $6481
 	ld [hl], d ; $6482
@@ -5175,15 +5175,15 @@ AdvanceSceneTileAnimation:
 	push bc ; $6528
 	ld a, h ; $6529
 	ld h, $40 ; $652a
-	ld de, $db12 ; $652c
+	ld de, wSceneTileAnimSrcPtr ; $652c
 	ld bc, $0002 ; $652f
 	call FarCopyBytes ; $6532
 	pop bc ; $6535
-	ld hl, $db10 ; $6536
+	ld hl, wSceneTileAnimBufferPtr ; $6536
 	ld a, [hl+] ; $6539
 	ld d, [hl] ; $653a
 	ld e, a ; $653b
-	ld hl, $db12 ; $653c
+	ld hl, wSceneTileAnimSrcPtr ; $653c
 	ld a, [hl+] ; $653f
 	ld h, [hl] ; $6540
 	ld l, a ; $6541
@@ -5192,7 +5192,7 @@ AdvanceSceneTileAnimation:
 	ld a, b ; $6544
 	pop bc ; $6545
 	call FarCopyBytes ; $6546
-	ld hl, $db10 ; $6549
+	ld hl, wSceneTileAnimBufferPtr ; $6549
 	ld a, [hl+] ; $654c
 	ld h, [hl] ; $654d
 	ld l, a ; $654e
@@ -5207,7 +5207,7 @@ AdvanceSceneTileAnimation:
 	rr c ; $655c
 	srl b ; $655e
 	rr c ; $6560
-	ld hl, $db10 ; $6562
+	ld hl, wSceneTileAnimBufferPtr ; $6562
 	ld a, [hl+] ; $6565
 	ld h, [hl] ; $6566
 	ld l, a ; $6567
@@ -5218,7 +5218,7 @@ AdvanceSceneTileAnimation:
 	add hl, bc ; $656e
 	ld b, h ; $656f
 	ld c, l ; $6570
-	ld hl, $db10 ; $6571
+	ld hl, wSceneTileAnimBufferPtr ; $6571
 	ld a, c ; $6574
 	ld [hl+], a ; $6575
 	ld [hl], b ; $6576

@@ -3427,6 +3427,12 @@
        "bank": "0x0a",
        "start": "0x4312",
        "end": "0x4315"
+      },
+      {
+       "bank": "0x0a",
+       "start": "0x4898",
+       "end": "0x489b",
+       "note": "WaitPlayerMoveDone loads the slot-1 pointer and only selects WRAM bank $04 two instructions later, so the bank observed at the operand is the caller's, not the one it means"
       }
      ],
      "symbols": {
@@ -4438,8 +4444,31 @@
    ]
   },
   {
+   "start": "0xd900",
+   "end": "0xda80",
+   "wram_bank": "0x05",
+   "comment": "Staging buffer UpdateSceneTileAnimations ($0a:$6460) assembles the scene's\nanimated tiles in before queueing them to VRAM. Same subsystem and the same\nscope as the $da80 union below, kept separate only because the animation\nheader starts at $da80 -- which is also what bounds the buffer, since no\nlength for it appears in the code.",
+   "variants": [
+    {
+     "context": "scene tile animation staging (bank $0a)",
+     "scopes": [
+      {
+       "bank": "0x0a",
+       "wram_bank": "0x05"
+      }
+     ],
+     "symbols": {
+      "0xd900": {
+       "name": "wSceneTileAnimBuffer",
+       "note": "[at most $180 bytes, bounded by wSceneTileAnimHeader above it] Base of the tile staging buffer. Referenced once, as the initial value of wSceneTileAnimBufferPtr; the bytes are filled by FarCopyBytes through that cursor and read out by QueueVRAMCopy"
+      }
+     }
+    }
+   ]
+  },
+  {
    "start": "0xda80",
-   "end": "0xdb08",
+   "end": "0xdb14",
    "wram_bank": "0x05",
    "comment": "Scene tile-animation record, WRAM bank $05: an $88-byte slot InitSceneTileAnimations\ncopies in before building its animation slots.",
    "variants": [
@@ -4461,6 +4490,14 @@
        "name": "wSceneTileAnimEntries",
        "note": "[128 bytes] The scene's tile-animation entries. InitSceneTileAnimations tests the first byte against $fe and skips building any slots when the list is empty.",
        "size": 128
+      },
+      "0xdb10": {
+       "name": "wSceneTileAnimBufferPtr",
+       "note": "[16-bit] Rolling write cursor into wSceneTileAnimBuffer. UpdateSceneTileAnimations ($0a:$647a) seeds it with the buffer base each pass, reads it back as the FarCopyBytes destination and as the QueueVRAMCopy source, then advances it by the number of bytes copied ($0a:$6571)"
+      },
+      "0xdb12": {
+       "name": "wSceneTileAnimSrcPtr",
+       "note": "[16-bit] Far source pointer for the frame being staged, copied two bytes at a time out of the scene's slot 6 record by FarCopyBytes ($0a:$652c), then offset by the frame index before the tile data is fetched"
       }
      }
     }
@@ -4623,6 +4660,12 @@
        "bank": "0x0a",
        "start": "0x5c64",
        "end": "0x5c68"
+      },
+      {
+       "bank": "0x0a",
+       "start": "0x622f",
+       "end": "0x6232",
+       "note": "GetSceneTilemapAddr returns base + cell without dereferencing, so no bank is live at the operand; its caller CopySceneTilemapRect selects WRAM bank $02 and copies with a $40 row stride, which is this buffer's geometry"
       }
      ],
      "symbols": {

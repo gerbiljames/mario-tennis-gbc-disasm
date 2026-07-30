@@ -3109,7 +3109,8 @@ SECTION "WRAMX bank 5", WRAMX[$d000], BANK[5]
 ;   $d841-$d87f  text and window engine
 ;   $d880-$d88f  short-text fetch
 ;   $d8b0-$d8ff  text argument queues
-;   $da80-$db07  scene tile animations
+;   $d900-$da7f  scene tile animation staging
+;   $da80-$db13  scene tile animations
 ;   $dc00-$dc7f  window system
 ;   $df00-$df96  match character struct  [one copy per bank 4-7]
 
@@ -3275,7 +3276,15 @@ wTextArgNumberQueue:: ds 32
 ; 16 x 1-byte short-text ids queued by PushTextArgShortTextId; the $08 control code pops one and prints the string it names
 wTextArgShortTextQueue:: ds 16
 
-	ds 384
+; Staging buffer UpdateSceneTileAnimations ($0a:$6460) assembles the scene's
+; animated tiles in before queueing them to VRAM. Same subsystem and the same
+; scope as the $da80 union below, kept separate only because the animation
+; header starts at $da80 -- which is also what bounds the buffer, since no
+; length for it appears in the code.
+; scene tile animation staging (bank $0a)
+; [at most $180 bytes, bounded by wSceneTileAnimHeader above it] Base of the tile staging buffer. Referenced once, as the initial value of wSceneTileAnimBufferPtr; the bytes are filled by FarCopyBytes through that cursor and read out by QueueVRAMCopy
+wSceneTileAnimBuffer:: db
+	ds 383
 
 ; Scene tile-animation record, WRAM bank $05: an $88-byte slot InitSceneTileAnimations
 ; copies in before building its animation slots.
@@ -3284,8 +3293,13 @@ wTextArgShortTextQueue:: ds 16
 wSceneTileAnimHeader:: ds 8
 ; [128 bytes] The scene's tile-animation entries. InitSceneTileAnimations tests the first byte against $fe and skips building any slots when the list is empty.
 wSceneTileAnimEntries:: ds 128
+	ds 8
+; [16-bit] Rolling write cursor into wSceneTileAnimBuffer. UpdateSceneTileAnimations ($0a:$647a) seeds it with the buffer base each pass, reads it back as the FarCopyBytes destination and as the QueueVRAMCopy source, then advances it by the number of bytes copied ($0a:$6571)
+wSceneTileAnimBufferPtr:: dw
+; [16-bit] Far source pointer for the frame being staged, copied two bytes at a time out of the scene's slot 6 record by FarCopyBytes ($0a:$652c), then offset by the frame index before the tile data is fetched
+wSceneTileAnimSrcPtr:: dw
 
-	ds 248
+	ds 236
 
 ; Window bookkeeping (WRAM bank $05), owned by the bank $05 window system:
 ; the window struct array, the dirty-row flags that drive the shadow
