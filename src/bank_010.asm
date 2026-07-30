@@ -76,7 +76,7 @@ MatchSelectPlayEpilogueScene:
 	farcall SetupSceneAnimationPalettes ; $40fc
 	script_fade_in $04 ; $40ff
 	call WaitFadeEnd ; $4104
-	sound $14 ; $4107
+	sound BGM_COURT_WAREHOUSE ; $4107
 	ld a, $01 ; $4109
 	ld hl, SceneAnimationFrameTask_10 ; $410b
 	call RegisterFrameTask ; $410e
@@ -431,7 +431,7 @@ RunServiceLessonMenu:
 	farcall RunPagedTextMenu ; $452c
 	cp $ff ; $452f
 	jp z, RunDoublesMatchListMenu.done ; $4531
-	add $03 ; $4534
+	add MINIGAME_SERVICE_PRACTICE_1 ; $4534
 	ld [wCurrentMinigameStoryMatch + 1], a ; $4536
 	ld hl, wStoryModePlayersXPosition ; $4539
 	ld de, wStoryModeSpawnPosition ; $453c
@@ -453,7 +453,7 @@ RunNetLessonMenu:
 	farcall RunPagedTextMenu ; $4564
 	cp $ff ; $4567
 	jp z, RunDoublesMatchListMenu.done ; $4569
-	add $09 ; $456c
+	add MINIGAME_NET_GAME_PRACTICE_1 ; $456c
 	ld [wCurrentMinigameStoryMatch + 1], a ; $456e
 	ld hl, wStoryModePlayersXPosition ; $4571
 	ld de, wStoryModeSpawnPosition ; $4574
@@ -475,7 +475,7 @@ RunStrokeLessonMenu:
 	farcall RunPagedTextMenu ; $459c
 	cp $ff ; $459f
 	jp z, RunDoublesMatchListMenu.done ; $45a1
-	add $0f ; $45a4
+	add MINIGAME_STROKE_PRACTICE_1 ; $45a4
 	ld [wCurrentMinigameStoryMatch + 1], a ; $45a6
 	ld hl, wStoryModePlayersXPosition ; $45a9
 	ld de, wStoryModeSpawnPosition ; $45ac
@@ -629,7 +629,7 @@ Test2ExitTriggers_10:
 	farcall PushTextArgNumber ; $47ec
 	script_set_text Text_30_353 ; $47ef
 	script_speak $80 ; $47f5
-	ld a, $01 ; $47fa
+	ld a, MINIGAME_SERVICE_MATCH_2 ; $47fa
 	farcall RunTrainingDrillByID ; $47fc
 	ret ; $47ff
 	ld hl, wStoryModePlayersXPosition ; $4800
@@ -645,7 +645,7 @@ Test2ExitTriggers_10:
 	farcall PushTextArgNumber ; $481d
 	script_set_text Text_30_353 ; $4820
 	script_speak $80 ; $4826
-	ld a, $02 ; $482b
+	ld a, MINIGAME_SERVICE_MATCH_3 ; $482b
 	farcall RunTrainingDrillByID ; $482d
 	ret ; $4830
 	ld hl, wStoryModePlayersXPosition ; $4831
@@ -661,7 +661,7 @@ Test2ExitTriggers_10:
 	farcall PushTextArgNumber ; $484e
 	script_set_text Text_30_353 ; $4851
 	script_speak $80 ; $4857
-	ld a, $03 ; $485c
+	ld a, MINIGAME_SERVICE_PRACTICE_1 ; $485c
 	farcall RunTrainingDrillByID ; $485e
 	ret ; $4861
 	ld hl, wStoryModePlayersXPosition ; $4862
@@ -677,7 +677,7 @@ Test2ExitTriggers_10:
 	farcall PushTextArgNumber ; $487f
 	script_set_text Text_30_353 ; $4882
 	script_speak $80 ; $4888
-	ld a, $04 ; $488d
+	ld a, MINIGAME_SERVICE_PRACTICE_2 ; $488d
 	farcall RunTrainingDrillByID ; $488f
 	ret ; $4892
 	ld hl, wStoryModePlayersXPosition ; $4893
@@ -693,7 +693,7 @@ Test2ExitTriggers_10:
 	farcall PushTextArgNumber ; $48b0
 	script_set_text Text_30_353 ; $48b3
 	script_speak $80 ; $48b9
-	ld a, $05 ; $48be
+	ld a, MINIGAME_SERVICE_PRACTICE_3 ; $48be
 	farcall RunTrainingDrillByID ; $48c0
 	ret ; $48c3
 	ld hl, wStoryModePlayersXPosition ; $48c4
@@ -709,7 +709,7 @@ Test2ExitTriggers_10:
 	farcall PushTextArgNumber ; $48e1
 	script_set_text Text_30_353 ; $48e4
 	script_speak $80 ; $48ea
-	ld a, $06 ; $48ef
+	ld a, MINIGAME_NET_GAME_MATCH_1 ; $48ef
 	farcall RunTrainingDrillByID ; $48f1
 	ret ; $48f4
 	ld hl, wStoryModePlayersXPosition ; $48f5
@@ -725,7 +725,7 @@ Test2ExitTriggers_10:
 	farcall PushTextArgNumber ; $4912
 	script_set_text Text_30_353 ; $4915
 	script_speak $80 ; $491b
-	ld a, $07 ; $4920
+	ld a, MINIGAME_NET_GAME_MATCH_2 ; $4920
 	farcall RunTrainingDrillByID ; $4922
 	ret ; $4925
 	ld hl, wStoryModePlayersXPosition ; $4926
@@ -741,7 +741,7 @@ Test2ExitTriggers_10:
 	farcall PushTextArgNumber ; $4943
 	script_set_text Text_30_353 ; $4946
 	script_speak $80 ; $494c
-	ld a, $08 ; $4951
+	ld a, MINIGAME_NET_GAME_MATCH_3 ; $4951
 	farcall RunTrainingDrillByID ; $4953
 	ret ; $4956
 Test2Npc0B_10:
@@ -758,7 +758,7 @@ Test2Npc0B_10:
 	farcall PushTextArgNumber ; $4974
 	script_set_text Text_30_353 ; $4977
 	script_speak $80 ; $497d
-	ld a, $09 ; $4982
+	ld a, MINIGAME_NET_GAME_PRACTICE_1 ; $4982
 	farcall RunTrainingDrillByID ; $4984
 	ret ; $4987
 Test2Npc0C_10:
@@ -775,7 +775,7 @@ Test2Npc0C_10:
 	farcall PushTextArgNumber ; $49a5
 	script_set_text Text_30_353 ; $49a8
 	script_speak $80 ; $49ae
-	ld a, $0a ; $49b3
+	ld a, MINIGAME_NET_GAME_PRACTICE_2 ; $49b3
 	farcall RunTrainingDrillByID ; $49b5
 	ret ; $49b8
 Test2Npc0D_10:
@@ -792,7 +792,7 @@ Test2Npc0D_10:
 	farcall PushTextArgNumber ; $49d6
 	script_set_text Text_30_353 ; $49d9
 	script_speak $80 ; $49df
-	ld a, $0b ; $49e4
+	ld a, MINIGAME_NET_GAME_PRACTICE_3 ; $49e4
 	farcall RunTrainingDrillByID ; $49e6
 	ret ; $49e9
 Test2Npc0E_10:
@@ -809,7 +809,7 @@ Test2Npc0E_10:
 	farcall PushTextArgNumber ; $4a07
 	script_set_text Text_30_353 ; $4a0a
 	script_speak $80 ; $4a10
-	ld a, $0c ; $4a15
+	ld a, MINIGAME_STROKE_MATCH_1 ; $4a15
 	farcall RunTrainingDrillByID ; $4a17
 	ret ; $4a1a
 Test2Npc0F_10:
@@ -826,7 +826,7 @@ Test2Npc0F_10:
 	farcall PushTextArgNumber ; $4a38
 	script_set_text Text_30_353 ; $4a3b
 	script_speak $80 ; $4a41
-	ld a, $0d ; $4a46
+	ld a, MINIGAME_STROKE_MATCH_2 ; $4a46
 	farcall RunTrainingDrillByID ; $4a48
 	ret ; $4a4b
 Test2Npc10_10:
@@ -843,7 +843,7 @@ Test2Npc10_10:
 	farcall PushTextArgNumber ; $4a69
 	script_set_text Text_30_353 ; $4a6c
 	script_speak $80 ; $4a72
-	ld a, $0e ; $4a77
+	ld a, MINIGAME_STROKE_MATCH_3 ; $4a77
 	farcall RunTrainingDrillByID ; $4a79
 	ret ; $4a7c
 Test2Npc11_10:
@@ -860,7 +860,7 @@ Test2Npc11_10:
 	farcall PushTextArgNumber ; $4a9a
 	script_set_text Text_30_353 ; $4a9d
 	script_speak $80 ; $4aa3
-	ld a, $0f ; $4aa8
+	ld a, MINIGAME_STROKE_PRACTICE_1 ; $4aa8
 	farcall RunTrainingDrillByID ; $4aaa
 	ret ; $4aad
 Test2Npc12_10:
@@ -877,7 +877,7 @@ Test2Npc12_10:
 	farcall PushTextArgNumber ; $4acb
 	script_set_text Text_30_353 ; $4ace
 	script_speak $80 ; $4ad4
-	ld a, $10 ; $4ad9
+	ld a, MINIGAME_STROKE_PRACTICE_2 ; $4ad9
 	farcall RunTrainingDrillByID ; $4adb
 	ret ; $4ade
 Test2NpcScripts_10:
@@ -930,7 +930,7 @@ Test2InitScript_10:
 	ld [wStoryModeExitLocationRequest], a ; $4ba8
 	ret ; $4bab
 	farcall InitMinigameMatchSettings ; $4bac
-	ld a, $02 ; $4baf
+	ld a, COURT_GRASS ; $4baf
 	ld [wCurrentlyUsedCourt], a ; $4bb1
 	ld a, $02 ; $4bb4
 	ld [wOnCourtCharCount], a ; $4bb6
@@ -939,9 +939,9 @@ Test2InitScript_10:
 	farcall SetModeHookTable ; $4bbe
 	ld de, Test2InitScriptMinigamePointTable_10 ; $4bc1
 	farcall SetMinigamePointTable ; $4bc4
-	ld a, $1a ; $4bc7
+	ld a, CHAR_MARIO ; $4bc7
 	ld [wMatchPlayerChar], a ; $4bc9
-	ld a, $04 ; $4bcc
+	ld a, CHAR_ALLIE ; $4bcc
 	ld [wMatchOpponentChar], a ; $4bce
 	farcall RunN64ExhibData ; $4bd1
 	farcall RunMinigameMatch ; $4bd4
@@ -1234,13 +1234,13 @@ MatchTypeSettingsTable1:
 	db $06 ; $4f0c
 RunTitleAndMainMenuLoop:
 	call ClearFrameTasks ; $4f0d
-	sound $00 ; $4f10
+	sound BGM_NONE ; $4f10
 	call ResumeBGM ; $4f12
 	ld a, [wStoryModeEntryPoint] ; $4f15
 	cp $0a ; $4f18
 	jr nz, .newGame ; $4f1a
 	call ClearFrameTasks ; $4f1c
-	sound $00 ; $4f1f
+	sound BGM_NONE ; $4f1f
 	call ResumeBGM ; $4f21
 	xor a ; $4f24
 	ld [wCheatUnlockTriggered], a ; $4f25
@@ -1366,7 +1366,7 @@ MatchSelectHandlersBHandler0:
 	jp EraseSavedDataFlowHandler4_10.runMatch ; $502d
 .restoreReturnPoint:
 	farcall RestoreStoryReturnPoint ; $5030
-	ld b, $0a ; $5033
+	ld b, STORYLOC_DORM_ROOM ; $5033
 	ld c, $01 ; $5035
 	farcall SaveStoryReturnPoint ; $5037
 	farcall SaveStorySlotWithTimer ; $503a
@@ -1432,10 +1432,10 @@ MatchSelectHandlersBHandler0:
 	call GetStoryContinueDestination ; $50ca
 	ld [wMatchSelectSubState], a ; $50cd
 	call RestoreGameTimer ; $50d0
-	ld a, $00 ; $50d3
+	ld a, GAMEMODE_NONE ; $50d3
 	ld [wGameMode], a ; $50d5
 	clear_flag FLAG_ISLAND_SKY_SCENE_ACTIVE ; $50d8
-	ld b, $0a ; $50db
+	ld b, STORYLOC_DORM_ROOM ; $50db
 	ld c, $01 ; $50dd
 	farcall SaveStoryReturnPoint ; $50df
 	farcall SaveStorySlotWithTimer ; $50e2
@@ -1551,7 +1551,7 @@ MatchSelectHandlersBHandler3:
 	xor a ; $51e0
 	ld [wSaveAndQuitRequest], a ; $51e1
 	farcall WriteExhibitionSaveBlock ; $51e4
-	ld a, $04 ; $51e7
+	ld a, GAMEMODE_EXHIBITION ; $51e7
 	ld [wGameMode], a ; $51e9
 	farcall RunMatch ; $51ec
 	ld a, [wSaveAndQuitRequest] ; $51ef
@@ -1954,7 +1954,7 @@ EraseSavedDataFlowHandler4_10:
 	or a ; $55bc
 	jr z, .matchFinished ; $55bd
 	farcall SaveStorySlotWithTimer ; $55bf
-	ld a, $00 ; $55c2
+	ld a, STORYLOC_MAIN_MENU ; $55c2
 	ld [wStoryModeCurrentLocation], a ; $55c4
 	ld a, $01 ; $55c7
 	ld [wStoryModeEntryPoint], a ; $55c9
@@ -1964,12 +1964,12 @@ EraseSavedDataFlowHandler4_10:
 	ret ; $55d4
 .matchFinished:
 	ld a, [wGameMode] ; $55d5
-	cp $04 ; $55d8
+	cp GAMEMODE_EXHIBITION ; $55d8
 	jr nz, .chooseReturn ; $55da
 	clear_flag FLAG_ISLAND_SKY_SCENE_ACTIVE ; $55dc
 	xor a ; $55df
 	ld [wKeepMatchStatsFlag], a ; $55e0
-	ld b, $00 ; $55e3
+	ld b, STORYLOC_MAIN_MENU ; $55e3
 	ld c, $01 ; $55e5
 	farcall SaveStoryReturnPoint ; $55e7
 	farcall SaveStorySlotWithTimer ; $55ea
@@ -1988,7 +1988,7 @@ EraseSavedDataFlowHandler4_10:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $5604
 	cp $14 ; $5607
 	jr c, .below14 ; $5609
-	ld a, $1c ; $560b
+	ld a, STORYLOC_SPECIAL_COURT ; $560b
 	ld [wStoryModeCurrentLocation], a ; $560d
 	ld a, $0a ; $5610
 	ld [wStoryModeEntryPoint], a ; $5612
@@ -2001,7 +2001,7 @@ EraseSavedDataFlowHandler4_10:
 	jr c, .below0f ; $5620
 	test_flag FLAG_DOUBLES ; $5622
 	jr nz, .below14Doubles ; $5625
-	ld a, $19 ; $5627
+	ld a, STORYLOC_TOURNAMENT ; $5627
 	ld [wStoryModeCurrentLocation], a ; $5629
 	ld a, $0a ; $562c
 	ld [wStoryModeEntryPoint], a ; $562e
@@ -2010,7 +2010,7 @@ EraseSavedDataFlowHandler4_10:
 	ld [wStoryModeExitLocationRequest], a ; $5636
 	ret ; $5639
 .below14Doubles:
-	ld a, $19 ; $563a
+	ld a, STORYLOC_TOURNAMENT ; $563a
 	ld [wStoryModeCurrentLocation], a ; $563c
 	ld a, $0b ; $563f
 	ld [wStoryModeEntryPoint], a ; $5641
@@ -2021,7 +2021,7 @@ EraseSavedDataFlowHandler4_10:
 .below0f:
 	cp $0a ; $564d
 	jr c, .below0a ; $564f
-	ld a, $07 ; $5651
+	ld a, STORYLOC_COURTYARD ; $5651
 	ld [wStoryModeCurrentLocation], a ; $5653
 	ld a, $0d ; $5656
 	ld [wStoryModeEntryPoint], a ; $5658
@@ -2033,7 +2033,7 @@ EraseSavedDataFlowHandler4_10:
 	cp $05 ; $5664
 	jr c, .below05 ; $5666
 	jr z, .id05 ; $5668
-	ld a, $10 ; $566a
+	ld a, STORYLOC_SENIOR_CLASS_COURT ; $566a
 	ld [wStoryModeCurrentLocation], a ; $566c
 	ld a, $0f ; $566f
 	ld [wStoryModeEntryPoint], a ; $5671
@@ -2042,7 +2042,7 @@ EraseSavedDataFlowHandler4_10:
 	ld [wStoryModeExitLocationRequest], a ; $5679
 	ret ; $567c
 .id05:
-	ld a, $10 ; $567d
+	ld a, STORYLOC_SENIOR_CLASS_COURT ; $567d
 	ld [wStoryModeCurrentLocation], a ; $567f
 	ld a, $09 ; $5682
 	ld [wStoryModeEntryPoint], a ; $5684
@@ -2055,7 +2055,7 @@ EraseSavedDataFlowHandler4_10:
 	jr nz, .otherRoom ; $5693
 	cp $00 ; $5695
 	jr z, .practiceRoomAlt ; $5697
-	ld a, $0b ; $5699
+	ld a, STORYLOC_JUNIOR_CLASS_COURT_SINGLES ; $5699
 	ld [wStoryModeCurrentLocation], a ; $569b
 	ld a, $0f ; $569e
 	ld [wStoryModeEntryPoint], a ; $56a0
@@ -2064,7 +2064,7 @@ EraseSavedDataFlowHandler4_10:
 	ld [wStoryModeExitLocationRequest], a ; $56a8
 	ret ; $56ab
 .practiceRoomAlt:
-	ld a, $0b ; $56ac
+	ld a, STORYLOC_JUNIOR_CLASS_COURT_SINGLES ; $56ac
 	ld [wStoryModeCurrentLocation], a ; $56ae
 	ld a, $09 ; $56b1
 	ld [wStoryModeEntryPoint], a ; $56b3
@@ -2075,7 +2075,7 @@ EraseSavedDataFlowHandler4_10:
 .otherRoom:
 	cp $00 ; $56bf
 	jr z, .otherRoomAlt ; $56c1
-	ld a, $0c ; $56c3
+	ld a, STORYLOC_JUNIOR_CLASS_COURT_DOUBLES ; $56c3
 	ld [wStoryModeCurrentLocation], a ; $56c5
 	ld a, $0f ; $56c8
 	ld [wStoryModeEntryPoint], a ; $56ca
@@ -2084,7 +2084,7 @@ EraseSavedDataFlowHandler4_10:
 	ld [wStoryModeExitLocationRequest], a ; $56d2
 	ret ; $56d5
 .otherRoomAlt:
-	ld a, $0c ; $56d6
+	ld a, STORYLOC_JUNIOR_CLASS_COURT_DOUBLES ; $56d6
 	ld [wStoryModeCurrentLocation], a ; $56d8
 	ld a, $09 ; $56db
 	ld [wStoryModeEntryPoint], a ; $56dd
@@ -3841,7 +3841,7 @@ AcademyWingInitScript_10:
 	call BeginFadeOut ; $6f25
 	call WaitFadeEnd ; $6f28
 	script_wait_frames $32 ; $6f2b
-	ld a, $0a ; $6f32
+	ld a, STORYLOC_DORM_ROOM ; $6f32
 	ld [wStoryModeCurrentLocation], a ; $6f34
 	ld a, $0a ; $6f37
 	ld [wStoryModeEntryPoint], a ; $6f39
@@ -4023,7 +4023,7 @@ AcademyWingInitActors0_10:
 	ld c, $02 ; $731e
 	call BeginFadeOut ; $7320
 	call WaitFadeEnd ; $7323
-	ld a, $14 ; $7326
+	ld a, STORYLOC_ACADEMY_ENTRANCE ; $7326
 	ld [wStoryModeCurrentLocation], a ; $7328
 	ld a, $0c ; $732b
 	ld [wStoryModeEntryPoint], a ; $732d
@@ -4033,14 +4033,14 @@ AcademyWingInitActors0_10:
 	ret ; $7338
 AcademyWingOpenDoor_10:
 	script_wait_frames $0a ; $7339
-	sound $79 ; $7340
+	sound SFX_DOOR_ALT ; $7340
 	script_copy_scene_rect $07, $38, $20, $38, $02, $02 ; $7342
 	script_wait_frames $02 ; $7351
 	script_copy_scene_rect $0b, $38, $20, $38, $02, $02 ; $7358
 	script_wait_frames $04 ; $7367
 	ret ; $736e
 AcademyWingCloseDoor_10:
-	sound $79 ; $736f
+	sound SFX_DOOR_ALT ; $736f
 	script_copy_scene_rect $07, $38, $20, $38, $02, $02 ; $7371
 	script_wait_frames $02 ; $7380
 	script_copy_scene_rect $03, $38, $20, $38, $02, $02 ; $7387

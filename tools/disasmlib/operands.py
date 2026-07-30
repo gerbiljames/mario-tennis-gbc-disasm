@@ -95,8 +95,12 @@ LOW_BYTE_SITES = {
 IMM_CODE_POINTERS = {0x006b0}
 
 
+SOUND_IMM_RE = re.compile(r"^sound \$([0-9a-f]{2})$")
+
+
 def render_operand(ins, off, labels, hwregs, ramnames, data_labels=None,
-                   ramscoped=None, constants=None, scopes=None):
+                   ramscoped=None, constants=None, scopes=None,
+                   sound_ids=None):
     text = ins.text
     # A curated 8-bit immediate (constants.json maps the instruction offset to a
     # named constant, e.g. a wCurrentShotType code). Keyed by exact offset, so
@@ -117,6 +121,14 @@ def render_operand(ins, off, labels, hwregs, ramnames, data_labels=None,
         m = IMM8_RE.search(text)
         if m:
             return text[:m.start()] + name
+    # The inline byte of a `sound` command (rst $08) is an id in one global
+    # space, so the name follows the value rather than the site -- unlike every
+    # other immediate here, which is curated per offset. A curated entry above
+    # still wins, for a site the id space does not explain.
+    if sound_ids:
+        ms = SOUND_IMM_RE.match(text)
+        if ms and int(ms.group(1), 16) in sound_ids:
+            return f"sound {sound_ids[int(ms.group(1), 16)]}"
     # An 8-bit immediate that is the low half of an address the code never
     # names, because it addresses through `ldh [c]`.
     if off in LOW_BYTE_SITES and ins.target is None:

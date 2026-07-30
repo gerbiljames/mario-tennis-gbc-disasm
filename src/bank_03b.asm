@@ -456,12 +456,12 @@ MoveMenuCursorLinkLocal:
 .checkMenuCursorLockFlags2:
 	bit 0, a ; $42ad
 	jr z, .bit0Clear ; $42af
-	sound $5f ; $42b1
+	sound SFX_MENU_SELECT ; $42b1
 	ld a, [wMenuCursorLockFlags] ; $42b3
 	ld b, a ; $42b6
 	and $01 ; $42b7
 	jr nz, .checkMenuCursorX ; $42b9
-	sound $5f ; $42bb
+	sound SFX_MENU_SELECT ; $42bb
 	ld a, b ; $42bd
 	or $01 ; $42be
 	ld [wMenuCursorLockFlags], a ; $42c0
@@ -469,7 +469,7 @@ MoveMenuCursorLinkLocal:
 .bit0Clear:
 	bit 1, a ; $42c5
 	jr z, .checkMenuCursorX ; $42c7
-	sound $62 ; $42c9
+	sound SFX_MENU_CANCEL ; $42c9
 	ld a, [wMenuCursorLockFlags] ; $42cb
 	ld b, a ; $42ce
 	and $03 ; $42cf
@@ -594,7 +594,7 @@ MoveMenuCursorLinkRemote:
 	ld b, a ; $437f
 	and $02 ; $4380
 	jr nz, .checkMenuCursor2X ; $4382
-	sound $5f ; $4384
+	sound SFX_MENU_SELECT ; $4384
 	ld a, b ; $4386
 	or $02 ; $4387
 	ld [wMenuCursorLockFlags], a ; $4389
@@ -602,7 +602,7 @@ MoveMenuCursorLinkRemote:
 .bit0Clear:
 	bit 1, a ; $438e
 	jr z, .checkMenuCursor2X ; $4390
-	sound $62 ; $4392
+	sound SFX_MENU_CANCEL ; $4392
 	ld a, [wMenuCursorLockFlags] ; $4394
 	ld b, a ; $4397
 	and $03 ; $4398
@@ -819,7 +819,7 @@ DrawAsciiDigitChar_3b:
 StubNop_3b:
 	ret ; $44a9
 RunN64ExhibData:
-	sound $04 ; $44aa
+	sound BGM_STATUS_SCREEN ; $44aa
 	call DisableLCDSafely ; $44ac
 	call BuildN64ExhibDataScreen ; $44af
 	xor a ; $44b2
@@ -846,14 +846,14 @@ RunN64ExhibData:
 	jr nz, .playSfx2 ; $44eb
 	jr .loop ; $44ed
 .playSfx:
-	sound $5f ; $44ef
+	sound SFX_MENU_SELECT ; $44ef
 	ld c, $10 ; $44f1
 	call BeginFadeOut ; $44f3
 	call WaitFadeEnd ; $44f6
 	call ClearFrameTasks ; $44f9
 	ret ; $44fc
 .playSfx2:
-	sound $62 ; $44fd
+	sound SFX_MENU_CANCEL ; $44fd
 	ld c, $10 ; $44ff
 	call BeginFadeOut ; $4501
 	call WaitFadeEnd ; $4504
@@ -869,7 +869,7 @@ ScrollN64ExhibDataCursor:
 	jr z, .done ; $4518
 	dec a ; $451a
 	ld [wN64ExhibPage], a ; $451b
-	sound $5e ; $451e
+	sound SFX_MENU_MOVE ; $451e
 	call RedrawN64ExhibDataWindow ; $4520
 	jr .done ; $4523
 .step:
@@ -880,7 +880,7 @@ ScrollN64ExhibDataCursor:
 	jr z, .done ; $452e
 	inc a ; $4530
 	ld [wN64ExhibPage], a ; $4531
-	sound $5e ; $4534
+	sound SFX_MENU_MOVE ; $4534
 	call RedrawN64ExhibDataWindow ; $4536
 	jr .done ; $4539
 .bit4Clear:
@@ -891,7 +891,7 @@ ScrollN64ExhibDataCursor:
 	jr z, .done ; $4543
 	dec a ; $4545
 	ld [wN64ExhibCursorRow], a ; $4546
-	sound $5e ; $4549
+	sound SFX_MENU_MOVE ; $4549
 	call RedrawN64ExhibDataWindow ; $454b
 	jr .done ; $454e
 .bit6Clear:
@@ -902,7 +902,7 @@ ScrollN64ExhibDataCursor:
 	jr z, .done ; $4559
 	inc a ; $455b
 	ld [wN64ExhibCursorRow], a ; $455c
-	sound $5e ; $455f
+	sound SFX_MENU_MOVE ; $455f
 	call RedrawN64ExhibDataWindow ; $4561
 	jr .done ; $4564
 .done:
@@ -1517,7 +1517,7 @@ ReadN64RecordsSaveBlock:
 	pop bc ; $4961
 	ret ; $4962
 RunTrophiesScreen:
-	sound $04 ; $4963
+	sound BGM_STATUS_SCREEN ; $4963
 	call DisableLCDSafely ; $4965
 	call BuildTrophiesScreen ; $4968
 	ld a, $00 ; $496b
@@ -1561,14 +1561,14 @@ RunTrophiesScreen:
 	jr z, .playSfx ; $49c1
 	call CheckTrophiesCheatCode ; $49c3
 .playSfx:
-	sound $5f ; $49c6
+	sound SFX_MENU_SELECT ; $49c6
 	ld c, $10 ; $49c8
 	call BeginFadeOut ; $49ca
 	call WaitFadeEnd ; $49cd
 	call ClearFrameTasks ; $49d0
 	ret ; $49d3
 .playSfx2:
-	sound $62 ; $49d4
+	sound SFX_MENU_CANCEL ; $49d4
 	ld c, $10 ; $49d6
 	call BeginFadeOut ; $49d8
 	call WaitFadeEnd ; $49db
@@ -1750,7 +1750,7 @@ DrawTrophiesCharSprite:
 	farcall CopyTilemapRect ; $4b15
 	ret ; $4b18
 CheckTrophiesCheatCode:
-	sound $22 ; $4b19
+	sound BGM_SENIOR_RANKING ; $4b19
 	ld a, [wN64RecordsBlock] ; $4b1b
 	cp $0c ; $4b1e
 	jp nz, .saveStorySlot ; $4b20
@@ -1944,7 +1944,7 @@ DecodeTrophyCounts:
 .done:
 	ret ; $4cf9
 RunN64TnmtData:
-	sound $04 ; $4cfa
+	sound BGM_STATUS_SCREEN ; $4cfa
 	call DisableLCDSafely ; $4cfc
 	call BuildN64TnmtDataScreen ; $4cff
 	xor a ; $4d02
@@ -1971,14 +1971,14 @@ RunN64TnmtData:
 	jr nz, .playSfx2 ; $4d3b
 	jr .loop ; $4d3d
 .playSfx:
-	sound $5f ; $4d3f
+	sound SFX_MENU_SELECT ; $4d3f
 	ld c, $10 ; $4d41
 	call BeginFadeOut ; $4d43
 	call WaitFadeEnd ; $4d46
 	call ClearFrameTasks ; $4d49
 	ret ; $4d4c
 .playSfx2:
-	sound $62 ; $4d4d
+	sound SFX_MENU_CANCEL ; $4d4d
 	ld c, $10 ; $4d4f
 	call BeginFadeOut ; $4d51
 	call WaitFadeEnd ; $4d54
@@ -1994,7 +1994,7 @@ ScrollN64TnmtDataCursor:
 	jr z, .done ; $4d68
 	xor a ; $4d6a
 	ld [wDataScreenPage], a ; $4d6b
-	sound $5e ; $4d6e
+	sound SFX_MENU_MOVE ; $4d6e
 	call RedrawN64TnmtDataWindow ; $4d70
 	jr .done ; $4d73
 .step:
@@ -2008,7 +2008,7 @@ ScrollN64TnmtDataCursor:
 	jr nz, .done ; $4d83
 	ld a, $01 ; $4d85
 	ld [wDataScreenPage], a ; $4d87
-	sound $5e ; $4d8a
+	sound SFX_MENU_MOVE ; $4d8a
 	call RedrawN64TnmtDataWindow ; $4d8c
 	jr .done ; $4d8f
 .bit4Clear:
@@ -2019,7 +2019,7 @@ ScrollN64TnmtDataCursor:
 	jr z, .done ; $4d99
 	dec a ; $4d9b
 	ld [wDataScreenCursorRow], a ; $4d9c
-	sound $5e ; $4d9f
+	sound SFX_MENU_MOVE ; $4d9f
 	call RedrawN64TnmtDataWindow ; $4da1
 	jr .done ; $4da4
 .bit6Clear:
@@ -2030,7 +2030,7 @@ ScrollN64TnmtDataCursor:
 	jr z, .done ; $4daf
 	inc a ; $4db1
 	ld [wDataScreenCursorRow], a ; $4db2
-	sound $5e ; $4db5
+	sound SFX_MENU_MOVE ; $4db5
 	call RedrawN64TnmtDataWindow ; $4db7
 	jr .done ; $4dba
 .done:
@@ -2540,7 +2540,7 @@ N64TnmtScrollArrowsTask:
 	ret ; $5147
 RunN64RingShotData:
 	call DisableLCDSafely ; $5148
-	sound $04 ; $514b
+	sound BGM_STATUS_SCREEN ; $514b
 	call BuildN64RingShotScreen ; $514d
 	xor a ; $5150
 	ld [wAnimatedTileSet], a ; $5151
@@ -2569,14 +2569,14 @@ RunN64RingShotData:
 	jr nz, .playSfx2 ; $5191
 	jr .loop ; $5193
 .playSfx:
-	sound $5f ; $5195
+	sound SFX_MENU_SELECT ; $5195
 	ld c, $10 ; $5197
 	call BeginFadeOut ; $5199
 	call WaitFadeEnd ; $519c
 	call ClearFrameTasks ; $519f
 	ret ; $51a2
 .playSfx2:
-	sound $62 ; $51a3
+	sound SFX_MENU_CANCEL ; $51a3
 	ld c, $10 ; $51a5
 	call BeginFadeOut ; $51a7
 	call WaitFadeEnd ; $51aa
@@ -2897,7 +2897,7 @@ ScrollRingShotCursor:
 .done:
 	ret ; $5416
 RedrawRingShotWindow:
-	sound $5e ; $5417
+	sound SFX_MENU_MOVE ; $5417
 	call DrawRingShotRowIcons ; $5419
 	call DrawRingShotClearMarks ; $541c
 	call DrawRingShotModeTab ; $541f
@@ -3172,7 +3172,7 @@ RingShotScoreDrawTask:
 	ret ; $55d0
 RunMainMenu:
 	call InitSerialLink ; $55d1
-	sound $03 ; $55d4
+	sound BGM_MENU ; $55d4
 	ld hl, rIE ; $55d6
 	res 2, [hl] ; $55d9
 	call BuildSaveSlotSummaries ; $55db
@@ -3214,7 +3214,7 @@ RunMainMenu:
 	jr nz, .playSfx ; $5639
 	jr .checkMenuInputPressed ; $563b
 .playSfx:
-	sound $5e ; $563d
+	sound SFX_MENU_MOVE ; $563d
 	call DrawMainMenuSelection ; $563f
 .checkMenuInputPressed:
 	ld a, [wMenuInputPressed] ; $5642
@@ -3230,7 +3230,7 @@ RunMainMenu:
 .clearFrameTasks:
 	ld a, $01 ; $5655
 	ld [wCheatUnlockTriggered], a ; $5657
-	sound $5f ; $565a
+	sound SFX_MENU_SELECT ; $565a
 	call ClearFrameTasks ; $565c
 	ld hl, rIE ; $565f
 	set 2, [hl] ; $5662
@@ -3256,7 +3256,7 @@ RunMainMenu:
 	call MapMainMenuCursorToItemId ; $5692
 	ret ; $5695
 .playSfx2:
-	sound $62 ; $5696
+	sound SFX_MENU_CANCEL ; $5696
 	call ResetSerialState ; $5698
 	call ClearFrameTasks ; $569b
 	ld hl, rIE ; $569e
@@ -4120,7 +4120,7 @@ RestoreScreenAfterLinkAttempt:
 RunMatchFormatSelect:
 	ld hl, rIE ; $5cf3
 	res 2, [hl] ; $5cf6
-	sound $03 ; $5cf8
+	sound BGM_MENU ; $5cf8
 	call LoadMatchFormatGfx ; $5cfa
 	wram_bank $03 ; $5cfd
 	ld a, [wMenuSlideDirection] ; $5d03
@@ -4146,7 +4146,7 @@ RunMatchFormatSelect:
 	call MoveMenuCursor ; $5d37
 	or a ; $5d3a
 	jr z, .checkMenuInputPressed ; $5d3b
-	sound $5e ; $5d3d
+	sound SFX_MENU_MOVE ; $5d3d
 	call DrawMatchFormatCaption ; $5d3f
 .checkMenuInputPressed:
 	ld a, [wMenuInputPressed] ; $5d42
@@ -4156,7 +4156,7 @@ RunMatchFormatSelect:
 	jr nz, .playSfx2 ; $5d4b
 	jr .loop ; $5d4d
 .playSfx:
-	sound $5f ; $5d4f
+	sound SFX_MENU_SELECT ; $5d4f
 	ld hl, rIE ; $5d51
 	set 2, [hl] ; $5d54
 	call ClearFrameTasks ; $5d56
@@ -4168,7 +4168,7 @@ RunMatchFormatSelect:
 	call GetMenuCursorCellIndex ; $5d65
 	ret ; $5d68
 .playSfx2:
-	sound $62 ; $5d69
+	sound SFX_MENU_CANCEL ; $5d69
 	ld hl, rIE ; $5d6b
 	set 2, [hl] ; $5d6e
 	call ClearFrameTasks ; $5d70
@@ -4419,7 +4419,7 @@ HandleMatchFormatInput:
 	jr nz, .playSfx2 ; $5f45
 	ret ; $5f47
 .playSfx:
-	sound $5e ; $5f48
+	sound SFX_MENU_MOVE ; $5f48
 	ld c, $01 ; $5f4a
 	call GetMenuCursorCellIndex ; $5f4c
 	or a ; $5f4f
@@ -4464,7 +4464,7 @@ HandleMatchFormatInput:
 	call DrawMatchFormatCaption ; $5f9b
 	ret ; $5f9e
 .playSfx2:
-	sound $5e ; $5f9f
+	sound SFX_MENU_MOVE ; $5f9f
 	ld c, $01 ; $5fa1
 	call GetMenuCursorCellIndex ; $5fa3
 	or a ; $5fa6
@@ -4783,7 +4783,7 @@ RenderMatchFormatOptionText:
 RunMinigameSelect:
 	ld hl, rIE ; $61f0
 	res 2, [hl] ; $61f3
-	sound $08 ; $61f5
+	sound BGM_MARIO_MINIGAME ; $61f5
 	xor a ; $61f7
 	ld [wMinigameSelectUnused], a ; $61f8
 	call BuildMarioCastUnlockMask ; $61fb
@@ -4831,7 +4831,7 @@ RunMinigameSelect:
 	farcall MoveMinigameGridCursor ; $625a
 	or a ; $625d
 	jr z, .advanceFrame ; $625e
-	sound $5e ; $6260
+	sound SFX_MENU_MOVE ; $6260
 	call DrawMinigameSelectCaption ; $6262
 	call DrawMinigameSelectGrid6 ; $6265
 	jr .advanceFrame ; $6268
@@ -4841,7 +4841,7 @@ RunMinigameSelect:
 	call MoveMenuCursor ; $626e
 	or a ; $6271
 	jr z, .advanceFrame ; $6272
-	sound $5e ; $6274
+	sound SFX_MENU_MOVE ; $6274
 	call DrawMinigameSelectCaption ; $6276
 	call DrawMinigameSelectGrid9 ; $6279
 .advanceFrame:
@@ -4857,12 +4857,12 @@ RunMinigameSelect:
 	call GetMenuCursorCellIndex ; $628e
 	ld c, a ; $6291
 	call GetUnlockedMarioCastCharAtGridSlot ; $6292
-	cp $15 ; $6295
+	cp CHAR_UNUSED_15 ; $6295
 	jr nz, .playSfx ; $6297
-	sound $61 ; $6299
+	sound SFX_MENU_LOCKED ; $6299
 	jr .loop ; $629b
 .playSfx:
-	sound $5f ; $629d
+	sound SFX_MENU_SELECT ; $629d
 	call ClearFrameTasks ; $629f
 	ld hl, rIE ; $62a2
 	set 2, [hl] ; $62a5
@@ -4885,7 +4885,7 @@ RunMinigameSelect:
 	ld [wSelectedMinigame], a ; $62c7
 	ret ; $62ca
 .playSfx2:
-	sound $62 ; $62cb
+	sound SFX_MENU_CANCEL ; $62cb
 	call ClearFrameTasks ; $62cd
 	ld hl, rIE ; $62d0
 	set 2, [hl] ; $62d3
@@ -5194,7 +5194,7 @@ OverrideMinigameCursorIfLocked:
 	call GetMenuCursorCellIndex ; $6552
 	ld c, a ; $6555
 	call GetUnlockedMarioCastCharAtGridSlot ; $6556
-	cp $15 ; $6559
+	cp CHAR_UNUSED_15 ; $6559
 	jr z, .eq15 ; $655b
 	pop de ; $655d
 	pop hl ; $655e
@@ -5422,7 +5422,7 @@ GetUnlockedMarioCastCharAtGridSlot:
 	ld a, [wMarioCastUnlockMask] ; $66cd
 	and b ; $66d0
 	jr nz, .unlocked ; $66d1
-	ld a, $15 ; $66d3
+	ld a, CHAR_UNUSED_15 ; $66d3
 	ret ; $66d5
 .unlocked:
 	ld a, d ; $66d6
@@ -5446,9 +5446,9 @@ MarioCastCharAtGridSlotTable:
 	db $19, $1c, $18 ; 0x03
 	db $1e, $1b, $1d ; 0x06
 CheckMinigameGridExpanded:
-	ld c, $06 ; $66f2
+	ld c, MARIOGAME_TREASURE_BOX ; $66f2
 	call GetUnlockedMarioCastCharAtGridSlot ; $66f4
-	cp $15 ; $66f7
+	cp CHAR_UNUSED_15 ; $66f7
 	jr nz, .expanded ; $66f9
 	xor a ; $66fb
 	ret ; $66fc
@@ -5546,7 +5546,7 @@ DrawMinigameSelectGrid6:
 	call QueueVRAMCopy ; $679d
 	ret ; $67a0
 RunSavedDataSourceSelect:
-	sound $03 ; $67a1
+	sound BGM_MENU ; $67a1
 	ld hl, rIE ; $67a3
 	res 2, [hl] ; $67a6
 	call BuildSaveSlotSummaries ; $67a8
@@ -5576,7 +5576,7 @@ RunSavedDataSourceSelect:
 	farcall MoveSavedDataPickerCursor ; $67ea
 	or a ; $67ed
 	jr z, .checkMenuInputPressed ; $67ee
-	sound $5e ; $67f0
+	sound SFX_MENU_MOVE ; $67f0
 	call DrawSavedDataSourceGrid ; $67f2
 .checkMenuInputPressed:
 	ld a, [wMenuInputPressed] ; $67f5
@@ -5593,7 +5593,7 @@ RunSavedDataSourceSelect:
 	call CheckN64DataPresent ; $680b
 	or a ; $680e
 	jr nz, .playSfx2 ; $680f
-	sound $61 ; $6811
+	sound SFX_MENU_LOCKED ; $6811
 	jr .loop ; $6813
 .ne04:
 	ld c, $03 ; $6815
@@ -5617,10 +5617,10 @@ RunSavedDataSourceSelect:
 	jr z, .playSfx ; $6832
 	jr .playSfx2 ; $6834
 .playSfx:
-	sound $61 ; $6836
+	sound SFX_MENU_LOCKED ; $6836
 	jr .loop ; $6838
 .playSfx2:
-	sound $5f ; $683a
+	sound SFX_MENU_SELECT ; $683a
 	call ClearFrameTasks ; $683c
 	ld hl, rIE ; $683f
 	set 2, [hl] ; $6842
@@ -5633,7 +5633,7 @@ RunSavedDataSourceSelect:
 	ld [wSavedDataMenuCursor], a ; $6853
 	ret ; $6856
 .playSfx3:
-	sound $62 ; $6857
+	sound SFX_MENU_CANCEL ; $6857
 	call ClearFrameTasks ; $6859
 	ld hl, rIE ; $685c
 	set 2, [hl] ; $685f
@@ -6150,7 +6150,7 @@ CheckN64DataPresent:
 RunEraseSavedDataSelect:
 	ld hl, rIE ; $6c7f
 	res 2, [hl] ; $6c82
-	sound $03 ; $6c84
+	sound BGM_MENU ; $6c84
 	call BuildSaveSlotSummaries ; $6c86
 	call LoadEraseSavedDataGfx ; $6c89
 	wram_bank $03 ; $6c8c
@@ -6175,7 +6175,7 @@ RunEraseSavedDataSelect:
 	call MoveSavedDataPickerCursor ; $6cc0
 	or a ; $6cc3
 	jr z, .advanceFrame ; $6cc4
-	sound $5e ; $6cc6
+	sound SFX_MENU_MOVE ; $6cc6
 	call DrawEraseSavedDataGrid ; $6cc8
 .advanceFrame:
 	call AdvanceFrame ; $6ccb
@@ -6207,10 +6207,10 @@ RunEraseSavedDataSelect:
 	jr z, .playSfx ; $6cf8
 	jr .playSfx2 ; $6cfa
 .playSfx:
-	sound $62 ; $6cfc
+	sound SFX_MENU_CANCEL ; $6cfc
 	jr .loop ; $6cfe
 .playSfx2:
-	sound $5f ; $6d00
+	sound SFX_MENU_SELECT ; $6d00
 	call ClearFrameTasks ; $6d02
 	ld hl, rIE ; $6d05
 	set 2, [hl] ; $6d08
@@ -6222,7 +6222,7 @@ RunEraseSavedDataSelect:
 	call GetMenuCursorCellIndex ; $6d16
 	ret ; $6d19
 .playSfx3:
-	sound $62 ; $6d1a
+	sound SFX_MENU_CANCEL ; $6d1a
 	call ClearFrameTasks ; $6d1c
 	ld hl, rIE ; $6d1f
 	set 2, [hl] ; $6d22
@@ -6824,7 +6824,7 @@ DrawEraseSavedDataCaption:
 	wram_bank ; $71ab
 	ret ; $71af
 RunN64RecordTypeSelect:
-	sound $03 ; $71b0
+	sound BGM_MENU ; $71b0
 	ld hl, rIE ; $71b2
 	res 2, [hl] ; $71b5
 	call LoadN64RecordTypeGfx ; $71b7
@@ -6854,7 +6854,7 @@ RunN64RecordTypeSelect:
 	call MoveMenuCursor ; $71f7
 	or a ; $71fa
 	jr z, .checkMenuInputPressed ; $71fb
-	sound $5e ; $71fd
+	sound SFX_MENU_MOVE ; $71fd
 	call DrawN64RecordTypeGrid ; $71ff
 .checkMenuInputPressed:
 	ld a, [wMenuInputPressed] ; $7202
@@ -6864,7 +6864,7 @@ RunN64RecordTypeSelect:
 	jr nz, .playSfx2 ; $720b
 	jr .loop ; $720d
 .playSfx:
-	sound $5f ; $720f
+	sound SFX_MENU_SELECT ; $720f
 	call ClearFrameTasks ; $7211
 	ld hl, rIE ; $7214
 	set 2, [hl] ; $7217
@@ -6877,7 +6877,7 @@ RunN64RecordTypeSelect:
 	ld [wSubMenuCursor], a ; $7228
 	ret ; $722b
 .playSfx2:
-	sound $62 ; $722c
+	sound SFX_MENU_CANCEL ; $722c
 	call ClearFrameTasks ; $722e
 	ld hl, rIE ; $7231
 	set 2, [hl] ; $7234
@@ -7246,7 +7246,7 @@ DrawN64RecordTypeCaption:
 	wram_bank ; $74ba
 	ret ; $74be
 RunN64TransferItemSelect:
-	sound $03 ; $74bf
+	sound BGM_MENU ; $74bf
 	ld hl, rIE ; $74c1
 	res 2, [hl] ; $74c4
 	call LoadN64TransferItemGfx ; $74c6
@@ -7276,7 +7276,7 @@ RunN64TransferItemSelect:
 	call MoveMenuCursor ; $7506
 	or a ; $7509
 	jr z, .checkMenuInputPressed ; $750a
-	sound $5e ; $750c
+	sound SFX_MENU_MOVE ; $750c
 	call DrawN64TransferItemGrid ; $750e
 .checkMenuInputPressed:
 	ld a, [wMenuInputPressed] ; $7511
@@ -7286,7 +7286,7 @@ RunN64TransferItemSelect:
 	jr nz, .playSfx2 ; $751a
 	jr .loop ; $751c
 .playSfx:
-	sound $5f ; $751e
+	sound SFX_MENU_SELECT ; $751e
 	call ClearFrameTasks ; $7520
 	ld hl, rIE ; $7523
 	set 2, [hl] ; $7526
@@ -7299,7 +7299,7 @@ RunN64TransferItemSelect:
 	ld [wN64TransferMenuCursor], a ; $7537
 	ret ; $753a
 .playSfx2:
-	sound $62 ; $753b
+	sound SFX_MENU_CANCEL ; $753b
 	call ClearFrameTasks ; $753d
 	ld hl, rIE ; $7540
 	set 2, [hl] ; $7543
@@ -7603,7 +7603,7 @@ ShowTournamentBracket:
 	call AdvanceFrame ; $7794
 	jr .loop ; $7797
 .playSfx:
-	sound $5f ; $7799
+	sound SFX_MENU_SELECT ; $7799
 	call ClearFrameTasks ; $779b
 	ld c, $10 ; $779e
 	call BeginFadeOut ; $77a0
@@ -7941,7 +7941,7 @@ BracketHighlightBlinkTaskPalettes:
 	; $79f1, 8 bytes (bytes:8)
 	db $f9, $67, $00, $00, $98, $00, $1f, $03 ; 0x00
 RunMarioCastExhibResults:
-	sound $04 ; $79f9
+	sound BGM_STATUS_SCREEN ; $79f9
 	call DisableLCDSafely ; $79fb
 	call BuildMarioCastExhibScreen ; $79fe
 	ld a, $01 ; $7a01
@@ -7977,14 +7977,14 @@ RunMarioCastExhibResults:
 	jr nz, .playSfx2 ; $7a4b
 	jr .loop ; $7a4d
 .playSfx:
-	sound $5f ; $7a4f
+	sound SFX_MENU_SELECT ; $7a4f
 	ld c, $10 ; $7a51
 	call BeginFadeOut ; $7a53
 	call WaitFadeEnd ; $7a56
 	call ClearFrameTasks ; $7a59
 	ret ; $7a5c
 .playSfx2:
-	sound $62 ; $7a5d
+	sound SFX_MENU_CANCEL ; $7a5d
 	ld c, $10 ; $7a5f
 	call BeginFadeOut ; $7a61
 	call WaitFadeEnd ; $7a64
@@ -8100,7 +8100,7 @@ ScrollMarioCastChartCursorFull:
 	jr z, .done ; $7b5a
 	dec a ; $7b5c
 	ld [wMenuCursorX], a ; $7b5d
-	sound $5e ; $7b60
+	sound SFX_MENU_MOVE ; $7b60
 	call RedrawMarioCastChartWindow ; $7b62
 	call FlushMarioCastChartWindowToVram ; $7b65
 	jr .done ; $7b68
@@ -8112,7 +8112,7 @@ ScrollMarioCastChartCursorFull:
 	jr z, .done ; $7b73
 	inc a ; $7b75
 	ld [wMenuCursorX], a ; $7b76
-	sound $5e ; $7b79
+	sound SFX_MENU_MOVE ; $7b79
 	call RedrawMarioCastChartWindow ; $7b7b
 	call FlushMarioCastChartWindowToVram ; $7b7e
 	jr .done ; $7b81
@@ -8124,7 +8124,7 @@ ScrollMarioCastChartCursorFull:
 	jr z, .done ; $7b8b
 	dec a ; $7b8d
 	ld [wMenuCursorY], a ; $7b8e
-	sound $5e ; $7b91
+	sound SFX_MENU_MOVE ; $7b91
 	call RedrawMarioCastChartWindow ; $7b93
 	call FlushMarioCastChartWindowToVram ; $7b96
 	jr .done ; $7b99
@@ -8136,7 +8136,7 @@ ScrollMarioCastChartCursorFull:
 	jr z, .done ; $7ba4
 	inc a ; $7ba6
 	ld [wMenuCursorY], a ; $7ba7
-	sound $5e ; $7baa
+	sound SFX_MENU_MOVE ; $7baa
 	call RedrawMarioCastChartWindow ; $7bac
 	call FlushMarioCastChartWindowToVram ; $7baf
 	jr .done ; $7bb2
@@ -8151,7 +8151,7 @@ ScrollMarioCastChartCursorSmall:
 	jr z, .done ; $7bc0
 	dec a ; $7bc2
 	ld [wMenuCursorY], a ; $7bc3
-	sound $5e ; $7bc6
+	sound SFX_MENU_MOVE ; $7bc6
 	call RedrawMarioCastChartWindow ; $7bc8
 	call FlushMarioCastChartWindowToVram ; $7bcb
 	jr .done ; $7bce
@@ -8163,7 +8163,7 @@ ScrollMarioCastChartCursorSmall:
 	jr z, .done ; $7bd9
 	inc a ; $7bdb
 	ld [wMenuCursorY], a ; $7bdc
-	sound $5e ; $7bdf
+	sound SFX_MENU_MOVE ; $7bdf
 	call RedrawMarioCastChartWindow ; $7be1
 	call FlushMarioCastChartWindowToVram ; $7be4
 	jr .done ; $7be7

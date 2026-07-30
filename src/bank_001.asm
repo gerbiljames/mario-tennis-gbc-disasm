@@ -59,7 +59,7 @@ RunDebugTestMenu:
 	script_fade_in $7f ; $40a0
 .loop:
 	ld hl, wStoryModeCurrentLocation ; $40a5
-	ld [hl], $00 ; $40a8
+	ld [hl], STORYLOC_MAIN_MENU ; $40a8
 	ld hl, wStoryModeEntryPoint ; $40aa
 	ld [hl], $0a ; $40ad
 	farcall RunStoryModeOverworld ; $40af
@@ -87,7 +87,7 @@ RunDebugTestMenu:
 	ld a, $00 ; $40d8
 	ldh [hDebugStepMode], a ; $40da
 	ld hl, wStoryModeCurrentLocation ; $40dc
-	ld [hl], $00 ; $40df
+	ld [hl], STORYLOC_MAIN_MENU ; $40df
 	ld hl, wStoryModeEntryPoint ; $40e1
 	ld [hl], $0a ; $40e4
 	farcall RunStoryModeOverworld ; $40e6
@@ -105,7 +105,7 @@ Unused_01_MenuRedraw:
 	ld a, $01 ; $40ff
 	ldh [hDebugStepMode], a ; $4101
 	ld hl, wStoryModeCurrentLocation ; $4103
-	ld [hl], $00 ; $4106
+	ld [hl], STORYLOC_MAIN_MENU ; $4106
 	ld hl, wStoryModeEntryPoint ; $4108
 	ld [hl], $0a ; $410b
 	farcall RunStoryModeOverworld ; $410d
@@ -178,7 +178,7 @@ Unused_01_MatchSetup:
 	farcall ShowEquipmentStatusScreen ; $419e
 	ld de, $002f ; $41a1
 	call ClearGameFlagByNumber ; $41a4
-	ld a, $04 ; $41a7
+	ld a, GAMEMODE_EXHIBITION ; $41a7
 	ld [wGameMode], a ; $41a9
 	farcall RunMatchStatsScreen ; $41ac
 	farcall ShowLinkErrorScreen ; $41af
@@ -209,7 +209,7 @@ Unused_01:
 	ld a, $01 ; $41df
 	ldh [hDebugStepMode], a ; $41e1
 	ld hl, wStoryModeCurrentLocation ; $41e3
-	ld [hl], $03 ; $41e6
+	ld [hl], STORYLOC_TEST ; $41e6
 	ld hl, wStoryModeEntryPoint ; $41e8
 	ld [hl], $0a ; $41eb
 	ld a, $00 ; $41ed

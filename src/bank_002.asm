@@ -274,7 +274,7 @@ InitStoryModeState:
 	ld d, $02 ; $4230
 	call InitPlayerRecordFromTemplate ; $4232
 	ld hl, wStoryModeCurrentLocation ; $4235
-	ld [hl], $00 ; $4238
+	ld [hl], STORYLOC_MAIN_MENU ; $4238
 	ld hl, wStoryModeEntryPoint ; $423a
 	ld [hl], $02 ; $423d
 	ld a, $01 ; $423f
@@ -1981,7 +1981,7 @@ CharData_02:
 	db $00, $83, $62, $00, $e1, $63, $00, $3f, $65, $00, $9d, $66, $00, $fb, $67, $00 ; 0x110
 	db $59, $69, $00, $b7, $6a, $00, $15, $6c, $00, $ff, $ff, $ff ; 0x120
 DebugStoryStatsScreen:
-	sound $05 ; $4fa6
+	sound BGM_DICTIONARY ; $4fa6
 	wram_bank $01 ; $4fa8
 	ld a, $03 ; $4fae
 	ldh [hDebugStepMode], a ; $4fb0
@@ -2188,7 +2188,7 @@ DebugStoryStatsScreen:
 	ld d, $00 ; $514e
 	call LevelUpPlayer ; $5150
 	pop de ; $5153
-	sound $5e ; $5154
+	sound SFX_MENU_MOVE ; $5154
 	jp .loopB ; $5156
 .levelUpPlayer:
 	bit 5, a ; $5159
@@ -2198,7 +2198,7 @@ DebugStoryStatsScreen:
 	ld d, $01 ; $5160
 	call LevelUpPlayer ; $5162
 	pop de ; $5165
-	sound $5e ; $5166
+	sound SFX_MENU_MOVE ; $5166
 	jp .loopB ; $5168
 .bit5Clear:
 	bit 4, a ; $516b
@@ -2208,7 +2208,7 @@ DebugStoryStatsScreen:
 	ld d, $02 ; $5172
 	call LevelUpPlayer ; $5174
 	pop de ; $5177
-	sound $5e ; $5178
+	sound SFX_MENU_MOVE ; $5178
 	jp .loopB ; $517a
 .bit4Clear:
 	bit 7, a ; $517d
@@ -2218,7 +2218,7 @@ DebugStoryStatsScreen:
 	ld d, $03 ; $5184
 	call LevelUpPlayer ; $5186
 	pop de ; $5189
-	sound $5e ; $518a
+	sound SFX_MENU_MOVE ; $518a
 	jp .loopB ; $518c
 .positive:
 	bit 1, a ; $518f
@@ -2226,7 +2226,7 @@ DebugStoryStatsScreen:
 	push de ; $5193
 	ld a, $01 ; $5194
 	ldh [hDebugStepMode], a ; $5196
-	sound $05 ; $5198
+	sound BGM_DICTIONARY ; $5198
 	ld a, $03 ; $519a
 	ldh [hDebugStepMode], a ; $519c
 	pop de ; $519e
@@ -2260,7 +2260,7 @@ DebugStoryStatsScreen:
 .bit0Clear:
 	bit 2, a ; $51cb
 	jr z, .bit2Clear ; $51cd
-	sound $5f ; $51cf
+	sound SFX_MENU_SELECT ; $51cf
 	ld a, [wCurrentStorySlot] ; $51d1
 	inc a ; $51d4
 	cp $03 ; $51d5
@@ -2272,7 +2272,7 @@ DebugStoryStatsScreen:
 .bit2Clear:
 	bit 3, a ; $51e0
 	jr z, .skipSave ; $51e2
-	sound $5f ; $51e4
+	sound SFX_MENU_SELECT ; $51e4
 	push de ; $51e6
 	ld hl, DebugStoryStatsScreenString1 ; $51e7
 	ld de, $0802 ; $51ea

@@ -28,7 +28,8 @@ def analyse(rom, coverage_paths, overrides=None, data_tables=None,
     """ROM + coverage dumps -> a fully analysed Disassembly."""
     dis = Disassembly(rom)
     dis.data_boundaries = set(data_tables or {})
-    seeds = load_coverage(coverage_paths, len(rom) // BANK_SIZE)
+    seeds = load_coverage(coverage_paths, len(rom) // BANK_SIZE,
+                          dis.seed_origins)
     print(f"{len(seeds)} coverage seeds")
     dis.seed(seeds)
     if descent:

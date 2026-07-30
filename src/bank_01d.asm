@@ -16,7 +16,7 @@ ShowCharDataScreen:
 	wram_bank $06 ; $4017
 	ld a, b ; $401d
 	ld [wCharDataSyncSource], a ; $401e
-	sound $04 ; $4021
+	sound BGM_STATUS_SCREEN ; $4021
 	farcall RefreshMainCharacterStats ; $4023
 	call EnableLCD ; $4026
 	ld c, $7f ; $4029
@@ -1507,7 +1507,7 @@ RunDrillResultInputLoop:
 	jp nz, .playSfx4 ; $4cd4
 	jr .loop ; $4cd7
 .playSfx:
-	sound $5e ; $4cd9
+	sound SFX_MENU_MOVE ; $4cd9
 	ld hl, CharDataScreenBgScrollTask ; $4cdb
 	call UnregisterFrameTask ; $4cde
 	ld hl, SlideCharDataArrowsInTask ; $4ce1
@@ -1540,7 +1540,7 @@ RunDrillResultInputLoop:
 	call RegisterFrameTask ; $4d34
 	jp .loop2 ; $4d37
 .playSfx2:
-	sound $5e ; $4d3a
+	sound SFX_MENU_MOVE ; $4d3a
 	ld hl, CharDataScreenBgScrollTask ; $4d3c
 	call UnregisterFrameTask ; $4d3f
 	ld hl, SlideCharDataArrowsInTask ; $4d42
@@ -1573,10 +1573,10 @@ RunDrillResultInputLoop:
 	call RegisterFrameTask ; $4d95
 	jr .loopB ; $4d98
 .playSfx3:
-	sound $62 ; $4d9a
+	sound SFX_MENU_CANCEL ; $4d9a
 	ret ; $4d9c
 .playSfx4:
-	sound $5f ; $4d9d
+	sound SFX_MENU_SELECT ; $4d9d
 	ret ; $4d9f
 .loopB:
 	call AdvanceFrame ; $4da0
@@ -1589,7 +1589,7 @@ RunDrillResultInputLoop:
 	jr nz, .playSfx7 ; $4daf
 	jr .loopB ; $4db1
 .playSfx5:
-	sound $5e ; $4db3
+	sound SFX_MENU_MOVE ; $4db3
 	ld hl, SlideCharDataArrowsInTask ; $4db5
 	call UnregisterFrameTask ; $4db8
 	ld a, $01 ; $4dbb
@@ -1615,10 +1615,10 @@ RunDrillResultInputLoop:
 	farcall StartCharDataScreenAnimTask ; $4df3
 	jp .loop ; $4df6
 .playSfx6:
-	sound $62 ; $4df9
+	sound SFX_MENU_CANCEL ; $4df9
 	ret ; $4dfb
 .playSfx7:
-	sound $5f ; $4dfc
+	sound SFX_MENU_SELECT ; $4dfc
 	ret ; $4dfe
 .loop2:
 	call AdvanceFrame ; $4dff
@@ -1631,7 +1631,7 @@ RunDrillResultInputLoop:
 	jr nz, .playSfx10 ; $4e0e
 	jr .loop2 ; $4e10
 .playSfx8:
-	sound $5e ; $4e12
+	sound SFX_MENU_MOVE ; $4e12
 	ld hl, SlideCharDataArrowsInTask ; $4e14
 	call UnregisterFrameTask ; $4e17
 	ld a, $01 ; $4e1a
@@ -1657,10 +1657,10 @@ RunDrillResultInputLoop:
 	farcall StartCharDataScreenAnimTask ; $4e52
 	jp .loop ; $4e55
 .playSfx9:
-	sound $62 ; $4e58
+	sound SFX_MENU_CANCEL ; $4e58
 	ret ; $4e5a
 .playSfx10:
-	sound $5f ; $4e5b
+	sound SFX_MENU_SELECT ; $4e5b
 	ret ; $4e5d
 SlideCharDataArrowsOutTask:
 	wram_bank $06 ; $4e5e
@@ -3102,7 +3102,7 @@ PromptCharDataConfirm:
 	jr nz, .beginFadeOut2 ; $5ab3
 	and $c0 ; $5ab5
 	jr z, .loop ; $5ab7
-	sound $5e ; $5ab9
+	sound SFX_MENU_MOVE ; $5ab9
 	ld a, [wCharDataConfirmState] ; $5abb
 	xor $01 ; $5abe
 	ld [wCharDataConfirmState], a ; $5ac0
@@ -3112,13 +3112,13 @@ PromptCharDataConfirm:
 	ld a, [wCharDataConfirmState] ; $5acb
 	or a ; $5ace
 	jr nz, .beginFadeOut2 ; $5acf
-	sound $5f ; $5ad1
+	sound SFX_MENU_SELECT ; $5ad1
 	jr .beginFadeOut ; $5ad3
 .beginFadeOut2:
 	wram_bank $06 ; $5ad5
 	ld a, $01 ; $5adb
 	ld [wCharDataConfirmState], a ; $5add
-	sound $62 ; $5ae0
+	sound SFX_MENU_CANCEL ; $5ae0
 .beginFadeOut:
 	ld c, $10 ; $5ae2
 	call BeginFadeOut ; $5ae4
@@ -3566,7 +3566,7 @@ RunExpDistributionFlow:
 	jr .loop2 ; $68a1
 ShowExpDistributionScreen:
 	push hl ; $68a3
-	sound $0c ; $68a4
+	sound BGM_EXP_DISTRIBUTION ; $68a4
 	call ClearFrameTasks ; $68a6
 	call DisableLCDSafely ; $68a9
 	xor a ; $68ac
@@ -4486,7 +4486,7 @@ RunExpDistributionLoop:
 	ld a, [wStoryCharacterSlot] ; $6fcd
 	or a ; $6fd0
 	jp z, RunExpDistributionLoop ; $6fd1
-	sound $5e ; $6fd4
+	sound SFX_MENU_MOVE ; $6fd4
 	xor a ; $6fd6
 	ld [wStoryCharacterSlot], a ; $6fd7
 	call UpdateExpScreenSelectionPalettes ; $6fda
@@ -4503,7 +4503,7 @@ RunExpDistributionLoop:
 	ld a, [wStoryCharacterSlot] ; $6ff9
 	or a ; $6ffc
 	jp nz, RunExpDistributionLoop ; $6ffd
-	sound $5e ; $7000
+	sound SFX_MENU_MOVE ; $7000
 	ld a, $01 ; $7002
 	ld [wStoryCharacterSlot], a ; $7004
 	call UpdateExpScreenSelectionPalettes ; $7007
@@ -4528,7 +4528,7 @@ RunExpDistributionLoop:
 	call UnassignExpPointFromChar ; $7038
 	or a ; $703b
 	jr z, .decreaseFailed ; $703c
-	sound $62 ; $703e
+	sound SFX_MENU_CANCEL ; $703e
 	wram_bank $06 ; $7040
 	ld a, [wExpRepeatDelay] ; $7046
 	or a ; $7049
@@ -4564,7 +4564,7 @@ RunExpDistributionLoop:
 	call AssignExpPointToChar ; $708e
 	or a ; $7091
 	jr z, .increaseFailed ; $7092
-	sound $5f ; $7094
+	sound SFX_MENU_SELECT ; $7094
 	wram_bank $06 ; $7096
 	ld a, [wExpRepeatDelay] ; $709c
 	or a ; $709f
@@ -5122,7 +5122,7 @@ CheckExpLevelDown:
 	farcall LoadIndexedPaletteThunk ; $748b
 	ld hl, hPaletteDirtyFlags ; $748e
 	set 0, [hl] ; $7491
-	sound $5f ; $7493
+	sound SFX_MENU_SELECT ; $7493
 	farcall BackupCharDataScreenRow ; $7495
 	ld hl, ExpLevelDownTilemapPatch4 ; $7498
 	ld bc, wCharDataScreenCell + 18 * TILEMAP_WIDTH ; $749b
@@ -5216,7 +5216,7 @@ DrawExpPromptCursor:
 	call QueueSprite ; $757b
 	ret ; $757e
 .playSfx:
-	sound $5e ; $757f
+	sound SFX_MENU_MOVE ; $757f
 	ld a, [wExpPromptCursorRow] ; $7581
 	xor $01 ; $7584
 	ld [wExpPromptCursorRow], a ; $7586
@@ -5225,10 +5225,10 @@ DrawExpPromptCursor:
 	ld a, [wExpPromptCursorRow] ; $758b
 	or a ; $758e
 	jr nz, .playSfx2 ; $758f
-	sound $5f ; $7591
+	sound SFX_MENU_SELECT ; $7591
 	ret ; $7593
 .playSfx2:
-	sound $62 ; $7594
+	sound SFX_MENU_CANCEL ; $7594
 	farcall RestoreCharDataScreenRow ; $7596
 	ld hl, ExpLevelDownTilemapPatch0 ; $7599
 	ld bc, wCharDataScreenCell + 18 * TILEMAP_WIDTH ; $759c
@@ -5477,13 +5477,13 @@ TickLevelUpJingle:
 	dec a ; $77b6
 	ld [wExpLevelUpFanfare], a ; $77b7
 	ret nz ; $77ba
-	sound $0c ; $77bb
+	sound BGM_EXP_DISTRIBUTION ; $77bb
 	ret ; $77bd
 .eqff:
 	ld a, $a0 ; $77be
 	ld [wExpLevelUpFanfare], a ; $77c0
-	sound $00 ; $77c3
-	sound $2f ; $77c5
+	sound BGM_NONE ; $77c3
+	sound BGM_LEVEL_UP ; $77c5
 	ret ; $77c7
 ExpPromptWindowFrame_1d:
 	INCBIN "data/bank_01d/d_77c8.bin" ; $77c8, 25 bytes

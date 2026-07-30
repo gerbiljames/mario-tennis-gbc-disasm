@@ -188,7 +188,7 @@ IntroCharactersAttrmap2:
 TitleScreenTiles:
 	INCBIN "data/bank_06d/lz_62d5.bin" ; $62d5, 1962 bytes
 ShowIntroCharacterScreen:
-	sound $22 ; $6a7f
+	sound BGM_SENIOR_RANKING ; $6a7f
 	call DisableLCDSafely ; $6a81
 	call ClearFrameTasks ; $6a84
 	xor a ; $6a87

@@ -341,7 +341,7 @@ TournamentSiteArrivalScene:
 	script_set_anim $04, $03 ; $465a
 	script_set_anim $05, $03 ; $4661
 	script_wait_idle $05 ; $4668
-	ld a, $19 ; $466d
+	ld a, STORYLOC_TOURNAMENT ; $466d
 	ld [wStoryModeCurrentLocation], a ; $466f
 	ld a, $0f ; $4672
 	ld [wStoryModeEntryPoint], a ; $4674
@@ -1321,7 +1321,7 @@ TrainingCourtResultDispatch:
 	ret ; $5377
 .ne01:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $5378
-	cp $12 ; $537b
+	cp MINIGAME_TENNIS_MACHINE_1 ; $537b
 	jr c, .lt12 ; $537d
 	ret ; $537f
 .lt12:
@@ -1615,7 +1615,7 @@ WaterSpriteSwingContestScene:
 	jp nz, .lose ; $56d2
 	dec l ; $56d5
 	jp nz, .win ; $56d6
-	sound $75 ; $56d9
+	sound SFX_COUNTDOWN_GO ; $56d9
 	call TogglePlayerSpriteXFlip ; $56db
 	ld a, $01 ; $56de
 	ld hl, WaterSpriteSwingCountTask ; $56e0
@@ -2121,7 +2121,7 @@ StrokeChallengerResultScene:
 	jr nz, .loseSpeak ; $5f24
 	ld a, [wMapSceneStage2] ; $5f26
 	farcall ScriptShowSpeakerDialogue ; $5f29
-	ld a, $0f ; $5f2c
+	ld a, STORYLOC_TRAINING_COURT ; $5f2c
 	ld [wStoryModeCurrentLocation], a ; $5f2e
 	ld a, $0a ; $5f31
 	ld [wStoryModeEntryPoint], a ; $5f33
@@ -2159,7 +2159,7 @@ StrokeChallengerResultScene:
 	farcall InitDialogueTextCursor ; $5f7d
 	ld a, [wMapSceneStage2] ; $5f80
 	farcall ScriptShowSpeakerDialogue ; $5f83
-	ld a, $0f ; $5f86
+	ld a, STORYLOC_TRAINING_COURT ; $5f86
 	ld [wStoryModeCurrentLocation], a ; $5f88
 	ld a, $0a ; $5f8b
 	ld [wStoryModeEntryPoint], a ; $5f8d
@@ -2661,14 +2661,14 @@ ServiceAceMatchChallengeScene:
 	script_wait_idle $06 ; $647d
 	script_speak $06 ; $6482
 	call WalkToServeChallengeCourtCutscene ; $6487
-	ld a, $0f ; $648a
+	ld a, STORYLOC_TRAINING_COURT ; $648a
 	ld [wStoryModeCurrentLocation], a ; $648c
 	ld a, $0a ; $648f
 	ld [wStoryModeEntryPoint], a ; $6491
 	ld a, $ff ; $6494
 	ld [wUnusedExitLocationMirror], a ; $6496
 	ld [wStoryModeExitLocationRequest], a ; $6499
-	ld a, $00 ; $649c
+	ld a, MINIGAME_SERVICE_MATCH_1 ; $649c
 	farcall RunTrainingDrillByID ; $649e
 	ret ; $64a1
 .loop:
@@ -2716,14 +2716,14 @@ CenterLineServeMatchChallengeScene:
 	script_wait_idle $06 ; $6561
 	script_speak $06 ; $6566
 	call WalkToServeChallengeCourtCutscene ; $656b
-	ld a, $0f ; $656e
+	ld a, STORYLOC_TRAINING_COURT ; $656e
 	ld [wStoryModeCurrentLocation], a ; $6570
 	ld a, $0a ; $6573
 	ld [wStoryModeEntryPoint], a ; $6575
 	ld a, $ff ; $6578
 	ld [wUnusedExitLocationMirror], a ; $657a
 	ld [wStoryModeExitLocationRequest], a ; $657d
-	ld a, $01 ; $6580
+	ld a, MINIGAME_SERVICE_MATCH_2 ; $6580
 	farcall RunTrainingDrillByID ; $6582
 	ret ; $6585
 AcademyRulesServeMatchChallengeScene:
@@ -2763,14 +2763,14 @@ AcademyRulesServeMatchChallengeScene:
 	script_wait_idle $06 ; $6622
 	script_speak $06 ; $6627
 	call WalkToServeChallengeCourtCutscene ; $662c
-	ld a, $0f ; $662f
+	ld a, STORYLOC_TRAINING_COURT ; $662f
 	ld [wStoryModeCurrentLocation], a ; $6631
 	ld a, $0a ; $6634
 	ld [wStoryModeEntryPoint], a ; $6636
 	ld a, $ff ; $6639
 	ld [wUnusedExitLocationMirror], a ; $663b
 	ld [wStoryModeExitLocationRequest], a ; $663e
-	ld a, $02 ; $6641
+	ld a, MINIGAME_SERVICE_MATCH_3 ; $6641
 	farcall RunTrainingDrillByID ; $6643
 	ret ; $6646
 PlayerPartnerGestureCutscene:
@@ -2851,9 +2851,9 @@ ServeCoachJuniorLessonScene:
 	script_face $07, FACE_RIGHT ; $6748
 	script_wait_frames $14 ; $674f
 	script_speak $07 ; $6756
-	ld a, $03 ; $675b
+	ld a, MINIGAME_SERVICE_PRACTICE_1 ; $675b
 	ld [wCurrentMinigameStoryMatch + 1], a ; $675d
-	ld a, $0f ; $6760
+	ld a, STORYLOC_TRAINING_COURT ; $6760
 	ld [wStoryModeCurrentLocation], a ; $6762
 	ld a, $09 ; $6765
 	ld [wStoryModeEntryPoint], a ; $6767
@@ -2889,9 +2889,9 @@ ServeCoachSeniorLessonScene:
 	script_face $07, FACE_RIGHT ; $67c6
 	script_wait_frames $14 ; $67cd
 	script_speak $07 ; $67d4
-	ld a, $04 ; $67d9
+	ld a, MINIGAME_SERVICE_PRACTICE_2 ; $67d9
 	ld [wCurrentMinigameStoryMatch + 1], a ; $67db
-	ld a, $0f ; $67de
+	ld a, STORYLOC_TRAINING_COURT ; $67de
 	ld [wStoryModeCurrentLocation], a ; $67e0
 	ld a, $09 ; $67e3
 	ld [wStoryModeEntryPoint], a ; $67e5
@@ -2927,9 +2927,9 @@ ServeCoachVarsityLessonScene:
 	script_face $07, FACE_RIGHT ; $6844
 	script_wait_frames $14 ; $684b
 	script_speak $07 ; $6852
-	ld a, $05 ; $6857
+	ld a, MINIGAME_SERVICE_PRACTICE_3 ; $6857
 	ld [wCurrentMinigameStoryMatch + 1], a ; $6859
-	ld a, $0f ; $685c
+	ld a, STORYLOC_TRAINING_COURT ; $685c
 	ld [wStoryModeCurrentLocation], a ; $685e
 	ld a, $09 ; $6861
 	ld [wStoryModeEntryPoint], a ; $6863
@@ -2997,7 +2997,7 @@ VolleyMatchChallengeScene:
 	script_wait_idle $11 ; $694a
 	script_speak $11 ; $694f
 	call WalkToNetChallengeCourtCutscene ; $6954
-	ld a, $06 ; $6957
+	ld a, MINIGAME_NET_GAME_MATCH_1 ; $6957
 	farcall RunTrainingDrillByID ; $6959
 	ret ; $695c
 .done:
@@ -3044,7 +3044,7 @@ SmashMatchChallengeScene:
 	farcall AdvanceDialogueTextCursor ; $6a16
 	script_speak $11 ; $6a19
 	call WalkToNetChallengeCourtCutscene ; $6a1e
-	ld a, $07 ; $6a21
+	ld a, MINIGAME_NET_GAME_MATCH_2 ; $6a21
 	farcall RunTrainingDrillByID ; $6a23
 	ret ; $6a26
 .speak:
@@ -3091,7 +3091,7 @@ DropShotMatchChallengeScene:
 	script_wait_idle $11 ; $6ade
 	script_speak $11 ; $6ae3
 	call WalkToNetChallengeCourtCutscene ; $6ae8
-	ld a, $08 ; $6aeb
+	ld a, MINIGAME_NET_GAME_MATCH_3 ; $6aeb
 	farcall RunTrainingDrillByID ; $6aed
 	ret ; $6af0
 .speak:
@@ -3106,7 +3106,7 @@ WalkToNetChallengeCourtCutscene:
 	script_set_actor_script ACTOR_PARTNER, ActorScript_15_09 ; $6b23
 	script_wait_actor_script ACTOR_PLAYER ; $6b2e
 	call PlayerPartnerGestureCutscene ; $6b33
-	ld a, $0f ; $6b36
+	ld a, STORYLOC_TRAINING_COURT ; $6b36
 	ld [wStoryModeCurrentLocation], a ; $6b38
 	ld a, $0a ; $6b3b
 	ld [wStoryModeEntryPoint], a ; $6b3d
@@ -3183,7 +3183,7 @@ StrokeMatchChallengeScene:
 	script_wait_idle $0c ; $6c29
 	script_speak $0c ; $6c2e
 	call WalkToStrokeChallengeCourtCutscene ; $6c33
-	ld a, $0c ; $6c36
+	ld a, MINIGAME_STROKE_MATCH_1 ; $6c36
 	farcall RunTrainingDrillByID ; $6c38
 	ret ; $6c3b
 LobMatchChallengeScene:
@@ -3222,7 +3222,7 @@ LobMatchChallengeScene:
 	script_wait_idle $0c ; $6cd1
 	script_speak $0c ; $6cd6
 	call WalkToStrokeChallengeCourtCutscene ; $6cdb
-	ld a, $0d ; $6cde
+	ld a, MINIGAME_STROKE_MATCH_2 ; $6cde
 	farcall RunTrainingDrillByID ; $6ce0
 	ret ; $6ce3
 ReturnMatchChallengeScene:
@@ -3267,7 +3267,7 @@ ReturnMatchChallengeScene:
 	script_wait_idle $0c ; $6d9b
 	script_speak $0c ; $6da0
 	call WalkToStrokeChallengeCourtCutscene ; $6da5
-	ld a, $0e ; $6da8
+	ld a, MINIGAME_STROKE_MATCH_3 ; $6da8
 	farcall RunTrainingDrillByID ; $6daa
 	ret ; $6dad
 .loop:
@@ -3304,9 +3304,9 @@ ReturnCoachReturnLessonScene:
 	script_speak $0d ; $6e17
 	script_set_anim $0d, $02 ; $6e1c
 	script_wait_idle $0d ; $6e23
-	ld a, $0f ; $6e28
+	ld a, MINIGAME_STROKE_PRACTICE_1 ; $6e28
 	ld [wCurrentMinigameStoryMatch + 1], a ; $6e2a
-	ld a, $0f ; $6e2d
+	ld a, STORYLOC_TRAINING_COURT ; $6e2d
 	ld [wStoryModeCurrentLocation], a ; $6e2f
 	ld a, $09 ; $6e32
 	ld [wStoryModeEntryPoint], a ; $6e34
@@ -3343,9 +3343,9 @@ ReturnCoachLobLessonScene:
 	script_speak $0d ; $6e9a
 	script_set_anim $0d, $02 ; $6e9f
 	script_wait_idle $0d ; $6ea6
-	ld a, $10 ; $6eab
+	ld a, MINIGAME_STROKE_PRACTICE_2 ; $6eab
 	ld [wCurrentMinigameStoryMatch + 1], a ; $6ead
-	ld a, $0f ; $6eb0
+	ld a, STORYLOC_TRAINING_COURT ; $6eb0
 	ld [wStoryModeCurrentLocation], a ; $6eb2
 	ld a, $09 ; $6eb5
 	ld [wStoryModeEntryPoint], a ; $6eb7
@@ -3382,9 +3382,9 @@ ReturnCoachPassingShotLessonScene:
 	script_speak $0d ; $6f1d
 	script_set_anim $0d, $02 ; $6f22
 	script_wait_idle $0d ; $6f29
-	ld a, $11 ; $6f2e
+	ld a, MINIGAME_STROKE_PRACTICE_3 ; $6f2e
 	ld [wCurrentMinigameStoryMatch + 1], a ; $6f30
-	ld a, $0f ; $6f33
+	ld a, STORYLOC_TRAINING_COURT ; $6f33
 	ld [wStoryModeCurrentLocation], a ; $6f35
 	ld a, $09 ; $6f38
 	ld [wStoryModeEntryPoint], a ; $6f3a
@@ -3404,7 +3404,7 @@ WalkToStrokeChallengeCourtCutscene:
 	script_set_actor_script ACTOR_PARTNER, ActorScript_15_12 ; $6f76
 	script_wait_actor_script ACTOR_PLAYER ; $6f81
 	call PlayerPartnerGestureCutscene ; $6f86
-	ld a, $0f ; $6f89
+	ld a, STORYLOC_TRAINING_COURT ; $6f89
 	ld [wStoryModeCurrentLocation], a ; $6f8b
 	ld a, $0a ; $6f8e
 	ld [wStoryModeEntryPoint], a ; $6f90
@@ -3469,9 +3469,9 @@ NetCoachVolleyLessonScene:
 	script_wait_idle $12 ; $7035
 	script_set_text Text_37_99 ; $703a
 	script_speak $12 ; $7040
-	ld a, $09 ; $7045
+	ld a, MINIGAME_NET_GAME_PRACTICE_1 ; $7045
 	ld [wCurrentMinigameStoryMatch + 1], a ; $7047
-	ld a, $0f ; $704a
+	ld a, STORYLOC_TRAINING_COURT ; $704a
 	ld [wStoryModeCurrentLocation], a ; $704c
 	ld a, $09 ; $704f
 	ld [wStoryModeEntryPoint], a ; $7051
@@ -3523,9 +3523,9 @@ NetCoachSmashLessonScene:
 	script_set_anim $12, $03 ; $70e9
 	script_wait_idle $12 ; $70f0
 	script_speak $12 ; $70f5
-	ld a, $0a ; $70fa
+	ld a, MINIGAME_NET_GAME_PRACTICE_2 ; $70fa
 	ld [wCurrentMinigameStoryMatch + 1], a ; $70fc
-	ld a, $0f ; $70ff
+	ld a, STORYLOC_TRAINING_COURT ; $70ff
 	ld [wStoryModeCurrentLocation], a ; $7101
 	ld a, $09 ; $7104
 	ld [wStoryModeEntryPoint], a ; $7106
@@ -3571,9 +3571,9 @@ NetCoachDropShotLessonScene:
 	script_set_anim $12, $02 ; $718a
 	script_wait_idle $12 ; $7191
 	script_speak $12 ; $7196
-	ld a, $0b ; $719b
+	ld a, MINIGAME_NET_GAME_PRACTICE_3 ; $719b
 	ld [wCurrentMinigameStoryMatch + 1], a ; $719d
-	ld a, $0f ; $71a0
+	ld a, STORYLOC_TRAINING_COURT ; $71a0
 	ld [wStoryModeCurrentLocation], a ; $71a2
 	ld a, $09 ; $71a5
 	ld [wStoryModeEntryPoint], a ; $71a7
@@ -4316,7 +4316,7 @@ PlaceSwingPracticeKidActor:
 	ret ; $7a66
 StartPendingLessonScene:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $7a67
-	cp $06 ; $7a6a
+	cp MINIGAME_NET_GAME_MATCH_1 ; $7a6a
 	jr nc, .netLesson ; $7a6c
 	call InitServeCoachScene ; $7a6e
 	call ServeCoachWalkToCourtAndStartLesson ; $7a71
@@ -4349,7 +4349,7 @@ ServeCoachWalkToCourtAndStartLesson:
 	script_wait_actor_script $07 ; $7adb
 	script_wait_frames $05 ; $7ae0
 	call PlayerPartnerGestureCutscene ; $7ae7
-	ld a, $0f ; $7aea
+	ld a, STORYLOC_TRAINING_COURT ; $7aea
 	ld [wStoryModeCurrentLocation], a ; $7aec
 	ld a, $0a ; $7aef
 	ld [wStoryModeEntryPoint], a ; $7af1
@@ -4393,7 +4393,7 @@ NetCoachWalkToCourtAndStartLesson:
 	script_wait_actor_script $12 ; $7b6e
 	script_wait_frames $05 ; $7b73
 	call PlayerPartnerGestureCutscene ; $7b7a
-	ld a, $0f ; $7b7d
+	ld a, STORYLOC_TRAINING_COURT ; $7b7d
 	ld [wStoryModeCurrentLocation], a ; $7b7f
 	ld a, $0a ; $7b82
 	ld [wStoryModeEntryPoint], a ; $7b84
@@ -4439,7 +4439,7 @@ ReturnCoachWalkToCourtAndStartLesson:
 	script_wait_actor_script $0d ; $7c07
 	script_wait_frames $05 ; $7c0c
 	call PlayerPartnerGestureCutscene ; $7c13
-	ld a, $0f ; $7c16
+	ld a, STORYLOC_TRAINING_COURT ; $7c16
 	ld [wStoryModeCurrentLocation], a ; $7c18
 	ld a, $0a ; $7c1b
 	ld [wStoryModeEntryPoint], a ; $7c1d

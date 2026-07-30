@@ -2892,7 +2892,7 @@ MoveSaveEditorCursor:
 	dec a ; $526e
 	ret ; $526f
 .move:
-	sound $5e ; $5270
+	sound SFX_MENU_MOVE ; $5270
 	ld hl, hSaveEditorCursor ; $5272
 	ld a, [hl+] ; $5275
 	ld h, [hl] ; $5276
@@ -2969,7 +2969,7 @@ SaveSlotDebugEditor:
 	ld de, $8000 ; $5313
 	ld c, (SaveSlotDebugEditor - SaveEditorCursorTiles_03) / 16 ; $5316
 	call QueueVRAMCopy ; $5318
-	sound $06 ; $531b
+	sound BGM_EXHIBITION_MATCH ; $531b
 	ld a, $03 ; $531d
 	ldh [hDebugStepMode], a ; $531f
 	xor a ; $5321
@@ -3152,7 +3152,7 @@ SaveSlotDebugEditor:
 	ld [hl+], a ; $545c
 	call WriteCurrentSlotBlock ; $545d
 	pop af ; $5460
-	sound $41 ; $5461
+	sound JINGLE_DONE_FOR_THE_DAY ; $5461
 	jp .loop ; $5463
 .restore:
 	pop af ; $5466
@@ -3161,7 +3161,7 @@ SaveSlotDebugEditor:
 .bit1Clear:
 	bit 2, a ; $546d
 	jr z, .bit2Clear ; $546f
-	sound $5f ; $5471
+	sound SFX_MENU_SELECT ; $5471
 	ld a, [wCurrentStorySlot] ; $5473
 	inc a ; $5476
 	and $03 ; $5477
@@ -3170,7 +3170,7 @@ SaveSlotDebugEditor:
 .bit2Clear:
 	bit 3, a ; $547f
 	jr z, .skipSave ; $5481
-	sound $5f ; $5483
+	sound SFX_MENU_SELECT ; $5483
 	ldh a, [hPlayerInputFlags] ; $5485
 	bit PADB_A, a ; $5487
 	jr nz, .bit3Set ; $5489
@@ -3926,7 +3926,7 @@ RunScrollingTextScreen:
 	call LoadPaletteShadow ; $59ec
 	call InitScrollingTextScreen ; $59ef
 	call EnableLCD ; $59f2
-	sound $2c ; $59f5
+	sound BGM_CREDITS ; $59f5
 	ld c, $08 ; $59f7
 	call ForceFadeIn ; $59f9
 	call WaitFadeEnd ; $59fc

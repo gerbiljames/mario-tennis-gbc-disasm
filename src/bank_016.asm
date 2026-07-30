@@ -420,12 +420,12 @@ MoveMenuCursorGridRemote_16:
 .checkLock:
 	bit 0, a ; $427b
 	jr z, .checkUnlock ; $427d
-	sound $5f ; $427f
+	sound SFX_MENU_SELECT ; $427f
 	ld a, [wMenuCursorLockFlags] ; $4281
 	ld b, a ; $4284
 	and $01 ; $4285
 	jr nz, .compare ; $4287
-	sound $5f ; $4289
+	sound SFX_MENU_SELECT ; $4289
 	ld a, b ; $428b
 	or $01 ; $428c
 	ld [wMenuCursorLockFlags], a ; $428e
@@ -433,7 +433,7 @@ MoveMenuCursorGridRemote_16:
 .checkUnlock:
 	bit 1, a ; $4293
 	jr z, .compare ; $4295
-	sound $62 ; $4297
+	sound SFX_MENU_CANCEL ; $4297
 	ld a, [wMenuCursorLockFlags] ; $4299
 	ld b, a ; $429c
 	and $03 ; $429d
@@ -558,7 +558,7 @@ MoveMenuCursor2GridRemote_16:
 	ld b, a ; $434d
 	and $02 ; $434e
 	jr nz, .compare ; $4350
-	sound $5f ; $4352
+	sound SFX_MENU_SELECT ; $4352
 	ld a, b ; $4354
 	or $02 ; $4355
 	ld [wMenuCursorLockFlags], a ; $4357
@@ -566,7 +566,7 @@ MoveMenuCursor2GridRemote_16:
 .checkUnlock:
 	bit 1, a ; $435c
 	jr z, .compare ; $435e
-	sound $62 ; $4360
+	sound SFX_MENU_CANCEL ; $4360
 	ld a, [wMenuCursorLockFlags] ; $4362
 	ld b, a ; $4365
 	and $03 ; $4366
@@ -789,9 +789,9 @@ RunMatchWinLoseScreen:
 	call ClearFrameTasks ; $4480
 	wram_bank $03 ; $4483
 	ld a, [wGameMode] ; $4489
-	cp $04 ; $448c
+	cp GAMEMODE_EXHIBITION ; $448c
 	jr z, .step ; $448e
-	cp $09 ; $4490
+	cp GAMEMODE_LINK_MATCH ; $4490
 	jr z, .step ; $4492
 	jr .checkMatchWinLoseFlag ; $4494
 .step:
@@ -809,10 +809,10 @@ RunMatchWinLoseScreen:
 	ld a, [wMatchWinLoseFlag] ; $44ac
 	cp $ff ; $44af
 	jr z, .playSfx ; $44b1
-	sound $09 ; $44b3
+	sound BGM_WIN ; $44b3
 	jr .initMatchWinLoseScreen ; $44b5
 .playSfx:
-	sound $0a ; $44b7
+	sound BGM_LOSE ; $44b7
 .initMatchWinLoseScreen:
 	call InitMatchWinLoseScreen ; $44b9
 	farcall UpdateAnimatedTiles ; $44bc
@@ -858,7 +858,7 @@ RunMatchWinLoseScreen:
 	jr nz, .bit4Set ; $4519
 	jr .loop ; $451b
 .playSfx2:
-	sound $5f ; $451d
+	sound SFX_MENU_SELECT ; $451d
 	call ClearFrameTasks ; $451f
 	ld c, $40 ; $4522
 	call BeginFadeOut ; $4524
@@ -1168,7 +1168,7 @@ BuildMatchResultTilemap:
 	jr .loop ; $4a97
 .checkCurrentMinigameStoryMatch:
 	ld a, [wCurrentMinigameStoryMatch] ; $4a99
-	cp $01 ; $4a9c
+	cp MATCHLIST_DOUBLES ; $4a9c
 	jr nz, .ne01 ; $4a9e
 	ld hl, $d3c7 ; $4aa0
 	ld de, $d200 ; $4aa3
@@ -1672,7 +1672,7 @@ MatchResultGfxC9:
 	INCBIN "data/bank_016/lz_5bf5.bin" ; $5bf5, 28 bytes
 MaybeInvertMatchWinLoseFlag:
 	ld a, [wGameMode] ; $5c11
-	cp $09 ; $5c14
+	cp GAMEMODE_LINK_MATCH ; $5c14
 	ret nz ; $5c16
 	ld a, [wLinkMatchRole] ; $5c17
 	cp $01 ; $5c1a
@@ -2096,7 +2096,7 @@ LoadResultScreenPortraits:
 	or a ; $5fe8
 	jr nz, .checkPlayer1CurrentMainCharacter ; $5fe9
 	ld a, [wGameMode] ; $5feb
-	cp $09 ; $5fee
+	cp GAMEMODE_LINK_MATCH ; $5fee
 	jr nz, .checkPlayer1CurrentMainCharacter ; $5ff0
 	ld a, [wLinkMatchRole] ; $5ff2
 	cp $02 ; $5ff5

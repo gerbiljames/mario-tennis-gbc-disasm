@@ -70,7 +70,7 @@ TrainingGymArrival02_0e:
 	call WaitFadeEnd ; $418a
 	script_move_target ACTOR_PLAYER, $0b00, $0e00 ; $418d
 	script_wait_move ACTOR_PLAYER ; $4198
-	sound $71 ; $419d
+	sound SFX_DOOR ; $419d
 	script_wait_frames $02 ; $419f
 	script_copy_scene_rect $3a, $0a, $0a, $0a, $02, $02 ; $41a6
 	script_wait_frames $02 ; $41b5
@@ -92,7 +92,7 @@ TrainingGymArrival03_0e:
 	call WaitFadeEnd ; $421f
 	script_move_target ACTOR_PLAYER, $1500, $0e00 ; $4222
 	script_wait_move ACTOR_PLAYER ; $422d
-	sound $71 ; $4232
+	sound SFX_DOOR ; $4232
 	script_wait_frames $02 ; $4234
 	script_copy_scene_rect $3a, $0a, $14, $0a, $02, $02 ; $423b
 	script_wait_frames $02 ; $424a
@@ -113,7 +113,7 @@ TrainingGymExit02_0e:
 	script_move_target ACTOR_PLAYER, $0b00, $0d00 ; $42a6
 	script_wait_move ACTOR_PLAYER ; $42b1
 	farcall WaitPlayerMoveDone ; $42b6
-	sound $71 ; $42b9
+	sound SFX_DOOR ; $42b9
 	script_copy_scene_rect $37, $0a, $0a, $0a, $02, $02 ; $42bb
 	script_wait_frames $02 ; $42ca
 	script_copy_scene_rect $3a, $0a, $0a, $0a, $02, $02 ; $42d1
@@ -133,7 +133,7 @@ TrainingGymExit03_0e:
 	script_move_target ACTOR_PLAYER, $1500, $0d00 ; $4331
 	script_wait_move ACTOR_PLAYER ; $433c
 	farcall WaitPlayerMoveDone ; $4341
-	sound $71 ; $4344
+	sound SFX_DOOR ; $4344
 	script_copy_scene_rect $37, $0a, $14, $0a, $02, $02 ; $4346
 	script_wait_frames $02 ; $4355
 	script_copy_scene_rect $3a, $0a, $14, $0a, $02, $02 ; $435c
@@ -1294,7 +1294,7 @@ RepairCounterServiceMenu:
 PrepareEquipmentSelectScreen:
 	ld a, [wEquippedRacket] ; $4eb2
 	ld [wMapScratch + 8], a ; $4eb5
-	ld a, $11 ; $4eb8
+	ld a, STORYLOC_TRAINING_CENTER ; $4eb8
 	ld [wStoryModeCurrentLocation], a ; $4eba
 	ld a, [wMapSceneStage2] ; $4ebd
 	ld [wStoryModeEntryPoint], a ; $4ec0
@@ -1338,7 +1338,7 @@ RestoreScreenAfterEquipSelect:
 	ld a, [wMapSceneStage2] ; $4f1d
 	add $02 ; $4f20
 	ld [wMapSceneStage2], a ; $4f22
-	ld a, $11 ; $4f25
+	ld a, STORYLOC_TRAINING_CENTER ; $4f25
 	ld [wStoryModeCurrentLocation], a ; $4f27
 	ld a, [wMapSceneStage2] ; $4f2a
 	ld [wStoryModeEntryPoint], a ; $4f2d
@@ -2093,7 +2093,7 @@ ExhibitionAcceptedSingles:
 	script_move_player $1500, $0d00 ; $5b95
 	script_wait_actor_script ACTOR_PLAYER ; $5b9f
 	call PlayStarWarpTransition ; $5ba4
-	ld a, $1c ; $5ba7
+	ld a, STORYLOC_SPECIAL_COURT ; $5ba7
 	ld [wStoryModeCurrentLocation], a ; $5ba9
 	ld a, $01 ; $5bac
 	ld [wStoryModeEntryPoint], a ; $5bae
@@ -2373,7 +2373,7 @@ ExhibitionAcceptedDoubles:
 	script_move_player $1500, $0d00 ; $62e6
 	script_wait_actor_script ACTOR_PARTNER ; $62f0
 	call PlayStarWarpTransition ; $62f5
-	ld a, $1c ; $62f8
+	ld a, STORYLOC_SPECIAL_COURT ; $62f8
 	ld [wStoryModeCurrentLocation], a ; $62fa
 	ld a, $04 ; $62fd
 	ld [wStoryModeEntryPoint], a ; $62ff
@@ -2730,7 +2730,7 @@ PromptExhibitionMatch:
 	script_move_player $1500, $0d00 ; $695e
 	script_wait_actor_script ACTOR_PLAYER ; $6968
 	call PlayStarWarpTransition ; $696d
-	ld a, $1c ; $6970
+	ld a, STORYLOC_SPECIAL_COURT ; $6970
 	ld [wStoryModeCurrentLocation], a ; $6972
 	ld a, [wMapScratch + 2] ; $6975
 	ld [wStoryModeEntryPoint], a ; $6978
@@ -3044,7 +3044,7 @@ ExhibitionDeclinedCutscene:
 	script_speak $08 ; $70df
 	script_jump_velocity $0f, $ff80 ; $70e4
 	script_wait_frames $14 ; $70ec
-	sound $70 ; $70f3
+	sound SFX_IMPACT ; $70f3
 	ld a, $04 ; $70f5
 	farcall SetScreenShake ; $70f7
 	script_wait_frames $0a ; $70fa
@@ -3101,7 +3101,7 @@ PlayStarWarpTransition:
 	script_copy_scene_rect $00, $2b, $1a, $0c, $04, $02 ; $7192
 	script_copy_scene_rect $04, $2d, $14, $14, $06, $02 ; $71a1
 	script_copy_scene_rect $0a, $2b, $1a, $12, $06, $02 ; $71b0
-	sound $09 ; $71bf
+	sound BGM_WIN ; $71bf
 	ld a, $01 ; $71c1
 	ld hl, UpdateStarWarpSprite ; $71c3
 	call RegisterFrameTask ; $71c6
@@ -3581,7 +3581,7 @@ ActorScript_0e_21:
 	as_set_field $14, FACE_UP
 	as_halt
 PrepareStoryMatch:
-	ld a, $1c ; $7b7f
+	ld a, STORYLOC_SPECIAL_COURT ; $7b7f
 	ld [wStoryModeCurrentLocation], a ; $7b81
 	ld a, $0a ; $7b84
 	ld [wStoryModeEntryPoint], a ; $7b86
@@ -3641,7 +3641,7 @@ HandleExhibitionMatchResult:
 	test_flag FLAG_WON_DREAM_MATCH_DOUBLES ; $7c1f
 	jr nz, .aborted ; $7c22
 .lost:
-	ld a, $1d ; $7c24
+	ld a, STORYLOC_PEACHS_CASTLE ; $7c24
 	ld [wStoryModeCurrentLocation], a ; $7c26
 	ld a, $0e ; $7c29
 	ld [wStoryModeEntryPoint], a ; $7c2b
@@ -3670,7 +3670,7 @@ HandleExhibitionMatchResult:
 	ld c, a ; $7c57
 	farcall RunStorySceneByMode ; $7c58
 .done:
-	ld a, $00 ; $7c5b
+	ld a, STORYLOC_MAIN_MENU ; $7c5b
 	ld [wStoryModeCurrentLocation], a ; $7c5d
 	ld a, $0a ; $7c60
 	ld [wStoryModeEntryPoint], a ; $7c62

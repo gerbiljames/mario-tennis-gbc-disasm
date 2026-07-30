@@ -474,12 +474,12 @@ MoveMenuCursorGridRemote_3e:
 .checkLock:
 	bit 0, a ; $42bd
 	jr z, .checkUnlock ; $42bf
-	sound $5f ; $42c1
+	sound SFX_MENU_SELECT ; $42c1
 	ld a, [wMenuCursorLockFlags] ; $42c3
 	ld b, a ; $42c6
 	and $01 ; $42c7
 	jr nz, .compare ; $42c9
-	sound $5f ; $42cb
+	sound SFX_MENU_SELECT ; $42cb
 	ld a, b ; $42cd
 	or $01 ; $42ce
 	ld [wMenuCursorLockFlags], a ; $42d0
@@ -487,7 +487,7 @@ MoveMenuCursorGridRemote_3e:
 .checkUnlock:
 	bit 1, a ; $42d5
 	jr z, .compare ; $42d7
-	sound $62 ; $42d9
+	sound SFX_MENU_CANCEL ; $42d9
 	ld a, [wMenuCursorLockFlags] ; $42db
 	ld b, a ; $42de
 	and $03 ; $42df
@@ -612,7 +612,7 @@ MoveMenuCursor2GridRemote_3e:
 	ld b, a ; $438f
 	and $02 ; $4390
 	jr nz, .compare ; $4392
-	sound $5f ; $4394
+	sound SFX_MENU_SELECT ; $4394
 	ld a, b ; $4396
 	or $02 ; $4397
 	ld [wMenuCursorLockFlags], a ; $4399
@@ -620,7 +620,7 @@ MoveMenuCursor2GridRemote_3e:
 .checkUnlock:
 	bit 1, a ; $439e
 	jr z, .compare ; $43a0
-	sound $62 ; $43a2
+	sound SFX_MENU_CANCEL ; $43a2
 	ld a, [wMenuCursorLockFlags] ; $43a4
 	ld b, a ; $43a7
 	and $03 ; $43a8
@@ -842,7 +842,7 @@ RestoreMenuScreenAndFadeIn:
 	ret ; $44ca
 RunLinkMatchRulesMenu:
 	call EnableTimerInterrupt ; $44cb
-	sound $03 ; $44ce
+	sound BGM_MENU ; $44ce
 	xor a ; $44d0
 	ld [wMatchFormatDoubles], a ; $44d1
 	ld [wMatchFormatGames], a ; $44d4
@@ -887,7 +887,7 @@ RunLinkMatchRulesMenu:
 	call MoveMenuCursorGrid_3e ; $4534
 	or a ; $4537
 	jr z, .zero ; $4538
-	sound $5e ; $453a
+	sound SFX_MENU_MOVE ; $453a
 	call DrawMatchRulesCaption ; $453c
 .zero:
 	push af ; $453f
@@ -900,7 +900,7 @@ RunLinkMatchRulesMenu:
 	jr nz, .playSfx2 ; $454d
 	jr .loop ; $454f
 .playSfx:
-	sound $5f ; $4551
+	sound SFX_MENU_SELECT ; $4551
 	push af ; $4553
 	farcall SyncLinkFrame ; $4554
 	pop af ; $4557
@@ -919,7 +919,7 @@ RunLinkMatchRulesMenu:
 	set 2, [hl] ; $4576
 	ret ; $4578
 .playSfx2:
-	sound $62 ; $4579
+	sound SFX_MENU_CANCEL ; $4579
 	push af ; $457b
 	farcall SyncLinkFrame ; $457c
 	pop af ; $457f
@@ -1178,7 +1178,7 @@ HandleMatchRulesToggleInput:
 	jr nz, .playSfx2 ; $4766
 	ret ; $4768
 .playSfx:
-	sound $5e ; $4769
+	sound SFX_MENU_MOVE ; $4769
 	ld c, $01 ; $476b
 	call GetMenuCursorIndex_3e ; $476d
 	or a ; $4770
@@ -1223,7 +1223,7 @@ HandleMatchRulesToggleInput:
 	call FlushMatchRuleRowAttrs ; $47bc
 	ret ; $47bf
 .playSfx2:
-	sound $5e ; $47c0
+	sound SFX_MENU_MOVE ; $47c0
 	ld c, $01 ; $47c2
 	call GetMenuCursorIndex_3e ; $47c4
 	or a ; $47c7
@@ -1809,13 +1809,13 @@ RunEraseDataConfirmMenu:
 	ld a, [wMenuCursorY] ; $4c74
 	xor $01 ; $4c77
 	ld [wMenuCursorY], a ; $4c79
-	sound $5e ; $4c7c
+	sound SFX_MENU_MOVE ; $4c7c
 	jr .loop ; $4c7e
 .checkMenuCursorY2:
 	ld a, [wMenuCursorY] ; $4c80
 	or a ; $4c83
 	jr nz, .playSfx ; $4c84
-	sound $60 ; $4c86
+	sound SFX_MENU_DECIDE ; $4c86
 	ld hl, rIE ; $4c88
 	set 2, [hl] ; $4c8b
 	call ClearFrameTasks ; $4c8d
@@ -1825,7 +1825,7 @@ RunEraseDataConfirmMenu:
 	ld a, $01 ; $4c98
 	ret ; $4c9a
 .playSfx:
-	sound $62 ; $4c9b
+	sound SFX_MENU_CANCEL ; $4c9b
 	ld hl, rIE ; $4c9d
 	set 2, [hl] ; $4ca0
 	call ClearFrameTasks ; $4ca2
@@ -2043,7 +2043,7 @@ EraseConfirmFlashColors_3e:
 	db $1f, $00, $df, $00, $ff, $01, $bf, $02, $7f, $03, $ff, $03, $ff, $03, $9f, $03 ; 0x00
 	db $bf, $02, $ff, $01, $df, $00, $1f, $00 ; 0x10
 RunRacketShoesChoiceMenu:
-	sound $03 ; $4ea0
+	sound BGM_MENU ; $4ea0
 	ld hl, rIE ; $4ea2
 	res 2, [hl] ; $4ea5
 	call LoadRacketShoesChoiceGraphics ; $4ea7
@@ -2073,7 +2073,7 @@ RunRacketShoesChoiceMenu:
 	call MoveMenuCursorGrid_3e ; $4ee7
 	or a ; $4eea
 	jr z, .checkMenuInputPressed ; $4eeb
-	sound $5e ; $4eed
+	sound SFX_MENU_MOVE ; $4eed
 	call RedrawRacketShoesChoiceMenu ; $4eef
 .checkMenuInputPressed:
 	ld a, [wMenuInputPressed] ; $4ef2
@@ -2083,7 +2083,7 @@ RunRacketShoesChoiceMenu:
 	jr nz, .playSfx2 ; $4efb
 	jr .loop ; $4efd
 .playSfx:
-	sound $5f ; $4eff
+	sound SFX_MENU_SELECT ; $4eff
 	call ClearFrameTasks ; $4f01
 	ld hl, rIE ; $4f04
 	set 2, [hl] ; $4f07
@@ -2096,7 +2096,7 @@ RunRacketShoesChoiceMenu:
 	ld [wRacketShoesTabIndex], a ; $4f18
 	ret ; $4f1b
 .playSfx2:
-	sound $62 ; $4f1c
+	sound SFX_MENU_CANCEL ; $4f1c
 	call ClearFrameTasks ; $4f1e
 	ld hl, rIE ; $4f21
 	set 2, [hl] ; $4f24
@@ -2448,7 +2448,7 @@ ChoiceTabAttrAddrs_3e:
 	; $518e, 4 bytes (bytes:4)
 	db $e3, $d4, $ec, $d4 ; 0x00
 RunPlayAlonePartnerMenu:
-	sound $03 ; $5192
+	sound BGM_MENU ; $5192
 	ld hl, rIE ; $5194
 	res 2, [hl] ; $5197
 	call LoadPlayAlonePartnerGraphics ; $5199
@@ -2478,7 +2478,7 @@ RunPlayAlonePartnerMenu:
 	call MoveMenuCursorGrid_3e ; $51d7
 	or a ; $51da
 	jr z, .checkMenuInputPressed ; $51db
-	sound $5e ; $51dd
+	sound SFX_MENU_MOVE ; $51dd
 	call RedrawPlayAlonePartnerMenu ; $51df
 .checkMenuInputPressed:
 	ld a, [wMenuInputPressed] ; $51e2
@@ -2488,7 +2488,7 @@ RunPlayAlonePartnerMenu:
 	jr nz, .playSfx2 ; $51eb
 	jr .loop ; $51ed
 .playSfx:
-	sound $5f ; $51ef
+	sound SFX_MENU_SELECT ; $51ef
 	call ClearFrameTasks ; $51f1
 	ld hl, rIE ; $51f4
 	set 2, [hl] ; $51f7
@@ -2505,7 +2505,7 @@ RunPlayAlonePartnerMenu:
 .done:
 	ret ; $5211
 .playSfx2:
-	sound $62 ; $5212
+	sound SFX_MENU_CANCEL ; $5212
 	call ClearFrameTasks ; $5214
 	ld hl, rIE ; $5217
 	set 2, [hl] ; $521a
@@ -2729,7 +2729,7 @@ ShowEquipmentStatusScreen:
 	call AdvanceFrame ; $53bc
 	jr .inputLoop ; $53bf
 .exit:
-	sound $5f ; $53c1
+	sound SFX_MENU_SELECT ; $53c1
 	call ClearFrameTasks ; $53c3
 	ld c, $10 ; $53c6
 	call BeginFadeOut ; $53c8
@@ -2966,7 +2966,7 @@ HandleEquipSelectInput:
 	ld a, [wEquipSelectExitTimer] ; $55be
 	or a ; $55c1
 	jr nz, .moveMenuCursorGrid ; $55c2
-	sound $60 ; $55c4
+	sound SFX_MENU_DECIDE ; $55c4
 	ld a, $01 ; $55c6
 	ld [wEquipSelectExitTimer], a ; $55c8
 	ld a, [wEquipItemCount] ; $55cb
@@ -2994,7 +2994,7 @@ HandleEquipSelectInput:
 	ld [wEquippedRacket], a ; $55f5
 	ret ; $55f8
 .playSfx:
-	sound $62 ; $55f9
+	sound SFX_MENU_CANCEL ; $55f9
 	ld a, $44 ; $55fb
 	ld [wEquipSelectExitTimer], a ; $55fd
 	ret ; $5600
@@ -3005,7 +3005,7 @@ HandleEquipSelectInput:
 	call MoveMenuCursorGrid_3e ; $5607
 	or a ; $560a
 	jr z, .done ; $560b
-	sound $5e ; $560d
+	sound SFX_MENU_MOVE ; $560d
 	call ClearEquipSelectTextRows ; $560f
 	ld a, [wEquipItemKind] ; $5612
 	or a ; $5615
@@ -3584,19 +3584,32 @@ ItemStatModList1:
 	db $00, $81, $01, $81, $03, $82, $04, $02 ; 0x00
 	db $05, $01, $ff ; 0x08
 ItemStatModList2:
-	INCBIN "data/bank_03e/d_5a85.bin" ; $5a85, 11 bytes
+	; $5a85, 11 bytes (bytes:8)
+	db $00, $02, $01, $01, $03, $01, $04, $82 ; 0x00
+	db $05, $82, $ff ; 0x08
 ItemStatModList3:
-	INCBIN "data/bank_03e/d_5a90.bin" ; $5a90, 11 bytes
+	; $5a90, 11 bytes (bytes:8)
+	db $00, $82, $01, $82, $02, $82, $fe, $fe ; 0x00
+	db $0b, $fe, $ff ; 0x08
 ItemStatModList4:
-	INCBIN "data/bank_03e/d_5a9b.bin" ; $5a9b, 11 bytes
+	; $5a9b, 11 bytes (bytes:8)
+	db $00, $81, $01, $81, $02, $03, $04, $01 ; 0x00
+	db $05, $01, $ff ; 0x08
 ItemStatModList5:
-	INCBIN "data/bank_03e/d_5aa6.bin" ; $5aa6, 9 bytes
+	; $5aa6, 9 bytes (bytes:8)
+	db $00, $02, $01, $02, $02, $81, $04, $81 ; 0x00
+	db $ff ; 0x08
 ItemStatModList6:
-	INCBIN "data/bank_03e/d_5aaf.bin" ; $5aaf, 7 bytes
+	; $5aaf, 7 bytes (bytes:8)
+	db $00, $82, $03, $03, $01, $82, $ff ; 0x00
 ItemStatModListTable0:
-	INCBIN "data/bank_03e/d_5ab6.bin" ; $5ab6, 11 bytes
+	; $5ab6, 11 bytes (bytes:8)
+	db $07, $82, $0c, $82, $08, $82, $09, $82 ; 0x00
+	db $0b, $fe, $ff ; 0x08
 ItemStatModListTable1:
-	INCBIN "data/bank_03e/d_5ac1.bin" ; $5ac1, 9 bytes
+	; $5ac1, 9 bytes (bytes:8)
+	db $07, $02, $0c, $02, $08, $82, $09, $82 ; 0x00
+	db $ff ; 0x08
 DrawStatModLabel:
 	push af ; $5aca
 	push bc ; $5acb
@@ -3724,7 +3737,7 @@ StatModRowAddr2:
 	db $81, $d1, $8b, $d1, $c1, $d1, $cb, $d1 ; 0x00
 	db $01, $d2, $0b, $d2, $00, $00, $00, $00 ; 0x08
 RunCourtSelect4Menu:
-	sound $03 ; $5b99
+	sound BGM_MENU ; $5b99
 	call ClearFrameTasks ; $5b9b
 	ld hl, rIE ; $5b9e
 	res 2, [hl] ; $5ba1
@@ -3755,7 +3768,7 @@ RunCourtSelect4Menu:
 	call MoveMenuCursorGrid_3e ; $5be3
 	or a ; $5be6
 	jr z, .checkMenuInputPressed ; $5be7
-	sound $5e ; $5be9
+	sound SFX_MENU_MOVE ; $5be9
 	call RedrawCourtSelect4Menu ; $5beb
 .checkMenuInputPressed:
 	ld a, [wMenuInputPressed] ; $5bee
@@ -3765,7 +3778,7 @@ RunCourtSelect4Menu:
 	jr nz, .playSfx2 ; $5bf7
 	jr .loop ; $5bf9
 .playSfx:
-	sound $60 ; $5bfb
+	sound SFX_MENU_DECIDE ; $5bfb
 	call ClearFrameTasks ; $5bfd
 	ld hl, rIE ; $5c00
 	set 2, [hl] ; $5c03
@@ -3782,7 +3795,7 @@ RunCourtSelect4Menu:
 	call CourtSelectIndexToCourtId ; $5c1a
 	ret ; $5c1d
 .playSfx2:
-	sound $62 ; $5c1e
+	sound SFX_MENU_CANCEL ; $5c1e
 	call ClearFrameTasks ; $5c20
 	ld hl, rIE ; $5c23
 	set 2, [hl] ; $5c26
@@ -3799,7 +3812,7 @@ RunLinkCourtSelect4Menu:
 	call ResetSerialState ; $5c3b
 	call ClearFrameTasks ; $5c3e
 	call EnableTimerInterrupt ; $5c41
-	sound $03 ; $5c44
+	sound BGM_MENU ; $5c44
 	farcall InitMenuBgScroll ; $5c46
 	ld b, $01 ; $5c49
 	ld c, $01 ; $5c4b
@@ -3839,7 +3852,7 @@ RunLinkCourtSelect4Menu:
 	call MoveMenuCursorGrid_3e ; $5c9a
 	or a ; $5c9d
 	jr z, .checkMenuInputPressed ; $5c9e
-	sound $5e ; $5ca0
+	sound SFX_MENU_MOVE ; $5ca0
 	call RedrawCourtSelect4Menu ; $5ca2
 .checkMenuInputPressed:
 	ld a, [wMenuInputPressed] ; $5ca5
@@ -3849,7 +3862,7 @@ RunLinkCourtSelect4Menu:
 	jr nz, .playSfx2 ; $5cae
 	jr .loop ; $5cb0
 .playSfx:
-	sound $60 ; $5cb2
+	sound SFX_MENU_DECIDE ; $5cb2
 	push af ; $5cb4
 	farcall SyncLinkFrame ; $5cb5
 	pop af ; $5cb8
@@ -3869,7 +3882,7 @@ RunLinkCourtSelect4Menu:
 	call CourtSelectIndexToCourtId ; $5cd5
 	ret ; $5cd8
 .playSfx2:
-	sound $62 ; $5cd9
+	sound SFX_MENU_CANCEL ; $5cd9
 	push af ; $5cdb
 	farcall SyncLinkFrame ; $5cdc
 	pop af ; $5cdf
@@ -4555,7 +4568,7 @@ RunCourtSelect9Menu:
 	ld a, [wUnlockedCourtMask] ; $6518
 	ld b, a ; $651b
 	call StoreCourtUnlockBits ; $651c
-	sound $03 ; $651f
+	sound BGM_MENU ; $651f
 	call ClearFrameTasks ; $6521
 	ld hl, rIE ; $6524
 	res 2, [hl] ; $6527
@@ -4586,7 +4599,7 @@ RunCourtSelect9Menu:
 	call MoveMenuCursorGrid_3e ; $6567
 	or a ; $656a
 	jr z, .checkMenuInputPressed ; $656b
-	sound $5e ; $656d
+	sound SFX_MENU_MOVE ; $656d
 	call RedrawCourtSelect9Menu ; $656f
 .checkMenuInputPressed:
 	ld a, [wMenuInputPressed] ; $6572
@@ -4602,10 +4615,10 @@ RunCourtSelect9Menu:
 	call IsCourtUnlocked ; $6585
 	or a ; $6588
 	jr nz, .playSfx ; $6589
-	sound $61 ; $658b
+	sound SFX_MENU_LOCKED ; $658b
 	jr .loop ; $658d
 .playSfx:
-	sound $60 ; $658f
+	sound SFX_MENU_DECIDE ; $658f
 	call ClearFrameTasks ; $6591
 	ld hl, rIE ; $6594
 	set 2, [hl] ; $6597
@@ -4622,7 +4635,7 @@ RunCourtSelect9Menu:
 	call CourtSelectIndexToCourtId ; $65ae
 	ret ; $65b1
 .playSfx2:
-	sound $62 ; $65b2
+	sound SFX_MENU_CANCEL ; $65b2
 	call ClearFrameTasks ; $65b4
 	ld hl, rIE ; $65b7
 	set 2, [hl] ; $65ba
@@ -4638,7 +4651,7 @@ RunLinkCourtSelect9Menu:
 	call ResetSerialState ; $65cc
 	call ClearFrameTasks ; $65cf
 	call EnableTimerInterrupt ; $65d2
-	sound $03 ; $65d5
+	sound BGM_MENU ; $65d5
 	ld a, [wUnlockedCourtMask] ; $65d7
 	ld b, a ; $65da
 	ld a, [wLinkPartnerCourtMask] ; $65db
@@ -4684,7 +4697,7 @@ RunLinkCourtSelect9Menu:
 	call MoveMenuCursorGrid_3e ; $6637
 	or a ; $663a
 	jr z, .checkMenuInputPressed ; $663b
-	sound $5e ; $663d
+	sound SFX_MENU_MOVE ; $663d
 	call RedrawCourtSelect9Menu ; $663f
 .checkMenuInputPressed:
 	ld a, [wMenuInputPressed] ; $6642
@@ -4700,10 +4713,10 @@ RunLinkCourtSelect9Menu:
 	call IsCourtUnlocked ; $6655
 	or a ; $6658
 	jr nz, .playSfx ; $6659
-	sound $61 ; $665b
+	sound SFX_MENU_LOCKED ; $665b
 	jr .loop ; $665d
 .playSfx:
-	sound $60 ; $665f
+	sound SFX_MENU_DECIDE ; $665f
 	push af ; $6661
 	farcall SyncLinkFrame ; $6662
 	pop af ; $6665
@@ -4723,7 +4736,7 @@ RunLinkCourtSelect9Menu:
 	call CourtSelectIndexToCourtId ; $6682
 	ret ; $6685
 .playSfx2:
-	sound $62 ; $6686
+	sound SFX_MENU_CANCEL ; $6686
 	push af ; $6688
 	farcall SyncLinkFrame ; $6689
 	pop af ; $668c
@@ -5075,7 +5088,7 @@ StoreCourtUnlockBits:
 	ret ; $697a
 IsCourtUnlocked:
 	ld a, b ; $697b
-	cp $04 ; $697c
+	cp COURT_STAR ; $697c
 	jr nc, .lookup ; $697e
 	ld a, $01 ; $6980
 	ret ; $6982
@@ -5084,7 +5097,7 @@ IsCourtUnlocked:
 	push af ; $6985
 	wram_bank $02 ; $6986
 	ld a, b ; $698c
-	sub $04 ; $698d
+	sub COURT_STAR ; $698d
 	ld hl, wScreenAttrmap ; $698f
 	add l ; $6992
 	ld l, a ; $6993

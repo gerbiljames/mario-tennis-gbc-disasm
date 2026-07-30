@@ -1338,7 +1338,7 @@ UpdateLinkSession:
 	ldh a, [hLinkExchangeActive] ; $4851
 	or a ; $4853
 	jp nz, .frameLoop ; $4854
-	sound $00 ; $4857
+	sound BGM_NONE ; $4857
 	call DisableLCDSafely ; $4859
 	ld a, $01 ; $485c
 	ldh [hLinkExchangeActive], a ; $485e
@@ -4044,7 +4044,7 @@ OverrideCharStatsForDebug:
 	ld [hl], d ; $5df7
 	ret ; $5df8
 RunDebugTestMatch:
-	ld a, $04 ; $5df9
+	ld a, GAMEMODE_EXHIBITION ; $5df9
 	ld [wGameMode], a ; $5dfb
 	ld a, $03 ; $5dfe
 	ld [wCurrentStorySlot], a ; $5e00
@@ -4079,27 +4079,27 @@ RunDebugTestMatch:
 	ld [wMatchIsDoubles], a ; $5e51
 	ld a, $04 ; $5e54
 	ld [wOnCourtCharCount], a ; $5e56
-	ld a, $05 ; $5e59
+	ld a, COURT_CASTLE ; $5e59
 	ld [wCurrentlyUsedCourt], a ; $5e5b
 	ld a, $03 ; $5e5e
 	ld [wMatchTypeNumberOfSets], a ; $5e60
 	ld a, $02 ; $5e63
 	ld [wMatchTypeNumberOfGames], a ; $5e65
-	ld a, $1a ; $5e68
+	ld a, CHAR_MARIO ; $5e68
 	ld [wMatchPlayerChar], a ; $5e6a
 	ld b, a ; $5e6d
 	ld c, $00 ; $5e6e
 	farcall InitCa00RecordFromCharId ; $5e70
-	ld a, $1d ; $5e73
+	ld a, CHAR_BOWSER ; $5e73
 	ld [wMatchOpponentChar], a ; $5e75
 	ld b, a ; $5e78
 	ld c, $02 ; $5e79
 	farcall InitCa00RecordFromCharId ; $5e7b
-	ld a, $1f ; $5e7e
+	ld a, CHAR_PEACH ; $5e7e
 	ld b, a ; $5e80
 	ld c, $01 ; $5e81
 	farcall InitCa00RecordFromCharId ; $5e83
-	ld a, $1c ; $5e86
+	ld a, CHAR_YOSHI ; $5e86
 	ld b, a ; $5e88
 	ld c, $03 ; $5e89
 	farcall InitCa00RecordFromCharId ; $5e8b
@@ -4113,7 +4113,7 @@ RunDebugTestMatch:
 	ret ; $5ea0
 RunTargetZoneTestMode_07:
 	farcall InitMinigameMatchSettings ; $5ea1
-	ld a, $02 ; $5ea4
+	ld a, COURT_GRASS ; $5ea4
 	ld [wCurrentlyUsedCourt], a ; $5ea6
 	ld a, $02 ; $5ea9
 	ld [wOnCourtCharCount], a ; $5eab
@@ -4124,9 +4124,9 @@ RunTargetZoneTestMode_07:
 	farcall SetMinigamePointTable ; $5eb9
 	ld a, $01 ; $5ebc
 	ld [wTargetZoneEnabled], a ; $5ebe
-	ld a, $1a ; $5ec1
+	ld a, CHAR_MARIO ; $5ec1
 	ld [wMatchPlayerChar], a ; $5ec3
-	ld a, $1c ; $5ec6
+	ld a, CHAR_YOSHI ; $5ec6
 	ld [wMatchOpponentChar], a ; $5ec8
 	farcall RunN64ExhibData ; $5ecb
 	farcall RunMinigameMatch ; $5ece

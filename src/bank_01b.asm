@@ -467,12 +467,12 @@ MoveMenuCursorGrid:
 .checkMenuCursorLockFlags2:
 	bit 0, a ; $42b5
 	jr z, .bit0Clear ; $42b7
-	sound $5f ; $42b9
+	sound SFX_MENU_SELECT ; $42b9
 	ld a, [wMenuCursorLockFlags] ; $42bb
 	ld b, a ; $42be
 	and $01 ; $42bf
 	jr nz, .checkMenuCursorX3 ; $42c1
-	sound $5f ; $42c3
+	sound SFX_MENU_SELECT ; $42c3
 	ld a, b ; $42c5
 	or $01 ; $42c6
 	ld [wMenuCursorLockFlags], a ; $42c8
@@ -480,7 +480,7 @@ MoveMenuCursorGrid:
 .bit0Clear:
 	bit 1, a ; $42cd
 	jr z, .checkMenuCursorX3 ; $42cf
-	sound $62 ; $42d1
+	sound SFX_MENU_CANCEL ; $42d1
 	ld a, [wMenuCursorLockFlags] ; $42d3
 	ld b, a ; $42d6
 	and $03 ; $42d7
@@ -605,7 +605,7 @@ MoveMenuCursor2GridRemote_1b:
 	ld b, a ; $4387
 	and $02 ; $4388
 	jr nz, .checkMenuCursor2X ; $438a
-	sound $5f ; $438c
+	sound SFX_MENU_SELECT ; $438c
 	ld a, b ; $438e
 	or $02 ; $438f
 	ld [wMenuCursorLockFlags], a ; $4391
@@ -613,7 +613,7 @@ MoveMenuCursor2GridRemote_1b:
 .bit0Clear:
 	bit 1, a ; $4396
 	jr z, .checkMenuCursor2X ; $4398
-	sound $62 ; $439a
+	sound SFX_MENU_CANCEL ; $439a
 	ld a, [wMenuCursorLockFlags] ; $439c
 	ld b, a ; $439f
 	and $03 ; $43a0
@@ -1043,12 +1043,12 @@ ShowRankingBoard:
 	ld a, [wRankingBoardMode] ; $4ea4
 	cp $01 ; $4ea7
 	jr nz, .checkSecondFanfare ; $4ea9
-	sound $2b ; $4eab
+	sound BGM_ISLAND_OPEN_WIN ; $4eab
 	jr .draw ; $4ead
 .checkSecondFanfare:
 	cp $02 ; $4eaf
 	jr nz, .draw ; $4eb1
-	sound $2a ; $4eb3
+	sound BGM_ISLAND_OPEN_LOSE ; $4eb3
 .draw:
 	call DisableLCDSafely ; $4eb5
 	call BuildRankingBoardScreen ; $4eb8
@@ -2710,7 +2710,7 @@ LoadRankingMarkerCoords:
 	call CopyMemoryBC ; $5c63
 	ret ; $5c66
 .nonZero:
-	ld hl, $5e21 ; $5c67
+	ld hl, RankingMarkerCoordsTable2 ; $5c67
 	ld a, [wRankingBoardMode] ; $5c6a
 	or a ; $5c6d
 	jr z, .zero2 ; $5c6e
@@ -2742,17 +2742,220 @@ RankingMarkerCoordsTable:
 	dw RankingMarkerCoordSet2 ; record 3
 	dw RankingMarkerCoordSet3 ; record 4
 RankingMarkerCoordSet0:
-	INCBIN "data/bank_01b/d_5c97.bin" ; $5c97, 48 bytes
+	; $5c97, 48 bytes (bytes:4)
+	db $00, $34, $0c, $00 ; 0x00
+	db $01, $34, $24, $00 ; 0x04
+	db $03, $34, $38, $00 ; 0x08
+	db $02, $34, $54, $00 ; 0x0c
+	db $03, $34, $6c, $00 ; 0x10
+	db $00, $34, $80, $00 ; 0x14
+	db $02, $6b, $0c, $00 ; 0x18
+	db $01, $6b, $24, $00 ; 0x1c
+	db $00, $6b, $38, $00 ; 0x20
+	db $02, $6b, $54, $00 ; 0x24
+	db $03, $6b, $6c, $00 ; 0x28
+	db $00, $6b, $80, $00 ; 0x2c
 RankingMarkerCoordSet1:
-	INCBIN "data/bank_01b/d_5cc7.bin" ; $5cc7, 48 bytes
+	; $5cc7, 48 bytes (bytes:4)
+	db $00, $3c, $18, $00 ; 0x00
+	db $01, $34, $24, $00 ; 0x04
+	db $03, $34, $38, $00 ; 0x08
+	db $02, $3c, $60, $00 ; 0x0c
+	db $03, $34, $6c, $00 ; 0x10
+	db $00, $34, $80, $00 ; 0x14
+	db $02, $64, $18, $00 ; 0x18
+	db $01, $6b, $24, $00 ; 0x1c
+	db $00, $6b, $38, $00 ; 0x20
+	db $02, $64, $60, $00 ; 0x24
+	db $03, $6b, $6c, $00 ; 0x28
+	db $00, $6b, $80, $00 ; 0x2c
 RankingMarkerCoordSet2:
-	INCBIN "data/bank_01b/d_5cf7.bin" ; $5cf7, 48 bytes
+	; $5cf7, 48 bytes (bytes:4)
+	db $00, $44, $28, $00 ; 0x00
+	db $01, $34, $24, $00 ; 0x04
+	db $03, $34, $38, $00 ; 0x08
+	db $02, $3c, $60, $00 ; 0x0c
+	db $03, $34, $6c, $00 ; 0x10
+	db $00, $44, $70, $00 ; 0x14
+	db $02, $64, $18, $00 ; 0x18
+	db $01, $6b, $24, $00 ; 0x1c
+	db $00, $5c, $28, $00 ; 0x20
+	db $02, $5c, $70, $00 ; 0x24
+	db $03, $6b, $6c, $00 ; 0x28
+	db $00, $6b, $80, $00 ; 0x2c
 RankingMarkerCoordSet3:
-	INCBIN "data/bank_01b/d_5d27.bin" ; $5d27, 48 bytes
+	; $5d27, 48 bytes (bytes:4)
+	db $00, $4c, $4c, $00 ; 0x00
+	db $01, $34, $24, $00 ; 0x04
+	db $03, $34, $38, $00 ; 0x08
+	db $02, $3c, $60, $00 ; 0x0c
+	db $03, $34, $6c, $00 ; 0x10
+	db $00, $44, $70, $00 ; 0x14
+	db $02, $64, $18, $00 ; 0x18
+	db $01, $6b, $24, $00 ; 0x1c
+	db $00, $5c, $28, $00 ; 0x20
+	db $02, $54, $4c, $00 ; 0x24
+	db $03, $6b, $6c, $00 ; 0x28
+	db $00, $6b, $80, $00 ; 0x2c
 RankingMarkerCoordsTable0:
-	INCBIN "data/bank_01b/d_5d57.bin" ; $5d57, 354 bytes
+	; $5d57, 10 bytes (records:2)
+	dw RankingMarkerCoordsTable0Set0 ; record 0
+	dw RankingMarkerCoordsTable0Set0 ; record 1
+	dw RankingMarkerCoordsTable0Set1 ; record 2
+	dw RankingMarkerCoordsTable0Set2 ; record 3
+	dw RankingMarkerCoordsTable0Set3 ; record 4
+RankingMarkerCoordsTable0Set0:
+	; $5d61, 48 bytes (bytes:4)
+	db $00, $3c, $0c, $00 ; 0x00
+	db $01, $3c, $24, $00 ; 0x04
+	db $03, $34, $38, $00 ; 0x08
+	db $02, $34, $54, $00 ; 0x0c
+	db $03, $34, $6c, $00 ; 0x10
+	db $00, $34, $80, $00 ; 0x14
+	db $02, $6b, $0c, $00 ; 0x18
+	db $01, $6b, $24, $00 ; 0x1c
+	db $00, $6b, $38, $00 ; 0x20
+	db $02, $6b, $54, $00 ; 0x24
+	db $03, $6b, $6c, $00 ; 0x28
+	db $00, $6b, $80, $00 ; 0x2c
+RankingMarkerCoordsTable0Set1:
+	; $5d91, 48 bytes (bytes:4)
+	db $00, $44, $18, $00 ; 0x00
+	db $01, $34, $24, $00 ; 0x04
+	db $03, $44, $38, $00 ; 0x08
+	db $02, $3c, $60, $00 ; 0x0c
+	db $03, $34, $6c, $00 ; 0x10
+	db $00, $34, $80, $00 ; 0x14
+	db $02, $64, $18, $00 ; 0x18
+	db $01, $6b, $24, $00 ; 0x1c
+	db $00, $6b, $38, $00 ; 0x20
+	db $02, $64, $60, $00 ; 0x24
+	db $03, $6b, $6c, $00 ; 0x28
+	db $00, $6b, $80, $00 ; 0x2c
+RankingMarkerCoordsTable0Set2:
+	; $5dc1, 48 bytes (bytes:4)
+	db $00, $4c, $28, $00 ; 0x00
+	db $01, $34, $24, $00 ; 0x04
+	db $03, $34, $38, $00 ; 0x08
+	db $02, $3c, $60, $00 ; 0x0c
+	db $03, $34, $6c, $00 ; 0x10
+	db $00, $4c, $70, $00 ; 0x14
+	db $02, $64, $18, $00 ; 0x18
+	db $01, $6b, $24, $00 ; 0x1c
+	db $00, $5c, $28, $00 ; 0x20
+	db $02, $5c, $70, $00 ; 0x24
+	db $03, $6b, $6c, $00 ; 0x28
+	db $00, $6b, $80, $00 ; 0x2c
+RankingMarkerCoordsTable0Set3:
+	; $5df1, 48 bytes (bytes:4)
+	db $00, $50, $4c, $00 ; 0x00
+	db $01, $34, $24, $00 ; 0x04
+	db $03, $34, $38, $00 ; 0x08
+	db $02, $3c, $60, $00 ; 0x0c
+	db $03, $34, $6c, $00 ; 0x10
+	db $00, $4c, $70, $00 ; 0x14
+	db $02, $64, $18, $00 ; 0x18
+	db $01, $6b, $24, $00 ; 0x1c
+	db $00, $5c, $28, $00 ; 0x20
+	db $02, $50, $4c, $00 ; 0x24
+	db $03, $6b, $6c, $00 ; 0x28
+	db $00, $6b, $80, $00 ; 0x2c
+RankingMarkerCoordsTable2:
+	; $5e21, 8 bytes (records:2)
+	dw RankingMarkerCoordsTable2Set0 ; record 0
+	dw RankingMarkerCoordsTable2Set0 ; record 1
+	dw RankingMarkerCoordsTable2Set1 ; record 2
+	dw RankingMarkerCoordsTable2Set2 ; record 3
+RankingMarkerCoordsTable2Set0:
+	; $5e29, 48 bytes (bytes:4)
+	db $00, $34, $1c, $00 ; 0x00
+	db $01, $34, $44, $00 ; 0x04
+	db $03, $34, $70, $00 ; 0x08
+	db $02, $6c, $1c, $00 ; 0x0c
+	db $03, $6c, $44, $00 ; 0x10
+	db $00, $6c, $70, $00 ; 0x14
+	db $ff, $ff, $ff, $ff ; 0x18
+	db $ff, $ff, $ff, $ff ; 0x1c
+	db $ff, $ff, $ff, $ff ; 0x20
+	db $ff, $ff, $ff, $ff ; 0x24
+	db $ff, $ff, $ff, $ff ; 0x28
+	db $ff, $ff, $ff, $ff ; 0x2c
+RankingMarkerCoordsTable2Set1:
+	; $5e59, 48 bytes (bytes:4)
+	db $00, $3c, $30, $00 ; 0x00
+	db $01, $34, $44, $00 ; 0x04
+	db $03, $34, $70, $00 ; 0x08
+	db $02, $64, $30, $00 ; 0x0c
+	db $03, $6c, $44, $00 ; 0x10
+	db $00, $6c, $70, $00 ; 0x14
+	db $ff, $ff, $ff, $ff ; 0x18
+	db $ff, $ff, $ff, $ff ; 0x1c
+	db $ff, $ff, $ff, $ff ; 0x20
+	db $ff, $ff, $ff, $ff ; 0x24
+	db $ff, $ff, $ff, $ff ; 0x28
+	db $ff, $ff, $ff, $ff ; 0x2c
+RankingMarkerCoordsTable2Set2:
+	; $5e89, 48 bytes (bytes:4)
+	db $00, $44, $4c, $00 ; 0x00
+	db $01, $34, $44, $00 ; 0x04
+	db $03, $34, $70, $00 ; 0x08
+	db $02, $5c, $4c, $00 ; 0x0c
+	db $03, $6c, $44, $00 ; 0x10
+	db $00, $6c, $70, $00 ; 0x14
+	db $ff, $ff, $ff, $ff ; 0x18
+	db $ff, $ff, $ff, $ff ; 0x1c
+	db $ff, $ff, $ff, $ff ; 0x20
+	db $ff, $ff, $ff, $ff ; 0x24
+	db $ff, $ff, $ff, $ff ; 0x28
+	db $ff, $ff, $ff, $ff ; 0x2c
 RankingMarkerCoordsTable1:
-	INCBIN "data/bank_01b/d_5eb9.bin" ; $5eb9, 152 bytes
+	; $5eb9, 8 bytes (records:2)
+	dw RankingMarkerCoordsTable1Set0 ; record 0
+	dw RankingMarkerCoordsTable1Set0 ; record 1
+	dw RankingMarkerCoordsTable1Set1 ; record 2
+	dw RankingMarkerCoordsTable1Set2 ; record 3
+RankingMarkerCoordsTable1Set0:
+	; $5ec1, 48 bytes (bytes:4)
+	db $00, $3c, $1c, $00 ; 0x00
+	db $01, $3c, $44, $00 ; 0x04
+	db $03, $34, $70, $00 ; 0x08
+	db $02, $6c, $1c, $00 ; 0x0c
+	db $03, $6c, $44, $00 ; 0x10
+	db $00, $6c, $70, $00 ; 0x14
+	db $ff, $ff, $ff, $ff ; 0x18
+	db $ff, $ff, $ff, $ff ; 0x1c
+	db $ff, $ff, $ff, $ff ; 0x20
+	db $ff, $ff, $ff, $ff ; 0x24
+	db $ff, $ff, $ff, $ff ; 0x28
+	db $ff, $ff, $ff, $ff ; 0x2c
+RankingMarkerCoordsTable1Set1:
+	; $5ef1, 48 bytes (bytes:4)
+	db $00, $44, $30, $00 ; 0x00
+	db $01, $34, $44, $00 ; 0x04
+	db $03, $44, $70, $00 ; 0x08
+	db $02, $64, $30, $00 ; 0x0c
+	db $03, $6c, $44, $00 ; 0x10
+	db $00, $6c, $70, $00 ; 0x14
+	db $ff, $ff, $ff, $ff ; 0x18
+	db $ff, $ff, $ff, $ff ; 0x1c
+	db $ff, $ff, $ff, $ff ; 0x20
+	db $ff, $ff, $ff, $ff ; 0x24
+	db $ff, $ff, $ff, $ff ; 0x28
+	db $ff, $ff, $ff, $ff ; 0x2c
+RankingMarkerCoordsTable1Set2:
+	; $5f21, 48 bytes (bytes:4)
+	db $00, $4c, $4c, $00 ; 0x00
+	db $01, $34, $44, $00 ; 0x04
+	db $03, $34, $70, $00 ; 0x08
+	db $02, $54, $4c, $00 ; 0x0c
+	db $03, $6c, $44, $00 ; 0x10
+	db $00, $6c, $70, $00 ; 0x14
+	db $ff, $ff, $ff, $ff ; 0x18
+	db $ff, $ff, $ff, $ff ; 0x1c
+	db $ff, $ff, $ff, $ff ; 0x20
+	db $ff, $ff, $ff, $ff ; 0x24
+	db $ff, $ff, $ff, $ff ; 0x28
+	db $ff, $ff, $ff, $ff ; 0x2c
 GetRankingMarkerSlot:
 	push af ; $5f51
 	ld a, c ; $5f52
@@ -2967,7 +3170,7 @@ DrawCharSelectMugshots:
 	ld b, a ; $6128
 	ld a, [wCharSelectChar] ; $6129
 	farcall InitPlayerRecordForCharacter ; $612c
-	sound $5f ; $612f
+	sound SFX_MENU_SELECT ; $612f
 	ld a, $fe ; $6131
 	jr .step4 ; $6133
 .checkInputRisingEdge:
@@ -2978,14 +3181,14 @@ DrawCharSelectMugshots:
 	ld b, a ; $613e
 	ld a, [wCharSelectChar] ; $613f
 	farcall InitPlayerRecordForCharacter ; $6142
-	sound $5f ; $6145
+	sound SFX_MENU_SELECT ; $6145
 	ld a, [wCharSelectChar] ; $6147
 	jr .step4 ; $614a
 .checkInputRisingEdge2:
 	ldh a, [hInputRisingEdge] ; $614c
 	and PADF_B ; $614e
 	jr z, .moveCharSelectCursor ; $6150
-	sound $62 ; $6152
+	sound SFX_MENU_CANCEL ; $6152
 	ld a, $ff ; $6154
 	jr .step4 ; $6156
 .moveCharSelectCursor:
@@ -3026,7 +3229,7 @@ MoveCharSelectCursor:
 	ld b, a ; $6194
 	and $f0 ; $6195
 	jr z, .done ; $6197
-	sound $5e ; $6199
+	sound SFX_MENU_MOVE ; $6199
 	ld a, [wCharSelectCol] ; $619b
 	ld d, a ; $619e
 	ld a, [wCharSelectRow] ; $619f
@@ -3044,7 +3247,7 @@ MoveCharSelectCursor:
 .done:
 	ret ; $61b9
 RunNewGameSetup:
-	sound $03 ; $61ba
+	sound BGM_MENU ; $61ba
 	farcall InitStoryModeState ; $61bc
 	ld a, $00 ; $61bf
 	farcall RollStoryRandomByte ; $61c1
@@ -3219,7 +3422,7 @@ RunNewGameSetup:
 	call WaitFadeEnd ; $62f4
 	ret ; $62f7
 RunDebugSaveDataFlow:
-	sound $03 ; $62f8
+	sound BGM_MENU ; $62f8
 	ld a, $01 ; $62fa
 	cp $ff ; $62fc
 	jr z, RunDebugSaveDataFlow ; $62fe
@@ -3243,7 +3446,7 @@ RunDebugSaveDataFlow:
 	farcall SaveStorySlotWithTimer ; $6327
 	jp .loop2 ; $632a
 .loop:
-	sound $03 ; $632d
+	sound BGM_MENU ; $632d
 	call RunDebugSaveDataMenu ; $632f
 	cp $ff ; $6332
 	jr z, RunDebugSaveDataFlow ; $6334
@@ -3266,7 +3469,7 @@ RunDebugSaveDataFlow:
 	farcall CheckStorySlot ; $6355
 	or a ; $6358
 	jr z, .zero ; $6359
-	sound $62 ; $635b
+	sound SFX_MENU_CANCEL ; $635b
 	jr .loop ; $635d
 .zero:
 	push bc ; $635f
@@ -3732,17 +3935,17 @@ RunMinigameFlagsDebugScreen:
 	jr z, .playSfx ; $678e
 	jr .playSfx2 ; $6790
 .playSfx:
-	sound $62 ; $6792
+	sound SFX_MENU_CANCEL ; $6792
 	jr .loop ; $6794
 .playSfx2:
-	sound $5f ; $6796
+	sound SFX_MENU_SELECT ; $6796
 	ld hl, wUnlockDebugSelection ; $6798
 	jr .beginFadeOut ; $679b
 .checkInputRisingEdge:
 	ldh a, [hInputRisingEdge] ; $679d
 	and PADF_B ; $679f
 	jr z, .checkInputRisingEdge2 ; $67a1
-	sound $62 ; $67a3
+	sound SFX_MENU_CANCEL ; $67a3
 	ld hl, wUnlockDebugSelection ; $67a5
 	ld a, $00 ; $67a8
 	ld [hl], a ; $67aa
@@ -3789,7 +3992,7 @@ MoveUnlockDebugCursor:
 	ld b, a ; $67f6
 	and $f0 ; $67f7
 	jr z, .done ; $67f9
-	sound $5e ; $67fb
+	sound SFX_MENU_MOVE ; $67fb
 	ld a, [wCharSelectCol] ; $67fd
 	ld d, a ; $6800
 	ld a, [wCharSelectRow] ; $6801
@@ -3918,12 +4121,12 @@ ToggleSelectedUnlockFlag:
 	ld a, [hl] ; $68c2
 	xor $01 ; $68c3
 	ld [hl], a ; $68c5
-	sound $5f ; $68c6
+	sound SFX_MENU_SELECT ; $68c6
 	pop af ; $68c8
 	wram_bank ; $68c9
 	ret ; $68cd
 .playSfx:
-	sound $62 ; $68ce
+	sound SFX_MENU_CANCEL ; $68ce
 	pop af ; $68d0
 	wram_bank ; $68d1
 	ret ; $68d5
@@ -4208,7 +4411,7 @@ ShowNoN64DataFoundScreen:
 	call AdvanceFrame ; $6b55
 	jr .loop ; $6b58
 .playSfx:
-	sound $5f ; $6b5a
+	sound SFX_MENU_SELECT ; $6b5a
 	ret ; $6b5c
 FillTilemapRow17:
 	ld [hl+], a ; $6b5d
@@ -4246,7 +4449,7 @@ ShowTrophiesPlaceholderScreen:
 	call AdvanceFrame ; $6b94
 	jr .loop ; $6b97
 .playSfx:
-	sound $5f ; $6b99
+	sound SFX_MENU_SELECT ; $6b99
 	ret ; $6b9b
 RunMinigameLevelSelect:
 	ldh a, [hWramBank] ; $6b9c
@@ -4331,23 +4534,50 @@ ClearedMinigameLevelsTable:
 	dw MinigameLevelRow7 ; record 7
 	dw MinigameLevelRow8 ; record 8
 MinigameLevelRow0:
-	INCBIN "data/bank_01b/d_6c23.bin" ; $6c23, 6 bytes
+	; $6c23, 6 bytes (save_flag_ids)
+	dw SAVEFLAG_CLEARED_BOO_BLAST_1 ; 0
+	dw SAVEFLAG_CLEARED_BOO_BLAST_2 ; 1
+	dw SAVEFLAG_CLEARED_BOO_BLAST_3 ; 2
 MinigameLevelRow1:
-	INCBIN "data/bank_01b/d_6c29.bin" ; $6c29, 6 bytes
+	; $6c29, 6 bytes (save_flag_ids)
+	dw SAVEFLAG_CLEARED_SHOOTING_STAR_1 ; 0
+	dw SAVEFLAG_CLEARED_SHOOTING_STAR_2 ; 1
+	dw SAVEFLAG_CLEARED_SHOOTING_STAR_3 ; 2
 MinigameLevelRow2:
-	INCBIN "data/bank_01b/d_6c2f.bin" ; $6c2f, 6 bytes
+	; $6c2f, 6 bytes (save_flag_ids)
+	dw SAVEFLAG_CLEARED_PERFECT_SHOT_1 ; 0
+	dw SAVEFLAG_CLEARED_PERFECT_SHOT_2 ; 1
+	dw SAVEFLAG_CLEARED_PERFECT_SHOT_3 ; 2
 MinigameLevelRow3:
-	INCBIN "data/bank_01b/d_6c35.bin" ; $6c35, 6 bytes
+	; $6c35, 6 bytes (save_flag_ids)
+	dw SAVEFLAG_CLEARED_TARGET_SHOT_1 ; 0
+	dw SAVEFLAG_CLEARED_TARGET_SHOT_2 ; 1
+	dw SAVEFLAG_CLEARED_TARGET_SHOT_3 ; 2
 MinigameLevelRow4:
-	INCBIN "data/bank_01b/d_6c3b.bin" ; $6c3b, 6 bytes
+	; $6c3b, 6 bytes (save_flag_ids)
+	dw SAVEFLAG_CLEARED_FRUIT_FANTASY_1 ; 0
+	dw SAVEFLAG_CLEARED_FRUIT_FANTASY_2 ; 1
+	dw SAVEFLAG_CLEARED_FRUIT_FANTASY_3 ; 2
 MinigameLevelRow5:
-	INCBIN "data/bank_01b/d_6c41.bin" ; $6c41, 6 bytes
+	; $6c41, 6 bytes (save_flag_ids)
+	dw SAVEFLAG_CLEARED_BANANA_BUNCH_1 ; 0
+	dw SAVEFLAG_CLEARED_BANANA_BUNCH_2 ; 1
+	dw SAVEFLAG_CLEARED_BANANA_BUNCH_3 ; 2
 MinigameLevelRow6:
-	INCBIN "data/bank_01b/d_6c47.bin" ; $6c47, 6 bytes
+	; $6c47, 6 bytes (save_flag_ids)
+	dw SAVEFLAG_CLEARED_TREASURE_BOX_1 ; 0
+	dw SAVEFLAG_CLEARED_TREASURE_BOX_2 ; 1
+	dw SAVEFLAG_CLEARED_TREASURE_BOX_3 ; 2
 MinigameLevelRow7:
-	INCBIN "data/bank_01b/d_6c4d.bin" ; $6c4d, 6 bytes
+	; $6c4d, 6 bytes (save_flag_ids)
+	dw SAVEFLAG_CLEARED_MEDALLION_MATCH_1 ; 0
+	dw SAVEFLAG_CLEARED_MEDALLION_MATCH_2 ; 1
+	dw SAVEFLAG_CLEARED_MEDALLION_MATCH_3 ; 2
 MinigameLevelRow8:
-	INCBIN "data/bank_01b/d_6c53.bin" ; $6c53, 6 bytes
+	; $6c53, 6 bytes (save_flag_ids)
+	dw SAVEFLAG_CLEARED_TWO_ON_ONE_1 ; 0
+	dw SAVEFLAG_CLEARED_TWO_ON_ONE_2 ; 1
+	dw SAVEFLAG_CLEARED_TWO_ON_ONE_3 ; 2
 LoadMinigameLevelSelectGfx:
 	ldh a, [hWramBank] ; $6c59
 	push af ; $6c5b
@@ -4606,7 +4836,7 @@ GetMinigameLevelColumnCount:
 	ret ; $6e30
 RunMinigameLevelSelect2:
 	call ResumeBGM ; $6e31
-	sound $08 ; $6e34
+	sound BGM_MARIO_MINIGAME ; $6e34
 	ld hl, rIE ; $6e36
 	res 2, [hl] ; $6e39
 	wram_bank $03 ; $6e3b
@@ -4637,7 +4867,7 @@ RunMinigameLevelSelect2:
 	call MoveMenuCursorGrid ; $6e85
 	or a ; $6e88
 	jr z, .checkMenuInputPressed ; $6e89
-	sound $5e ; $6e8b
+	sound SFX_MENU_MOVE ; $6e8b
 	call RedrawMinigameLevelSelect2 ; $6e8d
 .checkMenuInputPressed:
 	ld a, [wMenuInputPressed] ; $6e90
@@ -4655,10 +4885,10 @@ RunMinigameLevelSelect2:
 	ld a, [wScreenAttrmap + 1] ; $6eab
 	or a ; $6eae
 	jr nz, .playSfx ; $6eaf
-	sound $61 ; $6eb1
+	sound SFX_MENU_LOCKED ; $6eb1
 	jr .loop ; $6eb3
 .playSfx:
-	sound $5f ; $6eb5
+	sound SFX_MENU_SELECT ; $6eb5
 	call ClearFrameTasks ; $6eb7
 	ld hl, rIE ; $6eba
 	set 2, [hl] ; $6ebd
@@ -4673,7 +4903,7 @@ RunMinigameLevelSelect2:
 	ld [wScreenAttrmap + 3], a ; $6eda
 	ret ; $6edd
 .playSfx2:
-	sound $62 ; $6ede
+	sound SFX_MENU_CANCEL ; $6ede
 	call ClearFrameTasks ; $6ee0
 	ld hl, rIE ; $6ee3
 	set 2, [hl] ; $6ee6
@@ -4808,7 +5038,7 @@ MinigameLevelSelect2CursorTable1:
 	db $00, $10, $20 ; 0x00
 RunMinigameLevelSelect3:
 	call ResumeBGM ; $6fd2
-	sound $08 ; $6fd5
+	sound BGM_MARIO_MINIGAME ; $6fd5
 	ld hl, rIE ; $6fd7
 	res 2, [hl] ; $6fda
 	wram_bank $03 ; $6fdc
@@ -4839,7 +5069,7 @@ RunMinigameLevelSelect3:
 	call MoveMenuCursorGrid ; $7026
 	or a ; $7029
 	jr z, .checkMenuInputPressed ; $702a
-	sound $5e ; $702c
+	sound SFX_MENU_MOVE ; $702c
 	call RedrawMinigameLevelSelect3 ; $702e
 .checkMenuInputPressed:
 	ld a, [wMenuInputPressed] ; $7031
@@ -4849,7 +5079,7 @@ RunMinigameLevelSelect3:
 	jr nz, .playSfx2 ; $703a
 	jr .loop ; $703c
 .playSfx:
-	sound $5f ; $703e
+	sound SFX_MENU_SELECT ; $703e
 	call ClearFrameTasks ; $7040
 	ld hl, rIE ; $7043
 	set 2, [hl] ; $7046
@@ -4864,7 +5094,7 @@ RunMinigameLevelSelect3:
 	ld [wScreenAttrmap + 3], a ; $7063
 	ret ; $7066
 .playSfx2:
-	sound $62 ; $7067
+	sound SFX_MENU_CANCEL ; $7067
 	call ClearFrameTasks ; $7069
 	ld hl, rIE ; $706c
 	set 2, [hl] ; $706f
@@ -4998,7 +5228,7 @@ MinigameLevelSelect3CursorTable1:
 	; $715a, 3 bytes (bytes:3)
 	db $00, $10, $20 ; 0x00
 RunSavedDataTypeSelect:
-	sound $03 ; $715d
+	sound BGM_MENU ; $715d
 	ld hl, rIE ; $715f
 	res 2, [hl] ; $7162
 	call LoadSavedDataTypeSelectGfx ; $7164
@@ -5031,7 +5261,7 @@ RunSavedDataTypeSelect:
 	call MoveMenuCursorGrid ; $71ac
 	or a ; $71af
 	jr z, .checkMenuInputPressed ; $71b0
-	sound $5e ; $71b2
+	sound SFX_MENU_MOVE ; $71b2
 	call RedrawSavedDataTypeSelect ; $71b4
 .checkMenuInputPressed:
 	ld a, [wMenuInputPressed] ; $71b7
@@ -5041,7 +5271,7 @@ RunSavedDataTypeSelect:
 	jr nz, .playSfx2 ; $71c0
 	jr .loop ; $71c2
 .playSfx:
-	sound $5f ; $71c4
+	sound SFX_MENU_SELECT ; $71c4
 	call ClearFrameTasks ; $71c6
 	ld hl, rIE ; $71c9
 	set 2, [hl] ; $71cc
@@ -5055,7 +5285,7 @@ RunSavedDataTypeSelect:
 	ld [wSavedDataTypeTabIndex], a ; $71e3
 	ret ; $71e6
 .playSfx2:
-	sound $62 ; $71e7
+	sound SFX_MENU_CANCEL ; $71e7
 	call ClearFrameTasks ; $71e9
 	ld hl, rIE ; $71ec
 	set 2, [hl] ; $71ef
@@ -5318,7 +5548,7 @@ SavedDataTypePalette1:
 	; $73d5, 8 bytes (bytes:8)
 	db $bf, $02, $ff, $6b, $1b, $18, $00, $00 ; 0x00
 ShowMinigameDataScreen:
-	sound $04 ; $73dd
+	sound BGM_STATUS_SCREEN ; $73dd
 	call DisableLCDSafely ; $73df
 	call BuildMinigameDataScreen ; $73e2
 	ld a, $01 ; $73e5
@@ -5348,14 +5578,14 @@ ShowMinigameDataScreen:
 	jr nz, .playSfx2 ; $7427
 	jr .loop ; $7429
 .playSfx:
-	sound $5f ; $742b
+	sound SFX_MENU_SELECT ; $742b
 	ld c, $10 ; $742d
 	call BeginFadeOut ; $742f
 	call WaitFadeEnd ; $7432
 	call ClearFrameTasks ; $7435
 	ret ; $7438
 .playSfx2:
-	sound $62 ; $7439
+	sound SFX_MENU_CANCEL ; $7439
 	ld c, $10 ; $743b
 	call BeginFadeOut ; $743d
 	call WaitFadeEnd ; $7440
@@ -5421,7 +5651,7 @@ ScrollMinigameDataList:
 	ret z ; $74c0
 	ld [wMenuCursorY], a ; $74c1
 .playSfx:
-	sound $5e ; $74c4
+	sound SFX_MENU_MOVE ; $74c4
 	call RedrawMinigameDataRows ; $74c6
 	ret ; $74c9
 LoadMinigameDataState:
@@ -5852,11 +6082,26 @@ MinigameMarkTileTable:
 	dw MinigameStarRow1 ; record 1
 	dw MinigameStarRow2 ; record 2
 MinigameStarRow0:
-	INCBIN "data/bank_01b/d_778e.bin" ; $778e, 10 bytes
+	; $778e, 10 bytes (records:2)
+	dw $d0c6 ; record 0
+	dw $d106 ; record 1
+	dw $d146 ; record 2
+	dw $d186 ; record 3
+	dw $d1c6 ; record 4
 MinigameStarRow1:
-	INCBIN "data/bank_01b/d_7798.bin" ; $7798, 10 bytes
+	; $7798, 10 bytes (records:2)
+	dw $d0ca ; record 0
+	dw $d10a ; record 1
+	dw $d14a ; record 2
+	dw $d18a ; record 3
+	dw $d1ca ; record 4
 MinigameStarRow2:
-	INCBIN "data/bank_01b/d_77a2.bin" ; $77a2, 10 bytes
+	; $77a2, 10 bytes (records:2)
+	dw $d0ce ; record 0
+	dw $d10e ; record 1
+	dw $d14e ; record 2
+	dw $d18e ; record 3
+	dw $d1ce ; record 4
 ClearMinigameMarkColumns:
 	ld hl, wShadowTilemap + 4 * TILEMAP_WIDTH + 21 ; $77ac
 	ld de, wShadowTilemap + 6 * TILEMAP_WIDTH + 6 ; $77af

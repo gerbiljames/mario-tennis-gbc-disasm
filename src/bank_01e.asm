@@ -10,13 +10,13 @@ SECTION "ROM Bank $1e", ROMX[$4000], BANK[$1e]
 ShowMatchResultsScreen:
 	clear_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $400e
 	ld a, [wGameMode] ; $4011
-	cp $05 ; $4014
+	cp GAMEMODE_TRAINING_DRILL ; $4014
 	jr z, .checkExpScreen ; $4016
-	cp $06 ; $4018
+	cp GAMEMODE_TENNIS_MACHINE ; $4018
 	jr z, .checkExpScreen ; $401a
-	cp $07 ; $401c
+	cp GAMEMODE_WALL_PRACTICE ; $401c
 	jr z, .checkExpScreen ; $401e
-	cp $08 ; $4020
+	cp GAMEMODE_MARIO_MINIGAME ; $4020
 	test_flag FLAG_DOUBLES ; $4022
 	jr z, .checkExpScreen ; $4025
 	set_flag FLAG_TEMP_RESULTS_SCREEN_OPEN ; $4027
@@ -29,7 +29,7 @@ ShowMatchResultsScreen:
 	ld c, $10 ; $4031
 	call BeginFadeOut ; $4033
 	call WaitFadeEnd ; $4036
-	sound $03 ; $4039
+	sound BGM_MENU ; $4039
 	push bc ; $403b
 	farcall InitTextWindows ; $403c
 	ld hl, wShadowTilemapBank ; $403f
@@ -309,15 +309,15 @@ BuildResultsScreenPanels:
 	ld a, [wGameMode] ; $4319
 	or a ; $431c
 	jp z, DrawStoryResultsHeader ; $431d
-	cp $04 ; $4320
+	cp GAMEMODE_EXHIBITION ; $4320
 	jp z, DrawExhibitionResultsHeader ; $4322
-	cp $01 ; $4325
+	cp GAMEMODE_RANKING_MATCH ; $4325
 	jp z, DrawRankMatchResultsHeader ; $4327
-	cp $02 ; $432a
+	cp GAMEMODE_ISLAND_OPEN ; $432a
 	jp z, DrawTournamentResultsHeader ; $432c
-	cp $03 ; $432f
+	cp GAMEMODE_PRACTICE_MATCH ; $432f
 	jp z, DrawPracticeResultsHeader ; $4331
-	cp $0a ; $4334
+	cp GAMEMODE_DREAM_MATCH ; $4334
 	jp z, DrawMarioExhibitionResultsHeader ; $4336
 	ret ; $4339
 LoadSinglesLabelTiles:
@@ -440,7 +440,7 @@ DrawStoryResultsHeader:
 	test_flag FLAG_ISLAND_SKY_SCENE_ACTIVE ; $4466
 	jr nz, .skyScene ; $4469
 	ld a, [wStoryReturnLocation] ; $446b
-	cp $1d ; $446e
+	cp STORYLOC_PEACHS_CASTLE ; $446e
 	jr z, .altPosition ; $4470
 	ld hl, $04d8 ; $4472
 	ld de, wScreenAttrmap + 14 * TILEMAP_WIDTH + 3 ; $4475
@@ -979,7 +979,7 @@ DrawMarioExhibitionLabel:
 	ret ; $489a
 DrawPlayerNameAndLevel:
 	ld a, [wGameMode] ; $489b
-	cp $04 ; $489e
+	cp GAMEMODE_EXHIBITION ; $489e
 	ret z ; $48a0
 	wram_bank $01 ; $48a1
 	ld hl, ResultsPlayerPanelTilemap_1e ; $48a7
@@ -1321,14 +1321,14 @@ DrawContinuePromptCursor:
 	call QueueSprite ; $4b5d
 	ret ; $4b60
 .playSfx:
-	sound $5e ; $4b61
+	sound SFX_MENU_MOVE ; $4b61
 	wram_bank $06 ; $4b63
 	ld a, [wContinuePromptRow] ; $4b69
 	xor $01 ; $4b6c
 	ld [wContinuePromptRow], a ; $4b6e
 	jr RunContinuePrompt ; $4b71
 .playSfx2:
-	sound $5f ; $4b73
+	sound SFX_MENU_SELECT ; $4b73
 	wram_bank $06 ; $4b75
 	ld a, [wContinuePromptPage] ; $4b7b
 	or a ; $4b7e
@@ -1359,7 +1359,7 @@ DrawContinuePromptCursor:
 	ld [wContinuePromptResult], a ; $4bab
 	ret ; $4bae
 .playSfx3:
-	sound $62 ; $4baf
+	sound SFX_MENU_CANCEL ; $4baf
 	wram_bank $06 ; $4bb1
 	ld a, [wContinuePromptPage] ; $4bb7
 	or a ; $4bba
@@ -2192,8 +2192,8 @@ BeginNextExpAward:
 	call DrawNextExpAwardMessage ; $5b19
 	or a ; $5b1c
 	jp z, .waitFramesCmd ; $5b1d
-	sound $00 ; $5b20
-	sound $0b ; $5b22
+	sound BGM_NONE ; $5b20
+	sound BGM_EXP_AWARD ; $5b22
 	wram_bank $06 ; $5b24
 	ld a, [wExpAwardIndex] ; $5b2a
 	inc a ; $5b2d
@@ -2252,7 +2252,7 @@ CountUpExpTotal:
 	ld a, e ; $5b94
 	ld [hl+], a ; $5b95
 	ld [hl], d ; $5b96
-	sound $5e ; $5b97
+	sound SFX_MENU_MOVE ; $5b97
 	jr CountUpExpTotal ; $5b99
 .step:
 	ld hl, wExpAwardRunningTotal ; $5b9b
@@ -2266,7 +2266,7 @@ CountUpExpTotal:
 	ld a, e ; $5ba7
 	ld [hl+], a ; $5ba8
 	ld [hl], d ; $5ba9
-	sound $5f ; $5baa
+	sound SFX_MENU_SELECT ; $5baa
 	ret ; $5bac
 WaitForConfirmOrTimeout:
 	ld c, $b4 ; $5bad
@@ -2336,17 +2336,17 @@ ProcessMatchRewards:
 	call EnableLCD ; $6544
 	ld hl, $0000 ; $6547
 	ld a, [wGameMode] ; $654a
-	cp $08 ; $654d
+	cp GAMEMODE_MARIO_MINIGAME ; $654d
 	jp z, .updateMinigameBestScore ; $654f
-	cp $09 ; $6552
+	cp GAMEMODE_LINK_MATCH ; $6552
 	jp z, .eq09 ; $6554
-	cp $06 ; $6557
+	cp GAMEMODE_TENNIS_MACHINE ; $6557
 	jp z, .checkMatchExitRequest ; $6559
-	cp $07 ; $655c
+	cp GAMEMODE_WALL_PRACTICE ; $655c
 	jp z, .checkMatchExitRequest ; $655e
-	cp $0a ; $6561
+	cp GAMEMODE_DREAM_MATCH ; $6561
 	jp z, .computeMatchStatsReward ; $6563
-	cp $04 ; $6566
+	cp GAMEMODE_EXHIBITION ; $6566
 	jp z, .eq04 ; $6568
 	jp c, .computeMatchStatsReward ; $656b
 	ld a, [wPointWinLoseFlag] ; $656e
@@ -2368,7 +2368,7 @@ ProcessMatchRewards:
 	ld h, [hl] ; $6590
 	ld l, a ; $6591
 	ld a, [wGameMode] ; $6592
-	cp $07 ; $6595
+	cp GAMEMODE_WALL_PRACTICE ; $6595
 	ld a, $0f ; $6597
 	jr nz, .mulHLByAFracSigned ; $6599
 	add $0f ; $659b
@@ -2392,7 +2392,7 @@ ProcessMatchRewards:
 	or a ; $65bd
 	jr z, .getFirstClearRewardExp ; $65be
 	ld a, [wGameMode] ; $65c0
-	cp $06 ; $65c3
+	cp GAMEMODE_TENNIS_MACHINE ; $65c3
 	jr nz, .checkFlag ; $65c5
 	test_flag FLAG_CLEARED_MACHINE_MASTER ; $65c7
 	jr .step ; $65ca
@@ -2511,7 +2511,7 @@ ProcessMatchRewards:
 	call ApplyStatGapProgressFlag ; $66a6
 .showIslandOpenRankingBoard:
 	call ShowIslandOpenRankingBoard ; $66a9
-	ld a, $00 ; $66ac
+	ld a, GAMEMODE_NONE ; $66ac
 	ld [wGameMode], a ; $66ae
 	test_flag FLAG_WON_DREAM_MATCH_SINGLES ; $66b1
 	jr z, .checkFlag2 ; $66b4
@@ -2740,7 +2740,7 @@ ComputeMatchStatsReward:
 	ld l, e ; $6865
 	ld h, d ; $6866
 	ld a, [wGameMode] ; $6867
-	cp $09 ; $686a
+	cp GAMEMODE_LINK_MATCH ; $686a
 	ret z ; $686c
 	push hl ; $686d
 	call GetOpponentExpTier ; $686e
@@ -3018,15 +3018,15 @@ ShowExpAwardForMatch:
 	ld b, $03 ; $6a43
 	ld c, $00 ; $6a45
 	ld a, [wGameMode] ; $6a47
-	cp $02 ; $6a4a
+	cp GAMEMODE_ISLAND_OPEN ; $6a4a
 	jr nz, .compare ; $6a4c
 	ld c, $02 ; $6a4e
 .compare:
-	cp $03 ; $6a50
+	cp GAMEMODE_PRACTICE_MATCH ; $6a50
 	jr nz, .compare2 ; $6a52
 	ld c, $03 ; $6a54
 .compare2:
-	cp $0a ; $6a56
+	cp GAMEMODE_DREAM_MATCH ; $6a56
 	jr nz, .recordDrillResult ; $6a58
 	ld c, $04 ; $6a5a
 .recordDrillResult:
@@ -3141,7 +3141,7 @@ ApplyPendingExpAwards:
 	push af ; $6b03
 	ld a, [wGameMode] ; $6b04
 	push af ; $6b07
-	ld a, $00 ; $6b08
+	ld a, GAMEMODE_NONE ; $6b08
 	ld [wGameMode], a ; $6b0a
 	ld hl, wPendingExpStory ; $6b0d
 	ld a, [hl+] ; $6b10
@@ -3480,10 +3480,10 @@ TestRewardGameFlag:
 	ret ; $6cf5
 GetRewardTableIndex:
 	ld a, [wCurrentMinigameStoryMatch] ; $6cf6
-	cp $02 ; $6cf9
+	cp MATCHLIST_TRAINING ; $6cf9
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $6cfb
 	ret nz ; $6cfe
-	cp $1a ; $6cff
+	cp MINIGAME_TENNIS_MACHINE_HIGH_SCORE ; $6cff
 	ret c ; $6d01
 	jr nz, .checkFlag ; $6d02
 	test_flag FLAG_CLEARED_MACHINE_MASTER ; $6d04
@@ -3709,7 +3709,7 @@ RewardUnlockFlagsTable:
 	db $80, $07, $a0, $06 ; 0x30
 SetMinigameRecordSaveFlag:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $6eb1
-	cp $1d ; $6eb4
+	cp MINIGAME_SHOOTING_STAR ; $6eb4
 	jr nz, .compare ; $6eb6
 	push de ; $6eb8
 	ld de, SAVEFLAG_COURT_CASTLE ; $6eb9
@@ -3736,7 +3736,7 @@ SetMinigameRecordSaveFlag:
 	ret ; $6edb
 SetMinigameClearFlag:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $6edc
-	sub $1c ; $6edf
+	sub MINIGAME_BOO_BLAST ; $6edf
 	bit 7, a ; $6ee1
 	ret nz ; $6ee3
 	add a ; $6ee4
@@ -3798,7 +3798,7 @@ UpdateMinigameBestScore:
 	cp $02 ; $6f3e
 	jr nz, .restore ; $6f40
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $6f42
-	sub $1c ; $6f45
+	sub MINIGAME_BOO_BLAST ; $6f45
 	bit 7, a ; $6f47
 	jr nz, .restore ; $6f49
 	cp $09 ; $6f4b
@@ -3832,7 +3832,7 @@ UpdateMinigameBestScore:
 	ld [hl+], a ; $6f78
 	ld [hl], d ; $6f79
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $6f7a
-	sub $1c ; $6f7d
+	sub MINIGAME_BOO_BLAST ; $6f7d
 	inc a ; $6f7f
 	inc a ; $6f80
 	farcall UpdateMinigameRecord ; $6f81
@@ -3872,7 +3872,7 @@ CheckAllProgressComplete:
 	ret ; $6fb1
 ShowIslandOpenRankingBoard:
 	ld a, [wGameMode] ; $6fb2
-	cp $02 ; $6fb5
+	cp GAMEMODE_ISLAND_OPEN ; $6fb5
 	ret nz ; $6fb7
 	call SetupRankingBoardArgs ; $6fb8
 	farcall ShowRankingBoard ; $6fbb
@@ -4316,7 +4316,7 @@ ShowGameProgressScreen:
 	call ClearFrameTasks ; $7279
 	ret ; $727c
 InitGameProgressScreen:
-	sound $04 ; $727d
+	sound BGM_STATUS_SCREEN ; $727d
 	call ClearFrameTasks ; $727f
 	call ClearSpriteQueue ; $7282
 	xor a ; $7285
@@ -4427,10 +4427,10 @@ BuildGameProgressScreen:
 	jr nz, .playSfx ; $736e
 	jr .loop ; $7370
 .playSfx:
-	sound $62 ; $7372
+	sound SFX_MENU_CANCEL ; $7372
 	jr .restore ; $7374
 .playSfx2:
-	sound $5f ; $7376
+	sound SFX_MENU_SELECT ; $7376
 .restore:
 	pop af ; $7378
 	wram_bank ; $7379
@@ -4452,7 +4452,7 @@ ScrollProgressListDown:
 	cp b ; $7399
 	jr nc, .restore ; $739a
 	ld [hl], a ; $739c
-	sound $5e ; $739d
+	sound SFX_MENU_MOVE ; $739d
 	ld a, [wCharPosX + 1] ; $739f
 	set_flag FLAG_TEXT_RENDER_ACTIVE ; $73a2
 	farcall DrawTextWindowFrame ; $73a5
@@ -4471,7 +4471,7 @@ ScrollProgressListUp:
 	bit 7, a ; $73bf
 	jr nz, .restore ; $73c1
 	ld [hl], a ; $73c3
-	sound $5e ; $73c4
+	sound SFX_MENU_MOVE ; $73c4
 	ld a, [wCharPosX + 1] ; $73c6
 	set_flag FLAG_TEXT_RENDER_ACTIVE ; $73c9
 	farcall DrawTextWindowFrame ; $73cc

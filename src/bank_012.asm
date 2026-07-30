@@ -291,14 +291,14 @@ DormEntranceEntry0FScene:
 	script_move_target ACTOR_PLAYER, $1500, $0b00 ; $463d
 	script_wait_move ACTOR_PLAYER ; $4648
 	script_move_player $1600, $0b00 ; $464d
-	ld b, $0a ; $4657
+	ld b, STORYLOC_DORM_ROOM ; $4657
 	ld c, $0f ; $4659
 	farcall SaveStoryReturnPoint ; $465b
 	farcall SaveStorySlotWithTimer ; $465e
 	ld a, $01 ; $4661
 	farcall EraseStorySlotSaveData ; $4663
 	farcall SaveStorySlotWithTimer ; $4666
-	sound $00 ; $4669
+	sound BGM_NONE ; $4669
 	ld c, $04 ; $466b
 	call BeginFadeOut ; $466d
 	call WaitFadeEnd ; $4670
@@ -629,14 +629,14 @@ WallPracticeMaxScoreScript:
 	script_face $07, FACE_DOWN ; $49c3
 	jp RelaunchWallPracticeMasterLevel.checkDoubles ; $49ca
 RelaunchWallPracticeMasterLevel:
-	ld a, $13 ; $49cd
+	ld a, STORYLOC_WALL_PRACTICE_ROOM ; $49cd
 	ld [wStoryModeCurrentLocation], a ; $49cf
 	ld a, $0a ; $49d2
 	ld [wStoryModeEntryPoint], a ; $49d4
 	ld a, $ff ; $49d7
 	ld [wUnusedExitLocationMirror], a ; $49d9
 	ld [wStoryModeExitLocationRequest], a ; $49dc
-	ld a, $1b ; $49df
+	ld a, MINIGAME_WALL_PRACTICE_HIGH_SCORE ; $49df
 	farcall RunTrainingDrillByID ; $49e1
 	ret ; $49e4
 .carry:
@@ -883,14 +883,14 @@ WallPracticeRoomTile03_12:
 	ld c, $04 ; $4d75
 	call BeginFadeOut ; $4d77
 	call WaitFadeEnd ; $4d7a
-	ld a, $13 ; $4d7d
+	ld a, STORYLOC_WALL_PRACTICE_ROOM ; $4d7d
 	ld [wStoryModeCurrentLocation], a ; $4d7f
 	ld a, $0b ; $4d82
 	ld [wStoryModeEntryPoint], a ; $4d84
 	ld a, $ff ; $4d87
 	ld [wUnusedExitLocationMirror], a ; $4d89
 	ld [wStoryModeExitLocationRequest], a ; $4d8c
-	ld a, $16 ; $4d8f
+	ld a, MINIGAME_WALL_PRACTICE_1 ; $4d8f
 	farcall RunTrainingDrillByID ; $4d91
 	farcall EndCutsceneScriptMode ; $4d94
 .done:
@@ -915,14 +915,14 @@ WallPracticeRoomTile04_12:
 	ld c, $04 ; $4dea
 	call BeginFadeOut ; $4dec
 	call WaitFadeEnd ; $4def
-	ld a, $13 ; $4df2
+	ld a, STORYLOC_WALL_PRACTICE_ROOM ; $4df2
 	ld [wStoryModeCurrentLocation], a ; $4df4
 	ld a, $0b ; $4df7
 	ld [wStoryModeEntryPoint], a ; $4df9
 	ld a, $ff ; $4dfc
 	ld [wUnusedExitLocationMirror], a ; $4dfe
 	ld [wStoryModeExitLocationRequest], a ; $4e01
-	ld a, $17 ; $4e04
+	ld a, MINIGAME_WALL_PRACTICE_2 ; $4e04
 	farcall RunTrainingDrillByID ; $4e06
 	farcall EndCutsceneScriptMode ; $4e09
 .done:
@@ -947,14 +947,14 @@ WallPracticeRoomTile05_12:
 	ld c, $04 ; $4e5f
 	call BeginFadeOut ; $4e61
 	call WaitFadeEnd ; $4e64
-	ld a, $13 ; $4e67
+	ld a, STORYLOC_WALL_PRACTICE_ROOM ; $4e67
 	ld [wStoryModeCurrentLocation], a ; $4e69
 	ld a, $0b ; $4e6c
 	ld [wStoryModeEntryPoint], a ; $4e6e
 	ld a, $ff ; $4e71
 	ld [wUnusedExitLocationMirror], a ; $4e73
 	ld [wStoryModeExitLocationRequest], a ; $4e76
-	ld a, $18 ; $4e79
+	ld a, MINIGAME_WALL_PRACTICE_3 ; $4e79
 	farcall RunTrainingDrillByID ; $4e7b
 	farcall EndCutsceneScriptMode ; $4e7e
 .done:
@@ -979,14 +979,14 @@ WallPracticeRoomTile06_12:
 	ld c, $04 ; $4ed4
 	call BeginFadeOut ; $4ed6
 	call WaitFadeEnd ; $4ed9
-	ld a, $13 ; $4edc
+	ld a, STORYLOC_WALL_PRACTICE_ROOM ; $4edc
 	ld [wStoryModeCurrentLocation], a ; $4ede
 	ld a, $0b ; $4ee1
 	ld [wStoryModeEntryPoint], a ; $4ee3
 	ld a, $ff ; $4ee6
 	ld [wUnusedExitLocationMirror], a ; $4ee8
 	ld [wStoryModeExitLocationRequest], a ; $4eeb
-	ld a, $19 ; $4eee
+	ld a, MINIGAME_WALL_PRACTICE_4 ; $4eee
 	farcall RunTrainingDrillByID ; $4ef0
 	farcall EndCutsceneScriptMode ; $4ef3
 .done:
@@ -1103,7 +1103,7 @@ WallPracticeRoomInitScript_12:
 	ld c, $04 ; $503e
 	call BeginFadeOut ; $5040
 	call WaitFadeEnd ; $5043
-	ld a, $13 ; $5046
+	ld a, STORYLOC_WALL_PRACTICE_ROOM ; $5046
 	ld [wStoryModeCurrentLocation], a ; $5048
 	ld a, $0b ; $504b
 	ld [wStoryModeEntryPoint], a ; $504d
@@ -1277,7 +1277,7 @@ LaunchWallPracticeMinigame:
 	ld c, $04 ; $528d
 	call BeginFadeOut ; $528f
 	call WaitFadeEnd ; $5292
-	ld a, $13 ; $5295
+	ld a, STORYLOC_WALL_PRACTICE_ROOM ; $5295
 	ld [wStoryModeCurrentLocation], a ; $5297
 	ld a, $0a ; $529a
 	ld [wStoryModeEntryPoint], a ; $529c
@@ -3055,7 +3055,7 @@ ActorScript_12_20:
 	as_set_field $14, FACE_RIGHT
 	as_halt
 .storeStoryModeCurrentLocation:
-	ld a, $10 ; $6d8a
+	ld a, STORYLOC_SENIOR_CLASS_COURT ; $6d8a
 	ld [wStoryModeCurrentLocation], a ; $6d8c
 	ld a, $0d ; $6d8f
 	ld [wStoryModeEntryPoint], a ; $6d91
@@ -3319,7 +3319,7 @@ IslandOpenDoublesVictory:
 	script_set_anim $04, $03 ; $736e
 	script_set_anim $05, $03 ; $7375
 	script_wait_idle $05 ; $737c
-	ld a, $10 ; $7381
+	ld a, STORYLOC_SENIOR_CLASS_COURT ; $7381
 	ld [wStoryModeCurrentLocation], a ; $7383
 	ld a, $01 ; $7386
 	ld [wStoryModeEntryPoint], a ; $7388
@@ -3473,7 +3473,7 @@ SeniorSharedVictoryScene:
 	script_wait_move $04 ; $7704
 	script_set_position $11, $3f00, $3f00 ; $7709
 	script_speak $04 ; $7714
-	ld a, $10 ; $7719
+	ld a, STORYLOC_SENIOR_CLASS_COURT ; $7719
 	ld [wStoryModeCurrentLocation], a ; $771b
 	ld a, $01 ; $771e
 	ld [wStoryModeEntryPoint], a ; $7720

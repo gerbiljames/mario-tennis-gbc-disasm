@@ -470,7 +470,7 @@ MachineCourtStartLevelScene:
 	call BeginFadeOut ; $4579
 	call WaitFadeEnd ; $457c
 	clear_flag FLAG_TEMP_SCENE_VARIANT_A ; $457f
-	ld a, $12 ; $4582
+	ld a, STORYLOC_TENNIS_MACHINE_ROOM ; $4582
 	ld [wStoryModeCurrentLocation], a ; $4584
 	ld a, $05 ; $4587
 	ld [wStoryModeEntryPoint], a ; $4589
@@ -541,7 +541,7 @@ MachinePracticeLevelPrompt:
 	ld c, $08 ; $466d
 	call BeginFadeOut ; $466f
 	call WaitFadeEnd ; $4672
-	ld a, $12 ; $4675
+	ld a, STORYLOC_TENNIS_MACHINE_ROOM ; $4675
 	ld [wStoryModeCurrentLocation], a ; $4677
 	ld a, $07 ; $467a
 	ld [wStoryModeEntryPoint], a ; $467c
@@ -549,7 +549,7 @@ MachinePracticeLevelPrompt:
 	ld [wUnusedExitLocationMirror], a ; $4681
 	ld [wStoryModeExitLocationRequest], a ; $4684
 	ld a, [wMapScratch + 6] ; $4687
-	add $12 ; $468a
+	add MINIGAME_TENNIS_MACHINE_1 ; $468a
 	farcall RunTrainingDrillByID ; $468c
 	farcall EndCutsceneScriptMode ; $468f
 .done:
@@ -655,12 +655,12 @@ MachineCourtHandleRetryChoice:
 	ret ; $47cc
 MachineCourtRestartLevel:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $47cd
-	cp $1a ; $47d0
+	cp MINIGAME_TENNIS_MACHINE_HIGH_SCORE ; $47d0
 	jr z, .storeStoryModeCurrentLocation ; $47d2
-	sub $12 ; $47d4
+	sub MINIGAME_TENNIS_MACHINE_1 ; $47d4
 	call TestMachineLevelClearedFlag ; $47d6
 	jr z, .storeStoryModeCurrentLocation ; $47d9
-	ld a, $12 ; $47db
+	ld a, STORYLOC_TENNIS_MACHINE_ROOM ; $47db
 	ld [wStoryModeCurrentLocation], a ; $47dd
 	ld a, $07 ; $47e0
 	ld [wStoryModeEntryPoint], a ; $47e2
@@ -669,7 +669,7 @@ MachineCourtRestartLevel:
 	ld [wStoryModeExitLocationRequest], a ; $47ea
 	jr .runTrainingDrillByID ; $47ed
 .storeStoryModeCurrentLocation:
-	ld a, $12 ; $47ef
+	ld a, STORYLOC_TENNIS_MACHINE_ROOM ; $47ef
 	ld [wStoryModeCurrentLocation], a ; $47f1
 	ld a, $05 ; $47f4
 	ld [wStoryModeEntryPoint], a ; $47f6
@@ -698,7 +698,7 @@ ActorScript_14_0:
 	ld [hl], d ; $4829
 	pop af ; $482a
 	wram_bank ; $482b
-	ld a, $12 ; $482f
+	ld a, STORYLOC_TENNIS_MACHINE_ROOM ; $482f
 	ld [wStoryModeCurrentLocation], a ; $4831
 	ld a, $01 ; $4834
 	ld [wStoryModeEntryPoint], a ; $4836
@@ -1637,7 +1637,7 @@ IslandSkyInitScript_14:
 	ld [wMapSceneStage2], a ; $5478
 	dec h ; $547b
 	jr nz, .walkOff ; $547c
-	sound $7b ; $547e
+	sound SFX_PLANE ; $547e
 	ld h, $08 ; $5480
 .speak:
 	script_wait_frames $06 ; $5482
@@ -1671,7 +1671,7 @@ IslandSkyInitScript_14:
 	call BeginFadeOut ; $54c3
 	call WaitFadeEnd ; $54c6
 	call ClearFrameTasks ; $54c9
-	ld a, $15 ; $54cc
+	ld a, STORYLOC_TOURNAMENT_COURTYARD ; $54cc
 	ld [wStoryModeCurrentLocation], a ; $54ce
 	ld a, $04 ; $54d1
 	ld [wStoryModeEntryPoint], a ; $54d3
@@ -1749,7 +1749,7 @@ IslandSkyInitScript_14:
 	call WaitFadeEnd ; $561f
 	call WaitFadeEnd ; $5622
 	call ClearFrameTasks ; $5625
-	ld a, $0a ; $5628
+	ld a, STORYLOC_DORM_ROOM ; $5628
 	ld [wStoryModeCurrentLocation], a ; $562a
 	ld a, $09 ; $562d
 	ld [wStoryModeEntryPoint], a ; $562f
@@ -1894,7 +1894,7 @@ UpdateWaterSplash0_14:
 	jr c, .advance ; $6110
 	cp $08 ; $6112
 	jr z, .playSfx ; $6114
-	sound $7e ; $6116
+	sound SFX_SPLASH ; $6116
 .playSfx:
 	ld a, [wCutsceneObjX] ; $6118
 	inc a ; $611b
@@ -1993,7 +1993,7 @@ UpdateWaterSplash1_14:
 	jr c, .advance ; $61ca
 	cp $08 ; $61cc
 	jr z, .playSfx ; $61ce
-	sound $7e ; $61d0
+	sound SFX_SPLASH ; $61d0
 .playSfx:
 	ld a, [wCutsceneObjX + 1] ; $61d2
 	inc a ; $61d5
@@ -2229,7 +2229,7 @@ QueuePlaneSpriteByFrameCounter_14:
 	call BeginFadeOut ; $6403
 	call WaitFadeEnd ; $6406
 	call ClearFrameTasks ; $6409
-	ld a, $14 ; $640c
+	ld a, STORYLOC_ACADEMY_ENTRANCE ; $640c
 	ld [wStoryModeCurrentLocation], a ; $640e
 	ld a, $02 ; $6411
 	ld [wStoryModeEntryPoint], a ; $6413
@@ -2299,7 +2299,7 @@ UpdateFirework0_14:
 	ld a, [wCutsceneObjTimer] ; $6497
 	cp $0c ; $649a
 	jr nz, .burstSprite ; $649c
-	sound $81 ; $649e
+	sound SFX_FIREWORK ; $649e
 .burstSprite:
 	ld a, [wCutsceneObjPhase] ; $64a0
 	add LOW(UpdateFirework0_14Table) ; $64a3
@@ -2455,7 +2455,7 @@ UpdateFirework1_14Table:
 	call ClearFrameTasks ; $6647
 	test_flag FLAG_DOUBLES ; $664a
 	jr z, .notDoubles ; $664d
-	ld a, $1a ; $664f
+	ld a, STORYLOC_AWARDS_CEREMONY ; $664f
 	ld [wStoryModeCurrentLocation], a ; $6651
 	ld a, $0b ; $6654
 	ld [wStoryModeEntryPoint], a ; $6656
@@ -2464,7 +2464,7 @@ UpdateFirework1_14Table:
 	ld [wStoryModeExitLocationRequest], a ; $665e
 	ret ; $6661
 .notDoubles:
-	ld a, $1a ; $6662
+	ld a, STORYLOC_AWARDS_CEREMONY ; $6662
 	ld [wStoryModeCurrentLocation], a ; $6664
 	ld a, $0a ; $6667
 	ld [wStoryModeEntryPoint], a ; $6669
@@ -2534,7 +2534,7 @@ UpdateFirework1_14:
 	ld a, [wCutsceneObjTimer + 1] ; $6f3d
 	cp $0c ; $6f40
 	jr nz, .burstSprite ; $6f42
-	sound $81 ; $6f44
+	sound SFX_FIREWORK ; $6f44
 .burstSprite:
 	ld a, [wCutsceneObjPhase + 1] ; $6f46
 	add LOW(UpdateFirework1_14Table) ; $6f49
@@ -2727,14 +2727,14 @@ AdvanceFirework1Ascent_14:
 	jr nz, .storeLocation ; $711f
 	set_flag FLAG_STORY_COMPLETE_SINGLES ; $7121
 .setLocation:
-	ld b, $1d ; $7124
+	ld b, STORYLOC_PEACHS_CASTLE ; $7124
 	ld c, $0f ; $7126
 	farcall SaveStoryReturnPoint ; $7128
 	farcall SaveStorySlotWithTimer ; $712b
 	ld c, $01 ; $712e
 	call BeginFadeOut ; $7130
 	call WaitFadeEnd ; $7133
-	ld a, $00 ; $7136
+	ld a, STORYLOC_MAIN_MENU ; $7136
 	ld [wStoryModeCurrentLocation], a ; $7138
 	ld a, $0a ; $713b
 	ld [wStoryModeEntryPoint], a ; $713d
@@ -2753,7 +2753,7 @@ AdvanceFirework1Ascent_14:
 	ld c, $04 ; $7155
 	call BeginFadeOut ; $7157
 	call WaitFadeEnd ; $715a
-	ld a, $1d ; $715d
+	ld a, STORYLOC_PEACHS_CASTLE ; $715d
 	ld [wStoryModeCurrentLocation], a ; $715f
 	ld a, $01 ; $7162
 	ld [wStoryModeEntryPoint], a ; $7164
@@ -2765,7 +2765,7 @@ AdvanceFirework1Ascent_14:
 	ld c, $04 ; $7170
 	call BeginFadeOut ; $7172
 	call WaitFadeEnd ; $7175
-	ld a, $1d ; $7178
+	ld a, STORYLOC_PEACHS_CASTLE ; $7178
 	ld [wStoryModeCurrentLocation], a ; $717a
 	ld a, $0f ; $717d
 	ld [wStoryModeEntryPoint], a ; $717f
@@ -3089,7 +3089,7 @@ QueueTwinkleSprite_14:
 	ld c, $04 ; $7858
 	call BeginFadeOut ; $785a
 	call WaitFadeEnd ; $785d
-	ld a, $14 ; $7860
+	ld a, STORYLOC_ACADEMY_ENTRANCE ; $7860
 	ld [wStoryModeCurrentLocation], a ; $7862
 	ld a, $02 ; $7865
 	ld [wStoryModeEntryPoint], a ; $7867
@@ -3109,7 +3109,7 @@ PlayTwinkleAnimation_14:
 	ld a, $01 ; $7882
 	ld hl, QueueTwinkleSprite_14 ; $7884
 	call RegisterFrameTask ; $7887
-	sound $84 ; $788a
+	sound SFX_TWINKLE ; $788a
 	ld h, $04 ; $788c
 .loop:
 	script_wait_frames $04 ; $788e
@@ -3126,7 +3126,7 @@ PlayPlaneMoveSfx_14:
 	srl a ; $78a8
 	and $01 ; $78aa
 	jr z, .done ; $78ac
-	sound $7b ; $78ae
+	sound SFX_PLANE ; $78ae
 .done:
 	ret ; $78b0
 ActorScript_14_2:

@@ -442,12 +442,12 @@ SpriteWobbleYTable_17:
 .checkMenuCursorLockFlags4:
 	bit 0, a ; $428b
 	jr z, .bit0Clear ; $428d
-	sound $5f ; $428f
+	sound SFX_MENU_SELECT ; $428f
 	ld a, [wMenuCursorLockFlags] ; $4291
 	ld b, a ; $4294
 	and $01 ; $4295
 	jr nz, .checkMenuCursorX3 ; $4297
-	sound $5f ; $4299
+	sound SFX_MENU_SELECT ; $4299
 	ld a, b ; $429b
 	or $01 ; $429c
 	ld [wMenuCursorLockFlags], a ; $429e
@@ -455,7 +455,7 @@ SpriteWobbleYTable_17:
 .bit0Clear:
 	bit 1, a ; $42a3
 	jr z, .checkMenuCursorX3 ; $42a5
-	sound $62 ; $42a7
+	sound SFX_MENU_CANCEL ; $42a7
 	ld a, [wMenuCursorLockFlags] ; $42a9
 	ld b, a ; $42ac
 	and $03 ; $42ad
@@ -579,7 +579,7 @@ SpriteWobbleYTable_17:
 	ld b, a ; $435d
 	and $02 ; $435e
 	jr nz, .checkMenuCursor2X ; $4360
-	sound $5f ; $4362
+	sound SFX_MENU_SELECT ; $4362
 	ld a, b ; $4364
 	or $02 ; $4365
 	ld [wMenuCursorLockFlags], a ; $4367
@@ -587,7 +587,7 @@ SpriteWobbleYTable_17:
 .bit0Clear2:
 	bit 1, a ; $436c
 	jr z, .checkMenuCursor2X ; $436e
-	sound $62 ; $4370
+	sound SFX_MENU_CANCEL ; $4370
 	ld a, [wMenuCursorLockFlags] ; $4372
 	ld b, a ; $4375
 	and $03 ; $4376
@@ -829,9 +829,9 @@ ShowDrillBriefingScreen:
 	script_fade_in $10 ; $44b6
 	call WaitFadeEnd ; $44bb
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $44be
-	cp $12 ; $44c1
+	cp MINIGAME_TENNIS_MACHINE_1 ; $44c1
 	jr nc, .done ; $44c3
-	sub $03 ; $44c5
+	sub MINIGAME_SERVICE_PRACTICE_1 ; $44c5
 	cp $04 ; $44c7
 	jr c, .dispatch ; $44c9
 	sub $03 ; $44cb
@@ -4744,7 +4744,7 @@ MinigameRulesPageLoop:
 	jr nz, .restore2 ; $711a
 	jr .loopB ; $711c
 .playSfx:
-	sound $5f ; $711e
+	sound SFX_MENU_SELECT ; $711e
 	ld hl, DrawRulesNextPageArrow ; $7120
 	call UnregisterFrameTask ; $7123
 	ld hl, RulesScreenTiles ; $7126
@@ -4757,7 +4757,7 @@ MinigameRulesPageLoop:
 	pop hl ; $7138
 	jp .loop ; $7139
 .playSfx2:
-	sound $62 ; $713c
+	sound SFX_MENU_CANCEL ; $713c
 	ld hl, DrawRulesNextPageArrow ; $713e
 	call UnregisterFrameTask ; $7141
 	ld hl, RulesScreenTiles ; $7144
@@ -4766,11 +4766,11 @@ MinigameRulesPageLoop:
 	ld [wRulesExitCode], a ; $714c
 	pop hl ; $714f
 .playSfx3:
-	sound $60 ; $7150
+	sound SFX_MENU_DECIDE ; $7150
 	ret ; $7152
 .restore2:
 	pop hl ; $7153
-	sound $60 ; $7154
+	sound SFX_MENU_DECIDE ; $7154
 	ret ; $7156
 LoadRulesScreen:
 	call LoadRulesBorderAnimTiles ; $7157

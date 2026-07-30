@@ -313,7 +313,7 @@ FetchText_37:
 	ldh a, [hDebugStepMode] ; $7b5e
 	or a ; $7b60
 	jr z, .restore ; $7b61
-	sound $2c ; $7b63
+	sound BGM_CREDITS ; $7b63
 .restore:
 	pop hl ; $7b65
 	pop de ; $7b66

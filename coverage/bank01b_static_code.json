@@ -1,5 +1,5 @@
 {
- "_comment": "Static code-entry seeds for bank $1b (dispatch bank) stranded handlers. Function starts + internal call/jump targets only (avoids interleaved data tables in $5f5f/$664b). Flat = 0x1b*0x4000 + (cpu-0x4000). | Correction (static-seed over a table): $40e7 is the same 16-byte hVBlankCounter&$0f table as $17:$40bd; the routine starts at $40f7. | Twin-proven code: $42f8 and $4419 are byte-identical to bank $16's MoveMenuCursor2GridRemote_16 (398 bytes) and ClearWram3Row64Alt_16 (109), which the traces execute; here they sat as uncarved blobs.",
+ "_comment": "Static code-entry seeds for bank $1b (dispatch bank) stranded handlers. Function starts + internal call/jump targets only (avoids interleaved data tables in $5f5f/$664b). Flat = 0x1b*0x4000 + (cpu-0x4000). | Correction (static-seed over a table): $40e7 is the same 16-byte hVBlankCounter&$0f table as $17:$40bd; the routine starts at $40f7. | Twin-proven code: $42f8 and $4419 are byte-identical to bank $16's MoveMenuCursor2GridRemote_16 (398 bytes) and ClearWram3Row64Alt_16 (109), which the traces execute; here they sat as uncarved blobs. | Correction (off-by-one): 450530 ($5fe2) was the low operand byte of the `ld hl, CharSelectRosterTable` that opens LoadCharSelectRosterTable at $5fe1 -- already seeded on the line above -- so it decoded as conflicting and was skipped; removed.",
  "rom": [
   442432,
   442615,
@@ -89,7 +89,6 @@
   450507,
   450516,
   450529,
-  450530,
   450542,
   450562,
   450594,

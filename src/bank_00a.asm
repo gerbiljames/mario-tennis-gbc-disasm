@@ -1567,11 +1567,11 @@ InitStoryMatchSettings:
 	ld [wMatchIsDoubles], a ; $493b
 	add $02 ; $493e
 	ld [wOnCourtCharCount], a ; $4940
-	ld a, $00 ; $4943
+	ld a, MATCHLIST_SINGLES ; $4943
 	ld [wCurrentMinigameStoryMatch], a ; $4945
-	ld a, $0c ; $4948
+	ld a, CHAR_MARK ; $4948
 	ld [wMatchOpponentChar], a ; $494a
-	ld a, $02 ; $494d
+	ld a, COURT_GRASS ; $494d
 	ld [wCurrentlyUsedCourt], a ; $494f
 	ld a, $01 ; $4952
 	ld [wMatchTypeNumberOfSets], a ; $4954
@@ -1590,7 +1590,7 @@ RunStoryMatch:
 	or a ; $4973
 	jr z, .matchAborted ; $4974
 	farcall SaveStorySlotWithTimer ; $4976
-	ld a, $00 ; $4979
+	ld a, STORYLOC_MAIN_MENU ; $4979
 	ld [wStoryModeCurrentLocation], a ; $497b
 	ld a, $01 ; $497e
 	ld [wStoryModeEntryPoint], a ; $4980
@@ -1614,7 +1614,7 @@ RestoreOverworldAfterMatch:
 	ld [wMatchContext], a ; $49a6
 	ret ; $49a9
 AssignStoryMatchCharacters:
-	ld b, $80 ; $49aa
+	ld b, CHAR_STORY_MAIN ; $49aa
 	ld c, $00 ; $49ac
 	farcall InitCa00RecordFromCharId ; $49ae
 	ld a, [wMatchOpponentChar] ; $49b1
@@ -1624,7 +1624,7 @@ AssignStoryMatchCharacters:
 	ld a, [wMatchIsDoubles] ; $49ba
 	or a ; $49bd
 	jr z, .done ; $49be
-	ld b, $81 ; $49c0
+	ld b, CHAR_STORY_PARTNER ; $49c0
 	ld c, $01 ; $49c2
 	farcall InitCa00RecordFromCharId ; $49c4
 	ld a, [wMatchOpponentChar] ; $49c7
@@ -1669,7 +1669,7 @@ SetMatchNumberOfGames:
 LoadMatchSettingsFromTable:
 	ld de, SinglesMatchSettingsTable_0a ; $4a5c
 	ld a, [wCurrentMinigameStoryMatch] ; $4a5f
-	cp $01 ; $4a62
+	cp MATCHLIST_DOUBLES ; $4a62
 	ld a, $00 ; $4a64
 	jr nz, .haveTable ; $4a66
 	inc a ; $4a68
@@ -2264,7 +2264,7 @@ RunStoryLocation:
 	call ClearStoryEventRequests ; $4f4c
 	call LoadStoryLocationHeader ; $4f4f
 	call LoadStoryEntryPointRecord ; $4f52
-	ld a, $00 ; $4f55
+	ld a, GAMEMODE_NONE ; $4f55
 	ld [wGameMode], a ; $4f57
 	call AdvanceFrame ; $4f5a
 	test_flag FLAG_ENDING_CREDITS_RUNNING ; $4f5d
@@ -6249,7 +6249,7 @@ RunEndingCreditsSequence:
 	call BeginFadeOut ; $6e76
 	call WaitFadeEnd ; $6e79
 	set_flag FLAG_ENDING_CREDITS_RUNNING ; $6e7c
-	sound $2c ; $6e7f
+	sound BGM_CREDITS ; $6e7f
 	farcall LoadMenuFontGfx ; $6e81
 	ld hl, EndingCreditsSequencePalette ; $6e84
 	ld de, $0001 ; $6e87

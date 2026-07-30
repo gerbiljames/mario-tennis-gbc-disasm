@@ -79,7 +79,7 @@ LoadMatchGraphics:
 	ret ; $5efa
 LoadMatchVariantGraphics:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $5efb
-	sub $12 ; $5efe
+	sub MINIGAME_TENNIS_MACHINE_1 ; $5efe
 	jr c, .carry ; $5f00
 	ld a, a ; $5f02
 	rst Rst00 ; $5f03

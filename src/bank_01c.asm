@@ -90,7 +90,7 @@ CharDataScreen_Show:
 	call UnregisterFrameTask ; $40d2
 	ld hl, CharDataScreenAnimTask ; $40d5
 	call UnregisterFrameTask ; $40d8
-	sound $00 ; $40db
+	sound BGM_NONE ; $40db
 	call DisableLCDSafely ; $40dd
 	farcall LoadMenuFontGfx ; $40e0
 	call EnableLCD ; $40e3
@@ -761,7 +761,7 @@ CharDataScreenAnimTask:
 	pop af ; $4680
 	ret ; $4681
 AnimateCharDataStatsReveal:
-	sound $0d ; $4682
+	sound BGM_STAT_DISTRIBUTION ; $4682
 	call BackupCharDataScreenRow ; $4684
 	wram_bank $06 ; $4687
 .loop:
@@ -2138,7 +2138,7 @@ CharDataScreen_InputLoop:
 	ld a, [wCharDataPage] ; $5130
 	cp $04 ; $5133
 	jp z, CharDataScreen_InputLoop ; $5135
-	sound $5f ; $5138
+	sound SFX_MENU_SELECT ; $5138
 	ld d, a ; $513a
 	ld a, [wStoryCharacterSlot] ; $513b
 	farcall LevelUpPlayer ; $513e
@@ -2280,7 +2280,7 @@ CharDataScreen_InputLoop:
 	jr nz, .cancel ; $529f
 	and $c0 ; $52a1
 	jr z, .confirmLoop ; $52a3
-	sound $5e ; $52a5
+	sound SFX_MENU_MOVE ; $52a5
 	ld a, [wCharDataConfirmState] ; $52a7
 	xor $01 ; $52aa
 	ld [wCharDataConfirmState], a ; $52ac
@@ -2290,11 +2290,11 @@ CharDataScreen_InputLoop:
 	ld a, [wCharDataConfirmState] ; $52b7
 	or a ; $52ba
 	jr nz, .cancel ; $52bb
-	sound $5f ; $52bd
+	sound SFX_MENU_SELECT ; $52bd
 	xor a ; $52bf
 	ret ; $52c0
 .cancel:
-	sound $62 ; $52c1
+	sound SFX_MENU_CANCEL ; $52c1
 	call SelectCharDataConfirmSlot ; $52c3
 	call RestoreCharDataScreenRow ; $52c6
 	call LoadCharStats ; $52c9
@@ -2394,7 +2394,7 @@ MoveCharDataScreenSelection:
 	cp $ff ; $53d2
 	ret z ; $53d4
 	ld [wCharDataPage], a ; $53d5
-	sound $5e ; $53d8
+	sound SFX_MENU_MOVE ; $53d8
 	cp $04 ; $53da
 	jr z, .redraw ; $53dc
 	call RestoreCharDataScreenRow ; $53de
@@ -2417,7 +2417,7 @@ ApplyCharStatLevelUp:
 	ld a, [wCharDataChoiceCount] ; $540a
 	or a ; $540d
 	ret z ; $540e
-	sound $62 ; $540f
+	sound SFX_MENU_CANCEL ; $540f
 	ld hl, wCharDataPointsLeft ; $5411
 	inc [hl] ; $5414
 	push af ; $5415
@@ -2597,7 +2597,7 @@ QueueStatChangeArrow:
 	call QueueSprite ; $556e
 	ret ; $5571
 SetupCharDataScreen:
-	sound $0d ; $5572
+	sound BGM_STAT_DISTRIBUTION ; $5572
 	call BackupCharDataScreenRow ; $5574
 	ld hl, CharDataBand0RunsStep7_1c ; $5577
 	ld bc, $d240 ; $557a

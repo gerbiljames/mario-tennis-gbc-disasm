@@ -54,7 +54,7 @@ RunMatchPauseMenu:
 	push af ; $4079
 	farcall StepMatchFrame ; $407a
 	farcall StepMatchFrame ; $407d
-	sound $63 ; $4080
+	sound SFX_PAUSE_MENU ; $4080
 	xor a ; $4082
 	ld [wMatchMenuSelection], a ; $4083
 	ld a, $02 ; $4086
@@ -125,7 +125,7 @@ MatchPauseMenu_CheckRules:
 	ld hl, MatchPauseMenu_AfterRules ; $4119
 	push hl ; $411c
 	ld a, [wGameMode] ; $411d
-	cp $08 ; $4120
+	cp GAMEMODE_MARIO_MINIGAME ; $4120
 	jp z, ShowMinigameRulesPages ; $4122
 	ld a, [wMatchContext] ; $4125
 	cp $02 ; $4128
@@ -235,7 +235,7 @@ TrainingRulesPageLists:
 	rules_pages $1c ; list 28
 ShowMinigameRulesPages:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $421d
-	sub $1c ; $4220
+	sub MINIGAME_BOO_BLAST ; $4220
 	ld b, a ; $4222
 	add a ; $4223
 	add b ; $4224
@@ -253,7 +253,7 @@ ShowMinigameRulesPages:
 	ld [hl+], a ; $4238
 	ld [hl], d ; $4239
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $423a
-	sub $1c ; $423d
+	sub MINIGAME_BOO_BLAST ; $423d
 	add a ; $423f
 	add LOW(MinigameRulesTextIdBases) ; $4240
 	ld l, a ; $4242
@@ -363,7 +363,7 @@ ShowRulesPageSequence:
 	farcall ReadMatchInputPressed ; $4360
 	and $03 ; $4363
 	jr z, .loop ; $4365
-	sound $5f ; $4367
+	sound SFX_MENU_SELECT ; $4367
 	ld hl, DrawRulesNextPageArrow_06 ; $4369
 	call UnregisterFrameTask ; $436c
 	pop hl ; $436f
@@ -421,7 +421,7 @@ MatchPauseMenu_ReviewControls:
 	jr .loop ; $43e6
 .restoreBgTilemap:
 	call RestoreBgTilemap ; $43e8
-	sound $62 ; $43eb
+	sound SFX_MENU_CANCEL ; $43eb
 	ret ; $43ed
 MatchPauseMenu_ChangeOptions:
 	call RestoreBgTilemapRegion ; $43ee
@@ -475,7 +475,7 @@ MatchPauseMenu_MusicToggle:
 	jr z, .done ; $444e
 	call SetMusicMuted ; $4450
 	ld a, [wGameMode] ; $4453
-	cp $09 ; $4456
+	cp GAMEMODE_LINK_MATCH ; $4456
 	jr z, .done ; $4458
 	ldh a, [hMusic] ; $445a
 	and $01 ; $445c
@@ -837,7 +837,7 @@ RunMatchMenu:
 	farcall ReadMatchInputPressed ; $4701
 	and $0a ; $4704
 	jr z, .checkA ; $4706
-	sound $62 ; $4708
+	sound SFX_MENU_CANCEL ; $4708
 	ld a, $ff ; $470a
 	ld [wMatchMenuSelection], a ; $470c
 	jr .done ; $470f
@@ -845,7 +845,7 @@ RunMatchMenu:
 	farcall ReadMatchInputPressed ; $4711
 	and $01 ; $4714
 	jr z, .checkLeftRight ; $4716
-	sound $5f ; $4718
+	sound SFX_MENU_SELECT ; $4718
 	jr .done ; $471a
 .checkLeftRight:
 	farcall ReadMatchInputRepeat ; $471c
@@ -857,7 +857,7 @@ RunMatchMenu:
 	ld a, [wMatchMenuSelection] ; $4728
 	call MoveCursorHorizontal ; $472b
 	ld [wMatchMenuSelection], a ; $472e
-	sound $5e ; $4731
+	sound SFX_MENU_MOVE ; $4731
 .redraw:
 	farcall PrepareGlyphBuffer ; $4733
 	ld hl, wGlyphPenX ; $4736
@@ -1840,7 +1840,7 @@ MatchMenuItemGfx_QuitMinigame:
 	INCBIN "data/bank_006/d_5bda.bin" ; $5bda, 176 bytes
 LoadScoreboardModeGfx:
 	ld a, [wGameMode] ; $5c8a
-	cp $05 ; $5c8d
+	cp GAMEMODE_TRAINING_DRILL ; $5c8d
 	jr z, .eq05 ; $5c8f
 	add a ; $5c91
 	add $c9 ; $5c92
@@ -2668,7 +2668,7 @@ RunStoryMenu:
 	farcall ReadMatchInputPressed ; $6d1b
 	and $0a ; $6d1e
 	jr z, .checkA ; $6d20
-	sound $62 ; $6d22
+	sound SFX_MENU_CANCEL ; $6d22
 	ld a, $ff ; $6d24
 	ld [wMatchMenuSelection], a ; $6d26
 	jr .done ; $6d29
@@ -2676,7 +2676,7 @@ RunStoryMenu:
 	farcall ReadMatchInputPressed ; $6d2b
 	and $01 ; $6d2e
 	jr z, .checkLeftRight ; $6d30
-	sound $5f ; $6d32
+	sound SFX_MENU_SELECT ; $6d32
 	jr .done ; $6d34
 .checkLeftRight:
 	farcall ReadMatchInputRepeat ; $6d36
@@ -2688,7 +2688,7 @@ RunStoryMenu:
 	ld a, [wMatchMenuSelection] ; $6d42
 	call MoveCursorHorizontal ; $6d45
 	ld [wMatchMenuSelection], a ; $6d48
-	sound $5e ; $6d4b
+	sound SFX_MENU_MOVE ; $6d4b
 .redraw:
 	ld a, [wMatchMenuSelection] ; $6d4d
 	call GetStoryMenuItemId ; $6d50
@@ -2845,7 +2845,7 @@ RunStoryModeMenu:
 	ldh a, [hLinkPayloadKind] ; $6e1d
 	push af ; $6e1f
 	call AdvanceFrame ; $6e20
-	sound $63 ; $6e23
+	sound SFX_PAUSE_MENU ; $6e23
 	xor a ; $6e25
 	ld [wMatchMenuSelection], a ; $6e26
 	ld a, $02 ; $6e29
@@ -2932,7 +2932,7 @@ StoryPauseMenu_AfterItem:
 	farcall ReadMatchInputPressed ; $6ed7
 	and $0e ; $6eda
 	jr z, .readMatchInputPressed ; $6edc
-	sound $62 ; $6ede
+	sound SFX_MENU_CANCEL ; $6ede
 	ld a, $ff ; $6ee0
 	ld [wMatchMenuSelection], a ; $6ee2
 	jr .advanceFrame ; $6ee5
@@ -2940,7 +2940,7 @@ StoryPauseMenu_AfterItem:
 	farcall ReadMatchInputPressed ; $6ee7
 	and $01 ; $6eea
 	jr z, .readMatchInputRepeat ; $6eec
-	sound $5f ; $6eee
+	sound SFX_MENU_SELECT ; $6eee
 	jr .advanceFrame ; $6ef0
 .readMatchInputRepeat:
 	farcall ReadMatchInputRepeat ; $6ef2
@@ -2951,7 +2951,7 @@ StoryPauseMenu_AfterItem:
 	ld a, [wMatchMenuSelection] ; $6efc
 	call MoveCursorHorizontal ; $6eff
 	ld [wMatchMenuSelection], a ; $6f02
-	sound $5e ; $6f05
+	sound SFX_MENU_MOVE ; $6f05
 .checkMatchMenuSelection:
 	ld a, [wMatchMenuSelection] ; $6f07
 	call LoadStoryMenuItemGfx ; $6f0a
@@ -3129,7 +3129,7 @@ StoryPauseMenu_SaveQuit:
 	ld bc, rIE ; $7067
 	farcall SaveStoryReturnPoint ; $706a
 	farcall SaveStorySlotWithTimer ; $706d
-	ld a, $00 ; $7070
+	ld a, STORYLOC_MAIN_MENU ; $7070
 	ld [wStoryModeCurrentLocation], a ; $7072
 	ld a, $01 ; $7075
 	ld [wStoryModeEntryPoint], a ; $7077
@@ -3145,7 +3145,7 @@ StoryPauseMenu_ReturnToMainMenu:
 	ld [wMatchExitRequest], a ; $708c
 	ld a, $ff ; $708f
 	ld [wMatchAbortFlag], a ; $7091
-	ld a, $00 ; $7094
+	ld a, STORYLOC_MAIN_MENU ; $7094
 	ld [wStoryModeCurrentLocation], a ; $7096
 	ld a, $01 ; $7099
 	ld [wStoryModeEntryPoint], a ; $709b
@@ -3203,7 +3203,7 @@ RunStoryTwoOptionMenu:
 	farcall ReadMatchInputPressed ; $7105
 	and $02 ; $7108
 	jr z, .readMatchInputPressed ; $710a
-	sound $62 ; $710c
+	sound SFX_MENU_CANCEL ; $710c
 	ld a, $ff ; $710e
 	ld [wMatchMenuSelection], a ; $7110
 	jr .advanceFrame ; $7113
@@ -3211,7 +3211,7 @@ RunStoryTwoOptionMenu:
 	farcall ReadMatchInputPressed ; $7115
 	and $01 ; $7118
 	jr z, .readMatchInputRepeat ; $711a
-	sound $5f ; $711c
+	sound SFX_MENU_SELECT ; $711c
 	jr .advanceFrame ; $711e
 .readMatchInputRepeat:
 	farcall ReadMatchInputRepeat ; $7120
@@ -3222,7 +3222,7 @@ RunStoryTwoOptionMenu:
 	ld a, [wMatchMenuSelection] ; $712a
 	call MoveCursorHorizontal ; $712d
 	ld [wMatchMenuSelection], a ; $7130
-	sound $5e ; $7133
+	sound SFX_MENU_MOVE ; $7133
 	ld a, [wStoryMenuFirstItem] ; $7135
 	cp $0b ; $7138
 	jr z, .checkMatchMenuSelection ; $713a
@@ -3298,7 +3298,7 @@ RunStoryThreeOptionMenu:
 	farcall ReadMatchInputPressed ; $71bf
 	and $02 ; $71c2
 	jr z, .readMatchInputPressed ; $71c4
-	sound $62 ; $71c6
+	sound SFX_MENU_CANCEL ; $71c6
 	ld a, $ff ; $71c8
 	ld [wMatchMenuSelection], a ; $71ca
 	jr .restoreStoryTilemapNoPriority ; $71cd
@@ -3306,7 +3306,7 @@ RunStoryThreeOptionMenu:
 	farcall ReadMatchInputPressed ; $71cf
 	and $01 ; $71d2
 	jr z, .readMatchInputRepeat ; $71d4
-	sound $5f ; $71d6
+	sound SFX_MENU_SELECT ; $71d6
 	jr .restoreStoryTilemapNoPriority ; $71d8
 .readMatchInputRepeat:
 	farcall ReadMatchInputRepeat ; $71da
@@ -3317,7 +3317,7 @@ RunStoryThreeOptionMenu:
 	ld a, [wMatchMenuSelection] ; $71e4
 	call MoveCursorHorizontal ; $71e7
 	ld [wMatchMenuSelection], a ; $71ea
-	sound $5e ; $71ed
+	sound SFX_MENU_MOVE ; $71ed
 	ld a, [wStoryMenuFirstItem] ; $71ef
 	cp $06 ; $71f2
 	ld hl, wMatchMenuSelection ; $71f4

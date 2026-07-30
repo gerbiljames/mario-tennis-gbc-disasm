@@ -28,6 +28,7 @@ class DisassemblyBase:
         self.static_code_entries = {}  # curated: entry -> (bank, slot, target)
         self.jt_entries = {}  # rst $00 inline jump-table entry offset -> target_flat
         self.data_boundaries = set()  # declared data-table offsets (data_tables.json)
+        self.seed_origins = {}  # coverage seed offset -> [dump file name, ...]
         self.data_slots = {}  # entry_flat -> (bank, slot, src_flat, kind)
         self.data_blobs = {}  # src_flat -> (length or None, kind)
         self.object_headers = set()  # src_flat of 16-byte object headers
@@ -158,18 +159,23 @@ class DisassemblyBase:
         return all(b == 0xFF for b in self.rom[t:t + run])
 
     def seed(self, seeds):
-        bad = 0
+        bad = []
         seeds = set(seeds) - self.BAD_SEEDS
         for off in sorted(seeds):
             if off in self.instrs:
                 continue
             ins = self.decode_at(off)
             if not ins.valid or self.conflicts(off, ins):
-                bad += 1
+                bad.append((off, "invalid" if not ins.valid else "conflicts"))
                 continue
             self.mark(off, ins)
         if bad:
-            print(f"note: {bad} coverage seeds decoded invalid/conflicting; skipped")
+            print(f"note: {len(bad)} coverage seeds decoded "
+                  "invalid/conflicting; skipped:")
+            for off, why in bad:
+                src = ", ".join(self.seed_origins.get(off, ())) or "descent"
+                print(f"  0x{off:x} ${off // BANK_SIZE:02x}:"
+                      f"${offset_to_cpu(off):04x} {why} ({src})")
 
     def _looks_like_data_pointer(self, cpu, flat):
         """A table slot whose target (already known not to decode as code)

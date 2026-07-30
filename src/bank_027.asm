@@ -785,14 +785,14 @@ End12PrincipalsOfficeInitScript_27:
 	ret ; $516a
 OpenPrincipalsOfficeDoor_27:
 	script_wait_frames $0a ; $516b
-	sound $79 ; $5172
+	sound SFX_DOOR_ALT ; $5172
 	script_copy_scene_rect $07, $38, $20, $38, $02, $02 ; $5174
 	script_wait_frames $02 ; $5183
 	script_copy_scene_rect $0b, $38, $20, $38, $02, $02 ; $518a
 	script_wait_frames $04 ; $5199
 	ret ; $51a0
 ClosePrincipalsOfficeDoor_27:
-	sound $79 ; $51a1
+	sound SFX_DOOR_ALT ; $51a1
 	script_copy_scene_rect $07, $38, $20, $38, $02, $02 ; $51a3
 	script_wait_frames $02 ; $51b2
 	script_copy_scene_rect $03, $38, $20, $38, $02, $02 ; $51b9
@@ -2372,7 +2372,7 @@ EndRestaurantEntActorsAlt_27:
 	map_actor $0000, ActorScript_27_27, $1300, $0d00, FACE_DOWN, $4b, $01, $00
 	map_actor_end
 OpenRestaurantEntDoor_27:
-	sound $71 ; $716b
+	sound SFX_DOOR ; $716b
 	script_copy_scene_rect $14, $08, $06, $15, $02, $02 ; $716d
 	script_copy_scene_rect $00, $15, $14, $08, $02, $02 ; $717c
 	script_wait_frames $02 ; $718b
@@ -2382,7 +2382,7 @@ OpenRestaurantEntDoor_27:
 	script_wait_frames $02 ; $71b7
 	ret ; $71be
 CloseRestaurantEntDoor_27:
-	sound $71 ; $71bf
+	sound SFX_DOOR ; $71bf
 	script_copy_scene_rect $04, $15, $14, $08, $02, $02 ; $71c1
 	script_wait_frames $01 ; $71d0
 	script_copy_scene_rect $02, $15, $14, $08, $02, $02 ; $71d7
@@ -2537,7 +2537,7 @@ End1MainBldgInitScript_27:
 	ld [wStoryModeExitLocationRequest], a ; $7591
 	ret ; $7594
 End1MainBldgKnockdown_27:
-	sound $70 ; $7595
+	sound SFX_IMPACT ; $7595
 	script_null_script ACTOR_PLAYER_SHADOW ; $7597
 	ld a, $03 ; $759c
 	farcall SetScreenShake ; $759e

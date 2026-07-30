@@ -5,8 +5,11 @@ from pathlib import Path
 from .rom import BANK_SIZE
 
 
-def load_coverage(paths, nbanks):
+def load_coverage(paths, nbanks, origins=None):
     """Return a set of ROM offsets that are verified instruction starts.
+
+    Pass a dict as `origins` to also collect {offset: [dump name, ...]}, which
+    is what lets a rejected seed be traced back to the dump that claimed it.
 
     Accepts three dump shapes, auto-detected per file:
 
@@ -59,6 +62,8 @@ def load_coverage(paths, nbanks):
         for v in flat:
             if v < rom_size:
                 seeds.add(v)
+                if origins is not None:
+                    origins.setdefault(v, []).append(Path(p).name)
             else:
                 dropped += 1
     if dropped:

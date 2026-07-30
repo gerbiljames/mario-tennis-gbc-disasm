@@ -860,13 +860,13 @@ RunTwoOptionSelect:
 	and PADF_LEFT ; $5423
 	jr z, .inputLoop ; $5425
 	ld b, $00 ; $5427
-	sound $5e ; $5429
+	sound SFX_MENU_MOVE ; $5429
 .inputLoop:
 	ldh a, [hInputRisingEdge] ; $542b
 	and PADF_RIGHT ; $542d
 	jr z, .checkUp ; $542f
 	ld b, $01 ; $5431
-	sound $5e ; $5433
+	sound SFX_MENU_MOVE ; $5433
 .checkUp:
 	ldh a, [hInputRisingEdge] ; $5435
 	and PADF_A ; $5437
@@ -894,23 +894,23 @@ RunTwoOptionSelect:
 	ld a, b ; $545f
 	and a ; $5460
 	jr z, .done ; $5461
-	sound $62 ; $5463
+	sound SFX_MENU_CANCEL ; $5463
 	ret ; $5465
 .done:
-	sound $5f ; $5466
+	sound SFX_MENU_SELECT ; $5466
 	ret ; $5468
 RunTwoOptionSelectB:
 	ldh a, [hInputRisingEdge] ; $5469
 	and PADF_LEFT ; $546b
 	jr z, .inputLoop ; $546d
 	ld b, $00 ; $546f
-	sound $5e ; $5471
+	sound SFX_MENU_MOVE ; $5471
 .inputLoop:
 	ldh a, [hInputRisingEdge] ; $5473
 	and PADF_RIGHT ; $5475
 	jr z, .checkUp ; $5477
 	ld b, $01 ; $5479
-	sound $5e ; $547b
+	sound SFX_MENU_MOVE ; $547b
 .checkUp:
 	ldh a, [hInputRisingEdge] ; $547d
 	and PADF_A ; $547f
@@ -938,10 +938,10 @@ RunTwoOptionSelectB:
 	ld a, b ; $54a7
 	and a ; $54a8
 	jr z, .done ; $54a9
-	sound $62 ; $54ab
+	sound SFX_MENU_CANCEL ; $54ab
 	ret ; $54ad
 .done:
-	sound $5f ; $54ae
+	sound SFX_MENU_SELECT ; $54ae
 	ret ; $54b0
 DrawDecimalNumberSprites:
 	push af ; $54b1
@@ -1552,7 +1552,7 @@ PlayScreenSequence1:
 	ld a, $01 ; $77c9
 	ld hl, TaskUpdateObjects_18 ; $77cb
 	call RegisterFrameTask ; $77ce
-	sound $2c ; $77d1
+	sound BGM_CREDITS ; $77d1
 	call EnableLCD ; $77d3
 	script_fade_in $02 ; $77d6
 	call WaitFadeEnd ; $77db
@@ -1584,7 +1584,7 @@ PlayScreenSequence1:
 	call EnableLCD ; $781e
 	script_fade_in $40 ; $7821
 	call WaitFadeEnd ; $7826
-	sound $2d ; $7829
+	sound BGM_THE_END ; $7829
 .waitInput:
 	call AdvanceFrame ; $782b
 	ldh a, [hInputPressed] ; $782e
@@ -1685,7 +1685,7 @@ QueueScreen1Sprites_SpriteTemplate:
 	oam_sprite_end
 PlayScreenSequence2:
 	call ResetScrollAndCamera ; $792c
-	sound $09 ; $792f
+	sound BGM_WIN ; $792f
 	call LookupScreen2AssetIdA ; $7931
 	farcall LoadScreenAssetRecord ; $7934
 	farcall QueueWram3MapToVRAM ; $7937
@@ -1720,7 +1720,7 @@ PlayScreenSequence2:
 	jr z, .scene2Wait ; $7981
 	jr .scene3 ; $7983
 .scene2Wait:
-	sound $2c ; $7985
+	sound BGM_CREDITS ; $7985
 	farcall RunEndingCreditsSequence ; $7987
 .scene3:
 	wram_bank $03 ; $798a
@@ -1752,7 +1752,7 @@ PlayScreenSequence2:
 	ld a, $01 ; $79d4
 	ld hl, QueueScreen2Sprites ; $79d6
 	call RegisterFrameTask ; $79d9
-	sound $2d ; $79dc
+	sound BGM_THE_END ; $79dc
 .scene5:
 	call AdvanceFrame ; $79de
 	ldh a, [hInputPressed] ; $79e1

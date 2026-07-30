@@ -91,7 +91,7 @@ RestaurantPlazaArrival02_13:
 	script_fade_in $08 ; $4191
 	call WaitFadeEnd ; $4196
 	script_wait_frames $05 ; $4199
-	sound $50 ; $41a0
+	sound SFX_STOP ; $41a0
 	script_wait_frames $05 ; $41a2
 	script_move_target ACTOR_PLAYER, $1500, $0d00 ; $41a9
 	script_move_target ACTOR_PARTNER, $1500, $0b00 ; $41b4
@@ -619,7 +619,7 @@ TourPointerTiles_13:
 TourPointerPalette_13:
 	INCLUDE "data/bank_013/palettes_4d70.asm" ; $4d70, 8 bytes (palettes)
 AnimateDoorOpen_13:
-	sound $71 ; $4d78
+	sound SFX_DOOR ; $4d78
 	script_copy_scene_rect $14, $08, $06, $15, $02, $02 ; $4d7a
 	script_copy_scene_rect $00, $15, $14, $08, $02, $02 ; $4d89
 	script_wait_frames $02 ; $4d98
@@ -629,7 +629,7 @@ AnimateDoorOpen_13:
 	script_wait_frames $02 ; $4dc4
 	ret ; $4dcb
 AnimateDoorClose_13:
-	sound $71 ; $4dcc
+	sound SFX_DOOR ; $4dcc
 	script_copy_scene_rect $04, $15, $14, $08, $02, $02 ; $4dce
 	script_wait_frames $01 ; $4ddd
 	script_copy_scene_rect $02, $15, $14, $08, $02, $02 ; $4de4
@@ -734,7 +734,7 @@ DormRoomTile0F_13:
 	script_move_target ACTOR_PLAYER, $0b00, $1400 ; $4f97
 	script_wait_frames $0a ; $4fa2
 	script_face_toward ACTOR_PLAYER, $03 ; $4fa9
-	ld a, $06 ; $4fb1
+	ld a, STORYLOC_ACADEMY_WING ; $4fb1
 	ld [wStoryModeCurrentLocation], a ; $4fb3
 	ld a, $0d ; $4fb6
 	ld [wStoryModeEntryPoint], a ; $4fb8
@@ -758,7 +758,7 @@ DormRoomTile0F_13:
 	script_set_speed ACTOR_PLAYER, $0030 ; $4ff1
 	script_move_target ACTOR_PLAYER, $0b00, $1400 ; $4ff9
 	script_wait_frames $0a ; $5004
-	ld a, $06 ; $500b
+	ld a, STORYLOC_ACADEMY_WING ; $500b
 	ld [wStoryModeCurrentLocation], a ; $500d
 	ld a, $0d ; $5010
 	ld [wStoryModeEntryPoint], a ; $5012
@@ -786,7 +786,7 @@ DormRoomInitScript_13:
 	ld a, [wStoryModeEntryPoint] ; $504c
 	cp $0f ; $504f
 	jp z, DormRoomNpc03_13.walkToBed ; $5051
-	sound $1c ; $5054
+	sound BGM_DORM_ROOM ; $5054
 	ld a, [wStoryModeEntryPoint] ; $5056
 	cp $01 ; $5059
 	jp z, DormRoomNpc03_13.byStage ; $505b
@@ -1093,7 +1093,7 @@ DormRoomNpc03_13:
 	script_wait_idle ACTOR_PLAYER ; $539b
 	ret ; $53a0
 .walkToBed:
-	sound $41 ; $53a1
+	sound JINGLE_DONE_FOR_THE_DAY ; $53a1
 	script_set_speed ACTOR_PLAYER, $0010 ; $53a3
 	script_player_speed $0040 ; $53ab
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $53b1
@@ -1111,7 +1111,7 @@ DormRoomNpc03_13:
 	script_wait_frames $b4 ; $53ee
 	script_fade_in $04 ; $53f5
 	call WaitJingleEnd ; $53fa
-	sound $1c ; $53fd
+	sound BGM_DORM_ROOM ; $53fd
 	script_wait_frames $0a ; $53ff
 	ld a, $03 ; $5406
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $5408
@@ -1285,9 +1285,9 @@ DormRoomNpc03_13:
 .dayEnd:
 	farcall InitDialogueTextCursor ; $564b
 	script_speak $03 ; $564e
-	sound $00 ; $5653
+	sound BGM_NONE ; $5653
 	script_wait_frames $02 ; $5655
-	sound $41 ; $565c
+	sound JINGLE_DONE_FOR_THE_DAY ; $565c
 	script_set_anim ACTOR_PLAYER, $03 ; $565e
 	script_set_anim $03, $03 ; $5665
 	script_wait_idle $03 ; $566c
@@ -1298,7 +1298,7 @@ DormRoomNpc03_13:
 	ld a, $02 ; $567c
 	ld [wUnusedExitLocationMirror], a ; $567e
 	ld [wStoryModeExitLocationRequest], a ; $5681
-	ld b, $0a ; $5684
+	ld b, STORYLOC_DORM_ROOM ; $5684
 	ld c, $01 ; $5686
 	farcall SaveStoryReturnPoint ; $5688
 	farcall SaveStorySlotWithTimer ; $568b
@@ -1716,7 +1716,7 @@ AcademyTopicIslandOpen:
 	farcall InitDialogueTextCursor ; $5a24
 	ret ; $5a27
 ShowStoryNarration_13:
-	sound $00 ; $5a28
+	sound BGM_NONE ; $5a28
 	script_set_position $03, $3f00, $3f00 ; $5a2a
 	script_set_position $04, $3f00, $3f00 ; $5a35
 	script_set_active ACTOR_PLAYER, $00 ; $5a40
@@ -1730,7 +1730,7 @@ ShowStoryNarration_13:
 .setText:
 	script_set_text Text_30_496 ; $5a76
 	call ShowStoryNarration_13 ; $5a7c
-	ld a, $14 ; $5a7f
+	ld a, STORYLOC_ACADEMY_ENTRANCE ; $5a7f
 	ld [wStoryModeCurrentLocation], a ; $5a81
 	ld a, $0a ; $5a84
 	ld [wStoryModeEntryPoint], a ; $5a86
@@ -1741,7 +1741,7 @@ ShowStoryNarration_13:
 .setText2:
 	script_set_text Text_30_497 ; $5a92
 	call ShowStoryNarration_13 ; $5a98
-	ld a, $15 ; $5a9b
+	ld a, STORYLOC_TOURNAMENT_COURTYARD ; $5a9b
 	ld [wStoryModeCurrentLocation], a ; $5a9d
 	ld a, $0f ; $5aa0
 	ld [wStoryModeEntryPoint], a ; $5aa2
@@ -1752,7 +1752,7 @@ ShowStoryNarration_13:
 .setText3:
 	script_set_text Text_30_496 ; $5aae
 	call ShowStoryNarration_13 ; $5ab4
-	ld a, $14 ; $5ab7
+	ld a, STORYLOC_ACADEMY_ENTRANCE ; $5ab7
 	ld [wStoryModeCurrentLocation], a ; $5ab9
 	ld a, $0a ; $5abc
 	ld [wStoryModeEntryPoint], a ; $5abe
@@ -2602,13 +2602,49 @@ VarsityCourtTourSpritePtrs_13:
 	dw VarsityCourtTourSprite2_13 ; record 2
 	dw VarsityCourtTourSprite3_13 ; record 3
 VarsityCourtTourSprite0_13:
-	INCBIN "data/bank_013/d_6707.bin" ; $6707, 33 bytes
+	; $6707, 33 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $20, $08, $02, $00
+	oam_sprite $10, $10, $04, $00
+	oam_sprite $20, $10, $06, $00
+	oam_sprite $10, $18, $08, $00
+	oam_sprite $20, $18, $0a, $00
+	oam_sprite $10, $20, $0c, $00
+	oam_sprite $20, $20, $0e, $00
+	oam_sprite_end
 VarsityCourtTourSprite1_13:
-	INCBIN "data/bank_013/d_6728.bin" ; $6728, 33 bytes
+	; $6728, 33 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $20, $08, $02, $00
+	oam_sprite $10, $10, $04, $00
+	oam_sprite $20, $10, $06, $00
+	oam_sprite $10, $18, $08, $00
+	oam_sprite $20, $18, $0a, $00
+	oam_sprite $10, $20, $0c, $00
+	oam_sprite $20, $20, $0e, $00
+	oam_sprite_end
 VarsityCourtTourSprite2_13:
-	INCBIN "data/bank_013/d_6749.bin" ; $6749, 33 bytes
+	; $6749, 33 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $20, $08, $02, $00
+	oam_sprite $10, $10, $04, $00
+	oam_sprite $20, $10, $06, $00
+	oam_sprite $10, $18, $08, $00
+	oam_sprite $20, $18, $0a, $00
+	oam_sprite $10, $20, $0c, $00
+	oam_sprite $20, $20, $0e, $00
+	oam_sprite_end
 VarsityCourtTourSprite3_13:
-	INCBIN "data/bank_013/d_676a.bin" ; $676a, 33 bytes
+	; $676a, 33 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $20, $08, $02, $00
+	oam_sprite $10, $10, $04, $00
+	oam_sprite $20, $10, $06, $00
+	oam_sprite $10, $18, $08, $00
+	oam_sprite $20, $18, $0a, $00
+	oam_sprite $10, $20, $0c, $00
+	oam_sprite $20, $20, $0e, $00
+	oam_sprite_end
 VarsityCourtTourLzPtrs_13:
 	; $678b, 8 bytes (records:2)
 	dw VarsityCourtTourLz0_13 ; record 0
@@ -2844,7 +2880,7 @@ VarsityCourtANpc03_13:
 	script_set_anim $03, $03 ; $6d4a
 	script_wait_idle $03 ; $6d51
 	script_speak $03 ; $6d56
-	ld a, $07 ; $6d5b
+	ld a, STORYLOC_COURTYARD ; $6d5b
 	ld [wStoryModeCurrentLocation], a ; $6d5d
 	ld a, $0d ; $6d60
 	ld [wStoryModeEntryPoint], a ; $6d62
@@ -2959,7 +2995,7 @@ VarsityCourtBNpc03_13:
 	script_set_anim $03, $03 ; $6fbc
 	script_wait_idle $03 ; $6fc3
 	script_speak $03 ; $6fc8
-	ld a, $07 ; $6fcd
+	ld a, STORYLOC_COURTYARD ; $6fcd
 	ld [wStoryModeCurrentLocation], a ; $6fcf
 	ld a, $0d ; $6fd2
 	ld [wStoryModeEntryPoint], a ; $6fd4
@@ -3140,7 +3176,7 @@ SinglesTravelingTeamVictoryCutscene:
 	add $04 ; $7383
 	ld c, a ; $7385
 	farcall RunStorySceneByMode ; $7386
-	ld a, $00 ; $7389
+	ld a, STORYLOC_MAIN_MENU ; $7389
 	ld [wStoryModeCurrentLocation], a ; $738b
 	ld a, $0a ; $738e
 	ld [wStoryModeEntryPoint], a ; $7390
@@ -3357,7 +3393,7 @@ DoublesTravelingTeamVictoryCutscene:
 	call BeginFadeOut ; $78a8
 	call WaitFadeEnd ; $78ab
 	call PlayDoublesTravelingTeamScreenSequence_13 ; $78ae
-	ld a, $00 ; $78b1
+	ld a, STORYLOC_MAIN_MENU ; $78b1
 	ld [wStoryModeCurrentLocation], a ; $78b3
 	ld a, $0a ; $78b6
 	ld [wStoryModeEntryPoint], a ; $78b8
@@ -3412,7 +3448,7 @@ RunTravelingTeamBracketIfWon_13:
 	jp z, .eq01 ; $79a0
 	ret ; $79a3
 .eq01:
-	ld a, $07 ; $79a4
+	ld a, STORYLOC_COURTYARD ; $79a4
 	ld [wStoryModeCurrentLocation], a ; $79a6
 	ld a, $0e ; $79a9
 	ld [wStoryModeEntryPoint], a ; $79ab

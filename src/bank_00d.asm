@@ -20,7 +20,7 @@ InitMinigameFromConfig:
 	add hl, bc ; $4021
 	ld a, [hl] ; $4022
 	ld [wGameMode], a ; $4023
-	ld a, $02 ; $4026
+	ld a, MATCHLIST_TRAINING ; $4026
 	ld [wCurrentMinigameStoryMatch], a ; $4028
 	ld hl, $0004 ; $402b
 	add hl, bc ; $402e
@@ -39,7 +39,7 @@ InitMinigameFromConfig:
 	ld a, [wStoryModeMainCharacterOverworldSprite] ; $4046
 	ld [wMatchPlayerChar], a ; $4049
 	ld a, [wMatchOpponentChar] ; $404c
-	cp $ff ; $404f
+	cp CHAR_NONE ; $404f
 	jr z, .restore ; $4051
 	ld b, a ; $4053
 	ld c, $02 ; $4054
@@ -71,7 +71,7 @@ InitMinigameFromConfig:
 .done:
 	ret ; $407e
 StartMinigameByID:
-	sub $12 ; $407f
+	sub MINIGAME_TENNIS_MACHINE_1 ; $407f
 	ld l, a ; $4081
 	ld h, $00 ; $4082
 	add hl, hl ; $4084
@@ -128,7 +128,7 @@ InitMinigameScore:
 	ld [hl+], a ; $40e8
 	ld [hl], d ; $40e9
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $40ea
-	sub $1a ; $40ed
+	sub MINIGAME_TENNIS_MACHINE_HIGH_SCORE ; $40ed
 	ret c ; $40ef
 	add LOW(MinigameRecordSlotIds) ; $40f0
 	ld l, a ; $40f2
@@ -156,11 +156,11 @@ MinigameRecordSlotIds:
 	db $01, $00, $02, $03, $04, $05, $06, $07, $08, $09, $0a ; 0x00
 GetMinigameTargetScore:
 	ld de, $0000 ; $4121
-	cp $12 ; $4124
+	cp MINIGAME_TENNIS_MACHINE_1 ; $4124
 	ret c ; $4126
-	cp $1c ; $4127
+	cp MINIGAME_BOO_BLAST ; $4127
 	jr nc, .ge1c ; $4129
-	sub $12 ; $412b
+	sub MINIGAME_TENNIS_MACHINE_1 ; $412b
 	add a ; $412d
 	add LOW(MinigamePracticeTargetScores) ; $412e
 	ld l, a ; $4130
@@ -172,7 +172,7 @@ GetMinigameTargetScore:
 	ld e, a ; $4137
 	ret ; $4138
 .ge1c:
-	sub $1c ; $4139
+	sub MINIGAME_BOO_BLAST ; $4139
 	add a ; $413b
 	add a ; $413c
 	add b ; $413d
@@ -203,27 +203,61 @@ MinigameDefaultRecordValue01:
 	dw $270f ; record 1
 	dw $270f ; record 2
 MinigameTargetScores:
-	; $415e, 2 bytes (records:8)
-; 0 records x 8 bytes
-	db $1e, $00
+	; $415e, 2 bytes (records:2)
+	dw $001e ; record 0
 MinigameDefaultRecordValue02:
-	INCBIN "data/bank_00d/d_4160.bin" ; $4160, 8 bytes
+	; $4160, 8 bytes (records:2)
+	dw $003c ; record 0
+	dw $270f ; record 1
+	dw $0000 ; record 2
+	dw $001e ; record 3
 MinigameDefaultRecordValue03:
-	INCBIN "data/bank_00d/d_4168.bin" ; $4168, 8 bytes
+	; $4168, 8 bytes (records:2)
+	dw $003c ; record 0
+	dw $270f ; record 1
+	dw $0000 ; record 2
+	dw $0015 ; record 3
 MinigameDefaultRecordValue04:
-	INCBIN "data/bank_00d/d_4170.bin" ; $4170, 8 bytes
+	; $4170, 8 bytes (records:2)
+	dw $0015 ; record 0
+	dw $270f ; record 1
+	dw $0000 ; record 2
+	dw $001e ; record 3
 MinigameDefaultRecordValue05:
-	INCBIN "data/bank_00d/d_4178.bin" ; $4178, 8 bytes
+	; $4178, 8 bytes (records:2)
+	dw $003c ; record 0
+	dw $270f ; record 1
+	dw $0000 ; record 2
+	dw $0032 ; record 3
 MinigameDefaultRecordValue06:
-	INCBIN "data/bank_00d/d_4180.bin" ; $4180, 8 bytes
+	; $4180, 8 bytes (records:2)
+	dw $0064 ; record 0
+	dw $270f ; record 1
+	dw $0000 ; record 2
+	dw $001e ; record 3
 MinigameDefaultRecordValue07:
-	INCBIN "data/bank_00d/d_4188.bin" ; $4188, 8 bytes
+	; $4188, 8 bytes (records:2)
+	dw $003c ; record 0
+	dw $270f ; record 1
+	dw $0000 ; record 2
+	dw $00c8 ; record 3
 MinigameDefaultRecordValue08:
-	INCBIN "data/bank_00d/d_4190.bin" ; $4190, 8 bytes
+	; $4190, 8 bytes (records:2)
+	dw $012c ; record 0
+	dw $270f ; record 1
+	dw $0000 ; record 2
+	dw $0064 ; record 3
 MinigameDefaultRecordValue09:
-	INCBIN "data/bank_00d/d_4198.bin" ; $4198, 8 bytes
+	; $4198, 8 bytes (records:2)
+	dw $012c ; record 0
+	dw $270f ; record 1
+	dw $0000 ; record 2
+	dw $0001 ; record 3
 MinigameDefaultRecordValue10:
-	INCBIN "data/bank_00d/d_41a0.bin" ; $41a0, 6 bytes
+	; $41a0, 6 bytes (records:2)
+	dw $0001 ; record 0
+	dw $270f ; record 1
+	dw $0000 ; record 2
 GetDefaultMinigameRecordValue:
 	add a ; $41a6
 	add LOW(MinigameDefaultRecordValuePointers) ; $41a7
@@ -609,10 +643,10 @@ ShowMinigamePointResult:
 	ld a, [wPointWinLoseFlag] ; $4412
 	add a ; $4415
 	jr c, .lostPoint ; $4416
-	sound $09 ; $4418
+	sound BGM_WIN ; $4418
 	jr .showBanner ; $441a
 .lostPoint:
-	sound $0a ; $441c
+	sound BGM_LOSE ; $441c
 .showBanner:
 	farcall StepMatchFrame ; $441e
 	ld a, d ; $4421
@@ -1140,7 +1174,7 @@ PlayMinigameCountdown:
 	ld [wPauseDisabled], a ; $48d5
 	ld a, [wCurrentBGM] ; $48d8
 	push af ; $48db
-	sound $00 ; $48dc
+	sound BGM_NONE ; $48dc
 	ld a, $14 ; $48de
 	farcall StepMatchFrames ; $48e0
 	ld a, $03 ; $48e3
@@ -1152,7 +1186,7 @@ PlayMinigameCountdown:
 	ld a, [wMatchFramesAbort] ; $48ee
 	and a ; $48f1
 	jr nz, .nonZero ; $48f2
-	sound $74 ; $48f4
+	sound SFX_COUNTDOWN ; $48f4
 .nonZero:
 	ld a, $11 ; $48f6
 	farcall SpawnCourtBannerObj ; $48f8
@@ -1164,7 +1198,7 @@ PlayMinigameCountdown:
 	ld a, [wMatchFramesAbort] ; $4904
 	and a ; $4907
 	jr nz, .nonZero2 ; $4908
-	sound $75 ; $490a
+	sound SFX_COUNTDOWN_GO ; $490a
 .nonZero2:
 	ld a, $10 ; $490c
 	farcall ShowCourtBanner ; $490e

@@ -42,7 +42,7 @@ RunIntroCutscene:
 	ldh [hShowDebugConsole], a ; $403a
 	ld hl, rLCDC ; $403c
 	res 3, [hl] ; $403f
-	sound $01 ; $4041
+	sound BGM_INTRO ; $4041
 	ld a, $01 ; $4043
 	ld hl, CheckIntroSkipInput ; $4045
 	call RegisterFrameTask ; $4048
@@ -2309,7 +2309,7 @@ RunTitleScreen:
 	ld a, $01 ; $763f
 	ld hl, QueueTitleSprite ; $7641
 	call RegisterFrameTask ; $7644
-	sound $02 ; $7647
+	sound BGM_TITLE_SCREEN ; $7647
 	call EnableLCD ; $7649
 	script_fade_in $04 ; $764c
 	call WaitFadeEnd ; $7651
@@ -2333,15 +2333,15 @@ RunTitleScreen:
 	jr z, .playSfx2 ; $767c
 	jr .loop ; $767e
 .playSfx:
-	sound $00 ; $7680
-	sound $60 ; $7682
+	sound BGM_NONE ; $7680
+	sound SFX_MENU_DECIDE ; $7682
 	call ClearFrameTasks ; $7684
 	ld c, $10 ; $7687
 	call BeginFadeOut ; $7689
 	call WaitFadeEnd ; $768c
 	xor a ; $768f
 	ret ; $7690
-	sound $00 ; $7691
+	sound BGM_NONE ; $7691
 	call ClearFrameTasks ; $7693
 	ld c, $20 ; $7696
 	call BeginFadeOut ; $7698
@@ -2351,7 +2351,7 @@ RunTitleScreen:
 	ld a, $01 ; $76a3
 	ret ; $76a5
 .playSfx2:
-	sound $00 ; $76a6
+	sound BGM_NONE ; $76a6
 	call ClearFrameTasks ; $76a8
 	ld c, $08 ; $76ab
 	call BeginFadeOut ; $76ad

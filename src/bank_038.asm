@@ -440,12 +440,12 @@ MoveMenuCursorBoxRemote_38:
 .checkLock:
 	bit 0, a ; $428d
 	jr z, .checkUnlock ; $428f
-	sound $5f ; $4291
+	sound SFX_MENU_SELECT ; $4291
 	ld a, [wMenuCursorLockFlags] ; $4293
 	ld b, a ; $4296
 	and $01 ; $4297
 	jr nz, .compare ; $4299
-	sound $5f ; $429b
+	sound SFX_MENU_SELECT ; $429b
 	ld a, b ; $429d
 	or $01 ; $429e
 	ld [wMenuCursorLockFlags], a ; $42a0
@@ -453,7 +453,7 @@ MoveMenuCursorBoxRemote_38:
 .checkUnlock:
 	bit 1, a ; $42a5
 	jr z, .compare ; $42a7
-	sound $62 ; $42a9
+	sound SFX_MENU_CANCEL ; $42a9
 	ld a, [wMenuCursorLockFlags] ; $42ab
 	ld b, a ; $42ae
 	and $03 ; $42af
@@ -578,7 +578,7 @@ MoveMenuCursor2GridRemote_38:
 	ld b, a ; $435f
 	and $02 ; $4360
 	jr nz, .compare2 ; $4362
-	sound $5f ; $4364
+	sound SFX_MENU_SELECT ; $4364
 	ld a, b ; $4366
 	or $02 ; $4367
 	ld [wMenuCursorLockFlags], a ; $4369
@@ -586,7 +586,7 @@ MoveMenuCursor2GridRemote_38:
 .checkUnlock2:
 	bit 1, a ; $436e
 	jr z, .compare2 ; $4370
-	sound $62 ; $4372
+	sound SFX_MENU_CANCEL ; $4372
 	ld a, [wMenuCursorLockFlags] ; $4374
 	ld b, a ; $4377
 	and $03 ; $4378
@@ -833,7 +833,7 @@ RunMatchTypeMenu:
 	jr nz, .done ; $44ce
 	jr .inputLoop ; $44d0
 .confirm:
-	sound $5f ; $44d2
+	sound SFX_MENU_SELECT ; $44d2
 	ld c, $10 ; $44d4
 	call BeginFadeOut ; $44d6
 	call WaitFadeEnd ; $44d9
@@ -841,7 +841,7 @@ RunMatchTypeMenu:
 	xor a ; $44df
 	ret ; $44e0
 .done:
-	sound $62 ; $44e1
+	sound SFX_MENU_CANCEL ; $44e1
 	ld c, $10 ; $44e3
 	call BeginFadeOut ; $44e5
 	call WaitFadeEnd ; $44e8
@@ -872,7 +872,7 @@ RunMatchTypeMenuLink:
 	push af ; $4522
 	farcall RunLinkInputFrame ; $4523
 	pop af ; $4526
-	sound $14 ; $4527
+	sound BGM_COURT_WAREHOUSE ; $4527
 .inputLoop:
 	ldh a, [hLinkInput] ; $4529
 	ld [wMenuInputPressed], a ; $452b
@@ -894,7 +894,7 @@ RunMatchTypeMenuLink:
 	jr nz, .done ; $454c
 	jr .inputLoop ; $454e
 .confirm:
-	sound $5f ; $4550
+	sound SFX_MENU_SELECT ; $4550
 	push af ; $4552
 	farcall SyncLinkFrame ; $4553
 	pop af ; $4556
@@ -904,13 +904,13 @@ RunMatchTypeMenuLink:
 	ld c, $10 ; $455d
 	call BeginFadeOut ; $455f
 	call WaitFadeEnd ; $4562
-	sound $00 ; $4565
-	sound $50 ; $4567
+	sound BGM_NONE ; $4565
+	sound SFX_STOP ; $4567
 	call ClearFrameTasks ; $4569
 	xor a ; $456c
 	ret ; $456d
 .done:
-	sound $62 ; $456e
+	sound SFX_MENU_CANCEL ; $456e
 	push af ; $4570
 	farcall SyncLinkFrame ; $4571
 	pop af ; $4574
@@ -920,8 +920,8 @@ RunMatchTypeMenuLink:
 	ld c, $10 ; $457b
 	call BeginFadeOut ; $457d
 	call WaitFadeEnd ; $4580
-	sound $00 ; $4583
-	sound $50 ; $4585
+	sound BGM_NONE ; $4583
+	sound SFX_STOP ; $4585
 	call ClearFrameTasks ; $4587
 	ld a, $ff ; $458a
 	ret ; $458c
@@ -1038,7 +1038,7 @@ SetupMatchTypeMenuScreen:
 	farcall LoadIndexedPalette ; $4662
 	ret ; $4665
 RefreshMatchTypeLabelRow:
-	sound $5e ; $4666
+	sound SFX_MENU_MOVE ; $4666
 	wram_bank $03 ; $4668
 	ld de, wShadowTilemap + 15 * TILEMAP_WIDTH + 1 ; $466e
 	ld b, $12 ; $4671
@@ -1094,7 +1094,7 @@ AdjustMatchTypeSetting:
 	jr nz, .increase ; $4758
 	ret ; $475a
 .decrease:
-	sound $5e ; $475b
+	sound SFX_MENU_MOVE ; $475b
 	ld c, $01 ; $475d
 	call GetMenuCursorLinearIndex ; $475f
 	or a ; $4762
@@ -1127,7 +1127,7 @@ AdjustMatchTypeSetting:
 	ld [wMatchFormatSets], a ; $478d
 	ret ; $4790
 .increase:
-	sound $5e ; $4791
+	sound SFX_MENU_MOVE ; $4791
 	ld c, $01 ; $4793
 	call GetMenuCursorLinearIndex ; $4795
 	or a ; $4798
@@ -1160,7 +1160,7 @@ AdjustMatchTypeSetting:
 	ld [wMatchFormatSets], a ; $47c3
 	ret ; $47c6
 RunCharacterSelectScreen:
-	sound $03 ; $47c7
+	sound BGM_MENU ; $47c7
 	wram_bank $02 ; $47c9
 	ld a, b ; $47cf
 	ld [wCharSelectIsPartner], a ; $47d0
@@ -1227,7 +1227,7 @@ RunCharacterSelectScreen:
 	jr nz, .viewStats ; $4878
 	jr .redraw ; $487a
 .confirm:
-	sound $5f ; $487c
+	sound SFX_MENU_SELECT ; $487c
 	ld c, $10 ; $487e
 	call BeginFadeOut ; $4880
 	call WaitFadeEnd ; $4883
@@ -1273,7 +1273,7 @@ RunCharacterSelectScreen:
 	pop af ; $48d1
 	ret ; $48d2
 .cancel:
-	sound $62 ; $48d3
+	sound SFX_MENU_CANCEL ; $48d3
 	ld c, $10 ; $48d5
 	call BeginFadeOut ; $48d7
 	call WaitFadeEnd ; $48da
@@ -1286,7 +1286,7 @@ RunCharacterSelectScreen:
 	ld a, $ff ; $48ee
 	ret ; $48f0
 .viewStats:
-	sound $5e ; $48f1
+	sound SFX_MENU_MOVE ; $48f1
 	ldh a, [hWramBank] ; $48f3
 	push af ; $48f5
 	wram_bank $02 ; $48f6
@@ -1422,11 +1422,11 @@ SetupCharacterSelectScreen:
 	call SetCharSelectAnimations ; $4a02
 	call DrawCharacterSelectPrompt ; $4a05
 	farcall UploadGlyphBuffer ; $4a08
-	ld a, $00 ; $4a0b
+	ld a, CHAR_ALEX ; $4a0b
 	farcall LoadCharMugshotToBuffer ; $4a0d
 	ld de, $9200 + VRAM_BANK1 ; $4a10
 	farcall CopyMugshotBufferToVram ; $4a13
-	ld a, $01 ; $4a16
+	ld a, CHAR_NINA ; $4a16
 	farcall LoadCharMugshotToBuffer ; $4a18
 	ld de, $9300 + VRAM_BANK1 ; $4a1b
 	farcall CopyMugshotBufferToVram ; $4a1e
@@ -1434,11 +1434,11 @@ SetupCharacterSelectScreen:
 	ld a, [wCharSelectIsPartner] ; $4a27
 	or a ; $4a2a
 	jr z, .secondRow ; $4a2b
-	ld a, $02 ; $4a2d
+	ld a, CHAR_HARRY ; $4a2d
 	farcall LoadCharMugshotToBuffer ; $4a2f
 	ld de, $9200 + VRAM_BANK1 ; $4a32
 	farcall CopyMugshotBufferToVram ; $4a35
-	ld a, $03 ; $4a38
+	ld a, CHAR_KATE ; $4a38
 	farcall LoadCharMugshotToBuffer ; $4a3a
 	ld de, $9300 + VRAM_BANK1 ; $4a3d
 	farcall CopyMugshotBufferToVram ; $4a40
@@ -1484,7 +1484,7 @@ SetupCharacterSelectScreen:
 	call ReloadSelectedCharGfx ; $4aaa
 	ret ; $4aad
 RefreshCharacterSelectHighlight:
-	sound $5e ; $4aae
+	sound SFX_MENU_MOVE ; $4aae
 	call LoadCharSelectCharPalettes ; $4ab0
 	call LoadHighlightedCharPalette ; $4ab3
 	call SetCharSelectAnimations ; $4ab6
@@ -1550,28 +1550,28 @@ InitCharacterSelectChars:
 	ld hl, wCharPosX ; $4b51
 	ld c, $10 ; $4b54
 	call ClearMemory16 ; $4b56
-	ld a, $00 ; $4b59
+	ld a, CHAR_ALEX ; $4b59
 	farcall GetCharPaletteIndex ; $4b5b
 	ld e, a ; $4b5e
 	ld d, $00 ; $4b5f
 	wram_bank $04 ; $4b61
 	ld a, $00 ; $4b67
 	farcall InitChar ; $4b69
-	ld a, $01 ; $4b6c
+	ld a, CHAR_NINA ; $4b6c
 	farcall GetCharPaletteIndex ; $4b6e
 	ld e, a ; $4b71
 	ld d, $01 ; $4b72
 	wram_bank $05 ; $4b74
 	ld a, $01 ; $4b7a
 	farcall InitChar ; $4b7c
-	ld a, $02 ; $4b7f
+	ld a, CHAR_HARRY ; $4b7f
 	farcall GetCharPaletteIndex ; $4b81
 	ld e, a ; $4b84
 	ld d, $02 ; $4b85
 	wram_bank $06 ; $4b87
 	ld a, $02 ; $4b8d
 	farcall InitChar ; $4b8f
-	ld a, $03 ; $4b92
+	ld a, CHAR_KATE ; $4b92
 	farcall GetCharPaletteIndex ; $4b94
 	ld e, a ; $4b97
 	ld d, $03 ; $4b98
@@ -1862,7 +1862,7 @@ TickMenuBgScrollTask_38:
 	wram_bank ; $4e60
 	ret ; $4e64
 RunExhibitionCharSelectScreen:
-	sound $03 ; $4e65
+	sound BGM_MENU ; $4e65
 	wram_bank $03 ; $4e67
 	ld a, b ; $4e6d
 	ld [wCharSelectMode], a ; $4e6e
@@ -1951,7 +1951,7 @@ RunExhibitionCharSelectScreen:
 	xor a ; $4f34
 	ret ; $4f35
 .done:
-	sound $62 ; $4f36
+	sound SFX_MENU_CANCEL ; $4f36
 	ld c, $10 ; $4f38
 	call BeginFadeOut ; $4f3a
 	call WaitFadeEnd ; $4f3d
@@ -2143,7 +2143,7 @@ MoveCharGridCursorUp:
 	jr z, .prevPage ; $51f8
 	dec a ; $51fa
 	ld [wMenuCursorY], a ; $51fb
-	sound $5e ; $51fe
+	sound SFX_MENU_MOVE ; $51fe
 	jr .refresh ; $5200
 .prevPage:
 	ld a, [wCharGridPage] ; $5202
@@ -2155,7 +2155,7 @@ MoveCharGridCursorUp:
 	ld a, $03 ; $520c
 	jr .storePage ; $520e
 .beep:
-	sound $5e ; $5210
+	sound SFX_MENU_MOVE ; $5210
 .storePage:
 	ld [wCharGridPage], a ; $5212
 	call BuildVisiblePageSpriteList ; $5215
@@ -2168,7 +2168,7 @@ MoveCharGridCursorDown:
 	cp $02 ; $5220
 	jr z, .nextPage ; $5222
 	ld [wMenuCursorY], a ; $5224
-	sound $5e ; $5227
+	sound SFX_MENU_MOVE ; $5227
 	jr .refresh ; $5229
 .nextPage:
 	ld a, [wCharGridPage] ; $522b
@@ -2195,7 +2195,7 @@ MoveCharGridCursorDown:
 	dec a ; $524f
 	jr .beep ; $5250
 .storePage:
-	sound $5e ; $5252
+	sound SFX_MENU_MOVE ; $5252
 .beep:
 	ld [wCharGridPage], a ; $5254
 	call BuildVisiblePageSpriteList ; $5257
@@ -2224,7 +2224,7 @@ MoveCharGridCursorRight:
 	ld [wMenuCursorX], a ; $527f
 	call BuildVisiblePageSpriteList ; $5282
 	call RefreshCharInfoPanel ; $5285
-	sound $5e ; $5288
+	sound SFX_MENU_MOVE ; $5288
 	ret ; $528a
 MoveCharGridCursorLeft:
 	ld a, [wMenuCursorX] ; $528b
@@ -2248,7 +2248,7 @@ MoveCharGridCursorLeft:
 .store:
 	ld [wMenuCursorX], a ; $52b0
 	call RefreshCharInfoPanel ; $52b3
-	sound $5e ; $52b6
+	sound SFX_MENU_MOVE ; $52b6
 	ret ; $52b8
 HandleCharGridButtons:
 	ld a, [wMenuInputPressed] ; $52b9
@@ -2281,7 +2281,7 @@ HandleCharGridButtons:
 	call IsMarioCastCharacter ; $52e1
 	or a ; $52e4
 	jr z, .done ; $52e5
-	sound $5e ; $52e7
+	sound SFX_MENU_MOVE ; $52e7
 	ld a, [wCharGridHandedness] ; $52e9
 	cp $02 ; $52ec
 	jr z, .starChar ; $52ee
@@ -2352,10 +2352,10 @@ ConfirmCharGridSelection:
 	call GetGridSlotFromCursor ; $535d
 	ld b, a ; $5360
 	call DrawPlayerSlotPortrait ; $5361
-	sound $5f ; $5364
+	sound SFX_MENU_SELECT ; $5364
 	jr .advanceSlot ; $5366
 .emptyCell:
-	sound $62 ; $5368
+	sound SFX_MENU_CANCEL ; $5368
 	pop af ; $536a
 	wram_bank ; $536b
 	ret ; $536f
@@ -2407,7 +2407,7 @@ CancelCharGridSelection:
 	wram_bank ; $53c6
 	ret ; $53ca
 .clearSlot:
-	sound $62 ; $53cb
+	sound SFX_MENU_CANCEL ; $53cb
 	ld hl, wCharSelectSlotChars ; $53cd
 	ld a, [wCharSelectSlot] ; $53d0
 	add l ; $53d3
@@ -3518,7 +3518,7 @@ BuildCharGridFromUnlockFlags:
 	pop hl ; $5b5d
 	jr .next ; $5b5e
 .storeEmpty:
-	ld a, $ff ; $5b60
+	ld a, CHAR_NONE ; $5b60
 	ld [de], a ; $5b62
 .next:
 	inc de ; $5b63
@@ -4648,7 +4648,7 @@ RunCpuDifficultySubmenu:
 	jr .done ; $6241
 .cancel:
 	call CloseCpuDifficultyPanel ; $6243
-	sound $62 ; $6246
+	sound SFX_MENU_CANCEL ; $6246
 	wram_bank $03 ; $6248
 	ld hl, wCharSelectSlotDifficulty ; $624e
 	ld a, [wCharSelectSlot] ; $6251
@@ -4694,7 +4694,7 @@ RunCpuDifficultySubmenu:
 	call BuildVisiblePageSpriteList ; $6288
 	jr .advanceSlot ; $628b
 .confirm:
-	sound $5f ; $628d
+	sound SFX_MENU_SELECT ; $628d
 	call CloseCpuDifficultyPanel ; $628f
 	ld hl, wCharSelectSlotDifficulty ; $6292
 	ld a, [wCharSelectSlot] ; $6295
@@ -4760,12 +4760,12 @@ HandleCpuDifficultyInput:
 	jr nz, .increase ; $6318
 	ret ; $631a
 .decrease:
-	sound $5e ; $631b
+	sound SFX_MENU_MOVE ; $631b
 	ld a, [wCpuDifficultyCursor] ; $631d
 	dec a ; $6320
 	jr .wrap ; $6321
 .increase:
-	sound $5e ; $6323
+	sound SFX_MENU_MOVE ; $6323
 	ld a, [wCpuDifficultyCursor] ; $6325
 	inc a ; $6328
 .wrap:
@@ -4856,7 +4856,7 @@ RunLinkCharSelectScreen:
 	ldh [hLinkCursorPage], a ; $63c8
 	call ResetSerialState ; $63ca
 	call EnableTimerInterrupt ; $63cd
-	sound $03 ; $63d0
+	sound BGM_MENU ; $63d0
 	wram_bank $03 ; $63d2
 	ld a, $02 ; $63d8
 	ld [wCharGridHandedness], a ; $63da
@@ -4975,7 +4975,7 @@ RunLinkCharSelectScreen:
 .checkDone:
 	call ClearFrameTasks ; $64cb
 	call ProcessLinkSelectCommand ; $64ce
-	sound $5f ; $64d1
+	sound SFX_MENU_SELECT ; $64d1
 	push af ; $64d3
 	farcall SyncLinkFrame ; $64d4
 	pop af ; $64d7
@@ -5001,7 +5001,7 @@ RunLinkCharSelectScreen:
 	ret ; $6504
 .done:
 	call ClearFrameTasks ; $6505
-	sound $62 ; $6508
+	sound SFX_MENU_CANCEL ; $6508
 	push af ; $650a
 	farcall SyncLinkFrame ; $650b
 	pop af ; $650e
@@ -5322,7 +5322,7 @@ HandleLinkGridButtons:
 	call IsMarioCastCharacter ; $674e
 	or a ; $6751
 	jr z, .done ; $6752
-	sound $5e ; $6754
+	sound SFX_MENU_MOVE ; $6754
 	ld a, [$df00] ; $6756
 	cp $02 ; $6759
 	jr z, .starChar ; $675b
@@ -5359,7 +5359,7 @@ ConfirmLinkGridSelection:
 	call TestAndSetGridEntryTaken ; $6797
 	or a ; $679a
 	jr nz, .allSlotsFilled ; $679b
-	sound $5f ; $679d
+	sound SFX_MENU_SELECT ; $679d
 	call GetGridSlotFromCursor ; $679f
 	ld b, a ; $67a2
 	ld hl, wCharGridEntries ; $67a3
@@ -5401,7 +5401,7 @@ ConfirmLinkGridSelection:
 	call DrawPlayerSlotPortrait ; $67da
 	jr .refresh ; $67dd
 .allSlotsFilled:
-	sound $62 ; $67df
+	sound SFX_MENU_CANCEL ; $67df
 	pop af ; $67e1
 	wram_bank ; $67e2
 	ret ; $67e6
@@ -5441,7 +5441,7 @@ CancelLinkGridSelection:
 	ldh [hLinkCursorPage], a ; $682f
 	call RefreshCharInfoPanel ; $6831
 .clearTaken:
-	sound $62 ; $6834
+	sound SFX_MENU_CANCEL ; $6834
 	ld hl, wCharSelectSlotChars ; $6836
 	ld a, [wCharSelectSlot] ; $6839
 	add l ; $683c
@@ -6040,7 +6040,7 @@ RunLinkCpuDifficultySubmenu:
 	jr .done ; $6c02
 .cancel:
 	call CloseCpuDifficultyPanel ; $6c04
-	sound $62 ; $6c07
+	sound SFX_MENU_CANCEL ; $6c07
 	wram_bank $03 ; $6c09
 	call ClearPlayerSlotPortrait ; $6c0f
 	call BuildVisiblePageSpriteList ; $6c12
@@ -6297,7 +6297,7 @@ RetreatLinkGridSelection:
 	jr nz, .clearSlot ; $6d9c
 	ret ; $6d9e
 .clearSlot:
-	sound $62 ; $6d9f
+	sound SFX_MENU_CANCEL ; $6d9f
 	ld hl, wCharSelectSlotChars ; $6da1
 	ld a, [wCharSelectSlot] ; $6da4
 	add l ; $6da7
@@ -6441,13 +6441,13 @@ RunNameEntryScreen:
 	jr z, .backspace ; $6ea3
 	jr .accept ; $6ea5
 .beep:
-	sound $5e ; $6ea7
+	sound SFX_MENU_MOVE ; $6ea7
 .backspace:
-	sound $62 ; $6ea9
+	sound SFX_MENU_CANCEL ; $6ea9
 	call DeleteLastNameChar ; $6eab
 	jr .redraw ; $6eae
 .pressB:
-	sound $62 ; $6eb0
+	sound SFX_MENU_CANCEL ; $6eb0
 	ldh a, [hWramBank] ; $6eb2
 	push af ; $6eb4
 	wram_bank $03 ; $6eb5
@@ -6461,7 +6461,7 @@ RunNameEntryScreen:
 	call DeleteLastNameChar ; $6ec9
 	jr .redraw ; $6ecc
 .cancel:
-	sound $62 ; $6ece
+	sound SFX_MENU_CANCEL ; $6ece
 	ld c, $10 ; $6ed0
 	call BeginFadeOut ; $6ed2
 	call WaitFadeEnd ; $6ed5
@@ -6489,7 +6489,7 @@ RunNameEntryScreen:
 	ld hl, wNameEntryBuffer ; $6f08
 	ld bc, $000b ; $6f0b
 	call CopyMemoryBC ; $6f0e
-	sound $5f ; $6f11
+	sound SFX_MENU_SELECT ; $6f11
 	ld c, $10 ; $6f13
 	call BeginFadeOut ; $6f15
 	call WaitFadeEnd ; $6f18
@@ -6518,7 +6518,7 @@ RunNameEntryScreen:
 	ld c, $04 ; $6f51
 	call QueueVRAMCopy ; $6f53
 	call AdvanceFrame ; $6f56
-	sound $5f ; $6f59
+	sound SFX_MENU_SELECT ; $6f59
 	ld c, $10 ; $6f5b
 	call BeginFadeOut ; $6f5d
 	call WaitFadeEnd ; $6f60
@@ -6637,7 +6637,7 @@ Unused_38_NameEntryBlank:
 	; $7063, 15 bytes (bytes:15)
 	db $01, $03, $02, $00, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $00 ; 0x00
 HandleNameEntryCursorMove:
-	sound $5e ; $7072
+	sound SFX_MENU_MOVE ; $7072
 	ld a, [wMenuCursorY] ; $7074
 	cp $05 ; $7077
 	jr nz, .done ; $7079
@@ -6860,7 +6860,7 @@ AppendCharToName:
 	ld de, $98a0 ; $7318
 	ld c, $04 ; $731b
 	call QueueVRAMCopy ; $731d
-	sound $5f ; $7320
+	sound SFX_MENU_SELECT ; $7320
 	call GetEnteredNameLength ; $7322
 	cp $07 ; $7325
 	jr nz, .done ; $7327
@@ -7029,7 +7029,7 @@ RunLinkMatchSequence:
 	call ApplyMatchTypeSettingsLink ; $7441
 	farcall RunLinkCharSelectScreen ; $7444
 	push af ; $7447
-	ld a, $09 ; $7448
+	ld a, GAMEMODE_LINK_MATCH ; $7448
 	ld [wGameMode], a ; $744a
 	call StoreLinkMatchCharInfo ; $744d
 	pop af ; $7450
@@ -7146,8 +7146,8 @@ ExchangeLinkCharSelection:
 	xor a ; $7526
 	ldh [hLinkExchangeActive], a ; $7527
 	call ResetSerialState ; $7529
-	sound $50 ; $752c
-	sound $00 ; $752e
+	sound SFX_STOP ; $752c
+	sound BGM_NONE ; $752e
 	farcall ResyncLinkSession ; $7530
 	push af ; $7533
 	farcall RunLinkInputFrame ; $7534
@@ -7290,8 +7290,8 @@ ExchangeLinkUnlockFlags:
 	xor a ; $760a
 	ldh [hLinkExchangeActive], a ; $760b
 	call ResetSerialState ; $760d
-	sound $50 ; $7610
-	sound $00 ; $7612
+	sound SFX_STOP ; $7610
+	sound BGM_NONE ; $7612
 	farcall ResyncLinkSession ; $7614
 	push af ; $7617
 	farcall RunLinkInputFrame ; $7618

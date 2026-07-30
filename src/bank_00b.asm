@@ -18,7 +18,7 @@ StartDrillFromDefinition:
 	add hl, bc ; $401d
 	ld a, [hl] ; $401e
 	ld [wGameMode], a ; $401f
-	ld a, $02 ; $4022
+	ld a, MATCHLIST_TRAINING ; $4022
 	ld [wCurrentMinigameStoryMatch], a ; $4024
 	ld hl, $0004 ; $4027
 	add hl, bc ; $402a
@@ -37,7 +37,7 @@ StartDrillFromDefinition:
 	ld a, [wStoryModeMainCharacterOverworldSprite] ; $4042
 	ld [wMatchPlayerChar], a ; $4045
 	ld a, [wMatchOpponentChar] ; $4048
-	cp $ff ; $404b
+	cp CHAR_NONE ; $404b
 	jr z, .restore ; $404d
 	ld b, a ; $404f
 	ld c, $02 ; $4050
@@ -650,7 +650,7 @@ SyncPointWinLoseFlagTask:
 	ld a, $01 ; $4491
 	jr z, .checkCurrentServingPlayer ; $4493
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $4495
-	cp $01 ; $4498
+	cp MINIGAME_SERVICE_MATCH_2 ; $4498
 	jr nz, .checkRallyLength ; $449a
 	ld hl, wDrillServeTargetResult ; $449c
 	ld a, [wCurrentServingPlayer] ; $449f
@@ -1008,9 +1008,9 @@ RunTrainingDrillByID:
 	push af ; $4705
 	farcall InitMinigameMatchSettings ; $4706
 	pop af ; $4709
-	cp $24 ; $470a
+	cp MINIGAME_TWO_ON_ONE ; $470a
 	jp z, .doublesDrill ; $470c
-	cp $12 ; $470f
+	cp MINIGAME_TENNIS_MACHINE_1 ; $470f
 	jr nc, .minigame ; $4711
 	ld l, a ; $4713
 	ld h, $00 ; $4714
@@ -2092,7 +2092,7 @@ ServicePractice1Hook_BallHit:
 	ld a, $01 ; $4e95
 	ld [wDrillAbortCountdownActive], a ; $4e97
 	call ResetActiveCharState ; $4e9a
-	sound $5f ; $4e9d
+	sound SFX_MENU_SELECT ; $4e9d
 .done:
 	ret ; $4e9f
 ServicePractice1PointStartDrillPositions:
@@ -2666,7 +2666,13 @@ ServicePractice3PointStartDrillPositions:
 	dw $006c, $fd60 ; record 7
 	db $ff, $ff
 ServicePractice3TargetZones:
-	INCBIN "data/bank_00b/d_5302.bin" ; $5302, 34 bytes
+	; $5302, 34 bytes (records:8)
+; 4 records x 8 bytes
+	dw $ff94, $fd60, $0000, $feb0 ; record 0
+	dw $0000, $fd60, $006c, $feb0 ; record 1
+	dw $0000, $0150, $006c, $02a0 ; record 2
+	dw $ff94, $0150, $0000, $02a0 ; record 3
+	db $ff, $ff
 ServicePractice3HandlePointEnd:
 	farcall UpdateScorePanelDisplay ; $5324
 	call ServicePractice3QueueOutcomeMessage ; $5327
@@ -7267,11 +7273,11 @@ StrokePractice3Cases2:
 RunDoublesDrillMatch:
 	xor a ; $7258
 	ld [wMatchContext], a ; $7259
-	ld a, $08 ; $725c
+	ld a, GAMEMODE_MARIO_MINIGAME ; $725c
 	ld [wGameMode], a ; $725e
-	ld a, $02 ; $7261
+	ld a, MATCHLIST_TRAINING ; $7261
 	ld [wCurrentMinigameStoryMatch], a ; $7263
-	ld a, $24 ; $7266
+	ld a, MINIGAME_TWO_ON_ONE ; $7266
 	ld [wCurrentMinigameStoryMatch + 1], a ; $7268
 	ld a, $15 ; $726b
 	ld [wMatchBGM], a ; $726d
@@ -7279,19 +7285,19 @@ RunDoublesDrillMatch:
 	ld [wMatchIsDoubles], a ; $7272
 	ld a, $03 ; $7275
 	ld [wOnCourtCharCount], a ; $7277
-	ld a, $17 ; $727a
+	ld a, COURT_TWO_ON_ONE ; $727a
 	ld [wCurrentlyUsedCourt], a ; $727c
-	ld b, $1d ; $727f
+	ld b, CHAR_BOWSER ; $727f
 	ld a, b ; $7281
 	ld [wMatchPlayerChar], a ; $7282
 	ld c, $00 ; $7285
 	farcall InitCa00RecordFromCharId ; $7287
-	ld b, $1b ; $728a
+	ld b, CHAR_WALUIGI ; $728a
 	ld a, b ; $728c
 	ld [wMatchOpponentChar], a ; $728d
 	ld c, $02 ; $7290
 	farcall InitCa00RecordFromCharId ; $7292
-	ld b, $1e ; $7295
+	ld b, CHAR_WARIO ; $7295
 	ld c, $03 ; $7297
 	farcall InitCa00RecordFromCharId ; $7299
 	ld a, [wMinigameLevel] ; $729c
@@ -7338,9 +7344,12 @@ DoublesDrillMatchPtrs:
 	dw DrillResultBitsRow1 ; record 1
 	dw DrillResultBitsRow2 ; record 2
 DrillResultBitsRow0:
-	INCBIN "data/bank_00b/d_72e6.bin" ; $72e6, 7 bytes
+	; $72e6, 7 bytes (bytes:7)
+	db $06, $01, $24, $13, $12, $1e, $00 ; 0x00
 DrillResultBitsRow1:
-	INCBIN "data/bank_00b/d_72ed.bin" ; $72ed, 7 bytes
+	; $72ed, 7 bytes (bytes:7)
+	db $06, $03, $14, $0f, $0a, $64, $01 ; 0x00
 DrillResultBitsRow2:
-	INCBIN "data/bank_00b/d_72f4.bin" ; $72f4, 7 bytes
+	; $72f4, 7 bytes (bytes:7)
+	db $06, $05, $0e, $0a, $02, $b4, $03 ; 0x00
 	; $72fb, 3333 bytes fill to bank end (linker-padded)

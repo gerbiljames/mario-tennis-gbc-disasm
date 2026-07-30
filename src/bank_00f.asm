@@ -657,7 +657,7 @@ AwardsCeremonyTile02_0f:
 	add $04 ; $4e8e
 	ld c, a ; $4e90
 	farcall RunStorySceneByMode ; $4e91
-	ld a, $06 ; $4e94
+	ld a, STORYLOC_ACADEMY_WING ; $4e94
 	ld [wStoryModeCurrentLocation], a ; $4e96
 	ld a, $0f ; $4e99
 	ld [wStoryModeEntryPoint], a ; $4e9b
@@ -947,7 +947,7 @@ AwardsCeremonyTile02_0f:
 	or c ; $5569
 	ld c, a ; $556a
 	farcall RunStorySceneByMode ; $556b
-	ld a, $06 ; $556e
+	ld a, STORYLOC_ACADEMY_WING ; $556e
 	ld [wStoryModeCurrentLocation], a ; $5570
 	ld a, $0f ; $5573
 	ld [wStoryModeEntryPoint], a ; $5575
@@ -2514,7 +2514,7 @@ IslandOpenRoundCallCutscene:
 	call BeginFadeOut ; $71c1
 	call WaitFadeEnd ; $71c4
 	call ShowTournamentRankingBoard_0f ; $71c7
-	ld a, $19 ; $71ca
+	ld a, STORYLOC_TOURNAMENT ; $71ca
 	ld [wStoryModeCurrentLocation], a ; $71cc
 	ld a, $0a ; $71cf
 	ld [wStoryModeEntryPoint], a ; $71d1
@@ -2588,7 +2588,7 @@ IslandOpenRoundCallCutscene:
 	call BeginFadeOut ; $7361
 	call WaitFadeEnd ; $7364
 	call ShowTournamentRankingBoard_0f ; $7367
-	ld a, $19 ; $736a
+	ld a, STORYLOC_TOURNAMENT ; $736a
 	ld [wStoryModeCurrentLocation], a ; $736c
 	ld a, $0b ; $736f
 	ld [wStoryModeEntryPoint], a ; $7371
@@ -2704,7 +2704,7 @@ CheckIslandOpenVictoryTransition:
 	jr nz, .transition ; $746b
 	jr .stay ; $746d
 .transition:
-	ld a, $1b ; $746f
+	ld a, STORYLOC_ISLAND_SKY ; $746f
 	ld [wStoryModeCurrentLocation], a ; $7471
 	ld a, $08 ; $7474
 	ld [wStoryModeEntryPoint], a ; $7476

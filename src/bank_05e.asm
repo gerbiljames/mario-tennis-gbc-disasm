@@ -380,7 +380,7 @@ FetchText_5e:
 	ldh a, [hDebugStepMode] ; $6ecf
 	or a ; $6ed1
 	jr z, .restore ; $6ed2
-	sound $2c ; $6ed4
+	sound BGM_CREDITS ; $6ed4
 .restore:
 	pop hl ; $6ed6
 	pop de ; $6ed7

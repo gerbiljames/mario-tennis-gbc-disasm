@@ -1331,7 +1331,7 @@ RunMenuSelection:
 	jr c, .moveCursor ; $47f3
 	ld b, $00 ; $47f5
 .moveCursor:
-	sound $5e ; $47f7
+	sound SFX_MENU_MOVE ; $47f7
 	push de ; $47f9
 	xor a ; $47fa
 	ld [wTextArrowBlinkCounter], a ; $47fb
@@ -1384,7 +1384,7 @@ RunMenuSelection:
 .confirm:
 	ld a, b ; $4840
 	ld [wMenuCursorRow], a ; $4841
-	sound $5f ; $4844
+	sound SFX_MENU_SELECT ; $4844
 	push af ; $4846
 	push bc ; $4847
 	push de ; $4848
@@ -1410,14 +1410,14 @@ RunMenuSelection:
 	ldh a, [hInputRisingEdge] ; $486d
 	and PADF_START ; $486f
 	jp z, .checkB ; $4871
-	sound $62 ; $4874
+	sound SFX_MENU_CANCEL ; $4874
 	ld a, $ff ; $4876
 	jp .cancel ; $4878
 .checkB:
 	ldh a, [hInputPressed] ; $487b
 	and PADF_B ; $487d
 	jp z, .checkSideScroll ; $487f
-	sound $62 ; $4882
+	sound SFX_MENU_CANCEL ; $4882
 	ld a, $ff ; $4884
 	jr .cancel ; $4886
 .checkSideScroll:
@@ -1817,7 +1817,7 @@ RunMenuSelectionShared:
 	jr c, .playSfx ; $4b25
 	ld b, $00 ; $4b27
 .playSfx:
-	sound $5e ; $4b29
+	sound SFX_MENU_MOVE ; $4b29
 	push de ; $4b2b
 	xor a ; $4b2c
 	ld [wTextArrowBlinkCounter], a ; $4b2d
@@ -1872,7 +1872,7 @@ LoadOverworldSpriteDef:
 	call IsCursorOnAdjustRow ; $4b72
 	or a ; $4b75
 	jr nz, RunMenuSelectionShared.loop ; $4b76
-	sound $5f ; $4b78
+	sound SFX_MENU_SELECT ; $4b78
 	ld a, b ; $4b7a
 	ld [wMenuCursorRow], a ; $4b7b
 	push af ; $4b7e
@@ -1900,7 +1900,7 @@ LoadOverworldSpriteDef:
 	ldh a, [hInputRisingEdge] ; $4ba5
 	and PADF_START ; $4ba7
 	jp z, .checkInputPressed ; $4ba9
-	sound $62 ; $4bac
+	sound SFX_MENU_CANCEL ; $4bac
 	ld a, [wPauseMenuOptionBits] ; $4bae
 	and $f0 ; $4bb1
 	ld [wPauseMenuOptionBits], a ; $4bb3
@@ -1910,7 +1910,7 @@ LoadOverworldSpriteDef:
 	ldh a, [hInputPressed] ; $4bbb
 	and PADF_B ; $4bbd
 	jp z, .isCursorOnAdjustRow2 ; $4bbf
-	sound $62 ; $4bc2
+	sound SFX_MENU_CANCEL ; $4bc2
 	ld a, [wPauseMenuOptionBits] ; $4bc4
 	and $f0 ; $4bc7
 	ld [wPauseMenuOptionBits], a ; $4bc9

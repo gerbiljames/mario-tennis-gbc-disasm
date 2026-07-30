@@ -18,6 +18,7 @@ import bisect
 import re
 from pathlib import Path
 
+import lz
 from extract import render_spec
 
 from .constants import CHAR_ROSTER, is_splittable
@@ -233,6 +234,7 @@ class Emitter:
         self.ramscoped = ramscoped
         self.constants = constants or {}
         self.const_defs = const_defs or {}
+        self.sound_ids = self._sound_id_names()
         self.ptr_sites = ptr_sites
         self.ptr_data_targets = ptr_data_targets or set()
         self.ptr_cuts = sorted(self.ptr_data_targets)
@@ -636,7 +638,7 @@ class Emitter:
     def _operand(self, ins, off):
         return render_operand(ins, off, self.labels, self.hwregs, self.ramnames,
                               self.operand_labels, self.ramscoped,
-                              self.constants, self.scopes)
+                              self.constants, self.scopes, self.sound_ids)
 
     # ---- data runs ------------------------------------------------------
 
@@ -1016,6 +1018,23 @@ class Emitter:
         return {v: n for n, v in self.const_defs.items()
                 if n.startswith(prefix + "_")}
 
+    def _sound_id_names(self):
+        """{id: name} over the one id space the `sound` command takes.
+
+        PlaySound splits the space at $50 -- music below, effects above, with
+        the $40-$45 jingles claimed by the command handler first -- but it is
+        one space, so BGM_*, SFX_* and JINGLE_* cannot collide by value. If
+        they do, the constants are wrong and the merge would silently pick one,
+        so it raises instead."""
+        names = {}
+        for prefix in ("BGM", "SFX", "JINGLE"):
+            for value, name in self._enum_values(prefix).items():
+                if value in names:
+                    raise ValueError(f"sound id ${value:02x} named twice: "
+                                     f"{names[value]} and {name}")
+                names[value] = name
+        return names
+
     # ---- output helpers --------------------------------------------------
 
     def _label_line(self, off):
@@ -1112,19 +1131,29 @@ class Emitter:
         seen = sorted(set(self.truncated))
         if not seen:
             return
-        import os
-        if os.environ.get("SHOW_TRUNCATIONS"):
-            for off, name, spec in seen:
-                print(f"  0x{off:x} {name} (inside {spec})")
-        head = ", ".join(n for _o, n, _s in seen[:3])
-        more = f", +{len(seen) - 3} more" if len(seen) > 3 else ""
         print(f"note: {len(seen)} pointer targets are named at the end of a "
               f"declared table, so what they point at renders as an anonymous "
-              f"blob ({head}{more}); declaring them in data_tables.json keeps "
-              f"the structure.")
+              f"blob; declaring them in data_tables.json keeps the structure:")
+        for off, name, spec in seen:
+            print(f"  0x{off:x} {name} (inside {spec})")
 
     _SPEC_LINE_RE = re.compile(r"^\t; \$([0-9a-f]{4}), (\d+) bytes \(([^)]+)\)$")
-    _BLOB_LINE_RE = re.compile(r'^\tINCBIN "data/[^"]*/d_[0-9a-f]{4}\.bin" ; \$([0-9a-f]{4})')
+    _BLOB_LINE_RE = re.compile(r'^\tINCBIN "data/[^"]*/d_[0-9a-f]{4}\.bin"'
+                               r' ; \$([0-9a-f]{4}), (\d+) bytes')
+
+    def _is_payload(self, off, length, name, lines):
+        """True if the bytes at `off` are a graphics payload, so rendering them
+        as a named INCBIN is already right and no spec is missing. Two proofs,
+        both from the consumer rather than from the bytes looking plausible:
+        the stream LZ-decodes using exactly its own extent (DecompressData
+        input), or the bank sizes it with `(next - name) / 16` (the 16-byte tile
+        count QueueVRAMCopy takes, so it is a raw tile stream)."""
+        if any(f" - {name}) / 16" in l for l in lines):
+            return True
+        try:
+            return lz.decompress(self.rom, off, off + length)[1] == length
+        except (ValueError, IndexError):
+            return False
 
     def _check_truncated_tables(self, lines, bank):
         """Flag a named offset that ends a declared table. Naming a cut point is
@@ -1153,7 +1182,8 @@ class Emitter:
             if int(b.group(1), 16) == run[1] and is_splittable(run[2]) \
                     and any(l.strip().startswith(("dw " + name, "ld hl, " + name,
                                                   "ld de, " + name, "ld bc, " + name))
-                            for l in lines):
+                            for l in lines) \
+                    and not self._is_payload(off, int(b.group(2)), name, lines):
                 self.truncated.append((off, name, run[2]))
 
     def _splits_itself(self, start, end):

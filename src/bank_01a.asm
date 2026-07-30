@@ -325,7 +325,7 @@ AdjustMessageSpeedSetting:
 	jr z, .playSfx ; $4276
 	jr .done ; $4278
 .playSfx:
-	sound $5e ; $427a
+	sound SFX_MENU_MOVE ; $427a
 	ld hl, wMessageSpeed ; $427c
 	ld a, [hl] ; $427f
 	and $7f ; $4280
@@ -342,7 +342,7 @@ AdjustMessageSpeedSetting:
 	ld [hl], a ; $4290
 	jr .done ; $4291
 .playSfx2:
-	sound $5e ; $4293
+	sound SFX_MENU_MOVE ; $4293
 	ld hl, wMessageSpeed ; $4295
 	ld a, [hl] ; $4298
 	and $7f ; $4299
@@ -358,7 +358,7 @@ AdjustMessageSpeedSetting:
 .done:
 	ret ; $42a8
 ToggleMusicSetting:
-	sound $5e ; $42a9
+	sound SFX_MENU_MOVE ; $42a9
 	ld a, [wSoundOptionBits] ; $42ab
 	ld b, a ; $42ae
 	and $01 ; $42af
@@ -397,7 +397,7 @@ RestoreMessageSpeed:
 	ld bc, rIE ; $42f9
 	farcall SaveStoryReturnPoint ; $42fc
 	farcall SaveStorySlotWithTimer ; $42ff
-	ld a, $00 ; $4302
+	ld a, STORYLOC_MAIN_MENU ; $4302
 	ld [wStoryModeCurrentLocation], a ; $4304
 	ld a, $01 ; $4307
 	ld [wStoryModeEntryPoint], a ; $4309
@@ -429,7 +429,7 @@ RestoreMessageSpeed:
 	script_wait_frames $05 ; $4347
 	and a ; $434e
 	jr nz, .buildMinigameModePauseMenu ; $434f
-	ld a, $00 ; $4351
+	ld a, STORYLOC_MAIN_MENU ; $4351
 	ld [wStoryModeCurrentLocation], a ; $4353
 	ld a, $ff ; $4356
 	ld [wStoryModeEntryPoint], a ; $4358
@@ -516,7 +516,7 @@ RunDebugExpEditor:
 	ldh a, [hPlayerInputFlags] ; $4408
 	and PADF_A ; $440a
 	jr z, .checkPlayerInputFlags ; $440c
-	sound $5f ; $440e
+	sound SFX_MENU_SELECT ; $440e
 	ld de, $0064 ; $4410
 	call DebugAddExp ; $4413
 	jr .loop ; $4416
@@ -524,7 +524,7 @@ RunDebugExpEditor:
 	ldh a, [hPlayerInputFlags] ; $4418
 	and PADF_RIGHT ; $441a
 	jr z, .checkPlayerInputFlags2 ; $441c
-	sound $5e ; $441e
+	sound SFX_MENU_MOVE ; $441e
 	ld de, $000a ; $4420
 	call DebugAddExp ; $4423
 	jr .loop ; $4426
@@ -532,7 +532,7 @@ RunDebugExpEditor:
 	ldh a, [hPlayerInputFlags] ; $4428
 	and PADF_LEFT ; $442a
 	jr z, .checkPlayerInputFlags3 ; $442c
-	sound $5e ; $442e
+	sound SFX_MENU_MOVE ; $442e
 	ld de, $0001 ; $4430
 	call DebugAddExp ; $4433
 	jr .loop ; $4436
@@ -540,7 +540,7 @@ RunDebugExpEditor:
 	ldh a, [hPlayerInputFlags] ; $4438
 	and PADF_UP | PADF_DOWN ; $443a
 	jr z, .checkPlayerInputFlags4 ; $443c
-	sound $62 ; $443e
+	sound SFX_MENU_CANCEL ; $443e
 	ld a, c ; $4440
 	xor $01 ; $4441
 	ld c, a ; $4443
@@ -588,13 +588,16 @@ ExtendModifierByteTable0:
 	db $01, $01, $01, $7e, $de, $9d, $76, $72, $89, $82, $82, $de, $77, $66, $20, $20 ; 0x00
 	db $20, $20, $20, $20, $20, $20, $20, $00 ; 0x10
 ExtendModifierByteGfx1:
-	INCBIN "data/bank_01a/d_449b.bin" ; $449b, 13 bytes
+	; $449b, 13 bytes (bytes:13)
+	db $01, $03, $01, $cc, $df, $da, $b2, $7c, $8f, $7d, $76, $3f, $00 ; 0x00
 ExtendModifierByteTable2:
 	; $44a8, 25 bytes (bytes:16)
 	db $01, $01, $01, $81, $6d, $73, $80, $de, $9d, $c3, $de, $b0, $c0, $76, $de, $20 ; 0x00
 	db $77, $74, $83, $7c, $8f, $72, $8f, $7d, $00 ; 0x10
 ExtendModifierByteGfx3:
-	INCBIN "data/bank_01a/d_44c1.bin" ; $44c1, 23 bytes
+	; $44c1, 23 bytes (bytes:13)
+	db $01, $03, $01, $96, $9b, $7c, $72, $83, $de, $7d, $76, $3f, $00 ; 0x00
+	db $08, $10, $01, $bd, $ba, $b1, $20, $60, $30, $00 ; 0x0d
 ShowExpGainScreen:
 	push bc ; $44d8
 	push de ; $44d9
@@ -769,14 +772,14 @@ ShowExpGainScreen:
 	ldh a, [hPlayerInputFlags] ; $461c
 	and PADF_A | PADF_B ; $461e
 	jr nz, .gaugeFull ; $4620
-	sound $5e ; $4622
+	sound SFX_MENU_MOVE ; $4622
 	call WaitFramesCmd ; $4624
 	db $04 ; $4627 inline arg
 	jr .fillLoop ; $4628
 .gaugeFull:
 	ld a, $01 ; $462a
 	ld [wExpCountFastForward], a ; $462c
-	sound $5f ; $462f
+	sound SFX_MENU_SELECT ; $462f
 	call AdvanceExpGaugeFill ; $4631
 	ld hl, wExpAwardTotal ; $4634
 	ld a, [hl+] ; $4637
@@ -811,7 +814,7 @@ ShowExpGainScreen:
 	call AdvanceFrame ; $4676
 	jr .fillLoop ; $4679
 .levelUp:
-	sound $5f ; $467b
+	sound SFX_MENU_SELECT ; $467b
 	ld a, [wExpBonusPending] ; $467d
 	and a ; $4680
 	jr z, .finish ; $4681
@@ -844,7 +847,7 @@ ShowExpGainScreen:
 .bonusDone:
 	pop af ; $46af
 	call DrawExpBonusMessage ; $46b0
-	sound $5f ; $46b3
+	sound SFX_MENU_SELECT ; $46b3
 	call WaitFramesCmd ; $46b5
 	db $14 ; $46b8 inline arg
 	wram_bank $06 ; $46b9
@@ -2233,7 +2236,7 @@ DrawExpScreenCaption:
 	call DrawStringToTileBuffer ; $5040
 	ret ; $5043
 .caption5:
-	sound $00 ; $5044
+	sound BGM_NONE ; $5044
 	ld hl, Text_31_244 ; $5046
 	call LoadDialogueTextToBuffer ; $5049
 	wram_bank $01 ; $504c
@@ -2838,7 +2841,7 @@ RunCharViewerSelectGrid:
 	ld a, $07 ; $692b
 .store:
 	ld [wDebugCharViewerIndex], a ; $692d
-	sound $5e ; $6930
+	sound SFX_MENU_MOVE ; $6930
 	jr .loop ; $6932
 .checkDebugCharViewerIndex2:
 	ld a, [wDebugCharViewerIndex] ; $6934
@@ -2853,7 +2856,7 @@ RunCharViewerSelectGrid:
 	xor a ; $6944
 .store2:
 	ld [wDebugCharViewerIndex], a ; $6945
-	sound $5e ; $6948
+	sound SFX_MENU_MOVE ; $6948
 	jr .loop ; $694a
 .checkDebugCharViewerIndex3:
 	ld a, [wDebugCharViewerIndex] ; $694c
@@ -2866,11 +2869,11 @@ RunCharViewerSelectGrid:
 	jr z, .checkDebugCharViewerIndex4 ; $695c
 	dec a ; $695e
 	ld [wDebugCharViewerPage], a ; $695f
-	sound $5e ; $6962
+	sound SFX_MENU_MOVE ; $6962
 	jr .loadCharViewerGridTilemap ; $6964
 .store3:
 	ld [wDebugCharViewerIndex], a ; $6966
-	sound $5e ; $6969
+	sound SFX_MENU_MOVE ; $6969
 	jp .loop ; $696b
 .checkDebugCharViewerIndex4:
 	ld a, [wDebugCharViewerIndex] ; $696e
@@ -2889,11 +2892,11 @@ RunCharViewerSelectGrid:
 	jr z, .checkDebugCharViewerIndex6 ; $698c
 	inc a ; $698e
 	ld [wDebugCharViewerPage], a ; $698f
-	sound $5e ; $6992
+	sound SFX_MENU_MOVE ; $6992
 	jr .loadCharViewerGridTilemap ; $6994
 .store4:
 	ld [wDebugCharViewerIndex], a ; $6996
-	sound $5e ; $6999
+	sound SFX_MENU_MOVE ; $6999
 	jp .loop ; $699b
 .checkDebugCharViewerIndex6:
 	ld a, [wDebugCharViewerIndex] ; $699e
@@ -2915,7 +2918,7 @@ RunCharViewerSelectGrid:
 .bit0Set:
 	ld hl, DrawCharViewerGridCursor ; $69c8
 	call UnregisterFrameTask ; $69cb
-	sound $5f ; $69ce
+	sound SFX_MENU_SELECT ; $69ce
 	ld a, [wDebugCharViewerPage] ; $69d0
 	rlca ; $69d3
 	rlca ; $69d4
@@ -2929,7 +2932,7 @@ RunCharViewerSelectGrid:
 .bit1Set:
 	ld hl, DrawCharViewerGridCursor ; $69e0
 	call UnregisterFrameTask ; $69e3
-	sound $62 ; $69e6
+	sound SFX_MENU_CANCEL ; $69e6
 	ld a, $ff ; $69e8
 	ret ; $69ea
 LoadCharViewerGridTilemap:
@@ -3263,7 +3266,7 @@ RunCharViewerInputLoop:
 	jp nz, .nextPose ; $6cd0
 	jr RunCharViewerInputLoop ; $6cd3
 .up:
-	sound $5e ; $6cd5
+	sound SFX_MENU_MOVE ; $6cd5
 	wram_bank $06 ; $6cd7
 	ld a, [wCharViewerRow] ; $6cdd
 	or a ; $6ce0
@@ -3292,7 +3295,7 @@ RunCharViewerInputLoop:
 	ld [wCharViewerCursor], a ; $6d1d
 	jp .refresh ; $6d20
 .down:
-	sound $5e ; $6d23
+	sound SFX_MENU_MOVE ; $6d23
 	wram_bank $06 ; $6d25
 	ld a, [wCharViewerRow] ; $6d2b
 	or a ; $6d2e
@@ -3321,7 +3324,7 @@ RunCharViewerInputLoop:
 	ld [wCharViewerCursor], a ; $6d6b
 	jp .refresh ; $6d6e
 .left:
-	sound $5e ; $6d71
+	sound SFX_MENU_MOVE ; $6d71
 	wram_bank $06 ; $6d73
 	ld a, [wCharViewerRow] ; $6d79
 	or a ; $6d7c
@@ -3350,7 +3353,7 @@ RunCharViewerInputLoop:
 	ld [wCharViewerCursor], a ; $6da9
 	jr .refresh ; $6dac
 .right:
-	sound $5e ; $6dae
+	sound SFX_MENU_MOVE ; $6dae
 	wram_bank $06 ; $6db0
 	ld a, [wCharViewerRow] ; $6db6
 	or a ; $6db9
@@ -3378,7 +3381,7 @@ RunCharViewerInputLoop:
 	ld [wCharViewerCursor], a ; $6ddf
 	jr .refresh ; $6de2
 .confirm:
-	sound $5e ; $6de4
+	sound SFX_MENU_MOVE ; $6de4
 	wram_bank $06 ; $6de6
 	ld a, [wCharViewerRow] ; $6dec
 	or a ; $6def
@@ -3402,7 +3405,7 @@ RunCharViewerInputLoop:
 	call ApplyCharViewerPalette ; $6e18
 	jr .refresh ; $6e1b
 .exit:
-	sound $62 ; $6e1d
+	sound SFX_MENU_CANCEL ; $6e1d
 	ret ; $6e1f
 .refresh:
 	call RefreshCharViewerSelection ; $6e20
@@ -3778,7 +3781,7 @@ RunCharDataConfirmScreen:
 	jr nz, .beginFadeOut2 ; $79d6
 	and $c0 ; $79d8
 	jr z, .loop ; $79da
-	sound $5e ; $79dc
+	sound SFX_MENU_MOVE ; $79dc
 	ld a, [wCharDataConfirmState] ; $79de
 	xor $01 ; $79e1
 	ld [wCharDataConfirmState], a ; $79e3
@@ -3788,13 +3791,13 @@ RunCharDataConfirmScreen:
 	ld a, [wCharDataConfirmState] ; $79ee
 	or a ; $79f1
 	jr nz, .beginFadeOut2 ; $79f2
-	sound $5f ; $79f4
+	sound SFX_MENU_SELECT ; $79f4
 	jr .beginFadeOut ; $79f6
 .beginFadeOut2:
 	wram_bank $06 ; $79f8
 	ld a, $01 ; $79fe
 	ld [wCharDataConfirmState], a ; $7a00
-	sound $62 ; $7a03
+	sound SFX_MENU_CANCEL ; $7a03
 .beginFadeOut:
 	ld c, $10 ; $7a05
 	call BeginFadeOut ; $7a07

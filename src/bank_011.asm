@@ -755,7 +755,7 @@ LateStudentCrashCutscene:
 	ret ; $4cf5
 LateStudentCrashImpact:
 	script_null_script ACTOR_PLAYER_SHADOW ; $4cf6
-	sound $70 ; $4cfb
+	sound SFX_IMPACT ; $4cfb
 	ld a, $03 ; $4cfd
 	farcall SetScreenShake ; $4cff
 	script_wait_frames $0a ; $4d02
@@ -1069,7 +1069,7 @@ AcademyArrivalInitScriptActorListEnd_11:
 	ld c, $04 ; $5362
 	call BeginFadeOut ; $5364
 	call WaitFadeEnd ; $5367
-	ld a, $1b ; $536a
+	ld a, STORYLOC_ISLAND_SKY ; $536a
 	ld [wStoryModeCurrentLocation], a ; $536c
 	ld a, $01 ; $536f
 	ld [wStoryModeEntryPoint], a ; $5371
@@ -1112,7 +1112,7 @@ ActorList_11_0:
 	ld c, $04 ; $544f
 	call BeginFadeOut ; $5451
 	call WaitFadeEnd ; $5454
-	ld a, $1b ; $5457
+	ld a, STORYLOC_ISLAND_SKY ; $5457
 	ld [wStoryModeCurrentLocation], a ; $5459
 	ld a, $0f ; $545c
 	ld [wStoryModeEntryPoint], a ; $545e
@@ -1786,7 +1786,7 @@ ActorScript_11_21:
 	farcall WaitPlayerMoveDone ; $5d81
 	ret ; $5d84
 .eq012:
-	ld a, $0c ; $5d85
+	ld a, STORYLOC_JUNIOR_CLASS_COURT_DOUBLES ; $5d85
 	ld [wStoryModeCurrentLocation], a ; $5d87
 	ld a, $0d ; $5d8a
 	ld [wStoryModeEntryPoint], a ; $5d8c
@@ -1994,7 +1994,7 @@ ActorScript_11_21:
 	script_wait_idle $06 ; $6262
 	script_wait_frames $3c ; $6267
 	script_set_anim $03, $03 ; $626e
-	ld a, $0c ; $6275
+	ld a, STORYLOC_JUNIOR_CLASS_COURT_DOUBLES ; $6275
 	ld [wStoryModeCurrentLocation], a ; $6277
 	ld a, $01 ; $627a
 	ld [wStoryModeEntryPoint], a ; $627c
@@ -2684,7 +2684,7 @@ ActorScript_11_29:
 	farcall WaitPlayerMoveDone ; $6e84
 	ret ; $6e87
 .eq012:
-	ld a, $0b ; $6e88
+	ld a, STORYLOC_JUNIOR_CLASS_COURT_SINGLES ; $6e88
 	ld [wStoryModeCurrentLocation], a ; $6e8a
 	ld a, $0d ; $6e8d
 	ld [wStoryModeEntryPoint], a ; $6e8f
@@ -2851,7 +2851,7 @@ ActorScript_11_29:
 	script_wait_move $04 ; $7232
 	script_set_position $12, $3f00, $3f00 ; $7237
 	script_speak $04 ; $7242
-	ld a, $0b ; $7247
+	ld a, STORYLOC_JUNIOR_CLASS_COURT_SINGLES ; $7247
 	ld [wStoryModeCurrentLocation], a ; $7249
 	ld a, $01 ; $724c
 	ld [wStoryModeEntryPoint], a ; $724e

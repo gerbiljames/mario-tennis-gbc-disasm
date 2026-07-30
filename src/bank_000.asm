@@ -6342,7 +6342,7 @@ UpdateGameTimer:
 	jr nz, .step ; $2411
 	ld [hl], $00 ; $2413
 	inc hl ; $2415
-	sound $af ; $2416
+	sound SFX_TIMER_TICK ; $2416
 	dec [hl] ; $2418
 	ld a, [hl] ; $2419
 	cp $ff ; $241a
@@ -6362,7 +6362,7 @@ UpdateGameTimer:
 	ld [hl+], a ; $242f
 	ld [hl+], a ; $2430
 	ld [hl+], a ; $2431
-	sound $b0 ; $2432
+	sound SFX_TIMER_UP ; $2432
 	ret ; $2434
 TickSecondaryTimer:
 	ld hl, wSecondaryTimer ; $2435
@@ -8373,7 +8373,7 @@ StopBGMIfPlaying:
 	bit 0, [hl] ; $2f56
 	jr z, .done ; $2f58
 	res 0, [hl] ; $2f5a
-	sound $00 ; $2f5c
+	sound BGM_NONE ; $2f5c
 .done:
 	pop hl ; $2f5e
 	ret ; $2f5f

@@ -68,7 +68,7 @@ InitDefaultMatchSettings:
 	ld hl, $c780 ; $4084
 	ld c, $08 ; $4087
 	call ClearMemory16 ; $4089
-	ld a, $00 ; $408c
+	ld a, COURT_HARD ; $408c
 	ld [wCurrentlyUsedCourt], a ; $408e
 	ld a, $01 ; $4091
 	ld [wMatchTypeNumberOfSets], a ; $4093
@@ -144,7 +144,7 @@ ResetMatchState:
 	ld [wRulesGamesIndex], a ; $412a
 	call SelectScoreboardLayout ; $412d
 	ld a, [wGameMode] ; $4130
-	cp $09 ; $4133
+	cp GAMEMODE_LINK_MATCH ; $4133
 	ldh a, [hVBlankCounter] ; $4135
 	jr nz, .seedRng ; $4137
 	ld a, $00 ; $4139
@@ -207,7 +207,7 @@ RunMatch:
 	ld [wMatchEndLinkState], a ; $41d1
 	farcall EndLinkSession ; $41d4
 	ld a, [wGameMode] ; $41d7
-	cp $08 ; $41da
+	cp GAMEMODE_MARIO_MINIGAME ; $41da
 	call z, ShowMatchResultScreens ; $41dc
 	ld c, $20 ; $41df
 	call BeginFadeOut ; $41e1
@@ -397,7 +397,7 @@ HandleBallBounceEvent:
 	ld a, [wBallBounceCount] ; $4357
 	cp $02 ; $435a
 	jr nc, .clearEvent ; $435c
-	sound $5b ; $435e
+	sound SFX_BALL_BOUNCE ; $435e
 .clearEvent:
 	ld hl, wBallBounceCount ; $4360
 	ld a, [hl] ; $4363
@@ -640,13 +640,13 @@ CheckDebugStatsEditorHotkey:
 	ret ; $450d
 InitViewFlipPreference:
 	ld a, [wGameMode] ; $450e
-	cp $09 ; $4511
+	cp GAMEMODE_LINK_MATCH ; $4511
 	jr z, .storeFlip ; $4513
 	ld a, [wMatchContext] ; $4515
 	cp $02 ; $4518
 	jr z, .storeFlip ; $451a
 	ld a, [wGameMode] ; $451c
-	cp $08 ; $451f
+	cp GAMEMODE_MARIO_MINIGAME ; $451f
 	jr z, .storeFlip ; $4521
 	farcall TestStorySlotFlagB ; $4523
 	ld [wCourtViewOption], a ; $4526
@@ -661,7 +661,7 @@ InitViewFlipPreference:
 	ret ; $4538
 ApplyMatchBgmPreference:
 	ld a, [wGameMode] ; $4539
-	cp $09 ; $453c
+	cp GAMEMODE_LINK_MATCH ; $453c
 	jr z, .resume ; $453e
 	farcall TestStorySlotFlagA ; $4540
 	call SetMusicMuted ; $4543
@@ -977,7 +977,7 @@ FindServerCharBank:
 	ret ; $4713
 RunMatchPlayLoop:
 	ld a, [wGameMode] ; $4714
-	cp $02 ; $4717
+	cp GAMEMODE_ISLAND_OPEN ; $4717
 	jr z, .markChangeEnds ; $4719
 	ld a, [wMatchContext] ; $471b
 	and a ; $471e
@@ -1040,7 +1040,7 @@ CheckSetComplete:
 	call InitTiebreakPointCounter ; $4787
 	ld a, $01 ; $478a
 	ld [wChangeoverSkipBanner], a ; $478c
-	sound $0e ; $478f
+	sound BGM_TIEBREAK ; $478f
 	ld a, $0f ; $4791
 	farcall ShowCourtBanner ; $4793
 	ld a, $50 ; $4796
@@ -1702,7 +1702,7 @@ DelayAfterPointResolution:
 	ret ; $4ed0
 .case7:
 	ld a, [wGameMode] ; $4ed1
-	cp $08 ; $4ed4
+	cp GAMEMODE_MARIO_MINIGAME ; $4ed4
 	jr nz, .case9 ; $4ed6
 	ld a, [wMatchWinLoseFlag] ; $4ed8
 	add a ; $4edb
@@ -4420,7 +4420,7 @@ PlayCourtIntro:
 	ld a, b ; $6121
 	call PlaySoundManaged ; $6122
 	ld a, [wGameMode] ; $6125
-	cp $02 ; $6128
+	cp GAMEMODE_ISLAND_OPEN ; $6128
 	jr z, .panCamera ; $612a
 	ld a, [wMatchContext] ; $612c
 	and a ; $612f
@@ -5003,7 +5003,7 @@ ShowMatchResultScreens:
 	ld [wMatchSimFrozen], a ; $6599
 	ld [wMatchDrawFrozen], a ; $659c
 	ld a, [wGameMode] ; $659f
-	cp $08 ; $65a2
+	cp GAMEMODE_MARIO_MINIGAME ; $65a2
 	jr nz, .scoreboard ; $65a4
 	ld a, [wPointWinLoseFlag] ; $65a6
 	cp $01 ; $65a9
