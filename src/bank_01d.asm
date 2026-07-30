@@ -4,8 +4,8 @@ SECTION "ROM Bank $1d", ROMX[$4000], BANK[$1d]
 	farptr PromptCharDataConfirm ; $4002
 	farptr ShowExpDistributionScreen ; $4004
 	farptr RunExpDistributionFlow ; $4006
-	farptr ClearDrillResultBuffer ; $4008
-	farptr RecordDrillResult ; $400a
+	farptr ClearPendingExpAwards ; $4008
+	farptr SetPendingExpAward ; $400a
 	farptr InitCharDataScreenVideo ; $400c
 	farptr DrawCharDataConfirmPrompt ; $400e
 	farptr StartCharDataValuesSyncTask ; $4010
@@ -5567,7 +5567,7 @@ DrawExpToNextLevelTask_SpriteTemplate1:
 	oam_sprite $10, $30, $14, $00
 	oam_sprite $20, $30, $16, $00
 	oam_sprite_end
-ClearDrillResultBuffer:
+ClearPendingExpAwards:
 	push af ; $7cae
 	push bc ; $7caf
 	push de ; $7cb0
@@ -5581,27 +5581,27 @@ ClearDrillResultBuffer:
 	pop bc ; $7cc3
 	pop af ; $7cc4
 	ret ; $7cc5
-RecordDrillResult:
+SetPendingExpAward:
 	wram_bank $06 ; $7cc6
 	ld a, b ; $7ccc
 	rlca ; $7ccd
-	add LOW(DrillSubHandlers_1d) ; $7cce
+	add LOW(PendingExpAwardSetters_1d) ; $7cce
 	ld l, a ; $7cd0
-	adc HIGH(DrillSubHandlers_1d) ; $7cd1
+	adc HIGH(PendingExpAwardSetters_1d) ; $7cd1
 	sub l ; $7cd3
 	ld h, a ; $7cd4
 	ld a, [hl+] ; $7cd5
 	ld h, [hl] ; $7cd6
 	ld l, a ; $7cd7
 	jp hl ; $7cd8
-DrillSubHandlers_1d:
+PendingExpAwardSetters_1d:
 	; $7cd9, 10 bytes (records:2)
-	dw DrillSubHandler0 ; record 0
-	dw DrillSubHandler1 ; record 1
-	dw DrillSubHandler2 ; record 2
-	dw DrillSubHandler3 ; record 3
-	dw DrillSubHandler4 ; record 4
-DrillSubHandler0:
+	dw SetPendingExpAward_N64 ; record 0
+	dw SetPendingExpAward_Exhibition ; record 1
+	dw SetPendingExpAward_Linked ; record 2
+	dw SetPendingExpAward_Match ; record 3
+	dw SetPendingExpAward_Trophy ; record 4
+SetPendingExpAward_N64:
 	ld a, c ; $7ce3
 	ld [wPendingExpAwardVariants], a ; $7ce4
 	ld hl, wPendingExpAwardAmounts ; $7ce7
@@ -5609,7 +5609,7 @@ DrillSubHandler0:
 	ld [hl+], a ; $7ceb
 	ld [hl], d ; $7cec
 	ret ; $7ced
-DrillSubHandler1:
+SetPendingExpAward_Exhibition:
 	ld a, c ; $7cee
 	ld [wPendingExpAwardVariants + 1], a ; $7cef
 	ld hl, wPendingExpAwardAmounts + 2 ; $7cf2
@@ -5617,7 +5617,7 @@ DrillSubHandler1:
 	ld [hl+], a ; $7cf6
 	ld [hl], d ; $7cf7
 	ret ; $7cf8
-DrillSubHandler2:
+SetPendingExpAward_Linked:
 	ld a, c ; $7cf9
 	ld [wPendingExpAwardVariants + 2], a ; $7cfa
 	ld hl, wPendingExpAwardAmounts + 4 ; $7cfd
@@ -5625,7 +5625,7 @@ DrillSubHandler2:
 	ld [hl+], a ; $7d01
 	ld [hl], d ; $7d02
 	ret ; $7d03
-DrillSubHandler3:
+SetPendingExpAward_Match:
 	ld a, c ; $7d04
 	ld [wPendingExpAwardVariants + 3], a ; $7d05
 	ld hl, wPendingExpAwardAmounts + 6 ; $7d08
@@ -5633,7 +5633,7 @@ DrillSubHandler3:
 	ld [hl+], a ; $7d0c
 	ld [hl], d ; $7d0d
 	ret ; $7d0e
-DrillSubHandler4:
+SetPendingExpAward_Trophy:
 	ld a, c ; $7d0f
 	ld [wPendingExpAwardVariants + 4], a ; $7d10
 	ld hl, wPendingExpAwardAmounts + 8 ; $7d13

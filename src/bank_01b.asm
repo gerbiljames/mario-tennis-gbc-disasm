@@ -3574,15 +3574,15 @@ RunDebugSaveDataFlow:
 	push bc ; $6419
 	push de ; $641a
 	push hl ; $641b
-	farcall ClearDrillResultBuffer ; $641c
+	farcall ClearPendingExpAwards ; $641c
 	ld b, $00 ; $641f
 	ld c, $00 ; $6421
 	ld de, $0040 ; $6423
-	farcall RecordDrillResult ; $6426
+	farcall SetPendingExpAward ; $6426
 	ld b, $04 ; $6429
 	ld c, $01 ; $642b
 	ld de, $0077 ; $642d
-	farcall RecordDrillResult ; $6430
+	farcall SetPendingExpAward ; $6430
 	ld c, $01 ; $6433
 	farcall ShowMatchResultsScreen ; $6435
 	farcall RunExpDistributionFlow ; $6438

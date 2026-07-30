@@ -8,10 +8,10 @@ DataPtr_SeasideTilemap:
 	dw SeasideTilemap ; $4004
 DataPtr_SeasideAttrmap:
 	dw SeasideAttrmap ; $4006
-DataPtr_SeasideAuxTilemap:
-	dw SeasideAuxTilemap ; $4008
-DataPtr_SeasideAuxAttrmap:
-	dw SeasideAuxAttrmap ; $400a
+DataPtr_SeasideCollisionMap:
+	dw SeasideCollisionMap ; $4008
+DataPtr_SeasideBehaviorMap:
+	dw SeasideBehaviorMap ; $400a
 DataPtr_SeasideSceneUnusedSlot:
 	dw SeasideSceneUnusedSlot ; $400c
 DataPtr_SeasideTiles:
@@ -24,10 +24,10 @@ DataPtr_HedgeCourtTilemap:
 	dw HedgeCourtTilemap ; $4014
 DataPtr_HedgeCourtAttrmap:
 	dw HedgeCourtAttrmap ; $4016
-DataPtr_HedgeCourtAuxTilemap:
-	dw HedgeCourtAuxTilemap ; $4018
-DataPtr_HedgeCourtAuxAttrmap:
-	dw HedgeCourtAuxAttrmap ; $401a
+DataPtr_HedgeCourtCollisionMap:
+	dw HedgeCourtCollisionMap ; $4018
+DataPtr_HedgeCourtBehaviorMap:
+	dw HedgeCourtBehaviorMap ; $401a
 DataPtr_HedgeCourtSceneUnusedSlot:
 	dw HedgeCourtSceneUnusedSlot ; $401c
 DataPtr_HedgeCourtTiles:
@@ -40,10 +40,10 @@ DataPtr_ClayCourtGroundsTilemap:
 	dw ClayCourtGroundsTilemap ; $4024
 DataPtr_ClayCourtGroundsAttrmap:
 	dw ClayCourtGroundsAttrmap ; $4026
-DataPtr_ClayCourtGroundsAuxTilemap:
-	dw ClayCourtGroundsAuxTilemap ; $4028
-DataPtr_ClayCourtGroundsAuxAttrmap:
-	dw ClayCourtGroundsAuxAttrmap ; $402a
+DataPtr_ClayCourtGroundsCollisionMap:
+	dw ClayCourtGroundsCollisionMap ; $4028
+DataPtr_ClayCourtGroundsBehaviorMap:
+	dw ClayCourtGroundsBehaviorMap ; $402a
 DataPtr_ClayCourtGroundsSceneUnusedSlot:
 	dw ClayCourtGroundsSceneUnusedSlot ; $402c
 DataPtr_ClayCourtGroundsTiles:
@@ -58,9 +58,9 @@ SeasideTilemap:
 	INCBIN "data/bank_065/lz_4c36.bin" ; $4c36, 684 bytes
 SeasideAttrmap:
 	INCBIN "data/bank_065/lz_4ee2.bin" ; $4ee2, 416 bytes
-SeasideAuxTilemap:
+SeasideCollisionMap:
 	INCBIN "data/bank_065/lz_5082.bin" ; $5082, 70 bytes
-SeasideAuxAttrmap:
+SeasideBehaviorMap:
 	INCBIN "data/bank_065/lz_50c8.bin" ; $50c8, 73 bytes
 	; $5111, 15 bytes (fill)
 	ds 15, $00
@@ -76,9 +76,9 @@ HedgeCourtTilemap:
 	INCBIN "data/bank_065/lz_5ee0.bin" ; $5ee0, 905 bytes
 HedgeCourtAttrmap:
 	INCBIN "data/bank_065/lz_6269.bin" ; $6269, 517 bytes
-HedgeCourtAuxTilemap:
+HedgeCourtCollisionMap:
 	INCBIN "data/bank_065/lz_646e.bin" ; $646e, 70 bytes
-HedgeCourtAuxAttrmap:
+HedgeCourtBehaviorMap:
 	INCBIN "data/bank_065/lz_64b4.bin" ; $64b4, 70 bytes
 	; $64fa, 6 bytes (fill)
 	ds 6, $00
@@ -94,9 +94,9 @@ ClayCourtGroundsTilemap:
 	INCBIN "data/bank_065/lz_7458.bin" ; $7458, 1178 bytes
 ClayCourtGroundsAttrmap:
 	INCBIN "data/bank_065/lz_78f2.bin" ; $78f2, 933 bytes
-ClayCourtGroundsAuxTilemap:
+ClayCourtGroundsCollisionMap:
 	INCBIN "data/bank_065/lz_7c97.bin" ; $7c97, 110 bytes
-ClayCourtGroundsAuxAttrmap:
+ClayCourtGroundsBehaviorMap:
 	INCBIN "data/bank_065/lz_7d05.bin" ; $7d05, 81 bytes
 ClayCourtGroundsSceneUnusedSlot:
 	; $7d56, 682 bytes fill to bank end (linker-padded)

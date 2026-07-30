@@ -40,10 +40,10 @@ DataPtr_StarPatternBgTilemap:
 	dw StarPatternBgTilemap ; $4024
 DataPtr_StarPatternBgAttrmap:
 	dw StarPatternBgAttrmap ; $4026
-DataPtr_StarPatternBgAuxTilemap:
-	dw StarPatternBgAuxTilemap ; $4028
-DataPtr_StarPatternBgAuxAttrmap:
-	dw StarPatternBgAuxAttrmap ; $402a
+DataPtr_StarPatternBgCollisionMap:
+	dw StarPatternBgCollisionMap ; $4028
+DataPtr_StarPatternBgBehaviorMap:
+	dw StarPatternBgBehaviorMap ; $402a
 DataPtr_DormInteriorSceneConfig:
 	dw DormInteriorSceneConfig ; $402c
 DataPtr_StarPatternBgTiles:
@@ -56,10 +56,10 @@ DataPtr_DormInteriorTilemap:
 	dw DormInteriorTilemap ; $4034
 DataPtr_DormInteriorAttrmap:
 	dw DormInteriorAttrmap ; $4036
-DataPtr_DormInteriorAuxTilemap:
-	dw DormInteriorAuxTilemap ; $4038
-DataPtr_DormInteriorAuxAttrmap:
-	dw DormInteriorAuxAttrmap ; $403a
+DataPtr_DormInteriorCollisionMap:
+	dw DormInteriorCollisionMap ; $4038
+DataPtr_DormInteriorBehaviorMap:
+	dw DormInteriorBehaviorMap ; $403a
 DataPtr_DormInteriorSceneUnusedSlot:
 	dw DormInteriorSceneUnusedSlot ; $403c
 DataPtr_DormInteriorTiles:
@@ -98,9 +98,9 @@ StarPatternBgTilemap:
 	INCBIN "data/bank_063/lz_608c.bin" ; $608c, 274 bytes
 StarPatternBgAttrmap:
 	INCBIN "data/bank_063/lz_619e.bin" ; $619e, 263 bytes
-StarPatternBgAuxTilemap:
+StarPatternBgCollisionMap:
 	INCBIN "data/bank_063/lz_62a5.bin" ; $62a5, 70 bytes
-StarPatternBgAuxAttrmap:
+StarPatternBgBehaviorMap:
 	INCBIN "data/bank_063/lz_62eb.bin" ; $62eb, 70 bytes
 DormInteriorSceneConfig:
 	INCBIN "data/bank_063/d_6331.bin" ; $6331, 42 bytes
@@ -112,9 +112,9 @@ DormInteriorTilemap:
 	INCBIN "data/bank_063/d_7151.bin" ; $7151, 1470 bytes
 DormInteriorAttrmap:
 	INCBIN "data/bank_063/d_770f.bin" ; $770f, 769 bytes
-DormInteriorAuxTilemap:
+DormInteriorCollisionMap:
 	INCBIN "data/bank_063/d_7a10.bin" ; $7a10, 147 bytes
-DormInteriorAuxAttrmap:
+DormInteriorBehaviorMap:
 	INCBIN "data/bank_063/d_7aa3.bin" ; $7aa3, 94 bytes
 DormInteriorSceneUnusedSlot:
 	; $7b01, 1279 bytes fill to bank end (linker-padded)

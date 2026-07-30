@@ -2991,10 +2991,10 @@ ShowExpAwardForMinigame:
 	push hl ; $6a19
 	ldh a, [hWramBank] ; $6a1a
 	push af ; $6a1c
-	farcall ClearDrillResultBuffer ; $6a1d
+	farcall ClearPendingExpAwards ; $6a1d
 	ld b, $03 ; $6a20
 	ld c, $01 ; $6a22
-	farcall RecordDrillResult ; $6a24
+	farcall SetPendingExpAward ; $6a24
 	ld c, $01 ; $6a27
 	call ShowMatchResultsScreen ; $6a29
 	pop af ; $6a2c
@@ -3014,7 +3014,7 @@ ShowExpAwardForMatch:
 	push hl ; $6a3c
 	ldh a, [hWramBank] ; $6a3d
 	push af ; $6a3f
-	farcall ClearDrillResultBuffer ; $6a40
+	farcall ClearPendingExpAwards ; $6a40
 	ld b, $03 ; $6a43
 	ld c, $00 ; $6a45
 	ld a, [wGameMode] ; $6a47
@@ -3027,10 +3027,10 @@ ShowExpAwardForMatch:
 	ld c, $03 ; $6a54
 .compare2:
 	cp GAMEMODE_DREAM_MATCH ; $6a56
-	jr nz, .recordDrillResult ; $6a58
+	jr nz, .setPendingExpAward ; $6a58
 	ld c, $04 ; $6a5a
-.recordDrillResult:
-	farcall RecordDrillResult ; $6a5c
+.setPendingExpAward:
+	farcall SetPendingExpAward ; $6a5c
 	ld c, $01 ; $6a5f
 	call ShowMatchResultsScreen ; $6a61
 	pop af ; $6a64
@@ -3050,10 +3050,10 @@ ShowExpAwardForExhibition:
 	push hl ; $6a74
 	ldh a, [hWramBank] ; $6a75
 	push af ; $6a77
-	farcall ClearDrillResultBuffer ; $6a78
+	farcall ClearPendingExpAwards ; $6a78
 	ld b, $01 ; $6a7b
 	ld c, $00 ; $6a7d
-	farcall RecordDrillResult ; $6a7f
+	farcall SetPendingExpAward ; $6a7f
 	xor a ; $6a82
 	test_flag FLAG_DOUBLES ; $6a83
 	jr z, .notDoubles ; $6a86
@@ -3085,10 +3085,10 @@ ShowExpAwardForLinkedPlay:
 	push hl ; $6aaa
 	ldh a, [hWramBank] ; $6aab
 	push af ; $6aad
-	farcall ClearDrillResultBuffer ; $6aae
+	farcall ClearPendingExpAwards ; $6aae
 	ld b, $02 ; $6ab1
 	ld c, $00 ; $6ab3
-	farcall RecordDrillResult ; $6ab5
+	farcall SetPendingExpAward ; $6ab5
 	xor a ; $6ab8
 	test_flag FLAG_DOUBLES ; $6ab9
 	jr z, .notDoubles ; $6abc
@@ -3119,10 +3119,10 @@ ShowExpAwardForLinkedPlay:
 	push hl ; $6ae0
 	ldh a, [hWramBank] ; $6ae1
 	push af ; $6ae3
-	farcall ClearDrillResultBuffer ; $6ae4
+	farcall ClearPendingExpAwards ; $6ae4
 	ld b, $00 ; $6ae7
 	ld c, $00 ; $6ae9
-	farcall RecordDrillResult ; $6aeb
+	farcall SetPendingExpAward ; $6aeb
 	ld c, $01 ; $6aee
 	call ShowMatchResultsScreen ; $6af0
 	pop af ; $6af3
@@ -3182,7 +3182,7 @@ ApplyPendingExpAwards:
 	or l ; $6b41
 	jp z, .restore2 ; $6b42
 	push hl ; $6b45
-	farcall ClearDrillResultBuffer ; $6b46
+	farcall ClearPendingExpAwards ; $6b46
 	ld hl, wPendingExpStory ; $6b49
 	ld a, [hl+] ; $6b4c
 	ld d, [hl] ; $6b4d
@@ -3198,15 +3198,15 @@ ApplyPendingExpAwards:
 	ld de, $ffff ; $6b5a
 .scaleExpByPlayerLevel:
 	call ScaleExpByPlayerLevel ; $6b5d
-	jr nc, .recordDrillResult ; $6b60
+	jr nc, .setPendingExpAward ; $6b60
 	ld de, $ffff ; $6b62
-.recordDrillResult:
+.setPendingExpAward:
 	ld a, d ; $6b65
 	or e ; $6b66
 	jr z, .award2 ; $6b67
 	ld b, $00 ; $6b69
 	ld c, $00 ; $6b6b
-	farcall RecordDrillResult ; $6b6d
+	farcall SetPendingExpAward ; $6b6d
 .award2:
 	ld hl, wPendingExpExhibition ; $6b70
 	ld a, [hl+] ; $6b73
@@ -3217,7 +3217,7 @@ ApplyPendingExpAwards:
 	jr z, .award3 ; $6b78
 	ld b, $01 ; $6b7a
 	ld c, $00 ; $6b7c
-	farcall RecordDrillResult ; $6b7e
+	farcall SetPendingExpAward ; $6b7e
 .award3:
 	ld hl, wPendingExpLinked ; $6b81
 	ld a, [hl+] ; $6b84
@@ -3228,7 +3228,7 @@ ApplyPendingExpAwards:
 	jr z, .applyToRecord ; $6b89
 	ld b, $02 ; $6b8b
 	ld c, $00 ; $6b8d
-	farcall RecordDrillResult ; $6b8f
+	farcall SetPendingExpAward ; $6b8f
 .applyToRecord:
 	wram_bank $06 ; $6b92
 	ld hl, wTrophyExpTotal ; $6b98
@@ -3240,7 +3240,7 @@ ApplyPendingExpAwards:
 	jr z, .checkDoubles ; $6ba0
 	ld b, $04 ; $6ba2
 	ld c, $00 ; $6ba4
-	farcall RecordDrillResult ; $6ba6
+	farcall SetPendingExpAward ; $6ba6
 .checkDoubles:
 	xor a ; $6ba9
 	test_flag FLAG_DOUBLES ; $6baa
@@ -4001,7 +4001,7 @@ ComputeTrophyExpAwards:
 	jr z, .sumGroup1 ; $7076
 	ld b, $04 ; $7078
 	ld c, $00 ; $707a
-	farcall RecordDrillResult ; $707c
+	farcall SetPendingExpAward ; $707c
 .sumGroup1:
 	ld hl, wTrophyExpByGroup ; $707f
 	ld a, [hl+] ; $7082
@@ -4012,7 +4012,7 @@ ComputeTrophyExpAwards:
 	jr z, .sumGroup2 ; $7087
 	ld b, $04 ; $7089
 	ld c, $01 ; $708b
-	farcall RecordDrillResult ; $708d
+	farcall SetPendingExpAward ; $708d
 .sumGroup2:
 	ld hl, wTrophyExpByGroup + 2 ; $7090
 	ld a, [hl+] ; $7093
@@ -4023,7 +4023,7 @@ ComputeTrophyExpAwards:
 	jr z, .sumGroup3 ; $7098
 	ld b, $04 ; $709a
 	ld c, $02 ; $709c
-	farcall RecordDrillResult ; $709e
+	farcall SetPendingExpAward ; $709e
 .sumGroup3:
 	ld hl, wTrophyExpByGroup + 4 ; $70a1
 	ld a, [hl+] ; $70a4
@@ -4034,7 +4034,7 @@ ComputeTrophyExpAwards:
 	jr z, .sumGroup4 ; $70a9
 	ld b, $04 ; $70ab
 	ld c, $03 ; $70ad
-	farcall RecordDrillResult ; $70af
+	farcall SetPendingExpAward ; $70af
 .sumGroup4:
 	ld hl, wTrophyExpByGroup + 6 ; $70b2
 	ld a, [hl+] ; $70b5
@@ -4045,7 +4045,7 @@ ComputeTrophyExpAwards:
 	jr z, .sumGroup5 ; $70ba
 	ld b, $04 ; $70bc
 	ld c, $04 ; $70be
-	farcall RecordDrillResult ; $70c0
+	farcall SetPendingExpAward ; $70c0
 .sumGroup5:
 	ld hl, wTrophyExpByGroup + 8 ; $70c3
 	ld a, [hl+] ; $70c6
@@ -4056,7 +4056,7 @@ ComputeTrophyExpAwards:
 	jr z, .restore ; $70cb
 	ld b, $04 ; $70cd
 	ld c, $05 ; $70cf
-	farcall RecordDrillResult ; $70d1
+	farcall SetPendingExpAward ; $70d1
 .restore:
 	pop af ; $70d4
 	wram_bank ; $70d5

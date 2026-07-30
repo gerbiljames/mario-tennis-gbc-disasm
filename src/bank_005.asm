@@ -3137,7 +3137,7 @@ PowersOfTen_05:
 	dw $0064 ; record 2
 	dw $03e8 ; record 3
 	dw $2710 ; record 4
-Unused_05:
+StubNop_05_2:
 	ret ; $53ac
 	ret ; $53ad
 Unused_05_SetTextVar:
@@ -5949,7 +5949,7 @@ DebugMoveFlagCursor:
 	pop bc ; $657e
 	pop af ; $657f
 	ret ; $6580
-StubNop_05_2:
+StubNop_05_3:
 	ret ; $6581
 HexDigitHeaderRow0_05:
 	; $6582, 16 bytes (ascii)
@@ -6001,7 +6001,7 @@ RunDebugFlagEditor:
 	ld a, [wDebugFlagWindow2Id] ; $660c
 	call RedrawWindowRows ; $660f
 	ld a, $0f ; $6612
-	ld hl, StubNop_05_2 ; $6614
+	ld hl, StubNop_05_3 ; $6614
 	call RegisterFrameTask ; $6617
 .loop:
 	ldh a, [hInputRisingEdge] ; $661a
@@ -6054,7 +6054,7 @@ RunDebugFlagEditor:
 	call CloseWindow ; $668c
 	ld a, [wDebugFlagWindow2Id] ; $668f
 	call CloseWindow ; $6692
-	ld hl, StubNop_05_2 ; $6695
+	ld hl, StubNop_05_3 ; $6695
 	call UnregisterFrameTask ; $6698
 	pop hl ; $669b
 	pop de ; $669c

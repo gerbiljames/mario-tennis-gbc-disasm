@@ -467,7 +467,7 @@ named for what they do now, with the leading `ret` recorded in the note:
 | `StubAlwaysNotZero` | `CheckExpAwardAllowed` | the EXP-award gate — see below |
 | `StubNop_05_49dc` | `PagedMenuFrameTask` | a live frame task whose body has no effect |
 
-The thirty other `StubNop_*` labels have a bare `ret` for a body and keep the
+The other 32 `StubNop_*` labels have a bare `ret` for a body and keep the
 name, which for them is accurate.
 
 `CheckExpAwardAllowed` is worth its own line. `AddExpToCa00RecordChecked` calls

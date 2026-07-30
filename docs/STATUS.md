@@ -9284,3 +9284,78 @@ check it against the labels in `src/`, `labels.json`, `include/*.inc` and
 `ram/*.asm`. Everything still unresolved afterwards is a macro name, a data-spec
 kind, a deliberate placeholder (`FetchDialogueText_XX`), a third-party RAM note,
 or an ordinary English word in backticks.
+
+## Three name families that described the wrong thing (2026-07-30)
+
+### The `Drill*` routines in bank `$1d` are the EXP-award writer
+
+`ClearDrillResultBuffer` / `RecordDrillResult` / `DrillSubHandler0`-`4` write the
+two arrays a WRAM pass had just identified as `wPendingExpAwardAmounts` and
+`wPendingExpAwardVariants`, and every caller passes EXP. Renamed
+`ClearPendingExpAwards`, `SetPendingExpAward` and `SetPendingExpAward_<line>`,
+with the two curated local labels (`.recordDrillResult`) following.
+
+The five lines are not guessed. `DrawNextExpAwardMessage` takes each line's base
+text id from `DrawNextExpAwardMessageTable` and **adds that line's variant byte
+to it**, so the strings name the lines directly:
+
+| line | id | string |
+| --- | --- | --- |
+| 0 | `31:201` | `Mario Tennis for N64.` |
+| 1 | `31:202` | `Exhibition Mode.` |
+| 2 | `31:203` | `Linked Play.` |
+| 3 | `31:204` (+1..+4) | `the ranking match.` / `the Mini-Game.` / `the Island Open` / `the practice match` / `the exhibition match` |
+| 4 | `31:209` | `winning the trophy.` |
+
+Line 3's variant byte is the clincher: four independent `wGameMode` comparisons
+in `ShowExpAwardForMatch` select `c` = 0/2/3/4, landing on four consecutive
+strings that name those exact modes.
+
+Line 0 is `_N64` rather than `_Story`, which is a deliberate departure from what
+the task asked for. Its amount does come from `wPendingExpStory` — but it is
+`wPendingExpStory + wPendingExpTrophy` scaled by player level, and the line the
+player reads is "Mario Tennis for N64.". The string is what is provable.
+
+### `SceneGfxSlotTable` slots 4 and 5 are the collision and behaviour maps
+
+`LoadStorySceneGraphics` pushes slots 0-6 and pops them in reverse, so the pop
+order names them: slot 5 into `wBehaviorMap` (`$d400`) and slot 4 into
+`wCollisionMap` (`$d000`), both under WRAM bank `$06` — the same 1024-byte bases
+`GetCollisionMapCellAddr` and `GetBehaviorMapCellAddr` index. Four of the other
+pops land on slots already named `*Attrmap`, `*Tilemap`, `*Palettes` and
+`*SceneConfig`, which confirms the stride and the numbering rather than assuming
+them. Every one of the 21 slot-4/slot-5 payloads decompresses to **exactly 1024
+bytes**, and nothing else in the record does. So `*AuxTilemap`/`*AuxAttrmap`
+become `*CollisionMap`/`*BehaviorMap` across banks `$63`-`$69`.
+
+**Two of the 23 pairs were wrong in the other direction.** The Clubhouse and
+Courtyard records point slot 4 back at *slot 0* — the emitted source says
+`dw ClubhouseSceneConfig` at both `$4000` and `$4008` — and give slot 5 the
+40-byte blob after it. Neither blob is even an LZ stream, so neither can be a
+1024-byte map. That is exactly the shape of the 14 match-court records, whose
+slots are already `*SceneConfig` / `*SceneConfigAlias1` / `*SceneConfigB`, so
+those four labels became config records. Those two scenes have no collision or
+behaviour map of their own.
+
+### `Unused_05` is a stub, and the stub numbering shifted
+
+`$05:$53ac` is two bare `ret`s. Nothing reaches it: the bank's `$4000` directory
+points at `$53ae`, and a ROM-wide scan for the little-endian word and the
+`farptr` byte pair finds only graphics-bank coincidences and a `call $53ac` in
+bank `$08` that targets bank `$08`'s own address. So it is not a farptr'd
+deliberate no-op and not a routine that returns before its body — it is
+`StubNop_05_2`, and the old `StubNop_05_2` at `$6581` becomes `_3`, since every
+bank's stub numbering ascends by address.
+
+That also caught a stale sentence in `docs/bugs.md`, which said "the thirty other
+`StubNop_*` labels" when there were already 33. Now 32 others, counted from the
+source.
+
+### Left open
+
+`LoadSceneGraphicsDirect` (`$0a:$5d2a`) indexes the same `SceneGfxSlotTable`
+with a stride of **18**, not 16, reading nine words per record. 592 bytes is
+`37 * 16` and not a multiple of 18, and an 18-byte stride would break the
+`*Palettes`/`*Tilemap`/`*Attrmap`/`*Tiles` agreement across all 37 records — yet
+its own pop order agrees about the roles. Either the stride is a bug or the table
+has a second interpretation; not settled here.

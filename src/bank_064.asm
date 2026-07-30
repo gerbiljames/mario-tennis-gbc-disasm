@@ -8,10 +8,10 @@ DataPtr_DormBedroomTilemap:
 	dw DormBedroomTilemap ; $4004
 DataPtr_DormBedroomAttrmap:
 	dw DormBedroomAttrmap ; $4006
-DataPtr_DormBedroomAuxTilemap:
-	dw DormBedroomAuxTilemap ; $4008
-DataPtr_DormBedroomAuxAttrmap:
-	dw DormBedroomAuxAttrmap ; $400a
+DataPtr_DormBedroomCollisionMap:
+	dw DormBedroomCollisionMap ; $4008
+DataPtr_DormBedroomBehaviorMap:
+	dw DormBedroomBehaviorMap ; $400a
 DataPtr_CountrysideSceneConfig:
 	dw CountrysideSceneConfig ; $400c
 DataPtr_DormBedroomTiles:
@@ -24,10 +24,10 @@ DataPtr_CountrysideTilemap:
 	dw CountrysideTilemap ; $4014
 DataPtr_CountrysideAttrmap:
 	dw CountrysideAttrmap ; $4016
-DataPtr_CountrysideAuxTilemap:
-	dw CountrysideAuxTilemap ; $4018
-DataPtr_CountrysideAuxAttrmap:
-	dw CountrysideAuxAttrmap ; $401a
+DataPtr_CountrysideCollisionMap:
+	dw CountrysideCollisionMap ; $4018
+DataPtr_CountrysideBehaviorMap:
+	dw CountrysideBehaviorMap ; $401a
 DataPtr_AcademyGroundsSceneConfig:
 	dw AcademyGroundsSceneConfig ; $401c
 DataPtr_CountrysideTiles:
@@ -40,10 +40,10 @@ DataPtr_AcademyGroundsTilemap:
 	dw AcademyGroundsTilemap ; $4024
 DataPtr_AcademyGroundsAttrmap:
 	dw AcademyGroundsAttrmap ; $4026
-DataPtr_AcademyGroundsAuxTilemap:
-	dw AcademyGroundsAuxTilemap ; $4028
-DataPtr_AcademyGroundsAuxAttrmap:
-	dw AcademyGroundsAuxAttrmap ; $402a
+DataPtr_AcademyGroundsCollisionMap:
+	dw AcademyGroundsCollisionMap ; $4028
+DataPtr_AcademyGroundsBehaviorMap:
+	dw AcademyGroundsBehaviorMap ; $402a
 DataPtr_AcademyGroundsSceneUnusedSlot:
 	dw AcademyGroundsSceneUnusedSlot ; $402c
 DataPtr_AcademyGroundsTiles:
@@ -58,9 +58,9 @@ DormBedroomTilemap:
 	INCBIN "data/bank_064/lz_499d.bin" ; $499d, 706 bytes
 DormBedroomAttrmap:
 	INCBIN "data/bank_064/lz_4c5f.bin" ; $4c5f, 511 bytes
-DormBedroomAuxTilemap:
+DormBedroomCollisionMap:
 	INCBIN "data/bank_064/lz_4e5e.bin" ; $4e5e, 118 bytes
-DormBedroomAuxAttrmap:
+DormBedroomBehaviorMap:
 	INCBIN "data/bank_064/lz_4ed4.bin" ; $4ed4, 72 bytes
 CountrysideSceneConfig:
 	INCBIN "data/bank_064/d_4f1c.bin" ; $4f1c, 42 bytes
@@ -72,9 +72,9 @@ CountrysideTilemap:
 	INCBIN "data/bank_064/lz_5c2c.bin" ; $5c2c, 802 bytes
 CountrysideAttrmap:
 	INCBIN "data/bank_064/lz_5f4e.bin" ; $5f4e, 411 bytes
-CountrysideAuxTilemap:
+CountrysideCollisionMap:
 	INCBIN "data/bank_064/lz_60e9.bin" ; $60e9, 80 bytes
-CountrysideAuxAttrmap:
+CountrysideBehaviorMap:
 	INCBIN "data/bank_064/lz_6139.bin" ; $6139, 90 bytes
 AcademyGroundsSceneConfig:
 	INCBIN "data/bank_064/d_6193.bin" ; $6193, 27 bytes
@@ -86,9 +86,9 @@ AcademyGroundsTilemap:
 	INCBIN "data/bank_064/lz_6e0a.bin" ; $6e0a, 1429 bytes
 AcademyGroundsAttrmap:
 	INCBIN "data/bank_064/lz_739f.bin" ; $739f, 679 bytes
-AcademyGroundsAuxTilemap:
+AcademyGroundsCollisionMap:
 	INCBIN "data/bank_064/lz_7646.bin" ; $7646, 147 bytes
-AcademyGroundsAuxAttrmap:
+AcademyGroundsBehaviorMap:
 	INCBIN "data/bank_064/lz_76d9.bin" ; $76d9, 79 bytes
 	; $7728, 8 bytes (fill)
 	ds 8, $00

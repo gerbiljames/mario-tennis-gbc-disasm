@@ -8,10 +8,10 @@ DataPtr_HardCourtGroundsTilemap:
 	dw HardCourtGroundsTilemap ; $4004
 DataPtr_HardCourtGroundsAttrmap:
 	dw HardCourtGroundsAttrmap ; $4006
-DataPtr_HardCourtGroundsAuxTilemap:
-	dw HardCourtGroundsAuxTilemap ; $4008
-DataPtr_HardCourtGroundsAuxAttrmap:
-	dw HardCourtGroundsAuxAttrmap ; $400a
+DataPtr_HardCourtGroundsCollisionMap:
+	dw HardCourtGroundsCollisionMap ; $4008
+DataPtr_HardCourtGroundsBehaviorMap:
+	dw HardCourtGroundsBehaviorMap ; $400a
 DataPtr_SpaResortSceneConfig:
 	dw SpaResortSceneConfig ; $400c
 DataPtr_HardCourtGroundsTiles:
@@ -24,10 +24,10 @@ DataPtr_SpaResortTilemap:
 	dw SpaResortTilemap ; $4014
 DataPtr_SpaResortAttrmap:
 	dw SpaResortAttrmap ; $4016
-DataPtr_SpaResortAuxTilemap:
-	dw SpaResortAuxTilemap ; $4018
-DataPtr_SpaResortAuxAttrmap:
-	dw SpaResortAuxAttrmap ; $401a
+DataPtr_SpaResortCollisionMap:
+	dw SpaResortCollisionMap ; $4018
+DataPtr_SpaResortBehaviorMap:
+	dw SpaResortBehaviorMap ; $401a
 DataPtr_MainBuildingSceneConfig:
 	dw MainBuildingSceneConfig ; $401c
 DataPtr_SpaResortTiles:
@@ -40,10 +40,10 @@ DataPtr_MainBuildingTilemap:
 	dw MainBuildingTilemap ; $4024
 DataPtr_MainBuildingAttrmap:
 	dw MainBuildingAttrmap ; $4026
-DataPtr_MainBuildingAuxTilemap:
-	dw MainBuildingAuxTilemap ; $4028
-DataPtr_MainBuildingAuxAttrmap:
-	dw MainBuildingAuxAttrmap ; $402a
+DataPtr_MainBuildingCollisionMap:
+	dw MainBuildingCollisionMap ; $4028
+DataPtr_MainBuildingBehaviorMap:
+	dw MainBuildingBehaviorMap ; $402a
 DataPtr_GardenPavilionSceneConfig:
 	dw GardenPavilionSceneConfig ; $402c
 DataPtr_MainBuildingTiles:
@@ -56,10 +56,10 @@ DataPtr_GardenPavilionTilemap:
 	dw GardenPavilionTilemap ; $4034
 DataPtr_GardenPavilionAttrmap:
 	dw GardenPavilionAttrmap ; $4036
-DataPtr_GardenPavilionAuxTilemap:
-	dw GardenPavilionAuxTilemap ; $4038
-DataPtr_GardenPavilionAuxAttrmap:
-	dw GardenPavilionAuxAttrmap ; $403a
+DataPtr_GardenPavilionCollisionMap:
+	dw GardenPavilionCollisionMap ; $4038
+DataPtr_GardenPavilionBehaviorMap:
+	dw GardenPavilionBehaviorMap ; $403a
 DataPtr_GardenPavilionSceneUnusedSlot:
 	dw GardenPavilionSceneUnusedSlot ; $403c
 DataPtr_GardenPavilionTiles:
@@ -74,9 +74,9 @@ HardCourtGroundsTilemap:
 	INCBIN "data/bank_066/lz_45b6.bin" ; $45b6, 1012 bytes
 HardCourtGroundsAttrmap:
 	INCBIN "data/bank_066/lz_49aa.bin" ; $49aa, 760 bytes
-HardCourtGroundsAuxTilemap:
+HardCourtGroundsCollisionMap:
 	INCBIN "data/bank_066/lz_4ca2.bin" ; $4ca2, 101 bytes
-HardCourtGroundsAuxAttrmap:
+HardCourtGroundsBehaviorMap:
 	INCBIN "data/bank_066/lz_4d07.bin" ; $4d07, 72 bytes
 SpaResortSceneConfig:
 	INCBIN "data/bank_066/d_4d4f.bin" ; $4d4f, 42 bytes
@@ -88,9 +88,9 @@ SpaResortTilemap:
 	INCBIN "data/bank_066/lz_55ab.bin" ; $55ab, 1086 bytes
 SpaResortAttrmap:
 	INCBIN "data/bank_066/lz_59e9.bin" ; $59e9, 675 bytes
-SpaResortAuxTilemap:
+SpaResortCollisionMap:
 	INCBIN "data/bank_066/lz_5c8c.bin" ; $5c8c, 118 bytes
-SpaResortAuxAttrmap:
+SpaResortBehaviorMap:
 	INCBIN "data/bank_066/lz_5d02.bin" ; $5d02, 128 bytes
 MainBuildingSceneConfig:
 	INCBIN "data/bank_066/d_5d82.bin" ; $5d82, 9 bytes
@@ -102,9 +102,9 @@ MainBuildingTilemap:
 	INCBIN "data/bank_066/lz_66c8.bin" ; $66c8, 1096 bytes
 MainBuildingAttrmap:
 	INCBIN "data/bank_066/lz_6b10.bin" ; $6b10, 572 bytes
-MainBuildingAuxTilemap:
+MainBuildingCollisionMap:
 	INCBIN "data/bank_066/lz_6d4c.bin" ; $6d4c, 97 bytes
-MainBuildingAuxAttrmap:
+MainBuildingBehaviorMap:
 	INCBIN "data/bank_066/lz_6dad.bin" ; $6dad, 75 bytes
 GardenPavilionSceneConfig:
 	INCBIN "data/bank_066/d_6df8.bin" ; $6df8, 42 bytes
@@ -116,9 +116,9 @@ GardenPavilionTilemap:
 	INCBIN "data/bank_066/lz_75de.bin" ; $75de, 971 bytes
 GardenPavilionAttrmap:
 	INCBIN "data/bank_066/lz_79a9.bin" ; $79a9, 474 bytes
-GardenPavilionAuxTilemap:
+GardenPavilionCollisionMap:
 	INCBIN "data/bank_066/lz_7b83.bin" ; $7b83, 95 bytes
-GardenPavilionAuxAttrmap:
+GardenPavilionBehaviorMap:
 	INCBIN "data/bank_066/lz_7be2.bin" ; $7be2, 75 bytes
 GardenPavilionSceneUnusedSlot:
 	; $7c2d, 979 bytes fill to bank end (linker-padded)
