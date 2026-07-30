@@ -1009,7 +1009,7 @@ AwardsCeremonyInitScript_0f:
 	script_get_actor_state $03 ; $561a
 	ld c, l ; $561f
 	ld b, h ; $5620
-	ld de, $d000 ; $5621
+	ld de, wActors ; $5621
 	farcall AttachActorStepMover ; $5624
 .done:
 	ret ; $5627

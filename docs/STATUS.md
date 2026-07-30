@@ -9535,3 +9535,84 @@ likely a mis-carve than a discovery), the second means the list is stale. Both
 directions were tested by breaking them deliberately, because a check that
 cannot fail is worse than no check: this project has already been bitten by
 `make compare | grep OK | tail -1`, which always exits 0.
+
+## A sanitiser dropped the field the whole session was for (2026-07-30)
+
+A driving session reached the Dictionary, Wall Practice, the Tennis Machine
+Room, the Awards Ceremony and **all twelve `End*` locations** — and reported
+that `tools/ram_gaps.py` had not moved by a single site. Its diagnosis was that
+the MCP's `dump_coverage` does not emit `rom_wram_bank`, and its recommendation
+was that no further driving is worth doing until the connector is changed.
+
+**The diagnosis was wrong and the recommendation would have been costly.**
+`dump_coverage` emits the mask; two earlier sessions' dumps carry it, which is
+checkable in the committed files. What happened is that the session's *own
+sanitiser* — dropping the out-of-range `0xc00000 | v` entries — rebuilt each
+file as `{"rom": ..., "other": ...}` and discarded the parallel array. The
+symptom then looks exactly like a missing feature, because `load_traced_wram_banks`
+takes `if len(masks) != len(rom): continue`: a file whose mask is absent *or
+merely the wrong length* contributes nothing, silently.
+
+The recovery was one call. The session never restarted its trace, so BizHawk's
+coverage buffer still held all of it: a fresh `dump_coverage` returned 20,587
+offsets **with** 20,587 masks, every one non-zero. Re-sanitised properly —
+filtering `rom` and `rom_wram_bank` in lockstep — it is byte-for-byte the same
+set of in-range offsets the session had, 16,740 of them, with the evidence
+restored.
+
+| | before | after |
+| --- | --- | --- |
+| sites with an observed WRAM bank | 64,677 | **66,167** |
+| resolved that the dataflow could not | 18,333 | **18,966** |
+| `unproven` | 352 | **343** |
+| actionable (`unclaimed`/`mirrored`/`rom-scoped`) | 2 | **12** |
+
+So the session's work was not wasted; only its output file was. The lesson is
+narrow and worth keeping: **a coverage dump is two parallel arrays, and any
+filter must cut both.** A future sanitiser should assert `len(rom) ==
+len(rom_wram_bank)` on the way out rather than trusting the shape.
+
+### One name got worse, honestly
+
+The recovered evidence made `$0a:$4898` and `$0a:$622f` render as bare `$d040`
+and `$d000` where they had said `wActors + 1 * ACTOR_SIZE` and `wActors`. That
+is the trace overruling the dataflow, which is the documented precedence, and it
+is an improvement: both sites are now `mirrored` candidates observed under banks
+**3 and 4** (`GetSceneTilemapAddr`, `WaitPlayerMoveDone`), so a single
+bank-`$04` name was asserting more than the evidence supports. The bare-operand
+total went 354 → 355 for that reason; a bare address is honest ignorance and a
+wrong name is not. A third operand, `$0f:$5621`, gained `wActors` from the same
+data.
+
+### The debug-menu lever, confirmed and written down
+
+The one-byte gate works, and the recipe is now specific enough to reuse:
+
+* Set `hDebugStepMode` (`$ff9e`) non-zero, be in a real overworld location, and
+  **tap A once on an empty tile in a freshly loaded room**. Idle frames do not
+  open it and neither does holding a direction (movement never settles). That
+  was 100% reliable across ~15 uses.
+* The menu's four handlers are **Scene** (the warp), **Level Up** (applies
+  instantly, no sub-screen), **Pallette** (a full-screen tile/attribute test
+  pattern, not an interactive picker) and **Flags** (a grid editor, rows for
+  flag groups 0-3 and columns 0-F).
+* In Scene, Left/Right adjust the location number in short taps — longer holds
+  double-step — Down moves to `ENTER NO`, and A commits: `$c280` changes
+  immediately and the target's init code runs, even though the overlay still
+  shows the previous room's stale framebuffer. Control returns to the *top*
+  level, so chaining warps means re-entering Scene each time.
+
+Also corrected: **the main menu's whole middle row is Mario Tour** — three
+story-mode save slots, not one story slot flanked by other modes. The earlier
+guess that row 2 centre was an exhibition mode was wrong.
+
+### What the warp still cannot reach
+
+`ShowRankingBoard` is not a `STORYLOC_*` destination at all — it is farcalled
+from match-result and tournament-end code after the caller sets
+`wRankingBoardMode`, `wRankingBoardDoubles`, `wRankingBoardPlayerRow` and
+`wRankingBoardSilent`. No Scene warp reaches it, so sound id `$80` stays
+unidentified until a real ranking match is driven to its end. The twelve `End*`
+rooms were reached as bare per-room loads rather than through
+`RunEndingCreditsSequence`, so the credits captions and cross-room chaining did
+not run.

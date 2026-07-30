@@ -1458,7 +1458,7 @@ WaitPlayerMoveDone:
 	push bc ; $4893
 	push hl ; $4894
 	ld bc, $0258 ; $4895
-	ld hl, wActors + 1 * ACTOR_SIZE ; $4898
+	ld hl, $d040 ; $4898
 	ld a, l ; $489b
 	ldh [hActorPtr], a ; $489c
 	ld a, h ; $489e
@@ -4669,7 +4669,7 @@ GetSceneTilemapAddr:
 	ld l, h ; $622b
 	ld h, $00 ; $622c
 	add hl, bc ; $622e
-	ld bc, wActors ; $622f
+	ld bc, $d000 ; $622f
 	add hl, bc ; $6232
 	pop bc ; $6233
 	ret ; $6234
