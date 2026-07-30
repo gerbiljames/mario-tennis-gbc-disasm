@@ -4192,6 +4192,12 @@
       {
        "bank": "0x1d",
        "wram_bank": "0x03"
+      },
+      {
+       "bank": "0x1d",
+       "start": "0x50ab",
+       "end": "0x5430",
+       "note": "SlideToMainCharStatPage and its siblings pass the cell to ApplyTilemapPatchList, which writes it under WRAM bank $03 and then $02; the bank live here is $06, the screen's own working set, so the scope names no wram_bank. Every $d7e0-$dea0 operand in the range is one of the six page-slot cells."
       }
      ],
      "symbols": {

@@ -2021,13 +2021,13 @@ SlideToMainCharStatPage:
 	jr nz, SlideToMainCharStatPage ; $50a3
 	call LoadBasePageIntoWorkTilemap ; $50a5
 	ld hl, MainCharStatPageTilemapPatch02 ; $50a8
-	ld bc, $d7e0 ; $50ab
+	ld bc, wCharDataPageSlot1 ; $50ab
 	call ApplyTilemapPatchList ; $50ae
 	ld hl, MainCharStatPageTilemapPatch03 ; $50b1
-	ld bc, $d8e0 ; $50b4
+	ld bc, wCharDataPageSlot1 + 8 * TILEMAP_WIDTH ; $50b4
 	call ApplyTilemapPatchList ; $50b7
 	ld hl, MainCharStatPageTilemapPatch04 ; $50ba
-	ld bc, $d9e0 ; $50bd
+	ld bc, wCharDataPageSlot1 + 16 * TILEMAP_WIDTH ; $50bd
 	call ApplyTilemapPatchList ; $50c0
 	ld hl, DrillDisplayData_1d ; $50c3
 	ld bc, wCharDataScreenCell + 28 * TILEMAP_WIDTH + 16 ; $50c6
@@ -2041,13 +2041,13 @@ SlideToMainCharStatPage:
 	ld [hl], d ; $50dd
 	call LoadBasePageIntoWorkTilemap ; $50de
 	ld hl, MainCharStatPageTilemapPatch05 ; $50e1
-	ld bc, $d7e0 ; $50e4
+	ld bc, wCharDataPageSlot1 ; $50e4
 	call ApplyTilemapPatchList ; $50e7
 	ld hl, MainCharStatPageTilemapPatch06 ; $50ea
-	ld bc, $d8e0 ; $50ed
+	ld bc, wCharDataPageSlot1 + 8 * TILEMAP_WIDTH ; $50ed
 	call ApplyTilemapPatchList ; $50f0
 	ld hl, MainCharStatPageTilemapPatch07 ; $50f3
-	ld bc, $d9e0 ; $50f6
+	ld bc, wCharDataPageSlot1 + 16 * TILEMAP_WIDTH ; $50f6
 	call ApplyTilemapPatchList ; $50f9
 	ld hl, StatPageTilemapPatch0 ; $50fc
 	ld bc, wCharDataScreenCell + 28 * TILEMAP_WIDTH + 16 ; $50ff
@@ -2066,22 +2066,22 @@ SlideToMainCharStatPage:
 	ld [hl], d ; $511f
 	call LoadBasePageIntoWorkTilemap ; $5120
 	ld hl, MainCharStatPageTilemapPatch08 ; $5123
-	ld bc, $d7e0 ; $5126
+	ld bc, wCharDataPageSlot1 ; $5126
 	call ApplyTilemapPatchList ; $5129
 	ld hl, MainCharStatPageTilemapPatch09 ; $512c
-	ld bc, $d8e0 ; $512f
+	ld bc, wCharDataPageSlot1 + 8 * TILEMAP_WIDTH ; $512f
 	call ApplyTilemapPatchList ; $5132
 	ld hl, MainCharStatPageTilemapPatch10 ; $5135
-	ld bc, $d9e0 ; $5138
+	ld bc, wCharDataPageSlot1 + 16 * TILEMAP_WIDTH ; $5138
 	call ApplyTilemapPatchList ; $513b
 	ld hl, MainCharStatPageTilemapPatch26 ; $513e
-	ld bc, $da20 ; $5141
+	ld bc, wCharDataPageSlot2 ; $5141
 	call ApplyTilemapPatchList ; $5144
 	ld hl, MainCharStatPageTilemapPatch27 ; $5147
-	ld bc, $db20 ; $514a
+	ld bc, wCharDataPageSlot2 + 8 * TILEMAP_WIDTH ; $514a
 	call ApplyTilemapPatchList ; $514d
 	ld hl, MainCharStatPageTilemapPatch28 ; $5150
-	ld bc, $dc20 ; $5153
+	ld bc, wCharDataPageSlot2 + 16 * TILEMAP_WIDTH ; $5153
 	call ApplyTilemapPatchList ; $5156
 	farcall FlushCharDataTilemapsFar ; $5159
 	wram_bank $06 ; $515c
@@ -2097,22 +2097,22 @@ SlideToMainCharStatPage:
 	ld [hl], d ; $5173
 	call LoadBasePageIntoWorkTilemap ; $5174
 	ld hl, MainCharStatPageTilemapPatch11 ; $5177
-	ld bc, $d7e0 ; $517a
+	ld bc, wCharDataPageSlot1 ; $517a
 	call ApplyTilemapPatchList ; $517d
 	ld hl, MainCharStatPageTilemapPatch12 ; $5180
-	ld bc, $d8e0 ; $5183
+	ld bc, wCharDataPageSlot1 + 8 * TILEMAP_WIDTH ; $5183
 	call ApplyTilemapPatchList ; $5186
 	ld hl, MainCharStatPageTilemapPatch13 ; $5189
-	ld bc, $d9e0 ; $518c
+	ld bc, wCharDataPageSlot1 + 16 * TILEMAP_WIDTH ; $518c
 	call ApplyTilemapPatchList ; $518f
 	ld hl, MainCharStatPageTilemapPatch23 ; $5192
-	ld bc, $da20 ; $5195
+	ld bc, wCharDataPageSlot2 ; $5195
 	call ApplyTilemapPatchList ; $5198
 	ld hl, MainCharStatPageTilemapPatch24 ; $519b
-	ld bc, $db20 ; $519e
+	ld bc, wCharDataPageSlot2 + 8 * TILEMAP_WIDTH ; $519e
 	call ApplyTilemapPatchList ; $51a1
 	ld hl, MainCharStatPageTilemapPatch25 ; $51a4
-	ld bc, $dc20 ; $51a7
+	ld bc, wCharDataPageSlot2 + 16 * TILEMAP_WIDTH ; $51a7
 	call ApplyTilemapPatchList ; $51aa
 	farcall FlushCharDataTilemapsFar ; $51ad
 	wram_bank $06 ; $51b0
@@ -2128,13 +2128,13 @@ SlideToMainCharStatPage:
 	ld [hl], d ; $51c7
 	call LoadBasePageIntoWorkTilemap ; $51c8
 	ld hl, MainCharStatPageTilemapPatch20 ; $51cb
-	ld bc, $da20 ; $51ce
+	ld bc, wCharDataPageSlot2 ; $51ce
 	call ApplyTilemapPatchList ; $51d1
 	ld hl, MainCharStatPageTilemapPatch21 ; $51d4
-	ld bc, $db20 ; $51d7
+	ld bc, wCharDataPageSlot2 + 8 * TILEMAP_WIDTH ; $51d7
 	call ApplyTilemapPatchList ; $51da
 	ld hl, MainCharStatPageTilemapPatch22 ; $51dd
-	ld bc, $dc20 ; $51e0
+	ld bc, wCharDataPageSlot2 + 16 * TILEMAP_WIDTH ; $51e0
 	call ApplyTilemapPatchList ; $51e3
 	farcall FlushCharDataTilemapsFar ; $51e6
 	wram_bank $06 ; $51e9
@@ -2150,13 +2150,13 @@ SlideToMainCharStatPage:
 	ld [hl], d ; $5200
 	call LoadBasePageIntoWorkTilemap ; $5201
 	ld hl, MainCharStatPageTilemapPatch17 ; $5204
-	ld bc, $da20 ; $5207
+	ld bc, wCharDataPageSlot2 ; $5207
 	call ApplyTilemapPatchList ; $520a
 	ld hl, MainCharStatPageTilemapPatch18 ; $520d
-	ld bc, $db20 ; $5210
+	ld bc, wCharDataPageSlot2 + 8 * TILEMAP_WIDTH ; $5210
 	call ApplyTilemapPatchList ; $5213
 	ld hl, MainCharStatPageTilemapPatch19 ; $5216
-	ld bc, $dc20 ; $5219
+	ld bc, wCharDataPageSlot2 + 16 * TILEMAP_WIDTH ; $5219
 	call ApplyTilemapPatchList ; $521c
 	farcall FlushCharDataTilemapsFar ; $521f
 	wram_bank $06 ; $5222
@@ -2172,13 +2172,13 @@ SlideToMainCharStatPage:
 	ld [hl], d ; $5239
 	call LoadBasePageIntoWorkTilemap ; $523a
 	ld hl, MainCharStatPageTilemapPatch14 ; $523d
-	ld bc, $da20 ; $5240
+	ld bc, wCharDataPageSlot2 ; $5240
 	call ApplyTilemapPatchList ; $5243
 	ld hl, MainCharStatPageTilemapPatch15 ; $5246
-	ld bc, $db20 ; $5249
+	ld bc, wCharDataPageSlot2 + 8 * TILEMAP_WIDTH ; $5249
 	call ApplyTilemapPatchList ; $524c
 	ld hl, MainCharStatPageTilemapPatch16 ; $524f
-	ld bc, $dc20 ; $5252
+	ld bc, wCharDataPageSlot2 + 16 * TILEMAP_WIDTH ; $5252
 	call ApplyTilemapPatchList ; $5255
 	farcall FlushCharDataTilemapsFar ; $5258
 	wram_bank $06 ; $525b
@@ -2200,13 +2200,13 @@ SlideFromMainCharStatPage:
 	ld [hl], d ; $527f
 	call LoadBasePageIntoWorkTilemap ; $5280
 	ld hl, MainCharStatPageTilemapPatch17 ; $5283
-	ld bc, $da20 ; $5286
+	ld bc, wCharDataPageSlot2 ; $5286
 	call ApplyTilemapPatchList ; $5289
 	ld hl, MainCharStatPageTilemapPatch18 ; $528c
-	ld bc, $db20 ; $528f
+	ld bc, wCharDataPageSlot2 + 8 * TILEMAP_WIDTH ; $528f
 	call ApplyTilemapPatchList ; $5292
 	ld hl, MainCharStatPageTilemapPatch19 ; $5295
-	ld bc, $dc20 ; $5298
+	ld bc, wCharDataPageSlot2 + 16 * TILEMAP_WIDTH ; $5298
 	call ApplyTilemapPatchList ; $529b
 	farcall FlushCharDataTilemapsFar ; $529e
 	wram_bank $06 ; $52a1
@@ -2222,13 +2222,13 @@ SlideFromMainCharStatPage:
 	ld [hl], d ; $52b8
 	call LoadBasePageIntoWorkTilemap ; $52b9
 	ld hl, MainCharStatPageTilemapPatch20 ; $52bc
-	ld bc, $da20 ; $52bf
+	ld bc, wCharDataPageSlot2 ; $52bf
 	call ApplyTilemapPatchList ; $52c2
 	ld hl, MainCharStatPageTilemapPatch21 ; $52c5
-	ld bc, $db20 ; $52c8
+	ld bc, wCharDataPageSlot2 + 8 * TILEMAP_WIDTH ; $52c8
 	call ApplyTilemapPatchList ; $52cb
 	ld hl, MainCharStatPageTilemapPatch22 ; $52ce
-	ld bc, $dc20 ; $52d1
+	ld bc, wCharDataPageSlot2 + 16 * TILEMAP_WIDTH ; $52d1
 	call ApplyTilemapPatchList ; $52d4
 	farcall FlushCharDataTilemapsFar ; $52d7
 	wram_bank $06 ; $52da
@@ -2244,22 +2244,22 @@ SlideFromMainCharStatPage:
 	ld [hl], d ; $52f1
 	call LoadBasePageIntoWorkTilemap ; $52f2
 	ld hl, MainCharStatPageTilemapPatch11 ; $52f5
-	ld bc, $d7e0 ; $52f8
+	ld bc, wCharDataPageSlot1 ; $52f8
 	call ApplyTilemapPatchList ; $52fb
 	ld hl, MainCharStatPageTilemapPatch12 ; $52fe
-	ld bc, $d8e0 ; $5301
+	ld bc, wCharDataPageSlot1 + 8 * TILEMAP_WIDTH ; $5301
 	call ApplyTilemapPatchList ; $5304
 	ld hl, MainCharStatPageTilemapPatch13 ; $5307
-	ld bc, $d9e0 ; $530a
+	ld bc, wCharDataPageSlot1 + 16 * TILEMAP_WIDTH ; $530a
 	call ApplyTilemapPatchList ; $530d
 	ld hl, MainCharStatPageTilemapPatch23 ; $5310
-	ld bc, $da20 ; $5313
+	ld bc, wCharDataPageSlot2 ; $5313
 	call ApplyTilemapPatchList ; $5316
 	ld hl, MainCharStatPageTilemapPatch24 ; $5319
-	ld bc, $db20 ; $531c
+	ld bc, wCharDataPageSlot2 + 8 * TILEMAP_WIDTH ; $531c
 	call ApplyTilemapPatchList ; $531f
 	ld hl, MainCharStatPageTilemapPatch25 ; $5322
-	ld bc, $dc20 ; $5325
+	ld bc, wCharDataPageSlot2 + 16 * TILEMAP_WIDTH ; $5325
 	call ApplyTilemapPatchList ; $5328
 	farcall FlushCharDataTilemapsFar ; $532b
 	wram_bank $06 ; $532e
@@ -2275,22 +2275,22 @@ SlideFromMainCharStatPage:
 	ld [hl], d ; $5345
 	call LoadBasePageIntoWorkTilemap ; $5346
 	ld hl, MainCharStatPageTilemapPatch08 ; $5349
-	ld bc, $d7e0 ; $534c
+	ld bc, wCharDataPageSlot1 ; $534c
 	call ApplyTilemapPatchList ; $534f
 	ld hl, MainCharStatPageTilemapPatch09 ; $5352
-	ld bc, $d8e0 ; $5355
+	ld bc, wCharDataPageSlot1 + 8 * TILEMAP_WIDTH ; $5355
 	call ApplyTilemapPatchList ; $5358
 	ld hl, MainCharStatPageTilemapPatch10 ; $535b
-	ld bc, $d9e0 ; $535e
+	ld bc, wCharDataPageSlot1 + 16 * TILEMAP_WIDTH ; $535e
 	call ApplyTilemapPatchList ; $5361
 	ld hl, MainCharStatPageTilemapPatch26 ; $5364
-	ld bc, $da20 ; $5367
+	ld bc, wCharDataPageSlot2 ; $5367
 	call ApplyTilemapPatchList ; $536a
 	ld hl, MainCharStatPageTilemapPatch27 ; $536d
-	ld bc, $db20 ; $5370
+	ld bc, wCharDataPageSlot2 + 8 * TILEMAP_WIDTH ; $5370
 	call ApplyTilemapPatchList ; $5373
 	ld hl, MainCharStatPageTilemapPatch28 ; $5376
-	ld bc, $dc20 ; $5379
+	ld bc, wCharDataPageSlot2 + 16 * TILEMAP_WIDTH ; $5379
 	call ApplyTilemapPatchList ; $537c
 	farcall FlushCharDataTilemapsFar ; $537f
 	wram_bank $06 ; $5382
@@ -2306,13 +2306,13 @@ SlideFromMainCharStatPage:
 	ld [hl], d ; $5399
 	call LoadBasePageIntoWorkTilemap ; $539a
 	ld hl, MainCharStatPageTilemapPatch05 ; $539d
-	ld bc, $d7e0 ; $53a0
+	ld bc, wCharDataPageSlot1 ; $53a0
 	call ApplyTilemapPatchList ; $53a3
 	ld hl, MainCharStatPageTilemapPatch06 ; $53a6
-	ld bc, $d8e0 ; $53a9
+	ld bc, wCharDataPageSlot1 + 8 * TILEMAP_WIDTH ; $53a9
 	call ApplyTilemapPatchList ; $53ac
 	ld hl, MainCharStatPageTilemapPatch07 ; $53af
-	ld bc, $d9e0 ; $53b2
+	ld bc, wCharDataPageSlot1 + 16 * TILEMAP_WIDTH ; $53b2
 	call ApplyTilemapPatchList ; $53b5
 	ld hl, StatPageTilemapPatch0 ; $53b8
 	ld bc, wCharDataScreenCell + 28 * TILEMAP_WIDTH + 16 ; $53bb
@@ -2331,13 +2331,13 @@ SlideFromMainCharStatPage:
 	ld [hl], d ; $53db
 	call LoadBasePageIntoWorkTilemap ; $53dc
 	ld hl, MainCharStatPageTilemapPatch02 ; $53df
-	ld bc, $d7e0 ; $53e2
+	ld bc, wCharDataPageSlot1 ; $53e2
 	call ApplyTilemapPatchList ; $53e5
 	ld hl, MainCharStatPageTilemapPatch03 ; $53e8
-	ld bc, $d8e0 ; $53eb
+	ld bc, wCharDataPageSlot1 + 8 * TILEMAP_WIDTH ; $53eb
 	call ApplyTilemapPatchList ; $53ee
 	ld hl, MainCharStatPageTilemapPatch04 ; $53f1
-	ld bc, $d9e0 ; $53f4
+	ld bc, wCharDataPageSlot1 + 16 * TILEMAP_WIDTH ; $53f4
 	call ApplyTilemapPatchList ; $53f7
 	ld hl, DrillDisplayData_1d ; $53fa
 	ld bc, wCharDataScreenCell + 28 * TILEMAP_WIDTH + 16 ; $53fd
@@ -2350,13 +2350,13 @@ SlideFromMainCharStatPage:
 	ld [hl], a ; $5411
 	call LoadBasePageIntoWorkTilemap ; $5412
 	ld hl, StatPageTilemapPatch6 ; $5415
-	ld bc, $d7e0 ; $5418
+	ld bc, wCharDataPageSlot1 ; $5418
 	call ApplyTilemapPatchList ; $541b
 	ld hl, StatPageTilemapPatch7 ; $541e
-	ld bc, $d8e0 ; $5421
+	ld bc, wCharDataPageSlot1 + 8 * TILEMAP_WIDTH ; $5421
 	call ApplyTilemapPatchList ; $5424
 	ld hl, StatPageTilemapPatch8 ; $5427
-	ld bc, $d9e0 ; $542a
+	ld bc, wCharDataPageSlot1 + 16 * TILEMAP_WIDTH ; $542a
 	call ApplyTilemapPatchList ; $542d
 	ld hl, DrillDisplayData_1d ; $5430
 	ld bc, wCharDataScreenCell + 28 * TILEMAP_WIDTH + 16 ; $5433
