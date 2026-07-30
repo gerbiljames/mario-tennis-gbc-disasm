@@ -26,7 +26,7 @@ shape, not *twins*, and the shot banks are near-identical copies of each
 other, so a routine only one bank failed to execute reads as ordinary data
 until you diff it against its siblings.
 
-Everything below is **committed** (HEAD `7127476`); the whole history
+Everything below is **committed** (HEAD `0863c8e`); the whole history
 rebuilds byte-perfect. Per-bank progress at any time: `python3
 tools/progress.py` (proven-code bytes, fill runs, label counts, human-named
 counts) and `tools/progress.py --unnamed <bank>` to list still-auto-named
@@ -8481,3 +8481,41 @@ Stated because the absence is easy to mistake for a clean bill of health:
   site at all. One spec covers all four `map_script` roles and `arg0` only
   means a location in one of them, so tagging them needs a `role` parameter on
   `render_map_table`.
+
+## Five sound symbols named the opposite of what they do (2026-07-30)
+
+Naming the sound ids meant reading `PlaySound` closely enough to notice that its
+two index tables are labelled the wrong way round — and once they are swapped,
+three more names go with them.
+
+`PlaySound` loads `$3151` first and replaces it with `$31b5` only when the id is
+`>= $50`, so **`$3151` serves the ids below `$50`**. Three independent checks
+agree that half is music:
+
+* **The entry data.** Each index entry's high nibble is the channel count. The
+  `$3151` table's entries want 3-4 channels; the `$31b5` table's want 1. Music
+  uses 3-4 voices, an effect 1-2.
+* **The channels each half clears.** The `id >= $50` path clears channel structs
+  0 and 1 before its lookup; `StopMusic` (id `$00`) clears structs 2-5. The two
+  halves own different channels.
+* **`wCurrentBGM`.** The command handler latches every id below `$40` into it,
+  and its documented values run `$00`-`$32` — exactly the 50 entries of the
+  `$3151` table.
+
+So `$3151` is `MusicIndexTable`, `$31b5` is `SfxIndexTable`, and `PlaySound`'s
+`.sfx` branch — the one taken when the id is *below* `$50` — is `.music`.
+
+Two more names came from the same confusion. `CheckSfxChannelsIdle` walks four
+channel structs from `wSndChannels + 64`, i.e. channels 2-5, the *music*
+channels; its one caller is `ResumeBGMAfterJingle`, which restarts `wCurrentBGM`
+once they fall idle — once the jingle playing on the music channels has ended.
+It is `CheckMusicChannelsIdle`. And `StopAllSound` clears only those same four
+structs plus `wSndLoopSlots + 24`, leaving the effect channels running: it is
+`StopMusic`, and id `$50` is what silences the effects.
+
+Worth noting how this surfaced. The byte-perfect compare cannot see a wrong
+name, and none of these five had looked suspicious in three years of passes over
+this bank — `SfxIndexTable` sitting next to `MusicIndexTable` above `PlaySound`
+reads perfectly well until you check which one the `jr c` actually takes. What
+forced the check was needing to state, in `constants.inc`, *which id range is
+which*: a constant has to commit to a claim that a label can leave vague.
