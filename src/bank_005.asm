@@ -689,7 +689,7 @@ RestoreShadowTilemapRow:
 .next:
 	dec d ; $441f
 	jr nz, .loopB ; $4420
-	ld hl, wShadowTilemap ; $4422
+	ld hl, wWindowShadowTilemap ; $4422
 	ld a, e ; $4425
 	and $1f ; $4426
 	ld d, a ; $4428

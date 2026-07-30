@@ -4218,7 +4218,7 @@ DrawExpScreenLevelNumber:
 	or a ; $6df0
 	jr nz, .nonZero ; $6df1
 	ld a, [wExpScreenCharStats] ; $6df3
-	ld de, wCharDataNumberBuffer + 3 ; $6df6
+	ld de, wCharDataScreenCell + 4 * TILEMAP_WIDTH + 17 ; $6df6
 	jr .clearExpScreenLevelDigits ; $6df9
 .nonZero:
 	ld a, [wExpScreenCharStats + 15] ; $6dfb

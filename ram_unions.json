@@ -2556,6 +2556,11 @@
       },
       {
        "bank": "0x1d",
+       "start": "0x6df6",
+       "end": "0x6df9"
+      },
+      {
+       "bank": "0x1d",
        "start": "0x6dfe",
        "end": "0x6e01"
       }
@@ -2931,6 +2936,11 @@
      "scopes": [
       {
        "wram_bank": "0x05"
+      },
+      {
+       "bank": "0x05",
+       "start": "0x4422",
+       "end": "0x4425"
       },
       {
        "bank": "0x05",
@@ -3896,6 +3906,16 @@
      "scopes": [
       {
        "wram_bank": "0x01"
+      },
+      {
+       "bank": "0x06",
+       "start": "0x5224",
+       "end": "0x5227"
+      },
+      {
+       "bank": "0x06",
+       "start": "0x728e",
+       "end": "0x7291"
       }
      ],
      "symbols": {

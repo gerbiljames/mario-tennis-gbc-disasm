@@ -9359,3 +9359,130 @@ with a stride of **18**, not 16, reading nine words per record. 592 bytes is
 `*Palettes`/`*Tilemap`/`*Attrmap`/`*Tiles` agreement across all 37 records — yet
 its own pop order agrees about the roles. Either the stride is a bug or the table
 has a second interpretation; not settled here.
+
+## Union resolution is ordered by specificity now, not by file position (2026-07-30)
+
+Four names were wrong and known to be wrong, blocked because
+`ScopedRamNames.resolve` walked an address's matchers in **`ram_unions.json`
+order**. Ten variants claim `$d000-$d7ff` across three WRAM banks, so leaving
+that to file position makes every curation decision really a decision about line
+numbers. Two passes had offered a union reorder and both correctly refused it.
+
+`_matcher_precedence` now returns a sort key, most specific first:
+
+1. a **site scope** — a `start`/`end` range at most 16 bytes wide
+2. **bank consistency** — the variant's declared WRAM banks contain the bank
+   provable at the site
+3. the **ROM constraint**, narrowest first: explicit range > whole bank > none
+4. the **WRAM constraint**: one proved bank > a mirrored variant's bank set > none
+5. tie: registration order, i.e. file order — still the tiebreak, but only the
+   tiebreak, and stated rather than incidental
+
+### The obvious ladder is wrong in both directions
+
+The one this project would have written by hand — range > bank+wram_bank >
+bank > wram_bank — was implemented first and **broke 90 operands**. Variants
+scoped `{bank $1c/$1d, wram_bank $06}` (`wCharDataStats`, `wCharDataLevels`,
+`wExpScreenCharStats` …) were swallowed by `wCharDataScreenCell`, whose scopes
+are *routine-sized* ROM ranges — `{bank $1d, $4ad2-$5440}` is 2.4 KiB. A range
+that big says no more about any one operand in it than a whole-bank scope does.
+
+Inverting it, so a proved `wram_bank` outranks every ROM constraint, **breaks 71
+the other way**: `wNameEntryBuffer`, `wEquipItemList`, `wRankingBoardDoubles` and
+others lose to their union's catch-all variant, because those unions are built
+the opposite way round — the ROM scope is the discriminator and the bare
+`wram_bank` variant is the fallback. `ram_unions.json` says so in as many words,
+labelling one *"screen scratch (any other screen, where WRAM bank `$03` is
+provable)"*.
+
+So ROM has to outrank WRAM, and the two cases that must escape that are lifted
+above it. Tier 1 carries the four fixes: an instruction range naming no
+`wram_bank` is the declared form for an address whose bank the *callee* selects,
+so the bank provable at the site is precisely the fact it exists to overrule.
+Tier 2 keeps the routine-sized ranges in their place without the width threshold
+having to do that work — and it is not a new judgement, it is exactly what
+`audit_rom_only_scopes` reports, used to *choose* rather than to warn, so it can
+only reduce audit hits.
+
+The 16-byte threshold is measured, not tuned. The file's ranges fall into two
+cleanly separated populations — 35 per-site scopes of 3 to 11 bytes, then
+nothing until 28 bytes and on up to 11 KiB — and every value from 3 to 128 gives
+byte-identical output. The first value that changes a name is 248.
+
+### The check that makes the diff trustworthy
+
+With the tool change alone and no new scopes, **`git diff src/` was empty**.
+That is the strongest available evidence the ordering reproduces the old
+file-order behaviour everywhere curation does not deliberately ask it to differ,
+and it means every renamed operand is attributable to a scope added on purpose.
+Four scopes were then added and exactly four operands moved:
+
+| site | was | is |
+| --- | --- | --- |
+| `$05:$4422` | `wShadowTilemap` | `wWindowShadowTilemap` |
+| `$06:$5224` | `wScreenAttrmap` | `wDecompBuffer` |
+| `$06:$728e` | `wWindowShadowTilemap` | `wDecompBuffer` |
+| `$1d:$6df6` | `wCharDataNumberBuffer + 3` | `wCharDataScreenCell + 4 * TILEMAP_WIDTH + 17` |
+
+The `$05:$4422` case is the tidiest: the `wWindowShadowTilemap` union's comment
+already documented `RestoreShadowTilemapRow` as the reason for its one
+instruction-range scope — but that scope covers the *attrmap* half at
+`$4479-$447c`, and the tilemap half at `$4422` was simply never added.
+
+**The rule for future curation:** to pin one operand, write a `start`/`end`
+range of exactly that instruction and name no `wram_bank`. That now beats
+everything, including a proved bank. A wider range reads as a subsystem claim
+and competes on ROM narrowness alone, below bank consistency.
+
+## Three more shipped defects, and eleven that were not (2026-07-30)
+
+The fourteen "branch to the next label" sites are settled. Three went into
+`docs/bugs.md`; the other eleven are harmless and are recorded as such so the
+lead is closed rather than re-opened by the next sweep.
+
+* **`RegisterFrameTask` walks 22 records over a 16-record table.** The collapsed
+  branch was only the missing table-full handler; following it up found the real
+  defect. `wFrameTasks` is 64 bytes and `ClearFrameTasks` clears exactly
+  `4 * 16`; `RunFrameTasks`, `UnregisterFrameTask` and `SortFrameTasks` all say
+  16. Only the insert loop says `ld c, $16` — 22 — so records 16-21 land on
+  `wMasterPalettes` at `$c200`, the copy that fades scale into the live
+  palettes. An overflow task also never runs and cannot be unregistered.
+* **`GetActorStateAddr` destroys the flag it computes.** `ld a, [hl]` / `cp $00`
+  reads the activity byte, then `pop hl` / `inc h` / `dec h` / `ret` overwrites Z
+  with a test of the pointer's high byte — always `$d0`-`$d5`, never zero.
+  Eleven call sites branch on Z and none can fire. What proves it is a mistake
+  rather than an idiom is that it *is* the idiom: `CheckActorScriptEnd`,
+  `IsActorBusy` and the routine at `$0a:$4750` all use `inc h`/`dec h`/`ret z` as
+  their **first** instruction, a null-pointer guard. Here the halves are in the
+  wrong order.
+* **`CheckBallContactWindow`'s animation-state test does nothing** — all four
+  `cp` arms target the instruction after the last of them, so the hitting box is
+  identical in every animation state. The sibling arm above it adjusts reach by
+  `wCharFlags` bit 1, and `CharRallyEndState` runs the same four-way membership
+  test with a real body, so the shape is intact elsewhere.
+
+Two entries in the lead I handed over were **not** collapsed branches at all
+(they were the live conditional one instruction earlier), and one real site was
+missing from it — found by re-deriving the sweep from scratch rather than
+working the list.
+
+### A naming convention this exposes
+
+Auto-derived local labels on a collapsed branch name a block that does not
+exist: `.lose` at `$14:$278`, `.variantB` at `$27:$1320`, `.checkX` at
+`$08:$6515`. A reader skimming `MachineCourtResultScene` will believe there is a
+lose path. Left as-is for now, but a `.same`/`.nop` convention would stop the
+label asserting something the code does not.
+
+And two dead-decision shapes this sweep cannot see, for whoever re-runs it: a
+conditional whose two arms are byte-identical (`$27:$1117`), and a test all of
+whose outcomes are `ret` (`$08:$6316`).
+
+### One inverted pair of labels, fixed
+
+`$38:$63e1` reads `ld a, [wMatchIsDoubles]` / `or a` / `jr nz, .singles` — and
+the `nz` path is the *doubles* path. It sets `wCharSelectMode` 4 or 5, whose
+rings (`CharSelectSlotRing4`/`5`) carry two slots per side, i.e. four
+characters; the `z` path sets modes 2/3, one slot each. Renamed `.doubles`, with
+`.slave4`/`.slave2` — which set modes `$03` and `$05`, so their names were wrong
+about the mode as well as the side — becoming `.singlesSlave`/`.doublesSlave`.

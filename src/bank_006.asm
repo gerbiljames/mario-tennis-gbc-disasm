@@ -1762,7 +1762,7 @@ LoadMatchMenuItemGfx:
 	ld a, [hl+] ; $5221
 	ld h, [hl] ; $5222
 	ld l, a ; $5223
-	ld de, wScreenAttrmap ; $5224
+	ld de, wDecompBuffer ; $5224
 	ldh a, [hWramBank] ; $5227
 	push af ; $5229
 	wram_bank $01 ; $522a
@@ -3411,7 +3411,7 @@ LoadStoryMenuItemGfx:
 	ld a, [hl+] ; $728b
 	ld h, [hl] ; $728c
 	ld l, a ; $728d
-	ld de, wWindowShadowTilemap ; $728e
+	ld de, wDecompBuffer ; $728e
 	ldh a, [hWramBank] ; $7291
 	push af ; $7293
 	wram_bank $01 ; $7294

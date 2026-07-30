@@ -328,6 +328,136 @@ the halves reversed — `RefreshShadowTilemapFromMapBuffer` (`$05:$44ba`) adds i
 to the shadow-tilemap pointer and no instruction in the ROM writes it, so it is
 always 0.
 
+### `RegisterFrameTask` inserts six records past the end of its table
+
+`wFrameTasks` (`$c1c0`) is 64 bytes — sixteen 4-byte records of `[id, ptr lo,
+ptr hi, rom bank]`. Every routine that walks it agrees on sixteen except the one
+that writes it. `ClearFrameTasks` (`$00:$1b38`) clears `$04 * 16` = 64 bytes;
+`RunFrameTasks` (`$00:$1bff`) and `UnregisterFrameTask` (`$00:$1bcb`) both loop
+`ld c, $10`; `SortFrameTasks` (`$00:$1c3f`) makes fifteen passes over sixteen
+records. `RegisterFrameTask` (`$00:$1b6a`) also uses sixteen for its
+duplicate check (`ld bc, $0010` at `$1b80`), and then twenty-two for the insert:
+
+```
+        ld c, $16                ; <- $1b9a, 22 records
+        ld hl, wFrameTasks
+.insertLoop:
+        inc hl
+        call Check3BytesZero
+        jr nz, .insertNext
+        ...                      ; write the 4-byte record here
+        jr .done
+.insertNext:
+        inc hl / inc hl / inc hl ; stride 4
+        dec c
+        jr nz, .insertLoop
+        ld a, b
+        or a
+        jr nz, .done             ; <- $1bbf, decides nothing
+.done:
+```
+
+With all sixteen slots occupied the loop keeps going into `$c200`, which is
+`wMasterPalettes` — the master BG+OBJ palette copy that every fade scales into
+`wBGPalettes`/`wOBJPalettes`. The seventeenth registration writes its record over
+the first two colours of BG palette 0, the eighteenth over the next two, and so
+on for six records (24 bytes, BG palettes 0-2). The task itself never runs, since
+the runner stops at sixteen, and `UnregisterFrameTask` cannot remove it either.
+
+The trailing `ld a, b` / `or a` / `jr nz, .done` is the fossil that leads here:
+it is a copy of the duplicate-check idiom at `$1b96`, but `b` is 0 on every path
+that reaches it, and the target is the next instruction, so it is two dead bytes
+where the table-full handler was. Both halves of the overflow story are missing —
+the bound is wrong and there is nothing to run when the bound is hit.
+
+It is latent in practice. The heaviest user found is bank `$017`'s drill
+briefings (`DrillBriefing_SpinServe`, `$17:$5817`), which register five or six
+tasks per page and call `ClearFrameTasks` between pages, and the duplicate check
+stops a routine being registered twice, so no path found here gets near sixteen
+live tasks.
+
+### `GetActorStateAddr` destroys the answer it was asked for
+
+`GetActorStateAddr` (`$0a:$4312`) maps an actor id to its `$40`-byte state
+struct and is supposed to report whether that actor is active:
+
+```
+        ld a, [hl]               ; the actor's activity byte, struct + $20
+        cp $00
+        pop hl
+        inc h                    ; <- clobbers Z
+        dec h
+        ret
+```
+
+`pop hl` leaves the flags alone, so the `cp $00` result survives it — and then
+`inc h` / `dec h` overwrites Z with a test of `h`, which is the high byte of the
+struct pointer (`$d0`-`$d5`, or `$d0` for the out-of-range case that jumps
+straight to `.haveAddr` with `hl = wActors`). It is never zero, so the routine
+always returns NZ.
+
+`inc h` / `dec h` / `ret z` is a house idiom in this bank, but everywhere else it
+is the *first* thing a routine does, guarding an `hl` handed in by the caller:
+`CheckActorScriptEnd` (`$0a:$438a`), `IsActorBusy` (`$0a:$476c`) and the
+unlabelled routine at `$0a:$4750` all open with it. `CheckActorScriptEnd` is the
+control: it opens with the guard, and its answer is a `cp $00` at the end that
+only a `pop de` stands between and the `ret`, so it reaches its caller intact.
+`GetActorStateAddr` has the two halves in the opposite order — it computes `hl`
+itself and needs no guard, and the guard it has anyway lands on top of the
+answer.
+
+Eleven of its call sites branch on that flag — `ScriptSetActorMoveSpeed`
+(`$433b`), `ScriptSetActorMoveTarget` (`$4408`), `SetActorActive` (`$472e`) and
+eight more all do `ret z` or `jr z, .done` immediately after the call. Every one
+of those guards is dead, so the script engine writes into the state struct of an
+actor that is not active.
+
+Nothing visible follows, which is why it survived. An inactive actor is one whose
+activity byte is 0, and the draw loop (`$04:$4aae`) calls `DrawAndAnimateActor`
+only when that byte is `$02`, so a deactivated actor that is handed a move target
+walks invisibly and is re-initialised the next time it spawns. The case the guard
+would really have caught — an id of `$18` or more, which resolves to `wActors`
+and so aliases the player — does not arise: the highest actor id any `script_*`
+command in the ROM names is `$17` (`$15:$4f5e`), one below the limit.
+
+### The ball-contact window's animation-state test decides nothing
+
+`CheckBallContactWindow` (`$08:$6fa7`) decides whether the ball is inside the
+character's hitting box; `UpdateCharBallGeometry` calls it every frame the ball
+is in swing range (`$08:$6ebb`). It loads the X half-width from `wCharReachX`
+and then picks a modifier:
+
+```
+        ld a, [wCharFlags]
+        bit 1, a
+        jr z, .checkState
+        ...                      ; de = reach * 1.25
+        jr .checkX
+.checkState:
+        ld a, [wCharAnimId]
+        cp $05 / jr z, .checkX
+        cp $06 / jr z, .checkX
+        cp $09 / jr z, .checkX
+        cp $0a / jr z, .checkX
+.checkX:
+```
+
+All four arms target `$6fed`, the instruction after the last one, so the whole
+block loads an animation id, compares it four times and falls through either way.
+The `wCharFlags` arm above it shows what the shape is for — it scales `de` before
+`.checkX` — and `CharRallyEndState` (`$08:$6a90`) shows the idiom intact, testing
+the same membership (`$05`, `$06`, `$07`, `$09`, `$0a`, `$0b`, `$12`) with a real
+body. The ids are the swing animations: `$05` and `$06` are the forehand and
+backhand that `$08:$6e58`/`$6e5e` select into `wCharSwingAnim`.
+
+So the contact window is `wCharReachX` (or 1.25x of it when `wCharFlags` bit 1 is
+set) in every animation state, and the four swing states that were meant to
+differ do not. What they were meant to differ *by* is not in the ROM, so nothing
+looks wrong in play: the window is at least the same one the rest of the match
+engine assumes. This is the same shape as `RewriteCutsceneCameraY_6b` below — a
+read-modify-write with the modify deleted — except that this one is live code on
+the rally path.
+
 ## Dead stores
 
 Values written and never read. None of these change behaviour; they are listed

@@ -127,13 +127,73 @@ def audited_scopes(v):
     return [sc for sc in v.get("scopes", []) if not _is_exempt_scope(sc)]
 
 
+# A `start`/`end` scope this wide or narrower is read as pinning one operand
+# rather than a body of code. The two mean different things -- see
+# _matcher_precedence -- and how wide the range is is the only thing in the
+# schema that tells them apart. ram_unions.json's ranges fall into two clearly
+# separated populations: 35 per-site ones of 3 to 11 bytes, then nothing until
+# 28 bytes and on up to 11 KiB. Every value from 3 to 128 gives byte-identical
+# output, so the cut is not load-bearing; the first value that changes a name
+# is 248, the width of `{bank $1d, $6c78-$6d70}`.
+SITE_SCOPE_WIDTH = 16
+
+
+def _matcher_precedence(s, mirrored=False):
+    """A scope's sort key, *lowest* first. Which of several matching scopes
+    names an operand follows from what each one asserts, not from where its
+    union sits in ram_unions.json -- ten variants claim $d000-$d7ff across three
+    WRAM banks, so leaving that to file position makes every curation decision
+    really a decision about line numbers.
+
+    The full ladder is this key with one site-dependent tier spliced in after
+    the first element (see resolve); most specific first:
+
+    1. a *site* scope: a `start`/`end` range at most SITE_SCOPE_WIDTH wide.
+       This is a human pointing at one instruction, and it is the form that
+       declares an address whose WRAM bank the *callee* selects -- so the bank
+       provable at the site is exactly the fact it exists to overrule, and it
+       has to outrank every kind of bank evidence. A wider range is not that:
+       `{bank $1d, $4ad2-$5440}` covers a 2.4 KiB routine and says no more
+       about any one operand in it than a whole-bank scope does.
+    2. (in resolve) a variant whose declared WRAM banks contain the bank
+       provable at the site. This is audit_rom_only_scopes' judgement used to
+       choose rather than to warn: a name whose union does not live in the bank
+       the site selects is the error that audit reports, so where some other
+       matching variant does live there, prefer it.
+    3. the ROM constraint, narrowest first: an explicit range beats a whole
+       bank beats nothing, and between two ranges the shorter is contained in
+       the longer and so says more. This sits above the WRAM constraint
+       because within a union the ROM scope is what distinguishes the screens
+       sharing a range, and the bare `wram_bank` variant is the catch-all they
+       fall back to -- ram_unions.json says so in as many words ("screen
+       scratch (any other screen, where WRAM bank $03 is provable)").
+    4. the WRAM constraint: one proved bank, then a mirrored variant's *set* of
+       banks (which an unprovable bank also satisfies, so it is permissive
+       exactly where a single bank is not), then none.
+
+    Ties fall back to registration order, i.e. ram_unions.json's order -- file
+    order stays the tiebreak, but only as the tiebreak, and stated rather than
+    incidental."""
+    width = int(s["end"], 0) - int(s["start"], 0) if "start" in s else None
+    site = width is not None and width <= SITE_SCOPE_WIDTH
+    wram = ((1 if mirrored else 2) if "wram_bank" in s else 0)
+    rom = 2 if width is not None else 1 if "bank" in s else 0
+    return (-site, -rom, width or 0, -wram)
+
+
+# The precedence of a bare `wram_bank` constraint, for matchers built in code
+# rather than read from a scope (auto_banked_wram_names).
+WRAM_BANK_PRECEDENCE = (0, 0, 0, -2)
+
+
 def _scope_to_matcher(s, mirrored=False):
-    """A union-variant scope -> (flat_range_or_None, wram_bank_or_None). `bank`
-    (with optional start/end) constrains the *referencing code's* ROM location;
-    `wram_bank` constrains the WRAM bank provably selected there (see
+    """A union-variant scope -> (flat_range_or_None, wram_bank_or_None, rank).
+    `bank` (with optional start/end) constrains the *referencing code's* ROM
+    location; `wram_bank` constrains the WRAM bank provably selected there (see
     compute_wram_bank). Either may be given; a site matches when every present
     constraint holds. A scope with neither would match everywhere -- rejected by
-    load_ram_unions.
+    load_ram_unions. `rank` is _matcher_precedence's sort key, which decides
+    which of several matching scopes names the operand.
 
     A `mirrored` variant names bytes it does not allocate, because another
     union already declares them -- either the banks hold parallel copies of one
@@ -145,31 +205,41 @@ def _scope_to_matcher(s, mirrored=False):
     reaches $d4xx in banks 2, 3 and 6), so dropping the constraint outright
     would hand those addresses the wrong name."""
     rng = _scope_to_flat(s) if "bank" in s else None
+    rank = _matcher_precedence(s, bool(mirrored))
     if mirrored:
         # A mirrored scope that names a wram_bank still gates on one of the
         # set; one that names only a ROM range does not, because there the
         # callee selects the bank and the site's own is beside the point --
         # CharDataScreen_WriteStatNumber runs under bank $06 and writes its
         # `de` argument under $03 and then $02.
-        return (rng, mirrored if "wram_bank" in s else None)
+        return (rng, mirrored if "wram_bank" in s else None, rank)
     wb = int(s["wram_bank"], 0) if "wram_bank" in s else None
-    return (rng, wb)
+    return (rng, wb, rank)
 
 
 class ScopedRamNames:
     """RAM symbols whose name depends on the referencing site -- its ROM
     location and/or the WRAM bank selected there (union variants). resolve()
-    picks the variant whose scope matches; a default variant applies only
-    outside every scoped variant's ROM ranges, so unknown consumers inside a
-    scoped engine stay numeric. `bank_at` (a rom-offset -> WRAM bank map from
-    compute_wram_bank) is supplied before rendering; a wram_bank constraint
-    fails wherever the bank is not provably known."""
+    picks the matching scope that describes the site most narrowly (see
+    _matcher_precedence); a default variant applies only outside every scoped
+    variant's ROM ranges, so unknown consumers inside a scoped engine stay
+    numeric. `bank_at` (a rom-offset -> WRAM bank map from compute_wram_bank) is
+    supplied before rendering; a wram_bank constraint fails wherever the bank is
+    not provably known.
+
+    Scopes are registered one at a time, not one list per variant: a variant
+    that mixes a whole-bank scope with a per-site instruction range asserts two
+    different strengths of claim, and each has to rank on its own."""
 
     def __init__(self):
         self.by_addr = {}
-        self.sized = []   # (base, size, matchers, name, stride) for interiors
+        # (key, seq, matcher, decl, base, size, name, stride) per matcher, for
+        # the interior bytes of a multi-byte field
+        self.sized = []
         self.sized_default = []   # the same, for a default variant's fields
         self.bank_at = {}
+        self._seq = 0
+        self._ordered = False
         # (addr, name, note, size, banks) for mirrored variants' symbols, which
         # are emitted as EQUs rather than allocated in any one bank's SECTION
         self.mirrored = []
@@ -178,7 +248,10 @@ class ScopedRamNames:
         self.audit = []
 
     def add(self, addr, name, matchers, size=1, default_mask=None,
-            stride=None, union_banks_=None):
+            stride=None, union_banks_=None, decl=frozenset()):
+        """`decl` is the WRAM banks this variant's bytes actually live in --
+        what resolve's consistency tier compares the site's provable bank
+        against. Empty means unstated, which counts as consistent with any."""
         e = self.by_addr.setdefault(addr, {"scoped": [], "default": None,
                                            "mask": []})
         if default_mask is not None:
@@ -192,45 +265,94 @@ class ScopedRamNames:
                 self.sized_default.append((addr, size, default_mask, name,
                                            stride))
         else:
-            e["scoped"].append((matchers, name))
-            if size > 1:
-                self.sized.append((addr, size, matchers, name, stride))
+            for m in matchers:
+                self._seq += 1
+                e["scoped"].append((m[2], self._seq, m, decl, name))
+                if size > 1:
+                    self.sized.append((m[2], self._seq, m, decl, addr, size,
+                                       name, stride))
+            self._ordered = False
             if union_banks_ is not None:
                 self.audit.append((addr, size, matchers, name, union_banks_))
 
-    def _match(self, matchers, off, wram_bank=None):
+    def _order(self):
+        """Put every candidate list in precedence order: most specific matcher
+        first (see _matcher_precedence), ties by registration order, which is
+        ram_unions.json's."""
+        if self._ordered:
+            return
+        for e in self.by_addr.values():
+            e["scoped"].sort(key=lambda t: t[:2])
+        self.sized.sort(key=lambda t: t[:2])
+        self._ordered = True
+
+    def _match_one(self, m, off, wram_bank=None):
+        rng, wb, _rank = m
         at = self.bank_at.get(off) if wram_bank is None else wram_bank
-        for rng, wb in matchers:
-            if rng is not None and not (rng[0] <= off < rng[1]):
+        if rng is not None and not (rng[0] <= off < rng[1]):
+            return False
+        # a mirrored variant's banks (a set) mean the same structure, so an
+        # unprovable bank is no obstacle; a single bank must be proved.
+        if isinstance(wb, frozenset):
+            return at is None or at in wb
+        return wb is None or at == wb
+
+    def _match(self, matchers, off, wram_bank=None):
+        return any(self._match_one(m, off, wram_bank) for m in matchers)
+
+    def _consistent(self, decl, off, wram_bank=None):
+        """Does this variant's storage live in the bank the site selects? Only
+        meaningful where the variant says which banks it occupies and the site's
+        bank is provable; either unknown counts as consistent."""
+        at = self.bank_at.get(off) if wram_bank is None else wram_bank
+        return not decl or not isinstance(at, int) or at in decl
+
+    def _best(self, cands, off, wram_bank):
+        """The winning candidate from a precedence-sorted list, applying the
+        consistency tier that sits below a site scope and above everything else.
+
+        Scanning in sorted order, the first *consistent* match wins outright:
+        every later entry has a key at least as large, so it cannot beat it on
+        either tier. An inconsistent match is only held as a fallback, and only
+        until an entry appears whose site tier is worse than the fallback's --
+        past that point nothing can overtake it."""
+        fallback = None
+        for key, _seq, m, decl, *rest in cands:
+            if fallback is not None and key[0] > fallback[0]:
+                break
+            if not self._match_one(m, off, wram_bank):
                 continue
-            # a mirrored variant's banks (a set) mean the same structure, so an
-            # unprovable bank is no obstacle; a single bank must be proved.
-            if isinstance(wb, frozenset):
-                if at is not None and at not in wb:
-                    continue
-            elif wb is not None and at != wb:
-                continue
-            return True
-        return False
+            if self._consistent(decl, off, wram_bank):
+                return rest
+            if fallback is None:
+                fallback = (key[0], rest)
+        return fallback[1] if fallback else None
 
     def resolve(self, addr, off, wram_bank=None):
         """`wram_bank` asserts the bank instead of asking compute_wram_bank.
         A data word has no dataflow to read, so a table that holds RAM
-        addresses states its bank in its render spec (see render_ram_ptrs)."""
+        addresses states its bank in its render spec (see render_ram_ptrs).
+
+        An exact symbol is tried before any multi-byte field's interior: naming
+        the address itself is a stronger claim than falling inside something
+        larger, whatever the two scopes rank. Within each of those steps the
+        candidates are in precedence order (see _matcher_precedence, _best)."""
+        self._order()
         e = self.by_addr.get(addr)
         if e:
-            for matchers, name in e["scoped"]:
-                if self._match(matchers, off, wram_bank):
-                    return name
+            hit = self._best(e["scoped"], off, wram_bank)
+            if hit:
+                return hit[0]
             if e["default"] and not any(lo <= off < hi for lo, hi in e["mask"]):
                 return e["default"]
         # interior byte of a multi-byte scoped field -> `name + k` (mirrors the
         # ram_map.json expansion; an interior byte that is itself an explicit
         # symbol matched above and returned before reaching here)
-        for base, size, matchers, name, stride in self.sized:
-            if base < addr < base + size \
-                    and self._match(matchers, off, wram_bank):
-                return grid_offset(name, addr - base, stride)
+        hit = self._best((c for c in self.sized if c[4] < addr < c[4] + c[5]),
+                         off, wram_bank)
+        if hit:
+            base, _size, name, stride = hit
+            return grid_offset(name, addr - base, stride)
         for base, size, mask, name, stride in self.sized_default:
             if base < addr < base + size \
                     and not any(lo <= off < hi for lo, hi in mask):
@@ -280,7 +402,7 @@ def auto_banked_wram_names(dis, scoped, covered, covered_banks=None):
         if bank in covered_banks.get(addr, ()):
             continue
         name = f"w{bank}_{addr:04x}"
-        scoped.add(addr, name, [(None, bank)])
+        scoped.add(addr, name, [(None, bank, WRAM_BANK_PRECEDENCE)])
         named.append((addr, name, bank))
     return named
 
@@ -606,6 +728,10 @@ def load_ram_unions(path):
         for key in (BANK_KEY.get(mem) for _s, _e, mem, _p in RAM_REGIONS):
             if key and key in u:
                 ubanks.add(int(u[key], 0))
+        # The WRAM bank the union as a whole is filed under, for a variant that
+        # declares none of its own -- resolve's consistency tier compares the
+        # site's bank against this.
+        udecl = frozenset([int(u["wram_bank"], 0)] if "wram_bank" in u else [])
         variants = []
         for v in u["variants"]:
             mset = None
@@ -616,6 +742,9 @@ def load_ram_unions(path):
                                         if "wram_bank" in s]
                 mset = frozenset(int(b, 0) for b in bs)
             matchers = [_scope_to_matcher(s, mset) for s in v.get("scopes", [])]
+            wbanks = mset or frozenset(
+                int(s["wram_bank"], 0) for s in v.get("scopes", [])
+                if "wram_bank" in s)
             syms = []
             for addr_s, e in sorted(v["symbols"].items(),
                                     key=lambda kv: int(kv[0], 0)):
@@ -644,10 +773,9 @@ def load_ram_unions(path):
                     # mixes the two kinds -- which is what declaring a
                     # callee-selected argument on an existing variant produces --
                     # used to exempt itself wholesale, silently dropping its
-                    # whole-bank scopes out of the audit. Registering the two
-                    # groups separately keeps resolution identical (the matcher
-                    # lists are disjoint, and _match takes the first that fits)
-                    # while leaving the audited group audited.
+                    # whole-bank scopes out of the audit. Resolution does not
+                    # see the split at all, since every scope is registered and
+                    # ranked on its own; only the audit does.
                     for scs, banks_ in ((exempt_scopes(v), None),
                                         (audited_scopes(v), ubanks)):
                         if not scs:
@@ -655,13 +783,10 @@ def load_ram_unions(path):
                         scoped.add(addr, name,
                                    [_scope_to_matcher(s, mset) for s in scs],
                                    ram_field_size(e), stride=_stride(e),
-                                   union_banks_=banks_)
+                                   union_banks_=banks_, decl=wbanks or udecl)
                     if mset:
                         scoped.mirrored.append((addr, name, e.get("note", ""),
                                                 ram_field_size(e), mset))
-            wbanks = mset or frozenset(
-                int(s["wram_bank"], 0) for s in v.get("scopes", [])
-                if "wram_bank" in s)
             variants.append((v.get("context", ""), syms, wbanks,
                              bool(mset)))
         for ri, (rs, re_, mem, _path) in enumerate(RAM_REGIONS):

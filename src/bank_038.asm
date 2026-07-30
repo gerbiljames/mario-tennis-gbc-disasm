@@ -4862,22 +4862,22 @@ RunLinkCharSelectScreen:
 	ld [wCharGridHandedness], a ; $63da
 	ld a, [wMatchIsDoubles] ; $63dd
 	or a ; $63e0
-	jr nz, .singles ; $63e1
+	jr nz, .doubles ; $63e1
 	ldh a, [hLinkState] ; $63e3
 	cp $01 ; $63e5
-	jr nz, .slave4 ; $63e7
+	jr nz, .singlesSlave ; $63e7
 	ld a, $02 ; $63e9
 	jr .storeMode ; $63eb
-.slave4:
+.singlesSlave:
 	ld a, $03 ; $63ed
 	jr .storeMode ; $63ef
-.singles:
+.doubles:
 	ldh a, [hLinkState] ; $63f1
 	cp $01 ; $63f3
-	jr nz, .slave2 ; $63f5
+	jr nz, .doublesSlave ; $63f5
 	ld a, $04 ; $63f7
 	jr .storeMode ; $63f9
-.slave2:
+.doublesSlave:
 	ld a, $05 ; $63fb
 .storeMode:
 	ld [wCharSelectMode], a ; $63fd
