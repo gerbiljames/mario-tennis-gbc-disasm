@@ -140,8 +140,32 @@ class DisassemblyBase:
     # $90cab is a lone seed 1803 bytes into BallPosDataDrop_24, the 6-byte
     # ball-position table that ShotBallPathDrop passes to LookupBallPosByAim;
     # it decodes as nonsense (`call z, $a0f1` on repeat) and split the table.
+    #
+    # The last eight are one family, all from tracelog2cov conversions and all
+    # sitting on a $df byte that is really the high operand byte of a
+    # `[$dfxx]` absolute -- i.e. mid-instruction, which is why they conflict.
+    # They are the same bank misattribution as $19617f: the native tracer logs
+    # `rst $18` as its opcode byte alone, so a farcall that is the only
+    # instruction in its run (its callee leaves the bank, and the instruction
+    # before it did too) gives the converter one byte of bank evidence, and
+    # `min()` awarded it to the lowest bank holding $df at that in-bank
+    # offset. Each one's true site is an existing `farcall` in another bank,
+    # and the dump that claimed the phantom also contains that site's
+    # neighbours, which pins the bank:
+    #   $1d1a0 $07:$51a0 -> $24:$51a0 farcall ComputeShotPlacement
+    #   $1d469 $07:$5469 -> $1e:$5469 farcall InitActorEngine
+    #   $22afb $08:$6afb -> $12:$6afb farcall RunDialogueYesNoPrompt
+    #   $22afe $08:$6afe -> $12:$6afe farcall ScriptCloseDialogueWindow
+    #   $22c9b $08:$6c9b -> $0b:$6c9b farcall AwardPoint
+    #   $22fc6 $08:$6fc6 -> $38:$6fc6 farcall DrawTextWindowFrame
+    #   $235cf $08:$75cf -> $1d:$75cf farcall RestoreCharDataScreenRow
+    #   $789df $1e:$49df -> $38:$49df farcall DrawTextWindowFrame
+    # All eight true sites are already disassembled, so nothing is lost by
+    # dropping them. tracelog2cov.py no longer produces this shape.
     BAD_SEEDS = {0x19617F, 0x67682, 0x24F99, 0x252B5, 0xE619, 0x72182, 0x72F11,
-                 0x90CAB}
+                 0x90CAB,
+                 0x1D1A0, 0x1D469, 0x22AFB, 0x22AFE, 0x22C9B, 0x22FC6,
+                 0x235CF, 0x789DF}
 
     # ROM0 helpers that consume one inline byte after the `call` (they read
     # the byte at the return address and step the return past it). The byte

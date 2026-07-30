@@ -8407,6 +8407,97 @@ hand-authored static seed file. Removed, with the reason recorded in the file's
 `story*.json`) rather than by a Lua dump — which points at the converter's
 line-rejection rather than at the ROM.
 
+### All eight were one bug: `min()` guessing a bank for a lone `rst $18` (2026-07-30)
+
+The eight are not eight questions. Every one of them sits on a `$df` byte that
+is the *high operand byte* of a `[$dfxx]` absolute — `fa 6e df`, `ea 4b df` —
+so the seed is mid-instruction and the conflict is correct. `$df` is also
+`rst $18`, the FarCall opcode, and that is the whole mechanism.
+
+The native tracer logs `rst $18` as its opcode byte alone, one byte, because
+the two inline operands are read by the trampoline rather than fetched as part
+of the instruction. `tracelog2cov` resolves banks by intersecting the logged
+bytes across a *run* of consecutive banked lines, and a run ends whenever
+execution leaves `$4000-$7fff`. A farcall leaves twice over: the `rst` goes to
+ROM0, and the callee runs in a third bank. So a farcall that follows another
+farcall, or that opens a function, is alone in its run — **one byte of bank
+evidence** — and `min(candidates)` awarded it to the lowest bank that happens
+to hold `$df` at that in-bank offset. Banks `$07`/`$08` are low and dense with
+`[$dfxx]` operands, so they collect the phantoms.
+
+Each phantom's real site is an existing `farcall` at the same in-bank address
+in a higher bank, and the *same dump* that claimed the phantom also contains
+that site's neighbouring instructions, which pins the bank beyond argument:
+
+| phantom | true site | dump evidence |
+|---|---|---|
+| `$1d1a0` `$07:$51a0` | `$24:$51a0` `farcall ComputeShotPlacement` (`ShotBallPathDrop`) | 5/5 follow-ons, all 5 dumps |
+| `$1d469` `$07:$5469` | `$1e:$5469` `farcall InitActorEngine` | 6/6, all 4 dumps |
+| `$22afb` `$08:$6afb` | `$12:$6afb` `farcall RunDialogueYesNoPrompt` | 3/4 |
+| `$22afe` `$08:$6afe` | `$12:$6afe` `farcall ScriptCloseDialogueWindow` | 3/4 |
+| `$22c9b` `$08:$6c9b` | `$0b:$6c9b` `farcall AwardPoint` | 5/5 (`story3_drillwin`) |
+| `$22fc6` `$08:$6fc6` | `$38:$6fc6` `farcall DrawTextWindowFrame` | 7/7 (`story_intro`) |
+| `$235cf` `$08:$75cf` | `$1d:$75cf` `farcall RestoreCharDataScreenRow` | 6/6; the other two `$df` candidates (`$11`, `$3b`) score 0/6 and 0/7 |
+| `$789df` `$1e:$49df` | `$38:$49df` `farcall DrawTextWindowFrame` | 7/7 (`story_intro`) |
+
+It is a clean one-for-one substitution: in **every** dump, the phantom offset is
+present and the true offset is *absent*. `session4_native.json` shows the hole
+shape exactly — bank `$12`'s script stretch has `$6af1`, `$6af6`, `$6af8`,
+`$6b01`, `$6b08` and is missing `$6af3`, `$6afb`, `$6afe`, which are the three
+lone `farcall` lines in it. `$6af8` survives because the instruction before it
+(`ld a, $03`) stayed in the bank, so its run had evidence; `$6afb` and `$6afe`
+follow farcalls and had none.
+
+The attributions read correctly as a story too: the drill dump names
+`AwardPoint`, the intro dump names `DrawTextWindowFrame` twice, the match dumps
+name `ShotBallPathDrop`. **None of the eight is a real instruction start in the
+bank it was filed under, and no region is decoded at the wrong boundary.** The
+traced dumps are left untouched — they are evidence, and the mistake is not in
+them; the eight go in `BAD_SEEDS` with the table above recorded there. All eight
+true sites were already disassembled, so the instruction and byte counts do not
+move: 160,888 instructions / 316,563 bytes code, before and after. **The
+rejected-seed note is 8 → 0.**
+
+`tracelog2cov.py` no longer produces the shape. Two changes:
+
+* A run now survives an excursion out of the bank when execution returns to the
+  address *after* the instruction that left. That is sound rather than
+  heuristic: a caller can only resume at its own next address if its bank is
+  still mapped. Resuming past a `rst` needs the game's inline-operand
+  conventions (`rst $18` +2, `rst $08` +1, the flag rsts +2, `rst $00` never
+  resumes, `call Func_00_2725` +1), which the converter now knows.
+* A run that is still ambiguous with only one instruction in it is **dropped
+  instead of guessed**. One opcode byte cannot choose a bank.
+
+Checked against a synthetic trace log built from two of the real paths
+(`$1e:$5459…$546f` around `call ClearSpriteQueue`, and `$24:$51a0` entered by
+farcall): the old converter emits both `$1d1a0` and `$1d469`, the new one emits
+neither — and *correctly* resolves `$1e:$5469`, because the merge rule rejoins
+the farcall to the four instructions before it.
+
+### The 22,976 dropped coverage entries are WRAM data addresses, not WRAM code
+
+`load_coverage`'s other standing note. All 22,976 (5,723 distinct) come from
+five dumps — `banktrace6`–`9` and `charselect_cpudiff_grass` — and every one has
+the shape `0xc00000 | v` with `v` in `$c000-$fd88`. The tag `$c0` is 192 and the
+ROM has 128 banks, so no interpretation makes these ROM offsets; dropping them
+is right, and there are no sign-extended negatives left in any dump.
+
+They are **not executed code**, which retires the standing note that ~3 KB of
+WRAM-resident code needed a copier found. 345 of the addresses are named WRAM
+variables — starting with `$c000` = `wShadowOAM`, the shadow-OAM buffer
+rewritten every frame, and including `$c286` `wMapEntryPointsPtr` and `$df51`
+`wCharShotButton2`, all of them data that cannot be instructions. They are also
+scattered in short clusters across the whole of `$c000-$dfff` rather than
+forming a copied block. The only RAM-resident code in the game is
+`OAMDMARoutine`, copied to `$ff80` by `CopyOAMDMARoutineToHRAM` and called at
+`$00:$2795` — exactly the six `$ff80-$ff89` entries these dumps carry in
+`other`, and the only `call`/`jp` to a RAM address anywhere in `src/` is that
+`call hOAMDMARoutine`. (`src/bank_00b.asm`'s `call c, $e06d` is inside
+`StrokePractice2Hooks`, a mode-hook table, not code.) So the answer to "which
+routine copies that code into WRAM" is that there is no such code: these are
+WRAM *data* touches recorded alongside the exec trace.
+
 ## Driving the game found no new code, and that is the answer (2026-07-30)
 
 A trace of a complete exhibition match — set-up, the match itself, the loss, the
