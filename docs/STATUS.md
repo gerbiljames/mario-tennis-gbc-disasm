@@ -9764,3 +9764,27 @@ followed by a trace that starts *inside* the screen -- too late, since the setup
 code is what references them -- or a capture path that survives a reset. They are
 parked, not solved. The rule worth keeping is narrower than this screen: **do not
 trace across a reset.**
+
+### The stride-18 question, settled (2026-07-30)
+
+The open question left by the `SceneGfxSlotTable` work — why
+`LoadSceneGraphicsDirect` (`$0a:$5d2a`) indexes a 16-byte-record table with a
+stride of 18 — is a **bug**, and it is in `docs/bugs.md` now.
+
+The arithmetic is not ambiguous: `2a` is saved in `de`, `hl` is shifted to
+`16a`, and `add hl, de` makes `18a`. The sibling `GetSceneSlotPtr` twenty bytes
+earlier does it correctly with four `add hl, hl` and a `+ 2 * slot`. So the read
+slides one slot further into the table per scene id — scene 0 is right, scene 8
+lands on record 9 and loads another scene's graphics.
+
+What makes it invisible is the call graph: the only caller is
+`LoadAndDisplayScene`, whose four callers are all the **scene viewer**
+(`SceneViewerSelectScene`, `InitSceneViewer`, `InitSceneViewerDefault`), which
+hangs off `RunSceneSelectDebugMenu` and is reachable only through the debug menu
+that nothing in the retail build opens. Its `$4078` directory slot is never
+farcalled from another bank.
+
+That is the second defect this week found in code that only the unreachable
+debug harness can run, after the `$1b` confirm screen — a reminder that "no
+observable consequence" and "no defect" are different findings, and the file
+records which one applies.

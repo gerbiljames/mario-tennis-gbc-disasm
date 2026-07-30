@@ -611,6 +611,53 @@ per frame by `RunPagedTextMenuAutoSize` and unregistered when the menu closes,
 so the plumbing around it is real — but the body reads `wMenuCursorRow` into `a`
 and then `pop af` discards it. The task runs and does nothing.
 
+### The scene viewer indexes the slot table with the wrong stride
+
+`SceneGfxSlotTable` (`$0a:$59d9`) is 592 bytes = **37 records of eight slot
+words**, and `GetSceneSlotPtr` (`$0a:$5d0f`) walks it correctly — four
+`add hl, hl` for `16 * scene`, then `+ 2 * slot`:
+
+```
+        ld l, a
+        add hl, hl / add hl, hl / add hl, hl / add hl, hl   ; 16 * scene
+        ld de, SceneGfxSlotTable
+        add hl, de
+        ld e, b / sla e / ld d, $00 / add hl, de            ; + 2 * slot
+```
+
+`LoadSceneGraphicsDirect` (`$0a:$5d2a`) computes a different multiplier from the
+same input:
+
+```
+        ld l, a
+        add hl, hl          ; 2a
+        ld d, h / ld e, l   ; de = 2a
+        add hl, hl          ; 4a
+        add hl, hl          ; 8a
+        add hl, hl          ; 16a
+        add hl, de          ; <- 16a + 2a = 18a
+```
+
+Eighteen bytes per record, for a table whose records are sixteen. 592 is not a
+multiple of 18, and the slot roles are confirmed by `LoadStorySceneGraphics`,
+which pushes slots 0-6 and pops them into `wCollisionMap`, `wBehaviorMap`,
+`wScreenAttrmap`, `wShadowTilemap`, a palette load and a scene-config copy — six
+independent confirmations of the 16-byte stride across 21 records.
+
+The error is `2 * scene` bytes, i.e. the read slides one slot further into the
+table for every scene id: scene 0 is correct, scene 1 reads slot 2 where it
+wants slot 1, and scene 8 lands exactly on record 9 and loads a different
+scene's graphics entirely.
+
+**It has never been noticed because only debug code calls it.** Its one caller
+is `LoadAndDisplayScene` (`$0a:$5de2`), and that routine's four callers are
+`SceneViewerSelectScene`, `InitSceneViewer` and `InitSceneViewerDefault` — the
+scene viewer, which hangs off `RunSceneSelectDebugMenu` and is reachable only
+through the in-game debug menu (itself gated on `hDebugStepMode`, which nothing
+in the retail build sets). No `farcall` to `LoadAndDisplayScene` exists outside
+bank `$0a`, despite its directory slot at `$4078`.
+
+
 ### A confirm-screen suite in bank `$1b` that nothing can reach
 
 `$1b:$69d9`-`$6aa0` holds seven complete routines with no way in. They sit
