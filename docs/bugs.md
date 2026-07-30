@@ -481,6 +481,54 @@ per frame by `RunPagedTextMenuAutoSize` and unregistered when the menu closes,
 so the plumbing around it is real — but the body reads `wMenuCursorRow` into `a`
 and then `pop af` discards it. The task runs and does nothing.
 
+### The whole developer debug harness is unreachable, and its unlock flag is never read
+
+`InitAndRunGame` (`$01:$4018`) is the retail boot routine: `SoftReset` farcalls it
+unconditionally (`$00:$262c`, followed by `stop`), and it clears every WRAM bank,
+validates and repairs SRAM, applies the unlock flags, initialises story state and
+match settings, enables the LCD, and then at `.loop` (`$40a5`) sets
+`wStoryModeCurrentLocation` to `STORYLOC_MAIN_MENU` and calls
+`RunStoryModeOverworld` — which is the entire game.
+
+Immediately after that call sits a **complete debug dispatcher** (`$01:$40ec`
+onward) that polls `hInputPressed` and launches a different subsystem per button:
+
+| bit | button | what it runs |
+| --- | --- | --- |
+| 3 | START | the overworld at the main menu |
+| 2 | SELECT | `RunSoundTest` |
+| 0 | A | `RunDebugTestMatch`, looping |
+| 1 | B | `RunMatch`, looping |
+| 6 | UP | two `ShowTournamentBracket` calls, then `RunMatchWinLoseScreen` looping over result ids |
+| 7 | DOWN | `RunIntroCutscene` then `RunTitleScreen`, looping |
+| 4 | RIGHT | the overworld at `STORYLOC_TEST` |
+| 5 | LEFT | `RunDebugCharViewer` |
+
+with a further block (`$419e`) for `ShowEquipmentStatusScreen`,
+`RunMatchStatsScreen`, `ShowLinkErrorScreen`, `ShowLinkMessageScreen`,
+`RunShoesSelectScreen`, `RunRacketSelectScreen` and the character viewer.
+
+**Nothing reaches any of it.** No instruction jumps to `$40ec`; it can only be
+entered by falling out of the `farcall RunStoryModeOverworld` above it, and that
+call never returns in normal play — the overworld loop is the game. The blocks are
+named `Unused_01_*` for that reason.
+
+The accompanying save flag is the visible half. `SAVEFLAG_DEBUG_TEST_MENU`
+(#63) has exactly two references in the ROM, both inside this routine: it is
+**cleared** unconditionally at boot (`$401c`) and **set** if A is held at
+`$40c6` — and no instruction anywhere tests it. So the "hold A to enable the test
+menu next boot" gesture works, stores its bit in battery-backed SRAM, and is
+read by nothing.
+
+What survives is the *in-game* debug menu, which is reached by a different route
+entirely: `RunStoryLocation`'s frame loop calls `RunDebugMenu` (`$05:$66a0`)
+whenever `hDebugStepMode` is nonzero and no script or tile trigger is active
+(`$0a:$50b4`). That one is live, and its four handlers are a warp menu, a text
+subcommand, a palette editor and a game-flag editor. Since nothing in the retail
+build sets `hDebugStepMode` except the unreachable dispatcher above, it is
+unreachable in practice too — but only by one byte, not by a missing jump.
+
+
 ### The in-match stats editor has no live entry
 
 `CheckDebugStatsEditorHotkey` (bank `$08`, `$44ef`) is called by

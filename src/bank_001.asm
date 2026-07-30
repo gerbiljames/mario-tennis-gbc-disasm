@@ -1,6 +1,6 @@
 SECTION "ROM Bank $01", ROMX[$4000], BANK[$01]
 
-	farptr RunDebugTestMenu ; $4000
+	farptr InitAndRunGame ; $4000
 	farptr ShowDmgLockoutScreen ; $4002
 	farptr LoadMenuTilesA ; $4004
 	farptr LoadMenuTilesB ; $4006
@@ -12,7 +12,7 @@ SECTION "ROM Bank $01", ROMX[$4000], BANK[$01]
 	farptr LoadMenuTilesBChunk2 ; $4012
 	farptr LoadMenuFontGfxStaged ; $4014
 	farptr RunSoundTest ; $4016
-RunDebugTestMenu:
+InitAndRunGame:
 	call InitSerialLink ; $4018
 	push de ; $401b
 	ld de, SAVEFLAG_DEBUG_TEST_MENU ; $401c
@@ -109,7 +109,7 @@ Unused_01_MenuRedraw:
 	ld hl, wStoryModeEntryPoint ; $4108
 	ld [hl], $0a ; $410b
 	farcall RunStoryModeOverworld ; $410d
-	jp RunDebugTestMenu.loop ; $4110
+	jp InitAndRunGame.loop ; $4110
 .runSoundTest:
 	bit 2, a ; $4113
 	jr z, .bit2Clear ; $4115
@@ -200,7 +200,7 @@ Unused_01_MatchSetup:
 	farcall RunTitleScreen ; $41d1
 	jr .loop ; $41d4
 Unused_01:
-	jp RunDebugTestMenu.loop ; $41d6
+	jp InitAndRunGame.loop ; $41d6
 	db $18 ; $41d9
 	db $ef ; $41da
 .positive:

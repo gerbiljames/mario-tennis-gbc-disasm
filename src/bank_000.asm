@@ -6705,7 +6705,7 @@ SoftReset:
 	ld a, $c0 ; $2624
 	ld [wSpriteBufferPage], a ; $2626
 	call InitSerialLink ; $2629
-	farcall RunDebugTestMenu ; $262c
+	farcall InitAndRunGame ; $262c
 	stop ; $262f
 ; Waits for the next frame, and hosts the debug single-stepper: with
 ; hDebugStepMode enabled, holding SELECT+START sets hDebugStepPaused and the

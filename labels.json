@@ -927,7 +927,7 @@
  "0x3dd6": "WavePatterns",
  "0x3ed6": "SoundEnvelopeTable",
  "0x3ed8": "SoundEnvelopes",
- "0x4018": "RunDebugTestMenu",
+ "0x4018": "InitAndRunGame",
  "0x40a5": ".loop",
  "0x40b2": ".loopB",
  "0x40bf": ".loop2",

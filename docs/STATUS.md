@@ -32,7 +32,7 @@ tools/progress.py` (proven-code bytes, fill runs, label counts, human-named
 counts) and `tools/progress.py --unnamed <bank>` to list still-auto-named
 symbols. **20,114 of 21,694 labels are human-named** (up from 4,816 on
 2026-07-23), and the remaining 1,580 are all generator-*derived* names --
-`$4000` slot labels spelled after their curated target (`FarPtr_RunDebugTestMenu`)
+`$4000` slot labels spelled after their curated target (`FarPtr_InitAndRunGame`)
 and structures named for what they are (`SoundTable_78`). **No symbol anywhere
 in `src/` states only an address any more**: `tools/progress.py`'s `auto` column
 is 0, and `--unnamed <bank>` returns nothing for every bank.
@@ -9184,3 +9184,57 @@ range as `resolvable now` — the opposite of true, and the reason that bucket
 held a phantom entry through two passes. The range is carried now, and the
 phantom resolves into the honest classification: `$1e:$54ec`'s `$d000` is
 `rom-scoped`, one of the two genuinely unsettled sites above.
+
+## `RunDebugTestMenu` was the boot routine (2026-07-30)
+
+Looking for a way to reach the screens no trace has entered turned up a name that
+had it backwards. `RunDebugTestMenu` (`$01:$4018`) is **the retail boot
+routine**, renamed `InitAndRunGame`:
+
+* `Start` (`$00:$2578`) falls straight into `SoftReset`, which farcalls it
+  unconditionally at `$262c` and follows the call with `stop`.
+* Its body clears every WRAM bank, then `ValidateSaveRam`, `RepairAllSaveSlots`,
+  `ApplyN64RecordsUnlockFlags`, `UpdateUnlockablesSaveBlock`,
+  `InitStoryModeState`, `InitDefaultMatchSettings`, `EnableLCD`, a fade in — and
+  then `.loop` sets `wStoryModeCurrentLocation` to `STORYLOC_MAIN_MENU` and calls
+  `RunStoryModeOverworld`, which is the whole game. The main menu is itself a
+  story location, which is why the location space has a `STORYLOC_MAIN_MENU` at
+  all.
+
+The "debug test menu" the old name described is real but sits *after* that call
+(`$01:$40ec` onward, already labelled `Unused_01_*`) and is unreachable: nothing
+jumps to it, and the only way in is for `RunStoryModeOverworld` to return, which
+it never does. It is a full dispatcher — one subsystem per button, from
+`RunSoundTest` through the tournament bracket, the win/lose screen, the intro and
+title screens, the character viewer, and the equipment/stats/link/shoes/racket
+screens. Written up in `docs/bugs.md`, along with the detail that makes it worth
+recording: **`SAVEFLAG_DEBUG_TEST_MENU` is cleared at boot and set when A is
+held, and no instruction in the ROM ever reads it**, so the gesture writes a bit
+to battery-backed SRAM that nothing consumes.
+
+### The lever that *is* live, and it is one byte
+
+`RunStoryLocation`'s frame loop calls `RunDebugMenu` (`$05:$66a0`) whenever
+`wStoryAutoInteractFired` is zero and **`hDebugStepMode` (`$ff9e`) is nonzero**
+(`$0a:$50b4`). That menu's four handlers are `RunDebugWarpMenuThunk`, a text
+subcommand, `StartDebugPaletteEditorThunk` and `RunDebugFlagEditorThunk` — a warp
+menu and a flag editor, which is exactly the machinery for reaching unvisited
+locations.
+
+Nothing in the retail build sets `hDebugStepMode` except the unreachable
+dispatcher, so it is dead in normal play — but dead by one byte rather than by a
+missing jump, and that byte is writable from the emulator. The connector refuses
+ROM writes (and System-Bus writes below `$8000`, which hit the MBC), so RAM is
+the only way in; this is the one place where that is enough.
+
+Verified live: the byte persists once written, and the debug menu does **not**
+open on the main-menu location, because standing on a menu icon makes
+`GetTileTriggerAtPlayer` return nonzero every frame and the loop takes the
+tile-trigger branch before reaching the debug check. It needs a real overworld
+location with the player on a plain tile.
+
+The unreachable dispatcher stays useful either way: it records what state each
+otherwise-unenterable screen needs (`wCurrentStorySlot` + `CheckStorySlot` +
+`b`/`c` before `ShowTournamentBracket`; `wCurrentMinigameStoryMatch`,
+`wMatchWinLoseFlag` and four character ids before `RunMatchWinLoseScreen`), which
+makes it a recipe list for setting up those screens by hand.
