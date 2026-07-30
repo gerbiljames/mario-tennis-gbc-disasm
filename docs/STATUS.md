@@ -10055,3 +10055,84 @@ The 273 runs are themselves the larger prize: most carry no `$dxxx` operand at
 all, so `ram_gaps.py` never mentions them, but they are unlabelled code
 attributed to a neighbour — the same reason `RestoreStoryBlockFromBackup` looked
 half-analysed when it was complete.
+
+## The doubles EXP panels, reached by forcing the score (2026-07-30)
+
+The target that three sessions had failed to reach is done.
+`DrawExpDoublesPlayerPanel` and `DrawExpDoublesPartnerPanel` ran, and **all 16 of
+their bare operands resolved** to `wScreenAttrmap`/`wShadowTilemap` cells.
+
+```
+                    before   after
+bare $dxxx operands    344     328
+  unproven             316     300
+```
+
+The lever was writing the scoreboard rather than playing tennis: the block at
+`$c8e0`-`$c8ec` is fully named, so a match collapses to a few rallies. What it
+bought, in one match: a natural tiebreak, the SET POINT and MATCH POINT banners,
+the win/lose result screen, the EXP calculation screen, and the doubles panels
+with their skill-allocation confirm dialog.
+
+### What the forcing writes actually do
+
+The reusable part is which writes the engine honours, which it ignores, and
+when:
+
+| write | effect |
+| --- | --- |
+| sets / games / points (`$c8e0`-`$c8e5`) | always taken, shown at the next HUD refresh |
+| games straight to 6/6 | **ignored** for the tiebreak — `wTiebreakerIndicator` stays 0, because the transition is only evaluated *at the moment a game concludes* |
+| games 6/5, then let the trailing side win a point | works: the natural transition fires and the indicator goes to 1 |
+| points forced mid-rally | takes, but the situational banner does not appear for *that* point — `EvaluatePointSituation` precomputes the banners once per point, ahead of the rally |
+| the win/lose flags (`$c8e8`-`$c8eb`) | never written directly; leaving stale bytes from an earlier scenario produced one incoherent read (`matchflag $01` beside `pointflag $ff`), so zero the whole 13-byte block before each new setup |
+
+### A warp into flagged content hangs, and why
+
+The finding worth keeping. Warping straight into
+`STORYLOC_JUNIOR_CLASS_COURT_DOUBLES` and triggering the challenge NPC plays the
+dialogue correctly and then **soft-locks the walk-on cutscene forever** at
+`script_wait_actor_script ACTOR_PLAYER`.
+
+`LoadRankingOpponentGraphics` (`$11:$730a`) opens with
+`test_flag FLAG_DOUBLES / jp nz, LoadDoublesRankingOpponentGraphics`, and the
+flag is normally latched by story progression a debug warp skips. With it clear
+the shared routine takes the *singles* branch while the surrounding script
+positions actors for doubles, and the actor script waits on a condition that
+never resolves. Setting game-flag `$2f` (`$c9c5` bit 0) first fixes it —
+A/B tested, hangs twice without and plays twice with.
+
+Generalise it: **a raw warp lands in content whose flags were never set**, so
+check what the destination's shared loaders branch on before blaming the warp.
+
+### The ranking board is gated on the mode, not on the match
+
+A correction to the plan I gave. The brief assumed finishing any story ranking
+match would reach `ShowRankingBoard`; it does not.
+`ShowIslandOpenRankingBoard` (`$1e:$6fb2`) is
+
+```
+        ld a, [wGameMode]
+        cp GAMEMODE_ISLAND_OPEN
+        ret nz
+```
+
+so a class-court ranking win runs straight through and returns. The bank `$0f`
+callers are Island Open tournament-room code behind the same gate, and bank
+`$10`'s unconditional callers live in `MatchSelectHandlerTable_10`, the
+development test room, whose actors did not respond to interaction from the
+Scene warp.
+
+That leaves bank `$1b`'s cluster — still the largest — reachable only through
+the Island Open (gated behind `FLAG_WON_ISLAND_OPEN_*_FINAL`), or by **forcing
+`wGameMode` to `GAMEMODE_ISLAND_OPEN` at the moment a match result is
+processed**, which the score-forcing technique now makes a reasonable next
+experiment.
+
+### Save status
+
+The save was written: the EXP flow ends in an unconditional
+`farcall SaveStorySlotWithTimer`, so the slot now records a won Junior Doubles
+ranking match and the partner levelled 42 → 43. `FLAG_DOUBLES` was force-set by
+`write_memory` rather than earned, and that fed into the save when the match
+completed normally. Restorable from `maxed-unlocked.sav`.
