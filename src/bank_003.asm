@@ -3239,12 +3239,14 @@ RestoreStoryBlockFromBackup:
 	inc b ; $5536
 	call InvalidateSaveBlock ; $5537
 	ret ; $553a
+Unused_03_InvalidateBlockIfUnwritten:
 	ld hl, $d000 ; $553b
 	call ReadSaveBlock ; $553e
 	cp $ff ; $5541
 	ret nz ; $5543
 	call InvalidateSaveBlock ; $5544
 	ret ; $5547
+Unused_03_RestoreBlockOrClear:
 	ld hl, $d000 ; $5548
 	call ReadSaveBlock ; $554b
 	cp $ff ; $554e
@@ -3271,6 +3273,7 @@ RestoreStoryBlockFromBackup:
 	ld de, $0000 ; $5574
 	call WriteSaveBlock ; $5577
 	ret ; $557a
+Unused_03_RestoreBlock06FromBackup:
 	ld b, $06 ; $557b
 	ld hl, $d000 ; $557d
 	call ReadSaveBlock ; $5580
@@ -3291,6 +3294,7 @@ RestoreStoryBlockFromBackup:
 	ld b, $21 ; $559f
 	call InvalidateSaveBlock ; $55a1
 	ret ; $55a4
+Unused_03_RestoreBlock07FromBackup:
 	ld b, $07 ; $55a5
 	ld hl, $d000 ; $55a7
 	call ReadSaveBlock ; $55aa
@@ -3311,6 +3315,7 @@ RestoreStoryBlockFromBackup:
 	ld b, $22 ; $55c9
 	call InvalidateSaveBlock ; $55cb
 	ret ; $55ce
+Unused_03_RestoreBlock08FromBackup:
 	ld b, $08 ; $55cf
 	ld hl, $d000 ; $55d1
 	call ReadSaveBlock ; $55d4
@@ -3331,6 +3336,7 @@ RestoreStoryBlockFromBackup:
 	ld b, $23 ; $55f3
 	call InvalidateSaveBlock ; $55f5
 	ret ; $55f8
+Unused_03_RestoreBlock09FromBackup:
 	ld b, $09 ; $55f9
 	ld hl, $d000 ; $55fb
 	call ReadSaveBlock ; $55fe
@@ -3351,6 +3357,7 @@ RestoreStoryBlockFromBackup:
 	ld b, $24 ; $561d
 	call InvalidateSaveBlock ; $561f
 	ret ; $5622
+Unused_03_RestoreBlock0aFromBackup:
 	ld b, $0a ; $5623
 	ld hl, $d000 ; $5625
 	call ReadSaveBlock ; $5628
@@ -3371,6 +3378,7 @@ RestoreStoryBlockFromBackup:
 	ld b, $25 ; $5647
 	call InvalidateSaveBlock ; $5649
 	ret ; $564c
+Unused_03_ClearBlockIfSet:
 	ld hl, $d000 ; $564d
 	call ReadSaveBlock ; $5650
 	or a ; $5653

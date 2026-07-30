@@ -9953,3 +9953,44 @@ on return**, even when the player only views and cancels — worth knowing befor
 any future session browses the equipment menu. The session's calibration poke of
 `FLAG_DOUBLES` had self-cleared before the final save, which was verified by
 reading the byte immediately before backing out.
+
+## The save-repair path needs no reset, because those operands are not in it (2026-07-30)
+
+The open question was whether `RestoreStoryBlockFromBackup` (37 `unproven`
+operands attributed to bank `$03`, 18 to that label) could be reached without a
+reset — the repair runs from the boot routine, and tracing across a reset kills
+the connector.
+
+The question dissolves. `ValidateSaveRam` and `RepairAllSaveSlots` are indeed
+called from exactly one place each, `InitAndRunGame` at `$01:$408b`/`$408e`, so
+the repair path *is* boot-only. But **`RestoreStoryBlockFromBackup`'s own body
+already resolves** — it renders `wDecompBuffer` throughout. All 18 bare operands
+are in unlabelled code *after* its `ret`, in a run of **eight unreachable
+routines** (`$553b`-`$5669`) that no reference reaches.
+
+They are the superseded version of the repair: five copies of one routine with
+the save-block id hardcoded (`$06` through `$0a`), plus three helpers. What
+replaced them sits one label below — `RepairAllSaveSlots` calls the surviving
+routine three times with `b` = 0, 2, 4 and lets it derive the backup block with
+`ld a, $1b / add b`.
+
+The reference scan needed care, and my first attempt got it wrong. Treating
+"address followed by `$03`" as a far pointer flagged two hits inside
+`JuniorClassCourtDoublesNpcScripts_11` — but a `map_script` row is
+`(actor, mask, flag, handler, arg0, arg1)`, and the byte after the handler is
+`arg0`, which happened to be `$03`. Re-run against bank `$03` only, requiring a
+same-bank `dw` or a `call`/`jp` opcode immediately before, five hits remain and
+every one is a coincidence: `41 56` is the "AV" of the ASCII string `"SAVED"`,
+`2a 56` is an `ld a, [hl+]` / `ld d, [hl]` pair at three sites, and `21 56` is an
+`ld hl` operand byte.
+
+Named `Unused_03_*` and split out of `RestoreStoryBlockFromBackup`'s span, so the
+routine stops looking half-analysed when it was complete.
+
+### Which changes the count of what driving can ever reach
+
+With bank `$1b`'s confirm screen (11) and this run (18), **29 of the 316
+remaining `unproven` operands are in code that cannot execute**. Any future
+session should subtract them before judging a driving run — and the shape is now
+familiar enough to look for deliberately: unlabelled code between a `ret` and the
+next label, attributed to whichever label precedes it.

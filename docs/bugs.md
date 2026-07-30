@@ -658,6 +658,35 @@ in the retail build sets). No `farcall` to `LoadAndDisplayScene` exists outside
 bank `$0a`, despite its directory slot at `$4078`.
 
 
+### A superseded save-repair family in bank `$03`, unreachable
+
+`$03:$553b`-`$5669` holds **eight complete routines** with no way in, sitting
+between `RestoreStoryBlockFromBackup`'s `ret` and `RepairAllSaveSlots`. They are
+an earlier, hardcoded version of the repair the live pair does generically:
+`Unused_03_RestoreBlock06FromBackup` through `..._RestoreBlock0aFromBackup` are
+five copies of one routine with the block id baked in, flanked by
+`Unused_03_RestoreBlockOrClear`, `Unused_03_InvalidateBlockIfUnwritten` and
+`Unused_03_ClearBlockIfSet`.
+
+What replaced them is visible one label further down: `RepairAllSaveSlots`
+(`$03:$5669`) calls `RestoreStoryBlockFromBackup` three times with `b` = 0, 2, 4,
+and the callee derives the backup block with `ld a, $1b / add b` instead of
+naming it. One parameterised routine for five hardcoded ones.
+
+Nothing references any of it. Scanning bank `$03` for every address in the span,
+as a same-bank `dw` or as the operand of a `call`/`jp`, yields five hits and all
+five are coincidences: `41 56` is the "AV" of the ASCII string "SAVED", `2a 56`
+is an `ld a, [hl+]` / `ld d, [hl]` instruction pair at three sites, and `21 56`
+is the low operand byte of an `ld hl`. The descent finds nothing either, which is
+why the routines had no labels of their own.
+
+The disassembly consequence is the same as bank `$1b`'s confirm screen: **18 of
+the bare banked-WRAM operands `tools/ram_gaps.py` lists as `unproven` are in
+here**, and no amount of play can prove them. They had been attributed to
+`RestoreStoryBlockFromBackup`, whose own body resolves cleanly to
+`wDecompBuffer`, which made the routine look half-analysed when it was complete.
+
+
 ### A confirm-screen suite in bank `$1b` that nothing can reach
 
 `$1b:$69d9`-`$6aa0` holds seven complete routines with no way in. They sit
