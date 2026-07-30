@@ -611,6 +611,36 @@ per frame by `RunPagedTextMenuAutoSize` and unregistered when the menu closes,
 so the plumbing around it is real — but the body reads `wMenuCursorRow` into `a`
 and then `pop af` discards it. The task runs and does nothing.
 
+### A confirm-screen suite in bank `$1b` that nothing can reach
+
+`$1b:$69d9`-`$6aa0` holds seven complete routines with no way in. They sit
+immediately after `StubNop_1b_09` — three bare `ret`s that *are* legitimately
+used, registered as a no-op frame task around `RunTwoOptionSelectB`
+(`$1b:$69b9`/`$69c5`) — so the disassembler attributes the whole run to that
+label, which is why they read as part of a stub.
+
+They are a working screen: `Unused_1b_ShowHighScoreConfirmScreen` sets
+`wMinigameHighScoreMode`, fades out, calls `InitConfirmScreen`, flushes and
+fades back in; five siblings draw one prompt each with its Yes/No labels —
+"Erase?" (with the player's name pushed as a text argument through
+`CopyMainCharNameWithDiacritics`), "Erase it? Really?", "Continue?", "Is this
+correct?" and "Char. and item data." twice; and `Unused_1b_DrawGameTimerRow`
+renders `wGameTimer` as `hh:mm:ss`, writing the `$3a` colon glyph between the
+fields, then queues the row to VRAM.
+
+Nothing references any of it. A ROM-wide scan for each of the 200 candidate
+entry addresses, as a same-bank `dw` or as a `farptr`-shaped word followed by
+bank `$1b`, returns seven hits and every one is a coincidence: `11 6a d0` is the
+`ld de, $d06a` in a neighbouring routine, `cd ae 6a` is a call *within* the span
+itself, and the rest land inside graphics data in banks `$2f`, `$36` and `$70`.
+The descent finds no reference either, which is why the fragments had no labels
+of their own until they were named.
+
+The consequence is only for the disassembly's accounting, not for the game: 11
+of the bare banked-WRAM operands `tools/ram_gaps.py` still lists as `unproven`
+are in this span, and no amount of play can ever prove them, because the code
+does not run.
+
 ### The whole developer debug harness is unreachable, and its unlock flag is never read
 
 `InitAndRunGame` (`$01:$4018`) is the retail boot routine: `SoftReset` farcalls it

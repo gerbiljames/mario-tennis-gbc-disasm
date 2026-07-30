@@ -9689,3 +9689,65 @@ strings except that the routine which formats those writes somewhere else. The
 missing evidence is a *consumer*: nothing in bank `$1e` reads `$d009`-`$d023`,
 and no other bank references them. More coverage does not help — the question is
 semantic, not a bank question — so they stay honestly numeric.
+
+## Bank $1b's stranded confirm screen, and what is left to drive (2026-07-30)
+
+With the debug-menu warp working, the obvious question is how much of the
+remaining 343 `unproven` operands it can reach. Measuring where they actually
+are answers it, and the answer is "a minority":
+
+| bank | sites | what they are in |
+| --- | --- | --- |
+| `$1b` | **125** | the ranking board, minigame data rows, and a stranded confirm screen |
+| `$03` | 37 | `RestoreStoryBlockFromBackup` — the save-repair path |
+| `$3b` | 30 | `DecodeTrophyCounts`, the N64 transfer records |
+| `$05` | 22 | `WriteStringToTilemapStreamed` |
+| `$1e` | 21 | mostly `DrawExpDoubles{Player,Partner}Panel` |
+
+Almost none of that is a *story location*, which is the only thing the Scene
+warp selects, so the warp is one lever among several rather than the answer.
+Four different obstacles are in play: screens that are farcalled from
+match-result code and are not locations at all (the ranking board, the biggest
+single cluster); screens that need game *state* rather than a place (the doubles
+EXP panels want a completed doubles story match; `RestoreStoryBlockFromBackup`
+wants a corrupted save); a screen that only runs on non-colour hardware
+(`ShowDmgLockoutScreen`); and code that cannot run at all.
+
+### Eleven of the 343 are unreachable, permanently
+
+`$1b:$69d9`-`$6aa0` is seven complete routines with no way in — a confirm-screen
+suite: a screen setup that sets `wMinigameHighScoreMode` and calls
+`InitConfirmScreen`, five prompt drawers ("Erase?", "Erase it? Really?",
+"Continue?", "Is this correct?", "Char. and item data.") each with its Yes/No
+labels, and an `hh:mm:ss` renderer of `wGameTimer` that writes the `$3a` colon
+glyph between the fields.
+
+They sit immediately after `StubNop_1b_09`, whose three bare `ret`s *are*
+legitimately used as a no-op frame task, so the emitter attributed the whole run
+to that label and the fragments read as stub filler. A ROM-wide scan of all 200
+candidate entry addresses — as a same-bank `dw` or a `farptr`-shaped word
+followed by bank `$1b` — yields seven hits and all seven are coincidences
+(`11 6a d0` is a neighbouring `ld de, $d06a`; `cd ae 6a` is a call inside the
+span; the rest are graphics bytes in banks `$2f`/`$36`/`$70`). They are now
+named `Unused_1b_*` and split out of the stub's span, and recorded in
+`docs/bugs.md`.
+
+So 11 of the `unproven` sites can never be proven by driving, and any future
+session should stop counting them.
+
+### The DMG lockout screen needs one HRAM byte, not a Game Boy
+
+`ShowDmgLockoutScreen` (6 sites in bank `$01`) runs when `hIsCGB` is zero
+(`$00:$25a8`). `Start` computes that byte — and then falls into `SoftReset`,
+which is what the in-game A+B+SELECT+START combo jumps to (`$00:$27bd`), so
+**`hIsCGB` is never recomputed on a soft reset**. `SoftReset`'s HRAM clear runs
+`$70` bytes from `$ff80`, i.e. up to `$ffef`, and `hIsCGB` lives at **`$fffe`**,
+outside it. Writing `$fffe = 0` and hitting the reset combo should therefore
+land in the lockout screen on real CGB hardware emulation.
+
+Attempting it is what took the connector down (a traced `step_frames` timed out
+mid-call and the Lua accept loop stopped; `ss` shows the listener with a pending
+connection and a zero backlog, the documented signature). It needs a Lua reload
+in BizHawk before any further driving. Nothing was lost — `trace_start` resets
+the buffer, but the previous session's coverage was already dumped and
+committed.
