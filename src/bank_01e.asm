@@ -3929,7 +3929,7 @@ ComputeTrophyExpAwards:
 	ld hl, $0000 ; $7007
 	call ComputeTrophyExpGroup0 ; $700a
 	push hl ; $700d
-	ld hl, $d028 ; $700e
+	ld hl, wTrophyExpGroup0 ; $700e
 	ld a, c ; $7011
 	ld [hl+], a ; $7012
 	ld [hl], b ; $7013
@@ -3992,7 +3992,7 @@ ComputeTrophyExpAwards:
 	ldh a, [hWramBank] ; $7065
 	push af ; $7067
 	wram_bank $06 ; $7068
-	ld hl, $d028 ; $706e
+	ld hl, wTrophyExpGroup0 ; $706e
 	ld a, [hl+] ; $7071
 	ld d, [hl] ; $7072
 	ld e, a ; $7073

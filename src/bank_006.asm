@@ -674,12 +674,12 @@ DrawMenuCaptionWindow:
 	call RenderProportionalMenuText ; $45a6
 	ret ; $45a9
 RestoreBgTilemap:
-	ld hl, $d800 ; $45aa
-	ld de, wScreenAttrmap ; $45ad
+	ld hl, wCourtTilemapSaved ; $45aa
+	ld de, wCourtTilemap ; $45ad
 	ld c, $40 ; $45b0
 	call CopyMemoryFast ; $45b2
-	ld hl, $dc00 ; $45b5
-	ld de, $d400 ; $45b8
+	ld hl, wCourtAttrmapSaved ; $45b5
+	ld de, wCourtAttrmap ; $45b8
 	ld c, $40 ; $45bb
 	call CopyMemoryFast ; $45bd
 	ret ; $45c0
@@ -689,20 +689,20 @@ RestoreBgTilemapRegion:
 	ld c, l ; $45c6
 	ld b, h ; $45c7
 	push bc ; $45c8
-	ld hl, wScreenAttrmap ; $45c9
+	ld hl, wCourtTilemap ; $45c9
 	add hl, bc ; $45cc
 	ld e, l ; $45cd
 	ld d, h ; $45ce
-	ld hl, $d800 ; $45cf
+	ld hl, wCourtTilemapSaved ; $45cf
 	add hl, bc ; $45d2
 	ld c, $0e ; $45d3
 	call CopyMemoryFast ; $45d5
 	pop bc ; $45d8
-	ld hl, $d400 ; $45d9
+	ld hl, wCourtAttrmap ; $45d9
 	add hl, bc ; $45dc
 	ld e, l ; $45dd
 	ld d, h ; $45de
-	ld hl, $dc00 ; $45df
+	ld hl, wCourtAttrmapSaved ; $45df
 	add hl, bc ; $45e2
 	ld c, $0e ; $45e3
 	call CopyMemoryFast ; $45e5
@@ -732,7 +732,7 @@ FlushTilemapToVram:
 	add hl, bc ; $4607
 	ld e, l ; $4608
 	ld d, h ; $4609
-	ld hl, wScreenAttrmap ; $460a
+	ld hl, wCourtTilemap ; $460a
 	add hl, bc ; $460d
 	ld c, $22 ; $460e
 	call QueueVRAMCopy ; $4610
@@ -741,21 +741,21 @@ FlushTilemapToVram:
 	add hl, bc ; $4617
 	ld e, l ; $4618
 	ld d, h ; $4619
-	ld hl, $d400 ; $461a
+	ld hl, wCourtAttrmap ; $461a
 	add hl, bc ; $461d
 	ld c, $22 ; $461e
 	call QueueVRAMCopy ; $4620
 	ret ; $4623
 GetShadowTilemapAddr:
 	call GetScrolledTilemapOffset ; $4624
-	ld de, $d000 ; $4627
+	ld de, wActiveTilemap ; $4627
 	add hl, de ; $462a
 	ld e, l ; $462b
 	ld d, h ; $462c
 	ret ; $462d
 GetShadowAttrmapAddr:
 	call GetScrolledTilemapOffset ; $462e
-	ld de, $d400 ; $4631
+	ld de, wActiveAttrmap ; $4631
 	add hl, de ; $4634
 	ld e, l ; $4635
 	ld d, h ; $4636
@@ -828,7 +828,7 @@ RunMatchMenu:
 	call DrawMatchMenuItems ; $46ed
 	ld e, $0c ; $46f0
 	call GetScrolledTilemapRowOffset ; $46f2
-	ld de, $d400 ; $46f5
+	ld de, wCourtAttrmap ; $46f5
 	add hl, de ; $46f8
 	ld bc, $0040 ; $46f9
 	call ClearAttrPriorityRegion ; $46fc

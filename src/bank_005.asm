@@ -639,7 +639,7 @@ RestoreTilemapUnderWindow:
 RestoreShadowTilemapRow:
 	and $3f ; $43d2
 	ld e, a ; $43d4
-	ld hl, $d000 ; $43d5
+	ld hl, wMapBuffer64 ; $43d5
 	ld a, $06 ; $43d8
 	ld bc, $0040 ; $43da
 	ld d, e ; $43dd
@@ -741,7 +741,7 @@ RestoreShadowTilemapRow:
 .next2:
 	dec d ; $4476
 	jr nz, .loop3 ; $4477
-	ld hl, $d400 ; $4479
+	ld hl, wWindowShadowAttrmap ; $4479
 	ld a, e ; $447c
 	and $1f ; $447d
 	ld d, a ; $447f

@@ -270,7 +270,7 @@
   {
    "start": "0xdf00",
    "end": "0xdf97",
-   "comment": "Match-engine per-character struct, replicated across WRAM banks 4-7\n(bank = character: 4 near-P1, 5 far-P1, 6 near-partner, 7 far-partner).\nSame field, different character per bank -- one name each. Scoped by the\nprovably-selected WRAM bank, plus the match banks $07/$08 whose\ncallback-reached (jp hl) accesses the dataflow can't prove. Only the\nnamed field offsets render; other $dfxx bytes stay numeric.",
+   "comment": "Match-engine per-character struct, replicated across WRAM banks 4-7\n(bank = character: 4 near-P1, 5 far-P1, 6 near-partner, 7 far-partner).\nSame field, different character per bank -- one name each. Scoped by the\nprovably-selected WRAM bank, plus the match banks $07/$08 whose\ncallback-reached (jp hl) accesses the dataflow can't prove. Only the\nnamed field offsets render; other $dfxx bytes stay numeric.\nThe character-select screen drives the same struct: bank $38 runs\nUpdateCharSelectCharSprite and TickCharSelectIdleAnim once per preview\ncharacter, selecting WRAM banks $04-$07 in turn, so those two routines get\ninstruction-range scopes rather than a whole-bank one -- bank $38's own\n$df00 is wCharSelectHandedness in WRAM bank $03.",
    "variants": [
     {
      "context": "text-arg fetch buffer (menu banks reuse the idle char struct)",
@@ -354,6 +354,16 @@
       },
       {
        "bank": "0x2c"
+      },
+      {
+       "bank": "0x38",
+       "start": "0x4ce2",
+       "end": "0x4d14"
+      },
+      {
+       "bank": "0x38",
+       "start": "0x4da3",
+       "end": "0x4da6"
       }
      ],
      "symbols": {
@@ -600,6 +610,14 @@
       "0xdf51": {
        "name": "wCharChargeFlashOn",
        "note": "[8-bit] Per-character banked struct (WRAM4-7): set while the charge flash is playing; cleared when the swing starts or aborts"
+      },
+      "0xdf52": {
+       "name": "wCharChargeFlashGfxLoaded",
+       "note": "[8-bit] Per-character banked struct (WRAM4-7): 1 while the flashed tiles are the ones in VRAM. UpdateChargeFlash toggles the flash on wCharSwingFrames bit 2, and this latch is what makes each half of that cycle load its graphics once -- set it and call LoadCharChargeFlashGfx, or clear it and call ReloadCharFrameGfx"
+      },
+      "0xdf56": {
+       "name": "wCharScriptedMove",
+       "note": "[8-bit] Per-character banked struct (WRAM4-7): set to 1 by MoveCharTowardTarget once it has stepped the character toward wCharWalkTargetX/wCharWalkTargetDepth. UpdateCharStateMachine clears it at the top of every frame and UpdateCharVelocityFromInput returns immediately while it is set, so a scripted walk overrides the stick for that frame"
       },
       "0xdf94": {
        "name": "wCharMirrorAttrMask",
@@ -1085,8 +1103,8 @@
      "symbols": {
       "0xd800": {
        "name": "wNameEntryBuffer",
-       "note": "[8 bytes] Name being typed, terminated by $00; AppendCharToName / DeleteLastNameChar edit it and RunNameEntryScreen copies it into the character record on accept ($de is the blank-cell filler)",
-       "size": 8
+       "note": "[11 bytes] Name being typed, terminated by $00; AppendCharToName / DeleteLastNameChar edit it and RunNameEntryScreen copies it into the character record on accept ($de is the blank-cell filler). Eleven bytes, not the eight the visible cells suggest: every copy in or out of it is `ld bc, $000b`, and TrimTrailingSpacesFromName starts its backwards scan at the last of them",
+       "size": 11
       }
      }
     },
@@ -1416,10 +1434,14 @@
      }
     },
     {
-     "context": "character-select grid (bank $38)",
+     "context": "character-select grid (banks $38/$10)",
      "scopes": [
       {
        "bank": "0x38"
+      },
+      {
+       "bank": "0x10",
+       "wram_bank": "0x03"
       }
      ],
      "symbols": {
@@ -1445,7 +1467,7 @@
       },
       "0xd816": {
        "name": "wCharSelectSlotChars",
-       "note": "[4 bytes] Character id chosen for each player slot ($ff = empty); ResolveSelectedCharIds and InitMatchCharsFromSelection read it",
+       "note": "[4 bytes] Character id chosen for each player slot ($ff = empty); ResolveSelectedCharIds and InitMatchCharsFromSelection read it. Bank $10's CopyExhibitionCharSlotIds copies all four out to wMatchSlotCharRefs once the screen is done, which is the only reference to this block from outside bank $38",
        "size": 4
       },
       "0xd81a": {
@@ -1874,6 +1896,22 @@
       "0xd001": {
        "name": "wCutsceneTextScrollRows",
        "note": "[8-bit] First byte of the current TextPageDescriptors_03 entry: how many rows the page scrolls by. ScrollCutsceneTextWindow masks it to two bits and treats zero as one, so a descriptor that forgets the field still scrolls a single row"
+      }
+     }
+    },
+    {
+     "context": "trophy EXP awards (bank $1e)",
+     "scopes": [
+      {
+       "bank": "0x1e",
+       "wram_bank": "0x06"
+      }
+     ],
+     "symbols": {
+      "0xd028": {
+       "name": "wTrophyExpGroup0",
+       "note": "[16-bit] EXP for trophy group 0. It is the head of the six-word run ComputeTrophyExpAwards fills, but it falls below the union wTrophyExpByGroup is filed under, so groups 1-5 carry that name and this one stands alone",
+       "size": 2
       }
      }
     }
@@ -2507,12 +2545,27 @@
       {
        "bank": "0x1d",
        "wram_bank": "0x03"
+      },
+      {
+       "bank": "0x1d",
+       "start": "0x4516",
+       "end": "0x4706"
+      },
+      {
+       "bank": "0x1d",
+       "start": "0x4b79",
+       "end": "0x4b7c"
+      },
+      {
+       "bank": "0x1d",
+       "start": "0x5095",
+       "end": "0x5098"
       }
      ],
      "symbols": {
       "0xd400": {
        "name": "wCharDataPagePlane",
-       "note": "[992 bytes] Base stat-page rows for the character-data screen, one 31 x 32 cell plane in *each* of WRAM banks $02 and $03: bank $03 holds the tile half, bank $02 the CGB attribute half, cell for cell at the same addresses. LoadBasePageIntoWorkTilemap copies a row from here to the live screen twice, once per bank, which is why the two `ld hl` operands of that pair are the same word. Not an attribute map, despite falling where wShadowAttrmap sits for every other screen; the page slots proper start at wCharDataPageSlot1.",
+       "note": "[992 bytes] Base stat-page rows for the character-data screen, one 31 x 32 cell plane in *each* of WRAM banks $02 and $03: bank $03 holds the tile half, bank $02 the CGB attribute half, cell for cell at the same addresses. LoadBasePageIntoWorkTilemap copies a row from here to the live screen twice, once per bank, which is why the two `ld hl` operands of that pair are the same word. Not an attribute map, despite falling where wShadowAttrmap sits for every other screen; the page slots proper start at wCharDataPageSlot1.\nThe three instruction ranges are bank $1d's cell arguments, handed to CharDataScreen_WriteStatNumber and ApplyTilemapPatchList exactly like wCharDataScreenCell's and with the same consequence: WRAM bank $06 is live at the reference, so those scopes name no wram_bank and let the callee pick the plane.",
        "size": 992,
        "stride": [
         "TILEMAP_WIDTH",
@@ -2768,13 +2821,18 @@
    "start": "0xd000",
    "wram_bank": "0x05",
    "end": "0xd800",
-   "comment": "Shadow tilemap for text windows (WRAM bank $05). The same 32 x 32 cell\nplane plus CGB attribute plane the full-screen UIs keep in WRAM bank\n$03, but owned by the window engine: ResetTextWindowState clears both\nand points wShadowTilemapPtr / wShadowTilemapBank at $d000 / $05, and\nthe dirty-row flusher copies changed rows out to $9800.\nScoped to a provable WRAM bank $05 alone -- bank $05 is full of $d000\nand $d400 literals that address whichever plane the current screen\nowns, and its glyph buffers live at $d300-$d7ff in WRAM bank $07.",
+   "comment": "Shadow tilemap for text windows (WRAM bank $05). The same 32 x 32 cell\nplane plus CGB attribute plane the full-screen UIs keep in WRAM bank\n$03, but owned by the window engine: ResetTextWindowState clears both\nand points wShadowTilemapPtr / wShadowTilemapBank at $d000 / $05, and\nthe dirty-row flusher copies changed rows out to $9800.\nScoped to a provable WRAM bank $05 alone -- bank $05 is full of $d000\nand $d400 literals that address whichever plane the current screen\nowns, and its glyph buffers live at $d300-$d7ff in WRAM bank $07.\nThe one instruction range is the exception RestoreShadowTilemapRow forces:\nit reads a row out of wMapBuffer64 under WRAM banks $03 and $02 and writes\nit back into these planes under bank $05, so the bank live at the `ld hl,\n$d400` is the source's, not the destination's.",
    "variants": [
     {
      "context": "window shadow tilemap (WRAM bank $05)",
      "scopes": [
       {
        "wram_bank": "0x05"
+      },
+      {
+       "bank": "0x05",
+       "start": "0x4479",
+       "end": "0x447c"
       }
      ],
      "symbols": {
@@ -3187,15 +3245,75 @@
   },
   {
    "start": "0xd000",
+   "end": "0xd800",
+   "comment": "The scene's two cell maps, WRAM bank $06: what each half-tile of the\noverworld collides with, and what behaviour it triggers. Both are\ndecompressed by LoadStorySceneGraphics (and its sibling at $5d8e), which\nselects WRAM bank $06 and then fills $d400 and $d000 in that order.\nGetCollisionMapCellAddr and GetBehaviorMapCellAddr index them with the same\narithmetic -- 32 columns of half-tiles, rows 32 apart -- and their four\nReadRead/Write wrappers select bank $06 around the single load or store, so\nthe reference itself sits under WRAM bank $04 (the actor engine's) and the\ntwo bases would otherwise render as wActors and wActors + 16 * ACTOR_SIZE.\nDeclared mirrored so it names these bytes without allocating them: WRAM bank\n$06 already declares this range for the character-data screen and the\npalette fade engine, and the overworld simply owns it at another time.",
+   "variants": [
+    {
+     "context": "scene cell maps (bank $0a)",
+     "mirrored": true,
+     "banks": [
+      "0x06"
+     ],
+     "scopes": [
+      {
+       "bank": "0x0a",
+       "start": "0x58c2",
+       "end": "0x58cd",
+       "wram_bank": "0x06"
+      },
+      {
+       "bank": "0x0a",
+       "start": "0x5d9d",
+       "end": "0x5da8",
+       "wram_bank": "0x06"
+      },
+      {
+       "bank": "0x0a",
+       "start": "0x5ef4",
+       "end": "0x5ef8"
+      },
+      {
+       "bank": "0x0a",
+       "start": "0x5f48",
+       "end": "0x5f4c"
+      }
+     ],
+     "symbols": {
+      "0xd000": {
+       "name": "wCollisionMap",
+       "note": "[1024 bytes] One byte per half-tile cell of the scene, 32 columns by 32 rows, addressed as (y & ~1) * 16 + (x & ~1) / 2 by GetCollisionMapCellAddr. ReadCollisionMapCell and WriteCollisionMapCell are the only accessors, each selecting WRAM bank $06 for the one instruction that touches it.",
+       "size": 1024
+      },
+      "0xd400": {
+       "name": "wBehaviorMap",
+       "note": "[1024 bytes] The second plane of the same grid, cell for cell $400 higher, holding what a cell does rather than whether it blocks. ReadBehaviorMapCell prints the byte it reads with PrintHexByte, which is what makes it visible as a debug readout.",
+       "size": 1024
+      }
+     }
+    }
+   ]
+  },
+  {
+   "start": "0xd000",
    "wram_bank": "0x04",
    "end": "0xd600",
-   "comment": "Overworld / story actor slots (WRAM bank $04): 24 records of ACTOR_SIZE\nbytes, the array SpawnActor allocates from and the bank $04 engine walks\nonce a frame. Scoped to a provable WRAM bank $04 -- $d000 is eight\ndifferent things and seven ROM banks reach the array, so nothing but the\ndataflow can say which one a literal means.\nRecord fields are addressed as offsets (`ld hl, $00xx / add hl, bc`), not\nas absolute addresses, so they are not RAM symbols; the layout is in\ndocs/actor_script.md and the field-size table the script opcodes use is\nActorFieldTypeTable_04.",
+   "comment": "Overworld / story actor slots (WRAM bank $04): 24 records of ACTOR_SIZE\nbytes, the array SpawnActor allocates from and the bank $04 engine walks\nonce a frame. Scoped to a provable WRAM bank $04 -- $d000 is eight\ndifferent things and seven ROM banks reach the array, so nothing but the\ndataflow can say which one a literal means.\nTwo bank $0a sites get instruction ranges instead, because there the bank\nis selected in the callee and never at the reference: GetActorStateAddr\nbuilds its slot address and only then runs `wram_bank $04`, and\nEndCutsceneScriptMode hands slots 1 and 0 to AttachActorWaypointFollower,\nwhich selects the bank itself.\nRecord fields are addressed as offsets (`ld hl, $00xx / add hl, bc`), not\nas absolute addresses, so they are not RAM symbols; the layout is in\ndocs/actor_script.md and the field-size table the script opcodes use is\nActorFieldTypeTable_04.",
    "variants": [
     {
      "context": "overworld actors (WRAM bank $04)",
      "scopes": [
       {
        "wram_bank": "0x04"
+      },
+      {
+       "bank": "0x0a",
+       "start": "0x4110",
+       "end": "0x4116"
+      },
+      {
+       "bank": "0x0a",
+       "start": "0x4312",
+       "end": "0x4315"
       }
      ],
      "symbols": {
@@ -3777,13 +3895,31 @@
    "start": "0xd000",
    "wram_bank": "0x02",
    "end": "0xe000",
-   "comment": "WRAM bank $02 holds tilemap planes, and until now not one byte of it had\na name -- it was the only WRAMX bank with no SECTION at all. Three\nsubsystems use it three different ways, so $d000 is a tile plane, an\nattribute plane or a 64-wide scroll buffer depending on who is asking:\nthe match keeps the court tilemap and attrmap here as a pair, the\noverworld builds two of its four wide scroll planes here, and every\nfull-screen UI uses $d000 as the attribute half of the tilemap whose\ntile half is wShadowTilemap in WRAM bank $03.\nEvery scope carries wram_bank $02 as well as its ROM bank, and the common\nscreen case is scoped rather than a default. A default variant here was\nthe first thing tried and it was wrong twice over: it named the bank $07\nsave-editor window at $d300 as an attribute cell, and bank $08 reaches\nboth this bank and WRAM bank $04 -- RefreshCourtScoreboard's $de9x bytes\nare not court planes at all.",
+   "comment": "WRAM bank $02 holds tilemap planes, and until now not one byte of it had\na name -- it was the only WRAMX bank with no SECTION at all. Three\nsubsystems use it three different ways, so $d000 is a tile plane, an\nattribute plane or a 64-wide scroll buffer depending on who is asking:\nthe match keeps the court tilemap and attrmap here as a pair, the\noverworld builds two of its four wide scroll planes here, and every\nfull-screen UI uses $d000 as the attribute half of the tilemap whose\ntile half is wShadowTilemap in WRAM bank $03.\nEvery scope carries wram_bank $02 as well as its ROM bank, and the common\nscreen case is scoped rather than a default. A default variant here was\nthe first thing tried and it was wrong twice over: it named the bank $07\nsave-editor window at $d300 as an attribute cell, and bank $08 reaches\nboth this bank and WRAM bank $04 -- RefreshCourtScoreboard's $de9x bytes\nare not court planes at all.\nThe match owns the court planes from two more banks, over instruction\nranges rather than whole banks. Bank $06's in-match UI restores and\nflushes them: ShowMessageWindow and the pause menu select WRAM bank $02\nand then call RestoreBgTilemap / RestoreBgTilemapRegion /\nFlushTilemapToVram, which is why $d000 there is the tile half sent to VRAM\nbank 0 and not the attribute plane the whole-bank variant below would name\nit. Bank $0a's LoadCourtSceneGraphics decompresses the court into the\nsaved pair at $d800/$dc00 before the match starts.",
    "variants": [
     {
-     "context": "match court planes (bank $08)",
+     "context": "match court planes (banks $08/$06/$0a)",
      "scopes": [
       {
        "bank": "0x08",
+       "wram_bank": "0x02"
+      },
+      {
+       "bank": "0x06",
+       "start": "0x45aa",
+       "end": "0x4624",
+       "wram_bank": "0x02"
+      },
+      {
+       "bank": "0x06",
+       "start": "0x46f5",
+       "end": "0x46f8",
+       "wram_bank": "0x02"
+      },
+      {
+       "bank": "0x0a",
+       "start": "0x636d",
+       "end": "0x6378",
        "wram_bank": "0x02"
       },
       {
@@ -3890,6 +4026,33 @@
         "TILEMAP_WIDTH",
         "0x20"
        ]
+      }
+     }
+    },
+    {
+     "context": "character record scratch (banks $18/$1b/$3b)",
+     "scopes": [
+      {
+       "bank": "0x18",
+       "start": "0x4515",
+       "end": "0x4531"
+      },
+      {
+       "bank": "0x1b",
+       "start": "0x607e",
+       "end": "0x60b9"
+      },
+      {
+       "bank": "0x3b",
+       "start": "0x5adc",
+       "end": "0x5adf"
+      }
+     ],
+     "symbols": {
+      "0xd580": {
+       "name": "wCharRecordScratch",
+       "note": "[128 bytes] The character record a menu is about to draw. LoadCharacterRecordToBuffer asks LoadCharacterRecordToCa80 to build the record and then copies 128 bytes of it here from wPlayer2MainName, so the fields line up with that block: +$0b is the character id (wPlayer2CurrentMainCharacter's offset), which is what CheckCharacterUnlocked tests against $ff and what the mugshot and portrait loaders take as their index. The `.fixedRecord` shortcut writes $3e straight into +$0b without loading anything.\nScoped to instruction ranges rather than a WRAM bank because the bank is never selected at the reference: bank $3b's BuildSaveSlotSummaries is the one caller that says it out loud, running `wram_bank $02` on both sides of the call, and the reads have to be in the bank the write went to.",
+       "size": 128
       }
      }
     }
@@ -4198,6 +4361,127 @@
        "name": "wStorySceneUnusedBuffer",
        "note": "[1024 bytes] Third decompression destination of LoadStorySceneGraphics, and the only one nothing lands in: the `ld de, $d800` that selects it is overwritten by the next `ld de, $d400` before any call, so the store is dead. Its two live siblings decompress into $d400 and $d000 of this bank, and the planes after those go to wScreenAttrmap and the bank $03 tilemap.",
        "size": 1024
+      }
+     }
+    }
+   ]
+  },
+  {
+   "start": "0xd600",
+   "end": "0xd690",
+   "comment": "Character mugshot staging, owned by bank $1b. LoadCharMugshotToBuffer\ndecompresses nine tiles here and CopyMugshotBufferToVram queues them into\nVRAM bank 1; the pair is always called back to back and nothing between\nthem selects a WRAM bank, so the buffer lives in whichever bank the calling\nscreen happens to have mapped -- $02 and $03 within one routine on the\ncharacter-select screen, $03 on the trophy and bracket screens, and $04 has\nbeen observed too. Declared mirrored: it allocates nothing, since each of\nthose banks already declares these bytes.",
+   "variants": [
+    {
+     "context": "mugshot staging (bank $1b, mirrored across WRAM banks $02/$03/$04)",
+     "mirrored": true,
+     "banks": [
+      "0x02",
+      "0x03",
+      "0x04"
+     ],
+     "scopes": [
+      {
+       "bank": "0x1b",
+       "start": "0x4e3b",
+       "end": "0x4e3e"
+      },
+      {
+       "bank": "0x1b",
+       "start": "0x4e4a",
+       "end": "0x4e4d"
+      }
+     ],
+     "symbols": {
+      "0xd600": {
+       "name": "wMugshotBuffer",
+       "note": "[144 bytes] One 3 x 3 tile mugshot, decompressed from the entry CharMugshotGfxPointers holds for the character id in a. CopyMugshotBufferToVram sends all nine tiles to the VRAM address its caller passes in de.",
+       "size": 144
+      }
+     }
+    }
+   ]
+  },
+  {
+   "start": "0xd000",
+   "end": "0xd800",
+   "comment": "The plane pair whichever screen is running owns, as bank $06's two address\ngetters see it. GetShadowTilemapAddr and GetShadowAttrmapAddr add a scrolled\ncell offset to $d000 / $d400 and hand the result back to a caller that has\nalready selected the bank: the in-match UI runs them under WRAM bank $02\n(the court planes) and the story menus under bank $05 (the window engine's\nplanes), so no per-bank name fits the literal. Declared mirrored -- both\nbanks already declare these bytes under their own names, and this is a third\nway to address them.\nBank $03 is deliberately left out of the set. It is the third home of a\nplane pair (wShadowTilemap / wShadowAttrmap), but nothing observed reaches\nthese two getters with it selected, and listing it would stop a site proved\nto be bank $03 from staying numeric.",
+   "variants": [
+    {
+     "context": "current screen's plane pair (mirrored across WRAM banks $02/$05)",
+     "mirrored": true,
+     "banks": [
+      "0x02",
+      "0x05"
+     ],
+     "scopes": [
+      {
+       "bank": "0x06",
+       "start": "0x4627",
+       "end": "0x462a"
+      },
+      {
+       "bank": "0x06",
+       "start": "0x4631",
+       "end": "0x4634"
+      }
+     ],
+     "symbols": {
+      "0xd000": {
+       "name": "wActiveTilemap",
+       "note": "[1024 bytes] BG tile plane of the screen currently running, 32 x 32 cells with rows TILEMAP_WIDTH apart. The same bytes are wCourtTilemap in WRAM bank $02, wWindowShadowTilemap in bank $05 and wShadowTilemap in bank $03; wShadowTilemapBank / wShadowTilemapPtr are how the text engine is told which one is live.",
+       "size": 1024,
+       "stride": [
+        "TILEMAP_WIDTH",
+        "0x20"
+       ]
+      },
+      "0xd400": {
+       "name": "wActiveAttrmap",
+       "note": "[1024 bytes] Its CGB attribute plane, cell for cell $400 higher -- wCourtAttrmap, wWindowShadowAttrmap or wShadowAttrmap depending on the bank. FlushTilemapToVram sends the tile half to $9800 in VRAM bank 0 and this half to the same address in bank 1.",
+       "size": 1024,
+       "stride": [
+        "TILEMAP_WIDTH",
+        "0x20"
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "start": "0xd000",
+   "end": "0xe000",
+   "comment": "The overworld's 64 x 64 cell map buffer: a whole WRAM bank of tile ids in\nWRAM bank $03 and the matching CGB attributes in WRAM bank $02, cell for\ncell at the same address. The three routines that address it all read the\nreturned pointer twice, once under each bank -- GetMapBufferAddr64's two\ncallers copy a row or a column out of $d000 under `wram_bank $02` and then\nunder `wram_bank $03`, RestoreShadowTilemapRow does the same to rebuild a\nrow of the window engine's shadow planes, and CopyScrolledSceneTilemapToVram\nsends the attribute half to VRAM bank 1 and the tile half to bank 0 -- so\nthe WRAM bank live at the reference says nothing and the pair of banks is\nthe name.\nDeclared mirrored: it allocates nothing, because both banks already declare\nthese bytes. The bytes it names are the same ones LoadStorySceneGraphics\ndecompresses into and CopyMapToScrollBuffers fills (wMapScrollPlane0/1 in\nWRAM bank $02, wShadowTilemap/wScreenScratch in bank $03), which name\nhalves of the buffer from the builders' side.",
+   "variants": [
+    {
+     "context": "map buffer (mirrored across WRAM banks $02/$03)",
+     "mirrored": true,
+     "banks": [
+      "0x02",
+      "0x03"
+     ],
+     "scopes": [
+      {
+       "bank": "0x00",
+       "start": "0x2227",
+       "end": "0x222b"
+      },
+      {
+       "bank": "0x05",
+       "start": "0x43d5",
+       "end": "0x43d8"
+      },
+      {
+       "bank": "0x0a",
+       "start": "0x5c64",
+       "end": "0x5c68"
+      }
+     ],
+     "symbols": {
+      "0xd000": {
+       "name": "wMapBuffer64",
+       "note": "[4096 bytes] 64 rows of 64 cells, one plane in *each* of WRAM banks $02 and $03 -- bank $03 the tile half, bank $02 the CGB attribute half. Rows are 64 apart and both axes wrap within the buffer, which is what the `and $3f` on each camera coordinate and the `res 5, h / set 4, h` in BlitBGColumnFrom64 are for. Only the top 32 rows carry map data; CopyMapToScrollBuffers clears the bottom half after building it.",
+       "size": 4096
       }
      }
     }

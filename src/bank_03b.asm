@@ -3800,7 +3800,7 @@ BuildSaveSlotSummaries:
 	ld hl, $0000 ; $5ad2
 	add hl, bc ; $5ad5
 	wram_bank $02 ; $5ad6
-	ld a, [$d58b] ; $5adc
+	ld a, [wCharRecordScratch + 11] ; $5adc
 	push af ; $5adf
 	wram_bank $03 ; $5ae0
 	pop af ; $5ae6

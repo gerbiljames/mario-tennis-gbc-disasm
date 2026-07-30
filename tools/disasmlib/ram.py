@@ -111,6 +111,22 @@ def _scope_to_flat(s):
     return (bank * BANK_SIZE, (bank + 1) * BANK_SIZE)
 
 
+def _is_exempt_scope(sc):
+    """An instruction-range scope that names no WRAM bank -- the form used to
+    declare an address a *callee* selects the bank for. Exempt from
+    audit_rom_only_scopes by construction, since the site provably does not
+    select the bank the name belongs to."""
+    return "bank" in sc and "wram_bank" not in sc and "start" in sc
+
+
+def exempt_scopes(v):
+    return [sc for sc in v.get("scopes", []) if _is_exempt_scope(sc)]
+
+
+def audited_scopes(v):
+    return [sc for sc in v.get("scopes", []) if not _is_exempt_scope(sc)]
+
+
 def _scope_to_matcher(s, mirrored=False):
     """A union-variant scope -> (flat_range_or_None, wram_bank_or_None). `bank`
     (with optional start/end) constrains the *referencing code's* ROM location;
@@ -623,12 +639,23 @@ def load_ram_unions(path):
                     # exactly rather than catching a mistake. Whole-bank scopes
                     # are still audited -- that looseness is what the guard was
                     # added for, and it has caught real errors there.
-                    rom_only = any("bank" in sc and "wram_bank" not in sc
-                                   and "start" in sc
-                                   for sc in v.get("scopes", []))
-                    scoped.add(addr, name, matchers, ram_field_size(e),
-                               stride=_stride(e),
-                               union_banks_=None if rom_only else ubanks)
+                    #
+                    # The split is per *scope*, not per variant. A variant that
+                    # mixes the two kinds -- which is what declaring a
+                    # callee-selected argument on an existing variant produces --
+                    # used to exempt itself wholesale, silently dropping its
+                    # whole-bank scopes out of the audit. Registering the two
+                    # groups separately keeps resolution identical (the matcher
+                    # lists are disjoint, and _match takes the first that fits)
+                    # while leaving the audited group audited.
+                    for scs, banks_ in ((exempt_scopes(v), None),
+                                        (audited_scopes(v), ubanks)):
+                        if not scs:
+                            continue
+                        scoped.add(addr, name,
+                                   [_scope_to_matcher(s, mset) for s in scs],
+                                   ram_field_size(e), stride=_stride(e),
+                                   union_banks_=banks_)
                     if mset:
                         scoped.mirrored.append((addr, name, e.get("note", ""),
                                                 ram_field_size(e), mset))

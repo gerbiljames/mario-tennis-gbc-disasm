@@ -8858,3 +8858,133 @@ gates, which would mean a scene that should differ between singles and doubles
 no longer does. `$08:$6514` (`CheckBallContactWindow`, the fourth arm of a
 four-way animation test whose other three arms do skip work) is the one to read
 first.
+
+## Both actionable WRAM buckets are empty (2026-07-30)
+
+`tools/ram_gaps.py`:
+
+```
+                    before   after
+bare $dxxx operands    572     516
+  unproven             524     516
+  rom-scoped            28       0
+  mirrored              20       0
+```
+
+All 48 sites in the two actionable buckets are settled, and eight `unproven`
+sites fell out with them (same routines, same structures). 61 operands changed:
+56 were bare and became names, and **five were wrong names corrected**.
+
+### What the mirrored bucket turned out to be
+
+* **The overworld's map buffer is one 64x64 structure, not two planes.**
+  `wMapBuffer64` at `$d000`, 4096 bytes, mirrored across WRAM banks `$02` and
+  `$03`. Every consumer dereferences the pointer *twice*, once per bank:
+  `BlitBGRowFrom64` calls `GetMapBufferAddr64`, copies a row under
+  `wram_bank $02`, then copies the same row again from the pushed pointer under
+  `wram_bank $03`; `CopyScrolledSceneTilemapToVram` pairs bank `$02` with
+  `rVBK = 1` and bank `$03` with `rVBK = 0`. The geometry agrees — row stride
+  `$40`, both axes masked `and $3f`, and a `res 5, h / set 4, h` that wraps the
+  pointer inside `$d000-$dfff`, i.e. 64 rows of 64 cells filling a whole bank —
+  and so does the producer: `LoadStorySceneGraphics` decompresses the tile plane
+  into bank `$03` and the attributes into bank `$02` at the same address. The
+  existing `wMapScrollPlane0/1` and `wShadowTilemap`/`wScreenScratch` names are
+  halves of this buffer seen from `CopyMapToScrollBuffers`' side; the new union
+  says so rather than renaming them.
+* **Bank `$06`'s two plane getters serve two screens.** `GetShadowTilemapAddr`
+  and `GetShadowAttrmapAddr` are called only from bank `$06`, from
+  `ShowMessageWindow` with WRAM bank `$02` selected (the court planes) and from
+  `DrawStoryMenuCaption` with bank `$05` (the window engine's planes). Same
+  structure, one copy per screen context, so no per-bank name is right.
+  Bank `$03` is deliberately excluded: it is a third home of a plane pair, but
+  nothing reaches these getters with it selected, and including it would stop a
+  site *proved* to be bank `$03` from staying honestly numeric.
+* **Character select drives the match character struct.** Bank `$38` runs
+  `UpdateCharSelectCharSprite` once per preview character with
+  `wram_bank $04/$05/$06/$07` in turn, so those are ordinary `wCharPosX` /
+  `wCharFacingOctant` references. Fixed with *instruction-range* scopes rather
+  than a whole-bank `{bank: 0x38}` one, because bank `$38`'s own `$df00` is
+  `wCharSelectHandedness` in WRAM bank `$03` at nine sites and the char-struct
+  union is consulted first — a whole-bank scope would have stolen all nine.
+* **Two match-struct fields had no symbol at all** (not a scope problem):
+  `wCharChargeFlashGfxLoaded` (`$df52`), the latch that makes each half of the
+  `wCharSwingFrames and $04` cycle load its tiles once, and
+  `wCharScriptedMove` (`$df56`), which `UpdateCharVelocityFromInput` tests to
+  return early — a scripted walk overrides the stick for that frame.
+* **`wCharRecordScratch`** (`$d580`, 128 bytes, WRAM bank `$02`) and
+  **`wMugshotBuffer`** (`$d600`, 144 bytes = nine tiles, mirrored across banks
+  `$02`/`$03`/`$04`). The scratch buffer's bank is stated out loud in exactly one
+  place: `BuildSaveSlotSummaries` runs `wram_bank $02` before the call *and*
+  again before reading `$d58b` back.
+
+### The rom-scoped bucket was mostly one shape
+
+Eleven of the 28 were character-data page-plane cells in bank `$1d` whose
+variant was scoped `wram_bank $02`/`$03` while the bank live at the reference is
+`$06` — the screen's own working set — because the operand is handed to
+`CharDataScreen_WriteStatNumber`, which writes it under `$03` and then `$02`.
+That is the callee-selected-argument shape the sibling `wCharDataScreenCell`
+variant already documents, and the neighbouring already-named lines prove it:
+`$4570` sits three instructions from a `wCharDataPagePlane + 1 * TILEMAP_WIDTH + 15`.
+
+Eight more were bank `$06`'s in-match UI reaching the court planes from a bank
+nobody had enumerated — `RestoreBgTilemap` copies `$d800 -> $d000` and
+`$dc00 -> $d400`, exactly `wCourtTilemapSaved -> wCourtTilemap`. And one was not
+a scope problem at all: **`wNameEntryBuffer` was declared 8 bytes and is 11**,
+which bank `$38` copies with `ld bc, $000b` at three separate sites and an
+existing comment in the same file already said out loud.
+
+### Five wrong names, and where they came from
+
+Three `$d000` operands in bank `$06` were rendering as `wScreenAttrmap` when
+`FlushTilemapToVram` queues that exact address to `$9800` with no
+`VRAM_BANK1` bit — VRAM bank 0, the tile plane. They are `wCourtTilemap`.
+
+The other two are better: `GetCollisionMapCellAddr`'s base was rendering as
+**`wActors`**, and `GetBehaviorMapCellAddr`'s as `wActors + 16 * ACTOR_SIZE`.
+Both are `$d000`/`$d400` in WRAM bank `$06`, which the routines' own
+`wram_bank $06` wrappers prove, and both compute
+`base + (y & ~1) * 16 + (x & ~1) / 2` — 32 columns of half-tiles, 1024 bytes.
+They are now `wCollisionMap` and `wBehaviorMap`, declared in a union placed
+*before* the actor-slot union so its ROM-range scopes are consulted first. That
+also settles why `wStorySceneUnusedBuffer` at `$d800` is dead: both maps are
+accounted for below it.
+
+### The audit guard had a hole, and this work walked into it
+
+`audit_rom_only_scopes` exists because a variant scoped by ROM bank alone
+matches every site in that bank whatever WRAM bank is selected — the looseness
+that let four false names into this project before a bank-annotated trace
+exposed them. An instruction-range scope naming no `wram_bank` is exempt by
+construction, since declaring a callee-selected argument *is* "a name from a
+bank the site does not select".
+
+But the exemption was computed **per variant** (`any(...)` over its scopes), so
+adding one such scope to an existing variant silently dropped that variant's
+*whole-bank* scopes out of the audit too — and this pass added exactly that
+shape to four variants. The split is now per scope: the two groups are
+registered separately, which leaves resolution identical (the matcher lists are
+disjoint and `_match` takes the first that fits) while keeping the audited group
+audited. **Symbols under audit go from 325 to 455**, and the audit is silent on
+all of them.
+
+### Left open, with the reason
+
+`ScopedRamNames.resolve` walks each address's matchers in **file order**, so an
+earlier union's `wram_bank`-only scope wins before a later union's instruction
+range is consulted. Three names are wrong and blocked by that ordering, not by
+missing evidence: `$05:$4422` should be `wWindowShadowTilemap` (the write
+happens after a `wram_bank $05` that follows the matched bank-`$03` scope), and
+`$06:$5224`/`$06:$728e` should both be `wDecompBuffer` (each is a
+`DecompressData` destination immediately followed by `wram_bank $01`). Fixing
+them needs either a union reorder or a resolve-order override the schema does
+not have.
+
+### And the `unproven` label is now slightly wrong
+
+54 bare operands in `src/bank_01d.asm` (`$50ab` onward) sit in the `unproven`
+bucket but **need no coverage at all**: `wCharDataPageSlot1/2/3` have exactly
+the shape fixed above, and each bare `ld bc, $dxxx` sits between two
+already-named `wCharDataScreenCell + n * TILEMAP_WIDTH` siblings. The evidence
+is in the routine. So of the 516 remaining, a known 54 are ordinary curation
+work rather than something only the emulator can settle.

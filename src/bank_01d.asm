@@ -518,7 +518,7 @@ BuildCharDataSummaryFields:
 	ld a, $02 ; $450e
 	ld de, wCharDataNumberBuffer ; $4510
 	call FormatDecimalNumberUnsigned ; $4513
-	ld de, $d403 ; $4516
+	ld de, wCharDataPagePlane + 3 ; $4516
 	farcall CharDataScreen_WriteStatNumber ; $4519
 	wram_bank $06 ; $451c
 	push af ; $4522
@@ -541,7 +541,7 @@ BuildCharDataSummaryFields:
 	ld a, $02 ; $453b
 	ld de, wCharDataNumberBuffer ; $453d
 	call FormatDecimalNumberUnsigned ; $4540
-	ld de, $d40d ; $4543
+	ld de, wCharDataPagePlane + 13 ; $4543
 	farcall CharDataScreen_WriteStatNumber ; $4546
 	wram_bank $06 ; $4549
 	push af ; $454f
@@ -564,7 +564,7 @@ BuildCharDataSummaryFields:
 	ld a, $02 ; $4568
 	ld de, wCharDataNumberBuffer ; $456a
 	call FormatDecimalNumberUnsigned ; $456d
-	ld de, $d417 ; $4570
+	ld de, wCharDataPagePlane + 23 ; $4570
 	farcall CharDataScreen_WriteStatNumber ; $4573
 	call ComputeExpProgressBar ; $4576
 	ld de, wCharDataPagePlane + 1 * TILEMAP_WIDTH + 15 ; $4579
@@ -637,7 +637,7 @@ BuildCharDataSummaryFields:
 	adc $00 ; $45f1
 	ld h, a ; $45f3
 	pop af ; $45f4
-	ld de, $d45b ; $45f5
+	ld de, wCharDataPagePlane + 2 * TILEMAP_WIDTH + 27 ; $45f5
 	ld c, $0a ; $45f8
 	call WriteNameStringTiles ; $45fa
 	wram_bank $03 ; $45fd
@@ -683,7 +683,7 @@ BuildCharDataSummaryFields:
 	ld a, $02 ; $4649
 	ld de, wCharDataNumberBuffer ; $464b
 	call FormatDecimalNumberUnsigned ; $464e
-	ld de, $d46b ; $4651
+	ld de, wCharDataPagePlane + 3 * TILEMAP_WIDTH + 11 ; $4651
 	farcall CharDataScreen_WriteStatNumber ; $4654
 	wram_bank $06 ; $4657
 	push af ; $465d
@@ -706,7 +706,7 @@ BuildCharDataSummaryFields:
 	ld a, $02 ; $4676
 	ld de, wCharDataNumberBuffer ; $4678
 	call FormatDecimalNumberUnsigned ; $467b
-	ld de, $d489 ; $467e
+	ld de, wCharDataPagePlane + 4 * TILEMAP_WIDTH + 9 ; $467e
 	farcall CharDataScreen_WriteStatNumber ; $4681
 	wram_bank $06 ; $4684
 	push af ; $468a
@@ -729,7 +729,7 @@ BuildCharDataSummaryFields:
 	ld a, $02 ; $46a3
 	ld de, wCharDataNumberBuffer ; $46a5
 	call FormatDecimalNumberUnsigned ; $46a8
-	ld de, $d493 ; $46ab
+	ld de, wCharDataPagePlane + 4 * TILEMAP_WIDTH + 19 ; $46ab
 	farcall CharDataScreen_WriteStatNumber ; $46ae
 	wram_bank $06 ; $46b1
 	push af ; $46b7
@@ -752,7 +752,7 @@ BuildCharDataSummaryFields:
 	ld a, $02 ; $46d0
 	ld de, wCharDataNumberBuffer ; $46d2
 	call FormatDecimalNumberUnsigned ; $46d5
-	ld de, $d49d ; $46d8
+	ld de, wCharDataPagePlane + 4 * TILEMAP_WIDTH + 29 ; $46d8
 	farcall CharDataScreen_WriteStatNumber ; $46db
 	wram_bank $06 ; $46de
 	push af ; $46e4
@@ -775,7 +775,7 @@ BuildCharDataSummaryFields:
 	ld a, $02 ; $46fd
 	ld de, wCharDataNumberBuffer ; $46ff
 	call FormatDecimalNumberUnsigned ; $4702
-	ld de, $d4a7 ; $4705
+	ld de, wCharDataPagePlane + 5 * TILEMAP_WIDTH + 7 ; $4705
 	farcall CharDataScreen_WriteStatNumber ; $4708
 	call ComputeExpProgressBar ; $470b
 	ld de, wCharDataPagePlane + 5 * TILEMAP_WIDTH + 31 ; $470e
@@ -1328,7 +1328,7 @@ BuildPartnerStatPage:
 	ld a, [wCharDataLevels + 3] ; $4b70
 	ld [wCharStatPagePartner + 3], a ; $4b73
 	ld hl, PartnerStatPageTilemapPatch01 ; $4b76
-	ld bc, $d500 ; $4b79
+	ld bc, wCharDataPagePlane + 8 * TILEMAP_WIDTH ; $4b79
 	call ApplyTilemapPatchList ; $4b7c
 	ld hl, PartnerStatPageTilemapPatch00 ; $4b7f
 	ld bc, wCharDataScreenCell + 28 * TILEMAP_WIDTH ; $4b82
@@ -2011,7 +2011,7 @@ BuildCharStatDisplay:
 	ld a, $02 ; $508d
 	ld de, wCharDataNumberBuffer ; $508f
 	call FormatDecimalNumberUnsigned ; $5092
-	ld de, $d519 ; $5095
+	ld de, wCharDataPagePlane + 8 * TILEMAP_WIDTH + 25 ; $5095
 	farcall CharDataScreen_WriteStatNumber ; $5098
 	ret ; $509b
 SlideToMainCharStatPage:

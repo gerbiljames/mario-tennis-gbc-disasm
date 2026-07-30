@@ -5681,7 +5681,7 @@ ForEachCharBank:
 	jp hl ; $6a61
 UpdateCharStateMachine:
 	xor a ; $6a62
-	ld [$df56], a ; $6a63
+	ld [wCharScriptedMove], a ; $6a63
 	ld hl, wCharFreezeTimer ; $6a66
 	ld a, [hl] ; $6a69
 	and a ; $6a6a
@@ -7112,7 +7112,7 @@ StepCharMovement:
 	set 6, [hl] ; $73c7
 	ret ; $73c9
 UpdateCharVelocityFromInput:
-	ld a, [$df56] ; $73ca
+	ld a, [wCharScriptedMove] ; $73ca
 	and a ; $73cd
 	ret nz ; $73ce
 	ld hl, wCharFlags ; $73cf
@@ -7417,7 +7417,7 @@ MoveCharTowardTarget:
 	ld hl, wCharFlags ; $758c
 	set 4, [hl] ; $758f
 	ld a, $01 ; $7591
-	ld [$df56], a ; $7593
+	ld [wCharScriptedMove], a ; $7593
 	ld a, $01 ; $7596
 	ret ; $7598
 .toward:
@@ -7549,7 +7549,7 @@ UpdateChargeFlash:
 	ret c ; $7655
 	and $04 ; $7656
 	jr z, EndChargeFlash ; $7658
-	ld hl, $df52 ; $765a
+	ld hl, wCharChargeFlashGfxLoaded ; $765a
 	ld a, [hl] ; $765d
 	and a ; $765e
 	ret nz ; $765f
@@ -7557,7 +7557,7 @@ UpdateChargeFlash:
 	call LoadCharChargeFlashGfx ; $7662
 	ret ; $7665
 EndChargeFlash:
-	ld hl, $df52 ; $7666
+	ld hl, wCharChargeFlashGfxLoaded ; $7666
 	ld a, [hl] ; $7669
 	and a ; $766a
 	ret z ; $766b

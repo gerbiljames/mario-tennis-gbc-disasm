@@ -1691,20 +1691,20 @@ UpdateCharSelectCharSprite:
 	ld l, c ; $4ceb
 	ld h, b ; $4cec
 	push hl ; $4ced
-	ld de, $df00 ; $4cee
+	ld de, wCharPosX ; $4cee
 	ld c, $08 ; $4cf1
 	call CopyMemoryFast ; $4cf3
 	farcall EaseCharFacing ; $4cf6
 	farcall StepCharAnimation ; $4cf9
 	ld d, $02 ; $4cfc
 	ld a, d ; $4cfe
-	ld [$df32], a ; $4cff
+	ld [wCharFacingOctant], a ; $4cff
 	push de ; $4d02
 	farcall ReloadCharFacingTiles ; $4d03
 	pop de ; $4d06
 	farcall BuildCharSpriteSlots ; $4d07
 	pop de ; $4d0a
-	ld hl, $df00 ; $4d0b
+	ld hl, wCharPosX ; $4d0b
 	ld c, $06 ; $4d0e
 	call CopyMemoryFast ; $4d10
 	ret ; $4d13
@@ -1761,7 +1761,7 @@ TickCharSelectIdleAnim:
 	call GetSelectedCharWramBank ; $4d9b
 	ld a, b ; $4d9e
 	wram_bank ; $4d9f
-	ld bc, $df00 ; $4da3
+	ld bc, wCharPosX ; $4da3
 	ld hl, $002e ; $4da6
 	add hl, bc ; $4da9
 	ld a, [hl] ; $4daa
@@ -6948,7 +6948,7 @@ TrimTrailingSpacesFromName:
 	ldh a, [hWramBank] ; $73ae
 	push af ; $73b0
 	wram_bank $03 ; $73b1
-	ld hl, $d80a ; $73b7
+	ld hl, wNameEntryBuffer + 10 ; $73b7
 .scanLoop:
 	ld a, [hl] ; $73ba
 	cp $20 ; $73bb

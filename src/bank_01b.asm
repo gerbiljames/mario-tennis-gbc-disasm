@@ -965,7 +965,7 @@ LoadCharMugshotToBuffer:
 	cp $40 ; $4e37
 	ret nc ; $4e39
 	push de ; $4e3a
-	ld de, $d600 ; $4e3b
+	ld de, wMugshotBuffer ; $4e3b
 	call DecompressCharMugshot ; $4e3e
 	pop de ; $4e41
 	ret ; $4e42
@@ -980,7 +980,7 @@ CopyMugshotBufferToVram:
 	push bc ; $4e47
 	push de ; $4e48
 	push hl ; $4e49
-	ld hl, $d600 ; $4e4a
+	ld hl, wMugshotBuffer ; $4e4a
 	ld c, $09 ; $4e4d
 	call QueueVRAMCopy ; $4e4f
 	pop hl ; $4e52
@@ -3094,7 +3094,7 @@ DrawCharSelectMugshots:
 	farcall LoadCharacterRecordToBuffer ; $6076
 	farcall CheckCharacterUnlocked ; $6079
 	jr z, .step ; $607c
-	ld a, [$d58b] ; $607e
+	ld a, [wCharRecordScratch + 11] ; $607e
 	farcall LoadCharMugshotToBuffer ; $6081
 	ld a, [hl] ; $6084
 	ld de, $0002 ; $6085
@@ -3103,7 +3103,7 @@ DrawCharSelectMugshots:
 	ld a, [hl] ; $608e
 	ld de, $0006 ; $608f
 	call GetCharSelectRosterField ; $6092
-	ld a, [$d58b] ; $6095
+	ld a, [wCharRecordScratch + 11] ; $6095
 	add a ; $6098
 	add $c1 ; $6099
 	ld c, a ; $609b
@@ -3124,7 +3124,7 @@ DrawCharSelectMugshots:
 	jr nz, .loop ; $60ae
 	ld a, [wCharSelectChar] ; $60b0
 	farcall LoadCharacterRecordToBuffer ; $60b3
-	ld a, [$d58b] ; $60b6
+	ld a, [wCharRecordScratch + 11] ; $60b6
 	farcall StubNop_1b_01 ; $60b9
 	ret ; $60bc
 	and $01 ; $60bd

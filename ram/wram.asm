@@ -2380,9 +2380,13 @@ SECTION "WRAMX bank 2", WRAMX[$d000], BANK[2]
 
 ; WRAMX bank 2 at a glance -- regenerated, see ram_unions.json:
 ;
+;   $d000-$d3ff  wActiveTilemap  [mirrored with bank 5]
 ;   $d000-$d3ff  wCharDataScreenCell  [mirrored with bank 3]
-;   $d000-$dfff  match court planes / overworld scroll buffers / screen attribute plane
+;   $d000-$dfff  4 overlays: match court planes / overworld scroll buffers / screen attribute plane / +1 more
+;   $d000-$dfff  wMapBuffer64  [mirrored with bank 3]
 ;   $d400-$d7df  wCharDataPagePlane  [mirrored with bank 3]
+;   $d400-$d7ff  wActiveAttrmap  [mirrored with bank 5]
+;   $d600-$d68f  wMugshotBuffer  [mirrored with bank 3, 4]
 ;   $d7e0-$da1f  wCharDataPageSlot1  [mirrored with bank 3]
 ;   $da20-$dc5f  wCharDataPageSlot2  [mirrored with bank 3]
 ;   $dc60-$de9f  wCharDataPageSlot3  [mirrored with bank 3]
@@ -2401,8 +2405,16 @@ SECTION "WRAMX bank 2", WRAMX[$d000], BANK[2]
 ; save-editor window at $d300 as an attribute cell, and bank $08 reaches
 ; both this bank and WRAM bank $04 -- RefreshCourtScoreboard's $de9x bytes
 ; are not court planes at all.
+; The match owns the court planes from two more banks, over instruction
+; ranges rather than whole banks. Bank $06's in-match UI restores and
+; flushes them: ShowMessageWindow and the pause menu select WRAM bank $02
+; and then call RestoreBgTilemap / RestoreBgTilemapRegion /
+; FlushTilemapToVram, which is why $d000 there is the tile half sent to VRAM
+; bank 0 and not the attribute plane the whole-bank variant below would name
+; it. Bank $0a's LoadCourtSceneGraphics decompresses the court into the
+; saved pair at $d800/$dc00 before the match starts.
 UNION
-; match court planes (bank $08)
+; match court planes (banks $08/$06/$0a)
 ; [1024 bytes] The court tilemap the match renders from; UploadCourtTilemap sends it to $9800 in VRAM bank 0. Held in WRAM bank $02 rather than the usual $03 because the match owns bank $03 for other things
 wCourtTilemap:: ds 1024
 ; [1024 bytes] Its CGB attribute plane, cell for cell, uploaded to $9800 in VRAM bank 1 by UploadCourtAttrmap
@@ -2422,6 +2434,12 @@ NEXTU
 ; screen attribute plane
 ; [1024 bytes] CGB attributes for the full-screen UIs, cell for cell with wShadowTilemap in WRAM bank $03 -- the pair is what FlushCharDataTilemapChunk sends to $99e0 in VRAM banks 0 and 1. Seventeen ROM banks write cells here, which is why it is the default rather than a scoped variant. The page images the character-data screens patch from sit above it and keep their numeric addresses, being cells in two banks at once
 wScreenAttrmap:: ds 1024
+NEXTU
+; character record scratch (banks $18/$1b/$3b)
+	ds 1408
+; [128 bytes] The character record a menu is about to draw. LoadCharacterRecordToBuffer asks LoadCharacterRecordToCa80 to build the record and then copies 128 bytes of it here from wPlayer2MainName, so the fields line up with that block: +$0b is the character id (wPlayer2CurrentMainCharacter's offset), which is what CheckCharacterUnlocked tests against $ff and what the mugshot and portrait loaders take as their index. The `.fixedRecord` shortcut writes $3e straight into +$0b without loading anything.
+; Scoped to instruction ranges rather than a WRAM bank because the bank is never selected at the reference: bank $3b's BuildSaveSlotSummaries is the one caller that says it out loud, running `wram_bank $02` on both sides of the call, and the reads have to be in the bank the write went to.
+wCharRecordScratch:: ds 128
 ENDU
 
 
@@ -2431,7 +2449,9 @@ SECTION "WRAMX bank 3", WRAMX[$d000], BANK[3]
 ;
 ;   $d000-$d3ff  wCharDataScreenCell  [mirrored with bank 2]
 ;   $d000-$d7ff  screen tilemap
+;   $d000-$dfff  wMapBuffer64  [mirrored with bank 2]
 ;   $d400-$d7df  wCharDataPagePlane  [mirrored with bank 2]
+;   $d600-$d68f  wMugshotBuffer  [mirrored with bank 2, 4]
 ;   $d7e0-$da1f  wCharDataPageSlot1  [mirrored with bank 2]
 ;   $d800-$d80f  7 overlays: equipment select / name entry / match results / +4 more
 ;   $d810-$d83e  4 overlays: drill briefings / character-select grid / equipment select / +1 more
@@ -2477,8 +2497,8 @@ wEquipItemList:: ds 8
 wEquipOwnedMap:: ds 8
 NEXTU
 ; name entry (bank $38, $6e00-$7500)
-; [8 bytes] Name being typed, terminated by $00; AppendCharToName / DeleteLastNameChar edit it and RunNameEntryScreen copies it into the character record on accept ($de is the blank-cell filler)
-wNameEntryBuffer:: ds 8
+; [11 bytes] Name being typed, terminated by $00; AppendCharToName / DeleteLastNameChar edit it and RunNameEntryScreen copies it into the character record on accept ($de is the blank-cell filler). Eleven bytes, not the eight the visible cells suggest: every copy in or out of it is `ld bc, $000b`, and TrimTrailingSpacesFromName starts its backwards scan at the last of them
+wNameEntryBuffer:: ds 11
 NEXTU
 ; match results (bank $16)
 ; [8-bit] 1 if the player won the match just played, 0 if not; written beside wResultScreenMode by RunMatchWinLoseScreen and used by LoadWinLoseScreenAssets / LoadResultScreenTileGraphics to pick the graphics set
@@ -2594,7 +2614,7 @@ wBriefingAnimStep:: db
 wBriefingTargetPalette:: ds 8
 	ds 7
 NEXTU
-; character-select grid (bank $38)
+; character-select grid (banks $38/$10)
 	ds 1
 ; [8-bit] Character-select grid: top row currently shown (wMenuCursorX/Y address the cell within it); MoveCharGridCursor* wrap it and rebuild the page sprite list
 wCharGridPage:: db
@@ -2606,7 +2626,7 @@ wCharSelectMode:: db
 wCharSelectSlot:: db
 ; [8-bit] Character-select result polled by the frame loop: 0 keep running, 1 finished, 2 cancelled out
 wCharSelectExitCode:: db
-; [4 bytes] Character id chosen for each player slot ($ff = empty); ResolveSelectedCharIds and InitMatchCharsFromSelection read it
+; [4 bytes] Character id chosen for each player slot ($ff = empty); ResolveSelectedCharIds and InitMatchCharsFromSelection read it. Bank $10's CopyExhibitionCharSlotIds copies all four out to wMatchSlotCharRefs once the screen is done, which is the only reference to this block from outside bank $38
 wCharSelectSlotChars:: ds 4
 ; [8-bit] Character-select grid: roster entries present from $da24 on (CountCharGridEntries)
 wCharGridEntryCount:: db
@@ -2785,6 +2805,7 @@ SECTION "WRAMX bank 4", WRAMX[$d000], BANK[4]
 ; WRAMX bank 4 at a glance -- regenerated, see ram_unions.json:
 ;
 ;   $d000-$d5ff  overworld actors
+;   $d600-$d68f  wMugshotBuffer  [mirrored with bank 2, 3]
 ;   $d800-$dbff  wIntroCharactersTilemap  [mirrored with bank ]
 ;   $da00-$da31  actor engine
 ;   $dac0-$dae9  actor engine
@@ -2804,6 +2825,11 @@ SECTION "WRAMX bank 4", WRAMX[$d000], BANK[4]
 ; once a frame. Scoped to a provable WRAM bank $04 -- $d000 is eight
 ; different things and seven ROM banks reach the array, so nothing but the
 ; dataflow can say which one a literal means.
+; Two bank $0a sites get instruction ranges instead, because there the bank
+; is selected in the callee and never at the reference: GetActorStateAddr
+; builds its slot address and only then runs `wram_bank $04`, and
+; EndCutsceneScriptMode hands slots 1 and 0 to AttachActorWaypointFollower,
+; which selects the bank itself.
 ; Record fields are addressed as offsets (`ld hl, $00xx / add hl, bc`), not
 ; as absolute addresses, so they are not RAM symbols; the layout is in
 ; docs/actor_script.md and the field-size table the script opcodes use is
@@ -3054,7 +3080,9 @@ SECTION "WRAMX bank 5", WRAMX[$d000], BANK[5]
 
 ; WRAMX bank 5 at a glance -- regenerated, see ram_unions.json:
 ;
+;   $d000-$d3ff  wActiveTilemap  [mirrored with bank 2]
 ;   $d000-$d7ff  window shadow tilemap
+;   $d400-$d7ff  wActiveAttrmap  [mirrored with bank 2]
 ;   $d800-$d80f  window / menu engine
 ;   $d810-$d83e  window / menu engine
 ;   $d841-$d87f  text and window engine
@@ -3072,6 +3100,10 @@ SECTION "WRAMX bank 5", WRAMX[$d000], BANK[5]
 ; Scoped to a provable WRAM bank $05 alone -- bank $05 is full of $d000
 ; and $d400 literals that address whichever plane the current screen
 ; owns, and its glyph buffers live at $d300-$d7ff in WRAM bank $07.
+; The one instruction range is the exception RestoreShadowTilemapRow forces:
+; it reads a row out of wMapBuffer64 under WRAM banks $03 and $02 and writes
+; it back into these planes under bank $05, so the bank live at the `ld hl,
+; $d400` is the source's, not the destination's.
 ; window shadow tilemap (WRAM bank $05)
 ; Tile plane of the text-window shadow tilemap: 32 x 32 cells, rows TILEMAP_WIDTH apart, of which the top-left 20 x 18 is on screen
 wWindowShadowTilemap:: ds 1024
@@ -3269,10 +3301,12 @@ SECTION "WRAMX bank 6", WRAMX[$d000], BANK[6]
 
 ; WRAMX bank 6 at a glance -- regenerated, see ram_unions.json:
 ;
-;   $d000-$d029  6 overlays: star warp transition / debug character viewer / results continue prompt / +3 more
+;   $d000-$d029  7 overlays: star warp transition / debug character viewer / results continue prompt / +4 more
+;   $d000-$d3ff  wCollisionMap  [mirrored with bank ]
 ;   $d02a-$d219  8 overlays: star warp transition / trophy EXP awards / character-data screen / +5 more
 ;   $d230-$d259  scrolling text screen / EXP award screen
 ;   $d400-$d5ff  story slot signatures / unlock flags block
+;   $d400-$d7ff  wBehaviorMap  [mirrored with bank ]
 ;   $d800-$dbff  story scene load
 ;   $dc08-$dc8f  story scene load
 ;   $df00-$df96  match character struct  [one copy per bank 4-7]
@@ -3373,6 +3407,11 @@ NEXTU
 	ds 1
 ; [8-bit] First byte of the current TextPageDescriptors_03 entry: how many rows the page scrolls by. ScrollCutsceneTextWindow masks it to two bits and treats zero as one, so a descriptor that forgets the field still scrolls a single row
 wCutsceneTextScrollRows:: db
+NEXTU
+; trophy EXP awards (bank $1e)
+	ds 40
+; [16-bit] EXP for trophy group 0. It is the head of the six-word run ComputeTrophyExpAwards fills, but it falls below the union wTrophyExpByGroup is filed under, so groups 1-5 carry that name and this one stands alone
+wTrophyExpGroup0:: dw
 ENDU
 
 ; WRAM bank $06 from $d02a up, shared by four subsystems that never run at
@@ -3721,6 +3760,11 @@ SECTION "WRAMX bank 4 $df00", WRAMX[$df00], BANK[4]
 ; provably-selected WRAM bank, plus the match banks $07/$08 whose
 ; callback-reached (jp hl) accesses the dataflow can't prove. Only the
 ; named field offsets render; other $dfxx bytes stay numeric.
+; The character-select screen drives the same struct: bank $38 runs
+; UpdateCharSelectCharSprite and TickCharSelectIdleAnim once per preview
+; character, selecting WRAM banks $04-$07 in turn, so those two routines get
+; instruction-range scopes rather than a whole-bank one -- bank $38's own
+; $df00 is wCharSelectHandedness in WRAM bank $03.
 UNION
 ; text-arg fetch buffer (menu banks reuse the idle char struct)
 ; [bank 5] Scratch buffer that PushTextArgFetchedString fills (via FetchShortTextToBuffer) with a fetched short-text string, then pushes as a text argument; overlaps the idle far-P1 character struct at $df00
@@ -3839,14 +3883,16 @@ w4CharLastShotButton:: db
 w4CharBallReachFlags:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): set while the charge flash is playing; cleared when the swing starts or aborts
 w4CharChargeFlashOn:: db
-	ds 1
+; [8-bit] Per-character banked struct (WRAM4-7): 1 while the flashed tiles are the ones in VRAM. UpdateChargeFlash toggles the flash on wCharSwingFrames bit 2, and this latch is what makes each half of that cycle load its graphics once -- set it and call LoadCharChargeFlashGfx, or clear it and call ReloadCharFrameGfx
+w4CharChargeFlashGfxLoaded:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): last projected screen X (BuildCharSpriteSlots $7672)
 w4CharScreenX:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): last projected screen Y
 w4CharScreenY:: db
 ; [8-bit] Zeroed immediately after each write of wCharWalkTargetX / wCharWalkTargetDepth, on both paths that set a walk target. Nothing reads it -- the two writes are the only references in the ROM -- so whatever it once qualified about the target is gone.
 w4CharWalkTargetFlag:: db
-	ds 1
+; [8-bit] Per-character banked struct (WRAM4-7): set to 1 by MoveCharTowardTarget once it has stepped the character toward wCharWalkTargetX/wCharWalkTargetDepth. UpdateCharStateMachine clears it at the top of every frame and UpdateCharVelocityFromInput returns immediately while it is set, so a scripted walk overrides the stick for that frame
+w4CharScriptedMove:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): point result from this character's perspective (signed wPointWinLoseFlag)
 w4CharPointResult:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): shot buttons the AI decided to press this swing (AiPickServeButtons / AiPickShotButtons); AiPressFirstShotButton and AiPressSecondShotButton feed them into wCharInputBits one at a time
@@ -3940,6 +3986,11 @@ SECTION "WRAMX bank 5 $df00", WRAMX[$df00], BANK[5]
 ; provably-selected WRAM bank, plus the match banks $07/$08 whose
 ; callback-reached (jp hl) accesses the dataflow can't prove. Only the
 ; named field offsets render; other $dfxx bytes stay numeric.
+; The character-select screen drives the same struct: bank $38 runs
+; UpdateCharSelectCharSprite and TickCharSelectIdleAnim once per preview
+; character, selecting WRAM banks $04-$07 in turn, so those two routines get
+; instruction-range scopes rather than a whole-bank one -- bank $38's own
+; $df00 is wCharSelectHandedness in WRAM bank $03.
 UNION
 ; text-arg fetch buffer (menu banks reuse the idle char struct)
 ; [bank 5] Scratch buffer that PushTextArgFetchedString fills (via FetchShortTextToBuffer) with a fetched short-text string, then pushes as a text argument; overlaps the idle far-P1 character struct at $df00
@@ -4058,14 +4109,16 @@ w5CharLastShotButton:: db
 w5CharBallReachFlags:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): set while the charge flash is playing; cleared when the swing starts or aborts
 w5CharChargeFlashOn:: db
-	ds 1
+; [8-bit] Per-character banked struct (WRAM4-7): 1 while the flashed tiles are the ones in VRAM. UpdateChargeFlash toggles the flash on wCharSwingFrames bit 2, and this latch is what makes each half of that cycle load its graphics once -- set it and call LoadCharChargeFlashGfx, or clear it and call ReloadCharFrameGfx
+w5CharChargeFlashGfxLoaded:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): last projected screen X (BuildCharSpriteSlots $7672)
 w5CharScreenX:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): last projected screen Y
 w5CharScreenY:: db
 ; [8-bit] Zeroed immediately after each write of wCharWalkTargetX / wCharWalkTargetDepth, on both paths that set a walk target. Nothing reads it -- the two writes are the only references in the ROM -- so whatever it once qualified about the target is gone.
 w5CharWalkTargetFlag:: db
-	ds 1
+; [8-bit] Per-character banked struct (WRAM4-7): set to 1 by MoveCharTowardTarget once it has stepped the character toward wCharWalkTargetX/wCharWalkTargetDepth. UpdateCharStateMachine clears it at the top of every frame and UpdateCharVelocityFromInput returns immediately while it is set, so a scripted walk overrides the stick for that frame
+w5CharScriptedMove:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): point result from this character's perspective (signed wPointWinLoseFlag)
 w5CharPointResult:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): shot buttons the AI decided to press this swing (AiPickServeButtons / AiPickShotButtons); AiPressFirstShotButton and AiPressSecondShotButton feed them into wCharInputBits one at a time
@@ -4159,6 +4212,11 @@ SECTION "WRAMX bank 6 $df00", WRAMX[$df00], BANK[6]
 ; provably-selected WRAM bank, plus the match banks $07/$08 whose
 ; callback-reached (jp hl) accesses the dataflow can't prove. Only the
 ; named field offsets render; other $dfxx bytes stay numeric.
+; The character-select screen drives the same struct: bank $38 runs
+; UpdateCharSelectCharSprite and TickCharSelectIdleAnim once per preview
+; character, selecting WRAM banks $04-$07 in turn, so those two routines get
+; instruction-range scopes rather than a whole-bank one -- bank $38's own
+; $df00 is wCharSelectHandedness in WRAM bank $03.
 UNION
 ; text-arg fetch buffer (menu banks reuse the idle char struct)
 ; [bank 5] Scratch buffer that PushTextArgFetchedString fills (via FetchShortTextToBuffer) with a fetched short-text string, then pushes as a text argument; overlaps the idle far-P1 character struct at $df00
@@ -4277,14 +4335,16 @@ w6CharLastShotButton:: db
 w6CharBallReachFlags:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): set while the charge flash is playing; cleared when the swing starts or aborts
 w6CharChargeFlashOn:: db
-	ds 1
+; [8-bit] Per-character banked struct (WRAM4-7): 1 while the flashed tiles are the ones in VRAM. UpdateChargeFlash toggles the flash on wCharSwingFrames bit 2, and this latch is what makes each half of that cycle load its graphics once -- set it and call LoadCharChargeFlashGfx, or clear it and call ReloadCharFrameGfx
+w6CharChargeFlashGfxLoaded:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): last projected screen X (BuildCharSpriteSlots $7672)
 w6CharScreenX:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): last projected screen Y
 w6CharScreenY:: db
 ; [8-bit] Zeroed immediately after each write of wCharWalkTargetX / wCharWalkTargetDepth, on both paths that set a walk target. Nothing reads it -- the two writes are the only references in the ROM -- so whatever it once qualified about the target is gone.
 w6CharWalkTargetFlag:: db
-	ds 1
+; [8-bit] Per-character banked struct (WRAM4-7): set to 1 by MoveCharTowardTarget once it has stepped the character toward wCharWalkTargetX/wCharWalkTargetDepth. UpdateCharStateMachine clears it at the top of every frame and UpdateCharVelocityFromInput returns immediately while it is set, so a scripted walk overrides the stick for that frame
+w6CharScriptedMove:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): point result from this character's perspective (signed wPointWinLoseFlag)
 w6CharPointResult:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): shot buttons the AI decided to press this swing (AiPickServeButtons / AiPickShotButtons); AiPressFirstShotButton and AiPressSecondShotButton feed them into wCharInputBits one at a time
@@ -4378,6 +4438,11 @@ SECTION "WRAMX bank 7 $df00", WRAMX[$df00], BANK[7]
 ; provably-selected WRAM bank, plus the match banks $07/$08 whose
 ; callback-reached (jp hl) accesses the dataflow can't prove. Only the
 ; named field offsets render; other $dfxx bytes stay numeric.
+; The character-select screen drives the same struct: bank $38 runs
+; UpdateCharSelectCharSprite and TickCharSelectIdleAnim once per preview
+; character, selecting WRAM banks $04-$07 in turn, so those two routines get
+; instruction-range scopes rather than a whole-bank one -- bank $38's own
+; $df00 is wCharSelectHandedness in WRAM bank $03.
 UNION
 ; text-arg fetch buffer (menu banks reuse the idle char struct)
 ; [bank 5] Scratch buffer that PushTextArgFetchedString fills (via FetchShortTextToBuffer) with a fetched short-text string, then pushes as a text argument; overlaps the idle far-P1 character struct at $df00
@@ -4496,14 +4561,16 @@ w7CharLastShotButton:: db
 w7CharBallReachFlags:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): set while the charge flash is playing; cleared when the swing starts or aborts
 w7CharChargeFlashOn:: db
-	ds 1
+; [8-bit] Per-character banked struct (WRAM4-7): 1 while the flashed tiles are the ones in VRAM. UpdateChargeFlash toggles the flash on wCharSwingFrames bit 2, and this latch is what makes each half of that cycle load its graphics once -- set it and call LoadCharChargeFlashGfx, or clear it and call ReloadCharFrameGfx
+w7CharChargeFlashGfxLoaded:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): last projected screen X (BuildCharSpriteSlots $7672)
 w7CharScreenX:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): last projected screen Y
 w7CharScreenY:: db
 ; [8-bit] Zeroed immediately after each write of wCharWalkTargetX / wCharWalkTargetDepth, on both paths that set a walk target. Nothing reads it -- the two writes are the only references in the ROM -- so whatever it once qualified about the target is gone.
 w7CharWalkTargetFlag:: db
-	ds 1
+; [8-bit] Per-character banked struct (WRAM4-7): set to 1 by MoveCharTowardTarget once it has stepped the character toward wCharWalkTargetX/wCharWalkTargetDepth. UpdateCharStateMachine clears it at the top of every frame and UpdateCharVelocityFromInput returns immediately while it is set, so a scripted walk overrides the stick for that frame
+w7CharScriptedMove:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): point result from this character's perspective (signed wPointWinLoseFlag)
 w7CharPointResult:: db
 ; [8-bit] Per-character banked struct (WRAM4-7): shot buttons the AI decided to press this swing (AiPickServeButtons / AiPickShotButtons); AiPressFirstShotButton and AiPressSecondShotButton feed them into wCharInputBits one at a time

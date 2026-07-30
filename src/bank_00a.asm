@@ -145,8 +145,8 @@ EndCutsceneScriptMode:
 	xor a ; $4109
 	ld [wScreenShakeOffsetX], a ; $410a
 	ld [wScreenShakeOffsetY], a ; $410d
-	ld bc, $d040 ; $4110
-	ld de, $d000 ; $4113
+	ld bc, wActors + 1 * ACTOR_SIZE ; $4110
+	ld de, wActors ; $4113
 	farcall AttachActorWaypointFollower ; $4116
 	ld hl, ToggleCutsceneFastForward ; $4119
 	call UnregisterFrameTask ; $411c
@@ -451,7 +451,7 @@ ScriptSkipSpeakerDialogue:
 	pop af ; $4310
 	ret ; $4311
 GetActorStateAddr:
-	ld hl, $d000 ; $4312
+	ld hl, wActors ; $4312
 	cp $18 ; $4315
 	jr nc, .haveAddr ; $4317
 	ld h, a ; $4319
@@ -3547,10 +3547,10 @@ LoadStorySceneGraphics:
 	pop hl ; $58bd
 	ld de, wStorySceneUnusedBuffer ; $58be
 	pop hl ; $58c1
-	ld de, $d400 ; $58c2
+	ld de, wBehaviorMap ; $58c2
 	call DecompressDataFromBank ; $58c5
 	pop hl ; $58c8
-	ld de, $d000 ; $58c9
+	ld de, wCollisionMap ; $58c9
 	call DecompressDataFromBank ; $58cc
 	wram_bank $02 ; $58cf
 	pop hl ; $58d5
@@ -3764,7 +3764,7 @@ CopyScrolledSceneTilemapToVram:
 	add hl, hl ; $5c61
 	add l ; $5c62
 	ld l, a ; $5c63
-	ld de, $d000 ; $5c64
+	ld de, wMapBuffer64 ; $5c64
 	add hl, de ; $5c67
 	pop de ; $5c68
 	push hl ; $5c69
@@ -3992,10 +3992,10 @@ LoadSceneGraphicsDirect:
 	call DecompressDataFromBank ; $5d98
 	pop hl ; $5d9b
 	pop hl ; $5d9c
-	ld de, $d400 ; $5d9d
+	ld de, wBehaviorMap ; $5d9d
 	call DecompressDataFromBank ; $5da0
 	pop hl ; $5da3
-	ld de, $d000 ; $5da4
+	ld de, wCollisionMap ; $5da4
 	call DecompressDataFromBank ; $5da7
 	wram_bank $02 ; $5daa
 	pop hl ; $5db0
@@ -4153,7 +4153,7 @@ GetCollisionMapCellAddr:
 	ld c, d ; $5ef0
 	sra c ; $5ef1
 	add hl, bc ; $5ef3
-	ld bc, wActors ; $5ef4
+	ld bc, wCollisionMap ; $5ef4
 	add hl, bc ; $5ef7
 	pop de ; $5ef8
 	pop bc ; $5ef9
@@ -4209,7 +4209,7 @@ GetBehaviorMapCellAddr:
 	ld c, d ; $5f44
 	sra c ; $5f45
 	add hl, bc ; $5f47
-	ld bc, wActors + 16 * ACTOR_SIZE ; $5f48
+	ld bc, wBehaviorMap ; $5f48
 	add hl, bc ; $5f4b
 	pop de ; $5f4c
 	pop bc ; $5f4d
@@ -4873,10 +4873,10 @@ LoadCourtSceneGraphics:
 	call CopyDataFromBank ; $6363
 	wram_bank $02 ; $6366
 	pop hl ; $636c
-	ld de, $dc00 ; $636d
+	ld de, wCourtAttrmapSaved ; $636d
 	call DecompressDataFromBank ; $6370
 	pop hl ; $6373
-	ld de, $d800 ; $6374
+	ld de, wCourtTilemapSaved ; $6374
 	call DecompressDataFromBank ; $6377
 	pop hl ; $637a
 	ld de, wScreenAttrmap ; $637b

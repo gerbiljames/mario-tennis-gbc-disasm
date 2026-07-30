@@ -447,7 +447,7 @@ LoadCharacterRecordToBuffer:
 	push hl ; $450e
 	farcall LoadCharacterRecordToCa80 ; $450f
 	ld hl, wPlayer2MainName ; $4512
-	ld de, $d580 ; $4515
+	ld de, wCharRecordScratch ; $4515
 	ld c, $08 ; $4518
 	call CopyMemoryFast ; $451a
 	pop hl ; $451d
@@ -458,13 +458,13 @@ LoadCharacterRecordToBuffer:
 .fixedRecord:
 	push af ; $4522
 	ld a, $3e ; $4523
-	ld [$d58b], a ; $4525
+	ld [wCharRecordScratch + 11], a ; $4525
 	pop af ; $4528
 	ret ; $4529
 CheckCharacterUnlocked:
 	bit 7, a ; $452a
 	jr z, .checkRange ; $452c
-	ld a, [$d58b] ; $452e
+	ld a, [wCharRecordScratch + 11] ; $452e
 	cp $ff ; $4531
 	ret ; $4533
 .checkRange:

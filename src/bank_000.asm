@@ -6033,7 +6033,7 @@ GetMapBufferAddr64:
 	ld d, $00 ; $2223
 	ld e, a ; $2225
 	add hl, de ; $2226
-	ld de, $d000 ; $2227
+	ld de, wMapBuffer64 ; $2227
 	add hl, de ; $222a
 	ret ; $222b
 BlitBGRowFrom64:
