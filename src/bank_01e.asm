@@ -1615,7 +1615,7 @@ DrawExpAwardScreenPanels:
 	call DrawExpDoublesPartnerPanel ; $55f9
 	ret ; $55fc
 DrawExpSinglesPlayerPanel:
-	ld hl, $d0a3 ; $55fd
+	ld hl, wShadowTilemap + 5 * TILEMAP_WIDTH + 3 ; $55fd
 	ld b, $02 ; $5600
 	ld c, $01 ; $5602
 	call FillTilemapRun ; $5604
@@ -1625,7 +1625,7 @@ DrawExpSinglesPlayerPanel:
 	ld b, $04 ; $560e
 	ld c, $01 ; $5610
 	call FillTilemapRun ; $5612
-	ld hl, $d0c3 ; $5615
+	ld hl, wScreenAttrmap + 6 * TILEMAP_WIDTH + 3 ; $5615
 	ld b, $05 ; $5618
 	ld c, $01 ; $561a
 	call FillTilemapRun ; $561c
@@ -1635,7 +1635,7 @@ DrawExpSinglesPlayerPanel:
 	ld b, $06 ; $5626
 	ld c, $01 ; $5628
 	call FillTilemapRun ; $562a
-	ld hl, $d0e3 ; $562d
+	ld hl, wScreenAttrmap + 7 * TILEMAP_WIDTH + 3 ; $562d
 	ld b, $07 ; $5630
 	ld c, $01 ; $5632
 	call FillTilemapRun ; $5634
@@ -1657,11 +1657,11 @@ DrawExpSinglesPlayerPanel:
 	ld hl, $0000 ; $5659
 	add hl, bc ; $565c
 	call CopyStringToTextBuffer ; $565d
-	ld de, $d0c4 ; $5660
+	ld de, wScreenAttrmap + 6 * TILEMAP_WIDTH + 4 ; $5660
 	ld bc, $0020 ; $5663
 	call WriteTextToTilemap ; $5666
 	ld hl, Text_31_228 ; $5669
-	ld de, $d0cc ; $566c
+	ld de, wShadowTilemap + 6 * TILEMAP_WIDTH + 12 ; $566c
 	ld bc, $0020 ; $566f
 	call FetchAndDrawDialogueText ; $5672
 	pop bc ; $5675
@@ -1675,7 +1675,7 @@ DrawExpSinglesPlayerPanel:
 	ld de, wTextBuffer ; $5683
 	call FormatDecimalNumberUnsigned ; $5686
 	ld hl, wTextBuffer ; $5689
-	ld de, $d0ce ; $568c
+	ld de, wShadowTilemap + 6 * TILEMAP_WIDTH + 14 ; $568c
 	call WriteTextToTilemap ; $568f
 	ret ; $5692
 DrawExpDoublesPlayerPanel:
@@ -1841,7 +1841,7 @@ DrawExpTotalPanel:
 	call FillTilemapRun ; $5832
 	ld bc, $0401 ; $5835
 	call FillTilemapRun ; $5838
-	ld hl, $d1e2 ; $583b
+	ld hl, wScreenAttrmap + 15 * TILEMAP_WIDTH + 2 ; $583b
 	ld bc, $0501 ; $583e
 	call FillTilemapRun ; $5841
 	ld bc, $2008 ; $5844
@@ -1854,7 +1854,7 @@ DrawExpTotalPanel:
 	call FillTilemapRun ; $5859
 	ld bc, $0601 ; $585c
 	call FillTilemapRun ; $585f
-	ld hl, $d202 ; $5862
+	ld hl, wScreenAttrmap + 16 * TILEMAP_WIDTH + 2 ; $5862
 	ld bc, $0701 ; $5865
 	call FillTilemapRun ; $5868
 	ld bc, $0808 ; $586b
@@ -1868,7 +1868,7 @@ DrawExpTotalPanel:
 	ld bc, $0901 ; $5883
 	call FillTilemapRun ; $5886
 	ld hl, Text_31_231 ; $5889
-	ld de, $d1e3 ; $588c
+	ld de, wScreenAttrmap + 15 * TILEMAP_WIDTH + 3 ; $588c
 	ld bc, $0020 ; $588f
 	call FetchAndDrawDialogueText ; $5892
 	ret ; $5895
@@ -1880,28 +1880,28 @@ DrawExpMessageWindow:
 	call FillTilemapRun ; $58a2
 	ld bc, $0401 ; $58a5
 	call FillTilemapRun ; $58a8
-	ld hl, $d020 ; $58ab
+	ld hl, wScreenAttrmap + 1 * TILEMAP_WIDTH ; $58ab
 	ld bc, $0501 ; $58ae
 	call FillTilemapRun ; $58b1
 	ld bc, $2012 ; $58b4
 	call FillTilemapRun ; $58b7
 	ld bc, $0601 ; $58ba
 	call FillTilemapRun ; $58bd
-	ld hl, $d040 ; $58c0
+	ld hl, wScreenAttrmap + 2 * TILEMAP_WIDTH ; $58c0
 	ld bc, $0501 ; $58c3
 	call FillTilemapRun ; $58c6
 	ld bc, $2012 ; $58c9
 	call FillTilemapRun ; $58cc
 	ld bc, $0601 ; $58cf
 	call FillTilemapRun ; $58d2
-	ld hl, $d060 ; $58d5
+	ld hl, wScreenAttrmap + 3 * TILEMAP_WIDTH ; $58d5
 	ld bc, $0501 ; $58d8
 	call FillTilemapRun ; $58db
 	ld bc, $2012 ; $58de
 	call FillTilemapRun ; $58e1
 	ld bc, $0601 ; $58e4
 	call FillTilemapRun ; $58e7
-	ld hl, $d080 ; $58ea
+	ld hl, wScreenAttrmap + 4 * TILEMAP_WIDTH ; $58ea
 	ld bc, $0701 ; $58ed
 	call FillTilemapRun ; $58f0
 	ld bc, $0812 ; $58f3

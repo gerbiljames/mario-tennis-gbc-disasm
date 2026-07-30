@@ -771,10 +771,10 @@ AnimateCharDataStatsReveal:
 	jr nz, .loop ; $4694
 	call RestoreCharDataScreenRow ; $4696
 	ld hl, CharDataBand0RunsStep1_1c ; $4699
-	ld bc, $d240 ; $469c
+	ld bc, wScreenAttrmap + 18 * TILEMAP_WIDTH ; $469c
 	call BlitTilemapRunsFromTable ; $469f
 	ld hl, CharDataBand3RunsStep1_1c ; $46a2
-	ld bc, $d310 ; $46a5
+	ld bc, wScreenAttrmap + 24 * TILEMAP_WIDTH + 16 ; $46a5
 	call BlitTilemapRunsFromTable ; $46a8
 	wram_bank $06 ; $46ab
 	ld a, $09 ; $46b1
@@ -782,16 +782,16 @@ AnimateCharDataStatsReveal:
 	call FlushCharDataTilemaps ; $46b6
 	call RestoreCharDataScreenRow ; $46b9
 	ld hl, CharDataBand0RunsStep2_1c ; $46bc
-	ld bc, $d240 ; $46bf
+	ld bc, wScreenAttrmap + 18 * TILEMAP_WIDTH ; $46bf
 	call BlitTilemapRunsFromTable ; $46c2
 	ld hl, CharDataBand1RunsStep1_1c ; $46c5
-	ld bc, $d280 ; $46c8
+	ld bc, wScreenAttrmap + 20 * TILEMAP_WIDTH ; $46c8
 	call BlitTilemapRunsFromTable ; $46cb
 	ld hl, CharDataBand2RunsStep1_1c ; $46ce
-	ld bc, $d2d0 ; $46d1
+	ld bc, wScreenAttrmap + 22 * TILEMAP_WIDTH + 16 ; $46d1
 	call BlitTilemapRunsFromTable ; $46d4
 	ld hl, CharDataBand3RunsStep2_1c ; $46d7
-	ld bc, $d310 ; $46da
+	ld bc, wScreenAttrmap + 24 * TILEMAP_WIDTH + 16 ; $46da
 	call BlitTilemapRunsFromTable ; $46dd
 	wram_bank $06 ; $46e0
 	ld a, $07 ; $46e6
@@ -799,16 +799,16 @@ AnimateCharDataStatsReveal:
 	call FlushCharDataTilemaps ; $46eb
 	call RestoreCharDataScreenRow ; $46ee
 	ld hl, CharDataBand0RunsStep3_1c ; $46f1
-	ld bc, $d240 ; $46f4
+	ld bc, wScreenAttrmap + 18 * TILEMAP_WIDTH ; $46f4
 	call BlitTilemapRunsFromTable ; $46f7
 	ld hl, CharDataBand1RunsStep2_1c ; $46fa
-	ld bc, $d280 ; $46fd
+	ld bc, wScreenAttrmap + 20 * TILEMAP_WIDTH ; $46fd
 	call BlitTilemapRunsFromTable ; $4700
 	ld hl, CharDataBand2RunsStep2_1c ; $4703
-	ld bc, $d2d0 ; $4706
+	ld bc, wScreenAttrmap + 22 * TILEMAP_WIDTH + 16 ; $4706
 	call BlitTilemapRunsFromTable ; $4709
 	ld hl, CharDataBand3RunsStep3_1c ; $470c
-	ld bc, $d310 ; $470f
+	ld bc, wScreenAttrmap + 24 * TILEMAP_WIDTH + 16 ; $470f
 	call BlitTilemapRunsFromTable ; $4712
 	wram_bank $06 ; $4715
 	ld a, $05 ; $471b
@@ -816,16 +816,16 @@ AnimateCharDataStatsReveal:
 	call FlushCharDataTilemaps ; $4720
 	call RestoreCharDataScreenRow ; $4723
 	ld hl, CharDataBand0RunsStep4_1c ; $4726
-	ld bc, $d240 ; $4729
+	ld bc, wScreenAttrmap + 18 * TILEMAP_WIDTH ; $4729
 	call BlitTilemapRunsFromTable ; $472c
 	ld hl, CharDataBand1RunsStep3_1c ; $472f
-	ld bc, $d280 ; $4732
+	ld bc, wScreenAttrmap + 20 * TILEMAP_WIDTH ; $4732
 	call BlitTilemapRunsFromTable ; $4735
 	ld hl, CharDataBand2RunsStep3_1c ; $4738
-	ld bc, $d2d0 ; $473b
+	ld bc, wScreenAttrmap + 22 * TILEMAP_WIDTH + 16 ; $473b
 	call BlitTilemapRunsFromTable ; $473e
 	ld hl, CharDataBand3RunsStep4_1c ; $4741
-	ld bc, $d310 ; $4744
+	ld bc, wScreenAttrmap + 24 * TILEMAP_WIDTH + 16 ; $4744
 	call BlitTilemapRunsFromTable ; $4747
 	wram_bank $06 ; $474a
 	ld a, $03 ; $4750
@@ -833,16 +833,16 @@ AnimateCharDataStatsReveal:
 	call FlushCharDataTilemaps ; $4755
 	call RestoreCharDataScreenRow ; $4758
 	ld hl, CharDataBand0RunsStep5_1c ; $475b
-	ld bc, $d240 ; $475e
+	ld bc, wScreenAttrmap + 18 * TILEMAP_WIDTH ; $475e
 	call BlitTilemapRunsFromTable ; $4761
 	ld hl, CharDataBand1RunsStep4_1c ; $4764
-	ld bc, $d280 ; $4767
+	ld bc, wScreenAttrmap + 20 * TILEMAP_WIDTH ; $4767
 	call BlitTilemapRunsFromTable ; $476a
 	ld hl, CharDataBand2RunsStep4_1c ; $476d
-	ld bc, $d2d0 ; $4770
+	ld bc, wScreenAttrmap + 22 * TILEMAP_WIDTH + 16 ; $4770
 	call BlitTilemapRunsFromTable ; $4773
 	ld hl, CharDataBand3RunsStep5_1c ; $4776
-	ld bc, $d310 ; $4779
+	ld bc, wScreenAttrmap + 24 * TILEMAP_WIDTH + 16 ; $4779
 	call BlitTilemapRunsFromTable ; $477c
 	wram_bank $06 ; $477f
 	ld a, $02 ; $4785
@@ -850,16 +850,16 @@ AnimateCharDataStatsReveal:
 	call FlushCharDataTilemaps ; $478a
 	call RestoreCharDataScreenRow ; $478d
 	ld hl, CharDataBand0RunsStep6_1c ; $4790
-	ld bc, $d240 ; $4793
+	ld bc, wScreenAttrmap + 18 * TILEMAP_WIDTH ; $4793
 	call BlitTilemapRunsFromTable ; $4796
 	ld hl, CharDataBand1RunsStep5_1c ; $4799
-	ld bc, $d280 ; $479c
+	ld bc, wScreenAttrmap + 20 * TILEMAP_WIDTH ; $479c
 	call BlitTilemapRunsFromTable ; $479f
 	ld hl, CharDataBand2RunsStep5_1c ; $47a2
-	ld bc, $d2d0 ; $47a5
+	ld bc, wScreenAttrmap + 22 * TILEMAP_WIDTH + 16 ; $47a5
 	call BlitTilemapRunsFromTable ; $47a8
 	ld hl, CharDataBand3RunsStep6_1c ; $47ab
-	ld bc, $d310 ; $47ae
+	ld bc, wScreenAttrmap + 24 * TILEMAP_WIDTH + 16 ; $47ae
 	call BlitTilemapRunsFromTable ; $47b1
 	wram_bank $06 ; $47b4
 	ld a, $01 ; $47ba
@@ -867,16 +867,16 @@ AnimateCharDataStatsReveal:
 	call FlushCharDataTilemaps ; $47bf
 	call RestoreCharDataScreenRow ; $47c2
 	ld hl, CharDataBand0RunsStep7_1c ; $47c5
-	ld bc, $d240 ; $47c8
+	ld bc, wScreenAttrmap + 18 * TILEMAP_WIDTH ; $47c8
 	call BlitTilemapRunsFromTable ; $47cb
 	ld hl, CharDataBand1RunsStep6_1c ; $47ce
-	ld bc, $d280 ; $47d1
+	ld bc, wScreenAttrmap + 20 * TILEMAP_WIDTH ; $47d1
 	call BlitTilemapRunsFromTable ; $47d4
 	ld hl, CharDataBand2RunsStep6_1c ; $47d7
-	ld bc, $d2d0 ; $47da
+	ld bc, wScreenAttrmap + 22 * TILEMAP_WIDTH + 16 ; $47da
 	call BlitTilemapRunsFromTable ; $47dd
 	ld hl, CharDataBand3RunsStep7_1c ; $47e0
-	ld bc, $d310 ; $47e3
+	ld bc, wScreenAttrmap + 24 * TILEMAP_WIDTH + 16 ; $47e3
 	call BlitTilemapRunsFromTable ; $47e6
 	wram_bank $06 ; $47e9
 	ld hl, wCharDataPageArrowMode ; $47ef
@@ -887,42 +887,42 @@ AnimateCharDataStatsReveal:
 	call WaitFramesCmd ; $47fa
 	db $06 ; $47fd inline arg
 	ld hl, CharDataBand4RunsStep1_1c ; $47fe
-	ld bc, $d370 ; $4801
+	ld bc, wScreenAttrmap + 27 * TILEMAP_WIDTH + 16 ; $4801
 	call BlitTilemapRunsFromTable ; $4804
 	call FlushCharDataTilemaps ; $4807
 	ld hl, CharDataBand4RunsStep2_1c ; $480a
-	ld bc, $d370 ; $480d
+	ld bc, wScreenAttrmap + 27 * TILEMAP_WIDTH + 16 ; $480d
 	call BlitTilemapRunsFromTable ; $4810
 	call FlushCharDataTilemaps ; $4813
 	ld hl, CharDataBand4RunsStep3_1c ; $4816
-	ld bc, $d370 ; $4819
+	ld bc, wScreenAttrmap + 27 * TILEMAP_WIDTH + 16 ; $4819
 	call BlitTilemapRunsFromTable ; $481c
 	call FlushCharDataTilemaps ; $481f
 	ld hl, CharDataBand6RunsStep1_1c ; $4822
-	ld bc, $d3a0 ; $4825
+	ld bc, wScreenAttrmap + 29 * TILEMAP_WIDTH ; $4825
 	call BlitTilemapRunsFromTable ; $4828
 	ld hl, CharDataBand5RunsStep1_1c ; $482b
-	ld bc, $d380 ; $482e
+	ld bc, wScreenAttrmap + 28 * TILEMAP_WIDTH ; $482e
 	call BlitTilemapRunsFromTable ; $4831
 	wram_bank $06 ; $4834
 	ld a, $02 ; $483a
 	ld [wCharDataRevealStep], a ; $483c
 	call FlushCharDataTilemaps ; $483f
 	ld hl, CharDataBand6RunsStep2_1c ; $4842
-	ld bc, $d3a0 ; $4845
+	ld bc, wScreenAttrmap + 29 * TILEMAP_WIDTH ; $4845
 	call BlitTilemapRunsFromTable ; $4848
 	ld hl, CharDataBand5RunsStep2_1c ; $484b
-	ld bc, $d380 ; $484e
+	ld bc, wScreenAttrmap + 28 * TILEMAP_WIDTH ; $484e
 	call BlitTilemapRunsFromTable ; $4851
 	wram_bank $06 ; $4854
 	ld a, $01 ; $485a
 	ld [wCharDataRevealStep], a ; $485c
 	call FlushCharDataTilemaps ; $485f
 	ld hl, CharDataBand6RunsStep3_1c ; $4862
-	ld bc, $d3a0 ; $4865
+	ld bc, wScreenAttrmap + 29 * TILEMAP_WIDTH ; $4865
 	call BlitTilemapRunsFromTable ; $4868
 	ld hl, CharDataBand5RunsStep3_1c ; $486b
-	ld bc, $d380 ; $486e
+	ld bc, wScreenAttrmap + 28 * TILEMAP_WIDTH ; $486e
 	call BlitTilemapRunsFromTable ; $4871
 	wram_bank $06 ; $4874
 	xor a ; $487a
@@ -932,28 +932,28 @@ AnimateCharDataStatsReveal:
 DrawCharStatsAndFlush:
 	call DrawCharStatRows ; $4882
 	ld hl, CharDataBand6RunsStep3_1c ; $4885
-	ld bc, $d3a0 ; $4888
+	ld bc, wScreenAttrmap + 29 * TILEMAP_WIDTH ; $4888
 	call BlitTilemapRunsFromTable ; $488b
 	ld hl, CharDataBand5RunsStep3_1c ; $488e
-	ld bc, $d380 ; $4891
+	ld bc, wScreenAttrmap + 28 * TILEMAP_WIDTH ; $4891
 	call BlitTilemapRunsFromTable ; $4894
 	call FlushCharDataTilemaps ; $4897
 	ret ; $489a
 DrawCharStatRows:
 	ld hl, CharDataBand0RunsStep7_1c ; $489b
-	ld bc, $d240 ; $489e
+	ld bc, wScreenAttrmap + 18 * TILEMAP_WIDTH ; $489e
 	call BlitTilemapRunsFromTable ; $48a1
 	ld hl, CharDataBand1RunsStep6_1c ; $48a4
-	ld bc, $d280 ; $48a7
+	ld bc, wScreenAttrmap + 20 * TILEMAP_WIDTH ; $48a7
 	call BlitTilemapRunsFromTable ; $48aa
 	ld hl, CharDataBand2RunsStep6_1c ; $48ad
-	ld bc, $d2d0 ; $48b0
+	ld bc, wScreenAttrmap + 22 * TILEMAP_WIDTH + 16 ; $48b0
 	call BlitTilemapRunsFromTable ; $48b3
 	ld hl, CharDataBand3RunsStep7_1c ; $48b6
-	ld bc, $d310 ; $48b9
+	ld bc, wScreenAttrmap + 24 * TILEMAP_WIDTH + 16 ; $48b9
 	call BlitTilemapRunsFromTable ; $48bc
 	ld hl, CharDataBand4RunsStep3_1c ; $48bf
-	ld bc, $d370 ; $48c2
+	ld bc, wScreenAttrmap + 27 * TILEMAP_WIDTH + 16 ; $48c2
 	call BlitTilemapRunsFromTable ; $48c5
 	ret ; $48c8
 BackupCharDataScreenRow:
@@ -989,7 +989,7 @@ BlitTilemapRunsFromTable:
 	inc hl ; $4915
 	ld e, [hl] ; $4916
 	push hl ; $4917
-	ld hl, $d000 ; $4918
+	ld hl, wScreenAttrmap ; $4918
 	add hl, de ; $491b
 	ld d, h ; $491c
 	ld e, l ; $491d
@@ -2202,10 +2202,10 @@ CharDataScreen_InputLoop:
 	call RestoreCharDataScreenRow ; $51bc
 	call DrawCharStatRows ; $51bf
 	ld hl, CharDataBand6RunsStep2_1c ; $51c2
-	ld bc, $d3a0 ; $51c5
+	ld bc, wScreenAttrmap + 29 * TILEMAP_WIDTH ; $51c5
 	call BlitTilemapRunsFromTable ; $51c8
 	ld hl, CharDataBand5RunsStep2_1c ; $51cb
-	ld bc, $d380 ; $51ce
+	ld bc, wScreenAttrmap + 28 * TILEMAP_WIDTH ; $51ce
 	call BlitTilemapRunsFromTable ; $51d1
 	wram_bank $06 ; $51d4
 	ld a, $01 ; $51da
@@ -2216,10 +2216,10 @@ CharDataScreen_InputLoop:
 	call RestoreCharDataScreenRow ; $51e8
 	call DrawCharStatRows ; $51eb
 	ld hl, CharDataBand6RunsStep1_1c ; $51ee
-	ld bc, $d3a0 ; $51f1
+	ld bc, wScreenAttrmap + 29 * TILEMAP_WIDTH ; $51f1
 	call BlitTilemapRunsFromTable ; $51f4
 	ld hl, CharDataBand5RunsStep1_1c ; $51f7
-	ld bc, $d380 ; $51fa
+	ld bc, wScreenAttrmap + 28 * TILEMAP_WIDTH ; $51fa
 	call BlitTilemapRunsFromTable ; $51fd
 	wram_bank $06 ; $5200
 	ld a, $02 ; $5206
@@ -2242,7 +2242,7 @@ CharDataScreen_InputLoop:
 	call RestoreCharDataScreenRow ; $523a
 	call DrawCharStatRows ; $523d
 	ld hl, CharDataBand7RunsStep1_1c ; $5240
-	ld bc, $d3e0 ; $5243
+	ld bc, wScreenAttrmap + 31 * TILEMAP_WIDTH ; $5243
 	call BlitTilemapRunsFromTable ; $5246
 	ld hl, CharDataBand8RunsStep2_1c ; $5249
 	ld bc, $d410 ; $524c
@@ -2251,7 +2251,7 @@ CharDataScreen_InputLoop:
 	call RestoreCharDataScreenRow ; $5255
 	call DrawCharStatRows ; $5258
 	ld hl, CharDataBand7RunsStep2_1c ; $525b
-	ld bc, $d3e0 ; $525e
+	ld bc, wScreenAttrmap + 31 * TILEMAP_WIDTH ; $525e
 	call BlitTilemapRunsFromTable ; $5261
 	ld hl, CharDataBand8RunsStep3_1c ; $5264
 	ld bc, $d410 ; $5267
@@ -2260,7 +2260,7 @@ CharDataScreen_InputLoop:
 	call RestoreCharDataScreenRow ; $5270
 	call DrawCharStatRows ; $5273
 	ld hl, CharDataBand7RunsStep3_1c ; $5276
-	ld bc, $d3e0 ; $5279
+	ld bc, wScreenAttrmap + 31 * TILEMAP_WIDTH ; $5279
 	call BlitTilemapRunsFromTable ; $527c
 	ld hl, CharDataBand8RunsStep4_1c ; $527f
 	ld bc, $d410 ; $5282
@@ -2301,7 +2301,7 @@ CharDataScreen_InputLoop:
 	call CharDataScreen_DrawStats ; $52cc
 	call DrawCharStatRows ; $52cf
 	ld hl, CharDataBand7RunsStep2_1c ; $52d2
-	ld bc, $d3e0 ; $52d5
+	ld bc, wScreenAttrmap + 31 * TILEMAP_WIDTH ; $52d5
 	call BlitTilemapRunsFromTable ; $52d8
 	ld hl, CharDataBand8RunsStep3_1c ; $52db
 	ld bc, $d410 ; $52de
@@ -2310,7 +2310,7 @@ CharDataScreen_InputLoop:
 	call RestoreCharDataScreenRow ; $52e7
 	call DrawCharStatRows ; $52ea
 	ld hl, CharDataBand7RunsStep1_1c ; $52ed
-	ld bc, $d3e0 ; $52f0
+	ld bc, wScreenAttrmap + 31 * TILEMAP_WIDTH ; $52f0
 	call BlitTilemapRunsFromTable ; $52f3
 	ld hl, CharDataBand8RunsStep2_1c ; $52f6
 	ld bc, $d410 ; $52f9
@@ -2335,10 +2335,10 @@ CharDataScreen_InputLoop:
 	call RestoreCharDataScreenRow ; $5333
 	call DrawCharStatRows ; $5336
 	ld hl, CharDataBand6RunsStep1_1c ; $5339
-	ld bc, $d3a0 ; $533c
+	ld bc, wScreenAttrmap + 29 * TILEMAP_WIDTH ; $533c
 	call BlitTilemapRunsFromTable ; $533f
 	ld hl, CharDataBand5RunsStep1_1c ; $5342
-	ld bc, $d380 ; $5345
+	ld bc, wScreenAttrmap + 28 * TILEMAP_WIDTH ; $5345
 	call BlitTilemapRunsFromTable ; $5348
 	wram_bank $06 ; $534b
 	ld a, $02 ; $5351
@@ -2347,10 +2347,10 @@ CharDataScreen_InputLoop:
 	call RestoreCharDataScreenRow ; $5359
 	call DrawCharStatRows ; $535c
 	ld hl, CharDataBand6RunsStep2_1c ; $535f
-	ld bc, $d3a0 ; $5362
+	ld bc, wScreenAttrmap + 29 * TILEMAP_WIDTH ; $5362
 	call BlitTilemapRunsFromTable ; $5365
 	ld hl, CharDataBand5RunsStep2_1c ; $5368
-	ld bc, $d380 ; $536b
+	ld bc, wScreenAttrmap + 28 * TILEMAP_WIDTH ; $536b
 	call BlitTilemapRunsFromTable ; $536e
 	wram_bank $06 ; $5371
 	ld a, $01 ; $5377

@@ -465,7 +465,7 @@ HandleBallTouchCharEvent:
 	ret z ; $43d7
 	xor a ; $43d8
 	ld [wBallTouchCharFlag], a ; $43d9
-	sound $77 ; $43dc
+	sound SFX_BALL_CONTACT ; $43dc
 	call StartBallTouchCharEffect ; $43de
 	call ApplyBallTouchOutcome ; $43e1
 	ret ; $43e4
@@ -6182,7 +6182,7 @@ StartCharSwing:
 	ld [hl], d ; $6deb
 	ld hl, wCharSwingAnim ; $6dec
 	ld [hl], $08 ; $6def
-	sound $5c ; $6df1
+	sound SFX_SWING ; $6df1
 	ret ; $6df3
 .dive:
 	ld hl, wCharSwingAnim ; $6df4
@@ -6214,7 +6214,7 @@ StartCharSwing:
 	ld hl, wCharVelDepth ; $6e24
 	ld [hl+], a ; $6e27
 	ld [hl], e ; $6e28
-	sound $5c ; $6e29
+	sound SFX_SWING ; $6e29
 	ret ; $6e2b
 .startSwing:
 	xor a ; $6e2c

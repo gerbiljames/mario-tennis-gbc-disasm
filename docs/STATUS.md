@@ -8988,3 +8988,83 @@ the shape fixed above, and each bare `ld bc, $dxxx` sits between two
 already-named `wCharDataScreenCell + n * TILEMAP_WIDTH` siblings. The evidence
 is in the routine. So of the 516 remaining, a known 54 are ordinary curation
 work rather than something only the emulator can settle.
+
+## Driving the uncovered screens: 100 operands proved, and 30 of them are now workable (2026-07-30)
+
+Fourteen traced dumps: all nine mini-games on the select grid played to a
+scoring or result screen (including Two-on-One's pause menu), a fresh Tour save
+driven through a full story ranking match to a loss — which is what reaches the
+**match-result → EXP-award → EXP-distribution / stat-allocation chain**, the
+screens no trace had ever entered — plus the overworld Status/Records/Options
+menus and an overworld walk.
+
+Zero new instructions again, as expected since 2026-07-24. The result is in the
+bank evidence:
+
+```
+                    before   after
+bare $dxxx operands    516     446
+  unproven             516     416
+  rom-scoped             0      24
+  unclaimed              0       4
+  resolvable now         0       1
+  mirrored               0       1
+```
+
+Traced sites with an observed WRAM bank: 54,610 → **64,677**; sites where the
+trace resolves a bank the dataflow could not: 15,332 → **18,333**.
+
+The shape of that table is the point. 100 operands left `unproven`, 70 of them
+by rendering as a symbol outright, and **30 moved into buckets that need no
+emulator at all** — a bank the dataflow could not pin is now pinned, so what
+remains is ordinary curation. The new work is concentrated: seven `$d410` and
+two `$d430` references from bank `$1c`, six `$d1xx`/`$d2xx` from bank `$1d`,
+three from `$1e`, four `$d5xx`/`$d9xx`/`$dd2b` from bank `$0d`, four unclaimed
+addresses in WRAM bank `$04`, and one fresh mirrored candidate
+(`$d000` under banks `1,6` from `$1e:DrawExpMessageWindow`). Together with the
+54 bank-`$1d` page-slot operands identified in the previous pass, **84 of the
+446 are known desk work**.
+
+### Two sound ids named from the emulator, and one deliberately not
+
+The 187 numeric `sound` operands cannot be named by ear, but they can be named
+by experiment: hook `PlaySound.startChannels` (`$32dc`), where `hl` is the
+index-table entry and therefore survives the hook's register-based dedup — the
+id in `a` does not, which is why hooking `PlaySound` itself collapses every call
+into one capture — then perform one identifiable action and read the id back.
+
+* **`$5c` is the racket swing.** Both static sites are inside `StartCharSwing`,
+  and the capture came mid-rally under ROM bank `$08`. Named `SFX_SWING`.
+* **`$77` is the ball connecting with a scoring object**, captured as a
+  Medallion Match deflect. Its three sites — `HandleBallTouchCharEvent`,
+  `HandleMinigameTargetHit`, `MinigameTargetTypeScores` — are all that event,
+  so `SFX_BALL_CONTACT` is true at each. 448 of 630 `sound` sites are now named.
+
+**`$97` was confirmed empirically and still not named**, which is the more
+interesting outcome. The capture is unambiguous — it fires once per revealed
+panel in Perfect Shot, exactly as the on-screen grid advances — but the id has
+30 sites, and most of them are cutscene and location init scripts
+(`AcademyWingInitScript_10`, `LateStudentCrashCutscene`, `Court2SpectatorChat_14`).
+A sound id is *one sound*; a name has to be true at every site. `SFX_TARGET_HIT`
+would be a lie in a spectator-chat script, and naming it for what it sounds like
+needs ears this method does not have. Same reasoning parks `$78`: it was
+captured at a point conclusion during the live match, while the static sites are
+bank `$1b`'s `RankingBoardAnimState_*` — plausibly one shared flourish cue, but
+"plausibly" is not the standard.
+
+Also logged for a future pass, from the hook captures rather than from the
+source: `$a6`-`$ad` fire in a fixed cycle while the player walks (a footstep or
+surface-tap family, four variants doubled for a two-frame gait), and
+`$66`-`$6d` fire during rallies as shot-impact variants. Neither family reaches
+the ROM through a `sound` command, so neither is in the numeric remainder — they
+are played from tables, and naming them means naming the tables.
+
+### Not reached
+
+Wall Practice and the Tennis Machine, the Dictionary, the ranking-board screen
+(which would settle `$80`), the story cutscenes that carry `$96`/`$98`/`$99`,
+and the map-script tile that triggers `$a2`. The debug test menu was not reached
+either, and the agent's static reading suggests it may be genuinely unreachable
+rather than merely unvisited — which, if true, is a `docs/bugs.md` entry rather
+than a driving target. The save was altered as permitted: a Tour slot advanced
+from level 1 to 3 with one recorded loss; no erase, no save-or-quit.

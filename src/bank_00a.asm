@@ -5493,7 +5493,7 @@ HandleMinigameTargetHit:
 	bit 2, [hl] ; $671a
 	ret z ; $671c
 	res 2, [hl] ; $671d
-	sound $77 ; $671f
+	sound SFX_BALL_CONTACT ; $671f
 	ld a, $20 ; $6721
 	ld [wMinigameTargetWork + 2], a ; $6723
 	ld a, [wMinigameTargetWork + 1] ; $6726

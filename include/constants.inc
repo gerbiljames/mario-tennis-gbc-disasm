@@ -574,6 +574,12 @@ def JINGLE_DONE_FOR_THE_DAY  equ $41 ; going to bed (DormRoomNpc03_13) and the s
 ; Sound effects. Named from the event the call site plays them for.
 def SFX_STOP                 equ $50 ; silences the two effect channels
 def SFX_BALL_BOUNCE          equ $5b ; HandleBallBounceEvent ($08:$435e)
+; The next two were confirmed on the emulator rather than from the call sites,
+; by hooking PlaySound.startChannels ($32dc) -- `hl` there is the index-table
+; entry, so it survives the hook's register dedup where the id in `a` does not --
+; and then performing one identifiable action at a time.
+def SFX_SWING                equ $5c ; racket swing: both sites are in StartCharSwing ($08:$6df1, $6e29), captured mid-rally under ROM bank $08
+def SFX_BALL_CONTACT         equ $77 ; the ball connecting with a scoring object: HandleBallTouchCharEvent ($08:$43dc), HandleMinigameTargetHit ($0a:$671f), MinigameTargetTypeScores ($0d:$5612); captured as a Medallion Match deflect
 def SFX_MENU_MOVE            equ $5e ; every menu's "the cursor moved" branch
 def SFX_MENU_SELECT          equ $5f ; A accepted, menu continues
 def SFX_MENU_DECIDE          equ $60 ; A accepted the screen's final choice (fades out after it)

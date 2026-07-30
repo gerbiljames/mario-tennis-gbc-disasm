@@ -2760,7 +2760,7 @@ MinigameTargetTypeScores:
 	ret z ; $560c
 	sub $04 ; $560d
 	farcall DeflectBallOffMinigameTarget ; $560f
-	sound $77 ; $5612
+	sound SFX_BALL_CONTACT ; $5612
 	ret ; $5614
 MinigameConfig_BooBlast:
 	; $5615, 16 bytes (bytes:16)
