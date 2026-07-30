@@ -10136,3 +10136,64 @@ The save was written: the EXP flow ends in an unconditional
 ranking match and the partner levelled 42 → 43. `FLAG_DOUBLES` was force-set by
 `write_memory` rather than earned, and that fed into the save when the match
 completed normally. Restorable from `maxed-unlocked.sav`.
+
+## The ranking board was reached, and the capture was lost (2026-07-30)
+
+The forcing recipe works. From a mid-EXP-screen checkpoint of a won doubles
+match, writing `wGameMode` = `$02`, `wCurrentMinigameStoryMatch` = a Doubles
+Island Open index, `wMatchWinLoseFlag` = `$01`, and a partner name of six or
+more characters, then letting the flow run, reaches `ShowIslandOpenRankingBoard`
+and through it `ShowRankingBoard` — confirmed by `get_registers` showing
+`ROMX BANK` = 27 (`$1b`) with `wGameMode` still `$02`, i.e. genuinely inside the
+farcall.
+
+**No coverage survived.** The session traced ~700 frames through the board's
+setup and marker animation in ≤8-frame chunks, never dumping, and the connector
+dropped on the call before the first `dump_coverage`. Buckets are unchanged at
+328 total / 300 unproven.
+
+### Two lessons, one of them new
+
+**The connector does not only die on resets.** No reset was crossed here and
+every step was ≤8 frames, yet it dropped with the same signature (listener with
+a pending connection and a zero backlog, BizHawk alive). Long traced sessions
+are enough on their own — plausibly because the board's animation is VRAM-heavy
+under per-instruction hooks. So the rule needs a second half: **dump coverage
+incrementally, every ~100 traced frames, to numbered files.** A drop then costs
+one segment instead of a session, which is exactly the difference between this
+session yielding nothing and yielding most of the board.
+
+**The EXP screen has a UI trap that eats sessions.** `RunExpDistributionLoop`
+(`$1d`) shows a "Continue? YES/NO" prompt whenever a character's EXP pool
+empties, and its cursor **defaults to NO** (`wExpPromptCursorRow` is set to `$01`
+immediately before the loop). Tapping A confirms NO, which loops back into
+allocation, immediately fails again because the pool is still empty, and reopens
+the same prompt — forever. One **Down** tap before A is the whole fix.
+
+### The parameter map, which is the reusable output
+
+Read out of `SetupRankingBoardArgs` and `DispatchRankingBoardAnim`, this says
+which runs are needed to cover the family rather than discovering it by replay:
+
+* **Doubles** (`wCurrentMinigameStoryMatch` high byte `$01`), low byte
+  `$11`/`$12`/`$13` → player row 1/2/3 → anim states `5387`/`53fa`/`546d`.
+  Rows **2 and 3 together cover all six `DrawDoublesRankingMarker*`**; row 1 is
+  redundant. Pair each with win and loss (`wMatchWinLoseFlag` 1/2).
+* **Singles** (high byte `$00`), low byte `$10`-`$13` → rows 1-4. Rows **1, 2
+  and 3 cover all of `DrawRankingRow0` and `2`-`11`**; row 4 adds nothing.
+* Only the *singles* anim states call `StartRankingMarkerAnim3`, so
+  `UpdateScriptedOffsetChannel3` needs a singles run — a doubles-only session
+  cannot reach it.
+* The partner name must be **six characters or more** or
+  `RenderNameTopRow`/`RenderNameBottomRow` never run; the save's "Alex" and
+  "Harry" are too short.
+
+Projected: two doubles runs plus three singles runs would cover **76 of the 113**
+bank-`$1b` sites. That is a plan, not a result — none of it executed under a
+surviving trace.
+
+Two checkpoints survive in `drops/emu6/checkpoints/`: `pre_board_common.state`
+(mid-EXP-screen with the forcing writes applied, reusable for any row/outcome by
+rewriting two bytes) and `at_board_entry.state` (advanced to the confirmed
+bank-`$1b` entry, saved *before* `trace_start`). The next attempt can load the
+second and trace immediately, skipping everything that made this one expensive.
