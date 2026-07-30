@@ -10357,3 +10357,46 @@ debug menu, no warps, no forced state — and now still produces the WRAM-bank
 evidence that was the whole point of driving. Given that the debug harness is
 the likely cause of this week's crashes, a capture path that does not need it is
 worth more than the operands it happened to resolve today.
+
+## A fresh native capture, and what ordinary gameplay is worth (2026-07-31)
+
+61 new trace logs, captured in a five-minute window and converted with the
+register-reading derivation: **every one at 100% mask coverage**, 28,834
+distinct offsets across **32 banks** — a much broader spread than the previous
+set, which was concentrated in a handful.
+
+```
+                                    before    after
+sites with an observed WRAM bank    71,201   71,938
+resolved that the dataflow could not 19,448   19,508
+bare $dxxx operands                    327      325
+```
+
+Two operands resolved, both `wActors` cells in the story banks
+(`$12:$653d`, `$13:$536d`). Zero new instructions, and the rejected-seed count
+stayed at zero — the fixed converter is not producing phantoms.
+
+Worth recording precisely, because it calibrates what this capture path yields:
+599 offsets were entirely new to the coverage set, yet **none of them was new
+code** — they were already-proven instructions that no previous trace had
+executed. And only 138 of the 13,223 still-maskless offsets were covered, so
+that backlog is essentially permanent: those offsets belong to logs that were
+overwritten (BizHawk reuses the auto-split names, and this capture overwrote the
+42 originals) or sit at attributions the pre-fix converter produced and the
+current one does not.
+
+### The honest conclusion about driving
+
+An ordinary-gameplay session now costs nothing risky — no debug menu, no warps,
+no forced state, no per-instruction hooks, and it produces full bank evidence —
+but it yields **one or two operands**. The remaining 297 unproven sites are not
+waiting on a better capture path; they are waiting on *specific screens* that
+ordinary play does not visit: the save editor, the Island Open ranking board,
+the link-cable flows, the trophy screens' deeper paths.
+
+So the bottleneck has moved. It used to be "we cannot capture bank evidence
+safely"; that is solved. It is now "the screens that remain need either a long
+legitimate playthrough or the debug harness, and the debug harness is what
+breaks the game". Of those two, the playthrough is the one that does not
+corrupt anything — and with the Trace Logger it can now run at full speed for as
+long as someone is willing to play.

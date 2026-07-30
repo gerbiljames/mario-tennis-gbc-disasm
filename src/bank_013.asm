@@ -1076,7 +1076,7 @@ DormRoomNpc03_13:
 	script_get_actor_state $03 ; $5366
 	ld c, l ; $536b
 	ld b, h ; $536c
-	ld de, $d000 ; $536d
+	ld de, wActors ; $536d
 	farcall AttachActorStepMover ; $5370
 	script_face ACTOR_PLAYER, FACE_DOWN ; $5373
 	script_get_actor_state $03 ; $537a

@@ -2512,7 +2512,7 @@ SeniorDoublesRank3Intro:
 	script_player_speed $0020 ; $652d
 	script_move_player_to_actor $09 ; $6533
 	farcall WaitPlayerMoveDone ; $653a
-	ld bc, $d040 ; $653d
+	ld bc, wActors + 1 * ACTOR_SIZE ; $653d
 	script_get_actor_state $09 ; $6540
 	ld e, l ; $6545
 	ld d, h ; $6546
