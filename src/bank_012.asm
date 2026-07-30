@@ -2623,7 +2623,7 @@ SeniorSinglesRank4Intro:
 	script_player_speed $0020 ; $67c6
 	script_move_player_to_actor $07 ; $67cc
 	farcall WaitPlayerMoveDone ; $67d3
-	ld bc, $d040 ; $67d6
+	ld bc, wActors + 1 * ACTOR_SIZE ; $67d6
 	script_get_actor_state $07 ; $67d9
 	ld e, l ; $67de
 	ld d, h ; $67df

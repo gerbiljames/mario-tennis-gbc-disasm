@@ -60,6 +60,11 @@ RESUME_EXTRA = {0xDF: 2, 0xCF: 1, 0xE7: 2, 0xEF: 2, 0xF7: 2}
 # Writes to rWBK ($ff70): `ldh [$70], a` and the long form `ld [$ff70], a`.
 WBK_WRITES = (b"\xe0\x70", b"\xea\x70\xff")
 LD_A_IMM = 0x3E
+# BizHawk's Gambatte tracer logs the register file after the disassembly, and
+# its header says so: "PC, opcode, registers (A, F, B, C, D, E, H, L, LY, SP,
+# CY)". The values are the state *before* the instruction executes, so the A on
+# a `ldh [rWBK], a` line is exactly the byte that write stores.
+A_RE = re.compile(r"\bA:([0-9A-Fa-f]{2})\b")
 INLINE_ARG_CALLS = {0x2725}  # `call Func_00_2725` reads one byte after itself
 
 
@@ -107,7 +112,8 @@ def main():
     prev1 = None      # bytes of the instruction one back
     masks = {}        # flat ROM offset -> OR of (1 << wram bank) seen there
     stats = {"lines": 0, "unparsed": 0, "bank0_mismatch": 0,
-             "runs": 0, "ambiguous_runs": 0, "dead_runs": 0, "unresolved_runs": 0}
+             "runs": 0, "ambiguous_runs": 0, "dead_runs": 0, "unresolved_runs": 0,
+             "wbk_from_reg": 0, "wbk_from_idiom": 0, "wbk_unknown": 0}
 
     def close_run():
         nonlocal run, run_banks, resume
@@ -137,12 +143,22 @@ def main():
             stats["lines"] += 1
             addr = int(m.group(1), 16)
             data = bytes.fromhex(m.group(2))
-            # A write to rWBK takes its value from A. The bank is only known
-            # when the `ld a, imm` two instructions back supplied it -- that is
-            # the wram_bank idiom, and the immediate is in the logged bytes.
+            # A write to rWBK takes its value from A. Prefer the logged A --
+            # it is authoritative and covers every form, including the
+            # `pop af` restores that the idiom below cannot see. Fall back on
+            # the wram_bank idiom (`ld a, imm` two instructions back, immediate
+            # visible in the logged opcode bytes) for logs configured without
+            # the register columns.
             if any(data.startswith(w) for w in WBK_WRITES):
-                wbank = (prev2[1] & 0x07 if prev2 and len(prev2) >= 2
-                         and prev2[0] == LD_A_IMM else None)
+                ma = A_RE.search(line)
+                if ma:
+                    wbank = int(ma.group(1), 16) & 0x07
+                    stats["wbk_from_reg"] += 1
+                else:
+                    wbank = (prev2[1] & 0x07 if prev2 and len(prev2) >= 2
+                             and prev2[0] == LD_A_IMM else None)
+                    stats["wbk_from_idiom" if wbank is not None
+                          else "wbk_unknown"] += 1
                 if wbank == 0:
                     wbank = 1      # rWBK 0 and 1 both select WRAM bank 1
             prev2, prev1 = prev1, data
@@ -184,6 +200,9 @@ def main():
     print(f"runs: {stats['runs']} ({stats['ambiguous_runs']} ambiguous -> lowest bank, "
           f"{stats['unresolved_runs']} ambiguous single-instruction dropped, "
           f"{stats['dead_runs']} unmatched dropped), bank0 byte mismatches: {stats['bank0_mismatch']}")
+    print(f"rWBK writes: {stats['wbk_from_reg']} from the logged A, "
+          f"{stats['wbk_from_idiom']} from the ld-a-imm idiom, "
+          f"{stats['wbk_unknown']} unresolved")
     known = sum(1 for o in offs if masks.get(o))
     print(f"wrote {sys.argv[3]}: rom={len(rom_offs)} other={len(other)}, "
           f"wram bank known at {known} of {len(offs)} offsets "

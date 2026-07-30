@@ -10303,3 +10303,57 @@ The practical rules that follow are different from the ones I wrote yesterday:
   the run was unsound. Check it before merging — and check whether the regen's
   "resolved that the dataflow could not" count *falls*, which is what
   contradictory bank masks look like.
+
+## The native trace logs were re-convertible, and they carry registers (2026-07-31)
+
+Two assumptions turned out to be wrong, both in the useful direction.
+
+**The original trace logs still exist** — 42 of them, 6.2 GB, in BizHawk's
+`Tools/` directory. The coverage JSONs converted from them are in the repo; the
+logs themselves were never deleted, so every past capture is re-convertible with
+no emulator involvement at all.
+
+**And the logs carry the register file.** Their header says so:
+`PC, opcode, registers (A, F, B, C, D, E, H, L, LY, SP, CY)`. That makes the
+`ld a, imm` look-back heuristic added an hour earlier unnecessary — the `A` on a
+`ldh [rWBK], a` line *is* the byte that write stores, so the bank can be read
+directly, covering every form including the `pop af` restores the idiom cannot
+see. The heuristic stays as the fallback for logs configured without those
+columns; the converter reports which source it used.
+
+On a real 158 MB log: 1,483,724 instructions parsed, **2,869 rWBK writes all
+resolved from the logged A, none unresolved, WRAM bank known at 5,015 of 5,015
+offsets — 100%**. That is also the end-to-end validation against a real log that
+the synthetic tests could not give.
+
+### What re-converting all 42 actually bought
+
+```
+                                    before    after
+sites with an observed WRAM bank    69,841   71,201
+resolved that the dataflow could not 19,404   19,448
+bare $dxxx operands                    328      327
+```
+
+**One operand.** Worth stating plainly, because the headline number promised
+more: 14,581 of the 78,699 covered offsets had no mask, and the re-conversion
+filled only 1,358 of them. The rest belong to logs that no longer exist, or sit
+at offsets the *fixed* converter no longer produces — the pre-fix version
+mis-attributed banks (the bug behind the eight phantom seeds), so its output and
+the current output are not the same set. Those 13,223 offsets cannot be given
+masks without their source logs.
+
+The lasting value is not the single operand: 32,027 offsets now carry
+authoritative bank evidence permanently, 44 more sites have a trace-resolved
+bank than before, and the count of sites where the trace *contradicts* the
+dataflow fell from 1,843 to 1,796 — the new masks agree with the analysis more
+often than the old evidence did.
+
+### Why this matters more than its yield
+
+It changes what a future capture costs. A native-logger session runs at full
+speed with no per-instruction Lua hooks, through **ordinary gameplay** — no
+debug menu, no warps, no forced state — and now still produces the WRAM-bank
+evidence that was the whole point of driving. Given that the debug harness is
+the likely cause of this week's crashes, a capture path that does not need it is
+worth more than the operands it happened to resolve today.
