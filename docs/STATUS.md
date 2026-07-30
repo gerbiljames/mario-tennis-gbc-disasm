@@ -10156,9 +10156,9 @@ dropped on the call before the first `dump_coverage`. Buckets are unchanged at
 
 **The connector does not only die on resets.** No reset was crossed here and
 every step was ≤8 frames, yet it dropped with the same signature (listener with
-a pending connection and a zero backlog, BizHawk alive). Long traced sessions
-are enough on their own — plausibly because the board's animation is VRAM-heavy
-under per-instruction hooks. So the rule needs a second half: **dump coverage
+a pending connection and a zero backlog, BizHawk alive). *(Corrected the next
+day: the likelier cause is not the tracing but the debug features the session
+was using — see "The crashes were the debug features" below.)* So the rule needs a second half: **dump coverage
 incrementally, every ~100 traced frames, to numbered files.** A drop then costs
 one segment instead of a session, which is exactly the difference between this
 session yielding nothing and yielding most of the board.
@@ -10247,3 +10247,59 @@ byte would let the restore sites resolve too, since `ldh a, [hWramBank]` reads a
 value the log has seen written. It is left out because the model would only be
 sound if every write to that byte goes through the same idiom, and being wrong
 there reintroduces exactly the hazard this conservatism avoids.
+
+## The crashes were the debug features, not the tracing (2026-07-31)
+
+I attributed three connector losses to per-instruction Lua hooks destabilising
+the emulator. That is probably wrong, and the better explanation was already
+sitting in this document: **every one of those sessions was driving the game
+through dead code that the shipped build never executes, and forcing engine
+states its normal flow never produces.**
+
+Two mechanisms are already proven here, and neither needs tracing to explain a
+crash:
+
+* **Warping lands in content whose progression flags were never set.** Proven
+  directly: a Scene warp into `STORYLOC_JUNIOR_CLASS_COURT_DOUBLES` soft-locks
+  the walk-on cutscene forever, because `LoadRankingOpponentGraphics` branches
+  on `FLAG_DOUBLES` and takes the singles path while the script positions actors
+  for doubles. One flag was enough to fix that one; nothing says the other warps
+  are clean, and a hang is the *visible* end of that spectrum.
+* **The scene viewer reads past its table.** `LoadSceneGraphicsDirect` indexes
+  the 37-record, 16-byte-stride `SceneGfxSlotTable` with a stride of **18** — a
+  defect recorded in `docs/bugs.md` this week. It is reached only from
+  `LoadAndDisplayScene`, whose callers are all the debug scene viewer. Feeding
+  arbitrary words to a graphics loader as pointers, and decompressing from
+  wherever they point, is a mechanism for exactly the kind of corruption
+  observed: a dump in which 1,022 of 1,065 executed offsets were outside the
+  ROM image.
+
+The debug harness in this game is *unreachable in the retail build* — the
+dispatcher at `$01:$40ec`, the in-game menu behind `hDebugStepMode`, the scene
+viewer. Unreachable means never exercised in the shipped configuration, so its
+bugs survived shipping. We have been using it as if it were a supported
+interface. The scene viewer's stride bug is the proof that at least one of its
+paths is actively unsafe.
+
+**What this changes.** "Do not trace across a reset" stands — that one is
+mechanically clear, since the reset does an enormous amount of work under hooks.
+But "long traced sessions kill the connector" is no longer supported by the
+evidence: the run that produced it had been through a debug warp, a forced
+`wGameMode`, a forced match index, a forced win flag and a patched partner name
+before a single frame was traced. The dump's own numbers say the machine was
+already unwell.
+
+The practical rules that follow are different from the ones I wrote yesterday:
+
+* Treat a crash after debug-menu use as **the game's fault, not the tool's**,
+  and check the emulator state before blaming the capture path.
+* **Incremental dumping is still right**, but for a better reason than tool
+  fragility: it bounds the loss when the *game* dies, which is now the expected
+  failure.
+* Prefer reaching a screen through the paths the retail build actually uses,
+  even when they are slower. Forced state is a last resort, and every forced
+  value is a hypothesis about what the engine can tolerate.
+* A dump whose out-of-range fraction is far above the usual 0-19% is evidence
+  the run was unsound. Check it before merging — and check whether the regen's
+  "resolved that the dataflow could not" count *falls*, which is what
+  contradictory bank masks look like.
