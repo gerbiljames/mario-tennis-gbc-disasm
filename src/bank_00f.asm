@@ -1945,7 +1945,7 @@ IslandOpenArrivalCutscene:
 	script_get_actor_state $05 ; $6596
 	ld c, l ; $659b
 	ld b, h ; $659c
-	ld de, $d000 ; $659d
+	ld de, wActors ; $659d
 	farcall AttachActorStepMover ; $65a0
 	set_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $65a3
 .walkOn:
