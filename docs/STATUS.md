@@ -10197,3 +10197,53 @@ Two checkpoints survive in `drops/emu6/checkpoints/`: `pre_board_common.state`
 rewriting two bytes) and `at_board_entry.state` (advanced to the confirmed
 bank-`$1b` entry, saved *before* `trace_start`). The next attempt can load the
 second and trace immediately, skipping everything that made this one expensive.
+
+## tracelog2cov derives the WRAM bank now (2026-07-31)
+
+The capture problem this week had a shape worth naming: the method that
+survives a long session cannot produce the evidence the session is for. Lua
+per-instruction hooks give `rom_wram_bank` masks but destabilise the emulator —
+three connector losses in a day, the last of them with the game executing
+almost entirely outside the ROM image (1,022 of 1,065 offsets out of range) and
+the resulting dump *reducing* resolutions by 23, which is what a crashed CPU's
+arbitrary bank readings do. BizHawk's native Trace Logger is stable but logged
+no bank at all.
+
+It can, though, because the game switches banks with a fixed idiom whose
+immediate is in the logged opcode bytes:
+
+```
+        ld a, N            ; 3e NN
+        ldh [hWramBank], a ; e0 96
+        ldh [rWBK], a      ; e0 70
+```
+
+So a write to `rWBK` two instructions after an `ld a, imm` names the new bank
+outright, with no register state needed. `tools/tracelog2cov.py` now tracks that
+and emits `rom_wram_bank` parallel to `rom`.
+
+**It refuses to guess.** Any other route to that write — `A` from a `pop`, from
+memory, from the shadow byte — sets the bank to *unknown*, and instructions
+executed while it is unknown get a zero mask, which `load_traced_wram_banks`
+skips. A missing mask costs nothing; a wrong one silently corrupts every name
+derived from it, which is precisely the failure that made today's last dump
+unusable.
+
+Verified on synthetic logs built from **real ROM bytes**, since the converter
+byte-matches against the image and invented instructions are rejected outright
+(the first attempt at a negative test failed for exactly that reason):
+
+* Bank `$0a`'s `wram_bank $05` at `$6474`: the two instructions before the write
+  are unknown, and from the write onward the mask is bank 5 — which
+  independently matches `wSceneTileAnimBuffer`/`wSceneTileAnimBufferPtr` at
+  `$647a`/`$647d`, named by hand from the other direction earlier.
+* Bank `$02`'s save/restore at `$4119`-`$4127`, a real sequence:
+  `ldh a, [hWramBank]` / `push af` / `ld a, $06` / … / `ldh [rWBK], a` sets bank
+  6, and after the matching `pop af` / `ldh [rWBK], a` the mask correctly goes
+  back to **unknown** rather than carrying 6 forward.
+
+A possible extension, deliberately not taken: modelling the `hWramBank` shadow
+byte would let the restore sites resolve too, since `ldh a, [hWramBank]` reads a
+value the log has seen written. It is left out because the model would only be
+sound if every write to that byte goes through the same idiom, and being wrong
+there reintroduces exactly the hazard this conservatism avoids.
