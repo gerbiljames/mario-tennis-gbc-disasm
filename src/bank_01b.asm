@@ -2366,8 +2366,8 @@ RankingBoardAnimTaskTable:
 RankingCursorBobTask:
 	ld a, [wRankingBannerAnimFrame] ; $5a04
 	or a ; $5a07
-	jr nz, .nonZero ; $5a08
-.nonZero:
+	jr nz, .setBobOffset ; $5a08
+.setBobOffset:
 	ld de, $3040 ; $5a0a
 	ld a, [wRankingBoardDoubles] ; $5a0d
 	or a ; $5a10

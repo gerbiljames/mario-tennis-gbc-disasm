@@ -13,10 +13,15 @@ after a real defect broke it:
   text      every text_offsets word lands on a string start in its pool, so
             the `dw Pool.sN - Pool` rows name real strings
   regions   manifest regions stay inside their bank and do not overlap
+  branches  no conditional branch targets the instruction that follows it --
+            a branch that decides nothing, which is always either a deleted
+            guarded block or an inverted condition (14 exist; the list is
+            curated so a new one shows up as a failure)
 
 Exit status is non-zero if any check fails.
 """
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -116,6 +121,71 @@ def check_regions(manifest, fail):
     return len(spans)
 
 
+# Conditional branches whose taken and not-taken paths are the same address.
+# Every one is a fossil: a guarded block deleted, or a condition inverted and
+# its body removed. Three have consequences and are written up in
+# docs/bugs.md; the rest are harmless, and are listed here so the set is
+# pinned. A *new* one means a curation change invented a branch that decides
+# nothing -- far more likely a mis-carve than a real discovery.
+KNOWN_COLLAPSED_BRANCHES = {
+    (0x00, 0x1bbf), (0x05, 0x62b0), (0x08, 0x516e), (0x08, 0x6feb),
+    (0x0a, 0x42ff), (0x10, 0x6400), (0x12, 0x5844), (0x12, 0x5e35),
+    (0x14, 0x42ff), (0x1b, 0x5a08), (0x27, 0x5803), (0x27, 0x5be5),
+    (0x38, 0x67ef), (0x6b, 0x4be1),
+}
+
+_GLOBAL_RE = re.compile(r"^([A-Za-z_][\w]*):$")
+_LOCAL_RE = re.compile(r"^(\.[A-Za-z_][\w.]*):$")
+_ADDR_RE = re.compile(r"; \$([0-9a-f]{4})\s*$")
+_BRANCH_RE = re.compile(r"^\t(jr|jp) (nz|z|nc|c), ([.A-Za-z_][\w.]*) ; \$([0-9a-f]{4})$")
+
+
+def check_collapsed_branches(fail):
+    """Find `jr cc, X` / `jp cc, X` where X is the very next instruction.
+
+    Local labels repeat across functions -- `.done` appears 34 times in bank
+    $00 -- so a target has to be resolved inside its own scope or the answer is
+    whichever `.done` came first in the file."""
+    found = set()
+    for path in sorted((ROOT / "src").glob("bank_*.asm")):
+        bank = int(path.stem.split("_")[1], 16)
+        lines = path.read_text().split("\n")
+        addr_of, scope = {}, None
+        for i, line in enumerate(lines):
+            g, lo = _GLOBAL_RE.match(line), _LOCAL_RE.match(line)
+            if not (g or lo):
+                continue
+            name = g.group(1) if g else lo.group(1)
+            key = (None, name) if g else (scope, name)
+            for nxt in lines[i + 1:i + 4]:
+                m = _ADDR_RE.search(nxt)
+                if m:
+                    addr_of[key] = int(m.group(1), 16)
+                    break
+            if g:
+                scope = name
+        scope = None
+        for line in lines:
+            g = _GLOBAL_RE.match(line)
+            if g:
+                scope = g.group(1)
+                continue
+            m = _BRANCH_RE.match(line)
+            if not m:
+                continue
+            target, at = m.group(3), int(m.group(4), 16)
+            size = 2 if m.group(1) == "jr" else 3
+            key = (scope, target) if target.startswith(".") else (None, target)
+            if addr_of.get(key) == at + size:
+                found.add((bank, at))
+    for bank, at in sorted(found - KNOWN_COLLAPSED_BRANCHES):
+        fail("branches", f"new collapsed branch at ${bank:02x}:${at:04x}")
+    for bank, at in sorted(KNOWN_COLLAPSED_BRANCHES - found):
+        fail("branches", f"${bank:02x}:${at:04x} no longer collapsed -- "
+                         "drop it from KNOWN_COLLAPSED_BRANCHES")
+    return len(found)
+
+
 def main():
     global ROOT
     ROOT = Path(__file__).resolve().parent.parent
@@ -136,6 +206,7 @@ def main():
         "lz-labels": check_lz_labels(labels, manifest, fail),
         "text": check_text(rom, data_tables, manifest, fail),
         "regions": check_regions(manifest, fail),
+        "branches": check_collapsed_branches(fail),
     }
     by_check = {}
     for check, msg in failures:

@@ -5409,8 +5409,8 @@ ConfirmLinkGridSelection:
 	call BuildVisiblePageSpriteList ; $67e7
 	call AdvanceToNextPlayerSlot ; $67ea
 	cp $04 ; $67ed
-	jr nz, .done ; $67ef
-.done:
+	jr nz, .drawSlotPrompt ; $67ef
+.drawSlotPrompt:
 	call DrawCharGridSlotPrompt ; $67f1
 	ld hl, wShadowTilemap + 2 * TILEMAP_WIDTH ; $67f4
 	ld de, $9840 ; $67f7

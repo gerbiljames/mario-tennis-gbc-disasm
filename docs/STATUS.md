@@ -9486,3 +9486,52 @@ rings (`CharSelectSlotRing4`/`5`) carry two slots per side, i.e. four
 characters; the `z` path sets modes 2/3, one slot each. Renamed `.doubles`, with
 `.slave4`/`.slave2` — which set modes `$03` and `$05`, so their names were wrong
 about the mode as well as the side — becoming `.singlesSlave`/`.doublesSlave`.
+
+### The collapsed branches, pinned rather than renamed wholesale (2026-07-30)
+
+Acting on the naming problem the branch sweep exposed turned out to need less
+renaming than expected, because most of the labels were not lying.
+
+Re-deriving the set with **per-function scoping** matters: local labels repeat —
+`.done` appears 34 times in bank `$00` — so resolving a target by name alone
+gives whichever `.done` came first in the file. A first attempt without scoping
+found 6 of the 14 and would have renamed the wrong labels.
+
+Of the 14, nine have the collapsed branch as their label's *only* reference, so
+only those could be renamed at all. Reading the block each one heads, **five of
+the nine describe their block correctly**: `.advanceTextId` really does
+`inc hl` into `wScriptDialogueTextId`, `.walkPlayer` opens with
+`script_move_target ACTOR_PLAYER`, `.face` with `script_face_toward`,
+`.checkCutsceneStepTimer` reads `wCutsceneStepTimer`, and `$12:$5e35`'s `.done`
+heads a bare `ret`. A label names a *location*, not a branch — those are honest,
+and it is the branch that is inert.
+
+Four asserted a path that does not exist and were renamed from their block's
+content, following the convention the rest of the ROM's local labels already
+use (`call Foo` → `.foo`, `xor a` + store → `.clearFoo`):
+
+| site | was | is |
+| --- | --- | --- |
+| `$14:$4301` | `.lose` | `.clearShowLocationName` |
+| `$1b:$5a0a` | `.nonZero` | `.setBobOffset` |
+| `$27:$5be7` | `.variantB` | `.facePartner` |
+| `$38:$67f1` | `.done` | `.drawSlotPrompt` |
+
+`.lose` was the worst of them: a reader skimming `MachineCourtResultScene` would
+believe there is a lose path, and the block is the scene's ordinary
+continuation.
+
+The other five sites' labels are shared with real branches from elsewhere
+(`CheckBallContactWindow`'s `.checkX` has four other references, three of which
+are live jumps over the remaining comparisons), so the label is accurate and
+renaming would have been the error.
+
+**The inertness is now checked instead of encoded in a name.** `tools/check.py`
+grows a `branches` check that finds every conditional branch whose target is the
+instruction after it and compares the set against a curated list of the 14. A
+new one is a failure, and so is a listed one that stops being collapsed — the
+first means a curation change invented a branch that decides nothing (far more
+likely a mis-carve than a discovery), the second means the list is stale. Both
+directions were tested by breaking them deliberately, because a check that
+cannot fail is worse than no check: this project has already been bitten by
+`make compare | grep OK | tail -1`, which always exits 0.

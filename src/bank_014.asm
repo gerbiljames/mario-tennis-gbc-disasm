@@ -274,8 +274,8 @@ MachineCourtResultScene:
 	script_wait_frames $28 ; $42ed
 	script_set_speed ACTOR_PLAYER, $0020 ; $42f4
 	test_flag FLAG_DOUBLES ; $42fc
-	jr z, .lose ; $42ff
-.lose:
+	jr z, .clearShowLocationName ; $42ff
+.clearShowLocationName:
 	xor a ; $4301
 	ld [wStoryModeShowLocationName], a ; $4302
 	ld a, [wMatchExitRequest] ; $4305

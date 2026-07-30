@@ -1316,8 +1316,8 @@ CeremonyDoublesReaction_27:
 	script_set_anim ACTOR_PARTNER, $03 ; $5bd6
 	script_wait_idle ACTOR_PARTNER ; $5bdd
 	test_flag FLAG_TEMP_SCENE_VARIANT_A ; $5be2
-	jr z, .variantB ; $5be5
-.variantB:
+	jr z, .facePartner ; $5be5
+.facePartner:
 	script_face_toward ACTOR_PARTNER, ACTOR_PLAYER ; $5be7
 	script_set_anim ACTOR_PLAYER, $03 ; $5bef
 	script_wait_idle ACTOR_PLAYER ; $5bf6
