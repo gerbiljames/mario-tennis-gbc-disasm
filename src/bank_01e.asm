@@ -1828,7 +1828,7 @@ DrawExpDoublesPartnerPanel:
 	call WriteTextToTilemap ; $5810
 	ret ; $5813
 DrawExpTotalPanel:
-	ld hl, $d1c2 ; $5814
+	ld hl, wScreenAttrmap + 14 * TILEMAP_WIDTH + 2 ; $5814
 	ld bc, $0201 ; $5817
 	call FillTilemapRun ; $581a
 	ld bc, $0308 ; $581d
@@ -1873,7 +1873,7 @@ DrawExpTotalPanel:
 	call FetchAndDrawDialogueText ; $5892
 	ret ; $5895
 DrawExpMessageWindow:
-	ld hl, $d000 ; $5896
+	ld hl, wScreenAttrmap ; $5896
 	ld bc, $0201 ; $5899
 	call FillTilemapRun ; $589c
 	ld bc, $0312 ; $589f
@@ -2064,19 +2064,19 @@ DrawNextExpAwardMessage:
 	or d ; $5a07
 	jr z, .drawProportionalTextLine ; $5a08
 	ld hl, $04c8 ; $5a0a
-	ld de, $d022 ; $5a0d
+	ld de, wScreenAttrmap + 1 * TILEMAP_WIDTH + 2 ; $5a0d
 	ld bc, $0020 ; $5a10
 	call DrawProportionalTextLine ; $5a13
 	jr .restore ; $5a16
 .drawProportionalTextLine:
 	ld hl, $04c7 ; $5a18
-	ld de, $d022 ; $5a1b
+	ld de, wScreenAttrmap + 1 * TILEMAP_WIDTH + 2 ; $5a1b
 	ld bc, $0020 ; $5a1e
 	call DrawProportionalTextLine ; $5a21
 .restore:
 	pop hl ; $5a24
 	ld bc, $0020 ; $5a25
-	ld de, $d062 ; $5a28
+	ld de, wScreenAttrmap + 3 * TILEMAP_WIDTH + 2 ; $5a28
 	call DrawProportionalTextLine ; $5a2b
 	pop bc ; $5a2e
 	farcall UploadGlyphBuffer ; $5a2f
@@ -2279,7 +2279,7 @@ WaitForConfirmOrTimeout:
 	jr nz, .loop ; $5bb8
 	ret ; $5bba
 HasPendingExpAwards:
-	ld hl, $d152 ; $5bbb
+	ld hl, wPendingExpAwardAmounts ; $5bbb
 	ld a, [hl+] ; $5bbe
 	ld d, [hl] ; $5bbf
 	inc hl ; $5bc0

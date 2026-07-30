@@ -959,23 +959,23 @@ DrawCharStatRows:
 BackupCharDataScreenRow:
 	wram_bank $03 ; $48c9
 	ld hl, wShadowTilemap ; $48cf
-	ld de, wShadowAttrmap + 1 * TILEMAP_WIDTH + 16 ; $48d2
+	ld de, wCharDataScreenBackup ; $48d2
 	ld c, $24 ; $48d5
 	call CopyMemoryFast ; $48d7
 	wram_bank $02 ; $48da
 	ld hl, wScreenAttrmap ; $48e0
-	ld de, $d430 ; $48e3
+	ld de, wCharDataScreenBackup ; $48e3
 	ld c, $24 ; $48e6
 	call CopyMemoryFast ; $48e8
 	ret ; $48eb
 RestoreCharDataScreenRow:
 	wram_bank $03 ; $48ec
-	ld hl, wShadowAttrmap + 1 * TILEMAP_WIDTH + 16 ; $48f2
+	ld hl, wCharDataScreenBackup ; $48f2
 	ld de, wShadowTilemap ; $48f5
 	ld c, $24 ; $48f8
 	call CopyMemoryFast ; $48fa
 	wram_bank $02 ; $48fd
-	ld hl, $d430 ; $4903
+	ld hl, wCharDataScreenBackup ; $4903
 	ld de, wScreenAttrmap ; $4906
 	ld c, $24 ; $4909
 	call CopyMemoryFast ; $490b
@@ -2236,7 +2236,7 @@ CharDataScreen_InputLoop:
 	call RestoreCharDataScreenRow ; $5228
 	call DrawCharStatRows ; $522b
 	ld hl, CharDataBand8RunsStep1_1c ; $522e
-	ld bc, $d410 ; $5231
+	ld bc, wCharDataPagePlane + 16 ; $5231
 	call BlitTilemapRunsFromTable ; $5234
 	call FlushCharDataTilemaps ; $5237
 	call RestoreCharDataScreenRow ; $523a
@@ -2245,7 +2245,7 @@ CharDataScreen_InputLoop:
 	ld bc, wScreenAttrmap + 31 * TILEMAP_WIDTH ; $5243
 	call BlitTilemapRunsFromTable ; $5246
 	ld hl, CharDataBand8RunsStep2_1c ; $5249
-	ld bc, $d410 ; $524c
+	ld bc, wCharDataPagePlane + 16 ; $524c
 	call BlitTilemapRunsFromTable ; $524f
 	call FlushCharDataTilemaps ; $5252
 	call RestoreCharDataScreenRow ; $5255
@@ -2254,7 +2254,7 @@ CharDataScreen_InputLoop:
 	ld bc, wScreenAttrmap + 31 * TILEMAP_WIDTH ; $525e
 	call BlitTilemapRunsFromTable ; $5261
 	ld hl, CharDataBand8RunsStep3_1c ; $5264
-	ld bc, $d410 ; $5267
+	ld bc, wCharDataPagePlane + 16 ; $5267
 	call BlitTilemapRunsFromTable ; $526a
 	call FlushCharDataTilemaps ; $526d
 	call RestoreCharDataScreenRow ; $5270
@@ -2263,7 +2263,7 @@ CharDataScreen_InputLoop:
 	ld bc, wScreenAttrmap + 31 * TILEMAP_WIDTH ; $5279
 	call BlitTilemapRunsFromTable ; $527c
 	ld hl, CharDataBand8RunsStep4_1c ; $527f
-	ld bc, $d410 ; $5282
+	ld bc, wCharDataPagePlane + 16 ; $5282
 	call BlitTilemapRunsFromTable ; $5285
 	call FlushCharDataTilemaps ; $5288
 	jr .confirmLoop ; $528b
@@ -2304,7 +2304,7 @@ CharDataScreen_InputLoop:
 	ld bc, wScreenAttrmap + 31 * TILEMAP_WIDTH ; $52d5
 	call BlitTilemapRunsFromTable ; $52d8
 	ld hl, CharDataBand8RunsStep3_1c ; $52db
-	ld bc, $d410 ; $52de
+	ld bc, wCharDataPagePlane + 16 ; $52de
 	call BlitTilemapRunsFromTable ; $52e1
 	call FlushCharDataTilemaps ; $52e4
 	call RestoreCharDataScreenRow ; $52e7
@@ -2313,13 +2313,13 @@ CharDataScreen_InputLoop:
 	ld bc, wScreenAttrmap + 31 * TILEMAP_WIDTH ; $52f0
 	call BlitTilemapRunsFromTable ; $52f3
 	ld hl, CharDataBand8RunsStep2_1c ; $52f6
-	ld bc, $d410 ; $52f9
+	ld bc, wCharDataPagePlane + 16 ; $52f9
 	call BlitTilemapRunsFromTable ; $52fc
 	call FlushCharDataTilemaps ; $52ff
 	call RestoreCharDataScreenRow ; $5302
 	call DrawCharStatRows ; $5305
 	ld hl, CharDataBand8RunsStep1_1c ; $5308
-	ld bc, $d410 ; $530b
+	ld bc, wCharDataPagePlane + 16 ; $530b
 	call BlitTilemapRunsFromTable ; $530e
 	call FlushCharDataTilemaps ; $5311
 	call RestoreCharDataScreenRow ; $5314

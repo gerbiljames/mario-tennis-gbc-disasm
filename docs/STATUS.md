@@ -9068,3 +9068,119 @@ either, and the agent's static reading suggests it may be genuinely unreachable
 rather than merely unvisited — which, if true, is a `docs/bugs.md` entry rather
 than a driving target. The save was altered as permitted: a Tour slot advanced
 from level 1 to 3 with one recorded loss; no erase, no save-or-quit.
+
+## The four actionable WRAM buckets are empty again (2026-07-30)
+
+`tools/ram_gaps.py`:
+
+```
+                    before   after
+bare $dxxx operands    392     354
+  unproven             362     352
+  rom-scoped            24       1
+  unclaimed              4       0
+  resolvable now         1       1
+  mirrored               1       0
+```
+
+Twenty-eight of the 30 settled; 38 operands changed in all, because ten
+`unproven` neighbours fell out with them. **Two names were corrected** and two
+sites are honestly unsettled (both in `InitExpAwardScreenState`, below).
+
+### `CopyMemoryFast`'s `c` counts 16-byte blocks, not bytes
+
+Worth stating on its own, because it changed the answer at four sites. Bank
+`$1c`'s `BackupCharDataScreenRow` does `ld c, $24 / call CopyMemoryFast`, which
+reads as 36 bytes and is 576 — `$24` blocks of 16. So `$d430` is not a saved
+*row* borrowed from the page plane's corner, it is
+**`wCharDataScreenBackup`, a 576-byte snapshot of the whole visible screen**
+(18 rows x 32 cells), mirrored across WRAM banks `$02` and `$03` and the same
+size as `wCharDataPageSlot1-3`. `AnimateCharDataStatsReveal` takes it once and
+copies it back before every step of the reveal, so each step redraws its bands
+over the same clean background. It lands inside `wCharDataPagePlane`'s extent,
+which is why it needs a variant of its own rather than a wider scope — and why
+the bank `$03` side, previously spelled
+`wShadowAttrmap + 1 * TILEMAP_WIDTH + 16`, was the **first corrected name**.
+The routine labels `Backup`/`RestoreCharDataScreenRow` are misnomers for the
+same reason and are left for a naming pass.
+
+### What the rest turned out to be
+
+* **`$d410` x7 in bank `$1c` really is a page-plane cell.** The eight reveal
+  bands hand `BlitTilemapRunsFromTable` a *source* base, and they walk `$d240`,
+  `$d280`, `$d2d0`, `$d310`, `$d370`, `$d3e0`, `$d410` — rows 18 to 32 of one
+  continuous plane, alternating column 0 and column 16. Bank `$1d` writes the
+  same address as `wCharDataPagePlane + 2 * TILEMAP_WIDTH + 16` two routines
+  away. Scope widened to bank `$1c`, banks `$02`/`$03`.
+* **Bank `$0d` names all four court planes in one routine.**
+  `LoadMatchUiCourtTilemap` pushes the target-zone overlay's tile and attribute
+  halves twice each and `CopyTextRect`s them to `$d12b`, `$d92b`, `$d52b`,
+  `$dd2b` — tiles to `wCourtTilemap`/`wCourtTilemapSaved`, attributes to
+  `wCourtAttrmap`/`wCourtAttrmapSaved`. `QueueMinigameHudVRAMCopy` says the same
+  with the VRAM bank bit: `$d120 -> $9920`, `$d520 -> $9920 + VRAM_BANK1`. The
+  `$d12b` and `$d120` operands were rendering as `wScreenAttrmap` — the **second
+  corrected name**, and the same mistake the previous pass found in bank `$06`.
+* **The results screen's pending-EXP list is a 15-byte pair.**
+  `wPendingExpAwardAmounts` (`$d152`, five 16-bit amounts: story, exhibition,
+  linked, match/minigame, trophy) and `wPendingExpAwardVariants` (`$d15c`, one
+  byte per line, added to that line's base text id). `RecordDrillResult` takes
+  the line in `b` and dispatches through `DrillSubHandlers_1d`;
+  `DrawNextExpAwardMessage` reads the word back with split-base addressing
+  (`add $52 / adc $d1`) and `HasPendingExpAwards` ORs all five to decide whether
+  the screen is worth showing. The five handlers are reached by `jp hl`, so their
+  bank is unprovable and only handler 3 was traced —
+  `RecordDrillResult` runs `wram_bank $06` at its head and never changes it,
+  which an instruction-range scope now states. The `Drill*` labels are misnomers
+  too: every caller passes EXP.
+* **Three bank `$1d` EXP-screen cells** (`$d201`, `$d20c`, `$d1b1`) go to
+  `WriteExpScreenStringTiles`, which stores the tile under WRAM bank `$03` and
+  the attribute under `$02` — the callee-selected-argument shape. `$d20c` is
+  already spelled `wCharDataScreenCell + 16 * TILEMAP_WIDTH + 12` at the
+  parallel slot-1 routine 240 bytes away.
+* **Four bank `$1e` cells** (`$d1c2`, `$d000`, `$d022` x2, `$d062`) are the same
+  shape through `FillTilemapRun`, `WriteTextToTilemap` and
+  `RenderProportionalTextAt`. Named `wScreenAttrmap + ...` to match the 64
+  siblings in that bank, not `wCharDataScreenCell`: their later cells in the same
+  routines already render from a provable bank `$02`, but only because
+  `FillTilemapRun` happens to leave it selected on return.
+* **`wMinigameTargets`** (`$dc00`, 210 bytes, WRAM bank `$04`, bank `$0a`):
+  fifteen 14-byte target records, walked with `ld de, $000e` between them. It
+  overlays bank `$0d`'s `wMinigameActors` (seven 16-byte records) at the same
+  address — both use bit 0 of `+$00` as the live flag, but the strides and the
+  pointer fields differ (`+$04` versus `+$0e`), so they are two overlays and not
+  one structure. `InitMinigameTargets` clears 256 bytes, past the array and over
+  `wMinigameTargetWork` as well.
+* **`$d8f1` is not an address.** Both bank `$0d` sites are
+  `ld hl, $d8f1 / add hl, de` on `wMinigamesCurrentScore`: `$d8f1` is -9999, the
+  score cap, one site testing equality and the other branching on the carry to
+  clamp to `ld de, $270f`. Added to `RAM_IMM_IS_CONSTANT`, which is what emptied
+  the `unclaimed` bucket's fourth entry rather than a name.
+
+### The two that are not settled
+
+`InitExpAwardScreenState` (`$1e:$54bb`) selects WRAM bank `$06` and fills
+`$d004`-`$d027` in a pattern that fits no declared layout: 5 zero bytes, then
+`$20 $20 $20 $20 $30`, 11 zero, `$20 $20 $20 $20 $30`, 10 zero, then `1` into
+`$d000`. The `$20`/`$30` runs read as two right-aligned 5-cell digit strings
+("    0"), and the zero runs' boundaries land exactly on
+`wCharDataLevel + wCharDataNewLevels` and on `wCharDataStats`, but the digit runs
+straddle `wCharDataPointsLeft`/`wCharDataLevels` and
+`wCharDataStatDeltas`, so neither reading holds all the way. Nothing in bank
+`$1e` reads `$d009`-`$d023`, and no other bank references those addresses at all,
+so there is no consumer to name them from. `$d004` stays `rom-scoped` and `$d000`
+stays `resolvable now`; the latter is a `ram_gaps.py` artifact, since the variant
+it thinks covers `$d000` for bank `$1e` is scoped `$4000-$4d00` and this site is
+at `$54ec`.
+
+`audit_rom_only_scopes` is silent throughout, `tools/check.py` is clean, and
+`make compare` prints `mariotennis.gbc: OK`.
+
+### `ram_gaps.py` was reporting range-scoped sites as already resolvable
+
+`load_symbols` recorded each scope as `(rom bank, symbols)` and dropped its
+`start`/`end`. A scope that pins an instruction range covers only the sites
+inside it, so treating one as whole-bank coverage reported a site *outside* the
+range as `resolvable now` — the opposite of true, and the reason that bucket
+held a phantom entry through two passes. The range is carried now, and the
+phantom resolves into the honest classification: `$1e:$54ec`'s `$d000` is
+`rom-scoped`, one of the two genuinely unsettled sites above.

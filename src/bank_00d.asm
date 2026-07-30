@@ -582,11 +582,11 @@ MinigameGridCellTilemapOffsets:
 	dw $0195 ; record 22
 	dw $0197 ; record 23
 QueueMinigameHudVRAMCopy:
-	ld hl, wScreenAttrmap + 9 * TILEMAP_WIDTH ; $43a3
+	ld hl, wCourtTilemap + 9 * TILEMAP_WIDTH ; $43a3
 	ld de, $9920 ; $43a6
 	ld c, $0a ; $43a9
 	call QueueVRAMCopy ; $43ab
-	ld hl, $d520 ; $43ae
+	ld hl, wCourtAttrmap + 9 * TILEMAP_WIDTH ; $43ae
 	ld de, $9920 + VRAM_BANK1 ; $43b1
 	ld c, $0a ; $43b4
 	call QueueVRAMCopy ; $43b6
@@ -2174,19 +2174,19 @@ LoadMatchUiCourtTilemap:
 	push hl ; $510f
 	push hl ; $5110
 	pop hl ; $5111
-	ld de, $d92b ; $5112
+	ld de, wCourtTilemapSaved + 9 * TILEMAP_WIDTH + 11 ; $5112
 	ld bc, $0a05 ; $5115
 	call CopyTextRect ; $5118
 	pop hl ; $511b
-	ld de, wScreenAttrmap + 9 * TILEMAP_WIDTH + 11 ; $511c
+	ld de, wCourtTilemap + 9 * TILEMAP_WIDTH + 11 ; $511c
 	ld bc, $0a05 ; $511f
 	call CopyTextRect ; $5122
 	pop hl ; $5125
-	ld de, $dd2b ; $5126
+	ld de, wCourtAttrmapSaved + 9 * TILEMAP_WIDTH + 11 ; $5126
 	ld bc, $0a05 ; $5129
 	call CopyTextRect ; $512c
 	pop hl ; $512f
-	ld de, $d52b ; $5130
+	ld de, wCourtAttrmap + 9 * TILEMAP_WIDTH + 11 ; $5130
 	ld bc, $0a05 ; $5133
 	call CopyTextRect ; $5136
 	ret ; $5139

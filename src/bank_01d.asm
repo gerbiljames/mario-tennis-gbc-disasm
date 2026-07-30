@@ -3775,7 +3775,7 @@ DrawExpPoolReadout:
 	ld de, wCharDataNumberBuffer ; $6adc
 	call FormatDecimalNumberUnsigned ; $6adf
 	ld hl, wCharDataNumberBuffer ; $6ae2
-	ld de, $d201 ; $6ae5
+	ld de, wCharDataScreenCell + 16 * TILEMAP_WIDTH + 1 ; $6ae5
 	call WriteExpScreenStringTiles ; $6ae8
 	call DrawExpPoolGauge ; $6aeb
 	ret ; $6aee
@@ -3980,7 +3980,7 @@ InitExpScreenCharStats:
 	adc $00 ; $6c3e
 	ld h, a ; $6c40
 	pop af ; $6c41
-	ld de, $d20c ; $6c42
+	ld de, wCharDataScreenCell + 16 * TILEMAP_WIDTH + 12 ; $6c42
 	ld c, $20 ; $6c45
 	call WriteExpScreenStringTiles ; $6c47
 	wram_bank $06 ; $6c4a
@@ -4222,7 +4222,7 @@ DrawExpScreenLevelNumber:
 	jr .clearExpScreenLevelDigits ; $6df9
 .nonZero:
 	ld a, [wExpScreenCharStats + 15] ; $6dfb
-	ld de, $d1b1 ; $6dfe
+	ld de, wCharDataScreenCell + 13 * TILEMAP_WIDTH + 17 ; $6dfe
 .clearExpScreenLevelDigits:
 	call ClearExpScreenLevelDigits ; $6e01
 	cp $64 ; $6e04
@@ -5573,7 +5573,7 @@ ClearDrillResultBuffer:
 	push de ; $7cb0
 	push hl ; $7cb1
 	wram_bank $06 ; $7cb2
-	ld hl, $d152 ; $7cb8
+	ld hl, wPendingExpAwardAmounts ; $7cb8
 	ld bc, $000f ; $7cbb
 	call ClearBytes ; $7cbe
 	pop hl ; $7cc1
@@ -5603,40 +5603,40 @@ DrillSubHandlers_1d:
 	dw DrillSubHandler4 ; record 4
 DrillSubHandler0:
 	ld a, c ; $7ce3
-	ld [$d15c], a ; $7ce4
-	ld hl, $d152 ; $7ce7
+	ld [wPendingExpAwardVariants], a ; $7ce4
+	ld hl, wPendingExpAwardAmounts ; $7ce7
 	ld a, e ; $7cea
 	ld [hl+], a ; $7ceb
 	ld [hl], d ; $7cec
 	ret ; $7ced
 DrillSubHandler1:
 	ld a, c ; $7cee
-	ld [$d15d], a ; $7cef
-	ld hl, $d154 ; $7cf2
+	ld [wPendingExpAwardVariants + 1], a ; $7cef
+	ld hl, wPendingExpAwardAmounts + 2 ; $7cf2
 	ld a, e ; $7cf5
 	ld [hl+], a ; $7cf6
 	ld [hl], d ; $7cf7
 	ret ; $7cf8
 DrillSubHandler2:
 	ld a, c ; $7cf9
-	ld [$d15e], a ; $7cfa
-	ld hl, $d156 ; $7cfd
+	ld [wPendingExpAwardVariants + 2], a ; $7cfa
+	ld hl, wPendingExpAwardAmounts + 4 ; $7cfd
 	ld a, e ; $7d00
 	ld [hl+], a ; $7d01
 	ld [hl], d ; $7d02
 	ret ; $7d03
 DrillSubHandler3:
 	ld a, c ; $7d04
-	ld [$d15f], a ; $7d05
-	ld hl, $d158 ; $7d08
+	ld [wPendingExpAwardVariants + 3], a ; $7d05
+	ld hl, wPendingExpAwardAmounts + 6 ; $7d08
 	ld a, e ; $7d0b
 	ld [hl+], a ; $7d0c
 	ld [hl], d ; $7d0d
 	ret ; $7d0e
 DrillSubHandler4:
 	ld a, c ; $7d0f
-	ld [$d160], a ; $7d10
-	ld hl, $d15a ; $7d13
+	ld [wPendingExpAwardVariants + 4], a ; $7d10
+	ld hl, wPendingExpAwardAmounts + 8 ; $7d13
 	ld a, e ; $7d16
 	ld [hl+], a ; $7d17
 	ld [hl], d ; $7d18

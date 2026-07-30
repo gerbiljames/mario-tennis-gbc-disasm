@@ -2293,6 +2293,37 @@
      }
     },
     {
+     "context": "pending EXP award list (banks $1d/$1e)",
+     "scopes": [
+      {
+       "bank": "0x1d",
+       "wram_bank": "0x06"
+      },
+      {
+       "bank": "0x1e",
+       "wram_bank": "0x06"
+      },
+      {
+       "bank": "0x1d",
+       "start": "0x7ce3",
+       "end": "0x7d1a",
+       "note": "The five handlers are reached by `jp hl` out of DrillSubHandlers_1d, so no dataflow proves their bank and only handler 3 is traced. RecordDrillResult runs `wram_bank $06` at its head ($7cc6) and never changes it again, so bank $06 is live throughout -- the range says so where the analysis cannot."
+      }
+     ],
+     "symbols": {
+      "0xd152": {
+       "name": "wPendingExpAwardAmounts",
+       "note": "[10 bytes] Five 16-bit EXP amounts, one per line of the results screen's award list: 0 story, 1 exhibition, 2 linked, 3 match/minigame, 4 trophy. RecordDrillResult takes the line in `b` and dispatches through DrillSubHandlers_1d, each handler storing `de` at this base + 2 * line; ClearDrillResultBuffer zeroes all 15 bytes of the pair. DrawNextExpAwardMessage reads the word back with split-base addressing (`add $52 / adc $d1`) and skips a line whose amount is zero, and HasPendingExpAwards ORs the five words to decide whether the screen is worth showing at all.",
+       "size": 10
+      },
+      "0xd15c": {
+       "name": "wPendingExpAwardVariants",
+       "note": "[5 bytes] One byte per award line, the `c` argument of RecordDrillResult. DrawNextExpAwardMessage adds it to the line's base text id from DrawNextExpAwardMessageTable, so it picks between wordings of the same message -- ShowExpAwardForMatch passes 0, 2, 3 or 4 for a normal, Island Open, practice or Dream match, and the trophy pass numbers the six trophy groups.",
+       "size": 5
+      }
+     }
+    },
+    {
      "context": "EXP award screen (bank $1a)",
      "scopes": [
       {
@@ -2512,6 +2543,21 @@
        "bank": "0x1d",
        "start": "0x749b",
        "end": "0x75f0"
+      },
+      {
+       "bank": "0x1d",
+       "start": "0x6ae5",
+       "end": "0x6ae8"
+      },
+      {
+       "bank": "0x1d",
+       "start": "0x6c42",
+       "end": "0x6c45"
+      },
+      {
+       "bank": "0x1d",
+       "start": "0x6dfe",
+       "end": "0x6e01"
       }
      ],
      "symbols": {
@@ -2519,6 +2565,39 @@
        "name": "wCharDataScreenCell",
        "note": "[1024 bytes] The live screen the character-data and EXP screens draw into, one 32 x 32 cell plane in *each* of WRAM banks $02 and $03 -- bank $03 the tile half, bank $02 the CGB attribute half, cell for cell at the same address. Every reference here is an argument to a routine that selects those banks itself (CharDataScreen_WriteStatNumber writes [de] under $03 then $02; ApplyTilemapPatchList and its EXP-screen twin do the same), so the WRAM bank live at the call site is $06 -- the screen's own working set -- and says nothing about the operand. That is why these scopes are ROM ranges with no wram_bank: the callee picks the bank, so the site's is not a constraint to apply. Scoped to the exact call-site ranges rather than whole banks because banks $1c/$1d also address genuine WRAM bank $06 variables in $d2xx-$d3xx.",
        "size": 1024,
+       "stride": [
+        "TILEMAP_WIDTH",
+        "0x20"
+       ]
+      }
+     }
+    },
+    {
+     "context": "character-data screen backup (mirrored across WRAM banks $02/$03)",
+     "mirrored": true,
+     "banks": [
+      "0x02",
+      "0x03"
+     ],
+     "scopes": [
+      {
+       "bank": "0x1c",
+       "start": "0x48c9",
+       "end": "0x490f",
+       "wram_bank": "0x02"
+      },
+      {
+       "bank": "0x1c",
+       "start": "0x48c9",
+       "end": "0x490f",
+       "wram_bank": "0x03"
+      }
+     ],
+     "symbols": {
+      "0xd430": {
+       "name": "wCharDataScreenBackup",
+       "note": "[576 bytes] Snapshot of the visible screen -- 18 rows of 32 cells, one copy in each of WRAM banks $02 and $03 -- taken once at the top of AnimateCharDataStatsReveal and copied back before every step of the reveal, so each step redraws its bands over the same clean background. The 576 comes from CopyMemoryFast's `c` being a count of 16-byte blocks, not of bytes: `ld c, $24` is 36 blocks. Same size as wCharDataPageSlot1-3, and it lands inside wCharDataPagePlane's extent, but it is a save area rather than page content -- the plane's rows above it ($d400-$d42f) are band 8's staging row and the stat pages patch cells straight through $d430 while this snapshot is not live.",
+       "size": 576,
        "stride": [
         "TILEMAP_WIDTH",
         "0x20"
@@ -2536,6 +2615,14 @@
       },
       {
        "bank": "0x1a",
+       "wram_bank": "0x03"
+      },
+      {
+       "bank": "0x1c",
+       "wram_bank": "0x02"
+      },
+      {
+       "bank": "0x1c",
        "wram_bank": "0x03"
       },
       {
@@ -2565,7 +2652,7 @@
      "symbols": {
       "0xd400": {
        "name": "wCharDataPagePlane",
-       "note": "[992 bytes] Base stat-page rows for the character-data screen, one 31 x 32 cell plane in *each* of WRAM banks $02 and $03: bank $03 holds the tile half, bank $02 the CGB attribute half, cell for cell at the same addresses. LoadBasePageIntoWorkTilemap copies a row from here to the live screen twice, once per bank, which is why the two `ld hl` operands of that pair are the same word. Not an attribute map, despite falling where wShadowAttrmap sits for every other screen; the page slots proper start at wCharDataPageSlot1.\nThe three instruction ranges are bank $1d's cell arguments, handed to CharDataScreen_WriteStatNumber and ApplyTilemapPatchList exactly like wCharDataScreenCell's and with the same consequence: WRAM bank $06 is live at the reference, so those scopes name no wram_bank and let the callee pick the plane.",
+       "note": "[992 bytes] Base stat-page rows for the character-data screen, one 31 x 32 cell plane in *each* of WRAM banks $02 and $03: bank $03 holds the tile half, bank $02 the CGB attribute half, cell for cell at the same addresses. LoadBasePageIntoWorkTilemap copies a row from here to the live screen twice, once per bank, which is why the two `ld hl` operands of that pair are the same word. Not an attribute map, despite falling where wShadowAttrmap sits for every other screen; the page slots proper start at wCharDataPageSlot1.\nBank $1c stages the stat-distribution screen's reveal bands in the same rows: BlitTilemapRunsFromTable takes a source base in `bc`, and the eight bands walk $d240, $d280, $d2d0, $d310, $d370, $d3e0 and $d410 -- rows 18 to 32 of one continuous plane, alternating column 0 and column 16 -- so band 8's base is this plane's first row. The 576 bytes from `+ 1 * TILEMAP_WIDTH + 16` on are wCharDataScreenBackup, a save area rather than page content, which is why that address is a variant of its own above.\nThe three instruction ranges are bank $1d's cell arguments, handed to CharDataScreen_WriteStatNumber and ApplyTilemapPatchList exactly like wCharDataScreenCell's and with the same consequence: WRAM bank $06 is live at the reference, so those scopes name no wram_bank and let the callee pick the plane.",
        "size": 992,
        "stride": [
         "TILEMAP_WIDTH",
@@ -2607,8 +2694,8 @@
   {
    "start": "0xdc00",
    "wram_bank": "0x04",
-   "end": "0xdc80",
-   "comment": "Minigame actor records (WRAM bank $04), owned by bank $0d. The bank is\nearned from the dispatcher rather than the references: bank $08's\nRunMinigamePointLoop and UpdateMatchFrame select bank $04 before\nCallModeHook, and ClearMinigameActors / SetMinigameActorHandler /\nSetMinigameActorPosition each select it again, but the hooks are reached\nthrough a far pointer so compute_wram_bank cannot follow the edge.",
+   "end": "0xdcd2",
+   "comment": "Minigame actor records (WRAM bank $04), owned by bank $0d. The bank is\nearned from the dispatcher rather than the references: bank $08's\nRunMinigamePointLoop and UpdateMatchFrame select bank $04 before\nCallModeHook, and ClearMinigameActors / SetMinigameActorHandler /\nSetMinigameActorPosition each select it again, but the hooks are reached\nthrough a far pointer so compute_wram_bank cannot follow the edge.\nBank $0a lays a second array over the same bytes with a different record\nsize: fifteen 14-byte target records where bank $0d has seven 16-byte\nactors. Both start with bit 0 of +$00 as the live flag, but the strides\nand the field offsets differ (bank $0a's spawn writes its script pointer\nat +$04, bank $0d's handler pointer goes to +$0e), so they are two\noverlays rather than one structure.",
    "variants": [
     {
      "context": "minigames (bank $0d)",
@@ -2627,6 +2714,22 @@
        "name": "wMinigameSceneActor",
        "note": "[16 bytes] The eighth record, same layout, left out of the\nClearMinigameActors block. It is the object the minigame itself drives --\nthe shot target, the Boo, the treasure box -- and the only record the\ncode addresses by literal address rather than through bc, which is why\nits fields show up as wMinigameSceneActor + n.",
        "size": 16
+      }
+     }
+    },
+    {
+     "context": "minigame targets (bank $0a)",
+     "scopes": [
+      {
+       "bank": "0x0a",
+       "wram_bank": "0x04"
+      }
+     ],
+     "symbols": {
+      "0xdc00": {
+       "name": "wMinigameTargets",
+       "note": "[210 bytes] Fifteen 14-byte target records for the target-shot minigames. UpdateMinigameTargets walks exactly fifteen of them with `ld de, $000e` between records, and SpawnMinigameTargetsFromList fills them from a formation's script-pointer list with the same stride. Fields, addressed through bc: +$00 flags (bit 0 = live), +$01 the delay ActivateMinigameTarget zeroes, +$04 the target script pointer. UpdateMinigameTarget copies the record it is working on out to wMinigameTargetWork and back. InitMinigameTargets clears with `ld c, $10` through ClearMemory16, i.e. 256 bytes -- past the array's end and over wMinigameTargetWork as well.",
+       "size": 210
       }
      }
     }
@@ -3895,13 +3998,17 @@
    "start": "0xd000",
    "wram_bank": "0x02",
    "end": "0xe000",
-   "comment": "WRAM bank $02 holds tilemap planes, and until now not one byte of it had\na name -- it was the only WRAMX bank with no SECTION at all. Three\nsubsystems use it three different ways, so $d000 is a tile plane, an\nattribute plane or a 64-wide scroll buffer depending on who is asking:\nthe match keeps the court tilemap and attrmap here as a pair, the\noverworld builds two of its four wide scroll planes here, and every\nfull-screen UI uses $d000 as the attribute half of the tilemap whose\ntile half is wShadowTilemap in WRAM bank $03.\nEvery scope carries wram_bank $02 as well as its ROM bank, and the common\nscreen case is scoped rather than a default. A default variant here was\nthe first thing tried and it was wrong twice over: it named the bank $07\nsave-editor window at $d300 as an attribute cell, and bank $08 reaches\nboth this bank and WRAM bank $04 -- RefreshCourtScoreboard's $de9x bytes\nare not court planes at all.\nThe match owns the court planes from two more banks, over instruction\nranges rather than whole banks. Bank $06's in-match UI restores and\nflushes them: ShowMessageWindow and the pause menu select WRAM bank $02\nand then call RestoreBgTilemap / RestoreBgTilemapRegion /\nFlushTilemapToVram, which is why $d000 there is the tile half sent to VRAM\nbank 0 and not the attribute plane the whole-bank variant below would name\nit. Bank $0a's LoadCourtSceneGraphics decompresses the court into the\nsaved pair at $d800/$dc00 before the match starts.",
+   "comment": "WRAM bank $02 holds tilemap planes, and until now not one byte of it had\na name -- it was the only WRAMX bank with no SECTION at all. Three\nsubsystems use it three different ways, so $d000 is a tile plane, an\nattribute plane or a 64-wide scroll buffer depending on who is asking:\nthe match keeps the court tilemap and attrmap here as a pair, the\noverworld builds two of its four wide scroll planes here, and every\nfull-screen UI uses $d000 as the attribute half of the tilemap whose\ntile half is wShadowTilemap in WRAM bank $03.\nEvery scope carries wram_bank $02 as well as its ROM bank, and the common\nscreen case is scoped rather than a default. A default variant here was\nthe first thing tried and it was wrong twice over: it named the bank $07\nsave-editor window at $d300 as an attribute cell, and bank $08 reaches\nboth this bank and WRAM bank $04 -- RefreshCourtScoreboard's $de9x bytes\nare not court planes at all.\nThe match owns the court planes from two more banks, over instruction\nranges rather than whole banks. Bank $06's in-match UI restores and\nflushes them: ShowMessageWindow and the pause menu select WRAM bank $02\nand then call RestoreBgTilemap / RestoreBgTilemapRegion /\nFlushTilemapToVram, which is why $d000 there is the tile half sent to VRAM\nbank 0 and not the attribute plane the whole-bank variant below would name\nit. Bank $0a's LoadCourtSceneGraphics decompresses the court into the\nsaved pair at $d800/$dc00 before the match starts.\nBank $0d gets a whole-bank scope like $08's, and it is the one bank that\nnames all four planes in one routine: LoadMatchUiCourtTilemap pushes the\ntarget-zone overlay's tile and attribute halves twice each and CopyTextRects\nthem to $d12b, $d92b, $d52b and $dd2b, tiles to the two tilemaps and\nattributes to the two attrmaps. QueueMinigameHudVRAMCopy says the same with\nthe VRAM bank bit: $d120 goes to $9920 and $d520 to $9920 + VRAM_BANK1.",
    "variants": [
     {
-     "context": "match court planes (banks $08/$06/$0a)",
+     "context": "match court planes (banks $08/$0d/$06/$0a)",
      "scopes": [
       {
        "bank": "0x08",
+       "wram_bank": "0x02"
+      },
+      {
+       "bank": "0x0d",
        "wram_bank": "0x02"
       },
       {
@@ -4015,12 +4122,27 @@
      "scopes": [
       {
        "wram_bank": "0x02"
+      },
+      {
+       "bank": "0x1e",
+       "start": "0x5814",
+       "end": "0x5817"
+      },
+      {
+       "bank": "0x1e",
+       "start": "0x5896",
+       "end": "0x5899"
+      },
+      {
+       "bank": "0x1e",
+       "start": "0x5a0a",
+       "end": "0x5a2b"
       }
      ],
      "symbols": {
       "0xd000": {
        "name": "wScreenAttrmap",
-       "note": "[1024 bytes] CGB attributes for the full-screen UIs, cell for cell with wShadowTilemap in WRAM bank $03 -- the pair is what FlushCharDataTilemapChunk sends to $99e0 in VRAM banks 0 and 1. Seventeen ROM banks write cells here, which is why it is the default rather than a scoped variant. The page images the character-data screens patch from sit above it and keep their numeric addresses, being cells in two banks at once",
+       "note": "[1024 bytes] CGB attributes for the full-screen UIs, cell for cell with wShadowTilemap in WRAM bank $03 -- the pair is what FlushCharDataTilemapChunk sends to $99e0 in VRAM banks 0 and 1. Seventeen ROM banks write cells here, which is why it is the default rather than a scoped variant. The page images the character-data screens patch from sit above it and keep their numeric addresses, being cells in two banks at once. The three bank $1e ranges are the EXP award screen's first argument to a plane writer that selects both banks itself -- FillTilemapRun stores the tile under WRAM bank $03 and the attribute under $02, WriteTextToTilemap and RenderProportionalTextAt likewise -- so at the head of DrawExpTotalPanel, DrawExpMessageWindow and the two message lines of DrawNextExpAwardMessage the live bank is the caller's ($06, or unprovable) and not the operand's. Each of those routines' later cells already render from a provable bank $02, only because FillTilemapRun happens to leave it selected on return",
        "size": 1024,
        "stride": [
         "TILEMAP_WIDTH",

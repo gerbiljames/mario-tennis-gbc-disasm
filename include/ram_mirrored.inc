@@ -22,8 +22,12 @@ def wActiveAttrmap equ $d400
 def wBehaviorMap equ $d400
 
 ; [992 bytes] Base stat-page rows for the character-data screen, one 31 x 32 cell plane in *each* of WRAM banks $02 and $03: bank $03 holds the tile half, bank $02 the CGB attribute half, cell for cell at the same addresses. LoadBasePageIntoWorkTilemap copies a row from here to the live screen twice, once per bank, which is why the two `ld hl` operands of that pair are the same word. Not an attribute map, despite falling where wShadowAttrmap sits for every other screen; the page slots proper start at wCharDataPageSlot1.
+; Bank $1c stages the stat-distribution screen's reveal bands in the same rows: BlitTilemapRunsFromTable takes a source base in `bc`, and the eight bands walk $d240, $d280, $d2d0, $d310, $d370, $d3e0 and $d410 -- rows 18 to 32 of one continuous plane, alternating column 0 and column 16 -- so band 8's base is this plane's first row. The 576 bytes from `+ 1 * TILEMAP_WIDTH + 16` on are wCharDataScreenBackup, a save area rather than page content, which is why that address is a variant of its own above.
 ; The three instruction ranges are bank $1d's cell arguments, handed to CharDataScreen_WriteStatNumber and ApplyTilemapPatchList exactly like wCharDataScreenCell's and with the same consequence: WRAM bank $06 is live at the reference, so those scopes name no wram_bank and let the callee pick the plane.
 def wCharDataPagePlane equ $d400
+
+; [576 bytes] Snapshot of the visible screen -- 18 rows of 32 cells, one copy in each of WRAM banks $02 and $03 -- taken once at the top of AnimateCharDataStatsReveal and copied back before every step of the reveal, so each step redraws its bands over the same clean background. The 576 comes from CopyMemoryFast's `c` being a count of 16-byte blocks, not of bytes: `ld c, $24` is 36 blocks. Same size as wCharDataPageSlot1-3, and it lands inside wCharDataPagePlane's extent, but it is a save area rather than page content -- the plane's rows above it ($d400-$d42f) are band 8's staging row and the stat pages patch cells straight through $d430 while this snapshot is not live.
+def wCharDataScreenBackup equ $d430
 
 ; [144 bytes] One 3 x 3 tile mugshot, decompressed from the entry CharMugshotGfxPointers holds for the character id in a. CopyMugshotBufferToVram sends all nine tiles to the VRAM address its caller passes in de.
 def wMugshotBuffer equ $d600

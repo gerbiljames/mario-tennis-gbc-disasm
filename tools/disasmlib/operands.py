@@ -36,9 +36,13 @@ SRAM_IMM_SITES = {0x16d49}
 # and FormatDecimalNumberUnsigned subtract (each sits beside a `ld bc, $2710`), and it sits two instructions from a real wTextArgShortTextQueue
 # pointer setup in the same routine.
 # $c350 at 00:$282f is WaitSerialTransfer's timeout, counted down with `dec bc`.
+# $d8f1 at 0d:$41f4 and 0d:$426f is -9999, the minigame score cap: both are
+# `ld hl, $d8f1 / add hl, de` on wMinigamesCurrentScore, one testing for equality
+# and one branching on the carry to clamp the score to `ld de, $270f`.
 # Keyed by flat offset, so only these exact instructions stay numeric.
 RAM_IMM_IS_CONSTANT = {
     0x0199d, 0x01a40, 0x0282f, 0x010dc, 0x084ce, 0x1531d, 0x212fb, 0x22b5e,
+    0x341f4, 0x3426f,
     0x352b6, 0x3577b, 0x35c0b, 0x35da0, 0x35e7d,
     0x75165, 0x75337, 0x75542, 0x75699,
 }

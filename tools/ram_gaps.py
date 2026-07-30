@@ -32,6 +32,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from disasmlib.ram import load_traced_wram_banks, ram_field_size
+from disasmlib.rom import offset_to_cpu
 from disasmlib.operands import RAM_IMM_IS_CONSTANT
 
 OFF = re.compile(r";\s*\$([0-9a-f]{4})\s*$")
@@ -47,7 +48,12 @@ def flat(rom_bank, addr):
 
 
 def load_symbols(path="ram_unions.json"):
-    """{wram bank: [(rom bank or None, [(addr, size)])]} from the union file."""
+    """{wram bank: [(rom bank or None, rng or None, [(addr, size)])]}.
+
+    `rng` is the scope's `[start, end)` instruction range where it has one. It
+    has to be carried: a scope that pins a range covers only the sites inside
+    it, and treating one as whole-bank coverage reports a site outside the range
+    as already resolvable, which is the opposite of true."""
     by_bank = collections.defaultdict(list)
     for u in json.loads(Path(path).read_text())["unions"]:
         for v in u.get("variants", []):
@@ -55,7 +61,10 @@ def load_symbols(path="ram_unions.json"):
                     for k, e in v["symbols"].items()]
             for s in v.get("scopes", []):
                 if "wram_bank" in s:
-                    by_bank[int(s["wram_bank"], 0)].append((s.get("bank"), syms))
+                    rng = ((int(s["start"], 0), int(s["end"], 0))
+                           if "start" in s and "end" in s else None)
+                    by_bank[int(s["wram_bank"], 0)].append(
+                        (s.get("bank"), rng, syms))
     return by_bank
 
 
@@ -100,8 +109,10 @@ def main():
             buckets["mirrored"] += 1
             continue
         b = next(iter(banks))
-        covers = [rb for rb, syms in by_bank.get(b, [])
-                  if any(s <= addr < s + sz for s, sz in syms)]
+        cpu = offset_to_cpu(at) if rom_bank else at
+        covers = [rb for rb, rng, syms in by_bank.get(b, [])
+                  if any(s <= addr < s + sz for s, sz in syms)
+                  and (rng is None or rng[0] <= cpu < rng[1])]
         if not covers:
             buckets["unclaimed"] += 1
             unclaimed[(b, addr)] += 1

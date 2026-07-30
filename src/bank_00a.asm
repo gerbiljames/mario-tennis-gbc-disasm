@@ -5244,7 +5244,7 @@ AdvanceSceneTileAnimation:
 	ret ; $6595
 InitMinigameTargets:
 	wram_bank $04 ; $6596
-	ld hl, $dc00 ; $659c
+	ld hl, wMinigameTargets ; $659c
 	ld c, $10 ; $659f
 	call ClearMemory16 ; $65a1
 	ld a, $01 ; $65a4
@@ -5269,7 +5269,7 @@ UpdateMinigameTargets:
 	ld a, [wMinigameTargetsActive] ; $65c3
 	and a ; $65c6
 	ret z ; $65c7
-	ld hl, $dc00 ; $65c8
+	ld hl, wMinigameTargets ; $65c8
 	ld c, $0f ; $65cb
 .targetLoop:
 	call UpdateMinigameTarget ; $65cd
@@ -6081,7 +6081,7 @@ MinigameTargetFormation8ScriptPtrs:
 	dw MinigameTargetFormation8Script3 ; record 3
 	dw $0000 ; record 4
 SpawnMinigameTargetsFromList:
-	ld bc, $dc00 ; $6d52
+	ld bc, wMinigameTargets ; $6d52
 .spawnLoop:
 	ld a, [hl+] ; $6d55
 	ld e, a ; $6d56

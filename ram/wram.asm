@@ -2386,6 +2386,7 @@ SECTION "WRAMX bank 2", WRAMX[$d000], BANK[2]
 ;   $d000-$dfff  wMapBuffer64  [mirrored with bank 3]
 ;   $d400-$d7df  wCharDataPagePlane  [mirrored with bank 3]
 ;   $d400-$d7ff  wActiveAttrmap  [mirrored with bank 5]
+;   $d430-$d66f  wCharDataScreenBackup  [mirrored with bank 3]
 ;   $d600-$d68f  wMugshotBuffer  [mirrored with bank 3, 4]
 ;   $d7e0-$da1f  wCharDataPageSlot1  [mirrored with bank 3]
 ;   $da20-$dc5f  wCharDataPageSlot2  [mirrored with bank 3]
@@ -2413,8 +2414,14 @@ SECTION "WRAMX bank 2", WRAMX[$d000], BANK[2]
 ; bank 0 and not the attribute plane the whole-bank variant below would name
 ; it. Bank $0a's LoadCourtSceneGraphics decompresses the court into the
 ; saved pair at $d800/$dc00 before the match starts.
+; Bank $0d gets a whole-bank scope like $08's, and it is the one bank that
+; names all four planes in one routine: LoadMatchUiCourtTilemap pushes the
+; target-zone overlay's tile and attribute halves twice each and CopyTextRects
+; them to $d12b, $d92b, $d52b and $dd2b, tiles to the two tilemaps and
+; attributes to the two attrmaps. QueueMinigameHudVRAMCopy says the same with
+; the VRAM bank bit: $d120 goes to $9920 and $d520 to $9920 + VRAM_BANK1.
 UNION
-; match court planes (banks $08/$06/$0a)
+; match court planes (banks $08/$0d/$06/$0a)
 ; [1024 bytes] The court tilemap the match renders from; UploadCourtTilemap sends it to $9800 in VRAM bank 0. Held in WRAM bank $02 rather than the usual $03 because the match owns bank $03 for other things
 wCourtTilemap:: ds 1024
 ; [1024 bytes] Its CGB attribute plane, cell for cell, uploaded to $9800 in VRAM bank 1 by UploadCourtAttrmap
@@ -2432,7 +2439,7 @@ wMapScrollPlane0:: ds 1024
 wMapScrollPlane1:: ds 1024
 NEXTU
 ; screen attribute plane
-; [1024 bytes] CGB attributes for the full-screen UIs, cell for cell with wShadowTilemap in WRAM bank $03 -- the pair is what FlushCharDataTilemapChunk sends to $99e0 in VRAM banks 0 and 1. Seventeen ROM banks write cells here, which is why it is the default rather than a scoped variant. The page images the character-data screens patch from sit above it and keep their numeric addresses, being cells in two banks at once
+; [1024 bytes] CGB attributes for the full-screen UIs, cell for cell with wShadowTilemap in WRAM bank $03 -- the pair is what FlushCharDataTilemapChunk sends to $99e0 in VRAM banks 0 and 1. Seventeen ROM banks write cells here, which is why it is the default rather than a scoped variant. The page images the character-data screens patch from sit above it and keep their numeric addresses, being cells in two banks at once. The three bank $1e ranges are the EXP award screen's first argument to a plane writer that selects both banks itself -- FillTilemapRun stores the tile under WRAM bank $03 and the attribute under $02, WriteTextToTilemap and RenderProportionalTextAt likewise -- so at the head of DrawExpTotalPanel, DrawExpMessageWindow and the two message lines of DrawNextExpAwardMessage the live bank is the caller's ($06, or unprovable) and not the operand's. Each of those routines' later cells already render from a provable bank $02, only because FillTilemapRun happens to leave it selected on return
 wScreenAttrmap:: ds 1024
 NEXTU
 ; character record scratch (banks $18/$1b/$3b)
@@ -2451,6 +2458,7 @@ SECTION "WRAMX bank 3", WRAMX[$d000], BANK[3]
 ;   $d000-$d7ff  screen tilemap
 ;   $d000-$dfff  wMapBuffer64  [mirrored with bank 2]
 ;   $d400-$d7df  wCharDataPagePlane  [mirrored with bank 2]
+;   $d430-$d66f  wCharDataScreenBackup  [mirrored with bank 2]
 ;   $d600-$d68f  wMugshotBuffer  [mirrored with bank 2, 4]
 ;   $d7e0-$da1f  wCharDataPageSlot1  [mirrored with bank 2]
 ;   $d800-$d80f  7 overlays: equipment select / name entry / match results / +4 more
@@ -2810,7 +2818,7 @@ SECTION "WRAMX bank 4", WRAMX[$d000], BANK[4]
 ;   $da00-$da31  actor engine
 ;   $dac0-$dae9  actor engine
 ;   $daea-$daf7  actor engine
-;   $dc00-$dc7f  minigames
+;   $dc00-$dcd1  minigames / minigame targets
 ;   $dc00-$dfff  wIntroCharactersAttrmap  [mirrored with bank ]
 ;   $dcf0-$dcff  minigame targets
 ;   $dd00-$dd23  match ball history ring
@@ -2904,6 +2912,13 @@ wActorScriptBank:: db
 ; CallModeHook, and ClearMinigameActors / SetMinigameActorHandler /
 ; SetMinigameActorPosition each select it again, but the hooks are reached
 ; through a far pointer so compute_wram_bank cannot follow the edge.
+; Bank $0a lays a second array over the same bytes with a different record
+; size: fifteen 14-byte target records where bank $0d has seven 16-byte
+; actors. Both start with bit 0 of +$00 as the live flag, but the strides
+; and the field offsets differ (bank $0a's spawn writes its script pointer
+; at +$04, bank $0d's handler pointer goes to +$0e), so they are two
+; overlays rather than one structure.
+UNION
 ; minigames (bank $0d)
 ; [112 bytes] Seven 16-byte actor records, cleared as a block by
 ; ClearMinigameActors. Fields, addressed through bc by the helpers:
@@ -2918,8 +2933,14 @@ wMinigameActors:: ds 112
 ; code addresses by literal address rather than through bc, which is why
 ; its fields show up as wMinigameSceneActor + n.
 wMinigameSceneActor:: ds 16
+	ds 82
+NEXTU
+; minigame targets (bank $0a)
+; [210 bytes] Fifteen 14-byte target records for the target-shot minigames. UpdateMinigameTargets walks exactly fifteen of them with `ld de, $000e` between records, and SpawnMinigameTargetsFromList fills them from a formation's script-pointer list with the same stride. Fields, addressed through bc: +$00 flags (bit 0 = live), +$01 the delay ActivateMinigameTarget zeroes, +$04 the target script pointer. UpdateMinigameTarget copies the record it is working on out to wMinigameTargetWork and back. InitMinigameTargets clears with `ld c, $10` through ClearMemory16, i.e. 256 bytes -- past the array's end and over wMinigameTargetWork as well.
+wMinigameTargets:: ds 210
+ENDU
 
-	ds 112
+	ds 30
 
 ; Working copy of the minigame target actor being updated (WRAM bank $04),
 ; the same pattern as wObjSlotWork: UpdateMinigameTarget copies the slot in,
@@ -3303,7 +3324,7 @@ SECTION "WRAMX bank 6", WRAMX[$d000], BANK[6]
 ;
 ;   $d000-$d029  7 overlays: star warp transition / debug character viewer / results continue prompt / +4 more
 ;   $d000-$d3ff  wCollisionMap  [mirrored with bank ]
-;   $d02a-$d219  8 overlays: star warp transition / trophy EXP awards / character-data screen / +5 more
+;   $d02a-$d219  9 overlays: star warp transition / trophy EXP awards / character-data screen / +6 more
 ;   $d230-$d259  scrolling text screen / EXP award screen
 ;   $d400-$d5ff  story slot signatures / unlock flags block
 ;   $d400-$d7ff  wBehaviorMap  [mirrored with bank ]
@@ -3538,6 +3559,13 @@ wExpRedrawPending:: db
 wExpInputRepeating:: db
 ; [8-bit] $ff when a level-up has just happened; TickLevelUpJingle plays the jingle off it and clears it
 wExpLevelUpFanfare:: db
+NEXTU
+; pending EXP award list (banks $1d/$1e)
+	ds 296
+; [10 bytes] Five 16-bit EXP amounts, one per line of the results screen's award list: 0 story, 1 exhibition, 2 linked, 3 match/minigame, 4 trophy. RecordDrillResult takes the line in `b` and dispatches through DrillSubHandlers_1d, each handler storing `de` at this base + 2 * line; ClearDrillResultBuffer zeroes all 15 bytes of the pair. DrawNextExpAwardMessage reads the word back with split-base addressing (`add $52 / adc $d1`) and skips a line whose amount is zero, and HasPendingExpAwards ORs the five words to decide whether the screen is worth showing at all.
+wPendingExpAwardAmounts:: ds 10
+; [5 bytes] One byte per award line, the `c` argument of RecordDrillResult. DrawNextExpAwardMessage adds it to the line's base text id from DrawNextExpAwardMessageTable, so it picks between wordings of the same message -- ShowExpAwardForMatch passes 0, 2, 3 or 4 for a normal, Island Open, practice or Dream match, and the trophy pass numbers the six trophy groups.
+wPendingExpAwardVariants:: ds 5
 NEXTU
 ; EXP award screen (bank $1a)
 	ds 295
