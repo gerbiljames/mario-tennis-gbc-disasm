@@ -3156,7 +3156,7 @@ SeniorDoublesRank2Victory:
 	script_get_actor_state ACTOR_PARTNER ; $6f59
 	ld c, l ; $6f5e
 	ld b, h ; $6f5f
-	ld de, $d000 ; $6f60
+	ld de, wActors ; $6f60
 	farcall AttachActorStepMover ; $6f63
 	farcall EndCutsceneScriptMode ; $6f66
 	ret ; $6f69

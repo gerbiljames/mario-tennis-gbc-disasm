@@ -10400,3 +10400,43 @@ legitimate playthrough or the debug harness, and the debug harness is what
 breaks the game". Of those two, the playthrough is the one that does not
 corrupt anything — and with the Trace Logger it can now run at full speed for as
 long as someone is willing to play.
+
+## Ordinary gameplay has saturated (2026-07-31)
+
+A third native capture: 27 logs, 29,317 offsets across 29 banks, **100% mask
+coverage** again, and this one exercised the character-data and EXP screens
+heavily (`$1c` 2,559 offsets, `$1d` 1,658, `$1e` 1,287).
+
+```
+                                    before    after
+sites with an observed WRAM bank    71,938   72,475
+bare $dxxx operands                    325      324
+```
+
+**One operand** — another `wActors` cell. Three consecutive captures have now
+returned 2, 2 and 1. That is saturation, and the `$1c` result shows why: the
+session covered 2,559 offsets in that bank and its unproven count did not move
+from 12, because the routines holding bare operands were not among the paths
+taken. Coverage of a *bank* is not coverage of the *routines that need it*.
+
+Where the remaining 296 sit:
+
+| bank | sites | what stands between us and them |
+| --- | ---: | --- |
+| `$1b` | 113 | the Island Open ranking board; 5 are provably unreachable |
+| `$03` | 37 | **18 are provably unreachable** (the superseded save-repair family) |
+| `$05` | 22 | text paths ordinary dialogue does not take |
+| `$3b` | 16 | deeper trophy/N64 screens |
+| `$1c` | 12 | `SetupCharDataScreen`, not on the visited paths |
+| rest | ~96 | one or two per routine, spread thin |
+
+Subtracting the 29 sites proven to be in code that cannot execute leaves ~267
+genuinely reachable, and the largest single block of those needs one specific
+thing: **a legitimate Island Open run**, which would take a real bite out of the
+113 in bank `$1b` without any forced state.
+
+The tooling side is finished. Three captures, 130 logs, every one converted at
+100% mask coverage with zero rejected seeds and zero new instructions. What
+remains is not a capture problem — it is that the unvisited screens are
+unvisited, and the cheapest honest way to reach the biggest cluster is to play
+the tournament with the Trace Logger running.
