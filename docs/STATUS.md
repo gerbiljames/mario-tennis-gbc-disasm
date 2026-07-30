@@ -26,7 +26,7 @@ shape, not *twins*, and the shot banks are near-identical copies of each
 other, so a routine only one bank failed to execute reads as ordinary data
 until you diff it against its siblings.
 
-Everything below is **committed** (HEAD `87e58d7`); the whole history
+Everything below is **committed** (HEAD `aab4d9a`); the whole history
 rebuilds byte-perfect. Per-bank progress at any time: `python3
 tools/progress.py` (proven-code bytes, fill runs, label counts, human-named
 counts) and `tools/progress.py --unnamed <bank>` to list still-auto-named
