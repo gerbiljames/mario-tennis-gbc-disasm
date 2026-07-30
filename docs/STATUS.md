@@ -1,8 +1,8 @@
-# Project status — 2026-07-29
+# Project status — 2026-07-30
 
 ## Where things stand
 
-**~161.0K instructions / 424,745 bytes of proven code+structured source
+**~161.0K instructions / 425,889 bytes of proven code+structured source
 (20.3% of the 2 MiB ROM) disassembled; everything rebuilds byte-perfect**
 (`make compare` → OK against SHA-1
 `414ba58340a27fc27b127bc01455b32764151ff0`). 59 of 128 banks contain
@@ -26,7 +26,7 @@ shape, not *twins*, and the shot banks are near-identical copies of each
 other, so a routine only one bank failed to execute reads as ordinary data
 until you diff it against its siblings.
 
-Everything below is **committed** (HEAD `6dfc38b`); the whole history
+Everything below is **committed** (HEAD `7127476`); the whole history
 rebuilds byte-perfect. Per-bank progress at any time: `python3
 tools/progress.py` (proven-code bytes, fill runs, label counts, human-named
 counts) and `tools/progress.py --unnamed <bank>` to list still-auto-named
@@ -8240,3 +8240,244 @@ honestly, `--unnamed` is empty for every bank (which is the true state), and
 Seventeen representative names were checked against both patterns, including
 the regressions that matter: `DataPtr_5f_02`, `DataPtr_Data_5f_4c63` and
 `FarPtr_Func_10_4abc` must all still count as work, and do.
+
+## The immediates start naming themselves (2026-07-30)
+
+Every *symbol* in the ROM has had a curated name since 2026-07-26. The
+*immediates* did not: `include/constants.inc` defined 144 names in six families
+(joypad bits, actor facing, shot types, point outcomes, two menu-item id sets,
+save flags) and `constants.json` applied them at 266 sites. Everything else the
+game dispatches on — which court, which character, which location, which
+mini-game, which piece of music — was a bare `$xx` at every site.
+
+This pass names four more id spaces and applies them: **363 defs (up from 144),
+530 curated sites (up from 266), plus 443 sound-command operands** named by
+value rather than by site. Byte-perfect throughout, `tools/check.py` clean.
+
+| family | defs | sites | keyed on |
+| --- | --- | --- | --- |
+| `STORYLOC_*` | 42 (the whole space) | 103 | `wStoryModeCurrentLocation`, `wStoryReturnLocation` |
+| `GAMEMODE_*` | 11 (the whole space) | 49 | `wGameMode` |
+| `CHAR_*` + sentinels | 41 | 29 | character record `+$0b` |
+| `COURT_*` | 9 | 8 | `wCurrentlyUsedCourt` |
+| `MINIGAME_*` / `MATCHLIST_*` / `MARIOGAME_*` | 43 | 75 | `wCurrentMinigameStoryMatch`, `wSelectedMinigame` |
+| `BGM_*` / `SFX_*` / `JINGLE_*` | 57 | 443 | the `sound` command's inline byte |
+
+The site rule was the same in each case and it is deliberately narrow: an
+immediate is only tagged where the *code* proves it is an id of that family —
+the instruction directly before the store into the variable, a `cp` reachable
+from the load without `a` being clobbered in between, or a table row whose
+consumer indexes by it. `ld a, $05` in a routine that never touches the
+variable is not a location id, and this project has already been bitten once by
+a name applied to something that turned out to be a screen cell.
+
+### Two id spaces close, which is itself the evidence
+
+`GetStoryLocationRecordPtr` (`0a:$574e`) turns an id into
+`StoryLocationTable_0a + id*6`, the table is 252 bytes = 42 records, and
+`GetStoryLocationCount` returns `$2a` — so the space is exactly `$00`-`$29`,
+with record *i* describing location *i*. Better, each id **names itself
+in-game**: `LoadStoryLocationHeader` (`0a:$5142`) computes the popup's text id
+as `$0179 + id`, so the constants are the game's own wording rather than an
+inference. `DrawStoryResultsHeader` (`1e:$448c`) runs the same arithmetic on
+`wStoryReturnLocation`, which is how that variable is known to hold ids from
+the same space.
+
+`wGameMode` closes the same way: two tables index it **unguarded** and both are
+exactly 11 entries long (`SaveQuitMenuIdByGameMode` at `06:$44f3`,
+`ScoreboardModeGfxPointers` at `06:$5cc9`), so mode `$0b` does not exist. What
+each value *means* came from the scoreboard word-art the second table selects —
+the graphic spells the mode out — cross-checked against two independent
+sources: `Singles/DoublesMatchSettingsTable_0a`'s mode field paired with
+`RewardFlagListMode{0,1}_1e`'s per-match completion flags (mode `$02` rows get
+`FLAG_WON_ISLAND_OPEN_*`, the three mode-`$0a` rows get
+`FLAG_WON_DREAM_MATCH_*`), and the drill/mini-game configs, which copy record
+byte `+3` into `wGameMode` (`$05` for all 18 bank-`$0b` drills, `$06`/`$07`/`$08`
+for the Tennis Machine, Wall Practice and Mario mini-game configs).
+
+One slot in `ScoreboardModeGfxPointers` is unreachable filler: record 0
+duplicates record 1, but `LoadScoreboardModeGfx` only runs while a match is
+being set up and mode 0 means *no* match. It is not evidence that mode 0 is a
+ranking match.
+
+### The community RAM notes are wrong in two places
+
+`docs/ram_map.md` carries RetroAchievements code notes for the same two
+variables, and where they disagree with the code the code decides:
+
+* **Location `$1c` is "Special Court", not "Castle Court".** That is the popup
+  string for `$1c`; the note's own BGM list puts Castle Court's music (`$12`) on
+  id `$1d`, and `$1c`'s record selects BGM `$08`. A mix-up between adjacent ids.
+* **`wGameMode $09` is missing from the notes entirely.** It is the link-cable
+  versus match: set at `38:$7448`, one instruction after
+  `farcall RunLinkCharSelectScreen`, and every mode-`$09` test in banks
+  `$08`/`$16`/`$1e` either reads `wLinkMatchRole` immediately or bypasses the
+  story/save path.
+
+`ram_map.json`'s descriptions still carry both errors, and `ram/wram.asm`'s
+comments are generated from it, so the source now contradicts itself in two
+comments until that is fixed.
+
+### The sound ids needed a renderer, not a curated site list
+
+The sound id space decodes cleanly: **one 8-bit space split at `$50`**.
+`PlaySound` (`$3297`) reads `$3151 + (id - 1) * 2` below `$50` and
+`$31b5 + (id - $50 - 1) * 2` above, so `$01`-`$32` are the 50 entries of the
+first index table (3-4 voices on channels 2-5: songs) and `$51`-`$c1` the 113 of
+the second (1-2 voices on channels 0-1: effects). Id `$00` stops the music and
+`$50` stops the effects, each clearing its own half. `$40`-`$45` are jingles,
+claimed by the command handler (`$2fb3`) before the table lookup; that handler
+also latches every id below `$40` into `wCurrentBGM`, which is what makes the
+`wCurrentBGM` values *the same numbers* — so the RA note's BGM list and the
+`BGM_*` constants describe one space, not two.
+
+What blocked applying it is structural, and worth recording because it is not
+obvious from the id space: **`constants.json` cannot reach these sites.** Only
+two immediates in the whole ROM feed a sound id to a call the curated-offset
+mechanism can tag. The other 630 go through the `sound` macro — `rst $08` plus
+one inline byte, rendered in `core.py`'s decoder — whose operand is not an
+instruction immediate at all.
+
+So the substitution belongs to the *value*, not the site, which is exactly
+right for a global id space: `render_operand` now takes a `{id: name}` map built
+in the emitter from `constants.inc`'s `BGM_`/`SFX_`/`JINGLE_` defs (via the
+existing `_enum_values` helper), and a curated `constants.json` entry still wins
+above it for a site the id space does not explain. Adding a def to
+`constants.inc` now names every site of that id with no further work — and
+because the three prefixes cover one space, `_sound_id_names` **raises** rather
+than silently picking a winner if two of them ever claim one value.
+
+**443 of the 630 `sound` sites are named; 187 are not**, and the unnamed set is
+concentrated: `$96`-`$99` (101 sites, all in cutscene and location init
+scripts), `$78` and `$80` (32, all in bank `$1b`'s `RankingBoardAnimState_*`),
+`$a2` (9), `$72` (7, oddly in the serial encode/decode routines). Each of those
+appears in several sibling contexts that do not discriminate between them, so
+they need the sound test or the emulator, not more reading.
+
+## The pointer targets that fell out of their tables (2026-07-30)
+
+The generator has been printing this note for a while:
+
+> note: 18 pointer targets are named at the end of a declared table, so what
+> they point at renders as an anonymous blob (…); declaring them in
+> data_tables.json keeps the structure.
+
+All 18 are now declared, and the note is gone: **blobs 4,907 → 4,863**, and
+1,144 bytes moved from anonymous `INCBIN` to structured source (`records:2`,
+`bytes:4`, `sprite_template`, `save_flag_ids` and friends), with 11 new labels
+for the sub-tables that surfaced — bank `$1b`'s ranking-marker coordinate sets
+are three tables of four 4-byte sets each, which was invisible while the whole
+run was one blob.
+
+The load-bearing part is what was *not* declared. A truncated pointer target is
+only missing a spec if it is really structure; if the bytes are a graphics
+payload, a named `INCBIN` is already the correct rendering and a `records:`
+declaration over it would be a lie — the same mistake that cost 2,359 bytes of
+fake "structured source" in bank `$06` on 2026-07-22. The check that separates
+them now lives in the emitter (`_is_payload`) and takes both proofs from the
+*consumer* rather than from the bytes looking plausible:
+
+* the stream LZ-decodes using exactly its own extent (so it is what
+  `DecompressData` is given), or
+* the bank sizes it with `(next - name) / 16` — the 16-byte tile count
+  `QueueVRAMCopy` takes, so it is a raw tile stream.
+
+Payloads that pass either test are no longer reported as truncated at all,
+which is why the note went to zero without 18 new declarations.
+
+### Both self-reports now name names
+
+Two generator notes counted things without identifying them, and both were
+hiding work:
+
+* The truncated-target note listed three names and `+15 more`. It now prints
+  every offset, name and enclosing spec.
+* `note: N coverage seeds decoded invalid/conflicting; skipped` printed only
+  `N`. It now prints each offset, why it was rejected, and **which dump claimed
+  it** — `load_coverage` collects `{offset: [dump name, …]}` for exactly this.
+
+That immediately settled one of them. `0x6dfe2` (`$1b:$5fe2`) was the *low
+operand byte* of the `ld hl, CharSelectRosterTable` that opens
+`LoadCharSelectRosterTable` at `$5fe1` — already seeded on the line above — in a
+hand-authored static seed file. Removed, with the reason recorded in the file's
+`_comment`. **The count is 9 → 8**, and the survivors are now addressable:
+`0x1d1a0` is the long-known phantom, and the other seven are two sites in bank
+`$07` and five in bank `$08`/`$1e`, every one of them contributed by a
+`tracelog2cov` conversion (`native_seg*.json`, `session4_native.json`,
+`story*.json`) rather than by a Lua dump — which points at the converter's
+line-rejection rather than at the ROM.
+
+## Driving the game found no new code, and that is the answer (2026-07-30)
+
+A trace of a complete exhibition match — set-up, the match itself, the loss, the
+win/lose ceremony, the stats screen and the way back to the menu — plus an
+overworld capture added **43 new coverage seeds and zero new instructions**.
+Every byte those two sessions executed was already proven code.
+
+That is the expected result now, and it is worth stating plainly: the 2026-07-24
+ROM-wide code-shape screen and the twin-bank pass between them found the code
+the traces had missed, so *new coverage is no longer a source of new code*. What
+it is still a source of is **WRAM-bank evidence**, and there the two dumps did
+pay: sites with an observed bank went 53,723 → **54,610**, and the number of
+sites where the trace resolves a bank the dataflow could not went 14,913 →
+**15,332**.
+
+None of those 419 landed on one of the 572 bare `$dxxx` operands, so
+`tools/ram_gaps.py` is unchanged (524 unproven / 28 rom-scoped / 20 mirrored).
+That is consistent rather than contradictory: knowing a site's bank only changes
+the rendering if a union *names* that address in that bank, and these sites are
+in code whose addresses are already named. The remaining 524 need coverage of
+the screens nobody has driven — the save editor, the exp screen, most
+mini-games — not more coverage of the match.
+
+## Three subsystem references (2026-07-30)
+
+`docs/` held six files against an 8,200-line `STATUS.md`, which is a
+*chronological log*: everything known about the match engine or story mode was
+in it, in discovery order, findable only by grep. Three references now cover the
+three biggest subsystems, organised for a reader opening the source cold:
+
+| file | lines | covers |
+| --- | --- | --- |
+| `docs/match_engine.md` | 1,583 | the match state machine and frame order; fixed-point formats, world scale and sign conventions; the ball and its physics step; the swing → trajectory chain and the bank `$20` trajectory tables; the 15 shot types; the per-character struct and state machine; the AI; scoring; doubles; the serial link |
+| `docs/screens_and_ui.md` | 1,179 | the frame loop and VBlank order; `QueueVRAMCopy` as the only door into VRAM; the tilemap pipeline and its two plane-pairing conventions; the `$4000` slot convention and bank `$39`'s shared screen library; shadow OAM; palettes and fades; the text/window engine; menu trees and cursor walkers |
+| `docs/story_mode.md` | 806 | entry and top-level flow; the location loop; the location record and the `map_tree`'s four record grammars (`map_entry`, `map_actor`, `map_script`); scenes, collision and camera; NPCs; the pause menu; the two flag spaces; the ranking ladder and tournament arc; the character record, stats, EXP and the save signature |
+
+Each ends with its own limitations section, and none of it was confirmed by
+running the game — all three are static reading, and they say so.
+
+They were checked mechanically before being committed, because a reference
+nobody can verify is worse than no reference: of **1,081 symbol-shaped citations
+across the three files, every one resolves** to a label in `src/`, an entry in
+`labels.json`, or a def in the includes, once macro names, data-spec kinds and
+record field names are excluded. Six citations in `match_engine.md` were spelled
+without their bank suffix (`SetBallTargetFromAim` for `SetBallTargetFromAim_20`)
+and were corrected. Sampled substantive claims hold too — the "unreachable
+queue-compaction tail" at `$00:$0595`-`$05ae` really does sit after a `ret` with
+no label of its own, so nothing can reach it.
+
+### What this session did not do
+
+Stated because the absence is easy to mistake for a clean bill of health:
+
+* **The `mirrored` (20) and `rom-scoped` (28) `ram_gaps.py` buckets are
+  untouched.** They remain the two actionable WRAM naming buckets.
+* **No new entries in `docs/bugs.md`.** A systematic sweep for write-only
+  variables, unreachable routines and low-address stores was started and
+  produced nothing verified. The three new references each carry an
+  oddities/open-questions section whose contents are candidates for it — the
+  bank `$00` queue tail above, `CopyMapToScrollBuffers` clearing the region it
+  just expanded, and two declared `map_actor` extents that run past their
+  `$ff` sentinel.
+* **`ram_map.json` still carries the two wrong descriptions** above.
+* **Three renames are recommended and not applied**:
+  `DrawMarioExhibitionResultsHeader` (`1e:$4336`) handles mode `$0a`, the Dream
+  Match; `EndingCreditsSequenceTileList` (`0a:$6e40`) holds no tiles but 21
+  `(location, entry point)` pairs and an `$ffff` terminator.
+* **The `map_scripts` spec cannot express a location id.** `RunLocationExit`
+  (`0a:$5637`) copies `map_script` field `arg0` into
+  `wStoryModeCurrentLocation`, so most location transitions live in
+  ExitTriggers tables — which is why 23 of the 42 location ids have no code
+  site at all. One spec covers all four `map_script` roles and `arg0` only
+  means a location in one of them, so tagging them needs a `role` parameter on
+  `render_map_table`.
