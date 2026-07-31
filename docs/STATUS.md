@@ -26,7 +26,7 @@ shape, not *twins*, and the shot banks are near-identical copies of each
 other, so a routine only one bank failed to execute reads as ordinary data
 until you diff it against its siblings.
 
-Everything below is **committed** (HEAD `485585e`); the whole history
+Everything below is **committed** (HEAD `718042c`); the whole history
 rebuilds byte-perfect. Per-bank progress at any time: `python3
 tools/progress.py` (proven-code bytes, fill runs, label counts, human-named
 counts) and `tools/progress.py --unnamed <bank>` to list still-auto-named
@@ -10675,3 +10675,67 @@ nameable — `wStoryModeEntryPoint`'s 171 location-scoped sites,
 boolean, `wDrillLessonResult`'s per-drill codes, and the `wBriefing*` screen
 coordinates — so the pass has reached the point where the remaining bare hex is
 bare for a reason.
+
+## Scanning for unknown blobs: the streams were glued to what followed them (2026-07-31)
+
+A blob-by-blob audit, on the theory that "every blob is classified" is a claim
+about *labels* and not about *bytes*. Three scans, and the second one found a
+systemic defect.
+
+**Scan 1 — does every blob have a name?** Yes: of 4,636 `INCBIN`s, exactly one
+did not start at a label (13 bytes of RST-vector padding under `Rst08`), and
+the only vaguely-named ones were three, now identified (below). So the label
+side of the claim held.
+
+**Scan 2 — does each blob's content match what its name says?** For compressed
+data this is decidable, and it is where the claim broke. A blob holding an LZ
+stream was carved to the *next reference*, not to the end of the stream, so
+anything sitting between the two was silently glued onto it — and because the
+blob was then not named `lz_`, `make check` never decoded it, so nothing could
+notice. `tools/disasmlib/carve.py` now backtracks from every
+`call DecompressData` to the `ld hl, imm` that set the source and decodes it:
+**173 streams sized from their own call sites, 786 → 790 machine-verified where
+619 were before.** Six are demoted again by a validation pass because a later
+carve puts a boundary inside them — believe the boundary, drop the claim.
+
+What the splits exposed, every byte of it previously part of some other symbol:
+
+| where | what it is |
+| --- | --- |
+| `$6b:$7561` | an 8-byte routine: `ld a, [wCutsceneStepTimer] / inc a / ld [..], a / ret` |
+| `$18:$57f4` | a 14-sprite `QueueSpriteTemplate` strip, `$80` terminator and all |
+| `$1c` ×5 | one page-column tilemap per character-data page |
+| `$28:$6d14` | eight bytes that read as one 4-colour palette, next to the palette block |
+| ×3 | runs of `$00` alignment padding, now `ds` instead of extracted ROM bytes |
+
+The bank `$1c` five are what prove the mechanism rather than merely suggesting
+it: each begins at *exactly* the byte after its stream's last, and
+`CharDataScreen_DrawPageColumnsTable1` — a 10-byte opaque blob until now — is
+the `dw` table that points at all five. It is declared `records:2` now, along
+with three more pointer tables that were sitting as `INCBIN`s (two stat-bar
+tables and the char-data flush-chunk table, whose structured siblings sat
+directly above them in the same file) and `CharSelectCursorTemplatePtrs`, whose
+four targets turn out to be one corner sprite drawn four times with the flip
+bits — the whole selection box is 4 records and a terminator.
+
+**Scan 3 — the names that admitted they were guesses.** `PortraitGfxUnknown_16`
+and `MugshotGfxUnknown_1b` are the *same* 126-byte stream, and rendering it
+answers the question: a framed question mark, the placeholder every roster id
+without art of its own points at. `CharSelectMiscGfx` decompresses to ten tiles
+of Japanese label glyphs, reading as court-surface stats (ball pace, bounce) —
+what the court-select screen shows in English. It is record 10 of
+`TileBlockPtrs_39`, no call site passes that record number, and it now sits
+with the other unused JP tiles as `UnusedJpCourtStatLabelTiles_18`.
+
+### What the scans say is left
+
+Sixty blobs decode cleanly as whole LZ streams but are reached through pointer
+tables rather than an `ld hl, imm`, so the call-site pass cannot see them and
+their extents are fixed at emit time rather than in the carve. They are already
+correctly named and sized — `MatchMenuItemGfx_*`, the scoreboard word art —
+and what they would gain is automated verification, not structure. Promoting
+them wants the emitter's boundary calculation, not another heuristic.
+
+Two invariants worth stating now that the sweep is done: no blob's content
+contradicts its name that any content-shape test can detect, and every declared
+LZ stream in the ROM decodes exactly within its extent.
