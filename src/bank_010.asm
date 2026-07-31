@@ -3303,7 +3303,7 @@ AcademyWingFacingScripts_10:
 	db $ff
 AcademyWingFacing02_10:
 	ld a, [wMapSceneStage] ; $62d0
-	cp $01 ; $62d3
+	cp ACADEMYWINGSTAGE_SENIOR_CHAMP ; $62d3
 	jr nz, AcademyWingFacing01_10 ; $62d5
 	farcall BeginCutsceneScriptMode ; $62d7
 	script_player_speed $0020 ; $62da
@@ -3384,7 +3384,7 @@ AcademyWingInitScript_10:
 .byStage:
 	call SetAcademyWingDialogueStage_10 ; $6462
 	ld a, [wMapSceneStage] ; $6465
-	cp $03 ; $6468
+	cp ACADEMYWINGSTAGE_COMPLETE ; $6468
 	jr nz, .stage4 ; $646a
 	ldh a, [hRomBank] ; $646c
 	ld hl, AcademyWingInitActors1_10 ; $646e
@@ -3403,7 +3403,7 @@ AcademyWingInitScript_10:
 	script_face $03, FACE_UP ; $6497
 .stage4:
 	ld a, [wMapSceneStage] ; $649e
-	cp $01 ; $64a1
+	cp ACADEMYWINGSTAGE_SENIOR_CHAMP ; $64a1
 	jr nz, .stage5 ; $64a3
 	script_set_position $03, $19a0, $32c0 ; $64a5
 .stage5:
@@ -4085,7 +4085,7 @@ ActorScript_10_0:
 	as_halt
 AcademyWingInstallDoorTriggers_10:
 	ld a, [wMapSceneStage] ; $7429
-	cp $03 ; $742c
+	cp ACADEMYWINGSTAGE_COMPLETE ; $742c
 	jr nz, .done ; $742e
 	ld a, $11 ; $7430
 	ld d, $20 ; $7432
@@ -4112,29 +4112,29 @@ AcademyWingHideActorByProgressFlag_10:
 .done:
 	ret ; $7471
 SetAcademyWingDialogueStage_10:
-	ld a, $00 ; $7472
+	ld a, ACADEMYWINGSTAGE_PRE_SENIOR_CHAMP ; $7472
 	test_flag FLAG_DOUBLES ; $7474
 	jr z, .checkFlag ; $7477
 	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_1 ; $7479
 	jr z, .step ; $747c
-	ld a, $01 ; $747e
+	ld a, ACADEMYWINGSTAGE_SENIOR_CHAMP ; $747e
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $7480
 	jr z, .step ; $7483
-	ld a, $02 ; $7485
+	ld a, ACADEMYWINGSTAGE_ISLAND_OPEN ; $7485
 	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $7487
 	jr z, .step ; $748a
-	ld a, $03 ; $748c
+	ld a, ACADEMYWINGSTAGE_COMPLETE ; $748c
 	jr .step ; $748e
 .checkFlag:
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $7490
 	jr z, .step ; $7493
-	ld a, $01 ; $7495
+	ld a, ACADEMYWINGSTAGE_SENIOR_CHAMP ; $7495
 	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $7497
 	jr z, .step ; $749a
-	ld a, $02 ; $749c
+	ld a, ACADEMYWINGSTAGE_ISLAND_OPEN ; $749c
 	test_flag FLAG_STORY_COMPLETE_SINGLES ; $749e
 	jr z, .step ; $74a1
-	ld a, $03 ; $74a3
+	ld a, ACADEMYWINGSTAGE_COMPLETE ; $74a3
 .step:
 	ld [wMapSceneStage], a ; $74a5
 	ret ; $74a8

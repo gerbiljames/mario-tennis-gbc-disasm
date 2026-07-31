@@ -225,14 +225,10 @@ def check_constants(rom, constants, defs, manifest, fail):
 
 
 # Routines that follow an actor-script blob with no label of their own, so
-# their local labels bind to the *script's* scope. Every one is real code the
-# descent found and nothing names; they are pinned here because the fix is a
-# curated label per routine and that needs knowing what each one is, while a
-# *new* entry means a curation change stranded something that used to be named.
-KNOWN_STRANDED_IN_SCRIPT = {
-    (0x0e, 0x4c37), (0x0f, 0x7b7f), (0x12, 0x6d8a), (0x14, 0x4813),
-    (0x15, 0x66ef), (0x15, 0x6b8e), (0x27, 0x48f0), (0x27, 0x760e),
-}
+# their local labels bind to the *script's* scope. All fourteen that existed
+# have been named, so this is empty and the check is now a ratchet: a new entry
+# means a curation change stranded something that used to be named.
+KNOWN_STRANDED_IN_SCRIPT = set()
 
 _AS_RE = re.compile(r"^\tas_")
 

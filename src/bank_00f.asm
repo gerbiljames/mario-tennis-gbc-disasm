@@ -3280,12 +3280,16 @@ ActorScript_0f_11:
 	as_wait_move2
 	as_wait $28
 	as_jump .L1
+MapScriptNopAlt_0f:
 	ret ; $7b7f
+MapScriptClearActiveFlag_0f:
 	xor a ; $7b80
 	ld [wStoryScriptRan], a ; $7b81
 	ret ; $7b84
+MapScriptPlaySoundA2_0f:
 	sound $a2 ; $7b85
 	ret ; $7b87
+MapScriptHideLocationName_0f:
 	xor a ; $7b88
 	ld [wStoryModeShowLocationName], a ; $7b89
 	ret ; $7b8c

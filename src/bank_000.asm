@@ -9005,7 +9005,7 @@ UpdateSoundChannels:
 	and a ; $3467
 	jr z, .checkSndChannelBits ; $3468
 	ld a, [wSndChannelType] ; $346a
-	cp $02 ; $346d
+	cp SNDCHANTYPE_WAVE ; $346d
 	jr nz, .checkSndChannelBits ; $346f
 	ld a, [wSndChannelIndex] ; $3471
 	cp $02 ; $3474
@@ -9073,7 +9073,7 @@ UpdateSoundChannels:
 	ld d, a ; $34e6
 	ldh [hSndLengthAccum], a ; $34e7
 	ld a, [wSndChannelType] ; $34e9
-	cp $02 ; $34ec
+	cp SNDCHANTYPE_WAVE ; $34ec
 	jr z, .read ; $34ee
 	ld a, [hl+] ; $34f0
 	rrca ; $34f1
@@ -9086,7 +9086,7 @@ UpdateSoundChannels:
 	swap a ; $34f9
 	ldh [hSndVolume], a ; $34fb
 	ld a, [wSndChannelType] ; $34fd
-	cp $02 ; $3500
+	cp SNDCHANTYPE_WAVE ; $3500
 	jr z, .eq02 ; $3502
 	ld a, [hl+] ; $3504
 	ldh [hSndWaveId], a ; $3505
@@ -9195,7 +9195,7 @@ RunSoundChannelScript:
 	ldh [hSndScriptPtr], a ; $359f
 	ldh [hSndScriptPtr + 1], a ; $35a1
 	ld a, [wSndChannelType] ; $35a3
-	cp $02 ; $35a6
+	cp SNDCHANTYPE_WAVE ; $35a6
 	jr nz, .release ; $35a8
 	ld a, [wSndChannelIndex] ; $35aa
 	cp $02 ; $35ad
@@ -9218,7 +9218,7 @@ RunSoundChannelScript:
 .storeVolSlide:
 	ld b, a ; $35c9
 	ld a, [wSndChannelType] ; $35ca
-	cp $02 ; $35cd
+	cp SNDCHANTYPE_WAVE ; $35cd
 	jr z, .volSlideDone ; $35cf
 	ld a, b ; $35d1
 	ldh [hSndVolSlide], a ; $35d2
@@ -9232,7 +9232,7 @@ RunSoundChannelScript:
 	and $0f ; $35dd
 	ld b, a ; $35df
 	ld a, [wSndChannelType] ; $35e0
-	cp $02 ; $35e3
+	cp SNDCHANTYPE_WAVE ; $35e3
 	jr z, .envelopeDone ; $35e5
 	ldh a, [hSndVolume] ; $35e7
 	and $0f ; $35e9
@@ -9302,7 +9302,7 @@ RunSoundChannelScript:
 	cp $a1 ; $364f
 	jr nz, .setDuty ; $3651
 	ld a, [wSndChannelType] ; $3653
-	cp $02 ; $3656
+	cp SNDCHANTYPE_WAVE ; $3656
 	jr z, .loadWave ; $3658
 	ld a, [hl+] ; $365a
 	ldh [hSndWaveId], a ; $365b
@@ -9353,7 +9353,7 @@ RunSoundChannelScript:
 	cp $a2 ; $369e
 	jr nz, .setNoteLength ; $36a0
 	ld a, [wSndChannelType] ; $36a2
-	cp $02 ; $36a5
+	cp SNDCHANTYPE_WAVE ; $36a5
 	jr z, .setEnvLength ; $36a7
 	ld a, [hl+] ; $36a9
 	rrca ; $36aa
@@ -9600,7 +9600,7 @@ SndTriggerNoteBody:
 	xor a ; $3846
 	ldh [hSndRestFlag], a ; $3847
 	ld a, [wSndChannelType] ; $3849
-	cp $02 ; $384c
+	cp SNDCHANTYPE_WAVE ; $384c
 	jr z, .checkPeriod ; $384e
 	ldh a, [hSndPeriodHi] ; $3850
 	and $7f ; $3852
@@ -9647,7 +9647,7 @@ SndTriggerNote:
 	pop bc ; $388c
 	ldh [hSndRestFlag], a ; $388d
 	ld a, [wSndChannelType] ; $388f
-	cp $03 ; $3892
+	cp SNDCHANTYPE_NOISE ; $3892
 	jr nz, .ne03 ; $3894
 	ld a, b ; $3896
 	cp $1f ; $3897
@@ -9709,7 +9709,7 @@ SndTriggerNote:
 	ldh [hSndEnvPos], a ; $38e6
 	call AbortIfChannelTriggered ; $38e8
 	ld a, [wSndChannelType] ; $38eb
-	cp $02 ; $38ee
+	cp SNDCHANTYPE_WAVE ; $38ee
 	jr nz, .ne02 ; $38f0
 	call LoadWavePatternIfChanged ; $38f2
 	ld a, $80 ; $38f5
@@ -9738,9 +9738,9 @@ SndTriggerNote:
 .store:
 	ldh [hSndPeriodLo], a ; $391e
 	ld a, [wSndChannelType] ; $3920
-	cp $02 ; $3923
+	cp SNDCHANTYPE_WAVE ; $3923
 	jr z, .eq02 ; $3925
-	cp $02 ; $3927
+	cp SNDCHANTYPE_WAVE ; $3927
 	jr nc, .loopB ; $3929
 	ldh a, [hSndToneCtrl] ; $392b
 	and $c0 ; $392d
@@ -9781,7 +9781,7 @@ SndTriggerNote:
 	jr .loop2 ; $3966
 TickVolumeSlide:
 	ld a, [wSndChannelType] ; $3968
-	cp $02 ; $396b
+	cp SNDCHANTYPE_WAVE ; $396b
 	ret z ; $396d
 	ldh a, [hSndVolSlide] ; $396e
 	and a ; $3970
@@ -9821,7 +9821,7 @@ TickVolumeSlide:
 TickVibrato:
 	call AbortIfChannelTriggered ; $39a7
 	ld a, [wSndChannelType] ; $39aa
-	cp $03 ; $39ad
+	cp SNDCHANTYPE_NOISE ; $39ad
 	ret z ; $39af
 	ldh a, [hSndNoteLenTimer] ; $39b0
 	and a ; $39b2
@@ -9844,7 +9844,7 @@ TickVibrato:
 	jr WriteChannelReg ; $39ce
 ApplyChannelVolumeEnvelope:
 	ld a, [wSndChannelType] ; $39d0
-	cp $02 ; $39d3
+	cp SNDCHANTYPE_WAVE ; $39d3
 	jr z, WriteChannelReg.writeChannelReg ; $39d5
 	ldh a, [hSndEnvRate] ; $39d7
 	and a ; $39d9
@@ -9925,7 +9925,7 @@ TickInstrumentEnvelope:
 	and $7f ; $3a45
 	jp z, SndSilenceChannel ; $3a47
 	ld a, [wSndChannelType] ; $3a4a
-	cp $02 ; $3a4d
+	cp SNDCHANTYPE_WAVE ; $3a4d
 	jr z, .eq02 ; $3a4f
 	ldh a, [hSndEnvRate] ; $3a51
 	and a ; $3a53
@@ -9949,7 +9949,7 @@ TickInstrumentEnvelope:
 	dec b ; $3a68
 	jr nz, .loop ; $3a69
 	ld a, [wSndChannelType] ; $3a6b
-	cp $02 ; $3a6e
+	cp SNDCHANTYPE_WAVE ; $3a6e
 	jr z, ResetChannelLength.loop ; $3a70
 	ldh a, [hSndEnvRate] ; $3a72
 	or e ; $3a74

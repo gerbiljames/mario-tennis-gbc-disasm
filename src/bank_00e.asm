@@ -536,149 +536,149 @@ SetupGymActorsForProgress:
 ActorScript_0e_00:
 	; $4712, 439 bytes (actor_script)
 	as_set_target $2100, $0d00
-	as_call $4c37
+	as_call TrainingGymRunner0AWaitWaypointClear
 	as_wait_move
 	as_set_target $2100, $0e00
-	as_call $4c37
+	as_call TrainingGymRunner0AWaitWaypointClear
 	as_wait_move
 	as_flag $01, $05, $02
 	as_set_target $2100, $0f00
-	as_call $4c37
+	as_call TrainingGymRunner0AWaitWaypointClear
 	as_wait_move
 	as_set_target $2100, $1000
-	as_call $4c37
+	as_call TrainingGymRunner0AWaitWaypointClear
 	as_wait_move
 	as_set_target $2100, $1100
-	as_call $4c37
+	as_call TrainingGymRunner0AWaitWaypointClear
 	as_wait_move
 	as_set_target $2100, $1200
-	as_call $4c37
+	as_call TrainingGymRunner0AWaitWaypointClear
 	as_wait_move
 	as_set_target $2100, $1300
-	as_call $4c37
+	as_call TrainingGymRunner0AWaitWaypointClear
 	as_wait_move
 	as_set_target $2100, $1400
-	as_call $4c37
+	as_call TrainingGymRunner0AWaitWaypointClear
 	as_wait_move
 	as_set_target $2100, $1500
-	as_call $4c37
+	as_call TrainingGymRunner0AWaitWaypointClear
 	as_wait_move
 	as_set_target $2100, $1600
-	as_call $4c37
+	as_call TrainingGymRunner0AWaitWaypointClear
 	as_wait_move
 	as_set_target $2100, $1700
-	as_call $4c37
+	as_call TrainingGymRunner0AWaitWaypointClear
 	as_wait_move
 	as_set_target $2200, $1700
-	as_call $4c37
+	as_call TrainingGymRunner0AWaitWaypointClear
 	as_wait_move
 	as_set_target $2300, $1700
-	as_call $4c37
+	as_call TrainingGymRunner0AWaitWaypointClear
 	as_wait_move
 	as_set_target $2400, $1700
-	as_call $4c37
+	as_call TrainingGymRunner0AWaitWaypointClear
 	as_wait_move
 	as_set_target $2500, $1700
-	as_call $4c37
+	as_call TrainingGymRunner0AWaitWaypointClear
 	as_wait_move
 	as_set_target $2600, $1700
-	as_call $4c37
+	as_call TrainingGymRunner0AWaitWaypointClear
 	as_wait_move
 	as_set_target $2700, $1700
-	as_call $4c37
+	as_call TrainingGymRunner0AWaitWaypointClear
 	as_wait_move
 	as_set_target $2800, $1700
-	as_call $4c37
+	as_call TrainingGymRunner0AWaitWaypointClear
 	as_wait_move
 	as_set_target $2900, $1700
-	as_call $4c37
+	as_call TrainingGymRunner0AWaitWaypointClear
 	as_wait_move
 	as_set_target $2a00, $1700
-	as_call $4c37
+	as_call TrainingGymRunner0AWaitWaypointClear
 	as_wait_move
 	as_set_target $2b00, $1700
-	as_call $4c37
+	as_call TrainingGymRunner0AWaitWaypointClear
 	as_wait_move
 	as_set_target $2c00, $1700
-	as_call $4c37
+	as_call TrainingGymRunner0AWaitWaypointClear
 	as_wait_move
 	as_set_target $2d60, $1700
-	as_call $4c37
+	as_call TrainingGymRunner0AWaitWaypointClear
 	as_wait_move
 	as_set_target $2d60, $1600
-	as_call $4c37
+	as_call TrainingGymRunner0AWaitWaypointClear
 	as_wait_move
 	as_set_target $2d60, $1500
-	as_call $4c37
+	as_call TrainingGymRunner0AWaitWaypointClear
 	as_wait_move
 	as_set_target $2d60, $1400
-	as_call $4c37
+	as_call TrainingGymRunner0AWaitWaypointClear
 	as_wait_move
 	as_set_target $2d60, $1300
-	as_call $4c37
+	as_call TrainingGymRunner0AWaitWaypointClear
 	as_wait_move
 	as_set_target $2d60, $1200
-	as_call $4c37
+	as_call TrainingGymRunner0AWaitWaypointClear
 	as_wait_move
 	as_set_target $2d60, $1100
-	as_call $4c37
+	as_call TrainingGymRunner0AWaitWaypointClear
 	as_wait_move
 	as_set_target $2d60, $1000
-	as_call $4c37
+	as_call TrainingGymRunner0AWaitWaypointClear
 	as_wait_move
 	as_set_target $2d60, $0f00
-	as_call $4c37
+	as_call TrainingGymRunner0AWaitWaypointClear
 	as_wait_move
 	as_set_target $2d60, $0e00
-	as_call $4c37
+	as_call TrainingGymRunner0AWaitWaypointClear
 	as_wait_move
 	as_set_target $2d60, $0d00
-	as_call $4c37
+	as_call TrainingGymRunner0AWaitWaypointClear
 	as_wait_move
 	as_set_target $2d60, $0c00
-	as_call $4c37
+	as_call TrainingGymRunner0AWaitWaypointClear
 	as_wait_move
 	as_set_target $2d60, $0b00
-	as_call $4c37
+	as_call TrainingGymRunner0AWaitWaypointClear
 	as_wait_move
 	as_set_target $2c00, $0b00
-	as_call $4c37
+	as_call TrainingGymRunner0AWaitWaypointClear
 	as_wait_move
 	as_set_target $2b00, $0b00
-	as_call $4c37
+	as_call TrainingGymRunner0AWaitWaypointClear
 	as_wait_move
 	as_set_target $2a00, $0b00
-	as_call $4c37
+	as_call TrainingGymRunner0AWaitWaypointClear
 	as_wait_move
 	as_set_target $2900, $0b00
-	as_call $4c37
+	as_call TrainingGymRunner0AWaitWaypointClear
 	as_wait_move
 	as_set_target $2800, $0b00
-	as_call $4c37
+	as_call TrainingGymRunner0AWaitWaypointClear
 	as_wait_move
 	as_set_target $2700, $0b00
-	as_call $4c37
+	as_call TrainingGymRunner0AWaitWaypointClear
 	as_wait_move
 	as_set_target $2600, $0b00
-	as_call $4c37
+	as_call TrainingGymRunner0AWaitWaypointClear
 	as_wait_move
 	as_set_target $2500, $0b00
-	as_call $4c37
+	as_call TrainingGymRunner0AWaitWaypointClear
 	as_wait_move
 	as_set_target $2400, $0b00
-	as_call $4c37
+	as_call TrainingGymRunner0AWaitWaypointClear
 	as_wait_move
 	as_set_target $2300, $0b00
-	as_call $4c37
+	as_call TrainingGymRunner0AWaitWaypointClear
 	as_wait_move
 	as_set_target $2200, $0b00
-	as_call $4c37
+	as_call TrainingGymRunner0AWaitWaypointClear
 	as_wait_move
 	as_set_target $2100, $0b00
-	as_call $4c37
+	as_call TrainingGymRunner0AWaitWaypointClear
 	as_wait_move
 	as_set_target $2100, $0c00
-	as_call $4c37
+	as_call TrainingGymRunner0AWaitWaypointClear
 	as_wait_move
 	as_jump ActorScript_0e_00
 ActorScript_0e_01:
@@ -977,6 +977,7 @@ ActorScript_0e_02:
 	as_call $4ce5
 	as_wait_move
 	as_jump ActorScript_0e_02
+TrainingGymRunner0AWaitWaypointClear:
 	script_get_actor_state $0c ; $4c37
 	ld c, l ; $4c3c
 	ld b, h ; $4c3d

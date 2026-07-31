@@ -35,7 +35,7 @@ RunMinigameEndMenu:
 	ld [wPauseMenuId], a ; $404c
 	call RunMatchQuitMenu ; $404f
 	ld a, [wMatchMenuSelection] ; $4052
-	cp $ff ; $4055
+	cp MATCHMENUSEL_CANCELLED ; $4055
 	jr z, .loop ; $4057
 	ld hl, DrawScoreboardSprites ; $4059
 	call UnregisterFrameTask ; $405c
@@ -87,7 +87,7 @@ RunMatchPauseMenu:
 	ld [wPauseMenuId], a ; $40c7
 	call RunMatchMenu ; $40ca
 	ld a, [wMatchMenuSelection] ; $40cd
-	cp $ff ; $40d0
+	cp MATCHMENUSEL_CANCELLED ; $40d0
 	jr z, MatchPauseMenu_AfterItem.unregisterFrameTask ; $40d2
 	push af ; $40d4
 	ld hl, MatchPauseMenu_AfterItem ; $40d5
@@ -435,7 +435,7 @@ MatchPauseMenu_ChangeOptions:
 	ld [wPauseMenuId], a ; $43fd
 	call RunMatchMenu ; $4400
 	ld a, [wMatchMenuSelection] ; $4403
-	cp $ff ; $4406
+	cp MATCHMENUSEL_CANCELLED ; $4406
 	jr z, MatchOptionsMenu_AfterItem.done ; $4408
 	push af ; $440a
 	ld hl, MatchOptionsMenu_AfterItem ; $440b
@@ -457,7 +457,7 @@ MatchPauseMenu_CameraSelect:
 	ld [wPauseMenuId], a ; $4426
 	call RunMatchMenu ; $4429
 	ld a, [wMatchMenuSelection] ; $442c
-	cp $ff ; $442f
+	cp MATCHMENUSEL_CANCELLED ; $442f
 	jr z, .done ; $4431
 	ld [wCourtViewOption], a ; $4433
 	farcall SetStorySlotFlagB ; $4436
@@ -471,7 +471,7 @@ MatchPauseMenu_MusicToggle:
 	ld [wPauseMenuId], a ; $4443
 	call RunMatchMenu ; $4446
 	ld a, [wMatchMenuSelection] ; $4449
-	cp $ff ; $444c
+	cp MATCHMENUSEL_CANCELLED ; $444c
 	jr z, .done ; $444e
 	call SetMusicMuted ; $4450
 	ld a, [wGameMode] ; $4453
@@ -504,7 +504,7 @@ MatchPauseMenu_SaveQuit:
 RunMatchQuitMenu:
 	call RunMatchMenu ; $4485
 	ld a, [wMatchMenuSelection] ; $4488
-	cp $ff ; $448b
+	cp MATCHMENUSEL_CANCELLED ; $448b
 	ret z ; $448d
 	call GetMatchMenuItemId ; $448e
 	sub $0a ; $4491
@@ -838,7 +838,7 @@ RunMatchMenu:
 	and $0a ; $4704
 	jr z, .checkA ; $4706
 	sound SFX_MENU_CANCEL ; $4708
-	ld a, $ff ; $470a
+	ld a, MATCHMENUSEL_CANCELLED ; $470a
 	ld [wMatchMenuSelection], a ; $470c
 	jr .done ; $470f
 .checkA:
@@ -2669,7 +2669,7 @@ RunStoryMenu:
 	and $0a ; $6d1e
 	jr z, .checkA ; $6d20
 	sound SFX_MENU_CANCEL ; $6d22
-	ld a, $ff ; $6d24
+	ld a, MATCHMENUSEL_CANCELLED ; $6d24
 	ld [wMatchMenuSelection], a ; $6d26
 	jr .done ; $6d29
 .checkA:
@@ -2851,7 +2851,7 @@ RunStoryModeMenu:
 	ld a, $02 ; $6e29
 	ldh [hLinkPayloadKind], a ; $6e2b
 	farcall InitTextWindows ; $6e2d
-	ld a, $81 ; $6e30
+	ld a, TILEATTR_PRIORITY | TILEATTR_PAL1 ; $6e30
 	ld [wWindowTileAttr], a ; $6e32
 	set_flag FLAG_HIDE_OVERWORLD_ACTORS ; $6e35
 	farcall LoadMatchStoryGfx ; $6e38
@@ -2872,7 +2872,7 @@ RunStoryModeMenu:
 	ld [wPauseMenuId], a ; $6e5f
 	call RunStoryMenu ; $6e62
 	ld a, [wMatchMenuSelection] ; $6e65
-	cp $ff ; $6e68
+	cp MATCHMENUSEL_CANCELLED ; $6e68
 	jr z, StoryPauseMenu_AfterItem.restoreStoryShadowTilemap ; $6e6a
 	push af ; $6e6c
 	ld hl, StoryPauseMenu_AfterItem ; $6e6d
@@ -2933,7 +2933,7 @@ StoryPauseMenu_AfterItem:
 	and $0e ; $6eda
 	jr z, .readMatchInputPressed ; $6edc
 	sound SFX_MENU_CANCEL ; $6ede
-	ld a, $ff ; $6ee0
+	ld a, MATCHMENUSEL_CANCELLED ; $6ee0
 	ld [wMatchMenuSelection], a ; $6ee2
 	jr .advanceFrame ; $6ee5
 .readMatchInputPressed:
@@ -2995,7 +2995,7 @@ StoryPauseMenu_PlayerData:
 	ld [wPauseMenuId], a ; $6f4b
 	call RunStoryMenu ; $6f4e
 	ld a, [wMatchMenuSelection] ; $6f51
-	cp $ff ; $6f54
+	cp MATCHMENUSEL_CANCELLED ; $6f54
 	jr z, .restoreStoryTilemapNoPriority ; $6f56
 	ld a, [wMatchMenuSelection] ; $6f58
 	rst Rst00 ; $6f5b
@@ -3053,7 +3053,7 @@ StoryPauseMenu_Options:
 	ld [wPauseMenuId], a ; $6fc9
 	call RunStoryMenu ; $6fcc
 	ld a, [wMatchMenuSelection] ; $6fcf
-	cp $ff ; $6fd2
+	cp MATCHMENUSEL_CANCELLED ; $6fd2
 	jr z, StoryOptionsMenu_AfterItem.done ; $6fd4
 	push af ; $6fd6
 	ld hl, StoryOptionsMenu_AfterItem ; $6fd7
@@ -3081,7 +3081,7 @@ StoryPauseMenu_MessageSpeed:
 	ld [wMatchMenuSelection], a ; $6ffe
 	call RunMessageSpeedMenu ; $7001
 	ld a, [wMatchMenuSelection] ; $7004
-	cp $ff ; $7007
+	cp MATCHMENUSEL_CANCELLED ; $7007
 	jr z, .done ; $7009
 	ld b, a ; $700b
 	ld a, $02 ; $700c
@@ -3095,7 +3095,7 @@ StoryPauseMenu_MusicToggle:
 	ld [wMatchMenuSelection], a ; $7017
 	call RunMusicOnOffMenu ; $701a
 	ld a, [wMatchMenuSelection] ; $701d
-	cp $ff ; $7020
+	cp MATCHMENUSEL_CANCELLED ; $7020
 	jr z, .done ; $7022
 	call SetMusicMuted ; $7024
 	ldh a, [hMusic] ; $7027
@@ -3114,7 +3114,7 @@ StoryPauseMenu_SaveQuit:
 	ld [wPauseMenuId], a ; $7042
 	call RunStoryMenu ; $7045
 	ld a, [wMatchMenuSelection] ; $7048
-	cp $ff ; $704b
+	cp MATCHMENUSEL_CANCELLED ; $704b
 	jr z, StoryPauseMenu_ReturnToMainMenu.storeStoryMenuFirstItem ; $704d
 	cp $02 ; $704f
 	jr z, StoryPauseMenu_ReturnToMainMenu.storeStoryMenuFirstItem ; $7051
@@ -3204,7 +3204,7 @@ RunStoryTwoOptionMenu:
 	and $02 ; $7108
 	jr z, .readMatchInputPressed ; $710a
 	sound SFX_MENU_CANCEL ; $710c
-	ld a, $ff ; $710e
+	ld a, MATCHMENUSEL_CANCELLED ; $710e
 	ld [wMatchMenuSelection], a ; $7110
 	jr .advanceFrame ; $7113
 .readMatchInputPressed:
@@ -3299,7 +3299,7 @@ RunStoryThreeOptionMenu:
 	and $02 ; $71c2
 	jr z, .readMatchInputPressed ; $71c4
 	sound SFX_MENU_CANCEL ; $71c6
-	ld a, $ff ; $71c8
+	ld a, MATCHMENUSEL_CANCELLED ; $71c8
 	ld [wMatchMenuSelection], a ; $71ca
 	jr .restoreStoryTilemapNoPriority ; $71cd
 .readMatchInputPressed:

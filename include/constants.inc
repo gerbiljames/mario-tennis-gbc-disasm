@@ -823,3 +823,48 @@ def ISLANDOPENROUND_ROUND1            equ $00
 def ISLANDOPENROUND_ROUND2            equ $01 ; singles only -- doubles goes straight to the semi-final
 def ISLANDOPENROUND_SEMIFINAL         equ $02
 def ISLANDOPENROUND_FINAL             equ $03
+
+; --- Academy Wing stage (wMapSceneStage in the Academy Wing) ---
+; The Academy Wing runs its own four-value ladder, not the ten-value
+; STORYRANK_* one: SetAcademyWingDialogueStage_10 ($10:$7472) is the region's
+; only writer, and it walks the same flags on both the singles and the doubles
+; side to the *same* four values, so the format drops out. It starts at the
+; senior title rather than the junior one, which is what makes it a separate
+; space from STORYTIER_*.
+def ACADEMYWINGSTAGE_PRE_SENIOR_CHAMP equ $00 ; senior rank 1 not won yet
+def ACADEMYWINGSTAGE_SENIOR_CHAMP     equ $01 ; FLAG_WON_{SINGLES,DOUBLES}_SENIOR_RANK_1
+def ACADEMYWINGSTAGE_ISLAND_OPEN      equ $02 ; FLAG_REACHED_ISLAND_OPEN_*
+def ACADEMYWINGSTAGE_COMPLETE         equ $03 ; FLAG_STORY_COMPLETE_*
+
+; --- Sound channel type (wSndChannelType, $c31c) ---
+; `hSndChannelType & 3`, latched by RunSoundChannelScript ($33be) together with
+; `wSndRegBase = type * 5` -- the stride of the Game Boy's four sound-register
+; blocks ($ff10, $ff15, $ff1a, $ff1f). So the type *is* the hardware channel,
+; and every site that tests it is doing something only that channel needs:
+; loading wave RAM and poking rAUD3ENA for the wave channel (which has no
+; envelope generator, so it also skips duty, volume slide and instrument
+; envelope), and sending the note through NoiseNoteTable for the noise channel
+; (which has no period, so vibrato returns early).
+def SNDCHANTYPE_SQUARE1      equ $00 ; $ff10 block -- the only one with a sweep unit (NR10)
+def SNDCHANTYPE_SQUARE2      equ $01 ; $ff15 block. No site of its own: it takes every default path
+def SNDCHANTYPE_WAVE         equ $02 ; $ff1a block
+def SNDCHANTYPE_NOISE        equ $03 ; $ff1f block
+
+; --- Menu selection sentinel (wMatchMenuSelection, $c4e0) ---
+; The byte is a *row* in whatever menu is up -- the match pause menu, the story
+; pause menu and the debug stats screen all use it -- and a row is not an item
+; id: GetMatchMenuItemId ($06:$480a) is what turns one into the other, reading
+; `MatchMenuDefs + wPauseMenuId * 8 + row`. So the rows stay numeric and only
+; the out-of-band value has a name, written by every B-pressed branch.
+def MATCHMENUSEL_CANCELLED   equ $ff ; B pressed: no row chosen
+
+; --- Background tile attribute (wWindowTileAttr, $d81c in WRAM bank $05) ---
+; A CGB background attribute byte, stamped into the attribute plane of a text
+; window's rect by DrawTextWindowFrame ($05:$7051, which reaches the plane by
+; adding $0400 to the cell pointer) and read for its bank bit by both glyph
+; uploaders (`bit 3, a` then +$2000 on the VRAM destination). Only the two bits
+; the game actually composes are named; `include/hardware.inc` spells the same
+; layout as BG_PRIO/BG_PALETTE, but this project keeps its own names in this
+; file the way VRAM_BANK1 above does.
+def TILEATTR_PAL1            equ $01 ; BG palette 1
+def TILEATTR_PRIORITY        equ $80 ; BG colours 1-3 draw above sprites

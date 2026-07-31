@@ -2071,7 +2071,7 @@ SeniorCourtInitScript_12:
 	cp $0f ; $5d96
 	jp z, SeniorCourtPostMatchReturn ; $5d98
 	cp $0e ; $5d9b
-	jp z, ActorScript_12_20.storeStoryModeCurrentLocation ; $5d9d
+	jp z, SeniorCourtReloadIntoVictoryScene ; $5d9d
 	cp $0d ; $5da0
 	jp z, SeniorMatchVictorySceneDispatch ; $5da2
 	call SeniorCourtPositionActorsByProgressB ; $5da5
@@ -3054,7 +3054,7 @@ ActorScript_12_20:
 	as_wait_move
 	as_set_field $14, FACE_RIGHT
 	as_halt
-.storeStoryModeCurrentLocation:
+SeniorCourtReloadIntoVictoryScene:
 	ld a, STORYLOC_SENIOR_CLASS_COURT ; $6d8a
 	ld [wStoryModeCurrentLocation], a ; $6d8c
 	ld a, $0d ; $6d8f

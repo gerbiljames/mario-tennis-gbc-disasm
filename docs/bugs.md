@@ -458,6 +458,34 @@ engine assumes. This is the same shape as `RewriteCutsceneCameraY_6b` below — 
 read-modify-write with the modify deleted — except that this one is live code on
 the rally path.
 
+### The Training Court's stage normalisation can never run
+
+`TrainingCourtInitScript_15` (`$15:$532e`) opens by computing the location's
+progress index, then normalising it:
+
+```
+        call ComputeTrainingCourtProgressIndex
+        ld a, [wMapSceneStage]
+        cp $05
+        jr c, .fromLesson        ; always taken
+        ld a, [wMapSceneStage]   ; unreachable
+        sub $06
+        ld [wMapSceneStage], a
+.fromLesson:
+```
+
+`ComputeTrainingCourtProgressIndex` (`$15:$7fa0`) starts at `$00` and steps with
+`inc a` through at most four flags — junior title, senior title, then either the
+singles or the doubles pair of Island Open flags. Its maximum output is `$04`,
+on both ladders. The `cp $05` therefore always sets carry, the branch is always
+taken, and the three instructions that subtract 6 are unreachable.
+
+The subtraction is the shape of a *second* id space living in the same byte: a
+caller that had set `wMapSceneStage` to `$06 + n` and wanted `n` back. Nothing
+sets it that way any more — the compute call one instruction earlier overwrites
+whatever was there, so even a caller that did would lose it. What the six
+would have meant is not recoverable from the ROM.
+
 ## Dead stores
 
 Values written and never read. None of these change behaviour; they are listed

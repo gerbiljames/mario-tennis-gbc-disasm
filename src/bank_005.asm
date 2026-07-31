@@ -1095,7 +1095,7 @@ CreateWindowWithAttr:
 	ld [wWindowTileAttr], a ; $4670
 	call CreateWindow ; $4673
 	ld h, a ; $4676
-	ld a, $80 ; $4677
+	ld a, TILEATTR_PRIORITY ; $4677
 	ld [wWindowTileAttr], a ; $4679
 	pop af ; $467c
 	wram_bank ; $467d
@@ -7011,7 +7011,7 @@ RunDebugWindowDemo:
 	ld [hl], d ; $6dac
 	ld a, $05 ; $6dad
 	ld [wShadowTilemapBank], a ; $6daf
-	ld a, $80 ; $6db2
+	ld a, TILEATTR_PRIORITY ; $6db2
 	ld [wWindowTileAttr], a ; $6db4
 	ld d, $00 ; $6db7
 	ld e, $02 ; $6db9
@@ -7075,7 +7075,7 @@ ResetTextWindowState:
 	ld [hl], d ; $6e2b
 	ld a, $05 ; $6e2c
 	ld [wShadowTilemapBank], a ; $6e2e
-	ld a, $80 ; $6e31
+	ld a, TILEATTR_PRIORITY ; $6e31
 	ld [wWindowTileAttr], a ; $6e33
 	ld a, $ff ; $6e36
 	ld [wDialogueWindowId], a ; $6e38

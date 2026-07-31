@@ -355,7 +355,7 @@ End16BeforeFinalsScriptBody_27:
 	script_move_target ACTOR_PLAYER, $1c00, $1900 ; $48a8
 	script_wait_move ACTOR_PLAYER ; $48b3
 	test_flag FLAG_DOUBLES ; $48b8
-	jr nz, ActorScript_27_01.setScript ; $48bb
+	jr nz, SetEnd16BeforeFinalsDoublesWalkScripts_27 ; $48bb
 	script_set_actor_script ACTOR_PLAYER, ActorScript_27_01 ; $48bd
 	script_wait_actor_script ACTOR_PLAYER ; $48c8
 	ret ; $48cd
@@ -375,7 +375,7 @@ ActorScript_27_01:
 	as_wait_move
 	as_set_field $14, FACE_DOWN
 	as_halt
-.setScript:
+SetEnd16BeforeFinalsDoublesWalkScripts_27:
 	script_set_actor_script ACTOR_PLAYER, ActorScript_27_00 ; $48f0
 	script_set_actor_script ACTOR_PARTNER, ActorScript_27_01 ; $48fb
 	script_wait_actor_script ACTOR_PLAYER ; $4906
@@ -2438,7 +2438,7 @@ End1MainBldgInitScript_27:
 	cp $01 ; $72ff
 	jp z, .walkOff ; $7301
 	cp $02 ; $7304
-	jp z, ActorScript_27_26.placeActors ; $7306
+	jp z, End1MainBldgGroupDepartureCutscene_27 ; $7306
 	ret ; $7309
 .walkOff:
 	script_set_speed ACTOR_PLAYER, $0010 ; $730a
@@ -2567,7 +2567,7 @@ ActorScript_27_26:
 	as_anim $02
 	as_wait $50
 	as_jump ActorScript_27_26
-.placeActors:
+End1MainBldgGroupDepartureCutscene_27:
 	script_set_position $06, $3f00, $3f00 ; $760e
 	test_flag FLAG_DOUBLES ; $7619
 	jp z, .checkStoryModeGenderOfMainCharacter ; $761c

@@ -67,7 +67,7 @@ The HRAM layout is the sound-driver variant of the shared `$ffd0` union in
 |------|--------|---------|
 | `$d208` | `wSndActiveMask` | channels serviced/keyed this pass |
 | `$d209` | `wSndPanShadow` | rAUDTERM shadow (L/R enables) |
-| `$d20a` | `wSndChannelType` | current channel type (copy of `hSndChannelType` low bits) |
+| `$d20a` | `wSndChannelType` | current channel type (copy of `hSndChannelType` low bits): `SNDCHANTYPE_SQUARE1`/`SQUARE2`/`WAVE`/`NOISE` = the hardware channel, since `wSndRegBase` is type × 5 |
 | `$d20b` | `wSndChannelBits` | current channel's stereo bit-pair (`$11`/`$22`/`$44`/`$88`) |
 | `$d20c` | `wSndChannelPanMask` | same pair, masked with `hSndPanMask` into `wSndPanShadow` |
 | `$d20d` | `wSndRegBase` | APU register offset (type × 5); `WriteChannelReg` uses `$ff10`+this+reg |

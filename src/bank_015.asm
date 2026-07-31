@@ -149,7 +149,7 @@ InitTournamentSiteSceneVariant:
 	farcall WriteBehaviorMapCell ; $4281
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_SEMIFINAL ; $4284
 	jr z, .stage1 ; $4287
-	ld hl, TournamentSiteScripts3_15 ; $4289
+	ld hl, TournamentSiteFinalScripts_15 ; $4289
 	ld de, $000c ; $428c
 	farcall WriteStoryStateWord ; $428f
 	ld a, ISLANDOPENSTAGE_SINGLES_FINAL ; $4292
@@ -158,7 +158,7 @@ InitTournamentSiteSceneVariant:
 .stage1:
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_2 ; $4298
 	jr z, .stage2 ; $429b
-	ld hl, TournamentSiteScripts2_15 ; $429d
+	ld hl, TournamentSiteSemifinalScripts_15 ; $429d
 	ld de, $000c ; $42a0
 	farcall WriteStoryStateWord ; $42a3
 	ld a, ISLANDOPENSTAGE_SINGLES_SEMIFINAL ; $42a6
@@ -167,7 +167,7 @@ InitTournamentSiteSceneVariant:
 .stage2:
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_1 ; $42ac
 	jr z, .stage3 ; $42af
-	ld hl, TournamentSiteScripts1_15 ; $42b1
+	ld hl, TournamentSiteRound2Scripts_15 ; $42b1
 	ld de, $000c ; $42b4
 	farcall WriteStoryStateWord ; $42b7
 	ld a, ISLANDOPENSTAGE_SINGLES_ROUND2 ; $42ba
@@ -177,7 +177,7 @@ InitTournamentSiteSceneVariant:
 .doubles:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_SEMIFINAL ; $42c0
 	jr z, .doublesStage2 ; $42c3
-	ld hl, TournamentSiteScripts6_15 ; $42c5
+	ld hl, TournamentSiteDoublesFinalScripts_15 ; $42c5
 	ld de, $000c ; $42c8
 	farcall WriteStoryStateWord ; $42cb
 	ld a, ISLANDOPENSTAGE_DOUBLES_FINAL ; $42ce
@@ -186,20 +186,20 @@ InitTournamentSiteSceneVariant:
 .doublesStage2:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_ROUND_1 ; $42d4
 	jr z, .done ; $42d7
-	ld hl, TournamentSiteScripts5_15 ; $42d9
+	ld hl, TournamentSiteDoublesSemifinalScripts_15 ; $42d9
 	ld de, $000c ; $42dc
 	farcall WriteStoryStateWord ; $42df
 	ld a, ISLANDOPENSTAGE_DOUBLES_SEMIFINAL ; $42e2
 	ld [wMapSceneStage], a ; $42e4
 	ret ; $42e7
 .done:
-	ld hl, TournamentSiteScripts4_15 ; $42e8
+	ld hl, TournamentSiteDoublesRound1Scripts_15 ; $42e8
 	ld de, $000c ; $42eb
 	farcall WriteStoryStateWord ; $42ee
 	ld a, ISLANDOPENSTAGE_DOUBLES_ROUND1 ; $42f1
 	ld [wMapSceneStage], a ; $42f3
 	ret ; $42f6
-TournamentSiteScripts1_15:
+TournamentSiteRound2Scripts_15:
 	; $42f7, 57 bytes (map_scripts)
 	map_script $03, FACEMASK_ANY, $0000, Text_1f_37, $13, $00
 	map_script $04, FACEMASK_ANY, $0000, Text_1f_38, $03, $00
@@ -209,7 +209,7 @@ TournamentSiteScripts1_15:
 	map_script $08, FACEMASK_ANY, $0000, Text_1f_43, $03, $00
 	map_script $09, FACEMASK_ANY, $0000, Text_1f_44, $03, $00
 	db $ff
-TournamentSiteScripts2_15:
+TournamentSiteSemifinalScripts_15:
 	; $4330, 57 bytes (map_scripts)
 	map_script $03, FACEMASK_ANY, $0000, Text_1f_45, $13, $00
 	map_script $04, FACEMASK_ANY, $0000, Text_1f_46, $03, $00
@@ -219,7 +219,7 @@ TournamentSiteScripts2_15:
 	map_script $08, FACEMASK_ANY, $0000, Text_1f_49, $03, $00
 	map_script $09, FACEMASK_ANY, $0000, Text_1f_50, $03, $00
 	db $ff
-TournamentSiteScripts3_15:
+TournamentSiteFinalScripts_15:
 	; $4369, 57 bytes (map_scripts)
 	map_script $03, FACEMASK_ANY, $0000, Text_1f_51, $13, $00
 	map_script $04, FACEMASK_ANY, $0000, Text_1f_52, $03, $00
@@ -229,7 +229,7 @@ TournamentSiteScripts3_15:
 	map_script $08, FACEMASK_ANY, $0000, Text_1f_55, $03, $00
 	map_script $09, FACEMASK_ANY, $0000, Text_1f_56, $03, $00
 	db $ff
-TournamentSiteScripts4_15:
+TournamentSiteDoublesRound1Scripts_15:
 	; $43a2, 57 bytes (map_scripts)
 	map_script $03, FACEMASK_ANY, $0000, Text_1f_28, $13, $00
 	map_script $04, FACEMASK_ANY, $0000, Text_1f_57, $03, $00
@@ -239,7 +239,7 @@ TournamentSiteScripts4_15:
 	map_script $08, FACEMASK_ANY, $0000, Text_1f_62, $03, $00
 	map_script $09, FACEMASK_ANY, $0000, Text_1f_63, $03, $00
 	db $ff
-TournamentSiteScripts5_15:
+TournamentSiteDoublesSemifinalScripts_15:
 	; $43db, 57 bytes (map_scripts)
 	map_script $03, FACEMASK_ANY, $0000, Text_1f_64, $13, $00
 	map_script $04, FACEMASK_ANY, $0000, Text_1f_65, $03, $00
@@ -249,7 +249,7 @@ TournamentSiteScripts5_15:
 	map_script $08, FACEMASK_ANY, $0000, Text_1f_70, $03, $00
 	map_script $09, FACEMASK_ANY, $0000, Text_1f_71, $03, $00
 	db $ff
-TournamentSiteScripts6_15:
+TournamentSiteDoublesFinalScripts_15:
 	; $4414, 57 bytes (map_scripts)
 	map_script $03, FACEMASK_ANY, $0000, Text_1f_72, $13, $00
 	map_script $04, FACEMASK_ANY, $0000, Text_1f_73, $03, $00
@@ -2818,7 +2818,7 @@ ActorScript_15_06:
 	as_wait_move
 	as_set_field $14, FACE_RIGHT
 	as_halt
-.loop:
+SpeakServeCoachDeclineLine:
 	script_speak $07 ; $66ef
 	ret ; $66f4
 ServeCoachJuniorLessonScene:
@@ -2836,7 +2836,7 @@ ServeCoachJuniorLessonScene:
 	farcall ScriptCloseDialogueWindow ; $6718
 	script_wait_frames $05 ; $671b
 	and a ; $6722
-	jr nz, ActorScript_15_06.loop ; $6723
+	jr nz, SpeakServeCoachDeclineLine ; $6723
 	farcall AdvanceDialogueTextCursor ; $6725
 	ld a, $07 ; $6728
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $672a
@@ -2844,7 +2844,7 @@ ServeCoachJuniorLessonScene:
 	farcall ScriptCloseDialogueWindow ; $6730
 	script_wait_frames $05 ; $6733
 	and a ; $673a
-	jr nz, ActorScript_15_06.loop ; $673b
+	jr nz, SpeakServeCoachDeclineLine ; $673b
 	farcall AdvanceDialogueTextCursor ; $673d
 	script_speak $07 ; $6740
 	call MovePartyToServeCoachSpot ; $6745
@@ -2874,7 +2874,7 @@ ServeCoachSeniorLessonScene:
 	farcall ScriptCloseDialogueWindow ; $6794
 	script_wait_frames $05 ; $6797
 	and a ; $679e
-	jp nz, ActorScript_15_06.loop ; $679f
+	jp nz, SpeakServeCoachDeclineLine ; $679f
 	farcall AdvanceDialogueTextCursor ; $67a2
 	ld a, $07 ; $67a5
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $67a7
@@ -2882,7 +2882,7 @@ ServeCoachSeniorLessonScene:
 	farcall ScriptCloseDialogueWindow ; $67ad
 	script_wait_frames $05 ; $67b0
 	and a ; $67b7
-	jp nz, ActorScript_15_06.loop ; $67b8
+	jp nz, SpeakServeCoachDeclineLine ; $67b8
 	farcall AdvanceDialogueTextCursor ; $67bb
 	script_speak $07 ; $67be
 	call MovePartyToServeCoachSpot ; $67c3
@@ -2912,7 +2912,7 @@ ServeCoachVarsityLessonScene:
 	farcall ScriptCloseDialogueWindow ; $6812
 	script_wait_frames $05 ; $6815
 	and a ; $681c
-	jp nz, ActorScript_15_06.loop ; $681d
+	jp nz, SpeakServeCoachDeclineLine ; $681d
 	farcall AdvanceDialogueTextCursor ; $6820
 	ld a, $07 ; $6823
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $6825
@@ -2920,7 +2920,7 @@ ServeCoachVarsityLessonScene:
 	farcall ScriptCloseDialogueWindow ; $682b
 	script_wait_frames $05 ; $682e
 	and a ; $6835
-	jp nz, ActorScript_15_06.loop ; $6836
+	jp nz, SpeakServeCoachDeclineLine ; $6836
 	farcall AdvanceDialogueTextCursor ; $6839
 	script_speak $07 ; $683c
 	call MovePartyToServeCoachSpot ; $6841
@@ -3144,7 +3144,7 @@ ActorScript_15_09:
 	as_wait_move
 	as_set_field $14, FACE_LEFT
 	as_halt
-.loop:
+SpeakStrokeChallengerDeclineLine:
 	script_speak $0c ; $6b8e
 	ret ; $6b93
 StrokeMatchChallengeScene:
@@ -3156,7 +3156,7 @@ StrokeMatchChallengeScene:
 	farcall ScriptCloseDialogueWindow ; $6baa
 	script_wait_frames $05 ; $6bad
 	and a ; $6bb4
-	jp nz, ActorScript_15_09.loop ; $6bb5
+	jp nz, SpeakStrokeChallengerDeclineLine ; $6bb5
 	farcall AdvanceDialogueTextCursor ; $6bb8
 	ld a, $0c ; $6bbb
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $6bbd
@@ -3164,7 +3164,7 @@ StrokeMatchChallengeScene:
 	farcall ScriptCloseDialogueWindow ; $6bc3
 	script_wait_frames $05 ; $6bc6
 	and a ; $6bcd
-	jp nz, ActorScript_15_09.loop ; $6bce
+	jp nz, SpeakStrokeChallengerDeclineLine ; $6bce
 	farcall AdvanceDialogueTextCursor ; $6bd1
 	script_face $0c, FACE_RIGHT ; $6bd4
 	script_wait_frames $28 ; $6bdb
@@ -3195,7 +3195,7 @@ LobMatchChallengeScene:
 	farcall ScriptCloseDialogueWindow ; $6c52
 	script_wait_frames $05 ; $6c55
 	and a ; $6c5c
-	jp nz, ActorScript_15_09.loop ; $6c5d
+	jp nz, SpeakStrokeChallengerDeclineLine ; $6c5d
 	farcall AdvanceDialogueTextCursor ; $6c60
 	ld a, $0c ; $6c63
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $6c65
@@ -3203,7 +3203,7 @@ LobMatchChallengeScene:
 	farcall ScriptCloseDialogueWindow ; $6c6b
 	script_wait_frames $05 ; $6c6e
 	and a ; $6c75
-	jp nz, ActorScript_15_09.loop ; $6c76
+	jp nz, SpeakStrokeChallengerDeclineLine ; $6c76
 	farcall AdvanceDialogueTextCursor ; $6c79
 	script_speak $0c ; $6c7c
 	script_face $0c, FACE_RIGHT ; $6c81
@@ -3234,7 +3234,7 @@ ReturnMatchChallengeScene:
 	farcall ScriptCloseDialogueWindow ; $6cfa
 	script_wait_frames $05 ; $6cfd
 	and a ; $6d04
-	jp nz, ActorScript_15_09.loop ; $6d05
+	jp nz, SpeakStrokeChallengerDeclineLine ; $6d05
 	farcall AdvanceDialogueTextCursor ; $6d08
 	script_speak $0c ; $6d0b
 	ld a, $0c ; $6d10
@@ -3243,7 +3243,7 @@ ReturnMatchChallengeScene:
 	farcall ScriptCloseDialogueWindow ; $6d18
 	script_wait_frames $05 ; $6d1b
 	and a ; $6d22
-	jp nz, ActorScript_15_09.loop ; $6d23
+	jp nz, SpeakStrokeChallengerDeclineLine ; $6d23
 	farcall AdvanceDialogueTextCursor ; $6d26
 	script_set_anim $0c, $03 ; $6d29
 	script_wait_idle $0c ; $6d30
