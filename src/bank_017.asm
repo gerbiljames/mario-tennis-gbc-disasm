@@ -1650,7 +1650,7 @@ CourtDiagramGfx11:
 CourtDiagramGfx12:
 	INCBIN "data/bank_017/d_546d.bin" ; $546d, 74 bytes
 CourtDiagramGfx13:
-	INCBIN "data/bank_017/d_54b7.bin" ; $54b7, 33 bytes
+	INCBIN "data/bank_017/lz_54b7.bin" ; $54b7, 33 bytes
 CourtDiagramGfx14:
 	INCBIN "data/bank_017/d_54d8.bin" ; $54d8, 39 bytes
 CourtDiagramGfx15:

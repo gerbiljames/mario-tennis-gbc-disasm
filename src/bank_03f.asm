@@ -583,7 +583,7 @@ TennisDictionaryListDataDefault:
 TennisDictionaryListData:
 	INCBIN "data/bank_03f/lz_459c.bin" ; $459c, 367 bytes
 TennisDictionaryListDataAlt:
-	INCBIN "data/bank_03f/d_470b.bin" ; $470b, 163 bytes
+	INCBIN "data/bank_03f/lz_470b.bin" ; $470b, 163 bytes
 TennisDictionaryPalettesChar6:
 	INCLUDE "data/bank_03f/palettes_47ae.asm" ; $47ae, 72 bytes (palettes)
 TennisDictionaryPalettesDefault:

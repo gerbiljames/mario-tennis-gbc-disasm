@@ -26,7 +26,7 @@ shape, not *twins*, and the shot banks are near-identical copies of each
 other, so a routine only one bank failed to execute reads as ordinary data
 until you diff it against its siblings.
 
-Everything below is **committed** (HEAD `718042c`); the whole history
+Everything below is **committed** (HEAD `e53f213`); the whole history
 rebuilds byte-perfect. Per-bank progress at any time: `python3
 tools/progress.py` (proven-code bytes, fill runs, label counts, human-named
 counts) and `tools/progress.py --unnamed <bank>` to list still-auto-named
@@ -10739,3 +10739,29 @@ them wants the emitter's boundary calculation, not another heuristic.
 Two invariants worth stating now that the sweep is done: no blob's content
 contradicts its name that any content-shape test can detect, and every declared
 LZ stream in the ROM decodes exactly within its extent.
+
+### The sixty, promoted (2026-07-31)
+
+The follow-up above is done, and the reason it needed the emitter rather than
+another carve heuristic is worth stating: those blobs have **no extent until the
+run scan gives them one**. They are pointer targets with curated labels but no
+`data_blobs` entry, so at carve time there is nothing to test a decode against;
+`_data_run_end` fixes their end, and only then is there a span to check.
+
+So the test lives in `_emit_data_run` and `_emit_raw_segment` now, as
+`_decodes_exactly(start, end)`: one LZ stream, ending on the run's last byte,
+expanding by at least a fifth, at least 32 bytes long. **46 more streams
+declared, 836 verified in total** — up from 619 before today. A fresh sweep for
+blobs that decode exactly but are not declared returns **zero**.
+
+What promoted is exactly the class the scan predicted: the match pause-menu word
+art (17 items), the scoreboard mode word art (15), the story pause-menu items
+(8), four Varsity Court cutscene streams that were already *named* `Lz` by hand,
+a court diagram and the tennis dictionary's alternate list data — which expands
+7× into a tilemap, so the "ListData" in its name is a screen, not a table.
+
+The exact-end rule is what makes this safe to run over every blob in the ROM:
+the codec would have to run out of input precisely where a boundary derived from
+an unrelated reference falls. A run that merely *starts* with a decodable prefix
+is the glued-stream case, and where to split it is evidence the carve has and
+the emitter does not.

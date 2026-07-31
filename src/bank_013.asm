@@ -2652,13 +2652,13 @@ VarsityCourtTourLzPtrs_13:
 	dw VarsityCourtTourLz2_13 ; record 2
 	dw VarsityCourtTourLz3_13 ; record 3
 VarsityCourtTourLz0_13:
-	INCBIN "data/bank_013/d_6793.bin" ; $6793, 158 bytes
+	INCBIN "data/bank_013/lz_6793.bin" ; $6793, 158 bytes
 VarsityCourtTourLz1_13:
-	INCBIN "data/bank_013/d_6831.bin" ; $6831, 157 bytes
+	INCBIN "data/bank_013/lz_6831.bin" ; $6831, 157 bytes
 VarsityCourtTourLz2_13:
-	INCBIN "data/bank_013/d_68ce.bin" ; $68ce, 161 bytes
+	INCBIN "data/bank_013/lz_68ce.bin" ; $68ce, 161 bytes
 VarsityCourtTourLz3_13:
-	INCBIN "data/bank_013/d_696f.bin" ; $696f, 153 bytes
+	INCBIN "data/bank_013/lz_696f.bin" ; $696f, 153 bytes
 VarsityCourtTourPalette_13:
 	INCBIN "data/bank_013/d_6a08.bin" ; $6a08, 8 bytes
 SetupStoryMinigameMatch0:

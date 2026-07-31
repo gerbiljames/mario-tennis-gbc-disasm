@@ -1805,39 +1805,39 @@ MatchMenuItemGfxPointers:
 ScoreboardModeGfxTail:
 	INCBIN "data/bank_006/d_5280.bin" ; $5280, 64 bytes
 MatchMenuItemGfx_Rules:
-	INCBIN "data/bank_006/d_52c0.bin" ; $52c0, 130 bytes
+	INCBIN "data/bank_006/lz_52c0.bin" ; $52c0, 130 bytes
 MatchMenuItemGfx_Controls:
-	INCBIN "data/bank_006/d_5342.bin" ; $5342, 192 bytes
+	INCBIN "data/bank_006/lz_5342.bin" ; $5342, 192 bytes
 MatchMenuItemGfx_Options:
-	INCBIN "data/bank_006/d_5402.bin" ; $5402, 147 bytes
+	INCBIN "data/bank_006/lz_5402.bin" ; $5402, 147 bytes
 MatchMenuItemGfx_Save:
-	INCBIN "data/bank_006/d_5495.bin" ; $5495, 132 bytes
+	INCBIN "data/bank_006/lz_5495.bin" ; $5495, 132 bytes
 MatchMenuItemGfx_CameraMode:
-	INCBIN "data/bank_006/d_5519.bin" ; $5519, 172 bytes
+	INCBIN "data/bank_006/lz_5519.bin" ; $5519, 172 bytes
 MatchMenuItemGfx_Music:
-	INCBIN "data/bank_006/d_55c5.bin" ; $55c5, 131 bytes
+	INCBIN "data/bank_006/lz_55c5.bin" ; $55c5, 131 bytes
 MatchMenuItemGfx_Normal:
-	INCBIN "data/bank_006/d_5648.bin" ; $5648, 121 bytes
+	INCBIN "data/bank_006/lz_5648.bin" ; $5648, 121 bytes
 MatchMenuItemGfx_Player:
-	INCBIN "data/bank_006/d_56c1.bin" ; $56c1, 132 bytes
+	INCBIN "data/bank_006/lz_56c1.bin" ; $56c1, 132 bytes
 MatchMenuItemGfx_On:
-	INCBIN "data/bank_006/d_5745.bin" ; $5745, 124 bytes
+	INCBIN "data/bank_006/lz_5745.bin" ; $5745, 124 bytes
 MatchMenuItemGfx_Off:
-	INCBIN "data/bank_006/d_57c1.bin" ; $57c1, 131 bytes
+	INCBIN "data/bank_006/lz_57c1.bin" ; $57c1, 131 bytes
 MatchMenuItemGfx_Cancel:
-	INCBIN "data/bank_006/d_5844.bin" ; $5844, 129 bytes
+	INCBIN "data/bank_006/lz_5844.bin" ; $5844, 129 bytes
 MatchMenuItemGfx_SaveNarrow:
-	INCBIN "data/bank_006/d_58c5.bin" ; $58c5, 115 bytes
+	INCBIN "data/bank_006/lz_58c5.bin" ; $58c5, 115 bytes
 MatchMenuItemGfx_ToMainMenu:
-	INCBIN "data/bank_006/d_5938.bin" ; $5938, 176 bytes
+	INCBIN "data/bank_006/lz_5938.bin" ; $5938, 176 bytes
 MatchMenuItemGfx_ToLevelSelect:
-	INCBIN "data/bank_006/d_59e8.bin" ; $59e8, 178 bytes
+	INCBIN "data/bank_006/lz_59e8.bin" ; $59e8, 178 bytes
 MatchMenuItemGfx_TryAgain:
-	INCBIN "data/bank_006/d_5a9a.bin" ; $5a9a, 155 bytes
+	INCBIN "data/bank_006/lz_5a9a.bin" ; $5a9a, 155 bytes
 MatchMenuItemGfx_QuitMatch:
-	INCBIN "data/bank_006/d_5b35.bin" ; $5b35, 165 bytes
+	INCBIN "data/bank_006/lz_5b35.bin" ; $5b35, 165 bytes
 MatchMenuItemGfx_QuitMinigame:
-	INCBIN "data/bank_006/d_5bda.bin" ; $5bda, 176 bytes
+	INCBIN "data/bank_006/lz_5bda.bin" ; $5bda, 176 bytes
 LoadScoreboardModeGfx:
 	ld a, [wGameMode] ; $5c8a
 	cp GAMEMODE_TRAINING_DRILL ; $5c8d
@@ -1933,35 +1933,35 @@ ScoreboardMinigameGfxPointers:
 	; $5d33, 13 bytes (bytes:13)
 	db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00 ; 0x00
 ScoreboardModeGfx_RankingMatch:
-	INCBIN "data/bank_006/d_5d40.bin" ; $5d40, 181 bytes
+	INCBIN "data/bank_006/lz_5d40.bin" ; $5d40, 181 bytes
 ScoreboardModeGfx_IslandOpen:
-	INCBIN "data/bank_006/d_5df5.bin" ; $5df5, 188 bytes
+	INCBIN "data/bank_006/lz_5df5.bin" ; $5df5, 188 bytes
 ScoreboardModeGfx_PracticeMatch:
-	INCBIN "data/bank_006/d_5eb1.bin" ; $5eb1, 197 bytes
+	INCBIN "data/bank_006/lz_5eb1.bin" ; $5eb1, 197 bytes
 ScoreboardModeGfx_Exhibition:
-	INCBIN "data/bank_006/d_5f76.bin" ; $5f76, 129 bytes
+	INCBIN "data/bank_006/lz_5f76.bin" ; $5f76, 129 bytes
 ScoreboardModeGfx_MiniGames:
-	INCBIN "data/bank_006/d_5ff7.bin" ; $5ff7, 148 bytes
+	INCBIN "data/bank_006/lz_5ff7.bin" ; $5ff7, 148 bytes
 ScoreboardModeGfx_TennisMachine:
-	INCBIN "data/bank_006/d_608b.bin" ; $608b, 179 bytes
+	INCBIN "data/bank_006/lz_608b.bin" ; $608b, 179 bytes
 ScoreboardModeGfx_WallPractice:
-	INCBIN "data/bank_006/d_613e.bin" ; $613e, 184 bytes
+	INCBIN "data/bank_006/lz_613e.bin" ; $613e, 184 bytes
 ScoreboardModeGfx_MarioMiniGames:
-	INCBIN "data/bank_006/d_61f6.bin" ; $61f6, 197 bytes
+	INCBIN "data/bank_006/lz_61f6.bin" ; $61f6, 197 bytes
 ScoreboardModeGfx_LinkedMatch:
-	INCBIN "data/bank_006/d_62bb.bin" ; $62bb, 170 bytes
+	INCBIN "data/bank_006/lz_62bb.bin" ; $62bb, 170 bytes
 ScoreboardModeGfx_ServiceMatch:
-	INCBIN "data/bank_006/d_6365.bin" ; $6365, 173 bytes
+	INCBIN "data/bank_006/lz_6365.bin" ; $6365, 173 bytes
 ScoreboardModeGfx_ServicePractice:
-	INCBIN "data/bank_006/d_6412.bin" ; $6412, 202 bytes
+	INCBIN "data/bank_006/lz_6412.bin" ; $6412, 202 bytes
 ScoreboardModeGfx_NetPlayMatch:
-	INCBIN "data/bank_006/d_64dc.bin" ; $64dc, 211 bytes
+	INCBIN "data/bank_006/lz_64dc.bin" ; $64dc, 211 bytes
 ScoreboardModeGfx_NetPlayPractice:
-	INCBIN "data/bank_006/d_65af.bin" ; $65af, 216 bytes
+	INCBIN "data/bank_006/lz_65af.bin" ; $65af, 216 bytes
 ScoreboardModeGfx_StrokeMatch:
-	INCBIN "data/bank_006/d_6687.bin" ; $6687, 173 bytes
+	INCBIN "data/bank_006/lz_6687.bin" ; $6687, 173 bytes
 ScoreboardModeGfx_StrokePractice:
-	INCBIN "data/bank_006/d_6734.bin" ; $6734, 206 bytes
+	INCBIN "data/bank_006/lz_6734.bin" ; $6734, 206 bytes
 DrawMatchMenuItem:
 	push af ; $6802
 	push de ; $6803
@@ -3466,21 +3466,21 @@ QueueStoryMenuCursorSprite_SpriteTemplate:
 	; $7308, 8 bytes (bytes:8)
 	db $00, $00, $00, $00, $00, $00, $00, $00 ; 0x00
 StoryMenuItemGfx_Status:
-	INCBIN "data/bank_006/d_7310.bin" ; $7310, 160 bytes
+	INCBIN "data/bank_006/lz_7310.bin" ; $7310, 160 bytes
 StoryMenuItemGfx_ClearStatus:
-	INCBIN "data/bank_006/d_73b0.bin" ; $73b0, 183 bytes
+	INCBIN "data/bank_006/lz_73b0.bin" ; $73b0, 183 bytes
 StoryMenuItemGfx_Messages:
-	INCBIN "data/bank_006/d_7467.bin" ; $7467, 171 bytes
+	INCBIN "data/bank_006/lz_7467.bin" ; $7467, 171 bytes
 StoryMenuItemGfx_Slow:
-	INCBIN "data/bank_006/d_7512.bin" ; $7512, 118 bytes
+	INCBIN "data/bank_006/lz_7512.bin" ; $7512, 118 bytes
 StoryMenuItemGfx_Fast:
-	INCBIN "data/bank_006/d_7588.bin" ; $7588, 121 bytes
+	INCBIN "data/bank_006/lz_7588.bin" ; $7588, 121 bytes
 StoryMenuItemGfx_CharData:
-	INCBIN "data/bank_006/d_7601.bin" ; $7601, 175 bytes
+	INCBIN "data/bank_006/lz_7601.bin" ; $7601, 175 bytes
 StoryMenuItemGfx_Items:
-	INCBIN "data/bank_006/d_76b0.bin" ; $76b0, 125 bytes
+	INCBIN "data/bank_006/lz_76b0.bin" ; $76b0, 125 bytes
 StoryMenuItemGfx_Normal:
-	INCBIN "data/bank_006/d_772d.bin" ; $772d, 121 bytes
+	INCBIN "data/bank_006/lz_772d.bin" ; $772d, 121 bytes
 DrawStoryMenuItem:
 	push de ; $77a6
 	add a ; $77a7

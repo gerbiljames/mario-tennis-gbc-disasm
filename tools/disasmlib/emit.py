@@ -658,7 +658,8 @@ class Emitter:
             if mlen and mlen <= length:
                 run_end = run_start + mlen
                 length = mlen
-            if kind == "lz":
+            if kind == "lz" or (mlen is None
+                                and self._decodes_exactly(run_start, run_end)):
                 prefix = "lz"
         if run_start in self.dis.object_headers:
             self.lines.extend(render_object_header(
@@ -671,6 +672,29 @@ class Emitter:
         else:
             self._emit_unclassified(run_start, run_end, bank_end, bank)
         return run_end
+
+    # Below this a decode that happens to land on the boundary proves little:
+    # short runs of arbitrary bytes hit the codec's end condition too often.
+    LZ_MIN = 32
+
+    def _decodes_exactly(self, start, end):
+        """True if [start, end) is one LZ stream that ends on its last byte.
+
+        The carve pass sizes the streams whose source is an `ld hl, imm` before
+        a DecompressData call. The rest are reached through a pointer table, so
+        their extent is not known until the run scan above fixes it here -- and
+        a stream that ends exactly on a boundary derived from a separate
+        reference is not a coincidence. Requiring the exact end is what keeps
+        this honest: a run that merely *starts* with a decodable prefix is the
+        glued-stream case, and where to split it is evidence the carve has and
+        this does not."""
+        if end - start < self.LZ_MIN:
+            return False
+        try:
+            data, used = lz.decompress(self.rom, start, end)
+        except ValueError:
+            return False
+        return used == end - start and len(data) > (end - start) * 6 // 5
 
     def _data_run_end(self, run_start, bank_end):
         """The run ends at the next emitted structure. A curated label inside a
@@ -885,7 +909,8 @@ class Emitter:
                 mn = "ret" if b == 0xC9 else f"db ${b:02x}"
                 self.lines.append(f"\t{mn} ; ${offset_to_cpu(seg + k):04x}")
         else:
-            self.lines.append(self._incbin(seg, n, bank))
+            prefix = "lz" if self._decodes_exactly(seg, j) else "d"
+            self.lines.append(self._incbin(seg, n, bank, prefix))
 
     def _looks_like_text(self, seg, j):
         """ASCII dominance (plus the $00-$03 text control codes) marks a text
