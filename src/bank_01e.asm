@@ -1489,7 +1489,7 @@ ShowExpAwardScreen:
 InitExpAwardScreenState:
 	wram_bank $06 ; $54bb
 	xor a ; $54c1
-	ld hl, $d004 ; $54c2
+	ld hl, wExpAwardScreenState ; $54c2
 	ld d, $05 ; $54c5
 	call FillMemoryD ; $54c7
 	ld a, $20 ; $54ca
@@ -1509,7 +1509,7 @@ InitExpAwardScreenState:
 	ld d, $0a ; $54e5
 	call FillMemoryD ; $54e7
 	ld a, $01 ; $54ea
-	ld [$d000], a ; $54ec
+	ld [wContinuePromptKind], a ; $54ec
 	ret ; $54ef
 FillMemoryD:
 	ld [hl+], a ; $54f0

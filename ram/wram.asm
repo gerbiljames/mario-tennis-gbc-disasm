@@ -2461,8 +2461,8 @@ SECTION "WRAMX bank 3", WRAMX[$d000], BANK[3]
 ;   $d430-$d66f  wCharDataScreenBackup  [mirrored with bank 2]
 ;   $d600-$d68f  wMugshotBuffer  [mirrored with bank 2, 4]
 ;   $d7e0-$da1f  wCharDataPageSlot1  [mirrored with bank 2]
-;   $d800-$d80f  7 overlays: equipment select / name entry / match results / +4 more
-;   $d810-$d83e  4 overlays: drill briefings / character-select grid / equipment select / +1 more
+;   $d800-$d80f  9 overlays: equipment select / name entry / match results / +6 more
+;   $d810-$d83e  6 overlays: drill briefings / character-select grid / equipment select / +3 more
 ;   $d840-$d867  character unlock flags / ranking board
 ;   $d900-$daff  created characters and the character grid / N64 transfer records / screen sequences
 ;   $da20-$dc5f  wCharDataPageSlot2  [mirrored with bank 2]
@@ -2497,6 +2497,10 @@ wShadowAttrmap:: ds 1024
 ; each full-screen UI reuses these bytes, so the variants are scoped to the
 ; owning ROM bank (and, where one bank runs several screens, to that screen's
 ; code range).
+; The minigame data screen and the trophies screen each lay an array across
+; $d810, so their first symbol here is declared only as far as this block
+; reaches and the rest of the screen sits in the $d810 union under a variant
+; of the same name.
 UNION
 ; equipment select (bank $3e, $5400-$5c00)
 ; [8 bytes] Item ids the player owns, compacted by BuildOwnedItemList from wEquipOwnedMap; the cursor indexes this list
@@ -2521,7 +2525,7 @@ wRankingBoardDoubles:: db
 wRankingBoardPlayerRow:: db
 ; [8-bit] How the board is presented, from d: 0 plain, 1 plays fanfare $2b, 2 plays the second fanfare and registers RankingCursorBobTask. A 3 is turned back into 0 with w3_d85a set instead
 wRankingBoardMode:: db
-; [8-bit] Base of the ranking marker slots (83 bytes, $d803-$d855, so it runs past this block into the $d810 one). Cleared by ClearRankingMarkerSlots and filled by LoadRankingMarkerCoords; GetRankingMarkerSlot hands out one per marker drawn
+; [8-bit] Base of the ranking marker slots: twelve 4-byte records, $d803-$d832, so the array runs past this block into the $d810 one. GetRankingMarkerSlot returns base + index * 4 and DrawRankingMarkersTask walks all twelve, skipping any whose +0 reads $ff and queueing the rest as a sprite with +0 the tile, +1 the X and +2 the Y. ClearRankingMarkerSlots clears the $30 bytes of the array and LoadRankingMarkerCoords copies $30 bytes of coordinates over it; the separate $53-byte clear at the head of BuildRankingBoardScreen is wider than the array -- it wipes the whole screen's state from here up to wRankingBannerAnimFrame, animation channels included
 wRankingMarkerSlots:: db
 NEXTU
 ; trophy / N64-tournament / bracket screens (bank $3b)
@@ -2530,6 +2534,19 @@ NEXTU
 wDataScreenPage:: db
 ; [8-bit] Cursor row within the page, stepped by ScrollN64TnmtDataCursor
 wDataScreenCursorRow:: db
+NEXTU
+; minigame data screen (bank $1b, $73dd-$78bd)
+	ds 9
+; [7 of 9 bytes] One byte per list row, nonzero when that row's minigame has its level-1 clear flag. LoadMinigameClearFlags clears nine bytes here and walks MinigameClearFlagsTable ($0280/$02e0/$0340/$03a0/$0500/$0560/$05c0/$0620/$0680 -- the SAVEFLAG_CLEARED_*_1 of Boo Blast through Two-On-One) through TestSaveFlag; DrawMinigameClearMarks indexes it by wMenuCursorY and draws mark 0 for each of the five visible rows. Only seven of the nine bytes are declared here: the array runs to $d811, two bytes past this block and into the $d810 one
+wMinigameDataClearFlags:: ds 7
+NEXTU
+; trophies screen (bank $3b, $49e5-$4cfa)
+; [6 bytes] One trophy row: six cells, each 0 or 1, drawn as one icon per set cell by DrawTrophyRowPair (three cells, a gap, three more). DecodeTrophyCounts fills the first three from wN64TrophyCounts bits 0-1 and the second three from bits 4-5, one `1` per unit of the 0-3 count. This row is the main character's first set -- DrawTrophiesWonRows draws it where DrawTrophiesCharSprite has just put wStoryModeMainCharacterOverworldSprite
+wTrophyCellsMainSet1:: ds 6
+; [6 bytes] The partner's first-set row, from wN64TrophyCounts + 1 bits 0-1 and 4-5; drawn beside wStoryModePartnerCharacterOverworldSprite
+wTrophyCellsPartnerSet1:: ds 6
+; [4 of 6 bytes] The main character's second-set row, from wN64TrophyCounts bits 2-3 and 6-7. Only drawn when wTrophySecondSetPresent, which is what turns the screen from two rows into four. Four of the six bytes are declared here: the row runs to $d811, two bytes past this block and into the $d810 one
+wTrophyCellsMainSet2:: ds 4
 NEXTU
 ; title screen (bank $6b)
 	ds 1
@@ -2684,6 +2701,23 @@ NEXTU
 ; match results (bank $16)
 ; [8 bytes] Digit scratch PrintSinglesMatchStats / PrintDoublesMatchStats hand to PrintNumberRightAligned as bc while writing each stat into the shadow tilemap
 wStatsPrintBuffer:: ds 8
+NEXTU
+; minigame data screen (bank $1b, $73dd-$78bd)
+	ds 2
+; [9 bytes] One byte per list row, nonzero when that row's minigame has its level-2 clear flag. LoadMinigameStarFlags fills it from MinigameStarFlagsTable ($02a0/$0300/$0360/$03c0/$0520/$0580/$05e0/$0640/$06a0, the SAVEFLAG_CLEARED_*_2 run) exactly as wMinigameDataClearFlags is filled from the level-1 flags. DrawMinigameStarMarks draws mark 1 for each set row; DrawStarLegendMark copies the legend swatch onto the screen if any of the nine is set; and DrawMinigameHighScoreNumber returns early unless the row's byte here is set, so a row with no star shows no number
+wMinigameDataStarFlags:: ds 9
+; [8 x 16-bit] The number shown on each of the first eight rows. LoadMinigameHighScores calls ReadMinigameRecord with the record id row + 2 -- records 2-9 of the block $38 minigame records, whose 16-bit value comes back in wMinigameRecordValue under WRAM bank $07 -- and stores it at row * 2. DrawMinigameHighScoreNumber skips row 8, which has no record: that slot holds wMinigameDataTwoOnOneCleared instead
+wMinigameDataHighScores:: ds 16
+; [2 bytes] Row 8's slot in the high-score array, used as a flag pair rather than a number: LoadMinigameHighScores writes $01 into both bytes when SAVEFLAG_CLEARED_TWO_ON_ONE_3 is set, having cleared all 18 bytes from $d81b first. DrawMinigameSpecialMark reads the pair as a word and, once the list is scrolled to the bottom (wMenuCursorY = 4, so row 8 is the fifth visible row), draws mark 2 there
+wMinigameDataTwoOnOneCleared:: dw
+NEXTU
+; trophies screen (bank $3b, $49e5-$4cfa)
+	ds 2
+; [6 bytes] The partner's second-set trophy row, from wN64TrophyCounts + 1 bits 2-3 and 6-7; the fourth and last row DrawTrophiesWonRows draws, and only when wTrophySecondSetPresent
+wTrophyCellsPartnerSet2:: ds 6
+	ds 1
+; [8-bit] Set by DecodeTrophyCounts when any of the four second-set counts came out nonzero. It picks screen asset record $0d over $0e and switches DrawTrophiesWonRows and the character sprites from two rows (main at tilemap row 8, partner at 10) to four (rows 6/8 and 13/15)
+wTrophySecondSetPresent:: db
 ENDU
 
 	ds 1
@@ -2698,7 +2732,13 @@ UNION
 wCharUnlockFlags:: ds 40
 NEXTU
 ; ranking board (bank $1b)
-	ds 21
+; [4 x 16-bit] One pointer per animation channel to the ranking marker slot that channel moves, stored from hl by StartRankingMarkerAnim<N> (the callers get it from GetRankingMarkerSlot). UpdateScriptedOffsetChannel<N> reloads it each frame and adds the script's delta to the slot's +1 on channels 0 and 1 and to its +2 on channels 2 and 3 -- the X and Y DrawRankingMarkersTask hands to QueueSprite as d and e
+wRankingAnimSlotPtrs:: ds 8
+; [4 x 16-bit] One pointer per channel to the delta script it is playing, stored from de by StartRankingMarkerAnim<N>. A script is one byte of movement per frame -- $01 or $ff in every table here -- ending at $40, which is UpdateScriptedOffsetChannel<N>'s cue to unregister its own frame task rather than a delta
+wRankingAnimScriptPtrs:: ds 8
+; [4 bytes] How far into its script each channel is. StartRankingMarkerAnim<N> zeroes its byte; UpdateScriptedOffsetChannel<N> reads the script at this offset and, unless it was the $40 terminator, increments it -- so the byte is the frame counter as well as the index
+wRankingAnimStepIndex:: ds 4
+	ds 1
 ; [8-bit] Frame counter for the sliding banner sprite. RankingBoardAnimTask_1b indexes RankingBoardAnimTaskTable with it for this frame's X delta, and unregisters itself once it reaches $87
 wRankingBannerAnimFrame:: db
 ; [8-bit] X the banner sprite is drawn at, seeded to $a0 on frame 0 and advanced by the table delta every frame after
@@ -2709,6 +2749,9 @@ wRankingAnimStateDone:: db
 	ds 1
 ; [8-bit] Set when ShowRankingBoard is called with mode $03, which it then rewrites to $00. It suppresses the board's entrance animation (DispatchRankingBoardAnim returns at once) and the closing jingle -- the quiet variant used when the board is shown as part of a longer sequence
 wRankingBoardSilent:: db
+	ds 5
+; [7 bytes] Where a ranking name too long for one row is split. RenderPlayerNameFitted measures the name with GetStringLength and, at six characters or more, calls RenderNameTwoRows: RenderNameTopRow copies the first four characters here and appends $2d ('-') and a terminator, RenderNameBottomRow copies the seven bytes from the fifth character on, and each row is then drawn from here by DrawNameWithDiacritics
+wRankingNameRowBuffer:: ds 7
 ENDU
 
 	ds 152
@@ -3426,7 +3469,9 @@ wCharDataLevelPreview:: db
 wCharDataChoiceCount:: db
 NEXTU
 ; EXP award screen (bank $1e)
-	ds 5
+	ds 4
+; [8-bit] First byte of the EXP award screen's working set. InitExpAwardScreenState clears $d004-$d027 from here -- wExpAwardRunningTotal, wExpAwardAmount, wExpAwardIndex and wExpAwardMessageTimer all fall inside -- then seeds $d009-$d00c and $d019-$d01c to $20 and $d00d/$d01d to $30. Nothing in bank $1e reads the byte itself; only the address is used, as the base of that clear
+wExpAwardScreenState:: db
 ; [16-bit] The EXP total ticking up on screen. CountUpExpTotal increments it and decrements the amount still to add, one point and one sound per pass, and DrawExpTotalDigits redraws it
 wExpAwardRunningTotal:: dw
 ; [16-bit] The award being counted in, set as each message is shown

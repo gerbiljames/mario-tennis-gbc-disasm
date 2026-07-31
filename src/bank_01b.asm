@@ -2034,7 +2034,7 @@ RenderNameTwoRows:
 	ret ; $56e1
 RenderNameTopRow:
 	push de ; $56e2
-	ld de, $d860 ; $56e3
+	ld de, wRankingNameRowBuffer ; $56e3
 	ld bc, $0004 ; $56e6
 	call CopyMemoryBC ; $56e9
 	ld a, $2d ; $56ec
@@ -2043,18 +2043,18 @@ RenderNameTopRow:
 	xor a ; $56f0
 	ld [de], a ; $56f1
 	pop de ; $56f2
-	ld hl, $d860 ; $56f3
+	ld hl, wRankingNameRowBuffer ; $56f3
 	call DrawNameWithDiacritics ; $56f6
 	ret ; $56f9
 RenderNameBottomRow:
 	push de ; $56fa
 	ld bc, $0004 ; $56fb
 	add hl, bc ; $56fe
-	ld de, $d860 ; $56ff
+	ld de, wRankingNameRowBuffer ; $56ff
 	ld bc, $0007 ; $5702
 	call CopyMemoryBC ; $5705
 	pop de ; $5708
-	ld hl, $d860 ; $5709
+	ld hl, wRankingNameRowBuffer ; $5709
 	call DrawNameWithDiacritics ; $570c
 	ret ; $570f
 HighlightSinglesRankingRows:
@@ -2427,16 +2427,16 @@ QueueRankingMarkerSprite:
 StartRankingMarkerAnim0:
 	ld b, h ; $5a6e
 	ld c, l ; $5a6f
-	ld hl, $d840 ; $5a70
+	ld hl, wRankingAnimSlotPtrs ; $5a70
 	ld a, c ; $5a73
 	ld [hl+], a ; $5a74
 	ld [hl], b ; $5a75
-	ld hl, $d848 ; $5a76
+	ld hl, wRankingAnimScriptPtrs ; $5a76
 	ld a, e ; $5a79
 	ld [hl+], a ; $5a7a
 	ld [hl], d ; $5a7b
 	xor a ; $5a7c
-	ld [$d850], a ; $5a7d
+	ld [wRankingAnimStepIndex], a ; $5a7d
 	ld a, $01 ; $5a80
 	ld hl, UpdateScriptedOffsetChannel0 ; $5a82
 	call RegisterFrameTask ; $5a85
@@ -2444,16 +2444,16 @@ StartRankingMarkerAnim0:
 StartRankingMarkerAnim1:
 	ld b, h ; $5a89
 	ld c, l ; $5a8a
-	ld hl, $d842 ; $5a8b
+	ld hl, wRankingAnimSlotPtrs + 2 ; $5a8b
 	ld a, c ; $5a8e
 	ld [hl+], a ; $5a8f
 	ld [hl], b ; $5a90
-	ld hl, $d84a ; $5a91
+	ld hl, wRankingAnimScriptPtrs + 2 ; $5a91
 	ld a, e ; $5a94
 	ld [hl+], a ; $5a95
 	ld [hl], d ; $5a96
 	xor a ; $5a97
-	ld [$d851], a ; $5a98
+	ld [wRankingAnimStepIndex + 1], a ; $5a98
 	ld a, $01 ; $5a9b
 	ld hl, UpdateScriptedOffsetChannel1 ; $5a9d
 	call RegisterFrameTask ; $5aa0
@@ -2461,16 +2461,16 @@ StartRankingMarkerAnim1:
 StartRankingMarkerAnim2:
 	ld b, h ; $5aa4
 	ld c, l ; $5aa5
-	ld hl, $d844 ; $5aa6
+	ld hl, wRankingAnimSlotPtrs + 4 ; $5aa6
 	ld a, c ; $5aa9
 	ld [hl+], a ; $5aaa
 	ld [hl], b ; $5aab
-	ld hl, $d84c ; $5aac
+	ld hl, wRankingAnimScriptPtrs + 4 ; $5aac
 	ld a, e ; $5aaf
 	ld [hl+], a ; $5ab0
 	ld [hl], d ; $5ab1
 	xor a ; $5ab2
-	ld [$d852], a ; $5ab3
+	ld [wRankingAnimStepIndex + 2], a ; $5ab3
 	ld a, $01 ; $5ab6
 	ld hl, UpdateScriptedOffsetChannel2 ; $5ab8
 	call RegisterFrameTask ; $5abb
@@ -2478,26 +2478,26 @@ StartRankingMarkerAnim2:
 StartRankingMarkerAnim3:
 	ld b, h ; $5abf
 	ld c, l ; $5ac0
-	ld hl, $d846 ; $5ac1
+	ld hl, wRankingAnimSlotPtrs + 6 ; $5ac1
 	ld a, c ; $5ac4
 	ld [hl+], a ; $5ac5
 	ld [hl], b ; $5ac6
-	ld hl, $d84e ; $5ac7
+	ld hl, wRankingAnimScriptPtrs + 6 ; $5ac7
 	ld a, e ; $5aca
 	ld [hl+], a ; $5acb
 	ld [hl], d ; $5acc
 	xor a ; $5acd
-	ld [$d853], a ; $5ace
+	ld [wRankingAnimStepIndex + 3], a ; $5ace
 	ld a, $01 ; $5ad1
 	ld hl, UpdateScriptedOffsetChannel3 ; $5ad3
 	call RegisterFrameTask ; $5ad6
 	ret ; $5ad9
 UpdateScriptedOffsetChannel0:
-	ld hl, $d848 ; $5ada
+	ld hl, wRankingAnimScriptPtrs ; $5ada
 	ld a, [hl+] ; $5add
 	ld d, [hl] ; $5ade
 	ld e, a ; $5adf
-	ld a, [$d850] ; $5ae0
+	ld a, [wRankingAnimStepIndex] ; $5ae0
 	ld h, $00 ; $5ae3
 	ld l, a ; $5ae5
 	add hl, de ; $5ae6
@@ -2505,7 +2505,7 @@ UpdateScriptedOffsetChannel0:
 	cp $40 ; $5ae8
 	jr z, .eq40 ; $5aea
 	ld c, a ; $5aec
-	ld hl, $d840 ; $5aed
+	ld hl, wRankingAnimSlotPtrs ; $5aed
 	ld a, [hl+] ; $5af0
 	ld h, [hl] ; $5af1
 	ld l, a ; $5af2
@@ -2519,16 +2519,16 @@ UpdateScriptedOffsetChannel0:
 	call UnregisterFrameTask ; $5afc
 	ret ; $5aff
 .checkTextPageBreakRequest:
-	ld a, [$d850] ; $5b00
+	ld a, [wRankingAnimStepIndex] ; $5b00
 	inc a ; $5b03
-	ld [$d850], a ; $5b04
+	ld [wRankingAnimStepIndex], a ; $5b04
 	ret ; $5b07
 UpdateScriptedOffsetChannel1:
-	ld hl, $d84a ; $5b08
+	ld hl, wRankingAnimScriptPtrs + 2 ; $5b08
 	ld a, [hl+] ; $5b0b
 	ld d, [hl] ; $5b0c
 	ld e, a ; $5b0d
-	ld a, [$d851] ; $5b0e
+	ld a, [wRankingAnimStepIndex + 1] ; $5b0e
 	ld h, $00 ; $5b11
 	ld l, a ; $5b13
 	add hl, de ; $5b14
@@ -2536,7 +2536,7 @@ UpdateScriptedOffsetChannel1:
 	cp $40 ; $5b16
 	jr z, .eq40 ; $5b18
 	ld c, a ; $5b1a
-	ld hl, $d842 ; $5b1b
+	ld hl, wRankingAnimSlotPtrs + 2 ; $5b1b
 	ld a, [hl+] ; $5b1e
 	ld h, [hl] ; $5b1f
 	ld l, a ; $5b20
@@ -2550,16 +2550,16 @@ UpdateScriptedOffsetChannel1:
 	call UnregisterFrameTask ; $5b2a
 	ret ; $5b2d
 .step2:
-	ld a, [$d851] ; $5b2e
+	ld a, [wRankingAnimStepIndex + 1] ; $5b2e
 	inc a ; $5b31
-	ld [$d851], a ; $5b32
+	ld [wRankingAnimStepIndex + 1], a ; $5b32
 	ret ; $5b35
 UpdateScriptedOffsetChannel2:
-	ld hl, $d84c ; $5b36
+	ld hl, wRankingAnimScriptPtrs + 4 ; $5b36
 	ld a, [hl+] ; $5b39
 	ld d, [hl] ; $5b3a
 	ld e, a ; $5b3b
-	ld a, [$d852] ; $5b3c
+	ld a, [wRankingAnimStepIndex + 2] ; $5b3c
 	ld h, $00 ; $5b3f
 	ld l, a ; $5b41
 	add hl, de ; $5b42
@@ -2567,7 +2567,7 @@ UpdateScriptedOffsetChannel2:
 	cp $40 ; $5b44
 	jr z, .eq40 ; $5b46
 	ld c, a ; $5b48
-	ld hl, $d844 ; $5b49
+	ld hl, wRankingAnimSlotPtrs + 4 ; $5b49
 	ld a, [hl+] ; $5b4c
 	ld h, [hl] ; $5b4d
 	ld l, a ; $5b4e
@@ -2582,16 +2582,16 @@ UpdateScriptedOffsetChannel2:
 	call UnregisterFrameTask ; $5b59
 	ret ; $5b5c
 .step2:
-	ld a, [$d852] ; $5b5d
+	ld a, [wRankingAnimStepIndex + 2] ; $5b5d
 	inc a ; $5b60
-	ld [$d852], a ; $5b61
+	ld [wRankingAnimStepIndex + 2], a ; $5b61
 	ret ; $5b64
 UpdateScriptedOffsetChannel3:
-	ld hl, $d84e ; $5b65
+	ld hl, wRankingAnimScriptPtrs + 6 ; $5b65
 	ld a, [hl+] ; $5b68
 	ld d, [hl] ; $5b69
 	ld e, a ; $5b6a
-	ld a, [$d853] ; $5b6b
+	ld a, [wRankingAnimStepIndex + 3] ; $5b6b
 	ld h, $00 ; $5b6e
 	ld l, a ; $5b70
 	add hl, de ; $5b71
@@ -2599,7 +2599,7 @@ UpdateScriptedOffsetChannel3:
 	cp $40 ; $5b73
 	jr z, .eq40 ; $5b75
 	ld c, a ; $5b77
-	ld hl, $d846 ; $5b78
+	ld hl, wRankingAnimSlotPtrs + 6 ; $5b78
 	ld a, [hl+] ; $5b7b
 	ld h, [hl] ; $5b7c
 	ld l, a ; $5b7d
@@ -2614,9 +2614,9 @@ UpdateScriptedOffsetChannel3:
 	call UnregisterFrameTask ; $5b88
 	ret ; $5b8b
 .step2:
-	ld a, [$d853] ; $5b8c
+	ld a, [wRankingAnimStepIndex + 3] ; $5b8c
 	inc a ; $5b8f
-	ld [$d853], a ; $5b90
+	ld [wRankingAnimStepIndex + 3], a ; $5b90
 	ret ; $5b93
 RankingBoardAnimState_5077Table0:
 	; $5b94, 1 bytes (bytes:1)
@@ -5672,11 +5672,11 @@ LoadMinigameDataState:
 .done:
 	ret ; $74de
 LoadMinigameClearFlags:
-	ld hl, $d809 ; $74df
+	ld hl, wMinigameDataClearFlags ; $74df
 	ld bc, $0009 ; $74e2
 	call ClearBytes ; $74e5
 	ld c, $00 ; $74e8
-	ld hl, $d809 ; $74ea
+	ld hl, wMinigameDataClearFlags ; $74ea
 .loop:
 	ld a, c ; $74ed
 	add a ; $74ee
@@ -5715,11 +5715,11 @@ MinigameClearFlagsTable:
 	dw $0620 ; record 7
 	dw $0680 ; record 8
 LoadMinigameStarFlags:
-	ld hl, $d812 ; $751f
+	ld hl, wMinigameDataStarFlags ; $751f
 	ld bc, $0009 ; $7522
 	call ClearBytes ; $7525
 	ld c, $00 ; $7528
-	ld hl, $d812 ; $752a
+	ld hl, wMinigameDataStarFlags ; $752a
 .loop:
 	ld a, c ; $752d
 	add a ; $752e
@@ -5761,14 +5761,14 @@ MinigameStarFlagsTable:
 LoadMinigameHighScores:
 	ldh a, [hWramBank] ; $7560
 	push af ; $7562
-	ld hl, $d81b ; $7563
+	ld hl, wMinigameDataHighScores ; $7563
 	ld bc, $0012 ; $7566
 	call ClearBytes ; $7569
 	ld de, SAVEFLAG_CLEARED_TWO_ON_ONE_3 ; $756c
 	farcall TestSaveFlag ; $756f
 	jr z, .readMinigameRecord ; $7572
 	ld a, $01 ; $7574
-	ld hl, $d82b ; $7576
+	ld hl, wMinigameDataTwoOnOneCleared ; $7576
 	ld [hl+], a ; $7579
 	ld [hl], a ; $757a
 .readMinigameRecord:
@@ -5784,7 +5784,7 @@ LoadMinigameHighScores:
 	ld d, [hl] ; $758d
 	ld e, a ; $758e
 	wram_bank $03 ; $758f
-	ld hl, $d81b ; $7595
+	ld hl, wMinigameDataHighScores ; $7595
 	ld a, c ; $7598
 	add a ; $7599
 	add l ; $759a
@@ -5982,7 +5982,7 @@ DrawMinigameDataMarks:
 	call DrawMinigameSpecialMark ; $76f7
 	ret ; $76fa
 DrawMinigameClearMarks:
-	ld hl, $d809 ; $76fb
+	ld hl, wMinigameDataClearFlags ; $76fb
 	ld a, [wMenuCursorY] ; $76fe
 	add l ; $7701
 	ld l, a ; $7702
@@ -6004,7 +6004,7 @@ DrawMinigameClearMarks:
 	jr nz, .loop ; $7716
 	ret ; $7718
 DrawMinigameStarMarks:
-	ld hl, $d812 ; $7719
+	ld hl, wMinigameDataStarFlags ; $7719
 	ld a, [wMenuCursorY] ; $771c
 	add l ; $771f
 	ld l, a ; $7720
@@ -6029,7 +6029,7 @@ DrawMinigameSpecialMark:
 	ld a, [wMenuCursorY] ; $7737
 	cp $04 ; $773a
 	ret nz ; $773c
-	ld hl, $d82b ; $773d
+	ld hl, wMinigameDataTwoOnOneCleared ; $773d
 	ld a, [hl+] ; $7740
 	ld b, [hl] ; $7741
 	or b ; $7742
@@ -6142,7 +6142,7 @@ ClearMinigameMarkColumns:
 	farcall CopyTilemapRect ; $77f7
 	ret ; $77fa
 DrawStarLegendMark:
-	ld hl, $d812 ; $77fb
+	ld hl, wMinigameDataStarFlags ; $77fb
 	ld c, $00 ; $77fe
 .loop:
 	ld a, [hl+] ; $7800
@@ -6200,7 +6200,7 @@ DrawMinigameHighScoreNumber:
 	ld d, [hl] ; $7856
 	ld e, a ; $7857
 	ld a, c ; $7858
-	ld hl, $d812 ; $7859
+	ld hl, wMinigameDataStarFlags ; $7859
 	add l ; $785c
 	ld l, a ; $785d
 	jr nc, .readB ; $785e
@@ -6211,7 +6211,7 @@ DrawMinigameHighScoreNumber:
 	ret z ; $7863
 	ld a, c ; $7864
 	add a ; $7865
-	ld hl, $d81b ; $7866
+	ld hl, wMinigameDataHighScores ; $7866
 	add l ; $7869
 	ld l, a ; $786a
 	jr nc, .read2 ; $786b
@@ -6248,14 +6248,14 @@ CompactMinigameDataRows:
 	ldh a, [hWramBank] ; $7896
 	push af ; $7898
 	wram_bank $03 ; $7899
-	ld a, [$d80e] ; $789f
-	ld [$d80d], a ; $78a2
-	ld a, [$d817] ; $78a5
-	ld [$d816], a ; $78a8
-	ld a, [$d825] ; $78ab
-	ld [$d823], a ; $78ae
-	ld a, [$d826] ; $78b1
-	ld [$d824], a ; $78b4
+	ld a, [wMinigameDataClearFlags + 5] ; $789f
+	ld [wMinigameDataClearFlags + 4], a ; $78a2
+	ld a, [wMinigameDataStarFlags + 5] ; $78a5
+	ld [wMinigameDataStarFlags + 4], a ; $78a8
+	ld a, [wMinigameDataHighScores + 10] ; $78ab
+	ld [wMinigameDataHighScores + 8], a ; $78ae
+	ld a, [wMinigameDataHighScores + 11] ; $78b1
+	ld [wMinigameDataHighScores + 9], a ; $78b4
 	pop af ; $78b7
 	wram_bank ; $78b8
 	ret ; $78bc

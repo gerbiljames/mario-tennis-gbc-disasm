@@ -1579,7 +1579,7 @@ RunTrophiesScreen:
 BuildTrophiesScreen:
 	wram_bank $03 ; $49e5
 	call DecodeTrophyCounts ; $49eb
-	ld a, [$d819] ; $49ee
+	ld a, [wTrophySecondSetPresent] ; $49ee
 	or a ; $49f1
 	jr nz, .nonZero ; $49f2
 	ld c, $0e ; $49f4
@@ -1591,7 +1591,7 @@ BuildTrophiesScreen:
 .drawTrophiesWonRows:
 	wram_bank $03 ; $4a00
 	call DrawTrophiesWonRows ; $4a06
-	ld a, [$d819] ; $4a09
+	ld a, [wTrophySecondSetPresent] ; $4a09
 	or a ; $4a0c
 	jr nz, .nonZero2 ; $4a0d
 	ld a, [wStoryModeMainCharacterOverworldSprite] ; $4a0f
@@ -1636,17 +1636,17 @@ BuildTrophiesScreen:
 	farcall QueueWram3MapToVRAM ; $4a6d
 	ret ; $4a70
 DrawTrophiesWonRows:
-	ld a, [$d819] ; $4a71
+	ld a, [wTrophySecondSetPresent] ; $4a71
 	or a ; $4a74
 	jr nz, .nonZero ; $4a75
-	ld hl, wScreenScratch ; $4a77
+	ld hl, wTrophyCellsMainSet1 ; $4a77
 	ld de, wShadowTilemap + 8 * TILEMAP_WIDTH + 5 ; $4a7a
 	call DrawTrophyRowPair ; $4a7d
 	ld de, wShadowTilemap + 10 * TILEMAP_WIDTH + 5 ; $4a80
 	call DrawTrophyRowPair ; $4a83
 	ret ; $4a86
 .nonZero:
-	ld hl, wScreenScratch ; $4a87
+	ld hl, wTrophyCellsMainSet1 ; $4a87
 	ld de, wShadowTilemap + 6 * TILEMAP_WIDTH + 5 ; $4a8a
 	call DrawTrophyRowPair ; $4a8d
 	ld de, wShadowTilemap + 8 * TILEMAP_WIDTH + 5 ; $4a90
@@ -1870,28 +1870,28 @@ ApplyUnlockEverythingCheat:
 	ret ; $4c52
 DecodeTrophyCounts:
 	wram_bank $03 ; $4c53
-	ld hl, wScreenScratch ; $4c59
+	ld hl, wTrophyCellsMainSet1 ; $4c59
 	ld bc, $0018 ; $4c5c
 	call ClearBytes ; $4c5f
-	ld de, wScreenScratch ; $4c62
+	ld de, wTrophyCellsMainSet1 ; $4c62
 	ld a, [wN64TrophyCounts] ; $4c65
 	and $03 ; $4c68
 	ld b, a ; $4c6a
 	call FillTrophyCountCells ; $4c6b
-	ld de, $d803 ; $4c6e
+	ld de, wTrophyCellsMainSet1 + 3 ; $4c6e
 	ld a, [wN64TrophyCounts] ; $4c71
 	swap a ; $4c74
 	and $03 ; $4c76
 	ld b, a ; $4c78
 	call FillTrophyCountCells ; $4c79
-	ld de, $d80c ; $4c7c
+	ld de, wTrophyCellsMainSet2 ; $4c7c
 	ld a, [wN64TrophyCounts] ; $4c7f
 	srl a ; $4c82
 	srl a ; $4c84
 	and $03 ; $4c86
 	ld b, a ; $4c88
 	call FillTrophyCountCells ; $4c89
-	ld de, $d80f ; $4c8c
+	ld de, wTrophyCellsMainSet2 + 3 ; $4c8c
 	ld a, [wN64TrophyCounts] ; $4c8f
 	swap a ; $4c92
 	srl a ; $4c94
@@ -1899,25 +1899,25 @@ DecodeTrophyCounts:
 	and $03 ; $4c98
 	ld b, a ; $4c9a
 	call FillTrophyCountCells ; $4c9b
-	ld de, $d806 ; $4c9e
+	ld de, wTrophyCellsPartnerSet1 ; $4c9e
 	ld a, [wN64TrophyCounts + 1] ; $4ca1
 	and $03 ; $4ca4
 	ld b, a ; $4ca6
 	call FillTrophyCountCells ; $4ca7
-	ld de, $d809 ; $4caa
+	ld de, wTrophyCellsPartnerSet1 + 3 ; $4caa
 	ld a, [wN64TrophyCounts + 1] ; $4cad
 	swap a ; $4cb0
 	and $03 ; $4cb2
 	ld b, a ; $4cb4
 	call FillTrophyCountCells ; $4cb5
-	ld de, $d812 ; $4cb8
+	ld de, wTrophyCellsPartnerSet2 ; $4cb8
 	ld a, [wN64TrophyCounts + 1] ; $4cbb
 	srl a ; $4cbe
 	srl a ; $4cc0
 	and $03 ; $4cc2
 	ld b, a ; $4cc4
 	call FillTrophyCountCells ; $4cc5
-	ld de, $d815 ; $4cc8
+	ld de, wTrophyCellsPartnerSet2 + 3 ; $4cc8
 	ld a, [wN64TrophyCounts + 1] ; $4ccb
 	swap a ; $4cce
 	srl a ; $4cd0
@@ -1925,22 +1925,22 @@ DecodeTrophyCounts:
 	and $03 ; $4cd4
 	ld b, a ; $4cd6
 	call FillTrophyCountCells ; $4cd7
-	ld a, [$d80c] ; $4cda
+	ld a, [wTrophyCellsMainSet2] ; $4cda
 	or a ; $4cdd
 	jr nz, .step ; $4cde
-	ld a, [$d80f] ; $4ce0
+	ld a, [wTrophyCellsMainSet2 + 3] ; $4ce0
 	or a ; $4ce3
 	jr nz, .step ; $4ce4
-	ld a, [$d812] ; $4ce6
+	ld a, [wTrophyCellsPartnerSet2] ; $4ce6
 	or a ; $4ce9
 	jr nz, .step ; $4cea
-	ld a, [$d815] ; $4cec
+	ld a, [wTrophyCellsPartnerSet2 + 3] ; $4cec
 	or a ; $4cef
 	jr nz, .step ; $4cf0
 	jr .done ; $4cf2
 .step:
 	ld a, $01 ; $4cf4
-	ld [$d819], a ; $4cf6
+	ld [wTrophySecondSetPresent], a ; $4cf6
 .done:
 	ret ; $4cf9
 RunN64TnmtData:

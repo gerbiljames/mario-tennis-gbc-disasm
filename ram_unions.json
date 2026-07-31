@@ -1067,7 +1067,7 @@
   {
    "start": "0xd800",
    "end": "0xd810",
-   "comment": "Screen-local scratch in WRAM bank $03, low half. Like the $d810 block above\neach full-screen UI reuses these bytes, so the variants are scoped to the\nowning ROM bank (and, where one bank runs several screens, to that screen's\ncode range).",
+   "comment": "Screen-local scratch in WRAM bank $03, low half. Like the $d810 block above\neach full-screen UI reuses these bytes, so the variants are scoped to the\nowning ROM bank (and, where one bank runs several screens, to that screen's\ncode range).\nThe minigame data screen and the trophies screen each lay an array across\n$d810, so their first symbol here is declared only as far as this block\nreaches and the rest of the screen sits in the $d810 union under a variant\nof the same name.",
    "variants": [
     {
      "context": "equipment select (bank $3e, $5400-$5c00)",
@@ -1150,7 +1150,7 @@
       },
       "0xd803": {
        "name": "wRankingMarkerSlots",
-       "note": "[8-bit] Base of the ranking marker slots (83 bytes, $d803-$d855, so it runs past this block into the $d810 one). Cleared by ClearRankingMarkerSlots and filled by LoadRankingMarkerCoords; GetRankingMarkerSlot hands out one per marker drawn"
+       "note": "[8-bit] Base of the ranking marker slots: twelve 4-byte records, $d803-$d832, so the array runs past this block into the $d810 one. GetRankingMarkerSlot returns base + index * 4 and DrawRankingMarkersTask walks all twelve, skipping any whose +0 reads $ff and queueing the rest as a sprite with +0 the tile, +1 the X and +2 the Y. ClearRankingMarkerSlots clears the $30 bytes of the array and LoadRankingMarkerCoords copies $30 bytes of coordinates over it; the separate $53-byte clear at the head of BuildRankingBoardScreen is wider than the array -- it wipes the whole screen's state from here up to wRankingBannerAnimFrame, animation channels included"
       }
      }
     },
@@ -1169,6 +1169,52 @@
       "0xd802": {
        "name": "wDataScreenCursorRow",
        "note": "[8-bit] Cursor row within the page, stepped by ScrollN64TnmtDataCursor"
+      }
+     }
+    },
+    {
+     "context": "minigame data screen (bank $1b, $73dd-$78bd)",
+     "scopes": [
+      {
+       "bank": "0x1b",
+       "start": "0x73dd",
+       "end": "0x78bd",
+       "wram_bank": "0x03"
+      }
+     ],
+     "symbols": {
+      "0xd809": {
+       "name": "wMinigameDataClearFlags",
+       "note": "[7 of 9 bytes] One byte per list row, nonzero when that row's minigame has its level-1 clear flag. LoadMinigameClearFlags clears nine bytes here and walks MinigameClearFlagsTable ($0280/$02e0/$0340/$03a0/$0500/$0560/$05c0/$0620/$0680 -- the SAVEFLAG_CLEARED_*_1 of Boo Blast through Two-On-One) through TestSaveFlag; DrawMinigameClearMarks indexes it by wMenuCursorY and draws mark 0 for each of the five visible rows. Only seven of the nine bytes are declared here: the array runs to $d811, two bytes past this block and into the $d810 one",
+       "size": 7
+      }
+     }
+    },
+    {
+     "context": "trophies screen (bank $3b, $49e5-$4cfa)",
+     "scopes": [
+      {
+       "bank": "0x3b",
+       "start": "0x49e5",
+       "end": "0x4cfa",
+       "wram_bank": "0x03"
+      }
+     ],
+     "symbols": {
+      "0xd800": {
+       "name": "wTrophyCellsMainSet1",
+       "note": "[6 bytes] One trophy row: six cells, each 0 or 1, drawn as one icon per set cell by DrawTrophyRowPair (three cells, a gap, three more). DecodeTrophyCounts fills the first three from wN64TrophyCounts bits 0-1 and the second three from bits 4-5, one `1` per unit of the 0-3 count. This row is the main character's first set -- DrawTrophiesWonRows draws it where DrawTrophiesCharSprite has just put wStoryModeMainCharacterOverworldSprite",
+       "size": 6
+      },
+      "0xd806": {
+       "name": "wTrophyCellsPartnerSet1",
+       "note": "[6 bytes] The partner's first-set row, from wN64TrophyCounts + 1 bits 0-1 and 4-5; drawn beside wStoryModePartnerCharacterOverworldSprite",
+       "size": 6
+      },
+      "0xd80c": {
+       "name": "wTrophyCellsMainSet2",
+       "note": "[4 of 6 bytes] The main character's second-set row, from wN64TrophyCounts bits 2-3 and 6-7. Only drawn when wTrophySecondSetPresent, which is what turns the screen from two rows into four. Four of the six bytes are declared here: the row runs to $d811, two bytes past this block and into the $d810 one",
+       "size": 4
       }
      }
     },
@@ -1659,6 +1705,56 @@
        "size": 8
       }
      }
+    },
+    {
+     "context": "minigame data screen (bank $1b, $73dd-$78bd)",
+     "scopes": [
+      {
+       "bank": "0x1b",
+       "start": "0x73dd",
+       "end": "0x78bd",
+       "wram_bank": "0x03"
+      }
+     ],
+     "symbols": {
+      "0xd812": {
+       "name": "wMinigameDataStarFlags",
+       "note": "[9 bytes] One byte per list row, nonzero when that row's minigame has its level-2 clear flag. LoadMinigameStarFlags fills it from MinigameStarFlagsTable ($02a0/$0300/$0360/$03c0/$0520/$0580/$05e0/$0640/$06a0, the SAVEFLAG_CLEARED_*_2 run) exactly as wMinigameDataClearFlags is filled from the level-1 flags. DrawMinigameStarMarks draws mark 1 for each set row; DrawStarLegendMark copies the legend swatch onto the screen if any of the nine is set; and DrawMinigameHighScoreNumber returns early unless the row's byte here is set, so a row with no star shows no number",
+       "size": 9
+      },
+      "0xd81b": {
+       "name": "wMinigameDataHighScores",
+       "note": "[8 x 16-bit] The number shown on each of the first eight rows. LoadMinigameHighScores calls ReadMinigameRecord with the record id row + 2 -- records 2-9 of the block $38 minigame records, whose 16-bit value comes back in wMinigameRecordValue under WRAM bank $07 -- and stores it at row * 2. DrawMinigameHighScoreNumber skips row 8, which has no record: that slot holds wMinigameDataTwoOnOneCleared instead",
+       "size": 16
+      },
+      "0xd82b": {
+       "name": "wMinigameDataTwoOnOneCleared",
+       "note": "[2 bytes] Row 8's slot in the high-score array, used as a flag pair rather than a number: LoadMinigameHighScores writes $01 into both bytes when SAVEFLAG_CLEARED_TWO_ON_ONE_3 is set, having cleared all 18 bytes from $d81b first. DrawMinigameSpecialMark reads the pair as a word and, once the list is scrolled to the bottom (wMenuCursorY = 4, so row 8 is the fifth visible row), draws mark 2 there",
+       "size": 2
+      }
+     }
+    },
+    {
+     "context": "trophies screen (bank $3b, $49e5-$4cfa)",
+     "scopes": [
+      {
+       "bank": "0x3b",
+       "start": "0x49e5",
+       "end": "0x4cfa",
+       "wram_bank": "0x03"
+      }
+     ],
+     "symbols": {
+      "0xd812": {
+       "name": "wTrophyCellsPartnerSet2",
+       "note": "[6 bytes] The partner's second-set trophy row, from wN64TrophyCounts + 1 bits 2-3 and 6-7; the fourth and last row DrawTrophiesWonRows draws, and only when wTrophySecondSetPresent",
+       "size": 6
+      },
+      "0xd819": {
+       "name": "wTrophySecondSetPresent",
+       "note": "[8-bit] Set by DecodeTrophyCounts when any of the four second-set counts came out nonzero. It picks screen asset record $0d over $0e and switches DrawTrophiesWonRows and the character sprites from two rows (main at tilemap row 8, partner at 10) to four (rows 6/8 and 13/15)"
+      }
+     }
     }
    ]
   },
@@ -1747,6 +1843,13 @@
        "start": "0x4000",
        "end": "0x4d00",
        "wram_bank": "0x06"
+      },
+      {
+       "bank": "0x1e",
+       "start": "0x54bb",
+       "end": "0x54f0",
+       "wram_bank": "0x06",
+       "note": "InitExpAwardScreenState sets wContinuePromptKind to 1 before ShowExpAwardScreen calls InitResultsScreenCharacters, which is inside the range above and reads the byte at $49fa to decide whether to check FLAG_TEMP_RESULTS_SCREEN_OPEN. Same variable, written from outside the prompt's own code."
       }
      ],
      "symbols": {
@@ -1864,6 +1967,10 @@
       }
      ],
      "symbols": {
+      "0xd004": {
+       "name": "wExpAwardScreenState",
+       "note": "[8-bit] First byte of the EXP award screen's working set. InitExpAwardScreenState clears $d004-$d027 from here -- wExpAwardRunningTotal, wExpAwardAmount, wExpAwardIndex and wExpAwardMessageTimer all fall inside -- then seeds $d009-$d00c and $d019-$d01c to $20 and $d00d/$d01d to $30. Nothing in bank $1e reads the byte itself; only the address is used, as the base of that clear"
+      },
       "0xd005": {
        "name": "wExpAwardRunningTotal",
        "note": "[16-bit] The EXP total ticking up on screen. CountUpExpTotal increments it and decrements the amount still to add, one point and one sound per pass, and DrawExpTotalDigits redraws it",
@@ -3584,6 +3691,21 @@
       }
      ],
      "symbols": {
+      "0xd840": {
+       "name": "wRankingAnimSlotPtrs",
+       "note": "[4 x 16-bit] One pointer per animation channel to the ranking marker slot that channel moves, stored from hl by StartRankingMarkerAnim<N> (the callers get it from GetRankingMarkerSlot). UpdateScriptedOffsetChannel<N> reloads it each frame and adds the script's delta to the slot's +1 on channels 0 and 1 and to its +2 on channels 2 and 3 -- the X and Y DrawRankingMarkersTask hands to QueueSprite as d and e",
+       "size": 8
+      },
+      "0xd848": {
+       "name": "wRankingAnimScriptPtrs",
+       "note": "[4 x 16-bit] One pointer per channel to the delta script it is playing, stored from de by StartRankingMarkerAnim<N>. A script is one byte of movement per frame -- $01 or $ff in every table here -- ending at $40, which is UpdateScriptedOffsetChannel<N>'s cue to unregister its own frame task rather than a delta",
+       "size": 8
+      },
+      "0xd850": {
+       "name": "wRankingAnimStepIndex",
+       "note": "[4 bytes] How far into its script each channel is. StartRankingMarkerAnim<N> zeroes its byte; UpdateScriptedOffsetChannel<N> reads the script at this offset and, unless it was the $40 terminator, increments it -- so the byte is the frame counter as well as the index",
+       "size": 4
+      },
       "0xd855": {
        "name": "wRankingBannerAnimFrame",
        "note": "[8-bit] Frame counter for the sliding banner sprite. RankingBoardAnimTask_1b indexes RankingBoardAnimTaskTable with it for this frame's X delta, and unregisters itself once it reaches $87"
@@ -3599,6 +3721,11 @@
       "0xd85a": {
        "name": "wRankingBoardSilent",
        "note": "[8-bit] Set when ShowRankingBoard is called with mode $03, which it then rewrites to $00. It suppresses the board's entrance animation (DispatchRankingBoardAnim returns at once) and the closing jingle -- the quiet variant used when the board is shown as part of a longer sequence"
+      },
+      "0xd860": {
+       "name": "wRankingNameRowBuffer",
+       "note": "[7 bytes] Where a ranking name too long for one row is split. RenderPlayerNameFitted measures the name with GetStringLength and, at six characters or more, calls RenderNameTwoRows: RenderNameTopRow copies the first four characters here and appends $2d ('-') and a terminator, RenderNameBottomRow copies the seven bytes from the fifth character on, and each row is then drawn from here by DrawNameWithDiacritics",
+       "size": 7
       }
      }
     }
