@@ -1053,8 +1053,10 @@ def Text_25_64 equ $2840
 def Text_25_67 equ $2843
 def Text_25_68 equ $2844
 def Text_25_69 equ $2845
+def Text_25_70 equ $2846
 def Text_25_71 equ $2847
 def Text_25_73 equ $2849
+def Text_25_74 equ $284a
 def Text_25_75 equ $284b
 def Text_25_78 equ $284e
 def Text_25_79 equ $284f

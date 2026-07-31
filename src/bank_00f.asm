@@ -2873,7 +2873,12 @@ IslandOpenRoundSinglesNpc05_0fTable:
 	dw Text_25_79 ; record 2
 	dw Text_25_79 ; record 3
 IslandOpenSinglesStageTextPtrs_0f:
-	INCBIN "data/bank_00f/d_7699.bin" ; $7699, 10 bytes
+	; $7699, 10 bytes (text_ids)
+	dw Text_25_70 ; record 0
+	dw Text_25_70 ; record 1
+	dw Text_25_74 ; record 2
+	dw Text_25_78 ; record 3
+	dw Text_25_82 ; record 4
 Func_0f_76a3:
 	wram_bank $04 ; $76a3
 	ld a, [wMatchExitRequest] ; $76a9
