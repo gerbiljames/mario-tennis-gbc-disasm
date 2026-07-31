@@ -36,6 +36,7 @@ SmallCharTestEntryPoints_0f:
 	db $ff
 SmallCharTestExitTriggers_0f:
 	ds 1, $ff ; $40cf, fill
+SmallCharTestStageStepDown_0f:
 	ld hl, wMapSceneStage ; $40d0
 	ld a, [hl] ; $40d3
 	dec a ; $40d4
@@ -52,10 +53,10 @@ SmallCharTestExitTriggers_0f:
 	xor a ; $40e3
 .compare:
 	cp $29 ; $40e4
-	jr nc, .loop ; $40e6
+	jr nc, SmallCharTestApplyStage_0f ; $40e6
 	ld hl, wMapSceneStage2 ; $40e8
 	ld a, [hl] ; $40eb
-.loop:
+SmallCharTestApplyStage_0f:
 	ld hl, wMapSceneStage ; $40ec
 	ld [hl], a ; $40ef
 	call SetPlayerActorObjectDef ; $40f0
@@ -85,10 +86,10 @@ SmallCharTestNpc04_0f:
 	xor a ; $4114
 .compare:
 	cp $2a ; $4115
-	jr nc, SmallCharTestExitTriggers_0f.loop ; $4117
+	jr nc, SmallCharTestApplyStage_0f ; $4117
 	ld hl, $002a ; $4119
 	ld a, l ; $411c
-	jr SmallCharTestExitTriggers_0f.loop ; $411d
+	jr SmallCharTestApplyStage_0f ; $411d
 	ld hl, wMapSceneStage ; $411f
 	ld [hl], a ; $4122
 	call SetPlayerActorObjectDef ; $4123
