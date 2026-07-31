@@ -2350,7 +2350,7 @@ ProcessMatchRewards:
 	jp z, .eq04 ; $6568
 	jp c, .computeMatchStatsReward ; $656b
 	ld a, [wPointWinLoseFlag] ; $656e
-	cp $01 ; $6571
+	cp WINLOSE_WIN ; $6571
 	jp nz, .runExpDistributionFlow ; $6573
 	call GetFirstClearRewardExp ; $6576
 	call ShowExpAwardForMinigame ; $6579
@@ -2386,7 +2386,7 @@ ProcessMatchRewards:
 	ld d, a ; $65ae
 	call ApplyMatchSettingsExpBonus ; $65af
 	ld a, [wPointWinLoseFlag] ; $65b2
-	cp $01 ; $65b5
+	cp WINLOSE_WIN ; $65b5
 	jp nz, .getScoreBonus ; $65b7
 	ld a, [wMinigameHighScoreMode] ; $65ba
 	or a ; $65bd
@@ -2435,7 +2435,7 @@ ProcessMatchRewards:
 	call ApplyMatchSettingsExpBonus ; $6606
 	ld de, $0000 ; $6609
 	ld a, [wMatchWinLoseFlag] ; $660c
-	cp $01 ; $660f
+	cp WINLOSE_WIN ; $660f
 	jr nz, .offset ; $6611
 	call GetFirstClearRewardExp ; $6613
 .offset:
@@ -2444,7 +2444,7 @@ ProcessMatchRewards:
 	ld e, l ; $6618
 	call ShowExpAwardForMatch ; $6619
 	ld a, [wMatchWinLoseFlag] ; $661c
-	cp $01 ; $661f
+	cp WINLOSE_WIN ; $661f
 	jr nz, .runExpDistributionFlow ; $6621
 	call SetRewardGameFlag ; $6623
 	push hl ; $6626
@@ -2470,7 +2470,7 @@ ProcessMatchRewards:
 	ld d, a ; $6657
 	call ApplyMatchSettingsExpBonus ; $6658
 	ld a, [wMatchWinLoseFlag] ; $665b
-	cp $01 ; $665e
+	cp WINLOSE_WIN ; $665e
 	jr z, .step6 ; $6660
 	jr .awardLinkedPlayMatchExp ; $6662
 .eq02:
@@ -2480,7 +2480,7 @@ ProcessMatchRewards:
 	ld d, a ; $6670
 	call ApplyMatchSettingsExpBonus ; $6671
 	ld a, [wMatchWinLoseFlag] ; $6674
-	cp $ff ; $6677
+	cp WINLOSE_LOSE ; $6677
 	jr z, .step6 ; $6679
 	jr .awardLinkedPlayMatchExp ; $667b
 .step6:
@@ -2495,7 +2495,7 @@ ProcessMatchRewards:
 .updateMinigameBestScore:
 	call UpdateMinigameBestScore ; $6688
 	ld a, [wPointWinLoseFlag] ; $668b
-	cp $01 ; $668e
+	cp WINLOSE_WIN ; $668e
 	ret nz ; $6690
 	call SetMinigameClearFlag ; $6691
 	ret ; $6694
@@ -3897,7 +3897,7 @@ SetupRankingBoardArgs:
 	ld c, a ; $6fdd
 .checkMatchWinLoseFlag:
 	ld a, [wMatchWinLoseFlag] ; $6fde
-	cp $01 ; $6fe1
+	cp WINLOSE_WIN ; $6fe1
 	jr nz, .ne01 ; $6fe3
 	ld d, $01 ; $6fe5
 	ret ; $6fe7

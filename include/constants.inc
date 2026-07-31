@@ -714,3 +714,112 @@ def NUM_STORY_SLOTS          equ $03 ; the three story files, as a bound: `cp $0
 ; belong to the tables, which already name themselves, and only the sentinel is
 ; engine-wide.
 def STORYENTRY_NONE          equ $ff ; no entry point: keep the saved position (LoadStoryEntryPointRecord returns early), suppress the location-name popup ($0a:$5154), and terminate a map_entry table
+
+; --- Point outcome, continued: the codes above 6 ---
+; The same wPointOutcome space as the block near the top of this file. The
+; ResolvePointOutcome jumptable ($08:$4e0e) is ten entries, so the space is
+; $00-$09, and slots 7 and 8 are the two that show a text popup rather than a
+; court banner -- which is what names them. $0b is minigame-only and never
+; reaches that jumptable.
+def POINTOUTCOME_SERVE_VOLLEYED equ 7  ; the receiver hit the serve before it bounced; text id $0174 "Return the serve after it bounces."
+def POINTOUTCOME_WRONG_RECEIVER equ 8  ; the wrong player of a doubles pair returned; text id $0175 "Only the receiving player may return the ball."
+def POINTOUTCOME_BALL_HIT_PLAYER equ 9 ; the ball reached a character's body (ApplyBallTouchOutcome $08:$43e5)
+def POINTOUTCOME_MINIGAME_CLEARED equ $0b ; bank $0d only, set right after IsMinigameTargetReached; DetermineMinigamePointResult turns it into a WINLOSE_WIN
+
+; --- Win/lose sign (wPointWinLoseFlag $c8eb, wMatchWinLoseFlag $c8e8) ---
+; One tri-state sign shared by both flags, and by the set/game-level ones that
+; are not tagged here. AwardPoint ($08:$5c14) is the proof: `add a / ret z /
+; jr nc` credits nobody on $00, the player-1 side when the doubled value does
+; not carry, and the player-2 side when it does -- so the space is a signed
+; -1/0/+1 rather than three ids, and $ff has to be spelled as the negative.
+def WINLOSE_NONE             equ $00 ; nothing decided yet
+def WINLOSE_WIN              equ $01 ; the player-1 side took it
+def WINLOSE_LOSE             equ $ff ; the player-2 side took it
+
+; --- Character-select mode (wCharSelectMode, $d813 in WRAM bank 3) ---
+; Six modes, indexing four parallel 6-record tables (CharSelectSlotRing0-5 and
+; friends). There is no immediate store for modes 0-1 because
+; RunExhibitionCharSelectScreen ($38:$4e65) takes the value in b and its only
+; caller ($10:$515d) passes wMatchFormatDoubles; the link modes are stored
+; outright by RunLinkCharSelectScreen ($38:$63e9-$63fb), which picks on
+; wMatchIsDoubles and hLinkState. The P1/P2 split shows up in the slot rings:
+; the P2 modes start the cursor at seat 2 ($38:$5a50).
+def CHARSELECTMODE_EXHIBITION_SINGLES equ $00
+def CHARSELECTMODE_EXHIBITION_DOUBLES equ $01
+def CHARSELECTMODE_LINK_SINGLES_P1    equ $02
+def CHARSELECTMODE_LINK_SINGLES_P2    equ $03
+def CHARSELECTMODE_LINK_DOUBLES_P1    equ $04
+def CHARSELECTMODE_LINK_DOUBLES_P2    equ $05
+
+; --- Story progress rank (wMapSceneStage in the story locations) ---
+; $c2b0-$c2bf is per-location scratch, so what its first byte means depends on
+; the location's init script. This family is the one nine locations share:
+; ComputeRankingProgressIndex ($11:$7d95, and eight byte-identical copies) walks
+; the ranking flags from the top down and stores 2 * tier + isDoubles, so the
+; singles and doubles ladders interleave. Every consumer is a 10-entry text-id
+; table, which is what bounds the space at $00-$09.
+def STORYRANK_SINGLES_ACADEMY      equ $00 ; no junior title yet
+def STORYRANK_DOUBLES_ACADEMY      equ $01
+def STORYRANK_SINGLES_JUNIOR_CHAMP equ $02 ; FLAG_WON_JUNIOR_SINGLES_RANK_1
+def STORYRANK_DOUBLES_JUNIOR_CHAMP equ $03
+def STORYRANK_SINGLES_SENIOR_CHAMP equ $04 ; FLAG_WON_SENIOR_SINGLES_RANK_1
+def STORYRANK_DOUBLES_SENIOR_CHAMP equ $05
+def STORYRANK_SINGLES_ISLAND_OPEN  equ $06 ; FLAG_REACHED_ISLAND_OPEN_SINGLES
+def STORYRANK_DOUBLES_ISLAND_OPEN  equ $07
+def STORYRANK_SINGLES_COMPLETE     equ $08 ; FLAG_STORY_COMPLETE_SINGLES
+def STORYRANK_DOUBLES_COMPLETE     equ $09
+
+; --- Story tier (wMapSceneStage2 at the Cafeteria and the Restaurant) ---
+; Those two init scripts do `ld a, [wMapSceneStage] / sra a /
+; ld [wMapSceneStage2], a`, i.e. the STORYRANK_* above with the singles/doubles
+; bit shifted out, giving a format-independent tier for NPCs whose line does not
+; depend on which ladder the player is on.
+def STORYTIER_ACADEMY        equ $00
+def STORYTIER_JUNIOR_CHAMP   equ $01
+def STORYTIER_SENIOR_CHAMP   equ $02 ; no compare site; declared to close the space
+def STORYTIER_ISLAND_OPEN    equ $03
+def STORYTIER_COMPLETE       equ $04
+
+; --- Senior Class Court stage (wMapSceneStage2 in bank $12) ---
+; ComputeSeniorCourtStage ($12:$7756) writes fifteen values, and the run
+; $02-$08 is pinned exactly: StartSeniorRankingMatch does `sub $02` into a
+; seven-entry `rst Rst00` jump table, one slot per senior ranking match (four
+; singles ranks, three doubles). SeniorCourtExit01_12 does `sub $09` before
+; indexing its text-id table, which pins $09 as the base of the post-champion
+; block. The names say which opponent is next, because that is what the
+; jumptable slot starts.
+def SENIORCOURTSTAGE_SINGLES_PRE_JUNIOR   equ $00 ; not junior champion yet
+def SENIORCOURTSTAGE_DOUBLES_PRE_JUNIOR   equ $01
+def SENIORCOURTSTAGE_SINGLES_RANK4        equ $02 ; jumptable slot 0
+def SENIORCOURTSTAGE_SINGLES_RANK3        equ $03
+def SENIORCOURTSTAGE_SINGLES_RANK2        equ $04
+def SENIORCOURTSTAGE_SINGLES_RANK1        equ $05
+def SENIORCOURTSTAGE_DOUBLES_RANK3        equ $06 ; doubles has three ranking matches
+def SENIORCOURTSTAGE_DOUBLES_RANK2        equ $07
+def SENIORCOURTSTAGE_DOUBLES_RANK1        equ $08 ; last jumptable slot
+def SENIORCOURTSTAGE_SINGLES_SENIOR_CHAMP equ $09 ; base of SeniorCourtExit01TextIds
+def SENIORCOURTSTAGE_DOUBLES_SENIOR_CHAMP equ $0a
+def SENIORCOURTSTAGE_SINGLES_ISLAND_OPEN  equ $0b
+def SENIORCOURTSTAGE_DOUBLES_ISLAND_OPEN  equ $0c
+def SENIORCOURTSTAGE_SINGLES_COMPLETE     equ $0d
+def SENIORCOURTSTAGE_DOUBLES_COMPLETE     equ $0e
+
+; --- Island Open bracket position ---
+; Two locations track how far the tournament has got, both by counting the
+; bracket flags that are set, and both name the match that comes *next* -- which
+; is what the NPCs at that stage talk about. ISLANDOPENSTAGE_* is Center Court's
+; (bank $11), where singles and doubles share one space; ISLANDOPENROUND_* is
+; the tournament site's (bank $0f), where the format is already known from
+; FLAG_DOUBLES so the two ladders reuse the same four values. Doubles has no
+; second round, which is why its stage numbering skips one.
+def ISLANDOPENSTAGE_SINGLES_ROUND1    equ $00 ; no bracket flag set yet
+def ISLANDOPENSTAGE_SINGLES_ROUND2    equ $01 ; FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_1
+def ISLANDOPENSTAGE_SINGLES_SEMIFINAL equ $02
+def ISLANDOPENSTAGE_SINGLES_FINAL     equ $03
+def ISLANDOPENSTAGE_DOUBLES_ROUND1    equ $04
+def ISLANDOPENSTAGE_DOUBLES_SEMIFINAL equ $05
+def ISLANDOPENSTAGE_DOUBLES_FINAL     equ $06
+def ISLANDOPENROUND_ROUND1            equ $00
+def ISLANDOPENROUND_ROUND2            equ $01 ; singles only -- doubles goes straight to the semi-final
+def ISLANDOPENROUND_SEMIFINAL         equ $02
+def ISLANDOPENROUND_FINAL             equ $03

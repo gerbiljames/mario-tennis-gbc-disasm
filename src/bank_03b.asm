@@ -8379,7 +8379,7 @@ RecordExhibitionVictory:
 	push af ; $7d59
 	wram_bank $03 ; $7d5a
 	ld a, [wMatchWinLoseFlag] ; $7d60
-	cp $ff ; $7d63
+	cp WINLOSE_LOSE ; $7d63
 	jr z, .restore ; $7d65
 	ld de, $002f ; $7d67
 	call TestGameFlagByNumber ; $7d6a

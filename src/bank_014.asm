@@ -282,7 +282,7 @@ MachineCourtResultScene:
 	and a ; $4308
 	jp nz, MachineCourtGameOverExitScene ; $4309
 	ld a, [wPointWinLoseFlag] ; $430c
-	cp $01 ; $430f
+	cp WINLOSE_WIN ; $430f
 	jr z, .done ; $4311
 	ld a, [wMapSceneStage] ; $4313
 	ld a, a ; $4316
@@ -710,7 +710,7 @@ MachineExpertResultScene:
 	test_flag FLAG_CLEARED_MACHINE_EXPERT ; $4842
 	jr z, .notClearedMachineExpert ; $4845
 	ld a, [wPointWinLoseFlag] ; $4847
-	cp $01 ; $484a
+	cp WINLOSE_WIN ; $484a
 	jp z, MachineExpertCounterMaxScene ; $484c
 .notClearedMachineExpert:
 	ld bc, $0001 ; $484f
@@ -1122,13 +1122,13 @@ Court2Npc0A_14:
 	test_flag FLAG_DOUBLES ; $4dd2
 	jr nz, .isDoubles ; $4dd5
 	ld a, [wMapSceneStage] ; $4dd7
-	cp $03 ; $4dda
+	cp ISLANDOPENSTAGE_SINGLES_FINAL ; $4dda
 	jr nz, .speak ; $4ddc
 	script_set_text Text_1f_113 ; $4dde
 	jr .speak ; $4de4
 .isDoubles:
 	ld a, [wMapSceneStage] ; $4de6
-	cp $06 ; $4de9
+	cp ISLANDOPENSTAGE_DOUBLES_FINAL ; $4de9
 	jr nz, .speak ; $4deb
 	script_set_text Text_1f_113 ; $4ded
 .speak:
@@ -1164,7 +1164,7 @@ Court2InitScript_14:
 	call Court2EntryWalkIn ; $4e5c
 	ret ; $4e5f
 InitCourt2SceneVariant:
-	ld a, $00 ; $4e60
+	ld a, ISLANDOPENSTAGE_SINGLES_ROUND1 ; $4e60
 	ld [wMapSceneStage], a ; $4e62
 	test_flag FLAG_DOUBLES ; $4e65
 	jr nz, .doubles ; $4e68
@@ -1174,17 +1174,17 @@ InitCourt2SceneVariant:
 	ld hl, Court2ActorsAlt_14 ; $4e71
 	farcall ScriptRespawnLocationActors ; $4e74
 	farcall BeginCutsceneScriptMode ; $4e77
-	ld a, $03 ; $4e7a
+	ld a, ISLANDOPENSTAGE_SINGLES_FINAL ; $4e7a
 	jr .stage3 ; $4e7c
 .stage1:
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_2 ; $4e7e
 	jr z, .stage2 ; $4e81
-	ld a, $02 ; $4e83
+	ld a, ISLANDOPENSTAGE_SINGLES_SEMIFINAL ; $4e83
 	jr .stage3 ; $4e85
 .stage2:
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_1 ; $4e87
 	jr z, .stage4 ; $4e8a
-	ld a, $01 ; $4e8c
+	ld a, ISLANDOPENSTAGE_SINGLES_ROUND2 ; $4e8c
 .stage3:
 	ld [wMapSceneStage], a ; $4e8e
 .stage4:
@@ -1196,15 +1196,15 @@ InitCourt2SceneVariant:
 	ld hl, Court2ActorsAlt_14 ; $4e99
 	farcall ScriptRespawnLocationActors ; $4e9c
 	farcall BeginCutsceneScriptMode ; $4e9f
-	ld a, $06 ; $4ea2
+	ld a, ISLANDOPENSTAGE_DOUBLES_FINAL ; $4ea2
 	jr .stage3 ; $4ea4
 .doublesStage2:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_ROUND_1 ; $4ea6
 	jr z, .done ; $4ea9
-	ld a, $05 ; $4eab
+	ld a, ISLANDOPENSTAGE_DOUBLES_SEMIFINAL ; $4eab
 	jr .stage3 ; $4ead
 .done:
-	ld a, $04 ; $4eaf
+	ld a, ISLANDOPENSTAGE_DOUBLES_ROUND1 ; $4eaf
 	jr .stage3 ; $4eb1
 	ret ; $4eb3
 Court2ActorsAlt_14:
@@ -1348,13 +1348,13 @@ Court1InitScript_14:
 	call Court1EntryWalkIn ; $5101
 	ret ; $5104
 InitCourt1SceneVariant:
-	ld a, $00 ; $5105
+	ld a, ISLANDOPENSTAGE_SINGLES_ROUND1 ; $5105
 	ld [wMapSceneStage], a ; $5107
 	test_flag FLAG_DOUBLES ; $510a
 	jr nz, .doubles ; $510d
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_SEMIFINAL ; $510f
 	jr z, .stage1 ; $5112
-	ld a, $03 ; $5114
+	ld a, ISLANDOPENSTAGE_SINGLES_FINAL ; $5114
 	ld [wMapSceneStage], a ; $5116
 	ldh a, [hRomBank] ; $5119
 	ld hl, Court1ActorsAlt_14 ; $511b
@@ -1364,20 +1364,20 @@ InitCourt1SceneVariant:
 .stage1:
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_2 ; $5125
 	jr z, .stage2 ; $5128
-	ld a, $02 ; $512a
+	ld a, ISLANDOPENSTAGE_SINGLES_SEMIFINAL ; $512a
 	ld [wMapSceneStage], a ; $512c
 	ret ; $512f
 .stage2:
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_1 ; $5130
 	jr z, .stage3 ; $5133
-	ld a, $01 ; $5135
+	ld a, ISLANDOPENSTAGE_SINGLES_ROUND2 ; $5135
 	ld [wMapSceneStage], a ; $5137
 .stage3:
 	ret ; $513a
 .doubles:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_SEMIFINAL ; $513b
 	jr z, .doublesStage2 ; $513e
-	ld a, $06 ; $5140
+	ld a, ISLANDOPENSTAGE_DOUBLES_FINAL ; $5140
 	ld [wMapSceneStage], a ; $5142
 	ldh a, [hRomBank] ; $5145
 	ld hl, Court1ActorsAlt_14 ; $5147
@@ -1387,11 +1387,11 @@ InitCourt1SceneVariant:
 .doublesStage2:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_ROUND_1 ; $5151
 	jr z, .done ; $5154
-	ld a, $05 ; $5156
+	ld a, ISLANDOPENSTAGE_DOUBLES_SEMIFINAL ; $5156
 	ld [wMapSceneStage], a ; $5158
 	ret ; $515b
 .done:
-	ld a, $04 ; $515c
+	ld a, ISLANDOPENSTAGE_DOUBLES_ROUND1 ; $515c
 	ld [wMapSceneStage], a ; $515e
 	ret ; $5161
 Court1ActorsAlt_14:
@@ -3348,36 +3348,36 @@ ActorScript_14_4:
 	as_jump .L1a7
 	test_flag FLAG_DOUBLES ; $7a9d
 	jr nz, .isDoubles ; $7aa0
-	ld a, $00 ; $7aa2
+	ld a, STORYRANK_SINGLES_ACADEMY ; $7aa2
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7aa4
 	jr z, .loop ; $7aa7
-	ld a, $02 ; $7aa9
+	ld a, STORYRANK_SINGLES_JUNIOR_CHAMP ; $7aa9
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $7aab
 	jr z, .loop ; $7aae
-	ld a, $04 ; $7ab0
+	ld a, STORYRANK_SINGLES_SENIOR_CHAMP ; $7ab0
 	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $7ab2
 	jr z, .loop ; $7ab5
-	ld a, $06 ; $7ab7
+	ld a, STORYRANK_SINGLES_ISLAND_OPEN ; $7ab7
 	test_flag FLAG_STORY_COMPLETE_SINGLES ; $7ab9
 	jr z, .loop ; $7abc
-	ld a, $08 ; $7abe
+	ld a, STORYRANK_SINGLES_COMPLETE ; $7abe
 .loop:
 	ld [wMapSceneStage], a ; $7ac0
 	ret ; $7ac3
 .isDoubles:
-	ld a, $01 ; $7ac4
+	ld a, STORYRANK_DOUBLES_ACADEMY ; $7ac4
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $7ac6
 	jr z, .loop ; $7ac9
-	ld a, $03 ; $7acb
+	ld a, STORYRANK_DOUBLES_JUNIOR_CHAMP ; $7acb
 	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_1 ; $7acd
 	jr z, .loop ; $7ad0
-	ld a, $05 ; $7ad2
+	ld a, STORYRANK_DOUBLES_SENIOR_CHAMP ; $7ad2
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $7ad4
 	jr z, .loop ; $7ad7
-	ld a, $07 ; $7ad9
+	ld a, STORYRANK_DOUBLES_ISLAND_OPEN ; $7ad9
 	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $7adb
 	jr z, .loop ; $7ade
-	ld a, $09 ; $7ae0
+	ld a, STORYRANK_DOUBLES_COMPLETE ; $7ae0
 	jr .loop ; $7ae2
 	ld a, $00 ; $7ae4
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7ae6

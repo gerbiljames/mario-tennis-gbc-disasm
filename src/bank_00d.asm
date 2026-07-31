@@ -593,11 +593,11 @@ QueueMinigameHudVRAMCopy:
 	ret ; $43b9
 ShowPointOutcomeBanner:
 	ld a, [wPointOutcome] ; $43ba
-	cp $06 ; $43bd
+	cp POINTOUTCOME_WINNER ; $43bd
 	jr z, .done ; $43bf
-	cp $09 ; $43c1
+	cp POINTOUTCOME_BALL_HIT_PLAYER ; $43c1
 	jr z, .done ; $43c3
-	cp $0b ; $43c5
+	cp POINTOUTCOME_MINIGAME_CLEARED ; $43c5
 	jr z, .done ; $43c7
 	ld a, [wPointOutcome] ; $43c9
 	add $00 ; $43cc
@@ -614,7 +614,7 @@ DetermineMinigamePointResult:
 	and a ; $43e2
 	jr nz, .isMinigameScoreLimitReached ; $43e3
 	ld a, [wPointOutcome] ; $43e5
-	cp $0b ; $43e8
+	cp POINTOUTCOME_MINIGAME_CLEARED ; $43e8
 	jr z, .eq0b ; $43ea
 	jr .storePointWinLoseFlag ; $43ec
 .isMinigameScoreLimitReached:
@@ -623,19 +623,19 @@ DetermineMinigamePointResult:
 	jr nz, .nonZero ; $43f2
 	jr .storePointWinLoseFlag ; $43f4
 .eq0b:
-	ld a, $01 ; $43f6
+	ld a, WINLOSE_WIN ; $43f6
 	ld [wPointWinLoseFlag], a ; $43f8
 	ld a, [wMinigameLevel] ; $43fb
 	add $12 ; $43fe
 	ld d, a ; $4400
 	ret ; $4401
 .nonZero:
-	ld a, $01 ; $4402
+	ld a, WINLOSE_WIN ; $4402
 	ld [wPointWinLoseFlag], a ; $4404
 	ld d, $16 ; $4407
 	ret ; $4409
 .storePointWinLoseFlag:
-	ld a, $ff ; $440a
+	ld a, WINLOSE_LOSE ; $440a
 	ld [wPointWinLoseFlag], a ; $440c
 	ld d, $17 ; $440f
 	ret ; $4411
@@ -1006,7 +1006,7 @@ EndMinigamePoint:
 	call IsMinigameTargetReached ; $4791
 	and a ; $4794
 	ret z ; $4795
-	ld a, $0b ; $4796
+	ld a, POINTOUTCOME_MINIGAME_CLEARED ; $4796
 	ld [wPointOutcome], a ; $4798
 .resolve:
 	call DetermineMinigamePointResult ; $479b
@@ -1036,7 +1036,7 @@ CheckMinigameStartBannerTrigger:
 	ld a, [wBallBounceCount] ; $47d0
 	cp $01 ; $47d3
 	jr nz, .done ; $47d5
-	ld a, $06 ; $47d7
+	ld a, POINTOUTCOME_WINNER ; $47d7
 	ld [wPointOutcome], a ; $47d9
 	ld a, $01 ; $47dc
 	ld [wPointOutcomeSide], a ; $47de
@@ -1567,7 +1567,7 @@ AwardMinigamePointAndReflectBall:
 	call IsMinigameTargetReached ; $4b65
 	and a ; $4b68
 	jr z, ReflectBallVelocity ; $4b69
-	ld a, $0b ; $4b6b
+	ld a, POINTOUTCOME_MINIGAME_CLEARED ; $4b6b
 	ld [wPointOutcome], a ; $4b6d
 ReflectBallVelocity:
 	ld a, $01 ; $4b70
@@ -1977,7 +1977,7 @@ TargetShotHook_Bounce:
 	call CheckMinigameStartBannerTrigger ; $4df7
 	call CheckBallLandedOut ; $4dfa
 	ld a, [wPointOutcome] ; $4dfd
-	cp $06 ; $4e00
+	cp POINTOUTCOME_WINNER ; $4e00
 	ret nz ; $4e02
 	call LookupMinigameShotResult ; $4e03
 	ld d, $00 ; $4e06
@@ -2045,7 +2045,7 @@ CheckBallLandedOut:
 	farcall IsBallInTargetZone ; $4e86
 	and a ; $4e89
 	ret nz ; $4e8a
-	ld a, $05 ; $4e8b
+	ld a, POINTOUTCOME_OUT ; $4e8b
 	ld [wPointOutcome], a ; $4e8d
 	ld a, $ff ; $4e90
 	ld [wPointOutcomeSide], a ; $4e92
@@ -2475,7 +2475,7 @@ AwardHitScore:
 	call StartScorePopup ; $533c
 	ld b, $07 ; $533f
 	call IncrementCappedCounter ; $5341
-	ld a, $06 ; $5344
+	ld a, POINTOUTCOME_WINNER ; $5344
 	ld [wPointOutcome], a ; $5346
 	ld a, $01 ; $5349
 	ld [wPointOutcomeSide], a ; $534b
@@ -2740,7 +2740,7 @@ ScoreMinigameTargetHitOrDeflectBall:
 	call IsMinigameTargetReached ; $55ee
 	and a ; $55f1
 	ret z ; $55f2
-	ld a, $0b ; $55f3
+	ld a, POINTOUTCOME_MINIGAME_CLEARED ; $55f3
 	ld [wPointOutcome], a ; $55f5
 	ret ; $55f8
 MinigameTargetTypeScores:
@@ -3040,7 +3040,7 @@ ScoreBallHit:
 	call IsMinigameTargetReached ; $57e9
 	and a ; $57ec
 	jr z, .done ; $57ed
-	ld a, $0b ; $57ef
+	ld a, POINTOUTCOME_MINIGAME_CLEARED ; $57ef
 	ld [wPointOutcome], a ; $57f1
 .done:
 	ret ; $57f4
@@ -3207,7 +3207,7 @@ ProcessTargetTileHit:
 	call IsMinigameTargetReached ; $590c
 	and a ; $590f
 	jr z, .areAllTargetsHit ; $5910
-	ld a, $0b ; $5912
+	ld a, POINTOUTCOME_MINIGAME_CLEARED ; $5912
 	ld [wPointOutcome], a ; $5914
 	ret ; $5917
 .areAllTargetsHit:
@@ -3360,7 +3360,7 @@ TreasureBoxHook_Bounce:
 	call CheckMinigameStartBannerTrigger ; $5a4a
 	call CheckBallLandedOut ; $5a4d
 	ld a, [wPointOutcome] ; $5a50
-	cp $06 ; $5a53
+	cp POINTOUTCOME_WINNER ; $5a53
 	ret nz ; $5a55
 	ld de, $0001 ; $5a56
 	ld hl, wScorePopupValue ; $5a59
@@ -3665,7 +3665,7 @@ AwardTreasureBoxHitScore:
 	call StartScorePopup ; $5c6a
 	ld b, $03 ; $5c6d
 	call IncrementCappedCounter ; $5c6f
-	ld a, $06 ; $5c72
+	ld a, POINTOUTCOME_WINNER ; $5c72
 	ld [wPointOutcome], a ; $5c74
 	ld a, $01 ; $5c77
 	ld [wPointOutcomeSide], a ; $5c79

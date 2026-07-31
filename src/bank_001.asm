@@ -149,7 +149,7 @@ Unused_01_MenuRedraw:
 	ld [wCurrentMinigameStoryMatch], a ; $4159
 	ld a, $11 ; $415c
 	ld [wCurrentMinigameStoryMatch + 1], a ; $415e
-	ld a, $01 ; $4161
+	ld a, WINLOSE_WIN ; $4161
 	ld [wMatchWinLoseFlag], a ; $4163
 	ld a, $00 ; $4166
 	ld [wCurrentStorySlot], a ; $4168

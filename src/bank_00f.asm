@@ -1974,39 +1974,39 @@ ComputeIslandOpenRound:
 	jr nz, .doubles ; $6612
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_SEMIFINAL ; $6614
 	jr z, .checkRound2 ; $6617
-	ld a, $03 ; $6619
+	ld a, ISLANDOPENROUND_FINAL ; $6619
 	ld [wMapSceneStage], a ; $661b
 	ret ; $661e
 .checkRound2:
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_2 ; $661f
 	jr z, .checkRound1 ; $6622
-	ld a, $02 ; $6624
+	ld a, ISLANDOPENROUND_SEMIFINAL ; $6624
 	ld [wMapSceneStage], a ; $6626
 	ret ; $6629
 .checkRound1:
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_1 ; $662a
 	jr z, .round0 ; $662d
-	ld a, $01 ; $662f
+	ld a, ISLANDOPENROUND_ROUND2 ; $662f
 	ld [wMapSceneStage], a ; $6631
 	ret ; $6634
 .round0:
-	ld a, $00 ; $6635
+	ld a, ISLANDOPENROUND_ROUND1 ; $6635
 	ld [wMapSceneStage], a ; $6637
 	ret ; $663a
 .doubles:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_SEMIFINAL ; $663b
 	jr z, .doublesCheckRound2 ; $663e
-	ld a, $03 ; $6640
+	ld a, ISLANDOPENROUND_FINAL ; $6640
 	ld [wMapSceneStage], a ; $6642
 	ret ; $6645
 .doublesCheckRound2:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_ROUND_1 ; $6646
 	jr z, .round0 ; $6649
-	ld a, $02 ; $664b
+	ld a, ISLANDOPENROUND_SEMIFINAL ; $664b
 	ld [wMapSceneStage], a ; $664d
 	ret ; $6650
 LoadIslandOpenRoundNpcs:
-	ld a, $00 ; $6651
+	ld a, ISLANDOPENROUND_ROUND1 ; $6651
 	ld [wMapSceneStage], a ; $6653
 	test_flag FLAG_DOUBLES ; $6656
 	jr nz, LoadIslandOpenRoundNpcsDoubles ; $6659
@@ -2017,36 +2017,36 @@ LoadIslandOpenRoundNpcs:
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_SEMIFINAL ; $6664
 	jr z, .round2 ; $6667
 	ldh a, [hRomBank] ; $6669
-	ld hl, IslandOpenRound3Actors_0f ; $666b
+	ld hl, IslandOpenFinalActors_0f ; $666b
 	farcall ScriptRespawnLocationActors ; $666e
-	ld hl, IslandOpenRound3Scripts_0f ; $6671
+	ld hl, IslandOpenFinalScripts_0f ; $6671
 	ld de, $000c ; $6674
 	farcall WriteStoryStateWord ; $6677
-	ld a, $03 ; $667a
+	ld a, ISLANDOPENROUND_FINAL ; $667a
 	ld [wMapSceneStage], a ; $667c
 	ret ; $667f
 .round2:
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_2 ; $6680
 	jr z, .round1 ; $6683
 	ldh a, [hRomBank] ; $6685
-	ld hl, IslandOpenRound2Actors_0f ; $6687
+	ld hl, IslandOpenSemifinalActors_0f ; $6687
 	farcall ScriptRespawnLocationActors ; $668a
-	ld hl, IslandOpenRound2Scripts_0f ; $668d
+	ld hl, IslandOpenSemifinalScripts_0f ; $668d
 	ld de, $000c ; $6690
 	farcall WriteStoryStateWord ; $6693
-	ld a, $02 ; $6696
+	ld a, ISLANDOPENROUND_SEMIFINAL ; $6696
 	ld [wMapSceneStage], a ; $6698
 	ret ; $669b
 .round1:
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_1 ; $669c
 	jr z, .done ; $669f
 	ldh a, [hRomBank] ; $66a1
-	ld hl, IslandOpenRound1Actors_0f ; $66a3
+	ld hl, IslandOpenRound2Actors_0f ; $66a3
 	farcall ScriptRespawnLocationActors ; $66a6
-	ld hl, IslandOpenRound1Scripts_0f ; $66a9
+	ld hl, IslandOpenRound2Scripts_0f ; $66a9
 	ld de, $000c ; $66ac
 	farcall WriteStoryStateWord ; $66af
-	ld a, $01 ; $66b2
+	ld a, ISLANDOPENROUND_ROUND2 ; $66b2
 	ld [wMapSceneStage], a ; $66b4
 .done:
 	ret ; $66b7
@@ -2062,24 +2062,24 @@ LoadIslandOpenRoundNpcsDoubles:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_SEMIFINAL ; $66ca
 	jr z, .round2 ; $66cd
 	ldh a, [hRomBank] ; $66cf
-	ld hl, IslandOpenRound3ActorsDoubles_0f ; $66d1
+	ld hl, IslandOpenFinalActorsDoubles_0f ; $66d1
 	farcall ScriptRespawnLocationActors ; $66d4
-	ld hl, IslandOpenRound3ScriptsDoubles_0f ; $66d7
+	ld hl, IslandOpenFinalScriptsDoubles_0f ; $66d7
 	ld de, $000c ; $66da
 	farcall WriteStoryStateWord ; $66dd
-	ld a, $03 ; $66e0
+	ld a, ISLANDOPENROUND_FINAL ; $66e0
 	ld [wMapSceneStage], a ; $66e2
 	ret ; $66e5
 .round2:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_ROUND_1 ; $66e6
 	jr z, .round1 ; $66e9
 	ldh a, [hRomBank] ; $66eb
-	ld hl, IslandOpenRound2ActorsDoubles_0f ; $66ed
+	ld hl, IslandOpenSemifinalActorsDoubles_0f ; $66ed
 	farcall ScriptRespawnLocationActors ; $66f0
-	ld hl, IslandOpenRound2ScriptsDoubles_0f ; $66f3
+	ld hl, IslandOpenSemifinalScriptsDoubles_0f ; $66f3
 	ld de, $000c ; $66f6
 	farcall WriteStoryStateWord ; $66f9
-	ld a, $02 ; $66fc
+	ld a, ISLANDOPENROUND_SEMIFINAL ; $66fc
 	ld [wMapSceneStage], a ; $66fe
 	ret ; $6701
 .round1:
@@ -2090,7 +2090,7 @@ LoadIslandOpenRoundNpcsDoubles:
 	ld de, $000c ; $670d
 	farcall WriteStoryStateWord ; $6710
 	ret ; $6713
-IslandOpenRound1Actors_0f:
+IslandOpenRound2Actors_0f:
 	; $6714, 206 bytes (map_actors)
 	map_actor $0000, ActorScript_0f_09, $2700, $1100, FACE_LEFT, $25, $01, $00
 	map_actor $0000, ActorScript_0f_09, $1300, $0f00, FACE_DOWN, $25, $01, $00
@@ -2107,7 +2107,7 @@ IslandOpenRound1Actors_0f:
 	map_actor $0000, ActorScript_0f_09, $1700, $1500, FACE_DOWN, $1e, $01, $00
 	map_actor $0000, ActorScript_0f_08, $2900, $1300, FACE_DOWN, $1f, $01, $00
 	map_actor_end
-IslandOpenRound1Scripts_0f:
+IslandOpenRound2Scripts_0f:
 	; $67e2, 105 bytes (map_scripts)
 	map_script $06, FACEMASK_ANY, $0000, Text_1f_182, $03, $00
 	map_script $07, FACEMASK_ANY, $0000, Text_1f_183, $03, $00
@@ -2123,7 +2123,7 @@ IslandOpenRound1Scripts_0f:
 	map_script $03, FACEMASK_ANY, $0000, TournamentNpc03_0f, $03, $00
 	map_script $04, FACEMASK_ANY, $0000, TournamentNpc04_0f, $03, $00
 	db $ff
-IslandOpenRound2Actors_0f:
+IslandOpenSemifinalActors_0f:
 	; $684b, 206 bytes (map_actors)
 	map_actor $0000, ActorScript_0f_09, $2700, $1100, FACE_LEFT, $25, $01, $00
 	map_actor $0000, ActorScript_0f_09, $1300, $0f00, FACE_DOWN, $25, $01, $00
@@ -2140,7 +2140,7 @@ IslandOpenRound2Actors_0f:
 	map_actor $0000, ActorScript_0f_09, $0500, $2100, FACE_DOWN, $1e, $01, $00
 	map_actor $0000, ActorScript_0f_08, $2900, $1300, FACE_DOWN, $1f, $01, $00
 	map_actor_end
-IslandOpenRound2Scripts_0f:
+IslandOpenSemifinalScripts_0f:
 	; $6919, 105 bytes (map_scripts)
 	map_script $06, FACEMASK_ANY, $0000, Text_25_4, $03, $00
 	map_script $07, FACEMASK_ANY, $0000, Text_25_5, $13, $00
@@ -2156,7 +2156,7 @@ IslandOpenRound2Scripts_0f:
 	map_script $03, FACEMASK_ANY, $0000, TournamentNpc03_0f, $03, $00
 	map_script $04, FACEMASK_ANY, $0000, TournamentNpc04_0f, $03, $00
 	db $ff
-IslandOpenRound3Actors_0f:
+IslandOpenFinalActors_0f:
 	; $6982, 206 bytes (map_actors)
 	map_actor $0000, ActorScript_0f_09, $2700, $1100, FACE_LEFT, $25, $01, $00
 	map_actor $0000, ActorScript_0f_09, $1300, $0f00, FACE_DOWN, $25, $01, $00
@@ -2173,7 +2173,7 @@ IslandOpenRound3Actors_0f:
 	map_actor $0000, ActorScript_0f_09, $0500, $2100, FACE_DOWN, $1e, $01, $00
 	map_actor $0000, ActorScript_0f_08, $2900, $1300, FACE_DOWN, $1f, $01, $00
 	map_actor_end
-IslandOpenRound3Scripts_0f:
+IslandOpenFinalScripts_0f:
 	; $6a50, 105 bytes (map_scripts)
 	map_script $06, FACEMASK_ANY, $0000, Text_25_15, $03, $00
 	map_script $07, FACEMASK_ANY, $0000, Text_25_16, $13, $00
@@ -2259,7 +2259,7 @@ IslandOpenRound1DoublesNpc0D_0f:
 .speak:
 	script_speak $0d ; $6c40
 	ret ; $6c45
-IslandOpenRound2ActorsDoubles_0f:
+IslandOpenSemifinalActorsDoubles_0f:
 	; $6c46, 192 bytes (map_actors)
 	map_actor $0000, ActorScript_0f_09, $2700, $1100, FACE_LEFT, $25, $01, $00
 	map_actor $0000, ActorScript_0f_09, $1300, $0f00, FACE_DOWN, $25, $01, $00
@@ -2275,22 +2275,22 @@ IslandOpenRound2ActorsDoubles_0f:
 	map_actor $0000, ActorScript_0f_09, $2900, $1300, FACE_UP, $1f, $01, $00
 	map_actor $0000, ActorScript_0f_11, $2500, $1900, FACE_DOWN, $1e, $01, $05
 	map_actor_end
-IslandOpenRound2ScriptsDoubles_0f:
+IslandOpenSemifinalScriptsDoubles_0f:
 	; $6d06, 97 bytes (map_scripts)
 	map_script $06, FACEMASK_ANY, $0000, Text_25_42, $03, $00
 	map_script $07, FACEMASK_ANY, $0000, Text_25_43, $03, $00
-	map_script $08, FACEMASK_ANY, $0000, IslandOpenRound2DoublesNpc08_0f, $03, $00
+	map_script $08, FACEMASK_ANY, $0000, IslandOpenSemifinalDoublesNpc08_0f, $03, $00
 	map_script $09, FACEMASK_ANY, $0000, Text_25_47, $03, $00
 	map_script $0a, FACEMASK_ANY, $0000, Text_25_48, $03, $00
 	map_script $0b, FACEMASK_ANY, $0000, Text_25_49, $03, $00
 	map_script $0c, FACEMASK_ANY, $0000, Text_25_50, $03, $00
-	map_script $0d, FACEMASK_ANY, $0000, IslandOpenRound2DoublesNpc0D_0f, $13, $00
+	map_script $0d, FACEMASK_ANY, $0000, IslandOpenSemifinalDoublesNpc0D_0f, $13, $00
 	map_script $0e, FACEMASK_ANY, $0000, Text_25_54, $13, $00
 	map_script $0f, FACEMASK_ANY, $0000, Text_25_55, $13, $00
 	map_script $03, FACEMASK_ANY, $0000, TournamentNpc03_0f, $03, $00
 	map_script $04, FACEMASK_ANY, $0000, TournamentNpc04_0f, $03, $00
 	db $ff
-IslandOpenRound2DoublesNpc08_0f:
+IslandOpenSemifinalDoublesNpc08_0f:
 	script_set_text Text_25_44 ; $6d67
 	ld a, $08 ; $6d6d
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $6d6f
@@ -2303,7 +2303,7 @@ IslandOpenRound2DoublesNpc08_0f:
 .speak:
 	script_speak $08 ; $6d85
 	ret ; $6d8a
-IslandOpenRound2DoublesNpc0D_0f:
+IslandOpenSemifinalDoublesNpc0D_0f:
 	script_set_text Text_25_51 ; $6d8b
 	ld a, $0d ; $6d91
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $6d93
@@ -2316,7 +2316,7 @@ IslandOpenRound2DoublesNpc0D_0f:
 .speak:
 	script_speak $0d ; $6da9
 	ret ; $6dae
-IslandOpenRound3ActorsDoubles_0f:
+IslandOpenFinalActorsDoubles_0f:
 	; $6daf, 192 bytes (map_actors)
 	map_actor $0000, ActorScript_0f_09, $2700, $1100, FACE_LEFT, $25, $01, $00
 	map_actor $0000, ActorScript_0f_09, $1300, $0f00, FACE_DOWN, $25, $01, $00
@@ -2332,22 +2332,22 @@ IslandOpenRound3ActorsDoubles_0f:
 	map_actor $0000, ActorScript_0f_09, $2900, $1500, FACE_DOWN, $1f, $01, $00
 	map_actor $0000, ActorScript_0f_11, $2400, $1800, FACE_DOWN, $1e, $01, $05
 	map_actor_end
-IslandOpenRound3ScriptsDoubles_0f:
+IslandOpenFinalScriptsDoubles_0f:
 	; $6e6f, 97 bytes (map_scripts)
 	map_script $06, FACEMASK_ANY, $0000, Text_25_56, $03, $00
 	map_script $07, FACEMASK_ANY, $0000, Text_25_57, $03, $00
 	map_script $08, FACEMASK_ANY, $0000, Text_25_58, $03, $00
 	map_script $09, FACEMASK_ANY, $0000, Text_25_59, $03, $00
 	map_script $0a, FACEMASK_ANY, $0000, Text_25_60, $03, $00
-	map_script $0b, FACEMASK_ANY, $0000, IslandOpenRound3DoublesNpc0B_0f, $03, $00
-	map_script $0c, FACEMASK_ANY, $0000, IslandOpenRound3DoublesNpc0C_0f, $03, $00
+	map_script $0b, FACEMASK_ANY, $0000, IslandOpenFinalDoublesNpc0B_0f, $03, $00
+	map_script $0c, FACEMASK_ANY, $0000, IslandOpenFinalDoublesNpc0C_0f, $03, $00
 	map_script $0d, FACEMASK_ANY, $0000, Text_25_67, $03, $00
 	map_script $0e, FACEMASK_ANY, $0000, Text_25_68, $13, $00
 	map_script $0f, FACEMASK_ANY, $0000, Text_25_69, $13, $00
 	map_script $03, FACEMASK_ANY, $0000, TournamentNpc03_0f, $03, $00
 	map_script $04, FACEMASK_ANY, $0000, TournamentNpc04_0f, $03, $00
 	db $ff
-IslandOpenRound3DoublesNpc0C_0f:
+IslandOpenFinalDoublesNpc0C_0f:
 	script_set_text Text_25_64 ; $6ed0
 	ld a, $0c ; $6ed6
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $6ed8
@@ -2360,7 +2360,7 @@ IslandOpenRound3DoublesNpc0C_0f:
 .speak:
 	script_speak $0c ; $6eee
 	ret ; $6ef3
-IslandOpenRound3DoublesNpc0B_0f:
+IslandOpenFinalDoublesNpc0B_0f:
 	script_set_text Text_25_61 ; $6ef4
 	ld a, $0b ; $6efa
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $6efc
@@ -2466,7 +2466,7 @@ IslandOpenRoundCallCutscene:
 	script_wait_idle $04 ; $708d
 	script_move_target $05, $1000, $1700 ; $7092
 	ld a, [wMapSceneStage] ; $709d
-	cp $03 ; $70a0
+	cp ISLANDOPENROUND_FINAL ; $70a0
 	jr z, .partnerReady ; $70a2
 	script_move_target $04, $1800, $1700 ; $70a4
 	script_wait_move $04 ; $70af
@@ -2723,7 +2723,7 @@ IslandOpenSinglesMatchReturn:
 	cp $01 ; $7490
 	jr z, .quitOrLost ; $7492
 	ld a, [wMatchWinLoseFlag] ; $7494
-	cp $01 ; $7497
+	cp WINLOSE_WIN ; $7497
 	jp z, .wonRound ; $7499
 .quitOrLost:
 	call LoadIslandOpenRoundNpcs ; $749c
@@ -2886,7 +2886,7 @@ IslandOpenDoublesMatchReturn:
 	cp $01 ; $76ac
 	jr z, .quitOrLost ; $76ae
 	ld a, [wMatchWinLoseFlag] ; $76b0
-	cp $01 ; $76b3
+	cp WINLOSE_WIN ; $76b3
 	jp z, .wonRound ; $76b5
 .quitOrLost:
 	call LoadIslandOpenRoundNpcs ; $76b8
@@ -3466,36 +3466,36 @@ ActorScript_0f_12:
 	as_jump .L1a7
 	test_flag FLAG_DOUBLES ; $7d43
 	jr nz, .doubles ; $7d46
-	ld a, $00 ; $7d48
+	ld a, STORYRANK_SINGLES_ACADEMY ; $7d48
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7d4a
 	jr z, .loop ; $7d4d
-	ld a, $02 ; $7d4f
+	ld a, STORYRANK_SINGLES_JUNIOR_CHAMP ; $7d4f
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $7d51
 	jr z, .loop ; $7d54
-	ld a, $04 ; $7d56
+	ld a, STORYRANK_SINGLES_SENIOR_CHAMP ; $7d56
 	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $7d58
 	jr z, .loop ; $7d5b
-	ld a, $06 ; $7d5d
+	ld a, STORYRANK_SINGLES_ISLAND_OPEN ; $7d5d
 	test_flag FLAG_STORY_COMPLETE_SINGLES ; $7d5f
 	jr z, .loop ; $7d62
-	ld a, $08 ; $7d64
+	ld a, STORYRANK_SINGLES_COMPLETE ; $7d64
 .loop:
 	ld [wMapSceneStage], a ; $7d66
 	ret ; $7d69
 .doubles:
-	ld a, $01 ; $7d6a
+	ld a, STORYRANK_DOUBLES_ACADEMY ; $7d6a
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $7d6c
 	jr z, .loop ; $7d6f
-	ld a, $03 ; $7d71
+	ld a, STORYRANK_DOUBLES_JUNIOR_CHAMP ; $7d71
 	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_1 ; $7d73
 	jr z, .loop ; $7d76
-	ld a, $05 ; $7d78
+	ld a, STORYRANK_DOUBLES_SENIOR_CHAMP ; $7d78
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $7d7a
 	jr z, .loop ; $7d7d
-	ld a, $07 ; $7d7f
+	ld a, STORYRANK_DOUBLES_ISLAND_OPEN ; $7d7f
 	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $7d81
 	jr z, .loop ; $7d84
-	ld a, $09 ; $7d86
+	ld a, STORYRANK_DOUBLES_COMPLETE ; $7d86
 	jr .loop ; $7d88
 	ld a, $00 ; $7d8a
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7d8c

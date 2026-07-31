@@ -807,7 +807,7 @@ RunMatchWinLoseScreen:
 	call MaybeInvertMatchWinLoseFlag ; $44a7
 	ld a, $ff ; $44aa
 	ld a, [wMatchWinLoseFlag] ; $44ac
-	cp $ff ; $44af
+	cp WINLOSE_LOSE ; $44af
 	jr z, .playSfx ; $44b1
 	sound BGM_WIN ; $44b3
 	jr .initMatchWinLoseScreen ; $44b5
@@ -1094,7 +1094,7 @@ SetWinLosePortraitPaletteAttrs:
 	ret ; $4a0e
 LoadMatchResultPalettes:
 	ld a, [wMatchWinLoseFlag] ; $4a0f
-	cp $ff ; $4a12
+	cp WINLOSE_LOSE ; $4a12
 	jr z, .eqff ; $4a14
 	ld a, $02 ; $4a16
 	ld [wAnimatedTileSet], a ; $4a18
@@ -1121,7 +1121,7 @@ MatchResultPalettes1:
 	INCLUDE "data/bank_016/palettes_4a4e.asm" ; $4a4e, 8 bytes (palettes)
 AdjustResultTilemapForLoss:
 	ld a, [wMatchWinLoseFlag] ; $4a56
-	cp $ff ; $4a59
+	cp WINLOSE_LOSE ; $4a59
 	jr nz, .done ; $4a5b
 	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH ; $4a5d
 	ld de, wShadowTilemap + 9 * TILEMAP_WIDTH ; $4a60
@@ -1316,7 +1316,7 @@ MatchResultTilemapScripts_16:
 	tilemap_copy_end
 AdvanceResultScreenTimer:
 	ld a, [wMatchWinLoseFlag] ; $4c9d
-	cp $ff ; $4ca0
+	cp WINLOSE_LOSE ; $4ca0
 	jr nz, .neff ; $4ca2
 	ldh a, [hVBlankCounter] ; $4ca4
 	and $01 ; $4ca6
@@ -1328,7 +1328,7 @@ AdvanceResultScreenTimer:
 	ret ; $4cb0
 QueueResultScreenSprites:
 	ld a, [wMatchWinLoseFlag] ; $4cb1
-	cp $ff ; $4cb4
+	cp WINLOSE_LOSE ; $4cb4
 	jr z, .eqff ; $4cb6
 	ld de, $0824 ; $4cb8
 	call QueueResultPortraitTop ; $4cbb
@@ -1682,12 +1682,12 @@ MaybeInvertMatchWinLoseFlag:
 	cp $02 ; $5c1f
 	jr nz, .done ; $5c21
 	ld a, [wMatchWinLoseFlag] ; $5c23
-	cp $ff ; $5c26
+	cp WINLOSE_LOSE ; $5c26
 	jr z, .eqff ; $5c28
-	ld a, $ff ; $5c2a
+	ld a, WINLOSE_LOSE ; $5c2a
 	jr .store ; $5c2c
 .eqff:
-	ld a, $01 ; $5c2e
+	ld a, WINLOSE_WIN ; $5c2e
 .store:
 	ld [wMatchWinLoseFlag], a ; $5c30
 	ret ; $5c33
@@ -2202,7 +2202,7 @@ LoadResultPortraitSlot:
 .winner:
 	ld c, $01 ; $60a7
 	ld a, [wMatchWinLoseFlag] ; $60a9
-	cp $ff ; $60ac
+	cp WINLOSE_LOSE ; $60ac
 	jr nz, .decompress ; $60ae
 	ld c, $02 ; $60b0
 .decompress:

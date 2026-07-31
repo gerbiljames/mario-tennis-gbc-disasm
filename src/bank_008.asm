@@ -372,12 +372,12 @@ DetectServeAceOutcome:
 	ld a, [wPointOutcome] ; $432d
 	and a ; $4330
 	jr nz, .done ; $4331
-	ld b, $08 ; $4333
+	ld b, POINTOUTCOME_WRONG_RECEIVER ; $4333
 	ld c, $ff ; $4335
 	ld a, [wLastShotServeRole] ; $4337
 	cp $01 ; $433a
 	jr nz, .setOutcome ; $433c
-	ld b, $07 ; $433e
+	ld b, POINTOUTCOME_SERVE_VOLLEYED ; $433e
 	ld c, $ff ; $4340
 	ld a, [wBallBounceCount] ; $4342
 	and a ; $4345
@@ -419,12 +419,12 @@ EvaluateBounceOutcome:
 	ld a, [wPointOutcome] ; $437f
 	and a ; $4382
 	jr nz, .done ; $4383
-	ld b, $06 ; $4385
+	ld b, POINTOUTCOME_WINNER ; $4385
 	ld c, $01 ; $4387
 	ld a, [wBallBounceCount] ; $4389
 	cp $01 ; $438c
 	jr nz, .setOutcome ; $438e
-	ld b, $04 ; $4390
+	ld b, POINTOUTCOME_NET ; $4390
 	ld c, $ff ; $4392
 	ld hl, wBallQuadrantAtHit ; $4394
 	ld a, [wBallCourtQuadrant] ; $4397
@@ -432,21 +432,21 @@ EvaluateBounceOutcome:
 	and $02 ; $439b
 	jr z, .setOutcome ; $439d
 	call CheckBallOutOfBounds ; $439f
-	ld b, $05 ; $43a2
+	ld b, POINTOUTCOME_OUT ; $43a2
 	ld c, $ff ; $43a4
 	and a ; $43a6
 	jr nz, .setOutcome ; $43a7
 	ld a, [wRallyLength] ; $43a9
 	cp $01 ; $43ac
 	jr nz, .done ; $43ae
-	ld b, $05 ; $43b0
+	ld b, POINTOUTCOME_OUT ; $43b0
 	ld c, $ff ; $43b2
 	ld hl, wBallQuadrantAtHit ; $43b4
 	ld a, [wBallCourtQuadrant] ; $43b7
 	xor [hl] ; $43ba
 	and $01 ; $43bb
 	jr z, .setOutcome ; $43bd
-	ld b, $03 ; $43bf
+	ld b, POINTOUTCOME_LET ; $43bf
 	ld c, $00 ; $43c1
 	ld a, [wBallHasBouncedFlag] ; $43c3
 	and a ; $43c6
@@ -473,7 +473,7 @@ ApplyBallTouchOutcome:
 	ld a, [wPointOutcome] ; $43e5
 	and a ; $43e8
 	jr nz, .done ; $43e9
-	ld a, $09 ; $43eb
+	ld a, POINTOUTCOME_BALL_HIT_PLAYER ; $43eb
 	ld [wPointOutcome], a ; $43ed
 	ld a, $01 ; $43f0
 	ld [wPointOutcomeSide], a ; $43f2
@@ -1499,7 +1499,7 @@ PlayPoint:
 	and a ; $4d33
 	jr z, .rallyLoop ; $4d34
 	ld a, [wPointOutcome] ; $4d36
-	cp $09 ; $4d39
+	cp POINTOUTCOME_BALL_HIT_PLAYER ; $4d39
 	jr nz, .pointOver ; $4d3b
 	ld a, $28 ; $4d3d
 	call StepMatchFrames ; $4d3f
@@ -3961,9 +3961,9 @@ ResolvePointWinner:
 	ld a, [wPointOutcome] ; $5d9a
 	cp POINTOUTCOME_FAULT ; $5d9d
 	jr z, .noWinner ; $5d9f
-	cp $03 ; $5da1
+	cp POINTOUTCOME_LET ; $5da1
 	jr z, .noWinner ; $5da3
-	cp $09 ; $5da5
+	cp POINTOUTCOME_BALL_HIT_PLAYER ; $5da5
 	jr z, .fromToucher ; $5da7
 	ld a, [wLastShotCharIndex] ; $5da9
 	and $01 ; $5dac
@@ -5006,7 +5006,7 @@ ShowMatchResultScreens:
 	cp GAMEMODE_MARIO_MINIGAME ; $65a2
 	jr nz, .scoreboard ; $65a4
 	ld a, [wPointWinLoseFlag] ; $65a6
-	cp $01 ; $65a9
+	cp WINLOSE_WIN ; $65a9
 	jr z, .scoreboard ; $65ab
 	farcall RunMinigameEndMenu ; $65ad
 	jr .unfreeze ; $65b0
@@ -5088,7 +5088,7 @@ PlayMinigamePoint:
 	jr z, .rallyLoop ; $664a
 .pointOver:
 	ld a, [wPointOutcome] ; $664c
-	cp $09 ; $664f
+	cp POINTOUTCOME_BALL_HIT_PLAYER ; $664f
 	jr nz, .settle ; $6651
 	ld a, $28 ; $6653
 	call StepMatchFrames ; $6655

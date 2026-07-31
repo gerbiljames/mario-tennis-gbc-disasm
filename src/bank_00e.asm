@@ -3630,7 +3630,7 @@ LoadExhibitionMatchSettings5:
 	ret ; $7c0b
 HandleExhibitionMatchResult:
 	ld a, [wMatchWinLoseFlag] ; $7c0c
-	cp $01 ; $7c0f
+	cp WINLOSE_WIN ; $7c0f
 	jr nz, .lost ; $7c11
 	test_flag FLAG_DOUBLES ; $7c13
 	jr nz, .won ; $7c16
@@ -3901,36 +3901,36 @@ ActorScript_0e_28:
 ComputeTrainingGymProgressIndex:
 	test_flag FLAG_DOUBLES ; $7e5a
 	jr nz, .doubles ; $7e5d
-	ld a, $00 ; $7e5f
+	ld a, STORYRANK_SINGLES_ACADEMY ; $7e5f
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7e61
 	jr z, .store ; $7e64
-	ld a, $02 ; $7e66
+	ld a, STORYRANK_SINGLES_JUNIOR_CHAMP ; $7e66
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $7e68
 	jr z, .store ; $7e6b
-	ld a, $04 ; $7e6d
+	ld a, STORYRANK_SINGLES_SENIOR_CHAMP ; $7e6d
 	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $7e6f
 	jr z, .store ; $7e72
-	ld a, $06 ; $7e74
+	ld a, STORYRANK_SINGLES_ISLAND_OPEN ; $7e74
 	test_flag FLAG_STORY_COMPLETE_SINGLES ; $7e76
 	jr z, .store ; $7e79
-	ld a, $08 ; $7e7b
+	ld a, STORYRANK_SINGLES_COMPLETE ; $7e7b
 .store:
 	ld [wMapSceneStage], a ; $7e7d
 	ret ; $7e80
 .doubles:
-	ld a, $01 ; $7e81
+	ld a, STORYRANK_DOUBLES_ACADEMY ; $7e81
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $7e83
 	jr z, .store ; $7e86
-	ld a, $03 ; $7e88
+	ld a, STORYRANK_DOUBLES_JUNIOR_CHAMP ; $7e88
 	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_1 ; $7e8a
 	jr z, .store ; $7e8d
-	ld a, $05 ; $7e8f
+	ld a, STORYRANK_DOUBLES_SENIOR_CHAMP ; $7e8f
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $7e91
 	jr z, .store ; $7e94
-	ld a, $07 ; $7e96
+	ld a, STORYRANK_DOUBLES_ISLAND_OPEN ; $7e96
 	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $7e98
 	jr z, .store ; $7e9b
-	ld a, $09 ; $7e9d
+	ld a, STORYRANK_DOUBLES_COMPLETE ; $7e9d
 	jr .store ; $7e9f
 	ld a, $00 ; $7ea1
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7ea3

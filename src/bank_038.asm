@@ -2486,9 +2486,9 @@ DrawCharGridSlotPrompt:
 .promptFromTable:
 	ld hl, CharGridSlotPromptTable1 ; $5460
 	ld a, [wCharSelectMode] ; $5463
-	cp $03 ; $5466
+	cp CHARSELECTMODE_LINK_SINGLES_P2 ; $5466
 	jr z, .readEntry ; $5468
-	cp $05 ; $546a
+	cp CHARSELECTMODE_LINK_DOUBLES_P2 ; $546a
 	jr z, .readEntry ; $546c
 	ld hl, CharGridSlotPromptTable0 ; $546e
 .readEntry:
@@ -3366,9 +3366,9 @@ InitCharGridState:
 	ld [wCharSelectRemoteChars], a ; $5a47
 	ld [wCharSelectRemoteChars + 1], a ; $5a4a
 	ld a, [wCharSelectMode] ; $5a4d
-	cp $03 ; $5a50
+	cp CHARSELECTMODE_LINK_SINGLES_P2 ; $5a50
 	jr z, .slot2 ; $5a52
-	cp $05 ; $5a54
+	cp CHARSELECTMODE_LINK_DOUBLES_P2 ; $5a54
 	jr z, .slot2 ; $5a56
 	ld a, $00 ; $5a58
 	jr .storeSlot ; $5a5a
@@ -4866,19 +4866,19 @@ RunLinkCharSelectScreen:
 	ldh a, [hLinkState] ; $63e3
 	cp $01 ; $63e5
 	jr nz, .singlesSlave ; $63e7
-	ld a, $02 ; $63e9
+	ld a, CHARSELECTMODE_LINK_SINGLES_P1 ; $63e9
 	jr .storeMode ; $63eb
 .singlesSlave:
-	ld a, $03 ; $63ed
+	ld a, CHARSELECTMODE_LINK_SINGLES_P2 ; $63ed
 	jr .storeMode ; $63ef
 .doubles:
 	ldh a, [hLinkState] ; $63f1
 	cp $01 ; $63f3
 	jr nz, .doublesSlave ; $63f5
-	ld a, $04 ; $63f7
+	ld a, CHARSELECTMODE_LINK_DOUBLES_P1 ; $63f7
 	jr .storeMode ; $63f9
 .doublesSlave:
-	ld a, $05 ; $63fb
+	ld a, CHARSELECTMODE_LINK_DOUBLES_P2 ; $63fb
 .storeMode:
 	ld [wCharSelectMode], a ; $63fd
 	call DisableLCDSafely ; $6400
@@ -5054,9 +5054,9 @@ ProcessLinkSelectCommand:
 	or a ; $6574
 	jr z, .applySelection ; $6575
 	ld a, [wCharSelectMode] ; $6577
-	cp $03 ; $657a
+	cp CHARSELECTMODE_LINK_SINGLES_P2 ; $657a
 	jr z, .markOwnSlot ; $657c
-	cp $05 ; $657e
+	cp CHARSELECTMODE_LINK_DOUBLES_P2 ; $657e
 	jr z, .markOwnSlot ; $6580
 	ld a, [wCharSelectRemoteSlot] ; $6582
 	ld hl, wCharSelectSlotLeftHanded + 2 ; $6585
@@ -5135,9 +5135,9 @@ ProcessLinkSelectCommand:
 	ret ; $6608
 StoreRemoteCpuDifficulty:
 	ld a, [wCharSelectMode] ; $6609
-	cp $03 ; $660c
+	cp CHARSELECTMODE_LINK_SINGLES_P2 ; $660c
 	jr z, .slot0 ; $660e
-	cp $05 ; $6610
+	cp CHARSELECTMODE_LINK_DOUBLES_P2 ; $6610
 	jr z, .slot0 ; $6612
 	ld a, c ; $6614
 	ld [wCharSelectSlotDifficulty + 3], a ; $6615
@@ -5197,9 +5197,9 @@ ApplyRemoteCharCancel:
 	call SetGridEntryTakenByCharId ; $6672
 	wram_bank $03 ; $6675
 	ld a, [wCharSelectMode] ; $667b
-	cp $03 ; $667e
+	cp CHARSELECTMODE_LINK_SINGLES_P2 ; $667e
 	jr z, .clearOwnSlot ; $6680
-	cp $05 ; $6682
+	cp CHARSELECTMODE_LINK_DOUBLES_P2 ; $6682
 	jr z, .clearOwnSlot ; $6684
 	ld a, [wCharSelectRemoteSlot] ; $6686
 	ld hl, wCharSelectSlotDifficulty + 2 ; $6689
@@ -5245,9 +5245,9 @@ ApplyRemoteCharCancel:
 .refresh:
 	ret ; $66c2
 	ld a, [wCharSelectMode] ; $66c3
-	cp $03 ; $66c6
+	cp CHARSELECTMODE_LINK_SINGLES_P2 ; $66c6
 	jr z, .redraw ; $66c8
-	cp $05 ; $66ca
+	cp CHARSELECTMODE_LINK_DOUBLES_P2 ; $66ca
 	jr z, .redraw ; $66cc
 	ld a, [wCharSelectRemoteChars] ; $66ce
 	ld [wCharSelectSlotChars + 2], a ; $66d1
@@ -5513,9 +5513,9 @@ DrawRemoteSlotPortrait:
 	call WriteCharPortraitTiles ; $68a7
 	call DrawRemoteSlotLeftHandedMark ; $68aa
 	ld a, [wCharSelectMode] ; $68ad
-	cp $03 ; $68b0
+	cp CHARSELECTMODE_LINK_SINGLES_P2 ; $68b0
 	jr z, .slot0 ; $68b2
-	cp $05 ; $68b4
+	cp CHARSELECTMODE_LINK_DOUBLES_P2 ; $68b4
 	jr z, .slot0 ; $68b6
 	ld hl, wShadowTilemap + 9 * TILEMAP_WIDTH ; $68b8
 	ld de, $9920 ; $68bb
@@ -5541,9 +5541,9 @@ DrawRemoteSlotPortrait:
 	ret ; $68eb
 DrawRemoteSlotLeftHandedMark:
 	ld a, [wCharSelectMode] ; $68ec
-	cp $03 ; $68ef
+	cp CHARSELECTMODE_LINK_SINGLES_P2 ; $68ef
 	jr z, .checkOwnSlot ; $68f1
-	cp $05 ; $68f3
+	cp CHARSELECTMODE_LINK_DOUBLES_P2 ; $68f3
 	jr z, .checkOwnSlot ; $68f5
 	ld a, [wCharSelectRemoteSlot] ; $68f7
 	ld hl, wCharSelectSlotLeftHanded + 2 ; $68fa
@@ -5575,9 +5575,9 @@ DrawRemoteSlotLeftHandedMark:
 	ld [hl], a ; $691e
 	ret ; $691f
 	ld a, [wCharSelectMode] ; $6920
-	cp $03 ; $6923
+	cp CHARSELECTMODE_LINK_SINGLES_P2 ; $6923
 	jr z, .queueVram ; $6925
-	cp $05 ; $6927
+	cp CHARSELECTMODE_LINK_DOUBLES_P2 ; $6927
 	jr z, .queueVram ; $6929
 	ld a, [wCharSelectSlotDifficulty + 3] ; $692b
 	ld c, $33 ; $692e
@@ -5618,9 +5618,9 @@ ClearRemoteSlotPortrait:
 	ld [hl+], a ; $6969
 	ld [hl], a ; $696a
 	ld a, [wCharSelectMode] ; $696b
-	cp $03 ; $696e
+	cp CHARSELECTMODE_LINK_SINGLES_P2 ; $696e
 	jr z, .slot0 ; $6970
-	cp $05 ; $6972
+	cp CHARSELECTMODE_LINK_DOUBLES_P2 ; $6972
 	jr z, .slot0 ; $6974
 	ld hl, wShadowTilemap + 9 * TILEMAP_WIDTH ; $6976
 	ld de, $9920 ; $6979
@@ -5821,9 +5821,9 @@ InitLinkMatchCharsFromSelection:
 	wram_bank $03 ; $6a82
 	call CacheStorySlotNames ; $6a88
 	ld a, [wCharSelectMode] ; $6a8b
-	cp $03 ; $6a8e
+	cp CHARSELECTMODE_LINK_SINGLES_P2 ; $6a8e
 	jr z, .slot3Entry ; $6a90
-	cp $05 ; $6a92
+	cp CHARSELECTMODE_LINK_DOUBLES_P2 ; $6a92
 	jr z, .slot3Entry ; $6a94
 	ld a, [wCharSelectSlotChars] ; $6a96
 	cp $ff ; $6a99
@@ -5915,9 +5915,9 @@ InitLinkMatchCharsFromSelection:
 	wram_bank ; $6b2d
 	ret ; $6b31
 	ld a, [wCharSelectMode] ; $6b32
-	cp $03 ; $6b35
+	cp CHARSELECTMODE_LINK_SINGLES_P2 ; $6b35
 	ret z ; $6b37
-	cp $02 ; $6b38
+	cp CHARSELECTMODE_LINK_SINGLES_P1 ; $6b38
 	ret z ; $6b3a
 	xor a ; $6b3b
 	ld [wLinkCpuDifficulty], a ; $6b3c

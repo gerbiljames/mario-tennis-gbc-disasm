@@ -954,7 +954,7 @@
  },
  "0xc4b9": {
   "name": "wLastShotServeRole",
-  "note": "[8-bit] wCharServeRole of the character who hit the ball, snapshotted by ExecuteShot ($07:$53c4). Read once, at $08:$4337, where role 1 (the server) selects point outcome 7 (fault) instead of 8 when the ball goes out on the first bounce."
+  "note": "[8-bit] wCharServeRole of the character who hit the ball, snapshotted by ExecuteShot ($07:$53c4). Read once, at $08:$4337 in DetectServeAceOutcome: on the second hit of a point, role 1 (the receiver) with the ball still unbounced gives POINTOUTCOME_SERVE_VOLLEYED, and any other role gives POINTOUTCOME_WRONG_RECEIVER"
  },
  "0xc4ba": {
   "name": "wBallSpriteEnabled",

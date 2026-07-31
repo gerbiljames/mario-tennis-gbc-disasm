@@ -314,11 +314,11 @@ UpdateDrillAbortCountdown:
 	ret ; $41d9
 RecordDrillTargetZoneHitIfInPlay:
 	ld a, [wPointOutcome] ; $41da
-	cp $04 ; $41dd
+	cp POINTOUTCOME_NET ; $41dd
 	ret z ; $41df
-	cp $01 ; $41e0
+	cp POINTOUTCOME_FAULT ; $41e0
 	ret z ; $41e2
-	cp $03 ; $41e3
+	cp POINTOUTCOME_LET ; $41e3
 	ret z ; $41e5
 RecordDrillTargetZoneHit:
 	ld a, [wBallBounceCount] ; $41e6
@@ -537,13 +537,13 @@ PlayDrillPointEndSequence:
 	ld l, a ; $43b1
 	farcall SetCameraTarget ; $43b2
 	ld a, [wPointOutcome] ; $43b5
-	cp $06 ; $43b8
+	cp POINTOUTCOME_WINNER ; $43b8
 	jr z, .showScore ; $43ba
-	cp $07 ; $43bc
+	cp POINTOUTCOME_SERVE_VOLLEYED ; $43bc
 	jr z, .showScore ; $43be
-	cp $01 ; $43c0
+	cp POINTOUTCOME_FAULT ; $43c0
 	jr z, .showBanner ; $43c2
-	cp $03 ; $43c4
+	cp POINTOUTCOME_LET ; $43c4
 	jr z, .showBanner ; $43c6
 	jr .waitBanner ; $43c8
 .showBanner:
@@ -642,11 +642,11 @@ SyncPointWinLoseFlagTask:
 	wram_bank ; $447f
 	ret ; $4483
 	ld a, [wPointOutcome] ; $4484
-	cp $01 ; $4487
+	cp POINTOUTCOME_FAULT ; $4487
 	jr z, .checkPointOutcome2 ; $4489
-	cp $03 ; $448b
+	cp POINTOUTCOME_LET ; $448b
 	jr z, .checkPointOutcome2 ; $448d
-	cp $09 ; $448f
+	cp POINTOUTCOME_BALL_HIT_PLAYER ; $448f
 	ld a, $01 ; $4491
 	jr z, .checkCurrentServingPlayer ; $4493
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $4495
@@ -707,9 +707,9 @@ SyncPointWinLoseFlagTask:
 	ret ; $44f1
 QueueDrillOutcomeMessage:
 	ld a, [wPointOutcome] ; $44f2
-	cp $01 ; $44f5
+	cp POINTOUTCOME_FAULT ; $44f5
 	jr z, .step3 ; $44f7
-	cp $03 ; $44f9
+	cp POINTOUTCOME_LET ; $44f9
 	jr z, .step3 ; $44fb
 	call CheckDrillTargetZoneMissed ; $44fd
 	or a ; $4500
@@ -1054,7 +1054,7 @@ RunTrainingDrillByID:
 	ld a, [wMatchExitRequest] ; $475c
 	or a ; $475f
 	jr z, .checkMenuFlag ; $4760
-	ld a, $ff ; $4762
+	ld a, WINLOSE_LOSE ; $4762
 	ld [wPointWinLoseFlag], a ; $4764
 .checkMenuFlag:
 	test_flag FLAG_DRILL_FROM_MENU ; $4767
@@ -1197,7 +1197,7 @@ ServiceMatch1Hook_PointEnd:
 	sub [hl] ; $4884
 	jr z, .clearPointWinLoseFlag ; $4885
 	jr nc, .storePointWinLoseFlag ; $4887
-	ld a, $01 ; $4889
+	ld a, WINLOSE_WIN ; $4889
 	ld [wPointWinLoseFlag], a ; $488b
 	ret ; $488e
 .clearPointWinLoseFlag:
@@ -1205,7 +1205,7 @@ ServiceMatch1Hook_PointEnd:
 	ld [wPointWinLoseFlag], a ; $4890
 	ret ; $4893
 .storePointWinLoseFlag:
-	ld a, $ff ; $4894
+	ld a, WINLOSE_LOSE ; $4894
 	ld [wPointWinLoseFlag], a ; $4896
 	ret ; $4899
 ServiceMatch1Hook_RallyTick:
@@ -1372,7 +1372,7 @@ ServiceMatch1Cases1SignedTable:
 	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $06, $06, $ff ; 0x00
 ServiceMatch1Cases2:
 	ld a, [wPointOutcome] ; $49a0
-	cp $07 ; $49a3
+	cp POINTOUTCOME_SERVE_VOLLEYED ; $49a3
 	ld a, $00 ; $49a5
 	ret z ; $49a7
 	ld a, $04 ; $49a8
@@ -1468,7 +1468,7 @@ ServiceMatch2Hook_PointEnd:
 	sub [hl] ; $4a48
 	jr z, .clearPointWinLoseFlag ; $4a49
 	jr nc, .storePointWinLoseFlag ; $4a4b
-	ld a, $01 ; $4a4d
+	ld a, WINLOSE_WIN ; $4a4d
 	ld [wPointWinLoseFlag], a ; $4a4f
 	ret ; $4a52
 .clearPointWinLoseFlag:
@@ -1476,7 +1476,7 @@ ServiceMatch2Hook_PointEnd:
 	ld [wPointWinLoseFlag], a ; $4a54
 	ret ; $4a57
 .storePointWinLoseFlag:
-	ld a, $ff ; $4a58
+	ld a, WINLOSE_LOSE ; $4a58
 	ld [wPointWinLoseFlag], a ; $4a5a
 	ret ; $4a5d
 ServiceMatch2Hook_RallyTick:
@@ -1696,7 +1696,7 @@ ServiceMatch2Cases1DrillShotTable:
 	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $06, $06, $ff ; 0x00
 ServiceMatch2Cases2:
 	ld a, [wPointOutcome] ; $4bec
-	cp $07 ; $4bef
+	cp POINTOUTCOME_SERVE_VOLLEYED ; $4bef
 	ld a, $00 ; $4bf1
 	ret z ; $4bf3
 	ld a, $04 ; $4bf4
@@ -1774,7 +1774,7 @@ ServiceMatch3Hook_PointEnd:
 	rl a ; $4c70
 	or a ; $4c72
 	jr nz, .store ; $4c73
-	ld a, $ff ; $4c75
+	ld a, WINLOSE_LOSE ; $4c75
 .store:
 	ld [wPointWinLoseFlag], a ; $4c77
 	ld a, MATCHABORT_MATCH ; $4c7a
@@ -1784,7 +1784,7 @@ ServiceMatch3Hook_PointEnd:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $4c80
 	cp $08 ; $4c83
 	ret c ; $4c85
-	ld a, $00 ; $4c86
+	ld a, WINLOSE_NONE ; $4c86
 	ld [wPointWinLoseFlag], a ; $4c88
 	ret ; $4c8b
 ServiceMatch3Hook_RallyTick:
@@ -1965,7 +1965,7 @@ ServiceMatch3Cases1DrillShotTable:
 	db $ff, $ff, $ff, $ff, $ff, $ff, $ff, $06, $06, $ff ; 0x00
 ServiceMatch3Cases2:
 	ld a, [wPointOutcome] ; $4dbb
-	cp $07 ; $4dbe
+	cp POINTOUTCOME_SERVE_VOLLEYED ; $4dbe
 	ld a, $00 ; $4dc0
 	ret z ; $4dc2
 	ld a, $04 ; $4dc3
@@ -2147,12 +2147,12 @@ ServicePractice1HandlePointEnd:
 	ret ; $4f21
 ServicePractice1QueueOutcomeMessage:
 	ld a, [wPointOutcome] ; $4f22
-	cp $01 ; $4f25
+	cp POINTOUTCOME_FAULT ; $4f25
 	jp z, .step4 ; $4f27
-	cp $03 ; $4f2a
+	cp POINTOUTCOME_LET ; $4f2a
 	jp z, .step4 ; $4f2c
 	ld a, [wPointOutcome] ; $4f2f
-	cp $02 ; $4f32
+	cp POINTOUTCOME_DOUBLE_FAULT ; $4f32
 	jr z, .eq02 ; $4f34
 	ld a, $10 ; $4f36
 	ld b, $00 ; $4f38
@@ -2430,12 +2430,12 @@ ServicePractice2SetupShotTargetTable:
 	db $e9, $c2, $e8, $c2, $e9, $c2, $e8, $c2, $e9, $c2 ; 0x00
 ServicePractice2QueueOutcomeMessage:
 	ld a, [wPointOutcome] ; $513f
-	cp $01 ; $5142
+	cp POINTOUTCOME_FAULT ; $5142
 	jp z, .step4 ; $5144
-	cp $03 ; $5147
+	cp POINTOUTCOME_LET ; $5147
 	jp z, .step4 ; $5149
 	ld a, [wPointOutcome] ; $514c
-	cp $02 ; $514f
+	cp POINTOUTCOME_DOUBLE_FAULT ; $514f
 	jr nz, .ne02 ; $5151
 	ld a, $0e ; $5153
 	ld b, $00 ; $5155
@@ -2483,7 +2483,7 @@ ServicePractice2QueueOutcomeMessage:
 	ld b, $00 ; $51a2
 	call QueueDrillResultMessage ; $51a4
 	ld a, [wPointOutcome] ; $51a7
-	cp $06 ; $51aa
+	cp POINTOUTCOME_WINNER ; $51aa
 	jr z, .eq06 ; $51ac
 	ld a, $0e ; $51ae
 	ld b, $00 ; $51b0
@@ -2708,12 +2708,12 @@ ServicePractice3HandlePointEnd:
 	ret ; $537a
 ServicePractice3QueueOutcomeMessage:
 	ld a, [wPointOutcome] ; $537b
-	cp $01 ; $537e
+	cp POINTOUTCOME_FAULT ; $537e
 	jp z, .step4 ; $5380
-	cp $03 ; $5383
+	cp POINTOUTCOME_LET ; $5383
 	jp z, .step4 ; $5385
 	ld a, [wPointOutcome] ; $5388
-	cp $02 ; $538b
+	cp POINTOUTCOME_DOUBLE_FAULT ; $538b
 	jr z, .eq02 ; $538d
 	ld a, $13 ; $538f
 	ld b, $00 ; $5391
@@ -2736,7 +2736,7 @@ ServicePractice3QueueOutcomeMessage:
 	ld b, $00 ; $53b7
 	call QueueDrillResultMessage ; $53b9
 	ld a, [wPointOutcome] ; $53bc
-	cp $06 ; $53bf
+	cp POINTOUTCOME_WINNER ; $53bf
 	jr z, .eq06 ; $53c1
 .eq02:
 	ld a, $0e ; $53c3
@@ -2877,13 +2877,13 @@ NetGameMatch1DecideWinner:
 	ld a, [wPlayer2PointsWon] ; $54be
 	sub b ; $54c1
 	jr nc, .compare ; $54c2
-	ld a, $01 ; $54c4
+	ld a, WINLOSE_WIN ; $54c4
 	ld [wPointWinLoseFlag], a ; $54c6
 	ret ; $54c9
 .compare:
 	or a ; $54ca
 	jr z, .store ; $54cb
-	ld a, $ff ; $54cd
+	ld a, WINLOSE_LOSE ; $54cd
 .store:
 	ld [wPointWinLoseFlag], a ; $54cf
 	ret ; $54d2
@@ -3198,7 +3198,7 @@ NetGameMatch2Hook_PointEnd:
 	rl a ; $56bd
 	or a ; $56bf
 	jr nz, .store ; $56c0
-	ld a, $ff ; $56c2
+	ld a, WINLOSE_LOSE ; $56c2
 .store:
 	ld [wPointWinLoseFlag], a ; $56c4
 	ld a, MATCHABORT_MATCH ; $56c7
@@ -3208,7 +3208,7 @@ NetGameMatch2Hook_PointEnd:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $56cd
 	cp $08 ; $56d0
 	ret nz ; $56d2
-	ld a, $00 ; $56d3
+	ld a, WINLOSE_NONE ; $56d3
 	ld [wPointWinLoseFlag], a ; $56d5
 	ld a, MATCHABORT_MATCH ; $56d8
 	ld [wMatchAbortFlag], a ; $56da
@@ -3581,7 +3581,7 @@ NetGameMatch3Hook_PointEnd:
 	rl a ; $5930
 	or a ; $5932
 	jr nz, .store ; $5933
-	ld a, $ff ; $5935
+	ld a, WINLOSE_LOSE ; $5935
 .store:
 	ld [wPointWinLoseFlag], a ; $5937
 	ld a, MATCHABORT_MATCH ; $593a
@@ -3591,7 +3591,7 @@ NetGameMatch3Hook_PointEnd:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $5940
 	cp $08 ; $5943
 	ret c ; $5945
-	ld a, $00 ; $5946
+	ld a, WINLOSE_NONE ; $5946
 	ld [wPointWinLoseFlag], a ; $5948
 	ret ; $594b
 NetGameMatch3DrillOpponent:
@@ -3633,9 +3633,9 @@ NetGameMatch3HandlePointEnd:
 	call PlayDrillPointEndSequence ; $5990
 	ret ; $5993
 	ld a, [wPointOutcome] ; $5994
-	cp $01 ; $5997
+	cp POINTOUTCOME_FAULT ; $5997
 	jp z, NetGameMatch3HandlePointEndTable.checkPointWinLoseFlag ; $5999
-	cp $03 ; $599c
+	cp POINTOUTCOME_LET ; $599c
 	jp z, NetGameMatch3HandlePointEndTable.checkPointWinLoseFlag ; $599e
 	ld a, [wRallyLength] ; $59a1
 	dec a ; $59a4
@@ -3661,7 +3661,7 @@ NetGameMatch3HandlePointEndTable:
 	ld b, $0d ; $59be
 	call QueueDrillResultMessage ; $59c0
 	ld a, [wPointOutcome] ; $59c3
-	cp $06 ; $59c6
+	cp POINTOUTCOME_WINNER ; $59c6
 	jr z, .checkTotalPointsScoredInCurrentGame ; $59c8
 	ld a, $19 ; $59ca
 	ld b, $0d ; $59cc
@@ -3686,7 +3686,7 @@ NetGameMatch3HandlePointEndTable:
 	ld b, $0d ; $59ee
 	call QueueDrillResultMessage ; $59f0
 	ld a, [wPointOutcome] ; $59f3
-	cp $06 ; $59f6
+	cp POINTOUTCOME_WINNER ; $59f6
 	jr z, .checkTotalPointsScoredInCurrentGame ; $59f8
 	jr .checkTotalPointsScoredInCurrentGame2 ; $59fa
 .queueDrillResultMessage3:
@@ -3694,7 +3694,7 @@ NetGameMatch3HandlePointEndTable:
 	ld b, $0d ; $59fe
 	call QueueDrillResultMessage ; $5a00
 	ld a, [wPointOutcome] ; $5a03
-	cp $06 ; $5a06
+	cp POINTOUTCOME_WINNER ; $5a06
 	jr z, .checkTotalPointsScoredInCurrentGame2 ; $5a08
 	push af ; $5a0a
 	ld a, $1e ; $5a0b
@@ -4065,9 +4065,9 @@ NetGamePractice1PointStartTable:
 NetGamePractice1Hook_PointEnd:
 	call NetGamePractice1JudgeOnPointEnd ; $5c52
 	ld a, [wPointOutcome] ; $5c55
-	cp $04 ; $5c58
+	cp POINTOUTCOME_NET ; $5c58
 	jr z, .netGamePractice1HandlePointEnd2 ; $5c5a
-	cp $05 ; $5c5c
+	cp POINTOUTCOME_OUT ; $5c5c
 	jr z, .netGamePractice1HandlePointEnd2 ; $5c5e
 	jr .netGamePractice1HandlePointEnd ; $5c60
 .netGamePractice1HandlePointEnd2:
@@ -4365,7 +4365,7 @@ NetGamePractice1Cases3:
 	ld a, $00 ; $5e5a
 	ret nz ; $5e5c
 	ld a, [wPointOutcome] ; $5e5d
-	cp $04 ; $5e60
+	cp POINTOUTCOME_NET ; $5e60
 	jr z, .eq04 ; $5e62
 	ld a, $2e ; $5e64
 	ld b, $00 ; $5e66
@@ -4447,9 +4447,9 @@ NetGamePractice2Hook_PointStart:
 NetGamePractice2Hook_PointEnd:
 	call NetGamePractice2JudgeOnPointEnd ; $5efa
 	ld a, [wPointOutcome] ; $5efd
-	cp $04 ; $5f00
+	cp POINTOUTCOME_NET ; $5f00
 	jr z, .netGamePractice2HandlePointEnd2 ; $5f02
-	cp $05 ; $5f04
+	cp POINTOUTCOME_OUT ; $5f04
 	jr z, .netGamePractice2HandlePointEnd2 ; $5f06
 	jr .netGamePractice2HandlePointEnd ; $5f08
 .netGamePractice2HandlePointEnd2:
@@ -4650,11 +4650,11 @@ NetGamePractice2Cases1:
 	ld a, $00 ; $607b
 	ret nz ; $607d
 	ld a, [wPointOutcome] ; $607e
-	cp $05 ; $6081
+	cp POINTOUTCOME_OUT ; $6081
 	ld a, $00 ; $6083
 	ret z ; $6085
 	ld a, [wPointOutcome] ; $6086
-	cp $02 ; $6089
+	cp POINTOUTCOME_DOUBLE_FAULT ; $6089
 	ld a, $00 ; $608b
 	ret z ; $608d
 	ld a, $3b ; $608e
@@ -4828,9 +4828,9 @@ NetGamePractice3Hook_PointStart:
 NetGamePractice3Hook_PointEnd:
 	call NetGamePractice3JudgeOnPointEnd ; $61ac
 	ld a, [wPointOutcome] ; $61af
-	cp $04 ; $61b2
+	cp POINTOUTCOME_NET ; $61b2
 	jr z, .netGamePractice3HandlePointEnd2 ; $61b4
-	cp $05 ; $61b6
+	cp POINTOUTCOME_OUT ; $61b6
 	jr z, .netGamePractice3HandlePointEnd2 ; $61b8
 	jr .netGamePractice3HandlePointEnd ; $61ba
 .netGamePractice3HandlePointEnd2:
@@ -5038,7 +5038,7 @@ NetGamePractice3Cases1:
 	ld a, $00 ; $633a
 	ret nz ; $633c
 	ld a, [wPointOutcome] ; $633d
-	cp $05 ; $6340
+	cp POINTOUTCOME_OUT ; $6340
 	ld a, $00 ; $6342
 	ret z ; $6344
 	ld a, $3b ; $6345
@@ -5213,7 +5213,7 @@ StrokeMatch1Hook_PointEnd:
 	rl a ; $645d
 	or a ; $645f
 	jr nz, .store ; $6460
-	ld a, $ff ; $6462
+	ld a, WINLOSE_LOSE ; $6462
 .store:
 	ld [wPointWinLoseFlag], a ; $6464
 	ld a, MATCHABORT_MATCH ; $6467
@@ -5403,7 +5403,7 @@ StrokeMatch1Cases2:
 	ret ; $65a4
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $65a5
-	cp $09 ; $65a8
+	cp POINTOUTCOME_BALL_HIT_PLAYER ; $65a8
 	ld a, $00 ; $65aa
 	ret z ; $65ac
 	ld a, $61 ; $65ad
@@ -5460,7 +5460,7 @@ StrokeMatch1Cases3:
 	ret ; $6604
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $6605
-	cp $09 ; $6608
+	cp POINTOUTCOME_BALL_HIT_PLAYER ; $6608
 	ld a, $00 ; $660a
 	ret z ; $660c
 	ld a, $61 ; $660d
@@ -5517,7 +5517,7 @@ StrokeMatch1Cases4:
 	ret ; $6664
 .checkPointOutcome:
 	ld a, [wPointOutcome] ; $6665
-	cp $09 ; $6668
+	cp POINTOUTCOME_BALL_HIT_PLAYER ; $6668
 	ld a, $00 ; $666a
 	ret z ; $666c
 	ld a, $61 ; $666d
@@ -5664,7 +5664,7 @@ StrokeMatch2Hook_PointEnd:
 	rl a ; $675b
 	or a ; $675d
 	jr nz, .store ; $675e
-	ld a, $ff ; $6760
+	ld a, WINLOSE_LOSE ; $6760
 .store:
 	ld [wPointWinLoseFlag], a ; $6762
 	ld a, MATCHABORT_MATCH ; $6765
@@ -5674,7 +5674,7 @@ StrokeMatch2Hook_PointEnd:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $676b
 	cp $08 ; $676e
 	ret nz ; $6770
-	ld a, $00 ; $6771
+	ld a, WINLOSE_NONE ; $6771
 	ld [wPointWinLoseFlag], a ; $6773
 	ld a, MATCHABORT_MATCH ; $6776
 	ld [wMatchAbortFlag], a ; $6778
@@ -6016,7 +6016,7 @@ StrokeMatch3Hook_PointEnd:
 	rl a ; $69a6
 	or a ; $69a8
 	jr nz, .store ; $69a9
-	ld a, $ff ; $69ab
+	ld a, WINLOSE_LOSE ; $69ab
 .store:
 	ld [wPointWinLoseFlag], a ; $69ad
 	ld a, MATCHABORT_MATCH ; $69b0
@@ -6026,7 +6026,7 @@ StrokeMatch3Hook_PointEnd:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $69b6
 	cp $08 ; $69b9
 	ret nz ; $69bb
-	ld a, $00 ; $69bc
+	ld a, WINLOSE_NONE ; $69bc
 	ld [wPointWinLoseFlag], a ; $69be
 	ld a, MATCHABORT_MATCH ; $69c1
 	ld [wMatchAbortFlag], a ; $69c3
@@ -6361,7 +6361,7 @@ EnableTargetZoneAfterDelayTask:
 StrokePractice1Hook_PointEnd:
 	call StrokePractice1JudgeOnPointEnd ; $6be1
 	ld a, [wPointOutcome] ; $6be4
-	cp $05 ; $6be7
+	cp POINTOUTCOME_OUT ; $6be7
 	jr z, .eq05 ; $6be9
 	jr .strokePractice1HandlePointEnd ; $6beb
 .eq05:

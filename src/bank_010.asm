@@ -1625,7 +1625,7 @@ RunMinigameModeFlow:
 	or a ; $5293
 	jr nz, .levelMenu ; $5294
 	ld a, [wPointWinLoseFlag] ; $5296
-	cp $01 ; $5299
+	cp WINLOSE_WIN ; $5299
 	jr z, .levelMenu ; $529b
 	jp RunTitleAndMainMenuLoop.menuLoop ; $529d
 MatchSelectHandlersBHandler5:
@@ -2312,10 +2312,10 @@ CafeteriaNpc04_10:
 	ld l, a ; $58ba
 	farcall InitDialogueTextCursor ; $58bb
 	ld a, [wMapSceneStage2] ; $58be
-	cp $03 ; $58c1
+	cp STORYTIER_ISLAND_OPEN ; $58c1
 	jr c, .speak ; $58c3
 	ld a, [wMapSceneStage2] ; $58c5
-	cp $04 ; $58c8
+	cp STORYTIER_COMPLETE ; $58c8
 	jr z, .prompt ; $58ca
 	ld a, $04 ; $58cc
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $58ce
@@ -2330,7 +2330,7 @@ CafeteriaNpc04_10:
 	ret ; $58e9
 .prompt:
 	ld a, [wMapSceneStage] ; $58ea
-	cp $09 ; $58ed
+	cp STORYRANK_DOUBLES_COMPLETE ; $58ed
 	jr nz, .askQuestion ; $58ef
 	farcall AdvanceDialogueTextCursor ; $58f1
 .askQuestion:
@@ -2368,7 +2368,7 @@ CafeteriaNpc05_10:
 	ld l, a ; $5938
 	farcall InitDialogueTextCursor ; $5939
 	ld a, [wMapSceneStage2] ; $593c
-	cp $01 ; $593f
+	cp STORYTIER_JUNIOR_CHAMP ; $593f
 	jr nz, .speak ; $5941
 	ld a, $05 ; $5943
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $5945
@@ -2596,7 +2596,7 @@ RestaurantNpc03_10:
 	ld l, a ; $5bff
 	farcall InitDialogueTextCursor ; $5c00
 	ld a, [wMapSceneStage] ; $5c03
-	cp $03 ; $5c06
+	cp STORYRANK_DOUBLES_JUNIOR_CHAMP ; $5c06
 	jr nz, .speak ; $5c08
 	farcall AdvanceDialogueTextCursor ; $5c0a
 .speak:
@@ -2682,14 +2682,14 @@ RestaurantNpc06_10:
 	ld l, a ; $5cc9
 	farcall InitDialogueTextCursor ; $5cca
 	ld a, [wMapSceneStage] ; $5ccd
-	cp $05 ; $5cd0
+	cp STORYRANK_DOUBLES_SENIOR_CHAMP ; $5cd0
 	jr nz, .speak ; $5cd2
 	farcall AdvanceDialogueTextCursor ; $5cd4
 	farcall AdvanceDialogueTextCursor ; $5cd7
 .speak:
 	script_speak $06 ; $5cda
 	ld a, [wMapSceneStage2] ; $5cdf
-	cp $00 ; $5ce2
+	cp STORYTIER_ACADEMY ; $5ce2
 	jr nz, .animate ; $5ce4
 	call RestaurantShowActor11NearPlayer_10 ; $5ce6
 .animate:
@@ -2857,7 +2857,7 @@ RestaurantNpc09_10:
 	ld l, a ; $5e98
 	farcall InitDialogueTextCursor ; $5e99
 	ld a, [wMapSceneStage] ; $5e9c
-	cp $06 ; $5e9f
+	cp STORYRANK_SINGLES_ISLAND_OPEN ; $5e9f
 	jr nc, .altText ; $5ea1
 	script_speak $09 ; $5ea3
 	ret ; $5ea8
@@ -2906,7 +2906,7 @@ RestaurantNpc0A_10:
 	ld l, a ; $5f07
 	farcall InitDialogueTextCursor ; $5f08
 	ld a, [wMapSceneStage] ; $5f0b
-	cp $06 ; $5f0e
+	cp STORYRANK_SINGLES_ISLAND_OPEN ; $5f0e
 	jr nc, .speak ; $5f10
 	ld a, $0a ; $5f12
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $5f14
@@ -2944,7 +2944,7 @@ RestaurantNpc0B_10:
 	ld l, a ; $5f51
 	farcall InitDialogueTextCursor ; $5f52
 	ld a, [wMapSceneStage] ; $5f55
-	cp $01 ; $5f58
+	cp STORYRANK_DOUBLES_ACADEMY ; $5f58
 	jr nz, .speak ; $5f5a
 	farcall AdvanceDialogueTextCursor ; $5f5c
 .speak:
@@ -2970,7 +2970,7 @@ RestaurantNpc0C_10:
 	ld l, a ; $5f7c
 	farcall InitDialogueTextCursor ; $5f7d
 	ld a, [wMapSceneStage2] ; $5f80
-	cp $00 ; $5f83
+	cp STORYTIER_ACADEMY ; $5f83
 	jr z, .speak ; $5f85
 	cp $03 ; $5f87
 	jr nc, .ge03 ; $5f89
@@ -2983,7 +2983,7 @@ RestaurantNpc0C_10:
 	jr z, .speak ; $5f9e
 	farcall AdvanceDialogueTextCursor ; $5fa0
 	ld a, [wMapSceneStage] ; $5fa3
-	cp $05 ; $5fa6
+	cp STORYRANK_DOUBLES_SENIOR_CHAMP ; $5fa6
 	jr nz, .speak ; $5fa8
 	farcall AdvanceDialogueTextCursor ; $5faa
 	jr .speak ; $5fad
@@ -3015,7 +3015,7 @@ RestaurantNpc0D_10:
 	ld l, a ; $5fd6
 	farcall InitDialogueTextCursor ; $5fd7
 	ld a, [wMapSceneStage2] ; $5fda
-	cp $03 ; $5fdd
+	cp STORYTIER_ISLAND_OPEN ; $5fdd
 	jr nz, .advanceDialogueTextCursor ; $5fdf
 	ld a, $0d ; $5fe1
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $5fe3
@@ -3027,7 +3027,7 @@ RestaurantNpc0D_10:
 	farcall AdvanceDialogueTextCursor ; $5ff6
 .advanceDialogueTextCursor:
 	ld a, [wMapSceneStage] ; $5ff9
-	cp $03 ; $5ffc
+	cp STORYRANK_DOUBLES_JUNIOR_CHAMP ; $5ffc
 	jr nz, .speak ; $5ffe
 	farcall AdvanceDialogueTextCursor ; $6000
 .speak:
@@ -4916,36 +4916,36 @@ ActorScript_10_4:
 SetStoryDialogueStage_10:
 	test_flag FLAG_DOUBLES ; $7dbd
 	jr nz, .doublesStage ; $7dc0
-	ld a, $00 ; $7dc2
+	ld a, STORYRANK_SINGLES_ACADEMY ; $7dc2
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7dc4
 	jr z, .store ; $7dc7
-	ld a, $02 ; $7dc9
+	ld a, STORYRANK_SINGLES_JUNIOR_CHAMP ; $7dc9
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $7dcb
 	jr z, .store ; $7dce
-	ld a, $04 ; $7dd0
+	ld a, STORYRANK_SINGLES_SENIOR_CHAMP ; $7dd0
 	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $7dd2
 	jr z, .store ; $7dd5
-	ld a, $06 ; $7dd7
+	ld a, STORYRANK_SINGLES_ISLAND_OPEN ; $7dd7
 	test_flag FLAG_STORY_COMPLETE_SINGLES ; $7dd9
 	jr z, .store ; $7ddc
-	ld a, $08 ; $7dde
+	ld a, STORYRANK_SINGLES_COMPLETE ; $7dde
 .store:
 	ld [wMapSceneStage], a ; $7de0
 	ret ; $7de3
 .doublesStage:
-	ld a, $01 ; $7de4
+	ld a, STORYRANK_DOUBLES_ACADEMY ; $7de4
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $7de6
 	jr z, .store ; $7de9
-	ld a, $03 ; $7deb
+	ld a, STORYRANK_DOUBLES_JUNIOR_CHAMP ; $7deb
 	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_1 ; $7ded
 	jr z, .store ; $7df0
-	ld a, $05 ; $7df2
+	ld a, STORYRANK_DOUBLES_SENIOR_CHAMP ; $7df2
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $7df4
 	jr z, .store ; $7df7
-	ld a, $07 ; $7df9
+	ld a, STORYRANK_DOUBLES_ISLAND_OPEN ; $7df9
 	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $7dfb
 	jr z, .store ; $7dfe
-	ld a, $09 ; $7e00
+	ld a, STORYRANK_DOUBLES_COMPLETE ; $7e00
 	jr .store ; $7e02
 	ld a, $00 ; $7e04
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7e06

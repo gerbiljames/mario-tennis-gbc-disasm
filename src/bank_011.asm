@@ -40,13 +40,13 @@ CenterCourtNpc03_11:
 	test_flag FLAG_DOUBLES ; $4088
 	jr nz, .isDoubles ; $408b
 	ld a, [wMapSceneStage] ; $408d
-	cp $03 ; $4090
+	cp ISLANDOPENSTAGE_SINGLES_FINAL ; $4090
 	jr nz, .speak ; $4092
 	script_set_text Text_1f_91 ; $4094
 	jr .speak ; $409a
 .isDoubles:
 	ld a, [wMapSceneStage] ; $409c
-	cp $06 ; $409f
+	cp ISLANDOPENSTAGE_DOUBLES_FINAL ; $409f
 	jr nz, .speak ; $40a1
 	script_set_text Text_1f_91 ; $40a3
 .speak:
@@ -57,7 +57,7 @@ CenterCourtNpc04_11:
 	jr z, .altText ; $40b2
 	script_set_text Text_1f_96 ; $40b4
 	ld a, [wMapSceneStage] ; $40ba
-	cp $06 ; $40bd
+	cp ISLANDOPENSTAGE_DOUBLES_FINAL ; $40bd
 	jr nz, .done ; $40bf
 	script_set_text Text_1f_101 ; $40c1
 	jr .done ; $40c7
@@ -75,7 +75,7 @@ CenterCourtNpc04_11:
 	ret ; $40ec
 .speak:
 	ld a, [wMapSceneStage] ; $40ed
-	cp $03 ; $40f0
+	cp ISLANDOPENSTAGE_SINGLES_FINAL ; $40f0
 	jr nz, .done ; $40f2
 	farcall AdvanceDialogueTextCursor ; $40f4
 	farcall AdvanceDialogueTextCursor ; $40f7
@@ -95,7 +95,7 @@ CenterCourtNpc05_11:
 	ld l, a ; $410d
 	farcall InitDialogueTextCursor ; $410e
 	ld a, [wMapSceneStage] ; $4111
-	cp $03 ; $4114
+	cp ISLANDOPENSTAGE_SINGLES_FINAL ; $4114
 	jr z, .eq03 ; $4116
 	script_speak $05 ; $4118
 	ret ; $411d
@@ -171,13 +171,13 @@ CenterCourtInitScript_11:
 	call MapArrivalWalk_11 ; $41b2
 	ret ; $41b5
 SetupCenterCourtSceneVariant:
-	ld a, $00 ; $41b6
+	ld a, ISLANDOPENSTAGE_SINGLES_ROUND1 ; $41b6
 	ld [wMapSceneStage], a ; $41b8
 	test_flag FLAG_DOUBLES ; $41bb
 	jr nz, .doneEarly ; $41be
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_SEMIFINAL ; $41c0
 	jr z, .stage1 ; $41c3
-	ld a, $03 ; $41c5
+	ld a, ISLANDOPENSTAGE_SINGLES_FINAL ; $41c5
 	ld [wMapSceneStage], a ; $41c7
 	ldh a, [hRomBank] ; $41ca
 	ld hl, CenterCourtSceneVariantActors_11 ; $41cc
@@ -187,20 +187,20 @@ SetupCenterCourtSceneVariant:
 .stage1:
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_2 ; $41d6
 	jr z, .stage2 ; $41d9
-	ld a, $02 ; $41db
+	ld a, ISLANDOPENSTAGE_SINGLES_SEMIFINAL ; $41db
 	ld [wMapSceneStage], a ; $41dd
 	ret ; $41e0
 .stage2:
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_1 ; $41e1
 	jr z, .stage3 ; $41e4
-	ld a, $01 ; $41e6
+	ld a, ISLANDOPENSTAGE_SINGLES_ROUND2 ; $41e6
 	ld [wMapSceneStage], a ; $41e8
 .stage3:
 	ret ; $41eb
 .doneEarly:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_SEMIFINAL ; $41ec
 	jr z, .stage4 ; $41ef
-	ld a, $06 ; $41f1
+	ld a, ISLANDOPENSTAGE_DOUBLES_FINAL ; $41f1
 	ld [wMapSceneStage], a ; $41f3
 	ldh a, [hRomBank] ; $41f6
 	ld hl, CenterCourtSceneVariantActors_11 ; $41f8
@@ -210,11 +210,11 @@ SetupCenterCourtSceneVariant:
 .stage4:
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_ROUND_1 ; $4202
 	jr z, .done ; $4205
-	ld a, $05 ; $4207
+	ld a, ISLANDOPENSTAGE_DOUBLES_SEMIFINAL ; $4207
 	ld [wMapSceneStage], a ; $4209
 	ret ; $420c
 .done:
-	ld a, $04 ; $420d
+	ld a, ISLANDOPENSTAGE_DOUBLES_ROUND1 ; $420d
 	ld [wMapSceneStage], a ; $420f
 	ret ; $4212
 CenterCourtSceneVariantActors_11:
@@ -382,11 +382,11 @@ AcademyArrivalNpc03_11:
 	ld l, a ; $45aa
 	farcall InitDialogueTextCursor ; $45ab
 	ld a, [wMapSceneStage] ; $45ae
-	cp $08 ; $45b1
+	cp STORYRANK_SINGLES_COMPLETE ; $45b1
 	jr nc, .altText ; $45b3
-	cp $04 ; $45b5
+	cp STORYRANK_SINGLES_SENIOR_CHAMP ; $45b5
 	jr nc, .speak ; $45b7
-	cp $02 ; $45b9
+	cp STORYRANK_SINGLES_JUNIOR_CHAMP ; $45b9
 	jr c, .speak ; $45bb
 .altText:
 	script_speak $03 ; $45bd
@@ -1146,7 +1146,7 @@ EnableAcademyCampusExit:
 	ret ; $54a5
 MoveCampusGateGuardAside:
 	ld a, [wMapSceneStage] ; $54a6
-	cp $06 ; $54a9
+	cp STORYRANK_SINGLES_ISLAND_OPEN ; $54a9
 	jr c, .done ; $54ab
 	script_set_position $14, $1500, $3000 ; $54ad
 	script_face $14, FACE_RIGHT ; $54b8
@@ -1774,7 +1774,7 @@ ActorScript_11_21:
 	cp $01 ; $5d41
 	jr z, .eq01 ; $5d43
 	ld a, [wMatchWinLoseFlag] ; $5d45
-	cp $01 ; $5d48
+	cp WINLOSE_WIN ; $5d48
 	jp z, .eq012 ; $5d4a
 .eq01:
 	script_player_speed $0040 ; $5d4d
@@ -2674,7 +2674,7 @@ ActorScript_11_29:
 	cp $01 ; $6e56
 	jr z, .eq01 ; $6e58
 	ld a, [wMatchWinLoseFlag] ; $6e5a
-	cp $01 ; $6e5d
+	cp WINLOSE_WIN ; $6e5d
 	jp z, .eq012 ; $6e5f
 .eq01:
 	script_player_speed $0040 ; $6e62
@@ -3620,36 +3620,36 @@ ActorScript_11_52:
 ComputeRankingProgressIndex:
 	test_flag FLAG_DOUBLES ; $7d95
 	jr nz, .doubles ; $7d98
-	ld a, $00 ; $7d9a
+	ld a, STORYRANK_SINGLES_ACADEMY ; $7d9a
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7d9c
 	jr z, .store ; $7d9f
-	ld a, $02 ; $7da1
+	ld a, STORYRANK_SINGLES_JUNIOR_CHAMP ; $7da1
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $7da3
 	jr z, .store ; $7da6
-	ld a, $04 ; $7da8
+	ld a, STORYRANK_SINGLES_SENIOR_CHAMP ; $7da8
 	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $7daa
 	jr z, .store ; $7dad
-	ld a, $06 ; $7daf
+	ld a, STORYRANK_SINGLES_ISLAND_OPEN ; $7daf
 	test_flag FLAG_STORY_COMPLETE_SINGLES ; $7db1
 	jr z, .store ; $7db4
-	ld a, $08 ; $7db6
+	ld a, STORYRANK_SINGLES_COMPLETE ; $7db6
 .store:
 	ld [wMapSceneStage], a ; $7db8
 	ret ; $7dbb
 .doubles:
-	ld a, $01 ; $7dbc
+	ld a, STORYRANK_DOUBLES_ACADEMY ; $7dbc
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $7dbe
 	jr z, .store ; $7dc1
-	ld a, $03 ; $7dc3
+	ld a, STORYRANK_DOUBLES_JUNIOR_CHAMP ; $7dc3
 	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_1 ; $7dc5
 	jr z, .store ; $7dc8
-	ld a, $05 ; $7dca
+	ld a, STORYRANK_DOUBLES_SENIOR_CHAMP ; $7dca
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $7dcc
 	jr z, .store ; $7dcf
-	ld a, $07 ; $7dd1
+	ld a, STORYRANK_DOUBLES_ISLAND_OPEN ; $7dd1
 	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $7dd3
 	jr z, .store ; $7dd6
-	ld a, $09 ; $7dd8
+	ld a, STORYRANK_DOUBLES_COMPLETE ; $7dd8
 	jr .store ; $7dda
 	ld a, $00 ; $7ddc
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7dde

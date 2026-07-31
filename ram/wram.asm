@@ -786,7 +786,7 @@ wBallHitEvent:: db
 ; [8-bit] Character index (0-3) of the character who hit the ball, snapshotted from wCharIndex by ExecuteShot ($07:$53be). Used at $08:$5cb2 to select the wCharacterN stat block (index * 8) when crediting an ace/winner, at $08:$5da9 to turn the low bit into the point-outcome side sign, and by the bank $0d minigames ($4e80, $5292, $56f0) to test whether the player or the machine hit.
 wLastShotCharIndex:: db
 
-; [8-bit] wCharServeRole of the character who hit the ball, snapshotted by ExecuteShot ($07:$53c4). Read once, at $08:$4337, where role 1 (the server) selects point outcome 7 (fault) instead of 8 when the ball goes out on the first bounce.
+; [8-bit] wCharServeRole of the character who hit the ball, snapshotted by ExecuteShot ($07:$53c4). Read once, at $08:$4337 in DetectServeAceOutcome: on the second hit of a point, role 1 (the receiver) with the ball still unbounced gives POINTOUTCOME_SERVE_VOLLEYED, and any other role gives POINTOUTCOME_WRONG_RECEIVER
 wLastShotServeRole:: db
 
 ; [8-bit] Nonzero draws the ball sprite slot

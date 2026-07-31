@@ -487,7 +487,7 @@ WallPracticeMasterResultScript:
 	test_flag FLAG_CLEARED_WALL_EXPERT ; $484d
 	jr z, WallPracticeScoreRetryPrompt ; $4850
 	ld a, [wPointWinLoseFlag] ; $4852
-	cp $01 ; $4855
+	cp WINLOSE_WIN ; $4855
 	jr nz, WallPracticeScoreRetryPrompt ; $4857
 	jp WallPracticeMaxScoreScript ; $4859
 WallPracticeScoreRetryPrompt:
@@ -521,7 +521,7 @@ WallPracticeScoreRetryPrompt:
 	ld h, a ; $488f
 	jp nc, WallPracticeNewRecordScript ; $4890
 	ld a, [wPointOutcome] ; $4893
-	cp $09 ; $4896
+	cp POINTOUTCOME_BALL_HIT_PLAYER ; $4896
 	jr nz, .ne09 ; $4898
 	script_set_text Text_35_250 ; $489a
 	jr .pushTextArgNumber ; $48a0
@@ -695,7 +695,7 @@ WallPracticeLevelResultScript:
 	xor a ; $4ab5
 	ld [wStoryModeShowLocationName], a ; $4ab6
 	ld a, [wPointWinLoseFlag] ; $4ab9
-	cp $01 ; $4abc
+	cp WINLOSE_WIN ; $4abc
 	jp nz, .checkLevel ; $4abe
 	ld a, [wMapSceneStage] ; $4ac1
 	sub $01 ; $4ac4
@@ -712,7 +712,7 @@ WallPracticeLevelResultScript:
 	script_fade_in $06 ; $4ad8
 	call WaitFadeEnd ; $4add
 	ld a, [wPointOutcome] ; $4ae0
-	cp $09 ; $4ae3
+	cp POINTOUTCOME_BALL_HIT_PLAYER ; $4ae3
 	jr nz, .fromOutcome ; $4ae5
 	script_set_text Text_35_246 ; $4ae7
 	jr .speak ; $4aed
@@ -1058,7 +1058,7 @@ WallPracticeRoomInitScript_12:
 	cp $01 ; $4fca
 	jp z, .done ; $4fcc
 	ld a, [wPointWinLoseFlag] ; $4fcf
-	cp $01 ; $4fd2
+	cp WINLOSE_WIN ; $4fd2
 	jr nz, .checkSession ; $4fd4
 	script_set_text Text_36_53 ; $4fd6
 	ld a, $07 ; $4fdc
@@ -1071,7 +1071,7 @@ WallPracticeRoomInitScript_12:
 	jr .placeActors ; $4ff1
 .checkSession:
 	ld a, [wPointOutcome] ; $4ff3
-	cp $09 ; $4ff6
+	cp POINTOUTCOME_BALL_HIT_PLAYER ; $4ff6
 	jr nz, .sessionActive ; $4ff8
 	script_set_text Text_35_246 ; $4ffa
 	jr .normalEntry ; $5000
@@ -1421,7 +1421,7 @@ SeniorCourtExit01TextIds:
 	dw Text_34_186 ; record 5
 SeniorCourtNpc03_12:
 	ld a, [wMapSceneStage2] ; $55e8
-	cp $02 ; $55eb
+	cp SENIORCOURTSTAGE_SINGLES_RANK4 ; $55eb
 	jr c, SeniorCourtNpc03FaceUpFlag0000_12.checkDoubles ; $55ed
 	cp $09 ; $55ef
 	jr nc, SeniorCourtExit01_12.loop ; $55f1
@@ -1429,7 +1429,7 @@ SeniorCourtNpc03_12:
 	ret ; $55f6
 SeniorCourtNpc03FaceUpFlag0000_12:
 	ld a, [wMapSceneStage2] ; $55f7
-	cp $02 ; $55fa
+	cp SENIORCOURTSTAGE_SINGLES_RANK4 ; $55fa
 	jr c, .checkDoubles ; $55fc
 	cp $09 ; $55fe
 	jr nc, SeniorCourtExit01_12.loop ; $5600
@@ -1553,12 +1553,12 @@ SeniorCourtNpc04_12:
 	farcall InitDialogueTextCursor ; $582e
 	script_speak $04 ; $5831
 	ld a, [wMapSceneStage2] ; $5836
-	cp $02 ; $5839
+	cp SENIORCOURTSTAGE_SINGLES_RANK4 ; $5839
 	jr nc, .ge02 ; $583b
 	jr .done ; $583d
 .ge02:
 	ld a, [wMapSceneStage2] ; $583f
-	cp $06 ; $5842
+	cp SENIORCOURTSTAGE_DOUBLES_RANK3 ; $5842
 	jr c, .done ; $5844
 .done:
 	ret ; $5846
@@ -1586,7 +1586,7 @@ SeniorCourtNpc05_12:
 	ld l, a ; $5866
 	farcall InitDialogueTextCursor ; $5867
 	ld a, [wMapSceneStage2] ; $586a
-	cp $04 ; $586d
+	cp SENIORCOURTSTAGE_SINGLES_RANK2 ; $586d
 	jr z, .eq04 ; $586f
 	script_speak $05 ; $5871
 	ret ; $5876
@@ -1632,7 +1632,7 @@ SeniorCourtNpc06_12:
 	ld l, a ; $58c0
 	farcall InitDialogueTextCursor ; $58c1
 	ld a, [wMapSceneStage2] ; $58c4
-	cp $06 ; $58c7
+	cp SENIORCOURTSTAGE_DOUBLES_RANK3 ; $58c7
 	jr z, .eq06 ; $58c9
 	script_speak $06 ; $58cb
 	ret ; $58d0
@@ -1713,7 +1713,7 @@ SeniorCourtNpc08_12:
 	ld l, a ; $5958
 	farcall InitDialogueTextCursor ; $5959
 	ld a, [wMapSceneStage2] ; $595c
-	cp $02 ; $595f
+	cp SENIORCOURTSTAGE_SINGLES_RANK4 ; $595f
 	jr z, .speak ; $5961
 	jr nc, .altText ; $5963
 	script_face $08, FACE_UP ; $5965
@@ -1796,7 +1796,7 @@ SeniorCourtNpc09_12:
 	ld l, a ; $5a56
 	farcall InitDialogueTextCursor ; $5a57
 	ld a, [wMapSceneStage2] ; $5a5a
-	cp $02 ; $5a5d
+	cp SENIORCOURTSTAGE_SINGLES_RANK4 ; $5a5d
 	jr nc, .speak ; $5a5f
 	script_face $09, FACE_DOWN ; $5a61
 .speak:
@@ -1832,7 +1832,7 @@ SeniorCourtNpc0A_12:
 	ld l, a ; $5a99
 	farcall InitDialogueTextCursor ; $5a9a
 	ld a, [wMapSceneStage2] ; $5a9d
-	cp $06 ; $5aa0
+	cp SENIORCOURTSTAGE_DOUBLES_RANK3 ; $5aa0
 	jr z, .altText ; $5aa2
 	script_speak $0a ; $5aa4
 	ret ; $5aa9
@@ -1918,7 +1918,7 @@ SeniorCourtNpc0B_12:
 	ld l, a ; $5ba0
 	farcall InitDialogueTextCursor ; $5ba1
 	ld a, [wMapSceneStage2] ; $5ba4
-	cp $0c ; $5ba7
+	cp SENIORCOURTSTAGE_DOUBLES_ISLAND_OPEN ; $5ba7
 	jr c, .speak ; $5ba9
 	test_flag FLAG_DOUBLES ; $5bab
 	jr z, .speak ; $5bae
@@ -2037,7 +2037,7 @@ SeniorCourtInitScript_12:
 	call ComputeSeniorCourtStageB ; $5d1c
 	call ComputeSeniorCourtStage ; $5d1f
 	ld a, [wMapSceneStage2] ; $5d22
-	cp $02 ; $5d25
+	cp SENIORCOURTSTAGE_SINGLES_RANK4 ; $5d25
 	jr nc, .fromMatch ; $5d27
 	ld b, $00 ; $5d29
 	ld c, $2a ; $5d2b
@@ -2087,7 +2087,7 @@ SeniorCourtInitScript_12:
 	jr .placeActors ; $5dbc
 SeniorCourtPositionActorsByProgressB:
 	ld a, [wMapSceneStage2] ; $5dbe
-	cp $0b ; $5dc1
+	cp SENIORCOURTSTAGE_SINGLES_ISLAND_OPEN ; $5dc1
 	jr c, .checkDoubles ; $5dc3
 	cp $0d ; $5dc5
 	jr nc, .checkDoubles ; $5dc7
@@ -2101,14 +2101,14 @@ SeniorCourtPositionActorsByProgressB:
 	test_flag FLAG_DOUBLES ; $5ddc
 	jr nz, .doubles ; $5ddf
 	ld a, [wMapSceneStage2] ; $5de1
-	cp $09 ; $5de4
+	cp SENIORCOURTSTAGE_SINGLES_SENIOR_CHAMP ; $5de4
 	jr c, .done ; $5de6
 	script_set_position $04, $3f00, $3f00 ; $5de8
 .done:
 	ret ; $5df3
 .doubles:
 	ld a, [wMapSceneStage2] ; $5df4
-	cp $0a ; $5df7
+	cp SENIORCOURTSTAGE_DOUBLES_SENIOR_CHAMP ; $5df7
 	jr c, .done ; $5df9
 	script_set_position $04, $3f00, $3f00 ; $5dfb
 	script_set_position $05, $3f00, $3f00 ; $5e06
@@ -2117,19 +2117,19 @@ SeniorCourtPositionActorsByProgressA:
 	test_flag FLAG_DOUBLES ; $5e12
 	jr nz, .isDoubles ; $5e15
 	ld a, [wMapSceneStage2] ; $5e17
-	cp $03 ; $5e1a
+	cp SENIORCOURTSTAGE_SINGLES_RANK3 ; $5e1a
 	jr c, .checkStage9 ; $5e1c
 	script_set_position $07, $1b00, $0d00 ; $5e1e
 	script_face $07, FACE_LEFT ; $5e29
 .checkStage9:
 	ld a, [wMapSceneStage2] ; $5e30
-	cp $09 ; $5e33
+	cp SENIORCOURTSTAGE_SINGLES_SENIOR_CHAMP ; $5e33
 	jr c, .done ; $5e35
 .done:
 	ret ; $5e37
 .isDoubles:
 	ld a, [wMapSceneStage2] ; $5e38
-	cp $07 ; $5e3b
+	cp SENIORCOURTSTAGE_DOUBLES_RANK2 ; $5e3b
 	jr c, .checkStage10 ; $5e3d
 	cp $09 ; $5e3f
 	jr nc, .checkStage10 ; $5e41
@@ -2141,7 +2141,7 @@ SeniorCourtPositionActorsByProgressA:
 	script_set_anim $08, $01 ; $5e6c
 .checkStage10:
 	ld a, [wMapSceneStage2] ; $5e73
-	cp $0a ; $5e76
+	cp SENIORCOURTSTAGE_DOUBLES_SENIOR_CHAMP ; $5e76
 	jr c, .checkStage9 ; $5e78
 	script_set_position $04, $3f00, $3f00 ; $5e7a
 	script_set_position $05, $3f00, $3f00 ; $5e85
@@ -3070,7 +3070,7 @@ SeniorCourtPostMatchReturn:
 	cp $01 ; $6da9
 	jr z, .eq01 ; $6dab
 	ld a, [wMatchWinLoseFlag] ; $6dad
-	cp $01 ; $6db0
+	cp WINLOSE_WIN ; $6db0
 	jp z, SeniorMatchVictorySceneDispatch ; $6db2
 .eq01:
 	script_player_speed $0040 ; $6db5
@@ -3493,51 +3493,51 @@ SeniorSharedVictoryScene:
 ComputeSeniorCourtStage:
 	test_flag FLAG_DOUBLES ; $7756
 	jp nz, .isDoubles ; $7759
-	ld a, $00 ; $775c
+	ld a, SENIORCOURTSTAGE_SINGLES_PRE_JUNIOR ; $775c
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $775e
 	jr z, .loop ; $7761
-	ld a, $02 ; $7763
+	ld a, SENIORCOURTSTAGE_SINGLES_RANK4 ; $7763
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_4 ; $7765
 	jr z, .loop ; $7768
-	ld a, $03 ; $776a
+	ld a, SENIORCOURTSTAGE_SINGLES_RANK3 ; $776a
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_3 ; $776c
 	jr z, .loop ; $776f
-	ld a, $04 ; $7771
+	ld a, SENIORCOURTSTAGE_SINGLES_RANK2 ; $7771
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_2 ; $7773
 	jr z, .loop ; $7776
-	ld a, $05 ; $7778
+	ld a, SENIORCOURTSTAGE_SINGLES_RANK1 ; $7778
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $777a
 	jr z, .loop ; $777d
-	ld a, $09 ; $777f
+	ld a, SENIORCOURTSTAGE_SINGLES_SENIOR_CHAMP ; $777f
 	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $7781
 	jr z, .loop ; $7784
-	ld a, $0b ; $7786
+	ld a, SENIORCOURTSTAGE_SINGLES_ISLAND_OPEN ; $7786
 	test_flag FLAG_STORY_COMPLETE_SINGLES ; $7788
 	jr z, .loop ; $778b
-	ld a, $0d ; $778d
+	ld a, SENIORCOURTSTAGE_SINGLES_COMPLETE ; $778d
 .loop:
 	ld [wMapSceneStage2], a ; $778f
 	ret ; $7792
 .isDoubles:
-	ld a, $01 ; $7793
+	ld a, SENIORCOURTSTAGE_DOUBLES_PRE_JUNIOR ; $7793
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $7795
 	jr z, .loop ; $7798
-	ld a, $06 ; $779a
+	ld a, SENIORCOURTSTAGE_DOUBLES_RANK3 ; $779a
 	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_3 ; $779c
 	jr z, .loop ; $779f
-	ld a, $07 ; $77a1
+	ld a, SENIORCOURTSTAGE_DOUBLES_RANK2 ; $77a1
 	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_2 ; $77a3
 	jr z, .loop ; $77a6
-	ld a, $08 ; $77a8
+	ld a, SENIORCOURTSTAGE_DOUBLES_RANK1 ; $77a8
 	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_1 ; $77aa
 	jr z, .loop ; $77ad
-	ld a, $0a ; $77af
+	ld a, SENIORCOURTSTAGE_DOUBLES_SENIOR_CHAMP ; $77af
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $77b1
 	jr z, .loop ; $77b4
-	ld a, $0c ; $77b6
+	ld a, SENIORCOURTSTAGE_DOUBLES_ISLAND_OPEN ; $77b6
 	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $77b8
 	jr z, .loop ; $77bb
-	ld a, $0e ; $77bd
+	ld a, SENIORCOURTSTAGE_DOUBLES_COMPLETE ; $77bd
 	jr .loop ; $77bf
 	ret ; $77c1
 FadeInSeniorCourtNearPairA:
@@ -4065,36 +4065,36 @@ ActorScript_12_58:
 ComputeSeniorCourtStageB:
 	test_flag FLAG_DOUBLES ; $7c75
 	jr nz, .doubles ; $7c78
-	ld a, $00 ; $7c7a
+	ld a, STORYRANK_SINGLES_ACADEMY ; $7c7a
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7c7c
 	jr z, .store ; $7c7f
-	ld a, $02 ; $7c81
+	ld a, STORYRANK_SINGLES_JUNIOR_CHAMP ; $7c81
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $7c83
 	jr z, .store ; $7c86
-	ld a, $04 ; $7c88
+	ld a, STORYRANK_SINGLES_SENIOR_CHAMP ; $7c88
 	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $7c8a
 	jr z, .store ; $7c8d
-	ld a, $06 ; $7c8f
+	ld a, STORYRANK_SINGLES_ISLAND_OPEN ; $7c8f
 	test_flag FLAG_STORY_COMPLETE_SINGLES ; $7c91
 	jr z, .store ; $7c94
-	ld a, $08 ; $7c96
+	ld a, STORYRANK_SINGLES_COMPLETE ; $7c96
 .store:
 	ld [wMapSceneStage], a ; $7c98
 	ret ; $7c9b
 .doubles:
-	ld a, $01 ; $7c9c
+	ld a, STORYRANK_DOUBLES_ACADEMY ; $7c9c
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $7c9e
 	jr z, .store ; $7ca1
-	ld a, $03 ; $7ca3
+	ld a, STORYRANK_DOUBLES_JUNIOR_CHAMP ; $7ca3
 	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_1 ; $7ca5
 	jr z, .store ; $7ca8
-	ld a, $05 ; $7caa
+	ld a, STORYRANK_DOUBLES_SENIOR_CHAMP ; $7caa
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $7cac
 	jr z, .store ; $7caf
-	ld a, $07 ; $7cb1
+	ld a, STORYRANK_DOUBLES_ISLAND_OPEN ; $7cb1
 	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $7cb3
 	jr z, .store ; $7cb6
-	ld a, $09 ; $7cb8
+	ld a, STORYRANK_DOUBLES_COMPLETE ; $7cb8
 	jr .store ; $7cba
 	ld a, $00 ; $7cbc
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7cbe
