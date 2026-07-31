@@ -1711,7 +1711,7 @@ TournamentInitScript_0f:
 .placeActorsDoubles:
 	cp $0b ; $62fe
 	jr nz, .done ; $6300
-	call Func_0f_76a3 ; $6302
+	call IslandOpenDoublesMatchReturn ; $6302
 	ret ; $6305
 .done:
 	call LoadIslandOpenRoundNpcs ; $6306
@@ -2721,15 +2721,15 @@ IslandOpenSinglesMatchReturn:
 	wram_bank $04 ; $7487
 	ld a, [wMatchExitRequest] ; $748d
 	cp $01 ; $7490
-	jr z, .won ; $7492
+	jr z, .quitOrLost ; $7492
 	ld a, [wMatchWinLoseFlag] ; $7494
 	cp $01 ; $7497
-	jp z, .lost ; $7499
-.won:
+	jp z, .wonRound ; $7499
+.quitOrLost:
 	call LoadIslandOpenRoundNpcs ; $749c
 	call SetPlayerAndPartnerObjectDefs ; $749f
 	ret ; $74a2
-.lost:
+.wonRound:
 	clear_flag FLAG_TOURNAMENT_NPC05_TALKED_SINGLES ; $74a3
 	clear_flag FLAG_COURT2_SPECTATORS_TALKED_SINGLES ; $74a6
 	call CheckIslandOpenVictoryTransition ; $74a9
@@ -2880,15 +2880,15 @@ IslandOpenSinglesStageTextPtrs_0f:
 	dw Text_25_74 ; record 2
 	dw Text_25_78 ; record 3
 	dw Text_25_82 ; record 4
-Func_0f_76a3:
+IslandOpenDoublesMatchReturn:
 	wram_bank $04 ; $76a3
 	ld a, [wMatchExitRequest] ; $76a9
 	cp $01 ; $76ac
-	jr z, .prompt ; $76ae
+	jr z, .quitOrLost ; $76ae
 	ld a, [wMatchWinLoseFlag] ; $76b0
 	cp $01 ; $76b3
 	jp z, .wonRound ; $76b5
-.prompt:
+.quitOrLost:
 	call LoadIslandOpenRoundNpcs ; $76b8
 	call SetPlayerAndPartnerObjectDefs ; $76bb
 	script_set_position ACTOR_PLAYER, $2500, $1100 ; $76be
