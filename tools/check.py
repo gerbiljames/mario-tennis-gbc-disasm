@@ -16,6 +16,8 @@ after a real defect broke it:
   constants every constants.json entry lands on an instruction that really
             holds that value -- a mis-computed offset renders nothing and
             still passes `make compare`, so nothing else can see it
+  scopes    no global label covers both actor-script bytecode and CPU code
+            (a routine emitted after a script with nothing naming its entry)
   branches  no conditional branch targets the instruction that follows it --
             a branch that decides nothing, which is always either a deleted
             guarded block or an inverted condition (14 exist; the list is
@@ -222,6 +224,60 @@ def check_constants(rom, constants, defs, manifest, fail):
     return len(constants)
 
 
+# Routines that follow an actor-script blob with no label of their own, so
+# their local labels bind to the *script's* scope. Every one is real code the
+# descent found and nothing names; they are pinned here because the fix is a
+# curated label per routine and that needs knowing what each one is, while a
+# *new* entry means a curation change stranded something that used to be named.
+KNOWN_STRANDED_IN_SCRIPT = {
+    (0x0e, 0x4c37), (0x0f, 0x7b7f), (0x12, 0x6d8a), (0x14, 0x4813),
+    (0x15, 0x66ef), (0x15, 0x6b8e), (0x27, 0x48f0), (0x27, 0x760e),
+}
+
+_AS_RE = re.compile(r"^\tas_")
+
+
+def check_stranded_scopes(fail):
+    """No global label may cover both actor-script data and CPU instructions.
+
+    An actor script is a blob of `as_*` bytecode; a routine emitted right after
+    one, with nothing naming its entry, ends up inside the script's label scope,
+    where its `.loop`/`.done` read as part of the script. The mix is the signal:
+    the two never belong to one symbol."""
+    found = {}
+    for path in sorted((ROOT / "src").glob("bank_*.asm")):
+        bank = int(path.stem.split("_")[1], 16)
+        scope, kinds, entry = None, {}, {}
+        for line in path.read_text().split("\n"):
+            m = _GLOBAL_RE.match(line)
+            if m:
+                scope = m.group(1)
+                kinds[scope] = set()
+                continue
+            if scope is None:
+                continue
+            if _AS_RE.match(line):
+                kinds[scope].add("script")
+                entry.pop(scope, None)     # code before the script is its header
+                continue
+            mi = _INSTR_LINE_RE.match(line)
+            addr = _ADDR_RE.search(line)
+            if mi and mi.group(1) in _MNEMONICS or (addr and "script_" in line):
+                kinds[scope].add("code")
+                if addr:
+                    entry.setdefault(scope, int(addr.group(1), 16))
+        for name, kind in kinds.items():
+            if kind == {"script", "code"} and name in entry:
+                found[(bank, entry[name])] = name
+    for bank, at in sorted(set(found) - KNOWN_STRANDED_IN_SCRIPT):
+        fail("scopes", f"${bank:02x}:${at:04x} ({found[(bank, at)]}) is code "
+                       "inside an actor script's label scope -- name its entry")
+    for bank, at in sorted(KNOWN_STRANDED_IN_SCRIPT - set(found)):
+        fail("scopes", f"${bank:02x}:${at:04x} is no longer stranded -- drop it "
+                       "from KNOWN_STRANDED_IN_SCRIPT")
+    return len(found)
+
+
 def check_regions(manifest, fail):
     spans = sorted((o, o + n, p) for p, o, n, _s in manifest)
     prev = None
@@ -324,6 +380,7 @@ def main():
         "constants": check_constants(rom, constants, const_defs, manifest,
                                      fail),
         "regions": check_regions(manifest, fail),
+        "scopes": check_stranded_scopes(fail),
         "branches": check_collapsed_branches(fail),
     }
     by_check = {}

@@ -1479,11 +1479,11 @@ JuniorClassCourtDoublesInitScript_11:
 .stage2:
 	ld a, [wStoryModeEntryPoint] ; $5a66
 	cp $0f ; $5a69
-	jp z, ActorScript_11_21.checkMatchExitRequest ; $5a6b
+	jp z, JuniorClassCourtDoublesMatchReturn ; $5a6b
 	cp $0e ; $5a6e
-	jp z, ActorScript_11_21.eq012 ; $5a70
+	jp z, JuniorClassCourtDoublesMatchReturn.eq012 ; $5a70
 	cp $0d ; $5a73
-	jp z, ActorScript_11_21.storeStoryModeShowLocationName ; $5a75
+	jp z, JuniorClassCourtDoublesMatchReturn.storeStoryModeShowLocationName ; $5a75
 	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $5a78
 	jr nz, .stage3 ; $5a7b
 	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $5a7d
@@ -1768,7 +1768,7 @@ ActorScript_11_21:
 	as_wait_move
 	as_set_field $14, FACE_UP
 	as_halt
-.checkMatchExitRequest:
+JuniorClassCourtDoublesMatchReturn:
 	wram_bank $04 ; $5d38
 	ld a, [wMatchExitRequest] ; $5d3e
 	cp $01 ; $5d41
@@ -1804,9 +1804,9 @@ ActorScript_11_21:
 	sub $02 ; $5dad
 	ld a, a ; $5daf
 	rst Rst00 ; $5db0
-	dw ActorScript_11_21.setFlag ; $5db1 jumptable
-	dw ActorScript_11_21.setFlag2 ; $5db3 jumptable
-	dw ActorScript_11_21.setFlag3 ; $5db5 jumptable
+	dw JuniorClassCourtDoublesMatchReturn.setFlag ; $5db1 jumptable
+	dw JuniorClassCourtDoublesMatchReturn.setFlag2 ; $5db3 jumptable
+	dw JuniorClassCourtDoublesMatchReturn.setFlag3 ; $5db5 jumptable
 .setFlag:
 	set_flag FLAG_WON_JUNIOR_DOUBLES_RANK_3 ; $5db7
 	script_player_speed $0040 ; $5dba
@@ -2556,11 +2556,11 @@ JuniorClassCourtSinglesInitScript_11:
 .stage2:
 	ld a, [wStoryModeEntryPoint] ; $6d15
 	cp $0f ; $6d18
-	jp z, ActorScript_11_29.checkMatchExitRequest ; $6d1a
+	jp z, JuniorClassCourtSinglesMatchReturn ; $6d1a
 	cp $0e ; $6d1d
-	jp z, ActorScript_11_29.eq012 ; $6d1f
+	jp z, JuniorClassCourtSinglesMatchReturn.eq012 ; $6d1f
 	cp $0d ; $6d22
-	jp z, ActorScript_11_29.storeStoryModeShowLocationName ; $6d24
+	jp z, JuniorClassCourtSinglesMatchReturn.storeStoryModeShowLocationName ; $6d24
 	test_flag FLAG_STORY_COMPLETE_SINGLES ; $6d27
 	jr nz, .stage3 ; $6d2a
 	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $6d2c
@@ -2668,7 +2668,7 @@ ActorScript_11_29:
 	as_wait $f0
 	as_wait $f0
 	as_jump .L8
-.checkMatchExitRequest:
+JuniorClassCourtSinglesMatchReturn:
 	wram_bank $04 ; $6e4d
 	ld a, [wMatchExitRequest] ; $6e53
 	cp $01 ; $6e56
@@ -2700,10 +2700,10 @@ ActorScript_11_29:
 	sub $01 ; $6ea5
 	ld a, a ; $6ea7
 	rst Rst00 ; $6ea8
-	dw ActorScript_11_29.parkMiddleCourtPracticePair ; $6ea9 jumptable
-	dw ActorScript_11_29.parkLeftCourtPracticePairRightSide ; $6eab jumptable
-	dw ActorScript_11_29.parkLeftCourtPracticePairRightSide2 ; $6ead jumptable
-	dw ActorScript_11_29.waitPlayerMoveDone ; $6eaf jumptable
+	dw JuniorClassCourtSinglesMatchReturn.parkMiddleCourtPracticePair ; $6ea9 jumptable
+	dw JuniorClassCourtSinglesMatchReturn.parkLeftCourtPracticePairRightSide ; $6eab jumptable
+	dw JuniorClassCourtSinglesMatchReturn.parkLeftCourtPracticePairRightSide2 ; $6ead jumptable
+	dw JuniorClassCourtSinglesMatchReturn.waitPlayerMoveDone ; $6eaf jumptable
 .parkMiddleCourtPracticePair:
 	call ParkMiddleCourtPracticePair ; $6eb1
 	script_player_speed $0040 ; $6eb4

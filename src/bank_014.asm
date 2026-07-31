@@ -3346,6 +3346,7 @@ ActorScript_14_4:
 	as_wait $8c
 	as_anim $03
 	as_jump .L1a7
+ComputeRankingProgressIndex_14:
 	test_flag FLAG_DOUBLES ; $7a9d
 	jr nz, .isDoubles ; $7aa0
 	ld a, STORYRANK_SINGLES_ACADEMY ; $7aa2

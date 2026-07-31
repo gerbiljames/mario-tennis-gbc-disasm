@@ -3464,6 +3464,7 @@ ActorScript_0f_12:
 	as_wait $8c
 	as_anim $03
 	as_jump .L1a7
+ComputeRankingProgressIndex_0f:
 	test_flag FLAG_DOUBLES ; $7d43
 	jr nz, .doubles ; $7d46
 	ld a, STORYRANK_SINGLES_ACADEMY ; $7d48
