@@ -108,8 +108,8 @@ wMapTileTriggersPtr:: dw
 ; [16-bit] Slot 6 of the map_tree: the location's init code, run by RunLocationInitScript once the map is up
 wMapInitScriptPtr:: dw
 
-; [8-bit] Write-only mirror of wStoryModeExitLocationRequest ($c2a1): all 204 stores write the same value to both, and no instruction anywhere reads this one. Vestigial -- changing it has no effect
-wUnusedExitLocationMirror:: db
+; [8-bit] Write-only mirror of wStoryModeExitTriggerRequest ($c2a1): all 204 stores write the same value to both, and no instruction anywhere reads this one. Vestigial -- changing it has no effect
+wUnusedExitTriggerIdMirror:: db
 
 ; [8-bit] Story Mode - entry point / spawn-door ID for the location being loaded; $ff = none (keep saved player position). LoadStoryEntryPointRecord searches the location's entry table with it
 wStoryModeEntryPoint:: db
@@ -127,8 +127,8 @@ wStoryArrivalScript:: dw
 ; [8-bit] Story Mode - queued tile trigger-script id (behavior-map cell with low nibble 1 stores its high nibble here); nonzero makes the overworld loop run RunQueuedTriggerScript
 wStoryModeTriggerScript:: db
 
-; [8-bit] Story Mode - nonzero requests leaving the current location loop (RunLocationExit + reload); one of the event-request flags at $c2a0-$c2a5 cleared by ClearStoryEventRequests
-wStoryModeExitLocationRequest:: db
+; [8-bit] Story Mode - nonzero requests leaving the current location loop (RunLocationExit + reload); one of the event-request flags at $c2a0-$c2a5 cleared by ClearStoryEventRequests. The value is an exit-trigger id, not a location: RunLocationExit ($0a:$560b) passes it in d to FindStoryScriptEntry, which matches it against the id column of the location's ExitTriggers table (map_tree slot 1), and the destination STORYLOC_* id is that row's arg0. So the same $01 leaves different locations for different places
+wStoryModeExitTriggerRequest:: db
 
 ; [8-bit] Set to 1 by the overworld player-move code ($04:$52a6) on the frame the point ahead of the player resolves to a nonzero behaviour value. The location event loop consumes and clears it; combined with wPlayerMoving having reached $1e frames at an unchanged angle, it is what turns walking into a door or sign into an interaction
 wStoryAutoInteractArmed:: db

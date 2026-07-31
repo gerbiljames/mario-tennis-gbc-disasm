@@ -663,8 +663,8 @@ AwardsCeremonyTile02_0f:
 	ld a, $0f ; $4e99
 	ld [wStoryModeEntryPoint], a ; $4e9b
 	ld a, $ff ; $4e9e
-	ld [wUnusedExitLocationMirror], a ; $4ea0
-	ld [wStoryModeExitLocationRequest], a ; $4ea3
+	ld [wUnusedExitTriggerIdMirror], a ; $4ea0
+	ld [wStoryModeExitTriggerRequest], a ; $4ea3
 	ret ; $4ea6
 .doubles:
 	script_null_script ACTOR_PARTNER ; $4ea7
@@ -953,8 +953,8 @@ AwardsCeremonyTile02_0f:
 	ld a, $0f ; $5573
 	ld [wStoryModeEntryPoint], a ; $5575
 	ld a, $ff ; $5578
-	ld [wUnusedExitLocationMirror], a ; $557a
-	ld [wStoryModeExitLocationRequest], a ; $557d
+	ld [wUnusedExitTriggerIdMirror], a ; $557a
+	ld [wStoryModeExitTriggerRequest], a ; $557d
 	ret ; $5580
 AwardsCeremonyInitScript_0f:
 	test_flag FLAG_DOUBLES ; $5581
@@ -1600,8 +1600,8 @@ TournamentFacing01_0f:
 	call CopyMemoryBC ; $6197
 	ld a, $ff ; $619a
 	ld [wStoryModeEntryPoint], a ; $619c
-	ld [wUnusedExitLocationMirror], a ; $619f
-	ld [wStoryModeExitLocationRequest], a ; $61a2
+	ld [wUnusedExitTriggerIdMirror], a ; $619f
+	ld [wStoryModeExitTriggerRequest], a ; $61a2
 	ret ; $61a5
 TournamentTileTriggers_0f:
 	; $61a6, 17 bytes (map_scripts)
@@ -2520,8 +2520,8 @@ IslandOpenRoundCallCutscene:
 	ld a, $0a ; $71cf
 	ld [wStoryModeEntryPoint], a ; $71d1
 	ld a, $ff ; $71d4
-	ld [wUnusedExitLocationMirror], a ; $71d6
-	ld [wStoryModeExitLocationRequest], a ; $71d9
+	ld [wUnusedExitTriggerIdMirror], a ; $71d6
+	ld [wStoryModeExitTriggerRequest], a ; $71d9
 	farcall InitStoryMatchSettings ; $71dc
 	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_SEMIFINAL ; $71df
 	jr z, .checkRound2 ; $71e2
@@ -2594,8 +2594,8 @@ IslandOpenRoundCallCutscene:
 	ld a, $0b ; $736f
 	ld [wStoryModeEntryPoint], a ; $7371
 	ld a, $ff ; $7374
-	ld [wUnusedExitLocationMirror], a ; $7376
-	ld [wStoryModeExitLocationRequest], a ; $7379
+	ld [wUnusedExitTriggerIdMirror], a ; $7376
+	ld [wStoryModeExitTriggerRequest], a ; $7379
 	farcall InitStoryMatchSettings ; $737c
 	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_SEMIFINAL ; $737f
 	jp z, .walkOffDoubles ; $7382
@@ -2710,8 +2710,8 @@ CheckIslandOpenVictoryTransition:
 	ld a, $08 ; $7474
 	ld [wStoryModeEntryPoint], a ; $7476
 	ld a, $ff ; $7479
-	ld [wUnusedExitLocationMirror], a ; $747b
-	ld [wStoryModeExitLocationRequest], a ; $747e
+	ld [wUnusedExitTriggerIdMirror], a ; $747b
+	ld [wStoryModeExitTriggerRequest], a ; $747e
 	ld a, $01 ; $7481
 	ret ; $7483
 .stay:

@@ -218,8 +218,8 @@ MessageSpeedSettingHandler0:
 	call CopyMemoryBC ; $4184
 	ld a, $ff ; $4187
 	ld [wStoryModeEntryPoint], a ; $4189
-	ld [wUnusedExitLocationMirror], a ; $418c
-	ld [wStoryModeExitLocationRequest], a ; $418f
+	ld [wUnusedExitTriggerIdMirror], a ; $418c
+	ld [wStoryModeExitTriggerRequest], a ; $418f
 	jp RunPauseMenuWindow.done ; $4192
 ShowGameProgressScreenThunk:
 	farcall ShowGameProgressScreen ; $4195
@@ -229,8 +229,8 @@ ShowGameProgressScreenThunk:
 	call CopyMemoryBC ; $41a1
 	ld a, $ff ; $41a4
 	ld [wStoryModeEntryPoint], a ; $41a6
-	ld [wUnusedExitLocationMirror], a ; $41a9
-	ld [wStoryModeExitLocationRequest], a ; $41ac
+	ld [wUnusedExitTriggerIdMirror], a ; $41a9
+	ld [wStoryModeExitTriggerRequest], a ; $41ac
 	jp RunPauseMenuWindow.done ; $41af
 AdjustMessageSpeedSettingThunk:
 	call AdjustMessageSpeedSetting ; $41b2
@@ -402,8 +402,8 @@ RestoreMessageSpeed:
 	ld a, $01 ; $4307
 	ld [wStoryModeEntryPoint], a ; $4309
 	ld a, $ff ; $430c
-	ld [wUnusedExitLocationMirror], a ; $430e
-	ld [wStoryModeExitLocationRequest], a ; $4311
+	ld [wUnusedExitTriggerIdMirror], a ; $430e
+	ld [wStoryModeExitTriggerRequest], a ; $4311
 	jp RunPauseMenuWindow.done ; $4314
 .compare:
 	cp $ff ; $4317
@@ -434,8 +434,8 @@ RestoreMessageSpeed:
 	ld a, STORYENTRY_NONE ; $4356
 	ld [wStoryModeEntryPoint], a ; $4358
 	ld a, $ff ; $435b
-	ld [wUnusedExitLocationMirror], a ; $435d
-	ld [wStoryModeExitLocationRequest], a ; $4360
+	ld [wUnusedExitTriggerIdMirror], a ; $435d
+	ld [wStoryModeExitTriggerRequest], a ; $4360
 	jp RunPauseMenuWindow.done ; $4363
 .buildMinigameModePauseMenu:
 	call BuildMinigameModePauseMenu ; $4366

@@ -475,8 +475,8 @@ MachineCourtStartLevelScene:
 	ld a, $05 ; $4587
 	ld [wStoryModeEntryPoint], a ; $4589
 	ld a, $ff ; $458c
-	ld [wUnusedExitLocationMirror], a ; $458e
-	ld [wStoryModeExitLocationRequest], a ; $4591
+	ld [wUnusedExitTriggerIdMirror], a ; $458e
+	ld [wStoryModeExitTriggerRequest], a ; $4591
 	ld a, [wMapSceneStage] ; $4594
 	add LOW(MachineCourtStartLevelSceneTable) ; $4597
 	ld l, a ; $4599
@@ -546,8 +546,8 @@ MachinePracticeLevelPrompt:
 	ld a, $07 ; $467a
 	ld [wStoryModeEntryPoint], a ; $467c
 	ld a, $ff ; $467f
-	ld [wUnusedExitLocationMirror], a ; $4681
-	ld [wStoryModeExitLocationRequest], a ; $4684
+	ld [wUnusedExitTriggerIdMirror], a ; $4681
+	ld [wStoryModeExitTriggerRequest], a ; $4684
 	ld a, [wMapScratch + 6] ; $4687
 	add MINIGAME_TENNIS_MACHINE_1 ; $468a
 	farcall RunTrainingDrillByID ; $468c
@@ -665,8 +665,8 @@ MachineCourtRestartLevel:
 	ld a, $07 ; $47e0
 	ld [wStoryModeEntryPoint], a ; $47e2
 	ld a, $ff ; $47e5
-	ld [wUnusedExitLocationMirror], a ; $47e7
-	ld [wStoryModeExitLocationRequest], a ; $47ea
+	ld [wUnusedExitTriggerIdMirror], a ; $47e7
+	ld [wStoryModeExitTriggerRequest], a ; $47ea
 	jr .runTrainingDrillByID ; $47ed
 .storeStoryModeCurrentLocation:
 	ld a, STORYLOC_TENNIS_MACHINE_ROOM ; $47ef
@@ -674,8 +674,8 @@ MachineCourtRestartLevel:
 	ld a, $05 ; $47f4
 	ld [wStoryModeEntryPoint], a ; $47f6
 	ld a, $ff ; $47f9
-	ld [wUnusedExitLocationMirror], a ; $47fb
-	ld [wStoryModeExitLocationRequest], a ; $47fe
+	ld [wUnusedExitTriggerIdMirror], a ; $47fb
+	ld [wStoryModeExitTriggerRequest], a ; $47fe
 .runTrainingDrillByID:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $4801
 	farcall RunTrainingDrillByID ; $4804
@@ -703,8 +703,8 @@ ActorScript_14_0:
 	ld a, $01 ; $4834
 	ld [wStoryModeEntryPoint], a ; $4836
 	ld a, $ff ; $4839
-	ld [wUnusedExitLocationMirror], a ; $483b
-	ld [wStoryModeExitLocationRequest], a ; $483e
+	ld [wUnusedExitTriggerIdMirror], a ; $483b
+	ld [wStoryModeExitTriggerRequest], a ; $483e
 	ret ; $4841
 MachineExpertResultScene:
 	test_flag FLAG_CLEARED_MACHINE_EXPERT ; $4842
@@ -1676,8 +1676,8 @@ IslandSkyInitScript_14:
 	ld a, $04 ; $54d1
 	ld [wStoryModeEntryPoint], a ; $54d3
 	ld a, $ff ; $54d6
-	ld [wUnusedExitLocationMirror], a ; $54d8
-	ld [wStoryModeExitLocationRequest], a ; $54db
+	ld [wUnusedExitTriggerIdMirror], a ; $54d8
+	ld [wStoryModeExitTriggerRequest], a ; $54db
 	ret ; $54de
 .setLocation:
 	ld a, $40 ; $54df
@@ -1737,8 +1737,8 @@ IslandSkyInitScript_14:
 	ld [wCutsceneObjActive], a ; $55f4
 	ld [wCutsceneObjActive + 1], a ; $55f7
 	ld a, $01 ; $55fa
-	ld [wUnusedExitLocationMirror], a ; $55fc
-	ld [wStoryModeExitLocationRequest], a ; $55ff
+	ld [wUnusedExitTriggerIdMirror], a ; $55fc
+	ld [wStoryModeExitTriggerRequest], a ; $55ff
 	ret ; $5602
 .done:
 	script_move_target ACTOR_PLAYER, $0b00, $2700 ; $5603
@@ -1754,8 +1754,8 @@ IslandSkyInitScript_14:
 	ld a, $09 ; $562d
 	ld [wStoryModeEntryPoint], a ; $562f
 	ld a, $ff ; $5632
-	ld [wUnusedExitLocationMirror], a ; $5634
-	ld [wStoryModeExitLocationRequest], a ; $5637
+	ld [wUnusedExitTriggerIdMirror], a ; $5634
+	ld [wStoryModeExitTriggerRequest], a ; $5637
 	ret ; $563a
 ActorScript_14_1:
 	; $563b, 21 bytes (actor_script)
@@ -2234,8 +2234,8 @@ QueuePlaneSpriteByFrameCounter_14:
 	ld a, $02 ; $6411
 	ld [wStoryModeEntryPoint], a ; $6413
 	ld a, $ff ; $6416
-	ld [wUnusedExitLocationMirror], a ; $6418
-	ld [wStoryModeExitLocationRequest], a ; $641b
+	ld [wUnusedExitTriggerIdMirror], a ; $6418
+	ld [wStoryModeExitTriggerRequest], a ; $641b
 	ret ; $641e
 AdvancePlaneFrameCounter_14:
 	ld a, [wCutsceneObjX] ; $641f
@@ -2460,8 +2460,8 @@ UpdateFirework1_14Table:
 	ld a, $0b ; $6654
 	ld [wStoryModeEntryPoint], a ; $6656
 	ld a, $ff ; $6659
-	ld [wUnusedExitLocationMirror], a ; $665b
-	ld [wStoryModeExitLocationRequest], a ; $665e
+	ld [wUnusedExitTriggerIdMirror], a ; $665b
+	ld [wStoryModeExitTriggerRequest], a ; $665e
 	ret ; $6661
 .notDoubles:
 	ld a, STORYLOC_AWARDS_CEREMONY ; $6662
@@ -2469,8 +2469,8 @@ UpdateFirework1_14Table:
 	ld a, $0a ; $6667
 	ld [wStoryModeEntryPoint], a ; $6669
 	ld a, $ff ; $666c
-	ld [wUnusedExitLocationMirror], a ; $666e
-	ld [wStoryModeExitLocationRequest], a ; $6671
+	ld [wUnusedExitTriggerIdMirror], a ; $666e
+	ld [wStoryModeExitTriggerRequest], a ; $6671
 	ret ; $6674
 FireworkMapActors_14:
 	; $6675, 11 bytes (map_actors)
@@ -2712,8 +2712,8 @@ AdvanceFirework1Ascent_14:
 	ld a, $01 ; $70fe
 	ld [wCutsceneObjActive], a ; $7100
 	ld a, $01 ; $7103
-	ld [wUnusedExitLocationMirror], a ; $7105
-	ld [wStoryModeExitLocationRequest], a ; $7108
+	ld [wUnusedExitTriggerIdMirror], a ; $7105
+	ld [wStoryModeExitTriggerRequest], a ; $7108
 	ret ; $710b
 .fadeOut:
 	test_flag FLAG_DOUBLES ; $710c
@@ -2739,8 +2739,8 @@ AdvanceFirework1Ascent_14:
 	ld a, $0a ; $713b
 	ld [wStoryModeEntryPoint], a ; $713d
 	ld a, $ff ; $7140
-	ld [wUnusedExitLocationMirror], a ; $7142
-	ld [wStoryModeExitLocationRequest], a ; $7145
+	ld [wUnusedExitTriggerIdMirror], a ; $7142
+	ld [wStoryModeExitTriggerRequest], a ; $7145
 	ret ; $7148
 .doublesLocation:
 	test_flag FLAG_REACHED_MARIO_WORLD_DOUBLES ; $7149
@@ -2758,8 +2758,8 @@ AdvanceFirework1Ascent_14:
 	ld a, $01 ; $7162
 	ld [wStoryModeEntryPoint], a ; $7164
 	ld a, $ff ; $7167
-	ld [wUnusedExitLocationMirror], a ; $7169
-	ld [wStoryModeExitLocationRequest], a ; $716c
+	ld [wUnusedExitTriggerIdMirror], a ; $7169
+	ld [wStoryModeExitTriggerRequest], a ; $716c
 	ret ; $716f
 .done:
 	ld c, $04 ; $7170
@@ -2770,8 +2770,8 @@ AdvanceFirework1Ascent_14:
 	ld a, $0f ; $717d
 	ld [wStoryModeEntryPoint], a ; $717f
 	ld a, $ff ; $7182
-	ld [wUnusedExitLocationMirror], a ; $7184
-	ld [wStoryModeExitLocationRequest], a ; $7187
+	ld [wUnusedExitTriggerIdMirror], a ; $7184
+	ld [wStoryModeExitTriggerRequest], a ; $7187
 	ret ; $718a
 	; $718b, 5 bytes (fill)
 	ds 5, $00
@@ -3094,8 +3094,8 @@ QueueTwinkleSprite_14:
 	ld a, $02 ; $7865
 	ld [wStoryModeEntryPoint], a ; $7867
 	ld a, $ff ; $786a
-	ld [wUnusedExitLocationMirror], a ; $786c
-	ld [wStoryModeExitLocationRequest], a ; $786f
+	ld [wUnusedExitTriggerIdMirror], a ; $786c
+	ld [wStoryModeExitTriggerRequest], a ; $786f
 	ret ; $7872
 AdvancePlaneFrameCounter2_14:
 	ld a, [wCutsceneObjX] ; $7873

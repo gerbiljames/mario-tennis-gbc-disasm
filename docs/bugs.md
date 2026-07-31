@@ -469,7 +469,7 @@ store with a missing counterpart.
 | --- | --- | --- |
 | `wShotAimRow` | every shot bank | the aim row is computed, stored, and used from `a`; the store is a leftover |
 | `wUnusedDrillPointStartByte` | bank `$0b` | cleared by `ServiceMatch2Hook_PointStart` |
-| `wUnusedExitLocationMirror` | story engine | write-only mirror of `wStoryModeExitLocationRequest` |
+| `wUnusedExitTriggerIdMirror` | story engine | write-only mirror of `wStoryModeExitTriggerRequest` |
 | `wCharObjectDefId` | bank `$04` | the object-def id `SetupCharSpriteFromObjectDef` was handed |
 | `hUnusedLinkByte`, `hUnusedLinkSlot` | serial init | cleared by both link init routines, read by nothing |
 | `hLinkLastRxMirror` | bank `$07` | written beside `hLinkLastRxByte`, never compared |

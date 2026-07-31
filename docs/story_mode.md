@@ -46,7 +46,7 @@ Location `$00` is "Main Menu". Its `InitScript` (`MainMenuInitScript_10`,
 `$10:$4eb9`) parks the player actor off-map at `($3f00,$3f00)` and calls
 `RunTitleAndMainMenuLoop` (`$10:$4f0d`), which runs the logo, intro cutscene,
 title screen and main menu, and does not return until the player has committed
-to something. To *leave* the menu it writes `wStoryModeExitLocationRequest`; the
+to something. To *leave* the menu it writes `wStoryModeExitTriggerRequest`; the
 location loop then looks that id up in `MainMenuExitTriggers_10` and reads the
 destination out of the record:
 
@@ -110,7 +110,7 @@ fixed order:
 | order | request | handler |
 | --- | --- | --- |
 | 1 | `wStoryModeTriggerScript` (`$c2a0`) | `RunQueuedTriggerScript` — a step-on trigger queued by the movement code |
-| 2 | `wStoryModeExitLocationRequest` (`$c2a1`) | `RunLocationExit`, then return (reload) |
+| 2 | `wStoryModeExitTriggerRequest` (`$c2a1`) | `RunLocationExit`, then return (reload) |
 | 3 | `wStoryModeMenuRequest` (`$c2a5`) | wait for the player to stop, then `RunStoryModeMenu` unless `FLAG_STORY_MENU_LOCKED` |
 | 4 | auto-interact arming (`$c2a2`) | if the player has been walking into the same direction for `>= $1e` frames, raise an interact request itself |
 | 5 | `wStoryModeInteractRequest` (`$c2a4`) | `FindActorFacingPlayer` → `RunNpcInteraction`; if no script ran, `GetFacingTileInteractionId` → `RunFacingTileScript`; if still nothing, `GetTileTriggerAtPlayer` → `RunTileTriggerScript` |
@@ -365,7 +365,7 @@ movement too.
 | low nibble | meaning | read by |
 | --- | --- | --- |
 | `$1` | step-on trigger; the high nibble is queued in `wStoryModeTriggerScript` | `GetTileTriggerAtPlayer` (`$0a:$5369`), `CheckTileTriggerAtPoint` (`$04:$5141`) |
-| `$3` | exit trigger; the high nibble goes to `wStoryModeExitLocationRequest` | `CheckTileTriggerAtPoint` (`$04:$5160`) |
+| `$3` | exit trigger; the high nibble goes to `wStoryModeExitTriggerRequest` | `CheckTileTriggerAtPoint` (`$04:$5160`) |
 | `$8` | action tile; the high nibble is the `FacingScripts` id | `GetFacingTileInteractionId` (`$0a:$5200`) |
 | `$c` | extended talk reach: `FindActorFacingPlayer` re-probes at `$03c0` ahead instead of `$01c0` | `$0a:$5247` |
 
@@ -442,7 +442,7 @@ and runs the menu tree. `StoryMenuDefs` (`$06:$6ce0`) is six `menu_def` rows of
 
 The three full-screen items share one trick (`$06:$6f66`, `$6f84`, `$6fa0`): back
 up the live player position into `wStoryModeSpawnPosition`, set
-`wStoryModeEntryPoint = $ff` and `wStoryModeExitLocationRequest = $ff`, then
+`wStoryModeEntryPoint = $ff` and `wStoryModeExitTriggerRequest = $ff`, then
 farcall the screen. When it returns, the location loop's exit check fires, the
 `$ff` matches no exit record, and the location reloads with the player exactly
 where they were.
@@ -705,13 +705,13 @@ always visible), plus the actor array in bank `$04` and the two maps in bank
 | `$c282` | `wStoryLocationMapScriptsSlot` | `dslot` (low byte, bank) of the `map_tree` |
 | `$c284` | `wStoryLocationBGM` | `$ff` = keep current music |
 | `$c286`-`$c293` | `wMapEntryPointsPtr` … `wMapInitScriptPtr` | the seven `map_tree` slot pointers |
-| `$c294` | `wUnusedExitLocationMirror` | write-only mirror of `$c2a1` (dead store) |
+| `$c294` | `wUnusedExitTriggerIdMirror` | write-only mirror of `$c2a1` (dead store) |
 | `$c295` | `wStoryModeEntryPoint` | entry-point id; `$ff` = keep the saved position |
 | `$c296` | `wStoryModeSpawnPosition` | 5 bytes: X, Y, facing |
 | `$c29b` | `wStoryLocationBank` | ROM bank of all this location's tables and code |
 | `$c29c` | `wStoryArrivalScript` | the selected entry point's arrival script |
 | `$c2a0` | `wStoryModeTriggerScript` | queued step-on trigger id |
-| `$c2a1` | `wStoryModeExitLocationRequest` | nonzero = leave the location; `$ff` = plain reload |
+| `$c2a1` | `wStoryModeExitTriggerRequest` | nonzero = leave the location, by the id of a row in its `ExitTriggers` table (the destination is that row's `arg0`); `$ff` = plain reload, matching no row |
 | `$c2a2`/`$c2a3` | `wStoryAutoInteractArmed` / `wStoryAutoInteractFired` | walk-into-thing auto-interact |
 | `$c2a4` | `wStoryModeInteractRequest` | set by A |
 | `$c2a5` | `wStoryModeMenuRequest` | set by Start |

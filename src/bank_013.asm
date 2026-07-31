@@ -161,8 +161,8 @@ RestaurantPlazaTile01_13:
 	script_wait_move ACTOR_PLAYER ; $42fb
 	call StoryActorsWalkOffAndFadeOut_13 ; $4300
 	ld a, $01 ; $4303
-	ld [wUnusedExitLocationMirror], a ; $4305
-	ld [wStoryModeExitLocationRequest], a ; $4308
+	ld [wUnusedExitTriggerIdMirror], a ; $4305
+	ld [wStoryModeExitTriggerRequest], a ; $4308
 	ret ; $430b
 RestaurantPlazaTile02_13:
 	script_set_speed ACTOR_PLAYER, $0010 ; $430c
@@ -176,8 +176,8 @@ RestaurantPlazaTile02_13:
 	call BeginFadeOut ; $4344
 	script_wait_frames $1e ; $4347
 	ld a, $02 ; $434e
-	ld [wUnusedExitLocationMirror], a ; $4350
-	ld [wStoryModeExitLocationRequest], a ; $4353
+	ld [wUnusedExitTriggerIdMirror], a ; $4350
+	ld [wStoryModeExitTriggerRequest], a ; $4353
 	ret ; $4356
 RestaurantPlazaTile03_13:
 	script_set_speed ACTOR_PARTNER, $0040 ; $4357
@@ -191,8 +191,8 @@ RestaurantPlazaTile03_13:
 	call BeginFadeOut ; $438e
 	script_wait_frames $1e ; $4391
 	ld a, $03 ; $4398
-	ld [wUnusedExitLocationMirror], a ; $439a
-	ld [wStoryModeExitLocationRequest], a ; $439d
+	ld [wUnusedExitTriggerIdMirror], a ; $439a
+	ld [wStoryModeExitTriggerRequest], a ; $439d
 	ret ; $43a0
 RestaurantPlazaTile05_13:
 	script_move_target ACTOR_PARTNER, $3700, $0d00 ; $43a1
@@ -202,12 +202,12 @@ RestaurantPlazaTile05_13:
 	call StoryActorsWalkOffAndFadeOut_13 ; $43c6
 	test_flag FLAG_DOUBLES ; $43c9
 	ld a, $05 ; $43cc
-	ld [wUnusedExitLocationMirror], a ; $43ce
-	ld [wStoryModeExitLocationRequest], a ; $43d1
+	ld [wUnusedExitTriggerIdMirror], a ; $43ce
+	ld [wStoryModeExitTriggerRequest], a ; $43d1
 	jr z, .done ; $43d4
 	ld a, $0d ; $43d6
-	ld [wUnusedExitLocationMirror], a ; $43d8
-	ld [wStoryModeExitLocationRequest], a ; $43db
+	ld [wUnusedExitTriggerIdMirror], a ; $43d8
+	ld [wStoryModeExitTriggerRequest], a ; $43db
 .done:
 	ret ; $43de
 RestaurantPlazaTile06_13:
@@ -220,12 +220,12 @@ RestaurantPlazaTile06_13:
 	script_wait_frames $1e ; $4408
 	test_flag FLAG_DOUBLES ; $440f
 	ld a, $06 ; $4412
-	ld [wUnusedExitLocationMirror], a ; $4414
-	ld [wStoryModeExitLocationRequest], a ; $4417
+	ld [wUnusedExitTriggerIdMirror], a ; $4414
+	ld [wStoryModeExitTriggerRequest], a ; $4417
 	jr z, RestaurantPlazaTile05_13.done ; $441a
 	ld a, $06 ; $441c
-	ld [wUnusedExitLocationMirror], a ; $441e
-	ld [wStoryModeExitLocationRequest], a ; $4421
+	ld [wUnusedExitTriggerIdMirror], a ; $441e
+	ld [wStoryModeExitTriggerRequest], a ; $4421
 	ret ; $4424
 StoryActorsWalkOffAndFadeOut_13:
 	test_flag FLAG_DOUBLES ; $4425
@@ -366,8 +366,8 @@ AcademyCourtsTourCutscene:
 	script_move_target ACTOR_PLAYER, $4100, $0d20 ; $4710
 	script_wait_move ACTOR_PLAYER ; $471b
 	ld a, $0f ; $4720
-	ld [wUnusedExitLocationMirror], a ; $4722
-	ld [wStoryModeExitLocationRequest], a ; $4725
+	ld [wUnusedExitTriggerIdMirror], a ; $4722
+	ld [wStoryModeExitTriggerRequest], a ; $4725
 	farcall EndCutsceneScriptMode ; $4728
 	ret ; $472b
 AcademyCourtsTourActors_13:
@@ -561,8 +561,8 @@ ServiceAceCoachIntroCutscene:
 	script_set_position $06, $3f00, $3f00 ; $4c5c
 	script_set_position ACTOR_PLAYER, $3f00, $3f00 ; $4c67
 	ld a, $0e ; $4c72
-	ld [wUnusedExitLocationMirror], a ; $4c74
-	ld [wStoryModeExitLocationRequest], a ; $4c77
+	ld [wUnusedExitTriggerIdMirror], a ; $4c74
+	ld [wStoryModeExitTriggerRequest], a ; $4c77
 	farcall EndCutsceneScriptMode ; $4c7a
 	ret ; $4c7d
 ServiceAceCoachIntroActors_13:
@@ -739,8 +739,8 @@ DormRoomTile0F_13:
 	ld a, $0d ; $4fb6
 	ld [wStoryModeEntryPoint], a ; $4fb8
 	ld a, $ff ; $4fbb
-	ld [wUnusedExitLocationMirror], a ; $4fbd
-	ld [wStoryModeExitLocationRequest], a ; $4fc0
+	ld [wUnusedExitTriggerIdMirror], a ; $4fbd
+	ld [wStoryModeExitTriggerRequest], a ; $4fc0
 	ld c, $04 ; $4fc3
 	call BeginFadeOut ; $4fc5
 	script_wait_frames $14 ; $4fc8
@@ -763,8 +763,8 @@ DormRoomTile0F_13:
 	ld a, $0d ; $5010
 	ld [wStoryModeEntryPoint], a ; $5012
 	ld a, $ff ; $5015
-	ld [wUnusedExitLocationMirror], a ; $5017
-	ld [wStoryModeExitLocationRequest], a ; $501a
+	ld [wUnusedExitTriggerIdMirror], a ; $5017
+	ld [wStoryModeExitTriggerRequest], a ; $501a
 	ld c, $04 ; $501d
 	call BeginFadeOut ; $501f
 	script_wait_frames $14 ; $5022
@@ -1296,8 +1296,8 @@ DormRoomNpc03_13:
 	call BeginFadeOut ; $5676
 	call WaitFadeEnd ; $5679
 	ld a, $02 ; $567c
-	ld [wUnusedExitLocationMirror], a ; $567e
-	ld [wStoryModeExitLocationRequest], a ; $5681
+	ld [wUnusedExitTriggerIdMirror], a ; $567e
+	ld [wStoryModeExitTriggerRequest], a ; $5681
 	ld b, STORYLOC_DORM_ROOM ; $5684
 	ld c, $01 ; $5686
 	farcall SaveStoryReturnPoint ; $5688
@@ -1735,8 +1735,8 @@ ShowStoryNarration_13:
 	ld a, $0a ; $5a84
 	ld [wStoryModeEntryPoint], a ; $5a86
 	ld a, $ff ; $5a89
-	ld [wUnusedExitLocationMirror], a ; $5a8b
-	ld [wStoryModeExitLocationRequest], a ; $5a8e
+	ld [wUnusedExitTriggerIdMirror], a ; $5a8b
+	ld [wStoryModeExitTriggerRequest], a ; $5a8e
 	ret ; $5a91
 .setText2:
 	script_set_text Text_30_497 ; $5a92
@@ -1746,8 +1746,8 @@ ShowStoryNarration_13:
 	ld a, $0f ; $5aa0
 	ld [wStoryModeEntryPoint], a ; $5aa2
 	ld a, $ff ; $5aa5
-	ld [wUnusedExitLocationMirror], a ; $5aa7
-	ld [wStoryModeExitLocationRequest], a ; $5aaa
+	ld [wUnusedExitTriggerIdMirror], a ; $5aa7
+	ld [wStoryModeExitTriggerRequest], a ; $5aaa
 	ret ; $5aad
 .setText3:
 	script_set_text Text_30_496 ; $5aae
@@ -1757,8 +1757,8 @@ ShowStoryNarration_13:
 	ld a, $0a ; $5abc
 	ld [wStoryModeEntryPoint], a ; $5abe
 	ld a, $ff ; $5ac1
-	ld [wUnusedExitLocationMirror], a ; $5ac3
-	ld [wStoryModeExitLocationRequest], a ; $5ac6
+	ld [wUnusedExitTriggerIdMirror], a ; $5ac3
+	ld [wStoryModeExitTriggerRequest], a ; $5ac6
 	ret ; $5ac9
 GetDormRoomStoryStage_13:
 	test_flag FLAG_DOUBLES ; $5aca
@@ -2076,8 +2076,8 @@ VarsityCourtANpc05_13:
 	call CopyMemoryBC ; $5f5e
 	ld a, $ff ; $5f61
 	ld [wStoryModeEntryPoint], a ; $5f63
-	ld [wUnusedExitLocationMirror], a ; $5f66
-	ld [wStoryModeExitLocationRequest], a ; $5f69
+	ld [wUnusedExitTriggerIdMirror], a ; $5f66
+	ld [wStoryModeExitTriggerRequest], a ; $5f69
 	call SetupStoryMinigameMatch0 ; $5f6c
 	ret ; $5f6f
 VarsityCourtNpcScriptsA_13:
@@ -2125,8 +2125,8 @@ VarsityCourtBNpc05_13:
 	call CopyMemoryBC ; $600e
 	ld a, $ff ; $6011
 	ld [wStoryModeEntryPoint], a ; $6013
-	ld [wUnusedExitLocationMirror], a ; $6016
-	ld [wStoryModeExitLocationRequest], a ; $6019
+	ld [wUnusedExitTriggerIdMirror], a ; $6016
+	ld [wStoryModeExitTriggerRequest], a ; $6019
 	call SetupVarsityCourtDoublesMatch_13 ; $601c
 	ret ; $601f
 VarsityCourtNpcScriptsB_13:
@@ -2209,8 +2209,8 @@ CourtyardFacing01_13:
 	call CopyMemoryBC ; $6179
 	ld a, $ff ; $617c
 	ld [wStoryModeEntryPoint], a ; $617e
-	ld [wUnusedExitLocationMirror], a ; $6181
-	ld [wStoryModeExitLocationRequest], a ; $6184
+	ld [wUnusedExitTriggerIdMirror], a ; $6181
+	ld [wStoryModeExitTriggerRequest], a ; $6184
 	ret ; $6187
 CourtyardTileTriggers_13:
 	ds 1, $ff ; $6188, fill
@@ -2503,8 +2503,8 @@ VarsityCourtTourCutscene:
 	script_move_player $2200, $0d00 ; $6620
 	script_wait_move ACTOR_PLAYER ; $662a
 	ld a, $0f ; $662f
-	ld [wUnusedExitLocationMirror], a ; $6631
-	ld [wStoryModeExitLocationRequest], a ; $6634
+	ld [wUnusedExitTriggerIdMirror], a ; $6631
+	ld [wStoryModeExitTriggerRequest], a ; $6634
 	ret ; $6637
 VarsityCourtTourActors_13:
 	; $6638, 66 bytes (map_actors)
@@ -2885,8 +2885,8 @@ VarsityCourtANpc03_13:
 	ld a, $0d ; $6d60
 	ld [wStoryModeEntryPoint], a ; $6d62
 	ld a, $ff ; $6d65
-	ld [wUnusedExitLocationMirror], a ; $6d67
-	ld [wStoryModeExitLocationRequest], a ; $6d6a
+	ld [wUnusedExitTriggerIdMirror], a ; $6d67
+	ld [wStoryModeExitTriggerRequest], a ; $6d6a
 	script_null_script $07 ; $6d6d
 	script_set_speed ACTOR_PLAYER, $0020 ; $6d72
 	script_set_speed ACTOR_PARTNER, $0020 ; $6d7a
@@ -3000,8 +3000,8 @@ VarsityCourtBNpc03_13:
 	ld a, $0d ; $6fd2
 	ld [wStoryModeEntryPoint], a ; $6fd4
 	ld a, $ff ; $6fd7
-	ld [wUnusedExitLocationMirror], a ; $6fd9
-	ld [wStoryModeExitLocationRequest], a ; $6fdc
+	ld [wUnusedExitTriggerIdMirror], a ; $6fd9
+	ld [wStoryModeExitTriggerRequest], a ; $6fdc
 	script_set_speed ACTOR_PLAYER, $0020 ; $6fdf
 	script_set_speed ACTOR_PARTNER, $0020 ; $6fe7
 	script_set_actor_script $04, ActorScript_13_13 ; $6fef
@@ -3181,8 +3181,8 @@ SinglesTravelingTeamVictoryCutscene:
 	ld a, $0a ; $738e
 	ld [wStoryModeEntryPoint], a ; $7390
 	ld a, $ff ; $7393
-	ld [wUnusedExitLocationMirror], a ; $7395
-	ld [wStoryModeExitLocationRequest], a ; $7398
+	ld [wUnusedExitTriggerIdMirror], a ; $7395
+	ld [wStoryModeExitTriggerRequest], a ; $7398
 	ret ; $739b
 SinglesTravelingTeamActors_13:
 	; $739c, 164 bytes (map_actors)
@@ -3398,8 +3398,8 @@ DoublesTravelingTeamVictoryCutscene:
 	ld a, $0a ; $78b6
 	ld [wStoryModeEntryPoint], a ; $78b8
 	ld a, $ff ; $78bb
-	ld [wUnusedExitLocationMirror], a ; $78bd
-	ld [wStoryModeExitLocationRequest], a ; $78c0
+	ld [wUnusedExitTriggerIdMirror], a ; $78bd
+	ld [wStoryModeExitTriggerRequest], a ; $78c0
 	ret ; $78c3
 PlayDoublesTravelingTeamScreenSequence_13:
 	ld b, $00 ; $78c4
@@ -3453,8 +3453,8 @@ RunTravelingTeamBracketIfWon_13:
 	ld a, $0e ; $79a9
 	ld [wStoryModeEntryPoint], a ; $79ab
 	ld a, $ff ; $79ae
-	ld [wUnusedExitLocationMirror], a ; $79b0
-	ld [wStoryModeExitLocationRequest], a ; $79b3
+	ld [wUnusedExitTriggerIdMirror], a ; $79b0
+	ld [wStoryModeExitTriggerRequest], a ; $79b3
 	test_flag FLAG_DOUBLES ; $79b6
 	jr nz, .isDoubles ; $79b9
 	ldh a, [hRomBank] ; $79bb

@@ -63,8 +63,8 @@ MatchSelectRunCharacterSelect:
 	call CopyMemoryBC ; $40dd
 	ld a, $ff ; $40e0
 	ld [wStoryModeEntryPoint], a ; $40e2
-	ld [wUnusedExitLocationMirror], a ; $40e5
-	ld [wStoryModeExitLocationRequest], a ; $40e8
+	ld [wUnusedExitTriggerIdMirror], a ; $40e5
+	ld [wStoryModeExitTriggerRequest], a ; $40e8
 	farcall EndCutsceneScriptMode ; $40eb
 	ret ; $40ee
 MatchSelectPlayEpilogueScene:
@@ -140,8 +140,8 @@ RunSinglesMatchListMenu:
 	call CopyMemoryBC ; $41b1
 	ld a, $ff ; $41b4
 	ld [wStoryModeEntryPoint], a ; $41b6
-	ld [wUnusedExitLocationMirror], a ; $41b9
-	ld [wStoryModeExitLocationRequest], a ; $41bc
+	ld [wUnusedExitTriggerIdMirror], a ; $41b9
+	ld [wStoryModeExitTriggerRequest], a ; $41bc
 	farcall InitStoryMatchSettings ; $41bf
 	ld a, [wMapSceneStage] ; $41c2
 	add a ; $41c5
@@ -171,8 +171,8 @@ RunDoublesMatchListMenu:
 	call CopyMemoryBC ; $41f6
 	ld a, $ff ; $41f9
 	ld [wStoryModeEntryPoint], a ; $41fb
-	ld [wUnusedExitLocationMirror], a ; $41fe
-	ld [wStoryModeExitLocationRequest], a ; $4201
+	ld [wUnusedExitTriggerIdMirror], a ; $41fe
+	ld [wStoryModeExitTriggerRequest], a ; $4201
 	farcall InitStoryMatchSettings ; $4204
 	ld a, [wMapSceneStage] ; $4207
 	add a ; $420a
@@ -345,8 +345,8 @@ RunDrillMatchListMenu:
 	call CopyMemoryBC ; $4467
 	ld a, $ff ; $446a
 	ld [wStoryModeEntryPoint], a ; $446c
-	ld [wUnusedExitLocationMirror], a ; $446f
-	ld [wStoryModeExitLocationRequest], a ; $4472
+	ld [wUnusedExitTriggerIdMirror], a ; $446f
+	ld [wStoryModeExitTriggerRequest], a ; $4472
 	ld a, $00 ; $4475
 	ld [wCurrentStorySlot], a ; $4477
 	farcall CheckStorySlot ; $447a
@@ -367,8 +367,8 @@ MatchSelectCharDataOptionDisabled:
 	call CopyMemoryBC ; $44a2
 	ld a, $ff ; $44a5
 	ld [wStoryModeEntryPoint], a ; $44a7
-	ld [wUnusedExitLocationMirror], a ; $44aa
-	ld [wStoryModeExitLocationRequest], a ; $44ad
+	ld [wUnusedExitTriggerIdMirror], a ; $44aa
+	ld [wStoryModeExitTriggerRequest], a ; $44ad
 	ld a, $00 ; $44b0
 	ld [wCurrentStorySlot], a ; $44b2
 	farcall CheckStorySlot ; $44b5
@@ -439,8 +439,8 @@ RunServiceLessonMenu:
 	call CopyMemoryBC ; $4542
 	ld a, $ff ; $4545
 	ld [wStoryModeEntryPoint], a ; $4547
-	ld [wUnusedExitLocationMirror], a ; $454a
-	ld [wStoryModeExitLocationRequest], a ; $454d
+	ld [wUnusedExitTriggerIdMirror], a ; $454a
+	ld [wStoryModeExitTriggerRequest], a ; $454d
 	ld c, $10 ; $4550
 	call BeginFadeOut ; $4552
 	call WaitFadeEnd ; $4555
@@ -461,8 +461,8 @@ RunNetLessonMenu:
 	call CopyMemoryBC ; $457a
 	ld a, $ff ; $457d
 	ld [wStoryModeEntryPoint], a ; $457f
-	ld [wUnusedExitLocationMirror], a ; $4582
-	ld [wStoryModeExitLocationRequest], a ; $4585
+	ld [wUnusedExitTriggerIdMirror], a ; $4582
+	ld [wStoryModeExitTriggerRequest], a ; $4585
 	ld c, $10 ; $4588
 	call BeginFadeOut ; $458a
 	call WaitFadeEnd ; $458d
@@ -483,8 +483,8 @@ RunStrokeLessonMenu:
 	call CopyMemoryBC ; $45b2
 	ld a, $ff ; $45b5
 	ld [wStoryModeEntryPoint], a ; $45b7
-	ld [wUnusedExitLocationMirror], a ; $45ba
-	ld [wStoryModeExitLocationRequest], a ; $45bd
+	ld [wUnusedExitTriggerIdMirror], a ; $45ba
+	ld [wStoryModeExitTriggerRequest], a ; $45bd
 	ld c, $10 ; $45c0
 	call BeginFadeOut ; $45c2
 	call WaitFadeEnd ; $45c5
@@ -497,8 +497,8 @@ ShowRankingBoardSamples:
 	call CopyMemoryBC ; $45d5
 	ld a, $ff ; $45d8
 	ld [wStoryModeEntryPoint], a ; $45da
-	ld [wUnusedExitLocationMirror], a ; $45dd
-	ld [wStoryModeExitLocationRequest], a ; $45e0
+	ld [wUnusedExitTriggerIdMirror], a ; $45dd
+	ld [wStoryModeExitTriggerRequest], a ; $45e0
 	ld c, $10 ; $45e3
 	call BeginFadeOut ; $45e5
 	call WaitFadeEnd ; $45e8
@@ -567,8 +567,8 @@ RunMinigameSelectMenu:
 	call CopyMemoryBC ; $4675
 	ld a, $ff ; $4678
 	ld [wStoryModeEntryPoint], a ; $467a
-	ld [wUnusedExitLocationMirror], a ; $467d
-	ld [wStoryModeExitLocationRequest], a ; $4680
+	ld [wUnusedExitTriggerIdMirror], a ; $467d
+	ld [wStoryModeExitTriggerRequest], a ; $4680
 	ret ; $4683
 MinigameSelectMenuTable:
 	; $4684, 9 bytes (bytes:16)
@@ -622,8 +622,8 @@ Test2ExitTriggers_10:
 	call CopyMemoryBC ; $47d8
 	ld a, $ff ; $47db
 	ld [wStoryModeEntryPoint], a ; $47dd
-	ld [wUnusedExitLocationMirror], a ; $47e0
-	ld [wStoryModeExitLocationRequest], a ; $47e3
+	ld [wUnusedExitTriggerIdMirror], a ; $47e0
+	ld [wStoryModeExitTriggerRequest], a ; $47e3
 	set_flag FLAG_DRILL_FROM_MENU ; $47e6
 	ld hl, $0001 ; $47e9
 	farcall PushTextArgNumber ; $47ec
@@ -638,8 +638,8 @@ Test2ExitTriggers_10:
 	call CopyMemoryBC ; $4809
 	ld a, $ff ; $480c
 	ld [wStoryModeEntryPoint], a ; $480e
-	ld [wUnusedExitLocationMirror], a ; $4811
-	ld [wStoryModeExitLocationRequest], a ; $4814
+	ld [wUnusedExitTriggerIdMirror], a ; $4811
+	ld [wStoryModeExitTriggerRequest], a ; $4814
 	set_flag FLAG_DRILL_FROM_MENU ; $4817
 	ld hl, $0002 ; $481a
 	farcall PushTextArgNumber ; $481d
@@ -654,8 +654,8 @@ Test2ExitTriggers_10:
 	call CopyMemoryBC ; $483a
 	ld a, $ff ; $483d
 	ld [wStoryModeEntryPoint], a ; $483f
-	ld [wUnusedExitLocationMirror], a ; $4842
-	ld [wStoryModeExitLocationRequest], a ; $4845
+	ld [wUnusedExitTriggerIdMirror], a ; $4842
+	ld [wStoryModeExitTriggerRequest], a ; $4845
 	set_flag FLAG_DRILL_FROM_MENU ; $4848
 	ld hl, $0003 ; $484b
 	farcall PushTextArgNumber ; $484e
@@ -670,8 +670,8 @@ Test2ExitTriggers_10:
 	call CopyMemoryBC ; $486b
 	ld a, $ff ; $486e
 	ld [wStoryModeEntryPoint], a ; $4870
-	ld [wUnusedExitLocationMirror], a ; $4873
-	ld [wStoryModeExitLocationRequest], a ; $4876
+	ld [wUnusedExitTriggerIdMirror], a ; $4873
+	ld [wStoryModeExitTriggerRequest], a ; $4876
 	set_flag FLAG_DRILL_FROM_MENU ; $4879
 	ld hl, $0004 ; $487c
 	farcall PushTextArgNumber ; $487f
@@ -686,8 +686,8 @@ Test2ExitTriggers_10:
 	call CopyMemoryBC ; $489c
 	ld a, $ff ; $489f
 	ld [wStoryModeEntryPoint], a ; $48a1
-	ld [wUnusedExitLocationMirror], a ; $48a4
-	ld [wStoryModeExitLocationRequest], a ; $48a7
+	ld [wUnusedExitTriggerIdMirror], a ; $48a4
+	ld [wStoryModeExitTriggerRequest], a ; $48a7
 	set_flag FLAG_DRILL_FROM_MENU ; $48aa
 	ld hl, $0005 ; $48ad
 	farcall PushTextArgNumber ; $48b0
@@ -702,8 +702,8 @@ Test2ExitTriggers_10:
 	call CopyMemoryBC ; $48cd
 	ld a, $ff ; $48d0
 	ld [wStoryModeEntryPoint], a ; $48d2
-	ld [wUnusedExitLocationMirror], a ; $48d5
-	ld [wStoryModeExitLocationRequest], a ; $48d8
+	ld [wUnusedExitTriggerIdMirror], a ; $48d5
+	ld [wStoryModeExitTriggerRequest], a ; $48d8
 	set_flag FLAG_DRILL_FROM_MENU ; $48db
 	ld hl, $0006 ; $48de
 	farcall PushTextArgNumber ; $48e1
@@ -718,8 +718,8 @@ Test2ExitTriggers_10:
 	call CopyMemoryBC ; $48fe
 	ld a, $ff ; $4901
 	ld [wStoryModeEntryPoint], a ; $4903
-	ld [wUnusedExitLocationMirror], a ; $4906
-	ld [wStoryModeExitLocationRequest], a ; $4909
+	ld [wUnusedExitTriggerIdMirror], a ; $4906
+	ld [wStoryModeExitTriggerRequest], a ; $4909
 	set_flag FLAG_DRILL_FROM_MENU ; $490c
 	ld hl, $0007 ; $490f
 	farcall PushTextArgNumber ; $4912
@@ -734,8 +734,8 @@ Test2ExitTriggers_10:
 	call CopyMemoryBC ; $492f
 	ld a, $ff ; $4932
 	ld [wStoryModeEntryPoint], a ; $4934
-	ld [wUnusedExitLocationMirror], a ; $4937
-	ld [wStoryModeExitLocationRequest], a ; $493a
+	ld [wUnusedExitTriggerIdMirror], a ; $4937
+	ld [wStoryModeExitTriggerRequest], a ; $493a
 	set_flag FLAG_DRILL_FROM_MENU ; $493d
 	ld hl, $0008 ; $4940
 	farcall PushTextArgNumber ; $4943
@@ -751,8 +751,8 @@ Test2Npc0B_10:
 	call CopyMemoryBC ; $4960
 	ld a, $ff ; $4963
 	ld [wStoryModeEntryPoint], a ; $4965
-	ld [wUnusedExitLocationMirror], a ; $4968
-	ld [wStoryModeExitLocationRequest], a ; $496b
+	ld [wUnusedExitTriggerIdMirror], a ; $4968
+	ld [wStoryModeExitTriggerRequest], a ; $496b
 	set_flag FLAG_DRILL_FROM_MENU ; $496e
 	ld hl, $0009 ; $4971
 	farcall PushTextArgNumber ; $4974
@@ -768,8 +768,8 @@ Test2Npc0C_10:
 	call CopyMemoryBC ; $4991
 	ld a, $ff ; $4994
 	ld [wStoryModeEntryPoint], a ; $4996
-	ld [wUnusedExitLocationMirror], a ; $4999
-	ld [wStoryModeExitLocationRequest], a ; $499c
+	ld [wUnusedExitTriggerIdMirror], a ; $4999
+	ld [wStoryModeExitTriggerRequest], a ; $499c
 	set_flag FLAG_DRILL_FROM_MENU ; $499f
 	ld hl, $000a ; $49a2
 	farcall PushTextArgNumber ; $49a5
@@ -785,8 +785,8 @@ Test2Npc0D_10:
 	call CopyMemoryBC ; $49c2
 	ld a, $ff ; $49c5
 	ld [wStoryModeEntryPoint], a ; $49c7
-	ld [wUnusedExitLocationMirror], a ; $49ca
-	ld [wStoryModeExitLocationRequest], a ; $49cd
+	ld [wUnusedExitTriggerIdMirror], a ; $49ca
+	ld [wStoryModeExitTriggerRequest], a ; $49cd
 	set_flag FLAG_DRILL_FROM_MENU ; $49d0
 	ld hl, $000b ; $49d3
 	farcall PushTextArgNumber ; $49d6
@@ -802,8 +802,8 @@ Test2Npc0E_10:
 	call CopyMemoryBC ; $49f3
 	ld a, $ff ; $49f6
 	ld [wStoryModeEntryPoint], a ; $49f8
-	ld [wUnusedExitLocationMirror], a ; $49fb
-	ld [wStoryModeExitLocationRequest], a ; $49fe
+	ld [wUnusedExitTriggerIdMirror], a ; $49fb
+	ld [wStoryModeExitTriggerRequest], a ; $49fe
 	set_flag FLAG_DRILL_FROM_MENU ; $4a01
 	ld hl, $000c ; $4a04
 	farcall PushTextArgNumber ; $4a07
@@ -819,8 +819,8 @@ Test2Npc0F_10:
 	call CopyMemoryBC ; $4a24
 	ld a, $ff ; $4a27
 	ld [wStoryModeEntryPoint], a ; $4a29
-	ld [wUnusedExitLocationMirror], a ; $4a2c
-	ld [wStoryModeExitLocationRequest], a ; $4a2f
+	ld [wUnusedExitTriggerIdMirror], a ; $4a2c
+	ld [wStoryModeExitTriggerRequest], a ; $4a2f
 	set_flag FLAG_DRILL_FROM_MENU ; $4a32
 	ld hl, $000d ; $4a35
 	farcall PushTextArgNumber ; $4a38
@@ -836,8 +836,8 @@ Test2Npc10_10:
 	call CopyMemoryBC ; $4a55
 	ld a, $ff ; $4a58
 	ld [wStoryModeEntryPoint], a ; $4a5a
-	ld [wUnusedExitLocationMirror], a ; $4a5d
-	ld [wStoryModeExitLocationRequest], a ; $4a60
+	ld [wUnusedExitTriggerIdMirror], a ; $4a5d
+	ld [wStoryModeExitTriggerRequest], a ; $4a60
 	set_flag FLAG_DRILL_FROM_MENU ; $4a63
 	ld hl, $000e ; $4a66
 	farcall PushTextArgNumber ; $4a69
@@ -853,8 +853,8 @@ Test2Npc11_10:
 	call CopyMemoryBC ; $4a86
 	ld a, $ff ; $4a89
 	ld [wStoryModeEntryPoint], a ; $4a8b
-	ld [wUnusedExitLocationMirror], a ; $4a8e
-	ld [wStoryModeExitLocationRequest], a ; $4a91
+	ld [wUnusedExitTriggerIdMirror], a ; $4a8e
+	ld [wStoryModeExitTriggerRequest], a ; $4a91
 	set_flag FLAG_DRILL_FROM_MENU ; $4a94
 	ld hl, $000f ; $4a97
 	farcall PushTextArgNumber ; $4a9a
@@ -870,8 +870,8 @@ Test2Npc12_10:
 	call CopyMemoryBC ; $4ab7
 	ld a, $ff ; $4aba
 	ld [wStoryModeEntryPoint], a ; $4abc
-	ld [wUnusedExitLocationMirror], a ; $4abf
-	ld [wStoryModeExitLocationRequest], a ; $4ac2
+	ld [wUnusedExitTriggerIdMirror], a ; $4abf
+	ld [wStoryModeExitTriggerRequest], a ; $4ac2
 	set_flag FLAG_DRILL_FROM_MENU ; $4ac5
 	ld hl, $0010 ; $4ac8
 	farcall PushTextArgNumber ; $4acb
@@ -926,8 +926,8 @@ Test2InitScript_10:
 	ret z ; $4ba0
 	farcall ClearStatusSetupMenuEntry ; $4ba1
 	ld a, a ; $4ba4
-	ld [wUnusedExitLocationMirror], a ; $4ba5
-	ld [wStoryModeExitLocationRequest], a ; $4ba8
+	ld [wUnusedExitTriggerIdMirror], a ; $4ba5
+	ld [wStoryModeExitTriggerRequest], a ; $4ba8
 	ret ; $4bab
 	farcall InitMinigameMatchSettings ; $4bac
 	ld a, COURT_GRASS ; $4baf
@@ -1082,8 +1082,8 @@ DevelopmentRespawnActors_10:
 	call CopyMemoryBC ; $4d61
 	ld a, $ff ; $4d64
 	ld [wStoryModeEntryPoint], a ; $4d66
-	ld [wUnusedExitLocationMirror], a ; $4d69
-	ld [wStoryModeExitLocationRequest], a ; $4d6c
+	ld [wUnusedExitTriggerIdMirror], a ; $4d69
+	ld [wStoryModeExitTriggerRequest], a ; $4d6c
 	ret ; $4d6f
 DevelopmentRespawnActorsAlt_10:
 	ld c, $10 ; $4d70
@@ -1112,8 +1112,8 @@ DevelopmentRespawnActorsAlt_10:
 	ret ; $4da4
 	ret ; $4da5
 	ld a, $0e ; $4da6
-	ld [wUnusedExitLocationMirror], a ; $4da8
-	ld [wStoryModeExitLocationRequest], a ; $4dab
+	ld [wUnusedExitTriggerIdMirror], a ; $4da8
+	ld [wStoryModeExitTriggerRequest], a ; $4dab
 	ret ; $4dae
 DevelopmentNpcScripts_10:
 	; $4daf, 129 bytes (map_scripts)
@@ -1398,13 +1398,13 @@ MatchSelectHandlersBHandler0:
 	test_flag FLAG_DEBUG_SKIP_LOCATION_EXIT ; $507c
 	jr nz, .exitToLocation3 ; $507f
 	ld a, $01 ; $5081
-	ld [wUnusedExitLocationMirror], a ; $5083
-	ld [wStoryModeExitLocationRequest], a ; $5086
+	ld [wUnusedExitTriggerIdMirror], a ; $5083
+	ld [wStoryModeExitTriggerRequest], a ; $5086
 	ret ; $5089
 .exitToLocation3:
 	ld a, $03 ; $508a
-	ld [wUnusedExitLocationMirror], a ; $508c
-	ld [wStoryModeExitLocationRequest], a ; $508f
+	ld [wUnusedExitTriggerIdMirror], a ; $508c
+	ld [wStoryModeExitTriggerRequest], a ; $508f
 	ret ; $5092
 .resetScreen:
 	call DisableLCDSafely ; $5093
@@ -1443,13 +1443,13 @@ MatchSelectHandlersBHandler0:
 	jr nz, .loadSlot ; $50e8
 	ld a, [wMatchSelectSubState] ; $50ea
 	ld a, a ; $50ed
-	ld [wUnusedExitLocationMirror], a ; $50ee
-	ld [wStoryModeExitLocationRequest], a ; $50f1
+	ld [wUnusedExitTriggerIdMirror], a ; $50ee
+	ld [wStoryModeExitTriggerRequest], a ; $50f1
 	ret ; $50f4
 .loadSlot:
 	ld a, $03 ; $50f5
-	ld [wUnusedExitLocationMirror], a ; $50f7
-	ld [wStoryModeExitLocationRequest], a ; $50fa
+	ld [wUnusedExitTriggerIdMirror], a ; $50f7
+	ld [wStoryModeExitTriggerRequest], a ; $50fa
 	ret ; $50fd
 MatchSelectHandlersBHandler3:
 	ld a, STORYSLOT_NONE ; $50fe
@@ -1959,8 +1959,8 @@ EraseSavedDataFlowHandler4_10:
 	ld a, $01 ; $55c7
 	ld [wStoryModeEntryPoint], a ; $55c9
 	ld a, $ff ; $55cc
-	ld [wUnusedExitLocationMirror], a ; $55ce
-	ld [wStoryModeExitLocationRequest], a ; $55d1
+	ld [wUnusedExitTriggerIdMirror], a ; $55ce
+	ld [wStoryModeExitTriggerRequest], a ; $55d1
 	ret ; $55d4
 .matchFinished:
 	ld a, [wGameMode] ; $55d5
@@ -1976,13 +1976,13 @@ EraseSavedDataFlowHandler4_10:
 	test_flag FLAG_DEBUG_SKIP_LOCATION_EXIT ; $55ed
 	jr nz, .returnToLocation3 ; $55f0
 	ld a, $02 ; $55f2
-	ld [wUnusedExitLocationMirror], a ; $55f4
-	ld [wStoryModeExitLocationRequest], a ; $55f7
+	ld [wUnusedExitTriggerIdMirror], a ; $55f4
+	ld [wStoryModeExitTriggerRequest], a ; $55f7
 	ret ; $55fa
 .returnToLocation3:
 	ld a, $03 ; $55fb
-	ld [wUnusedExitLocationMirror], a ; $55fd
-	ld [wStoryModeExitLocationRequest], a ; $5600
+	ld [wUnusedExitTriggerIdMirror], a ; $55fd
+	ld [wStoryModeExitTriggerRequest], a ; $5600
 	ret ; $5603
 .chooseReturn:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $5604
@@ -1993,8 +1993,8 @@ EraseSavedDataFlowHandler4_10:
 	ld a, $0a ; $5610
 	ld [wStoryModeEntryPoint], a ; $5612
 	ld a, $ff ; $5615
-	ld [wUnusedExitLocationMirror], a ; $5617
-	ld [wStoryModeExitLocationRequest], a ; $561a
+	ld [wUnusedExitTriggerIdMirror], a ; $5617
+	ld [wStoryModeExitTriggerRequest], a ; $561a
 	ret ; $561d
 .below14:
 	cp $0f ; $561e
@@ -2006,8 +2006,8 @@ EraseSavedDataFlowHandler4_10:
 	ld a, $0a ; $562c
 	ld [wStoryModeEntryPoint], a ; $562e
 	ld a, $ff ; $5631
-	ld [wUnusedExitLocationMirror], a ; $5633
-	ld [wStoryModeExitLocationRequest], a ; $5636
+	ld [wUnusedExitTriggerIdMirror], a ; $5633
+	ld [wStoryModeExitTriggerRequest], a ; $5636
 	ret ; $5639
 .below14Doubles:
 	ld a, STORYLOC_TOURNAMENT ; $563a
@@ -2015,8 +2015,8 @@ EraseSavedDataFlowHandler4_10:
 	ld a, $0b ; $563f
 	ld [wStoryModeEntryPoint], a ; $5641
 	ld a, $ff ; $5644
-	ld [wUnusedExitLocationMirror], a ; $5646
-	ld [wStoryModeExitLocationRequest], a ; $5649
+	ld [wUnusedExitTriggerIdMirror], a ; $5646
+	ld [wStoryModeExitTriggerRequest], a ; $5649
 	ret ; $564c
 .below0f:
 	cp $0a ; $564d
@@ -2026,8 +2026,8 @@ EraseSavedDataFlowHandler4_10:
 	ld a, $0d ; $5656
 	ld [wStoryModeEntryPoint], a ; $5658
 	ld a, $ff ; $565b
-	ld [wUnusedExitLocationMirror], a ; $565d
-	ld [wStoryModeExitLocationRequest], a ; $5660
+	ld [wUnusedExitTriggerIdMirror], a ; $565d
+	ld [wStoryModeExitTriggerRequest], a ; $5660
 	ret ; $5663
 .below0a:
 	cp $05 ; $5664
@@ -2038,8 +2038,8 @@ EraseSavedDataFlowHandler4_10:
 	ld a, $0f ; $566f
 	ld [wStoryModeEntryPoint], a ; $5671
 	ld a, $ff ; $5674
-	ld [wUnusedExitLocationMirror], a ; $5676
-	ld [wStoryModeExitLocationRequest], a ; $5679
+	ld [wUnusedExitTriggerIdMirror], a ; $5676
+	ld [wStoryModeExitTriggerRequest], a ; $5679
 	ret ; $567c
 .id05:
 	ld a, STORYLOC_SENIOR_CLASS_COURT ; $567d
@@ -2047,8 +2047,8 @@ EraseSavedDataFlowHandler4_10:
 	ld a, $09 ; $5682
 	ld [wStoryModeEntryPoint], a ; $5684
 	ld a, $ff ; $5687
-	ld [wUnusedExitLocationMirror], a ; $5689
-	ld [wStoryModeExitLocationRequest], a ; $568c
+	ld [wUnusedExitTriggerIdMirror], a ; $5689
+	ld [wStoryModeExitTriggerRequest], a ; $568c
 	ret ; $568f
 .below05:
 	test_flag FLAG_DOUBLES ; $5690
@@ -2060,8 +2060,8 @@ EraseSavedDataFlowHandler4_10:
 	ld a, $0f ; $569e
 	ld [wStoryModeEntryPoint], a ; $56a0
 	ld a, $ff ; $56a3
-	ld [wUnusedExitLocationMirror], a ; $56a5
-	ld [wStoryModeExitLocationRequest], a ; $56a8
+	ld [wUnusedExitTriggerIdMirror], a ; $56a5
+	ld [wStoryModeExitTriggerRequest], a ; $56a8
 	ret ; $56ab
 .practiceRoomAlt:
 	ld a, STORYLOC_JUNIOR_CLASS_COURT_SINGLES ; $56ac
@@ -2069,8 +2069,8 @@ EraseSavedDataFlowHandler4_10:
 	ld a, $09 ; $56b1
 	ld [wStoryModeEntryPoint], a ; $56b3
 	ld a, $ff ; $56b6
-	ld [wUnusedExitLocationMirror], a ; $56b8
-	ld [wStoryModeExitLocationRequest], a ; $56bb
+	ld [wUnusedExitTriggerIdMirror], a ; $56b8
+	ld [wStoryModeExitTriggerRequest], a ; $56bb
 	ret ; $56be
 .otherRoom:
 	cp $00 ; $56bf
@@ -2080,8 +2080,8 @@ EraseSavedDataFlowHandler4_10:
 	ld a, $0f ; $56c8
 	ld [wStoryModeEntryPoint], a ; $56ca
 	ld a, $ff ; $56cd
-	ld [wUnusedExitLocationMirror], a ; $56cf
-	ld [wStoryModeExitLocationRequest], a ; $56d2
+	ld [wUnusedExitTriggerIdMirror], a ; $56cf
+	ld [wStoryModeExitTriggerRequest], a ; $56d2
 	ret ; $56d5
 .otherRoomAlt:
 	ld a, STORYLOC_JUNIOR_CLASS_COURT_DOUBLES ; $56d6
@@ -2089,8 +2089,8 @@ EraseSavedDataFlowHandler4_10:
 	ld a, $09 ; $56db
 	ld [wStoryModeEntryPoint], a ; $56dd
 	ld a, $ff ; $56e0
-	ld [wUnusedExitLocationMirror], a ; $56e2
-	ld [wStoryModeExitLocationRequest], a ; $56e5
+	ld [wUnusedExitTriggerIdMirror], a ; $56e2
+	ld [wStoryModeExitTriggerRequest], a ; $56e5
 	ret ; $56e8
 GetMinigameDrillId:
 	ld hl, MinigameDrillIdTable ; $56e9
@@ -3846,8 +3846,8 @@ AcademyWingInitScript_10:
 	ld a, $0a ; $6f37
 	ld [wStoryModeEntryPoint], a ; $6f39
 	ld a, $ff ; $6f3c
-	ld [wUnusedExitLocationMirror], a ; $6f3e
-	ld [wStoryModeExitLocationRequest], a ; $6f41
+	ld [wUnusedExitTriggerIdMirror], a ; $6f3e
+	ld [wStoryModeExitTriggerRequest], a ; $6f41
 	ret ; $6f44
 AcademyWingInitActors0_10:
 	; $6f45, 136 bytes (map_actors)
@@ -4028,8 +4028,8 @@ AcademyWingInitActors0_10:
 	ld a, $0c ; $732b
 	ld [wStoryModeEntryPoint], a ; $732d
 	ld a, $ff ; $7330
-	ld [wUnusedExitLocationMirror], a ; $7332
-	ld [wStoryModeExitLocationRequest], a ; $7335
+	ld [wUnusedExitTriggerIdMirror], a ; $7332
+	ld [wStoryModeExitTriggerRequest], a ; $7335
 	ret ; $7338
 AcademyWingOpenDoor_10:
 	script_wait_frames $0a ; $7339
@@ -4461,8 +4461,8 @@ AcademyMainBldgNewStudentCutscene_10:
 	script_move_target ACTOR_PLAYER, $2200, $0300 ; $7964
 	script_wait_move ACTOR_PLAYER ; $796f
 	ld a, $0f ; $7974
-	ld [wUnusedExitLocationMirror], a ; $7976
-	ld [wStoryModeExitLocationRequest], a ; $7979
+	ld [wUnusedExitTriggerIdMirror], a ; $7976
+	ld [wStoryModeExitTriggerRequest], a ; $7979
 	farcall EndCutsceneScriptMode ; $797c
 	ret ; $797f
 AcademyMainBldgNewStudentActors_10:

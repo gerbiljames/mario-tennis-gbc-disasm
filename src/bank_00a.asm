@@ -1595,8 +1595,8 @@ RunStoryMatch:
 	ld a, $01 ; $497e
 	ld [wStoryModeEntryPoint], a ; $4980
 	ld a, $ff ; $4983
-	ld [wUnusedExitLocationMirror], a ; $4985
-	ld [wStoryModeExitLocationRequest], a ; $4988
+	ld [wUnusedExitTriggerIdMirror], a ; $4985
+	ld [wStoryModeExitTriggerRequest], a ; $4988
 	ret ; $498b
 .matchAborted:
 	xor a ; $498c
@@ -2313,7 +2313,7 @@ RunStoryLocation:
 	call CallHLInBankA ; $4fc1
 .runInitScript:
 	call RunLocationInitScript ; $4fc4
-	ld hl, wStoryModeExitLocationRequest ; $4fc7
+	ld hl, wStoryModeExitTriggerRequest ; $4fc7
 	ld a, [hl] ; $4fca
 	and a ; $4fcb
 	jr z, .fadeIn ; $4fcc
@@ -2355,7 +2355,7 @@ RunStoryLocation:
 	ld [hl], $00 ; $501d
 	call RunQueuedTriggerScript ; $501f
 .checkExit:
-	ld hl, wStoryModeExitLocationRequest ; $5022
+	ld hl, wStoryModeExitTriggerRequest ; $5022
 	ld a, [hl] ; $5025
 	and a ; $5026
 	jr z, .checkMenu ; $5027
@@ -2755,8 +2755,8 @@ RestoreStoryReturnPoint:
 	ld a, [wStoryReturnEntryPoint] ; $52bf
 	ld [wStoryModeEntryPoint], a ; $52c2
 	ld a, $ff ; $52c5
-	ld [wUnusedExitLocationMirror], a ; $52c7
-	ld [wStoryModeExitLocationRequest], a ; $52ca
+	ld [wUnusedExitTriggerIdMirror], a ; $52c7
+	ld [wStoryModeExitTriggerRequest], a ; $52ca
 	jr .done ; $52cd
 .restorePosition:
 	ld hl, wStoryReturnPosition ; $52cf
@@ -2768,9 +2768,9 @@ RestoreStoryReturnPoint:
 	ld a, STORYENTRY_NONE ; $52e1
 	ld [wStoryModeEntryPoint], a ; $52e3
 	ld a, $ff ; $52e6
-	ld [wUnusedExitLocationMirror], a ; $52e8
+	ld [wUnusedExitTriggerIdMirror], a ; $52e8
 	ld a, $ff ; $52eb
-	ld [wStoryModeExitLocationRequest], a ; $52ed
+	ld [wStoryModeExitTriggerRequest], a ; $52ed
 .done:
 	pop hl ; $52f0
 	pop de ; $52f1

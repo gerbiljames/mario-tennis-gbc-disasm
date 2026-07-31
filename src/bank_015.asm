@@ -346,8 +346,8 @@ TournamentSiteArrivalScene:
 	ld a, $0f ; $4672
 	ld [wStoryModeEntryPoint], a ; $4674
 	ld a, $ff ; $4677
-	ld [wUnusedExitLocationMirror], a ; $4679
-	ld [wStoryModeExitLocationRequest], a ; $467c
+	ld [wUnusedExitTriggerIdMirror], a ; $4679
+	ld [wStoryModeExitTriggerRequest], a ; $467c
 	script_move_angle $04, FACE_UP, $0a00 ; $467f
 	script_move_angle $05, FACE_UP, $0a00 ; $4689
 	script_move_angle $06, FACE_UP, $0a00 ; $4693
@@ -1885,8 +1885,8 @@ TrainingCourtIntroTourScene:
 	call BeginFadeOut ; $5c39
 	script_wait_frames $14 ; $5c3c
 	ld a, $0f ; $5c43
-	ld [wUnusedExitLocationMirror], a ; $5c45
-	ld [wStoryModeExitLocationRequest], a ; $5c48
+	ld [wUnusedExitTriggerIdMirror], a ; $5c45
+	ld [wStoryModeExitTriggerRequest], a ; $5c48
 	farcall EndCutsceneScriptMode ; $5c4b
 	ret ; $5c4e
 TrainingCourtTourActors_15:
@@ -2126,8 +2126,8 @@ StrokeChallengerResultScene:
 	ld a, $0a ; $5f31
 	ld [wStoryModeEntryPoint], a ; $5f33
 	ld a, $ff ; $5f36
-	ld [wUnusedExitLocationMirror], a ; $5f38
-	ld [wStoryModeExitLocationRequest], a ; $5f3b
+	ld [wUnusedExitTriggerIdMirror], a ; $5f38
+	ld [wStoryModeExitTriggerRequest], a ; $5f3b
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $5f3e
 	farcall RunTrainingDrillByID ; $5f41
 	farcall EndCutsceneScriptMode ; $5f44
@@ -2164,8 +2164,8 @@ StrokeChallengerResultScene:
 	ld a, $0a ; $5f8b
 	ld [wStoryModeEntryPoint], a ; $5f8d
 	ld a, $ff ; $5f90
-	ld [wUnusedExitLocationMirror], a ; $5f92
-	ld [wStoryModeExitLocationRequest], a ; $5f95
+	ld [wUnusedExitTriggerIdMirror], a ; $5f92
+	ld [wStoryModeExitTriggerRequest], a ; $5f95
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $5f98
 	farcall RunTrainingDrillByID ; $5f9b
 	farcall EndCutsceneScriptMode ; $5f9e
@@ -2666,8 +2666,8 @@ ServiceAceMatchChallengeScene:
 	ld a, $0a ; $648f
 	ld [wStoryModeEntryPoint], a ; $6491
 	ld a, $ff ; $6494
-	ld [wUnusedExitLocationMirror], a ; $6496
-	ld [wStoryModeExitLocationRequest], a ; $6499
+	ld [wUnusedExitTriggerIdMirror], a ; $6496
+	ld [wStoryModeExitTriggerRequest], a ; $6499
 	ld a, MINIGAME_SERVICE_MATCH_1 ; $649c
 	farcall RunTrainingDrillByID ; $649e
 	ret ; $64a1
@@ -2721,8 +2721,8 @@ CenterLineServeMatchChallengeScene:
 	ld a, $0a ; $6573
 	ld [wStoryModeEntryPoint], a ; $6575
 	ld a, $ff ; $6578
-	ld [wUnusedExitLocationMirror], a ; $657a
-	ld [wStoryModeExitLocationRequest], a ; $657d
+	ld [wUnusedExitTriggerIdMirror], a ; $657a
+	ld [wStoryModeExitTriggerRequest], a ; $657d
 	ld a, MINIGAME_SERVICE_MATCH_2 ; $6580
 	farcall RunTrainingDrillByID ; $6582
 	ret ; $6585
@@ -2768,8 +2768,8 @@ AcademyRulesServeMatchChallengeScene:
 	ld a, $0a ; $6634
 	ld [wStoryModeEntryPoint], a ; $6636
 	ld a, $ff ; $6639
-	ld [wUnusedExitLocationMirror], a ; $663b
-	ld [wStoryModeExitLocationRequest], a ; $663e
+	ld [wUnusedExitTriggerIdMirror], a ; $663b
+	ld [wStoryModeExitTriggerRequest], a ; $663e
 	ld a, MINIGAME_SERVICE_MATCH_3 ; $6641
 	farcall RunTrainingDrillByID ; $6643
 	ret ; $6646
@@ -2858,8 +2858,8 @@ ServeCoachJuniorLessonScene:
 	ld a, $09 ; $6765
 	ld [wStoryModeEntryPoint], a ; $6767
 	ld a, $ff ; $676a
-	ld [wUnusedExitLocationMirror], a ; $676c
-	ld [wStoryModeExitLocationRequest], a ; $676f
+	ld [wUnusedExitTriggerIdMirror], a ; $676c
+	ld [wStoryModeExitTriggerRequest], a ; $676f
 	ld c, $10 ; $6772
 	call BeginFadeOut ; $6774
 	call WaitFadeEnd ; $6777
@@ -2896,8 +2896,8 @@ ServeCoachSeniorLessonScene:
 	ld a, $09 ; $67e3
 	ld [wStoryModeEntryPoint], a ; $67e5
 	ld a, $ff ; $67e8
-	ld [wUnusedExitLocationMirror], a ; $67ea
-	ld [wStoryModeExitLocationRequest], a ; $67ed
+	ld [wUnusedExitTriggerIdMirror], a ; $67ea
+	ld [wStoryModeExitTriggerRequest], a ; $67ed
 	ld c, $10 ; $67f0
 	call BeginFadeOut ; $67f2
 	call WaitFadeEnd ; $67f5
@@ -2934,8 +2934,8 @@ ServeCoachVarsityLessonScene:
 	ld a, $09 ; $6861
 	ld [wStoryModeEntryPoint], a ; $6863
 	ld a, $ff ; $6866
-	ld [wUnusedExitLocationMirror], a ; $6868
-	ld [wStoryModeExitLocationRequest], a ; $686b
+	ld [wUnusedExitTriggerIdMirror], a ; $6868
+	ld [wStoryModeExitTriggerRequest], a ; $686b
 	ld c, $10 ; $686e
 	call BeginFadeOut ; $6870
 	call WaitFadeEnd ; $6873
@@ -3111,8 +3111,8 @@ WalkToNetChallengeCourtCutscene:
 	ld a, $0a ; $6b3b
 	ld [wStoryModeEntryPoint], a ; $6b3d
 	ld a, $ff ; $6b40
-	ld [wUnusedExitLocationMirror], a ; $6b42
-	ld [wStoryModeExitLocationRequest], a ; $6b45
+	ld [wUnusedExitTriggerIdMirror], a ; $6b42
+	ld [wStoryModeExitTriggerRequest], a ; $6b45
 	ret ; $6b48
 ActorScript_15_07:
 	; $6b49, 11 bytes (actor_script)
@@ -3311,8 +3311,8 @@ ReturnCoachReturnLessonScene:
 	ld a, $09 ; $6e32
 	ld [wStoryModeEntryPoint], a ; $6e34
 	ld a, $ff ; $6e37
-	ld [wUnusedExitLocationMirror], a ; $6e39
-	ld [wStoryModeExitLocationRequest], a ; $6e3c
+	ld [wUnusedExitTriggerIdMirror], a ; $6e39
+	ld [wStoryModeExitTriggerRequest], a ; $6e3c
 	ld c, $10 ; $6e3f
 	call BeginFadeOut ; $6e41
 	call WaitFadeEnd ; $6e44
@@ -3350,8 +3350,8 @@ ReturnCoachLobLessonScene:
 	ld a, $09 ; $6eb5
 	ld [wStoryModeEntryPoint], a ; $6eb7
 	ld a, $ff ; $6eba
-	ld [wUnusedExitLocationMirror], a ; $6ebc
-	ld [wStoryModeExitLocationRequest], a ; $6ebf
+	ld [wUnusedExitTriggerIdMirror], a ; $6ebc
+	ld [wStoryModeExitTriggerRequest], a ; $6ebf
 	ld c, $10 ; $6ec2
 	call BeginFadeOut ; $6ec4
 	call WaitFadeEnd ; $6ec7
@@ -3389,8 +3389,8 @@ ReturnCoachPassingShotLessonScene:
 	ld a, $09 ; $6f38
 	ld [wStoryModeEntryPoint], a ; $6f3a
 	ld a, $ff ; $6f3d
-	ld [wUnusedExitLocationMirror], a ; $6f3f
-	ld [wStoryModeExitLocationRequest], a ; $6f42
+	ld [wUnusedExitTriggerIdMirror], a ; $6f3f
+	ld [wStoryModeExitTriggerRequest], a ; $6f42
 	ld c, $10 ; $6f45
 	call BeginFadeOut ; $6f47
 	call WaitFadeEnd ; $6f4a
@@ -3409,8 +3409,8 @@ WalkToStrokeChallengeCourtCutscene:
 	ld a, $0a ; $6f8e
 	ld [wStoryModeEntryPoint], a ; $6f90
 	ld a, $ff ; $6f93
-	ld [wUnusedExitLocationMirror], a ; $6f95
-	ld [wStoryModeExitLocationRequest], a ; $6f98
+	ld [wUnusedExitTriggerIdMirror], a ; $6f95
+	ld [wStoryModeExitTriggerRequest], a ; $6f98
 	ret ; $6f9b
 ActorScript_15_10:
 	; $6f9c, 11 bytes (actor_script)
@@ -3476,8 +3476,8 @@ NetCoachVolleyLessonScene:
 	ld a, $09 ; $704f
 	ld [wStoryModeEntryPoint], a ; $7051
 	ld a, $ff ; $7054
-	ld [wUnusedExitLocationMirror], a ; $7056
-	ld [wStoryModeExitLocationRequest], a ; $7059
+	ld [wUnusedExitTriggerIdMirror], a ; $7056
+	ld [wStoryModeExitTriggerRequest], a ; $7059
 	ld c, $10 ; $705c
 	call BeginFadeOut ; $705e
 	call WaitFadeEnd ; $7061
@@ -3530,8 +3530,8 @@ NetCoachSmashLessonScene:
 	ld a, $09 ; $7104
 	ld [wStoryModeEntryPoint], a ; $7106
 	ld a, $ff ; $7109
-	ld [wUnusedExitLocationMirror], a ; $710b
-	ld [wStoryModeExitLocationRequest], a ; $710e
+	ld [wUnusedExitTriggerIdMirror], a ; $710b
+	ld [wStoryModeExitTriggerRequest], a ; $710e
 	ld c, $10 ; $7111
 	call BeginFadeOut ; $7113
 	call WaitFadeEnd ; $7116
@@ -3578,8 +3578,8 @@ NetCoachDropShotLessonScene:
 	ld a, $09 ; $71a5
 	ld [wStoryModeEntryPoint], a ; $71a7
 	ld a, $ff ; $71aa
-	ld [wUnusedExitLocationMirror], a ; $71ac
-	ld [wStoryModeExitLocationRequest], a ; $71af
+	ld [wUnusedExitTriggerIdMirror], a ; $71ac
+	ld [wStoryModeExitTriggerRequest], a ; $71af
 	ld c, $10 ; $71b2
 	call BeginFadeOut ; $71b4
 	call WaitFadeEnd ; $71b7
@@ -4354,8 +4354,8 @@ ServeCoachWalkToCourtAndStartLesson:
 	ld a, $0a ; $7aef
 	ld [wStoryModeEntryPoint], a ; $7af1
 	ld a, $ff ; $7af4
-	ld [wUnusedExitLocationMirror], a ; $7af6
-	ld [wStoryModeExitLocationRequest], a ; $7af9
+	ld [wUnusedExitTriggerIdMirror], a ; $7af6
+	ld [wStoryModeExitTriggerRequest], a ; $7af9
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $7afc
 	farcall RunTrainingDrillByID ; $7aff
 	ret ; $7b02
@@ -4398,8 +4398,8 @@ NetCoachWalkToCourtAndStartLesson:
 	ld a, $0a ; $7b82
 	ld [wStoryModeEntryPoint], a ; $7b84
 	ld a, $ff ; $7b87
-	ld [wUnusedExitLocationMirror], a ; $7b89
-	ld [wStoryModeExitLocationRequest], a ; $7b8c
+	ld [wUnusedExitTriggerIdMirror], a ; $7b89
+	ld [wStoryModeExitTriggerRequest], a ; $7b8c
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $7b8f
 	farcall RunTrainingDrillByID ; $7b92
 	ret ; $7b95
@@ -4444,8 +4444,8 @@ ReturnCoachWalkToCourtAndStartLesson:
 	ld a, $0a ; $7c1b
 	ld [wStoryModeEntryPoint], a ; $7c1d
 	ld a, $ff ; $7c20
-	ld [wUnusedExitLocationMirror], a ; $7c22
-	ld [wStoryModeExitLocationRequest], a ; $7c25
+	ld [wUnusedExitTriggerIdMirror], a ; $7c22
+	ld [wStoryModeExitTriggerRequest], a ; $7c25
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $7c28
 	farcall RunTrainingDrillByID ; $7c2b
 	ret ; $7c2e

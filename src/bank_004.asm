@@ -2777,7 +2777,7 @@ CheckTileTriggerAtPoint:
 	ld a, d ; $5160
 	swap a ; $5161
 	and $0f ; $5163
-	ld [wStoryModeExitLocationRequest], a ; $5165
+	ld [wStoryModeExitTriggerRequest], a ; $5165
 .done:
 	pop de ; $5168
 	pop af ; $5169

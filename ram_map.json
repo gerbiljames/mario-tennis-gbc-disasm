@@ -119,8 +119,8 @@
   "size": 2
  },
  "0xc294": {
-  "name": "wUnusedExitLocationMirror",
-  "note": "[8-bit] Write-only mirror of wStoryModeExitLocationRequest ($c2a1): all 204 stores write the same value to both, and no instruction anywhere reads this one. Vestigial -- changing it has no effect"
+  "name": "wUnusedExitTriggerIdMirror",
+  "note": "[8-bit] Write-only mirror of wStoryModeExitTriggerRequest ($c2a1): all 204 stores write the same value to both, and no instruction anywhere reads this one. Vestigial -- changing it has no effect"
  },
  "0xc295": {
   "name": "wStoryModeEntryPoint",
@@ -145,8 +145,8 @@
   "note": "[8-bit] Story Mode - queued tile trigger-script id (behavior-map cell with low nibble 1 stores its high nibble here); nonzero makes the overworld loop run RunQueuedTriggerScript"
  },
  "0xc2a1": {
-  "name": "wStoryModeExitLocationRequest",
-  "note": "[8-bit] Story Mode - nonzero requests leaving the current location loop (RunLocationExit + reload); one of the event-request flags at $c2a0-$c2a5 cleared by ClearStoryEventRequests"
+  "name": "wStoryModeExitTriggerRequest",
+  "note": "[8-bit] Story Mode - nonzero requests leaving the current location loop (RunLocationExit + reload); one of the event-request flags at $c2a0-$c2a5 cleared by ClearStoryEventRequests. The value is an exit-trigger id, not a location: RunLocationExit ($0a:$560b) passes it in d to FindStoryScriptEntry, which matches it against the id column of the location's ExitTriggers table (map_tree slot 1), and the destination STORYLOC_* id is that row's arg0. So the same $01 leaves different locations for different places"
  },
  "0xc2a2": {
   "name": "wStoryAutoInteractArmed",
