@@ -1420,21 +1420,21 @@ ClearContinuePromptRows:
 ResultsScreenPalettes:
 	INCLUDE "data/bank_01e/palettes_4c40.asm" ; $4c40, 48 bytes (palettes)
 ResultsScreenGfx_1e:
-	INCBIN "data/bank_01e/d_4c70.bin" ; $4c70, 1455 bytes
+	INCBIN "data/bank_01e/lz_4c70.bin" ; $4c70, 1455 bytes
 ResultsScreenTilemap_1e:
-	INCBIN "data/bank_01e/d_521f.bin" ; $521f, 205 bytes
+	INCBIN "data/bank_01e/lz_521f.bin" ; $521f, 205 bytes
 ResultsScreenAttrmap_1e:
-	INCBIN "data/bank_01e/d_52ec.bin" ; $52ec, 87 bytes
+	INCBIN "data/bank_01e/lz_52ec.bin" ; $52ec, 87 bytes
 PanelFrameGfx_1e:
-	INCBIN "data/bank_01e/d_5343.bin" ; $5343, 156 bytes
+	INCBIN "data/bank_01e/lz_5343.bin" ; $5343, 156 bytes
 ResultsSinglesLabelTilemap_1e:
-	INCBIN "data/bank_01e/d_53df.bin" ; $53df, 19 bytes
+	INCBIN "data/bank_01e/lz_53df.bin" ; $53df, 19 bytes
 ResultsDoublesLabelTilemap_1e:
-	INCBIN "data/bank_01e/d_53f2.bin" ; $53f2, 19 bytes
+	INCBIN "data/bank_01e/lz_53f2.bin" ; $53f2, 19 bytes
 ResultsPlayerPanelTilemap_1e:
-	INCBIN "data/bank_01e/d_5405.bin" ; $5405, 28 bytes
+	INCBIN "data/bank_01e/lz_5405.bin" ; $5405, 28 bytes
 ResultsPlayerPanelAttrmap_1e:
-	INCBIN "data/bank_01e/d_5421.bin" ; $5421, 23 bytes
+	INCBIN "data/bank_01e/lz_5421.bin" ; $5421, 23 bytes
 ShowExpAwardScreen:
 	call HasPendingExpAwards ; $5438
 	or a ; $543b
@@ -2313,15 +2313,15 @@ HasPendingExpAwards:
 ExpAwardScreenPalettes0:
 	INCLUDE "data/bank_01e/palettes_5be1.asm" ; $5be1, 24 bytes (palettes)
 ExpAwardScreenGfx_1e:
-	INCBIN "data/bank_01e/d_5bf9.bin" ; $5bf9, 1745 bytes
+	INCBIN "data/bank_01e/lz_5bf9.bin" ; $5bf9, 1745 bytes
 ExpAwardScreenTilemap_1e:
-	INCBIN "data/bank_01e/d_62ca.bin" ; $62ca, 389 bytes
+	INCBIN "data/bank_01e/lz_62ca.bin" ; $62ca, 389 bytes
 ExpAwardScreenAttrmap_1e:
-	INCBIN "data/bank_01e/d_644f.bin" ; $644f, 70 bytes
+	INCBIN "data/bank_01e/lz_644f.bin" ; $644f, 70 bytes
 ExpAwardScreenPalettes1:
 	INCLUDE "data/bank_01e/palettes_6495.asm" ; $6495, 8 bytes (palettes)
 ExpDigitSpriteGfx_1e:
-	INCBIN "data/bank_01e/d_649d.bin" ; $649d, 150 bytes
+	INCBIN "data/bank_01e/lz_649d.bin" ; $649d, 150 bytes
 StubNop_1e:
 	ret ; $6533
 ProcessMatchRewards:
@@ -4755,11 +4755,13 @@ LoadGameProgressScreenTiles:
 	call LoadPaletteShadow ; $75a2
 	ret ; $75a5
 GameProgressHeaderGfx_1e:
-	INCBIN "data/bank_01e/d_75a6.bin" ; $75a6, 236 bytes
+	INCBIN "data/bank_01e/lz_75a6.bin" ; $75a6, 236 bytes
 GameProgressHeaderTilemap_1e:
-	INCBIN "data/bank_01e/d_7692.bin" ; $7692, 80 bytes
+	INCBIN "data/bank_01e/lz_7692.bin" ; $7692, 80 bytes
 GameProgressHeaderAttrmap_1e:
-	INCBIN "data/bank_01e/d_76e2.bin" ; $76e2, 30 bytes
+	INCBIN "data/bank_01e/lz_76e2.bin" ; $76e2, 24 bytes
+	; $76fa, 6 bytes (fill)
+	ds 6, $00
 GameProgressScreenPalettes0:
 	INCLUDE "data/bank_01e/palettes_7700.asm" ; $7700, 16 bytes (palettes)
 GameProgressScreenTiles0:

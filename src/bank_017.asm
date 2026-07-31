@@ -5226,17 +5226,17 @@ RulesScreenAttrmap:
 RulesScreenPalettes:
 	INCLUDE "data/bank_017/palettes_78fc.asm" ; $78fc, 64 bytes (palettes)
 RulesBorderAnimTiles0:
-	INCBIN "data/bank_017/d_793c.bin" ; $793c, 204 bytes
+	INCBIN "data/bank_017/lz_793c.bin" ; $793c, 204 bytes
 RulesBorderAnimTiles1:
-	INCBIN "data/bank_017/d_7a08.bin" ; $7a08, 39 bytes
+	INCBIN "data/bank_017/lz_7a08.bin" ; $7a08, 39 bytes
 RulesBorderAnimTiles2:
-	INCBIN "data/bank_017/d_7a2f.bin" ; $7a2f, 39 bytes
+	INCBIN "data/bank_017/lz_7a2f.bin" ; $7a2f, 39 bytes
 RulesBorderAnimTiles3:
-	INCBIN "data/bank_017/d_7a56.bin" ; $7a56, 162 bytes
+	INCBIN "data/bank_017/lz_7a56.bin" ; $7a56, 162 bytes
 RulesBorderAnimTiles4:
-	INCBIN "data/bank_017/d_7af8.bin" ; $7af8, 32 bytes
+	INCBIN "data/bank_017/lz_7af8.bin" ; $7af8, 32 bytes
 RulesBorderAnimTiles5:
-	INCBIN "data/bank_017/d_7b18.bin" ; $7b18, 33 bytes
+	INCBIN "data/bank_017/lz_7b18.bin" ; $7b18, 33 bytes
 RulesScreenPalette:
 	INCLUDE "data/bank_017/palettes_7b39.asm" ; $7b39, 64 bytes (palettes)
 	; $7b79, 1159 bytes fill to bank end (linker-padded)

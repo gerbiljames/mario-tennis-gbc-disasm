@@ -2672,7 +2672,8 @@ Padding_1a:
 	; $5523, 13 bytes (fill)
 	ds 13, $00
 ExpScreenGfx0:
-	INCBIN "data/bank_01a/d_5530.bin" ; $5530, 1712 bytes
+	INCBIN "data/bank_01a/lz_5530.bin" ; $5530, 1711 bytes
+	db $00 ; $5bdf
 ExpScreenGfx1:
 	INCBIN "data/bank_01a/d_5be0.bin" ; $5be0, 576 bytes
 ExpScreenGfx2:
@@ -2696,19 +2697,19 @@ StatChangeArrows5:
 ExpScreenGfxPalettes0:
 	INCBIN "data/bank_01a/d_64e0.bin" ; $64e0, 368 bytes
 ExpScreenGfx5:
-	INCBIN "data/bank_01a/d_6650.bin" ; $6650, 24 bytes
+	INCBIN "data/bank_01a/lz_6650.bin" ; $6650, 24 bytes
 ExpScreenGfxPalettes1:
 	INCBIN "data/bank_01a/d_6668.bin" ; $6668, 24 bytes
 ExpScreenGfx6:
-	INCBIN "data/bank_01a/d_6680.bin" ; $6680, 72 bytes
+	INCBIN "data/bank_01a/lz_6680.bin" ; $6680, 72 bytes
 ExpScreenGfx7:
-	INCBIN "data/bank_01a/d_66c8.bin" ; $66c8, 73 bytes
+	INCBIN "data/bank_01a/lz_66c8.bin" ; $66c8, 73 bytes
 ExpScreenGfxPalettes2:
 	INCBIN "data/bank_01a/d_6711.bin" ; $6711, 16 bytes
 ExpScreenGfxPalettes3:
 	INCBIN "data/bank_01a/d_6721.bin" ; $6721, 8 bytes
 ExpScreenGfx8:
-	INCBIN "data/bank_01a/d_6729.bin" ; $6729, 171 bytes
+	INCBIN "data/bank_01a/lz_6729.bin" ; $6729, 171 bytes
 RunDebugCharViewer:
 	xor a ; $67d4
 	ld [wDebugCharViewerPage], a ; $67d5
@@ -3718,15 +3719,15 @@ ApplyCharViewerPalette:
 Palette_1a_0:
 	INCLUDE "data/bank_01a/palettes_70d9.asm" ; $70d9, 64 bytes (palettes)
 CharViewerScreenGfx0:
-	INCBIN "data/bank_01a/d_7119.bin" ; $7119, 1636 bytes
+	INCBIN "data/bank_01a/lz_7119.bin" ; $7119, 1636 bytes
 CharViewerScreenGfx1:
-	INCBIN "data/bank_01a/d_777d.bin" ; $777d, 180 bytes
+	INCBIN "data/bank_01a/lz_777d.bin" ; $777d, 180 bytes
 CharViewerScreenGfx2:
-	INCBIN "data/bank_01a/d_7831.bin" ; $7831, 129 bytes
+	INCBIN "data/bank_01a/lz_7831.bin" ; $7831, 129 bytes
 CharViewerGridTilemap0:
-	INCBIN "data/bank_01a/d_78b2.bin" ; $78b2, 58 bytes
+	INCBIN "data/bank_01a/lz_78b2.bin" ; $78b2, 58 bytes
 CharViewerGridTilemap1:
-	INCBIN "data/bank_01a/d_78ec.bin" ; $78ec, 67 bytes
+	INCBIN "data/bank_01a/lz_78ec.bin" ; $78ec, 67 bytes
 CharViewerInputLoopTable:
 	; $792f, 22 bytes (bytes:16)
 	db $00, $01, $02, $03, $04, $05, $06, $07, $08, $09, $0a, $0b, $0c, $0d, $0e, $0f ; 0x00
@@ -4388,17 +4389,17 @@ CharDataConfirmScreenTable0:
 	; $7e46, 13 bytes (bytes:13)
 	db $00, $00, $00, $0e, $00, $20, $0e, $0e, $00, $40, $1c, $0e, $ff ; 0x00
 CharDataConfirmScreenGfx1:
-	INCBIN "data/bank_01a/d_7e53.bin" ; $7e53, 34 bytes
+	INCBIN "data/bank_01a/lz_7e53.bin" ; $7e53, 34 bytes
 CharDataConfirmScreenGfx2:
-	INCBIN "data/bank_01a/d_7e75.bin" ; $7e75, 9 bytes
+	INCBIN "data/bank_01a/lz_7e75.bin" ; $7e75, 9 bytes
 CharDataScreen_LoadPalette:
 	INCLUDE "data/bank_01a/palettes_7e7e.asm" ; $7e7e, 16 bytes (palettes)
 CharDataScreenGfx0:
-	INCBIN "data/bank_01a/d_7e8e.bin" ; $7e8e, 11 bytes
+	INCBIN "data/bank_01a/lz_7e8e.bin" ; $7e8e, 11 bytes
 CharDataScreenGfx1:
-	INCBIN "data/bank_01a/d_7e99.bin" ; $7e99, 11 bytes
+	INCBIN "data/bank_01a/lz_7e99.bin" ; $7e99, 11 bytes
 CharDataScreenGfx2:
-	INCBIN "data/bank_01a/d_7ea4.bin" ; $7ea4, 11 bytes
+	INCBIN "data/bank_01a/lz_7ea4.bin" ; $7ea4, 11 bytes
 CharDataScreenGfx3:
-	INCBIN "data/bank_01a/d_7eaf.bin" ; $7eaf, 11 bytes
+	INCBIN "data/bank_01a/lz_7eaf.bin" ; $7eaf, 11 bytes
 	; $7eba, 326 bytes fill to bank end (linker-padded)

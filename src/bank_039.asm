@@ -483,7 +483,7 @@ LoadFixedTileBlockAndPalette:
 	call LoadPaletteShadow ; $44f2
 	ret ; $44f5
 FixedTileBlockAndPalette:
-	INCBIN "data/bank_039/d_44f6.bin" ; $44f6, 32 bytes
+	INCBIN "data/bank_039/lz_44f6.bin" ; $44f6, 32 bytes
 FixedTileBlockPalette:
 	INCLUDE "data/bank_039/palettes_4516.asm" ; $4516, 8 bytes (palettes)
 LoadFixedBgPalette0:

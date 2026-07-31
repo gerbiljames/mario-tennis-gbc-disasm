@@ -419,9 +419,9 @@ ShowDmgLockoutScreen:
 	call AdvanceFrame ; $6077
 	jr .loop ; $607a
 DmgLockoutTilesLZ_01:
-	INCBIN "data/bank_001/d_607c.bin" ; $607c, 2183 bytes
+	INCBIN "data/bank_001/lz_607c.bin" ; $607c, 2183 bytes
 DmgLockoutTilemapLZ_01:
-	INCBIN "data/bank_001/d_6903.bin" ; $6903, 344 bytes
+	INCBIN "data/bank_001/lz_6903.bin" ; $6903, 344 bytes
 RunSoundTest:
 	push af ; $6a5b
 	push bc ; $6a5c

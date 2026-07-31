@@ -3418,39 +3418,39 @@ CharDataConfirmScreenTilemapPatch5:
 CharDataConfirmPromptTilemapPatch:
 	INCBIN "data/bank_01d/d_6310.bin" ; $6310, 17 bytes
 CharDataScreenPageGfx00:
-	INCBIN "data/bank_01d/d_6321.bin" ; $6321, 10 bytes
+	INCBIN "data/bank_01d/lz_6321.bin" ; $6321, 10 bytes
 CharDataScreenPageGfx01:
-	INCBIN "data/bank_01d/d_632b.bin" ; $632b, 9 bytes
+	INCBIN "data/bank_01d/lz_632b.bin" ; $632b, 9 bytes
 CharDataScreenPalettes:
 	INCBIN "data/bank_01d/d_6334.bin" ; $6334, 8 bytes
 CharDataScreenGfx14:
-	INCBIN "data/bank_01d/d_633c.bin" ; $633c, 184 bytes
+	INCBIN "data/bank_01d/lz_633c.bin" ; $633c, 184 bytes
 CharDataScreenPageGfx02:
-	INCBIN "data/bank_01d/d_63f4.bin" ; $63f4, 85 bytes
+	INCBIN "data/bank_01d/lz_63f4.bin" ; $63f4, 85 bytes
 CharDataScreenPageGfx03:
-	INCBIN "data/bank_01d/d_6449.bin" ; $6449, 18 bytes
+	INCBIN "data/bank_01d/lz_6449.bin" ; $6449, 18 bytes
 CharDataScreenPageGfx04:
-	INCBIN "data/bank_01d/d_645b.bin" ; $645b, 35 bytes
+	INCBIN "data/bank_01d/lz_645b.bin" ; $645b, 35 bytes
 CharDataScreenPageGfx05:
-	INCBIN "data/bank_01d/d_647e.bin" ; $647e, 7 bytes
+	INCBIN "data/bank_01d/lz_647e.bin" ; $647e, 7 bytes
 CharDataScreenPageGfx06:
-	INCBIN "data/bank_01d/d_6485.bin" ; $6485, 14 bytes
+	INCBIN "data/bank_01d/lz_6485.bin" ; $6485, 14 bytes
 CharDataScreenPageGfx07:
-	INCBIN "data/bank_01d/d_6493.bin" ; $6493, 7 bytes
+	INCBIN "data/bank_01d/lz_6493.bin" ; $6493, 7 bytes
 CharDataScreenPageGfx08:
-	INCBIN "data/bank_01d/d_649a.bin" ; $649a, 24 bytes
+	INCBIN "data/bank_01d/lz_649a.bin" ; $649a, 24 bytes
 CharDataScreenPageGfx09:
-	INCBIN "data/bank_01d/d_64b2.bin" ; $64b2, 9 bytes
+	INCBIN "data/bank_01d/lz_64b2.bin" ; $64b2, 9 bytes
 CharDataScreenPageGfx10:
-	INCBIN "data/bank_01d/d_64bb.bin" ; $64bb, 149 bytes
+	INCBIN "data/bank_01d/lz_64bb.bin" ; $64bb, 149 bytes
 CharDataScreenPageGfx11:
-	INCBIN "data/bank_01d/d_6550.bin" ; $6550, 24 bytes
+	INCBIN "data/bank_01d/lz_6550.bin" ; $6550, 24 bytes
 CharDataScreenPageGfx12:
-	INCBIN "data/bank_01d/d_6568.bin" ; $6568, 7 bytes
+	INCBIN "data/bank_01d/lz_6568.bin" ; $6568, 7 bytes
 CharDataScreenPageGfx13:
-	INCBIN "data/bank_01d/d_656f.bin" ; $656f, 117 bytes
+	INCBIN "data/bank_01d/lz_656f.bin" ; $656f, 117 bytes
 CharDataScreenPageGfx14:
-	INCBIN "data/bank_01d/d_65e4.bin" ; $65e4, 134 bytes
+	INCBIN "data/bank_01d/lz_65e4.bin" ; $65e4, 134 bytes
 DrawCharDataPageArrowsTask_SpriteTemplate0:
 	; $666a, 21 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
@@ -3460,7 +3460,7 @@ DrawCharDataPageArrowsTask_SpriteTemplate0:
 	oam_sprite $10, $28, $08, $00
 	oam_sprite_end
 CharDataScreenPageGraphicsGfx0:
-	INCBIN "data/bank_01d/d_667f.bin" ; $667f, 141 bytes
+	INCBIN "data/bank_01d/lz_667f.bin" ; $667f, 141 bytes
 DrawCharDataPageArrowsTask_SpriteTemplate1:
 	; $670c, 21 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
@@ -3470,7 +3470,7 @@ DrawCharDataPageArrowsTask_SpriteTemplate1:
 	oam_sprite $10, $28, $08, $00
 	oam_sprite_end
 CharDataScreenPageGraphicsGfx1:
-	INCBIN "data/bank_01d/d_6721.bin" ; $6721, 121 bytes
+	INCBIN "data/bank_01d/lz_6721.bin" ; $6721, 121 bytes
 DrawCharDataPageArrowsTask_SpriteTemplate2:
 	; $679a, 17 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
@@ -5498,15 +5498,15 @@ ExpLevelDownTilemapPatch3:
 ExpLevelDownTilemapPatch4:
 	INCBIN "data/bank_01d/d_781d.bin" ; $781d, 5 bytes
 ExpDistributionScreenGfx5:
-	INCBIN "data/bank_01d/d_7822.bin" ; $7822, 47 bytes
+	INCBIN "data/bank_01d/lz_7822.bin" ; $7822, 47 bytes
 ExpDistributionScreenGfx6:
-	INCBIN "data/bank_01d/d_7851.bin" ; $7851, 37 bytes
+	INCBIN "data/bank_01d/lz_7851.bin" ; $7851, 37 bytes
 ExpDistributionScreenGfx7:
-	INCBIN "data/bank_01d/d_7876.bin" ; $7876, 25 bytes
+	INCBIN "data/bank_01d/lz_7876.bin" ; $7876, 25 bytes
 ExpDistributionScreenPalettes:
 	INCBIN "data/bank_01d/d_788f.bin" ; $788f, 24 bytes
 ExpDistributionScreenGfx8:
-	INCBIN "data/bank_01d/d_78a7.bin" ; $78a7, 137 bytes
+	INCBIN "data/bank_01d/lz_78a7.bin" ; $78a7, 137 bytes
 DrawExpCharCursorTask_SpriteTemplate:
 	; $7930, 25 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
@@ -5517,14 +5517,14 @@ DrawExpCharCursorTask_SpriteTemplate:
 	oam_sprite $20, $18, $0a, $00
 	oam_sprite_end
 ExpDistributionScreenGfx0:
-	INCBIN "data/bank_01d/d_7949.bin" ; $7949, 49 bytes
+	INCBIN "data/bank_01d/lz_7949.bin" ; $7949, 49 bytes
 DrawExpBarFillMarkersTask_SpriteTemplate:
 	; $797a, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
 ExpDistributionScreenGfx1:
-	INCBIN "data/bank_01d/d_7983.bin" ; $7983, 49 bytes
+	INCBIN "data/bank_01d/lz_7983.bin" ; $7983, 49 bytes
 DrawExpBarSweepSpriteTask_SpriteTemplate:
 	; $79b4, 13 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
@@ -5532,9 +5532,9 @@ DrawExpBarSweepSpriteTask_SpriteTemplate:
 	oam_sprite $10, $18, $04, $00
 	oam_sprite_end
 ExpDistributionScreenGfx2:
-	INCBIN "data/bank_01d/d_79c1.bin" ; $79c1, 162 bytes
+	INCBIN "data/bank_01d/lz_79c1.bin" ; $79c1, 162 bytes
 ExpDistributionScreenGfx3:
-	INCBIN "data/bank_01d/d_7a63.bin" ; $7a63, 246 bytes
+	INCBIN "data/bank_01d/lz_7a63.bin" ; $7a63, 246 bytes
 DrawExpToNextLevelTask_SpriteTemplate0:
 	; $7b59, 49 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
@@ -5551,7 +5551,7 @@ DrawExpToNextLevelTask_SpriteTemplate0:
 	oam_sprite $20, $30, $16, $00
 	oam_sprite_end
 ExpDistributionScreenGfx4:
-	INCBIN "data/bank_01d/d_7b8a.bin" ; $7b8a, 243 bytes
+	INCBIN "data/bank_01d/lz_7b8a.bin" ; $7b8a, 243 bytes
 DrawExpToNextLevelTask_SpriteTemplate1:
 	; $7c7d, 49 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00

@@ -101,6 +101,9 @@ def prove_data(dis, overrides, hook_paths=()):
     dis.carve_tennis_dictionary_assets()
     dis.carve_char_mugshots()
     dis.carve_tilemap_dispatch()
+    decomp = _curated_offsets(overrides, ("DecompressData",))
+    if decomp:
+        dis.carve_lz_sources(min(decomp))
     queue_sprite = _curated_offsets(overrides, ("QueueSpriteTemplate",))
     if queue_sprite:
         dis.carve_sprite_templates(min(queue_sprite))
@@ -113,6 +116,7 @@ def prove_data(dis, overrides, hook_paths=()):
     dis.follow_frame_arrays()
     if helpers or hook_paths:
         dis.scan_data_slots()
+    dis.validate_lz_blobs({int(k, 0) for k in (overrides or {})})
 
 
 def resolve_labels(dis, overrides=None, data_tables=None):

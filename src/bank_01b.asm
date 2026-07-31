@@ -4151,7 +4151,9 @@ LoadUnlockDebugCursorGfx:
 	call RegisterFrameTask ; $6906
 	ret ; $6909
 UnlockDebugCursorGfx:
-	INCBIN "data/bank_01b/d_690a.bin" ; $690a, 38 bytes
+	INCBIN "data/bank_01b/lz_690a.bin" ; $690a, 29 bytes
+	; $6927, 9 bytes (fill)
+	ds 9, $00
 UnlockDebugCursorPalette:
 	INCLUDE "data/bank_01b/palettes_6930.asm" ; $6930, 8 bytes (palettes)
 DrawUnlockDebugFlagSprites:

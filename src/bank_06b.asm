@@ -1778,17 +1778,17 @@ InitCutsceneSceneC:
 	farcall CopyScrolledSceneTilemapToVram ; $5519
 	ret ; $551c
 CutsceneSceneAGfx0:
-	INCBIN "data/bank_06b/d_551d.bin" ; $551d, 1210 bytes
+	INCBIN "data/bank_06b/lz_551d.bin" ; $551d, 1210 bytes
 CutsceneSceneBGfx0:
-	INCBIN "data/bank_06b/d_59d7.bin" ; $59d7, 512 bytes
+	INCBIN "data/bank_06b/lz_59d7.bin" ; $59d7, 512 bytes
 CutsceneSceneBGfx1:
-	INCBIN "data/bank_06b/d_5bd7.bin" ; $5bd7, 334 bytes
+	INCBIN "data/bank_06b/lz_5bd7.bin" ; $5bd7, 334 bytes
 Palette_6b_1:
 	INCLUDE "data/bank_06b/palettes_5d25.asm" ; $5d25, 64 bytes (palettes)
 CutsceneSceneAGfx1:
-	INCBIN "data/bank_06b/d_5d65.bin" ; $5d65, 323 bytes
+	INCBIN "data/bank_06b/lz_5d65.bin" ; $5d65, 323 bytes
 CutsceneSceneAGfx2:
-	INCBIN "data/bank_06b/d_5ea8.bin" ; $5ea8, 461 bytes
+	INCBIN "data/bank_06b/lz_5ea8.bin" ; $5ea8, 461 bytes
 LoadIntroTilesAndPalette:
 	ld b, $54 ; $6075
 	ld c, $10 ; $6077
@@ -2009,7 +2009,7 @@ IntroCutsceneState16InitGfx6:
 IntroCutsceneState16InitGfx7:
 	INCBIN "data/bank_06b/d_6d24.bin" ; $6d24, 491 bytes
 TitleSceneGraphicsGfx2:
-	INCBIN "data/bank_06b/d_6f0f.bin" ; $6f0f, 308 bytes
+	INCBIN "data/bank_06b/lz_6f0f.bin" ; $6f0f, 308 bytes
 TitleScenePalette:
 	INCLUDE "data/bank_06b/palettes_7043.asm" ; $7043, 64 bytes (palettes)
 IntroSequenceTimerTask:
@@ -2241,9 +2241,14 @@ DecompressIntroTitleTiles:
 	wram_bank ; $7433
 	ret ; $7437
 DecompressIntroTitleTiles1:
-	INCBIN "data/bank_06b/d_7438.bin" ; $7438, 221 bytes
+	INCBIN "data/bank_06b/lz_7438.bin" ; $7438, 221 bytes
 DecompressIntroTitleTiles2:
-	INCBIN "data/bank_06b/d_7515.bin" ; $7515, 84 bytes
+	INCBIN "data/bank_06b/lz_7515.bin" ; $7515, 76 bytes
+Unused_6b_IncrementCutsceneStepTimer:
+	ld a, [wCutsceneStepTimer] ; $7561
+	inc a ; $7564
+	ld [wCutsceneStepTimer], a ; $7565
+	ret ; $7568
 ApplyScrollYFromWram:
 	ld a, [wCutsceneSpriteAX] ; $7569
 	ldh [hScrollY], a ; $756c

@@ -5133,113 +5133,113 @@ SceneAnimObjPalette1_03:
 	; $65cc, 4 bytes (fill)
 	ds 4, $00
 CutsceneAnimFrameLZ_00:
-	INCBIN "data/bank_003/d_65d0.bin" ; $65d0, 42 bytes
+	INCBIN "data/bank_003/lz_65d0.bin" ; $65d0, 42 bytes
 CutsceneAnimFrameLZ_01:
-	INCBIN "data/bank_003/d_65fa.bin" ; $65fa, 46 bytes
+	INCBIN "data/bank_003/lz_65fa.bin" ; $65fa, 46 bytes
 CutsceneAnimFrameLZ_02:
-	INCBIN "data/bank_003/d_6628.bin" ; $6628, 48 bytes
+	INCBIN "data/bank_003/lz_6628.bin" ; $6628, 48 bytes
 CutsceneAnimFrameLZ_03:
-	INCBIN "data/bank_003/d_6658.bin" ; $6658, 65 bytes
+	INCBIN "data/bank_003/lz_6658.bin" ; $6658, 65 bytes
 CutsceneAnimFrameLZ_04:
-	INCBIN "data/bank_003/d_6699.bin" ; $6699, 66 bytes
+	INCBIN "data/bank_003/lz_6699.bin" ; $6699, 66 bytes
 CutsceneAnimFrameLZ_05:
-	INCBIN "data/bank_003/d_66db.bin" ; $66db, 72 bytes
+	INCBIN "data/bank_003/lz_66db.bin" ; $66db, 72 bytes
 CutsceneAnimFrameLZ_06:
-	INCBIN "data/bank_003/d_6723.bin" ; $6723, 73 bytes
+	INCBIN "data/bank_003/lz_6723.bin" ; $6723, 73 bytes
 CutsceneAnimFrameLZ_07:
-	INCBIN "data/bank_003/d_676c.bin" ; $676c, 73 bytes
+	INCBIN "data/bank_003/lz_676c.bin" ; $676c, 73 bytes
 CutsceneAnimFrameLZ_08:
-	INCBIN "data/bank_003/d_67b5.bin" ; $67b5, 71 bytes
+	INCBIN "data/bank_003/lz_67b5.bin" ; $67b5, 71 bytes
 CutsceneAnimFrameLZ_09:
-	INCBIN "data/bank_003/d_67fc.bin" ; $67fc, 38 bytes
+	INCBIN "data/bank_003/lz_67fc.bin" ; $67fc, 38 bytes
 CutsceneAnimFrameLZ_0a:
-	INCBIN "data/bank_003/d_6822.bin" ; $6822, 46 bytes
+	INCBIN "data/bank_003/lz_6822.bin" ; $6822, 46 bytes
 CutsceneAnimFrameLZ_0b:
-	INCBIN "data/bank_003/d_6850.bin" ; $6850, 46 bytes
+	INCBIN "data/bank_003/lz_6850.bin" ; $6850, 46 bytes
 CutsceneAnimFrameLZ_0c:
-	INCBIN "data/bank_003/d_687e.bin" ; $687e, 67 bytes
+	INCBIN "data/bank_003/lz_687e.bin" ; $687e, 67 bytes
 CutsceneAnimFrameLZ_0d:
-	INCBIN "data/bank_003/d_68c1.bin" ; $68c1, 75 bytes
+	INCBIN "data/bank_003/lz_68c1.bin" ; $68c1, 75 bytes
 CutsceneAnimFrameLZ_0e:
-	INCBIN "data/bank_003/d_690c.bin" ; $690c, 75 bytes
+	INCBIN "data/bank_003/lz_690c.bin" ; $690c, 75 bytes
 CutsceneAnimFrameLZ_0f:
-	INCBIN "data/bank_003/d_6957.bin" ; $6957, 75 bytes
+	INCBIN "data/bank_003/lz_6957.bin" ; $6957, 75 bytes
 CutsceneAnimFrameLZ_10:
-	INCBIN "data/bank_003/d_69a2.bin" ; $69a2, 74 bytes
+	INCBIN "data/bank_003/lz_69a2.bin" ; $69a2, 74 bytes
 CutsceneAnimFrameLZ_11:
-	INCBIN "data/bank_003/d_69ec.bin" ; $69ec, 73 bytes
+	INCBIN "data/bank_003/lz_69ec.bin" ; $69ec, 73 bytes
 CutsceneAnimFrameLZ_12:
-	INCBIN "data/bank_003/d_6a35.bin" ; $6a35, 39 bytes
+	INCBIN "data/bank_003/lz_6a35.bin" ; $6a35, 39 bytes
 CutsceneAnimFrameLZ_13:
-	INCBIN "data/bank_003/d_6a5c.bin" ; $6a5c, 49 bytes
+	INCBIN "data/bank_003/lz_6a5c.bin" ; $6a5c, 49 bytes
 CutsceneAnimFrameLZ_14:
-	INCBIN "data/bank_003/d_6a8d.bin" ; $6a8d, 53 bytes
+	INCBIN "data/bank_003/lz_6a8d.bin" ; $6a8d, 53 bytes
 CutsceneAnimFrameLZ_15:
-	INCBIN "data/bank_003/d_6ac2.bin" ; $6ac2, 66 bytes
+	INCBIN "data/bank_003/lz_6ac2.bin" ; $6ac2, 66 bytes
 CutsceneAnimFrameLZ_16:
-	INCBIN "data/bank_003/d_6b04.bin" ; $6b04, 69 bytes
+	INCBIN "data/bank_003/lz_6b04.bin" ; $6b04, 69 bytes
 CutsceneAnimFrameLZ_17:
-	INCBIN "data/bank_003/d_6b49.bin" ; $6b49, 73 bytes
+	INCBIN "data/bank_003/lz_6b49.bin" ; $6b49, 73 bytes
 CutsceneAnimFrameLZ_18:
-	INCBIN "data/bank_003/d_6b92.bin" ; $6b92, 74 bytes
+	INCBIN "data/bank_003/lz_6b92.bin" ; $6b92, 74 bytes
 CutsceneAnimFrameLZ_19:
-	INCBIN "data/bank_003/d_6bdc.bin" ; $6bdc, 74 bytes
+	INCBIN "data/bank_003/lz_6bdc.bin" ; $6bdc, 74 bytes
 CutsceneAnimFrameLZ_1a:
-	INCBIN "data/bank_003/d_6c26.bin" ; $6c26, 69 bytes
+	INCBIN "data/bank_003/lz_6c26.bin" ; $6c26, 69 bytes
 CutsceneAnimFrameLZ_1b:
-	INCBIN "data/bank_003/d_6c6b.bin" ; $6c6b, 15 bytes
+	INCBIN "data/bank_003/lz_6c6b.bin" ; $6c6b, 15 bytes
 CutsceneAnimFrameLZ_1c:
-	INCBIN "data/bank_003/d_6c7a.bin" ; $6c7a, 15 bytes
+	INCBIN "data/bank_003/lz_6c7a.bin" ; $6c7a, 15 bytes
 CutsceneAnimFrameLZ_1d:
-	INCBIN "data/bank_003/d_6c89.bin" ; $6c89, 15 bytes
+	INCBIN "data/bank_003/lz_6c89.bin" ; $6c89, 15 bytes
 CutsceneAnimFrameLZ_1e:
-	INCBIN "data/bank_003/d_6c98.bin" ; $6c98, 19 bytes
+	INCBIN "data/bank_003/lz_6c98.bin" ; $6c98, 19 bytes
 CutsceneAnimFrameLZ_1f:
-	INCBIN "data/bank_003/d_6cab.bin" ; $6cab, 22 bytes
+	INCBIN "data/bank_003/lz_6cab.bin" ; $6cab, 22 bytes
 CutsceneAnimFrameLZ_20:
-	INCBIN "data/bank_003/d_6cc1.bin" ; $6cc1, 22 bytes
+	INCBIN "data/bank_003/lz_6cc1.bin" ; $6cc1, 22 bytes
 CutsceneAnimFrameLZ_21:
-	INCBIN "data/bank_003/d_6cd7.bin" ; $6cd7, 22 bytes
+	INCBIN "data/bank_003/lz_6cd7.bin" ; $6cd7, 22 bytes
 CutsceneAnimFrameLZ_22:
-	INCBIN "data/bank_003/d_6ced.bin" ; $6ced, 22 bytes
+	INCBIN "data/bank_003/lz_6ced.bin" ; $6ced, 22 bytes
 CutsceneAnimFrameLZ_23:
-	INCBIN "data/bank_003/d_6d03.bin" ; $6d03, 22 bytes
+	INCBIN "data/bank_003/lz_6d03.bin" ; $6d03, 22 bytes
 CutsceneAnimFrameLZ_24:
-	INCBIN "data/bank_003/d_6d19.bin" ; $6d19, 15 bytes
+	INCBIN "data/bank_003/lz_6d19.bin" ; $6d19, 15 bytes
 CutsceneAnimFrameLZ_25:
-	INCBIN "data/bank_003/d_6d28.bin" ; $6d28, 15 bytes
+	INCBIN "data/bank_003/lz_6d28.bin" ; $6d28, 15 bytes
 CutsceneAnimFrameLZ_26:
-	INCBIN "data/bank_003/d_6d37.bin" ; $6d37, 15 bytes
+	INCBIN "data/bank_003/lz_6d37.bin" ; $6d37, 15 bytes
 CutsceneAnimFrameLZ_27:
-	INCBIN "data/bank_003/d_6d46.bin" ; $6d46, 20 bytes
+	INCBIN "data/bank_003/lz_6d46.bin" ; $6d46, 20 bytes
 CutsceneAnimFrameLZ_28:
-	INCBIN "data/bank_003/d_6d5a.bin" ; $6d5a, 21 bytes
+	INCBIN "data/bank_003/lz_6d5a.bin" ; $6d5a, 21 bytes
 CutsceneAnimFrameLZ_29:
-	INCBIN "data/bank_003/d_6d6f.bin" ; $6d6f, 22 bytes
+	INCBIN "data/bank_003/lz_6d6f.bin" ; $6d6f, 22 bytes
 CutsceneAnimFrameLZ_2a:
-	INCBIN "data/bank_003/d_6d85.bin" ; $6d85, 22 bytes
+	INCBIN "data/bank_003/lz_6d85.bin" ; $6d85, 22 bytes
 CutsceneAnimFrameLZ_2b:
-	INCBIN "data/bank_003/d_6d9b.bin" ; $6d9b, 22 bytes
+	INCBIN "data/bank_003/lz_6d9b.bin" ; $6d9b, 22 bytes
 CutsceneAnimFrameLZ_2c:
-	INCBIN "data/bank_003/d_6db1.bin" ; $6db1, 22 bytes
+	INCBIN "data/bank_003/lz_6db1.bin" ; $6db1, 22 bytes
 CutsceneAnimFrameLZ_2d:
-	INCBIN "data/bank_003/d_6dc7.bin" ; $6dc7, 15 bytes
+	INCBIN "data/bank_003/lz_6dc7.bin" ; $6dc7, 15 bytes
 CutsceneAnimFrameLZ_2e:
-	INCBIN "data/bank_003/d_6dd6.bin" ; $6dd6, 15 bytes
+	INCBIN "data/bank_003/lz_6dd6.bin" ; $6dd6, 15 bytes
 CutsceneAnimFrameLZ_2f:
-	INCBIN "data/bank_003/d_6de5.bin" ; $6de5, 15 bytes
+	INCBIN "data/bank_003/lz_6de5.bin" ; $6de5, 15 bytes
 CutsceneAnimFrameLZ_30:
-	INCBIN "data/bank_003/d_6df4.bin" ; $6df4, 19 bytes
+	INCBIN "data/bank_003/lz_6df4.bin" ; $6df4, 19 bytes
 CutsceneAnimFrameLZ_31:
-	INCBIN "data/bank_003/d_6e07.bin" ; $6e07, 22 bytes
+	INCBIN "data/bank_003/lz_6e07.bin" ; $6e07, 22 bytes
 CutsceneAnimFrameLZ_32:
-	INCBIN "data/bank_003/d_6e1d.bin" ; $6e1d, 22 bytes
+	INCBIN "data/bank_003/lz_6e1d.bin" ; $6e1d, 22 bytes
 CutsceneAnimFrameLZ_33:
-	INCBIN "data/bank_003/d_6e33.bin" ; $6e33, 22 bytes
+	INCBIN "data/bank_003/lz_6e33.bin" ; $6e33, 22 bytes
 CutsceneAnimFrameLZ_34:
-	INCBIN "data/bank_003/d_6e49.bin" ; $6e49, 22 bytes
+	INCBIN "data/bank_003/lz_6e49.bin" ; $6e49, 22 bytes
 CutsceneAnimFrameLZ_35:
-	INCBIN "data/bank_003/d_6e5f.bin" ; $6e5f, 22 bytes
+	INCBIN "data/bank_003/lz_6e5f.bin" ; $6e5f, 22 bytes
 LoadCutsceneAnimFrameGfx_00_08_SpriteTemplate0:
 	; $6e75, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00

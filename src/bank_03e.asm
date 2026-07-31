@@ -4483,11 +4483,11 @@ LoadCourtSelectPanelTiles:
 	call QueueVRAMCopy ; $61d0
 	ret ; $61d3
 CourtSelectTitleTiles:
-	INCBIN "data/bank_03e/d_61d4.bin" ; $61d4, 159 bytes
+	INCBIN "data/bank_03e/lz_61d4.bin" ; $61d4, 159 bytes
 CourtSelectTitleTiles2Gfx:
-	INCBIN "data/bank_03e/d_6273.bin" ; $6273, 83 bytes
+	INCBIN "data/bank_03e/lz_6273.bin" ; $6273, 83 bytes
 CourtSelectPanelTiles:
-	INCBIN "data/bank_03e/d_62c6.bin" ; $62c6, 457 bytes
+	INCBIN "data/bank_03e/lz_62c6.bin" ; $62c6, 457 bytes
 DrawCourtNameTiles:
 	ldh a, [hWramBank] ; $648f
 	push af ; $6491

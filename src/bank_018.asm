@@ -675,13 +675,13 @@ InitPlayerRecordForCharacter:
 	ld [hl], a ; $4678
 	ret ; $4679
 ConfirmScreenGfx0:
-	INCBIN "data/bank_018/d_467a.bin" ; $467a, 2233 bytes
+	INCBIN "data/bank_018/lz_467a.bin" ; $467a, 2233 bytes
 ConfirmScreenPalette0:
 	INCLUDE "data/bank_018/palettes_4f33.asm" ; $4f33, 64 bytes (palettes)
 ConfirmScreenGfx1:
-	INCBIN "data/bank_018/d_4f73.bin" ; $4f73, 347 bytes
+	INCBIN "data/bank_018/lz_4f73.bin" ; $4f73, 347 bytes
 ConfirmScreenGfx2:
-	INCBIN "data/bank_018/d_50ce.bin" ; $50ce, 138 bytes
+	INCBIN "data/bank_018/lz_50ce.bin" ; $50ce, 138 bytes
 ThreeOptionLabelsData0:
 	INCBIN "data/bank_018/d_5158.bin" ; $5158, 16 bytes
 ThreeOptionLabelsData1:
@@ -707,7 +707,7 @@ YesNoLabels3:
 	; $51e8, 16 bytes (bytes:16)
 	db $08, $08, $0e, $0e, $0e, $08, $08, $0e, $0e, $0e, $08, $08, $09, $09, $09, $09 ; 0x00
 ConfirmScreenGfx3:
-	INCBIN "data/bank_018/d_51f8.bin" ; $51f8, 206 bytes
+	INCBIN "data/bank_018/lz_51f8.bin" ; $51f8, 206 bytes
 ConfirmScreenPalette1:
 	INCLUDE "data/bank_018/palettes_52c6.asm" ; $52c6, 24 bytes (palettes)
 InitConfirmScreen:
@@ -1169,7 +1169,25 @@ LoadConfirmScreenSpriteGfx:
 	call LoadPalettesImmediate ; $562f
 	ret ; $5632
 ConfirmScreenSpriteGfx0:
-	INCBIN "data/bank_018/d_5633.bin" ; $5633, 506 bytes
+	INCBIN "data/bank_018/lz_5633.bin" ; $5633, 449 bytes
+; A QueueSpriteTemplate list: 14 records of (dy $10, dx $08+8n, tile 2n, attr 0) then the $80 terminator -- one horizontal strip of 14 sprites. It sat inside ConfirmScreenSpriteGfx0's blob until that stream was sized by decoding it; nothing references it, which is why the sprite-template carve never saw it
+ConfirmScreenSpriteTemplate:
+	; $57f4, 57 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $10, $10, $02, $00
+	oam_sprite $10, $18, $04, $00
+	oam_sprite $10, $20, $06, $00
+	oam_sprite $10, $28, $08, $00
+	oam_sprite $10, $30, $0a, $00
+	oam_sprite $10, $38, $0c, $00
+	oam_sprite $10, $40, $0e, $00
+	oam_sprite $10, $48, $10, $00
+	oam_sprite $10, $50, $12, $00
+	oam_sprite $10, $58, $14, $00
+	oam_sprite $10, $60, $16, $00
+	oam_sprite $10, $68, $18, $00
+	oam_sprite $10, $70, $1a, $00
+	oam_sprite_end
 ConfirmScreenSpritePalette0:
 	INCLUDE "data/bank_018/palettes_582d.asm" ; $582d, 24 bytes (palettes)
 ConfirmScreenSpriteGfx1:
@@ -1224,15 +1242,39 @@ DrawCharSelectCursor:
 CharSelectCursorAnimTable:
 	INCBIN "data/bank_018/d_59fe.bin" ; $59fe, 32 bytes
 CharSelectCursorTemplatePtrs:
-	INCBIN "data/bank_018/d_5a1e.bin" ; $5a1e, 8 bytes
+	; $5a1e, 8 bytes (records:2)
+	dw CharSelectCursorTemplate0 ; record 0
+	dw CharSelectCursorTemplate1 ; record 1
+	dw CharSelectCursorTemplate2 ; record 2
+	dw CharSelectCursorTemplate3 ; record 3
 CharSelectCursorTemplate0:
-	INCBIN "data/bank_018/d_5a26.bin" ; $5a26, 17 bytes
+	; $5a26, 17 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $18, $08, $00, $40
+	oam_sprite $10, $18, $00, $20
+	oam_sprite $18, $18, $00, $60
+	oam_sprite_end
 CharSelectCursorTemplate1:
-	INCBIN "data/bank_018/d_5a37.bin" ; $5a37, 17 bytes
+	; $5a37, 17 bytes (sprite_template)
+	oam_sprite $0f, $07, $00, $00
+	oam_sprite $19, $07, $00, $40
+	oam_sprite $0f, $19, $00, $20
+	oam_sprite $19, $19, $00, $60
+	oam_sprite_end
 CharSelectCursorTemplate2:
-	INCBIN "data/bank_018/d_5a48.bin" ; $5a48, 17 bytes
+	; $5a48, 17 bytes (sprite_template)
+	oam_sprite $10, $08, $00, $00
+	oam_sprite $18, $08, $00, $40
+	oam_sprite $10, $48, $00, $20
+	oam_sprite $18, $48, $00, $60
+	oam_sprite_end
 CharSelectCursorTemplate3:
-	INCBIN "data/bank_018/d_5a59.bin" ; $5a59, 17 bytes
+	; $5a59, 17 bytes (sprite_template)
+	oam_sprite $0f, $07, $00, $00
+	oam_sprite $19, $07, $00, $40
+	oam_sprite $0f, $49, $00, $20
+	oam_sprite $19, $49, $00, $60
+	oam_sprite_end
 ApplySpriteBobOffset_18:
 	ldh a, [hVBlankCounter] ; $5a6a
 	and $3f ; $5a6c

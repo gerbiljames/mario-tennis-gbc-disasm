@@ -15,7 +15,7 @@ Padding_28_0:
 MatchGraphicsGfx:
 	INCBIN "data/bank_028/d_4020.bin" ; $4020, 1472 bytes
 MatchGfxTilesA_28:
-	INCBIN "data/bank_028/d_45e0.bin" ; $45e0, 1472 bytes
+	INCBIN "data/bank_028/lz_45e0.bin" ; $45e0, 1472 bytes
 MatchGfxPalettesA_28:
 	INCLUDE "data/bank_028/palettes_4ba0.asm" ; $4ba0, 64 bytes (palettes)
 MatchGraphicsPalettes:
@@ -394,7 +394,9 @@ Padding_28_1:
 	; $6171, 15 bytes (fill)
 	ds 15, $00
 MatchGfxTilesB_28:
-	INCBIN "data/bank_028/d_6180.bin" ; $6180, 2972 bytes
+	INCBIN "data/bank_028/lz_6180.bin" ; $6180, 2964 bytes
+UnusedMatchGfxPalette_28:
+	INCBIN "data/bank_028/d_6d14.bin" ; $6d14, 8 bytes
 MatchGfxPalettesC_28:
 	INCLUDE "data/bank_028/palettes_6d1c.asm" ; $6d1c, 56 bytes (palettes)
 MatchStoryGfxPalettes:

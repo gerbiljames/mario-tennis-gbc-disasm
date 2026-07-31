@@ -7,6 +7,8 @@ references them by name. Two code-shape passes live here too (text-bank entry
 stubs and story match-launcher stubs): both recover functions that no control
 flow reaches, by matching a rigid byte shape rather than by descent.
 """
+import bisect
+
 import lz
 
 from .rom import BANK_SIZE, offset_to_cpu
@@ -312,6 +314,89 @@ class StructureCarvingMixin:
                         self.sprite_template_sites.setdefault(src, set()).add(hl_end - 3)
         if added:
             print(f"sprite templates: {added} carved")
+
+    def carve_lz_sources(self, decomp_flat):
+        """Size every `call DecompressData` operand by decoding it.
+
+        The same backtrack as carve_sprite_templates, but the length comes from
+        the codec: a stream ends where its own terminator says, so decoding is
+        the only thing that knows where the compressed bytes stop. Without this
+        a stream that shares a blob with whatever follows it is carved to the
+        *next reference*, which silently glues the two together -- and because
+        the blob is then not named `lz_`, `make check` never decodes it and the
+        mismatch stays invisible. Registering the true length splits the tail
+        into its own blob, where it can be named for what it is."""
+        dcpu = offset_to_cpu(decomp_flat)
+        added = 0
+        last_hl = None
+        for off in sorted(self.instrs):
+            op = self.rom[off]
+            if op == 0x21:
+                cpu = self.rom[off + 1] | (self.rom[off + 2] << 8)
+                last_hl = (off // BANK_SIZE, off + 3, cpu)
+                continue
+            if last_hl is not None and _writes_hl(self.instrs[off].text):
+                last_hl = None
+            if not (op == 0xCD and last_hl is not None
+                    and (self.rom[off + 1] | (self.rom[off + 2] << 8)) == dcpu):
+                continue
+            bank, hl_end, cpu = last_hl
+            if not (bank == off // BANK_SIZE and 0x4000 <= cpu < 0x8000
+                    and 0 <= off - hl_end <= 24):
+                continue
+            src = bank * BANK_SIZE + cpu - BANK_SIZE
+            if src in self.instrs:
+                continue
+            try:
+                _, clen = lz.decompress(self.rom, src, (bank + 1) * BANK_SIZE)
+            except ValueError:
+                # The pointer did not survive to the call after all (a table
+                # index, a bank switch, an hl the tracker could not follow), so
+                # believe the existing carve rather than a failed decode.
+                continue
+            existing = self.data_blobs.get(src)
+            if existing is not None and existing[1] == "lz":
+                continue
+            # The decode ran to the end of the bank, so a stream that overlaps
+            # anything already carved is evidence the pointer tracking picked
+            # the wrong source, not that the other carve is wrong. Emission
+            # would clip the region at that boundary and the `lz` name would
+            # then assert a stream that does not fit inside it.
+            if any(src < o < src + clen
+                   for o in (*self.data_blobs, *self.instrs)):
+                continue
+            if existing is None or existing[0] is None or clen < existing[0]:
+                self.data_blobs[src] = (clen, "lz")
+                added += 1
+        if added:
+            print(f"lz sources: {added} streams sized from their decompress call")
+
+    def validate_lz_blobs(self, label_offsets=()):
+        """Demote any `lz` blob whose stream does not fit the space it gets.
+
+        A blob's emitted extent ends at the next thing that claims an address --
+        another blob, an instruction, or a curated label -- and passes that run
+        after this one can introduce such a boundary inside a stream that was
+        whole when it was registered. Naming the region `lz_` then asserts a
+        stream that provably does not decode inside it, which is what
+        `make check`'s lz check reports. Believe the boundary and drop the
+        claim: the bytes are unchanged either way."""
+        bounds = sorted({*self.data_blobs, *self.instrs, *label_offsets})
+        demoted = 0
+        for src, (length, kind) in sorted(self.data_blobs.items()):
+            if kind != "lz" or length is None:
+                continue
+            i = bisect.bisect_right(bounds, src)
+            end = min(bounds[i], src + length) if i < len(bounds) else src + length
+            try:
+                _, used = lz.decompress(self.rom, src, end)
+            except ValueError:
+                used = None
+            if used != end - src:
+                self.data_blobs[src] = (length, "copy")
+                demoted += 1
+        if demoted:
+            print(f"lz sources: {demoted} demoted -- a later carve split them")
 
     def _sprite_template_len(self, src):
         """Length of a QueueSpriteTemplate list at src: 4-byte records up to a

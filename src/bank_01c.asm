@@ -629,9 +629,31 @@ CharDataScreen_DrawStatBarPtrs:
 	dw CharDataScreenStatBar09 ; record 9
 	dw CharDataScreenStatBar10 ; record 10
 CharDataScreen_DrawStatBarTable0:
-	INCBIN "data/bank_01c/d_456e.bin" ; $456e, 22 bytes
+	; $456e, 22 bytes (records:2)
+	dw CharDataScreenStatBar11 ; record 0
+	dw CharDataScreenStatBar12 ; record 1
+	dw CharDataScreenStatBar13 ; record 2
+	dw CharDataScreenStatBar14 ; record 3
+	dw CharDataScreenStatBar15 ; record 4
+	dw CharDataScreenStatBar16 ; record 5
+	dw CharDataScreenStatBar17 ; record 6
+	dw CharDataScreenStatBar18 ; record 7
+	dw CharDataScreenStatBar19 ; record 8
+	dw CharDataScreenStatBar20 ; record 9
+	dw CharDataScreenStatBar21 ; record 10
 CharDataScreen_DrawStatBarTable1:
-	INCBIN "data/bank_01c/d_4584.bin" ; $4584, 22 bytes
+	; $4584, 22 bytes (records:2)
+	dw CharDataScreenStatBar22 ; record 0
+	dw CharDataScreenStatBar23 ; record 1
+	dw CharDataScreenStatBar24 ; record 2
+	dw CharDataScreenStatBar25 ; record 3
+	dw CharDataScreenStatBar26 ; record 4
+	dw CharDataScreenStatBar27 ; record 5
+	dw CharDataScreenStatBar28 ; record 6
+	dw CharDataScreenStatBar29 ; record 7
+	dw CharDataScreenStatBar30 ; record 8
+	dw CharDataScreenStatBar31 ; record 9
+	dw CharDataScreenStatBar32 ; record 10
 CharDataScreen_DrawPortrait:
 	push af ; $459a
 	ld hl, wStoryModeNameOfMainCharacter ; $459b
@@ -1798,7 +1820,12 @@ CharDataScreen_DrawPageColumnsTable0:
 	db $0a, $d1, $09, $0a ; 0x0c
 	db $e0, $d1, $03, $0a ; 0x10
 CharDataScreen_DrawPageColumnsTable1:
-	INCBIN "data/bank_01c/d_4e4a.bin" ; $4e4a, 10 bytes
+	; $4e4a, 10 bytes (records:2)
+	dw CharDataScreenPage0Columns ; record 0
+	dw CharDataScreenPage1Columns ; record 1
+	dw CharDataScreenPage2Columns ; record 2
+	dw CharDataScreenPage3Columns ; record 3
+	dw CharDataScreenPage4Columns ; record 4
 DrawStatValueSprites:
 	wram_bank $06 ; $4e54
 	ld b, $0e ; $4e5a
@@ -2708,7 +2735,23 @@ Unused_1c_0:
 	dw UnusedShiftGfx14 ; record 14
 	dw UnusedShiftGfx15 ; record 15
 CharDataScreenAnimTask_CharDataFlushChunkTable:
-	INCBIN "data/bank_01c/d_5699.bin" ; $5699, 32 bytes
+	; $5699, 32 bytes (records:2)
+	dw UnusedShiftGfx16 ; record 0
+	dw UnusedShiftGfx17 ; record 1
+	dw UnusedShiftGfx18 ; record 2
+	dw UnusedShiftGfx19 ; record 3
+	dw UnusedShiftGfx20 ; record 4
+	dw UnusedShiftGfx21 ; record 5
+	dw UnusedShiftGfx22 ; record 6
+	dw UnusedShiftGfx23 ; record 7
+	dw UnusedShiftGfx24 ; record 8
+	dw UnusedShiftGfx25 ; record 9
+	dw UnusedShiftGfx26 ; record 10
+	dw UnusedShiftGfx27 ; record 11
+	dw UnusedShiftGfx28 ; record 12
+	dw UnusedShiftGfx29 ; record 13
+	dw UnusedShiftGfx30 ; record 14
+	dw UnusedShiftGfx31 ; record 15
 CharDataBand0RunsStep7_1c:
 	; $56b9, 22 bytes (bytes:16)
 	db $00, $60, $00, $0a, $00, $80, $0a, $0a, $00, $a0, $14, $0a, $00, $c0, $1e, $0a ; 0x00
@@ -2868,11 +2911,11 @@ CharDataBand8RunsStep1_1c:
 CharDataScreen_LoadScreenPalette:
 	INCLUDE "data/bank_01c/palettes_598c.asm" ; $598c, 64 bytes (palettes)
 CharDataScreenGfx0_1c:
-	INCBIN "data/bank_01c/d_59cc.bin" ; $59cc, 2618 bytes
+	INCBIN "data/bank_01c/lz_59cc.bin" ; $59cc, 2618 bytes
 CharDataScreenGfx1_1c:
-	INCBIN "data/bank_01c/d_6406.bin" ; $6406, 99 bytes
+	INCBIN "data/bank_01c/lz_6406.bin" ; $6406, 99 bytes
 CharDataScreenGfx2_1c:
-	INCBIN "data/bank_01c/d_6469.bin" ; $6469, 59 bytes
+	INCBIN "data/bank_01c/lz_6469.bin" ; $6469, 59 bytes
 CharDataScreenStatBar00:
 	INCBIN "data/bank_01c/d_64a4.bin" ; $64a4, 5 bytes
 CharDataScreenStatBar01:
@@ -2940,41 +2983,53 @@ CharDataScreenStatBar31:
 CharDataScreenStatBar32:
 	INCBIN "data/bank_01c/d_6544.bin" ; $6544, 5 bytes
 CharDataScreenGfx3_1c:
-	INCBIN "data/bank_01c/d_6549.bin" ; $6549, 54 bytes
+	INCBIN "data/bank_01c/lz_6549.bin" ; $6549, 54 bytes
 CharDataScreenGfx4:
-	INCBIN "data/bank_01c/d_657f.bin" ; $657f, 73 bytes
+	INCBIN "data/bank_01c/lz_657f.bin" ; $657f, 23 bytes
+CharDataScreenPage0Columns:
+	INCBIN "data/bank_01c/d_6596.bin" ; $6596, 50 bytes
 CharDataScreenGfx5:
-	INCBIN "data/bank_01c/d_65c8.bin" ; $65c8, 67 bytes
+	INCBIN "data/bank_01c/lz_65c8.bin" ; $65c8, 67 bytes
 CharDataScreenGfx6:
-	INCBIN "data/bank_01c/d_660b.bin" ; $660b, 93 bytes
+	INCBIN "data/bank_01c/lz_660b.bin" ; $660b, 23 bytes
+CharDataScreenPage1Columns:
+	INCBIN "data/bank_01c/d_6622.bin" ; $6622, 70 bytes
 CharDataScreenGfx7:
-	INCBIN "data/bank_01c/d_6668.bin" ; $6668, 58 bytes
+	INCBIN "data/bank_01c/lz_6668.bin" ; $6668, 58 bytes
 CharDataScreenGfx8:
-	INCBIN "data/bank_01c/d_66a2.bin" ; $66a2, 74 bytes
+	INCBIN "data/bank_01c/lz_66a2.bin" ; $66a2, 24 bytes
+CharDataScreenPage2Columns:
+	INCBIN "data/bank_01c/d_66ba.bin" ; $66ba, 50 bytes
 CharDataScreenGfx9:
-	INCBIN "data/bank_01c/d_66ec.bin" ; $66ec, 72 bytes
+	INCBIN "data/bank_01c/lz_66ec.bin" ; $66ec, 72 bytes
 CharDataScreenGfx10:
-	INCBIN "data/bank_01c/d_6734.bin" ; $6734, 145 bytes
+	INCBIN "data/bank_01c/lz_6734.bin" ; $6734, 25 bytes
+CharDataScreenPage3Columns:
+	INCBIN "data/bank_01c/d_674d.bin" ; $674d, 90 bytes
+CharDataScreenPage4Columns:
+	INCBIN "data/bank_01c/d_67a7.bin" ; $67a7, 30 bytes
 CharDataScreenGfx11:
-	INCBIN "data/bank_01c/d_67c5.bin" ; $67c5, 14 bytes
+	INCBIN "data/bank_01c/lz_67c5.bin" ; $67c5, 14 bytes
 CharDataScreenGfx12:
-	INCBIN "data/bank_01c/d_67d3.bin" ; $67d3, 7 bytes
+	INCBIN "data/bank_01c/lz_67d3.bin" ; $67d3, 7 bytes
 CharDataScreenUIGraphicsGfx0:
-	INCBIN "data/bank_01c/d_67da.bin" ; $67da, 24 bytes
+	INCBIN "data/bank_01c/lz_67da.bin" ; $67da, 24 bytes
 CharDataScreenUIGraphicsGfx1:
-	INCBIN "data/bank_01c/d_67f2.bin" ; $67f2, 12 bytes
+	INCBIN "data/bank_01c/lz_67f2.bin" ; $67f2, 12 bytes
 CharDataScreenUIGraphicsGfx2:
-	INCBIN "data/bank_01c/d_67fe.bin" ; $67fe, 39 bytes
+	INCBIN "data/bank_01c/lz_67fe.bin" ; $67fe, 39 bytes
 CharDataScreenUIGraphicsGfx3:
-	INCBIN "data/bank_01c/d_6825.bin" ; $6825, 9 bytes
+	INCBIN "data/bank_01c/lz_6825.bin" ; $6825, 9 bytes
 CharDataScreenUIGraphicsGfx4:
-	INCBIN "data/bank_01c/d_682e.bin" ; $682e, 26 bytes
+	INCBIN "data/bank_01c/lz_682e.bin" ; $682e, 26 bytes
 CharDataScreenUIGraphicsGfx5:
-	INCBIN "data/bank_01c/d_6848.bin" ; $6848, 7 bytes
+	INCBIN "data/bank_01c/lz_6848.bin" ; $6848, 7 bytes
 CharDataScreenUIGraphicsGfx6:
-	INCBIN "data/bank_01c/d_684f.bin" ; $684f, 28 bytes
+	INCBIN "data/bank_01c/lz_684f.bin" ; $684f, 28 bytes
 CharDataScreenUIGraphicsGfx7:
-	INCBIN "data/bank_01c/d_686b.bin" ; $686b, 21 bytes
+	INCBIN "data/bank_01c/lz_686b.bin" ; $686b, 7 bytes
+	; $6872, 14 bytes (fill)
+	ds 14, $00
 UnusedShiftGfx00:
 	INCBIN "data/bank_01c/d_6880.bin" ; $6880, 64 bytes
 UnusedShiftGfx01:
@@ -3049,7 +3104,7 @@ UnusedShiftGfx30:
 UnusedShiftGfx31:
 	INCBIN "data/bank_01c/d_7040.bin" ; $7040, 64 bytes
 CharDataScreenGfx13:
-	INCBIN "data/bank_01c/d_7080.bin" ; $7080, 150 bytes
+	INCBIN "data/bank_01c/lz_7080.bin" ; $7080, 150 bytes
 CharDataScreen_LoadScreen:
 	ld hl, CharDataScreen_LoadScreenPalette ; $7116
 	ld de, $0008 ; $7119
@@ -3480,9 +3535,9 @@ LoadCharDataScreenMugshots:
 CharDataScreenBgAndPalettes:
 	INCLUDE "data/bank_01c/palettes_7541.asm" ; $7541, 64 bytes (palettes)
 CharDataScreenBgAndPalettes0:
-	INCBIN "data/bank_01c/d_7581.bin" ; $7581, 1886 bytes
+	INCBIN "data/bank_01c/lz_7581.bin" ; $7581, 1886 bytes
 CharDataScreenBgAndPalettes1:
-	INCBIN "data/bank_01c/d_7cdf.bin" ; $7cdf, 320 bytes
+	INCBIN "data/bank_01c/lz_7cdf.bin" ; $7cdf, 320 bytes
 CharDataScreenBgAndPalettes2:
-	INCBIN "data/bank_01c/d_7e1f.bin" ; $7e1f, 216 bytes
+	INCBIN "data/bank_01c/lz_7e1f.bin" ; $7e1f, 216 bytes
 	; $7ef7, 265 bytes fill to bank end (linker-padded)

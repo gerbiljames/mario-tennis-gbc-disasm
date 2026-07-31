@@ -17,8 +17,8 @@ bank_001/palettes_50f6.asm 0050f6 80 palettes
 bank_001/d_51b0.bin 0051b0 100
 bank_001/d_53b0.bin 0053b0 c40
 bank_001/palettes_5ff0.asm 005ff0 40 palettes
-bank_001/d_607c.bin 00607c 887
-bank_001/d_6903.bin 006903 158
+bank_001/lz_607c.bin 00607c 887
+bank_001/lz_6903.bin 006903 158
 bank_001/sound_data_6b64.asm 006b64 6 sound_data
 bank_001/text_6b6a.asm 006b6a 7
 bank_001/sound_data_6b75.asm 006b75 3f sound_data
@@ -30,60 +30,60 @@ bank_003/d_52f0.bin 00d2f0 20
 bank_003/palettes_5b20.asm 00db20 8 palettes
 bank_003/palettes_65bc.asm 00e5bc 8 palettes
 bank_003/palettes_65c4.asm 00e5c4 8 palettes
-bank_003/d_65d0.bin 00e5d0 2a
-bank_003/d_65fa.bin 00e5fa 2e
-bank_003/d_6628.bin 00e628 30
-bank_003/d_6658.bin 00e658 41
-bank_003/d_6699.bin 00e699 42
-bank_003/d_66db.bin 00e6db 48
-bank_003/d_6723.bin 00e723 49
-bank_003/d_676c.bin 00e76c 49
-bank_003/d_67b5.bin 00e7b5 47
-bank_003/d_67fc.bin 00e7fc 26
-bank_003/d_6822.bin 00e822 2e
-bank_003/d_6850.bin 00e850 2e
-bank_003/d_687e.bin 00e87e 43
-bank_003/d_68c1.bin 00e8c1 4b
-bank_003/d_690c.bin 00e90c 4b
-bank_003/d_6957.bin 00e957 4b
-bank_003/d_69a2.bin 00e9a2 4a
-bank_003/d_69ec.bin 00e9ec 49
-bank_003/d_6a35.bin 00ea35 27
-bank_003/d_6a5c.bin 00ea5c 31
-bank_003/d_6a8d.bin 00ea8d 35
-bank_003/d_6ac2.bin 00eac2 42
-bank_003/d_6b04.bin 00eb04 45
-bank_003/d_6b49.bin 00eb49 49
-bank_003/d_6b92.bin 00eb92 4a
-bank_003/d_6bdc.bin 00ebdc 4a
-bank_003/d_6c26.bin 00ec26 45
-bank_003/d_6c6b.bin 00ec6b f
-bank_003/d_6c7a.bin 00ec7a f
-bank_003/d_6c89.bin 00ec89 f
-bank_003/d_6c98.bin 00ec98 13
-bank_003/d_6cab.bin 00ecab 16
-bank_003/d_6cc1.bin 00ecc1 16
-bank_003/d_6cd7.bin 00ecd7 16
-bank_003/d_6ced.bin 00eced 16
-bank_003/d_6d03.bin 00ed03 16
-bank_003/d_6d19.bin 00ed19 f
-bank_003/d_6d28.bin 00ed28 f
-bank_003/d_6d37.bin 00ed37 f
-bank_003/d_6d46.bin 00ed46 14
-bank_003/d_6d5a.bin 00ed5a 15
-bank_003/d_6d6f.bin 00ed6f 16
-bank_003/d_6d85.bin 00ed85 16
-bank_003/d_6d9b.bin 00ed9b 16
-bank_003/d_6db1.bin 00edb1 16
-bank_003/d_6dc7.bin 00edc7 f
-bank_003/d_6dd6.bin 00edd6 f
-bank_003/d_6de5.bin 00ede5 f
-bank_003/d_6df4.bin 00edf4 13
-bank_003/d_6e07.bin 00ee07 16
-bank_003/d_6e1d.bin 00ee1d 16
-bank_003/d_6e33.bin 00ee33 16
-bank_003/d_6e49.bin 00ee49 16
-bank_003/d_6e5f.bin 00ee5f 16
+bank_003/lz_65d0.bin 00e5d0 2a
+bank_003/lz_65fa.bin 00e5fa 2e
+bank_003/lz_6628.bin 00e628 30
+bank_003/lz_6658.bin 00e658 41
+bank_003/lz_6699.bin 00e699 42
+bank_003/lz_66db.bin 00e6db 48
+bank_003/lz_6723.bin 00e723 49
+bank_003/lz_676c.bin 00e76c 49
+bank_003/lz_67b5.bin 00e7b5 47
+bank_003/lz_67fc.bin 00e7fc 26
+bank_003/lz_6822.bin 00e822 2e
+bank_003/lz_6850.bin 00e850 2e
+bank_003/lz_687e.bin 00e87e 43
+bank_003/lz_68c1.bin 00e8c1 4b
+bank_003/lz_690c.bin 00e90c 4b
+bank_003/lz_6957.bin 00e957 4b
+bank_003/lz_69a2.bin 00e9a2 4a
+bank_003/lz_69ec.bin 00e9ec 49
+bank_003/lz_6a35.bin 00ea35 27
+bank_003/lz_6a5c.bin 00ea5c 31
+bank_003/lz_6a8d.bin 00ea8d 35
+bank_003/lz_6ac2.bin 00eac2 42
+bank_003/lz_6b04.bin 00eb04 45
+bank_003/lz_6b49.bin 00eb49 49
+bank_003/lz_6b92.bin 00eb92 4a
+bank_003/lz_6bdc.bin 00ebdc 4a
+bank_003/lz_6c26.bin 00ec26 45
+bank_003/lz_6c6b.bin 00ec6b f
+bank_003/lz_6c7a.bin 00ec7a f
+bank_003/lz_6c89.bin 00ec89 f
+bank_003/lz_6c98.bin 00ec98 13
+bank_003/lz_6cab.bin 00ecab 16
+bank_003/lz_6cc1.bin 00ecc1 16
+bank_003/lz_6cd7.bin 00ecd7 16
+bank_003/lz_6ced.bin 00eced 16
+bank_003/lz_6d03.bin 00ed03 16
+bank_003/lz_6d19.bin 00ed19 f
+bank_003/lz_6d28.bin 00ed28 f
+bank_003/lz_6d37.bin 00ed37 f
+bank_003/lz_6d46.bin 00ed46 14
+bank_003/lz_6d5a.bin 00ed5a 15
+bank_003/lz_6d6f.bin 00ed6f 16
+bank_003/lz_6d85.bin 00ed85 16
+bank_003/lz_6d9b.bin 00ed9b 16
+bank_003/lz_6db1.bin 00edb1 16
+bank_003/lz_6dc7.bin 00edc7 f
+bank_003/lz_6dd6.bin 00edd6 f
+bank_003/lz_6de5.bin 00ede5 f
+bank_003/lz_6df4.bin 00edf4 13
+bank_003/lz_6e07.bin 00ee07 16
+bank_003/lz_6e1d.bin 00ee1d 16
+bank_003/lz_6e33.bin 00ee33 16
+bank_003/lz_6e49.bin 00ee49 16
+bank_003/lz_6e5f.bin 00ee5f 16
 bank_005/d_6488.bin 016488 10
 bank_005/d_6890.bin 016890 c0
 bank_005/d_7920.bin 017920 660
@@ -473,42 +473,37 @@ bank_017/lz_7570.bin 05f570 200
 bank_017/lz_7770.bin 05f770 135
 bank_017/lz_78a5.bin 05f8a5 57
 bank_017/palettes_78fc.asm 05f8fc 40 palettes
-bank_017/d_793c.bin 05f93c cc
-bank_017/d_7a08.bin 05fa08 27
-bank_017/d_7a2f.bin 05fa2f 27
-bank_017/d_7a56.bin 05fa56 a2
-bank_017/d_7af8.bin 05faf8 20
-bank_017/d_7b18.bin 05fb18 21
+bank_017/lz_793c.bin 05f93c cc
+bank_017/lz_7a08.bin 05fa08 27
+bank_017/lz_7a2f.bin 05fa2f 27
+bank_017/lz_7a56.bin 05fa56 a2
+bank_017/lz_7af8.bin 05faf8 20
+bank_017/lz_7b18.bin 05fb18 21
 bank_017/palettes_7b39.asm 05fb39 40 palettes
 bank_018/d_40a0.bin 0600a0 200
 bank_018/d_42a0.bin 0602a0 40
 bank_018/palettes_42e0.asm 0602e0 20 palettes
 bank_018/palettes_4300.asm 060300 28 palettes
-bank_018/d_467a.bin 06067a 8b9
+bank_018/lz_467a.bin 06067a 8b9
 bank_018/palettes_4f33.asm 060f33 40 palettes
-bank_018/d_4f73.bin 060f73 15b
-bank_018/d_50ce.bin 0610ce 8a
+bank_018/lz_4f73.bin 060f73 15b
+bank_018/lz_50ce.bin 0610ce 8a
 bank_018/d_5158.bin 061158 10
 bank_018/d_5168.bin 061168 10
 bank_018/d_5178.bin 061178 10
 bank_018/d_5188.bin 061188 10
 bank_018/d_5198.bin 061198 10
 bank_018/d_51a8.bin 0611a8 10
-bank_018/d_51f8.bin 0611f8 ce
+bank_018/lz_51f8.bin 0611f8 ce
 bank_018/palettes_52c6.asm 0612c6 18 palettes
 bank_018/d_5507.bin 061507 20
-bank_018/d_5633.bin 061633 1fa
+bank_018/lz_5633.bin 061633 1c1
 bank_018/palettes_582d.asm 06182d 18 palettes
 bank_018/d_5845.bin 061845 4d
 bank_018/palettes_58ad.asm 0618ad 33 palettes
 bank_018/d_58e0.bin 0618e0 d9
 bank_018/palettes_59b9.asm 0619b9 8 palettes
 bank_018/d_59fe.bin 0619fe 20
-bank_018/d_5a1e.bin 061a1e 8
-bank_018/d_5a26.bin 061a26 11
-bank_018/d_5a37.bin 061a37 11
-bank_018/d_5a48.bin 061a48 11
-bank_018/d_5a59.bin 061a59 11
 bank_018/d_5af0.bin 061af0 800
 bank_018/d_62f0.bin 0622f0 800
 bank_018/d_6af0.bin 062af0 40
@@ -594,7 +589,7 @@ bank_019/lz_7a8e.bin 067a8e 113
 bank_019/lz_7ba1.bin 067ba1 93
 bank_019/lz_7c34.bin 067c34 113
 bank_019/lz_7d47.bin 067d47 90
-bank_01a/d_5530.bin 069530 6b0
+bank_01a/lz_5530.bin 069530 6af
 bank_01a/d_5be0.bin 069be0 240
 bank_01a/d_5e20.bin 069e20 240
 bank_01a/d_6060.bin 06a060 240
@@ -606,27 +601,27 @@ bank_01a/d_6464.bin 06a464 10
 bank_01a/d_6474.bin 06a474 10
 bank_01a/d_6484.bin 06a484 5c
 bank_01a/d_64e0.bin 06a4e0 170
-bank_01a/d_6650.bin 06a650 18
+bank_01a/lz_6650.bin 06a650 18
 bank_01a/d_6668.bin 06a668 18
-bank_01a/d_6680.bin 06a680 48
-bank_01a/d_66c8.bin 06a6c8 49
+bank_01a/lz_6680.bin 06a680 48
+bank_01a/lz_66c8.bin 06a6c8 49
 bank_01a/d_6711.bin 06a711 10
 bank_01a/d_6721.bin 06a721 8
-bank_01a/d_6729.bin 06a729 ab
+bank_01a/lz_6729.bin 06a729 ab
 bank_01a/d_6c95.bin 06ac95 a
 bank_01a/palettes_70d9.asm 06b0d9 40 palettes
-bank_01a/d_7119.bin 06b119 664
-bank_01a/d_777d.bin 06b77d b4
-bank_01a/d_7831.bin 06b831 81
-bank_01a/d_78b2.bin 06b8b2 3a
-bank_01a/d_78ec.bin 06b8ec 43
-bank_01a/d_7e53.bin 06be53 22
-bank_01a/d_7e75.bin 06be75 9
+bank_01a/lz_7119.bin 06b119 664
+bank_01a/lz_777d.bin 06b77d b4
+bank_01a/lz_7831.bin 06b831 81
+bank_01a/lz_78b2.bin 06b8b2 3a
+bank_01a/lz_78ec.bin 06b8ec 43
+bank_01a/lz_7e53.bin 06be53 22
+bank_01a/lz_7e75.bin 06be75 9
 bank_01a/palettes_7e7e.asm 06be7e 10 palettes
-bank_01a/d_7e8e.bin 06be8e b
-bank_01a/d_7e99.bin 06be99 b
-bank_01a/d_7ea4.bin 06bea4 b
-bank_01a/d_7eaf.bin 06beaf b
+bank_01a/lz_7e8e.bin 06be8e b
+bank_01a/lz_7e99.bin 06be99 b
+bank_01a/lz_7ea4.bin 06bea4 b
+bank_01a/lz_7eaf.bin 06beaf b
 bank_01b/lz_44b1.bin 06c4b1 9e
 bank_01b/lz_454f.bin 06c54f a3
 bank_01b/lz_45f2.bin 06c5f2 92
@@ -643,7 +638,7 @@ bank_01b/lz_4bd5.bin 06cbd5 99
 bank_01b/lz_4c6e.bin 06cc6e 7e
 bank_01b/palettes_4f76.asm 06cf76 30 palettes
 bank_01b/d_597b.bin 06d97b 89
-bank_01b/d_690a.bin 06e90a 26
+bank_01b/lz_690a.bin 06e90a 1d
 bank_01b/palettes_6930.asm 06e930 8 palettes
 bank_01b/lz_78bd.bin 06f8bd b3
 bank_01b/lz_7970.bin 06f970 50
@@ -654,15 +649,11 @@ bank_01b/lz_7af6.bin 06faf6 41
 bank_01b/lz_7b37.bin 06fb37 1f7
 bank_01b/lz_7d2e.bin 06fd2e 141
 bank_01b/lz_7e6f.bin 06fe6f 143
-bank_01c/d_456e.bin 07056e 16
-bank_01c/d_4584.bin 070584 16
-bank_01c/d_4e4a.bin 070e4a a
 bank_01c/d_4fe9.bin 070fe9 60
-bank_01c/d_5699.bin 071699 20
 bank_01c/palettes_598c.asm 07198c 40 palettes
-bank_01c/d_59cc.bin 0719cc a3a
-bank_01c/d_6406.bin 072406 63
-bank_01c/d_6469.bin 072469 3b
+bank_01c/lz_59cc.bin 0719cc a3a
+bank_01c/lz_6406.bin 072406 63
+bank_01c/lz_6469.bin 072469 3b
 bank_01c/d_64a4.bin 0724a4 5
 bank_01c/d_64a9.bin 0724a9 5
 bank_01c/d_64ae.bin 0724ae 5
@@ -696,24 +687,29 @@ bank_01c/d_6535.bin 072535 5
 bank_01c/d_653a.bin 07253a 5
 bank_01c/d_653f.bin 07253f 5
 bank_01c/d_6544.bin 072544 5
-bank_01c/d_6549.bin 072549 36
-bank_01c/d_657f.bin 07257f 49
-bank_01c/d_65c8.bin 0725c8 43
-bank_01c/d_660b.bin 07260b 5d
-bank_01c/d_6668.bin 072668 3a
-bank_01c/d_66a2.bin 0726a2 4a
-bank_01c/d_66ec.bin 0726ec 48
-bank_01c/d_6734.bin 072734 91
-bank_01c/d_67c5.bin 0727c5 e
-bank_01c/d_67d3.bin 0727d3 7
-bank_01c/d_67da.bin 0727da 18
-bank_01c/d_67f2.bin 0727f2 c
-bank_01c/d_67fe.bin 0727fe 27
-bank_01c/d_6825.bin 072825 9
-bank_01c/d_682e.bin 07282e 1a
-bank_01c/d_6848.bin 072848 7
-bank_01c/d_684f.bin 07284f 1c
-bank_01c/d_686b.bin 07286b 15
+bank_01c/lz_6549.bin 072549 36
+bank_01c/lz_657f.bin 07257f 17
+bank_01c/d_6596.bin 072596 32
+bank_01c/lz_65c8.bin 0725c8 43
+bank_01c/lz_660b.bin 07260b 17
+bank_01c/d_6622.bin 072622 46
+bank_01c/lz_6668.bin 072668 3a
+bank_01c/lz_66a2.bin 0726a2 18
+bank_01c/d_66ba.bin 0726ba 32
+bank_01c/lz_66ec.bin 0726ec 48
+bank_01c/lz_6734.bin 072734 19
+bank_01c/d_674d.bin 07274d 5a
+bank_01c/d_67a7.bin 0727a7 1e
+bank_01c/lz_67c5.bin 0727c5 e
+bank_01c/lz_67d3.bin 0727d3 7
+bank_01c/lz_67da.bin 0727da 18
+bank_01c/lz_67f2.bin 0727f2 c
+bank_01c/lz_67fe.bin 0727fe 27
+bank_01c/lz_6825.bin 072825 9
+bank_01c/lz_682e.bin 07282e 1a
+bank_01c/lz_6848.bin 072848 7
+bank_01c/lz_684f.bin 07284f 1c
+bank_01c/lz_686b.bin 07286b 7
 bank_01c/d_6880.bin 072880 40
 bank_01c/d_68c0.bin 0728c0 40
 bank_01c/d_6900.bin 072900 40
@@ -746,11 +742,11 @@ bank_01c/d_6f80.bin 072f80 40
 bank_01c/d_6fc0.bin 072fc0 40
 bank_01c/d_7000.bin 073000 40
 bank_01c/d_7040.bin 073040 40
-bank_01c/d_7080.bin 073080 96
+bank_01c/lz_7080.bin 073080 96
 bank_01c/palettes_7541.asm 073541 40 palettes
-bank_01c/d_7581.bin 073581 75e
-bank_01c/d_7cdf.bin 073cdf 140
-bank_01c/d_7e1f.bin 073e1f d8
+bank_01c/lz_7581.bin 073581 75e
+bank_01c/lz_7cdf.bin 073cdf 140
+bank_01c/lz_7e1f.bin 073e1f d8
 bank_01d/d_5c25.bin 075c25 9
 bank_01d/d_5c2e.bin 075c2e 5
 bank_01d/d_5c33.bin 075c33 35
@@ -831,25 +827,25 @@ bank_01d/d_62d9.bin 0762d9 21
 bank_01d/d_62fa.bin 0762fa 9
 bank_01d/d_6303.bin 076303 d
 bank_01d/d_6310.bin 076310 11
-bank_01d/d_6321.bin 076321 a
-bank_01d/d_632b.bin 07632b 9
+bank_01d/lz_6321.bin 076321 a
+bank_01d/lz_632b.bin 07632b 9
 bank_01d/d_6334.bin 076334 8
-bank_01d/d_633c.bin 07633c b8
-bank_01d/d_63f4.bin 0763f4 55
-bank_01d/d_6449.bin 076449 12
-bank_01d/d_645b.bin 07645b 23
-bank_01d/d_647e.bin 07647e 7
-bank_01d/d_6485.bin 076485 e
-bank_01d/d_6493.bin 076493 7
-bank_01d/d_649a.bin 07649a 18
-bank_01d/d_64b2.bin 0764b2 9
-bank_01d/d_64bb.bin 0764bb 95
-bank_01d/d_6550.bin 076550 18
-bank_01d/d_6568.bin 076568 7
-bank_01d/d_656f.bin 07656f 75
-bank_01d/d_65e4.bin 0765e4 86
-bank_01d/d_667f.bin 07667f 8d
-bank_01d/d_6721.bin 076721 79
+bank_01d/lz_633c.bin 07633c b8
+bank_01d/lz_63f4.bin 0763f4 55
+bank_01d/lz_6449.bin 076449 12
+bank_01d/lz_645b.bin 07645b 23
+bank_01d/lz_647e.bin 07647e 7
+bank_01d/lz_6485.bin 076485 e
+bank_01d/lz_6493.bin 076493 7
+bank_01d/lz_649a.bin 07649a 18
+bank_01d/lz_64b2.bin 0764b2 9
+bank_01d/lz_64bb.bin 0764bb 95
+bank_01d/lz_6550.bin 076550 18
+bank_01d/lz_6568.bin 076568 7
+bank_01d/lz_656f.bin 07656f 75
+bank_01d/lz_65e4.bin 0765e4 86
+bank_01d/lz_667f.bin 07667f 8d
+bank_01d/lz_6721.bin 076721 79
 bank_01d/d_67ab.bin 0767ab 65
 bank_01d/d_77c8.bin 0777c8 19
 bank_01d/d_77e1.bin 0777e1 15
@@ -857,34 +853,34 @@ bank_01d/d_77f6.bin 0777f6 11
 bank_01d/d_7807.bin 077807 d
 bank_01d/d_7814.bin 077814 9
 bank_01d/d_781d.bin 07781d 5
-bank_01d/d_7822.bin 077822 2f
-bank_01d/d_7851.bin 077851 25
-bank_01d/d_7876.bin 077876 19
+bank_01d/lz_7822.bin 077822 2f
+bank_01d/lz_7851.bin 077851 25
+bank_01d/lz_7876.bin 077876 19
 bank_01d/d_788f.bin 07788f 18
-bank_01d/d_78a7.bin 0778a7 89
-bank_01d/d_7949.bin 077949 31
-bank_01d/d_7983.bin 077983 31
-bank_01d/d_79c1.bin 0779c1 a2
-bank_01d/d_7a63.bin 077a63 f6
-bank_01d/d_7b8a.bin 077b8a f3
+bank_01d/lz_78a7.bin 0778a7 89
+bank_01d/lz_7949.bin 077949 31
+bank_01d/lz_7983.bin 077983 31
+bank_01d/lz_79c1.bin 0779c1 a2
+bank_01d/lz_7a63.bin 077a63 f6
+bank_01d/lz_7b8a.bin 077b8a f3
 bank_01e/palettes_4c40.asm 078c40 30 palettes
-bank_01e/d_4c70.bin 078c70 5af
-bank_01e/d_521f.bin 07921f cd
-bank_01e/d_52ec.bin 0792ec 57
-bank_01e/d_5343.bin 079343 9c
-bank_01e/d_53df.bin 0793df 13
-bank_01e/d_53f2.bin 0793f2 13
-bank_01e/d_5405.bin 079405 1c
-bank_01e/d_5421.bin 079421 17
+bank_01e/lz_4c70.bin 078c70 5af
+bank_01e/lz_521f.bin 07921f cd
+bank_01e/lz_52ec.bin 0792ec 57
+bank_01e/lz_5343.bin 079343 9c
+bank_01e/lz_53df.bin 0793df 13
+bank_01e/lz_53f2.bin 0793f2 13
+bank_01e/lz_5405.bin 079405 1c
+bank_01e/lz_5421.bin 079421 17
 bank_01e/palettes_5be1.asm 079be1 18 palettes
-bank_01e/d_5bf9.bin 079bf9 6d1
-bank_01e/d_62ca.bin 07a2ca 185
-bank_01e/d_644f.bin 07a44f 46
+bank_01e/lz_5bf9.bin 079bf9 6d1
+bank_01e/lz_62ca.bin 07a2ca 185
+bank_01e/lz_644f.bin 07a44f 46
 bank_01e/palettes_6495.asm 07a495 8 palettes
-bank_01e/d_649d.bin 07a49d 96
-bank_01e/d_75a6.bin 07b5a6 ec
-bank_01e/d_7692.bin 07b692 50
-bank_01e/d_76e2.bin 07b6e2 1e
+bank_01e/lz_649d.bin 07a49d 96
+bank_01e/lz_75a6.bin 07b5a6 ec
+bank_01e/lz_7692.bin 07b692 50
+bank_01e/lz_76e2.bin 07b6e2 18
 bank_01e/palettes_7700.asm 07b700 10 palettes
 bank_01e/palettes_7710.asm 07b710 100 palettes
 bank_01e/palettes_7810.asm 07b810 10 palettes
@@ -911,7 +907,7 @@ bank_026/text_pool_41f6.asm 0981f6 3921 text_pool
 bank_027/palettes_5580.asm 09d580 40 palettes
 bank_027/palettes_55c0.asm 09d5c0 30 palettes
 bank_028/d_4020.bin 0a0020 5c0
-bank_028/d_45e0.bin 0a05e0 5c0
+bank_028/lz_45e0.bin 0a05e0 5c0
 bank_028/palettes_4ba0.asm 0a0ba0 40 palettes
 bank_028/palettes_4be0.asm 0a0be0 10 palettes
 bank_028/d_4bf0.bin 0a0bf0 140
@@ -929,7 +925,8 @@ bank_028/palettes_5e78.asm 0a1e78 8 palettes
 bank_028/palettes_5e80.asm 0a1e80 18 palettes
 bank_028/palettes_5e98.asm 0a1e98 8 palettes
 bank_028/palettes_5ea0.asm 0a1ea0 10 palettes
-bank_028/d_6180.bin 0a2180 b9c
+bank_028/lz_6180.bin 0a2180 b94
+bank_028/d_6d14.bin 0a2d14 8
 bank_028/palettes_6d1c.asm 0a2d1c 38 palettes
 bank_028/palettes_6d54.asm 0a2d54 10 palettes
 bank_029/d_427d.bin 0a427d 1c20
@@ -952,13 +949,13 @@ bank_035/text_pool_4220.asm 0d4220 3909 text_pool
 bank_036/text_pool_4592.asm 0d8592 392c text_pool
 bank_037/text_pool_4204.asm 0dc204 391a text_pool
 bank_038/d_4695.bin 0e0695 8d
-bank_038/d_50a7.bin 0e10a7 4a
+bank_038/lz_50a7.bin 0e10a7 4a
 bank_038/d_50f1.bin 0e10f1 8
-bank_038/d_50f9.bin 0e10f9 9c
+bank_038/lz_50f9.bin 0e10f9 9c
 bank_038/d_70a5.bin 0e30a5 b4
 bank_038/text_7171.asm 0e3171 b
 bank_038/text_71b6.asm 0e31b6 6a
-bank_039/d_44f6.bin 0e44f6 20
+bank_039/lz_44f6.bin 0e44f6 20
 bank_039/palettes_4516.asm 0e4516 8 palettes
 bank_039/palettes_4528.asm 0e4528 8 palettes
 bank_039/palettes_4599.asm 0e4599 c8 palettes
@@ -1126,9 +1123,9 @@ bank_03d/lz_7b0e.bin 0f7b0e 14b
 bank_03d/lz_7c59.bin 0f7c59 66
 bank_03e/d_40ef.bin 0f80ef 10
 bank_03e/palettes_555b.asm 0f955b 8 palettes
-bank_03e/d_61d4.bin 0fa1d4 9f
-bank_03e/d_6273.bin 0fa273 53
-bank_03e/d_62c6.bin 0fa2c6 1c9
+bank_03e/lz_61d4.bin 0fa1d4 9f
+bank_03e/lz_6273.bin 0fa273 53
+bank_03e/lz_62c6.bin 0fa2c6 1c9
 bank_03e/d_677b.bin 0fa77b 58
 bank_03e/lz_69d5.bin 0fa9d5 a51
 bank_03e/palettes_7426.asm 0fb426 40 palettes
@@ -3284,12 +3281,12 @@ bank_06b/d_4ea5.bin 1acea5 f0
 bank_06b/d_4f95.bin 1acf95 d8
 bank_06b/d_506d.bin 1ad06d 120
 bank_06b/palettes_525a.asm 1ad25a 10 palettes
-bank_06b/d_551d.bin 1ad51d 4ba
-bank_06b/d_59d7.bin 1ad9d7 200
-bank_06b/d_5bd7.bin 1adbd7 14e
+bank_06b/lz_551d.bin 1ad51d 4ba
+bank_06b/lz_59d7.bin 1ad9d7 200
+bank_06b/lz_5bd7.bin 1adbd7 14e
 bank_06b/palettes_5d25.asm 1add25 40 palettes
-bank_06b/d_5d65.bin 1add65 143
-bank_06b/d_5ea8.bin 1adea8 1cd
+bank_06b/lz_5d65.bin 1add65 143
+bank_06b/lz_5ea8.bin 1adea8 1cd
 bank_06b/palettes_60c5.asm 1ae0c5 10 palettes
 bank_06b/d_61e6.bin 1ae1e6 a44
 bank_06b/d_6c2e.bin 1aec2e 4
@@ -3298,14 +3295,14 @@ bank_06b/d_6cbc.bin 1aecbc 54
 bank_06b/d_6d16.bin 1aed16 4
 bank_06b/d_6d1e.bin 1aed1e 4
 bank_06b/d_6d24.bin 1aed24 1eb
-bank_06b/d_6f0f.bin 1aef0f 134
+bank_06b/lz_6f0f.bin 1aef0f 134
 bank_06b/palettes_7043.asm 1af043 40 palettes
 bank_06b/palettes_70af.asm 1af0af 80 palettes
 bank_06b/palettes_712f.asm 1af12f 80 palettes
 bank_06b/palettes_71af.asm 1af1af 80 palettes
 bank_06b/palettes_722f.asm 1af22f 80 palettes
-bank_06b/d_7438.bin 1af438 dd
-bank_06b/d_7515.bin 1af515 54
+bank_06b/lz_7438.bin 1af438 dd
+bank_06b/lz_7515.bin 1af515 4c
 bank_06b/palettes_756f.asm 1af56f 40 palettes
 bank_06b/lz_774e.bin 1af74e 124
 bank_06b/lz_7872.bin 1af872 9d
