@@ -632,7 +632,7 @@ TileBlockPtrs_39:
 	dslot DataPtr_Screen1ObjGfx ; record 7
 	dslot DataPtr_Screen2ObjGfx ; record 8
 	dslot DataPtr_MatchWinLoseGfx ; record 9
-	dslot DataPtr_CharSelectMiscGfx ; record 10
+	dslot DataPtr_UnusedJpCourtStatLabelTiles_18 ; record 10
 	dslot DataPtr_SharedMenuGfx17Alias11 ; record 11
 	dslot DataPtr_SharedMenuGfx17Alias12 ; record 12
 	dslot DataPtr_SharedMenuGfx17Alias13 ; record 13

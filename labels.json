@@ -9020,7 +9020,10 @@
  "0x5b3b2": "PortraitGfxEmily_16",
  "0x5b449": "PortraitGfxBCoz_16",
  "0x5b4dc": "PortraitGfxACoz_16",
- "0x5b555": "PortraitGfxUnknown_16",
+ "0x5b555": {
+  "name": "PortraitGfxPlaceholder_16",
+  "note": "The framed question-mark portrait, shared by every roster id without art of its own (ids $14-$16 in CharPortraitGfxPointers). Byte-identical to MugshotGfxPlaceholder_1b"
+ },
  "0x5b5d3": "PortraitGfxLuigi_16",
  "0x5b66d": "PortraitGfxDK_16",
  "0x5b709": "PortraitGfxBabyMario_16",
@@ -9600,7 +9603,10 @@
  "0x6340b": "MarioMiniGamesAttrmap",
  "0x634e1": "MarioMiniGamesPalettes",
  "0x63521": "MatchWinLoseGfx",
- "0x63568": "CharSelectMiscGfx",
+ "0x63568": {
+  "name": "UnusedJpCourtStatLabelTiles_18",
+  "note": "Ten tiles of Japanese label glyphs, decompressed from record 10 of TileBlockPtrs_39. No call site passes that record number, so nothing in the ROM loads them. The kana read as court-surface stat labels -- the first group as \u7403\u8db3 (ball pace) and the second as \u30d0\u30a6\u30f3\u30c9 (bounce) -- which is what the court-select screen shows in English; the exact split of the first four glyphs is a reading of the rendered tiles, not something the ROM states"
+ },
  "0x63617": "RunStorySceneByMode",
  "0x63626": ".checkMode1",
  "0x6362e": ".mode2",
@@ -10179,7 +10185,10 @@
  "0x6cad4": "MugshotGfxStorySlot1_1b",
  "0x6cb42": "MugshotGfxStorySlot2_1b",
  "0x6cbd5": "MugshotGfxStorySlot3_1b",
- "0x6cc6e": "MugshotGfxUnknown_1b",
+ "0x6cc6e": {
+  "name": "MugshotGfxPlaceholder_1b",
+  "note": "The framed question-mark mugshot: the same 126-byte stream as PortraitGfxPlaceholder_16, and CharMugshotGfxPointers aims every character without their own mugshot at it"
+ },
  "0x6ccec": "CharMugshotGfxPointers",
  "0x6ce0c": "StubNop_1b_00",
  "0x6ce0d": "ResetMugshotPalettes_1b",

@@ -371,6 +371,43 @@ class StructureCarvingMixin:
         if added:
             print(f"lz sources: {added} streams sized from their decompress call")
 
+    def promote_exact_lz_blobs(self, label_offsets=()):
+        """Declare a plain blob an `lz` stream when it decodes to exactly itself.
+
+        The call-site pass only sees streams whose pointer is an `ld hl, imm`;
+        the rest are reached through a table, so their kind stays `copy` and
+        `make check` never decodes them. A blob whose bytes decode as a stream
+        that ends on its last byte *and* expands is not a coincidence at this
+        size -- the codec would have to run out of input exactly at the extent
+        the carve derived from a completely separate reference. Requiring the
+        exact end is what makes this safe: a blob that merely starts with a
+        decodable prefix is left alone, because that is the glued-tail case the
+        call-site pass exists to fix, and guessing its split has no evidence."""
+        bounds = sorted({*self.data_blobs, *self.instrs, *label_offsets})
+        promoted = 0
+        for src, (length, kind) in sorted(self.data_blobs.items()):
+            if kind not in ("copy", ""):
+                continue
+            # A blob whose length the carve never fixed ends at the next thing
+            # that claims an address, which is the extent the emitter will give
+            # it -- the same span the decode has to land on exactly.
+            i = bisect.bisect_right(bounds, src)
+            end = bounds[i] if i < len(bounds) else (src // BANK_SIZE + 1) * BANK_SIZE
+            if length is not None:
+                end = min(end, src + length)
+            length = end - src
+            if length < 32:
+                continue
+            try:
+                data, used = lz.decompress(self.rom, src, end)
+            except ValueError:
+                continue
+            if used == length and len(data) > length * 6 // 5:
+                self.data_blobs[src] = (length, "lz")
+                promoted += 1
+        if promoted:
+            print(f"lz sources: {promoted} blobs promoted (decode to their exact extent)")
+
     def validate_lz_blobs(self, label_offsets=()):
         """Demote any `lz` blob whose stream does not fit the space it gets.
 

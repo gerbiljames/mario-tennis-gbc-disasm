@@ -851,7 +851,7 @@ MugshotGfxStorySlot2_1b:
 	INCBIN "data/bank_01b/lz_4b42.bin" ; $4b42, 147 bytes
 MugshotGfxStorySlot3_1b:
 	INCBIN "data/bank_01b/lz_4bd5.bin" ; $4bd5, 153 bytes
-MugshotGfxUnknown_1b:
+MugshotGfxPlaceholder_1b:
 	INCBIN "data/bank_01b/lz_4c6e.bin" ; $4c6e, 126 bytes
 CharMugshotGfxPointers:
 	; $4cec, 288 bytes (mugshot_ptr_table)
@@ -859,66 +859,66 @@ CharMugshotGfxPointers:
 	dw MugshotGfxNina_1b, .unused ; $01 Nina
 	dw MugshotGfxHarry_1b, .unused ; $02 Harry
 	dw MugshotGfxKate_1b, .unused ; $03 Kate
-	dw MugshotGfxUnknown_1b, .unused ; $04 Allie
-	dw MugshotGfxUnknown_1b, .unused ; $05 Joy
-	dw MugshotGfxUnknown_1b, .unused ; $06 Brian
-	dw MugshotGfxUnknown_1b, .unused ; $07 Pam
-	dw MugshotGfxUnknown_1b, .unused ; $08 Bob
-	dw MugshotGfxUnknown_1b, .unused ; $09 Beth
-	dw MugshotGfxUnknown_1b, .unused ; $0a Fay
-	dw MugshotGfxUnknown_1b, .unused ; $0b Curt
-	dw MugshotGfxUnknown_1b, .unused ; $0c Mark
-	dw MugshotGfxUnknown_1b, .unused ; $0d Sean
-	dw MugshotGfxUnknown_1b, .unused ; $0e Sammi
-	dw MugshotGfxUnknown_1b, .unused ; $0f Elden
-	dw MugshotGfxUnknown_1b, .unused ; $10 Spike
-	dw MugshotGfxUnknown_1b, .unused ; $11 Emily
-	dw MugshotGfxUnknown_1b, .unused ; $12 B. Coz
-	dw MugshotGfxUnknown_1b, .unused ; $13 A. Coz
-	dw MugshotGfxUnknown_1b, .unused ; $14 Kevin
-	dw MugshotGfxUnknown_1b, .unused ; $15 Not used
-	dw MugshotGfxUnknown_1b, .unused ; $16 Not used
-	dw MugshotGfxUnknown_1b, .unused ; $17 Luigi
-	dw MugshotGfxUnknown_1b, .unused ; $18 DK
-	dw MugshotGfxUnknown_1b, .unused ; $19 Baby M.
+	dw MugshotGfxPlaceholder_1b, .unused ; $04 Allie
+	dw MugshotGfxPlaceholder_1b, .unused ; $05 Joy
+	dw MugshotGfxPlaceholder_1b, .unused ; $06 Brian
+	dw MugshotGfxPlaceholder_1b, .unused ; $07 Pam
+	dw MugshotGfxPlaceholder_1b, .unused ; $08 Bob
+	dw MugshotGfxPlaceholder_1b, .unused ; $09 Beth
+	dw MugshotGfxPlaceholder_1b, .unused ; $0a Fay
+	dw MugshotGfxPlaceholder_1b, .unused ; $0b Curt
+	dw MugshotGfxPlaceholder_1b, .unused ; $0c Mark
+	dw MugshotGfxPlaceholder_1b, .unused ; $0d Sean
+	dw MugshotGfxPlaceholder_1b, .unused ; $0e Sammi
+	dw MugshotGfxPlaceholder_1b, .unused ; $0f Elden
+	dw MugshotGfxPlaceholder_1b, .unused ; $10 Spike
+	dw MugshotGfxPlaceholder_1b, .unused ; $11 Emily
+	dw MugshotGfxPlaceholder_1b, .unused ; $12 B. Coz
+	dw MugshotGfxPlaceholder_1b, .unused ; $13 A. Coz
+	dw MugshotGfxPlaceholder_1b, .unused ; $14 Kevin
+	dw MugshotGfxPlaceholder_1b, .unused ; $15 Not used
+	dw MugshotGfxPlaceholder_1b, .unused ; $16 Not used
+	dw MugshotGfxPlaceholder_1b, .unused ; $17 Luigi
+	dw MugshotGfxPlaceholder_1b, .unused ; $18 DK
+	dw MugshotGfxPlaceholder_1b, .unused ; $19 Baby M.
 	dw MugshotGfxMario_1b, .unused ; $1a Mario
 	dw MugshotGfxWaluigi_1b, .unused ; $1b Waluigi
 	dw MugshotGfxYoshi_1b, .unused ; $1c Yoshi
 	dw MugshotGfxBowser_1b, .unused ; $1d Bowser
 	dw MugshotGfxWario_1b, .unused ; $1e Wario
 	dw MugshotGfxPeach_1b, .unused ; $1f Peach
-	dw MugshotGfxUnknown_1b, .unused ; $20 no character
-	dw MugshotGfxUnknown_1b, .unused ; $21 no character
-	dw MugshotGfxUnknown_1b, .unused ; $22 no character
-	dw MugshotGfxUnknown_1b, .unused ; $23 no character
-	dw MugshotGfxUnknown_1b, .unused ; $24 no character
-	dw MugshotGfxUnknown_1b, .unused ; $25 no character
-	dw MugshotGfxUnknown_1b, .unused ; $26 no character
-	dw MugshotGfxUnknown_1b, .unused ; $27 no character
-	dw MugshotGfxUnknown_1b, .unused ; $28 no character
-	dw MugshotGfxUnknown_1b, .unused ; $29 no character
-	dw MugshotGfxUnknown_1b, .unused ; $2a no character
-	dw MugshotGfxUnknown_1b, .unused ; $2b no character
-	dw MugshotGfxUnknown_1b, .unused ; $2c no character
-	dw MugshotGfxUnknown_1b, .unused ; $2d no character
-	dw MugshotGfxUnknown_1b, .unused ; $2e no character
-	dw MugshotGfxUnknown_1b, .unused ; $2f no character
-	dw MugshotGfxUnknown_1b, .unused ; $30 no character
-	dw MugshotGfxUnknown_1b, .unused ; $31 no character
-	dw MugshotGfxUnknown_1b, .unused ; $32 no character
-	dw MugshotGfxUnknown_1b, .unused ; $33 no character
-	dw MugshotGfxUnknown_1b, .unused ; $34 no character
-	dw MugshotGfxUnknown_1b, .unused ; $35 no character
-	dw MugshotGfxUnknown_1b, .unused ; $36 no character
-	dw MugshotGfxUnknown_1b, .unused ; $37 no character
-	dw MugshotGfxUnknown_1b, .unused ; $38 no character
-	dw MugshotGfxUnknown_1b, .unused ; $39 no character
-	dw MugshotGfxUnknown_1b, .unused ; $3a no character
-	dw MugshotGfxUnknown_1b, .unused ; $3b no character
-	dw MugshotGfxUnknown_1b, .unused ; $3c no character
-	dw MugshotGfxUnknown_1b, .unused ; $3d no character
-	dw MugshotGfxUnknown_1b, .unused ; $3e no character
-	dw MugshotGfxUnknown_1b, .unused ; $3f story hero (remapped to $40 + save slot)
+	dw MugshotGfxPlaceholder_1b, .unused ; $20 no character
+	dw MugshotGfxPlaceholder_1b, .unused ; $21 no character
+	dw MugshotGfxPlaceholder_1b, .unused ; $22 no character
+	dw MugshotGfxPlaceholder_1b, .unused ; $23 no character
+	dw MugshotGfxPlaceholder_1b, .unused ; $24 no character
+	dw MugshotGfxPlaceholder_1b, .unused ; $25 no character
+	dw MugshotGfxPlaceholder_1b, .unused ; $26 no character
+	dw MugshotGfxPlaceholder_1b, .unused ; $27 no character
+	dw MugshotGfxPlaceholder_1b, .unused ; $28 no character
+	dw MugshotGfxPlaceholder_1b, .unused ; $29 no character
+	dw MugshotGfxPlaceholder_1b, .unused ; $2a no character
+	dw MugshotGfxPlaceholder_1b, .unused ; $2b no character
+	dw MugshotGfxPlaceholder_1b, .unused ; $2c no character
+	dw MugshotGfxPlaceholder_1b, .unused ; $2d no character
+	dw MugshotGfxPlaceholder_1b, .unused ; $2e no character
+	dw MugshotGfxPlaceholder_1b, .unused ; $2f no character
+	dw MugshotGfxPlaceholder_1b, .unused ; $30 no character
+	dw MugshotGfxPlaceholder_1b, .unused ; $31 no character
+	dw MugshotGfxPlaceholder_1b, .unused ; $32 no character
+	dw MugshotGfxPlaceholder_1b, .unused ; $33 no character
+	dw MugshotGfxPlaceholder_1b, .unused ; $34 no character
+	dw MugshotGfxPlaceholder_1b, .unused ; $35 no character
+	dw MugshotGfxPlaceholder_1b, .unused ; $36 no character
+	dw MugshotGfxPlaceholder_1b, .unused ; $37 no character
+	dw MugshotGfxPlaceholder_1b, .unused ; $38 no character
+	dw MugshotGfxPlaceholder_1b, .unused ; $39 no character
+	dw MugshotGfxPlaceholder_1b, .unused ; $3a no character
+	dw MugshotGfxPlaceholder_1b, .unused ; $3b no character
+	dw MugshotGfxPlaceholder_1b, .unused ; $3c no character
+	dw MugshotGfxPlaceholder_1b, .unused ; $3d no character
+	dw MugshotGfxPlaceholder_1b, .unused ; $3e no character
+	dw MugshotGfxPlaceholder_1b, .unused ; $3f story hero (remapped to $40 + save slot)
 	dw MugshotGfxStorySlot1_1b, .unusedAlt ; $40 story hero, save slot 1
 	dw MugshotGfxStorySlot2_1b, .unusedAlt ; $41 story hero, save slot 2
 	dw MugshotGfxStorySlot3_1b, .unusedAlt ; $42 story hero, save slot 3

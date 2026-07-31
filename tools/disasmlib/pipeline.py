@@ -116,7 +116,9 @@ def prove_data(dis, overrides, hook_paths=()):
     dis.follow_frame_arrays()
     if helpers or hook_paths:
         dis.scan_data_slots()
-    dis.validate_lz_blobs({int(k, 0) for k in (overrides or {})})
+    curated = {int(k, 0) for k in (overrides or {})}
+    dis.promote_exact_lz_blobs(curated)
+    dis.validate_lz_blobs(curated)
 
 
 def resolve_labels(dis, overrides=None, data_tables=None):

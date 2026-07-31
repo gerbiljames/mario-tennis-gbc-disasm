@@ -109,12 +109,12 @@ DormInteriorPalettes:
 DormInteriorTiles:
 	INCBIN "data/bank_063/d_639b.bin" ; $639b, 3510 bytes
 DormInteriorTilemap:
-	INCBIN "data/bank_063/d_7151.bin" ; $7151, 1470 bytes
+	INCBIN "data/bank_063/lz_7151.bin" ; $7151, 1470 bytes
 DormInteriorAttrmap:
-	INCBIN "data/bank_063/d_770f.bin" ; $770f, 769 bytes
+	INCBIN "data/bank_063/lz_770f.bin" ; $770f, 769 bytes
 DormInteriorCollisionMap:
-	INCBIN "data/bank_063/d_7a10.bin" ; $7a10, 147 bytes
+	INCBIN "data/bank_063/lz_7a10.bin" ; $7a10, 147 bytes
 DormInteriorBehaviorMap:
-	INCBIN "data/bank_063/d_7aa3.bin" ; $7aa3, 94 bytes
+	INCBIN "data/bank_063/lz_7aa3.bin" ; $7aa3, 94 bytes
 DormInteriorSceneUnusedSlot:
 	; $7b01, 1279 bytes fill to bank end (linker-padded)

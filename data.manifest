@@ -3041,10 +3041,10 @@ bank_063/lz_62eb.bin 18e2eb 46
 bank_063/d_6331.bin 18e331 2a
 bank_063/palettes_635b.asm 18e35b 40 palettes
 bank_063/d_639b.bin 18e39b db6
-bank_063/d_7151.bin 18f151 5be
-bank_063/d_770f.bin 18f70f 301
-bank_063/d_7a10.bin 18fa10 93
-bank_063/d_7aa3.bin 18faa3 5e
+bank_063/lz_7151.bin 18f151 5be
+bank_063/lz_770f.bin 18f70f 301
+bank_063/lz_7a10.bin 18fa10 93
+bank_063/lz_7aa3.bin 18faa3 5e
 bank_064/d_4030.bin 190030 2a
 bank_064/palettes_405a.asm 19005a 40 palettes
 bank_064/lz_409a.bin 19009a 903

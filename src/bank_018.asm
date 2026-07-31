@@ -110,8 +110,8 @@ DataPtr_MarioMiniGamesPalettes:
 	farptr DebugScreenAssetViewer ; $4090
 DataPtr_MatchWinLoseGfx:
 	dw MatchWinLoseGfx ; $4092
-DataPtr_CharSelectMiscGfx:
-	dw CharSelectMiscGfx ; $4094
+DataPtr_UnusedJpCourtStatLabelTiles_18:
+	dw UnusedJpCourtStatLabelTiles_18 ; $4094
 Padding_18:
 	; $4096, 10 bytes (fill)
 	ds 10, $00
@@ -1402,7 +1402,7 @@ MarioMiniGamesPalettes:
 	INCLUDE "data/bank_018/palettes_74e1.asm" ; $74e1, 64 bytes (palettes)
 MatchWinLoseGfx:
 	INCBIN "data/bank_018/lz_7521.bin" ; $7521, 71 bytes
-CharSelectMiscGfx:
+UnusedJpCourtStatLabelTiles_18:
 	INCBIN "data/bank_018/lz_7568.bin" ; $7568, 175 bytes
 RunStorySceneByMode:
 	ld a, c ; $7617

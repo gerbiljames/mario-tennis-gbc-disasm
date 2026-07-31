@@ -2317,9 +2317,9 @@ CharacterPortraitTable_16:
 	dw PortraitGfxEmily_16 ; $11 Emily
 	dw PortraitGfxBCoz_16 ; $12 B. Coz
 	dw PortraitGfxACoz_16 ; $13 A. Coz
-	dw PortraitGfxUnknown_16 ; $14 Kevin
-	dw PortraitGfxUnknown_16 ; $15 Not used
-	dw PortraitGfxUnknown_16 ; $16 Not used
+	dw PortraitGfxPlaceholder_16 ; $14 Kevin
+	dw PortraitGfxPlaceholder_16 ; $15 Not used
+	dw PortraitGfxPlaceholder_16 ; $16 Not used
 	dw PortraitGfxLuigi_16 ; $17 Luigi
 	dw PortraitGfxDK_16 ; $18 DK
 	dw PortraitGfxBabyMario_16 ; $19 Baby M.
@@ -2369,7 +2369,7 @@ PortraitGfxBCoz_16:
 	INCBIN "data/bank_016/lz_7449.bin" ; $7449, 147 bytes
 PortraitGfxACoz_16:
 	INCBIN "data/bank_016/lz_74dc.bin" ; $74dc, 121 bytes
-PortraitGfxUnknown_16:
+PortraitGfxPlaceholder_16:
 	INCBIN "data/bank_016/lz_7555.bin" ; $7555, 126 bytes
 PortraitGfxLuigi_16:
 	INCBIN "data/bank_016/lz_75d3.bin" ; $75d3, 154 bytes
