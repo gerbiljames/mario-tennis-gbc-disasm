@@ -26,11 +26,11 @@ shape, not *twins*, and the shot banks are near-identical copies of each
 other, so a routine only one bank failed to execute reads as ordinary data
 until you diff it against its siblings.
 
-Everything below is **committed** (HEAD `3bd5bc7`); the whole history
+Everything below is **committed** (HEAD `485585e`); the whole history
 rebuilds byte-perfect. Per-bank progress at any time: `python3
 tools/progress.py` (proven-code bytes, fill runs, label counts, human-named
 counts) and `tools/progress.py --unnamed <bank>` to list still-auto-named
-symbols. **20,135 of 21,715 labels are human-named** (up from 4,816 on
+symbols. **20,141 of 21,721 labels are human-named** (up from 4,816 on
 2026-07-23), and the remaining 1,580 are all generator-*derived* names --
 `$4000` slot labels spelled after their curated target (`FarPtr_InitAndRunGame`)
 and structures named for what they are (`SoundTable_78`). **No symbol anywhere
@@ -10564,3 +10564,114 @@ sound ids. The next passes with a clear work-list are the eight stranded
 routines above, and the next tier of the bare-immediate scan (`wCharDataPage`,
 `wDialogueWindowId`, `wPauseMenuId`, `wSndChannelType`, `wCutsceneObjPhase` —
 tens of sites each, not hundreds).
+
+## The stranded routines are all named, and four more id spaces (2026-07-31)
+
+Second half of the same day's work: the eight routines the new `scopes` check
+had pinned are now named, so `KNOWN_STRANDED_IN_SCRIPT` is **empty** and that
+check has turned into a ratchet — a curation change that strands something new
+fails, and there is no backlog behind it. Fifty more curated immediates landed
+alongside (1,098 → 1,148 sites, 459 → 470 defs), byte-perfect throughout.
+
+### What the eight turned out to be
+
+| where | name | how it is reached |
+| --- | --- | --- |
+| `$0e:$4c37` | `TrainingGymRunner0AWaitWaypointClear` | 48 `as_call`s from the gym jogger's own actor script |
+| `$0f:$7b7f`+ | `MapScriptNopAlt_0f`, `MapScriptClearActiveFlag_0f`, `MapScriptPlaySoundA2_0f`, `MapScriptHideLocationName_0f` | nothing — the per-bank library tail, replicated |
+| `$12:$6d8a` | `SeniorCourtReloadIntoVictoryScene` | `SeniorCourtInitScript_12`'s `cp $0e / jp z` |
+| `$14:$4813` | `UnusedMachineRecordOverrideAndReturn_14` | nothing |
+| `$15:$66ef` | `SpeakServeCoachDeclineLine` | the `jr nz` of six lesson scenes |
+| `$15:$6b8e` | `SpeakStrokeChallengerDeclineLine` | the `jr nz` of six challenge scenes |
+| `$27:$48f0` | `SetEnd16BeforeFinalsDoublesWalkScripts_27` | one `jr nz` — a branch arm of the routine above it |
+| `$27:$760e` | `End1MainBldgGroupDepartureCutscene_27` | `End1MainBldgInitScript_27`'s `jp z` on entry point `$02` |
+
+Three things are worth keeping from that table. The bank `$0f` case is **four**
+entry points, not one, and it identifies itself: banks `$0e`, `$10`, `$14` and
+`$27` already carry exactly those four names in the same order, so it is the
+same library tail copied per bank — which is also why nothing references it.
+The two bank `$27` entries are not routines at all but **branch arms** of the
+routine above them, separated from their owner by the actor-script blob the
+assembler emitted in between; a local label cannot reach across a global, so a
+global label is the only fix the source can express. And
+`UnusedMachineRecordOverrideAndReturn_14` reads tennis-machine record `$01`,
+discards it for a constant `$0050`, and never calls `UpdateMinigameRecord`, so
+even if something did call it the value would not persist — the reasoning is in
+its `labels.json` note rather than in the name.
+
+### The four id spaces
+
+| family | defs | sites | the finding |
+| --- | ---: | ---: | --- |
+| `SNDCHANTYPE_*` | 4 | 18 | the type *is* the hardware channel |
+| `MATCHMENUSEL_CANCELLED` | 1 | 17 | the byte is a row, not an item id |
+| `ACADEMYWINGSTAGE_*` | 4 | 11 | a fourth ladder in `wMapSceneStage` |
+| `TILEATTR_PRIORITY`/`_PAL1` | 2 | 4 | a CGB attribute byte |
+
+`wSndChannelType` decodes cleanly because `wSndRegBase` is computed as
+`type * 5` one instruction later, which is the stride of the Game Boy's four
+sound-register blocks (`$ff10`/`$ff15`/`$ff1a`/`$ff1f`). Every site that tests
+it is doing something only that channel needs: loading wave RAM and poking
+`rAUD3ENA` for the wave channel (which also skips duty, volume slide and
+instrument envelope, having no envelope generator), and routing the note through
+`NoiseNoteTable` for noise (which has no period, so vibrato returns early).
+Square 1 is pinned separately by the `and a`-gated write to NR10, the sweep
+register only it has; square 2 has no site of its own and is declared to close
+the space.
+
+**`wMatchMenuSelection` is the trap this pass was most at risk of.** It looks
+like the existing `MATCHMENUITEM_*` space and it is not: `GetMatchMenuItemId`
+(`$06:$480a`) reads `MatchMenuDefs + wPauseMenuId * 8 + row` — the variable is
+the *row*, the constant family is what the lookup *returns*, and the two sit on
+opposite sides of it. The same byte is also the story pause menu's row and the
+debug stats screen's cursor. Only `$ff`, written by every B-pressed branch, is
+engine-wide.
+
+`ACADEMYWINGSTAGE_*` is a fourth family in `wMapSceneStage`, after
+`STORYRANK_*`, `STORYTIER_*` and `SENIORCOURTSTAGE_*`:
+`SetAcademyWingDialogueStage_10` is the region's only writer and walks both
+ladders to the *same* four values, starting at the senior title rather than the
+junior one — which is exactly what makes it neither of the two spaces it
+resembles.
+
+### Three variables that should stay bare
+
+`wShadowTilemapBank` holds literal WRAM bank ids (`$02`/`$03`/`$05`) that go
+straight to the `wram_bank` macro, which already renders a bank as a number —
+naming them would make one number look like two different things.
+`wDrillIsPracticeLesson` is a boolean whose four readers all use `and a`.
+`wCutsceneObjPhase` is reused by four bank-`$14` animations for two unrelated
+purposes: a sprite tile-base offset advanced by `add $04`, and a plain 0-3
+sequencer counter.
+
+### The Tournament Site tables had the Island Open bug
+
+`TournamentSiteScripts1_15` through `6` were numbered by the flag that selects
+them, like the bank `$0f` tables fixed earlier the same day. The dialogue
+settles it the same way: the table loaded once `ROUND_1` is won contains
+*"Everyone from Union lost in the first round…"*, and the next one *"Three
+Academy members and A. Costello have made the semi-finals!"*. Renamed to
+`TournamentSiteRound2Scripts_15` / `…Semifinal…` / `…Final…` and the three
+doubles siblings, so each label now says what the `ISLANDOPENSTAGE_*` constant
+stored beside it says.
+
+### One more shipped defect
+
+`TrainingCourtInitScript_15` (`$15:$532e`) normalises its stage byte with
+`cp $05 / jr c, .fromLesson` and then `sub $06` — but
+`ComputeTrainingCourtProgressIndex`, called on the instruction before, maxes out
+at `$04` on both ladders. The branch is always taken and the subtraction can
+never run. It is the shape of a second id space that used to live in the same
+byte (`$06 + n`), and the compute call would now overwrite it anyway.
+Written up in `docs/bugs.md`.
+
+### Where the naming stands
+
+**20,141 of 21,721 labels are human-named**; the 1,580 generator-derived names
+are unchanged. 470 constant defs cover 1,148 sites plus the value-keyed sound
+ids. What is left on the bare-immediate work-list is mostly *proven* not to be
+nameable — `wStoryModeEntryPoint`'s 171 location-scoped sites,
+`wUnusedExitTriggerIdMirror`'s 161 dead trigger ids, `wMenuSlideDirection`'s
+boolean, `wDrillLessonResult`'s per-drill codes, and the `wBriefing*` screen
+coordinates — so the pass has reached the point where the remaining bare hex is
+bare for a reason.
