@@ -2240,15 +2240,15 @@ RankingMarkerHandlers_1b:
 	dw DrawDoublesRankingMarker5 ; $5861 jumptable
 	dw DrawDoublesRankingMarker6 ; $5863 jumptable
 DrawDoublesRankingMarker0:
-	ld hl, $d240 ; $5865
-	ld de, $d066 ; $5868
+	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH ; $5865
+	ld de, wShadowTilemap + 3 * TILEMAP_WIDTH + 6 ; $5868
 	ld b, $04 ; $586b
 	ld c, $04 ; $586d
 	farcall CopyTilemapRect ; $586f
 	jp StubNop_1b_08 ; $5872
 DrawDoublesRankingMarker2:
-	ld hl, $d244 ; $5875
-	ld de, $d06a ; $5878
+	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH + 4 ; $5875
+	ld de, wShadowTilemap + 3 * TILEMAP_WIDTH + 10 ; $5878
 	ld b, $04 ; $587b
 	ld c, $04 ; $587d
 	farcall CopyTilemapRect ; $587f
@@ -2282,29 +2282,29 @@ DrawDoublesRankingMarker6:
 	farcall CopyTilemapRect ; $58bf
 	jp StubNop_1b_08 ; $58c2
 PushRankingBoardTilemapRows:
-	ld hl, $d000 ; $58c5
+	ld hl, wShadowTilemap ; $58c5
 	ld de, $9800 ; $58c8
 	ld c, $10 ; $58cb
 	call QueueVRAMCopy ; $58cd
-	ld hl, $d400 ; $58d0
+	ld hl, wShadowAttrmap ; $58d0
 	ld de, $9800 + VRAM_BANK1 ; $58d3
 	ld c, $10 ; $58d6
 	call QueueVRAMCopy ; $58d8
 	call AdvanceFrame ; $58db
-	ld hl, $d100 ; $58de
+	ld hl, wShadowTilemap + 8 * TILEMAP_WIDTH ; $58de
 	ld de, $9900 ; $58e1
 	ld c, $10 ; $58e4
 	call QueueVRAMCopy ; $58e6
-	ld hl, $d500 ; $58e9
+	ld hl, wShadowAttrmap + 8 * TILEMAP_WIDTH ; $58e9
 	ld de, $9900 + VRAM_BANK1 ; $58ec
 	ld c, $10 ; $58ef
 	call QueueVRAMCopy ; $58f1
 	call AdvanceFrame ; $58f4
-	ld hl, $d200 ; $58f7
+	ld hl, wShadowTilemap + 16 * TILEMAP_WIDTH ; $58f7
 	ld de, $9a00 ; $58fa
 	ld c, $08 ; $58fd
 	call QueueVRAMCopy ; $58ff
-	ld hl, $d600 ; $5902
+	ld hl, wShadowAttrmap + 16 * TILEMAP_WIDTH ; $5902
 	ld de, $9a00 + VRAM_BANK1 ; $5905
 	ld c, $08 ; $5908
 	call QueueVRAMCopy ; $590a

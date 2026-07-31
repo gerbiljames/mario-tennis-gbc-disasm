@@ -1710,7 +1710,7 @@ TournamentInitScript_0f:
 .placeActorsDoubles:
 	cp $0b ; $62fe
 	jr nz, .done ; $6300
-	call $76a3 ; $6302
+	call Func_0f_76a3 ; $6302
 	ret ; $6305
 .done:
 	call LoadIslandOpenRoundNpcs ; $6306
@@ -2874,10 +2874,8 @@ IslandOpenRoundSinglesNpc05_0fTable:
 	dw Text_25_79 ; record 3
 IslandOpenSinglesStageTextPtrs_0f:
 	INCBIN "data/bank_00f/d_7699.bin" ; $7699, 10 bytes
-	; $76a3, 1 bytes (bytes:1)
-	db $3e ; 0x00
-	inc b ; $76a4
-	wram_bank ; $76a5
+Func_0f_76a3:
+	wram_bank $04 ; $76a3
 	ld a, [wMatchExitRequest] ; $76a9
 	cp $01 ; $76ac
 	jr z, .prompt ; $76ae
@@ -2985,7 +2983,7 @@ IslandOpenSinglesStageTextPtrs_0f:
 	script_get_actor_state ACTOR_PARTNER ; $782c
 	ld c, l ; $7831
 	ld b, h ; $7832
-	ld de, $d000 ; $7833
+	ld de, wActors ; $7833
 	farcall AttachActorStepMover ; $7836
 	ret ; $7839
 IslandOpenRoundSinglesNpc05TextIds:
