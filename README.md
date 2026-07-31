@@ -56,8 +56,15 @@ restated:
 `make check` verifies the structural claims a byte-perfect build cannot: that
 every declared LZ stream decodes inside its extent and survives a re-encode,
 that no symbol sits inside a compressed stream (which would truncate it), that
-every text offset table addresses real strings in its pool, and that the
-extracted regions stay in-bank and do not overlap.
+every text offset table addresses real strings in its pool, that every
+`constants.json` immediate lands on an instruction actually holding that value,
+and that the extracted regions stay in-bank and do not overlap.
+
+The constants check exists because that one failure is otherwise invisible: an
+entry is keyed by the flat ROM offset of the instruction
+(`bank * 0x4000 + cpu - 0x4000`), and an offset off by one — or one pointing
+into a data blob — renders nothing at all while the build still matches the
+ROM. The symptom is a name that silently never appears.
 
 One caveat: `data/` is generated, so `./setup.sh` and `tools/extract.py`
 overwrite it (and now delete files the manifest no longer lists). Keep modified

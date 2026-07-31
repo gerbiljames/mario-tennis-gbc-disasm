@@ -50,8 +50,9 @@ compare: $(ROM)
 
 # Structural invariants a byte-perfect build cannot see: that the declared LZ
 # streams really decode (and re-encode), that no symbol truncates one, that the
-# text offset tables address real strings, and that the extracted regions do
-# not overlap. See tools/check.py.
+# text offset tables address real strings, that every curated immediate lands on
+# an instruction holding that value, and that the extracted regions do not
+# overlap. See tools/check.py.
 check:
 	python3 tools/check.py
 
