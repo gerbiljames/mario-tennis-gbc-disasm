@@ -42,7 +42,7 @@ TrainingGymEntryPoints_0e:
 	db $ff
 TrainingGymArrival01_0e:
 	ld a, [wStoryModeEntryPoint] ; $40ff
-	cp $ff ; $4102
+	cp STORYENTRY_NONE ; $4102
 	jp z, .done ; $4104
 	test_flag FLAG_DOUBLES ; $4107
 	jr z, .walkUp ; $410a
@@ -58,7 +58,7 @@ TrainingGymArrival01_0e:
 	ret ; $4144
 TrainingGymArrival02_0e:
 	ld a, [wStoryModeEntryPoint] ; $4145
-	cp $ff ; $4148
+	cp STORYENTRY_NONE ; $4148
 	jp z, .done ; $414a
 	script_set_speed ACTOR_PLAYER, $0010 ; $414d
 	script_set_speed ACTOR_PARTNER, $0010 ; $4155
@@ -81,7 +81,7 @@ TrainingGymArrival02_0e:
 	ret ; $41e1
 TrainingGymArrival03_0e:
 	ld a, [wStoryModeEntryPoint] ; $41e2
-	cp $ff ; $41e5
+	cp STORYENTRY_NONE ; $41e5
 	jr z, TrainingGymArrival02_0e.done ; $41e7
 	script_set_speed ACTOR_PLAYER, $0010 ; $41e9
 	script_set_speed ACTOR_PARTNER, $0010 ; $41f1

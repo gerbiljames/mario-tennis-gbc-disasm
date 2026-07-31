@@ -2263,7 +2263,7 @@ DebugStoryStatsScreen:
 	sound SFX_MENU_SELECT ; $51cf
 	ld a, [wCurrentStorySlot] ; $51d1
 	inc a ; $51d4
-	cp $03 ; $51d5
+	cp NUM_STORY_SLOTS ; $51d5
 	jr c, .store ; $51d7
 	xor a ; $51d9
 .store:

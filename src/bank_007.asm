@@ -4046,7 +4046,7 @@ OverrideCharStatsForDebug:
 RunDebugTestMatch:
 	ld a, GAMEMODE_EXHIBITION ; $5df9
 	ld [wGameMode], a ; $5dfb
-	ld a, $03 ; $5dfe
+	ld a, STORYSLOT_NONE ; $5dfe
 	ld [wCurrentStorySlot], a ; $5e00
 	ld a, $01 ; $5e03
 	ld [wKeepMatchStatsFlag], a ; $5e05
@@ -4229,7 +4229,7 @@ TargetZonePointEndHook_07:
 	jr nz, .abortMatch ; $5f8b
 	ret ; $5f8d
 .abortMatch:
-	ld a, $ff ; $5f8e
+	ld a, MATCHABORT_ALL ; $5f8e
 	ld [wMatchAbortFlag], a ; $5f90
 	ret ; $5f93
 MinigamePointTable_07_0:

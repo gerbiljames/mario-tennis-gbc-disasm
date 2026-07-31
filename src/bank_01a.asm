@@ -431,7 +431,7 @@ RestoreMessageSpeed:
 	jr nz, .buildMinigameModePauseMenu ; $434f
 	ld a, STORYLOC_MAIN_MENU ; $4351
 	ld [wStoryModeCurrentLocation], a ; $4353
-	ld a, $ff ; $4356
+	ld a, STORYENTRY_NONE ; $4356
 	ld [wStoryModeEntryPoint], a ; $4358
 	ld a, $ff ; $435b
 	ld [wUnusedExitLocationMirror], a ; $435d

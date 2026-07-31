@@ -2560,7 +2560,7 @@ LoadStoryEntryPointRecord:
 	push de ; $5171
 	push hl ; $5172
 	ld a, [wStoryModeEntryPoint] ; $5173
-	cp $ff ; $5176
+	cp STORYENTRY_NONE ; $5176
 	jr z, .done ; $5178
 	ld hl, wStoryModeEntryPoint ; $517a
 	ld d, [hl] ; $517d
@@ -2571,7 +2571,7 @@ LoadStoryEntryPointRecord:
 .searchLoop:
 	ld a, [wStoryLocationBank] ; $5184
 	call FarReadByte ; $5187
-	cp $ff ; $518a
+	cp STORYENTRY_NONE ; $518a
 	jr z, .notFound ; $518c
 	cp d ; $518e
 	jr z, .copyRecord ; $518f
@@ -2765,7 +2765,7 @@ RestoreStoryReturnPoint:
 	call CopyMemoryBC ; $52d8
 	ld a, [wStoryReturnLocation] ; $52db
 	ld [wStoryModeCurrentLocation], a ; $52de
-	ld a, $ff ; $52e1
+	ld a, STORYENTRY_NONE ; $52e1
 	ld [wStoryModeEntryPoint], a ; $52e3
 	ld a, $ff ; $52e6
 	ld [wUnusedExitLocationMirror], a ; $52e8

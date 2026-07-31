@@ -1641,7 +1641,7 @@ TournamentInitScript_0f:
 	ld hl, UpdateTournamentActorDrawModes_0f ; $6211
 	call RegisterFrameTask ; $6214
 	ld a, [wStoryModeEntryPoint] ; $6217
-	cp $ff ; $621a
+	cp STORYENTRY_NONE ; $621a
 	jr z, .inProgress ; $621c
 	clear_flag FLAG_ISLAND_OPEN_IN_PROGRESS ; $621e
 .inProgress:
@@ -3177,7 +3177,7 @@ QueueShortText:
 	ret ; $7aae
 WalkActorsInFromEntryPoint_0f:
 	ld a, [wStoryModeEntryPoint] ; $7aaf
-	cp $ff ; $7ab2
+	cp STORYENTRY_NONE ; $7ab2
 	jp z, .done ; $7ab4
 	test_flag FLAG_DOUBLES ; $7ab7
 	jr z, .walkOff ; $7aba

@@ -530,7 +530,7 @@ MatchQuitMenu_SaveAndQuit:
 	ld a, $01 ; $44b2
 	ld [wKeepMatchStatsFlag], a ; $44b4
 	ld [wSaveAndQuitRequest], a ; $44b7
-	ld a, $ff ; $44ba
+	ld a, MATCHABORT_ALL ; $44ba
 	ld [wMatchAbortFlag], a ; $44bc
 	ld [wMatchFramesAbort], a ; $44bf
 	ret ; $44c2
@@ -538,7 +538,7 @@ MatchQuitMenu_Retry:
 	ld a, $01 ; $44c3
 	ld [wMatchRetryRequest], a ; $44c5
 	ld [wMatchExitRequest], a ; $44c8
-	ld a, $ff ; $44cb
+	ld a, MATCHABORT_ALL ; $44cb
 	ld [wMatchAbortFlag], a ; $44cd
 	ld [wMatchFramesAbort], a ; $44d0
 	ret ; $44d3
@@ -546,14 +546,14 @@ MatchQuitMenu_SelectNewLevel:
 	ld a, $01 ; $44d4
 	ld [wMatchSelectNewLevelRequest], a ; $44d6
 	ld [wMatchExitRequest], a ; $44d9
-	ld a, $ff ; $44dc
+	ld a, MATCHABORT_ALL ; $44dc
 	ld [wMatchAbortFlag], a ; $44de
 	ld [wMatchFramesAbort], a ; $44e1
 	ret ; $44e4
 MatchQuitMenu_Quit:
 	ld a, $01 ; $44e5
 	ld [wMatchExitRequest], a ; $44e7
-	ld a, $ff ; $44ea
+	ld a, MATCHABORT_ALL ; $44ea
 	ld [wMatchAbortFlag], a ; $44ec
 	ld [wMatchFramesAbort], a ; $44ef
 	ret ; $44f2
@@ -3143,7 +3143,7 @@ StoryPauseMenu_ReturnToMainMenu:
 	db $08 ; $7089 inline arg
 	ld a, $01 ; $708a
 	ld [wMatchExitRequest], a ; $708c
-	ld a, $ff ; $708f
+	ld a, MATCHABORT_ALL ; $708f
 	ld [wMatchAbortFlag], a ; $7091
 	ld a, STORYLOC_MAIN_MENU ; $7094
 	ld [wStoryModeCurrentLocation], a ; $7096

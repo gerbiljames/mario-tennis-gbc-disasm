@@ -238,7 +238,7 @@ CenterCourtSceneVariantActors_11:
 	map_actor_end
 MapArrivalWalk_11:
 	ld a, [wStoryModeEntryPoint] ; $42fd
-	cp $ff ; $4300
+	cp STORYENTRY_NONE ; $4300
 	jp z, .done ; $4302
 	test_flag FLAG_DOUBLES ; $4305
 	jr z, .walkOff ; $4308
@@ -348,7 +348,7 @@ AcademyArrivalEntryPoints_11:
 	db $ff
 AcademyArrivalArrival01_11:
 	ld a, [wStoryModeEntryPoint] ; $4536
-	cp $ff ; $4539
+	cp STORYENTRY_NONE ; $4539
 	jp z, .done ; $453b
 	test_flag FLAG_DOUBLES ; $453e
 	jr z, .walkOff ; $4541

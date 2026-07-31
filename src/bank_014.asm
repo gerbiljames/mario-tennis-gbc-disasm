@@ -31,7 +31,7 @@ TennisMachineRoomEntryPoints_14:
 	db $ff
 TennisMachineRoomArrival01_14:
 	ld a, [wStoryModeEntryPoint] ; $4063
-	cp $ff ; $4066
+	cp STORYENTRY_NONE ; $4066
 	jp z, .done ; $4068
 	clear_flag FLAG_PRACTICE_ROOM_SESSION_ACTIVE ; $406b
 	test_flag FLAG_DOUBLES ; $406e
@@ -256,7 +256,7 @@ TennisMachineRoomInitScript_14:
 	jp z, MachineCourtResultScene ; $42a2
 	cp $07 ; $42a5
 	jp z, MachinePracticeResultScene ; $42a7
-	cp $ff ; $42aa
+	cp STORYENTRY_NONE ; $42aa
 	jp z, MachineCourtWalkToAttendantCutscene.practiceRoom ; $42ac
 	ret ; $42af
 MachineCourtResultScene:
@@ -1224,7 +1224,7 @@ Court2ActorsAlt_14:
 	map_actor_end
 Court2EntryWalkIn:
 	ld a, [wStoryModeEntryPoint] ; $4f66
-	cp $ff ; $4f69
+	cp STORYENTRY_NONE ; $4f69
 	jp z, .done ; $4f6b
 	test_flag FLAG_DOUBLES ; $4f6e
 	jr z, .walkOff ; $4f71
@@ -1403,7 +1403,7 @@ Court1ActorsAlt_14:
 	map_actor_end
 Court1EntryWalkIn:
 	ld a, [wStoryModeEntryPoint] ; $51a4
-	cp $ff ; $51a7
+	cp STORYENTRY_NONE ; $51a7
 	jp z, .done ; $51a9
 	test_flag FLAG_DOUBLES ; $51ac
 	jr z, .walkOff ; $51af

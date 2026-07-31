@@ -681,3 +681,36 @@ def CHARB_AIRBORNE           equ 2 ; set for the smash jump, cleared by StepChar
 def CHARB_MOVING             equ 4 ; the velocity came out nonzero this frame (or MoveCharTowardTarget stepped); UpdateCharRunAnimation reads it to choose run over idle
 def CHARB_CHARGING           equ 5 ; a swing is winding up: StepCharMovement ($08:$72ed) shifts both velocities right 3, so speed / 8
 def CHARB_MOVE_BLOCKED       equ 6 ; StepCharMovement refused an axis at the court bound instead of clamping it. Written at four sites and read at none
+
+; --- Match abort flag (wMatchAbortFlag, $c4c3) ---
+; Two independent bits rather than a code, which is why the masks and not the
+; values are what the code tests: every reader is an `and` (or one `bit 7`),
+; and the two bits break different loops. docs/match_engine.md describes the
+; same split. Note that the quit-menu writes $ff, not $81 -- it sets every bit
+; rather than the two defined ones, so that value needs a name of its own.
+def MATCHABORT_POINT         equ $01 ; give up the current rally: tested `and $01` by PlayPoint.rallyLoop ($08:$4d2c) and PlayMinigamePoint.rallyLoop
+def MATCHABORT_MATCH         equ $80 ; break out of the point/game/set/match loops: tested `and $80` in RunMatchPlayLoop, CheckSetComplete and RunMinigameLoop
+def MATCHABORT_ALL           equ $ff ; every bit set, written by the four MatchQuitMenu_* actions, StoryPauseMenu_ReturnToMainMenu and TargetZonePointEndHook_07
+def MATCHABORTB_MATCH        equ 7   ; bit-index form of MATCHABORT_MATCH, for the one `bit 7, a` consumer ($16:$447a)
+
+; --- Story save slot (wCurrentStorySlot, $c8a5) ---
+; Slots 0-2 are the three story files; the byte doubles as an index
+; (GetCurrentSlotBlockId $03:$529d reads StorySlotBlockIds_03[slot], and a slot
+; saves as block 2N with its backup at +$1b), so the real ids stay numeric. The
+; out-of-range value is the one worth naming: it means "not a story file at
+; all" -- exhibition, link, mini-game and the two debug screens set it, and
+; StorySlotBlockIds_03[3] is the exhibition block. It shares its value with the
+; slot count, which is the bound in the same `cp $03` guard, so both names
+; exist and each site takes the one that says what that site is doing.
+def STORYSLOT_NONE           equ $03 ; not a story file: set by exhibition, link, mini-game and debug setup, and mapped to the exhibition save block
+def NUM_STORY_SLOTS          equ $03 ; the three story files, as a bound: `cp $03 / ret nc` in SaveStorySlot/CheckStorySlot, and the debug stats screen's page wrap
+
+; --- Story entry point sentinel (wStoryModeEntryPoint, $c295) ---
+; The entry point is *location-scoped*, not a global id space: each location's
+; map_tree carries its own `map_entry` table (8-byte records keyed by their
+; first byte), and LoadStoryEntryPointRecord ($0a:$516f) linearly searches that
+; table, falling back to its first record on no match. So the same $0f means
+; one door at the Senior Class Court and another at the Junior one -- the ids
+; belong to the tables, which already name themselves, and only the sentinel is
+; engine-wide.
+def STORYENTRY_NONE          equ $ff ; no entry point: keep the saved position (LoadStoryEntryPointRecord returns early), suppress the location-name popup ($0a:$5154), and terminate a map_entry table

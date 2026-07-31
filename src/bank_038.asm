@@ -4344,7 +4344,7 @@ CacheStorySlotNames:
 	pop de ; $60aa
 	pop bc ; $60ab
 	pop af ; $60ac
-	ld a, $03 ; $60ad
+	ld a, STORYSLOT_NONE ; $60ad
 	ld [wCurrentStorySlot], a ; $60af
 	farcall InitStoryModeState ; $60b2
 	farcall InitDefaultMatchSettings ; $60b5

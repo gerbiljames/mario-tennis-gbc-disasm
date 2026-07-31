@@ -31,7 +31,7 @@ RestaurantPlazaEntryPoints_13:
 	db $ff
 RestaurantPlazaArrival04_13:
 	ld a, [wStoryModeEntryPoint] ; $405f
-	cp $ff ; $4062
+	cp STORYENTRY_NONE ; $4062
 	jp z, .done ; $4064
 	test_flag FLAG_DOUBLES ; $4067
 	jr z, .walkOff ; $406a
@@ -47,7 +47,7 @@ RestaurantPlazaArrival04_13:
 	ret ; $40a4
 RestaurantPlazaArrival06_13:
 	ld a, [wStoryModeEntryPoint] ; $40a5
-	cp $ff ; $40a8
+	cp STORYENTRY_NONE ; $40a8
 	jp z, .done ; $40aa
 	test_flag FLAG_DOUBLES ; $40ad
 	jr z, .walkOff ; $40b0
@@ -63,7 +63,7 @@ RestaurantPlazaArrival06_13:
 	ret ; $40ea
 RestaurantPlazaArrival01_13:
 	ld a, [wStoryModeEntryPoint] ; $40eb
-	cp $ff ; $40ee
+	cp STORYENTRY_NONE ; $40ee
 	jp z, RestaurantPlazaArrivalWalkIn_13.done ; $40f0
 	script_set_speed ACTOR_PLAYER, $0018 ; $40f3
 	script_set_anim ACTOR_PLAYER, $08 ; $40fb
@@ -83,7 +83,7 @@ RestaurantPlazaArrival01_13:
 	ret ; $4162
 RestaurantPlazaArrival02_13:
 	ld a, [wStoryModeEntryPoint] ; $4163
-	cp $ff ; $4166
+	cp STORYENTRY_NONE ; $4166
 	jp z, RestaurantPlazaArrivalWalkIn_13.done ; $4168
 	script_copy_scene_rect $14, $08, $06, $15, $02, $02 ; $416b
 	script_copy_scene_rect $04, $15, $14, $08, $02, $02 ; $417a
@@ -103,7 +103,7 @@ RestaurantPlazaArrival02_13:
 	ret ; $41ce
 RestaurantPlazaArrivalWalkIn_13:
 	ld a, [wStoryModeEntryPoint] ; $41cf
-	cp $ff ; $41d2
+	cp STORYENTRY_NONE ; $41d2
 	jr z, .done ; $41d4
 	script_set_speed ACTOR_PLAYER, $000c ; $41d6
 	script_set_anim ACTOR_PLAYER, $08 ; $41de
@@ -935,7 +935,7 @@ SetupDormRoomSceneVariant:
 	ret ; $51af
 PlaceDormRoomArrivalActors_13:
 	ld a, [wStoryModeEntryPoint] ; $51b0
-	cp $ff ; $51b3
+	cp STORYENTRY_NONE ; $51b3
 	jr z, .stage3 ; $51b5
 	cp $01 ; $51b7
 	jr z, .stage2 ; $51b9
@@ -2347,7 +2347,7 @@ Table_13:
 	db $ff, $10, $02, $01, $5a, $10, $04, $01, $96, $0c, $f7, $ff ; 0x18
 CourtyardEntryWalkIn_13:
 	ld a, [wStoryModeEntryPoint] ; $62ff
-	cp $ff ; $6302
+	cp STORYENTRY_NONE ; $6302
 	jp z, .done ; $6304
 	test_flag FLAG_DOUBLES ; $6307
 	jr z, .walkOff ; $630a

@@ -966,7 +966,7 @@ WaterSpriteHook_BallHit:
 	ld a, [wRallyLength] ; $4beb
 	cp $02 ; $4bee
 	jr c, .done ; $4bf0
-	ld a, $01 ; $4bf2
+	ld a, MATCHABORT_POINT ; $4bf2
 	ld [wMatchAbortFlag], a ; $4bf4
 	ld hl, wTotalPointsScoredInCurrentGame ; $4bf7
 	inc [hl] ; $4bfa
@@ -984,7 +984,7 @@ WaterSpriteHook_PointEnd:
 	jr nz, .storeMatchAbortFlag ; $4c0a
 	ret ; $4c0c
 .storeMatchAbortFlag:
-	ld a, $80 ; $4c0d
+	ld a, MATCHABORT_MATCH ; $4c0d
 	ld [wMatchAbortFlag], a ; $4c0f
 	ret ; $4c12
 Test2InitScriptMinigamePointTable_10:
@@ -1452,7 +1452,7 @@ MatchSelectHandlersBHandler0:
 	ld [wStoryModeExitLocationRequest], a ; $50fa
 	ret ; $50fd
 MatchSelectHandlersBHandler3:
-	ld a, $03 ; $50fe
+	ld a, STORYSLOT_NONE ; $50fe
 	ld [wCurrentStorySlot], a ; $5100
 	farcall ReadExhibitionSaveBlock ; $5103
 	bit 7, a ; $5106
@@ -1480,7 +1480,7 @@ MatchSelectHandlersBHandler3:
 .noSlot:
 	xor a ; $5137
 	ld [wVictoryScoreTableAlt], a ; $5138
-	ld a, $03 ; $513b
+	ld a, STORYSLOT_NONE ; $513b
 	ld [wCurrentStorySlot], a ; $513d
 	farcall InitStoryModeState ; $5140
 	farcall InitDefaultMatchSettings ; $5143
@@ -1546,7 +1546,7 @@ MatchSelectHandlersBHandler3:
 	ld [wCurrentlyUsedCourt], a ; $51d5
 	call ApplyMatchTypeSettings ; $51d8
 .optionsFlow:
-	ld a, $03 ; $51db
+	ld a, STORYSLOT_NONE ; $51db
 	ld [wCurrentStorySlot], a ; $51dd
 	xor a ; $51e0
 	ld [wSaveAndQuitRequest], a ; $51e1
@@ -1579,7 +1579,7 @@ RunMinigameModeFlow:
 	ld [wMenuSlideDirection], a ; $5223
 	jp RunTitleAndMainMenuLoop.menuLoop ; $5226
 .levelMenu:
-	ld a, $03 ; $5229
+	ld a, STORYSLOT_NONE ; $5229
 	ld [wCurrentStorySlot], a ; $522b
 	ld a, [wSelectedMinigame] ; $522e
 	ld c, a ; $5231
@@ -1629,7 +1629,7 @@ RunMinigameModeFlow:
 	jr z, .levelMenu ; $529b
 	jp RunTitleAndMainMenuLoop.menuLoop ; $529d
 MatchSelectHandlersBHandler5:
-	ld a, $03 ; $52a0
+	ld a, STORYSLOT_NONE ; $52a0
 	ld [wCurrentStorySlot], a ; $52a2
 	farcall InitStoryModeState ; $52a5
 	farcall InitDefaultMatchSettings ; $52a8
@@ -1651,7 +1651,7 @@ RunSavedDataMenuFlow:
 	farcall RunSavedDataSourceSelect ; $52d1
 	cp $ff ; $52d4
 	jp z, RunTitleAndMainMenuLoop.menuLoop ; $52d6
-	cp $03 ; $52d9
+	cp NUM_STORY_SLOTS ; $52d9
 	jp nc, .checkSavedData ; $52db
 	ld [wCurrentStorySlot], a ; $52de
 	farcall CheckStorySlot ; $52e1
@@ -2561,7 +2561,7 @@ RestaurantEntryPoints_10:
 	db $ff
 RestaurantArrival01_10:
 	ld a, [wStoryModeEntryPoint] ; $5b97
-	cp $ff ; $5b9a
+	cp STORYENTRY_NONE ; $5b9a
 	jp z, .done ; $5b9c
 	test_flag FLAG_DOUBLES ; $5b9f
 	jr z, .walkOff ; $5ba2
@@ -4166,7 +4166,7 @@ AcademyMainBldgEntryPoints_10:
 	db $ff
 AcademyMainBldgArrival02_10:
 	ld a, [wStoryModeEntryPoint] ; $7532
-	cp $ff ; $7535
+	cp STORYENTRY_NONE ; $7535
 	jp z, .done ; $7537
 	test_flag FLAG_DOUBLES ; $753a
 	jr z, .walkOff ; $753d
@@ -4182,7 +4182,7 @@ AcademyMainBldgArrival02_10:
 	ret ; $7577
 AcademyMainBldgArrival01_10:
 	ld a, [wStoryModeEntryPoint] ; $7578
-	cp $ff ; $757b
+	cp STORYENTRY_NONE ; $757b
 	jp z, .done ; $757d
 	test_flag FLAG_DOUBLES ; $7580
 	jr z, .walkOff ; $7583
@@ -4643,7 +4643,7 @@ MapExitWalkCurveRight_10:
 	ret ; $7b1e
 MapExitWalkCurveLeft_10:
 	ld a, [wStoryModeEntryPoint] ; $7b1f
-	cp $ff ; $7b22
+	cp STORYENTRY_NONE ; $7b22
 	jr z, .done ; $7b24
 	script_set_speed ACTOR_PARTNER, $0010 ; $7b26
 	script_set_speed ACTOR_PLAYER, $0010 ; $7b2e
@@ -4656,7 +4656,7 @@ MapExitWalkCurveLeft_10:
 	ret ; $7b5e
 MapArrivalWalkPair_10:
 	ld a, [wStoryModeEntryPoint] ; $7b5f
-	cp $ff ; $7b62
+	cp STORYENTRY_NONE ; $7b62
 	jr z, .done ; $7b64
 	script_set_speed ACTOR_PLAYER, $0010 ; $7b66
 	script_set_speed ACTOR_PARTNER, $0010 ; $7b6e

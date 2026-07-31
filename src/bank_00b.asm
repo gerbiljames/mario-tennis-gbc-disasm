@@ -309,7 +309,7 @@ UpdateDrillAbortCountdown:
 	ld a, [hl] ; $41d1
 	or a ; $41d2
 	ret nz ; $41d3
-	ld a, $01 ; $41d4
+	ld a, MATCHABORT_POINT ; $41d4
 	ld [wMatchAbortFlag], a ; $41d6
 	ret ; $41d9
 RecordDrillTargetZoneHitIfInPlay:
@@ -1188,7 +1188,7 @@ ServiceMatch1Hook_PointEnd:
 	ld b, [hl] ; $4877
 	cp b ; $4878
 	ret z ; $4879
-	ld a, $80 ; $487a
+	ld a, MATCHABORT_MATCH ; $487a
 	ld [wMatchAbortFlag], a ; $487c
 	ret ; $487f
 .eq08:
@@ -1387,12 +1387,12 @@ ServiceMatch1Cases2:
 .storeMatchAbortFlag2:
 	xor a ; $49b5
 	ret ; $49b6
-	ld a, $01 ; $49b7
+	ld a, MATCHABORT_POINT ; $49b7
 	ld [wMatchAbortFlag], a ; $49b9
 	ld a, $01 ; $49bc
 	ret ; $49be
 .storeMatchAbortFlag:
-	ld a, $01 ; $49bf
+	ld a, MATCHABORT_POINT ; $49bf
 	ld [wMatchAbortFlag], a ; $49c1
 	ld a, $ff ; $49c4
 	ret ; $49c6
@@ -1459,7 +1459,7 @@ ServiceMatch2Hook_PointEnd:
 	ld b, [hl] ; $4a3b
 	cp b ; $4a3c
 	ret z ; $4a3d
-	ld a, $80 ; $4a3e
+	ld a, MATCHABORT_MATCH ; $4a3e
 	ld [wMatchAbortFlag], a ; $4a40
 	ret ; $4a43
 .eq08:
@@ -1711,12 +1711,12 @@ ServiceMatch2Cases2:
 .storeMatchAbortFlag2:
 	xor a ; $4c01
 	ret ; $4c02
-	ld a, $01 ; $4c03
+	ld a, MATCHABORT_POINT ; $4c03
 	ld [wMatchAbortFlag], a ; $4c05
 	ld a, $01 ; $4c08
 	ret ; $4c0a
 .storeMatchAbortFlag:
-	ld a, $01 ; $4c0b
+	ld a, MATCHABORT_POINT ; $4c0b
 	ld [wMatchAbortFlag], a ; $4c0d
 	ld a, $ff ; $4c10
 	ret ; $4c12
@@ -1777,7 +1777,7 @@ ServiceMatch3Hook_PointEnd:
 	ld a, $ff ; $4c75
 .store:
 	ld [wPointWinLoseFlag], a ; $4c77
-	ld a, $80 ; $4c7a
+	ld a, MATCHABORT_MATCH ; $4c7a
 	ld [wMatchAbortFlag], a ; $4c7c
 	ret ; $4c7f
 .checkTotalPointsScoredInCurrentGame:
@@ -1980,12 +1980,12 @@ ServiceMatch3Cases2:
 .storeMatchAbortFlag2:
 	xor a ; $4dd0
 	ret ; $4dd1
-	ld a, $01 ; $4dd2
+	ld a, MATCHABORT_POINT ; $4dd2
 	ld [wMatchAbortFlag], a ; $4dd4
 	ld a, $01 ; $4dd7
 	ret ; $4dd9
 .storeMatchAbortFlag:
-	ld a, $01 ; $4dda
+	ld a, MATCHABORT_POINT ; $4dda
 	ld [wMatchAbortFlag], a ; $4ddc
 	ld a, $ff ; $4ddf
 	ret ; $4de1
@@ -2033,7 +2033,7 @@ ServicePractice1Hook_PointEnd:
 	ret z ; $4e32
 	call ServicePractice1EvaluateResult ; $4e33
 	ld [wPointWinLoseFlag], a ; $4e36
-	ld a, $80 ; $4e39
+	ld a, MATCHABORT_MATCH ; $4e39
 	ld [wMatchAbortFlag], a ; $4e3b
 	ret ; $4e3e
 ServicePractice1EvaluateResult:
@@ -2234,7 +2234,7 @@ ServicePractice2Hook_PointEnd:
 	ret z ; $4fc2
 	call ServicePractice2EvaluateResult ; $4fc3
 	ld [wPointWinLoseFlag], a ; $4fc6
-	ld a, $80 ; $4fc9
+	ld a, MATCHABORT_MATCH ; $4fc9
 	ld [wMatchAbortFlag], a ; $4fcb
 	ret ; $4fce
 ServicePractice2EvaluateResult:
@@ -2568,7 +2568,7 @@ ServicePractice3Hook_PointEnd:
 	ret z ; $5244
 	call ServicePractice3EvaluateResult ; $5245
 	ld [wPointWinLoseFlag], a ; $5248
-	ld a, $80 ; $524b
+	ld a, MATCHABORT_MATCH ; $524b
 	ld [wMatchAbortFlag], a ; $524d
 	ret ; $5250
 ServicePractice3EvaluateResult:
@@ -2808,7 +2808,7 @@ NetGameMatch1Hook_PointEnd:
 	ld hl, wPlayer1PointsWon ; $5440
 	sub [hl] ; $5443
 	ret z ; $5444
-	ld a, $80 ; $5445
+	ld a, MATCHABORT_MATCH ; $5445
 	ld [wMatchAbortFlag], a ; $5447
 	ret ; $544a
 NetGameMatch1Hook_RallyTick:
@@ -3123,12 +3123,12 @@ NetGameMatch1Cases4:
 .storeMatchAbortFlag2:
 	xor a ; $5632
 	ret ; $5633
-	ld a, $01 ; $5634
+	ld a, MATCHABORT_POINT ; $5634
 	ld [wMatchAbortFlag], a ; $5636
 	ld a, $01 ; $5639
 	ret ; $563b
 .storeMatchAbortFlag:
-	ld a, $01 ; $563c
+	ld a, MATCHABORT_POINT ; $563c
 	ld [wMatchAbortFlag], a ; $563e
 	ld a, $ff ; $5641
 	ret ; $5643
@@ -3201,7 +3201,7 @@ NetGameMatch2Hook_PointEnd:
 	ld a, $ff ; $56c2
 .store:
 	ld [wPointWinLoseFlag], a ; $56c4
-	ld a, $80 ; $56c7
+	ld a, MATCHABORT_MATCH ; $56c7
 	ld [wMatchAbortFlag], a ; $56c9
 	ret ; $56cc
 .checkTotalPointsScoredInCurrentGame:
@@ -3210,7 +3210,7 @@ NetGameMatch2Hook_PointEnd:
 	ret nz ; $56d2
 	ld a, $00 ; $56d3
 	ld [wPointWinLoseFlag], a ; $56d5
-	ld a, $80 ; $56d8
+	ld a, MATCHABORT_MATCH ; $56d8
 	ld [wMatchAbortFlag], a ; $56da
 	ret ; $56dd
 NetGameMatch2Hook_RallyTick:
@@ -3511,12 +3511,12 @@ NetGameMatch2Cases4:
 	xor a ; $58ad
 	ret ; $58ae
 .storeMatchAbortFlag:
-	ld a, $01 ; $58af
+	ld a, MATCHABORT_POINT ; $58af
 	ld [wMatchAbortFlag], a ; $58b1
 	ld a, $01 ; $58b4
 	ret ; $58b6
 .storeMatchAbortFlag2:
-	ld a, $01 ; $58b7
+	ld a, MATCHABORT_POINT ; $58b7
 	ld [wMatchAbortFlag], a ; $58b9
 	ld a, $ff ; $58bc
 	ret ; $58be
@@ -3584,7 +3584,7 @@ NetGameMatch3Hook_PointEnd:
 	ld a, $ff ; $5935
 .store:
 	ld [wPointWinLoseFlag], a ; $5937
-	ld a, $80 ; $593a
+	ld a, MATCHABORT_MATCH ; $593a
 	ld [wMatchAbortFlag], a ; $593c
 	ret ; $593f
 .checkTotalPointsScoredInCurrentGame:
@@ -3991,12 +3991,12 @@ NetGameMatch3Cases4:
 .storeMatchAbortFlag2:
 	xor a ; $5bc8
 	ret ; $5bc9
-	ld a, $01 ; $5bca
+	ld a, MATCHABORT_POINT ; $5bca
 	ld [wMatchAbortFlag], a ; $5bcc
 	ld a, $01 ; $5bcf
 	ret ; $5bd1
 .storeMatchAbortFlag:
-	ld a, $01 ; $5bd2
+	ld a, MATCHABORT_POINT ; $5bd2
 	ld [wMatchAbortFlag], a ; $5bd4
 	ld a, $ff ; $5bd7
 	ret ; $5bd9
@@ -4385,12 +4385,12 @@ NetGamePractice1Cases3:
 	xor a ; $5e83
 	ret ; $5e84
 .nonZero:
-	ld a, $01 ; $5e85
+	ld a, MATCHABORT_POINT ; $5e85
 	ld [wMatchAbortFlag], a ; $5e87
 	ld a, $01 ; $5e8a
 	ret ; $5e8c
 .storeMatchAbortFlag:
-	ld a, $01 ; $5e8d
+	ld a, MATCHABORT_POINT ; $5e8d
 	ld [wMatchAbortFlag], a ; $5e8f
 	ld a, $ff ; $5e92
 	ret ; $5e94
@@ -4769,12 +4769,12 @@ NetGamePractice2Cases3:
 	xor a ; $613c
 	ret ; $613d
 .storeMatchAbortFlag:
-	ld a, $01 ; $613e
+	ld a, MATCHABORT_POINT ; $613e
 	ld [wMatchAbortFlag], a ; $6140
 	ld a, $01 ; $6143
 	ret ; $6145
 .ne09:
-	ld a, $01 ; $6146
+	ld a, MATCHABORT_POINT ; $6146
 	ld [wMatchAbortFlag], a ; $6148
 	ld a, $ff ; $614b
 	ret ; $614d
@@ -5150,12 +5150,12 @@ NetGamePractice3Cases3:
 .storeMatchAbortFlag2:
 	xor a ; $63ee
 	ret ; $63ef
-	ld a, $01 ; $63f0
+	ld a, MATCHABORT_POINT ; $63f0
 	ld [wMatchAbortFlag], a ; $63f2
 	ld a, $01 ; $63f5
 	ret ; $63f7
 .storeMatchAbortFlag:
-	ld a, $01 ; $63f8
+	ld a, MATCHABORT_POINT ; $63f8
 	ld [wMatchAbortFlag], a ; $63fa
 	ld a, $ff ; $63fd
 	ret ; $63ff
@@ -5216,7 +5216,7 @@ StrokeMatch1Hook_PointEnd:
 	ld a, $ff ; $6462
 .store:
 	ld [wPointWinLoseFlag], a ; $6464
-	ld a, $80 ; $6467
+	ld a, MATCHABORT_MATCH ; $6467
 	ld [wMatchAbortFlag], a ; $6469
 	ret ; $646c
 .checkTotalPointsScoredInCurrentGame:
@@ -5225,7 +5225,7 @@ StrokeMatch1Hook_PointEnd:
 	ret nz ; $6472
 	xor a ; $6473
 	ld [wPointWinLoseFlag], a ; $6474
-	ld a, $80 ; $6477
+	ld a, MATCHABORT_MATCH ; $6477
 	ld [wMatchAbortFlag], a ; $6479
 	ret ; $647c
 StrokeMatch1Hook_RallyTick:
@@ -5532,12 +5532,12 @@ StrokeMatch1Cases4:
 	xor a ; $667d
 	ret ; $667e
 .storeMatchAbortFlag:
-	ld a, $01 ; $667f
+	ld a, MATCHABORT_POINT ; $667f
 	ld [wMatchAbortFlag], a ; $6681
 	ld a, $01 ; $6684
 	ret ; $6686
 .storeMatchAbortFlag2:
-	ld a, $01 ; $6687
+	ld a, MATCHABORT_POINT ; $6687
 	ld [wMatchAbortFlag], a ; $6689
 	ld a, $ff ; $668c
 	ret ; $668e
@@ -5667,7 +5667,7 @@ StrokeMatch2Hook_PointEnd:
 	ld a, $ff ; $6760
 .store:
 	ld [wPointWinLoseFlag], a ; $6762
-	ld a, $80 ; $6765
+	ld a, MATCHABORT_MATCH ; $6765
 	ld [wMatchAbortFlag], a ; $6767
 	ret ; $676a
 .checkTotalPointsScoredInCurrentGame:
@@ -5676,7 +5676,7 @@ StrokeMatch2Hook_PointEnd:
 	ret nz ; $6770
 	ld a, $00 ; $6771
 	ld [wPointWinLoseFlag], a ; $6773
-	ld a, $80 ; $6776
+	ld a, MATCHABORT_MATCH ; $6776
 	ld [wMatchAbortFlag], a ; $6778
 	ret ; $677b
 StrokeMatch2Hook_RallyTick:
@@ -5937,12 +5937,12 @@ StrokeMatch2Cases3:
 	xor a ; $6914
 	ret ; $6915
 .zero:
-	ld a, $01 ; $6916
+	ld a, MATCHABORT_POINT ; $6916
 	ld [wMatchAbortFlag], a ; $6918
 	ld a, $01 ; $691b
 	ret ; $691d
 .storeMatchAbortFlag:
-	ld a, $01 ; $691e
+	ld a, MATCHABORT_POINT ; $691e
 	ld [wMatchAbortFlag], a ; $6920
 	ld a, $ff ; $6923
 	ret ; $6925
@@ -6019,7 +6019,7 @@ StrokeMatch3Hook_PointEnd:
 	ld a, $ff ; $69ab
 .store:
 	ld [wPointWinLoseFlag], a ; $69ad
-	ld a, $80 ; $69b0
+	ld a, MATCHABORT_MATCH ; $69b0
 	ld [wMatchAbortFlag], a ; $69b2
 	ret ; $69b5
 .checkTotalPointsScoredInCurrentGame:
@@ -6028,7 +6028,7 @@ StrokeMatch3Hook_PointEnd:
 	ret nz ; $69bb
 	ld a, $00 ; $69bc
 	ld [wPointWinLoseFlag], a ; $69be
-	ld a, $80 ; $69c1
+	ld a, MATCHABORT_MATCH ; $69c1
 	ld [wMatchAbortFlag], a ; $69c3
 	ret ; $69c6
 StrokeMatch3Hook_RallyTick:
@@ -6280,12 +6280,12 @@ StrokeMatch3Cases3:
 	xor a ; $6b4b
 	ret ; $6b4c
 .zero:
-	ld a, $01 ; $6b4d
+	ld a, MATCHABORT_POINT ; $6b4d
 	ld [wMatchAbortFlag], a ; $6b4f
 	ld a, $01 ; $6b52
 	ret ; $6b54
 .storeMatchAbortFlag:
-	ld a, $01 ; $6b55
+	ld a, MATCHABORT_POINT ; $6b55
 	ld [wMatchAbortFlag], a ; $6b57
 	ld a, $ff ; $6b5a
 	ret ; $6b5c
@@ -6613,12 +6613,12 @@ StrokePractice1Cases2:
 	xor a ; $6d9c
 	ret ; $6d9d
 .nonZero:
-	ld a, $01 ; $6d9e
+	ld a, MATCHABORT_POINT ; $6d9e
 	ld [wMatchAbortFlag], a ; $6da0
 	ld a, $01 ; $6da3
 	ret ; $6da5
 .storeMatchAbortFlag:
-	ld a, $01 ; $6da6
+	ld a, MATCHABORT_POINT ; $6da6
 	ld [wMatchAbortFlag], a ; $6da8
 	ld a, $ff ; $6dab
 	ret ; $6dad
@@ -6943,12 +6943,12 @@ StrokePractice2Cases2:
 	xor a ; $6ffc
 	ret ; $6ffd
 .nonZero:
-	ld a, $01 ; $6ffe
+	ld a, MATCHABORT_POINT ; $6ffe
 	ld [wMatchAbortFlag], a ; $7000
 	ld a, $01 ; $7003
 	ret ; $7005
 .storeMatchAbortFlag:
-	ld a, $01 ; $7006
+	ld a, MATCHABORT_POINT ; $7006
 	ld [wMatchAbortFlag], a ; $7008
 	ld a, $ff ; $700b
 	ret ; $700d
@@ -7261,12 +7261,12 @@ StrokePractice3Cases2:
 	xor a ; $7246
 	ret ; $7247
 .nonZero:
-	ld a, $01 ; $7248
+	ld a, MATCHABORT_POINT ; $7248
 	ld [wMatchAbortFlag], a ; $724a
 	ld a, $01 ; $724d
 	ret ; $724f
 .storeMatchAbortFlag:
-	ld a, $01 ; $7250
+	ld a, MATCHABORT_POINT ; $7250
 	ld [wMatchAbortFlag], a ; $7252
 	ld a, $ff ; $7255
 	ret ; $7257

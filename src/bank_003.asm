@@ -2002,12 +2002,12 @@ ReadSaveBlockTag:
 	ret ; $4d07
 SaveStorySlot:
 	ld a, [wCurrentStorySlot] ; $4d08
-	cp $03 ; $4d0b
+	cp NUM_STORY_SLOTS ; $4d0b
 	ret nc ; $4d0d
 	jr SaveStorySlotWithTimer.checkCurrentStorySlot ; $4d0e
 SaveStorySlotWithTimer:
 	ld a, [wCurrentStorySlot] ; $4d10
-	cp $03 ; $4d13
+	cp NUM_STORY_SLOTS ; $4d13
 	ret nc ; $4d15
 	call SaveGameTimer ; $4d16
 .checkCurrentStorySlot:
@@ -2055,7 +2055,7 @@ CheckStorySlot:
 	push de ; $4d65
 	push hl ; $4d66
 	ld a, [wCurrentStorySlot] ; $4d67
-	cp $03 ; $4d6a
+	cp NUM_STORY_SLOTS ; $4d6a
 	jr nc, .noSlot ; $4d6c
 	add a ; $4d6e
 	ld b, a ; $4d6f
@@ -3133,7 +3133,7 @@ SaveSlotDebugEditor:
 	jr z, .bit1Clear ; $543c
 	ld a, [wCurrentStorySlot] ; $543e
 	push af ; $5441
-	ld a, $03 ; $5442
+	ld a, STORYSLOT_NONE ; $5442
 	ld [wCurrentStorySlot], a ; $5444
 	call ReadCurrentSlotBlock ; $5447
 	or a ; $544a

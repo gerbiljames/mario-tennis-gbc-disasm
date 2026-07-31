@@ -382,7 +382,7 @@ SetupTournamentSitePartnerActor:
 	ret ; $46ef
 TournamentSiteEntryWalkIn:
 	ld a, [wStoryModeEntryPoint] ; $46f0
-	cp $ff ; $46f3
+	cp STORYENTRY_NONE ; $46f3
 	jp z, .done ; $46f5
 	test_flag FLAG_DOUBLES ; $46f8
 	jr z, .walkOff ; $46fb
@@ -499,7 +499,7 @@ TrainingCourtEntryPoints_15:
 	db $ff
 TrainingCourtArrival01_15:
 	ld a, [wStoryModeEntryPoint] ; $490d
-	cp $ff ; $4910
+	cp STORYENTRY_NONE ; $4910
 	jp z, .done ; $4912
 	call ClearTrainingCourtNpcFlags ; $4915
 	test_flag FLAG_DOUBLES ; $4918

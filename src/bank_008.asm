@@ -988,7 +988,7 @@ RunMatchPlayLoop:
 .setLoop:
 	call PlaySet ; $4726
 	ld a, [wMatchAbortFlag] ; $4729
-	and $80 ; $472c
+	and MATCHABORT_MATCH ; $472c
 	jr nz, .done ; $472e
 	ld a, [wMatchWinLoseFlag] ; $4730
 	and a ; $4733
@@ -1004,7 +1004,7 @@ PlaySet:
 	jp CheckSetComplete.tiebreak ; $4742
 CheckSetComplete:
 	ld a, [wMatchAbortFlag] ; $4745
-	and $80 ; $4748
+	and MATCHABORT_MATCH ; $4748
 	jr nz, .done ; $474a
 	ld a, [wSetWinLoseFlag] ; $474c
 	and a ; $474f
@@ -1023,7 +1023,7 @@ CheckSetComplete:
 	call AssignCourtPositions ; $4765
 	call PlayPoint ; $4768
 	ld a, [wMatchAbortFlag] ; $476b
-	and $80 ; $476e
+	and MATCHABORT_MATCH ; $476e
 	jr nz, .gameDone ; $4770
 	ld a, [wGameWinLoseFlag] ; $4772
 	and a ; $4775
@@ -1054,7 +1054,7 @@ CheckSetComplete:
 	call RunChangeoverSequence ; $47a9
 	call PlayPoint ; $47ac
 	ld a, [wMatchAbortFlag] ; $47af
-	and $80 ; $47b2
+	and MATCHABORT_MATCH ; $47b2
 	jr nz, .tiebreakDone ; $47b4
 	ld hl, wTotalPointsScoredInCurrentGame ; $47b6
 	ld a, [hl] ; $47b9
@@ -1493,7 +1493,7 @@ PlayPoint:
 .rallyLoop:
 	call StepMatchFrame ; $4d26
 	ld a, [wMatchAbortFlag] ; $4d29
-	and $01 ; $4d2c
+	and MATCHABORT_POINT ; $4d2c
 	jr nz, .aborted ; $4d2e
 	ld a, [wPointOutcome] ; $4d30
 	and a ; $4d33
@@ -5029,7 +5029,7 @@ RunMinigamePointLoop:
 	ld d, $03 ; $65d5
 	call CallModeHook ; $65d7
 	ld a, [wMatchAbortFlag] ; $65da
-	and $80 ; $65dd
+	and MATCHABORT_MATCH ; $65dd
 	jr nz, .done ; $65df
 .pointLoop:
 	call LoadMinigamePointLayout ; $65e1
@@ -5037,7 +5037,7 @@ RunMinigamePointLoop:
 	ld d, $01 ; $65e7
 	call CallModeHook ; $65e9
 	ld a, [wMatchAbortFlag] ; $65ec
-	and $80 ; $65ef
+	and MATCHABORT_MATCH ; $65ef
 	jr nz, .done ; $65f1
 	ld a, [wMinigameUsesTennisMachine] ; $65f3
 	and a ; $65f6
@@ -5047,12 +5047,12 @@ RunMinigamePointLoop:
 .playPoint:
 	call PlayMinigamePoint ; $65ff
 	ld a, [wMatchAbortFlag] ; $6602
-	and $80 ; $6605
+	and MATCHABORT_MATCH ; $6605
 	jr nz, .done ; $6607
 	ld d, $02 ; $6609
 	call CallModeHook ; $660b
 	ld a, [wMatchAbortFlag] ; $660e
-	and $80 ; $6611
+	and MATCHABORT_MATCH ; $6611
 	jr nz, .done ; $6613
 	ld hl, wMinigamePointTable ; $6615
 	ld a, [hl+] ; $6618
@@ -5081,7 +5081,7 @@ PlayMinigamePoint:
 .rallyLoop:
 	call StepMatchFrame ; $663c
 	ld a, [wMatchAbortFlag] ; $663f
-	and $01 ; $6642
+	and MATCHABORT_POINT ; $6642
 	jr nz, .pointOver ; $6644
 	ld a, [wPointOutcome] ; $6646
 	and a ; $6649

@@ -783,7 +783,7 @@ PrintNumberStringChar_16:
 	ret ; $4476
 RunMatchWinLoseScreen:
 	ld a, [wMatchAbortFlag] ; $4477
-	bit 7, a ; $447a
+	bit MATCHABORTB_MATCH, a ; $447a
 	ret nz ; $447c
 	call DisableLCDSafely ; $447d
 	call ClearFrameTasks ; $4480

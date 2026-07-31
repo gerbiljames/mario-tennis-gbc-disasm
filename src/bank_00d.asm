@@ -659,7 +659,7 @@ ShowMinigamePointResult:
 	farcall HideCourtBanner ; $4432
 	ld a, $0f ; $4435
 	farcall StepMatchFrames ; $4437
-	ld a, $80 ; $443a
+	ld a, MATCHABORT_MATCH ; $443a
 	ld [wMatchAbortFlag], a ; $443c
 	ret ; $443f
 ClearMinigameActors:

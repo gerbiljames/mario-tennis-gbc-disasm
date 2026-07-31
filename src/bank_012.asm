@@ -30,7 +30,7 @@ DormEntranceEntryPoints_12:
 	db $ff
 DormEntranceArrival02_12:
 	ld a, [wStoryModeEntryPoint] ; $406f
-	cp $ff ; $4072
+	cp STORYENTRY_NONE ; $4072
 	jp z, .done ; $4074
 	test_flag FLAG_DOUBLES ; $4077
 	jr z, .walkOff ; $407a
@@ -46,7 +46,7 @@ DormEntranceArrival02_12:
 	ret ; $40b4
 DormEntranceArrival01_12:
 	ld a, [wStoryModeEntryPoint] ; $40b5
-	cp $ff ; $40b8
+	cp STORYENTRY_NONE ; $40b8
 	jp z, .done ; $40ba
 	test_flag FLAG_DOUBLES ; $40bd
 	jr z, .walkOff ; $40c0
@@ -331,7 +331,7 @@ WallPracticeRoomEntryPoints_12:
 	db $ff
 WallPracticeRoomArrival01_12:
 	ld a, [wStoryModeEntryPoint] ; $46f3
-	cp $ff ; $46f6
+	cp STORYENTRY_NONE ; $46f6
 	jp z, .done ; $46f8
 	clear_flag FLAG_PRACTICE_ROOM_SESSION_ACTIVE ; $46fb
 	test_flag FLAG_DOUBLES ; $46fe
