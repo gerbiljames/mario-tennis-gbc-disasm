@@ -1,4 +1,4 @@
-# Project status — 2026-07-30
+# Project status — 2026-07-31
 
 ## Where things stand
 
@@ -26,11 +26,11 @@ shape, not *twins*, and the shot banks are near-identical copies of each
 other, so a routine only one bank failed to execute reads as ordinary data
 until you diff it against its siblings.
 
-Everything below is **committed** (HEAD `f463ddd`); the whole history
+Everything below is **committed** (HEAD `3bd5bc7`); the whole history
 rebuilds byte-perfect. Per-bank progress at any time: `python3
 tools/progress.py` (proven-code bytes, fill runs, label counts, human-named
 counts) and `tools/progress.py --unnamed <bank>` to list still-auto-named
-symbols. **20,114 of 21,694 labels are human-named** (up from 4,816 on
+symbols. **20,135 of 21,715 labels are human-named** (up from 4,816 on
 2026-07-23), and the remaining 1,580 are all generator-*derived* names --
 `$4000` slot labels spelled after their curated target (`FarPtr_InitAndRunGame`)
 and structures named for what they are (`SoundTable_78`). **No symbol anywhere
@@ -10440,3 +10440,127 @@ The tooling side is finished. Three captures, 130 logs, every one converted at
 remains is not a capture problem — it is that the unvisited screens are
 unvisited, and the cheapest honest way to reach the biggest cluster is to play
 the tournament with the Trace Logger running.
+
+## The immediates, second pass: eight id spaces and a check that can see them (2026-07-31)
+
+Driving has saturated, so this pass went at the *other* unnamed thing: the bare
+`$xx` immediates. A scan of every `ld a, $xx` / `ld [wVar], a` pair and every
+`ld a, [wVar]` / `cp $xx` pair in `src/` ranks the WRAM variables by how many of
+their sites are still bare hex, which is a direct work-list. Five of the top
+candidates were researched to a verdict; **460 sites are now named** (638 →
+1,098 curated entries, 398 → 459 defs), byte-perfect throughout.
+
+| family | defs | sites | what it is |
+| --- | ---: | ---: | --- |
+| `STORYRANK_*` | 10 | 102 | `2 * tier + isDoubles` over the ranking ladder |
+| `POINTOUTCOME_*` (7-9, `$0b`) | 4 | 75 | the codes above the six already named |
+| `WINLOSE_*` | 3 | 56 | one tri-state sign shared by two flags |
+| `MATCHABORT_*` | 4 | 67 | two independent bits, not a code |
+| `ISLANDOPENSTAGE_*` | 7 | 35 | Center Court's bracket position |
+| `SENIORCOURTSTAGE_*` | 15 | 33 | fifteen values, `$02`-`$08` pinned by a jumptable |
+| `STORYENTRY_NONE` | 1 | 32 | the one engine-wide value of a per-location space |
+| `CHARSELECTMODE_*` | 6 | 28 | exhibition/link × singles/doubles × side |
+| `ISLANDOPENROUND_*` | 4 | 13 | the tournament site's copy of the bracket |
+| `STORYSLOT_NONE`, `NUM_STORY_SLOTS` | 2 | 13 | one value, two roles |
+| `STORYTIER_*` | 5 | 6 | `STORYRANK >> 1`, format-independent |
+
+### Three of the five candidates were not id spaces, and that is the result
+
+The site rule this project uses — tag only the immediate that feeds the store,
+the `cp` reachable from the load, or the table row whose consumer indexes by it
+— is a filter, and it is supposed to reject things:
+
+* **`wStoryModeEntryPoint`** (201 bare sites, the biggest single candidate) is
+  *location-scoped*. `LoadStoryEntryPointRecord` (`$0a:$516f`) linearly searches
+  the loading location's own `map_entry` table and falls back to its first
+  record, so `$0f` is one door at the Senior Class Court and a different one at
+  the Junior. 42 tables, 126 records, ids `$01`-`$0f`, and the same value means
+  different things in each — `EraseSavedDataFlowHandler4_10` resolves one
+  "return from a story match" event to five different `(location, entry)` pairs.
+  Only `$ff` is engine-wide.
+* **`wMenuSlideDirection`** (66 sites) is a boolean: every consumer opens
+  `ld a, b / or a / jr z`, and no third value exists in any bank.
+* **`wDrillLessonResult`** (45 sites) is nine *per-drill* critique codes that
+  bank `$15`'s per-coach jump tables interpret; `$03` is "missed targets" in one
+  drill and a fall-through in another. The one cross-drill invariant (`$00` =
+  perfect) is written only by `xor a`, so it has no immediate to tag anyway.
+* **`wUnusedExitLocationMirror`** (161 sites) is not location ids either — see
+  below — and **`wMinigameLevel`** is an ordinal the consumers do arithmetic on
+  (`+$12`, `id*3+level`), not a symbolic set.
+
+### The exit request was named after the wrong column
+
+`wStoryModeExitLocationRequest` holds an exit-*trigger* id. `RunLocationExit`
+(`$0a:$560b`) passes it in `d` to `FindStoryScriptEntry`, which matches it
+against the **id** column of the location's `ExitTriggers` table; the
+destination `STORYLOC_*` is that row's `arg0`, a different column. So `$01`
+leaves the Training Gym for the Courtyard and leaves somewhere else for
+somewhere else. Renamed to `wStoryModeExitTriggerRequest`, and its write-only
+mirror at `$c294` to `wUnusedExitTriggerIdMirror`. (That mirror is genuinely
+dead: all 204 references are stores, and `RunLocationExit`'s first instruction
+writes a *second* dead mirror at `$c2db`.)
+
+`wLastShotServeRole`'s note was wrong in the same way: role 1 is the receiver,
+not the server, and the outcome it selects is `POINTOUTCOME_SERVE_VOLLEYED`
+("Return the serve after it bounces"), not a fault.
+
+### The Island Open tables were named for the round just won
+
+`LoadIslandOpenRoundNpcs` (`$0f:$6651`) swaps the tournament site's actor and
+script lists as bracket flags come in, and the lists were numbered by the flag
+that selects them. The dialogue says otherwise: the list loaded once
+`FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_1` is set contains *"You play Spike in the
+second round"*, *"You did great in Round One"* and *"Round Two is next!"*; the
+next one says semi-finals, and the one after that says finals. Fourteen labels
+renamed to the match their NPCs are talking about (`IslandOpenRound1Actors_0f`
+→ `IslandOpenRound2Actors_0f`, `Round2` → `Semifinal`, `Round3` → `Final`, and
+the same shift on the doubles side, where the *first* list really is round 1
+because doubles has no second round). The `ISLANDOPENSTAGE_*` /
+`ISLANDOPENROUND_*` constants now say the same thing as the labels.
+
+### `make check` can see a mis-keyed constant now
+
+`constants.json` is keyed by the flat ROM offset of the instruction
+(`bank * 0x4000 + cpu - 0x4000`), and getting that wrong has no symptom: the
+entry addresses a byte inside some other instruction, renders nothing, and the
+build still matches the ROM. The new `constants` check decodes every entry's
+offset, requires it to be an emitted instruction *boundary* with a
+named-immediate operand, and compares the operand against the `constants.inc`
+value. Seeded faults — an off-by-one key, a key inside a data blob, a real
+instruction holding a different value, an undefined name — are all caught; the
+first version of the check caught only one of them, because a `break` in the
+data-region loop skipped the instruction test for every offset below the first
+blob. All 1,098 entries verify.
+
+### Fourteen routines were inside an actor script's label scope
+
+Scanning for global labels whose body mixes `as_*` bytecode with CPU
+instructions found fourteen. A routine emitted right after an actor-script blob,
+with nothing naming its entry, lands inside that script's scope, so its
+`.loop`/`.done` belong to the script's symbol.
+
+Six are named: four are byte-identical copies of `ComputeRankingProgressIndex`
+(the same 78 bytes appear in eight banks; `$0f`/`$13`/`$14`/`$15` had no label),
+and two are the Junior Class Court's post-match returns, which share their
+prologue with `SeniorCourtPostMatchReturn` and the two Island Open ones — the
+doubles variant being the one that positions `ACTOR_PARTNER`. The remaining
+eight are pinned in a new `scopes` check, so a curation change that strands
+something new fails instead of passing quietly:
+
+| where | what it looks like |
+| --- | --- |
+| `$0e:$4c37` | reads an actor's state block into `wMapScratch` |
+| `$0f:$7b7f` | three one-line handlers (clear `wStoryScriptRan`, play `$a2`, clear the location-name flag) |
+| `$12:$6d8a` | sets location = Senior Class Court, entry `$0d` |
+| `$14:$4813` | reads a minigame record, then sets location = Tennis Machine Room |
+| `$15:$66ef`, `$15:$6b8e` | the `script_speak` tail of a lesson scene |
+| `$27:$48f0`, `$27:$760e` | ending-cutscene bodies |
+
+### Where the naming stands
+
+**20,135 of 21,715 labels are human-named**; the remaining 1,580 are still all
+generator-derived. 459 constant defs cover 1,098 sites plus the value-keyed
+sound ids. The next passes with a clear work-list are the eight stranded
+routines above, and the next tier of the bare-immediate scan (`wCharDataPage`,
+`wDialogueWindowId`, `wPauseMenuId`, `wSndChannelType`, `wCutsceneObjPhase` —
+tens of sites each, not hundreds).
