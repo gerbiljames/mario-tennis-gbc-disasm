@@ -666,7 +666,7 @@ TrainingCourtNpc0B_15:
 	ld l, a ; $4a4d
 	farcall InitDialogueTextCursor ; $4a4e
 	ld a, [wMapSceneStage] ; $4a51
-	cp $01 ; $4a54
+	cp STORYTIER_JUNIOR_CHAMP ; $4a54
 	jr z, .speak ; $4a56
 	ld a, $0b ; $4a58
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $4a5a
@@ -720,7 +720,7 @@ TrainingCourtNpc0F_15:
 	ld l, a ; $4aae
 	farcall InitDialogueTextCursor ; $4aaf
 	ld a, [wMapSceneStage] ; $4ab2
-	cp $01 ; $4ab5
+	cp STORYTIER_JUNIOR_CHAMP ; $4ab5
 	jr nc, .speak ; $4ab7
 	ld a, $0f ; $4ab9
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $4abb
@@ -753,7 +753,7 @@ TrainingCourtNpc10_15:
 	ld l, a ; $4aee
 	farcall InitDialogueTextCursor ; $4aef
 	ld a, [wMapSceneStage] ; $4af2
-	cp $02 ; $4af5
+	cp STORYTIER_SENIOR_CHAMP ; $4af5
 	jr c, .speak ; $4af7
 	ld a, $10 ; $4af9
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $4afb

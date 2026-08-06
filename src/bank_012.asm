@@ -428,7 +428,7 @@ WallPracticeRoomNpc05_12:
 	ld l, a ; $47b3
 	farcall InitDialogueTextCursor ; $47b4
 	ld a, [wMapSceneStage] ; $47b7
-	cp $04 ; $47ba
+	cp WALLPRACTICESTAGE_MASTER ; $47ba
 	jr c, .face ; $47bc
 	script_speak $05 ; $47be
 	ret ; $47c3
@@ -707,7 +707,7 @@ WallPracticeLevelResultScript:
 	dw WallPracticeLevelResultScriptTextIds.variant1 ; $4ace jumptable
 .checkLevel:
 	ld a, [wMapSceneStage] ; $4ad0
-	cp $04 ; $4ad3
+	cp WALLPRACTICESTAGE_MASTER ; $4ad3
 	jp z, WallPracticeScoreRetryPrompt ; $4ad5
 	script_fade_in $06 ; $4ad8
 	call WaitFadeEnd ; $4add
@@ -1036,7 +1036,7 @@ WallPracticeRoomInitScript_12:
 	jp WallPracticeExitCourtScript ; $4f7b
 .showResult:
 	ld a, [wMapSceneStage] ; $4f7e
-	cp $05 ; $4f81
+	cp WALLPRACTICESTAGE_EXPERT ; $4f81
 	jp nc, WallPracticeMasterResultScript ; $4f83
 	jp WallPracticeLevelResultScript ; $4f86
 	ret ; $4f89
@@ -1115,29 +1115,29 @@ WallPracticeRoomInitScript_12:
 .done:
 	ret ; $505e
 SetupWallPracticeLevelSigns:
-	ld a, $00 ; $505f
+	ld a, WALLPRACTICESTAGE_LEVEL1 ; $505f
 	test_flag FLAG_CLEARED_WALL_LEVEL_1 ; $5061
 	jp z, .step ; $5064
 	script_copy_scene_rect $1e, $2c, $02, $2c, $02, $02 ; $5067
-	ld a, $01 ; $5076
+	ld a, WALLPRACTICESTAGE_LEVEL2 ; $5076
 	test_flag FLAG_CLEARED_WALL_LEVEL_2 ; $5078
 	jr z, .step ; $507b
 	script_copy_scene_rect $1e, $30, $06, $2c, $02, $02 ; $507d
-	ld a, $02 ; $508c
+	ld a, WALLPRACTICESTAGE_LEVEL3 ; $508c
 	test_flag FLAG_CLEARED_WALL_LEVEL_3 ; $508e
 	jr z, .step ; $5091
 	script_copy_scene_rect $1e, $34, $10, $2c, $02, $02 ; $5093
-	ld a, $03 ; $50a2
+	ld a, WALLPRACTICESTAGE_LEVEL4 ; $50a2
 	test_flag FLAG_CLEARED_WALL_LEVEL_4 ; $50a4
 	jr z, .step ; $50a7
 	script_copy_scene_rect $1e, $38, $14, $2c, $02, $02 ; $50a9
-	ld a, $04 ; $50b8
+	ld a, WALLPRACTICESTAGE_MASTER ; $50b8
 	test_flag FLAG_CLEARED_WALL_MASTER ; $50ba
 	jr z, .step ; $50bd
-	ld a, $05 ; $50bf
+	ld a, WALLPRACTICESTAGE_EXPERT ; $50bf
 	test_flag FLAG_CLEARED_WALL_EXPERT ; $50c1
 	jr z, .step ; $50c4
-	ld a, $06 ; $50c6
+	ld a, WALLPRACTICESTAGE_COMPLETE ; $50c6
 .step:
 	ld [wMapSceneStage], a ; $50c8
 	ret ; $50cb
@@ -1160,7 +1160,7 @@ WallPracticeRoomNpc07_12:
 	ld l, a ; $50ea
 	farcall InitDialogueTextCursor ; $50eb
 	ld a, [wMapSceneStage] ; $50ee
-	cp $05 ; $50f1
+	cp WALLPRACTICESTAGE_EXPERT ; $50f1
 	jr nz, .prompt ; $50f3
 	ldh a, [hWramBank] ; $50f5
 	push af ; $50f7

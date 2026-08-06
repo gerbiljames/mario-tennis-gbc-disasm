@@ -2179,7 +2179,7 @@ EraseStorySlotSaveData:
 	ld [rRAMG], a ; $4e19
 	call InitSaveHeader ; $4e1c
 	ld a, [wCurrentStorySlot] ; $4e1f
-	cp $03 ; $4e22
+	cp NUM_STORY_SLOTS ; $4e22
 	jp nc, .badSlot ; $4e24
 	add a ; $4e27
 	ld c, a ; $4e28
@@ -2525,7 +2525,7 @@ ReadMinigameRecord:
 	sub $02 ; $5024
 	jr nc, .read ; $5026
 	ld a, [wCurrentStorySlot] ; $5028
-	cp $03 ; $502b
+	cp NUM_STORY_SLOTS ; $502b
 	jr nc, .done ; $502d
 .read:
 	push af ; $502f
@@ -2588,7 +2588,7 @@ UpdateMinigameRecord:
 	sub $02 ; $5080
 	jr nc, .readSlot0 ; $5082
 	ld a, [wCurrentStorySlot] ; $5084
-	cp $03 ; $5087
+	cp NUM_STORY_SLOTS ; $5087
 	jp nc, .failed ; $5089
 	jr .read ; $508c
 .readSlot0:

@@ -3741,7 +3741,7 @@ FitWindowToText:
 	inc e ; $5701
 	push de ; $5702
 	ld a, [wDialogueWindowId] ; $5703
-	cp $ff ; $5706
+	cp DIALOGUEWIN_NONE ; $5706
 	jr nz, .placeWindow ; $5708
 	xor a ; $570a
 .placeWindow:
@@ -3957,7 +3957,7 @@ ShowSpeakerDialogue:
 	ld a, b ; $5859
 	ld [wDialogueVoice], a ; $585a
 	ld a, [wDialogueWindowId] ; $585d
-	cp $ff ; $5860
+	cp DIALOGUEWIN_NONE ; $5860
 	jr nz, .loop ; $5862
 	xor a ; $5864
 	ld [wGlyphRowStartCol], a ; $5865
@@ -4000,7 +4000,7 @@ ShowSpeakerDialogue:
 .zero:
 	ld a, [wDialogueWindowId] ; $58c9
 	call CloseWindow ; $58cc
-	ld a, $ff ; $58cf
+	ld a, DIALOGUEWIN_NONE ; $58cf
 	ld [wDialogueWindowId], a ; $58d1
 	xor a ; $58d4
 	ld [wTextArgStringWriteIndex], a ; $58d5
@@ -4047,7 +4047,7 @@ ShowSpeakerDialogueRestoreBG:
 	ld a, b ; $592a
 	ld [wDialogueVoice], a ; $592b
 	ld a, [wDialogueWindowId] ; $592e
-	cp $ff ; $5931
+	cp DIALOGUEWIN_NONE ; $5931
 	jr nz, .loop ; $5933
 	xor a ; $5935
 	ld [wGlyphRowStartCol], a ; $5936
@@ -4126,7 +4126,7 @@ ShowDialogueAtPosition:
 	ld [wDialogueVoice], a ; $59df
 	call ApplyMessageSpeed ; $59e2
 	ld a, [wDialogueWindowId] ; $59e5
-	cp $ff ; $59e8
+	cp DIALOGUEWIN_NONE ; $59e8
 	jr nz, .loop ; $59ea
 	call OpenDialogueWindowCentered ; $59ec
 	call RefreshShadowTilemapFromMapBuffer ; $59ef
@@ -4153,7 +4153,7 @@ ShowDialogueAtPosition:
 	jr nz, .loop ; $5a26
 	ld a, [wDialogueWindowId] ; $5a28
 	call CloseWindow ; $5a2b
-	ld a, $ff ; $5a2e
+	ld a, DIALOGUEWIN_NONE ; $5a2e
 	ld [wDialogueWindowId], a ; $5a30
 	xor a ; $5a33
 	ld [wTextArgStringWriteIndex], a ; $5a34
@@ -4190,7 +4190,7 @@ DrawDialogueAtPosition:
 .store:
 	ld [wDialogueVoice], a ; $5a6e
 	ld a, [wDialogueWindowId] ; $5a71
-	cp $ff ; $5a74
+	cp DIALOGUEWIN_NONE ; $5a74
 	jr nz, .loop ; $5a76
 	call OpenDialogueWindowCentered ; $5a78
 .loop:
@@ -4213,7 +4213,7 @@ CloseActiveDialogueWindow:
 	wram_bank $05 ; $5a97
 	ld a, [wDialogueWindowId] ; $5a9d
 	call CloseWindow ; $5aa0
-	ld a, $ff ; $5aa3
+	ld a, DIALOGUEWIN_NONE ; $5aa3
 	ld [wDialogueWindowId], a ; $5aa5
 	pop af ; $5aa8
 	wram_bank ; $5aa9
@@ -5566,7 +5566,7 @@ ShowDialogueCentered:
 	call AddTextIdOffset ; $6306
 	call ApplyMessageSpeed ; $6309
 	ld a, [wDialogueWindowId] ; $630c
-	cp $ff ; $630f
+	cp DIALOGUEWIN_NONE ; $630f
 	jr nz, .loop ; $6311
 	call OpenCenteredDialogueWindow ; $6313
 .loop:
@@ -5579,7 +5579,7 @@ ShowDialogueCentered:
 	jr nz, .loop ; $6326
 	ld a, [wDialogueWindowId] ; $6328
 	call CloseWindowAlt ; $632b
-	ld a, $ff ; $632e
+	ld a, DIALOGUEWIN_NONE ; $632e
 	ld [wDialogueWindowId], a ; $6330
 	xor a ; $6333
 	ld [wTextArgStringWriteIndex], a ; $6334
@@ -7077,7 +7077,7 @@ ResetTextWindowState:
 	ld [wShadowTilemapBank], a ; $6e2e
 	ld a, TILEATTR_PRIORITY ; $6e31
 	ld [wWindowTileAttr], a ; $6e33
-	ld a, $ff ; $6e36
+	ld a, DIALOGUEWIN_NONE ; $6e36
 	ld [wDialogueWindowId], a ; $6e38
 	ld a, $fe ; $6e3b
 	ld [wMenuWindowId], a ; $6e3d

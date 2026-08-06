@@ -80,7 +80,7 @@ TennisMachineRoomNpc04_14:
 	ld l, a ; $40c1
 	farcall InitDialogueTextCursor ; $40c2
 	ld a, [wMapSceneStage] ; $40c5
-	cp $01 ; $40c8
+	cp MACHINECOURTSTAGE_LEVEL2 ; $40c8
 	jr z, .eq01 ; $40ca
 	jr .speak ; $40cc
 .eq01:
@@ -326,23 +326,23 @@ MachineCourtGameOverExitScene:
 	farcall AttachActorStepMover ; $43a0
 	ret ; $43a3
 ComputeMachineCourtProgress:
-	ld a, $00 ; $43a4
+	ld a, MACHINECOURTSTAGE_LEVEL1 ; $43a4
 	test_flag FLAG_CLEARED_MACHINE_LEVEL_1 ; $43a6
 	jp z, .machineCourtStartLevelScene ; $43a9
 	script_copy_scene_rect $1e, $2c, $30, $2c, $02, $02 ; $43ac
-	ld a, $01 ; $43bb
+	ld a, MACHINECOURTSTAGE_LEVEL2 ; $43bb
 	test_flag FLAG_CLEARED_MACHINE_LEVEL_2 ; $43bd
 	jp z, .machineCourtStartLevelScene ; $43c0
 	script_copy_scene_rect $1e, $30, $30, $30, $02, $02 ; $43c3
-	ld a, $02 ; $43d2
+	ld a, MACHINECOURTSTAGE_LEVEL3 ; $43d2
 	test_flag FLAG_CLEARED_MACHINE_LEVEL_3 ; $43d4
 	jr z, .machineCourtStartLevelScene ; $43d7
 	script_copy_scene_rect $1e, $34, $30, $34, $02, $02 ; $43d9
-	ld a, $03 ; $43e8
+	ld a, MACHINECOURTSTAGE_LEVEL4 ; $43e8
 	test_flag FLAG_CLEARED_MACHINE_LEVEL_4 ; $43ea
 	jr z, .machineCourtStartLevelScene ; $43ed
 	script_copy_scene_rect $1e, $38, $30, $38, $02, $02 ; $43ef
-	ld a, $04 ; $43fe
+	ld a, MACHINECOURTSTAGE_MASTER ; $43fe
 	ld b, a ; $4400
 	ld a, $01 ; $4401
 	farcall ReadMinigameRecord ; $4403
@@ -358,10 +358,10 @@ ComputeMachineCourtProgress:
 	ld a, b ; $441a
 	test_flag FLAG_CLEARED_MACHINE_MASTER ; $441b
 	jr z, .machineCourtStartLevelScene ; $441e
-	ld a, $05 ; $4420
+	ld a, MACHINECOURTSTAGE_EXPERT ; $4420
 	test_flag FLAG_CLEARED_MACHINE_EXPERT ; $4422
 	jr z, .machineCourtStartLevelScene ; $4425
-	ld a, $06 ; $4427
+	ld a, MACHINECOURTSTAGE_COMPLETE ; $4427
 .machineCourtStartLevelScene:
 	ld [wMapSceneStage], a ; $4429
 	ret ; $442c
@@ -380,7 +380,7 @@ TennisMachineRoomNpc05_14:
 	ld l, a ; $4440
 	farcall InitDialogueTextCursor ; $4441
 	ld a, [wMapSceneStage] ; $4444
-	cp $05 ; $4447
+	cp MACHINECOURTSTAGE_EXPERT ; $4447
 	jr c, .prompt ; $4449
 	ldh a, [hWramBank] ; $444b
 	push af ; $444d
@@ -461,7 +461,7 @@ MachineCourtStartLevelScene:
 	script_face ACTOR_PLAYER, FACE_UP ; $4557
 	script_wait_frames $0a ; $455e
 	ld a, [wMapSceneStage] ; $4565
-	cp $04 ; $4568
+	cp MACHINECOURTSTAGE_MASTER ; $4568
 	jr c, .lt04 ; $456a
 	script_set_text Text_6e_204 ; $456c
 	script_speak $05 ; $4572

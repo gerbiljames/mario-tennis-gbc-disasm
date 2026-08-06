@@ -769,14 +769,17 @@ def STORYRANK_DOUBLES_ISLAND_OPEN  equ $07
 def STORYRANK_SINGLES_COMPLETE     equ $08 ; FLAG_STORY_COMPLETE_SINGLES
 def STORYRANK_DOUBLES_COMPLETE     equ $09
 
-; --- Story tier (wMapSceneStage2 at the Cafeteria and the Restaurant) ---
-; Those two init scripts do `ld a, [wMapSceneStage] / sra a /
+; --- Story tier (STORYRANK_* >> 1) ---
+; The Cafeteria and Restaurant init scripts do `ld a, [wMapSceneStage] / sra a /
 ; ld [wMapSceneStage2], a`, i.e. the STORYRANK_* above with the singles/doubles
 ; bit shifted out, giving a format-independent tier for NPCs whose line does not
-; depend on which ladder the player is on.
+; depend on which ladder the player is on. The Training Gym and Academy main
+; building do the same shift at each reader instead (`sra a` between the
+; wMapSceneStage load and the cp), and ComputeTrainingCourtProgressIndex
+; ($15:$7fa0) writes the tier directly by counting the same four flags.
 def STORYTIER_ACADEMY        equ $00
 def STORYTIER_JUNIOR_CHAMP   equ $01
-def STORYTIER_SENIOR_CHAMP   equ $02 ; no compare site; declared to close the space
+def STORYTIER_SENIOR_CHAMP   equ $02
 def STORYTIER_ISLAND_OPEN    equ $03
 def STORYTIER_COMPLETE       equ $04
 
@@ -803,6 +806,32 @@ def SENIORCOURTSTAGE_SINGLES_ISLAND_OPEN  equ $0b
 def SENIORCOURTSTAGE_DOUBLES_ISLAND_OPEN  equ $0c
 def SENIORCOURTSTAGE_SINGLES_COMPLETE     equ $0d
 def SENIORCOURTSTAGE_DOUBLES_COMPLETE     equ $0e
+
+; --- Wall Practice stage (wMapSceneStage in the Wall Practice Room) ---
+; SetupWallPracticeLevelSigns ($12:$505f) is the only writer: it walks the
+; FLAG_CLEARED_WALL_* flags upward, drawing one cleared-level sign per step, so
+; the value names the next challenge. Readers: WallPracticeRoomNpc05/Npc07,
+; WallPracticeLevelResultScript, WallPracticeRoomInitScript_12.
+def WALLPRACTICESTAGE_LEVEL1   equ $00 ; level 1 not cleared yet
+def WALLPRACTICESTAGE_LEVEL2   equ $01 ; FLAG_CLEARED_WALL_LEVEL_1
+def WALLPRACTICESTAGE_LEVEL3   equ $02
+def WALLPRACTICESTAGE_LEVEL4   equ $03
+def WALLPRACTICESTAGE_MASTER   equ $04 ; all four levels cleared; the score-attack Master level is next
+def WALLPRACTICESTAGE_EXPERT   equ $05 ; FLAG_CLEARED_WALL_MASTER; Npc07 shows the record
+def WALLPRACTICESTAGE_COMPLETE equ $06 ; FLAG_CLEARED_WALL_EXPERT
+
+; --- Machine Court stage (wMapSceneStage in the Tennis Machine Room) ---
+; ComputeMachineCourtProgress ($14:$43a4) is the only writer, the machine-room
+; twin of SetupWallPracticeLevelSigns: it walks FLAG_CLEARED_MACHINE_* upward
+; drawing one sign per cleared level, so the value names the next challenge.
+; Readers: TennisMachineRoomNpc04/Npc05, MachineCourtStartLevelScene.
+def MACHINECOURTSTAGE_LEVEL1   equ $00 ; level 1 not cleared yet
+def MACHINECOURTSTAGE_LEVEL2   equ $01 ; FLAG_CLEARED_MACHINE_LEVEL_1
+def MACHINECOURTSTAGE_LEVEL3   equ $02
+def MACHINECOURTSTAGE_LEVEL4   equ $03
+def MACHINECOURTSTAGE_MASTER   equ $04 ; all four levels cleared; Master next
+def MACHINECOURTSTAGE_EXPERT   equ $05 ; FLAG_CLEARED_MACHINE_MASTER; Npc05 shows the record
+def MACHINECOURTSTAGE_COMPLETE equ $06 ; FLAG_CLEARED_MACHINE_EXPERT
 
 ; --- Island Open bracket position ---
 ; Two locations track how far the tournament has got, both by counting the
@@ -868,3 +897,11 @@ def MATCHMENUSEL_CANCELLED   equ $ff ; B pressed: no row chosen
 ; file the way VRAM_BANK1 above does.
 def TILEATTR_PAL1            equ $01 ; BG palette 1
 def TILEATTR_PRIORITY        equ $80 ; BG colours 1-3 draw above sprites
+
+; --- Dialogue window sentinel (wDialogueWindowId, WRAM bank $05) ---
+; The real values are window-struct indices handed out by
+; CreateWindowFromScreenRect (stored from a at $05:$4695, never an immediate),
+; so only the no-window sentinel is literal: the speaker-dialogue helpers test
+; it before opening a window (FitWindowToText substitutes window 0), and store
+; it back after CloseWindow tears the window down.
+def DIALOGUEWIN_NONE         equ $ff ; no dialogue window open

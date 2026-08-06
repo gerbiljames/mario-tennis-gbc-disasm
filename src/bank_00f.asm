@@ -1953,7 +1953,7 @@ IslandOpenArrivalCutscene:
 	script_player_speed $0018 ; $65a6
 	script_move_player $1c00, $1d00 ; $65ac
 	farcall WaitPlayerMoveDone ; $65b6
-	ld a, $00 ; $65b9
+	ld a, ISLANDOPENROUND_ROUND1 ; $65b9
 	ld [wMapSceneStage], a ; $65bb
 	farcall SaveStorySlotWithTimer ; $65be
 	ret ; $65c1

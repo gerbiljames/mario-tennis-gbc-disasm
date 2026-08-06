@@ -2922,6 +2922,7 @@ StoryPauseMenu_AfterItem:
 	pop af ; $6ec1
 	wram_bank ; $6ec2
 	ret ; $6ec6
+UnusedStoryMenuRedrawReentry:
 	call DrawStoryMenuItemRow ; $6ec7
 	ld hl, ScoreboardModeGfxTail ; $6eca
 	ld de, $8640 ; $6ecd
@@ -3068,7 +3069,8 @@ StoryOptionsMenu_AfterItem:
 	jr StoryPauseMenu_Options.loop ; $6fe7
 .done:
 	ret ; $6fe9
-	ld a, $0e ; $6fea
+UnusedRunStoryPlayerDataMenu:
+	ld a, STORYMENUITEM_CHAR_DATA ; $6fea
 	ld [wStoryMenuFirstItem], a ; $6fec
 	ld a, $01 ; $6fef
 	ld [wPauseMenuId], a ; $6ff1
@@ -3158,18 +3160,20 @@ StoryPauseMenu_ReturnToMainMenu:
 .storeStoryMenuFirstItem:
 	ld a, $00 ; $70a9
 	ret ; $70ab
-	ld a, $04 ; $70ac
+UnusedRunMessagesMusicMenu:
+	ld a, STORYMENUITEM_MESSAGES ; $70ac
 	ld [wStoryMenuFirstItem], a ; $70ae
 	jp RunStoryTwoOptionMenu ; $70b1
 RunMessageSpeedMenu:
-	ld a, $06 ; $70b4
+	ld a, STORYMENUITEM_MSG_SLOW ; $70b4
 	ld [wStoryMenuFirstItem], a ; $70b6
 	jp RunStoryThreeOptionMenu ; $70b9
 RunMusicOnOffMenu:
-	ld a, $09 ; $70bc
+	ld a, STORYMENUITEM_MUSIC_ON ; $70bc
 	ld [wStoryMenuFirstItem], a ; $70be
 	jp RunStoryTwoOptionMenu ; $70c1
-	ld a, $0b ; $70c4
+UnusedRunSaveQuitMenu:
+	ld a, STORYMENUITEM_SAVE_GAME ; $70c4
 	ld [wStoryMenuFirstItem], a ; $70c6
 	jp RunStoryTwoOptionMenu ; $70c9
 RunStoryTwoOptionMenu:
@@ -3181,7 +3185,7 @@ RunStoryTwoOptionMenu:
 	ld de, $0b0a ; $70d9
 	call DrawStoryMenuItem ; $70dc
 	ld a, [wStoryMenuFirstItem] ; $70df
-	cp $0b ; $70e2
+	cp STORYMENUITEM_SAVE_GAME ; $70e2
 	jr z, .redrawStoryTilemapRows ; $70e4
 	ld hl, wMatchMenuSelection ; $70e6
 	add [hl] ; $70e9
@@ -3224,7 +3228,7 @@ RunStoryTwoOptionMenu:
 	ld [wMatchMenuSelection], a ; $7130
 	sound SFX_MENU_MOVE ; $7133
 	ld a, [wStoryMenuFirstItem] ; $7135
-	cp $0b ; $7138
+	cp STORYMENUITEM_SAVE_GAME ; $7138
 	jr z, .checkMatchMenuSelection ; $713a
 	ld hl, wMatchMenuSelection ; $713c
 	add [hl] ; $713f

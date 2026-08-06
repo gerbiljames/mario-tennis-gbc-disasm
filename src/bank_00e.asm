@@ -249,7 +249,7 @@ TrainingGymNpc06TextIds:
 TrainingGymNpc07_0e:
 	ld a, [wMapSceneStage] ; $444a
 	sra a ; $444d
-	cp $03 ; $444f
+	cp STORYTIER_ISLAND_OPEN ; $444f
 	jr z, TrainingGymNpc07TextIds.speak ; $4451
 	add a ; $4453
 	add LOW(TrainingGymNpc07TextIds) ; $4454
@@ -502,11 +502,11 @@ TrainingGymInitScript_0e:
 SetupGymActorsForProgress:
 	ld a, [wMapSceneStage] ; $4681
 	sra a ; $4684
-	cp $01 ; $4686
+	cp STORYTIER_JUNIOR_CHAMP ; $4686
 	jr z, .stage1 ; $4688
-	cp $03 ; $468a
+	cp STORYTIER_ISLAND_OPEN ; $468a
 	jr z, .stage2 ; $468c
-	cp $04 ; $468e
+	cp STORYTIER_COMPLETE ; $468e
 	jr z, .done ; $4690
 	ret ; $4692
 .stage1:

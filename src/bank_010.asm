@@ -4219,7 +4219,7 @@ AcademyMainBldgNpc03_10:
 	farcall InitDialogueTextCursor ; $75f7
 	ld a, [wMapSceneStage] ; $75fa
 	sra a ; $75fd
-	cp $03 ; $75ff
+	cp STORYTIER_ISLAND_OPEN ; $75ff
 	jr z, .eq03 ; $7601
 	script_speak $03 ; $7603
 	ret ; $7608
@@ -4355,7 +4355,7 @@ AcademyMainBldgInitScript_10:
 	call SetStoryDialogueStage_10 ; $7717
 	ld a, [wMapSceneStage] ; $771a
 	sra a ; $771d
-	cp $02 ; $771f
+	cp STORYTIER_SENIOR_CHAMP ; $771f
 	jr nz, .ne02 ; $7721
 	script_set_actor_script $03, ActorScript_10_1 ; $7723
 .ne02:
