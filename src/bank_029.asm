@@ -404,6 +404,7 @@ SetBallTargetFromAim_29:
 	ld [hl+], a ; $421e
 	ld [hl], d ; $421f
 	ret ; $4220
+LookupBallPosByAim_29:
 	push hl ; $4221
 	push bc ; $4222
 	ld hl, wShotAimAngle ; $4223

@@ -139,6 +139,7 @@ SetBallVelocityFromEntry4_24:
 	pop hl ; $409f
 	farcall SetBallVelocityPolar ; $40a0
 	ret ; $40a3
+SetBallTargetByPrediction_24:
 	ld a, [hl+] ; $40a4
 	ld c, a ; $40a5
 	ld a, [hl+] ; $40a6
@@ -241,7 +242,7 @@ ApplyBallTrajectory6Capped_24:
 	ld e, l ; $4124
 	ld d, h ; $4125
 	pop hl ; $4126
-	jp c, ApplyBallTrajectory_24.applyFallbackBallTrajectory ; $4127
+	jp c, ApplyBallTrajectory4_24.applyFallbackBallTrajectory ; $4127
 	call SeekBallTrajEntry6_24 ; $412a
 	push de ; $412d
 	call SetBallVelocityFromEntry6_24 ; $412e
@@ -338,7 +339,7 @@ ApplyBallTrajectory_24:
 	ld e, l ; $41b8
 	ld d, h ; $41b9
 	pop hl ; $41ba
-	jp c, .applyFallbackBallTrajectory ; $41bb
+	jp c, ApplyBallTrajectory4_24.applyFallbackBallTrajectory ; $41bb
 	call SeekBallTrajEntry4_24 ; $41be
 	push de ; $41c1
 	call SetBallVelocityFromEntry4_24 ; $41c2
@@ -351,6 +352,7 @@ ApplyBallTrajectory_24:
 	rr l ; $41cf
 	call SetBallTargetFromAim_24 ; $41d1
 	ret ; $41d4
+ApplyBallTrajectory4_24:
 	xor a ; $41d5
 	sub c ; $41d6
 	ld c, a ; $41d7

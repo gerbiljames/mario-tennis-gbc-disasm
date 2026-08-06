@@ -135,6 +135,7 @@ SetBallVelocityFromEntry4_2c:
 	pop hl ; $4097
 	farcall SetBallVelocityPolar ; $4098
 	ret ; $409b
+SetBallTargetByPrediction_2c:
 	ld a, [hl+] ; $409c
 	ld c, a ; $409d
 	ld a, [hl+] ; $409e
@@ -274,6 +275,7 @@ ApplyBallTrajectory6_2c:
 	rr l ; $415b
 	call SetBallTargetFromAim_2c ; $415d
 	ret ; $4160
+ApplyBallTrajectoryCapped_2c:
 	push hl ; $4161
 	ld hl, wShotAimAngle ; $4162
 	ld a, [hl+] ; $4165
@@ -404,6 +406,7 @@ SetBallTargetFromAim_2c:
 	ld [hl+], a ; $4222
 	ld [hl], d ; $4223
 	ret ; $4224
+LookupBallPosByAim_2c:
 	push hl ; $4225
 	push bc ; $4226
 	ld hl, wShotAimAngle ; $4227
@@ -468,6 +471,7 @@ LookupBallPosByHeight_2c:
 	ld l, a ; $426f
 	add hl, de ; $4270
 	ret ; $4271
+LookupBallPosByShotIndex_2c:
 	ld e, l ; $4272
 	ld d, h ; $4273
 	add a ; $4274

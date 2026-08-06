@@ -133,6 +133,7 @@ SetBallVelocityFromEntry4_21:
 	pop hl ; $4093
 	farcall SetBallVelocityPolar ; $4094
 	ret ; $4097
+SetBallTargetByPrediction_21:
 	ld a, [hl+] ; $4098
 	ld c, a ; $4099
 	ld a, [hl+] ; $409a
@@ -235,7 +236,7 @@ ApplyBallTrajectory_21:
 	ld e, l ; $4118
 	ld d, h ; $4119
 	pop hl ; $411a
-	jp c, .applyFallbackBallTrajectory ; $411b
+	jp c, ApplyBallTrajectory4_21.applyFallbackBallTrajectory ; $411b
 	call SeekBallTrajEntry6_21 ; $411e
 	push de ; $4121
 	call SetBallVelocityFromEntry6_21 ; $4122
@@ -248,6 +249,7 @@ ApplyBallTrajectory_21:
 	rr l ; $412f
 	call SetBallTargetFromAim_21 ; $4131
 	ret ; $4134
+ApplyBallTrajectory6_21:
 	xor a ; $4135
 	sub c ; $4136
 	ld c, a ; $4137
@@ -271,6 +273,7 @@ ApplyBallTrajectory_21:
 	rr l ; $4157
 	call SetBallTargetFromAim_21 ; $4159
 	ret ; $415c
+ApplyBallTrajectoryCapped_21:
 	push hl ; $415d
 	ld hl, wShotAimAngle ; $415e
 	ld a, [hl+] ; $4161
@@ -310,6 +313,7 @@ ApplyBallTrajectory_21:
 	pop hl ; $4191
 	call SetBallTargetFromAim_21 ; $4192
 	ret ; $4195
+ApplyBallTrajectory4Capped_21:
 	xor a ; $4196
 	sub c ; $4197
 	ld c, a ; $4198
@@ -329,7 +333,7 @@ ApplyBallTrajectory_21:
 	ld e, l ; $41ac
 	ld d, h ; $41ad
 	pop hl ; $41ae
-	jp c, .applyFallbackBallTrajectory ; $41af
+	jp c, ApplyBallTrajectory4_21.applyFallbackBallTrajectory ; $41af
 	call SeekBallTrajEntry4_21 ; $41b2
 	push de ; $41b5
 	call SetBallVelocityFromEntry4_21 ; $41b6
@@ -342,6 +346,7 @@ ApplyBallTrajectory_21:
 	rr l ; $41c3
 	call SetBallTargetFromAim_21 ; $41c5
 	ret ; $41c8
+ApplyBallTrajectory4_21:
 	xor a ; $41c9
 	sub c ; $41ca
 	ld c, a ; $41cb
@@ -399,6 +404,7 @@ SetBallTargetFromAim_21:
 	ld [hl+], a ; $421e
 	ld [hl], d ; $421f
 	ret ; $4220
+LookupBallPosByAim_21:
 	push hl ; $4221
 	push bc ; $4222
 	ld hl, wShotAimAngle ; $4223
