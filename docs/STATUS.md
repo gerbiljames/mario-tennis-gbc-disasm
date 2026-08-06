@@ -1,4 +1,4 @@
-# Project status — 2026-07-31
+# Project status — 2026-08-06
 
 ## Where things stand
 
@@ -26,11 +26,11 @@ shape, not *twins*, and the shot banks are near-identical copies of each
 other, so a routine only one bank failed to execute reads as ordinary data
 until you diff it against its siblings.
 
-Everything below is **committed** (HEAD `e53f213`); the whole history
+Everything below is **committed** (HEAD `22800ec`); the whole history
 rebuilds byte-perfect. Per-bank progress at any time: `python3
 tools/progress.py` (proven-code bytes, fill runs, label counts, human-named
 counts) and `tools/progress.py --unnamed <bank>` to list still-auto-named
-symbols. **20,141 of 21,721 labels are human-named** (up from 4,816 on
+symbols. **20,196 of 21,776 labels are human-named** (up from 4,816 on
 2026-07-23), and the remaining 1,580 are all generator-*derived* names --
 `$4000` slot labels spelled after their curated target (`FarPtr_InitAndRunGame`)
 and structures named for what they are (`SoundTable_78`). **No symbol anywhere
@@ -10765,3 +10765,81 @@ the codec would have to run out of input precisely where a boundary derived from
 an unrelated reference falls. A run that merely *starts* with a decodable prefix
 is the glued-stream case, and where to split it is evidence the carve has and
 the emitter does not.
+
+## The second-tier immediates, and the seeds the labels forgot (2026-08-06)
+
+Two passes, one planned and one found along the way.
+
+### The bare-immediate scan, third tier
+
+The ranked scan was rebuilt and the next eight candidates researched to a
+verdict, four by parallel agents. Two new id spaces came out of
+`wMapSceneStage`, both twins of a shape already named: the **Wall Practice
+Room** and **Tennis Machine Room** walk their `FLAG_CLEARED_*` flags to the
+same next-challenge ladder the Senior Court uses, so `WALLPRACTICESTAGE_*` /
+`MACHINECOURTSTAGE_*` (7 defs each) name what the signs on the wall show.
+`wDialogueWindowId` gets the one name it can carry — the real values are
+window-struct indices handed out by `CreateWindowFromScreenRect`, so only
+`DIALOGUEWIN_NONE` is literal (11 sites). Ten more sites of `STORYTIER_*` /
+`ISLANDOPENROUND_*` were hiding behind `sra`-at-the-reader — the Training Gym
+and Academy main building shift the rank at each compare instead of storing
+the tier — which also closes `STORYTIER_SENIOR_CHAMP`'s "no compare site"
+note. Three `cp $03` bound tests joined `NUM_STORY_SLOTS`, and
+`wStoryMenuFirstItem`'s five stores turned out to hold `STORYMENUITEM_*` ids.
+**1,148 → 1,200 curated sites, 470 → 485 defs.**
+
+Proven bare and left that way, which is the result as much as the defs are:
+`wPauseMenuId` is the pause-menu *page* index but mode-scoped — the identical
+value indexes `MatchMenuDefs` (15 rows) or `StoryMenuDefs` (6 rows) depending
+on which `Run*Menu` runs next, with $00-$05 live in both, so $02 is
+camera/music options in a match and messages/music options in story mode.
+`wMatchSimFrozen` writes $ff and $01 interchangeably and every reader is
+`and a` — a boolean with two spellings, not a tri-state.
+`wCharGridHandedness` is 0/1/2 (right/left/unchosen) but is toggled with
+`xor $01` and its destination byte (+$0e of the match records) doubles as the
+OAM mirror flag, so a `HAND_*` name would lie at those writers. The char-grid
+page, slot and data-page bytes are ordinals their consumers do arithmetic on
+($04 in `wCharSelectSlot` being a *pseudo-slot* injected from the mode's
+slot-ring data, not a count). And the bank $13/$14 cutscene uses of the
+scene-stage pair are world pixel coordinates — `GetSceneObjectScreenPos_14`
+subtracts the scroll registers from them.
+
+### Four dead launchers in the story-menu code
+
+The `wStoryMenuFirstItem` chase exposed four unreachable fragments sitting
+unlabeled between their live siblings in bank $06 — code after a `ret` with no
+label and no reference, each a menu launcher that was written and never wired:
+`UnusedStoryMenuRedrawReentry`, `UnusedRunStoryPlayerDataMenu`,
+`UnusedRunMessagesMusicMenu` and `UnusedRunSaveQuitMenu` (the last three are
+one-instruction variants of `RunMessageSpeedMenu` / `RunMusicOnOffMenu` that
+nothing calls).
+
+### The seeds the labels forgot
+
+Those fragments generalised. Every hand-authored static seed in
+`coverage/*static*.json` asserts "code starts here", but a seed only *decodes*
+an offset — nothing ever demanded it get a label, and `progress.py` counts
+labels, so an entry point with no label at all was invisible to every naming
+metric. A sweep found **361 seed offsets with no symbol, 290 of them at a flow
+boundary** (directly after a `ret`/`jp`/`jr` — function-start shaped).
+
+The biggest coherent family is named: the ball-trajectory twin banks
+$20-$24/$29-$2c each carry the same six shot-solver helpers, but each bank
+only ever got labels for the ones its own tail entry exercises, so the
+routine that is `SetBallTargetByPrediction_29` in one bank was an unlabeled
+instruction run in eight others. **42 labels added**, every one verified
+instruction-for-instruction against its labeled sibling
+(`SetBallTargetByPrediction`, `ApplyBallTrajectory6`/`6Capped`/`Capped`/`4`/
+`4Capped`, `LookupBallPosByAim`, `LookupBallPosByShotIndex_2c`).
+
+### What is left on this list
+
+~248 flow-boundary seed offsets in the other banks. They are not uniform:
+some are dead bodies under an existing label (bank $0b's disabled
+`ServiceMatch*Judge*` handlers — `Label: ret` with the original body still
+behind it, already in `docs/bugs.md`), some are unreachable routines wanting
+an `Unused*` label (the bank $10 run of eleven consecutive `ret` stubs and a
+dead exit-request setter at $4da6), and some are live computed-dispatch
+entries whose dispatcher names them (the court banks were this kind). Each
+needs that three-way classification before a name is right, which is why they
+were not batch-named here.
