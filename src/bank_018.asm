@@ -2192,12 +2192,12 @@ ObjectArrayAUpdateCallback_18:
 	ldh a, [hVBlankCounter] ; $7e38
 	add c ; $7e3a
 	and $1f ; $7e3b
-	ld hl, Data_18_7e69 ; $7e3d
+	ld hl, ObjectArrayAWaveTable_18 ; $7e3d
 	add l ; $7e40
 	ld l, a ; $7e41
-	jr nc, Label_18_7e45 ; $7e42
+	jr nc, .read ; $7e42
 	inc h ; $7e44
-Label_18_7e45:
+.read:
 	ld d, [hl] ; $7e45
 	ld hl, $0005 ; $7e46
 	add hl, bc ; $7e49
@@ -2208,7 +2208,7 @@ Label_18_7e45:
 	ldh a, [hVBlankCounter] ; $7e50
 	sub d ; $7e52
 	and $07 ; $7e53
-	jr nz, Label_18_7e66 ; $7e55
+	jr nz, .done ; $7e55
 	ld hl, $0007 ; $7e57
 	add hl, bc ; $7e5a
 	ld a, [hl] ; $7e5b
@@ -2219,9 +2219,9 @@ Label_18_7e45:
 	and $f0 ; $7e62
 	or d ; $7e64
 	ld [hl], a ; $7e65
-Label_18_7e66:
+.done:
 	jp ObjectUpdateLoopTail_18 ; $7e66
-Data_18_7e69:
+ObjectArrayAWaveTable_18:
 	INCBIN "data/bank_018/d_7e69.bin" ; $7e69, 32 bytes
 ObjectArrayBUpdateCallback_18:
 	ldh a, [hVBlankCounter] ; $7e89
@@ -2234,12 +2234,12 @@ ObjectArrayBUpdateCallback_18:
 	ldh a, [hVBlankCounter] ; $7e94
 	add c ; $7e96
 	and $1f ; $7e97
-	ld hl, Data_18_7ec8 ; $7e99
+	ld hl, ObjectArrayBDriftTable_18 ; $7e99
 	add l ; $7e9c
 	ld l, a ; $7e9d
-	jr nc, Label_18_7ea1 ; $7e9e
+	jr nc, .read ; $7e9e
 	inc h ; $7ea0
-Label_18_7ea1:
+.read:
 	ld d, [hl] ; $7ea1
 	ld hl, $0002 ; $7ea2
 	add hl, bc ; $7ea5
@@ -2252,7 +2252,7 @@ Label_18_7ea1:
 	ldh a, [hVBlankCounter] ; $7eae
 	sub d ; $7eb0
 	and $07 ; $7eb1
-	jr nz, Label_18_7ec5 ; $7eb3
+	jr nz, .done ; $7eb3
 	ld hl, $0007 ; $7eb5
 	add hl, bc ; $7eb8
 	ld d, [hl] ; $7eb9
@@ -2264,8 +2264,8 @@ Label_18_7ea1:
 	and $f0 ; $7ec1
 	or d ; $7ec3
 	ld [hl], d ; $7ec4
-Label_18_7ec5:
+.done:
 	jp ObjectUpdateLoopTail_18 ; $7ec5
-Data_18_7ec8:
+ObjectArrayBDriftTable_18:
 	INCBIN "data/bank_018/d_7ec8.bin" ; $7ec8, 45 bytes
 	; $7ef5, 267 bytes fill to bank end (linker-padded)
