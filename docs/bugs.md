@@ -546,6 +546,39 @@ address addresses it at `TILEMAP_WIDTH` = 32. Bank `$1a` never references
 name describes — four 64-wide scroll planes — has no consumer in the shipped
 ROM.
 
+### `ProjectBallSprite` reads the hit-streak table and throws the value away
+
+`ProjectBallSprite` (`$0d:$5843`) indexes `MinigameHitStreakValueTable_0d` by
+`wMinigameHitStreak` — split-base `add LOW / adc HIGH`, so this is deliberate
+addressing, not an accident — loads the entry into `b`, and then immediately
+overwrites it:
+
+```
+        ld b, [hl]                     ; $5862
+        ld b, $0e                      ; $5863
+        ret
+```
+
+The table holds `$0f, $0e ×6, $0d`, which reads as a per-streak sprite tile
+(or size) that was flattened to the constant middle value. Eight bytes of data
+and the whole lookup survive with no effect; only the seed-classification pass
+noticed, because the table had been mis-seeded as code and the lookup decoded
+against a garbage label.
+
+### `ObjectArrayBUpdateCallback_18` stores the wrong register
+
+The two per-object movement callbacks in bank `$18` advance an animation
+nibble in object field `+$07` every 8 frames. Callback A does it correctly:
+
+```
+        ld a, [hl] / and $f0 / or d / ld [hl], a   ; $7e65
+```
+
+Callback B ends the identical sequence with `ld [hl], d` (`$7ec4`): the
+combined value sits in `a`, but the store writes `d` — the new low nibble
+alone — so the field's high nibble is zeroed every time the path runs. The A
+copy proves the intent.
+
 ## A routine whose body is a no-op
 
 `RewriteCutsceneCameraY_6b` (bank `$6b`, `$615e`) guards on

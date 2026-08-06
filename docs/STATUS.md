@@ -2,7 +2,7 @@
 
 ## Where things stand
 
-**~161.0K instructions / 422,043 bytes of proven code+structured source
+**~160.9K instructions / 422,569 bytes of proven code+structured source
 (20.1% of the 2 MiB ROM) disassembled; everything rebuilds byte-perfect**
 (`make compare` → OK against SHA-1
 `414ba58340a27fc27b127bc01455b32764151ff0`). 59 of 128 banks contain
@@ -26,11 +26,11 @@ shape, not *twins*, and the shot banks are near-identical copies of each
 other, so a routine only one bank failed to execute reads as ordinary data
 until you diff it against its siblings.
 
-Everything below is **committed** (HEAD `22800ec`); the whole history
+Everything below is **committed** (HEAD `eda70a5`); the whole history
 rebuilds byte-perfect. Per-bank progress at any time: `python3
 tools/progress.py` (proven-code bytes, fill runs, label counts, human-named
 counts) and `tools/progress.py --unnamed <bank>` to list still-auto-named
-symbols. **20,196 of 21,776 labels are human-named** (up from 4,816 on
+symbols. **20,405 of 21,985 labels are human-named** (up from 4,816 on
 2026-07-23), and the remaining 1,580 are all generator-*derived* names --
 `$4000` slot labels spelled after their curated target (`FarPtr_InitAndRunGame`)
 and structures named for what they are (`SoundTable_78`). **No symbol anywhere
@@ -10843,3 +10843,63 @@ dead exit-request setter at $4da6), and some are live computed-dispatch
 entries whose dispatcher names them (the court banks were this kind). Each
 needs that three-way classification before a name is right, which is why they
 were not batch-named here.
+
+## The 247 unlabeled seeds, classified to zero (2026-08-06)
+
+The work-list from the morning's sweep is done: nine parallel agents took the
+flow-boundary seed offsets bank by bank, and every one now has a verdict. The
+split: **179 unreachable routines named** (`Unused_*`, `StubNop_*`, or their
+byte-identical labeled twin's stem with this bank's suffix), **18
+computed-dispatch entries named** (the map-script stub trio replicated into
+banks `$10`-`$15`/`$27`, `AcademyTopicTopRanked`, and bank `$18`'s
+`ObjectUpdateLoopTail_18`), and **46 dead bodies left deliberately unlabeled**
+— each is the unreachable remainder of the labeled routine directly above it
+(the 20 disabled drill judges `docs/bugs.md` inventories, orphaned error
+epilogues in the save engine, branch arms sealed off by an earlier `jr`), and
+a label would cut it off from the routine it belongs to. Re-running the sweep
+now returns exactly those 46 plus one trampoline whose address is pushed
+inline — the list is a stable remainder, not a backlog.
+
+### Five seeds were sitting on data
+
+The classification's real yield was the seeds that were wrong. Four decoded
+tables as code: `$10:$6150` (five game-flag words the Restaurant NPC's
+split-base read indexes — now `RestaurantNpc12StageFlagTable_10`, declared
+`flag_ids`), `$0d:$57f5` (a `$01..$80` bit-mask table, unreferenced),
+`$0d:$5866` (the per-hit-streak table whose decode had also swept the
+*declared* `MinigameConfig_PerfectShot` record in as code), and `$13:$5928`
+(the 7-entry `dw` table `RunAcademyQuestionsMenu` dispatches through — now
+`AcademyTopicHandlerTable`, which also moved `AcademyTopicSinglesRank` to its
+real entry at `$5936` and named the seventh handler). A fifth seed was off by
+one byte: `$3b:$6978` is the last byte of the `bytes:2` table above it, and
+the routine is `Unused_3b_SlideMenuPanel_1` at `$6979`.
+
+### And one blob was hiding live code
+
+Bank `$18`'s `d_7d88.bin` was three things fused: the `ObjectArrayBSpawnTable`
+records (`records:11`, same shape as the A table beside it) and the two
+per-object movement callbacks the spawn records carry at `+$09` —
+`TaskUpdateObjects_18` dispatches into them by `jp hl`, and both end by
+jumping to `ObjectUpdateLoopTail_18`, which is how the agent found them: the
+`jp $7bba` bytes were sitting in the blob. Carving them surfaced their two
+index tables (`ObjectArrayAWaveTable_18`, `ObjectArrayBDriftTable_18`) and a
+shipped defect — callback B ends its animation-nibble update with
+`ld [hl], d` where the A copy stores the combined value from `a`.
+
+### What the orphans turned out to be
+
+Whole abandoned features, not just fragments: a second debug drill-launcher
+NPC family in bank `$10` (`Unused_10_Test2Npc04`-`0A` — the shipped table
+rebinds their ids to plain dialogue), a water-sprite minigame launcher
+(`Unused_10_RunWaterSpriteMinigame`, grass court, Mario vs Allie, its own
+mode-hook table), a standalone character-select screen in bank `$1b`, the
+singles half of the traveling-team victory pair in bank `$13`, both halves of
+an abandoned per-player serve-target stat in bank `$0b` (writer at `$4f19`,
+reader at `$4484`, nothing in between), a white-fade arming routine in ROM0
+that `docs/bugs.md` had already described, and interrupt-enable / decimal-draw
+/ signed-multiply helper families in ROM0 that nothing ever called.
+`docs/bugs.md` gains the two new dead-value defects (`ProjectBallSprite`
+discarding its table read; the callback-B register slip).
+
+**20,405 of 21,985 labels are human-named**, auto is back to 0, and the seed
+files now carry correction notes for every mis-seed the pass found.
