@@ -734,6 +734,7 @@ ClearWram3Row64Alt_3e:
 UpdateAnimatedTiles_3e:
 	farcall UpdateAnimatedTiles ; $4438
 	ret ; $443b
+DrawNameWithDiacritics_3e:
 	push af ; $443c
 	push bc ; $443d
 .loop:
@@ -782,6 +783,7 @@ UpdateAnimatedTiles_3e:
 	pop bc ; $4472
 	pop af ; $4473
 	ret ; $4474
+PrintNumberString_3e:
 	push af ; $4475
 	push bc ; $4476
 	push hl ; $4477
@@ -3343,6 +3345,7 @@ FlushEquipSelectTextRows:
 	ld c, $04 ; $58b5
 	call QueueVRAMCopy ; $58b7
 	ret ; $58ba
+Unused_3e_GetEquipSelectTextRowPtr:
 	push af ; $58bb
 	push bc ; $58bc
 	ld hl, EquipSelectTextRowPtrs_3e ; $58bd

@@ -173,6 +173,7 @@ SpriteWobbleYTable_17:
 	call QueueSprite ; $4103
 	pop de ; $4106
 	ret ; $4107
+MoveMenuCursorGrid_17:
 	ld a, [wMenuCursorX] ; $4108
 	ld d, a ; $410b
 	ld a, [wMenuCursorY] ; $410c
@@ -260,6 +261,7 @@ SpriteWobbleYTable_17:
 .checkMenuCursorX5:
 	ld a, $01 ; $4183
 	ret ; $4185
+MoveMenuCursorGridFromLinkInput_17:
 	ld a, [wMenuCursorX] ; $4186
 	ld d, a ; $4189
 	ld a, [wMenuCursorY] ; $418a
@@ -347,6 +349,7 @@ SpriteWobbleYTable_17:
 .checkMenuCursorX6:
 	ld a, $01 ; $4200
 	ret ; $4202
+MoveMenuCursorGridRemote_17:
 	ld a, [wMenuCursorX] ; $4203
 	ld d, a ; $4206
 	ld a, [wMenuCursorY] ; $4207
@@ -480,6 +483,7 @@ SpriteWobbleYTable_17:
 .checkMenuCursor2X2:
 	ld a, $01 ; $42cb
 	ret ; $42cd
+MoveMenuCursor2GridRemote_17:
 	ld a, [wMenuCursor2X] ; $42ce
 	ld d, a ; $42d1
 	ld a, [wMenuCursor2Y] ; $42d2
@@ -612,6 +616,7 @@ SpriteWobbleYTable_17:
 .checkMenuCursorY:
 	ld a, $01 ; $4394
 	ret ; $4396
+GetMenuCursorLinearIndex_17:
 	ld a, [wMenuCursorY] ; $4397
 	ld b, a ; $439a
 	xor a ; $439b
@@ -626,6 +631,7 @@ SpriteWobbleYTable_17:
 	ld a, [wMenuCursorX] ; $43a4
 	add b ; $43a7
 	ret ; $43a8
+GetMenuCursorLinearIndexFromPtr_17:
 	push bc ; $43a9
 	ld a, [hl-] ; $43aa
 	ld b, a ; $43ab
@@ -680,6 +686,7 @@ WriteGridPosFromLinearIndex_17:
 	ld a, d ; $43d6
 	ld [hl], a ; $43d7
 	ret ; $43d8
+ClearWram3Row64_17:
 	ldh a, [hWramBank] ; $43d9
 	push af ; $43db
 	wram_bank $03 ; $43dc
@@ -692,6 +699,7 @@ WriteGridPosFromLinearIndex_17:
 	pop af ; $43e9
 	wram_bank ; $43ea
 	ret ; $43ee
+ClearWram3Row64Alt_17:
 	ldh a, [hWramBank] ; $43ef
 	push af ; $43f1
 	wram_bank $03 ; $43f2
@@ -707,6 +715,7 @@ WriteGridPosFromLinearIndex_17:
 UpdateAnimatedTilesTask_17:
 	farcall UpdateAnimatedTiles ; $4406
 	ret ; $4409
+CopyStringToTilemap_17:
 	push af ; $440a
 	push bc ; $440b
 .loop:
@@ -755,6 +764,7 @@ UpdateAnimatedTilesTask_17:
 	pop bc ; $4440
 	pop af ; $4441
 	ret ; $4442
+DrawDecimalNumber_17:
 	push af ; $4443
 	push bc ; $4444
 	push hl ; $4445
@@ -1467,7 +1477,9 @@ QueueCaptionRowToVRAM:
 	ld c, $0c ; $49ff
 	call QueueVRAMCopy ; $4a01
 	ret ; $4a04
+Unused_17_StubRet:
 	ret ; $4a05
+Unused_17_DrawSecondCaptionRow:
 	ld hl, $0135 ; $4a06
 	ld de, $d1c1 ; $4a09
 	farcall RenderProportionalTextAt ; $4a0c

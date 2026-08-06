@@ -414,6 +414,7 @@ CopyLabelTilesToTilemap:
 	dec c ; $4427
 	jr nz, CopyLabelTilesToTilemap ; $4428
 	ret ; $442a
+UnusedClearLabelTilemapRow:
 	wram_bank $03 ; $442b
 	ld a, $20 ; $4431
 	ld hl, wShadowTilemap + 13 * TILEMAP_WIDTH + 1 ; $4433
@@ -3110,6 +3111,7 @@ ShowExpAwardForLinkedPlay:
 	pop bc ; $6ad7
 	pop af ; $6ad8
 	ret ; $6ad9
+UnusedShowExpAwardForN64:
 	ld a, e ; $6ada
 	or d ; $6adb
 	ret z ; $6adc
@@ -3989,6 +3991,7 @@ ComputeTrophyExpAwards:
 	pop bc ; $7062
 	pop af ; $7063
 	ret ; $7064
+UnusedSetPendingTrophyExpAwards:
 	ldh a, [hWramBank] ; $7065
 	push af ; $7067
 	wram_bank $06 ; $7068
@@ -4480,6 +4483,7 @@ ScrollProgressListUp:
 .restore:
 	pop af ; $73d5
 	ret ; $73d6
+UnusedCreateProgressHeaderWindow:
 	ld d, $02 ; $73d7
 	ld e, $00 ; $73d9
 	ld b, $10 ; $73db
@@ -4826,6 +4830,7 @@ FillProgressListRowAttrs:
 	dec e ; $7a2c
 	jr nz, .loop ; $7a2d
 	ret ; $7a2f
+UnusedCopyProgressListTilemap:
 	ld hl, $d060 ; $7a30
 	ld de, $9860 ; $7a33
 	ld c, $1e ; $7a36

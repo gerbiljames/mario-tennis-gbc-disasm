@@ -156,6 +156,7 @@ SetActorPosition:
 	pop de ; $40f1
 	pop af ; $40f2
 	ret ; $40f3
+Unused_04_SetActorTarget:
 	inc b ; $40f4
 	dec b ; $40f5
 	ret z ; $40f6
@@ -179,6 +180,7 @@ SetActorPosition:
 	pop hl ; $4111
 	pop de ; $4112
 	ret ; $4113
+Unused_04_SetActorTargetRelative:
 	inc b ; $4114
 	dec b ; $4115
 	ret z ; $4116
@@ -1667,6 +1669,7 @@ ActorScriptOp_WaitMove2:
 .done:
 	xor a ; $4979
 	ret ; $497a
+Unused_04_ActorScriptOpMoveVector:
 	inc de ; $497b
 	push de ; $497c
 	ld a, [wActorScriptBank] ; $497d

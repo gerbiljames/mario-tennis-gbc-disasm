@@ -700,6 +700,7 @@ ClearWram3Row64:
 	pop af ; $440b
 	wram_bank ; $440c
 	ret ; $4410
+ClearWram3Row64Alt:
 	ldh a, [hWramBank] ; $4411
 	push af ; $4413
 	wram_bank $03 ; $4414
@@ -1188,6 +1189,7 @@ BuildN64ExhibColumnList:
 .buildN64ExhibResultsGrid:
 	call BuildN64ExhibResultsGrid ; $476d
 	ret ; $4770
+StubNop_3b_1:
 	ret ; $4771
 N64ExhibColumn:
 	; $4772, 17 bytes (bytes:8)
@@ -1412,6 +1414,7 @@ ExpandByteToBitArray:
 	pop bc ; $48b5
 	pop hl ; $48b6
 	ret ; $48b7
+Unused_3b_FillN64RecordsPalettes:
 	wram_bank $03 ; $48b8
 	ld hl, wN64RecordsBlock + 216 ; $48be
 	ld c, $00 ; $48c1
@@ -1575,6 +1578,7 @@ RunTrophiesScreen:
 	call ClearFrameTasks ; $49de
 	ld a, $ff ; $49e1
 	ret ; $49e3
+StubNop_3b_2:
 	ret ; $49e4
 BuildTrophiesScreen:
 	wram_bank $03 ; $49e5
@@ -4031,6 +4035,7 @@ PrintNumberRightAligned:
 	dec c ; $5c4e
 	jr nz, .copyLoop ; $5c4f
 	ret ; $5c51
+StubNop_3b_3:
 	ret ; $5c52
 TryMainMenuLinkHandshake:
 	di ; $5c53
@@ -4775,6 +4780,7 @@ RenderMatchFormatOptionText:
 	ld c, $20 ; $61e3
 	farcall RenderTextToBuffer64 ; $61e5
 	ret ; $61e8
+StubNop_3b_4:
 	ret ; $61e9
 	; $61ea, 6 bytes (ram_ptrs:3)
 	dw wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; record 0
@@ -5728,7 +5734,7 @@ LoadSavedDataSourceGfx:
 	pop af ; $6957
 	wram_bank ; $6958
 	ret ; $695c
-	; $695d, 27 bytes (bytes:2)
+	; $695d, 28 bytes (bytes:2)
 	db $62, $3c ; 0x00
 	db $64, $3c ; 0x02
 	db $66, $3c ; 0x04
@@ -5742,8 +5748,8 @@ LoadSavedDataSourceGfx:
 	db $00, $ab ; 0x14
 	db $00, $ac ; 0x16
 	db $00, $ad ; 0x18
-	db $00 ; 0x1a
-	xor [hl] ; $6978
+	db $00, $ae ; 0x1a
+Unused_3b_SlideMenuPanel_1:
 	ld a, b ; $6979
 	or a ; $697a
 	jr z, .zero ; $697b
@@ -5774,6 +5780,7 @@ LoadSavedDataSourceGfx:
 	cp $ff ; $69a6
 	jr nz, .loopB ; $69a8
 	ret ; $69aa
+Unused_3b_SlideMenuPanel_2:
 	ld a, b ; $69ab
 	or a ; $69ac
 	jr z, .zero2 ; $69ad
@@ -8431,6 +8438,7 @@ RecordExhibitionVictory:
 	pop af ; $7dbd
 	wram_bank ; $7dbe
 	ret ; $7dc2
+StubNop_3b_5:
 	ret ; $7dc3
 GetVictoryScore:
 	ld b, a ; $7dc4

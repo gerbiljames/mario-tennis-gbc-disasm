@@ -2941,6 +2941,7 @@ ServeCoachVarsityLessonScene:
 	call WaitFadeEnd ; $6873
 	farcall ShowDrillBriefingScreen ; $6876
 	ret ; $6879
+Unused_15_SpeakServeCoachLines:
 	script_speak $07 ; $687a
 	script_speak $07 ; $687f
 	script_speak $07 ; $6884
@@ -3607,6 +3608,7 @@ TestServeChallengerGameFlag:
 	ld e, a ; $71e1
 	call TestGameFlagByNumber ; $71e2
 	ret ; $71e5
+Unused_15_SetServeChallengerGameFlag:
 	ld a, [wMapSceneStage] ; $71e6
 	add a ; $71e9
 	add LOW(TestServeChallengerGameFlagTable) ; $71ea
@@ -3649,6 +3651,7 @@ TestNetChallengerGameFlag:
 	ld e, a ; $7227
 	call TestGameFlagByNumber ; $7228
 	ret ; $722b
+Unused_15_SetNetChallengerGameFlag:
 	ld a, [wMapSceneStage] ; $722c
 	add a ; $722f
 	add LOW(TestNetChallengerGameFlagTable) ; $7230
@@ -3691,6 +3694,7 @@ TestStrokeChallengerGameFlag:
 	ld e, a ; $726d
 	call TestGameFlagByNumber ; $726e
 	ret ; $7271
+Unused_15_SetStrokeChallengerGameFlag:
 	ld a, [wMapSceneStage] ; $7272
 	add a ; $7275
 	add LOW(TestStrokeChallengerGameFlagTable) ; $7276
@@ -4552,11 +4556,14 @@ ActorScript_15_23:
 	as_jump .L15
 MapScriptNop_15:
 	ret ; $7d95
+MapScriptClearActiveFlag_15:
 	xor a ; $7d96
 	ld [wStoryScriptRan], a ; $7d97
 	ret ; $7d9a
+MapScriptPlaySoundA2_15:
 	sound $a2 ; $7d9b
 	ret ; $7d9d
+MapScriptHideLocationName_15:
 	xor a ; $7d9e
 	ld [wStoryModeShowLocationName], a ; $7d9f
 	ret ; $7da2

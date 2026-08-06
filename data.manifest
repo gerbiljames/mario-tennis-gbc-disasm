@@ -550,7 +550,8 @@ bank_018/palettes_78c5.asm 0638c5 8 palettes
 bank_018/palettes_7a41.asm 063a41 8 palettes
 bank_018/palettes_7ab5.asm 063ab5 81 palettes
 bank_018/palettes_7d44.asm 063d44 18 palettes
-bank_018/d_7d88.bin 063d88 16d
+bank_018/d_7e69.bin 063e69 20
+bank_018/d_7ec8.bin 063ec8 2d
 bank_019/lz_404c.bin 06404c c2e
 bank_019/palettes_4c7a.asm 064c7a 40 palettes
 bank_019/lz_4cba.bin 064cba 109

@@ -488,6 +488,7 @@ CheckCharacterUnlocked:
 	pop de ; $454a
 	pop hl ; $454b
 	ret ; $454c
+UnusedCheckCharacterIdUnlocked:
 	cp $10 ; $454d
 	jr nc, .done ; $454f
 	ld a, $01 ; $4551
@@ -2009,6 +2010,7 @@ TaskUpdateObjects_18:
 	ld h, [hl] ; $7bb7
 	ld l, a ; $7bb8
 	jp hl ; $7bb9
+ObjectUpdateLoopTail_18:
 	ld hl, $0004 ; $7bba
 	add hl, bc ; $7bbd
 	ld a, [hl] ; $7bbe
@@ -2021,7 +2023,7 @@ TaskUpdateObjects_18:
 	inc c ; $7bc7
 	ld a, c ; $7bc8
 	cp $10 ; $7bc9
-	jr nz, .objectLoop ; $7bcb
+	jr nz, TaskUpdateObjects_18.objectLoop ; $7bcb
 	ret ; $7bcd
 InitObjectSceneA:
 	ldh a, [hWramBank] ; $7bce
@@ -2168,5 +2170,102 @@ PopulateObjectArrayB:
 	jr nz, .spawnLoop ; $7d85
 	ret ; $7d87
 ObjectArrayBSpawnTable:
-	INCBIN "data/bank_018/d_7d88.bin" ; $7d88, 365 bytes
+	; $7d88, 176 bytes (records:11)
+; 16 records x 11 bytes
+	db $01, $00, $44, $00, $00, $40, $a0, $00, $00, $89, $7e ; record 0
+	db $02, $00, $34, $00, $18, $50, $63, $04, $01, $89, $7e ; record 1
+	db $03, $00, $43, $00, $3c, $45, $95, $08, $02, $89, $7e ; record 2
+	db $01, $00, $60, $00, $00, $70, $ff, $0c, $01, $89, $7e ; record 3
+	db $02, $00, $44, $00, $84, $40, $b3, $10, $03, $89, $7e ; record 4
+	db $03, $00, $38, $00, $1a, $80, $ca, $14, $01, $89, $7e ; record 5
+	db $01, $00, $2c, $00, $84, $30, $d2, $18, $00, $89, $7e ; record 6
+	db $02, $00, $56, $00, $10, $45, $52, $1c, $01, $89, $7e ; record 7
+	db $03, $00, $44, $00, $14, $61, $c4, $20, $03, $89, $7e ; record 8
+	db $01, $00, $1f, $00, $88, $4f, $b4, $24, $00, $89, $7e ; record 9
+	db $02, $00, $2a, $00, $4c, $43, $55, $28, $01, $89, $7e ; record 10
+	db $03, $00, $80, $00, $23, $42, $b4, $2c, $02, $89, $7e ; record 11
+	db $01, $00, $73, $00, $14, $64, $f0, $00, $01, $89, $7e ; record 12
+	db $02, $00, $3a, $00, $28, $34, $82, $00, $02, $89, $7e ; record 13
+	db $03, $00, $8c, $00, $9c, $45, $d0, $00, $01, $89, $7e ; record 14
+	db $01, $00, $33, $00, $30, $55, $b0, $00, $00, $89, $7e ; record 15
+ObjectArrayAUpdateCallback_18:
+	ldh a, [hVBlankCounter] ; $7e38
+	add c ; $7e3a
+	and $1f ; $7e3b
+	ld hl, Data_18_7e69 ; $7e3d
+	add l ; $7e40
+	ld l, a ; $7e41
+	jr nc, Label_18_7e45 ; $7e42
+	inc h ; $7e44
+Label_18_7e45:
+	ld d, [hl] ; $7e45
+	ld hl, $0005 ; $7e46
+	add hl, bc ; $7e49
+	ld [hl], d ; $7e4a
+	ld hl, $0008 ; $7e4b
+	add hl, bc ; $7e4e
+	ld d, [hl] ; $7e4f
+	ldh a, [hVBlankCounter] ; $7e50
+	sub d ; $7e52
+	and $07 ; $7e53
+	jr nz, Label_18_7e66 ; $7e55
+	ld hl, $0007 ; $7e57
+	add hl, bc ; $7e5a
+	ld a, [hl] ; $7e5b
+	add $04 ; $7e5c
+	and $0f ; $7e5e
+	ld d, a ; $7e60
+	ld a, [hl] ; $7e61
+	and $f0 ; $7e62
+	or d ; $7e64
+	ld [hl], a ; $7e65
+Label_18_7e66:
+	jp ObjectUpdateLoopTail_18 ; $7e66
+Data_18_7e69:
+	INCBIN "data/bank_018/d_7e69.bin" ; $7e69, 32 bytes
+ObjectArrayBUpdateCallback_18:
+	ldh a, [hVBlankCounter] ; $7e89
+	add c ; $7e8b
+	and $03 ; $7e8c
+	ld d, a ; $7e8e
+	ld hl, $0005 ; $7e8f
+	add hl, bc ; $7e92
+	ld [hl], d ; $7e93
+	ldh a, [hVBlankCounter] ; $7e94
+	add c ; $7e96
+	and $1f ; $7e97
+	ld hl, Data_18_7ec8 ; $7e99
+	add l ; $7e9c
+	ld l, a ; $7e9d
+	jr nc, Label_18_7ea1 ; $7e9e
+	inc h ; $7ea0
+Label_18_7ea1:
+	ld d, [hl] ; $7ea1
+	ld hl, $0002 ; $7ea2
+	add hl, bc ; $7ea5
+	ld a, [hl] ; $7ea6
+	add d ; $7ea7
+	ld [hl], a ; $7ea8
+	ld hl, $0008 ; $7ea9
+	add hl, bc ; $7eac
+	ld d, [hl] ; $7ead
+	ldh a, [hVBlankCounter] ; $7eae
+	sub d ; $7eb0
+	and $07 ; $7eb1
+	jr nz, Label_18_7ec5 ; $7eb3
+	ld hl, $0007 ; $7eb5
+	add hl, bc ; $7eb8
+	ld d, [hl] ; $7eb9
+	ld a, d ; $7eba
+	add $04 ; $7ebb
+	and $0f ; $7ebd
+	ld d, a ; $7ebf
+	ld a, [hl] ; $7ec0
+	and $f0 ; $7ec1
+	or d ; $7ec3
+	ld [hl], d ; $7ec4
+Label_18_7ec5:
+	jp ObjectUpdateLoopTail_18 ; $7ec5
+Data_18_7ec8:
+	INCBIN "data/bank_018/d_7ec8.bin" ; $7ec8, 45 bytes
 	; $7ef5, 267 bytes fill to bank end (linker-padded)

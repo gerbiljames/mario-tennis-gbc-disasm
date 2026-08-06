@@ -3413,6 +3413,7 @@ CharGridGfx2:
 DigitFontTiles:
 	INCBIN "data/bank_039/lz_734e.bin" ; $734e, 249 bytes
 	ret ; $7447
+Unused_39_PushPopNop_1:
 	push af ; $7448
 	push bc ; $7449
 	push de ; $744a
@@ -3422,6 +3423,7 @@ DigitFontTiles:
 	pop bc ; $744e
 	pop af ; $744f
 	ret ; $7450
+Unused_39_PushPopNop_2:
 	push af ; $7451
 	push bc ; $7452
 	push de ; $7453

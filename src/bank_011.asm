@@ -1314,13 +1314,14 @@ JuniorClassCourtDoublesNpc0A_11:
 JuniorClassCourtDoublesNpc0B_11:
 	script_set_text Text_32_136 ; $5771
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_3 ; $5777
-	jr nz, .speak ; $577a
+	jr nz, Unused_11_JuniorClassCourtDoublesNpcSpeech.speak ; $577a
 	script_set_text Text_32_130 ; $577c
 	script_speak $0b ; $5782
 	script_face_toward ACTOR_PLAYER, $0a ; $5787
 	script_set_anim $0a, $02 ; $578f
 	script_wait_idle $0a ; $5796
 	jp JuniorClassCourtDoublesNpc0A_11 ; $579b
+Unused_11_JuniorClassCourtDoublesNpcSpeech:
 	script_set_text Text_32_82 ; $579e
 	script_face_toward ACTOR_PLAYER, $0a ; $57a4
 	script_set_anim $0a, $04 ; $57ac
@@ -3427,11 +3428,14 @@ ActorScript_11_47:
 	as_jump .Lb
 MapScriptNop_11:
 	ret ; $7bd1
+MapScriptClearActiveFlag_11:
 	xor a ; $7bd2
 	ld [wStoryScriptRan], a ; $7bd3
 	ret ; $7bd6
+MapScriptPlaySoundA2_11:
 	sound $a2 ; $7bd7
 	ret ; $7bd9
+MapScriptHideLocationName_11:
 	xor a ; $7bda
 	ld [wStoryModeShowLocationName], a ; $7bdb
 	ret ; $7bde
@@ -3651,6 +3655,7 @@ ComputeRankingProgressIndex:
 	jr z, .store ; $7dd6
 	ld a, STORYRANK_DOUBLES_COMPLETE ; $7dd8
 	jr .store ; $7dda
+Unused_11_ComputeIslandProgressStage:
 	ld a, $00 ; $7ddc
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7dde
 	jr z, .storeIsland ; $7de1

@@ -151,6 +151,7 @@ WriteTileToShadowMapCell:
 	pop de ; $410e
 	pop af ; $410f
 	ret ; $4110
+Unused_05_ReadShadowMapCell:
 	push af ; $4111
 	push de ; $4112
 	push af ; $4113
@@ -303,6 +304,7 @@ QueueFullAttrmapCopy:
 	pop bc ; $41f5
 	pop af ; $41f6
 	ret ; $41f7
+Unused_05_CopyTilemapRowToVRAM:
 	push af ; $41f8
 	ld a, b ; $41f9
 	wram_bank ; $41fa
@@ -816,6 +818,7 @@ RefreshShadowTilemapFromMapBuffer:
 	pop bc ; $44f0
 	pop af ; $44f1
 	ret ; $44f2
+Unused_05_GetCameraTileRow:
 	ld a, [wCameraY + 1] ; $44f3
 	and $3f ; $44f6
 	ret ; $44f8
@@ -933,6 +936,7 @@ DrawTileAttrRect:
 	pop bc ; $458d
 	pop af ; $458e
 	ret ; $458f
+Unused_05_ClearShadowMapRect:
 	push af ; $4590
 	push bc ; $4591
 	push de ; $4592
@@ -972,6 +976,7 @@ DrawTileAttrRect:
 	pop bc ; $45b7
 	pop af ; $45b8
 	ret ; $45b9
+Unused_05_CloseMenuWindow:
 	push hl ; $45ba
 	push bc ; $45bb
 	push de ; $45bc
@@ -3432,6 +3437,7 @@ RenderInlineString:
 .done:
 	pop af ; $5553
 	ret ; $5554
+Unused_05_RenderInlineHexByte:
 	push af ; $5555
 	push bc ; $5556
 	push hl ; $5557
@@ -3446,6 +3452,7 @@ RenderInlineString:
 	ld l, a ; $5563
 	call FormatHexWord ; $5564
 	jp RenderInlineNumber.zero ; $5567
+Unused_05_RenderInlineHexWord:
 	push af ; $556a
 	push bc ; $556b
 	push hl ; $556c
@@ -3462,6 +3469,7 @@ RenderInlineString:
 	ld c, e ; $5579
 	call FormatHexWord ; $557a
 	jp RenderInlineNumber.zero ; $557d
+Unused_05_RenderInlineDecimalByte:
 	push af ; $5580
 	push bc ; $5581
 	push hl ; $5582
@@ -5188,6 +5196,7 @@ WriteDialogueToWindow:
 	pop bc ; $6064
 	pop af ; $6065
 	ret ; $6066
+Unused_05_WriteNumberToWindow:
 	push af ; $6067
 	push bc ; $6068
 	push de ; $6069
@@ -5634,6 +5643,7 @@ OpenCenteredDialogueWindow:
 	pop bc ; $6385
 	pop af ; $6386
 	ret ; $6387
+Unused_05_ChooseSpeechBubbleHalf:
 	push af ; $6388
 	push bc ; $6389
 	push hl ; $638a
@@ -6829,6 +6839,7 @@ WriteStringToTilemapStreamed:
 .restore:
 	pop af ; $6c77
 	ret ; $6c78
+Unused_05_WriteDialogueToTilemapStreamed:
 	push af ; $6c79
 	push bc ; $6c7a
 	push de ; $6c7b
@@ -6940,6 +6951,7 @@ FetchSRAMDialogueText:
 	call FetchSRAMText ; $6d2e
 	pop af ; $6d31
 	ret ; $6d32
+Unused_05_FetchSRAMShortText:
 	push af ; $6d33
 	ld a, $01 ; $6d34
 	call FetchSRAMText ; $6d36
@@ -8596,6 +8608,7 @@ DrawInlineGlyph:
 	pop bc ; $76ce
 	pop af ; $76cf
 	ret ; $76d0
+Unused_05_ResetGlyphPen_1:
 	push af ; $76d1
 	push bc ; $76d2
 	push de ; $76d3
@@ -8619,6 +8632,7 @@ DrawInlineGlyph:
 	pop bc ; $76f2
 	pop af ; $76f3
 	ret ; $76f4
+Unused_05_ResetGlyphPen_2:
 	push af ; $76f5
 	push bc ; $76f6
 	push de ; $76f7
@@ -8952,6 +8966,7 @@ UploadGlyphTileRange:
 	pop de ; $78f0
 	pop bc ; $78f1
 	ret ; $78f2
+Unused_05_DrawGlyphString:
 	push af ; $78f3
 	push bc ; $78f4
 	push de ; $78f5

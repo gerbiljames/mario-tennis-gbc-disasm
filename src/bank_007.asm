@@ -3442,6 +3442,7 @@ ExecuteShotServeFlat:
 	farcall ShotBallPathServeFlat ; $59e5
 	call SetSpecialShotFlagFromBallHeight ; $59e8
 	ret ; $59eb
+Unused_07_SetSpecialShotFlagThreshold:
 	ld hl, wBallHeight ; $59ec
 	ld a, [hl+] ; $59ef
 	ld h, [hl] ; $59f0
@@ -3875,6 +3876,7 @@ OverrideCharStatsForDebug:
 	ld a, $01 ; $5d1a
 	pop af ; $5d1c
 	ret ; $5d1d
+Unused_07_ApplyCharStatPreset:
 	add a ; $5d1e
 	add a ; $5d1f
 	add a ; $5d20

@@ -195,6 +195,7 @@ Unused_0b_0:
 	ld h, [hl] ; $412c
 	ld l, a ; $412d
 	ret ; $412e
+UnusedGetObjectXAndDepth:
 	ld h, a ; $412f
 	ld l, $00 ; $4130
 	srl h ; $4132
@@ -605,6 +606,7 @@ WriteCharStructByte:
 	pop af ; $443a
 	wram_bank ; $443b
 	ret ; $443f
+UnusedSetAiReactionDelayFar:
 	ld hl, $007a ; $4440
 	call WriteCharStructByte ; $4443
 	ret ; $4446
@@ -641,6 +643,7 @@ SyncPointWinLoseFlagTask:
 	pop af ; $447e
 	wram_bank ; $447f
 	ret ; $4483
+UnusedQueueDrillOutcomeMessage:
 	ld a, [wPointOutcome] ; $4484
 	cp POINTOUTCOME_FAULT ; $4487
 	jr z, .checkPointOutcome2 ; $4489
@@ -1378,7 +1381,7 @@ ServiceMatch1Cases2:
 	ld a, $04 ; $49a8
 	ld b, $06 ; $49aa
 	call QueueDrillResultMessage ; $49ac
-	jr .storeMatchAbortFlag ; $49af
+	jr UnusedStoreMatchAbortFlag_1.storeMatchAbortFlag ; $49af
 	db $af ; $49b1
 	ret ; $49b2
 .returnZero:
@@ -1387,6 +1390,7 @@ ServiceMatch1Cases2:
 .storeMatchAbortFlag2:
 	xor a ; $49b5
 	ret ; $49b6
+UnusedStoreMatchAbortFlag_1:
 	ld a, MATCHABORT_POINT ; $49b7
 	ld [wMatchAbortFlag], a ; $49b9
 	ld a, $01 ; $49bc
@@ -1655,7 +1659,7 @@ ServiceMatch2Cases1:
 	ld b, $06 ; $4ba4
 	call QueueDrillResultMessage ; $4ba6
 	farcall DidBallCrossGate ; $4ba9
-	jr z, ServiceMatch2Cases2.storeMatchAbortFlag ; $4bac
+	jr z, UnusedStoreMatchAbortFlag_2.storeMatchAbortFlag ; $4bac
 	xor a ; $4bae
 	ld [wDrillGateActive], a ; $4baf
 	xor a ; $4bb2
@@ -1702,7 +1706,7 @@ ServiceMatch2Cases2:
 	ld a, $04 ; $4bf4
 	ld b, $06 ; $4bf6
 	call QueueDrillResultMessage ; $4bf8
-	jr .storeMatchAbortFlag ; $4bfb
+	jr UnusedStoreMatchAbortFlag_2.storeMatchAbortFlag ; $4bfb
 	db $af ; $4bfd
 	ret ; $4bfe
 .returnZero:
@@ -1711,6 +1715,7 @@ ServiceMatch2Cases2:
 .storeMatchAbortFlag2:
 	xor a ; $4c01
 	ret ; $4c02
+UnusedStoreMatchAbortFlag_2:
 	ld a, MATCHABORT_POINT ; $4c03
 	ld [wMatchAbortFlag], a ; $4c05
 	ld a, $01 ; $4c08
@@ -1971,7 +1976,7 @@ ServiceMatch3Cases2:
 	ld a, $04 ; $4dc3
 	ld b, $06 ; $4dc5
 	call QueueDrillResultMessage ; $4dc7
-	jr .storeMatchAbortFlag ; $4dca
+	jr UnusedStoreMatchAbortFlag_3.storeMatchAbortFlag ; $4dca
 	db $af ; $4dcc
 	ret ; $4dcd
 .returnZero:
@@ -1980,6 +1985,7 @@ ServiceMatch3Cases2:
 .storeMatchAbortFlag2:
 	xor a ; $4dd0
 	ret ; $4dd1
+UnusedStoreMatchAbortFlag_3:
 	ld a, MATCHABORT_POINT ; $4dd2
 	ld [wMatchAbortFlag], a ; $4dd4
 	ld a, $01 ; $4dd7
@@ -2077,6 +2083,7 @@ ServicePractice1Hook_Bounce:
 	ret nz ; $4e7a
 	call RecordDrillTargetZoneHitIfInPlay ; $4e7b
 	ret ; $4e7e
+UnusedServeSecondBounceSound_1:
 	ld a, [wBallBounceCount] ; $4e7f
 	cp $02 ; $4e82
 	ret nz ; $4e84
@@ -2140,6 +2147,7 @@ ServicePractice1HandlePointEnd:
 	call UnregisterFrameTask ; $4f12
 	call PlayDrillPointEndSequence ; $4f15
 	ret ; $4f18
+UnusedStoreDrillServeTargetResult:
 	call CheckDrillTargetZoneMissed ; $4f19
 	add a ; $4f1c
 	dec a ; $4f1d
@@ -2304,6 +2312,7 @@ ServicePractice2Hook_Bounce:
 	ret nz ; $503c
 	call RecordDrillTargetZoneHitIfInPlay ; $503d
 	ret ; $5040
+UnusedServeSecondBounceSound_2:
 	ld a, [wBallBounceCount] ; $5041
 	cp $02 ; $5044
 	ret nz ; $5046
@@ -3045,13 +3054,13 @@ NetGameMatch1Cases3:
 	and $01 ; $55c1
 	call TestCharStateBit4 ; $55c3
 	or a ; $55c6
-	jp z, NetGameMatch1Cases4.storeMatchAbortFlag ; $55c7
+	jp z, UnusedStoreMatchAbortFlag_4.storeMatchAbortFlag ; $55c7
 	ld a, $1f ; $55ca
 	ld b, $0d ; $55cc
 	call QueueDrillResultMessage ; $55ce
 	ld a, [wShotRecoilVariant] ; $55d1
 	cp $01 ; $55d4
-	jp nz, NetGameMatch1Cases4.storeMatchAbortFlag ; $55d6
+	jp nz, UnusedStoreMatchAbortFlag_4.storeMatchAbortFlag ; $55d6
 	xor a ; $55d9
 	ret ; $55da
 .returnZero:
@@ -3116,13 +3125,14 @@ NetGameMatch1Cases4:
 	ld a, $1d ; $5626
 	ld b, $0d ; $5628
 	call QueueDrillResultMessage ; $562a
-	jp .storeMatchAbortFlag ; $562d
+	jp UnusedStoreMatchAbortFlag_4.storeMatchAbortFlag ; $562d
 .noAction3:
 	xor a ; $5630
 	ret ; $5631
 .storeMatchAbortFlag2:
 	xor a ; $5632
 	ret ; $5633
+UnusedStoreMatchAbortFlag_4:
 	ld a, MATCHABORT_POINT ; $5634
 	ld [wMatchAbortFlag], a ; $5636
 	ld a, $01 ; $5639
@@ -3632,6 +3642,7 @@ NetGameMatch3HandlePointEnd:
 	farcall StartPointEndReactions ; $598d
 	call PlayDrillPointEndSequence ; $5990
 	ret ; $5993
+UnusedNetGameMatch3JudgePoint:
 	ld a, [wPointOutcome] ; $5994
 	cp POINTOUTCOME_FAULT ; $5997
 	jp z, NetGameMatch3HandlePointEndTable.checkPointWinLoseFlag ; $5999
@@ -3919,7 +3930,7 @@ NetGameMatch3Cases3:
 	and $01 ; $5b66
 	call TestCharStateBit4 ; $5b68
 	or a ; $5b6b
-	jp z, NetGameMatch3Cases4.storeMatchAbortFlag ; $5b6c
+	jp z, UnusedStoreMatchAbortFlag_5.storeMatchAbortFlag ; $5b6c
 	xor a ; $5b6f
 	ret ; $5b70
 .returnZero:
@@ -3984,13 +3995,14 @@ NetGameMatch3Cases4:
 	ld a, $1d ; $5bbc
 	ld b, $0d ; $5bbe
 	call QueueDrillResultMessage ; $5bc0
-	jp .storeMatchAbortFlag ; $5bc3
+	jp UnusedStoreMatchAbortFlag_5.storeMatchAbortFlag ; $5bc3
 .noAction3:
 	xor a ; $5bc6
 	ret ; $5bc7
 .storeMatchAbortFlag2:
 	xor a ; $5bc8
 	ret ; $5bc9
+UnusedStoreMatchAbortFlag_5:
 	ld a, MATCHABORT_POINT ; $5bca
 	ld [wMatchAbortFlag], a ; $5bcc
 	ld a, $01 ; $5bcf
@@ -5047,7 +5059,7 @@ NetGamePractice3Cases1:
 	call RecordDrillTargetZoneHit ; $634c
 	call CheckDrillTargetZoneMissed ; $634f
 	or a ; $6352
-	jp z, NetGamePractice3Cases3.storeMatchAbortFlag ; $6353
+	jp z, UnusedStoreMatchAbortFlag_6.storeMatchAbortFlag ; $6353
 	xor a ; $6356
 	ret ; $6357
 .returnZero:
@@ -5133,13 +5145,13 @@ NetGamePractice3Cases3:
 	xor a ; $63cf
 	call TestCharStateBit4 ; $63d0
 	or a ; $63d3
-	jp z, .storeMatchAbortFlag ; $63d4
+	jp z, UnusedStoreMatchAbortFlag_6.storeMatchAbortFlag ; $63d4
 	ld a, $39 ; $63d7
 	ld b, $00 ; $63d9
 	call QueueDrillResultMessage ; $63db
 	ld a, [wCurrentShotType] ; $63de
 	cp $0b ; $63e1
-	jp nz, .storeMatchAbortFlag ; $63e3
+	jp nz, UnusedStoreMatchAbortFlag_6.storeMatchAbortFlag ; $63e3
 	ld hl, wDrillCounters + 5 ; $63e6
 	dec [hl] ; $63e9
 	xor a ; $63ea
@@ -5150,6 +5162,7 @@ NetGamePractice3Cases3:
 .storeMatchAbortFlag2:
 	xor a ; $63ee
 	ret ; $63ef
+UnusedStoreMatchAbortFlag_6:
 	ld a, MATCHABORT_POINT ; $63f0
 	ld [wMatchAbortFlag], a ; $63f2
 	ld a, $01 ; $63f5

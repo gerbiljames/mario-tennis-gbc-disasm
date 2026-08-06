@@ -1,5 +1,5 @@
 {
- "_comment": "Static code-entry seeds for bank $10 (story match-select) stranded handlers: 13 code blobs (safe function-start + internal flow targets) + targets of two jump tables ($4e6c/$4fc6). Flat = 0x10*0x4000 + (cpu-0x4000). Plus farcall scripts $448d/$7443/$7472. $40b0 is the setup routine after the $4010 data pointer table (a coarse $4010 seed used to sweep that table in as mis-decoded code). $40ef/$4137/$4190/$4195/$41da are the match-select handlers reached via the $4010 -> $4145 pointer tree. Menu-tree pass: the remaining record/handler-table trees at $468d/$4ccb/$57f6/$5a80/$61b1/$74a9 decode like banks $0f/$11/$12/$14/$15; seeds are their verified handler-table targets, the $0cXX-lookup dispatch heads, and task callback $4141. | Correction (actor-script VM): $741c is a script_set_actor_script target (an actor script), not a jump-table code handler; removed that over-seed. | Correction (static-seed over a table): $54ec is the 5-word jump table $54de indexes and jp hl's through, not code. Replaced by its three distinct handler targets.",
+ "_comment": "Static code-entry seeds for bank $10 (story match-select) stranded handlers: 13 code blobs (safe function-start + internal flow targets) + targets of two jump tables ($4e6c/$4fc6). Flat = 0x10*0x4000 + (cpu-0x4000). Plus farcall scripts $448d/$7443/$7472. $40b0 is the setup routine after the $4010 data pointer table (a coarse $4010 seed used to sweep that table in as mis-decoded code). $40ef/$4137/$4190/$4195/$41da are the match-select handlers reached via the $4010 -> $4145 pointer tree. Menu-tree pass: the remaining record/handler-table trees at $468d/$4ccb/$57f6/$5a80/$61b1/$74a9 decode like banks $0f/$11/$12/$14/$15; seeds are their verified handler-table targets, the $0cXX-lookup dispatch heads, and task callback $4141. | Correction (actor-script VM): $741c is a script_set_actor_script target (an actor script), not a jump-table code handler; removed that over-seed. | Correction (static-seed over a table): $54ec is the 5-word jump table $54de indexes and jp hl's through, not code. Replaced by its three distinct handler targets. | Correction (static-seed over a table): $6150 is five game-flag-number words the split-base add $50/adc $61 in Test/SetRestaurantNpc12StageFlag_10 indexes by wMapSceneStage2*2; seeding it decoded the words as code. Now RestaurantNpc12StageFlagTable_10, declared flag_ids.",
  "rom": [
   262320,
   262383,
@@ -89,7 +89,6 @@
   270388,
   270421,
   270577,
-  270672,
   270907,
   271056,
   271189,

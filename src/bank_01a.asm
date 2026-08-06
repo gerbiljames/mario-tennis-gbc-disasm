@@ -299,6 +299,7 @@ MusicSettingHandler1:
 	ld bc, MusicSettingPtrs ; $4235
 	ld a, [wPauseMenuWindowId] ; $4238
 	jp RunPauseMenuWindow.menuLoop ; $423b
+UnusedRunMusicSettingMenu:
 	call ResetPauseMenuState ; $423e
 	ld a, $c0 ; $4241
 	ld [wPauseMenuOptionBits], a ; $4243
@@ -1887,7 +1888,9 @@ SignExtendModifierByte:
 	pop bc ; $4da5
 	pop af ; $4da6
 	ret ; $4da7
+StubNop_1a_3:
 	ret ; $4da8
+UnusedDrawExpScreenMessage_1:
 	push af ; $4da9
 	push bc ; $4daa
 	push de ; $4dab
@@ -1925,6 +1928,7 @@ SignExtendModifierByte:
 	pop bc ; $4e04
 	pop af ; $4e05
 	ret ; $4e06
+UnusedDrawExpScreenMessage_2:
 	push af ; $4e07
 	push bc ; $4e08
 	push de ; $4e09

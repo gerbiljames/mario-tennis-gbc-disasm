@@ -85,6 +85,7 @@ CallHLInBankA:
 	inc sp ; $0181
 	inc sp ; $0182
 	ret ; $0183
+Unused_00_CallTableEntryInBankA:
 	push hl ; $0184
 	push hl ; $0185
 	push hl ; $0186
@@ -176,6 +177,7 @@ CallVectorEntryA:
 	ld l, a ; $01f3
 	pop af ; $01f4
 	ret ; $01f5
+Unused_00_FarCallVectorInline:
 	ld hl, sp + 0 ; $01f6
 	ldh a, [hRomBank] ; $01f8
 	push af ; $01fa
@@ -313,6 +315,7 @@ SwitchCPUSpeed:
 	pop af ; $02c3
 	ldh [rIE], a ; $02c4
 	ret ; $02c6
+Unused_00_SwitchCPUSpeedSingle:
 	ldh a, [rSPD] ; $02c7
 	bit 7, a ; $02c9
 	ret z ; $02cb
@@ -441,6 +444,7 @@ ClearVRAMBank:
 	ld bc, $0200 ; $038c
 	call ClearMemoryBC16 ; $038f
 	ret ; $0392
+Unused_00_ClearBGMap:
 	ldh a, [hIsCGB] ; $0393
 	and a ; $0395
 	jp nz, ClearBothVRAMBanks.loop ; $0396
@@ -1036,6 +1040,7 @@ FarReadWordDI:
 	ld [rROMB0], a ; $065c
 	ei ; $065f
 	ret ; $0660
+Unused_00_ReadFarVectorEntry:
 	push bc ; $0661
 	ldh a, [hRomBank] ; $0662
 	ld b, a ; $0664
@@ -1069,6 +1074,7 @@ FarCopyBytes:
 	ldh [hRomBank], a ; $068c
 	ld [rROMB0], a ; $068e
 	ret ; $0691
+Unused_00_FarDecompressData:
 	push af ; $0692
 	push bc ; $0693
 	ld b, a ; $0694
@@ -1914,6 +1920,7 @@ VectorFromLengthAndAngle:
 	add hl, hl ; $0ae7
 	add hl, hl ; $0ae8
 	ret ; $0ae9
+Unused_00_VectorFromSignedLengthAndAngle:
 	bit 7, h ; $0aea
 	jr z, VectorFromLengthAndAngleRaw ; $0aec
 	push af ; $0aee
@@ -2174,6 +2181,7 @@ MulHLByDESigned:
 	ld h, a ; $0c65
 	pop af ; $0c66
 	ret ; $0c67
+Unused_00_MulHLByDEBothSigned:
 	ld a, h ; $0c68
 	xor d ; $0c69
 	ldh [hMathSign], a ; $0c6a
@@ -4253,6 +4261,7 @@ StartVRAMDMATransfer:
 	inc l ; $18e1
 	ld [hl], a ; $18e2
 	ret ; $18e3
+Unused_00_WaitStartVRAMDMAFromHL:
 	push af ; $18e4
 .loop:
 	ldh a, [hVBlankOccurred] ; $18e5
@@ -5064,11 +5073,13 @@ AdjustColorsBrightness:
 	pop bc ; $1d06
 	pop af ; $1d07
 	ret ; $1d08
+Unused_00_ForceFadeOut:
 	push af ; $1d09
 	jr BeginFadeOut.start ; $1d0a
 ForceFadeIn:
 	push af ; $1d0c
 	jr BeginFadeIn.start ; $1d0d
+Unused_00_BeginWhiteFadeOut:
 	di ; $1d0f
 	call BeginFadeOut ; $1d10
 	push af ; $1d13
@@ -5313,6 +5324,7 @@ ClearBothSpriteBuffers:
 	call ClearSpriteQueue ; $1e4b
 	pop af ; $1e4e
 	ret ; $1e4f
+Unused_00_SetSpriteQueueBase:
 	ldh a, [hSpriteQueueIndex] ; $1e50
 	ldh [hSpriteQueueBase], a ; $1e52
 	ret ; $1e54
@@ -5780,6 +5792,7 @@ NumberFontGlyphPtrs:
 	pop bc ; $20cb
 	pop af ; $20cc
 	ret ; $20cd
+Unused_00_RenderCharToTiles:
 	push af ; $20ce
 	push hl ; $20cf
 	sub $30 ; $20d0
@@ -6335,6 +6348,7 @@ UpdateGameTimer:
 	dec hl ; $2406
 	ld [hl], $3b ; $2407
 	ret ; $2409
+Unused_00_TickSecondaryTimerCountdown:
 	ld hl, wSecondaryTimer ; $240a
 	inc [hl] ; $240d
 	ld a, [hl] ; $240e
@@ -7367,6 +7381,7 @@ SerialDecodeInput:
 	pop bc ; $29f3
 	pop af ; $29f4
 	ret ; $29f5
+Unused_00_EnableSerialInterrupt:
 	di ; $29f6
 	xor a ; $29f7
 	ldh [rIF], a ; $29f8
@@ -7375,6 +7390,7 @@ SerialDecodeInput:
 	ldh [rIE], a ; $29fe
 	ei ; $2a00
 	ret ; $2a01
+Unused_00_EnableVBlankInterrupt:
 	di ; $2a02
 	xor a ; $2a03
 	ldh [rIF], a ; $2a04
@@ -7392,6 +7408,7 @@ EnableTimerInterrupt:
 	ldh [rIE], a ; $2a16
 	ei ; $2a18
 	ret ; $2a19
+Unused_00_SetInterruptsVBlankTimerSerial:
 	di ; $2a1a
 	xor a ; $2a1b
 	ldh [rIF], a ; $2a1c
@@ -7399,6 +7416,7 @@ EnableTimerInterrupt:
 	ldh [rIE], a ; $2a20
 	ei ; $2a22
 	ret ; $2a23
+Unused_00_SetInterruptsVBlankSerial:
 	di ; $2a24
 	xor a ; $2a25
 	ldh [rIF], a ; $2a26
@@ -7508,6 +7526,7 @@ CopyTextString:
 	pop bc ; $2acd
 	pop af ; $2ace
 	ret ; $2acf
+Unused_00_WriteByteAdvanceDE:
 	ld [de], a ; $2ad0
 	inc de ; $2ad1
 	ret ; $2ad2
@@ -7561,18 +7580,22 @@ DrawDecimalWord:
 	pop bc ; $2b0e
 	pop af ; $2b0f
 	ret ; $2b10
+Unused_00_DrawDecimalByte1Digit:
 	ld l, a ; $2b11
 	ld h, $00 ; $2b12
 	ld a, $01 ; $2b14
 	jr DrawDecimalWord ; $2b16
+Unused_00_DrawDecimalByte2Digits:
 	ld l, a ; $2b18
 	ld h, $00 ; $2b19
 	ld a, $02 ; $2b1b
 	jr DrawDecimalWord ; $2b1d
+Unused_00_DrawDecimalByte3Digits:
 	ld l, a ; $2b1f
 	ld h, $00 ; $2b20
 	ld a, $03 ; $2b22
 	jr DrawDecimalWord ; $2b24
+Unused_00_DrawThreeHalvedWordsDecimal:
 	push af ; $2b26
 	push hl ; $2b27
 	call DrawHalvedWordDecimal ; $2b28
@@ -7737,6 +7760,7 @@ DrawWindowFrameBottom:
 	ld a, $09 ; $2be7
 	ld [hl+], a ; $2be9
 	ret ; $2bea
+Unused_00_MoveCoordsByDpad:
 	bit 5, a ; $2beb
 	jr z, .bit5Clear ; $2bed
 	dec d ; $2bef

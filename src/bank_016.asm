@@ -680,6 +680,7 @@ ClearWram3Row64Alt_16:
 UpdateResultScreenAnimatedTilesTask:
 	farcall UpdateAnimatedTiles ; $43f6
 	ret ; $43f9
+UnusedDrawCourtDiagramMarkers:
 	push af ; $43fa
 	push bc ; $43fb
 .loop:
@@ -716,7 +717,7 @@ CourtDiagramBaseTask:
 	inc de ; $4421
 	ld a, e ; $4422
 	and $1f ; $4423
-	jr nz, UpdateResultScreenAnimatedTilesTask.loop ; $4425
+	jr nz, UnusedDrawCourtDiagramMarkers.loop ; $4425
 	push hl ; $4427
 	ld h, d ; $4428
 	ld l, e ; $4429
@@ -724,11 +725,12 @@ CourtDiagramBaseTask:
 	ld d, h ; $442b
 	ld e, l ; $442c
 	pop hl ; $442d
-	jr UpdateResultScreenAnimatedTilesTask.loop ; $442e
+	jr UnusedDrawCourtDiagramMarkers.loop ; $442e
 .restore:
 	pop bc ; $4430
 	pop af ; $4431
 	ret ; $4432
+UnusedPrintDecimalNumber_16:
 	push af ; $4433
 	push bc ; $4434
 	push hl ; $4435
@@ -1132,6 +1134,7 @@ AdjustResultTilemapForLoss:
 	ld [wAnimatedTilePeriod], a ; $4a6c
 .done:
 	ret ; $4a6f
+StubNop_16:
 	ret ; $4a70
 BuildMatchResultTilemap:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $4a71

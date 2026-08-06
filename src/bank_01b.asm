@@ -285,6 +285,7 @@ MoveMenuCursorGrid:
 .checkMenuCursorX5:
 	ld a, $01 ; $41ad
 	ret ; $41af
+MoveMenuCursorGridFromLinkInput_1b:
 	ld a, [wMenuCursorX] ; $41b0
 	ld d, a ; $41b3
 	ld a, [wMenuCursorY] ; $41b4
@@ -372,6 +373,7 @@ MoveMenuCursorGrid:
 .checkMenuCursorX6:
 	ld a, $01 ; $422a
 	ret ; $422c
+MoveMenuCursorGridRemote_1b:
 	ld a, [wMenuCursorX] ; $422d
 	ld d, a ; $4230
 	ld a, [wMenuCursorY] ; $4231
@@ -684,6 +686,7 @@ SetMenuCursorFromIndex:
 	ld a, d ; $43f0
 	ld [wMenuCursorY], a ; $43f1
 	ret ; $43f4
+SetMenuCursorFromIndexToPtr_1b:
 	ld d, $00 ; $43f5
 	ld a, c ; $43f7
 .loopB:
@@ -697,6 +700,7 @@ SetMenuCursorFromIndex:
 	ld a, d ; $4400
 	ld [hl], a ; $4401
 	ret ; $4402
+ClearWram3Row64_1b:
 	ldh a, [hWramBank] ; $4403
 	push af ; $4405
 	wram_bank $03 ; $4406
@@ -774,6 +778,7 @@ DrawNameWithDiacritics:
 	pop bc ; $446a
 	pop af ; $446b
 	ret ; $446c
+DrawDecimalNumber_1b:
 	push af ; $446d
 	push bc ; $446e
 	push hl ; $446f
@@ -2969,6 +2974,7 @@ GetRankingMarkerSlot:
 .done:
 	pop af ; $5f5d
 	ret ; $5f5e
+Unused_1b_WriteRankingMarkerSlot:
 	push af ; $5f5f
 	ld a, b ; $5f60
 	ld [hl+], a ; $5f61
@@ -2979,6 +2985,7 @@ GetRankingMarkerSlot:
 	inc hl ; $5f66
 	pop af ; $5f67
 	ret ; $5f68
+Unused_1b_AddRankingMarkerSlotByte1:
 	push hl ; $5f69
 	push af ; $5f6a
 	inc hl ; $5f6b
@@ -2988,6 +2995,7 @@ GetRankingMarkerSlot:
 	pop af ; $5f6f
 	pop hl ; $5f70
 	ret ; $5f71
+Unused_1b_AddRankingMarkerSlotByte2:
 	push hl ; $5f72
 	push af ; $5f73
 	inc hl ; $5f74
@@ -3127,6 +3135,7 @@ DrawCharSelectMugshots:
 	ld a, [wCharRecordScratch + 11] ; $60b6
 	farcall StubNop_1b_01 ; $60b9
 	ret ; $60bc
+Unused_1b_RunCharSelectLoop:
 	and $01 ; $60bd
 	ld [wTargetZoneX2], a ; $60bf
 	call ClearFrameTasks ; $60c2
@@ -4243,7 +4252,9 @@ Unused_1b_StubRetAndFill:
 	db $c9, $ff, $36, $ff, $36, $ff, $36, $ff, $36 ; 0x00
 StubNop_1b_09:
 	ret ; $69d6
+Unused_1b_StubRet1:
 	ret ; $69d7
+Unused_1b_StubRet2:
 	ret ; $69d8
 Unused_1b_ShowHighScoreConfirmScreen:
 	ld hl, wMinigameHighScoreMode ; $69d9

@@ -570,6 +570,7 @@ TestMachineLevelClearedFlag:
 	ld e, a ; $46a9
 	call TestGameFlagByNumber ; $46aa
 	ret ; $46ad
+Unused_14_SetMachineLevelClearedFlag:
 	add a ; $46ae
 	add LOW(TestMachineLevelClearedFlagTable) ; $46af
 	ld l, a ; $46b1
@@ -840,6 +841,7 @@ MachineExpertCounterMaxScene:
 	ld de, $d000 ; $494a
 	farcall AttachActorStepMover ; $494d
 	ret ; $4950
+Unused_14_CompareMinigameScoreToRecord:
 	ld hl, wMinigamesCurrentScore ; $4951
 	ld a, [hl+] ; $4954
 	ld b, [hl] ; $4955
@@ -3382,6 +3384,7 @@ ComputeRankingProgressIndex_14:
 	jr z, .loop ; $7ade
 	ld a, STORYRANK_DOUBLES_COMPLETE ; $7ae0
 	jr .loop ; $7ae2
+Unused_14_ComputeIslandProgressStage:
 	ld a, $00 ; $7ae4
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7ae6
 	jr z, .loopB ; $7ae9

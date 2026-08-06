@@ -1,5 +1,5 @@
 {
- "_comment": "Static code-entry seeds for bank $3b blobs stranded behind computed jumps; recovered by blob disassembly classification (clean decode chains, wram_bank prologues, calls into proven bank-0 helpers). Flat ROM offsets = 0xE8000 + cpu_addr.",
+ "_comment": "Static code-entry seeds for bank $3b blobs stranded behind computed jumps; recovered by blob disassembly classification (clean decode chains, wram_bank prologues, calls into proven bank-0 helpers). Flat ROM offsets = 0xE8000 + cpu_addr. | Correction (off-by-one): $6978 is the last byte of the bytes:2 table at $695d -- the rows run ($00,$a8)..($00,$ad) and the stray $ae completes ($00,$ae); seeding it decoded the byte as xor [hl] and left the table one pair short. The routine starts at $6979 (Unused_3b_SlideMenuPanel_1).",
  "rom": [
   966712,
   966895,
@@ -62,7 +62,7 @@
   973906,
   974049,
   975337,
-  977272,
+  977273,
   977300,
   977323,
   977350,

@@ -90,6 +90,7 @@ SmallCharTestNpc04_0f:
 	ld hl, $002a ; $4119
 	ld a, l ; $411c
 	jr SmallCharTestApplyStage_0f ; $411d
+UnusedSmallCharTestApplyStage_0f:
 	ld hl, wMapSceneStage ; $411f
 	ld [hl], a ; $4122
 	call SetPlayerActorObjectDef ; $4123
@@ -1794,6 +1795,7 @@ SetActorDrawModeFromSceneTile_0f:
 	ld a, $02 ; $6392
 	ld [hl], a ; $6394
 	ret ; $6395
+UnusedSetActorDrawModeFromSceneTileSingle_0f:
 	ld h, a ; $6396
 	ld l, $00 ; $6397
 	wram_bank $04 ; $6399
@@ -2373,6 +2375,7 @@ IslandOpenFinalDoublesNpc0B_0f:
 .speak:
 	script_speak $0b ; $6f12
 	ret ; $6f17
+UnusedTournamentNpc0A_0f:
 	script_set_text Text_1f_163 ; $6f18
 	ld a, $0b ; $6f1e
 	farcall ScriptShowSpeakerDialogueRestoreBG ; $6f20
@@ -3502,6 +3505,7 @@ ComputeRankingProgressIndex_0f:
 	jr z, .loop ; $7d84
 	ld a, STORYRANK_DOUBLES_COMPLETE ; $7d86
 	jr .loop ; $7d88
+UnusedComputeStoryProgressCount_0f:
 	ld a, $00 ; $7d8a
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7d8c
 	jr z, .loopB ; $7d8f

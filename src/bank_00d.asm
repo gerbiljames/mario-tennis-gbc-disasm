@@ -3044,10 +3044,9 @@ ScoreBallHit:
 	ld [wPointOutcome], a ; $57f1
 .done:
 	ret ; $57f4
-	ld bc, $0402 ; $57f5
-	ld [$2010], sp ; $57f8
-	ld b, b ; $57fb
-	add b ; $57fc
+UnusedBitMaskTable_0d:
+	; $57f5, 8 bytes (bytes:8)
+	db $01, $02, $04, $08, $10, $20, $40, $80 ; 0x00
 DrawBooBlastTargetSprite:
 	call ProjectBallSprite ; $57fd
 	ld c, $30 ; $5800
@@ -3092,34 +3091,20 @@ ProjectBallSprite:
 	ld h, d ; $5854
 	farcall ApplyCameraProjection ; $5855
 	ld a, [wMinigameHitStreak] ; $5858
-	add $66 ; $585b
+	add LOW(MinigameHitStreakValueTable_0d) ; $585b
 	ld l, a ; $585d
-	adc $58 ; $585e
+	adc HIGH(MinigameHitStreakValueTable_0d) ; $585e
 	sub l ; $5860
 	ld h, a ; $5861
 	ld b, [hl] ; $5862
 	ld b, $0e ; $5863
 	ret ; $5865
-	rrca ; $5866
-	ld c, $0e ; $5867
-	ld c, $0e ; $5869
-	ld c, $0e ; $586b
-	dec c ; $586d
+MinigameHitStreakValueTable_0d:
+	; $5866, 8 bytes (bytes:8)
+	db $0f, $0e, $0e, $0e, $0e, $0e, $0e, $0d ; 0x00
 MinigameConfig_PerfectShot:
-	nop ; $586e
-	inc de ; $586f
-	ld bc, $1e08 ; $5870
-	ld [de], a ; $5873
-	nop ; $5874
-	rra ; $5875
-	and [hl] ; $5876
-	ld e, b ; $5877
-	or h ; $5878
-	ld b, b ; $5879
-	ld a, [hl] ; $587a
-	ld e, b ; $587b
-	nop ; $587c
-	nop ; $587d
+	; $586e, 16 bytes (bytes:16)
+	db $00, $13, $01, $08, $1e, $12, $00, $1f, $a6, $58, $b4, $40, $7e, $58, $00, $00 ; 0x00
 InitMinigame_PerfectShot:
 	ld a, $01 ; $587e
 	ld [wMinigameUsesWall], a ; $5880

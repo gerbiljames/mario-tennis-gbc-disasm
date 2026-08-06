@@ -1,5 +1,5 @@
 {
- "_comment": "Cross-bank static code seeds from the final blob screen: verified stranded heads/continuations in banks $03/$04/$05/$0a/$0b/$0d/$13/$15/$16/$1a/$1b/$1d/$38/$3e. Flat = bank*0x4000 + (cpu-0x4000).",
+ "_comment": "Cross-bank static code seeds from the final blob screen: verified stranded heads/continuations in banks $03/$04/$05/$0a/$0b/$0d/$13/$15/$16/$1a/$1b/$1d/$38/$3e. Flat = bank*0x4000 + (cpu-0x4000). | Correction (static-seed over a table, x2 in bank $0d): $57f5 is the 8-byte power-of-two mask table $01..$80 (unreferenced), and $5866 is the 8-byte per-hit-streak table ($0f,$0e x6,$0d) the split-base add $66/adc $58 at $585b indexes by wMinigameHitStreak -- seeding them decoded both as code, and the $5866 run swept the declared MinigameConfig_PerfectShot record in with it. Now UnusedBitMaskTable_0d / MinigameHitStreakValueTable_0d.",
  "rom": [
   54600,
   54651,
@@ -111,9 +111,7 @@
   218975,
   219068,
   219070,
-  219125,
   219208,
-  219238,
   319692,
   323104,
   346849,

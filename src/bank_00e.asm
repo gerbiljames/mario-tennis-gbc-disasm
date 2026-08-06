@@ -1020,7 +1020,8 @@ TrainingGymRunner0AWaitWaypointClear:
 	ld a, e ; $4c76
 	ld [hl+], a ; $4c77
 	ld [hl], d ; $4c78
-	jp .checkTimer ; $4c79
+	jp UnusedTrainingGymRunner0CClearWaypoint.checkTimer ; $4c79
+UnusedTrainingGymRunner0AClearWaypoint:
 	script_get_actor_state $0a ; $4c7c
 	ld c, l ; $4c81
 	ld b, h ; $4c82
@@ -1072,7 +1073,8 @@ TrainingGymRunner0AWaitWaypointClear:
 	ld a, e ; $4ccd
 	ld [hl+], a ; $4cce
 	ld [hl], d ; $4ccf
-	jp .checkTimer ; $4cd0
+	jp UnusedTrainingGymRunner0CClearWaypoint.checkTimer ; $4cd0
+UnusedTrainingGymRunner0BClearWaypoint:
 	script_get_actor_state $0b ; $4cd3
 	ld c, l ; $4cd8
 	ld b, h ; $4cd9
@@ -1124,7 +1126,8 @@ TrainingGymRunner0AWaitWaypointClear:
 	ld a, e ; $4d24
 	ld [hl+], a ; $4d25
 	ld [hl], d ; $4d26
-	jp .checkTimer ; $4d27
+	jp UnusedTrainingGymRunner0CClearWaypoint.checkTimer ; $4d27
+UnusedTrainingGymRunner0CClearWaypoint:
 	script_get_actor_state $0c ; $4d2a
 	ld c, l ; $4d2f
 	ld b, h ; $4d30
@@ -3933,6 +3936,7 @@ ComputeTrainingGymProgressIndex:
 	jr z, .store ; $7e9b
 	ld a, STORYRANK_DOUBLES_COMPLETE ; $7e9d
 	jr .store ; $7e9f
+UnusedComputeStoryProgressCount_0e:
 	ld a, $00 ; $7ea1
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7ea3
 	jr z, .storeIsland ; $7ea6

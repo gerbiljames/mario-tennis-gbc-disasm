@@ -1964,6 +1964,7 @@ ReadSaveBlockTag:
 	pop de ; $4cd0
 	pop hl ; $4cd1
 	ret ; $4cd2
+Unused_03_ReadSaveBlockTagWord:
 	push hl ; $4cd3
 	push de ; $4cd4
 	push bc ; $4cd5
@@ -1978,7 +1979,7 @@ ReadSaveBlockTag:
 	or a ; $4ce7
 	jp nz, .nonZero2 ; $4ce8
 	ld a, $fe ; $4ceb
-	jp .loopB ; $4ced
+	jp ReadSaveBlockTag.loopB ; $4ced
 .nonZero2:
 	ld a, $08 ; $4cf0
 	add c ; $4cf2
@@ -2320,6 +2321,7 @@ ClearSaveBlockData:
 	pop de ; $4ef4
 	pop hl ; $4ef5
 	ret ; $4ef6
+Unused_03_EraseSaveBlock:
 	push hl ; $4ef7
 	push de ; $4ef8
 	push bc ; $4ef9
@@ -5978,6 +5980,7 @@ InitGrayscalePaletteFade:
 	pop af ; $75c4
 	wram_bank ; $75c5
 	ret ; $75c9
+Unused_03_InitBlackPaletteFade:
 	ldh a, [hWramBank] ; $75ca
 	push af ; $75cc
 	wram_bank $06 ; $75cd

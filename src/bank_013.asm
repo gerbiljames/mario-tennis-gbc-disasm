@@ -1520,9 +1520,9 @@ RunAcademyQuestionsMenu:
 	cp $ff ; $58ef
 	jp z, .done ; $58f1
 	add a ; $58f4
-	add $28 ; $58f5
+	add LOW(AcademyTopicHandlerTable) ; $58f5
 	ld l, a ; $58f7
-	adc $59 ; $58f8
+	adc HIGH(AcademyTopicHandlerTable) ; $58f8
 	sub l ; $58fa
 	ld h, a ; $58fb
 	ld a, [hl+] ; $58fc
@@ -1545,25 +1545,22 @@ RunAcademyQuestionsMenu:
 	jr .menuLoop ; $5925
 .done:
 	ret ; $5927
-	ld [hl], $59 ; $5928
-	ld l, b ; $592a
-	ld e, c ; $592b
-	and [hl] ; $592c
-	ld e, c ; $592d
-	ret nz ; $592e
-	ld e, c ; $592f
-	and $59 ; $5930
-	nop ; $5932
-	ld e, d ; $5933
-	ld a, [de] ; $5934
-	ld e, d ; $5935
+AcademyTopicHandlerTable:
+	; $5928, 14 bytes (records:2)
+	dw AcademyTopicSinglesRank ; record 0
+	dw AcademyTopicDoublesRank ; record 1
+	dw AcademyTopicRules ; record 2
+	dw AcademyTopicClassRank ; record 3
+	dw AcademyTopicVarsity ; record 4
+	dw AcademyTopicIslandOpen ; record 5
+	dw AcademyTopicTopRanked ; record 6
+AcademyTopicSinglesRank:
 	ld de, $0001 ; $5936
 	ld hl, wMapScratch ; $5939
 	ld a, [hl+] ; $593c
 	ld h, [hl] ; $593d
 	ld l, a ; $593e
 	add hl, de ; $593f
-AcademyTopicSinglesRank:
 	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $5940
 	jr z, .setCursor ; $5943
 	ld a, $01 ; $5945
@@ -1707,6 +1704,7 @@ AcademyTopicIslandOpen:
 .setCursor:
 	farcall InitDialogueTextCursor ; $5a16
 	ret ; $5a19
+AcademyTopicTopRanked:
 	ld de, $0013 ; $5a1a
 	ld hl, wMapScratch ; $5a1d
 	ld a, [hl+] ; $5a20
@@ -3058,6 +3056,7 @@ ReturnVarsityCourtBNpcsToSpawn_13:
 	script_set_actor_script $04, ActorScript_13_18 ; $70d5
 	script_set_actor_script $09, ActorScript_13_19 ; $70e0
 	ret ; $70eb
+RunSinglesTravelingTeamVictoryIfWon_13:
 	wram_bank $04 ; $70ec
 	ld a, [wMatchWinLoseFlag] ; $70f2
 	cp WINLOSE_WIN ; $70f5
@@ -3624,11 +3623,14 @@ ActorScript_13_28:
 	as_jump .L15
 MapScriptNop_13:
 	ret ; $7b4d
+MapScriptClearActiveFlag_13:
 	xor a ; $7b4e
 	ld [wStoryScriptRan], a ; $7b4f
 	ret ; $7b52
+MapScriptPlaySoundA2_13:
 	sound $a2 ; $7b53
 	ret ; $7b55
+MapScriptHideLocationName_13:
 	xor a ; $7b56
 	ld [wStoryModeShowLocationName], a ; $7b57
 	ret ; $7b5a

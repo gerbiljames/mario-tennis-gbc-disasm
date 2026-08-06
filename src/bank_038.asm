@@ -1296,6 +1296,7 @@ RunCharacterSelectScreen:
 	pop af ; $4904
 	wram_bank ; $4905
 	jp .redraw ; $4909
+Unused_38_DrawCharSelectCursorBox:
 	ld c, $02 ; $490c
 	call GetMenuCursorLinearIndex ; $490e
 	add a ; $4911
@@ -1855,6 +1856,7 @@ CharacterSelectCursorTable:
 TickMenuBgScrollTask_38:
 	farcall TickMenuBgScroll ; $4e52
 	ret ; $4e55
+Unused_38_WramBank3Nop:
 	ldh a, [hWramBank] ; $4e56
 	push af ; $4e58
 	wram_bank $03 ; $4e59
@@ -3820,6 +3822,7 @@ BuildVisiblePageSpriteList:
 	pop bc ; $5d22
 	pop af ; $5d23
 	ret ; $5d24
+Unused_38_TestAndClearGridEntryTaken:
 	push bc ; $5d25
 	push de ; $5d26
 	push hl ; $5d27
@@ -5244,6 +5247,7 @@ ApplyRemoteCharCancel:
 	call BuildVisiblePageSpriteList ; $66bf
 .refresh:
 	ret ; $66c2
+Unused_38_CopyRemoteCharsToSlots:
 	ld a, [wCharSelectMode] ; $66c3
 	cp CHARSELECTMODE_LINK_SINGLES_P2 ; $66c6
 	jr z, .redraw ; $66c8
@@ -5574,6 +5578,7 @@ DrawRemoteSlotLeftHandedMark:
 	ld a, $32 ; $691c
 	ld [hl], a ; $691e
 	ret ; $691f
+Unused_38_DrawRemoteDifficultyDigit:
 	ld a, [wCharSelectMode] ; $6920
 	cp CHARSELECTMODE_LINK_SINGLES_P2 ; $6923
 	jr z, .queueVram ; $6925
@@ -5914,6 +5919,7 @@ InitLinkMatchCharsFromSelection:
 	pop af ; $6b2c
 	wram_bank ; $6b2d
 	ret ; $6b31
+Unused_38_LinkCpuDifficultyDebugLoop:
 	ld a, [wCharSelectMode] ; $6b32
 	cp CHARSELECTMODE_LINK_SINGLES_P2 ; $6b35
 	ret z ; $6b37
@@ -6323,6 +6329,7 @@ RetreatLinkGridSelection:
 	ld a, $02 ; $6dbe
 	ld [wLinkSelectSlotState], a ; $6dc0
 	ret ; $6dc3
+Unused_38_ConfirmRemoteGridSelection:
 	ld a, [wCharSelectSlot] ; $6dc4
 	ld a, [wCharGridPage] ; $6dc7
 	ld c, a ; $6dca

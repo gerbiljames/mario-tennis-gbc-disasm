@@ -361,6 +361,7 @@ MatchSelectCharDataOptionDisabled:
 	script_set_text Text_25_164 ; $448d
 	script_speak $80 ; $4493
 	ret ; $4498
+Unused_10_RunCharDataScreen:
 	ld hl, wStoryModePlayersXPosition ; $4499
 	ld de, wStoryModeSpawnPosition ; $449c
 	ld bc, $0005 ; $449f
@@ -632,6 +633,7 @@ Test2ExitTriggers_10:
 	ld a, MINIGAME_SERVICE_MATCH_2 ; $47fa
 	farcall RunTrainingDrillByID ; $47fc
 	ret ; $47ff
+Unused_10_Test2Npc04:
 	ld hl, wStoryModePlayersXPosition ; $4800
 	ld de, wStoryModeSpawnPosition ; $4803
 	ld bc, $0005 ; $4806
@@ -648,6 +650,7 @@ Test2ExitTriggers_10:
 	ld a, MINIGAME_SERVICE_MATCH_3 ; $482b
 	farcall RunTrainingDrillByID ; $482d
 	ret ; $4830
+Unused_10_Test2Npc05:
 	ld hl, wStoryModePlayersXPosition ; $4831
 	ld de, wStoryModeSpawnPosition ; $4834
 	ld bc, $0005 ; $4837
@@ -664,6 +667,7 @@ Test2ExitTriggers_10:
 	ld a, MINIGAME_SERVICE_PRACTICE_1 ; $485c
 	farcall RunTrainingDrillByID ; $485e
 	ret ; $4861
+Unused_10_Test2Npc06:
 	ld hl, wStoryModePlayersXPosition ; $4862
 	ld de, wStoryModeSpawnPosition ; $4865
 	ld bc, $0005 ; $4868
@@ -680,6 +684,7 @@ Test2ExitTriggers_10:
 	ld a, MINIGAME_SERVICE_PRACTICE_2 ; $488d
 	farcall RunTrainingDrillByID ; $488f
 	ret ; $4892
+Unused_10_Test2Npc07:
 	ld hl, wStoryModePlayersXPosition ; $4893
 	ld de, wStoryModeSpawnPosition ; $4896
 	ld bc, $0005 ; $4899
@@ -696,6 +701,7 @@ Test2ExitTriggers_10:
 	ld a, MINIGAME_SERVICE_PRACTICE_3 ; $48be
 	farcall RunTrainingDrillByID ; $48c0
 	ret ; $48c3
+Unused_10_Test2Npc08:
 	ld hl, wStoryModePlayersXPosition ; $48c4
 	ld de, wStoryModeSpawnPosition ; $48c7
 	ld bc, $0005 ; $48ca
@@ -712,6 +718,7 @@ Test2ExitTriggers_10:
 	ld a, MINIGAME_NET_GAME_MATCH_1 ; $48ef
 	farcall RunTrainingDrillByID ; $48f1
 	ret ; $48f4
+Unused_10_Test2Npc09:
 	ld hl, wStoryModePlayersXPosition ; $48f5
 	ld de, wStoryModeSpawnPosition ; $48f8
 	ld bc, $0005 ; $48fb
@@ -728,6 +735,7 @@ Test2ExitTriggers_10:
 	ld a, MINIGAME_NET_GAME_MATCH_2 ; $4920
 	farcall RunTrainingDrillByID ; $4922
 	ret ; $4925
+Unused_10_Test2Npc0A:
 	ld hl, wStoryModePlayersXPosition ; $4926
 	ld de, wStoryModeSpawnPosition ; $4929
 	ld bc, $0005 ; $492c
@@ -929,6 +937,7 @@ Test2InitScript_10:
 	ld [wUnusedExitTriggerIdMirror], a ; $4ba5
 	ld [wStoryModeExitTriggerRequest], a ; $4ba8
 	ret ; $4bab
+Unused_10_RunWaterSpriteMinigame:
 	farcall InitMinigameMatchSettings ; $4bac
 	ld a, COURT_GRASS ; $4baf
 	ld [wCurrentlyUsedCourt], a ; $4bb1
@@ -1068,6 +1077,7 @@ DevelopmentRespawnActors_10:
 	script_fade_in $10 ; $4d0f
 	call WaitFadeEnd ; $4d14
 	ret ; $4d17
+Unused_10_DevelopmentMoveActorsAndExit:
 	script_move_target $03, $0100, $0100 ; $4d18
 	script_wait_move $03 ; $4d23
 	script_move_target $07, $0100, $0100 ; $4d28
@@ -1095,22 +1105,35 @@ DevelopmentRespawnActorsAlt_10:
 	script_fade_in $10 ; $4d80
 	call WaitFadeEnd ; $4d85
 	ret ; $4d88
+Unused_10_SpeakCheckedChest:
 	farcall BeginCutsceneScriptMode ; $4d89
 	script_set_text Text_30_1 ; $4d8c
 	script_speak ACTOR_PLAYER ; $4d92
 	farcall EndCutsceneScriptMode ; $4d97
 	ret ; $4d9a
+StubNop_10_0:
 	ret ; $4d9b
+StubNop_10_1:
 	ret ; $4d9c
+StubNop_10_2:
 	ret ; $4d9d
+StubNop_10_3:
 	ret ; $4d9e
+StubNop_10_4:
 	ret ; $4d9f
+StubNop_10_5:
 	ret ; $4da0
+StubNop_10_6:
 	ret ; $4da1
+StubNop_10_7:
 	ret ; $4da2
+StubNop_10_8:
 	ret ; $4da3
+StubNop_10_9:
 	ret ; $4da4
+StubNop_10_10:
 	ret ; $4da5
+Unused_10_RequestExitTrigger0e:
 	ld a, $0e ; $4da6
 	ld [wUnusedExitTriggerIdMirror], a ; $4da8
 	ld [wStoryModeExitTriggerRequest], a ; $4dab
@@ -2126,6 +2149,7 @@ CopyExhibitionCharSlotIds:
 	wram_bank ; $5718
 	pop af ; $571c
 	ret ; $571d
+Unused_10_CheckAnyStorySlot:
 	ld a, [wCurrentStorySlot] ; $571e
 	push af ; $5721
 	xor a ; $5722
@@ -3149,9 +3173,9 @@ RestaurantRestoreNpc12Position_10:
 TestRestaurantNpc12StageFlag_10:
 	ld a, [wMapSceneStage2] ; $612c
 	add a ; $612f
-	add $50 ; $6130
+	add LOW(RestaurantNpc12StageFlagTable_10) ; $6130
 	ld l, a ; $6132
-	adc $61 ; $6133
+	adc HIGH(RestaurantNpc12StageFlagTable_10) ; $6133
 	sub l ; $6135
 	ld h, a ; $6136
 	ld a, [hl+] ; $6137
@@ -3162,9 +3186,9 @@ TestRestaurantNpc12StageFlag_10:
 SetRestaurantNpc12StageFlag_10:
 	ld a, [wMapSceneStage2] ; $613e
 	add a ; $6141
-	add $50 ; $6142
+	add LOW(RestaurantNpc12StageFlagTable_10) ; $6142
 	ld l, a ; $6144
-	adc $61 ; $6145
+	adc HIGH(RestaurantNpc12StageFlagTable_10) ; $6145
 	sub l ; $6147
 	ld h, a ; $6148
 	ld a, [hl+] ; $6149
@@ -3172,16 +3196,13 @@ SetRestaurantNpc12StageFlag_10:
 	ld e, a ; $614b
 	call SetGameFlagByNumber ; $614c
 	ret ; $614f
-	ld [hl], b ; $6150
-	nop ; $6151
-	ld [hl], c ; $6152
-	nop ; $6153
-	ld [hl], d ; $6154
-	nop ; $6155
-	ld [hl], e ; $6156
-	nop ; $6157
-	ld a, d ; $6158
-	nop ; $6159
+RestaurantNpc12StageFlagTable_10:
+	; $6150, 10 bytes (flag_ids)
+	dw $0070 ; 0: flag $00, 3
+	dw $0071 ; 1: flag $00, 3
+	dw $0072 ; 2: flag $00, 3
+	dw $0073 ; 3: flag $00, 3
+	dw $007a ; 4: flag $00, 3
 RestaurantShowActor11NearPlayer_10:
 	wram_bank $04 ; $615a
 	script_get_actor_state ACTOR_PLAYER ; $6160
@@ -4549,6 +4570,7 @@ UpdateActorTileAnimState_10:
 	ld a, $02 ; $7a52
 	ld [hl], a ; $7a54
 	ret ; $7a55
+Unused_10_UpdateActorTileAnimStateByIndex:
 	ld h, a ; $7a56
 	ld l, $00 ; $7a57
 	wram_bank $04 ; $7a59
@@ -4733,8 +4755,10 @@ MapScriptClearActiveFlag_10:
 	xor a ; $7bfa
 	ld [wStoryScriptRan], a ; $7bfb
 	ret ; $7bfe
+MapScriptPlaySoundA2_10:
 	sound $a2 ; $7bff
 	ret ; $7c01
+MapScriptHideLocationName_10:
 	xor a ; $7c02
 	ld [wStoryModeShowLocationName], a ; $7c03
 	ret ; $7c06
@@ -4947,6 +4971,7 @@ SetStoryDialogueStage_10:
 	jr z, .store ; $7dfe
 	ld a, STORYRANK_DOUBLES_COMPLETE ; $7e00
 	jr .store ; $7e02
+Unused_10_SetStoryDialogueStageAlt:
 	ld a, $00 ; $7e04
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7e06
 	jr z, .storeIsland ; $7e09

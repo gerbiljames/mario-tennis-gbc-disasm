@@ -2712,8 +2712,10 @@ MapScriptClearActiveFlag_27:
 	xor a ; $7886
 	ld [wStoryScriptRan], a ; $7887
 	ret ; $788a
+MapScriptPlaySoundA2_27:
 	sound $a2 ; $788b
 	ret ; $788d
+MapScriptHideLocationName_27:
 	xor a ; $788e
 	ld [wStoryModeShowLocationName], a ; $788f
 	ret ; $7892

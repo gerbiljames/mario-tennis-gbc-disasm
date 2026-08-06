@@ -702,6 +702,7 @@ SelectScoreboardLayout:
 	ld a, b ; $4583
 	ld [wScoreboardLayout], a ; $4584
 	ret ; $4587
+UnusedTickTimerTrampoline:
 	jp TickTimer ; $4588
 SetBallPosition:
 	push hl ; $458b
@@ -2587,6 +2588,7 @@ DrawBallTouchCharEffectTable:
 	ld bc, $095e ; $54ff
 	call QueueSprite ; $5502
 	ret ; $5505
+UnusedDrawBallTargetMarker:
 	ld bc, $0000 ; $5506
 	ld hl, wBallTargetDepth ; $5509
 	ld a, [hl+] ; $550c
@@ -3344,6 +3346,7 @@ ApplyCameraProjection:
 	add hl, hl ; $59d1
 	ld e, h ; $59d2
 	ret ; $59d3
+UnusedMulHLSignedByDE:
 	bit 7, h ; $59d4
 	jp z, MulHLByDE ; $59d6
 	xor a ; $59d9
@@ -3451,6 +3454,7 @@ MulHLByTangent:
 	ld d, l ; $5a5d
 	ld e, a ; $5a5e
 	ret ; $5a5f
+UnusedAbsADE:
 	bit 7, d ; $5a60
 	ret z ; $5a62
 NegateADE:
@@ -4954,6 +4958,7 @@ DrawStandingShadowSlot:
 	ld d, [hl] ; $6530
 	ld hl, StandingShadowOamTemplate ; $6531
 	jp QueueSpriteTemplate ; $6534
+UnusedDrawStandingShadowSlot16:
 	ld a, [hl+] ; $6537
 	cp $ff ; $6538
 	ret z ; $653a
@@ -5525,6 +5530,7 @@ UpdateAllChars:
 	call UpdateChar ; $694d
 	wram_bank $04 ; $6950
 	ret ; $6956
+StubNop_08:
 	ret ; $6957
 UpdateChar:
 	ld a, [wCharObjectBank] ; $6958
@@ -6689,6 +6695,7 @@ ComputeBallEtaToChar:
 	ld e, l ; $70ee
 	ld d, h ; $70ef
 	ret ; $70f0
+UnusedComputeBallEtaToCharWrapper:
 	call ComputeBallEtaToChar ; $70f1
 	ret ; $70f4
 PredictBallLateralOffset:
@@ -6928,12 +6935,13 @@ HandleServePositioning:
 CheckSwingRelease:
 	ld a, [wCharInputBits] ; $7267
 	and PADF_SELECT ; $726a
-	jr z, .tickTimer ; $726c
+	jr z, UnusedLatchSwingHoldButton.tickTimer ; $726c
 	xor a ; $726e
 	ld [wCharSwingHoldButton], a ; $726f
 	ld [wCharSwingHoldFrames], a ; $7272
 	ld a, $01 ; $7275
 	ret ; $7277
+UnusedLatchSwingHoldButton:
 	ld a, b ; $7278
 	ld [wCharSwingHoldButton], a ; $7279
 	xor a ; $727c

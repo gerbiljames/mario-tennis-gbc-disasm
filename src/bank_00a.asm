@@ -1226,6 +1226,7 @@ SetActorActive:
 .read:
 	ld [hl], b ; $473f
 	ret ; $4740
+UnusedSubDEFromHL:
 	ld a, d ; $4741
 	or e ; $4742
 	ret z ; $4743
@@ -1239,6 +1240,7 @@ SetActorActive:
 	ld d, a ; $474d
 	add hl, de ; $474e
 	ret ; $474f
+UnusedSetActorMoveTarget:
 	inc h ; $4750
 	dec h ; $4751
 	ret z ; $4752
@@ -2855,6 +2857,7 @@ GetTileTriggerAtPlayer:
 	pop de ; $539f
 	pop bc ; $53a0
 	ret ; $53a1
+UnusedEvalFlagCondition_0a:
 	ld a, e ; $53a2
 	or d ; $53a3
 	ret z ; $53a4
@@ -4072,6 +4075,7 @@ SceneViewerSelectScene:
 	call InitSceneTileAnimations ; $5e4e
 .done:
 	ret ; $5e51
+UnusedSceneViewerSelectSceneMenu:
 	ld hl, Text_30_374 ; $5e52
 	ld d, $01 ; $5e55
 	ld e, $01 ; $5e57
@@ -4406,6 +4410,7 @@ InitSceneViewer:
 	pop bc ; $606c
 	pop af ; $606d
 	ret ; $606e
+UnusedUnregisterSceneViewerFrameTask:
 	ld hl, StubNop_0a ; $606f
 	call UnregisterFrameTask ; $6072
 	ret ; $6075
@@ -4445,6 +4450,7 @@ InitSceneViewerDefault:
 	pop bc ; $60b0
 	pop af ; $60b1
 	ret ; $60b2
+UnusedSceneViewerMainLoop:
 	call InitSceneViewerDefault ; $60b3
 .clearScroll:
 	call UpdateSceneViewerScroll ; $60b6
@@ -4743,6 +4749,7 @@ UpdateCameraFromPlayer:
 	ld a, d ; $6298
 	ld [hl], a ; $6299
 	ret ; $629a
+UnusedStepCourtSceneGfxStream:
 	ld a, [wCourtSceneGfxStepsLeft] ; $629b
 	or a ; $629e
 	jr nz, .done ; $629f

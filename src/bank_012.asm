@@ -3871,11 +3871,14 @@ ActorScript_12_52:
 	as_jump .L15
 MapScriptNop_12:
 	ret ; $7ab1
+MapScriptClearActiveFlag_12:
 	xor a ; $7ab2
 	ld [wStoryScriptRan], a ; $7ab3
 	ret ; $7ab6
+MapScriptPlaySoundA2_12:
 	sound $a2 ; $7ab7
 	ret ; $7ab9
+MapScriptHideLocationName_12:
 	xor a ; $7aba
 	ld [wStoryModeShowLocationName], a ; $7abb
 	ret ; $7abe
@@ -4096,6 +4099,7 @@ ComputeSeniorCourtStageB:
 	jr z, .store ; $7cb6
 	ld a, STORYRANK_DOUBLES_COMPLETE ; $7cb8
 	jr .store ; $7cba
+Unused_12_ComputeIslandProgressStage:
 	ld a, $00 ; $7cbc
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7cbe
 	jr z, .storeIsland ; $7cc1
