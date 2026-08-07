@@ -10,6 +10,7 @@ provably used as a same-bank pointer.
 import re
 
 from .rom import BANK_SIZE, target_to_offset
+from .operands import DATA_IMM_IS_CONSTANT
 
 
 # ROM0 helpers that take a task-function pointer in hl (`ld hl, fn; call ...`).
@@ -261,6 +262,8 @@ def pointer_load_targets(dis, overrides=None):
         reg = LD_IMM16_REG.get(rom[o])
         if reg is None or dis.instrs[o].size != 3:
             continue
+        if o in DATA_IMM_IS_CONSTANT:
+            continue  # a coordinate pair aliasing an in-bank address
         imm = rom[o + 1] | (rom[o + 2] << 8)
         base = (o // BANK_SIZE) * BANK_SIZE
         if not (base and 0x4000 <= imm < 0x8000):

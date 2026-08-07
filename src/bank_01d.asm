@@ -1438,7 +1438,7 @@ DrawCharDataPageArrowsTask:
 	ld b, $0e ; $4c48
 	ld c, $14 ; $4c4a
 	call QueueSpriteTemplate ; $4c4c
-	ld de, CharDataPageArrowsTaskSpriteTemplate ; $4c4f
+	ld de, $6810 ; $4c4f
 	call BobArrowSpriteRight ; $4c52
 	ld hl, DrawCharDataPageArrowsTask_SpriteTemplate1 ; $4c55
 	ld b, $0e ; $4c58

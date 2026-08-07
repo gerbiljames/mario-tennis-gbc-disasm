@@ -493,15 +493,15 @@ ShotBallPathServeTopspin:
 	ld bc, ShotBallPathServeTopspinTable ; $5ea3
 	ld a, [wTopspinPlacementIndex] ; $5ea6
 	call LookupBallPosByShotIndex_29 ; $5ea9
-	ld bc, $5ed3 ; $5eac
+	ld bc, ShotBallPathServeTopspinSpeeds ; $5eac
 	ld a, [wSmashServeSpeedIndex] ; $5eaf
 	call LookupBallPosByShotIndex_29 ; $5eb2
-	ld bc, $5ee7 ; $5eb5
+	ld bc, ShotBallPathServeTopspinHeights ; $5eb5
 	call LookupBallPosByHeight_29 ; $5eb8
 	call SetBallTargetByPrediction_29 ; $5ebb
 	ret ; $5ebe
 ShotBallPathServeTopspinTable:
-	; $5ebf, 104 bytes (records:2)
+	; $5ebf, 20 bytes (records:2)
 	dw $0000 ; record 0
 	dw $02d0 ; record 1
 	dw $05a0 ; record 2
@@ -512,46 +512,50 @@ ShotBallPathServeTopspinTable:
 	dw $13b0 ; record 7
 	dw $1680 ; record 8
 	dw $1950 ; record 9
+ShotBallPathServeTopspinSpeeds:
+	; $5ed3, 20 bytes (records:2)
+	dw $0000 ; record 0
+	dw $0048 ; record 1
+	dw $0090 ; record 2
+	dw $00d8 ; record 3
+	dw $0120 ; record 4
+	dw $0168 ; record 5
+	dw $01b0 ; record 6
+	dw $01f8 ; record 7
+	dw $0240 ; record 8
+	dw $0288 ; record 9
+ShotBallPathServeTopspinHeights:
+	; $5ee7, 64 bytes (records:2)
+	dw $0000 ; record 0
+	dw $0000 ; record 1
+	dw $0000 ; record 2
+	dw $0000 ; record 3
+	dw $0000 ; record 4
+	dw $0000 ; record 5
+	dw $0000 ; record 6
+	dw $0000 ; record 7
+	dw $0000 ; record 8
+	dw $0000 ; record 9
 	dw $0000 ; record 10
-	dw $0048 ; record 11
-	dw $0090 ; record 12
-	dw $00d8 ; record 13
-	dw $0120 ; record 14
-	dw $0168 ; record 15
-	dw $01b0 ; record 16
-	dw $01f8 ; record 17
-	dw $0240 ; record 18
-	dw $0288 ; record 19
-	dw $0000 ; record 20
-	dw $0000 ; record 21
-	dw $0000 ; record 22
-	dw $0000 ; record 23
-	dw $0000 ; record 24
-	dw $0000 ; record 25
-	dw $0000 ; record 26
-	dw $0000 ; record 27
-	dw $0000 ; record 28
-	dw $0000 ; record 29
-	dw $0000 ; record 30
-	dw $0000 ; record 31
-	dw $0006 ; record 32
-	dw $000c ; record 33
-	dw $0012 ; record 34
-	dw $0018 ; record 35
-	dw $001e ; record 36
-	dw $0024 ; record 37
-	dw $002a ; record 38
-	dw $0030 ; record 39
-	dw $0036 ; record 40
-	dw $003c ; record 41
-	dw $0042 ; record 42
-	dw $0042 ; record 43
-	dw $0042 ; record 44
-	dw $0042 ; record 45
-	dw $0042 ; record 46
-	dw $0042 ; record 47
-	dw $0042 ; record 48
-	dw $0042 ; record 49
-	dw $0042 ; record 50
-	dw $0042 ; record 51
+	dw $0000 ; record 11
+	dw $0006 ; record 12
+	dw $000c ; record 13
+	dw $0012 ; record 14
+	dw $0018 ; record 15
+	dw $001e ; record 16
+	dw $0024 ; record 17
+	dw $002a ; record 18
+	dw $0030 ; record 19
+	dw $0036 ; record 20
+	dw $003c ; record 21
+	dw $0042 ; record 22
+	dw $0042 ; record 23
+	dw $0042 ; record 24
+	dw $0042 ; record 25
+	dw $0042 ; record 26
+	dw $0042 ; record 27
+	dw $0042 ; record 28
+	dw $0042 ; record 29
+	dw $0042 ; record 30
+	dw $0042 ; record 31
 	; $5f27, 8409 bytes fill to bank end (linker-padded)

@@ -7933,18 +7933,19 @@ BracketPlayerRowTable2:
 	dw wShadowAttrmap + 9 * TILEMAP_WIDTH + 5 ; record 1
 	dw wShadowAttrmap + 13 * TILEMAP_WIDTH + 5 ; record 2
 BracketHighlightBlinkTask:
-	ld hl, $79e9 ; $79d6
+	ld hl, BracketHighlightBlinkTaskPalettes0 ; $79d6
 	ldh a, [hVBlankCounter] ; $79d9
 	and $10 ; $79db
 	jr z, .maskClear ; $79dd
-	ld hl, BracketHighlightBlinkTaskPalettes ; $79df
+	ld hl, BracketHighlightBlinkTaskPalettes1 ; $79df
 .maskClear:
 	ld de, $0501 ; $79e2
 	call LoadPalettesImmediate ; $79e5
 	ret ; $79e8
+BracketHighlightBlinkTaskPalettes0:
 	; $79e9, 8 bytes (bytes:8)
 	db $f9, $67, $00, $00, $1f, $3e, $ff, $33 ; 0x00
-BracketHighlightBlinkTaskPalettes:
+BracketHighlightBlinkTaskPalettes1:
 	; $79f1, 8 bytes (bytes:8)
 	db $f9, $67, $00, $00, $98, $00, $1f, $03 ; 0x00
 RunMarioCastExhibResults:

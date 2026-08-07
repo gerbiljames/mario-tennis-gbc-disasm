@@ -399,13 +399,13 @@ InitObjSlot:
 	pop bc ; $45a0
 	ld hl, $0008 ; $45a1
 	add hl, bc ; $45a4
-	ld de, $4781 ; $45a5
+	ld de, FinishObjSlotUpdate.done ; $45a5
 	ld a, e ; $45a8
 	ld [hl+], a ; $45a9
 	ld [hl], d ; $45aa
 	ld hl, $0002 ; $45ab
 	add hl, bc ; $45ae
-	ld de, $7098 ; $45af
+	ld de, ObjSlotSpriteTemplate_09 ; $45af
 	ld a, e ; $45b2
 	ld [hl+], a ; $45b3
 	ld [hl], d ; $45b4
@@ -907,7 +907,110 @@ LoadServeGfx:
 	call QueueVRAMCopy ; $6c6a
 	ret ; $6c6d
 ServeGfxPtrTable_09:
-	INCBIN "data/bank_009/d_6c6e.bin" ; $6c6e, 1173 bytes
+	INCBIN "data/bank_009/d_6c6e.bin" ; $6c6e, 1066 bytes
+ObjSlotSpriteTemplate_09:
+	; $7098, 107 bytes (sprite_template)
+	oam_sprite $10, $10, $02, $00
+	oam_sprite $10, $08, $00, $00
+	oam_sprite_end
+	db $10
+	db $40
+	db $1c
+	db $00
+	db $20
+	db $40
+	db $1e
+	db $00
+	db $10
+	db $38
+	db $18
+	db $00
+	db $20
+	db $38
+	db $1a
+	db $00
+	db $10
+	db $30
+	db $14
+	db $00
+	db $20
+	db $30
+	db $16
+	db $00
+	db $10
+	db $28
+	db $10
+	db $00
+	db $20
+	db $28
+	db $12
+	db $00
+	db $10
+	db $20
+	db $0c
+	db $00
+	db $20
+	db $20
+	db $0e
+	db $00
+	db $10
+	db $18
+	db $08
+	db $00
+	db $20
+	db $18
+	db $0a
+	db $00
+	db $10
+	db $10
+	db $04
+	db $00
+	db $20
+	db $10
+	db $06
+	db $00
+	db $10
+	db $08
+	db $00
+	db $00
+	db $20
+	db $08
+	db $02
+	db $00
+	db $80
+	db $10
+	db $20
+	db $0c
+	db $00
+	db $20
+	db $28
+	db $0e
+	db $00
+	db $10
+	db $18
+	db $08
+	db $00
+	db $20
+	db $20
+	db $0a
+	db $00
+	db $10
+	db $10
+	db $04
+	db $00
+	db $20
+	db $18
+	db $06
+	db $00
+	db $10
+	db $08
+	db $00
+	db $00
+	db $20
+	db $10
+	db $02
+	db $00
+	db $80
 GetPlayer1ServeIndicatorSprites:
 	ld a, [wOnCourtCharCountMinus1] ; $7103
 	add a ; $7106

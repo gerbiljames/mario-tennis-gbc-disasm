@@ -167,7 +167,7 @@ bank_009/d_616d.bin 02616d 4
 bank_009/d_6171.bin 026171 4
 bank_009/d_6175.bin 026175 a4b
 bank_009/d_6bc0.bin 026bc0 80
-bank_009/d_6c6e.bin 026c6e 495
+bank_009/d_6c6e.bin 026c6e 42a
 bank_00a/palettes_5341.asm 029341 28 palettes
 bank_00a/d_66fe.bin 02a6fe 10
 bank_00a/d_68e1.bin 02a8e1 a
@@ -594,13 +594,7 @@ bank_01a/lz_5530.bin 069530 6af
 bank_01a/d_5be0.bin 069be0 240
 bank_01a/d_5e20.bin 069e20 240
 bank_01a/d_6060.bin 06a060 240
-bank_01a/d_62a0.bin 06a2a0 18c
-bank_01a/d_642c.bin 06a42c 10
-bank_01a/d_643c.bin 06a43c 18
-bank_01a/d_6454.bin 06a454 10
-bank_01a/d_6464.bin 06a464 10
-bank_01a/d_6474.bin 06a474 10
-bank_01a/d_6484.bin 06a484 5c
+bank_01a/d_62a0.bin 06a2a0 240
 bank_01a/d_64e0.bin 06a4e0 170
 bank_01a/lz_6650.bin 06a650 18
 bank_01a/d_6668.bin 06a668 18

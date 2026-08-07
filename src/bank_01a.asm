@@ -1113,7 +1113,7 @@ LoadExpScreenGfx:
 	wram_bank $01 ; $4933
 	ld hl, ExpScreenGfx4 ; $4939
 	ld de, wDecompBuffer ; $493c
-	ld c, $24 ; $493f
+	ld c, (ExpScreenGfxPalettes0 - ExpScreenGfx4) / 16 ; $493f
 	call CopyMemoryFast ; $4941
 	ld hl, ExpScreenGfx3 ; $4944
 	ld de, wDecompBuffer + 64 * TILE_SIZE ; $4947
@@ -2685,19 +2685,7 @@ ExpScreenGfx2:
 ExpScreenGfx3:
 	INCBIN "data/bank_01a/d_6060.bin" ; $6060, 576 bytes
 ExpScreenGfx4:
-	INCBIN "data/bank_01a/d_62a0.bin" ; $62a0, 396 bytes
-StatChangeArrows0:
-	INCBIN "data/bank_01a/d_642c.bin" ; $642c, 16 bytes
-StatChangeArrows1:
-	INCBIN "data/bank_01a/d_643c.bin" ; $643c, 24 bytes
-StatChangeArrows2:
-	INCBIN "data/bank_01a/d_6454.bin" ; $6454, 16 bytes
-StatChangeArrows3:
-	INCBIN "data/bank_01a/d_6464.bin" ; $6464, 16 bytes
-StatChangeArrows4:
-	INCBIN "data/bank_01a/d_6474.bin" ; $6474, 16 bytes
-StatChangeArrows5:
-	INCBIN "data/bank_01a/d_6484.bin" ; $6484, 92 bytes
+	INCBIN "data/bank_01a/d_62a0.bin" ; $62a0, 576 bytes
 ExpScreenGfxPalettes0:
 	INCBIN "data/bank_01a/d_64e0.bin" ; $64e0, 368 bytes
 ExpScreenGfx5:
@@ -4195,7 +4183,7 @@ DrawStatChangeArrows:
 	ld l, a ; $7cef
 	ld a, [wCharDataStatDeltas + 5] ; $7cf0
 	add l ; $7cf3
-	ld de, StatChangeArrows0 ; $7cf4
+	ld de, $642c ; $7cf4
 	call ComputeStatArrowSpriteX ; $7cf7
 	push de ; $7cfa
 	call QueueSprite ; $7cfb
@@ -4217,7 +4205,7 @@ DrawStatChangeArrows:
 	ld l, a ; $7d1c
 	ld a, [wCharDataStatDeltas + 6] ; $7d1d
 	add l ; $7d20
-	ld de, StatChangeArrows1 ; $7d21
+	ld de, $643c ; $7d21
 	call ComputeStatArrowSpriteX ; $7d24
 	push de ; $7d27
 	call QueueSprite ; $7d28
@@ -4239,7 +4227,7 @@ DrawStatChangeArrows:
 	ld l, a ; $7d49
 	ld a, [wCharDataStatDeltas + 7] ; $7d4a
 	add l ; $7d4d
-	ld de, StatChangeArrows2 ; $7d4e
+	ld de, $6454 ; $7d4e
 	call ComputeStatArrowSpriteX ; $7d51
 	push de ; $7d54
 	call QueueSprite ; $7d55
@@ -4261,7 +4249,7 @@ DrawStatChangeArrows:
 	ld l, a ; $7d76
 	ld a, [wCharDataStatDeltas + 8] ; $7d77
 	add l ; $7d7a
-	ld de, StatChangeArrows3 ; $7d7b
+	ld de, $6464 ; $7d7b
 	call ComputeStatArrowSpriteX ; $7d7e
 	push de ; $7d81
 	call QueueSprite ; $7d82
@@ -4283,7 +4271,7 @@ DrawStatChangeArrows:
 	ld l, a ; $7da3
 	ld a, [wCharDataStatDeltas + 9] ; $7da4
 	add l ; $7da7
-	ld de, StatChangeArrows4 ; $7da8
+	ld de, $6474 ; $7da8
 	call ComputeStatArrowSpriteX ; $7dab
 	push de ; $7dae
 	call QueueSprite ; $7daf
@@ -4305,7 +4293,7 @@ DrawStatChangeArrows:
 	ld l, a ; $7dd0
 	ld a, [wCharDataStatDeltas + 10] ; $7dd1
 	add l ; $7dd4
-	ld de, StatChangeArrows5 ; $7dd5
+	ld de, $6484 ; $7dd5
 	call ComputeStatArrowSpriteX ; $7dd8
 	push de ; $7ddb
 	call QueueSprite ; $7ddc

@@ -107,7 +107,25 @@ LOW_BYTE_SITES = {
 # executed there, so the label of the code is the operand. Curated per site for
 # the same reason as ROM0_FAR_POINTERS -- a word that happens to equal some
 # routine's address is usually a constant, so this is never inferred.
-IMM_CODE_POINTERS = {0x006b0}
+IMM_CODE_POINTERS = {
+    0x006b0,
+    0x245a5,  # InitObjSlot's default slot handler: ProcessObjSlot jp-hl's
+              # through slot +$08, and the value is FinishObjSlotUpdate.done
+}
+
+# `ld rr, n16` sites whose value aliases an in-bank ROM address but is a
+# constant -- QueueSprite/QueueSpriteTemplate position pairs land in the ROM
+# window often enough to collide with a real label ($1d:$4c4f) or to mint a
+# phantom one (the bank $1a arrow columns carved six bogus blobs out of
+# ExpScreenGfx4's tail). Suppresses both the rendering and the label
+# derivation in seeds.pointer_load_targets.
+DATA_IMM_IS_CONSTANT = {
+    0x74c4f,  # $1d:$4c4f: X=$68,Y=$10 arrow position, not
+              # CharDataPageArrowsTaskSpriteTemplate ($1d:$6810)
+    # DrawStatChangeArrows' six QueueSprite positions: X=$64, Y stepping down
+    # the stat rows -- the same column layout as bank $1c's arrow sites
+    0x6bcf4, 0x6bd21, 0x6bd4e, 0x6bd7b, 0x6bda8, 0x6bdd5,
+}
 
 
 SOUND_IMM_RE = re.compile(r"^sound \$([0-9a-f]{2})$")
@@ -164,7 +182,7 @@ def render_operand(ins, off, labels, hwregs, ramnames, data_labels=None,
                     flat = imm
             elif base and imm < 0x8000:
                 flat = base + (imm - 0x4000)
-            if flat in data_labels:
+            if flat in data_labels and off not in DATA_IMM_IS_CONSTANT:
                 return f"ld {m.group(1)}, {data_labels[flat]}"
             if off in IMM_CODE_POINTERS and flat in labels:
                 name = scopes.ref(flat, off) if scopes else labels[flat]
