@@ -163,6 +163,32 @@ def render_sprite_anim(rom, start, end):
     return out
 
 
+def render_ptr_records(rom, seg, end, stride, ptr_off, bank, labels):
+    """Fixed-stride byte records with one embedded same-bank pointer at
+    `ptr_off`: the byte fields render as `db`, the pointer as a `dw` label
+    (raw when its target carries none). Spec form `records:<stride>:ptr<off>`,
+    e.g. the bank $18 spawn tables, whose +$09 word is the per-object
+    movement callback TaskUpdateObjects_18 dispatches through."""
+    out = [f"; {(end - seg) // stride} records x {stride} bytes"
+           f" (dw callback at +${ptr_off:x})"]
+    for r in range(0, end - seg - stride + 1, stride):
+        b = rom[seg + r:seg + r + stride]
+        n = r // stride
+        if ptr_off:
+            out.append("\tdb " + ", ".join(f"${x:02x}" for x in b[:ptr_off])
+                       + f" ; record {n}")
+        w = b[ptr_off] | (b[ptr_off + 1] << 8)
+        tgt = bank * 0x4000 + w - 0x4000 if 0x4000 <= w < 0x8000 else None
+        out.append("\tdw " + (labels.get(tgt) or f"${w:04x}"))
+        tail = b[ptr_off + 2:]
+        if tail:
+            out.append("\tdb " + ", ".join(f"${x:02x}" for x in tail))
+    rem = (end - seg) % stride
+    if rem:
+        out.append("\tdb " + ", ".join(f"${x:02x}" for x in rom[end - rem:end]))
+    return out
+
+
 def render_drill_definition(rom, seg, end, bank, labels):
     """A training-drill definition for `StartDrillFromDefinition` ($0b:$4002):
     8 setup bytes then three same-bank pointers (mode hooks, point table, and

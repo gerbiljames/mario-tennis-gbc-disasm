@@ -2090,24 +2090,40 @@ PopulateObjectArrayA:
 	jr nz, .spawnLoop ; $7c50
 	ret ; $7c52
 ObjectArrayASpawnTable:
-	; $7c53, 176 bytes (records:11)
-; 16 records x 11 bytes
-	db $01, $00, $14, $00, $00, $40, $a0, $00, $00, $38, $7e ; record 0
-	db $02, $00, $24, $00, $18, $50, $c3, $04, $01, $38, $7e ; record 1
-	db $03, $00, $a3, $00, $3c, $45, $85, $08, $02, $38, $7e ; record 2
-	db $01, $00, $d0, $00, $00, $70, $ff, $0c, $01, $38, $7e ; record 3
-	db $02, $00, $54, $00, $24, $40, $b3, $10, $03, $38, $7e ; record 4
-	db $03, $00, $48, $00, $48, $80, $c5, $14, $01, $38, $7e ; record 5
-	db $01, $00, $9c, $00, $24, $30, $d2, $18, $00, $38, $7e ; record 6
-	db $02, $00, $66, $00, $10, $45, $82, $1c, $01, $38, $7e ; record 7
-	db $03, $00, $44, $00, $14, $61, $90, $20, $03, $38, $7e ; record 8
-	db $01, $00, $c2, $00, $28, $4f, $a4, $24, $00, $38, $7e ; record 9
-	db $02, $00, $5a, $00, $4c, $43, $55, $28, $01, $38, $7e ; record 10
-	db $03, $00, $30, $00, $60, $42, $b4, $2c, $02, $38, $7e ; record 11
-	db $01, $00, $63, $00, $44, $64, $f0, $00, $01, $38, $7e ; record 12
-	db $02, $00, $18, $00, $98, $34, $52, $00, $02, $38, $7e ; record 13
-	db $03, $00, $8c, $00, $0c, $45, $c0, $00, $01, $38, $7e ; record 14
-	db $01, $00, $a0, $00, $30, $55, $a0, $00, $00, $38, $7e ; record 15
+	; $7c53, 176 bytes (records:11:ptr9)
+; 16 records x 11 bytes (dw callback at +$9)
+	db $01, $00, $14, $00, $00, $40, $a0, $00, $00 ; record 0
+	dw ObjectArrayAUpdateCallback_18
+	db $02, $00, $24, $00, $18, $50, $c3, $04, $01 ; record 1
+	dw ObjectArrayAUpdateCallback_18
+	db $03, $00, $a3, $00, $3c, $45, $85, $08, $02 ; record 2
+	dw ObjectArrayAUpdateCallback_18
+	db $01, $00, $d0, $00, $00, $70, $ff, $0c, $01 ; record 3
+	dw ObjectArrayAUpdateCallback_18
+	db $02, $00, $54, $00, $24, $40, $b3, $10, $03 ; record 4
+	dw ObjectArrayAUpdateCallback_18
+	db $03, $00, $48, $00, $48, $80, $c5, $14, $01 ; record 5
+	dw ObjectArrayAUpdateCallback_18
+	db $01, $00, $9c, $00, $24, $30, $d2, $18, $00 ; record 6
+	dw ObjectArrayAUpdateCallback_18
+	db $02, $00, $66, $00, $10, $45, $82, $1c, $01 ; record 7
+	dw ObjectArrayAUpdateCallback_18
+	db $03, $00, $44, $00, $14, $61, $90, $20, $03 ; record 8
+	dw ObjectArrayAUpdateCallback_18
+	db $01, $00, $c2, $00, $28, $4f, $a4, $24, $00 ; record 9
+	dw ObjectArrayAUpdateCallback_18
+	db $02, $00, $5a, $00, $4c, $43, $55, $28, $01 ; record 10
+	dw ObjectArrayAUpdateCallback_18
+	db $03, $00, $30, $00, $60, $42, $b4, $2c, $02 ; record 11
+	dw ObjectArrayAUpdateCallback_18
+	db $01, $00, $63, $00, $44, $64, $f0, $00, $01 ; record 12
+	dw ObjectArrayAUpdateCallback_18
+	db $02, $00, $18, $00, $98, $34, $52, $00, $02 ; record 13
+	dw ObjectArrayAUpdateCallback_18
+	db $03, $00, $8c, $00, $0c, $45, $c0, $00, $01 ; record 14
+	dw ObjectArrayAUpdateCallback_18
+	db $01, $00, $a0, $00, $30, $55, $a0, $00, $00 ; record 15
+	dw ObjectArrayAUpdateCallback_18
 InitObjectSceneB:
 	ldh a, [hWramBank] ; $7d03
 	push af ; $7d05
@@ -2170,24 +2186,40 @@ PopulateObjectArrayB:
 	jr nz, .spawnLoop ; $7d85
 	ret ; $7d87
 ObjectArrayBSpawnTable:
-	; $7d88, 176 bytes (records:11)
-; 16 records x 11 bytes
-	db $01, $00, $44, $00, $00, $40, $a0, $00, $00, $89, $7e ; record 0
-	db $02, $00, $34, $00, $18, $50, $63, $04, $01, $89, $7e ; record 1
-	db $03, $00, $43, $00, $3c, $45, $95, $08, $02, $89, $7e ; record 2
-	db $01, $00, $60, $00, $00, $70, $ff, $0c, $01, $89, $7e ; record 3
-	db $02, $00, $44, $00, $84, $40, $b3, $10, $03, $89, $7e ; record 4
-	db $03, $00, $38, $00, $1a, $80, $ca, $14, $01, $89, $7e ; record 5
-	db $01, $00, $2c, $00, $84, $30, $d2, $18, $00, $89, $7e ; record 6
-	db $02, $00, $56, $00, $10, $45, $52, $1c, $01, $89, $7e ; record 7
-	db $03, $00, $44, $00, $14, $61, $c4, $20, $03, $89, $7e ; record 8
-	db $01, $00, $1f, $00, $88, $4f, $b4, $24, $00, $89, $7e ; record 9
-	db $02, $00, $2a, $00, $4c, $43, $55, $28, $01, $89, $7e ; record 10
-	db $03, $00, $80, $00, $23, $42, $b4, $2c, $02, $89, $7e ; record 11
-	db $01, $00, $73, $00, $14, $64, $f0, $00, $01, $89, $7e ; record 12
-	db $02, $00, $3a, $00, $28, $34, $82, $00, $02, $89, $7e ; record 13
-	db $03, $00, $8c, $00, $9c, $45, $d0, $00, $01, $89, $7e ; record 14
-	db $01, $00, $33, $00, $30, $55, $b0, $00, $00, $89, $7e ; record 15
+	; $7d88, 176 bytes (records:11:ptr9)
+; 16 records x 11 bytes (dw callback at +$9)
+	db $01, $00, $44, $00, $00, $40, $a0, $00, $00 ; record 0
+	dw ObjectArrayBUpdateCallback_18
+	db $02, $00, $34, $00, $18, $50, $63, $04, $01 ; record 1
+	dw ObjectArrayBUpdateCallback_18
+	db $03, $00, $43, $00, $3c, $45, $95, $08, $02 ; record 2
+	dw ObjectArrayBUpdateCallback_18
+	db $01, $00, $60, $00, $00, $70, $ff, $0c, $01 ; record 3
+	dw ObjectArrayBUpdateCallback_18
+	db $02, $00, $44, $00, $84, $40, $b3, $10, $03 ; record 4
+	dw ObjectArrayBUpdateCallback_18
+	db $03, $00, $38, $00, $1a, $80, $ca, $14, $01 ; record 5
+	dw ObjectArrayBUpdateCallback_18
+	db $01, $00, $2c, $00, $84, $30, $d2, $18, $00 ; record 6
+	dw ObjectArrayBUpdateCallback_18
+	db $02, $00, $56, $00, $10, $45, $52, $1c, $01 ; record 7
+	dw ObjectArrayBUpdateCallback_18
+	db $03, $00, $44, $00, $14, $61, $c4, $20, $03 ; record 8
+	dw ObjectArrayBUpdateCallback_18
+	db $01, $00, $1f, $00, $88, $4f, $b4, $24, $00 ; record 9
+	dw ObjectArrayBUpdateCallback_18
+	db $02, $00, $2a, $00, $4c, $43, $55, $28, $01 ; record 10
+	dw ObjectArrayBUpdateCallback_18
+	db $03, $00, $80, $00, $23, $42, $b4, $2c, $02 ; record 11
+	dw ObjectArrayBUpdateCallback_18
+	db $01, $00, $73, $00, $14, $64, $f0, $00, $01 ; record 12
+	dw ObjectArrayBUpdateCallback_18
+	db $02, $00, $3a, $00, $28, $34, $82, $00, $02 ; record 13
+	dw ObjectArrayBUpdateCallback_18
+	db $03, $00, $8c, $00, $9c, $45, $d0, $00, $01 ; record 14
+	dw ObjectArrayBUpdateCallback_18
+	db $01, $00, $33, $00, $30, $55, $b0, $00, $00 ; record 15
+	dw ObjectArrayBUpdateCallback_18
 ObjectArrayAUpdateCallback_18:
 	ldh a, [hVBlankCounter] ; $7e38
 	add c ; $7e3a

@@ -33,6 +33,7 @@ from .datatables import (render_actor_list, render_actor_script,
                          render_ram_ptrs, render_rect_pair,
                          render_rect_ptrs, render_rules_pages,
                          render_sprite_anim, render_text_ids,
+                         render_ptr_records,
                          render_slot_records, render_story_locations,
                          render_text_offsets,
                          render_tilemap_dispatch, render_tilemap_scripts)
@@ -1040,6 +1041,10 @@ class Emitter:
                                    self._enum_values(spec.split(":")[1]))
         if spec == "drill_definition":
             return render_drill_definition(self.rom, start, end, bank, self.labels)
+        m = re.match(r"records:(\d+):ptr(\d+)$", spec)
+        if m:
+            return render_ptr_records(self.rom, start, end, int(m.group(1)),
+                                      int(m.group(2)), bank, self.labels)
         if spec == "actor_list":
             return render_actor_list(self.rom, start, end, bank, self.labels)
         if spec == "rect_ptrs":
