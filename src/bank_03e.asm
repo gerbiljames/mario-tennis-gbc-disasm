@@ -1091,14 +1091,14 @@ LoadMatchRulesMenuGraphics:
 	wram_bank ; $46d3
 	ret ; $46d7
 MatchRulesMenuGraphicsTable:
-	; $46d8, 14 bytes (records:2)
-	dw $3c62 ; record 0
-	dw $3c64 ; record 1
-	dw $3c66 ; record 2
-	dw $3c68 ; record 3
-	dw $3c6a ; record 4
-	dw $3c6c ; record 5
-	dw $3c6e ; record 6
+	; $46d8, 14 bytes (7 records x 1 slot words)
+	dslot DataPtr_N64RecordTypeLabelTiles0 ; record 0
+	dslot DataPtr_N64RecordTypeLabelTiles1 ; record 1
+	dslot DataPtr_GamesLabelTiles ; record 2
+	dslot DataPtr_GamesLabelTiles2 ; record 3
+	dslot DataPtr_OneSetLabelTiles ; record 4
+	dslot DataPtr_ThreeSetsLabelTiles ; record 5
+	dslot DataPtr_FiveSetsLabelTiles ; record 6
 MatchRulesMenuTable:
 	; $46e6, 14 bytes (records:2)
 	dw $a800 ; record 0
@@ -4031,17 +4031,17 @@ LoadCourtSelectGraphics:
 	wram_bank ; $5dec
 	ret ; $5df0
 CourtSelectGraphicsTable:
-	; $5df1, 20 bytes (records:2)
-	dw $3f02 ; record 0
-	dw $3f04 ; record 1
-	dw $3f06 ; record 2
-	dw $3f08 ; record 3
-	dw $3f0a ; record 4
-	dw $3f0c ; record 5
-	dw $3f0e ; record 6
-	dw $3f10 ; record 7
-	dw $3f12 ; record 8
-	dw $3f14 ; record 9
+	; $5df1, 20 bytes (10 records x 1 slot words)
+	dslot DataPtr_HardCourtLabelTiles ; record 0
+	dslot DataPtr_ClayCourtLabelTiles ; record 1
+	dslot DataPtr_GrassCourtLabelTiles ; record 2
+	dslot DataPtr_CompositionCourtLabelTiles ; record 3
+	dslot DataPtr_CourtNameLabelTiles0 ; record 4
+	dslot DataPtr_CourtNameLabelTiles1 ; record 5
+	dslot DataPtr_CourtNameLabelTiles2 ; record 6
+	dslot DataPtr_CourtNameLabelTiles3 ; record 7
+	dslot DataPtr_CourtNameLabelTiles4 ; record 8
+	dslot DataPtr_CourtNameLabelTiles5 ; record 9
 CourtSelectTable:
 	; $5e05, 18 bytes (records:2)
 	dw $a800 ; record 0

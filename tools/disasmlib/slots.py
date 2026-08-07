@@ -152,6 +152,11 @@ class SlotProvingMixin:
         "AnimatedTilesTable2": 1,
         "AnimatedTilesTable3": 1,
         "AnimatedTilesTable4": 1,
+        # LoadMatchRulesMenuGraphics ($3e:$4607) and the court-select loader
+        # ($3e:$5d21) walk these the same way: word as h:l into
+        # DecompressDataFromBank, one label-tile stream per menu row.
+        "MatchRulesMenuGraphicsTable": 1,
+        "CourtSelectGraphicsTable": 1,
     }
 
     def add_slot_record_tables(self, overrides):
