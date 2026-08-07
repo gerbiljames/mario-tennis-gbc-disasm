@@ -143,6 +143,15 @@ class SlotProvingMixin:
         # the (bank, slot) word as h:l into DecompressDataFromBank -- one
         # $4000-table data slot per record.
         "TileBlockPtrs_39": 1,
+        # UpdateAnimatedTiles ($39:$4373) picks a frame table by
+        # wAnimatedTileSet, indexes it by frame, and reads the word as h:l
+        # straight into DecompressDataFromBank -- so every row is a
+        # (bank << 8) | slot selector, not an in-bank pointer, even though
+        # table 1's $6dxx rows alias TilemapAssemblyDispatch_39 interiors.
+        "AnimatedTilesTable1": 1,
+        "AnimatedTilesTable2": 1,
+        "AnimatedTilesTable3": 1,
+        "AnimatedTilesTable4": 1,
     }
 
     def add_slot_record_tables(self, overrides):
