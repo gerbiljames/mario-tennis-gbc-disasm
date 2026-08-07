@@ -480,14 +480,27 @@ class Emitter:
             else:
                 flat = bank * BANK_SIZE + addr - BANK_SIZE if bank else addr
             name = self.labels.get(flat)
+            expr = name
+            if not name:
+                # a base a few bytes into a labeled table (a column of its
+                # records, or a sub-range the index is biased into), or the
+                # +$100 high half of a word table indexed by a doubled byte
+                for delta in (*range(1, 9), 0x100):
+                    name = self.labels.get(flat - delta)
+                    if name:
+                        expr = f"{name} + ${delta:x}" if delta == 0x100 \
+                            else f"{name} + {delta}"
+                        break
             # a qualified local (`Parent.loop`) names a point inside a routine,
             # never a table base
             if not name or "." in name:
                 continue
-            if not any("[hl" in x for x in lines[i + 3:i + 10]):
+            # the dereference may happen in a callee the pointer is handed to
+            if not any("[hl" in x or x.lstrip().startswith("call ")
+                       for x in lines[i + 3:i + 10]):
                 continue
-            lines[i] = f"{m.group(1)}LOW({name}){m.group(3)}"
-            lines[i + 1 + k] = f"{adc.group(1)}HIGH({name}){adc.group(3)}"
+            lines[i] = f"{m.group(1)}LOW({expr}){m.group(3)}"
+            lines[i + 1 + k] = f"{adc.group(1)}HIGH({expr}){adc.group(3)}"
 
     def _emit_bank(self, bank):
         base = bank * BANK_SIZE

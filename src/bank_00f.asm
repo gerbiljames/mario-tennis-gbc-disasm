@@ -3187,9 +3187,9 @@ WalkActorsInFromEntryPoint_0f:
 	script_set_speed ACTOR_PARTNER, $00ff ; $7abc
 	ld a, [wStoryModeEntryPoint] ; $7ac4
 	dec a ; $7ac7
-	add $1b ; $7ac8
+	add LOW(WalkActorsInFromEntryPointFacings_0f + 5) ; $7ac8
 	ld l, a ; $7aca
-	adc $7b ; $7acb
+	adc HIGH(WalkActorsInFromEntryPointFacings_0f + 5) ; $7acb
 	sub l ; $7acd
 	ld h, a ; $7ace
 	ld b, [hl] ; $7acf

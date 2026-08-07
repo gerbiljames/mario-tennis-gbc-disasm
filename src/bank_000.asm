@@ -3095,9 +3095,9 @@ GetSquareOfByte:
 	pop af ; $107c
 	ret ; $107d
 .highHalf:
-	add $30 ; $107e
+	add LOW(SquaresTable + $100) ; $107e
 	ld l, a ; $1080
-	adc $12 ; $1081
+	adc HIGH(SquaresTable + $100) ; $1081
 	sub l ; $1083
 	ld h, a ; $1084
 	ld a, [hl+] ; $1085

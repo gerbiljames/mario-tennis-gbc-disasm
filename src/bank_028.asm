@@ -13,7 +13,13 @@ Padding_28_0:
 	; $4012, 14 bytes (fill)
 	ds 14, $00
 MatchGraphicsGfx:
-	INCBIN "data/bank_028/d_4020.bin" ; $4020, 1472 bytes
+	INCBIN "data/bank_028/d_4020.bin" ; $4020, 832 bytes
+SpecialHitEffectTiles_28:
+	INCBIN "data/bank_028/d_4360.bin" ; $4360, 256 bytes
+BallTouchCharEffectTilesA_28:
+	INCBIN "data/bank_028/d_4460.bin" ; $4460, 256 bytes
+BallTouchCharEffectTilesB_28:
+	INCBIN "data/bank_028/d_4560.bin" ; $4560, 128 bytes
 MatchGfxTilesA_28:
 	INCBIN "data/bank_028/lz_45e0.bin" ; $45e0, 1472 bytes
 MatchGfxPalettesA_28:
@@ -216,9 +222,9 @@ LoadSpecialHitEffectTiles:
 	rrca ; $6030
 	rrca ; $6031
 	and $c0 ; $6032
-	add $60 ; $6034
+	add LOW(SpecialHitEffectTiles_28) ; $6034
 	ld l, a ; $6036
-	adc $43 ; $6037
+	adc HIGH(SpecialHitEffectTiles_28) ; $6037
 	sub l ; $6039
 	ld h, a ; $603a
 	ld de, $8740 + VRAM_BANK1 ; $603b
@@ -229,9 +235,9 @@ LoadBallTouchCharEffectTilesA:
 	rrca ; $6044
 	rrca ; $6045
 	and $40 ; $6046
-	add $60 ; $6048
+	add LOW(BallTouchCharEffectTilesA_28) ; $6048
 	ld l, a ; $604a
-	adc $44 ; $604b
+	adc HIGH(BallTouchCharEffectTilesA_28) ; $604b
 	sub l ; $604d
 	ld h, a ; $604e
 	ld de, $8780 + VRAM_BANK1 ; $604f
@@ -242,9 +248,9 @@ LoadBallTouchCharEffectTilesB:
 	rrca ; $6058
 	rrca ; $6059
 	and $40 ; $605a
-	add $60 ; $605c
+	add LOW(BallTouchCharEffectTilesB_28) ; $605c
 	ld l, a ; $605e
-	adc $45 ; $605f
+	adc HIGH(BallTouchCharEffectTilesB_28) ; $605f
 	sub l ; $6061
 	ld h, a ; $6062
 	ld de, $87c0 + VRAM_BANK1 ; $6063

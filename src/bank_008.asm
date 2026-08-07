@@ -2069,9 +2069,9 @@ SetBallTrailColor:
 	add a ; $518c
 	add a ; $518d
 	add a ; $518e
-	add $dc ; $518f
+	add LOW(BallTrailPalettes) ; $518f
 	ld l, a ; $5191
-	adc $50 ; $5192
+	adc HIGH(BallTrailPalettes) ; $5192
 	sub l ; $5194
 	ld h, a ; $5195
 	ld de, $0801 ; $5196

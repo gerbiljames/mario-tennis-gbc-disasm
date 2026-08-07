@@ -2203,9 +2203,9 @@ LoadTargetZoneConfig:
 	add a ; $5148
 	add a ; $5149
 	add a ; $514a
-	add $5c ; $514b
+	add LOW(MinigameTargetZoneBounds) ; $514b
 	ld l, a ; $514d
-	adc $51 ; $514e
+	adc HIGH(MinigameTargetZoneBounds) ; $514e
 	sub l ; $5150
 	ld h, a ; $5151
 	ld de, wTargetZoneX1 ; $5152
@@ -2550,9 +2550,9 @@ QueueMinigameHitBurstFirstFour:
 	cpl ; $53da
 	inc a ; $53db
 	add $0f ; $53dc
-	add $2c ; $53de
+	add LOW(MinigameHitBurstParticleOffsets) ; $53de
 	ld l, a ; $53e0
-	adc $54 ; $53e1
+	adc HIGH(MinigameHitBurstParticleOffsets) ; $53e1
 	sub l ; $53e3
 	ld h, a ; $53e4
 	ld a, e ; $53e5
@@ -2568,9 +2568,9 @@ QueueMinigameHitBurstFirstTwo:
 	cpl ; $53f8
 	inc a ; $53f9
 	add $0f ; $53fa
-	add $2c ; $53fc
+	add LOW(MinigameHitBurstParticleOffsets) ; $53fc
 	ld l, a ; $53fe
-	adc $54 ; $53ff
+	adc HIGH(MinigameHitBurstParticleOffsets) ; $53ff
 	sub l ; $5401
 	ld h, a ; $5402
 	call QueueMinigameHitBurstParticle ; $5403

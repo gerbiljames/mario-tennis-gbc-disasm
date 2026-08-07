@@ -368,9 +368,9 @@ LoadDebugMenuPalette:
 	add a ; $519b
 	add a ; $519c
 	add a ; $519d
-	add $f6 ; $519e
+	add LOW(DebugMenuPalettes_01) ; $519e
 	ld l, a ; $51a0
-	adc $50 ; $51a1
+	adc HIGH(DebugMenuPalettes_01) ; $51a1
 	sub l ; $51a3
 	ld h, a ; $51a4
 	ld e, $01 ; $51a5

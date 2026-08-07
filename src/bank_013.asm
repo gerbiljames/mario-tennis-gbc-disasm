@@ -2352,9 +2352,9 @@ CourtyardEntryWalkIn_13:
 	script_set_speed ACTOR_PARTNER, $00ff ; $630c
 	ld a, [wStoryModeEntryPoint] ; $6314
 	dec a ; $6317
-	add $69 ; $6318
+	add LOW(CourtyardEntryWalkInFacings_13 + 3) ; $6318
 	ld l, a ; $631a
-	adc $63 ; $631b
+	adc HIGH(CourtyardEntryWalkInFacings_13 + 3) ; $631b
 	sub l ; $631d
 	ld h, a ; $631e
 	ld b, [hl] ; $631f

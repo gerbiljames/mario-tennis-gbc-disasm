@@ -907,7 +907,10 @@ bank_025/text_pool_421a.asm 09421a 391e text_pool
 bank_026/text_pool_41f6.asm 0981f6 3921 text_pool
 bank_027/palettes_5580.asm 09d580 40 palettes
 bank_027/palettes_55c0.asm 09d5c0 30 palettes
-bank_028/d_4020.bin 0a0020 5c0
+bank_028/d_4020.bin 0a0020 340
+bank_028/d_4360.bin 0a0360 100
+bank_028/d_4460.bin 0a0460 100
+bank_028/d_4560.bin 0a0560 80
 bank_028/lz_45e0.bin 0a05e0 5c0
 bank_028/palettes_4ba0.asm 0a0ba0 40 palettes
 bank_028/palettes_4be0.asm 0a0be0 10 palettes

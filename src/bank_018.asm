@@ -145,9 +145,9 @@ LoadIndexedPalette_18:
 	add a ; $433f
 	add a ; $4340
 	add a ; $4341
-	add $00 ; $4342
+	add LOW(AllIndexedPalettes_18) ; $4342
 	ld l, a ; $4344
-	adc $43 ; $4345
+	adc HIGH(AllIndexedPalettes_18) ; $4345
 	sub l ; $4347
 	ld h, a ; $4348
 	ld e, $01 ; $4349

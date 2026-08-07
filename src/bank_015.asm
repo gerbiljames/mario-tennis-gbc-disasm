@@ -389,9 +389,9 @@ TournamentSiteEntryWalkIn:
 	script_set_speed ACTOR_PARTNER, $00ff ; $46fd
 	ld a, [wStoryModeEntryPoint] ; $4705
 	dec a ; $4708
-	add $5b ; $4709
+	add LOW(TournamentSiteEntryWalkInFacings + 4) ; $4709
 	ld l, a ; $470b
-	adc $47 ; $470c
+	adc HIGH(TournamentSiteEntryWalkInFacings + 4) ; $470c
 	sub l ; $470e
 	ld h, a ; $470f
 	ld b, [hl] ; $4710

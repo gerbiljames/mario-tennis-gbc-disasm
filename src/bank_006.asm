@@ -158,9 +158,9 @@ ShowMatchRulesPages:
 	ld a, [wRulesPageListIndex] ; $4155
 	add a ; $4158
 	add a ; $4159
-	add $65 ; $415a
+	add LOW(MatchRulesPageLists) ; $415a
 	ld l, a ; $415c
-	adc $41 ; $415d
+	adc HIGH(MatchRulesPageLists) ; $415d
 	sub l ; $415f
 	ld h, a ; $4160
 	call ShowRulesPageSequence ; $4161
@@ -194,9 +194,9 @@ ShowTrainingRulesPages:
 	ld a, [wRulesPageListIndex] ; $4199
 	add a ; $419c
 	add a ; $419d
-	add $a9 ; $419e
+	add LOW(TrainingRulesPageLists) ; $419e
 	ld l, a ; $41a0
-	adc $41 ; $41a1
+	adc HIGH(TrainingRulesPageLists) ; $41a1
 	sub l ; $41a3
 	ld h, a ; $41a4
 	call ShowRulesPageSequence ; $41a5
@@ -272,9 +272,9 @@ ShowMinigameRulesPages:
 	ld b, a ; $4254
 	add a ; $4255
 	add b ; $4256
-	add $74 ; $4257
+	add LOW(MinigameRulesPageLists) ; $4257
 	ld l, a ; $4259
-	adc $42 ; $425a
+	adc HIGH(MinigameRulesPageLists) ; $425a
 	sub l ; $425c
 	ld h, a ; $425d
 	call ShowRulesPageSequence ; $425e
@@ -1001,9 +1001,9 @@ GetMatchMenuItemCount:
 	add a ; $4823
 	add a ; $4824
 	add a ; $4825
-	add $73 ; $4826
+	add LOW(MatchMenuDefs + 4) ; $4826
 	ld l, a ; $4828
-	adc $46 ; $4829
+	adc HIGH(MatchMenuDefs + 4) ; $4829
 	sub l ; $482b
 	ld h, a ; $482c
 	ld a, [hl] ; $482d
@@ -1984,9 +1984,9 @@ DrawMatchMenuItem:
 	pop af ; $681c
 	add a ; $681d
 	add a ; $681e
-	add $37 ; $681f
+	add LOW(MatchMenuItemRectPointers + 2) ; $681f
 	ld l, a ; $6821
-	adc $68 ; $6822
+	adc HIGH(MatchMenuItemRectPointers + 2) ; $6822
 	sub l ; $6824
 	ld h, a ; $6825
 	ld a, [hl+] ; $6826
@@ -2695,9 +2695,9 @@ RunStoryMenu:
 	push af ; $6d53
 	call LoadStoryMenuItemGfx ; $6d54
 	pop af ; $6d57
-	add $62 ; $6d58
+	add LOW(CallHLInBankA + 4) ; $6d58
 	ld l, a ; $6d5a
-	adc $01 ; $6d5b
+	adc HIGH(CallHLInBankA + 4) ; $6d5b
 	sub l ; $6d5d
 	ld h, a ; $6d5e
 	ld de, $000e ; $6d5f
@@ -2734,9 +2734,9 @@ GetStoryMenuItemCount:
 	add a ; $6d8d
 	add a ; $6d8e
 	add a ; $6d8f
-	add $e4 ; $6d90
+	add LOW(StoryMenuDefs + 4) ; $6d90
 	ld l, a ; $6d92
-	adc $6c ; $6d93
+	adc HIGH(StoryMenuDefs + 4) ; $6d93
 	sub l ; $6d95
 	ld h, a ; $6d96
 	ld a, [hl] ; $6d97
@@ -2957,9 +2957,9 @@ UnusedStoryMenuRedrawReentry:
 	ld a, [wMatchMenuSelection] ; $6f07
 	call LoadStoryMenuItemGfx ; $6f0a
 	ld a, [wMatchMenuSelection] ; $6f0d
-	add $62 ; $6f10
+	add LOW(CallHLInBankA + 4) ; $6f10
 	ld l, a ; $6f12
-	adc $01 ; $6f13
+	adc HIGH(CallHLInBankA + 4) ; $6f13
 	sub l ; $6f15
 	ld h, a ; $6f16
 	ld de, $000e ; $6f17
