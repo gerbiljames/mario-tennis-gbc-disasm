@@ -630,12 +630,21 @@ class Emitter:
                               f"${offset_to_cpu(off + 3):04x} inline arg")
         else:
             note = dis.data_site_notes.get(off)
+            text = self._operand(ins, off)
             suffix = ""
             if note:
                 sl = self.data_slot_names.get(
                     note, f"DataPtr_{note[0]:02x}_{note[1]:02x}")
-                suffix = f" -> {sl}"
-            self.lines.append(f"\t{self._operand(ins, off)} ; ${cpu:04x}{suffix}")
+                # hl packs (bank << 8) | LOW(directory slot) for
+                # DecompressDataFromBank, which splits it back apart; the
+                # expression assembles to the same word and survives the slot
+                # moving within its directory.
+                m = re.match(r"ld hl, \$[0-9a-f]{4}$", text)
+                if m:
+                    text = f"ld hl, (BANK({sl}) << 8) | LOW({sl})"
+                else:
+                    suffix = f" -> {sl}"
+            self.lines.append(f"\t{text} ; ${cpu:04x}{suffix}")
         return off + ins.size
 
     def _collapse_idiom(self, off):

@@ -337,7 +337,7 @@ ResetTennisDictionaryScroll:
 	ret ; $425e
 LoadTennisDictionaryAssetsDefault:
 	wram_bank $01 ; $425f
-	ld hl, $3a02 ; $4265 -> DataPtr_TennisDictionaryListTiles
+	ld hl, (BANK(DataPtr_TennisDictionaryListTiles) << 8) | LOW(DataPtr_TennisDictionaryListTiles) ; $4265
 	ld de, wDecompBuffer ; $4268
 	call DecompressDataFromBank ; $426b
 	ld hl, wDecompBuffer ; $426e
@@ -359,7 +359,7 @@ LoadTennisDictionaryAssetsDefault:
 	ret ; $429f
 LoadTennisDictionaryAssetsChar6:
 	wram_bank $01 ; $42a0
-	ld hl, $3a00 ; $42a6 -> DataPtr_TennisDictionaryTiles
+	ld hl, (BANK(DataPtr_TennisDictionaryTiles) << 8) | LOW(DataPtr_TennisDictionaryTiles) ; $42a6
 	ld de, wDecompBuffer ; $42a9
 	call DecompressDataFromBank ; $42ac
 	ld hl, wDecompBuffer ; $42af

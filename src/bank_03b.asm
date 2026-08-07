@@ -4973,14 +4973,14 @@ LoadMinigameSelectGfx:
 	ld de, $8500 + VRAM_BANK1 ; $636c
 	farcall LoadCompressedTileBlock ; $636f
 	call AdvanceFrame ; $6372
-	ld hl, $6d7e ; $6375 -> DataPtr_MinigameSelectIconGfx0
+	ld hl, (BANK(DataPtr_MinigameSelectIconGfx0) << 8) | LOW(DataPtr_MinigameSelectIconGfx0) ; $6375
 	ld de, wDecompBuffer ; $6378
 	call DecompressDataFromBank ; $637b
 	ld hl, wDecompBuffer ; $637e
 	ld de, $8200 ; $6381
 	ld c, $10 ; $6384
 	call QueueVRAMCopy ; $6386
-	ld hl, $6d80 ; $6389 -> DataPtr_MinigameSelectIconGfx1
+	ld hl, (BANK(DataPtr_MinigameSelectIconGfx1) << 8) | LOW(DataPtr_MinigameSelectIconGfx1) ; $6389
 	ld de, wDecompBuffer + 64 * TILE_SIZE ; $638c
 	call DecompressDataFromBank ; $638f
 	ld hl, wDecompBuffer + 64 * TILE_SIZE ; $6392
@@ -4988,7 +4988,7 @@ LoadMinigameSelectGfx:
 	ld c, $10 ; $6398
 	call QueueVRAMCopy ; $639a
 	call AdvanceFrame ; $639d
-	ld hl, $6d82 ; $63a0 -> DataPtr_MinigameSelectIconGfx2
+	ld hl, (BANK(DataPtr_MinigameSelectIconGfx2) << 8) | LOW(DataPtr_MinigameSelectIconGfx2) ; $63a0
 	ld de, wDecompBuffer ; $63a3
 	call DecompressDataFromBank ; $63a6
 	ld hl, wDecompBuffer ; $63a9
@@ -5653,7 +5653,7 @@ LoadSavedDataSourceGfx:
 	ldh a, [hWramBank] ; $686e
 	push af ; $6870
 	wram_bank $01 ; $6871
-	ld hl, $3c14 ; $6877 -> DataPtr_ModeSelectLabelTiles1
+	ld hl, (BANK(DataPtr_ModeSelectLabelTiles1) << 8) | LOW(DataPtr_ModeSelectLabelTiles1) ; $6877
 	ld de, wDecompBuffer ; $687a
 	call DecompressDataFromBank ; $687d
 	ld hl, wDecompBuffer ; $6880
@@ -5661,7 +5661,7 @@ LoadSavedDataSourceGfx:
 	ld bc, $0010 ; $6886
 	call QueueVRAMCopy ; $6889
 	call AdvanceFrame ; $688c
-	ld hl, $3c20 ; $688f -> DataPtr_ModeSelectLabelTiles7
+	ld hl, (BANK(DataPtr_ModeSelectLabelTiles7) << 8) | LOW(DataPtr_ModeSelectLabelTiles7) ; $688f
 	ld de, wDecompBuffer ; $6892
 	call DecompressDataFromBank ; $6895
 	ld hl, wDecompBuffer ; $6898
@@ -6268,7 +6268,7 @@ LoadEraseSavedDataGfx:
 	farcall CopyMugshotBufferToVram ; $6d82
 	call AdvanceFrame ; $6d85
 	wram_bank $01 ; $6d88
-	ld hl, $3d0e ; $6d8e -> DataPtr_N64TransferLabelTiles0
+	ld hl, (BANK(DataPtr_N64TransferLabelTiles0) << 8) | LOW(DataPtr_N64TransferLabelTiles0) ; $6d8e
 	ld de, wDecompBuffer ; $6d91
 	call DecompressDataFromBank ; $6d94
 	ld hl, wDecompBuffer ; $6d97
@@ -6276,7 +6276,7 @@ LoadEraseSavedDataGfx:
 	ld c, $10 ; $6d9d
 	call QueueVRAMCopy ; $6d9f
 	call AdvanceFrame ; $6da2
-	ld hl, $3d10 ; $6da5 -> DataPtr_N64TransferLabelTiles1
+	ld hl, (BANK(DataPtr_N64TransferLabelTiles1) << 8) | LOW(DataPtr_N64TransferLabelTiles1) ; $6da5
 	ld de, wDecompBuffer ; $6da8
 	call DecompressDataFromBank ; $6dab
 	ld hl, wDecompBuffer ; $6dae

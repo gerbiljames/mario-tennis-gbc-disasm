@@ -359,7 +359,7 @@ IntroCutsceneState01Init_6b:
 	wram_bank ; $425b
 	farcall QueueWram3MapToVRAM ; $425f
 	wram_bank $01 ; $4262
-	ld hl, IntroCutsceneState01InitGfx0 ; $4268 -> DataPtr_IntroSwingTiles
+	ld hl, (BANK(DataPtr_IntroSwingTiles) << 8) | LOW(DataPtr_IntroSwingTiles) ; $4268
 	ld de, wDecompBuffer ; $426b
 	call DecompressDataFromBank ; $426e
 	ld hl, wDecompBuffer ; $4271
@@ -371,10 +371,10 @@ IntroCutsceneState01Init_6b:
 	ld c, $80 ; $4282
 	call QueueVRAMCopy ; $4284
 	wram_bank $03 ; $4287
-	ld hl, IntroCutsceneState01InitGfx1 ; $428d -> DataPtr_IntroSwingTilemap
+	ld hl, (BANK(DataPtr_IntroSwingTilemap) << 8) | LOW(DataPtr_IntroSwingTilemap) ; $428d
 	ld de, wScreenScratch ; $4290
 	call DecompressDataFromBank ; $4293
-	ld hl, IntroCutsceneState01InitGfx2 ; $4296 -> DataPtr_IntroSwingAttrmap
+	ld hl, (BANK(DataPtr_IntroSwingAttrmap) << 8) | LOW(DataPtr_IntroSwingAttrmap) ; $4296
 	ld de, wRulesScreenAnimFrame ; $4299
 	call DecompressDataFromBank ; $429c
 	ld a, $01 ; $429f
@@ -470,7 +470,7 @@ IntroCutsceneState03Init_6b:
 	wram_bank ; $43ed
 	farcall QueueWram3MapToVRAM ; $43f1
 	wram_bank $01 ; $43f4
-	ld hl, IntroCutsceneState03InitGfx0 ; $43fa -> DataPtr_IntroCloseupTiles
+	ld hl, (BANK(DataPtr_IntroCloseupTiles) << 8) | LOW(DataPtr_IntroCloseupTiles) ; $43fa
 	ld de, wDecompBuffer ; $43fd
 	call DecompressDataFromBank ; $4400
 	ld hl, wDecompBuffer ; $4403
@@ -482,10 +482,10 @@ IntroCutsceneState03Init_6b:
 	ld c, $80 ; $4414
 	call QueueVRAMCopy ; $4416
 	wram_bank $03 ; $4419
-	ld hl, IntroCutsceneState03InitGfx1 ; $441f -> DataPtr_IntroCloseupTilemap
+	ld hl, (BANK(DataPtr_IntroCloseupTilemap) << 8) | LOW(DataPtr_IntroCloseupTilemap) ; $441f
 	ld de, wScreenScratch ; $4422
 	call DecompressDataFromBank ; $4425
-	ld hl, IntroCutsceneState03InitGfx2 ; $4428 -> DataPtr_IntroCloseupAttrmap
+	ld hl, (BANK(DataPtr_IntroCloseupAttrmap) << 8) | LOW(DataPtr_IntroCloseupAttrmap) ; $4428
 	ld de, wRulesScreenAnimFrame ; $442b
 	call DecompressDataFromBank ; $442e
 	ld a, $01 ; $4431
@@ -996,7 +996,7 @@ IntroCutsceneState16Init_6b:
 	ld hl, rLCDC ; $496d
 	set 3, [hl] ; $4970
 	wram_bank $01 ; $4972
-	ld hl, IntroCutsceneState16InitGfx0 ; $4978 -> DataPtr_IntroGreatestPlayerTiles
+	ld hl, (BANK(DataPtr_IntroGreatestPlayerTiles) << 8) | LOW(DataPtr_IntroGreatestPlayerTiles) ; $4978
 	ld de, wDecompBuffer ; $497b
 	call DecompressDataFromBank ; $497e
 	ld hl, wDecompBuffer ; $4981
@@ -1007,10 +1007,10 @@ IntroCutsceneState16Init_6b:
 	ld de, $8800 ; $498f
 	ld c, $80 ; $4992
 	call QueueVRAMCopy ; $4994
-	ld hl, IntroCutsceneState16InitGfx1 ; $4997 -> DataPtr_IntroGreatestPlayerTilemap
+	ld hl, (BANK(DataPtr_IntroGreatestPlayerTilemap) << 8) | LOW(DataPtr_IntroGreatestPlayerTilemap) ; $4997
 	ld de, wDecompBuffer ; $499a
 	call DecompressDataFromBank ; $499d
-	ld hl, IntroCutsceneState16InitGfx2 ; $49a0 -> DataPtr_IntroGreatestPlayerAttrmap
+	ld hl, (BANK(DataPtr_IntroGreatestPlayerAttrmap) << 8) | LOW(DataPtr_IntroGreatestPlayerAttrmap) ; $49a0
 	ld de, wDecompBuffer + 64 * TILE_SIZE ; $49a3
 	call DecompressDataFromBank ; $49a6
 	ld hl, wDecompBuffer ; $49a9
@@ -1025,7 +1025,7 @@ IntroCutsceneState16Init_6b:
 	ld de, $0008 ; $49c2
 	call LoadPaletteShadow ; $49c5
 	wram_bank $01 ; $49c8
-	ld hl, IntroCutsceneState16InitGfx3 ; $49ce -> DataPtr_IntroCharactersTiles
+	ld hl, (BANK(DataPtr_IntroCharactersTiles) << 8) | LOW(DataPtr_IntroCharactersTiles) ; $49ce
 	ld de, wDecompBuffer ; $49d1
 	call DecompressDataFromBank ; $49d4
 	ld hl, wDecompBuffer ; $49d7
@@ -1037,17 +1037,17 @@ IntroCutsceneState16Init_6b:
 	ld c, $80 ; $49e8
 	call QueueVRAMCopy ; $49ea
 	wram_bank $04 ; $49ed
-	ld hl, IntroCutsceneState16InitGfx4 ; $49f3 -> DataPtr_IntroCharactersTilemap
+	ld hl, (BANK(DataPtr_IntroCharactersTilemap) << 8) | LOW(DataPtr_IntroCharactersTilemap) ; $49f3
 	ld de, wIntroCharactersTilemap ; $49f6
 	call DecompressDataFromBank ; $49f9
-	ld hl, IntroCutsceneState16InitGfx5 ; $49fc -> DataPtr_IntroCharactersAttrmap
+	ld hl, (BANK(DataPtr_IntroCharactersAttrmap) << 8) | LOW(DataPtr_IntroCharactersAttrmap) ; $49fc
 	ld de, wIntroCharactersAttrmap ; $49ff
 	call DecompressDataFromBank ; $4a02
 	wram_bank $05 ; $4a05
-	ld hl, IntroCutsceneState16InitGfx6 ; $4a0b -> DataPtr_IntroCharactersTilemap2
+	ld hl, (BANK(DataPtr_IntroCharactersTilemap2) << 8) | LOW(DataPtr_IntroCharactersTilemap2) ; $4a0b
 	ld de, wWindowShadowTilemap ; $4a0e
 	call DecompressDataFromBank ; $4a11
-	ld hl, IntroCutsceneState16InitGfx7 ; $4a14 -> DataPtr_IntroCharactersAttrmap2
+	ld hl, (BANK(DataPtr_IntroCharactersAttrmap2) << 8) | LOW(DataPtr_IntroCharactersAttrmap2) ; $4a14
 	ld de, wWindowShadowAttrmap ; $4a17
 	call DecompressDataFromBank ; $4a1a
 	wram_bank $01 ; $4a1d
@@ -1965,49 +1965,9 @@ InitTitleSceneGraphics:
 	farcall CopyScrolledSceneTilemapToVram ; $61e2
 	ret ; $61e5
 TitleSceneGraphicsGfx0:
-	INCBIN "data/bank_06b/d_61e6.bin" ; $61e6, 2628 bytes
-IntroCutsceneState01InitGfx0:
-	db $c0 ; $6c2a
-	db $cd ; $6c2b
-IntroCutsceneState01InitGfx1:
-	db $ff ; $6c2c
-	db $f8 ; $6c2d
-IntroCutsceneState01InitGfx2:
-	INCBIN "data/bank_06b/d_6c2e.bin" ; $6c2e, 4 bytes
-IntroCutsceneState03InitGfx0:
-	db $0c ; $6c32
-	db $ff ; $6c33
-IntroCutsceneState03InitGfx1:
-	db $12 ; $6c34
-	db $d0 ; $6c35
-IntroCutsceneState03InitGfx2:
-	INCBIN "data/bank_06b/d_6c36.bin" ; $6c36, 134 bytes
+	INCBIN "data/bank_06b/lz_61e6.bin" ; $61e6, 2774 bytes
 TitleSceneGraphicsGfx1:
-	INCBIN "data/bank_06b/d_6cbc.bin" ; $6cbc, 84 bytes
-DecompressIntroTitleTiles0:
-	db $0f ; $6d10
-	db $10 ; $6d11
-IntroCutsceneState16InitGfx0:
-	db $00 ; $6d12
-	db $11 ; $6d13
-IntroCutsceneState16InitGfx1:
-	db $00 ; $6d14
-	db $00 ; $6d15
-IntroCutsceneState16InitGfx2:
-	INCBIN "data/bank_06b/d_6d16.bin" ; $6d16, 4 bytes
-IntroCutsceneState16InitGfx3:
-	db $b7 ; $6d1a
-	db $b8 ; $6d1b
-IntroCutsceneState16InitGfx4:
-	db $b9 ; $6d1c
-	db $ba ; $6d1d
-IntroCutsceneState16InitGfx5:
-	INCBIN "data/bank_06b/d_6d1e.bin" ; $6d1e, 4 bytes
-IntroCutsceneState16InitGfx6:
-	db $5f ; $6d22
-	db $60 ; $6d23
-IntroCutsceneState16InitGfx7:
-	INCBIN "data/bank_06b/d_6d24.bin" ; $6d24, 491 bytes
+	INCBIN "data/bank_06b/lz_6cbc.bin" ; $6cbc, 595 bytes
 TitleSceneGraphicsGfx2:
 	INCBIN "data/bank_06b/lz_6f0f.bin" ; $6f0f, 308 bytes
 TitleScenePalette:
@@ -2219,7 +2179,7 @@ DecompressIntroTitleTiles:
 	ldh a, [hWramBank] ; $73f2
 	push af ; $73f4
 	wram_bank $01 ; $73f5
-	ld hl, DecompressIntroTitleTiles0 ; $73fb -> DataPtr_IntroAwesomeTiles
+	ld hl, (BANK(DataPtr_IntroAwesomeTiles) << 8) | LOW(DataPtr_IntroAwesomeTiles) ; $73fb
 	ld de, wDecompBuffer ; $73fe
 	call DecompressDataFromBank ; $7401
 	ld hl, wDecompBuffer ; $7404

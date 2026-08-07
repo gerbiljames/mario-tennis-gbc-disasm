@@ -3286,13 +3286,8 @@ bank_06b/palettes_5d25.asm 1add25 40 palettes
 bank_06b/lz_5d65.bin 1add65 143
 bank_06b/lz_5ea8.bin 1adea8 1cd
 bank_06b/palettes_60c5.asm 1ae0c5 10 palettes
-bank_06b/d_61e6.bin 1ae1e6 a44
-bank_06b/d_6c2e.bin 1aec2e 4
-bank_06b/d_6c36.bin 1aec36 86
-bank_06b/d_6cbc.bin 1aecbc 54
-bank_06b/d_6d16.bin 1aed16 4
-bank_06b/d_6d1e.bin 1aed1e 4
-bank_06b/d_6d24.bin 1aed24 1eb
+bank_06b/lz_61e6.bin 1ae1e6 ad6
+bank_06b/lz_6cbc.bin 1aecbc 253
 bank_06b/lz_6f0f.bin 1aef0f 134
 bank_06b/palettes_7043.asm 1af043 40 palettes
 bank_06b/palettes_70af.asm 1af0af 80 palettes

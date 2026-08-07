@@ -264,6 +264,9 @@ def pointer_load_targets(dis, overrides=None):
             continue
         if o in DATA_IMM_IS_CONSTANT:
             continue  # a coordinate pair aliasing an in-bank address
+        if o in dis.data_site_notes:
+            continue  # (bank << 8) | slot for DecompressDataFromBank --
+                      # not an in-bank pointer, whatever it aliases
         imm = rom[o + 1] | (rom[o + 2] << 8)
         base = (o // BANK_SIZE) * BANK_SIZE
         if not (base and 0x4000 <= imm < 0x8000):

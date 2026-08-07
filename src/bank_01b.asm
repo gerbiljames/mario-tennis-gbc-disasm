@@ -1136,21 +1136,21 @@ LoadRankingBoardTiles:
 	ldh a, [hWramBank] ; $4fa6
 	push af ; $4fa8
 	wram_bank $01 ; $4fa9
-	ld hl, $3f30 ; $4faf -> DataPtr_BracketCharIcon00
+	ld hl, (BANK(DataPtr_BracketCharIcon00) << 8) | LOW(DataPtr_BracketCharIcon00) ; $4faf
 	ld de, wDecompBuffer ; $4fb2
 	call DecompressDataFromBank ; $4fb5
 	ld hl, wDecompBuffer ; $4fb8
 	ld de, $8000 + VRAM_BANK1 ; $4fbb
 	ld c, $10 ; $4fbe
 	call QueueVRAMCopy ; $4fc0
-	ld hl, $3f32 ; $4fc3 -> DataPtr_BracketCharIcon01
+	ld hl, (BANK(DataPtr_BracketCharIcon01) << 8) | LOW(DataPtr_BracketCharIcon01) ; $4fc3
 	ld de, wDecompBuffer ; $4fc6
 	call DecompressDataFromBank ; $4fc9
 	ld hl, wDecompBuffer ; $4fcc
 	ld de, $8100 + VRAM_BANK1 ; $4fcf
 	ld c, $10 ; $4fd2
 	call QueueVRAMCopy ; $4fd4
-	ld hl, $3f34 ; $4fd7 -> DataPtr_BracketCharIcon02
+	ld hl, (BANK(DataPtr_BracketCharIcon02) << 8) | LOW(DataPtr_BracketCharIcon02) ; $4fd7
 	ld de, wDecompBuffer ; $4fda
 	call DecompressDataFromBank ; $4fdd
 	ld hl, wDecompBuffer ; $4fe0

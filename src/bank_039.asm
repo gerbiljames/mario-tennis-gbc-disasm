@@ -1001,7 +1001,7 @@ LoadStadiumBgGraphics:
 	ldh a, [hWramBank] ; $4c38
 	push af ; $4c3a
 	wram_bank $01 ; $4c3b
-	ld hl, $3c08 ; $4c41 -> DataPtr_StadiumTiles
+	ld hl, (BANK(DataPtr_StadiumTiles) << 8) | LOW(DataPtr_StadiumTiles) ; $4c41
 	ld de, wDecompBuffer ; $4c44
 	call DecompressDataFromBank ; $4c47
 	ld hl, wDecompBuffer ; $4c4a
@@ -1013,20 +1013,20 @@ LoadStadiumBgGraphics:
 	ld c, $80 ; $4c5b
 	call QueueVRAMCopy ; $4c5d
 	wram_bank $03 ; $4c60
-	ld hl, $3c0a ; $4c66 -> DataPtr_StadiumTilemap
+	ld hl, (BANK(DataPtr_StadiumTilemap) << 8) | LOW(DataPtr_StadiumTilemap) ; $4c66
 	ld de, wShadowTilemap ; $4c69
 	call DecompressDataFromBank ; $4c6c
-	ld hl, $3c0a ; $4c6f -> DataPtr_StadiumTilemap
+	ld hl, (BANK(DataPtr_StadiumTilemap) << 8) | LOW(DataPtr_StadiumTilemap) ; $4c6f
 	ld de, wScreenScratch ; $4c72
 	call DecompressDataFromBank ; $4c75
-	ld hl, $3c0c ; $4c78 -> DataPtr_StadiumAttrmap
+	ld hl, (BANK(DataPtr_StadiumAttrmap) << 8) | LOW(DataPtr_StadiumAttrmap) ; $4c78
 	ld de, wShadowAttrmap ; $4c7b
 	call DecompressDataFromBank ; $4c7e
-	ld hl, $3c0c ; $4c81 -> DataPtr_StadiumAttrmap
+	ld hl, (BANK(DataPtr_StadiumAttrmap) << 8) | LOW(DataPtr_StadiumAttrmap) ; $4c81
 	ld de, wRulesScreenAnimFrame ; $4c84
 	call DecompressDataFromBank ; $4c87
 	wram_bank $01 ; $4c8a
-	ld hl, $3c0e ; $4c90 -> DataPtr_StadiumPalettes
+	ld hl, (BANK(DataPtr_StadiumPalettes) << 8) | LOW(DataPtr_StadiumPalettes) ; $4c90
 	ld de, wDecompBuffer ; $4c93
 	ld bc, $0040 ; $4c96
 	call CopyDataFromBank ; $4c99
