@@ -1193,12 +1193,21 @@
   "note": "[8-bit] Number of story locations GetStoryLocationCount reported, the upper bound RunDebugWarpMenu's location stepper wraps at"
  },
  "0xc703": {
-  "name": "wDebugWarpNumber",
-  "note": "[8-bit] Location number typed into the debug warp menu. The colour-component viewer formats its digits over the same bytes, which is why the two after it stay numeric"
+  "name": "wDebugWarpCursorRow",
+  "note": "[8-bit] Which field the debug warp menu's cursor is on: 0 = location number, 1 = entry point (toggled with xor 1, row drawn at *2+2). The location number itself lives in $c700 during this menu. The colour editor formats its G digits over the same three bytes"
  },
  "0xc704": {
   "name": "wDebugWarpEntryPoint",
   "note": "[8-bit] Entry point the debug warp menu is editing, written to wStoryModeEntryPoint when A confirms the warp. Note that $c700-$c709 is shared debug scratch: the same bytes are wDebugMenuWindowId and wDebugWarpWindowId in one submenu, the \"RRRGGGBBB\" decimal buffer in the colour editor, and a save slot for eight bytes of wCharPosX in the stats editor"
+ },
+ "0xc706": {
+  "name": "wDebugColorBlueDigits",
+  "size": 3,
+  "note": "[3 bytes] Last third of the colour editor's $c700-$c709 digit string: DebugDrawColorComponents formats the R/G/B components as three 3-digit groups at $c700/$c703/$c706, plants the $0d cursor glyph over the selected component's first digit, and WriteStringToWindow draws the whole run under the R/G/B header. Only these and the terminator have free addresses; R and G land on the warp-menu names"
+ },
+ "0xc709": {
+  "name": "wDebugColorDigitsEnd",
+  "note": "[8-bit] NUL terminator DebugDrawColorComponents plants after the nine RGB digits so WriteStringToWindow stops here; also the last byte of the shared $c700-$c709 debug scratch block"
  },
  "0xc710": {
   "name": "wDebugPaletteViewerWindowId",

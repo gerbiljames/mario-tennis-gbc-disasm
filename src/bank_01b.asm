@@ -3031,7 +3031,7 @@ GetCharSelectRosterField:
 	ret ; $5fd3
 LoadCharSelectNavGrid:
 	ld hl, CharSelectNavGridTable ; $5fd4
-	ld de, $c7a0 ; $5fd7
+	ld de, wNavGridBuffer ; $5fd7
 	ld bc, $0020 ; $5fda
 	call CopyMemoryBC ; $5fdd
 	ret ; $5fe0
@@ -3244,7 +3244,7 @@ MoveCharSelectCursor:
 	ld a, [wCharSelectRow] ; $619f
 	ld e, a ; $61a2
 .loop:
-	ld hl, $c7a0 ; $61a3
+	ld hl, wNavGridBuffer ; $61a3
 	farcall MoveGridCursor ; $61a6
 	farcall LoadCharacterRecordToBuffer ; $61a9
 	farcall CheckCharacterUnlocked ; $61ac
@@ -3761,7 +3761,7 @@ GetUnlockDebugRosterField:
 	ret ; $65f9
 LoadUnlockDebugNavGrid:
 	ld hl, UnlockDebugNavGridTable ; $65fa
-	ld de, $c7a0 ; $65fd
+	ld de, wNavGridBuffer ; $65fd
 	ld bc, $0020 ; $6600
 	call CopyMemoryBC ; $6603
 	ret ; $6606
@@ -4006,7 +4006,7 @@ MoveUnlockDebugCursor:
 	ld d, a ; $6800
 	ld a, [wCharSelectRow] ; $6801
 	ld e, a ; $6804
-	ld hl, $c7a0 ; $6805
+	ld hl, wNavGridBuffer ; $6805
 	call StepUnlockDebugCursor ; $6808
 	ld b, a ; $680b
 	push bc ; $680c

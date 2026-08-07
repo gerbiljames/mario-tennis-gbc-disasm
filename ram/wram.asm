@@ -191,6 +191,18 @@ wSwingContestHudMode:: db
 ; [8-bit] Which HUD page the swing contest shows; InitWaterSpriteMinigameHud seeds it and QueueWaterSpriteMinigameHudPanels queues the panels for it
 wSwingContestHudPage:: db
 NEXTU
+; Training Court challenger dialogue ids (bank $15, $5d00-$6400)
+; [16-bit] Each challenger result scene writes its court's lose-dialogue text id here ($201d serve, $204a net, $2078 stroke) when the point was lost -- one slot below the id block the handlers actually read. The pre-scene setup seeds the same word into wChallengerLoseTextId, and nothing anywhere reads this copy, so the write is a vestigial duplicate of the lose slot
+wUnusedChallengerLoseTextId:: dw
+; [16-bit] Lose-dialogue text id the challenger setup scenes seed per court; the shared result handler's .lose arm reads it into hl for InitDialogueTextCursor. The bank-wide swing-contest names used to cover these sites, which is why the challenger machinery once read as contest timers
+wChallengerLoseTextId:: dw
+; [16-bit] Win-dialogue text id, read by the result handler's finish arm
+wChallengerWinTextId:: dw
+; [16-bit] Draw-dialogue text id, read by the result handler's draw arm
+wChallengerDrawTextId:: dw
+; [16-bit] Follow-up dialogue text id the result scenes speak after the verdict line; the setup scenes write it as a word across what the swing contest treats as two byte-wide HUD variables
+wChallengerFollowupTextId:: dw
+NEXTU
 ; generic location scratch
 ; [14 bytes] The rest of the current location's scratch block, after wMapSceneStage / wMapSceneStage2. Every story script in banks $0e-$13 uses it for whatever that location needs -- a saved actor position, a name being assembled for a text argument, a menu's working bytes -- so the block has a name and the offsets do not. The two overlays that do have a fixed layout (bank $14's cutscene sprite slots, bank $15's swing contest) are the scoped variants above
 wMapScratch:: ds 14
@@ -956,12 +968,19 @@ wDebugWarpWindowId:: db
 ; [8-bit] Number of story locations GetStoryLocationCount reported, the upper bound RunDebugWarpMenu's location stepper wraps at
 wDebugWarpLocationCount:: db
 
-; [8-bit] Location number typed into the debug warp menu. The colour-component viewer formats its digits over the same bytes, which is why the two after it stay numeric
-wDebugWarpNumber:: db
+; [8-bit] Which field the debug warp menu's cursor is on: 0 = location number, 1 = entry point (toggled with xor 1, row drawn at *2+2). The location number itself lives in $c700 during this menu. The colour editor formats its G digits over the same three bytes
+wDebugWarpCursorRow:: db
 
 ; [8-bit] Entry point the debug warp menu is editing, written to wStoryModeEntryPoint when A confirms the warp. Note that $c700-$c709 is shared debug scratch: the same bytes are wDebugMenuWindowId and wDebugWarpWindowId in one submenu, the "RRRGGGBBB" decimal buffer in the colour editor, and a save slot for eight bytes of wCharPosX in the stats editor
 wDebugWarpEntryPoint:: db
-	ds 11
+	ds 1
+
+; [3 bytes] Last third of the colour editor's $c700-$c709 digit string: DebugDrawColorComponents formats the R/G/B components as three 3-digit groups at $c700/$c703/$c706, plants the $0d cursor glyph over the selected component's first digit, and WriteStringToWindow draws the whole run under the R/G/B header. Only these and the terminator have free addresses; R and G land on the warp-menu names
+wDebugColorBlueDigits:: ds 3
+
+; [8-bit] NUL terminator DebugDrawColorComponents plants after the nine RGB digits so WriteStringToWindow stops here; also the last byte of the shared $c700-$c709 debug scratch block
+wDebugColorDigitsEnd:: db
+	ds 6
 
 ; [8-bit] Window handle of the debug palette viewer's grid window (RunDebugPaletteViewer)
 wDebugPaletteViewerWindowId:: db
@@ -1009,7 +1028,13 @@ wDebugStatWords2:: ds 8
 	ds 8
 
 ; Mode-local scratch ($c780-$c78f is reused by each game mode;
-; only proven consumers are named, sites in other modes stay numeric)
+; only proven consumers are named, sites in other modes stay numeric).
+; The match engine's two `ld hl, $c780 / ld c, $08 / call ClearMemory16`
+; sites ($08:$4084/$41ad) zero the ENTIRE $c780-$c7ff mode page, not 8
+; bytes -- ClearMemory16 clears c*16 -- which is what resets every union
+; variant, the wTargetZone*/wDrillGate* flats and the mode-hook table
+; between modes. ResetMugshotPalettes_1b also writes $ff to $c780 before
+; reloading palettes; nothing in bank $1b reads it back.
 UNION
 ; character select (bank $1b)
 	ds 1
@@ -1049,9 +1074,16 @@ NEXTU
 wDrillGateActive:: db
 NEXTU
 ; scoreboard (bank $18)
-	ds 10
+; [8-bit] Cleared by InitConfirmScreen; DrawScoreNumbersTask compares it against 3 every frame and, on a match, raises wScorePanelBobActive for that frame's score digits. Nothing reachable ever advances it: the confirm screen's only caller is Unused_1b_ShowHighScoreConfirmScreen, so the whole bob is dead code (its ramp table is likewise UnusedBobRamp_18)
+wScorePanelBobStep:: db
+	ds 2
+; [8-bit] Transient flag DrawScoreNumbersTask raises while drawing the wScorePanelScore digits and clears immediately after; DrawGlyphSprite reads it to add a per-glyph Y offset from UnusedBobRamp_18
+wScorePanelBobActive:: db
+	ds 6
 ; [8-bit] wStoryMainCharExpTier as LoadScorePanelValue copied it for the scoreboard, so DrawScoreNumbersTask draws from a snapshot rather than the live value
 wScorePanelExpTier:: db
+; [8-bit named; read as a 16-bit word] DrawScoreNumbersTask loads hl from $c78b-$c78c and draws it as a 3-digit sprite number beside the wScorePanelExpTier draw. No writer exists in bank $18 (LoadScorePanelValue fills only the exp tier), and the high byte is wTargetZoneEnabled -- the dead high-score confirm screen predates the target-zone layout, so on any real entry the value is whatever the mode-page clear left (0)
+wScorePanelScore:: db
 ENDU
 
 ; [8-bit] Nonzero draws the 4-corner court target zone (training drills)
@@ -1092,14 +1124,23 @@ wDrillGate1:: ds 4
 wDrillGate2:: ds 4
 
 ; Mode-local scratch, the first five bytes above $c780. Scoped to the
-; minigame banks; bank $1b loads its 32-byte character-select nav grid over
-; the same address and on past the named mode bytes above, so that use has
-; no symbol it could be given.
+; minigame banks; bank $1b loads its 32-byte nav grids over the same
+; address and on past the named mode bytes above -- dead while the menu
+; shell runs, and the match engine re-zeroes the whole $c780-$c7ff page
+; anyway -- so only the buffer's base byte can carry the union symbol and
+; the 32-byte extent lives in its note.
+UNION
+; menu-shell nav grid (bank $1b)
+; [8-bit] Base of the 32-byte 4x8 grid of character/menu-cell ids the menu shell's grid cursor walks -- the buffer runs past this union into the named minigame block, so only the base byte carries the symbol. LoadCharSelectNavGrid copies CharSelectNavGridTable here and the unlock-debug screen copies UnlockDebugNavGridTable ($ff = empty cell, $fe/$fd = wrap sentinels). MoveGridCursor takes hl = this base, and the selection readers index it split-base with row*8+col
+wNavGridBuffer:: db
+	ds 4
+NEXTU
 ; minigame targets (banks $0a/$0d)
 ; [4 bytes] Position the floating score popup starts from, copied out of wBallHistory + 30 by StartScorePopup and stepped by UpdateScorePopup
 wScorePopupSource:: ds 4
 ; [8-bit] Set at init by Banana Bunch and Fruit Fantasy, the two minigames whose targets deflect the ball rather than absorb it. While it is nonzero UpdateMinigameTarget runs the Alt draw, hit-test and scoring handlers instead of the ordinary ones
 wMinigameTargetsAltMode:: db
+ENDU
 
 ; [8-bit] Random roll SelectRandomMinigameShot and SelectRandomTreasureBoxTargetZone keep while they walk their weight tables to pick the next shot or target zone
 wMinigameShotRoll:: db

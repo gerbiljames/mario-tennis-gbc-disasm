@@ -717,8 +717,8 @@ InitConfirmScreen:
 	call ClearTileVramBothBanks ; $52e4
 	call LoadScorePanelValue ; $52e7
 	xor a ; $52ea
-	ld [$c783], a ; $52eb
-	ld [$c780], a ; $52ee
+	ld [wScorePanelBobActive], a ; $52eb
+	ld [wScorePanelBobStep], a ; $52ee
 	ld hl, ConfirmScreenGfx0 ; $52f1
 	ld de, wDecompBuffer ; $52f4
 	call DecompressData ; $52f7
@@ -801,13 +801,13 @@ DrawScoreNumbersTask:
 	ld b, $03 ; $53bc
 	ld a, $02 ; $53be
 	call DrawDecimalNumberSprites ; $53c0
-	ld a, [$c780] ; $53c3
+	ld a, [wScorePanelBobStep] ; $53c3
 	cp $03 ; $53c6
 	jr nz, .draw ; $53c8
 	ld a, $01 ; $53ca
-	ld [$c783], a ; $53cc
+	ld [wScorePanelBobActive], a ; $53cc
 .draw:
-	ld hl, $c78b ; $53cf
+	ld hl, wScorePanelScore ; $53cf
 	ld a, [hl+] ; $53d2
 	ld h, [hl] ; $53d3
 	ld l, a ; $53d4
@@ -816,7 +816,7 @@ DrawScoreNumbersTask:
 	ld a, $03 ; $53da
 	call DrawDecimalNumberSprites ; $53dc
 	xor a ; $53df
-	ld [$c783], a ; $53e0
+	ld [wScorePanelBobActive], a ; $53e0
 	ret ; $53e3
 GetTextSlotPointer:
 	add $04 ; $53e4
@@ -987,7 +987,7 @@ DrawGlyphSprite:
 	add a ; $54e2
 	add $30 ; $54e3
 	ld c, a ; $54e5
-	ld a, [$c783] ; $54e6
+	ld a, [wScorePanelBobActive] ; $54e6
 	and a ; $54e9
 	jr z, .queue ; $54ea
 	ld a, d ; $54ec

@@ -6197,7 +6197,7 @@ DebugDrawWarpMenu:
 	ld a, [wDebugWarpWindowId] ; $6798
 	call WriteStringToWindow ; $679b
 	ld d, $10 ; $679e
-	ld a, [wDebugWarpNumber] ; $67a0
+	ld a, [wDebugWarpCursorRow] ; $67a0
 	add a ; $67a3
 	add $02 ; $67a4
 	ld e, a ; $67a6
@@ -6217,7 +6217,7 @@ RunDebugWarpMenu:
 	push hl ; $67c7
 	wram_bank $05 ; $67c8
 	xor a ; $67ce
-	ld [wDebugWarpNumber], a ; $67cf
+	ld [wDebugWarpCursorRow], a ; $67cf
 	ld [wDebugWarpEntryPoint], a ; $67d2
 	ld a, [wStoryModeCurrentLocation] ; $67d5
 	ld [wDebugMenuWindowId], a ; $67d8
@@ -6248,13 +6248,13 @@ RunDebugWarpMenu:
 	ldh a, [hInputPressed] ; $6815
 	and PADF_UP | PADF_DOWN ; $6817
 	jr z, .step2 ; $6819
-	ld hl, wDebugWarpNumber ; $681b
+	ld hl, wDebugWarpCursorRow ; $681b
 	ld a, [hl] ; $681e
 	xor $01 ; $681f
 	ld [hl], a ; $6821
 	call DebugDrawWarpMenu ; $6822
 .step2:
-	ld a, [wDebugWarpNumber] ; $6825
+	ld a, [wDebugWarpCursorRow] ; $6825
 	cp $01 ; $6828
 	jr z, .eq01 ; $682a
 	ld a, [wDebugWarpLocationCount] ; $682c
@@ -6357,12 +6357,12 @@ DebugDrawColorComponents:
 	call FormatDecimalNumber ; $697a
 	ld h, $00 ; $697d
 	ld l, b ; $697f
-	ld de, wDebugWarpNumber ; $6980
+	ld de, wDebugWarpCursorRow ; $6980
 	ld a, $03 ; $6983
 	call FormatDecimalNumber ; $6985
 	ld h, $00 ; $6988
 	ld l, c ; $698a
-	ld de, $c706 ; $698b
+	ld de, wDebugColorBlueDigits ; $698b
 	ld a, $03 ; $698e
 	call FormatDecimalNumber ; $6990
 	pop de ; $6993
@@ -6376,7 +6376,7 @@ DebugDrawColorComponents:
 	ld h, a ; $699d
 	ld [hl], $0d ; $699e
 	xor a ; $69a0
-	ld [$c709], a ; $69a1
+	ld [wDebugColorDigitsEnd], a ; $69a1
 	ld hl, wDebugMenuWindowId ; $69a4
 	ld de, $0102 ; $69a7
 	ld a, [wDebugColorEditorWindowId] ; $69aa

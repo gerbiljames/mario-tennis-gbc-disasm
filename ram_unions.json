@@ -86,7 +86,7 @@
   {
    "start": "0xc780",
    "end": "0xc78c",
-   "comment": "Mode-local scratch ($c780-$c78f is reused by each game mode;\nonly proven consumers are named, sites in other modes stay numeric)",
+   "comment": "Mode-local scratch ($c780-$c78f is reused by each game mode;\nonly proven consumers are named, sites in other modes stay numeric).\nThe match engine's two `ld hl, $c780 / ld c, $08 / call ClearMemory16`\nsites ($08:$4084/$41ad) zero the ENTIRE $c780-$c7ff mode page, not 8\nbytes -- ClearMemory16 clears c*16 -- which is what resets every union\nvariant, the wTargetZone*/wDrillGate* flats and the mode-hook table\nbetween modes. ResetMugshotPalettes_1b also writes $ff to $c780 before\nreloading palettes; nothing in bank $1b reads it back.",
    "variants": [
     {
      "context": "character select (bank $1b)",
@@ -184,9 +184,21 @@
       }
      ],
      "symbols": {
+      "0xc780": {
+       "name": "wScorePanelBobStep",
+       "note": "[8-bit] Cleared by InitConfirmScreen; DrawScoreNumbersTask compares it against 3 every frame and, on a match, raises wScorePanelBobActive for that frame's score digits. Nothing reachable ever advances it: the confirm screen's only caller is Unused_1b_ShowHighScoreConfirmScreen, so the whole bob is dead code (its ramp table is likewise UnusedBobRamp_18)"
+      },
+      "0xc783": {
+       "name": "wScorePanelBobActive",
+       "note": "[8-bit] Transient flag DrawScoreNumbersTask raises while drawing the wScorePanelScore digits and clears immediately after; DrawGlyphSprite reads it to add a per-glyph Y offset from UnusedBobRamp_18"
+      },
       "0xc78a": {
        "name": "wScorePanelExpTier",
        "note": "[8-bit] wStoryMainCharExpTier as LoadScorePanelValue copied it for the scoreboard, so DrawScoreNumbersTask draws from a snapshot rather than the live value"
+      },
+      "0xc78b": {
+       "name": "wScorePanelScore",
+       "note": "[8-bit named; read as a 16-bit word] DrawScoreNumbersTask loads hl from $c78b-$c78c and draws it as a 3-digit sprite number beside the wScorePanelExpTier draw. No writer exists in bank $18 (LoadScorePanelValue fills only the exp tier), and the high byte is wTargetZoneEnabled -- the dead high-score confirm screen predates the target-zone layout, so on any real entry the value is whatever the mode-page clear left (0)"
       }
      }
     }
@@ -2599,6 +2611,43 @@
      }
     },
     {
+     "context": "Training Court challenger dialogue ids (bank $15, $5d00-$6400)",
+     "scopes": [
+      {
+       "bank": "0x15",
+       "start": "0x5d00",
+       "end": "0x6400"
+      }
+     ],
+     "symbols": {
+      "0xc2b2": {
+       "name": "wUnusedChallengerLoseTextId",
+       "note": "[16-bit] Each challenger result scene writes its court's lose-dialogue text id here ($201d serve, $204a net, $2078 stroke) when the point was lost -- one slot below the id block the handlers actually read. The pre-scene setup seeds the same word into wChallengerLoseTextId, and nothing anywhere reads this copy, so the write is a vestigial duplicate of the lose slot",
+       "size": 2
+      },
+      "0xc2b4": {
+       "name": "wChallengerLoseTextId",
+       "note": "[16-bit] Lose-dialogue text id the challenger setup scenes seed per court; the shared result handler's .lose arm reads it into hl for InitDialogueTextCursor. The bank-wide swing-contest names used to cover these sites, which is why the challenger machinery once read as contest timers",
+       "size": 2
+      },
+      "0xc2b6": {
+       "name": "wChallengerWinTextId",
+       "note": "[16-bit] Win-dialogue text id, read by the result handler's finish arm",
+       "size": 2
+      },
+      "0xc2b8": {
+       "name": "wChallengerDrawTextId",
+       "note": "[16-bit] Draw-dialogue text id, read by the result handler's draw arm",
+       "size": 2
+      },
+      "0xc2ba": {
+       "name": "wChallengerFollowupTextId",
+       "note": "[16-bit] Follow-up dialogue text id the result scenes speak after the verdict line; the setup scenes write it as a word across what the swing contest treats as two byte-wide HUD variables",
+       "size": 2
+      }
+     }
+    },
+    {
      "context": "generic location scratch",
      "default": true,
      "scopes": [],
@@ -3883,8 +3932,22 @@
   {
    "start": "0xc7a0",
    "end": "0xc7a5",
-   "comment": "Mode-local scratch, the first five bytes above $c780. Scoped to the\nminigame banks; bank $1b loads its 32-byte character-select nav grid over\nthe same address and on past the named mode bytes above, so that use has\nno symbol it could be given.",
+   "comment": "Mode-local scratch, the first five bytes above $c780. Scoped to the\nminigame banks; bank $1b loads its 32-byte nav grids over the same\naddress and on past the named mode bytes above -- dead while the menu\nshell runs, and the match engine re-zeroes the whole $c780-$c7ff page\nanyway -- so only the buffer's base byte can carry the union symbol and\nthe 32-byte extent lives in its note.",
    "variants": [
+    {
+     "context": "menu-shell nav grid (bank $1b)",
+     "scopes": [
+      {
+       "bank": "0x1b"
+      }
+     ],
+     "symbols": {
+      "0xc7a0": {
+       "name": "wNavGridBuffer",
+       "note": "[8-bit] Base of the 32-byte 4x8 grid of character/menu-cell ids the menu shell's grid cursor walks -- the buffer runs past this union into the named minigame block, so only the base byte carries the symbol. LoadCharSelectNavGrid copies CharSelectNavGridTable here and the unlock-debug screen copies UnlockDebugNavGridTable ($ff = empty cell, $fe/$fd = wrap sentinels). MoveGridCursor takes hl = this base, and the selection readers index it split-base with row*8+col"
+      }
+     }
+    },
     {
      "context": "minigame targets (banks $0a/$0d)",
      "scopes": [

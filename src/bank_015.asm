@@ -1929,7 +1929,7 @@ ServeChallengerResultScene:
 	inc a ; $5d57
 	cp $01 ; $5d58
 	jr nz, .dispatch ; $5d5a
-	ld hl, $c2b2 ; $5d5c
+	ld hl, wUnusedChallengerLoseTextId ; $5d5c
 	ld de, $201d ; $5d5f
 	ld a, e ; $5d62
 	ld [hl+], a ; $5d63
@@ -1970,7 +1970,7 @@ NetChallengerResultScene:
 	inc a ; $5dd8
 	cp $01 ; $5dd9
 	jr nz, .dispatch ; $5ddb
-	ld hl, $c2b2 ; $5ddd
+	ld hl, wUnusedChallengerLoseTextId ; $5ddd
 	ld de, $204a ; $5de0
 	ld a, e ; $5de3
 	ld [hl+], a ; $5de4
@@ -2010,7 +2010,7 @@ StrokeChallengerResultScene:
 	inc a ; $5e57
 	cp $01 ; $5e58
 	jr nz, .dispatch ; $5e5a
-	ld hl, $c2b2 ; $5e5c
+	ld hl, wUnusedChallengerLoseTextId ; $5e5c
 	ld de, $2078 ; $5e5f
 	ld a, e ; $5e62
 	ld [hl+], a ; $5e63
@@ -2032,17 +2032,17 @@ StrokeChallengerResultScene:
 	jp .finish ; $5e81
 	ret ; $5e84
 .celebrate:
-	ld hl, wSwingContestHudMode ; $5e85
+	ld hl, wChallengerFollowupTextId ; $5e85
 	ld de, $2020 ; $5e88
 	ld a, e ; $5e8b
 	ld [hl+], a ; $5e8c
 	ld [hl], d ; $5e8d
-	ld hl, wSwingContestTimer ; $5e8e
+	ld hl, wChallengerLoseTextId ; $5e8e
 	ld de, $201d ; $5e91
 	ld a, e ; $5e94
 	ld [hl+], a ; $5e95
 	ld [hl], d ; $5e96
-	ld hl, wSwingContestSwings ; $5e97
+	ld hl, wChallengerWinTextId ; $5e97
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $5e9a
 	jr z, .celebrateWait ; $5e9d
 	ld de, $2023 ; $5e9f
@@ -2053,7 +2053,7 @@ StrokeChallengerResultScene:
 	ld a, e ; $5ea7
 	ld [hl+], a ; $5ea8
 	ld [hl], d ; $5ea9
-	ld hl, wSwingContestPrevInput ; $5eaa
+	ld hl, wChallengerDrawTextId ; $5eaa
 	ld de, $2024 ; $5ead
 	ld a, e ; $5eb0
 	ld [hl+], a ; $5eb1
@@ -2061,22 +2061,22 @@ StrokeChallengerResultScene:
 	call ServeChallengerResultScene ; $5eb3
 	ret ; $5eb6
 .speakWin:
-	ld hl, wSwingContestHudMode ; $5eb7
+	ld hl, wChallengerFollowupTextId ; $5eb7
 	ld de, $2020 ; $5eba
 	ld a, e ; $5ebd
 	ld [hl+], a ; $5ebe
 	ld [hl], d ; $5ebf
-	ld hl, wSwingContestTimer ; $5ec0
+	ld hl, wChallengerLoseTextId ; $5ec0
 	ld de, $201d ; $5ec3
 	ld a, e ; $5ec6
 	ld [hl+], a ; $5ec7
 	ld [hl], d ; $5ec8
-	ld hl, wSwingContestSwings ; $5ec9
+	ld hl, wChallengerWinTextId ; $5ec9
 	ld de, $2031 ; $5ecc
 	ld a, e ; $5ecf
 	ld [hl+], a ; $5ed0
 	ld [hl], d ; $5ed1
-	ld hl, wSwingContestPrevInput ; $5ed2
+	ld hl, wChallengerDrawTextId ; $5ed2
 	ld de, $2032 ; $5ed5
 	ld a, e ; $5ed8
 	ld [hl+], a ; $5ed9
@@ -2084,22 +2084,22 @@ StrokeChallengerResultScene:
 	call ServeChallengerResultScene ; $5edb
 	ret ; $5ede
 .partnerJoins:
-	ld hl, wSwingContestHudMode ; $5edf
+	ld hl, wChallengerFollowupTextId ; $5edf
 	ld de, $2020 ; $5ee2
 	ld a, e ; $5ee5
 	ld [hl+], a ; $5ee6
 	ld [hl], d ; $5ee7
-	ld hl, wSwingContestTimer ; $5ee8
+	ld hl, wChallengerLoseTextId ; $5ee8
 	ld de, $201d ; $5eeb
 	ld a, e ; $5eee
 	ld [hl+], a ; $5eef
 	ld [hl], d ; $5ef0
-	ld hl, wSwingContestSwings ; $5ef1
+	ld hl, wChallengerWinTextId ; $5ef1
 	ld de, $203d ; $5ef4
 	ld a, e ; $5ef7
 	ld [hl+], a ; $5ef8
 	ld [hl], d ; $5ef9
-	ld hl, wSwingContestPrevInput ; $5efa
+	ld hl, wChallengerDrawTextId ; $5efa
 	ld de, $203e ; $5efd
 	ld a, e ; $5f00
 	ld [hl+], a ; $5f01
@@ -2107,7 +2107,7 @@ StrokeChallengerResultScene:
 	call ServeChallengerResultScene ; $5f03
 	ret ; $5f06
 .lose:
-	ld hl, wSwingContestTimer ; $5f07
+	ld hl, wChallengerLoseTextId ; $5f07
 	ld a, [hl+] ; $5f0a
 	ld h, [hl] ; $5f0b
 	ld l, a ; $5f0c
@@ -2140,7 +2140,7 @@ StrokeChallengerResultScene:
 	farcall EndCutsceneScriptMode ; $5f54
 	ret ; $5f57
 .finish:
-	ld hl, wSwingContestSwings ; $5f58
+	ld hl, wChallengerWinTextId ; $5f58
 	ld a, [hl+] ; $5f5b
 	ld h, [hl] ; $5f5c
 	ld l, a ; $5f5d
@@ -2152,7 +2152,7 @@ StrokeChallengerResultScene:
 	script_wait_frames $05 ; $5f6d
 	and a ; $5f74
 	jr nz, .finishDoubles ; $5f75
-	ld hl, wSwingContestHudMode ; $5f77
+	ld hl, wChallengerFollowupTextId ; $5f77
 	ld a, [hl+] ; $5f7a
 	ld h, [hl] ; $5f7b
 	ld l, a ; $5f7c
@@ -2171,7 +2171,7 @@ StrokeChallengerResultScene:
 	farcall EndCutsceneScriptMode ; $5f9e
 	ret ; $5fa1
 .finishDoubles:
-	ld hl, wSwingContestHudMode ; $5fa2
+	ld hl, wChallengerFollowupTextId ; $5fa2
 	ld a, [hl+] ; $5fa5
 	ld h, [hl] ; $5fa6
 	ld l, a ; $5fa7
@@ -2191,7 +2191,7 @@ StrokeChallengerResultScene:
 	farcall ScriptSetActorAnimation ; $5fc7
 	ld a, [wMapSceneStage2] ; $5fca
 	farcall ScriptWaitActorIdle ; $5fcd
-	ld hl, wSwingContestPrevInput ; $5fd0
+	ld hl, wChallengerDrawTextId ; $5fd0
 	ld a, [hl+] ; $5fd3
 	ld h, [hl] ; $5fd4
 	ld l, a ; $5fd5
@@ -2457,36 +2457,36 @@ MovePlayerToLessonCourtSpot:
 	farcall AttachActorStepMover ; $62bb
 	ret ; $62be
 .netResultText:
-	ld hl, wSwingContestHudMode ; $62bf
+	ld hl, wChallengerFollowupTextId ; $62bf
 	ld de, $204d ; $62c2
 	ld a, e ; $62c5
 	ld [hl+], a ; $62c6
 	ld [hl], d ; $62c7
-	ld hl, wSwingContestTimer ; $62c8
+	ld hl, wChallengerLoseTextId ; $62c8
 	ld de, $204a ; $62cb
 	ld a, e ; $62ce
 	ld [hl+], a ; $62cf
 	ld [hl], d ; $62d0
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $62d1
 	jr z, .netResultTextAlt ; $62d4
-	ld hl, wSwingContestSwings ; $62d6
+	ld hl, wChallengerWinTextId ; $62d6
 	ld de, $2050 ; $62d9
 	ld a, e ; $62dc
 	ld [hl+], a ; $62dd
 	ld [hl], d ; $62de
-	ld hl, wSwingContestPrevInput ; $62df
+	ld hl, wChallengerDrawTextId ; $62df
 	ld de, $2053 ; $62e2
 	ld a, e ; $62e5
 	ld [hl+], a ; $62e6
 	ld [hl], d ; $62e7
 	jr .netResult ; $62e8
 .netResultTextAlt:
-	ld hl, wSwingContestSwings ; $62ea
+	ld hl, wChallengerWinTextId ; $62ea
 	ld de, $204f ; $62ed
 	ld a, e ; $62f0
 	ld [hl+], a ; $62f1
 	ld [hl], d ; $62f2
-	ld hl, wSwingContestPrevInput ; $62f3
+	ld hl, wChallengerDrawTextId ; $62f3
 	ld de, $2051 ; $62f6
 	ld a, e ; $62f9
 	ld [hl+], a ; $62fa
@@ -2495,22 +2495,22 @@ MovePlayerToLessonCourtSpot:
 	call NetChallengerResultScene ; $62fc
 	ret ; $62ff
 .netResultDoubles:
-	ld hl, wSwingContestHudMode ; $6300
+	ld hl, wChallengerFollowupTextId ; $6300
 	ld de, $204d ; $6303
 	ld a, e ; $6306
 	ld [hl+], a ; $6307
 	ld [hl], d ; $6308
-	ld hl, wSwingContestTimer ; $6309
+	ld hl, wChallengerLoseTextId ; $6309
 	ld de, $204a ; $630c
 	ld a, e ; $630f
 	ld [hl+], a ; $6310
 	ld [hl], d ; $6311
-	ld hl, wSwingContestSwings ; $6312
+	ld hl, wChallengerWinTextId ; $6312
 	ld de, $205f ; $6315
 	ld a, e ; $6318
 	ld [hl+], a ; $6319
 	ld [hl], d ; $631a
-	ld hl, wSwingContestPrevInput ; $631b
+	ld hl, wChallengerDrawTextId ; $631b
 	ld de, $2060 ; $631e
 	ld a, e ; $6321
 	ld [hl+], a ; $6322
@@ -2518,22 +2518,22 @@ MovePlayerToLessonCourtSpot:
 	call NetChallengerResultScene ; $6324
 	ret ; $6327
 .serveResultText:
-	ld hl, wSwingContestHudMode ; $6328
+	ld hl, wChallengerFollowupTextId ; $6328
 	ld de, $204d ; $632b
 	ld a, e ; $632e
 	ld [hl+], a ; $632f
 	ld [hl], d ; $6330
-	ld hl, wSwingContestTimer ; $6331
+	ld hl, wChallengerLoseTextId ; $6331
 	ld de, $204a ; $6334
 	ld a, e ; $6337
 	ld [hl+], a ; $6338
 	ld [hl], d ; $6339
-	ld hl, wSwingContestSwings ; $633a
+	ld hl, wChallengerWinTextId ; $633a
 	ld de, $206c ; $633d
 	ld a, e ; $6340
 	ld [hl+], a ; $6341
 	ld [hl], d ; $6342
-	ld hl, wSwingContestPrevInput ; $6343
+	ld hl, wChallengerDrawTextId ; $6343
 	ld de, $206d ; $6346
 	ld a, e ; $6349
 	ld [hl+], a ; $634a
@@ -2541,36 +2541,36 @@ MovePlayerToLessonCourtSpot:
 	call NetChallengerResultScene ; $634c
 	ret ; $634f
 .serveResultTextAlt:
-	ld hl, wSwingContestHudMode ; $6350
+	ld hl, wChallengerFollowupTextId ; $6350
 	ld de, $207b ; $6353
 	ld a, e ; $6356
 	ld [hl+], a ; $6357
 	ld [hl], d ; $6358
-	ld hl, wSwingContestTimer ; $6359
+	ld hl, wChallengerLoseTextId ; $6359
 	ld de, $2078 ; $635c
 	ld a, e ; $635f
 	ld [hl+], a ; $6360
 	ld [hl], d ; $6361
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $6362
 	jr z, .serveResult ; $6365
-	ld hl, wSwingContestSwings ; $6367
+	ld hl, wChallengerWinTextId ; $6367
 	ld de, $207e ; $636a
 	ld a, e ; $636d
 	ld [hl+], a ; $636e
 	ld [hl], d ; $636f
-	ld hl, wSwingContestPrevInput ; $6370
+	ld hl, wChallengerDrawTextId ; $6370
 	ld de, $2082 ; $6373
 	ld a, e ; $6376
 	ld [hl+], a ; $6377
 	ld [hl], d ; $6378
 	jr .serveResultDoubles ; $6379
 .serveResult:
-	ld hl, wSwingContestSwings ; $637b
+	ld hl, wChallengerWinTextId ; $637b
 	ld de, $207d ; $637e
 	ld a, e ; $6381
 	ld [hl+], a ; $6382
 	ld [hl], d ; $6383
-	ld hl, wSwingContestPrevInput ; $6384
+	ld hl, wChallengerDrawTextId ; $6384
 	ld de, $207f ; $6387
 	ld a, e ; $638a
 	ld [hl+], a ; $638b
@@ -2579,22 +2579,22 @@ MovePlayerToLessonCourtSpot:
 	call StrokeChallengerResultScene ; $638d
 	ret ; $6390
 .strokeResultText:
-	ld hl, wSwingContestHudMode ; $6391
+	ld hl, wChallengerFollowupTextId ; $6391
 	ld de, $207b ; $6394
 	ld a, e ; $6397
 	ld [hl+], a ; $6398
 	ld [hl], d ; $6399
-	ld hl, wSwingContestTimer ; $639a
+	ld hl, wChallengerLoseTextId ; $639a
 	ld de, $2078 ; $639d
 	ld a, e ; $63a0
 	ld [hl+], a ; $63a1
 	ld [hl], d ; $63a2
-	ld hl, wSwingContestSwings ; $63a3
+	ld hl, wChallengerWinTextId ; $63a3
 	ld de, $2091 ; $63a6
 	ld a, e ; $63a9
 	ld [hl+], a ; $63aa
 	ld [hl], d ; $63ab
-	ld hl, wSwingContestPrevInput ; $63ac
+	ld hl, wChallengerDrawTextId ; $63ac
 	ld de, $2092 ; $63af
 	ld a, e ; $63b2
 	ld [hl+], a ; $63b3
@@ -2602,22 +2602,22 @@ MovePlayerToLessonCourtSpot:
 	call StrokeChallengerResultScene ; $63b5
 	ret ; $63b8
 .strokeResult:
-	ld hl, wSwingContestHudMode ; $63b9
+	ld hl, wChallengerFollowupTextId ; $63b9
 	ld de, $207b ; $63bc
 	ld a, e ; $63bf
 	ld [hl+], a ; $63c0
 	ld [hl], d ; $63c1
-	ld hl, wSwingContestTimer ; $63c2
+	ld hl, wChallengerLoseTextId ; $63c2
 	ld de, $2078 ; $63c5
 	ld a, e ; $63c8
 	ld [hl+], a ; $63c9
 	ld [hl], d ; $63ca
-	ld hl, wSwingContestSwings ; $63cb
+	ld hl, wChallengerWinTextId ; $63cb
 	ld de, $20a3 ; $63ce
 	ld a, e ; $63d1
 	ld [hl+], a ; $63d2
 	ld [hl], d ; $63d3
-	ld hl, wSwingContestPrevInput ; $63d4
+	ld hl, wChallengerDrawTextId ; $63d4
 	ld de, $20a4 ; $63d7
 	ld a, e ; $63da
 	ld [hl+], a ; $63db
