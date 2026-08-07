@@ -26,12 +26,13 @@ shape, not *twins*, and the shot banks are near-identical copies of each
 other, so a routine only one bank failed to execute reads as ordinary data
 until you diff it against its siblings.
 
-Everything below is **committed** (HEAD `5227b00`); the whole history
+Everything below is **committed** (HEAD `9192706`); the whole history
 rebuilds byte-perfect. Per-bank progress at any time: `python3
 tools/progress.py` (proven-code bytes, fill runs, label counts, human-named
 counts) and `tools/progress.py --unnamed <bank>` to list still-auto-named
-symbols. **20,406 of 21,986 labels are human-named** (up from 4,816 on
-2026-07-23), and the remaining 1,580 are all generator-*derived* names --
+symbols. **20,391 of 21,971 labels are human-named** (up from 4,816 on
+2026-07-23; the count went *down* on 2026-08-07 because 21 phantom labels
+were deleted), and the remaining 1,580 are all generator-*derived* names --
 `$4000` slot labels spelled after their curated target (`FarPtr_InitAndRunGame`)
 and structures named for what they are (`SoundTable_78`). **No symbol anywhere
 in `src/` states only an address any more**: `tools/progress.py`'s `auto` column
@@ -10954,3 +10955,47 @@ packed `(bank << 8) | directory-slot` selectors for `DecompressDataFromBank`
 (the check evaluator only handles flat names, so a curated expression cannot
 verify), and bank `$39`'s 32 stride-2 pointers into the
 `TilemapAssemblyDispatch_39` stream.
+
+## Both emitter leads followed, and both dissolved into the same pattern (2026-08-07)
+
+Yesterday's two "wants an emitter mechanism" leads are closed, and neither
+needed what the note guessed.
+
+### The packed selectors render now
+
+An hl handed to `DecompressDataFromBank` is `(bank << 8) | LOW(directory
+slot)`, which the helper splits back apart. `slots.py` had already resolved
+every call site statically — the emitter just said so in a comment. The
+operand now renders as `(BANK(DataPtr_X) << 8) | LOW(DataPtr_X)`, which
+assembles to the same word and survives the slot moving within its directory:
+33 sites across seven banks, and the `-> DataPtr` arrow comments are gone.
+
+Doing that exposed a **second phantom-label family**: the fifteen
+`IntroCutsceneState*InitGfx*` "labels" in bank `$6b` sat at the in-bank
+addresses the packed selectors alias, chopping two- and four-byte fragments
+out of the `TitleSceneGraphicsGfx` blobs — each referenced only by the
+operand that minted it. They are deleted, the blobs are whole (two more LZ
+streams machine-verify as a result, 836 → 838), and
+`pointer_load_targets` now skips any site `slots.py` resolved as a packed
+selector, so the class cannot regenerate.
+
+### The bank $39 "interior pointers" never existed
+
+The other lead said `AnimatedTilesTable1` held 32 stride-2 pointers into the
+`TilemapAssemblyDispatch_39` stream. Reading the consumer disproved the
+premise: `UpdateAnimatedTiles` reads each word as h:l straight into
+`DecompressDataFromBank`, so every row is a packed selector too, and the
+`$6dxx` rows alias the dispatch stream by coincidence — the same trap one
+level up. All four frame tables now render through the existing
+`SLOT_RECORD_RENDERS` mechanism, and the `dslot` rows name what the
+animations actually cycle: the intro character icons (bank `$6d`), the
+roster icons (bank `$18`), and bank `$3f`'s streams.
+
+A closing ROM-wide sweep tested all 237 raw `dw` rows whose value decodes as
+a plausible `(bank, slot)` pair. Exactly two more tables were real —
+`MatchRulesMenuGraphicsTable` and `CourtSelectGraphicsTable`, whose loaders
+do the same h:l read, now `dslot` rows — and the other 200-odd are the
+coincidence base rate, sitting in tables whose names are already numeric
+(`TangentTable`, `NotePeriodTable`, the ball-position offsets). Which is the
+session's moral, twice over: the packed reading is proven at the consumer,
+never inferred from the value.
