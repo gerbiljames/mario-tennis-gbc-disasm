@@ -1,9 +1,9 @@
-# Project status — 2026-08-06
+# Project status — 2026-08-07
 
 ## Where things stand
 
-**~160.9K instructions / 422,569 bytes of proven code+structured source
-(20.1% of the 2 MiB ROM) disassembled; everything rebuilds byte-perfect**
+**~160.9K instructions / 422,676 bytes of proven code+structured source
+(20.2% of the 2 MiB ROM) disassembled; everything rebuilds byte-perfect**
 (`make compare` → OK against SHA-1
 `414ba58340a27fc27b127bc01455b32764151ff0`). 59 of 128 banks contain
 code; the other 69 are data (graphics/audio/tilemaps/text) — but most of that
@@ -26,11 +26,11 @@ shape, not *twins*, and the shot banks are near-identical copies of each
 other, so a routine only one bank failed to execute reads as ordinary data
 until you diff it against its siblings.
 
-Everything below is **committed** (HEAD `eda70a5`); the whole history
+Everything below is **committed** (HEAD `5227b00`); the whole history
 rebuilds byte-perfect. Per-bank progress at any time: `python3
 tools/progress.py` (proven-code bytes, fill runs, label counts, human-named
 counts) and `tools/progress.py --unnamed <bank>` to list still-auto-named
-symbols. **20,405 of 21,985 labels are human-named** (up from 4,816 on
+symbols. **20,406 of 21,986 labels are human-named** (up from 4,816 on
 2026-07-23), and the remaining 1,580 are all generator-*derived* names --
 `$4000` slot labels spelled after their curated target (`FarPtr_InitAndRunGame`)
 and structures named for what they are (`SoundTable_78`). **No symbol anywhere
@@ -10903,3 +10903,54 @@ discarding its table read; the callback-B register slip).
 
 **20,405 of 21,985 labels are human-named**, auto is back to 0, and the seed
 files now carry correction notes for every mis-seed the pass found.
+
+## Every raw address operand followed to its consumer (2026-08-07)
+
+Two sweeps over what still spells an address in hex, both generalising finds
+from the seed pass.
+
+### Split-base pairs: all fourteen resolved
+
+A scan for raw `add $xx / adc $yy` pairs found fourteen. The resolver learned
+what the real ones needed: a base a few bytes inside a labeled table renders
+as `LOW(Name + n)` (`MatchMenuItemRectPointers + 2` is the second pointer
+column; the story banks' partner walk-off routines bias into their
+`WalkInFacings` tables), a pointer handed straight to a callee counts as a
+dereference (the minigame hit-burst pair, `LoadIndexedPalette_18`), and a word
+table indexed by a doubled byte has a `+$100` high half (`SquaresTable`). Bank
+`$28`'s three effect-tile regions wanted labels instead — carved out of
+`MatchGraphicsGfx` after their loaders (`SpecialHitEffectTiles_28`,
+`BallTouchCharEffectTilesA/B_28`). A companion scan of blob bytes for
+`jp`/`call` opcodes targeting labeled code (the pattern that exposed the bank
+`$18` callbacks) returned only coincidences inside verified LZ streams — no
+more code hides in blobs.
+
+### The 87 raw pointer loads: 78 constants, 9 findings, 6 phantom labels
+
+Every remaining `ld rr, $4xxx-$7xxx` was followed to its consumer by three
+agents. The constants are overwhelmingly `QueueSprite` position pairs, several
+proven by sibling branches whose values sit above `$8000` where no ROM pointer
+can. Two immediates were pointers after all: `InitObjSlot`'s default slot
+handler is `FinishObjSlotUpdate.done` (rendered via `IMM_CODE_POINTERS`), and
+its template pointer reaches 107 bytes of `oam_sprite` records glued into
+`ServeGfxPtrTable_09`, now `ObjSlotSpriteTemplate_09`.
+`ShotBallPathServeTopspinTable` is really three concatenated word tables —
+placement, speeds, and the 32-entry `wBallHeight` lookup, now labeled — and
+the bracket blink task's zero-phase palette is
+`BracketHighlightBlinkTaskPalettes0`.
+
+**The teardown matters more than the labels.** `StatChangeArrows0`-`5` never
+existed: the six "labels" were X=`$64` sprite-column positions the
+pointer-load heuristic minted as data labels, and their blob splits had
+chopped the tail off `ExpScreenGfx4` — which is 576 bytes again, the same
+size as its three siblings. The sites live in a new `DATA_IMM_IS_CONSTANT`
+set that suppresses both the rendering and the label derivation, alongside
+`$1d:$4c4f`, an arrow position that collided with a real template label the
+same way. This is the `wrong names survive byte-perfect` hazard in its purest
+form — nothing but following the consumer can catch it.
+
+Two leads left for an emitter mechanism, not curation: bank `$3b`'s three
+packed `(bank << 8) | directory-slot` selectors for `DecompressDataFromBank`
+(the check evaluator only handles flat names, so a curated expression cannot
+verify), and bank `$39`'s 32 stride-2 pointers into the
+`TilemapAssemblyDispatch_39` stream.
