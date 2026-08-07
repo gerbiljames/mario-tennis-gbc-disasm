@@ -1,4 +1,4 @@
-# Project status — 2026-08-07
+# Project status — 2026-08-08
 
 ## Where things stand
 
@@ -26,7 +26,7 @@ shape, not *twins*, and the shot banks are near-identical copies of each
 other, so a routine only one bank failed to execute reads as ordinary data
 until you diff it against its siblings.
 
-Everything below is **committed** (HEAD `9192706`); the whole history
+Everything below is **committed** (HEAD `02e3a18`); the whole history
 rebuilds byte-perfect. Per-bank progress at any time: `python3
 tools/progress.py` (proven-code bytes, fill runs, label counts, human-named
 counts) and `tools/progress.py --unnamed <bank>` to list still-auto-named
@@ -10999,3 +10999,51 @@ coincidence base rate, sitting in tables whose names are already numeric
 (`TangentTable`, `NotePeriodTable`, the ball-position offsets). Which is the
 session's moral, twice over: the packed reading is proven at the consumer,
 never inferred from the value.
+
+## The record-table pointers, the last unbanked WRAM, and one more lying scope (2026-08-08)
+
+### `records:N:ptrK`
+
+A fixed-stride record table can carry one embedded same-bank pointer that the
+generic renderer printed as two loose bytes. The new `records:<stride>:ptr<off>`
+spec renders the byte fields as `db` and the pointer as its label, so the bank
+`$18` spawn tables' rows now name the `ObjectArrayA/BUpdateCallback_18` they
+dispatch to. A ROM-wide scan for other record tables with consistently-labeled
+embedded words found none. Alongside: a sym-wide audit confirms **zero labels
+end in their own address** (the walk-sprite `SpriteTemplate_*` debt noted on
+2026-07-29 was already paid), and HRAM has no raw operands at all.
+
+### The eleven raw `$cxxx` operands, researched to a verdict
+
+Unbanked WRAM was the one RAM surface `ram_gaps.py` does not track (it counts
+banked operands). Two of the eleven are constants — a polar velocity magnitude
+and `WaitSerialTransfer`'s 50000-iteration timeout — and two are loop-biased
+pointers that only ever access `wShadowTilemap` rows from `$d030` up. The rest
+are named, and the findings outrank the names:
+
+* **The bank `$15` swing-contest union scope was lying**: the Training Court
+  challenger scenes reuse `$c2b4-$c2bb` as four 16-bit dialogue-id slots, so
+  the challenger machinery rendered as contest timers — and one seed wrote a
+  word across two byte-wide HUD names. A range-scoped challenger variant
+  (`wChallengerLose/Win/Draw/FollowupTextId`) wins by specificity now, and the
+  raw `$c2b2` write is a vestigial duplicate of the lose slot, write-only.
+* **`ClearMemory16` clears `c * 16` bytes**, so the match engine's supposed
+  8-byte clears at `$08:$4084`/`$41ad` actually zero the whole `$c780-$c7ff`
+  mode page — which is what resets every mode-local union between modes. The
+  earlier blob-audit reading of those sites was wrong and the union comment
+  now records the real behaviour.
+* **`wNavGridBuffer`** (`$c7a0`): the menu shell's 4x8 cursor grid, copied
+  deliberately over the minigame variable block — dead while menus run.
+* Bank `$18`'s dead high-score confirm screen (only caller:
+  `Unused_1b_ShowHighScoreConfirmScreen`) gets its panel state named, its
+  score word provably writer-less with the high byte running into
+  `wTargetZoneEnabled`.
+* The debug colour editor's RGB digit string gets its two free addresses, and
+  `wDebugWarpNumber` is renamed **`wDebugWarpCursorRow`** — it is the warp
+  menu's field selector; the location number lives in `$c700`.
+
+One emitter gotcha for the record: a union symbol's *size derives from its
+note's leading `[N bytes]` tag*, so tagging the nav grid `[32 bytes]` inside a
+5-byte union silently grew the RAM section and shifted every address above it.
+`make compare` caught it as a 3,914-byte diff; the fix is tagging the base
+byte and putting the extent in prose.
