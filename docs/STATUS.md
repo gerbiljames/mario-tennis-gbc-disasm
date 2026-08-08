@@ -26,7 +26,7 @@ shape, not *twins*, and the shot banks are near-identical copies of each
 other, so a routine only one bank failed to execute reads as ordinary data
 until you diff it against its siblings.
 
-Everything below is **committed** (HEAD `f2291e9`); the whole history
+Everything below is **committed** (HEAD `a6c7566`); the whole history
 rebuilds byte-perfect. Per-bank progress at any time: `python3
 tools/progress.py` (proven-code bytes, fill runs, label counts, human-named
 counts) and `tools/progress.py --unnamed <bank>` to list still-auto-named
@@ -11079,3 +11079,35 @@ in flows the session did not reach — the ranking-board rows (the attendant
 interaction kept losing to the debug lever and wandering NPCs), match
 results, minigame scoring, and the link screens — a concrete drive list for
 next time, now that the warp menu makes any location three inputs away.
+
+## A native trace of the doubles semi-final: the ranking board, and a dead routine confirmed (2026-08-08)
+
+A user-captured BizHawk native Trace Logger run of **winning the Island Open
+doubles semi-final** -- 8.5 GB across 56 auto-split `_N.log` segments, 83.6M
+instructions. `tools/tracelog2cov.py` grew a glob input that streams every
+segment in numeric order as one continuous trace (a banked run straddling a
+split still resolves), which is what made a 56-segment capture convertible.
+It produced 36,031 ROM offsets with the WRAM bank resolved at **100%** of them.
+
+This trace reached the story match-result flow that ordinary driving could
+not, and it settled two open questions:
+
+* **`BuildMatchResultTilemap` ($16:$4a71) is dead code, not "story-only".**
+  Earlier I could not reach it and guessed it needed a story ranking match.
+  It does *not* execute even in a real doubles result -- the live result
+  screen is `RunMatchWinLoseScreen` + `RunMatchStatsScreen` +
+  `ShowMatchResultsScreen` (all hit), and `BuildMatchResultTilemap` has no
+  caller of any kind. Its `$d3c7` doubles-branch operand is in unreachable
+  code. It is *not* the Island Open bracket either -- that is
+  `ShowTournamentBracket`, a separate bank $3b routine (not hit here).
+* **`ShowRankingBoard` runs**, resolving the two doubles ranking-board
+  markers: `DrawDoublesRankingMarker3`/`4`'s `$d248`/`$d066` and
+  `$d24c`/`$d06a` are `wShadowTilemap` cells in WRAM bank 3, now rendered
+  `wShadowTilemap + row * TILEMAP_WIDTH + col`. **234 -> 230 unproven banked
+  operands**, byte-perfect.
+
+The lesson the whole arc taught: ordinary interactive driving is saturated,
+but a *native full-session trace of a real story match* reaches flows the
+menus and exhibition never touch -- and it is now a one-command convert. The
+remaining 230 want more such captures (singles ranking matches, the other
+tournament rounds, link play), not more driving.
