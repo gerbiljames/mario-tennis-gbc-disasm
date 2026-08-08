@@ -84,7 +84,7 @@ InitResultsPromptState:
 BuildResultsScreenTilemap:
 	call LoadResultsScreenGraphics ; $40be
 	ld hl, $04d2 ; $40c1
-	ld de, $d041 ; $40c4
+	ld de, wDecompBuffer + 4 * TILE_SIZE + 1 ; $40c4
 	ld bc, $0020 ; $40c7
 	call DrawProportionalTextLine ; $40ca
 	ld hl, $04d3 ; $40cd
@@ -993,16 +993,16 @@ DrawPlayerNameAndLevel:
 	ld de, wDecompBuffer + 10 * TILE_SIZE ; $48bc
 	ld c, $08 ; $48bf
 	call CopyTilesAndAttrsRun ; $48c1
-	ld de, wDecompBuffer + 12 * TILE_SIZE ; $48c4
+	ld de, wScreenAttrmap + 6 * TILEMAP_WIDTH ; $48c4
 	ld c, $08 ; $48c7
 	call CopyTilesAndAttrsRun ; $48c9
-	ld de, wDecompBuffer + 14 * TILE_SIZE ; $48cc
+	ld de, wScreenAttrmap + 7 * TILEMAP_WIDTH ; $48cc
 	ld c, $08 ; $48cf
 	call CopyTilesAndAttrsRun ; $48d1
-	ld de, wDecompBuffer + 16 * TILE_SIZE ; $48d4
+	ld de, wScreenAttrmap + 8 * TILEMAP_WIDTH ; $48d4
 	ld c, $08 ; $48d7
 	call CopyTilesAndAttrsRun ; $48d9
-	ld de, wDecompBuffer + 18 * TILE_SIZE ; $48dc
+	ld de, wScreenAttrmap + 9 * TILEMAP_WIDTH ; $48dc
 	ld c, $08 ; $48df
 	call CopyTilesAndAttrsRun ; $48e1
 	wram_bank $03 ; $48e4
