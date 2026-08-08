@@ -43,11 +43,36 @@ Output shape matches the fixed connector:
 parallel and equal in length.
 
 usage: tracelog2cov.py <baserom> <trace.log> <out.json>
+
+The trace argument may be a glob (quote it) matching BizHawk's auto-split
+`<name>_1.log`, `<name>_2.log`, ... segments; they are streamed in numeric
+order as one continuous trace, so a banked run that straddles a split still
+resolves. A single literal file works unchanged.
 """
+import glob
 import json
 import re
 import sys
 from pathlib import Path
+
+
+def _segment_key(path):
+    """Numeric sort key for `<name>_<N>.log` so _2 precedes _10; the trailing
+    integer before the extension orders the split, and a name with none sorts
+    first (the unnumbered/base segment)."""
+    m = re.search(r"_(\d+)\.log$", path)
+    return (int(m.group(1)) if m else -1, path)
+
+
+def _trace_lines(pattern):
+    """Yield lines across every file matching `pattern` (numeric segment order).
+    A literal path matches only itself."""
+    paths = sorted(glob.glob(pattern), key=_segment_key) or [pattern]
+    for i, p in enumerate(paths):
+        if len(paths) > 1:
+            print(f"[{i + 1}/{len(paths)}] {p}", file=sys.stderr)
+        with open(p, errors="replace") as f:
+            yield from f
 
 BANK_SIZE = 0x4000
 LINE_RE = re.compile(r"^([0-9A-F]{4}):\s+([0-9A-F]{2}(?: [0-9A-F]{2}){0,2})\s")
@@ -134,61 +159,60 @@ def main():
                 stats["dead_runs"] += 1
         run, run_banks, resume = [], None, None
 
-    with open(sys.argv[2], errors="replace") as f:
-        for line in f:
-            m = LINE_RE.match(line)
-            if not m:
-                stats["unparsed"] += 1
-                continue
-            stats["lines"] += 1
-            addr = int(m.group(1), 16)
-            data = bytes.fromhex(m.group(2))
-            # A write to rWBK takes its value from A. Prefer the logged A --
-            # it is authoritative and covers every form, including the
-            # `pop af` restores that the idiom below cannot see. Fall back on
-            # the wram_bank idiom (`ld a, imm` two instructions back, immediate
-            # visible in the logged opcode bytes) for logs configured without
-            # the register columns.
-            if any(data.startswith(w) for w in WBK_WRITES):
-                ma = A_RE.search(line)
-                if ma:
-                    wbank = int(ma.group(1), 16) & 0x07
-                    stats["wbk_from_reg"] += 1
-                else:
-                    wbank = (prev2[1] & 0x07 if prev2 and len(prev2) >= 2
-                             and prev2[0] == LD_A_IMM else None)
-                    stats["wbk_from_idiom" if wbank is not None
-                          else "wbk_unknown"] += 1
-                if wbank == 0:
-                    wbank = 1      # rWBK 0 and 1 both select WRAM bank 1
-            prev2, prev1 = prev1, data
-            if addr < BANK_SIZE:
-                left_bank = True
-                if rom[addr:addr + len(data)] == data:
-                    rom_offs.add(addr)
-                    if wbank:
-                        masks[addr] = masks.get(addr, 0) | (1 << wbank)
-                else:
-                    stats["bank0_mismatch"] += 1
-            elif addr < 0x8000:
-                if left_bank and addr != resume:
-                    close_run()
-                left_bank = False
-                cand = candidates(rom, nbanks, addr, data, cache)
-                merged = run_banks & cand if run_banks is not None else cand
-                if not merged:
-                    close_run()
-                    merged = cand
-                if merged:
-                    run.append((addr, data, wbank))
-                    run_banks = merged
-                    resume = resume_addr(addr, data)
-                else:
-                    stats["dead_runs"] += 1
-                    resume = None
+    for line in _trace_lines(sys.argv[2]):
+        m = LINE_RE.match(line)
+        if not m:
+            stats["unparsed"] += 1
+            continue
+        stats["lines"] += 1
+        addr = int(m.group(1), 16)
+        data = bytes.fromhex(m.group(2))
+        # A write to rWBK takes its value from A. Prefer the logged A --
+        # it is authoritative and covers every form, including the
+        # `pop af` restores that the idiom below cannot see. Fall back on
+        # the wram_bank idiom (`ld a, imm` two instructions back, immediate
+        # visible in the logged opcode bytes) for logs configured without
+        # the register columns.
+        if any(data.startswith(w) for w in WBK_WRITES):
+            ma = A_RE.search(line)
+            if ma:
+                wbank = int(ma.group(1), 16) & 0x07
+                stats["wbk_from_reg"] += 1
             else:
-                left_bank = True
-                other.add(addr)
+                wbank = (prev2[1] & 0x07 if prev2 and len(prev2) >= 2
+                         and prev2[0] == LD_A_IMM else None)
+                stats["wbk_from_idiom" if wbank is not None
+                      else "wbk_unknown"] += 1
+            if wbank == 0:
+                wbank = 1      # rWBK 0 and 1 both select WRAM bank 1
+        prev2, prev1 = prev1, data
+        if addr < BANK_SIZE:
+            left_bank = True
+            if rom[addr:addr + len(data)] == data:
+                rom_offs.add(addr)
+                if wbank:
+                    masks[addr] = masks.get(addr, 0) | (1 << wbank)
+            else:
+                stats["bank0_mismatch"] += 1
+        elif addr < 0x8000:
+            if left_bank and addr != resume:
+                close_run()
+            left_bank = False
+            cand = candidates(rom, nbanks, addr, data, cache)
+            merged = run_banks & cand if run_banks is not None else cand
+            if not merged:
+                close_run()
+                merged = cand
+            if merged:
+                run.append((addr, data, wbank))
+                run_banks = merged
+                resume = resume_addr(addr, data)
+            else:
+                stats["dead_runs"] += 1
+                resume = None
+        else:
+            left_bank = True
+            other.add(addr)
     close_run()
 
     offs = sorted(rom_offs)

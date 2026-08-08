@@ -2259,15 +2259,15 @@ DrawDoublesRankingMarker2:
 	farcall CopyTilemapRect ; $587f
 	jp StubNop_1b_08 ; $5882
 DrawDoublesRankingMarker3:
-	ld hl, $d248 ; $5885
-	ld de, $d066 ; $5888
+	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH + 8 ; $5885
+	ld de, wShadowTilemap + 3 * TILEMAP_WIDTH + 6 ; $5888
 	ld b, $04 ; $588b
 	ld c, $07 ; $588d
 	farcall CopyTilemapRect ; $588f
 	jp StubNop_1b_08 ; $5892
 DrawDoublesRankingMarker4:
-	ld hl, $d24c ; $5895
-	ld de, $d06a ; $5898
+	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH + 12 ; $5895
+	ld de, wShadowTilemap + 3 * TILEMAP_WIDTH + 10 ; $5898
 	ld b, $04 ; $589b
 	ld c, $07 ; $589d
 	farcall CopyTilemapRect ; $589f
