@@ -26,7 +26,7 @@ shape, not *twins*, and the shot banks are near-identical copies of each
 other, so a routine only one bank failed to execute reads as ordinary data
 until you diff it against its siblings.
 
-Everything below is **committed** (HEAD `02e3a18`); the whole history
+Everything below is **committed** (HEAD `f2291e9`); the whole history
 rebuilds byte-perfect. Per-bank progress at any time: `python3
 tools/progress.py` (proven-code bytes, fill runs, label counts, human-named
 counts) and `tools/progress.py --unnamed <bank>` to list still-auto-named
@@ -11047,3 +11047,35 @@ note's leading `[N bytes]` tag*, so tagging the nav grid `[32 bytes]` inside a
 5-byte union silently grew the RAM section and shifted every address above it.
 `make compare` caught it as a 3,914-byte diff; the fix is tagging the base
 byte and putting the extent in prose.
+
+## A driven session under the v3 connector: bank proof for 28,413 offsets (2026-08-08)
+
+The v3 Lua connector's `rom_wram_bank` bitmask records which WRAM banks were
+selected while each ROM offset executed — the runtime fact the 238 bare
+banked operands have been waiting on, and one a disassembler cannot derive.
+One traced session gathered it across: the title attract cycle (the bank
+`$03` cutscene frame loaders), a soft reset, the whole GB DATA status tree
+(char/partner data, clear status, equipment select, the N64 tournament
+trophy grid), and a story tour steered by the game's own debug menu — the
+palette colour editor (watching `wDebugColorBlueDigits` earn its name in
+live RGB digits), the warp menu, Island Sky's plane cutscene, the Awards
+Ceremony map, the Tennis Machine Room, the Wall Practice Room with its
+coach dialogue, the Dorm Room partner scene, and the `End1`-`End4` ending
+maps the warp list exposes past the last `STORYLOC` constant.
+
+**79,664 instructions now carry bank observations** (was 77,033), 23,737 of
+them resolving what static dataflow could not — and the corrections caught
+two more wrong names surviving byte-perfect:
+`DrawPlayerNameAndLevel`'s copies at `$1e:$48c4`/`$48cc` write
+`wScreenAttrmap` rows, not the `wDecompBuffer` tiles the single-bank guess
+had inferred.
+
+`ram_gaps` finally shows actionable rows instead of a wall: `SoftReset`'s
+`ld sp, $d000` is the stack top misread as a data reference (wants `ld sp`
+skipped as a class), `InitAndRunGame`'s bank-6 page clear wants the palette
+union's ROM scope widened to bank `$01`, and one bank `$1b` site proved
+WRAM bank 7 and awaits a name. The rest of the 234 still-unproven sites sit
+in flows the session did not reach — the ranking-board rows (the attendant
+interaction kept losing to the debug lever and wandering NPCs), match
+results, minigame scoring, and the link screens — a concrete drive list for
+next time, now that the warp menu makes any location three inputs away.
