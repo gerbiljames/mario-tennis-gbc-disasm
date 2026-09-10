@@ -2253,7 +2253,7 @@ LoadDialogueTextToBuffer:
 	wram_bank $05 ; $505e
 	farcall FetchDialogueText ; $5064
 	ld hl, wTextBuffer ; $5067
-	ld de, $d800 ; $506a
+	ld de, wTextTileBuffer ; $506a
 .copyLoop:
 	wram_bank $05 ; $506d
 	ld b, [hl] ; $5073
@@ -3535,7 +3535,7 @@ RefreshCharViewerSelection:
 	adc $10 ; $6f06
 	sub l ; $6f08
 	ld h, a ; $6f09
-	ld de, $d201 ; $6f0a
+	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $6f0a
 	ld c, $20 ; $6f0d
 	wram_bank $03 ; $6f0f
 	farcall RenderTextToBuffer64 ; $6f15

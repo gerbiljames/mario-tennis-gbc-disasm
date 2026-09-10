@@ -5739,7 +5739,7 @@ DrawCutsceneTextLines:
 .mulHLByA:
 	call MulHLByA ; $7418
 .step:
-	ld de, $d063 ; $741b
+	ld de, wCutsceneTextScrollBuffer + 99 ; $741b
 	add hl, de ; $741e
 	ld d, h ; $741f
 	ld e, l ; $7420
@@ -5823,7 +5823,7 @@ BlitCutsceneTextWindow:
 	push hl ; $7493
 	ldh a, [hWramBank] ; $7494
 	push af ; $7496
-	ld hl, $d000 ; $7497
+	ld hl, wCutsceneTextScrollBuffer ; $7497
 	ld a, c ; $749a
 	add l ; $749b
 	ld l, a ; $749c
@@ -5831,7 +5831,7 @@ BlitCutsceneTextWindow:
 	inc h ; $749f
 .gotPtr:
 	ld b, $08 ; $74a0
-	ld de, $d000 ; $74a2
+	ld de, wWindowShadowTilemap ; $74a2
 .loop:
 	ld c, $14 ; $74a5
 	push hl ; $74a7

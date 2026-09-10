@@ -1672,7 +1672,7 @@ AnimateLinkErrorPalette:
 	push af ; $4b39
 	wram_bank $03 ; $4b3a
 	ld hl, LinkErrorPalette_3e ; $4b40
-	ld de, wScreenScratch ; $4b43
+	ld de, wLinkErrorPalette ; $4b43
 	ld bc, $0008 ; $4b46
 	call CopyMemoryBC ; $4b49
 	ldh a, [hVBlankCounter] ; $4b4c
@@ -1700,11 +1700,11 @@ AnimateLinkErrorPalette:
 	ld a, [hl+] ; $4b6b
 	ld d, [hl] ; $4b6c
 	ld e, a ; $4b6d
-	ld hl, $d802 ; $4b6e
+	ld hl, wLinkErrorPalette + 2 ; $4b6e
 	ld [hl], e ; $4b71
 	inc hl ; $4b72
 	ld [hl], d ; $4b73
-	ld hl, wScreenScratch ; $4b74
+	ld hl, wLinkErrorPalette ; $4b74
 	ld de, $0301 ; $4b77
 	call LoadPaletteShadow ; $4b7a
 	pop af ; $4b7d

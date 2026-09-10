@@ -2627,30 +2627,30 @@ SetupCharDataScreen:
 	sound BGM_STAT_DISTRIBUTION ; $5572
 	call BackupCharDataScreenRow ; $5574
 	ld hl, CharDataBand0RunsStep7_1c ; $5577
-	ld bc, $d240 ; $557a
+	ld bc, wCharDataScreenCell + 18 * TILEMAP_WIDTH ; $557a
 	call BlitTilemapRunsFromTable ; $557d
 	ld hl, CharDataBand1RunsStep6_1c ; $5580
-	ld bc, $d280 ; $5583
+	ld bc, wCharDataScreenCell + 20 * TILEMAP_WIDTH ; $5583
 	call BlitTilemapRunsFromTable ; $5586
 	ld hl, CharDataBand2RunsStep6_1c ; $5589
-	ld bc, $d2d0 ; $558c
+	ld bc, wCharDataScreenCell + 22 * TILEMAP_WIDTH + 16 ; $558c
 	call BlitTilemapRunsFromTable ; $558f
 	ld hl, CharDataBand3RunsStep7_1c ; $5592
-	ld bc, $d310 ; $5595
+	ld bc, wCharDataScreenCell + 24 * TILEMAP_WIDTH + 16 ; $5595
 	call BlitTilemapRunsFromTable ; $5598
 	ld hl, CharDataBand4RunsStep3_1c ; $559b
-	ld bc, $d370 ; $559e
+	ld bc, wCharDataScreenCell + 27 * TILEMAP_WIDTH + 16 ; $559e
 	call BlitTilemapRunsFromTable ; $55a1
 	wram_bank $06 ; $55a4
 	xor a ; $55aa
 	ld [wCharDataRevealTimer], a ; $55ab
 	wram_bank $03 ; $55ae
-	ld hl, wShadowTilemap ; $55b4
+	ld hl, wCharDataScreenCell ; $55b4
 	ld de, $9800 ; $55b7
 	ld c, $24 ; $55ba
 	call QueueVRAMCopy ; $55bc
 	wram_bank $02 ; $55bf
-	ld hl, wScreenAttrmap ; $55c5
+	ld hl, wCharDataScreenCell ; $55c5
 	ld de, $9800 + VRAM_BANK1 ; $55c8
 	ld c, $24 ; $55cb
 	call QueueVRAMCopy ; $55cd
@@ -2673,34 +2673,34 @@ SetupCharDataScreen:
 	call RestoreCharDataScreenRow ; $5601
 	call DrawCharStatRows ; $5604
 	ld hl, CharDataBand8RunsStep1_1c ; $5607
-	ld bc, $d410 ; $560a
+	ld bc, wCharDataScreenCell + 32 * TILEMAP_WIDTH + 16 ; $560a
 	call BlitTilemapRunsFromTable ; $560d
 	call FlushCharDataTilemaps ; $5610
 	call RestoreCharDataScreenRow ; $5613
 	call DrawCharStatRows ; $5616
 	ld hl, CharDataBand7RunsStep1_1c ; $5619
-	ld bc, $d3e0 ; $561c
+	ld bc, wCharDataScreenCell + 31 * TILEMAP_WIDTH ; $561c
 	call BlitTilemapRunsFromTable ; $561f
 	ld hl, CharDataBand8RunsStep2_1c ; $5622
-	ld bc, $d410 ; $5625
+	ld bc, wCharDataScreenCell + 32 * TILEMAP_WIDTH + 16 ; $5625
 	call BlitTilemapRunsFromTable ; $5628
 	call FlushCharDataTilemaps ; $562b
 	call RestoreCharDataScreenRow ; $562e
 	call DrawCharStatRows ; $5631
 	ld hl, CharDataBand7RunsStep2_1c ; $5634
-	ld bc, $d3e0 ; $5637
+	ld bc, wCharDataScreenCell + 31 * TILEMAP_WIDTH ; $5637
 	call BlitTilemapRunsFromTable ; $563a
 	ld hl, CharDataBand8RunsStep3_1c ; $563d
-	ld bc, $d410 ; $5640
+	ld bc, wCharDataScreenCell + 32 * TILEMAP_WIDTH + 16 ; $5640
 	call BlitTilemapRunsFromTable ; $5643
 	call FlushCharDataTilemaps ; $5646
 	call RestoreCharDataScreenRow ; $5649
 	call DrawCharStatRows ; $564c
 	ld hl, CharDataBand7RunsStep3_1c ; $564f
-	ld bc, $d3e0 ; $5652
+	ld bc, wCharDataScreenCell + 31 * TILEMAP_WIDTH ; $5652
 	call BlitTilemapRunsFromTable ; $5655
 	ld hl, CharDataBand8RunsStep4_1c ; $5658
-	ld bc, $d410 ; $565b
+	ld bc, wCharDataScreenCell + 32 * TILEMAP_WIDTH + 16 ; $565b
 	call BlitTilemapRunsFromTable ; $565e
 	call FlushCharDataTilemaps ; $5661
 	ret ; $5664

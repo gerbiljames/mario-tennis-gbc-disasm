@@ -21,6 +21,8 @@ a different fix, so the split is what makes the remaining work mechanical:
   unclaimed     the bank is provable and nothing names the address yet:
                 ordinary naming work, with the bank already settled.
   dead          the site is in an Unused* routine, so no trace can ever reach it,
+  static, unnamed  (--static only) the generator's dataflow knows the bank but no
+                union names the address there -- desk work, not driving,
   unproven      no trace covers the site and the dataflow cannot pin the bank,
                 so there is nothing to name it from.
 """
@@ -89,12 +91,30 @@ def scan_sites():
     return sites
 
 
+def static_banks():
+    """Per-site WRAM bank from the generator's own dataflow, for --static.
+    Slow (it re-runs the analysis), so only on request."""
+    from disasmlib import pipeline
+    from disasmlib.config import load_label_overrides, load_offset_map
+    from disasmlib.ram import compute_wram_bank
+    rom = Path("baserom.gbc").read_bytes()
+    dis = pipeline.analyse(rom, sorted(glob.glob("coverage/*.json")),
+                           load_label_overrides("labels.json"),
+                           load_offset_map("data_tables.json"),
+                           sorted(glob.glob("hooks/*.json")), descent=True)
+    return {off: b for off, b in compute_wram_bank(dis).items()
+            if isinstance(b, int)}
+
+
 def main():
+    want_static = "--static" in sys.argv[1:]
+    static = static_banks() if want_static else {}
     traced = load_traced_wram_banks(sorted(glob.glob("coverage/*.json")))
     by_bank = load_symbols()
     sites = scan_sites()
 
     buckets = collections.Counter()
+    static_unnamed = []
     romscoped = collections.Counter()
     unclaimed = collections.Counter()
     # an address seen under several banks from one routine is a plane pair
@@ -109,6 +129,12 @@ def main():
             # bare for good; count them apart from the ones driving can fix.
             if routine.split(".")[0].startswith("Unused"):
                 buckets["dead"] += 1
+            elif at in static:
+                # The dataflow knows the bank; no union names the address
+                # there (or the callee picks its own bank and the site wants
+                # a range scope). Desk work, not driving.
+                buckets["static, unnamed"] += 1
+                static_unnamed.append((rom_bank, routine, addr, static[at]))
             else:
                 buckets["unproven"] += 1
             continue
@@ -145,6 +171,12 @@ def main():
     for (addr, b, rom_bank), n in romscoped.most_common(15):
         print(f"  ${addr:04x}  wram bank {b}, referenced from ROM bank "
               f"${rom_bank:02x}  x{n}")
+
+    if want_static:
+        print(f"\nstatic, unnamed -- the dataflow pins the bank, nothing names "
+              f"the address there ({len(static_unnamed)}):")
+        for rom_bank, routine, addr, b in static_unnamed[:40]:
+            print(f"  ${rom_bank:02x}:{routine:34s} ${addr:04x}  wram bank {b}")
 
     print(f"\nunclaimed -- bank proved, needs a name ({len(unclaimed)}):")
     for (b, addr, rom_bank, routine), n in unclaimed.most_common(15):

@@ -1315,7 +1315,7 @@ CombineExhibCellBits:
 	push bc ; $4836
 	ld a, b ; $4837
 	and $0f ; $4838
-	ld hl, $dc20 ; $483a
+	ld hl, wExhibCellBits ; $483a
 	add l ; $483d
 	ld l, a ; $483e
 	jr nc, .read ; $483f
@@ -1364,11 +1364,11 @@ ExpandRowBytesToBits:
 	push de ; $4872
 	push hl ; $4873
 	push de ; $4874
-	ld hl, $dc20 ; $4875
+	ld hl, wExhibCellBits ; $4875
 	ld bc, $0004 ; $4878
 	call ClearMemory16 ; $487b
 	pop de ; $487e
-	ld hl, $dc20 ; $487f
+	ld hl, wExhibCellBits ; $487f
 	ld c, $00 ; $4882
 .loop:
 	ld a, [de] ; $4884

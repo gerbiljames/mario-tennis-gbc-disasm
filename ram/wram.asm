@@ -2388,7 +2388,7 @@ SECTION "WRAMX bank 1", WRAMX[$d000], BANK[1]
 
 ; WRAMX bank 1 at a glance -- regenerated, see ram_unions.json:
 ;
-;   $d000-$dfff  character record copy / VRAM staging
+;   $d000-$dfff  cutscene text scroll buffer / character record copy / VRAM staging
 
 ; WRAM bank $01 is staging for VRAM, and almost nothing else: every screen
 ; in the game decompresses into it and then QueueVRAMCopies out of it.
@@ -2403,11 +2403,15 @@ SECTION "WRAMX bank 1", WRAMX[$d000], BANK[1]
 ; selected, and bank $1b selects this one, so the record lands on top of the
 ; staging buffer while the new-game roster is being built.
 UNION
+; cutscene text scroll buffer (bank $03)
+; [640 bytes] Eight 80-column rows of rendered cutscene text in WRAM bank $01: DrawCutsceneTextLines draws each line into it from column 19 of row 1 on, and BlitCutsceneTextWindow copies a 20-column window of it, one column further along per call, into wWindowShadowTilemap to scroll the text across the window. Both routines select the bank themselves, so the sites are scoped by range
+wCutsceneTextScrollBuffer:: ds 640
+	ds 3456
+NEXTU
 ; character record copy (bank $1b)
 	ds 1408
 ; [128 bytes] Copy of a character record that LoadCharacterRecordToBuffer takes from wPlayer2MainName, so a caller can read one character's fields without disturbing the live records. +$0b is the id CheckCharacterUnlocked tests against $ff, and RunNewGameSetup reads +$0c and +$0e for each of the four starting characters
 wCharRecordBuffer:: ds 128
-	ds 2560
 NEXTU
 ; VRAM staging (WRAM bank $01)
 ; [2048 bytes] Where DecompressData lands and QueueVRAMCopy reads from. A screen may slice it several ways at once -- the cutscene frame loaders keep six frames at tiles 0, 4, 8, 12, 14 and 16, while the EXP screen puts a tilemap plane at tile 0 and its attributes at tile 64. CopyMapToScrollBuffers reads the map planes back out of it to expand them into WRAM bank $02
@@ -2422,7 +2426,7 @@ SECTION "WRAMX bank 2", WRAMX[$d000], BANK[2]
 ; WRAMX bank 2 at a glance -- regenerated, see ram_unions.json:
 ;
 ;   $d000-$d3ff  wActiveTilemap  [mirrored with bank 5]
-;   $d000-$d3ff  wCharDataScreenCell  [mirrored with bank 3]
+;   $d000-$d41f  wCharDataScreenCell  [mirrored with bank 3]
 ;   $d000-$dfff  5 overlays: N64 block presence probe / match court planes / overworld scroll buffers / +2 more
 ;   $d000-$dfff  wMapBuffer64  [mirrored with bank 3]
 ;   $d400-$d7df  wCharDataPagePlane  [mirrored with bank 3]
@@ -2500,21 +2504,21 @@ SECTION "WRAMX bank 3", WRAMX[$d000], BANK[3]
 
 ; WRAMX bank 3 at a glance -- regenerated, see ram_unions.json:
 ;
-;   $d000-$d3ff  wCharDataScreenCell  [mirrored with bank 2]
+;   $d000-$d41f  wCharDataScreenCell  [mirrored with bank 2]
 ;   $d000-$d7ff  screen tilemap
 ;   $d000-$dfff  wMapBuffer64  [mirrored with bank 2]
 ;   $d400-$d7df  wCharDataPagePlane  [mirrored with bank 2]
 ;   $d430-$d66f  wCharDataScreenBackup  [mirrored with bank 2]
 ;   $d600-$d68f  wMugshotBuffer  [mirrored with bank 2, 4]
 ;   $d7e0-$da1f  wCharDataPageSlot1  [mirrored with bank 2]
-;   $d800-$d80f  9 overlays: equipment select / name entry / match results / +6 more
+;   $d800-$d80f  10 overlays: link error flash palette / equipment select / name entry / +7 more
 ;   $d810-$d83e  8 overlays: N64 tournament data screen / erase-confirm flash palette / drill briefings / +5 more
 ;   $d840-$d867  character unlock flags / ranking board
 ;   $d900-$daff  created characters and the character grid / N64 transfer records / screen sequences
 ;   $da20-$dc5f  wCharDataPageSlot2  [mirrored with bank 2]
 ;   $db00-$dbff  chart rows
 ;   $dc00-$dc13  rules screen / N64 exhibition and Mario-cast charts / rules screen
-;   $dc40-$dc4f  ring-shot results
+;   $dc20-$dc5f  exhibition victory grid bits / ring-shot results
 ;   $dc60-$de9f  wCharDataPageSlot3  [mirrored with bank 2]
 ;   $de00-$de00  character select
 ;   $df00-$df00  character select
@@ -2548,6 +2552,11 @@ wShadowAttrmap:: ds 1024
 ; reaches and the rest of the screen sits in the $d810 union under a variant
 ; of the same name.
 UNION
+; link error flash palette (bank $3e)
+; [8 bytes] One 4-colour palette AnimateLinkErrorPalette rebuilds each frame for the link-error screen, colour 1 (+2) replaced from a flash table indexed by the frame counter, then uploaded through LoadPaletteShadow as palette 3
+wLinkErrorPalette:: ds 8
+	ds 8
+NEXTU
 ; equipment select (bank $3e, $5400-$5c00)
 ; [8 bytes] Item ids the player owns, compacted by BuildOwnedItemList from wEquipOwnedMap; the cursor indexes this list
 wEquipItemList:: ds 8
@@ -2830,7 +2839,7 @@ NEXTU
 ; [512 bytes] Image of save block $0b, the N64 (Transfer Pak) records, read here by ReadN64RecordsSaveBlock for the trophies screen and the ring-shot and star-victory grids. Same block the bank $03 engine stages at wSaveBlockBuffer in WRAM bank $07 -- this is the screen's own copy
 wN64RecordsBlock:: ds 512
 NEXTU
-; screen sequences (bank $18)
+; screen sequences (bank $18, past the dead confirm-label drawers)
 	ds 256
 ; [8-bit] Cleared as the ending sequence enters its third scene and stepped through the scenes that follow
 wEndingSceneStep:: db
@@ -2883,15 +2892,21 @@ NEXTU
 wRulesScreenAnimFrame:: db
 ENDU
 
-	ds 44
+	ds 12
 
-; Ring-shot entry list (WRAM bank $03), owned by the bank $3b N64 records
-; screen and scoped to that bank.
+; Bank $3b's results-screen scratch (WRAM bank $03): the exhibition victory grid's expanded cell bits, and the ring-shot entry list that the N64 records screen keeps in the same bytes.
+UNION
+; exhibition victory grid bits (bank $3b)
+; [64 bytes] The victory grid's row bytes expanded one bit per byte by ExpandRowBytesToBits (it clears 4 x 16 bytes first), which CombineExhibCellBits indexes by the low nibble of b to fold cells back into bits
+wExhibCellBits:: ds 64
+NEXTU
 ; ring-shot results (bank $3b)
+	ds 32
 ; [16 bytes] The ring-shot rows to show, copied from the N64RingShot table and then patched: an entry becomes $10 (the blank row) when the matching bit in the N64 records block is clear, so a course the player never transferred is left out
 wRingShotEntryList:: ds 16
+ENDU
 
-	ds 432
+	ds 416
 
 ; Character-grid scroll counter (WRAM bank $03), owned by bank $38.
 ; character select (bank $38)
@@ -3438,7 +3453,7 @@ SECTION "WRAMX bank 6", WRAMX[$d000], BANK[6]
 ;
 ;   $d000-$d029  9 overlays: scrolling story cutscene slide flag / scene animation frame counter / star warp transition / +6 more
 ;   $d000-$d3ff  wCollisionMap  [mirrored with bank ]
-;   $d02a-$d219  9 overlays: star warp transition / trophy EXP awards / character-data screen / +6 more
+;   $d02a-$d219  10 overlays: results continue prompt rows / star warp transition / trophy EXP awards / +7 more
 ;   $d230-$d259  scrolling text screen / EXP award screen
 ;   $d400-$d5ff  story slot signatures / unlock flags block
 ;   $d400-$d7ff  wBehaviorMap  [mirrored with bank ]
@@ -3498,6 +3513,9 @@ wContinuePromptRow:: db
 wContinuePromptPage:: db
 ; [8-bit] What the prompt returned: 1 confirm, $ff cancel, or wContinuePromptPage - 1
 wContinuePromptResult:: db
+	ds 28
+; [10 bytes] Row 1 of the four-row tilemap strip the continue prompt queues to $9800 from wContinuePromptKind (8 blocks of 16 bytes, so row 0 is the prompt's own variables). The row runs on to $d03f; DrawSaveWarningTextLine1 writes it from column 1
+wContinuePromptTilemapRow1:: ds 10
 NEXTU
 ; character-data screen (banks $1a/$1c/$1d)
 ; [8-bit] Free-running counter CharDataScreenAnimTask steps every frame the screen is idle; its low nibble indexes the animation table
@@ -3568,13 +3586,20 @@ ENDU
 ; The sound driver's scope keeps its wram_bank $07 alternative, since the
 ; same offsets are its channel state in that bank.
 UNION
+; results continue prompt rows (bank $1e)
+	ds 22
+; [32 bytes] Row 2 of the continue prompt's tilemap strip; DrawContinuePromptText writes the prompt from column 1
+wContinuePromptTilemapRow2:: ds 32
+; [32 bytes] Row 3 of the strip; DrawSaveWarningTextLine2 writes the second warning line from column 1
+wContinuePromptTilemapRow3:: ds 32
+	ds 410
+NEXTU
 ; star warp transition (bank $0e)
 	ds 22
 ; [8-bit] X of the point the star has reached along its path, copied into each sparkle as it spawns
 wStarWarpPathX:: db
 ; [8-bit] Y of the same point
 wStarWarpPathY:: db
-	ds 472
 NEXTU
 ; trophy EXP awards (bank $1e)
 ; [10 bytes] EXP for trophy groups 1-5, five 16-bit words. ComputeTrophyExpAwards fills them one group at a time carrying a running sum in hl -- group 0's word goes two bytes lower still, onto the byte the character-data screen calls wCharDataLevelPreview, which is why the array cannot be declared from its true base here

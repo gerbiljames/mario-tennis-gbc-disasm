@@ -1123,6 +1123,23 @@
    "comment": "Screen-local scratch in WRAM bank $03, low half. Like the $d810 block above\neach full-screen UI reuses these bytes, so the variants are scoped to the\nowning ROM bank (and, where one bank runs several screens, to that screen's\ncode range).\nThe minigame data screen and the trophies screen each lay an array across\n$d810, so their first symbol here is declared only as far as this block\nreaches and the rest of the screen sits in the $d810 union under a variant\nof the same name.",
    "variants": [
     {
+     "context": "link error flash palette (bank $3e)",
+     "scopes": [
+      {
+       "bank": "0x3e",
+       "start": "0x4b37",
+       "end": "0x4b90"
+      }
+     ],
+     "symbols": {
+      "0xd800": {
+       "name": "wLinkErrorPalette",
+       "note": "[8 bytes] One 4-colour palette AnimateLinkErrorPalette rebuilds each frame for the link-error screen, colour 1 (+2) replaced from a flash table indexed by the frame counter, then uploaded through LoadPaletteShadow as palette 3",
+       "size": 8
+      }
+     }
+    },
+    {
      "context": "equipment select (bank $3e, $5400-$5c00)",
      "scopes": [
       {
@@ -2000,6 +2017,11 @@
       "0xd003": {
        "name": "wContinuePromptResult",
        "note": "[8-bit] What the prompt returned: 1 confirm, $ff cancel, or wContinuePromptPage - 1"
+      },
+      "0xd020": {
+       "name": "wContinuePromptTilemapRow1",
+       "note": "[10 bytes] Row 1 of the four-row tilemap strip the continue prompt queues to $9800 from wContinuePromptKind (8 blocks of 16 bytes, so row 0 is the prompt's own variables). The row runs on to $d03f; DrawSaveWarningTextLine1 writes it from column 1",
+       "size": 10
       }
      }
     },
@@ -2162,6 +2184,29 @@
    "end": "0xd21a",
    "comment": "WRAM bank $06 from $d02a up, shared by four subsystems that never run at\nonce. The palette fade engine's two 128-byte buffers straddle what used\nto be the boundary between two unions, which is why they are one now.\nEvery scope carries a ROM bank and wram_bank $06: the working palette\nbuffer and the character-data screen's stat arrays start at the same\naddress, and only the owning bank tells them apart.\nThe sound driver's scope keeps its wram_bank $07 alternative, since the\nsame offsets are its channel state in that bank.",
    "variants": [
+    {
+     "context": "results continue prompt rows (bank $1e)",
+     "scopes": [
+      {
+       "bank": "0x1e",
+       "start": "0x4bd7",
+       "end": "0x4c03",
+       "wram_bank": "0x06"
+      }
+     ],
+     "symbols": {
+      "0xd040": {
+       "name": "wContinuePromptTilemapRow2",
+       "note": "[32 bytes] Row 2 of the continue prompt's tilemap strip; DrawContinuePromptText writes the prompt from column 1",
+       "size": 32
+      },
+      "0xd060": {
+       "name": "wContinuePromptTilemapRow3",
+       "note": "[32 bytes] Row 3 of the strip; DrawSaveWarningTextLine2 writes the second warning line from column 1",
+       "size": 32
+      }
+     }
+    },
     {
      "context": "star warp transition (bank $0e)",
      "scopes": [
@@ -2839,13 +2884,18 @@
        "bank": "0x1d",
        "start": "0x6dfe",
        "end": "0x6e01"
+      },
+      {
+       "bank": "0x1c",
+       "start": "0x5574",
+       "end": "0x5660"
       }
      ],
      "symbols": {
       "0xd000": {
        "name": "wCharDataScreenCell",
-       "note": "[1024 bytes] The live screen the character-data and EXP screens draw into, one 32 x 32 cell plane in *each* of WRAM banks $02 and $03 -- bank $03 the tile half, bank $02 the CGB attribute half, cell for cell at the same address. Every reference here is an argument to a routine that selects those banks itself (CharDataScreen_WriteStatNumber writes [de] under $03 then $02; ApplyTilemapPatchList and its EXP-screen twin do the same), so the WRAM bank live at the call site is $06 -- the screen's own working set -- and says nothing about the operand. That is why these scopes are ROM ranges with no wram_bank: the callee picks the bank, so the site's is not a constraint to apply. Scoped to the exact call-site ranges rather than whole banks because banks $1c/$1d also address genuine WRAM bank $06 variables in $d2xx-$d3xx.",
-       "size": 1024,
+       "note": "[1056 bytes] The live screen the character-data and EXP screens draw into, one 32 x 32 cell plane in *each* of WRAM banks $02 and $03 -- bank $03 the tile half, bank $02 the CGB attribute half, cell for cell at the same address. Every reference here is an argument to a routine that selects those banks itself (CharDataScreen_WriteStatNumber writes [de] under $03 then $02; ApplyTilemapPatchList and its EXP-screen twin do the same), so the WRAM bank live at the call site is $06 -- the screen's own working set -- and says nothing about the operand. That is why these scopes are ROM ranges with no wram_bank: the callee picks the bank, so the site's is not a constraint to apply. Scoped to the exact call-site ranges rather than whole banks because banks $1c/$1d also address genuine WRAM bank $06 variables in $d2xx-$d3xx. SetupCharDataScreen's band-8 runs read a 33rd row at +$400 ($d410), so the plane is declared one row longer than the 32 x 32 screen.",
+       "size": 1056,
        "stride": [
         "TILEMAP_WIDTH",
         "0x20"
@@ -2947,6 +2997,11 @@
      "scopes": [
       {
        "wram_bank": "0x03"
+      },
+      {
+       "bank": "0x1a",
+       "start": "0x6f0a",
+       "end": "0x6f0d"
       }
      ],
      "symbols": {
@@ -3222,6 +3277,11 @@
        "bank": "0x05",
        "start": "0x4479",
        "end": "0x447c"
+      },
+      {
+       "bank": "0x03",
+       "start": "0x74a2",
+       "end": "0x74a5"
       }
      ],
      "symbols": {
@@ -3942,10 +4002,12 @@
      }
     },
     {
-     "context": "screen sequences (bank $18)",
+     "context": "screen sequences (bank $18, past the dead confirm-label drawers)",
      "scopes": [
       {
-       "bank": "0x18"
+       "bank": "0x18",
+       "start": "0x5590",
+       "end": "0x8000"
       }
      ],
      "symbols": {
@@ -3962,11 +4024,29 @@
    ]
   },
   {
-   "start": "0xdc40",
+   "start": "0xdc20",
    "wram_bank": "0x03",
-   "end": "0xdc50",
-   "comment": "Ring-shot entry list (WRAM bank $03), owned by the bank $3b N64 records\nscreen and scoped to that bank.",
+   "end": "0xdc60",
+   "comment": "Bank $3b's results-screen scratch (WRAM bank $03): the exhibition victory grid's expanded cell bits, and the ring-shot entry list that the N64 records screen keeps in the same bytes.",
    "variants": [
+    {
+     "context": "exhibition victory grid bits (bank $3b)",
+     "scopes": [
+      {
+       "bank": "0x3b",
+       "start": "0x4800",
+       "end": "0x48c0",
+       "wram_bank": "0x03"
+      }
+     ],
+     "symbols": {
+      "0xdc20": {
+       "name": "wExhibCellBits",
+       "note": "[64 bytes] The victory grid's row bytes expanded one bit per byte by ExpandRowBytesToBits (it clears 4 x 16 bytes first), which CombineExhibCellBits indexes by the low nibble of b to fold cells back into bits",
+       "size": 64
+      }
+     }
+    },
     {
      "context": "ring-shot results (bank $3b)",
      "scopes": [
@@ -4202,6 +4282,28 @@
    "comment": "WRAM bank $01 is staging for VRAM, and almost nothing else: every screen\nin the game decompresses into it and then QueueVRAMCopies out of it.\nWhat a given offset means therefore depends on what the current screen\nput there -- tile graphics, a tilemap plane, its attribute plane -- so\nthe two halves get names and the offsets do not. Every offset in use is a\nwhole multiple of TILE_SIZE, which is why they render as tile indices.\nScoped to a provable WRAM bank $01: $d000 is eight different things and\ntwenty ROM banks stage through this one.\nThe one overlay with a fixed meaning is bank $1b's character-record copy:\nLoadCharacterRecordToBuffer writes $d580 in whichever bank the caller left\nselected, and bank $1b selects this one, so the record lands on top of the\nstaging buffer while the new-game roster is being built.",
    "variants": [
     {
+     "context": "cutscene text scroll buffer (bank $03)",
+     "scopes": [
+      {
+       "bank": "0x03",
+       "start": "0x7403",
+       "end": "0x7452"
+      },
+      {
+       "bank": "0x03",
+       "start": "0x7497",
+       "end": "0x749a"
+      }
+     ],
+     "symbols": {
+      "0xd000": {
+       "name": "wCutsceneTextScrollBuffer",
+       "note": "[640 bytes] Eight 80-column rows of rendered cutscene text in WRAM bank $01: DrawCutsceneTextLines draws each line into it from column 19 of row 1 on, and BlitCutsceneTextWindow copies a 20-column window of it, one column further along per call, into wWindowShadowTilemap to scroll the text across the window. Both routines select the bank themselves, so the sites are scoped by range",
+       "size": 640
+      }
+     }
+    },
+    {
      "context": "character record copy (bank $1b)",
      "scopes": [
       {
@@ -4232,6 +4334,11 @@
        "bank": "0x06",
        "start": "0x728e",
        "end": "0x7291"
+      },
+      {
+       "bank": "0x1a",
+       "start": "0x506a",
+       "end": "0x506d"
       }
      ],
      "symbols": {

@@ -1379,7 +1379,7 @@ RefreshContinuePromptText:
 	xor a ; $4bd0
 	ld [wContinuePromptRow], a ; $4bd1
 	call ClearContinuePromptRows ; $4bd4
-	ld hl, $d041 ; $4bd7
+	ld hl, wContinuePromptTilemapRow2 + 1 ; $4bd7
 	call DrawContinuePromptText ; $4bda
 	ld hl, wContinuePromptKind ; $4bdd
 	ld de, $9800 ; $4be0
@@ -1391,9 +1391,9 @@ RefreshContinuePromptText:
 	ld a, $01 ; $4bef
 	ld [wContinuePromptRow], a ; $4bf1
 	call ClearContinuePromptRows ; $4bf4
-	ld hl, $d021 ; $4bf7
+	ld hl, wContinuePromptTilemapRow1 + 1 ; $4bf7
 	call DrawSaveWarningTextLine1 ; $4bfa
-	ld hl, $d061 ; $4bfd
+	ld hl, wContinuePromptTilemapRow3 + 1 ; $4bfd
 	call DrawSaveWarningTextLine2 ; $4c00
 	ld hl, wContinuePromptKind ; $4c03
 	ld de, $9800 ; $4c06

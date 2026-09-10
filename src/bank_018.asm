@@ -1031,7 +1031,7 @@ Unused_18_DrawThreeOptionLabels:
 	ld de, $d9e1 ; $5551
 	call CopyBytes11 ; $5554
 	ld hl, ThreeOptionLabelsData2 ; $5557
-	ld de, wScreenSequenceTimer ; $555a
+	ld de, $da01 ; $555a
 	call CopyBytes11 ; $555d
 	ret ; $5560
 Unused_18_DrawYesNoLabels:
@@ -1045,7 +1045,7 @@ Unused_18_DrawYesNoLabels:
 	ld de, $d9e1 ; $5576
 	call CopyBytes11 ; $5579
 	ld hl, YesNoLabels1 ; $557c
-	ld de, wScreenSequenceTimer ; $557f
+	ld de, $da01 ; $557f
 	call CopyBytes11 ; $5582
 	ret ; $5585
 DrawTileBlock6x2ToTilemap:

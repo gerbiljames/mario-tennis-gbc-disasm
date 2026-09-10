@@ -40,7 +40,10 @@ SRAM_IMM_SITES = {0x16d49}
 # `ld hl, $d8f1 / add hl, de` on wMinigamesCurrentScore, one testing for equality
 # and one branching on the carry to clamp the score to `ld de, $270f`.
 # Keyed by flat offset, so only these exact instructions stay numeric.
+# $d8f0 at 1a:$4646 is -10000: `ld de, $d8f0 / add hl, de / jr nc` on
+# wExpAwardTotal, testing whether the award has reached the 10000 cap.
 RAM_IMM_IS_CONSTANT = {
+    0x68646,
     0x0199d, 0x01a40, 0x0282f, 0x010dc, 0x084ce, 0x1531d, 0x212fb, 0x22b5e,
     0x341f4, 0x3426f,
     0x352b6, 0x3577b, 0x35c0b, 0x35da0, 0x35e7d,
