@@ -4339,9 +4339,9 @@ Unused_1b_DrawGameTimerRow:
 	ld a, $3a ; $6a95
 	ld de, $da0a ; $6a97
 	farcall WriteTilemapByteAdvance ; $6a9a
-	call QueueStoryInfoRowToVram ; $6a9d
+	call Unused_1b_QueueStoryInfoRowToVram ; $6a9d
 	ret ; $6aa0
-QueueStoryInfoRowToVram:
+Unused_1b_QueueStoryInfoRowToVram:
 	ld hl, $da00 ; $6aa1
 	ld de, $9a00 ; $6aa4
 	ld c, $01 ; $6aa7

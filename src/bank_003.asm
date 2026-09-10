@@ -2870,7 +2870,7 @@ WriteMarioCastVictoryGrid:
 	pop de ; $524c
 	pop bc ; $524d
 	ret ; $524e
-MoveSaveEditorCursor:
+Unused_03_MoveSaveEditorCursor:
 	ldh a, [hPlayerInputFlags] ; $524f
 	bit PADB_A, a ; $5251
 	jr nz, .move ; $5253
@@ -3106,28 +3106,28 @@ Unused_03_SaveSlotDebugEditor:
 	bit PADB_UP, a ; $53fd
 	jr z, .moveSaveEditorCursor ; $53ff
 	ld bc, $f0f8 ; $5401
-	call MoveSaveEditorCursor ; $5404
+	call Unused_03_MoveSaveEditorCursor ; $5404
 	jr z, .loop4 ; $5407
 	jp .loopB ; $5409
 .moveSaveEditorCursor:
 	bit 5, a ; $540c
 	jr z, .bit5Clear ; $540e
 	ld bc, $ffff ; $5410
-	call MoveSaveEditorCursor ; $5413
+	call Unused_03_MoveSaveEditorCursor ; $5413
 	jr z, .loop4 ; $5416
 	jp .loopB ; $5418
 .bit5Clear:
 	bit 4, a ; $541b
 	jr z, .bit4Clear ; $541d
 	ld bc, $0101 ; $541f
-	call MoveSaveEditorCursor ; $5422
+	call Unused_03_MoveSaveEditorCursor ; $5422
 	jr z, .loop4 ; $5425
 	jp .loopB ; $5427
 .bit4Clear:
 	bit 7, a ; $542a
 	jr z, .positive ; $542c
 	ld bc, $1008 ; $542e
-	call MoveSaveEditorCursor ; $5431
+	call Unused_03_MoveSaveEditorCursor ; $5431
 	jp z, .loop4 ; $5434
 	jp .loopB ; $5437
 .positive:
@@ -4089,7 +4089,7 @@ SetupSceneAnimationPalettes:
 	push af ; $5b2a
 	wram_bank $06 ; $5b2b
 	xor a ; $5b31
-	ld [$d000], a ; $5b32
+	ld [wSceneAnimFrame], a ; $5b32
 	ld hl, SceneAnimObjPalette0_03 ; $5b35
 	ld de, $0a01 ; $5b38
 	call LoadPaletteShadow ; $5b3b
@@ -4113,20 +4113,20 @@ UpdateSceneAnimation:
 	ld a, [wCutsceneSlideTimer] ; $5b6e
 	and $03 ; $5b71
 	jr nz, .restore ; $5b73
-	ld a, [$d000] ; $5b75
+	ld a, [wSceneAnimFrame] ; $5b75
 	ld b, a ; $5b78
 	sub $36 ; $5b79
 	jp nc, .restore ; $5b7b
 	ld a, b ; $5b7e
 	inc a ; $5b7f
-	ld [$d000], a ; $5b80
+	ld [wSceneAnimFrame], a ; $5b80
 .restore:
 	pop af ; $5b83
 	wram_bank ; $5b84
 	ret ; $5b88
 LoadCutsceneAnimFrameGfx_00_08:
 	wram_bank $06 ; $5b89
-	ld a, [$d000] ; $5b8f
+	ld a, [wSceneAnimFrame] ; $5b8f
 	cp $00 ; $5b92
 	jp z, .eq00 ; $5b94
 	cp $01 ; $5b97
@@ -4290,7 +4290,7 @@ LoadCutsceneAnimFrameGfx_00_08:
 	ret ; $5d37
 LoadCutsceneAnimFrameGfx_09_11:
 	wram_bank $06 ; $5d38
-	ld a, [$d000] ; $5d3e
+	ld a, [wSceneAnimFrame] ; $5d3e
 	ld b, a ; $5d41
 	sub $09 ; $5d42
 	ret c ; $5d44
@@ -4458,7 +4458,7 @@ LoadCutsceneAnimFrameGfx_09_11:
 	ret ; $5eeb
 LoadCutsceneAnimFrameGfx_12_1A:
 	wram_bank $06 ; $5eec
-	ld a, [$d000] ; $5ef2
+	ld a, [wSceneAnimFrame] ; $5ef2
 	ld b, a ; $5ef5
 	sub $12 ; $5ef6
 	ret c ; $5ef8
@@ -4626,7 +4626,7 @@ LoadCutsceneAnimFrameGfx_12_1A:
 	ret ; $609f
 LoadCutsceneAnimFrameGfx_1B_23:
 	wram_bank $06 ; $60a0
-	ld a, [$d000] ; $60a6
+	ld a, [wSceneAnimFrame] ; $60a6
 	ld b, a ; $60a9
 	sub $1b ; $60aa
 	ret c ; $60ac
@@ -4794,7 +4794,7 @@ LoadCutsceneAnimFrameGfx_1B_23:
 	ret ; $6253
 LoadCutsceneAnimFrameGfx_24_2C:
 	wram_bank $06 ; $6254
-	ld a, [$d000] ; $625a
+	ld a, [wSceneAnimFrame] ; $625a
 	ld b, a ; $625d
 	sub $24 ; $625e
 	ret c ; $6260
@@ -4962,7 +4962,7 @@ LoadCutsceneAnimFrameGfx_24_2C:
 	ret ; $6407
 LoadCutsceneAnimFrameGfx_2D_35:
 	wram_bank $06 ; $6408
-	ld a, [$d000] ; $640e
+	ld a, [wSceneAnimFrame] ; $640e
 	ld b, a ; $6411
 	sub $2d ; $6412
 	ret c ; $6414
@@ -5521,7 +5521,7 @@ PlayScrollingStoryCutscene:
 	ldh [rWY], a ; $702a
 	wram_bank $06 ; $702c
 	xor a ; $7032
-	ld [$d000], a ; $7033
+	ld [wCutsceneSlideDone], a ; $7033
 	ld [wCutsceneSlideTimer], a ; $7036
 	pop af ; $7039
 	push af ; $703a
@@ -5531,7 +5531,7 @@ PlayScrollingStoryCutscene:
 	call RegisterFrameTask ; $7043
 .loop:
 	call AdvanceFrame ; $7046
-	ld a, [$d000] ; $7049
+	ld a, [wCutsceneSlideDone] ; $7049
 	or a ; $704c
 	jr z, .loop ; $704d
 	ld a, $20 ; $704f
@@ -5624,7 +5624,7 @@ AnimateWindowSlideUpTask:
 	call UnregisterFrameTask ; $72f2
 	wram_bank $06 ; $72f5
 	ld a, $01 ; $72fb
-	ld [$d000], a ; $72fd
+	ld [wCutsceneSlideDone], a ; $72fd
 .done:
 	ret ; $7300
 WindowSlideStepTable_03:

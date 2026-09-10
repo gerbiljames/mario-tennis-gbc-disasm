@@ -3436,7 +3436,7 @@ SECTION "WRAMX bank 6", WRAMX[$d000], BANK[6]
 
 ; WRAMX bank 6 at a glance -- regenerated, see ram_unions.json:
 ;
-;   $d000-$d029  7 overlays: star warp transition / debug character viewer / results continue prompt / +4 more
+;   $d000-$d029  9 overlays: scrolling story cutscene slide flag / scene animation frame counter / star warp transition / +6 more
 ;   $d000-$d3ff  wCollisionMap  [mirrored with bank ]
 ;   $d02a-$d219  9 overlays: star warp transition / trophy EXP awards / character-data screen / +6 more
 ;   $d230-$d259  scrolling text screen / EXP award screen
@@ -3456,6 +3456,15 @@ SECTION "WRAMX bank 6", WRAMX[$d000], BANK[6]
 ; at $d000 -- the results screen's tilemap planes, the viewer's actors --
 ; which the scope audit found once traced banks made the sites provable.
 UNION
+; scrolling story cutscene slide flag (bank $03)
+; [8-bit] Set to 1 by AnimateWindowSlideUpTask when the text window has finished sliding; PlayScrollingStoryCutscene clears it before registering the task and spins until it is set
+wCutsceneSlideDone:: db
+	ds 41
+NEXTU
+; scene animation frame counter (bank $03)
+; [8-bit] Which frame of the ending's animated scene is showing: zeroed by SetupSceneAnimationPalettes, stepped by UpdateSceneAnimation every fourth tick of wCutsceneSlideTimer until $36, and read by the six LoadCutsceneAnimFrameGfx_* loaders to pick the frame graphics they decompress
+wSceneAnimFrame:: db
+NEXTU
 ; star warp transition (bank $0e)
 ; [8-bit] Animation frame of the warp star, 0-5, stepped every other VBlank by UpdateStarWarpSprite
 wStarWarpFrame:: db
@@ -3465,7 +3474,6 @@ wStarWarpPathIndex:: db
 wStarWarpCountdown:: db
 ; [16 bytes] One life counter per trail sparkle. UpdateStarWarpTrailSparkles finds the first zero, sets it to $10 and seeds that slot's position from wStarWarpPathX/Y; the positions themselves are two bytes per slot from $d014
 wStarWarpSparkleLife:: ds 16
-	ds 23
 NEXTU
 ; debug character viewer (bank $1a, $6800-$7000)
 ; [8-bit] Which row of the debug character viewer the cursor is on, toggled with `xor $01`: 0 = the character grid, 1 = the palette row

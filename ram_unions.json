@@ -1857,6 +1857,46 @@
    "comment": "Character-data (level-up) screen working set, WRAM bank $06, shared by\nthe bank $1a/$1c/$1d screen code. The first four bytes are a smaller\nscratch that three screens overlay -- the debug character viewer, the\nresults continue prompt and the character-data screen itself -- so those\nget their own range-scoped variants ahead of it.\nEvery scope carries wram_bank $06. The viewer and the continue prompt both\nstarted with ROM-range-only scopes and both were naming other banks' bytes\nat $d000 -- the results screen's tilemap planes, the viewer's actors --\nwhich the scope audit found once traced banks made the sites provable.",
    "variants": [
     {
+     "context": "scrolling story cutscene slide flag (bank $03)",
+     "scopes": [
+      {
+       "bank": "0x03",
+       "start": "0x6ff7",
+       "end": "0x7060",
+       "wram_bank": "0x06"
+      },
+      {
+       "bank": "0x03",
+       "start": "0x72a0",
+       "end": "0x7301",
+       "wram_bank": "0x06"
+      }
+     ],
+     "symbols": {
+      "0xd000": {
+       "name": "wCutsceneSlideDone",
+       "note": "[8-bit] Set to 1 by AnimateWindowSlideUpTask when the text window has finished sliding; PlayScrollingStoryCutscene clears it before registering the task and spins until it is set"
+      }
+     }
+    },
+    {
+     "context": "scene animation frame counter (bank $03)",
+     "scopes": [
+      {
+       "bank": "0x03",
+       "start": "0x5b28",
+       "end": "0x6420",
+       "wram_bank": "0x06"
+      }
+     ],
+     "symbols": {
+      "0xd000": {
+       "name": "wSceneAnimFrame",
+       "note": "[8-bit] Which frame of the ending's animated scene is showing: zeroed by SetupSceneAnimationPalettes, stepped by UpdateSceneAnimation every fourth tick of wCutsceneSlideTimer until $36, and read by the six LoadCutsceneAnimFrameGfx_* loaders to pick the frame graphics they decompress"
+      }
+     }
+    },
+    {
      "context": "star warp transition (bank $0e)",
      "scopes": [
       {

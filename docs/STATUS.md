@@ -21,7 +21,7 @@ per `data.manifest`.
 | labels | 21,974, of which 20,394 human-named and 1,580 generator-derived (`FarPtr_*` slot labels, `SoundTable_*`); 0 state only an address |
 | data blobs (`INCBIN`) | 4,218 — 838 LZ streams, the rest raw graphics, tilemaps, sprite frames and sound |
 | coverage inputs | 174 `coverage/*.json` dumps and 2 `hooks/*.json` captures |
-| bare banked-WRAM operands | 230, all in the `unproven` bucket of `tools/ram_gaps.py` |
+| bare banked-WRAM operands | 188 — 94 `unproven` (live code no trace has reached), 91 `dead` (inside `Unused*` routines, unreachable by any trace), 3 in the bank `$03` cutscene text-window blit whose buffer does not fit its union |
 
 Everything that was ever anonymous has been classified. Every `INCBIN` is
 known to be graphics, audio, text, a resource descriptor, a record array or
@@ -53,17 +53,22 @@ decoded — see `docs/history.md` for the line).
 
 ## What is still open
 
-**The 230 unproven banked-WRAM operands.** A `$dxxx` literal whose WRAM bank
-neither static dataflow nor any trace has pinned renders as a raw number,
-because a name in the wrong bank is worse than none. Ordinary driving has
-saturated — a traced exhibition match adds no instructions and one or two
-operands — but a *native BizHawk Trace Logger capture of a real story
-flow* still reaches code the menus never touch: the last such capture (a
-doubles semi-final) resolved four and settled two dead-code questions.
-The flows not yet captured: a singles ranking match through the ranking
-board, the other Island Open rounds, a minigame to its score screen, and
-link play. `tools/tracelog2cov.py` converts a multi-segment log in one
-command. It is fair to stop here and call the residue unreachable-by-trace.
+**The 94 live unproven banked-WRAM operands.** A `$dxxx` literal whose WRAM
+bank neither static dataflow nor any trace has pinned renders as a raw
+number, because a name in the wrong bank is worse than none. 91 more sit in
+`Unused*` routines and are counted as `dead`: nothing references them, so
+no trace can ever prove them. Of the live 94, the biggest groups are the
+story cutscene scripts in banks `$12`-`$14` (Senior Court rank intros, the
+Tennis Machine level-cleared scenes, the Wall Practice room — one site
+each, ~20 in all, each behind its own progression flag), the character-data
+screen's view-only re-entry (12, `SetupCharDataScreen`), the link screens
+(bank `$38` grid, bank `$3e` link error), the Training Court challenger
+walk-ons (6), the three ranking rows 9-11 and doubles markers 5/6 no
+board argument seems to reach, and the DMG lockout screen (5, needs the
+ROM run in DMG mode). The developer "Test" map (debug warp location 3)
+is the cheapest lever for the story flows: its nine NPCs launch every
+story match, the lesson menu with its ranking-board samples, the
+epilogue and the ending credits directly.
 
 **Named in the docs as not established.** `docs/graphics_formats.md` §8
 (collision-map cell geometry, three odd-sized palette regions, object-header
@@ -119,6 +124,13 @@ label bound to the wrong parent.
 
 ## Recent changes
 
+* **2026-09-10** — an emulator session: eleven coverage dumps under the v4
+  connector (erase-confirm prompt, the N64 Tennis Data screens with a forged
+  save block, the developer Test map's lesson menu, epilogue, ending credits
+  and an Island Open singles match to its EXP screens). `ram_gaps` gained a
+  `dead` bucket and sixteen unreferenced routines their `Unused_` names;
+  seven new union variants name what the screens touch. Bare banked
+  operands 230 → 188, of which 94 are live.
 * **2026-09-10** — the text-id walker follows `push hl` / `pop hl` pairs, so
   `RenderProportionalTextAt` (which parks the id while it sets the glyph
   pointer) and the five caption helpers built on it count as consumers: 102

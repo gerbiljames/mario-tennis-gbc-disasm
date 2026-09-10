@@ -2502,7 +2502,7 @@ End1MainBldgInitScript_27:
 	farcall ScriptWaitActorJumpDone ; $74b2
 	script_move_target $06, $1800, $2000 ; $74b5
 	script_wait_frames $1e ; $74c0
-	ld bc, $d040 ; $74c7
+	ld bc, wActors + 1 * ACTOR_SIZE ; $74c7
 	script_get_actor_state $06 ; $74ca
 	ld e, l ; $74cf
 	ld d, h ; $74d0
