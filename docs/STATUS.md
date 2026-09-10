@@ -4,7 +4,7 @@ This is where the disassembly stands and what is still open. The dated
 working log that used to live here — every session's findings in the order
 they were found, 2026-07-09 to 2026-08-08 — is `docs/history.md`, kept
 verbatim; the subsystem docs under `docs/` are the reader-facing writeups.
-The state below describes HEAD `468d7e9` plus the text-id change.
+The state below describes HEAD `abfb563`.
 
 ## Where things stand
 
