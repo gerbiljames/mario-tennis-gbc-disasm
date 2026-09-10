@@ -2402,6 +2402,10 @@ SECTION "WRAMX bank 1", WRAMX[$d000], BANK[1]
 ; LoadCharacterRecordToBuffer writes $d580 in whichever bank the caller left
 ; selected, and bank $1b selects this one, so the record lands on top of the
 ; staging buffer while the new-game roster is being built.
+; ShowDmgLockoutScreen (bank $01, $6034-$6068) is scoped here by range without a
+; WRAM bank: it only runs on a DMG, where rWBK does not exist and $d000-$dfff
+; is the single upper half of WRAM -- the bytes a CGB calls bank 1. The lockout
+; screen stages its tiles there and copies them to VRAM like every other screen.
 UNION
 ; cutscene text scroll buffer (bank $03)
 ; [640 bytes] Eight 80-column rows of rendered cutscene text in WRAM bank $01: DrawCutsceneTextLines draws each line into it from column 19 of row 1 on, and BlitCutsceneTextWindow copies a 20-column window of it, one column further along per call, into wWindowShadowTilemap to scroll the text across the window. Both routines select the bank themselves, so the sites are scoped by range

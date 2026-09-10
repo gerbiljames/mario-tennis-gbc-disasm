@@ -21,7 +21,7 @@ per `data.manifest`.
 | labels | 21,974, of which 20,394 human-named and 1,580 generator-derived (`FarPtr_*` slot labels, `SoundTable_*`); 0 state only an address |
 | data blobs (`INCBIN`) | 4,218 — 838 LZ streams, the rest raw graphics, tilemaps, sprite frames and sound |
 | coverage inputs | 174 `coverage/*.json` dumps and 2 `hooks/*.json` captures |
-| bare banked-WRAM operands | 165 — 72 `unproven` (live code no trace has reached, and whose bank the dataflow cannot pin), 93 `dead` (inside `Unused*` routines, unreachable by any trace) |
+| bare banked-WRAM operands | 160 — 67 `unproven` (live code no trace has reached, and whose bank the dataflow cannot pin), 93 `dead` (inside `Unused*` routines, unreachable by any trace) |
 
 Everything that was ever anonymous has been classified. Every `INCBIN` is
 known to be graphics, audio, text, a resource descriptor, a record array or
@@ -53,20 +53,19 @@ decoded — see `docs/history.md` for the line).
 
 ## What is still open
 
-**The 72 live unproven banked-WRAM operands.** A `$dxxx` literal whose WRAM
+**The 67 live unproven banked-WRAM operands.** A `$dxxx` literal whose WRAM
 bank neither static dataflow nor any trace has pinned renders as a raw
 number, because a name in the wrong bank is worse than none. 93 more sit in
 `Unused*` routines and are counted as `dead`: nothing references them, so
 no trace can ever prove them. `tools/ram_gaps.py --static` separates a
 third kind — sites whose bank the generator's dataflow already knows but
-that no union names — and that bucket is empty. Of the live 72, the biggest
+that no union names — and that bucket is empty. Of the live 67, the biggest
 groups are the story cutscene scripts in banks `$12`-`$14` (Senior Court
 rank intros, the Tennis Machine level-cleared scenes, the Wall Practice
 room — one site each, ~20 in all, each behind its own progression flag),
 the link screens (bank `$38` grid), the Training Court challenger walk-ons
-(6), the three ranking rows 9-11 and doubles markers 5/6 no board argument
-seems to reach, and the DMG lockout screen (5, needs the ROM run in DMG
-mode). The developer "Test" map (debug warp location 3)
+(6), and the three ranking rows 9-11 and doubles markers 5/6 no board
+argument seems to reach. The developer "Test" map (debug warp location 3)
 is the cheapest lever for the story flows: its nine NPCs launch every
 story match, the lesson menu with its ranking-board samples, the
 epilogue and the ending credits directly.
@@ -125,6 +124,11 @@ label bound to the wrong parent.
 
 ## Recent changes
 
+* **2026-09-10** — the DMG lockout screen, from a native trace of the ROM
+  booted in DMG mode: the game hangs there, so the connector could not
+  capture it, and on a DMG there is no WRAM bank register for the converter
+  to read — the screen's five staging-buffer sites are scoped to the WRAM
+  bank 1 union by range, the single upper WRAM half a DMG has. 165 → 160.
 * **2026-09-10** — the desk pass after the emulator session: the cutscene
   text-scroll buffer, the continue prompt's tilemap rows, the link-error
   palette, the exhibition grid bits and the character-data blit sources

@@ -389,20 +389,20 @@ ShowDmgLockoutScreen:
 	ld a, $00 ; $6030
 	ldh [rLCDC], a ; $6032
 	ld hl, DmgLockoutTilesLZ_01 ; $6034
-	ld de, $d000 ; $6037
+	ld de, wDecompBuffer ; $6037
 	call DecompressData ; $603a
-	ld hl, $d000 ; $603d
+	ld hl, wDecompBuffer ; $603d
 	ld de, $9000 ; $6040
 	ld c, $80 ; $6043
 	call CopyMemoryFast ; $6045
-	ld hl, $d800 ; $6048
+	ld hl, wTextTileBuffer ; $6048
 	ld de, $8800 ; $604b
 	ld c, $80 ; $604e
 	call CopyMemoryFast ; $6050
 	ld hl, DmgLockoutTilemapLZ_01 ; $6053
-	ld de, $d000 ; $6056
+	ld de, wDecompBuffer ; $6056
 	call DecompressData ; $6059
-	ld hl, $d000 ; $605c
+	ld hl, wDecompBuffer ; $605c
 	ld de, $9800 ; $605f
 	ld c, $40 ; $6062
 	call CopyMemoryFast ; $6064

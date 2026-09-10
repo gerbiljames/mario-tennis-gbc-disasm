@@ -4279,7 +4279,7 @@
    "start": "0xd000",
    "wram_bank": "0x01",
    "end": "0xe000",
-   "comment": "WRAM bank $01 is staging for VRAM, and almost nothing else: every screen\nin the game decompresses into it and then QueueVRAMCopies out of it.\nWhat a given offset means therefore depends on what the current screen\nput there -- tile graphics, a tilemap plane, its attribute plane -- so\nthe two halves get names and the offsets do not. Every offset in use is a\nwhole multiple of TILE_SIZE, which is why they render as tile indices.\nScoped to a provable WRAM bank $01: $d000 is eight different things and\ntwenty ROM banks stage through this one.\nThe one overlay with a fixed meaning is bank $1b's character-record copy:\nLoadCharacterRecordToBuffer writes $d580 in whichever bank the caller left\nselected, and bank $1b selects this one, so the record lands on top of the\nstaging buffer while the new-game roster is being built.",
+   "comment": "WRAM bank $01 is staging for VRAM, and almost nothing else: every screen\nin the game decompresses into it and then QueueVRAMCopies out of it.\nWhat a given offset means therefore depends on what the current screen\nput there -- tile graphics, a tilemap plane, its attribute plane -- so\nthe two halves get names and the offsets do not. Every offset in use is a\nwhole multiple of TILE_SIZE, which is why they render as tile indices.\nScoped to a provable WRAM bank $01: $d000 is eight different things and\ntwenty ROM banks stage through this one.\nThe one overlay with a fixed meaning is bank $1b's character-record copy:\nLoadCharacterRecordToBuffer writes $d580 in whichever bank the caller left\nselected, and bank $1b selects this one, so the record lands on top of the\nstaging buffer while the new-game roster is being built.\nShowDmgLockoutScreen (bank $01, $6034-$6068) is scoped here by range without a\nWRAM bank: it only runs on a DMG, where rWBK does not exist and $d000-$dfff\nis the single upper half of WRAM -- the bytes a CGB calls bank 1. The lockout\nscreen stages its tiles there and copies them to VRAM like every other screen.",
    "variants": [
     {
      "context": "cutscene text scroll buffer (bank $03)",
@@ -4339,6 +4339,11 @@
        "bank": "0x1a",
        "start": "0x506a",
        "end": "0x506d"
+      },
+      {
+       "bank": "0x01",
+       "start": "0x6034",
+       "end": "0x6068"
       }
      ],
      "symbols": {
