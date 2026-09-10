@@ -17,7 +17,7 @@ only the first is one:
   left behind by an edit generally is not, so they are recorded rather than
   judged.
 
-Cross-references point at `docs/STATUS.md` where a find is written up in more
+Cross-references point at `docs/history.md` where a find is written up in more
 detail.
 
 ## Bugs

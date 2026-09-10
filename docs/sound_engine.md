@@ -16,7 +16,7 @@ Six logical channels share the four hardware channels. Each channel owns a
   `wSndChannels + 64` (`$d140`, i.e. channel 2), while the effect half of
   `PlaySound` clears blocks 0 and 1 before its table lookup. (This document said
   the opposite until 2026-07-30, following two index-table labels that were
-  themselves swapped; see docs/STATUS.md.)
+  themselves swapped; see docs/history.md.)
 - `wSndLoopSlots` (`$d1c0`) — per-channel loop bookkeeping resolved by
   `GetChannelLoopSlot`.
 

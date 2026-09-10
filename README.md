@@ -45,7 +45,8 @@ restated:
   edit, `tools/lz.py -c out.bin data/<bank>/lz_<addr>.bin` to encode back. The
   new stream need not be the same size.
 - **Tables.** Stats, physics constants, mode hooks, map actors and animation
-  scripts render as structured source with named fields — see docs/STATUS.md.
+  scripts render as structured source with named fields — see docs/STATUS.md
+  and docs/graphics_formats.md.
 - **Copy counts follow their source.** A VRAM copy whose length equalled its
   blob's size is written `ld c, (Next - Blob) / 16`, so growing the blob copies
   the extra tiles instead of silently truncating.
@@ -120,7 +121,8 @@ assets outside the tree and copy them in, or do not re-run extraction.
   fields after the Nintendo logo), `pattern` (a repeated byte pattern, as one
   `ds count, v1, v2, ...`), `fill` (padding, rendered as `ds` runs).
 - `include/hardware.inc` — standard Game Boy hardware definitions (CC0).
-- `docs/` — `STATUS.md` is the running log of what has been worked out and how;
+- `docs/` — `STATUS.md` is where the project stands and what is still open;
+  `history.md` is the dated log of how it got there;
   `bugs.md` collects defects in the *game* (as opposed to in this disassembly),
   with the dead stores and deliberately-stubbed routines kept separate from
   them; `save_format.md`, `ram_map.md`, `sound_engine.md`, `actor_script.md`
