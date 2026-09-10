@@ -681,7 +681,7 @@ RelaunchWallPracticeMasterLevel:
 	script_get_actor_state ACTOR_PARTNER ; $4a9a
 	ld c, l ; $4a9f
 	ld b, h ; $4aa0
-	ld de, $d000 ; $4aa1
+	ld de, wActors ; $4aa1
 	farcall AttachActorStepMover ; $4aa4
 	script_wait_frames $28 ; $4aa7
 .done:
@@ -758,7 +758,7 @@ WallPracticeExitCourtScript:
 	script_get_actor_state ACTOR_PARTNER ; $4b87
 	ld c, l ; $4b8c
 	ld b, h ; $4b8d
-	ld de, $d000 ; $4b8e
+	ld de, wActors ; $4b8e
 	farcall AttachActorStepMover ; $4b91
 .done:
 	script_wait_frames $0a ; $4b94
@@ -823,7 +823,7 @@ WallPracticeLevelResultScriptTextIds:
 	script_get_actor_state ACTOR_PARTNER ; $4c84
 	ld c, l ; $4c89
 	ld b, h ; $4c8a
-	ld de, $d000 ; $4c8b
+	ld de, wActors ; $4c8b
 	farcall AttachActorStepMover ; $4c8e
 	script_wait_frames $14 ; $4c91
 .wait:
@@ -861,7 +861,7 @@ WallPracticeRoomTile02_12:
 	script_get_actor_state ACTOR_PARTNER ; $4d1b
 	ld c, l ; $4d20
 	ld b, h ; $4d21
-	ld de, $d000 ; $4d22
+	ld de, wActors ; $4d22
 	farcall AttachActorStepMover ; $4d25
 .done:
 	ret ; $4d28
@@ -1536,7 +1536,7 @@ SeniorCourtNpc03FaceUpFlag0840_12:
 	script_get_actor_state ACTOR_PARTNER ; $5812
 	ld c, l ; $5817
 	ld b, h ; $5818
-	ld de, $d000 ; $5819
+	ld de, wActors ; $5819
 	farcall AttachActorStepMover ; $581c
 	ret ; $581f
 SeniorCourtNpc04_12:
@@ -2279,7 +2279,7 @@ SeniorDoublesRankOfferScene:
 	script_get_actor_state ACTOR_PARTNER ; $6092
 	ld c, l ; $6097
 	ld b, h ; $6098
-	ld de, $d000 ; $6099
+	ld de, wActors ; $6099
 	farcall AttachActorStepMover ; $609c
 	ret ; $609f
 StartSeniorRankingMatch:
@@ -2552,7 +2552,7 @@ SeniorDoublesRank2Intro:
 	script_player_speed $0020 ; $6616
 	script_move_player_to_actor $07 ; $661c
 	farcall WaitPlayerMoveDone ; $6623
-	ld bc, $d040 ; $6626
+	ld bc, wActors + 1 * ACTOR_SIZE ; $6626
 	script_get_actor_state $07 ; $6629
 	ld e, l ; $662e
 	ld d, h ; $662f
@@ -2651,7 +2651,7 @@ SeniorSinglesRank3Intro:
 	script_player_speed $0020 ; $6860
 	script_move_player_to_actor $06 ; $6866
 	farcall WaitPlayerMoveDone ; $686d
-	ld bc, $d040 ; $6870
+	ld bc, wActors + 1 * ACTOR_SIZE ; $6870
 	script_get_actor_state $06 ; $6873
 	ld e, l ; $6878
 	ld d, h ; $6879
@@ -2684,7 +2684,7 @@ SeniorSinglesRank2Intro:
 	script_player_speed $0020 ; $6918
 	script_move_player_to_actor $05 ; $691e
 	farcall WaitPlayerMoveDone ; $6925
-	ld bc, $d040 ; $6928
+	ld bc, wActors + 1 * ACTOR_SIZE ; $6928
 	script_get_actor_state $05 ; $692b
 	ld e, l ; $6930
 	ld d, h ; $6931
@@ -2857,7 +2857,7 @@ SeniorDoublesMatchConfirm:
 	script_get_actor_state ACTOR_PARTNER ; $6bd3
 	ld c, l ; $6bd8
 	ld b, h ; $6bd9
-	ld de, $d000 ; $6bda
+	ld de, wActors ; $6bda
 	farcall AttachActorStepMover ; $6bdd
 	farcall EndCutsceneScriptMode ; $6be0
 	ret ; $6be3
@@ -3198,7 +3198,7 @@ SeniorDoublesRank1Victory:
 	script_get_actor_state ACTOR_PARTNER ; $7060
 	ld c, l ; $7065
 	ld b, h ; $7066
-	ld de, $d000 ; $7067
+	ld de, wActors ; $7067
 	farcall AttachActorStepMover ; $706a
 	farcall EndCutsceneScriptMode ; $706d
 	ret ; $7070

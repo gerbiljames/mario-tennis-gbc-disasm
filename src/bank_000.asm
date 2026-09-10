@@ -6190,7 +6190,7 @@ GetScrollBufferAddr:
 	ld d, $00 ; $230a
 	ld e, a ; $230c
 	add hl, de ; $230d
-	ld de, $d000 ; $230e
+	ld de, wMapBuffer64 ; $230e
 	add hl, de ; $2311
 	ret ; $2312
 BlitBGStrip:

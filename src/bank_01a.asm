@@ -3845,7 +3845,7 @@ ApplyTilemapPatchList_1a:
 	inc hl ; $7a6d
 	ld e, [hl] ; $7a6e
 	push hl ; $7a6f
-	ld hl, $d000 ; $7a70
+	ld hl, wCharDataScreenCell ; $7a70
 	add hl, de ; $7a73
 	ld d, h ; $7a74
 	ld e, l ; $7a75

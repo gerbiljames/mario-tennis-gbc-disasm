@@ -753,7 +753,7 @@ DormRoomTile0F_13:
 	script_get_actor_state $03 ; $4fe4
 	ld c, l ; $4fe9
 	ld b, h ; $4fea
-	ld de, $d000 ; $4feb
+	ld de, wActors ; $4feb
 	farcall AttachActorStepMover ; $4fee
 	script_set_speed ACTOR_PLAYER, $0030 ; $4ff1
 	script_move_target ACTOR_PLAYER, $0b00, $1400 ; $4ff9
@@ -1807,7 +1807,7 @@ DormRoomArrivalCutscene_13:
 	script_get_actor_state $03 ; $5b5e
 	ld c, l ; $5b63
 	ld b, h ; $5b64
-	ld de, $d000 ; $5b65
+	ld de, wActors ; $5b65
 	farcall AttachActorStepMover ; $5b68
 	script_get_actor_state $03 ; $5b6b
 	ld c, l ; $5b70
@@ -3025,7 +3025,7 @@ VarsityCourtBNpc03_13:
 	script_get_actor_state ACTOR_PARTNER ; $7082
 	ld c, l ; $7087
 	ld b, h ; $7088
-	ld de, $d000 ; $7089
+	ld de, wActors ; $7089
 	farcall AttachActorStepMover ; $708c
 	ret ; $708f
 .speak:
@@ -3046,7 +3046,7 @@ VarsityCourtBNpc03_13:
 	script_get_actor_state ACTOR_PARTNER ; $70bb
 	ld c, l ; $70c0
 	ld b, h ; $70c1
-	ld de, $d000 ; $70c2
+	ld de, wActors ; $70c2
 	farcall AttachActorStepMover ; $70c5
 	ret ; $70c8
 ReturnVarsityCourtANpc04ToSpawn_13:

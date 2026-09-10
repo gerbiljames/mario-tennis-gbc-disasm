@@ -768,7 +768,7 @@ PrintNumberString_16:
 	ret ; $445d
 PrintNumberStringChar_16:
 	push hl ; $445e
-	ld hl, $d240 ; $445f
+	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH ; $445f
 	sub $30 ; $4462
 	jr c, .carry ; $4464
 	add $30 ; $4466

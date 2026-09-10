@@ -5327,16 +5327,16 @@ HandleLinkGridButtons:
 	or a ; $6751
 	jr z, .done ; $6752
 	sound SFX_MENU_MOVE ; $6754
-	ld a, [$df00] ; $6756
+	ld a, [wCharGridHandedness] ; $6756
 	cp $02 ; $6759
 	jr z, .starChar ; $675b
 	xor $01 ; $675d
-	ld [$df00], a ; $675f
+	ld [wCharGridHandedness], a ; $675f
 	call RefreshCharInfoPanel ; $6762
 	ret ; $6765
 .starChar:
 	ld a, $01 ; $6766
-	ld [$df00], a ; $6768
+	ld [wCharGridHandedness], a ; $6768
 	call RefreshCharInfoPanel ; $676b
 .done:
 	ret ; $676e

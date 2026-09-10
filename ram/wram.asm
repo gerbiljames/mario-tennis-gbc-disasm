@@ -2538,6 +2538,10 @@ SECTION "WRAMX bank 3", WRAMX[$d000], BANK[3]
 ; bank the current screen uses ($03 for screens, $05 for text windows, $02 for
 ; the match). Cell addresses render as `base + row * TILEMAP_WIDTH + column`,
 ; which is what they are.
+; The ranking board's row and marker drawers are one shape repeated behind a
+; jump table; rows 0-8 and markers 1-4 were traced in WRAM bank $03, and
+; rows 9-11 and markers 5/6 -- which no ShowRankingBoard argument selects --
+; are scoped by range on the strength of their siblings.
 ; screen tilemap (any bank, where WRAM bank $03 is provable)
 ; [1024 bytes] BG tile map the screen is being assembled into, 32 x 32 cells
 ; with rows TILEMAP_WIDTH apart; CopyTilemapRect steps rows by $0020
@@ -2961,6 +2965,10 @@ SECTION "WRAMX bank 4", WRAMX[$d000], BANK[4]
 ; as absolute addresses, so they are not RAM symbols; the layout is in
 ; docs/actor_script.md and the field-size table the script opcodes use is
 ; ActorFieldTypeTable_04.
+; The story cutscene scripts in banks $0e-$15 load slot 0 or slot 1 (`ld de,
+; $d000` / `ld bc, $d040`) and hand it straight to AttachActorStepMover or
+; script_get_actor_state, which select WRAM bank $04 themselves; those loads
+; are scoped by instruction range, like WaitPlayerMoveDone's.
 ; overworld actors (WRAM bank $04)
 ; [24 x ACTOR_SIZE] Actor slots. +$00 script pointer, +$02 its bank, +$03 wait counter, +$05 flags (bit 0 paused, bit 7 moving), +$08/+$0a move target, +$0c/+$0e position, +$21 object id, +$30 flags (bit 7 = live), +$32 facing. A slot is free when +$01 is zero
 wActors:: ds 1536

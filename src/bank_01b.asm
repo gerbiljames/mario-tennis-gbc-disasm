@@ -19,7 +19,7 @@ SECTION "ROM Bank $1b", ROMX[$4000], BANK[$1b]
 	farptr ShowNoN64DataFoundScreen ; $4020
 	farptr RunNewGameSetup ; $4022
 	farptr Unused_1b_RunDebugSaveDataFlow ; $4024
-	farptr RunMinigameFlagsDebugScreen ; $4026
+	farptr Unused_1b_RunMinigameFlagsDebugScreen ; $4026
 	farptr RunMinigameLevelSelect ; $4028
 	farptr RunSavedDataTypeSelect ; $402a
 	farptr ShowMinigameDataScreen ; $402c
@@ -815,7 +815,7 @@ DrawAsciiDigitString:
 	ret ; $4497
 DrawAsciiDigitChar:
 	push hl ; $4498
-	ld hl, $d240 ; $4499
+	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH ; $4499
 	sub $30 ; $449c
 	jr c, .carry ; $449e
 	add $30 ; $44a0
@@ -2182,22 +2182,22 @@ DrawRankingRow8:
 	farcall CopyTilemapRect ; $57f3
 	jp StubNop_1b_07 ; $57f6
 DrawRankingRow9:
-	ld hl, $d014 ; $57f9
-	ld de, $d026 ; $57fc
+	ld hl, wShadowTilemap + 20 ; $57f9
+	ld de, wShadowTilemap + 1 * TILEMAP_WIDTH + 6 ; $57fc
 	ld b, $04 ; $57ff
 	ld c, $10 ; $5801
 	farcall CopyTilemapRect ; $5803
 	jp StubNop_1b_07 ; $5806
 DrawRankingRow10:
-	ld hl, $d018 ; $5809
-	ld de, $d02a ; $580c
+	ld hl, wShadowTilemap + 24 ; $5809
+	ld de, wShadowTilemap + 1 * TILEMAP_WIDTH + 10 ; $580c
 	ld b, $04 ; $580f
 	ld c, $10 ; $5811
 	farcall CopyTilemapRect ; $5813
 	jp StubNop_1b_07 ; $5816
 DrawRankingRow11:
-	ld hl, $d014 ; $5819
-	ld de, $d026 ; $581c
+	ld hl, wShadowTilemap + 20 ; $5819
+	ld de, wShadowTilemap + 1 * TILEMAP_WIDTH + 6 ; $581c
 	ld b, $08 ; $581f
 	ld c, $10 ; $5821
 	farcall CopyTilemapRect ; $5823
@@ -2273,15 +2273,15 @@ DrawDoublesRankingMarker4:
 	farcall CopyTilemapRect ; $589f
 	jp StubNop_1b_08 ; $58a2
 DrawDoublesRankingMarker5:
-	ld hl, $d248 ; $58a5
-	ld de, $d066 ; $58a8
+	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH + 8 ; $58a5
+	ld de, wShadowTilemap + 3 * TILEMAP_WIDTH + 6 ; $58a8
 	ld b, $08 ; $58ab
 	ld c, $07 ; $58ad
 	farcall CopyTilemapRect ; $58af
 	jp StubNop_1b_08 ; $58b2
 DrawDoublesRankingMarker6:
-	ld hl, $d250 ; $58b5
-	ld de, $d066 ; $58b8
+	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH + 16 ; $58b5
+	ld de, wShadowTilemap + 3 * TILEMAP_WIDTH + 6 ; $58b8
 	ld b, $08 ; $58bb
 	ld c, $07 ; $58bd
 	farcall CopyTilemapRect ; $58bf
@@ -3456,7 +3456,7 @@ Unused_1b_RunDebugSaveDataFlow:
 	jp .loop2 ; $632a
 .loop:
 	sound BGM_MENU ; $632d
-	call RunDebugSaveDataMenu ; $632f
+	call Unused_1b_RunDebugSaveDataMenu ; $632f
 	cp $ff ; $6332
 	jr z, Unused_1b_RunDebugSaveDataFlow ; $6334
 	cp $01 ; $6336
@@ -3510,7 +3510,7 @@ Unused_1b_RunDebugSaveDataFlow:
 .eq01:
 	ld a, $00 ; $638e
 	ld [wUnlockDebugSelection], a ; $6390
-	farcall RunMinigameFlagsDebugScreen ; $6393
+	farcall Unused_1b_RunMinigameFlagsDebugScreen ; $6393
 	jp .loop ; $6396
 .clearFrameTasks:
 	call ClearFrameTasks ; $6399
@@ -3651,7 +3651,7 @@ RunLevelUpStatusTrophiesMenu:
 	pop de ; $64b6
 	pop bc ; $64b7
 	ret ; $64b8
-RunDebugSaveDataMenu:
+Unused_1b_RunDebugSaveDataMenu:
 	push bc ; $64b9
 	push de ; $64ba
 	push hl ; $64bb
@@ -3797,7 +3797,7 @@ LoadUnlockDebugScreenGfx:
 ; Decompresses UnlockDebugNavGridTable to $d000, uploads it to $8500 and loads
 ; its palette. The leading `ret` means it never runs -- this is debug-screen
 ; artwork, so the screen presumably renders without it.
-LoadUnlockDebugNavGridGfx:
+Unused_1b_LoadUnlockDebugNavGridGfx:
 	ret ; $664a
 	ld hl, UnlockDebugNavGridTable ; $664b
 	ld de, $d000 ; $664e
@@ -3899,7 +3899,7 @@ DrawUnlockDebugMugshots:
 	ld a, [wCharRecordBuffer + 11] ; $6715
 	farcall StubNop_1b_01 ; $6718
 	ret ; $671b
-RunMinigameFlagsDebugScreen:
+Unused_1b_RunMinigameFlagsDebugScreen:
 	wram_bank $01 ; $671c
 	call ClearFrameTasks ; $6722
 	call LoadUnlockDebugNavGrid ; $6725
@@ -3913,7 +3913,7 @@ RunMinigameFlagsDebugScreen:
 	call BeginFadeOut ; $673c
 	call WaitFadeEnd ; $673f
 	call DisableLCDSafely ; $6742
-	call LoadUnlockDebugNavGridGfx ; $6745
+	call Unused_1b_LoadUnlockDebugNavGridGfx ; $6745
 	call StartUnlockDebugCursorTask ; $6748
 	call LoadUnlockDebugScreenGfx ; $674b
 	call DrawUnlockDebugMugshots ; $674e

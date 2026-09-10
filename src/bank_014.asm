@@ -127,7 +127,7 @@ MachineLevel1ClearedScene:
 	script_get_actor_state ACTOR_PARTNER ; $4139
 	ld c, l ; $413e
 	ld b, h ; $413f
-	ld de, $d000 ; $4140
+	ld de, wActors ; $4140
 	farcall AttachActorStepMover ; $4143
 	ret ; $4146
 MachineLevel2FailedPrompt:
@@ -148,7 +148,7 @@ MachineLevel2ClearedScene:
 	script_get_actor_state ACTOR_PARTNER ; $416e
 	ld c, l ; $4173
 	ld b, h ; $4174
-	ld de, $d000 ; $4175
+	ld de, wActors ; $4175
 	farcall AttachActorStepMover ; $4178
 	ret ; $417b
 MachineLevel3FailedPrompt:
@@ -169,7 +169,7 @@ MachineLevel3ClearedScene:
 	script_get_actor_state ACTOR_PARTNER ; $41a3
 	ld c, l ; $41a8
 	ld b, h ; $41a9
-	ld de, $d000 ; $41aa
+	ld de, wActors ; $41aa
 	farcall AttachActorStepMover ; $41ad
 	ret ; $41b0
 MachineLevel4FailedPrompt:
@@ -190,7 +190,7 @@ MachineLevel4ClearedScene:
 	script_get_actor_state ACTOR_PARTNER ; $41d8
 	ld c, l ; $41dd
 	ld b, h ; $41de
-	ld de, $d000 ; $41df
+	ld de, wActors ; $41df
 	farcall AttachActorStepMover ; $41e2
 	ret ; $41e5
 TennisMachineRoomFacingScripts_14:
@@ -231,7 +231,7 @@ TennisMachineRoomTile01_14:
 	script_get_actor_state ACTOR_PARTNER ; $4262
 	ld c, l ; $4267
 	ld b, h ; $4268
-	ld de, $d000 ; $4269
+	ld de, wActors ; $4269
 	farcall AttachActorStepMover ; $426c
 	ret ; $426f
 	; $4270, 8 bytes (bytes:16)
@@ -322,7 +322,7 @@ MachineCourtGameOverExitScene:
 	script_get_actor_state ACTOR_PARTNER ; $4396
 	ld c, l ; $439b
 	ld b, h ; $439c
-	ld de, $d000 ; $439d
+	ld de, wActors ; $439d
 	farcall AttachActorStepMover ; $43a0
 	ret ; $43a3
 ComputeMachineCourtProgress:
@@ -651,7 +651,7 @@ MachineCourtHandleRetryChoice:
 	script_get_actor_state ACTOR_PARTNER ; $47bf
 	ld c, l ; $47c4
 	ld b, h ; $47c5
-	ld de, $d000 ; $47c6
+	ld de, wActors ; $47c6
 	farcall AttachActorStepMover ; $47c9
 	ret ; $47cc
 MachineCourtRestartLevel:
@@ -801,7 +801,7 @@ MachineExpertNewRecordScene:
 	script_get_actor_state ACTOR_PARTNER ; $48eb
 	ld c, l ; $48f0
 	ld b, h ; $48f1
-	ld de, $d000 ; $48f2
+	ld de, wActors ; $48f2
 	farcall AttachActorStepMover ; $48f5
 	ret ; $48f8
 MachineExpertCounterMaxScene:
@@ -838,7 +838,7 @@ MachineExpertCounterMaxScene:
 	script_get_actor_state ACTOR_PARTNER ; $4943
 	ld c, l ; $4948
 	ld b, h ; $4949
-	ld de, $d000 ; $494a
+	ld de, wActors ; $494a
 	farcall AttachActorStepMover ; $494d
 	ret ; $4950
 Unused_14_CompareMinigameScoreToRecord:

@@ -417,6 +417,11 @@
        "bank": "0x38",
        "start": "0x4da3",
        "end": "0x4da6"
+      },
+      {
+       "bank": "0x0b",
+       "start": "0x4453",
+       "end": "0x4456"
       }
      ],
      "symbols": {
@@ -1313,6 +1318,16 @@
      "scopes": [
       {
        "wram_bank": "0x03"
+      },
+      {
+       "bank": "0x18",
+       "start": "0x7b39",
+       "end": "0x7b3c"
+      },
+      {
+       "bank": "0x18",
+       "start": "0x7b71",
+       "end": "0x7b74"
       }
      ],
      "symbols": {
@@ -2830,7 +2845,7 @@
    "start": "0xd000",
    "wram_bank": "0x03",
    "end": "0xd800",
-   "comment": "Screen tilemap buffers, WRAM bank $03. The full-screen UIs assemble their\nBG map at $d000 and its CGB attributes at $d400 -- 32 x 32 cells each, rows\nTILEMAP_WIDTH apart, of which the top-left 20 x 18 is on screen -- then\nQueueVRAMCopy them to $9800 in VRAM banks 0 and 1. Not every screen pairs\nthe planes this way: the bank $03 cutscenes keep the attribute plane at\n$d000 in WRAM bank $02 instead, which is why these names are scoped to a\nprovable WRAM bank $03 rather than to the addresses.\nwShadowTilemapBank / wShadowTilemapPtr point the text engine at whichever\nbank the current screen uses ($03 for screens, $05 for text windows, $02 for\nthe match). Cell addresses render as `base + row * TILEMAP_WIDTH + column`,\nwhich is what they are.",
+   "comment": "Screen tilemap buffers, WRAM bank $03. The full-screen UIs assemble their\nBG map at $d000 and its CGB attributes at $d400 -- 32 x 32 cells each, rows\nTILEMAP_WIDTH apart, of which the top-left 20 x 18 is on screen -- then\nQueueVRAMCopy them to $9800 in VRAM banks 0 and 1. Not every screen pairs\nthe planes this way: the bank $03 cutscenes keep the attribute plane at\n$d000 in WRAM bank $02 instead, which is why these names are scoped to a\nprovable WRAM bank $03 rather than to the addresses.\nwShadowTilemapBank / wShadowTilemapPtr point the text engine at whichever\nbank the current screen uses ($03 for screens, $05 for text windows, $02 for\nthe match). Cell addresses render as `base + row * TILEMAP_WIDTH + column`,\nwhich is what they are.\nThe ranking board's row and marker drawers are one shape repeated behind a\njump table; rows 0-8 and markers 1-4 were traced in WRAM bank $03, and\nrows 9-11 and markers 5/6 -- which no ShowRankingBoard argument selects --\nare scoped by range on the strength of their siblings.",
    "variants": [
     {
      "context": "character-data / EXP screen cells (mirrored across WRAM banks $02/$03)",
@@ -2889,6 +2904,11 @@
        "bank": "0x1c",
        "start": "0x5574",
        "end": "0x5660"
+      },
+      {
+       "bank": "0x1a",
+       "start": "0x7a70",
+       "end": "0x7a73"
       }
      ],
      "symbols": {
@@ -3002,6 +3022,81 @@
        "bank": "0x1a",
        "start": "0x6f0a",
        "end": "0x6f0d"
+      },
+      {
+       "bank": "0x16",
+       "start": "0x445f",
+       "end": "0x4462"
+      },
+      {
+       "bank": "0x17",
+       "start": "0x446f",
+       "end": "0x4472"
+      },
+      {
+       "bank": "0x1b",
+       "start": "0x4499",
+       "end": "0x449c"
+      },
+      {
+       "bank": "0x3b",
+       "start": "0x4491",
+       "end": "0x4494"
+      },
+      {
+       "bank": "0x3e",
+       "start": "0x44a1",
+       "end": "0x44a4"
+      },
+      {
+       "bank": "0x1b",
+       "start": "0x57f9",
+       "end": "0x57fc"
+      },
+      {
+       "bank": "0x1b",
+       "start": "0x57fc",
+       "end": "0x57ff"
+      },
+      {
+       "bank": "0x1b",
+       "start": "0x5809",
+       "end": "0x580c"
+      },
+      {
+       "bank": "0x1b",
+       "start": "0x580c",
+       "end": "0x580f"
+      },
+      {
+       "bank": "0x1b",
+       "start": "0x5819",
+       "end": "0x581c"
+      },
+      {
+       "bank": "0x1b",
+       "start": "0x581c",
+       "end": "0x581f"
+      },
+      {
+       "bank": "0x1b",
+       "start": "0x58a5",
+       "end": "0x58a8"
+      },
+      {
+       "bank": "0x1b",
+       "start": "0x58a8",
+       "end": "0x58ab"
+      },
+      {
+       "bank": "0x1b",
+       "start": "0x58b5",
+       "end": "0x58b8"
+      },
+      {
+       "bank": "0x1b",
+       "start": "0x58b8",
+       "end": "0x58bb"
       }
      ],
      "symbols": {
@@ -3746,7 +3841,7 @@
    "start": "0xd000",
    "wram_bank": "0x04",
    "end": "0xd600",
-   "comment": "Overworld / story actor slots (WRAM bank $04): 24 records of ACTOR_SIZE\nbytes, the array SpawnActor allocates from and the bank $04 engine walks\nonce a frame. Scoped to a provable WRAM bank $04 -- $d000 is eight\ndifferent things and seven ROM banks reach the array, so nothing but the\ndataflow can say which one a literal means.\nTwo bank $0a sites get instruction ranges instead, because there the bank\nis selected in the callee and never at the reference: GetActorStateAddr\nbuilds its slot address and only then runs `wram_bank $04`, and\nEndCutsceneScriptMode hands slots 1 and 0 to AttachActorWaypointFollower,\nwhich selects the bank itself.\nRecord fields are addressed as offsets (`ld hl, $00xx / add hl, bc`), not\nas absolute addresses, so they are not RAM symbols; the layout is in\ndocs/actor_script.md and the field-size table the script opcodes use is\nActorFieldTypeTable_04.",
+   "comment": "Overworld / story actor slots (WRAM bank $04): 24 records of ACTOR_SIZE\nbytes, the array SpawnActor allocates from and the bank $04 engine walks\nonce a frame. Scoped to a provable WRAM bank $04 -- $d000 is eight\ndifferent things and seven ROM banks reach the array, so nothing but the\ndataflow can say which one a literal means.\nTwo bank $0a sites get instruction ranges instead, because there the bank\nis selected in the callee and never at the reference: GetActorStateAddr\nbuilds its slot address and only then runs `wram_bank $04`, and\nEndCutsceneScriptMode hands slots 1 and 0 to AttachActorWaypointFollower,\nwhich selects the bank itself.\nRecord fields are addressed as offsets (`ld hl, $00xx / add hl, bc`), not\nas absolute addresses, so they are not RAM symbols; the layout is in\ndocs/actor_script.md and the field-size table the script opcodes use is\nActorFieldTypeTable_04.\nThe story cutscene scripts in banks $0e-$15 load slot 0 or slot 1 (`ld de,\n$d000` / `ld bc, $d040`) and hand it straight to AttachActorStepMover or\nscript_get_actor_state, which select WRAM bank $04 themselves; those loads\nare scoped by instruction range, like WaitPlayerMoveDone's.",
    "variants": [
     {
      "context": "overworld actors (WRAM bank $04)",
@@ -3769,6 +3864,201 @@
        "start": "0x4898",
        "end": "0x489b",
        "note": "WaitPlayerMoveDone loads the slot-1 pointer and only selects WRAM bank $04 two instructions later, so the bank observed at the operand is the caller's, not the one it means"
+      },
+      {
+       "bank": "0x0e",
+       "start": "0x6059",
+       "end": "0x605c"
+      },
+      {
+       "bank": "0x0e",
+       "start": "0x663a",
+       "end": "0x663d"
+      },
+      {
+       "bank": "0x0f",
+       "start": "0x46f9",
+       "end": "0x46fc"
+      },
+      {
+       "bank": "0x0f",
+       "start": "0x471e",
+       "end": "0x4721"
+      },
+      {
+       "bank": "0x0f",
+       "start": "0x5882",
+       "end": "0x5885"
+      },
+      {
+       "bank": "0x0f",
+       "start": "0x5ae5",
+       "end": "0x5ae8"
+      },
+      {
+       "bank": "0x11",
+       "start": "0x75c5",
+       "end": "0x75c8"
+      },
+      {
+       "bank": "0x11",
+       "start": "0x5eb9",
+       "end": "0x5ebc"
+      },
+      {
+       "bank": "0x11",
+       "start": "0x5fb6",
+       "end": "0x5fb9"
+      },
+      {
+       "bank": "0x12",
+       "start": "0x4aa1",
+       "end": "0x4aa4"
+      },
+      {
+       "bank": "0x12",
+       "start": "0x5819",
+       "end": "0x581c"
+      },
+      {
+       "bank": "0x12",
+       "start": "0x6bda",
+       "end": "0x6bdd"
+      },
+      {
+       "bank": "0x12",
+       "start": "0x7067",
+       "end": "0x706a"
+      },
+      {
+       "bank": "0x12",
+       "start": "0x6626",
+       "end": "0x6629"
+      },
+      {
+       "bank": "0x12",
+       "start": "0x6099",
+       "end": "0x609c"
+      },
+      {
+       "bank": "0x12",
+       "start": "0x6928",
+       "end": "0x692b"
+      },
+      {
+       "bank": "0x12",
+       "start": "0x6870",
+       "end": "0x6873"
+      },
+      {
+       "bank": "0x12",
+       "start": "0x4b8e",
+       "end": "0x4b91"
+      },
+      {
+       "bank": "0x12",
+       "start": "0x4c8b",
+       "end": "0x4c8e"
+      },
+      {
+       "bank": "0x12",
+       "start": "0x4d22",
+       "end": "0x4d25"
+      },
+      {
+       "bank": "0x13",
+       "start": "0x5b65",
+       "end": "0x5b68"
+      },
+      {
+       "bank": "0x13",
+       "start": "0x4feb",
+       "end": "0x4fee"
+      },
+      {
+       "bank": "0x13",
+       "start": "0x7089",
+       "end": "0x708c"
+      },
+      {
+       "bank": "0x13",
+       "start": "0x70c2",
+       "end": "0x70c5"
+      },
+      {
+       "bank": "0x14",
+       "start": "0x439d",
+       "end": "0x43a0"
+      },
+      {
+       "bank": "0x14",
+       "start": "0x47c6",
+       "end": "0x47c9"
+      },
+      {
+       "bank": "0x14",
+       "start": "0x494a",
+       "end": "0x494d"
+      },
+      {
+       "bank": "0x14",
+       "start": "0x48f2",
+       "end": "0x48f5"
+      },
+      {
+       "bank": "0x14",
+       "start": "0x4140",
+       "end": "0x4143"
+      },
+      {
+       "bank": "0x14",
+       "start": "0x4175",
+       "end": "0x4178"
+      },
+      {
+       "bank": "0x14",
+       "start": "0x41aa",
+       "end": "0x41ad"
+      },
+      {
+       "bank": "0x14",
+       "start": "0x41df",
+       "end": "0x41e2"
+      },
+      {
+       "bank": "0x14",
+       "start": "0x4269",
+       "end": "0x426c"
+      },
+      {
+       "bank": "0x15",
+       "start": "0x627c",
+       "end": "0x627f"
+      },
+      {
+       "bank": "0x15",
+       "start": "0x629a",
+       "end": "0x629d"
+      },
+      {
+       "bank": "0x15",
+       "start": "0x62b8",
+       "end": "0x62bb"
+      },
+      {
+       "bank": "0x15",
+       "start": "0x61c0",
+       "end": "0x61c3"
+      },
+      {
+       "bank": "0x15",
+       "start": "0x61ff",
+       "end": "0x6202"
+      },
+      {
+       "bank": "0x15",
+       "start": "0x623e",
+       "end": "0x6241"
       }
      ],
      "symbols": {
@@ -4698,6 +4988,11 @@
       {
        "bank": "0x38",
        "wram_bank": "0x03"
+      },
+      {
+       "bank": "0x38",
+       "start": "0x6756",
+       "end": "0x676b"
       }
      ],
      "symbols": {
@@ -4744,6 +5039,11 @@
       {
        "bank": "0x3b",
        "wram_bank": "0x03"
+      },
+      {
+       "bank": "0x3b",
+       "start": "0x5592",
+       "end": "0x5595"
       }
      ],
      "symbols": {
@@ -5106,6 +5406,11 @@
        "start": "0x622f",
        "end": "0x6232",
        "note": "GetSceneTilemapAddr returns base + cell without dereferencing, so no bank is live at the operand; its caller CopySceneTilemapRect selects WRAM bank $02 and copies with a $40 row stride, which is this buffer's geometry"
+      },
+      {
+       "bank": "0x00",
+       "start": "0x230e",
+       "end": "0x2311"
       }
      ],
      "symbols": {

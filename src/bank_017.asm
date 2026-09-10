@@ -801,7 +801,7 @@ DrawAsciiDigitString_17:
 	ret ; $446d
 DrawAsciiDigitChar_17:
 	push hl ; $446e
-	ld hl, $d240 ; $446f
+	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH ; $446f
 	sub $30 ; $4472
 	jr c, .carry ; $4474
 	add $30 ; $4476

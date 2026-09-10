@@ -2287,7 +2287,7 @@ MarioWorldArrivalDoubles:
 	script_get_actor_state ACTOR_PARTNER ; $6052
 	ld c, l ; $6057
 	ld b, h ; $6058
-	ld de, $d000 ; $6059
+	ld de, wActors ; $6059
 	farcall AttachActorStepMover ; $605c
 	ret ; $605f
 ExhibitionAcceptedDoubles:
@@ -2589,7 +2589,7 @@ PromptExhibitionMatch:
 	script_get_actor_state ACTOR_PARTNER ; $6633
 	ld c, l ; $6638
 	ld b, h ; $6639
-	ld de, $d000 ; $663a
+	ld de, wActors ; $663a
 	farcall AttachActorStepMover ; $663d
 .declined:
 	farcall EndCutsceneScriptMode ; $6640

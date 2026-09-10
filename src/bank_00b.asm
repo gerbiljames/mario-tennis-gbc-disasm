@@ -618,7 +618,7 @@ TestCharStateBit4:
 	add b ; $444d
 	ld a, a ; $444e
 	wram_bank ; $444f
-	ld de, $df00 ; $4453
+	ld de, wCharPosX ; $4453
 	ld hl, $0050 ; $4456
 	add hl, de ; $4459
 	ld a, [hl] ; $445a

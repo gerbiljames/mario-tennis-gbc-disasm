@@ -1907,7 +1907,7 @@ TaskDrawObjectSprites_18:
 	ld c, $00 ; $7b36
 .objectLoop:
 	push bc ; $7b38
-	ld hl, $d800 ; $7b39
+	ld hl, wScreenScratch ; $7b39
 	ld a, c ; $7b3c
 	add a ; $7b3d
 	add a ; $7b3e
@@ -1955,7 +1955,7 @@ TaskUpdateObjects_18:
 	ld c, $00 ; $7b6e
 .objectLoop:
 	push bc ; $7b70
-	ld hl, $d800 ; $7b71
+	ld hl, wScreenScratch ; $7b71
 	ld a, c ; $7b74
 	add a ; $7b75
 	add a ; $7b76

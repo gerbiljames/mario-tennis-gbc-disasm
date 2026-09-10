@@ -17,7 +17,7 @@ SECTION "ROM Bank $05", ROMX[$4000], BANK[$05]
 	farptr RenderProportionalTextAt ; $401c
 	farptr FetchDialogueText ; $401e
 	farptr DrawTileAttrRect ; $4020
-	farptr CopyTilemapRowsAnimated ; $4022
+	farptr Unused_05_CopyTilemapRowsAnimated ; $4022
 	farptr ApplyMessageSpeed ; $4024
 	farptr MeasureDialogueWidthTiles ; $4026
 	farptr ResetWindowState ; $4028
@@ -341,7 +341,7 @@ Unused_05_CopyTilemapRowToVRAM:
 	ld c, $02 ; $4233
 	call QueueVRAMCopy ; $4235
 	ret ; $4238
-CopyTilemapRowsToVRAM:
+Unused_05_CopyTilemapRowsToVRAM:
 	ld d, a ; $4239
 	ld a, c ; $423a
 	or a ; $423b
@@ -390,7 +390,7 @@ CopyTilemapRowsToVRAM:
 	pop de ; $4282
 .done:
 	ret ; $4283
-CopyTilemapRowsAnimated:
+Unused_05_CopyTilemapRowsAnimated:
 	push af ; $4284
 	push bc ; $4285
 	push de ; $4286
@@ -441,7 +441,7 @@ CopyTilemapRowsAnimated:
 	ld c, a ; $42c3
 	xor a ; $42c4
 	ld b, $05 ; $42c5
-	call CopyTilemapRowsToVRAM ; $42c7
+	call Unused_05_CopyTilemapRowsToVRAM ; $42c7
 	pop bc ; $42ca
 	ld a, c ; $42cb
 	sub b ; $42cc
@@ -451,7 +451,7 @@ CopyTilemapRowsAnimated:
 .ge20:
 	and $1f ; $42cf
 	ld b, $05 ; $42d1
-	call CopyTilemapRowsToVRAM ; $42d3
+	call Unused_05_CopyTilemapRowsToVRAM ; $42d3
 	pop hl ; $42d6
 	pop de ; $42d7
 	pop bc ; $42d8

@@ -347,7 +347,7 @@ AwardsCeremonyTile01_0f:
 	script_get_actor_state ACTOR_PARTNER ; $46f2
 	ld c, l ; $46f7
 	ld b, h ; $46f8
-	ld de, $d000 ; $46f9
+	ld de, wActors ; $46f9
 	farcall AttachActorStepMover ; $46fc
 	ret ; $46ff
 .done:
@@ -358,7 +358,7 @@ AwardsCeremonyTile01_0f:
 	script_get_actor_state $03 ; $4717
 	ld c, l ; $471c
 	ld b, h ; $471d
-	ld de, $d000 ; $471e
+	ld de, wActors ; $471e
 	farcall AttachActorStepMover ; $4721
 	ret ; $4724
 AwardsCeremonyTile02_0f:
@@ -1159,7 +1159,7 @@ CutsceneStompScreenShake:
 	script_get_actor_state $03 ; $587b
 	ld c, l ; $5880
 	ld b, h ; $5881
-	ld de, $d000 ; $5882
+	ld de, wActors ; $5882
 	farcall AttachActorStepMover ; $5885
 	ret ; $5888
 .doubles:
@@ -1278,7 +1278,7 @@ CutsceneStompScreenShake:
 	script_get_actor_state ACTOR_PARTNER ; $5ade
 	ld c, l ; $5ae3
 	ld b, h ; $5ae4
-	ld de, $d000 ; $5ae5
+	ld de, wActors ; $5ae5
 	farcall AttachActorStepMover ; $5ae8
 	ret ; $5aeb
 SpeakPartnerVariantLine:

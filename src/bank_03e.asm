@@ -820,7 +820,7 @@ DrawAsciiDigitString_3e:
 	ret ; $449f
 DrawAsciiDigitChar_3e:
 	push hl ; $44a0
-	ld hl, $d240 ; $44a1
+	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH ; $44a1
 	sub $30 ; $44a4
 	jr c, .carry ; $44a6
 	add $30 ; $44a8

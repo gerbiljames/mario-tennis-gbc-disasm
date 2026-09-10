@@ -802,7 +802,7 @@ DrawAsciiDigitString_3b:
 	ret ; $448f
 DrawAsciiDigitChar_3b:
 	push hl ; $4490
-	ld hl, $d240 ; $4491
+	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH ; $4491
 	sub $30 ; $4494
 	jr c, .carry ; $4496
 	add $30 ; $4498
@@ -3127,7 +3127,7 @@ RingShotMarkCellTable:
 	dw wShadowTilemap + 8 * TILEMAP_WIDTH + 23 ; record 1
 RingShotScoreDrawTask:
 	ld a, [wMenuCursorY] ; $558f
-	ld hl, $db00 ; $5592
+	ld hl, wChartRows ; $5592
 	ld bc, $000c ; $5595
 .loop:
 	or a ; $5598

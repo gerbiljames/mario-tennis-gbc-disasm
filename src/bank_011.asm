@@ -1850,7 +1850,7 @@ JuniorClassCourtDoublesMatchReturn:
 	script_get_actor_state ACTOR_PARTNER ; $5eb2
 	ld c, l ; $5eb7
 	ld b, h ; $5eb8
-	ld de, $d000 ; $5eb9
+	ld de, wActors ; $5eb9
 	farcall AttachActorStepMover ; $5ebc
 	ret ; $5ebf
 .setFlag2:
@@ -1892,7 +1892,7 @@ JuniorClassCourtDoublesMatchReturn:
 	script_get_actor_state ACTOR_PARTNER ; $5faf
 	ld c, l ; $5fb4
 	ld b, h ; $5fb5
-	ld de, $d000 ; $5fb6
+	ld de, wActors ; $5fb6
 	farcall AttachActorStepMover ; $5fb9
 	ret ; $5fbc
 .setFlag3:
@@ -3044,7 +3044,7 @@ DrawRankingOpponentInfo:
 	script_player_speed $0020 ; $75b5
 	script_move_player_to_actor $04 ; $75bb
 	farcall WaitPlayerMoveDone ; $75c2
-	ld bc, $d040 ; $75c5
+	ld bc, wActors + 1 * ACTOR_SIZE ; $75c5
 	script_get_actor_state $04 ; $75c8
 	ld e, l ; $75cd
 	ld d, h ; $75ce

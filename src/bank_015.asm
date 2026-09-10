@@ -2374,7 +2374,7 @@ WalkChallengerOntoCourt:
 	script_get_actor_state ACTOR_PARTNER ; $61b9
 	ld c, l ; $61be
 	ld b, h ; $61bf
-	ld de, $d000 ; $61c0
+	ld de, wActors ; $61c0
 	farcall AttachActorStepMover ; $61c3
 	ld a, [wMapSceneStage2] ; $61c6
 	farcall ScriptWaitActorMoveDone ; $61c9
@@ -2393,7 +2393,7 @@ WalkChallengerOntoCourt:
 	script_get_actor_state ACTOR_PARTNER ; $61f8
 	ld c, l ; $61fd
 	ld b, h ; $61fe
-	ld de, $d000 ; $61ff
+	ld de, wActors ; $61ff
 	farcall AttachActorStepMover ; $6202
 	ld a, [wMapSceneStage2] ; $6205
 	farcall ScriptWaitActorMoveDone ; $6208
@@ -2412,7 +2412,7 @@ WalkChallengerOntoCourt:
 	script_get_actor_state ACTOR_PARTNER ; $6237
 	ld c, l ; $623c
 	ld b, h ; $623d
-	ld de, $d000 ; $623e
+	ld de, wActors ; $623e
 	farcall AttachActorStepMover ; $6241
 	ld a, [wMapSceneStage2] ; $6244
 	farcall ScriptWaitActorMoveDone ; $6247
@@ -2435,7 +2435,7 @@ MovePlayerToLessonCourtSpot:
 	script_get_actor_state ACTOR_PARTNER ; $6275
 	ld c, l ; $627a
 	ld b, h ; $627b
-	ld de, $d000 ; $627c
+	ld de, wActors ; $627c
 	farcall AttachActorStepMover ; $627f
 	ret ; $6282
 .serveCourtSpot:
@@ -2444,7 +2444,7 @@ MovePlayerToLessonCourtSpot:
 	script_get_actor_state ACTOR_PARTNER ; $6293
 	ld c, l ; $6298
 	ld b, h ; $6299
-	ld de, $d000 ; $629a
+	ld de, wActors ; $629a
 	farcall AttachActorStepMover ; $629d
 	ret ; $62a0
 .strokeCourtSpot:
@@ -2453,7 +2453,7 @@ MovePlayerToLessonCourtSpot:
 	script_get_actor_state ACTOR_PARTNER ; $62b1
 	ld c, l ; $62b6
 	ld b, h ; $62b7
-	ld de, $d000 ; $62b8
+	ld de, wActors ; $62b8
 	farcall AttachActorStepMover ; $62bb
 	ret ; $62be
 .netResultText:
