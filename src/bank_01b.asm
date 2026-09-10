@@ -18,7 +18,7 @@ SECTION "ROM Bank $1b", ROMX[$4000], BANK[$1b]
 	farptr RunStoryDataConfirmMenu ; $401e
 	farptr ShowNoN64DataFoundScreen ; $4020
 	farptr RunNewGameSetup ; $4022
-	farptr RunDebugSaveDataFlow ; $4024
+	farptr Unused_1b_RunDebugSaveDataFlow ; $4024
 	farptr RunMinigameFlagsDebugScreen ; $4026
 	farptr RunMinigameLevelSelect ; $4028
 	farptr RunSavedDataTypeSelect ; $402a
@@ -2126,57 +2126,57 @@ RankingRowDrawHandlers_1b:
 	dw DrawRankingRow10 ; $5775 jumptable
 	dw DrawRankingRow11 ; $5777 jumptable
 DrawRankingRow0:
-	ld hl, $d240 ; $5779
-	ld de, $d026 ; $577c
+	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH ; $5779
+	ld de, wShadowTilemap + 1 * TILEMAP_WIDTH + 6 ; $577c
 	ld b, $05 ; $577f
 	ld c, $02 ; $5781
 	farcall CopyTilemapRect ; $5783
 	jp StubNop_1b_07 ; $5786
 DrawRankingRow2:
-	ld hl, $d280 ; $5789
-	ld de, $d146 ; $578c
+	ld hl, wShadowTilemap + 20 * TILEMAP_WIDTH ; $5789
+	ld de, wShadowTilemap + 10 * TILEMAP_WIDTH + 6 ; $578c
 	ld b, $04 ; $578f
 	ld c, $02 ; $5791
 	farcall CopyTilemapRect ; $5793
 	jp StubNop_1b_07 ; $5796
 DrawRankingRow3:
-	ld hl, $d244 ; $5799
-	ld de, $d02a ; $579c
+	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH + 4 ; $5799
+	ld de, wShadowTilemap + 1 * TILEMAP_WIDTH + 10 ; $579c
 	ld b, $04 ; $579f
 	ld c, $02 ; $57a1
 	farcall CopyTilemapRect ; $57a3
 	jp StubNop_1b_07 ; $57a6
 DrawRankingRow4:
-	ld hl, $d284 ; $57a9
-	ld de, $d14a ; $57ac
+	ld hl, wShadowTilemap + 20 * TILEMAP_WIDTH + 4 ; $57a9
+	ld de, wShadowTilemap + 10 * TILEMAP_WIDTH + 10 ; $57ac
 	ld b, $04 ; $57af
 	ld c, $02 ; $57b1
 	farcall CopyTilemapRect ; $57b3
 	jp StubNop_1b_07 ; $57b6
 DrawRankingRow5:
-	ld hl, $d2c0 ; $57b9
-	ld de, $d026 ; $57bc
+	ld hl, wShadowTilemap + 22 * TILEMAP_WIDTH ; $57b9
+	ld de, wShadowTilemap + 1 * TILEMAP_WIDTH + 6 ; $57bc
 	ld b, $04 ; $57bf
 	ld c, $07 ; $57c1
 	farcall CopyTilemapRect ; $57c3
 	jp StubNop_1b_07 ; $57c6
 DrawRankingRow6:
-	ld hl, $d2c8 ; $57c9
-	ld de, $d146 ; $57cc
+	ld hl, wShadowTilemap + 22 * TILEMAP_WIDTH + 8 ; $57c9
+	ld de, wShadowTilemap + 10 * TILEMAP_WIDTH + 6 ; $57cc
 	ld b, $04 ; $57cf
 	ld c, $07 ; $57d1
 	farcall CopyTilemapRect ; $57d3
 	jp StubNop_1b_07 ; $57d6
 DrawRankingRow7:
-	ld hl, $d2c4 ; $57d9
-	ld de, $d02a ; $57dc
+	ld hl, wShadowTilemap + 22 * TILEMAP_WIDTH + 4 ; $57d9
+	ld de, wShadowTilemap + 1 * TILEMAP_WIDTH + 10 ; $57dc
 	ld b, $04 ; $57df
 	ld c, $07 ; $57e1
 	farcall CopyTilemapRect ; $57e3
 	jp StubNop_1b_07 ; $57e6
 DrawRankingRow8:
-	ld hl, $d2cc ; $57e9
-	ld de, $d14a ; $57ec
+	ld hl, wShadowTilemap + 22 * TILEMAP_WIDTH + 12 ; $57e9
+	ld de, wShadowTilemap + 10 * TILEMAP_WIDTH + 10 ; $57ec
 	ld b, $04 ; $57ef
 	ld c, $07 ; $57f1
 	farcall CopyTilemapRect ; $57f3
@@ -3041,7 +3041,7 @@ LoadCharSelectRosterTable:
 	ld bc, $0080 ; $5fe7
 	call CopyMemoryBC ; $5fea
 	ret ; $5fed
-LoadCharSelectScreenGfx:
+Unused_1b_LoadCharSelectScreenGfx:
 	ld hl, CharSelectNavGridTable ; $5fee
 	ld de, $d000 ; $5ff1
 	call DecompressData ; $5ff4
@@ -3076,7 +3076,7 @@ UpdateCharSelectCursorTask:
 	ld a, [wCharSelectChar] ; $603e
 	farcall DrawCharSelectCursor ; $6041
 	ret ; $6044
-DrawCharSelectPrompt:
+Unused_1b_DrawCharSelectPrompt:
 	ld hl, $d000 ; $6045
 	ld de, $9000 ; $6048
 	ld c, $10 ; $604b
@@ -3155,9 +3155,9 @@ Unused_1b_RunCharSelectLoop:
 	call BeginFadeOut ; $60e3
 	call WaitFadeEnd ; $60e6
 	call DisableLCDSafely ; $60e9
-	call LoadCharSelectScreenGfx ; $60ec
+	call Unused_1b_LoadCharSelectScreenGfx ; $60ec
 	call DrawCharSelectMugshots ; $60ef
-	call DrawCharSelectPrompt ; $60f2
+	call Unused_1b_DrawCharSelectPrompt ; $60f2
 	ld hl, $dc00 ; $60f5
 	ld de, $9800 + VRAM_BANK1 ; $60f8
 	ld c, $24 ; $60fb
@@ -3430,15 +3430,15 @@ RunNewGameSetup:
 	call BeginFadeOut ; $62f1
 	call WaitFadeEnd ; $62f4
 	ret ; $62f7
-RunDebugSaveDataFlow:
+Unused_1b_RunDebugSaveDataFlow:
 	sound BGM_MENU ; $62f8
 	ld a, $01 ; $62fa
 	cp $ff ; $62fc
-	jr z, RunDebugSaveDataFlow ; $62fe
+	jr z, Unused_1b_RunDebugSaveDataFlow ; $62fe
 	or a ; $6300
 	jr z, .loop ; $6301
 	bit 7, a ; $6303
-	jr z, RunDebugSaveDataFlow ; $6305
+	jr z, Unused_1b_RunDebugSaveDataFlow ; $6305
 	and $3f ; $6307
 	ld [wCurrentStorySlot], a ; $6309
 	ld hl, wStorySlotData ; $630c
@@ -3449,7 +3449,7 @@ RunDebugSaveDataFlow:
 	jp z, .clearFrameTasks ; $6317
 	call RunNewGameSetup ; $631a
 	cp $ff ; $631d
-	jp z, RunDebugSaveDataFlow ; $631f
+	jp z, Unused_1b_RunDebugSaveDataFlow ; $631f
 	ld a, $01 ; $6322
 	farcall EraseStorySlotSaveData ; $6324
 	farcall SaveStorySlotWithTimer ; $6327
@@ -3458,7 +3458,7 @@ RunDebugSaveDataFlow:
 	sound BGM_MENU ; $632d
 	call RunDebugSaveDataMenu ; $632f
 	cp $ff ; $6332
-	jr z, RunDebugSaveDataFlow ; $6334
+	jr z, Unused_1b_RunDebugSaveDataFlow ; $6334
 	cp $01 ; $6336
 	jp z, .eq01 ; $6338
 	cp $ff ; $633b
@@ -3574,7 +3574,7 @@ RunDebugSaveDataFlow:
 .loop2:
 	call RunLevelUpStatusTrophiesMenu ; $6408
 	cp $ff ; $640b
-	jp z, RunDebugSaveDataFlow ; $640d
+	jp z, Unused_1b_RunDebugSaveDataFlow ; $640d
 	cp $01 ; $6410
 	jr z, .showCharDataScreen ; $6412
 	cp $02 ; $6414
@@ -4284,25 +4284,25 @@ Unused_1b_DrawErasePrompt:
 	call CopyMainCharNameWithDiacritics ; $6a18
 	ld hl, Text_31_106 ; $6a1b
 	farcall RenderProportionalTextAt32 ; $6a1e
-	farcall DrawYesNoLabels ; $6a21
+	farcall Unused_18_DrawYesNoLabels ; $6a21
 	ret ; $6a24
 Unused_1b_DrawContinuePrompt:
 	ld hl, Text_31_109 ; $6a25
 	ld de, $d9c1 ; $6a28
 	farcall RenderProportionalTextAt32 ; $6a2b
-	farcall DrawYesNoLabels ; $6a2e
+	farcall Unused_18_DrawYesNoLabels ; $6a2e
 	ret ; $6a31
 Unused_1b_DrawEraseConfirmPrompt:
 	ld hl, Text_31_107 ; $6a32
 	ld de, $d9c1 ; $6a35
 	farcall RenderProportionalTextAt32 ; $6a38
-	farcall DrawYesNoLabels ; $6a3b
+	farcall Unused_18_DrawYesNoLabels ; $6a3b
 	ret ; $6a3e
 Unused_1b_DrawIsThisCorrectPrompt:
 	ld hl, Text_31_113 ; $6a3f
 	ld de, $d9c1 ; $6a42
 	farcall RenderProportionalTextAt32 ; $6a45
-	farcall DrawYesNoLabels ; $6a48
+	farcall Unused_18_DrawYesNoLabels ; $6a48
 	ret ; $6a4b
 Unused_1b_DrawCharAndItemDataPrompt:
 	ld hl, Text_30_354 ; $6a4c

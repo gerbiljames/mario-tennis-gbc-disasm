@@ -2069,7 +2069,7 @@ LoadN64TnmtDataRecords:
 	ld bc, $0080 ; $4e08
 	call ClearMemory16 ; $4e0b
 	ld hl, N64TnmtData ; $4e0e
-	ld de, $d810 ; $4e11
+	ld de, wN64TnmtLayout ; $4e11
 	ld bc, $0010 ; $4e14
 	call CopyMemoryBC ; $4e17
 	call ReadN64RecordsSaveBlock ; $4e1a
@@ -2079,13 +2079,13 @@ LoadN64TnmtDataRecords:
 	and $01 ; $4e22
 	jr nz, .maskSet ; $4e24
 	ld a, $10 ; $4e26
-	ld [$d81e], a ; $4e28
+	ld [wN64TnmtLayout + 14], a ; $4e28
 .maskSet:
 	ld a, b ; $4e2b
 	and $02 ; $4e2c
 	jr nz, .buildN64TnmtTrophyGrid ; $4e2e
 	ld a, $10 ; $4e30
-	ld [$d81f], a ; $4e32
+	ld [wN64TnmtLayout + 15], a ; $4e32
 .buildN64TnmtTrophyGrid:
 	call BuildN64TnmtTrophyGrid ; $4e35
 	call CheckN64TnmtSecondPage ; $4e38
@@ -2099,7 +2099,7 @@ N64TnmtData:
 	; $4e44, 16 bytes (bytes:16)
 	db $00, $01, $02, $03, $04, $05, $06, $07, $08, $09, $0a, $0b, $0c, $0d, $0e, $0f ; 0x00
 BuildN64TnmtTrophyGrid:
-	ld de, $d830 ; $4e54
+	ld de, wN64TnmtTrophyCells ; $4e54
 	ld hl, wN64RecordsBlock + 8 ; $4e57
 	ld c, $00 ; $4e5a
 .loop:
@@ -2198,7 +2198,7 @@ FillTrophyCountCells:
 	pop de ; $4ee1
 	ret ; $4ee2
 CheckN64TnmtSecondPage:
-	ld hl, $d832 ; $4ee3
+	ld hl, wN64TnmtTrophyCells + 2 ; $4ee3
 	ld c, $00 ; $4ee6
 	ld de, $000c ; $4ee8
 .loop:
@@ -2211,7 +2211,7 @@ CheckN64TnmtSecondPage:
 	ld c, a ; $4ef2
 	cp $0e ; $4ef3
 	jr nz, .loop ; $4ef5
-	ld hl, $d835 ; $4ef7
+	ld hl, wN64TnmtTrophyCells + 5 ; $4ef7
 	ld c, $00 ; $4efa
 	ld de, $000c ; $4efc
 .loopB:
@@ -2225,7 +2225,7 @@ CheckN64TnmtSecondPage:
 	cp $10 ; $4f07
 	jr nz, .loopB ; $4f09
 .zero:
-	ld hl, $d835 ; $4f0b
+	ld hl, wN64TnmtTrophyCells + 5 ; $4f0b
 	ld c, $00 ; $4f0e
 	ld de, $000c ; $4f10
 .loop2:
@@ -2238,7 +2238,7 @@ CheckN64TnmtSecondPage:
 	ld c, a ; $4f1a
 	cp $0e ; $4f1b
 	jr nz, .loop2 ; $4f1d
-	ld hl, $d832 ; $4f1f
+	ld hl, wN64TnmtTrophyCells + 2 ; $4f1f
 	ld c, $00 ; $4f22
 	ld de, $000c ; $4f24
 .loop3:
@@ -2271,7 +2271,7 @@ DrawN64TnmtRowIcons:
 	ldh a, [hWramBank] ; $4f49
 	push af ; $4f4b
 	wram_bank $03 ; $4f4c
-	ld hl, $d810 ; $4f52
+	ld hl, wN64TnmtLayout ; $4f52
 	ld a, [wDataScreenCursorRow] ; $4f55
 	add l ; $4f58
 	ld l, a ; $4f59
@@ -2364,7 +2364,7 @@ DrawN64TnmtTrophyRows:
 	add a ; $500b
 	add b ; $500c
 	add a ; $500d
-	ld hl, $d830 ; $500e
+	ld hl, wN64TnmtTrophyCells ; $500e
 	add l ; $5011
 	ld l, a ; $5012
 	jr nc, .gotPtr ; $5013
@@ -6140,9 +6140,9 @@ CheckN64DataPresent:
 	ldh a, [hWramBank] ; $6c5d
 	push af ; $6c5f
 	wram_bank $02 ; $6c60
-	ld a, [wScreenAttrmap] ; $6c66
+	ld a, [wN64BlockProbe] ; $6c66
 	ld b, a ; $6c69
-	ld a, [wScreenAttrmap + 1] ; $6c6a
+	ld a, [wN64BlockProbe + 1] ; $6c6a
 	or b ; $6c6d
 	jr z, .restore ; $6c6e
 	pop af ; $6c70

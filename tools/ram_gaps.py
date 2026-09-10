@@ -20,6 +20,7 @@ a different fix, so the split is what makes the remaining work mechanical:
                 overlay of the same bytes, which needs a variant of its own.
   unclaimed     the bank is provable and nothing names the address yet:
                 ordinary naming work, with the bank already settled.
+  dead          the site is in an Unused* routine, so no trace can ever reach it,
   unproven      no trace covers the site and the dataflow cannot pin the bank,
                 so there is nothing to name it from.
 """
@@ -103,7 +104,13 @@ def main():
         if banks:
             seen[(addr, rom_bank, routine)] |= banks
         if not banks:
-            buckets["unproven"] += 1
+            # A routine nothing references (named Unused* by the naming
+            # passes) can never execute under a trace, so its operands stay
+            # bare for good; count them apart from the ones driving can fix.
+            if routine.split(".")[0].startswith("Unused"):
+                buckets["dead"] += 1
+            else:
+                buckets["unproven"] += 1
             continue
         if len(banks) > 1:
             buckets["mirrored"] += 1

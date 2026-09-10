@@ -7,7 +7,7 @@ SECTION "ROM Bank $04", ROMX[$4000], BANK[$04]
 	farptr SetActorMode ; $4008
 	farptr SpawnActorsFromList ; $400a
 	farptr UpdateCameraToActor ; $400c
-	farptr SpawnScriptedActorScene ; $400e
+	farptr Unused_04_SpawnScriptedActorScene ; $400e
 	farptr ClearActorSlots ; $4010
 	farptr SetupCharSpriteFromObjectDef ; $4012
 	farptr EvalFlagCondition ; $4014
@@ -2299,7 +2299,7 @@ SpawnActorsFromList:
 	pop bc ; $4d29
 	pop af ; $4d2a
 	ret ; $4d2b
-SpawnScriptedActorScene:
+Unused_04_SpawnScriptedActorScene:
 	ldh a, [hRomBank] ; $4d2c
 	ld hl, ActorList_04_1 ; $4d2e
 	call SpawnActorFromTemplate ; $4d31

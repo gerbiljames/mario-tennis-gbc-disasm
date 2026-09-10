@@ -1999,7 +1999,7 @@ AnimateEraseConfirmPalette:
 	push af ; $4e36
 	wram_bank $03 ; $4e37
 	ld hl, EraseConfirmPalette_3e ; $4e3d
-	ld de, $d810 ; $4e40
+	ld de, wEraseConfirmPalette ; $4e40
 	ld bc, $0008 ; $4e43
 	call CopyMemoryBC ; $4e46
 	ldh a, [hVBlankCounter] ; $4e49
@@ -2027,11 +2027,11 @@ AnimateEraseConfirmPalette:
 	ld a, [hl+] ; $4e68
 	ld d, [hl] ; $4e69
 	ld e, a ; $4e6a
-	ld hl, $d814 ; $4e6b
+	ld hl, wEraseConfirmPalette + 4 ; $4e6b
 	ld [hl], e ; $4e6e
 	inc hl ; $4e6f
 	ld [hl], d ; $4e70
-	ld hl, $d810 ; $4e71
+	ld hl, wEraseConfirmPalette ; $4e71
 	ld de, $0401 ; $4e74
 	call LoadPaletteShadow ; $4e77
 	pop af ; $4e7a

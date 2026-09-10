@@ -9,9 +9,9 @@ SECTION "ROM Bank $05", ROMX[$4000], BANK[$05]
 	farptr StubNop_05_1 ; $400c
 	farptr SetWindowTextId ; $400e
 	farptr StubNop_05_0 ; $4010
-	farptr QueueFullTilemapCopy ; $4012
-	farptr QueueFullAttrmapCopy ; $4014
-	farptr CopyVisibleTilemapToVRAM ; $4016
+	farptr Unused_05_QueueFullTilemapCopy ; $4012
+	farptr Unused_05_QueueFullAttrmapCopy ; $4014
+	farptr Unused_05_CopyVisibleTilemapToVRAM ; $4016
 	farptr RestoreShadowTilemap ; $4018
 	farptr WriteWindowCellTileAttr ; $401a
 	farptr RenderProportionalTextAt ; $401c
@@ -56,9 +56,9 @@ SECTION "ROM Bank $05", ROMX[$4000], BANK[$05]
 	farptr RestoreTilemapUnderWindow ; $406a
 	farptr WriteStringToTilemap ; $406c
 	farptr WriteStringToTilemapAlt ; $406e
-	farptr WriteStringToTilemapStreamed ; $4070
+	farptr Unused_05_WriteStringToTilemapStreamed ; $4070
 	farptr RenderTextToBuffer64 ; $4072
-	farptr RunDebugWindowDemo ; $4074
+	farptr Unused_05_RunDebugWindowDemo ; $4074
 	farptr ResetTextWindowState ; $4076
 	farptr CreateWindowFromScreenRect ; $4078
 	farptr CloseWindow ; $407a
@@ -193,7 +193,7 @@ GetTilemapCellAddress:
 	pop bc ; $4143
 	pop af ; $4144
 	ret ; $4145
-CopyVisibleTilemapToVRAM:
+Unused_05_CopyVisibleTilemapToVRAM:
 	push af ; $4146
 	push bc ; $4147
 	push de ; $4148
@@ -272,7 +272,7 @@ CopyVisibleTilemapToVRAM:
 	pop bc ; $41c3
 	pop af ; $41c4
 	ret ; $41c5
-QueueFullTilemapCopy:
+Unused_05_QueueFullTilemapCopy:
 	push af ; $41c6
 	push bc ; $41c7
 	push de ; $41c8
@@ -288,7 +288,7 @@ QueueFullTilemapCopy:
 	pop bc ; $41dc
 	pop af ; $41dd
 	ret ; $41de
-QueueFullAttrmapCopy:
+Unused_05_QueueFullAttrmapCopy:
 	push af ; $41df
 	push bc ; $41e0
 	push de ; $41e1
@@ -6743,7 +6743,7 @@ WriteStringToTilemapAlt:
 .restore:
 	pop af ; $6bee
 	ret ; $6bef
-WriteStringToTilemapStreamed:
+Unused_05_WriteStringToTilemapStreamed:
 	push af ; $6bf0
 	ld a, d ; $6bf1
 	ld [$dc05], a ; $6bf2
@@ -7002,7 +7002,7 @@ SramTextOffsetTable_05:
 	dw $0689 ; record 13
 	dw $0709 ; record 14
 	dw $0789 ; record 15
-RunDebugWindowDemo:
+Unused_05_RunDebugWindowDemo:
 	ldh a, [hWramBank] ; $6d85
 	push af ; $6d87
 	xor a ; $6d88

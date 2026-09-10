@@ -1136,7 +1136,7 @@ AdjustResultTilemapForLoss:
 	ret ; $4a6f
 StubNop_16:
 	ret ; $4a70
-BuildMatchResultTilemap:
+Unused_16_BuildMatchResultTilemap:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $4a71
 	add a ; $4a74
 	ld hl, MatchResultTilemapScripts_16 ; $4a75

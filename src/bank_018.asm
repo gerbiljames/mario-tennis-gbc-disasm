@@ -32,7 +32,7 @@ SECTION "ROM Bank $18", ROMX[$4000], BANK[$18]
 	farptr LoadScorePanelValue ; $403a
 	farptr StubNop_18_1 ; $403c
 	farptr DrawDecimalNumberSprites ; $403e
-	farptr DrawYesNoLabels ; $4040
+	farptr Unused_18_DrawYesNoLabels ; $4040
 	farptr DrawTileBlock6x2ToTilemap ; $4042
 	farptr LoadOnCourtCharTilesA ; $4044
 	farptr LoadOnCourtCharTilesB ; $4046
@@ -1013,7 +1013,7 @@ DrawGlyphSprite:
 	ret ; $5506
 UnusedBobRamp_18:
 	INCBIN "data/bank_018/d_5507.bin" ; $5507, 32 bytes
-DrawThreeOptionLabels:
+Unused_18_DrawThreeOptionLabels:
 	call DrawConfirmScreenBox ; $5527
 	ld hl, ThreeOptionLabelsData3 ; $552a
 	ld de, $ddc1 ; $552d
@@ -1034,7 +1034,7 @@ DrawThreeOptionLabels:
 	ld de, wScreenSequenceTimer ; $555a
 	call CopyBytes11 ; $555d
 	ret ; $5560
-DrawYesNoLabels:
+Unused_18_DrawYesNoLabels:
 	ld hl, YesNoLabels2 ; $5561
 	ld de, $dde1 ; $5564
 	call CopyBytes11 ; $5567

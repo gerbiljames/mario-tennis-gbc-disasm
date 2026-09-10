@@ -1394,6 +1394,45 @@
    "comment": "Screen-local state in WRAM bank $03: each full-screen UI reuses these\nbytes for its own purpose, so the variants are scoped to the ROM bank\nthat owns the screen rather than to the WRAM bank -- banks $16/$17/$38\nall select WRAM bank $03 here, and most sites select it in a callee so\ncompute_wram_bank cannot prove it at the reference.",
    "variants": [
     {
+     "context": "N64 tournament data screen (bank $3b)",
+     "scopes": [
+      {
+       "bank": "0x3b",
+       "start": "0x4dbb",
+       "end": "0x5300"
+      }
+     ],
+     "symbols": {
+      "0xd810": {
+       "name": "wN64TnmtLayout",
+       "note": "[16 bytes] Copy of N64TnmtData taken by LoadN64TnmtDataRecords. +$0e and +$0f are the singles and doubles column masks: forced to $10 when bit 0 / bit 1 of the records block's byte +344 is clear, i.e. when that half of the tournament has no data",
+       "size": 16
+      },
+      "0xd830": {
+       "name": "wN64TnmtTrophyCells",
+       "note": "[12 bytes] First of 16 rows of 12 cells, one row per character in N64CharTrophyRowPtrTable order, filled by BuildN64TnmtTrophyGrid from DecodeN64CharTrophyCounts; the rows run on to $d8ef. CheckN64TnmtSecondPage scans +2 and +5 of the first fourteen rows to decide whether a second page exists",
+       "size": 12
+      }
+     }
+    },
+    {
+     "context": "erase-confirm flash palette (bank $3e)",
+     "scopes": [
+      {
+       "bank": "0x3e",
+       "start": "0x4e34",
+       "end": "0x4e80"
+      }
+     ],
+     "symbols": {
+      "0xd810": {
+       "name": "wEraseConfirmPalette",
+       "note": "[8 bytes] One 4-colour palette AnimateEraseConfirmPalette rebuilds every frame from EraseConfirmPalette_3e and uploads as palette 4 through LoadPaletteShadow; colour 2 (+4) is replaced each frame from EraseConfirmFlashColors_3e indexed by hVBlankCounter -- the warning text flashing on the erase-confirm screen",
+       "size": 8
+      }
+     }
+    },
+    {
      "context": "drill briefings (bank $17)",
      "scopes": [
       {
@@ -4257,6 +4296,24 @@
    "end": "0xe000",
    "comment": "WRAM bank $02 holds tilemap planes, and until now not one byte of it had\na name -- it was the only WRAMX bank with no SECTION at all. Three\nsubsystems use it three different ways, so $d000 is a tile plane, an\nattribute plane or a 64-wide scroll buffer depending on who is asking:\nthe match keeps the court tilemap and attrmap here as a pair, the\noverworld builds two of its four wide scroll planes here, and every\nfull-screen UI uses $d000 as the attribute half of the tilemap whose\ntile half is wShadowTilemap in WRAM bank $03.\nEvery scope carries wram_bank $02 as well as its ROM bank, and the common\nscreen case is scoped rather than a default. A default variant here was\nthe first thing tried and it was wrong twice over: it named the bank $07\nsave-editor window at $d300 as an attribute cell, and bank $08 reaches\nboth this bank and WRAM bank $04 -- RefreshCourtScoreboard's $de9x bytes\nare not court planes at all.\nThe match owns the court planes from two more banks, over instruction\nranges rather than whole banks. Bank $06's in-match UI restores and\nflushes them: ShowMessageWindow and the pause menu select WRAM bank $02\nand then call RestoreBgTilemap / RestoreBgTilemapRegion /\nFlushTilemapToVram, which is why $d000 there is the tile half sent to VRAM\nbank 0 and not the attribute plane the whole-bank variant below would name\nit. Bank $0a's LoadCourtSceneGraphics decompresses the court into the\nsaved pair at $d800/$dc00 before the match starts.\nBank $0d gets a whole-bank scope like $08's, and it is the one bank that\nnames all four planes in one routine: LoadMatchUiCourtTilemap pushes the\ntarget-zone overlay's tile and attribute halves twice each and CopyTextRects\nthem to $d12b, $d92b, $d52b and $dd2b, tiles to the two tilemaps and\nattributes to the two attrmaps. QueueMinigameHudVRAMCopy says the same with\nthe VRAM bank bit: $d120 goes to $9920 and $d520 to $9920 + VRAM_BANK1.",
    "variants": [
+    {
+     "context": "N64 block presence probe (bank $3b)",
+     "scopes": [
+      {
+       "bank": "0x3b",
+       "start": "0x6c5d",
+       "end": "0x6c78",
+       "wram_bank": "0x02"
+      }
+     ],
+     "symbols": {
+      "0xd000": {
+       "name": "wN64BlockProbe",
+       "note": "[2 bytes] The first two bytes of save block $0b as staged here before CheckN64DataPresent runs; non-zero means Transfer Pak records exist, which is what unlocks the N64 entries on the status menu",
+       "size": 2
+      }
+     }
+    },
     {
      "context": "match court planes (banks $08/$0d/$06/$0a)",
      "scopes": [

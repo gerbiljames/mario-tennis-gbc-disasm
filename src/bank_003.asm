@@ -17,7 +17,7 @@ SECTION "ROM Bank $03", ROMX[$4000], BANK[$03]
 	farptr TestSaveFlag ; $401c
 	farptr SetSaveFlag ; $401e
 	farptr ClearSaveFlag ; $4020
-	farptr SaveSlotDebugEditor ; $4022
+	farptr Unused_03_SaveSlotDebugEditor ; $4022
 	farptr ReadExhibitionSaveBlock ; $4024
 	farptr WriteExhibitionSaveBlock ; $4026
 	farptr ClearSaveBlock11 ; $4028
@@ -2966,10 +2966,10 @@ InvalidateCurrentSlotBlock:
 	ds 13, $00
 SaveEditorCursorTiles_03:
 	INCBIN "data/bank_003/d_52f0.bin" ; $52f0, 32 bytes
-SaveSlotDebugEditor:
+Unused_03_SaveSlotDebugEditor:
 	ld hl, SaveEditorCursorTiles_03 ; $5310
 	ld de, $8000 ; $5313
-	ld c, (SaveSlotDebugEditor - SaveEditorCursorTiles_03) / 16 ; $5316
+	ld c, (Unused_03_SaveSlotDebugEditor - SaveEditorCursorTiles_03) / 16 ; $5316
 	call QueueVRAMCopy ; $5318
 	sound BGM_EXHIBITION_MATCH ; $531b
 	ld a, $03 ; $531d

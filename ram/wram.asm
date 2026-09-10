@@ -2423,7 +2423,7 @@ SECTION "WRAMX bank 2", WRAMX[$d000], BANK[2]
 ;
 ;   $d000-$d3ff  wActiveTilemap  [mirrored with bank 5]
 ;   $d000-$d3ff  wCharDataScreenCell  [mirrored with bank 3]
-;   $d000-$dfff  4 overlays: match court planes / overworld scroll buffers / screen attribute plane / +1 more
+;   $d000-$dfff  5 overlays: N64 block presence probe / match court planes / overworld scroll buffers / +2 more
 ;   $d000-$dfff  wMapBuffer64  [mirrored with bank 3]
 ;   $d400-$d7df  wCharDataPagePlane  [mirrored with bank 3]
 ;   $d400-$d7ff  wActiveAttrmap  [mirrored with bank 5]
@@ -2462,6 +2462,11 @@ SECTION "WRAMX bank 2", WRAMX[$d000], BANK[2]
 ; attributes to the two attrmaps. QueueMinigameHudVRAMCopy says the same with
 ; the VRAM bank bit: $d120 goes to $9920 and $d520 to $9920 + VRAM_BANK1.
 UNION
+; N64 block presence probe (bank $3b)
+; [2 bytes] The first two bytes of save block $0b as staged here before CheckN64DataPresent runs; non-zero means Transfer Pak records exist, which is what unlocks the N64 entries on the status menu
+wN64BlockProbe:: dw
+	ds 4094
+NEXTU
 ; match court planes (banks $08/$0d/$06/$0a)
 ; [1024 bytes] The court tilemap the match renders from; UploadCourtTilemap sends it to $9800 in VRAM bank 0. Held in WRAM bank $02 rather than the usual $03 because the match owns bank $03 for other things
 wCourtTilemap:: ds 1024
@@ -2503,7 +2508,7 @@ SECTION "WRAMX bank 3", WRAMX[$d000], BANK[3]
 ;   $d600-$d68f  wMugshotBuffer  [mirrored with bank 2, 4]
 ;   $d7e0-$da1f  wCharDataPageSlot1  [mirrored with bank 2]
 ;   $d800-$d80f  9 overlays: equipment select / name entry / match results / +6 more
-;   $d810-$d83e  6 overlays: drill briefings / character-select grid / equipment select / +3 more
+;   $d810-$d83e  8 overlays: N64 tournament data screen / erase-confirm flash palette / drill briefings / +5 more
 ;   $d840-$d867  character unlock flags / ranking board
 ;   $d900-$daff  created characters and the character grid / N64 transfer records / screen sequences
 ;   $da20-$dc5f  wCharDataPageSlot2  [mirrored with bank 2]
@@ -2612,6 +2617,18 @@ ENDU
 ; all select WRAM bank $03 here, and most sites select it in a callee so
 ; compute_wram_bank cannot prove it at the reference.
 UNION
+; N64 tournament data screen (bank $3b)
+; [16 bytes] Copy of N64TnmtData taken by LoadN64TnmtDataRecords. +$0e and +$0f are the singles and doubles column masks: forced to $10 when bit 0 / bit 1 of the records block's byte +344 is clear, i.e. when that half of the tournament has no data
+wN64TnmtLayout:: ds 16
+	ds 16
+; [12 bytes] First of 16 rows of 12 cells, one row per character in N64CharTrophyRowPtrTable order, filled by BuildN64TnmtTrophyGrid from DecodeN64CharTrophyCounts; the rows run on to $d8ef. CheckN64TnmtSecondPage scans +2 and +5 of the first fourteen rows to decide whether a second page exists
+wN64TnmtTrophyCells:: ds 12
+	ds 3
+NEXTU
+; erase-confirm flash palette (bank $3e)
+; [8 bytes] One 4-colour palette AnimateEraseConfirmPalette rebuilds every frame from EraseConfirmPalette_3e and uploads as palette 4 through LoadPaletteShadow; colour 2 (+4) is replaced each frame from EraseConfirmFlashColors_3e indexed by hVBlankCounter -- the warning text flashing on the erase-confirm screen
+wEraseConfirmPalette:: ds 8
+NEXTU
 ; drill briefings (bank $17)
 ; [8-bit] Drill-briefing diagram: player sprite X, queued by DrawBriefingPlayerSprite (d = X, e = Y in QueueSprite)
 wBriefingPlayerX:: db
@@ -2678,7 +2695,6 @@ wBriefingAnimStep:: db
 	ds 1
 ; [8 bytes] Drill-briefing target palette scratch: CycleDiagramTargetPaletteData copied here, colour 2 ($d834) replaced with the cycling colour, then uploaded by LoadPaletteShadow
 wBriefingTargetPalette:: ds 8
-	ds 7
 NEXTU
 ; character-select grid (banks $38/$10)
 	ds 1

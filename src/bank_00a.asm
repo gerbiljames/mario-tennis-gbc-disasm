@@ -55,7 +55,7 @@ SECTION "ROM Bank $0a", ROMX[$4000], BANK[$0a]
 	farptr LoadStoryObjPalettes ; $4068
 	farptr InitSceneScroll ; $406a
 	farptr LoadStorySceneGraphics ; $406c
-	farptr CopySceneTilemapToVram ; $406e
+	farptr Unused_0a_CopySceneTilemapToVram ; $406e
 	farptr UpdateSceneScroll ; $4070
 	farptr InitSceneViewer ; $4072
 	farptr RunSceneSelectDebugMenu ; $4074
@@ -3345,7 +3345,7 @@ GetStoryLocationRecordPtr:
 	ret ; $5759
 	db $ff ; $575a
 	ret ; $575b
-CopySceneTilemapToVram:
+Unused_0a_CopySceneTilemapToVram:
 	push af ; $575c
 	push bc ; $575d
 	push de ; $575e
