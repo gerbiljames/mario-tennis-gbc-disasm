@@ -173,6 +173,7 @@ def Text_31_109 equ $046d
 def Text_31_113 equ $0471
 def Text_31_123 equ $047b
 def Text_31_124 equ $047c
+def Text_31_125 equ $047d
 def Text_31_128 equ $0480
 def Text_31_131 equ $0483
 def Text_31_156 equ $049c

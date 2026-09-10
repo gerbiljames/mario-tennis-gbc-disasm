@@ -3669,7 +3669,7 @@ RunDebugSaveDataMenu:
 	ld a, [hl+] ; $64dd
 	ld d, [hl] ; $64de
 	ld e, a ; $64df
-	ld hl, $047d ; $64e0
+	ld hl, Text_31_125 ; $64e0
 	or d ; $64e3
 	jr nz, .createMenuWindowFromText ; $64e4
 	inc hl ; $64e6

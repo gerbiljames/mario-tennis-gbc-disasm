@@ -121,20 +121,50 @@ def text_id_load_sites(dis, overrides):
         if rom[o] != 0x21 or dis.instrs[o].size != 3:
             continue  # ld hl, n16
         imm = rom[o + 1] | (rom[o + 2] << 8)
-        i, prev_end = idx[o] + 1, o + 3
-        for _ in range(5):
-            if i >= len(order) or order[i] != prev_end:
-                break
-            no = order[i]
-            ins = dis.instrs[no]
-            if ins.is_call:
-                if _call_target(dis, no, ins) in consumers:
-                    name = text_id_name(imm)
-                    if name:
-                        out[o] = name
-                break
-            if ins.text.startswith(_HL_CLOBBER) or ins.ends_flow:
-                break
-            prev_end = no + ins.size
-            i += 1
+        if _reaches_consumer(dis, order, idx, o, consumers):
+            name = text_id_name(imm)
+            if name:
+                out[o] = name
     return out
+
+
+def _reaches_consumer(dis, order, idx, o, consumers, limit=12):
+    """True if the value `ld hl, n16` at `o` loads is what a consumer gets:
+    the same push/pop tracking as _forwards_hl, and the hand-off may be a
+    call, a tail jump, or a conditional jump (the branch that takes it has
+    the id in hl; `inc hl` on the other path is the next id, so the load is
+    still the right name). Any other call while the id is live and unparked
+    ends the walk -- what it does to hl is not known here."""
+    from .seeds import _call_target
+    i, prev_end = idx[o] + 1, o + 3
+    stack, live = [], True
+    for _ in range(limit):
+        if i >= len(order) or order[i] != prev_end:
+            return False
+        no = order[i]
+        ins = dis.instrs[no]
+        text = ins.text
+        if ins.is_call or ins.is_jump:
+            if live and _call_target(dis, no, ins) in consumers:
+                return True
+            if ins.is_call and live:
+                return False
+            if ins.is_jump and not ins.is_cond:
+                return False
+        if text in _PUSH:
+            stack.append((_PUSH[text], live if _PUSH[text] == "hl" else None))
+        elif text in _POP:
+            if not stack or stack[-1][0] != _POP[text]:
+                return False
+            reg, saved = stack.pop()
+            if reg == "hl":
+                live = saved
+        elif text.startswith(_HL_CLOBBER):
+            live = False
+        elif ins.ends_flow:
+            return False
+        if not live and not any(r == "hl" and sv for r, sv in stack):
+            return False
+        prev_end = no + ins.size
+        i += 1
+    return False

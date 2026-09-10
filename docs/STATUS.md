@@ -124,7 +124,12 @@ label bound to the wrong parent.
   `RenderProportionalTextAt` (which parks the id while it sets the glyph
   pointer) and the five caption helpers built on it count as consumers: 102
   more `ld hl, Text_*` sites, 503 → 605, every caption in the briefing,
-  menu, link and clear-status screens named.
+  menu, link and clear-status screens named. A survey of the other forward
+  walkers found one more gap — the load-site walk had no push/pop tracking,
+  a five-instruction limit and only recognised `call` hand-offs — worth one
+  site (606). `_scan_ptr_use` and the WRAM-bank dataflow already track the
+  stack; the nine derived consumers that call something while the id sits
+  in `hl` all call routines that park it (`push hl` first thing).
 * **2026-09-10** — the desk pass over everything the docs had flagged as
   wrong: object-header word 1 renamed `AnimPtrs` and its 635 scripts rendered
   as `anim_*` macros; bank `$03`'s fade buffers renamed the right way round
