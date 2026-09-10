@@ -10,8 +10,8 @@ DataPtr_ClubhouseSceneAttrmap:
 	dw ClubhouseSceneAttrmap ; $4006
 DataPtr_ClubhouseSceneConfigAlias1:
 	dw ClubhouseSceneConfig ; $4008
-DataPtr_ClubhouseSceneConfigB:
-	dw ClubhouseSceneConfigB ; $400a
+DataPtr_ClubhouseScoreboardColumnAttrs:
+	dw ClubhouseScoreboardColumnAttrs ; $400a
 DataPtr_CourtyardScenePalettes:
 	dw CourtyardScenePalettes ; $400c
 DataPtr_ClubhouseSceneTiles:
@@ -26,8 +26,8 @@ DataPtr_CourtyardSceneAttrmap:
 	dw CourtyardSceneAttrmap ; $4016
 DataPtr_CourtyardSceneConfigAlias1:
 	dw CourtyardSceneConfig ; $4018
-DataPtr_CourtyardSceneConfigB:
-	dw CourtyardSceneConfigB ; $401a
+DataPtr_CourtyardScoreboardColumnAttrs:
+	dw CourtyardScoreboardColumnAttrs ; $401a
 DataPtr_CourtyardSceneUnusedSlot:
 	dw CourtyardSceneUnusedSlot ; $401c
 DataPtr_CourtyardSceneTiles:
@@ -42,7 +42,7 @@ ClubhouseSceneAttrmap:
 	INCBIN "data/bank_05f/lz_4ac6.bin" ; $4ac6, 333 bytes
 ClubhouseSceneConfig:
 	INCBIN "data/bank_05f/d_4c13.bin" ; $4c13, 40 bytes
-ClubhouseSceneConfigB:
+ClubhouseScoreboardColumnAttrs:
 	INCBIN "data/bank_05f/d_4c3b.bin" ; $4c3b, 40 bytes
 CourtyardScenePalettes:
 	INCLUDE "data/bank_05f/palettes_4c63.asm" ; $4c63, 64 bytes (palettes)
@@ -54,7 +54,7 @@ CourtyardSceneAttrmap:
 	INCBIN "data/bank_05f/lz_57de.bin" ; $57de, 294 bytes
 CourtyardSceneConfig:
 	INCBIN "data/bank_05f/d_5904.bin" ; $5904, 40 bytes
-CourtyardSceneConfigB:
+CourtyardScoreboardColumnAttrs:
 	INCBIN "data/bank_05f/d_592c.bin" ; $592c, 40 bytes
 CourtyardSceneUnusedSlot:
 	ds 9900, $ff ; $5954, fill

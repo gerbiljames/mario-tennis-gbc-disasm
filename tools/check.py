@@ -117,7 +117,7 @@ def check_text(rom, data_tables, manifest, fail):
 
 
 _IMM8_RE = re.compile(r"\$([0-9a-f]{1,2})$")
-_LDIMM_RE = re.compile(r"^ld (?:hl|de|bc), \$([0-9a-f]{1,4})$")
+_LDIMM_RE = re.compile(r"^ld (?:hl|de|bc|sp), \$([0-9a-f]{1,4})$")
 _BITOP_RE = re.compile(r"^(?:bit|res|set) (\d+), ")
 
 

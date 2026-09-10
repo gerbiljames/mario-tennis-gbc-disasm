@@ -10,8 +10,8 @@ DataPtr_IslandOpenCourtAttrmap:
 	dw IslandOpenCourtAttrmap ; $4006
 DataPtr_IslandOpenCourtSceneConfigAlias1:
 	dw IslandOpenCourtSceneConfig ; $4008
-DataPtr_IslandOpenCourtSceneConfigB:
-	dw IslandOpenCourtSceneConfigB ; $400a
+DataPtr_IslandOpenCourtScoreboardColumnAttrs:
+	dw IslandOpenCourtScoreboardColumnAttrs ; $400a
 DataPtr_DKCourtPalettes:
 	dw DKCourtPalettes ; $400c
 DataPtr_IslandOpenCourtTiles:
@@ -26,8 +26,8 @@ DataPtr_DKCourtAttrmap:
 	dw DKCourtAttrmap ; $4016
 DataPtr_DKCourtSceneConfigAlias1:
 	dw DKCourtSceneConfig ; $4018
-DataPtr_DKCourtSceneConfigB:
-	dw DKCourtSceneConfigB ; $401a
+DataPtr_DKCourtScoreboardColumnAttrs:
+	dw DKCourtScoreboardColumnAttrs ; $401a
 DataPtr_StarPatternBgSceneConfig:
 	dw StarPatternBgSceneConfig ; $401c
 DataPtr_DKCourtTiles:
@@ -74,7 +74,7 @@ IslandOpenCourtAttrmap:
 	INCBIN "data/bank_063/lz_4af5.bin" ; $4af5, 185 bytes
 IslandOpenCourtSceneConfig:
 	INCBIN "data/bank_063/d_4bae.bin" ; $4bae, 40 bytes
-IslandOpenCourtSceneConfigB:
+IslandOpenCourtScoreboardColumnAttrs:
 	INCBIN "data/bank_063/d_4bd6.bin" ; $4bd6, 40 bytes
 DKCourtPalettes:
 	INCLUDE "data/bank_063/palettes_4bfe.asm" ; $4bfe, 64 bytes (palettes)
@@ -86,7 +86,7 @@ DKCourtAttrmap:
 	INCBIN "data/bank_063/lz_5be2.bin" ; $5be2, 323 bytes
 DKCourtSceneConfig:
 	INCBIN "data/bank_063/d_5d25.bin" ; $5d25, 40 bytes
-DKCourtSceneConfigB:
+DKCourtScoreboardColumnAttrs:
 	INCBIN "data/bank_063/d_5d4d.bin" ; $5d4d, 40 bytes
 StarPatternBgSceneConfig:
 	INCBIN "data/bank_063/d_5d75.bin" ; $5d75, 42 bytes

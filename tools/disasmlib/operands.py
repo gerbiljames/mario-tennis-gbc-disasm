@@ -6,7 +6,7 @@ from .rom import BANK_SIZE, target_to_offset
 
 HWADDR_RE = re.compile(r"\$ff[0-9a-f]{2}\b")
 MEMADDR_RE = re.compile(r"\[\$([0-9a-f]{4})\]")
-LDIMM_RE = re.compile(r"^ld (hl|de|bc), \$([0-9a-f]{1,4})$")
+LDIMM_RE = re.compile(r"^ld (hl|de|bc|sp), \$([0-9a-f]{1,4})$")
 
 
 # ROM0 data a banked caller loads by address. A word below $4000 loaded from

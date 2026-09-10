@@ -112,7 +112,7 @@ def prove_data(dis, overrides, hook_paths=()):
     dis.find_walk_sprite_banks()
     dis.add_object_header_slots()
     dis.split_object_bodies()
-    dis.follow_oam_arrays()
+    dis.follow_anim_arrays()
     dis.follow_frame_arrays()
     if helpers or hook_paths:
         dis.scan_data_slots()

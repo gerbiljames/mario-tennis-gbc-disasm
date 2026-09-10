@@ -40,7 +40,7 @@ InitAndRunGame:
 	ld c, $00 ; $4067
 	call ClearMemory16 ; $4069
 	wram_bank $06 ; $406c
-	ld hl, $d000 ; $4072
+	ld hl, WRAMX_BASE ; $4072
 	ld c, $00 ; $4075
 	call ClearMemory16 ; $4077
 	ld hl, wShadowOAM ; $407a

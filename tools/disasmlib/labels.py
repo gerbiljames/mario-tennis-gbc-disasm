@@ -24,7 +24,7 @@ VECTOR_LABELS = {
 
 
 AUTO_STEMS = ("Func_", "Label_", "Data_", "Lz_", "Fill_", "SpriteTemplate_",
-              "OamPtrs_")
+              "AnimPtrs_")
 
 
 def _is_auto(name):
@@ -157,12 +157,13 @@ def build_labels(dis, overrides=None, data_tables=None, ptr_sites=None):
                {src: dis.sprite_template_sites.get(src, ())
                 for src in dis.sprite_templates},
                enclosing_function_lookup(labels, dis))
-    # An object header's OAM pointer array belongs to that record and nothing
-    # else, so it is named for the header, like the record's Gfx/Oam blobs.
+    # An object header's animation-script pointer array belongs to that record
+    # and nothing else, so it is named for the header, like the record's
+    # Gfx/Anim blobs.
     # The name has to go back into ptr_labels: that is what the header's own
     # `dw` reads to reference the array, so both spellings move together.
-    name_owned(dis.ptr_labels, set(dis.oam_arrays), "OamPtrs",
-               {a: (h,) for a, h in dis.oam_arrays.items()},
+    name_owned(dis.ptr_labels, set(dis.anim_arrays), "AnimPtrs",
+               {a: (h,) for a, h in dis.anim_arrays.items()},
                lambda header: labels.get(header),
                reserved=set(labels.values()))
     # Same-bank pointer-load targets (`ld hl, table` etc.) that recursive descent

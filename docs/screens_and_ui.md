@@ -496,20 +496,21 @@ entries below the base would persist across frames. In practice they never do �
 | `QueueSprite16` | `$00:$1e55` | two entries forming a 16×16 metasprite: the second at X+8 with tile `c+2`. When attribute bit 5 (X-flip) is set the halves are emitted in the opposite order so the mirror is correct. |
 | `QueueSpriteGrid` | `$00:$1f0d` | an `h` × `l` grid; applies the `+$10`/`+$08` OAM bias up front, steps X by 8 and tile by 2 per column, Y by `$10` per row |
 | `QueueSpriteTemplate` | `$00:$1e9d` | walks an `oam_sprite` list, adding each record's `{dy, dx, tile, attr}` to the base in `e`/`d`/`c`/`b`; terminator is `dy == $80`. Mirrored variant (attribute bit 5) negates `dx` as `8 - dx` and ORs the attribute instead of adding it. |
-| `QueueSprite24x32`, `QueueSprite32x32`, `QueueSpriteBlockPart` | `$00:$2c2b`, `$2eba`, `$2f2d` | fixed larger blocks, used by the court renderer |
+| `QueueSprite24x32`, `QueueSprite32x32`, `QueueSpriteBlockPart` | `$00:$2c2b`, `$2ced`, `$2d79` | fixed larger blocks, used by the court renderer |
 
 `include/macros.inc:626` documents the `oam_sprite` record and the
 `sprite_template` data spec that renders it; the spec appears in 21 banks.
 Walk-sprite banks (`$6a`, `$6f`, `$70`-`$77`) hold object headers whose
-`dw .frames, <name>_OamPtrs, .frames` triple points at a frame-pointer array and
-an OAM-pointer array (e.g. `src/bank_072.asm:21`-`23`).
+`dw .frames, <name>_AnimPtrs, .frames` triple points at a frame-pointer array and
+an animation-script pointer array (e.g. `src/bank_072.asm:21`-`23`); the scripts
+render as `anim_*` macros (`docs/graphics_formats.md` §4.4).
 
 `PositionSpriteWorld` (`$00:$1f6b`) and `PositionSpriteWorld2` (`$00:$1fb1`) are
 the world-space wrappers: subtract `wCameraX`/`wCameraY`, cull if the high byte
 of the difference is out of range (`cp $16` for X, `cp $14`/`$13` for Y),
 multiply by 8 and take the high byte — so one high-byte unit is 8 screen pixels
 and a world unit is 1/32 pixel — then call `QueueSprite16` / `QueueSprite`.
-`ProjectWorldToScreen` (`$00:$2f4a`) and `GetPerspectiveScale` (`$00:$3033`) are
+`ProjectWorldToScreen` (`$00:$2d8c`) and `GetPerspectiveScale` (`$00:$2e61`) are
 the match court's perspective projection, outside this document's scope.
 
 ---

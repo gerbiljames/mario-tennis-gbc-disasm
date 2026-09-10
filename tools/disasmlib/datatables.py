@@ -521,11 +521,12 @@ def render_mugshot_ptr_table(rom, start, end, bank, data_labels):
 
 
 def render_object_header(rom, off, data_labels, ptr_labels):
-    """Render a 16-byte sprite/object header as committed db/dw source: a
-    count byte, three flag bytes, then six pointers into the record's body.
-    Bank $04's loader copies these to $dad0 and expands them into an actor
-    struct (word 0 -> +$24, word 1 -> +$28, word 2 dereferenced for an
-    8-byte subrecord, word 3 -> +$38). Being structural (a count and
+    """Render a 16-byte sprite/object header as committed db/dw source: an
+    OAM attribute byte, the facing count, two bytes neither loader reads,
+    then six pointers into the record's body. Bank $04's loader copies these
+    to $dad0 and expands them into an actor struct (word 0 -> +$24 the frame
+    array, word 1 -> +$28 the animation-script pointer array, word 2
+    dereferenced for an 8-byte subrecord, word 3 -> +$38). Being structural (a count and
     pointers, like the DataPtr table above it) they live in the source, not
     the gitignored data blobs. Body pointers resolve to the labels of the
     sub-blobs split_object_bodies() carved; the rest stay literal (they aim
@@ -540,8 +541,8 @@ def render_object_header(rom, off, data_labels, ptr_labels):
         return data_labels.get(tgt) or ptr_labels.get(tgt) or f"${w:04x}"
 
     w = [b[4 + 2 * i] | (b[5 + 2 * i] << 8) for i in range(6)]
-    return [f"\tdb ${b[0]:02x}, ${b[1]:02x}, ${b[2]:02x}, ${b[3]:02x} ; count, flags",
-            f"\tdw {lbl(w[0])}, {lbl(w[1])}, {lbl(w[2])} ; frame array, OAM array, frame array",
+    return [f"\tdb ${b[0]:02x}, ${b[1]:02x}, ${b[2]:02x}, ${b[3]:02x} ; OAM attr, facing count, unread, unread",
+            f"\tdw {lbl(w[0])}, {lbl(w[1])}, {lbl(w[2])} ; frame array, anim scripts, frame array",
             ".frames:",
             f"\tdw {lbl(w[3])}, {lbl(w[4])}, {lbl(w[5])} ; frame pointers (continue in body)"]
 
@@ -559,7 +560,8 @@ def render_flag_ids(rom, start, end, flag_names=None):
         if name and not (lo == 0 and hi == 0):
             out.append(f"\tflag_id {name} ; {r}")
             continue
-        note = "none" if lo == 0 and hi == 0 else f"flag ${hi:02x}, {lo >> 5}"
+        note = ("none" if lo == 0 and hi == 0 else "end" if lo == hi == 0xFF
+                else f"flag ${hi:02x}, {lo >> 5}")
         out.append(f"\tdw ${lo | (hi << 8):04x} ; {r}: {note}")
     if (end - start) % 2:
         out.append(f"\tdb ${rom[end - 1]:02x}")

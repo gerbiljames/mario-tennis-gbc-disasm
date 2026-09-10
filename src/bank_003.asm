@@ -5975,8 +5975,8 @@ InitGrayscalePaletteFade:
 	ld [hl+], a ; $75ba
 	dec b ; $75bb
 	jr nz, .loop ; $75bc
-	call BackupMasterPalettes ; $75be
-	call DesaturateWorkingPalettes ; $75c1
+	call CopyMasterPalettesToFadeBuffers ; $75be
+	call DesaturateFadeTargetPalettes ; $75c1
 	pop af ; $75c4
 	wram_bank ; $75c5
 	ret ; $75c9
@@ -5991,14 +5991,14 @@ Unused_03_InitBlackPaletteFade:
 	ld [hl+], a ; $75d9
 	dec b ; $75da
 	jr nz, .loopB ; $75db
-	call BackupMasterPalettes ; $75dd
-	call ClearWorkingPaletteBuffer ; $75e0
+	call CopyMasterPalettesToFadeBuffers ; $75dd
+	call ClearFadeTargetPalettes ; $75e0
 	pop af ; $75e3
 	wram_bank ; $75e4
 	ret ; $75e8
-BackupMasterPalettes:
+CopyMasterPalettesToFadeBuffers:
 	ld hl, wMasterPalettes ; $75e9
-	ld de, wMasterPalettesBackup ; $75ec
+	ld de, wPaletteFadeLive ; $75ec
 	ld b, $80 ; $75ef
 .loop:
 	ld a, [hl+] ; $75f1
@@ -6007,7 +6007,7 @@ BackupMasterPalettes:
 	dec b ; $75f4
 	jr nz, .loop ; $75f5
 	ld hl, wMasterPalettes ; $75f7
-	ld de, wWorkingPalettes ; $75fa
+	ld de, wPaletteFadeTarget ; $75fa
 	ld b, $80 ; $75fd
 .loopB:
 	ld a, [hl+] ; $75ff
@@ -6016,8 +6016,8 @@ BackupMasterPalettes:
 	dec b ; $7602
 	jr nz, .loopB ; $7603
 	ret ; $7605
-ClearWorkingPaletteBuffer:
-	ld hl, wWorkingPalettes ; $7606
+ClearFadeTargetPalettes:
+	ld hl, wPaletteFadeTarget ; $7606
 	ld b, $40 ; $7609
 	ld de, $0000 ; $760b
 .loop:
@@ -6028,8 +6028,8 @@ ClearWorkingPaletteBuffer:
 	dec b ; $7612
 	jr nz, .loop ; $7613
 	ret ; $7615
-DesaturateWorkingPalettes:
-	ld hl, wWorkingPalettes ; $7616
+DesaturateFadeTargetPalettes:
+	ld hl, wPaletteFadeTarget ; $7616
 	ld de, wPaletteColorSplit ; $7619
 	ld b, $40 ; $761c
 .loop:
@@ -6125,7 +6125,7 @@ SetupPaletteFadeMask:
 	ld de, $001f ; $7697
 	call DivHLByDE ; $769a
 	ld a, l ; $769d
-	ld [wPaletteFadeStep], a ; $769e
+	ld [wPaletteFadeFrameDelay], a ; $769e
 	ld hl, wPaletteFadeMask ; $76a1
 	bit 7, b ; $76a4
 	jr z, .positive ; $76a6
@@ -6214,7 +6214,7 @@ AnimatePaletteFadeToTarget:
 	push af ; $771b
 	wram_bank $06 ; $771c
 .loop:
-	ld a, [wPaletteFadeStep] ; $7722
+	ld a, [wPaletteFadeFrameDelay] ; $7722
 .loopB:
 	and a ; $7725
 	jr z, .zero ; $7726
@@ -6239,7 +6239,7 @@ AnimatePaletteFadeToTarget:
 	ld a, b ; $7740
 	cp $10 ; $7741
 	jr nz, .loop2 ; $7743
-	ld hl, wMasterPalettesBackup ; $7745
+	ld hl, wPaletteFadeLive ; $7745
 	ld d, $00 ; $7748
 	ld e, $10 ; $774a
 	call LoadPalettesImmediate ; $774c
@@ -6257,11 +6257,11 @@ AnimatePaletteFadeToTarget:
 StepPaletteColorsTowardTarget:
 	ld a, b ; $7764
 	ld [wPaletteFadeIndex], a ; $7765
-	ld hl, wWorkingPalettes ; $7768
+	ld hl, wPaletteFadeTarget ; $7768
 	call AdvanceToPaletteEntry ; $776b
 	ld d, h ; $776e
 	ld e, l ; $776f
-	ld hl, wMasterPalettesBackup ; $7770
+	ld hl, wPaletteFadeLive ; $7770
 	ld a, [wPaletteFadeIndex] ; $7773
 	ld b, a ; $7776
 	call AdvanceToPaletteEntry ; $7777
@@ -6347,12 +6347,12 @@ SnapPalettesToTarget:
 	and a ; $77ea
 	jr z, .restore ; $77eb
 	ld c, b ; $77ed
-	ld hl, wWorkingPalettes ; $77ee
+	ld hl, wPaletteFadeTarget ; $77ee
 	call AdvanceToPaletteEntry ; $77f1
 	ld d, h ; $77f4
 	ld e, l ; $77f5
 	ld b, c ; $77f6
-	ld hl, wMasterPalettesBackup ; $77f7
+	ld hl, wPaletteFadeLive ; $77f7
 	call AdvanceToPaletteEntry ; $77fa
 	ld a, [de] ; $77fd
 	ld [hl+], a ; $77fe
@@ -6386,7 +6386,7 @@ SnapPalettesToTarget:
 	ld a, b ; $7819
 	cp $10 ; $781a
 	jr nz, .loop ; $781c
-	ld hl, wMasterPalettesBackup ; $781e
+	ld hl, wPaletteFadeLive ; $781e
 	ld d, $00 ; $7821
 	ld e, $10 ; $7823
 	call LoadPalettesImmediate ; $7825

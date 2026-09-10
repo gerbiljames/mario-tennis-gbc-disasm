@@ -285,6 +285,47 @@
    "comment": "Match-engine per-character struct, replicated across WRAM banks 4-7\n(bank = character: 4 near-P1, 5 far-P1, 6 near-partner, 7 far-partner).\nSame field, different character per bank -- one name each. Scoped by the\nprovably-selected WRAM bank, plus the match banks $07/$08 whose\ncallback-reached (jp hl) accesses the dataflow can't prove. Only the\nnamed field offsets render; other $dfxx bytes stay numeric.\nThe character-select screen drives the same struct: bank $38 runs\nUpdateCharSelectCharSprite and TickCharSelectIdleAnim once per preview\ncharacter, selecting WRAM banks $04-$07 in turn, so those two routines get\ninstruction-range scopes rather than a whole-bank one -- bank $38's own\n$df00 is wCharSelectHandedness in WRAM bank $03.",
    "variants": [
     {
+     "context": "clear-status developer menu (bank $0a, WRAM bank $05)",
+     "scopes": [
+      {
+       "bank": "0x0a",
+       "wram_bank": "0x05",
+       "start": "0x4bac",
+       "end": "0x4ef8"
+      }
+     ],
+     "symbols": {
+      "0xdf00": {
+       "name": "wClearStatusMode",
+       "note": "[8-bit] RunClearStatusSetupMenu's first choice (Text_34_215): 0 Set, 1 Continue, $ff cancelled. Continue and cancel skip straight to the result code; the menu keeps its state in WRAM bank $05 on top of the idle far-P1 character struct, cleared 32 bytes at a time on entry"
+      },
+      "0xdf01": {
+       "name": "wClearStatusDoubles",
+       "note": "[8-bit] 0 singles, 1 doubles -- not asked, copied from FLAG_DOUBLES when Set is chosen. Picks the singles or doubles rank list and result-code row"
+      },
+      "0xdf02": {
+       "name": "wClearStatusFormat",
+       "note": "[8-bit] Second menu (Text_34_217): 0 Mini-Game, 1 Ranking Match; $ff steps back"
+      },
+      "0xdf03": {
+       "name": "wClearStatusClass",
+       "note": "[8-bit] Third menu (Text_34_218): 0 Junior, 1 Senior, 2 Varsity; $ff steps back. SetTrainingCourtClearFlags reads it as the drill level to mark cleared, the ranking routines as how many classes of wins to set"
+      },
+      "0xdf04": {
+       "name": "wClearStatusRank",
+       "note": "[8-bit] Fourth menu: the drill (Text_34_219) for a Mini-Game clear, or the rank within the class (Text_34_220 and the per-class lists after it) for a Ranking Match clear; $ff steps back"
+      },
+      "0xdf05": {
+       "name": "wClearStatusWindowId",
+       "note": "[8-bit] Window struct index of the caption frame CreateWindowFromScreenRect opened, redrawn before every menu"
+      },
+      "0xdf06": {
+       "name": "wClearStatusResultCode",
+       "note": "[8-bit] What RunClearStatusSetupMenu returns in b: 8 cancelled, 1 Continue, else the ClearStatusResultCodeIndexTable entry for the choice"
+      }
+     }
+    },
+    {
      "context": "text-arg fetch buffer (menu banks reuse the idle char struct)",
      "scopes": [
       {
@@ -569,7 +610,7 @@
       },
       "0xdf2c": {
        "name": "wCharAnimScriptPtr",
-       "note": "[16-bit] Per-character banked struct (WRAM4-7): cursor into the current animation script. Commands are word-sized: < $f0 is [delay, frame], $ff jumps, $fe switches animation, $fb toggles the flip bits of wCharSpriteAttr"
+       "note": "[16-bit] Per-character banked struct (WRAM4-7): cursor into the current animation script. Commands are word-sized: < $f0 is [frame, delay], $ff jumps, $fe switches animation, $fb toggles the flip bits of wCharSpriteAttr"
       },
       "0xdf2e": {
        "name": "wCharAnimId",
@@ -2266,23 +2307,23 @@
      ],
      "symbols": {
       "0xd0a0": {
-       "name": "wWorkingPalettes",
-       "note": "[128 bytes] The palettes being faded: 16 palettes of four 16-bit colours. BackupMasterPalettes seeds it from wMasterPalettes, ClearWorkingPaletteBuffer zeroes all 64 colours and DesaturateWorkingPalettes rewrites each one through SplitColorComponents. AdvanceToPaletteEntry walks it 8 bytes at a time",
+       "name": "wPaletteFadeTarget",
+       "note": "[128 bytes] The fade's endpoint: 16 palettes of four 16-bit colours. CopyMasterPalettesToFadeBuffers seeds it from wMasterPalettes, then the caller rewrites it -- ClearFadeTargetPalettes zeroes all 64 colours (fade to black), DesaturateFadeTargetPalettes greys each one through SplitColorComponents. StepPaletteColorsTowardTarget reads it and SnapPalettesToTarget copies it over wPaletteFadeLive; AdvanceToPaletteEntry walks it 8 bytes at a time",
        "size": 128
       },
       "0xd140": {
-       "name": "wMasterPalettesBackup",
-       "note": "[128 bytes] The untouched copy taken at the same moment, so a fade always has its endpoint to interpolate from and can be snapped back",
+       "name": "wPaletteFadeLive",
+       "note": "[128 bytes] The buffer the fade animates and shows: seeded from wMasterPalettes at the same moment, then every AnimatePaletteFadeToTarget pass steps each masked palette's components +/-1 toward wPaletteFadeTarget (StepPaletteColorsTowardTarget writes back here) and LoadPalettesImmediate uploads all 16 palettes from it",
        "size": 128
       },
       "0xd1e0": {
        "name": "wPaletteFadeMask",
-       "note": "[8 bytes] One flag per palette, set from the bits of b at SetupPaletteFadeMask -- bit 7 is palette 0. Only flagged palettes are stepped",
-       "size": 8
+       "note": "[16 bytes] One byte per palette, all 16 -- InitGrayscalePaletteFade clears $10 of them and the animate/snap loops walk $10 -- of which SetupPaletteFadeMask sets the first eight from the bits of b (bit 7 is palette 0). Only flagged palettes are stepped",
+       "size": 16
       },
       "0xd1f0": {
        "name": "wPaletteFadeAmount",
-       "note": "[8-bit] How far through the fade, as passed in d"
+       "note": "[8-bit] Passes remaining, as passed in d; AnimatePaletteFadeToTarget decrements it once per pass and snaps when it reaches zero"
       },
       "0xd1f1": {
        "name": "wPaletteFadeIndex",
@@ -2294,8 +2335,8 @@
        "size": 6
       },
       "0xd1f9": {
-       "name": "wPaletteFadeStep",
-       "note": "[8-bit] wPaletteFadeAmount divided by $1f, the per-component step the fade moves each call"
+       "name": "wPaletteFadeFrameDelay",
+       "note": "[8-bit] wPaletteFadeAmount divided by $1f: the frames AnimatePaletteFadeToTarget waits before each pass. The colour step itself is always +/-1 per component (StepColorComponentTowardTarget)"
       },
       "0xd1fe": {
        "name": "wCutsceneWindowSliding",

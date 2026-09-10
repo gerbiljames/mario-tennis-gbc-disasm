@@ -1,6 +1,13 @@
 ; Game constants. Hand-maintained (not generated). Preincluded for every bank
 ; via the Makefile PRELUDE, alongside hardware.inc / macros.inc.
 
+; --- WRAM layout ---
+; The switchable bank at $d000-$dfff. SoftReset and InitAndRunGame clear
+; whole banks from here, and SoftReset parks the stack at its lower edge,
+; growing down into WRAM0.
+def WRAMX_BASE equ $d000
+def STACK_TOP equ $d000
+
 ; --- VRAM bank in a copy destination ---
 ; QueueVRAMCopy takes its destination in de and carries the VRAM bank in bit 13
 ; of it: `bit 5, d` selects rVBK, and `res 5, d` recovers the real address. So a

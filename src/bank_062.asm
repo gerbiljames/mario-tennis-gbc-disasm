@@ -10,8 +10,8 @@ DataPtr_StarCourtAttrmap:
 	dw StarCourtAttrmap ; $4006
 DataPtr_StarCourtSceneConfigAlias1:
 	dw StarCourtSceneConfig ; $4008
-DataPtr_StarCourtSceneConfigB:
-	dw StarCourtSceneConfigB ; $400a
+DataPtr_StarCourtScoreboardColumnAttrs:
+	dw StarCourtScoreboardColumnAttrs ; $400a
 DataPtr_BowserCourtPalettes:
 	dw BowserCourtPalettes ; $400c
 DataPtr_StarCourtTiles:
@@ -26,8 +26,8 @@ DataPtr_BowserCourtAttrmap:
 	dw BowserCourtAttrmap ; $4016
 DataPtr_BowserCourtSceneConfigAlias1:
 	dw BowserCourtSceneConfig ; $4018
-DataPtr_BowserCourtSceneConfigB:
-	dw BowserCourtSceneConfigB ; $401a
+DataPtr_BowserCourtScoreboardColumnAttrs:
+	dw BowserCourtScoreboardColumnAttrs ; $401a
 DataPtr_WarioCourtPalettes:
 	dw WarioCourtPalettes ; $401c
 DataPtr_BowserCourtTiles:
@@ -42,8 +42,8 @@ DataPtr_WarioCourtAttrmap:
 	dw WarioCourtAttrmap ; $4026
 DataPtr_WarioCourtSceneConfigAlias1:
 	dw WarioCourtSceneConfig ; $4028
-DataPtr_WarioCourtSceneConfigB:
-	dw WarioCourtSceneConfigB ; $402a
+DataPtr_WarioCourtScoreboardColumnAttrs:
+	dw WarioCourtScoreboardColumnAttrs ; $402a
 DataPtr_PeachCourtPalettes:
 	dw PeachCourtPalettes ; $402c
 DataPtr_WarioCourtTiles:
@@ -58,8 +58,8 @@ DataPtr_PeachCourtAttrmap:
 	dw PeachCourtAttrmap ; $4036
 DataPtr_PeachCourtSceneConfigAlias1:
 	dw PeachCourtSceneConfig ; $4038
-DataPtr_PeachCourtSceneConfigB:
-	dw PeachCourtSceneConfigB ; $403a
+DataPtr_PeachCourtScoreboardColumnAttrs:
+	dw PeachCourtScoreboardColumnAttrs ; $403a
 DataPtr_PeachCourtSceneUnusedSlot:
 	dw PeachCourtSceneUnusedSlot ; $403c
 DataPtr_PeachCourtTiles:
@@ -74,7 +74,7 @@ StarCourtAttrmap:
 	INCBIN "data/bank_062/lz_4a42.bin" ; $4a42, 209 bytes
 StarCourtSceneConfig:
 	INCBIN "data/bank_062/d_4b13.bin" ; $4b13, 40 bytes
-StarCourtSceneConfigB:
+StarCourtScoreboardColumnAttrs:
 	INCBIN "data/bank_062/d_4b3b.bin" ; $4b3b, 40 bytes
 BowserCourtPalettes:
 	INCLUDE "data/bank_062/palettes_4b63.asm" ; $4b63, 64 bytes (palettes)
@@ -86,7 +86,7 @@ BowserCourtAttrmap:
 	INCBIN "data/bank_062/lz_54e3.bin" ; $54e3, 285 bytes
 BowserCourtSceneConfig:
 	INCBIN "data/bank_062/d_5600.bin" ; $5600, 40 bytes
-BowserCourtSceneConfigB:
+BowserCourtScoreboardColumnAttrs:
 	INCBIN "data/bank_062/d_5628.bin" ; $5628, 40 bytes
 WarioCourtPalettes:
 	INCLUDE "data/bank_062/palettes_5650.asm" ; $5650, 64 bytes (palettes)
@@ -98,7 +98,7 @@ WarioCourtAttrmap:
 	INCBIN "data/bank_062/lz_62cf.bin" ; $62cf, 274 bytes
 WarioCourtSceneConfig:
 	INCBIN "data/bank_062/d_63e1.bin" ; $63e1, 40 bytes
-WarioCourtSceneConfigB:
+WarioCourtScoreboardColumnAttrs:
 	INCBIN "data/bank_062/d_6409.bin" ; $6409, 40 bytes
 PeachCourtPalettes:
 	INCLUDE "data/bank_062/palettes_6431.asm" ; $6431, 64 bytes (palettes)
@@ -110,7 +110,7 @@ PeachCourtAttrmap:
 	INCBIN "data/bank_062/lz_6df5.bin" ; $6df5, 313 bytes
 PeachCourtSceneConfig:
 	INCBIN "data/bank_062/d_6f2e.bin" ; $6f2e, 40 bytes
-PeachCourtSceneConfigB:
+PeachCourtScoreboardColumnAttrs:
 	INCBIN "data/bank_062/d_6f56.bin" ; $6f56, 40 bytes
 PeachCourtSceneUnusedSlot:
 	; $6f7e, 4226 bytes fill to bank end (linker-padded)

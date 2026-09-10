@@ -10,8 +10,8 @@ DataPtr_MachineCourtAttrmap:
 	dw MachineCourtAttrmap ; $4006
 DataPtr_MachineCourtSceneConfigAlias1:
 	dw MachineCourtSceneConfig ; $4008
-DataPtr_MachineCourtSceneConfigB:
-	dw MachineCourtSceneConfigB ; $400a
+DataPtr_MachineCourtScoreboardColumnAttrs:
+	dw MachineCourtScoreboardColumnAttrs ; $400a
 DataPtr_CenterCourtPalettes:
 	dw CenterCourtPalettes ; $400c
 DataPtr_MachineCourtTiles:
@@ -26,8 +26,8 @@ DataPtr_CenterCourtAttrmap:
 	dw CenterCourtAttrmap ; $4016
 DataPtr_CenterCourtSceneConfigAlias1:
 	dw CenterCourtSceneConfig ; $4018
-DataPtr_CenterCourtSceneConfigB:
-	dw CenterCourtSceneConfigB ; $401a
+DataPtr_CenterCourtScoreboardColumnAttrs:
+	dw CenterCourtScoreboardColumnAttrs ; $401a
 DataPtr_PracticeCourtPalettes:
 	dw PracticeCourtPalettes ; $401c
 DataPtr_CenterCourtTiles:
@@ -42,8 +42,8 @@ DataPtr_PracticeCourtAttrmap:
 	dw PracticeCourtAttrmap ; $4026
 DataPtr_PracticeCourtSceneConfigAlias1:
 	dw PracticeCourtSceneConfig ; $4028
-DataPtr_PracticeCourtSceneConfigB:
-	dw PracticeCourtSceneConfigB ; $402a
+DataPtr_PracticeCourtScoreboardColumnAttrs:
+	dw PracticeCourtScoreboardColumnAttrs ; $402a
 DataPtr_YoshiCourtPalettes:
 	dw YoshiCourtPalettes ; $402c
 DataPtr_PracticeCourtTiles:
@@ -58,8 +58,8 @@ DataPtr_YoshiCourtAttrmap:
 	dw YoshiCourtAttrmap ; $4036
 DataPtr_YoshiCourtSceneConfigAlias1:
 	dw YoshiCourtSceneConfig ; $4038
-DataPtr_YoshiCourtSceneConfigB:
-	dw YoshiCourtSceneConfigB ; $403a
+DataPtr_YoshiCourtScoreboardColumnAttrs:
+	dw YoshiCourtScoreboardColumnAttrs ; $403a
 DataPtr_YoshiCourtSceneUnusedSlot:
 	dw YoshiCourtSceneUnusedSlot ; $403c
 DataPtr_YoshiCourtTiles:
@@ -74,7 +74,7 @@ MachineCourtAttrmap:
 	INCBIN "data/bank_061/lz_4b7b.bin" ; $4b7b, 158 bytes
 MachineCourtSceneConfig:
 	INCBIN "data/bank_061/d_4c19.bin" ; $4c19, 40 bytes
-MachineCourtSceneConfigB:
+MachineCourtScoreboardColumnAttrs:
 	INCBIN "data/bank_061/d_4c41.bin" ; $4c41, 40 bytes
 CenterCourtPalettes:
 	INCLUDE "data/bank_061/palettes_4c69.asm" ; $4c69, 64 bytes (palettes)
@@ -86,7 +86,7 @@ CenterCourtAttrmap:
 	INCBIN "data/bank_061/lz_5aee.bin" ; $5aee, 269 bytes
 CenterCourtSceneConfig:
 	INCBIN "data/bank_061/d_5bfb.bin" ; $5bfb, 40 bytes
-CenterCourtSceneConfigB:
+CenterCourtScoreboardColumnAttrs:
 	INCBIN "data/bank_061/d_5c23.bin" ; $5c23, 40 bytes
 PracticeCourtPalettes:
 	INCLUDE "data/bank_061/palettes_5c4b.asm" ; $5c4b, 64 bytes (palettes)
@@ -98,7 +98,7 @@ PracticeCourtAttrmap:
 	INCBIN "data/bank_061/lz_6977.bin" ; $6977, 132 bytes
 PracticeCourtSceneConfig:
 	INCBIN "data/bank_061/d_69fb.bin" ; $69fb, 40 bytes
-PracticeCourtSceneConfigB:
+PracticeCourtScoreboardColumnAttrs:
 	INCBIN "data/bank_061/d_6a23.bin" ; $6a23, 40 bytes
 YoshiCourtPalettes:
 	INCLUDE "data/bank_061/palettes_6a4b.asm" ; $6a4b, 64 bytes (palettes)
@@ -110,7 +110,7 @@ YoshiCourtAttrmap:
 	INCBIN "data/bank_061/lz_790a.bin" ; $790a, 317 bytes
 YoshiCourtSceneConfig:
 	INCBIN "data/bank_061/d_7a47.bin" ; $7a47, 40 bytes
-YoshiCourtSceneConfigB:
+YoshiCourtScoreboardColumnAttrs:
 	INCBIN "data/bank_061/d_7a6f.bin" ; $7a6f, 40 bytes
 YoshiCourtSceneUnusedSlot:
 	; $7a97, 1385 bytes fill to bank end (linker-padded)

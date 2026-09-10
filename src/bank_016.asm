@@ -806,7 +806,7 @@ RunMatchWinLoseScreen:
 	ld [wResultScreenMode], a ; $449e
 	ld a, [wMatchWinLoseFlag] ; $44a1
 	ld [wMatchWinLoseState], a ; $44a4
-	call MaybeInvertMatchWinLoseFlag ; $44a7
+	call ApplyLinkRoleToWinLoseFlag ; $44a7
 	ld a, $ff ; $44aa
 	ld a, [wMatchWinLoseFlag] ; $44ac
 	cp WINLOSE_LOSE ; $44af
@@ -1673,7 +1673,7 @@ MatchResultGfxCUnused:
 	INCBIN "data/bank_016/lz_5b0f.bin" ; $5b0f, 230 bytes
 MatchResultGfxC9:
 	INCBIN "data/bank_016/lz_5bf5.bin" ; $5bf5, 28 bytes
-MaybeInvertMatchWinLoseFlag:
+ApplyLinkRoleToWinLoseFlag:
 	ld a, [wGameMode] ; $5c11
 	cp GAMEMODE_LINK_MATCH ; $5c14
 	ret nz ; $5c16

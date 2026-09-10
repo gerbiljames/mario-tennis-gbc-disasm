@@ -19,8 +19,8 @@ DataPtr_WalkSprite_75_07:
 DataPtr_WalkSprite_75_08:
 	dw WalkSprite_75_08 ; $4010
 WalkSprite_75_00:
-	db $03, $04, $02, $00 ; count, flags
-	dw .frames, WalkSprite_75_00_OamPtrs, .frames ; frame array, OAM array, frame array
+	db $03, $04, $02, $00 ; OAM attr, facing count, unread, unread
+	dw .frames, WalkSprite_75_00_AnimPtrs, .frames ; frame array, anim scripts, frame array
 .frames:
 	dw WalkSprite_75_00_Gfx00, WalkSprite_75_00_Gfx01, WalkSprite_75_00_Gfx02 ; frame pointers (continue in body)
 	dw WalkSprite_75_00_Gfx02 ; $4022
@@ -42,30 +42,61 @@ WalkSprite_75_00_Gfx04:
 	INCBIN "data/bank_075/d_4430.bin" ; $4430, 256 bytes
 WalkSprite_75_00_Gfx05:
 	INCBIN "data/bank_075/d_4530.bin" ; $4530, 256 bytes
-WalkSprite_75_00_OamPtrs:
-	dw WalkSprite_75_00_Oam00 ; $4630
-	dw WalkSprite_75_00_Oam01 ; $4632
-	dw WalkSprite_75_00_Oam02 ; $4634
-	dw WalkSprite_75_00_Oam03 ; $4636
-	dw WalkSprite_75_00_Oam04 ; $4638
-	dw WalkSprite_75_00_Oam05 ; $463a
-	dw WalkSprite_75_00_Oam05 ; $463c
-	dw WalkSprite_75_00_Oam05 ; $463e
-WalkSprite_75_00_Oam00:
-	INCBIN "data/bank_075/d_4640.bin" ; $4640, 3 bytes
-WalkSprite_75_00_Oam01:
-	INCBIN "data/bank_075/d_4643.bin" ; $4643, 6 bytes
-WalkSprite_75_00_Oam02:
-	INCBIN "data/bank_075/d_4649.bin" ; $4649, 12 bytes
-WalkSprite_75_00_Oam03:
-	INCBIN "data/bank_075/d_4655.bin" ; $4655, 8 bytes
-WalkSprite_75_00_Oam04:
-	INCBIN "data/bank_075/d_465d.bin" ; $465d, 20 bytes
-WalkSprite_75_00_Oam05:
-	INCBIN "data/bank_075/d_4671.bin" ; $4671, 12 bytes
+WalkSprite_75_00_AnimPtrs:
+	dw WalkSprite_75_00_Anim00 ; $4630
+	dw WalkSprite_75_00_Anim01 ; $4632
+	dw WalkSprite_75_00_Anim02 ; $4634
+	dw WalkSprite_75_00_Anim03 ; $4636
+	dw WalkSprite_75_00_Anim04 ; $4638
+	dw WalkSprite_75_00_Anim05 ; $463a
+	dw WalkSprite_75_00_Anim05 ; $463c
+	dw WalkSprite_75_00_Anim05 ; $463e
+WalkSprite_75_00_Anim00:
+	; $4640, 3 bytes (sprite_anim)
+	anim_frame $00, $ff
+	anim_hold $fd
+WalkSprite_75_00_Anim01:
+	; $4643, 6 bytes (sprite_anim)
+	anim_frame $00, $1e
+	anim_frame $01, $1e
+	anim_loop $00
+WalkSprite_75_00_Anim02:
+	; $4649, 12 bytes (sprite_anim)
+	anim_frame $00, $0a
+	anim_frame $09, $08
+	anim_frame $00, $08
+	anim_frame $09, $08
+	anim_frame $00, $0a
+	anim_set $01
+WalkSprite_75_00_Anim03:
+	; $4655, 8 bytes (sprite_anim)
+	anim_frame $00, $0a
+	anim_frame $06, $1e
+	anim_frame $00, $0a
+	anim_set $01
+WalkSprite_75_00_Anim04:
+	; $465d, 20 bytes (sprite_anim)
+	anim_frame $00, $0a
+	anim_frame $07, $0a
+	anim_frame $00, $03
+	anim_frame $08, $0a
+	anim_frame $00, $03
+	anim_frame $07, $0a
+	anim_frame $00, $03
+	anim_frame $08, $0a
+	anim_frame $00, $0a
+	anim_set $01
+WalkSprite_75_00_Anim05:
+	; $4671, 12 bytes (sprite_anim)
+	anim_frame $00, $0a
+	anim_frame $09, $08
+	anim_frame $00, $08
+	anim_frame $09, $08
+	anim_frame $00, $0a
+	anim_set $01
 WalkSprite_75_01:
-	db $03, $04, $02, $00 ; count, flags
-	dw .frames, WalkSprite_75_01_OamPtrs, .frames ; frame array, OAM array, frame array
+	db $03, $04, $02, $00 ; OAM attr, facing count, unread, unread
+	dw .frames, WalkSprite_75_01_AnimPtrs, .frames ; frame array, anim scripts, frame array
 .frames:
 	dw WalkSprite_75_01_Gfx00, WalkSprite_75_01_Gfx01, WalkSprite_75_01_Gfx02 ; frame pointers (continue in body)
 	dw WalkSprite_75_01_Gfx02 ; $468d
@@ -90,30 +121,61 @@ WalkSprite_75_01_Gfx04:
 	INCBIN "data/bank_075/d_4aa0.bin" ; $4aa0, 256 bytes
 WalkSprite_75_01_Gfx05:
 	INCBIN "data/bank_075/d_4ba0.bin" ; $4ba0, 256 bytes
-WalkSprite_75_01_OamPtrs:
-	dw WalkSprite_75_01_Oam00 ; $4ca0
-	dw WalkSprite_75_01_Oam01 ; $4ca2
-	dw WalkSprite_75_01_Oam02 ; $4ca4
-	dw WalkSprite_75_01_Oam03 ; $4ca6
-	dw WalkSprite_75_01_Oam04 ; $4ca8
-	dw WalkSprite_75_01_Oam05 ; $4caa
-	dw WalkSprite_75_01_Oam05 ; $4cac
-	dw WalkSprite_75_01_Oam05 ; $4cae
-WalkSprite_75_01_Oam00:
-	INCBIN "data/bank_075/d_4cb0.bin" ; $4cb0, 3 bytes
-WalkSprite_75_01_Oam01:
-	INCBIN "data/bank_075/d_4cb3.bin" ; $4cb3, 6 bytes
-WalkSprite_75_01_Oam02:
-	INCBIN "data/bank_075/d_4cb9.bin" ; $4cb9, 12 bytes
-WalkSprite_75_01_Oam03:
-	INCBIN "data/bank_075/d_4cc5.bin" ; $4cc5, 8 bytes
-WalkSprite_75_01_Oam04:
-	INCBIN "data/bank_075/d_4ccd.bin" ; $4ccd, 20 bytes
-WalkSprite_75_01_Oam05:
-	INCBIN "data/bank_075/d_4ce1.bin" ; $4ce1, 12 bytes
+WalkSprite_75_01_AnimPtrs:
+	dw WalkSprite_75_01_Anim00 ; $4ca0
+	dw WalkSprite_75_01_Anim01 ; $4ca2
+	dw WalkSprite_75_01_Anim02 ; $4ca4
+	dw WalkSprite_75_01_Anim03 ; $4ca6
+	dw WalkSprite_75_01_Anim04 ; $4ca8
+	dw WalkSprite_75_01_Anim05 ; $4caa
+	dw WalkSprite_75_01_Anim05 ; $4cac
+	dw WalkSprite_75_01_Anim05 ; $4cae
+WalkSprite_75_01_Anim00:
+	; $4cb0, 3 bytes (sprite_anim)
+	anim_frame $00, $ff
+	anim_hold $fd
+WalkSprite_75_01_Anim01:
+	; $4cb3, 6 bytes (sprite_anim)
+	anim_frame $00, $1e
+	anim_frame $01, $1e
+	anim_loop $00
+WalkSprite_75_01_Anim02:
+	; $4cb9, 12 bytes (sprite_anim)
+	anim_frame $00, $0a
+	anim_frame $09, $08
+	anim_frame $00, $08
+	anim_frame $09, $08
+	anim_frame $00, $0a
+	anim_set $01
+WalkSprite_75_01_Anim03:
+	; $4cc5, 8 bytes (sprite_anim)
+	anim_frame $00, $0a
+	anim_frame $06, $1e
+	anim_frame $00, $0a
+	anim_set $01
+WalkSprite_75_01_Anim04:
+	; $4ccd, 20 bytes (sprite_anim)
+	anim_frame $00, $0a
+	anim_frame $07, $0a
+	anim_frame $00, $03
+	anim_frame $08, $0a
+	anim_frame $00, $03
+	anim_frame $07, $0a
+	anim_frame $00, $03
+	anim_frame $08, $0a
+	anim_frame $00, $0a
+	anim_set $01
+WalkSprite_75_01_Anim05:
+	; $4ce1, 12 bytes (sprite_anim)
+	anim_frame $00, $0a
+	anim_frame $09, $08
+	anim_frame $00, $08
+	anim_frame $09, $08
+	anim_frame $00, $0a
+	anim_set $01
 WalkSprite_75_02:
-	db $05, $04, $02, $00 ; count, flags
-	dw .frames, WalkSprite_75_02_OamPtrs, .frames ; frame array, OAM array, frame array
+	db $05, $04, $02, $00 ; OAM attr, facing count, unread, unread
+	dw .frames, WalkSprite_75_02_AnimPtrs, .frames ; frame array, anim scripts, frame array
 .frames:
 	dw WalkSprite_75_02_Gfx00, WalkSprite_75_02_Gfx01, WalkSprite_75_02_Gfx02 ; frame pointers (continue in body)
 	dw WalkSprite_75_02_Gfx02 ; $4cfd
@@ -138,30 +200,61 @@ WalkSprite_75_02_Gfx04:
 	INCBIN "data/bank_075/d_5110.bin" ; $5110, 256 bytes
 WalkSprite_75_02_Gfx05:
 	INCBIN "data/bank_075/d_5210.bin" ; $5210, 256 bytes
-WalkSprite_75_02_OamPtrs:
-	dw WalkSprite_75_02_Oam00 ; $5310
-	dw WalkSprite_75_02_Oam01 ; $5312
-	dw WalkSprite_75_02_Oam02 ; $5314
-	dw WalkSprite_75_02_Oam03 ; $5316
-	dw WalkSprite_75_02_Oam04 ; $5318
-	dw WalkSprite_75_02_Oam05 ; $531a
-	dw WalkSprite_75_02_Oam05 ; $531c
-	dw WalkSprite_75_02_Oam05 ; $531e
-WalkSprite_75_02_Oam00:
-	INCBIN "data/bank_075/d_5320.bin" ; $5320, 3 bytes
-WalkSprite_75_02_Oam01:
-	INCBIN "data/bank_075/d_5323.bin" ; $5323, 6 bytes
-WalkSprite_75_02_Oam02:
-	INCBIN "data/bank_075/d_5329.bin" ; $5329, 12 bytes
-WalkSprite_75_02_Oam03:
-	INCBIN "data/bank_075/d_5335.bin" ; $5335, 8 bytes
-WalkSprite_75_02_Oam04:
-	INCBIN "data/bank_075/d_533d.bin" ; $533d, 20 bytes
-WalkSprite_75_02_Oam05:
-	INCBIN "data/bank_075/d_5351.bin" ; $5351, 12 bytes
+WalkSprite_75_02_AnimPtrs:
+	dw WalkSprite_75_02_Anim00 ; $5310
+	dw WalkSprite_75_02_Anim01 ; $5312
+	dw WalkSprite_75_02_Anim02 ; $5314
+	dw WalkSprite_75_02_Anim03 ; $5316
+	dw WalkSprite_75_02_Anim04 ; $5318
+	dw WalkSprite_75_02_Anim05 ; $531a
+	dw WalkSprite_75_02_Anim05 ; $531c
+	dw WalkSprite_75_02_Anim05 ; $531e
+WalkSprite_75_02_Anim00:
+	; $5320, 3 bytes (sprite_anim)
+	anim_frame $00, $ff
+	anim_hold $fd
+WalkSprite_75_02_Anim01:
+	; $5323, 6 bytes (sprite_anim)
+	anim_frame $00, $1e
+	anim_frame $01, $1e
+	anim_loop $00
+WalkSprite_75_02_Anim02:
+	; $5329, 12 bytes (sprite_anim)
+	anim_frame $00, $0a
+	anim_frame $09, $08
+	anim_frame $00, $08
+	anim_frame $09, $08
+	anim_frame $00, $0a
+	anim_set $01
+WalkSprite_75_02_Anim03:
+	; $5335, 8 bytes (sprite_anim)
+	anim_frame $00, $0a
+	anim_frame $06, $1e
+	anim_frame $00, $0a
+	anim_set $01
+WalkSprite_75_02_Anim04:
+	; $533d, 20 bytes (sprite_anim)
+	anim_frame $00, $0a
+	anim_frame $07, $0a
+	anim_frame $00, $03
+	anim_frame $08, $0a
+	anim_frame $00, $03
+	anim_frame $07, $0a
+	anim_frame $00, $03
+	anim_frame $08, $0a
+	anim_frame $00, $0a
+	anim_set $01
+WalkSprite_75_02_Anim05:
+	; $5351, 12 bytes (sprite_anim)
+	anim_frame $00, $0a
+	anim_frame $09, $08
+	anim_frame $00, $08
+	anim_frame $09, $08
+	anim_frame $00, $0a
+	anim_set $01
 WalkSprite_75_03:
-	db $05, $04, $02, $00 ; count, flags
-	dw .frames, WalkSprite_75_03_OamPtrs, .frames ; frame array, OAM array, frame array
+	db $05, $04, $02, $00 ; OAM attr, facing count, unread, unread
+	dw .frames, WalkSprite_75_03_AnimPtrs, .frames ; frame array, anim scripts, frame array
 .frames:
 	dw WalkSprite_75_03_Gfx00, WalkSprite_75_03_Gfx01, WalkSprite_75_03_Gfx02 ; frame pointers (continue in body)
 	dw WalkSprite_75_03_Gfx02 ; $536d
@@ -186,30 +279,61 @@ WalkSprite_75_03_Gfx04:
 	INCBIN "data/bank_075/d_5780.bin" ; $5780, 256 bytes
 WalkSprite_75_03_Gfx05:
 	INCBIN "data/bank_075/d_5880.bin" ; $5880, 256 bytes
-WalkSprite_75_03_OamPtrs:
-	dw WalkSprite_75_03_Oam00 ; $5980
-	dw WalkSprite_75_03_Oam01 ; $5982
-	dw WalkSprite_75_03_Oam02 ; $5984
-	dw WalkSprite_75_03_Oam03 ; $5986
-	dw WalkSprite_75_03_Oam04 ; $5988
-	dw WalkSprite_75_03_Oam05 ; $598a
-	dw WalkSprite_75_03_Oam05 ; $598c
-	dw WalkSprite_75_03_Oam05 ; $598e
-WalkSprite_75_03_Oam00:
-	INCBIN "data/bank_075/d_5990.bin" ; $5990, 3 bytes
-WalkSprite_75_03_Oam01:
-	INCBIN "data/bank_075/d_5993.bin" ; $5993, 6 bytes
-WalkSprite_75_03_Oam02:
-	INCBIN "data/bank_075/d_5999.bin" ; $5999, 12 bytes
-WalkSprite_75_03_Oam03:
-	INCBIN "data/bank_075/d_59a5.bin" ; $59a5, 8 bytes
-WalkSprite_75_03_Oam04:
-	INCBIN "data/bank_075/d_59ad.bin" ; $59ad, 20 bytes
-WalkSprite_75_03_Oam05:
-	INCBIN "data/bank_075/d_59c1.bin" ; $59c1, 12 bytes
+WalkSprite_75_03_AnimPtrs:
+	dw WalkSprite_75_03_Anim00 ; $5980
+	dw WalkSprite_75_03_Anim01 ; $5982
+	dw WalkSprite_75_03_Anim02 ; $5984
+	dw WalkSprite_75_03_Anim03 ; $5986
+	dw WalkSprite_75_03_Anim04 ; $5988
+	dw WalkSprite_75_03_Anim05 ; $598a
+	dw WalkSprite_75_03_Anim05 ; $598c
+	dw WalkSprite_75_03_Anim05 ; $598e
+WalkSprite_75_03_Anim00:
+	; $5990, 3 bytes (sprite_anim)
+	anim_frame $00, $ff
+	anim_hold $fd
+WalkSprite_75_03_Anim01:
+	; $5993, 6 bytes (sprite_anim)
+	anim_frame $00, $1e
+	anim_frame $01, $1e
+	anim_loop $00
+WalkSprite_75_03_Anim02:
+	; $5999, 12 bytes (sprite_anim)
+	anim_frame $00, $0a
+	anim_frame $09, $08
+	anim_frame $00, $08
+	anim_frame $09, $08
+	anim_frame $00, $0a
+	anim_set $01
+WalkSprite_75_03_Anim03:
+	; $59a5, 8 bytes (sprite_anim)
+	anim_frame $00, $0a
+	anim_frame $06, $1e
+	anim_frame $00, $0a
+	anim_set $01
+WalkSprite_75_03_Anim04:
+	; $59ad, 20 bytes (sprite_anim)
+	anim_frame $00, $0a
+	anim_frame $07, $0a
+	anim_frame $00, $03
+	anim_frame $08, $0a
+	anim_frame $00, $03
+	anim_frame $07, $0a
+	anim_frame $00, $03
+	anim_frame $08, $0a
+	anim_frame $00, $0a
+	anim_set $01
+WalkSprite_75_03_Anim05:
+	; $59c1, 12 bytes (sprite_anim)
+	anim_frame $00, $0a
+	anim_frame $09, $08
+	anim_frame $00, $08
+	anim_frame $09, $08
+	anim_frame $00, $0a
+	anim_set $01
 WalkSprite_75_04:
-	db $07, $04, $02, $00 ; count, flags
-	dw .frames, WalkSprite_75_04_OamPtrs, .frames ; frame array, OAM array, frame array
+	db $07, $04, $02, $00 ; OAM attr, facing count, unread, unread
+	dw .frames, WalkSprite_75_04_AnimPtrs, .frames ; frame array, anim scripts, frame array
 .frames:
 	dw WalkSprite_75_04_Gfx00, WalkSprite_75_04_Gfx01, WalkSprite_75_04_Gfx02 ; frame pointers (continue in body)
 	dw WalkSprite_75_04_Gfx02 ; $59dd
@@ -234,30 +358,61 @@ WalkSprite_75_04_Gfx04:
 	INCBIN "data/bank_075/d_5df0.bin" ; $5df0, 256 bytes
 WalkSprite_75_04_Gfx05:
 	INCBIN "data/bank_075/d_5ef0.bin" ; $5ef0, 256 bytes
-WalkSprite_75_04_OamPtrs:
-	dw WalkSprite_75_04_Oam00 ; $5ff0
-	dw WalkSprite_75_04_Oam01 ; $5ff2
-	dw WalkSprite_75_04_Oam02 ; $5ff4
-	dw WalkSprite_75_04_Oam03 ; $5ff6
-	dw WalkSprite_75_04_Oam04 ; $5ff8
-	dw WalkSprite_75_04_Oam05 ; $5ffa
-	dw WalkSprite_75_04_Oam05 ; $5ffc
-	dw WalkSprite_75_04_Oam05 ; $5ffe
-WalkSprite_75_04_Oam00:
-	INCBIN "data/bank_075/d_6000.bin" ; $6000, 3 bytes
-WalkSprite_75_04_Oam01:
-	INCBIN "data/bank_075/d_6003.bin" ; $6003, 6 bytes
-WalkSprite_75_04_Oam02:
-	INCBIN "data/bank_075/d_6009.bin" ; $6009, 12 bytes
-WalkSprite_75_04_Oam03:
-	INCBIN "data/bank_075/d_6015.bin" ; $6015, 8 bytes
-WalkSprite_75_04_Oam04:
-	INCBIN "data/bank_075/d_601d.bin" ; $601d, 20 bytes
-WalkSprite_75_04_Oam05:
-	INCBIN "data/bank_075/d_6031.bin" ; $6031, 12 bytes
+WalkSprite_75_04_AnimPtrs:
+	dw WalkSprite_75_04_Anim00 ; $5ff0
+	dw WalkSprite_75_04_Anim01 ; $5ff2
+	dw WalkSprite_75_04_Anim02 ; $5ff4
+	dw WalkSprite_75_04_Anim03 ; $5ff6
+	dw WalkSprite_75_04_Anim04 ; $5ff8
+	dw WalkSprite_75_04_Anim05 ; $5ffa
+	dw WalkSprite_75_04_Anim05 ; $5ffc
+	dw WalkSprite_75_04_Anim05 ; $5ffe
+WalkSprite_75_04_Anim00:
+	; $6000, 3 bytes (sprite_anim)
+	anim_frame $00, $ff
+	anim_hold $fd
+WalkSprite_75_04_Anim01:
+	; $6003, 6 bytes (sprite_anim)
+	anim_frame $00, $1e
+	anim_frame $01, $1e
+	anim_loop $00
+WalkSprite_75_04_Anim02:
+	; $6009, 12 bytes (sprite_anim)
+	anim_frame $00, $0a
+	anim_frame $09, $08
+	anim_frame $00, $08
+	anim_frame $09, $08
+	anim_frame $00, $0a
+	anim_set $01
+WalkSprite_75_04_Anim03:
+	; $6015, 8 bytes (sprite_anim)
+	anim_frame $00, $0a
+	anim_frame $06, $1e
+	anim_frame $00, $0a
+	anim_set $01
+WalkSprite_75_04_Anim04:
+	; $601d, 20 bytes (sprite_anim)
+	anim_frame $00, $0a
+	anim_frame $07, $0a
+	anim_frame $00, $03
+	anim_frame $08, $0a
+	anim_frame $00, $03
+	anim_frame $07, $0a
+	anim_frame $00, $03
+	anim_frame $08, $0a
+	anim_frame $00, $0a
+	anim_set $01
+WalkSprite_75_04_Anim05:
+	; $6031, 12 bytes (sprite_anim)
+	anim_frame $00, $0a
+	anim_frame $09, $08
+	anim_frame $00, $08
+	anim_frame $09, $08
+	anim_frame $00, $0a
+	anim_set $01
 WalkSprite_75_05:
-	db $07, $04, $02, $00 ; count, flags
-	dw .frames, WalkSprite_75_05_OamPtrs, .frames ; frame array, OAM array, frame array
+	db $07, $04, $02, $00 ; OAM attr, facing count, unread, unread
+	dw .frames, WalkSprite_75_05_AnimPtrs, .frames ; frame array, anim scripts, frame array
 .frames:
 	dw WalkSprite_75_05_Gfx00, WalkSprite_75_05_Gfx01, WalkSprite_75_05_Gfx02 ; frame pointers (continue in body)
 	dw WalkSprite_75_05_Gfx02 ; $604d
@@ -282,30 +437,61 @@ WalkSprite_75_05_Gfx04:
 	INCBIN "data/bank_075/d_6460.bin" ; $6460, 256 bytes
 WalkSprite_75_05_Gfx05:
 	INCBIN "data/bank_075/d_6560.bin" ; $6560, 256 bytes
-WalkSprite_75_05_OamPtrs:
-	dw WalkSprite_75_05_Oam00 ; $6660
-	dw WalkSprite_75_05_Oam01 ; $6662
-	dw WalkSprite_75_05_Oam02 ; $6664
-	dw WalkSprite_75_05_Oam03 ; $6666
-	dw WalkSprite_75_05_Oam04 ; $6668
-	dw WalkSprite_75_05_Oam05 ; $666a
-	dw WalkSprite_75_05_Oam05 ; $666c
-	dw WalkSprite_75_05_Oam05 ; $666e
-WalkSprite_75_05_Oam00:
-	INCBIN "data/bank_075/d_6670.bin" ; $6670, 3 bytes
-WalkSprite_75_05_Oam01:
-	INCBIN "data/bank_075/d_6673.bin" ; $6673, 6 bytes
-WalkSprite_75_05_Oam02:
-	INCBIN "data/bank_075/d_6679.bin" ; $6679, 12 bytes
-WalkSprite_75_05_Oam03:
-	INCBIN "data/bank_075/d_6685.bin" ; $6685, 8 bytes
-WalkSprite_75_05_Oam04:
-	INCBIN "data/bank_075/d_668d.bin" ; $668d, 20 bytes
-WalkSprite_75_05_Oam05:
-	INCBIN "data/bank_075/d_66a1.bin" ; $66a1, 12 bytes
+WalkSprite_75_05_AnimPtrs:
+	dw WalkSprite_75_05_Anim00 ; $6660
+	dw WalkSprite_75_05_Anim01 ; $6662
+	dw WalkSprite_75_05_Anim02 ; $6664
+	dw WalkSprite_75_05_Anim03 ; $6666
+	dw WalkSprite_75_05_Anim04 ; $6668
+	dw WalkSprite_75_05_Anim05 ; $666a
+	dw WalkSprite_75_05_Anim05 ; $666c
+	dw WalkSprite_75_05_Anim05 ; $666e
+WalkSprite_75_05_Anim00:
+	; $6670, 3 bytes (sprite_anim)
+	anim_frame $00, $ff
+	anim_hold $fd
+WalkSprite_75_05_Anim01:
+	; $6673, 6 bytes (sprite_anim)
+	anim_frame $00, $1e
+	anim_frame $01, $1e
+	anim_loop $00
+WalkSprite_75_05_Anim02:
+	; $6679, 12 bytes (sprite_anim)
+	anim_frame $00, $0a
+	anim_frame $09, $08
+	anim_frame $00, $08
+	anim_frame $09, $08
+	anim_frame $00, $0a
+	anim_set $01
+WalkSprite_75_05_Anim03:
+	; $6685, 8 bytes (sprite_anim)
+	anim_frame $00, $0a
+	anim_frame $06, $1e
+	anim_frame $00, $0a
+	anim_set $01
+WalkSprite_75_05_Anim04:
+	; $668d, 20 bytes (sprite_anim)
+	anim_frame $00, $0a
+	anim_frame $07, $0a
+	anim_frame $00, $03
+	anim_frame $08, $0a
+	anim_frame $00, $03
+	anim_frame $07, $0a
+	anim_frame $00, $03
+	anim_frame $08, $0a
+	anim_frame $00, $0a
+	anim_set $01
+WalkSprite_75_05_Anim05:
+	; $66a1, 12 bytes (sprite_anim)
+	anim_frame $00, $0a
+	anim_frame $09, $08
+	anim_frame $00, $08
+	anim_frame $09, $08
+	anim_frame $00, $0a
+	anim_set $01
 WalkSprite_75_06:
-	db $07, $04, $02, $00 ; count, flags
-	dw .frames, WalkSprite_75_06_OamPtrs, .frames ; frame array, OAM array, frame array
+	db $07, $04, $02, $00 ; OAM attr, facing count, unread, unread
+	dw .frames, WalkSprite_75_06_AnimPtrs, .frames ; frame array, anim scripts, frame array
 .frames:
 	dw WalkSprite_75_06_Gfx00, WalkSprite_75_06_Gfx01, WalkSprite_75_06_Gfx02 ; frame pointers (continue in body)
 	dw WalkSprite_75_06_Gfx02 ; $66bd
@@ -315,7 +501,7 @@ WalkSprite_75_06:
 	dw WalkSprite_75_06_Gfx03 ; $66c5
 	dw WalkSprite_75_06_Gfx04 ; $66c7
 	dw WalkSprite_75_06_Gfx05 ; $66c9
-	dw WalkSprite_75_06_OamPtrs ; $66cb
+	dw WalkSprite_75_06_AnimPtrs ; $66cb
 Padding_75_5:
 	; $66cd, 3 bytes (fill)
 	ds 3, $00
@@ -331,35 +517,72 @@ WalkSprite_75_06_Gfx04:
 	INCBIN "data/bank_075/d_6ad0.bin" ; $6ad0, 256 bytes
 WalkSprite_75_06_Gfx05:
 	INCBIN "data/bank_075/d_6bd0.bin" ; $6bd0, 256 bytes
-WalkSprite_75_06_OamPtrs:
-	dw WalkSprite_75_06_Oam00 ; $6cd0
-	dw WalkSprite_75_06_Oam01 ; $6cd2
-	dw WalkSprite_75_06_Oam02 ; $6cd4
-	dw WalkSprite_75_06_Oam03 ; $6cd6
-	dw WalkSprite_75_06_Oam04 ; $6cd8
-	dw WalkSprite_75_06_Oam05 ; $6cda
-	dw WalkSprite_75_06_Oam06 ; $6cdc
-	dw WalkSprite_75_06_Oam06 ; $6cde
-	dw WalkSprite_75_06_Oam07 ; $6ce0
-WalkSprite_75_06_Oam00:
-	INCBIN "data/bank_075/d_6ce2.bin" ; $6ce2, 3 bytes
-WalkSprite_75_06_Oam01:
-	INCBIN "data/bank_075/d_6ce5.bin" ; $6ce5, 6 bytes
-WalkSprite_75_06_Oam02:
-	INCBIN "data/bank_075/d_6ceb.bin" ; $6ceb, 12 bytes
-WalkSprite_75_06_Oam03:
-	INCBIN "data/bank_075/d_6cf7.bin" ; $6cf7, 8 bytes
-WalkSprite_75_06_Oam04:
-	INCBIN "data/bank_075/d_6cff.bin" ; $6cff, 20 bytes
-WalkSprite_75_06_Oam05:
-	INCBIN "data/bank_075/d_6d13.bin" ; $6d13, 6 bytes
-WalkSprite_75_06_Oam06:
-	INCBIN "data/bank_075/d_6d19.bin" ; $6d19, 12 bytes
-WalkSprite_75_06_Oam07:
-	INCBIN "data/bank_075/d_6d25.bin" ; $6d25, 6 bytes
+WalkSprite_75_06_AnimPtrs:
+	dw WalkSprite_75_06_Anim00 ; $6cd0
+	dw WalkSprite_75_06_Anim01 ; $6cd2
+	dw WalkSprite_75_06_Anim02 ; $6cd4
+	dw WalkSprite_75_06_Anim03 ; $6cd6
+	dw WalkSprite_75_06_Anim04 ; $6cd8
+	dw WalkSprite_75_06_Anim05 ; $6cda
+	dw WalkSprite_75_06_Anim06 ; $6cdc
+	dw WalkSprite_75_06_Anim06 ; $6cde
+	dw WalkSprite_75_06_Anim07 ; $6ce0
+WalkSprite_75_06_Anim00:
+	; $6ce2, 3 bytes (sprite_anim)
+	anim_frame $00, $ff
+	anim_hold $fd
+WalkSprite_75_06_Anim01:
+	; $6ce5, 6 bytes (sprite_anim)
+	anim_frame $00, $1e
+	anim_frame $01, $1e
+	anim_loop $00
+WalkSprite_75_06_Anim02:
+	; $6ceb, 12 bytes (sprite_anim)
+	anim_frame $00, $0a
+	anim_frame $09, $08
+	anim_frame $00, $08
+	anim_frame $09, $08
+	anim_frame $00, $0a
+	anim_set $01
+WalkSprite_75_06_Anim03:
+	; $6cf7, 8 bytes (sprite_anim)
+	anim_frame $00, $0a
+	anim_frame $06, $1e
+	anim_frame $00, $0a
+	anim_set $01
+WalkSprite_75_06_Anim04:
+	; $6cff, 20 bytes (sprite_anim)
+	anim_frame $00, $0a
+	anim_frame $07, $0a
+	anim_frame $00, $03
+	anim_frame $08, $0a
+	anim_frame $00, $03
+	anim_frame $07, $0a
+	anim_frame $00, $03
+	anim_frame $08, $0a
+	anim_frame $00, $0a
+	anim_set $01
+WalkSprite_75_06_Anim05:
+	; $6d13, 6 bytes (sprite_anim)
+	anim_frame $00, $0a
+	anim_frame $09, $0a
+	anim_set $01
+WalkSprite_75_06_Anim06:
+	; $6d19, 12 bytes (sprite_anim)
+	anim_frame $00, $0a
+	anim_frame $09, $08
+	anim_frame $00, $08
+	anim_frame $09, $08
+	anim_frame $00, $0a
+	anim_set $01
+WalkSprite_75_06_Anim07:
+	; $6d25, 6 bytes (sprite_anim)
+	anim_frame $0b, $1e
+	anim_frame $0c, $1e
+	anim_loop $00
 WalkSprite_75_07:
-	db $07, $04, $02, $00 ; count, flags
-	dw .frames, WalkSprite_75_07_OamPtrs, .frames ; frame array, OAM array, frame array
+	db $07, $04, $02, $00 ; OAM attr, facing count, unread, unread
+	dw .frames, WalkSprite_75_07_AnimPtrs, .frames ; frame array, anim scripts, frame array
 .frames:
 	dw WalkSprite_75_07_Gfx00, WalkSprite_75_07_Gfx01, WalkSprite_75_07_Gfx02 ; frame pointers (continue in body)
 	dw WalkSprite_75_07_Gfx02 ; $6d3b
@@ -384,30 +607,61 @@ WalkSprite_75_07_Gfx04:
 	INCBIN "data/bank_075/d_7150.bin" ; $7150, 256 bytes
 WalkSprite_75_07_Gfx05:
 	INCBIN "data/bank_075/d_7250.bin" ; $7250, 256 bytes
-WalkSprite_75_07_OamPtrs:
-	dw WalkSprite_75_07_Oam00 ; $7350
-	dw WalkSprite_75_07_Oam01 ; $7352
-	dw WalkSprite_75_07_Oam02 ; $7354
-	dw WalkSprite_75_07_Oam03 ; $7356
-	dw WalkSprite_75_07_Oam04 ; $7358
-	dw WalkSprite_75_07_Oam05 ; $735a
-	dw WalkSprite_75_07_Oam05 ; $735c
-	dw WalkSprite_75_07_Oam05 ; $735e
-WalkSprite_75_07_Oam00:
-	INCBIN "data/bank_075/d_7360.bin" ; $7360, 3 bytes
-WalkSprite_75_07_Oam01:
-	INCBIN "data/bank_075/d_7363.bin" ; $7363, 6 bytes
-WalkSprite_75_07_Oam02:
-	INCBIN "data/bank_075/d_7369.bin" ; $7369, 12 bytes
-WalkSprite_75_07_Oam03:
-	INCBIN "data/bank_075/d_7375.bin" ; $7375, 8 bytes
-WalkSprite_75_07_Oam04:
-	INCBIN "data/bank_075/d_737d.bin" ; $737d, 20 bytes
-WalkSprite_75_07_Oam05:
-	INCBIN "data/bank_075/d_7391.bin" ; $7391, 12 bytes
+WalkSprite_75_07_AnimPtrs:
+	dw WalkSprite_75_07_Anim00 ; $7350
+	dw WalkSprite_75_07_Anim01 ; $7352
+	dw WalkSprite_75_07_Anim02 ; $7354
+	dw WalkSprite_75_07_Anim03 ; $7356
+	dw WalkSprite_75_07_Anim04 ; $7358
+	dw WalkSprite_75_07_Anim05 ; $735a
+	dw WalkSprite_75_07_Anim05 ; $735c
+	dw WalkSprite_75_07_Anim05 ; $735e
+WalkSprite_75_07_Anim00:
+	; $7360, 3 bytes (sprite_anim)
+	anim_frame $00, $ff
+	anim_hold $fd
+WalkSprite_75_07_Anim01:
+	; $7363, 6 bytes (sprite_anim)
+	anim_frame $00, $1e
+	anim_frame $01, $1e
+	anim_loop $00
+WalkSprite_75_07_Anim02:
+	; $7369, 12 bytes (sprite_anim)
+	anim_frame $00, $0a
+	anim_frame $09, $08
+	anim_frame $00, $08
+	anim_frame $09, $08
+	anim_frame $00, $0a
+	anim_set $01
+WalkSprite_75_07_Anim03:
+	; $7375, 8 bytes (sprite_anim)
+	anim_frame $00, $0a
+	anim_frame $06, $1e
+	anim_frame $00, $0a
+	anim_set $01
+WalkSprite_75_07_Anim04:
+	; $737d, 20 bytes (sprite_anim)
+	anim_frame $00, $0a
+	anim_frame $07, $0a
+	anim_frame $00, $03
+	anim_frame $08, $0a
+	anim_frame $00, $03
+	anim_frame $07, $0a
+	anim_frame $00, $03
+	anim_frame $08, $0a
+	anim_frame $00, $0a
+	anim_set $01
+WalkSprite_75_07_Anim05:
+	; $7391, 12 bytes (sprite_anim)
+	anim_frame $00, $0a
+	anim_frame $09, $08
+	anim_frame $00, $08
+	anim_frame $09, $08
+	anim_frame $00, $0a
+	anim_set $01
 WalkSprite_75_08:
-	db $07, $04, $02, $00 ; count, flags
-	dw .frames, WalkSprite_75_08_OamPtrs, .frames ; frame array, OAM array, frame array
+	db $07, $04, $02, $00 ; OAM attr, facing count, unread, unread
+	dw .frames, WalkSprite_75_08_AnimPtrs, .frames ; frame array, anim scripts, frame array
 .frames:
 	dw WalkSprite_75_08_Gfx00, WalkSprite_75_08_Gfx01, WalkSprite_75_08_Gfx02 ; frame pointers (continue in body)
 	dw WalkSprite_75_08_Gfx03 ; $73ad
@@ -440,29 +694,64 @@ WalkSprite_75_08_Gfx08:
 	INCBIN "data/bank_075/d_7bc0.bin" ; $7bc0, 256 bytes
 WalkSprite_75_08_Gfx09:
 	INCBIN "data/bank_075/d_7cc0.bin" ; $7cc0, 256 bytes
-WalkSprite_75_08_OamPtrs:
-	dw WalkSprite_75_08_Oam00 ; $7dc0
-	dw WalkSprite_75_08_Oam01 ; $7dc2
-	dw WalkSprite_75_08_Oam02 ; $7dc4
-	dw WalkSprite_75_08_Oam03 ; $7dc6
-	dw WalkSprite_75_08_Oam04 ; $7dc8
-	dw WalkSprite_75_08_Oam05 ; $7dca
-	dw WalkSprite_75_08_Oam06 ; $7dcc
-	dw WalkSprite_75_08_Oam07 ; $7dce
-WalkSprite_75_08_Oam00:
-	INCBIN "data/bank_075/d_7dd0.bin" ; $7dd0, 3 bytes
-WalkSprite_75_08_Oam01:
-	INCBIN "data/bank_075/d_7dd3.bin" ; $7dd3, 6 bytes
-WalkSprite_75_08_Oam02:
-	INCBIN "data/bank_075/d_7dd9.bin" ; $7dd9, 12 bytes
-WalkSprite_75_08_Oam03:
-	INCBIN "data/bank_075/d_7de5.bin" ; $7de5, 8 bytes
-WalkSprite_75_08_Oam04:
-	INCBIN "data/bank_075/d_7ded.bin" ; $7ded, 20 bytes
-WalkSprite_75_08_Oam05:
-	INCBIN "data/bank_075/d_7e01.bin" ; $7e01, 8 bytes
-WalkSprite_75_08_Oam06:
-	INCBIN "data/bank_075/d_7e09.bin" ; $7e09, 5 bytes
-WalkSprite_75_08_Oam07:
-	INCBIN "data/bank_075/d_7e0e.bin" ; $7e0e, 12 bytes
+WalkSprite_75_08_AnimPtrs:
+	dw WalkSprite_75_08_Anim00 ; $7dc0
+	dw WalkSprite_75_08_Anim01 ; $7dc2
+	dw WalkSprite_75_08_Anim02 ; $7dc4
+	dw WalkSprite_75_08_Anim03 ; $7dc6
+	dw WalkSprite_75_08_Anim04 ; $7dc8
+	dw WalkSprite_75_08_Anim05 ; $7dca
+	dw WalkSprite_75_08_Anim06 ; $7dcc
+	dw WalkSprite_75_08_Anim07 ; $7dce
+WalkSprite_75_08_Anim00:
+	; $7dd0, 3 bytes (sprite_anim)
+	anim_frame $00, $ff
+	anim_hold $fd
+WalkSprite_75_08_Anim01:
+	; $7dd3, 6 bytes (sprite_anim)
+	anim_frame $00, $1e
+	anim_frame $01, $1e
+	anim_loop $00
+WalkSprite_75_08_Anim02:
+	; $7dd9, 12 bytes (sprite_anim)
+	anim_frame $00, $0a
+	anim_frame $09, $08
+	anim_frame $00, $08
+	anim_frame $09, $08
+	anim_frame $00, $0a
+	anim_set $01
+WalkSprite_75_08_Anim03:
+	; $7de5, 8 bytes (sprite_anim)
+	anim_frame $00, $0a
+	anim_frame $06, $1e
+	anim_frame $00, $0a
+	anim_set $01
+WalkSprite_75_08_Anim04:
+	; $7ded, 20 bytes (sprite_anim)
+	anim_frame $00, $0a
+	anim_frame $07, $0a
+	anim_frame $00, $03
+	anim_frame $08, $0a
+	anim_frame $00, $03
+	anim_frame $07, $0a
+	anim_frame $00, $03
+	anim_frame $08, $0a
+	anim_frame $00, $0a
+	anim_set $01
+WalkSprite_75_08_Anim05:
+	; $7e01, 8 bytes (sprite_anim)
+	db $00
+	db $14, $02, $0a, $01, $1e, $fd, $00
+WalkSprite_75_08_Anim06:
+	; $7e09, 5 bytes (sprite_anim)
+	db $03
+	db "(", $04, "F", $ff
+WalkSprite_75_08_Anim07:
+	; $7e0e, 12 bytes (sprite_anim)
+	anim_frame $00, $0a
+	anim_frame $09, $08
+	anim_frame $00, $08
+	anim_frame $09, $08
+	anim_frame $00, $0a
+	anim_set $01
 	; $7e1a, 486 bytes fill to bank end (linker-padded)

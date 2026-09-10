@@ -78,8 +78,8 @@ def scan_sites():
             m = ROUTINE.match(line)
             if m and not m.group(1).startswith("."):
                 routine = m.group(1)
-            if not OFF.search(line.rstrip()):
-                continue
+            if not OFF.search(line.rstrip()) or "\tld sp," in line:
+                continue   # the stack top is not a variable
             at = flat(rom_bank, int(OFF.search(line.rstrip()).group(1), 16))
             if at in RAM_IMM_IS_CONSTANT:
                 continue   # a curated arithmetic constant, not an address
@@ -115,7 +115,7 @@ def main():
                   and (rng is None or rng[0] <= cpu < rng[1])]
         if not covers:
             buckets["unclaimed"] += 1
-            unclaimed[(b, addr)] += 1
+            unclaimed[(b, addr, rom_bank, routine)] += 1
         elif any(rb is None or int(str(rb), 0) == rom_bank for rb in covers):
             buckets["resolvable now"] += 1
         else:
@@ -140,8 +140,8 @@ def main():
               f"${rom_bank:02x}  x{n}")
 
     print(f"\nunclaimed -- bank proved, needs a name ({len(unclaimed)}):")
-    for (b, addr), n in unclaimed.most_common(15):
-        print(f"  wram bank {b}  ${addr:04x}  x{n}")
+    for (b, addr, rom_bank, routine), n in unclaimed.most_common(15):
+        print(f"  wram bank {b}  ${addr:04x}  x{n}  from ${rom_bank:02x}:{routine}")
 
 
 if __name__ == "__main__":

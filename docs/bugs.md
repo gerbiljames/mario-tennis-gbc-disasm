@@ -486,6 +486,18 @@ sets it that way any more — the compute call one instruction earlier overwrite
 whatever was there, so even a caller that did would lose it. What the six
 would have meant is not recoverable from the ROM.
 
+### The doubles clear-status path clears the singles wins
+
+`SetDoublesRankingClearFlags` (`$0a:$4e75`) is the doubles half of the
+developer clear-status tool (`RunClearStatusSetupMenu`, `docs/story_mode.md`).
+Its clear loop is a copy of the singles routine's — `ld c, $09` / `ld de,
+$0a00`, nine flags from byte `$0a` bit 0 — so it clears
+`FLAG_WON_JUNIOR_SINGLES_RANK_4` through `FLAG_WON_VARSITY_SINGLES_RANK_4`,
+then sets the *doubles* wins from `DoublesRankingClearFlagList_0a`. The doubles
+block at bytes `$08`/`$09` is never cleared, so a doubles "Set" leaves any
+higher doubles wins already in the save in place and wipes the singles ladder.
+Reachable only through the developer menu.
+
 ## Dead stores
 
 Values written and never read. None of these change behaviour; they are listed

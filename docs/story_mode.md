@@ -732,8 +732,8 @@ always visible), plus the actor array in bank `$04` and the two maps in bank
 
 ## Oddities and open questions
 
-Recorded here because a future reader will otherwise re-derive them. None of
-these are fixed in the source; several are candidates for `bugs.md`.
+Recorded here because a future reader will otherwise re-derive them. Items
+marked *resolved* were fixed in the source on 2026-09-10; the rest stand.
 
 * **Scene slot 6 is never loaded.** `LoadStorySceneGraphics` (`$0a:$58bd`) pops
   slot 6 into `hl` and loads `de` with `wStorySceneUnusedBuffer`, then
@@ -741,11 +741,14 @@ these are fixed in the source; several are candidates for `bugs.md`.
   destination has a WRAM label and no data ever arrives there; correspondingly,
   most scene records' slot 6 holds either an `*SceneUnusedSlot` filler pointer or
   a stray pointer to the *next* scene's config.
-* **`SceneGfxSlotTable` slot 4/5 names describe the wrong thing.** The loader
-  decompresses slot 4 to `$d000` and slot 5 to `$d400` in WRAM bank `$06` — the
-  collision map and behaviour map. They are currently named `*AuxTilemap` and
-  `*AuxAttrmap` (or `*SceneConfigAlias1` / `*SceneConfigB` on the court records).
-  Slot 0, named `*SceneConfig`/`*AuxTilemap`, is the 136-byte config copy.
+* **`SceneGfxSlotTable` slots 4/5 — resolved.** The story loader decompresses
+  slot 4 to `wCollisionMap` (`$d000`) and slot 5 to `wBehaviorMap` (`$d400`) in
+  WRAM bank `$06`, and the story-scene records are named `*CollisionMap` /
+  `*BehaviorMap` accordingly. The 16 court-shaped records are read by the
+  court loader instead (`docs/graphics_formats.md` §3.4): there slot 4 aliases
+  slot 0 (40 raw bytes of scoreboard column tiles — still `*SceneConfig`,
+  because under the story loader the same slot is the config/palette block)
+  and slot 5 is `*ScoreboardColumnAttrs` (renamed from `*SceneConfigB`).
 * **`ReadBehaviorMapCell` still prints its result.** `$0a:$5f65`-`$5f6f`
   unconditionally calls `PrintHexByte` with `de = $0e0e` on every read.
   `PrintString` writes into the debug text buffer and only sets
@@ -756,23 +759,32 @@ these are fixed in the source; several are candidates for `bugs.md`.
   `and $0f` / `cp $0b`, so the returned nibble is discarded and the
   `$0b` branch (which would set walk speed `$0010` and probe range 2) is
   unreachable. The other two speeds (`$0040` running, `$0020` normal) work.
-* **An unlabelled duplicate of `EvalFlagCondition`** sits at `$0a:$53a2`,
-  between `GetTileTriggerAtPlayer`'s `ret` and `FacingMaskTable_0a`. The live
-  copy that `FindStoryScriptEntry` farcalls is `$04:$4c49`; no caller of the
-  bank-`$0a` copy was found.
-* **`SetRankingMatchClearFlags` and `SetMinigameClearFlags` look swapped.**
-  `SetRankingMatchClearFlags` (`$0a:$4da9`) clears 28 flags from byte `$18`
-  bit 0 — the *training-drill* clears — and sets a "level 1" or "level 1+2"
-  subset from `RankingFlagList_0a_0`/`_1`. `SetMinigameClearFlags` (`$0a:$4e0e`)
-  and `SetMinigameClearFlagsAlt` (`$0a:$4e75`) clear bytes `$0a`/`$0b` and
-  `$08`/`$09` — the *class ranking-match* wins — and touch nothing to do with
-  arcade minigames (whose real writer is `SetMinigameClearFlag`, singular, at
-  `$1e:$6edc`, into the SRAM flag space). Not changed.
+* **A duplicate of `EvalFlagCondition`** sits at `$0a:$53a2`, between
+  `GetTileTriggerAtPlayer`'s `ret` and `FacingMaskTable_0a`, labelled
+  `EvalFlagCondition_0a`. The live copy that `FindStoryScriptEntry` farcalls
+  is `$04:$4c49`; no caller of the bank-`$0a` copy was found.
+* **The clear-status flag writers were named for each other — resolved.**
+  `SetTrainingCourtClearFlags` (`$0a:$4da9`, was `SetRankingMatchClearFlags`)
+  clears the 28 `FLAG_CLEARED_*` drill flags from byte `$18` and re-sets the
+  level-1 or level-1+2 subset from `TrainingCourtLevel1/2ClearFlags_0a`.
+  `SetSinglesRankingClearFlags` (`$0a:$4e0e`, was `SetMinigameClearFlags`)
+  clears the nine singles `FLAG_WON_*_SINGLES_RANK_*` flags and sets as many
+  of `SinglesRankingClearFlagList_0a` as the chosen class and rank imply;
+  `SetDoublesRankingClearFlags` (`$0a:$4e75`, was the `Alt`) does the same
+  from `DoublesRankingClearFlagList_0a` — but its clear loop starts at byte
+  `$0a` too, so it clears the *singles* wins and leaves stale doubles wins in
+  place (`docs/bugs.md`). The lists render as `flag_id` rows. None of this
+  touches the arcade minigames, whose real writer is `SetMinigameClearFlag`,
+  singular, at `$1e:$6edc`, into the SRAM flag space.
 * **`RunClearStatusSetupMenu` is a developer tool.** `$0a:$4bac` walks a
   Set/Continue → Mini-Game/Ranking-Match → level menu chain and then
   `ApplyClearStatusFlags` (`$0a:$4d80`) rewrites the progression flags wholesale;
-  choosing "Continue" makes the whole thing a no-op. `RankingFlagListPtrs_0a`
-  (`$0a:$4dec`) parallels the branch structure but has no reader — dead data.
+  choosing "Continue" makes the whole thing a no-op. Its menu state lives in
+  WRAM bank `$05` on top of the idle far-P1 character struct
+  (`wClearStatusMode` / `Doubles` / `Format` / `Class` / `Rank` /
+  `WindowId` / `ResultCode`, `$df00`-`$df06`, range-scoped so the match-engine
+  names stay out). `TrainingCourtClearFlagListPtrs_0a` (`$0a:$4dec`) parallels
+  the branch structure but has no reader — dead data.
 * **The character-vs-level naming at record `+$18`.** `ram_map.json` names
   `$c818` "Level (1-99)" and `$c918` "ExpTier" — the same offset in two records
   with the same layout. For player characters the raw byte is a level;
@@ -797,11 +809,13 @@ these are fixed in the source; several are candidates for `bugs.md`.
 * **Not established:** the meaning of record fields `+$2b`, `+$2f` and
   `+$3d`-`+$3f`; `+$2f` is deliberately written `$00`/`$02`/`$03` by the three
   record-init paths but no reader was found.
-* **Possible carving slop, unverified:** `JuniorClassCourtSinglesEntryPoints_11`
-  (`src/bank_011.asm:2293`) is declared 18 bytes for two records plus the
-  terminator, ending `db $ff, $c9`; `JuniorClassCourtDoublesFacingScripts_11` and
-  `…TileTriggers_11` (`src/bank_011.asm:1462`, `1465`) are each declared 2 bytes
-  as `db $ff, $c9`; `FireworkMapActors_14` (`src/bank_014.asm:2475`) carries one
-  `db $00` past its `map_actor_end`. The trailing bytes may be alignment filler
-  (the next label is reached correctly in each case) rather than absorbed
-  records, but the declared extents do not match the record grammar.
+* **The `$ff, $c9` list endings — resolved.** The `$c9` after the `$ff`
+  terminator of `JuniorClassCourtSinglesEntryPoints_11`,
+  `JuniorClassCourtDoublesFacingScripts_11` and `…TileTriggers_11` is a `ret`
+  opcode: a one-byte empty script left after each list, which nothing in the
+  bank points at (a search of every word in bank `$11` finds no reference).
+  They are carved as `Unused_11_NullScriptA`-`C`, and the lists are the
+  terminator alone. `FireworkMapActors_14` (`$14:$6675`) and the bank `$1a`
+  table that shares the shape each carry one `$00` past `map_actor_end`; the
+  byte before a 2 KiB tile blob is padding, and is rendered as the `db $00`
+  it is.

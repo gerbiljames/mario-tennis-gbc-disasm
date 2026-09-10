@@ -34,7 +34,7 @@ class DisassemblyBase:
         self.object_headers = set()  # src_flat of 16-byte object headers
         self.sprite_templates = set()  # src_flat of QueueSpriteTemplate lists
         self.sprite_template_sites = {}  # template src_flat -> {`ld hl` offsets}
-        self.oam_arrays = {}  # OAM pointer-array flat -> owning object header
+        self.anim_arrays = {}  # anim-script pointer-array flat -> owning object header
         self.data_site_notes = {}  # `ld hl` setup offset -> (bank, slot)
         self.ptr_words = {}   # word offset -> (target_flat or None, note)
         self.ptr_labels = {}  # flat offset -> generated structure label

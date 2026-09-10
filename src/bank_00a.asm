@@ -1784,7 +1784,7 @@ RunClearStatusSetupMenu:
 	farcall LoadMenuFontGfx ; $4bb8
 	call EnableLCD ; $4bbb
 	wram_bank $05 ; $4bbe
-	ld hl, wCharPosX ; $4bc4
+	ld hl, wClearStatusMode ; $4bc4
 	ld c, $02 ; $4bc7
 	call ClearMemory16 ; $4bc9
 	farcall ResetTextWindowState ; $4bcc
@@ -1794,18 +1794,18 @@ RunClearStatusSetupMenu:
 	ld b, $14 ; $4bd6
 	ld c, $07 ; $4bd8
 	farcall CreateWindowFromScreenRect ; $4bda
-	ld [wCharPosDepth + 2], a ; $4bdd
+	ld [wClearStatusWindowId], a ; $4bdd
 	farcall DrawTextWindowFrame ; $4be0
 	script_fade_in $10 ; $4be3
 	call WaitFadeEnd ; $4be8
 	wram_bank $05 ; $4beb
 .modeMenu:
-	ld a, [wCharPosDepth + 2] ; $4bf1
+	ld a, [wClearStatusWindowId] ; $4bf1
 	farcall DrawTextWindowFrame ; $4bf4
 	ld hl, $10e8 ; $4bf7
 	ld de, wWindowShadowTilemap + 12 * TILEMAP_WIDTH + 1 ; $4bfa
 	farcall RenderProportionalTextAt ; $4bfd
-	ld a, [wCharPosDepth + 2] ; $4c00
+	ld a, [wClearStatusWindowId] ; $4c00
 	farcall RedrawWindowRows ; $4c03
 	ld hl, Text_34_215 ; $4c06
 	ld d, $01 ; $4c09
@@ -1814,20 +1814,20 @@ RunClearStatusSetupMenu:
 	farcall RestoreShadowTilemap ; $4c10
 	farcall RenderMenuWindowText ; $4c13
 	farcall RunMenuSelection ; $4c16
-	ld [wCharPosX], a ; $4c19
+	ld [wClearStatusMode], a ; $4c19
 	ld a, [wMenuWindowId] ; $4c1c
 	farcall CloseWindow ; $4c1f
-	ld a, [wCharPosX] ; $4c22
+	ld a, [wClearStatusMode] ; $4c22
 	cp $ff ; $4c25
 	jr nz, .checkMode ; $4c27
 	ld a, $08 ; $4c29
-	ld [wCharPosHeight], a ; $4c2b
+	ld [wClearStatusResultCode], a ; $4c2b
 	jp .done ; $4c2e
 .checkMode:
 	or a ; $4c31
 	jp z, .defaultDoubles ; $4c32
 	ld a, $01 ; $4c35
-	ld [wCharPosHeight], a ; $4c37
+	ld [wClearStatusResultCode], a ; $4c37
 	jp .done ; $4c3a
 .defaultDoubles:
 	test_flag FLAG_DOUBLES ; $4c3d
@@ -1837,14 +1837,14 @@ RunClearStatusSetupMenu:
 .doubles:
 	ld a, $01 ; $4c45
 .storeDoubles:
-	ld [wCharPosX + 1], a ; $4c47
+	ld [wClearStatusDoubles], a ; $4c47
 .formatMenu:
-	ld a, [wCharPosDepth + 2] ; $4c4a
+	ld a, [wClearStatusWindowId] ; $4c4a
 	farcall DrawTextWindowFrame ; $4c4d
 	ld hl, $10e4 ; $4c50
 	ld de, wWindowShadowTilemap + 12 * TILEMAP_WIDTH + 1 ; $4c53
 	farcall RenderProportionalTextAt ; $4c56
-	ld a, [wCharPosDepth + 2] ; $4c59
+	ld a, [wClearStatusWindowId] ; $4c59
 	farcall RedrawWindowRows ; $4c5c
 	ld hl, Text_34_217 ; $4c5f
 	ld d, $03 ; $4c62
@@ -1853,19 +1853,19 @@ RunClearStatusSetupMenu:
 	farcall RestoreShadowTilemap ; $4c69
 	farcall RenderMenuWindowText ; $4c6c
 	farcall RunMenuSelection ; $4c6f
-	ld [wCharPosX + 2], a ; $4c72
+	ld [wClearStatusFormat], a ; $4c72
 	ld a, [wMenuWindowId] ; $4c75
 	farcall CloseWindow ; $4c78
-	ld a, [wCharPosX + 2] ; $4c7b
+	ld a, [wClearStatusFormat] ; $4c7b
 	cp $ff ; $4c7e
 	jp z, .modeMenu ; $4c80
 .setsMenu:
-	ld a, [wCharPosDepth + 2] ; $4c83
+	ld a, [wClearStatusWindowId] ; $4c83
 	farcall DrawTextWindowFrame ; $4c86
 	ld hl, $10e5 ; $4c89
 	ld de, wWindowShadowTilemap + 12 * TILEMAP_WIDTH + 1 ; $4c8c
 	farcall RenderProportionalTextAt ; $4c8f
-	ld a, [wCharPosDepth + 2] ; $4c92
+	ld a, [wClearStatusWindowId] ; $4c92
 	farcall RedrawWindowRows ; $4c95
 	ld hl, Text_34_218 ; $4c98
 	ld d, $05 ; $4c9b
@@ -1874,16 +1874,16 @@ RunClearStatusSetupMenu:
 	farcall RestoreShadowTilemap ; $4ca2
 	farcall RenderMenuWindowText ; $4ca5
 	farcall RunMenuSelection ; $4ca8
-	ld [wCharPosDepth], a ; $4cab
+	ld [wClearStatusClass], a ; $4cab
 	ld a, [wMenuWindowId] ; $4cae
 	farcall CloseWindow ; $4cb1
-	ld a, [wCharPosDepth] ; $4cb4
+	ld a, [wClearStatusClass] ; $4cb4
 	cp $ff ; $4cb7
 	jp z, .formatMenu ; $4cb9
-	ld a, [wCharPosDepth + 2] ; $4cbc
+	ld a, [wClearStatusWindowId] ; $4cbc
 	farcall DrawTextWindowFrame ; $4cbf
 	ld hl, $10e6 ; $4cc2
-	ld a, [wCharPosX + 2] ; $4cc5
+	ld a, [wClearStatusFormat] ; $4cc5
 	add l ; $4cc8
 	ld l, a ; $4cc9
 	jr nc, .drawSetsOption ; $4cca
@@ -1891,9 +1891,9 @@ RunClearStatusSetupMenu:
 .drawSetsOption:
 	ld de, wWindowShadowTilemap + 12 * TILEMAP_WIDTH + 1 ; $4ccd
 	farcall RenderProportionalTextAt ; $4cd0
-	ld a, [wCharPosDepth + 2] ; $4cd3
+	ld a, [wClearStatusWindowId] ; $4cd3
 	farcall RedrawWindowRows ; $4cd6
-	ld a, [wCharPosX + 1] ; $4cd9
+	ld a, [wClearStatusDoubles] ; $4cd9
 	or a ; $4cdc
 	jp nz, .setsCancel ; $4cdd
 	ld hl, $10db ; $4ce0
@@ -1901,10 +1901,10 @@ RunClearStatusSetupMenu:
 .setsCancel:
 	ld hl, $10df ; $4ce5
 .checkSets:
-	ld a, [wCharPosX + 2] ; $4ce8
+	ld a, [wClearStatusFormat] ; $4ce8
 	or a ; $4ceb
 	jr z, .storeSets ; $4cec
-	ld a, [wCharPosDepth] ; $4cee
+	ld a, [wClearStatusClass] ; $4cee
 	inc a ; $4cf1
 	add l ; $4cf2
 	ld l, a ; $4cf3
@@ -1917,16 +1917,16 @@ RunClearStatusSetupMenu:
 	farcall RestoreShadowTilemap ; $4cfe
 	farcall RenderMenuWindowText ; $4d01
 	farcall RunMenuSelection ; $4d04
-	ld [wCharPosDepth + 1], a ; $4d07
+	ld [wClearStatusRank], a ; $4d07
 	ld a, [wMenuWindowId] ; $4d0a
 	farcall CloseWindow ; $4d0d
-	ld a, [wCharPosDepth + 1] ; $4d10
+	ld a, [wClearStatusRank] ; $4d10
 	cp $ff ; $4d13
 	jp z, .setsMenu ; $4d15
 	call ApplyClearStatusFlags ; $4d18
 	call GetClearStatusResultCode ; $4d1b
 .done:
-	ld hl, wCharPosHeight ; $4d1e
+	ld hl, wClearStatusResultCode ; $4d1e
 	ld b, [hl] ; $4d21
 	pop af ; $4d22
 	wram_bank ; $4d23
@@ -1970,30 +1970,30 @@ FillMemoryFast:
 	jr nz, .fillLoop ; $4d7d
 	ret ; $4d7f
 ApplyClearStatusFlags:
-	ld a, [wCharPosX] ; $4d80
+	ld a, [wClearStatusMode] ; $4d80
 	or a ; $4d83
 	ret nz ; $4d84
 	clear_flag FLAG_DOUBLES ; $4d85
-	ld a, [wCharPosX + 1] ; $4d88
+	ld a, [wClearStatusDoubles] ; $4d88
 	or a ; $4d8b
 	jr z, .checkDoubles ; $4d8c
 	set_flag FLAG_DOUBLES ; $4d8e
 .checkDoubles:
-	call SetRankingMatchClearFlags ; $4d91
-	ld a, [wCharPosX + 1] ; $4d94
+	call SetTrainingCourtClearFlags ; $4d91
+	ld a, [wClearStatusDoubles] ; $4d94
 	or a ; $4d97
 	jr nz, .setFlags ; $4d98
 .doubles:
-	call SetMinigameClearFlags ; $4d9a
+	call SetSinglesRankingClearFlags ; $4d9a
 	jr .done ; $4d9d
 .setFlags:
-	ld a, [wCharPosX + 2] ; $4d9f
+	ld a, [wClearStatusFormat] ; $4d9f
 	or a ; $4da2
 	jr z, .doubles ; $4da3
-	call SetMinigameClearFlagsAlt ; $4da5
+	call SetDoublesRankingClearFlags ; $4da5
 .done:
 	ret ; $4da8
-SetRankingMatchClearFlags:
+SetTrainingCourtClearFlags:
 	ld c, $1c ; $4da9
 	ld de, $1800 ; $4dab
 .clearLoop:
@@ -2006,10 +2006,10 @@ SetRankingMatchClearFlags:
 	ld e, l ; $4db8
 	dec c ; $4db9
 	jr nz, .clearLoop ; $4dba
-	ld a, [wCharPosDepth] ; $4dbc
+	ld a, [wClearStatusClass] ; $4dbc
 	or a ; $4dbf
 	ret z ; $4dc0
-	ld hl, RankingFlagList_0a_0 ; $4dc1
+	ld hl, TrainingCourtLevel1ClearFlags_0a ; $4dc1
 .setListA:
 	ld a, [hl+] ; $4dc4
 	ld d, [hl] ; $4dc5
@@ -2022,10 +2022,10 @@ SetRankingMatchClearFlags:
 	call SetGameFlag ; $4dce
 	jr .setListA ; $4dd1
 .checkSecondList:
-	ld a, [wCharPosDepth] ; $4dd3
+	ld a, [wClearStatusClass] ; $4dd3
 	cp $01 ; $4dd6
 	ret z ; $4dd8
-	ld hl, RankingFlagList_0a_1 ; $4dd9
+	ld hl, TrainingCourtLevel2ClearFlags_0a ; $4dd9
 .setListB:
 	ld a, [hl+] ; $4ddc
 	ld d, [hl] ; $4ddd
@@ -2039,30 +2039,30 @@ SetRankingMatchClearFlags:
 	jr .setListB ; $4de9
 .done:
 	ret ; $4deb
-RankingFlagListPtrs_0a:
+TrainingCourtClearFlagListPtrs_0a:
 	; $4dec, 6 bytes (records:2)
 	dw $0000 ; record 0
-	dw RankingFlagList_0a_0 ; record 1
-	dw RankingFlagList_0a_1 ; record 2
-RankingFlagList_0a_0:
-	; $4df2, 14 bytes (records:2)
-	dw $1800 ; record 0
-	dw $1860 ; record 1
-	dw $18c0 ; record 2
-	dw $1920 ; record 3
-	dw $1980 ; record 4
-	dw $19e0 ; record 5
-	dw $ffff ; record 6
-RankingFlagList_0a_1:
-	; $4e00, 14 bytes (records:2)
-	dw $1820 ; record 0
-	dw $1880 ; record 1
-	dw $18e0 ; record 2
-	dw $1940 ; record 3
-	dw $19a0 ; record 4
-	dw $1a00 ; record 5
-	dw $ffff ; record 6
-SetMinigameClearFlags:
+	dw TrainingCourtLevel1ClearFlags_0a ; record 1
+	dw TrainingCourtLevel2ClearFlags_0a ; record 2
+TrainingCourtLevel1ClearFlags_0a:
+	; $4df2, 14 bytes (flag_ids)
+	flag_id FLAG_CLEARED_SERVICE_MATCH_1 ; 0
+	flag_id FLAG_CLEARED_SERVICE_PRACTICE_1 ; 1
+	flag_id FLAG_CLEARED_NET_GAME_MATCH_1 ; 2
+	flag_id FLAG_CLEARED_NET_GAME_PRACTICE_1 ; 3
+	flag_id FLAG_CLEARED_STROKE_MATCH_1 ; 4
+	flag_id FLAG_CLEARED_STROKE_PRACTICE_1 ; 5
+	dw $ffff ; 6: end
+TrainingCourtLevel2ClearFlags_0a:
+	; $4e00, 14 bytes (flag_ids)
+	flag_id FLAG_CLEARED_SERVICE_MATCH_2 ; 0
+	flag_id FLAG_CLEARED_SERVICE_PRACTICE_2 ; 1
+	flag_id FLAG_CLEARED_NET_GAME_MATCH_2 ; 2
+	flag_id FLAG_CLEARED_NET_GAME_PRACTICE_2 ; 3
+	flag_id FLAG_CLEARED_STROKE_MATCH_2 ; 4
+	flag_id FLAG_CLEARED_STROKE_PRACTICE_2 ; 5
+	dw $ffff ; 6: end
+SetSinglesRankingClearFlags:
 	ld c, $09 ; $4e0e
 	ld de, $0a00 ; $4e10
 .clearLoop:
@@ -2075,13 +2075,13 @@ SetMinigameClearFlags:
 	ld e, l ; $4e1d
 	dec c ; $4e1e
 	jr nz, .clearLoop ; $4e1f
-	ld a, [wCharPosX + 2] ; $4e21
+	ld a, [wClearStatusFormat] ; $4e21
 	or a ; $4e24
 	jr z, .haveLevel ; $4e25
-	ld a, [wCharPosDepth + 1] ; $4e27
+	ld a, [wClearStatusRank] ; $4e27
 .haveLevel:
 	ld b, a ; $4e2a
-	ld a, [wCharPosDepth] ; $4e2b
+	ld a, [wClearStatusClass] ; $4e2b
 	ld c, a ; $4e2e
 	add a ; $4e2f
 	add a ; $4e30
@@ -2091,7 +2091,7 @@ SetMinigameClearFlags:
 	add c ; $4e34
 	ld c, a ; $4e35
 	inc c ; $4e36
-	ld hl, MinigameClearFlagsRankingFlagList ; $4e37
+	ld hl, SinglesRankingClearFlagList_0a ; $4e37
 .setLoop:
 	ld a, [hl+] ; $4e3a
 	ld d, [hl] ; $4e3b
@@ -2106,30 +2106,30 @@ SetMinigameClearFlags:
 	jr .setLoop ; $4e48
 .done:
 	ret ; $4e4a
-MinigameClearFlagsRankingFlagList:
-	; $4e4b, 42 bytes (records:2)
-	dw $0000 ; record 0
-	dw $0a00 ; record 1
-	dw $0a20 ; record 2
-	dw $0a40 ; record 3
-	dw $0a60 ; record 4
-	dw $0000 ; record 5
-	dw $0a80 ; record 6
-	dw $0aa0 ; record 7
-	dw $0ac0 ; record 8
-	dw $0ae0 ; record 9
-	dw $0000 ; record 10
-	dw $0b00 ; record 11
-	dw $0000 ; record 12
-	dw $0000 ; record 13
-	dw $0000 ; record 14
-	dw $0000 ; record 15
-	dw $07e0 ; record 16
-	dw $07c0 ; record 17
-	dw $07a0 ; record 18
-	dw $0780 ; record 19
-	dw $ffff ; record 20
-SetMinigameClearFlagsAlt:
+SinglesRankingClearFlagList_0a:
+	; $4e4b, 42 bytes (flag_ids)
+	dw $0000 ; 0: none
+	flag_id FLAG_WON_JUNIOR_SINGLES_RANK_4 ; 1
+	flag_id FLAG_WON_JUNIOR_SINGLES_RANK_3 ; 2
+	flag_id FLAG_WON_JUNIOR_SINGLES_RANK_2 ; 3
+	flag_id FLAG_WON_JUNIOR_SINGLES_RANK_1 ; 4
+	dw $0000 ; 5: none
+	flag_id FLAG_WON_SENIOR_SINGLES_RANK_4 ; 6
+	flag_id FLAG_WON_SENIOR_SINGLES_RANK_3 ; 7
+	flag_id FLAG_WON_SENIOR_SINGLES_RANK_2 ; 8
+	flag_id FLAG_WON_SENIOR_SINGLES_RANK_1 ; 9
+	dw $0000 ; 10: none
+	flag_id FLAG_WON_VARSITY_SINGLES_RANK_4 ; 11
+	dw $0000 ; 12: none
+	dw $0000 ; 13: none
+	dw $0000 ; 14: none
+	dw $0000 ; 15: none
+	flag_id FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_1 ; 16
+	flag_id FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_2 ; 17
+	flag_id FLAG_WON_ISLAND_OPEN_SINGLES_SEMIFINAL ; 18
+	flag_id FLAG_WON_ISLAND_OPEN_SINGLES_FINAL ; 19
+	dw $ffff ; 20: end
+SetDoublesRankingClearFlags:
 	ld c, $09 ; $4e75
 	ld de, $0a00 ; $4e77
 .clearLoop:
@@ -2142,15 +2142,15 @@ SetMinigameClearFlagsAlt:
 	ld e, l ; $4e84
 	dec c ; $4e85
 	jr nz, .clearLoop ; $4e86
-	ld a, [wCharPosDepth] ; $4e88
+	ld a, [wClearStatusClass] ; $4e88
 	add a ; $4e8b
 	add a ; $4e8c
 	ld c, a ; $4e8d
-	ld a, [wCharPosDepth + 1] ; $4e8e
+	ld a, [wClearStatusRank] ; $4e8e
 	add c ; $4e91
 	ld c, a ; $4e92
 	inc c ; $4e93
-	ld hl, MinigameClearFlagsAltRankingFlagList ; $4e94
+	ld hl, DoublesRankingClearFlagList_0a ; $4e94
 .setLoop:
 	ld a, [hl+] ; $4e97
 	ld d, [hl] ; $4e98
@@ -2165,40 +2165,40 @@ SetMinigameClearFlagsAlt:
 	jr .setLoop ; $4ea5
 .done:
 	ret ; $4ea7
-MinigameClearFlagsAltRankingFlagList:
-	; $4ea8, 34 bytes (records:2)
-	dw $0000 ; record 0
-	dw $0800 ; record 1
-	dw $0820 ; record 2
-	dw $0840 ; record 3
-	dw $0000 ; record 4
-	dw $0880 ; record 5
-	dw $08a0 ; record 6
-	dw $08c0 ; record 7
-	dw $0000 ; record 8
-	dw $0900 ; record 9
-	dw $0000 ; record 10
-	dw $0000 ; record 11
-	dw $0000 ; record 12
-	dw $07e0 ; record 13
-	dw $07c0 ; record 14
-	dw $07a0 ; record 15
-	dw $ffff ; record 16
+DoublesRankingClearFlagList_0a:
+	; $4ea8, 34 bytes (flag_ids)
+	dw $0000 ; 0: none
+	flag_id FLAG_WON_JUNIOR_DOUBLES_RANK_3 ; 1
+	flag_id FLAG_WON_JUNIOR_DOUBLES_RANK_2 ; 2
+	flag_id FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; 3
+	dw $0000 ; 4: none
+	flag_id FLAG_WON_SENIOR_DOUBLES_RANK_3 ; 5
+	flag_id FLAG_WON_SENIOR_DOUBLES_RANK_2 ; 6
+	flag_id FLAG_WON_SENIOR_DOUBLES_RANK_1 ; 7
+	dw $0000 ; 8: none
+	flag_id FLAG_WON_VARSITY_DOUBLES_RANK_2 ; 9
+	dw $0000 ; 10: none
+	dw $0000 ; 11: none
+	dw $0000 ; 12: none
+	flag_id FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_1 ; 13
+	flag_id FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_2 ; 14
+	flag_id FLAG_WON_ISLAND_OPEN_SINGLES_SEMIFINAL ; 15
+	dw $ffff ; 16: end
 GetClearStatusResultCode:
 	ld hl, ClearStatusResultCodeIndexTable ; $4eca
-	ld a, [wCharPosX + 2] ; $4ecd
+	ld a, [wClearStatusFormat] ; $4ecd
 	ld b, a ; $4ed0
 	or a ; $4ed1
 	jr z, .doublesRow ; $4ed2
-	ld a, [wCharPosDepth] ; $4ed4
+	ld a, [wClearStatusClass] ; $4ed4
 	inc a ; $4ed7
 	inc a ; $4ed8
 	add a ; $4ed9
 	ld b, a ; $4eda
-	ld a, [wCharPosX + 1] ; $4edb
+	ld a, [wClearStatusDoubles] ; $4edb
 	jr .index ; $4ede
 .doublesRow:
-	ld a, [wCharPosDepth + 1] ; $4ee0
+	ld a, [wClearStatusRank] ; $4ee0
 .index:
 	add b ; $4ee3
 	add l ; $4ee4
@@ -2207,7 +2207,7 @@ GetClearStatusResultCode:
 	inc h ; $4ee8
 .read:
 	ld a, [hl] ; $4ee9
-	ld [wCharPosHeight], a ; $4eea
+	ld [wClearStatusResultCode], a ; $4eea
 	ret ; $4eed
 ClearStatusResultCodeIndexTable:
 	; $4eee, 10 bytes (bytes:10)
@@ -3683,22 +3683,22 @@ UpdateSceneScroll:
 	ret ; $59d8
 SceneGfxSlotTable:
 	; $59d9, 592 bytes (37 records x 8 slot words)
-	dslot DataPtr_ClubhouseSceneConfig, DataPtr_ClubhouseScenePalettes, DataPtr_ClubhouseSceneTilemap, DataPtr_ClubhouseSceneAttrmap, DataPtr_ClubhouseSceneConfigAlias1, DataPtr_ClubhouseSceneConfigB, DataPtr_CourtyardScenePalettes, DataPtr_ClubhouseSceneTiles ; record 0
-	dslot DataPtr_CourtyardSceneConfig, DataPtr_CourtyardScenePalettesAlias1, DataPtr_CourtyardSceneTilemap, DataPtr_CourtyardSceneAttrmap, DataPtr_CourtyardSceneConfigAlias1, DataPtr_CourtyardSceneConfigB, DataPtr_CourtyardSceneUnusedSlot, DataPtr_CourtyardSceneTiles ; record 1
-	dslot DataPtr_GrassCourtSceneConfig, DataPtr_GrassCourtPalettes, DataPtr_GrassCourtTilemap, DataPtr_GrassCourtAttrmap, DataPtr_GrassCourtSceneConfigAlias1, DataPtr_GrassCourtSceneConfigB, DataPtr_HardCourtPalettes, DataPtr_GrassCourtTiles ; record 2
-	dslot DataPtr_HardCourtSceneConfig, DataPtr_HardCourtPalettesAlias1, DataPtr_HardCourtTilemap, DataPtr_HardCourtAttrmap, DataPtr_HardCourtSceneConfigAlias1, DataPtr_HardCourtSceneConfigB, DataPtr_ClayCourtPalettes, DataPtr_HardCourtTiles ; record 3
-	dslot DataPtr_ClayCourtSceneConfig, DataPtr_ClayCourtPalettesAlias1, DataPtr_ClayCourtTilemap, DataPtr_ClayCourtAttrmap, DataPtr_ClayCourtSceneConfigAlias1, DataPtr_ClayCourtSceneConfigB, DataPtr_CompositionCourtPalettes, DataPtr_ClayCourtTiles ; record 4
-	dslot DataPtr_CompositionCourtSceneConfig, DataPtr_CompositionCourtPalettesAlias1, DataPtr_CompositionCourtTilemap, DataPtr_CompositionCourtAttrmap, DataPtr_CompositionCourtSceneConfigAlias1, DataPtr_CompositionCourtSceneConfigB, DataPtr_CompositionCourtSceneUnusedSlot, DataPtr_CompositionCourtTiles ; record 5
-	dslot DataPtr_MachineCourtSceneConfig, DataPtr_MachineCourtPalettes, DataPtr_MachineCourtTilemap, DataPtr_MachineCourtAttrmap, DataPtr_MachineCourtSceneConfigAlias1, DataPtr_MachineCourtSceneConfigB, DataPtr_CenterCourtPalettes, DataPtr_MachineCourtTiles ; record 6
-	dslot DataPtr_CenterCourtSceneConfig, DataPtr_CenterCourtPalettesAlias1, DataPtr_CenterCourtTilemap, DataPtr_CenterCourtAttrmap, DataPtr_CenterCourtSceneConfigAlias1, DataPtr_CenterCourtSceneConfigB, DataPtr_PracticeCourtPalettes, DataPtr_CenterCourtTiles ; record 7
-	dslot DataPtr_PracticeCourtSceneConfig, DataPtr_PracticeCourtPalettesAlias1, DataPtr_PracticeCourtTilemap, DataPtr_PracticeCourtAttrmap, DataPtr_PracticeCourtSceneConfigAlias1, DataPtr_PracticeCourtSceneConfigB, DataPtr_YoshiCourtPalettes, DataPtr_PracticeCourtTiles ; record 8
-	dslot DataPtr_YoshiCourtSceneConfig, DataPtr_YoshiCourtPalettesAlias1, DataPtr_YoshiCourtTilemap, DataPtr_YoshiCourtAttrmap, DataPtr_YoshiCourtSceneConfigAlias1, DataPtr_YoshiCourtSceneConfigB, DataPtr_YoshiCourtSceneUnusedSlot, DataPtr_YoshiCourtTiles ; record 9
-	dslot DataPtr_StarCourtSceneConfig, DataPtr_StarCourtPalettes, DataPtr_StarCourtTilemap, DataPtr_StarCourtAttrmap, DataPtr_StarCourtSceneConfigAlias1, DataPtr_StarCourtSceneConfigB, DataPtr_BowserCourtPalettes, DataPtr_StarCourtTiles ; record 10
-	dslot DataPtr_BowserCourtSceneConfig, DataPtr_BowserCourtPalettesAlias1, DataPtr_BowserCourtTilemap, DataPtr_BowserCourtAttrmap, DataPtr_BowserCourtSceneConfigAlias1, DataPtr_BowserCourtSceneConfigB, DataPtr_WarioCourtPalettes, DataPtr_BowserCourtTiles ; record 11
-	dslot DataPtr_WarioCourtSceneConfig, DataPtr_WarioCourtPalettesAlias1, DataPtr_WarioCourtTilemap, DataPtr_WarioCourtAttrmap, DataPtr_WarioCourtSceneConfigAlias1, DataPtr_WarioCourtSceneConfigB, DataPtr_PeachCourtPalettes, DataPtr_WarioCourtTiles ; record 12
-	dslot DataPtr_PeachCourtSceneConfig, DataPtr_PeachCourtPalettesAlias1, DataPtr_PeachCourtTilemap, DataPtr_PeachCourtAttrmap, DataPtr_PeachCourtSceneConfigAlias1, DataPtr_PeachCourtSceneConfigB, DataPtr_PeachCourtSceneUnusedSlot, DataPtr_PeachCourtTiles ; record 13
-	dslot DataPtr_IslandOpenCourtSceneConfig, DataPtr_IslandOpenCourtPalettes, DataPtr_IslandOpenCourtTilemap, DataPtr_IslandOpenCourtAttrmap, DataPtr_IslandOpenCourtSceneConfigAlias1, DataPtr_IslandOpenCourtSceneConfigB, DataPtr_DKCourtPalettes, DataPtr_IslandOpenCourtTiles ; record 14
-	dslot DataPtr_DKCourtSceneConfig, DataPtr_DKCourtPalettesAlias1, DataPtr_DKCourtTilemap, DataPtr_DKCourtAttrmap, DataPtr_DKCourtSceneConfigAlias1, DataPtr_DKCourtSceneConfigB, DataPtr_StarPatternBgSceneConfig, DataPtr_DKCourtTiles ; record 15
+	dslot DataPtr_ClubhouseSceneConfig, DataPtr_ClubhouseScenePalettes, DataPtr_ClubhouseSceneTilemap, DataPtr_ClubhouseSceneAttrmap, DataPtr_ClubhouseSceneConfigAlias1, DataPtr_ClubhouseScoreboardColumnAttrs, DataPtr_CourtyardScenePalettes, DataPtr_ClubhouseSceneTiles ; record 0
+	dslot DataPtr_CourtyardSceneConfig, DataPtr_CourtyardScenePalettesAlias1, DataPtr_CourtyardSceneTilemap, DataPtr_CourtyardSceneAttrmap, DataPtr_CourtyardSceneConfigAlias1, DataPtr_CourtyardScoreboardColumnAttrs, DataPtr_CourtyardSceneUnusedSlot, DataPtr_CourtyardSceneTiles ; record 1
+	dslot DataPtr_GrassCourtSceneConfig, DataPtr_GrassCourtPalettes, DataPtr_GrassCourtTilemap, DataPtr_GrassCourtAttrmap, DataPtr_GrassCourtSceneConfigAlias1, DataPtr_GrassCourtScoreboardColumnAttrs, DataPtr_HardCourtPalettes, DataPtr_GrassCourtTiles ; record 2
+	dslot DataPtr_HardCourtSceneConfig, DataPtr_HardCourtPalettesAlias1, DataPtr_HardCourtTilemap, DataPtr_HardCourtAttrmap, DataPtr_HardCourtSceneConfigAlias1, DataPtr_HardCourtScoreboardColumnAttrs, DataPtr_ClayCourtPalettes, DataPtr_HardCourtTiles ; record 3
+	dslot DataPtr_ClayCourtSceneConfig, DataPtr_ClayCourtPalettesAlias1, DataPtr_ClayCourtTilemap, DataPtr_ClayCourtAttrmap, DataPtr_ClayCourtSceneConfigAlias1, DataPtr_ClayCourtScoreboardColumnAttrs, DataPtr_CompositionCourtPalettes, DataPtr_ClayCourtTiles ; record 4
+	dslot DataPtr_CompositionCourtSceneConfig, DataPtr_CompositionCourtPalettesAlias1, DataPtr_CompositionCourtTilemap, DataPtr_CompositionCourtAttrmap, DataPtr_CompositionCourtSceneConfigAlias1, DataPtr_CompositionCourtScoreboardColumnAttrs, DataPtr_CompositionCourtSceneUnusedSlot, DataPtr_CompositionCourtTiles ; record 5
+	dslot DataPtr_MachineCourtSceneConfig, DataPtr_MachineCourtPalettes, DataPtr_MachineCourtTilemap, DataPtr_MachineCourtAttrmap, DataPtr_MachineCourtSceneConfigAlias1, DataPtr_MachineCourtScoreboardColumnAttrs, DataPtr_CenterCourtPalettes, DataPtr_MachineCourtTiles ; record 6
+	dslot DataPtr_CenterCourtSceneConfig, DataPtr_CenterCourtPalettesAlias1, DataPtr_CenterCourtTilemap, DataPtr_CenterCourtAttrmap, DataPtr_CenterCourtSceneConfigAlias1, DataPtr_CenterCourtScoreboardColumnAttrs, DataPtr_PracticeCourtPalettes, DataPtr_CenterCourtTiles ; record 7
+	dslot DataPtr_PracticeCourtSceneConfig, DataPtr_PracticeCourtPalettesAlias1, DataPtr_PracticeCourtTilemap, DataPtr_PracticeCourtAttrmap, DataPtr_PracticeCourtSceneConfigAlias1, DataPtr_PracticeCourtScoreboardColumnAttrs, DataPtr_YoshiCourtPalettes, DataPtr_PracticeCourtTiles ; record 8
+	dslot DataPtr_YoshiCourtSceneConfig, DataPtr_YoshiCourtPalettesAlias1, DataPtr_YoshiCourtTilemap, DataPtr_YoshiCourtAttrmap, DataPtr_YoshiCourtSceneConfigAlias1, DataPtr_YoshiCourtScoreboardColumnAttrs, DataPtr_YoshiCourtSceneUnusedSlot, DataPtr_YoshiCourtTiles ; record 9
+	dslot DataPtr_StarCourtSceneConfig, DataPtr_StarCourtPalettes, DataPtr_StarCourtTilemap, DataPtr_StarCourtAttrmap, DataPtr_StarCourtSceneConfigAlias1, DataPtr_StarCourtScoreboardColumnAttrs, DataPtr_BowserCourtPalettes, DataPtr_StarCourtTiles ; record 10
+	dslot DataPtr_BowserCourtSceneConfig, DataPtr_BowserCourtPalettesAlias1, DataPtr_BowserCourtTilemap, DataPtr_BowserCourtAttrmap, DataPtr_BowserCourtSceneConfigAlias1, DataPtr_BowserCourtScoreboardColumnAttrs, DataPtr_WarioCourtPalettes, DataPtr_BowserCourtTiles ; record 11
+	dslot DataPtr_WarioCourtSceneConfig, DataPtr_WarioCourtPalettesAlias1, DataPtr_WarioCourtTilemap, DataPtr_WarioCourtAttrmap, DataPtr_WarioCourtSceneConfigAlias1, DataPtr_WarioCourtScoreboardColumnAttrs, DataPtr_PeachCourtPalettes, DataPtr_WarioCourtTiles ; record 12
+	dslot DataPtr_PeachCourtSceneConfig, DataPtr_PeachCourtPalettesAlias1, DataPtr_PeachCourtTilemap, DataPtr_PeachCourtAttrmap, DataPtr_PeachCourtSceneConfigAlias1, DataPtr_PeachCourtScoreboardColumnAttrs, DataPtr_PeachCourtSceneUnusedSlot, DataPtr_PeachCourtTiles ; record 13
+	dslot DataPtr_IslandOpenCourtSceneConfig, DataPtr_IslandOpenCourtPalettes, DataPtr_IslandOpenCourtTilemap, DataPtr_IslandOpenCourtAttrmap, DataPtr_IslandOpenCourtSceneConfigAlias1, DataPtr_IslandOpenCourtScoreboardColumnAttrs, DataPtr_DKCourtPalettes, DataPtr_IslandOpenCourtTiles ; record 14
+	dslot DataPtr_DKCourtSceneConfig, DataPtr_DKCourtPalettesAlias1, DataPtr_DKCourtTilemap, DataPtr_DKCourtAttrmap, DataPtr_DKCourtSceneConfigAlias1, DataPtr_DKCourtScoreboardColumnAttrs, DataPtr_StarPatternBgSceneConfig, DataPtr_DKCourtTiles ; record 15
 	dslot DataPtr_StarPatternBgSceneConfigAlias1, DataPtr_StarPatternBgPalettes, DataPtr_StarPatternBgTilemap, DataPtr_StarPatternBgAttrmap, DataPtr_StarPatternBgCollisionMap, DataPtr_StarPatternBgBehaviorMap, DataPtr_DormInteriorSceneConfig, DataPtr_StarPatternBgTiles ; record 16
 	dslot DataPtr_DormInteriorSceneConfigAlias1, DataPtr_DormInteriorPalettes, DataPtr_DormInteriorTilemap, DataPtr_DormInteriorAttrmap, DataPtr_DormInteriorCollisionMap, DataPtr_DormInteriorBehaviorMap, DataPtr_DormInteriorSceneUnusedSlot, DataPtr_DormInteriorTiles ; record 17
 	dslot DataPtr_DormBedroomSceneConfig, DataPtr_DormBedroomPalettes, DataPtr_DormBedroomTilemap, DataPtr_DormBedroomAttrmap, DataPtr_DormBedroomCollisionMap, DataPtr_DormBedroomBehaviorMap, DataPtr_CountrysideSceneConfig, DataPtr_DormBedroomTiles ; record 18

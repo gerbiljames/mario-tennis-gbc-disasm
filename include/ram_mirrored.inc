@@ -50,14 +50,35 @@ def wCharDataPageSlot3 equ $dc60
 ; [3 bytes] Per-character banked struct (WRAM4-7): lateral X position, 24-bit fixed point (fraction byte + signed 16-bit integer part)
 def wCharPosX equ $df00
 
+; [8-bit] RunClearStatusSetupMenu's first choice (Text_34_215): 0 Set, 1 Continue, $ff cancelled. Continue and cancel skip straight to the result code; the menu keeps its state in WRAM bank $05 on top of the idle far-P1 character struct, cleared 32 bytes at a time on entry
+def wClearStatusMode equ $df00
+
 ; [bank 5] Scratch buffer that PushTextArgFetchedString fills (via FetchShortTextToBuffer) with a fetched short-text string, then pushes as a text argument; overlaps the idle far-P1 character struct at $df00
 def wTextArgFetchBuffer equ $df00
+
+; [8-bit] 0 singles, 1 doubles -- not asked, copied from FLAG_DOUBLES when Set is chosen. Picks the singles or doubles rank list and result-code row
+def wClearStatusDoubles equ $df01
+
+; [8-bit] Second menu (Text_34_217): 0 Mini-Game, 1 Ranking Match; $ff steps back
+def wClearStatusFormat equ $df02
 
 ; [3 bytes] Per-character banked struct (WRAM4-7): depth position (toward/away from net), same 24-bit fixed-point format; the two court sides carry opposite signs
 def wCharPosDepth equ $df03
 
+; [8-bit] Third menu (Text_34_218): 0 Junior, 1 Senior, 2 Varsity; $ff steps back. SetTrainingCourtClearFlags reads it as the drill level to mark cleared, the ranking routines as how many classes of wins to set
+def wClearStatusClass equ $df03
+
+; [8-bit] Fourth menu: the drill (Text_34_219) for a Mini-Game clear, or the rank within the class (Text_34_220 and the per-class lists after it) for a Ranking Match clear; $ff steps back
+def wClearStatusRank equ $df04
+
+; [8-bit] Window struct index of the caption frame CreateWindowFromScreenRect opened, redrawn before every menu
+def wClearStatusWindowId equ $df05
+
 ; [3 bytes] Per-character banked struct (WRAM4-7): height above court, same 24-bit fixed-point format (zeroed by SetCharPosAndTarget)
 def wCharPosHeight equ $df06
+
+; [8-bit] What RunClearStatusSetupMenu returns in b: 8 cancelled, 1 Continue, else the ClearStatusResultCodeIndexTable entry for the choice
+def wClearStatusResultCode equ $df06
 
 ; [8-bit] Per-character banked struct (WRAM4-7): serve/side role code (court-position record byte 4-7); XORed with 2 on the per-point side swap, mapped through the $4fa0 table at point start
 def wCharServeRole equ $df09
@@ -140,7 +161,7 @@ def wCharAnimTablePtr equ $df28
 ; [16-bit] Per-character banked struct (WRAM4-7): start of the current animation script, which the $ff (jump) command rewinds to
 def wCharAnimScriptBase equ $df2a
 
-; [16-bit] Per-character banked struct (WRAM4-7): cursor into the current animation script. Commands are word-sized: < $f0 is [delay, frame], $ff jumps, $fe switches animation, $fb toggles the flip bits of wCharSpriteAttr
+; [16-bit] Per-character banked struct (WRAM4-7): cursor into the current animation script. Commands are word-sized: < $f0 is [frame, delay], $ff jumps, $fe switches animation, $fb toggles the flip bits of wCharSpriteAttr
 def wCharAnimScriptPtr equ $df2c
 
 ; [8-bit] Per-character banked struct (WRAM4-7): animation currently playing; SetCharAnimation returns early when asked for the one already running

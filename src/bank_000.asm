@@ -6635,7 +6635,7 @@ Start:
 .store:
 	ldh [hIsCGB], a ; $2580
 SoftReset:
-	ld sp, $d000 ; $2582
+	ld sp, STACK_TOP ; $2582
 	call DisableLCDSafely ; $2585
 	di ; $2588
 	ld hl, wShadowOAM ; $2589
@@ -6678,7 +6678,7 @@ SoftReset:
 	ldh a, [hWramBank] ; $25d1
 	push af ; $25d3
 	wram_bank $07 ; $25d4
-	ld hl, $d000 ; $25da
+	ld hl, WRAMX_BASE ; $25da
 	ld c, $00 ; $25dd
 	call ClearMemory16 ; $25df
 	call InitAudioEngine ; $25e2

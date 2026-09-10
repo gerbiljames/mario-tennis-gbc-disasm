@@ -3593,24 +3593,23 @@ wExpScreenCharStats:: ds 30
 NEXTU
 ; palette fade engine (bank $03)
 	ds 118
-; [128 bytes] The palettes being faded: 16 palettes of four 16-bit colours. BackupMasterPalettes seeds it from wMasterPalettes, ClearWorkingPaletteBuffer zeroes all 64 colours and DesaturateWorkingPalettes rewrites each one through SplitColorComponents. AdvanceToPaletteEntry walks it 8 bytes at a time
-wWorkingPalettes:: ds 128
+; [128 bytes] The fade's endpoint: 16 palettes of four 16-bit colours. CopyMasterPalettesToFadeBuffers seeds it from wMasterPalettes, then the caller rewrites it -- ClearFadeTargetPalettes zeroes all 64 colours (fade to black), DesaturateFadeTargetPalettes greys each one through SplitColorComponents. StepPaletteColorsTowardTarget reads it and SnapPalettesToTarget copies it over wPaletteFadeLive; AdvanceToPaletteEntry walks it 8 bytes at a time
+wPaletteFadeTarget:: ds 128
 	ds 32
-; [128 bytes] The untouched copy taken at the same moment, so a fade always has its endpoint to interpolate from and can be snapped back
-wMasterPalettesBackup:: ds 128
+; [128 bytes] The buffer the fade animates and shows: seeded from wMasterPalettes at the same moment, then every AnimatePaletteFadeToTarget pass steps each masked palette's components +/-1 toward wPaletteFadeTarget (StepPaletteColorsTowardTarget writes back here) and LoadPalettesImmediate uploads all 16 palettes from it
+wPaletteFadeLive:: ds 128
 	ds 32
-; [8 bytes] One flag per palette, set from the bits of b at SetupPaletteFadeMask -- bit 7 is palette 0. Only flagged palettes are stepped
-wPaletteFadeMask:: ds 8
-	ds 8
-; [8-bit] How far through the fade, as passed in d
+; [16 bytes] One byte per palette, all 16 -- InitGrayscalePaletteFade clears $10 of them and the animate/snap loops walk $10 -- of which SetupPaletteFadeMask sets the first eight from the bits of b (bit 7 is palette 0). Only flagged palettes are stepped
+wPaletteFadeMask:: ds 16
+; [8-bit] Passes remaining, as passed in d; AnimatePaletteFadeToTarget decrements it once per pass and snaps when it reaches zero
 wPaletteFadeAmount:: db
 ; [8-bit] Palette currently being stepped, saved across the AdvanceToPaletteEntry calls that resolve the same entry in both buffers
 wPaletteFadeIndex:: db
 ; [6 bytes] The two colours being interpolated, unpacked to red, green and blue by SplitColorComponents -- the working colour at +$00 and the target at +$03
 wPaletteColorSplit:: ds 6
 	ds 1
-; [8-bit] wPaletteFadeAmount divided by $1f, the per-component step the fade moves each call
-wPaletteFadeStep:: db
+; [8-bit] wPaletteFadeAmount divided by $1f: the frames AnimatePaletteFadeToTarget waits before each pass. The colour step itself is always +/-1 per component (StepColorComponentTowardTarget)
+wPaletteFadeFrameDelay:: db
 	ds 4
 ; [8-bit] Set while a cutscene text window is sliding, by AnimateWindowSlideUpTask and the scrolling-story player
 wCutsceneWindowSliding:: db
@@ -3894,10 +3893,26 @@ SECTION "WRAMX bank 4 $df00", WRAMX[$df00], BANK[4]
 ; instruction-range scopes rather than a whole-bank one -- bank $38's own
 ; $df00 is wCharSelectHandedness in WRAM bank $03.
 UNION
+; clear-status developer menu (bank $0a, WRAM bank $05)
+; [8-bit] RunClearStatusSetupMenu's first choice (Text_34_215): 0 Set, 1 Continue, $ff cancelled. Continue and cancel skip straight to the result code; the menu keeps its state in WRAM bank $05 on top of the idle far-P1 character struct, cleared 32 bytes at a time on entry
+w4ClearStatusMode:: db
+; [8-bit] 0 singles, 1 doubles -- not asked, copied from FLAG_DOUBLES when Set is chosen. Picks the singles or doubles rank list and result-code row
+w4ClearStatusDoubles:: db
+; [8-bit] Second menu (Text_34_217): 0 Mini-Game, 1 Ranking Match; $ff steps back
+w4ClearStatusFormat:: db
+; [8-bit] Third menu (Text_34_218): 0 Junior, 1 Senior, 2 Varsity; $ff steps back. SetTrainingCourtClearFlags reads it as the drill level to mark cleared, the ranking routines as how many classes of wins to set
+w4ClearStatusClass:: db
+; [8-bit] Fourth menu: the drill (Text_34_219) for a Mini-Game clear, or the rank within the class (Text_34_220 and the per-class lists after it) for a Ranking Match clear; $ff steps back
+w4ClearStatusRank:: db
+; [8-bit] Window struct index of the caption frame CreateWindowFromScreenRect opened, redrawn before every menu
+w4ClearStatusWindowId:: db
+; [8-bit] What RunClearStatusSetupMenu returns in b: 8 cancelled, 1 Continue, else the ClearStatusResultCodeIndexTable entry for the choice
+w4ClearStatusResultCode:: db
+	ds 144
+NEXTU
 ; text-arg fetch buffer (menu banks reuse the idle char struct)
 ; [bank 5] Scratch buffer that PushTextArgFetchedString fills (via FetchShortTextToBuffer) with a fetched short-text string, then pushes as a text argument; overlaps the idle far-P1 character struct at $df00
 w4TextArgFetchBuffer:: db
-	ds 150
 NEXTU
 ; match character struct (WRAM banks 4-7, and the match/shot/results banks that address it with the bank already selected)
 ; [3 bytes] Per-character banked struct (WRAM4-7): lateral X position, 24-bit fixed point (fraction byte + signed 16-bit integer part)
@@ -3962,7 +3977,7 @@ w4CharFrameVramDest:: dw
 w4CharAnimTablePtr:: dw
 ; [16-bit] Per-character banked struct (WRAM4-7): start of the current animation script, which the $ff (jump) command rewinds to
 w4CharAnimScriptBase:: dw
-; [16-bit] Per-character banked struct (WRAM4-7): cursor into the current animation script. Commands are word-sized: < $f0 is [delay, frame], $ff jumps, $fe switches animation, $fb toggles the flip bits of wCharSpriteAttr
+; [16-bit] Per-character banked struct (WRAM4-7): cursor into the current animation script. Commands are word-sized: < $f0 is [frame, delay], $ff jumps, $fe switches animation, $fb toggles the flip bits of wCharSpriteAttr
 w4CharAnimScriptPtr:: dw
 ; [8-bit] Per-character banked struct (WRAM4-7): animation currently playing; SetCharAnimation returns early when asked for the one already running
 w4CharAnimId:: db
@@ -4120,10 +4135,26 @@ SECTION "WRAMX bank 5 $df00", WRAMX[$df00], BANK[5]
 ; instruction-range scopes rather than a whole-bank one -- bank $38's own
 ; $df00 is wCharSelectHandedness in WRAM bank $03.
 UNION
+; clear-status developer menu (bank $0a, WRAM bank $05)
+; [8-bit] RunClearStatusSetupMenu's first choice (Text_34_215): 0 Set, 1 Continue, $ff cancelled. Continue and cancel skip straight to the result code; the menu keeps its state in WRAM bank $05 on top of the idle far-P1 character struct, cleared 32 bytes at a time on entry
+w5ClearStatusMode:: db
+; [8-bit] 0 singles, 1 doubles -- not asked, copied from FLAG_DOUBLES when Set is chosen. Picks the singles or doubles rank list and result-code row
+w5ClearStatusDoubles:: db
+; [8-bit] Second menu (Text_34_217): 0 Mini-Game, 1 Ranking Match; $ff steps back
+w5ClearStatusFormat:: db
+; [8-bit] Third menu (Text_34_218): 0 Junior, 1 Senior, 2 Varsity; $ff steps back. SetTrainingCourtClearFlags reads it as the drill level to mark cleared, the ranking routines as how many classes of wins to set
+w5ClearStatusClass:: db
+; [8-bit] Fourth menu: the drill (Text_34_219) for a Mini-Game clear, or the rank within the class (Text_34_220 and the per-class lists after it) for a Ranking Match clear; $ff steps back
+w5ClearStatusRank:: db
+; [8-bit] Window struct index of the caption frame CreateWindowFromScreenRect opened, redrawn before every menu
+w5ClearStatusWindowId:: db
+; [8-bit] What RunClearStatusSetupMenu returns in b: 8 cancelled, 1 Continue, else the ClearStatusResultCodeIndexTable entry for the choice
+w5ClearStatusResultCode:: db
+	ds 144
+NEXTU
 ; text-arg fetch buffer (menu banks reuse the idle char struct)
 ; [bank 5] Scratch buffer that PushTextArgFetchedString fills (via FetchShortTextToBuffer) with a fetched short-text string, then pushes as a text argument; overlaps the idle far-P1 character struct at $df00
 w5TextArgFetchBuffer:: db
-	ds 150
 NEXTU
 ; match character struct (WRAM banks 4-7, and the match/shot/results banks that address it with the bank already selected)
 ; [3 bytes] Per-character banked struct (WRAM4-7): lateral X position, 24-bit fixed point (fraction byte + signed 16-bit integer part)
@@ -4188,7 +4219,7 @@ w5CharFrameVramDest:: dw
 w5CharAnimTablePtr:: dw
 ; [16-bit] Per-character banked struct (WRAM4-7): start of the current animation script, which the $ff (jump) command rewinds to
 w5CharAnimScriptBase:: dw
-; [16-bit] Per-character banked struct (WRAM4-7): cursor into the current animation script. Commands are word-sized: < $f0 is [delay, frame], $ff jumps, $fe switches animation, $fb toggles the flip bits of wCharSpriteAttr
+; [16-bit] Per-character banked struct (WRAM4-7): cursor into the current animation script. Commands are word-sized: < $f0 is [frame, delay], $ff jumps, $fe switches animation, $fb toggles the flip bits of wCharSpriteAttr
 w5CharAnimScriptPtr:: dw
 ; [8-bit] Per-character banked struct (WRAM4-7): animation currently playing; SetCharAnimation returns early when asked for the one already running
 w5CharAnimId:: db
@@ -4346,10 +4377,26 @@ SECTION "WRAMX bank 6 $df00", WRAMX[$df00], BANK[6]
 ; instruction-range scopes rather than a whole-bank one -- bank $38's own
 ; $df00 is wCharSelectHandedness in WRAM bank $03.
 UNION
+; clear-status developer menu (bank $0a, WRAM bank $05)
+; [8-bit] RunClearStatusSetupMenu's first choice (Text_34_215): 0 Set, 1 Continue, $ff cancelled. Continue and cancel skip straight to the result code; the menu keeps its state in WRAM bank $05 on top of the idle far-P1 character struct, cleared 32 bytes at a time on entry
+w6ClearStatusMode:: db
+; [8-bit] 0 singles, 1 doubles -- not asked, copied from FLAG_DOUBLES when Set is chosen. Picks the singles or doubles rank list and result-code row
+w6ClearStatusDoubles:: db
+; [8-bit] Second menu (Text_34_217): 0 Mini-Game, 1 Ranking Match; $ff steps back
+w6ClearStatusFormat:: db
+; [8-bit] Third menu (Text_34_218): 0 Junior, 1 Senior, 2 Varsity; $ff steps back. SetTrainingCourtClearFlags reads it as the drill level to mark cleared, the ranking routines as how many classes of wins to set
+w6ClearStatusClass:: db
+; [8-bit] Fourth menu: the drill (Text_34_219) for a Mini-Game clear, or the rank within the class (Text_34_220 and the per-class lists after it) for a Ranking Match clear; $ff steps back
+w6ClearStatusRank:: db
+; [8-bit] Window struct index of the caption frame CreateWindowFromScreenRect opened, redrawn before every menu
+w6ClearStatusWindowId:: db
+; [8-bit] What RunClearStatusSetupMenu returns in b: 8 cancelled, 1 Continue, else the ClearStatusResultCodeIndexTable entry for the choice
+w6ClearStatusResultCode:: db
+	ds 144
+NEXTU
 ; text-arg fetch buffer (menu banks reuse the idle char struct)
 ; [bank 5] Scratch buffer that PushTextArgFetchedString fills (via FetchShortTextToBuffer) with a fetched short-text string, then pushes as a text argument; overlaps the idle far-P1 character struct at $df00
 w6TextArgFetchBuffer:: db
-	ds 150
 NEXTU
 ; match character struct (WRAM banks 4-7, and the match/shot/results banks that address it with the bank already selected)
 ; [3 bytes] Per-character banked struct (WRAM4-7): lateral X position, 24-bit fixed point (fraction byte + signed 16-bit integer part)
@@ -4414,7 +4461,7 @@ w6CharFrameVramDest:: dw
 w6CharAnimTablePtr:: dw
 ; [16-bit] Per-character banked struct (WRAM4-7): start of the current animation script, which the $ff (jump) command rewinds to
 w6CharAnimScriptBase:: dw
-; [16-bit] Per-character banked struct (WRAM4-7): cursor into the current animation script. Commands are word-sized: < $f0 is [delay, frame], $ff jumps, $fe switches animation, $fb toggles the flip bits of wCharSpriteAttr
+; [16-bit] Per-character banked struct (WRAM4-7): cursor into the current animation script. Commands are word-sized: < $f0 is [frame, delay], $ff jumps, $fe switches animation, $fb toggles the flip bits of wCharSpriteAttr
 w6CharAnimScriptPtr:: dw
 ; [8-bit] Per-character banked struct (WRAM4-7): animation currently playing; SetCharAnimation returns early when asked for the one already running
 w6CharAnimId:: db
@@ -4572,10 +4619,26 @@ SECTION "WRAMX bank 7 $df00", WRAMX[$df00], BANK[7]
 ; instruction-range scopes rather than a whole-bank one -- bank $38's own
 ; $df00 is wCharSelectHandedness in WRAM bank $03.
 UNION
+; clear-status developer menu (bank $0a, WRAM bank $05)
+; [8-bit] RunClearStatusSetupMenu's first choice (Text_34_215): 0 Set, 1 Continue, $ff cancelled. Continue and cancel skip straight to the result code; the menu keeps its state in WRAM bank $05 on top of the idle far-P1 character struct, cleared 32 bytes at a time on entry
+w7ClearStatusMode:: db
+; [8-bit] 0 singles, 1 doubles -- not asked, copied from FLAG_DOUBLES when Set is chosen. Picks the singles or doubles rank list and result-code row
+w7ClearStatusDoubles:: db
+; [8-bit] Second menu (Text_34_217): 0 Mini-Game, 1 Ranking Match; $ff steps back
+w7ClearStatusFormat:: db
+; [8-bit] Third menu (Text_34_218): 0 Junior, 1 Senior, 2 Varsity; $ff steps back. SetTrainingCourtClearFlags reads it as the drill level to mark cleared, the ranking routines as how many classes of wins to set
+w7ClearStatusClass:: db
+; [8-bit] Fourth menu: the drill (Text_34_219) for a Mini-Game clear, or the rank within the class (Text_34_220 and the per-class lists after it) for a Ranking Match clear; $ff steps back
+w7ClearStatusRank:: db
+; [8-bit] Window struct index of the caption frame CreateWindowFromScreenRect opened, redrawn before every menu
+w7ClearStatusWindowId:: db
+; [8-bit] What RunClearStatusSetupMenu returns in b: 8 cancelled, 1 Continue, else the ClearStatusResultCodeIndexTable entry for the choice
+w7ClearStatusResultCode:: db
+	ds 144
+NEXTU
 ; text-arg fetch buffer (menu banks reuse the idle char struct)
 ; [bank 5] Scratch buffer that PushTextArgFetchedString fills (via FetchShortTextToBuffer) with a fetched short-text string, then pushes as a text argument; overlaps the idle far-P1 character struct at $df00
 w7TextArgFetchBuffer:: db
-	ds 150
 NEXTU
 ; match character struct (WRAM banks 4-7, and the match/shot/results banks that address it with the bank already selected)
 ; [3 bytes] Per-character banked struct (WRAM4-7): lateral X position, 24-bit fixed point (fraction byte + signed 16-bit integer part)
@@ -4640,7 +4703,7 @@ w7CharFrameVramDest:: dw
 w7CharAnimTablePtr:: dw
 ; [16-bit] Per-character banked struct (WRAM4-7): start of the current animation script, which the $ff (jump) command rewinds to
 w7CharAnimScriptBase:: dw
-; [16-bit] Per-character banked struct (WRAM4-7): cursor into the current animation script. Commands are word-sized: < $f0 is [delay, frame], $ff jumps, $fe switches animation, $fb toggles the flip bits of wCharSpriteAttr
+; [16-bit] Per-character banked struct (WRAM4-7): cursor into the current animation script. Commands are word-sized: < $f0 is [frame, delay], $ff jumps, $fe switches animation, $fb toggles the flip bits of wCharSpriteAttr
 w7CharAnimScriptPtr:: dw
 ; [8-bit] Per-character banked struct (WRAM4-7): animation currently playing; SetCharAnimation returns early when asked for the one already running
 w7CharAnimId:: db

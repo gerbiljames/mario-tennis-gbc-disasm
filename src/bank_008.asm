@@ -4743,11 +4743,11 @@ UpdateMatchCamera:
 	ld [hl], d ; $62ff
 	ret ; $6300
 StandingShadowOamTemplate:
-	; $6301, 13 bytes (bytes:4)
-	db $02, $fc, $00, $00 ; 0x00
-	db $02, $04, $02, $00 ; 0x04
-	db $02, $0c, $04, $00 ; 0x08
-	db $80 ; 0x0c
+	; $6301, 13 bytes (sprite_template)
+	oam_sprite $02, $fc, $00, $00
+	oam_sprite $02, $04, $02, $00
+	oam_sprite $02, $0c, $04, $00
+	oam_sprite_end
 ClearSpriteSlots:
 	ld a, $ff ; $630e
 	ld [wNetBallSlot], a ; $6310
@@ -8313,7 +8313,7 @@ AiApplyServeAim:
 AiApplyServeAimTable:
 	; $7b0b, 8 bytes (bytes:8)
 	db $10, $10, $10, $10, $20, $20, $20, $20 ; 0x00
-AiMaybeAimAwayFromChar:
+AiRollAimAwayFromChar:
 	ld c, a ; $7b13
 	call AdvanceMatchRng ; $7b14
 	ld hl, wAiAimAwayChance ; $7b17
@@ -8746,7 +8746,7 @@ AiSwingControlSingles:
 	ld a, [wCharIndex] ; $7de5
 	add $01 ; $7de8
 	and $01 ; $7dea
-	call AiMaybeAimAwayFromChar ; $7dec
+	call AiRollAimAwayFromChar ; $7dec
 	jp AiAdvancePhase ; $7def
 AiRecoverStateNetPlayer:
 	ld a, [wAiPhase] ; $7df2

@@ -342,11 +342,6 @@ The 21 story records have 64×64 tile and attribute planes (4096 = 64×64) and
 (`$0a:$5f31`) index. Nothing else in a record is 1024 bytes, so the pairing is
 unambiguous.
 
-> **Symbol-name note.** The curated name `GetCollisionMapCellAddr` is cited in
-> the task brief and in `docs/bugs.md:164` at `$0a:$5ef4`. At HEAD the label is
-> at **`$0a:$5edd`**; `$5ef4` is the `ld bc, wCollisionMap` four instructions
-> from its end. Cite `$5edd`.
-
 `GetCollisionMapCellAddr` indexes **32 columns of half-tiles**: it rounds `d`
 and `e` down to even values (`sra`/`sla` pairs), builds `hl = (e >> 1) * 16`
 via four `add hl, hl` on `e`, adds `d >> 1`, and adds `wCollisionMap`. So one
@@ -513,18 +508,13 @@ then adds the `FACE_*` value (`$00`/`$40`/`$80`/`$c0`,
 `include/constants.inc`) as a **byte offset inside the frame**, and uploads
 `c = $04` tiles → a 16×16 metasprite drawn as two 8×16 objects.
 
-> **Suspected wrong name — reported, not fixed.** `render_object_header`
-> (`tools/disasmlib/datatables.py:483`) labels word 1 `OAM array` in its emitted
-> comment (`; frame array, OAM array, frame array`, line 504) and
-> `tools/disasmlib/labels.py` names the blobs `WalkSprite_bb_ss_OamPtrs` /
-> `..._OamNN`; `docs/screens_and_ui.md:501-503` repeats it. Word 1 lands in
-> actor field `+$28` / `wCharAnimTablePtr`, and both `SetActorAnimation`
-> (`$04:$4bbe`, body at `$4bde`) and `SetCharAnimation` (`$08:$69ea`, body at
-> `$69fc`) index it by `animation id * 2` and dereference it into the animation
-> **script** pointer. Dumping those blobs decodes cleanly as §4.4 anim entries.
-> `AnimPtrs` would be the right name. Header byte 0 is likewise commented
-> `count` when it is an attribute byte, and byte 1 — the real count — is
-> commented `flags`.
+Word 1 is what `SetActorAnimation` (`$04:$4bbe`, body at `$4bde`) and
+`SetCharAnimation` (`$08:$69ea`, body at `$69fc`) index by `animation id * 2`
+to reach the animation **script** pointer, and the walk-sprite banks name it
+that way: `WalkSprite_bb_ss_AnimPtrs` and the scripts it points at
+`..._AnimNN`, rendered as §4.4 `anim_*` macros. (They were `_OamPtrs` /
+`_OamNN` until 2026-09-10, and the header renderer commented byte 0 as a
+count; it now reads `OAM attr, facing count, unread, unread`.)
 
 ### 4.4 Animation scripts
 
@@ -549,14 +539,17 @@ loose: the code is `and $0f` *then* `xor d`, so it clears bits 4-7 first and
 `$fb mm` **replaces** the high nibble. With the operands that actually occur
 (`$20`, `$00`) the difference is invisible.
 
-**The `$fd` case is not rendered.** `render_sprite_anim`
-(`tools/disasmlib/datatables.py:128`) returns `None` for any command it does not
-implement, deliberately, so a mis-declared region falls back to plain `db`
-rather than rendering a lie. Counted over the emitted source (matching each
-`; … (sprite_anim)` spec comment against the line that follows it):
-**570 declared regions, 359 render as `anim_*` macros, 211 fall back to `db`.**
-Every one of the 211 contains a `$fd`. `docs/STATUS.md:181`'s "All 570 now
-render as `anim_*` macros" is over-stated at HEAD.
+`render_sprite_anim` (`tools/disasmlib/datatables.py:128`) returns `None`
+for anything it cannot account for, deliberately, so a mis-declared region
+falls back to plain `db` rather than rendering a lie. Counted over the emitted
+source (matching each `; … (sprite_anim)` spec comment against the line that
+follows it): of the **570 character-bank scripts, 569 render as `anim_*`
+macros**; `SeanSpriteAnim04` (`$47:$7f67`) carries one `$00` after its hold
+command and falls back. Of the **635 walk-sprite scripts (banks `$6a`, `$6f`,
+`$70`-`$77`), 593 render**; the 42 that do not are the five-byte
+`03 14 04 1e ff` script every bank repeats, whose closing loop command takes
+its operand from the first byte of the *next* script — an overlap the source
+cannot express, so those stay `db`.
 
 ### 4.5 The two interpreters
 
@@ -569,11 +562,10 @@ render as `anim_*` macros" is over-stated at HEAD.
 | delay tick | `[+$2f] -= [+$18]` (or `[+$19]` when `bit 7,[+$05]`), clamped — a per-actor animation *speed* | plain `dec wCharAnimDelay`, 1 per frame |
 | frame change | stores to `+$33`, sets bit 6 of `+$30` | stores to `wCharAnimFrame`, sets bit 6 of `wCharSpriteDirty` |
 
-Two existing comments state the byte order backwards —
-`docs/STATUS.md:5822` and the `wCharAnimScriptPtr` comment in
-`include/ram_mirrored.inc:143` both write "`< $f0` **[delay, frame]**". The
-frame is the **low** byte: `ld a, e` / `cp $f0`, then `ld a, d` /
-`ld [wCharAnimDelay], a`. Reported, not fixed.
+The frame is the **low** byte: `ld a, e` / `cp $f0`, then `ld a, d` /
+`ld [wCharAnimDelay], a`. (The `wCharAnimScriptPtr` comment in
+`include/ram_mirrored.inc` used to say `[delay, frame]`; corrected
+2026-09-10. The 2026-07 entry in `docs/history.md` still has it backwards.)
 
 The character banks `$40`-`$5d` carry a third array, `*SpriteOam` (e.g.
 `AlexSpriteOam`, 580 bytes = 145 records × 4). It is read at
@@ -697,8 +689,8 @@ So the fade is an **additive per-component offset with saturation**, not a
 multiply, and the delta is always in 0-31 because `srl c` twice
 (`$00:$1d8c`, `$1d8e`) is a *logical* shift.
 
-> **Discrepancy — reported, not fixed.** `docs/STATUS.md:8767-8771` says "every
-> fade in the game is a fade to black". The reachable arithmetic reads the
+> **Discrepancy with the earlier narrative.** The 2026-07-29 entry in
+> `docs/history.md` says "every fade in the game is a fade to black". The reachable arithmetic reads the
 > other way: the delta is non-negative, `AddClampColorComponent` **adds** it and
 > saturates at `$1f`, and during a fade-out the delta rises 0 → 31, so every
 > component ends at maximum. That is a fade to **white**. The `bit 7`
@@ -713,19 +705,22 @@ multiply, and the delta is always in 0-31 because `srl c` twice
 > visually** — one emulator frame captured mid-fade would settle it.
 
 A **second, independent** fade engine lives in bank `$03` with buffers in WRAM
-bank `$06` (`wWorkingPalettes` `$d0a0`, `wMasterPalettesBackup` `$d140`,
-`wPaletteFadeMask` `$d1e0`). It steps each component **±1 per iteration**
-toward a target buffer rather than scaling: `BackupMasterPalettes`
-(`$03:$75e9`) seeds both buffers from `wMasterPalettes`, the caller rewrites
-the target with `ClearWorkingPaletteBuffer` (`$03:$7606`, → black) or
-`DesaturateWorkingPalettes` (`$03:$7616`, → grayscale), then
-`AnimatePaletteFadeToTarget` (`$03:$7719`) drives
-`StepPaletteColorsTowardTarget` (`$03:$7764`) until the count runs out and
-`SnapPalettesToTarget` (`$03:$77e2`) finishes. Public entry points are the
-farptr slots `$03:$4042` and `$03:$4044`. **This** is the engine that fades to
-black.
-
-Three annotations on that engine look wrong; see §8.
+bank `$06` (`wPaletteFadeTarget` `$d0a0`, `wPaletteFadeLive` `$d140`,
+`wPaletteFadeMask` `$d1e0`, 16 bytes). It steps each component **±1 per
+pass** toward a target buffer rather than scaling:
+`CopyMasterPalettesToFadeBuffers` (`$03:$75e9`) seeds both buffers from
+`wMasterPalettes`, the caller rewrites the target with
+`ClearFadeTargetPalettes` (`$03:$7606`, → black) or
+`DesaturateFadeTargetPalettes` (`$03:$7616`, → grayscale), then
+`AnimatePaletteFadeToTarget` (`$03:$7719`) waits `wPaletteFadeFrameDelay`
+frames, steps every masked palette of the *live* buffer with
+`StepPaletteColorsTowardTarget` (`$03:$7764`), uploads the live buffer, and
+repeats `wPaletteFadeAmount` times before `SnapPalettesToTarget`
+(`$03:$77e2`) copies the target over it. Public entry points are the farptr
+slots `$03:$4042` and `$03:$4044`. **This** is the engine that fades to black.
+(Until 2026-09-10 the two buffers were named the other way round —
+`wWorkingPalettes` for the target and `wMasterPalettesBackup` for the live
+copy — and the frame delay was described as a per-component step.)
 
 ---
 
@@ -914,12 +909,16 @@ structure the source claims is true. At HEAD, all five pass:
 
 ---
 
-## 8. Not established, and discrepancies to resolve
+## 8. Not established
 
-Collected so future sessions do not have to re-derive them. **None of these
-were changed** — this file is the report, not the fix.
-
-**Open / unverified in this pass**
+Collected so future sessions do not have to re-derive them. The
+"discrepancies to resolve" this section used to carry — the `OamPtrs` name,
+the header-byte comments, the `[delay, frame]` order, the `$fd` fallback, the
+stale routine addresses in `docs/screens_and_ui.md`, the three palette-fade
+annotations, the `gfxdump.py` palette sheet and the `jp`-reached sprite
+templates — were all fixed on 2026-09-10 (the `jp` form, once accepted by
+`carve_sprite_templates`, carved nothing new: every template is reached by
+`call`). What remains is genuinely open:
 
 * `GetCollisionMapCellAddr`'s cell geometry (§3.3). The shift sequence is
   verified; whether a row is 16 or 32 entries wide in practice is not.
@@ -938,49 +937,3 @@ were changed** — this file is the report, not the fix.
   (`wMapScrollMinX/Y`, `wMapWidthTiles/HeightTiles`) are identified here, plus
   the observation that for court records its first 80 bytes double as two
   40-byte scoreboard column blocks (§3.4).
-
-**Names and comments that contradict the code**
-
-* `render_object_header` (`tools/disasmlib/datatables.py:504`) and the
-  `WalkSprite_*_OamPtrs` / `_OamNN` labels call word 1 an OAM array; it is the
-  animation-script pointer table (§4.3). Repeated in
-  `docs/screens_and_ui.md:501-503`.
-* The same renderer comments header byte 0 as `count` (it is an OAM attribute /
-  palette byte) and byte 1 as a flag (it is the facing count).
-* `docs/STATUS.md:5822` and `include/ram_mirrored.inc:143` give animation entry
-  order as `[delay, frame]`; it is `[frame, delay]` (§4.5).
-* `docs/STATUS.md:181` says all 570 `sprite_anim` regions render as macros;
-  measured at HEAD it is 359, with 211 falling back to `db` on `$fd` (§4.4).
-* `docs/STATUS.md:8771` says every fade is a fade to black; the reachable
-  bank-`$00` path is additive toward `$1f` (§5.4).
-* The task brief and `docs/bugs.md:164` cite `GetCollisionMapCellAddr` at
-  `$0a:$5ef4`; at HEAD the label is `$0a:$5edd` (§3.3).
-* `docs/screens_and_ui.md:499` and `:513` list `QueueSprite32x32` `$2eba`,
-  `QueueSpriteBlockPart` `$2f2d`, `ProjectWorldToScreen` `$2f4a`,
-  `GetPerspectiveScale` `$3033`. Current source: `$2ced`, `$2d79`, `$2d8c`,
-  `$2e61`.
-* Bank `$03`'s fade engine: `ram_unions.json:2156` describes
-  `wWorkingPalettes` as the animated buffer and `wMasterPalettesBackup` as the
-  untouched endpoint; the code is the other way round —
-  `StepPaletteColorsTowardTarget` writes into `wMasterPalettesBackup` and
-  `SnapPalettesToTarget` copies *from* `wWorkingPalettes`.
-* `ram_unions.json:2178` calls `wPaletteFadeStep` "the per-component step"; the
-  code (`$03:$7722`) uses it as a frame-delay count, and the per-component step
-  is always ±1 (`$03:$77d0`).
-* `ram_unions.json:2160` declares `wPaletteFadeMask` as 8 bytes; the engine
-  clears and walks `$10` of them (`$03:$75b8`, `$03:$7741`). No overlap results
-  — `wPaletteFadeAmount` is at `$d1f0` — but the declared size is wrong.
-
-**Tooling**
-
-* `tools/gfxdump.py:117` renders every 64-byte stream as a palette swatch on
-  size alone. Running `python3 tools/gfxdump.py baserom.gbc /tmp/gfxcheck` at
-  HEAD produces `streams_tiles.png` (619 cells) and `streams_palettes.png`
-  (73 cells) — but **none of those 73 streams is a palette set.** Testing bit
-  15 (unused in BGR555) across all 32 words: 0 of 73 have it clear throughout,
-  against 151 of the 160 declared `palettes` regions. Spot-checking the labels
-  confirms it — `CharRosterIcon00` (`$18:$6b30`) decompresses to 64 bytes
-  because it is a 4-tile 16×16 icon. The palette sheet is noise.
-* `carve_sprite_templates` (`tools/disasmlib/carve.py:293`) only matches opcode
-  `$cd`, so templates reached by `jp QueueSpriteTemplate` are never carved
-  (§4.1).

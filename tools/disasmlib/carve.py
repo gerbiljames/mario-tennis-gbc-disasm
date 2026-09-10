@@ -80,11 +80,12 @@ class StructureCarvingMixin:
         if added:
             print(f"object bodies: {added} splits at header pointers")
 
-    def follow_oam_arrays(self):
-        """Follow each header's OAM pointer array (word 1): a self-delimiting
-        dw table (it ends where its lowest target begins) of pointers to the
-        record's per-frame OAM sublists. Render the table as dw labels and
-        split the OAM data it points at into blobs."""
+    def follow_anim_arrays(self):
+        """Follow each header's animation-script pointer array (word 1, the
+        word the loaders store in wCharAnimTablePtr / actor +$28): a
+        self-delimiting dw table (it ends where its lowest target begins) of
+        pointers to the record's animation scripts. Render the table as dw
+        labels and split the scripts it points at into blobs."""
         starts = sorted(self.object_headers)
         arrays = splits = 0
         for i, h in enumerate(starts):
@@ -105,7 +106,7 @@ class StructureCarvingMixin:
             if not all(astart + span <= t < rend for t in tgts):
                 continue
             del self.data_blobs[astart]
-            self.oam_arrays[astart] = h  # named after the header in build_labels
+            self.anim_arrays[astart] = h  # named after the header in build_labels
             for k in range(n):
                 self.ptr_words[astart + 2 * k] = (tgts[k], "")
             arrays += 1
@@ -292,7 +293,7 @@ class StructureCarvingMixin:
             # means the loaded imm is not the template pointer itself.
             if last_hl is not None and _writes_hl(self.instrs[off].text):
                 last_hl = None
-            if (op == 0xCD and last_hl is not None
+            if (op in (0xCD, 0xC3) and last_hl is not None
                   and (self.rom[off + 1] | (self.rom[off + 2] << 8)) == qcpu):
                 bank, hl_end, cpu = last_hl
                 # only accept a pointer set in the same bank, close to the call

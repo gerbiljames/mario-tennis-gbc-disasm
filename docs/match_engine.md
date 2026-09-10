@@ -1011,7 +1011,7 @@ into the struct. Slot 0 — the human — is never touched.
 | reaction delay, near | `$df79` | 28 → 2 frames | frames of total inertness after each stroke (`AiSetReactionDelay`) |
 | reaction delay, far | `$df7a` | 24 → 2 frames | same, for a character away from the net |
 | tracking parameter | `$df7b` | 12 → 0 frames | seeds `wAiTrackingCountdown`; `AiWaitThenPickShot` will not choose a shot until it expires *unless* the ball is already in swing range, so a low value lets the AI start its swing early |
-| aim-away chance | `$df7c` | 60/256 ≈ 23% → 230/256 ≈ 90% | RNG threshold in `AiMaybeAimAwayFromChar` (`$08:$7b17`); below it the AI presses no direction at all and the shot goes down the middle |
+| aim-away chance | `$df7c` | 60/256 ≈ 23% → 230/256 ≈ 90% | RNG threshold in `AiRollAimAwayFromChar` (`$08:$7b17`); below it the AI presses no direction at all and the shot goes down the middle |
 
 Aim *jitter* is not a difficulty parameter — `wCharAimJitterScale` comes from the
 character's own stats and applies to the human as well.
@@ -1027,7 +1027,7 @@ button, and sets `wAiSecondButtonDelay = 5` — which is precisely the gap
 `AiSwingControlSingles` (`$08:$7dcb`) finishes the job: release the second
 button once the delay expires, keep `AiSteerTowardBall` running while the ball is
 outside the contact window, and **apply the directional aim on the contact frame
-only** (`AiMaybeAimAwayFromChar`). Applying aim that late is why the CPU's
+only** (`AiRollAimAwayFromChar`). Applying aim that late is why the CPU's
 placement is hard to read.
 
 `AiPickShotButtons` (`$08:$7b7b`) chooses in priority order:

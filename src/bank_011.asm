@@ -1461,11 +1461,13 @@ JuniorClassCourtDoublesDNpc0A_11:
 	script_speak $0a ; $5a18
 	ret ; $5a1d
 JuniorClassCourtDoublesFacingScripts_11:
-	; $5a1e, 2 bytes (map_scripts)
-	db $ff, $c9
+	ds 1, $ff ; $5a1e, fill
+Unused_11_NullScriptA:
+	ret ; $5a1f
 JuniorClassCourtDoublesTileTriggers_11:
-	; $5a20, 2 bytes (map_scripts)
-	db $ff, $c9
+	ds 1, $ff ; $5a20, fill
+Unused_11_NullScriptB:
+	ret ; $5a21
 JuniorClassCourtDoublesInitScript_11:
 	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $5a22
 	jr nz, .stage2 ; $5a25
@@ -2292,10 +2294,12 @@ JuniorClassCourtSinglesActors_11:
 	map_actor $0000, ActorScript_11_45, $4000, $4000, FACE_UP, $53, $01, $00
 	map_actor_end
 JuniorClassCourtSinglesEntryPoints_11:
-	; $691a, 18 bytes (map_entries)
+	; $691a, 17 bytes (map_entries)
 	map_entry $01, FACE_UP, $1300, $1d00, MapArrivalWalk_11
 	map_entry $09, FACE_UP, $2d00, $1900, $0000
-	db $ff, $c9
+	db $ff
+Unused_11_NullScriptC:
+	ret ; $692b
 JuniorClassCourtSinglesExitTriggers_11:
 	; $692c, 17 bytes (map_scripts:exit)
 	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_11, STORYLOC_RESTAURANT_PLAZA, $05

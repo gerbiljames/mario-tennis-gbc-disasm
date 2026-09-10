@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Render the carved graphics streams to PNG contact sheets for
 identification. Reads the manifest for stream locations, decompresses each,
-and draws 2bpp tile views (plus BGR555 swatches for 64-byte palette sets and
-optional tilemap-over-tilesheet composites for pairing maps with graphics).
+and draws 2bpp tile views (plus BGR555 swatches for the manifest's `palettes`
+regions and optional tilemap-over-tilesheet composites for pairing maps with graphics).
 
 Output contains ROM-derived imagery, so it belongs under gitignored data/
 (the default) or another uncommitted location. Requires Pillow.
@@ -41,9 +41,10 @@ def tiles_image(data, scale=2, tiles_per_row=16):
 
 
 def pal_image(data):
-    img = Image.new("RGB", (4 * 12, 8 * 12))
+    npal = max(1, len(data) // 8)
+    img = Image.new("RGB", (4 * 12, npal * 12))
     d = ImageDraw.Draw(img)
-    for p in range(8):
+    for p in range(npal):
         for c in range(4):
             w = data[(p * 4 + c) * 2] | (data[(p * 4 + c) * 2 + 1] << 8)
             d.rectangle([c * 12, p * 12, c * 12 + 11, p * 12 + 11],
@@ -102,19 +103,29 @@ def main():
     out.mkdir(parents=True, exist_ok=True)
 
     streams = []
+    pals = []
     for ln in Path(args.manifest).read_text().splitlines():
-        if "/lz_" not in ln:
+        fields = ln.split()
+        if len(fields) < 3 or fields[0].startswith("#"):
             continue
-        _p, o, _l = ln.split()
-        off = int(o, 16)
-        data, _n = lz.decompress(rom, off)
+        off = int(fields[1], 16)
         name = f"{off // BANK_SIZE:02x}:{0x4000 + off % BANK_SIZE:04x}"
+        # Palette sets are the manifest's `palettes` regions (raw BGR555
+        # words), not any 64-byte stream: a 4-tile icon decompresses to 64
+        # bytes too, and a size-only test used to fill the palette sheet with
+        # them.
+        if len(fields) > 3 and fields[3] == "palettes":
+            n = int(fields[2], 16)
+            pals.append((f"{name} {n // 8}p", pal_image(rom[off:off + n])))
+            continue
+        if "/lz_" not in fields[0]:
+            continue
+        data, _n = lz.decompress(rom, off)
         streams.append((name, off, data))
     streams.sort(key=lambda s: (-len(s[2]), s[0]))
 
     contact_sheet([(f"{n} {len(d)}B", tiles_image(d)) for n, _o, d in streams],
                   6, out / "streams_tiles.png")
-    pals = [(n, pal_image(d)) for n, _o, d in streams if len(d) == 64]
     if pals:
         contact_sheet(pals, 10, out / "streams_palettes.png")
 
