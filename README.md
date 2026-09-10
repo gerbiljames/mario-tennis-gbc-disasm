@@ -122,6 +122,7 @@ assets outside the tree and copy them in, or do not re-run extraction.
   `ds count, v1, v2, ...`), `fill` (padding, rendered as `ds` runs).
 - `include/hardware.inc` — standard Game Boy hardware definitions (CC0).
 - `docs/` — `STATUS.md` is where the project stands and what is still open;
+  `unused_code.md` explains the `Unused_` routines and the patterns in them;
   `history.md` is the dated log of how it got there;
   `bugs.md` collects defects in the *game* (as opposed to in this disassembly),
   with the dead stores and deliberately-stubbed routines kept separate from
