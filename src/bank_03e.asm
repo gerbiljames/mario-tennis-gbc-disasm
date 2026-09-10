@@ -1656,11 +1656,11 @@ LoadLinkErrorScreen:
 	farcall RedrawWindowRows ; $4b0e
 	farcall PrepareGlyphBuffer ; $4b11
 	wram_bank $03 ; $4b14
-	ld hl, $012b ; $4b1a
+	ld hl, Text_30_299 ; $4b1a
 	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH + 1 ; $4b1d
 	ld c, $12 ; $4b20
 	farcall RenderProportionalTextAt ; $4b22
-	ld hl, $012c ; $4b25
+	ld hl, Text_30_300 ; $4b25
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $4b28
 	ld c, $12 ; $4b2b
 	farcall RenderProportionalTextAt ; $4b2d
@@ -1731,19 +1731,19 @@ ShowLinkStatusMessage:
 	jr z, .eq01 ; $4bbd
 	jr .renderProportionalTextAt ; $4bbf
 .zero:
-	ld hl, $0129 ; $4bc1
+	ld hl, Text_30_297 ; $4bc1
 	ld de, wShadowTilemap + 12 * TILEMAP_WIDTH + 1 ; $4bc4
 	ld c, $12 ; $4bc7
 	farcall RenderProportionalTextAt ; $4bc9
 	jr .uploadGlyphBuffer ; $4bcc
 .eq01:
-	ld hl, $012a ; $4bce
+	ld hl, Text_30_298 ; $4bce
 	ld de, wShadowTilemap + 12 * TILEMAP_WIDTH + 1 ; $4bd1
 	ld c, $12 ; $4bd4
 	farcall RenderProportionalTextAt ; $4bd6
 	jr .uploadGlyphBuffer ; $4bd9
 .renderProportionalTextAt:
-	ld hl, $0128 ; $4bdb
+	ld hl, Text_30_296 ; $4bdb
 	ld de, wShadowTilemap + 12 * TILEMAP_WIDTH + 1 ; $4bde
 	ld c, $12 ; $4be1
 	farcall RenderProportionalTextAt ; $4be3
@@ -1893,19 +1893,19 @@ LoadEraseDataConfirmScreen:
 	ld a, [wScreenScratch] ; $4d3e
 	cp $02 ; $4d41
 	jr nz, .compare ; $4d43
-	ld hl, $00dd ; $4d45
+	ld hl, Text_30_221 ; $4d45
 	ld de, wShadowTilemap + 6 * TILEMAP_WIDTH + 3 ; $4d48
 	ld c, $0e ; $4d4b
 	farcall RenderProportionalTextAt ; $4d4d
-	ld hl, $00de ; $4d50
+	ld hl, Text_30_222 ; $4d50
 	ld de, wShadowTilemap + 8 * TILEMAP_WIDTH + 3 ; $4d53
 	ld c, $0e ; $4d56
 	farcall RenderProportionalTextAt ; $4d58
-	ld hl, $00df ; $4d5b
+	ld hl, Text_30_223 ; $4d5b
 	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH + 2 ; $4d5e
 	ld c, $0e ; $4d61
 	farcall RenderProportionalTextAt ; $4d63
-	ld hl, $00dc ; $4d66
+	ld hl, Text_30_220 ; $4d66
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 2 ; $4d69
 	ld c, $0e ; $4d6c
 	farcall RenderProportionalTextAt ; $4d6e
@@ -1917,19 +1917,19 @@ LoadEraseDataConfirmScreen:
 .compare:
 	or a ; $4d7e
 	jr z, .zero ; $4d7f
-	ld hl, $00d8 ; $4d81
+	ld hl, Text_30_216 ; $4d81
 	ld de, wShadowTilemap + 6 * TILEMAP_WIDTH + 3 ; $4d84
 	ld c, $0e ; $4d87
 	farcall RenderProportionalTextAt ; $4d89
-	ld hl, $00d9 ; $4d8c
+	ld hl, Text_30_217 ; $4d8c
 	ld de, wShadowTilemap + 8 * TILEMAP_WIDTH + 3 ; $4d8f
 	ld c, $0e ; $4d92
 	farcall RenderProportionalTextAt ; $4d94
-	ld hl, $00db ; $4d97
+	ld hl, Text_30_219 ; $4d97
 	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH + 2 ; $4d9a
 	ld c, $0e ; $4d9d
 	farcall RenderProportionalTextAt ; $4d9f
-	ld hl, $00dc ; $4da2
+	ld hl, Text_30_220 ; $4da2
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 2 ; $4da5
 	ld c, $0e ; $4da8
 	farcall RenderProportionalTextAt ; $4daa
@@ -1939,19 +1939,19 @@ LoadEraseDataConfirmScreen:
 	farcall LoadCompressedTileBlock ; $4db4
 	jr .renderProportionalTextAt ; $4db7
 .zero:
-	ld hl, $00d6 ; $4db9
+	ld hl, Text_30_214 ; $4db9
 	ld de, wShadowTilemap + 6 * TILEMAP_WIDTH + 3 ; $4dbc
 	ld c, $0e ; $4dbf
 	farcall RenderProportionalTextAt ; $4dc1
-	ld hl, $00d7 ; $4dc4
+	ld hl, Text_30_215 ; $4dc4
 	ld de, wShadowTilemap + 8 * TILEMAP_WIDTH + 3 ; $4dc7
 	ld c, $0e ; $4dca
 	farcall RenderProportionalTextAt ; $4dcc
-	ld hl, $00da ; $4dcf
+	ld hl, Text_30_218 ; $4dcf
 	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH + 2 ; $4dd2
 	ld c, $0e ; $4dd5
 	farcall RenderProportionalTextAt ; $4dd7
-	ld hl, $00dc ; $4dda
+	ld hl, Text_30_220 ; $4dda
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 2 ; $4ddd
 	ld c, $0e ; $4de0
 	farcall RenderProportionalTextAt ; $4de2
@@ -1960,11 +1960,11 @@ LoadEraseDataConfirmScreen:
 	ld de, $8000 ; $4de9
 	farcall LoadCompressedTileBlock ; $4dec
 .renderProportionalTextAt:
-	ld hl, $007a ; $4def
+	ld hl, Text_30_122 ; $4def
 	ld de, wShadowTilemap + 14 * TILEMAP_WIDTH + 16 ; $4df2
 	ld c, $04 ; $4df5
 	farcall RenderProportionalTextAt ; $4df7
-	ld hl, $007b ; $4dfa
+	ld hl, Text_30_123 ; $4dfa
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 16 ; $4dfd
 	ld c, $04 ; $4e00
 	farcall RenderProportionalTextAt ; $4e02

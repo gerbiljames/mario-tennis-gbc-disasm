@@ -83,13 +83,13 @@ InitResultsPromptState:
 	ret ; $40bd
 BuildResultsScreenTilemap:
 	call LoadResultsScreenGraphics ; $40be
-	ld hl, $04d2 ; $40c1
+	ld hl, Text_31_210 ; $40c1
 	ld de, wDecompBuffer + 4 * TILE_SIZE + 1 ; $40c4
 	ld bc, $0020 ; $40c7
 	call DrawProportionalTextLine ; $40ca
-	ld hl, $04d3 ; $40cd
+	ld hl, Text_31_211 ; $40cd
 	call DrawProportionalTextLine ; $40d0
-	ld hl, $04d4 ; $40d3
+	ld hl, Text_31_212 ; $40d3
 	call DrawProportionalTextLine ; $40d6
 	call BuildResultsScreenPanels ; $40d9
 	call DrawPlayerNameAndLevel ; $40dc
@@ -443,13 +443,13 @@ DrawStoryResultsHeader:
 	ld a, [wStoryReturnLocation] ; $446b
 	cp STORYLOC_PEACHS_CASTLE ; $446e
 	jr z, .altPosition ; $4470
-	ld hl, $04d8 ; $4472
+	ld hl, Text_31_216 ; $4472
 	ld de, wScreenAttrmap + 14 * TILEMAP_WIDTH + 3 ; $4475
 	ld bc, $0020 ; $4478
 	call DrawProportionalTextLine ; $447b
 	jr .drawOpponentName ; $447e
 .skyScene:
-	ld hl, $04d9 ; $4480
+	ld hl, Text_31_217 ; $4480
 	ld de, wScreenAttrmap + 14 * TILEMAP_WIDTH + 2 ; $4483
 	ld bc, $0020 ; $4486
 	call DrawProportionalTextLine ; $4489
@@ -799,7 +799,7 @@ DrawClassNameLabel:
 	ld hl, $04db ; $4737
 	jr .draw ; $473a
 .varsity:
-	ld hl, $04dc ; $473c
+	ld hl, Text_31_220 ; $473c
 .draw:
 	ld de, wScreenAttrmap + 14 * TILEMAP_WIDTH + 1 ; $473f
 	ld bc, $0020 ; $4742
@@ -873,7 +873,7 @@ DrawRankMatchLabel:
 	xor a ; $47c5
 	ld h, a ; $47c6
 	farcall PushTextArgNumber ; $47c7
-	ld hl, $04dd ; $47ca
+	ld hl, Text_31_221 ; $47ca
 	ld de, wScreenAttrmap + 14 * TILEMAP_WIDTH + 10 ; $47cd
 	ld bc, $0020 ; $47d0
 	call DrawProportionalTextLine ; $47d3
@@ -897,7 +897,7 @@ DrawRankMatchLabel:
 	wram_bank ; $47ef
 	ret ; $47f3
 DrawTournamentRoundLabel:
-	ld hl, $04de ; $47f4
+	ld hl, Text_31_222 ; $47f4
 	ld de, wScreenAttrmap + 14 * TILEMAP_WIDTH + 1 ; $47f7
 	ld bc, $0020 ; $47fa
 	call DrawProportionalTextLine ; $47fd
@@ -931,21 +931,21 @@ DrawTournamentRoundLabel:
 	xor a ; $4835
 	ld h, a ; $4836
 	farcall PushTextArgNumber ; $4837
-	ld hl, $04df ; $483a
+	ld hl, Text_31_223 ; $483a
 	ld de, wScreenAttrmap + 14 * TILEMAP_WIDTH + 10 ; $483d
 	ld bc, $0020 ; $4840
 	call DrawProportionalTextLine ; $4843
 	ret ; $4846
 .clearRoundLabelRow:
 	call ClearRoundLabelRow ; $4847
-	ld hl, $04e6 ; $484a
+	ld hl, Text_31_230 ; $484a
 	ld de, wScreenAttrmap + 14 * TILEMAP_WIDTH + 9 ; $484d
 	ld bc, $0020 ; $4850
 	call DrawProportionalTextLine ; $4853
 	ret ; $4856
 .clearRoundLabelRow2:
 	call ClearRoundLabelRow ; $4857
-	ld hl, $04e5 ; $485a
+	ld hl, Text_31_229 ; $485a
 	ld de, wScreenAttrmap + 14 * TILEMAP_WIDTH + 10 ; $485d
 	ld bc, $0020 ; $4860
 	call DrawProportionalTextLine ; $4863
@@ -967,13 +967,13 @@ ClearRoundLabelRow:
 	ld [hl], a ; $487f
 	ret ; $4880
 DrawPracticeMatchLabel:
-	ld hl, $04e0 ; $4881
+	ld hl, Text_31_224 ; $4881
 	ld de, wScreenAttrmap + 14 * TILEMAP_WIDTH + 11 ; $4884
 	ld bc, $0020 ; $4887
 	call DrawProportionalTextLine ; $488a
 	ret ; $488d
 DrawMarioExhibitionLabel:
-	ld hl, $04ea ; $488e
+	ld hl, Text_31_234 ; $488e
 	ld de, wScreenAttrmap + 14 * TILEMAP_WIDTH + 1 ; $4891
 	ld bc, $0020 ; $4894
 	call DrawProportionalTextLine ; $4897
@@ -2064,13 +2064,13 @@ DrawNextExpAwardMessage:
 	ld d, [hl] ; $5a06
 	or d ; $5a07
 	jr z, .drawProportionalTextLine ; $5a08
-	ld hl, $04c8 ; $5a0a
+	ld hl, Text_31_200 ; $5a0a
 	ld de, wScreenAttrmap + 1 * TILEMAP_WIDTH + 2 ; $5a0d
 	ld bc, $0020 ; $5a10
 	call DrawProportionalTextLine ; $5a13
 	jr .restore ; $5a16
 .drawProportionalTextLine:
-	ld hl, $04c7 ; $5a18
+	ld hl, Text_31_199 ; $5a18
 	ld de, wScreenAttrmap + 1 * TILEMAP_WIDTH + 2 ; $5a1b
 	ld bc, $0020 ; $5a1e
 	call DrawProportionalTextLine ; $5a21

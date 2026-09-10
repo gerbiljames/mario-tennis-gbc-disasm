@@ -1319,7 +1319,7 @@ DrawExpScreenYesNoBox:
 	jr .loop ; $4aa2
 .eq0a:
 	ld de, wCharDataPagePlane + 6 * TILEMAP_WIDTH + 2 ; $4aa4
-	ld hl, $04eb ; $4aa7
+	ld hl, Text_31_235 ; $4aa7
 	ld c, $20 ; $4aaa
 	farcall RenderProportionalTextAt ; $4aac
 	pop hl ; $4aaf
@@ -1451,7 +1451,7 @@ DrawExpScreenNameAndLevel:
 	ld h, $00 ; $4b5e
 	farcall PushTextArgNumber ; $4b60
 	ld de, wDecompBuffer + 80 * TILE_SIZE + 7 ; $4b63
-	ld hl, $04ed ; $4b66
+	ld hl, Text_31_237 ; $4b66
 	ld c, $20 ; $4b69
 	farcall RenderProportionalTextAt ; $4b6b
 	pop hl ; $4b6e
@@ -2224,7 +2224,7 @@ DrawExpScreenCaption:
 	ret ; $5017
 .caption3:
 	wram_bank $03 ; $5018
-	ld hl, $04f2 ; $501e
+	ld hl, Text_31_242 ; $501e
 	ld de, wCharDataPageSlot1 + 2 * TILEMAP_WIDTH + 11 ; $5021
 	ld c, $20 ; $5024
 	farcall RenderProportionalTextAt ; $5026

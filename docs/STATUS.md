@@ -4,7 +4,7 @@ This is where the disassembly stands and what is still open. The dated
 working log that used to live here — every session's findings in the order
 they were found, 2026-07-09 to 2026-08-08 — is `docs/history.md`, kept
 verbatim; the subsystem docs under `docs/` are the reader-facing writeups.
-The state below describes HEAD `1d371d6`.
+The state below describes HEAD `468d7e9` plus the text-id change.
 
 ## Where things stand
 
@@ -73,12 +73,10 @@ white, the 136-byte scene-config layout); `docs/story_mode.md` "Oddities
 and open questions" (story-completion unlocks, record fields `+$2b`/`+$2f`/
 `+$3d`-`+$3f`); the "not established" sentences in `docs/match_engine.md`.
 
-**Small rendering leads.** 38 of the 62 `RenderProportionalTextAt` call
-sites load their caption id as a raw `ld hl, $10xx` rather than a `Text_*`
-constant, because the text-id pass names ids by consumer and that consumer is
-not on its list. `SeanSpriteAnim04` and the 42 five-byte walk-sprite scripts
-render as `db` for reasons `docs/graphics_formats.md` §4.4 gives. Two
-`map_actors` tables carry one padding byte past their terminator.
+**Small rendering leads.** `SeanSpriteAnim04` and the 42 five-byte
+walk-sprite scripts render as `db` for reasons `docs/graphics_formats.md`
+§4.4 gives. Two `map_actors` tables carry one padding byte past their
+terminator.
 
 **Not started, and only worth it for other people.** A generated PNG pipeline
 for the graphics blobs, unit tests for `tools/disasmlib`, and a ROM-free CI
@@ -122,6 +120,11 @@ label bound to the wrong parent.
 
 ## Recent changes
 
+* **2026-09-10** — the text-id walker follows `push hl` / `pop hl` pairs, so
+  `RenderProportionalTextAt` (which parks the id while it sets the glyph
+  pointer) and the five caption helpers built on it count as consumers: 102
+  more `ld hl, Text_*` sites, 503 → 605, every caption in the briefing,
+  menu, link and clear-status screens named.
 * **2026-09-10** — the desk pass over everything the docs had flagged as
   wrong: object-header word 1 renamed `AnimPtrs` and its 635 scripts rendered
   as `anim_*` macros; bank `$03`'s fade buffers renamed the right way round

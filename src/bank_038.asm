@@ -1510,20 +1510,20 @@ DrawCharacterSelectPrompt:
 	or a ; $4adf
 	jr nz, .altRow ; $4ae0
 	wram_bank $03 ; $4ae2
-	ld hl, $0075 ; $4ae8
+	ld hl, Text_30_117 ; $4ae8
 	ld de, wShadowTilemap + 3 * TILEMAP_WIDTH + 1 ; $4aeb
 	ld c, $12 ; $4aee
 	farcall RenderProportionalTextAt ; $4af0
 	jr .nextRow ; $4af3
 .altRow:
 	wram_bank $03 ; $4af5
-	ld hl, $0077 ; $4afb
+	ld hl, Text_30_119 ; $4afb
 	ld de, wShadowTilemap + 3 * TILEMAP_WIDTH + 2 ; $4afe
 	ld c, $12 ; $4b01
 	farcall RenderProportionalTextAt ; $4b03
 .nextRow:
 	wram_bank $03 ; $4b06
-	ld hl, $0076 ; $4b0c
+	ld hl, Text_30_118 ; $4b0c
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $4b0f
 	ld c, $12 ; $4b12
 	farcall RenderProportionalTextAt ; $4b14

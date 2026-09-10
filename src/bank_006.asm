@@ -385,13 +385,13 @@ MatchPauseMenu_ReviewControls:
 	call DrawWindowFrameAt ; $438f
 	farcall PrepareGlyphBuffer ; $4392
 	ld de, $0103 ; $4395
-	ld hl, $0157 ; $4398
+	ld hl, Text_30_343 ; $4398
 	call DrawMenuTextLine ; $439b
 	ld de, $060a ; $439e
-	ld hl, $0158 ; $43a1
+	ld hl, Text_30_344 ; $43a1
 	call DrawMenuTextLine ; $43a4
 	ld de, $010c ; $43a7
-	ld hl, $0159 ; $43aa
+	ld hl, Text_30_345 ; $43aa
 	call DrawMenuTextLine ; $43ad
 	farcall UploadGlyphBuffer ; $43b0
 	call FlushTilemapToVram ; $43b3
@@ -914,7 +914,7 @@ ScoreboardCaption_SetGamePoint:
 	add hl, bc ; $4797
 	ld e, l ; $4798
 	ld d, h ; $4799
-	ld hl, $015a ; $479a
+	ld hl, Text_30_346 ; $479a
 	call DrawMenuTextLine ; $479d
 	ret ; $47a0
 ScoreboardCaption_Total:
@@ -926,7 +926,7 @@ ScoreboardCaption_Total:
 	add hl, bc ; $47aa
 	ld e, l ; $47ab
 	ld d, h ; $47ac
-	ld hl, $015b ; $47ad
+	ld hl, Text_30_347 ; $47ad
 	call DrawMenuTextLine ; $47b0
 	ret ; $47b3
 ScoreboardCaption_ScoreTarget:
@@ -938,19 +938,19 @@ ScoreboardCaption_ScoreTarget:
 	add hl, bc ; $47bd
 	ld e, l ; $47be
 	ld d, h ; $47bf
-	ld hl, $015c ; $47c0
+	ld hl, Text_30_348 ; $47c0
 	call DrawMenuTextLine ; $47c3
 	ld hl, $0304 ; $47c6
 	add hl, bc ; $47c9
 	ld e, l ; $47ca
 	ld d, h ; $47cb
-	ld hl, $015d ; $47cc
+	ld hl, Text_30_349 ; $47cc
 	call DrawMenuTextLine ; $47cf
 	ld hl, $0505 ; $47d2
 	add hl, bc ; $47d5
 	ld e, l ; $47d6
 	ld d, h ; $47d7
-	ld hl, $015c ; $47d8
+	ld hl, Text_30_348 ; $47d8
 	call DrawMenuTextLine ; $47db
 	ret ; $47de
 ScoreboardCaption_ScoreHigh:
@@ -962,19 +962,19 @@ ScoreboardCaption_ScoreHigh:
 	add hl, bc ; $47e8
 	ld e, l ; $47e9
 	ld d, h ; $47ea
-	ld hl, $015c ; $47eb
+	ld hl, Text_30_348 ; $47eb
 	call DrawMenuTextLine ; $47ee
 	ld hl, $0404 ; $47f1
 	add hl, bc ; $47f4
 	ld e, l ; $47f5
 	ld d, h ; $47f6
-	ld hl, $015e ; $47f7
+	ld hl, Text_30_350 ; $47f7
 	call DrawMenuTextLine ; $47fa
 	ld hl, $0505 ; $47fd
 	add hl, bc ; $4800
 	ld e, l ; $4801
 	ld d, h ; $4802
-	ld hl, $015c ; $4803
+	ld hl, Text_30_348 ; $4803
 	call DrawMenuTextLine ; $4806
 	ret ; $4809
 GetMatchMenuItemId:
@@ -3107,7 +3107,7 @@ StoryPauseMenu_MusicToggle:
 	ret ; $702e
 StoryPauseMenu_SaveQuit:
 	call RestoreStoryTilemapNoPriority ; $702f
-	ld hl, $0172 ; $7032
+	ld hl, Text_30_370 ; $7032
 	ld de, $000e ; $7035
 	call DrawStoryMenuCaption ; $7038
 	ld a, $02 ; $703b

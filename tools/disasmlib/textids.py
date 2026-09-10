@@ -38,19 +38,40 @@ TEXT_ID_SINKS = ("FetchDialogueText", "AddTextIdOffset", "CreateWindowWithTextId
 _HL_CLOBBER = ("ld hl,", "ld h,", "ld l,", "pop hl")
 
 
+_PUSH = {"push af": "af", "push bc": "bc", "push de": "de", "push hl": "hl"}
+_POP = {"pop af": "af", "pop bc": "bc", "pop de": "de", "pop hl": "hl"}
+
+
 def _forwards_hl(dis, order, idx, start, sinks, limit=24):
-    """True if the routine at `start` reaches a sink with hl untouched."""
+    """True if the routine at `start` reaches a sink with hl intact. A value
+    parked with `push hl` and brought back by the matching `pop hl` counts as
+    intact -- RenderProportionalTextAt saves the id, uses hl for the glyph
+    write pointer, restores it and only then calls AddTextIdOffset."""
     from .seeds import _call_target
     i, prev_end = idx[start], start
+    stack, live = [], True
     for _ in range(limit):
         if i >= len(order) or order[i] != prev_end:
             return False
         no = order[i]
         ins = dis.instrs[no]
         if ins.is_call and _call_target(dis, no, ins) in sinks:
-            return True
-        if ins.text.startswith(_HL_CLOBBER) or ins.ends_flow:
+            return live
+        text = ins.text
+        if text in _PUSH:
+            stack.append((_PUSH[text], live if _PUSH[text] == "hl" else None))
+        elif text in _POP:
+            if not stack or stack[-1][0] != _POP[text]:
+                return False   # unbalanced: give up rather than guess
+            reg, saved = stack.pop()
+            if reg == "hl":
+                live = saved
+        elif text.startswith(_HL_CLOBBER):
+            live = False
+        elif ins.ends_flow:
             return False
+        if not live and not any(r == "hl" and sv for r, sv in stack):
+            return False   # the id is gone and nothing on the stack has it
         prev_end = no + ins.size
         i += 1
     return False

@@ -3089,7 +3089,7 @@ DrawCharSelectPrompt:
 	ld a, [wStoryCharacterSlot] ; $605f
 	or a ; $6062
 	jr z, .zero ; $6063
-	ld hl, $047b ; $6065
+	ld hl, Text_31_123 ; $6065
 .zero:
 	ld de, $da01 ; $6068
 	farcall RenderProportionalTextAt32 ; $606b
@@ -4282,33 +4282,33 @@ Unused_1b_DrawErasePrompt:
 	farcall PushTextArgString ; $6a12
 	ld de, $d9c1 ; $6a15
 	call CopyMainCharNameWithDiacritics ; $6a18
-	ld hl, $046a ; $6a1b
+	ld hl, Text_31_106 ; $6a1b
 	farcall RenderProportionalTextAt32 ; $6a1e
 	farcall DrawYesNoLabels ; $6a21
 	ret ; $6a24
 Unused_1b_DrawContinuePrompt:
-	ld hl, $046d ; $6a25
+	ld hl, Text_31_109 ; $6a25
 	ld de, $d9c1 ; $6a28
 	farcall RenderProportionalTextAt32 ; $6a2b
 	farcall DrawYesNoLabels ; $6a2e
 	ret ; $6a31
 Unused_1b_DrawEraseConfirmPrompt:
-	ld hl, $046b ; $6a32
+	ld hl, Text_31_107 ; $6a32
 	ld de, $d9c1 ; $6a35
 	farcall RenderProportionalTextAt32 ; $6a38
 	farcall DrawYesNoLabels ; $6a3b
 	ret ; $6a3e
 Unused_1b_DrawIsThisCorrectPrompt:
-	ld hl, $0471 ; $6a3f
+	ld hl, Text_31_113 ; $6a3f
 	ld de, $d9c1 ; $6a42
 	farcall RenderProportionalTextAt32 ; $6a45
 	farcall DrawYesNoLabels ; $6a48
 	ret ; $6a4b
 Unused_1b_DrawCharAndItemDataPrompt:
-	ld hl, $0162 ; $6a4c
+	ld hl, Text_30_354 ; $6a4c
 	ld de, $d9c1 ; $6a4f
 	farcall RenderProportionalTextAt32 ; $6a52
-	ld hl, $0162 ; $6a55
+	ld hl, Text_30_354 ; $6a55
 	ld de, $da01 ; $6a58
 	farcall RenderProportionalTextAt32 ; $6a5b
 	ret ; $6a5e
@@ -4414,10 +4414,10 @@ ShowNoN64DataFoundScreen:
 	call FillTilemapRow17 ; $6b26
 	ld hl, wTextTileBuffer + 78 * TILE_SIZE + 2 ; $6b29
 	call FillTilemapRow17 ; $6b2c
-	ld hl, $047b ; $6b2f
+	ld hl, Text_31_123 ; $6b2f
 	ld de, wTextTileBuffer + 8 * TILE_SIZE + 3 ; $6b32
 	farcall RenderProportionalTextAt32 ; $6b35
-	ld hl, $047c ; $6b38
+	ld hl, Text_31_124 ; $6b38
 	ld de, wTextTileBuffer + 12 * TILE_SIZE + 3 ; $6b3b
 	farcall RenderProportionalTextAt32 ; $6b3e
 	farcall ForceFlushBgMapToVram ; $6b41
