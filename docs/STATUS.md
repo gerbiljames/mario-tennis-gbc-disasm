@@ -116,6 +116,10 @@ label bound to the wrong parent.
 
 ## Recent changes
 
+* **2026-09-11** — `tools/extract.py --keep`: a re-extraction that leaves an
+  edited file alone (a `.bin` or generated `.asm` that differs from the ROM,
+  or a PNG that no longer encodes to its blob) and deletes nothing, so the
+  tree can be regenerated around a modder's changes.
 * **2026-09-11** — live twins are marked. `tools/twins.py` fingerprints the
   generated source and finds 64 groups of instruction-identical live
   routines, 279 in all (the shot solver's fifteen helpers in nine banks,

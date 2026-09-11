@@ -105,9 +105,12 @@ restated:
 - **Save files.** `tools/savetool.py` verifies, dumps and edits battery saves
   (levels, stats, unlock flags), recomputing the checksums (`docs/save_format.md`).
 
-One caveat: `data/` is generated, so `./setup.sh` and `tools/extract.py`
-overwrite it (and delete files the manifest no longer lists). Keep modified
-assets outside the tree and copy them in, or do not re-run extraction.
+`data/` is generated, so `./setup.sh` and `tools/extract.py` overwrite it
+and delete files the manifest no longer lists. To re-extract after the
+source has been regenerated without losing edits, run extraction with
+`--keep`: a file that differs from what the ROM would give (a `.bin`, a
+generated `.asm`, or a PNG that no longer encodes to its blob) is left as
+it is and reported, and nothing is deleted.
 
 ## Reading the source
 

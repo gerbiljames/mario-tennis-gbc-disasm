@@ -101,6 +101,44 @@ class TileImages(unittest.TestCase):
             self.assertEqual(len(grown), 20 * 16)
             self.assertEqual(grown[:17 * 16], data)
 
+    def test_extract_keep_leaves_edits(self):
+        rng = random.Random(6)
+        rom = bytes(rng.getrandbits(8) for _ in range(0x200))
+        with tempfile.TemporaryDirectory() as d:
+            romp, man, out = os.path.join(d, "r.gbc"), os.path.join(d, "m"), os.path.join(d, "out")
+            with open(romp, "wb") as f:
+                f.write(rom)
+            with open(man, "w") as f:
+                f.write("bank_000/Tiles.bin 000000 40 gfx\nbank_000/Blob.bin 000040 10\n")
+            run = lambda *a: subprocess.run(  # noqa: E731
+                [sys.executable, str(TOOLS / "extract.py"), *a, romp, man, out],
+                capture_output=True, text=True, check=True).stdout
+            run()
+            blob = os.path.join(out, "bank_000", "Blob.bin")
+            png = os.path.join(out, "bank_000", "Tiles.png")
+            with open(blob, "wb") as f:
+                f.write(b"edited")
+            from PIL import Image
+            from PIL.PngImagePlugin import PngInfo
+            img = Image.open(png)
+            img.putpixel((0, 0), (img.getpixel((0, 0)) + 1) % 4)
+            info = PngInfo()
+            for k, v in img.text.items():
+                info.add_text(k, v)
+            img.save(png, pnginfo=info)
+            stale = os.path.join(out, "bank_000", "old.bin")
+            with open(stale, "wb") as f:
+                f.write(b"x")
+            outp = run("--keep")
+            self.assertIn("kept 2 edited", outp)
+            self.assertEqual(open(blob, "rb").read(), b"edited")
+            self.assertNotEqual(self.gfx.image_file_to_tiles(png), rom[:0x40])
+            self.assertTrue(os.path.exists(stale))
+            run()
+            self.assertEqual(open(blob, "rb").read(), rom[0x40:0x50])
+            self.assertEqual(self.gfx.image_file_to_tiles(png), rom[:0x40])
+            self.assertFalse(os.path.exists(stale))
+
     def test_size_inc(self):
         with tempfile.TemporaryDirectory() as d:
             p = os.path.join(d, "lz_Thing.bin")

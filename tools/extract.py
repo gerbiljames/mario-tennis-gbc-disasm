@@ -484,16 +484,42 @@ def render_spec(data: bytes, spec: str) -> str:
     return render_text(data)
 
 
+def _edited(dest, data):
+    """True when `dest` exists and no longer holds `data` -- someone changed
+    it, so --keep leaves it alone."""
+    return dest.exists() and dest.read_bytes() != data
+
+
+def _gfx_edited(dest, png, data, gfx):
+    """A graphics pair counts as edited if the .bin differs from the ROM or
+    the PNG no longer encodes to it (an edit not yet built, which rewriting
+    the .bin last would silently bury)."""
+    if _edited(dest, data):
+        return True
+    if not png.exists():
+        return False
+    try:
+        return gfx.image_file_to_tiles(png) != (
+            gfx.lz.decompress(data, 0)[0] if gfx.is_lz(dest) else data)
+    except Exception:
+        return True
+
+
 def main() -> int:
-    if len(sys.argv) != 4:
-        print(f"usage: {sys.argv[0]} <baserom> <manifest> <outdir>", file=sys.stderr)
+    args = [a for a in sys.argv[1:] if a != "--keep"]
+    keep = len(args) != len(sys.argv) - 1
+    if len(args) != 3:
+        print(f"usage: {sys.argv[0]} [--keep] <baserom> <manifest> <outdir>\n"
+              "  --keep: leave a file that has been edited since extraction "
+              "as it is, and delete nothing", file=sys.stderr)
         return 2
-    rom = Path(sys.argv[1]).read_bytes()
-    manifest = Path(sys.argv[2])
-    outdir = Path(sys.argv[3])
+    rom = Path(args[0]).read_bytes()
+    manifest = Path(args[1])
+    outdir = Path(args[2])
 
     count = 0
     written = set()
+    kept = []
     pngs = gfx_skipped = 0
     try:
         import gfx
@@ -516,12 +542,26 @@ def main() -> int:
             return 1
         dest = outdir / path
         dest.parent.mkdir(parents=True, exist_ok=True)
-        if spec == "gfx" or (spec or "").startswith("gfx:"):
+        data = rom[off:off + length]
+        is_gfx = spec == "gfx" or (spec or "").startswith("gfx:")
+        if keep:
+            png = dest.with_suffix(".png")
+            if (_gfx_edited(dest, png, data, gfx) if is_gfx and gfx_ok
+                    else _edited(dest, (data if not spec and not path.endswith(".asm")
+                                        else (render_spec(data, spec) if spec
+                                              else render_text(data)).encode()))):
+                kept.append(path)
+                written.add(path)
+                if is_gfx and png.exists():
+                    written.add(str(png.relative_to(outdir)))
+                count += 1
+                continue
+        if is_gfx:
             # the .bin as always, plus the PNG a modder edits; the .bin is
             # written last so it is the newer file and make leaves it alone
             # until the PNG changes
             png = dest.with_suffix(".png")
-            dest.write_bytes(rom[off:off + length])
+            dest.write_bytes(data)
             if gfx_ok:
                 if gfx.decode(dest, png, spec.partition(":")[2] or None) is None:
                     png.unlink(missing_ok=True)
@@ -550,9 +590,15 @@ def main() -> int:
              if f.is_file() and str(f.relative_to(outdir)) not in written
              and not (f.suffix == ".inc"
                       and str(f.with_suffix(".bin").relative_to(outdir)) in written)]
-    for f in stale:
-        f.unlink()
-    note = f", removed {len(stale)} stale" if stale else ""
+    if not keep:
+        for f in stale:
+            f.unlink()
+    note = (f", {'left' if keep else 'removed'} {len(stale)} stale"
+            if stale else "")
+    if kept:
+        note += f", kept {len(kept)} edited"
+        for path in kept:
+            print(f"  kept {path}")
     if pngs:
         note += f", {pngs} graphics PNGs"
     if gfx_skipped:

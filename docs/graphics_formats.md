@@ -31,7 +31,8 @@ the tile count in the file. `make` re-encodes any blob whose PNG is newer
 `make check` verifies that every PNG still encodes back to its blob. A
 plain image grows its blob when the canvas is enlarged and something is
 drawn past the last tile; blank padding in a partial last row is not
-growth.
+growth. `tools/extract.py --keep` re-extracts around edited files instead
+of over them.
 
 The copies that put a blob into VRAM follow its size where the source can
 say so: a whole copy of a raw blob is `ld c, (Next - Blob) / 16`, and a
