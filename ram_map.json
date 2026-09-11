@@ -1167,7 +1167,7 @@
  },
  "0xc600": {
   "name": "wTextBuffer",
-  "note": "Dialogue string buffer (160 bytes); text-bank fetch routines copy string N here when called with a = 0",
+  "note": "Dialogue string buffer (160 bytes); text-bank fetch routines copy string N here when called with a = 0. Also the save engine's staging area: MirrorSaveHeaderToBank1 ($03:$48a1) copies each 512-byte SRAM header region through $c600-$c7ff on its way to SRAM bank 1 (ld c, $20 = 32 blocks of 16), running over this buffer, wTilemapRowStage, wInlineTextBuffer and the debug-menu variables up to $c7ff; the directory entries its last copy leaves behind are what a RAM poison run found at $c6e0-$c75f",
   "size": 160
  },
  "0xc6a0": {
@@ -1434,8 +1434,8 @@
  },
  "0xc82c": {
   "name": "wStoryModeMainCharacterEXP",
-  "note": "[16-bit] Story Mode - Main Character EXP",
-  "size": 2
+  "note": "[3 bytes] Story Mode - Main Character EXP -- a 3-byte accumulator, capped at 99999 by AddExpCapped",
+  "size": 3
  },
  "0xc838": {
   "name": "wStoryModeMainCharacterSpinLevel",
@@ -1523,8 +1523,8 @@
  },
  "0xc86c": {
   "name": "wStoryModePartnerCharacterEXP",
-  "note": "[16-bit] Story Mode - Partner Character EXP",
-  "size": 2
+  "note": "[3 bytes] Story Mode - Partner Character EXP -- a 3-byte accumulator, capped at 99999 by AddExpCapped",
+  "size": 3
  },
  "0xc878": {
   "name": "wStoryModePartnerCharacterSpinLevel",
@@ -1929,8 +1929,8 @@
  },
  "0xc92c": {
   "name": "wStoryMainCharExp",
-  "note": "[16-bit] EXP in the story main character's record ($c900 + $2c)",
-  "size": 2
+  "note": "[3 bytes] EXP in the story main character's record ($c900 + $2c) -- a 3-byte accumulator, capped at 99999 by AddExpCapped",
+  "size": 3
  },
  "0xc938": {
   "name": "wStoryMainCharSpinLevel",
@@ -1983,8 +1983,8 @@
  },
  "0xc96c": {
   "name": "wStoryPartnerCharExp",
-  "note": "[16-bit] EXP in the story partner's record ($c940 + $2c)",
-  "size": 2
+  "note": "[3 bytes] EXP in the story partner's record ($c940 + $2c) -- a 3-byte accumulator, capped at 99999 by AddExpCapped",
+  "size": 3
  },
  "0xc978": {
   "name": "wStoryPartnerCharSpinLevel",
@@ -2871,5 +2871,321 @@
   "name": "wShadowOAM2",
   "note": "[160 bytes] The second shadow OAM page: hOAMDMARoutine sources page $c0 or $c5 as wSpriteBufferPage toggles each frame, so this is the buffer being built while wShadowOAM is being copied. Like wShadowOAM it is only ever reached through pointers (the sprite queue writes via wSpriteBufferPage as the high byte), never by a direct [$c5xx] operand, which is why it went unnamed until the 2026-09-11 RAM-poison run showed it written in every flow",
   "size": 160
+ },
+ "0xc807": {
+  "name": "wStoryModeMainCharacterNamePad",
+  "note": "[4 bytes] Character record +$07-$0a of the saved-slot mirror of the story main character record: name terminator and padding after the 7-character name; the drawer scans to the NUL, so these are read",
+  "size": 4
+ },
+ "0xc80f": {
+  "name": "wStoryModeMainCharacterPhysics",
+  "note": "[9 bytes] Character record +$0f-$17 of the saved-slot mirror of the story main character record: AI and physics attributes copied from the ROM record (StoryCharacterRecords_02): +$0f a personality byte, +$10-$17 the reach windows, smash and dive speeds and reaction delays that RecomputeCharacterStats refreshes from the +$30 template",
+  "size": 9
+ },
+ "0xc819": {
+  "name": "wStoryModeMainCharacterSwingAttrWord",
+  "note": "[2 bytes] Character record +$19-$1a of the saved-slot mirror of the story main character record: swing attribute word",
+  "size": 2
+ },
+ "0xc81b": {
+  "name": "wStoryModeMainCharacterAiParams",
+  "note": "[5 bytes] Character record +$1b-$1f of the saved-slot mirror of the story main character record: the AI personality parameters (docs/story_mode.md, \"The character record\")",
+  "size": 5
+ },
+ "0xc830": {
+  "name": "wStoryModeMainCharacterPhysicsTemplate",
+  "note": "[8 bytes] Character record +$30-$37 of the saved-slot mirror of the story main character record: physics template, copied into +$10-+$17 on every RecomputeCharacterStats",
+  "size": 8
+ },
+ "0xc847": {
+  "name": "wStoryModePartnerCharacterNamePad",
+  "note": "[4 bytes] Character record +$07-$0a of the saved-slot mirror of the partner record: name terminator and padding after the 7-character name; the drawer scans to the NUL, so these are read",
+  "size": 4
+ },
+ "0xc84f": {
+  "name": "wStoryModePartnerCharacterPhysics",
+  "note": "[9 bytes] Character record +$0f-$17 of the saved-slot mirror of the partner record: AI and physics attributes copied from the ROM record (StoryCharacterRecords_02): +$0f a personality byte, +$10-$17 the reach windows, smash and dive speeds and reaction delays that RecomputeCharacterStats refreshes from the +$30 template",
+  "size": 9
+ },
+ "0xc859": {
+  "name": "wStoryModePartnerCharacterSwingAttrWord",
+  "note": "[2 bytes] Character record +$19-$1a of the saved-slot mirror of the partner record: swing attribute word",
+  "size": 2
+ },
+ "0xc85b": {
+  "name": "wStoryModePartnerCharacterAiParams",
+  "note": "[5 bytes] Character record +$1b-$1f of the saved-slot mirror of the partner record: the AI personality parameters (docs/story_mode.md, \"The character record\")",
+  "size": 5
+ },
+ "0xc870": {
+  "name": "wStoryModePartnerCharacterPhysicsTemplate",
+  "note": "[8 bytes] Character record +$30-$37 of the saved-slot mirror of the partner record: physics template, copied into +$10-+$17 on every RecomputeCharacterStats",
+  "size": 8
+ },
+ "0xc907": {
+  "name": "wStoryMainCharNamePad",
+  "note": "[4 bytes] Character record +$07-$0a of the live story main character record: name terminator and padding after the 7-character name; the drawer scans to the NUL, so these are read",
+  "size": 4
+ },
+ "0xc90f": {
+  "name": "wStoryMainCharPhysics",
+  "note": "[9 bytes] Character record +$0f-$17 of the live story main character record: AI and physics attributes copied from the ROM record (StoryCharacterRecords_02): +$0f a personality byte, +$10-$17 the reach windows, smash and dive speeds and reaction delays that RecomputeCharacterStats refreshes from the +$30 template",
+  "size": 9
+ },
+ "0xc919": {
+  "name": "wStoryMainCharSwingAttrWord",
+  "note": "[2 bytes] Character record +$19-$1a of the live story main character record: swing attribute word",
+  "size": 2
+ },
+ "0xc91b": {
+  "name": "wStoryMainCharAiParams",
+  "note": "[5 bytes] Character record +$1b-$1f of the live story main character record: the AI personality parameters (docs/story_mode.md, \"The character record\")",
+  "size": 5
+ },
+ "0xc930": {
+  "name": "wStoryMainCharPhysicsTemplate",
+  "note": "[8 bytes] Character record +$30-$37 of the live story main character record: physics template, copied into +$10-+$17 on every RecomputeCharacterStats",
+  "size": 8
+ },
+ "0xc947": {
+  "name": "wStoryPartnerCharNamePad",
+  "note": "[4 bytes] Character record +$07-$0a of the live partner record: name terminator and padding after the 7-character name; the drawer scans to the NUL, so these are read",
+  "size": 4
+ },
+ "0xc94f": {
+  "name": "wStoryPartnerCharPhysics",
+  "note": "[9 bytes] Character record +$0f-$17 of the live partner record: AI and physics attributes copied from the ROM record (StoryCharacterRecords_02): +$0f a personality byte, +$10-$17 the reach windows, smash and dive speeds and reaction delays that RecomputeCharacterStats refreshes from the +$30 template",
+  "size": 9
+ },
+ "0xc959": {
+  "name": "wStoryPartnerCharSwingAttrWord",
+  "note": "[2 bytes] Character record +$19-$1a of the live partner record: swing attribute word",
+  "size": 2
+ },
+ "0xc95b": {
+  "name": "wStoryPartnerCharAiParams",
+  "note": "[5 bytes] Character record +$1b-$1f of the live partner record: the AI personality parameters (docs/story_mode.md, \"The character record\")",
+  "size": 5
+ },
+ "0xc960": {
+  "name": "wStoryPartnerCharStats",
+  "note": "[11 bytes] Character record +$20-$2a of the live partner record: the eleven displayed stat bars 0-9: Top, Slice, Serve, Stroke, Volley, Angle, Placement, Speed, Dash, Reaction, Stop",
+  "size": 11
+ },
+ "0xc970": {
+  "name": "wStoryPartnerCharPhysicsTemplate",
+  "note": "[8 bytes] Character record +$30-$37 of the live partner record: physics template, copied into +$10-+$17 on every RecomputeCharacterStats",
+  "size": 8
+ },
+ "0xca07": {
+  "name": "wPlayer1MainNamePad",
+  "note": "[3 bytes] Character record +$07-$09 of on-court record for player 1 main: name terminator and padding after the 7-character name; the drawer scans to the NUL, so these are read",
+  "size": 3
+ },
+ "0xca0f": {
+  "name": "wPlayer1MainPhysics",
+  "note": "[9 bytes] Character record +$0f-$17 of on-court record for player 1 main: AI and physics attributes copied from the ROM record (StoryCharacterRecords_02): +$0f a personality byte, +$10-$17 the reach windows, smash and dive speeds and reaction delays that RecomputeCharacterStats refreshes from the +$30 template",
+  "size": 9
+ },
+ "0xca19": {
+  "name": "wPlayer1MainSwingAttrWord",
+  "note": "[2 bytes] Character record +$19-$1a of on-court record for player 1 main: swing attribute word",
+  "size": 2
+ },
+ "0xca1b": {
+  "name": "wPlayer1MainAiParams",
+  "note": "[5 bytes] Character record +$1b-$1f of on-court record for player 1 main: the AI personality parameters (docs/story_mode.md, \"The character record\")",
+  "size": 5
+ },
+ "0xca20": {
+  "name": "wPlayer1MainStats",
+  "note": "[11 bytes] Character record +$20-$2a of on-court record for player 1 main: the eleven displayed stat bars 0-9: Top, Slice, Serve, Stroke, Volley, Angle, Placement, Speed, Dash, Reaction, Stop",
+  "size": 11
+ },
+ "0xca30": {
+  "name": "wPlayer1MainPhysicsTemplate",
+  "note": "[8 bytes] Character record +$30-$37 of on-court record for player 1 main: physics template, copied into +$10-+$17 on every RecomputeCharacterStats",
+  "size": 8
+ },
+ "0xca38": {
+  "name": "wPlayer1MainTrainLevels",
+  "note": "[4 bytes] Character record +$38-$3b of on-court record for player 1 main: the four trainable levels: Spin, Power, Control, Speed",
+  "size": 4
+ },
+ "0xca47": {
+  "name": "wPlayer1PartnerNamePad",
+  "note": "[4 bytes] Character record +$07-$0a of on-court record for player 1 partner: name terminator and padding after the 7-character name; the drawer scans to the NUL, so these are read",
+  "size": 4
+ },
+ "0xca4f": {
+  "name": "wPlayer1PartnerPhysics",
+  "note": "[9 bytes] Character record +$0f-$17 of on-court record for player 1 partner: AI and physics attributes copied from the ROM record (StoryCharacterRecords_02): +$0f a personality byte, +$10-$17 the reach windows, smash and dive speeds and reaction delays that RecomputeCharacterStats refreshes from the +$30 template",
+  "size": 9
+ },
+ "0xca59": {
+  "name": "wPlayer1PartnerSwingAttrWord",
+  "note": "[2 bytes] Character record +$19-$1a of on-court record for player 1 partner: swing attribute word",
+  "size": 2
+ },
+ "0xca60": {
+  "name": "wPlayer1PartnerStats",
+  "note": "[11 bytes] Character record +$20-$2a of on-court record for player 1 partner: the eleven displayed stat bars 0-9: Top, Slice, Serve, Stroke, Volley, Angle, Placement, Speed, Dash, Reaction, Stop",
+  "size": 11
+ },
+ "0xca70": {
+  "name": "wPlayer1PartnerPhysicsTemplate",
+  "note": "[8 bytes] Character record +$30-$37 of on-court record for player 1 partner: physics template, copied into +$10-+$17 on every RecomputeCharacterStats",
+  "size": 8
+ },
+ "0xca78": {
+  "name": "wPlayer1PartnerTrainLevels",
+  "note": "[4 bytes] Character record +$38-$3b of on-court record for player 1 partner: the four trainable levels: Spin, Power, Control, Speed",
+  "size": 4
+ },
+ "0xca87": {
+  "name": "wPlayer2MainNamePad",
+  "note": "[3 bytes] Character record +$07-$09 of on-court record for player 2 main: name terminator and padding after the 7-character name; the drawer scans to the NUL, so these are read",
+  "size": 3
+ },
+ "0xca90": {
+  "name": "wPlayer2MainPhysicsFrom10",
+  "note": "[8 bytes] Character record +$10-$17 of on-court record for player 2 main: AI and physics attributes copied from the ROM record (StoryCharacterRecords_02): +$0f a personality byte, +$10-$17 the reach windows, smash and dive speeds and reaction delays that RecomputeCharacterStats refreshes from the +$30 template",
+  "size": 8
+ },
+ "0xca99": {
+  "name": "wPlayer2MainSwingAttrWord",
+  "note": "[2 bytes] Character record +$19-$1a of on-court record for player 2 main: swing attribute word",
+  "size": 2
+ },
+ "0xcaa0": {
+  "name": "wPlayer2MainStats",
+  "note": "[11 bytes] Character record +$20-$2a of on-court record for player 2 main: the eleven displayed stat bars 0-9: Top, Slice, Serve, Stroke, Volley, Angle, Placement, Speed, Dash, Reaction, Stop",
+  "size": 11
+ },
+ "0xcab0": {
+  "name": "wPlayer2MainPhysicsTemplate",
+  "note": "[8 bytes] Character record +$30-$37 of on-court record for player 2 main: physics template, copied into +$10-+$17 on every RecomputeCharacterStats",
+  "size": 8
+ },
+ "0xcab8": {
+  "name": "wPlayer2MainTrainLevels",
+  "note": "[4 bytes] Character record +$38-$3b of on-court record for player 2 main: the four trainable levels: Spin, Power, Control, Speed",
+  "size": 4
+ },
+ "0xcac7": {
+  "name": "wPlayer2PartnerNamePad",
+  "note": "[4 bytes] Character record +$07-$0a of on-court record for player 2 partner: name terminator and padding after the 7-character name; the drawer scans to the NUL, so these are read",
+  "size": 4
+ },
+ "0xcacf": {
+  "name": "wPlayer2PartnerPhysics",
+  "note": "[9 bytes] Character record +$0f-$17 of on-court record for player 2 partner: AI and physics attributes copied from the ROM record (StoryCharacterRecords_02): +$0f a personality byte, +$10-$17 the reach windows, smash and dive speeds and reaction delays that RecomputeCharacterStats refreshes from the +$30 template",
+  "size": 9
+ },
+ "0xcad9": {
+  "name": "wPlayer2PartnerSwingAttrWord",
+  "note": "[2 bytes] Character record +$19-$1a of on-court record for player 2 partner: swing attribute word",
+  "size": 2
+ },
+ "0xcae0": {
+  "name": "wPlayer2PartnerStats",
+  "note": "[11 bytes] Character record +$20-$2a of on-court record for player 2 partner: the eleven displayed stat bars 0-9: Top, Slice, Serve, Stroke, Volley, Angle, Placement, Speed, Dash, Reaction, Stop",
+  "size": 11
+ },
+ "0xcaf0": {
+  "name": "wPlayer2PartnerPhysicsTemplate",
+  "note": "[8 bytes] Character record +$30-$37 of on-court record for player 2 partner: physics template, copied into +$10-+$17 on every RecomputeCharacterStats",
+  "size": 8
+ },
+ "0xcaf8": {
+  "name": "wPlayer2PartnerTrainLevels",
+  "note": "[4 bytes] Character record +$38-$3b of on-court record for player 2 partner: the four trainable levels: Spin, Power, Control, Speed",
+  "size": 4
+ },
+ "0xca2c": {
+  "name": "wPlayer1MainExp",
+  "note": "[3 bytes] Character record +$2c-$2e of the on-court record: EXP, a 3-byte accumulator capped at 99999 by AddExpCapped",
+  "size": 3
+ },
+ "0xca6c": {
+  "name": "wPlayer1PartnerExp",
+  "note": "[3 bytes] Character record +$2c-$2e of the on-court record: EXP, a 3-byte accumulator capped at 99999 by AddExpCapped",
+  "size": 3
+ },
+ "0xcaac": {
+  "name": "wPlayer2MainExp",
+  "note": "[3 bytes] Character record +$2c-$2e of the on-court record: EXP, a 3-byte accumulator capped at 99999 by AddExpCapped",
+  "size": 3
+ },
+ "0xcaec": {
+  "name": "wPlayer2PartnerExp",
+  "note": "[3 bytes] Character record +$2c-$2e of the on-court record: EXP, a 3-byte accumulator capped at 99999 by AddExpCapped",
+  "size": 3
+ },
+ "0xc801": {
+  "name": "wSavedMainCharacterName",
+  "note": "[6 bytes] Bytes 1-6 of the saved-slot mirror's main character name (record +$01-$06); byte 0 of the name is the slot image base wStorySlotData. The mirror pair at $c800/$c840 is kept in step with the live records at $c900/$c940 by a 128-byte copy ($02:$4795)",
+  "size": 6
+ },
+ "0xc80b": {
+  "name": "wSavedMainCharacterId",
+  "note": "[8-bit] Saved-slot mirror of the main character record +$0b: character id (post-RemapExtendedCharId), the mirror of $c90b"
+ },
+ "0xc80c": {
+  "name": "wSavedMainCharacterPaletteIndex",
+  "note": "[8-bit] Saved-slot mirror of the main character record +$0c: palette index (GetCharPaletteIndex)"
+ },
+ "0xc80d": {
+  "name": "wSavedMainCharacterGender",
+  "note": "[8-bit] Saved-slot mirror of the main character record +$0d: gender, 0 male, 1 female"
+ },
+ "0xc80e": {
+  "name": "wSavedMainCharacterLeftHanded",
+  "note": "[8-bit] Saved-slot mirror of the main character record +$0e: left-handed flag"
+ },
+ "0xc84b": {
+  "name": "wSavedPartnerCharacterId",
+  "note": "[8-bit] Saved-slot mirror of the partner record +$0b: character id (post-RemapExtendedCharId), the mirror of $c94b"
+ },
+ "0xc84c": {
+  "name": "wSavedPartnerCharacterPaletteIndex",
+  "note": "[8-bit] Saved-slot mirror of the partner record +$0c: palette index (GetCharPaletteIndex)"
+ },
+ "0xc84d": {
+  "name": "wSavedPartnerCharacterGender",
+  "note": "[8-bit] Saved-slot mirror of the partner record +$0d: gender, 0 male, 1 female"
+ },
+ "0xc84e": {
+  "name": "wSavedPartnerCharacterLeftHanded",
+  "note": "[8-bit] Saved-slot mirror of the partner record +$0e: left-handed flag"
+ },
+ "0xc840": {
+  "name": "wSavedPartnerCharacterName",
+  "note": "[7 bytes] Saved-slot mirror of the partner record +$00-$06: the 7-character name, NUL-padded",
+  "size": 7
+ },
+ "0xc9ce": {
+  "name": "wStoryModeNpcEventFlags",
+  "note": "[3 bytes] wGameFlags bytes $0e-$10 (flags 112-135): the NPC talked/moved/turned and scene-seen flags -- FLAG_SENIOR_COURT_NPC03_TURNED, FLAG_TOURNAMENT_NPC05_TALKED_*, FLAG_COURT2_SPECTATORS_TALKED_*, FLAG_RESTAURANT_NPC08_MOVED, FLAG_PRACTICE_ROOM_SESSION_ACTIVE, FLAG_REPAIR_COUNTER_*, FLAG_SWING_PRACTICE_KID_PLACED, FLAG_JUNIOR_COURT_NPC0A_TALKED, FLAG_AWARDS_CEREMONY_SEEN_* (flags.json)",
+  "size": 3
+ },
+ "0xc9d1": {
+  "name": "wGameFlagsSpare",
+  "note": "[3 bytes] wGameFlags bytes $11-$13 (flags 136-159): no flag number in flags.json lands here and no site sets or tests one -- saved with the slot, never used",
+  "size": 3
+ },
+ "0xc9d4": {
+  "name": "wCheatUnlockFlags",
+  "note": "[2 bytes] wGameFlags bytes $14-$15 (flags 160-175): FLAG_CHEAT_UNLOCK_0-12, the per-slot bits the unlock-everything cheat sets and nothing reads, then FLAG_REACHED_ISLAND_OPEN_SINGLES/DOUBLES",
+  "size": 2
+ },
+ "0xc9d6": {
+  "name": "wStoryProgressFlags",
+  "note": "[2 bytes] wGameFlags bytes $16-$17 (flags 176-191): FLAG_STORY_COMPLETE_*, FLAG_REACHED_MARIO_WORLD_*, FLAG_ENDING_SEEN_*, FLAG_ISLAND_OPEN_IN_PROGRESS, the three *_CHALLENGER_DEFEATED and three *_COACH_GREETED bits",
+  "size": 2
+ },
+ "0xca18": {
+  "name": "wPlayer1MainExpTier",
+  "note": "[8-bit] EXP tier of the player-1 main character, record +$18 -- the level for a player character (1-99), the class tier for a roster NPC; the counterpart of wPlayer1PartnerExpTier"
  }
 }

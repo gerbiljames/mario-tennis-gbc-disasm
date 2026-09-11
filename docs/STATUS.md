@@ -69,12 +69,11 @@ which no `ShowRankingBoard` argument ever selects); and one arithmetic
 constant. `ram_gaps.py --static` reports any site whose bank the dataflow
 knows but no union names, and that bucket is empty too.
 
-**Unnamed but used RAM.** 786 bytes hold real data in some flow and carry
-no name: the neighbours of the second shadow-OAM page (`$c4ef-$c5ff`),
-undeclared fields of the story character and match records (`$c801-$c877`,
-`$c90f-$c977`, `$ca0f-$caff`), small tables at `$c6e0`, `$c705`, `$c730`,
-`$c9ce`, four bytes at bank `$06` `$df84`, and `$d281-$d2ff` of bank `$07`
-under the ranking board. `docs/ram_map.md` "Free RAM" lists them.
+**Unnamed but used RAM.** Four bytes at bank `$06` `$df84`, between the
+character's sprite-slot and air-shadow records, that the ending credits
+fill with a slot-shaped record and nothing addresses by name. Everything
+else the free-RAM inventory turned up is now declared or explained
+(`docs/ram_map.md`, "Free RAM").
 
 **Named in the docs as not established.** `docs/graphics_formats.md` §8 now
 holds two items, and both are about the developers' intent rather than the
@@ -123,6 +122,18 @@ label bound to the wrong parent.
 
 ## Recent changes
 
+* **2026-09-11** — the RAM the poison run found in use is named. The
+  character records' documented field groups are declared in all eight
+  records (physics attributes, swing word, AI parameters, stat bars, the
+  3-byte EXP accumulators, physics template, trainable levels, name
+  padding), the saved-slot mirror records get their name, id, palette,
+  gender and handedness fields, the flag bytes 14-23 of `wGameFlags` are
+  named by content, and `wPlayer1MainExpTier` fills its gap. The rest was
+  not variables: the "records" at `$c6e0`/`$c730` are the save engine's
+  staging copy passing through `$c600-$c7ff`, and bank `$07` `$d2b0-$d2ff`
+  is the text engine writing five glyph tiles below `wGlyphTileBuffer`
+  when the pen goes negative (`docs/bugs.md`). Static unnamed RAM is down
+  to 4,416 bytes: 2,591 untouched, 1,616 cleared only, 209 explained.
 * **2026-09-11** — the "text-engine buffers" were block clears. Checking
   every written-but-unnamed byte against all seventeen saved states showed
   the 1,455 bytes of WRAM bank `$05` (and `$df97-$dfff` of banks `$05`-`$07`,

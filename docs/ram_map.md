@@ -616,10 +616,13 @@ not padding.) The written bytes were then checked against every saved state
 of the session: a byte that was written but is zero in all of them was only
 ever *cleared*.
 
-Three classes came out of the 4,741 bytes the static pass lists once the
-tile-animation buffer is declared at its real size:
+Three classes came out of the 4,416 bytes the static pass lists once the
+tile-animation buffer, the second shadow-OAM page, the character records'
+documented field groups and the mirror records' name, id, palette, gender
+and handedness fields are declared (all of which the first pass had counted
+as unnamed):
 
-* **Untouched (2,495 bytes).** Neither written nor read in any flow. Safe to
+* **Untouched (2,591 bytes).** Neither written nor read in any flow. Safe to
   allocate; the ones eight bytes or longer:
 
 | bank | range | bytes |
@@ -654,7 +657,7 @@ tile-animation buffer is declared at its real size:
   mirror bank `$04`'s ball and minigame slots and stayed untouched even in
   the doubles match; `$d690-$d7ff` in bank `$04` is untouched everywhere.
 
-* **Cleared only (1,620 bytes).** Written, but never with anything but
+* **Cleared only (1,616 bytes).** Written, but never with anything but
   zero: they sit inside a block clear and nothing else reaches them. The
   whole of WRAM bank `$05` is cleared by `ResetTextWindowState` (`$05:$6e09`,
   two `ClearMemory16` runs of `$800` bytes from `$d000` and from `$d800`)
@@ -691,16 +694,20 @@ tile-animation buffer is declared at its real size:
 | WRAM6 | `$df97-$dfff` | 105 | match setup ($df00 clear), boot |
 | WRAM7 | `$df97-$dfff` | 105 | match setup ($df00 clear), boot |
 
-* **Holds data (786 bytes).** Written with real values somewhere in the
-  session, so in use even though no symbol says so: the second shadow-OAM
-  page and its neighbours (`$c4ef-$c5ff`, the page itself is now
-  `wShadowOAM2`); the undeclared fields of the story character and match
-  records (`$c801-$c877`, `$c90f-$c977`, `$ca0f-$caff` -- names, stat
-  bytes, equipment); `$c6e0-$c6ff`, `$c705` and `$c730-$c75f` (small
-  tables written on the Test map and in matches); `$c9ce-$c9d7`; four bytes
-  at `$df84` of bank `$06` in the credits; and `$d281-$d2ff` of bank `$07`,
-  which the lesson menu's ranking board fills. These are the naming targets
-  the inventory leaves open.
+* **Holds data (209 bytes).** Written with real values somewhere in the
+  session. What was left of this class once the record fields were named
+  is three things, each now understood: `$c6e0-$c6ff`, `$c705` and
+  `$c730-$c75f` are leftovers of the save engine's staging copy --
+  `MirrorSaveHeaderToBank1` runs each 512-byte SRAM header region through
+  `$c600-$c7ff` on its way to SRAM bank 1, so the tail of the block
+  directory stays behind under the debug-menu variables (`wTextBuffer`'s
+  note); `$d2b0-$d2ff` of bank `$07` are five glyph tiles the text engine
+  writes *below* `wGlyphTileBuffer` when the pen goes negative, seen on the
+  lesson menu's second page (`docs/bugs.md`); and four bytes at `$df84` of
+  bank `$06`, between the character's sprite-slot and air-shadow records,
+  that the ending credits fill with a slot-shaped `00 f1 fc 80` and no
+  routine addresses by name -- the one byte group this inventory leaves
+  unexplained.
 
 Not exercised: the minigames, link play, the N64 transfer screens and the
 story scenes beyond the Test map, so a range here is free for those modes

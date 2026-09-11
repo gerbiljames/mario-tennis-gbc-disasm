@@ -3755,7 +3755,7 @@
      "symbols": {
       "0xd300": {
        "name": "wGlyphTileBuffer",
-       "note": "[2048 bytes] 128 proportional-font glyph tiles, laid out 1:1 against VRAM $8800 so tile n is at + n * TILE_SIZE and uploads to $8800 + n * TILE_SIZE. ClearGlyphBuffer fills all 128 with the blank glyph; UploadGlyphBufferFull sends the first 80 as five 256-byte pages, and UploadGlyphTilesPartial / UploadGlyphTileRange send narrower runs",
+       "note": "[2048 bytes] 128 proportional-font glyph tiles, laid out 1:1 against VRAM $8800 so tile n is at + n * TILE_SIZE and uploads to $8800 + n * TILE_SIZE. PlotGlyphRow adds the pen position to this base with a signed shift (sra d / rr e), so a negative pen writes below it: the lesson menu's second page puts five glyph tiles at $d2b0-$d2ff, harmless because bank $07 is unused there (docs/bugs.md). ClearGlyphBuffer fills all 128 with the blank glyph; UploadGlyphBufferFull sends the first 80 as five 256-byte pages, and UploadGlyphTilesPartial / UploadGlyphTileRange send narrower runs",
        "size": 2048,
        "stride": [
         "TILE_SIZE",

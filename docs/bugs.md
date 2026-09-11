@@ -883,3 +883,17 @@ Unlike the drill judges this one is a single routine rather than a family, and
 its body is guarded by `hDebugStepMode` anyway, so the `ret` may well have been
 deliberate belt-and-braces before release. As with the judges, the ROM does not
 distinguish that from an editing accident.
+
+## Glyph stream underrun below the glyph tile buffer
+
+`PlotGlyphRow` (`$05:$737a`) turns the glyph pen position into a byte offset
+with a signed shift (`sra d / rr e` three times) and adds it to
+`wGlyphTileBuffer` (bank `$07`, `$d300`), so a negative pen writes tiles
+*below* the buffer. The lesson menu's second page does it: five glyph tiles
+land at `$d2b0-$d2ff`, found by a RAM poison run (2026-09-11) as the only
+bank `$07` bytes below `$d300` that ever hold data. Nothing lives there, so
+the underrun is harmless in the retail layout; anything allocated in that
+range would be overwritten by text. `DrawInlineGlyph`'s `.eq01` path seeds
+the pen from a signed half of the row width, which is where a negative
+value can come from.
+

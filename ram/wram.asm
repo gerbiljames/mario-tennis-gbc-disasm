@@ -953,7 +953,7 @@ wDebugMatchFlags:: db
 wShadowOAM2:: ds 160
 	ds 96
 
-; Dialogue string buffer (160 bytes); text-bank fetch routines copy string N here when called with a = 0
+; Dialogue string buffer (160 bytes); text-bank fetch routines copy string N here when called with a = 0. Also the save engine's staging area: MirrorSaveHeaderToBank1 ($03:$48a1) copies each 512-byte SRAM header region through $c600-$c7ff on its way to SRAM bank 1 (ld c, $20 = 32 blocks of 16), running over this buffer, wTilemapRowStage, wInlineTextBuffer and the debug-menu variables up to $c7ff; the directory entries its last copy leaves behind are what a RAM poison run found at $c6e0-$c75f
 wTextBuffer:: ds 160
 
 ; [32 bytes] One tilemap row staged by RestoreShadowTilemapRow: it reads the row out of the map buffer, wrapping at the map edge, and writes it back into the shadow tilemap from here
@@ -1219,11 +1219,36 @@ ENDU
 
 ; [buffer] Base of the story-slot state image (WRAM $c800-$caff): the live region holding the wStoryModeMainCharacter*/wGameMode/match-settings/roster fields, saved wholesale as save block 2N (see docs/save_format.md) and reloaded from it on slot load
 wStorySlotData:: db
-	ds 23
+
+; [6 bytes] Bytes 1-6 of the saved-slot mirror's main character name (record +$01-$06); byte 0 of the name is the slot image base wStorySlotData. The mirror pair at $c800/$c840 is kept in step with the live records at $c900/$c940 by a 128-byte copy ($02:$4795)
+wSavedMainCharacterName:: ds 6
+
+; [4 bytes] Character record +$07-$0a of the saved-slot mirror of the story main character record: name terminator and padding after the 7-character name; the drawer scans to the NUL, so these are read
+wStoryModeMainCharacterNamePad:: ds 4
+
+; [8-bit] Saved-slot mirror of the main character record +$0b: character id (post-RemapExtendedCharId), the mirror of $c90b
+wSavedMainCharacterId:: db
+
+; [8-bit] Saved-slot mirror of the main character record +$0c: palette index (GetCharPaletteIndex)
+wSavedMainCharacterPaletteIndex:: db
+
+; [8-bit] Saved-slot mirror of the main character record +$0d: gender, 0 male, 1 female
+wSavedMainCharacterGender:: db
+
+; [8-bit] Saved-slot mirror of the main character record +$0e: left-handed flag
+wSavedMainCharacterLeftHanded:: db
+
+; [9 bytes] Character record +$0f-$17 of the saved-slot mirror of the story main character record: AI and physics attributes copied from the ROM record (StoryCharacterRecords_02): +$0f a personality byte, +$10-$17 the reach windows, smash and dive speeds and reaction delays that RecomputeCharacterStats refreshes from the +$30 template
+wStoryModeMainCharacterPhysics:: ds 9
 
 ; [8-bit] Story Mode - Main Character Level (0x01-0x63)
 wStoryModeMainCharacterLevel:: db
-	ds 7
+
+; [2 bytes] Character record +$19-$1a of the saved-slot mirror of the story main character record: swing attribute word
+wStoryModeMainCharacterSwingAttrWord:: dw
+
+; [5 bytes] Character record +$1b-$1f of the saved-slot mirror of the story main character record: the AI personality parameters (docs/story_mode.md, "The character record")
+wStoryModeMainCharacterAiParams:: ds 5
 
 ; [8-bit] Story Mode - Main Character Top Stat (0x00-0x09)
 wStoryModeMainCharacterTopStat:: db
@@ -1259,9 +1284,12 @@ wStoryModeMainCharacterReactionStat:: db
 wStoryModeMainCharacterStopStat:: db
 	ds 1
 
-; [16-bit] Story Mode - Main Character EXP
-wStoryModeMainCharacterEXP:: dw
-	ds 10
+; [3 bytes] Story Mode - Main Character EXP -- a 3-byte accumulator, capped at 99999 by AddExpCapped
+wStoryModeMainCharacterEXP:: ds 3
+	ds 1
+
+; [8 bytes] Character record +$30-$37 of the saved-slot mirror of the story main character record: physics template, copied into +$10-+$17 on every RecomputeCharacterStats
+wStoryModeMainCharacterPhysicsTemplate:: ds 8
 
 ; [8-bit] Story Mode - Main Character Spin Level
 wStoryModeMainCharacterSpinLevel:: db
@@ -1277,11 +1305,37 @@ wStoryModeMainCharacterSpeedLevel:: db
 
 ; [8-bit] Equipment nibbles for the main character, cleaned up by RefreshMainCharacterStats before the stats are recomputed: a low nibble of 3 drops the low nibble, a high nibble of 1 drops the high one
 wMainCharEquipmentBits:: db
-	ds 27
+	ds 3
+
+; [7 bytes] Saved-slot mirror of the partner record +$00-$06: the 7-character name, NUL-padded
+wSavedPartnerCharacterName:: ds 7
+
+; [4 bytes] Character record +$07-$0a of the saved-slot mirror of the partner record: name terminator and padding after the 7-character name; the drawer scans to the NUL, so these are read
+wStoryModePartnerCharacterNamePad:: ds 4
+
+; [8-bit] Saved-slot mirror of the partner record +$0b: character id (post-RemapExtendedCharId), the mirror of $c94b
+wSavedPartnerCharacterId:: db
+
+; [8-bit] Saved-slot mirror of the partner record +$0c: palette index (GetCharPaletteIndex)
+wSavedPartnerCharacterPaletteIndex:: db
+
+; [8-bit] Saved-slot mirror of the partner record +$0d: gender, 0 male, 1 female
+wSavedPartnerCharacterGender:: db
+
+; [8-bit] Saved-slot mirror of the partner record +$0e: left-handed flag
+wSavedPartnerCharacterLeftHanded:: db
+
+; [9 bytes] Character record +$0f-$17 of the saved-slot mirror of the partner record: AI and physics attributes copied from the ROM record (StoryCharacterRecords_02): +$0f a personality byte, +$10-$17 the reach windows, smash and dive speeds and reaction delays that RecomputeCharacterStats refreshes from the +$30 template
+wStoryModePartnerCharacterPhysics:: ds 9
 
 ; [8-bit] Story Mode - Partner Character Level (0x01-0x63)
 wStoryModePartnerCharacterLevel:: db
-	ds 7
+
+; [2 bytes] Character record +$19-$1a of the saved-slot mirror of the partner record: swing attribute word
+wStoryModePartnerCharacterSwingAttrWord:: dw
+
+; [5 bytes] Character record +$1b-$1f of the saved-slot mirror of the partner record: the AI personality parameters (docs/story_mode.md, "The character record")
+wStoryModePartnerCharacterAiParams:: ds 5
 
 ; [8-bit] Story Mode - Partner Character Top Stat (0x00-0x09)
 wStoryModePartnerCharacterTopStat:: db
@@ -1317,9 +1371,12 @@ wStoryModePartnerCharacterReactionStat:: db
 wStoryModePartnerCharacterStopStat:: db
 	ds 1
 
-; [16-bit] Story Mode - Partner Character EXP
-wStoryModePartnerCharacterEXP:: dw
-	ds 10
+; [3 bytes] Story Mode - Partner Character EXP -- a 3-byte accumulator, capped at 99999 by AddExpCapped
+wStoryModePartnerCharacterEXP:: ds 3
+	ds 1
+
+; [8 bytes] Character record +$30-$37 of the saved-slot mirror of the partner record: physics template, copied into +$10-+$17 on every RecomputeCharacterStats
+wStoryModePartnerCharacterPhysicsTemplate:: ds 8
 
 ; [8-bit] Story Mode - Partner Character Spin Level
 wStoryModePartnerCharacterSpinLevel:: db
@@ -1683,7 +1740,9 @@ wMatchBGM:: db
 
 ; [ASCII, 7 Bytes] Story Mode - Name of Main Character
 wStoryModeNameOfMainCharacter:: ds 7
-	ds 4
+
+; [4 bytes] Character record +$07-$0a of the live story main character record: name terminator and padding after the 7-character name; the drawer scans to the NUL, so these are read
+wStoryMainCharNamePad:: ds 4
 
 ; [8-bit] Story Mode - Main Character Overworld Sprite
 ;
@@ -1709,19 +1768,29 @@ wStoryModeGenderOfMainCharacter:: db
 
 ; [8-bit] Story Mode - nonzero when the main character plays left-handed. Written from wCharSelectHandedness at $38:$48ba (record offset +$0e) and, on the bank $02 new-game path, from bit 2 of the character id ($02:$51c5). Bank $17 uses it to swap the spin-serve briefing text between $36:696 ("serve to the right with topspin and to the left with slice") and $36:697, its mirror image.
 wStoryModeMainCharacterLeftHanded:: db
-	ds 9
+
+; [9 bytes] Character record +$0f-$17 of the live story main character record: AI and physics attributes copied from the ROM record (StoryCharacterRecords_02): +$0f a personality byte, +$10-$17 the reach windows, smash and dive speeds and reaction delays that RecomputeCharacterStats refreshes from the +$30 template
+wStoryMainCharPhysics:: ds 9
 
 ; [8-bit] EXP tier of the story main character's record ($c900 + $18, the same field LoadCharacterAttributes turns into wCharExpTier for an on-court character). ScaleExpByPlayerLevel averages it with wStoryPartnerCharExpTier and compares the result against $0a to decide whether match EXP is scaled down
 wStoryMainCharExpTier:: db
-	ds 7
+
+; [2 bytes] Character record +$19-$1a of the live story main character record: swing attribute word
+wStoryMainCharSwingAttrWord:: dw
+
+; [5 bytes] Character record +$1b-$1f of the live story main character record: the AI personality parameters (docs/story_mode.md, "The character record")
+wStoryMainCharAiParams:: ds 5
 
 ; [11 bytes] The eleven 0-9 stats of the story main character's record ($c900 + $20), in the wStoryModeMainCharacter*Stat order: Top, Slice, Serve, Stroke, Volley, Angle, Placement, Speed, Dash, Reaction, Stop
 wStoryMainCharStats:: ds 11
 	ds 1
 
-; [16-bit] EXP in the story main character's record ($c900 + $2c)
-wStoryMainCharExp:: dw
-	ds 10
+; [3 bytes] EXP in the story main character's record ($c900 + $2c) -- a 3-byte accumulator, capped at 99999 by AddExpCapped
+wStoryMainCharExp:: ds 3
+	ds 1
+
+; [8 bytes] Character record +$30-$37 of the live story main character record: physics template, copied into +$10-+$17 on every RecomputeCharacterStats
+wStoryMainCharPhysicsTemplate:: ds 8
 
 ; [8-bit] Spin level in the story main character's record ($c900 + $38); the four levels shown on character select run from here
 wStoryMainCharSpinLevel:: db
@@ -1755,7 +1824,9 @@ wEquippedRacket:: db
 
 ; [ASCII, 7 Bytes] Story Mode - Name of Partner Character
 wStoryModeNameOfPartnerCharacter:: ds 7
-	ds 4
+
+; [4 bytes] Character record +$07-$0a of the live partner record: name terminator and padding after the 7-character name; the drawer scans to the NUL, so these are read
+wStoryPartnerCharNamePad:: ds 4
 
 ; [8-bit] Story Mode - Partner Character Overworld Sprite; for values see 0x00c90b
 wStoryModePartnerCharacterOverworldSprite:: db
@@ -1768,15 +1839,29 @@ wStoryModeGenderOfPartnerCharacter:: db
 
 ; [8-bit] Story Mode - the partner record's copy of the left-handed flag (record offset +$0e at the $40 stride); written by the same character-select path as wStoryModeMainCharacterLeftHanded.
 wStoryModePartnerCharacterLeftHanded:: db
-	ds 9
+
+; [9 bytes] Character record +$0f-$17 of the live partner record: AI and physics attributes copied from the ROM record (StoryCharacterRecords_02): +$0f a personality byte, +$10-$17 the reach windows, smash and dive speeds and reaction delays that RecomputeCharacterStats refreshes from the +$30 template
+wStoryPartnerCharPhysics:: ds 9
 
 ; [8-bit] EXP tier of the story partner's record ($c940 + $18), the partner half of wStoryMainCharExpTier
 wStoryPartnerCharExpTier:: db
-	ds 19
 
-; [16-bit] EXP in the story partner's record ($c940 + $2c)
-wStoryPartnerCharExp:: dw
-	ds 10
+; [2 bytes] Character record +$19-$1a of the live partner record: swing attribute word
+wStoryPartnerCharSwingAttrWord:: dw
+
+; [5 bytes] Character record +$1b-$1f of the live partner record: the AI personality parameters (docs/story_mode.md, "The character record")
+wStoryPartnerCharAiParams:: ds 5
+
+; [11 bytes] Character record +$20-$2a of the live partner record: the eleven displayed stat bars 0-9: Top, Slice, Serve, Stroke, Volley, Angle, Placement, Speed, Dash, Reaction, Stop
+wStoryPartnerCharStats:: ds 11
+	ds 1
+
+; [3 bytes] EXP in the story partner's record ($c940 + $2c) -- a 3-byte accumulator, capped at 99999 by AddExpCapped
+wStoryPartnerCharExp:: ds 3
+	ds 1
+
+; [8 bytes] Character record +$30-$37 of the live partner record: physics template, copied into +$10-+$17 on every RecomputeCharacterStats
+wStoryPartnerCharPhysicsTemplate:: ds 8
 
 ; [8-bit] Spin level in the story partner's record ($c940 + $38)
 wStoryPartnerCharSpinLevel:: db
@@ -1877,7 +1962,18 @@ wStoryModeEquipmentFlags1:: db
 ;
 ; Bit 7 - Light Shoes
 wStoryModeEquipmentFlags2:: db
-	ds 10
+
+; [3 bytes] wGameFlags bytes $0e-$10 (flags 112-135): the NPC talked/moved/turned and scene-seen flags -- FLAG_SENIOR_COURT_NPC03_TURNED, FLAG_TOURNAMENT_NPC05_TALKED_*, FLAG_COURT2_SPECTATORS_TALKED_*, FLAG_RESTAURANT_NPC08_MOVED, FLAG_PRACTICE_ROOM_SESSION_ACTIVE, FLAG_REPAIR_COUNTER_*, FLAG_SWING_PRACTICE_KID_PLACED, FLAG_JUNIOR_COURT_NPC0A_TALKED, FLAG_AWARDS_CEREMONY_SEEN_* (flags.json)
+wStoryModeNpcEventFlags:: ds 3
+
+; [3 bytes] wGameFlags bytes $11-$13 (flags 136-159): no flag number in flags.json lands here and no site sets or tests one -- saved with the slot, never used
+wGameFlagsSpare:: ds 3
+
+; [2 bytes] wGameFlags bytes $14-$15 (flags 160-175): FLAG_CHEAT_UNLOCK_0-12, the per-slot bits the unlock-everything cheat sets and nothing reads, then FLAG_REACHED_ISLAND_OPEN_SINGLES/DOUBLES
+wCheatUnlockFlags:: dw
+
+; [2 bytes] wGameFlags bytes $16-$17 (flags 176-191): FLAG_STORY_COMPLETE_*, FLAG_REACHED_MARIO_WORLD_*, FLAG_ENDING_SEEN_*, FLAG_ISLAND_OPEN_IN_PROGRESS, the three *_CHALLENGER_DEFEATED and three *_COACH_GREETED bits
+wStoryProgressFlags:: dw
 
 ; [8-bit] Story Mode - Minigame Completion Flags (1/4)
 ;
@@ -1927,7 +2023,9 @@ wGameFlagsTemp:: ds 4
 
 ; [7 bytes] Display name of the player-1 main character, base of its $40-byte on-court character record. The results screen draws it straight from here through CopyStringToTextBuffer, and the same record supplies the physics and AI attributes LoadCharacterAttributes copies into the character's banked struct
 wPlayer1MainName:: ds 7
-	ds 3
+
+; [3 bytes] Character record +$07-$09 of on-court record for player 1 main: name terminator and padding after the 7-character name; the drawer scans to the NUL, so these are read
+wPlayer1MainNamePad:: ds 3
 
 ; [8-bit] Byte +$0a of the player-1 main record, borrowed by ExchangeLinkUnlockFlags ($38:$7603) as the cell the peer's bonus-court unlock mask arrives in. Whichever of this and wPlayer2MainLinkCourtMask matches the link role is copied to wLinkPartnerCourtMask, then both are cleared
 wPlayer1MainLinkCourtMask:: db
@@ -1974,7 +2072,32 @@ wPlayer1MainPalette:: db
 
 ; [8-bit] Nonzero mirrors the player-1 main character: LoadCharacterAttributes turns it into wCharMirrorAttrMask ($20, the OAM X-flip bit) and the results-screen portrait code XORs the same bit in. ApplyStarFlagsToCharRecords seeds it from wCharSelectSlotStar
 wPlayer1MainLeftHanded:: db
-	ds 45
+
+; [9 bytes] Character record +$0f-$17 of on-court record for player 1 main: AI and physics attributes copied from the ROM record (StoryCharacterRecords_02): +$0f a personality byte, +$10-$17 the reach windows, smash and dive speeds and reaction delays that RecomputeCharacterStats refreshes from the +$30 template
+wPlayer1MainPhysics:: ds 9
+
+; [8-bit] EXP tier of the player-1 main character, record +$18 -- the level for a player character (1-99), the class tier for a roster NPC; the counterpart of wPlayer1PartnerExpTier
+wPlayer1MainExpTier:: db
+
+; [2 bytes] Character record +$19-$1a of on-court record for player 1 main: swing attribute word
+wPlayer1MainSwingAttrWord:: dw
+
+; [5 bytes] Character record +$1b-$1f of on-court record for player 1 main: the AI personality parameters (docs/story_mode.md, "The character record")
+wPlayer1MainAiParams:: ds 5
+
+; [11 bytes] Character record +$20-$2a of on-court record for player 1 main: the eleven displayed stat bars 0-9: Top, Slice, Serve, Stroke, Volley, Angle, Placement, Speed, Dash, Reaction, Stop
+wPlayer1MainStats:: ds 11
+	ds 1
+
+; [3 bytes] Character record +$2c-$2e of the on-court record: EXP, a 3-byte accumulator capped at 99999 by AddExpCapped
+wPlayer1MainExp:: ds 3
+	ds 1
+
+; [8 bytes] Character record +$30-$37 of on-court record for player 1 main: physics template, copied into +$10-+$17 on every RecomputeCharacterStats
+wPlayer1MainPhysicsTemplate:: ds 8
+
+; [4 bytes] Character record +$38-$3b of on-court record for player 1 main: the four trainable levels: Spin, Power, Control, Speed
+wPlayer1MainTrainLevels:: ds 4
 
 ; [8-bit] Equipment the player-1 main character is carrying, one nibble each (same field as wEquippedRacket in the story record). ApplyMatchSettingsExpBonus reads it for the handicap EXP bonus: low nibble $03 is worth one step, high nibble $01 another, and two steps double the match EXP
 wPlayer1MainEquipment:: db
@@ -1982,7 +2105,9 @@ wPlayer1MainEquipment:: db
 
 ; [7 bytes] Display name and record base of the player-1 partner, the doubles counterpart of wPlayer1MainName
 wPlayer1PartnerName:: ds 7
-	ds 4
+
+; [4 bytes] Character record +$07-$0a of on-court record for player 1 partner: name terminator and padding after the 7-character name; the drawer scans to the NUL, so these are read
+wPlayer1PartnerNamePad:: ds 4
 
 ; [8-bit] Player 1 Current Partner Character; for values see 0xca0b
 wPlayer1CurrentPartnerCharacter:: db
@@ -1993,11 +2118,15 @@ wPlayer1PartnerPalette:: db
 
 ; [8-bit] Mirror flag of the player-1 partner (see wPlayer1MainLeftHanded)
 wPlayer1PartnerLeftHanded:: db
-	ds 9
+
+; [9 bytes] Character record +$0f-$17 of on-court record for player 1 partner: AI and physics attributes copied from the ROM record (StoryCharacterRecords_02): +$0f a personality byte, +$10-$17 the reach windows, smash and dive speeds and reaction delays that RecomputeCharacterStats refreshes from the +$30 template
+wPlayer1PartnerPhysics:: ds 9
 
 ; [8-bit] EXP tier of the player-1 partner, record +$18. ApplyCpuDifficultyToCharRecords writes it from the difficulty row only when the slot is not a created character, so a story character keeps the tier it earned
 wPlayer1PartnerExpTier:: db
-	ds 2
+
+; [2 bytes] Character record +$19-$1a of on-court record for player 1 partner: swing attribute word
+wPlayer1PartnerSwingAttrWord:: dw
 
 ; [4 bytes] Four of the player-1 partner's six AI personality parameters (record +$1b-$1e; +$0f and +$1f are the other two). ApplyCpuDifficultyToCharRecords copies them out of the chosen difficulty's row, and OverrideCharStatsForDebug rewrites exactly this block
 wPlayer1PartnerAiParams:: ds 4
@@ -2009,11 +2138,27 @@ wPlayer1PartnerAiParams:: ds 4
 ; 0x02 - Hard
 ; 0x03 - Intense
 wExhibitionModePlayerPartnerCharacterDifficulty:: db
-	ds 32
+
+; [11 bytes] Character record +$20-$2a of on-court record for player 1 partner: the eleven displayed stat bars 0-9: Top, Slice, Serve, Stroke, Volley, Angle, Placement, Speed, Dash, Reaction, Stop
+wPlayer1PartnerStats:: ds 11
+	ds 1
+
+; [3 bytes] Character record +$2c-$2e of the on-court record: EXP, a 3-byte accumulator capped at 99999 by AddExpCapped
+wPlayer1PartnerExp:: ds 3
+	ds 1
+
+; [8 bytes] Character record +$30-$37 of on-court record for player 1 partner: physics template, copied into +$10-+$17 on every RecomputeCharacterStats
+wPlayer1PartnerPhysicsTemplate:: ds 8
+
+; [4 bytes] Character record +$38-$3b of on-court record for player 1 partner: the four trainable levels: Spin, Power, Control, Speed
+wPlayer1PartnerTrainLevels:: ds 4
+	ds 4
 
 ; [7 bytes] Display name and record base of the player-2 main character
 wPlayer2MainName:: ds 7
-	ds 3
+
+; [3 bytes] Character record +$07-$09 of on-court record for player 2 main: name terminator and padding after the 7-character name; the drawer scans to the NUL, so these are read
+wPlayer2MainNamePad:: ds 3
 
 ; [8-bit] The player-2 main record's copy of the unlock-mask exchange cell (see wPlayer1MainLinkCourtMask)
 wPlayer2MainLinkCourtMask:: db
@@ -2030,18 +2175,35 @@ wPlayer2MainLeftHanded:: db
 
 ; [8-bit] Last byte of BooBlastInitParams, stored into the CPU character record at +$0f as the minigame is set up. Nothing reads it back
 wPlayer2MainInitByte:: db
-	ds 8
+
+; [8 bytes] Character record +$10-$17 of on-court record for player 2 main: AI and physics attributes copied from the ROM record (StoryCharacterRecords_02): +$0f a personality byte, +$10-$17 the reach windows, smash and dive speeds and reaction delays that RecomputeCharacterStats refreshes from the +$30 template
+wPlayer2MainPhysicsFrom10:: ds 8
 
 ; [8-bit] EXP tier of the player-2 main character (see wPlayer1PartnerExpTier)
 wPlayer2MainExpTier:: db
-	ds 2
+
+; [2 bytes] Character record +$19-$1a of on-court record for player 2 main: swing attribute word
+wPlayer2MainSwingAttrWord:: dw
 
 ; [4 bytes] The player-2 main character's AI parameter block (see wPlayer1PartnerAiParams). The bank $0b and $0d minigame setups write it directly to give a drill opponent a fixed personality
 wPlayer2MainAiParams:: ds 4
 
 ; [8-bit] Exhibition Mode - CPU Main Character Difficulty; for values see 0x00ca5f
 wExhibitionModeCPUMainCharacterDifficulty:: db
-	ds 28
+
+; [11 bytes] Character record +$20-$2a of on-court record for player 2 main: the eleven displayed stat bars 0-9: Top, Slice, Serve, Stroke, Volley, Angle, Placement, Speed, Dash, Reaction, Stop
+wPlayer2MainStats:: ds 11
+	ds 1
+
+; [3 bytes] Character record +$2c-$2e of the on-court record: EXP, a 3-byte accumulator capped at 99999 by AddExpCapped
+wPlayer2MainExp:: ds 3
+	ds 1
+
+; [8 bytes] Character record +$30-$37 of on-court record for player 2 main: physics template, copied into +$10-+$17 on every RecomputeCharacterStats
+wPlayer2MainPhysicsTemplate:: ds 8
+
+; [4 bytes] Character record +$38-$3b of on-court record for player 2 main: the four trainable levels: Spin, Power, Control, Speed
+wPlayer2MainTrainLevels:: ds 4
 
 ; [8-bit] Equipment of the player-2 main character (see wPlayer1MainEquipment); the link-match EXP path reads it when the local player is player 2
 wPlayer2MainEquipment:: db
@@ -2049,7 +2211,9 @@ wPlayer2MainEquipment:: db
 
 ; [7 bytes] Display name and record base of the player-2 partner
 wPlayer2PartnerName:: ds 7
-	ds 4
+
+; [4 bytes] Character record +$07-$0a of on-court record for player 2 partner: name terminator and padding after the 7-character name; the drawer scans to the NUL, so these are read
+wPlayer2PartnerNamePad:: ds 4
 
 ; [8-bit] Player 2 Current Partner Character; for values see 0xca0b
 wPlayer2CurrentPartnerCharacter:: db
@@ -2060,18 +2224,36 @@ wPlayer2PartnerPalette:: db
 
 ; [8-bit] Mirror flag of the player-2 partner (see wPlayer1MainLeftHanded)
 wPlayer2PartnerLeftHanded:: db
-	ds 9
+
+; [9 bytes] Character record +$0f-$17 of on-court record for player 2 partner: AI and physics attributes copied from the ROM record (StoryCharacterRecords_02): +$0f a personality byte, +$10-$17 the reach windows, smash and dive speeds and reaction delays that RecomputeCharacterStats refreshes from the +$30 template
+wPlayer2PartnerPhysics:: ds 9
 
 ; [8-bit] EXP tier of the player-2 partner (see wPlayer1PartnerExpTier)
 wPlayer2PartnerExpTier:: db
-	ds 2
+
+; [2 bytes] Character record +$19-$1a of on-court record for player 2 partner: swing attribute word
+wPlayer2PartnerSwingAttrWord:: dw
 
 ; [4 bytes] The player-2 partner's AI parameter block (see wPlayer1PartnerAiParams)
 wPlayer2PartnerAiParams:: ds 4
 
 ; [8-bit] Exhibition Mode - CPU Partner Character Difficulty; for values see 0x00ca5f
 wExhibitionModeCPUPartnerCharacterDifficulty:: db
-	ds 32
+
+; [11 bytes] Character record +$20-$2a of on-court record for player 2 partner: the eleven displayed stat bars 0-9: Top, Slice, Serve, Stroke, Volley, Angle, Placement, Speed, Dash, Reaction, Stop
+wPlayer2PartnerStats:: ds 11
+	ds 1
+
+; [3 bytes] Character record +$2c-$2e of the on-court record: EXP, a 3-byte accumulator capped at 99999 by AddExpCapped
+wPlayer2PartnerExp:: ds 3
+	ds 1
+
+; [8 bytes] Character record +$30-$37 of on-court record for player 2 partner: physics template, copied into +$10-+$17 on every RecomputeCharacterStats
+wPlayer2PartnerPhysicsTemplate:: ds 8
+
+; [4 bytes] Character record +$38-$3b of on-court record for player 2 partner: the four trainable levels: Spin, Power, Control, Speed
+wPlayer2PartnerTrainLevels:: ds 4
+	ds 4
 
 ; [8-bit] Story Mode - which of the two story character records the character-select / name-entry / char-data screens are acting on: 0 = main character, 1 = partner. Used as a $40-stride index into the wStoryModeMainCharacter*/wStoryModePartnerCharacter* pair (GetActiveStoryNameBuffer at $38:$73fa returns wStoryModeNameOfMainCharacter or ...OfPartnerCharacter straight off it).
 wStoryCharacterSlot:: db
@@ -3906,7 +4088,7 @@ wSndWaveReloadPending:: db
 ; $200 short of where ReadCurrentSlotBlock actually puts the block.)
 UNION
 ; text glyph tiles (banks $05/$3f)
-; [2048 bytes] 128 proportional-font glyph tiles, laid out 1:1 against VRAM $8800 so tile n is at + n * TILE_SIZE and uploads to $8800 + n * TILE_SIZE. ClearGlyphBuffer fills all 128 with the blank glyph; UploadGlyphBufferFull sends the first 80 as five 256-byte pages, and UploadGlyphTilesPartial / UploadGlyphTileRange send narrower runs
+; [2048 bytes] 128 proportional-font glyph tiles, laid out 1:1 against VRAM $8800 so tile n is at + n * TILE_SIZE and uploads to $8800 + n * TILE_SIZE. PlotGlyphRow adds the pen position to this base with a signed shift (sra d / rr e), so a negative pen writes below it: the lesson menu's second page puts five glyph tiles at $d2b0-$d2ff, harmless because bank $07 is unused there (docs/bugs.md). ClearGlyphBuffer fills all 128 with the blank glyph; UploadGlyphBufferFull sends the first 80 as five 256-byte pages, and UploadGlyphTilesPartial / UploadGlyphTileRange send narrower runs
 wGlyphTileBuffer:: ds 2048
 NEXTU
 ; save-block staging (bank $03)
