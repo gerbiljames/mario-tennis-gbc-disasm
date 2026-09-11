@@ -8549,6 +8549,11 @@
  "0x52675": "FireworkMapActors_14",
  "0x52680": "FireworkObjTiles_14",
  "0x52ea1": "FireworkObjPalettes_14",
+ "0x52ec1": {
+  "name": "Unused_14_ResetFireworkObjOnButton",
+  "note": "Sits after FireworkObjPalettes_14's four palettes, unreferenced: when hInputRisingEdge bit 1 is newly pressed it resets both cutscene firework objects -- X $40/$68, Y $30/$38, phase 0, timer $1e each -- and returns. Nothing calls or jumps to it; UpdateFirework1_14, which follows, is the live routine."
+ },
+ "0x52eef": ".done",
  "0x52ef0": "UpdateFirework1_14",
  "0x52f01": ".draw",
  "0x52f46": ".burstSprite",
@@ -9833,6 +9838,7 @@
  "0x61845": "ConfirmScreenSpriteGfx1",
  "0x61892": "TwoOptionSelectBTable",
  "0x618ad": "ConfirmScreenSpritePalette1",
+ "0x618dd": "ConfirmScreenSpritePalette1Pad",
  "0x618e0": "CharSelectCursorGfx",
  "0x619b9": "CharSelectCursorPalette",
  "0x619c1": "LoadCharSelectCursorGfx",
@@ -9947,6 +9953,7 @@
  "0x63a9c": ".read",
  "0x63aaf": ".alt2",
  "0x63ab5": "PaletteFadeTable_18",
+ "0x63b35": "Unused_18_StubRet3",
  "0x63b36": "TaskDrawObjectSprites_18",
  "0x63b38": ".objectLoop",
  "0x63b46": ".read",
@@ -12080,7 +12087,10 @@
  "0x7ad1c": "RewardFlagListMode0_1e",
  "0x7ad4e": "RewardFlagListMode1_1e",
  "0x7ad80": "ProgressEntryFlagList_1e",
- "0x7ad82": "AllProgressFlagList_1e",
+ "0x7ad82": {
+  "name": "AllProgressFlagList_1e",
+  "note": "Ten flags here, but CheckAllProgressComplete walks 36 (`ld c, $24`): it runs straight on into RewardFlagListMode2_1e's 26 drill, machine and wall clears. All 36 set -- both Dream Matches, every class's rank-1 win in both arcs, both Island Open finals, every training clear -- is what grants SAVEFLAG_COURT_STAR."
+ },
  "0x7ad96": "RewardFlagListMode2_1e",
  "0x7add2": "RewardCategoryFlagTable_1e",
  "0x7ae1c": "ApplyRewardUnlockFlags",

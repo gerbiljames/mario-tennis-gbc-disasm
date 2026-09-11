@@ -1280,6 +1280,7 @@
  "0x6182d": "palettes",
  "0x61892": "bytes:16",
  "0x618ad": "palettes",
+ "0x618dd": "fill",
  "0x619b9": "palettes",
  "0x61a1e": "records:2",
  "0x61a26": "sprite_template",

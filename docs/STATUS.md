@@ -68,14 +68,14 @@ which no `ShowRankingBoard` argument ever selects); and one arithmetic
 constant. `ram_gaps.py --static` reports any site whose bank the dataflow
 knows but no union names, and that bucket is empty too.
 
-**Named in the docs as not established.** `docs/graphics_formats.md` §8
-(three odd-sized palette regions, object-header bytes +2/+3, the `$63`
-sentinel, the intended difference between the two additive fades, the
-136-byte scene-config layout — all questions of intent; the two an
-emulator could answer, the collision-map row width and the fade colour,
-were settled on 2026-09-11); `docs/story_mode.md` "Oddities
-and open questions" (story-completion unlocks, record fields `+$2b`/`+$2f`/
-`+$3d`-`+$3f`); the "not established" sentences in `docs/match_engine.md`.
+**Named in the docs as not established.** `docs/graphics_formats.md` §8 now
+holds two items, and both are about the developers' intent rather than the
+bytes: why the `$63` per-object-palette sentinel exists when no object uses
+it, and why there are two additive fades. Everything else there was settled
+on 2026-09-11 (the odd palette regions were over-declared, the header bytes
+are a constant, the scene record is read only to `+5`); `docs/story_mode.md` "Oddities
+and open questions" keeps only the shipped-defect entries (the Star Court
+unlock and the dead record fields are resolved); the "not established" sentences in `docs/match_engine.md`.
 
 **Small rendering leads.** `SeanSpriteAnim04` and the 42 five-byte
 walk-sprite scripts render as `db` for reasons `docs/graphics_formats.md`
@@ -124,6 +124,13 @@ label bound to the wrong parent.
 
 ## Recent changes
 
+* **2026-09-11** — the questions of intent, worked through: the three
+  odd-sized palette regions were over-declared and hid a stray `ret`, a
+  47-byte unreferenced firework reset and three padding bytes (carved);
+  header bytes +2/+3 are a per-family constant; the scene record is read
+  only to `+5`; the Star Court is granted by `CheckAllProgressComplete`
+  once all 36 progress flags are set; the record fields are dead stores.
+  Two genuine intent questions remain in the graphics doc.
 * **2026-09-11** — two emulator experiments close the graphics doc's
   testable questions: the collision map is a 32 × 32 grid of 2 × 2-tile
   cells (the rounded `e * 16` is `(e >> 1) * 32`), drawn live it is the

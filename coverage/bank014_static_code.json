@@ -1,5 +1,5 @@
 {
- "_comment": "Static code-entry seeds for bank $14 (menu-screen bank; $4000 directory -> trees $4008/$4a39/$4fac/$5221, same record/handler-table shape as banks $0f/$10). Entries are handler-table targets, tree slot-6 code entries, RegisterFrameTask callbacks ($76ab), micro-handlers at $78d9 inside the resource-descriptor blob, and fall-through code heads tiling exactly into proven code. Flat = 0x14*0x4000 + (cpu-0x4000). Second pass: code heads $5e9c/$60c4/$644a/$73d8/$755c inside the former d_625b stretch.",
+ "_comment": "Static code-entry seeds for bank $14 (menu-screen bank; $4000 directory -> trees $4008/$4a39/$4fac/$5221, same record/handler-table shape as banks $0f/$10). Entries are handler-table targets, tree slot-6 code entries, RegisterFrameTask callbacks ($76ab), micro-handlers at $78d9 inside the resource-descriptor blob, and fall-through code heads tiling exactly into proven code. Flat = 0x14*0x4000 + (cpu-0x4000). Second pass: code heads $5e9c/$60c4/$644a/$73d8/$755c inside the former d_625b stretch. $6ec1 is an unreferenced firework-object reset that follows the four FireworkObjPalettes_14 palettes (the palette region used to swallow it).",
  "rom": [
   327823,
   327860,
@@ -38,6 +38,7 @@
   336254,
   336475,
   336970,
+  339649,
   340952,
   341340,
   341675,

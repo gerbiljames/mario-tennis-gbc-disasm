@@ -802,13 +802,20 @@ marked *resolved* were fixed in the source on 2026-09-10; the rest stand.
   The `byte0 == 0` branch at `$0a:$6ea4`-`$6eab` computes
   `sprite * 2` and then discards it by reloading `a`; no record in the table has
   a zero first byte, so the branch is unreachable.
-* **Not established:** whether completing story mode directly grants any
-  permanent (`SAVEFLAG_*`) exhibition unlock. The SRAM unlocks that were traced
-  are keyed on specific arcade minigames, N64 Transfer Pak records, or the Dream
-  Match — no path was found from `FLAG_STORY_COMPLETE_*` to a `SetSaveFlag`.
-* **Not established:** the meaning of record fields `+$2b`, `+$2f` and
-  `+$3d`-`+$3f`; `+$2f` is deliberately written `$00`/`$02`/`$03` by the three
-  record-init paths but no reader was found.
+* **Story completion and the Star Court — resolved.** `FLAG_STORY_COMPLETE_*`
+  itself grants nothing permanent, but `CheckAllProgressComplete`
+  (`$1e:$6f8d`, run from `ProcessMatchRewards` after every rewarded match)
+  walks 36 game flags — `AllProgressFlagList_1e` (both Dream Matches, the
+  rank-1 win of every class in both arcs, both Island Open finals) and,
+  because the walk is 36 entries long, the 26 drill, machine and wall clears
+  of `RewardFlagListMode2_1e` that follow it — and when every one is set it
+  calls `SetSaveFlag` with `SAVEFLAG_COURT_STAR`. So the Star Court is the
+  exhibition unlock for finishing *everything* in story mode, singles and
+  doubles, and it is granted on the match that completes the set.
+* **Record fields `+$2b`, `+$2f` and `+$3d`-`+$3f` are dead stores.** `+$2f`
+  is written `$00`/`$02`/`$03` by the three record-init paths and nothing
+  reads it; the others are neither written by the game nor read. Listed under
+  dead stores in `docs/bugs.md`.
 * **The `$ff, $c9` list endings — resolved.** The `$c9` after the `$ff`
   terminator of `JuniorClassCourtSinglesEntryPoints_11`,
   `JuniorClassCourtDoublesFacingScripts_11` and `…TileTriggers_11` is a `ret`

@@ -3563,6 +3563,7 @@ RewardFlagListMode1_1e:
 ProgressEntryFlagList_1e:
 	; $6d80, 2 bytes (flag_ids)
 	flag_id FLAG_TEMP_PROGRESS_SCREEN_OPEN ; 0
+; Ten flags here, but CheckAllProgressComplete walks 36 (`ld c, $24`): it runs straight on into RewardFlagListMode2_1e's 26 drill, machine and wall clears. All 36 set -- both Dream Matches, every class's rank-1 win in both arcs, both Island Open finals, every training clear -- is what grants SAVEFLAG_COURT_STAR.
 AllProgressFlagList_1e:
 	; $6d82, 20 bytes (flag_ids)
 	flag_id FLAG_WON_DREAM_MATCH_SINGLES ; 0

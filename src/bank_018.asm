@@ -1198,7 +1198,10 @@ TwoOptionSelectBTable:
 	db $92, $ec, $e1, $10, $6c, $7c, $d5, $e2, $92, $e8, $e7, $00, $de, $e5, $b4, $e3 ; 0x00
 	db $88, $e3, $c8, $e9, $da, $ef, $ff, $eb, $00, $00, $00 ; 0x10
 ConfirmScreenSpritePalette1:
-	INCLUDE "data/bank_018/palettes_58ad.asm" ; $58ad, 51 bytes (palettes)
+	INCLUDE "data/bank_018/palettes_58ad.asm" ; $58ad, 48 bytes (palettes)
+ConfirmScreenSpritePalette1Pad:
+	; $58dd, 3 bytes (fill)
+	ds 3, $00
 CharSelectCursorGfx:
 	INCBIN "data/bank_018/d_58e0.bin" ; $58e0, 217 bytes
 CharSelectCursorPalette:
@@ -1902,7 +1905,9 @@ TaskFadeInPalette_18:
 	wram_bank ; $7ab0
 	ret ; $7ab4
 PaletteFadeTable_18:
-	INCLUDE "data/bank_018/palettes_7ab5.asm" ; $7ab5, 129 bytes (palettes)
+	INCLUDE "data/bank_018/palettes_7ab5.asm" ; $7ab5, 128 bytes (palettes)
+Unused_18_StubRet3:
+	ret ; $7b35
 TaskDrawObjectSprites_18:
 	ld c, $00 ; $7b36
 .objectLoop:

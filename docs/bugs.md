@@ -505,6 +505,15 @@ because each one is a loose end that a future reader will otherwise re-derive,
 and because the class is worth watching — the grayscale bug above is a dead
 store with a missing counterpart.
 
+### Story character record `+$2f`
+
+The three record-init paths (`InitCa00RecordFromCharId` and the story
+main/partner initialisers, `docs/story_mode.md`) each write a constant into
+byte `+$2f` of the `$40`-byte character record — `$00`, `$02` or `$03`
+depending on which path built the record. No code reads `+$2f`, nor `+$2b`
+or `+$3d`-`+$3f`, in any bank; the field is a record-type tag that nothing
+consults.
+
 | symbol | where | note |
 | --- | --- | --- |
 | `wShotAimRow` | every shot bank | the aim row is computed, stored, and used from `a`; the store is a leftover |

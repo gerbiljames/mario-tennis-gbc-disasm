@@ -285,7 +285,7 @@ bank_014/palettes_6099.asm 052099 8 palettes
 bank_014/d_64d9.bin 0524d9 4
 bank_014/d_64dd.bin 0524dd 4
 bank_014/d_6680.bin 052680 800
-bank_014/palettes_6ea1.asm 052ea1 4f palettes
+bank_014/palettes_6ea1.asm 052ea1 20 palettes
 bank_014/d_7190.bin 053190 100
 bank_014/d_7290.bin 053290 c0
 bank_014/d_7350.bin 053350 21
@@ -500,7 +500,7 @@ bank_018/d_5507.bin 061507 20
 bank_018/lz_5633.bin 061633 1c1
 bank_018/palettes_582d.asm 06182d 18 palettes
 bank_018/d_5845.bin 061845 4d
-bank_018/palettes_58ad.asm 0618ad 33 palettes
+bank_018/palettes_58ad.asm 0618ad 30 palettes
 bank_018/d_58e0.bin 0618e0 d9
 bank_018/palettes_59b9.asm 0619b9 8 palettes
 bank_018/d_59fe.bin 0619fe 20
@@ -548,7 +548,7 @@ bank_018/palettes_7754.asm 063754 8 palettes
 bank_018/palettes_78a9.asm 0638a9 8 palettes
 bank_018/palettes_78c5.asm 0638c5 8 palettes
 bank_018/palettes_7a41.asm 063a41 8 palettes
-bank_018/palettes_7ab5.asm 063ab5 81 palettes
+bank_018/palettes_7ab5.asm 063ab5 80 palettes
 bank_018/palettes_7d44.asm 063d44 18 palettes
 bank_018/d_7e69.bin 063e69 20
 bank_018/d_7ec8.bin 063ec8 2d

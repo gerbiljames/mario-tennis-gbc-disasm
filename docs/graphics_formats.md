@@ -927,16 +927,33 @@ templates — were all fixed on 2026-09-10 (the `jp` form, once accepted by
 `carve_sprite_templates`, carved nothing new: every template is reached by
 `call`). What remains is genuinely open:
 
-* The three non-multiple-of-8 `palettes` regions — `0x63ab5` (129 B),
-  `0x52ea1` (79 B), `0x618ad` (51 B). Over-declared runs, or a trailing field
-  of a different kind? Unknown.
-* Object-header bytes +2/+3 (`$02`, or `$03 $00` for the char banks). No reader
-  found.
 * The `$63` sentinel branch in `LoadActorObjectDef` (`$04:$4b2b`) is dead for
-  all 117 dispatch entries, so word 2's use cannot be confirmed from data.
+  all 117 dispatch entries, so word 2's use cannot be confirmed from data. What
+  it *would* do is clear — load the object's own palette from the pointer at
+  +8 — so the sentinel is a per-object-palette feature no shipped object uses.
 * What the intended difference between `AdjustColorsBrightness` and
-  `ApplyWhiteFade` was, given both add toward `$1f`.
-* The 136-byte scene-config record's full field layout. Only `+2`…`+5`
-  (`wMapScrollMinX/Y`, `wMapWidthTiles/HeightTiles`) are identified here, plus
-  the observation that for court records its first 80 bytes double as two
-  40-byte scoreboard column blocks (§3.4).
+  `ApplyWhiteFade` was, given both add toward `$1f`. Only the developers could
+  say; the cheaper 16-bit form is the one left unreachable.
+
+**Settled on 2026-09-11**
+
+* The three odd-sized `palettes` regions were all over-declared: `0x63ab5`
+  (bank `$18`) is 128 bytes of palettes plus a lone `ret` nothing references
+  (`Unused_18_StubRet3`); `0x52ea1` (bank `$14`) is four palettes plus a
+  47-byte unreferenced routine that resets the firework objects on a button
+  press (`Unused_14_ResetFireworkObjOnButton`); `0x618ad` (bank `$18`) is six
+  palettes plus three `$00` bytes padding the next blob to `$58e0`
+  (`ConfirmScreenSpritePalette1Pad`).
+* Object-header bytes +2/+3 are a constant, `$02 $00` in all 92 walk-sprite
+  headers and `$03 $00` in the character banks — a fixed per-family field. No
+  loader reads them, so whatever they meant to the tool that emitted the
+  headers, the game does not use it.
+* The 136-byte scene-config record: only `+2`…`+5` are ever read. The story
+  loader copies all 136 bytes to `wStorySceneRecord`, reads the four scroll
+  and size bytes back out, and no code anywhere reads the copy past `+5`
+  (the only other consumer of slot 0 is the debug loader, which treats its
+  first 64 bytes as palettes). The bytes are real data — every one of them
+  varies across the 21 story records, and `+16`…`+47` is four 8-byte
+  entries keyed `0/2/4/6` — but they are a leftover of a richer record the
+  shipped loaders no longer consume. For the 16 court records the first 80
+  bytes are the two scoreboard column blocks (§3.4).

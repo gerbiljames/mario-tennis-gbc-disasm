@@ -2495,7 +2495,30 @@ SpriteTemplate_14_2:
 	oam_sprite $20, $20, $0e, $00
 	oam_sprite_end
 FireworkObjPalettes_14:
-	INCLUDE "data/bank_014/palettes_6ea1.asm" ; $6ea1, 79 bytes (palettes)
+	INCLUDE "data/bank_014/palettes_6ea1.asm" ; $6ea1, 32 bytes (palettes)
+; Sits after FireworkObjPalettes_14's four palettes, unreferenced: when hInputRisingEdge bit 1 is newly pressed it resets both cutscene firework objects -- X $40/$68, Y $30/$38, phase 0, timer $1e each -- and returns. Nothing calls or jumps to it; UpdateFirework1_14, which follows, is the live routine.
+Unused_14_ResetFireworkObjOnButton:
+	ldh a, [hInputRisingEdge] ; $6ec1
+	and $02 ; $6ec3
+	jr z, .done ; $6ec5
+	ld a, $40 ; $6ec7
+	ld [wCutsceneObjX], a ; $6ec9
+	ld a, $30 ; $6ecc
+	ld [wCutsceneObjY], a ; $6ece
+	ld a, $00 ; $6ed1
+	ld [wCutsceneObjPhase], a ; $6ed3
+	ld a, $1e ; $6ed6
+	ld [wCutsceneObjTimer], a ; $6ed8
+	ld a, $68 ; $6edb
+	ld [wCutsceneObjX + 1], a ; $6edd
+	ld a, $38 ; $6ee0
+	ld [wCutsceneObjY + 1], a ; $6ee2
+	ld a, $00 ; $6ee5
+	ld [wCutsceneObjPhase + 1], a ; $6ee7
+	ld a, $1e ; $6eea
+	ld [wCutsceneObjTimer + 1], a ; $6eec
+.done:
+	ret ; $6eef
 UpdateFirework1_14:
 	ld a, [wCutsceneObjPhase + 1] ; $6ef0
 	cp $04 ; $6ef3
