@@ -7,7 +7,10 @@ farcall slot, and where a slot table does reference it, no `farcall` ever
 names that slot. The naming passes that found them are in `docs/history.md`;
 this file is what they have in common. Measured 2026-09-10 by fingerprinting
 each unused routine's opcode sequence against every live routine
-(`tools/ram_gaps.py` counts their 97 raw banked operands as `dead`).
+(`tools/ram_gaps.py` counts their 97 raw banked operands as `dead`). Where
+an unused routine has a live twin, the exact difference is a `labels.json`
+note rendered as the comment above it in `src/`, so the relationship is
+visible where the routine is read, not only here.
 
 ## The patterns
 
@@ -22,9 +25,9 @@ is not. `TestAndSetGridEntryTaken` is live, `Unused_38_TestAndClearGridEntryTake
 
 **2. The same helper compiled into several banks.** Seven unused routines
 are opcode-identical to a live routine in another bank, and their names say
-so: `Unused_11_ComputeIslandProgressStage`, `_12_` and `_14_` are all the
-24-instruction `ComputeStoryRankTier_13`; `UnusedComputeStoryProgressCount_0e`
-and `_0f` are the same routine again; `UnusedEvalFlagCondition_0a` is
+so: `Unused_0e_ComputeStoryRankTier`, `_0f_`, `_10_`, `_11_`, `_12_` and
+`_14_` are all the 24-instruction `ComputeStoryRankTier_13`, one copy per
+story bank; `UnusedEvalFlagCondition_0a` is
 `EvalFlagCondition` from bank `$04`; `Unused_05_FetchSRAMShortText` is
 `FetchSRAMDialogueText`. This is what a shared include assembled into every
 story bank looks like: each bank got the whole set, and only the copy the

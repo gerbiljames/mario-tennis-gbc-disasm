@@ -3452,6 +3452,7 @@ Unused_05_RenderInlineHexByte:
 	ld l, a ; $5563
 	call FormatHexWord ; $5564
 	jp RenderInlineNumber.zero ; $5567
+; PrintHexWord without its push de and with a jp tail: the inline-argument variant of the same renderer. Nothing calls it.
 Unused_05_RenderInlineHexWord:
 	push af ; $556a
 	push bc ; $556b
@@ -3469,6 +3470,7 @@ Unused_05_RenderInlineHexWord:
 	ld c, e ; $5579
 	call FormatHexWord ; $557a
 	jp RenderInlineNumber.zero ; $557d
+; PrintDecimalByte without its push de and with a jp tail: the inline-argument variant of the same renderer. Nothing calls it.
 Unused_05_RenderInlineDecimalByte:
 	push af ; $5580
 	push bc ; $5581
@@ -6951,6 +6953,7 @@ FetchSRAMDialogueText:
 	call FetchSRAMText ; $6d2e
 	pop af ; $6d31
 	ret ; $6d32
+; FetchSRAMDialogueText with a = 1 in place of a = 0 -- the short-text fetch mode over the same SRAM path. Nothing calls it.
 Unused_05_FetchSRAMShortText:
 	push af ; $6d33
 	ld a, $01 ; $6d34

@@ -315,6 +315,7 @@ SwitchCPUSpeed:
 	pop af ; $02c3
 	ldh [rIE], a ; $02c4
 	ret ; $02c6
+; SwitchCPUSpeed with its two branch conditions inverted (ret z / jr nz where the live one has ret nz / jr z): the single-speed direction the game never asks for. Nothing calls it.
 Unused_00_SwitchCPUSpeedSingle:
 	ldh a, [rSPD] ; $02c7
 	bit 7, a ; $02c9
@@ -1040,6 +1041,7 @@ FarReadWordDI:
 	ld [rROMB0], a ; $065c
 	ei ; $065f
 	ret ; $0660
+; FarReadPtrIndexed that returns instead of tail-jumping through the entry it read. Nothing calls it.
 Unused_00_ReadFarVectorEntry:
 	push bc ; $0661
 	ldh a, [hRomBank] ; $0662
@@ -1074,6 +1076,7 @@ FarCopyBytes:
 	ldh [hRomBank], a ; $068c
 	ld [rROMB0], a ; $068e
 	ret ; $0691
+; FarCopyBytes with a push af / pop af around the banked call -- the same far-call shell aimed at DecompressData. Nothing calls it; every decompress goes through DecompressDataFromBank.
 Unused_00_FarDecompressData:
 	push af ; $0692
 	push bc ; $0693
@@ -4657,6 +4660,7 @@ PrintDecimalByte:
 	ld a, $04 ; $1af4
 	call FormatDecimalNumber ; $1af6
 	jr PrintDecimalWord.printString ; $1af9
+; PrintDecimalByte with one extra call before the digit loop (the sign handling). Nothing calls it.
 Unused_00_PrintDecimalByteSigned:
 	push af ; $1afb
 	push bc ; $1afc
@@ -7381,6 +7385,7 @@ SerialDecodeInput:
 	pop bc ; $29f3
 	pop af ; $29f4
 	ret ; $29f5
+; EnableTimerInterrupt with `or $08` (IE bit 3, serial) in place of `or $04`. Nothing calls it; the link code sets IE directly.
 Unused_00_EnableSerialInterrupt:
 	di ; $29f6
 	xor a ; $29f7
@@ -7390,6 +7395,7 @@ Unused_00_EnableSerialInterrupt:
 	ldh [rIE], a ; $29fe
 	ei ; $2a00
 	ret ; $2a01
+; EnableTimerInterrupt with `or $01` (IE bit 0, VBlank) in place of `or $04`. Nothing calls it.
 Unused_00_EnableVBlankInterrupt:
 	di ; $2a02
 	xor a ; $2a03
@@ -7408,6 +7414,7 @@ EnableTimerInterrupt:
 	ldh [rIE], a ; $2a16
 	ei ; $2a18
 	ret ; $2a19
+; EnableSerialAndVBlankInterrupts with IE = $0d (timer as well). Nothing calls it.
 Unused_00_SetInterruptsVBlankTimerSerial:
 	di ; $2a1a
 	xor a ; $2a1b
@@ -7416,6 +7423,7 @@ Unused_00_SetInterruptsVBlankTimerSerial:
 	ldh [rIE], a ; $2a20
 	ei ; $2a22
 	ret ; $2a23
+; Instruction-for-instruction the same as EnableSerialAndVBlankInterrupts, a second copy of it. Nothing calls it.
 Unused_00_SetInterruptsVBlankSerial:
 	di ; $2a24
 	xor a ; $2a25

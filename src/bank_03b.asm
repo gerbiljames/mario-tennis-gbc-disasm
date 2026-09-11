@@ -5749,6 +5749,7 @@ LoadSavedDataSourceGfx:
 	db $00, $ac ; 0x16
 	db $00, $ad ; 0x18
 	db $00, $ae ; 0x1a
+; MainMenuSlideIn with different start columns, end test (`cp $0c`) and row count: the same panel slide-in for a panel the bank never shows. Nothing calls it.
 Unused_3b_SlideMenuPanel_1:
 	ld a, b ; $6979
 	or a ; $697a
@@ -5780,6 +5781,7 @@ Unused_3b_SlideMenuPanel_1:
 	cp $ff ; $69a6
 	jr nz, .loopB ; $69a8
 	ret ; $69aa
+; MainMenuSlideOut with different start columns, end test (`cp $0d`) and row count: the slide-out matching Unused_3b_SlideMenuPanel_1. Nothing calls it.
 Unused_3b_SlideMenuPanel_2:
 	ld a, b ; $69ab
 	or a ; $69ac

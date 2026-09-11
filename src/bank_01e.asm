@@ -3111,6 +3111,7 @@ ShowExpAwardForLinkedPlay:
 	pop bc ; $6ad7
 	pop af ; $6ad8
 	ret ; $6ad9
+; ShowExpAwardForMinigame with b = 0, c = 0 in place of b = 3, c = 1: the Transfer Pak (N64 records) award variant of the same screen. Nothing calls it, so no N64 EXP award is ever shown.
 UnusedShowExpAwardForN64:
 	ld a, e ; $6ada
 	or d ; $6adb
@@ -4483,6 +4484,7 @@ ScrollProgressListUp:
 .restore:
 	pop af ; $73d5
 	ret ; $73d6
+; CreateProgressListWindow with a 16 x 3 window at (2, 0) in place of the 18 x 15 list at (1, 3): the header the progress screen never draws. Nothing calls it.
 UnusedCreateProgressHeaderWindow:
 	ld d, $02 ; $73d7
 	ld e, $00 ; $73d9

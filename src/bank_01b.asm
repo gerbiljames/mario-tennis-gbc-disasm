@@ -3041,6 +3041,7 @@ LoadCharSelectRosterTable:
 	ld bc, $0080 ; $5fe7
 	call CopyMemoryBC ; $5fea
 	ret ; $5fed
+; LoadUnlockDebugScreenGfx with one more decompress and CharSelectNavGridTable as its source: the character-select variant of the same screen loader. Called only from Unused_1b_RunCharSelectLoop.
 Unused_1b_LoadCharSelectScreenGfx:
 	ld hl, CharSelectNavGridTable ; $5fee
 	ld de, $d000 ; $5ff1

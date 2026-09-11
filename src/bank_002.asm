@@ -188,6 +188,7 @@ InitCa00RecordFromCharId:
 	pop af ; $4122
 	wram_bank ; $4123
 	ret ; $4127
+; GetCharPaletteIndex with a different table base (`add $33` for `add $7e`): the same character-id lookup over the remap table above. Nothing calls it.
 Unused_02_CharIdRemapLookup:
 	push hl ; $4128
 	add LOW(Unused_02_CharIdRemapTable) ; $4129

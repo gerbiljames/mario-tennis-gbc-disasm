@@ -3345,6 +3345,7 @@ FlushEquipSelectTextRows:
 	ld c, $04 ; $58b5
 	call QueueVRAMCopy ; $58b7
 	ret ; $58ba
+; GetItemStatModListPtr over two other tables ($58d6/$58e4 in place of $5a5f/$5a6d): the same two-level pointer lookup. Nothing calls it.
 Unused_3e_GetEquipSelectTextRowPtr:
 	push af ; $58bb
 	push bc ; $58bc

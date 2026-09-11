@@ -90,6 +90,7 @@ SmallCharTestNpc04_0f:
 	ld hl, $002a ; $4119
 	ld a, l ; $411c
 	jr SmallCharTestApplyStage_0f ; $411d
+; Instruction-for-instruction the same as SmallCharTestApplyStage_0f just above it: the same four-instruction body assembled twice. Nothing reaches this copy.
 UnusedSmallCharTestApplyStage_0f:
 	ld hl, wMapSceneStage ; $411f
 	ld [hl], a ; $4122
@@ -1795,6 +1796,7 @@ SetActorDrawModeFromSceneTile_0f:
 	ld a, $02 ; $6392
 	ld [hl], a ; $6394
 	ret ; $6395
+; SetActorDrawModeFromSceneTile_0f without the push af / pop af / or a / jr z that makes the live one skip on a zero argument. Nothing calls it.
 UnusedSetActorDrawModeFromSceneTileSingle_0f:
 	ld h, a ; $6396
 	ld l, $00 ; $6397
@@ -2375,6 +2377,7 @@ IslandOpenFinalDoublesNpc0B_0f:
 .speak:
 	script_speak $0b ; $6f12
 	ret ; $6f17
+; Instruction-for-instruction the same as TournamentNpc0A_0f: the handler assembled a second time. Nothing points at this copy.
 UnusedTournamentNpc0A_0f:
 	script_set_text Text_1f_163 ; $6f18
 	ld a, $0b ; $6f1e
@@ -3505,7 +3508,8 @@ ComputeRankingProgressIndex_0f:
 	jr z, .loop ; $7d84
 	ld a, STORYRANK_DOUBLES_COMPLETE ; $7d86
 	jr .loop ; $7d88
-UnusedComputeStoryProgressCount_0f:
+; This bank's copy of ComputeStoryRankTier_13, identical instruction for instruction: the shared story include carried it into every story bank, and only bank $13's copy is called (by SetStoryRankTier). Nothing calls this one.
+Unused_0f_ComputeStoryRankTier:
 	ld a, $00 ; $7d8a
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7d8c
 	jr z, .loopB ; $7d8f

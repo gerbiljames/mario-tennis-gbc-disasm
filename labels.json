@@ -19,7 +19,10 @@
  "0x028f": ".loop",
  "0x02a3": "SwitchCPUSpeed",
  "0x02b8": ".loop",
- "0x2c7": "Unused_00_SwitchCPUSpeedSingle",
+ "0x2c7": {
+  "name": "Unused_00_SwitchCPUSpeedSingle",
+  "note": "SwitchCPUSpeed with its two branch conditions inverted (ret z / jr nz where the live one has ret nz / jr z): the single-speed direction the game never asks for. Nothing calls it."
+ },
  "0x02dc": ".loopB",
  "0x02eb": "ReadJoypad",
  "0x032b": ".nonZero",
@@ -82,9 +85,15 @@
  "0x0628": "FarReadByte",
  "0x063d": "FarReadWord",
  "0x0652": "FarReadWordDI",
- "0x661": "Unused_00_ReadFarVectorEntry",
+ "0x661": {
+  "name": "Unused_00_ReadFarVectorEntry",
+  "note": "FarReadPtrIndexed that returns instead of tail-jumping through the entry it read. Nothing calls it."
+ },
  "0x067a": "FarCopyBytes",
- "0x692": "Unused_00_FarDecompressData",
+ "0x692": {
+  "name": "Unused_00_FarDecompressData",
+  "note": "FarCopyBytes with a push af / pop af around the banked call -- the same far-call shell aimed at DecompressData. Nothing calls it; every decompress goes through DecompressDataFromBank."
+ },
  "0x06ac": "CopyOAMDMARoutineToHRAM",
  "0x06b3": ".loop",
  "0x06ba": "OAMDMARoutine",
@@ -441,7 +450,10 @@
  "0x1ab7": "PrintHexByte",
  "0x1ace": "PrintHexWord",
  "0x1ae4": "PrintDecimalByte",
- "0x1afb": "Unused_00_PrintDecimalByteSigned",
+ "0x1afb": {
+  "name": "Unused_00_PrintDecimalByteSigned",
+  "note": "PrintDecimalByte with one extra call before the digit loop (the sign handling). Nothing calls it."
+ },
  "0x1b15": "PrintDecimalWord",
  "0x1b2b": ".printString",
  "0x1b38": "ClearFrameTasks",
@@ -685,11 +697,23 @@
  "0x29e0": ".asSlave",
  "0x29f1": ".storeInput",
  "0x29f3": ".done",
- "0x29f6": "Unused_00_EnableSerialInterrupt",
- "0x2a02": "Unused_00_EnableVBlankInterrupt",
+ "0x29f6": {
+  "name": "Unused_00_EnableSerialInterrupt",
+  "note": "EnableTimerInterrupt with `or $08` (IE bit 3, serial) in place of `or $04`. Nothing calls it; the link code sets IE directly."
+ },
+ "0x2a02": {
+  "name": "Unused_00_EnableVBlankInterrupt",
+  "note": "EnableTimerInterrupt with `or $01` (IE bit 0, VBlank) in place of `or $04`. Nothing calls it."
+ },
  "0x2a0e": "EnableTimerInterrupt",
- "0x2a1a": "Unused_00_SetInterruptsVBlankTimerSerial",
- "0x2a24": "Unused_00_SetInterruptsVBlankSerial",
+ "0x2a1a": {
+  "name": "Unused_00_SetInterruptsVBlankTimerSerial",
+  "note": "EnableSerialAndVBlankInterrupts with IE = $0d (timer as well). Nothing calls it."
+ },
+ "0x2a24": {
+  "name": "Unused_00_SetInterruptsVBlankSerial",
+  "note": "Instruction-for-instruction the same as EnableSerialAndVBlankInterrupts, a second copy of it. Nothing calls it."
+ },
  "0x2a2e": "QueueDeferredTilemapCopy",
  "0x2a54": "VBlankDeferredTilemapCopyTask",
  "0x2a79": ".maskClear",
@@ -1029,7 +1053,10 @@
  "0x80db": ".gotDest",
  "0x80dd": ".copyLoop",
  "0x8103": ".gotTextId",
- "0x8128": "Unused_02_CharIdRemapLookup",
+ "0x8128": {
+  "name": "Unused_02_CharIdRemapLookup",
+  "note": "GetCharPaletteIndex with a different table base (`add $33` for `add $7e`): the same character-id lookup over the remap table above. Nothing calls it."
+ },
  "0x8133": "Unused_02_CharIdRemapTable",
  "0x8173": "GetCharPaletteIndex",
  "0x817e": "CharPaletteIndexTable",
@@ -1241,7 +1268,10 @@
  "0xccbb": ".nonZero",
  "0xccc2": ".loop",
  "0xccc9": ".loopB",
- "0xccd3": "Unused_03_ReadSaveBlockTagWord",
+ "0xccd3": {
+  "name": "Unused_03_ReadSaveBlockTagWord",
+  "note": "ReadSaveBlockTag reading a 2-byte field (`ld c, $02`) where the live one reads 8. Nothing calls it."
+ },
  "0xccf0": ".nonZero2",
  "0xccf7": ".loop2",
  "0xcd08": "SaveStorySlot",
@@ -1269,7 +1299,10 @@
  "0xce9d": "ClearSaveBlockData",
  "0xcecb": ".loop",
  "0xceed": ".loopB",
- "0xcef7": "Unused_03_EraseSaveBlock",
+ "0xcef7": {
+  "name": "Unused_03_EraseSaveBlock",
+  "note": "ClearSaveBlockData with four extra instructions that step the pointer by 8 first -- the same block clear from a later offset. Nothing calls it."
+ },
  "0xcf2b": ".loop2",
  "0xcf4d": ".loop3",
  "0xcf57": "ClearSaveBlockEntry",
@@ -1579,7 +1612,10 @@
  "0xf51e": "ShowStoryResultScreen",
  "0xf5ab": "InitGrayscalePaletteFade",
  "0xf5ba": ".loop",
- "0xf5ca": "Unused_03_InitBlackPaletteFade",
+ "0xf5ca": {
+  "name": "Unused_03_InitBlackPaletteFade",
+  "note": "InitGrayscalePaletteFade with ClearFadeTargetPalettes in place of DesaturateFadeTargetPalettes: the fade-to-black variant of the same setup. Nothing calls it; bank $03's callers only use the grayscale one."
+ },
  "0xf5d9": ".loopB",
  "0xf5e9": "CopyMasterPalettesToFadeBuffers",
  "0xf5f1": ".loop",
@@ -2156,8 +2192,14 @@
  "0x1553e": ".nextCell",
  "0x15553": ".done",
  "0x15555": "Unused_05_RenderInlineHexByte",
- "0x1556a": "Unused_05_RenderInlineHexWord",
- "0x15580": "Unused_05_RenderInlineDecimalByte",
+ "0x1556a": {
+  "name": "Unused_05_RenderInlineHexWord",
+  "note": "PrintHexWord without its push de and with a jp tail: the inline-argument variant of the same renderer. Nothing calls it."
+ },
+ "0x15580": {
+  "name": "Unused_05_RenderInlineDecimalByte",
+  "note": "PrintDecimalByte without its push de and with a jp tail: the inline-argument variant of the same renderer. Nothing calls it."
+ },
  "0x15597": "RenderInlineNumber",
  "0x155b9": ".loop",
  "0x155c0": ".restore",
@@ -2460,7 +2502,10 @@
  "0x16cf3": ".nedf2",
  "0x16d02": ".checkWramBank",
  "0x16d2b": "FetchSRAMDialogueText",
- "0x16d33": "Unused_05_FetchSRAMShortText",
+ "0x16d33": {
+  "name": "Unused_05_FetchSRAMShortText",
+  "note": "FetchSRAMDialogueText with a = 1 in place of a = 0 -- the short-text fetch mode over the same SRAM path. Nothing calls it."
+ },
  "0x16d3b": "FetchSRAMText",
  "0x16d58": ".nonZero",
  "0x16d5e": ".copyMemoryBC",
@@ -3815,7 +3860,10 @@
  "0x224fd": "DrawSlotSprite",
  "0x2250a": "DrawCharSprite",
  "0x22527": "DrawStandingShadowSlot",
- "0x22537": "UnusedDrawStandingShadowSlot16",
+ "0x22537": {
+  "name": "UnusedDrawStandingShadowSlot16",
+  "note": "Instruction-for-instruction the same as DrawSlotSprite, with the operands aimed at slot 16. Nothing calls it."
+ },
  "0x22544": "InitMinigameMatchSettings",
  "0x22557": "RunMinigameMatch",
  "0x22592": "ShowMatchResultScreens",
@@ -4522,7 +4570,10 @@
  "0x29341": "StoryObjPalettes",
  "0x29369": "GetTileTriggerAtPlayer",
  "0x2939d": ".done",
- "0x293a2": "UnusedEvalFlagCondition_0a",
+ "0x293a2": {
+  "name": "UnusedEvalFlagCondition_0a",
+  "note": "Bank $0a's copy of EvalFlagCondition ($04:$4c49), identical instruction for instruction: the shared story include assembled into this bank too. Nothing calls this copy; FindStoryScriptEntry farcalls the bank $04 one."
+ },
  "0x293ad": ".negated",
  "0x293b6": ".true",
  "0x293b9": "FacingMaskTable_0a",
@@ -6371,8 +6422,14 @@
  "0x388c9": "ActorScript_0e_01",
  "0x38a80": "ActorScript_0e_02",
  "0x38c37": "TrainingGymRunner0AWaitWaypointClear",
- "0x38c7c": "UnusedTrainingGymRunner0AClearWaypoint",
- "0x38cd3": "UnusedTrainingGymRunner0BClearWaypoint",
+ "0x38c7c": {
+  "name": "UnusedTrainingGymRunner0AClearWaypoint",
+  "note": "TrainingGymRunner0AWaitWaypointClear with ten extra instructions that fetch actor $0a's state and `res 0` its +5 flag before returning -- the clear-and-return variant of the wait. Nothing calls it."
+ },
+ "0x38cd3": {
+  "name": "UnusedTrainingGymRunner0BClearWaypoint",
+  "note": "The same clear-and-return variant as UnusedTrainingGymRunner0AClearWaypoint for actor $0b. Nothing calls it."
+ },
  "0x38d2a": "UnusedTrainingGymRunner0CClearWaypoint",
  "0x38d3c": ".checkTimer",
  "0x38d58": ".checkX",
@@ -6583,7 +6640,10 @@
  "0x3be5a": "ComputeTrainingGymProgressIndex",
  "0x3be7d": ".store",
  "0x3be81": ".doubles",
- "0x3bea1": "UnusedComputeStoryProgressCount_0e",
+ "0x3bea1": {
+  "name": "Unused_0e_ComputeStoryRankTier",
+  "note": "This bank's copy of ComputeStoryRankTier_13, identical instruction for instruction: the shared story include carried it into every story bank, and only bank $13's copy is called (by SetStoryRankTier). Nothing calls this one."
+ },
  "0x3bec0": ".storeIsland",
  "0x3bec4": ".doublesIsland",
  "0x3c006": "SmallCharTestMapScripts_0f",
@@ -6598,7 +6658,10 @@
  "0x3c101": "SmallCharTestNpc04_0f",
  "0x3c110": ".checkMax",
  "0x3c115": ".compare",
- "0x3c11f": "UnusedSmallCharTestApplyStage_0f",
+ "0x3c11f": {
+  "name": "UnusedSmallCharTestApplyStage_0f",
+  "note": "Instruction-for-instruction the same as SmallCharTestApplyStage_0f just above it: the same four-instruction body assembled twice. Nothing reaches this copy."
+ },
  "0x3c127": "SmallCharTestNpc05_0f",
  "0x3c12f": "SmallCharTestNpc06_0f",
  "0x3c137": "MapScriptNop_0f",
@@ -6679,7 +6742,10 @@
  "0x3e355": ".readCell",
  "0x3e36f": ".checkBelow",
  "0x3e388": ".actorLoop",
- "0x3e396": "UnusedSetActorDrawModeFromSceneTileSingle_0f",
+ "0x3e396": {
+  "name": "UnusedSetActorDrawModeFromSceneTileSingle_0f",
+  "note": "SetActorDrawModeFromSceneTile_0f without the push af / pop af / or a / jr z that makes the live one skip on a zero argument. Nothing calls it."
+ },
  "0x3e3e1": ".nextActor",
  "0x3e3fa": ".done",
  "0x3e408": "ReadSceneTilemapTile_0f",
@@ -6728,7 +6794,10 @@
  "0x3eeee": ".speak",
  "0x3eef4": "IslandOpenFinalDoublesNpc0B_0f",
  "0x3ef12": ".speak",
- "0x3ef18": "UnusedTournamentNpc0A_0f",
+ "0x3ef18": {
+  "name": "UnusedTournamentNpc0A_0f",
+  "note": "Instruction-for-instruction the same as TournamentNpc0A_0f: the handler assembled a second time. Nothing points at this copy."
+ },
  "0x3ef36": ".speakAlt",
  "0x3ef3c": "TournamentNpc03_0f",
  "0x3ef5d": ".altLine",
@@ -6821,7 +6890,10 @@
  "0x3fd43": "ComputeRankingProgressIndex_0f",
  "0x3fd66": ".loop",
  "0x3fd6a": ".doubles",
- "0x3fd8a": "UnusedComputeStoryProgressCount_0f",
+ "0x3fd8a": {
+  "name": "Unused_0f_ComputeStoryRankTier",
+  "note": "This bank's copy of ComputeStoryRankTier_13, identical instruction for instruction: the shared story include carried it into every story bank, and only bank $13's copy is called (by SetStoryRankTier). Nothing calls this one."
+ },
  "0x3fda9": ".loopB",
  "0x3fdad": ".doublesIsland",
  "0x40010": "MatchSelectMapScripts_10",
@@ -6891,13 +6963,34 @@
  "0x4069b": "Test2Actors_10",
  "0x40785": "Test2EntryPoints_10",
  "0x4078e": "Test2ExitTriggers_10",
- "0x40800": "Unused_10_Test2Npc04",
- "0x40831": "Unused_10_Test2Npc05",
- "0x40862": "Unused_10_Test2Npc06",
- "0x40893": "Unused_10_Test2Npc07",
- "0x408c4": "Unused_10_Test2Npc08",
- "0x408f5": "Unused_10_Test2Npc09",
- "0x40926": "Unused_10_Test2Npc0A",
+ "0x40800": {
+  "name": "Unused_10_Test2Npc04",
+  "note": "Test2Npc0B_10 with actor $04 in its two operands: one of seven identical template handlers for the Test 2 debug map's NPCs. No NpcScripts record points at it."
+ },
+ "0x40831": {
+  "name": "Unused_10_Test2Npc05",
+  "note": "Test2Npc0B_10 with actor $05 in its two operands: one of seven identical template handlers for the Test 2 debug map's NPCs. No NpcScripts record points at it."
+ },
+ "0x40862": {
+  "name": "Unused_10_Test2Npc06",
+  "note": "Test2Npc0B_10 with actor $06 in its two operands: one of seven identical template handlers for the Test 2 debug map's NPCs. No NpcScripts record points at it."
+ },
+ "0x40893": {
+  "name": "Unused_10_Test2Npc07",
+  "note": "Test2Npc0B_10 with actor $07 in its two operands: one of seven identical template handlers for the Test 2 debug map's NPCs. No NpcScripts record points at it."
+ },
+ "0x408c4": {
+  "name": "Unused_10_Test2Npc08",
+  "note": "Test2Npc0B_10 with actor $08 in its two operands: one of seven identical template handlers for the Test 2 debug map's NPCs. No NpcScripts record points at it."
+ },
+ "0x408f5": {
+  "name": "Unused_10_Test2Npc09",
+  "note": "Test2Npc0B_10 with actor $09 in its two operands: one of seven identical template handlers for the Test 2 debug map's NPCs. No NpcScripts record points at it."
+ },
+ "0x40926": {
+  "name": "Unused_10_Test2Npc0A",
+  "note": "Test2Npc0B_10 with actor $0a in its two operands: one of seven identical template handlers for the Test 2 debug map's NPCs. No NpcScripts record points at it."
+ },
  "0x40957": "Test2Npc0B_10",
  "0x40988": "Test2Npc0C_10",
  "0x409b9": "Test2Npc0D_10",
@@ -7251,7 +7344,10 @@
  "0x43a15": ".readCell",
  "0x43a2f": ".checkBelow",
  "0x43a48": ".actorLoop",
- "0x43a56": "Unused_10_UpdateActorTileAnimStateByIndex",
+ "0x43a56": {
+  "name": "Unused_10_UpdateActorTileAnimStateByIndex",
+  "note": "UpdateActorTileAnimState_10 without the push af / pop af / or a / jr z zero-argument guard. Nothing calls it."
+ },
  "0x43aa1": ".nextActor",
  "0x43aba": ".done",
  "0x43ac8": "ReadSceneTilemapCell_10",
@@ -7274,7 +7370,10 @@
  "0x43dbd": "SetStoryDialogueStage_10",
  "0x43de0": ".store",
  "0x43de4": ".doublesStage",
- "0x43e04": "Unused_10_SetStoryDialogueStageAlt",
+ "0x43e04": {
+  "name": "Unused_10_ComputeStoryRankTier",
+  "note": "This bank's copy of ComputeStoryRankTier_13, identical instruction for instruction: the shared story include carried it into every story bank, and only bank $13's copy is called (by SetStoryRankTier). Nothing calls this one."
+ },
  "0x43e23": ".storeIsland",
  "0x43e27": ".doublesIsland",
  "0x44008": "CenterCourtMapScripts_11",
@@ -7575,7 +7674,10 @@
  "0x47d95": "ComputeRankingProgressIndex",
  "0x47db8": ".store",
  "0x47dbc": ".doubles",
- "0x47ddc": "Unused_11_ComputeIslandProgressStage",
+ "0x47ddc": {
+  "name": "Unused_11_ComputeStoryRankTier",
+  "note": "This bank's copy of ComputeStoryRankTier_13, identical instruction for instruction: the shared story include carried it into every story bank, and only bank $13's copy is called (by SetStoryRankTier). Nothing calls this one."
+ },
  "0x47dfb": ".storeIsland",
  "0x47dff": ".doublesIsland",
  "0x48006": "DormEntranceMapScripts_12",
@@ -7897,7 +7999,10 @@
  "0x4bc75": "ComputeSeniorCourtStageB",
  "0x4bc98": ".store",
  "0x4bc9c": ".doubles",
- "0x4bcbc": "Unused_12_ComputeIslandProgressStage",
+ "0x4bcbc": {
+  "name": "Unused_12_ComputeStoryRankTier",
+  "note": "This bank's copy of ComputeStoryRankTier_13, identical instruction for instruction: the shared story include carried it into every story bank, and only bank $13's copy is called (by SetStoryRankTier). Nothing calls this one."
+ },
  "0x4bcdb": ".storeIsland",
  "0x4bcdf": ".doublesIsland",
  "0x4c006": "RestaurantPlazaMapScripts_13",
@@ -8261,7 +8366,10 @@
  "0x50692": ".done",
  "0x50693": "MachineLevelNotClearedMessage",
  "0x5069f": "TestMachineLevelClearedFlag",
- "0x506ae": "Unused_14_SetMachineLevelClearedFlag",
+ "0x506ae": {
+  "name": "Unused_14_SetMachineLevelClearedFlag",
+  "note": "TestMachineLevelClearedFlag with SetGameFlagByNumber in place of TestGameFlagByNumber over the same TestMachineLevelClearedFlagTable: the Set member of the pair. Nothing calls it; the level-cleared flags are set by the machine-room scene scripts directly."
+ },
  "0x506bd": "TestMachineLevelClearedFlagTable",
  "0x506c5": "MachinePracticeResultScene",
  "0x506ef": ".placeActors",
@@ -8507,7 +8615,10 @@
  "0x53a9d": "ComputeRankingProgressIndex_14",
  "0x53ac0": ".loop",
  "0x53ac4": ".isDoubles",
- "0x53ae4": "Unused_14_ComputeIslandProgressStage",
+ "0x53ae4": {
+  "name": "Unused_14_ComputeStoryRankTier",
+  "note": "This bank's copy of ComputeStoryRankTier_13, identical instruction for instruction: the shared story include carried it into every story bank, and only bank $13's copy is called (by SetStoryRankTier). Nothing calls this one."
+ },
  "0x53b03": ".loopB",
  "0x53b07": ".checkFlag",
  "0x54004": "TournamentCourtyardMapScripts_15",
@@ -8769,19 +8880,28 @@
  "0x571c8": ".placeActors",
  "0x571d3": ".done",
  "0x571d4": "TestServeChallengerGameFlag",
- "0x571e6": "Unused_15_SetServeChallengerGameFlag",
+ "0x571e6": {
+  "name": "Unused_15_SetServeChallengerGameFlag",
+  "note": "TestServeChallengerGameFlag with SetGameFlagByNumber in place of TestGameFlagByNumber over the same table: the Set member of the pair. Nothing calls it."
+ },
  "0x571f8": "TestServeChallengerGameFlagTable",
  "0x57204": "HideNetChallengerActor",
  "0x5720e": ".placeActors",
  "0x57219": ".done",
  "0x5721a": "TestNetChallengerGameFlag",
- "0x5722c": "Unused_15_SetNetChallengerGameFlag",
+ "0x5722c": {
+  "name": "Unused_15_SetNetChallengerGameFlag",
+  "note": "TestNetChallengerGameFlag with SetGameFlagByNumber in place of TestGameFlagByNumber over the same table: the Set member of the pair. Nothing calls it."
+ },
  "0x5723e": "TestNetChallengerGameFlagTable",
  "0x5724a": "HideStrokeChallengerActor",
  "0x57254": ".placeActors",
  "0x5725f": ".done",
  "0x57260": "TestStrokeChallengerGameFlag",
- "0x57272": "Unused_15_SetStrokeChallengerGameFlag",
+ "0x57272": {
+  "name": "Unused_15_SetStrokeChallengerGameFlag",
+  "note": "TestStrokeChallengerGameFlag with SetGameFlagByNumber in place of TestGameFlagByNumber over the same table: the Set member of the pair. Nothing calls it."
+ },
  "0x57284": "TestStrokeChallengerGameFlagTable",
  "0x57290": ".dispatchStage",
  "0x5729f": ".dispatchStage2",
@@ -10565,7 +10685,10 @@
  "0x6dfcb": "GetCharSelectRosterField",
  "0x6dfd4": "LoadCharSelectNavGrid",
  "0x6dfe1": "LoadCharSelectRosterTable",
- "0x6dfee": "Unused_1b_LoadCharSelectScreenGfx",
+ "0x6dfee": {
+  "name": "Unused_1b_LoadCharSelectScreenGfx",
+  "note": "LoadUnlockDebugScreenGfx with one more decompress and CharSelectNavGridTable as its source: the character-select variant of the same screen loader. Called only from Unused_1b_RunCharSelectLoop."
+ },
  "0x6e029": "StartCharSelectCursorTask",
  "0x6e035": "UpdateCharSelectCursorTask",
  "0x6e045": "Unused_1b_DrawCharSelectPrompt",
@@ -11910,7 +12033,10 @@
  "0x7aaa4": "ShowExpAwardForLinkedPlay",
  "0x7aac0": ".notDoubles",
  "0x7aad0": ".restore",
- "0x7aada": "UnusedShowExpAwardForN64",
+ "0x7aada": {
+  "name": "UnusedShowExpAwardForN64",
+  "note": "ShowExpAwardForMinigame with b = 0, c = 0 in place of b = 3, c = 1: the Transfer Pak (N64 records) award variant of the same screen. Nothing calls it, so no N64 EXP award is ever shown."
+ },
  "0x7aafd": "ApplyPendingExpAwards",
  "0x7ab3d": ".sumAwards",
  "0x7ab40": ".noCarry",
@@ -12040,7 +12166,10 @@
  "0x7b3ae": ".restore",
  "0x7b3b0": "ScrollProgressListUp",
  "0x7b3d5": ".restore",
- "0x7b3d7": "UnusedCreateProgressHeaderWindow",
+ "0x7b3d7": {
+  "name": "UnusedCreateProgressHeaderWindow",
+  "note": "CreateProgressListWindow with a 16 x 3 window at (2, 0) in place of the 18 x 15 list at (1, 3): the header the progress screen never draws. Nothing calls it."
+ },
  "0x7b3e3": "CreateProgressListWindow",
  "0x7b3ef": "TestProgressEntryFlag",
  "0x7b3fa": ".read",
@@ -13001,7 +13130,10 @@
  "0xe08b1": ".finish",
  "0xe08d3": ".cancel",
  "0xe08f1": ".viewStats",
- "0xe090c": "Unused_38_DrawCharSelectCursorBox",
+ "0xe090c": {
+  "name": "Unused_38_DrawCharSelectCursorBox",
+  "note": "DrawCharGridCursorBox with a different palette (c = 2), template and 48 x 24 extent: the same cursor-box drawer sized for another grid. Nothing calls it."
+ },
  "0xe091a": ".done",
  "0xe0924": "CharacterSelectScreenTable",
  "0xe092c": "LoadCharSelectCharPalettes",
@@ -13242,7 +13374,10 @@
  "0xe1d02": ".copyStart",
  "0xe1d07": ".copyLoop",
  "0xe1d12": ".nextSlot",
- "0xe1d25": "Unused_38_TestAndClearGridEntryTaken",
+ "0xe1d25": {
+  "name": "Unused_38_TestAndClearGridEntryTaken",
+  "note": "TestAndSetGridEntryTaken with `xor a` in place of `ld a, $01`: the Clear member of the pair. Nothing calls it."
+ },
  "0xe1d42": "TestAndSetGridEntryTaken",
  "0xe1d60": "GetGridEntryTakenPtr",
  "0xe1d67": ".rowLoop",
@@ -14403,11 +14538,17 @@
  "0xee83a": ".playSfx2",
  "0xee857": ".playSfx3",
  "0xee86e": "LoadSavedDataSourceGfx",
- "0xee979": "Unused_3b_SlideMenuPanel_1",
+ "0xee979": {
+  "name": "Unused_3b_SlideMenuPanel_1",
+  "note": "MainMenuSlideIn with different start columns, end test (`cp $0c`) and row count: the same panel slide-in for a panel the bank never shows. Nothing calls it."
+ },
  "0xee97f": ".loop",
  "0xee994": ".zero",
  "0xee996": ".loopB",
- "0xee9ab": "Unused_3b_SlideMenuPanel_2",
+ "0xee9ab": {
+  "name": "Unused_3b_SlideMenuPanel_2",
+  "note": "MainMenuSlideOut with different start columns, end test (`cp $0d`) and row count: the slide-out matching Unused_3b_SlideMenuPanel_1. Nothing calls it."
+ },
  "0xee9b1": ".loop2",
  "0xee9c6": ".zero2",
  "0xee9c8": ".loop3",
@@ -15134,7 +15275,10 @@
  "0xf9838": "CreateEquipCaptionWindow",
  "0xf9854": "ClearEquipSelectTextRows",
  "0xf9899": "FlushEquipSelectTextRows",
- "0xf98bb": "Unused_3e_GetEquipSelectTextRowPtr",
+ "0xf98bb": {
+  "name": "Unused_3e_GetEquipSelectTextRowPtr",
+  "note": "GetItemStatModListPtr over two other tables ($58d6/$58e4 in place of $5a5f/$5a6d): the same two-level pointer lookup. Nothing calls it."
+ },
  "0xf98c9": ".zero",
  "0xf98d0": ".read",
  "0xf98d6": "EquipSelectTextRowPtrs_3e",

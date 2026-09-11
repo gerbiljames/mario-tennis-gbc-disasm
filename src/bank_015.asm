@@ -3608,6 +3608,7 @@ TestServeChallengerGameFlag:
 	ld e, a ; $71e1
 	call TestGameFlagByNumber ; $71e2
 	ret ; $71e5
+; TestServeChallengerGameFlag with SetGameFlagByNumber in place of TestGameFlagByNumber over the same table: the Set member of the pair. Nothing calls it.
 Unused_15_SetServeChallengerGameFlag:
 	ld a, [wMapSceneStage] ; $71e6
 	add a ; $71e9
@@ -3651,6 +3652,7 @@ TestNetChallengerGameFlag:
 	ld e, a ; $7227
 	call TestGameFlagByNumber ; $7228
 	ret ; $722b
+; TestNetChallengerGameFlag with SetGameFlagByNumber in place of TestGameFlagByNumber over the same table: the Set member of the pair. Nothing calls it.
 Unused_15_SetNetChallengerGameFlag:
 	ld a, [wMapSceneStage] ; $722c
 	add a ; $722f
@@ -3694,6 +3696,7 @@ TestStrokeChallengerGameFlag:
 	ld e, a ; $726d
 	call TestGameFlagByNumber ; $726e
 	ret ; $7271
+; TestStrokeChallengerGameFlag with SetGameFlagByNumber in place of TestGameFlagByNumber over the same table: the Set member of the pair. Nothing calls it.
 Unused_15_SetStrokeChallengerGameFlag:
 	ld a, [wMapSceneStage] ; $7272
 	add a ; $7275

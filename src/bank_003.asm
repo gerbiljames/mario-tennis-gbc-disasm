@@ -1964,6 +1964,7 @@ ReadSaveBlockTag:
 	pop de ; $4cd0
 	pop hl ; $4cd1
 	ret ; $4cd2
+; ReadSaveBlockTag reading a 2-byte field (`ld c, $02`) where the live one reads 8. Nothing calls it.
 Unused_03_ReadSaveBlockTagWord:
 	push hl ; $4cd3
 	push de ; $4cd4
@@ -2321,6 +2322,7 @@ ClearSaveBlockData:
 	pop de ; $4ef4
 	pop hl ; $4ef5
 	ret ; $4ef6
+; ClearSaveBlockData with four extra instructions that step the pointer by 8 first -- the same block clear from a later offset. Nothing calls it.
 Unused_03_EraseSaveBlock:
 	push hl ; $4ef7
 	push de ; $4ef8
@@ -5980,6 +5982,7 @@ InitGrayscalePaletteFade:
 	pop af ; $75c4
 	wram_bank ; $75c5
 	ret ; $75c9
+; InitGrayscalePaletteFade with ClearFadeTargetPalettes in place of DesaturateFadeTargetPalettes: the fade-to-black variant of the same setup. Nothing calls it; bank $03's callers only use the grayscale one.
 Unused_03_InitBlackPaletteFade:
 	ldh a, [hWramBank] ; $75ca
 	push af ; $75cc

@@ -3659,7 +3659,8 @@ ComputeRankingProgressIndex:
 	jr z, .store ; $7dd6
 	ld a, STORYRANK_DOUBLES_COMPLETE ; $7dd8
 	jr .store ; $7dda
-Unused_11_ComputeIslandProgressStage:
+; This bank's copy of ComputeStoryRankTier_13, identical instruction for instruction: the shared story include carried it into every story bank, and only bank $13's copy is called (by SetStoryRankTier). Nothing calls this one.
+Unused_11_ComputeStoryRankTier:
 	ld a, $00 ; $7ddc
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7dde
 	jr z, .storeIsland ; $7de1

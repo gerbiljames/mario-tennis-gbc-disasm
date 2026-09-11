@@ -1021,6 +1021,7 @@ TrainingGymRunner0AWaitWaypointClear:
 	ld [hl+], a ; $4c77
 	ld [hl], d ; $4c78
 	jp UnusedTrainingGymRunner0CClearWaypoint.checkTimer ; $4c79
+; TrainingGymRunner0AWaitWaypointClear with ten extra instructions that fetch actor $0a's state and `res 0` its +5 flag before returning -- the clear-and-return variant of the wait. Nothing calls it.
 UnusedTrainingGymRunner0AClearWaypoint:
 	script_get_actor_state $0a ; $4c7c
 	ld c, l ; $4c81
@@ -1074,6 +1075,7 @@ UnusedTrainingGymRunner0AClearWaypoint:
 	ld [hl+], a ; $4cce
 	ld [hl], d ; $4ccf
 	jp UnusedTrainingGymRunner0CClearWaypoint.checkTimer ; $4cd0
+; The same clear-and-return variant as UnusedTrainingGymRunner0AClearWaypoint for actor $0b. Nothing calls it.
 UnusedTrainingGymRunner0BClearWaypoint:
 	script_get_actor_state $0b ; $4cd3
 	ld c, l ; $4cd8
@@ -3936,7 +3938,8 @@ ComputeTrainingGymProgressIndex:
 	jr z, .store ; $7e9b
 	ld a, STORYRANK_DOUBLES_COMPLETE ; $7e9d
 	jr .store ; $7e9f
-UnusedComputeStoryProgressCount_0e:
+; This bank's copy of ComputeStoryRankTier_13, identical instruction for instruction: the shared story include carried it into every story bank, and only bank $13's copy is called (by SetStoryRankTier). Nothing calls this one.
+Unused_0e_ComputeStoryRankTier:
 	ld a, $00 ; $7ea1
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7ea3
 	jr z, .storeIsland ; $7ea6

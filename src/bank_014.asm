@@ -570,6 +570,7 @@ TestMachineLevelClearedFlag:
 	ld e, a ; $46a9
 	call TestGameFlagByNumber ; $46aa
 	ret ; $46ad
+; TestMachineLevelClearedFlag with SetGameFlagByNumber in place of TestGameFlagByNumber over the same TestMachineLevelClearedFlagTable: the Set member of the pair. Nothing calls it; the level-cleared flags are set by the machine-room scene scripts directly.
 Unused_14_SetMachineLevelClearedFlag:
 	add a ; $46ae
 	add LOW(TestMachineLevelClearedFlagTable) ; $46af
@@ -3384,7 +3385,8 @@ ComputeRankingProgressIndex_14:
 	jr z, .loop ; $7ade
 	ld a, STORYRANK_DOUBLES_COMPLETE ; $7ae0
 	jr .loop ; $7ae2
-Unused_14_ComputeIslandProgressStage:
+; This bank's copy of ComputeStoryRankTier_13, identical instruction for instruction: the shared story include carried it into every story bank, and only bank $13's copy is called (by SetStoryRankTier). Nothing calls this one.
+Unused_14_ComputeStoryRankTier:
 	ld a, $00 ; $7ae4
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7ae6
 	jr z, .loopB ; $7ae9

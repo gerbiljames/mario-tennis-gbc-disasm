@@ -1296,6 +1296,7 @@ RunCharacterSelectScreen:
 	pop af ; $4904
 	wram_bank ; $4905
 	jp .redraw ; $4909
+; DrawCharGridCursorBox with a different palette (c = 2), template and 48 x 24 extent: the same cursor-box drawer sized for another grid. Nothing calls it.
 Unused_38_DrawCharSelectCursorBox:
 	ld c, $02 ; $490c
 	call GetMenuCursorLinearIndex ; $490e
@@ -3822,6 +3823,7 @@ BuildVisiblePageSpriteList:
 	pop bc ; $5d22
 	pop af ; $5d23
 	ret ; $5d24
+; TestAndSetGridEntryTaken with `xor a` in place of `ld a, $01`: the Clear member of the pair. Nothing calls it.
 Unused_38_TestAndClearGridEntryTaken:
 	push bc ; $5d25
 	push de ; $5d26
