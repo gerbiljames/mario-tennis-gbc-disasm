@@ -208,8 +208,7 @@ TennisDictionaryScreen:
 	res 0, a ; $413a
 	ld [wTennisDictFlags], a ; $413c
 	call EndTennisDictionaryAnim ; $413f
-	call WaitFramesCmd ; $4142
-	db $01 ; $4145 inline arg
+	wait_frames $01 ; $4142
 	ld a, $02 ; $4146
 	jr .loop ; $4148
 .checkTennisDictFlags:
@@ -826,8 +825,7 @@ UpdateTennisDictionarySprites:
 	pop de ; $4fed
 	pop bc ; $4fee
 	pop af ; $4fef
-	pop af ; $4ff0
-	wram_bank ; $4ff1
+	pop_wram_bank ; $4ff0
 	ret ; $4ff5
 TennisDictionarySprites0:
 	; $4ff6, 16 bytes (bytes:16)
@@ -1745,9 +1743,7 @@ HandleTennisDictionaryListInput:
 	pop bc ; $5747
 	ret ; $5748
 QueueTennisDictionaryGlyphTiles:
-	ldh a, [hWramBank] ; $5749
-	push af ; $574b
-	wram_bank $07 ; $574c
+	push_wram_bank $07 ; $5749
 	ld hl, wGlyphTileBuffer + 54 * TILE_SIZE ; $5752
 	ld de, $8b60 ; $5755
 	ld c, $18 ; $5758
@@ -1774,13 +1770,10 @@ QueueTennisDictionaryGlyphTiles:
 	ld de, $8e60 ; $5781
 	ld c, $18 ; $5784
 	call QueueVRAMCopy ; $5786
-	pop af ; $5789
-	wram_bank ; $578a
+	pop_wram_bank ; $5789
 	ret ; $578e
 QueueTennisDictionaryListRows:
-	ldh a, [hWramBank] ; $578f
-	push af ; $5791
-	wram_bank $05 ; $5792
+	push_wram_bank $05 ; $578f
 	ld hl, wWindowShadowTilemap + 5 * TILEMAP_WIDTH + 16 ; $5798
 	ld de, $98b0 ; $579b
 	ld c, $01 ; $579e
@@ -1812,8 +1805,7 @@ QueueTennisDictionaryListRows:
 	call AdvanceFrame ; $57e1
 .restore:
 	pop af ; $57e4
-	pop af ; $57e5
-	wram_bank ; $57e6
+	pop_wram_bank ; $57e5
 	ret ; $57ea
 HardCourtLabelTiles:
 	INCBIN "data/bank_03f/lz_57eb.bin" ; $57eb, 193 bytes

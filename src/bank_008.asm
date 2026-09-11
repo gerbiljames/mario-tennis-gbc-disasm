@@ -354,11 +354,7 @@ HandleBallHitEvent:
 	ret ; $430e
 SetCharStateOnBallHit:
 	ld a, [wCharState] ; $430f
-	add LOW(SetCharStateOnBallHitTable) ; $4312
-	ld l, a ; $4314
-	adc HIGH(SetCharStateOnBallHitTable) ; $4315
-	sub l ; $4317
-	ld h, a ; $4318
+	ld_hl_indexed SetCharStateOnBallHitTable ; $4312
 	ld a, [hl] ; $4319
 	call SetCharState ; $431a
 	ret ; $431d
@@ -576,8 +572,7 @@ StepMatchFrame:
 	call HandlePauseMenu ; $4486
 	call CheckDebugStatsEditorHotkey ; $4489
 .done:
-	pop af ; $448c
-	wram_bank ; $448d
+	pop_wram_bank ; $448c
 	pop hl ; $4491
 	pop de ; $4492
 	pop bc ; $4493
@@ -1073,11 +1068,7 @@ CheckSetComplete:
 InitTiebreakPointCounter:
 	ld a, [wTotalGamesWonInMatch] ; $47cd
 	and $03 ; $47d0
-	add LOW(InitTiebreakPointCounterTable) ; $47d2
-	ld l, a ; $47d4
-	adc HIGH(InitTiebreakPointCounterTable) ; $47d5
-	sub l ; $47d7
-	ld h, a ; $47d8
+	ld_hl_indexed InitTiebreakPointCounterTable ; $47d2
 	ld a, [hl] ; $47d9
 	ld [wTotalPointsScoredInCurrentGame], a ; $47da
 	ret ; $47dd
@@ -1103,11 +1094,7 @@ FinalizeServeSideOrientation:
 GetGamePositionHandler:
 	ld a, [wOnCourtCharCountMinus1] ; $4808
 	add a ; $480b
-	add LOW(GamePositionPtrs) ; $480c
-	ld l, a ; $480e
-	adc HIGH(GamePositionPtrs) ; $480f
-	sub l ; $4811
-	ld h, a ; $4812
+	ld_hl_indexed GamePositionPtrs ; $480c
 	ld a, [hl+] ; $4813
 	ld h, [hl] ; $4814
 	ld l, a ; $4815
@@ -1185,11 +1172,7 @@ FlipFarBothCharPositions:
 .done:
 	ld a, [wOnCourtCharCountMinus1] ; $48c9
 	add a ; $48cc
-	add LOW(TiebreakPositionPtrs) ; $48cd
-	ld l, a ; $48cf
-	adc HIGH(TiebreakPositionPtrs) ; $48d0
-	sub l ; $48d2
-	ld h, a ; $48d3
+	ld_hl_indexed TiebreakPositionPtrs ; $48cd
 	ld a, [hl+] ; $48d4
 	ld h, [hl] ; $48d5
 	ld l, a ; $48d6
@@ -1428,11 +1411,7 @@ IdentifyServingPlayer:
 	ret ; $4c98
 SetCharFacingFromCourtPos:
 	ld a, [wCharCourtPos] ; $4c99
-	add LOW(CourtPosFacingTable_08) ; $4c9c
-	ld l, a ; $4c9e
-	adc HIGH(CourtPosFacingTable_08) ; $4c9f
-	sub l ; $4ca1
-	ld h, a ; $4ca2
+	ld_hl_indexed CourtPosFacingTable_08 ; $4c9c
 	ld a, [hl] ; $4ca3
 	ld [wCharBaseFacing], a ; $4ca4
 	ld [wCharFacingDesired], a ; $4ca7
@@ -1793,11 +1772,7 @@ ResetCharForPoint:
 	ret ; $4f90
 SetCharStateFromServeRole:
 	ld a, [wCharServeRole] ; $4f91
-	add LOW(ServeRoleCharStateTable_08) ; $4f94
-	ld l, a ; $4f96
-	adc HIGH(ServeRoleCharStateTable_08) ; $4f97
-	sub l ; $4f99
-	ld h, a ; $4f9a
+	ld_hl_indexed ServeRoleCharStateTable_08 ; $4f94
 	ld a, [hl] ; $4f9b
 	call SetCharState ; $4f9c
 	ret ; $4f9f
@@ -2069,11 +2044,7 @@ SetBallTrailColor:
 	add a ; $518c
 	add a ; $518d
 	add a ; $518e
-	add LOW(BallTrailPalettes) ; $518f
-	ld l, a ; $5191
-	adc HIGH(BallTrailPalettes) ; $5192
-	sub l ; $5194
-	ld h, a ; $5195
+	ld_hl_indexed BallTrailPalettes ; $518f
 	ld de, $0801 ; $5196
 	call LoadPalettesImmediate ; $5199
 	ret ; $519c
@@ -2370,11 +2341,7 @@ DrawLandingMarker:
 	call QueueSprite16 ; $535d
 	ldh a, [hMatchFrameCounter] ; $5360
 	and $0f ; $5362
-	add LOW(DrawLandingMarkerTable) ; $5364
-	ld l, a ; $5366
-	adc HIGH(DrawLandingMarkerTable) ; $5367
-	sub l ; $5369
-	ld h, a ; $536a
+	ld_hl_indexed DrawLandingMarkerTable ; $5364
 	ld a, [hl] ; $536b
 	cp $ff ; $536c
 	ret z ; $536e
@@ -2517,11 +2484,7 @@ DrawSpecialHitEffect:
 	ld hl, wSpecialHitTimer ; $5454
 	call TickTimer ; $5457
 	ld a, [wSpecialHitTimer] ; $545a
-	add LOW(DrawSpecialHitEffectTable) ; $545d
-	ld l, a ; $545f
-	adc HIGH(DrawSpecialHitEffectTable) ; $5460
-	sub l ; $5462
-	ld h, a ; $5463
+	ld_hl_indexed DrawSpecialHitEffectTable ; $545d
 	ld a, [hl] ; $5464
 	cp $ff ; $5465
 	ret z ; $5467
@@ -2557,11 +2520,7 @@ DrawBallTouchCharEffect:
 	ld hl, wBallTouchCharTimer ; $54aa
 	call TickTimer ; $54ad
 	ld a, [wBallTouchCharTimer] ; $54b0
-	add LOW(DrawBallTouchCharEffectTable) ; $54b3
-	ld l, a ; $54b5
-	adc HIGH(DrawBallTouchCharEffectTable) ; $54b6
-	sub l ; $54b8
-	ld h, a ; $54b9
+	ld_hl_indexed DrawBallTouchCharEffectTable ; $54b3
 	ld a, [hl] ; $54ba
 	cp $ff ; $54bb
 	ret z ; $54bd
@@ -4025,11 +3984,7 @@ LoadCourtSceneData:
 	ld a, [wCurrentlyUsedCourt] ; $5e31
 	add a ; $5e34
 	add a ; $5e35
-	add LOW(LoadCourtSceneDataTable) ; $5e36
-	ld l, a ; $5e38
-	adc HIGH(LoadCourtSceneDataTable) ; $5e39
-	sub l ; $5e3b
-	ld h, a ; $5e3c
+	ld_hl_indexed LoadCourtSceneDataTable ; $5e36
 	ld a, [hl+] ; $5e3d
 	ld [wCourtSurfaceFriction], a ; $5e3e
 	ld a, [hl+] ; $5e41
@@ -4037,8 +3992,7 @@ LoadCourtSceneData:
 	ld a, [hl+] ; $5e45
 	farcall LoadCourtSceneGraphics ; $5e46
 	call SnapshotCourtTilemaps ; $5e49
-	pop af ; $5e4c
-	wram_bank ; $5e4d
+	pop_wram_bank ; $5e4c
 	ret ; $5e51
 SnapshotCourtTilemaps:
 	wram_bank $02 ; $5e52
@@ -4326,11 +4280,7 @@ GetCharBaseCourtPosition:
 	ld a, [wCharServeRole] ; $6098
 	add a ; $609b
 	add a ; $609c
-	add LOW(GetCharBaseCourtPositionTable) ; $609d
-	ld l, a ; $609f
-	adc HIGH(GetCharBaseCourtPositionTable) ; $60a0
-	sub l ; $60a2
-	ld h, a ; $60a3
+	ld_hl_indexed GetCharBaseCourtPositionTable ; $609d
 	ld a, [hl+] ; $60a4
 	ld c, a ; $60a5
 	ld a, [hl+] ; $60a6
@@ -4372,11 +4322,7 @@ GetCharChangeoverPosition:
 	ld a, [wCharServeRole] ; $60d8
 	add a ; $60db
 	add a ; $60dc
-	add LOW(GetCharChangeoverPositionTable) ; $60dd
-	ld l, a ; $60df
-	adc HIGH(GetCharChangeoverPositionTable) ; $60e0
-	sub l ; $60e2
-	ld h, a ; $60e3
+	ld_hl_indexed GetCharChangeoverPositionTable ; $60dd
 	ld a, [hl+] ; $60e4
 	ld c, a ; $60e5
 	ld a, [hl+] ; $60e6
@@ -5334,9 +5280,7 @@ DidBallCrossGate:
 	xor a ; $67c0
 	ret ; $67c1
 IsBallInTargetZone:
-	ldh a, [hWramBank] ; $67c2
-	push af ; $67c4
-	wram_bank $04 ; $67c5
+	push_wram_bank $04 ; $67c2
 	ld hl, wTargetZoneX1 ; $67cb
 	ld a, [hl+] ; $67ce
 	ld d, [hl] ; $67cf
@@ -5417,14 +5361,12 @@ IsBallInTargetZone:
 	ld h, a ; $6836
 	bit 7, h ; $6837
 	jr z, .outside ; $6839
-	pop af ; $683b
-	wram_bank ; $683c
+	pop_wram_bank ; $683b
 	xor a ; $6840
 	inc a ; $6841
 	ret ; $6842
 .outside:
-	pop af ; $6843
-	wram_bank ; $6844
+	pop_wram_bank ; $6843
 	xor a ; $6848
 	ret ; $6849
 InitChar:
@@ -5783,12 +5725,9 @@ CharServeInitPhase:
 	ld a, [wMinigameIsBooBlast] ; $6b12
 	and a ; $6b15
 	jr nz, .startAnim ; $6b16
-	ldh a, [hWramBank] ; $6b18
-	push af ; $6b1a
-	wram_bank $04 ; $6b1b
+	push_wram_bank $04 ; $6b18
 	farcall SpawnServeIndicatorObjs ; $6b21
-	pop af ; $6b24
-	wram_bank ; $6b25
+	pop_wram_bank ; $6b24
 .startAnim:
 	ld d, CHARANIM_SERVE_PREP ; $6b29
 	call SetCharAnimation ; $6b2b
@@ -5826,12 +5765,9 @@ CharServeTossPhase:
 	ld [wBallSpriteEnabled], a ; $6b69
 	ld [wBallShadowEnabled], a ; $6b6c
 	ld [wBallTrailEnabled], a ; $6b6f
-	ldh a, [hWramBank] ; $6b72
-	push af ; $6b74
-	wram_bank $04 ; $6b75
+	push_wram_bank $04 ; $6b72
 	farcall DismissServeIndicatorObjs ; $6b7b
-	pop af ; $6b7e
-	wram_bank ; $6b7f
+	pop_wram_bank ; $6b7e
 	ld d, CHARANIM_OVERHEAD_READY ; $6b83
 	call SetCharAnimation ; $6b85
 	ld hl, wCharStatePhase ; $6b88
@@ -6035,12 +5971,9 @@ CharAwaitServeState:
 	add hl, de ; $6cf4
 	bit 7, h ; $6cf5
 	jr nz, .done ; $6cf7
-	ldh a, [hWramBank] ; $6cf9
-	push af ; $6cfb
-	wram_bank $04 ; $6cfc
+	push_wram_bank $04 ; $6cf9
 	farcall DismissServeIndicatorObjs ; $6d02
-	pop af ; $6d05
-	wram_bank ; $6d06
+	pop_wram_bank ; $6d05
 	jp AdvanceCharStatePhase ; $6d0a
 .done:
 	ret ; $6d0d
@@ -6623,11 +6556,7 @@ CheckBallInSwingRange:
 	ret ; $706a
 SelectServeShotType:
 	ld a, [wCharShotButton1] ; $706b
-	add LOW(SelectServeShotType_CharShotTypeTable) ; $706e
-	ld l, a ; $7070
-	adc HIGH(SelectServeShotType_CharShotTypeTable) ; $7071
-	sub l ; $7073
-	ld h, a ; $7074
+	ld_hl_indexed SelectServeShotType_CharShotTypeTable ; $706e
 	ld a, [hl] ; $7075
 	ld [wCharShotType], a ; $7076
 	ret ; $7079
@@ -6807,11 +6736,7 @@ ApplyCharMovementInput:
 	and $f0 ; $719d
 	jr z, .done ; $719f
 	swap a ; $71a1
-	add LOW(DpadToFacingTable_08) ; $71a3
-	ld l, a ; $71a5
-	adc HIGH(DpadToFacingTable_08) ; $71a6
-	sub l ; $71a8
-	ld h, a ; $71a9
+	ld_hl_indexed DpadToFacingTable_08 ; $71a3
 	ld a, [hl] ; $71aa
 	cp $ff ; $71ab
 	jr z, .done ; $71ad
@@ -6847,11 +6772,7 @@ HandleServePositioning:
 	and PADF_RIGHT | PADF_LEFT ; $71e6
 	jr z, .done ; $71e8
 	swap a ; $71ea
-	add LOW(DpadToFacingTable_08) ; $71ec
-	ld l, a ; $71ee
-	adc HIGH(DpadToFacingTable_08) ; $71ef
-	sub l ; $71f1
-	ld h, a ; $71f2
+	ld_hl_indexed DpadToFacingTable_08 ; $71ec
 	ld a, [hl] ; $71f3
 	cp $ff ; $71f4
 	jr z, .done ; $71f6
@@ -6895,11 +6816,7 @@ HandleServePositioning:
 	and PADF_RIGHT | PADF_LEFT ; $722c
 	jr z, .receiverDone ; $722e
 	swap a ; $7230
-	add LOW(DpadToFacingTable_08) ; $7232
-	ld l, a ; $7234
-	adc HIGH(DpadToFacingTable_08) ; $7235
-	sub l ; $7237
-	ld h, a ; $7238
+	ld_hl_indexed DpadToFacingTable_08 ; $7232
 	ld a, [hl] ; $7239
 	cp $ff ; $723a
 	jr z, .receiverDone ; $723c
@@ -7528,11 +7445,7 @@ ReloadCharFacingTiles:
 	ret z ; $7626
 	res 6, [hl] ; $7627
 	ld a, d ; $7629
-	add LOW(ReloadCharFacingTilesTable) ; $762a
-	ld l, a ; $762c
-	adc HIGH(ReloadCharFacingTilesTable) ; $762d
-	sub l ; $762f
-	ld h, a ; $7630
+	ld_hl_indexed ReloadCharFacingTilesTable ; $762a
 	ld d, [hl] ; $7631
 	ld a, [wCharAnimFrame] ; $7632
 	ld e, a ; $7635
@@ -7610,11 +7523,7 @@ BuildCharSpriteSlots:
 	add $80 ; $76a8
 	ld [wCharDepthKey], a ; $76aa
 	ld a, [wCharFacingOctant] ; $76ad
-	add LOW(BuildCharSpriteSlotsTable) ; $76b0
-	ld l, a ; $76b2
-	adc HIGH(BuildCharSpriteSlotsTable) ; $76b3
-	sub l ; $76b5
-	ld h, a ; $76b6
+	ld_hl_indexed BuildCharSpriteSlotsTable ; $76b0
 	ld a, [wCharSpriteAttr] ; $76b7
 	or $08 ; $76ba
 	xor [hl] ; $76bc
@@ -7838,11 +7747,7 @@ ReadCharInput:
 	ld [wCharInputBits], a ; $780d
 	ld a, [wCharInputSource] ; $7810
 	add a ; $7813
-	add LOW(CharInputPtrs) ; $7814
-	ld l, a ; $7816
-	adc HIGH(CharInputPtrs) ; $7817
-	sub l ; $7819
-	ld h, a ; $781a
+	ld_hl_indexed CharInputPtrs ; $7814
 	ld a, [hl+] ; $781b
 	ld h, [hl] ; $781c
 	ld l, a ; $781d
@@ -8034,11 +7939,7 @@ AiSteerTowardTarget:
 	call AngleFromVectorCoarse ; $792c
 	swap a ; $792f
 	and $0f ; $7931
-	add LOW(AngleToDpadTable_08) ; $7933
-	ld l, a ; $7935
-	adc HIGH(AngleToDpadTable_08) ; $7936
-	sub l ; $7938
-	ld h, a ; $7939
+	ld_hl_indexed AngleToDpadTable_08 ; $7933
 	ld a, [wCharInputBits] ; $793a
 	and $0f ; $793d
 	or [hl] ; $793f
@@ -8056,11 +7957,7 @@ AiSteerTowardBall:
 	call AngleFromVectorCoarse ; $7950
 	swap a ; $7953
 	and $0f ; $7955
-	add LOW(AngleToDpadTable_08) ; $7957
-	ld l, a ; $7959
-	adc HIGH(AngleToDpadTable_08) ; $795a
-	sub l ; $795c
-	ld h, a ; $795d
+	ld_hl_indexed AngleToDpadTable_08 ; $7957
 	ld a, [wCharInputBits] ; $795e
 	and $0f ; $7961
 	or [hl] ; $7963
@@ -8166,11 +8063,7 @@ AiServeWalkToSpot:
 	call AdvanceMatchRng ; $7a12
 	and $07 ; $7a15
 	add a ; $7a17
-	add LOW(ServeWalkToSpotTable) ; $7a18
-	ld l, a ; $7a1a
-	adc HIGH(ServeWalkToSpotTable) ; $7a1b
-	sub l ; $7a1d
-	ld h, a ; $7a1e
+	ld_hl_indexed ServeWalkToSpotTable ; $7a18
 	ld a, [hl+] ; $7a1f
 	ld b, [hl] ; $7a20
 	ld c, a ; $7a21
@@ -8225,11 +8118,7 @@ AiServePressToss:
 	ld a, [wAiServeStyle] ; $7a70
 	and $0f ; $7a73
 	add a ; $7a75
-	add LOW(ServePressTossPtrs) ; $7a76
-	ld l, a ; $7a78
-	adc HIGH(ServePressTossPtrs) ; $7a79
-	sub l ; $7a7b
-	ld h, a ; $7a7c
+	ld_hl_indexed ServePressTossPtrs ; $7a76
 	ld a, [hl+] ; $7a7d
 	ld h, [hl] ; $7a7e
 	ld l, a ; $7a7f
@@ -8298,11 +8187,7 @@ AiApplyServeAim:
 .randomAim:
 	call AdvanceMatchRng ; $7af5
 	and $07 ; $7af8
-	add LOW(AiApplyServeAimTable) ; $7afa
-	ld l, a ; $7afc
-	adc HIGH(AiApplyServeAimTable) ; $7afd
-	sub l ; $7aff
-	ld h, a ; $7b00
+	ld_hl_indexed AiApplyServeAimTable ; $7afa
 	ld b, [hl] ; $7b01
 .applyAim:
 	ld hl, wCharInputBits ; $7b02
@@ -8336,8 +8221,7 @@ AiAimAwayFromChar:
 	ld a, [hl+] ; $7b34
 	ld h, [hl] ; $7b35
 	ld l, a ; $7b36
-	pop af ; $7b37
-	wram_bank ; $7b38
+	pop_wram_bank ; $7b37
 	call AdvanceMatchRng ; $7b3c
 	and $03 ; $7b3f
 	jr z, .pickDirection ; $7b41
@@ -8367,11 +8251,7 @@ AiAimAwayFromChar:
 AiPickServeButtons:
 	call AdvanceMatchRng ; $7b62
 	and $07 ; $7b65
-	add LOW(AiPickServeButtons_AiShotButtonsTable) ; $7b67
-	ld l, a ; $7b69
-	adc HIGH(AiPickServeButtons_AiShotButtonsTable) ; $7b6a
-	sub l ; $7b6c
-	ld h, a ; $7b6d
+	ld_hl_indexed AiPickServeButtons_AiShotButtonsTable ; $7b67
 	ld a, [hl] ; $7b6e
 	ld [wAiShotButtons], a ; $7b6f
 	ret ; $7b72
@@ -8436,8 +8316,7 @@ AiPickShotButtons:
 	ld a, [hl+] ; $7be0
 	ld h, [hl] ; $7be1
 	ld l, a ; $7be2
-	pop af ; $7be3
-	wram_bank ; $7be4
+	pop_wram_bank ; $7be3
 	bit 7, h ; $7be8
 	jr z, .checkReachDepth ; $7bea
 	xor a ; $7bec
@@ -8508,8 +8387,7 @@ GetCharRoleByIndex:
 	wram_bank ; $7c49
 	ld a, [wCharServeRole] ; $7c4d
 	ld b, a ; $7c50
-	pop af ; $7c51
-	wram_bank ; $7c52
+	pop_wram_bank ; $7c51
 	ret ; $7c56
 OffsetFromBallLanding:
 	ld a, [wShotAimAngle + 1] ; $7c57
@@ -8797,8 +8675,7 @@ AiBaselinerShadowPartner:
 	sub h ; $7e42
 	ld h, a ; $7e43
 .setTarget:
-	pop af ; $7e44
-	wram_bank ; $7e45
+	pop_wram_bank ; $7e44
 	ld de, $0460 ; $7e49
 	call SetCharTargetMirrored ; $7e4c
 	jp AiAdvancePhase ; $7e4f
@@ -8882,8 +8759,7 @@ AiDoublesTrackBallPhase:
 	wram_bank ; $7ef5
 	ld a, [wCharShotButton1] ; $7ef9
 	ld b, a ; $7efc
-	pop af ; $7efd
-	wram_bank ; $7efe
+	pop_wram_bank ; $7efd
 	ld a, b ; $7f02
 	and a ; $7f03
 	jr nz, .poachCheck ; $7f04
@@ -8952,8 +8828,7 @@ AiNetPlayerPoachCheck:
 	ld a, h ; $7f6a
 	sbc d ; $7f6b
 	ld h, a ; $7f6c
-	pop af ; $7f6d
-	wram_bank ; $7f6e
+	pop_wram_bank ; $7f6d
 	bit 7, h ; $7f72
 	jr z, .done ; $7f74
 	ld hl, wCharPosDepth + 1 ; $7f76

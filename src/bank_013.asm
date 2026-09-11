@@ -575,9 +575,7 @@ ServiceAceCoachIntroActors_13:
 	map_actor $0000, ActorScript_13_27, $1300, $0d00, FACE_DOWN, $4b, $01, $00
 	map_actor_end
 LoadTourPointerSpriteGfx_13:
-	ldh a, [hWramBank] ; $4cdc
-	push af ; $4cde
-	wram_bank $01 ; $4cdf
+	push_wram_bank $01 ; $4cdc
 	ld hl, TourPointerTiles_13 ; $4ce5
 	ld de, $8000 + VRAM_BANK1 ; $4ce8
 	ld c, (TourPointerPalette_13 - TourPointerTiles_13) / 16 ; $4ceb
@@ -585,8 +583,7 @@ LoadTourPointerSpriteGfx_13:
 	ld hl, TourPointerPalette_13 ; $4cf0
 	ld de, $0801 ; $4cf3
 	call LoadPaletteShadow ; $4cf6
-	pop af ; $4cf9
-	wram_bank ; $4cfa
+	pop_wram_bank ; $4cf9
 	ret ; $4cfe
 QueueTourPointerSprite_13:
 	ld hl, QueueTourPointerSprite_13_SpriteTemplate ; $4cff
@@ -985,11 +982,7 @@ SetRandomDormRoomNpc04Script_13:
 	ld a, l ; $5251
 	and $07 ; $5252
 	add a ; $5254
-	add LOW(DormRoomNpc04IdleScripts_13) ; $5255
-	ld l, a ; $5257
-	adc HIGH(DormRoomNpc04IdleScripts_13) ; $5258
-	sub l ; $525a
-	ld h, a ; $525b
+	ld_hl_indexed DormRoomNpc04IdleScripts_13 ; $5255
 	ld a, [hl+] ; $525c
 	ld h, [hl] ; $525d
 	ld l, a ; $525e
@@ -1520,11 +1513,7 @@ RunAcademyQuestionsMenu:
 	cp $ff ; $58ef
 	jp z, .done ; $58f1
 	add a ; $58f4
-	add LOW(AcademyTopicHandlerTable) ; $58f5
-	ld l, a ; $58f7
-	adc HIGH(AcademyTopicHandlerTable) ; $58f8
-	sub l ; $58fa
-	ld h, a ; $58fb
+	ld_hl_indexed AcademyTopicHandlerTable ; $58f5
 	ld a, [hl+] ; $58fc
 	ld h, [hl] ; $58fd
 	ld l, a ; $58fe
@@ -2352,11 +2341,7 @@ CourtyardEntryWalkIn_13:
 	script_set_speed ACTOR_PARTNER, $00ff ; $630c
 	ld a, [wStoryModeEntryPoint] ; $6314
 	dec a ; $6317
-	add LOW(CourtyardEntryWalkInFacings_13 + 3) ; $6318
-	ld l, a ; $631a
-	adc HIGH(CourtyardEntryWalkInFacings_13 + 3) ; $631b
-	sub l ; $631d
-	ld h, a ; $631e
+	ld_hl_indexed CourtyardEntryWalkInFacings_13 + 3 ; $6318
 	ld b, [hl] ; $631f
 	ld a, $02 ; $6320
 	ld b, b ; $6322
@@ -2365,11 +2350,7 @@ CourtyardEntryWalkIn_13:
 	script_wait_move ACTOR_PARTNER ; $6329
 	ld a, [wStoryModeEntryPoint] ; $632e
 	dec a ; $6331
-	add LOW(CourtyardEntryWalkInFacings_13) ; $6332
-	ld l, a ; $6334
-	adc HIGH(CourtyardEntryWalkInFacings_13) ; $6335
-	sub l ; $6337
-	ld h, a ; $6338
+	ld_hl_indexed CourtyardEntryWalkInFacings_13 ; $6332
 	ld b, [hl] ; $6339
 	ld a, $02 ; $633a
 	ld b, b ; $633c
@@ -2379,11 +2360,7 @@ CourtyardEntryWalkIn_13:
 	script_set_speed ACTOR_PLAYER, $0010 ; $6348
 	ld a, [wStoryModeEntryPoint] ; $6350
 	dec a ; $6353
-	add LOW(CourtyardEntryWalkInFacings_13) ; $6354
-	ld l, a ; $6356
-	adc HIGH(CourtyardEntryWalkInFacings_13) ; $6357
-	sub l ; $6359
-	ld h, a ; $635a
+	ld_hl_indexed CourtyardEntryWalkInFacings_13 ; $6354
 	ld b, [hl] ; $635b
 	ld a, $00 ; $635c
 	ld b, b ; $635e
@@ -2512,9 +2489,7 @@ VarsityCourtTourActors_13:
 	map_actor $0000, ActorScript_13_27, $2b00, $0b00, FACE_DOWN, $49, $01, $00
 	map_actor_end
 DecompressVarsityCourtTourRecords_13:
-	ldh a, [hWramBank] ; $667a
-	push af ; $667c
-	wram_bank $01 ; $667d
+	push_wram_bank $01 ; $667a
 	ld c, $04 ; $6683
 	xor a ; $6685
 .loop:
@@ -2551,8 +2526,7 @@ DecompressVarsityCourtTourRecords_13:
 	ld hl, VarsityCourtTourPalette_13 ; $66b4
 	ld de, $0801 ; $66b7
 	call LoadPaletteShadow ; $66ba
-	pop af ; $66bd
-	wram_bank ; $66be
+	pop_wram_bank ; $66bd
 	ret ; $66c2
 QueueVarsityCourtTourSprites_13:
 	ld a, [wCameraX + 1] ; $66c3

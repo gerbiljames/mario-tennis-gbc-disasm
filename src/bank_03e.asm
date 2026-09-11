@@ -706,30 +706,24 @@ SetMenuCursorFromIndexToPtr:
 	ld [hl], a ; $4409
 	ret ; $440a
 ClearWram3Row64_3e:
-	ldh a, [hWramBank] ; $440b
-	push af ; $440d
-	wram_bank $03 ; $440e
+	push_wram_bank $03 ; $440b
 	xor a ; $4414
 	ld c, $40 ; $4415
 .loop:
 	ld [hl+], a ; $4417
 	dec c ; $4418
 	jr nz, .loop ; $4419
-	pop af ; $441b
-	wram_bank ; $441c
+	pop_wram_bank ; $441b
 	ret ; $4420
 ClearWram3Row64Alt_3e:
-	ldh a, [hWramBank] ; $4421
-	push af ; $4423
-	wram_bank $03 ; $4424
+	push_wram_bank $03 ; $4421
 	ld a, $00 ; $442a
 	ld c, $40 ; $442c
 .loop:
 	ld [hl+], a ; $442e
 	dec c ; $442f
 	jr nz, .loop ; $4430
-	pop af ; $4432
-	wram_bank ; $4433
+	pop_wram_bank ; $4432
 	ret ; $4437
 UpdateAnimatedTiles_3e:
 	farcall UpdateAnimatedTiles ; $4438
@@ -984,9 +978,7 @@ MatchRulesInitialStatePalettes2:
 	; $45ff, 8 bytes (bytes:8)
 	db $1f, $03, $ff, $7f, $40, $51, $00, $00 ; 0x00
 LoadMatchRulesMenuGraphics:
-	ldh a, [hWramBank] ; $4607
-	push af ; $4609
-	wram_bank $01 ; $460a
+	push_wram_bank $01 ; $4607
 	ld c, $00 ; $4610
 .loop:
 	ld a, c ; $4612
@@ -1087,8 +1079,7 @@ LoadMatchRulesMenuGraphics:
 	ld b, $08 ; $46cb
 	ld c, $10 ; $46cd
 	farcall LoadIndexedPalette ; $46cf
-	pop af ; $46d2
-	wram_bank ; $46d3
+	pop_wram_bank ; $46d2
 	ret ; $46d7
 MatchRulesMenuGraphicsTable:
 	; $46d8, 14 bytes (7 records x 1 slot words)
@@ -1315,9 +1306,7 @@ SetMatchRuleOptionAttrRect:
 	push bc ; $486b
 	push de ; $486c
 	push hl ; $486d
-	ldh a, [hWramBank] ; $486e
-	push af ; $4870
-	wram_bank $03 ; $4871
+	push_wram_bank $03 ; $486e
 	ld hl, MatchRuleOptionAttrAddrs_3e ; $4877
 	ld a, b ; $487a
 	add a ; $487b
@@ -1346,8 +1335,7 @@ SetMatchRuleOptionAttrRect:
 	ld b, $05 ; $4895
 	ld c, $03 ; $4897
 	farcall FillTilemapRect ; $4899
-	pop af ; $489c
-	wram_bank ; $489d
+	pop_wram_bank ; $489c
 	pop hl ; $48a1
 	pop de ; $48a2
 	pop bc ; $48a3
@@ -1531,8 +1519,7 @@ ShowLinkMessageScreen:
 	call EnableLCD ; $49ff
 	script_fade_in $08 ; $4a02
 	call WaitFadeEnd ; $4a07
-	pop af ; $4a0a
-	wram_bank ; $4a0b
+	pop_wram_bank ; $4a0a
 	pop hl ; $4a0f
 	pop de ; $4a10
 	pop bc ; $4a11
@@ -1668,9 +1655,7 @@ LoadLinkErrorScreen:
 	farcall QueueWram3MapToVRAM ; $4b33
 	ret ; $4b36
 AnimateLinkErrorPalette:
-	ldh a, [hWramBank] ; $4b37
-	push af ; $4b39
-	wram_bank $03 ; $4b3a
+	push_wram_bank $03 ; $4b37
 	ld hl, LinkErrorPalette_3e ; $4b40
 	ld de, wLinkErrorPalette ; $4b43
 	ld bc, $0008 ; $4b46
@@ -1707,8 +1692,7 @@ AnimateLinkErrorPalette:
 	ld hl, wLinkErrorPalette ; $4b74
 	ld de, $0301 ; $4b77
 	call LoadPaletteShadow ; $4b7a
-	pop af ; $4b7d
-	wram_bank ; $4b7e
+	pop_wram_bank ; $4b7d
 	ret ; $4b82
 LinkErrorPalette_3e:
 	; $4b83, 8 bytes (bytes:8)
@@ -1995,9 +1979,7 @@ QueueEraseConfirmCursorSprites:
 	farcall TickMenuBgScroll ; $4e30
 	ret ; $4e33
 AnimateEraseConfirmPalette:
-	ldh a, [hWramBank] ; $4e34
-	push af ; $4e36
-	wram_bank $03 ; $4e37
+	push_wram_bank $03 ; $4e34
 	ld hl, EraseConfirmPalette_3e ; $4e3d
 	ld de, wEraseConfirmPalette ; $4e40
 	ld bc, $0008 ; $4e43
@@ -2034,8 +2016,7 @@ AnimateEraseConfirmPalette:
 	ld hl, wEraseConfirmPalette ; $4e71
 	ld de, $0401 ; $4e74
 	call LoadPaletteShadow ; $4e77
-	pop af ; $4e7a
-	wram_bank ; $4e7b
+	pop_wram_bank ; $4e7a
 	ret ; $4e7f
 EraseConfirmPalette_3e:
 	; $4e80, 8 bytes (bytes:8)
@@ -2109,9 +2090,7 @@ RunRacketShoesChoiceMenu:
 	ld a, $ff ; $4f30
 	ret ; $4f32
 LoadRacketShoesChoiceGraphics:
-	ldh a, [hWramBank] ; $4f33
-	push af ; $4f35
-	wram_bank $01 ; $4f36
+	push_wram_bank $01 ; $4f33
 	ld c, $00 ; $4f3c
 .loop:
 	ld a, c ; $4f3e
@@ -2187,8 +2166,7 @@ LoadRacketShoesChoiceGraphics:
 	ld b, $08 ; $4fb6
 	ld c, $10 ; $4fb8
 	farcall LoadIndexedPalette ; $4fba
-	pop af ; $4fbd
-	wram_bank ; $4fbe
+	pop_wram_bank ; $4fbd
 	ret ; $4fc2
 RacketShoesChoiceGfxParams_3e:
 	; $4fc3, 6 bytes (bytes:6)
@@ -2272,9 +2250,7 @@ RacketShoesChoicePalette1:
 	; $5065, 8 bytes (bytes:8)
 	db $0a, $03, $ff, $7f, $40, $51, $00, $00 ; 0x00
 DrawRacketShoesChoiceCaption:
-	ldh a, [hWramBank] ; $506d
-	push af ; $506f
-	wram_bank $03 ; $5070
+	push_wram_bank $03 ; $506d
 	ld c, $02 ; $5076
 	call GetMenuCursorIndex_3e ; $5078
 	ld b, a ; $507b
@@ -2287,8 +2263,7 @@ DrawRacketShoesChoiceCaption:
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $5084
 	ld c, $20 ; $5087
 	farcall RenderTextToBuffer64 ; $5089
-	pop af ; $508c
-	wram_bank ; $508d
+	pop_wram_bank ; $508c
 	ret ; $5091
 OpenChoiceTabPanel:
 	ld a, b ; $5092
@@ -2518,9 +2493,7 @@ RunPlayAlonePartnerMenu:
 	ld a, $ff ; $5226
 	ret ; $5228
 LoadPlayAlonePartnerGraphics:
-	ldh a, [hWramBank] ; $5229
-	push af ; $522b
-	wram_bank $01 ; $522c
+	push_wram_bank $01 ; $5229
 	ld c, $00 ; $5232
 .loop:
 	ld a, c ; $5234
@@ -2592,8 +2565,7 @@ LoadPlayAlonePartnerGraphics:
 	ld b, $08 ; $52a2
 	ld c, $10 ; $52a4
 	farcall LoadIndexedPalette ; $52a6
-	pop af ; $52a9
-	wram_bank ; $52aa
+	pop_wram_bank ; $52a9
 	ret ; $52ae
 PlayAlonePartnerGfxParams_3e:
 	; $52af, 4 bytes (bytes:4)
@@ -2675,9 +2647,7 @@ PlayAlonePartnerPalette:
 	db $df, $02, $ff, $7f, $a0, $01, $00, $00 ; 0x00
 	db $0a, $03, $ff, $7f, $40, $51, $00, $00 ; 0x08
 DrawPlayAlonePartnerCaption:
-	ldh a, [hWramBank] ; $5355
-	push af ; $5357
-	wram_bank $03 ; $5358
+	push_wram_bank $03 ; $5355
 	ld c, $02 ; $535e
 	call GetMenuCursorIndex_3e ; $5360
 	ld b, a ; $5363
@@ -2700,8 +2670,7 @@ DrawPlayAlonePartnerCaption:
 .renderTextToBuffer64:
 	ld c, $20 ; $5379
 	farcall RenderTextToBuffer64 ; $537b
-	pop af ; $537e
-	wram_bank ; $537f
+	pop_wram_bank ; $537e
 	ret ; $5383
 PlayAlonePartnerCaptionDests_3e:
 	; $5384, 4 bytes (bytes:4)
@@ -3414,9 +3383,7 @@ DrawEquippedItemStatMods:
 	push bc ; $596f
 	push de ; $5970
 	push hl ; $5971
-	ldh a, [hWramBank] ; $5972
-	push af ; $5974
-	wram_bank $03 ; $5975
+	push_wram_bank $03 ; $5972
 	call GetEquippedItemId ; $597b
 	jp DrawHoveredItemStatMods.drawItemStatModList ; $597e
 DrawHoveredItemStatMods:
@@ -3424,14 +3391,11 @@ DrawHoveredItemStatMods:
 	push bc ; $5982
 	push de ; $5983
 	push hl ; $5984
-	ldh a, [hWramBank] ; $5985
-	push af ; $5987
-	wram_bank $03 ; $5988
+	push_wram_bank $03 ; $5985
 	call GetHoveredItemId ; $598e
 .drawItemStatModList:
 	call DrawItemStatModList ; $5991
-	pop af ; $5994
-	wram_bank ; $5995
+	pop_wram_bank ; $5994
 	pop hl ; $5999
 	pop de ; $599a
 	pop bc ; $599b
@@ -3489,9 +3453,7 @@ EquipListCursorYPositions_3e:
 	; $59e5, 6 bytes (bytes:6)
 	db $38, $48, $58, $68, $78, $88 ; 0x00
 EquippedItemMarkerSpriteTask:
-	ldh a, [hWramBank] ; $59eb
-	push af ; $59ed
-	wram_bank $03 ; $59ee
+	push_wram_bank $03 ; $59eb
 	ld a, [wEquipEquippedIndex] ; $59f4
 	ld hl, EquippedMarkerYPositions_3e ; $59f7
 	add l ; $59fa
@@ -3504,8 +3466,7 @@ EquippedItemMarkerSpriteTask:
 	ld b, $09 ; $5a02
 	ld c, $20 ; $5a04
 	call QueueSprite ; $5a06
-	pop af ; $5a09
-	wram_bank ; $5a0a
+	pop_wram_bank ; $5a09
 	ret ; $5a0e
 EquippedMarkerYPositions_3e:
 	; $5a0f, 6 bytes (bytes:6)
@@ -4028,8 +3989,7 @@ LoadCourtSelectGraphics:
 	ld b, $08 ; $5de4
 	ld c, $10 ; $5de6
 	farcall LoadIndexedPalette ; $5de8
-	pop af ; $5deb
-	wram_bank ; $5dec
+	pop_wram_bank ; $5deb
 	ret ; $5df0
 CourtSelectGraphicsTable:
 	; $5df1, 20 bytes (10 records x 1 slot words)
@@ -4404,9 +4364,7 @@ LoadCourtSelectHeader:
 	call AdvanceFrame ; $6114
 	ret ; $6117
 DrawCourtSelectTitleRow:
-	ldh a, [hWramBank] ; $6118
-	push af ; $611a
-	wram_bank $03 ; $611b
+	push_wram_bank $03 ; $6118
 	ld a, $12 ; $6121
 	ld hl, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $6123
 	ld c, $20 ; $6126
@@ -4417,8 +4375,7 @@ DrawCourtSelectTitleRow:
 	jr nz, .loop ; $612b
 	call DrawCourtSelectTitleLeft ; $612d
 	call DrawCourtSelectTitleRight ; $6130
-	pop af ; $6133
-	wram_bank ; $6134
+	pop_wram_bank ; $6133
 	ret ; $6138
 DrawCourtSelectTitleLeft:
 	ld b, $30 ; $6139
@@ -4439,25 +4396,19 @@ DrawCourtSelectTitleRight:
 	farcall FillIncrementingBytes ; $615b
 	ret ; $615e
 FlushCourtSelectTitleRow:
-	ldh a, [hWramBank] ; $615f
-	push af ; $6161
-	wram_bank $03 ; $6162
+	push_wram_bank $03 ; $615f
 	ld hl, wShadowTilemap + 15 * TILEMAP_WIDTH ; $6168
 	ld de, $99e0 ; $616b
 	ld bc, $0006 ; $616e
 	call QueueVRAMCopy ; $6171
-	pop af ; $6174
-	wram_bank ; $6175
+	pop_wram_bank ; $6174
 	ret ; $6179
 LoadCourtSelectTitleGfx:
-	ldh a, [hWramBank] ; $617a
-	push af ; $617c
-	wram_bank $01 ; $617d
+	push_wram_bank $01 ; $617a
 	call LoadCourtSelectTitleTiles ; $6183
 	call LoadCourtSelectTitleTiles2 ; $6186
 	call LoadCourtSelectPanelTiles ; $6189
-	pop af ; $618c
-	wram_bank ; $618d
+	pop_wram_bank ; $618c
 	ret ; $6191
 LoadCourtSelectTitleTiles:
 	ld hl, CourtSelectTitleTiles ; $6192
@@ -4493,15 +4444,12 @@ CourtSelectTitleTiles2Gfx:
 CourtSelectPanelTiles:
 	INCBIN "data/bank_03e/lz_62c6.bin" ; $62c6, 457 bytes
 DrawCourtNameTiles:
-	ldh a, [hWramBank] ; $648f
-	push af ; $6491
-	wram_bank $03 ; $6492
+	push_wram_bank $03 ; $648f
 	push bc ; $6498
 	call DrawCourtNameLeft ; $6499
 	pop bc ; $649c
 	call DrawCourtNameRight ; $649d
-	pop af ; $64a0
-	wram_bank ; $64a1
+	pop_wram_bank ; $64a0
 	ret ; $64a5
 DrawCourtNameLeft:
 	ld a, b ; $64a6
@@ -4556,17 +4504,14 @@ CourtNameRightIndices_3e:
 	; $64ef, 9 bytes (bytes:9)
 	db $1b, $05, $05, $10, $1b, $10, $05, $26, $1b ; 0x00
 FadeOutAndResetMenuScreen:
-	ldh a, [hWramBank] ; $64f8
-	push af ; $64fa
-	wram_bank $03 ; $64fb
+	push_wram_bank $03 ; $64f8
 	ld c, $10 ; $6501
 	call BeginFadeOut ; $6503
 	call WaitFadeEnd ; $6506
 	call DisableLCDSafely ; $6509
 	farcall LoadMenuFontGfx ; $650c
 	farcall ResetScreenAndTextWindows ; $650f
-	pop af ; $6512
-	wram_bank ; $6513
+	pop_wram_bank ; $6512
 	ret ; $6517
 RunCourtSelect9Menu:
 	ld a, [wUnlockedCourtMask] ; $6518
@@ -5072,9 +5017,7 @@ CourtSelect9Palette8:
 	db $cd, $6f, $60, $c1, $cd, $93, $60, $18 ; 0x20
 	db $00, $f1, $e0, $96, $e0, $70, $c9 ; 0x28
 StoreCourtUnlockBits:
-	ldh a, [hWramBank] ; $695a
-	push af ; $695c
-	wram_bank $02 ; $695d
+	push_wram_bank $02 ; $695a
 	ld c, $00 ; $6963
 	ld hl, wScreenAttrmap ; $6965
 .loop:
@@ -5087,8 +5030,7 @@ StoreCourtUnlockBits:
 	ld c, a ; $6970
 	cp $05 ; $6971
 	jr nz, .loop ; $6973
-	pop af ; $6975
-	wram_bank ; $6976
+	pop_wram_bank ; $6975
 	ret ; $697a
 IsCourtUnlocked:
 	ld a, b ; $697b
@@ -5097,9 +5039,7 @@ IsCourtUnlocked:
 	ld a, $01 ; $6980
 	ret ; $6982
 .lookup:
-	ldh a, [hWramBank] ; $6983
-	push af ; $6985
-	wram_bank $02 ; $6986
+	push_wram_bank $02 ; $6983
 	ld a, b ; $698c
 	sub COURT_STAR ; $698d
 	ld hl, wScreenAttrmap ; $698f
@@ -5110,8 +5050,7 @@ IsCourtUnlocked:
 .read:
 	ld a, [hl] ; $6997
 	ld b, a ; $6998
-	pop af ; $6999
-	wram_bank ; $699a
+	pop_wram_bank ; $6999
 	ld a, b ; $699e
 	ret ; $699f
 ComputeUnlockedCourtFlags:

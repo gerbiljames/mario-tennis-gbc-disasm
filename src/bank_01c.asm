@@ -14,9 +14,7 @@ SECTION "ROM Bank $1c", ROMX[$4000], BANK[$1c]
 	farptr FlushCharDataTilemapsFar ; $4016
 	farptr LoadCharDataScreenGraphics ; $4018
 CharDataScreen_Show:
-	ldh a, [hWramBank] ; $401a
-	push af ; $401c
-	wram_bank $06 ; $401d
+	push_wram_bank $06 ; $401a
 	push bc ; $4023
 	ld a, [wCharDataViewOnly] ; $4024
 	or a ; $4027
@@ -96,15 +94,13 @@ CharDataScreen_Show:
 	call EnableLCD ; $40e3
 	call AdvanceFrame ; $40e6
 	pop bc ; $40e9
-	pop af ; $40ea
-	wram_bank ; $40eb
+	pop_wram_bank ; $40ea
 	ld a, b ; $40ef
 	ret ; $40f0
 .levelUpPending:
 	pop bc ; $40f1
 	pop bc ; $40f2
-	pop af ; $40f3
-	wram_bank ; $40f4
+	pop_wram_bank ; $40f3
 	ld a, $ff ; $40f8
 	ret ; $40fa
 CharDataScreen_InitState:
@@ -551,11 +547,7 @@ CharDataScreen_DrawStatBar:
 	jr nz, .altTable ; $4505
 	ld a, b ; $4507
 	rlca ; $4508
-	add LOW(CharDataScreen_DrawStatBarPtrs) ; $4509
-	ld l, a ; $450b
-	adc HIGH(CharDataScreen_DrawStatBarPtrs) ; $450c
-	sub l ; $450e
-	ld h, a ; $450f
+	ld_hl_indexed CharDataScreen_DrawStatBarPtrs ; $4509
 	ld a, [hl+] ; $4510
 	ld h, [hl] ; $4511
 	ld l, a ; $4512
@@ -563,11 +555,7 @@ CharDataScreen_DrawStatBar:
 .altTable:
 	ld a, b ; $4515
 	rlca ; $4516
-	add LOW(CharDataScreen_DrawStatBarTable0) ; $4517
-	ld l, a ; $4519
-	adc HIGH(CharDataScreen_DrawStatBarTable0) ; $451a
-	sub l ; $451c
-	ld h, a ; $451d
+	ld_hl_indexed CharDataScreen_DrawStatBarTable0 ; $4517
 	ld a, [hl+] ; $451e
 	ld h, [hl] ; $451f
 	ld l, a ; $4520
@@ -591,11 +579,7 @@ CharDataScreen_DrawStatBar:
 	wram_bank $02 ; $4536
 	ld a, b ; $453c
 	rlca ; $453d
-	add LOW(CharDataScreen_DrawStatBarTable1) ; $453e
-	ld l, a ; $4540
-	adc HIGH(CharDataScreen_DrawStatBarTable1) ; $4541
-	sub l ; $4543
-	ld h, a ; $4544
+	ld_hl_indexed CharDataScreen_DrawStatBarTable1 ; $453e
 	ld a, [hl+] ; $4545
 	ld h, [hl] ; $4546
 	ld l, a ; $4547
@@ -708,9 +692,7 @@ CharDataScreenAnimTask:
 	push bc ; $45fb
 	push de ; $45fc
 	push hl ; $45fd
-	ldh a, [hWramBank] ; $45fe
-	push af ; $4600
-	wram_bank $06 ; $4601
+	push_wram_bank $06 ; $45fe
 	ld a, [wCharDataFlushChunk] ; $4607
 	or a ; $460a
 	jp nz, .nonZero ; $460b
@@ -721,11 +703,7 @@ CharDataScreenAnimTask:
 	and $0f ; $461b
 	rlca ; $461d
 	push af ; $461e
-	add LOW(Unused_1c_0) ; $461f
-	ld l, a ; $4621
-	adc HIGH(Unused_1c_0) ; $4622
-	sub l ; $4624
-	ld h, a ; $4625
+	ld_hl_indexed Unused_1c_0 ; $461f
 	ld a, [hl+] ; $4626
 	ld h, [hl] ; $4627
 	ld l, a ; $4628
@@ -744,11 +722,7 @@ CharDataScreenAnimTask:
 	ld c, $02 ; $463d
 	call QueueVRAMCopy ; $463f
 	pop af ; $4642
-	add LOW(CharDataScreenAnimTask_CharDataFlushChunkTable) ; $4643
-	ld l, a ; $4645
-	adc HIGH(CharDataScreenAnimTask_CharDataFlushChunkTable) ; $4646
-	sub l ; $4648
-	ld h, a ; $4649
+	ld_hl_indexed CharDataScreenAnimTask_CharDataFlushChunkTable ; $4643
 	ld a, [hl+] ; $464a
 	ld h, [hl] ; $464b
 	ld l, a ; $464c
@@ -775,8 +749,7 @@ CharDataScreenAnimTask:
 	xor a ; $4674
 .store:
 	ld [wCharDataFlushChunk], a ; $4675
-	pop af ; $4678
-	wram_bank ; $4679
+	pop_wram_bank ; $4678
 	pop hl ; $467d
 	pop de ; $467e
 	pop bc ; $467f
@@ -906,8 +879,7 @@ AnimateCharDataStatsReveal:
 	xor a ; $47f3
 	ld [wCharDataRevealTimer], a ; $47f4
 	call FlushCharDataTilemaps ; $47f7
-	call WaitFramesCmd ; $47fa
-	db $06 ; $47fd inline arg
+	wait_frames $06 ; $47fa
 	ld hl, CharDataBand4RunsStep1_1c ; $47fe
 	ld bc, wScreenAttrmap + 27 * TILEMAP_WIDTH + 16 ; $4801
 	call BlitTilemapRunsFromTable ; $4804
@@ -1754,11 +1726,7 @@ CharDataScreen_DrawPageColumns:
 	rlca ; $4ddf
 	push af ; $4de0
 	rlca ; $4de1
-	add LOW(CharDataScreen_DrawPageColumnsTable0) ; $4de2
-	ld l, a ; $4de4
-	adc HIGH(CharDataScreen_DrawPageColumnsTable0) ; $4de5
-	sub l ; $4de7
-	ld h, a ; $4de8
+	ld_hl_indexed CharDataScreen_DrawPageColumnsTable0 ; $4de2
 	ld a, [hl+] ; $4de9
 	ld d, [hl] ; $4dea
 	ld e, a ; $4deb
@@ -1767,11 +1735,7 @@ CharDataScreen_DrawPageColumns:
 	ld b, [hl] ; $4dee
 	ld c, a ; $4def
 	pop af ; $4df0
-	add LOW(CharDataScreen_DrawPageColumnsTable1) ; $4df1
-	ld l, a ; $4df3
-	adc HIGH(CharDataScreen_DrawPageColumnsTable1) ; $4df4
-	sub l ; $4df6
-	ld h, a ; $4df7
+	ld_hl_indexed CharDataScreen_DrawPageColumnsTable1 ; $4df1
 	ld a, [hl+] ; $4df8
 	ld h, [hl] ; $4df9
 	ld l, a ; $4dfa
@@ -2028,11 +1992,7 @@ DrawStatValueSprites:
 	ret ; $4fcd
 GetStatDigitSpritePos:
 	rlca ; $4fce
-	add LOW(RadialOffsetRamps_1c) ; $4fcf
-	ld l, a ; $4fd1
-	adc HIGH(RadialOffsetRamps_1c) ; $4fd2
-	sub l ; $4fd4
-	ld h, a ; $4fd5
+	ld_hl_indexed RadialOffsetRamps_1c ; $4fcf
 	ld a, [hl+] ; $4fd6
 	ld h, [hl] ; $4fd7
 	ld l, a ; $4fd8

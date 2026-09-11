@@ -145,11 +145,7 @@ LoadIndexedPalette_18:
 	add a ; $433f
 	add a ; $4340
 	add a ; $4341
-	add LOW(AllIndexedPalettes_18) ; $4342
-	ld l, a ; $4344
-	adc HIGH(AllIndexedPalettes_18) ; $4345
-	sub l ; $4347
-	ld h, a ; $4348
+	ld_hl_indexed AllIndexedPalettes_18 ; $4342
 	ld e, $01 ; $4349
 	call LoadPaletteShadow ; $434b
 	pop hl ; $434e
@@ -347,22 +343,14 @@ AddBobbingOffsetXY:
 	push hl ; $4445
 	ldh a, [hVBlankCounter] ; $4446
 	and $0f ; $4448
-	add LOW(AddBobbingOffsetXYTable) ; $444a
-	ld l, a ; $444c
-	adc HIGH(AddBobbingOffsetXYTable) ; $444d
-	sub l ; $444f
-	ld h, a ; $4450
+	ld_hl_indexed AddBobbingOffsetXYTable ; $444a
 	ld a, [hl] ; $4451
 	add d ; $4452
 	ld d, a ; $4453
 	ldh a, [hVBlankCounter] ; $4454
 	add $04 ; $4456
 	and $0f ; $4458
-	add LOW(AddBobbingOffsetXYTable) ; $445a
-	ld l, a ; $445c
-	adc HIGH(AddBobbingOffsetXYTable) ; $445d
-	sub l ; $445f
-	ld h, a ; $4460
+	ld_hl_indexed AddBobbingOffsetXYTable ; $445a
 	ld a, [hl] ; $4461
 	cpl ; $4462
 	add e ; $4463
@@ -378,11 +366,7 @@ AddBobbingOffsetY:
 	push hl ; $4479
 	ldh a, [hVBlankCounter] ; $447a
 	and $0f ; $447c
-	add LOW(AddBobbingOffsetYTable) ; $447e
-	ld l, a ; $4480
-	adc HIGH(AddBobbingOffsetYTable) ; $4481
-	sub l ; $4483
-	ld h, a ; $4484
+	ld_hl_indexed AddBobbingOffsetYTable ; $447e
 	ld a, [hl] ; $4485
 	add e ; $4486
 	ld e, a ; $4487
@@ -397,11 +381,7 @@ AddBobbingOffsetYLarge:
 	push hl ; $449c
 	ldh a, [hVBlankCounter] ; $449d
 	and $3f ; $449f
-	add LOW(AddBobbingOffsetYLargeTable) ; $44a1
-	ld l, a ; $44a3
-	adc HIGH(AddBobbingOffsetYLargeTable) ; $44a4
-	sub l ; $44a6
-	ld h, a ; $44a7
+	ld_hl_indexed AddBobbingOffsetYLargeTable ; $44a1
 	ld a, [hl] ; $44a8
 	add e ; $44a9
 	ld e, a ; $44aa
@@ -822,11 +802,7 @@ GetTextSlotPointer:
 	add $04 ; $53e4
 	and $0f ; $53e6
 	add a ; $53e8
-	add LOW(TextSlotPointerTable) ; $53e9
-	ld l, a ; $53eb
-	adc HIGH(TextSlotPointerTable) ; $53ec
-	sub l ; $53ee
-	ld h, a ; $53ef
+	ld_hl_indexed TextSlotPointerTable ; $53e9
 	ld a, [hl+] ; $53f0
 	ld h, [hl] ; $53f1
 	ld l, a ; $53f2
@@ -994,11 +970,7 @@ DrawGlyphSprite:
 	ld hl, hVBlankCounter ; $54ed
 	sub [hl] ; $54f0
 	and $1f ; $54f1
-	add LOW(UnusedBobRamp_18) ; $54f3
-	ld l, a ; $54f5
-	adc HIGH(UnusedBobRamp_18) ; $54f6
-	sub l ; $54f8
-	ld h, a ; $54f9
+	ld_hl_indexed UnusedBobRamp_18 ; $54f3
 	ld a, [hl] ; $54fa
 	add e ; $54fb
 	ld e, a ; $54fc
@@ -1223,20 +1195,12 @@ DrawCharSelectCursor:
 .animate:
 	ldh a, [hVBlankCounter] ; $59de
 	and $1f ; $59e0
-	add LOW(CharSelectCursorAnimTable) ; $59e2
-	ld l, a ; $59e4
-	adc HIGH(CharSelectCursorAnimTable) ; $59e5
-	sub l ; $59e7
-	ld h, a ; $59e8
+	ld_hl_indexed CharSelectCursorAnimTable ; $59e2
 	ld a, c ; $59e9
 	add a ; $59ea
 	add [hl] ; $59eb
 	add a ; $59ec
-	add LOW(CharSelectCursorTemplatePtrs) ; $59ed
-	ld l, a ; $59ef
-	adc HIGH(CharSelectCursorTemplatePtrs) ; $59f0
-	sub l ; $59f2
-	ld h, a ; $59f3
+	ld_hl_indexed CharSelectCursorTemplatePtrs ; $59ed
 	ld a, [hl+] ; $59f4
 	ld h, [hl] ; $59f5
 	ld l, a ; $59f6
@@ -1282,11 +1246,7 @@ CharSelectCursorTemplate3:
 ApplySpriteBobOffset_18:
 	ldh a, [hVBlankCounter] ; $5a6a
 	and $3f ; $5a6c
-	add LOW(SpriteBobRamp_18) ; $5a6e
-	ld l, a ; $5a70
-	adc HIGH(SpriteBobRamp_18) ; $5a71
-	sub l ; $5a73
-	ld h, a ; $5a74
+	ld_hl_indexed SpriteBobRamp_18 ; $5a6e
 	ld a, [hl] ; $5a75
 	add e ; $5a76
 	ld e, a ; $5a77
@@ -1877,9 +1837,7 @@ QueueScreen2Sprites_SpriteTemplate:
 	oam_sprite_end
 	ret ; $7a80
 TaskFadeInPalette_18:
-	ldh a, [hWramBank] ; $7a81
-	push af ; $7a83
-	wram_bank $03 ; $7a84
+	push_wram_bank $03 ; $7a81
 	ld a, [wEndingSceneStep] ; $7a8a
 	cp $10 ; $7a8d
 	jr z, .alt2 ; $7a8f
@@ -1901,8 +1859,7 @@ TaskFadeInPalette_18:
 	inc a ; $7aab
 	ld [wEndingSceneStep], a ; $7aac
 .alt2:
-	pop af ; $7aaf
-	wram_bank ; $7ab0
+	pop_wram_bank ; $7aaf
 	ret ; $7ab4
 PaletteFadeTable_18:
 	INCLUDE "data/bank_018/palettes_7ab5.asm" ; $7ab5, 128 bytes (palettes)
@@ -2031,9 +1988,7 @@ ObjectUpdateLoopTail_18:
 	jr nz, TaskUpdateObjects_18.objectLoop ; $7bcb
 	ret ; $7bcd
 InitObjectSceneA:
-	ldh a, [hWramBank] ; $7bce
-	push af ; $7bd0
-	wram_bank $03 ; $7bd1
+	push_wram_bank $03 ; $7bce
 	ld hl, wScreenScratch ; $7bd7
 	ld bc, $0100 ; $7bda
 	call ClearBytes ; $7bdd
@@ -2130,9 +2085,7 @@ ObjectArrayASpawnTable:
 	db $01, $00, $a0, $00, $30, $55, $a0, $00, $00 ; record 15
 	dw ObjectArrayAUpdateCallback_18
 InitObjectSceneB:
-	ldh a, [hWramBank] ; $7d03
-	push af ; $7d05
-	wram_bank $03 ; $7d06
+	push_wram_bank $03 ; $7d03
 	ld hl, wScreenScratch ; $7d0c
 	ld bc, $0100 ; $7d0f
 	call ClearBytes ; $7d12

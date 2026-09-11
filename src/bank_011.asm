@@ -85,11 +85,7 @@ CenterCourtNpc04_11:
 CenterCourtNpc05_11:
 	ld a, [wMapSceneStage] ; $4100
 	add a ; $4103
-	add LOW(CenterCourtNpc05TextIds) ; $4104
-	ld l, a ; $4106
-	adc HIGH(CenterCourtNpc05TextIds) ; $4107
-	sub l ; $4109
-	ld h, a ; $410a
+	ld_hl_indexed CenterCourtNpc05TextIds ; $4104
 	ld a, [hl+] ; $410b
 	ld h, [hl] ; $410c
 	ld l, a ; $410d
@@ -123,11 +119,7 @@ CenterCourtNpc05TextIds:
 CenterCourtNpc06_11:
 	ld a, [wMapSceneStage] ; $414a
 	add a ; $414d
-	add LOW(CenterCourtNpc06TextIds) ; $414e
-	ld l, a ; $4150
-	adc HIGH(CenterCourtNpc06TextIds) ; $4151
-	sub l ; $4153
-	ld h, a ; $4154
+	ld_hl_indexed CenterCourtNpc06TextIds ; $414e
 	ld a, [hl+] ; $4155
 	ld h, [hl] ; $4156
 	ld l, a ; $4157
@@ -372,11 +364,7 @@ AcademyArrivalExitTriggers_11:
 AcademyArrivalNpc03_11:
 	ld a, [wMapSceneStage] ; $459d
 	add a ; $45a0
-	add LOW(AcademyArrivalNpc03TextIds) ; $45a1
-	ld l, a ; $45a3
-	adc HIGH(AcademyArrivalNpc03TextIds) ; $45a4
-	sub l ; $45a6
-	ld h, a ; $45a7
+	ld_hl_indexed AcademyArrivalNpc03TextIds ; $45a1
 	ld a, [hl+] ; $45a8
 	ld h, [hl] ; $45a9
 	ld l, a ; $45aa
@@ -418,11 +406,7 @@ AcademyArrivalNpc03TextIds:
 AcademyArrivalNpc04_11:
 	ld a, [wMapSceneStage] ; $45f5
 	add a ; $45f8
-	add LOW(AcademyArrivalNpc04TextIds) ; $45f9
-	ld l, a ; $45fb
-	adc HIGH(AcademyArrivalNpc04TextIds) ; $45fc
-	sub l ; $45fe
-	ld h, a ; $45ff
+	ld_hl_indexed AcademyArrivalNpc04TextIds ; $45f9
 	ld a, [hl+] ; $4600
 	ld h, [hl] ; $4601
 	ld l, a ; $4602
@@ -445,11 +429,7 @@ AcademyArrivalNpc05_11:
 	ld a, [wMapSceneStage] ; $4620
 	sra a ; $4623
 	add a ; $4625
-	add LOW(AcademyArrivalNpc05TextIds) ; $4626
-	ld l, a ; $4628
-	adc HIGH(AcademyArrivalNpc05TextIds) ; $4629
-	sub l ; $462b
-	ld h, a ; $462c
+	ld_hl_indexed AcademyArrivalNpc05TextIds ; $4626
 	ld a, [hl+] ; $462d
 	ld h, [hl] ; $462e
 	ld l, a ; $462f

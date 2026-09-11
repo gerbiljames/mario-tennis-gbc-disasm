@@ -570,7 +570,7 @@ ROM.
 ### `ProjectBallSprite` reads the hit-streak table and throws the value away
 
 `ProjectBallSprite` (`$0d:$5843`) indexes `MinigameHitStreakValueTable_0d` by
-`wMinigameHitStreak` — split-base `add LOW / adc HIGH`, so this is deliberate
+`wMinigameHitStreak` — the split-base `ld_hl_indexed`, so this is deliberate
 addressing, not an accident — loads the entry into `b`, and then immediately
 overwrites it:
 

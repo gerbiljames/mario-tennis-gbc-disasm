@@ -222,11 +222,7 @@ LoadSpecialHitEffectTiles:
 	rrca ; $6030
 	rrca ; $6031
 	and $c0 ; $6032
-	add LOW(SpecialHitEffectTiles_28) ; $6034
-	ld l, a ; $6036
-	adc HIGH(SpecialHitEffectTiles_28) ; $6037
-	sub l ; $6039
-	ld h, a ; $603a
+	ld_hl_indexed SpecialHitEffectTiles_28 ; $6034
 	ld de, $8740 + VRAM_BANK1 ; $603b
 	ld c, $04 ; $603e
 	call QueueVRAMCopy ; $6040
@@ -235,11 +231,7 @@ LoadBallTouchCharEffectTilesA:
 	rrca ; $6044
 	rrca ; $6045
 	and $40 ; $6046
-	add LOW(BallTouchCharEffectTilesA_28) ; $6048
-	ld l, a ; $604a
-	adc HIGH(BallTouchCharEffectTilesA_28) ; $604b
-	sub l ; $604d
-	ld h, a ; $604e
+	ld_hl_indexed BallTouchCharEffectTilesA_28 ; $6048
 	ld de, $8780 + VRAM_BANK1 ; $604f
 	ld c, $04 ; $6052
 	call QueueVRAMCopy ; $6054
@@ -248,22 +240,14 @@ LoadBallTouchCharEffectTilesB:
 	rrca ; $6058
 	rrca ; $6059
 	and $40 ; $605a
-	add LOW(BallTouchCharEffectTilesB_28) ; $605c
-	ld l, a ; $605e
-	adc HIGH(BallTouchCharEffectTilesB_28) ; $605f
-	sub l ; $6061
-	ld h, a ; $6062
+	ld_hl_indexed BallTouchCharEffectTilesB_28 ; $605c
 	ld de, $87c0 + VRAM_BANK1 ; $6063
 	ld c, $04 ; $6066
 	call QueueVRAMCopy ; $6068
 	ret ; $606b
 QueueMatchSpriteFrameA:
 	add a ; $606c
-	add LOW(QueueMatchSpriteFrameATable) ; $606d
-	ld l, a ; $606f
-	adc HIGH(QueueMatchSpriteFrameATable) ; $6070
-	sub l ; $6072
-	ld h, a ; $6073
+	ld_hl_indexed QueueMatchSpriteFrameATable ; $606d
 	ld a, [hl+] ; $6074
 	ld h, [hl] ; $6075
 	ld l, a ; $6076
@@ -276,11 +260,7 @@ QueueMatchSpriteFrameATable:
 	db $30, $52, $f0, $52, $b0, $53 ; 0x00
 QueueMatchSpriteFrameB:
 	add a ; $6086
-	add LOW(QueueMatchSpriteFrameBTable) ; $6087
-	ld l, a ; $6089
-	adc HIGH(QueueMatchSpriteFrameBTable) ; $608a
-	sub l ; $608c
-	ld h, a ; $608d
+	ld_hl_indexed QueueMatchSpriteFrameBTable ; $6087
 	ld a, [hl+] ; $608e
 	ld h, [hl] ; $608f
 	ld l, a ; $6090
@@ -304,11 +284,7 @@ LoadEffectFrameTiles_28:
 	ld d, h ; $60aa
 	ld a, b ; $60ab
 	add a ; $60ac
-	add LOW(LoadEffectFrameTiles_28Table) ; $60ad
-	ld l, a ; $60af
-	adc HIGH(LoadEffectFrameTiles_28Table) ; $60b0
-	sub l ; $60b2
-	ld h, a ; $60b3
+	ld_hl_indexed LoadEffectFrameTiles_28Table ; $60ad
 	ld a, [hl+] ; $60b4
 	ld h, [hl] ; $60b5
 	ld l, a ; $60b6

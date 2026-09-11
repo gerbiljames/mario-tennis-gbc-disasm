@@ -1478,9 +1478,7 @@ CopyMapToScrollBuffers:
 	push bc ; $086d
 	push de ; $086e
 	push hl ; $086f
-	ldh a, [hWramBank] ; $0870
-	push af ; $0872
-	wram_bank $01 ; $0873
+	push_wram_bank $01 ; $0870
 	ld hl, wDecompBuffer ; $0879
 	ld de, wTextBuffer ; $087c
 	ld c, $20 ; $087f
@@ -1522,8 +1520,7 @@ CopyMapToScrollBuffers:
 	ld hl, wScreenScratch ; $08fb
 	ld c, $80 ; $08fe
 	call ClearMemory16 ; $0900
-	pop af ; $0903
-	wram_bank ; $0904
+	pop_wram_bank ; $0903
 	pop hl ; $0908
 	pop de ; $0909
 	pop bc ; $090a
@@ -3087,22 +3084,14 @@ GetSquareOfByte:
 	push af ; $106e
 	add a ; $106f
 	jr c, .highHalf ; $1070
-	add LOW(SquaresTable) ; $1072
-	ld l, a ; $1074
-	adc HIGH(SquaresTable) ; $1075
-	sub l ; $1077
-	ld h, a ; $1078
+	ld_hl_indexed SquaresTable ; $1072
 	ld a, [hl+] ; $1079
 	ld h, [hl] ; $107a
 	ld l, a ; $107b
 	pop af ; $107c
 	ret ; $107d
 .highHalf:
-	add LOW(SquaresTable + $100) ; $107e
-	ld l, a ; $1080
-	adc HIGH(SquaresTable + $100) ; $1081
-	sub l ; $1083
-	ld h, a ; $1084
+	ld_hl_indexed SquaresTable + $100 ; $107e
 	ld a, [hl+] ; $1085
 	ld h, [hl] ; $1086
 	ld l, a ; $1087
@@ -5802,11 +5791,7 @@ Unused_00_RenderCharToTiles:
 	sub $30 ; $20d0
 	and $1f ; $20d2
 	add a ; $20d4
-	add LOW(NumberFontGlyphPtrs) ; $20d5
-	ld l, a ; $20d7
-	adc HIGH(NumberFontGlyphPtrs) ; $20d8
-	sub l ; $20da
-	ld h, a ; $20db
+	ld_hl_indexed NumberFontGlyphPtrs ; $20d5
 	ld a, [hl+] ; $20dc
 	ld h, [hl] ; $20dd
 	ld l, a ; $20de
@@ -5833,11 +5818,7 @@ RenderTextToTiles:
 	push hl ; $20f7
 	and $1f ; $20f8
 	add a ; $20fa
-	add LOW(NumberFontGlyphPtrs) ; $20fb
-	ld l, a ; $20fd
-	adc HIGH(NumberFontGlyphPtrs) ; $20fe
-	sub l ; $2100
-	ld h, a ; $2101
+	ld_hl_indexed NumberFontGlyphPtrs ; $20fb
 	ld a, [hl+] ; $2102
 	ld h, [hl] ; $2103
 	ld l, a ; $2104
@@ -5868,11 +5849,7 @@ RenderGlyphToTiles:
 	push hl ; $2127
 	ld a, b ; $2128
 	and $07 ; $2129
-	add LOW(PixelMaskTable) ; $212b
-	ld l, a ; $212d
-	adc HIGH(PixelMaskTable) ; $212e
-	sub l ; $2130
-	ld h, a ; $2131
+	ld_hl_indexed PixelMaskTable ; $212b
 	ld a, [hl] ; $2132
 	ld [wGlyphBlitDestMask], a ; $2133
 	ld a, b ; $2136
@@ -6477,11 +6454,7 @@ TestGameFlag:
 	rlca ; $24a3
 	rlca ; $24a4
 	rlca ; $24a5
-	add LOW(FlagMaskTable) ; $24a6
-	ld l, a ; $24a8
-	adc HIGH(FlagMaskTable) ; $24a9
-	sub l ; $24ab
-	ld h, a ; $24ac
+	ld_hl_indexed FlagMaskTable ; $24a6
 	ld a, [hl] ; $24ad
 	ld hl, wGameFlags ; $24ae
 	ld e, d ; $24b1
@@ -6499,11 +6472,7 @@ SetGameFlag:
 	rlca ; $24bd
 	rlca ; $24be
 	rlca ; $24bf
-	add LOW(FlagMaskTable) ; $24c0
-	ld l, a ; $24c2
-	adc HIGH(FlagMaskTable) ; $24c3
-	sub l ; $24c5
-	ld h, a ; $24c6
+	ld_hl_indexed FlagMaskTable ; $24c0
 	ld a, [hl] ; $24c7
 	ld hl, wGameFlags ; $24c8
 	ld e, d ; $24cb
@@ -6521,11 +6490,7 @@ ClearGameFlag:
 	rlca ; $24d7
 	rlca ; $24d8
 	rlca ; $24d9
-	add LOW(FlagMaskTable) ; $24da
-	ld l, a ; $24dc
-	adc HIGH(FlagMaskTable) ; $24dd
-	sub l ; $24df
-	ld h, a ; $24e0
+	ld_hl_indexed FlagMaskTable ; $24da
 	ld a, [hl] ; $24e1
 	ld hl, wGameFlags ; $24e2
 	ld e, d ; $24e5
@@ -6679,15 +6644,12 @@ SoftReset:
 	call ClearSpriteQueue ; $25c8
 	call ClearFrameTasks ; $25cb
 	call ClearVRAMCopyQueue ; $25ce
-	ldh a, [hWramBank] ; $25d1
-	push af ; $25d3
-	wram_bank $07 ; $25d4
+	push_wram_bank $07 ; $25d1
 	ld hl, WRAMX_BASE ; $25da
 	ld c, $00 ; $25dd
 	call ClearMemory16 ; $25df
 	call InitAudioEngine ; $25e2
-	pop af ; $25e5
-	wram_bank ; $25e6
+	pop_wram_bank ; $25e5
 	ld a, $07 ; $25ea
 	ldh [rWX], a ; $25ec
 	ld a, $90 ; $25ee
@@ -6755,12 +6717,9 @@ AdvanceFrame:
 	and $cf ; $264e
 	xor $05 ; $2650
 	ld [wSpriteBufferPage], a ; $2652
-	ldh a, [hWramBank] ; $2655
-	push af ; $2657
-	wram_bank $07 ; $2658
+	push_wram_bank $07 ; $2655
 	call ResumeBGMAfterJingle ; $265e
-	pop af ; $2661
-	wram_bank ; $2662
+	pop_wram_bank ; $2661
 	ldh a, [rLY] ; $2666
 	ld l, a ; $2668
 	ldh a, [hPeakLY] ; $2669
@@ -7487,8 +7446,7 @@ VBlankDeferredTilemapCopyTask:
 .maskClear2:
 	xor a ; $2a90
 	ld [wDeferredTilemapPending], a ; $2a91
-	pop af ; $2a94
-	wram_bank ; $2a95
+	pop_wram_bank ; $2a94
 	pop hl ; $2a99
 	pop de ; $2a9a
 	pop bc ; $2a9b
@@ -8372,8 +8330,7 @@ UpdateSoundEngine:
 	ldh a, [hWramBank] ; $2f23
 	push af ; $2f25
 	call RunSoundEngine ; $2f26
-	pop af ; $2f29
-	wram_bank ; $2f2a
+	pop_wram_bank ; $2f29
 	xor a ; $2f2e
 	ldh [hSoundEngineBusy], a ; $2f2f
 .done:
@@ -8391,8 +8348,7 @@ ResumeBGM:
 	push af ; $2f41
 	ld a, [wCurrentBGM] ; $2f42
 	call PlaySound ; $2f45
-	pop af ; $2f48
-	wram_bank ; $2f49
+	pop_wram_bank ; $2f48
 .done:
 	pop hl ; $2f4d
 	pop de ; $2f4e
@@ -8427,8 +8383,7 @@ SyncBGMEnableFlag:
 	push af ; $2f77
 	xor a ; $2f78
 	call PlaySound ; $2f79
-	pop af ; $2f7c
-	wram_bank ; $2f7d
+	pop_wram_bank ; $2f7c
 .done:
 	pop hl ; $2f81
 	pop de ; $2f82
@@ -8460,8 +8415,7 @@ SetMusicMuted:
 	xor a ; $2fa5
 .apply:
 	call PlaySound ; $2fa6
-	pop af ; $2fa9
-	wram_bank ; $2faa
+	pop_wram_bank ; $2fa9
 	pop hl ; $2fae
 	pop de ; $2faf
 	pop bc ; $2fb0
@@ -8525,8 +8479,7 @@ JingleSoundIds:
 	push af ; $3004
 	ld a, h ; $3005
 	call PlaySound ; $3006
-	pop af ; $3009
-	wram_bank ; $300a
+	pop_wram_bank ; $3009
 	jr .restore ; $300e
 .ge50:
 	ld h, a ; $3010
@@ -8534,8 +8487,7 @@ JingleSoundIds:
 	push af ; $3013
 	ld a, h ; $3014
 	call PlaySound ; $3015
-	pop af ; $3018
-	wram_bank ; $3019
+	pop_wram_bank ; $3018
 	jr .restore ; $301d
 .restore:
 	pop hl ; $301f
@@ -8575,8 +8527,7 @@ WaitJingleEnd:
 	push af ; $304c
 	ld a, [wCurrentBGM] ; $304d
 	call PlaySound ; $3050
-	pop af ; $3053
-	wram_bank ; $3054
+	pop_wram_bank ; $3053
 .restore:
 	pop hl ; $3058
 	pop de ; $3059

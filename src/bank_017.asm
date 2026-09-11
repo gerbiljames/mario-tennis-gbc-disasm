@@ -687,30 +687,24 @@ WriteGridPosFromLinearIndex_17:
 	ld [hl], a ; $43d7
 	ret ; $43d8
 ClearWram3Row64_17:
-	ldh a, [hWramBank] ; $43d9
-	push af ; $43db
-	wram_bank $03 ; $43dc
+	push_wram_bank $03 ; $43d9
 	xor a ; $43e2
 	ld c, $40 ; $43e3
 .loop4:
 	ld [hl+], a ; $43e5
 	dec c ; $43e6
 	jr nz, .loop4 ; $43e7
-	pop af ; $43e9
-	wram_bank ; $43ea
+	pop_wram_bank ; $43e9
 	ret ; $43ee
 ClearWram3Row64Alt_17:
-	ldh a, [hWramBank] ; $43ef
-	push af ; $43f1
-	wram_bank $03 ; $43f2
+	push_wram_bank $03 ; $43ef
 	ld a, $00 ; $43f8
 	ld c, $40 ; $43fa
 .loop5:
 	ld [hl+], a ; $43fc
 	dec c ; $43fd
 	jr nz, .loop5 ; $43fe
-	pop af ; $4400
-	wram_bank ; $4401
+	pop_wram_bank ; $4400
 	ret ; $4405
 UpdateAnimatedTilesTask_17:
 	farcall UpdateAnimatedTiles ; $4406
@@ -1018,9 +1012,7 @@ DrawDiagramTargetOverlay:
 	call QueueDiagramServiceBoxesToVRAM ; $4672
 	ret ; $4675
 CycleDiagramTargetPalette:
-	ldh a, [hWramBank] ; $4676
-	push af ; $4678
-	wram_bank $03 ; $4679
+	push_wram_bank $03 ; $4676
 	ld hl, CycleDiagramTargetPaletteData ; $467f
 	ld de, wBriefingTargetPalette ; $4682
 	ld bc, $0008 ; $4685
@@ -1057,8 +1049,7 @@ CycleDiagramTargetPalette:
 	ld hl, wBriefingTargetPalette ; $46b3
 	ld de, $0201 ; $46b6
 	call LoadPaletteShadow ; $46b9
-	pop af ; $46bc
-	wram_bank ; $46bd
+	pop_wram_bank ; $46bc
 	ret ; $46c1
 Unused_17:
 	; $46c2, 8 bytes (bytes:8)
@@ -1078,9 +1069,7 @@ DiagramTargetPaletteRamp_17:
 	dw $00df ; record 10
 	dw $001f ; record 11
 DrawBriefingPlayerSprite:
-	ldh a, [hWramBank] ; $46e2
-	push af ; $46e4
-	wram_bank $03 ; $46e5
+	push_wram_bank $03 ; $46e2
 	ld a, [wBriefingPlayerX] ; $46eb
 	ld d, a ; $46ee
 	ld a, [wBriefingPlayerY] ; $46ef
@@ -1089,8 +1078,7 @@ DrawBriefingPlayerSprite:
 	ld b, $08 ; $46f6
 	ld c, $00 ; $46f8
 	call QueueSpriteTemplate ; $46fa
-	pop af ; $46fd
-	wram_bank ; $46fe
+	pop_wram_bank ; $46fd
 	ret ; $4702
 DrawBriefingPlayerSprite_SpriteTemplate:
 	; $4703, 9 bytes (sprite_template)
@@ -1098,9 +1086,7 @@ DrawBriefingPlayerSprite_SpriteTemplate:
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
 DrawBriefingOpponentSprite:
-	ldh a, [hWramBank] ; $470c
-	push af ; $470e
-	wram_bank $03 ; $470f
+	push_wram_bank $03 ; $470c
 	ld a, [wBriefingOpponentX] ; $4715
 	ld d, a ; $4718
 	ld a, [wBriefingOpponentY] ; $4719
@@ -1109,8 +1095,7 @@ DrawBriefingOpponentSprite:
 	ld b, $08 ; $4720
 	ld c, $04 ; $4722
 	call QueueSpriteTemplate ; $4724
-	pop af ; $4727
-	wram_bank ; $4728
+	pop_wram_bank ; $4727
 	ret ; $472c
 DrawBriefingOpponentSprite_SpriteTemplate:
 	; $472d, 9 bytes (sprite_template)
@@ -1118,9 +1103,7 @@ DrawBriefingOpponentSprite_SpriteTemplate:
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
 DrawBriefingBallSprite:
-	ldh a, [hWramBank] ; $4736
-	push af ; $4738
-	wram_bank $03 ; $4739
+	push_wram_bank $03 ; $4736
 	ld a, [wBriefingBallX] ; $473f
 	ld d, a ; $4742
 	ld a, [wBriefingBallY] ; $4743
@@ -1128,13 +1111,10 @@ DrawBriefingBallSprite:
 	ld c, $6e ; $4747
 	ld b, $09 ; $4749
 	call QueueSprite ; $474b
-	pop af ; $474e
-	wram_bank ; $474f
+	pop_wram_bank ; $474e
 	ret ; $4753
 DrawBriefingMarkerHFlip:
-	ldh a, [hWramBank] ; $4754
-	push af ; $4756
-	wram_bank $03 ; $4757
+	push_wram_bank $03 ; $4754
 	ld b, $09 ; $475d
 	ld a, [wBriefingHMarkerUnflipped] ; $475f
 	cp $01 ; $4762
@@ -1153,8 +1133,7 @@ DrawBriefingMarkerHFlip:
 	ld c, $60 ; $4777
 	ld hl, DrawBriefingMarkerHFlip_SpriteTemplate ; $4779
 	call QueueSpriteTemplate ; $477c
-	pop af ; $477f
-	wram_bank ; $4780
+	pop_wram_bank ; $477f
 	ret ; $4784
 DrawBriefingMarkerHFlip_SpriteTemplate:
 	; $4785, 9 bytes (sprite_template)
@@ -1162,9 +1141,7 @@ DrawBriefingMarkerHFlip_SpriteTemplate:
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
 DrawBriefingSwingAnim:
-	ldh a, [hWramBank] ; $478e
-	push af ; $4790
-	wram_bank $03 ; $4791
+	push_wram_bank $03 ; $478e
 	ld a, [wBriefingSwingFrame] ; $4797
 	ld hl, BriefingSwingAnimTable0 ; $479a
 	add l ; $479d
@@ -1185,8 +1162,7 @@ DrawBriefingSwingAnim:
 	ld e, a ; $47b7
 	ld b, $09 ; $47b8
 	call QueueSpriteTemplate ; $47ba
-	pop af ; $47bd
-	wram_bank ; $47be
+	pop_wram_bank ; $47bd
 	ret ; $47c2
 BriefingSwingAnimTable0:
 	; $47c3, 10 bytes (bytes:10)
@@ -1203,9 +1179,7 @@ BriefingSwingAnimTable1:
 	; $47e2, 13 bytes (bytes:13)
 	db $10, $08, $00, $00, $10, $10, $02, $00, $10, $18, $04, $00, $80 ; 0x00
 DrawBriefingPoleSprites:
-	ldh a, [hWramBank] ; $47ef
-	push af ; $47f1
-	wram_bank $03 ; $47f2
+	push_wram_bank $03 ; $47ef
 	ld a, [wBriefingPole1X] ; $47f8
 	ld d, a ; $47fb
 	ld a, [wBriefingPole1Y] ; $47fc
@@ -1220,13 +1194,10 @@ DrawBriefingPoleSprites:
 	ld c, $6a ; $480f
 	ld b, $09 ; $4811
 	call QueueSprite ; $4813
-	pop af ; $4816
-	wram_bank ; $4817
+	pop_wram_bank ; $4816
 	ret ; $481b
 DrawBriefingMarkerVFlip:
-	ldh a, [hWramBank] ; $481c
-	push af ; $481e
-	wram_bank $03 ; $481f
+	push_wram_bank $03 ; $481c
 	ld c, $70 ; $4825
 	ld b, $09 ; $4827
 	ld a, [wBriefingVMarkerUpright] ; $4829
@@ -1239,13 +1210,10 @@ DrawBriefingMarkerVFlip:
 	ld a, [wBriefingVMarkerY] ; $4836
 	ld e, a ; $4839
 	call QueueSprite ; $483a
-	pop af ; $483d
-	wram_bank ; $483e
+	pop_wram_bank ; $483d
 	ret ; $4842
 DrawSpinServeBriefingMarker:
-	ldh a, [hWramBank] ; $4843
-	push af ; $4845
-	wram_bank $03 ; $4846
+	push_wram_bank $03 ; $4843
 	ld c, $64 ; $484c
 	ld b, $09 ; $484e
 	ld a, [wBriefingSpinMarkerUnflipped] ; $4850
@@ -1259,8 +1227,7 @@ DrawSpinServeBriefingMarker:
 	ld e, a ; $4860
 	ld hl, DrawSpinServeBriefingMarker_SpriteTemplate ; $4861
 	call QueueSpriteTemplate ; $4864
-	pop af ; $4867
-	wram_bank ; $4868
+	pop_wram_bank ; $4867
 	ret ; $486c
 DrawSpinServeBriefingMarker_SpriteTemplate:
 	; $486d, 9 bytes (sprite_template)
@@ -1268,9 +1235,7 @@ DrawSpinServeBriefingMarker_SpriteTemplate:
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
 DrawBriefingMarkerRotated:
-	ldh a, [hWramBank] ; $4876
-	push af ; $4878
-	wram_bank $03 ; $4879
+	push_wram_bank $03 ; $4876
 	ld hl, BriefingMarkerRotatedTable ; $487f
 	ld a, [wBriefingRotMarkerDir] ; $4882
 	add l ; $4885
@@ -1285,16 +1250,13 @@ DrawBriefingMarkerRotated:
 	ld a, [wBriefingRotMarkerY] ; $4891
 	ld e, a ; $4894
 	call QueueSprite ; $4895
-	pop af ; $4898
-	wram_bank ; $4899
+	pop_wram_bank ; $4898
 	ret ; $489d
 BriefingMarkerRotatedTable:
 	; $489e, 4 bytes (bytes:4)
 	db $49, $09, $29, $69 ; 0x00
 DrawBlinkingPrompt:
-	ldh a, [hWramBank] ; $48a2
-	push af ; $48a4
-	wram_bank $03 ; $48a5
+	push_wram_bank $03 ; $48a2
 	ldh a, [hVBlankCounter] ; $48ab
 	and $10 ; $48ad
 	jr z, .restore ; $48af
@@ -1303,13 +1265,10 @@ DrawBlinkingPrompt:
 	ld de, $508c ; $48b5
 	call QueueSprite ; $48b8
 .restore:
-	pop af ; $48bb
-	wram_bank ; $48bc
+	pop_wram_bank ; $48bb
 	ret ; $48c0
 DrawBriefingTargetBrackets:
-	ldh a, [hWramBank] ; $48c1
-	push af ; $48c3
-	wram_bank $03 ; $48c4
+	push_wram_bank $03 ; $48c1
 	ld a, [wBriefingBracketX] ; $48ca
 	ld d, a ; $48cd
 	ldh a, [hVBlankCounter] ; $48ce
@@ -1394,8 +1353,7 @@ DrawBriefingTargetBrackets:
 	ld c, $6c ; $4953
 	ld b, $4a ; $4955
 	call QueueSprite ; $4957
-	pop af ; $495a
-	wram_bank ; $495b
+	pop_wram_bank ; $495a
 	ret ; $495f
 LoadCourtDiagramScreen:
 	ld c, $24 ; $4960
@@ -1852,11 +1810,7 @@ ServeToTargetsBriefing_AdvanceAnim:
 	sla a ; $5728
 	sla a ; $572a
 	ld c, a ; $572c
-	add LOW(ServeToTargetsBriefing_AdvanceAnimTable) ; $572d
-	ld l, a ; $572f
-	adc HIGH(ServeToTargetsBriefing_AdvanceAnimTable) ; $5730
-	sub l ; $5732
-	ld h, a ; $5733
+	ld_hl_indexed ServeToTargetsBriefing_AdvanceAnimTable ; $572d
 	ld a, [hl] ; $5734
 	inc hl ; $5735
 	inc hl ; $5736
@@ -1866,11 +1820,7 @@ ServeToTargetsBriefing_AdvanceAnim:
 	ld a, b ; $573c
 	ld [wBriefingPlayerY], a ; $573d
 	ld a, c ; $5740
-	add LOW(ServeToTargetsBriefing_AdvanceAnim_BracketPosTable) ; $5741
-	ld l, a ; $5743
-	adc HIGH(ServeToTargetsBriefing_AdvanceAnim_BracketPosTable) ; $5744
-	sub l ; $5746
-	ld h, a ; $5747
+	ld_hl_indexed ServeToTargetsBriefing_AdvanceAnim_BracketPosTable ; $5741
 	ld a, [hl] ; $5748
 	inc hl ; $5749
 	inc hl ; $574a
@@ -1880,11 +1830,7 @@ ServeToTargetsBriefing_AdvanceAnim:
 	ld a, b ; $5750
 	ld [wBriefingBracketY], a ; $5751
 	ld a, c ; $5754
-	add LOW(ServeToTargetsBriefing_AdvanceAnim_BallPosTable) ; $5755
-	ld l, a ; $5757
-	adc HIGH(ServeToTargetsBriefing_AdvanceAnim_BallPosTable) ; $5758
-	sub l ; $575a
-	ld h, a ; $575b
+	ld_hl_indexed ServeToTargetsBriefing_AdvanceAnim_BallPosTable ; $5755
 	ld a, [hl] ; $575c
 	inc hl ; $575d
 	inc hl ; $575e
@@ -1894,19 +1840,11 @@ ServeToTargetsBriefing_AdvanceAnim:
 	ld a, b ; $5764
 	ld [wBriefingBallY], a ; $5765
 	ld a, [wBriefingAnimStep] ; $5768
-	add LOW(ServeToTargetsBriefing_AdvanceAnim_HMarkerUnflippedTable) ; $576b
-	ld l, a ; $576d
-	adc HIGH(ServeToTargetsBriefing_AdvanceAnim_HMarkerUnflippedTable) ; $576e
-	sub l ; $5770
-	ld h, a ; $5771
+	ld_hl_indexed ServeToTargetsBriefing_AdvanceAnim_HMarkerUnflippedTable ; $576b
 	ld a, [hl] ; $5772
 	ld [wBriefingHMarkerUnflipped], a ; $5773
 	ld a, c ; $5776
-	add LOW(ServeToTargetsBriefing_AdvanceAnim_HMarkerPosTable) ; $5777
-	ld l, a ; $5779
-	adc HIGH(ServeToTargetsBriefing_AdvanceAnim_HMarkerPosTable) ; $577a
-	sub l ; $577c
-	ld h, a ; $577d
+	ld_hl_indexed ServeToTargetsBriefing_AdvanceAnim_HMarkerPosTable ; $5777
 	ld a, [hl] ; $577e
 	inc hl ; $577f
 	inc hl ; $5780
@@ -1916,19 +1854,11 @@ ServeToTargetsBriefing_AdvanceAnim:
 	ld a, b ; $5786
 	ld [wBriefingHMarkerY], a ; $5787
 	ld a, [wBriefingAnimStep] ; $578a
-	add LOW(ServeToTargetsBriefing_AdvanceAnim_RotMarkerDirTable) ; $578d
-	ld l, a ; $578f
-	adc HIGH(ServeToTargetsBriefing_AdvanceAnim_RotMarkerDirTable) ; $5790
-	sub l ; $5792
-	ld h, a ; $5793
+	ld_hl_indexed ServeToTargetsBriefing_AdvanceAnim_RotMarkerDirTable ; $578d
 	ld a, [hl] ; $5794
 	ld [wBriefingRotMarkerDir], a ; $5795
 	ld a, c ; $5798
-	add LOW(ServeToTargetsBriefing_AdvanceAnim_RotMarkerPosTable) ; $5799
-	ld l, a ; $579b
-	adc HIGH(ServeToTargetsBriefing_AdvanceAnim_RotMarkerPosTable) ; $579c
-	sub l ; $579e
-	ld h, a ; $579f
+	ld_hl_indexed ServeToTargetsBriefing_AdvanceAnim_RotMarkerPosTable ; $5799
 	ld a, [hl] ; $57a0
 	inc hl ; $57a1
 	inc hl ; $57a2
@@ -1938,11 +1868,7 @@ ServeToTargetsBriefing_AdvanceAnim:
 	ld a, b ; $57a8
 	ld [wBriefingRotMarkerY], a ; $57a9
 	ld a, [wBriefingAnimStep] ; $57ac
-	add LOW(ServeToTargetsBriefing_AdvanceAnim_TargetOverlayTable) ; $57af
-	ld l, a ; $57b1
-	adc HIGH(ServeToTargetsBriefing_AdvanceAnim_TargetOverlayTable) ; $57b2
-	sub l ; $57b4
-	ld h, a ; $57b5
+	ld_hl_indexed ServeToTargetsBriefing_AdvanceAnim_TargetOverlayTable ; $57af
 	ld b, [hl] ; $57b6
 	call DrawDiagramTargetOverlay ; $57b7
 	ret ; $57ba
@@ -2226,11 +2152,7 @@ SpinServeBriefing_AdvanceAnim:
 	sla a ; $5a8e
 	sla a ; $5a90
 	ld c, a ; $5a92
-	add LOW(SpinServeBriefing_AdvanceAnimTable) ; $5a93
-	ld l, a ; $5a95
-	adc HIGH(SpinServeBriefing_AdvanceAnimTable) ; $5a96
-	sub l ; $5a98
-	ld h, a ; $5a99
+	ld_hl_indexed SpinServeBriefing_AdvanceAnimTable ; $5a93
 	ld a, [hl] ; $5a9a
 	inc hl ; $5a9b
 	inc hl ; $5a9c
@@ -2240,11 +2162,7 @@ SpinServeBriefing_AdvanceAnim:
 	ld a, b ; $5aa2
 	ld [wBriefingPlayerY], a ; $5aa3
 	ld a, c ; $5aa6
-	add LOW(SpinServeBriefing_AdvanceAnim_BracketPosTable) ; $5aa7
-	ld l, a ; $5aa9
-	adc HIGH(SpinServeBriefing_AdvanceAnim_BracketPosTable) ; $5aaa
-	sub l ; $5aac
-	ld h, a ; $5aad
+	ld_hl_indexed SpinServeBriefing_AdvanceAnim_BracketPosTable ; $5aa7
 	ld a, [hl] ; $5aae
 	inc hl ; $5aaf
 	inc hl ; $5ab0
@@ -2254,11 +2172,7 @@ SpinServeBriefing_AdvanceAnim:
 	ld a, b ; $5ab6
 	ld [wBriefingBracketY], a ; $5ab7
 	ld a, c ; $5aba
-	add LOW(SpinServeBriefing_AdvanceAnim_BallPosTable) ; $5abb
-	ld l, a ; $5abd
-	adc HIGH(SpinServeBriefing_AdvanceAnim_BallPosTable) ; $5abe
-	sub l ; $5ac0
-	ld h, a ; $5ac1
+	ld_hl_indexed SpinServeBriefing_AdvanceAnim_BallPosTable ; $5abb
 	ld a, [hl] ; $5ac2
 	inc hl ; $5ac3
 	inc hl ; $5ac4
@@ -2268,19 +2182,11 @@ SpinServeBriefing_AdvanceAnim:
 	ld a, b ; $5aca
 	ld [wBriefingBallY], a ; $5acb
 	ld a, [wBriefingAnimStep] ; $5ace
-	add LOW(SpinServeBriefing_AdvanceAnim_HMarkerUnflippedTable) ; $5ad1
-	ld l, a ; $5ad3
-	adc HIGH(SpinServeBriefing_AdvanceAnim_HMarkerUnflippedTable) ; $5ad4
-	sub l ; $5ad6
-	ld h, a ; $5ad7
+	ld_hl_indexed SpinServeBriefing_AdvanceAnim_HMarkerUnflippedTable ; $5ad1
 	ld a, [hl] ; $5ad8
 	ld [wBriefingHMarkerUnflipped], a ; $5ad9
 	ld a, c ; $5adc
-	add LOW(SpinServeBriefing_AdvanceAnim_HMarkerPosTable) ; $5add
-	ld l, a ; $5adf
-	adc HIGH(SpinServeBriefing_AdvanceAnim_HMarkerPosTable) ; $5ae0
-	sub l ; $5ae2
-	ld h, a ; $5ae3
+	ld_hl_indexed SpinServeBriefing_AdvanceAnim_HMarkerPosTable ; $5add
 	ld a, [hl] ; $5ae4
 	inc hl ; $5ae5
 	inc hl ; $5ae6
@@ -2290,19 +2196,11 @@ SpinServeBriefing_AdvanceAnim:
 	ld a, b ; $5aec
 	ld [wBriefingHMarkerY], a ; $5aed
 	ld a, [wBriefingAnimStep] ; $5af0
-	add LOW(SpinServeBriefing_RotMarkerDirTable) ; $5af3
-	ld l, a ; $5af5
-	adc HIGH(SpinServeBriefing_RotMarkerDirTable) ; $5af6
-	sub l ; $5af8
-	ld h, a ; $5af9
+	ld_hl_indexed SpinServeBriefing_RotMarkerDirTable ; $5af3
 	ld a, [hl] ; $5afa
 	ld [wBriefingRotMarkerDir], a ; $5afb
 	ld a, c ; $5afe
-	add LOW(SpinServeBriefing_AdvanceAnim_RotMarkerPosTable) ; $5aff
-	ld l, a ; $5b01
-	adc HIGH(SpinServeBriefing_AdvanceAnim_RotMarkerPosTable) ; $5b02
-	sub l ; $5b04
-	ld h, a ; $5b05
+	ld_hl_indexed SpinServeBriefing_AdvanceAnim_RotMarkerPosTable ; $5aff
 	ld a, [hl] ; $5b06
 	inc hl ; $5b07
 	inc hl ; $5b08
@@ -2312,11 +2210,7 @@ SpinServeBriefing_AdvanceAnim:
 	ld a, b ; $5b0e
 	ld [wBriefingRotMarkerY], a ; $5b0f
 	ld a, [wBriefingAnimStep] ; $5b12
-	add LOW(SpinServeBriefing_TargetOverlayTable) ; $5b15
-	ld l, a ; $5b17
-	adc HIGH(SpinServeBriefing_TargetOverlayTable) ; $5b18
-	sub l ; $5b1a
-	ld h, a ; $5b1b
+	ld_hl_indexed SpinServeBriefing_TargetOverlayTable ; $5b15
 	ld b, [hl] ; $5b1c
 	call DrawDiagramTargetOverlay ; $5b1d
 	ret ; $5b20
@@ -2336,11 +2230,7 @@ SpinServeBriefing_AdvanceAnim2:
 	sla a ; $5b39
 	sla a ; $5b3b
 	ld c, a ; $5b3d
-	add LOW(SpinServeBriefing_AdvanceAnimTable) ; $5b3e
-	ld l, a ; $5b40
-	adc HIGH(SpinServeBriefing_AdvanceAnimTable) ; $5b41
-	sub l ; $5b43
-	ld h, a ; $5b44
+	ld_hl_indexed SpinServeBriefing_AdvanceAnimTable ; $5b3e
 	ld a, [hl] ; $5b45
 	inc hl ; $5b46
 	inc hl ; $5b47
@@ -2350,11 +2240,7 @@ SpinServeBriefing_AdvanceAnim2:
 	ld a, b ; $5b4d
 	ld [wBriefingPlayerY], a ; $5b4e
 	ld a, c ; $5b51
-	add LOW(SpinServeBriefing_AdvanceAnim2_BallPosTable) ; $5b52
-	ld l, a ; $5b54
-	adc HIGH(SpinServeBriefing_AdvanceAnim2_BallPosTable) ; $5b55
-	sub l ; $5b57
-	ld h, a ; $5b58
+	ld_hl_indexed SpinServeBriefing_AdvanceAnim2_BallPosTable ; $5b52
 	ld a, [hl] ; $5b59
 	inc hl ; $5b5a
 	inc hl ; $5b5b
@@ -2364,19 +2250,11 @@ SpinServeBriefing_AdvanceAnim2:
 	ld a, b ; $5b61
 	ld [wBriefingBallY], a ; $5b62
 	ld a, [wBriefingAnimStep] ; $5b65
-	add LOW(SpinServeBriefing_RotMarkerDirTable) ; $5b68
-	ld l, a ; $5b6a
-	adc HIGH(SpinServeBriefing_RotMarkerDirTable) ; $5b6b
-	sub l ; $5b6d
-	ld h, a ; $5b6e
+	ld_hl_indexed SpinServeBriefing_RotMarkerDirTable ; $5b68
 	ld a, [hl] ; $5b6f
 	ld [wBriefingRotMarkerDir], a ; $5b70
 	ld a, c ; $5b73
-	add LOW(SpinServeBriefing_AdvanceAnim2_RotMarkerPosTable) ; $5b74
-	ld l, a ; $5b76
-	adc HIGH(SpinServeBriefing_AdvanceAnim2_RotMarkerPosTable) ; $5b77
-	sub l ; $5b79
-	ld h, a ; $5b7a
+	ld_hl_indexed SpinServeBriefing_AdvanceAnim2_RotMarkerPosTable ; $5b74
 	ld a, [hl] ; $5b7b
 	inc hl ; $5b7c
 	inc hl ; $5b7d
@@ -2386,19 +2264,11 @@ SpinServeBriefing_AdvanceAnim2:
 	ld a, b ; $5b83
 	ld [wBriefingRotMarkerY], a ; $5b84
 	ld a, [wBriefingAnimStep] ; $5b87
-	add LOW(SpinServeBriefing_AdvanceAnim2_SpinMarkerUnflippedTable) ; $5b8a
-	ld l, a ; $5b8c
-	adc HIGH(SpinServeBriefing_AdvanceAnim2_SpinMarkerUnflippedTable) ; $5b8d
-	sub l ; $5b8f
-	ld h, a ; $5b90
+	ld_hl_indexed SpinServeBriefing_AdvanceAnim2_SpinMarkerUnflippedTable ; $5b8a
 	ld a, [hl] ; $5b91
 	ld [wBriefingSpinMarkerUnflipped], a ; $5b92
 	ld a, c ; $5b95
-	add LOW(SpinServeBriefing_AdvanceAnim2_SpinMarkerPosTable) ; $5b96
-	ld l, a ; $5b98
-	adc HIGH(SpinServeBriefing_AdvanceAnim2_SpinMarkerPosTable) ; $5b99
-	sub l ; $5b9b
-	ld h, a ; $5b9c
+	ld_hl_indexed SpinServeBriefing_AdvanceAnim2_SpinMarkerPosTable ; $5b96
 	ld a, [hl] ; $5b9d
 	inc hl ; $5b9e
 	inc hl ; $5b9f
@@ -2415,19 +2285,11 @@ SpinServeBriefing_AdvanceAnim2:
 .zero:
 	ld a, [wBriefingAnimStep] ; $5bb3
 	add b ; $5bb6
-	add LOW(SpinServeBriefing_AdvanceAnim2_SwingFrameTable) ; $5bb7
-	ld l, a ; $5bb9
-	adc HIGH(SpinServeBriefing_AdvanceAnim2_SwingFrameTable) ; $5bba
-	sub l ; $5bbc
-	ld h, a ; $5bbd
+	ld_hl_indexed SpinServeBriefing_AdvanceAnim2_SwingFrameTable ; $5bb7
 	ld a, [hl] ; $5bbe
 	ld [wBriefingSwingFrame], a ; $5bbf
 	ld a, c ; $5bc2
-	add LOW(SpinServeBriefing_AdvanceAnim2_SwingPosTable) ; $5bc3
-	ld l, a ; $5bc5
-	adc HIGH(SpinServeBriefing_AdvanceAnim2_SwingPosTable) ; $5bc6
-	sub l ; $5bc8
-	ld h, a ; $5bc9
+	ld_hl_indexed SpinServeBriefing_AdvanceAnim2_SwingPosTable ; $5bc3
 	ld a, [hl] ; $5bca
 	inc hl ; $5bcb
 	inc hl ; $5bcc
@@ -2437,11 +2299,7 @@ SpinServeBriefing_AdvanceAnim2:
 	ld a, b ; $5bd2
 	ld [wBriefingSwingY], a ; $5bd3
 	ld a, [wBriefingAnimStep] ; $5bd6
-	add LOW(SpinServeBriefing_TargetOverlayTable) ; $5bd9
-	ld l, a ; $5bdb
-	adc HIGH(SpinServeBriefing_TargetOverlayTable) ; $5bdc
-	sub l ; $5bde
-	ld h, a ; $5bdf
+	ld_hl_indexed SpinServeBriefing_TargetOverlayTable ; $5bd9
 	ld b, [hl] ; $5be0
 	call DrawDiagramTargetOverlay ; $5be1
 	ret ; $5be4
@@ -2545,11 +2403,7 @@ DrillBriefing_ServeThroughPoles:
 	ld a, [wBriefingAnimStep] ; $5cfd
 	sla a ; $5d00
 	sla a ; $5d02
-	add LOW(DrillBriefing_ServeThroughPolesTable) ; $5d04
-	ld l, a ; $5d06
-	adc HIGH(DrillBriefing_ServeThroughPolesTable) ; $5d07
-	sub l ; $5d09
-	ld h, a ; $5d0a
+	ld_hl_indexed DrillBriefing_ServeThroughPolesTable ; $5d04
 	ld a, [hl] ; $5d0b
 	inc hl ; $5d0c
 	inc hl ; $5d0d
@@ -2647,11 +2501,7 @@ PoleServeBriefing_AdvanceAnim:
 	sla a ; $5de9
 	sla a ; $5deb
 	ld c, a ; $5ded
-	add LOW(DrillBriefing_ServeThroughPolesTable) ; $5dee
-	ld l, a ; $5df0
-	adc HIGH(DrillBriefing_ServeThroughPolesTable) ; $5df1
-	sub l ; $5df3
-	ld h, a ; $5df4
+	ld_hl_indexed DrillBriefing_ServeThroughPolesTable ; $5dee
 	ld a, [hl] ; $5df5
 	inc hl ; $5df6
 	inc hl ; $5df7
@@ -2661,11 +2511,7 @@ PoleServeBriefing_AdvanceAnim:
 	ld a, b ; $5dfd
 	ld [wBriefingPlayerY], a ; $5dfe
 	ld a, c ; $5e01
-	add LOW(PoleServeBriefing_AdvanceAnim_BallPosTable) ; $5e02
-	ld l, a ; $5e04
-	adc HIGH(PoleServeBriefing_AdvanceAnim_BallPosTable) ; $5e05
-	sub l ; $5e07
-	ld h, a ; $5e08
+	ld_hl_indexed PoleServeBriefing_AdvanceAnim_BallPosTable ; $5e02
 	ld a, [hl] ; $5e09
 	inc hl ; $5e0a
 	inc hl ; $5e0b
@@ -2675,19 +2521,11 @@ PoleServeBriefing_AdvanceAnim:
 	ld a, b ; $5e11
 	ld [wBriefingBallY], a ; $5e12
 	ld a, [wBriefingAnimStep] ; $5e15
-	add LOW(PoleServeBriefing_HMarkerUnflippedTable) ; $5e18
-	ld l, a ; $5e1a
-	adc HIGH(PoleServeBriefing_HMarkerUnflippedTable) ; $5e1b
-	sub l ; $5e1d
-	ld h, a ; $5e1e
+	ld_hl_indexed PoleServeBriefing_HMarkerUnflippedTable ; $5e18
 	ld a, [hl] ; $5e1f
 	ld [wBriefingHMarkerUnflipped], a ; $5e20
 	ld a, c ; $5e23
-	add LOW(PoleServeBriefing_AdvanceAnim_HMarkerPosTable) ; $5e24
-	ld l, a ; $5e26
-	adc HIGH(PoleServeBriefing_AdvanceAnim_HMarkerPosTable) ; $5e27
-	sub l ; $5e29
-	ld h, a ; $5e2a
+	ld_hl_indexed PoleServeBriefing_AdvanceAnim_HMarkerPosTable ; $5e24
 	ld a, [hl] ; $5e2b
 	inc hl ; $5e2c
 	inc hl ; $5e2d
@@ -2697,19 +2535,11 @@ PoleServeBriefing_AdvanceAnim:
 	ld a, b ; $5e33
 	ld [wBriefingHMarkerY], a ; $5e34
 	ld a, [wBriefingAnimStep] ; $5e37
-	add LOW(PoleServeBriefing_AdvanceAnim_RotMarkerDirTable) ; $5e3a
-	ld l, a ; $5e3c
-	adc HIGH(PoleServeBriefing_AdvanceAnim_RotMarkerDirTable) ; $5e3d
-	sub l ; $5e3f
-	ld h, a ; $5e40
+	ld_hl_indexed PoleServeBriefing_AdvanceAnim_RotMarkerDirTable ; $5e3a
 	ld a, [hl] ; $5e41
 	ld [wBriefingRotMarkerDir], a ; $5e42
 	ld a, c ; $5e45
-	add LOW(PoleServeBriefing_AdvanceAnim_RotMarkerPosTable) ; $5e46
-	ld l, a ; $5e48
-	adc HIGH(PoleServeBriefing_AdvanceAnim_RotMarkerPosTable) ; $5e49
-	sub l ; $5e4b
-	ld h, a ; $5e4c
+	ld_hl_indexed PoleServeBriefing_AdvanceAnim_RotMarkerPosTable ; $5e46
 	ld a, [hl] ; $5e4d
 	inc hl ; $5e4e
 	inc hl ; $5e4f
@@ -2719,11 +2549,7 @@ PoleServeBriefing_AdvanceAnim:
 	ld a, b ; $5e55
 	ld [wBriefingRotMarkerY], a ; $5e56
 	ld a, [wBriefingAnimStep] ; $5e59
-	add LOW(PoleServeBriefing_TargetOverlayTable) ; $5e5c
-	ld l, a ; $5e5e
-	adc HIGH(PoleServeBriefing_TargetOverlayTable) ; $5e5f
-	sub l ; $5e61
-	ld h, a ; $5e62
+	ld_hl_indexed PoleServeBriefing_TargetOverlayTable ; $5e5c
 	ld b, [hl] ; $5e63
 	call DrawDiagramTargetOverlay ; $5e64
 	ret ; $5e67
@@ -2744,11 +2570,7 @@ PoleServeBriefing_AdvanceAnim2:
 	sla a ; $5e81
 	sla a ; $5e83
 	ld c, a ; $5e85
-	add LOW(PoleServeBriefing_AdvanceAnim2_PlayerPosTable) ; $5e86
-	ld l, a ; $5e88
-	adc HIGH(PoleServeBriefing_AdvanceAnim2_PlayerPosTable) ; $5e89
-	sub l ; $5e8b
-	ld h, a ; $5e8c
+	ld_hl_indexed PoleServeBriefing_AdvanceAnim2_PlayerPosTable ; $5e86
 	ld a, [hl] ; $5e8d
 	inc hl ; $5e8e
 	inc hl ; $5e8f
@@ -2758,11 +2580,7 @@ PoleServeBriefing_AdvanceAnim2:
 	ld a, b ; $5e95
 	ld [wBriefingPlayerY], a ; $5e96
 	ld a, c ; $5e99
-	add LOW(PoleServeBriefing_AdvanceAnim2_BracketPosTable) ; $5e9a
-	ld l, a ; $5e9c
-	adc HIGH(PoleServeBriefing_AdvanceAnim2_BracketPosTable) ; $5e9d
-	sub l ; $5e9f
-	ld h, a ; $5ea0
+	ld_hl_indexed PoleServeBriefing_AdvanceAnim2_BracketPosTable ; $5e9a
 	ld a, [hl] ; $5ea1
 	inc hl ; $5ea2
 	inc hl ; $5ea3
@@ -2772,11 +2590,7 @@ PoleServeBriefing_AdvanceAnim2:
 	ld a, b ; $5ea9
 	ld [wBriefingBracketY], a ; $5eaa
 	ld a, c ; $5ead
-	add LOW(PoleServeBriefing_AdvanceAnim2_PolePosTable) ; $5eae
-	ld l, a ; $5eb0
-	adc HIGH(PoleServeBriefing_AdvanceAnim2_PolePosTable) ; $5eb1
-	sub l ; $5eb3
-	ld h, a ; $5eb4
+	ld_hl_indexed PoleServeBriefing_AdvanceAnim2_PolePosTable ; $5eae
 	ld a, [hl] ; $5eb5
 	inc hl ; $5eb6
 	inc hl ; $5eb7
@@ -2786,30 +2600,18 @@ PoleServeBriefing_AdvanceAnim2:
 	ld a, b ; $5ebd
 	ld [wBriefingPole1Y], a ; $5ebe
 	ld a, c ; $5ec1
-	add LOW(PoleServeBriefing_AdvanceAnim2_PolePosTable) ; $5ec2
-	ld l, a ; $5ec4
-	adc HIGH(PoleServeBriefing_AdvanceAnim2_PolePosTable) ; $5ec5
-	sub l ; $5ec7
-	ld h, a ; $5ec8
+	ld_hl_indexed PoleServeBriefing_AdvanceAnim2_PolePosTable ; $5ec2
 	ld a, [hl] ; $5ec9
 	add $08 ; $5eca
 	ld [wBriefingPole2X], a ; $5ecc
 	ld a, [wBriefingPole1Y] ; $5ecf
 	ld [wBriefingPole2Y], a ; $5ed2
 	ld a, [wBriefingAnimStep] ; $5ed5
-	add LOW(PoleServeBriefing_HMarkerUnflippedTable) ; $5ed8
-	ld l, a ; $5eda
-	adc HIGH(PoleServeBriefing_HMarkerUnflippedTable) ; $5edb
-	sub l ; $5edd
-	ld h, a ; $5ede
+	ld_hl_indexed PoleServeBriefing_HMarkerUnflippedTable ; $5ed8
 	ld a, [hl] ; $5edf
 	ld [wBriefingHMarkerUnflipped], a ; $5ee0
 	ld a, c ; $5ee3
-	add LOW(PoleServeBriefing_AdvanceAnim2_HMarkerPosTable) ; $5ee4
-	ld l, a ; $5ee6
-	adc HIGH(PoleServeBriefing_AdvanceAnim2_HMarkerPosTable) ; $5ee7
-	sub l ; $5ee9
-	ld h, a ; $5eea
+	ld_hl_indexed PoleServeBriefing_AdvanceAnim2_HMarkerPosTable ; $5ee4
 	ld a, [hl] ; $5eeb
 	inc hl ; $5eec
 	inc hl ; $5eed
@@ -2819,11 +2621,7 @@ PoleServeBriefing_AdvanceAnim2:
 	ld a, b ; $5ef3
 	ld [wBriefingHMarkerY], a ; $5ef4
 	ld a, [wBriefingAnimStep] ; $5ef7
-	add LOW(PoleServeBriefing_TargetOverlayTable) ; $5efa
-	ld l, a ; $5efc
-	adc HIGH(PoleServeBriefing_TargetOverlayTable) ; $5efd
-	sub l ; $5eff
-	ld h, a ; $5f00
+	ld_hl_indexed PoleServeBriefing_TargetOverlayTable ; $5efa
 	ld b, [hl] ; $5f01
 	call DrawDiagramTargetOverlay ; $5f02
 	ret ; $5f05
@@ -3003,11 +2801,7 @@ ServeAndVolleyBriefing_AdvanceAnim:
 	sla a ; $60f9
 	sla a ; $60fb
 	ld c, a ; $60fd
-	add LOW(ServeAndVolleyBriefing_AdvanceAnimTable) ; $60fe
-	ld l, a ; $6100
-	adc HIGH(ServeAndVolleyBriefing_AdvanceAnimTable) ; $6101
-	sub l ; $6103
-	ld h, a ; $6104
+	ld_hl_indexed ServeAndVolleyBriefing_AdvanceAnimTable ; $60fe
 	ld a, [hl] ; $6105
 	inc hl ; $6106
 	inc hl ; $6107
@@ -3017,11 +2811,7 @@ ServeAndVolleyBriefing_AdvanceAnim:
 	ld a, b ; $610d
 	ld [wBriefingPlayerY], a ; $610e
 	ld a, c ; $6111
-	add LOW(ServeAndVolleyBriefing_AdvanceAnim_OpponentPosTable) ; $6112
-	ld l, a ; $6114
-	adc HIGH(ServeAndVolleyBriefing_AdvanceAnim_OpponentPosTable) ; $6115
-	sub l ; $6117
-	ld h, a ; $6118
+	ld_hl_indexed ServeAndVolleyBriefing_AdvanceAnim_OpponentPosTable ; $6112
 	ld a, [hl] ; $6119
 	inc hl ; $611a
 	inc hl ; $611b
@@ -3031,11 +2821,7 @@ ServeAndVolleyBriefing_AdvanceAnim:
 	ld a, b ; $6121
 	ld [wBriefingOpponentY], a ; $6122
 	ld a, c ; $6125
-	add LOW(ServeAndVolleyBriefing_AdvanceAnim_BracketPosTable) ; $6126
-	ld l, a ; $6128
-	adc HIGH(ServeAndVolleyBriefing_AdvanceAnim_BracketPosTable) ; $6129
-	sub l ; $612b
-	ld h, a ; $612c
+	ld_hl_indexed ServeAndVolleyBriefing_AdvanceAnim_BracketPosTable ; $6126
 	ld a, [hl] ; $612d
 	inc hl ; $612e
 	inc hl ; $612f
@@ -3045,11 +2831,7 @@ ServeAndVolleyBriefing_AdvanceAnim:
 	ld a, b ; $6135
 	ld [wBriefingBracketY], a ; $6136
 	ld a, c ; $6139
-	add LOW(ServeAndVolleyBriefing_AdvanceAnim_BallPosTable) ; $613a
-	ld l, a ; $613c
-	adc HIGH(ServeAndVolleyBriefing_AdvanceAnim_BallPosTable) ; $613d
-	sub l ; $613f
-	ld h, a ; $6140
+	ld_hl_indexed ServeAndVolleyBriefing_AdvanceAnim_BallPosTable ; $613a
 	ld a, [hl] ; $6141
 	inc hl ; $6142
 	inc hl ; $6143
@@ -3059,19 +2841,11 @@ ServeAndVolleyBriefing_AdvanceAnim:
 	ld a, b ; $6149
 	ld [wBriefingBallY], a ; $614a
 	ld a, [wBriefingAnimStep] ; $614d
-	add LOW(ServeAndVolleyBriefing_AdvanceAnim_HMarkerUnflippedTable) ; $6150
-	ld l, a ; $6152
-	adc HIGH(ServeAndVolleyBriefing_AdvanceAnim_HMarkerUnflippedTable) ; $6153
-	sub l ; $6155
-	ld h, a ; $6156
+	ld_hl_indexed ServeAndVolleyBriefing_AdvanceAnim_HMarkerUnflippedTable ; $6150
 	ld a, [hl] ; $6157
 	ld [wBriefingHMarkerUnflipped], a ; $6158
 	ld a, c ; $615b
-	add LOW(ServeAndVolleyBriefing_AdvanceAnim_HMarkerPosTable) ; $615c
-	ld l, a ; $615e
-	adc HIGH(ServeAndVolleyBriefing_AdvanceAnim_HMarkerPosTable) ; $615f
-	sub l ; $6161
-	ld h, a ; $6162
+	ld_hl_indexed ServeAndVolleyBriefing_AdvanceAnim_HMarkerPosTable ; $615c
 	ld a, [hl] ; $6163
 	inc hl ; $6164
 	inc hl ; $6165
@@ -3081,19 +2855,11 @@ ServeAndVolleyBriefing_AdvanceAnim:
 	ld a, b ; $616b
 	ld [wBriefingHMarkerY], a ; $616c
 	ld a, [wBriefingAnimStep] ; $616f
-	add LOW(ServeAndVolleyBriefing_AdvanceAnim_RotMarkerDirTable) ; $6172
-	ld l, a ; $6174
-	adc HIGH(ServeAndVolleyBriefing_AdvanceAnim_RotMarkerDirTable) ; $6175
-	sub l ; $6177
-	ld h, a ; $6178
+	ld_hl_indexed ServeAndVolleyBriefing_AdvanceAnim_RotMarkerDirTable ; $6172
 	ld a, [hl] ; $6179
 	ld [wBriefingRotMarkerDir], a ; $617a
 	ld a, c ; $617d
-	add LOW(ServeAndVolleyBriefing_AdvanceAnim_RotMarkerPosTable) ; $617e
-	ld l, a ; $6180
-	adc HIGH(ServeAndVolleyBriefing_AdvanceAnim_RotMarkerPosTable) ; $6181
-	sub l ; $6183
-	ld h, a ; $6184
+	ld_hl_indexed ServeAndVolleyBriefing_AdvanceAnim_RotMarkerPosTable ; $617e
 	ld a, [hl] ; $6185
 	inc hl ; $6186
 	inc hl ; $6187
@@ -3103,19 +2869,11 @@ ServeAndVolleyBriefing_AdvanceAnim:
 	ld a, b ; $618d
 	ld [wBriefingRotMarkerY], a ; $618e
 	ld a, [wBriefingAnimStep] ; $6191
-	add LOW(ServeAndVolleyBriefing_AdvanceAnim_VMarkerUprightTable) ; $6194
-	ld l, a ; $6196
-	adc HIGH(ServeAndVolleyBriefing_AdvanceAnim_VMarkerUprightTable) ; $6197
-	sub l ; $6199
-	ld h, a ; $619a
+	ld_hl_indexed ServeAndVolleyBriefing_AdvanceAnim_VMarkerUprightTable ; $6194
 	ld a, [hl] ; $619b
 	ld [wBriefingVMarkerUpright], a ; $619c
 	ld a, c ; $619f
-	add LOW(ServeAndVolleyBriefing_AdvanceAnim_VMarkerPosTable) ; $61a0
-	ld l, a ; $61a2
-	adc HIGH(ServeAndVolleyBriefing_AdvanceAnim_VMarkerPosTable) ; $61a3
-	sub l ; $61a5
-	ld h, a ; $61a6
+	ld_hl_indexed ServeAndVolleyBriefing_AdvanceAnim_VMarkerPosTable ; $61a0
 	ld a, [hl] ; $61a7
 	inc hl ; $61a8
 	inc hl ; $61a9
@@ -3360,11 +3118,7 @@ DrillBriefing_ServeAndSmash:
 	sla a ; $643a
 	sla a ; $643c
 	ld c, a ; $643e
-	add LOW(DrillBriefing_ServeAndSmashTable) ; $643f
-	ld l, a ; $6441
-	adc HIGH(DrillBriefing_ServeAndSmashTable) ; $6442
-	sub l ; $6444
-	ld h, a ; $6445
+	ld_hl_indexed DrillBriefing_ServeAndSmashTable ; $643f
 	ld a, [hl] ; $6446
 	inc hl ; $6447
 	inc hl ; $6448
@@ -3374,11 +3128,7 @@ DrillBriefing_ServeAndSmash:
 	ld a, b ; $644e
 	ld [wBriefingPlayerY], a ; $644f
 	ld a, c ; $6452
-	add LOW(DrillBriefing_ServeAndSmash_OpponentPosTable) ; $6453
-	ld l, a ; $6455
-	adc HIGH(DrillBriefing_ServeAndSmash_OpponentPosTable) ; $6456
-	sub l ; $6458
-	ld h, a ; $6459
+	ld_hl_indexed DrillBriefing_ServeAndSmash_OpponentPosTable ; $6453
 	ld a, [hl] ; $645a
 	inc hl ; $645b
 	inc hl ; $645c
@@ -3388,11 +3138,7 @@ DrillBriefing_ServeAndSmash:
 	ld a, b ; $6462
 	ld [wBriefingOpponentY], a ; $6463
 	ld a, c ; $6466
-	add LOW(DrillBriefing_ServeAndSmash_BracketPosTable) ; $6467
-	ld l, a ; $6469
-	adc HIGH(DrillBriefing_ServeAndSmash_BracketPosTable) ; $646a
-	sub l ; $646c
-	ld h, a ; $646d
+	ld_hl_indexed DrillBriefing_ServeAndSmash_BracketPosTable ; $6467
 	ld a, [hl] ; $646e
 	inc hl ; $646f
 	inc hl ; $6470
@@ -3402,11 +3148,7 @@ DrillBriefing_ServeAndSmash:
 	ld a, b ; $6476
 	ld [wBriefingBracketY], a ; $6477
 	ld a, c ; $647a
-	add LOW(DrillBriefing_ServeAndSmash_BallPosTable) ; $647b
-	ld l, a ; $647d
-	adc HIGH(DrillBriefing_ServeAndSmash_BallPosTable) ; $647e
-	sub l ; $6480
-	ld h, a ; $6481
+	ld_hl_indexed DrillBriefing_ServeAndSmash_BallPosTable ; $647b
 	ld a, [hl] ; $6482
 	inc hl ; $6483
 	inc hl ; $6484
@@ -3416,19 +3158,11 @@ DrillBriefing_ServeAndSmash:
 	ld a, b ; $648a
 	ld [wBriefingBallY], a ; $648b
 	ld a, [wBriefingAnimStep] ; $648e
-	add LOW(DrillBriefing_ServeAndSmash_RotMarkerDirTable) ; $6491
-	ld l, a ; $6493
-	adc HIGH(DrillBriefing_ServeAndSmash_RotMarkerDirTable) ; $6494
-	sub l ; $6496
-	ld h, a ; $6497
+	ld_hl_indexed DrillBriefing_ServeAndSmash_RotMarkerDirTable ; $6491
 	ld a, [hl] ; $6498
 	ld [wBriefingRotMarkerDir], a ; $6499
 	ld a, c ; $649c
-	add LOW(DrillBriefing_ServeAndSmash_RotMarkerPosTable) ; $649d
-	ld l, a ; $649f
-	adc HIGH(DrillBriefing_ServeAndSmash_RotMarkerPosTable) ; $64a0
-	sub l ; $64a2
-	ld h, a ; $64a3
+	ld_hl_indexed DrillBriefing_ServeAndSmash_RotMarkerPosTable ; $649d
 	ld a, [hl] ; $64a4
 	inc hl ; $64a5
 	inc hl ; $64a6
@@ -3671,11 +3405,7 @@ DrillBriefing_ServeAndSmash2:
 	sla a ; $6743
 	sla a ; $6745
 	ld c, a ; $6747
-	add LOW(DrillBriefing_ServeAndSmash2Table) ; $6748
-	ld l, a ; $674a
-	adc HIGH(DrillBriefing_ServeAndSmash2Table) ; $674b
-	sub l ; $674d
-	ld h, a ; $674e
+	ld_hl_indexed DrillBriefing_ServeAndSmash2Table ; $6748
 	ld a, [hl] ; $674f
 	inc hl ; $6750
 	inc hl ; $6751
@@ -3685,11 +3415,7 @@ DrillBriefing_ServeAndSmash2:
 	ld a, b ; $6757
 	ld [wBriefingPlayerY], a ; $6758
 	ld a, c ; $675b
-	add LOW(DrillBriefing_ServeAndSmash2_OpponentPosTable) ; $675c
-	ld l, a ; $675e
-	adc HIGH(DrillBriefing_ServeAndSmash2_OpponentPosTable) ; $675f
-	sub l ; $6761
-	ld h, a ; $6762
+	ld_hl_indexed DrillBriefing_ServeAndSmash2_OpponentPosTable ; $675c
 	ld a, [hl] ; $6763
 	inc hl ; $6764
 	inc hl ; $6765
@@ -3699,11 +3425,7 @@ DrillBriefing_ServeAndSmash2:
 	ld a, b ; $676b
 	ld [wBriefingOpponentY], a ; $676c
 	ld a, c ; $676f
-	add LOW(DrillBriefing_ServeAndSmash2_BracketPosTable) ; $6770
-	ld l, a ; $6772
-	adc HIGH(DrillBriefing_ServeAndSmash2_BracketPosTable) ; $6773
-	sub l ; $6775
-	ld h, a ; $6776
+	ld_hl_indexed DrillBriefing_ServeAndSmash2_BracketPosTable ; $6770
 	ld a, [hl] ; $6777
 	inc hl ; $6778
 	inc hl ; $6779
@@ -3713,11 +3435,7 @@ DrillBriefing_ServeAndSmash2:
 	ld a, b ; $677f
 	ld [wBriefingBracketY], a ; $6780
 	ld a, c ; $6783
-	add LOW(DrillBriefing_ServeAndSmash2_BallPosTable) ; $6784
-	ld l, a ; $6786
-	adc HIGH(DrillBriefing_ServeAndSmash2_BallPosTable) ; $6787
-	sub l ; $6789
-	ld h, a ; $678a
+	ld_hl_indexed DrillBriefing_ServeAndSmash2_BallPosTable ; $6784
 	ld a, [hl] ; $678b
 	inc hl ; $678c
 	inc hl ; $678d
@@ -3727,19 +3445,11 @@ DrillBriefing_ServeAndSmash2:
 	ld a, b ; $6793
 	ld [wBriefingBallY], a ; $6794
 	ld a, [wBriefingAnimStep] ; $6797
-	add LOW(DrillBriefing_ServeAndSmash2_RotMarkerDirTable) ; $679a
-	ld l, a ; $679c
-	adc HIGH(DrillBriefing_ServeAndSmash2_RotMarkerDirTable) ; $679d
-	sub l ; $679f
-	ld h, a ; $67a0
+	ld_hl_indexed DrillBriefing_ServeAndSmash2_RotMarkerDirTable ; $679a
 	ld a, [hl] ; $67a1
 	ld [wBriefingRotMarkerDir], a ; $67a2
 	ld a, c ; $67a5
-	add LOW(DrillBriefing_ServeAndSmash2_RotMarkerPosTable) ; $67a6
-	ld l, a ; $67a8
-	adc HIGH(DrillBriefing_ServeAndSmash2_RotMarkerPosTable) ; $67a9
-	sub l ; $67ab
-	ld h, a ; $67ac
+	ld_hl_indexed DrillBriefing_ServeAndSmash2_RotMarkerPosTable ; $67a6
 	ld a, [hl] ; $67ad
 	inc hl ; $67ae
 	inc hl ; $67af
@@ -3900,11 +3610,7 @@ ReturnToTargetBriefing_AdvanceAnim:
 	sla a ; $6972
 	sla a ; $6974
 	ld c, a ; $6976
-	add LOW(ReturnToTargetBriefing_AdvanceAnimTable) ; $6977
-	ld l, a ; $6979
-	adc HIGH(ReturnToTargetBriefing_AdvanceAnimTable) ; $697a
-	sub l ; $697c
-	ld h, a ; $697d
+	ld_hl_indexed ReturnToTargetBriefing_AdvanceAnimTable ; $6977
 	ld a, [hl] ; $697e
 	inc hl ; $697f
 	inc hl ; $6980
@@ -3914,11 +3620,7 @@ ReturnToTargetBriefing_AdvanceAnim:
 	ld a, b ; $6986
 	ld [wBriefingPlayerY], a ; $6987
 	ld a, c ; $698a
-	add LOW(ReturnToTargetBriefing_AdvanceAnim_OpponentPosTable) ; $698b
-	ld l, a ; $698d
-	adc HIGH(ReturnToTargetBriefing_AdvanceAnim_OpponentPosTable) ; $698e
-	sub l ; $6990
-	ld h, a ; $6991
+	ld_hl_indexed ReturnToTargetBriefing_AdvanceAnim_OpponentPosTable ; $698b
 	ld a, [hl] ; $6992
 	inc hl ; $6993
 	inc hl ; $6994
@@ -3928,11 +3630,7 @@ ReturnToTargetBriefing_AdvanceAnim:
 	ld a, b ; $699a
 	ld [wBriefingOpponentY], a ; $699b
 	ld a, c ; $699e
-	add LOW(ReturnToTargetBriefing_AdvanceAnim_BracketPosTable) ; $699f
-	ld l, a ; $69a1
-	adc HIGH(ReturnToTargetBriefing_AdvanceAnim_BracketPosTable) ; $69a2
-	sub l ; $69a4
-	ld h, a ; $69a5
+	ld_hl_indexed ReturnToTargetBriefing_AdvanceAnim_BracketPosTable ; $699f
 	ld a, [hl] ; $69a6
 	inc hl ; $69a7
 	inc hl ; $69a8
@@ -3942,11 +3640,7 @@ ReturnToTargetBriefing_AdvanceAnim:
 	ld a, b ; $69ae
 	ld [wBriefingBracketY], a ; $69af
 	ld a, c ; $69b2
-	add LOW(ReturnToTargetBriefing_AdvanceAnim_BallPosTable) ; $69b3
-	ld l, a ; $69b5
-	adc HIGH(ReturnToTargetBriefing_AdvanceAnim_BallPosTable) ; $69b6
-	sub l ; $69b8
-	ld h, a ; $69b9
+	ld_hl_indexed ReturnToTargetBriefing_AdvanceAnim_BallPosTable ; $69b3
 	ld a, [hl] ; $69ba
 	inc hl ; $69bb
 	inc hl ; $69bc
@@ -3956,19 +3650,11 @@ ReturnToTargetBriefing_AdvanceAnim:
 	ld a, b ; $69c2
 	ld [wBriefingBallY], a ; $69c3
 	ld a, [wBriefingAnimStep] ; $69c6
-	add LOW(ReturnToTargetBriefing_AdvanceAnim_HMarkerUnflippedTable) ; $69c9
-	ld l, a ; $69cb
-	adc HIGH(ReturnToTargetBriefing_AdvanceAnim_HMarkerUnflippedTable) ; $69cc
-	sub l ; $69ce
-	ld h, a ; $69cf
+	ld_hl_indexed ReturnToTargetBriefing_AdvanceAnim_HMarkerUnflippedTable ; $69c9
 	ld a, [hl] ; $69d0
 	ld [wBriefingHMarkerUnflipped], a ; $69d1
 	ld a, c ; $69d4
-	add LOW(ReturnToTargetBriefing_AdvanceAnim_HMarkerPosTable) ; $69d5
-	ld l, a ; $69d7
-	adc HIGH(ReturnToTargetBriefing_AdvanceAnim_HMarkerPosTable) ; $69d8
-	sub l ; $69da
-	ld h, a ; $69db
+	ld_hl_indexed ReturnToTargetBriefing_AdvanceAnim_HMarkerPosTable ; $69d5
 	ld a, [hl] ; $69dc
 	inc hl ; $69dd
 	inc hl ; $69de
@@ -3978,19 +3664,11 @@ ReturnToTargetBriefing_AdvanceAnim:
 	ld a, b ; $69e4
 	ld [wBriefingHMarkerY], a ; $69e5
 	ld a, [wBriefingAnimStep] ; $69e8
-	add LOW(ReturnToTargetBriefing_AdvanceAnim_RotMarkerDirTable) ; $69eb
-	ld l, a ; $69ed
-	adc HIGH(ReturnToTargetBriefing_AdvanceAnim_RotMarkerDirTable) ; $69ee
-	sub l ; $69f0
-	ld h, a ; $69f1
+	ld_hl_indexed ReturnToTargetBriefing_AdvanceAnim_RotMarkerDirTable ; $69eb
 	ld a, [hl] ; $69f2
 	ld [wBriefingRotMarkerDir], a ; $69f3
 	ld a, c ; $69f6
-	add LOW(ReturnToTargetBriefing_AdvanceAnim_RotMarkerPosTable) ; $69f7
-	ld l, a ; $69f9
-	adc HIGH(ReturnToTargetBriefing_AdvanceAnim_RotMarkerPosTable) ; $69fa
-	sub l ; $69fc
-	ld h, a ; $69fd
+	ld_hl_indexed ReturnToTargetBriefing_AdvanceAnim_RotMarkerPosTable ; $69f7
 	ld a, [hl] ; $69fe
 	inc hl ; $69ff
 	inc hl ; $6a00
@@ -4155,11 +3833,7 @@ ReturnLobBriefing_AdvanceAnim:
 	sla a ; $6bb3
 	sla a ; $6bb5
 	ld c, a ; $6bb7
-	add LOW(ReturnLobBriefing_AdvanceAnimTable) ; $6bb8
-	ld l, a ; $6bba
-	adc HIGH(ReturnLobBriefing_AdvanceAnimTable) ; $6bbb
-	sub l ; $6bbd
-	ld h, a ; $6bbe
+	ld_hl_indexed ReturnLobBriefing_AdvanceAnimTable ; $6bb8
 	ld a, [hl] ; $6bbf
 	inc hl ; $6bc0
 	inc hl ; $6bc1
@@ -4169,11 +3843,7 @@ ReturnLobBriefing_AdvanceAnim:
 	ld a, b ; $6bc7
 	ld [wBriefingPlayerY], a ; $6bc8
 	ld a, c ; $6bcb
-	add LOW(ReturnLobBriefing_AdvanceAnim_OpponentPosTable) ; $6bcc
-	ld l, a ; $6bce
-	adc HIGH(ReturnLobBriefing_AdvanceAnim_OpponentPosTable) ; $6bcf
-	sub l ; $6bd1
-	ld h, a ; $6bd2
+	ld_hl_indexed ReturnLobBriefing_AdvanceAnim_OpponentPosTable ; $6bcc
 	ld a, [hl] ; $6bd3
 	inc hl ; $6bd4
 	inc hl ; $6bd5
@@ -4183,11 +3853,7 @@ ReturnLobBriefing_AdvanceAnim:
 	ld a, b ; $6bdb
 	ld [wBriefingOpponentY], a ; $6bdc
 	ld a, c ; $6bdf
-	add LOW(ReturnLobBriefing_AdvanceAnim_BracketPosTable) ; $6be0
-	ld l, a ; $6be2
-	adc HIGH(ReturnLobBriefing_AdvanceAnim_BracketPosTable) ; $6be3
-	sub l ; $6be5
-	ld h, a ; $6be6
+	ld_hl_indexed ReturnLobBriefing_AdvanceAnim_BracketPosTable ; $6be0
 	ld a, [hl] ; $6be7
 	inc hl ; $6be8
 	inc hl ; $6be9
@@ -4197,11 +3863,7 @@ ReturnLobBriefing_AdvanceAnim:
 	ld a, b ; $6bef
 	ld [wBriefingBracketY], a ; $6bf0
 	ld a, c ; $6bf3
-	add LOW(ReturnLobBriefing_AdvanceAnim_BallPosTable) ; $6bf4
-	ld l, a ; $6bf6
-	adc HIGH(ReturnLobBriefing_AdvanceAnim_BallPosTable) ; $6bf7
-	sub l ; $6bf9
-	ld h, a ; $6bfa
+	ld_hl_indexed ReturnLobBriefing_AdvanceAnim_BallPosTable ; $6bf4
 	ld a, [hl] ; $6bfb
 	inc hl ; $6bfc
 	inc hl ; $6bfd
@@ -4211,19 +3873,11 @@ ReturnLobBriefing_AdvanceAnim:
 	ld a, b ; $6c03
 	ld [wBriefingBallY], a ; $6c04
 	ld a, [wBriefingAnimStep] ; $6c07
-	add LOW(ReturnLobBriefing_AdvanceAnim_HMarkerUnflippedTable) ; $6c0a
-	ld l, a ; $6c0c
-	adc HIGH(ReturnLobBriefing_AdvanceAnim_HMarkerUnflippedTable) ; $6c0d
-	sub l ; $6c0f
-	ld h, a ; $6c10
+	ld_hl_indexed ReturnLobBriefing_AdvanceAnim_HMarkerUnflippedTable ; $6c0a
 	ld a, [hl] ; $6c11
 	ld [wBriefingHMarkerUnflipped], a ; $6c12
 	ld a, c ; $6c15
-	add LOW(ReturnLobBriefing_AdvanceAnim_HMarkerPosTable) ; $6c16
-	ld l, a ; $6c18
-	adc HIGH(ReturnLobBriefing_AdvanceAnim_HMarkerPosTable) ; $6c19
-	sub l ; $6c1b
-	ld h, a ; $6c1c
+	ld_hl_indexed ReturnLobBriefing_AdvanceAnim_HMarkerPosTable ; $6c16
 	ld a, [hl] ; $6c1d
 	inc hl ; $6c1e
 	inc hl ; $6c1f
@@ -4233,19 +3887,11 @@ ReturnLobBriefing_AdvanceAnim:
 	ld a, b ; $6c25
 	ld [wBriefingHMarkerY], a ; $6c26
 	ld a, [wBriefingAnimStep] ; $6c29
-	add LOW(ReturnLobBriefing_AdvanceAnim_RotMarkerDirTable) ; $6c2c
-	ld l, a ; $6c2e
-	adc HIGH(ReturnLobBriefing_AdvanceAnim_RotMarkerDirTable) ; $6c2f
-	sub l ; $6c31
-	ld h, a ; $6c32
+	ld_hl_indexed ReturnLobBriefing_AdvanceAnim_RotMarkerDirTable ; $6c2c
 	ld a, [hl] ; $6c33
 	ld [wBriefingRotMarkerDir], a ; $6c34
 	ld a, c ; $6c37
-	add LOW(ReturnLobBriefing_AdvanceAnim_RotMarkerPosTable) ; $6c38
-	ld l, a ; $6c3a
-	adc HIGH(ReturnLobBriefing_AdvanceAnim_RotMarkerPosTable) ; $6c3b
-	sub l ; $6c3d
-	ld h, a ; $6c3e
+	ld_hl_indexed ReturnLobBriefing_AdvanceAnim_RotMarkerPosTable ; $6c38
 	ld a, [hl] ; $6c3f
 	inc hl ; $6c40
 	inc hl ; $6c41
@@ -4255,19 +3901,11 @@ ReturnLobBriefing_AdvanceAnim:
 	ld a, b ; $6c47
 	ld [wBriefingRotMarkerY], a ; $6c48
 	ld a, [wBriefingAnimStep] ; $6c4b
-	add LOW(ReturnLobBriefing_AdvanceAnim_SwingFrameTable) ; $6c4e
-	ld l, a ; $6c50
-	adc HIGH(ReturnLobBriefing_AdvanceAnim_SwingFrameTable) ; $6c51
-	sub l ; $6c53
-	ld h, a ; $6c54
+	ld_hl_indexed ReturnLobBriefing_AdvanceAnim_SwingFrameTable ; $6c4e
 	ld a, [hl] ; $6c55
 	ld [wBriefingSwingFrame], a ; $6c56
 	ld a, c ; $6c59
-	add LOW(ReturnLobBriefing_AdvanceAnim_SwingPosTable) ; $6c5a
-	ld l, a ; $6c5c
-	adc HIGH(ReturnLobBriefing_AdvanceAnim_SwingPosTable) ; $6c5d
-	sub l ; $6c5f
-	ld h, a ; $6c60
+	ld_hl_indexed ReturnLobBriefing_AdvanceAnim_SwingPosTable ; $6c5a
 	ld a, [hl] ; $6c61
 	inc hl ; $6c62
 	inc hl ; $6c63
@@ -4430,11 +4068,7 @@ ReturnDownLineBriefing_AdvanceAnim:
 	sla a ; $6e1a
 	sla a ; $6e1c
 	ld c, a ; $6e1e
-	add LOW(ReturnDownLineBriefing_AdvanceAnimTable) ; $6e1f
-	ld l, a ; $6e21
-	adc HIGH(ReturnDownLineBriefing_AdvanceAnimTable) ; $6e22
-	sub l ; $6e24
-	ld h, a ; $6e25
+	ld_hl_indexed ReturnDownLineBriefing_AdvanceAnimTable ; $6e1f
 	ld a, [hl] ; $6e26
 	inc hl ; $6e27
 	inc hl ; $6e28
@@ -4444,11 +4078,7 @@ ReturnDownLineBriefing_AdvanceAnim:
 	ld a, b ; $6e2e
 	ld [wBriefingPlayerY], a ; $6e2f
 	ld a, c ; $6e32
-	add LOW(ReturnDownLineBriefing_AdvanceAnim_OpponentPosTable) ; $6e33
-	ld l, a ; $6e35
-	adc HIGH(ReturnDownLineBriefing_AdvanceAnim_OpponentPosTable) ; $6e36
-	sub l ; $6e38
-	ld h, a ; $6e39
+	ld_hl_indexed ReturnDownLineBriefing_AdvanceAnim_OpponentPosTable ; $6e33
 	ld a, [hl] ; $6e3a
 	inc hl ; $6e3b
 	inc hl ; $6e3c
@@ -4458,11 +4088,7 @@ ReturnDownLineBriefing_AdvanceAnim:
 	ld a, b ; $6e42
 	ld [wBriefingOpponentY], a ; $6e43
 	ld a, c ; $6e46
-	add LOW(ReturnDownLineBriefing_AdvanceAnim_BracketPosTable) ; $6e47
-	ld l, a ; $6e49
-	adc HIGH(ReturnDownLineBriefing_AdvanceAnim_BracketPosTable) ; $6e4a
-	sub l ; $6e4c
-	ld h, a ; $6e4d
+	ld_hl_indexed ReturnDownLineBriefing_AdvanceAnim_BracketPosTable ; $6e47
 	ld a, [hl] ; $6e4e
 	inc hl ; $6e4f
 	inc hl ; $6e50
@@ -4472,11 +4098,7 @@ ReturnDownLineBriefing_AdvanceAnim:
 	ld a, b ; $6e56
 	ld [wBriefingBracketY], a ; $6e57
 	ld a, c ; $6e5a
-	add LOW(ReturnDownLineBriefing_AdvanceAnim_BallPosTable) ; $6e5b
-	ld l, a ; $6e5d
-	adc HIGH(ReturnDownLineBriefing_AdvanceAnim_BallPosTable) ; $6e5e
-	sub l ; $6e60
-	ld h, a ; $6e61
+	ld_hl_indexed ReturnDownLineBriefing_AdvanceAnim_BallPosTable ; $6e5b
 	ld a, [hl] ; $6e62
 	inc hl ; $6e63
 	inc hl ; $6e64
@@ -4486,19 +4108,11 @@ ReturnDownLineBriefing_AdvanceAnim:
 	ld a, b ; $6e6a
 	ld [wBriefingBallY], a ; $6e6b
 	ld a, [wBriefingAnimStep] ; $6e6e
-	add LOW(ReturnDownLineBriefing_AdvanceAnim_HMarkerUnflippedTable) ; $6e71
-	ld l, a ; $6e73
-	adc HIGH(ReturnDownLineBriefing_AdvanceAnim_HMarkerUnflippedTable) ; $6e74
-	sub l ; $6e76
-	ld h, a ; $6e77
+	ld_hl_indexed ReturnDownLineBriefing_AdvanceAnim_HMarkerUnflippedTable ; $6e71
 	ld a, [hl] ; $6e78
 	ld [wBriefingHMarkerUnflipped], a ; $6e79
 	ld a, c ; $6e7c
-	add LOW(ReturnDownLineBriefing_AdvanceAnim_HMarkerPosTable) ; $6e7d
-	ld l, a ; $6e7f
-	adc HIGH(ReturnDownLineBriefing_AdvanceAnim_HMarkerPosTable) ; $6e80
-	sub l ; $6e82
-	ld h, a ; $6e83
+	ld_hl_indexed ReturnDownLineBriefing_AdvanceAnim_HMarkerPosTable ; $6e7d
 	ld a, [hl] ; $6e84
 	inc hl ; $6e85
 	inc hl ; $6e86
@@ -4508,19 +4122,11 @@ ReturnDownLineBriefing_AdvanceAnim:
 	ld a, b ; $6e8c
 	ld [wBriefingHMarkerY], a ; $6e8d
 	ld a, [wBriefingAnimStep] ; $6e90
-	add LOW(ReturnDownLineBriefing_AdvanceAnim_VMarkerUprightTable) ; $6e93
-	ld l, a ; $6e95
-	adc HIGH(ReturnDownLineBriefing_AdvanceAnim_VMarkerUprightTable) ; $6e96
-	sub l ; $6e98
-	ld h, a ; $6e99
+	ld_hl_indexed ReturnDownLineBriefing_AdvanceAnim_VMarkerUprightTable ; $6e93
 	ld a, [hl] ; $6e9a
 	ld [wBriefingVMarkerUpright], a ; $6e9b
 	ld a, c ; $6e9e
-	add LOW(ReturnDownLineBriefing_AdvanceAnim_VMarkerPosTable) ; $6e9f
-	ld l, a ; $6ea1
-	adc HIGH(ReturnDownLineBriefing_AdvanceAnim_VMarkerPosTable) ; $6ea2
-	sub l ; $6ea4
-	ld h, a ; $6ea5
+	ld_hl_indexed ReturnDownLineBriefing_AdvanceAnim_VMarkerPosTable ; $6e9f
 	ld a, [hl] ; $6ea6
 	inc hl ; $6ea7
 	inc hl ; $6ea8
@@ -4599,9 +4205,7 @@ ShowRulesScreen:
 	ret ; $6f8f
 	ret ; $6f90
 RunMinigameRulesPages:
-	ldh a, [hWramBank] ; $6f91
-	push af ; $6f93
-	wram_bank $03 ; $6f94
+	push_wram_bank $03 ; $6f91
 	ld a, [wSelectedMinigame] ; $6f9a
 	inc a ; $6f9d
 	inc a ; $6f9e
@@ -4631,8 +4235,7 @@ RunMinigameRulesPages:
 	ld hl, MinigameRulesPageLists_17 ; $6fcc
 	ld a, [wRulesPageListId] ; $6fcf
 	call MinigameRulesPageLoop ; $6fd2
-	pop af ; $6fd5
-	wram_bank ; $6fd6
+	pop_wram_bank ; $6fd5
 	ret ; $6fda
 MinigameRulesTextIdBases_17:
 	; $6fdb, 18 bytes (records:2)
@@ -4797,8 +4400,7 @@ LoadRulesScreen:
 	ld [wShadowTilemapBank], a ; $7170
 	ld a, $00 ; $7173
 	ld [wWindowTileAttr], a ; $7175
-	pop af ; $7178
-	wram_bank ; $7179
+	pop_wram_bank ; $7178
 	farcall PrepareGlyphBuffer ; $717d
 	call ClearRulesScreenTextArea ; $7180
 	ld hl, RulesScreenPalette ; $7183
@@ -4826,22 +4428,17 @@ LoadRulesScreen:
 	farcall QueueWram3MapToVRAM ; $71b9
 	ret ; $71bc
 ClearRulesScreenTextArea:
-	ldh a, [hWramBank] ; $71bd
-	push af ; $71bf
-	wram_bank $03 ; $71c0
+	push_wram_bank $03 ; $71bd
 	ld de, wShadowAttrmap + 3 * TILEMAP_WIDTH + 2 ; $71c6
 	ld b, $10 ; $71c9
 	ld c, $0e ; $71cb
 	ld h, $00 ; $71cd
 	farcall FillTilemapRect ; $71cf
 	call ClearRulesPageRows ; $71d2
-	pop af ; $71d5
-	wram_bank ; $71d6
+	pop_wram_bank ; $71d5
 	ret ; $71da
 ClearRulesPageRows:
-	ldh a, [hWramBank] ; $71db
-	push af ; $71dd
-	wram_bank $03 ; $71de
+	push_wram_bank $03 ; $71db
 	ld de, wShadowTilemap + 3 * TILEMAP_WIDTH + 2 ; $71e4
 	ld b, $10 ; $71e7
 	ld c, $01 ; $71e9
@@ -4852,13 +4449,10 @@ ClearRulesPageRows:
 	ld c, $0d ; $71f5
 	ld h, $20 ; $71f7
 	farcall FillTilemapRect ; $71f9
-	pop af ; $71fc
-	wram_bank ; $71fd
+	pop_wram_bank ; $71fc
 	ret ; $7201
 PrepareRulesPageTilemap:
-	ldh a, [hWramBank] ; $7202
-	push af ; $7204
-	wram_bank $03 ; $7205
+	push_wram_bank $03 ; $7202
 	ld de, wShadowTilemap + 3 * TILEMAP_WIDTH + 2 ; $720b
 	ld b, $10 ; $720e
 	ld c, $01 ; $7210
@@ -4887,8 +4481,7 @@ PrepareRulesPageTilemap:
 	ld h, $00 ; $7242
 	farcall FillTilemapRect ; $7244
 .restore:
-	pop af ; $7247
-	wram_bank ; $7248
+	pop_wram_bank ; $7247
 	ret ; $724c
 QueueRulesPageToVRAM:
 	ld a, [wRulesIsMinigame] ; $724d
@@ -5054,9 +4647,7 @@ LoadRulesBorderAnimTiles:
 	call QueueVRAMCopy ; $741c
 	ret ; $741f
 AdvanceRulesScreenAnimFrame:
-	ldh a, [hWramBank] ; $7420
-	push af ; $7422
-	wram_bank $03 ; $7423
+	push_wram_bank $03 ; $7420
 	ld a, [wRulesAnimCounter] ; $7429
 	inc a ; $742c
 	ld [wRulesAnimCounter], a ; $742d
@@ -5103,8 +4694,7 @@ AdvanceRulesScreenAnimFrame:
 	xor a ; $7475
 	ld [wRulesAnimEnabled], a ; $7476
 .restore:
-	pop af ; $7479
-	wram_bank ; $747a
+	pop_wram_bank ; $7479
 	ret ; $747e
 RulesScreenAnimFrameTable:
 	; $747f, 32 bytes (records:2)
@@ -5157,9 +4747,7 @@ RulesScreenAnimFrameTable1:
 	dw $0302 ; record 28
 	dw $0402 ; record 29
 DrawRulesScreenCharacters:
-	ldh a, [hWramBank] ; $74db
-	push af ; $74dd
-	wram_bank $03 ; $74de
+	push_wram_bank $03 ; $74db
 	ld a, [wRulesScreenAnimFrame] ; $74e4
 	ld hl, RulesScreenCharactersTable0 ; $74e7
 	add l ; $74ea
@@ -5196,8 +4784,7 @@ DrawRulesScreenCharacters:
 	ld de, $7e68 ; $7518
 	ld hl, DrawRulesScreenCharacters_SpriteTemplate ; $751b
 	call QueueSpriteTemplate ; $751e
-	pop af ; $7521
-	wram_bank ; $7522
+	pop_wram_bank ; $7521
 	ret ; $7526
 DrawRulesScreenCharacters_SpriteTemplate:
 	; $7527, 37 bytes (sprite_template)

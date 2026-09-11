@@ -216,13 +216,10 @@ UnusedGetObjectXAndDepth:
 	ld l, a ; $4149
 	ret ; $414a
 ResetActiveCharState:
-	ldh a, [hWramBank] ; $414b
-	push af ; $414d
-	wram_bank $05 ; $414e
+	push_wram_bank $05 ; $414b
 	ld a, CHARSTATE_INERT ; $4154
 	farcall SetCharState ; $4156
-	pop af ; $4159
-	wram_bank ; $415a
+	pop_wram_bank ; $4159
 	ret ; $415e
 IndexDrillTableByPoint:
 	ld a, [wTotalPointsScoredInCurrentGame] ; $415f
@@ -577,12 +574,9 @@ LoadDrillOpponentChar:
 	ld b, a ; $4404
 	ld c, $02 ; $4405
 	farcall InitCa00RecordFromCharId ; $4407
-	ldh a, [hWramBank] ; $440a
-	push af ; $440c
-	wram_bank $05 ; $440d
+	push_wram_bank $05 ; $440a
 	farcall LoadCharacterAttributes ; $4413
-	pop af ; $4416
-	wram_bank ; $4417
+	pop_wram_bank ; $4416
 	ret ; $441b
 LoadDrillOpponentBySide:
 	ld a, [wCurrentServingPlayer] ; $441c
@@ -597,14 +591,11 @@ LoadDrillOpponentBySide:
 	ret ; $442a
 WriteCharStructByte:
 	ld b, a ; $442b
-	ldh a, [hWramBank] ; $442c
-	push af ; $442e
-	wram_bank $05 ; $442f
+	push_wram_bank $05 ; $442c
 	ld de, wCharPosX ; $4435
 	add hl, de ; $4438
 	ld [hl], b ; $4439
-	pop af ; $443a
-	wram_bank ; $443b
+	pop_wram_bank ; $443a
 	ret ; $443f
 UnusedSetAiReactionDelayFar:
 	ld hl, $007a ; $4440
@@ -624,24 +615,19 @@ TestCharStateBit4:
 	ld a, [hl] ; $445a
 	bit 4, a ; $445b
 	jr z, .clear ; $445d
-	pop af ; $445f
-	wram_bank ; $4460
+	pop_wram_bank ; $445f
 	ld a, $01 ; $4464
 	ret ; $4466
 .clear:
-	pop af ; $4467
-	wram_bank ; $4468
+	pop_wram_bank ; $4467
 	xor a ; $446c
 	ret ; $446d
 SyncPointWinLoseFlagTask:
-	ldh a, [hWramBank] ; $446e
-	push af ; $4470
-	wram_bank $05 ; $4471
+	push_wram_bank $05 ; $446e
 	ld hl, wCharPointResult ; $4477
 	ld a, [wPointWinLoseFlag] ; $447a
 	ld [hl], a ; $447d
-	pop af ; $447e
-	wram_bank ; $447f
+	pop_wram_bank ; $447e
 	ret ; $4483
 UnusedQueueDrillOutcomeMessage:
 	ld a, [wPointOutcome] ; $4484
@@ -824,13 +810,10 @@ ShowDrillMessageByIndex:
 	ld l, c ; $459d
 	add $02 ; $459e
 	ld b, a ; $45a0
-	ldh a, [hWramBank] ; $45a1
-	push af ; $45a3
-	wram_bank $05 ; $45a4
+	push_wram_bank $05 ; $45a1
 	ld a, [wFitTextLineCount] ; $45aa
 	ld e, a ; $45ad
-	pop af ; $45ae
-	wram_bank ; $45af
+	pop_wram_bank ; $45ae
 	ld a, e ; $45b3
 	add a ; $45b4
 	inc a ; $45b5
@@ -7315,11 +7298,7 @@ RunDoublesDrillMatch:
 	farcall InitCa00RecordFromCharId ; $7299
 	ld a, [wMinigameLevel] ; $729c
 	add a ; $729f
-	add LOW(DoublesDrillMatchPtrs) ; $72a0
-	ld l, a ; $72a2
-	adc HIGH(DoublesDrillMatchPtrs) ; $72a3
-	sub l ; $72a5
-	ld h, a ; $72a6
+	ld_hl_indexed DoublesDrillMatchPtrs ; $72a0
 	ld a, [hl+] ; $72a7
 	ld h, [hl] ; $72a8
 	ld l, a ; $72a9

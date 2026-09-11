@@ -28,8 +28,9 @@ known to be graphics, audio, text, a resource descriptor, a record array or
 fill; a ROM-wide code-shape screen plus a twin-bank diff of the near-identical
 shot banks found the last stranded routines, and the 247 seed offsets that
 had no label were each traced to a verdict. The interesting structure is
-rendered rather than binary: farcall slot tables, `rst` pseudo-ops, story
-map trees and actor bytecode, mode-hook tables, sprite templates and
+rendered rather than binary: farcall slot tables, `rst` pseudo-ops, the
+three idioms the code is built from (`push_wram_bank`/`pop_wram_bank`,
+`ld_hl_indexed`, `wait_frames`), story map trees and actor bytecode, mode-hook tables, sprite templates and
 animation scripts, flag-id lists, text ids, packed bank/slot selectors,
 record tables with embedded pointers, and 3,949 local labels inside
 functions. What stays binary is content: tiles, tilemaps, palettes, strings
@@ -124,6 +125,11 @@ label bound to the wrong parent.
 
 ## Recent changes
 
+* **2026-09-11** — three idiom macros: `push_wram_bank N` / `pop_wram_bank`
+  for the bank prologue and epilogue (351 / 452 sites), `ld_hl_indexed T`
+  for the five-instruction split-base table index (414), and `wait_frames N`
+  for WaitFramesCmd's inline argument (79). Each expands to the original
+  bytes; a label or note landing inside a sequence keeps it raw.
 * **2026-09-11** — the questions of intent, worked through: the three
   odd-sized palette regions were over-declared and hid a stray `ret`, a
   47-byte unreferenced firework reset and three padding bytes (carved);

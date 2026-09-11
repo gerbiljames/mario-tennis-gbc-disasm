@@ -688,30 +688,24 @@ StoreCellIndexToCursorPtr:
 	ld [hl], a ; $43f9
 	ret ; $43fa
 ClearWram3Row64:
-	ldh a, [hWramBank] ; $43fb
-	push af ; $43fd
-	wram_bank $03 ; $43fe
+	push_wram_bank $03 ; $43fb
 	xor a ; $4404
 	ld c, $40 ; $4405
 .loop:
 	ld [hl+], a ; $4407
 	dec c ; $4408
 	jr nz, .loop ; $4409
-	pop af ; $440b
-	wram_bank ; $440c
+	pop_wram_bank ; $440b
 	ret ; $4410
 ClearWram3Row64Alt:
-	ldh a, [hWramBank] ; $4411
-	push af ; $4413
-	wram_bank $03 ; $4414
+	push_wram_bank $03 ; $4411
 	ld a, $00 ; $441a
 	ld c, $40 ; $441c
 .loopB:
 	ld [hl+], a ; $441e
 	dec c ; $441f
 	jr nz, .loopB ; $4420
-	pop af ; $4422
-	wram_bank ; $4423
+	pop_wram_bank ; $4422
 	ret ; $4427
 UpdateAnimatedTilesTask_3b:
 	farcall UpdateAnimatedTiles ; $4428
@@ -909,9 +903,7 @@ ScrollN64ExhibDataCursor:
 .done:
 	ret ; $4566
 N64ExhibScrollArrowsTask:
-	ldh a, [hWramBank] ; $4567
-	push af ; $4569
-	wram_bank $03 ; $456a
+	push_wram_bank $03 ; $4567
 	ld a, [wN64ExhibPage] ; $4570
 	cp $09 ; $4573
 	jr z, .eq09 ; $4575
@@ -956,8 +948,7 @@ N64ExhibScrollArrowsTask:
 	ld h, $03 ; $45c9
 	farcall QueueStackedSpritePair ; $45cb
 .restore:
-	pop af ; $45ce
-	wram_bank ; $45cf
+	pop_wram_bank ; $45ce
 	ret ; $45d3
 BuildN64ExhibDataScreen:
 	wram_bank $03 ; $45d4
@@ -1504,9 +1495,7 @@ ChartCharIconTable:
 	db $0e ; 0x10
 ReadN64RecordsSaveBlock:
 	push bc ; $493f
-	ldh a, [hWramBank] ; $4940
-	push af ; $4942
-	wram_bank $03 ; $4943
+	push_wram_bank $03 ; $4940
 	ld hl, wN64RecordsBlock ; $4949
 	ld bc, $0020 ; $494c
 	call ClearMemory16 ; $494f
@@ -1514,8 +1503,7 @@ ReadN64RecordsSaveBlock:
 	ld b, $0b ; $4955
 	farcall ReadSaveBlock ; $4957
 	ld b, a ; $495a
-	pop af ; $495b
-	wram_bank ; $495c
+	pop_wram_bank ; $495b
 	ld a, b ; $4960
 	pop bc ; $4961
 	ret ; $4962
@@ -2268,9 +2256,7 @@ DrawN64TnmtRowIcons:
 	push bc ; $4f46
 	push de ; $4f47
 	push hl ; $4f48
-	ldh a, [hWramBank] ; $4f49
-	push af ; $4f4b
-	wram_bank $03 ; $4f4c
+	push_wram_bank $03 ; $4f49
 	ld hl, wN64TnmtLayout ; $4f52
 	ld a, [wDataScreenCursorRow] ; $4f55
 	add l ; $4f58
@@ -2296,17 +2282,14 @@ DrawN64TnmtRowIcons:
 	ld c, a ; $4f72
 	cp $05 ; $4f73
 	jr nz, .loop ; $4f75
-	pop af ; $4f77
-	wram_bank ; $4f78
+	pop_wram_bank ; $4f77
 	pop hl ; $4f7c
 	pop de ; $4f7d
 	pop bc ; $4f7e
 	pop af ; $4f7f
 	ret ; $4f80
 DrawN64TnmtPageLabels:
-	ldh a, [hWramBank] ; $4f81
-	push af ; $4f83
-	wram_bank $03 ; $4f84
+	push_wram_bank $03 ; $4f81
 	ld a, [wDataScreenPage] ; $4f8a
 	or a ; $4f8d
 	jr nz, .nonZero ; $4f8e
@@ -2353,8 +2336,7 @@ DrawN64TnmtPageLabels:
 	ld c, $02 ; $4ff5
 	farcall CopyTilemapRect ; $4ff7
 .restore:
-	pop af ; $4ffa
-	wram_bank ; $4ffb
+	pop_wram_bank ; $4ffa
 	ret ; $4fff
 DrawN64TnmtTrophyRows:
 	wram_bank $03 ; $5000
@@ -2489,9 +2471,7 @@ FlushN64TnmtWindowToVram:
 	call QueueVRAMCopy ; $50d2
 	ret ; $50d5
 N64TnmtScrollArrowsTask:
-	ldh a, [hWramBank] ; $50d6
-	push af ; $50d8
-	wram_bank $03 ; $50d9
+	push_wram_bank $03 ; $50d6
 	ld a, [wScreenScratch] ; $50df
 	or a ; $50e2
 	jr z, .applyCursorBounceX ; $50e3
@@ -2539,8 +2519,7 @@ N64TnmtScrollArrowsTask:
 	ld h, $03 ; $513d
 	farcall QueueStackedSpritePair ; $513f
 .restore:
-	pop af ; $5142
-	wram_bank ; $5143
+	pop_wram_bank ; $5142
 	ret ; $5147
 RunN64RingShotData:
 	call DisableLCDSafely ; $5148
@@ -2621,9 +2600,7 @@ DrawRingShotRowIcons:
 	push bc ; $5203
 	push de ; $5204
 	push hl ; $5205
-	ldh a, [hWramBank] ; $5206
-	push af ; $5208
-	wram_bank $03 ; $5209
+	push_wram_bank $03 ; $5206
 	ld hl, wRingShotEntryList ; $520f
 	ld a, [wMenuCursorY] ; $5212
 	add l ; $5215
@@ -2649,8 +2626,7 @@ DrawRingShotRowIcons:
 	ld c, a ; $522f
 	cp $05 ; $5230
 	jr nz, .loop ; $5232
-	pop af ; $5234
-	wram_bank ; $5235
+	pop_wram_bank ; $5234
 	pop hl ; $5239
 	pop de ; $523a
 	pop bc ; $523b
@@ -2908,9 +2884,7 @@ RedrawRingShotWindow:
 	call FlushRingShotWindowToVram ; $5422
 	ret ; $5425
 DrawRingShotModeTab:
-	ldh a, [hWramBank] ; $5426
-	push af ; $5428
-	wram_bank $03 ; $5429
+	push_wram_bank $03 ; $5426
 	ld a, [wMenuCursorX] ; $542f
 	add a ; $5432
 	ld hl, RingShotModeTabTable ; $5433
@@ -2926,8 +2900,7 @@ DrawRingShotModeTab:
 	ld b, $08 ; $5441
 	ld c, $02 ; $5443
 	farcall CopyTilemapRect ; $5445
-	pop af ; $5448
-	wram_bank ; $5449
+	pop_wram_bank ; $5448
 	ret ; $544d
 RingShotModeTabTable:
 	; $544e, 8 bytes (ram_ptrs:3)
@@ -2959,9 +2932,7 @@ FlushRingShotWindowToVram:
 	call QueueVRAMCopy ; $548d
 	ret ; $5490
 RingShotScrollArrowsTask:
-	ldh a, [hWramBank] ; $5491
-	push af ; $5493
-	wram_bank $03 ; $5494
+	push_wram_bank $03 ; $5491
 	ld a, [wMenuCursorX] ; $549a
 	cp $03 ; $549d
 	jr z, .checkMenuCursorX ; $549f
@@ -3006,8 +2977,7 @@ RingShotScrollArrowsTask:
 	ld h, $03 ; $54f3
 	farcall QueueStackedSpritePair ; $54f5
 .restore:
-	pop af ; $54f8
-	wram_bank ; $54f9
+	pop_wram_bank ; $54f8
 	ret ; $54fd
 DrawRingShotClearMarks:
 	ld a, [wMenuCursorY] ; $54fe
@@ -3287,9 +3257,7 @@ MapMainMenuCursorToItemIdTable:
 	db $06, $07, $08 ; 0x06
 	ret ; $56c3
 LoadMainMenuGfx:
-	ldh a, [hWramBank] ; $56c4
-	push af ; $56c6
-	wram_bank $01 ; $56c7
+	push_wram_bank $01 ; $56c4
 	ld c, $00 ; $56cd
 .loop:
 	ld a, c ; $56cf
@@ -3413,8 +3381,7 @@ LoadMainMenuGfx:
 	ld c, $14 ; $57d2
 	ld de, $8000 ; $57d4
 	farcall LoadCompressedTileBlock ; $57d7
-	pop af ; $57da
-	wram_bank ; $57db
+	pop_wram_bank ; $57da
 	ret ; $57df
 MainMenuTable0:
 	; $57e0, 12 bytes (bytes:2)
@@ -3786,9 +3753,7 @@ MainMenuItemPalette5:
 	; $5aa4, 8 bytes (bytes:8)
 	db $96, $59, $ff, $6b, $12, $14, $00, $00 ; 0x00
 BuildSaveSlotSummaries:
-	ldh a, [hWramBank] ; $5aac
-	push af ; $5aae
-	wram_bank $03 ; $5aaf
+	push_wram_bank $03 ; $5aac
 	ld hl, wShadowTilemap + 24 * TILEMAP_WIDTH ; $5ab5
 	ld bc, $0003 ; $5ab8
 	call ClearMemory16 ; $5abb
@@ -3856,13 +3821,10 @@ BuildSaveSlotSummaries:
 	inc a ; $5b33
 	cp $83 ; $5b34
 	jr nz, .loop ; $5b36
-	pop af ; $5b38
-	wram_bank ; $5b39
+	pop_wram_bank ; $5b38
 	ret ; $5b3d
 DrawMainMenuCaption:
-	ldh a, [hWramBank] ; $5b3e
-	push af ; $5b40
-	wram_bank $03 ; $5b41
+	push_wram_bank $03 ; $5b3e
 	ld c, $03 ; $5b47
 	call GetMenuCursorCellIndex ; $5b49
 	ld b, a ; $5b4c
@@ -3934,8 +3896,7 @@ DrawMainMenuCaption:
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 18 ; $5bbc
 	ld bc, wShadowTilemap + 25 * TILEMAP_WIDTH + 16 ; $5bbf
 	call Print2DigitNumberRightAligned ; $5bc2
-	pop af ; $5bc5
-	wram_bank ; $5bc6
+	pop_wram_bank ; $5bc5
 	ld a, $3a ; $5bca
 	ld [wShadowTilemap + 16 * TILEMAP_WIDTH + 16], a ; $5bcc
 	ret ; $5bcf
@@ -3972,8 +3933,7 @@ DrawMainMenuCaption:
 	ld c, $20 ; $5bf8
 	farcall RenderTextToBuffer64 ; $5bfa
 .restore:
-	pop af ; $5bfd
-	wram_bank ; $5bfe
+	pop_wram_bank ; $5bfd
 	ret ; $5c02
 MainMenuCaptionTable:
 	; $5c03, 18 bytes (ram_ptrs:3)
@@ -4072,16 +4032,14 @@ TryMainMenuLinkHandshake:
 	push af ; $5c86
 	ld c, $00 ; $5c87
 	farcall ShowLinkStatusMessage ; $5c89
-	pop af ; $5c8c
-	wram_bank ; $5c8d
+	pop_wram_bank ; $5c8c
 	jr .animateLinkStatusPalette ; $5c91
 .nonZero:
 	ldh a, [hWramBank] ; $5c93
 	push af ; $5c95
 	ld c, $01 ; $5c96
 	farcall ShowLinkStatusMessage ; $5c98
-	pop af ; $5c9b
-	wram_bank ; $5c9c
+	pop_wram_bank ; $5c9b
 .animateLinkStatusPalette:
 	ld de, $01f4 ; $5ca0
 .loopB:
@@ -4109,8 +4067,7 @@ TryMainMenuLinkHandshake:
 	pop af ; $5cd4
 	jr .done ; $5cd5
 .waitFramesCmd:
-	call WaitFramesCmd ; $5cd7
-	db $06 ; $5cda inline arg
+	wait_frames $06 ; $5cd7
 	farcall TryEstablishLink ; $5cdb
 	jr c, .loop ; $5cde
 .done:
@@ -4230,9 +4187,7 @@ MatchFormatOptionsPalettes2:
 	; $5de4, 8 bytes (bytes:8)
 	db $1f, $03, $ff, $7f, $40, $51, $00, $00 ; 0x00
 LoadMatchFormatGfx:
-	ldh a, [hWramBank] ; $5dec
-	push af ; $5dee
-	wram_bank $01 ; $5def
+	push_wram_bank $01 ; $5dec
 	ld c, $00 ; $5df5
 .loop:
 	ld a, c ; $5df7
@@ -4333,8 +4288,7 @@ LoadMatchFormatGfx:
 	ld b, $08 ; $5eb0
 	ld c, $10 ; $5eb2
 	farcall LoadIndexedPalette ; $5eb4
-	pop af ; $5eb7
-	wram_bank ; $5eb8
+	pop_wram_bank ; $5eb7
 	ret ; $5ebc
 MatchFormatTable0:
 	; $5ebd, 14 bytes (bytes:2)
@@ -4559,9 +4513,7 @@ FillMatchFormatOptionCell:
 	push bc ; $604a
 	push de ; $604b
 	push hl ; $604c
-	ldh a, [hWramBank] ; $604d
-	push af ; $604f
-	wram_bank $03 ; $6050
+	push_wram_bank $03 ; $604d
 	ld hl, FillMatchFormatOptionCellTable ; $6056
 	ld a, b ; $6059
 	add a ; $605a
@@ -4590,8 +4542,7 @@ FillMatchFormatOptionCell:
 	ld b, $05 ; $6074
 	ld c, $03 ; $6076
 	farcall FillTilemapRect ; $6078
-	pop af ; $607b
-	wram_bank ; $607c
+	pop_wram_bank ; $607b
 	pop hl ; $6080
 	pop de ; $6081
 	pop bc ; $6082
@@ -4910,9 +4861,7 @@ RunMinigameSelect:
 	ld a, $ff ; $62ec
 	ret ; $62ee
 LoadMinigameSelectGfx:
-	ldh a, [hWramBank] ; $62ef
-	push af ; $62f1
-	wram_bank $01 ; $62f2
+	push_wram_bank $01 ; $62ef
 	ld c, $00 ; $62f8
 .loop:
 	push bc ; $62fa
@@ -5013,8 +4962,7 @@ LoadMinigameSelectGfx:
 	ld b, $08 ; $63db
 	ld c, $10 ; $63dd
 	farcall LoadIndexedPalette ; $63df
-	pop af ; $63e2
-	wram_bank ; $63e3
+	pop_wram_bank ; $63e2
 	ret ; $63e7
 	; $63e8, 14 bytes (bytes:2)
 	db $62, $3c ; 0x00
@@ -5650,9 +5598,7 @@ RunSavedDataSourceSelect:
 	ld a, $ff ; $686b
 	ret ; $686d
 LoadSavedDataSourceGfx:
-	ldh a, [hWramBank] ; $686e
-	push af ; $6870
-	wram_bank $01 ; $6871
+	push_wram_bank $01 ; $686e
 	ld hl, (BANK(DataPtr_ModeSelectLabelTiles1) << 8) | LOW(DataPtr_ModeSelectLabelTiles1) ; $6877
 	ld de, wDecompBuffer ; $687a
 	call DecompressDataFromBank ; $687d
@@ -5731,8 +5677,7 @@ LoadSavedDataSourceGfx:
 	ld b, $08 ; $6950
 	ld c, $10 ; $6952
 	farcall LoadIndexedPalette ; $6954
-	pop af ; $6957
-	wram_bank ; $6958
+	pop_wram_bank ; $6957
 	ret ; $695c
 	; $695d, 28 bytes (bytes:2)
 	db $62, $3c ; 0x00
@@ -6026,9 +5971,7 @@ SavedDataSourceCellPalette1:
 	; $6b7b, 8 bytes (bytes:8)
 	db $9f, $5a, $ff, $6b, $1f, $00, $00, $00 ; 0x00
 DrawSavedDataSourceCaption:
-	ldh a, [hWramBank] ; $6b83
-	push af ; $6b85
-	wram_bank $03 ; $6b86
+	push_wram_bank $03 ; $6b83
 	ld c, $03 ; $6b8c
 	call GetMenuCursorCellIndex ; $6b8e
 	ld b, a ; $6b91
@@ -6099,8 +6042,7 @@ DrawSavedDataSourceCaption:
 	call Print2DigitNumberRightAligned ; $6c00
 	ld a, $3a ; $6c03
 	ld [wShadowTilemap + 16 * TILEMAP_WIDTH + 16], a ; $6c05
-	pop af ; $6c08
-	wram_bank ; $6c09
+	pop_wram_bank ; $6c08
 	ret ; $6c0d
 .eq3f:
 	ld hl, Text_30_200 ; $6c0e
@@ -6122,38 +6064,30 @@ DrawSavedDataSourceCaption:
 	ld c, $20 ; $6c32
 	farcall RenderTextToBuffer64 ; $6c34
 .restore:
-	pop af ; $6c37
-	wram_bank ; $6c38
+	pop_wram_bank ; $6c37
 	ret ; $6c3c
 LoadN64RecordsToWram2:
-	ldh a, [hWramBank] ; $6c3d
-	push af ; $6c3f
-	wram_bank $02 ; $6c40
+	push_wram_bank $02 ; $6c3d
 	ld hl, wScreenAttrmap ; $6c46
 	ld bc, $0020 ; $6c49
 	call ClearMemory16 ; $6c4c
 	ld hl, wScreenAttrmap ; $6c4f
 	ld b, $0b ; $6c52
 	farcall ReadSaveBlock ; $6c54
-	pop af ; $6c57
-	wram_bank ; $6c58
+	pop_wram_bank ; $6c57
 	ret ; $6c5c
 CheckN64DataPresent:
-	ldh a, [hWramBank] ; $6c5d
-	push af ; $6c5f
-	wram_bank $02 ; $6c60
+	push_wram_bank $02 ; $6c5d
 	ld a, [wN64BlockProbe] ; $6c66
 	ld b, a ; $6c69
 	ld a, [wN64BlockProbe + 1] ; $6c6a
 	or b ; $6c6d
 	jr z, .restore ; $6c6e
-	pop af ; $6c70
-	wram_bank ; $6c71
+	pop_wram_bank ; $6c70
 	ld a, $01 ; $6c75
 	ret ; $6c77
 .restore:
-	pop af ; $6c78
-	wram_bank ; $6c79
+	pop_wram_bank ; $6c78
 	xor a ; $6c7d
 	ret ; $6c7e
 RunEraseSavedDataSelect:
@@ -6242,9 +6176,7 @@ RunEraseSavedDataSelect:
 	ld a, $ff ; $6d2e
 	ret ; $6d30
 LoadEraseSavedDataGfx:
-	ldh a, [hWramBank] ; $6d31
-	push af ; $6d33
-	wram_bank $01 ; $6d34
+	push_wram_bank $01 ; $6d31
 	wram_bank $03 ; $6d3a
 	ld a, $00 ; $6d40
 	ld [wCurrentStorySlot], a ; $6d42
@@ -6324,8 +6256,7 @@ LoadEraseSavedDataGfx:
 	ld b, $08 ; $6e17
 	ld c, $10 ; $6e19
 	farcall LoadIndexedPalette ; $6e1b
-	pop af ; $6e1e
-	wram_bank ; $6e1f
+	pop_wram_bank ; $6e1e
 	ret ; $6e23
 SavedDataPickerSlideIn:
 	ld a, b ; $6e24
@@ -6735,9 +6666,7 @@ SavedDataCellPalette1:
 	; $70f8, 8 bytes (bytes:8)
 	db $cc, $3a, $ff, $6b, $40, $65, $00, $00 ; 0x00
 DrawEraseSavedDataCaption:
-	ldh a, [hWramBank] ; $7100
-	push af ; $7102
-	wram_bank $03 ; $7103
+	push_wram_bank $03 ; $7100
 	ld c, $03 ; $7109
 	call GetMenuCursorCellIndex ; $710b
 	ld b, a ; $710e
@@ -6808,8 +6737,7 @@ DrawEraseSavedDataCaption:
 	call Print2DigitNumberRightAligned ; $717d
 	ld a, $3a ; $7180
 	ld [wShadowTilemap + 16 * TILEMAP_WIDTH + 16], a ; $7182
-	pop af ; $7185
-	wram_bank ; $7186
+	pop_wram_bank ; $7185
 	ret ; $718a
 .eq3f:
 	ld hl, Text_30_206 ; $718b
@@ -6829,8 +6757,7 @@ DrawEraseSavedDataCaption:
 	ld c, $20 ; $71a5
 	farcall RenderTextToBuffer64 ; $71a7
 .restore:
-	pop af ; $71aa
-	wram_bank ; $71ab
+	pop_wram_bank ; $71aa
 	ret ; $71af
 RunN64RecordTypeSelect:
 	sound BGM_MENU ; $71b0
@@ -6897,9 +6824,7 @@ RunN64RecordTypeSelect:
 	ld a, $ff ; $7240
 	ret ; $7242
 LoadN64RecordTypeGfx:
-	ldh a, [hWramBank] ; $7243
-	push af ; $7245
-	wram_bank $01 ; $7246
+	push_wram_bank $01 ; $7243
 	ld c, $00 ; $724c
 .loop:
 	ld a, c ; $724e
@@ -6980,8 +6905,7 @@ LoadN64RecordTypeGfx:
 	ld b, $08 ; $72d3
 	ld c, $10 ; $72d5
 	farcall LoadIndexedPalette ; $72d7
-	pop af ; $72da
-	wram_bank ; $72db
+	pop_wram_bank ; $72da
 	ret ; $72df
 N64RecordTypeTable0:
 	; $72e0, 6 bytes (bytes:2)
@@ -7236,9 +7160,7 @@ N64RecordTypeCellPalette2:
 	; $7492, 8 bytes (bytes:8)
 	db $32, $1b, $ff, $6b, $e0, $15, $00, $00 ; 0x00
 DrawN64RecordTypeCaption:
-	ldh a, [hWramBank] ; $749a
-	push af ; $749c
-	wram_bank $03 ; $749d
+	push_wram_bank $03 ; $749a
 	ld c, $03 ; $74a3
 	call GetMenuCursorCellIndex ; $74a5
 	ld b, a ; $74a8
@@ -7251,8 +7173,7 @@ DrawN64RecordTypeCaption:
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $74b1
 	ld c, $20 ; $74b4
 	farcall RenderTextToBuffer64 ; $74b6
-	pop af ; $74b9
-	wram_bank ; $74ba
+	pop_wram_bank ; $74b9
 	ret ; $74be
 RunN64TransferItemSelect:
 	sound BGM_MENU ; $74bf
@@ -7319,9 +7240,7 @@ RunN64TransferItemSelect:
 	ld a, $ff ; $754f
 	ret ; $7551
 LoadN64TransferItemGfx:
-	ldh a, [hWramBank] ; $7552
-	push af ; $7554
-	wram_bank $01 ; $7555
+	push_wram_bank $01 ; $7552
 	ld c, $00 ; $755b
 .loop:
 	ld a, c ; $755d
@@ -7407,8 +7326,7 @@ LoadN64TransferItemGfx:
 	ld b, $08 ; $75ef
 	ld c, $10 ; $75f1
 	farcall LoadIndexedPalette ; $75f3
-	pop af ; $75f6
-	wram_bank ; $75f7
+	pop_wram_bank ; $75f6
 	ret ; $75fb
 N64TransferItemTable0:
 	; $75fc, 8 bytes (bytes:2)
@@ -7508,9 +7426,7 @@ N64TransferItemCellPalette3:
 	; $76bd, 8 bytes (bytes:8)
 	db $bf, $02, $ff, $6b, $57, $05, $00, $00 ; 0x00
 DrawN64TransferItemCaption:
-	ldh a, [hWramBank] ; $76c5
-	push af ; $76c7
-	wram_bank $03 ; $76c8
+	push_wram_bank $03 ; $76c5
 	ld c, $02 ; $76ce
 	call GetMenuCursorCellIndex ; $76d0
 	ld b, a ; $76d3
@@ -7523,8 +7439,7 @@ DrawN64TransferItemCaption:
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 1 ; $76dc
 	ld c, $20 ; $76df
 	farcall RenderTextToBuffer64 ; $76e1
-	pop af ; $76e4
-	wram_bank ; $76e5
+	pop_wram_bank ; $76e4
 	ret ; $76e9
 N64TransferItemCursorSpriteTask:
 	farcall TickMenuBgScroll ; $76ea
@@ -7601,8 +7516,7 @@ ShowTournamentBracket:
 	ld hl, BracketHighlightBlinkTask ; $777e
 	call RegisterFrameTask ; $7781
 	sound $78 ; $7784
-	call WaitFramesCmd ; $7786
-	db $78 ; $7789 inline arg
+	wait_frames $78 ; $7786
 .loop:
 	ldh a, [hInputPressed] ; $778a
 	bit PADB_A, a ; $778c
@@ -8002,9 +7916,7 @@ RunMarioCastExhibResults:
 	ld a, $ff ; $7a6a
 	ret ; $7a6c
 MarioCastChartScrollArrowsTask:
-	ldh a, [hWramBank] ; $7a6d
-	push af ; $7a6f
-	wram_bank $03 ; $7a70
+	push_wram_bank $03 ; $7a6d
 	call CheckMarioCastChartExpanded ; $7a76
 	or a ; $7a79
 	jr z, .checkMenuCursorY3 ; $7a7a
@@ -8076,8 +7988,7 @@ MarioCastChartScrollArrowsTask:
 	ld h, $03 ; $7b06
 	farcall QueueStackedSpritePair ; $7b08
 .restore:
-	pop af ; $7b0b
-	wram_bank ; $7b0c
+	pop_wram_bank ; $7b0b
 	ret ; $7b10
 BuildMarioCastExhibScreen:
 	wram_bank $03 ; $7b11
@@ -8354,9 +8265,7 @@ MarioCastChartColumnTable:
 	db $03, $04, $05 ; 0x03
 	db $07, $08, $0c ; 0x06
 LoadMarioCastExhibGrid:
-	ldh a, [hWramBank] ; $7d1e
-	push af ; $7d20
-	wram_bank $03 ; $7d21
+	push_wram_bank $03 ; $7d1e
 	ld hl, wN64RecordsBlock ; $7d27
 	farcall ReadMarioCastVictoryGrid ; $7d2a
 	ld hl, wN64RecordsBlock ; $7d2d
@@ -8381,13 +8290,10 @@ LoadMarioCastExhibGrid:
 	ld a, c ; $7d4c
 	cp $09 ; $7d4d
 	jr nz, .loop ; $7d4f
-	pop af ; $7d51
-	wram_bank ; $7d52
+	pop_wram_bank ; $7d51
 	ret ; $7d56
 RecordExhibitionVictory:
-	ldh a, [hWramBank] ; $7d57
-	push af ; $7d59
-	wram_bank $03 ; $7d5a
+	push_wram_bank $03 ; $7d57
 	ld a, [wMatchWinLoseFlag] ; $7d60
 	cp WINLOSE_LOSE ; $7d63
 	jr z, .restore ; $7d65
@@ -8438,8 +8344,7 @@ RecordExhibitionVictory:
 .step2:
 	jr nz, .step2 ; $7dbb
 .restore:
-	pop af ; $7dbd
-	wram_bank ; $7dbe
+	pop_wram_bank ; $7dbd
 	ret ; $7dc2
 StubNop_3b_5:
 	ret ; $7dc3
@@ -8527,14 +8432,12 @@ CheckMarioCastChartExpanded:
 	cp $10 ; $7e2e
 	jr z, .notExpanded ; $7e30
 	pop bc ; $7e32
-	pop af ; $7e33
-	wram_bank ; $7e34
+	pop_wram_bank ; $7e33
 	ld a, $01 ; $7e38
 	ret ; $7e3a
 .notExpanded:
 	pop bc ; $7e3b
-	pop af ; $7e3c
-	wram_bank ; $7e3d
+	pop_wram_bank ; $7e3c
 	xor a ; $7e41
 	ret ; $7e42
 ApplyMarioCastChartReducedLayout:
@@ -8542,9 +8445,7 @@ ApplyMarioCastChartReducedLayout:
 	push bc ; $7e44
 	push de ; $7e45
 	push hl ; $7e46
-	ldh a, [hWramBank] ; $7e47
-	push af ; $7e49
-	wram_bank $03 ; $7e4a
+	push_wram_bank $03 ; $7e47
 	call CheckMarioCastChartExpanded ; $7e50
 	or a ; $7e53
 	jr nz, .restore ; $7e54
@@ -8552,8 +8453,7 @@ ApplyMarioCastChartReducedLayout:
 	call FixupMarioCastChartHeaderRow ; $7e59
 	call CompactMarioCastChartRows ; $7e5c
 .restore:
-	pop af ; $7e5f
-	wram_bank ; $7e60
+	pop_wram_bank ; $7e5f
 	pop hl ; $7e64
 	pop de ; $7e65
 	pop bc ; $7e66

@@ -17,8 +17,7 @@ RunMinigameModePauseMenu:
 	call BuildMinigameModePauseMenu ; $401a
 	call RunPauseMenuWindow ; $401d
 	call RestoreMessageSpeed ; $4020
-	pop af ; $4023
-	wram_bank ; $4024
+	pop_wram_bank ; $4023
 	ld a, [wPauseMenuIsMinigame] ; $4028
 	ret ; $402b
 RunPauseMenuWindow:
@@ -478,9 +477,7 @@ RunDebugExpEditor:
 	push bc ; $43ab
 	push de ; $43ac
 	push hl ; $43ad
-	ldh a, [hWramBank] ; $43ae
-	push af ; $43b0
-	wram_bank $05 ; $43b1
+	push_wram_bank $05 ; $43ae
 	ld de, $0000 ; $43b7
 	ld bc, $1404 ; $43ba
 	farcall CreateWindow ; $43bd
@@ -564,8 +561,7 @@ RunDebugExpEditor:
 	ld e, a ; $4463
 	ld l, $01 ; $4464
 	call ResetCharDataScreenAnim ; $4466
-	pop af ; $4469
-	wram_bank ; $446a
+	pop_wram_bank ; $4469
 	pop hl ; $446e
 	pop de ; $446f
 	pop bc ; $4470
@@ -639,8 +635,7 @@ ShowExpGainScreen:
 	call StubNop_1a_2 ; $4521
 	jp .queueVRAMCopy ; $4524
 .done:
-	pop af ; $4527
-	wram_bank ; $4528
+	pop_wram_bank ; $4527
 	pop hl ; $452c
 	pop de ; $452d
 	ld b, h ; $452e
@@ -774,8 +769,7 @@ ShowExpGainScreen:
 	and PADF_A | PADF_B ; $461e
 	jr nz, .gaugeFull ; $4620
 	sound SFX_MENU_MOVE ; $4622
-	call WaitFramesCmd ; $4624
-	db $04 ; $4627 inline arg
+	wait_frames $04 ; $4624
 	jr .fillLoop ; $4628
 .gaugeFull:
 	ld a, $01 ; $462a
@@ -849,8 +843,7 @@ ShowExpGainScreen:
 	pop af ; $46af
 	call DrawExpBonusMessage ; $46b0
 	sound SFX_MENU_SELECT ; $46b3
-	call WaitFramesCmd ; $46b5
-	db $14 ; $46b8 inline arg
+	wait_frames $14 ; $46b5
 	wram_bank $06 ; $46b9
 	ld hl, wExpBonusAmount ; $46bf
 	ld a, [hl+] ; $46c2
@@ -908,8 +901,7 @@ ShowExpGainScreen:
 	call AdvanceFrame ; $471d
 	pop de ; $4720
 	pop hl ; $4721
-	pop af ; $4722
-	wram_bank ; $4723
+	pop_wram_bank ; $4722
 	pop bc ; $4727
 	wram_bank $06 ; $4728
 	ld hl, wExpAwardTotal ; $472e
@@ -939,8 +931,7 @@ ShowExpGainScreen:
 	call EnableLCD ; $4765
 	script_fade_in $10 ; $4768
 	call WaitFadeEnd ; $476d
-	pop af ; $4770
-	wram_bank ; $4771
+	pop_wram_bank ; $4770
 	pop hl ; $4775
 	pop de ; $4776
 	pop bc ; $4777
@@ -952,9 +943,7 @@ ExpScreenDrawTask:
 	push bc ; $477b
 	push de ; $477c
 	push hl ; $477d
-	ldh a, [hWramBank] ; $477e
-	push af ; $4780
-	wram_bank $06 ; $4781
+	push_wram_bank $06 ; $477e
 	ld a, [wExpScreenFlags] ; $4787
 	or a ; $478a
 	jr nz, .checkStoryModeMainCharacterOverworldSprite ; $478b
@@ -962,11 +951,7 @@ ExpScreenDrawTask:
 .checkStoryModeMainCharacterOverworldSprite:
 	ld a, [wStoryModeMainCharacterOverworldSprite] ; $4790
 	rlca ; $4793
-	add LOW(ExpScreenDrawTaskTable) ; $4794
-	ld l, a ; $4796
-	adc HIGH(ExpScreenDrawTaskTable) ; $4797
-	sub l ; $4799
-	ld h, a ; $479a
+	ld_hl_indexed ExpScreenDrawTaskTable ; $4794
 	ld a, [hl+] ; $479b
 	ld d, [hl] ; $479c
 	ld e, a ; $479d
@@ -1009,8 +994,7 @@ ExpScreenDrawTask:
 	and $7f ; $47fa
 	ld [wExpScreenFlags], a ; $47fc
 .restore:
-	pop af ; $47ff
-	wram_bank ; $4800
+	pop_wram_bank ; $47ff
 	pop hl ; $4804
 	pop de ; $4805
 	pop bc ; $4806
@@ -1619,9 +1603,7 @@ WriteTileBufferCell:
 	push bc ; $4c39
 	push de ; $4c3a
 	push hl ; $4c3b
-	ldh a, [hWramBank] ; $4c3c
-	push af ; $4c3e
-	wram_bank $01 ; $4c3f
+	push_wram_bank $01 ; $4c3c
 	call GetTileBufferCellAddr ; $4c45
 	ld a, e ; $4c48
 	ld [hl], a ; $4c49
@@ -1631,8 +1613,7 @@ WriteTileBufferCell:
 	pop de ; $4c4f
 	ld a, d ; $4c50
 	ld [hl], a ; $4c51
-	pop af ; $4c52
-	wram_bank ; $4c53
+	pop_wram_bank ; $4c52
 	pop hl ; $4c57
 	pop de ; $4c58
 	pop bc ; $4c59
@@ -1895,9 +1876,7 @@ UnusedDrawExpScreenMessage_1:
 	push bc ; $4daa
 	push de ; $4dab
 	push hl ; $4dac
-	ldh a, [hWramBank] ; $4dad
-	push af ; $4daf
-	wram_bank $06 ; $4db0
+	push_wram_bank $06 ; $4dad
 	ld a, [wExpScreenFlags] ; $4db6
 	or $01 ; $4db9
 	ld [wExpScreenFlags], a ; $4dbb
@@ -1921,8 +1900,7 @@ UnusedDrawExpScreenMessage_1:
 	ld a, [wExpScreenFlags] ; $4df5
 	and $fe ; $4df8
 	ld [wExpScreenFlags], a ; $4dfa
-	pop af ; $4dfd
-	wram_bank ; $4dfe
+	pop_wram_bank ; $4dfd
 	pop hl ; $4e02
 	pop de ; $4e03
 	pop bc ; $4e04
@@ -1933,9 +1911,7 @@ UnusedDrawExpScreenMessage_2:
 	push bc ; $4e08
 	push de ; $4e09
 	push hl ; $4e0a
-	ldh a, [hWramBank] ; $4e0b
-	push af ; $4e0d
-	wram_bank $06 ; $4e0e
+	push_wram_bank $06 ; $4e0b
 	ld a, [wExpScreenFlags] ; $4e14
 	or $01 ; $4e17
 	ld [wExpScreenFlags], a ; $4e19
@@ -1959,8 +1935,7 @@ UnusedDrawExpScreenMessage_2:
 	ld a, [wExpScreenFlags] ; $4e53
 	and $fe ; $4e56
 	ld [wExpScreenFlags], a ; $4e58
-	pop af ; $4e5b
-	wram_bank ; $4e5c
+	pop_wram_bank ; $4e5b
 	pop hl ; $4e60
 	pop de ; $4e61
 	pop bc ; $4e62
@@ -2270,13 +2245,10 @@ ResetCharDataScreenAnim:
 	push bc ; $5083
 	push de ; $5084
 	push hl ; $5085
-	ldh a, [hWramBank] ; $5086
-	push af ; $5088
-	wram_bank $06 ; $5089
+	push_wram_bank $06 ; $5086
 	xor a ; $508f
 	ld [wCharDataAnimCounter], a ; $5090
-	pop af ; $5093
-	wram_bank ; $5094
+	pop_wram_bank ; $5093
 	pop hl ; $5098
 	pop de ; $5099
 	pop bc ; $509a
@@ -2301,8 +2273,7 @@ ResetCharDataScreenAnim:
 	ld h, $04 ; $50c4
 	call ShowExpGainScreen ; $50c6
 .restore:
-	pop af ; $50c9
-	wram_bank ; $50ca
+	pop_wram_bank ; $50c9
 	pop hl ; $50ce
 	pop de ; $50cf
 	pop bc ; $50d0
@@ -3059,11 +3030,7 @@ DrawCharViewerGridCursor:
 	ret z ; $6af8
 	ld a, [wDebugCharViewerIndex] ; $6af9
 	rlca ; $6afc
-	add LOW(DrawCharViewerGridCursorTable) ; $6afd
-	ld l, a ; $6aff
-	adc HIGH(DrawCharViewerGridCursorTable) ; $6b00
-	sub l ; $6b02
-	ld h, a ; $6b03
+	ld_hl_indexed DrawCharViewerGridCursorTable ; $6afd
 	ld a, [hl+] ; $6b04
 	ld d, [hl] ; $6b05
 	ld e, a ; $6b06
@@ -3195,11 +3162,7 @@ DrawCharViewerCursorSprite:
 	jr nz, .nonZero ; $6c32
 	ld a, [wCharViewerCursor] ; $6c34
 	rlca ; $6c37
-	add LOW(DrawCharViewerCursorSpriteTable0) ; $6c38
-	ld l, a ; $6c3a
-	adc HIGH(DrawCharViewerCursorSpriteTable0) ; $6c3b
-	sub l ; $6c3d
-	ld h, a ; $6c3e
+	ld_hl_indexed DrawCharViewerCursorSpriteTable0 ; $6c38
 	ld a, [hl+] ; $6c3f
 	ld d, [hl] ; $6c40
 	ld e, a ; $6c41
@@ -3207,11 +3170,7 @@ DrawCharViewerCursorSprite:
 .nonZero:
 	ld a, [wCharViewerCursor] ; $6c44
 	rlca ; $6c47
-	add LOW(DrawCharViewerCursorSpriteTable1) ; $6c48
-	ld l, a ; $6c4a
-	adc HIGH(DrawCharViewerCursorSpriteTable1) ; $6c4b
-	sub l ; $6c4d
-	ld h, a ; $6c4e
+	ld_hl_indexed DrawCharViewerCursorSpriteTable1 ; $6c48
 	ld a, [hl+] ; $6c4f
 	ld d, [hl] ; $6c50
 	ld e, a ; $6c51
@@ -3633,11 +3592,7 @@ DrawCharViewerCharSprite:
 	farcall ReloadCharFacingTiles ; $7043
 	pop de ; $7046
 	ld a, d ; $7047
-	add LOW(DrawCharViewerCharSprite_CharScreenPosTable) ; $7048
-	ld l, a ; $704a
-	adc HIGH(DrawCharViewerCharSprite_CharScreenPosTable) ; $704b
-	sub l ; $704d
-	ld h, a ; $704e
+	ld_hl_indexed DrawCharViewerCharSprite_CharScreenPosTable ; $7048
 	ld b, [hl] ; $704f
 	ld hl, wCharTileBase ; $7050
 	ld a, [hl+] ; $7053
@@ -4353,11 +4308,7 @@ ComputeStatArrowSpriteX:
 	add d ; $7e26
 	ld d, a ; $7e27
 	ld a, h ; $7e28
-	add LOW(ComputeStatArrowSpriteXTable) ; $7e29
-	ld l, a ; $7e2b
-	adc HIGH(ComputeStatArrowSpriteXTable) ; $7e2c
-	sub l ; $7e2e
-	ld h, a ; $7e2f
+	ld_hl_indexed ComputeStatArrowSpriteXTable ; $7e29
 	ld a, [hl] ; $7e30
 	add d ; $7e31
 	ld d, a ; $7e32

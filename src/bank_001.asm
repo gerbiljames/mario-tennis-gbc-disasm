@@ -368,11 +368,7 @@ LoadDebugMenuPalette:
 	add a ; $519b
 	add a ; $519c
 	add a ; $519d
-	add LOW(DebugMenuPalettes_01) ; $519e
-	ld l, a ; $51a0
-	adc HIGH(DebugMenuPalettes_01) ; $51a1
-	sub l ; $51a3
-	ld h, a ; $51a4
+	ld_hl_indexed DebugMenuPalettes_01 ; $519e
 	ld e, $01 ; $51a5
 	call LoadPaletteShadow ; $51a7
 	ret ; $51aa
@@ -565,11 +561,7 @@ RunSoundTest:
 	push de ; $6b39
 	push hl ; $6b3a
 	ld a, d ; $6b3b
-	add LOW(SoundTestSoundsA_01) ; $6b3c
-	ld l, a ; $6b3e
-	adc HIGH(SoundTestSoundsA_01) ; $6b3f
-	sub l ; $6b41
-	ld h, a ; $6b42
+	ld_hl_indexed SoundTestSoundsA_01 ; $6b3c
 	ld a, [hl] ; $6b43
 	call PlaySoundManaged ; $6b44
 	pop hl ; $6b47
@@ -583,11 +575,7 @@ RunSoundTest:
 	push de ; $6b4f
 	push hl ; $6b50
 	ld a, e ; $6b51
-	add LOW(SoundTestSoundsB_01) ; $6b52
-	ld l, a ; $6b54
-	adc HIGH(SoundTestSoundsB_01) ; $6b55
-	sub l ; $6b57
-	ld h, a ; $6b58
+	ld_hl_indexed SoundTestSoundsB_01 ; $6b52
 	ld a, [hl] ; $6b59
 	call PlaySoundManaged ; $6b5a
 	pop hl ; $6b5d

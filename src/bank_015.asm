@@ -45,11 +45,7 @@ TournamentCourtyardExitTriggers_15:
 TournamentCourtyardNpc05_15:
 	ld a, [wMapSceneStage] ; $4100
 	add a ; $4103
-	add LOW(TournamentCourtyardNpc05TextIds) ; $4104
-	ld l, a ; $4106
-	adc HIGH(TournamentCourtyardNpc05TextIds) ; $4107
-	sub l ; $4109
-	ld h, a ; $410a
+	ld_hl_indexed TournamentCourtyardNpc05TextIds ; $4104
 	ld a, [hl+] ; $410b
 	ld h, [hl] ; $410c
 	ld l, a ; $410d
@@ -389,11 +385,7 @@ TournamentSiteEntryWalkIn:
 	script_set_speed ACTOR_PARTNER, $00ff ; $46fd
 	ld a, [wStoryModeEntryPoint] ; $4705
 	dec a ; $4708
-	add LOW(TournamentSiteEntryWalkInFacings + 4) ; $4709
-	ld l, a ; $470b
-	adc HIGH(TournamentSiteEntryWalkInFacings + 4) ; $470c
-	sub l ; $470e
-	ld h, a ; $470f
+	ld_hl_indexed TournamentSiteEntryWalkInFacings + 4 ; $4709
 	ld b, [hl] ; $4710
 	ld a, $02 ; $4711
 	ld b, b ; $4713
@@ -402,11 +394,7 @@ TournamentSiteEntryWalkIn:
 	script_wait_move ACTOR_PARTNER ; $471a
 	ld a, [wStoryModeEntryPoint] ; $471f
 	dec a ; $4722
-	add LOW(TournamentSiteEntryWalkInFacings) ; $4723
-	ld l, a ; $4725
-	adc HIGH(TournamentSiteEntryWalkInFacings) ; $4726
-	sub l ; $4728
-	ld h, a ; $4729
+	ld_hl_indexed TournamentSiteEntryWalkInFacings ; $4723
 	ld b, [hl] ; $472a
 	ld a, $02 ; $472b
 	ld b, b ; $472d
@@ -416,11 +404,7 @@ TournamentSiteEntryWalkIn:
 	script_set_speed ACTOR_PLAYER, $0010 ; $4739
 	ld a, [wStoryModeEntryPoint] ; $4741
 	dec a ; $4744
-	add LOW(TournamentSiteEntryWalkInFacings) ; $4745
-	ld l, a ; $4747
-	adc HIGH(TournamentSiteEntryWalkInFacings) ; $4748
-	sub l ; $474a
-	ld h, a ; $474b
+	ld_hl_indexed TournamentSiteEntryWalkInFacings ; $4745
 	ld b, [hl] ; $474c
 	ld a, $00 ; $474d
 	ld b, b ; $474f
@@ -530,11 +514,7 @@ ClearTrainingCourtNpcFlags:
 TrainingCourtNpc03_15:
 	ld a, [wMapSceneStage] ; $497a
 	add a ; $497d
-	add LOW(TrainingCourtNpc03TextIds) ; $497e
-	ld l, a ; $4980
-	adc HIGH(TrainingCourtNpc03TextIds) ; $4981
-	sub l ; $4983
-	ld h, a ; $4984
+	ld_hl_indexed TrainingCourtNpc03TextIds ; $497e
 	ld a, [hl+] ; $4985
 	ld h, [hl] ; $4986
 	ld l, a ; $4987
@@ -551,11 +531,7 @@ TrainingCourtNpc03TextIds:
 TrainingCourtNpc04_15:
 	ld a, [wMapSceneStage] ; $499b
 	add a ; $499e
-	add LOW(TrainingCourtNpc04TextIds) ; $499f
-	ld l, a ; $49a1
-	adc HIGH(TrainingCourtNpc04TextIds) ; $49a2
-	sub l ; $49a4
-	ld h, a ; $49a5
+	ld_hl_indexed TrainingCourtNpc04TextIds ; $499f
 	ld a, [hl+] ; $49a6
 	ld h, [hl] ; $49a7
 	ld l, a ; $49a8
@@ -572,11 +548,7 @@ TrainingCourtNpc04TextIds:
 TrainingCourtNpc05_15:
 	ld a, [wMapSceneStage] ; $49bc
 	add a ; $49bf
-	add LOW(TrainingCourtNpc05TextIds) ; $49c0
-	ld l, a ; $49c2
-	adc HIGH(TrainingCourtNpc05TextIds) ; $49c3
-	sub l ; $49c5
-	ld h, a ; $49c6
+	ld_hl_indexed TrainingCourtNpc05TextIds ; $49c0
 	ld a, [hl+] ; $49c7
 	ld h, [hl] ; $49c8
 	ld l, a ; $49c9
@@ -593,11 +565,7 @@ TrainingCourtNpc05TextIds:
 TrainingCourtNpc08_15:
 	ld a, [wMapSceneStage] ; $49dd
 	add a ; $49e0
-	add LOW(TrainingCourtNpc08TextIds) ; $49e1
-	ld l, a ; $49e3
-	adc HIGH(TrainingCourtNpc08TextIds) ; $49e4
-	sub l ; $49e6
-	ld h, a ; $49e7
+	ld_hl_indexed TrainingCourtNpc08TextIds ; $49e1
 	ld a, [hl+] ; $49e8
 	ld h, [hl] ; $49e9
 	ld l, a ; $49ea
@@ -614,11 +582,7 @@ TrainingCourtNpc08TextIds:
 TrainingCourtNpc09_15:
 	ld a, [wMapSceneStage] ; $49fe
 	add a ; $4a01
-	add LOW(TrainingCourtNpc09TextIds_15) ; $4a02
-	ld l, a ; $4a04
-	adc HIGH(TrainingCourtNpc09TextIds_15) ; $4a05
-	sub l ; $4a07
-	ld h, a ; $4a08
+	ld_hl_indexed TrainingCourtNpc09TextIds_15 ; $4a02
 	ld a, [hl+] ; $4a09
 	ld h, [hl] ; $4a0a
 	ld l, a ; $4a0b
@@ -635,11 +599,7 @@ TrainingCourtNpc09TextIds_15:
 TrainingCourtNpc0A_15:
 	ld a, [wMapSceneStage] ; $4a1f
 	add a ; $4a22
-	add LOW(TrainingCourtNpc0ATextIds) ; $4a23
-	ld l, a ; $4a25
-	adc HIGH(TrainingCourtNpc0ATextIds) ; $4a26
-	sub l ; $4a28
-	ld h, a ; $4a29
+	ld_hl_indexed TrainingCourtNpc0ATextIds ; $4a23
 	ld a, [hl+] ; $4a2a
 	ld h, [hl] ; $4a2b
 	ld l, a ; $4a2c
@@ -656,11 +616,7 @@ TrainingCourtNpc0ATextIds:
 TrainingCourtNpc0B_15:
 	ld a, [wMapSceneStage] ; $4a40
 	add a ; $4a43
-	add LOW(TrainingCourtNpc0BTextIds) ; $4a44
-	ld l, a ; $4a46
-	adc HIGH(TrainingCourtNpc0BTextIds) ; $4a47
-	sub l ; $4a49
-	ld h, a ; $4a4a
+	ld_hl_indexed TrainingCourtNpc0BTextIds ; $4a44
 	ld a, [hl+] ; $4a4b
 	ld h, [hl] ; $4a4c
 	ld l, a ; $4a4d
@@ -689,11 +645,7 @@ TrainingCourtNpc0BTextIds:
 TrainingCourtNpc0E_15:
 	ld a, [wMapSceneStage] ; $4a80
 	add a ; $4a83
-	add LOW(TrainingCourtNpc0ETextIds) ; $4a84
-	ld l, a ; $4a86
-	adc HIGH(TrainingCourtNpc0ETextIds) ; $4a87
-	sub l ; $4a89
-	ld h, a ; $4a8a
+	ld_hl_indexed TrainingCourtNpc0ETextIds ; $4a84
 	ld a, [hl+] ; $4a8b
 	ld h, [hl] ; $4a8c
 	ld l, a ; $4a8d
@@ -710,11 +662,7 @@ TrainingCourtNpc0ETextIds:
 TrainingCourtNpc0F_15:
 	ld a, [wMapSceneStage] ; $4aa1
 	add a ; $4aa4
-	add LOW(TrainingCourtNpc0FTextIds) ; $4aa5
-	ld l, a ; $4aa7
-	adc HIGH(TrainingCourtNpc0FTextIds) ; $4aa8
-	sub l ; $4aaa
-	ld h, a ; $4aab
+	ld_hl_indexed TrainingCourtNpc0FTextIds ; $4aa5
 	ld a, [hl+] ; $4aac
 	ld h, [hl] ; $4aad
 	ld l, a ; $4aae
@@ -743,11 +691,7 @@ TrainingCourtNpc0FTextIds:
 TrainingCourtNpc10_15:
 	ld a, [wMapSceneStage] ; $4ae1
 	add a ; $4ae4
-	add LOW(TrainingCourtNpc10TextIds_15) ; $4ae5
-	ld l, a ; $4ae7
-	adc HIGH(TrainingCourtNpc10TextIds_15) ; $4ae8
-	sub l ; $4aea
-	ld h, a ; $4aeb
+	ld_hl_indexed TrainingCourtNpc10TextIds_15 ; $4ae5
 	ld a, [hl+] ; $4aec
 	ld h, [hl] ; $4aed
 	ld l, a ; $4aee
@@ -1673,8 +1617,7 @@ WaterSpriteSwingContestScene:
 	jp nz, .done ; $5755
 	ld hl, QueueWaterSpriteMinigameHudPanels ; $5758
 	call UnregisterFrameTask ; $575b
-	call WaitFramesCmd ; $575e
-	db $3c ; $5761 inline arg
+	wait_frames $3c ; $575e
 	script_set_text Text_36_676 ; $5762
 	ld hl, wSwingContestSwings ; $5768
 	ld a, [hl+] ; $576b
@@ -1733,9 +1676,7 @@ WaterSpriteHudTiles_15:
 WaterSpriteHudPalette_15:
 	INCLUDE "data/bank_015/palettes_5890.asm" ; $5890, 8 bytes (palettes)
 LoadWaterSpriteMinigameHudGfx:
-	ldh a, [hWramBank] ; $5898
-	push af ; $589a
-	wram_bank $01 ; $589b
+	push_wram_bank $01 ; $5898
 	ld hl, WaterSpriteHudTiles_15 ; $58a1
 	ld de, $8000 + VRAM_BANK1 ; $58a4
 	ld c, (WaterSpriteHudPalette_15 - WaterSpriteHudTiles_15) / 16 ; $58a7
@@ -1743,8 +1684,7 @@ LoadWaterSpriteMinigameHudGfx:
 	ld hl, WaterSpriteHudPalette_15 ; $58ac
 	ld de, $0802 ; $58af
 	call LoadPaletteShadow ; $58b2
-	pop af ; $58b5
-	wram_bank ; $58b6
+	pop_wram_bank ; $58b5
 	ret ; $58ba
 QueueWaterSpriteMinigameTimerPanel:
 	ld hl, QueueWaterSpriteMinigameTimerPanel_SpriteTemplate ; $58bb
@@ -3598,11 +3538,7 @@ HideServeChallengerActor:
 TestServeChallengerGameFlag:
 	ld a, [wMapSceneStage] ; $71d4
 	add a ; $71d7
-	add LOW(TestServeChallengerGameFlagTable) ; $71d8
-	ld l, a ; $71da
-	adc HIGH(TestServeChallengerGameFlagTable) ; $71db
-	sub l ; $71dd
-	ld h, a ; $71de
+	ld_hl_indexed TestServeChallengerGameFlagTable ; $71d8
 	ld a, [hl+] ; $71df
 	ld d, [hl] ; $71e0
 	ld e, a ; $71e1
@@ -3612,11 +3548,7 @@ TestServeChallengerGameFlag:
 Unused_15_SetServeChallengerGameFlag:
 	ld a, [wMapSceneStage] ; $71e6
 	add a ; $71e9
-	add LOW(TestServeChallengerGameFlagTable) ; $71ea
-	ld l, a ; $71ec
-	adc HIGH(TestServeChallengerGameFlagTable) ; $71ed
-	sub l ; $71ef
-	ld h, a ; $71f0
+	ld_hl_indexed TestServeChallengerGameFlagTable ; $71ea
 	ld a, [hl+] ; $71f1
 	ld d, [hl] ; $71f2
 	ld e, a ; $71f3
@@ -3642,11 +3574,7 @@ HideNetChallengerActor:
 TestNetChallengerGameFlag:
 	ld a, [wMapSceneStage] ; $721a
 	add a ; $721d
-	add LOW(TestNetChallengerGameFlagTable) ; $721e
-	ld l, a ; $7220
-	adc HIGH(TestNetChallengerGameFlagTable) ; $7221
-	sub l ; $7223
-	ld h, a ; $7224
+	ld_hl_indexed TestNetChallengerGameFlagTable ; $721e
 	ld a, [hl+] ; $7225
 	ld d, [hl] ; $7226
 	ld e, a ; $7227
@@ -3656,11 +3584,7 @@ TestNetChallengerGameFlag:
 Unused_15_SetNetChallengerGameFlag:
 	ld a, [wMapSceneStage] ; $722c
 	add a ; $722f
-	add LOW(TestNetChallengerGameFlagTable) ; $7230
-	ld l, a ; $7232
-	adc HIGH(TestNetChallengerGameFlagTable) ; $7233
-	sub l ; $7235
-	ld h, a ; $7236
+	ld_hl_indexed TestNetChallengerGameFlagTable ; $7230
 	ld a, [hl+] ; $7237
 	ld d, [hl] ; $7238
 	ld e, a ; $7239
@@ -3686,11 +3610,7 @@ HideStrokeChallengerActor:
 TestStrokeChallengerGameFlag:
 	ld a, [wMapSceneStage] ; $7260
 	add a ; $7263
-	add LOW(TestStrokeChallengerGameFlagTable) ; $7264
-	ld l, a ; $7266
-	adc HIGH(TestStrokeChallengerGameFlagTable) ; $7267
-	sub l ; $7269
-	ld h, a ; $726a
+	ld_hl_indexed TestStrokeChallengerGameFlagTable ; $7264
 	ld a, [hl+] ; $726b
 	ld d, [hl] ; $726c
 	ld e, a ; $726d
@@ -3700,11 +3620,7 @@ TestStrokeChallengerGameFlag:
 Unused_15_SetStrokeChallengerGameFlag:
 	ld a, [wMapSceneStage] ; $7272
 	add a ; $7275
-	add LOW(TestStrokeChallengerGameFlagTable) ; $7276
-	ld l, a ; $7278
-	adc HIGH(TestStrokeChallengerGameFlagTable) ; $7279
-	sub l ; $727b
-	ld h, a ; $727c
+	ld_hl_indexed TestStrokeChallengerGameFlagTable ; $7276
 	ld a, [hl+] ; $727d
 	ld d, [hl] ; $727e
 	ld e, a ; $727f

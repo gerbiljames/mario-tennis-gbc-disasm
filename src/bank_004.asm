@@ -394,11 +394,7 @@ StepActorScript:
 	ld hl, ActorScriptOpcodeReturn ; $4250
 	push hl ; $4253
 	add a ; $4254
-	add LOW(ActorScriptOpHandlers_04) ; $4255
-	ld l, a ; $4257
-	adc HIGH(ActorScriptOpHandlers_04) ; $4258
-	sub l ; $425a
-	ld h, a ; $425b
+	ld_hl_indexed ActorScriptOpHandlers_04 ; $4255
 	ld a, [hl+] ; $425c
 	ld h, [hl] ; $425d
 	ld l, a ; $425e
@@ -1759,11 +1755,7 @@ ActorScriptOp_Flag:
 	ld h, d ; $49f8
 	call FarReadByte ; $49f9
 	inc de ; $49fc
-	add LOW(BitMaskTable_04) ; $49fd
-	ld l, a ; $49ff
-	adc HIGH(BitMaskTable_04) ; $4a00
-	sub l ; $4a02
-	ld h, a ; $4a03
+	ld_hl_indexed BitMaskTable_04 ; $49fd
 	ld c, [hl] ; $4a04
 	pop af ; $4a05
 	ld hl, hActorPtr ; $4a06
@@ -1913,11 +1905,7 @@ LoadActorObjectDef:
 	ld [hl], d ; $4ad3
 	ld a, d ; $4ad4
 	add a ; $4ad5
-	add LOW(ObjectIdList_04) ; $4ad6
-	ld l, a ; $4ad8
-	adc HIGH(ObjectIdList_04) ; $4ad9
-	sub l ; $4adb
-	ld h, a ; $4adc
+	ld_hl_indexed ObjectIdList_04 ; $4ad6
 	ld a, [hl+] ; $4add
 	ld h, [hl] ; $4ade
 	ld l, a ; $4adf
@@ -2000,11 +1988,7 @@ SetupCharSpriteFromObjectDef:
 	ld a, d ; $4b68
 	ld [wCharObjectDefId], a ; $4b69
 	add a ; $4b6c
-	add LOW(ObjectIdList_04) ; $4b6d
-	ld l, a ; $4b6f
-	adc HIGH(ObjectIdList_04) ; $4b70
-	sub l ; $4b72
-	ld h, a ; $4b73
+	ld_hl_indexed ObjectIdList_04 ; $4b6d
 	ld a, [hl+] ; $4b74
 	ld h, [hl] ; $4b75
 	ld l, a ; $4b76
@@ -2272,9 +2256,7 @@ SpawnActorsFromList:
 	push de ; $4cf9
 	push hl ; $4cfa
 	ld b, a ; $4cfb
-	ldh a, [hWramBank] ; $4cfc
-	push af ; $4cfe
-	wram_bank $04 ; $4cff
+	push_wram_bank $04 ; $4cfc
 	ld a, b ; $4d05
 .spawnLoop:
 	push af ; $4d06
@@ -2292,8 +2274,7 @@ SpawnActorsFromList:
 	jr .spawnLoop ; $4d1f
 .done:
 	pop af ; $4d21
-	pop af ; $4d22
-	wram_bank ; $4d23
+	pop_wram_bank ; $4d22
 	pop hl ; $4d27
 	pop de ; $4d28
 	pop bc ; $4d29
@@ -2386,11 +2367,7 @@ SpawnMainCharacterActor:
 	ld a, [wStoryModeMainCharacterOverworldSprite] ; $4e77
 	and $03 ; $4e7a
 	add a ; $4e7c
-	add LOW(ScriptedActorListPtrs_04) ; $4e7d
-	ld l, a ; $4e7f
-	adc HIGH(ScriptedActorListPtrs_04) ; $4e80
-	sub l ; $4e82
-	ld h, a ; $4e83
+	ld_hl_indexed ScriptedActorListPtrs_04 ; $4e7d
 	ld a, [hl+] ; $4e84
 	ld h, [hl] ; $4e85
 	ld l, a ; $4e86
@@ -2682,11 +2659,7 @@ GetPointAheadOfActorRanged:
 	add a ; $50e9
 IndexPlayerControlTable:
 	add d ; $50ea
-	add LOW(ActorMoveVectors_04) ; $50eb
-	ld l, a ; $50ed
-	adc HIGH(ActorMoveVectors_04) ; $50ee
-	sub l ; $50f0
-	ld h, a ; $50f1
+	ld_hl_indexed ActorMoveVectors_04 ; $50eb
 	ld a, [hl+] ; $50f2
 	ld e, a ; $50f3
 	ld a, [hl+] ; $50f4
@@ -3702,11 +3675,7 @@ UpdateActorFacingFromHeading:
 	add $08 ; $5695
 	swap a ; $5697
 	and $0f ; $5699
-	add LOW(DirectionToFacing_04) ; $569b
-	ld l, a ; $569d
-	adc HIGH(DirectionToFacing_04) ; $569e
-	sub l ; $56a0
-	ld h, a ; $56a1
+	ld_hl_indexed DirectionToFacing_04 ; $569b
 	ld d, [hl] ; $56a2
 .store:
 	ld hl, $0032 ; $56a3

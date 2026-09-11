@@ -563,13 +563,10 @@ DrawProportionalTextLine:
 	push af ; $4565
 	ld bc, $0012 ; $4566
 	farcall RenderProportionalTextAt ; $4569
-	pop af ; $456c
-	wram_bank ; $456d
+	pop_wram_bank ; $456c
 	ret ; $4571
 DrawContinuePromptText:
-	ldh a, [hWramBank] ; $4572
-	push af ; $4574
-	wram_bank $03 ; $4575
+	push_wram_bank $03 ; $4572
 	ld a, $80 ; $457b
 .loop:
 	cp $91 ; $457d
@@ -579,13 +576,10 @@ DrawContinuePromptText:
 	inc a ; $4583
 	jr .loop ; $4584
 .restore:
-	pop af ; $4586
-	wram_bank ; $4587
+	pop_wram_bank ; $4586
 	ret ; $458b
 DrawSaveWarningTextLine1:
-	ldh a, [hWramBank] ; $458c
-	push af ; $458e
-	wram_bank $03 ; $458f
+	push_wram_bank $03 ; $458c
 	ld a, $92 ; $4595
 .loop:
 	cp $9e ; $4597
@@ -595,13 +589,10 @@ DrawSaveWarningTextLine1:
 	inc a ; $459d
 	jr .loop ; $459e
 .restore:
-	pop af ; $45a0
-	wram_bank ; $45a1
+	pop_wram_bank ; $45a0
 	ret ; $45a5
 DrawSaveWarningTextLine2:
-	ldh a, [hWramBank] ; $45a6
-	push af ; $45a8
-	wram_bank $03 ; $45a9
+	push_wram_bank $03 ; $45a6
 	ld a, $a4 ; $45af
 .loop:
 	cp $b5 ; $45b1
@@ -611,8 +602,7 @@ DrawSaveWarningTextLine2:
 	inc a ; $45b7
 	jr .loop ; $45b8
 .restore:
-	pop af ; $45ba
-	wram_bank ; $45bb
+	pop_wram_bank ; $45ba
 	ret ; $45bf
 FetchAndDrawDialogueText:
 	push bc ; $45c0
@@ -879,9 +869,7 @@ DrawRankMatchLabel:
 	call DrawProportionalTextLine ; $47d3
 	ret ; $47d6
 .checkWramBank:
-	ldh a, [hWramBank] ; $47d7
-	push af ; $47d9
-	wram_bank $03 ; $47da
+	push_wram_bank $03 ; $47d7
 	ld hl, wShadowTilemap + 14 * TILEMAP_WIDTH + 10 ; $47e0
 	ld a, $20 ; $47e3
 	ld [hl+], a ; $47e5
@@ -893,8 +881,7 @@ DrawRankMatchLabel:
 	ld [hl+], a ; $47eb
 	ld [hl+], a ; $47ec
 	ld [hl], a ; $47ed
-	pop af ; $47ee
-	wram_bank ; $47ef
+	pop_wram_bank ; $47ee
 	ret ; $47f3
 DrawTournamentRoundLabel:
 	ld hl, Text_31_222 ; $47f4
@@ -1216,11 +1203,7 @@ UpdateResultsCharSprite:
 	farcall ReloadCharFacingTiles ; $4ab4
 	pop de ; $4ab7
 	ld a, d ; $4ab8
-	add LOW(UpdateResultsCharSpriteTable) ; $4ab9
-	ld l, a ; $4abb
-	adc HIGH(UpdateResultsCharSpriteTable) ; $4abc
-	sub l ; $4abe
-	ld h, a ; $4abf
+	ld_hl_indexed UpdateResultsCharSpriteTable ; $4ab9
 	ld b, [hl] ; $4ac0
 	pop af ; $4ac1
 	push af ; $4ac2
@@ -1471,8 +1454,7 @@ ShowExpAwardScreen:
 	call RegisterFrameTask ; $5488
 	script_fade_in $10 ; $548b
 	call WaitFadeEnd ; $5490
-	call WaitFramesCmd ; $5493
-	db $14 ; $5496 inline arg
+	wait_frames $14 ; $5493
 	call RunExpAwardSequence ; $5497
 	ld c, $10 ; $549a
 	call BeginFadeOut ; $549c
@@ -1960,11 +1942,7 @@ UpdateExpScreenCharSprite:
 	ld [wCharFacingOctant], a ; $5960
 	farcall ReloadCharFacingTiles ; $5963
 	ld a, [wCharFacingOctant] ; $5966
-	add LOW(UpdateExpScreenCharSpriteTable) ; $5969
-	ld l, a ; $596b
-	adc HIGH(UpdateExpScreenCharSpriteTable) ; $596c
-	sub l ; $596e
-	ld h, a ; $596f
+	ld_hl_indexed UpdateExpScreenCharSpriteTable ; $5969
 	ld a, [wCharSpriteAttr] ; $5970
 	or $08 ; $5973
 	xor [hl] ; $5975
@@ -2042,11 +2020,7 @@ DrawNextExpAwardMessage:
 	ld d, a ; $59e3
 	ld a, [wExpAwardIndex] ; $59e4
 	rlca ; $59e7
-	add LOW(DrawNextExpAwardMessageTable) ; $59e8
-	ld l, a ; $59ea
-	adc HIGH(DrawNextExpAwardMessageTable) ; $59eb
-	sub l ; $59ed
-	ld h, a ; $59ee
+	ld_hl_indexed DrawNextExpAwardMessageTable ; $59e8
 	ld a, [hl+] ; $59ef
 	ld h, [hl] ; $59f0
 	ld l, a ; $59f1
@@ -2218,8 +2192,7 @@ BeginNextExpAward:
 	ld a, $01 ; $5b5d
 	ret ; $5b5f
 .waitFramesCmd:
-	call WaitFramesCmd ; $5b60
-	db $0a ; $5b63 inline arg
+	wait_frames $0a ; $5b60
 	xor a ; $5b64
 	ret ; $5b65
 CountUpExpTotal:
@@ -2819,9 +2792,7 @@ ApplyMatchSettingsExpBonus:
 	add hl, hl ; $68ff
 	ret ; $6900
 GetOpponentExpTier:
-	ldh a, [hWramBank] ; $6901
-	push af ; $6903
-	wram_bank $05 ; $6904
+	push_wram_bank $05 ; $6901
 	call LookupExpTierForChar ; $690a
 	ld a, [wMatchIsDoubles] ; $690d
 	and a ; $6910
@@ -2842,8 +2813,7 @@ GetOpponentExpTier:
 	ld a, $06 ; $6929
 .lt06:
 	ld c, a ; $692b
-	pop af ; $692c
-	wram_bank ; $692d
+	pop_wram_bank ; $692c
 	ret ; $6931
 GetPlayerExpTier:
 	call LookupExpTierForChar ; $6932
@@ -2866,11 +2836,7 @@ LookupExpTierForChar:
 	ld e, $0a ; $694c
 	call DivAHLByE ; $694e
 	ld a, l ; $6951
-	add LOW(LookupExpTierForCharTable) ; $6952
-	ld l, a ; $6954
-	adc HIGH(LookupExpTierForCharTable) ; $6955
-	sub l ; $6957
-	ld h, a ; $6958
+	ld_hl_indexed LookupExpTierForCharTable ; $6952
 	ld c, [hl] ; $6959
 	ret ; $695a
 LookupExpTierForCharTable:
@@ -2998,8 +2964,7 @@ ShowExpAwardForMinigame:
 	farcall SetPendingExpAward ; $6a24
 	ld c, $01 ; $6a27
 	call ShowMatchResultsScreen ; $6a29
-	pop af ; $6a2c
-	wram_bank ; $6a2d
+	pop_wram_bank ; $6a2c
 	pop hl ; $6a31
 	pop de ; $6a32
 	pop bc ; $6a33
@@ -3034,8 +2999,7 @@ ShowExpAwardForMatch:
 	farcall SetPendingExpAward ; $6a5c
 	ld c, $01 ; $6a5f
 	call ShowMatchResultsScreen ; $6a61
-	pop af ; $6a64
-	wram_bank ; $6a65
+	pop_wram_bank ; $6a64
 	pop hl ; $6a69
 	pop de ; $6a6a
 	pop bc ; $6a6b
@@ -3069,8 +3033,7 @@ ShowExpAwardForExhibition:
 	jr z, .restore ; $6a95
 	set_flag FLAG_DOUBLES ; $6a97
 .restore:
-	pop af ; $6a9a
-	wram_bank ; $6a9b
+	pop_wram_bank ; $6a9a
 	pop hl ; $6a9f
 	pop de ; $6aa0
 	pop bc ; $6aa1
@@ -3104,8 +3067,7 @@ ShowExpAwardForLinkedPlay:
 	jr z, .restore ; $6acb
 	set_flag FLAG_DOUBLES ; $6acd
 .restore:
-	pop af ; $6ad0
-	wram_bank ; $6ad1
+	pop_wram_bank ; $6ad0
 	pop hl ; $6ad5
 	pop de ; $6ad6
 	pop bc ; $6ad7
@@ -3128,8 +3090,7 @@ UnusedShowExpAwardForN64:
 	farcall SetPendingExpAward ; $6aeb
 	ld c, $01 ; $6aee
 	call ShowMatchResultsScreen ; $6af0
-	pop af ; $6af3
-	wram_bank ; $6af4
+	pop_wram_bank ; $6af3
 	pop hl ; $6af8
 	pop de ; $6af9
 	pop bc ; $6afa
@@ -3282,8 +3243,7 @@ ApplyPendingExpAwards:
 	pop af ; $6be7
 	ld [wGameMode], a ; $6be8
 	farcall SaveStorySlot ; $6beb
-	pop af ; $6bee
-	wram_bank ; $6bef
+	pop_wram_bank ; $6bee
 	pop hl ; $6bf3
 	pop de ; $6bf4
 	pop bc ; $6bf5
@@ -3293,8 +3253,7 @@ ApplyPendingExpAwards:
 .restore2:
 	pop af ; $6bfa
 	ld [wGameMode], a ; $6bfb
-	pop af ; $6bfe
-	wram_bank ; $6bff
+	pop_wram_bank ; $6bfe
 	pop hl ; $6c03
 	pop de ; $6c04
 	pop bc ; $6c05
@@ -3842,8 +3801,7 @@ UpdateMinigameBestScore:
 	farcall UpdateMinigameRecord ; $6f81
 	call SetMinigameRecordSaveFlag ; $6f84
 .restore:
-	pop af ; $6f87
-	wram_bank ; $6f88
+	pop_wram_bank ; $6f87
 	ret ; $6f8c
 CheckAllProgressComplete:
 	push af ; $6f8d
@@ -3927,9 +3885,7 @@ ComputeTrophyExpAwards:
 	push af ; $6ffb
 	push bc ; $6ffc
 	push de ; $6ffd
-	ldh a, [hWramBank] ; $6ffe
-	push af ; $7000
-	wram_bank $06 ; $7001
+	push_wram_bank $06 ; $6ffe
 	ld hl, $0000 ; $7007
 	call ComputeTrophyExpGroup0 ; $700a
 	push hl ; $700d
@@ -3987,16 +3943,13 @@ ComputeTrophyExpAwards:
 	ld [hl+], a ; $7059
 	ld [hl], b ; $705a
 	pop hl ; $705b
-	pop af ; $705c
-	wram_bank ; $705d
+	pop_wram_bank ; $705c
 	pop de ; $7061
 	pop bc ; $7062
 	pop af ; $7063
 	ret ; $7064
 UnusedSetPendingTrophyExpAwards:
-	ldh a, [hWramBank] ; $7065
-	push af ; $7067
-	wram_bank $06 ; $7068
+	push_wram_bank $06 ; $7065
 	ld hl, wTrophyExpGroup0 ; $706e
 	ld a, [hl+] ; $7071
 	ld d, [hl] ; $7072
@@ -4063,8 +4016,7 @@ UnusedSetPendingTrophyExpAwards:
 	ld c, $05 ; $70cf
 	farcall SetPendingExpAward ; $70d1
 .restore:
-	pop af ; $70d4
-	wram_bank ; $70d5
+	pop_wram_bank ; $70d4
 	ret ; $70d9
 ComputeTrophyExpGroup0:
 	ld a, $00 ; $70da
@@ -4095,9 +4047,7 @@ ComputeTrophyExpForGroup:
 	push de ; $70ff
 	push hl ; $7100
 	ld c, a ; $7101
-	ldh a, [hWramBank] ; $7102
-	push af ; $7104
-	wram_bank $06 ; $7105
+	push_wram_bank $06 ; $7102
 	ld a, c ; $710b
 	ld [wTrophyExpGroup], a ; $710c
 	ld hl, TrophyExpForGroupTable4 ; $710f
@@ -4281,8 +4231,7 @@ ComputeTrophyExpForGroup:
 	ld a, [hl+] ; $721b
 	ld b, [hl] ; $721c
 	ld c, a ; $721d
-	pop af ; $721e
-	wram_bank ; $721f
+	pop_wram_bank ; $721e
 	pop hl ; $7223
 	pop de ; $7224
 	pop af ; $7225
@@ -4347,9 +4296,7 @@ InitGameProgressScreen:
 	jr nz, .loop ; $72ac
 	ret ; $72ae
 BuildGameProgressScreen:
-	ldh a, [hWramBank] ; $72af
-	push af ; $72b1
-	wram_bank $05 ; $72b2
+	push_wram_bank $05 ; $72af
 	ld c, $10 ; $72b8
 	call BeginFadeOut ; $72ba
 	call WaitFadeEnd ; $72bd
@@ -4437,8 +4384,7 @@ BuildGameProgressScreen:
 .playSfx2:
 	sound SFX_MENU_SELECT ; $7376
 .restore:
-	pop af ; $7378
-	wram_bank ; $7379
+	pop_wram_bank ; $7378
 	ret ; $737d
 UpdateProgressScreenAnimatedTiles:
 	farcall UpdateAnimatedTiles ; $737e
@@ -4694,9 +4640,7 @@ LoadGameProgressScreenAssets:
 	call FillProgressListRowAttrs ; $7500
 	ret ; $7503
 LoadGameProgressScreenTiles:
-	ldh a, [hWramBank] ; $7504
-	push af ; $7506
-	wram_bank $01 ; $7507
+	push_wram_bank $01 ; $7504
 	ld hl, GameProgressHeaderGfx_1e ; $750d
 	ld de, wDecompBuffer ; $7510
 	call DecompressData ; $7513
@@ -4740,8 +4684,7 @@ LoadGameProgressScreenTiles:
 	ld d, $00 ; $7566
 	ld e, $02 ; $7568
 	call LoadPaletteShadow ; $756a
-	pop af ; $756d
-	wram_bank ; $756e
+	pop_wram_bank ; $756d
 	ld hl, GameProgressScreenTiles0 ; $7572
 	ld de, $8000 + VRAM_BANK1 ; $7575
 	ld c, (GameProgressScreenPalettes1 - GameProgressScreenTiles0) / 16 ; $7578

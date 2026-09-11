@@ -48,8 +48,8 @@ in the game and has 419 call sites. Every screen loop, every fade wait, every
 
 `WaitFrames` (`$00:$2740`, `c` = count) is the trivial loop around it, and
 `WaitFramesCmd` (`$00:$2725`) is the inline-argument variant that reads its
-count from the byte after the call site (see the `INLINE_ARG_CALLS` note in
-`tools/disasm.py`).
+count from the byte after the call site; the source renders each call as
+`wait_frames N` (see `INLINE_ARG_CALLS` in `tools/disasmlib/core.py`).
 
 ### 1.2 What VBlank does, in order
 

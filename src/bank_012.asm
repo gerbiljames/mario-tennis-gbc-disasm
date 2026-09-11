@@ -347,11 +347,7 @@ WallPracticeRoomExitTriggers_12:
 WallPracticeRoomNpc03_12:
 	ld a, [wMapSceneStage] ; $471f
 	add a ; $4722
-	add LOW(WallPracticeRoomNpc03TextIds) ; $4723
-	ld l, a ; $4725
-	adc HIGH(WallPracticeRoomNpc03TextIds) ; $4726
-	sub l ; $4728
-	ld h, a ; $4729
+	ld_hl_indexed WallPracticeRoomNpc03TextIds ; $4723
 	ld a, [hl+] ; $472a
 	ld h, [hl] ; $472b
 	ld l, a ; $472c
@@ -395,11 +391,7 @@ WallPracticeRoomNpc03TextIds:
 WallPracticeRoomNpc04_12:
 	ld a, [wMapSceneStage] ; $4781
 	add a ; $4784
-	add LOW(WallPracticeRoomNpc04TextIds) ; $4785
-	ld l, a ; $4787
-	adc HIGH(WallPracticeRoomNpc04TextIds) ; $4788
-	sub l ; $478a
-	ld h, a ; $478b
+	ld_hl_indexed WallPracticeRoomNpc04TextIds ; $4785
 	ld a, [hl+] ; $478c
 	ld h, [hl] ; $478d
 	ld l, a ; $478e
@@ -418,11 +410,7 @@ WallPracticeRoomNpc04TextIds:
 WallPracticeRoomNpc05_12:
 	ld a, [wMapSceneStage] ; $47a6
 	add a ; $47a9
-	add LOW(WallPracticeRoomNpc05TextIds) ; $47aa
-	ld l, a ; $47ac
-	adc HIGH(WallPracticeRoomNpc05TextIds) ; $47ad
-	sub l ; $47af
-	ld h, a ; $47b0
+	ld_hl_indexed WallPracticeRoomNpc05TextIds ; $47aa
 	ld a, [hl+] ; $47b1
 	ld h, [hl] ; $47b2
 	ld l, a ; $47b3
@@ -451,11 +439,7 @@ WallPracticeRoomNpc05TextIds:
 WallPracticeRoomNpc06_12:
 	ld a, [wMapSceneStage] ; $47f3
 	add a ; $47f6
-	add LOW(WallPracticeRoomNpc06TextIds) ; $47f7
-	ld l, a ; $47f9
-	adc HIGH(WallPracticeRoomNpc06TextIds) ; $47fa
-	sub l ; $47fc
-	ld h, a ; $47fd
+	ld_hl_indexed WallPracticeRoomNpc06TextIds ; $47f7
 	ld a, [hl+] ; $47fe
 	ld h, [hl] ; $47ff
 	ld l, a ; $4800
@@ -499,17 +483,14 @@ WallPracticeScoreRetryPrompt:
 	ld a, [hl+] ; $486b
 	ld b, [hl] ; $486c
 	ld c, a ; $486d
-	ldh a, [hWramBank] ; $486e
-	push af ; $4870
-	wram_bank $07 ; $4871
+	push_wram_bank $07 ; $486e
 	ld a, $00 ; $4877
 	farcall ReadMinigameRecord ; $4879
 	ld hl, wMinigameRecordValue ; $487c
 	ld a, [hl+] ; $487f
 	ld d, [hl] ; $4880
 	ld e, a ; $4881
-	pop af ; $4882
-	wram_bank ; $4883
+	pop_wram_bank ; $4882
 	ld l, c ; $4887
 	ld h, b ; $4888
 	inc de ; $4889
@@ -529,11 +510,7 @@ WallPracticeScoreRetryPrompt:
 	ld a, [wPointOutcome] ; $48a2
 	and $03 ; $48a5
 	add a ; $48a7
-	add LOW(WallPracticeScoreRetryPromptTextIds) ; $48a8
-	ld l, a ; $48aa
-	adc HIGH(WallPracticeScoreRetryPromptTextIds) ; $48ab
-	sub l ; $48ad
-	ld h, a ; $48ae
+	ld_hl_indexed WallPracticeScoreRetryPromptTextIds ; $48a8
 	ld a, [hl+] ; $48af
 	ld h, [hl] ; $48b0
 	ld l, a ; $48b1
@@ -557,9 +534,7 @@ WallPracticeScoreRetryPrompt:
 	jp LaunchWallPracticeMinigame ; $48e7
 	ret ; $48ea
 WallPracticeNewRecordScript:
-	ldh a, [hWramBank] ; $48eb
-	push af ; $48ed
-	wram_bank $07 ; $48ee
+	push_wram_bank $07 ; $48eb
 	ld hl, wMinigamesCurrentScore ; $48f4
 	ld a, [hl+] ; $48f7
 	ld d, [hl] ; $48f8
@@ -570,8 +545,7 @@ WallPracticeNewRecordScript:
 	ld [hl], d ; $48ff
 	ld a, $00 ; $4900
 	farcall UpdateMinigameRecord ; $4902
-	pop af ; $4905
-	wram_bank ; $4906
+	pop_wram_bank ; $4905
 	call SetupWallPracticeLevelSigns ; $490a
 	script_set_text Text_36_40 ; $490d
 	ld hl, wMinigamesCurrentScore ; $4913
@@ -591,17 +565,14 @@ WallPracticeNewRecordScript:
 WallPracticeMaxScoreScript:
 	script_set_text Text_36_41 ; $4936
 	script_speak $07 ; $493c
-	ldh a, [hWramBank] ; $4941
-	push af ; $4943
-	wram_bank $07 ; $4944
+	push_wram_bank $07 ; $4941
 	ld a, $00 ; $494a
 	farcall ReadMinigameRecord ; $494c
 	ld hl, wMinigameRecordValue ; $494f
 	ld a, [hl+] ; $4952
 	ld h, [hl] ; $4953
 	ld l, a ; $4954
-	pop af ; $4955
-	wram_bank ; $4956
+	pop_wram_bank ; $4955
 	ld de, $270f ; $495a
 	ld a, l ; $495d
 	sub e ; $495e
@@ -640,9 +611,7 @@ RelaunchWallPracticeMasterLevel:
 	farcall RunTrainingDrillByID ; $49e1
 	ret ; $49e4
 .carry:
-	ldh a, [hWramBank] ; $49e5
-	push af ; $49e7
-	wram_bank $07 ; $49e8
+	push_wram_bank $07 ; $49e5
 	ld hl, wMinigamesCurrentScore ; $49ee
 	ld a, [hl+] ; $49f1
 	ld d, [hl] ; $49f2
@@ -653,8 +622,7 @@ RelaunchWallPracticeMasterLevel:
 	ld [hl], d ; $49f9
 	ld a, $00 ; $49fa
 	farcall UpdateMinigameRecord ; $49fc
-	pop af ; $49ff
-	wram_bank ; $4a00
+	pop_wram_bank ; $49ff
 	script_set_speed ACTOR_PLAYER, $0020 ; $4a04
 	script_move_target ACTOR_PLAYER, $0500, $3100 ; $4a0c
 	script_wait_move ACTOR_PLAYER ; $4a17
@@ -720,11 +688,7 @@ WallPracticeLevelResultScript:
 	ld a, [wPointOutcome] ; $4aef
 	and $03 ; $4af2
 	add a ; $4af4
-	add LOW(WallPracticeLevelResultScriptTextIds) ; $4af5
-	ld l, a ; $4af7
-	adc HIGH(WallPracticeLevelResultScriptTextIds) ; $4af8
-	sub l ; $4afa
-	ld h, a ; $4afb
+	ld_hl_indexed WallPracticeLevelResultScriptTextIds ; $4af5
 	ld a, [hl+] ; $4afc
 	ld h, [hl] ; $4afd
 	ld l, a ; $4afe
@@ -774,9 +738,7 @@ WallPracticeLevelResultScriptTextIds:
 	call WaitFadeEnd ; $4bad
 	jr .speakAndLeave ; $4bb0
 .variant2:
-	ldh a, [hWramBank] ; $4bb2
-	push af ; $4bb4
-	wram_bank $07 ; $4bb5
+	push_wram_bank $07 ; $4bb2
 	ld de, $0032 ; $4bbb
 	ld hl, wMinigameRecordValue ; $4bbe
 	ld a, e ; $4bc1
@@ -784,8 +746,7 @@ WallPracticeLevelResultScriptTextIds:
 	ld [hl], d ; $4bc3
 	ld a, $00 ; $4bc4
 	farcall UpdateMinigameRecord ; $4bc6
-	pop af ; $4bc9
-	wram_bank ; $4bca
+	pop_wram_bank ; $4bc9
 	script_set_text Text_35_254 ; $4bce
 	script_fade_in $06 ; $4bd4
 	call WaitFadeEnd ; $4bd9
@@ -1079,11 +1040,7 @@ WallPracticeRoomInitScript_12:
 	ld a, [wPointOutcome] ; $5002
 	and $03 ; $5005
 	add a ; $5007
-	add LOW(WallPracticeLevelResultScriptTextIds) ; $5008
-	ld l, a ; $500a
-	adc HIGH(WallPracticeLevelResultScriptTextIds) ; $500b
-	sub l ; $500d
-	ld h, a ; $500e
+	ld_hl_indexed WallPracticeLevelResultScriptTextIds ; $5008
 	ld a, [hl+] ; $500f
 	ld h, [hl] ; $5010
 	ld l, a ; $5011
@@ -1150,11 +1107,7 @@ WallPracticeRoomNpc07_12:
 .scoreLine:
 	ld a, [wMapSceneStage] ; $50dd
 	add a ; $50e0
-	add LOW(WallPracticeRoomNpc07TextIds) ; $50e1
-	ld l, a ; $50e3
-	adc HIGH(WallPracticeRoomNpc07TextIds) ; $50e4
-	sub l ; $50e6
-	ld h, a ; $50e7
+	ld_hl_indexed WallPracticeRoomNpc07TextIds ; $50e1
 	ld a, [hl+] ; $50e8
 	ld h, [hl] ; $50e9
 	ld l, a ; $50ea
@@ -1162,17 +1115,14 @@ WallPracticeRoomNpc07_12:
 	ld a, [wMapSceneStage] ; $50ee
 	cp WALLPRACTICESTAGE_EXPERT ; $50f1
 	jr nz, .prompt ; $50f3
-	ldh a, [hWramBank] ; $50f5
-	push af ; $50f7
-	wram_bank $07 ; $50f8
+	push_wram_bank $07 ; $50f5
 	ld a, $00 ; $50fe
 	farcall ReadMinigameRecord ; $5100
 	ld hl, wMinigameRecordValue ; $5103
 	ld a, [hl+] ; $5106
 	ld h, [hl] ; $5107
 	ld l, a ; $5108
-	pop af ; $5109
-	wram_bank ; $510a
+	pop_wram_bank ; $5109
 	farcall PushTextArgNumber ; $510e
 .prompt:
 	ld a, $07 ; $5111
@@ -1184,11 +1134,7 @@ WallPracticeRoomNpc07_12:
 	jp z, .doublesDeclined ; $5124
 	ld a, [wMapSceneStage] ; $5127
 	add a ; $512a
-	add LOW(WallPracticeRoomNpc07TextIds2) ; $512b
-	ld l, a ; $512d
-	adc HIGH(WallPracticeRoomNpc07TextIds2) ; $512e
-	sub l ; $5130
-	ld h, a ; $5131
+	ld_hl_indexed WallPracticeRoomNpc07TextIds2 ; $512b
 	ld a, [hl+] ; $5132
 	ld h, [hl] ; $5133
 	ld l, a ; $5134
@@ -1285,11 +1231,7 @@ LaunchWallPracticeMinigame:
 	ld [wUnusedExitTriggerIdMirror], a ; $52a1
 	ld [wStoryModeExitTriggerRequest], a ; $52a4
 	ld a, [wMapSceneStage] ; $52a7
-	add LOW(LaunchWallPracticeMinigameTable) ; $52aa
-	ld l, a ; $52ac
-	adc HIGH(LaunchWallPracticeMinigameTable) ; $52ad
-	sub l ; $52af
-	ld h, a ; $52b0
+	ld_hl_indexed LaunchWallPracticeMinigameTable ; $52aa
 	ld a, [hl] ; $52b1
 	farcall RunTrainingDrillByID ; $52b2
 	farcall EndCutsceneScriptMode ; $52b5
@@ -1392,11 +1334,7 @@ SeniorCourtExit01_12:
 	ld a, [wMapSceneStage2] ; $55b5
 	sub $09 ; $55b8
 	add a ; $55ba
-	add LOW(SeniorCourtExit01TextIds) ; $55bb
-	ld l, a ; $55bd
-	adc HIGH(SeniorCourtExit01TextIds) ; $55be
-	sub l ; $55c0
-	ld h, a ; $55c1
+	ld_hl_indexed SeniorCourtExit01TextIds ; $55bb
 	ld a, [hl+] ; $55c2
 	ld h, [hl] ; $55c3
 	ld l, a ; $55c4
@@ -1542,11 +1480,7 @@ SeniorCourtNpc03FaceUpFlag0840_12:
 SeniorCourtNpc04_12:
 	ld a, [wMapSceneStage2] ; $5820
 	add a ; $5823
-	add LOW(SeniorCourtNpc04TextIds) ; $5824
-	ld l, a ; $5826
-	adc HIGH(SeniorCourtNpc04TextIds) ; $5827
-	sub l ; $5829
-	ld h, a ; $582a
+	ld_hl_indexed SeniorCourtNpc04TextIds ; $5824
 	ld a, [hl+] ; $582b
 	ld h, [hl] ; $582c
 	ld l, a ; $582d
@@ -1576,11 +1510,7 @@ SeniorCourtNpc04TextIds:
 SeniorCourtNpc05_12:
 	ld a, [wMapSceneStage2] ; $5859
 	add a ; $585c
-	add LOW(SeniorCourtNpc05TextIds_12) ; $585d
-	ld l, a ; $585f
-	adc HIGH(SeniorCourtNpc05TextIds_12) ; $5860
-	sub l ; $5862
-	ld h, a ; $5863
+	ld_hl_indexed SeniorCourtNpc05TextIds_12 ; $585d
 	ld a, [hl+] ; $5864
 	ld h, [hl] ; $5865
 	ld l, a ; $5866
@@ -1622,11 +1552,7 @@ SeniorCourtNpc05TextIds_12:
 SeniorCourtNpc06_12:
 	ld a, [wMapSceneStage2] ; $58b3
 	add a ; $58b6
-	add LOW(SeniorCourtNpc06TextIds_12) ; $58b7
-	ld l, a ; $58b9
-	adc HIGH(SeniorCourtNpc06TextIds_12) ; $58ba
-	sub l ; $58bc
-	ld h, a ; $58bd
+	ld_hl_indexed SeniorCourtNpc06TextIds_12 ; $58b7
 	ld a, [hl+] ; $58be
 	ld h, [hl] ; $58bf
 	ld l, a ; $58c0
@@ -1672,11 +1598,7 @@ SeniorCourtNpc06TextIds_12:
 SeniorCourtNpc07_12:
 	ld a, [wMapSceneStage2] ; $5916
 	add a ; $5919
-	add LOW(SeniorCourtNpc07TextIds) ; $591a
-	ld l, a ; $591c
-	adc HIGH(SeniorCourtNpc07TextIds) ; $591d
-	sub l ; $591f
-	ld h, a ; $5920
+	ld_hl_indexed SeniorCourtNpc07TextIds ; $591a
 	ld a, [hl+] ; $5921
 	ld h, [hl] ; $5922
 	ld l, a ; $5923
@@ -1703,11 +1625,7 @@ SeniorCourtNpc07TextIds:
 SeniorCourtNpc08_12:
 	ld a, [wMapSceneStage2] ; $594b
 	add a ; $594e
-	add LOW(SeniorCourtNpc08TextIds) ; $594f
-	ld l, a ; $5951
-	adc HIGH(SeniorCourtNpc08TextIds) ; $5952
-	sub l ; $5954
-	ld h, a ; $5955
+	ld_hl_indexed SeniorCourtNpc08TextIds ; $594f
 	ld a, [hl+] ; $5956
 	ld h, [hl] ; $5957
 	ld l, a ; $5958
@@ -1786,11 +1704,7 @@ SeniorCourtNpc08TextIds:
 SeniorCourtNpc09_12:
 	ld a, [wMapSceneStage2] ; $5a49
 	add a ; $5a4c
-	add LOW(SeniorCourtNpc09TextIds) ; $5a4d
-	ld l, a ; $5a4f
-	adc HIGH(SeniorCourtNpc09TextIds) ; $5a50
-	sub l ; $5a52
-	ld h, a ; $5a53
+	ld_hl_indexed SeniorCourtNpc09TextIds ; $5a4d
 	ld a, [hl+] ; $5a54
 	ld h, [hl] ; $5a55
 	ld l, a ; $5a56
@@ -1822,11 +1736,7 @@ SeniorCourtNpc09TextIds:
 SeniorCourtNpc0A_12:
 	ld a, [wMapSceneStage2] ; $5a8c
 	add a ; $5a8f
-	add LOW(SeniorCourtNpc0ATextIds) ; $5a90
-	ld l, a ; $5a92
-	adc HIGH(SeniorCourtNpc0ATextIds) ; $5a93
-	sub l ; $5a95
-	ld h, a ; $5a96
+	ld_hl_indexed SeniorCourtNpc0ATextIds ; $5a90
 	ld a, [hl+] ; $5a97
 	ld h, [hl] ; $5a98
 	ld l, a ; $5a99
@@ -1908,11 +1818,7 @@ SeniorCourtNpc0ATextIds:
 SeniorCourtNpc0B_12:
 	ld a, [wMapSceneStage2] ; $5b93
 	add a ; $5b96
-	add LOW(SeniorCourtNpc0BTextIds) ; $5b97
-	ld l, a ; $5b99
-	adc HIGH(SeniorCourtNpc0BTextIds) ; $5b9a
-	sub l ; $5b9c
-	ld h, a ; $5b9d
+	ld_hl_indexed SeniorCourtNpc0BTextIds ; $5b97
 	ld a, [hl+] ; $5b9e
 	ld h, [hl] ; $5b9f
 	ld l, a ; $5ba0
@@ -1952,11 +1858,7 @@ SeniorCourtNpc0C_12:
 	jr nz, .nonZero ; $5be1
 	ld a, [wMapSceneStage2] ; $5be3
 	add a ; $5be6
-	add LOW(SeniorCourtNpc0C_12Table) ; $5be7
-	ld l, a ; $5be9
-	adc HIGH(SeniorCourtNpc0C_12Table) ; $5bea
-	sub l ; $5bec
-	ld h, a ; $5bed
+	ld_hl_indexed SeniorCourtNpc0C_12Table ; $5be7
 	ld a, [hl+] ; $5bee
 	ld h, [hl] ; $5bef
 	ld l, a ; $5bf0
@@ -1966,11 +1868,7 @@ SeniorCourtNpc0C_12:
 .nonZero:
 	ld a, [wMapSceneStage2] ; $5bfa
 	add a ; $5bfd
-	add LOW(SeniorCourtNpc0CTextIds) ; $5bfe
-	ld l, a ; $5c00
-	adc HIGH(SeniorCourtNpc0CTextIds) ; $5c01
-	sub l ; $5c03
-	ld h, a ; $5c04
+	ld_hl_indexed SeniorCourtNpc0CTextIds ; $5bfe
 	ld a, [hl+] ; $5c05
 	ld h, [hl] ; $5c06
 	ld l, a ; $5c07
@@ -2483,11 +2381,7 @@ RunSeniorRankingMatchIntro:
 	ld a, [wMapSceneStage2] ; $64de
 	sub $02 ; $64e1
 	add a ; $64e3
-	add LOW(SeniorRankingMatchIntroPtrs) ; $64e4
-	ld l, a ; $64e6
-	adc HIGH(SeniorRankingMatchIntroPtrs) ; $64e7
-	sub l ; $64e9
-	ld h, a ; $64ea
+	ld_hl_indexed SeniorRankingMatchIntroPtrs ; $64e4
 	ld a, [hl+] ; $64eb
 	ld h, [hl] ; $64ec
 	ld l, a ; $64ed
@@ -2737,11 +2631,7 @@ ResumeSeniorOpponentScripts:
 	ld a, [wMapSceneStage2] ; $6a41
 	sub $02 ; $6a44
 	add a ; $6a46
-	add LOW(ResumeSeniorOpponentScriptsPtrs) ; $6a47
-	ld l, a ; $6a49
-	adc HIGH(ResumeSeniorOpponentScriptsPtrs) ; $6a4a
-	sub l ; $6a4c
-	ld h, a ; $6a4d
+	ld_hl_indexed ResumeSeniorOpponentScriptsPtrs ; $6a47
 	ld a, [hl+] ; $6a4e
 	ld h, [hl] ; $6a4f
 	ld l, a ; $6a50
@@ -3088,11 +2978,7 @@ SeniorMatchVictorySceneDispatch:
 	ld a, [wMapSceneStage2] ; $6df6
 	sub $02 ; $6df9
 	add a ; $6dfb
-	add LOW(SeniorMatchVictorySceneDispatchPtrs) ; $6dfc
-	ld l, a ; $6dfe
-	adc HIGH(SeniorMatchVictorySceneDispatchPtrs) ; $6dff
-	sub l ; $6e01
-	ld h, a ; $6e02
+	ld_hl_indexed SeniorMatchVictorySceneDispatchPtrs ; $6dfc
 	ld a, [hl+] ; $6e03
 	ld h, [hl] ; $6e04
 	ld l, a ; $6e05
@@ -3829,16 +3715,13 @@ Unclassified_12:
 	; $7a65, 3 bytes (bytes:3)
 	db $fa, $4d, $c9 ; 0x00
 PushTextArgFetchedString:
-	ldh a, [hWramBank] ; $7a68
-	push af ; $7a6a
-	wram_bank $07 ; $7a6b
+	push_wram_bank $07 ; $7a68
 	ld de, wTextArgFetchBuffer ; $7a71
 	wram_bank $05 ; $7a74
 	farcall FetchShortTextToBuffer ; $7a7a
 	ld hl, wTextArgFetchBuffer ; $7a7d
 	farcall PushTextArgString ; $7a80
-	pop af ; $7a83
-	wram_bank ; $7a84
+	pop_wram_bank ; $7a83
 	ret ; $7a88
 ActorScript_12_51:
 	; $7a89, 10 bytes (actor_script)

@@ -6,6 +6,8 @@ bytes identical while making the source read as the operation. Each collapser
 returns (text, byte size), or None when the sequence is not an exact match or
 when a label/data note lands inside it (which would be hidden by the macro).
 """
+import re
+
 from .constants import ACTOR_FACING_NAMES
 from .rom import BANK_SIZE
 from .textids import text_id_name
@@ -236,3 +238,64 @@ def match_launcher_seq(dis, rom, off, labels):
         return (f"load_match_settings "
                 f"${(rom[off + 1] << 8) | rom[off + 6]:04x}"), 13
     return None
+
+
+# Inline-argument callees (core.INLINE_ARG_CALLS) that render as a macro
+# taking the byte: keyed by the callee's CPU address.
+INLINE_ARG_MACROS = {0x2725: "wait_frames"}
+
+_LINE_ADDR = re.compile(r"^\t(.*?) ; (\$[0-9a-f]{4})(.*)$")
+
+
+def _instr(line):
+    """(text, address, trailer) of an emitted instruction line, else None."""
+    m = _LINE_ADDR.match(line)
+    return (m.group(1), m.group(2), m.group(3)) if m else None
+
+
+def collapse_line_idioms(lines):
+    """Collapse two fixed sequences into their macros after the operand
+    passes have run, working on the emitted text so the split-base symbol
+    resolution is already in place:
+
+        ldh a, [hWramBank] / push af / wram_bank N  ->  push_wram_bank N
+        pop af / wram_bank                          ->  pop_wram_bank
+        add LOW(T) / ld l, a / adc HIGH(T) / sub l / ld h, a
+                                                    ->  ld_hl_indexed T
+
+    Only consecutive instruction lines qualify: a label, note or data line
+    between them (a jump target, a data-site annotation) keeps the raw
+    instructions, so a reader can still find every address the code lands
+    on. The macro line keeps the first instruction's address."""
+    out = []
+    i = 0
+    n = len(lines)
+    while i < n:
+        t = _instr(lines[i])
+        if t:
+            text, addr, _ = t
+            if text == "ldh a, [hWramBank]" and i + 2 < n:
+                t1, t2 = _instr(lines[i + 1]), _instr(lines[i + 2])
+                if t1 and t2 and t1[0] == "push af" \
+                        and re.fullmatch(r"wram_bank \$[0-9a-f]{2}", t2[0]):
+                    out.append(f"\tpush_{t2[0]} ; {addr}")
+                    i += 3
+                    continue
+            if text == "pop af" and i + 1 < n:
+                t1 = _instr(lines[i + 1])
+                if t1 and t1[0] == "wram_bank":
+                    out.append(f"\tpop_wram_bank ; {addr}")
+                    i += 2
+                    continue
+            m = re.fullmatch(r"add LOW\((.+)\)", text)
+            if m and i + 4 < n:
+                seq = [_instr(lines[i + k]) for k in range(1, 5)]
+                if all(seq) and seq[0][0] == "ld l, a" \
+                        and seq[1][0] == f"adc HIGH({m.group(1)})" \
+                        and seq[2][0] == "sub l" and seq[3][0] == "ld h, a":
+                    out.append(f"\tld_hl_indexed {m.group(1)} ; {addr}")
+                    i += 5
+                    continue
+        out.append(lines[i])
+        i += 1
+    lines[:] = out

@@ -345,8 +345,7 @@ UpdateAnimatedTiles:
 	ld c, $02 ; $43f4
 	call QueueVRAMCopy ; $43f6
 .done:
-	pop af ; $43f9
-	wram_bank ; $43fa
+	pop_wram_bank ; $43f9
 	pop hl ; $43fe
 	pop de ; $43ff
 	pop bc ; $4400
@@ -617,8 +616,7 @@ LoadCompressedTileBlock:
 	pop de ; $46aa
 	ld hl, wDecompBuffer ; $46ab
 	call QueueVRAMCopy ; $46ae
-	pop af ; $46b1
-	wram_bank ; $46b2
+	pop_wram_bank ; $46b1
 	ret ; $46b6
 TileBlockPtrs_39:
 	; $46b7, 244 bytes (122 records x 1 slot words)
@@ -825,11 +823,7 @@ QueueStackedSpritePair:
 ApplySpriteWaveOffset:
 	ldh a, [hVBlankCounter] ; $4a75
 	and $3f ; $4a77
-	add LOW(ApplySpriteWaveOffsetTable) ; $4a79
-	ld l, a ; $4a7b
-	adc HIGH(ApplySpriteWaveOffsetTable) ; $4a7c
-	sub l ; $4a7e
-	ld h, a ; $4a7f
+	ld_hl_indexed ApplySpriteWaveOffsetTable ; $4a79
 	ld a, [hl] ; $4a80
 	add e ; $4a81
 	ld e, a ; $4a82
@@ -843,11 +837,7 @@ ApplySpriteWaveOffsetTable:
 ApplySpriteBobOffset:
 	ldh a, [hVBlankCounter] ; $4ac4
 	and $3f ; $4ac6
-	add LOW(ApplySpriteBobOffsetTable) ; $4ac8
-	ld l, a ; $4aca
-	adc HIGH(ApplySpriteBobOffsetTable) ; $4acb
-	sub l ; $4acd
-	ld h, a ; $4ace
+	ld_hl_indexed ApplySpriteBobOffsetTable ; $4ac8
 	ld a, [hl] ; $4acf
 	add e ; $4ad0
 	ld e, a ; $4ad1
@@ -998,9 +988,7 @@ ResetScreenAndTextWindows:
 	farcall QueueWram3MapToVRAM ; $4c34
 	ret ; $4c37
 LoadStadiumBgGraphics:
-	ldh a, [hWramBank] ; $4c38
-	push af ; $4c3a
-	wram_bank $01 ; $4c3b
+	push_wram_bank $01 ; $4c38
 	ld hl, (BANK(DataPtr_StadiumTiles) << 8) | LOW(DataPtr_StadiumTiles) ; $4c41
 	ld de, wDecompBuffer ; $4c44
 	call DecompressDataFromBank ; $4c47
@@ -1033,17 +1021,14 @@ LoadStadiumBgGraphics:
 	ld hl, wDecompBuffer ; $4c9c
 	ld de, $0008 ; $4c9f
 	call LoadPaletteShadow ; $4ca2
-	pop af ; $4ca5
-	wram_bank ; $4ca6
+	pop_wram_bank ; $4ca5
 	ret ; $4caa
 FlushWram3MapRows:
 	push af ; $4cab
 	push bc ; $4cac
 	push de ; $4cad
 	push hl ; $4cae
-	ldh a, [hWramBank] ; $4caf
-	push af ; $4cb1
-	wram_bank $03 ; $4cb2
+	push_wram_bank $03 ; $4caf
 	ld a, b ; $4cb8
 	or a ; $4cb9
 	jr nz, .mode1 ; $4cba
@@ -1159,8 +1144,7 @@ FlushWram3MapRows:
 	call QueueVRAMCopy ; $4ddc
 	jr .done ; $4ddf
 .done:
-	pop af ; $4de1
-	wram_bank ; $4de2
+	pop_wram_bank ; $4de1
 	pop hl ; $4de6
 	pop de ; $4de7
 	pop bc ; $4de8
@@ -3259,9 +3243,7 @@ DrawDecimalNumberSprites_39:
 	push bc ; $6f11
 	push de ; $6f12
 	push hl ; $6f13
-	ldh a, [hWramBank] ; $6f14
-	push af ; $6f16
-	wram_bank $02 ; $6f17
+	push_wram_bank $02 ; $6f14
 	push de ; $6f1d
 	ld de, wDigitSpriteSlots ; $6f1e
 	ld a, $00 ; $6f21
@@ -3290,8 +3272,7 @@ DrawDecimalNumberSprites_39:
 	jr z, .done ; $6f41
 	jr .digitLoop ; $6f43
 .done:
-	pop af ; $6f45
-	wram_bank ; $6f46
+	pop_wram_bank ; $6f45
 	pop hl ; $6f4a
 	pop de ; $6f4b
 	pop bc ; $6f4c
@@ -3317,9 +3298,7 @@ DrawDigitSprite_39:
 	pop af ; $6f65
 	ret ; $6f66
 UpdateCheatCodeEntry:
-	ldh a, [hWramBank] ; $6f67
-	push af ; $6f69
-	wram_bank $01 ; $6f6a
+	push_wram_bank $01 ; $6f67
 	ld a, [wCheatUnlockTriggered] ; $6f70
 	or a ; $6f73
 	jr nz, .restore ; $6f74
@@ -3372,8 +3351,7 @@ UpdateCheatCodeEntry:
 	inc a ; $6fbc
 	ld [wCheatCodeLength], a ; $6fbd
 .restore:
-	pop af ; $6fc0
-	wram_bank ; $6fc1
+	pop_wram_bank ; $6fc0
 	ret ; $6fc5
 CheatCodeEntryTable:
 	; $6fc6, 33 bytes (bytes:16)
@@ -3381,16 +3359,13 @@ CheatCodeEntryTable:
 	db $40, $10, $04, $20, $80, $80, $10, $10, $40, $40, $20, $04, $04, $00, $00, $00 ; 0x10
 	db $00 ; 0x20
 ResetCheatCodeBuffer:
-	ldh a, [hWramBank] ; $6fe7
-	push af ; $6fe9
-	wram_bank $01 ; $6fea
+	push_wram_bank $01 ; $6fe7
 	xor a ; $6ff0
 	ld [wCheatCodeLength], a ; $6ff1
 	ld hl, wDecompBuffer ; $6ff4
 	ld bc, $0020 ; $6ff7
 	call ClearBytes ; $6ffa
-	pop af ; $6ffd
-	wram_bank ; $6ffe
+	pop_wram_bank ; $6ffd
 	ret ; $7002
 TriggerCheatUnlock:
 	sound $65 ; $7003

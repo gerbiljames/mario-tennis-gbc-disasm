@@ -47,11 +47,7 @@ TennisMachineRoomExitTriggers_14:
 TennisMachineRoomNpc03_14:
 	ld a, [wMapSceneStage] ; $408f
 	add a ; $4092
-	add LOW(TennisMachineRoomNpc03TextIds) ; $4093
-	ld l, a ; $4095
-	adc HIGH(TennisMachineRoomNpc03TextIds) ; $4096
-	sub l ; $4098
-	ld h, a ; $4099
+	ld_hl_indexed TennisMachineRoomNpc03TextIds ; $4093
 	ld a, [hl+] ; $409a
 	ld h, [hl] ; $409b
 	ld l, a ; $409c
@@ -70,11 +66,7 @@ TennisMachineRoomNpc03TextIds:
 TennisMachineRoomNpc04_14:
 	ld a, [wMapSceneStage] ; $40b4
 	add a ; $40b7
-	add LOW(TennisMachineRoomNpc04TextIds) ; $40b8
-	ld l, a ; $40ba
-	adc HIGH(TennisMachineRoomNpc04TextIds) ; $40bb
-	sub l ; $40bd
-	ld h, a ; $40be
+	ld_hl_indexed TennisMachineRoomNpc04TextIds ; $40b8
 	ld a, [hl+] ; $40bf
 	ld h, [hl] ; $40c0
 	ld l, a ; $40c1
@@ -346,15 +338,12 @@ ComputeMachineCourtProgress:
 	ld b, a ; $4400
 	ld a, $01 ; $4401
 	farcall ReadMinigameRecord ; $4403
-	ldh a, [hWramBank] ; $4406
-	push af ; $4408
-	wram_bank $07 ; $4409
+	push_wram_bank $07 ; $4406
 	ld hl, wMinigameRecordValue ; $440f
 	ld a, [hl+] ; $4412
 	ld h, [hl] ; $4413
 	ld l, a ; $4414
-	pop af ; $4415
-	wram_bank ; $4416
+	pop_wram_bank ; $4415
 	ld a, b ; $441a
 	test_flag FLAG_CLEARED_MACHINE_MASTER ; $441b
 	jr z, .machineCourtStartLevelScene ; $441e
@@ -370,11 +359,7 @@ TennisMachineRoomNpc05_14:
 	jp nz, MachineCourtStartLevelScene ; $4430
 	ld a, [wMapSceneStage] ; $4433
 	add a ; $4436
-	add LOW(TennisMachineRoomNpc05TextIds) ; $4437
-	ld l, a ; $4439
-	adc HIGH(TennisMachineRoomNpc05TextIds) ; $443a
-	sub l ; $443c
-	ld h, a ; $443d
+	ld_hl_indexed TennisMachineRoomNpc05TextIds ; $4437
 	ld a, [hl+] ; $443e
 	ld h, [hl] ; $443f
 	ld l, a ; $4440
@@ -382,17 +367,14 @@ TennisMachineRoomNpc05_14:
 	ld a, [wMapSceneStage] ; $4444
 	cp MACHINECOURTSTAGE_EXPERT ; $4447
 	jr c, .prompt ; $4449
-	ldh a, [hWramBank] ; $444b
-	push af ; $444d
-	wram_bank $07 ; $444e
+	push_wram_bank $07 ; $444b
 	ld a, $01 ; $4454
 	farcall ReadMinigameRecord ; $4456
 	ld hl, wMinigameRecordValue ; $4459
 	ld a, [hl+] ; $445c
 	ld h, [hl] ; $445d
 	ld l, a ; $445e
-	pop af ; $445f
-	wram_bank ; $4460
+	pop_wram_bank ; $445f
 	farcall PushTextArgNumber ; $4464
 .prompt:
 	script_face ACTOR_PARTNER, FACE_RIGHT ; $4467
@@ -428,11 +410,7 @@ TennisMachineRoomNpc05_14:
 .done:
 	ld a, [wMapSceneStage] ; $44ca
 	add a ; $44cd
-	add LOW(TennisMachineRoomNpc05TextIds) ; $44ce
-	ld l, a ; $44d0
-	adc HIGH(TennisMachineRoomNpc05TextIds) ; $44d1
-	sub l ; $44d3
-	ld h, a ; $44d4
+	ld_hl_indexed TennisMachineRoomNpc05TextIds ; $44ce
 	ld a, [hl+] ; $44d5
 	ld h, [hl] ; $44d6
 	ld l, a ; $44d7
@@ -478,11 +456,7 @@ MachineCourtStartLevelScene:
 	ld [wUnusedExitTriggerIdMirror], a ; $458e
 	ld [wStoryModeExitTriggerRequest], a ; $4591
 	ld a, [wMapSceneStage] ; $4594
-	add LOW(MachineCourtStartLevelSceneTable) ; $4597
-	ld l, a ; $4599
-	adc HIGH(MachineCourtStartLevelSceneTable) ; $459a
-	sub l ; $459c
-	ld h, a ; $459d
+	ld_hl_indexed MachineCourtStartLevelSceneTable ; $4597
 	ld a, [hl] ; $459e
 	farcall RunTrainingDrillByID ; $459f
 	farcall EndCutsceneScriptMode ; $45a2
@@ -560,11 +534,7 @@ MachineLevelNotClearedMessage:
 	ret ; $469e
 TestMachineLevelClearedFlag:
 	add a ; $469f
-	add LOW(TestMachineLevelClearedFlagTable) ; $46a0
-	ld l, a ; $46a2
-	adc HIGH(TestMachineLevelClearedFlagTable) ; $46a3
-	sub l ; $46a5
-	ld h, a ; $46a6
+	ld_hl_indexed TestMachineLevelClearedFlagTable ; $46a0
 	ld a, [hl+] ; $46a7
 	ld d, [hl] ; $46a8
 	ld e, a ; $46a9
@@ -573,11 +543,7 @@ TestMachineLevelClearedFlag:
 ; TestMachineLevelClearedFlag with SetGameFlagByNumber in place of TestGameFlagByNumber over the same TestMachineLevelClearedFlagTable: the Set member of the pair. Nothing calls it; the level-cleared flags are set by the machine-room scene scripts directly.
 Unused_14_SetMachineLevelClearedFlag:
 	add a ; $46ae
-	add LOW(TestMachineLevelClearedFlagTable) ; $46af
-	ld l, a ; $46b1
-	adc HIGH(TestMachineLevelClearedFlagTable) ; $46b2
-	sub l ; $46b4
-	ld h, a ; $46b5
+	ld_hl_indexed TestMachineLevelClearedFlagTable ; $46af
 	ld a, [hl+] ; $46b6
 	ld d, [hl] ; $46b7
 	ld e, a ; $46b8
@@ -690,9 +656,7 @@ ActorScript_14_0:
 	as_halt
 ; Reads tennis-machine record $01 and then throws the result away, storing the constant $0050 into wMinigameRecordValue instead, before sending the player back to the machine room at entry point $01. Nothing calls it (no textual or ROM-wide pointer reference), and it never calls UpdateMinigameRecord, so even if it ran the 80 would not persist -- it reads as an abandoned debug helper. The name states what the body does, not what it was for
 UnusedMachineRecordOverrideAndReturn_14:
-	ldh a, [hWramBank] ; $4813
-	push af ; $4815
-	wram_bank $07 ; $4816
+	push_wram_bank $07 ; $4813
 	ld a, $01 ; $481c
 	farcall ReadMinigameRecord ; $481e
 	ld de, $0050 ; $4821
@@ -700,8 +664,7 @@ UnusedMachineRecordOverrideAndReturn_14:
 	ld a, e ; $4827
 	ld [hl+], a ; $4828
 	ld [hl], d ; $4829
-	pop af ; $482a
-	wram_bank ; $482b
+	pop_wram_bank ; $482a
 	ld a, STORYLOC_TENNIS_MACHINE_ROOM ; $482f
 	ld [wStoryModeCurrentLocation], a ; $4831
 	ld a, $01 ; $4834
@@ -718,15 +681,12 @@ MachineExpertResultScene:
 	jp z, MachineExpertCounterMaxScene ; $484c
 .notClearedMachineExpert:
 	ld bc, $0001 ; $484f
-	ldh a, [hWramBank] ; $4852
-	push af ; $4854
-	wram_bank $07 ; $4855
+	push_wram_bank $07 ; $4852
 	ld hl, wMinigamesCurrentScore ; $485b
 	ld a, [hl+] ; $485e
 	ld d, [hl] ; $485f
 	ld e, a ; $4860
-	pop af ; $4861
-	wram_bank ; $4862
+	pop_wram_bank ; $4861
 	ld l, c ; $4866
 	ld h, b ; $4867
 	ld a, l ; $4868
@@ -737,17 +697,14 @@ MachineExpertResultScene:
 	ld h, a ; $486d
 	jp nc, MachineExpertRetryPrompt ; $486e
 	ld bc, $270f ; $4871
-	ldh a, [hWramBank] ; $4874
-	push af ; $4876
-	wram_bank $07 ; $4877
+	push_wram_bank $07 ; $4874
 	ld a, $01 ; $487d
 	farcall ReadMinigameRecord ; $487f
 	ld hl, wMinigameRecordValue ; $4882
 	ld a, [hl+] ; $4885
 	ld d, [hl] ; $4886
 	ld e, a ; $4887
-	pop af ; $4888
-	wram_bank ; $4889
+	pop_wram_bank ; $4888
 	ld l, c ; $488d
 	ld h, b ; $488e
 	ld a, l ; $488f
@@ -761,15 +718,12 @@ MachineExpertResultScene:
 	ld a, [hl+] ; $489b
 	ld b, [hl] ; $489c
 	ld c, a ; $489d
-	ldh a, [hWramBank] ; $489e
-	push af ; $48a0
-	wram_bank $07 ; $48a1
+	push_wram_bank $07 ; $489e
 	ld hl, wMinigameRecordValue ; $48a7
 	ld a, [hl+] ; $48aa
 	ld d, [hl] ; $48ab
 	ld e, a ; $48ac
-	pop af ; $48ad
-	wram_bank ; $48ae
+	pop_wram_bank ; $48ad
 	ld l, c ; $48b2
 	ld h, b ; $48b3
 	inc de ; $48b4
@@ -806,17 +760,14 @@ MachineExpertNewRecordScene:
 	farcall AttachActorStepMover ; $48f5
 	ret ; $48f8
 MachineExpertCounterMaxScene:
-	ldh a, [hWramBank] ; $48f9
-	push af ; $48fb
-	wram_bank $07 ; $48fc
+	push_wram_bank $07 ; $48f9
 	ld a, $01 ; $4902
 	farcall ReadMinigameRecord ; $4904
 	ld hl, wMinigameRecordValue ; $4907
 	ld a, [hl+] ; $490a
 	ld h, [hl] ; $490b
 	ld l, a ; $490c
-	pop af ; $490d
-	wram_bank ; $490e
+	pop_wram_bank ; $490d
 	ld de, $270f ; $4912
 	ld a, l ; $4915
 	sub e ; $4916
@@ -847,15 +798,12 @@ Unused_14_CompareMinigameScoreToRecord:
 	ld a, [hl+] ; $4954
 	ld b, [hl] ; $4955
 	ld c, a ; $4956
-	ldh a, [hWramBank] ; $4957
-	push af ; $4959
-	wram_bank $07 ; $495a
+	push_wram_bank $07 ; $4957
 	ld hl, wMinigameRecordValue ; $4960
 	ld a, [hl+] ; $4963
 	ld d, [hl] ; $4964
 	ld e, a ; $4965
-	pop af ; $4966
-	wram_bank ; $4967
+	pop_wram_bank ; $4966
 	ld l, c ; $496b
 	ld h, b ; $496c
 	ld a, l ; $496d
@@ -866,9 +814,7 @@ Unused_14_CompareMinigameScoreToRecord:
 	ld h, a ; $4972
 	ret ; $4973
 SaveMachineExpertRecord:
-	ldh a, [hWramBank] ; $4974
-	push af ; $4976
-	wram_bank $07 ; $4977
+	push_wram_bank $07 ; $4974
 	ld hl, wMinigamesCurrentScore ; $497d
 	ld a, [hl+] ; $4980
 	ld d, [hl] ; $4981
@@ -879,8 +825,7 @@ SaveMachineExpertRecord:
 	ld [hl], d ; $4988
 	ld a, $01 ; $4989
 	farcall UpdateMinigameRecord ; $498b
-	pop af ; $498e
-	wram_bank ; $498f
+	pop_wram_bank ; $498e
 	call ComputeMachineCourtProgress ; $4993
 	ret ; $4996
 MachineCourtWalkToAttendantCutscene:
@@ -956,11 +901,7 @@ Court2Npc03_14:
 Court2Npc04_14:
 	ld a, [wMapSceneStage] ; $4b6d
 	add a ; $4b70
-	add LOW(Court2Npc04TextIds) ; $4b71
-	ld l, a ; $4b73
-	adc HIGH(Court2Npc04TextIds) ; $4b74
-	sub l ; $4b76
-	ld h, a ; $4b77
+	ld_hl_indexed Court2Npc04TextIds ; $4b71
 	ld a, [hl+] ; $4b78
 	ld h, [hl] ; $4b79
 	ld l, a ; $4b7a
@@ -979,11 +920,7 @@ Court2Npc04TextIds:
 Court2Npc05_14:
 	ld a, [wMapSceneStage] ; $4b92
 	add a ; $4b95
-	add LOW(Court2Npc05TextIds) ; $4b96
-	ld l, a ; $4b98
-	adc HIGH(Court2Npc05TextIds) ; $4b99
-	sub l ; $4b9b
-	ld h, a ; $4b9c
+	ld_hl_indexed Court2Npc05TextIds ; $4b96
 	ld a, [hl+] ; $4b9d
 	ld h, [hl] ; $4b9e
 	ld l, a ; $4b9f
@@ -1002,11 +939,7 @@ Court2Npc05TextIds:
 Court2Npc06_14:
 	ld a, [wMapSceneStage] ; $4bb7
 	add a ; $4bba
-	add LOW(Court2Npc06TextIds) ; $4bbb
-	ld l, a ; $4bbd
-	adc HIGH(Court2Npc06TextIds) ; $4bbe
-	sub l ; $4bc0
-	ld h, a ; $4bc1
+	ld_hl_indexed Court2Npc06TextIds ; $4bbb
 	ld a, [hl+] ; $4bc2
 	ld h, [hl] ; $4bc3
 	ld l, a ; $4bc4
@@ -1036,11 +969,7 @@ Court2SpectatorChat_14:
 .step:
 	ld a, [wMapSceneStage] ; $4bf5
 	add a ; $4bf8
-	add LOW(Court2SpectatorChatTextIds) ; $4bf9
-	ld l, a ; $4bfb
-	adc HIGH(Court2SpectatorChatTextIds) ; $4bfc
-	sub l ; $4bfe
-	ld h, a ; $4bff
+	ld_hl_indexed Court2SpectatorChatTextIds ; $4bf9
 	ld a, [hl+] ; $4c00
 	ld h, [hl] ; $4c01
 	ld l, a ; $4c02
@@ -1285,11 +1214,7 @@ Court1Npc04_14:
 Court1Npc05_14:
 	ld a, [wMapSceneStage] ; $507c
 	add a ; $507f
-	add LOW(Court1Npc05TextIds) ; $5080
-	ld l, a ; $5082
-	adc HIGH(Court1Npc05TextIds) ; $5083
-	sub l ; $5085
-	ld h, a ; $5086
+	ld_hl_indexed Court1Npc05TextIds ; $5080
 	ld a, [hl+] ; $5087
 	ld h, [hl] ; $5088
 	ld l, a ; $5089
@@ -1308,11 +1233,7 @@ Court1Npc05TextIds:
 Court1Npc06_14:
 	ld a, [wMapSceneStage] ; $50a1
 	add a ; $50a4
-	add LOW(Court1Npc06TextIds) ; $50a5
-	ld l, a ; $50a7
-	adc HIGH(Court1Npc06TextIds) ; $50a8
-	sub l ; $50aa
-	ld h, a ; $50ab
+	ld_hl_indexed Court1Npc06TextIds ; $50a5
 	ld a, [hl+] ; $50ac
 	ld h, [hl] ; $50ad
 	ld l, a ; $50ae
@@ -1791,9 +1712,7 @@ SpriteTemplate_14_0:
 IslandObjPalette_14:
 	INCLUDE "data/bank_014/palettes_5e71.asm" ; $5e71, 8 bytes (palettes)
 LoadPlaneObjGfx_14:
-	ldh a, [hWramBank] ; $5e79
-	push af ; $5e7b
-	wram_bank $01 ; $5e7c
+	push_wram_bank $01 ; $5e79
 	ld hl, PlaneObjTiles_14 ; $5e82
 	ld de, $8000 + VRAM_BANK1 ; $5e85
 	ld c, $60 ; $5e88
@@ -1801,8 +1720,7 @@ LoadPlaneObjGfx_14:
 	ld hl, IslandObjPalette_14 ; $5e8d
 	ld de, $0801 ; $5e90
 	call LoadPaletteShadow ; $5e93
-	pop af ; $5e96
-	wram_bank ; $5e97
+	pop_wram_bank ; $5e96
 	ret ; $5e9b
 QueuePlaneSpriteByHeight_14:
 	call GetSceneObjectScreenPos_14 ; $5e9c
@@ -1842,9 +1760,7 @@ SpriteTemplate_14_1:
 WaterSplashObjPalette_14:
 	INCLUDE "data/bank_014/palettes_6099.asm" ; $6099, 8 bytes (palettes)
 LoadWaterSplashObjGfx_14:
-	ldh a, [hWramBank] ; $60a1
-	push af ; $60a3
-	wram_bank $01 ; $60a4
+	push_wram_bank $01 ; $60a1
 	ld hl, WaterSplashObjGfx ; $60aa
 	ld de, $8200 ; $60ad
 	ld c, (SpriteTemplate_14_1 - WaterSplashObjGfx) / 16 ; $60b0
@@ -1852,8 +1768,7 @@ LoadWaterSplashObjGfx_14:
 	ld hl, WaterSplashObjPalette_14 ; $60b5
 	ld de, $0901 ; $60b8
 	call LoadPaletteShadow ; $60bb
-	pop af ; $60be
-	wram_bank ; $60bf
+	pop_wram_bank ; $60be
 	ret ; $60c3
 UpdateWaterSplash0_14:
 	ldh a, [hScrollX] ; $60c4
@@ -2054,9 +1969,7 @@ AdvanceWaterSplash1Rise_14:
 .done:
 	ret ; $6237
 LoadPlaneObjGfx2_14:
-	ldh a, [hWramBank] ; $6238
-	push af ; $623a
-	wram_bank $01 ; $623b
+	push_wram_bank $01 ; $6238
 	ld hl, IslandObjTiles_14 ; $6241
 	ld de, $8000 + VRAM_BANK1 ; $6244
 	ld c, $60 ; $6247
@@ -2064,8 +1977,7 @@ LoadPlaneObjGfx2_14:
 	ld hl, IslandObjPalette_14 ; $624c
 	ld de, $0801 ; $624f
 	call LoadPaletteShadow ; $6252
-	pop af ; $6255
-	wram_bank ; $6256
+	pop_wram_bank ; $6255
 	ret ; $625a
 QueuePlaneSpriteByFrameCounter_14:
 	call GetSceneObjectScreenPos_14 ; $625b
@@ -2248,9 +2160,7 @@ AdvancePlaneFrameCounter_14:
 	ld [wCutsceneObjX], a ; $6423
 	ret ; $6426
 LoadFireworkObjGfx_14:
-	ldh a, [hWramBank] ; $6427
-	push af ; $6429
-	wram_bank $01 ; $642a
+	push_wram_bank $01 ; $6427
 	ld hl, FireworkObjTiles_14 ; $6430
 	ld de, $8100 ; $6433
 	ld c, (SpriteTemplate_14_2 - FireworkObjTiles_14) / 16 ; $6436
@@ -2258,8 +2168,7 @@ LoadFireworkObjGfx_14:
 	ld hl, FireworkObjPalettes_14 ; $643b
 	ld de, $0904 ; $643e
 	call LoadPaletteShadow ; $6441
-	pop af ; $6444
-	wram_bank ; $6445
+	pop_wram_bank ; $6444
 	ret ; $6449
 UpdateFirework0_14:
 	ld a, [wCutsceneObjPhase] ; $644a
@@ -2291,11 +2200,7 @@ UpdateFirework0_14:
 	cp $04 ; $647d
 	jp nc, .done ; $647f
 	ld a, [wCutsceneObjPhase] ; $6482
-	add LOW(Table_14) ; $6485
-	ld l, a ; $6487
-	adc HIGH(Table_14) ; $6488
-	sub l ; $648a
-	ld h, a ; $648b
+	ld_hl_indexed Table_14 ; $6485
 	ld a, [hl] ; $648c
 	ld [wCutsceneObjTimer], a ; $648d
 	ld a, [wCutsceneObjPhase] ; $6490
@@ -2307,11 +2212,7 @@ UpdateFirework0_14:
 	sound SFX_FIREWORK ; $649e
 .burstSprite:
 	ld a, [wCutsceneObjPhase] ; $64a0
-	add LOW(UpdateFirework0_14Table) ; $64a3
-	ld l, a ; $64a5
-	adc HIGH(UpdateFirework0_14Table) ; $64a6
-	sub l ; $64a8
-	ld h, a ; $64a9
+	ld_hl_indexed UpdateFirework0_14Table ; $64a3
 	ld a, [hl] ; $64aa
 	add $10 ; $64ab
 	ld c, a ; $64ad
@@ -2549,11 +2450,7 @@ UpdateFirework1_14:
 	cp $04 ; $6f23
 	jp nc, .done ; $6f25
 	ld a, [wCutsceneObjPhase + 1] ; $6f28
-	add LOW(Table_14) ; $6f2b
-	ld l, a ; $6f2d
-	adc HIGH(Table_14) ; $6f2e
-	sub l ; $6f30
-	ld h, a ; $6f31
+	ld_hl_indexed Table_14 ; $6f2b
 	ld a, [hl] ; $6f32
 	ld [wCutsceneObjTimer + 1], a ; $6f33
 	ld a, [wCutsceneObjPhase + 1] ; $6f36
@@ -2565,11 +2462,7 @@ UpdateFirework1_14:
 	sound SFX_FIREWORK ; $6f44
 .burstSprite:
 	ld a, [wCutsceneObjPhase + 1] ; $6f46
-	add LOW(UpdateFirework1_14Table) ; $6f49
-	ld l, a ; $6f4b
-	adc HIGH(UpdateFirework1_14Table) ; $6f4c
-	sub l ; $6f4e
-	ld h, a ; $6f4f
+	ld_hl_indexed UpdateFirework1_14Table ; $6f49
 	ld a, [hl] ; $6f50
 	add $10 ; $6f51
 	ld c, a ; $6f53
@@ -2821,9 +2714,7 @@ AnimateIslandSkyEffectSprites_14_SpriteTemplate:
 IslandSkyPalettes_14:
 	INCLUDE "data/bank_014/palettes_738a.asm" ; $738a, 32 bytes (palettes)
 LoadIslandSkyEffectObjGfx_14:
-	ldh a, [hWramBank] ; $73aa
-	push af ; $73ac
-	wram_bank $01 ; $73ad
+	push_wram_bank $01 ; $73aa
 	ld hl, IslandSkyTilesA_14 ; $73b3
 	ld de, $8100 ; $73b6
 	ld c, $40 ; $73b9
@@ -2835,8 +2726,7 @@ LoadIslandSkyEffectObjGfx_14:
 	ld hl, IslandSkyPalettes_14 ; $73c9
 	ld de, $0903 ; $73cc
 	call LoadPaletteShadow ; $73cf
-	pop af ; $73d2
-	wram_bank ; $73d3
+	pop_wram_bank ; $73d2
 	ret ; $73d7
 AnimateIslandSkyEffectSprites_14:
 	ldh a, [hScrollX] ; $73d8
@@ -2898,9 +2788,7 @@ SpriteTemplate_14_3:
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
 LoadDistantPlaneObjGfx_14:
-	ldh a, [hWramBank] ; $7539
-	push af ; $753b
-	wram_bank $01 ; $753c
+	push_wram_bank $01 ; $7539
 	ld hl, DistantPlaneObjGfx ; $7542
 	ld de, $8000 + VRAM_BANK1 ; $7545
 	ld c, (SpriteTemplate_14_3 - DistantPlaneObjGfx) / 16 ; $7548
@@ -2908,8 +2796,7 @@ LoadDistantPlaneObjGfx_14:
 	ld hl, IslandObjPalette_14 ; $754d
 	ld de, $0801 ; $7550
 	call LoadPaletteShadow ; $7553
-	pop af ; $7556
-	wram_bank ; $7557
+	pop_wram_bank ; $7556
 	ret ; $755b
 QueueDistantPlaneSprite_14:
 	call GetSceneObjectScreenPos_14 ; $755c
@@ -2939,9 +2826,7 @@ TwinkleObjGfx:
 TwinkleObjPalette_14:
 	INCLUDE "data/bank_014/palettes_7680.asm" ; $7680, 8 bytes (palettes)
 LoadTwinkleObjGfx_14:
-	ldh a, [hWramBank] ; $7688
-	push af ; $768a
-	wram_bank $01 ; $768b
+	push_wram_bank $01 ; $7688
 	ld hl, TwinkleObjGfx ; $7691
 	ld de, $8000 + VRAM_BANK1 ; $7694
 	ld c, (TwinkleObjPalette_14 - TwinkleObjGfx) / 16 ; $7697
@@ -2949,8 +2834,7 @@ LoadTwinkleObjGfx_14:
 	ld hl, TwinkleObjPalette_14 ; $769c
 	ld de, $0801 ; $769f
 	call LoadPaletteShadow ; $76a2
-	pop af ; $76a5
-	wram_bank ; $76a6
+	pop_wram_bank ; $76a5
 	ret ; $76aa
 QueueTwinkleSprite_14:
 	ldh a, [hScrollX] ; $76ab

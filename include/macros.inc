@@ -134,6 +134,39 @@ MACRO wram_bank
 	ldh [rWBK], a
 ENDM
 
+; Save the current WRAM bank on the stack and select another: the prologue
+; nearly every banked routine opens with (`ldh a, [hWramBank] / push af /
+; wram_bank N`). pop_wram_bank is the matching epilogue (`pop af / wram_bank`).
+MACRO push_wram_bank
+	ldh a, [hWramBank]
+	push af
+	wram_bank \1
+ENDM
+
+MACRO pop_wram_bank
+	pop af
+	wram_bank
+ENDM
+
+; hl =  + a. The split-base table index the game uses everywhere: the two
+; halves of the address are 8-bit immediates, added with carry propagation
+; (`sub l` recovers the carry from the low add), so the pair assembles to
+; exactly the five instructions it replaces.
+MACRO ld_hl_indexed
+	add LOW(\1)
+	ld l, a
+	adc HIGH(\1)
+	sub l
+	ld h, a
+ENDM
+
+; WaitFramesCmd takes its frame count as an inline byte after the call and
+; returns past it; the byte is an argument, not the next instruction.
+MACRO wait_frames
+	call WaitFramesCmd
+	db \1
+ENDM
+
 ; --- Story-mode map-script tables (banks $0e-$15) ---
 ; Each story location owns a 7-word directory (a map_tree) copied to $c286.
 ; The words point at the location's sub-tables, one per slot, consumed by the

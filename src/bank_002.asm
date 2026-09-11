@@ -182,20 +182,13 @@ InitCa00RecordFromCharId:
 	ld hl, $002f ; $4113
 	add hl, de ; $4116
 	ld [hl], $02 ; $4117
-	ldh a, [hWramBank] ; $4119
-	push af ; $411b
-	wram_bank $06 ; $411c
-	pop af ; $4122
-	wram_bank ; $4123
+	push_wram_bank $06 ; $4119
+	pop_wram_bank ; $4122
 	ret ; $4127
 ; GetCharPaletteIndex with a different table base (`add $33` for `add $7e`): the same character-id lookup over the remap table above. Nothing calls it.
 Unused_02_CharIdRemapLookup:
 	push hl ; $4128
-	add LOW(Unused_02_CharIdRemapTable) ; $4129
-	ld l, a ; $412b
-	adc HIGH(Unused_02_CharIdRemapTable) ; $412c
-	sub l ; $412e
-	ld h, a ; $412f
+	ld_hl_indexed Unused_02_CharIdRemapTable ; $4129
 	ld a, [hl] ; $4130
 	pop hl ; $4131
 	ret ; $4132
@@ -207,11 +200,7 @@ Unused_02_CharIdRemapTable:
 	db $14, $15, $16, $17, $14, $15, $16, $17, $14, $15, $16, $17, $14, $15, $16, $17 ; 0x30
 GetCharPaletteIndex:
 	push hl ; $4173
-	add LOW(CharPaletteIndexTable) ; $4174
-	ld l, a ; $4176
-	adc HIGH(CharPaletteIndexTable) ; $4177
-	sub l ; $4179
-	ld h, a ; $417a
+	ld_hl_indexed CharPaletteIndexTable ; $4174
 	ld a, [hl] ; $417b
 	pop hl ; $417c
 	ret ; $417d
@@ -303,9 +292,7 @@ CacheStorySlotSummaries:
 	push bc ; $4262
 	push de ; $4263
 	push hl ; $4264
-	ldh a, [hWramBank] ; $4265
-	push af ; $4267
-	wram_bank $06 ; $4268
+	push_wram_bank $06 ; $4265
 	xor a ; $426e
 	ld c, $0c ; $426f
 	ld hl, wStorySlotSignatures ; $4271
@@ -344,8 +331,7 @@ CacheStorySlotSummaries:
 .restore:
 	pop af ; $42bb
 	ld [wCurrentStorySlot], a ; $42bc
-	pop af ; $42bf
-	wram_bank ; $42c0
+	pop_wram_bank ; $42bf
 	pop hl ; $42c4
 	pop de ; $42c5
 	pop bc ; $42c6
@@ -368,9 +354,7 @@ Copy4Bytes:
 CheckStorySignatureCollision:
 	push de ; $42d6
 	push hl ; $42d7
-	ldh a, [hWramBank] ; $42d8
-	push af ; $42da
-	wram_bank $06 ; $42db
+	push_wram_bank $06 ; $42d8
 	ld hl, wStorySaveSignature ; $42e1
 	ld a, [hl+] ; $42e4
 	or [hl] ; $42e5
@@ -413,8 +397,7 @@ CheckStorySignatureCollision:
 	xor a ; $433c
 .step:
 	ld h, a ; $433d
-	pop af ; $433e
-	wram_bank ; $433f
+	pop_wram_bank ; $433e
 	ld a, h ; $4343
 	pop hl ; $4344
 	pop de ; $4345
@@ -525,11 +508,7 @@ InitPlayerRecordFromTemplate:
 	farcall FetchShortTextToBuffer ; $43d7
 	pop de ; $43da
 	ld a, d ; $43db
-	add LOW(StoryCharGenderTable) ; $43dc
-	ld l, a ; $43de
-	adc HIGH(StoryCharGenderTable) ; $43df
-	sub l ; $43e1
-	ld h, a ; $43e2
+	ld_hl_indexed StoryCharGenderTable ; $43dc
 	ld a, [hl] ; $43e3
 	ld hl, $000d ; $43e4
 	add hl, bc ; $43e7
@@ -537,11 +516,7 @@ InitPlayerRecordFromTemplate:
 	push bc ; $43e9
 	ld a, d ; $43ea
 	add a ; $43eb
-	add LOW(EquipRecordPtrs_02) ; $43ec
-	ld l, a ; $43ee
-	adc HIGH(EquipRecordPtrs_02) ; $43ef
-	sub l ; $43f1
-	ld h, a ; $43f2
+	ld_hl_indexed EquipRecordPtrs_02 ; $43ec
 	ld a, [hl+] ; $43f3
 	ld h, [hl] ; $43f4
 	ld l, a ; $43f5
@@ -610,8 +585,7 @@ LoadMainCharacterFromRoster:
 .gotPtr:
 	ldh a, [hWramBank] ; $4471
 	push af ; $4473
-	pop af ; $4474
-	wram_bank ; $4475
+	pop_wram_bank ; $4474
 	ret ; $4479
 Copy64Bytes:
 	push de ; $447a
@@ -705,11 +679,7 @@ RecomputeCharacterStats:
 	ld a, [hl] ; $44ee
 	and $03 ; $44ef
 	add a ; $44f1
-	add LOW(EquipRecordPtrs_02) ; $44f2
-	ld l, a ; $44f4
-	adc HIGH(EquipRecordPtrs_02) ; $44f5
-	sub l ; $44f7
-	ld h, a ; $44f8
+	ld_hl_indexed EquipRecordPtrs_02 ; $44f2
 	ld a, [hl+] ; $44f9
 	ld d, [hl] ; $44fa
 	ld e, a ; $44fb
@@ -1585,11 +1555,7 @@ RemapExtendedCharId:
 	push hl ; $4c5b
 	sub $20 ; $4c5c
 	and $7f ; $4c5e
-	add LOW(NameTextRemap_02) ; $4c60
-	ld l, a ; $4c62
-	adc HIGH(NameTextRemap_02) ; $4c63
-	sub l ; $4c65
-	ld h, a ; $4c66
+	ld_hl_indexed NameTextRemap_02 ; $4c60
 	ld a, [hl] ; $4c67
 	pop hl ; $4c68
 	ret ; $4c69
@@ -1604,11 +1570,7 @@ SetStorySlotFlagB:
 	push af ; $4cb1
 	ld a, [wCurrentStorySlot] ; $4cb2
 	add a ; $4cb5
-	add LOW(StorySlotFlagBIds_02) ; $4cb6
-	ld l, a ; $4cb8
-	adc HIGH(StorySlotFlagBIds_02) ; $4cb9
-	sub l ; $4cbb
-	ld h, a ; $4cbc
+	ld_hl_indexed StorySlotFlagBIds_02 ; $4cb6
 	ld a, [hl+] ; $4cbd
 	ld d, [hl] ; $4cbe
 	ld e, a ; $4cbf
@@ -1629,11 +1591,7 @@ StorySlotFlagBIds_02:
 TestStorySlotFlagB:
 	ld a, [wCurrentStorySlot] ; $4cd4
 	add a ; $4cd7
-	add LOW(StorySlotFlagBIds_02) ; $4cd8
-	ld l, a ; $4cda
-	adc HIGH(StorySlotFlagBIds_02) ; $4cdb
-	sub l ; $4cdd
-	ld h, a ; $4cde
+	ld_hl_indexed StorySlotFlagBIds_02 ; $4cd8
 	ld a, [hl+] ; $4cdf
 	ld d, [hl] ; $4ce0
 	ld e, a ; $4ce1
@@ -1648,11 +1606,7 @@ SetStorySlotFlagA:
 	push af ; $4ced
 	ld a, [wCurrentStorySlot] ; $4cee
 	add a ; $4cf1
-	add LOW(StorySlotFlagAIds_02) ; $4cf2
-	ld l, a ; $4cf4
-	adc HIGH(StorySlotFlagAIds_02) ; $4cf5
-	sub l ; $4cf7
-	ld h, a ; $4cf8
+	ld_hl_indexed StorySlotFlagAIds_02 ; $4cf2
 	ld a, [hl+] ; $4cf9
 	ld d, [hl] ; $4cfa
 	ld e, a ; $4cfb
@@ -1673,11 +1627,7 @@ StorySlotFlagAIds_02:
 TestStorySlotFlagA:
 	ld a, [wCurrentStorySlot] ; $4d10
 	add a ; $4d13
-	add LOW(StorySlotFlagAIds_02) ; $4d14
-	ld l, a ; $4d16
-	adc HIGH(StorySlotFlagAIds_02) ; $4d17
-	sub l ; $4d19
-	ld h, a ; $4d1a
+	ld_hl_indexed StorySlotFlagAIds_02 ; $4d14
 	ld a, [hl+] ; $4d1b
 	ld d, [hl] ; $4d1c
 	ld e, a ; $4d1d
@@ -2519,11 +2469,7 @@ Unused_02_CharGroupFind:
 	add a ; $5ec9
 	add a ; $5eca
 	add a ; $5ecb
-	add LOW(CharGroupTable_02) ; $5ecc
-	ld l, a ; $5ece
-	adc HIGH(CharGroupTable_02) ; $5ecf
-	sub l ; $5ed1
-	ld h, a ; $5ed2
+	ld_hl_indexed CharGroupTable_02 ; $5ecc
 	ld b, $10 ; $5ed3
 .loop:
 	ld a, [hl+] ; $5ed5
@@ -2541,11 +2487,7 @@ DoesCharGroupRowContain:
 	add a ; $5ee3
 	add a ; $5ee4
 	add a ; $5ee5
-	add LOW(CharGroupTable_02) ; $5ee6
-	ld l, a ; $5ee8
-	adc HIGH(CharGroupTable_02) ; $5ee9
-	sub l ; $5eeb
-	ld h, a ; $5eec
+	ld_hl_indexed CharGroupTable_02 ; $5ee6
 	ld c, $10 ; $5eed
 .loop:
 	ld a, [hl+] ; $5eef

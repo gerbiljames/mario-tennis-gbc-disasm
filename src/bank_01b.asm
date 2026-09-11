@@ -701,30 +701,24 @@ SetMenuCursorFromIndexToPtr_1b:
 	ld [hl], a ; $4401
 	ret ; $4402
 ClearWram3Row64_1b:
-	ldh a, [hWramBank] ; $4403
-	push af ; $4405
-	wram_bank $03 ; $4406
+	push_wram_bank $03 ; $4403
 	xor a ; $440c
 	ld c, $40 ; $440d
 .loop2:
 	ld [hl+], a ; $440f
 	dec c ; $4410
 	jr nz, .loop2 ; $4411
-	pop af ; $4413
-	wram_bank ; $4414
+	pop_wram_bank ; $4413
 	ret ; $4418
 ClearWram3Row64Alt_1b:
-	ldh a, [hWramBank] ; $4419
-	push af ; $441b
-	wram_bank $03 ; $441c
+	push_wram_bank $03 ; $4419
 	ld a, $00 ; $4422
 	ld c, $40 ; $4424
 .loop3:
 	ld [hl+], a ; $4426
 	dec c ; $4427
 	jr nz, .loop3 ; $4428
-	pop af ; $442a
-	wram_bank ; $442b
+	pop_wram_bank ; $442a
 	ret ; $442f
 UpdateAnimatedTilesTask:
 	farcall UpdateAnimatedTiles ; $4430
@@ -1062,8 +1056,7 @@ ShowRankingBoard:
 	call WaitFadeEnd ; $4ec3
 	wram_bank $03 ; $4ec6
 	call DispatchRankingBoardAnim ; $4ecc
-	call WaitFramesCmd ; $4ecf
-	db $1e ; $4ed2 inline arg
+	wait_frames $1e ; $4ecf
 	call WaitForAOrBPress ; $4ed3
 	ld c, $20 ; $4ed6
 	ld a, [wRankingBoardMode] ; $4ed8
@@ -1133,9 +1126,7 @@ BuildRankingBoardScreen:
 RankingBoardScreenPalettes:
 	INCLUDE "data/bank_01b/palettes_4f76.asm" ; $4f76, 48 bytes (palettes)
 LoadRankingBoardTiles:
-	ldh a, [hWramBank] ; $4fa6
-	push af ; $4fa8
-	wram_bank $01 ; $4fa9
+	push_wram_bank $01 ; $4fa6
 	ld hl, (BANK(DataPtr_BracketCharIcon00) << 8) | LOW(DataPtr_BracketCharIcon00) ; $4faf
 	ld de, wDecompBuffer ; $4fb2
 	call DecompressDataFromBank ; $4fb5
@@ -1157,8 +1148,7 @@ LoadRankingBoardTiles:
 	ld de, $8200 + VRAM_BANK1 ; $4fe3
 	ld c, $10 ; $4fe6
 	call QueueVRAMCopy ; $4fe8
-	pop af ; $4feb
-	wram_bank ; $4fec
+	pop_wram_bank ; $4feb
 	ret ; $4ff0
 DispatchRankingBoardAnim:
 	ld a, [wRankingBoardSilent] ; $4ff1
@@ -1261,8 +1251,7 @@ RankingBoardAnimState_5077_1b:
 	ld a, $01 ; $5077
 	ld hl, RankingBoardAnimTask_1b ; $5079
 	call RegisterFrameTask ; $507c
-	call WaitFramesCmd ; $507f
-	db $8c ; $5082 inline arg
+	wait_frames $8c ; $507f
 	sound $78 ; $5083
 	ld c, $00 ; $5085
 	call GetRankingMarkerSlot ; $5087
@@ -1275,8 +1264,7 @@ RankingBoardAnimState_5077_1b:
 	ld b, $01 ; $509b
 	call HighlightRankingRow ; $509d
 	call PushRankingBoardTilemapRows ; $50a0
-	call WaitFramesCmd ; $50a3
-	db $1e ; $50a6 inline arg
+	wait_frames $1e ; $50a3
 	sound $80 ; $50a7
 	ld c, $03 ; $50a9
 	call GetRankingMarkerSlot ; $50ab
@@ -1286,8 +1274,7 @@ RankingBoardAnimState_5077_1b:
 	call GetRankingMarkerSlot ; $50b6
 	ld de, RankingBoardAnimState_5077Table0 ; $50b9
 	call StartRankingMarkerAnim1 ; $50bc
-	call WaitFramesCmd ; $50bf
-	db $5a ; $50c2 inline arg
+	wait_frames $5a ; $50bf
 	sound $78 ; $50c3
 	ld c, $03 ; $50c5
 	call GetRankingMarkerSlot ; $50c7
@@ -1300,8 +1287,7 @@ RankingBoardAnimState_5077_1b:
 	ld b, $02 ; $50db
 	call HighlightRankingRow ; $50dd
 	call PushRankingBoardTilemapRows ; $50e0
-	call WaitFramesCmd ; $50e3
-	db $1e ; $50e6 inline arg
+	wait_frames $1e ; $50e3
 	sound $80 ; $50e7
 	ld c, $06 ; $50e9
 	call GetRankingMarkerSlot ; $50eb
@@ -1311,8 +1297,7 @@ RankingBoardAnimState_5077_1b:
 	call GetRankingMarkerSlot ; $50f6
 	ld de, RankingBoardAnimState_5077Table2 ; $50f9
 	call StartRankingMarkerAnim1 ; $50fc
-	call WaitFramesCmd ; $50ff
-	db $5a ; $5102 inline arg
+	wait_frames $5a ; $50ff
 	sound $78 ; $5103
 	ld c, $06 ; $5105
 	call GetRankingMarkerSlot ; $5107
@@ -1325,8 +1310,7 @@ RankingBoardAnimState_5077_1b:
 	ld b, $03 ; $511b
 	call HighlightRankingRow ; $511d
 	call PushRankingBoardTilemapRows ; $5120
-	call WaitFramesCmd ; $5123
-	db $1e ; $5126 inline arg
+	wait_frames $1e ; $5123
 	sound $80 ; $5127
 	ld c, $09 ; $5129
 	call GetRankingMarkerSlot ; $512b
@@ -1336,8 +1320,7 @@ RankingBoardAnimState_5077_1b:
 	call GetRankingMarkerSlot ; $5136
 	ld de, RankingBoardAnimState_5077Table2 ; $5139
 	call StartRankingMarkerAnim1 ; $513c
-	call WaitFramesCmd ; $513f
-	db $5a ; $5142 inline arg
+	wait_frames $5a ; $513f
 	sound $78 ; $5143
 	ld c, $09 ; $5145
 	call GetRankingMarkerSlot ; $5147
@@ -1350,8 +1333,7 @@ RankingBoardAnimState_5077_1b:
 	ld b, $04 ; $515b
 	call HighlightRankingRow ; $515d
 	call PushRankingBoardTilemapRows ; $5160
-	call WaitFramesCmd ; $5163
-	db $1e ; $5166 inline arg
+	wait_frames $1e ; $5163
 	ld a, $01 ; $5167
 	ld [wRankingAnimStateDone], a ; $5169
 	jp RankingBoardAnimNop_1b ; $516c
@@ -1359,8 +1341,7 @@ RankingBoardAnimState_516f_1b:
 	ld a, $01 ; $516f
 	ld hl, RankingBoardAnimTask_1b ; $5171
 	call RegisterFrameTask ; $5174
-	call WaitFramesCmd ; $5177
-	db $8c ; $517a inline arg
+	wait_frames $8c ; $5177
 	sound $78 ; $517b
 	ld c, $00 ; $517d
 	call GetRankingMarkerSlot ; $517f
@@ -1373,21 +1354,18 @@ RankingBoardAnimState_516f_1b:
 	ld b, $05 ; $5193
 	call HighlightRankingRow ; $5195
 	call PushRankingBoardTilemapRows ; $5198
-	call WaitFramesCmd ; $519b
-	db $1e ; $519e inline arg
+	wait_frames $1e ; $519b
 	sound $80 ; $519f
 	ld c, $05 ; $51a1
 	call GetRankingMarkerSlot ; $51a3
 	ld de, RankingBoardAnimState_516fTable0 ; $51a6
 	call StartRankingMarkerAnim1 ; $51a9
-	call WaitFramesCmd ; $51ac
-	db $04 ; $51af inline arg
+	wait_frames $04 ; $51ac
 	ld c, $03 ; $51b0
 	call GetRankingMarkerSlot ; $51b2
 	ld de, RankingBoardAnimState_516fTable2 ; $51b5
 	call StartRankingMarkerAnim0 ; $51b8
-	call WaitFramesCmd ; $51bb
-	db $78 ; $51be inline arg
+	wait_frames $78 ; $51bb
 	sound $78 ; $51bf
 	ld c, $05 ; $51c1
 	call GetRankingMarkerSlot ; $51c3
@@ -1400,21 +1378,18 @@ RankingBoardAnimState_516f_1b:
 	ld b, $06 ; $51d7
 	call HighlightRankingRow ; $51d9
 	call PushRankingBoardTilemapRows ; $51dc
-	call WaitFramesCmd ; $51df
-	db $1e ; $51e2 inline arg
+	wait_frames $1e ; $51df
 	sound $80 ; $51e3
 	ld c, $08 ; $51e5
 	call GetRankingMarkerSlot ; $51e7
 	ld de, RankingBoardAnimState_516fTable4 ; $51ea
 	call StartRankingMarkerAnim1 ; $51ed
-	call WaitFramesCmd ; $51f0
-	db $04 ; $51f3 inline arg
+	wait_frames $04 ; $51f0
 	ld c, $06 ; $51f4
 	call GetRankingMarkerSlot ; $51f6
 	ld de, RankingBoardAnimState_516fTable5 ; $51f9
 	call StartRankingMarkerAnim0 ; $51fc
-	call WaitFramesCmd ; $51ff
-	db $5a ; $5202 inline arg
+	wait_frames $5a ; $51ff
 	sound $78 ; $5203
 	ld c, $08 ; $5205
 	call GetRankingMarkerSlot ; $5207
@@ -1427,21 +1402,18 @@ RankingBoardAnimState_516f_1b:
 	ld b, $07 ; $521b
 	call HighlightRankingRow ; $521d
 	call PushRankingBoardTilemapRows ; $5220
-	call WaitFramesCmd ; $5223
-	db $1e ; $5226 inline arg
+	wait_frames $1e ; $5223
 	sound $80 ; $5227
 	ld c, $0b ; $5229
 	call GetRankingMarkerSlot ; $522b
 	ld de, RankingBoardAnimState_516fTable4 ; $522e
 	call StartRankingMarkerAnim1 ; $5231
-	call WaitFramesCmd ; $5234
-	db $04 ; $5237 inline arg
+	wait_frames $04 ; $5234
 	ld c, $09 ; $5238
 	call GetRankingMarkerSlot ; $523a
 	ld de, RankingBoardAnimState_516fTable5 ; $523d
 	call StartRankingMarkerAnim0 ; $5240
-	call WaitFramesCmd ; $5243
-	db $5a ; $5246 inline arg
+	wait_frames $5a ; $5243
 	sound $78 ; $5247
 	ld c, $0b ; $5249
 	call GetRankingMarkerSlot ; $524b
@@ -1454,8 +1426,7 @@ RankingBoardAnimState_516f_1b:
 	ld b, $08 ; $525f
 	call HighlightRankingRow ; $5261
 	call PushRankingBoardTilemapRows ; $5264
-	call WaitFramesCmd ; $5267
-	db $1e ; $526a inline arg
+	wait_frames $1e ; $5267
 	ld a, $01 ; $526b
 	ld [wRankingAnimStateDone], a ; $526d
 	jp RankingBoardAnimNop_1b ; $5270
@@ -1463,8 +1434,7 @@ RankingBoardAnimState_5273_1b:
 	ld a, $01 ; $5273
 	ld hl, RankingBoardAnimTask_1b ; $5275
 	call RegisterFrameTask ; $5278
-	call WaitFramesCmd ; $527b
-	db $8c ; $527e inline arg
+	wait_frames $8c ; $527b
 	sound $78 ; $527f
 	ld c, $00 ; $5281
 	call GetRankingMarkerSlot ; $5283
@@ -1477,8 +1447,7 @@ RankingBoardAnimState_5273_1b:
 	ld b, $09 ; $5297
 	call HighlightRankingRow ; $5299
 	call PushRankingBoardTilemapRows ; $529c
-	call WaitFramesCmd ; $529f
-	db $5a ; $52a2 inline arg
+	wait_frames $5a ; $529f
 	sound $80 ; $52a3
 	ld c, $08 ; $52a5
 	call GetRankingMarkerSlot ; $52a7
@@ -1488,8 +1457,7 @@ RankingBoardAnimState_5273_1b:
 	call GetRankingMarkerSlot ; $52b2
 	ld de, RankingBoardAnimState_516fTable5 ; $52b5
 	call StartRankingMarkerAnim1 ; $52b8
-	call WaitFramesCmd ; $52bb
-	db $5a ; $52be inline arg
+	wait_frames $5a ; $52bb
 	sound $78 ; $52bf
 	ld c, $08 ; $52c1
 	call GetRankingMarkerSlot ; $52c3
@@ -1502,8 +1470,7 @@ RankingBoardAnimState_5273_1b:
 	ld b, $0a ; $52d7
 	call HighlightRankingRow ; $52d9
 	call PushRankingBoardTilemapRows ; $52dc
-	call WaitFramesCmd ; $52df
-	db $1e ; $52e2 inline arg
+	wait_frames $1e ; $52df
 	ld a, $01 ; $52e3
 	ld [wRankingAnimStateDone], a ; $52e5
 	jp RankingBoardAnimNop_1b ; $52e8
@@ -1511,14 +1478,12 @@ RankingBoardAnimState_52eb_1b:
 	ld a, $01 ; $52eb
 	ld hl, RankingBoardAnimTask_1b ; $52ed
 	call RegisterFrameTask ; $52f0
-	call WaitFramesCmd ; $52f3
-	db $8c ; $52f6 inline arg
+	wait_frames $8c ; $52f3
 	ld a, $01 ; $52f7
 	ld [wRankingAnimStateDone], a ; $52f9
 	jp RankingBoardAnimNop_1b ; $52fc
 RankingBoardAnimState_52ff_1b:
-	call WaitFramesCmd ; $52ff
-	db $14 ; $5302 inline arg
+	wait_frames $14 ; $52ff
 	sound $80 ; $5303
 	ld c, $00 ; $5305
 	call GetRankingMarkerSlot ; $5307
@@ -1528,29 +1493,24 @@ RankingBoardAnimState_52ff_1b:
 	call GetRankingMarkerSlot ; $5312
 	ld de, RankingBoardAnimState_5077Table0 ; $5315
 	call StartRankingMarkerAnim1 ; $5318
-	call WaitFramesCmd ; $531b
-	db $14 ; $531e inline arg
+	wait_frames $14 ; $531b
 	jp RankingBoardAnimNop_1b ; $531f
 RankingBoardAnimState_5322_1b:
-	call WaitFramesCmd ; $5322
-	db $0a ; $5325 inline arg
+	wait_frames $0a ; $5322
 	sound $80 ; $5326
 	ld c, $02 ; $5328
 	call GetRankingMarkerSlot ; $532a
 	ld de, RankingBoardAnimState_516fTable0 ; $532d
 	call StartRankingMarkerAnim1 ; $5330
-	call WaitFramesCmd ; $5333
-	db $04 ; $5336 inline arg
+	wait_frames $04 ; $5333
 	ld c, $00 ; $5337
 	call GetRankingMarkerSlot ; $5339
 	ld de, RankingBoardAnimState_516fTable2 ; $533c
 	call StartRankingMarkerAnim0 ; $533f
-	call WaitFramesCmd ; $5342
-	db $14 ; $5345 inline arg
+	wait_frames $14 ; $5342
 	jp RankingBoardAnimNop_1b ; $5346
 RankingBoardAnimState_5349_1b:
-	call WaitFramesCmd ; $5349
-	db $14 ; $534c inline arg
+	wait_frames $14 ; $5349
 	sound $80 ; $534d
 	ld c, $00 ; $534f
 	call GetRankingMarkerSlot ; $5351
@@ -1562,8 +1522,7 @@ RankingBoardAnimState_5349_1b:
 	call StartRankingMarkerAnim1 ; $5362
 	jp RankingBoardAnimNop_1b ; $5365
 RankingBoardAnimState_5368_1b:
-	call WaitFramesCmd ; $5368
-	db $1e ; $536b inline arg
+	wait_frames $1e ; $5368
 	sound $80 ; $536c
 	ld c, $00 ; $536e
 	call GetRankingMarkerSlot ; $5370
@@ -1578,8 +1537,7 @@ RankingBoardAnimState_5387_1b:
 	ld a, $01 ; $5387
 	ld hl, RankingBoardAnimTask_1b ; $5389
 	call RegisterFrameTask ; $538c
-	call WaitFramesCmd ; $538f
-	db $8c ; $5392 inline arg
+	wait_frames $8c ; $538f
 	sound $78 ; $5393
 	ld c, $00 ; $5395
 	call GetRankingMarkerSlot ; $5397
@@ -1592,8 +1550,7 @@ RankingBoardAnimState_5387_1b:
 	ld b, $01 ; $53ab
 	call HighlightDoublesRankingRow ; $53ad
 	call PushRankingBoardTilemapRows ; $53b0
-	call WaitFramesCmd ; $53b3
-	db $5a ; $53b6 inline arg
+	wait_frames $5a ; $53b3
 	sound $80 ; $53b7
 	ld c, $03 ; $53b9
 	call GetRankingMarkerSlot ; $53bb
@@ -1603,8 +1560,7 @@ RankingBoardAnimState_5387_1b:
 	call GetRankingMarkerSlot ; $53c6
 	ld de, RankingBoardAnimState_5077Table2 ; $53c9
 	call StartRankingMarkerAnim1 ; $53cc
-	call WaitFramesCmd ; $53cf
-	db $5a ; $53d2 inline arg
+	wait_frames $5a ; $53cf
 	sound $78 ; $53d3
 	ld c, $03 ; $53d5
 	call GetRankingMarkerSlot ; $53d7
@@ -1617,15 +1573,13 @@ RankingBoardAnimState_5387_1b:
 	ld b, $02 ; $53eb
 	call HighlightDoublesRankingRow ; $53ed
 	call PushRankingBoardTilemapRows ; $53f0
-	call WaitFramesCmd ; $53f3
-	db $5a ; $53f6 inline arg
+	wait_frames $5a ; $53f3
 	jp RankingBoardAnimNop_1b ; $53f7
 RankingBoardAnimState_53fa_1b:
 	ld a, $01 ; $53fa
 	ld hl, RankingBoardAnimTask_1b ; $53fc
 	call RegisterFrameTask ; $53ff
-	call WaitFramesCmd ; $5402
-	db $8c ; $5405 inline arg
+	wait_frames $8c ; $5402
 	sound $78 ; $5406
 	ld c, $00 ; $5408
 	call GetRankingMarkerSlot ; $540a
@@ -1638,8 +1592,7 @@ RankingBoardAnimState_53fa_1b:
 	ld b, $03 ; $541e
 	call HighlightDoublesRankingRow ; $5420
 	call PushRankingBoardTilemapRows ; $5423
-	call WaitFramesCmd ; $5426
-	db $5a ; $5429 inline arg
+	wait_frames $5a ; $5426
 	sound $80 ; $542a
 	ld c, $03 ; $542c
 	call GetRankingMarkerSlot ; $542e
@@ -1649,8 +1602,7 @@ RankingBoardAnimState_53fa_1b:
 	call GetRankingMarkerSlot ; $5439
 	ld de, RankingBoardAnimState_516fTable3 ; $543c
 	call StartRankingMarkerAnim1 ; $543f
-	call WaitFramesCmd ; $5442
-	db $8c ; $5445 inline arg
+	wait_frames $8c ; $5442
 	sound $78 ; $5446
 	ld c, $03 ; $5448
 	call GetRankingMarkerSlot ; $544a
@@ -1663,15 +1615,13 @@ RankingBoardAnimState_53fa_1b:
 	ld b, $04 ; $545e
 	call HighlightDoublesRankingRow ; $5460
 	call PushRankingBoardTilemapRows ; $5463
-	call WaitFramesCmd ; $5466
-	db $1e ; $5469 inline arg
+	wait_frames $1e ; $5466
 	jp RankingBoardAnimNop_1b ; $546a
 RankingBoardAnimState_546d_1b:
 	ld a, $01 ; $546d
 	ld hl, RankingBoardAnimTask_1b ; $546f
 	call RegisterFrameTask ; $5472
-	call WaitFramesCmd ; $5475
-	db $8c ; $5478 inline arg
+	wait_frames $8c ; $5475
 	sound $78 ; $5479
 	ld c, $00 ; $547b
 	call GetRankingMarkerSlot ; $547d
@@ -1684,14 +1634,12 @@ RankingBoardAnimState_546d_1b:
 	ld b, $06 ; $5491
 	call HighlightDoublesRankingRow ; $5493
 	call PushRankingBoardTilemapRows ; $5496
-	call WaitFramesCmd ; $5499
-	db $1e ; $549c inline arg
+	wait_frames $1e ; $5499
 	jp RankingBoardAnimNop_1b ; $549d
 RankingBoardAnimState_54a0_1b:
 	jp RankingBoardAnimNop_1b ; $54a0
 RankingBoardAnimState_54a3_1b:
-	call WaitFramesCmd ; $54a3
-	db $1e ; $54a6 inline arg
+	wait_frames $1e ; $54a3
 	sound $80 ; $54a7
 	ld c, $00 ; $54a9
 	call GetRankingMarkerSlot ; $54ab
@@ -1703,23 +1651,20 @@ RankingBoardAnimState_54a3_1b:
 	call StartRankingMarkerAnim1 ; $54bc
 	jp RankingBoardAnimNop_1b ; $54bf
 RankingBoardAnimState_54c2_1b:
-	call WaitFramesCmd ; $54c2
-	db $1e ; $54c5 inline arg
+	wait_frames $1e ; $54c2
 	sound $80 ; $54c6
 	ld c, $02 ; $54c8
 	call GetRankingMarkerSlot ; $54ca
 	ld de, RankingBoardAnimState_516fTable0 ; $54cd
 	call StartRankingMarkerAnim1 ; $54d0
-	call WaitFramesCmd ; $54d3
-	db $08 ; $54d6 inline arg
+	wait_frames $08 ; $54d3
 	ld c, $00 ; $54d7
 	call GetRankingMarkerSlot ; $54d9
 	ld de, RankingBoardAnimState_5077Table0 ; $54dc
 	call StartRankingMarkerAnim0 ; $54df
 	jp RankingBoardAnimNop_1b ; $54e2
 RankingBoardAnimState_54e5_1b:
-	call WaitFramesCmd ; $54e5
-	db $1e ; $54e8 inline arg
+	wait_frames $1e ; $54e5
 	sound $80 ; $54e9
 	ld c, $00 ; $54eb
 	call GetRankingMarkerSlot ; $54ed
@@ -3524,13 +3469,10 @@ Unused_1b_RunDebugSaveDataFlow:
 	ld e, a ; $63a7
 	or d ; $63a8
 	jr z, .step4 ; $63a9
-	ldh a, [hWramBank] ; $63ab
-	push af ; $63ad
-	wram_bank $06 ; $63ae
+	push_wram_bank $06 ; $63ab
 	xor a ; $63b4
 	ld [$d000], a ; $63b5
-	pop af ; $63b8
-	wram_bank ; $63b9
+	pop_wram_bank ; $63b8
 	ld h, $01 ; $63bd
 	ld l, $00 ; $63bf
 	ld a, $01 ; $63c1
@@ -3544,13 +3486,10 @@ Unused_1b_RunDebugSaveDataFlow:
 	ld e, a ; $63d0
 	or d ; $63d1
 	jr z, .step5 ; $63d2
-	ldh a, [hWramBank] ; $63d4
-	push af ; $63d6
-	wram_bank $06 ; $63d7
+	push_wram_bank $06 ; $63d4
 	xor a ; $63dd
 	ld [$d000], a ; $63de
-	pop af ; $63e1
-	wram_bank ; $63e2
+	pop_wram_bank ; $63e1
 	ld h, $01 ; $63e6
 	ld l, $01 ; $63e8
 	ld a, $01 ; $63ea
@@ -3645,8 +3584,7 @@ RunLevelUpStatusTrophiesMenu:
 	call WaitFadeEnd ; $64a6
 	ld a, [wMenuWindowId] ; $64a9
 	farcall CloseWindow ; $64ac
-	pop af ; $64af
-	wram_bank ; $64b0
+	pop_wram_bank ; $64af
 	ld a, b ; $64b4
 	pop hl ; $64b5
 	pop de ; $64b6
@@ -3690,8 +3628,7 @@ Unused_1b_RunDebugSaveDataMenu:
 	call WaitFadeEnd ; $650b
 	ld a, [wMenuWindowId] ; $650e
 	farcall CloseWindow ; $6511
-	pop af ; $6514
-	wram_bank ; $6515
+	pop_wram_bank ; $6514
 	ld a, b ; $6519
 	pop hl ; $651a
 	pop de ; $651b
@@ -4089,33 +4026,25 @@ StepUnlockDebugCursor:
 	ret ; $686e
 ReadUnlockFlagsSaveBlock:
 	push bc ; $686f
-	ldh a, [hWramBank] ; $6870
-	push af ; $6872
-	wram_bank $06 ; $6873
+	push_wram_bank $06 ; $6870
 	ld hl, wUnlockFlagsBlock ; $6879
 	ld b, $0b ; $687c
 	farcall ReadSaveBlock ; $687e
 	ld b, a ; $6881
-	pop af ; $6882
-	wram_bank ; $6883
+	pop_wram_bank ; $6882
 	ld a, b ; $6887
 	pop bc ; $6888
 	ret ; $6889
 WriteUnlockFlagsSaveBlock:
-	ldh a, [hWramBank] ; $688a
-	push af ; $688c
-	wram_bank $06 ; $688d
+	push_wram_bank $06 ; $688a
 	ld hl, wUnlockFlagsBlock ; $6893
 	ld de, $0000 ; $6896
 	ld b, $0b ; $6899
 	farcall WriteSaveBlock ; $689b
-	pop af ; $689e
-	wram_bank ; $689f
+	pop_wram_bank ; $689e
 	ret ; $68a3
 ToggleSelectedUnlockFlag:
-	ldh a, [hWramBank] ; $68a4
-	push af ; $68a6
-	wram_bank $06 ; $68a7
+	push_wram_bank $06 ; $68a4
 	ld hl, wUnlockFlagsBlock ; $68ad
 	ld a, [wCharSelectChar] ; $68b0
 	cp $1a ; $68b3
@@ -4132,18 +4061,14 @@ ToggleSelectedUnlockFlag:
 	xor $01 ; $68c3
 	ld [hl], a ; $68c5
 	sound SFX_MENU_SELECT ; $68c6
-	pop af ; $68c8
-	wram_bank ; $68c9
+	pop_wram_bank ; $68c8
 	ret ; $68cd
 .playSfx:
 	sound SFX_MENU_CANCEL ; $68ce
-	pop af ; $68d0
-	wram_bank ; $68d1
+	pop_wram_bank ; $68d0
 	ret ; $68d5
 LoadUnlockDebugCursorGfx:
-	ldh a, [hWramBank] ; $68d6
-	push af ; $68d8
-	wram_bank $01 ; $68d9
+	push_wram_bank $01 ; $68d6
 	ld hl, UnlockDebugCursorGfx ; $68df
 	ld de, wDecompBuffer ; $68e2
 	call DecompressData ; $68e5
@@ -4151,8 +4076,7 @@ LoadUnlockDebugCursorGfx:
 	ld de, $8500 ; $68eb
 	ld c, $02 ; $68ee
 	call QueueVRAMCopy ; $68f0
-	pop af ; $68f3
-	wram_bank ; $68f4
+	pop_wram_bank ; $68f3
 	ld hl, UnlockDebugCursorPalette ; $68f8
 	ld de, $0801 ; $68fb
 	call LoadPaletteShadow ; $68fe
@@ -4167,9 +4091,7 @@ UnlockDebugCursorGfx:
 UnlockDebugCursorPalette:
 	INCLUDE "data/bank_01b/palettes_6930.asm" ; $6930, 8 bytes (palettes)
 DrawUnlockDebugFlagSprites:
-	ldh a, [hWramBank] ; $6938
-	push af ; $693a
-	wram_bank $06 ; $693b
+	push_wram_bank $06 ; $6938
 	ld hl, wUnlockFlagsBlock + 2 ; $6941
 	xor a ; $6944
 .loop:
@@ -4195,8 +4117,7 @@ DrawUnlockDebugFlagSprites:
 	inc a ; $695d
 	cp $06 ; $695e
 	jr c, .loop ; $6960
-	pop af ; $6962
-	wram_bank ; $6963
+	pop_wram_bank ; $6962
 	ret ; $6967
 UnlockDebugFlagSprites:
 	; $6968, 12 bytes (bytes:12)
@@ -4473,9 +4394,7 @@ ShowTrophiesPlaceholderScreen:
 	sound SFX_MENU_SELECT ; $6b99
 	ret ; $6b9b
 RunMinigameLevelSelect:
-	ldh a, [hWramBank] ; $6b9c
-	push af ; $6b9e
-	wram_bank $02 ; $6b9f
+	push_wram_bank $02 ; $6b9c
 	ld a, c ; $6ba5
 	ld [wScreenAttrmap], a ; $6ba6
 	xor a ; $6ba9
@@ -4493,8 +4412,7 @@ RunMinigameLevelSelect:
 	wram_bank $02 ; $6bc2
 	ld a, [wScreenAttrmap + 3] ; $6bc8
 	ld c, a ; $6bcb
-	pop af ; $6bcc
-	wram_bank ; $6bcd
+	pop_wram_bank ; $6bcc
 	ld a, c ; $6bd1
 	ret ; $6bd2
 CountClearedMinigameLevels:
@@ -4600,9 +4518,7 @@ MinigameLevelRow8:
 	dw SAVEFLAG_CLEARED_TWO_ON_ONE_2 ; 1
 	dw SAVEFLAG_CLEARED_TWO_ON_ONE_3 ; 2
 LoadMinigameLevelSelectGfx:
-	ldh a, [hWramBank] ; $6c59
-	push af ; $6c5b
-	wram_bank $01 ; $6c5c
+	push_wram_bank $01 ; $6c59
 	ld c, $00 ; $6c62
 .loop:
 	ld a, c ; $6c64
@@ -4652,13 +4568,10 @@ LoadMinigameLevelSelectGfx:
 	inc a ; $6c9e
 	ld c, a ; $6c9f
 	call AdvanceFrame ; $6ca0
-	ldh a, [hWramBank] ; $6ca3
-	push af ; $6ca5
-	wram_bank $02 ; $6ca6
+	push_wram_bank $02 ; $6ca3
 	ld a, [wScreenAttrmap + 1] ; $6cac
 	ld b, a ; $6caf
-	pop af ; $6cb0
-	wram_bank ; $6cb1
+	pop_wram_bank ; $6cb0
 	ld a, b ; $6cb5
 	or a ; $6cb6
 	jr z, .zero ; $6cb7
@@ -4676,13 +4589,10 @@ LoadMinigameLevelSelectGfx:
 	ld de, $8000 + VRAM_BANK1 ; $6cc9
 	farcall LoadCompressedTileBlock ; $6ccc
 	call AdvanceFrame ; $6ccf
-	ldh a, [hWramBank] ; $6cd2
-	push af ; $6cd4
-	wram_bank $02 ; $6cd5
+	push_wram_bank $02 ; $6cd2
 	ld a, [wScreenAttrmap + 1] ; $6cdb
 	ld b, a ; $6cde
-	pop af ; $6cdf
-	wram_bank ; $6ce0
+	pop_wram_bank ; $6cdf
 	ld a, b ; $6ce4
 	or a ; $6ce5
 	jr z, .zero2 ; $6ce6
@@ -4713,8 +4623,7 @@ LoadMinigameLevelSelectGfx:
 	ld b, $08 ; $6d20
 	ld c, $10 ; $6d22
 	farcall LoadIndexedPalette ; $6d24
-	pop af ; $6d27
-	wram_bank ; $6d28
+	pop_wram_bank ; $6d27
 	ret ; $6d2c
 MinigameLevelSelectGfxTable:
 	; $6d2d, 8 bytes (records:2)
@@ -4729,9 +4638,7 @@ MinigameLevelSelectTable:
 	dw $aa00 ; record 2
 	dw $a900 ; record 3
 DrawMinigameLevelDescription:
-	ldh a, [hWramBank] ; $6d3d
-	push af ; $6d3f
-	wram_bank $02 ; $6d40
+	push_wram_bank $02 ; $6d3d
 	ld a, [wScreenAttrmap + 1] ; $6d46
 	or a ; $6d49
 	jr nz, .getMenuCursorIndex ; $6d4a
@@ -4809,9 +4716,7 @@ MinigameLevelSelectPalette2:
 	; $6dbe, 8 bytes (bytes:8)
 	db $99, $52, $ff, $6b, $1f, $14, $00, $00 ; 0x00
 FlushLevelSelectTextRows:
-	ldh a, [hWramBank] ; $6dc6
-	push af ; $6dc8
-	wram_bank $03 ; $6dc9
+	push_wram_bank $03 ; $6dc6
 	ld hl, wShadowAttrmap + 7 * TILEMAP_WIDTH ; $6dcf
 	ld de, $98e0 + VRAM_BANK1 ; $6dd2
 	ld c, $06 ; $6dd5
@@ -4820,13 +4725,10 @@ FlushLevelSelectTextRows:
 	ld de, $99e0 ; $6ddd
 	ld c, $04 ; $6de0
 	call QueueVRAMCopy ; $6de2
-	pop af ; $6de5
-	wram_bank ; $6de6
+	pop_wram_bank ; $6de5
 	ret ; $6dea
 ClearMinigameLevelDescriptionRow:
-	ldh a, [hWramBank] ; $6deb
-	push af ; $6ded
-	wram_bank $03 ; $6dee
+	push_wram_bank $03 ; $6deb
 	ld de, wShadowTilemap + 15 * TILEMAP_WIDTH ; $6df4
 	ld b, $14 ; $6df7
 	ld c, $01 ; $6df9
@@ -4841,18 +4743,14 @@ ClearMinigameLevelDescriptionRow:
 	ld c, $01 ; $6e0f
 	ld h, $20 ; $6e11
 	farcall FillTilemapRect ; $6e13
-	pop af ; $6e16
-	wram_bank ; $6e17
+	pop_wram_bank ; $6e16
 	ret ; $6e1b
 GetMinigameLevelColumnCount:
 	push af ; $6e1c
-	ldh a, [hWramBank] ; $6e1d
-	push af ; $6e1f
-	wram_bank $02 ; $6e20
+	push_wram_bank $02 ; $6e1d
 	ld a, [wScreenAttrmap + 2] ; $6e26
 	ld b, a ; $6e29
-	pop af ; $6e2a
-	wram_bank ; $6e2b
+	pop_wram_bank ; $6e2a
 	pop af ; $6e2f
 	ret ; $6e30
 RunMinigameLevelSelect2:
@@ -5319,9 +5217,7 @@ RunSavedDataTypeSelect:
 	ld a, $ff ; $7207
 	ret ; $7209
 LoadSavedDataTypeSelectGfx:
-	ldh a, [hWramBank] ; $720a
-	push af ; $720c
-	wram_bank $01 ; $720d
+	push_wram_bank $01 ; $720a
 	ld c, $00 ; $7213
 .loop:
 	ld a, c ; $7215
@@ -5397,8 +5293,7 @@ LoadSavedDataTypeSelectGfx:
 	ld b, $08 ; $728d
 	ld c, $10 ; $728f
 	farcall LoadIndexedPalette ; $7291
-	pop af ; $7294
-	wram_bank ; $7295
+	pop_wram_bank ; $7294
 	ret ; $7299
 SavedDataTypeSelectGfx0:
 	; $729a, 4 bytes (bytes:4)
@@ -5513,9 +5408,7 @@ RedrawSavedDataTypeSelect:
 	call FlushLevelSelectTextRows ; $737f
 	ret ; $7382
 DrawSavedDataTypeDescription:
-	ldh a, [hWramBank] ; $7383
-	push af ; $7385
-	wram_bank $03 ; $7386
+	push_wram_bank $03 ; $7383
 	ld c, $03 ; $738c
 	call GetMenuCursorIndex ; $738e
 	ld b, a ; $7391
@@ -5538,8 +5431,7 @@ DrawSavedDataTypeDescription:
 .renderTextToBuffer64:
 	ld c, $20 ; $73a7
 	farcall RenderTextToBuffer64 ; $73a9
-	pop af ; $73ac
-	wram_bank ; $73ad
+	pop_wram_bank ; $73ac
 	ret ; $73b1
 SavedDataTypeDescriptionTable:
 	; $73b2, 4 bytes (bytes:4)
@@ -5813,8 +5705,7 @@ LoadMinigameHighScores:
 	ld a, c ; $75a3
 	cp $08 ; $75a4
 	jr nz, .loop ; $75a6
-	pop af ; $75a8
-	wram_bank ; $75a9
+	pop_wram_bank ; $75a8
 	ret ; $75ad
 RedrawMinigameDataRows:
 	call DrawMinigameDataMugshotsScrolled ; $75ae
@@ -5851,9 +5742,7 @@ FlushMinigameDataRowsToVram:
 	call AdvanceFrame ; $7600
 	ret ; $7603
 DrawMinigameDataMugshotsScrolled:
-	ldh a, [hWramBank] ; $7604
-	push af ; $7606
-	wram_bank $03 ; $7607
+	push_wram_bank $03 ; $7604
 	ld a, [wMenuCursorY] ; $760d
 	ld c, a ; $7610
 	ld b, $00 ; $7611
@@ -5877,13 +5766,10 @@ DrawMinigameDataMugshotsScrolled:
 	ld b, a ; $7629
 	cp $05 ; $762a
 	jr nz, .loop ; $762c
-	pop af ; $762e
-	wram_bank ; $762f
+	pop_wram_bank ; $762e
 	ret ; $7633
 DrawMinigameDataMugshotsStatic:
-	ldh a, [hWramBank] ; $7634
-	push af ; $7636
-	wram_bank $03 ; $7637
+	push_wram_bank $03 ; $7634
 	ld c, $00 ; $763d
 	ld b, $00 ; $763f
 .loop:
@@ -5909,23 +5795,19 @@ DrawMinigameDataMugshotsStatic:
 	ld c, $05 ; $765c
 	ld b, $04 ; $765e
 	call DrawMinigameDataMugshot ; $7660
-	pop af ; $7663
-	wram_bank ; $7664
+	pop_wram_bank ; $7663
 	ret ; $7668
 DrawMinigameDataMugshot:
 	push af ; $7669
 	push bc ; $766a
 	push de ; $766b
 	push hl ; $766c
-	ldh a, [hWramBank] ; $766d
-	push af ; $766f
-	wram_bank $03 ; $7670
+	push_wram_bank $03 ; $766d
 	call MapMinigameRowToMugshotSlot ; $7676
 	call GetMinigameRowTilemapDest ; $7679
 	ld b, c ; $767c
 	farcall DrawChartCharIcon ; $767d
-	pop af ; $7680
-	wram_bank ; $7681
+	pop_wram_bank ; $7680
 	pop hl ; $7685
 	pop de ; $7686
 	pop bc ; $7687
@@ -6181,9 +6063,7 @@ DrawStarLegendMark:
 	farcall CopyTilemapRect ; $7823
 	ret ; $7826
 DrawMinigameHighScoreNumbers:
-	ldh a, [hWramBank] ; $7827
-	push af ; $7829
-	wram_bank $03 ; $782a
+	push_wram_bank $03 ; $7827
 	ld a, [wMenuCursorY] ; $7830
 	ld c, a ; $7833
 	ld b, $00 ; $7834
@@ -6195,8 +6075,7 @@ DrawMinigameHighScoreNumbers:
 	ld a, b ; $783c
 	cp $05 ; $783d
 	jr nz, .loop ; $783f
-	pop af ; $7841
-	wram_bank ; $7842
+	pop_wram_bank ; $7841
 	ret ; $7846
 DrawMinigameHighScoreNumber:
 	ld a, c ; $7847
@@ -6259,9 +6138,7 @@ CheckMinigameDataScrollable:
 	ld a, $01 ; $7893
 	ret ; $7895
 CompactMinigameDataRows:
-	ldh a, [hWramBank] ; $7896
-	push af ; $7898
-	wram_bank $03 ; $7899
+	push_wram_bank $03 ; $7896
 	ld a, [wMinigameDataClearFlags + 5] ; $789f
 	ld [wMinigameDataClearFlags + 4], a ; $78a2
 	ld a, [wMinigameDataStarFlags + 5] ; $78a5
@@ -6270,8 +6147,7 @@ CompactMinigameDataRows:
 	ld [wMinigameDataHighScores + 8], a ; $78ae
 	ld a, [wMinigameDataHighScores + 11] ; $78b1
 	ld [wMinigameDataHighScores + 9], a ; $78b4
-	pop af ; $78b7
-	wram_bank ; $78b8
+	pop_wram_bank ; $78b7
 	ret ; $78bc
 ObjectSceneAGfx0:
 	INCBIN "data/bank_01b/lz_78bd.bin" ; $78bd, 179 bytes

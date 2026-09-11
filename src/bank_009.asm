@@ -721,11 +721,7 @@ FinishObjSlotUpdate:
 GetNextMoveCurveValue:
 	ld a, [wObjSlotWork + 14] ; $4782
 	add a ; $4785
-	add LOW(MoveCurveTable_09) ; $4786
-	ld l, a ; $4788
-	adc HIGH(MoveCurveTable_09) ; $4789
-	sub l ; $478b
-	ld h, a ; $478c
+	ld_hl_indexed MoveCurveTable_09 ; $4786
 	ld a, [hl+] ; $478d
 	ld h, [hl] ; $478e
 	ld l, a ; $478f
@@ -755,11 +751,7 @@ MoveCurveTable_09:
 LoadTilesetGfx:
 	add a ; $4873
 	add a ; $4874
-	add LOW(VramTileset_09) ; $4875
-	ld l, a ; $4877
-	adc HIGH(VramTileset_09) ; $4878
-	sub l ; $487a
-	ld h, a ; $487b
+	ld_hl_indexed VramTileset_09 ; $4875
 	ld a, [hl+] ; $487c
 	ld e, a ; $487d
 	ld a, [hl+] ; $487e
@@ -877,11 +869,7 @@ DeuceAdvantageTiles:
 LoadServeGfx:
 	ld a, [wCurrentServingPlayer] ; $6c40
 	add a ; $6c43
-	add LOW(ServeGfxPtrTable_09) ; $6c44
-	ld l, a ; $6c46
-	adc HIGH(ServeGfxPtrTable_09) ; $6c47
-	sub l ; $6c49
-	ld h, a ; $6c4a
+	ld_hl_indexed ServeGfxPtrTable_09 ; $6c44
 	ld a, [hl+] ; $6c4b
 	ld h, [hl] ; $6c4c
 	ld l, a ; $6c4d
@@ -1014,11 +1002,7 @@ ObjSlotSpriteTemplate_09:
 GetPlayer1ServeIndicatorSprites:
 	ld a, [wOnCourtCharCountMinus1] ; $7103
 	add a ; $7106
-	add LOW(Player1ServeIndicatorSpritePtrs_09) ; $7107
-	ld l, a ; $7109
-	adc HIGH(Player1ServeIndicatorSpritePtrs_09) ; $710a
-	sub l ; $710c
-	ld h, a ; $710d
+	ld_hl_indexed Player1ServeIndicatorSpritePtrs_09 ; $7107
 	ld a, [hl+] ; $710e
 	ld d, [hl] ; $710f
 	ld e, a ; $7110
@@ -1032,11 +1016,7 @@ Player1ServeIndicatorSpritePtrs_09:
 GetPlayer2ServeIndicatorSprites:
 	ld a, [wOnCourtCharCountMinus1] ; $711a
 	add a ; $711d
-	add LOW(Player2ServeIndicatorSpritePtrs_09) ; $711e
-	ld l, a ; $7120
-	adc HIGH(Player2ServeIndicatorSpritePtrs_09) ; $7121
-	sub l ; $7123
-	ld h, a ; $7124
+	ld_hl_indexed Player2ServeIndicatorSpritePtrs_09 ; $711e
 	ld a, [hl+] ; $7125
 	ld d, [hl] ; $7126
 	ld e, a ; $7127
@@ -1086,11 +1066,7 @@ Player2ServeIndicatorSpriteTemplate1_09:
 GetPlayer1CharIconSprites:
 	ld a, [wOnCourtCharCountMinus1] ; $7195
 	add a ; $7198
-	add LOW(Player1CharIconSpritePtrs_09) ; $7199
-	ld l, a ; $719b
-	adc HIGH(Player1CharIconSpritePtrs_09) ; $719c
-	sub l ; $719e
-	ld h, a ; $719f
+	ld_hl_indexed Player1CharIconSpritePtrs_09 ; $7199
 	ld a, [hl+] ; $71a0
 	ld d, [hl] ; $71a1
 	ld e, a ; $71a2
@@ -1104,11 +1080,7 @@ Player1CharIconSpritePtrs_09:
 GetPlayer2CharIconSprites:
 	ld a, [wOnCourtCharCountMinus1] ; $71ac
 	add a ; $71af
-	add LOW(Player2CharIconSpritePtrs_09) ; $71b0
-	ld l, a ; $71b2
-	adc HIGH(Player2CharIconSpritePtrs_09) ; $71b3
-	sub l ; $71b5
-	ld h, a ; $71b6
+	ld_hl_indexed Player2CharIconSpritePtrs_09 ; $71b0
 	ld a, [hl+] ; $71b7
 	ld d, [hl] ; $71b8
 	ld e, a ; $71b9

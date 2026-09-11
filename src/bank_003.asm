@@ -2048,8 +2048,7 @@ SaveStorySlotWithTimer:
 	call UpdateUnlockablesSaveBlock ; $4d57
 	xor a ; $4d5a
 	ret ; $4d5b
-	pop af ; $4d5c
-	wram_bank ; $4d5d
+	pop_wram_bank ; $4d5c
 	ld a, $ff ; $4d61
 	ret ; $4d63
 CheckStorySlot:
@@ -2428,9 +2427,7 @@ ReinitSaveRamPreservingBlock6:
 	push bc ; $4f7e
 	push de ; $4f7f
 	push hl ; $4f80
-	ldh a, [hWramBank] ; $4f81
-	push af ; $4f83
-	wram_bank $01 ; $4f84
+	push_wram_bank $01 ; $4f81
 	ld hl, wDecompBuffer ; $4f8a
 	call ReadBlock6 ; $4f8d
 	ld b, a ; $4f90
@@ -2444,8 +2441,7 @@ ReinitSaveRamPreservingBlock6:
 	call WriteBlock6WithBackup ; $4f9e
 .initAllMinigameRecordBlocks:
 	call InitAllMinigameRecordBlocks ; $4fa1
-	pop af ; $4fa4
-	wram_bank ; $4fa5
+	pop_wram_bank ; $4fa4
 	pop hl ; $4fa9
 	pop de ; $4faa
 	pop bc ; $4fab
@@ -2480,8 +2476,7 @@ WriteExhibitionSaveBlock:
 	ret nz ; $4fdf
 	xor a ; $4fe0
 	ret ; $4fe1
-	pop af ; $4fe2
-	wram_bank ; $4fe3
+	pop_wram_bank ; $4fe2
 	ld a, $ff ; $4fe7
 	ret ; $4fe9
 ReadExhibitionSaveBlock:
@@ -2522,9 +2517,7 @@ ReadMinigameRecord:
 	push de ; $5017
 	push hl ; $5018
 	ld b, a ; $5019
-	ldh a, [hWramBank] ; $501a
-	push af ; $501c
-	wram_bank $07 ; $501d
+	push_wram_bank $07 ; $501a
 	ld a, b ; $5023
 	sub $02 ; $5024
 	jr nc, .read ; $5026
@@ -2573,8 +2566,7 @@ ReadMinigameRecord:
 	ld [hl+], a ; $5066
 	ld [hl], d ; $5067
 .done:
-	pop af ; $5068
-	wram_bank ; $5069
+	pop_wram_bank ; $5068
 	pop hl ; $506d
 	pop de ; $506e
 	pop bc ; $506f
@@ -2585,9 +2577,7 @@ UpdateMinigameRecord:
 	push de ; $5073
 	push hl ; $5074
 	ld b, a ; $5075
-	ldh a, [hWramBank] ; $5076
-	push af ; $5078
-	wram_bank $07 ; $5079
+	push_wram_bank $07 ; $5076
 	ld a, b ; $507f
 	sub $02 ; $5080
 	jr nc, .readSlot0 ; $5082
@@ -2700,16 +2690,14 @@ UpdateMinigameRecord:
 	jr nz, .failed ; $5128
 	jr .done ; $512a
 .failed:
-	pop af ; $512c
-	wram_bank ; $512d
+	pop_wram_bank ; $512c
 	ld a, $01 ; $5131
 	pop hl ; $5133
 	pop de ; $5134
 	pop bc ; $5135
 	ret ; $5136
 .done:
-	pop af ; $5137
-	wram_bank ; $5138
+	pop_wram_bank ; $5137
 	xor a ; $513c
 	pop hl ; $513d
 	pop de ; $513e
@@ -2720,9 +2708,7 @@ InitCurrentSlotMinigameRecords:
 	push bc ; $5142
 	push de ; $5143
 	push hl ; $5144
-	ldh a, [hWramBank] ; $5145
-	push af ; $5147
-	wram_bank $07 ; $5148
+	push_wram_bank $07 ; $5145
 	ld a, [wCurrentStorySlot] ; $514e
 	add $38 ; $5151
 	ld b, a ; $5153
@@ -2755,8 +2741,7 @@ InitCurrentSlotMinigameRecords:
 	ld de, $0000 ; $518a
 	call WriteSaveBlock ; $518d
 .restore:
-	pop af ; $5190
-	wram_bank ; $5191
+	pop_wram_bank ; $5190
 	pop hl ; $5195
 	pop de ; $5196
 	pop bc ; $5197
@@ -2767,9 +2752,7 @@ InitAllMinigameRecordBlocks:
 	push bc ; $519b
 	push de ; $519c
 	push hl ; $519d
-	ldh a, [hWramBank] ; $519e
-	push af ; $51a0
-	wram_bank $07 ; $51a1
+	push_wram_bank $07 ; $519e
 	push af ; $51a7
 	push bc ; $51a8
 	push de ; $51a9
@@ -2836,8 +2819,7 @@ InitAllMinigameRecordBlocks:
 	ld de, $0000 ; $5219
 	call WriteSaveBlock ; $521c
 .restore:
-	pop af ; $521f
-	wram_bank ; $5220
+	pop_wram_bank ; $521f
 	pop hl ; $5224
 	pop de ; $5225
 	pop bc ; $5226
@@ -2934,11 +2916,7 @@ GetCurrentSlotBlockId:
 	push hl ; $529e
 	ld a, [wCurrentStorySlot] ; $529f
 	and $03 ; $52a2
-	add LOW(StorySlotBlockIds_03) ; $52a4
-	ld l, a ; $52a6
-	adc HIGH(StorySlotBlockIds_03) ; $52a7
-	sub l ; $52a9
-	ld h, a ; $52aa
+	ld_hl_indexed StorySlotBlockIds_03 ; $52a4
 	ld b, [hl] ; $52ab
 	pop hl ; $52ac
 	pop af ; $52ad
@@ -3433,9 +3411,7 @@ ApplyN64RecordsUnlockFlags:
 	push bc ; $56a9
 	push de ; $56aa
 	push hl ; $56ab
-	ldh a, [hWramBank] ; $56ac
-	push af ; $56ae
-	wram_bank $07 ; $56af
+	push_wram_bank $07 ; $56ac
 	ld hl, wSaveBlockBuffer ; $56b5
 	ld b, $0b ; $56b8
 	call ReadSaveBlock ; $56ba
@@ -3468,8 +3444,7 @@ ApplyN64RecordsUnlockFlags:
 	farcall SetSaveFlag ; $56ed
 	pop de ; $56f0
 .restore:
-	pop af ; $56f1
-	wram_bank ; $56f2
+	pop_wram_bank ; $56f1
 	pop hl ; $56f6
 	pop de ; $56f7
 	pop bc ; $56f8
@@ -3480,9 +3455,7 @@ UpdateUnlockablesSaveBlock:
 	push bc ; $56fc
 	push de ; $56fd
 	push hl ; $56fe
-	ldh a, [hWramBank] ; $56ff
-	push af ; $5701
-	wram_bank $07 ; $5702
+	push_wram_bank $07 ; $56ff
 	ld hl, wSaveBlockBuffer ; $5708
 	ld b, $0b ; $570b
 	call ReadSaveBlock ; $570d
@@ -3547,8 +3520,7 @@ UpdateUnlockablesSaveBlock:
 	ld de, $0000 ; $5777
 	call WriteSaveBlock ; $577a
 .restore:
-	pop af ; $577d
-	wram_bank ; $577e
+	pop_wram_bank ; $577d
 	pop hl ; $5782
 	pop de ; $5783
 	pop bc ; $5784
@@ -3559,9 +3531,7 @@ SetAllUnlockablesInSaveBlock:
 	push bc ; $5788
 	push de ; $5789
 	push hl ; $578a
-	ldh a, [hWramBank] ; $578b
-	push af ; $578d
-	wram_bank $07 ; $578e
+	push_wram_bank $07 ; $578b
 	ld hl, wSaveBlockBuffer ; $5794
 	ld b, $0b ; $5797
 	call ReadSaveBlock ; $5799
@@ -3590,8 +3560,7 @@ SetAllUnlockablesInSaveBlock:
 	ld de, $0000 ; $57c9
 	call WriteSaveBlock ; $57cc
 .restore:
-	pop af ; $57cf
-	wram_bank ; $57d0
+	pop_wram_bank ; $57cf
 	pop hl ; $57d4
 	pop de ; $57d5
 	pop bc ; $57d6
@@ -3613,9 +3582,7 @@ CheckUnlockCondition:
 	push de ; $57e3
 	push hl ; $57e4
 	ld b, a ; $57e5
-	ldh a, [hWramBank] ; $57e6
-	push af ; $57e8
-	wram_bank $07 ; $57e9
+	push_wram_bank $07 ; $57e6
 	cp $02 ; $57ef
 	jr nc, .saveFlagCondition ; $57f1
 	or a ; $57f3
@@ -3665,8 +3632,7 @@ CheckUnlockCondition:
 	xor a ; $5838
 	ld b, a ; $5839
 .done:
-	pop af ; $583a
-	wram_bank ; $583b
+	pop_wram_bank ; $583a
 	ld a, b ; $583f
 	pop hl ; $5840
 	pop de ; $5841
@@ -4087,9 +4053,7 @@ TestTextEndMarker:
 ScrollTextPalette_03:
 	INCLUDE "data/bank_003/palettes_5b20.asm" ; $5b20, 8 bytes (palettes)
 SetupSceneAnimationPalettes:
-	ldh a, [hWramBank] ; $5b28
-	push af ; $5b2a
-	wram_bank $06 ; $5b2b
+	push_wram_bank $06 ; $5b28
 	xor a ; $5b31
 	ld [wSceneAnimFrame], a ; $5b32
 	ld hl, SceneAnimObjPalette0_03 ; $5b35
@@ -4098,13 +4062,10 @@ SetupSceneAnimationPalettes:
 	ld hl, SceneAnimObjPalette1_03 ; $5b3e
 	ld de, $0b01 ; $5b41
 	call LoadPaletteShadow ; $5b44
-	pop af ; $5b47
-	wram_bank ; $5b48
+	pop_wram_bank ; $5b47
 	ret ; $5b4c
 UpdateSceneAnimation:
-	ldh a, [hWramBank] ; $5b4d
-	push af ; $5b4f
-	wram_bank $06 ; $5b50
+	push_wram_bank $06 ; $5b4d
 	call LoadCutsceneAnimFrameGfx_00_08 ; $5b56
 	call LoadCutsceneAnimFrameGfx_09_11 ; $5b59
 	call LoadCutsceneAnimFrameGfx_12_1A ; $5b5c
@@ -4123,8 +4084,7 @@ UpdateSceneAnimation:
 	inc a ; $5b7f
 	ld [wSceneAnimFrame], a ; $5b80
 .restore:
-	pop af ; $5b83
-	wram_bank ; $5b84
+	pop_wram_bank ; $5b83
 	ret ; $5b88
 LoadCutsceneAnimFrameGfx_00_08:
 	wram_bank $06 ; $5b89
@@ -5556,8 +5516,7 @@ PlayScrollingStoryCutscene:
 	pop af ; $707d
 	call DrawCutsceneTextPage ; $707e
 	call ScrollCutsceneTextWindow ; $7081
-	pop af ; $7084
-	wram_bank ; $7085
+	pop_wram_bank ; $7084
 	pop hl ; $7089
 	pop de ; $708a
 	pop bc ; $708b
@@ -5574,9 +5533,7 @@ WindowTileMap_03:
 	; $71a0, 256 bytes (pattern)
 	ds 256, $20
 AnimateWindowSlideUpTask:
-	ldh a, [hWramBank] ; $72a0
-	push af ; $72a2
-	wram_bank $06 ; $72a3
+	push_wram_bank $06 ; $72a0
 	ld a, [wCutsceneWindowSliding] ; $72a9
 	ld b, a ; $72ac
 	ld hl, WindowSlideStepTable_03 ; $72ad
@@ -5591,8 +5548,7 @@ AnimateWindowSlideUpTask:
 	ld c, a ; $72b8
 	ld e, [hl] ; $72b9
 	ld d, $00 ; $72ba
-	pop af ; $72bc
-	wram_bank ; $72bd
+	pop_wram_bank ; $72bc
 	ldh a, [hVBlankCounter] ; $72c1
 	and $01 ; $72c3
 	jr nz, .maskSet ; $72c5
@@ -5692,8 +5648,7 @@ DrawCutsceneTextPage:
 	ld a, c ; $7362
 	cp b ; $7363
 	jr nz, .loop ; $7364
-	pop af ; $7366
-	wram_bank ; $7367
+	pop_wram_bank ; $7366
 	pop hl ; $736b
 	pop de ; $736c
 	pop bc ; $736d
@@ -5771,8 +5726,7 @@ DrawCutsceneTextLines:
 	inc hl ; $7444
 	dec b ; $7445
 	jr nz, .loop ; $7446
-	pop af ; $7448
-	wram_bank ; $7449
+	pop_wram_bank ; $7448
 	pop hl ; $744d
 	pop de ; $744e
 	pop bc ; $744f
@@ -5783,9 +5737,7 @@ ScrollCutsceneTextWindow:
 	push bc ; $7453
 	push de ; $7454
 	push hl ; $7455
-	ldh a, [hWramBank] ; $7456
-	push af ; $7458
-	wram_bank $06 ; $7459
+	push_wram_bank $06 ; $7456
 	ld a, [wCutsceneTextScrollRows] ; $745f
 	and $03 ; $7462
 	jr nz, .maskSet ; $7464
@@ -5811,8 +5763,7 @@ ScrollCutsceneTextWindow:
 	ld a, d ; $7482
 	cp b ; $7483
 	jr nz, .loop ; $7484
-	pop af ; $7486
-	wram_bank ; $7487
+	pop_wram_bank ; $7486
 	pop hl ; $748b
 	pop de ; $748c
 	pop bc ; $748d
@@ -5874,8 +5825,7 @@ BlitCutsceneTextWindow:
 	ld c, $10 ; $74e0
 	call QueueVRAMCopy ; $74e2
 	call AdvanceFrame ; $74e5
-	pop af ; $74e8
-	wram_bank ; $74e9
+	pop_wram_bank ; $74e8
 	pop hl ; $74ed
 	pop de ; $74ee
 	pop bc ; $74ef
@@ -5905,8 +5855,7 @@ DrawDialogueLineToBuffer:
 	dec c ; $7511
 	jr nz, .loop ; $7512
 .restore:
-	pop af ; $7514
-	wram_bank ; $7515
+	pop_wram_bank ; $7514
 	pop hl ; $7519
 	pop de ; $751a
 	pop bc ; $751b
@@ -5917,9 +5866,7 @@ ShowStoryResultScreen:
 	push bc ; $751f
 	push de ; $7520
 	push hl ; $7521
-	ldh a, [hWramBank] ; $7522
-	push af ; $7524
-	wram_bank $02 ; $7525
+	push_wram_bank $02 ; $7522
 	ld hl, wScreenAttrmap ; $752b
 	ld de, $0240 ; $752e
 	ld b, $00 ; $7531
@@ -5957,19 +5904,15 @@ ShowStoryResultScreen:
 	call AdvanceFrame ; $7592
 	script_fade_in $04 ; $7595
 	call WaitFadeEnd ; $759a
-	call WaitFramesCmd ; $759d
-	db $78 ; $75a0 inline arg
-	pop af ; $75a1
-	wram_bank ; $75a2
+	wait_frames $78 ; $759d
+	pop_wram_bank ; $75a1
 	pop hl ; $75a6
 	pop de ; $75a7
 	pop bc ; $75a8
 	pop af ; $75a9
 	ret ; $75aa
 InitGrayscalePaletteFade:
-	ldh a, [hWramBank] ; $75ab
-	push af ; $75ad
-	wram_bank $06 ; $75ae
+	push_wram_bank $06 ; $75ab
 	xor a ; $75b4
 	ld hl, wPaletteFadeMask ; $75b5
 	ld b, $10 ; $75b8
@@ -5979,14 +5922,11 @@ InitGrayscalePaletteFade:
 	jr nz, .loop ; $75bc
 	call CopyMasterPalettesToFadeBuffers ; $75be
 	call DesaturateFadeTargetPalettes ; $75c1
-	pop af ; $75c4
-	wram_bank ; $75c5
+	pop_wram_bank ; $75c4
 	ret ; $75c9
 ; InitGrayscalePaletteFade with ClearFadeTargetPalettes in place of DesaturateFadeTargetPalettes: the fade-to-black variant of the same setup. Nothing calls it; bank $03's callers only use the grayscale one.
 Unused_03_InitBlackPaletteFade:
-	ldh a, [hWramBank] ; $75ca
-	push af ; $75cc
-	wram_bank $06 ; $75cd
+	push_wram_bank $06 ; $75ca
 	xor a ; $75d3
 	ld hl, wPaletteFadeMask ; $75d4
 	ld b, $10 ; $75d7
@@ -5996,8 +5936,7 @@ Unused_03_InitBlackPaletteFade:
 	jr nz, .loopB ; $75db
 	call CopyMasterPalettesToFadeBuffers ; $75dd
 	call ClearFadeTargetPalettes ; $75e0
-	pop af ; $75e3
-	wram_bank ; $75e4
+	pop_wram_bank ; $75e3
 	ret ; $75e8
 CopyMasterPalettesToFadeBuffers:
 	ld hl, wMasterPalettes ; $75e9
@@ -6118,9 +6057,7 @@ ComputeGrayscaleColor:
 	ld [de], a ; $7685
 	ret ; $7686
 SetupPaletteFadeMask:
-	ldh a, [hWramBank] ; $7687
-	push af ; $7689
-	wram_bank $06 ; $768a
+	push_wram_bank $06 ; $7687
 	ld hl, wPaletteFadeAmount ; $7690
 	ld [hl], d ; $7693
 	ld l, d ; $7694
@@ -6209,13 +6146,10 @@ SetupPaletteFadeMask:
 	jr z, .restore ; $770f
 	ld [hl], $01 ; $7711
 .restore:
-	pop af ; $7713
-	wram_bank ; $7714
+	pop_wram_bank ; $7713
 	ret ; $7718
 AnimatePaletteFadeToTarget:
-	ldh a, [hWramBank] ; $7719
-	push af ; $771b
-	wram_bank $06 ; $771c
+	push_wram_bank $06 ; $7719
 .loop:
 	ld a, [wPaletteFadeFrameDelay] ; $7722
 .loopB:
@@ -6254,8 +6188,7 @@ AnimatePaletteFadeToTarget:
 	and a ; $7758
 	jr nz, .loop ; $7759
 	call SnapPalettesToTarget ; $775b
-	pop af ; $775e
-	wram_bank ; $775f
+	pop_wram_bank ; $775e
 	ret ; $7763
 StepPaletteColorsTowardTarget:
 	ld a, b ; $7764

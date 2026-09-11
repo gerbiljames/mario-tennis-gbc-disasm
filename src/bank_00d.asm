@@ -130,16 +130,10 @@ InitMinigameScore:
 	ld a, [wCurrentMinigameStoryMatch + 1] ; $40ea
 	sub MINIGAME_TENNIS_MACHINE_HIGH_SCORE ; $40ed
 	ret c ; $40ef
-	add LOW(MinigameRecordSlotIds) ; $40f0
-	ld l, a ; $40f2
-	adc HIGH(MinigameRecordSlotIds) ; $40f3
-	sub l ; $40f5
-	ld h, a ; $40f6
+	ld_hl_indexed MinigameRecordSlotIds ; $40f0
 	ld a, [hl] ; $40f7
 	farcall ReadMinigameRecord ; $40f8
-	ldh a, [hWramBank] ; $40fb
-	push af ; $40fd
-	wram_bank $07 ; $40fe
+	push_wram_bank $07 ; $40fb
 	ld hl, wMinigameRecordValue ; $4104
 	ld de, wMinigameHighScore ; $4107
 	ld a, [hl+] ; $410a
@@ -148,8 +142,7 @@ InitMinigameScore:
 	ld a, [hl+] ; $410d
 	ld [de], a ; $410e
 	inc de ; $410f
-	pop af ; $4110
-	wram_bank ; $4111
+	pop_wram_bank ; $4110
 	ret ; $4115
 MinigameRecordSlotIds:
 	; $4116, 11 bytes (bytes:11)
@@ -162,11 +155,7 @@ GetMinigameTargetScore:
 	jr nc, .ge1c ; $4129
 	sub MINIGAME_TENNIS_MACHINE_1 ; $412b
 	add a ; $412d
-	add LOW(MinigamePracticeTargetScores) ; $412e
-	ld l, a ; $4130
-	adc HIGH(MinigamePracticeTargetScores) ; $4131
-	sub l ; $4133
-	ld h, a ; $4134
+	ld_hl_indexed MinigamePracticeTargetScores ; $412e
 	ld a, [hl+] ; $4135
 	ld d, [hl] ; $4136
 	ld e, a ; $4137
@@ -177,11 +166,7 @@ GetMinigameTargetScore:
 	add a ; $413c
 	add b ; $413d
 	add a ; $413e
-	add LOW(MinigameTargetScores) ; $413f
-	ld l, a ; $4141
-	adc HIGH(MinigameTargetScores) ; $4142
-	sub l ; $4144
-	ld h, a ; $4145
+	ld_hl_indexed MinigameTargetScores ; $413f
 	ld a, [hl+] ; $4146
 	ld d, [hl] ; $4147
 	ld e, a ; $4148
@@ -260,11 +245,7 @@ MinigameDefaultRecordValue10:
 	dw $0000 ; record 2
 GetDefaultMinigameRecordValue:
 	add a ; $41a6
-	add LOW(MinigameDefaultRecordValuePointers) ; $41a7
-	ld l, a ; $41a9
-	adc HIGH(MinigameDefaultRecordValuePointers) ; $41aa
-	sub l ; $41ac
-	ld h, a ; $41ad
+	ld_hl_indexed MinigameDefaultRecordValuePointers ; $41a7
 	ld a, [hl+] ; $41ae
 	ld h, [hl] ; $41af
 	ld l, a ; $41b0
@@ -342,9 +323,7 @@ IsMinigameScoreLimitReached:
 	ld a, $01 ; $420e
 	ret ; $4210
 StartScorePopup:
-	ldh a, [hWramBank] ; $4211
-	push af ; $4213
-	wram_bank $04 ; $4214
+	push_wram_bank $04 ; $4211
 	ld hl, wBallHistory + 30 ; $421a
 	ld de, wScorePopupSource ; $421d
 	ld a, [hl+] ; $4220
@@ -359,8 +338,7 @@ StartScorePopup:
 	ld a, [hl+] ; $4229
 	ld [de], a ; $422a
 	inc de ; $422b
-	pop af ; $422c
-	wram_bank ; $422d
+	pop_wram_bank ; $422c
 	ld a, $10 ; $4231
 	ld [wScorePopupTimer], a ; $4233
 	ret ; $4236
@@ -430,9 +408,7 @@ MinigameGridCellAttrs:
 	db $0c, $0c, $0c, $0c ; 0x18
 	db $0c, $0c, $0c, $0c ; 0x1c
 GetMinigameGridCellIndex:
-	ldh a, [hWramBank] ; $42bf
-	push af ; $42c1
-	wram_bank $04 ; $42c2
+	push_wram_bank $04 ; $42bf
 	ld hl, wBallHistory + 30 ; $42c8
 	ld a, [hl+] ; $42cb
 	ld d, [hl] ; $42cc
@@ -441,8 +417,7 @@ GetMinigameGridCellIndex:
 	ld a, [hl+] ; $42d1
 	ld b, [hl] ; $42d2
 	ld c, a ; $42d3
-	pop af ; $42d4
-	wram_bank ; $42d5
+	pop_wram_bank ; $42d4
 	ld a, d ; $42d9
 	add $0f ; $42da
 	set 0, a ; $42dc
@@ -494,11 +469,7 @@ DrawMinigameGrid:
 	ret ; $431a
 DrawMinigameGridCell:
 	add a ; $431b
-	add LOW(MinigameGridCellTilemapOffsets) ; $431c
-	ld l, a ; $431e
-	adc HIGH(MinigameGridCellTilemapOffsets) ; $431f
-	sub l ; $4321
-	ld h, a ; $4322
+	ld_hl_indexed MinigameGridCellTilemapOffsets ; $431c
 	ld a, [hl+] ; $4323
 	ld d, [hl] ; $4324
 	ld e, a ; $4325
@@ -911,13 +882,10 @@ DrawMinigameScoreHud:
 	ld a, [wMinigameServeState] ; $46dd
 	and a ; $46e0
 	jr z, .done ; $46e1
-	ldh a, [hWramBank] ; $46e3
-	push af ; $46e5
-	wram_bank $05 ; $46e6
+	push_wram_bank $05 ; $46e3
 	ld hl, wCharSpriteSlot + 1 ; $46ec
 	res 5, [hl] ; $46ef
-	pop af ; $46f1
-	wram_bank ; $46f2
+	pop_wram_bank ; $46f1
 .done:
 	ret ; $46f6
 LaunchMinigameServe:
@@ -937,13 +905,10 @@ LaunchMinigameServe:
 .gotSpeed:
 	ld a, b ; $470b
 	ld [wMinigameServeSpeed], a ; $470c
-	ldh a, [hWramBank] ; $470f
-	push af ; $4711
-	wram_bank $05 ; $4712
+	push_wram_bank $05 ; $470f
 	ld d, CHARANIM_FOREHAND ; $4718
 	farcall SetCharAnimation ; $471a
-	pop af ; $471d
-	wram_bank ; $471e
+	pop_wram_bank ; $471d
 	ld a, [wMinigameServeState] ; $4722
 	and a ; $4725
 	jr z, .launch ; $4726
@@ -976,13 +941,10 @@ AwardMinigamePointAndEnd:
 	ld de, $0001 ; $4757
 	call AddToMinigameScore ; $475a
 EndMinigamePoint:
-	ldh a, [hWramBank] ; $475d
-	push af ; $475f
-	wram_bank $04 ; $4760
+	push_wram_bank $04 ; $475d
 	ld a, CHARSTATE_STANDBY ; $4766
 	farcall SetCharState ; $4768
-	pop af ; $476b
-	wram_bank ; $476c
+	pop_wram_bank ; $476b
 	call ShowPointOutcomeBanner ; $4770
 	farcall ResolvePointWinner ; $4773
 	add a ; $4776
@@ -990,17 +952,9 @@ EndMinigamePoint:
 	ld a, [wMinigameServeSpeed] ; $4779
 	add a ; $477c
 	add a ; $477d
-	add LOW(EndMinigamePoint_PointOutcomeTable) ; $477e
-	ld l, a ; $4780
-	adc HIGH(EndMinigamePoint_PointOutcomeTable) ; $4781
-	sub l ; $4783
-	ld h, a ; $4784
+	ld_hl_indexed EndMinigamePoint_PointOutcomeTable ; $477e
 	ld a, [hl] ; $4785
-	add LOW(MinigameShotIntervalByTempo) ; $4786
-	ld l, a ; $4788
-	adc HIGH(MinigameShotIntervalByTempo) ; $4789
-	sub l ; $478b
-	ld h, a ; $478c
+	ld_hl_indexed MinigameShotIntervalByTempo ; $4786
 	ld a, [hl] ; $478d
 	farcall StepMatchFrames ; $478e
 	call IsMinigameTargetReached ; $4791
@@ -1011,14 +965,11 @@ EndMinigamePoint:
 .resolve:
 	call DetermineMinigamePointResult ; $479b
 	push de ; $479e
-	ldh a, [hWramBank] ; $479f
-	push af ; $47a1
-	wram_bank $04 ; $47a2
+	push_wram_bank $04 ; $479f
 	farcall CharPointEndReaction ; $47a8
 	wram_bank $05 ; $47ab
 	farcall CharPointEndReaction ; $47b1
-	pop af ; $47b4
-	wram_bank ; $47b5
+	pop_wram_bank ; $47b4
 	pop de ; $47b9
 	call ShowMinigamePointResult ; $47ba
 	ret ; $47bd
@@ -1046,13 +997,10 @@ FreezeMinigameOpponentOnReturn:
 	ld a, [wRallyLength] ; $47e2
 	cp $03 ; $47e5
 	jr nz, .done ; $47e7
-	ldh a, [hWramBank] ; $47e9
-	push af ; $47eb
-	wram_bank $05 ; $47ec
+	push_wram_bank $05 ; $47e9
 	ld a, $28 ; $47f2
 	ld [wCharFreezeTimer], a ; $47f4
-	pop af ; $47f7
-	wram_bank ; $47f8
+	pop_wram_bank ; $47f7
 .done:
 	ret ; $47fc
 LaunchBall:
@@ -1064,19 +1012,13 @@ LaunchBall:
 	ld [wRallyLength], a ; $480a
 	ld a, $02 ; $480d
 	ld [wBallCourtQuadrant], a ; $480f
-	ldh a, [hWramBank] ; $4812
-	push af ; $4814
-	wram_bank $05 ; $4815
+	push_wram_bank $05 ; $4812
 	ld a, $20 ; $481b
 	ld [wCharSwingFrames], a ; $481d
 	ld a, [wMinigameServeSpeed] ; $4820
 	add a ; $4823
 	add a ; $4824
-	add LOW(LaunchBallTable) ; $4825
-	ld l, a ; $4827
-	adc HIGH(LaunchBallTable) ; $4828
-	sub l ; $482a
-	ld h, a ; $482b
+	ld_hl_indexed LaunchBallTable ; $4825
 	ld a, [hl] ; $482c
 	dec a ; $482d
 	ld [wGroundStrokeSpeedIndex], a ; $482e
@@ -1086,11 +1028,7 @@ LaunchBall:
 	ld a, [wMinigameServeSpeed] ; $483a
 	add a ; $483d
 	add a ; $483e
-	add LOW(MinigameShotDifficultyRamp) ; $483f
-	ld l, a ; $4841
-	adc HIGH(MinigameShotDifficultyRamp) ; $4842
-	sub l ; $4844
-	ld h, a ; $4845
+	ld_hl_indexed MinigameShotDifficultyRamp ; $483f
 	ld a, [hl] ; $4846
 	add a ; $4847
 	add a ; $4848
@@ -1117,20 +1055,12 @@ LaunchBall:
 	ld [wCharShotButton2], a ; $4867
 	farcall SelectRallyShotType ; $486a
 	ld a, [wMinigameServeGroup] ; $486d
-	add LOW(MinigameBallLaunchSpeeds) ; $4870
-	ld l, a ; $4872
-	adc HIGH(MinigameBallLaunchSpeeds) ; $4873
-	sub l ; $4875
-	ld h, a ; $4876
+	ld_hl_indexed MinigameBallLaunchSpeeds ; $4870
 	ld a, [hl] ; $4877
 	ld [wCharAimOffsetScale], a ; $4878
 	ld a, [wMinigameServeGroup] ; $487b
 	add a ; $487e
-	add LOW(MinigameBallLaunchHeights) ; $487f
-	ld l, a ; $4881
-	adc HIGH(MinigameBallLaunchHeights) ; $4882
-	sub l ; $4884
-	ld h, a ; $4885
+	ld_hl_indexed MinigameBallLaunchHeights ; $487f
 	ld a, [hl+] ; $4886
 	ld b, [hl] ; $4887
 	ld c, a ; $4888
@@ -1145,28 +1075,20 @@ LaunchBall:
 	farcall SetBallPosition ; $4895
 	farcall AdvanceMatchRng ; $4898
 	and $07 ; $489b
-	add LOW(MinigameShotSpinPool) ; $489d
-	ld l, a ; $489f
-	adc HIGH(MinigameShotSpinPool) ; $48a0
-	sub l ; $48a2
-	ld h, a ; $48a3
+	ld_hl_indexed MinigameShotSpinPool ; $489d
 	ld a, [hl] ; $48a4
 	ld [wCharAimOffset], a ; $48a5
 	ld hl, $073c ; $48a8
 	call FarCallVector ; $48ab
 	sound $76 ; $48ae
-	pop af ; $48b0
-	wram_bank ; $48b1
+	pop_wram_bank ; $48b0
 	ret ; $48b5
 ApplyMinigameCharTargetFromTable:
-	ldh a, [hWramBank] ; $48b6
-	push af ; $48b8
-	wram_bank $05 ; $48b9
+	push_wram_bank $05 ; $48b6
 	ld a, [wMinigameServeSlot] ; $48bf
 	call GetMinigameCharCoordsEntry ; $48c2
 	farcall SetCharTarget ; $48c5
-	pop af ; $48c8
-	wram_bank ; $48c9
+	pop_wram_bank ; $48c8
 	ret ; $48cd
 PlayMinigameCountdown:
 	wram_bank $04 ; $48ce
@@ -1217,11 +1139,7 @@ PlayMinigameCountdown:
 GetMinigameCharCoordsEntry:
 	add a ; $4926
 	add a ; $4927
-	add LOW(MinigameCharCoordsTable) ; $4928
-	ld l, a ; $492a
-	adc HIGH(MinigameCharCoordsTable) ; $492b
-	sub l ; $492d
-	ld h, a ; $492e
+	ld_hl_indexed MinigameCharCoordsTable ; $4928
 	ld a, [hl+] ; $492f
 	ld c, a ; $4930
 	ld a, [hl+] ; $4931
@@ -1492,9 +1410,7 @@ UpdateMinigameHudAndBallTrail:
 	ld de, $8484 ; $4ac1
 	call DrawMinigameScore ; $4ac4
 .trail:
-	ldh a, [hWramBank] ; $4ac7
-	push af ; $4ac9
-	wram_bank $04 ; $4aca
+	push_wram_bank $04 ; $4ac7
 	ld hl, wBallHistory + 12 ; $4ad0
 	ld de, wBallTrailSlots + 8 ; $4ad3
 	call MarkMinigameObjectOffscreen ; $4ad6
@@ -1504,8 +1420,7 @@ UpdateMinigameHudAndBallTrail:
 	ld hl, wBallHistory ; $4ae2
 	ld de, wBallTrailSlots + 16 ; $4ae5
 	call MarkMinigameObjectOffscreen ; $4ae8
-	pop af ; $4aeb
-	wram_bank ; $4aec
+	pop_wram_bank ; $4aeb
 	ret ; $4af0
 MarkMinigameObjectOffscreen:
 	inc hl ; $4af1
@@ -1529,32 +1444,23 @@ StartMinigameSoloPoint:
 	ld a, e ; $4b0e
 	ld [hl+], a ; $4b0f
 	ld [hl], d ; $4b10
-	ldh a, [hWramBank] ; $4b11
-	push af ; $4b13
-	wram_bank $04 ; $4b14
+	push_wram_bank $04 ; $4b11
 	ld hl, $0000 ; $4b1a
 	ld de, $04e0 ; $4b1d
 	farcall SetCharPosAndTarget ; $4b20
-	pop af ; $4b23
-	wram_bank ; $4b24
+	pop_wram_bank ; $4b23
 	ret ; $4b28
 HandleMinigamePointEnd:
-	ldh a, [hWramBank] ; $4b29
-	push af ; $4b2b
-	wram_bank $04 ; $4b2c
+	push_wram_bank $04 ; $4b29
 	ld a, CHARSTATE_STANDBY ; $4b32
 	farcall SetCharState ; $4b34
-	pop af ; $4b37
-	wram_bank ; $4b38
+	pop_wram_bank ; $4b37
 	call ShowPointOutcomeBanner ; $4b3c
 	call DetermineMinigamePointResult ; $4b3f
 	push de ; $4b42
-	ldh a, [hWramBank] ; $4b43
-	push af ; $4b45
-	wram_bank $04 ; $4b46
+	push_wram_bank $04 ; $4b43
 	farcall CharPointEndReaction ; $4b4c
-	pop af ; $4b4f
-	wram_bank ; $4b50
+	pop_wram_bank ; $4b4f
 	pop de ; $4b54
 	call ShowMinigamePointResult ; $4b55
 	ret ; $4b58
@@ -1614,13 +1520,10 @@ ReflectBallVelocity:
 	ld a, [wPointOutcome] ; $4bae
 	and a ; $4bb1
 	ret nz ; $4bb2
-	ldh a, [hWramBank] ; $4bb3
-	push af ; $4bb5
-	wram_bank $04 ; $4bb6
+	push_wram_bank $04 ; $4bb3
 	ld a, CHARSTATE_RALLY ; $4bbc
 	farcall SetCharState ; $4bbe
-	pop af ; $4bc1
-	wram_bank ; $4bc2
+	pop_wram_bank ; $4bc1
 	ret ; $4bc6
 StubNop_0d_0:
 	ret ; $4bc7
@@ -1997,16 +1900,10 @@ UpdateTargetShotScorePopup:
 	call UpdateScorePopup ; $4e1c
 	ret ; $4e1f
 SelectRandomMinigameShot:
-	ldh a, [hWramBank] ; $4e20
-	push af ; $4e22
-	wram_bank $02 ; $4e23
+	push_wram_bank $02 ; $4e20
 	ld a, [wMinigameLevel] ; $4e29
 	add a ; $4e2c
-	add LOW(TargetShotZonePoolsByLevel) ; $4e2d
-	ld l, a ; $4e2f
-	adc HIGH(TargetShotZonePoolsByLevel) ; $4e30
-	sub l ; $4e32
-	ld h, a ; $4e33
+	ld_hl_indexed TargetShotZonePoolsByLevel ; $4e2d
 	ld a, [hl+] ; $4e34
 	ld h, [hl] ; $4e35
 	ld l, a ; $4e36
@@ -2024,8 +1921,7 @@ SelectRandomMinigameShot:
 	ld a, [wMinigameShotRoll] ; $4e4b
 	call LoadMatchUiCourtTilemap ; $4e4e
 	call QueueMinigameHudVRAMCopy ; $4e51
-	pop af ; $4e54
-	wram_bank ; $4e55
+	pop_wram_bank ; $4e54
 	ret ; $4e59
 TargetShotZonePoolsByLevel:
 	; $4e5a, 6 bytes (records:2)
@@ -2157,11 +2053,7 @@ TargetShotZoneOverlayAttrs:
 	db $2f, $2f, $0e, $0e, $0e, $2e, $2e, $2e, $2f, $0f ; 0xf0
 LoadMatchUiCourtTilemap:
 	add a ; $50fa
-	add LOW(TargetShotZoneOverlayOffsets) ; $50fb
-	ld l, a ; $50fd
-	adc HIGH(TargetShotZoneOverlayOffsets) ; $50fe
-	sub l ; $5100
-	ld h, a ; $5101
+	ld_hl_indexed TargetShotZoneOverlayOffsets ; $50fb
 	ld a, [hl+] ; $5102
 	ld b, [hl] ; $5103
 	ld c, a ; $5104
@@ -2203,11 +2095,7 @@ LoadTargetZoneConfig:
 	add a ; $5148
 	add a ; $5149
 	add a ; $514a
-	add LOW(MinigameTargetZoneBounds) ; $514b
-	ld l, a ; $514d
-	adc HIGH(MinigameTargetZoneBounds) ; $514e
-	sub l ; $5150
-	ld h, a ; $5151
+	ld_hl_indexed MinigameTargetZoneBounds ; $514b
 	ld de, wTargetZoneX1 ; $5152
 	ld bc, $0008 ; $5155
 	call CopyMemoryBC ; $5158
@@ -2494,11 +2382,7 @@ DrawTargetReticleSprite:
 	call QueueSprite24x32 ; $5368
 	ldh a, [hVBlankCounter] ; $536b
 	and $1f ; $536d
-	add LOW(TargetReticleAnimFrames) ; $536f
-	ld l, a ; $5371
-	adc HIGH(TargetReticleAnimFrames) ; $5372
-	sub l ; $5374
-	ld h, a ; $5375
+	ld_hl_indexed TargetReticleAnimFrames ; $536f
 	ld a, [hl] ; $5376
 	cp $ff ; $5377
 	ret z ; $5379
@@ -2530,11 +2414,7 @@ ProjectMinigameWorldPosition:
 	ld h, d ; $53b6
 	farcall ApplyCameraProjection ; $53b7
 	ld a, [wMinigameHitStreak] ; $53ba
-	add LOW(MinigameTargetSpriteOamAttrByHitStreak) ; $53bd
-	ld l, a ; $53bf
-	adc HIGH(MinigameTargetSpriteOamAttrByHitStreak) ; $53c0
-	sub l ; $53c2
-	ld h, a ; $53c3
+	ld_hl_indexed MinigameTargetSpriteOamAttrByHitStreak ; $53bd
 	ld b, [hl] ; $53c4
 	ret ; $53c5
 MinigameTargetSpriteOamAttrByHitStreak:
@@ -2550,11 +2430,7 @@ QueueMinigameHitBurstFirstFour:
 	cpl ; $53da
 	inc a ; $53db
 	add $0f ; $53dc
-	add LOW(MinigameHitBurstParticleOffsets) ; $53de
-	ld l, a ; $53e0
-	adc HIGH(MinigameHitBurstParticleOffsets) ; $53e1
-	sub l ; $53e3
-	ld h, a ; $53e4
+	ld_hl_indexed MinigameHitBurstParticleOffsets ; $53de
 	ld a, e ; $53e5
 	add $f8 ; $53e6
 	ld e, a ; $53e8
@@ -2568,11 +2444,7 @@ QueueMinigameHitBurstFirstTwo:
 	cpl ; $53f8
 	inc a ; $53f9
 	add $0f ; $53fa
-	add LOW(MinigameHitBurstParticleOffsets) ; $53fc
-	ld l, a ; $53fe
-	adc HIGH(MinigameHitBurstParticleOffsets) ; $53ff
-	sub l ; $5401
-	ld h, a ; $5402
+	ld_hl_indexed MinigameHitBurstParticleOffsets ; $53fc
 	call QueueMinigameHitBurstParticle ; $5403
 	call QueueMinigameHitBurstParticle ; $5406
 	ret ; $5409
@@ -2659,11 +2531,7 @@ BananaBunchHook_PointStart:
 	call StartMinigameSoloPoint ; $5533
 	ld a, [wMinigameLevel] ; $5536
 	add a ; $5539
-	add LOW(BananaBunchGridLayoutsByLevel) ; $553a
-	ld l, a ; $553c
-	adc HIGH(BananaBunchGridLayoutsByLevel) ; $553d
-	sub l ; $553f
-	ld h, a ; $5540
+	ld_hl_indexed BananaBunchGridLayoutsByLevel ; $553a
 	ld a, [hl+] ; $5541
 	ld h, [hl] ; $5542
 	ld l, a ; $5543
@@ -2727,11 +2595,7 @@ ScoreMinigameTargetHitOrDeflectBall:
 	cp $ff ; $55d5
 	jr z, MinigameTargetTypeScores.eqff ; $55d7
 	ld a, [wMinigameHitTargetType] ; $55d9
-	add LOW(MinigameTargetTypeScores) ; $55dc
-	ld l, a ; $55de
-	adc HIGH(MinigameTargetTypeScores) ; $55df
-	sub l ; $55e1
-	ld h, a ; $55e2
+	ld_hl_indexed MinigameTargetTypeScores ; $55dc
 	ld e, [hl] ; $55e3
 	ld d, $00 ; $55e4
 	call AddToMinigameScore ; $55e6
@@ -2857,9 +2721,7 @@ ResolveAndShowMinigamePoint:
 	call ShowPointOutcomeBanner ; $56c0
 	call DetermineMinigamePointResult ; $56c3
 	push de ; $56c6
-	ldh a, [hWramBank] ; $56c7
-	push af ; $56c9
-	wram_bank $04 ; $56ca
+	push_wram_bank $04 ; $56c7
 	farcall CharPointEndReaction ; $56d0
 	ld a, [wCharPointResult] ; $56d3
 	push af ; $56d6
@@ -2867,8 +2729,7 @@ ResolveAndShowMinigamePoint:
 	farcall CharPointEndReaction ; $56dd
 	pop af ; $56e0
 	ld [wCharPointResult], a ; $56e1
-	pop af ; $56e4
-	wram_bank ; $56e5
+	pop_wram_bank ; $56e4
 	pop de ; $56e9
 	call ShowMinigamePointResult ; $56ea
 	ret ; $56ed
@@ -3055,11 +2916,7 @@ DrawBooBlastTargetSprite:
 	call QueueSprite24x32 ; $5806
 	ldh a, [hVBlankCounter] ; $5809
 	and $1f ; $580b
-	add LOW(BooBlastTargetAnimFrames) ; $580d
-	ld l, a ; $580f
-	adc HIGH(BooBlastTargetAnimFrames) ; $5810
-	sub l ; $5812
-	ld h, a ; $5813
+	ld_hl_indexed BooBlastTargetAnimFrames ; $580d
 	ld a, [hl] ; $5814
 	cp $ff ; $5815
 	ret z ; $5817
@@ -3091,11 +2948,7 @@ ProjectBallSprite:
 	ld h, d ; $5854
 	farcall ApplyCameraProjection ; $5855
 	ld a, [wMinigameHitStreak] ; $5858
-	add LOW(MinigameHitStreakValueTable_0d) ; $585b
-	ld l, a ; $585d
-	adc HIGH(MinigameHitStreakValueTable_0d) ; $585e
-	sub l ; $5860
-	ld h, a ; $5861
+	ld_hl_indexed MinigameHitStreakValueTable_0d ; $585b
 	ld b, [hl] ; $5862
 	ld b, $0e ; $5863
 	ret ; $5865
@@ -3116,11 +2969,7 @@ InitMinigame_PerfectShot:
 .initMinigameTargets:
 	farcall InitMinigameTargets ; $588f
 	ld a, [wMinigameLevel] ; $5892
-	add LOW(PerfectShotLevelHasTargets) ; $5895
-	ld l, a ; $5897
-	adc HIGH(PerfectShotLevelHasTargets) ; $5898
-	sub l ; $589a
-	ld h, a ; $589b
+	ld_hl_indexed PerfectShotLevelHasTargets ; $5895
 	ld a, [hl] ; $589c
 	and a ; $589d
 	ret z ; $589e
@@ -3172,17 +3021,14 @@ ProcessTargetTileHit:
 	ld a, [hl] ; $58e2
 	cp $01 ; $58e3
 	ret z ; $58e5
-	ldh a, [hWramBank] ; $58e6
-	push af ; $58e8
-	wram_bank $02 ; $58e9
+	push_wram_bank $02 ; $58e6
 	ld a, $01 ; $58ef
 	ld [hl], a ; $58f1
 	ld a, b ; $58f2
 	ld b, $01 ; $58f3
 	call DrawMinigameGridCell ; $58f5
 	farcall FlushTilemapToVram ; $58f8
-	pop af ; $58fb
-	wram_bank ; $58fc
+	pop_wram_bank ; $58fb
 	sound $97 ; $5900
 	ld a, [wTargetTileHit] ; $5902
 	inc a ; $5905
@@ -3205,16 +3051,13 @@ ProcessTargetTileHit:
 	jr nc, .ge09 ; $5923
 	inc [hl] ; $5925
 .ge09:
-	ldh a, [hWramBank] ; $5926
-	push af ; $5928
-	wram_bank $02 ; $5929
+	push_wram_bank $02 ; $5926
 	ld a, $01 ; $592f
 	ld [wMatchSimFrozen], a ; $5931
 	call AnimateTargetGridClear ; $5934
 	xor a ; $5937
 	ld [wMatchSimFrozen], a ; $5938
-	pop af ; $593b
-	wram_bank ; $593c
+	pop_wram_bank ; $593b
 	ret ; $5940
 PerfectShotTargetGridLayout:
 	; $5941, 24 bytes (bytes:8)
@@ -3365,11 +3208,7 @@ UpdateTreasureBoxScorePopup:
 SelectRandomTreasureBoxTargetZone:
 	ld a, [wMinigameLevel] ; $5a70
 	add a ; $5a73
-	add LOW(TreasureBoxZonePoolsByLevel) ; $5a74
-	ld l, a ; $5a76
-	adc HIGH(TreasureBoxZonePoolsByLevel) ; $5a77
-	sub l ; $5a79
-	ld h, a ; $5a7a
+	ld_hl_indexed TreasureBoxZonePoolsByLevel ; $5a74
 	ld a, [hl+] ; $5a7b
 	ld h, [hl] ; $5a7c
 	ld l, a ; $5a7d
@@ -3445,11 +3284,7 @@ AdvanceTreasureBoxActorState:
 	ld [wMinigameSceneActor + 1], a ; $5b02
 	ld a, [wMinigameShotRoll] ; $5b05
 	add a ; $5b08
-	add LOW(TreasureBoxSpawnPointsByZone) ; $5b09
-	ld l, a ; $5b0b
-	adc HIGH(TreasureBoxSpawnPointsByZone) ; $5b0c
-	sub l ; $5b0e
-	ld h, a ; $5b0f
+	ld_hl_indexed TreasureBoxSpawnPointsByZone ; $5b09
 	ld a, [hl+] ; $5b10
 	ld h, [hl] ; $5b11
 	ld l, a ; $5b12
@@ -3625,11 +3460,7 @@ AwardTreasureBoxHitScore:
 	ld a, [de] ; $5c40
 	call PlaySoundManaged ; $5c41
 	ld a, [wMinigameSceneActor + 1] ; $5c44
-	add LOW(TreasureBoxValuesByType) ; $5c47
-	ld l, a ; $5c49
-	adc HIGH(TreasureBoxValuesByType) ; $5c4a
-	sub l ; $5c4c
-	ld h, a ; $5c4d
+	ld_hl_indexed TreasureBoxValuesByType ; $5c47
 	ld l, [hl] ; $5c4e
 	ld h, $00 ; $5c4f
 	ld a, [wMinigameHitStreak] ; $5c51
@@ -3674,11 +3505,7 @@ DrawTreasureBoxSprite:
 	ld a, [hl] ; $5c98
 	inc [hl] ; $5c99
 	and $1f ; $5c9a
-	add LOW(TreasureBoxSpriteAnimFrames) ; $5c9c
-	ld l, a ; $5c9e
-	adc HIGH(TreasureBoxSpriteAnimFrames) ; $5c9f
-	sub l ; $5ca1
-	ld h, a ; $5ca2
+	ld_hl_indexed TreasureBoxSpriteAnimFrames ; $5c9c
 	ld a, [hl] ; $5ca3
 	cp $ff ; $5ca4
 	ret z ; $5ca6
@@ -4015,11 +3842,7 @@ DrawMedallionMatchSprite:
 	srl a ; $5efd
 	srl a ; $5eff
 	and $03 ; $5f01
-	add LOW(MedallionMatchSpriteAnimFrames) ; $5f03
-	ld l, a ; $5f05
-	adc HIGH(MedallionMatchSpriteAnimFrames) ; $5f06
-	sub l ; $5f08
-	ld h, a ; $5f09
+	ld_hl_indexed MedallionMatchSpriteAnimFrames ; $5f03
 	ld c, [hl] ; $5f0a
 	call QueueSprite16 ; $5f0b
 	ret ; $5f0e
@@ -4085,11 +3908,7 @@ FruitFantasyHook_PointStart:
 	call StartMinigameSoloPoint ; $5f79
 	ld a, [wMinigameLevel] ; $5f7c
 	add a ; $5f7f
-	add LOW(FruitFantasyGridLayoutsByLevel) ; $5f80
-	ld l, a ; $5f82
-	adc HIGH(FruitFantasyGridLayoutsByLevel) ; $5f83
-	sub l ; $5f85
-	ld h, a ; $5f86
+	ld_hl_indexed FruitFantasyGridLayoutsByLevel ; $5f80
 	ld a, [hl+] ; $5f87
 	ld h, [hl] ; $5f88
 	ld l, a ; $5f89

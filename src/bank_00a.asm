@@ -113,11 +113,8 @@ BeginCutsceneScriptMode:
 	push bc ; $40d1
 	push de ; $40d2
 	push hl ; $40d3
-	ldh a, [hWramBank] ; $40d4
-	push af ; $40d6
-	wram_bank $05 ; $40d7
-	pop af ; $40dd
-	wram_bank ; $40de
+	push_wram_bank $05 ; $40d4
+	pop_wram_bank ; $40dd
 	ld a, $ff ; $40e2
 	ld [wScreenShakeMagnitude], a ; $40e4
 	xor a ; $40e7
@@ -151,13 +148,10 @@ EndCutsceneScriptMode:
 	ld hl, ToggleCutsceneFastForward ; $4119
 	call UnregisterFrameTask ; $411c
 	clear_flag FLAG_CUTSCENE_FAST_FORWARD ; $411f
-	ldh a, [hWramBank] ; $4122
-	push af ; $4124
-	wram_bank $04 ; $4125
+	push_wram_bank $04 ; $4122
 	ld a, [wActors + 20] ; $412b
 	ld [wPlayerMoveAngle], a ; $412e
-	pop af ; $4131
-	wram_bank ; $4132
+	pop_wram_bank ; $4131
 	pop hl ; $4136
 	pop de ; $4137
 	pop bc ; $4138
@@ -186,25 +180,20 @@ ScriptRespawnLocationActors:
 	ret ; $4155
 InitDialogueTextCursor:
 	push af ; $4156
-	ldh a, [hWramBank] ; $4157
-	push af ; $4159
-	wram_bank $05 ; $415a
+	push_wram_bank $05 ; $4157
 	farcall SetActiveWindowTextId ; $4160
 	ld a, l ; $4163
 	ld [wScriptDialogueTextId], a ; $4164
 	ld a, h ; $4167
 	ld [wScriptDialogueTextId + 1], a ; $4168
-	pop af ; $416b
-	wram_bank ; $416c
+	pop_wram_bank ; $416b
 	pop af ; $4170
 	ret ; $4171
 AdvanceDialogueTextCursor:
 	push af ; $4172
 	push hl ; $4173
 	push de ; $4174
-	ldh a, [hWramBank] ; $4175
-	push af ; $4177
-	wram_bank $05 ; $4178
+	push_wram_bank $05 ; $4175
 	ld hl, wScriptDialogueTextId ; $417e
 	ld a, [hl+] ; $4181
 	ld d, [hl] ; $4182
@@ -214,8 +203,7 @@ AdvanceDialogueTextCursor:
 	ld a, e ; $4186
 	ld [hl+], a ; $4187
 	ld [hl], d ; $4188
-	pop af ; $4189
-	wram_bank ; $418a
+	pop_wram_bank ; $4189
 	pop de ; $418e
 	pop hl ; $418f
 	pop af ; $4190
@@ -242,8 +230,7 @@ ScriptShowSpeakerDialogue:
 	ld [wScriptDialogueTextId], a ; $41b2
 	ld a, h ; $41b5
 	ld [wScriptDialogueTextId + 1], a ; $41b6
-	pop af ; $41b9
-	wram_bank ; $41ba
+	pop_wram_bank ; $41b9
 	pop hl ; $41be
 	pop af ; $41bf
 	ret ; $41c0
@@ -269,8 +256,7 @@ ScriptShowSpeakerDialogueRestoreBG:
 	ld [wScriptDialogueTextId], a ; $41e3
 	ld a, h ; $41e6
 	ld [wScriptDialogueTextId + 1], a ; $41e7
-	pop af ; $41ea
-	wram_bank ; $41eb
+	pop_wram_bank ; $41ea
 	pop hl ; $41ef
 	pop af ; $41f0
 	ret ; $41f1
@@ -281,9 +267,7 @@ RunDialogueYesNoPrompt:
 	push bc ; $41f6
 	push de ; $41f7
 	push hl ; $41f8
-	ldh a, [hWramBank] ; $41f9
-	push af ; $41fb
-	wram_bank $05 ; $41fc
+	push_wram_bank $05 ; $41f9
 	call FindDialogueChoiceMarker ; $4202
 	ld a, [wTextRedrawGuard] ; $4205
 	push af ; $4208
@@ -302,8 +286,7 @@ RunDialogueYesNoPrompt:
 	ld [wMenuWindowId], a ; $4226
 	pop af ; $4229
 	ld [wTextRedrawGuard], a ; $422a
-	pop af ; $422d
-	wram_bank ; $422e
+	pop_wram_bank ; $422d
 	ld a, b ; $4232
 	pop hl ; $4233
 	pop de ; $4234
@@ -355,8 +338,7 @@ ShowYesNoPromptWindow:
 .upperRow:
 	ld e, $01 ; $427d
 .open:
-	pop af ; $427f
-	wram_bank ; $4280
+	pop_wram_bank ; $427f
 	ld d, $02 ; $4284
 	ld hl, Text_30_26 ; $4286
 	farcall CreateMenuWindowFromText ; $4289
@@ -430,9 +412,7 @@ RunMenuFromText:
 ScriptSkipSpeakerDialogue:
 	push af ; $42e9
 	push hl ; $42ea
-	ldh a, [hWramBank] ; $42eb
-	push af ; $42ed
-	wram_bank $05 ; $42ee
+	push_wram_bank $05 ; $42eb
 	ld a, [wScriptDialogueTextId] ; $42f4
 	ld l, a ; $42f7
 	ld a, [wScriptDialogueTextId + 1] ; $42f8
@@ -445,8 +425,7 @@ ScriptSkipSpeakerDialogue:
 	ld [wScriptDialogueTextId], a ; $4303
 	ld a, h ; $4306
 	ld [wScriptDialogueTextId + 1], a ; $4307
-	pop af ; $430a
-	wram_bank ; $430b
+	pop_wram_bank ; $430a
 	pop hl ; $430f
 	pop af ; $4310
 	ret ; $4311
@@ -1522,8 +1501,7 @@ SetScreenShake:
 	ld a, $ff ; $48f9
 .store:
 	ld [wScreenShakeMagnitude], a ; $48fb
-	pop af ; $48fe
-	wram_bank ; $48ff
+	pop_wram_bank ; $48fe
 	pop hl ; $4903
 	pop de ; $4904
 	pop bc ; $4905
@@ -1928,8 +1906,7 @@ RunClearStatusSetupMenu:
 .done:
 	ld hl, wClearStatusResultCode ; $4d1e
 	ld b, [hl] ; $4d21
-	pop af ; $4d22
-	wram_bank ; $4d23
+	pop_wram_bank ; $4d22
 	ld a, b ; $4d27
 	pop hl ; $4d28
 	pop de ; $4d29
@@ -2335,8 +2312,7 @@ RunStoryLocation:
 	call ShowLocationNamePopup ; $4fec
 	jr .frameLoop ; $4fef
 .noNamePopup:
-	call WaitFramesCmd ; $4ff1
-	db $04 ; $4ff4 inline arg
+	wait_frames $04 ; $4ff1
 .frameLoop:
 	wram_bank $04 ; $4ff5
 	call CheckStoryEventRequests ; $4ffb
@@ -2806,8 +2782,7 @@ ShowLocationNamePopup:
 	wram_bank $05 ; $5322
 	ld hl, wMessageSpeed ; $5328
 	res 7, [hl] ; $532b
-	pop af ; $532d
-	wram_bank ; $532e
+	pop_wram_bank ; $532d
 	pop hl ; $5332
 	pop de ; $5333
 	pop bc ; $5334
@@ -2891,11 +2866,7 @@ CheckTriggerFacingMask:
 	rlca ; $53cf
 	rlca ; $53d0
 	and $03 ; $53d1
-	add LOW(FacingMaskTable_0a) ; $53d3
-	ld l, a ; $53d5
-	adc HIGH(FacingMaskTable_0a) ; $53d6
-	sub l ; $53d8
-	ld h, a ; $53d9
+	ld_hl_indexed FacingMaskTable_0a ; $53d3
 	ld a, [hl] ; $53da
 	and b ; $53db
 	jr nz, .done ; $53dc
@@ -2978,8 +2949,7 @@ RunStoryScriptOrDialogue:
 	call CallHLInBankA ; $5456
 	farcall EndCutsceneScriptMode ; $5459
 .done:
-	pop af ; $545c
-	wram_bank ; $545d
+	pop_wram_bank ; $545c
 	pop hl ; $5461
 	pop de ; $5462
 	pop bc ; $5463
@@ -3029,8 +2999,7 @@ RunLocationInitScript:
 	ld l, a ; $54a5
 	ld a, $00 ; $54a6
 	call RunStoryScriptOrDialogue ; $54a8
-	pop af ; $54ab
-	wram_bank ; $54ac
+	pop_wram_bank ; $54ab
 	pop hl ; $54b0
 	pop de ; $54b1
 	pop bc ; $54b2
@@ -4168,12 +4137,9 @@ ReadCollisionMapCell:
 	push de ; $5efc
 	push hl ; $5efd
 	call GetCollisionMapCellAddr ; $5efe
-	ldh a, [hWramBank] ; $5f01
-	push af ; $5f03
-	wram_bank $06 ; $5f04
+	push_wram_bank $06 ; $5f01
 	ld b, [hl] ; $5f0a
-	pop af ; $5f0b
-	wram_bank ; $5f0c
+	pop_wram_bank ; $5f0b
 	ld a, b ; $5f10
 	pop hl ; $5f11
 	pop de ; $5f12
@@ -4186,12 +4152,9 @@ WriteCollisionMapCell:
 	push hl ; $5f18
 	call GetCollisionMapCellAddr ; $5f19
 	ld b, a ; $5f1c
-	ldh a, [hWramBank] ; $5f1d
-	push af ; $5f1f
-	wram_bank $06 ; $5f20
+	push_wram_bank $06 ; $5f1d
 	ld [hl], b ; $5f26
-	pop af ; $5f27
-	wram_bank ; $5f28
+	pop_wram_bank ; $5f27
 	pop hl ; $5f2c
 	pop de ; $5f2d
 	pop bc ; $5f2e
@@ -4224,12 +4187,9 @@ ReadBehaviorMapCell:
 	push de ; $5f50
 	push hl ; $5f51
 	call GetBehaviorMapCellAddr ; $5f52
-	ldh a, [hWramBank] ; $5f55
-	push af ; $5f57
-	wram_bank $06 ; $5f58
+	push_wram_bank $06 ; $5f55
 	ld b, [hl] ; $5f5e
-	pop af ; $5f5f
-	wram_bank ; $5f60
+	pop_wram_bank ; $5f5f
 	ld a, b ; $5f64
 	push de ; $5f65
 	push af ; $5f66
@@ -4249,12 +4209,9 @@ WriteBehaviorMapCell:
 	push hl ; $5f77
 	call GetBehaviorMapCellAddr ; $5f78
 	ld b, a ; $5f7b
-	ldh a, [hWramBank] ; $5f7c
-	push af ; $5f7e
-	wram_bank $06 ; $5f7f
+	push_wram_bank $06 ; $5f7c
 	ld [hl], b ; $5f85
-	pop af ; $5f86
-	wram_bank ; $5f87
+	pop_wram_bank ; $5f86
 	pop hl ; $5f8b
 	pop de ; $5f8c
 	pop bc ; $5f8d
@@ -4304,8 +4261,7 @@ CopyCollisionMapRect:
 	pop bc ; $5fc8
 	dec a ; $5fc9
 	jr nz, .rowLoop ; $5fca
-	pop af ; $5fcc
-	wram_bank ; $5fcd
+	pop_wram_bank ; $5fcc
 	pop hl ; $5fd1
 	pop de ; $5fd2
 	pop bc ; $5fd3
@@ -4355,8 +4311,7 @@ CopyBehaviorMapRect:
 	pop bc ; $600e
 	dec a ; $600f
 	jr nz, .rowLoop ; $6010
-	pop af ; $6012
-	wram_bank ; $6013
+	pop_wram_bank ; $6012
 	pop hl ; $6017
 	pop de ; $6018
 	pop bc ; $6019
@@ -4658,8 +4613,7 @@ CopySceneTilemapRect:
 	ld d, e ; $6210
 	ld e, l ; $6211
 	farcall RedrawTilemapRowRange ; $6212
-	pop af ; $6215
-	wram_bank ; $6216
+	pop_wram_bank ; $6215
 	pop hl ; $621a
 	pop de ; $621b
 	pop bc ; $621c
@@ -4906,9 +4860,7 @@ InitSceneTileAnimations:
 	push bc ; $639c
 	push de ; $639d
 	push hl ; $639e
-	ldh a, [hWramBank] ; $639f
-	push af ; $63a1
-	wram_bank $05 ; $63a2
+	push_wram_bank $05 ; $639f
 	ld a, $ff ; $63a8
 	ld b, $01 ; $63aa
 	ld hl, wSceneTileAnimState ; $63ac
@@ -5029,8 +4981,7 @@ InitSceneTileAnimations:
 	call RegisterFrameTask ; $6447
 	add sp, 2 ; $644a
 .done:
-	pop af ; $644c
-	wram_bank ; $644d
+	pop_wram_bank ; $644c
 	pop hl ; $6451
 	pop de ; $6452
 	pop bc ; $6453
@@ -5057,9 +5008,7 @@ UpdateSceneTileAnimations:
 	push bc ; $646e
 	push de ; $646f
 	push hl ; $6470
-	ldh a, [hWramBank] ; $6471
-	push af ; $6473
-	wram_bank $05 ; $6474
+	push_wram_bank $05 ; $6471
 	ld de, wSceneTileAnimBuffer ; $647a
 	ld hl, wSceneTileAnimBufferPtr ; $647d
 	ld a, e ; $6480
@@ -5098,8 +5047,7 @@ UpdateSceneTileAnimations:
 	cp $04 ; $64ad
 	jr nz, .read ; $64af
 .done:
-	pop af ; $64b1
-	wram_bank ; $64b2
+	pop_wram_bank ; $64b1
 	pop hl ; $64b6
 	pop de ; $64b7
 	pop bc ; $64b8
@@ -5453,11 +5401,7 @@ DrawMinigameTarget:
 	ld a, [wMinigameTargetWork + 2] ; $66bf
 	and $0f ; $66c2
 	jr z, .readSprite ; $66c4
-	add LOW(DrawMinigameTargetTable) ; $66c6
-	ld l, a ; $66c8
-	adc HIGH(DrawMinigameTargetTable) ; $66c9
-	sub l ; $66cb
-	ld h, a ; $66cc
+	ld_hl_indexed DrawMinigameTargetTable ; $66c6
 	ld a, [hl] ; $66cd
 	ld h, $00 ; $66ce
 	ld l, a ; $66d0
@@ -5475,11 +5419,7 @@ DrawMinigameTarget:
 .readSprite:
 	ld a, [wMinigameTargetWork + 1] ; $66e1
 	add a ; $66e4
-	add LOW(MinigameTargetTable) ; $66e5
-	ld l, a ; $66e7
-	adc HIGH(MinigameTargetTable) ; $66e8
-	sub l ; $66ea
-	ld h, a ; $66eb
+	ld_hl_indexed MinigameTargetTable ; $66e5
 	ld a, [hl+] ; $66ec
 	ld b, [hl] ; $66ed
 	ld c, a ; $66ee
@@ -5825,11 +5765,7 @@ RunMinigameTargetScript:
 	push hl ; $68c9
 	ld a, [de] ; $68ca
 	add a ; $68cb
-	add LOW(MinigameTargetOpHandlers_0a) ; $68cc
-	ld l, a ; $68ce
-	adc HIGH(MinigameTargetOpHandlers_0a) ; $68cf
-	sub l ; $68d1
-	ld h, a ; $68d2
+	ld_hl_indexed MinigameTargetOpHandlers_0a ; $68cc
 	ld a, [hl+] ; $68d3
 	ld h, [hl] ; $68d4
 	ld l, a ; $68d5
@@ -6127,22 +6063,14 @@ DrawMinigameTargetAlt:
 	ld a, [wMinigameTargetWork + 2] ; $6d7f
 	and $0f ; $6d82
 	jr z, .readSprite ; $6d84
-	add LOW(DrawMinigameTargetAltTable) ; $6d86
-	ld l, a ; $6d88
-	adc HIGH(DrawMinigameTargetAltTable) ; $6d89
-	sub l ; $6d8b
-	ld h, a ; $6d8c
+	ld_hl_indexed DrawMinigameTargetAltTable ; $6d86
 	ld a, [hl] ; $6d8d
 	add d ; $6d8e
 	ld d, a ; $6d8f
 .readSprite:
 	ld a, [wMinigameTargetWork + 1] ; $6d90
 	add a ; $6d93
-	add LOW(MinigameTargetAltTable) ; $6d94
-	ld l, a ; $6d96
-	adc HIGH(MinigameTargetAltTable) ; $6d97
-	sub l ; $6d99
-	ld h, a ; $6d9a
+	ld_hl_indexed MinigameTargetAltTable ; $6d94
 	ld a, [hl+] ; $6d9b
 	ld b, [hl] ; $6d9c
 	ld c, a ; $6d9d
@@ -6268,11 +6196,7 @@ RunEndingCreditsSequence:
 	call ClearFrameTasks ; $6e91
 	ld a, [wStoryCharacterSlot] ; $6e94
 	add a ; $6e97
-	add LOW(EndingCutsceneLocationList) ; $6e98
-	ld l, a ; $6e9a
-	adc HIGH(EndingCutsceneLocationList) ; $6e9b
-	sub l ; $6e9d
-	ld h, a ; $6e9e
+	ld_hl_indexed EndingCutsceneLocationList ; $6e98
 	ld a, [hl+] ; $6e9f
 	cp $ff ; $6ea0
 	jr z, .done ; $6ea2

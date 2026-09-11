@@ -83,9 +83,7 @@ FetchShortTextToBuffer:
 	push bc ; $409b
 	push de ; $409c
 	push hl ; $409d
-	ldh a, [hWramBank] ; $409e
-	push af ; $40a0
-	wram_bank $05 ; $40a1
+	push_wram_bank $05 ; $409e
 	call FetchShortText ; $40a7
 	ld hl, wShortTextBuffer ; $40aa
 .copyLoop:
@@ -94,22 +92,18 @@ FetchShortTextToBuffer:
 	inc de ; $40af
 	cp $00 ; $40b0
 	jr nz, .copyLoop ; $40b2
-	pop af ; $40b4
-	wram_bank ; $40b5
+	pop_wram_bank ; $40b4
 	pop hl ; $40b9
 	pop de ; $40ba
 	pop bc ; $40bb
 	pop af ; $40bc
 	ret ; $40bd
 ClearWindowGlyphPage:
-	ldh a, [hWramBank] ; $40be
-	push af ; $40c0
-	wram_bank $05 ; $40c1
+	push_wram_bank $05 ; $40be
 	ld hl, wWindowShadowTilemap ; $40c7
 	ld c, $80 ; $40ca
 	call ClearMemory16 ; $40cc
-	pop af ; $40cf
-	wram_bank ; $40d0
+	pop_wram_bank ; $40cf
 	ret ; $40d4
 QueueGlyphPageDMAOnA:
 	ldh a, [hPlayerInputFlags] ; $40d5
@@ -528,8 +522,7 @@ WriteWindowCellTileAttr:
 	ld de, $0400 ; $4337
 	add hl, de ; $433a
 	ld [hl], b ; $433b
-	pop af ; $433c
-	wram_bank ; $433d
+	pop_wram_bank ; $433c
 	pop hl ; $4341
 	pop de ; $4342
 	pop bc ; $4343
@@ -555,8 +548,7 @@ ReadWindowCellTileAttr:
 	ld de, $0400 ; $4360
 	add hl, de ; $4363
 	ld b, [hl] ; $4364
-	pop af ; $4365
-	wram_bank ; $4366
+	pop_wram_bank ; $4365
 	pop hl ; $436a
 	pop de ; $436b
 	pop bc ; $436c
@@ -570,8 +562,7 @@ RestoreShadowTilemap:
 	ldh a, [hWramBank] ; $4373
 	push af ; $4375
 	call RestoreAllShadowTilemapRows ; $4376
-	pop af ; $4379
-	wram_bank ; $437a
+	pop_wram_bank ; $4379
 	pop hl ; $437e
 	pop de ; $437f
 	pop bc ; $4380
@@ -770,9 +761,7 @@ RefreshShadowTilemapFromMapBuffer:
 	push bc ; $44a4
 	push de ; $44a5
 	push hl ; $44a6
-	ldh a, [hWramBank] ; $44a7
-	push af ; $44a9
-	wram_bank $05 ; $44aa
+	push_wram_bank $05 ; $44a7
 	ld a, [wShadowTilemapBank] ; $44b0
 	push af ; $44b3
 	ld hl, wShadowTilemapPtr ; $44b4
@@ -811,8 +800,7 @@ RefreshShadowTilemapFromMapBuffer:
 	dec b ; $44e6
 	jr nz, .loop ; $44e7
 .restore:
-	pop af ; $44e9
-	wram_bank ; $44ea
+	pop_wram_bank ; $44e9
 	pop hl ; $44ee
 	pop de ; $44ef
 	pop bc ; $44f0
@@ -830,8 +818,7 @@ SetFixedMenuWindowTextId:
 	push af ; $44fe
 	ld b, a ; $44ff
 	call SetWindowTextId ; $4500
-	pop af ; $4503
-	wram_bank ; $4504
+	pop_wram_bank ; $4503
 	ld a, b ; $4508
 	ld [wFixedMenuWindowId], a ; $4509
 	pop hl ; $450c
@@ -852,8 +839,7 @@ RunFixedTextMenu:
 	call CloseWindow ; $4527
 	ld a, [wFixedMenuWindowId] ; $452a
 	call CloseWindow ; $452d
-	pop af ; $4530
-	wram_bank ; $4531
+	pop_wram_bank ; $4530
 	ld a, h ; $4535
 	pop hl ; $4536
 	ret ; $4537
@@ -1093,17 +1079,14 @@ GetScreenTopLeftCell:
 CreateWindowWithAttr:
 	push hl ; $4664
 	ld h, a ; $4665
-	ldh a, [hWramBank] ; $4666
-	push af ; $4668
-	wram_bank $05 ; $4669
+	push_wram_bank $05 ; $4666
 	ld a, h ; $466f
 	ld [wWindowTileAttr], a ; $4670
 	call CreateWindow ; $4673
 	ld h, a ; $4676
 	ld a, TILEATTR_PRIORITY ; $4677
 	ld [wWindowTileAttr], a ; $4679
-	pop af ; $467c
-	wram_bank ; $467d
+	pop_wram_bank ; $467c
 	ld a, h ; $4681
 	pop hl ; $4682
 	ret ; $4683
@@ -1268,9 +1251,7 @@ RunMenuSelection:
 	push bc ; $477f
 	push de ; $4780
 	push hl ; $4781
-	ldh a, [hWramBank] ; $4782
-	push af ; $4784
-	wram_bank $05 ; $4785
+	push_wram_bank $05 ; $4782
 	xor a ; $478b
 	ld [wTextArrowEraseAddr], a ; $478c
 	ld [wTextArrowEraseAddr + 1], a ; $478f
@@ -1480,8 +1461,7 @@ RunMenuSelection:
 	pop af ; $48e5
 .done:
 	ld b, a ; $48e6
-	pop af ; $48e7
-	wram_bank ; $48e8
+	pop_wram_bank ; $48e7
 	ld a, b ; $48ec
 	pop hl ; $48ed
 	pop de ; $48ee
@@ -1545,9 +1525,7 @@ RunPagedTextMenu:
 	push de ; $4945
 	push hl ; $4946
 	ld b, a ; $4947
-	ldh a, [hWramBank] ; $4948
-	push af ; $494a
-	wram_bank $05 ; $494b
+	push_wram_bank $05 ; $4948
 	ld a, b ; $4951
 	add sp, -3 ; $4952
 	ld b, h ; $4954
@@ -1620,8 +1598,7 @@ RunPagedTextMenu:
 	ld [wMenuCursorRow], a ; $49cc
 	add sp, 3 ; $49cf
 	ld b, a ; $49d1
-	pop af ; $49d2
-	wram_bank ; $49d3
+	pop_wram_bank ; $49d2
 	ld a, b ; $49d7
 	pop hl ; $49d8
 	pop de ; $49d9
@@ -1637,12 +1614,9 @@ PagedMenuFrameTask:
 	push bc ; $49dd
 	push de ; $49de
 	push hl ; $49df
-	ldh a, [hWramBank] ; $49e0
-	push af ; $49e2
-	wram_bank $05 ; $49e3
+	push_wram_bank $05 ; $49e0
 	ld a, [wMenuCursorRow] ; $49e9
-	pop af ; $49ec
-	wram_bank ; $49ed
+	pop_wram_bank ; $49ec
 	pop hl ; $49f1
 	pop de ; $49f2
 	pop bc ; $49f3
@@ -1653,9 +1627,7 @@ RunPagedTextMenuAutoSize:
 	push de ; $49f7
 	push hl ; $49f8
 	ld b, a ; $49f9
-	ldh a, [hWramBank] ; $49fa
-	push af ; $49fc
-	wram_bank $05 ; $49fd
+	push_wram_bank $05 ; $49fa
 	ld a, b ; $4a03
 	add sp, -3 ; $4a04
 	ld b, h ; $4a06
@@ -1740,8 +1712,7 @@ RunPagedTextMenuAutoSize:
 	call UnregisterFrameTask ; $4a99
 	pop af ; $4a9c
 	ld b, a ; $4a9d
-	pop af ; $4a9e
-	wram_bank ; $4a9f
+	pop_wram_bank ; $4a9e
 	ld a, b ; $4aa3
 	pop hl ; $4aa4
 	pop de ; $4aa5
@@ -1751,9 +1722,7 @@ RunMenuSelectionShared:
 	push bc ; $4aa8
 	push de ; $4aa9
 	push hl ; $4aaa
-	ldh a, [hWramBank] ; $4aab
-	push af ; $4aad
-	wram_bank $05 ; $4aae
+	push_wram_bank $05 ; $4aab
 	xor a ; $4ab4
 	ld [wTextArrowEraseAddr], a ; $4ab5
 	ld [wTextArrowEraseAddr + 1], a ; $4ab8
@@ -2013,8 +1982,7 @@ LoadOverworldSpriteDef:
 	pop af ; $4c6a
 .step7:
 	ld b, a ; $4c6b
-	pop af ; $4c6c
-	wram_bank ; $4c6d
+	pop_wram_bank ; $4c6c
 	ld a, b ; $4c71
 	pop hl ; $4c72
 	pop de ; $4c73
@@ -2378,9 +2346,7 @@ TextCmdNextGlyphStreamRow:
 	ld [hl+], a ; $4eff
 	ld [hl], b ; $4f00
 	call StartGlyphStreamRow ; $4f01
-	ldh a, [hWramBank] ; $4f04
-	push af ; $4f06
-	wram_bank $05 ; $4f07
+	push_wram_bank $05 ; $4f04
 	ld hl, wGlyphVramDest ; $4f0d
 	ld a, [hl+] ; $4f10
 	ld h, [hl] ; $4f11
@@ -2400,8 +2366,7 @@ TextCmdNextGlyphStreamRow:
 	ld [wGlyphVramDest + 1], a ; $4f24
 	ld d, h ; $4f27
 	ld e, l ; $4f28
-	pop af ; $4f29
-	wram_bank ; $4f2a
+	pop_wram_bank ; $4f29
 	pop hl ; $4f2e
 	pop bc ; $4f2f
 	pop af ; $4f30
@@ -2620,9 +2585,7 @@ TextCmdDelay150Skippable:
 TextCmdPrintArgString:
 	push af ; $5089
 	push bc ; $508a
-	ldh a, [hWramBank] ; $508b
-	push af ; $508d
-	wram_bank $05 ; $508e
+	push_wram_bank $05 ; $508b
 	ld hl, wTextArgStringQueue ; $5094
 	ld a, [wTextArgStringCount] ; $5097
 	ld b, a ; $509a
@@ -2677,8 +2640,7 @@ TextCmdPrintArgString:
 	ld hl, wInlineTextBuffer ; $50e9
 	call RenderInlineString ; $50ec
 .restore:
-	pop af ; $50ef
-	wram_bank ; $50f0
+	pop_wram_bank ; $50ef
 	pop bc ; $50f4
 	pop af ; $50f5
 	ret ; $50f6
@@ -2707,9 +2669,7 @@ PushTextArgString:
 	and $0f ; $5115
 	ld h, a ; $5117
 .push:
-	ldh a, [hWramBank] ; $5118
-	push af ; $511a
-	wram_bank $05 ; $511b
+	push_wram_bank $05 ; $5118
 	ld d, h ; $5121
 	ld e, l ; $5122
 	ld a, [wTextArgStringWriteIndex] ; $5123
@@ -2727,8 +2687,7 @@ PushTextArgString:
 	inc hl ; $513b
 	ld [hl], d ; $513c
 .done:
-	pop af ; $513d
-	wram_bank ; $513e
+	pop_wram_bank ; $513d
 	pop hl ; $5142
 	pop de ; $5143
 	pop bc ; $5144
@@ -2739,9 +2698,7 @@ PushTextArgNumber:
 	push bc ; $5148
 	push de ; $5149
 	push hl ; $514a
-	ldh a, [hWramBank] ; $514b
-	push af ; $514d
-	wram_bank $05 ; $514e
+	push_wram_bank $05 ; $514b
 	ld d, h ; $5154
 	ld e, l ; $5155
 	ld a, [wTextArgNumberWriteIndex] ; $5156
@@ -2759,8 +2716,7 @@ PushTextArgNumber:
 	inc hl ; $516e
 	ld [hl], d ; $516f
 .done:
-	pop af ; $5170
-	wram_bank ; $5171
+	pop_wram_bank ; $5170
 	pop hl ; $5175
 	pop de ; $5176
 	pop bc ; $5177
@@ -2772,9 +2728,7 @@ PushTextArgShortTextId:
 	push de ; $517c
 	push hl ; $517d
 	ld d, a ; $517e
-	ldh a, [hWramBank] ; $517f
-	push af ; $5181
-	wram_bank $05 ; $5182
+	push_wram_bank $05 ; $517f
 	ld a, [wTextArgShortTextWriteIndex] ; $5188
 	cp $10 ; $518b
 	jr z, .restore ; $518d
@@ -2787,8 +2741,7 @@ PushTextArgShortTextId:
 	add hl, bc ; $519c
 	ld [hl], d ; $519d
 .restore:
-	pop af ; $519e
-	wram_bank ; $519f
+	pop_wram_bank ; $519e
 	pop hl ; $51a3
 	pop de ; $51a4
 	pop bc ; $51a5
@@ -2993,9 +2946,7 @@ GetNextArgShortTextLength:
 	ret ; $52cd
 TextCmdPrintArgNumber:
 	push bc ; $52ce
-	ldh a, [hWramBank] ; $52cf
-	push af ; $52d1
-	wram_bank $05 ; $52d2
+	push_wram_bank $05 ; $52cf
 	ld a, [wTextArgNumberCount] ; $52d8
 	ld b, a ; $52db
 	ld a, [wTextArgNumberWriteIndex] ; $52dc
@@ -3011,15 +2962,13 @@ TextCmdPrintArgNumber:
 	ld c, [hl] ; $52ef
 	inc hl ; $52f0
 	ld b, [hl] ; $52f1
-	pop af ; $52f2
-	wram_bank ; $52f3
+	pop_wram_bank ; $52f2
 	ld h, b ; $52f7
 	ld l, c ; $52f8
 	call RenderInlineNumber ; $52f9
 	jr .restore2 ; $52fc
 .restore:
-	pop af ; $52fe
-	wram_bank ; $52ff
+	pop_wram_bank ; $52fe
 .restore2:
 	pop bc ; $5303
 	ret ; $5304
@@ -3151,13 +3100,10 @@ Unused_05_SetTextVar:
 	push de ; $53b0
 	push hl ; $53b1
 	ld b, a ; $53b2
-	ldh a, [hWramBank] ; $53b3
-	push af ; $53b5
-	wram_bank $05 ; $53b6
+	push_wram_bank $05 ; $53b3
 	ld a, b ; $53bc
 	ld [wUnusedTextByte], a ; $53bd
-	pop af ; $53c0
-	wram_bank ; $53c1
+	pop_wram_bank ; $53c0
 	pop hl ; $53c5
 	pop de ; $53c6
 	pop bc ; $53c7
@@ -3862,9 +3808,7 @@ DelayTextCharacter:
 	push de ; $579d
 	push hl ; $579e
 	ld c, a ; $579f
-	ldh a, [hWramBank] ; $57a0
-	push af ; $57a2
-	wram_bank $05 ; $57a3
+	push_wram_bank $05 ; $57a0
 	ld a, [wTextRedrawGuard] ; $57a9
 	or a ; $57ac
 	ld b, a ; $57ad
@@ -3897,8 +3841,7 @@ DelayTextCharacter:
 	dec b ; $57da
 	jr nz, .waitFrame ; $57db
 .restore:
-	pop af ; $57dd
-	wram_bank ; $57de
+	pop_wram_bank ; $57dd
 	pop hl ; $57e2
 	pop de ; $57e3
 	pop bc ; $57e4
@@ -3906,9 +3849,7 @@ DelayTextCharacter:
 	ret ; $57e6
 ApplyMessageSpeed:
 	push af ; $57e7
-	ldh a, [hWramBank] ; $57e8
-	push af ; $57ea
-	wram_bank $05 ; $57eb
+	push_wram_bank $05 ; $57e8
 	ld a, [wMessageSpeed] ; $57f1
 	bit 7, a ; $57f4
 	jr z, .speed1 ; $57f6
@@ -3931,8 +3872,7 @@ ApplyMessageSpeed:
 	ld a, $04 ; $5813
 	ld [wTextRedrawGuard], a ; $5815
 .store:
-	pop af ; $5818
-	wram_bank ; $5819
+	pop_wram_bank ; $5818
 	pop af ; $581d
 	ret ; $581e
 ShowSpeakerDialogue:
@@ -3940,9 +3880,7 @@ ShowSpeakerDialogue:
 	push bc ; $5820
 	push de ; $5821
 	ld b, a ; $5822
-	ldh a, [hWramBank] ; $5823
-	push af ; $5825
-	wram_bank $05 ; $5826
+	push_wram_bank $05 ; $5823
 	xor a ; $582c
 	ld [wTextArgStringWriteIndex], a ; $582d
 	ld [wTextArgStringMeasureIndex], a ; $5830
@@ -3972,13 +3910,10 @@ ShowSpeakerDialogue:
 	xor a ; $5864
 	ld [wGlyphRowStartCol], a ; $5865
 	ld [wGlyphFlushedCol], a ; $5868
-	ldh a, [hWramBank] ; $586b
-	push af ; $586d
-	wram_bank $07 ; $586e
+	push_wram_bank $07 ; $586b
 	call ClearGlyphBuffer ; $5874
 	call UploadGlyphBufferFull ; $5877
-	pop af ; $587a
-	wram_bank ; $587b
+	pop_wram_bank ; $587a
 	ld a, [wDialogueSpeaker] ; $587f
 	call OpenSpeechBubble ; $5882
 	call RestoreShadowTilemap ; $5885
@@ -3986,13 +3921,10 @@ ShowSpeakerDialogue:
 	xor a ; $5888
 	ld [wGlyphRowStartCol], a ; $5889
 	ld [wGlyphFlushedCol], a ; $588c
-	ldh a, [hWramBank] ; $588f
-	push af ; $5891
-	wram_bank $07 ; $5892
+	push_wram_bank $07 ; $588f
 	call ClearGlyphBuffer ; $5898
 	call UploadGlyphBufferFull ; $589b
-	pop af ; $589e
-	wram_bank ; $589f
+	pop_wram_bank ; $589e
 	call SetActiveWindowTextId ; $58a3
 	ld a, [wDialogueWindowId] ; $58a6
 	set_flag FLAG_TEXT_RENDER_ACTIVE ; $58a9
@@ -4019,8 +3951,7 @@ ShowSpeakerDialogue:
 	ld [wTextArgNumberMeasureIndex], a ; $58de
 	ld [wTextArgShortTextWriteIndex], a ; $58e1
 	ld [wTextArgShortTextMeasureIndex], a ; $58e4
-	pop af ; $58e7
-	wram_bank ; $58e8
+	pop_wram_bank ; $58e7
 	pop de ; $58ec
 	pop bc ; $58ed
 	pop af ; $58ee
@@ -4030,9 +3961,7 @@ ShowSpeakerDialogueRestoreBG:
 	push bc ; $58f1
 	push de ; $58f2
 	ld b, a ; $58f3
-	ldh a, [hWramBank] ; $58f4
-	push af ; $58f6
-	wram_bank $05 ; $58f7
+	push_wram_bank $05 ; $58f4
 	xor a ; $58fd
 	ld [wTextArgStringWriteIndex], a ; $58fe
 	ld [wTextArgStringMeasureIndex], a ; $5901
@@ -4062,26 +3991,20 @@ ShowSpeakerDialogueRestoreBG:
 	xor a ; $5935
 	ld [wGlyphRowStartCol], a ; $5936
 	ld [wGlyphFlushedCol], a ; $5939
-	ldh a, [hWramBank] ; $593c
-	push af ; $593e
-	wram_bank $07 ; $593f
+	push_wram_bank $07 ; $593c
 	call ClearGlyphBuffer ; $5945
 	call UploadGlyphBufferFull ; $5948
-	pop af ; $594b
-	wram_bank ; $594c
+	pop_wram_bank ; $594b
 	ld a, [wDialogueSpeaker] ; $5950
 	call OpenSpeechBubble ; $5953
 .loop:
 	xor a ; $5956
 	ld [wGlyphRowStartCol], a ; $5957
 	ld [wGlyphFlushedCol], a ; $595a
-	ldh a, [hWramBank] ; $595d
-	push af ; $595f
-	wram_bank $07 ; $5960
+	push_wram_bank $07 ; $595d
 	call ClearGlyphBuffer ; $5966
 	call UploadGlyphBufferFull ; $5969
-	pop af ; $596c
-	wram_bank ; $596d
+	pop_wram_bank ; $596c
 	call SetActiveWindowTextId ; $5971
 	call RestoreShadowTilemap ; $5974
 	ld a, [wDialogueWindowId] ; $5977
@@ -4103,8 +4026,7 @@ ShowSpeakerDialogueRestoreBG:
 	ld [wTextArgNumberMeasureIndex], a ; $599e
 	ld [wTextArgShortTextWriteIndex], a ; $59a1
 	ld [wTextArgShortTextMeasureIndex], a ; $59a4
-	pop af ; $59a7
-	wram_bank ; $59a8
+	pop_wram_bank ; $59a7
 	pop de ; $59ac
 	pop bc ; $59ad
 	pop af ; $59ae
@@ -4114,9 +4036,7 @@ ShowDialogueAtPosition:
 	push bc ; $59b1
 	push de ; $59b2
 	ld b, a ; $59b3
-	ldh a, [hWramBank] ; $59b4
-	push af ; $59b6
-	wram_bank $05 ; $59b7
+	push_wram_bank $05 ; $59b4
 	xor a ; $59bd
 	ld [wTextArgStringWriteIndex], a ; $59be
 	ld [wTextArgStringMeasureIndex], a ; $59c1
@@ -4144,13 +4064,10 @@ ShowDialogueAtPosition:
 	xor a ; $59f2
 	ld [wGlyphRowStartCol], a ; $59f3
 	ld [wGlyphFlushedCol], a ; $59f6
-	ldh a, [hWramBank] ; $59f9
-	push af ; $59fb
-	wram_bank $07 ; $59fc
+	push_wram_bank $07 ; $59f9
 	call ClearGlyphBuffer ; $5a02
 	call UploadGlyphBufferFull ; $5a05
-	pop af ; $5a08
-	wram_bank ; $5a09
+	pop_wram_bank ; $5a08
 	call SetActiveWindowTextId ; $5a0d
 	ld a, [wDialogueWindowId] ; $5a10
 	set_flag FLAG_TEXT_RENDER_ACTIVE ; $5a13
@@ -4172,8 +4089,7 @@ ShowDialogueAtPosition:
 	ld [wTextArgNumberMeasureIndex], a ; $5a3d
 	ld [wTextArgShortTextWriteIndex], a ; $5a40
 	ld [wTextArgShortTextMeasureIndex], a ; $5a43
-	pop af ; $5a46
-	wram_bank ; $5a47
+	pop_wram_bank ; $5a46
 	pop de ; $5a4b
 	pop bc ; $5a4c
 	pop af ; $5a4d
@@ -4189,9 +4105,7 @@ DrawDialogueAtPosition:
 	sub $09 ; $5a57
 	ld e, a ; $5a59
 	ld b, a ; $5a5a
-	ldh a, [hWramBank] ; $5a5b
-	push af ; $5a5d
-	wram_bank $05 ; $5a5e
+	push_wram_bank $05 ; $5a5b
 	ld a, b ; $5a64
 	bit 7, a ; $5a65
 	ld a, $08 ; $5a67
@@ -4210,23 +4124,19 @@ DrawDialogueAtPosition:
 	ld a, [wTextPageBreakRequest] ; $5a84
 	or a ; $5a87
 	jr nz, .loop ; $5a88
-	pop af ; $5a8a
-	wram_bank ; $5a8b
+	pop_wram_bank ; $5a8a
 	pop de ; $5a8f
 	pop bc ; $5a90
 	pop af ; $5a91
 	ret ; $5a92
 CloseActiveDialogueWindow:
 	push af ; $5a93
-	ldh a, [hWramBank] ; $5a94
-	push af ; $5a96
-	wram_bank $05 ; $5a97
+	push_wram_bank $05 ; $5a94
 	ld a, [wDialogueWindowId] ; $5a9d
 	call CloseWindow ; $5aa0
 	ld a, DIALOGUEWIN_NONE ; $5aa3
 	ld [wDialogueWindowId], a ; $5aa5
-	pop af ; $5aa8
-	wram_bank ; $5aa9
+	pop_wram_bank ; $5aa8
 	pop af ; $5aad
 	ret ; $5aae
 OpenSpeechBubble:
@@ -4273,8 +4183,7 @@ OpenSpeechBubble:
 	wram_bank $05 ; $5aee
 	ld a, b ; $5af4
 	ld [wSpeechBubbleLowerHalf], a ; $5af5
-	pop af ; $5af8
-	wram_bank ; $5af9
+	pop_wram_bank ; $5af8
 	ld b, $14 ; $5afd
 	ld c, $07 ; $5aff
 	ld d, $00 ; $5b01
@@ -4439,15 +4348,12 @@ OpenDialogueWindowCentered:
 	ret ; $5bfb
 MeasureDialogueWidthTiles:
 	push bc ; $5bfc
-	ldh a, [hWramBank] ; $5bfd
-	push af ; $5bff
-	wram_bank $05 ; $5c00
+	push_wram_bank $05 ; $5bfd
 	call FetchDialogueText ; $5c06
 	call FitWindowToText ; $5c09
 	ld a, [wFitTextWidthCells] ; $5c0c
 	ld b, a ; $5c0f
-	pop af ; $5c10
-	wram_bank ; $5c11
+	pop_wram_bank ; $5c10
 	ld a, b ; $5c15
 	pop bc ; $5c16
 	ret ; $5c17
@@ -4754,9 +4660,7 @@ RenderProportionalTextAt:
 	ld [hl], d ; $5dc2
 	pop hl ; $5dc3
 	call InitGlyphStreamAt ; $5dc4
-	ldh a, [hWramBank] ; $5dc7
-	push af ; $5dc9
-	wram_bank $05 ; $5dca
+	push_wram_bank $05 ; $5dc7
 	xor a ; $5dd0
 	call AddTextIdOffset ; $5dd1
 	xor a ; $5dd4
@@ -4797,8 +4701,7 @@ RenderProportionalTextAt:
 	ld a, $01 ; $5e1a
 	ld [wGlyphStampEnabled], a ; $5e1c
 .markerChecked:
-	pop af ; $5e1f
-	wram_bank ; $5e20
+	pop_wram_bank ; $5e1f
 .charLoop:
 	ld a, [hl] ; $5e24
 	cp $20 ; $5e25
@@ -4842,8 +4745,7 @@ ProportionalTextCodeHandler14_05:
 	wram_bank $05 ; $5e5c
 	ld a, [hl] ; $5e62
 	ld [wTextCharNameArg], a ; $5e63
-	pop af ; $5e66
-	wram_bank ; $5e67
+	pop_wram_bank ; $5e66
 	pop af ; $5e6b
 	call DispatchControlCode ; $5e6c
 	inc hl ; $5e6f
@@ -4914,9 +4816,7 @@ ProportionalTextCodeHandler5_05:
 	jp RenderProportionalTextAt.charLoop ; $5eca
 ProportionalTextCodeHandler0_05:
 	pop hl ; $5ecd
-	ldh a, [hWramBank] ; $5ece
-	push af ; $5ed0
-	wram_bank $05 ; $5ed1
+	push_wram_bank $05 ; $5ece
 	xor a ; $5ed7
 	ld [wTextRowIndent], a ; $5ed8
 	ld [wTextArgStringWriteIndex], a ; $5edb
@@ -4925,8 +4825,7 @@ ProportionalTextCodeHandler0_05:
 	ld [wTextArgNumberMeasureIndex], a ; $5ee4
 	ld [wTextArgShortTextWriteIndex], a ; $5ee7
 	ld [wTextArgShortTextMeasureIndex], a ; $5eea
-	pop af ; $5eed
-	wram_bank ; $5eee
+	pop_wram_bank ; $5eed
 	ld hl, wGlyphPenX ; $5ef2
 	ld a, [hl+] ; $5ef5
 	ld h, [hl] ; $5ef6
@@ -5002,9 +4901,7 @@ RenderTextToBuffer64:
 	push bc ; $5f53
 	push de ; $5f54
 	push hl ; $5f55
-	ldh a, [hWramBank] ; $5f56
-	push af ; $5f58
-	wram_bank $05 ; $5f59
+	push_wram_bank $05 ; $5f56
 	xor a ; $5f5f
 	call AddTextIdOffset ; $5f60
 	ld a, e ; $5f63
@@ -5019,8 +4916,7 @@ RenderTextToBuffer64:
 	ld [wTextRowIndent], a ; $5f71
 	call FetchDialogueText ; $5f74
 	ld hl, wTextBuffer ; $5f77
-	pop af ; $5f7a
-	wram_bank ; $5f7b
+	pop_wram_bank ; $5f7a
 .charLoop:
 	ld a, [hl] ; $5f7f
 	cp $20 ; $5f80
@@ -5228,9 +5124,7 @@ GetSpeakerVoice:
 	ld b, $08 ; $6091
 	or l ; $6093
 	jr z, .done ; $6094
-	ldh a, [hWramBank] ; $6096
-	push af ; $6098
-	wram_bank $04 ; $6099
+	push_wram_bank $04 ; $6096
 	ld a, l ; $609f
 	ldh [hActorPtr], a ; $60a0
 	ld a, h ; $60a2
@@ -5253,8 +5147,7 @@ GetSpeakerVoice:
 	add hl, de ; $60be
 	inc hl ; $60bf
 	ld b, [hl] ; $60c0
-	pop af ; $60c1
-	wram_bank ; $60c2
+	pop_wram_bank ; $60c1
 .done:
 	ld a, b ; $60c6
 	pop hl ; $60c7
@@ -5357,9 +5250,7 @@ ResetTextWindowsAndRestoreMap:
 	ret ; $6180
 CreateWindowWithTextId:
 	push bc ; $6181
-	ldh a, [hWramBank] ; $6182
-	push af ; $6184
-	wram_bank $05 ; $6185
+	push_wram_bank $05 ; $6182
 	call CreateWindow ; $618b
 	bit 7, h ; $618e
 	jr nz, .negative ; $6190
@@ -5368,8 +5259,7 @@ CreateWindowWithTextId:
 .negative:
 	ld a, [wWindowId] ; $6196
 	ld b, a ; $6199
-	pop af ; $619a
-	wram_bank ; $619b
+	pop_wram_bank ; $619a
 	ld a, b ; $619f
 	pop bc ; $61a0
 	ret ; $61a1
@@ -5379,9 +5269,7 @@ RedrawWindowText:
 	push de ; $61a4
 	push hl ; $61a5
 	ld b, a ; $61a6
-	ldh a, [hWramBank] ; $61a7
-	push af ; $61a9
-	wram_bank $05 ; $61aa
+	push_wram_bank $05 ; $61a7
 	ld a, [wDialogueWindowId] ; $61b0
 	cp b ; $61b3
 	jr nz, .getWindowStructPtr ; $61b4
@@ -5390,13 +5278,10 @@ RedrawWindowText:
 	xor a ; $61b9
 	ld [wGlyphRowStartCol], a ; $61ba
 	ld [wGlyphFlushedCol], a ; $61bd
-	ldh a, [hWramBank] ; $61c0
-	push af ; $61c2
-	wram_bank $07 ; $61c3
+	push_wram_bank $07 ; $61c0
 	call ClearGlyphBuffer ; $61c9
 	call UploadGlyphTilesPartial ; $61cc
-	pop af ; $61cf
-	wram_bank ; $61d0
+	pop_wram_bank ; $61cf
 	ld a, [wDialogueWindowId] ; $61d4
 	push af ; $61d7
 	call GetWindowStructPtr ; $61d8
@@ -5444,17 +5329,14 @@ RedrawWindowText:
 	ld hl, wTextBuffer ; $621e
 	call RenderTextString ; $6221
 .restore:
-	pop af ; $6224
-	wram_bank ; $6225
+	pop_wram_bank ; $6224
 	pop hl ; $6229
 	pop de ; $622a
 	pop bc ; $622b
 	pop af ; $622c
 	ret ; $622d
 UploadGlyphTilesPartial:
-	ldh a, [hWramBank] ; $622e
-	push af ; $6230
-	wram_bank $07 ; $6231
+	push_wram_bank $07 ; $622e
 	ld hl, wGlyphTileBuffer ; $6237
 	ld de, $8800 ; $623a
 	ld c, $1b ; $623d
@@ -5477,8 +5359,7 @@ UploadGlyphTilesPartial:
 	call AdvanceFrame ; $625f
 .restore2:
 	pop af ; $6262
-	pop af ; $6263
-	wram_bank ; $6264
+	pop_wram_bank ; $6263
 	ret ; $6268
 RenderWindowTextToCompletion:
 	push af ; $6269
@@ -5486,9 +5367,7 @@ RenderWindowTextToCompletion:
 	push de ; $626b
 	push hl ; $626c
 	ld b, a ; $626d
-	ldh a, [hWramBank] ; $626e
-	push af ; $6270
-	wram_bank $05 ; $6271
+	push_wram_bank $05 ; $626e
 	ld a, [wDialogueWindowId] ; $6277
 	cp b ; $627a
 	jr nz, .getWindowStructPtr ; $627b
@@ -5527,8 +5406,7 @@ RenderWindowTextToCompletion:
 	cp $ff ; $62ae
 	jr z, .restore ; $62b0
 .restore:
-	pop af ; $62b2
-	wram_bank ; $62b3
+	pop_wram_bank ; $62b2
 	pop hl ; $62b7
 	pop de ; $62b8
 	pop bc ; $62b9
@@ -5540,13 +5418,10 @@ RedrawWindowRowsSafe:
 	push de ; $62be
 	push hl ; $62bf
 	ld b, a ; $62c0
-	ldh a, [hWramBank] ; $62c1
-	push af ; $62c3
-	wram_bank $05 ; $62c4
+	push_wram_bank $05 ; $62c1
 	ld a, b ; $62ca
 	call RedrawWindowRowsThunk ; $62cb
-	pop af ; $62ce
-	wram_bank ; $62cf
+	pop_wram_bank ; $62ce
 	pop hl ; $62d3
 	pop de ; $62d4
 	pop bc ; $62d5
@@ -5564,9 +5439,7 @@ ShowDialogueCentered:
 	push af ; $62e7
 	push bc ; $62e8
 	push de ; $62e9
-	ldh a, [hWramBank] ; $62ea
-	push af ; $62ec
-	wram_bank $05 ; $62ed
+	push_wram_bank $05 ; $62ea
 	xor a ; $62f3
 	ld [wTextArgStringWriteIndex], a ; $62f4
 	ld [wTextArgStringMeasureIndex], a ; $62f7
@@ -5599,8 +5472,7 @@ ShowDialogueCentered:
 	ld [wTextArgNumberMeasureIndex], a ; $633d
 	ld [wTextArgShortTextWriteIndex], a ; $6340
 	ld [wTextArgShortTextMeasureIndex], a ; $6343
-	pop af ; $6346
-	wram_bank ; $6347
+	pop_wram_bank ; $6346
 	pop de ; $634b
 	pop bc ; $634c
 	pop af ; $634d
@@ -5685,8 +5557,7 @@ Unused_05_ChooseSpeechBubbleHalf:
 	wram_bank $05 ; $63c3
 	ld a, b ; $63c9
 	ld [wSpeechBubbleLowerHalf], a ; $63ca
-	pop af ; $63cd
-	wram_bank ; $63ce
+	pop_wram_bank ; $63cd
 	ld d, $00 ; $63d2
 	pop hl ; $63d4
 	pop bc ; $63d5
@@ -6846,9 +6717,7 @@ Unused_05_WriteDialogueToTilemapStreamed:
 	push bc ; $6c7a
 	push de ; $6c7b
 	push hl ; $6c7c
-	ldh a, [hWramBank] ; $6c7d
-	push af ; $6c7f
-	wram_bank $05 ; $6c80
+	push_wram_bank $05 ; $6c7d
 	xor a ; $6c86
 	call AddTextIdOffset ; $6c87
 	xor a ; $6c8a
@@ -6870,8 +6739,7 @@ Unused_05_WriteDialogueToTilemapStreamed:
 	ld [wTextRowIndent], a ; $6cab
 	call FetchDialogueText ; $6cae
 	ld hl, wTextBuffer ; $6cb1
-	pop af ; $6cb4
-	wram_bank ; $6cb5
+	pop_wram_bank ; $6cb4
 .loopB:
 	ld a, [hl] ; $6cb9
 	or a ; $6cba
@@ -6929,9 +6797,7 @@ Unused_05_WriteDialogueToTilemapStreamed:
 	pop hl ; $6cff
 	jr .loopB ; $6d00
 .checkWramBank:
-	ldh a, [hWramBank] ; $6d02
-	push af ; $6d04
-	wram_bank $05 ; $6d05
+	push_wram_bank $05 ; $6d02
 	xor a ; $6d0b
 	ld [wTextRowIndent], a ; $6d0c
 	ld [wTextArgStringWriteIndex], a ; $6d0f
@@ -6940,8 +6806,7 @@ Unused_05_WriteDialogueToTilemapStreamed:
 	ld [wTextArgNumberMeasureIndex], a ; $6d18
 	ld [wTextArgShortTextWriteIndex], a ; $6d1b
 	ld [wTextArgShortTextMeasureIndex], a ; $6d1e
-	pop af ; $6d21
-	wram_bank ; $6d22
+	pop_wram_bank ; $6d21
 	pop hl ; $6d26
 	pop de ; $6d27
 	pop bc ; $6d28
@@ -7015,8 +6880,7 @@ Unused_05_RunDebugWindowDemo:
 	script_fade_in $7f ; $6d8f
 	call WaitFadeEnd ; $6d94
 	call RestoreShadowTilemap ; $6d97
-	call WaitFramesCmd ; $6d9a
-	db $1e ; $6d9d inline arg
+	wait_frames $1e ; $6d9a
 	call DisableLCDSafely ; $6d9e
 	call ResetTextWindowState ; $6da1
 	ld de, $d000 ; $6da4
@@ -7043,8 +6907,7 @@ Unused_05_RunDebugWindowDemo:
 	call DrawTextWindowFrame ; $6dd3
 	call RedrawWindowRows ; $6dd6
 	call EnableLCD ; $6dd9
-	pop af ; $6ddc
-	wram_bank ; $6ddd
+	pop_wram_bank ; $6ddc
 	sound $72 ; $6de1
 .loop:
 	ldh a, [hPlayerInputFlags] ; $6de3
@@ -7286,9 +7149,7 @@ WrapCellPtrToRowStart:
 	ret ; $6f37
 ClampCellPtrToShadowMap:
 	push af ; $6f38
-	ldh a, [hWramBank] ; $6f39
-	push af ; $6f3b
-	wram_bank $05 ; $6f3c
+	push_wram_bank $05 ; $6f39
 	ld a, [wShadowTilemapPtr + 1] ; $6f42
 	add $03 ; $6f45
 	cp h ; $6f47
@@ -7296,15 +7157,12 @@ ClampCellPtrToShadowMap:
 	sub $03 ; $6f4a
 	ld h, a ; $6f4c
 .restore:
-	pop af ; $6f4d
-	wram_bank ; $6f4e
+	pop_wram_bank ; $6f4d
 	pop af ; $6f52
 	ret ; $6f53
 ClampCellPtrToAttrMap:
 	push af ; $6f54
-	ldh a, [hWramBank] ; $6f55
-	push af ; $6f57
-	wram_bank $05 ; $6f58
+	push_wram_bank $05 ; $6f55
 	ld a, [wShadowTilemapPtr + 1] ; $6f5e
 	add $07 ; $6f61
 	cp h ; $6f63
@@ -7312,8 +7170,7 @@ ClampCellPtrToAttrMap:
 	sub $03 ; $6f66
 	ld h, a ; $6f68
 .restore:
-	pop af ; $6f69
-	wram_bank ; $6f6a
+	pop_wram_bank ; $6f69
 	pop af ; $6f6e
 	ret ; $6f6f
 DrawTextWindowFrame:
@@ -7504,8 +7361,7 @@ DrawTextWindowFrame:
 	dec d ; $7079
 	jr nz, .attrRowLoop ; $707a
 .done:
-	pop af ; $707c
-	wram_bank ; $707d
+	pop_wram_bank ; $707c
 	pop hl ; $7081
 	pop de ; $7082
 	pop bc ; $7083
@@ -7740,8 +7596,7 @@ CopyDirtyRowSpanToVRAM:
 	add hl, de ; $71b5
 	pop de ; $71b6
 	call QueueVRAMCopy ; $71b7
-	pop af ; $71ba
-	wram_bank ; $71bb
+	pop_wram_bank ; $71ba
 	pop hl ; $71bf
 	pop de ; $71c0
 	pop bc ; $71c1
@@ -7895,9 +7750,7 @@ RenderTextAtWindowCell:
 	ld d, h ; $727d
 	ld e, l ; $727e
 	pop hl ; $727f
-	ldh a, [hWramBank] ; $7280
-	push af ; $7282
-	wram_bank $05 ; $7283
+	push_wram_bank $05 ; $7280
 	ld a, [wMenuWindowId] ; $7289
 	ld c, a ; $728c
 	ld a, [wShadowTilemapBank] ; $728d
@@ -7920,8 +7773,7 @@ RenderTextAtWindowCell:
 	pop de ; $72a6
 	call RenderProportionalTextAt ; $72a7
 	call UploadGlyphBuffer ; $72aa
-	pop af ; $72ad
-	wram_bank ; $72ae
+	pop_wram_bank ; $72ad
 	ld a, [wMenuWindowId] ; $72b2
 	call RedrawWindowRows ; $72b5
 	pop hl ; $72b8
@@ -7955,9 +7807,7 @@ PrepareGlyphBuffer:
 	push bc ; $72dd
 	push de ; $72de
 	push hl ; $72df
-	ldh a, [hWramBank] ; $72e0
-	push af ; $72e2
-	wram_bank $05 ; $72e3
+	push_wram_bank $05 ; $72e0
 	ld a, [wGlyphBufferHoldCount] ; $72e9
 	or a ; $72ec
 	jr nz, .keepBuffer ; $72ed
@@ -7969,8 +7819,7 @@ PrepareGlyphBuffer:
 	ld a, [wGlyphRowStartCol] ; $72fd
 	ld [wGlyphFlushedCol], a ; $7300
 .done:
-	pop af ; $7303
-	wram_bank ; $7304
+	pop_wram_bank ; $7303
 	pop hl ; $7308
 	pop de ; $7309
 	pop bc ; $730a
@@ -8284,8 +8133,7 @@ UploadGlyphBufferFull:
 .done:
 	pop af ; $74d0
 	clear_flag FLAG_VRAM_UPDATE_BUSY ; $74d1
-	pop af ; $74d4
-	wram_bank ; $74d5
+	pop_wram_bank ; $74d4
 	pop hl ; $74d9
 	pop de ; $74da
 	pop bc ; $74db
@@ -8332,8 +8180,7 @@ DrawWindowGlyphRun:
 	call DrawGlyph ; $751e
 	jr .glyphLoop ; $7521
 .done:
-	pop af ; $7523
-	wram_bank ; $7524
+	pop_wram_bank ; $7523
 	pop hl ; $7528
 	pop de ; $7529
 	pop bc ; $752a
@@ -8344,9 +8191,7 @@ InitGlyphStreamForWindow:
 	push bc ; $752e
 	push de ; $752f
 	push hl ; $7530
-	ldh a, [hWramBank] ; $7531
-	push af ; $7533
-	wram_bank $05 ; $7534
+	push_wram_bank $05 ; $7531
 	ld de, $0000 ; $753a
 	ld a, [wGlyphWindowId] ; $753d
 	or a ; $7540
@@ -8382,8 +8227,7 @@ InitGlyphStreamForWindow:
 	inc hl ; $756f
 	ld [hl], e ; $7570
 	call ClearWindowGlyphTiles ; $7571
-	pop af ; $7574
-	wram_bank ; $7575
+	pop_wram_bank ; $7574
 	pop hl ; $7579
 	pop de ; $757a
 	pop bc ; $757b
@@ -8394,9 +8238,7 @@ DrawStreamGlyph:
 	push bc ; $757f
 	push de ; $7580
 	push hl ; $7581
-	ldh a, [hWramBank] ; $7582
-	push af ; $7584
-	wram_bank $05 ; $7585
+	push_wram_bank $05 ; $7582
 	ld hl, wTextRowWidth ; $758b
 	ld b, [hl] ; $758e
 	inc hl ; $758f
@@ -8438,8 +8280,7 @@ DrawStreamGlyph:
 	rl d ; $75cb
 	ld a, d ; $75cd
 	ld [wGlyphRowStartCol], a ; $75ce
-	pop af ; $75d1
-	wram_bank ; $75d2
+	pop_wram_bank ; $75d1
 	pop hl ; $75d6
 	pop de ; $75d7
 	pop bc ; $75d8
@@ -8507,9 +8348,7 @@ UploadLastGlyphTiles:
 	pop af ; $762f
 	ret ; $7630
 .maskSet:
-	ldh a, [hWramBank] ; $7631
-	push af ; $7633
-	wram_bank $07 ; $7634
+	push_wram_bank $07 ; $7631
 	ld a, [wKeepMatchStatsFlag] ; $763a
 	or a ; $763d
 	jr z, .zero ; $763e
@@ -8552,8 +8391,7 @@ UploadLastGlyphTiles:
 	ld c, $02 ; $7672
 	call QueueVRAMCopy ; $7674
 .restore2:
-	pop af ; $7677
-	wram_bank ; $7678
+	pop_wram_bank ; $7677
 	pop hl ; $767c
 	pop de ; $767d
 	pop bc ; $767e
@@ -8604,8 +8442,7 @@ DrawInlineGlyph:
 	ld a, e ; $76c4
 	ld [hl+], a ; $76c5
 	ld [hl], d ; $76c6
-	pop af ; $76c7
-	wram_bank ; $76c8
+	pop_wram_bank ; $76c7
 	pop hl ; $76cc
 	pop de ; $76cd
 	pop bc ; $76ce
@@ -8628,8 +8465,7 @@ Unused_05_ResetGlyphPen_1:
 	ld [hl], a ; $76e1
 	wram_bank $07 ; $76e2
 	call ClearGlyphBuffer ; $76e8
-	pop af ; $76eb
-	wram_bank ; $76ec
+	pop_wram_bank ; $76eb
 	pop hl ; $76f0
 	pop de ; $76f1
 	pop bc ; $76f2
@@ -8653,8 +8489,7 @@ Unused_05_ResetGlyphPen_2:
 	ld [hl+], a ; $7707
 	wram_bank $07 ; $7708
 	call ClearGlyphBuffer ; $770e
-	pop af ; $7711
-	wram_bank ; $7712
+	pop_wram_bank ; $7711
 	pop hl ; $7716
 	pop de ; $7717
 	pop bc ; $7718
@@ -8665,9 +8500,7 @@ InitGlyphStreamAt:
 	push bc ; $771c
 	push de ; $771d
 	push hl ; $771e
-	ldh a, [hWramBank] ; $771f
-	push af ; $7721
-	wram_bank $05 ; $7722
+	push_wram_bank $05 ; $771f
 	xor a ; $7728
 	ld hl, wGlyphPenX ; $7729
 	ld [hl+], a ; $772c
@@ -8712,8 +8545,7 @@ InitGlyphStreamAt:
 	ld a, [hl] ; $7767
 	add c ; $7768
 	ld [hl], a ; $7769
-	pop af ; $776a
-	wram_bank ; $776b
+	pop_wram_bank ; $776a
 	pop hl ; $776f
 	pop de ; $7770
 	pop bc ; $7771
@@ -8827,17 +8659,14 @@ UploadGlyphBufferQueued:
 	ld c, l ; $780f
 	ld de, $8800 ; $7810
 	add hl, de ; $7813
-	ldh a, [hWramBank] ; $7814
-	push af ; $7816
-	wram_bank $05 ; $7817
+	push_wram_bank $05 ; $7814
 	ld a, [wWindowTileAttr] ; $781d
 	bit 3, a ; $7820
 	jr z, .restore ; $7822
 	ld de, $2000 ; $7824
 	add hl, de ; $7827
 .restore:
-	pop af ; $7828
-	wram_bank ; $7829
+	pop_wram_bank ; $7828
 	push hl ; $782d
 	ld h, b ; $782e
 	ld l, c ; $782f
@@ -8870,8 +8699,7 @@ UploadGlyphBufferQueued:
 	dec b ; $7856
 	jr nz, .loopB ; $7857
 	clear_flag FLAG_VRAM_UPDATE_BUSY ; $7859
-	pop af ; $785c
-	wram_bank ; $785d
+	pop_wram_bank ; $785c
 	pop hl ; $7861
 	pop de ; $7862
 	pop bc ; $7863
@@ -8917,8 +8745,7 @@ UploadGlyphBufferDMA:
 	pop bc ; $789f
 	dec b ; $78a0
 	jr nz, .loopB ; $78a1
-	pop af ; $78a3
-	wram_bank ; $78a4
+	pop_wram_bank ; $78a3
 	pop hl ; $78a8
 	pop de ; $78a9
 	pop bc ; $78aa
@@ -8928,9 +8755,7 @@ UploadGlyphTileRange:
 	push bc ; $78ad
 	push de ; $78ae
 	push hl ; $78af
-	ldh a, [hWramBank] ; $78b0
-	push af ; $78b2
-	wram_bank $07 ; $78b3
+	push_wram_bank $07 ; $78b0
 	ld a, [wGlyphUploadFirstTile] ; $78b9
 	ld l, a ; $78bc
 	ld h, $00 ; $78bd
@@ -8962,8 +8787,7 @@ UploadGlyphTileRange:
 	ld c, a ; $78e4
 	call QueueVRAMCopy ; $78e5
 	ld b, a ; $78e8
-	pop af ; $78e9
-	wram_bank ; $78ea
+	pop_wram_bank ; $78e9
 	ld a, b ; $78ee
 	pop hl ; $78ef
 	pop de ; $78f0

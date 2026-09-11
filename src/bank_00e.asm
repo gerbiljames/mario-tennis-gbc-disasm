@@ -149,11 +149,7 @@ TrainingGymExit03_0e:
 TrainingGymNpc03_0e:
 	ld a, [wMapSceneStage] ; $43a6
 	add a ; $43a9
-	add LOW(TrainingGymNpc03TextIds) ; $43aa
-	ld l, a ; $43ac
-	adc HIGH(TrainingGymNpc03TextIds) ; $43ad
-	sub l ; $43af
-	ld h, a ; $43b0
+	ld_hl_indexed TrainingGymNpc03TextIds ; $43aa
 	ld a, [hl+] ; $43b1
 	ld h, [hl] ; $43b2
 	ld l, a ; $43b3
@@ -176,11 +172,7 @@ TrainingGymNpc04_0e:
 	ld a, [wMapSceneStage] ; $43d1
 	sra a ; $43d4
 	add a ; $43d6
-	add LOW(TrainingGymNpc04TextIds) ; $43d7
-	ld l, a ; $43d9
-	adc HIGH(TrainingGymNpc04TextIds) ; $43da
-	sub l ; $43dc
-	ld h, a ; $43dd
+	ld_hl_indexed TrainingGymNpc04TextIds ; $43d7
 	ld a, [hl+] ; $43de
 	ld h, [hl] ; $43df
 	ld l, a ; $43e0
@@ -197,11 +189,7 @@ TrainingGymNpc04TextIds:
 TrainingGymNpc05_0e:
 	ld a, [wMapSceneStage] ; $43f4
 	add a ; $43f7
-	add LOW(TrainingGymNpc05TextIds) ; $43f8
-	ld l, a ; $43fa
-	adc HIGH(TrainingGymNpc05TextIds) ; $43fb
-	sub l ; $43fd
-	ld h, a ; $43fe
+	ld_hl_indexed TrainingGymNpc05TextIds ; $43f8
 	ld a, [hl+] ; $43ff
 	ld h, [hl] ; $4400
 	ld l, a ; $4401
@@ -223,11 +211,7 @@ TrainingGymNpc05TextIds:
 TrainingGymNpc06_0e:
 	ld a, [wMapSceneStage] ; $441f
 	add a ; $4422
-	add LOW(TrainingGymNpc06TextIds) ; $4423
-	ld l, a ; $4425
-	adc HIGH(TrainingGymNpc06TextIds) ; $4426
-	sub l ; $4428
-	ld h, a ; $4429
+	ld_hl_indexed TrainingGymNpc06TextIds ; $4423
 	ld a, [hl+] ; $442a
 	ld h, [hl] ; $442b
 	ld l, a ; $442c
@@ -252,11 +236,7 @@ TrainingGymNpc07_0e:
 	cp STORYTIER_ISLAND_OPEN ; $444f
 	jr z, TrainingGymNpc07TextIds.speak ; $4451
 	add a ; $4453
-	add LOW(TrainingGymNpc07TextIds) ; $4454
-	ld l, a ; $4456
-	adc HIGH(TrainingGymNpc07TextIds) ; $4457
-	sub l ; $4459
-	ld h, a ; $445a
+	ld_hl_indexed TrainingGymNpc07TextIds ; $4454
 	ld a, [hl+] ; $445b
 	ld h, [hl] ; $445c
 	ld l, a ; $445d
@@ -287,11 +267,7 @@ TrainingGymNpc08_0e:
 	ld a, [wMapSceneStage] ; $4495
 	sra a ; $4498
 	add a ; $449a
-	add LOW(TrainingGymNpc08TextIds) ; $449b
-	ld l, a ; $449d
-	adc HIGH(TrainingGymNpc08TextIds) ; $449e
-	sub l ; $44a0
-	ld h, a ; $44a1
+	ld_hl_indexed TrainingGymNpc08TextIds ; $449b
 	ld a, [hl+] ; $44a2
 	ld h, [hl] ; $44a3
 	ld l, a ; $44a4
@@ -309,11 +285,7 @@ TrainingGymNpc09_0e:
 	ld a, [wMapSceneStage] ; $44b8
 	sra a ; $44bb
 	add a ; $44bd
-	add LOW(TrainingGymNpc09TextIds) ; $44be
-	ld l, a ; $44c0
-	adc HIGH(TrainingGymNpc09TextIds) ; $44c1
-	sub l ; $44c3
-	ld h, a ; $44c4
+	ld_hl_indexed TrainingGymNpc09TextIds ; $44be
 	ld a, [hl+] ; $44c5
 	ld h, [hl] ; $44c6
 	ld l, a ; $44c7
@@ -330,11 +302,7 @@ TrainingGymNpc09TextIds:
 TrainingGymNpc0A_0e:
 	ld a, [wMapSceneStage] ; $44db
 	add a ; $44de
-	add LOW(TrainingGymNpc0ATextIds) ; $44df
-	ld l, a ; $44e1
-	adc HIGH(TrainingGymNpc0ATextIds) ; $44e2
-	sub l ; $44e4
-	ld h, a ; $44e5
+	ld_hl_indexed TrainingGymNpc0ATextIds ; $44df
 	ld a, [hl+] ; $44e6
 	ld h, [hl] ; $44e7
 	ld l, a ; $44e8
@@ -356,11 +324,7 @@ TrainingGymNpc0ATextIds:
 TrainingGymNpc0B_0e:
 	ld a, [wMapSceneStage] ; $4506
 	add a ; $4509
-	add LOW(TrainingGymNpc0BTextIds) ; $450a
-	ld l, a ; $450c
-	adc HIGH(TrainingGymNpc0BTextIds) ; $450d
-	sub l ; $450f
-	ld h, a ; $4510
+	ld_hl_indexed TrainingGymNpc0BTextIds ; $450a
 	ld a, [hl+] ; $4511
 	ld h, [hl] ; $4512
 	ld l, a ; $4513
@@ -383,11 +347,7 @@ TrainingGymNpc0C_0e:
 	ld a, [wMapSceneStage] ; $4531
 	sra a ; $4534
 	add a ; $4536
-	add LOW(TrainingGymNpc0CTextIds) ; $4537
-	ld l, a ; $4539
-	adc HIGH(TrainingGymNpc0CTextIds) ; $453a
-	sub l ; $453c
-	ld h, a ; $453d
+	ld_hl_indexed TrainingGymNpc0CTextIds ; $4537
 	ld a, [hl+] ; $453e
 	ld h, [hl] ; $453f
 	ld l, a ; $4540
@@ -1354,16 +1314,13 @@ RestoreScreenAfterEquipSelect:
 	call RestoreScreenAfterEquipSelect ; $4f38
 	ret ; $4f3b
 FetchAndPushShortTextArg:
-	ldh a, [hWramBank] ; $4f3c
-	push af ; $4f3e
-	wram_bank $07 ; $4f3f
+	push_wram_bank $07 ; $4f3c
 	ld de, wTextArgFetchBuffer ; $4f45
 	wram_bank $05 ; $4f48
 	farcall FetchShortTextToBuffer ; $4f4e
 	ld hl, wTextArgFetchBuffer ; $4f51
 	farcall PushTextArgString ; $4f54
-	pop af ; $4f57
-	wram_bank ; $4f58
+	pop_wram_bank ; $4f57
 	ret ; $4f5c
 GetEquippedRacketNibble:
 	ld a, [wMapScratch + 10] ; $4f5d
@@ -3119,8 +3076,7 @@ PlayStarWarpTransition:
 	jr z, .startFade ; $71d7
 	or a ; $71d9
 	jr nz, .waitLoop ; $71da
-	pop af ; $71dc
-	wram_bank ; $71dd
+	pop_wram_bank ; $71dc
 	ret ; $71e1
 .startFade:
 	ld c, $03 ; $71e2
@@ -3142,11 +3098,7 @@ UpdateStarWarpSprite:
 .draw:
 	ld a, [wStarWarpFrame] ; $7200
 	rlca ; $7203
-	add LOW(StarWarpFrameSprites) ; $7204
-	ld l, a ; $7206
-	adc HIGH(StarWarpFrameSprites) ; $7207
-	sub l ; $7209
-	ld h, a ; $720a
+	ld_hl_indexed StarWarpFrameSprites ; $7204
 	push hl ; $720b
 	ld c, [hl] ; $720c
 	ld b, $09 ; $720d
@@ -3185,20 +3137,12 @@ UpdateStarWarpSprite:
 	ret ; $7249
 OffsetStarWarpPathPoint:
 	ld a, [wStarWarpPathIndex] ; $724a
-	add LOW(StarWarpPathY) ; $724d
-	ld l, a ; $724f
-	adc HIGH(StarWarpPathY) ; $7250
-	sub l ; $7252
-	ld h, a ; $7253
+	ld_hl_indexed StarWarpPathY ; $724d
 	ld a, [hl] ; $7254
 	add d ; $7255
 	ld d, a ; $7256
 	ld a, [wStarWarpPathIndex] ; $7257
-	add LOW(StarWarpPathX) ; $725a
-	ld l, a ; $725c
-	adc HIGH(StarWarpPathX) ; $725d
-	sub l ; $725f
-	ld h, a ; $7260
+	ld_hl_indexed StarWarpPathX ; $725a
 	ld a, [hl] ; $7261
 	add e ; $7262
 	ld e, a ; $7263
@@ -3597,11 +3541,7 @@ PrepareStoryMatch:
 	farcall InitStoryMatchSettings ; $7b91
 	ld a, [wMapScratch + 2] ; $7b94
 	add a ; $7b97
-	add LOW(PrepareStoryMatchTable) ; $7b98
-	ld l, a ; $7b9a
-	adc HIGH(PrepareStoryMatchTable) ; $7b9b
-	sub l ; $7b9d
-	ld h, a ; $7b9e
+	ld_hl_indexed PrepareStoryMatchTable ; $7b98
 	ld a, [hl+] ; $7b9f
 	ld h, [hl] ; $7ba0
 	ld l, a ; $7ba1

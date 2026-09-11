@@ -652,30 +652,24 @@ SetMenuCursorFromIndexToPtr_16:
 	ld [hl], a ; $43c7
 	ret ; $43c8
 ClearWram3Row64_16:
-	ldh a, [hWramBank] ; $43c9
-	push af ; $43cb
-	wram_bank $03 ; $43cc
+	push_wram_bank $03 ; $43c9
 	xor a ; $43d2
 	ld c, $40 ; $43d3
 .loop:
 	ld [hl+], a ; $43d5
 	dec c ; $43d6
 	jr nz, .loop ; $43d7
-	pop af ; $43d9
-	wram_bank ; $43da
+	pop_wram_bank ; $43d9
 	ret ; $43de
 ClearWram3Row64Alt_16:
-	ldh a, [hWramBank] ; $43df
-	push af ; $43e1
-	wram_bank $03 ; $43e2
+	push_wram_bank $03 ; $43df
 	ld a, $00 ; $43e8
 	ld c, $40 ; $43ea
 .loop:
 	ld [hl+], a ; $43ec
 	dec c ; $43ed
 	jr nz, .loop ; $43ee
-	pop af ; $43f0
-	wram_bank ; $43f1
+	pop_wram_bank ; $43f0
 	ret ; $43f5
 UpdateResultScreenAnimatedTilesTask:
 	farcall UpdateAnimatedTiles ; $43f6
@@ -925,9 +919,7 @@ InitMatchWinLoseScreen:
 	call SetWinLosePortraitPaletteAttrs ; $45b3
 	ld c, $00 ; $45b6
 	call LoadResultScreenPortraits ; $45b8
-	ldh a, [hWramBank] ; $45bb
-	push af ; $45bd
-	wram_bank $01 ; $45be
+	push_wram_bank $01 ; $45bb
 	ld hl, MatchWinLoseScreenGfx ; $45c4
 	ld de, wDecompBuffer ; $45c7
 	call DecompressData ; $45ca
@@ -949,8 +941,7 @@ InitMatchWinLoseScreen:
 	ld c, $04 ; $45f7
 	ld de, $8400 + VRAM_BANK1 ; $45f9
 	farcall LoadCompressedTileBlock ; $45fc
-	pop af ; $45ff
-	wram_bank ; $4600
+	pop_wram_bank ; $45ff
 	farcall QueueWram3MapToVRAM ; $4604
 	ret ; $4607
 MatchWinLoseScreenGfx:

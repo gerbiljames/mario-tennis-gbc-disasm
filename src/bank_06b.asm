@@ -347,16 +347,13 @@ IntroCutsceneState01Init_6b:
 	ld c, $16 ; $423d
 	farcall LoadScreenAssetRecord ; $423f
 	call LoadCutsceneTileset ; $4242
-	ldh a, [hWramBank] ; $4245
-	push af ; $4247
-	wram_bank $03 ; $4248
+	push_wram_bank $03 ; $4245
 	ld h, $8a ; $424e
 	ld de, wShadowAttrmap + 11 * TILEMAP_WIDTH ; $4250
 	ld b, $20 ; $4253
 	ld c, $01 ; $4255
 	farcall FillTilemapRect ; $4257
-	pop af ; $425a
-	wram_bank ; $425b
+	pop_wram_bank ; $425a
 	farcall QueueWram3MapToVRAM ; $425f
 	wram_bank $01 ; $4262
 	ld hl, (BANK(DataPtr_IntroSwingTiles) << 8) | LOW(DataPtr_IntroSwingTiles) ; $4268
@@ -410,9 +407,7 @@ IntroCutsceneState01Update_6b:
 .timerExpired:
 	jp DispatchCutsceneStateInit.loopB ; $4323
 IntroCutsceneState02Init_6b:
-	ldh a, [hWramBank] ; $4326
-	push af ; $4328
-	wram_bank $03 ; $4329
+	push_wram_bank $03 ; $4326
 	ld hl, wIntroCharactersTilemap + 4 * TILEMAP_WIDTH ; $432f
 	ld de, $9880 ; $4332
 	ld c, $0a ; $4335
@@ -430,8 +425,7 @@ IntroCutsceneState02Init_6b:
 	ld de, $9920 + VRAM_BANK1 ; $4356
 	ld c, $0a ; $4359
 	call QueueVRAMCopy ; $435b
-	pop af ; $435e
-	wram_bank ; $435f
+	pop_wram_bank ; $435e
 	ld hl, IntroCutsceneState02InitPalette_6b ; $4363
 	ld de, $0008 ; $4366
 	call LoadPalettesImmediate ; $4369
@@ -458,16 +452,13 @@ IntroCutsceneState03Init_6b:
 	call DisableLCDSafely ; $43cf
 	ld c, $17 ; $43d2
 	farcall LoadScreenAssetRecord ; $43d4
-	ldh a, [hWramBank] ; $43d7
-	push af ; $43d9
-	wram_bank $03 ; $43da
+	push_wram_bank $03 ; $43d7
 	ld h, $8a ; $43e0
 	ld de, wShadowAttrmap + 11 * TILEMAP_WIDTH ; $43e2
 	ld b, $20 ; $43e5
 	ld c, $01 ; $43e7
 	farcall FillTilemapRect ; $43e9
-	pop af ; $43ec
-	wram_bank ; $43ed
+	pop_wram_bank ; $43ec
 	farcall QueueWram3MapToVRAM ; $43f1
 	wram_bank $01 ; $43f4
 	ld hl, (BANK(DataPtr_IntroCloseupTiles) << 8) | LOW(DataPtr_IntroCloseupTiles) ; $43fa
@@ -524,9 +515,7 @@ IntroCutsceneState03Update_6b:
 	ld [wCutsceneSpriteBX], a ; $4481
 	jp DispatchCutsceneStateInit.loop ; $4484
 IntroCutsceneState04Init_6b:
-	ldh a, [hWramBank] ; $4487
-	push af ; $4489
-	wram_bank $03 ; $448a
+	push_wram_bank $03 ; $4487
 	ld hl, wIntroCharactersTilemap + 4 * TILEMAP_WIDTH ; $4490
 	ld de, $9880 ; $4493
 	ld c, $0a ; $4496
@@ -544,8 +533,7 @@ IntroCutsceneState04Init_6b:
 	ld de, $9920 + VRAM_BANK1 ; $44b7
 	ld c, $0a ; $44ba
 	call QueueVRAMCopy ; $44bc
-	pop af ; $44bf
-	wram_bank ; $44c0
+	pop_wram_bank ; $44bf
 	ld hl, IntroCutsceneState04InitPalettes ; $44c4
 	ld de, $0008 ; $44c7
 	call LoadPalettesImmediate ; $44ca
@@ -570,9 +558,7 @@ IntroCutsceneState05Init_6b:
 	call DisableLCDSafely ; $452e
 	ld c, $18 ; $4531
 	farcall LoadScreenAssetRecord ; $4533
-	ldh a, [hWramBank] ; $4536
-	push af ; $4538
-	wram_bank $03 ; $4539
+	push_wram_bank $03 ; $4536
 	ld h, $8a ; $453f
 	ld de, wShadowAttrmap + 8 * TILEMAP_WIDTH ; $4541
 	ld b, $20 ; $4544
@@ -583,8 +569,7 @@ IntroCutsceneState05Init_6b:
 	ld b, $20 ; $4550
 	ld c, $01 ; $4552
 	farcall FillTilemapRect ; $4554
-	pop af ; $4557
-	wram_bank ; $4558
+	pop_wram_bank ; $4557
 	farcall QueueWram3MapToVRAM ; $455c
 	ld c, $19 ; $455f
 	farcall LoadScreenAssetRecord ; $4561
@@ -622,9 +607,7 @@ IntroCutsceneState05Init_6b:
 IntroCutsceneState05Exit_6b:
 	ld hl, rIE ; $45b5
 	res 1, [hl] ; $45b8
-	ldh a, [hWramBank] ; $45ba
-	push af ; $45bc
-	wram_bank $03 ; $45bd
+	push_wram_bank $03 ; $45ba
 	ld hl, wShadowTilemap + 3 * TILEMAP_WIDTH ; $45c3
 	ld de, $9860 ; $45c6
 	ld c, $0c ; $45c9
@@ -633,8 +616,7 @@ IntroCutsceneState05Exit_6b:
 	ld de, $9860 + VRAM_BANK1 ; $45d1
 	ld c, $0c ; $45d4
 	call QueueVRAMCopy ; $45d6
-	pop af ; $45d9
-	wram_bank ; $45da
+	pop_wram_bank ; $45d9
 	ld hl, QueueCutsceneSpriteGroupA ; $45de
 	call UnregisterFrameTask ; $45e1
 	ld hl, UpdateCutsceneScroll ; $45e4
@@ -642,9 +624,7 @@ IntroCutsceneState05Exit_6b:
 	xor a ; $45ea
 	ldh [hScrollX], a ; $45eb
 	call AdvanceFrame ; $45ed
-	ldh a, [hWramBank] ; $45f0
-	push af ; $45f2
-	wram_bank $03 ; $45f3
+	push_wram_bank $03 ; $45f0
 	ld hl, wShadowTilemap + 9 * TILEMAP_WIDTH ; $45f9
 	ld de, $9920 ; $45fc
 	ld c, $0c ; $45ff
@@ -653,8 +633,7 @@ IntroCutsceneState05Exit_6b:
 	ld de, $9920 + VRAM_BANK1 ; $4607
 	ld c, $0c ; $460a
 	call QueueVRAMCopy ; $460c
-	pop af ; $460f
-	wram_bank ; $4610
+	pop_wram_bank ; $460f
 	ld hl, QueueCutsceneSpriteGroupB ; $4614
 	call UnregisterFrameTask ; $4617
 	call AdvanceFrame ; $461a
@@ -751,9 +730,7 @@ IntroCutsceneState13Init_6b:
 	ldh [hScrollY], a ; $46e6
 	ldh [hScrollX], a ; $46e8
 	ld [wCutsceneStepTimer], a ; $46ea
-	ldh a, [hWramBank] ; $46ed
-	push af ; $46ef
-	wram_bank $05 ; $46f0
+	push_wram_bank $05 ; $46ed
 	ld hl, IntroCutsceneState13InitPalettes_6b ; $46f6
 	ld de, $0008 ; $46f9
 	call LoadPaletteShadow ; $46fc
@@ -775,8 +752,7 @@ IntroCutsceneState13Init_6b:
 	ld c, $04 ; $4729
 	call QueueVRAMCopy ; $472b
 	call AdvanceFrame ; $472e
-	pop af ; $4731
-	wram_bank ; $4732
+	pop_wram_bank ; $4731
 	jp DispatchCutsceneStateInit.loop ; $4736
 IntroCutsceneState13Exit_6b:
 	ld c, $10 ; $4739
@@ -2176,9 +2152,7 @@ ScrollCutsceneLeftTaskTable:
 	db $0a, $0a, $0a, $0a, $0a, $0a, $0a, $02, $01, $00, $00, $00, $00, $00, $00, $00 ; 0x00
 	db $00, $00, $00 ; 0x10
 DecompressIntroTitleTiles:
-	ldh a, [hWramBank] ; $73f2
-	push af ; $73f4
-	wram_bank $01 ; $73f5
+	push_wram_bank $01 ; $73f2
 	ld hl, (BANK(DataPtr_IntroAwesomeTiles) << 8) | LOW(DataPtr_IntroAwesomeTiles) ; $73fb
 	ld de, wDecompBuffer ; $73fe
 	call DecompressDataFromBank ; $7401
@@ -2197,8 +2171,7 @@ DecompressIntroTitleTiles:
 	ld hl, DecompressIntroTitleTiles2 ; $7429
 	ld de, wWindowShadowAttrmap ; $742c
 	call DecompressData ; $742f
-	pop af ; $7432
-	wram_bank ; $7433
+	pop_wram_bank ; $7432
 	ret ; $7437
 DecompressIntroTitleTiles1:
 	INCBIN "data/bank_06b/lz_7438.bin" ; $7438, 221 bytes
@@ -2324,9 +2297,7 @@ RunTitleScreen:
 	ld a, $ff ; $76b3
 	ret ; $76b5
 QueueTitleSprite:
-	ldh a, [hWramBank] ; $76b6
-	push af ; $76b8
-	wram_bank $03 ; $76b9
+	push_wram_bank $03 ; $76b6
 	ld a, [wTitleSpriteFrame] ; $76bf
 	ld hl, TitleSpriteTable0 ; $76c2
 	add l ; $76c5
@@ -2346,8 +2317,7 @@ QueueTitleSprite:
 	ld de, $2858 ; $76d7
 	ld hl, QueueTitleSprite_SpriteTemplate ; $76da
 	call QueueSpriteTemplate ; $76dd
-	pop af ; $76e0
-	wram_bank ; $76e1
+	pop_wram_bank ; $76e0
 	ret ; $76e5
 TitleSpriteTable0:
 	; $76e6, 8 bytes (bytes:8)

@@ -1450,11 +1450,7 @@ BobArrowSpriteLeft:
 	ld a, [wCharDataArrowPhase] ; $4c66
 	rrca ; $4c69
 	and $0f ; $4c6a
-	add LOW(CharDataArrowBobOffsetTable_1d) ; $4c6c
-	ld l, a ; $4c6e
-	adc HIGH(CharDataArrowBobOffsetTable_1d) ; $4c6f
-	sub l ; $4c71
-	ld h, a ; $4c72
+	ld_hl_indexed CharDataArrowBobOffsetTable_1d ; $4c6c
 	ld a, [hl] ; $4c73
 	cpl ; $4c74
 	inc a ; $4c75
@@ -1471,11 +1467,7 @@ BobArrowSpriteRight:
 	ld a, [wCharDataArrowPhase] ; $4c86
 	rrca ; $4c89
 	and $0f ; $4c8a
-	add LOW(CharDataArrowBobOffsetTable_1d) ; $4c8c
-	ld l, a ; $4c8e
-	adc HIGH(CharDataArrowBobOffsetTable_1d) ; $4c8f
-	sub l ; $4c91
-	ld h, a ; $4c92
+	ld_hl_indexed CharDataArrowBobOffsetTable_1d ; $4c8c
 	ld a, [hl] ; $4c93
 	add d ; $4c94
 	ld d, a ; $4c95
@@ -3006,11 +2998,7 @@ DrawExpProgressBarTiles:
 	ld b, a ; $5a0a
 	ld a, $08 ; $5a0b
 	rlca ; $5a0d
-	add LOW(DrawExpProgressBarTilesTable) ; $5a0e
-	ld l, a ; $5a10
-	adc HIGH(DrawExpProgressBarTilesTable) ; $5a11
-	sub l ; $5a13
-	ld h, a ; $5a14
+	ld_hl_indexed DrawExpProgressBarTilesTable ; $5a0e
 	ld a, [hl+] ; $5a15
 	ld [de], a ; $5a16
 	push de ; $5a17
@@ -3028,11 +3016,7 @@ DrawExpProgressBarTiles:
 .carry:
 	add $08 ; $5a25
 	rlca ; $5a27
-	add LOW(DrawExpProgressBarTilesTable) ; $5a28
-	ld l, a ; $5a2a
-	adc HIGH(DrawExpProgressBarTilesTable) ; $5a2b
-	sub l ; $5a2d
-	ld h, a ; $5a2e
+	ld_hl_indexed DrawExpProgressBarTilesTable ; $5a28
 	ld a, [hl+] ; $5a2f
 	ld [de], a ; $5a30
 	ld a, $0a ; $5a31
@@ -3047,11 +3031,7 @@ DrawExpProgressBarTiles:
 .zero:
 	ld a, $08 ; $5a3b
 	rlca ; $5a3d
-	add LOW(DrawExpProgressBarTilesTable) ; $5a3e
-	ld l, a ; $5a40
-	adc HIGH(DrawExpProgressBarTilesTable) ; $5a41
-	sub l ; $5a43
-	ld h, a ; $5a44
+	ld_hl_indexed DrawExpProgressBarTilesTable ; $5a3e
 	ld a, [hl+] ; $5a45
 	ld [de], a ; $5a46
 	ld a, $0a ; $5a47
@@ -3809,11 +3789,7 @@ DrawExpPoolGauge:
 	ld b, a ; $6b23
 	ld a, $08 ; $6b24
 	rlca ; $6b26
-	add LOW(ExpPoolGaugeTilePairTable) ; $6b27
-	ld l, a ; $6b29
-	adc HIGH(ExpPoolGaugeTilePairTable) ; $6b2a
-	sub l ; $6b2c
-	ld h, a ; $6b2d
+	ld_hl_indexed ExpPoolGaugeTilePairTable ; $6b27
 	ld a, [hl+] ; $6b2e
 	ld [de], a ; $6b2f
 	inc de ; $6b30
@@ -3827,11 +3803,7 @@ DrawExpPoolGauge:
 .carry:
 	add $08 ; $6b3b
 	rlca ; $6b3d
-	add LOW(ExpPoolGaugeTilePairTable) ; $6b3e
-	ld l, a ; $6b40
-	adc HIGH(ExpPoolGaugeTilePairTable) ; $6b41
-	sub l ; $6b43
-	ld h, a ; $6b44
+	ld_hl_indexed ExpPoolGaugeTilePairTable ; $6b3e
 	ld a, [hl+] ; $6b45
 	ld [de], a ; $6b46
 	inc de ; $6b47
@@ -4386,11 +4358,7 @@ DrawExpScreenLevelBar:
 	jr c, .carry ; $6f0a
 	ld b, a ; $6f0c
 	ld a, $08 ; $6f0d
-	add LOW(ExpBarFillTiles_1d) ; $6f0f
-	ld l, a ; $6f11
-	adc HIGH(ExpBarFillTiles_1d) ; $6f12
-	sub l ; $6f14
-	ld h, a ; $6f15
+	ld_hl_indexed ExpBarFillTiles_1d ; $6f0f
 	ld a, [hl] ; $6f16
 	ld [de], a ; $6f17
 	dec c ; $6f18
@@ -4399,11 +4367,7 @@ DrawExpScreenLevelBar:
 	jr .loop ; $6f1b
 .carry:
 	add $08 ; $6f1d
-	add LOW(ExpBarFillTiles_1d) ; $6f1f
-	ld l, a ; $6f21
-	adc HIGH(ExpBarFillTiles_1d) ; $6f22
-	sub l ; $6f24
-	ld h, a ; $6f25
+	ld_hl_indexed ExpBarFillTiles_1d ; $6f1f
 	ld a, [hl] ; $6f26
 	ld [de], a ; $6f27
 	dec c ; $6f28
@@ -4747,9 +4711,7 @@ GrayscalePaletteColorInPlace:
 ; See docs/bugs.md.
 ConvertColorToGrayscale:
 	push hl ; $7210
-	ldh a, [hWramBank] ; $7211
-	push af ; $7213
-	wram_bank $01 ; $7214
+	push_wram_bank $01 ; $7211
 	ld a, e ; $721a
 	and $1f ; $721b
 	ld [wDecompBuffer], a ; $721d
@@ -4798,8 +4760,7 @@ ConvertColorToGrayscale:
 	rlca ; $7263
 	or d ; $7264
 	ld d, a ; $7265
-	pop af ; $7266
-	wram_bank ; $7267
+	pop_wram_bank ; $7266
 	pop hl ; $726b
 	ret ; $726c
 AssignExpPointToChar:
@@ -5128,38 +5089,32 @@ CheckExpLevelDown:
 	ld bc, wCharDataScreenCell + 18 * TILEMAP_WIDTH ; $749b
 	call ApplyTilemapPatchListExpScreen ; $749e
 	call UploadExpPromptWindowRows ; $74a1
-	call WaitFramesCmd ; $74a4
-	db $02 ; $74a7 inline arg
+	wait_frames $02 ; $74a4
 	ld hl, ExpLevelDownTilemapPatch3 ; $74a8
 	ld bc, wCharDataScreenCell + 18 * TILEMAP_WIDTH ; $74ab
 	call ApplyTilemapPatchListExpScreen ; $74ae
 	call UploadExpPromptWindowRows ; $74b1
-	call WaitFramesCmd ; $74b4
-	db $02 ; $74b7 inline arg
+	wait_frames $02 ; $74b4
 	ld hl, ExpLevelDownTilemapPatch2 ; $74b8
 	ld bc, wCharDataScreenCell + 18 * TILEMAP_WIDTH ; $74bb
 	call ApplyTilemapPatchListExpScreen ; $74be
 	call UploadExpPromptWindowRows ; $74c1
-	call WaitFramesCmd ; $74c4
-	db $02 ; $74c7 inline arg
+	wait_frames $02 ; $74c4
 	ld hl, ExpLevelDownTilemapPatch1 ; $74c8
 	ld bc, wCharDataScreenCell + 18 * TILEMAP_WIDTH ; $74cb
 	call ApplyTilemapPatchListExpScreen ; $74ce
 	call UploadExpPromptWindowRows ; $74d1
-	call WaitFramesCmd ; $74d4
-	db $02 ; $74d7 inline arg
+	wait_frames $02 ; $74d4
 	ld hl, ExpLevelDownTilemapPatch0 ; $74d8
 	ld bc, wCharDataScreenCell + 18 * TILEMAP_WIDTH ; $74db
 	call ApplyTilemapPatchListExpScreen ; $74de
 	call UploadExpPromptWindowRows ; $74e1
-	call WaitFramesCmd ; $74e4
-	db $02 ; $74e7 inline arg
+	wait_frames $02 ; $74e4
 	ld hl, ExpPromptWindowFrame_1d ; $74e8
 	ld bc, wCharDataScreenCell + 18 * TILEMAP_WIDTH ; $74eb
 	call ApplyTilemapPatchListExpScreen ; $74ee
 	call UploadExpPromptWindowRows ; $74f1
-	call WaitFramesCmd ; $74f4
-	db $0c ; $74f7 inline arg
+	wait_frames $0c ; $74f4
 	wram_bank $06 ; $74f8
 	ld a, $01 ; $74fe
 	ld [wExpPromptCursorRow], a ; $7500
@@ -5234,40 +5189,34 @@ DrawExpPromptCursor:
 	ld bc, wCharDataScreenCell + 18 * TILEMAP_WIDTH ; $759c
 	call ApplyTilemapPatchListExpScreen ; $759f
 	call UploadExpPromptWindowRowsClosing ; $75a2
-	call WaitFramesCmd ; $75a5
-	db $02 ; $75a8 inline arg
+	wait_frames $02 ; $75a5
 	farcall RestoreCharDataScreenRow ; $75a9
 	ld hl, ExpLevelDownTilemapPatch1 ; $75ac
 	ld bc, wCharDataScreenCell + 18 * TILEMAP_WIDTH ; $75af
 	call ApplyTilemapPatchListExpScreen ; $75b2
 	call UploadExpPromptWindowRowsClosing ; $75b5
-	call WaitFramesCmd ; $75b8
-	db $02 ; $75bb inline arg
+	wait_frames $02 ; $75b8
 	farcall RestoreCharDataScreenRow ; $75bc
 	ld hl, ExpLevelDownTilemapPatch2 ; $75bf
 	ld bc, wCharDataScreenCell + 18 * TILEMAP_WIDTH ; $75c2
 	call ApplyTilemapPatchListExpScreen ; $75c5
 	call UploadExpPromptWindowRowsClosing ; $75c8
-	call WaitFramesCmd ; $75cb
-	db $02 ; $75ce inline arg
+	wait_frames $02 ; $75cb
 	farcall RestoreCharDataScreenRow ; $75cf
 	ld hl, ExpLevelDownTilemapPatch3 ; $75d2
 	ld bc, wCharDataScreenCell + 18 * TILEMAP_WIDTH ; $75d5
 	call ApplyTilemapPatchListExpScreen ; $75d8
 	call UploadExpPromptWindowRowsClosing ; $75db
-	call WaitFramesCmd ; $75de
-	db $02 ; $75e1 inline arg
+	wait_frames $02 ; $75de
 	farcall RestoreCharDataScreenRow ; $75e2
 	ld hl, ExpLevelDownTilemapPatch4 ; $75e5
 	ld bc, wCharDataScreenCell + 18 * TILEMAP_WIDTH ; $75e8
 	call ApplyTilemapPatchListExpScreen ; $75eb
 	call UploadExpPromptWindowRowsClosing ; $75ee
-	call WaitFramesCmd ; $75f1
-	db $02 ; $75f4 inline arg
+	wait_frames $02 ; $75f1
 	farcall RestoreCharDataScreenRow ; $75f5
 	call UploadExpPromptWindowRowsClosing ; $75f8
-	call WaitFramesCmd ; $75fb
-	db $02 ; $75fe inline arg
+	wait_frames $02 ; $75fb
 	wram_bank $06 ; $75ff
 	ld hl, wExpCursorChar ; $7605
 	res 2, [hl] ; $7608
@@ -5419,11 +5368,7 @@ GetExpScreenDigitSprite:
 DrawExpCharCursorTask:
 	wram_bank $06 ; $7727
 	ld a, [wExpCursorSlide] ; $772d
-	add LOW(DrawExpCharCursorTaskTable) ; $7730
-	ld l, a ; $7732
-	adc HIGH(DrawExpCharCursorTaskTable) ; $7733
-	sub l ; $7735
-	ld h, a ; $7736
+	ld_hl_indexed DrawExpCharCursorTaskTable ; $7730
 	ld a, [hl] ; $7737
 	inc a ; $7738
 	ld e, a ; $7739
@@ -5585,11 +5530,7 @@ SetPendingExpAward:
 	wram_bank $06 ; $7cc6
 	ld a, b ; $7ccc
 	rlca ; $7ccd
-	add LOW(PendingExpAwardSetters_1d) ; $7cce
-	ld l, a ; $7cd0
-	adc HIGH(PendingExpAwardSetters_1d) ; $7cd1
-	sub l ; $7cd3
-	ld h, a ; $7cd4
+	ld_hl_indexed PendingExpAwardSetters_1d ; $7cce
 	ld a, [hl+] ; $7cd5
 	ld h, [hl] ; $7cd6
 	ld l, a ; $7cd7

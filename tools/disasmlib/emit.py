@@ -37,7 +37,8 @@ from .datatables import (render_actor_list, render_actor_script,
                          render_slot_records, render_story_locations,
                          render_text_offsets,
                          render_tilemap_dispatch, render_tilemap_scripts)
-from .idioms import match_launcher_seq, script_cmd_seq, wram_bank_seq
+from .idioms import (INLINE_ARG_MACROS, collapse_line_idioms,
+                     match_launcher_seq, script_cmd_seq, wram_bank_seq)
 from .labels import LabelScopes
 from .macros import MACROS_INC
 from .operands import render_operand
@@ -535,6 +536,7 @@ class Emitter:
                                base)
         resolve_copy_lengths(lines, base)
         self._resolve_split_base(lines, bank)
+        collapse_line_idioms(lines)
         # Several emitters declare a label for the same offset (the fill /
         # segment path that runs up to a blob, and the blob's own mark). Most
         # guard on lines[-1]; collapsing here covers the rest -- two identical
@@ -626,9 +628,13 @@ class Emitter:
                 arg = sl[len("FarPtr_"):] if sl.startswith("FarPtr_") else sl
                 self.lines.append(f"\tfarcall {arg} ; ${cpu:04x}")
         elif off in dis.inline_arg_calls and ins.size == 4:
-            self.lines.append(f"\t{self._operand(ins, off)} ; ${cpu:04x}")
-            self.lines.append(f"\tdb ${rom[off + 3]:02x} ; "
-                              f"${offset_to_cpu(off + 3):04x} inline arg")
+            macro = INLINE_ARG_MACROS.get(ins.target)
+            if macro:
+                self.lines.append(f"\t{macro} ${rom[off + 3]:02x} ; ${cpu:04x}")
+            else:
+                self.lines.append(f"\t{self._operand(ins, off)} ; ${cpu:04x}")
+                self.lines.append(f"\tdb ${rom[off + 3]:02x} ; "
+                                  f"${offset_to_cpu(off + 3):04x} inline arg")
         else:
             note = dis.data_site_notes.get(off)
             text = self._operand(ins, off)

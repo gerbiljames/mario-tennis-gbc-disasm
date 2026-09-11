@@ -2764,11 +2764,7 @@ IslandOpenSinglesMatchReturn:
 	call WaitFadeEnd ; $74de
 	ld a, [wMapSceneStage] ; $74e1
 	add a ; $74e4
-	add LOW(IslandOpenSinglesStageTextPtrs_0f) ; $74e5
-	ld l, a ; $74e7
-	adc HIGH(IslandOpenSinglesStageTextPtrs_0f) ; $74e8
-	sub l ; $74ea
-	ld h, a ; $74eb
+	ld_hl_indexed IslandOpenSinglesStageTextPtrs_0f ; $74e5
 	ld a, [hl+] ; $74ec
 	ld h, [hl] ; $74ed
 	ld l, a ; $74ee
@@ -2842,11 +2838,7 @@ IslandOpenRoundSinglesNpc04_0f:
 IslandOpenRoundSinglesNpc03_0f:
 	ld a, [wMapSceneStage] ; $7649
 	add a ; $764c
-	add LOW(IslandOpenSinglesStageTextPtrs_0f) ; $764d
-	ld l, a ; $764f
-	adc HIGH(IslandOpenSinglesStageTextPtrs_0f) ; $7650
-	sub l ; $7652
-	ld h, a ; $7653
+	ld_hl_indexed IslandOpenSinglesStageTextPtrs_0f ; $764d
 	ld a, [hl+] ; $7654
 	ld h, [hl] ; $7655
 	ld l, a ; $7656
@@ -2859,11 +2851,7 @@ IslandOpenRoundSinglesNpc05_0f:
 	ld a, [wMapSceneStage] ; $766c
 	dec a ; $766f
 	add a ; $7670
-	add LOW(IslandOpenRoundSinglesNpc05_0fTable) ; $7671
-	ld l, a ; $7673
-	adc HIGH(IslandOpenRoundSinglesNpc05_0fTable) ; $7674
-	sub l ; $7676
-	ld h, a ; $7677
+	ld_hl_indexed IslandOpenRoundSinglesNpc05_0fTable ; $7671
 	ld a, [hl+] ; $7678
 	ld h, [hl] ; $7679
 	ld l, a ; $767a
@@ -2932,11 +2920,7 @@ IslandOpenDoublesMatchReturn:
 	ld a, [wMapSceneStage] ; $7742
 	dec a ; $7745
 	add a ; $7746
-	add LOW(IslandOpenRoundSinglesNpc05TextIds) ; $7747
-	ld l, a ; $7749
-	adc HIGH(IslandOpenRoundSinglesNpc05TextIds) ; $774a
-	sub l ; $774c
-	ld h, a ; $774d
+	ld_hl_indexed IslandOpenRoundSinglesNpc05TextIds ; $7747
 	ld a, [hl+] ; $774e
 	ld h, [hl] ; $774f
 	ld l, a ; $7750
@@ -3035,11 +3019,7 @@ IslandOpenRoundDoublesNpc03_0f:
 	ld a, [wMapSceneStage] ; $78cc
 	dec a ; $78cf
 	add a ; $78d0
-	add LOW(IslandOpenRoundDoublesNpc03TextIds) ; $78d1
-	ld l, a ; $78d3
-	adc HIGH(IslandOpenRoundDoublesNpc03TextIds) ; $78d4
-	sub l ; $78d6
-	ld h, a ; $78d7
+	ld_hl_indexed IslandOpenRoundDoublesNpc03TextIds ; $78d1
 	ld a, [hl+] ; $78d8
 	ld h, [hl] ; $78d9
 	ld l, a ; $78da
@@ -3170,16 +3150,13 @@ ActorScript_0f_08:
 	as_wait $78
 	as_jump .L8
 QueueShortText:
-	ldh a, [hWramBank] ; $7a8e
-	push af ; $7a90
-	wram_bank $07 ; $7a91
+	push_wram_bank $07 ; $7a8e
 	ld de, wTextArgFetchBuffer ; $7a97
 	wram_bank $05 ; $7a9a
 	farcall FetchShortTextToBuffer ; $7aa0
 	ld hl, wTextArgFetchBuffer ; $7aa3
 	farcall PushTextArgString ; $7aa6
-	pop af ; $7aa9
-	wram_bank ; $7aaa
+	pop_wram_bank ; $7aa9
 	ret ; $7aae
 WalkActorsInFromEntryPoint_0f:
 	ld a, [wStoryModeEntryPoint] ; $7aaf
@@ -3190,11 +3167,7 @@ WalkActorsInFromEntryPoint_0f:
 	script_set_speed ACTOR_PARTNER, $00ff ; $7abc
 	ld a, [wStoryModeEntryPoint] ; $7ac4
 	dec a ; $7ac7
-	add LOW(WalkActorsInFromEntryPointFacings_0f + 5) ; $7ac8
-	ld l, a ; $7aca
-	adc HIGH(WalkActorsInFromEntryPointFacings_0f + 5) ; $7acb
-	sub l ; $7acd
-	ld h, a ; $7ace
+	ld_hl_indexed WalkActorsInFromEntryPointFacings_0f + 5 ; $7ac8
 	ld b, [hl] ; $7acf
 	ld a, $02 ; $7ad0
 	ld b, b ; $7ad2
@@ -3203,11 +3176,7 @@ WalkActorsInFromEntryPoint_0f:
 	script_wait_move ACTOR_PARTNER ; $7ad9
 	ld a, [wStoryModeEntryPoint] ; $7ade
 	dec a ; $7ae1
-	add LOW(WalkActorsInFromEntryPointFacings_0f) ; $7ae2
-	ld l, a ; $7ae4
-	adc HIGH(WalkActorsInFromEntryPointFacings_0f) ; $7ae5
-	sub l ; $7ae7
-	ld h, a ; $7ae8
+	ld_hl_indexed WalkActorsInFromEntryPointFacings_0f ; $7ae2
 	ld b, [hl] ; $7ae9
 	ld a, $02 ; $7aea
 	ld b, b ; $7aec
@@ -3217,11 +3186,7 @@ WalkActorsInFromEntryPoint_0f:
 	script_set_speed ACTOR_PLAYER, $0010 ; $7af8
 	ld a, [wStoryModeEntryPoint] ; $7b00
 	dec a ; $7b03
-	add LOW(WalkActorsInFromEntryPointFacings_0f) ; $7b04
-	ld l, a ; $7b06
-	adc HIGH(WalkActorsInFromEntryPointFacings_0f) ; $7b07
-	sub l ; $7b09
-	ld h, a ; $7b0a
+	ld_hl_indexed WalkActorsInFromEntryPointFacings_0f ; $7b04
 	ld b, [hl] ; $7b0b
 	ld a, $00 ; $7b0c
 	ld b, b ; $7b0e
