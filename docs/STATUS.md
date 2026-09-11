@@ -78,10 +78,6 @@ are a constant, the scene record is read only to `+5`); `docs/story_mode.md` "Od
 and open questions" keeps only the shipped-defect entries (the Star Court
 unlock and the dead record fields are resolved); the "not established" sentences in `docs/match_engine.md`.
 
-**Not started, and only worth it for other people.** A ROM-free CI job
-(`make test` skips the ROM-dependent pins when `baserom.gbc` is absent, so
-it would run as it stands). It changes nothing in the disassembly.
-
 ## How to resume
 
 Regenerate the source from the curated inputs — always with the hook
