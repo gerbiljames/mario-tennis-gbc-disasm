@@ -69,6 +69,13 @@ which no `ShowRankingBoard` argument ever selects); and one arithmetic
 constant. `ram_gaps.py --static` reports any site whose bank the dataflow
 knows but no union names, and that bucket is empty too.
 
+**Unnamed but used RAM.** The poison run behind the free-RAM inventory
+showed 1,455 bytes of WRAM bank `$05` (`$d901`, `$dc80`, `$de02`, `$df97`)
+written by the text and window engine, 671 bytes of WRAM0 scratch around
+the match and menu records, and undeclared fields of the story character
+record (`$c907-$c90a`, `$c90f-$c913`) read by the overworld. None has a
+name yet; `docs/ram_map.md` "Free RAM" lists them.
+
 **Named in the docs as not established.** `docs/graphics_formats.md` §8 now
 holds two items, and both are about the developers' intent rather than the
 bytes: why the `$63` per-object-palette sentinel exists when no object uses
@@ -116,6 +123,17 @@ label bound to the wrong parent.
 
 ## Recent changes
 
+* **2026-09-11** — a verified free-RAM inventory (`docs/ram_map.md`, "Free
+  RAM"). `tools/ram_free.py` lists the 5,106 bytes no symbol covers; every
+  one was poisoned in a savestate and seven scripted flows (menus, a
+  singles and a doubles match, the Test map, the status screens, the
+  lesson menu, the credits) replayed against the clean state. 2,495 bytes
+  were never touched and are the list to allocate from; 2,771 were
+  written, among them the second shadow-OAM page, now `wShadowOAM2`, and
+  1,455 bytes of still-unnamed WRAM bank `$05` text-engine buffers; the
+  story character record's undeclared fields turned out to be read. The
+  top 512 bytes of WRAM0 are the stack (`STACK_TOP` `$d000`, deepest reach
+  `$cf34`) and are excluded.
 * **2026-09-11** — `tools/extract.py --keep`: a re-extraction that leaves an
   edited file alone (a `.bin` or generated `.asm` that differs from the ROM,
   or a PNG that no longer encodes to its blob) and deletes nothing, so the

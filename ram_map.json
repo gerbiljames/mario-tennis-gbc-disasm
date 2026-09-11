@@ -2866,5 +2866,10 @@
   "name": "hIsCGB",
   "note": "[8-bit] 1 = running on Game Boy Color hardware",
   "size": 1
+ },
+ "0xc500": {
+  "name": "wShadowOAM2",
+  "note": "[160 bytes] The second shadow OAM page: hOAMDMARoutine sources page $c0 or $c5 as wSpriteBufferPage toggles each frame, so this is the buffer being built while wShadowOAM is being copied. Like wShadowOAM it is only ever reached through pointers (the sprite queue writes via wSpriteBufferPage as the high byte), never by a direct [$c5xx] operand, which is why it went unnamed until the 2026-09-11 RAM-poison run showed it written in every flow",
+  "size": 160
  }
 }

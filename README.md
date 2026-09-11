@@ -102,6 +102,9 @@ restated:
 - **The header is fixed up.** `make` runs `rgbfix -v`, so editing the title or
   cart type cannot leave a header checksum the CGB boot ROM rejects. It changes
   nothing in the unmodified build, which is why `make compare` still holds.
+- **Free RAM.** `docs/ram_map.md` ends with the bytes nothing names and a
+  poison run never touched, per bank; `tools/ram_free.py` recomputes the
+  static half after the RAM declarations change.
 - **Save files.** `tools/savetool.py` verifies, dumps and edits battery saves
   (levels, stats, unlock flags), recomputing the checksums (`docs/save_format.md`).
 
@@ -209,6 +212,8 @@ tables the static analysis cannot classify regress to raw blobs.
   macros against the bytes they stand for, the idiom and packed-argument
   renderers, the curated inputs' structure and the analysis on a synthetic
   ROM; with `baserom.gbc` present, pins on the generated source as well.
+- `tools/ram_free.py` — the RAM bytes no symbol covers, the static half of
+  the free-RAM inventory in `docs/ram_map.md`.
 - `tools/twins.py` — the groups of instruction-identical live routines
   (`docs/duplicated_code.md`).
 - `tools/progress.py` — per-bank proven-code bytes and the label-naming

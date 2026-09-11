@@ -593,3 +593,67 @@ Overlay variants collapse to their `context` strings; a range with more than
 three lists the first three and a count. This is also the only place mirrored
 structures appear in the layout at all — they allocate nothing, so no symbol in
 either bank's section would otherwise mention them.
+
+## Free RAM
+
+What a modder can take without displacing anything, measured two ways on
+2026-09-11. `tools/ram_free.py` walks the generated `ram/` the way the
+assembler does and lists every byte no symbol covers and no raw literal in
+`src/` addresses (the top 512 bytes of WRAM0 are the stack, which grows down
+from `STACK_TOP` `$d000` and has no symbol; the deepest reach seen is
+`$cf34`). That list is only "unnamed", so each byte in it was then
+*poisoned* -- set to `$5a` in a BizHawk savestate -- and seven scripted flows
+were replayed from the poisoned and the clean state and compared byte for
+byte: the main menu and exhibition setup, a singles match with a pause menu,
+the developer Test map (walking, three NPC talks), the N64 status screens,
+the lesson menu, the ending credits, and a story doubles match launched from
+the Test map. A byte still holding `$5a` afterwards was never written; and in
+every flow but one the run was identical in every named byte and on screen,
+so nothing read the poison either. (The exception is the story character
+record: poisoning its undeclared fields at `$c907-$c90a` and `$c90f-$c913`
+changed the player's overworld sprite attributes, so those are live fields,
+not padding.)
+
+Of the 5,568 bytes the static pass listed before this run, 302 are the stack
+zone and **2,771 were written** by one of the flows -- the second shadow-OAM
+page (now `wShadowOAM2`, which takes the static count to 5,106), 1,455 bytes of WRAM bank `$05`
+buffers the text and window engine fills (`$d901`, `$dc80`, `$de02`, `$df97`,
+still unnamed), 671 bytes of WRAM0 scratch around the match and menu
+records, the `$df97-$dfff` tail of banks `$05`-`$07`, and the stack.
+**2,495 were touched by nothing** in any flow. The ones eight bytes or
+longer, the list to allocate from:
+
+| bank | range | bytes |
+|---|---|---|
+| WRAM0 | `$c2a6-$c2af` | 10 |
+| WRAM0 | `$c2c8-$c2cf` | 8 |
+| WRAM0 | `$c2f0-$c2f7` | 8 |
+| WRAM0 | `$c377-$c37f` | 9 |
+| WRAM0 | `$c3a8-$c3af` | 8 |
+| WRAM0 | `$c3e0-$c3ff` | 32 |
+| WRAM0 | `$cb79-$cbef` | 119 |
+| WRAM0 | `$cbf2-$cbff` | 14 |
+| WRAM4 | `$d690-$d7ff` | 368 |
+| WRAM6 | `$dc90-$ddc0` | 305 |
+| WRAM6 | `$ddc2-$dddf` | 30 |
+| WRAM6 | `$dde2-$de00` | 31 |
+| WRAM6 | `$de02-$deff` | 254 |
+| WRAM7 | `$d020-$d057` | 56 |
+| WRAM7 | `$d098-$d0d6` | 63 |
+| WRAM7 | `$d21a-$d27f` | 102 |
+| WRAM7 | `$db00-$db25` | 38 |
+| WRAM7 | `$db28-$db53` | 44 |
+| WRAM7 | `$db61-$db7f` | 31 |
+| WRAM7 | `$db81-$dbff` | 127 |
+| WRAM7 | `$dc0b-$ddc0` | 438 |
+| WRAM7 | `$ddc2-$dddf` | 30 |
+| WRAM7 | `$dde2-$ddff` | 30 |
+| WRAM7 | `$de02-$deff` | 254 |
+
+plus 29 shorter gaps (63 bytes) and 23 bytes of HRAM in
+twelve one-to-four-byte holes. The banks `$06`/`$07` ranges at `$dc90-$deff`
+mirror bank `$04`'s ball and minigame slots and stayed untouched even in the
+doubles match; `$d690-$d7ff` in bank `$04` is untouched everywhere. Not
+exercised: the minigames, link play, the N64 transfer screens and the story
+scenes beyond the Test map, so a range here is free for those modes only as
+far as the static pass says -- nothing addresses it by name.

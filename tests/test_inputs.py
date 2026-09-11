@@ -7,6 +7,7 @@ import unittest
 
 from tests.helpers import ROOT
 from disasmlib.ram import ram_field_size
+import ram_free
 
 ROM_SIZE = 0x200000
 SPEC_KINDS = {
@@ -131,6 +132,20 @@ class Manifest(unittest.TestCase):
             self.assertLessEqual(off + n, ROM_SIZE, line)
             if len(f) > 3:
                 self.assertIn(f[3].split(":")[0], SPEC_KINDS | {"gfx"}, line)
+
+
+
+class FreeRam(unittest.TestCase):
+    def test_static_free_ranges(self):
+        ranges = ram_free.free_ranges()
+        total = sum(b - a for _, _, a, b in ranges)
+        self.assertEqual((len(ranges), total), (201, 5106))
+        for space, bank, a, b in ranges:
+            self.assertFalse(space == "w" and bank == 0 and b > ram_free.STACK_ZONE,
+                             f"${a:04x}: the stack zone is not free")
+        self.assertNotIn(("w", 0, 0xC500, 0xC5A0), ranges, "wShadowOAM2 is named")
+        # nothing is free in the banks the map buffers fill
+        self.assertEqual({b for s, b, _, _ in ranges if s == "w"}, {0, 4, 5, 6, 7})
 
 
 if __name__ == "__main__":

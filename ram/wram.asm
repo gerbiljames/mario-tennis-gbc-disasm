@@ -947,7 +947,11 @@ wMinigameHighScore:: dw
 
 ; [8-bit] Flag byte for the built-in debug test match; set to $fe by RunDebugTestMatch ($07:$5e9a). Bit 1 makes the character setup call OverrideCharStatsForDebug ($07:$5c35); bit 0 makes the frame-stepping loop at $08:$4447 ignore the input wait.
 wDebugMatchFlags:: db
-	ds 273
+	ds 17
+
+; [160 bytes] The second shadow OAM page: hOAMDMARoutine sources page $c0 or $c5 as wSpriteBufferPage toggles each frame, so this is the buffer being built while wShadowOAM is being copied. Like wShadowOAM it is only ever reached through pointers (the sprite queue writes via wSpriteBufferPage as the high byte), never by a direct [$c5xx] operand, which is why it went unnamed until the 2026-09-11 RAM-poison run showed it written in every flow
+wShadowOAM2:: ds 160
+	ds 96
 
 ; Dialogue string buffer (160 bytes); text-bank fetch routines copy string N here when called with a = 0
 wTextBuffer:: ds 160
