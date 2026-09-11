@@ -5,12 +5,12 @@ several times into one bank. A modder fixing one copy has to fix them all,
 and nothing at the call sites says a twin exists. This page lists every
 group of live routines that are instruction-identical once the bank suffix
 on names is ignored (`FetchText_25` and `FetchText_26` call `FetchText`-shaped
-helpers of their own bank), measured by `tools/twins.py` over the generated
-source with a floor of ten instructions. `Unused*` routines are left to
+helpers of their own bank), measured by `tools/twins.py` over the source
+with a floor of ten instructions. `Unused*` routines are left to
 `docs/unused_code.md`, which covers the dead copies of the same families.
 
-Each member's note in `labels.json` names its twins, so the fact is visible
-above the routine in `src/`; on 2026-09-11 the copies whose names had
+The note above each member in `src/` names its twins, so the fact is visible
+where the routine is read; on 2026-09-11 the copies whose names had
 drifted apart (`MoveMenuCursorBox` / `MoveMenuCursor` / `MoveMenuCursorGrid_3e`,
 `PrintNumberString_3b` / `DrawDecimalNumber_17`, `ComputeSeniorCourtStageB` /
 `ComputeRankingProgressIndex`) were renamed to one base name plus bank suffix.

@@ -1,6 +1,6 @@
 # Bank 0 annotation notes
 
-Routines identified in `src/bank_000.asm` and renamed in `labels.json`.
+Routines identified in `src/bank_000.asm`.
 Bank 0 is the fixed home bank: it holds the reset vectors, all interrupt
 handlers, the far-call/bank-switch trampolines, core memory/VRAM/OAM
 helpers, the joypad driver, the sound engine, and the soft-reset routine

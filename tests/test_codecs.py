@@ -10,7 +10,6 @@ import unittest
 from tests.helpers import ROOT, TOOLS, assemble, needs_rgbasm
 
 import lz
-import sm83
 
 
 class LzRoundTrip(unittest.TestCase):
@@ -217,11 +216,6 @@ class TileImages(unittest.TestCase):
             with open(p, "wb") as f:
                 f.write(b"\x00" * 30)
             self.assertIsNone(self.gfx.decode(p, p[:-4] + ".png"))
-
-
-class Sm83(unittest.TestCase):
-    def test_selftest(self):
-        sm83.selftest()
 
 
 @needs_rgbasm

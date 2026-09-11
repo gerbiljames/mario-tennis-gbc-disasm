@@ -49,7 +49,7 @@ in the game and has 419 call sites. Every screen loop, every fade wait, every
 `WaitFrames` (`$00:$2740`, `c` = count) is the trivial loop around it, and
 `WaitFramesCmd` (`$00:$2725`) is the inline-argument variant that reads its
 count from the byte after the call site; the source renders each call as
-`wait_frames N` (see `INLINE_ARG_CALLS` in `tools/disasmlib/core.py`).
+`wait_frames N` (`include/macros.inc`).
 
 ### 1.2 What VBlank does, in order
 
@@ -387,7 +387,7 @@ decompressed 32-wide map: four 512-byte chunks are copied out of `wDecompBuffer`
 per call. Note that the second and fourth chunks are expanded and then
 immediately cleared — `ClearMemory16` with `c = $80` over `wMapScrollPlane1`
 (`$08b3`) and over `wScreenScratch` (`$08fb`) — so two of the four expansions
-are thrown away. `ram_unions.json` records this on `wMapScrollPlane1`.
+are thrown away. The note on `wMapScrollPlane1` in `ram/wram.asm` records this.
 
 ### 3.6 Undoing a draw
 
@@ -630,7 +630,8 @@ text banks**, using a 13-word table of per-bank string counts
 
 Tooling: `include/text_ids.inc` defines `Text_<bank>_<index> equ <raw id>` so
 the assembled bytes are unchanged while the operand names its string;
-`tools/disasmlib/textids.py` implements the same decode and finds sites by
+the generator (`tools/disasmlib/textids.py` at tag `generator-final`)
+implemented the same decode and found sites by
 walking *consumers* of `hl` (`TEXT_ID_SINKS` = `FetchDialogueText`,
 `AddTextIdOffset`, `CreateWindowWithTextId`, grown through wrappers that forward
 `hl` untouched); `tools/strings.py --index --bank XX` dumps `bank:index → text`
@@ -787,7 +788,7 @@ the bit.
 | `+$06`/`+$07` | text id lo/hi | `SetWindowTextId` (`$05:$55d5`); `$03` in the high byte is the "no text" sentinel |
 
 > The width/height assignment above contradicts the note currently on
-> `wWindowStructs` in `ram_unions.json` and the names
+> `wWindowStructs` in `ram/wram.asm` and the names
 > `wDialogueWindowHeight`/`wDialogueWindowWidth`. Three independent proofs that
 > `+$02` is the width: `ResetScreenAndTextWindows` builds the bottom text box
 > with `b = $14, c = $03` (`$39:$4c27`) — 20 cannot be a row count on an
@@ -1099,7 +1100,7 @@ authoritative and covers the rest.
 
 ### Banked WRAM
 
-`ram_unions.json` scopes these; `docs/ram_map.md` and
+The union variants in `ram/wram.asm` name these; `docs/ram_map.md` and
 `include/ram_mirrored.inc` carry the detail.
 
 | bank | `$d000` | `$d400` | `$d800`+ |

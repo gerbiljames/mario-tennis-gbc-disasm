@@ -7,10 +7,10 @@ farcall slot, and where a slot table does reference it, no `farcall` ever
 names that slot. The naming passes that found them are in `docs/history.md`;
 this file is what they have in common. Measured 2026-09-10 by fingerprinting
 each unused routine's opcode sequence against every live routine
-(`tools/ram_gaps.py` counts their 97 raw banked operands as `dead`). Where
-an unused routine has a live twin, the exact difference is a `labels.json`
-note rendered as the comment above it in `src/`, so the relationship is
-visible where the routine is read, not only here.
+(the 97 raw `$dxxx` operands left in the source are all inside them). Where
+an unused routine has a live twin, the exact difference is in the comment
+above it in `src/`, so the relationship is visible where the routine is
+read, not only here.
 
 ## The patterns
 

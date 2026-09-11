@@ -163,9 +163,9 @@ drive the star-rank unlock logic after exhibition wins.
 The save engine never reads/writes SRAM in place; every block moves
 through banked-WRAM scratch, all of it multiplexed with other uses. The
 three bank-`$07` buffers are named now — they overlay `wGlyphTileBuffer`,
-the text engine's glyph tiles, and a union in `ram_unions.json` scoped to
-*both* the referencing ROM bank and a provable WRAM bank `$07` keeps the
-two apart. The rest stay numeric.
+the text engine's glyph tiles, and a union variant in `ram/wram.asm`, whose
+names were applied only where *both* the referencing ROM bank and a provable
+WRAM bank `$07` agreed, keeps the two apart. The rest stay numeric.
 
 | buffer | used for |
 |---|---|

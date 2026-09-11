@@ -28,7 +28,7 @@ the layout, the names and the structure.
    make                         # builds mariotennis.gbc
    make compare                 # confirms SHA-1 matches the original
    make check                   # structural checks the byte compare cannot make
-   make test                    # the generator's own tests (ROM optional)
+   make test                    # codecs, macros and source pins (ROM optional)
    ```
 
 ## What is here
@@ -40,7 +40,7 @@ graphics, audio, tilemaps and text.
 |---|---|
 | instructions disassembled | 160,940, across every code bank |
 | proven code and structured source | 428,509 bytes, 20.4% of the ROM |
-| labels | 21,979 — 20,399 human-named, the rest derived by the generator from something already named (a bank's `$4000` slot table, a sound table) |
+| labels | 21,979 — 20,399 human-named, the rest derived from something already named (a bank's `$4000` slot table, a sound table) |
 | compressed graphics | 838 LZ streams, each named, sized by decoding it |
 | `Unused_` routines | 199 routines and 100 blobs nothing references, catalogued in `docs/unused_code.md` |
 
@@ -122,10 +122,9 @@ restated:
 - **Save files.** `tools/savetool.py` verifies, dumps and edits battery saves
   (levels, stats, unlock flags), recomputing the checksums (`docs/save_format.md`).
 
-`data/` is generated, so `./setup.sh` and `tools/extract.py` overwrite it
-and delete files the manifest no longer lists. To re-extract after the
-source has been regenerated without losing edits, run extraction with
-`--keep`: a file that differs from what the ROM would give (a `.bin`, a
+`data/` is extracted, so `./setup.sh` and `tools/extract.py` overwrite it
+and delete files the manifest no longer lists. To re-extract without losing
+edits, run extraction with `--keep`: a file that differs from what the ROM would give (a `.bin`, a
 generated `.asm`, or a PNG that no longer encodes to its blob) is left as
 it is and reported, and nothing is deleted.
 
@@ -155,8 +154,8 @@ it is and reported, and nothing is deleted.
   `+ VRAM_BANK1` marks the second VRAM bank (`include/constants.inc`).
 - **RAM symbols** live in `ram/` (`wram.asm`, `hram.asm`, `sram.asm`). WRAM
   banks 1-7 and the overlaid buffers are declared as unions with a variant per
-  owner, and a banked address is only named at a site whose bank is proven,
-  by the generator's dataflow or by a traced run; a raw `$dxxx` that remains
+  owner, and a banked address was named only at a site whose bank was
+  proven, by static dataflow or by a traced run; a raw `$dxxx` that remains
   is inside an `Unused_` routine no trace can reach. `include/ram_mirrored.inc`
   holds the structures that exist identically in several banks.
 - **`Unused_` routines** are proven unreferenced. Where one is a copy or a
@@ -174,8 +173,7 @@ it is and reported, and nothing is deleted.
   (text, palettes, sound tables — decoded structure whose values are ROM
   content), or an `INCBIN` of a named blob.
 - `ram/`, `include/` — RAM declarations; hardware, macro, constant, flag,
-  text-id and mirrored-RAM includes (`hardware.inc` is CC0; the rest are
-  generated or hand-maintained as their headers say).
+  text-id and mirrored-RAM includes (`hardware.inc` is CC0).
 - `data.manifest` — offset/length/spec list `tools/extract.py` slices the
   base ROM by; `data.previews` — which planes, tiles and palettes make up
   each scene, for the preview pictures.
@@ -186,70 +184,49 @@ it is and reported, and nothing is deleted.
   `bugs.md` (defects in the game, with dead stores and stubbed routines kept
   apart), `unused_code.md` (the unreferenced code and its patterns),
   `duplicated_code.md` (the live routines that exist as identical copies).
-- The **curated inputs** the source is generated from — all JSON, all keyed
-  by flat ROM offset (`bank * 0x4000 + cpu - 0x4000`) where they name a site:
-  `labels.json` (symbol names; a value may be `{"name", "note"}`, and a
-  dot-prefixed name is a local label), `data_tables.json` (the render spec
-  of each data region), `ram_map.json` and `ram_unions.json` (RAM names and
-  the scoped unions), `constants.json` (named immediates), `flags.json`
-  (game-flag names), `coverage/*.json` (execution traces and hand-authored
-  code seeds) and `hooks/*.json` (captured data-copy arguments that classify
-  the `$4000` slot tables).
-- `tools/` — the generator and its helpers (below).
+- `tools/` — the codecs, the extractor and the checks (below).
 
-## Regenerating
+## Editing
 
-`src/`, `ram/` and most of `include/` are generated. They are committed so
-the repository builds as it stands, but a change to a name, a note, a union
-or a data spec is made in the curated inputs and regenerated — never by
-hand-editing `src/`, which the next regeneration overwrites:
+`src/`, `ram/` and `include/` are the source: a name, a note, a union
+variant or a table layout is changed there, and `make` is the whole
+pipeline. Every instruction still carries its original address in a
+trailing comment, which is the key the docs use; it is a record of where
+the instruction came from, not something the assembler reads, so a moved
+or inserted instruction can simply do without one.
 
-```sh
-python3 tools/disasm.py baserom.gbc coverage/*.json --hooks hooks/*.json
-python3 tools/extract.py baserom.gbc data.manifest data/
-make clean && make compare && make check
-```
-
-The `--hooks` argument is not optional: without the captures, the data-slot
-tables the static analysis cannot classify regress to raw blobs.
+The tree was produced by a generator — coverage traces from real runs of
+the game, a conservative recursive descent, and JSON inputs holding every
+name, note, union scope and data-region spec — that was retired on
+2026-09-11 once nothing anonymous remained. Its last output is this
+source. The generator, its inputs and the coverage captures are kept at
+the git tag `generator-final`, and `docs/history.md` records how each part
+of the ROM was reached.
 
 ## Tools
 
-- `tools/disasm.py` — the command line of the generator; `tools/disasmlib/`
-  is the generator itself, in three stages: analysis (`core.py` decoding and
-  descent, `slots.py` data-slot proving, `carve.py` structure carving,
-  composed in `disassembly.py`), naming (`labels.py`, `ram.py`,
-  `textids.py`, `config.py`) and emission (`emit.py`, with the renderers in
-  `operands.py`, `idioms.py`, `datatables.py`, `macros.py`). The package
-  docstring has the module map.
 - `tools/check.py` (`make check`) — the structural checks a byte-perfect
-  build cannot make: every LZ stream decodes inside its extent and survives a
-  re-encode, no symbol sits inside a stream, every text table addresses real
-  strings, every curated constant lands on an instruction holding that value,
-  the extracted regions do not overlap, local labels bind to the right parent.
-- `tests/` (`make test`) — the generator's unit tests: the codecs, the
-  macros against the bytes they stand for, the idiom and packed-argument
-  renderers, the curated inputs' structure and the analysis on a synthetic
-  ROM; with `baserom.gbc` present, pins on the generated source as well.
+  build cannot make: every LZ stream in the manifest decodes inside its
+  extent and survives a re-encode, no assembled symbol sits inside a
+  stream, the extracted regions do not overlap, no routine sits inside an
+  actor script's label scope, no new conditional branch targets the
+  instruction after it, and every PNG and tilemap grid encodes back to its
+  blob.
+- `tests/` (`make test`) — the codecs, every idiom macro assembled and
+  compared to the bytes it stands for, the extractor's `--keep`, and pins on
+  the source (idiom, sound-id, VRAM-name and copy-length counts) that a
+  hand-written raw form would move.
 - `tools/ram_free.py` — the RAM bytes no symbol covers, the static half of
   the free-RAM inventory in `docs/ram_map.md`.
 - `tools/twins.py` — the groups of instruction-identical live routines
   (`docs/duplicated_code.md`).
-- `tools/progress.py` — per-bank proven-code bytes and the label-naming
-  buckets. `tools/ram_gaps.py` — the bare banked-WRAM operands and why each
-  is bare (`--static` adds the ones the dataflow could name).
 - `tools/lz.py` — codec for the game's LZ format, both directions; the
   encoder round-trips every stream in the ROM.
-- `tools/strings.py` — dumps the game text from the ROM by bank and index.
+- `tools/gfx.py`, `tools/tilemap.py` — the PNG and tilemap-grid codecs
+  `make` runs when an image or grid is edited.
+- `tools/strings.py` — lists the game text by bank and string index from
+  the extracted text source (`--index`), or scans a ROM for strings.
 - `tools/savetool.py` — battery save inspector and editor.
 - `tools/gfxdump.py` — PNG contact sheets of the graphics streams and palette
   regions, under gitignored `data/gfx/`, for identifying assets.
-- `tools/sm83.py` — the SM83 decoder, emitting RGBDS syntax that round-trips
-  byte-exactly through rgbasm.
 - `tools/extract.py` — `data.manifest` + base ROM → `data/`.
-- `tools/tracelog2cov.py`, `tools/hook_client.py`, `tools/trace_client.py` —
-  the coverage pipeline: a BizHawk native Trace Logger file, or the
-  `gbc-disasm` Lua connector's traces and data-copy hook captures, into the
-  `coverage/` and `hooks/` inputs. Code was identified by execution coverage
-  from real runs of the game, extended by a conservative recursive descent;
-  `docs/history.md` records how each part of the ROM was reached.

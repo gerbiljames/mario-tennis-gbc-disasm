@@ -1,8 +1,0 @@
-{
- "_comment": "Static code-entry seeds for bank $28 unproven farcall slots $0e/$10 (targets $60a0/$6086), small SRAM-copy helpers interleaved with their index tables. Flat = 0x28*0x4000 + (cpu-0x4000).",
- "rom": [
-  663686,
-  663712
- ],
- "other": []
-}

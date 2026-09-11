@@ -763,8 +763,8 @@ is the low operand byte of an `ld hl`. The descent finds nothing either, which i
 why the routines had no labels of their own.
 
 The disassembly consequence is the same as bank `$1b`'s confirm screen: **18 of
-the bare banked-WRAM operands `tools/ram_gaps.py` lists as `unproven` are in
-here**, and no amount of play can prove them. They had been attributed to
+the bare banked-WRAM operands left raw in the source are in here**, and no
+amount of play can prove them. They had been attributed to
 `RestoreStoryBlockFromBackup`, whose own body resolves cleanly to
 `wDecompBuffer`, which made the routine look half-analysed when it was complete.
 
@@ -795,8 +795,7 @@ The descent finds no reference either, which is why the fragments had no labels
 of their own until they were named.
 
 The consequence is only for the disassembly's accounting, not for the game: 11
-of the bare banked-WRAM operands `tools/ram_gaps.py` still lists as `unproven`
-are in this span, and no amount of play can ever prove them, because the code
+of the bare banked-WRAM operands left raw in the source are in this span, and no amount of play can ever prove them, because the code
 does not run.
 
 ### The whole developer debug harness is unreachable, and its unlock flag is never read

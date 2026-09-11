@@ -68,11 +68,11 @@ compare: $(ROM)
 	@echo "$(BASEROM_SHA1)  $(ROM)" | sha1sum -c
 
 # Structural invariants a byte-perfect build cannot see: that the declared LZ
-# streams really decode (and re-encode), that no symbol truncates one, that the
-# text offset tables address real strings, that every curated immediate lands on
-# an instruction holding that value, and that the extracted regions do not
-# overlap. See tools/check.py.
-check:
+# streams really decode (and re-encode), that no assembled symbol truncates
+# one (read from the build's .sym, hence the dependency), that the extracted
+# regions do not overlap, and that every PNG and tilemap grid encodes back to
+# its blob. See tools/check.py.
+check: $(ROM)
 	python3 tools/check.py
 
 # Redraw the view-only scene pictures (data/<bank>/<Tilemap>.preview.png)

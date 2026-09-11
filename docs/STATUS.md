@@ -1,4 +1,4 @@
-# Project status — 2026-09-10
+# Project status — 2026-09-11
 
 This is where the disassembly stands and what is still open. The dated
 working log that used to live here — every session's findings in the order
@@ -18,9 +18,9 @@ per `data.manifest`.
 | proven code + structured source | 428,461 bytes, 20.4% of the 2 MiB ROM |
 | instructions disassembled | 160,919 |
 | banks containing code | 59 of 128 |
-| labels | 21,979, of which 20,399 human-named and 1,580 generator-derived (`FarPtr_*` slot labels, `SoundTable_*`); 0 state only an address |
+| labels | 21,979, of which 20,399 human-named and 1,580 derived (`FarPtr_*` slot labels, `SoundTable_*`); 0 state only an address |
 | data blobs (`INCBIN`) | 4,218 — 838 LZ streams, the rest raw graphics, tilemaps, sprite frames and sound |
-| coverage inputs | 174 `coverage/*.json` dumps and 2 `hooks/*.json` captures |
+| source of truth | `src/`, `ram/`, `include/`, edited directly; the generator and its 174 coverage dumps and 2 hook captures are retired at tag `generator-final` |
 | bare banked-WRAM operands | 97, all `dead`: inside `Unused*` routines nothing references, so no trace can ever reach them. Zero in live code |
 
 Everything that was ever anonymous has been classified. Every `INCBIN` is
@@ -48,7 +48,7 @@ decoded — see `docs/history.md` for the line).
 | `docs/actor_script.md` | the overworld actor bytecode VM and its opcodes |
 | `docs/sound_engine.md` | the driver, sound-id indexing, channel scripts |
 | `docs/save_format.md` | the battery save layout and `tools/savetool.py` |
-| `docs/ram_map.md` | the WRAM/HRAM symbol map, generated from `ram_map.json` |
+| `docs/ram_map.md` | the WRAM/HRAM symbol map, the union overlays, free RAM |
 | `docs/bugs.md` | defects in the *game* — bugs, dead stores, stubbed routines |
 | `docs/unused_code.md` | the 199 unreferenced routines and 100 blobs, and the eight patterns they fall into |
 | `docs/bank0_notes.md` | the ROM0 helpers |
@@ -58,16 +58,15 @@ decoded — see `docs/history.md` for the line).
 **Banked-WRAM operands: none left in live code.** A `$dxxx` literal whose
 WRAM bank neither static dataflow nor any trace has pinned renders as a raw
 number, because a name in the wrong bank is worse than none. The 97 that
-remain all sit in `Unused*` routines (`tools/ram_gaps.py` counts them as
-`dead`): nothing references them, so no trace can ever prove them, and they
-are left raw on purpose. The last live ones went three ways — a callee that
+remain all sit in `Unused*` routines: nothing references them, so no trace
+can ever prove them, and they are left raw on purpose. The last live ones went three ways — a callee that
 selects the bank itself (the story scripts' actor-slot pointers handed to
 `AttachActorStepMover`, the digit drawers' `wram_bank $03`), which the
 unions express as instruction-range scopes; siblings behind a jump table
 whose traced twins prove the bank (ranking rows 9-11, doubles markers 5/6,
 which no `ShowRankingBoard` argument ever selects); and one arithmetic
-constant. `ram_gaps.py --static` reports any site whose bank the dataflow
-knows but no union names, and that bucket is empty too.
+constant. The generator's last run reported no site whose bank the dataflow
+knew but no union named.
 
 **Named in the docs as not established.** `docs/graphics_formats.md` §8 now
 holds two items, and both are about the developers' intent rather than the
@@ -80,41 +79,50 @@ unlock and the dead record fields are resolved); the "not established" sentences
 
 ## How to resume
 
-Regenerate the source from the curated inputs — always with the hook
-captures, or the data banks regress:
+The source is edited directly: a name, a note, a union variant, a table
+layout or an instruction is changed in `src/`, `ram/` or `include/`, and
 
 ```
-python3 tools/disasm.py baserom.gbc coverage/*.json --hooks hooks/*.json
-python3 tools/extract.py baserom.gbc data.manifest data/
-make clean && make -j compare && make check
+make clean && make -j compare && make check && make test
 ```
 
-Measure with `python3 tools/progress.py` (per-bank proven bytes and the
-`named` / `derived` / `auto` label buckets; `--unnamed <bank>` lists what is
-left) and `python3 tools/ram_gaps.py` (the bare banked-operand buckets).
-`tools/strings.py baserom.gbc --index --bank <bank>` reads a text id;
-`tools/gfxdump.py` draws contact sheets of the graphics streams and palette
-regions into gitignored `data/gfx/`.
+is the whole pipeline (`compare` holds until the first deliberate change to
+the bytes; `check` and `test` hold after it). `tools/strings.py --index
+--bank <bank>` reads a text id; `tools/gfxdump.py` draws contact sheets of
+the graphics streams and palette regions into gitignored `data/gfx/`;
+`tools/twins.py` lists the routines a fix has to land in more than once;
+`tools/ram_free.py` recomputes the free-RAM inventory after the RAM
+declarations change.
 
-The curated inputs, all JSON, all regenerated into `src/` and `ram/`:
-
-| file | what it holds |
-|---|---|
-| `labels.json` | ROM symbol names by flat offset; a dot-prefixed value is a local label inside the enclosing function |
-| `data_tables.json` | render spec per data region (`records:N`, `flag_ids`, `sprite_anim`, `map_actors`, …) |
-| `ram_map.json` | global WRAM/HRAM names |
-| `ram_unions.json` | banked and overlaid RAM: variants scoped by ROM bank, WRAM bank and instruction range; a symbol's size comes from its note's leading `[N bytes]` tag |
-| `constants.json` | named immediates by instruction offset (values in `include/constants.inc`) |
-| `flags.json` | game-flag and save-flag names |
-| `coverage/*_static_code.json` | hand-authored code seeds; a wrong one asserts garbage as code forever |
-| `hooks/*.json` | `CopyDataFromBank` / `DecompressDataFromBank` captures that classify the `$4000` slot tables |
+The generator that produced the tree — `tools/disasm.py`, its `disasmlib`
+package, the JSON inputs (`labels.json`, `data_tables.json`, `ram_map.json`,
+`ram_unions.json`, `constants.json`, `flags.json`), the `coverage/` traces
+and `hooks/` captures, and the tests that exercised them — was retired on
+2026-09-11, when a final run reproduced the committed source exactly. It is
+kept whole at the git tag `generator-final` (`git show generator-final:tools/disasm.py`)
+for anyone who wants to see how a name or a union scope was established;
+nothing in the tree depends on it any more.
 
 `make check` is what catches the mistakes a byte-perfect build cannot: an LZ
-stream that no longer decodes, a symbol inside one, a text table pointing at
-nothing, a constant keyed to the wrong offset, overlapping regions, a local
-label bound to the wrong parent.
+stream that no longer decodes, an assembled symbol inside one, overlapping
+extracted regions, a routine stranded in an actor script's label scope, a
+new branch that decides nothing, a PNG or grid that no longer encodes to its
+blob.
 
 ## Recent changes
+
+* **2026-09-11** — the generator is retired and `src/` is the source of
+  truth. A final run reproduced the committed tree byte for byte, the tag
+  `generator-final` was placed on it, and `tools/disasm.py`, `disasmlib/`,
+  the six JSON inputs, `coverage/`, `hooks/`, the coverage-pipeline clients,
+  `sm83.py`, `progress.py`, `ram_gaps.py` and the generator's tests left
+  the tree. What stayed was made independent of them: `check.py` reads
+  symbols from the build's `.sym` (and dropped the text-table and curated-
+  constant checks, which the assembler now makes), `strings.py --index`
+  reads the extracted text source, `ram_free.py` reads
+  `include/ram_mirrored.inc`, and the "do not edit by hand" headers are
+  gone. From here a change to a name, note, union or table is an edit to
+  the assembly.
 
 * **2026-09-11** — every sound call names its id. The 33 ids that were
   still literal at 182 sites are named from their call sites in

@@ -27,7 +27,7 @@ field is a pointer to a script blob.
 3. `StepActorScript` yields immediately if `+$05` bit0 is set (paused) or while
    the `+$03` wait counter is nonzero (decrementing it). Otherwise it reads the
    opcode at the script pointer and dispatches through the 22-entry handler
-   table at **`$04:$447d`** (`ACTOR_SCRIPT_OPS` in `tools/disasmlib/datatables.py`).
+   table at **`$04:$447d`** (the `as_*` macros in `include/macros.inc`, one per opcode).
 4. Each handler advances the script pointer past its own operands and returns
    `a`: **0** = stop stepping this frame (yield), **nonzero** = run the next
    opcode immediately. The updated pointer is written back to `+$00/+$01`.
@@ -147,8 +147,8 @@ code or data:
 | `ActorScript_27_05` | 25 B | 128 B |
 | `ActorScript_27_33` | 133 B | 120 B |
 
-`decode_actor_script` in `tools/disasmlib/datatables.py` decodes the clean
-prefix and stops at the first non-opcode byte (returning `None` only if a jump
-escapes the prefix or nothing decodes); the caller emits the prefix as `as_*`
-macros and the remainder as the tail blob. Classifying the tails is future
-work.
+The generator decoded the clean prefix and stopped at the first non-opcode
+byte, emitting the prefix as `as_*` macros and the remainder as the tail
+blob (`decode_actor_script` in `tools/disasmlib/datatables.py` at tag
+`generator-final`). Classifying the tails is future work, now done by hand
+in the source.

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """List the live routines that are instruction-identical copies of each other.
 
-Reads the generated `src/bank_*.asm`, takes every global label's run of
+Reads `src/bank_*.asm`, takes every global label's run of
 instructions up to the next global label, and normalises each line by
 dropping the address comment and the two-hex-digit bank suffix on names
 (`FetchText_25` -> `FetchText`), so copies of one routine assembled into
@@ -9,9 +9,9 @@ several banks fingerprint alike whatever their bank-local helpers are
 called. Routines shorter than --min instructions and `Unused*` routines
 (catalogued in docs/unused_code.md) are left out.
 
-The groups are what a fix has to be applied to in full: `labels.json`
-carries a note on each member naming its twins, and docs/duplicated_code.md
-is this tool's table.
+The groups are what a fix has to be applied to in full: the note above each
+member in `src/` names its twins, and docs/duplicated_code.md is this
+tool's table.
 
 usage: twins.py [--min N] [--json FILE]
 """

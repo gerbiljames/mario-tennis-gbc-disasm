@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """Which RAM bytes nothing names or addresses.
 
-Walks the generated `ram/wram.asm` and `ram/hram.asm` the way the assembler
-does -- sections, unions, every `db`/`dw`/`ds` -- and reports the bytes no
-symbol covers (an anonymous `ds` gap, or the tail of a bank after its last
+Walks `ram/wram.asm` and `ram/hram.asm` the way the assembler does --
+sections, unions, every `db`/`dw`/`ds` -- and reports the bytes no symbol
+covers (an anonymous `ds` gap, or the tail of a bank after its last
 declaration), minus any address a raw literal in `src/` still refers to.
-Mirrored symbols (`ram_unions.json`, `mirrored: true`) count as named in the
-banks they list.
+Mirrored symbols (`include/ram_mirrored.inc`) count as named in every banked
+WRAM bank.
 
 Static only: a byte here is unreferenced by name, not proven unused -- a
 buffer declared shorter than the loop that fills it reaches past its symbol,
@@ -76,17 +76,25 @@ def named_bytes():
             if name:
                 named.setdefault((space, bank), set()).update(range(addr, addr + n))
             addr += n
-    # mirrored names allocate nothing -- the banks they list already declare
-    # the bytes -- but a range only they name must still count as named
-    from disasmlib.ram import ram_field_size
-    for u in json.loads((ROOT / "ram_unions.json").read_text())["unions"]:
-        for v in u["variants"]:
-            if not v.get("mirrored"):
-                continue
-            for a, sym in v["symbols"].items():
-                a, n = int(a, 0), ram_field_size(sym)
-                for b in v.get("banks", []):
-                    named.setdefault(("w", int(b, 0)), set()).update(range(a, a + n))
+    # mirrored names (include/ram_mirrored.inc) allocate nothing -- the banks
+    # they exist in declare the bytes -- but a range only they name must still
+    # count as named, in the banks its `; in WRAM banks` line lists
+    size, banks = None, []
+    for line in (ROOT / "include" / "ram_mirrored.inc").read_text().splitlines():
+        m = re.match(r"; \[(\d+) bytes?\]", line)
+        if m:
+            size, banks = int(m.group(1)), []
+            continue
+        m = re.match(r"; in WRAM banks (.*)", line)
+        if m:
+            banks = [int(b.strip().lstrip("$"), 16) for b in m.group(1).split(",")]
+            continue
+        m = re.match(r"def (\w+) equ \$([0-9a-f]+)", line, re.I)
+        if m and size:
+            a = int(m.group(2), 16)
+            for b in banks:
+                named.setdefault(("w", b), set()).update(range(a, a + size))
+            size, banks = None, []
     return named
 
 

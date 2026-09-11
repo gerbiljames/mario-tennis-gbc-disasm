@@ -1,9 +1,0 @@
-{
- "_comment": "Static code-entry seeds for bank $03 (save engine): stranded restore-bank epilogues and an error stub. Flat = bank*0x4000 + (cpu-0x4000).",
- "rom": [
-  52572,
-  53218,
-  53869
- ],
- "other": []
-}

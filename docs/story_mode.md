@@ -165,9 +165,7 @@ The location name popup is not stored in the record: `LoadStoryLocationHeader`
 computes text id `$0179 + location` (`$0a:$5142`) into
 `wStoryModeLocationNameTextId`, and sets `wStoryModeShowLocationName` from
 `wStoryModeEntryPoint != $ff` — arriving through a door names the room, coming
-back from a menu screen does not. `STORY_LOCATION_NAMES` in
-`tools/disasmlib/constants.py` is that string list, transcribed; the ids `$00`-`$04`
-are developer/test locations.
+back from a menu screen does not. The ids `$00`-`$04` are developer/test locations.
 
 ### The `map_tree`
 
@@ -470,7 +468,7 @@ different, developer-facing thing — see below.
 | where | WRAM `$c9c0`-`$c9df` (32 bytes), inside the saved story-slot image | SRAM `$a040`-`$a05f` |
 | scope | per story slot | global, all slots |
 | accessors | `rst $20/$28/$30` → `SetGameFlag`/`ClearGameFlag`/`TestGameFlag` (`$00:$24ba`/`$24d4`/`$249f`); `*GameFlagByNumber` (`$00:$24ef`) for a computed id | `SetSaveFlag`/`ClearSaveFlag`/`TestSaveFlag` (`$03:$4db6`/`$4de4`/`$4d86`), which also bank in SRAM and rewrite the header checksum |
-| names | 120 `FLAG_*` in `include/flag_constants.inc` (generated from `flags.json`) | 47 `SAVEFLAG_*` in `include/constants.inc` |
+| names | 120 `FLAG_*` in `include/flag_constants.inc` | 47 `SAVEFLAG_*` in `include/constants.inc` |
 
 Both use the same id encoding. A flag number is `byte * 8 + bit`; the inline
 operand form used by the macros is two bytes, `bit << 5` then the byte index,
@@ -785,12 +783,12 @@ marked *resolved* were fixed in the source on 2026-09-10; the rest stand.
   `WindowId` / `ResultCode`, `$df00`-`$df06`, range-scoped so the match-engine
   names stay out). `TrainingCourtClearFlagListPtrs_0a` (`$0a:$4dec`) parallels
   the branch structure but has no reader — dead data.
-* **The character-vs-level naming at record `+$18`.** `ram_map.json` names
+* **The character-vs-level naming at record `+$18`.** `ram/wram.asm` names
   `$c818` "Level (1-99)" and `$c918` "ExpTier" — the same offset in two records
   with the same layout. For player characters the raw byte is a level;
   `LookupExpTierForChar` (`$1e:$…`, `src/bank_01e.asm:2856`) is what derives a
   coarse 0-6 tier from it.
-* **EXP field width.** `ram_map.json` documents `$c92c`/`$c82c` as 16-bit, but
+* **EXP field width.** `ram/wram.asm` documents `$c92c`/`$c82c` as 16-bit, but
   `AddExpCapped` maintains three bytes and caps at 99999, while
   `GetExpRemainingToNextLevel` / `GetExpProgressInCurrentLevel` read only the low
   two back out. In practice the level-99 requirement is well under 65536, so the

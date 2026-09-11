@@ -138,11 +138,10 @@ Game: Mario Tennis (Game Boy Color). Addresses are real GBC CPU addresses: cartr
 
 ## Project-identified addresses (not in the RA notes)
 
-Addresses named by this project from disassembly evidence; also in
-`ram_map.json` so `disasm.py` renders them symbolically. This table is a
-straight rendering of every `ram_map.json` entry not in the RA table above —
-`ram_map.json` is the source of truth, so add names there and refresh this
-table rather than editing rows here.
+Addresses named by this project from disassembly evidence. The declarations
+in `ram/wram.asm`, `ram/hram.asm` and `ram/sram.asm` are the source of truth
+and carry the same notes; this table mirrors the entries not in the RA table
+above, so add a name there first and then its row here.
 
 | Address | Region | Name | Note |
 |---|---|---|---|
@@ -391,23 +390,25 @@ table rather than editing rows here.
 | `0xfffc` | HRAM | `hRandomSeed` | [16-bit] RNG state (x*5 + $3573 per VBlank) |
 | `0xfffe` | HRAM | `hIsCGB` | [8-bit] 1 = running on Game Boy Color hardware |
 
-## Union overlays (`ram_unions.json`)
+## Union overlays
 
 Some RAM ranges are reused by several subsystems that never run at the same
-time. These are modeled as RGBDS `UNION`/`NEXTU` overlays in the generated
-`ram/*.asm`, driven by `ram_unions.json`: each variant carries its own symbols
-plus the code *scopes* where it applies. A scope is `{bank[, start, end]}`
-(the referencing code's ROM location) and/or `{wram_bank: N}` (the WRAM bank
-provably selected at the site, inferred by `tools/disasmlib/ram.py`'s `compute_wram_bank`
-CFG dataflow). Constraints within one scope AND; scopes within a variant OR.
-`disasm.py` substitutes a variant's names only where a scope matches; a variant
-marked `default` applies everywhere outside every scoped variant's ROM ranges.
-Sites in unproven consumers — including any WRAMX access whose bank can't be
-proven — keep the numeric address.
+time. These are RGBDS `UNION`/`NEXTU` overlays in `ram/*.asm`: each variant
+carries its own symbols, and its note says which code owns it. When the
+source was generated, a variant's names were substituted only at sites whose
+*scope* matched — the referencing code's ROM bank and range, and/or the WRAM
+bank provably selected at the site by a control-flow dataflow or a traced
+run — so the same `$dxxx` offset reads as a different symbol in different
+routines, and a site whose bank could not be proven kept the numeric address
+(97 remain, all inside `Unused_*` routines nothing reaches). That
+attribution is now simply what the source says: an edit that moves an
+access from one owner to another changes the operand by hand, and the
+assembler accepts any variant's symbol anywhere, so the notes on the
+variants are the guide to which one a routine may touch.
 
-`wram_bank: N` is the tool for banked WRAMX (`$d000-$dfff`): the same offset
-means different things per WRAM bank, so a global `ram_map.json` name would
-leak across banks.
+The WRAM-bank scoping matters for banked WRAMX (`$d000-$dfff`): the same
+offset means different things per WRAM bank, so a global name would leak
+across banks.
 
 ### Mirrored variants
 
@@ -444,8 +445,8 @@ section. It is emitted instead as an EQU into the generated
 assembly-time only, so unlike an exported `::` label it has to be visible while
 each bank is assembled rather than at link time.
 
-`tools/ram_gaps.py` reports which bare `$dxxx` operands are mirrored
-candidates: one address, several banks, one routine.
+A bare `$dxxx` operand left in the source is a candidate for one: one
+address, several banks, one routine.
 
 ### Bank-tagged copies
 
@@ -478,7 +479,7 @@ stay documentation-only, but are a candidate for per-bank `wram_bank` scoping.)
 | `$a020-$a03f`, `$a060-$a76f` | save engine (bank `$03`) | `sSaveSignature`, `sSaveMasterChecksum`, `sSaveFormatVersion`, `sSaveBlockDirectory` |
 
 Interior bytes of a multi-byte scoped field render as `name + k` (same
-expansion `ram_map.json` symbols get), so `$dd1e` reads `wBallHistory + 30` and
+expansion the global symbols get), so `$dd1e` reads `wBallHistory + 30` and
 `$ffd1` reads `hSndScriptPtr + 1`, under the same scope as the base.
 
 
@@ -498,8 +499,7 @@ bank**, all at the same `$dfxx` addresses; code selects a character by writing
 | 7 | far-side partner | 3 (Two-On-One), 4 |
 
 Known fields (addresses valid only while a bank 4-7 is mapped). These are named
-via a `wram_bank`-scoped union in `ram_unions.json` (see "Union overlays"
-above): one `wChar*` name per field, rendered only where the WRAM bank is
+via a union variant in `ram/wram.asm` (see "Union overlays" above): one `wChar*` name per field, rendered only where the WRAM bank is
 provably 4-7 or inside match banks `$07`/`$08`. Other WRAM banks reuse `$dfxx`
 for unrelated data and stay numeric — e.g. bank `$38`'s non-char `$dfxx`
 accesses, and the text-arg scratch reuse of `$df00` in menu banks (named
@@ -582,7 +582,7 @@ symbols across 19 overlay variants — so the section body tells you what is the
 only once you have read all of it:
 
 ```
-; WRAMX bank 2 at a glance -- regenerated, see ram_unions.json:
+; WRAMX bank 2 at a glance (ram/wram.asm):
 ;
 ;   $d000-$dfff  match court planes / overworld scroll buffers / screen attribute plane
 ;   $d400-$d7df  wCharDataPagePlane  [mirrored with bank 3]

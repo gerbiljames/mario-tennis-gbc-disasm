@@ -25,7 +25,7 @@ working set at **`$ffd0`** (`hSndScriptPtr` … `hSndRestFlag`) so the inner loo
 can use fast `ldh`. `RunSoundEngine` (`$3373`) saves/restores the sprite-queue
 bytes that overlap `$ffd0`; the block is written back after each channel.
 The HRAM layout is the sound-driver variant of the shared `$ffd0` union in
-`ram_unions.json` (scoped to `$3373`–`$3de0`).
+`ram/hram.asm` (its names apply in `$3373`–`$3de0`).
 
 ### HRAM channel working set (`$ffd0`–`$ffef`)
 
