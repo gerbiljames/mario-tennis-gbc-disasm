@@ -65,7 +65,9 @@ restated:
 - **Code and data may change size.** Pointers are symbols, so inserting bytes
   moves what follows and every reference follows it. Each bank's section stops
   at its last real byte and `rgblink -p 0xff` pads the rest, so the trailing
-  space (186 KiB across 122 banks) is free for new code.
+  space (186 KiB across 122 banks) is free for new code -- and a blob that
+  grows, an edited tilemap or PNG, has room, since even a labelled tail is
+  left to the linker rather than restated as a fill.
 - **Text.** Edit the strings in `data/<bank>/TextStrings_<bank>.asm`; the
   per-bank offset table is `dw Pool.sN - Pool` in the bank source, so the
   assembler recomputes every offset. Line and page breaks are the `line` /
@@ -93,6 +95,12 @@ restated:
   and draw past the last tile. `make check` confirms every PNG still encodes back to
   its blob. `tools/gfx.py` and `tools/lz.py` are the converters if you need
   them by hand.
+- **Screen layouts are text.** Every tile plane and attribute plane (213
+  blobs, most of them LZ streams) is extracted a second time as a
+  `.tilemap` file beside its `.bin`: one `tilemap_row` of hex cells per
+  row, at the width the loader uses. Edit it and `make` re-encodes the
+  blob, compressing it again if it is an `lz_*` stream; `make check`
+  round-trips every grid.
 - **Tables.** Stats, physics constants, mode hooks, map actors, animation
   scripts, flag lists and menu definitions render as structured source with
   named fields — `docs/graphics_formats.md` and `docs/story_mode.md` give the

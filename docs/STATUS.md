@@ -116,6 +116,14 @@ label bound to the wrong parent.
 
 ## Recent changes
 
+* **2026-09-11** — screen layouts are editable. The 213 tile and attribute
+  planes (200 of them LZ streams) carry a `tilemap:W` manifest tag and are
+  extracted a second time as `.tilemap` text grids, one `tilemap_row` per
+  row at the loader's width (64 for the story scroll buffers, 32 for the
+  screen planes); `make` re-encodes an edited grid and recompresses it,
+  `make check` round-trips all 213. Proving it exposed that two banks ended
+  in a *labelled* `ds` fill, which left them no room to grow; a labelled
+  tail is now left to the linker's padding like any other.
 * **2026-09-11** — text control codes are named. `include/text_codes.inc`
   gives every byte below `$20` its `TX_*` name (player and partner name,
   the string and number argument pops, the three delays, the short-text
