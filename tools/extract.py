@@ -667,6 +667,19 @@ def main() -> int:
     if not keep:
         for f in stale:
             f.unlink()
+    previews = Path(manifest).with_name("data.previews")
+    if gfx_ok and previews.exists():
+        try:
+            n = tilemap.previews(previews, outdir)
+            for line in previews.read_text().splitlines():
+                if line.strip() and not line.startswith("#"):
+                    png = Path(line.split()[0]).with_suffix(".preview.png")
+                    if (outdir / png).exists():
+                        written.add(str(png))
+            if n:
+                print(f"composed {n} scene previews")
+        except Exception as e:  # a preview is a convenience, never a failure
+            print(f"note: scene previews not composed: {e}", file=sys.stderr)
     note = (f", {'left' if keep else 'removed'} {len(stale)} stale"
             if stale else "")
     if kept:

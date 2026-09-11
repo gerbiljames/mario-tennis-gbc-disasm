@@ -97,6 +97,27 @@ class TileImages(unittest.TestCase):
             tilemap.encode(p[:-4] + ".tilemap", p)
             self.assertEqual(lz.decompress(open(p, "rb").read(), 0)[0], data)
 
+    def test_scene_preview_composes(self):
+        import tilemap
+        with tempfile.TemporaryDirectory() as d:
+            tiles = bytes([0xFF, 0x00] * 8) + bytes([0x00, 0xFF] * 8)   # tile 0 colour 1, tile 1 colour 2
+            tm = bytes([0, 1, 0x90, 0] * 8)                                # 4 wide x 8 rows
+            am = bytes([0x0A, 0x2B, 0x08, 0x00] * 8)                       # bank 1 pal 2 / flipped pal 3 / glyph id / bank 0
+            pal = "".join(f"\tdw $0000, $001f, $03e0, $7c00 ; pal {i}\n" for i in range(8))
+            paths = [os.path.join(d, n) for n in ("Map.bin", "Attr.bin", "Tiles.bin", "Pal.asm")]
+            for pth, data in zip(paths, (tm, am, tiles, pal)):
+                with open(pth, "wb" if isinstance(data, bytes) else "w") as f:
+                    f.write(data)
+            out = os.path.join(d, "Map.preview.png")
+            self.assertEqual(tilemap.preview(*paths, out, 4), (4, 8))
+            from PIL import Image
+            img = Image.open(out)
+            self.assertEqual(img.size, (32, 64))
+            self.assertEqual(img.getpixel((0, 0)), (255, 0, 0))       # tile 0, pal 2 colour 1 = red
+            self.assertEqual(img.getpixel((8, 0)), (0, 255, 0))       # tile 1, pal 3 colour 2 = green
+            self.assertEqual(img.getpixel((16, 0)), (224, 224, 224))  # a glyph-buffer id: grey
+            self.assertEqual(img.getpixel((24, 0)), (224, 224, 224))  # VRAM bank 0: grey
+
     def test_plain_image_grows_when_drawn_past_its_end(self):
         rng = random.Random(5)
         data = bytes(rng.getrandbits(8) | 1 for _ in range(17 * 16))

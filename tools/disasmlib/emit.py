@@ -1539,3 +1539,32 @@ class Emitter:
             for blob, off, length, spec in self.manifest:
                 f.write(f"{blob} {off:06x} {length:x}"
                         + (f" {spec}\n" if spec else "\n"))
+        self._write_previews()
+
+    def _write_previews(self):
+        """data.previews: which tile plane, attribute plane, tile set and
+        palette block make up each scene, read from SceneGfxSlotTable (37
+        records of eight slot words; slots 2, 3, 7 and 1 under both loaders,
+        docs/graphics_formats.md 3.2 and 3.4), so tools/extract.py and
+        `make previews` can compose a picture of every scene's layout."""
+        table = next((off for off, name in self.labels.items()
+                      if name == "SceneGfxSlotTable"), None)
+        if table is None:
+            return
+        by_off = {off: blob for blob, off, length, spec in self.manifest}
+
+        def target(word):
+            bank, entry = word >> 8, word & 0xFF
+            ptr = self.rom[bank * BANK_SIZE + entry] | (self.rom[bank * BANK_SIZE + entry + 1] << 8)
+            return bank * BANK_SIZE + ptr - BANK_SIZE
+
+        lines = ["# tilemap  attrmap  tiles  palettes -- one scene per line, from "
+                 "SceneGfxSlotTable; composed by tools/tilemap.py previews"]
+        for rec in range(37):
+            base = table + rec * 16
+            words = [self.rom[base + i * 2] | (self.rom[base + i * 2 + 1] << 8) for i in range(8)]
+            parts = [by_off.get(target(words[i])) for i in (2, 3, 7, 1)]
+            if all(parts):
+                lines.append(" ".join(parts))
+        path = Path(self.manifest_path).with_name("data.previews")
+        path.write_text("\n".join(lines) + "\n")

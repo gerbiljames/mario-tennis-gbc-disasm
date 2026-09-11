@@ -16,6 +16,12 @@ blob in rows.
 
 usage: tilemap.py decode <bin> <txt> <width>   (lz_* stems are decompressed first)
        tilemap.py encode <txt> <bin>           (lz_* stems are compressed again)
+       tilemap.py previews data.previews data/ (compose <tilemap>.preview.png per scene)
+
+The preview is view only: `data.previews` (written beside the manifest from
+SceneGfxSlotTable) names each scene's tile plane, attribute plane, tile set
+and palette block, and the composer draws the plane as the CGB would, so a
+grid edit can be checked by eye with `make previews`.
 """
 import re
 import sys
@@ -102,7 +108,80 @@ def encode(txt_path, bin_path):
     return len(data)
 
 
+def _palettes(path):
+    """The BGR555 words of a generated palettes .asm (or a raw 64-byte block)
+    as [(r, g, b)] per colour, 4 per palette."""
+    p = Path(path)
+    if p.suffix == ".asm":
+        words = [int(w, 16) for w in re.findall(r"\$([0-9a-f]{4})", p.read_text())]
+    else:
+        raw = p.read_bytes()
+        words = [raw[i] | (raw[i + 1] << 8) for i in range(0, len(raw) - 1, 2)]
+    return [tuple(((w >> sh) & 0x1F) * 255 // 31 for sh in (0, 5, 10)) for w in words]
+
+
+def preview(tilemap_path, attr_path, tiles_path, pal_path, out_png, width):
+    """Compose a scene as the CGB shows it: each cell's tile from the scene's
+    tile set (VRAM bank 1, ids below $80; the $80+ range is the text engine's
+    glyph buffer and cells that select VRAM bank 0 are the shared UI tiles,
+    both drawn as a light grey), coloured by the attribute byte's palette
+    (BG 2-7 come from bytes 16-63 of the scene's 64-byte block; 0 and 1 are
+    the text window's and drawn as a grey ramp), flipped per bits 5 and 6.
+    View only: a pixel does not map back to a tile id."""
+    from PIL import Image
+
+    def plane(path):
+        raw = Path(path).read_bytes()
+        return lz.decompress(raw, 0)[0] if is_lz(path) else raw
+
+    tm, am, tiles = plane(tilemap_path), plane(attr_path), plane(tiles_path)
+    pal = _palettes(pal_path)
+    grey = [(224, 224, 224), (160, 160, 160), (96, 96, 96), (32, 32, 32)]
+    height = len(tm) // width
+    img = Image.new("RGB", (width * 8, height * 8), grey[0])
+    px = img.load()
+    ntiles = len(tiles) // 16
+    for cell in range(height * width):
+        tile, attr = tm[cell], am[cell] if cell < len(am) else 0
+        cx, cy = (cell % width) * 8, (cell // width) * 8
+        p = attr & 7
+        colours = pal[16 // 2 + (p - 2) * 4:16 // 2 + (p - 2) * 4 + 4] if 2 <= p <= 7 and len(pal) >= 32 else grey
+        if not (attr & 0x08) or tile >= 0x80 or tile >= ntiles:
+            for y in range(8):
+                for x in range(8):
+                    px[cx + x, cy + y] = grey[0] if (x // 4 + y // 4) % 2 == 0 else grey[1]
+            continue
+        t = tiles[tile * 16:tile * 16 + 16]
+        for y in range(8):
+            lo, hi = t[y * 2], t[y * 2 + 1]
+            for x in range(8):
+                c = ((lo >> (7 - x)) & 1) | (((hi >> (7 - x)) & 1) << 1)
+                dx = 7 - x if attr & 0x20 else x
+                dy = 7 - y if attr & 0x40 else y
+                px[cx + dx, cy + dy] = colours[c]
+    img.save(out_png)
+    return width, height
+
+
+def previews(list_path, data_dir):
+    """Compose every scene listed in data.previews into <tilemap>.preview.png."""
+    n = 0
+    for line in Path(list_path).read_text().splitlines():
+        if not line.strip() or line.startswith("#"):
+            continue
+        tmp, atp, tip, plp = (Path(data_dir) / p for p in line.split())
+        if not all(p.exists() for p in (tmp, atp, tip, plp)):
+            continue
+        width = 64 if (len(lz.decompress(tmp.read_bytes(), 0)[0]) if is_lz(tmp) else tmp.stat().st_size) >= 4096 else 32
+        preview(tmp, atp, tip, plp, tmp.with_suffix(".preview.png"), width)
+        n += 1
+    return n
+
+
 def main(argv):
+    if len(argv) == 4 and argv[1] == "previews":
+        print(f"{previews(argv[2], argv[3])} scene previews")
+        return 0
     if len(argv) == 5 and argv[1] == "decode":
         print(f"{argv[3]}: {decode(argv[2], argv[3], int(argv[4]))} rows")
     elif len(argv) == 4 and argv[1] == "encode":

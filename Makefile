@@ -10,7 +10,7 @@ RAM_SRCS := ram.asm $(wildcard ram/*.asm)
 
 BASEROM_SHA1 := 414ba58340a27fc27b127bc01455b32764151ff0
 
-.PHONY: all compare check test clean
+.PHONY: all compare check test previews clean
 
 all: $(ROM)
 
@@ -74,6 +74,11 @@ compare: $(ROM)
 # overlap. See tools/check.py.
 check:
 	python3 tools/check.py
+
+# Redraw the view-only scene pictures (data/<bank>/<Tilemap>.preview.png)
+# from the current grids, tiles and palettes, e.g. after editing a grid.
+previews:
+	python3 tools/tilemap.py previews data.previews data/
 
 # The unit tests need no ROM; the regression pins in tests/test_rom.py skip
 # themselves when baserom.gbc is absent.
