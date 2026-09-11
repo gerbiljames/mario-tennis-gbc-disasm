@@ -39,6 +39,12 @@ build/ram.o: $(RAM_SRCS) | build/rgbdscheck.o
 data/%.bin: data/%.png
 	python3 tools/gfx.py encode $< $@
 
+# A tilemap or attribute-map blob whose grid (.tilemap, written by extract.py
+# beside it) is newer is re-encoded from the text, and re-compressed if it is
+# an LZ stream. Same discipline as the PNGs: an untouched tree never triggers it.
+data/%.bin: data/%.tilemap
+	python3 tools/tilemap.py encode $< $@
+
 # `DEF <Label>_SIZE EQU <decoded length>` for an LZ stream the source copies
 # whole after decompressing (`ld c, Label_SIZE / 16`): the assembler cannot
 # measure a decoded length, so it is derived from the blob and follows edits.

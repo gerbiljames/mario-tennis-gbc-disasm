@@ -295,6 +295,25 @@ _WALK_GFX_RE = re.compile(r"^WalkSprite_[0-9a-f]+_\d+_Gfx\d+$")
 _CHAR_FRAME_RE = re.compile(r"SpriteFrame(\d+|sUnused)$")
 
 
+_GRID_NAME_RE = re.compile(r"(Tilemap|Attrmap)(?!Patch|Ptrs|Script|Dispatch|Row|Rect)\w*$")
+
+
+def tilemap_width(name, size):
+    """Cells per row for a blob that is a whole tile or attribute plane, or
+    None. 64x64 scroll buffers (LoadStorySceneGraphics slots 2/3 of the
+    story records), 32-wide screen planes (1024 = 32 x 32, 576 = 32 x 18),
+    and the few short strips; a `*Patch` list is records, not a plane."""
+    if not name or not _GRID_NAME_RE.search(name) or size < 14:
+        return None
+    if size >= 4096 and size % 64 == 0:
+        return 64
+    if size % 32 == 0:
+        return 32
+    if size % 20 == 0:
+        return 20
+    return size if size <= 32 else None
+
+
 def gfx_layout(name, ntiles):
     """The PNG layout (tools/gfx.py) for a blob that is a run of sprite
     frames, or None for plain tiles. Walk-sprite frames are 16x16, two
@@ -946,13 +965,16 @@ class Emitter:
         no section covers with $ff (`-p 0xff`)."""
         b = self.rom[seg]
         cpu = offset_to_cpu(seg)
-        if b == 0xFF and j == bank_end and seg not in self.labels \
-                and seg not in self.ptr_data_targets:
-            self.lines.append(bank_end_fill(cpu, j - seg))
-            return False
         if (seg in self.labels or seg in self.ptr_data_targets) \
                 and self.lines[-1] != f"{self._auto_name(seg)}:":
             self.lines.append(f"{self._auto_name(seg)}:")
+        if b == 0xFF and j == bank_end:
+            # A label on the trailing fill (an unused $4000-table slot, a
+            # pointer parked at the bank end) still resolves at the section's
+            # end; restating the fill as `ds` would leave the bank no room
+            # to grow, since rgbasm caps a ROMX section at $4000.
+            self.lines.append(bank_end_fill(cpu, j - seg))
+            return False
         self.lines.append(f"\tds {j - seg}, ${b:02x} ; ${cpu:04x}, fill")
         return True
 
@@ -1446,6 +1468,17 @@ class Emitter:
             if n and n % 16 == 0:
                 layout = gfx_layout(self.labels.get(start), n // 16)
                 spec = f"gfx:{layout}" if layout else "gfx"
+        elif _GRID_NAME_RE.search(self.labels.get(start, "") or ""):
+            if prefix == "lz":
+                try:
+                    n = len(lz.decompress(self.rom, start)[0])
+                except Exception:
+                    n = 0
+            else:
+                n = length
+            width = tilemap_width(self.labels.get(start), n)
+            if width:
+                spec = f"tilemap:{width}"
         self.manifest.append((blob, start, length, spec))
         return f'\tINCBIN "data/{blob}" ; ${cpu:04x}, {length} bytes{note}'
 

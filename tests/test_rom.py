@@ -89,6 +89,7 @@ class Manifest(unittest.TestCase):
         self.assertEqual(sum(s == "gfx:2x2" for s in specs), 570)
         self.assertEqual(sum(s == "gfx:3x4+3" for s in specs), 1650)
         self.assertEqual(sum(s == "gfx:4x4+4" for s in specs), 60)
+        self.assertEqual(sum(1 for f in lines if len(f) > 3 and f[3].startswith("tilemap:") and f[0].endswith(".bin")), 213)
 
 
 @needs_rom

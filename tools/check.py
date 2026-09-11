@@ -336,6 +336,33 @@ def check_gfx(manifest, fail):
     return n
 
 
+def check_tilemaps(manifest, fail):
+    """Every tilemap:W blob with a grid beside it encodes back to the bytes
+    the grid was decoded from."""
+    sys.path.insert(0, str(ROOT / "tools"))
+    import tilemap
+    n = 0
+    for path, off, length, spec in manifest:
+        if not path.endswith(".bin") or not (spec or "").startswith("tilemap:"):
+            continue
+        binp = ROOT / "data" / path
+        grid = binp.with_suffix(".tilemap")
+        if not grid.exists() or not binp.exists():
+            continue
+        n += 1
+        raw = binp.read_bytes()
+        want = tilemap.lz.decompress(raw, 0)[0] if tilemap.is_lz(binp) else raw
+        try:
+            got = tilemap.grid_bytes(grid.read_text())
+        except ValueError as e:
+            fail("tilemap", f"{path}: {e}")
+            continue
+        if got != want:
+            fail("tilemap", f"{path}: grid does not encode back to the blob "
+                            f"({len(got)} vs {len(want)} bytes)")
+    return n
+
+
 def check_collapsed_branches(fail):
     """Find `jr cc, X` / `jp cc, X` where X is the very next instruction.
 
@@ -410,6 +437,7 @@ def main():
         "scopes": check_stranded_scopes(fail),
         "branches": check_collapsed_branches(fail),
         "gfx": check_gfx(manifest, fail),
+        "tilemap": check_tilemaps(manifest, fail),
     }
     by_check = {}
     for check, msg in failures:

@@ -12,6 +12,8 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT / "tools"))
+import tilemap  # noqa: E402
 
 # Printable ASCII safe inside an rgbasm string literal: excludes the quote,
 # backslash, and the {} symbol-interpolation characters.
@@ -532,6 +534,20 @@ def _edited(dest, data):
     return dest.exists() and dest.read_bytes() != data
 
 
+def _grid_edited(dest, grid, data):
+    """A tilemap pair counts as edited if the .bin differs from the ROM or the
+    grid no longer encodes to it."""
+    if _edited(dest, data):
+        return True
+    if not grid.exists():
+        return False
+    try:
+        return tilemap.grid_bytes(grid.read_text()) != (
+            tilemap.lz.decompress(data, 0)[0] if tilemap.is_lz(dest) else data)
+    except Exception:
+        return True
+
+
 def _gfx_edited(dest, png, data, gfx):
     """A graphics pair counts as edited if the .bin differs from the ROM or
     the PNG no longer encodes to it (an edit not yet built, which rewriting
@@ -562,7 +578,7 @@ def main() -> int:
     count = 0
     written = set()
     kept = []
-    pngs = gfx_skipped = 0
+    pngs = gfx_skipped = grids = 0
     try:
         import gfx
         from PIL import Image  # noqa: F401
@@ -586,18 +602,34 @@ def main() -> int:
         dest.parent.mkdir(parents=True, exist_ok=True)
         data = rom[off:off + length]
         is_gfx = spec == "gfx" or (spec or "").startswith("gfx:")
+        is_grid = path.endswith(".bin") and (spec or "").startswith("tilemap:")
         if keep:
             png = dest.with_suffix(".png")
+            grid = dest.with_suffix(".tilemap")
             if (_gfx_edited(dest, png, data, gfx) if is_gfx and gfx_ok
+                    else _grid_edited(dest, grid, data) if is_grid
                     else _edited(dest, (data if not spec and not path.endswith(".asm")
                                         else (render_spec(data, spec) if spec
                                               else render_text(data)).encode()))):
                 kept.append(path)
                 written.add(path)
-                if is_gfx and png.exists():
-                    written.add(str(png.relative_to(outdir)))
+                for side in (png, grid):
+                    if side.exists():
+                        written.add(str(side.relative_to(outdir)))
                 count += 1
                 continue
+        if is_grid:
+            # the .bin, then the editable grid, then the .bin again so it is
+            # the newer file and make leaves it alone until the grid changes
+            grid = dest.with_suffix(".tilemap")
+            dest.write_bytes(data)
+            tilemap.decode(dest, grid, int(spec.partition(":")[2]))
+            written.add(str(grid.relative_to(outdir)))
+            grids += 1
+            dest.write_bytes(data)
+            written.add(path)
+            count += 1
+            continue
         if is_gfx:
             # the .bin as always, plus the PNG a modder edits; the .bin is
             # written last so it is the newer file and make leaves it alone
@@ -630,7 +662,7 @@ def main() -> int:
     stale = [f for d in sorted(outdir.glob("bank_*")) if d.is_dir()
              for f in sorted(d.rglob("*"))
              if f.is_file() and str(f.relative_to(outdir)) not in written
-             and not (f.suffix == ".inc"
+             and not (f.suffix in (".inc", ".tilemap")
                       and str(f.with_suffix(".bin").relative_to(outdir)) in written)]
     if not keep:
         for f in stale:
@@ -643,6 +675,8 @@ def main() -> int:
             print(f"  kept {path}")
     if pngs:
         note += f", {pngs} graphics PNGs"
+    if grids:
+        note += f", {grids} tilemap grids"
     if gfx_skipped:
         note += f" ({gfx_skipped} gfx blobs not a whole number of tiles)"
     print(f"extracted {count} files to {outdir}/{note}")

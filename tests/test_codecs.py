@@ -78,6 +78,25 @@ class TileImages(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.gfx.parse_layout("3x")
 
+    def test_tilemap_grid_round_trip(self):
+        import tilemap
+        rng = random.Random(7)
+        for size, width in ((1024, 32), (4096, 64), (576, 32), (40, 20), (14, 14), (37, 32)):
+            data = bytes(rng.getrandbits(8) for _ in range(size))
+            text = tilemap.grid_text(data, width, "T")
+            self.assertEqual(tilemap.grid_bytes(text), data, (size, width))
+            self.assertEqual(text.count("\n\ttilemap_row "), size // width)
+        with self.assertRaises(ValueError):
+            tilemap.grid_bytes("\ttilemap_begin 4, 1\n\ttilemap_row $00, $01\n\ttilemap_end\n")
+        with tempfile.TemporaryDirectory() as d:
+            data = bytes(rng.getrandbits(8) & 3 for _ in range(1024))
+            p = os.path.join(d, "lz_Map.bin")
+            with open(p, "wb") as f:
+                f.write(lz.compress(data))
+            self.assertEqual(tilemap.decode(p, p[:-4] + ".tilemap", 32), 32)
+            tilemap.encode(p[:-4] + ".tilemap", p)
+            self.assertEqual(lz.decompress(open(p, "rb").read(), 0)[0], data)
+
     def test_plain_image_grows_when_drawn_past_its_end(self):
         rng = random.Random(5)
         data = bytes(rng.getrandbits(8) | 1 for _ in range(17 * 16))
@@ -109,7 +128,8 @@ class TileImages(unittest.TestCase):
             with open(romp, "wb") as f:
                 f.write(rom)
             with open(man, "w") as f:
-                f.write("bank_000/Tiles.bin 000000 40 gfx\nbank_000/Blob.bin 000040 10\n")
+                f.write("bank_000/Tiles.bin 000000 40 gfx\nbank_000/Blob.bin 000040 10\n"
+                        "bank_000/Map.bin 000050 40 tilemap:32\n")
             run = lambda *a: subprocess.run(  # noqa: E731
                 [sys.executable, str(TOOLS / "extract.py"), *a, romp, man, out],
                 capture_output=True, text=True, check=True).stdout
@@ -126,11 +146,16 @@ class TileImages(unittest.TestCase):
             for k, v in img.text.items():
                 info.add_text(k, v)
             img.save(png, pnginfo=info)
+            grid = os.path.join(out, "bank_000", "Map.tilemap")
+            with open(grid) as f:
+                gtext = f.read()
+            with open(grid, "w") as f:
+                f.write(gtext.replace("tilemap_row $", "tilemap_row $ff, $", 1).replace("$ff, $", "$ff,$", 0))
             stale = os.path.join(out, "bank_000", "old.bin")
             with open(stale, "wb") as f:
                 f.write(b"x")
             outp = run("--keep")
-            self.assertIn("kept 2 edited", outp)
+            self.assertIn("kept 3 edited", outp)
             self.assertEqual(open(blob, "rb").read(), b"edited")
             self.assertNotEqual(self.gfx.image_file_to_tiles(png), rom[:0x40])
             self.assertTrue(os.path.exists(stale))

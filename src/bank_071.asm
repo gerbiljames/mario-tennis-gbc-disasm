@@ -767,4 +767,4 @@ WalkSprite_71_09_Anim01:
 	anim_frame $01, $1e
 	anim_loop $00
 WalkSprite_71_09_Anim02:
-	ds 519, $ff ; $7df9, fill
+	; $7df9, 519 bytes fill to bank end (linker-padded)

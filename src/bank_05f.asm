@@ -57,4 +57,4 @@ CourtyardSceneConfig:
 CourtyardScoreboardColumnAttrs:
 	INCBIN "data/bank_05f/CourtyardScoreboardColumnAttrs.bin" ; $592c, 40 bytes
 CourtyardSceneUnusedSlot:
-	ds 9900, $ff ; $5954, fill
+	; $5954, 9900 bytes fill to bank end (linker-padded)
