@@ -19,6 +19,9 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT / "tools"))
+from banksrc import bank_text  # noqa: E402
+
 BANK_SIZE = 0x4000
 
 _SEG_RE = re.compile(r'"((?:[^"\\]|\\.)*)"|([A-Za-z_]\w*)')
@@ -59,7 +62,7 @@ def dump_indexed(want_bank, min_len, pat):
             pool[label] = txt
         table = re.findall(r"\tdw TextStrings_%02x\.s(\d+) - TextStrings_%02x ; (\d+)"
                            % (bank, bank),
-                           (ROOT / "src" / f"bank_{bank:03x}.asm").read_text())
+                           bank_text(ROOT / "src" / f"bank_{bank:03x}.asm"))
         for s, index in table:
             text = pool.get(int(s), "")
             if len(text) >= min_len and (pat is None or pat.search(text)):

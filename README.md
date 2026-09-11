@@ -190,10 +190,20 @@ it is and reported, and nothing is deleted.
 
 ## Layout
 
-- `src/bank_XXX.asm` — one file per ROM bank. Code is disassembled;
-  data is either structured source, a generated `INCLUDE` from `data/`
-  (text, palettes, sound tables — decoded structure whose values are ROM
-  content), or an `INCBIN` of a named blob.
+- `src/bank_XXX.asm` — one holder per ROM bank: its `SECTION` line, any
+  decoded-length includes, and the ordered `INCLUDE` list of the fragment
+  files that hold its contents. The fragments live by subsystem, named
+  `<topic>_<bank>.asm` after the routines that dominate them:
+  `src/home/` (bank `$00`), `src/engine/{match,story,minigames,text,menus,
+  cutscenes,save}/`, `src/story/` (the location scripts), `src/audio/`
+  (the sound engine and the sound banks) and `src/data/{shots,text,sprites,
+  scenes,gfx}/` (the banks that are only tables and blobs). A bank's order
+  is the holder's include order, so a fragment can be edited, split or
+  moved without touching the bytes. Code is disassembled; data is either
+  structured source, a generated `INCLUDE` from `data/` (text, palettes,
+  sound tables — decoded structure whose values are ROM content), or an
+  `INCBIN` of a named blob. `tools/banksrc.py` reads a bank whole for the
+  tools.
 - `ram/`, `include/` — RAM declarations; hardware, macro, constant, flag,
   text-id and mirrored-RAM includes (`hardware.inc` is CC0).
 - `data.manifest` — offset/length/spec list `tools/extract.py` slices the

@@ -17,12 +17,14 @@ usage: twins.py [--min N] [--json FILE]
 """
 import argparse
 import collections
-import glob
 import json
 import re
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT / "tools"))
+from banksrc import bank_lines, bank_of, holders  # noqa: E402
 _LABEL_RE = re.compile(r"^([A-Za-z_]\w*):")
 _SUFFIX_RE = re.compile(r"\b([A-Za-z]\w*?)_[0-9a-f]{2}\b")
 
@@ -30,15 +32,15 @@ _SUFFIX_RE = re.compile(r"\b([A-Za-z]\w*?)_[0-9a-f]{2}\b")
 def routines(min_instrs):
     """name -> (bank, normalised line tuple, instruction count)."""
     out = {}
-    for f in sorted(glob.glob(str(ROOT / "src" / "bank_*.asm"))):
-        bank = int(f[-7:-4], 16)
+    for f in holders():
+        bank = bank_of(f)
         cur, seq, n = None, [], 0
 
         def flush():
             if cur and n >= min_instrs and "Unused" not in cur:
                 out[cur] = (bank, tuple(seq), n)
 
-        for line in open(f):
+        for line in bank_lines(f)[0]:
             m = _LABEL_RE.match(line)
             if m:
                 flush()
@@ -46,7 +48,7 @@ def routines(min_instrs):
                 continue
             if not line.startswith("\t") or line.startswith("\t;"):
                 continue
-            body = line.split(" ; ")[0].rstrip("\n")
+            body = line.split(" ; ")[0]
             seq.append(_SUFFIX_RE.sub(r"\1", body))
             if " ; $" in line and not body.startswith(("\tdb", "\tdw", "\tds",
                                                          "\tINCBIN", "\tINCLUDE")):

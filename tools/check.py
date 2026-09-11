@@ -27,6 +27,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
+from banksrc import bank_lines, bank_of, holders
 from lz import compress, decompress
 
 ROOT = BANK = None
@@ -119,10 +120,10 @@ def check_stranded_scopes(fail):
     where its `.loop`/`.done` read as part of the script. The mix is the signal:
     the two never belong to one symbol."""
     found = {}
-    for path in sorted((ROOT / "src").glob("bank_*.asm")):
-        bank = int(path.stem.split("_")[1], 16)
+    for path in holders():
+        bank = bank_of(path)
         scope, kinds, entry = None, {}, {}
-        for line in path.read_text().split("\n"):
+        for line in bank_lines(path)[0]:
             m = _GLOBAL_RE.match(line)
             if m:
                 scope = m.group(1)
@@ -248,9 +249,9 @@ def check_collapsed_branches(fail):
     $00 -- so a target has to be resolved inside its own scope or the answer is
     whichever `.done` came first in the file."""
     found = set()
-    for path in sorted((ROOT / "src").glob("bank_*.asm")):
-        bank = int(path.stem.split("_")[1], 16)
-        lines = path.read_text().split("\n")
+    for path in holders():
+        bank = bank_of(path)
+        lines = bank_lines(path)[0]
         addr_of, scope = {}, None
         for i, line in enumerate(lines):
             g, lo = _GLOBAL_RE.match(line), _LOCAL_RE.match(line)

@@ -9,13 +9,15 @@ import sys
 import unittest
 
 from tests.helpers import ROOT, needs_rom
+from banksrc import bank_text, holders
 
-SRC = sorted((ROOT / "src").glob("bank_*.asm"))
+# each bank as one text, its fragment files expanded in place
+SRC = [(h.name, bank_text(h)) for h in holders()]
 
 
 def count(pattern):
     rx = re.compile(pattern, re.M)
-    return sum(len(rx.findall(f.read_text())) for f in SRC)
+    return sum(len(rx.findall(text)) for _, text in SRC)
 
 
 class Source(unittest.TestCase):
@@ -51,11 +53,10 @@ class Source(unittest.TestCase):
         n = count(r"^\tld c, (\w+)_SIZE / 16 ;")
         self.assertGreaterEqual(n, 90)
         # every _SIZE constant used is INCLUDEd from the .inc beside its blob
-        for f in SRC:
-            text = f.read_text()
+        for name, text in SRC:
             used = set(re.findall(r"\bld c, (\w+)_SIZE / 16", text))
             have = set(re.findall(r'INCLUDE "data/bank_[0-9a-f]{3}/lz_(\w+)\.inc"', text))
-            self.assertEqual(used - have, set(), f.name)
+            self.assertEqual(used - have, set(), name)
         self.assertGreaterEqual(count(r"^\tld c, \$[0-9a-f]{2} ; \$[0-9a-f]{4} -- \d+ of \w+'s \d+ tiles"), 25)
 
     def test_data_files_are_named_after_labels(self):

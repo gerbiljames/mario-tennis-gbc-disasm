@@ -103,7 +103,7 @@ def literal_refs():
     unresolved operands): {(space, bank or None): set}."""
     refs = set()
     rx = re.compile(r"\$([cd][0-9a-f]{3}|ff[89a-f][0-9a-f])\b")
-    for f in glob.glob(str(ROOT / "src" / "bank_*.asm")):
+    for f in (ROOT / "src").rglob("*.asm"):
         for line in open(f):
             if not line.startswith("\t") or line.startswith(("\tdb", "\tdw", "\t;")):
                 continue

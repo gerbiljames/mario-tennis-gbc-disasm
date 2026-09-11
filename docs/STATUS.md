@@ -111,6 +111,18 @@ blob.
 
 ## Recent changes
 
+* **2026-09-11** — the source is split by subsystem. Each
+  `src/bank_XXX.asm` is now a holder — the `SECTION` line, the
+  decoded-length includes, and an ordered `INCLUDE` list — and the
+  contents live in 400 fragment files under `src/home/`,
+  `src/engine/<subsystem>/`, `src/story/`, `src/audio/` and
+  `src/data/<kind>/`, each named `<topic>_<bank>.asm` after the routines
+  that dominate it (cut at label boundaries where the topic changes,
+  400-1000 lines each; the pure data banks are one file apiece, named for
+  what they hold). The bytes are unchanged, the holder's include order is
+  the bank's layout, and `tools/banksrc.py` gives the tools a bank whole.
+  Make dependencies come from `tools/deps.py` (`build/deps.mk`). The docs'
+  `src/bank_XXX.asm:line` references were mapped to the fragment files.
 * **2026-09-11** — the id pass. The big families (character, court,
   game-mode, location, minigame, shot-type, sound) were already applied
   where the generator's constants keyed them; a data-flow scan from each

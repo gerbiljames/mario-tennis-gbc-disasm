@@ -1,0 +1,894 @@
+CheckAwardsCeremonyRivalSceneDone:
+	test_flag FLAG_DOUBLES ; $5f7a
+	jr z, .zero ; $5f7d
+	ld a, $00 ; $5f7f
+	test_flag FLAG_AWARDS_CEREMONY_SEEN_DOUBLES ; $5f81
+	jr z, .done ; $5f84
+	ld a, $01 ; $5f86
+	jr .done ; $5f88
+.zero:
+	ld a, $00 ; $5f8a
+	test_flag FLAG_AWARDS_CEREMONY_SEEN_SINGLES ; $5f8c
+	jr z, .done ; $5f8f
+	ld a, $01 ; $5f91
+.done:
+	ret ; $5f93
+TournamentMapScripts_0f:
+	; $5f94, 14 bytes (map_tree)
+	dw TournamentEntryPoints_0f ; slot 0 EntryPoints
+	dw TournamentExitTriggers_0f ; slot 1 ExitTriggers
+	dw TournamentActors_0f ; slot 2 Actors
+	dw TournamentNpcScripts_0f ; slot 3 NpcScripts
+	dw TournamentFacingScripts_0f ; slot 4 FacingScripts
+	dw TournamentTileTriggers_0f ; slot 5 TileTriggers
+	dw TournamentInitScript_0f ; slot 6 InitScript
+TournamentActors_0f:
+	; $5fa2, 206 bytes (map_actors)
+	map_actor $0000, ActorScript_0f_09, $2700, $1100, FACE_LEFT, $25, $01, $00
+	map_actor $0000, ActorScript_0f_09, $1300, $0f00, FACE_DOWN, $25, $01, $00
+	map_actor $0000, ActorScript_0f_09, $0100, $0c00, FACE_RIGHT, $25, $01, $00
+	map_actor $0000, ActorScript_0f_09, $2300, $1100, FACE_UP, $5c, $01, $00
+	map_actor $0000, ActorScript_0f_11, $2300, $1700, FACE_UP, $5b, $01, $00
+	map_actor $0000, ActorScript_0f_09, $2100, $1100, FACE_RIGHT, $5a, $01, $00
+	map_actor $0000, ActorScript_0f_09, $2900, $1700, FACE_LEFT, $5f, $01, $00
+	map_actor $0000, ActorScript_0f_09, $1100, $1500, FACE_DOWN, $5d, $01, $00
+	map_actor $0000, ActorScript_0f_09, $1900, $1300, FACE_DOWN, $60, $01, $00
+	map_actor $0000, ActorScript_0f_09, $1700, $1300, FACE_DOWN, $61, $01, $00
+	map_actor $0000, ActorScript_0f_09, $0f00, $1300, FACE_DOWN, $62, $01, $00
+	map_actor $0000, ActorScript_0f_09, $1900, $1500, FACE_DOWN, $5e, $01, $00
+	map_actor $0000, ActorScript_0f_09, $1700, $1500, FACE_DOWN, $1e, $01, $00
+	map_actor $0000, ActorScript_0f_09, $1100, $1300, FACE_DOWN, $1f, $01, $00
+	map_actor_end
+TournamentEntryPoints_0f:
+	; $6070, 65 bytes (map_entries)
+	map_entry $01, FACE_DOWN, $0e00, $0900, $0000
+	map_entry $02, FACE_DOWN, $2a00, $0900, $0000
+	map_entry $03, FACE_RIGHT, $0500, $0b00, $0000
+	map_entry $04, FACE_LEFT, $3300, $0b00, $0000
+	map_entry $05, FACE_UP, $1c00, $2300, $0000
+	map_entry $0a, FACE_DOWN, $2500, $1100, $0000
+	map_entry $0b, FACE_DOWN, $2300, $1100, $0000
+	map_entry $0f, FACE_UP, $1b00, $3100, $0000
+	db $ff
+TournamentExitTriggers_0f:
+	; $60b1, 41 bytes (map_scripts:exit)
+	map_script $01, FACEMASK_ANY, $0000, TournamentExit_0f, STORYLOC_CENTER_COURT, $01
+	map_script $02, FACEMASK_ANY, $0000, TournamentExit_0f, STORYLOC_CENTER_COURT, $02
+	map_script $03, FACEMASK_ANY, $0000, TournamentExit_0f, STORYLOC_COURT_2, $01
+	map_script $04, FACEMASK_ANY, $0000, TournamentExit_0f, STORYLOC_COURT_1, $01
+	map_script $05, FACEMASK_ANY, $0000, TournamentExit_0f, STORYLOC_TOURNAMENT_COURTYARD, $03
+	db $ff
+TournamentExit_0f:
+	clear_flag FLAG_ISLAND_OPEN_IN_PROGRESS ; $60da
+	ret ; $60dd
+TournamentNpc0A_0f:
+	script_set_text Text_1f_163 ; $60de
+	ld a, $0b ; $60e4
+	farcall ScriptShowSpeakerDialogueRestoreBG ; $60e6
+	farcall RunDialogueYesNoPrompt ; $60e9
+	farcall ScriptCloseDialogueWindow ; $60ec
+	script_wait_frames $05 ; $60ef
+	and a ; $60f6
+	jr z, .speak ; $60f7
+	farcall AdvanceDialogueTextCursor ; $60f9
+.speak:
+	script_speak $0b ; $60fc
+	ret ; $6101
+TournamentNpcScripts_0f:
+	; $6102, 105 bytes (map_scripts)
+	map_script $06, FACEMASK_ANY, $0000, Text_1f_159, $03, $00
+	map_script $07, FACEMASK_ANY, $0000, Text_1f_160, $13, $00
+	map_script $08, FACEMASK_ANY, $0000, Text_1f_161, $03, $00
+	map_script $09, FACEMASK_ANY, $0000, Text_1f_162, $03, $00
+	map_script $0a, FACEMASK_ANY, $0000, TournamentNpc0A_0f, $03, $00
+	map_script $0b, FACEMASK_ANY, $0000, Text_1f_166, $03, $00
+	map_script $0c, FACEMASK_ANY, $0000, Text_1f_167, $03, $00
+	map_script $0d, FACEMASK_ANY, $0000, Text_1f_168, $03, $00
+	map_script $0e, FACEMASK_ANY, $0000, Text_1f_169, $03, $00
+	map_script $0f, FACEMASK_ANY, $0000, Text_1f_170, $03, $00
+	map_script $10, FACEMASK_ANY, $0000, Text_1f_171, $03, $00
+	map_script $03, FACEMASK_ANY, $0000, TournamentNpc03_0f, $03, $00
+	map_script $04, FACEMASK_ANY, $0000, TournamentNpc04_0f, $03, $00
+	db $ff
+TournamentFacingScripts_0f:
+	; $616b, 9 bytes (map_scripts)
+	map_script $01, FACEMASK_ANY, $0000, TournamentFacing01_0f, $00, $00
+	db $ff
+TournamentFacing01_0f:
+	xor a ; $6174
+	ldh [hBGColumnBlitPending], a ; $6175
+	ldh [hBGRowBlitPending], a ; $6177
+	ldh [hScrollY], a ; $6179
+	ldh [hScrollX], a ; $617b
+	ld [wCameraX + 1], a ; $617d
+	ld [wCameraY + 1], a ; $6180
+	call ClearFrameTasks ; $6183
+	call GetIslandOpenRoundParams ; $6186
+	ld d, $03 ; $6189
+	farcall ShowRankingBoard ; $618b
+	ld hl, wStoryModePlayersXPosition ; $618e
+	ld de, wStoryModeSpawnPosition ; $6191
+	ld bc, $0005 ; $6194
+	call CopyMemoryBC ; $6197
+	ld a, STORYENTRY_NONE ; $619a
+	ld [wStoryModeEntryPoint], a ; $619c
+	ld [wUnusedExitTriggerIdMirror], a ; $619f
+	ld [wStoryModeExitTriggerRequest], a ; $61a2
+	ret ; $61a5
+TournamentTileTriggers_0f:
+	; $61a6, 17 bytes (map_scripts)
+	map_script $0e, FACEMASK_ANY, $0000, TournamentTile0E_0f, $00, $00
+	map_script $0f, FACEMASK_ANY, $0000, TournamentTile0F_0f, $00, $00
+	db $ff
+TournamentTile0E_0f:
+	ld a, $01 ; $61b7
+	ld [wMapSceneStage2], a ; $61b9
+	script_null_script ACTOR_PARTNER ; $61bc
+	script_set_actor_script ACTOR_PLAYER, ActorScript_0f_01 ; $61c1
+	script_set_actor_script ACTOR_PARTNER, ActorScript_0f_02 ; $61cc
+	script_wait_actor_script ACTOR_PLAYER ; $61d7
+	call IslandOpenRoundCallCutscene ; $61dc
+	ret ; $61df
+ActorScript_0f_01:
+	; $61e0, 11 bytes (actor_script)
+	as_set_target $1100, $1500
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_halt
+ActorScript_0f_02:
+	; $61eb, 11 bytes (actor_script)
+	as_set_target $0f00, $1500
+	as_wait_move
+	as_set_field $14, FACE_DOWN
+	as_halt
+TournamentTile0F_0f:
+	ld a, $00 ; $61f6
+	ld [wMapSceneStage2], a ; $61f8
+	script_set_actor_script ACTOR_PLAYER, ActorScript_0f_02 ; $61fb
+	script_wait_actor_script ACTOR_PLAYER ; $6206
+	call IslandOpenRoundCallCutscene ; $620b
+	ret ; $620e
+TournamentInitScript_0f:
+	ld a, $01 ; $620f
+	ld hl, UpdateTournamentActorDrawModes_0f ; $6211
+	call RegisterFrameTask ; $6214
+	ld a, [wStoryModeEntryPoint] ; $6217
+	cp STORYENTRY_NONE ; $621a
+	jr z, .inProgress ; $621c
+	clear_flag FLAG_ISLAND_OPEN_IN_PROGRESS ; $621e
+.inProgress:
+	test_flag FLAG_ISLAND_OPEN_IN_PROGRESS ; $6221
+	jp z, .notInProgress ; $6224
+	call ComputeIslandOpenRound ; $6227
+	ld a, [wMapSceneStage] ; $622a
+	and a ; $622d
+	jr nz, .singles ; $622e
+	ldh a, [hRomBank] ; $6230
+	ld hl, IslandOpenRoundActors_0f ; $6232
+	farcall ScriptRespawnLocationActors ; $6235
+	ld hl, IslandOpenRoundScripts_0f ; $6238
+	ld de, $000c ; $623b
+	farcall WriteStoryStateWord ; $623e
+	farcall BeginCutsceneScriptMode ; $6241
+	script_set_position $03, $1c00, $1c00 ; $6244
+	script_set_position $04, $1c00, $1f00 ; $624f
+	script_set_position $05, $1d00, $2100 ; $625a
+	script_face $03, FACE_DOWN ; $6265
+	script_face $04, FACE_DOWN ; $626c
+	script_face $05, FACE_LEFT ; $6273
+	test_flag FLAG_DOUBLES ; $627a
+	jr z, .setObjectDefs ; $627d
+	script_set_position $05, $3f00, $3f00 ; $627f
+.setObjectDefs:
+	call SetPlayerAndPartnerObjectDefs ; $628a
+	ret ; $628d
+.singles:
+	test_flag FLAG_DOUBLES ; $628e
+	jr nz, .doubles ; $6291
+	ldh a, [hRomBank] ; $6293
+	ld hl, IslandOpenRoundActorsSingles_0f ; $6295
+	farcall ScriptRespawnLocationActors ; $6298
+	ld hl, IslandOpenRoundScriptsSingles_0f ; $629b
+	ld de, $000c ; $629e
+	farcall WriteStoryStateWord ; $62a1
+	farcall BeginCutsceneScriptMode ; $62a4
+	call SetPlayerAndPartnerObjectDefs ; $62a7
+	script_face $03, FACE_RIGHT ; $62aa
+	script_set_position $04, $2700, $1300 ; $62b1
+	script_face $04, FACE_LEFT ; $62bc
+	ret ; $62c3
+.doubles:
+	ldh a, [hRomBank] ; $62c4
+	ld hl, IslandOpenRoundActorsDoubles_0f ; $62c6
+	farcall ScriptRespawnLocationActors ; $62c9
+	ld hl, IslandOpenRoundScriptsDoubles_0f ; $62cc
+	ld de, $000c ; $62cf
+	farcall WriteStoryStateWord ; $62d2
+	farcall BeginCutsceneScriptMode ; $62d5
+	call SetPlayerAndPartnerObjectDefs ; $62d8
+	script_face_toward ACTOR_PLAYER, $04 ; $62db
+	script_face $03, FACE_RIGHT ; $62e3
+	ret ; $62ea
+.notInProgress:
+	ld a, [wStoryModeEntryPoint] ; $62eb
+	cp $0f ; $62ee
+	jr nz, .placeActors ; $62f0
+	call IslandOpenArrivalCutscene ; $62f2
+	ret ; $62f5
+.placeActors:
+	cp $0a ; $62f6
+	jr nz, .placeActorsDoubles ; $62f8
+	call IslandOpenSinglesMatchReturn ; $62fa
+	ret ; $62fd
+.placeActorsDoubles:
+	cp $0b ; $62fe
+	jr nz, .done ; $6300
+	call IslandOpenDoublesMatchReturn ; $6302
+	ret ; $6305
+.done:
+	call LoadIslandOpenRoundNpcs ; $6306
+	call SetPlayerAndPartnerObjectDefs ; $6309
+	call WalkActorsInFromEntryPoint_0f ; $630c
+	ret ; $630f
+UpdateTournamentActorDrawModes_0f:
+	ld a, $00 ; $6310
+	call SetActorDrawModeFromSceneTile_0f ; $6312
+	test_flag FLAG_DOUBLES ; $6315
+	ret z ; $6318
+	ld a, $02 ; $6319
+	call SetActorDrawModeFromSceneTile_0f ; $631b
+	ret ; $631e
+SetActorDrawModeFromSceneTile_0f:
+	ld h, a ; $631f
+	ld l, $00 ; $6320
+	push af ; $6322
+	wram_bank $04 ; $6323
+	srl h ; $6329
+	rr l ; $632b
+	srl h ; $632d
+	rr l ; $632f
+	ld bc, wActors ; $6331
+	add hl, bc ; $6334
+	ld b, h ; $6335
+	ld c, l ; $6336
+	ld hl, $000c ; $6337
+	add hl, bc ; $633a
+	ld a, [hl+] ; $633b
+	ld h, [hl] ; $633c
+	ld l, a ; $633d
+	ld de, $ffb0 ; $633e
+	add hl, de ; $6341
+	ld d, h ; $6342
+	ld hl, $000e ; $6343
+	add hl, bc ; $6346
+	ld a, [hl+] ; $6347
+	add $40 ; $6348
+	ld a, [hl] ; $634a
+	adc $00 ; $634b
+	ld e, a ; $634d
+	dec e ; $634e
+	pop af ; $634f
+	or a ; $6350
+	jr z, .readCell ; $6351
+	dec e ; $6353
+	dec e ; $6354
+.readCell:
+	push de ; $6355
+	call ReadSceneTilemapTile_0f ; $6356
+	pop de ; $6359
+	and $87 ; $635a
+	cp $05 ; $635c
+	jr nz, .checkBelow ; $635e
+	wram_bank $04 ; $6360
+	ld hl, $0020 ; $6366
+	add hl, bc ; $6369
+	ld a, [hl] ; $636a
+	xor $01 ; $636b
+	ld [hl], a ; $636d
+	ret ; $636e
+.checkBelow:
+	inc d ; $636f
+	call ReadSceneTilemapTile_0f ; $6370
+	and $07 ; $6373
+	cp $05 ; $6375
+	jr nz, .actorLoop ; $6377
+	wram_bank $04 ; $6379
+	ld hl, $0020 ; $637f
+	add hl, bc ; $6382
+	ld a, [hl] ; $6383
+	xor $01 ; $6384
+	ld [hl], a ; $6386
+	ret ; $6387
+.actorLoop:
+	wram_bank $04 ; $6388
+	ld hl, $0020 ; $638e
+	add hl, bc ; $6391
+	ld a, $02 ; $6392
+	ld [hl], a ; $6394
+	ret ; $6395
+; SetActorDrawModeFromSceneTile_0f without the push af / pop af / or a / jr z that makes the live one skip on a zero argument. Nothing calls it.
+UnusedSetActorDrawModeFromSceneTileSingle_0f:
+	ld h, a ; $6396
+	ld l, $00 ; $6397
+	wram_bank $04 ; $6399
+	srl h ; $639f
+	rr l ; $63a1
+	srl h ; $63a3
+	rr l ; $63a5
+	ld bc, wActors ; $63a7
+	add hl, bc ; $63aa
+	ld b, h ; $63ab
+	ld c, l ; $63ac
+	ld hl, $000c ; $63ad
+	add hl, bc ; $63b0
+	ld a, [hl+] ; $63b1
+	ld h, [hl] ; $63b2
+	ld l, a ; $63b3
+	ld de, $ffb0 ; $63b4
+	add hl, de ; $63b7
+	ld d, h ; $63b8
+	ld hl, $000e ; $63b9
+	add hl, bc ; $63bc
+	ld a, [hl+] ; $63bd
+	add $40 ; $63be
+	ld a, [hl] ; $63c0
+	adc $00 ; $63c1
+	ld e, a ; $63c3
+	dec e ; $63c4
+	dec e ; $63c5
+	dec e ; $63c6
+	push de ; $63c7
+	call ReadSceneTilemapTile_0f ; $63c8
+	pop de ; $63cb
+	and $87 ; $63cc
+	cp $05 ; $63ce
+	jr nz, .nextActor ; $63d0
+	wram_bank $04 ; $63d2
+	ld hl, $0020 ; $63d8
+	add hl, bc ; $63db
+	ld a, [hl] ; $63dc
+	xor $01 ; $63dd
+	ld [hl], a ; $63df
+	ret ; $63e0
+.nextActor:
+	inc d ; $63e1
+	call ReadSceneTilemapTile_0f ; $63e2
+	and $07 ; $63e5
+	cp $05 ; $63e7
+	jr nz, .done ; $63e9
+	wram_bank $04 ; $63eb
+	ld hl, $0020 ; $63f1
+	add hl, bc ; $63f4
+	ld a, [hl] ; $63f5
+	xor $01 ; $63f6
+	ld [hl], a ; $63f8
+	ret ; $63f9
+.done:
+	wram_bank $04 ; $63fa
+	ld hl, $0020 ; $6400
+	add hl, bc ; $6403
+	ld a, $02 ; $6404
+	ld [hl], a ; $6406
+	ret ; $6407
+; Instruction-identical to ReadSceneTilemapTile_10 (one copy per bank); a change here belongs in every copy.
+ReadSceneTilemapTile_0f:
+	wram_bank $02 ; $6408
+	ld h, e ; $640e
+	ld l, $00 ; $640f
+	srl h ; $6411
+	rr l ; $6413
+	srl h ; $6415
+	rr l ; $6417
+	ld a, d ; $6419
+	add l ; $641a
+	ld l, a ; $641b
+	jr nc, .read ; $641c
+	inc h ; $641e
+.read:
+	ld d, h ; $641f
+	ld e, l ; $6420
+	ld l, c ; $6421
+	ld h, b ; $6422
+	add hl, de ; $6423
+	ld a, [hl] ; $6424
+	ret ; $6425
+IslandOpenArrivalCutscene:
+	set_flag FLAG_ISLAND_OPEN_IN_PROGRESS ; $6426
+	ldh a, [hRomBank] ; $6429
+	ld hl, IslandOpenRoundActors_0f ; $642b
+	farcall ScriptRespawnLocationActors ; $642e
+	ld hl, IslandOpenRoundScripts_0f ; $6431
+	ld de, $000c ; $6434
+	farcall WriteStoryStateWord ; $6437
+	farcall BeginCutsceneScriptMode ; $643a
+	call ReplacePartnerWithStandInActor ; $643d
+	script_player_speed $00ff ; $6440
+	script_move_player $1c00, $2500 ; $6446
+	farcall WaitPlayerMoveDone ; $6450
+	script_fade_in $04 ; $6453
+	call WaitFadeEnd ; $6458
+	script_player_speed $0018 ; $645b
+	script_move_player $1c00, $1b00 ; $6461
+	script_move_target $03, $1c00, $1c00 ; $646b
+	script_move_target $04, $1c00, $1f00 ; $6476
+	script_move_target $05, $1d00, $2100 ; $6481
+	script_move_target ACTOR_PLAYER, $1b00, $2100 ; $648c
+	script_wait_move ACTOR_PLAYER ; $6497
+	script_wait_frames $28 ; $649c
+	script_face $03, FACE_DOWN ; $64a3
+	script_set_text Text_1f_21 ; $64aa
+	script_face ACTOR_PLAYER, FACE_DOWN ; $64b0
+	script_wait_frames $28 ; $64b7
+	script_face ACTOR_PLAYER, FACE_LEFT ; $64be
+	script_wait_frames $28 ; $64c5
+	script_face ACTOR_PLAYER, FACE_UP ; $64cc
+	script_wait_frames $28 ; $64d3
+	script_face ACTOR_PLAYER, FACE_RIGHT ; $64da
+	script_wait_frames $28 ; $64e1
+	script_face ACTOR_PLAYER, FACE_DOWN ; $64e8
+	script_wait_frames $28 ; $64ef
+	script_set_anim ACTOR_PLAYER, $02 ; $64f6
+	script_wait_idle ACTOR_PLAYER ; $64fd
+	script_face $04, FACE_RIGHT ; $6502
+	script_face $04, FACE_DOWN ; $6509
+	script_face $05, FACE_LEFT ; $6510
+	script_wait_frames $14 ; $6517
+	script_set_anim $04, $04 ; $651e
+	script_wait_idle $04 ; $6525
+	script_speak $04 ; $652a
+	script_face ACTOR_PLAYER, FACE_UP ; $652f
+	script_wait_frames $28 ; $6536
+	script_set_anim ACTOR_PLAYER, $03 ; $653d
+	script_wait_idle ACTOR_PLAYER ; $6544
+	script_set_anim $03, $02 ; $6549
+	script_wait_idle $03 ; $6550
+	script_speak $03 ; $6555
+	script_set_anim ACTOR_PLAYER, $02 ; $655a
+	script_wait_idle ACTOR_PLAYER ; $6561
+	test_flag FLAG_DOUBLES ; $6566
+	jr nz, .doubles ; $6569
+	script_set_anim $05, $03 ; $656b
+	script_wait_idle $05 ; $6572
+	script_speak $05 ; $6577
+	set_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $657c
+	jr .walkOn ; $657f
+	ret ; $6581
+.doubles:
+	farcall AdvanceDialogueTextCursor ; $6582
+	script_set_anim $04, $03 ; $6585
+	script_wait_idle $04 ; $658c
+	script_speak $04 ; $6591
+	script_get_actor_state $05 ; $6596
+	ld c, l ; $659b
+	ld b, h ; $659c
+	ld de, wActors ; $659d
+	farcall AttachActorStepMover ; $65a0
+	set_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $65a3
+.walkOn:
+	script_player_speed $0018 ; $65a6
+	script_move_player $1c00, $1d00 ; $65ac
+	farcall WaitPlayerMoveDone ; $65b6
+	ld a, ISLANDOPENROUND_ROUND1 ; $65b9
+	ld [wMapSceneStage], a ; $65bb
+	farcall SaveStorySlotWithTimer ; $65be
+	ret ; $65c1
+IslandOpenRoundActors_0f:
+	; $65c2, 52 bytes (map_actors)
+	map_actor $0000, ActorScript_0f_09, $1c00, $2c00, FACE_UP, $5c, $01, $00
+	map_actor $0000, ActorScript_0f_09, $1c00, $2f00, FACE_UP, $5a, $01, $00
+	map_actor $0000, ActorScript_0f_09, $1d00, $3100, FACE_UP, $5b, $01, $00
+	map_actor_end
+IslandOpenRoundScripts_0f:
+	; $65f6, 25 bytes (map_scripts)
+	map_script $03, FACEMASK_ANY, $0000, Text_1f_25, $03, $00
+	map_script $04, FACEMASK_ANY, $0000, Text_1f_26, $03, $00
+	map_script $05, FACEMASK_ANY, $0000, Text_1f_27, $03, $00
+	db $ff
+ComputeIslandOpenRound:
+	test_flag FLAG_DOUBLES ; $660f
+	jr nz, .doubles ; $6612
+	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_SEMIFINAL ; $6614
+	jr z, .checkRound2 ; $6617
+	ld a, ISLANDOPENROUND_FINAL ; $6619
+	ld [wMapSceneStage], a ; $661b
+	ret ; $661e
+.checkRound2:
+	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_2 ; $661f
+	jr z, .checkRound1 ; $6622
+	ld a, ISLANDOPENROUND_SEMIFINAL ; $6624
+	ld [wMapSceneStage], a ; $6626
+	ret ; $6629
+.checkRound1:
+	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_1 ; $662a
+	jr z, .round0 ; $662d
+	ld a, ISLANDOPENROUND_ROUND2 ; $662f
+	ld [wMapSceneStage], a ; $6631
+	ret ; $6634
+.round0:
+	ld a, ISLANDOPENROUND_ROUND1 ; $6635
+	ld [wMapSceneStage], a ; $6637
+	ret ; $663a
+.doubles:
+	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_SEMIFINAL ; $663b
+	jr z, .doublesCheckRound2 ; $663e
+	ld a, ISLANDOPENROUND_FINAL ; $6640
+	ld [wMapSceneStage], a ; $6642
+	ret ; $6645
+.doublesCheckRound2:
+	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_ROUND_1 ; $6646
+	jr z, .round0 ; $6649
+	ld a, ISLANDOPENROUND_SEMIFINAL ; $664b
+	ld [wMapSceneStage], a ; $664d
+	ret ; $6650
+LoadIslandOpenRoundNpcs:
+	ld a, ISLANDOPENROUND_ROUND1 ; $6651
+	ld [wMapSceneStage], a ; $6653
+	test_flag FLAG_DOUBLES ; $6656
+	jr nz, LoadIslandOpenRoundNpcsDoubles ; $6659
+	ld a, $f1 ; $665b
+	ld d, $0e ; $665d
+	ld e, $14 ; $665f
+	farcall WriteBehaviorMapCell ; $6661
+	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_SEMIFINAL ; $6664
+	jr z, .round2 ; $6667
+	ldh a, [hRomBank] ; $6669
+	ld hl, IslandOpenFinalActors_0f ; $666b
+	farcall ScriptRespawnLocationActors ; $666e
+	ld hl, IslandOpenFinalScripts_0f ; $6671
+	ld de, $000c ; $6674
+	farcall WriteStoryStateWord ; $6677
+	ld a, ISLANDOPENROUND_FINAL ; $667a
+	ld [wMapSceneStage], a ; $667c
+	ret ; $667f
+.round2:
+	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_2 ; $6680
+	jr z, .round1 ; $6683
+	ldh a, [hRomBank] ; $6685
+	ld hl, IslandOpenSemifinalActors_0f ; $6687
+	farcall ScriptRespawnLocationActors ; $668a
+	ld hl, IslandOpenSemifinalScripts_0f ; $668d
+	ld de, $000c ; $6690
+	farcall WriteStoryStateWord ; $6693
+	ld a, ISLANDOPENROUND_SEMIFINAL ; $6696
+	ld [wMapSceneStage], a ; $6698
+	ret ; $669b
+.round1:
+	test_flag FLAG_WON_ISLAND_OPEN_SINGLES_ROUND_1 ; $669c
+	jr z, .done ; $669f
+	ldh a, [hRomBank] ; $66a1
+	ld hl, IslandOpenRound2Actors_0f ; $66a3
+	farcall ScriptRespawnLocationActors ; $66a6
+	ld hl, IslandOpenRound2Scripts_0f ; $66a9
+	ld de, $000c ; $66ac
+	farcall WriteStoryStateWord ; $66af
+	ld a, ISLANDOPENROUND_ROUND2 ; $66b2
+	ld [wMapSceneStage], a ; $66b4
+.done:
+	ret ; $66b7
+LoadIslandOpenRoundNpcsDoubles:
+	ld a, $e1 ; $66b8
+	ld d, $0e ; $66ba
+	ld e, $14 ; $66bc
+	farcall WriteBehaviorMapCell ; $66be
+	ld a, $e1 ; $66c1
+	ld d, $10 ; $66c3
+	ld e, $14 ; $66c5
+	farcall WriteBehaviorMapCell ; $66c7
+	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_SEMIFINAL ; $66ca
+	jr z, .round2 ; $66cd
+	ldh a, [hRomBank] ; $66cf
+	ld hl, IslandOpenFinalActorsDoubles_0f ; $66d1
+	farcall ScriptRespawnLocationActors ; $66d4
+	ld hl, IslandOpenFinalScriptsDoubles_0f ; $66d7
+	ld de, $000c ; $66da
+	farcall WriteStoryStateWord ; $66dd
+	ld a, ISLANDOPENROUND_FINAL ; $66e0
+	ld [wMapSceneStage], a ; $66e2
+	ret ; $66e5
+.round2:
+	test_flag FLAG_WON_ISLAND_OPEN_DOUBLES_ROUND_1 ; $66e6
+	jr z, .round1 ; $66e9
+	ldh a, [hRomBank] ; $66eb
+	ld hl, IslandOpenSemifinalActorsDoubles_0f ; $66ed
+	farcall ScriptRespawnLocationActors ; $66f0
+	ld hl, IslandOpenSemifinalScriptsDoubles_0f ; $66f3
+	ld de, $000c ; $66f6
+	farcall WriteStoryStateWord ; $66f9
+	ld a, ISLANDOPENROUND_SEMIFINAL ; $66fc
+	ld [wMapSceneStage], a ; $66fe
+	ret ; $6701
+.round1:
+	ldh a, [hRomBank] ; $6702
+	ld hl, IslandOpenRound1ActorsDoubles_0f ; $6704
+	farcall ScriptRespawnLocationActors ; $6707
+	ld hl, IslandOpenRound1ScriptsDoubles_0f ; $670a
+	ld de, $000c ; $670d
+	farcall WriteStoryStateWord ; $6710
+	ret ; $6713
+IslandOpenRound2Actors_0f:
+	; $6714, 206 bytes (map_actors)
+	map_actor $0000, ActorScript_0f_09, $2700, $1100, FACE_LEFT, $25, $01, $00
+	map_actor $0000, ActorScript_0f_09, $1300, $0f00, FACE_DOWN, $25, $01, $00
+	map_actor $0000, ActorScript_0f_09, $0100, $0b00, FACE_RIGHT, $25, $01, $00
+	map_actor $0000, ActorScript_0f_09, $1900, $1500, FACE_DOWN, $5c, $01, $00
+	map_actor $0000, ActorScript_0f_09, $1900, $1300, FACE_DOWN, $5b, $01, $00
+	map_actor $0000, ActorScript_0f_09, $1100, $1300, FACE_DOWN, $5a, $01, $00
+	map_actor $0000, ActorScript_0f_09, $1d00, $1100, FACE_RIGHT, $5d, $01, $00
+	map_actor $0000, ActorScript_0f_09, $1100, $1500, FACE_DOWN, $5f, $01, $00
+	map_actor $0000, ActorScript_0f_09, $2900, $1900, FACE_LEFT, $60, $01, $00
+	map_actor $0000, ActorScript_0f_09, $1700, $1300, FACE_DOWN, $61, $01, $00
+	map_actor $0000, ActorScript_0f_09, $0f00, $1300, FACE_DOWN, $62, $01, $00
+	map_actor $0000, ActorScript_0f_09, $1d00, $1500, FACE_DOWN, $5e, $01, $00
+	map_actor $0000, ActorScript_0f_09, $1700, $1500, FACE_DOWN, $1e, $01, $00
+	map_actor $0000, ActorScript_0f_08, $2900, $1300, FACE_DOWN, $1f, $01, $00
+	map_actor_end
+IslandOpenRound2Scripts_0f:
+	; $67e2, 105 bytes (map_scripts)
+	map_script $06, FACEMASK_ANY, $0000, Text_1f_182, $03, $00
+	map_script $07, FACEMASK_ANY, $0000, Text_1f_183, $03, $00
+	map_script $08, FACEMASK_ANY, $0000, Text_1f_184, $03, $00
+	map_script $09, FACEMASK_ANY, $0000, Text_1f_185, $03, $00
+	map_script $0a, FACEMASK_ANY, $0000, Text_1f_186, $03, $00
+	map_script $0b, FACEMASK_ANY, $0000, Text_1f_187, $03, $00
+	map_script $0c, FACEMASK_ANY, $0000, Text_1f_188, $03, $00
+	map_script $0d, FACEMASK_ANY, $0000, Text_1f_189, $03, $00
+	map_script $0e, FACEMASK_ANY, $0000, Text_1f_190, $03, $00
+	map_script $0f, FACEMASK_ANY, $0000, Text_1f_191, $03, $00
+	map_script $10, FACEMASK_ANY, $0000, Text_1f_192, $13, $00
+	map_script $03, FACEMASK_ANY, $0000, TournamentNpc03_0f, $03, $00
+	map_script $04, FACEMASK_ANY, $0000, TournamentNpc04_0f, $03, $00
+	db $ff
+IslandOpenSemifinalActors_0f:
+	; $684b, 206 bytes (map_actors)
+	map_actor $0000, ActorScript_0f_09, $2700, $1100, FACE_LEFT, $25, $01, $00
+	map_actor $0000, ActorScript_0f_09, $1300, $0f00, FACE_DOWN, $25, $01, $00
+	map_actor $0000, ActorScript_0f_09, $0100, $0b00, FACE_RIGHT, $25, $01, $00
+	map_actor $0000, ActorScript_0f_09, $1700, $1500, FACE_DOWN, $5c, $01, $00
+	map_actor $0000, ActorScript_0f_11, $2300, $1700, FACE_UP, $5b, $01, $00
+	map_actor $0000, ActorScript_0f_09, $1d00, $1100, FACE_RIGHT, $5d, $01, $00
+	map_actor $0000, ActorScript_0f_09, $2900, $1700, FACE_LEFT, $5f, $01, $00
+	map_actor $0000, ActorScript_0f_09, $1100, $1500, FACE_DOWN, $5a, $01, $00
+	map_actor $0000, ActorScript_0f_09, $2900, $1900, FACE_LEFT, $60, $01, $00
+	map_actor $0000, ActorScript_0f_09, $1900, $1500, FACE_DOWN, $61, $01, $00
+	map_actor $0000, ActorScript_0f_10, $0700, $1f00, FACE_DOWN, $62, $01, $00
+	map_actor $0000, ActorScript_0f_09, $1d00, $1300, FACE_RIGHT, $5e, $01, $00
+	map_actor $0000, ActorScript_0f_09, $0500, $2100, FACE_DOWN, $1e, $01, $00
+	map_actor $0000, ActorScript_0f_08, $2900, $1300, FACE_DOWN, $1f, $01, $00
+	map_actor_end
+IslandOpenSemifinalScripts_0f:
+	; $6919, 105 bytes (map_scripts)
+	map_script $06, FACEMASK_ANY, $0000, Text_25_4, $03, $00
+	map_script $07, FACEMASK_ANY, $0000, Text_25_5, $13, $00
+	map_script $08, FACEMASK_ANY, $0000, Text_25_6, $03, $00
+	map_script $09, FACEMASK_ANY, $0000, Text_25_7, $03, $00
+	map_script $0a, FACEMASK_ANY, $0000, Text_25_8, $03, $00
+	map_script $0b, FACEMASK_ANY, $0000, Text_25_9, $03, $00
+	map_script $0c, FACEMASK_ANY, $0000, Text_25_10, $03, $00
+	map_script $0d, FACEMASK_ANY, $0000, Text_25_11, $13, $00
+	map_script $0e, FACEMASK_ANY, $0000, Text_25_12, $03, $00
+	map_script $0f, FACEMASK_ANY, $0000, Text_25_13, $03, $00
+	map_script $10, FACEMASK_ANY, $0000, Text_25_14, $13, $00
+	map_script $03, FACEMASK_ANY, $0000, TournamentNpc03_0f, $03, $00
+	map_script $04, FACEMASK_ANY, $0000, TournamentNpc04_0f, $03, $00
+	db $ff
+IslandOpenFinalActors_0f:
+	; $6982, 206 bytes (map_actors)
+	map_actor $0000, ActorScript_0f_09, $2700, $1100, FACE_LEFT, $25, $01, $00
+	map_actor $0000, ActorScript_0f_09, $1300, $0f00, FACE_DOWN, $25, $01, $00
+	map_actor $0000, ActorScript_0f_09, $0e00, $0400, FACE_RIGHT, $25, $01, $00
+	map_actor $0000, ActorScript_0f_09, $2300, $1100, FACE_UP, $5c, $01, $00
+	map_actor $0000, ActorScript_0f_11, $2300, $1700, FACE_UP, $5b, $01, $00
+	map_actor $0000, ActorScript_0f_09, $1d00, $1100, FACE_RIGHT, $5d, $01, $00
+	map_actor $0000, ActorScript_0f_09, $2900, $1700, FACE_LEFT, $5f, $01, $00
+	map_actor $0000, ActorScript_0f_09, $1100, $1500, FACE_DOWN, $61, $01, $00
+	map_actor $0000, ActorScript_0f_09, $2100, $1100, FACE_RIGHT, $5a, $01, $00
+	map_actor $0000, ActorScript_0f_09, $2900, $1900, FACE_LEFT, $60, $01, $00
+	map_actor $0000, ActorScript_0f_10, $0700, $1f00, FACE_DOWN, $62, $01, $00
+	map_actor $0000, ActorScript_0f_09, $1d00, $1300, FACE_RIGHT, $5e, $01, $00
+	map_actor $0000, ActorScript_0f_09, $0500, $2100, FACE_DOWN, $1e, $01, $00
+	map_actor $0000, ActorScript_0f_08, $2900, $1300, FACE_DOWN, $1f, $01, $00
+	map_actor_end
+IslandOpenFinalScripts_0f:
+	; $6a50, 105 bytes (map_scripts)
+	map_script $06, FACEMASK_ANY, $0000, Text_25_15, $03, $00
+	map_script $07, FACEMASK_ANY, $0000, Text_25_16, $13, $00
+	map_script $08, FACEMASK_ANY, $0000, Text_25_17, $03, $00
+	map_script $09, FACEMASK_ANY, $0000, Text_25_18, $03, $00
+	map_script $0a, FACEMASK_ANY, $0000, Text_25_19, $03, $00
+	map_script $0b, FACEMASK_ANY, $0000, Text_25_20, $03, $00
+	map_script $0c, FACEMASK_ANY, $0000, Text_25_21, $03, $00
+	map_script $0d, FACEMASK_ANY, $0000, Text_25_22, $13, $00
+	map_script $0e, FACEMASK_ANY, $0000, Text_25_23, $03, $00
+	map_script $0f, FACEMASK_ANY, $0000, Text_25_24, $03, $00
+	map_script $10, FACEMASK_ANY, $0000, Text_25_25, $13, $00
+	map_script $03, FACEMASK_ANY, $0000, TournamentNpc03_0f, $03, $00
+	map_script $04, FACEMASK_ANY, $0000, TournamentNpc04_0f, $03, $00
+	db $ff
+IslandOpenRound1ActorsDoubles_0f:
+	; $6ab9, 192 bytes (map_actors)
+	map_actor $0000, ActorScript_0f_09, $2700, $1100, FACE_LEFT, $25, $01, $00
+	map_actor $0000, ActorScript_0f_09, $1300, $0f00, FACE_DOWN, $25, $01, $00
+	map_actor $0000, ActorScript_0f_09, $0100, $0b00, FACE_RIGHT, $25, $01, $00
+	map_actor $0000, ActorScript_0f_09, $2300, $1100, FACE_UP, $5c, $01, $00
+	map_actor $0000, ActorScript_0f_11, $2300, $1700, FACE_RIGHT, $5a, $01, $00
+	map_actor $0000, ActorScript_0f_09, $2900, $1700, FACE_LEFT, $5f, $01, $00
+	map_actor $0000, ActorScript_0f_09, $2900, $1900, FACE_LEFT, $60, $01, $00
+	map_actor $0000, ActorScript_0f_09, $0f00, $1300, FACE_DOWN, $5d, $01, $00
+	map_actor $0000, ActorScript_0f_09, $1100, $1300, FACE_DOWN, $5e, $01, $00
+	map_actor $0000, ActorScript_0f_09, $1700, $1300, FACE_UP, $61, $01, $00
+	map_actor $0000, ActorScript_0f_07, $1900, $10c0, FACE_LEFT, $62, $01, $00
+	map_actor $0000, ActorScript_0f_09, $1700, $1500, FACE_DOWN, $1f, $01, $00
+	map_actor $0000, ActorScript_0f_09, $1900, $1500, FACE_DOWN, $1e, $01, $05
+	map_actor_end
+IslandOpenRound1ScriptsDoubles_0f:
+	; $6b79, 97 bytes (map_scripts)
+	map_script $06, FACEMASK_ANY, $0000, Text_25_26, $03, $00
+	map_script $07, FACEMASK_ANY, $0000, Text_25_27, $13, $00
+	map_script $08, FACEMASK_ANY, $0000, Text_25_28, $03, $00
+	map_script $09, FACEMASK_ANY, $0000, Text_25_29, $03, $00
+	map_script $0a, FACEMASK_ANY, $0000, IslandOpenRound1DoublesNpc0A_0f, $03, $00
+	map_script $0b, FACEMASK_ANY, $0000, IslandOpenRound1DoublesNpc0B_0f, $03, $00
+	map_script $0c, FACEMASK_ANY, $0000, Text_25_36, $03, $00
+	map_script $0d, FACEMASK_ANY, $0000, IslandOpenRound1DoublesNpc0D_0f, $13, $00
+	map_script $0e, FACEMASK_ANY, $0000, Text_25_40, $03, $00
+	map_script $0f, FACEMASK_ANY, $0000, Text_25_41, $03, $00
+	map_script $03, FACEMASK_ANY, $0000, TournamentNpc03_0f, $03, $00
+	map_script $04, FACEMASK_ANY, $0000, TournamentNpc04_0f, $03, $00
+	db $ff
+IslandOpenRound1DoublesNpc0A_0f:
+	script_set_text Text_25_30 ; $6bda
+	ld a, $0a ; $6be0
+	farcall ScriptShowSpeakerDialogueRestoreBG ; $6be2
+	farcall RunDialogueYesNoPrompt ; $6be5
+	farcall ScriptCloseDialogueWindow ; $6be8
+	script_wait_frames $05 ; $6beb
+	and a ; $6bf2
+	jr z, .speak ; $6bf3
+	farcall AdvanceDialogueTextCursor ; $6bf5
+.speak:
+	script_speak $0a ; $6bf8
+	ret ; $6bfd
+; Instruction-identical to IslandOpenFinalDoublesNpc0B_0f (in this bank); a change here belongs in every copy.
+IslandOpenRound1DoublesNpc0B_0f:
+	script_set_text Text_25_33 ; $6bfe
+	ld a, $0b ; $6c04
+	farcall ScriptShowSpeakerDialogueRestoreBG ; $6c06
+	farcall RunDialogueYesNoPrompt ; $6c09
+	farcall ScriptCloseDialogueWindow ; $6c0c
+	script_wait_frames $05 ; $6c0f
+	and a ; $6c16
+	jr z, .speak ; $6c17
+	farcall AdvanceDialogueTextCursor ; $6c19
+.speak:
+	script_speak $0b ; $6c1c
+	ret ; $6c21
+; Instruction-identical to IslandOpenSemifinalDoublesNpc0D_0f (in this bank); a change here belongs in every copy.
+IslandOpenRound1DoublesNpc0D_0f:
+	script_set_text Text_25_37 ; $6c22
+	ld a, $0d ; $6c28
+	farcall ScriptShowSpeakerDialogueRestoreBG ; $6c2a
+	farcall RunDialogueYesNoPrompt ; $6c2d
+	farcall ScriptCloseDialogueWindow ; $6c30
+	script_wait_frames $05 ; $6c33
+	and a ; $6c3a
+	jr z, .speak ; $6c3b
+	farcall AdvanceDialogueTextCursor ; $6c3d
+.speak:
+	script_speak $0d ; $6c40
+	ret ; $6c45
+IslandOpenSemifinalActorsDoubles_0f:
+	; $6c46, 192 bytes (map_actors)
+	map_actor $0000, ActorScript_0f_09, $2700, $1100, FACE_LEFT, $25, $01, $00
+	map_actor $0000, ActorScript_0f_09, $1300, $0f00, FACE_DOWN, $25, $01, $00
+	map_actor $0000, ActorScript_0f_09, $0100, $0b00, FACE_RIGHT, $25, $01, $00
+	map_actor $0000, ActorScript_0f_09, $1700, $1500, FACE_DOWN, $5c, $01, $00
+	map_actor $0000, ActorScript_0f_09, $1900, $1500, FACE_DOWN, $5a, $01, $00
+	map_actor $0000, ActorScript_0f_09, $1d00, $1100, FACE_RIGHT, $5d, $01, $00
+	map_actor $0000, ActorScript_0f_09, $1d00, $1500, FACE_DOWN, $5e, $01, $00
+	map_actor $0000, ActorScript_0f_09, $0f00, $1300, FACE_DOWN, $5f, $01, $00
+	map_actor $0000, ActorScript_0f_09, $1100, $1300, FACE_DOWN, $60, $01, $00
+	map_actor $0000, ActorScript_0f_09, $1700, $1300, FACE_UP, $61, $01, $00
+	map_actor $0000, ActorScript_0f_07, $1900, $10c0, FACE_LEFT, $62, $01, $00
+	map_actor $0000, ActorScript_0f_09, $2900, $1300, FACE_UP, $1f, $01, $00
+	map_actor $0000, ActorScript_0f_11, $2500, $1900, FACE_DOWN, $1e, $01, $05
+	map_actor_end
+IslandOpenSemifinalScriptsDoubles_0f:
+	; $6d06, 97 bytes (map_scripts)
+	map_script $06, FACEMASK_ANY, $0000, Text_25_42, $03, $00
+	map_script $07, FACEMASK_ANY, $0000, Text_25_43, $03, $00
+	map_script $08, FACEMASK_ANY, $0000, IslandOpenSemifinalDoublesNpc08_0f, $03, $00
+	map_script $09, FACEMASK_ANY, $0000, Text_25_47, $03, $00
+	map_script $0a, FACEMASK_ANY, $0000, Text_25_48, $03, $00
+	map_script $0b, FACEMASK_ANY, $0000, Text_25_49, $03, $00
+	map_script $0c, FACEMASK_ANY, $0000, Text_25_50, $03, $00
+	map_script $0d, FACEMASK_ANY, $0000, IslandOpenSemifinalDoublesNpc0D_0f, $13, $00
+	map_script $0e, FACEMASK_ANY, $0000, Text_25_54, $13, $00
+	map_script $0f, FACEMASK_ANY, $0000, Text_25_55, $13, $00
+	map_script $03, FACEMASK_ANY, $0000, TournamentNpc03_0f, $03, $00
+	map_script $04, FACEMASK_ANY, $0000, TournamentNpc04_0f, $03, $00
+	db $ff
+IslandOpenSemifinalDoublesNpc08_0f:
+	script_set_text Text_25_44 ; $6d67
+	ld a, $08 ; $6d6d
+	farcall ScriptShowSpeakerDialogueRestoreBG ; $6d6f
+	farcall RunDialogueYesNoPrompt ; $6d72
+	farcall ScriptCloseDialogueWindow ; $6d75
+	script_wait_frames $05 ; $6d78
+	and a ; $6d7f
+	jr z, .speak ; $6d80
+	farcall AdvanceDialogueTextCursor ; $6d82
+.speak:
+	script_speak $08 ; $6d85
+	ret ; $6d8a
+; Instruction-identical to IslandOpenRound1DoublesNpc0D_0f (in this bank); a change here belongs in every copy.
+IslandOpenSemifinalDoublesNpc0D_0f:
+	script_set_text Text_25_51 ; $6d8b
+	ld a, $0d ; $6d91
+	farcall ScriptShowSpeakerDialogueRestoreBG ; $6d93
+	farcall RunDialogueYesNoPrompt ; $6d96
+	farcall ScriptCloseDialogueWindow ; $6d99
+	script_wait_frames $05 ; $6d9c
+	and a ; $6da3
+	jr z, .speak ; $6da4
+	farcall AdvanceDialogueTextCursor ; $6da6
+.speak:
+	script_speak $0d ; $6da9
+	ret ; $6dae
+IslandOpenFinalActorsDoubles_0f:
+	; $6daf, 192 bytes (map_actors)
+	map_actor $0000, ActorScript_0f_09, $2700, $1100, FACE_LEFT, $25, $01, $00
+	map_actor $0000, ActorScript_0f_09, $1300, $0f00, FACE_DOWN, $25, $01, $00
+	map_actor $0000, ActorScript_0f_09, $0e00, $0400, FACE_RIGHT, $25, $01, $00
+	map_actor $0000, ActorScript_0f_09, $2300, $1100, FACE_DOWN, $5c, $01, $00
+	map_actor $0000, ActorScript_0f_09, $2300, $1300, FACE_UP, $5a, $01, $00
+	map_actor $0000, ActorScript_0f_09, $2900, $1700, FACE_LEFT, $5f, $01, $00
+	map_actor $0000, ActorScript_0f_09, $2900, $1900, FACE_LEFT, $60, $01, $00
+	map_actor $0000, ActorScript_0f_09, $0f00, $1300, FACE_DOWN, $61, $01, $00
+	map_actor $0000, ActorScript_0f_09, $1100, $1300, FACE_DOWN, $62, $01, $00
+	map_actor $0000, ActorScript_0f_09, $1d00, $1100, FACE_RIGHT, $5d, $01, $00
+	map_actor $0000, ActorScript_0f_09, $1d00, $1500, FACE_DOWN, $5e, $01, $00
+	map_actor $0000, ActorScript_0f_09, $2900, $1500, FACE_DOWN, $1f, $01, $00
+	map_actor $0000, ActorScript_0f_11, $2400, $1800, FACE_DOWN, $1e, $01, $05
+	map_actor_end
+IslandOpenFinalScriptsDoubles_0f:
+	; $6e6f, 97 bytes (map_scripts)
+	map_script $06, FACEMASK_ANY, $0000, Text_25_56, $03, $00
+	map_script $07, FACEMASK_ANY, $0000, Text_25_57, $03, $00
+	map_script $08, FACEMASK_ANY, $0000, Text_25_58, $03, $00
+	map_script $09, FACEMASK_ANY, $0000, Text_25_59, $03, $00
+	map_script $0a, FACEMASK_ANY, $0000, Text_25_60, $03, $00
+	map_script $0b, FACEMASK_ANY, $0000, IslandOpenFinalDoublesNpc0B_0f, $03, $00
+	map_script $0c, FACEMASK_ANY, $0000, IslandOpenFinalDoublesNpc0C_0f, $03, $00
+	map_script $0d, FACEMASK_ANY, $0000, Text_25_67, $03, $00
+	map_script $0e, FACEMASK_ANY, $0000, Text_25_68, $13, $00
+	map_script $0f, FACEMASK_ANY, $0000, Text_25_69, $13, $00
+	map_script $03, FACEMASK_ANY, $0000, TournamentNpc03_0f, $03, $00
+	map_script $04, FACEMASK_ANY, $0000, TournamentNpc04_0f, $03, $00
+	db $ff
+IslandOpenFinalDoublesNpc0C_0f:
+	script_set_text Text_25_64 ; $6ed0
+	ld a, $0c ; $6ed6
+	farcall ScriptShowSpeakerDialogueRestoreBG ; $6ed8
+	farcall RunDialogueYesNoPrompt ; $6edb
+	farcall ScriptCloseDialogueWindow ; $6ede
+	script_wait_frames $05 ; $6ee1
+	and a ; $6ee8
+	jr z, .speak ; $6ee9
+	farcall AdvanceDialogueTextCursor ; $6eeb
+.speak:
+	script_speak $0c ; $6eee
+	ret ; $6ef3
+; Instruction-identical to IslandOpenRound1DoublesNpc0B_0f (in this bank); a change here belongs in every copy.
+IslandOpenFinalDoublesNpc0B_0f:
+	script_set_text Text_25_61 ; $6ef4
+	ld a, $0b ; $6efa
+	farcall ScriptShowSpeakerDialogueRestoreBG ; $6efc
+	farcall RunDialogueYesNoPrompt ; $6eff
+	farcall ScriptCloseDialogueWindow ; $6f02
+	script_wait_frames $05 ; $6f05
+	and a ; $6f0c
+	jr z, .speak ; $6f0d
+	farcall AdvanceDialogueTextCursor ; $6f0f
+.speak:
+	script_speak $0b ; $6f12
+	ret ; $6f17

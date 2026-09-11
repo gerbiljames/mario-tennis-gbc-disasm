@@ -67,7 +67,7 @@ how the game arranges it.
 
 ### 1.1 Stream shape
 
-`DecompressData` (`$00:$1797`, `src/bank_000.asm:3981`) is the only
+`DecompressData` (`$00:$1797`, `src/home/tangent_00.asm:299`) is the only
 decompressor in the ROM. It takes `hl` = source, `de` = destination, and
 returns `hl` = the number of bytes written.
 
@@ -159,7 +159,7 @@ length encodes as `$0000` — indistinguishable from the terminator. `lz.py`'s
 | `DecompressData` | `$00:$1797` | `hl` source, `de` dest → `hl` = bytes written |
 | `DecompressDataFromBank` | `$00:$0234` | `h` = ROM bank, `l` = **byte offset into that bank's `$4000` pointer table**, `de` dest |
 
-`DecompressDataFromBank` (`src/bank_000.asm:222`) banks in `h`, then does
+`DecompressDataFromBank` (`src/home/joypad_00.asm:220`) banks in `h`, then does
 `ld h, $40` / `ld a, [hl+]` / `ld h, [hl]` / `ld l, a` — it dereferences one
 entry of the bank's word table at `$4000` and calls `DecompressData` on the
 result. So a **slot word** `bbss` means "bank `$bb`, entry `ss/2` of that
@@ -235,7 +235,7 @@ at `$0a:$58f9`) rather than writing bare offsets.
 
 ### 2.2 `QueueVRAMCopy` counts tiles, not bytes
 
-`QueueVRAMCopy` (`$00:$0480`, `src/bank_000.asm:672`) is **the only way
+`QueueVRAMCopy` (`$00:$0480`, `src/home/memory_00.asm:204`) is **the only way
 anything reaches VRAM**: 613 `call`/`jp` sites, and not one direct
 `ld [$8xxx], a` anywhere in the ROM (both counts re-derived by grep over
 `src/`).
@@ -285,7 +285,7 @@ address: the **tile index** in bank 0 and the **attribute byte** (palette,
 tile-VRAM-bank, flips, priority) in bank 1. The game keeps them as two separate
 WRAM planes and blits them separately.
 
-`CopyScrolledSceneTilemapToVram` (`$0a:$5c29`, `src/bank_00a.asm:3720`) is the
+`CopyScrolledSceneTilemapToVram` (`$0a:$5c29`, `src/engine/story/scene2_0a.asm:28`) is the
 clearest example. Its attribute half (`$5c6b`-`$5cb6`) sets `rVBK = 1`, walks
 `wMapBuffer64` (4096 bytes, WRAM bank `$02`) and writes `$15` rows × `$17`
 columns — 21 × 23 cells — into `$9800`. Both source and destination wrap
@@ -329,7 +329,7 @@ A trailing partial row stays literal `db`.
 
 ### 3.1 Geometry
 
-`SceneGfxSlotTable` (`$0a:$59d9`, `src/bank_00a.asm:3681`) is **592 bytes =
+`SceneGfxSlotTable` (`$0a:$59d9`, `src/engine/story/scene_0a.asm:558`) is **592 bytes =
 37 records × 8 slot words**. Each word is a `dslot` bank/offset pair (§1.4).
 
 The table is a dense enumeration, which is independent confirmation of the
@@ -343,7 +343,7 @@ whole table.
 
 ### 3.2 Slot roles under the story loader
 
-`LoadStorySceneGraphics` (`$0a:$585d`, `src/bank_00a.asm:3483`) takes the scene
+`LoadStorySceneGraphics` (`$0a:$585d`, `src/engine/story/scene_0a.asm:360`) takes the scene
 id in `a`, computes `hl = SceneGfxSlotTable + 16*a` with four `add hl, hl`, and
 **pushes slots 0-6 in order** (`$586f`-`$5891`), reads slot 7 inline, then pops
 in reverse. The pop order names the slots — this is derivation, not assumption,
@@ -409,7 +409,7 @@ are noise.
 
 ### 3.4 The same slots mean something else to the court loader
 
-`LoadCourtSceneGraphics` (`$0a:$62f8`, `src/bank_00a.asm:4808`) is the loader
+`LoadCourtSceneGraphics` (`$0a:$62f8`, `src/engine/story/scene4_0a.asm:172`) is the loader
 for the court backdrops. It uses the **same 16-byte stride** but skips slot 0
 (`inc hl` twice at `$630a`), pushes slots 1-5, skips slot 6 (`inc hl` twice at
 `$6325`) and reads slot 7 inline. Its pop order gives slots 4 and 5 completely
@@ -447,7 +447,7 @@ other.
 
 ### 3.5 Open question: the stride-18 readers
 
-`LoadSceneGraphicsDirect` (`$0a:$5d2a`, `src/bank_00a.asm:3918`) indexes the
+`LoadSceneGraphicsDirect` (`$0a:$5d2a`, `src/engine/story/scene2_0a.asm:226`) indexes the
 same table with a stride of **18**. The arithmetic is not ambiguous: `hl = a`,
 `add hl, hl` → `2a` saved in `de`, three more `add hl, hl` → `16a`,
 `add hl, de` → **`18a`** (`$5d31`-`$5d37`). It then does `inc hl` twice and
@@ -496,7 +496,7 @@ A **sprite template** is a list of 4-byte OAM rows terminated by a single
 	oam_sprite_end                     ; $80
 ```
 
-`QueueSpriteTemplate` (`$00:$1e9d`, `src/bank_000.asm:5380`) takes
+`QueueSpriteTemplate` (`$00:$1e9d`, `src/home/sprite_00.asm:173`) takes
 `hl` = template and a base in `e` (Y), `d` (X), `c` (tile), `b` (attr), and for
 each row emits `byte0 + e`, `byte1 + d`, `byte2 + c`, `byte3 + b` into the
 sprite buffer — hardware OAM order, all four adds mod 256. The terminator is
@@ -619,7 +619,7 @@ which is written as a commented `db`:
 
 | | `AdvanceActorAnimation` | `StepCharAnimation` |
 |---|---|---|
-| addr | **`$04:$55c1`** (`src/bank_004.asm:3552`) | **`$08:$7791`** (`src/bank_008.asm:7752`) |
+| addr | **`$04:$55c1`** (`src/engine/story/actor4_04.asm:544`) | **`$08:$7791`** (`src/engine/match/char6_08.asm:286`) |
 | scope | overworld actors — struct in `bc`, WRAM bank `$04` | on-court characters — fixed `$df00` struct |
 | far read | `FarReadWord`, bank from actor `+$22` | `FarReadWordDI`, bank from `wCharObjectBank` |
 | `$fb` | **not implemented** (falls into "hold") | implemented (`$08:$77b2`) |
@@ -696,7 +696,7 @@ All three buffers live in fixed WRAM (bank-independent `$c000`-`$cfff`):
 
 There is **no symbol named `wShadowPalettes`**; the pair is master ↔ live.
 
-`LoadPalettesImmediate` (`$00:$05b5`, `src/bank_000.asm:908`) takes
+`LoadPalettesImmediate` (`$00:$05b5`, `src/home/memory_00.asm:440`) takes
 `d` = palette index 0-15, `e` = palette count, `hl` = source, and writes each
 colour word to **both** planes in one pass — `ld [de], a` / `inc d` /
 `ld [de], a` / `dec d`, with `d` starting at `$c1` (`$05bf`-`$05c9`). The index
@@ -720,7 +720,7 @@ documents call BCPS/BCPD and OCPS/OCPD.)
 The bank-`$00` fade is a per-frame state machine — `hFadeState` (`$ffa2`),
 `hFadeSpeed` (`$ffa3`), `hFadeCounter` (`$ffa4`, starts `$7c`) — ticked from
 VBlank by `UpdateFadeOut` (`$00:$1d5e`) and `UpdateFadeIn` (`$00:$1d48`)
-(`src/bank_000.asm:6979`). Entry points: `BeginFadeOut` (`$00:$1d20`),
+(`src/home/serial_00.asm:95`). Entry points: `BeginFadeOut` (`$00:$1d20`),
 `BeginFadeIn` (`$00:$1d2e`), `ForceFadeIn` (`$00:$1d0c`); `c` = speed.
 
 Each tick:
@@ -810,7 +810,7 @@ A text id is a 16-bit coordinate, not an address:
 
 `FetchDialogueText` (`$05:$5c18`) tests `bit 7, h`, then builds
 `de = (h & $03) << 8 | l` and `a = (h >> 2) & $0f`, and jumps through
-`DialogueTextFetchers_05` (`$05:$5c3b`, `src/bank_005.asm:4472`), a 16-word
+`DialogueTextFetchers_05` (`$05:$5c3b`, `src/engine/text/dialogue_05.asm:439`), a 16-word
 table. Selectors 0-7 → banks `$30`-`$37`; 8 → `$6e`, 9 → `$1f`, 10 → `$25`,
 11 → `$26`, 12 → `$5e`; **13, 14 and 15 all alias bank `$30`**.
 `include/text_ids.inc` names ids by the bank the selector resolves to.
@@ -828,7 +828,7 @@ FetchTextTable_XX:                       ; $4004  — spec `text_offsets`
 TextStrings_XX:                          ; — spec `text_pool`
 ```
 
-(`src/bank_030.asm:1-12`.) The offset table runs from `$4004` immediately to
+(`src/data/text/text_30.asm:1-12`.) The offset table runs from `$4004` immediately to
 the pool, so its entry count is `(pool - $4004) / 2`. Across the 13 banks that
 totals **4,109 indexed strings**, the largest being bank `$36` with 711 and
 bank `$30` with 560.
@@ -849,7 +849,7 @@ break inside a string.
 `string_starts` (`tools/extract.py:127`) splits the pool on `$00` **or `$03`**.
 `$03` is really the `WaitTextAdvanceInput` control code, not an engine
 terminator, so the `.sN` anchors `render_text_pool` emits are numbered over
-`$00`/`$03`-delimited *fragments*. `src/bank_030.asm:6-12` shows the
+`$00`/`$03`-delimited *fragments*. `src/data/text/text_30.asm:4-12` shows the
 consequence directly: table index 2 → `.s3`, index 3 → `.s5`, index 4 → `.s7`.
 The comment after each `dw` carries the true game index; the label does not.
 

@@ -54,11 +54,16 @@ data/%.inc: data/%.bin
 build/rgbdscheck.o: rgbdscheck.asm | build
 	$(RGBASM) -o $@ $<
 
-# Top-of-file INCLUDE paths resolve via -I include; INCBIN paths and the
-# indented data/ INCLUDEs (generated text source) are repo-relative.
+# A bank object depends on its holder, the fragment files the holder INCLUDEs
+# (src/<subsystem>/<topic>_XX.asm), the top-of-file includes and every data
+# file the bank INCBINs or INCLUDEs; tools/deps.py lists them.
+FRAGMENTS := $(shell find src -mindepth 2 -name '*.asm')
+
+build/deps.mk: $(SRCS) $(FRAGMENTS) tools/deps.py tools/banksrc.py | build
+	python3 tools/deps.py > $@
+
 ifeq (,$(filter clean,$(MAKECMDGOALS)))
-$(foreach src,$(SRCS),$(eval build/$(notdir $(src:.asm=.o)): \
-	$(shell sed -n 's|^INCLUDE "\(.*\)"|include/\1|p; s|^[[:space:]]*INCBIN "\([^"]*\)".*|\1|p; s|^[[:space:]]*INCLUDE "\(data/[^"]*\)".*|\1|p' $(src))))
+-include build/deps.mk
 endif
 
 build:
