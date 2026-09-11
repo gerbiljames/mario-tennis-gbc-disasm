@@ -93,14 +93,16 @@ restated:
   it again if it is an LZ stream (`lz_*`); a PNG you have not touched never
   rebuilds anything. A plain image grows its blob if you enlarge the canvas
   and draw past the last tile. `make check` confirms every PNG still encodes back to
-  its blob. `tools/gfx.py` and `tools/lz.py` are the converters if you need
-  them by hand.
+  its blob. `tools/gfx.py`, `tools/tilemap.py` and `tools/lz.py` are the converters
+  if you need them by hand.
 - **Screen layouts are text.** Every tile plane and attribute plane (213
   blobs, most of them LZ streams) is extracted a second time as a
   `.tilemap` file beside its `.bin`: one `tilemap_row` of hex cells per
   row, at the width the loader uses. Edit it and `make` re-encodes the
   blob, compressing it again if it is an `lz_*` stream; `make check`
-  round-trips every grid.
+  round-trips every grid. The 37 scenes also get a view-only picture
+  beside the grid (`<Tilemap>.preview.png`, composed from the scene's
+  tiles and palettes; `make previews` redraws them after an edit).
 - **Tables.** Stats, physics constants, mode hooks, map actors, animation
   scripts, flag lists and menu definitions render as structured source with
   named fields — `docs/graphics_formats.md` and `docs/story_mode.md` give the
@@ -171,7 +173,8 @@ it is and reported, and nothing is deleted.
   text-id and mirrored-RAM includes (`hardware.inc` is CC0; the rest are
   generated or hand-maintained as their headers say).
 - `data.manifest` — offset/length/spec list `tools/extract.py` slices the
-  base ROM by.
+  base ROM by; `data.previews` — which planes, tiles and palettes make up
+  each scene, for the preview pictures.
 - `docs/` — `STATUS.md` (current state), `history.md` (the dated log),
   `match_engine.md`, `story_mode.md`, `screens_and_ui.md`,
   `graphics_formats.md`, `actor_script.md`, `sound_engine.md`,

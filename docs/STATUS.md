@@ -121,7 +121,9 @@ label bound to the wrong parent.
   extracted a second time as `.tilemap` text grids, one `tilemap_row` per
   row at the loader's width (64 for the story scroll buffers, 32 for the
   screen planes); `make` re-encodes an edited grid and recompresses it,
-  `make check` round-trips all 213. Proving it exposed that two banks ended
+  `make check` round-trips all 213, and each of the 37 scenes gets a
+  view-only picture composed from its planes, tiles and palettes
+  (`data.previews`, `make previews`). Proving it exposed that two banks ended
   in a *labelled* `ds` fill, which left them no room to grow; a labelled
   tail is now left to the linker's padding like any other.
 * **2026-09-11** — text control codes are named. `include/text_codes.inc`
