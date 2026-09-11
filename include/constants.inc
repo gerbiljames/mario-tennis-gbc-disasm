@@ -544,6 +544,23 @@ def MARIOGAME_TREASURE_BOX    equ $06 ; Wario; first cell of the expanded grid
 def MARIOGAME_MEDALLION_MATCH equ $07 ; Waluigi
 def MARIOGAME_TWO_ON_ONE      equ $08 ; Bowser
 
+; --- Notes (snd_note in a sound channel script: the low nibble of the note byte) ---
+; Index into NotePeriodTable's twelve semitones; snd_tone_flag picks which
+; of the table's two octaves, and the note's octave argument halves the
+; period that many times.
+def C_ equ 0
+def C# equ 1
+def D_ equ 2
+def D# equ 3
+def E_ equ 4
+def F_ equ 5
+def F# equ 6
+def G_ equ 7
+def G# equ 8
+def A_ equ 9
+def A# equ 10
+def B_ equ 11
+
 ; --- Sound ids (a to PlaySound $3297 / PlaySoundManaged $3024 / `sound`) ---
 ; One 8-bit id space covers both music and sound effects; the routine splits it
 ; at $50. PlaySound reads $3151 + (id - 1) * 2 for id < $50 and $31b5 +

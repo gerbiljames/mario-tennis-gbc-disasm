@@ -3902,318 +3902,318 @@ bank_077/WalkSprite_77_07_Gfx02.bin 1df490 40 gfx:2x2
 bank_077/WalkSprite_77_07_Gfx03.bin 1df4d0 40 gfx:2x2
 bank_077/WalkSprite_77_07_Gfx04.bin 1df510 40 gfx:2x2
 bank_077/WalkSprite_77_07_Gfx05.bin 1df550 40 gfx:2x2
-bank_078/Sfx01_Trk0.bin 1e0088 f0
-bank_078/Sfx01_Trk1.bin 1e0178 f2
-bank_078/Sfx01_Trk2.bin 1e026a 164
-bank_078/Sfx01_Trk3.bin 1e03ce 538
-bank_078/Sfx02_Trk0.bin 1e0906 3e
-bank_078/Sfx02_Trk1.bin 1e0944 4e
-bank_078/Sfx02_Trk2.bin 1e0992 ae
-bank_078/Sfx02_Trk3.bin 1e0a40 246
-bank_078/Sfx03_Trk0.bin 1e0c86 1e6
-bank_078/Sfx03_Trk1.bin 1e0e6c 1c0
-bank_078/Sfx03_Trk2.bin 1e102c 46e
-bank_078/Sfx03_Trk3.bin 1e149a 340
-bank_078/Sfx04_Trk0.bin 1e17da 212
-bank_078/Sfx04_Trk1.bin 1e19ec 212
-bank_078/Sfx04_Trk2.bin 1e1bfe 10a
-bank_078/Sfx04_Trk3.bin 1e1d08 338
-bank_078/Sfx05_Trk0.bin 1e2040 1b4
-bank_078/Sfx05_Trk1.bin 1e21f4 12c
-bank_078/Sfx05_Trk2.bin 1e2320 162
-bank_078/Sfx05_Trk3.bin 1e2482 362
-bank_078/Sfx06_Trk0.bin 1e27e4 270
-bank_078/Sfx06_Trk1.bin 1e2a54 242
-bank_078/Sfx06_Trk2.bin 1e2c96 4fc
-bank_078/Sfx06_Trk3.bin 1e3192 504
-bank_078/Sfx07_Trk0.bin 1e3696 182
-bank_078/Sfx07_Trk1.bin 1e3818 2c8
-bank_078/Sfx07_Trk2.bin 1e3ae0 2c4
-bank_078/Sfx07_Trk3.bin 1e3da4 188
-bank_078/Sfx0a_Trk0.bin 1e3f2c 3a
-bank_078/Sfx0a_Trk1.bin 1e3f66 38
-bank_078/Sfx0a_Trk2.bin 1e3f9e 18
-bank_078/Music51_Trk0.bin 1e3fb6 16
-bank_078/Music52_Trk0.bin 1e3fcc 1a
-bank_078/Music9a_Trk0.bin 1e3fe6 a
-bank_079/Sfx08_Trk0.bin 1e4084 31a
-bank_079/Sfx08_Trk1.bin 1e439e 322
-bank_079/Sfx08_Trk2.bin 1e46c0 19e
-bank_079/Sfx08_Trk3.bin 1e485e 636
-bank_079/Sfx09_Trk0.bin 1e4e94 9a
-bank_079/Sfx09_Trk1.bin 1e4f2e 9a
-bank_079/Sfx09_Trk2.bin 1e4fc8 8e
-bank_079/Sfx09_Trk3.bin 1e5056 324
-bank_079/Sfx0b_Trk0.bin 1e537a d2
-bank_079/Sfx0b_Trk1.bin 1e544c d2
-bank_079/Sfx0b_Trk2.bin 1e551e e0
-bank_079/Sfx0b_Trk3.bin 1e55fe 342
-bank_079/Sfx0c_Trk0.bin 1e5940 78
-bank_079/Sfx0c_Trk1.bin 1e59b8 7a
-bank_079/Sfx0c_Trk2.bin 1e5a32 12c
-bank_079/Sfx0c_Trk3.bin 1e5b5e 36e
-bank_079/Sfx0d_Trk0.bin 1e5ecc a8
-bank_079/Sfx0d_Trk1.bin 1e5f74 196
-bank_079/Sfx0d_Trk2.bin 1e610a cc
-bank_079/Sfx0d_Trk3.bin 1e61d6 3b6
-bank_079/Sfx0e_Trk0.bin 1e658c 20a
-bank_079/Sfx0e_Trk1.bin 1e6796 20e
-bank_079/Sfx0e_Trk2.bin 1e69a4 694
-bank_079/Sfx0e_Trk3.bin 1e7038 198
-bank_079/Sfx0f_Trk0.bin 1e71d0 20c
-bank_079/Sfx0f_Trk1.bin 1e73dc d6
-bank_079/Sfx0f_Trk2.bin 1e74b2 364
-bank_079/Sfx0f_Trk3.bin 1e7816 676
-bank_079/Sfx2d_Trk0.bin 1e7e8c 6c
-bank_079/Sfx2d_Trk1.bin 1e7ef8 62
-bank_079/Sfx2d_Trk2.bin 1e7f5a 22
-bank_079/Sfx2d_Trk3.bin 1e7f7c 4a
-bank_079/Music53_Trk0.bin 1e7fc6 2c
-bank_07a/Sfx10_Trk0.bin 1e806c 352
-bank_07a/Sfx10_Trk1.bin 1e83be 274
-bank_07a/Sfx10_Trk2.bin 1e8632 656
-bank_07a/Sfx10_Trk3.bin 1e8c88 30c
-bank_07a/Sfx11_Trk0.bin 1e8f94 2d0
-bank_07a/Sfx11_Trk1.bin 1e9264 2f4
-bank_07a/Sfx11_Trk2.bin 1e9558 262
-bank_07a/Sfx11_Trk3.bin 1e97ba 2f0
-bank_07a/Sfx12_Trk0.bin 1e9aaa 5ae
-bank_07a/Sfx12_Trk1.bin 1ea058 4de
-bank_07a/Sfx12_Trk2.bin 1ea536 140
-bank_07a/Sfx12_Trk3.bin 1ea676 2a0
-bank_07a/Sfx13_Trk0.bin 1ea916 208
-bank_07a/Sfx13_Trk1.bin 1eab1e 262
-bank_07a/Sfx13_Trk2.bin 1ead80 2a8
-bank_07a/Sfx13_Trk3.bin 1eb028 270
-bank_07a/Sfx14_Trk0.bin 1eb298 16c
-bank_07a/Sfx14_Trk1.bin 1eb404 13e
-bank_07a/Sfx14_Trk2.bin 1eb542 172
-bank_07a/Sfx14_Trk3.bin 1eb6b4 2a6
-bank_07a/Sfx15_Trk0.bin 1eb95a 196
-bank_07a/Sfx15_Trk1.bin 1ebaf0 17e
-bank_07a/Sfx15_Trk2.bin 1ebc6e 126
-bank_07a/Sfx15_Trk3.bin 1ebd94 16c
-bank_07a/Sfx2e_Trk0.bin 1ebf00 5e
-bank_07a/Sfx2e_Trk1.bin 1ebf5e 4c
-bank_07a/Sfx2e_Trk2.bin 1ebfaa 46
-bank_07b/Sfx16_Trk0.bin 1ec0c0 1b6
-bank_07b/Sfx16_Trk1.bin 1ec276 1c8
-bank_07b/Sfx16_Trk2.bin 1ec43e 158
-bank_07b/Sfx16_Trk3.bin 1ec596 256
-bank_07b/Sfx17_Trk0.bin 1ec7ec 108
-bank_07b/Sfx17_Trk1.bin 1ec8f4 c4
-bank_07b/Sfx17_Trk2.bin 1ec9b8 9e
-bank_07b/Sfx17_Trk3.bin 1eca56 52
-bank_07b/Sfx18_Trk0.bin 1ecaa8 12e
-bank_07b/Sfx18_Trk1.bin 1ecbd6 12e
-bank_07b/Sfx18_Trk2.bin 1ecd04 94
-bank_07b/Sfx18_Trk3.bin 1ecd98 3da
-bank_07b/Sfx19_Trk0.bin 1ed172 1f4
-bank_07b/Sfx19_Trk1.bin 1ed366 1be
-bank_07b/Sfx19_Trk2.bin 1ed524 2cc
-bank_07b/Sfx19_Trk3.bin 1ed7f0 9a
-bank_07b/Sfx1a_Trk0.bin 1ed88a da
-bank_07b/Sfx1a_Trk1.bin 1ed964 de
-bank_07b/Sfx1a_Trk2.bin 1eda42 7c
-bank_07b/Sfx1b_Trk0.bin 1edabe b8
-bank_07b/Sfx1b_Trk1.bin 1edb76 ba
-bank_07b/Sfx1b_Trk2.bin 1edc30 d0
-bank_07b/Sfx1b_Trk3.bin 1edd00 152
-bank_07b/Sfx1c_Trk0.bin 1ede52 84
-bank_07b/Sfx1c_Trk1.bin 1eded6 ea
-bank_07b/Sfx1c_Trk2.bin 1edfc0 18c
-bank_07b/Sfx1c_Trk3.bin 1ee14c 19c
-bank_07b/Sfx1d_Trk0.bin 1ee2e8 12e
-bank_07b/Sfx1d_Trk1.bin 1ee416 1c0
-bank_07b/Sfx1d_Trk2.bin 1ee5d6 f0
-bank_07b/Sfx1d_Trk3.bin 1ee6c6 60
-bank_07b/Sfx1e_Trk0.bin 1ee726 2d4
-bank_07b/Sfx1e_Trk1.bin 1ee9fa 436
-bank_07b/Sfx1e_Trk2.bin 1eee30 4ac
-bank_07b/Sfx1e_Trk3.bin 1ef2dc 6be
-bank_07b/Sfx1f_Trk0.bin 1ef99a d4
-bank_07b/Sfx1f_Trk1.bin 1efa6e d8
-bank_07b/Sfx1f_Trk2.bin 1efb46 1c2
-bank_07b/Sfx1f_Trk3.bin 1efd08 154
-bank_07b/Sfx2f_Trk0.bin 1efe5c 1c
-bank_07b/Sfx2f_Trk1.bin 1efe78 1c
-bank_07b/Sfx2f_Trk2.bin 1efe94 16
-bank_07b/Sfx2f_Trk3.bin 1efeaa 4c
-bank_07b/Sfx31_Trk0.bin 1efef6 26
-bank_07b/Sfx31_Trk1.bin 1eff1c 26
-bank_07b/Sfx31_Trk2.bin 1eff42 22
-bank_07b/Sfx31_Trk3.bin 1eff64 82
-bank_07b/Music9b_Trk0.bin 1effe6 a
-bank_07c/Sfx20_Trk0.bin 1f006c 1c6
-bank_07c/Sfx20_Trk1.bin 1f0232 4bc
-bank_07c/Sfx20_Trk2.bin 1f06ee 418
-bank_07c/Sfx20_Trk3.bin 1f0b06 2e2
-bank_07c/Sfx21_Trk0.bin 1f0de8 1a8
-bank_07c/Sfx21_Trk1.bin 1f0f90 2b4
-bank_07c/Sfx21_Trk2.bin 1f1244 1ea
-bank_07c/Sfx21_Trk3.bin 1f142e 4f8
-bank_07c/Sfx22_Trk0.bin 1f1926 28e
-bank_07c/Sfx22_Trk1.bin 1f1bb4 28c
-bank_07c/Sfx22_Trk2.bin 1f1e40 268
-bank_07c/Sfx22_Trk3.bin 1f20a8 1a6
-bank_07c/Sfx23_Trk0.bin 1f224e 1f2
-bank_07c/Sfx23_Trk1.bin 1f2440 1f6
-bank_07c/Sfx23_Trk2.bin 1f2636 216
-bank_07c/Sfx23_Trk3.bin 1f284c 4fa
-bank_07c/Sfx24_Trk0.bin 1f2d46 236
-bank_07c/Sfx24_Trk1.bin 1f2f7c 23a
-bank_07c/Sfx24_Trk2.bin 1f31b6 692
-bank_07c/Sfx24_Trk3.bin 1f3848 670
-bank_07c/Music54_Trk0.bin 1f3eb8 2a
-bank_07c/Music55_Trk0.bin 1f3ee2 36
-bank_07c/Music56_Trk0.bin 1f3f18 28
-bank_07c/Music57_Trk0.bin 1f3f40 38
-bank_07c/Music58_Trk0.bin 1f3f78 28
-bank_07c/Music59_Trk0.bin 1f3fa0 30
-bank_07c/Music5b_Trk0.bin 1f3fd0 16
-bank_07d/Sfx25_Trk0.bin 1f407c 28a
-bank_07d/Sfx25_Trk1.bin 1f4306 44e
-bank_07d/Sfx25_Trk2.bin 1f4754 12e
-bank_07d/Sfx25_Trk3.bin 1f4882 680
-bank_07d/Sfx26_Trk0.bin 1f4f02 59a
-bank_07d/Sfx26_Trk1.bin 1f549c 564
-bank_07d/Sfx26_Trk2.bin 1f5a00 6b2
-bank_07d/Sfx26_Trk3.bin 1f60b2 606
-bank_07d/Sfx27_Trk0.bin 1f66b8 23a
-bank_07d/Sfx27_Trk1.bin 1f68f2 64a
-bank_07d/Sfx27_Trk2.bin 1f6f3c 672
-bank_07d/Sfx27_Trk3.bin 1f75ae a2
-bank_07d/Sfx2a_Trk0.bin 1f7650 110
-bank_07d/Sfx2a_Trk1.bin 1f7760 10a
-bank_07d/Sfx2a_Trk2.bin 1f786a 14
-bank_07d/Sfx2a_Trk3.bin 1f787e 66
-bank_07d/Sfx2b_Trk0.bin 1f78e4 a4
-bank_07d/Sfx2b_Trk1.bin 1f7988 a4
-bank_07d/Sfx2b_Trk2.bin 1f7a2c e0
-bank_07d/Sfx2b_Trk3.bin 1f7b0c 18e
-bank_07d/Sfx30_Trk0.bin 1f7c9a 40
-bank_07d/Sfx30_Trk1.bin 1f7cda 40
-bank_07d/Sfx30_Trk2.bin 1f7d1a 1a
-bank_07d/Sfx30_Trk3.bin 1f7d34 bc
-bank_07d/Sfx32_Trk0.bin 1f7df0 2a
-bank_07d/Sfx32_Trk1.bin 1f7e1a 2a
-bank_07d/Sfx32_Trk2.bin 1f7e44 2a
-bank_07d/Sfx32_Trk3.bin 1f7e6e e2
-bank_07d/Music5a_Trk0.bin 1f7f50 4c
-bank_07d/Music5c_Trk0.bin 1f7f9c 4c
-bank_07d/Music9c_Trk0.bin 1f7fe8 a
-bank_07e/Sfx28_Trk0.bin 1f8124 336
-bank_07e/Sfx28_Trk1.bin 1f845a 214
-bank_07e/Sfx28_Trk2.bin 1f866e 690
-bank_07e/Sfx28_Trk3.bin 1f8cfe 61e
-bank_07e/Sfx29_Trk0.bin 1f931c 328
-bank_07e/Sfx29_Trk1.bin 1f9644 2ea
-bank_07e/Sfx29_Trk2.bin 1f992e 344
-bank_07e/Sfx29_Trk3.bin 1f9c72 506
-bank_07e/Sfx2c_Trk0.bin 1fa178 2b0
-bank_07e/Sfx2c_Trk1.bin 1fa428 2cc
-bank_07e/Sfx2c_Trk2.bin 1fa6f4 25e
-bank_07e/Sfx2c_Trk3.bin 1fa952 62e
-bank_07e/Music5d_Trk0.bin 1faf80 14
-bank_07e/Music5e_Trk0.bin 1faf94 14
-bank_07e/Music5f_Trk0.bin 1fafa8 12
-bank_07e/Music60_Trk0.bin 1fafba 18
-bank_07e/Music61_Trk0.bin 1fafd2 30
-bank_07e/Music62_Trk0.bin 1fb002 12
-bank_07e/Music63_Trk0.bin 1fb014 12
-bank_07e/Music64_Trk0.bin 1fb026 14
-bank_07e/Music65_Trk0.bin 1fb03a 22
-bank_07e/Music66_Trk0.bin 1fb05c 2e
-bank_07e/Music67_Trk0.bin 1fb08a 4a
-bank_07e/Music68_Trk0.bin 1fb0d4 4e
-bank_07e/Music69_Trk0.bin 1fb122 40
-bank_07e/Music6a_Trk0.bin 1fb162 3c
-bank_07e/Music6b_Trk0.bin 1fb19e 3e
-bank_07e/Music6c_Trk0.bin 1fb1dc 22
-bank_07e/Music6d_Trk0.bin 1fb1fe 42
-bank_07e/Music6e_Trk0.bin 1fb240 22
-bank_07e/Music6f_Trk1.bin 1fb262 22
-bank_07e/Music6f_Trk0.bin 1fb284 114
-bank_07e/Music70_Trk0.bin 1fb398 4c
-bank_07e/Music71_Trk0.bin 1fb3e4 22
-bank_07e/Music72_Trk0.bin 1fb406 1a
-bank_07e/Music73_Trk0.bin 1fb420 2c
-bank_07e/Music74_Trk0.bin 1fb44c 26
-bank_07e/Music75_Trk0.bin 1fb472 6e
-bank_07e/Music76_Trk0.bin 1fb4e0 36
-bank_07e/Music77_Trk0.bin 1fb516 38
-bank_07e/Music78_Trk0.bin 1fb54e 40
-bank_07e/Music79_Trk0.bin 1fb58e 2a
-bank_07e/Music7a_Trk0.bin 1fb5b8 36
-bank_07e/Music7b_Trk0.bin 1fb5ee 22
-bank_07e/Music7c_Trk0.bin 1fb610 3e
-bank_07e/Music7d_Trk0.bin 1fb64e 22
-bank_07e/Music7e_Trk0.bin 1fb670 46
-bank_07e/Music7f_Trk0.bin 1fb6b6 32
-bank_07e/Music80_Trk0.bin 1fb6e8 2a
-bank_07e/Music81_Trk0.bin 1fb712 48
-bank_07e/Music82_Trk1.bin 1fb75a 22
-bank_07e/Music82_Trk0.bin 1fb77c 114
-bank_07e/Music83_Trk0.bin 1fb890 1c
-bank_07e/Music84_Trk0.bin 1fb8ac 2a
-bank_07e/Music84_Trk1.bin 1fb8d6 32
-bank_07e/Music85_Trk0.bin 1fb908 2a
-bank_07e/Music86_Trk0.bin 1fb932 7a
-bank_07e/Music87_Trk0.bin 1fb9ac 1e
-bank_07e/Music87_Trk1.bin 1fb9ca e
-bank_07e/Music88_Trk0.bin 1fb9d8 32
-bank_07e/Music89_Trk0.bin 1fba0a c4
-bank_07e/Music8a_Trk0.bin 1fbace f0
-bank_07e/Music8b_Trk0.bin 1fbbbe 34
-bank_07e/Music8c_Trk0.bin 1fbbf2 16
-bank_07e/Music8d_Trk0.bin 1fbc08 90
-bank_07e/Music8e_Trk0.bin 1fbc98 40
-bank_07e/Music8f_Trk0.bin 1fbcd8 108
-bank_07e/Music90_Trk0.bin 1fbde0 f0
-bank_07e/Music91_Trk0.bin 1fbed0 2e
-bank_07e/Music92_Trk0.bin 1fbefe 16
-bank_07e/Music93_Trk0.bin 1fbf14 36
-bank_07e/Music94_Trk0.bin 1fbf4a 4c
-bank_07e/Music95_Trk0.bin 1fbf96 1c
-bank_07f/Music96_Trk0.bin 1fc0a8 24
-bank_07f/Music96_Trk1.bin 1fc0cc 2c
-bank_07f/Music97_Trk0.bin 1fc0f8 48
-bank_07f/Music98_Trk0.bin 1fc140 48
-bank_07f/Music99_Trk0.bin 1fc188 1a
-bank_07f/Music9d_Trk0.bin 1fc1a2 c
-bank_07f/Music9e_Trk0.bin 1fc1ae c
-bank_07f/Music9f_Trk0.bin 1fc1ba c
-bank_07f/Musica0_Trk0.bin 1fc1c6 c
-bank_07f/Musica1_Trk0.bin 1fc1d2 c
-bank_07f/Musica2_Trk0.bin 1fc1de c
-bank_07f/Musica3_Trk0.bin 1fc1ea c
-bank_07f/Musica4_Trk0.bin 1fc1f6 c
-bank_07f/Musica5_Trk0.bin 1fc202 c
-bank_07f/Musica6_Trk0.bin 1fc20e c
-bank_07f/Musica7_Trk0.bin 1fc21a c
-bank_07f/Musica8_Trk0.bin 1fc226 c
-bank_07f/Musica9_Trk0.bin 1fc232 c
-bank_07f/Musicaa_Trk0.bin 1fc23e c
-bank_07f/Musicab_Trk0.bin 1fc24a c
-bank_07f/Musicac_Trk0.bin 1fc256 c
-bank_07f/Musicad_Trk0.bin 1fc262 c
-bank_07f/Musicae_Trk0.bin 1fc26e c
-bank_07f/Musicaf_Trk0.bin 1fc27a c
-bank_07f/Musicb0_Trk0.bin 1fc286 c
-bank_07f/Musicb1_Trk0.bin 1fc292 c
-bank_07f/Musicb2_Trk0.bin 1fc29e c
-bank_07f/Musicb3_Trk0.bin 1fc2aa c
-bank_07f/Musicb4_Trk0.bin 1fc2b6 c
-bank_07f/Musicb5_Trk0.bin 1fc2c2 c
-bank_07f/Musicb6_Trk0.bin 1fc2ce c
-bank_07f/Musicb7_Trk0.bin 1fc2da c
-bank_07f/Musicb8_Trk0.bin 1fc2e6 c
-bank_07f/Musicb9_Trk0.bin 1fc2f2 c
-bank_07f/Musicba_Trk0.bin 1fc2fe 48
-bank_07f/Musicbb_Trk0.bin 1fc346 48
-bank_07f/Musicbc_Trk0.bin 1fc38e 48
-bank_07f/Musicbd_Trk0.bin 1fc3d6 48
-bank_07f/Musicbe_Trk0.bin 1fc41e 48
-bank_07f/Musicbf_Trk0.bin 1fc466 48
-bank_07f/Musicc0_Trk0.bin 1fc4ae 48
-bank_07f/Musicc1_Trk0.bin 1fc4f6 c
+bank_078/Sfx01_Trk0.asm 1e0088 f0 snd_script:pulse
+bank_078/Sfx01_Trk1.asm 1e0178 f2 snd_script:pulse
+bank_078/Sfx01_Trk2.asm 1e026a 164 snd_script:wave
+bank_078/Sfx01_Trk3.asm 1e03ce 538 snd_script:noise
+bank_078/Sfx02_Trk0.asm 1e0906 3e snd_script:pulse
+bank_078/Sfx02_Trk1.asm 1e0944 4e snd_script:pulse
+bank_078/Sfx02_Trk2.asm 1e0992 ae snd_script:wave
+bank_078/Sfx02_Trk3.asm 1e0a40 246 snd_script:noise
+bank_078/Sfx03_Trk0.asm 1e0c86 1e6 snd_script:pulse
+bank_078/Sfx03_Trk1.asm 1e0e6c 1c0 snd_script:pulse
+bank_078/Sfx03_Trk2.asm 1e102c 46e snd_script:wave
+bank_078/Sfx03_Trk3.asm 1e149a 340 snd_script:noise
+bank_078/Sfx04_Trk0.asm 1e17da 212 snd_script:pulse
+bank_078/Sfx04_Trk1.asm 1e19ec 212 snd_script:pulse
+bank_078/Sfx04_Trk2.asm 1e1bfe 10a snd_script:wave
+bank_078/Sfx04_Trk3.asm 1e1d08 338 snd_script:noise
+bank_078/Sfx05_Trk0.asm 1e2040 1b4 snd_script:pulse
+bank_078/Sfx05_Trk1.asm 1e21f4 12c snd_script:pulse
+bank_078/Sfx05_Trk2.asm 1e2320 162 snd_script:wave
+bank_078/Sfx05_Trk3.asm 1e2482 362 snd_script:noise
+bank_078/Sfx06_Trk0.asm 1e27e4 270 snd_script:pulse
+bank_078/Sfx06_Trk1.asm 1e2a54 242 snd_script:pulse
+bank_078/Sfx06_Trk2.asm 1e2c96 4fc snd_script:wave
+bank_078/Sfx06_Trk3.asm 1e3192 504 snd_script:noise
+bank_078/Sfx07_Trk0.asm 1e3696 182 snd_script:pulse
+bank_078/Sfx07_Trk1.asm 1e3818 2c8 snd_script:pulse
+bank_078/Sfx07_Trk2.asm 1e3ae0 2c4 snd_script:wave
+bank_078/Sfx07_Trk3.asm 1e3da4 188 snd_script:noise
+bank_078/Sfx0a_Trk0.asm 1e3f2c 3a snd_script:pulse
+bank_078/Sfx0a_Trk1.asm 1e3f66 38 snd_script:pulse
+bank_078/Sfx0a_Trk2.asm 1e3f9e 18 snd_script:wave
+bank_078/Music51_Trk0.asm 1e3fb6 16 snd_script:noise
+bank_078/Music52_Trk0.asm 1e3fcc 1a snd_script:noise
+bank_078/Music9a_Trk0.asm 1e3fe6 a snd_script:pulse
+bank_079/Sfx08_Trk0.asm 1e4084 31a snd_script:pulse
+bank_079/Sfx08_Trk1.asm 1e439e 322 snd_script:pulse
+bank_079/Sfx08_Trk2.asm 1e46c0 19e snd_script:wave
+bank_079/Sfx08_Trk3.asm 1e485e 636 snd_script:noise
+bank_079/Sfx09_Trk0.asm 1e4e94 9a snd_script:pulse
+bank_079/Sfx09_Trk1.asm 1e4f2e 9a snd_script:pulse
+bank_079/Sfx09_Trk2.asm 1e4fc8 8e snd_script:wave
+bank_079/Sfx09_Trk3.asm 1e5056 324 snd_script:noise
+bank_079/Sfx0b_Trk0.asm 1e537a d2 snd_script:pulse
+bank_079/Sfx0b_Trk1.asm 1e544c d2 snd_script:pulse
+bank_079/Sfx0b_Trk2.asm 1e551e e0 snd_script:wave
+bank_079/Sfx0b_Trk3.asm 1e55fe 342 snd_script:noise
+bank_079/Sfx0c_Trk0.asm 1e5940 78 snd_script:pulse
+bank_079/Sfx0c_Trk1.asm 1e59b8 7a snd_script:pulse
+bank_079/Sfx0c_Trk2.asm 1e5a32 12c snd_script:wave
+bank_079/Sfx0c_Trk3.asm 1e5b5e 36e snd_script:noise
+bank_079/Sfx0d_Trk0.asm 1e5ecc a8 snd_script:pulse
+bank_079/Sfx0d_Trk1.asm 1e5f74 196 snd_script:pulse
+bank_079/Sfx0d_Trk2.asm 1e610a cc snd_script:wave
+bank_079/Sfx0d_Trk3.asm 1e61d6 3b6 snd_script:noise
+bank_079/Sfx0e_Trk0.asm 1e658c 20a snd_script:pulse
+bank_079/Sfx0e_Trk1.asm 1e6796 20e snd_script:pulse
+bank_079/Sfx0e_Trk2.asm 1e69a4 694 snd_script:wave
+bank_079/Sfx0e_Trk3.asm 1e7038 198 snd_script:noise
+bank_079/Sfx0f_Trk0.asm 1e71d0 20c snd_script:pulse
+bank_079/Sfx0f_Trk1.asm 1e73dc d6 snd_script:pulse
+bank_079/Sfx0f_Trk2.asm 1e74b2 364 snd_script:wave
+bank_079/Sfx0f_Trk3.asm 1e7816 676 snd_script:noise
+bank_079/Sfx2d_Trk0.asm 1e7e8c 6c snd_script:pulse
+bank_079/Sfx2d_Trk1.asm 1e7ef8 62 snd_script:pulse
+bank_079/Sfx2d_Trk2.asm 1e7f5a 22 snd_script:wave
+bank_079/Sfx2d_Trk3.asm 1e7f7c 4a snd_script:noise
+bank_079/Music53_Trk0.asm 1e7fc6 2c snd_script:noise
+bank_07a/Sfx10_Trk0.asm 1e806c 352 snd_script:pulse
+bank_07a/Sfx10_Trk1.asm 1e83be 274 snd_script:pulse
+bank_07a/Sfx10_Trk2.asm 1e8632 656 snd_script:wave
+bank_07a/Sfx10_Trk3.asm 1e8c88 30c snd_script:noise
+bank_07a/Sfx11_Trk0.asm 1e8f94 2d0 snd_script:pulse
+bank_07a/Sfx11_Trk1.asm 1e9264 2f4 snd_script:pulse
+bank_07a/Sfx11_Trk2.asm 1e9558 262 snd_script:wave
+bank_07a/Sfx11_Trk3.asm 1e97ba 2f0 snd_script:noise
+bank_07a/Sfx12_Trk0.asm 1e9aaa 5ae snd_script:pulse
+bank_07a/Sfx12_Trk1.asm 1ea058 4de snd_script:pulse
+bank_07a/Sfx12_Trk2.asm 1ea536 140 snd_script:wave
+bank_07a/Sfx12_Trk3.asm 1ea676 2a0 snd_script:noise
+bank_07a/Sfx13_Trk0.asm 1ea916 208 snd_script:pulse
+bank_07a/Sfx13_Trk1.asm 1eab1e 262 snd_script:pulse
+bank_07a/Sfx13_Trk2.asm 1ead80 2a8 snd_script:wave
+bank_07a/Sfx13_Trk3.asm 1eb028 270 snd_script:noise
+bank_07a/Sfx14_Trk0.asm 1eb298 16c snd_script:pulse
+bank_07a/Sfx14_Trk1.asm 1eb404 13e snd_script:pulse
+bank_07a/Sfx14_Trk2.asm 1eb542 172 snd_script:wave
+bank_07a/Sfx14_Trk3.asm 1eb6b4 2a6 snd_script:noise
+bank_07a/Sfx15_Trk0.asm 1eb95a 196 snd_script:pulse
+bank_07a/Sfx15_Trk1.asm 1ebaf0 17e snd_script:pulse
+bank_07a/Sfx15_Trk2.asm 1ebc6e 126 snd_script:wave
+bank_07a/Sfx15_Trk3.asm 1ebd94 16c snd_script:noise
+bank_07a/Sfx2e_Trk0.asm 1ebf00 5e snd_script:pulse
+bank_07a/Sfx2e_Trk1.asm 1ebf5e 4c snd_script:pulse
+bank_07a/Sfx2e_Trk2.asm 1ebfaa 46 snd_script:wave
+bank_07b/Sfx16_Trk0.asm 1ec0c0 1b6 snd_script:pulse
+bank_07b/Sfx16_Trk1.asm 1ec276 1c8 snd_script:pulse
+bank_07b/Sfx16_Trk2.asm 1ec43e 158 snd_script:wave
+bank_07b/Sfx16_Trk3.asm 1ec596 256 snd_script:noise
+bank_07b/Sfx17_Trk0.asm 1ec7ec 108 snd_script:pulse
+bank_07b/Sfx17_Trk1.asm 1ec8f4 c4 snd_script:pulse
+bank_07b/Sfx17_Trk2.asm 1ec9b8 9e snd_script:wave
+bank_07b/Sfx17_Trk3.asm 1eca56 52 snd_script:noise
+bank_07b/Sfx18_Trk0.asm 1ecaa8 12e snd_script:pulse
+bank_07b/Sfx18_Trk1.asm 1ecbd6 12e snd_script:pulse
+bank_07b/Sfx18_Trk2.asm 1ecd04 94 snd_script:wave
+bank_07b/Sfx18_Trk3.asm 1ecd98 3da snd_script:noise
+bank_07b/Sfx19_Trk0.asm 1ed172 1f4 snd_script:pulse
+bank_07b/Sfx19_Trk1.asm 1ed366 1be snd_script:pulse
+bank_07b/Sfx19_Trk2.asm 1ed524 2cc snd_script:wave
+bank_07b/Sfx19_Trk3.asm 1ed7f0 9a snd_script:noise
+bank_07b/Sfx1a_Trk0.asm 1ed88a da snd_script:pulse
+bank_07b/Sfx1a_Trk1.asm 1ed964 de snd_script:pulse
+bank_07b/Sfx1a_Trk2.asm 1eda42 7c snd_script:wave
+bank_07b/Sfx1b_Trk0.asm 1edabe b8 snd_script:pulse
+bank_07b/Sfx1b_Trk1.asm 1edb76 ba snd_script:pulse
+bank_07b/Sfx1b_Trk2.asm 1edc30 d0 snd_script:wave
+bank_07b/Sfx1b_Trk3.asm 1edd00 152 snd_script:noise
+bank_07b/Sfx1c_Trk0.asm 1ede52 84 snd_script:pulse
+bank_07b/Sfx1c_Trk1.asm 1eded6 ea snd_script:pulse
+bank_07b/Sfx1c_Trk2.asm 1edfc0 18c snd_script:wave
+bank_07b/Sfx1c_Trk3.asm 1ee14c 19c snd_script:noise
+bank_07b/Sfx1d_Trk0.asm 1ee2e8 12e snd_script:pulse
+bank_07b/Sfx1d_Trk1.asm 1ee416 1c0 snd_script:pulse
+bank_07b/Sfx1d_Trk2.asm 1ee5d6 f0 snd_script:wave
+bank_07b/Sfx1d_Trk3.asm 1ee6c6 60 snd_script:noise
+bank_07b/Sfx1e_Trk0.asm 1ee726 2d4 snd_script:pulse
+bank_07b/Sfx1e_Trk1.asm 1ee9fa 436 snd_script:pulse
+bank_07b/Sfx1e_Trk2.asm 1eee30 4ac snd_script:wave
+bank_07b/Sfx1e_Trk3.asm 1ef2dc 6be snd_script:noise
+bank_07b/Sfx1f_Trk0.asm 1ef99a d4 snd_script:pulse
+bank_07b/Sfx1f_Trk1.asm 1efa6e d8 snd_script:pulse
+bank_07b/Sfx1f_Trk2.asm 1efb46 1c2 snd_script:wave
+bank_07b/Sfx1f_Trk3.asm 1efd08 154 snd_script:noise
+bank_07b/Sfx2f_Trk0.asm 1efe5c 1c snd_script:pulse
+bank_07b/Sfx2f_Trk1.asm 1efe78 1c snd_script:pulse
+bank_07b/Sfx2f_Trk2.asm 1efe94 16 snd_script:wave
+bank_07b/Sfx2f_Trk3.asm 1efeaa 4c snd_script:noise
+bank_07b/Sfx31_Trk0.asm 1efef6 26 snd_script:pulse
+bank_07b/Sfx31_Trk1.asm 1eff1c 26 snd_script:pulse
+bank_07b/Sfx31_Trk2.asm 1eff42 22 snd_script:wave
+bank_07b/Sfx31_Trk3.asm 1eff64 82 snd_script:noise
+bank_07b/Music9b_Trk0.asm 1effe6 a snd_script:pulse
+bank_07c/Sfx20_Trk0.asm 1f006c 1c6 snd_script:pulse
+bank_07c/Sfx20_Trk1.asm 1f0232 4bc snd_script:pulse
+bank_07c/Sfx20_Trk2.asm 1f06ee 418 snd_script:wave
+bank_07c/Sfx20_Trk3.asm 1f0b06 2e2 snd_script:noise
+bank_07c/Sfx21_Trk0.asm 1f0de8 1a8 snd_script:pulse
+bank_07c/Sfx21_Trk1.asm 1f0f90 2b4 snd_script:pulse
+bank_07c/Sfx21_Trk2.asm 1f1244 1ea snd_script:wave
+bank_07c/Sfx21_Trk3.asm 1f142e 4f8 snd_script:noise
+bank_07c/Sfx22_Trk0.asm 1f1926 28e snd_script:pulse
+bank_07c/Sfx22_Trk1.asm 1f1bb4 28c snd_script:pulse
+bank_07c/Sfx22_Trk2.asm 1f1e40 268 snd_script:wave
+bank_07c/Sfx22_Trk3.asm 1f20a8 1a6 snd_script:noise
+bank_07c/Sfx23_Trk0.asm 1f224e 1f2 snd_script:pulse
+bank_07c/Sfx23_Trk1.asm 1f2440 1f6 snd_script:pulse
+bank_07c/Sfx23_Trk2.asm 1f2636 216 snd_script:wave
+bank_07c/Sfx23_Trk3.asm 1f284c 4fa snd_script:noise
+bank_07c/Sfx24_Trk0.asm 1f2d46 236 snd_script:pulse
+bank_07c/Sfx24_Trk1.asm 1f2f7c 23a snd_script:pulse
+bank_07c/Sfx24_Trk2.asm 1f31b6 692 snd_script:wave
+bank_07c/Sfx24_Trk3.asm 1f3848 670 snd_script:noise
+bank_07c/Music54_Trk0.asm 1f3eb8 2a snd_script:noise
+bank_07c/Music55_Trk0.asm 1f3ee2 36 snd_script:noise
+bank_07c/Music56_Trk0.asm 1f3f18 28 snd_script:noise
+bank_07c/Music57_Trk0.asm 1f3f40 38 snd_script:noise
+bank_07c/Music58_Trk0.asm 1f3f78 28 snd_script:noise
+bank_07c/Music59_Trk0.asm 1f3fa0 30 snd_script:noise
+bank_07c/Music5b_Trk0.asm 1f3fd0 16 snd_script:noise
+bank_07d/Sfx25_Trk0.asm 1f407c 28a snd_script:pulse
+bank_07d/Sfx25_Trk1.asm 1f4306 44e snd_script:pulse
+bank_07d/Sfx25_Trk2.asm 1f4754 12e snd_script:wave
+bank_07d/Sfx25_Trk3.asm 1f4882 680 snd_script:noise
+bank_07d/Sfx26_Trk0.asm 1f4f02 59a snd_script:pulse
+bank_07d/Sfx26_Trk1.asm 1f549c 564 snd_script:pulse
+bank_07d/Sfx26_Trk2.asm 1f5a00 6b2 snd_script:wave
+bank_07d/Sfx26_Trk3.asm 1f60b2 606 snd_script:noise
+bank_07d/Sfx27_Trk0.asm 1f66b8 23a snd_script:pulse
+bank_07d/Sfx27_Trk1.asm 1f68f2 64a snd_script:pulse
+bank_07d/Sfx27_Trk2.asm 1f6f3c 672 snd_script:wave
+bank_07d/Sfx27_Trk3.asm 1f75ae a2 snd_script:noise
+bank_07d/Sfx2a_Trk0.asm 1f7650 110 snd_script:pulse
+bank_07d/Sfx2a_Trk1.asm 1f7760 10a snd_script:pulse
+bank_07d/Sfx2a_Trk2.asm 1f786a 14 snd_script:wave
+bank_07d/Sfx2a_Trk3.asm 1f787e 66 snd_script:noise
+bank_07d/Sfx2b_Trk0.asm 1f78e4 a4 snd_script:pulse
+bank_07d/Sfx2b_Trk1.asm 1f7988 a4 snd_script:pulse
+bank_07d/Sfx2b_Trk2.asm 1f7a2c e0 snd_script:wave
+bank_07d/Sfx2b_Trk3.asm 1f7b0c 18e snd_script:noise
+bank_07d/Sfx30_Trk0.asm 1f7c9a 40 snd_script:pulse
+bank_07d/Sfx30_Trk1.asm 1f7cda 40 snd_script:pulse
+bank_07d/Sfx30_Trk2.asm 1f7d1a 1a snd_script:wave
+bank_07d/Sfx30_Trk3.asm 1f7d34 bc snd_script:noise
+bank_07d/Sfx32_Trk0.asm 1f7df0 2a snd_script:pulse
+bank_07d/Sfx32_Trk1.asm 1f7e1a 2a snd_script:pulse
+bank_07d/Sfx32_Trk2.asm 1f7e44 2a snd_script:wave
+bank_07d/Sfx32_Trk3.asm 1f7e6e e2 snd_script:noise
+bank_07d/Music5a_Trk0.asm 1f7f50 4c snd_script:pulse
+bank_07d/Music5c_Trk0.asm 1f7f9c 4c snd_script:pulse
+bank_07d/Music9c_Trk0.asm 1f7fe8 a snd_script:pulse
+bank_07e/Sfx28_Trk0.asm 1f8124 336 snd_script:pulse
+bank_07e/Sfx28_Trk1.asm 1f845a 214 snd_script:pulse
+bank_07e/Sfx28_Trk2.asm 1f866e 690 snd_script:wave
+bank_07e/Sfx28_Trk3.asm 1f8cfe 61e snd_script:noise
+bank_07e/Sfx29_Trk0.asm 1f931c 328 snd_script:pulse
+bank_07e/Sfx29_Trk1.asm 1f9644 2ea snd_script:pulse
+bank_07e/Sfx29_Trk2.asm 1f992e 344 snd_script:wave
+bank_07e/Sfx29_Trk3.asm 1f9c72 506 snd_script:noise
+bank_07e/Sfx2c_Trk0.asm 1fa178 2b0 snd_script:pulse
+bank_07e/Sfx2c_Trk1.asm 1fa428 2cc snd_script:pulse
+bank_07e/Sfx2c_Trk2.asm 1fa6f4 25e snd_script:wave
+bank_07e/Sfx2c_Trk3.asm 1fa952 62e snd_script:noise
+bank_07e/Music5d_Trk0.asm 1faf80 14 snd_script:pulse
+bank_07e/Music5e_Trk0.asm 1faf94 14 snd_script:pulse
+bank_07e/Music5f_Trk0.asm 1fafa8 12 snd_script:pulse
+bank_07e/Music60_Trk0.asm 1fafba 18 snd_script:pulse
+bank_07e/Music61_Trk0.asm 1fafd2 30 snd_script:pulse
+bank_07e/Music62_Trk0.asm 1fb002 12 snd_script:pulse
+bank_07e/Music63_Trk0.asm 1fb014 12 snd_script:pulse
+bank_07e/Music64_Trk0.asm 1fb026 14 snd_script:pulse
+bank_07e/Music65_Trk0.asm 1fb03a 22 snd_script:pulse
+bank_07e/Music66_Trk0.asm 1fb05c 2e snd_script:pulse
+bank_07e/Music67_Trk0.asm 1fb08a 4a snd_script:pulse
+bank_07e/Music68_Trk0.asm 1fb0d4 4e snd_script:pulse
+bank_07e/Music69_Trk0.asm 1fb122 40 snd_script:pulse
+bank_07e/Music6a_Trk0.asm 1fb162 3c snd_script:pulse
+bank_07e/Music6b_Trk0.asm 1fb19e 3e snd_script:pulse
+bank_07e/Music6c_Trk0.asm 1fb1dc 22 snd_script:pulse
+bank_07e/Music6d_Trk0.asm 1fb1fe 42 snd_script:pulse
+bank_07e/Music6e_Trk0.asm 1fb240 22 snd_script:noise
+bank_07e/Music6f_Trk1.asm 1fb262 22 snd_script:noise
+bank_07e/Music6f_Trk0.asm 1fb284 114 snd_script:pulse
+bank_07e/Music70_Trk0.asm 1fb398 4c snd_script:pulse
+bank_07e/Music71_Trk0.asm 1fb3e4 22 snd_script:noise
+bank_07e/Music72_Trk0.asm 1fb406 1a snd_script:noise
+bank_07e/Music73_Trk0.asm 1fb420 2c snd_script:pulse
+bank_07e/Music74_Trk0.asm 1fb44c 26 snd_script:pulse
+bank_07e/Music75_Trk0.asm 1fb472 6e snd_script:pulse
+bank_07e/Music76_Trk0.asm 1fb4e0 36 snd_script:noise
+bank_07e/Music77_Trk0.asm 1fb516 38 snd_script:pulse
+bank_07e/Music78_Trk0.asm 1fb54e 40 snd_script:noise
+bank_07e/Music79_Trk0.asm 1fb58e 2a snd_script:noise
+bank_07e/Music7a_Trk0.asm 1fb5b8 36 snd_script:noise
+bank_07e/Music7b_Trk0.asm 1fb5ee 22 snd_script:noise
+bank_07e/Music7c_Trk0.asm 1fb610 3e snd_script:noise
+bank_07e/Music7d_Trk0.asm 1fb64e 22 snd_script:noise
+bank_07e/Music7e_Trk0.asm 1fb670 46 snd_script:noise
+bank_07e/Music7f_Trk0.asm 1fb6b6 32 snd_script:noise
+bank_07e/Music80_Trk0.asm 1fb6e8 2a snd_script:pulse
+bank_07e/Music81_Trk0.asm 1fb712 48 snd_script:noise
+bank_07e/Music82_Trk1.asm 1fb75a 22 snd_script:noise
+bank_07e/Music82_Trk0.asm 1fb77c 114 snd_script:pulse
+bank_07e/Music83_Trk0.asm 1fb890 1c snd_script:noise
+bank_07e/Music84_Trk0.asm 1fb8ac 2a snd_script:pulse
+bank_07e/Music84_Trk1.asm 1fb8d6 32 snd_script:pulse
+bank_07e/Music85_Trk0.asm 1fb908 2a snd_script:noise
+bank_07e/Music86_Trk0.asm 1fb932 7a snd_script:pulse
+bank_07e/Music87_Trk0.asm 1fb9ac 1e snd_script:pulse
+bank_07e/Music87_Trk1.asm 1fb9ca e snd_script:noise
+bank_07e/Music88_Trk0.asm 1fb9d8 32 snd_script:noise
+bank_07e/Music89_Trk0.asm 1fba0a c4 snd_script:pulse
+bank_07e/Music8a_Trk0.asm 1fbace f0 snd_script:pulse
+bank_07e/Music8b_Trk0.asm 1fbbbe 34 snd_script:noise
+bank_07e/Music8c_Trk0.asm 1fbbf2 16 snd_script:pulse
+bank_07e/Music8d_Trk0.asm 1fbc08 90 snd_script:pulse
+bank_07e/Music8e_Trk0.asm 1fbc98 40 snd_script:pulse
+bank_07e/Music8f_Trk0.asm 1fbcd8 108 snd_script:pulse
+bank_07e/Music90_Trk0.asm 1fbde0 f0 snd_script:pulse
+bank_07e/Music91_Trk0.asm 1fbed0 2e snd_script:noise
+bank_07e/Music92_Trk0.asm 1fbefe 16 snd_script:noise
+bank_07e/Music93_Trk0.asm 1fbf14 36 snd_script:pulse
+bank_07e/Music94_Trk0.asm 1fbf4a 4c snd_script:pulse
+bank_07e/Music95_Trk0.asm 1fbf96 1c snd_script:pulse
+bank_07f/Music96_Trk0.asm 1fc0a8 24 snd_script:pulse
+bank_07f/Music96_Trk1.asm 1fc0cc 2c snd_script:wave
+bank_07f/Music97_Trk0.asm 1fc0f8 48 snd_script:pulse
+bank_07f/Music98_Trk0.asm 1fc140 48 snd_script:pulse
+bank_07f/Music99_Trk0.asm 1fc188 1a snd_script:noise
+bank_07f/Music9d_Trk0.asm 1fc1a2 c snd_script:pulse
+bank_07f/Music9e_Trk0.asm 1fc1ae c snd_script:pulse
+bank_07f/Music9f_Trk0.asm 1fc1ba c snd_script:pulse
+bank_07f/Musica0_Trk0.asm 1fc1c6 c snd_script:pulse
+bank_07f/Musica1_Trk0.asm 1fc1d2 c snd_script:pulse
+bank_07f/Musica2_Trk0.asm 1fc1de c snd_script:pulse
+bank_07f/Musica3_Trk0.asm 1fc1ea c snd_script:pulse
+bank_07f/Musica4_Trk0.asm 1fc1f6 c snd_script:pulse
+bank_07f/Musica5_Trk0.asm 1fc202 c snd_script:pulse
+bank_07f/Musica6_Trk0.asm 1fc20e c snd_script:pulse
+bank_07f/Musica7_Trk0.asm 1fc21a c snd_script:pulse
+bank_07f/Musica8_Trk0.asm 1fc226 c snd_script:pulse
+bank_07f/Musica9_Trk0.asm 1fc232 c snd_script:pulse
+bank_07f/Musicaa_Trk0.asm 1fc23e c snd_script:pulse
+bank_07f/Musicab_Trk0.asm 1fc24a c snd_script:pulse
+bank_07f/Musicac_Trk0.asm 1fc256 c snd_script:pulse
+bank_07f/Musicad_Trk0.asm 1fc262 c snd_script:pulse
+bank_07f/Musicae_Trk0.asm 1fc26e c snd_script:pulse
+bank_07f/Musicaf_Trk0.asm 1fc27a c snd_script:pulse
+bank_07f/Musicb0_Trk0.asm 1fc286 c snd_script:pulse
+bank_07f/Musicb1_Trk0.asm 1fc292 c snd_script:pulse
+bank_07f/Musicb2_Trk0.asm 1fc29e c snd_script:pulse
+bank_07f/Musicb3_Trk0.asm 1fc2aa c snd_script:pulse
+bank_07f/Musicb4_Trk0.asm 1fc2b6 c snd_script:pulse
+bank_07f/Musicb5_Trk0.asm 1fc2c2 c snd_script:pulse
+bank_07f/Musicb6_Trk0.asm 1fc2ce c snd_script:pulse
+bank_07f/Musicb7_Trk0.asm 1fc2da c snd_script:pulse
+bank_07f/Musicb8_Trk0.asm 1fc2e6 c snd_script:pulse
+bank_07f/Musicb9_Trk0.asm 1fc2f2 c snd_script:pulse
+bank_07f/Musicba_Trk0.asm 1fc2fe 48 snd_script:pulse
+bank_07f/Musicbb_Trk0.asm 1fc346 48 snd_script:pulse
+bank_07f/Musicbc_Trk0.asm 1fc38e 48 snd_script:pulse
+bank_07f/Musicbd_Trk0.asm 1fc3d6 48 snd_script:pulse
+bank_07f/Musicbe_Trk0.asm 1fc41e 48 snd_script:pulse
+bank_07f/Musicbf_Trk0.asm 1fc466 48 snd_script:pulse
+bank_07f/Musicc0_Trk0.asm 1fc4ae 48 snd_script:pulse
+bank_07f/Musicc1_Trk0.asm 1fc4f6 c snd_script:pulse

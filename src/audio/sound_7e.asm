@@ -146,149 +146,149 @@ SoundTable_7e:
 	snd_channel 0, $00 ; $4120
 	dw Music95_Trk0 ; $4122
 Sfx28_Trk0:
-	INCBIN "data/bank_07e/Sfx28_Trk0.bin" ; $4124, 822 bytes
+	INCLUDE "data/bank_07e/Sfx28_Trk0.asm" ; $4124, 822 bytes (snd_script:pulse)
 Sfx28_Trk1:
-	INCBIN "data/bank_07e/Sfx28_Trk1.bin" ; $445a, 532 bytes
+	INCLUDE "data/bank_07e/Sfx28_Trk1.asm" ; $445a, 532 bytes (snd_script:pulse)
 Sfx28_Trk2:
-	INCBIN "data/bank_07e/Sfx28_Trk2.bin" ; $466e, 1680 bytes
+	INCLUDE "data/bank_07e/Sfx28_Trk2.asm" ; $466e, 1680 bytes (snd_script:wave)
 Sfx28_Trk3:
-	INCBIN "data/bank_07e/Sfx28_Trk3.bin" ; $4cfe, 1566 bytes
+	INCLUDE "data/bank_07e/Sfx28_Trk3.asm" ; $4cfe, 1566 bytes (snd_script:noise)
 Sfx29_Trk0:
-	INCBIN "data/bank_07e/Sfx29_Trk0.bin" ; $531c, 808 bytes
+	INCLUDE "data/bank_07e/Sfx29_Trk0.asm" ; $531c, 808 bytes (snd_script:pulse)
 Sfx29_Trk1:
-	INCBIN "data/bank_07e/Sfx29_Trk1.bin" ; $5644, 746 bytes
+	INCLUDE "data/bank_07e/Sfx29_Trk1.asm" ; $5644, 746 bytes (snd_script:pulse)
 Sfx29_Trk2:
-	INCBIN "data/bank_07e/Sfx29_Trk2.bin" ; $592e, 836 bytes
+	INCLUDE "data/bank_07e/Sfx29_Trk2.asm" ; $592e, 836 bytes (snd_script:wave)
 Sfx29_Trk3:
-	INCBIN "data/bank_07e/Sfx29_Trk3.bin" ; $5c72, 1286 bytes
+	INCLUDE "data/bank_07e/Sfx29_Trk3.asm" ; $5c72, 1286 bytes (snd_script:noise)
 Sfx2c_Trk0:
-	INCBIN "data/bank_07e/Sfx2c_Trk0.bin" ; $6178, 688 bytes
+	INCLUDE "data/bank_07e/Sfx2c_Trk0.asm" ; $6178, 688 bytes (snd_script:pulse)
 Sfx2c_Trk1:
-	INCBIN "data/bank_07e/Sfx2c_Trk1.bin" ; $6428, 716 bytes
+	INCLUDE "data/bank_07e/Sfx2c_Trk1.asm" ; $6428, 716 bytes (snd_script:pulse)
 Sfx2c_Trk2:
-	INCBIN "data/bank_07e/Sfx2c_Trk2.bin" ; $66f4, 606 bytes
+	INCLUDE "data/bank_07e/Sfx2c_Trk2.asm" ; $66f4, 606 bytes (snd_script:wave)
 Sfx2c_Trk3:
-	INCBIN "data/bank_07e/Sfx2c_Trk3.bin" ; $6952, 1582 bytes
+	INCLUDE "data/bank_07e/Sfx2c_Trk3.asm" ; $6952, 1582 bytes (snd_script:noise)
 Music5d_Trk0:
-	INCBIN "data/bank_07e/Music5d_Trk0.bin" ; $6f80, 20 bytes
+	INCLUDE "data/bank_07e/Music5d_Trk0.asm" ; $6f80, 20 bytes (snd_script:pulse)
 Music5e_Trk0:
-	INCBIN "data/bank_07e/Music5e_Trk0.bin" ; $6f94, 20 bytes
+	INCLUDE "data/bank_07e/Music5e_Trk0.asm" ; $6f94, 20 bytes (snd_script:pulse)
 Music5f_Trk0:
-	INCBIN "data/bank_07e/Music5f_Trk0.bin" ; $6fa8, 18 bytes
+	INCLUDE "data/bank_07e/Music5f_Trk0.asm" ; $6fa8, 18 bytes (snd_script:pulse)
 Music60_Trk0:
-	INCBIN "data/bank_07e/Music60_Trk0.bin" ; $6fba, 24 bytes
+	INCLUDE "data/bank_07e/Music60_Trk0.asm" ; $6fba, 24 bytes (snd_script:pulse)
 Music61_Trk0:
-	INCBIN "data/bank_07e/Music61_Trk0.bin" ; $6fd2, 48 bytes
+	INCLUDE "data/bank_07e/Music61_Trk0.asm" ; $6fd2, 48 bytes (snd_script:pulse)
 Music62_Trk0:
-	INCBIN "data/bank_07e/Music62_Trk0.bin" ; $7002, 18 bytes
+	INCLUDE "data/bank_07e/Music62_Trk0.asm" ; $7002, 18 bytes (snd_script:pulse)
 Music63_Trk0:
-	INCBIN "data/bank_07e/Music63_Trk0.bin" ; $7014, 18 bytes
+	INCLUDE "data/bank_07e/Music63_Trk0.asm" ; $7014, 18 bytes (snd_script:pulse)
 Music64_Trk0:
-	INCBIN "data/bank_07e/Music64_Trk0.bin" ; $7026, 20 bytes
+	INCLUDE "data/bank_07e/Music64_Trk0.asm" ; $7026, 20 bytes (snd_script:pulse)
 Music65_Trk0:
-	INCBIN "data/bank_07e/Music65_Trk0.bin" ; $703a, 34 bytes
+	INCLUDE "data/bank_07e/Music65_Trk0.asm" ; $703a, 34 bytes (snd_script:pulse)
 Music66_Trk0:
-	INCBIN "data/bank_07e/Music66_Trk0.bin" ; $705c, 46 bytes
+	INCLUDE "data/bank_07e/Music66_Trk0.asm" ; $705c, 46 bytes (snd_script:pulse)
 Music67_Trk0:
-	INCBIN "data/bank_07e/Music67_Trk0.bin" ; $708a, 74 bytes
+	INCLUDE "data/bank_07e/Music67_Trk0.asm" ; $708a, 74 bytes (snd_script:pulse)
 Music68_Trk0:
-	INCBIN "data/bank_07e/Music68_Trk0.bin" ; $70d4, 78 bytes
+	INCLUDE "data/bank_07e/Music68_Trk0.asm" ; $70d4, 78 bytes (snd_script:pulse)
 Music69_Trk0:
-	INCBIN "data/bank_07e/Music69_Trk0.bin" ; $7122, 64 bytes
+	INCLUDE "data/bank_07e/Music69_Trk0.asm" ; $7122, 64 bytes (snd_script:pulse)
 Music6a_Trk0:
-	INCBIN "data/bank_07e/Music6a_Trk0.bin" ; $7162, 60 bytes
+	INCLUDE "data/bank_07e/Music6a_Trk0.asm" ; $7162, 60 bytes (snd_script:pulse)
 Music6b_Trk0:
-	INCBIN "data/bank_07e/Music6b_Trk0.bin" ; $719e, 62 bytes
+	INCLUDE "data/bank_07e/Music6b_Trk0.asm" ; $719e, 62 bytes (snd_script:pulse)
 Music6c_Trk0:
-	INCBIN "data/bank_07e/Music6c_Trk0.bin" ; $71dc, 34 bytes
+	INCLUDE "data/bank_07e/Music6c_Trk0.asm" ; $71dc, 34 bytes (snd_script:pulse)
 Music6d_Trk0:
-	INCBIN "data/bank_07e/Music6d_Trk0.bin" ; $71fe, 66 bytes
+	INCLUDE "data/bank_07e/Music6d_Trk0.asm" ; $71fe, 66 bytes (snd_script:pulse)
 Music6e_Trk0:
-	INCBIN "data/bank_07e/Music6e_Trk0.bin" ; $7240, 34 bytes
+	INCLUDE "data/bank_07e/Music6e_Trk0.asm" ; $7240, 34 bytes (snd_script:noise)
 Music6f_Trk1:
-	INCBIN "data/bank_07e/Music6f_Trk1.bin" ; $7262, 34 bytes
+	INCLUDE "data/bank_07e/Music6f_Trk1.asm" ; $7262, 34 bytes (snd_script:noise)
 Music6f_Trk0:
-	INCBIN "data/bank_07e/Music6f_Trk0.bin" ; $7284, 276 bytes
+	INCLUDE "data/bank_07e/Music6f_Trk0.asm" ; $7284, 276 bytes (snd_script:pulse)
 Music70_Trk0:
-	INCBIN "data/bank_07e/Music70_Trk0.bin" ; $7398, 76 bytes
+	INCLUDE "data/bank_07e/Music70_Trk0.asm" ; $7398, 76 bytes (snd_script:pulse)
 Music71_Trk0:
-	INCBIN "data/bank_07e/Music71_Trk0.bin" ; $73e4, 34 bytes
+	INCLUDE "data/bank_07e/Music71_Trk0.asm" ; $73e4, 34 bytes (snd_script:noise)
 Music72_Trk0:
-	INCBIN "data/bank_07e/Music72_Trk0.bin" ; $7406, 26 bytes
+	INCLUDE "data/bank_07e/Music72_Trk0.asm" ; $7406, 26 bytes (snd_script:noise)
 Music73_Trk0:
-	INCBIN "data/bank_07e/Music73_Trk0.bin" ; $7420, 44 bytes
+	INCLUDE "data/bank_07e/Music73_Trk0.asm" ; $7420, 44 bytes (snd_script:pulse)
 Music74_Trk0:
-	INCBIN "data/bank_07e/Music74_Trk0.bin" ; $744c, 38 bytes
+	INCLUDE "data/bank_07e/Music74_Trk0.asm" ; $744c, 38 bytes (snd_script:pulse)
 Music75_Trk0:
-	INCBIN "data/bank_07e/Music75_Trk0.bin" ; $7472, 110 bytes
+	INCLUDE "data/bank_07e/Music75_Trk0.asm" ; $7472, 110 bytes (snd_script:pulse)
 Music76_Trk0:
-	INCBIN "data/bank_07e/Music76_Trk0.bin" ; $74e0, 54 bytes
+	INCLUDE "data/bank_07e/Music76_Trk0.asm" ; $74e0, 54 bytes (snd_script:noise)
 Music77_Trk0:
-	INCBIN "data/bank_07e/Music77_Trk0.bin" ; $7516, 56 bytes
+	INCLUDE "data/bank_07e/Music77_Trk0.asm" ; $7516, 56 bytes (snd_script:pulse)
 Music78_Trk0:
-	INCBIN "data/bank_07e/Music78_Trk0.bin" ; $754e, 64 bytes
+	INCLUDE "data/bank_07e/Music78_Trk0.asm" ; $754e, 64 bytes (snd_script:noise)
 Music79_Trk0:
-	INCBIN "data/bank_07e/Music79_Trk0.bin" ; $758e, 42 bytes
+	INCLUDE "data/bank_07e/Music79_Trk0.asm" ; $758e, 42 bytes (snd_script:noise)
 Music7a_Trk0:
-	INCBIN "data/bank_07e/Music7a_Trk0.bin" ; $75b8, 54 bytes
+	INCLUDE "data/bank_07e/Music7a_Trk0.asm" ; $75b8, 54 bytes (snd_script:noise)
 Music7b_Trk0:
-	INCBIN "data/bank_07e/Music7b_Trk0.bin" ; $75ee, 34 bytes
+	INCLUDE "data/bank_07e/Music7b_Trk0.asm" ; $75ee, 34 bytes (snd_script:noise)
 Music7c_Trk0:
-	INCBIN "data/bank_07e/Music7c_Trk0.bin" ; $7610, 62 bytes
+	INCLUDE "data/bank_07e/Music7c_Trk0.asm" ; $7610, 62 bytes (snd_script:noise)
 Music7d_Trk0:
-	INCBIN "data/bank_07e/Music7d_Trk0.bin" ; $764e, 34 bytes
+	INCLUDE "data/bank_07e/Music7d_Trk0.asm" ; $764e, 34 bytes (snd_script:noise)
 Music7e_Trk0:
-	INCBIN "data/bank_07e/Music7e_Trk0.bin" ; $7670, 70 bytes
+	INCLUDE "data/bank_07e/Music7e_Trk0.asm" ; $7670, 70 bytes (snd_script:noise)
 Music7f_Trk0:
-	INCBIN "data/bank_07e/Music7f_Trk0.bin" ; $76b6, 50 bytes
+	INCLUDE "data/bank_07e/Music7f_Trk0.asm" ; $76b6, 50 bytes (snd_script:noise)
 Music80_Trk0:
-	INCBIN "data/bank_07e/Music80_Trk0.bin" ; $76e8, 42 bytes
+	INCLUDE "data/bank_07e/Music80_Trk0.asm" ; $76e8, 42 bytes (snd_script:pulse)
 Music81_Trk0:
-	INCBIN "data/bank_07e/Music81_Trk0.bin" ; $7712, 72 bytes
+	INCLUDE "data/bank_07e/Music81_Trk0.asm" ; $7712, 72 bytes (snd_script:noise)
 Music82_Trk1:
-	INCBIN "data/bank_07e/Music82_Trk1.bin" ; $775a, 34 bytes
+	INCLUDE "data/bank_07e/Music82_Trk1.asm" ; $775a, 34 bytes (snd_script:noise)
 Music82_Trk0:
-	INCBIN "data/bank_07e/Music82_Trk0.bin" ; $777c, 276 bytes
+	INCLUDE "data/bank_07e/Music82_Trk0.asm" ; $777c, 276 bytes (snd_script:pulse)
 Music83_Trk0:
-	INCBIN "data/bank_07e/Music83_Trk0.bin" ; $7890, 28 bytes
+	INCLUDE "data/bank_07e/Music83_Trk0.asm" ; $7890, 28 bytes (snd_script:noise)
 Music84_Trk0:
-	INCBIN "data/bank_07e/Music84_Trk0.bin" ; $78ac, 42 bytes
+	INCLUDE "data/bank_07e/Music84_Trk0.asm" ; $78ac, 42 bytes (snd_script:pulse)
 Music84_Trk1:
-	INCBIN "data/bank_07e/Music84_Trk1.bin" ; $78d6, 50 bytes
+	INCLUDE "data/bank_07e/Music84_Trk1.asm" ; $78d6, 50 bytes (snd_script:pulse)
 Music85_Trk0:
-	INCBIN "data/bank_07e/Music85_Trk0.bin" ; $7908, 42 bytes
+	INCLUDE "data/bank_07e/Music85_Trk0.asm" ; $7908, 42 bytes (snd_script:noise)
 Music86_Trk0:
-	INCBIN "data/bank_07e/Music86_Trk0.bin" ; $7932, 122 bytes
+	INCLUDE "data/bank_07e/Music86_Trk0.asm" ; $7932, 122 bytes (snd_script:pulse)
 Music87_Trk0:
-	INCBIN "data/bank_07e/Music87_Trk0.bin" ; $79ac, 30 bytes
+	INCLUDE "data/bank_07e/Music87_Trk0.asm" ; $79ac, 30 bytes (snd_script:pulse)
 Music87_Trk1:
-	INCBIN "data/bank_07e/Music87_Trk1.bin" ; $79ca, 14 bytes
+	INCLUDE "data/bank_07e/Music87_Trk1.asm" ; $79ca, 14 bytes (snd_script:noise)
 Music88_Trk0:
-	INCBIN "data/bank_07e/Music88_Trk0.bin" ; $79d8, 50 bytes
+	INCLUDE "data/bank_07e/Music88_Trk0.asm" ; $79d8, 50 bytes (snd_script:noise)
 Music89_Trk0:
-	INCBIN "data/bank_07e/Music89_Trk0.bin" ; $7a0a, 196 bytes
+	INCLUDE "data/bank_07e/Music89_Trk0.asm" ; $7a0a, 196 bytes (snd_script:pulse)
 Music8a_Trk0:
-	INCBIN "data/bank_07e/Music8a_Trk0.bin" ; $7ace, 240 bytes
+	INCLUDE "data/bank_07e/Music8a_Trk0.asm" ; $7ace, 240 bytes (snd_script:pulse)
 Music8b_Trk0:
-	INCBIN "data/bank_07e/Music8b_Trk0.bin" ; $7bbe, 52 bytes
+	INCLUDE "data/bank_07e/Music8b_Trk0.asm" ; $7bbe, 52 bytes (snd_script:noise)
 Music8c_Trk0:
-	INCBIN "data/bank_07e/Music8c_Trk0.bin" ; $7bf2, 22 bytes
+	INCLUDE "data/bank_07e/Music8c_Trk0.asm" ; $7bf2, 22 bytes (snd_script:pulse)
 Music8d_Trk0:
-	INCBIN "data/bank_07e/Music8d_Trk0.bin" ; $7c08, 144 bytes
+	INCLUDE "data/bank_07e/Music8d_Trk0.asm" ; $7c08, 144 bytes (snd_script:pulse)
 Music8e_Trk0:
-	INCBIN "data/bank_07e/Music8e_Trk0.bin" ; $7c98, 64 bytes
+	INCLUDE "data/bank_07e/Music8e_Trk0.asm" ; $7c98, 64 bytes (snd_script:pulse)
 Music8f_Trk0:
-	INCBIN "data/bank_07e/Music8f_Trk0.bin" ; $7cd8, 264 bytes
+	INCLUDE "data/bank_07e/Music8f_Trk0.asm" ; $7cd8, 264 bytes (snd_script:pulse)
 Music90_Trk0:
-	INCBIN "data/bank_07e/Music90_Trk0.bin" ; $7de0, 240 bytes
+	INCLUDE "data/bank_07e/Music90_Trk0.asm" ; $7de0, 240 bytes (snd_script:pulse)
 Music91_Trk0:
-	INCBIN "data/bank_07e/Music91_Trk0.bin" ; $7ed0, 46 bytes
+	INCLUDE "data/bank_07e/Music91_Trk0.asm" ; $7ed0, 46 bytes (snd_script:noise)
 Music92_Trk0:
-	INCBIN "data/bank_07e/Music92_Trk0.bin" ; $7efe, 22 bytes
+	INCLUDE "data/bank_07e/Music92_Trk0.asm" ; $7efe, 22 bytes (snd_script:noise)
 Music93_Trk0:
-	INCBIN "data/bank_07e/Music93_Trk0.bin" ; $7f14, 54 bytes
+	INCLUDE "data/bank_07e/Music93_Trk0.asm" ; $7f14, 54 bytes (snd_script:pulse)
 Music94_Trk0:
-	INCBIN "data/bank_07e/Music94_Trk0.bin" ; $7f4a, 76 bytes
+	INCLUDE "data/bank_07e/Music94_Trk0.asm" ; $7f4a, 76 bytes (snd_script:pulse)
 Music95_Trk0:
-	INCBIN "data/bank_07e/Music95_Trk0.bin" ; $7f96, 28 bytes
+	INCLUDE "data/bank_07e/Music95_Trk0.asm" ; $7f96, 28 bytes (snd_script:pulse)
 	; $7fb2, 78 bytes fill to bank end (linker-padded)

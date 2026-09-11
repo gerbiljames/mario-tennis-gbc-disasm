@@ -218,6 +218,29 @@ class TileImages(unittest.TestCase):
             self.assertIsNone(self.gfx.decode(p, p[:-4] + ".png"))
 
 
+class SoundScript(unittest.TestCase):
+    """The channel-script codec: two-byte commands, the four-byte snd_call
+    with a byte-offset target, and the rendering round trip."""
+
+    def test_round_trip(self):
+        import snd
+        track = bytes([0xa0, 0x1e, 0x41, 0x08, 0xfd, 0xf0, 0x2f, 0x04, 0xb2, 0xf0,
+                       0xac, 0x03, 0x10, 0x00, 0xff, 0xff, 0x53, 0x02, 0xad, 0x00])
+        text = snd.render(track, "T", "pulse")
+        self.assertIn("snd_note E_, 4, 8", text)
+        self.assertIn("snd_call 3, .call0", text)
+        self.assertIn(".call0:", text)
+        self.assertEqual(snd.encode(text), track)
+        self.assertIn("snd_noise $41, 8", snd.render(track, "T", "noise"))
+
+    def test_rejects_bad_scripts(self):
+        import snd
+        with self.assertRaises(ValueError):
+            snd.decode(bytes([0xa0, 0x1e, 0xff]))          # odd length
+        with self.assertRaises(ValueError):
+            snd.decode(bytes([0xac, 0x01, 0x03, 0x00, 0xff, 0xff]))   # target mid-command
+
+
 @needs_rgbasm
 class MacroBytes(unittest.TestCase):
     """Every idiom macro must assemble to the bytes of the instructions it

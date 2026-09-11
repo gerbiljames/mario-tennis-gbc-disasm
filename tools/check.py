@@ -153,6 +153,29 @@ def check_stranded_scopes(fail):
     return len(found)
 
 
+def check_sound(rom, manifest, fail):
+    """Every snd_script track decodes to whole commands over exactly its
+    extent, with every snd_call target on a command, and renders to rows
+    that encode back to the same bytes."""
+    import snd
+    n = 0
+    for path, off, length, spec in manifest:
+        if not (spec or "").startswith("snd_script"):
+            continue
+        n += 1
+        data = rom[off:off + length]
+        kind = spec.partition(":")[2] or "pulse"
+        try:
+            snd.decode(data)
+        except ValueError as e:
+            fail("sound", f"{path}: {e}")
+            continue
+        back = snd.encode(snd.render(data, Path(path).stem, kind))
+        if back != data:
+            fail("sound", f"{path}: rendering does not encode back to the track")
+    return n
+
+
 def check_regions(manifest, fail):
     spans = sorted((o, o + n, p) for p, o, n, _s in manifest)
     prev = None
@@ -304,6 +327,7 @@ def main():
         "lz": check_lz(rom, manifest, fail),
         "lz-labels": check_lz_labels(labels, manifest, fail),
         "regions": check_regions(manifest, fail),
+        "sound": check_sound(rom, manifest, fail),
         "scopes": check_stranded_scopes(fail),
         "branches": check_collapsed_branches(fail),
         "gfx": check_gfx(manifest, fail),

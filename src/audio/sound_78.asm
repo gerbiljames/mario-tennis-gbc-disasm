@@ -68,71 +68,71 @@ SoundTable_78:
 	snd_channel 0, $00 ; $4084
 	dw Music9a_Trk0 ; $4086
 Sfx01_Trk0:
-	INCBIN "data/bank_078/Sfx01_Trk0.bin" ; $4088, 240 bytes
+	INCLUDE "data/bank_078/Sfx01_Trk0.asm" ; $4088, 240 bytes (snd_script:pulse)
 Sfx01_Trk1:
-	INCBIN "data/bank_078/Sfx01_Trk1.bin" ; $4178, 242 bytes
+	INCLUDE "data/bank_078/Sfx01_Trk1.asm" ; $4178, 242 bytes (snd_script:pulse)
 Sfx01_Trk2:
-	INCBIN "data/bank_078/Sfx01_Trk2.bin" ; $426a, 356 bytes
+	INCLUDE "data/bank_078/Sfx01_Trk2.asm" ; $426a, 356 bytes (snd_script:wave)
 Sfx01_Trk3:
-	INCBIN "data/bank_078/Sfx01_Trk3.bin" ; $43ce, 1336 bytes
+	INCLUDE "data/bank_078/Sfx01_Trk3.asm" ; $43ce, 1336 bytes (snd_script:noise)
 Sfx02_Trk0:
-	INCBIN "data/bank_078/Sfx02_Trk0.bin" ; $4906, 62 bytes
+	INCLUDE "data/bank_078/Sfx02_Trk0.asm" ; $4906, 62 bytes (snd_script:pulse)
 Sfx02_Trk1:
-	INCBIN "data/bank_078/Sfx02_Trk1.bin" ; $4944, 78 bytes
+	INCLUDE "data/bank_078/Sfx02_Trk1.asm" ; $4944, 78 bytes (snd_script:pulse)
 Sfx02_Trk2:
-	INCBIN "data/bank_078/Sfx02_Trk2.bin" ; $4992, 174 bytes
+	INCLUDE "data/bank_078/Sfx02_Trk2.asm" ; $4992, 174 bytes (snd_script:wave)
 Sfx02_Trk3:
-	INCBIN "data/bank_078/Sfx02_Trk3.bin" ; $4a40, 582 bytes
+	INCLUDE "data/bank_078/Sfx02_Trk3.asm" ; $4a40, 582 bytes (snd_script:noise)
 Sfx03_Trk0:
-	INCBIN "data/bank_078/Sfx03_Trk0.bin" ; $4c86, 486 bytes
+	INCLUDE "data/bank_078/Sfx03_Trk0.asm" ; $4c86, 486 bytes (snd_script:pulse)
 Sfx03_Trk1:
-	INCBIN "data/bank_078/Sfx03_Trk1.bin" ; $4e6c, 448 bytes
+	INCLUDE "data/bank_078/Sfx03_Trk1.asm" ; $4e6c, 448 bytes (snd_script:pulse)
 Sfx03_Trk2:
-	INCBIN "data/bank_078/Sfx03_Trk2.bin" ; $502c, 1134 bytes
+	INCLUDE "data/bank_078/Sfx03_Trk2.asm" ; $502c, 1134 bytes (snd_script:wave)
 Sfx03_Trk3:
-	INCBIN "data/bank_078/Sfx03_Trk3.bin" ; $549a, 832 bytes
+	INCLUDE "data/bank_078/Sfx03_Trk3.asm" ; $549a, 832 bytes (snd_script:noise)
 Sfx04_Trk0:
-	INCBIN "data/bank_078/Sfx04_Trk0.bin" ; $57da, 530 bytes
+	INCLUDE "data/bank_078/Sfx04_Trk0.asm" ; $57da, 530 bytes (snd_script:pulse)
 Sfx04_Trk1:
-	INCBIN "data/bank_078/Sfx04_Trk1.bin" ; $59ec, 530 bytes
+	INCLUDE "data/bank_078/Sfx04_Trk1.asm" ; $59ec, 530 bytes (snd_script:pulse)
 Sfx04_Trk2:
-	INCBIN "data/bank_078/Sfx04_Trk2.bin" ; $5bfe, 266 bytes
+	INCLUDE "data/bank_078/Sfx04_Trk2.asm" ; $5bfe, 266 bytes (snd_script:wave)
 Sfx04_Trk3:
-	INCBIN "data/bank_078/Sfx04_Trk3.bin" ; $5d08, 824 bytes
+	INCLUDE "data/bank_078/Sfx04_Trk3.asm" ; $5d08, 824 bytes (snd_script:noise)
 Sfx05_Trk0:
-	INCBIN "data/bank_078/Sfx05_Trk0.bin" ; $6040, 436 bytes
+	INCLUDE "data/bank_078/Sfx05_Trk0.asm" ; $6040, 436 bytes (snd_script:pulse)
 Sfx05_Trk1:
-	INCBIN "data/bank_078/Sfx05_Trk1.bin" ; $61f4, 300 bytes
+	INCLUDE "data/bank_078/Sfx05_Trk1.asm" ; $61f4, 300 bytes (snd_script:pulse)
 Sfx05_Trk2:
-	INCBIN "data/bank_078/Sfx05_Trk2.bin" ; $6320, 354 bytes
+	INCLUDE "data/bank_078/Sfx05_Trk2.asm" ; $6320, 354 bytes (snd_script:wave)
 Sfx05_Trk3:
-	INCBIN "data/bank_078/Sfx05_Trk3.bin" ; $6482, 866 bytes
+	INCLUDE "data/bank_078/Sfx05_Trk3.asm" ; $6482, 866 bytes (snd_script:noise)
 Sfx06_Trk0:
-	INCBIN "data/bank_078/Sfx06_Trk0.bin" ; $67e4, 624 bytes
+	INCLUDE "data/bank_078/Sfx06_Trk0.asm" ; $67e4, 624 bytes (snd_script:pulse)
 Sfx06_Trk1:
-	INCBIN "data/bank_078/Sfx06_Trk1.bin" ; $6a54, 578 bytes
+	INCLUDE "data/bank_078/Sfx06_Trk1.asm" ; $6a54, 578 bytes (snd_script:pulse)
 Sfx06_Trk2:
-	INCBIN "data/bank_078/Sfx06_Trk2.bin" ; $6c96, 1276 bytes
+	INCLUDE "data/bank_078/Sfx06_Trk2.asm" ; $6c96, 1276 bytes (snd_script:wave)
 Sfx06_Trk3:
-	INCBIN "data/bank_078/Sfx06_Trk3.bin" ; $7192, 1284 bytes
+	INCLUDE "data/bank_078/Sfx06_Trk3.asm" ; $7192, 1284 bytes (snd_script:noise)
 Sfx07_Trk0:
-	INCBIN "data/bank_078/Sfx07_Trk0.bin" ; $7696, 386 bytes
+	INCLUDE "data/bank_078/Sfx07_Trk0.asm" ; $7696, 386 bytes (snd_script:pulse)
 Sfx07_Trk1:
-	INCBIN "data/bank_078/Sfx07_Trk1.bin" ; $7818, 712 bytes
+	INCLUDE "data/bank_078/Sfx07_Trk1.asm" ; $7818, 712 bytes (snd_script:pulse)
 Sfx07_Trk2:
-	INCBIN "data/bank_078/Sfx07_Trk2.bin" ; $7ae0, 708 bytes
+	INCLUDE "data/bank_078/Sfx07_Trk2.asm" ; $7ae0, 708 bytes (snd_script:wave)
 Sfx07_Trk3:
-	INCBIN "data/bank_078/Sfx07_Trk3.bin" ; $7da4, 392 bytes
+	INCLUDE "data/bank_078/Sfx07_Trk3.asm" ; $7da4, 392 bytes (snd_script:noise)
 Sfx0a_Trk0:
-	INCBIN "data/bank_078/Sfx0a_Trk0.bin" ; $7f2c, 58 bytes
+	INCLUDE "data/bank_078/Sfx0a_Trk0.asm" ; $7f2c, 58 bytes (snd_script:pulse)
 Sfx0a_Trk1:
-	INCBIN "data/bank_078/Sfx0a_Trk1.bin" ; $7f66, 56 bytes
+	INCLUDE "data/bank_078/Sfx0a_Trk1.asm" ; $7f66, 56 bytes (snd_script:pulse)
 Sfx0a_Trk2:
-	INCBIN "data/bank_078/Sfx0a_Trk2.bin" ; $7f9e, 24 bytes
+	INCLUDE "data/bank_078/Sfx0a_Trk2.asm" ; $7f9e, 24 bytes (snd_script:wave)
 Music51_Trk0:
-	INCBIN "data/bank_078/Music51_Trk0.bin" ; $7fb6, 22 bytes
+	INCLUDE "data/bank_078/Music51_Trk0.asm" ; $7fb6, 22 bytes (snd_script:noise)
 Music52_Trk0:
-	INCBIN "data/bank_078/Music52_Trk0.bin" ; $7fcc, 26 bytes
+	INCLUDE "data/bank_078/Music52_Trk0.asm" ; $7fcc, 26 bytes (snd_script:noise)
 Music9a_Trk0:
-	INCBIN "data/bank_078/Music9a_Trk0.bin" ; $7fe6, 10 bytes
+	INCLUDE "data/bank_078/Music9a_Trk0.asm" ; $7fe6, 10 bytes (snd_script:pulse)
 	; $7ff0, 16 bytes fill to bank end (linker-padded)

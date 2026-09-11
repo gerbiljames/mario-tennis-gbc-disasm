@@ -2,8 +2,10 @@
 
 The music/SFX driver lives entirely in bank 0, `$3078`–`$3ddf`. It is a
 per-channel command interpreter: every song and sound effect is a script of
-1-byte opcodes (plus operands) that is stepped once per engine tick to drive the
-four Game Boy APU channels.
+two-byte commands — opcode, operand — that is stepped once per engine tick to
+drive the four Game Boy APU channels. The 315 channel scripts are extracted
+as editable source (`data/bank_07x/<Track>.asm`, one `snd_*` macro row per
+command; see "Script command set" and `tools/snd.py`).
 
 ## Channels and state blocks
 
@@ -94,34 +96,56 @@ it expires, stepping the script via `RunSoundChannelScript`:
 
 ## Script command set
 
-`RunSoundChannelScript` (`$3558`) reads one opcode byte and dispatches by range:
+`RunSoundChannelScript` (`$3558`) keeps the channel's position as a **command
+index** (`hSndScriptPtr`) and reads the command at `hSndDataPtr + index * 2`:
+every command is two bytes, opcode then operand, and the index steps by one
+per command. The one exception is `$ac`, four bytes, whose target word is the
+byte offset of a command from the track's start (`srl` halves it into an
+index). Loop points and the `$b0`-`$bf` loops work through sixteen per-channel
+**slots** (`GetChannelLoopSlot`, three bytes each: a counter and a saved
+index), so they carry no addresses. The macro on each row is what the
+extracted scripts are written with (`include/macros.inc`):
 
-| Range | Handler | Meaning |
-|-------|---------|---------|
-| `$00`–`$9f` | `SndTriggerNote` (`$3864`) | note-on: compute period, key the channel |
-| `$a0` | | set volume, apply envelope |
-| `$a1` | | set `hSndWaveId` (loads wave RAM on the wave channel) |
-| `$a2` | | set duty (`hSndToneCtrl`) / wave note length |
-| `$a3` | | note length → `hSndNoteLenReload`/`hSndNoteLenTimer` |
-| `$a4` | | `hSndNoteOffset` (detune) |
-| `$a5` | | `hSndPanMask` (stereo output) |
-| `$a6` | | write `rAUDVOL` (master volume) |
-| `$a7` | | `hSndPortamentoTimer` (glide) |
-| `$a8` | | `hSndInstrument` |
-| `$a9` | | transpose control (`hSndTranspose`/`wSndTranspose`) |
-| `$aa` | | echo setup (`hSndEcho`/`hSndEchoCtrl`/`hSndEchoTimer`) |
-| `$ac` | | loop with count (`hSndLoopCount` + `hSndLoopReturnPtr`) |
-| `$ad` | | loop return |
-| `$ae` | | `hSndToneCtrl` bit 4 flag |
-| `$af` | | note-length nibble → `hSndToneCtrl`/`hSndLengthAccum` |
-| `$b0`–`$bf` | | loop / repeat (count in low nibble, uses `GetChannelLoopSlot`) |
-| `$c0`–`$cf` | | instrument-envelope sweep (`hSndEnvRate`/`hSndEnvLength`) |
-| `$d0`–`$df` | | volume slide up |
-| `$e0`–`$ef` | | volume slide down |
-| `$fd` | | set loop point |
-| `$ff` | `SndReleaseChannel` (`$3b02`) | end script, clear this channel's output |
+| Opcode | Operand | Macro | Meaning |
+|---|---|---|---|
+| `$00`–`$9f` | length in ticks | `snd_note NOTE, octave, len` | note-on (`SndTriggerNote` `$3864`): low nibble = semitone into `NotePeriodTable` (`C_`..`B_`, the table's upper octave when `snd_tone_flag` bit 4 is set), high nibble = how many times the period is halved. Low nibble `$f` is `snd_hold octave, len`: no new pitch, the sounding note continues (or silence if none). On the noise channel the byte is `snd_noise value, len`: `< $10` indexes `NoiseNoteTable`, else the raw polynomial value |
+| `$a0` | volume | `snd_volume` | set `hSndVolume`, apply the envelope |
+| `$a1` | id | `snd_wave` | `hSndWaveId`: loads wave RAM on the wave channel, the sweep register on pulse 1 |
+| `$a2` | value | `snd_duty` | duty into `hSndToneCtrl` (pulse) / envelope length (wave) |
+| `$a3` | length | `snd_note_length` | `hSndNoteLenReload`/`hSndNoteLenTimer`; `$fe` clears |
+| `$a4` | offset | `snd_detune` | `hSndNoteOffset` |
+| `$a5` | mask | `snd_pan` | `hSndPanMask`; `$01` swaps the current mask's nibbles |
+| `$a6` | value | `snd_master_volume` | written to `rAUDVOL` |
+| `$a7` | ticks | `snd_glide` | the note timer (`hSndPortamentoTimer`) without a key-on |
+| `$a8` | index | `snd_instrument` | `hSndInstrument` |
+| `$a9` | value | `snd_transpose` | `hSndTranspose`/`wSndTranspose`; `$f0`-`$f3` step them, `$fe`/`$ff` read a jump table of indices that follows. Unused by the shipped scripts |
+| `$aa` | value | `snd_echo` | echo count and note offset; 0 clears |
+| `$ac` | count, target | `snd_call count, .label` | run the block at `.label` `count` times; each `snd_return` comes back to this command |
+| `$ad` | — | `snd_return` | jump to the pending `snd_call` |
+| `$ae` | flag | `snd_tone_flag` | `hSndToneCtrl` bit 4, the note table's octave |
+| `$af` | nibble | `snd_length_nibble` | note-length increment |
+| `$b0` | `$f0` \| slot | `snd_jump slot` | go back to the slot's loop point; without the `$f` marker the command is skipped |
+| `$b1`–`$bf` | `$f0` \| slot | `snd_loop count, slot` | count = low nibble: go back until the block has run count + 1 times |
+| `$c0`–`$cf` | length | `snd_envelope rate, len` | instrument-envelope sweep (`hSndEnvRate`/`hSndEnvLength`) |
+| `$d0`–`$df` | period | `snd_volume_up step, period` | volume slide up |
+| `$e0`–`$ef` | period | `snd_volume_down step, period` | volume slide down |
+| `$fd` | `$f0` \| slot | `snd_loop_point slot` | remember the next command's index in the slot (the handlers mask the slot to the low nibble; every shipped operand carries the `$f` marker, so the macros write it) |
+| `$ff` | — | `snd_end` | `SndReleaseChannel` (`$3b02`): end, clear this channel's output |
 
-(`$ab`, unclaimed `$f0`–`$fc`/`$fe` opcodes fall through and skip one byte.)
+`$ab` and the unclaimed `$f0`–`$fc`/`$fe` opcodes are skipped with their
+operand; the renderer writes them as raw `db` rows. Eight tracks end on a note
+rather than a terminator and run on into the bytes that follow them; the
+rendering says so on its last line.
+
+**Editing a track.** `data/bank_07x/<Track>.asm` is generated at setup and
+`INCLUDE`d by the bank in place of the old `INCBIN`; edit it and `make`.
+Commands may be added or removed freely: `snd_call` targets are local labels
+and everything else is slot-relative, so nothing has to be renumbered. A new
+track is a new file plus a `SoundTable_7x` row (`snd_channel` + `dw`) and,
+for a new id, a `sound_entry` in the index table. `make check` (`sound`)
+proves the codec: every track decodes over exactly its extent and renders to
+rows that encode back to the same bytes. `tools/snd.py decode <file.bin>`
+renders any blob by hand.
 
 ## Key data tables
 

@@ -129,6 +129,12 @@ restated:
   follows and every reference moves. A slot in a bank's `$4000` table is
   likewise a `DataPtr_`/`FarPtr_` label, referenced as `BANK(...)` /
   `LOW(...)` or through `dslot`.
+- **Sound is source.** The 315 channel scripts behind every song and effect
+  are extracted to `data/bank_07x/<Track>.asm`, one `snd_*` row per command
+  (`snd_note C#, 3, 8`, `snd_loop_point 0`, `snd_call 2, .call0`, ...), with
+  the command set in `docs/sound_engine.md`. Edit a track and `make`; add
+  one with a file and a `SoundTable` row. `make check` proves every track
+  round-trips through the codec (`tools/snd.py`).
 - **Copy counts follow their source.** A VRAM copy of a whole blob is
   written `ld c, (Next - Blob) / 16`, and a whole copy of a decompressed
   stream `ld c, Blob_SIZE / 16`, where `Blob_SIZE` is the decoded length in

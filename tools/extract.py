@@ -491,10 +491,15 @@ def render_sprite_template(data: bytes) -> str:
     return "\n".join(out) + "\n"
 
 
-def render_spec(data: bytes, spec: str) -> str:
+def render_spec(data: bytes, spec: str, name: str | None = None) -> str:
     kind, _, param = spec.partition(":")
     if kind == "palettes":
         return render_palettes(data)
+    if kind == "snd_script":
+        # a sound channel script: name is the track label the file's rows
+        # take their call offsets from, param the hardware channel kind
+        import snd
+        return snd.render(data, name, param or "pulse")
     if kind == "sprite_template":
         return render_sprite_template(data)
     if kind == "records":
@@ -614,7 +619,7 @@ def main() -> int:
             if (_gfx_edited(dest, png, data, gfx) if is_gfx and gfx_ok
                     else _grid_edited(dest, grid, data) if is_grid
                     else _edited(dest, (data if not spec and not path.endswith(".asm")
-                                        else (render_spec(data, spec) if spec
+                                        else (render_spec(data, spec, dest.stem) if spec
                                               else render_text(data)).encode()))):
                 kept.append(path)
                 written.add(path)
@@ -650,7 +655,7 @@ def main() -> int:
                     pngs += 1
                     dest.write_bytes(rom[off:off + length])
         elif spec:
-            dest.write_text(render_spec(rom[off:off + length], spec))
+            dest.write_text(render_spec(rom[off:off + length], spec, dest.stem))
         elif path.endswith(".asm"):
             dest.write_text(render_text(rom[off:off + length]))
         else:

@@ -111,6 +111,19 @@ blob.
 
 ## Recent changes
 
+* **2026-09-12** — the sound scripts are source. Reading the driver
+  settled the format: every command is two bytes and the interpreter
+  steps by command index, the one four-byte command (`$ac`) carrying a
+  byte offset from the track's start; loops go through per-channel slots.
+  All 315 channel scripts decode over exactly their extents, and
+  `extract.py` now renders each to `data/bank_07x/<Track>.asm` as `snd_*`
+  macro rows (`snd_note C#, 3, 8`, `snd_call 2, .call0`; noise-channel
+  tracks as `snd_noise`), which the sound banks `INCLUDE` in place of the
+  `INCBIN`s. `tools/snd.py` is the codec, `make check` (`sound`) proves
+  the round trip, and `docs/sound_engine.md` has the command reference.
+  Eight tracks end on a note and run on into what follows; the rendering
+  says so. The emulator gives no audio, so the command names come from
+  what the driver does with each operand, not from listening.
 * **2026-09-11** — the scene blob families are named after their scene.
   Each of the 37 scenes' blobs (config, palettes, tiles, tilemap, attribute
   map, collision and behaviour maps, and the `DataPtr_` slots and aliases)
