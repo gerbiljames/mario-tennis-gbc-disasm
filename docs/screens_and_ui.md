@@ -685,6 +685,14 @@ by `a * 2`, and `jp hl`.
 | `$1e` (`$de`) | `TextCmdApplyDakuten` | rewrites the *previous* cell to add a voiced-sound mark |
 | `$1f` (`$df`) | `TextCmdApplyHandakuten` | ditto for the semi-voiced mark |
 
+In the generated pools (`data/<bank>/TextStrings_*.asm`) these bytes are
+written as the `TX_*` names of `include/text_codes.inc` (`$01`/`$02`/`$03`
+as the `line`/`page`/`done` macros), with `TX_SHORT_TEXT`'s operand as the
+numeric byte after it. The codes the retail strings use: `$07` (136
+times), `$0e` (40), `$06` (35), `$0b` (19), `$11` (17), `$09` (10), `$14`
+(10), `$0c` (6), `$1a` (5), `$04` (2), `$1d` (2); `$05`, `$08` and the
+dakuten pair never.
+
 Two further 32-entry tables in the same bank reuse `DispatchControlCode` for
 different targets: `ProportionalTextCodeHandlers_05` (`$05:$5e39`, driven by
 `RenderProportionalTextAt` — a text id rendered at an arbitrary cell with no

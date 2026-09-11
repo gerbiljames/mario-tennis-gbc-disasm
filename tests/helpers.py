@@ -33,7 +33,7 @@ def assemble(source, tmpdir):
     src.write_text(defs + 'SECTION "t", ROM0[$0000]\n' + source + "\n")
     prelude = [str(ROOT / "include" / f) for f in
                ("hardware.inc", "macros.inc", "constants.inc", "text_ids.inc",
-                "flag_constants.inc", "ram_mirrored.inc")]
+                "flag_constants.inc", "text_codes.inc", "ram_mirrored.inc")]
     subprocess.run([RGBASM, "-E", "-I", str(ROOT / "include")]
                    + [a for f in prelude for a in ("-P", f)]
                    + ["-o", str(obj), str(src)], check=True, cwd=ROOT)

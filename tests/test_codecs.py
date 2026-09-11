@@ -201,6 +201,16 @@ class MacroBytes(unittest.TestCase):
         self.assertEqual(out[:4], bytes.fromhex("cd2527" "1e"))   # WaitFramesCmd = $2725
         self.assertEqual(out[4:10], bytes.fromhex("110602" "0100ff"))
 
+    def test_text_codes_round_trip(self):
+        sys.path.insert(0, str(TOOLS))
+        import extract
+        raw = bytes.fromhex("07") + b" won" + bytes.fromhex("010e05") + b"!" + bytes.fromhex("0603")
+        lines = extract.render_string(raw)
+        self.assertEqual(lines, ['\ttext TX_PLAYER_NAME, " won"',
+                                 '\tline TX_SHORT_TEXT, $05, "!", TX_DELAY_15',
+                                 '\tdone'])
+        self.assertEqual(self.bytes_of("\n".join(lines))[:len(raw)], raw)
+
     def test_flag_forms_agree(self):
         # flag 47 = byte 5, bit 7 -> (5 << 8) | (7 << 5) = $05e0
         out = self.bytes_of("ld_flag_id de, FLAG_DOUBLES\nflag_id FLAG_DOUBLES\n"

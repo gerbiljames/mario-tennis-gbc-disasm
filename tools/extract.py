@@ -42,13 +42,27 @@ def solve_table(data: bytes):
     return entries[:good[0]]
 
 
+# Control codes below $20 (and the two remapped high bytes) by the names
+# include/text_codes.inc gives them; $01/$02/$03 are the line/page/done macros.
+TEXT_CODES = {0x04: "TX_ARG_STRING", 0x05: "TX_DELAY_30", 0x06: "TX_DELAY_15",
+              0x07: "TX_PLAYER_NAME", 0x08: "TX_SHORT_TEXT_ARG", 0x09: "TX_ARG_NUMBER",
+              0x0A: "TX_NOP", 0x0B: "TX_PARTNER_NAME", 0x0C: "TX_DELAY_150",
+              0x0D: "TX_NEXT_GLYPH_ROW", 0x0E: "TX_SHORT_TEXT", 0x0F: "TX_NEWLINE_0F",
+              0x10: "TX_NOP_10", 0x11: "TX_NOP_11", 0x12: "TX_NOP_12", 0x13: "TX_NOP_13",
+              0xDE: "TX_DAKUTEN", 0xDF: "TX_HANDAKUTEN"}
+TEXT_CODES.update({c: f"TX_NEWLINE_{c:02X}" for c in range(0x14, 0x1E)})
+
+
 def render_string(chunk: bytes) -> list:
     """Render one string as text/line/page macro lines (see macros.inc).
-    Segments are split on the $01/$02 control bytes; unexpected bytes stay
-    numeric args, so any input reassembles identically."""
+    Segments are split on the $01/$02 control bytes; the other control codes
+    are written by name (TEXT_CODES), TX_SHORT_TEXT keeps its operand byte
+    numeric, and anything else stays a numeric arg, so any input reassembles
+    identically."""
     out = []
     mac = "text"
     items, buf = [], ""
+    operand = False
 
     def flush_buf():
         nonlocal buf
@@ -67,7 +81,14 @@ def render_string(chunk: bytes) -> list:
         items, mac = [], next_mac
 
     for b in chunk:
-        if b in SAFE:
+        if operand:
+            items.append(f"${b:02x}")
+            operand = False
+        elif b in TEXT_CODES:
+            flush_buf()
+            items.append(TEXT_CODES[b])
+            operand = b == 0x0E
+        elif b in SAFE:
             buf += chr(b)
             if len(buf) >= 58:
                 flush_buf()

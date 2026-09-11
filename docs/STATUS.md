@@ -116,6 +116,13 @@ label bound to the wrong parent.
 
 ## Recent changes
 
+* **2026-09-11** — text control codes are named. `include/text_codes.inc`
+  gives every byte below `$20` its `TX_*` name (player and partner name,
+  the string and number argument pops, the three delays, the short-text
+  code and its operand, the newline aliases and the no-ops) and the pool
+  renderer writes them, so a string reads `text TX_PLAYER_NAME, " won"`
+  instead of `text $07, " won"`. The include is in the build prelude; a
+  test round-trips a string through the renderer and rgbasm.
 * **2026-09-11** — the RAM the poison run found in use is named. The
   character records' documented field groups are declared in all eight
   records (physics attributes, swing word, AI parameters, stat bars, the
