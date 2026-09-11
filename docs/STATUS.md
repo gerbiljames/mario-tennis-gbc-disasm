@@ -69,12 +69,12 @@ which no `ShowRankingBoard` argument ever selects); and one arithmetic
 constant. `ram_gaps.py --static` reports any site whose bank the dataflow
 knows but no union names, and that bucket is empty too.
 
-**Unnamed but used RAM.** The poison run behind the free-RAM inventory
-showed 1,455 bytes of WRAM bank `$05` (`$d901`, `$dc80`, `$de02`, `$df97`)
-written by the text and window engine, 671 bytes of WRAM0 scratch around
-the match and menu records, and undeclared fields of the story character
-record (`$c907-$c90a`, `$c90f-$c913`) read by the overworld. None has a
-name yet; `docs/ram_map.md` "Free RAM" lists them.
+**Unnamed but used RAM.** 786 bytes hold real data in some flow and carry
+no name: the neighbours of the second shadow-OAM page (`$c4ef-$c5ff`),
+undeclared fields of the story character and match records (`$c801-$c877`,
+`$c90f-$c977`, `$ca0f-$caff`), small tables at `$c6e0`, `$c705`, `$c730`,
+`$c9ce`, four bytes at bank `$06` `$df84`, and `$d281-$d2ff` of bank `$07`
+under the ranking board. `docs/ram_map.md` "Free RAM" lists them.
 
 **Named in the docs as not established.** `docs/graphics_formats.md` §8 now
 holds two items, and both are about the developers' intent rather than the
@@ -123,6 +123,15 @@ label bound to the wrong parent.
 
 ## Recent changes
 
+* **2026-09-11** — the "text-engine buffers" were block clears. Checking
+  every written-but-unnamed byte against all seventeen saved states showed
+  the 1,455 bytes of WRAM bank `$05` (and `$df97-$dfff` of banks `$05`-`$07`,
+  and 286 WRAM0 bytes) never hold anything but zero: `ResetTextWindowState`
+  clears the whole bank on every text-screen init, boot clears every WRAMX
+  bank, and match setup clears each character bank's `$df00` page. The
+  inventory now has three classes -- untouched (2,495 bytes), cleared only
+  (1,620, usable as per-screen scratch), holds data (786, the naming
+  targets) -- and `wSceneTileAnimBuffer` is declared at its real 384 bytes.
 * **2026-09-11** — a verified free-RAM inventory (`docs/ram_map.md`, "Free
   RAM"). `tools/ram_free.py` lists the 5,106 bytes no symbol covers; every
   one was poisoned in a savestate and seven scripted flows (menus, a

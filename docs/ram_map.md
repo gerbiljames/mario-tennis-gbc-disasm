@@ -607,21 +607,20 @@ were replayed from the poisoned and the clean state and compared byte for
 byte: the main menu and exhibition setup, a singles match with a pause menu,
 the developer Test map (walking, three NPC talks), the N64 status screens,
 the lesson menu, the ending credits, and a story doubles match launched from
-the Test map. A byte still holding `$5a` afterwards was never written; and in
+the Test map. A byte still holding `$5a` afterwards was never written; in
 every flow but one the run was identical in every named byte and on screen,
 so nothing read the poison either. (The exception is the story character
 record: poisoning its undeclared fields at `$c907-$c90a` and `$c90f-$c913`
 changed the player's overworld sprite attributes, so those are live fields,
-not padding.)
+not padding.) The written bytes were then checked against every saved state
+of the session: a byte that was written but is zero in all of them was only
+ever *cleared*.
 
-Of the 5,568 bytes the static pass listed before this run, 302 are the stack
-zone and **2,771 were written** by one of the flows -- the second shadow-OAM
-page (now `wShadowOAM2`, which takes the static count to 5,106), 1,455 bytes of WRAM bank `$05`
-buffers the text and window engine fills (`$d901`, `$dc80`, `$de02`, `$df97`,
-still unnamed), 671 bytes of WRAM0 scratch around the match and menu
-records, the `$df97-$dfff` tail of banks `$05`-`$07`, and the stack.
-**2,495 were touched by nothing** in any flow. The ones eight bytes or
-longer, the list to allocate from:
+Three classes came out of the 4,741 bytes the static pass lists once the
+tile-animation buffer is declared at its real size:
+
+* **Untouched (2,495 bytes).** Neither written nor read in any flow. Safe to
+  allocate; the ones eight bytes or longer:
 
 | bank | range | bytes |
 |---|---|---|
@@ -650,10 +649,59 @@ longer, the list to allocate from:
 | WRAM7 | `$dde2-$ddff` | 30 |
 | WRAM7 | `$de02-$deff` | 254 |
 
-plus 29 shorter gaps (63 bytes) and 23 bytes of HRAM in
-twelve one-to-four-byte holes. The banks `$06`/`$07` ranges at `$dc90-$deff`
-mirror bank `$04`'s ball and minigame slots and stayed untouched even in the
-doubles match; `$d690-$d7ff` in bank `$04` is untouched everywhere. Not
-exercised: the minigames, link play, the N64 transfer screens and the story
-scenes beyond the Test map, so a range here is free for those modes only as
-far as the static pass says -- nothing addresses it by name.
+  plus 29 shorter gaps (63 bytes) and 23 bytes of HRAM in twelve
+  one-to-four-byte holes. The banks `$06`/`$07` ranges at `$dc90-$deff`
+  mirror bank `$04`'s ball and minigame slots and stayed untouched even in
+  the doubles match; `$d690-$d7ff` in bank `$04` is untouched everywhere.
+
+* **Cleared only (1,620 bytes).** Written, but never with anything but
+  zero: they sit inside a block clear and nothing else reaches them. The
+  whole of WRAM bank `$05` is cleared by `ResetTextWindowState` (`$05:$6e09`,
+  two `ClearMemory16` runs of `$800` bytes from `$d000` and from `$d800`)
+  every time a text screen starts, and every WRAMX bank is cleared at boot
+  (`$01:$402c`-`$4075`); `$df00-$dfff` of each character bank is cleared at
+  match setup (`$08:$68a1`, `$38:$47f5`). So the "text-engine buffers" the
+  first pass reported in bank `$05` are nothing of the kind: the window
+  engine's state is what is already named there (`$d800-$d8ff`,
+  `$dc00-$dc7f`), and the rest of the bank is zeroed scratch. Usable, with
+  the rule that the clear will take it back at the next screen or match
+  init. Eight bytes or longer:
+
+| bank | range | bytes | cleared by |
+|---|---|---|---|
+| WRAM0 | `$c495-$c49f` | 11 | boot / screen init |
+| WRAM0 | `$c778-$c77f` | 8 | boot / screen init |
+| WRAM0 | `$c7d8-$c7ff` | 40 | boot / screen init |
+| WRAM0 | `$c892-$c8a2` | 17 | boot / screen init |
+| WRAM0 | `$c97c-$c9af` | 52 | boot / screen init |
+| WRAM0 | `$c9b7-$c9bf` | 9 | boot / screen init |
+| WRAM0 | `$c9e0-$c9ff` | 32 | boot / screen init |
+| WRAM5 | `$d810-$d81f` | 16 | ResetTextWindowState, boot |
+| WRAM5 | `$d870-$d87f` | 16 | ResetTextWindowState, boot |
+| WRAM5 | `$d890-$d8af` | 32 | ResetTextWindowState, boot |
+| WRAM5 | `$db08-$db0f` | 8 | ResetTextWindowState, boot |
+| WRAM5 | `$db14-$db53` | 64 | ResetTextWindowState, boot |
+| WRAM5 | `$db61-$db7f` | 31 | ResetTextWindowState, boot |
+| WRAM5 | `$db81-$dbff` | 127 | ResetTextWindowState, boot |
+| WRAM5 | `$dc80-$ddc0` | 321 | ResetTextWindowState, boot |
+| WRAM5 | `$ddc2-$dddf` | 30 | ResetTextWindowState, boot |
+| WRAM5 | `$dde2-$de00` | 31 | ResetTextWindowState, boot |
+| WRAM5 | `$de02-$deff` | 254 | ResetTextWindowState, boot |
+| WRAM5 | `$df97-$dfff` | 105 | match setup ($df00 clear), boot |
+| WRAM6 | `$df97-$dfff` | 105 | match setup ($df00 clear), boot |
+| WRAM7 | `$df97-$dfff` | 105 | match setup ($df00 clear), boot |
+
+* **Holds data (786 bytes).** Written with real values somewhere in the
+  session, so in use even though no symbol says so: the second shadow-OAM
+  page and its neighbours (`$c4ef-$c5ff`, the page itself is now
+  `wShadowOAM2`); the undeclared fields of the story character and match
+  records (`$c801-$c877`, `$c90f-$c977`, `$ca0f-$caff` -- names, stat
+  bytes, equipment); `$c6e0-$c6ff`, `$c705` and `$c730-$c75f` (small
+  tables written on the Test map and in matches); `$c9ce-$c9d7`; four bytes
+  at `$df84` of bank `$06` in the credits; and `$d281-$d2ff` of bank `$07`,
+  which the lesson menu's ranking board fills. These are the naming targets
+  the inventory leaves open.
+
+Not exercised: the minigames, link play, the N64 transfer screens and the
+story scenes beyond the Test map, so a range here is free for those modes
+only as far as the static pass says -- nothing addresses it by name.

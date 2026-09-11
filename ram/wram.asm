@@ -3413,9 +3413,8 @@ wTextArgShortTextQueue:: ds 16
 ; header starts at $da80 -- which is also what bounds the buffer, since no
 ; length for it appears in the code.
 ; scene tile animation staging (bank $0a)
-; [at most $180 bytes, bounded by wSceneTileAnimHeader above it] Base of the tile staging buffer. Referenced once, as the initial value of wSceneTileAnimBufferPtr; the bytes are filled by FarCopyBytes through that cursor and read out by QueueVRAMCopy
-wSceneTileAnimBuffer:: db
-	ds 383
+; [384 bytes] The tile staging buffer, $d900-$da7f, bounded by wSceneTileAnimHeader above it. Referenced once, as the initial value of wSceneTileAnimBufferPtr; the bytes are filled by FarCopyBytes through that cursor and read out by QueueVRAMCopy
+wSceneTileAnimBuffer:: ds 384
 
 ; Scene tile-animation record, WRAM bank $05: an $88-byte slot InitSceneTileAnimations
 ; copies in before building its animation slots.

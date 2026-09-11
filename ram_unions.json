@@ -5200,7 +5200,7 @@
      "symbols": {
       "0xd900": {
        "name": "wSceneTileAnimBuffer",
-       "note": "[at most $180 bytes, bounded by wSceneTileAnimHeader above it] Base of the tile staging buffer. Referenced once, as the initial value of wSceneTileAnimBufferPtr; the bytes are filled by FarCopyBytes through that cursor and read out by QueueVRAMCopy"
+       "note": "[384 bytes] The tile staging buffer, $d900-$da7f, bounded by wSceneTileAnimHeader above it. Referenced once, as the initial value of wSceneTileAnimBufferPtr; the bytes are filled by FarCopyBytes through that cursor and read out by QueueVRAMCopy"
       }
      }
     }
