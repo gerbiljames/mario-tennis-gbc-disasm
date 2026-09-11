@@ -26,6 +26,14 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "tools"))
 from banksrc import bank_lines, bank_of, holders  # noqa: E402
 _LABEL_RE = re.compile(r"^([A-Za-z_]\w*):")
+# what counts as an instruction: CPU mnemonics, the code idiom macros, and the
+# story script_* macros (prefix-matched below) -- not table rows, and not the
+# as_* actor bytecode, which is data
+_CODE_WORDS = frozenset(
+    "adc add and bit call ccf cp cpl daa dec di ei halt inc jp jr ld ldd ldh ldi nop or pop "
+    "push res ret reti rl rla rlc rlca rr rra rrc rrca rst sbc scf set sla sra srl stop sub "
+    "swap xor farcall push_wram_bank pop_wram_bank wram_bank ld_hl_indexed wait_frames lb "
+    "set_flag clear_flag test_flag ld_flag_id sound".split())
 _SUFFIX_RE = re.compile(r"\b([A-Za-z]\w*?)_[0-9a-f]{2}\b")
 
 
@@ -52,8 +60,8 @@ def routines(min_instrs):
             # a text id (Text_25_61) is not a bank-suffixed name
             seq.append(_SUFFIX_RE.sub(lambda m: m.group(0) if m.group(1).startswith("Text_")
                                       else m.group(1), body))
-            if body.strip() and not body.startswith(("\tdb", "\tdw", "\tds", "\tINCBIN",
-                                                     "\tINCLUDE", "\ttwin")):
+            word = body.split()[0] if body.strip() else ""
+            if word in _CODE_WORDS or word.startswith("script_"):
                 n += 1
         flush()
     return out
