@@ -227,7 +227,7 @@ class SoundScript(unittest.TestCase):
         track = bytes([0xa0, 0x1e, 0x41, 0x08, 0xfd, 0xf0, 0x2f, 0x04, 0xb2, 0xf0,
                        0xac, 0x03, 0x10, 0x00, 0xff, 0xff, 0x53, 0x02, 0xad, 0x00])
         text = snd.render(track, "T", "pulse")
-        self.assertIn("snd_note E_, 4, 8", text)
+        self.assertIn("snd_note C#, 4, 8", text)
         self.assertIn("snd_call 3, .call0", text)
         self.assertIn(".call0:", text)
         self.assertEqual(snd.encode(text), track)
