@@ -6001,7 +6001,7 @@ TextSubcmdHandler1:
 	ld de, wStoryModeSpawnPosition ; $66f6
 	ld bc, $0005 ; $66f9
 	call CopyMemoryBC ; $66fc
-	ld a, $ff ; $66ff
+	ld a, STORYENTRY_NONE ; $66ff
 	ld [wStoryModeEntryPoint], a ; $6701
 	ld [wUnusedExitTriggerIdMirror], a ; $6704
 	ld [wStoryModeExitTriggerRequest], a ; $6707

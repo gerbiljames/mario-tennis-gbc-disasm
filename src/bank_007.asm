@@ -42,7 +42,7 @@ TryEstablishLink:
 	ei ; $404b
 	cp $c1 ; $404c
 	jr z, .probe ; $404e
-	ld a, $01 ; $4050
+	ld a, LINKSTATE_MASTER ; $4050
 	ldh [hLinkState], a ; $4052
 	call TryLinkHandshakeMaster ; $4054
 	jr nc, .done ; $4057
@@ -58,7 +58,7 @@ TryEstablishLink:
 	xor a ; $4065
 	ldh [hLinkTransferDone], a ; $4066
 	ei ; $4068
-	ld a, $02 ; $4069
+	ld a, LINKSTATE_SLAVE ; $4069
 	ldh [hLinkState], a ; $406b
 	call TryLinkHandshakeSlave ; $406d
 	jr nc, .done ; $4070
@@ -119,12 +119,12 @@ ExchangeNibbleBlockMaster:
 	ld e, $64 ; $40cf
 .syncLoop:
 	di ; $40d1
-	ld a, $c3 ; $40d2
+	ld a, LINKMSG_SYNC_MASTER ; $40d2
 	ldh [rSB], a ; $40d4
 	push af ; $40d6
-	ld a, $03 ; $40d7
+	ld a, SC_FAST | SC_INTERNAL ; $40d7
 	ldh [rSC], a ; $40d9
-	ld a, $83 ; $40db
+	ld a, SC_START | SC_FAST | SC_INTERNAL ; $40db
 	ldh [rSC], a ; $40dd
 	pop af ; $40df
 	ei ; $40e0
@@ -160,9 +160,9 @@ ExchangeNibbleBlockMaster:
 	or $40 ; $4110
 	ldh [rSB], a ; $4112
 	push af ; $4114
-	ld a, $03 ; $4115
+	ld a, SC_FAST | SC_INTERNAL ; $4115
 	ldh [rSC], a ; $4117
-	ld a, $83 ; $4119
+	ld a, SC_START | SC_FAST | SC_INTERNAL ; $4119
 	ldh [rSC], a ; $411b
 	pop af ; $411d
 	call WaitSerialTransfer ; $411e
@@ -201,13 +201,13 @@ ExchangeNibbleBlockMaster:
 	inc [hl] ; $4155
 	dec b ; $4156
 	jr nz, .nibbleLoop ; $4157
-	ld a, $c5 ; $4159
-	ld b, $c6 ; $415b
+	ld a, LINKMSG_BLOCK_END ; $4159
+	ld b, LINKMSG_BLOCK_END_ACK ; $415b
 	call SendByteAwaitEchoMaster ; $415d
 	jr nc, .sendBlockEnd ; $4160
 	call LinkErrorReset ; $4162
 .sendBlockEnd:
-	ld a, $cc ; $4165
+	ld a, LINKMSG_CHECKSUM ; $4165
 	call SendByteGetReplyMaster ; $4167
 	cp $cc ; $416a
 	jr z, .compareChecksum ; $416c
@@ -231,7 +231,7 @@ ExchangeNibbleBlockMaster:
 	pop de ; $4184
 	pop hl ; $4185
 	jp z, .checksumOk ; $4186
-	ld a, $cb ; $4189
+	ld a, LINKMSG_CHECKSUM_BAD ; $4189
 	call SendByteGetReplyMaster ; $418b
 	cp $cd ; $418e
 	jp z, .startBlock ; $4190
@@ -239,7 +239,7 @@ ExchangeNibbleBlockMaster:
 	jp z, .startBlock ; $4195
 	call LinkErrorReset ; $4198
 .checksumOk:
-	ld a, $cd ; $419b
+	ld a, LINKMSG_BLOCK_OK ; $419b
 	call SendByteGetReplyMaster ; $419d
 	cp $cd ; $41a0
 	jr z, .done ; $41a2
@@ -277,9 +277,9 @@ DelayByLinkPhase:
 	ld a, $d3 ; $41ce
 	ldh [rSB], a ; $41d0
 	push af ; $41d2
-	ld a, $03 ; $41d3
+	ld a, SC_FAST | SC_INTERNAL ; $41d3
 	ldh [rSC], a ; $41d5
-	ld a, $83 ; $41d7
+	ld a, SC_START | SC_FAST | SC_INTERNAL ; $41d7
 	ldh [rSC], a ; $41d9
 	pop af ; $41db
 	call WaitSerialTransfer ; $41dc
@@ -310,12 +310,12 @@ ExchangeNibbleBlockSlave:
 	call ComputeNibbleBufferChecksum ; $41fc
 .startBlock:
 	di ; $41ff
-	ld a, $c4 ; $4200
+	ld a, LINKMSG_SYNC_SLAVE ; $4200
 	ldh [rSB], a ; $4202
 	push af ; $4204
-	ld a, $02 ; $4205
+	ld a, SC_FAST | SC_EXTERNAL ; $4205
 	ldh [rSC], a ; $4207
-	ld a, $82 ; $4209
+	ld a, SC_START | SC_FAST | SC_EXTERNAL ; $4209
 	ldh [rSC], a ; $420b
 	pop af ; $420d
 	ei ; $420e
@@ -408,7 +408,7 @@ ExchangeNibbleBlockSlave:
 	ldh [rIF], a ; $4295
 	xor a ; $4297
 	ldh [hLinkTransferDone], a ; $4298
-	ld a, $c6 ; $429a
+	ld a, LINKMSG_BLOCK_END_ACK ; $429a
 	ldh [hLinkTxByte], a ; $429c
 	ei ; $429e
 	call WaitSerialTransfer ; $429f
@@ -436,7 +436,7 @@ ExchangeNibbleBlockSlave:
 	jr nc, .sendBlockEnd ; $42c0
 	inc d ; $42c2
 .sendBlockEnd:
-	ld a, $cc ; $42c3
+	ld a, LINKMSG_CHECKSUM ; $42c3
 	call SendByteGetReplySlave ; $42c5
 	cp $c5 ; $42c8
 	jr z, .compareChecksum ; $42ca
@@ -466,16 +466,16 @@ ExchangeNibbleBlockSlave:
 	ldh [rIF], a ; $42ec
 	xor a ; $42ee
 	ldh [hLinkTransferDone], a ; $42ef
-	ld a, $cb ; $42f1
+	ld a, LINKMSG_CHECKSUM_BAD ; $42f1
 	ldh [rSB], a ; $42f3
 	push af ; $42f5
-	ld a, $02 ; $42f6
+	ld a, SC_FAST | SC_EXTERNAL ; $42f6
 	ldh [rSC], a ; $42f8
-	ld a, $82 ; $42fa
+	ld a, SC_START | SC_FAST | SC_EXTERNAL ; $42fa
 	ldh [rSC], a ; $42fc
 	pop af ; $42fe
 	ei ; $42ff
-	ld a, $cb ; $4300
+	ld a, LINKMSG_CHECKSUM_BAD ; $4300
 	call SendByteGetReplySlave ; $4302
 	cp $cb ; $4305
 	jp z, .startBlock ; $4307
@@ -483,7 +483,7 @@ ExchangeNibbleBlockSlave:
 	jp z, .startBlock ; $430c
 	call LinkErrorReset ; $430f
 .checksumOk:
-	ld a, $cd ; $4312
+	ld a, LINKMSG_BLOCK_OK ; $4312
 	call SendByteGetReplySlave ; $4314
 	cp $cb ; $4317
 	jp z, .startBlock ; $4319
@@ -595,7 +595,7 @@ ExchangeChecksumSlave:
 	call LinkErrorReset ; $43dc
 .nibble4:
 	call ShiftNibbleIntoChecksum ; $43df
-	ld a, $cd ; $43e2
+	ld a, LINKMSG_BLOCK_OK ; $43e2
 	call SendByteGetReplySlave ; $43e4
 	ld b, a ; $43e7
 	and $c0 ; $43e8
@@ -657,8 +657,8 @@ SendNibbleBlockSlave:
 .haveLength:
 	ld c, a ; $4437
 .startBlock:
-	ld a, $c3 ; $4438
-	ld b, $c4 ; $443a
+	ld a, LINKMSG_SYNC_MASTER ; $4438
+	ld b, LINKMSG_SYNC_SLAVE ; $443a
 	call SendByteAwaitEchoSlave ; $443c
 	jr c, .startBlock ; $443f
 	ld hl, wLinkNibbleBuffer ; $4441
@@ -677,9 +677,9 @@ SendNibbleBlockSlave:
 	or $80 ; $4453
 	ldh [rSB], a ; $4455
 	push af ; $4457
-	ld a, $02 ; $4458
+	ld a, SC_FAST | SC_EXTERNAL ; $4458
 	ldh [rSC], a ; $445a
-	ld a, $82 ; $445c
+	ld a, SC_START | SC_FAST | SC_EXTERNAL ; $445c
 	ldh [rSC], a ; $445e
 	pop af ; $4460
 	ei ; $4461
@@ -691,13 +691,13 @@ SendNibbleBlockSlave:
 	dec b ; $446d
 	jr nz, .sendLoop ; $446e
 .sendBlockEnd:
-	ld a, $c5 ; $4470
-	ld b, $c6 ; $4472
+	ld a, LINKMSG_BLOCK_END ; $4470
+	ld b, LINKMSG_BLOCK_END_ACK ; $4472
 	call SendByteAwaitEchoSlave ; $4474
 	jr c, .sendBlockEnd ; $4477
 	ld hl, $0000 ; $4479
 .compareChecksum:
-	ld a, $cc ; $447c
+	ld a, LINKMSG_CHECKSUM ; $447c
 	call SendByteGetReplySlave ; $447e
 	cp $cd ; $4481
 	jr z, .checksumOk ; $4483
@@ -752,8 +752,8 @@ ReceiveNibbleBlockMaster:
 	push hl ; $44c4
 	call EnableSerialAndVBlankInterrupts ; $44c5
 .startBlock:
-	ld a, $c4 ; $44c8
-	ld b, $c3 ; $44ca
+	ld a, LINKMSG_SYNC_SLAVE ; $44c8
+	ld b, LINKMSG_SYNC_MASTER ; $44ca
 	call SendByteAwaitEchoMaster ; $44cc
 	jr c, .startBlock ; $44cf
 	ld hl, wLinkByteBuffer ; $44d1
@@ -763,9 +763,9 @@ ReceiveNibbleBlockMaster:
 	ld a, $40 ; $44d9
 	ldh [rSB], a ; $44db
 	push af ; $44dd
-	ld a, $03 ; $44de
+	ld a, SC_FAST | SC_INTERNAL ; $44de
 	ldh [rSC], a ; $44e0
-	ld a, $83 ; $44e2
+	ld a, SC_START | SC_FAST | SC_INTERNAL ; $44e2
 	ldh [rSC], a ; $44e4
 	pop af ; $44e6
 	call ShortDelay ; $44e7
@@ -788,7 +788,7 @@ ReceiveNibbleBlockMaster:
 	jr c, .nibbleLoop ; $4502
 	call LinkErrorReset ; $4504
 .compareChecksum:
-	ld a, $c6 ; $4507
+	ld a, LINKMSG_BLOCK_END_ACK ; $4507
 	call SendByteGetReplyMaster ; $4509
 	ld a, d ; $450c
 	or $40 ; $450d
@@ -796,7 +796,7 @@ ReceiveNibbleBlockMaster:
 	ld a, e ; $4512
 	or $40 ; $4513
 	call SendByteGetReplyMaster ; $4515
-	ld a, $cd ; $4518
+	ld a, LINKMSG_BLOCK_OK ; $4518
 	call SendByteGetReplyMaster ; $451a
 .retry:
 	ld a, $40 ; $451d
@@ -841,9 +841,9 @@ SendByteAwaitEchoMaster:
 	ldh a, [hLinkTxByte] ; $4551
 	ldh [rSB], a ; $4553
 	push af ; $4555
-	ld a, $03 ; $4556
+	ld a, SC_FAST | SC_INTERNAL ; $4556
 	ldh [rSC], a ; $4558
-	ld a, $83 ; $455a
+	ld a, SC_START | SC_FAST | SC_INTERNAL ; $455a
 	ldh [rSC], a ; $455c
 	pop af ; $455e
 	ei ; $455f
@@ -883,9 +883,9 @@ SendByteAwaitEchoSlave:
 	ldh a, [hLinkTxByte] ; $4590
 	ldh [rSB], a ; $4592
 	push af ; $4594
-	ld a, $02 ; $4595
+	ld a, SC_FAST | SC_EXTERNAL ; $4595
 	ldh [rSC], a ; $4597
-	ld a, $82 ; $4599
+	ld a, SC_START | SC_FAST | SC_EXTERNAL ; $4599
 	ldh [rSC], a ; $459b
 	pop af ; $459d
 	ei ; $459e
@@ -923,9 +923,9 @@ SendByteGetReplyMaster:
 	ldh a, [hLinkTxByte] ; $45c9
 	ldh [rSB], a ; $45cb
 	push af ; $45cd
-	ld a, $03 ; $45ce
+	ld a, SC_FAST | SC_INTERNAL ; $45ce
 	ldh [rSC], a ; $45d0
-	ld a, $83 ; $45d2
+	ld a, SC_START | SC_FAST | SC_INTERNAL ; $45d2
 	ldh [rSC], a ; $45d4
 	pop af ; $45d6
 	ei ; $45d7
@@ -955,9 +955,9 @@ SendByteAwaitReplyMaster:
 	ldh a, [hLinkTxByte] ; $45fb
 	ldh [rSB], a ; $45fd
 	push af ; $45ff
-	ld a, $03 ; $4600
+	ld a, SC_FAST | SC_INTERNAL ; $4600
 	ldh [rSC], a ; $4602
-	ld a, $83 ; $4604
+	ld a, SC_START | SC_FAST | SC_INTERNAL ; $4604
 	ldh [rSC], a ; $4606
 	pop af ; $4608
 	call AdvanceFrame ; $4609
@@ -1054,9 +1054,9 @@ ExchangeLinkFrameByteMaster:
 	ldh a, [hLinkTxByte] ; $4688
 	ldh [rSB], a ; $468a
 	push af ; $468c
-	ld a, $03 ; $468d
+	ld a, SC_FAST | SC_INTERNAL ; $468d
 	ldh [rSC], a ; $468f
-	ld a, $83 ; $4691
+	ld a, SC_START | SC_FAST | SC_INTERNAL ; $4691
 	ldh [rSC], a ; $4693
 	pop af ; $4695
 	ei ; $4696
@@ -1170,7 +1170,7 @@ SyncLinkFrame:
 	ld hl, hMatchFrameCounter ; $474b
 	inc [hl] ; $474e
 	ldh a, [hLinkState] ; $474f
-	cp $02 ; $4751
+	cp LINKSTATE_SLAVE ; $4751
 	jr z, .slave ; $4753
 	call SyncLinkFrameMaster ; $4755
 	jr .done ; $4758
@@ -1190,7 +1190,7 @@ RunLinkMatchFrame:
 	ld hl, hMatchFrameCounter ; $4766
 	inc [hl] ; $4769
 	ldh a, [hLinkState] ; $476a
-	cp $02 ; $476c
+	cp LINKSTATE_SLAVE ; $476c
 	jr z, .asSlave ; $476e
 	call RunLinkMatchFrameMaster ; $4770
 	jr .done ; $4773
@@ -1207,9 +1207,9 @@ ExchangeLinkReadySignal:
 	push bc ; $477e
 	ld c, $64 ; $477f
 	ldh a, [hLinkState] ; $4781
-	cp $02 ; $4783
+	cp LINKSTATE_SLAVE ; $4783
 	jr z, .asSlave ; $4785
-	cp $01 ; $4787
+	cp LINKSTATE_MASTER ; $4787
 	jr z, .delayLoop ; $4789
 	call LinkErrorReset ; $478b
 .delayLoop:
@@ -1240,9 +1240,9 @@ ExchangeReadyTokenMaster:
 	or $40 ; $47b3
 	ldh [rSB], a ; $47b5
 	push af ; $47b7
-	ld a, $03 ; $47b8
+	ld a, SC_FAST | SC_INTERNAL ; $47b8
 	ldh [rSC], a ; $47ba
-	ld a, $83 ; $47bc
+	ld a, SC_START | SC_FAST | SC_INTERNAL ; $47bc
 	ldh [rSC], a ; $47be
 	pop af ; $47c0
 	ei ; $47c1
@@ -1270,9 +1270,9 @@ ExchangeReadyTokenSlave:
 	ldh [hLinkTxByte], a ; $47e2
 	ldh [rSB], a ; $47e4
 	push af ; $47e6
-	ld a, $02 ; $47e7
+	ld a, SC_FAST | SC_EXTERNAL ; $47e7
 	ldh [rSC], a ; $47e9
-	ld a, $82 ; $47eb
+	ld a, SC_START | SC_FAST | SC_EXTERNAL ; $47eb
 	ldh [rSC], a ; $47ed
 	pop af ; $47ef
 	ei ; $47f0
@@ -1319,7 +1319,7 @@ RunLinkInputFrame:
 	ld hl, hMatchFrameCounter ; $4833
 	inc [hl] ; $4836
 	ldh a, [hLinkState] ; $4837
-	cp $02 ; $4839
+	cp LINKSTATE_SLAVE ; $4839
 	jr z, .slave ; $483b
 	call RunLinkInputFrameMaster ; $483d
 	jr .done ; $4840
@@ -1344,9 +1344,9 @@ UpdateLinkSession:
 	ldh [hLinkExchangeActive], a ; $485e
 	farcall ExchangeLinkReadySignal ; $4860
 	ldh a, [hLinkState] ; $4863
-	cp $02 ; $4865
+	cp LINKSTATE_SLAVE ; $4865
 	jp z, .asSlave ; $4867
-	cp $01 ; $486a
+	cp LINKSTATE_MASTER ; $486a
 	jr z, .asMaster ; $486c
 	call LinkErrorReset ; $486e
 .asMaster:
@@ -1453,9 +1453,9 @@ ExchangeLinkBlockToWram5:
 	call LongDelay ; $4937
 	call LongDelay ; $493a
 	ldh a, [hLinkState] ; $493d
-	cp $02 ; $493f
+	cp LINKSTATE_SLAVE ; $493f
 	jr z, .asSlave ; $4941
-	cp $01 ; $4943
+	cp LINKSTATE_MASTER ; $4943
 	jr z, .asMaster ; $4945
 	call LinkErrorReset ; $4947
 .asMaster:
@@ -1496,9 +1496,9 @@ ExchangeLinkDataBlock:
 	pop de ; $498c
 	pop hl ; $498d
 	ldh a, [hLinkState] ; $498e
-	cp $02 ; $4990
+	cp LINKSTATE_SLAVE ; $4990
 	jr z, .asSlave ; $4992
-	cp $01 ; $4994
+	cp LINKSTATE_MASTER ; $4994
 	jr z, .asMaster ; $4996
 	call LinkErrorReset ; $4998
 .asMaster:
@@ -1555,14 +1555,14 @@ PackNibblesToBytes:
 	ret ; $49e1
 PrimeSlaveSerialReply:
 	ldh a, [hLinkState] ; $49e2
-	cp $02 ; $49e4
+	cp LINKSTATE_SLAVE ; $49e4
 	jr nz, .done ; $49e6
 	ld a, $40 ; $49e8
 	ldh [rSB], a ; $49ea
 	push af ; $49ec
-	ld a, $02 ; $49ed
+	ld a, SC_FAST | SC_EXTERNAL ; $49ed
 	ldh [rSC], a ; $49ef
-	ld a, $82 ; $49f1
+	ld a, SC_START | SC_FAST | SC_EXTERNAL ; $49f1
 	ldh [rSC], a ; $49f3
 	pop af ; $49f5
 .done:
@@ -1644,9 +1644,9 @@ ResyncLinkSession:
 	ldh [hLinkExchangeActive], a ; $4a65
 	farcall ExchangeLinkReadySignal ; $4a67
 	ldh a, [hLinkState] ; $4a6a
-	cp $02 ; $4a6c
+	cp LINKSTATE_SLAVE ; $4a6c
 	jr z, .asSlave ; $4a6e
-	cp $01 ; $4a70
+	cp LINKSTATE_MASTER ; $4a70
 	jr z, .asMaster ; $4a72
 	call LinkErrorReset ; $4a74
 .asMaster:
@@ -1689,9 +1689,9 @@ ResyncLinkSessionWithTimer:
 	ldh [hLinkExchangeActive], a ; $4aba
 	farcall ExchangeLinkReadySignal ; $4abc
 	ldh a, [hLinkState] ; $4abf
-	cp $02 ; $4ac1
+	cp LINKSTATE_SLAVE ; $4ac1
 	jr z, .asSlave ; $4ac3
-	cp $01 ; $4ac5
+	cp LINKSTATE_MASTER ; $4ac5
 	jr z, .asMaster ; $4ac7
 	call LinkErrorReset ; $4ac9
 .asMaster:
@@ -1731,7 +1731,7 @@ TryLinkHandshakeSlave:
 	ldh [rIF], a ; $4b09
 	xor a ; $4b0b
 	ldh [hLinkTransferDone], a ; $4b0c
-	ld a, $c2 ; $4b0e
+	ld a, LINKMSG_PROBE_REPLY ; $4b0e
 	ldh [hLinkTxByte], a ; $4b10
 	ldh [hLinkTxPending], a ; $4b12
 	ei ; $4b14
@@ -1770,7 +1770,7 @@ TryLinkHandshakeMaster:
 	and $7f ; $4b41
 	ldh [rSC], a ; $4b43
 	ei ; $4b45
-	ld a, $c1 ; $4b46
+	ld a, LINKMSG_PROBE ; $4b46
 	ldh [hLinkTxByte], a ; $4b48
 	ld hl, $03e8 ; $4b4a
 	ld de, $03e8 ; $4b4d
@@ -1785,9 +1785,9 @@ TryLinkHandshakeMaster:
 	ldh a, [hLinkTxByte] ; $4b5d
 	ldh [rSB], a ; $4b5f
 	push af ; $4b61
-	ld a, $03 ; $4b62
+	ld a, SC_FAST | SC_INTERNAL ; $4b62
 	ldh [rSC], a ; $4b64
-	ld a, $83 ; $4b66
+	ld a, SC_START | SC_FAST | SC_INTERNAL ; $4b66
 	ldh [rSC], a ; $4b68
 	pop af ; $4b6a
 	xor a ; $4b6b
@@ -1825,12 +1825,12 @@ TryLinkHandshakeMaster:
 	jr .sendReady ; $4ba0
 .sendReady:
 	di ; $4ba2
-	ld a, $c0 ; $4ba3
+	ld a, LINKMSG_NONE ; $4ba3
 	ldh [rSB], a ; $4ba5
 	push af ; $4ba7
-	ld a, $03 ; $4ba8
+	ld a, SC_FAST | SC_INTERNAL ; $4ba8
 	ldh [rSC], a ; $4baa
-	ld a, $83 ; $4bac
+	ld a, SC_START | SC_FAST | SC_INTERNAL ; $4bac
 	ldh [rSC], a ; $4bae
 	pop af ; $4bb0
 	xor a ; $4bb1
@@ -1868,7 +1868,7 @@ LongDelay:
 	ret ; $4bf2
 RunLinkCommandFrame:
 	ldh a, [hLinkState] ; $4bf3
-	cp $02 ; $4bf5
+	cp LINKSTATE_SLAVE ; $4bf5
 	jr z, .asSlave ; $4bf7
 	call RunLinkCommandFrameMaster ; $4bf9
 	jr .done ; $4bfc
@@ -1908,15 +1908,15 @@ SerialEncodeCommand:
 	pop hl ; $4c2f
 	ld c, b ; $4c30
 	ldh a, [hLinkState] ; $4c31
-	cp $01 ; $4c33
+	cp LINKSTATE_MASTER ; $4c33
 	jr z, .checkSlaveWait ; $4c35
-	cp $02 ; $4c37
+	cp LINKSTATE_SLAVE ; $4c37
 	jr z, .checkSlaveWait ; $4c39
 	sound SFX_BEEP ; $4c3b
 	xor a ; $4c3d
 	ldh [hLinkRemoteInputBuf], a ; $4c3e
 	ldh [hLinkTxInput], a ; $4c40
-	ld a, $c0 ; $4c42
+	ld a, LINKMSG_NONE ; $4c42
 	ldh [hLinkTxByte], a ; $4c44
 	call LinkErrorReset ; $4c46
 .checkSlaveWait:
@@ -1924,7 +1924,7 @@ SerialEncodeCommand:
 	or a ; $4c4b
 	jr z, .send ; $4c4c
 	ldh a, [hLinkState] ; $4c4e
-	cp $02 ; $4c50
+	cp LINKSTATE_SLAVE ; $4c50
 	jr nz, .send ; $4c52
 .waitAck:
 	ei ; $4c54
@@ -1963,7 +1963,7 @@ SerialDecodeCommand:
 	and $3f ; $4c80
 	ldh [hLinkRemoteInput], a ; $4c82
 	ldh a, [hLinkState] ; $4c84
-	cp $01 ; $4c86
+	cp LINKSTATE_MASTER ; $4c86
 	jr nz, .asSlave ; $4c88
 	ldh a, [hLinkRemoteInputBuf] ; $4c8a
 	or a ; $4c8c

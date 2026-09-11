@@ -1334,7 +1334,7 @@ SeniorCourtExit01_12:
 	ret ; $55b4
 .loop:
 	ld a, [wMapSceneStage2] ; $55b5
-	sub $09 ; $55b8
+	sub SENIORCOURTSTAGE_SINGLES_SENIOR_CHAMP ; $55b8
 	add a ; $55ba
 	ld_hl_indexed SeniorCourtExit01TextIds ; $55bb
 	ld a, [hl+] ; $55c2
@@ -1677,7 +1677,7 @@ SeniorCourtNpc08_12:
 	ld de, wStoryModeSpawnPosition ; $5a00
 	ld bc, $0005 ; $5a03
 	call CopyMemoryBC ; $5a06
-	ld a, $ff ; $5a09
+	ld a, STORYENTRY_NONE ; $5a09
 	ld [wStoryModeEntryPoint], a ; $5a0b
 	ld [wUnusedExitTriggerIdMirror], a ; $5a0e
 	ld [wStoryModeExitTriggerRequest], a ; $5a11
@@ -1791,7 +1791,7 @@ SeniorCourtNpc0A_12:
 	ld de, wStoryModeSpawnPosition ; $5b4a
 	ld bc, $0005 ; $5b4d
 	call CopyMemoryBC ; $5b50
-	ld a, $ff ; $5b53
+	ld a, STORYENTRY_NONE ; $5b53
 	ld [wStoryModeEntryPoint], a ; $5b55
 	ld [wUnusedExitTriggerIdMirror], a ; $5b58
 	ld [wStoryModeExitTriggerRequest], a ; $5b5b
@@ -2186,7 +2186,7 @@ StartSeniorRankingMatch:
 	script_set_speed ACTOR_PLAYER, $0020 ; $60a0
 	script_set_speed ACTOR_PARTNER, $0020 ; $60a8
 	ld a, [wMapSceneStage2] ; $60b0
-	sub $02 ; $60b3
+	sub SENIORCOURTSTAGE_SINGLES_RANK4 ; $60b3
 	rst Rst00 ; $60b5
 	dw StartSeniorRankingMatch.rank4 ; $60b6 jumptable
 	dw StartSeniorRankingMatch.rank5 ; $60b8 jumptable
@@ -2381,7 +2381,7 @@ StartSeniorCourtPairBRally:
 	ret ; $64dd
 RunSeniorRankingMatchIntro:
 	ld a, [wMapSceneStage2] ; $64de
-	sub $02 ; $64e1
+	sub SENIORCOURTSTAGE_SINGLES_RANK4 ; $64e1
 	add a ; $64e3
 	ld_hl_indexed SeniorRankingMatchIntroPtrs ; $64e4
 	ld a, [hl+] ; $64eb
@@ -2631,7 +2631,7 @@ SeniorSinglesRank1Intro:
 	ret ; $6a40
 ResumeSeniorOpponentScripts:
 	ld a, [wMapSceneStage2] ; $6a41
-	sub $02 ; $6a44
+	sub SENIORCOURTSTAGE_SINGLES_RANK4 ; $6a44
 	add a ; $6a46
 	ld_hl_indexed ResumeSeniorOpponentScriptsPtrs ; $6a47
 	ld a, [hl+] ; $6a4e
@@ -2978,7 +2978,7 @@ SeniorMatchVictorySceneDispatch:
 	ld [wStoryModeShowLocationName], a ; $6dee
 	script_null_script ACTOR_PLAYER_SHADOW ; $6df1
 	ld a, [wMapSceneStage2] ; $6df6
-	sub $02 ; $6df9
+	sub SENIORCOURTSTAGE_SINGLES_RANK4 ; $6df9
 	add a ; $6dfb
 	ld_hl_indexed SeniorMatchVictorySceneDispatchPtrs ; $6dfc
 	ld a, [hl+] ; $6e03

@@ -362,9 +362,9 @@ MoveMenuCursorGridRemote_17:
 	ld a, [wMenuCursorY] ; $4207
 	ld e, a ; $420a
 	ldh a, [hLinkState] ; $420b
-	cp $02 ; $420d
+	cp LINKSTATE_SLAVE ; $420d
 	jr z, .eq02 ; $420f
-	cp $01 ; $4211
+	cp LINKSTATE_MASTER ; $4211
 	jr z, .eq01 ; $4213
 	call LinkErrorReset ; $4215
 .eq01:
@@ -496,9 +496,9 @@ MoveMenuCursor2GridRemote_17:
 	ld a, [wMenuCursor2Y] ; $42d2
 	ld e, a ; $42d5
 	ldh a, [hLinkState] ; $42d6
-	cp $02 ; $42d8
+	cp LINKSTATE_SLAVE ; $42d8
 	jr z, .eq022 ; $42da
-	cp $01 ; $42dc
+	cp LINKSTATE_MASTER ; $42dc
 	jr z, .eq012 ; $42de
 	call LinkErrorReset ; $42e0
 .eq012:

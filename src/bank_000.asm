@@ -1107,7 +1107,7 @@ CopyOAMDMARoutineToHRAM:
 	jr nz, .loop ; $06b7
 	ret ; $06b9
 OAMDMARoutine:
-	ld a, $c0 ; $06ba
+	ld a, LINKMSG_NONE ; $06ba
 	ldh [rDMA], a ; $06bc
 	ld a, $28 ; $06be
 .loopB:
@@ -6666,9 +6666,9 @@ SoftReset:
 	ldh [rLYC], a ; $2602
 	xor a ; $2604
 	ldh [rSB], a ; $2605
-	ld a, $02 ; $2607
+	ld a, SC_FAST | SC_EXTERNAL ; $2607
 	ldh [rSC], a ; $2609
-	ld a, $82 ; $260b
+	ld a, SC_START | SC_FAST | SC_EXTERNAL ; $260b
 	ldh [rSC], a ; $260d
 	xor a ; $260f
 	ldh [rIF], a ; $2610
@@ -6682,7 +6682,7 @@ SoftReset:
 	ldh [hFadeState], a ; $261e
 	ldh [hFadeSpeed], a ; $2620
 	ldh [hFadeCounter], a ; $2622
-	ld a, $c0 ; $2624
+	ld a, LINKMSG_NONE ; $2624
 	ld [wSpriteBufferPage], a ; $2626
 	call InitSerialLink ; $2629
 	farcall InitAndRunGame ; $262c
@@ -6785,7 +6785,7 @@ AdvanceFrame:
 	or a ; $26cc
 	jr z, .stepHaltLoop ; $26cd
 	ldh a, [hLinkState] ; $26cf
-	cp $02 ; $26d1
+	cp LINKSTATE_SLAVE ; $26d1
 	jr z, .stepFrameDone ; $26d3
 	jr .stepLinkLoop ; $26d5
 .stepHaltLoop:
@@ -6816,7 +6816,7 @@ AdvanceFrame:
 	or a ; $26f5
 	jr z, .haltLoop ; $26f6
 	ldh a, [hLinkState] ; $26f8
-	cp $02 ; $26fa
+	cp LINKSTATE_SLAVE ; $26fa
 	jr z, .done ; $26fc
 	jr .linkLoop ; $26fe
 .haltLoop:
@@ -6967,7 +6967,7 @@ VBlankHandler:
 TimerHandler:
 	push af ; $27d7
 	ldh a, [hLinkState] ; $27d8
-	cp $02 ; $27da
+	cp LINKSTATE_SLAVE ; $27da
 	jr nz, .ne02 ; $27dc
 	ldh a, [rIF] ; $27de
 	and $08 ; $27e0
@@ -7085,7 +7085,7 @@ SerialHandler:
 	ldh [hLinkRxByte], a ; $286d
 .carry:
 	ldh a, [hLinkState] ; $286f
-	cp $01 ; $2871
+	cp LINKSTATE_MASTER ; $2871
 	jr nz, .ne01 ; $2873
 	ldh [hLinkTransferDone], a ; $2875
 	pop hl ; $2877
@@ -7121,9 +7121,9 @@ SerialHandler:
 	ldh a, [hLinkTxByte] ; $289f
 	ldh [rSB], a ; $28a1
 	push af ; $28a3
-	ld a, $02 ; $28a4
+	ld a, SC_FAST | SC_EXTERNAL ; $28a4
 	ldh [rSC], a ; $28a6
-	ld a, $82 ; $28a8
+	ld a, SC_START | SC_FAST | SC_EXTERNAL ; $28a8
 	ldh [rSC], a ; $28aa
 	pop af ; $28ac
 	pop af ; $28ad
@@ -7137,15 +7137,15 @@ IncrementLinkFrameCounter:
 .done:
 	ret ; $28b8
 InitSerialLink:
-	ld a, $c0 ; $28b9
+	ld a, LINKMSG_NONE ; $28b9
 	ldh [rSB], a ; $28bb
 	xor a ; $28bd
 	ldh [hLinkRxByte], a ; $28be
-	ld a, $c0 ; $28c0
+	ld a, LINKMSG_NONE ; $28c0
 	ldh [hLinkTxByte], a ; $28c2
-	ld a, $02 ; $28c4
+	ld a, SC_FAST | SC_EXTERNAL ; $28c4
 	ldh [rSC], a ; $28c6
-	ld a, $82 ; $28c8
+	ld a, SC_START | SC_FAST | SC_EXTERNAL ; $28c8
 	ldh [rSC], a ; $28ca
 	xor a ; $28cc
 	ldh [hLinkState], a ; $28cd
@@ -7241,15 +7241,15 @@ SerialEncodeInput:
 	ld a, b ; $2959
 	ldh [hLinkTxInput], a ; $295a
 	ldh a, [hLinkState] ; $295c
-	cp $01 ; $295e
+	cp LINKSTATE_MASTER ; $295e
 	jr z, .checkSlaveWait ; $2960
-	cp $02 ; $2962
+	cp LINKSTATE_SLAVE ; $2962
 	jr z, .checkSlaveWait ; $2964
 	sound SFX_BEEP ; $2966
 	xor a ; $2968
 	ldh [hLinkRemoteInputBuf], a ; $2969
 	ldh [hLinkTxInput], a ; $296b
-	ld a, $c0 ; $296d
+	ld a, LINKMSG_NONE ; $296d
 	ldh [hLinkTxByte], a ; $296f
 	call LinkErrorReset ; $2971
 .checkSlaveWait:
@@ -7257,7 +7257,7 @@ SerialEncodeInput:
 	or a ; $2976
 	jr z, .send ; $2977
 	ldh a, [hLinkState] ; $2979
-	cp $02 ; $297b
+	cp LINKSTATE_SLAVE ; $297b
 	jr nz, .send ; $297d
 .waitAck:
 	ei ; $297f
@@ -7320,7 +7320,7 @@ SerialDecodeInput:
 .storeRemote:
 	ldh [hLinkRemoteInput], a ; $29cf
 	ldh a, [hLinkState] ; $29d1
-	cp $01 ; $29d3
+	cp LINKSTATE_MASTER ; $29d3
 	jr nz, .asSlave ; $29d5
 	ldh a, [hLinkRemoteInputBuf] ; $29d7
 	or a ; $29d9

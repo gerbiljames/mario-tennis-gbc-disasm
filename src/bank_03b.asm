@@ -415,9 +415,9 @@ MoveMenuCursorLinkLocal:
 	ld a, [wMenuCursorY] ; $4229
 	ld e, a ; $422c
 	ldh a, [hLinkState] ; $422d
-	cp $02 ; $422f
+	cp LINKSTATE_SLAVE ; $422f
 	jr z, .eq02 ; $4231
-	cp $01 ; $4233
+	cp LINKSTATE_MASTER ; $4233
 	jr z, .eq01 ; $4235
 	call LinkErrorReset ; $4237
 .eq01:
@@ -549,9 +549,9 @@ MoveMenuCursorLinkRemote:
 	ld a, [wMenuCursor2Y] ; $42f4
 	ld e, a ; $42f7
 	ldh a, [hLinkState] ; $42f8
-	cp $02 ; $42fa
+	cp LINKSTATE_SLAVE ; $42fa
 	jr z, .eq02 ; $42fc
-	cp $01 ; $42fe
+	cp LINKSTATE_MASTER ; $42fe
 	jr z, .eq01 ; $4300
 	call LinkErrorReset ; $4302
 .eq01:
@@ -3277,7 +3277,7 @@ RunMainMenu:
 	call TryMainMenuLinkHandshake ; $567f
 	jp c, RunMainMenu ; $5682
 .storeMenuSlideDirection:
-	ld a, $01 ; $5685
+	ld a, MENUSLIDE_FORWARD ; $5685
 	ld [wMenuSlideDirection], a ; $5687
 	ld c, $03 ; $568a
 	call GetMenuCursorIndex_3b ; $568c
@@ -3292,7 +3292,7 @@ RunMainMenu:
 	set 2, [hl] ; $56a1
 	ld b, $00 ; $56a3
 	call MainMenuSlideOut ; $56a5
-	ld a, $00 ; $56a8
+	ld a, MENUSLIDE_BACK ; $56a8
 	ld [wMenuSlideDirection], a ; $56aa
 	ld a, $ff ; $56ad
 	ret ; $56af
@@ -4179,7 +4179,7 @@ RunMatchFormatSelect:
 	call ClearFrameTasks ; $5d56
 	ld b, $01 ; $5d59
 	call MatchFormatSlideOut ; $5d5b
-	ld a, $01 ; $5d5e
+	ld a, MENUSLIDE_FORWARD ; $5d5e
 	ld [wMenuSlideDirection], a ; $5d60
 	ld c, $03 ; $5d63
 	call GetMenuCursorIndex_3b ; $5d65
@@ -4191,7 +4191,7 @@ RunMatchFormatSelect:
 	call ClearFrameTasks ; $5d70
 	ld b, $00 ; $5d73
 	call MatchFormatSlideOut ; $5d75
-	ld a, $00 ; $5d78
+	ld a, MENUSLIDE_BACK ; $5d78
 	ld [wMenuSlideDirection], a ; $5d7a
 	ld a, $ff ; $5d7d
 	ret ; $5d7f
@@ -4890,7 +4890,7 @@ RunMinigameSelect:
 	ld b, $01 ; $62b4
 	call MinigameSelectSlideOut9 ; $62b6
 .storeMenuSlideDirection:
-	ld a, $01 ; $62b9
+	ld a, MENUSLIDE_FORWARD ; $62b9
 	ld [wMenuSlideDirection], a ; $62bb
 	xor a ; $62be
 	ld [wMinigameSelectUnused], a ; $62bf
@@ -4913,7 +4913,7 @@ RunMinigameSelect:
 	ld b, $00 ; $62e2
 	call MinigameSelectSlideOut9 ; $62e4
 .storeMenuSlideDirection2:
-	ld a, $00 ; $62e7
+	ld a, MENUSLIDE_BACK ; $62e7
 	ld [wMenuSlideDirection], a ; $62e9
 	ld a, $ff ; $62ec
 	ret ; $62ee
@@ -5247,7 +5247,7 @@ RenderMinigameNameText:
 	push af ; $65ab
 	ld c, a ; $65ac
 	call GetUnlockedMarioCastCharAtGridSlot ; $65ad
-	cp $15 ; $65b0
+	cp CHAR_UNUSED_15 ; $65b0
 	jr nz, .restore ; $65b2
 	pop af ; $65b4
 	ld hl, $00bb ; $65b5
@@ -5415,7 +5415,7 @@ MarioCastUnlockMaskTable:
 	dw $01c0 ; record 5
 GetUnlockedMarioCastCharAtGridSlot:
 	call GetMarioCastCharAtGridSlot ; $66b5
-	cp $17 ; $66b8
+	cp CHAR_LUIGI ; $66b8
 	ret z ; $66ba
 	cp $19 ; $66bb
 	ret z ; $66bd
@@ -5637,7 +5637,7 @@ RunSavedDataSourceSelect:
 	set 2, [hl] ; $6842
 	ld b, $01 ; $6844
 	farcall SavedDataPickerSlideOut ; $6846
-	ld a, $01 ; $6849
+	ld a, MENUSLIDE_FORWARD ; $6849
 	ld [wMenuSlideDirection], a ; $684b
 	ld c, $03 ; $684e
 	call GetMenuCursorIndex_3b ; $6850
@@ -5650,7 +5650,7 @@ RunSavedDataSourceSelect:
 	set 2, [hl] ; $685f
 	ld b, $00 ; $6861
 	farcall SavedDataPickerSlideOut ; $6863
-	ld a, $00 ; $6866
+	ld a, MENUSLIDE_BACK ; $6866
 	ld [wMenuSlideDirection], a ; $6868
 	ld a, $ff ; $686b
 	ret ; $686d
@@ -6216,7 +6216,7 @@ RunEraseSavedDataSelect:
 	set 2, [hl] ; $6d08
 	ld b, $01 ; $6d0a
 	call SavedDataPickerSlideOut ; $6d0c
-	ld a, $01 ; $6d0f
+	ld a, MENUSLIDE_FORWARD ; $6d0f
 	ld [wMenuSlideDirection], a ; $6d11
 	ld c, $03 ; $6d14
 	call GetMenuCursorIndex_3b ; $6d16
@@ -6228,7 +6228,7 @@ RunEraseSavedDataSelect:
 	set 2, [hl] ; $6d22
 	ld b, $00 ; $6d24
 	call SavedDataPickerSlideOut ; $6d26
-	ld a, $00 ; $6d29
+	ld a, MENUSLIDE_BACK ; $6d29
 	ld [wMenuSlideDirection], a ; $6d2b
 	ld a, $ff ; $6d2e
 	ret ; $6d30
@@ -6863,7 +6863,7 @@ RunN64RecordTypeSelect:
 	set 2, [hl] ; $7217
 	ld b, $01 ; $7219
 	call N64RecordTypeSlideOut ; $721b
-	ld a, $01 ; $721e
+	ld a, MENUSLIDE_FORWARD ; $721e
 	ld [wMenuSlideDirection], a ; $7220
 	ld c, $03 ; $7223
 	call GetMenuCursorIndex_3b ; $7225
@@ -6876,7 +6876,7 @@ RunN64RecordTypeSelect:
 	set 2, [hl] ; $7234
 	ld b, $00 ; $7236
 	call N64RecordTypeSlideOut ; $7238
-	ld a, $00 ; $723b
+	ld a, MENUSLIDE_BACK ; $723b
 	ld [wMenuSlideDirection], a ; $723d
 	ld a, $ff ; $7240
 	ret ; $7242
@@ -7279,7 +7279,7 @@ RunN64TransferItemSelect:
 	set 2, [hl] ; $7526
 	ld b, $01 ; $7528
 	farcall CloseCourtSelect4Panel ; $752a
-	ld a, $01 ; $752d
+	ld a, MENUSLIDE_FORWARD ; $752d
 	ld [wMenuSlideDirection], a ; $752f
 	ld c, $02 ; $7532
 	call GetMenuCursorIndex_3b ; $7534
@@ -7292,7 +7292,7 @@ RunN64TransferItemSelect:
 	set 2, [hl] ; $7543
 	ld b, $00 ; $7545
 	farcall CloseCourtSelect4Panel ; $7547
-	ld a, $00 ; $754a
+	ld a, MENUSLIDE_BACK ; $754a
 	ld [wMenuSlideDirection], a ; $754c
 	ld a, $ff ; $754f
 	ret ; $7551

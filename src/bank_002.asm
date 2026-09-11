@@ -2380,7 +2380,7 @@ LoadStorySlot:
 	ld [wCurrentStorySlot], a ; $526b
 	ret ; $526e
 .storePlayer1CurrentMainCharacter:
-	ld a, $ff ; $526f
+	ld a, CHAR_NONE ; $526f
 	ld [wPlayer1CurrentMainCharacter], a ; $5271
 	ret ; $5274
 .zero:
@@ -2405,7 +2405,7 @@ Unused_02_StorySlotVariant:
 	pop de ; $5292
 	or a ; $5293
 	jr z, .zero ; $5294
-	ld a, $ff ; $5296
+	ld a, CHAR_NONE ; $5296
 	ld [wPlayer1CurrentMainCharacter], a ; $5298
 	ld a, $ff ; $529b
 	ret ; $529d

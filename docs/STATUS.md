@@ -111,6 +111,20 @@ blob.
 
 ## Recent changes
 
+* **2026-09-11** — the id pass. The big families (character, court,
+  game-mode, location, minigame, shot-type, sound) were already applied
+  where the generator's constants keyed them; a data-flow scan from each
+  family's carrier symbol found 290 more sites, and four new families:
+  `SCENE_*` (the 37 scene-table records, named for what loads them, used by
+  the `story_location` and `court_scene` rows), `LINKSTATE_*` and
+  `LINKMSG_*` (the link roles and the ten `$c0`-`$cd` control tokens),
+  `MATCHCONTEXT_*` and `MENUSLIDE_*`; the 40 serial-control writes use
+  `hardware.inc`'s `SC_*` bits, and the 42 story entry-point sentinels
+  `STORYENTRY_NONE`. What stays literal is mostly per-location stage
+  scratch, whose meaning changes by bank, and the numbered entry points.
+  Follow-up: the scene blob families named by visual guess (`SpaResort*`
+  is the restaurant, `CeremonyHall*` Peach's Castle) should be renamed for
+  what loads them.
 * **2026-09-11** — the tunable tables have named fields. One macro row per
   record, field order in the macro's comment: the 100 character records
   (`char_record`, each with the character's name), the racket and shoe

@@ -145,7 +145,7 @@ Unused_01_MenuRedraw:
 	ld b, $01 ; $4150
 	ld c, $02 ; $4152
 	farcall ShowTournamentBracket ; $4154
-	ld a, $01 ; $4157
+	ld a, MINIGAME_SERVICE_MATCH_2 ; $4157
 	ld [wCurrentMinigameStoryMatch], a ; $4159
 	ld a, $11 ; $415c
 	ld [wCurrentMinigameStoryMatch + 1], a ; $415e
@@ -154,13 +154,13 @@ Unused_01_MenuRedraw:
 	ld a, $00 ; $4166
 	ld [wCurrentStorySlot], a ; $4168
 	farcall CheckStorySlot ; $416b
-	ld a, $17 ; $416e
+	ld a, CHAR_LUIGI ; $416e
 	ld [wPlayer1CurrentMainCharacter], a ; $4170
-	ld a, $18 ; $4173
+	ld a, CHAR_DK ; $4173
 	ld [wPlayer1CurrentPartnerCharacter], a ; $4175
-	ld a, $19 ; $4178
+	ld a, CHAR_BABY_MARIO ; $4178
 	ld [wPlayer2CurrentMainCharacter], a ; $417a
-	ld a, $1a ; $417d
+	ld a, CHAR_MARIO ; $417d
 	ld [wPlayer2CurrentPartnerCharacter], a ; $417f
 	ld a, $03 ; $4182
 	ld [wAnimatedTilePeriod], a ; $4184

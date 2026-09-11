@@ -215,7 +215,7 @@ MessageSpeedSettingHandler0:
 	ld de, wStoryModeSpawnPosition ; $417e
 	ld bc, $0005 ; $4181
 	call CopyMemoryBC ; $4184
-	ld a, $ff ; $4187
+	ld a, STORYENTRY_NONE ; $4187
 	ld [wStoryModeEntryPoint], a ; $4189
 	ld [wUnusedExitTriggerIdMirror], a ; $418c
 	ld [wStoryModeExitTriggerRequest], a ; $418f
@@ -226,7 +226,7 @@ ShowGameProgressScreenThunk:
 	ld de, wStoryModeSpawnPosition ; $419b
 	ld bc, $0005 ; $419e
 	call CopyMemoryBC ; $41a1
-	ld a, $ff ; $41a4
+	ld a, STORYENTRY_NONE ; $41a4
 	ld [wStoryModeEntryPoint], a ; $41a6
 	ld [wUnusedExitTriggerIdMirror], a ; $41a9
 	ld [wStoryModeExitTriggerRequest], a ; $41ac

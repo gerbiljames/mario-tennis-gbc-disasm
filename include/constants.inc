@@ -979,3 +979,82 @@ def TILEATTR_PRIORITY        equ $80 ; BG colours 1-3 draw above sprites
 ; it before opening a window (FitWindowToText substitutes window 0), and store
 ; it back after CloseWindow tears the window down.
 def DIALOGUEWIN_NONE         equ $ff ; no dialogue window open
+
+; --- Link role (hLinkState $ffc2, wLinkMatchRole, wLinkState) ---
+; Role election is first-come (TryEstablishLink $07:$4048): the console that
+; finds the peer's probe already waiting becomes the slave, the other the
+; master. The master drives character 0, the slave character 1
+; (docs/match_engine.md "Two players over the link cable").
+def LINKSTATE_IDLE           equ $00
+def LINKSTATE_MASTER         equ $01
+def LINKSTATE_SLAVE          equ $02
+
+; --- Link control tokens (the serial byte, $07 link routines) ---
+; Bulk blocks travel one nibble per byte with a tag in bits 6-7 (`or $40`
+; from the master, `or $80` from the slave), which keeps $c0-$cf free for
+; in-band control. Per-frame play bytes never use these.
+def LINKMSG_NONE             equ $c0 ; nothing to say: sent after the handshake and on a reset
+def LINKMSG_PROBE            equ $c1 ; the master's handshake probe (TryLinkHandshakeMaster)
+def LINKMSG_PROBE_REPLY      equ $c2 ; the slave's answer (TryLinkHandshakeSlave)
+def LINKMSG_SYNC_MASTER      equ $c3 ; block start, master side (ExchangeNibbleBlockMaster)
+def LINKMSG_SYNC_SLAVE       equ $c4 ; block start, slave side
+def LINKMSG_BLOCK_END        equ $c5 ; the sender's last nibble has gone
+def LINKMSG_BLOCK_END_ACK    equ $c6 ; the receiver's echo of that
+def LINKMSG_CHECKSUM_BAD     equ $cb ; checksums differ: retransmit the whole block
+def LINKMSG_CHECKSUM         equ $cc ; compare checksums now
+def LINKMSG_BLOCK_OK         equ $cd ; block accepted
+
+; --- Match context (wMatchContext, $c8f5) ---
+def MATCHCONTEXT_EXHIBITION  equ $00 ; cleared by RestoreOverworldAfterMatch
+def MATCHCONTEXT_STORY       equ $01 ; InitStoryMatchSettings
+def MATCHCONTEXT_MINIGAME    equ $02 ; InitMinigameMatchSettings, RunDoublesDrillMatch: fixed view, doubles scoreboard
+
+; --- Menu transition direction (wMenuSlideDirection) ---
+def MENUSLIDE_BACK           equ $00
+def MENUSLIDE_FORWARD        equ $01 ; into a submenu
+
+; --- Scene ids (SceneGfxSlotTable $0a:$59d9; wCurrentScene, wStoryLocationScene) ---
+; The index of a scene's eight-slot record. 0-15 are the match courts, which
+; CourtSceneDataTable selects by court id; 16-36 the overworld, which the
+; story_location records select. Named for what loads them, which is the
+; evidence: several of the scene's blob families (SpaResort*, CeremonyHall*,
+; Countryside*, the four unlabelled-court families) still carry the visual
+; guesses they were first named by, and those are the restaurant, Peach's
+; Castle, the restaurant plaza and the courts below.
+def SCENE_MINIGAME_COURT     equ $00 ; Banana Bunch, Perfect Shot, Fruit Fantasy, and the unused court $0e
+def SCENE_TARGET_SHOT_COURT  equ $01
+def SCENE_GRASS_COURT        equ $02 ; COURT_GRASS and COURT_GRASS_ISLAND_OPEN
+def SCENE_TRAINING_COURT     equ $03 ; COURT_TRAINING_PRACTICE and the training match court
+def SCENE_CLAY_COURT         equ $04
+def SCENE_HARD_COURT         equ $05
+def SCENE_MACHINE_COURT      equ $06
+def SCENE_CENTER_COURT       equ $07
+def SCENE_COMPOSITION_COURT  equ $08
+def SCENE_TROPICS_COURT      equ $09 ; Yoshi's court
+def SCENE_STAR_COURT         equ $0a ; also Shooting Star and Boo Blast
+def SCENE_BOWSER_COURT       equ $0b ; no court row selects it
+def SCENE_WAREHOUSE_COURT    equ $0c ; Wario's court; also Treasure Box, Medallion Match, Two-On-One
+def SCENE_CASTLE_COURT       equ $0d ; Peach's court
+def SCENE_WALL_PRACTICE      equ $0e
+def SCENE_JUNGLE_COURT       equ $0f ; DK's court
+def SCENE_STAR_PATTERN_BG    equ $10 ; the main menu and the developer test locations
+def SCENE_ACADEMY_MAIN_BLDG  equ $11
+def SCENE_DORM_ROOM          equ $12
+def SCENE_RESTAURANT_PLAZA   equ $13
+def SCENE_COURTYARD          equ $14 ; the Academy courtyard and the Varsity Court
+def SCENE_ISLAND_SKY         equ $15
+def SCENE_SPECIAL_COURT      equ $16
+def SCENE_SENIOR_CLASS_COURT equ $17
+def SCENE_JUNIOR_CLASS_COURT equ $18
+def SCENE_RESTAURANT         equ $19 ; and the cafeteria
+def SCENE_ACADEMY_ENTRANCE   equ $1a
+def SCENE_DORM_ENTRANCE      equ $1b
+def SCENE_TOURNAMENT_COURTYARD equ $1c
+def SCENE_COURT_1            equ $1d
+def SCENE_TRAINING_COURT_MAP equ $1e ; the overworld view of the Training Court
+def SCENE_COURT_2            equ $1f
+def SCENE_CENTER_COURT_MAP   equ $20 ; the overworld view of the Center Court
+def SCENE_PEACHS_CASTLE      equ $21
+def SCENE_TRAINING_CENTER    equ $22 ; also the machine and wall practice rooms
+def SCENE_TOURNAMENT         equ $23
+def SCENE_AWARDS_CEREMONY    equ $24

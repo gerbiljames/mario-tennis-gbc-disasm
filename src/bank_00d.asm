@@ -870,7 +870,7 @@ StartMinigameMatch:
 	xor a ; $46c3
 	ld [wMinigameServeState], a ; $46c4
 	ld a, [wCharId] ; $46c7
-	cp $15 ; $46ca
+	cp CHAR_UNUSED_15 ; $46ca
 	jr nz, .countdown ; $46cc
 	ld a, $01 ; $46ce
 	ld [wMinigameServeState], a ; $46d0

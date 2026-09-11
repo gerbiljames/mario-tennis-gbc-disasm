@@ -115,6 +115,11 @@ restated:
   (`AISHOT_*`), the CPU difficulty rows (`cpu_difficulty`, `src/bank_038.asm`),
   the shot-type presets (`shot_preset`, `src/bank_007.asm`) and the per-court
   surface physics (`court_scene`, `src/bank_008.asm`).
+- **Ids are constants.** Character, court, scene, game-mode, story-location,
+  minigame, shot-type, sound and menu-item ids, the link roles and control
+  tokens, and the per-location story stages each have a family in
+  `include/constants.inc`, and the comparisons and stores that use them are
+  written with the name. A family's header says which RAM symbol carries it.
 - **Assets are referenced by name.** The two screen-asset dispatchers take
   an index into a table in bank `$39`, and each table row defines its own:
   `tileblock MenuFontTiles_01` is a row of `TileBlockPtrs_39` and defines

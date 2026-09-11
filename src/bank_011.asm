@@ -1280,7 +1280,7 @@ JuniorClassCourtDoublesNpc0A_11:
 	ld de, wStoryModeSpawnPosition ; $5730
 	ld bc, $0005 ; $5733
 	call CopyMemoryBC ; $5736
-	ld a, $ff ; $5739
+	ld a, STORYENTRY_NONE ; $5739
 	ld [wStoryModeEntryPoint], a ; $573b
 	ld [wUnusedExitTriggerIdMirror], a ; $573e
 	ld [wStoryModeExitTriggerRequest], a ; $5741
@@ -2402,7 +2402,7 @@ JuniorClassCourtSinglesNpc08_11:
 	ld de, wStoryModeSpawnPosition ; $6abe
 	ld bc, $0005 ; $6ac1
 	call CopyMemoryBC ; $6ac4
-	ld a, $ff ; $6ac7
+	ld a, STORYENTRY_NONE ; $6ac7
 	ld [wStoryModeEntryPoint], a ; $6ac9
 	ld [wUnusedExitTriggerIdMirror], a ; $6acc
 	ld [wStoryModeExitTriggerRequest], a ; $6acf

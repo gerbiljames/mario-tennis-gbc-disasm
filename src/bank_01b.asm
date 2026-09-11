@@ -392,9 +392,9 @@ MoveMenuCursorGridRemote_1b:
 	ld a, [wMenuCursorY] ; $4231
 	ld e, a ; $4234
 	ldh a, [hLinkState] ; $4235
-	cp $02 ; $4237
+	cp LINKSTATE_SLAVE ; $4237
 	jr z, .eq02 ; $4239
-	cp $01 ; $423b
+	cp LINKSTATE_MASTER ; $423b
 	jr z, .eq01 ; $423d
 	call LinkErrorReset ; $423f
 .eq01:
@@ -526,9 +526,9 @@ MoveMenuCursor2GridRemote_1b:
 	ld a, [wMenuCursor2Y] ; $42fc
 	ld e, a ; $42ff
 	ldh a, [hLinkState] ; $4300
-	cp $02 ; $4302
+	cp LINKSTATE_SLAVE ; $4302
 	jr z, .asSlave ; $4304
-	cp $01 ; $4306
+	cp LINKSTATE_MASTER ; $4306
 	jr z, .asMaster ; $4308
 	call LinkErrorReset ; $430a
 .asMaster:
@@ -4833,7 +4833,7 @@ RunMinigameLevelSelect2:
 	wram_bank $03 ; $6ebf
 	ld b, $01 ; $6ec5
 	farcall CloseChoiceTabPanel ; $6ec7
-	ld a, $01 ; $6eca
+	ld a, MENUSLIDE_FORWARD ; $6eca
 	ld [wMenuSlideDirection], a ; $6ecc
 	wram_bank $02 ; $6ecf
 	ld c, $03 ; $6ed5
@@ -4848,7 +4848,7 @@ RunMinigameLevelSelect2:
 	wram_bank $03 ; $6ee8
 	ld b, $00 ; $6eee
 	farcall CloseChoiceTabPanel ; $6ef0
-	ld a, $00 ; $6ef3
+	ld a, MENUSLIDE_BACK ; $6ef3
 	ld [wMenuSlideDirection], a ; $6ef5
 	wram_bank $02 ; $6ef8
 	ld a, $ff ; $6efe
@@ -5024,7 +5024,7 @@ RunMinigameLevelSelect3:
 	wram_bank $03 ; $7048
 	ld b, $01 ; $704e
 	farcall N64RecordTypeSlideOut ; $7050
-	ld a, $01 ; $7053
+	ld a, MENUSLIDE_FORWARD ; $7053
 	ld [wMenuSlideDirection], a ; $7055
 	wram_bank $02 ; $7058
 	ld c, $03 ; $705e
@@ -5039,7 +5039,7 @@ RunMinigameLevelSelect3:
 	wram_bank $03 ; $7071
 	ld b, $00 ; $7077
 	farcall N64RecordTypeSlideOut ; $7079
-	ld a, $00 ; $707c
+	ld a, MENUSLIDE_BACK ; $707c
 	ld [wMenuSlideDirection], a ; $707e
 	wram_bank $02 ; $7081
 	ld a, $ff ; $7087
@@ -5216,7 +5216,7 @@ RunSavedDataTypeSelect:
 	wram_bank $03 ; $71ce
 	ld b, $01 ; $71d4
 	farcall CloseChoiceTabPanel ; $71d6
-	ld a, $01 ; $71d9
+	ld a, MENUSLIDE_FORWARD ; $71d9
 	ld [wMenuSlideDirection], a ; $71db
 	ld c, $02 ; $71de
 	call GetMenuCursorIndex_1b ; $71e0
@@ -5230,7 +5230,7 @@ RunSavedDataTypeSelect:
 	wram_bank $03 ; $71f1
 	ld b, $00 ; $71f7
 	farcall CloseChoiceTabPanel ; $71f9
-	ld a, $00 ; $71fc
+	ld a, MENUSLIDE_BACK ; $71fc
 	ld [wMenuSlideDirection], a ; $71fe
 	wram_bank $02 ; $7201
 	ld a, $ff ; $7207
@@ -5769,7 +5769,7 @@ DrawMinigameDataMugshotsScrolled:
 	push bc ; $7613
 	farcall GetUnlockedMarioCastCharAtGridSlot ; $7614
 	pop bc ; $7617
-	cp $15 ; $7618
+	cp CHAR_UNUSED_15 ; $7618
 	jr nz, .ne15 ; $761a
 	push bc ; $761c
 	ld c, $09 ; $761d
@@ -5795,7 +5795,7 @@ DrawMinigameDataMugshotsStatic:
 	push bc ; $7641
 	farcall GetUnlockedMarioCastCharAtGridSlot ; $7642
 	pop bc ; $7645
-	cp $15 ; $7646
+	cp CHAR_UNUSED_15 ; $7646
 	jr nz, .ne15 ; $7648
 	push bc ; $764a
 	ld c, $09 ; $764b
@@ -6143,7 +6143,7 @@ CheckMinigameDataScrollable:
 	push hl ; $7881
 	ld c, $04 ; $7882
 	farcall GetUnlockedMarioCastCharAtGridSlot ; $7884
-	cp $15 ; $7887
+	cp CHAR_UNUSED_15 ; $7887
 	jr nz, .scrollable ; $7889
 	pop hl ; $788b
 	pop de ; $788c

@@ -638,7 +638,7 @@ InitViewFlipPreference:
 	cp GAMEMODE_LINK_MATCH ; $4511
 	jr z, .storeFlip ; $4513
 	ld a, [wMatchContext] ; $4515
-	cp $02 ; $4518
+	cp MATCHCONTEXT_MINIGAME ; $4518
 	jr z, .storeFlip ; $451a
 	ld a, [wGameMode] ; $451c
 	cp GAMEMODE_MARIO_MINIGAME ; $451f
@@ -666,7 +666,7 @@ ApplyMatchBgmPreference:
 	ret ; $454a
 SelectScoreboardLayout:
 	ld a, [wMatchContext] ; $454b
-	cp $02 ; $454e
+	cp MATCHCONTEXT_MINIGAME ; $454e
 	jr z, .doubles ; $4550
 	ld a, [wOnCourtCharCount] ; $4552
 	sub $02 ; $4555
@@ -3950,31 +3950,31 @@ ResolvePointWinner:
 CourtSceneDataTable:
 	; $5dc4, 100 bytes (court_scene)
 ; court_scene friction, bounce, scene, unused
-	court_scene $cd, $cd, 5, $21 ; $00 COURT_HARD
-	court_scene $b3, $99, 4, $22 ; $01 COURT_CLAY
-	court_scene $e6, $99, 2, $23 ; $02 COURT_GRASS (exhibition)
-	court_scene $f0, $b3, 8, $20 ; $03 COURT_COMPOSITION
-	court_scene $e6, $cd, 10, $11 ; $04 COURT_STAR
-	court_scene $cd, $b3, 13, $12 ; $05 COURT_CASTLE
-	court_scene $f0, $99, 9, $13 ; $06 COURT_TROPICS
-	court_scene $e6, $e6, 15, $16 ; $07 COURT_JUNGLE
-	court_scene $b3, $cd, 12, $14 ; $08 COURT_WAREHOUSE
-	court_scene $cd, $b3, 3, $25 ; $09 COURT_TRAINING_PRACTICE
-	court_scene $cd, $b3, 6, $1e ; $0a COURT_TENNIS_MACHINE
-	court_scene $cd, $b3, 14, $1f ; $0b COURT_WALL_PRACTICE
-	court_scene $e6, $99, 7, $28 ; $0c COURT_CENTER
-	court_scene $e6, $99, 2, $27 ; $0d COURT_GRASS_ISLAND_OPEN
-	court_scene $cd, $b3, 0, $29 ; $0e COURT_UNUSED_0E
-	court_scene $cd, $b3, 1, $17 ; $0f Target Shot
-	court_scene $e6, $cd, 10, $18 ; $10 Shooting Star
-	court_scene $cd, $b3, 0, $16 ; $11 Banana Bunch
-	court_scene $e6, $cd, 10, $11 ; $12 Boo Blast
-	court_scene $cd, $b3, 0, $12 ; $13 Perfect Shot
-	court_scene $b3, $cd, 12, $14 ; $14 Treasure Box
-	court_scene $b3, $cd, 12, $19 ; $15 Medallion Match
-	court_scene $cd, $b3, 0, $13 ; $16 Fruit Fantasy
-	court_scene $b3, $cd, 12, $15 ; $17 Two-On-One
-	court_scene $cd, $b3, 3, $24 ; $18 Training Court (match)
+	court_scene $cd, $cd, SCENE_HARD_COURT, $21 ; $00 COURT_HARD
+	court_scene $b3, $99, SCENE_CLAY_COURT, $22 ; $01 COURT_CLAY
+	court_scene $e6, $99, SCENE_GRASS_COURT, $23 ; $02 COURT_GRASS (exhibition)
+	court_scene $f0, $b3, SCENE_COMPOSITION_COURT, $20 ; $03 COURT_COMPOSITION
+	court_scene $e6, $cd, SCENE_STAR_COURT, $11 ; $04 COURT_STAR
+	court_scene $cd, $b3, SCENE_CASTLE_COURT, $12 ; $05 COURT_CASTLE
+	court_scene $f0, $99, SCENE_TROPICS_COURT, $13 ; $06 COURT_TROPICS
+	court_scene $e6, $e6, SCENE_JUNGLE_COURT, $16 ; $07 COURT_JUNGLE
+	court_scene $b3, $cd, SCENE_WAREHOUSE_COURT, $14 ; $08 COURT_WAREHOUSE
+	court_scene $cd, $b3, SCENE_TRAINING_COURT, $25 ; $09 COURT_TRAINING_PRACTICE
+	court_scene $cd, $b3, SCENE_MACHINE_COURT, $1e ; $0a COURT_TENNIS_MACHINE
+	court_scene $cd, $b3, SCENE_WALL_PRACTICE, $1f ; $0b COURT_WALL_PRACTICE
+	court_scene $e6, $99, SCENE_CENTER_COURT, $28 ; $0c COURT_CENTER
+	court_scene $e6, $99, SCENE_GRASS_COURT, $27 ; $0d COURT_GRASS_ISLAND_OPEN
+	court_scene $cd, $b3, SCENE_MINIGAME_COURT, $29 ; $0e COURT_UNUSED_0E
+	court_scene $cd, $b3, SCENE_TARGET_SHOT_COURT, $17 ; $0f Target Shot
+	court_scene $e6, $cd, SCENE_STAR_COURT, $18 ; $10 Shooting Star
+	court_scene $cd, $b3, SCENE_MINIGAME_COURT, $16 ; $11 Banana Bunch
+	court_scene $e6, $cd, SCENE_STAR_COURT, $11 ; $12 Boo Blast
+	court_scene $cd, $b3, SCENE_MINIGAME_COURT, $12 ; $13 Perfect Shot
+	court_scene $b3, $cd, SCENE_WAREHOUSE_COURT, $14 ; $14 Treasure Box
+	court_scene $b3, $cd, SCENE_WAREHOUSE_COURT, $19 ; $15 Medallion Match
+	court_scene $cd, $b3, SCENE_MINIGAME_COURT, $13 ; $16 Fruit Fantasy
+	court_scene $b3, $cd, SCENE_WAREHOUSE_COURT, $15 ; $17 Two-On-One
+	court_scene $cd, $b3, SCENE_TRAINING_COURT, $24 ; $18 Training Court (match)
 LoadCourtSceneData:
 	ldh a, [hWramBank] ; $5e28
 	push af ; $5e2a
@@ -4920,7 +4920,7 @@ UnusedDrawStandingShadowSlot16:
 	jp QueueSprite16 ; $6541
 InitMinigameMatchSettings:
 	call InitDefaultMatchSettings ; $6544
-	ld a, $02 ; $6547
+	ld a, MATCHCONTEXT_MINIGAME ; $6547
 	ld [wMatchContext], a ; $6549
 	ld a, $01 ; $654c
 	ld [wScoreDisplayIsTiebreak], a ; $654e
@@ -7769,16 +7769,16 @@ CharInputHandler4_08:
 	ret ; $7832
 CharInputHandler5_08:
 	ldh a, [hLinkState] ; $7833
-	cp $02 ; $7835
+	cp LINKSTATE_SLAVE ; $7835
 	jr z, CharInputHandler6_08.remoteLive ; $7837
-	cp $01 ; $7839
+	cp LINKSTATE_MASTER ; $7839
 	jr z, CharInputHandler6_08.remoteBuffered ; $783b
 	jr ReadCharPadInput ; $783d
 CharInputHandler6_08:
 	ldh a, [hLinkState] ; $783f
-	cp $02 ; $7841
+	cp LINKSTATE_SLAVE ; $7841
 	jr z, .remoteBuffered ; $7843
-	cp $01 ; $7845
+	cp LINKSTATE_MASTER ; $7845
 	jr z, .remoteLive ; $7847
 	jr ReadCharPadInput ; $7849
 .remoteBuffered:

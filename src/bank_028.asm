@@ -80,7 +80,7 @@ LoadMatchGraphics:
 	ld c, $80 ; $5eed
 	call QueueVRAMCopy ; $5eef
 	ld a, [wMatchContext] ; $5ef2
-	cp $02 ; $5ef5
+	cp MATCHCONTEXT_MINIGAME ; $5ef5
 	call z, LoadMatchVariantGraphics ; $5ef7
 	ret ; $5efa
 LoadMatchVariantGraphics:

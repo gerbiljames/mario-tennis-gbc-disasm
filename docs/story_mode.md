@@ -322,8 +322,13 @@ same value `GetActorStateAddr` (`$0a:$4312`) turns into `$d000 + slot*$40`.
 
 A location's `scene` byte indexes `SceneGfxSlotTable` (`$0a:$59d9`), 37 records
 of eight `dslot` words. Records 0-15 are the match courts (loaded by
-`LoadCourtSceneGraphics`); the overworld uses `$10`-`$24`, which is exactly the
-range the `story_location` records reference.
+`LoadCourtSceneGraphics` from the `court_scene` rows); the overworld uses
+`$10`-`$24`, which is exactly the range the `story_location` records reference.
+The `SCENE_*` constants name each record for what loads it, and both tables
+and the scene table's row comments use them. Several scene blob families
+(`SpaResort*`, `CeremonyHall*`, `Countryside*`, the four court families
+without a court name) still carry the visual guesses they were first named
+by; the constants' comments say what each really is.
 
 `LoadStorySceneGraphics` (`$0a:$585d`) reads the eight slots and consumes them in
 this order:

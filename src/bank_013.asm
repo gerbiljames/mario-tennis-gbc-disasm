@@ -2063,7 +2063,7 @@ VarsityCourtANpc05_13:
 	ld de, wStoryModeSpawnPosition ; $5f58
 	ld bc, $0005 ; $5f5b
 	call CopyMemoryBC ; $5f5e
-	ld a, $ff ; $5f61
+	ld a, STORYENTRY_NONE ; $5f61
 	ld [wStoryModeEntryPoint], a ; $5f63
 	ld [wUnusedExitTriggerIdMirror], a ; $5f66
 	ld [wStoryModeExitTriggerRequest], a ; $5f69
@@ -2112,7 +2112,7 @@ VarsityCourtBNpc05_13:
 	ld de, wStoryModeSpawnPosition ; $6008
 	ld bc, $0005 ; $600b
 	call CopyMemoryBC ; $600e
-	ld a, $ff ; $6011
+	ld a, STORYENTRY_NONE ; $6011
 	ld [wStoryModeEntryPoint], a ; $6013
 	ld [wUnusedExitTriggerIdMirror], a ; $6016
 	ld [wStoryModeExitTriggerRequest], a ; $6019
@@ -2196,7 +2196,7 @@ CourtyardFacing01_13:
 	ld de, wStoryModeSpawnPosition ; $6173
 	ld bc, $0005 ; $6176
 	call CopyMemoryBC ; $6179
-	ld a, $ff ; $617c
+	ld a, STORYENTRY_NONE ; $617c
 	ld [wStoryModeEntryPoint], a ; $617e
 	ld [wUnusedExitTriggerIdMirror], a ; $6181
 	ld [wStoryModeExitTriggerRequest], a ; $6184

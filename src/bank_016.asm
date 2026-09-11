@@ -337,9 +337,9 @@ MoveMenuCursorGridRemote_16:
 	ld a, [wMenuCursorY] ; $41f7
 	ld e, a ; $41fa
 	ldh a, [hLinkState] ; $41fb
-	cp $02 ; $41fd
+	cp LINKSTATE_SLAVE ; $41fd
 	jr z, .asSlave ; $41ff
-	cp $01 ; $4201
+	cp LINKSTATE_MASTER ; $4201
 	jr z, .asMaster ; $4203
 	call LinkErrorReset ; $4205
 .asMaster:
@@ -472,9 +472,9 @@ MoveMenuCursor2GridRemote_16:
 	ld a, [wMenuCursor2Y] ; $42c2
 	ld e, a ; $42c5
 	ldh a, [hLinkState] ; $42c6
-	cp $02 ; $42c8
+	cp LINKSTATE_SLAVE ; $42c8
 	jr z, .asSlave ; $42ca
-	cp $01 ; $42cc
+	cp LINKSTATE_MASTER ; $42cc
 	jr z, .asMaster ; $42ce
 	call LinkErrorReset ; $42d0
 .asMaster:
@@ -1682,7 +1682,7 @@ ApplyLinkRoleToWinLoseFlag:
 	cp GAMEMODE_LINK_MATCH ; $5c14
 	ret nz ; $5c16
 	ld a, [wLinkMatchRole] ; $5c17
-	cp $01 ; $5c1a
+	cp LINKSTATE_MASTER ; $5c1a
 	jr nz, .compare ; $5c1c
 	ret ; $5c1e
 .compare:
@@ -2106,7 +2106,7 @@ LoadResultScreenPortraits:
 	cp GAMEMODE_LINK_MATCH ; $5fee
 	jr nz, .checkPlayer1CurrentMainCharacter ; $5ff0
 	ld a, [wLinkMatchRole] ; $5ff2
-	cp $02 ; $5ff5
+	cp LINKSTATE_SLAVE ; $5ff5
 	jr z, .checkPlayer1CurrentMainCharacter2 ; $5ff7
 .checkPlayer1CurrentMainCharacter:
 	ld a, [wPlayer1CurrentMainCharacter] ; $5ff9

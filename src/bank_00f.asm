@@ -1600,7 +1600,7 @@ TournamentFacing01_0f:
 	ld de, wStoryModeSpawnPosition ; $6191
 	ld bc, $0005 ; $6194
 	call CopyMemoryBC ; $6197
-	ld a, $ff ; $619a
+	ld a, STORYENTRY_NONE ; $619a
 	ld [wStoryModeEntryPoint], a ; $619c
 	ld [wUnusedExitTriggerIdMirror], a ; $619f
 	ld [wStoryModeExitTriggerRequest], a ; $61a2

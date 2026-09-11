@@ -1557,7 +1557,7 @@ InitStoryMatchSettings:
 	ld [wMatchTypeNumberOfSets], a ; $4954
 	ld a, $02 ; $4957
 	ld [wMatchTypeNumberOfGames], a ; $4959
-	ld a, $01 ; $495c
+	ld a, MATCHCONTEXT_STORY ; $495c
 	ld [wMatchContext], a ; $495e
 	ret ; $4961
 RunStoryMatch:
@@ -2512,7 +2512,7 @@ LoadStoryLocationHeader:
 	ld a, h ; $5150
 	ld [wStoryModeLocationNameTextId + 1], a ; $5151
 	ld a, [wStoryModeEntryPoint] ; $5154
-	sub $ff ; $5157
+	sub STORYENTRY_NONE ; $5157
 	ld [wStoryModeShowLocationName], a ; $5159
 	pop hl ; $515c
 	pop de ; $515d
@@ -3257,48 +3257,48 @@ RunLocationExit:
 	ret ; $564e
 StoryLocationTable_0a:
 	; $564f, 252 bytes (story_locations)
-	story_location $00, $10, DataPtr_MainMenuMapScripts_10, $ff ; loc 0 Main Menu
-	story_location $01, $10, DataPtr_DevelopmentMapScripts_10, $ff ; loc 1 Development
-	story_location $02, $10, DataPtr_SmallCharTestMapScripts_0f, $ff ; loc 2 Small Char. Test
-	story_location $03, $10, DataPtr_MatchSelectMapScripts_10, $ff ; loc 3 Test
-	story_location $04, $10, DataPtr_Test2MapScripts_10, $0b ; loc 4 Test 2
-	story_location $05, $11, DataPtr_AcademyMainBldgMapScripts_10, $1a ; loc 5 Academy Main Bldg.
-	story_location $06, $11, DataPtr_AcademyWingMapScripts_10, $1a ; loc 6 Academy Wing
-	story_location $07, $14, DataPtr_CourtyardMapScripts_13, $1b ; loc 7 Courtyard
-	story_location $08, $13, DataPtr_RestaurantPlazaMapScripts_13, $1b ; loc 8 Restaurant Plaza
-	story_location $09, $1b, DataPtr_DormEntranceMapScripts_12, $1b ; loc 9 Dorm Entrance
-	story_location $0a, $12, DataPtr_DormRoomMapScripts_13, $00 ; loc 10 Dorm Room
-	story_location $0b, $18, DataPtr_JuniorClassCourtSinglesMapScripts_11, $1b ; loc 11 Junior Class Court
-	story_location $0c, $18, DataPtr_JuniorClassCourtDoublesMapScripts_11, $1b ; loc 12 Junior Class Court
-	story_location $0d, $19, DataPtr_RestaurantMapScripts_10, $1d ; loc 13 Restaurant
-	story_location $0e, $19, DataPtr_CafeteriaMapScripts_10, $1d ; loc 14 Cafeteria
-	story_location $0f, $1e, DataPtr_TrainingCourtMapScripts_15, $1b ; loc 15 Training Court
-	story_location $10, $17, DataPtr_SeniorCourtMapScripts_12, $1b ; loc 16 Senior Class Court
-	story_location $11, $22, DataPtr_TrainingGymMapScripts_0e, $1d ; loc 17 Training Center
-	story_location $12, $22, DataPtr_TennisMachineRoomMapScripts_14, $1d ; loc 18 Tennis Machine Room
-	story_location $13, $22, DataPtr_WallPracticeRoomMapScripts_12, $1d ; loc 19 Wall Practice Room
-	story_location $14, $1a, DataPtr_AcademyArrivalMapScripts_11, $1b ; loc 20 Academy Entrance
-	story_location $15, $1c, DataPtr_TournamentCourtyardMapScripts_15, $1b ; loc 21 Tournament Courtyard
-	story_location $16, $1d, DataPtr_Court1MapScripts_14, $1b ; loc 22 Court #1
-	story_location $17, $1f, DataPtr_Court2MapScripts_14, $1b ; loc 23 Court #2
-	story_location $18, $20, DataPtr_CenterCourtMapScripts_11, $1d ; loc 24 Center Court
-	story_location $19, $23, DataPtr_TournamentMapScripts_0f, $1d ; loc 25 Tournament
-	story_location $1a, $24, DataPtr_AwardsCeremonyMapScripts_0f, $1b ; loc 26 Awards Ceremony
-	story_location $1b, $15, DataPtr_IslandSkyMapScripts_14, $1b ; loc 27 Island Sky
-	story_location $1c, $16, DataPtr_SpecialCourtMapScripts_0e, $08 ; loc 28 Special Court
-	story_location $1d, $21, DataPtr_MarioWorldMapScripts_0e, $12 ; loc 29 Peach's Castle
-	story_location $1e, $1a, DataPtr_End1MainBldgMapScripts_27, $2c ; loc 30 End1 Main Bldg
-	story_location $1f, $13, DataPtr_EndRestaurantEntMapScripts_27, $ff ; loc 31 End Restaurant Ent.
-	story_location $20, $1b, DataPtr_End3DormEntMapScripts_27, $ff ; loc 32 End3 Dorm Ent.
-	story_location $21, $18, DataPtr_End4JrCourtMapScripts_27, $ff ; loc 33 End4 Jr. Court
-	story_location $22, $19, DataPtr_End5ServiceAceMapScripts_27, $ff ; loc 34 End5 Service Ace
-	story_location $23, $22, DataPtr_End7TrainingCtrMapScripts_27, $ff ; loc 35 End7 Training Ctr.
-	story_location $24, $17, DataPtr_End8SrCourtMapScripts_27, $ff ; loc 36 End8 Sr. Court
-	story_location $25, $14, DataPtr_End10VarsityCourtMapScripts_27, $ff ; loc 37 End10 Varsity Court
-	story_location $26, $1e, DataPtr_End11TrainingCourtMapScripts_27, $ff ; loc 38 End11 Training Court
-	story_location $27, $11, DataPtr_End12PrincipalsOfficeMapScripts_27, $ff ; loc 39 End12 Principal's Office
-	story_location $28, $23, DataPtr_End16BeforeFinalsMapScripts_27, $ff ; loc 40 End16 Before Finals
-	story_location $29, $24, DataPtr_End17AwardCeremonyMapScripts_27, $ff ; loc 41 End17 Award Ceremony
+	story_location $00, SCENE_STAR_PATTERN_BG, DataPtr_MainMenuMapScripts_10, $ff ; loc 0 Main Menu
+	story_location $01, SCENE_STAR_PATTERN_BG, DataPtr_DevelopmentMapScripts_10, $ff ; loc 1 Development
+	story_location $02, SCENE_STAR_PATTERN_BG, DataPtr_SmallCharTestMapScripts_0f, $ff ; loc 2 Small Char. Test
+	story_location $03, SCENE_STAR_PATTERN_BG, DataPtr_MatchSelectMapScripts_10, $ff ; loc 3 Test
+	story_location $04, SCENE_STAR_PATTERN_BG, DataPtr_Test2MapScripts_10, $0b ; loc 4 Test 2
+	story_location $05, SCENE_ACADEMY_MAIN_BLDG, DataPtr_AcademyMainBldgMapScripts_10, $1a ; loc 5 Academy Main Bldg.
+	story_location $06, SCENE_ACADEMY_MAIN_BLDG, DataPtr_AcademyWingMapScripts_10, $1a ; loc 6 Academy Wing
+	story_location $07, SCENE_COURTYARD, DataPtr_CourtyardMapScripts_13, $1b ; loc 7 Courtyard
+	story_location $08, SCENE_RESTAURANT_PLAZA, DataPtr_RestaurantPlazaMapScripts_13, $1b ; loc 8 Restaurant Plaza
+	story_location $09, SCENE_DORM_ENTRANCE, DataPtr_DormEntranceMapScripts_12, $1b ; loc 9 Dorm Entrance
+	story_location $0a, SCENE_DORM_ROOM, DataPtr_DormRoomMapScripts_13, $00 ; loc 10 Dorm Room
+	story_location $0b, SCENE_JUNIOR_CLASS_COURT, DataPtr_JuniorClassCourtSinglesMapScripts_11, $1b ; loc 11 Junior Class Court
+	story_location $0c, SCENE_JUNIOR_CLASS_COURT, DataPtr_JuniorClassCourtDoublesMapScripts_11, $1b ; loc 12 Junior Class Court
+	story_location $0d, SCENE_RESTAURANT, DataPtr_RestaurantMapScripts_10, $1d ; loc 13 Restaurant
+	story_location $0e, SCENE_RESTAURANT, DataPtr_CafeteriaMapScripts_10, $1d ; loc 14 Cafeteria
+	story_location $0f, SCENE_TRAINING_COURT_MAP, DataPtr_TrainingCourtMapScripts_15, $1b ; loc 15 Training Court
+	story_location $10, SCENE_SENIOR_CLASS_COURT, DataPtr_SeniorCourtMapScripts_12, $1b ; loc 16 Senior Class Court
+	story_location $11, SCENE_TRAINING_CENTER, DataPtr_TrainingGymMapScripts_0e, $1d ; loc 17 Training Center
+	story_location $12, SCENE_TRAINING_CENTER, DataPtr_TennisMachineRoomMapScripts_14, $1d ; loc 18 Tennis Machine Room
+	story_location $13, SCENE_TRAINING_CENTER, DataPtr_WallPracticeRoomMapScripts_12, $1d ; loc 19 Wall Practice Room
+	story_location $14, SCENE_ACADEMY_ENTRANCE, DataPtr_AcademyArrivalMapScripts_11, $1b ; loc 20 Academy Entrance
+	story_location $15, SCENE_TOURNAMENT_COURTYARD, DataPtr_TournamentCourtyardMapScripts_15, $1b ; loc 21 Tournament Courtyard
+	story_location $16, SCENE_COURT_1, DataPtr_Court1MapScripts_14, $1b ; loc 22 Court #1
+	story_location $17, SCENE_COURT_2, DataPtr_Court2MapScripts_14, $1b ; loc 23 Court #2
+	story_location $18, SCENE_CENTER_COURT_MAP, DataPtr_CenterCourtMapScripts_11, $1d ; loc 24 Center Court
+	story_location $19, SCENE_TOURNAMENT, DataPtr_TournamentMapScripts_0f, $1d ; loc 25 Tournament
+	story_location $1a, SCENE_AWARDS_CEREMONY, DataPtr_AwardsCeremonyMapScripts_0f, $1b ; loc 26 Awards Ceremony
+	story_location $1b, SCENE_ISLAND_SKY, DataPtr_IslandSkyMapScripts_14, $1b ; loc 27 Island Sky
+	story_location $1c, SCENE_SPECIAL_COURT, DataPtr_SpecialCourtMapScripts_0e, $08 ; loc 28 Special Court
+	story_location $1d, SCENE_PEACHS_CASTLE, DataPtr_MarioWorldMapScripts_0e, $12 ; loc 29 Peach's Castle
+	story_location $1e, SCENE_ACADEMY_ENTRANCE, DataPtr_End1MainBldgMapScripts_27, $2c ; loc 30 End1 Main Bldg
+	story_location $1f, SCENE_RESTAURANT_PLAZA, DataPtr_EndRestaurantEntMapScripts_27, $ff ; loc 31 End Restaurant Ent.
+	story_location $20, SCENE_DORM_ENTRANCE, DataPtr_End3DormEntMapScripts_27, $ff ; loc 32 End3 Dorm Ent.
+	story_location $21, SCENE_JUNIOR_CLASS_COURT, DataPtr_End4JrCourtMapScripts_27, $ff ; loc 33 End4 Jr. Court
+	story_location $22, SCENE_RESTAURANT, DataPtr_End5ServiceAceMapScripts_27, $ff ; loc 34 End5 Service Ace
+	story_location $23, SCENE_TRAINING_CENTER, DataPtr_End7TrainingCtrMapScripts_27, $ff ; loc 35 End7 Training Ctr.
+	story_location $24, SCENE_SENIOR_CLASS_COURT, DataPtr_End8SrCourtMapScripts_27, $ff ; loc 36 End8 Sr. Court
+	story_location $25, SCENE_COURTYARD, DataPtr_End10VarsityCourtMapScripts_27, $ff ; loc 37 End10 Varsity Court
+	story_location $26, SCENE_TRAINING_COURT_MAP, DataPtr_End11TrainingCourtMapScripts_27, $ff ; loc 38 End11 Training Court
+	story_location $27, SCENE_ACADEMY_MAIN_BLDG, DataPtr_End12PrincipalsOfficeMapScripts_27, $ff ; loc 39 End12 Principal's Office
+	story_location $28, SCENE_TOURNAMENT, DataPtr_End16BeforeFinalsMapScripts_27, $ff ; loc 40 End16 Before Finals
+	story_location $29, SCENE_AWARDS_CEREMONY, DataPtr_End17AwardCeremonyMapScripts_27, $ff ; loc 41 End17 Award Ceremony
 GetStoryLocationCount:
 	ld a, $2a ; $574b
 	ret ; $574d
@@ -3653,43 +3653,43 @@ UpdateSceneScroll:
 	ret ; $59d8
 SceneGfxSlotTable:
 	; $59d9, 592 bytes (37 records x 8 slot words)
-	dslot DataPtr_ClubhouseSceneConfig, DataPtr_ClubhouseScenePalettes, DataPtr_ClubhouseSceneTilemap, DataPtr_ClubhouseSceneAttrmap, DataPtr_ClubhouseSceneConfigAlias1, DataPtr_ClubhouseScoreboardColumnAttrs, DataPtr_CourtyardScenePalettes, DataPtr_ClubhouseSceneTiles ; record 0
-	dslot DataPtr_CourtyardSceneConfig, DataPtr_CourtyardScenePalettesAlias1, DataPtr_CourtyardSceneTilemap, DataPtr_CourtyardSceneAttrmap, DataPtr_CourtyardSceneConfigAlias1, DataPtr_CourtyardScoreboardColumnAttrs, DataPtr_CourtyardSceneUnusedSlot, DataPtr_CourtyardSceneTiles ; record 1
-	dslot DataPtr_GrassCourtSceneConfig, DataPtr_GrassCourtPalettes, DataPtr_GrassCourtTilemap, DataPtr_GrassCourtAttrmap, DataPtr_GrassCourtSceneConfigAlias1, DataPtr_GrassCourtScoreboardColumnAttrs, DataPtr_HardCourtPalettes, DataPtr_GrassCourtTiles ; record 2
-	dslot DataPtr_HardCourtSceneConfig, DataPtr_HardCourtPalettesAlias1, DataPtr_HardCourtTilemap, DataPtr_HardCourtAttrmap, DataPtr_HardCourtSceneConfigAlias1, DataPtr_HardCourtScoreboardColumnAttrs, DataPtr_ClayCourtPalettes, DataPtr_HardCourtTiles ; record 3
-	dslot DataPtr_ClayCourtSceneConfig, DataPtr_ClayCourtPalettesAlias1, DataPtr_ClayCourtTilemap, DataPtr_ClayCourtAttrmap, DataPtr_ClayCourtSceneConfigAlias1, DataPtr_ClayCourtScoreboardColumnAttrs, DataPtr_CompositionCourtPalettes, DataPtr_ClayCourtTiles ; record 4
-	dslot DataPtr_CompositionCourtSceneConfig, DataPtr_CompositionCourtPalettesAlias1, DataPtr_CompositionCourtTilemap, DataPtr_CompositionCourtAttrmap, DataPtr_CompositionCourtSceneConfigAlias1, DataPtr_CompositionCourtScoreboardColumnAttrs, DataPtr_CompositionCourtSceneUnusedSlot, DataPtr_CompositionCourtTiles ; record 5
-	dslot DataPtr_MachineCourtSceneConfig, DataPtr_MachineCourtPalettes, DataPtr_MachineCourtTilemap, DataPtr_MachineCourtAttrmap, DataPtr_MachineCourtSceneConfigAlias1, DataPtr_MachineCourtScoreboardColumnAttrs, DataPtr_CenterCourtPalettes, DataPtr_MachineCourtTiles ; record 6
-	dslot DataPtr_CenterCourtSceneConfig, DataPtr_CenterCourtPalettesAlias1, DataPtr_CenterCourtTilemap, DataPtr_CenterCourtAttrmap, DataPtr_CenterCourtSceneConfigAlias1, DataPtr_CenterCourtScoreboardColumnAttrs, DataPtr_PracticeCourtPalettes, DataPtr_CenterCourtTiles ; record 7
-	dslot DataPtr_PracticeCourtSceneConfig, DataPtr_PracticeCourtPalettesAlias1, DataPtr_PracticeCourtTilemap, DataPtr_PracticeCourtAttrmap, DataPtr_PracticeCourtSceneConfigAlias1, DataPtr_PracticeCourtScoreboardColumnAttrs, DataPtr_YoshiCourtPalettes, DataPtr_PracticeCourtTiles ; record 8
-	dslot DataPtr_YoshiCourtSceneConfig, DataPtr_YoshiCourtPalettesAlias1, DataPtr_YoshiCourtTilemap, DataPtr_YoshiCourtAttrmap, DataPtr_YoshiCourtSceneConfigAlias1, DataPtr_YoshiCourtScoreboardColumnAttrs, DataPtr_YoshiCourtSceneUnusedSlot, DataPtr_YoshiCourtTiles ; record 9
-	dslot DataPtr_StarCourtSceneConfig, DataPtr_StarCourtPalettes, DataPtr_StarCourtTilemap, DataPtr_StarCourtAttrmap, DataPtr_StarCourtSceneConfigAlias1, DataPtr_StarCourtScoreboardColumnAttrs, DataPtr_BowserCourtPalettes, DataPtr_StarCourtTiles ; record 10
-	dslot DataPtr_BowserCourtSceneConfig, DataPtr_BowserCourtPalettesAlias1, DataPtr_BowserCourtTilemap, DataPtr_BowserCourtAttrmap, DataPtr_BowserCourtSceneConfigAlias1, DataPtr_BowserCourtScoreboardColumnAttrs, DataPtr_WarioCourtPalettes, DataPtr_BowserCourtTiles ; record 11
-	dslot DataPtr_WarioCourtSceneConfig, DataPtr_WarioCourtPalettesAlias1, DataPtr_WarioCourtTilemap, DataPtr_WarioCourtAttrmap, DataPtr_WarioCourtSceneConfigAlias1, DataPtr_WarioCourtScoreboardColumnAttrs, DataPtr_PeachCourtPalettes, DataPtr_WarioCourtTiles ; record 12
-	dslot DataPtr_PeachCourtSceneConfig, DataPtr_PeachCourtPalettesAlias1, DataPtr_PeachCourtTilemap, DataPtr_PeachCourtAttrmap, DataPtr_PeachCourtSceneConfigAlias1, DataPtr_PeachCourtScoreboardColumnAttrs, DataPtr_PeachCourtSceneUnusedSlot, DataPtr_PeachCourtTiles ; record 13
-	dslot DataPtr_IslandOpenCourtSceneConfig, DataPtr_IslandOpenCourtPalettes, DataPtr_IslandOpenCourtTilemap, DataPtr_IslandOpenCourtAttrmap, DataPtr_IslandOpenCourtSceneConfigAlias1, DataPtr_IslandOpenCourtScoreboardColumnAttrs, DataPtr_DKCourtPalettes, DataPtr_IslandOpenCourtTiles ; record 14
-	dslot DataPtr_DKCourtSceneConfig, DataPtr_DKCourtPalettesAlias1, DataPtr_DKCourtTilemap, DataPtr_DKCourtAttrmap, DataPtr_DKCourtSceneConfigAlias1, DataPtr_DKCourtScoreboardColumnAttrs, DataPtr_StarPatternBgSceneConfig, DataPtr_DKCourtTiles ; record 15
-	dslot DataPtr_StarPatternBgSceneConfigAlias1, DataPtr_StarPatternBgPalettes, DataPtr_StarPatternBgTilemap, DataPtr_StarPatternBgAttrmap, DataPtr_StarPatternBgCollisionMap, DataPtr_StarPatternBgBehaviorMap, DataPtr_AcademyMainBldgSceneConfig, DataPtr_StarPatternBgTiles ; record 16
-	dslot DataPtr_AcademyMainBldgSceneConfigAlias1, DataPtr_AcademyMainBldgPalettes, DataPtr_AcademyMainBldgTilemap, DataPtr_AcademyMainBldgAttrmap, DataPtr_AcademyMainBldgCollisionMap, DataPtr_AcademyMainBldgBehaviorMap, DataPtr_AcademyMainBldgSceneUnusedSlot, DataPtr_AcademyMainBldgTiles ; record 17
-	dslot DataPtr_DormBedroomSceneConfig, DataPtr_DormBedroomPalettes, DataPtr_DormBedroomTilemap, DataPtr_DormBedroomAttrmap, DataPtr_DormBedroomCollisionMap, DataPtr_DormBedroomBehaviorMap, DataPtr_CountrysideSceneConfig, DataPtr_DormBedroomTiles ; record 18
-	dslot DataPtr_CountrysideSceneConfigAlias1, DataPtr_CountrysidePalettes, DataPtr_CountrysideTilemap, DataPtr_CountrysideAttrmap, DataPtr_CountrysideCollisionMap, DataPtr_CountrysideBehaviorMap, DataPtr_AcademyGroundsSceneConfig, DataPtr_CountrysideTiles ; record 19
-	dslot DataPtr_AcademyGroundsSceneConfigAlias1, DataPtr_AcademyGroundsPalettes, DataPtr_AcademyGroundsTilemap, DataPtr_AcademyGroundsAttrmap, DataPtr_AcademyGroundsCollisionMap, DataPtr_AcademyGroundsBehaviorMap, DataPtr_AcademyGroundsSceneUnusedSlot, DataPtr_AcademyGroundsTiles ; record 20
-	dslot DataPtr_SeasideSceneConfig, DataPtr_SeasidePalettes, DataPtr_SeasideTilemap, DataPtr_SeasideAttrmap, DataPtr_SeasideCollisionMap, DataPtr_SeasideBehaviorMap, DataPtr_SeasideSceneUnusedSlot, DataPtr_SeasideTiles ; record 21
-	dslot DataPtr_HedgeCourtSceneConfig, DataPtr_HedgeCourtPalettes, DataPtr_HedgeCourtTilemap, DataPtr_HedgeCourtAttrmap, DataPtr_HedgeCourtCollisionMap, DataPtr_HedgeCourtBehaviorMap, DataPtr_HedgeCourtSceneUnusedSlot, DataPtr_HedgeCourtTiles ; record 22
-	dslot DataPtr_ClayCourtGroundsSceneConfig, DataPtr_ClayCourtGroundsPalettes, DataPtr_ClayCourtGroundsTilemap, DataPtr_ClayCourtGroundsAttrmap, DataPtr_ClayCourtGroundsCollisionMap, DataPtr_ClayCourtGroundsBehaviorMap, DataPtr_ClayCourtGroundsSceneUnusedSlot, DataPtr_ClayCourtGroundsTiles ; record 23
-	dslot DataPtr_HardCourtGroundsSceneConfig, DataPtr_HardCourtGroundsPalettes, DataPtr_HardCourtGroundsTilemap, DataPtr_HardCourtGroundsAttrmap, DataPtr_HardCourtGroundsCollisionMap, DataPtr_HardCourtGroundsBehaviorMap, DataPtr_SpaResortSceneConfig, DataPtr_HardCourtGroundsTiles ; record 24
-	dslot DataPtr_SpaResortSceneConfigAlias1, DataPtr_SpaResortPalettes, DataPtr_SpaResortTilemap, DataPtr_SpaResortAttrmap, DataPtr_SpaResortCollisionMap, DataPtr_SpaResortBehaviorMap, DataPtr_MainBuildingSceneConfig, DataPtr_SpaResortTiles ; record 25
-	dslot DataPtr_MainBuildingSceneConfigAlias1, DataPtr_MainBuildingPalettes, DataPtr_MainBuildingTilemap, DataPtr_MainBuildingAttrmap, DataPtr_MainBuildingCollisionMap, DataPtr_MainBuildingBehaviorMap, DataPtr_GardenPavilionSceneConfig, DataPtr_MainBuildingTiles ; record 26
-	dslot DataPtr_GardenPavilionSceneConfigAlias1, DataPtr_GardenPavilionPalettes, DataPtr_GardenPavilionTilemap, DataPtr_GardenPavilionAttrmap, DataPtr_GardenPavilionCollisionMap, DataPtr_GardenPavilionBehaviorMap, DataPtr_GardenPavilionSceneUnusedSlot, DataPtr_GardenPavilionTiles ; record 27
-	dslot DataPtr_FountainCourtSceneConfig, DataPtr_FountainCourtPalettes, DataPtr_FountainCourtTilemap, DataPtr_FountainCourtAttrmap, DataPtr_FountainCourtCollisionMap, DataPtr_FountainCourtBehaviorMap, DataPtr_FountainCourtSceneUnusedSlot, DataPtr_FountainCourtTiles ; record 28
-	dslot DataPtr_CafeCourtSceneConfig, DataPtr_CafeCourtPalettes, DataPtr_CafeCourtTilemap, DataPtr_CafeCourtAttrmap, DataPtr_CafeCourtCollisionMap, DataPtr_CafeCourtBehaviorMap, DataPtr_CourtComplexSceneConfig, DataPtr_CafeCourtTiles ; record 29
-	dslot DataPtr_CourtComplexSceneConfigAlias1, DataPtr_CourtComplexPalettes, DataPtr_CourtComplexTilemap, DataPtr_CourtComplexAttrmap, DataPtr_CourtComplexCollisionMap, DataPtr_CourtComplexBehaviorMap, DataPtr_CourtComplexSceneUnusedSlot, DataPtr_CourtComplexTiles ; record 30
-	dslot DataPtr_ClubCourtSceneConfig, DataPtr_ClubCourtPalettes, DataPtr_ClubCourtTilemap, DataPtr_ClubCourtAttrmap, DataPtr_ClubCourtCollisionMap, DataPtr_ClubCourtBehaviorMap, DataPtr_StadiumGroundsSceneConfig, DataPtr_ClubCourtTiles ; record 31
-	dslot DataPtr_StadiumGroundsSceneConfigAlias1, DataPtr_StadiumGroundsPalettes, DataPtr_StadiumGroundsTilemap, DataPtr_StadiumGroundsAttrmap, DataPtr_StadiumGroundsCollisionMap, DataPtr_StadiumGroundsBehaviorMap, DataPtr_CeremonyHallSceneConfig, DataPtr_StadiumGroundsTiles ; record 32
-	dslot DataPtr_CeremonyHallSceneConfigAlias1, DataPtr_CeremonyHallPalettes, DataPtr_CeremonyHallTilemap, DataPtr_CeremonyHallAttrmap, DataPtr_CeremonyHallCollisionMap, DataPtr_CeremonyHallBehaviorMap, DataPtr_CeremonyHallSceneUnusedSlot, DataPtr_CeremonyHallTiles ; record 33
-	dslot DataPtr_TrainingHallSceneConfig, DataPtr_TrainingHallPalettes, DataPtr_TrainingHallTilemap, DataPtr_TrainingHallAttrmap, DataPtr_TrainingHallCollisionMap, DataPtr_TrainingHallBehaviorMap, DataPtr_CenterCourtHallSceneConfig, DataPtr_TrainingHallTiles ; record 34
-	dslot DataPtr_CenterCourtHallSceneConfigAlias1, DataPtr_CenterCourtHallPalettes, DataPtr_CenterCourtHallTilemap, DataPtr_CenterCourtHallAttrmap, DataPtr_CenterCourtHallCollisionMap, DataPtr_CenterCourtHallBehaviorMap, DataPtr_ClubroomInteriorSceneConfig, DataPtr_CenterCourtHallTiles ; record 35
-	dslot DataPtr_ClubroomInteriorSceneConfigAlias1, DataPtr_ClubroomInteriorPalettes, DataPtr_ClubroomInteriorTilemap, DataPtr_ClubroomInteriorAttrmap, DataPtr_ClubroomInteriorCollisionMap, DataPtr_ClubroomInteriorBehaviorMap, DataPtr_ClubroomInteriorSceneUnusedSlot, DataPtr_ClubroomInteriorTiles ; record 36
+	dslot DataPtr_ClubhouseSceneConfig, DataPtr_ClubhouseScenePalettes, DataPtr_ClubhouseSceneTilemap, DataPtr_ClubhouseSceneAttrmap, DataPtr_ClubhouseSceneConfigAlias1, DataPtr_ClubhouseScoreboardColumnAttrs, DataPtr_CourtyardScenePalettes, DataPtr_ClubhouseSceneTiles ; record 0 SCENE_MINIGAME_COURT
+	dslot DataPtr_CourtyardSceneConfig, DataPtr_CourtyardScenePalettesAlias1, DataPtr_CourtyardSceneTilemap, DataPtr_CourtyardSceneAttrmap, DataPtr_CourtyardSceneConfigAlias1, DataPtr_CourtyardScoreboardColumnAttrs, DataPtr_CourtyardSceneUnusedSlot, DataPtr_CourtyardSceneTiles ; record 1 SCENE_TARGET_SHOT_COURT
+	dslot DataPtr_GrassCourtSceneConfig, DataPtr_GrassCourtPalettes, DataPtr_GrassCourtTilemap, DataPtr_GrassCourtAttrmap, DataPtr_GrassCourtSceneConfigAlias1, DataPtr_GrassCourtScoreboardColumnAttrs, DataPtr_HardCourtPalettes, DataPtr_GrassCourtTiles ; record 2 SCENE_GRASS_COURT
+	dslot DataPtr_HardCourtSceneConfig, DataPtr_HardCourtPalettesAlias1, DataPtr_HardCourtTilemap, DataPtr_HardCourtAttrmap, DataPtr_HardCourtSceneConfigAlias1, DataPtr_HardCourtScoreboardColumnAttrs, DataPtr_ClayCourtPalettes, DataPtr_HardCourtTiles ; record 3 SCENE_TRAINING_COURT
+	dslot DataPtr_ClayCourtSceneConfig, DataPtr_ClayCourtPalettesAlias1, DataPtr_ClayCourtTilemap, DataPtr_ClayCourtAttrmap, DataPtr_ClayCourtSceneConfigAlias1, DataPtr_ClayCourtScoreboardColumnAttrs, DataPtr_CompositionCourtPalettes, DataPtr_ClayCourtTiles ; record 4 SCENE_CLAY_COURT
+	dslot DataPtr_CompositionCourtSceneConfig, DataPtr_CompositionCourtPalettesAlias1, DataPtr_CompositionCourtTilemap, DataPtr_CompositionCourtAttrmap, DataPtr_CompositionCourtSceneConfigAlias1, DataPtr_CompositionCourtScoreboardColumnAttrs, DataPtr_CompositionCourtSceneUnusedSlot, DataPtr_CompositionCourtTiles ; record 5 SCENE_HARD_COURT
+	dslot DataPtr_MachineCourtSceneConfig, DataPtr_MachineCourtPalettes, DataPtr_MachineCourtTilemap, DataPtr_MachineCourtAttrmap, DataPtr_MachineCourtSceneConfigAlias1, DataPtr_MachineCourtScoreboardColumnAttrs, DataPtr_CenterCourtPalettes, DataPtr_MachineCourtTiles ; record 6 SCENE_MACHINE_COURT
+	dslot DataPtr_CenterCourtSceneConfig, DataPtr_CenterCourtPalettesAlias1, DataPtr_CenterCourtTilemap, DataPtr_CenterCourtAttrmap, DataPtr_CenterCourtSceneConfigAlias1, DataPtr_CenterCourtScoreboardColumnAttrs, DataPtr_PracticeCourtPalettes, DataPtr_CenterCourtTiles ; record 7 SCENE_CENTER_COURT
+	dslot DataPtr_PracticeCourtSceneConfig, DataPtr_PracticeCourtPalettesAlias1, DataPtr_PracticeCourtTilemap, DataPtr_PracticeCourtAttrmap, DataPtr_PracticeCourtSceneConfigAlias1, DataPtr_PracticeCourtScoreboardColumnAttrs, DataPtr_YoshiCourtPalettes, DataPtr_PracticeCourtTiles ; record 8 SCENE_COMPOSITION_COURT
+	dslot DataPtr_YoshiCourtSceneConfig, DataPtr_YoshiCourtPalettesAlias1, DataPtr_YoshiCourtTilemap, DataPtr_YoshiCourtAttrmap, DataPtr_YoshiCourtSceneConfigAlias1, DataPtr_YoshiCourtScoreboardColumnAttrs, DataPtr_YoshiCourtSceneUnusedSlot, DataPtr_YoshiCourtTiles ; record 9 SCENE_TROPICS_COURT
+	dslot DataPtr_StarCourtSceneConfig, DataPtr_StarCourtPalettes, DataPtr_StarCourtTilemap, DataPtr_StarCourtAttrmap, DataPtr_StarCourtSceneConfigAlias1, DataPtr_StarCourtScoreboardColumnAttrs, DataPtr_BowserCourtPalettes, DataPtr_StarCourtTiles ; record 10 SCENE_STAR_COURT
+	dslot DataPtr_BowserCourtSceneConfig, DataPtr_BowserCourtPalettesAlias1, DataPtr_BowserCourtTilemap, DataPtr_BowserCourtAttrmap, DataPtr_BowserCourtSceneConfigAlias1, DataPtr_BowserCourtScoreboardColumnAttrs, DataPtr_WarioCourtPalettes, DataPtr_BowserCourtTiles ; record 11 SCENE_BOWSER_COURT
+	dslot DataPtr_WarioCourtSceneConfig, DataPtr_WarioCourtPalettesAlias1, DataPtr_WarioCourtTilemap, DataPtr_WarioCourtAttrmap, DataPtr_WarioCourtSceneConfigAlias1, DataPtr_WarioCourtScoreboardColumnAttrs, DataPtr_PeachCourtPalettes, DataPtr_WarioCourtTiles ; record 12 SCENE_WAREHOUSE_COURT
+	dslot DataPtr_PeachCourtSceneConfig, DataPtr_PeachCourtPalettesAlias1, DataPtr_PeachCourtTilemap, DataPtr_PeachCourtAttrmap, DataPtr_PeachCourtSceneConfigAlias1, DataPtr_PeachCourtScoreboardColumnAttrs, DataPtr_PeachCourtSceneUnusedSlot, DataPtr_PeachCourtTiles ; record 13 SCENE_CASTLE_COURT
+	dslot DataPtr_IslandOpenCourtSceneConfig, DataPtr_IslandOpenCourtPalettes, DataPtr_IslandOpenCourtTilemap, DataPtr_IslandOpenCourtAttrmap, DataPtr_IslandOpenCourtSceneConfigAlias1, DataPtr_IslandOpenCourtScoreboardColumnAttrs, DataPtr_DKCourtPalettes, DataPtr_IslandOpenCourtTiles ; record 14 SCENE_WALL_PRACTICE
+	dslot DataPtr_DKCourtSceneConfig, DataPtr_DKCourtPalettesAlias1, DataPtr_DKCourtTilemap, DataPtr_DKCourtAttrmap, DataPtr_DKCourtSceneConfigAlias1, DataPtr_DKCourtScoreboardColumnAttrs, DataPtr_StarPatternBgSceneConfig, DataPtr_DKCourtTiles ; record 15 SCENE_JUNGLE_COURT
+	dslot DataPtr_StarPatternBgSceneConfigAlias1, DataPtr_StarPatternBgPalettes, DataPtr_StarPatternBgTilemap, DataPtr_StarPatternBgAttrmap, DataPtr_StarPatternBgCollisionMap, DataPtr_StarPatternBgBehaviorMap, DataPtr_AcademyMainBldgSceneConfig, DataPtr_StarPatternBgTiles ; record 16 SCENE_STAR_PATTERN_BG
+	dslot DataPtr_AcademyMainBldgSceneConfigAlias1, DataPtr_AcademyMainBldgPalettes, DataPtr_AcademyMainBldgTilemap, DataPtr_AcademyMainBldgAttrmap, DataPtr_AcademyMainBldgCollisionMap, DataPtr_AcademyMainBldgBehaviorMap, DataPtr_AcademyMainBldgSceneUnusedSlot, DataPtr_AcademyMainBldgTiles ; record 17 SCENE_ACADEMY_MAIN_BLDG
+	dslot DataPtr_DormBedroomSceneConfig, DataPtr_DormBedroomPalettes, DataPtr_DormBedroomTilemap, DataPtr_DormBedroomAttrmap, DataPtr_DormBedroomCollisionMap, DataPtr_DormBedroomBehaviorMap, DataPtr_CountrysideSceneConfig, DataPtr_DormBedroomTiles ; record 18 SCENE_DORM_ROOM
+	dslot DataPtr_CountrysideSceneConfigAlias1, DataPtr_CountrysidePalettes, DataPtr_CountrysideTilemap, DataPtr_CountrysideAttrmap, DataPtr_CountrysideCollisionMap, DataPtr_CountrysideBehaviorMap, DataPtr_AcademyGroundsSceneConfig, DataPtr_CountrysideTiles ; record 19 SCENE_RESTAURANT_PLAZA
+	dslot DataPtr_AcademyGroundsSceneConfigAlias1, DataPtr_AcademyGroundsPalettes, DataPtr_AcademyGroundsTilemap, DataPtr_AcademyGroundsAttrmap, DataPtr_AcademyGroundsCollisionMap, DataPtr_AcademyGroundsBehaviorMap, DataPtr_AcademyGroundsSceneUnusedSlot, DataPtr_AcademyGroundsTiles ; record 20 SCENE_COURTYARD
+	dslot DataPtr_SeasideSceneConfig, DataPtr_SeasidePalettes, DataPtr_SeasideTilemap, DataPtr_SeasideAttrmap, DataPtr_SeasideCollisionMap, DataPtr_SeasideBehaviorMap, DataPtr_SeasideSceneUnusedSlot, DataPtr_SeasideTiles ; record 21 SCENE_ISLAND_SKY
+	dslot DataPtr_HedgeCourtSceneConfig, DataPtr_HedgeCourtPalettes, DataPtr_HedgeCourtTilemap, DataPtr_HedgeCourtAttrmap, DataPtr_HedgeCourtCollisionMap, DataPtr_HedgeCourtBehaviorMap, DataPtr_HedgeCourtSceneUnusedSlot, DataPtr_HedgeCourtTiles ; record 22 SCENE_SPECIAL_COURT
+	dslot DataPtr_ClayCourtGroundsSceneConfig, DataPtr_ClayCourtGroundsPalettes, DataPtr_ClayCourtGroundsTilemap, DataPtr_ClayCourtGroundsAttrmap, DataPtr_ClayCourtGroundsCollisionMap, DataPtr_ClayCourtGroundsBehaviorMap, DataPtr_ClayCourtGroundsSceneUnusedSlot, DataPtr_ClayCourtGroundsTiles ; record 23 SCENE_SENIOR_CLASS_COURT
+	dslot DataPtr_HardCourtGroundsSceneConfig, DataPtr_HardCourtGroundsPalettes, DataPtr_HardCourtGroundsTilemap, DataPtr_HardCourtGroundsAttrmap, DataPtr_HardCourtGroundsCollisionMap, DataPtr_HardCourtGroundsBehaviorMap, DataPtr_SpaResortSceneConfig, DataPtr_HardCourtGroundsTiles ; record 24 SCENE_JUNIOR_CLASS_COURT
+	dslot DataPtr_SpaResortSceneConfigAlias1, DataPtr_SpaResortPalettes, DataPtr_SpaResortTilemap, DataPtr_SpaResortAttrmap, DataPtr_SpaResortCollisionMap, DataPtr_SpaResortBehaviorMap, DataPtr_MainBuildingSceneConfig, DataPtr_SpaResortTiles ; record 25 SCENE_RESTAURANT
+	dslot DataPtr_MainBuildingSceneConfigAlias1, DataPtr_MainBuildingPalettes, DataPtr_MainBuildingTilemap, DataPtr_MainBuildingAttrmap, DataPtr_MainBuildingCollisionMap, DataPtr_MainBuildingBehaviorMap, DataPtr_GardenPavilionSceneConfig, DataPtr_MainBuildingTiles ; record 26 SCENE_ACADEMY_ENTRANCE
+	dslot DataPtr_GardenPavilionSceneConfigAlias1, DataPtr_GardenPavilionPalettes, DataPtr_GardenPavilionTilemap, DataPtr_GardenPavilionAttrmap, DataPtr_GardenPavilionCollisionMap, DataPtr_GardenPavilionBehaviorMap, DataPtr_GardenPavilionSceneUnusedSlot, DataPtr_GardenPavilionTiles ; record 27 SCENE_DORM_ENTRANCE
+	dslot DataPtr_FountainCourtSceneConfig, DataPtr_FountainCourtPalettes, DataPtr_FountainCourtTilemap, DataPtr_FountainCourtAttrmap, DataPtr_FountainCourtCollisionMap, DataPtr_FountainCourtBehaviorMap, DataPtr_FountainCourtSceneUnusedSlot, DataPtr_FountainCourtTiles ; record 28 SCENE_TOURNAMENT_COURTYARD
+	dslot DataPtr_CafeCourtSceneConfig, DataPtr_CafeCourtPalettes, DataPtr_CafeCourtTilemap, DataPtr_CafeCourtAttrmap, DataPtr_CafeCourtCollisionMap, DataPtr_CafeCourtBehaviorMap, DataPtr_CourtComplexSceneConfig, DataPtr_CafeCourtTiles ; record 29 SCENE_COURT_1
+	dslot DataPtr_CourtComplexSceneConfigAlias1, DataPtr_CourtComplexPalettes, DataPtr_CourtComplexTilemap, DataPtr_CourtComplexAttrmap, DataPtr_CourtComplexCollisionMap, DataPtr_CourtComplexBehaviorMap, DataPtr_CourtComplexSceneUnusedSlot, DataPtr_CourtComplexTiles ; record 30 SCENE_TRAINING_COURT_MAP
+	dslot DataPtr_ClubCourtSceneConfig, DataPtr_ClubCourtPalettes, DataPtr_ClubCourtTilemap, DataPtr_ClubCourtAttrmap, DataPtr_ClubCourtCollisionMap, DataPtr_ClubCourtBehaviorMap, DataPtr_StadiumGroundsSceneConfig, DataPtr_ClubCourtTiles ; record 31 SCENE_COURT_2
+	dslot DataPtr_StadiumGroundsSceneConfigAlias1, DataPtr_StadiumGroundsPalettes, DataPtr_StadiumGroundsTilemap, DataPtr_StadiumGroundsAttrmap, DataPtr_StadiumGroundsCollisionMap, DataPtr_StadiumGroundsBehaviorMap, DataPtr_CeremonyHallSceneConfig, DataPtr_StadiumGroundsTiles ; record 32 SCENE_CENTER_COURT_MAP
+	dslot DataPtr_CeremonyHallSceneConfigAlias1, DataPtr_CeremonyHallPalettes, DataPtr_CeremonyHallTilemap, DataPtr_CeremonyHallAttrmap, DataPtr_CeremonyHallCollisionMap, DataPtr_CeremonyHallBehaviorMap, DataPtr_CeremonyHallSceneUnusedSlot, DataPtr_CeremonyHallTiles ; record 33 SCENE_PEACHS_CASTLE
+	dslot DataPtr_TrainingHallSceneConfig, DataPtr_TrainingHallPalettes, DataPtr_TrainingHallTilemap, DataPtr_TrainingHallAttrmap, DataPtr_TrainingHallCollisionMap, DataPtr_TrainingHallBehaviorMap, DataPtr_CenterCourtHallSceneConfig, DataPtr_TrainingHallTiles ; record 34 SCENE_TRAINING_CENTER
+	dslot DataPtr_CenterCourtHallSceneConfigAlias1, DataPtr_CenterCourtHallPalettes, DataPtr_CenterCourtHallTilemap, DataPtr_CenterCourtHallAttrmap, DataPtr_CenterCourtHallCollisionMap, DataPtr_CenterCourtHallBehaviorMap, DataPtr_ClubroomInteriorSceneConfig, DataPtr_CenterCourtHallTiles ; record 35 SCENE_TOURNAMENT
+	dslot DataPtr_ClubroomInteriorSceneConfigAlias1, DataPtr_ClubroomInteriorPalettes, DataPtr_ClubroomInteriorTilemap, DataPtr_ClubroomInteriorAttrmap, DataPtr_ClubroomInteriorCollisionMap, DataPtr_ClubroomInteriorBehaviorMap, DataPtr_ClubroomInteriorSceneUnusedSlot, DataPtr_ClubroomInteriorTiles ; record 36 SCENE_AWARDS_CEREMONY
 CopyScrolledSceneTilemapToVram:
 	push af ; $5c29
 	push bc ; $5c2a

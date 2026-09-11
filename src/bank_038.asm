@@ -364,9 +364,9 @@ MoveMenuCursorGridRemote_38:
 	ld a, [wMenuCursorY] ; $4209
 	ld e, a ; $420c
 	ldh a, [hLinkState] ; $420d
-	cp $02 ; $420f
+	cp LINKSTATE_SLAVE ; $420f
 	jr z, .asSlave ; $4211
-	cp $01 ; $4213
+	cp LINKSTATE_MASTER ; $4213
 	jr z, .asMaster ; $4215
 	call LinkErrorReset ; $4217
 .asMaster:
@@ -498,9 +498,9 @@ MoveMenuCursor2GridRemote_38:
 	ld a, [wMenuCursor2Y] ; $42d4
 	ld e, a ; $42d7
 	ldh a, [hLinkState] ; $42d8
-	cp $02 ; $42da
+	cp LINKSTATE_SLAVE ; $42da
 	jr z, .asSlave ; $42dc
-	cp $01 ; $42de
+	cp LINKSTATE_MASTER ; $42de
 	jr z, .asMaster ; $42e0
 	call LinkErrorReset ; $42e2
 .asMaster:
@@ -3309,7 +3309,7 @@ InitCharGridState:
 	ld [wCpuDifficultyPrompt], a ; $5a30
 	ld [wCpuDifficultyPanelOpen], a ; $5a33
 	ld [wCpuDifficultyCursor], a ; $5a36
-	ld a, $ff ; $5a39
+	ld a, CHAR_NONE ; $5a39
 	ld [wCharSelectSlotChars], a ; $5a3b
 	ld [wCharSelectSlotChars + 1], a ; $5a3e
 	ld [wCharSelectSlotChars + 2], a ; $5a41
@@ -3987,9 +3987,9 @@ InitMatchCharsFromSelection:
 	push_wram_bank $03 ; $5ea6
 	call CacheStorySlotNames ; $5eaf
 	ld a, [wCharSelectSlotChars] ; $5eb2
-	cp $ff ; $5eb5
+	cp CHAR_NONE ; $5eb5
 	jr z, .slot2 ; $5eb7
-	cp $80 ; $5eb9
+	cp CHAR_STORY_MAIN ; $5eb9
 	jr c, .slot1Created ; $5ebb
 	ld c, a ; $5ebd
 	and $07 ; $5ebe
@@ -4768,7 +4768,7 @@ RunLinkCharSelectScreen:
 	or a ; $63e0
 	jr nz, .doubles ; $63e1
 	ldh a, [hLinkState] ; $63e3
-	cp $01 ; $63e5
+	cp LINKSTATE_MASTER ; $63e5
 	jr nz, .singlesSlave ; $63e7
 	ld a, CHARSELECTMODE_LINK_SINGLES_P1 ; $63e9
 	jr .storeMode ; $63eb
@@ -4777,7 +4777,7 @@ RunLinkCharSelectScreen:
 	jr .storeMode ; $63ef
 .doubles:
 	ldh a, [hLinkState] ; $63f1
-	cp $01 ; $63f3
+	cp LINKSTATE_MASTER ; $63f3
 	jr nz, .doublesSlave ; $63f5
 	ld a, CHARSELECTMODE_LINK_DOUBLES_P1 ; $63f7
 	jr .storeMode ; $63f9
@@ -4889,7 +4889,7 @@ RunLinkCharSelectScreen:
 	call ApplyHandednessToCharRecords ; $64e7
 	call ApplyCpuDifficultyToCharRecords ; $64ea
 	ldh a, [hLinkState] ; $64ed
-	cp $01 ; $64ef
+	cp LINKSTATE_MASTER ; $64ef
 	jr nz, .finish ; $64f1
 	call WaitVBlank ; $64f3
 .finish:
@@ -5710,9 +5710,9 @@ InitLinkMatchCharsFromSelection:
 	cp CHARSELECTMODE_LINK_DOUBLES_P2 ; $6a92
 	jr z, .slot3Entry ; $6a94
 	ld a, [wCharSelectSlotChars] ; $6a96
-	cp $ff ; $6a99
+	cp CHAR_NONE ; $6a99
 	jr z, .slot2 ; $6a9b
-	cp $80 ; $6a9d
+	cp CHAR_STORY_MAIN ; $6a9d
 	jr c, .slot1Created ; $6a9f
 	ld c, a ; $6aa1
 	and $07 ; $6aa2
@@ -6876,7 +6876,7 @@ RunLinkMatchSequence:
 	cp $ff ; $7451
 	jr nz, .afterMatch ; $7453
 	farcall RestoreMenuScreenAndFadeIn ; $7455
-	ld a, $00 ; $7458
+	ld a, MENUSLIDE_BACK ; $7458
 	ld [wMenuSlideDirection], a ; $745a
 	jr .waitReady ; $745d
 .afterMatch:
@@ -6892,7 +6892,7 @@ RunLinkMatchSequence:
 	xor a ; $747b
 	ldh [hLinkExchangeActive], a ; $747c
 	call ResetSerialState ; $747e
-	ld a, $01 ; $7481
+	ld a, MENUSLIDE_FORWARD ; $7481
 	ld [wMenuSlideDirection], a ; $7483
 	call ApplyMatchTypeSettingsLink ; $7486
 	ld a, [wUnlockedCourtMask] ; $7489
@@ -6915,7 +6915,7 @@ RunLinkMatchSequence:
 	ld c, $10 ; $74a9
 	call BeginFadeOut ; $74ab
 	call WaitFadeEnd ; $74ae
-	ld a, $01 ; $74b1
+	ld a, CHAR_NINA ; $74b1
 	ld [wMatchPlayerChar], a ; $74b3
 	ld [wMatchOpponentChar], a ; $74b6
 	ld a, [wMatchIsDoubles] ; $74b9
@@ -6999,7 +6999,7 @@ ExchangeLinkCharSelection:
 	ldh [hLinkExchangeActive], a ; $753e
 	call ResetSerialState ; $7540
 	ldh a, [hLinkState] ; $7543
-	cp $01 ; $7545
+	cp LINKSTATE_MASTER ; $7545
 	jr nz, .checkTag ; $7547
 	call WaitVBlank ; $7549
 .checkTag:
@@ -7013,9 +7013,9 @@ ExchangeLinkCharSelection:
 	call LinkErrorReset ; $7556
 .pickBuffers:
 	ldh a, [hLinkState] ; $7559
-	cp $02 ; $755b
+	cp LINKSTATE_SLAVE ; $755b
 	jr z, .asSlave ; $755d
-	cp $01 ; $755f
+	cp LINKSTATE_MASTER ; $755f
 	jr z, .asMaster ; $7561
 	call LinkErrorReset ; $7563
 .asMaster:
@@ -7102,9 +7102,9 @@ ExchangeLinkCharSelection:
 	cp $26 ; $75db
 	jr nz, .done ; $75dd
 	ldh a, [hLinkState] ; $75df
-	cp $02 ; $75e1
+	cp LINKSTATE_SLAVE ; $75e1
 	jr z, .replyOk ; $75e3
-	cp $01 ; $75e5
+	cp LINKSTATE_MASTER ; $75e5
 	jr z, .checkReply ; $75e7
 	call LinkErrorReset ; $75e9
 .checkReply:
@@ -7143,7 +7143,7 @@ ExchangeLinkUnlockFlags:
 	ldh [hLinkExchangeActive], a ; $7622
 	call ResetSerialState ; $7624
 	ldh a, [hLinkState] ; $7627
-	cp $01 ; $7629
+	cp LINKSTATE_MASTER ; $7629
 	jr nz, .send ; $762b
 	call WaitVBlank ; $762d
 .send:

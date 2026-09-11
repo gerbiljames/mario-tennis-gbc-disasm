@@ -1350,7 +1350,7 @@ DrawContinuePromptCursor:
 	jr nz, .nonZero3 ; $4bbb
 	ld a, $ff ; $4bbd
 	ld [wContinuePromptResult], a ; $4bbf
-	ld a, $00 ; $4bc2
+	ld a, MENUSLIDE_BACK ; $4bc2
 	ld [wMenuSlideDirection], a ; $4bc4
 	ret ; $4bc7
 .nonZero3:
@@ -1631,7 +1631,7 @@ DrawExpSinglesPlayerPanel:
 	call FillTilemapRun ; $5642
 	ld bc, wPlayer1MainName ; $5645
 	ld a, [wLinkMatchRole] ; $5648
-	cp $02 ; $564b
+	cp LINKSTATE_SLAVE ; $564b
 	jr nz, .ne02 ; $564d
 	ld bc, wPlayer2MainName ; $564f
 	ld a, [wLinkMatchCharLevel] ; $5652
@@ -1706,7 +1706,7 @@ DrawExpDoublesPlayerPanel:
 .nonZero:
 	ld bc, wPlayer1MainName ; $5707
 	ld a, [wLinkMatchRole] ; $570a
-	cp $02 ; $570d
+	cp LINKSTATE_SLAVE ; $570d
 	jr nz, .copyStringToTextBuffer ; $570f
 	ld bc, wPlayer2MainName ; $5711
 	ld a, [wLinkMatchCharLevel] ; $5714
@@ -1782,7 +1782,7 @@ DrawExpDoublesPartnerPanel:
 .nonZero:
 	ld bc, wPlayer1PartnerName ; $57cc
 	ld a, [wLinkMatchRole] ; $57cf
-	cp $02 ; $57d2
+	cp LINKSTATE_SLAVE ; $57d2
 	jr nz, .copyStringToTextBuffer ; $57d4
 	ld bc, wPlayer2PartnerName ; $57d6
 .copyStringToTextBuffer:
@@ -2438,7 +2438,7 @@ ProcessMatchRewards:
 	ret ; $6643
 .eq09:
 	ld a, [wLinkMatchRole] ; $6644
-	cp $02 ; $6647
+	cp LINKSTATE_SLAVE ; $6647
 	jr z, .eq02 ; $6649
 	wram_bank $04 ; $664b
 	call ComputeMatchStatsReward ; $6651

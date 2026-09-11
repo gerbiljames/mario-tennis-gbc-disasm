@@ -3388,7 +3388,7 @@ NetGameMatch2Cases2:
 	ld b, $0d ; $57fe
 	call QueueDrillResultMessage ; $5800
 	ld a, [wCurrentShotType] ; $5803
-	cp $0a ; $5806
+	cp SHOTTYPE_LOB ; $5806
 	jp nz, NetGameMatch2Cases4.storeMatchAbortFlag ; $5808
 	xor a ; $580b
 	ret ; $580c
@@ -4712,7 +4712,7 @@ NetGamePractice2Cases2:
 	ld b, $00 ; $60de
 	call QueueDrillResultMessage ; $60e0
 	ld a, [wCurrentShotType] ; $60e3
-	cp $0a ; $60e6
+	cp SHOTTYPE_LOB ; $60e6
 	jp nz, NetGamePractice2Cases3.storeMatchAbortFlag ; $60e8
 	xor a ; $60eb
 	ret ; $60ec
@@ -4759,7 +4759,7 @@ NetGamePractice2Cases3:
 	ld b, $00 ; $6127
 	call QueueDrillResultMessage ; $6129
 	ld a, [wCurrentShotType] ; $612c
-	cp $09 ; $612f
+	cp SHOTTYPE_SMASH ; $612f
 	jp nz, .ne09 ; $6131
 	ld hl, wDrillCounters + 5 ; $6134
 	dec [hl] ; $6137
@@ -5142,7 +5142,7 @@ NetGamePractice3Cases3:
 	ld b, $00 ; $63d9
 	call QueueDrillResultMessage ; $63db
 	ld a, [wCurrentShotType] ; $63de
-	cp $0b ; $63e1
+	cp SHOTTYPE_DROP ; $63e1
 	jp nz, UnusedStoreMatchAbortFlag_6.storeMatchAbortFlag ; $63e3
 	ld hl, wDrillCounters + 5 ; $63e6
 	dec [hl] ; $63e9
@@ -5860,7 +5860,7 @@ StrokeMatch2Cases2:
 	ld b, $0d ; $6899
 	call SetDrillMessageByServer ; $689b
 	ld a, [wCurrentShotType] ; $689e
-	cp $0a ; $68a1
+	cp SHOTTYPE_LOB ; $68a1
 	jp nz, StrokeMatch2Cases3.storeMatchAbortFlag ; $68a3
 	xor a ; $68a6
 	ret ; $68a7
@@ -6925,7 +6925,7 @@ StrokePractice2Cases2:
 	ld b, $00 ; $6fc2
 	call QueueDrillResultMessage ; $6fc4
 	ld a, [wCurrentShotType] ; $6fc7
-	cp $0a ; $6fca
+	cp SHOTTYPE_LOB ; $6fca
 	jp nz, .storeMatchAbortFlag ; $6fcc
 	ld hl, wDrillCounters + 2 ; $6fcf
 	inc [hl] ; $6fd2

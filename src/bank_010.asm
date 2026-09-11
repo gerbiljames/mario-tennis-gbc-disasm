@@ -61,7 +61,7 @@ MatchSelectRunCharacterSelect:
 	ld de, wStoryModeSpawnPosition ; $40d7
 	ld bc, $0005 ; $40da
 	call CopyMemoryBC ; $40dd
-	ld a, $ff ; $40e0
+	ld a, STORYENTRY_NONE ; $40e0
 	ld [wStoryModeEntryPoint], a ; $40e2
 	ld [wUnusedExitTriggerIdMirror], a ; $40e5
 	ld [wStoryModeExitTriggerRequest], a ; $40e8
@@ -130,7 +130,7 @@ RunSinglesMatchListMenu:
 	ld de, wStoryModeSpawnPosition ; $41ab
 	ld bc, $0005 ; $41ae
 	call CopyMemoryBC ; $41b1
-	ld a, $ff ; $41b4
+	ld a, STORYENTRY_NONE ; $41b4
 	ld [wStoryModeEntryPoint], a ; $41b6
 	ld [wUnusedExitTriggerIdMirror], a ; $41b9
 	ld [wStoryModeExitTriggerRequest], a ; $41bc
@@ -157,7 +157,7 @@ RunDoublesMatchListMenu:
 	ld de, wStoryModeSpawnPosition ; $41f0
 	ld bc, $0005 ; $41f3
 	call CopyMemoryBC ; $41f6
-	ld a, $ff ; $41f9
+	ld a, STORYENTRY_NONE ; $41f9
 	ld [wStoryModeEntryPoint], a ; $41fb
 	ld [wUnusedExitTriggerIdMirror], a ; $41fe
 	ld [wStoryModeExitTriggerRequest], a ; $4201
@@ -327,7 +327,7 @@ RunDrillMatchListMenu:
 	ld de, wStoryModeSpawnPosition ; $4461
 	ld bc, $0005 ; $4464
 	call CopyMemoryBC ; $4467
-	ld a, $ff ; $446a
+	ld a, STORYENTRY_NONE ; $446a
 	ld [wStoryModeEntryPoint], a ; $446c
 	ld [wUnusedExitTriggerIdMirror], a ; $446f
 	ld [wStoryModeExitTriggerRequest], a ; $4472
@@ -350,7 +350,7 @@ Unused_10_RunCharDataScreen:
 	ld de, wStoryModeSpawnPosition ; $449c
 	ld bc, $0005 ; $449f
 	call CopyMemoryBC ; $44a2
-	ld a, $ff ; $44a5
+	ld a, STORYENTRY_NONE ; $44a5
 	ld [wStoryModeEntryPoint], a ; $44a7
 	ld [wUnusedExitTriggerIdMirror], a ; $44aa
 	ld [wStoryModeExitTriggerRequest], a ; $44ad
@@ -419,7 +419,7 @@ RunServiceLessonMenu:
 	ld de, wStoryModeSpawnPosition ; $453c
 	ld bc, $0005 ; $453f
 	call CopyMemoryBC ; $4542
-	ld a, $ff ; $4545
+	ld a, STORYENTRY_NONE ; $4545
 	ld [wStoryModeEntryPoint], a ; $4547
 	ld [wUnusedExitTriggerIdMirror], a ; $454a
 	ld [wStoryModeExitTriggerRequest], a ; $454d
@@ -441,7 +441,7 @@ RunNetLessonMenu:
 	ld de, wStoryModeSpawnPosition ; $4574
 	ld bc, $0005 ; $4577
 	call CopyMemoryBC ; $457a
-	ld a, $ff ; $457d
+	ld a, STORYENTRY_NONE ; $457d
 	ld [wStoryModeEntryPoint], a ; $457f
 	ld [wUnusedExitTriggerIdMirror], a ; $4582
 	ld [wStoryModeExitTriggerRequest], a ; $4585
@@ -463,7 +463,7 @@ RunStrokeLessonMenu:
 	ld de, wStoryModeSpawnPosition ; $45ac
 	ld bc, $0005 ; $45af
 	call CopyMemoryBC ; $45b2
-	ld a, $ff ; $45b5
+	ld a, STORYENTRY_NONE ; $45b5
 	ld [wStoryModeEntryPoint], a ; $45b7
 	ld [wUnusedExitTriggerIdMirror], a ; $45ba
 	ld [wStoryModeExitTriggerRequest], a ; $45bd
@@ -477,7 +477,7 @@ ShowRankingBoardSamples:
 	ld de, wStoryModeSpawnPosition ; $45cf
 	ld bc, $0005 ; $45d2
 	call CopyMemoryBC ; $45d5
-	ld a, $ff ; $45d8
+	ld a, STORYENTRY_NONE ; $45d8
 	ld [wStoryModeEntryPoint], a ; $45da
 	ld [wUnusedExitTriggerIdMirror], a ; $45dd
 	ld [wStoryModeExitTriggerRequest], a ; $45e0
@@ -547,7 +547,7 @@ RunMinigameSelectMenu:
 	ld de, wStoryModeSpawnPosition ; $466f
 	ld bc, $0005 ; $4672
 	call CopyMemoryBC ; $4675
-	ld a, $ff ; $4678
+	ld a, STORYENTRY_NONE ; $4678
 	ld [wStoryModeEntryPoint], a ; $467a
 	ld [wUnusedExitTriggerIdMirror], a ; $467d
 	ld [wStoryModeExitTriggerRequest], a ; $4680
@@ -602,7 +602,7 @@ Test2ExitTriggers_10:
 	ld de, wStoryModeSpawnPosition ; $47d2
 	ld bc, $0005 ; $47d5
 	call CopyMemoryBC ; $47d8
-	ld a, $ff ; $47db
+	ld a, STORYENTRY_NONE ; $47db
 	ld [wStoryModeEntryPoint], a ; $47dd
 	ld [wUnusedExitTriggerIdMirror], a ; $47e0
 	ld [wStoryModeExitTriggerRequest], a ; $47e3
@@ -620,7 +620,7 @@ Unused_10_Test2Npc04:
 	ld de, wStoryModeSpawnPosition ; $4803
 	ld bc, $0005 ; $4806
 	call CopyMemoryBC ; $4809
-	ld a, $ff ; $480c
+	ld a, STORYENTRY_NONE ; $480c
 	ld [wStoryModeEntryPoint], a ; $480e
 	ld [wUnusedExitTriggerIdMirror], a ; $4811
 	ld [wStoryModeExitTriggerRequest], a ; $4814
@@ -638,7 +638,7 @@ Unused_10_Test2Npc05:
 	ld de, wStoryModeSpawnPosition ; $4834
 	ld bc, $0005 ; $4837
 	call CopyMemoryBC ; $483a
-	ld a, $ff ; $483d
+	ld a, STORYENTRY_NONE ; $483d
 	ld [wStoryModeEntryPoint], a ; $483f
 	ld [wUnusedExitTriggerIdMirror], a ; $4842
 	ld [wStoryModeExitTriggerRequest], a ; $4845
@@ -656,7 +656,7 @@ Unused_10_Test2Npc06:
 	ld de, wStoryModeSpawnPosition ; $4865
 	ld bc, $0005 ; $4868
 	call CopyMemoryBC ; $486b
-	ld a, $ff ; $486e
+	ld a, STORYENTRY_NONE ; $486e
 	ld [wStoryModeEntryPoint], a ; $4870
 	ld [wUnusedExitTriggerIdMirror], a ; $4873
 	ld [wStoryModeExitTriggerRequest], a ; $4876
@@ -674,7 +674,7 @@ Unused_10_Test2Npc07:
 	ld de, wStoryModeSpawnPosition ; $4896
 	ld bc, $0005 ; $4899
 	call CopyMemoryBC ; $489c
-	ld a, $ff ; $489f
+	ld a, STORYENTRY_NONE ; $489f
 	ld [wStoryModeEntryPoint], a ; $48a1
 	ld [wUnusedExitTriggerIdMirror], a ; $48a4
 	ld [wStoryModeExitTriggerRequest], a ; $48a7
@@ -692,7 +692,7 @@ Unused_10_Test2Npc08:
 	ld de, wStoryModeSpawnPosition ; $48c7
 	ld bc, $0005 ; $48ca
 	call CopyMemoryBC ; $48cd
-	ld a, $ff ; $48d0
+	ld a, STORYENTRY_NONE ; $48d0
 	ld [wStoryModeEntryPoint], a ; $48d2
 	ld [wUnusedExitTriggerIdMirror], a ; $48d5
 	ld [wStoryModeExitTriggerRequest], a ; $48d8
@@ -710,7 +710,7 @@ Unused_10_Test2Npc09:
 	ld de, wStoryModeSpawnPosition ; $48f8
 	ld bc, $0005 ; $48fb
 	call CopyMemoryBC ; $48fe
-	ld a, $ff ; $4901
+	ld a, STORYENTRY_NONE ; $4901
 	ld [wStoryModeEntryPoint], a ; $4903
 	ld [wUnusedExitTriggerIdMirror], a ; $4906
 	ld [wStoryModeExitTriggerRequest], a ; $4909
@@ -728,7 +728,7 @@ Unused_10_Test2Npc0A:
 	ld de, wStoryModeSpawnPosition ; $4929
 	ld bc, $0005 ; $492c
 	call CopyMemoryBC ; $492f
-	ld a, $ff ; $4932
+	ld a, STORYENTRY_NONE ; $4932
 	ld [wStoryModeEntryPoint], a ; $4934
 	ld [wUnusedExitTriggerIdMirror], a ; $4937
 	ld [wStoryModeExitTriggerRequest], a ; $493a
@@ -745,7 +745,7 @@ Test2Npc0B_10:
 	ld de, wStoryModeSpawnPosition ; $495a
 	ld bc, $0005 ; $495d
 	call CopyMemoryBC ; $4960
-	ld a, $ff ; $4963
+	ld a, STORYENTRY_NONE ; $4963
 	ld [wStoryModeEntryPoint], a ; $4965
 	ld [wUnusedExitTriggerIdMirror], a ; $4968
 	ld [wStoryModeExitTriggerRequest], a ; $496b
@@ -762,7 +762,7 @@ Test2Npc0C_10:
 	ld de, wStoryModeSpawnPosition ; $498b
 	ld bc, $0005 ; $498e
 	call CopyMemoryBC ; $4991
-	ld a, $ff ; $4994
+	ld a, STORYENTRY_NONE ; $4994
 	ld [wStoryModeEntryPoint], a ; $4996
 	ld [wUnusedExitTriggerIdMirror], a ; $4999
 	ld [wStoryModeExitTriggerRequest], a ; $499c
@@ -779,7 +779,7 @@ Test2Npc0D_10:
 	ld de, wStoryModeSpawnPosition ; $49bc
 	ld bc, $0005 ; $49bf
 	call CopyMemoryBC ; $49c2
-	ld a, $ff ; $49c5
+	ld a, STORYENTRY_NONE ; $49c5
 	ld [wStoryModeEntryPoint], a ; $49c7
 	ld [wUnusedExitTriggerIdMirror], a ; $49ca
 	ld [wStoryModeExitTriggerRequest], a ; $49cd
@@ -796,7 +796,7 @@ Test2Npc0E_10:
 	ld de, wStoryModeSpawnPosition ; $49ed
 	ld bc, $0005 ; $49f0
 	call CopyMemoryBC ; $49f3
-	ld a, $ff ; $49f6
+	ld a, STORYENTRY_NONE ; $49f6
 	ld [wStoryModeEntryPoint], a ; $49f8
 	ld [wUnusedExitTriggerIdMirror], a ; $49fb
 	ld [wStoryModeExitTriggerRequest], a ; $49fe
@@ -813,7 +813,7 @@ Test2Npc0F_10:
 	ld de, wStoryModeSpawnPosition ; $4a1e
 	ld bc, $0005 ; $4a21
 	call CopyMemoryBC ; $4a24
-	ld a, $ff ; $4a27
+	ld a, STORYENTRY_NONE ; $4a27
 	ld [wStoryModeEntryPoint], a ; $4a29
 	ld [wUnusedExitTriggerIdMirror], a ; $4a2c
 	ld [wStoryModeExitTriggerRequest], a ; $4a2f
@@ -830,7 +830,7 @@ Test2Npc10_10:
 	ld de, wStoryModeSpawnPosition ; $4a4f
 	ld bc, $0005 ; $4a52
 	call CopyMemoryBC ; $4a55
-	ld a, $ff ; $4a58
+	ld a, STORYENTRY_NONE ; $4a58
 	ld [wStoryModeEntryPoint], a ; $4a5a
 	ld [wUnusedExitTriggerIdMirror], a ; $4a5d
 	ld [wStoryModeExitTriggerRequest], a ; $4a60
@@ -847,7 +847,7 @@ Test2Npc11_10:
 	ld de, wStoryModeSpawnPosition ; $4a80
 	ld bc, $0005 ; $4a83
 	call CopyMemoryBC ; $4a86
-	ld a, $ff ; $4a89
+	ld a, STORYENTRY_NONE ; $4a89
 	ld [wStoryModeEntryPoint], a ; $4a8b
 	ld [wUnusedExitTriggerIdMirror], a ; $4a8e
 	ld [wStoryModeExitTriggerRequest], a ; $4a91
@@ -864,7 +864,7 @@ Test2Npc12_10:
 	ld de, wStoryModeSpawnPosition ; $4ab1
 	ld bc, $0005 ; $4ab4
 	call CopyMemoryBC ; $4ab7
-	ld a, $ff ; $4aba
+	ld a, STORYENTRY_NONE ; $4aba
 	ld [wStoryModeEntryPoint], a ; $4abc
 	ld [wUnusedExitTriggerIdMirror], a ; $4abf
 	ld [wStoryModeExitTriggerRequest], a ; $4ac2
@@ -1078,7 +1078,7 @@ Unused_10_DevelopmentMoveActorsAndExit:
 	ld de, wStoryModeSpawnPosition ; $4d5b
 	ld bc, $0005 ; $4d5e
 	call CopyMemoryBC ; $4d61
-	ld a, $ff ; $4d64
+	ld a, STORYENTRY_NONE ; $4d64
 	ld [wStoryModeEntryPoint], a ; $4d66
 	ld [wUnusedExitTriggerIdMirror], a ; $4d69
 	ld [wStoryModeExitTriggerRequest], a ; $4d6c
@@ -1280,7 +1280,7 @@ RunTitleAndMainMenuLoop:
 	call BeginFadeOut ; $4f5a
 	call WaitFadeEnd ; $4f5d
 	call DisableLCDSafely ; $4f60
-	ld a, $01 ; $4f63
+	ld a, MENUSLIDE_FORWARD ; $4f63
 	ld [wMenuSlideDirection], a ; $4f65
 .redrawMenu:
 	call DisableLCDSafely ; $4f68
@@ -1394,7 +1394,7 @@ MatchSelectHandlersBHandler0:
 	farcall RunNewGameSetup ; $5052
 	cp $ff ; $5055
 	jp nz, .newStorySlot ; $5057
-	ld a, $00 ; $505a
+	ld a, MENUSLIDE_BACK ; $505a
 	ld [wMenuSlideDirection], a ; $505c
 	call DisableLCDSafely ; $505f
 	farcall LoadMenuFontGfx ; $5062
@@ -1436,7 +1436,7 @@ MatchSelectHandlersBHandler0:
 	farcall RunPlayAlonePartnerMenu ; $50bb
 	cp $ff ; $50be
 	jr nz, .continueStory ; $50c0
-	ld a, $00 ; $50c2
+	ld a, MENUSLIDE_BACK ; $50c2
 	ld [wMenuSlideDirection], a ; $50c4
 	jp RunTitleAndMainMenuLoop.menuLoop ; $50c7
 .continueStory:
@@ -1523,11 +1523,11 @@ MatchSelectHandlersBHandler3:
 	jr nz, .minigameFlow ; $5180
 	call EnableLCD ; $5182
 	script_fade_in $10 ; $5185
-	ld a, $00 ; $518a
+	ld a, MENUSLIDE_BACK ; $518a
 	ld [wMenuSlideDirection], a ; $518c
 	jr .eraseFlow ; $518f
 .minigameFlow:
-	ld a, $01 ; $5191
+	ld a, MENUSLIDE_FORWARD ; $5191
 	ld [wMenuSlideDirection], a ; $5193
 	farcall StubNop_3e ; $5196
 	ld a, [wUnlockedCourtMask] ; $5199
@@ -1538,7 +1538,7 @@ MatchSelectHandlersBHandler3:
 	farcall RunCourtSelect9Menu ; $51a7
 	cp $ff ; $51aa
 	jr nz, .linkFlow ; $51ac
-	ld a, $00 ; $51ae
+	ld a, MENUSLIDE_BACK ; $51ae
 	ld [wMenuSlideDirection], a ; $51b0
 	jp z, .savedDataFlow ; $51b3
 .exhibitionFlow:
@@ -1547,7 +1547,7 @@ MatchSelectHandlersBHandler3:
 	farcall RunCourtSelect4Menu ; $51be
 	cp $ff ; $51c1
 	jr nz, .linkFlow ; $51c3
-	ld a, $00 ; $51c5
+	ld a, MENUSLIDE_BACK ; $51c5
 	ld [wMenuSlideDirection], a ; $51c7
 	jp z, .savedDataFlow ; $51ca
 .linkFlow:
@@ -1572,7 +1572,7 @@ MatchSelectHandlersBHandler3:
 	ld [wVictoryScoreTableAlt], a ; $51f7
 	farcall WriteExhibitionSaveBlock ; $51fa
 .done:
-	ld a, $01 ; $51fd
+	ld a, MENUSLIDE_FORWARD ; $51fd
 	ld [wMenuSlideDirection], a ; $51ff
 	call DisableLCDSafely ; $5202
 	farcall LoadMenuFontGfx ; $5205
@@ -1586,7 +1586,7 @@ RunMinigameModeFlow:
 	farcall RunMinigameSelect ; $521a
 	cp $ff ; $521d
 	jr nz, .levelMenu ; $521f
-	ld a, $00 ; $5221
+	ld a, MENUSLIDE_BACK ; $5221
 	ld [wMenuSlideDirection], a ; $5223
 	jp RunTitleAndMainMenuLoop.menuLoop ; $5226
 .levelMenu:
@@ -1597,7 +1597,7 @@ RunMinigameModeFlow:
 	farcall RunMinigameLevelSelect ; $5232
 	cp $ff ; $5235
 	jr nz, .startMinigame ; $5237
-	ld a, $00 ; $5239
+	ld a, MENUSLIDE_BACK ; $5239
 	ld [wMenuSlideDirection], a ; $523b
 	jp RunMinigameModeFlow ; $523e
 .startMinigame:
@@ -1617,14 +1617,14 @@ RunMinigameModeFlow:
 	farcall ResetScreenAndTextWindows ; $525c
 	call EnableLCD ; $525f
 	script_fade_in $10 ; $5262
-	ld a, $00 ; $5267
+	ld a, MENUSLIDE_BACK ; $5267
 	ld [wMenuSlideDirection], a ; $5269
 	jr .levelMenu ; $526c
 .done:
 	ld a, [wSelectedMinigame] ; $526e
 	call GetMinigameDrillId ; $5271
 	farcall RunTrainingDrillByID ; $5274
-	ld a, $01 ; $5277
+	ld a, MENUSLIDE_FORWARD ; $5277
 	ld [wMenuSlideDirection], a ; $5279
 	call DisableLCDSafely ; $527c
 	farcall LoadMenuFontGfx ; $527f
@@ -1650,7 +1650,7 @@ MatchSelectHandlersBHandler5:
 	pop af ; $52b2
 	cp $ff ; $52b3
 	jp z, RunTitleAndMainMenuLoop.menuLoop ; $52b5
-	ld a, $01 ; $52b8
+	ld a, MENUSLIDE_FORWARD ; $52b8
 	ld [wMenuSlideDirection], a ; $52ba
 	call DisableLCDSafely ; $52bd
 	farcall LoadMenuFontGfx ; $52c0
@@ -1682,7 +1682,7 @@ RunSavedDataMenuFlow:
 	farcall ResetScreenAndTextWindows ; $5302
 	call EnableLCD ; $5305
 	script_fade_in $10 ; $5308
-	ld a, $00 ; $530d
+	ld a, MENUSLIDE_BACK ; $530d
 	ld [wMenuSlideDirection], a ; $530f
 	jp .transferMenu ; $5312
 .transferOption1:
@@ -1700,7 +1700,7 @@ RunSavedDataMenuFlow:
 	farcall ResetScreenAndTextWindows ; $5332
 	call EnableLCD ; $5335
 	script_fade_in $10 ; $5338
-	ld a, $00 ; $533d
+	ld a, MENUSLIDE_BACK ; $533d
 	ld [wMenuSlideDirection], a ; $533f
 	jp .transferMenu ; $5342
 .transferOption2:
@@ -1715,7 +1715,7 @@ RunSavedDataMenuFlow:
 	farcall ResetScreenAndTextWindows ; $535a
 	call EnableLCD ; $535d
 	script_fade_in $10 ; $5360
-	ld a, $00 ; $5365
+	ld a, MENUSLIDE_BACK ; $5365
 	ld [wMenuSlideDirection], a ; $5367
 	jp .transferMenu ; $536a
 .equipmentMenu:
@@ -1724,7 +1724,7 @@ RunSavedDataMenuFlow:
 	jr z, .racketSelect ; $5372
 	cp $01 ; $5374
 	jr z, .shoesSelect ; $5376
-	ld a, $00 ; $5378
+	ld a, MENUSLIDE_BACK ; $5378
 	ld [wMenuSlideDirection], a ; $537a
 	jp .transferMenu ; $537d
 .racketSelect:
@@ -1739,7 +1739,7 @@ RunSavedDataMenuFlow:
 	farcall ResetScreenAndTextWindows ; $5397
 	call EnableLCD ; $539a
 	script_fade_in $10 ; $539d
-	ld a, $00 ; $53a2
+	ld a, MENUSLIDE_BACK ; $53a2
 	ld [wMenuSlideDirection], a ; $53a4
 	jp .equipmentMenu ; $53a7
 .shoesSelect:
@@ -1754,7 +1754,7 @@ RunSavedDataMenuFlow:
 	farcall ResetScreenAndTextWindows ; $53c1
 	call EnableLCD ; $53c4
 	script_fade_in $10 ; $53c7
-	ld a, $00 ; $53cc
+	ld a, MENUSLIDE_BACK ; $53cc
 	ld [wMenuSlideDirection], a ; $53ce
 	jp .equipmentMenu ; $53d1
 .checkSavedData:
@@ -1780,7 +1780,7 @@ RunSavedDataMenuFlow:
 	farcall ResetScreenAndTextWindows ; $53fe
 	call EnableLCD ; $5401
 	script_fade_in $10 ; $5404
-	ld a, $00 ; $5409
+	ld a, MENUSLIDE_BACK ; $5409
 	ld [wMenuSlideDirection], a ; $540b
 	jp .savedDataMenu ; $540e
 .minigameData:
@@ -1796,7 +1796,7 @@ RunSavedDataMenuFlow:
 	farcall ResetScreenAndTextWindows ; $542a
 	call EnableLCD ; $542d
 	script_fade_in $10 ; $5430
-	ld a, $00 ; $5435
+	ld a, MENUSLIDE_BACK ; $5435
 	ld [wMenuSlideDirection], a ; $5437
 	jp .savedDataMenu ; $543a
 .n64RecordMenu:
@@ -1814,7 +1814,7 @@ RunSavedDataMenuFlow:
 	farcall ResetScreenAndTextWindows ; $5459
 	call EnableLCD ; $545c
 	script_fade_in $10 ; $545f
-	ld a, $00 ; $5464
+	ld a, MENUSLIDE_BACK ; $5464
 	ld [wMenuSlideDirection], a ; $5466
 	jp .checkSavedData ; $5469
 .n64RecordOption1:
@@ -1829,7 +1829,7 @@ RunSavedDataMenuFlow:
 	farcall ResetScreenAndTextWindows ; $5481
 	call EnableLCD ; $5484
 	script_fade_in $10 ; $5487
-	ld a, $00 ; $548c
+	ld a, MENUSLIDE_BACK ; $548c
 	ld [wMenuSlideDirection], a ; $548e
 	jp .checkSavedData ; $5491
 .done:
@@ -1839,7 +1839,7 @@ RunSavedDataMenuFlow:
 	farcall ResetScreenAndTextWindows ; $549d
 	call EnableLCD ; $54a0
 	script_fade_in $10 ; $54a3
-	ld a, $00 ; $54a8
+	ld a, MENUSLIDE_BACK ; $54a8
 	ld [wMenuSlideDirection], a ; $54aa
 	jp .checkSavedData ; $54ad
 MatchSelectHandlersBHandler7:
@@ -1853,7 +1853,7 @@ MatchSelectHandlersBHandler7:
 	farcall ResetScreenAndTextWindows ; $54c3
 	call EnableLCD ; $54c6
 	script_fade_in $10 ; $54c9
-	ld a, $00 ; $54ce
+	ld a, MENUSLIDE_BACK ; $54ce
 	ld [wMenuSlideDirection], a ; $54d0
 	jp RunTitleAndMainMenuLoop.menuLoop ; $54d3
 RunEraseSavedDataFlow:
@@ -1906,7 +1906,7 @@ EraseSavedDataFlowHandler0_10:
 	farcall ResetScreenAndTextWindows ; $5526
 	call EnableLCD ; $5529
 	script_fade_in $10 ; $552c
-	ld a, $00 ; $5531
+	ld a, MENUSLIDE_BACK ; $5531
 	ld [wMenuSlideDirection], a ; $5533
 	jp RunEraseSavedDataFlow ; $5536
 EraseSavedDataFlowHandler3_10:
@@ -1924,7 +1924,7 @@ EraseSavedDataFlowHandler3_10:
 	farcall ResetScreenAndTextWindows ; $5552
 	call EnableLCD ; $5555
 	script_fade_in $10 ; $5558
-	ld a, $00 ; $555d
+	ld a, MENUSLIDE_BACK ; $555d
 	ld [wMenuSlideDirection], a ; $555f
 	jp RunEraseSavedDataFlow ; $5562
 EraseSavedDataFlowHandler4_10:
@@ -1940,7 +1940,7 @@ EraseSavedDataFlowHandler4_10:
 	farcall ResetScreenAndTextWindows ; $557b
 	call EnableLCD ; $557e
 	script_fade_in $10 ; $5581
-	ld a, $00 ; $5586
+	ld a, MENUSLIDE_BACK ; $5586
 	ld [wMenuSlideDirection], a ; $5588
 	xor a ; $558b
 	ld [wMainMenuCursor], a ; $558c
@@ -1952,7 +1952,7 @@ EraseSavedDataFlowHandler4_10:
 	farcall ResetScreenAndTextWindows ; $559b
 	call EnableLCD ; $559e
 	script_fade_in $10 ; $55a1
-	ld a, $00 ; $55a6
+	ld a, MENUSLIDE_BACK ; $55a6
 	ld [wMenuSlideDirection], a ; $55a8
 	xor a ; $55ab
 	ld [wMainMenuCursor], a ; $55ac

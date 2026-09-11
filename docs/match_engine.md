@@ -1315,7 +1315,7 @@ hLinkExchangeActive != 0  ->  farcall RunLinkMatchFrame            $07:$4762
 ```
 
 `RunLinkMatchFrame` bumps `hMatchFrameCounter` itself and dispatches on
-`hLinkState` (`$ffc2`; 1 = master, 2 = slave) to `RunLinkMatchFrameMaster`
+`hLinkState` (`$ffc2`; `LINKSTATE_MASTER` / `LINKSTATE_SLAVE`) to `RunLinkMatchFrameMaster`
 (`$07:$4081`) or `…Slave` (`$07:$409a`). The two are identical apart from the
 byte exchange:
 
@@ -1384,9 +1384,12 @@ Bulk data — character selections, the court-unlock mask, EXP records — goes
 through a separate path that sends **one nibble per byte** with the tag in bits
 6-7 (`UnpackBytesToNibbles` `$07:$4656`, `PackNibblesToBytes` `$07:$49b0`,
 `ExchangeNibbleBlockMaster/Slave` `$07:$40b3`/`$41d9`). Nibbling frees `$c0`-`$cf`
-for in-band control tokens that payload can never collide with (`$c1`/`$c2`
-handshake probe and reply, `$c3`/`$c4` block sync, `$cb` checksum mismatch →
-retransmit the whole block, `$cd` block accepted, and so on). Blocks are
+for in-band control tokens that payload can never collide with, the
+`LINKMSG_*` constants: `$c1`/`$c2` handshake probe and reply, `$c3`/`$c4`
+block sync, `$c5`/`$c6` end of block and its echo, `$cc` compare checksums,
+`$cb` checksum mismatch → retransmit the whole block, `$cd` block accepted,
+`$c0` nothing to say. The serial-control writes are spelled with
+`hardware.inc`'s `SC_START | SC_FAST | SC_INTERNAL` / `SC_EXTERNAL`. Blocks are
 protected by a 16-bit byte sum (`ComputeNibbleBufferChecksum` `$07:$440c`)
 compared four nibbles at a time. This path clears `hLinkExchangeActive` and
 disables the LCD, so it can never run inside a match frame.

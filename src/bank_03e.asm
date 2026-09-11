@@ -408,9 +408,9 @@ MoveMenuCursorGridRemote_3e:
 	ld a, [wMenuCursorY] ; $4239
 	ld e, a ; $423c
 	ldh a, [hLinkState] ; $423d
-	cp $02 ; $423f
+	cp LINKSTATE_SLAVE ; $423f
 	jr z, .asSlave ; $4241
-	cp $01 ; $4243
+	cp LINKSTATE_MASTER ; $4243
 	jr z, .asMaster ; $4245
 	call LinkErrorReset ; $4247
 .asMaster:
@@ -543,9 +543,9 @@ MoveMenuCursor2GridRemote_3e:
 	ld a, [wMenuCursor2Y] ; $4304
 	ld e, a ; $4307
 	ldh a, [hLinkState] ; $4308
-	cp $02 ; $430a
+	cp LINKSTATE_SLAVE ; $430a
 	jr z, .asSlave ; $430c
-	cp $01 ; $430e
+	cp LINKSTATE_MASTER ; $430e
 	jr z, .asMaster ; $4310
 	call LinkErrorReset ; $4312
 .asMaster:
@@ -939,7 +939,7 @@ RunLinkMatchRulesMenu:
 	call ClearFrameTasks ; $4561
 	ld b, $01 ; $4564
 	call CloseMatchRulesPanel ; $4566
-	ld a, $01 ; $4569
+	ld a, MENUSLIDE_FORWARD ; $4569
 	ld [wMenuSlideDirection], a ; $456b
 	ld c, $03 ; $456e
 	call GetMenuCursorIndex_3e ; $4570
@@ -957,7 +957,7 @@ RunLinkMatchRulesMenu:
 	call ClearFrameTasks ; $4586
 	ld b, $00 ; $4589
 	call CloseMatchRulesPanel ; $458b
-	ld a, $00 ; $458e
+	ld a, MENUSLIDE_BACK ; $458e
 	ld [wMenuSlideDirection], a ; $4590
 	ld hl, rIE ; $4593
 	set 2, [hl] ; $4596
@@ -2106,7 +2106,7 @@ RunRacketShoesChoiceMenu:
 	set 2, [hl] ; $4f07
 	ld b, $01 ; $4f09
 	call CloseChoiceTabPanel ; $4f0b
-	ld a, $01 ; $4f0e
+	ld a, MENUSLIDE_FORWARD ; $4f0e
 	ld [wMenuSlideDirection], a ; $4f10
 	ld c, $02 ; $4f13
 	call GetMenuCursorIndex_3e ; $4f15
@@ -2119,7 +2119,7 @@ RunRacketShoesChoiceMenu:
 	set 2, [hl] ; $4f24
 	ld b, $00 ; $4f26
 	call CloseChoiceTabPanel ; $4f28
-	ld a, $00 ; $4f2b
+	ld a, MENUSLIDE_BACK ; $4f2b
 	ld [wMenuSlideDirection], a ; $4f2d
 	ld a, $ff ; $4f30
 	ret ; $4f32
@@ -2505,7 +2505,7 @@ RunPlayAlonePartnerMenu:
 	set 2, [hl] ; $51f7
 	ld b, $01 ; $51f9
 	call CloseChoiceTabPanel ; $51fb
-	ld a, $01 ; $51fe
+	ld a, MENUSLIDE_FORWARD ; $51fe
 	ld [wMenuSlideDirection], a ; $5200
 	ld c, $02 ; $5203
 	call GetMenuCursorIndex_3e ; $5205
@@ -2522,7 +2522,7 @@ RunPlayAlonePartnerMenu:
 	set 2, [hl] ; $521a
 	ld b, $00 ; $521c
 	call CloseChoiceTabPanel ; $521e
-	ld a, $00 ; $5221
+	ld a, MENUSLIDE_BACK ; $5221
 	ld [wMenuSlideDirection], a ; $5223
 	ld a, $ff ; $5226
 	ret ; $5228
@@ -3783,7 +3783,7 @@ RunCourtSelect4Menu:
 	set 2, [hl] ; $5c03
 	ld b, $01 ; $5c05
 	call CloseCourtSelect4Panel ; $5c07
-	ld a, $01 ; $5c0a
+	ld a, MENUSLIDE_FORWARD ; $5c0a
 	ld [wMenuSlideDirection], a ; $5c0c
 	ld c, $02 ; $5c0f
 	call GetMenuCursorIndex_3e ; $5c11
@@ -3800,7 +3800,7 @@ RunCourtSelect4Menu:
 	set 2, [hl] ; $5c26
 	ld b, $00 ; $5c28
 	call CloseCourtSelect4Panel ; $5c2a
-	ld a, $00 ; $5c2d
+	ld a, MENUSLIDE_BACK ; $5c2d
 	ld [wMenuSlideDirection], a ; $5c2f
 	call FadeOutAndResetMenuScreen ; $5c32
 	ld a, $ff ; $5c35
@@ -3870,7 +3870,7 @@ RunLinkCourtSelect4Menu:
 	ldh [hLinkExchangeActive], a ; $5cbd
 	call ResetSerialState ; $5cbf
 	call EnableTimerInterrupt ; $5cc2
-	ld a, $01 ; $5cc5
+	ld a, MENUSLIDE_FORWARD ; $5cc5
 	ld [wMenuSlideDirection], a ; $5cc7
 	ld c, $02 ; $5cca
 	call GetMenuCursorIndex_3e ; $5ccc
@@ -3891,7 +3891,7 @@ RunLinkCourtSelect4Menu:
 	call ClearFrameTasks ; $5ce6
 	ld b, $00 ; $5ce9
 	call CloseCourtSelect4Panel ; $5ceb
-	ld a, $00 ; $5cee
+	ld a, MENUSLIDE_BACK ; $5cee
 	ld [wMenuSlideDirection], a ; $5cf0
 	ld c, $10 ; $5cf3
 	call BeginFadeOut ; $5cf5
@@ -4607,7 +4607,7 @@ RunCourtSelect9Menu:
 	set 2, [hl] ; $6597
 	ld b, $01 ; $6599
 	call CloseCourtSelect9Panel ; $659b
-	ld a, $01 ; $659e
+	ld a, MENUSLIDE_FORWARD ; $659e
 	ld [wMenuSlideDirection], a ; $65a0
 	ld c, $03 ; $65a3
 	call GetMenuCursorIndex_3e ; $65a5
@@ -4624,7 +4624,7 @@ RunCourtSelect9Menu:
 	set 2, [hl] ; $65ba
 	ld b, $00 ; $65bc
 	call CloseCourtSelect9Panel ; $65be
-	ld a, $00 ; $65c1
+	ld a, MENUSLIDE_BACK ; $65c1
 	ld [wMenuSlideDirection], a ; $65c3
 	ld a, $ff ; $65c6
 	ret ; $65c8
@@ -4708,7 +4708,7 @@ RunLinkCourtSelect9Menu:
 	ldh [hLinkExchangeActive], a ; $666a
 	call ResetSerialState ; $666c
 	call EnableTimerInterrupt ; $666f
-	ld a, $01 ; $6672
+	ld a, MENUSLIDE_FORWARD ; $6672
 	ld [wMenuSlideDirection], a ; $6674
 	ld c, $03 ; $6677
 	call GetMenuCursorIndex_3e ; $6679
@@ -4729,7 +4729,7 @@ RunLinkCourtSelect9Menu:
 	call ClearFrameTasks ; $6693
 	ld b, $00 ; $6696
 	call CloseCourtSelect9Panel ; $6698
-	ld a, $00 ; $669b
+	ld a, MENUSLIDE_BACK ; $669b
 	ld [wMenuSlideDirection], a ; $669d
 	ld c, $10 ; $66a0
 	call BeginFadeOut ; $66a2

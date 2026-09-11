@@ -126,7 +126,7 @@ MatchPauseMenu_CheckRules:
 	cp GAMEMODE_MARIO_MINIGAME ; $4120
 	jp z, ShowMinigameRulesPages ; $4122
 	ld a, [wMatchContext] ; $4125
-	cp $02 ; $4128
+	cp MATCHCONTEXT_MINIGAME ; $4128
 	jp z, ShowTrainingRulesPages ; $412a
 	jr ShowMatchRulesPages ; $412d
 MatchPauseMenu_AfterRules:
@@ -1142,7 +1142,7 @@ PrepareScoreboardGfx:
 	farcall ReloadCharFrameGfx ; $4964
 	farcall StepMatchFrame ; $4967
 	ld a, [wMatchContext] ; $496a
-	cp $02 ; $496d
+	cp MATCHCONTEXT_MINIGAME ; $496d
 	jr z, .eq02 ; $496f
 	ld a, [wPlayer1GamesWon] ; $4971
 	ld b, $01 ; $4974
@@ -2909,7 +2909,7 @@ StoryPauseMenu_CharPartnerData:
 	ld de, wStoryModeSpawnPosition ; $6f69
 	ld bc, $0005 ; $6f6c
 	call CopyMemoryBC ; $6f6f
-	ld a, $ff ; $6f72
+	ld a, STORYENTRY_NONE ; $6f72
 	ld [wStoryModeEntryPoint], a ; $6f74
 	ld [wUnusedExitTriggerIdMirror], a ; $6f77
 	ld [wStoryModeExitTriggerRequest], a ; $6f7a
@@ -2922,7 +2922,7 @@ StoryPauseMenu_Equipment:
 	ld de, wStoryModeSpawnPosition ; $6f87
 	ld bc, $0005 ; $6f8a
 	call CopyMemoryBC ; $6f8d
-	ld a, $ff ; $6f90
+	ld a, STORYENTRY_NONE ; $6f90
 	ld [wStoryModeEntryPoint], a ; $6f92
 	ld [wUnusedExitTriggerIdMirror], a ; $6f95
 	ld [wStoryModeExitTriggerRequest], a ; $6f98
@@ -2934,7 +2934,7 @@ StoryPauseMenu_GameProgress:
 	ld de, wStoryModeSpawnPosition ; $6fa3
 	ld bc, $0005 ; $6fa6
 	call CopyMemoryBC ; $6fa9
-	ld a, $ff ; $6fac
+	ld a, STORYENTRY_NONE ; $6fac
 	ld [wStoryModeEntryPoint], a ; $6fae
 	ld [wUnusedExitTriggerIdMirror], a ; $6fb1
 	ld [wStoryModeExitTriggerRequest], a ; $6fb4
