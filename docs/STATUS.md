@@ -83,9 +83,11 @@ walk-sprite scripts render as `db` for reasons `docs/graphics_formats.md`
 §4.4 gives. Two `map_actors` tables carry one padding byte past their
 terminator.
 
-**Not started, and only worth it for other people.** A generated PNG pipeline
-for the graphics blobs, unit tests for `tools/disasmlib`, and a ROM-free CI
-job. None of it changes the disassembly.
+**Not started, and only worth it for other people.** A ROM-free CI job
+(`make test` skips the ROM-dependent pins when `baserom.gbc` is absent, so
+it would run as it stands), and sprite-aware PNG layouts: the PNGs are tiles
+in blob order, sixteen per row, so a 16x32 sprite frame is not assembled
+into a picture. Neither changes the disassembly.
 
 ## How to resume
 
