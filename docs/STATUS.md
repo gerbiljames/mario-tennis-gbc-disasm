@@ -80,9 +80,7 @@ unlock and the dead record fields are resolved); the "not established" sentences
 
 **Not started, and only worth it for other people.** A ROM-free CI job
 (`make test` skips the ROM-dependent pins when `baserom.gbc` is absent, so
-it would run as it stands), and sprite-aware PNG layouts: the PNGs are tiles
-in blob order, sixteen per row, so a 16x32 sprite frame is not assembled
-into a picture. Neither changes the disassembly.
+it would run as it stands). It changes nothing in the disassembly.
 
 ## How to resume
 
@@ -122,6 +120,13 @@ label bound to the wrong parent.
 
 ## Recent changes
 
+* **2026-09-11** — sprite frames in the PNGs are drawn assembled. A blob
+  that is a run of frames carries a layout in the manifest (`gfx:2x2` for
+  the 570 walk-sprite blobs, four 16x16 facings side by side; `gfx:3x4+3`
+  and `gfx:4x4+4` for the 1,710 character frames, the 24x32 or 32x32 body
+  as 4-tile columns with the standing-shadow tiles beneath), taken from the
+  object queues' tile order rather than from templates, so it is a fixed
+  permutation and encodes back exactly (`docs/graphics_formats.md` §0).
 * **2026-09-11** — the last `db` fallbacks in the rendered data are gone.
   The 34 animation scripts that end on a byte the macros cannot spell (a
   hold's unread `$00` operand; the five-byte walk script whose bare loop

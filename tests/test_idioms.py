@@ -6,7 +6,7 @@ import unittest
 from tests.helpers import ROOT  # noqa: F401  (sets sys.path)
 
 from disasmlib.idioms import collapse_line_idioms, render_packed_args
-from disasmlib.emit import is_gfx_name
+from disasmlib.emit import gfx_layout, is_gfx_name
 from disasmlib.textids import text_id_name
 
 
@@ -85,6 +85,14 @@ class Naming(unittest.TestCase):
         self.assertEqual(text_id_name(0x0c0c), "Text_33_12")
         self.assertIsNone(text_id_name(0))
         self.assertIsNone(text_id_name(0x8001), "bit 15 is the SRAM-string flag")
+
+    def test_gfx_layout(self):
+        self.assertEqual(gfx_layout("WalkSprite_6a_00_Gfx0", 16), "2x2")
+        self.assertEqual(gfx_layout("AlexSpriteFrame07", 15), "3x4+3")
+        self.assertEqual(gfx_layout("AlexSpriteFrame40", 20), "4x4+4")
+        self.assertEqual(gfx_layout("AlexSpriteFramesUnused", 105), "3x4+3")
+        self.assertIsNone(gfx_layout("CourtTiles", 64))
+        self.assertIsNone(gfx_layout(None, 64))
 
     def test_gfx_classifier(self):
         for yes in ("AlexSpriteFrame07", "CourtDiagramTiles", "CharRosterIcon00",

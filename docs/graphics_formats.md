@@ -25,10 +25,27 @@ Every blob that is a whole number of 8x8 tiles — the manifest tags them
 blob order, sixteen per row, as a four-colour indexed image with the tile
 count in the file. `make` re-encodes any blob whose PNG is newer
 (`tools/gfx.py encode`, then `tools/lz.py` for an `lz_*` stream), and
-`make check` verifies that every PNG still encodes back to its blob. The
-image is a container for the tile bytes in order, so an 8x16 object or a
-multi-tile metasprite appears as its tiles in memory order, not as the
-assembled sprite; the record layouts below say how the game arranges them.
+`make check` verifies that every PNG still encodes back to its blob.
+
+A blob that is a run of sprite frames carries a **layout** (`gfx:2x2`,
+`gfx:3x4+3`, `gfx:4x4+4` in the manifest; `layout=` in the PNG) so each
+frame is drawn as it appears on screen. `WxH` is one frame as W columns of
+H tiles, column-major, which is the order the 8x16-object queues consume
+tiles in (§4.2); `+S` is S extra tiles per frame drawn as a row under it.
+Frames go left to right, tiles left over after the last whole frame follow
+as a plain row. The layout is a fixed permutation of the blob's tiles, so
+encoding back is exact.
+
+| layout | blobs | what a frame is |
+|---|---|---|
+| `2x2` | the 570 walk-sprite `_GfxNN` blobs (banks `$6a`, `$6f`, `$70`-`$77`) | one 16x16 facing, two 8x16 objects (`QueueSprite16`); a 256-byte blob is the four facings side by side |
+| `3x4+3` | the 240-byte character frames of banks `$40`-`$5d`, and each bank's `SpriteFramesUnused` run | the 24x32 body as three 4-tile columns (`QueueSprite24x32`, `$00:$2c2b`), then the three standing-shadow tiles that replace each column's bottom tile in VRAM when `wStandingShadowsEnabled` is set (`$00:$2ee8`) |
+| `4x4+4` | the 60 320-byte character frames (the `01 10` per-slot OAM records, §4.3) | the same at 32x32 with four columns and four shadow tiles |
+
+Every other graphics blob is plain: tiles in blob order, sixteen per row.
+The sprite templates of §4.1 place tiles from arbitrary bases, so a blob
+drawn only through `QueueSpriteTemplate` stays plain and the template says
+how the game arranges it.
 
 ## 1. The LZ format
 

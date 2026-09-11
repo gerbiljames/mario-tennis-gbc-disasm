@@ -316,7 +316,7 @@ def check_gfx(manifest, fail):
         return 0
     n = 0
     for path, off, length, spec in manifest:
-        if spec != "gfx":
+        if not (spec == "gfx" or (spec or "").startswith("gfx:")):
             continue
         binp = ROOT / "data" / path
         png = binp.with_suffix(".png")
@@ -325,8 +325,11 @@ def check_gfx(manifest, fail):
         n += 1
         raw = binp.read_bytes()
         want = gfx.lz.decompress(raw, 0)[0] if gfx.is_lz(binp) else raw
-        img = Image.open(png)
-        got = gfx.image_to_tiles(img, int(img.text.get("tiles", 0)) or None)
+        layout = spec.partition(":")[2] or None
+        if (Image.open(png).text.get("layout") or None) != layout:
+            fail("gfx", f"{path}: PNG layout is not the manifest's {layout!r}")
+            continue
+        got = gfx.image_file_to_tiles(png)
         if got != want:
             fail("gfx", f"{path}: PNG does not encode back to the blob "
                         f"({len(got)} vs {len(want)} bytes)")

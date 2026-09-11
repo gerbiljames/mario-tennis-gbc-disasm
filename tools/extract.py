@@ -516,14 +516,14 @@ def main() -> int:
             return 1
         dest = outdir / path
         dest.parent.mkdir(parents=True, exist_ok=True)
-        if spec == "gfx":
+        if spec == "gfx" or (spec or "").startswith("gfx:"):
             # the .bin as always, plus the PNG a modder edits; the .bin is
             # written last so it is the newer file and make leaves it alone
             # until the PNG changes
             png = dest.with_suffix(".png")
             dest.write_bytes(rom[off:off + length])
             if gfx_ok:
-                if gfx.decode(dest, png) is None:
+                if gfx.decode(dest, png, spec.partition(":")[2] or None) is None:
                     png.unlink(missing_ok=True)
                     gfx_skipped += 1
                 else:

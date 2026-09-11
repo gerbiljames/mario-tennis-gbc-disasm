@@ -74,8 +74,11 @@ restated:
 - **Graphics are images.** Every blob that is tile graphics (2,724 of
   them: character and object frames, tile sets, icons, portraits, fonts) is
   extracted twice, as the `.bin` the source includes and as a PNG beside it
-  in `data/` — the tiles in blob order, sixteen per row, a four-colour
-  indexed image. Edit the PNG and `make` re-encodes the blob, compressing
+  in `data/` — a four-colour indexed image. Sprite frames are drawn
+  assembled: a character frame as its 24x32 body with the standing-shadow
+  tiles beneath, a walk sprite as its four facings side by side
+  (`docs/graphics_formats.md` §0); everything else is the tiles in blob
+  order, sixteen per row. Edit the PNG and `make` re-encodes the blob, compressing
   it again if it is an LZ stream (`lz_*`); a PNG you have not touched never
   rebuilds anything. `make check` confirms every PNG still encodes back to
   its blob. `tools/gfx.py` and `tools/lz.py` are the converters if you need

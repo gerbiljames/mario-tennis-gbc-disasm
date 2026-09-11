@@ -194,6 +194,26 @@ def is_gfx_name(name):
                 and not _NOT_GFX_NAME_RE.search(name))
 
 
+_WALK_GFX_RE = re.compile(r"^WalkSprite_[0-9a-f]+_\d+_Gfx\d+$")
+_CHAR_FRAME_RE = re.compile(r"SpriteFrame(\d+|sUnused)$")
+
+
+def gfx_layout(name, ntiles):
+    """The PNG layout (tools/gfx.py) for a blob that is a run of sprite
+    frames, or None for plain tiles. Walk-sprite frames are 16x16, two
+    8x16 objects per facing (QueueSprite16, $00:$1e55). A character frame
+    is 24x32 as three 4-tile columns (QueueSprite24x32, $00:$2c2b) plus
+    three standing-shadow tiles that replace each column's bottom tile in
+    VRAM ($00:$2ee8), or 32x32 plus four for the 320-byte frames."""
+    if not name:
+        return None
+    if _WALK_GFX_RE.match(name):
+        return "2x2"
+    if _CHAR_FRAME_RE.search(name):
+        return "4x4+4" if ntiles % 20 == 0 and ntiles % 15 else "3x4+3"
+    return None
+
+
 def bank_end_fill(cpu, length):
     """Note the trailing $ff mastering fill a bank's section stops short of.
 
@@ -1302,7 +1322,8 @@ class Emitter:
             else:
                 n = length
             if n and n % 16 == 0:
-                spec = "gfx"
+                layout = gfx_layout(self.labels.get(start), n // 16)
+                spec = f"gfx:{layout}" if layout else "gfx"
         self.manifest.append((blob, start, length, spec))
         return f'\tINCBIN "data/{blob}" ; ${cpu:04x}, {length} bytes{note}'
 

@@ -56,6 +56,26 @@ class TileImages(unittest.TestCase):
             self.assertEqual(n, ntiles)
             self.assertEqual(self.gfx.image_to_tiles(img, ntiles), data)
 
+    def test_layouts_are_permutations(self):
+        rng = random.Random(4)
+        for ntiles, layout in ((15, "3x4+3"), (20, "4x4+4"), (16, "2x2"),
+                               (4, "2x2"), (105, "3x4+3"), (17, "2x2")):
+            data = bytes(rng.getrandbits(8) for _ in range(ntiles * 16))
+            pos, size = self.gfx.tile_positions(ntiles, layout)
+            self.assertEqual(len(set(pos)), ntiles, layout)
+            img, n = self.gfx.tiles_to_image(data, layout=layout)
+            self.assertEqual(img.size, size)
+            self.assertEqual(self.gfx.image_to_tiles(img, ntiles, layout), data)
+        # a walk-sprite facing: tiles 0,1 are the left 8x16 object, 2,3 the right
+        self.assertEqual(self.gfx.tile_positions(4, "2x2")[0],
+                         [(0, 0), (0, 8), (8, 0), (8, 8)])
+        # a character frame: three 4-tile columns, shadows under each column
+        pos, size = self.gfx.tile_positions(15, "3x4+3")
+        self.assertEqual(size, (24, 40))
+        self.assertEqual(pos[12:], [(0, 32), (8, 32), (16, 32)])
+        with self.assertRaises(ValueError):
+            self.gfx.parse_layout("3x")
+
     def test_file_round_trip_raw_and_lz(self):
         rng = random.Random(3)
         data = bytes(rng.getrandbits(8) & 0x0F for _ in range(48 * 16))
