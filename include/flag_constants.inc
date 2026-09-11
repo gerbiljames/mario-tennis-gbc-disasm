@@ -4,6 +4,9 @@
 ; mask $80 >> bit to wGameFlags[byte]. Pass it to `set_flag`/`clear_flag`/
 ; `test_flag`/`flag_id` (one-argument form) or to *GameFlagByNumber.
 
+def FLAG_NEW_GAME_CLEARED_BIT equ 14 ; wGameFlags byte $01 bit 6
+def FLAG_NEW_GAME_SET_BIT equ 15 ; wGameFlags byte $01 bit 7
+
 def FLAG_DEBUG_NOCLIP equ 16 ; wGameFlags byte $02 bit 0
 def FLAG_PLAYER_RUNNING equ 17 ; wGameFlags byte $02 bit 1
 def FLAG_HIDE_OVERWORLD_ACTORS equ 20 ; wGameFlags byte $02 bit 4
@@ -91,6 +94,20 @@ def FLAG_JUNIOR_COURT_NPC0A_TALKED equ 130 ; wGameFlags byte $10 bit 2
 def FLAG_AWARDS_CEREMONY_SEEN_SINGLES equ 131 ; wGameFlags byte $10 bit 3
 def FLAG_AWARDS_CEREMONY_SEEN_DOUBLES equ 132 ; wGameFlags byte $10 bit 4
 
+def FLAG_CHEAT_UNLOCK_0 equ 160 ; wGameFlags byte $14 bit 0
+def FLAG_CHEAT_UNLOCK_1 equ 161 ; wGameFlags byte $14 bit 1
+def FLAG_CHEAT_UNLOCK_2 equ 162 ; wGameFlags byte $14 bit 2
+def FLAG_CHEAT_UNLOCK_3 equ 163 ; wGameFlags byte $14 bit 3
+def FLAG_CHEAT_UNLOCK_4 equ 164 ; wGameFlags byte $14 bit 4
+def FLAG_CHEAT_UNLOCK_5 equ 165 ; wGameFlags byte $14 bit 5
+def FLAG_CHEAT_UNLOCK_6 equ 166 ; wGameFlags byte $14 bit 6
+def FLAG_CHEAT_UNLOCK_7 equ 167 ; wGameFlags byte $14 bit 7
+
+def FLAG_CHEAT_UNLOCK_8 equ 168 ; wGameFlags byte $15 bit 0
+def FLAG_CHEAT_UNLOCK_11 equ 169 ; wGameFlags byte $15 bit 1
+def FLAG_CHEAT_UNLOCK_12 equ 170 ; wGameFlags byte $15 bit 2
+def FLAG_CHEAT_UNLOCK_9 equ 171 ; wGameFlags byte $15 bit 3
+def FLAG_CHEAT_UNLOCK_10 equ 172 ; wGameFlags byte $15 bit 4
 def FLAG_REACHED_ISLAND_OPEN_SINGLES equ 174 ; wGameFlags byte $15 bit 6
 def FLAG_REACHED_ISLAND_OPEN_DOUBLES equ 175 ; wGameFlags byte $15 bit 7
 
@@ -98,7 +115,9 @@ def FLAG_STORY_COMPLETE_SINGLES equ 176 ; wGameFlags byte $16 bit 0
 def FLAG_STORY_COMPLETE_DOUBLES equ 177 ; wGameFlags byte $16 bit 1
 def FLAG_REACHED_MARIO_WORLD_SINGLES equ 178 ; wGameFlags byte $16 bit 2
 def FLAG_REACHED_MARIO_WORLD_DOUBLES equ 179 ; wGameFlags byte $16 bit 3
+def FLAG_ENDING_SEEN_SINGLES equ 183 ; wGameFlags byte $16 bit 7
 
+def FLAG_ENDING_SEEN_DOUBLES equ 184 ; wGameFlags byte $17 bit 0
 def FLAG_ISLAND_OPEN_IN_PROGRESS equ 185 ; wGameFlags byte $17 bit 1
 def FLAG_SERVE_CHALLENGER_DEFEATED equ 186 ; wGameFlags byte $17 bit 2
 def FLAG_NET_CHALLENGER_DEFEATED equ 187 ; wGameFlags byte $17 bit 3

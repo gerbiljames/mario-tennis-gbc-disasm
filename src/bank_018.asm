@@ -1716,12 +1716,12 @@ PlayScreenSequence2:
 	ld_flag_id de, FLAG_DOUBLES ; $7969
 	call TestGameFlag ; $796c
 	jr z, .scene2 ; $796f
-	ld de, $1700 ; $7971
+	ld_flag_id de, FLAG_ENDING_SEEN_DOUBLES ; $7971
 	call TestGameFlag ; $7974
 	jr z, .scene2Wait ; $7977
 	jr .scene3 ; $7979
 .scene2:
-	ld de, $16e0 ; $797b
+	ld_flag_id de, FLAG_ENDING_SEEN_SINGLES ; $797b
 	call TestGameFlag ; $797e
 	jr z, .scene2Wait ; $7981
 	jr .scene3 ; $7983
@@ -1769,11 +1769,11 @@ PlayScreenSequence2:
 	ld_flag_id de, FLAG_DOUBLES ; $79ed
 	call TestGameFlag ; $79f0
 	jr z, .fadeOut ; $79f3
-	ld de, $1700 ; $79f5
+	ld_flag_id de, FLAG_ENDING_SEEN_DOUBLES ; $79f5
 	call SetGameFlag ; $79f8
 	jr .done ; $79fb
 .fadeOut:
-	ld de, $16e0 ; $79fd
+	ld_flag_id de, FLAG_ENDING_SEEN_SINGLES ; $79fd
 	call SetGameFlag ; $7a00
 .done:
 	farcall SaveStorySlotWithTimer ; $7a03

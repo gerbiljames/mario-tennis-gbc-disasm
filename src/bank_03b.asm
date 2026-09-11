@@ -1823,31 +1823,31 @@ ApplyUnlockEverythingCheat:
 	farcall CheckStorySlot ; $4bec
 	cp $fe ; $4bef
 	jr z, .restore ; $4bf1
-	ld de, $1400 ; $4bf3
+	ld_flag_id de, FLAG_CHEAT_UNLOCK_0 ; $4bf3
 	call SetGameFlag ; $4bf6
-	ld de, $1420 ; $4bf9
+	ld_flag_id de, FLAG_CHEAT_UNLOCK_1 ; $4bf9
 	call SetGameFlag ; $4bfc
-	ld de, $1440 ; $4bff
+	ld_flag_id de, FLAG_CHEAT_UNLOCK_2 ; $4bff
 	call SetGameFlag ; $4c02
-	ld de, $1460 ; $4c05
+	ld_flag_id de, FLAG_CHEAT_UNLOCK_3 ; $4c05
 	call SetGameFlag ; $4c08
-	ld de, $1480 ; $4c0b
+	ld_flag_id de, FLAG_CHEAT_UNLOCK_4 ; $4c0b
 	call SetGameFlag ; $4c0e
-	ld de, $14a0 ; $4c11
+	ld_flag_id de, FLAG_CHEAT_UNLOCK_5 ; $4c11
 	call SetGameFlag ; $4c14
-	ld de, $14c0 ; $4c17
+	ld_flag_id de, FLAG_CHEAT_UNLOCK_6 ; $4c17
 	call SetGameFlag ; $4c1a
-	ld de, $14e0 ; $4c1d
+	ld_flag_id de, FLAG_CHEAT_UNLOCK_7 ; $4c1d
 	call SetGameFlag ; $4c20
-	ld de, $1500 ; $4c23
+	ld_flag_id de, FLAG_CHEAT_UNLOCK_8 ; $4c23
 	call SetGameFlag ; $4c26
-	ld de, $1560 ; $4c29
+	ld_flag_id de, FLAG_CHEAT_UNLOCK_9 ; $4c29
 	call SetGameFlag ; $4c2c
-	ld de, $1580 ; $4c2f
+	ld_flag_id de, FLAG_CHEAT_UNLOCK_10 ; $4c2f
 	call SetGameFlag ; $4c32
-	ld de, $1520 ; $4c35
+	ld_flag_id de, FLAG_CHEAT_UNLOCK_11 ; $4c35
 	call SetGameFlag ; $4c38
-	ld de, $1540 ; $4c3b
+	ld_flag_id de, FLAG_CHEAT_UNLOCK_12 ; $4c3b
 	call SetGameFlag ; $4c3e
 	farcall SaveStorySlot ; $4c41
 .restore:

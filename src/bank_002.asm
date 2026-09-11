@@ -270,8 +270,8 @@ InitStoryModeState:
 	ld a, $01 ; $423f
 	ld [wMessageSpeed], a ; $4241
 	farcall InitDefaultMatchSettings ; $4244
-	clear_flag $01, 6 ; $4247
-	set_flag $01, 7 ; $424a
+	clear_flag FLAG_NEW_GAME_CLEARED_BIT ; $4247
+	set_flag FLAG_NEW_GAME_SET_BIT ; $424a
 	ld hl, wStorySlotBlockTag ; $424d
 	xor a ; $4250
 	ld [hl], $56 ; $4251

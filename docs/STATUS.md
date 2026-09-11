@@ -132,8 +132,11 @@ label bound to the wrong parent.
   game-flag id handed to Set/Clear/TestGameFlag renders as
   `ld_flag_id de, FLAG_*` and one handed to a `*ByNumber` helper as the
   constant; `RunPagedTextMenu` joins the text-id sinks (13 menu ids named,
-  605 → 619). Lead left: the flags at numbers 160-184 that the remaining
-  raw `SetGameFlag` sites set have no names in `flags.json`.
+  605 → 619). The seventeen game flags that had no name are named for
+  their only writers: the ending-seen pair `PlayScreenSequence2` tests and
+  sets, the new-game pair `InitStoryModeState` writes, and the thirteen
+  per-slot flags the unlock-everything cheat sets that nothing reads. Every
+  game-flag operand in the source is symbolic now except three loop bases.
 * **2026-09-11** — three idiom macros: `push_wram_bank N` / `pop_wram_bank`
   for the bank prologue and epilogue (351 / 452 sites), `ld_hl_indexed T`
   for the five-instruction split-base table index (414), and `wait_frames N`
