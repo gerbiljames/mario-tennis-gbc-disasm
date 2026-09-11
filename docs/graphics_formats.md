@@ -342,14 +342,17 @@ The 21 story records have 64×64 tile and attribute planes (4096 = 64×64) and
 (`$0a:$5f31`) index. Nothing else in a record is 1024 bytes, so the pairing is
 unambiguous.
 
-`GetCollisionMapCellAddr` indexes **32 columns of half-tiles**: it rounds `d`
-and `e` down to even values (`sra`/`sla` pairs), builds `hl = (e >> 1) * 16`
-via four `add hl, hl` on `e`, adds `d >> 1`, and adds `wCollisionMap`. So one
-cell covers a 2×2 block of the coordinate space and a row is 16 bytes… but the
-1024-byte map is walked with a 32-entry row elsewhere. The arithmetic as
-written yields a **16-wide** row (`e >> 1` scaled by 16), which is worth
-re-deriving before relying on it; I have verified the shift sequence but not
-the intended cell geometry against a live map.
+`GetCollisionMapCellAddr` indexes a **32 × 32 grid of 2 × 2-tile cells**: it
+rounds `d` and `e` down to even values (`sra`/`sla` pairs), builds
+`hl = e * 16` via four `add hl, hl` on the *rounded* `e`, adds `d >> 1`, and
+adds `wCollisionMap`. Because `e` is even, `e * 16` is `(e >> 1) * 32` — a
+32-byte row, not the 16-byte row a first reading of the shifts suggests.
+Checked against a live map on 2026-09-11: the 1024 bytes of `wCollisionMap`
+in the Tournament Courtyard (a 34 × 50-tile scene), read from WRAM bank 6
+and drawn 32 wide, are the courtyard — the walled plaza, the fountain, the
+gate corridor to the north, the exits — with the player's cell
+(`X / 2`, `Y / 2`) in open space where the sprite stands; drawn 16 wide they
+are noise.
 
 ### 3.4 The same slots mean something else to the court loader
 
@@ -689,8 +692,8 @@ So the fade is an **additive per-component offset with saturation**, not a
 multiply, and the delta is always in 0-31 because `srl c` twice
 (`$00:$1d8c`, `$1d8e`) is a *logical* shift.
 
-> **Discrepancy with the earlier narrative.** The 2026-07-29 entry in
-> `docs/history.md` says "every fade in the game is a fade to black". The reachable arithmetic reads the
+> **Confirmed on 2026-09-11, against the earlier narrative.** The 2026-07-29
+> entry in `docs/history.md` says "every fade in the game is a fade to black". The reachable arithmetic reads the
 > other way: the delta is non-negative, `AddClampColorComponent` **adds** it and
 > saturates at `$1f`, and during a fade-out the delta rises 0 → 31, so every
 > component ends at maximum. That is a fade to **white**. The `bit 7`
@@ -701,8 +704,12 @@ multiply, and the delta is always in 0-31 because `srl c` twice
 > unconditional `jr` — but `ApplyWhiteFade` is *also* additive-toward-`$1f`;
 > it differs by being cheaper (one 16-bit add per colour) and coarser
 > (saturating at `$1e`, because it pre-clears each field's low bit to make the
-> carry detectable). I verified the opcodes but **did not confirm this
-> visually** — one emulator frame captured mid-fade would settle it.
+> carry detectable). Seen live: four frames into the erase-menu fade-out
+> (`hFadeState` = 1, `hFadeCounter` `$2c`) `wBGPalettes` holds the master
+> colours plus 20 per component — palette 0's `$015f` had become `$53df`
+> and its black `$7fff` — and the screen is washing to white; the main
+> menu's fade-in likewise descends from white. The bank `$00` fade is a
+> fade to **white**; only the bank `$03` engine fades to black.
 
 A **second, independent** fade engine lives in bank `$03` with buffers in WRAM
 bank `$06` (`wPaletteFadeTarget` `$d0a0`, `wPaletteFadeLive` `$d140`,
@@ -920,8 +927,6 @@ templates — were all fixed on 2026-09-10 (the `jp` form, once accepted by
 `carve_sprite_templates`, carved nothing new: every template is reached by
 `call`). What remains is genuinely open:
 
-* `GetCollisionMapCellAddr`'s cell geometry (§3.3). The shift sequence is
-  verified; whether a row is 16 or 32 entries wide in practice is not.
 * The three non-multiple-of-8 `palettes` regions — `0x63ab5` (129 B),
   `0x52ea1` (79 B), `0x618ad` (51 B). Over-declared runs, or a trailing field
   of a different kind? Unknown.
@@ -929,8 +934,6 @@ templates — were all fixed on 2026-09-10 (the `jp` form, once accepted by
   found.
 * The `$63` sentinel branch in `LoadActorObjectDef` (`$04:$4b2b`) is dead for
   all 117 dispatch entries, so word 2's use cannot be confirmed from data.
-* Whether the bank-`$00` fade is visually white (§5.4). Static evidence is
-  byte-level solid; one emulator frame would settle it.
 * What the intended difference between `AdjustColorsBrightness` and
   `ApplyWhiteFade` was, given both add toward `$1f`.
 * The 136-byte scene-config record's full field layout. Only `+2`…`+5`

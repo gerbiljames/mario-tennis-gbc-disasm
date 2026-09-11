@@ -69,9 +69,11 @@ constant. `ram_gaps.py --static` reports any site whose bank the dataflow
 knows but no union names, and that bucket is empty too.
 
 **Named in the docs as not established.** `docs/graphics_formats.md` §8
-(collision-map cell geometry, three odd-sized palette regions, object-header
-bytes +2/+3, the `$63` sentinel, whether the bank `$00` fade is visually
-white, the 136-byte scene-config layout); `docs/story_mode.md` "Oddities
+(three odd-sized palette regions, object-header bytes +2/+3, the `$63`
+sentinel, the intended difference between the two additive fades, the
+136-byte scene-config layout — all questions of intent; the two an
+emulator could answer, the collision-map row width and the fade colour,
+were settled on 2026-09-11); `docs/story_mode.md` "Oddities
 and open questions" (story-completion unlocks, record fields `+$2b`/`+$2f`/
 `+$3d`-`+$3f`); the "not established" sentences in `docs/match_engine.md`.
 
@@ -122,6 +124,11 @@ label bound to the wrong parent.
 
 ## Recent changes
 
+* **2026-09-11** — two emulator experiments close the graphics doc's
+  testable questions: the collision map is a 32 × 32 grid of 2 × 2-tile
+  cells (the rounded `e * 16` is `(e >> 1) * 32`), drawn live it is the
+  Tournament Courtyard; and the bank `$00` fade is a fade to white, seen
+  mid-fade with the palettes at master + 20 per component.
 * **2026-09-10** — the last 67 live sites, all on the desk: 39 story-script
   loads of actor slot 0/1 handed to helpers that select WRAM bank 4, the
   five digit-drawer copies, the link grid's handedness toggle, the screen
