@@ -43,6 +43,10 @@ class GeneratedSource(unittest.TestCase):
         self.assertEqual(count(r"^\tld de, \$[0-9a-f]{4} ; \$[0-9a-f]{4}\n\t(?:far)?call (Set|Clear|Test)GameFlag "),
                          0, "a raw game-flag id passed straight to a flag helper")
 
+    def test_vram_addresses_are_named(self):
+        self.assertGreaterEqual(count(r"^\tld (?:de|hl|bc), v(?:Tiles[012]|BGMap[01])\b"), 700)
+        self.assertLessEqual(count(r"^\tld (?:de|hl|bc), \$[89][0-9a-f]{3} ;"), 60)
+
     def test_copy_lengths_follow_their_blobs(self):
         self.assertEqual(count(r"^\tld c, \(\w+ - \w+\) / 16 ;"), 34)
         n = count(r"^\tld c, (\w+)_SIZE / 16 ;")

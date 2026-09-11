@@ -15,7 +15,7 @@ RunMinigameEndMenu:
 	farcall StepMatchFrame ; $4017
 	call LoadScoreboardModeGfx ; $401a
 	ld hl, ScoreboardModeGfxTail ; $401d
-	ld de, $8640 ; $4020
+	ld de, vTiles0 + $64 * TILE_SIZE ; $4020
 	ld c, (MatchMenuItemGfx_Rules - ScoreboardModeGfxTail) / 16 ; $4023
 	call QueueVRAMCopy ; $4025
 	farcall StepMatchFrame ; $4028
@@ -62,7 +62,7 @@ RunMatchPauseMenu:
 	farcall StepMatchFrame ; $408d
 	call LoadScoreboardModeGfx ; $4090
 	ld hl, ScoreboardModeGfxTail ; $4093
-	ld de, $8640 ; $4096
+	ld de, vTiles0 + $64 * TILE_SIZE ; $4096
 	ld c, (MatchMenuItemGfx_Rules - ScoreboardModeGfxTail) / 16 ; $4099
 	call QueueVRAMCopy ; $409b
 	farcall StepMatchFrame ; $409e
@@ -700,7 +700,7 @@ FlushTilemapToVram:
 	ld c, l ; $4601
 	ld b, h ; $4602
 	push bc ; $4603
-	ld hl, $9800 ; $4604
+	ld hl, vBGMap0 ; $4604
 	add hl, bc ; $4607
 	ld e, l ; $4608
 	ld d, h ; $4609
@@ -709,7 +709,7 @@ FlushTilemapToVram:
 	ld c, $22 ; $460e
 	call QueueVRAMCopy ; $4610
 	pop bc ; $4613
-	ld hl, $9800 + VRAM_BANK1 ; $4614
+	ld hl, vBGMap0 + VRAM_BANK1 ; $4614
 	add hl, bc ; $4617
 	ld e, l ; $4618
 	ld d, h ; $4619
@@ -1146,19 +1146,19 @@ PrepareScoreboardGfx:
 	jr z, .eq02 ; $496f
 	ld a, [wPlayer1GamesWon] ; $4971
 	ld b, $01 ; $4974
-	ld de, $8700 ; $4976
+	ld de, vTiles0 + $70 * TILE_SIZE ; $4976
 	farcall LoadScoreDigitGfx ; $4979
 	ld a, [wPlayer1SetsWon] ; $497c
 	ld b, $01 ; $497f
-	ld de, $8680 ; $4981
+	ld de, vTiles0 + $68 * TILE_SIZE ; $4981
 	farcall LoadScoreDigitGfx ; $4984
 	ld a, [wPlayer2GamesWon] ; $4987
 	ld b, $01 ; $498a
-	ld de, $8740 ; $498c
+	ld de, vTiles0 + $74 * TILE_SIZE ; $498c
 	farcall LoadScoreDigitGfx ; $498f
 	ld a, [wPlayer2SetsWon] ; $4992
 	ld b, $01 ; $4995
-	ld de, $86c0 ; $4997
+	ld de, vTiles0 + $6c * TILE_SIZE ; $4997
 	farcall LoadScoreDigitGfx ; $499a
 	farcall StepMatchFrame ; $499d
 .eq02:
@@ -1713,7 +1713,7 @@ LoadMatchMenuItemGfx:
 	push_wram_bank $01 ; $5227
 	call DecompressData ; $5230
 	ld hl, wDecompBuffer ; $5233
-	ld de, $8400 ; $5236
+	ld de, vTiles0 + $40 * TILE_SIZE ; $5236
 	ld c, $10 ; $5239
 	call QueueVRAMCopy ; $523b
 	pop_wram_bank ; $523e
@@ -1805,7 +1805,7 @@ LoadScoreboardModeGfx:
 	ld de, wDecompBuffer ; $5cb2
 	call DecompressData ; $5cb5
 	ld hl, wDecompBuffer ; $5cb8
-	ld de, $8500 ; $5cbb
+	ld de, vTiles0 + $50 * TILE_SIZE ; $5cbb
 	ld c, $14 ; $5cbe
 	call QueueVRAMCopy ; $5cc0
 	pop_wram_bank ; $5cc3
@@ -2773,7 +2773,7 @@ RunStoryModeMenu:
 	wram_bank $05 ; $6e4c
 .loop:
 	ld hl, ScoreboardModeGfxTail ; $6e52
-	ld de, $8640 ; $6e55
+	ld de, vTiles0 + $64 * TILE_SIZE ; $6e55
 	ld c, (MatchMenuItemGfx_Rules - ScoreboardModeGfxTail) / 16 ; $6e58
 	call QueueVRAMCopy ; $6e5a
 	ld a, $00 ; $6e5d
@@ -2831,7 +2831,7 @@ StoryPauseMenu_AfterItem:
 UnusedStoryMenuRedrawReentry:
 	call DrawStoryMenuItemRow ; $6ec7
 	ld hl, ScoreboardModeGfxTail ; $6eca
-	ld de, $8640 ; $6ecd
+	ld de, vTiles0 + $64 * TILE_SIZE ; $6ecd
 	ld c, (MatchMenuItemGfx_Rules - ScoreboardModeGfxTail) / 16 ; $6ed0
 	call QueueVRAMCopy ; $6ed2
 	jr .checkMatchMenuSelection ; $6ed5
@@ -3304,7 +3304,7 @@ LoadStoryMenuItemGfx:
 	push_wram_bank $01 ; $7291
 	call DecompressData ; $729a
 	ld hl, wDecompBuffer ; $729d
-	ld de, $8700 ; $72a0
+	ld de, vTiles0 + $70 * TILE_SIZE ; $72a0
 	ld c, $10 ; $72a3
 	call QueueVRAMCopy ; $72a5
 	pop_wram_bank ; $72a8

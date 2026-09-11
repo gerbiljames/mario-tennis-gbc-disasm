@@ -15,6 +15,18 @@ def STACK_TOP equ $d000
 ; that as `$9800 + VRAM_BANK1` rather than hiding the bank inside a literal.
 def VRAM_BANK1 equ $2000
 
+; --- VRAM regions ---
+; The three 128-tile blocks and the two background maps, so a copy destination
+; reads as a place: `vTiles0 + $10 * TILE_SIZE` is tile $10 of the sprite
+; block, `vBGMap0 + 15 * TILEMAP_WIDTH + 4` is map cell (4, 15). The BG uses
+; $8800 addressing (ids $80-$ff in vTiles1, $00-$7f in vTiles2); objects use
+; $8000 addressing (ids $00-$7f in vTiles0, $80-$ff in vTiles1).
+def vTiles0 equ $8000
+def vTiles1 equ $8800
+def vTiles2 equ $9000
+def vBGMap0 equ $9800
+def vBGMap1 equ $9c00
+
 ; --- Absent cell in a table of tilemap addresses ---
 ; The character-select PlayerSlotBoxAddrs* tables hold one shadow-tilemap cell
 ; per player slot, and a layout that does not show a slot stores zero for it.

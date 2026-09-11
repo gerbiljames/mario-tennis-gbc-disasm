@@ -116,6 +116,13 @@ label bound to the wrong parent.
 
 ## Recent changes
 
+* **2026-09-11** — two readability changes for modders. VRAM addresses are
+  named at the 760 sites a VRAM consumer takes them (`vTiles0 + $10 *
+  TILE_SIZE`, `vBGMap0 + 15 * TILEMAP_WIDTH`, `+ VRAM_BANK1`), the 51 words
+  in that range that are sign bits or coordinates left literal. And the
+  generated palette files use a `palette` macro of four `r,g,b` 5-bit
+  triples instead of `dw` words, except the five palettes whose words use
+  bit 15.
 * **2026-09-11** — screen layouts are editable. The 213 tile and attribute
   planes (200 of them LZ streams) carry a `tilemap:W` manifest tag and are
   extracted a second time as `.tilemap` text grids, one `tilemap_row` per

@@ -579,7 +579,7 @@ ServiceAceCoachIntroActors_13:
 LoadTourPointerSpriteGfx_13:
 	push_wram_bank $01 ; $4cdc
 	ld hl, TourPointerTiles_13 ; $4ce5
-	ld de, $8000 + VRAM_BANK1 ; $4ce8
+	ld de, vTiles0 + VRAM_BANK1 ; $4ce8
 	ld c, (TourPointerPalette_13 - TourPointerTiles_13) / 16 ; $4ceb
 	call QueueVRAMCopy ; $4ced
 	ld hl, TourPointerPalette_13 ; $4cf0

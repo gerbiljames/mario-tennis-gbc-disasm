@@ -4008,14 +4008,14 @@ SnapshotCourtTilemaps:
 UploadCourtTilemap:
 	wram_bank $02 ; $5e6f
 	ld hl, wCourtTilemap ; $5e75
-	ld de, $9800 ; $5e78
+	ld de, vBGMap0 ; $5e78
 	ld c, $40 ; $5e7b
 	call QueueVRAMCopy ; $5e7d
 	ret ; $5e80
 UploadCourtAttrmap:
 	wram_bank $02 ; $5e81
 	ld hl, wCourtAttrmap ; $5e87
-	ld de, $9800 + VRAM_BANK1 ; $5e8a
+	ld de, vBGMap0 + VRAM_BANK1 ; $5e8a
 	ld c, $40 ; $5e8d
 	call QueueVRAMCopy ; $5e8f
 	ret ; $5e92
@@ -4135,11 +4135,11 @@ RefreshCourtAfterEndChange:
 	call StepMatchFrame ; $5f5e
 	wram_bank $02 ; $5f61
 	ld hl, wCourtTilemap + 12 * TILEMAP_WIDTH ; $5f67
-	ld de, $9980 ; $5f6a
+	ld de, vBGMap0 + 12 * TILEMAP_WIDTH ; $5f6a
 	ld c, $0a ; $5f6d
 	call QueueVRAMCopy ; $5f6f
 	ld hl, wCourtAttrmap + 12 * TILEMAP_WIDTH ; $5f72
-	ld de, $9980 + VRAM_BANK1 ; $5f75
+	ld de, vBGMap0 + 12 * TILEMAP_WIDTH + VRAM_BANK1 ; $5f75
 	ld c, $0a ; $5f78
 	call QueueVRAMCopy ; $5f7a
 	pop af ; $5f7d

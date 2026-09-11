@@ -268,8 +268,15 @@ def VRAM_BANK1 equ $2000        ; include/constants.inc:9
 
 `QueueVRAMCopy` does `bit 5, d` to select `rVBK` and `res 5, d` to recover the
 real address (`$0486`-`$048d`). So a destination of `$b800` means `$9800` in
-VRAM bank 1, and the disassembly writes it as `$9800 + VRAM_BANK1` rather than
-hiding the bank inside a literal (`include/constants.inc:4-9`).
+VRAM bank 1, and the disassembly writes it as `vBGMap0 + VRAM_BANK1` rather than
+hiding the bank inside a literal (`include/constants.inc`). Every VRAM
+address a copy or loader consumes is written that way: `vTiles0`, `vTiles1`,
+`vTiles2` for the three 128-tile blocks plus `$NN * TILE_SIZE`, `vBGMap0` /
+`vBGMap1` for the maps plus `row * TILEMAP_WIDTH + col` -- 760 sites. The
+word is only renamed where one of the VRAM consumers (`QueueVRAMCopy`,
+`LoadCompressedTileBlock`, `DecompressData`, the tile loaders) takes it,
+because `$8000` is also a sign bit and `$932f` a coordinate pair; the 51
+that remain literal are those.
 
 ### 2.4 The two map planes
 
@@ -655,13 +662,14 @@ A palette is 4 colours = 8 bytes. A full set is 8 palettes = **64 bytes**.
 
 160 regions are declared `palettes`. The spec is in `GENERATED_SPECS`
 (`tools/disasmlib/emit.py:56`), so the values are **not committed**: the
-emitter writes an `INCLUDE "data/bank_XXX/palettes_<addr>.asm"` line and
-`render_palettes` (`tools/extract.py:195`) generates the file at setup, as
-plain `dw` rows with a decoded `#rrggbb` comment.
-
-There is **no `rgb`/`palette` macro** in `include/macros.inc` — grepping it
-finds only the word "palette" inside the `map_actor` docs. If you are looking
-for one, it does not exist; the rows are bare `dw`.
+emitter writes an `INCLUDE "data/bank_XXX/<Label>.asm"` line and
+`render_palettes` (`tools/extract.py`) generates the file at setup, one
+`palette` macro per palette: four colours as 5-bit `r,g,b` components,
+which the macro (`include/macros.inc`) packs into the BGR555 words, with
+the decoded `#rrggbb` in a comment. So editing a colour is editing the
+component that means it. The five palettes in the ROM whose words set bit
+15 (three files in banks `$28` and `$39`) cannot be spelled by the macro
+and stay `dw`.
 
 `_STRIDES = {"palettes": 8, ...}` (`tools/disasmlib/emit.py:1099`) pins the row
 stride so an over-running region cannot render as 5-byte palettes.

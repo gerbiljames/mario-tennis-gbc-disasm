@@ -1716,7 +1716,7 @@ IslandObjPalette_14:
 LoadPlaneObjGfx_14:
 	push_wram_bank $01 ; $5e79
 	ld hl, PlaneObjTiles_14 ; $5e82
-	ld de, $8000 + VRAM_BANK1 ; $5e85
+	ld de, vTiles0 + VRAM_BANK1 ; $5e85
 	ld c, $60 ; $5e88
 	call QueueVRAMCopy ; $5e8a
 	ld hl, IslandObjPalette_14 ; $5e8d
@@ -1764,7 +1764,7 @@ WaterSplashObjPalette_14:
 LoadWaterSplashObjGfx_14:
 	push_wram_bank $01 ; $60a1
 	ld hl, WaterSplashObjGfx ; $60aa
-	ld de, $8200 ; $60ad
+	ld de, vTiles0 + $20 * TILE_SIZE ; $60ad
 	ld c, (SpriteTemplate_14_1 - WaterSplashObjGfx) / 16 ; $60b0
 	call QueueVRAMCopy ; $60b2
 	ld hl, WaterSplashObjPalette_14 ; $60b5
@@ -1973,7 +1973,7 @@ AdvanceWaterSplash1Rise_14:
 LoadPlaneObjGfx2_14:
 	push_wram_bank $01 ; $6238
 	ld hl, IslandObjTiles_14 ; $6241
-	ld de, $8000 + VRAM_BANK1 ; $6244
+	ld de, vTiles0 + VRAM_BANK1 ; $6244
 	ld c, $60 ; $6247
 	call QueueVRAMCopy ; $6249
 	ld hl, IslandObjPalette_14 ; $624c
@@ -2164,7 +2164,7 @@ AdvancePlaneFrameCounter_14:
 LoadFireworkObjGfx_14:
 	push_wram_bank $01 ; $6427
 	ld hl, FireworkObjTiles_14 ; $6430
-	ld de, $8100 ; $6433
+	ld de, vTiles0 + $10 * TILE_SIZE ; $6433
 	ld c, (SpriteTemplate_14_2 - FireworkObjTiles_14) / 16 ; $6436
 	call QueueVRAMCopy ; $6438
 	ld hl, FireworkObjPalettes_14 ; $643b
@@ -2718,11 +2718,11 @@ IslandSkyPalettes_14:
 LoadIslandSkyEffectObjGfx_14:
 	push_wram_bank $01 ; $73aa
 	ld hl, IslandSkyTilesA_14 ; $73b3
-	ld de, $8100 ; $73b6
+	ld de, vTiles0 + $10 * TILE_SIZE ; $73b6
 	ld c, $40 ; $73b9
 	call QueueVRAMCopy ; $73bb
 	ld hl, IslandSkyTilesB_14 ; $73be
-	ld de, $8200 ; $73c1
+	ld de, vTiles0 + $20 * TILE_SIZE ; $73c1
 	ld c, $30 ; $73c4
 	call QueueVRAMCopy ; $73c6
 	ld hl, IslandSkyPalettes_14 ; $73c9
@@ -2792,7 +2792,7 @@ SpriteTemplate_14_3:
 LoadDistantPlaneObjGfx_14:
 	push_wram_bank $01 ; $7539
 	ld hl, DistantPlaneObjGfx ; $7542
-	ld de, $8000 + VRAM_BANK1 ; $7545
+	ld de, vTiles0 + VRAM_BANK1 ; $7545
 	ld c, (SpriteTemplate_14_3 - DistantPlaneObjGfx) / 16 ; $7548
 	call QueueVRAMCopy ; $754a
 	ld hl, IslandObjPalette_14 ; $754d
@@ -2830,7 +2830,7 @@ TwinkleObjPalette_14:
 LoadTwinkleObjGfx_14:
 	push_wram_bank $01 ; $7688
 	ld hl, TwinkleObjGfx ; $7691
-	ld de, $8000 + VRAM_BANK1 ; $7694
+	ld de, vTiles0 + VRAM_BANK1 ; $7694
 	ld c, (TwinkleObjPalette_14 - TwinkleObjGfx) / 16 ; $7697
 	call QueueVRAMCopy ; $7699
 	ld hl, TwinkleObjPalette_14 ; $769c

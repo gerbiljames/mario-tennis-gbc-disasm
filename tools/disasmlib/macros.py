@@ -171,6 +171,13 @@ MACRO wait_frames
 	db \\1
 ENDM
 
+; palette r,g,b, r,g,b, r,g,b, r,g,b -- one CGB palette, four colours of
+; 5-bit components, assembled to the BGR555 words the hardware takes. A
+; palette whose words use bit 15 (five in the ROM) stays a plain dw.
+MACRO palette
+	dw (\\1) | ((\\2) << 5) | ((\\3) << 10), (\\4) | ((\\5) << 5) | ((\\6) << 10), (\\7) | ((\\8) << 5) | ((\\9) << 10), (\\<10>) | ((\\<11>) << 5) | ((\\<12>) << 10)
+ENDM
+
 ; lb pair, hi, lo -- load two bytes into a register pair with one 16-bit
 ; immediate. Used where a callee reads the halves separately (QueueSprite's
 ; x/y, LoadPaletteShadow's index/count, ...); the site comment says which.

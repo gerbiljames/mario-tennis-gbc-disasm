@@ -7,6 +7,7 @@ from tests.helpers import ROOT  # noqa: F401  (sets sys.path)
 
 from disasmlib.idioms import collapse_line_idioms, render_packed_args
 from disasmlib.emit import gfx_layout, is_gfx_name
+from disasmlib.idioms import resolve_vram_addresses, vram_name
 from disasmlib.textids import text_id_name
 
 
@@ -85,6 +86,19 @@ class Naming(unittest.TestCase):
         self.assertEqual(text_id_name(0x0c0c), "Text_33_12")
         self.assertIsNone(text_id_name(0))
         self.assertIsNone(text_id_name(0x8001), "bit 15 is the SRAM-string flag")
+
+    def test_vram_names(self):
+        self.assertEqual(vram_name(0x8000), "vTiles0")
+        self.assertEqual(vram_name(0x8100), "vTiles0 + $10 * TILE_SIZE")
+        self.assertEqual(vram_name(0x99e0), "vBGMap0 + 15 * TILEMAP_WIDTH")
+        self.assertEqual(vram_name(0x9c21), "vBGMap1 + 1 * TILEMAP_WIDTH + 1")
+        lines = ["\tld de, $9800 ; $4000", "\tcall AdvanceFrame ; $4003", "\tcall QueueVRAMCopy ; $4006",
+                 "\tld de, $932f ; $4009", "\tcall ApplyCursorBounceX ; $400c",
+                 "\tld de, $8000 + VRAM_BANK1 ; $400f", "Label:", "\tcall QueueVRAMCopy ; $4012"]
+        resolve_vram_addresses(lines)
+        self.assertEqual(lines[0], "\tld de, vBGMap0 ; $4000")
+        self.assertEqual(lines[3], "\tld de, $932f ; $4009", "a coordinate pair is not a VRAM address")
+        self.assertEqual(lines[5], "\tld de, $8000 + VRAM_BANK1 ; $400f", "a label ends the look-ahead")
 
     def test_gfx_layout(self):
         self.assertEqual(gfx_layout("WalkSprite_6a_00_Gfx0", 16), "2x2")

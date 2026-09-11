@@ -1926,12 +1926,12 @@ ClearBgTilemaps:
 	call FillMemoryFast ; $4d4e
 	wram_bank $03 ; $4d51
 	ld hl, wShadowTilemap ; $4d57
-	ld de, $9800 ; $4d5a
+	ld de, vBGMap0 ; $4d5a
 	ld c, $24 ; $4d5d
 	call QueueVRAMCopy ; $4d5f
 	wram_bank $02 ; $4d62
 	ld hl, wScreenAttrmap ; $4d68
-	ld de, $9800 + VRAM_BANK1 ; $4d6b
+	ld de, vBGMap0 + VRAM_BANK1 ; $4d6b
 	ld c, $24 ; $4d6e
 	call QueueVRAMCopy ; $4d70
 	call EnableLCD ; $4d73
@@ -3509,11 +3509,11 @@ LoadStorySceneGraphics:
 	ld de, wDecompBuffer ; $589b
 	call DecompressDataFromBank ; $589e
 	ld hl, wDecompBuffer ; $58a1
-	ld de, $9000 + VRAM_BANK1 ; $58a4
+	ld de, vTiles2 + VRAM_BANK1 ; $58a4
 	ld c, $80 ; $58a7
 	call QueueVRAMCopy ; $58a9
 	ld hl, wTextTileBuffer ; $58ac
-	ld de, $8800 + VRAM_BANK1 ; $58af
+	ld de, vTiles1 + VRAM_BANK1 ; $58af
 	ld c, $80 ; $58b2
 	call QueueVRAMCopy ; $58b4
 	wram_bank $06 ; $58b7
@@ -3952,11 +3952,11 @@ LoadSceneGraphicsDirect:
 	ld de, wDecompBuffer ; $5d70
 	call DecompressDataFromBank ; $5d73
 	ld hl, wDecompBuffer ; $5d76
-	ld de, $9000 ; $5d79
+	ld de, vTiles2 ; $5d79
 	ld bc, $0080 ; $5d7c
 	call StartVRAMDMAFromHL ; $5d7f
 	ld hl, wTextTileBuffer ; $5d82
-	ld de, $8800 ; $5d85
+	ld de, vTiles1 ; $5d85
 	ld bc, $0080 ; $5d88
 	call StartVRAMDMAFromHL ; $5d8b
 	wram_bank $06 ; $5d8e
@@ -4817,11 +4817,11 @@ LoadCourtSceneGraphics:
 	ld de, wDecompBuffer ; $6330
 	call DecompressDataFromBank ; $6333
 	ld hl, wDecompBuffer ; $6336
-	ld de, $9000 + VRAM_BANK1 ; $6339
+	ld de, vTiles2 + VRAM_BANK1 ; $6339
 	ld c, $80 ; $633c
 	call QueueVRAMCopy ; $633e
 	ld hl, wTextTileBuffer ; $6341
-	ld de, $8800 + VRAM_BANK1 ; $6344
+	ld de, vTiles1 + VRAM_BANK1 ; $6344
 	ld c, $80 ; $6347
 	call QueueVRAMCopy ; $6349
 	wram_bank $04 ; $634c

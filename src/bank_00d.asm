@@ -555,11 +555,11 @@ MinigameGridCellTilemapOffsets:
 	dw $0197 ; record 23
 QueueMinigameHudVRAMCopy:
 	ld hl, wCourtTilemap + 9 * TILEMAP_WIDTH ; $43a3
-	ld de, $9920 ; $43a6
+	ld de, vBGMap0 + 9 * TILEMAP_WIDTH ; $43a6
 	ld c, $0a ; $43a9
 	call QueueVRAMCopy ; $43ab
 	ld hl, wCourtAttrmap + 9 * TILEMAP_WIDTH ; $43ae
-	ld de, $9920 + VRAM_BANK1 ; $43b1
+	ld de, vBGMap0 + 9 * TILEMAP_WIDTH + VRAM_BANK1 ; $43b1
 	ld c, $0a ; $43b4
 	call QueueVRAMCopy ; $43b6
 	ret ; $43b9
@@ -1104,7 +1104,7 @@ PlayMinigameCountdown:
 .loop:
 	push af ; $48e5
 	ld b, $01 ; $48e6
-	ld de, $8200 ; $48e8
+	ld de, vTiles0 + $20 * TILE_SIZE ; $48e8
 	farcall LoadScoreDigitGfx ; $48eb
 	ld a, [wMatchFramesAbort] ; $48ee
 	and a ; $48f1

@@ -241,7 +241,7 @@ DecompressDataFromBank:
 ClearBothVRAMBanks:
 	ld a, $01 ; $024e
 	ldh [rVBK], a ; $0250
-	ld hl, $8000 ; $0252
+	ld hl, vTiles0 ; $0252
 	ld bc, $0200 ; $0255
 	call ClearMemoryBC16 ; $0258
 	xor a ; $025b
@@ -252,12 +252,12 @@ ClearBothVRAMBanks:
 .loop:
 	ld a, $01 ; $0267
 	ldh [rVBK], a ; $0269
-	ld hl, $9800 ; $026b
+	ld hl, vBGMap0 ; $026b
 	ld c, $80 ; $026e
 	call ClearMemory16 ; $0270
 	xor a ; $0273
 	ldh [rVBK], a ; $0274
-	ld hl, $9800 ; $0276
+	ld hl, vBGMap0 ; $0276
 	ld c, $80 ; $0279
 	call ClearMemory16 ; $027b
 	ret ; $027e
@@ -441,7 +441,7 @@ ClearVRAMBank:
 	ldh a, [hIsCGB] ; $0383
 	and a ; $0385
 	jp nz, ClearBothVRAMBanks ; $0386
-	ld hl, $8000 ; $0389
+	ld hl, vTiles0 ; $0389
 	ld bc, $0200 ; $038c
 	call ClearMemoryBC16 ; $038f
 	ret ; $0392
@@ -7427,7 +7427,7 @@ VBlankDeferredTilemapCopyTask:
 	ld a, [hl+] ; $2a6c
 	ld h, [hl] ; $2a6d
 	ld l, a ; $2a6e
-	ld de, $9800 ; $2a6f
+	ld de, vBGMap0 ; $2a6f
 	ld a, [wDeferredTilemapLength] ; $2a72
 	ld c, a ; $2a75
 	call QueueVRAMCopy ; $2a76
@@ -7439,7 +7439,7 @@ VBlankDeferredTilemapCopyTask:
 	ld a, [hl+] ; $2a83
 	ld h, [hl] ; $2a84
 	ld l, a ; $2a85
-	ld de, $9800 + VRAM_BANK1 ; $2a86
+	ld de, vBGMap0 + VRAM_BANK1 ; $2a86
 	ld a, [wDeferredTilemapLength] ; $2a89
 	ld c, a ; $2a8c
 	call QueueVRAMCopy ; $2a8d

@@ -31,7 +31,7 @@ ShowCharDataScreen:
 	ld de, wDecompBuffer ; $4046
 	call DecompressData ; $4049
 	ld hl, wDecompBuffer ; $404c
-	ld de, $8600 + VRAM_BANK1 ; $404f
+	ld de, vTiles0 + $60 * TILE_SIZE + VRAM_BANK1 ; $404f
 	ld c, CharDataScreenGfx14_SIZE / 16 ; $4052
 	call QueueVRAMCopy ; $4054
 	farcall InitMenuBgScroll ; $4057
@@ -134,12 +134,12 @@ BuildCharDataScreenPages:
 	call ApplyTilemapPatchList ; $414f
 	wram_bank $03 ; $4152
 	ld hl, wShadowTilemap ; $4158
-	ld de, $9800 ; $415b
+	ld de, vBGMap0 ; $415b
 	ld c, $24 ; $415e
 	call QueueVRAMCopy ; $4160
 	wram_bank $02 ; $4163
 	ld hl, wScreenAttrmap ; $4169
-	ld de, $9800 + VRAM_BANK1 ; $416c
+	ld de, vBGMap0 + VRAM_BANK1 ; $416c
 	ld c, $24 ; $416f
 	call QueueVRAMCopy ; $4171
 	ret ; $4174
@@ -149,7 +149,7 @@ LoadCharDataScreenPageGraphics:
 	ld de, wDecompBuffer ; $417e
 	call DecompressData ; $4181
 	ld hl, wDecompBuffer ; $4184
-	ld de, $8140 + VRAM_BANK1 ; $4187
+	ld de, vTiles0 + $14 * TILE_SIZE + VRAM_BANK1 ; $4187
 	ld c, CharDataScreenPageGfx14_SIZE / 16 ; $418a
 	call QueueVRAMCopy ; $418c
 	wram_bank $01 ; $418f
@@ -157,7 +157,7 @@ LoadCharDataScreenPageGraphics:
 	ld de, wDecompBuffer ; $4198
 	call DecompressData ; $419b
 	ld hl, wDecompBuffer ; $419e
-	ld de, $81e0 + VRAM_BANK1 ; $41a1
+	ld de, vTiles0 + $1e * TILE_SIZE + VRAM_BANK1 ; $41a1
 	ld c, CharDataScreenPageGraphicsGfx0_SIZE / 16 ; $41a4
 	call QueueVRAMCopy ; $41a6
 	wram_bank $01 ; $41a9
@@ -165,7 +165,7 @@ LoadCharDataScreenPageGraphics:
 	ld de, wDecompBuffer ; $41b2
 	call DecompressData ; $41b5
 	ld hl, wDecompBuffer ; $41b8
-	ld de, $8280 + VRAM_BANK1 ; $41bb
+	ld de, vTiles0 + $28 * TILE_SIZE + VRAM_BANK1 ; $41bb
 	ld c, CharDataScreenPageGraphicsGfx1_SIZE / 16 ; $41be
 	call QueueVRAMCopy ; $41c0
 	wram_bank $01 ; $41c3
@@ -173,7 +173,7 @@ LoadCharDataScreenPageGraphics:
 	ld de, wDecompBuffer ; $41cc
 	call DecompressData ; $41cf
 	ld hl, wDecompBuffer ; $41d2
-	ld de, $8300 + VRAM_BANK1 ; $41d5
+	ld de, vTiles0 + $30 * TILE_SIZE + VRAM_BANK1 ; $41d5
 	ld c, $08 ; $41d8
 	call QueueVRAMCopy ; $41da
 	wram_bank $01 ; $41dd
@@ -265,14 +265,14 @@ LoadCharDataScreenPageGraphics:
 	ld de, wDecompBuffer ; $4306
 	call DecompressData ; $4309
 	ld hl, wDecompBuffer ; $430c
-	ld de, $8380 + VRAM_BANK1 ; $430f
+	ld de, vTiles0 + $38 * TILE_SIZE + VRAM_BANK1 ; $430f
 	ld c, CharDataScreenPageGfx10_SIZE / 16 ; $4312
 	call QueueVRAMCopy ; $4314
 	ld hl, CharDataScreenPageGfx13 ; $4317
 	ld de, wDecompBuffer ; $431a
 	call DecompressData ; $431d
 	ld hl, wDecompBuffer ; $4320
-	ld de, $84c0 + VRAM_BANK1 ; $4323
+	ld de, vTiles0 + $4c * TILE_SIZE + VRAM_BANK1 ; $4323
 	ld c, CharDataScreenPageGfx13_SIZE / 16 ; $4326
 	call QueueVRAMCopy ; $4328
 	wram_bank $01 ; $432b
@@ -327,15 +327,15 @@ LoadCharDataScreenPageGraphics:
 	ld de, wDecompBuffer ; $4397
 	farcall DecompressCharMugshot ; $439a
 	ld hl, wDecompBuffer ; $439d
-	ld de, $9200 + VRAM_BANK1 ; $43a0
+	ld de, vTiles2 + $20 * TILE_SIZE + VRAM_BANK1 ; $43a0
 	ld c, $03 ; $43a3
 	call QueueVRAMCopy ; $43a5
 	ld hl, wDecompBuffer + 3 * TILE_SIZE ; $43a8
-	ld de, $9300 + VRAM_BANK1 ; $43ab
+	ld de, vTiles2 + $30 * TILE_SIZE + VRAM_BANK1 ; $43ab
 	ld c, $03 ; $43ae
 	call QueueVRAMCopy ; $43b0
 	ld hl, wDecompBuffer + 6 * TILE_SIZE ; $43b3
-	ld de, $9400 + VRAM_BANK1 ; $43b6
+	ld de, vTiles2 + $40 * TILE_SIZE + VRAM_BANK1 ; $43b6
 	ld c, $03 ; $43b9
 	call QueueVRAMCopy ; $43bb
 	ld a, $01 ; $43be
@@ -376,15 +376,15 @@ LoadCharDataScreenPageGraphics:
 	ld de, wDecompBuffer ; $43fb
 	farcall DecompressCharMugshot ; $43fe
 	ld hl, wDecompBuffer ; $4401
-	ld de, $9230 + VRAM_BANK1 ; $4404
+	ld de, vTiles2 + $23 * TILE_SIZE + VRAM_BANK1 ; $4404
 	ld c, $03 ; $4407
 	call QueueVRAMCopy ; $4409
 	ld hl, wDecompBuffer + 3 * TILE_SIZE ; $440c
-	ld de, $9330 + VRAM_BANK1 ; $440f
+	ld de, vTiles2 + $33 * TILE_SIZE + VRAM_BANK1 ; $440f
 	ld c, $03 ; $4412
 	call QueueVRAMCopy ; $4414
 	ld hl, wDecompBuffer + 6 * TILE_SIZE ; $4417
-	ld de, $9430 + VRAM_BANK1 ; $441a
+	ld de, vTiles2 + $43 * TILE_SIZE + VRAM_BANK1 ; $441a
 	ld c, $03 ; $441d
 	call QueueVRAMCopy ; $441f
 	ret ; $4422
@@ -3165,15 +3165,15 @@ BuildCharDataConfirmScreen:
 	ld de, wDecompBuffer ; $5b5d
 	farcall DecompressCharMugshot ; $5b60
 	ld hl, wDecompBuffer ; $5b63
-	ld de, $9200 + VRAM_BANK1 ; $5b66
+	ld de, vTiles2 + $20 * TILE_SIZE + VRAM_BANK1 ; $5b66
 	ld c, $03 ; $5b69
 	call QueueVRAMCopy ; $5b6b
 	ld hl, wDecompBuffer + 3 * TILE_SIZE ; $5b6e
-	ld de, $9300 + VRAM_BANK1 ; $5b71
+	ld de, vTiles2 + $30 * TILE_SIZE + VRAM_BANK1 ; $5b71
 	ld c, $03 ; $5b74
 	call QueueVRAMCopy ; $5b76
 	ld hl, wDecompBuffer + 6 * TILE_SIZE ; $5b79
-	ld de, $9400 + VRAM_BANK1 ; $5b7c
+	ld de, vTiles2 + $40 * TILE_SIZE + VRAM_BANK1 ; $5b7c
 	ld c, $03 ; $5b7f
 	call QueueVRAMCopy ; $5b81
 	call BuildCharStatDisplay ; $5b84
@@ -3198,12 +3198,12 @@ BuildCharDataConfirmScreen:
 	call DrawCharDataConfirmPrompt ; $5bbd
 	wram_bank $03 ; $5bc0
 	ld hl, wShadowTilemap ; $5bc6
-	ld de, $9800 ; $5bc9
+	ld de, vBGMap0 ; $5bc9
 	ld c, $24 ; $5bcc
 	call QueueVRAMCopy ; $5bce
 	wram_bank $02 ; $5bd1
 	ld hl, wScreenAttrmap ; $5bd7
-	ld de, $9800 + VRAM_BANK1 ; $5bda
+	ld de, vBGMap0 + VRAM_BANK1 ; $5bda
 	ld c, $24 ; $5bdd
 	call QueueVRAMCopy ; $5bdf
 	ret ; $5be2
@@ -3665,7 +3665,7 @@ BuildExpDistributionScreen:
 	ld de, wDecompBuffer ; $69cb
 	call DecompressData ; $69ce
 	ld hl, wDecompBuffer ; $69d1
-	ld de, $8160 + VRAM_BANK1 ; $69d4
+	ld de, vTiles0 + $16 * TILE_SIZE + VRAM_BANK1 ; $69d4
 	ld c, ExpDistributionScreenGfx7_SIZE / 16 ; $69d7
 	call QueueVRAMCopy ; $69d9
 	wram_bank $01 ; $69dc
@@ -3673,7 +3673,7 @@ BuildExpDistributionScreen:
 	ld de, wDecompBuffer ; $69e5
 	call DecompressData ; $69e8
 	ld hl, wDecompBuffer ; $69eb
-	ld de, $8180 + VRAM_BANK1 ; $69ee
+	ld de, vTiles0 + $18 * TILE_SIZE + VRAM_BANK1 ; $69ee
 	ld c, ExpDistributionScreenGfx2_SIZE / 16 ; $69f1
 	call QueueVRAMCopy ; $69f3
 	wram_bank $01 ; $69f6
@@ -3681,7 +3681,7 @@ BuildExpDistributionScreen:
 	ld de, wDecompBuffer ; $69ff
 	call DecompressData ; $6a02
 	ld hl, wDecompBuffer ; $6a05
-	ld de, $82c0 + VRAM_BANK1 ; $6a08
+	ld de, vTiles0 + $2c * TILE_SIZE + VRAM_BANK1 ; $6a08
 	ld c, ExpDistributionScreenGfx3_SIZE / 16 ; $6a0b
 	call QueueVRAMCopy ; $6a0d
 	wram_bank $01 ; $6a10
@@ -3689,7 +3689,7 @@ BuildExpDistributionScreen:
 	ld de, wDecompBuffer ; $6a19
 	call DecompressData ; $6a1c
 	ld hl, wDecompBuffer ; $6a1f
-	ld de, $8440 + VRAM_BANK1 ; $6a22
+	ld de, vTiles0 + $44 * TILE_SIZE + VRAM_BANK1 ; $6a22
 	ld c, ExpDistributionScreenGfx4_SIZE / 16 ; $6a25
 	call QueueVRAMCopy ; $6a27
 	ld hl, ExpDistributionScreenPalettes ; $6a2a
@@ -3700,7 +3700,7 @@ BuildExpDistributionScreen:
 	ld de, wDecompBuffer ; $6a3c
 	call DecompressData ; $6a3f
 	ld hl, wDecompBuffer ; $6a42
-	ld de, $8000 + VRAM_BANK1 ; $6a45
+	ld de, vTiles0 + VRAM_BANK1 ; $6a45
 	ld c, ExpDistributionScreenGfx8_SIZE / 16 ; $6a48
 	call QueueVRAMCopy ; $6a4a
 	wram_bank $01 ; $6a4d
@@ -3708,7 +3708,7 @@ BuildExpDistributionScreen:
 	ld de, wDecompBuffer ; $6a56
 	call DecompressData ; $6a59
 	ld hl, wDecompBuffer ; $6a5c
-	ld de, $80c0 + VRAM_BANK1 ; $6a5f
+	ld de, vTiles0 + $0c * TILE_SIZE + VRAM_BANK1 ; $6a5f
 	ld c, ExpDistributionScreenGfx0_SIZE / 16 ; $6a62
 	call QueueVRAMCopy ; $6a64
 	wram_bank $01 ; $6a67
@@ -3716,17 +3716,17 @@ BuildExpDistributionScreen:
 	ld de, wDecompBuffer ; $6a70
 	call DecompressData ; $6a73
 	ld hl, wDecompBuffer ; $6a76
-	ld de, $8100 + VRAM_BANK1 ; $6a79
+	ld de, vTiles0 + $10 * TILE_SIZE + VRAM_BANK1 ; $6a79
 	ld c, ExpDistributionScreenGfx1_SIZE / 16 ; $6a7c
 	call QueueVRAMCopy ; $6a7e
 	wram_bank $03 ; $6a81
 	ld hl, wShadowTilemap ; $6a87
-	ld de, $9800 ; $6a8a
+	ld de, vBGMap0 ; $6a8a
 	ld c, $24 ; $6a8d
 	call QueueVRAMCopy ; $6a8f
 	wram_bank $02 ; $6a92
 	ld hl, wScreenAttrmap ; $6a98
-	ld de, $9800 + VRAM_BANK1 ; $6a9b
+	ld de, vBGMap0 + VRAM_BANK1 ; $6a9b
 	ld c, $24 ; $6a9e
 	call QueueVRAMCopy ; $6aa0
 	ret ; $6aa3
@@ -4938,15 +4938,15 @@ UnassignExpPointFromChar:
 UploadExpScreenTilemapRows:
 	wram_bank $03 ; $734b
 	ld hl, wShadowTilemap + 1 * TILEMAP_WIDTH ; $7351
-	ld de, $9820 ; $7354
+	ld de, vBGMap0 + 1 * TILEMAP_WIDTH ; $7354
 	ld c, $16 ; $7357
 	call QueueVRAMCopy ; $7359
 	ld hl, wShadowTilemap + 13 * TILEMAP_WIDTH ; $735c
-	ld de, $99a0 ; $735f
+	ld de, vBGMap0 + 13 * TILEMAP_WIDTH ; $735f
 	ld c, $04 ; $7362
 	call QueueVRAMCopy ; $7364
 	ld hl, wShadowTilemap + 16 * TILEMAP_WIDTH ; $7367
-	ld de, $9a00 ; $736a
+	ld de, vBGMap0 + 16 * TILEMAP_WIDTH ; $736a
 	ld c, $01 ; $736d
 	call QueueVRAMCopy ; $736f
 	ret ; $7372
@@ -5129,12 +5129,12 @@ CheckExpLevelDown:
 UploadExpPromptWindowRows:
 	wram_bank $03 ; $7505
 	ld hl, wCharDataScreenCell + 12 * TILEMAP_WIDTH ; $750b
-	ld de, $9980 ; $750e
+	ld de, vBGMap0 + 12 * TILEMAP_WIDTH ; $750e
 	ld c, $0c ; $7511
 	call QueueVRAMCopy ; $7513
 	wram_bank $02 ; $7516
 	ld hl, wCharDataScreenCell + 12 * TILEMAP_WIDTH ; $751c
-	ld de, $9980 + VRAM_BANK1 ; $751f
+	ld de, vBGMap0 + 12 * TILEMAP_WIDTH + VRAM_BANK1 ; $751f
 	ld c, $0c ; $7522
 	call QueueVRAMCopy ; $7524
 	ret ; $7527
@@ -5155,12 +5155,12 @@ UploadExpPromptWindowRows:
 UploadExpPromptWindowRowsClosing:
 	wram_bank $03 ; $7545
 	ld hl, wCharDataScreenCell + 12 * TILEMAP_WIDTH ; $754b
-	ld de, $9980 ; $754e
+	ld de, vBGMap0 + 12 * TILEMAP_WIDTH ; $754e
 	ld c, $0c ; $7551
 	call QueueVRAMCopy ; $7553
 	wram_bank $02 ; $7556
 	ld hl, wCharDataScreenCell + 12 * TILEMAP_WIDTH ; $755c
-	ld de, $9980 + VRAM_BANK1 ; $755f
+	ld de, vBGMap0 + 12 * TILEMAP_WIDTH + VRAM_BANK1 ; $755f
 	ld c, $0c ; $7562
 	call QueueVRAMCopy ; $7564
 	ret ; $7567

@@ -145,10 +145,14 @@ it is and reported, and nothing is deleted.
   `wait_frames N` for the frame-wait's inline argument, `lb rr, hi, lo` where
   a callee reads a register pair as two bytes (the site comment names them),
   `set_flag` / `test_flag` / `clear_flag` and `ld_flag_id` for the
-  per-story-slot game flags (`include/flag_constants.inc`), `sound` for the
+  per-story-slot game flags (`include/flag_constants.inc`), `palette` for
+  a CGB palette as four `r,g,b` triples, `sound` for the
   `rst $08` sound command, and the `script_*`, `as_*`, `anim_*`, `map_*`
   and `tilemap_*` families for the story scripts, actor bytecode, animation
   scripts, map records and tilemap patch lists.
+- **VRAM addresses are places.** A copy destination is `vTiles0 + $10 *
+  TILE_SIZE` or `vBGMap0 + 15 * TILEMAP_WIDTH + 4`, never a bare `$8100`;
+  `+ VRAM_BANK1` marks the second VRAM bank (`include/constants.inc`).
 - **RAM symbols** live in `ram/` (`wram.asm`, `hram.asm`, `sram.asm`). WRAM
   banks 1-7 and the overlaid buffers are declared as unions with a variant per
   owner, and a banked address is only named at a site whose bank is proven,

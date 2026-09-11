@@ -95,12 +95,12 @@ BuildResultsScreenTilemap:
 	call DrawPlayerNameAndLevel ; $40dc
 	wram_bank $03 ; $40df
 	ld hl, wShadowTilemap ; $40e5
-	ld de, $9800 ; $40e8
+	ld de, vBGMap0 ; $40e8
 	ld c, $24 ; $40eb
 	call QueueVRAMCopy ; $40ed
 	wram_bank $02 ; $40f0
 	ld hl, wScreenAttrmap ; $40f6
-	ld de, $9800 + VRAM_BANK1 ; $40f9
+	ld de, vBGMap0 + VRAM_BANK1 ; $40f9
 	ld c, $24 ; $40fc
 	call QueueVRAMCopy ; $40fe
 	farcall UploadGlyphBuffer ; $4101
@@ -117,11 +117,11 @@ LoadResultsScreenGraphics:
 	ld de, wDecompBuffer ; $4120
 	call DecompressData ; $4123
 	ld hl, wDecompBuffer ; $4126
-	ld de, $9000 + VRAM_BANK1 ; $4129
+	ld de, vTiles2 + VRAM_BANK1 ; $4129
 	ld c, $80 ; $412c -- 128 of ResultsScreenGfx_1e's 176 tiles
 	call QueueVRAMCopy ; $412e
 	ld hl, wTextTileBuffer ; $4131
-	ld de, $8800 + VRAM_BANK1 ; $4134
+	ld de, vTiles1 + VRAM_BANK1 ; $4134
 	ld c, $80 ; $4137
 	call QueueVRAMCopy ; $4139
 	wram_bank $01 ; $413c
@@ -143,7 +143,7 @@ LoadResultsScreenGraphics:
 	ld de, wDecompBuffer ; $4175
 	call DecompressData ; $4178
 	ld hl, wDecompBuffer ; $417b
-	ld de, $9000 ; $417e
+	ld de, vTiles2 ; $417e
 	ld c, PanelFrameGfx_1e_SIZE / 16 ; $4181
 	call QueueVRAMCopy ; $4183
 	ret ; $4186
@@ -1365,7 +1365,7 @@ RefreshContinuePromptText:
 	ld hl, wContinuePromptTilemapRow2 + 1 ; $4bd7
 	call DrawContinuePromptText ; $4bda
 	ld hl, wContinuePromptKind ; $4bdd
-	ld de, $9800 ; $4be0
+	ld de, vBGMap0 ; $4be0
 	ld c, $08 ; $4be3
 	call QueueVRAMCopy ; $4be5
 	wram_bank $06 ; $4be8
@@ -1379,7 +1379,7 @@ RefreshContinuePromptText:
 	ld hl, wContinuePromptTilemapRow3 + 1 ; $4bfd
 	call DrawSaveWarningTextLine2 ; $4c00
 	ld hl, wContinuePromptKind ; $4c03
-	ld de, $9800 ; $4c06
+	ld de, vBGMap0 ; $4c06
 	ld c, $08 ; $4c09
 	call QueueVRAMCopy ; $4c0b
 	wram_bank $06 ; $4c0e
@@ -1505,12 +1505,12 @@ BuildExpAwardScreenTilemap:
 	call DrawExpAwardScreenPanels ; $54f8
 	wram_bank $03 ; $54fb
 	ld hl, wShadowTilemap ; $5501
-	ld de, $9800 ; $5504
+	ld de, vBGMap0 ; $5504
 	ld c, $24 ; $5507
 	call QueueVRAMCopy ; $5509
 	wram_bank $02 ; $550c
 	ld hl, wScreenAttrmap ; $5512
-	ld de, $9800 + VRAM_BANK1 ; $5515
+	ld de, vBGMap0 + VRAM_BANK1 ; $5515
 	ld c, $24 ; $5518
 	call QueueVRAMCopy ; $551a
 	ret ; $551d
@@ -1523,11 +1523,11 @@ LoadExpAwardScreenGraphics:
 	ld de, wDecompBuffer ; $5530
 	call DecompressData ; $5533
 	ld hl, wDecompBuffer ; $5536
-	ld de, $9000 + VRAM_BANK1 ; $5539
+	ld de, vTiles2 + VRAM_BANK1 ; $5539
 	ld c, $80 ; $553c -- 128 of ExpAwardScreenGfx_1e's 256 tiles
 	call QueueVRAMCopy ; $553e
 	ld hl, wTextTileBuffer ; $5541
-	ld de, $8800 + VRAM_BANK1 ; $5544
+	ld de, vTiles1 + VRAM_BANK1 ; $5544
 	ld c, $80 ; $5547
 	call QueueVRAMCopy ; $5549
 	wram_bank $01 ; $554c
@@ -1549,7 +1549,7 @@ LoadExpAwardScreenGraphics:
 	ld de, wDecompBuffer ; $5585
 	call DecompressData ; $5588
 	ld hl, wDecompBuffer ; $558b
-	ld de, $9000 ; $558e
+	ld de, vTiles2 ; $558e
 	ld c, PanelFrameGfx_1e_SIZE / 16 ; $5591
 	call QueueVRAMCopy ; $5593
 	ld hl, ExpAwardScreenPalettes1 ; $5596
@@ -1560,7 +1560,7 @@ LoadExpAwardScreenGraphics:
 	ld de, wDecompBuffer ; $55a8
 	call DecompressData ; $55ab
 	ld hl, wDecompBuffer ; $55ae
-	ld de, $86c0 + VRAM_BANK1 ; $55b1
+	ld de, vTiles0 + $6c * TILE_SIZE + VRAM_BANK1 ; $55b1
 	ld c, ExpDigitSpriteGfx_1e_SIZE / 16 ; $55b4
 	call QueueVRAMCopy ; $55b6
 	ret ; $55b9
@@ -2182,12 +2182,12 @@ BeginNextExpAward:
 	ld [hl], b ; $5b3a
 	wram_bank $03 ; $5b3b
 	ld hl, wShadowTilemap ; $5b41
-	ld de, $9800 ; $5b44
+	ld de, vBGMap0 ; $5b44
 	ld c, $08 ; $5b47
 	call QueueVRAMCopy ; $5b49
 	wram_bank $02 ; $5b4c
 	ld hl, wScreenAttrmap ; $5b52
-	ld de, $9800 + VRAM_BANK1 ; $5b55
+	ld de, vBGMap0 + VRAM_BANK1 ; $5b55
 	ld c, $08 ; $5b58
 	call QueueVRAMCopy ; $5b5a
 	ld a, $01 ; $5b5d
@@ -4647,14 +4647,14 @@ LoadGameProgressScreenTiles:
 	ld de, wDecompBuffer ; $7510
 	call DecompressData ; $7513
 	ld hl, wDecompBuffer ; $7516
-	ld de, $9000 + VRAM_BANK1 ; $7519
+	ld de, vTiles2 + VRAM_BANK1 ; $7519
 	ld c, GameProgressHeaderGfx_1e_SIZE / 16 ; $751c
 	call QueueVRAMCopy ; $751e
 	ld hl, GameProgressHeaderTilemap_1e ; $7521
 	ld de, wDecompBuffer ; $7524
 	call DecompressData ; $7527
 	ld hl, wDecompBuffer ; $752a
-	ld de, $9800 ; $752d
+	ld de, vBGMap0 ; $752d
 	ld c, GameProgressHeaderTilemap_1e_SIZE / 16 ; $7530
 	call QueueVRAMCopy ; $7532
 	ld hl, GameProgressHeaderAttrmap_1e ; $7535
@@ -4679,7 +4679,7 @@ LoadGameProgressScreenTiles:
 	dec c ; $7555
 	jr nz, .loop ; $7556
 	ld hl, wDecompBuffer ; $7558
-	ld de, $9800 + VRAM_BANK1 ; $755b
+	ld de, vBGMap0 + VRAM_BANK1 ; $755b
 	ld c, $06 ; $755e
 	call QueueVRAMCopy ; $7560
 	ld hl, GameProgressScreenPalettes0 ; $7563
@@ -4688,15 +4688,15 @@ LoadGameProgressScreenTiles:
 	call LoadPaletteShadow ; $756a
 	pop_wram_bank ; $756d
 	ld hl, GameProgressScreenTiles0 ; $7572
-	ld de, $8000 + VRAM_BANK1 ; $7575
+	ld de, vTiles0 + VRAM_BANK1 ; $7575
 	ld c, (GameProgressScreenPalettes1 - GameProgressScreenTiles0) / 16 ; $7578
 	call QueueVRAMCopy ; $757a
 	ld hl, GameProgressScreenTiles2 ; $757d
-	ld de, $8100 + VRAM_BANK1 ; $7580
+	ld de, vTiles0 + $10 * TILE_SIZE + VRAM_BANK1 ; $7580
 	ld c, $04 ; $7583 -- 4 of GameProgressScreenTiles2's 8 tiles
 	call QueueVRAMCopy ; $7585
 	ld hl, GameProgressScreenTiles1 ; $7588
-	ld de, $8200 + VRAM_BANK1 ; $758b
+	ld de, vTiles0 + $20 * TILE_SIZE + VRAM_BANK1 ; $758b
 	ld c, (GameProgressScreenTiles2 - GameProgressScreenTiles1) / 16 ; $758e
 	call QueueVRAMCopy ; $7590
 	ld hl, GameProgressScreenPalettes1 ; $7593
@@ -4782,7 +4782,7 @@ FillProgressListRowAttrs:
 	ret ; $7a2f
 UnusedCopyProgressListTilemap:
 	ld hl, $d060 ; $7a30
-	ld de, $9860 ; $7a33
+	ld de, vBGMap0 + 3 * TILEMAP_WIDTH ; $7a33
 	ld c, $1e ; $7a36
 	call QueueVRAMCopy ; $7a38
 	ret ; $7a3b
@@ -4962,7 +4962,7 @@ DrawProgressScreenSprites:
 	jr nz, .loop ; $7b49
 	ret ; $7b4b
 LoadProgressScreenIconTiles:
-	ld de, $8200 ; $7b4c
+	ld de, vTiles0 + $20 * TILE_SIZE ; $7b4c
 	farcall LoadMenuArrowSpriteTiles ; $7b4f
 	ld b, $08 ; $7b52
 	ld c, $0f ; $7b54

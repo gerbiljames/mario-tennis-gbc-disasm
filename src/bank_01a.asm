@@ -725,11 +725,11 @@ ShowExpGainScreen:
 	ld [wExpScreenFlags], a ; $45b5
 	wram_bank $01 ; $45b8
 	ld hl, wDecompBuffer ; $45be
-	ld de, $9800 + VRAM_BANK1 ; $45c1
+	ld de, vBGMap0 + VRAM_BANK1 ; $45c1
 	ld c, $24 ; $45c4
 	call QueueVRAMCopy ; $45c6
 	ld hl, wDecompBuffer + 64 * TILE_SIZE ; $45c9
-	ld de, $9800 ; $45cc
+	ld de, vBGMap0 ; $45cc
 	ld c, $24 ; $45cf
 	call QueueVRAMCopy ; $45d1
 	call CopyMapToScrollBuffers ; $45d4
@@ -917,11 +917,11 @@ ShowExpGainScreen:
 .queueVRAMCopy:
 	wram_bank $01 ; $473e
 	ld hl, wDecompBuffer ; $4744
-	ld de, $9800 + VRAM_BANK1 ; $4747
+	ld de, vBGMap0 + VRAM_BANK1 ; $4747
 	ld c, $24 ; $474a
 	call QueueVRAMCopy ; $474c
 	ld hl, wDecompBuffer + 64 * TILE_SIZE ; $474f
-	ld de, $9800 ; $4752
+	ld de, vBGMap0 ; $4752
 	ld c, $24 ; $4755
 	call QueueVRAMCopy ; $4757
 	call CopyMapToScrollBuffers ; $475a
@@ -972,7 +972,7 @@ ExpScreenDrawTask:
 	dec b ; $47c2
 	jr nz, .loop ; $47c3
 	ld hl, wCharDataPageSlot1 + 1 * TILEMAP_WIDTH ; $47c5
-	ld de, $99e0 + VRAM_BANK1 ; $47c8
+	ld de, vBGMap0 + 15 * TILEMAP_WIDTH + VRAM_BANK1 ; $47c8
 	ld c, $04 ; $47cb
 	call QueueVRAMCopy ; $47cd
 	wram_bank $03 ; $47d0
@@ -986,7 +986,7 @@ ExpScreenDrawTask:
 	ld a, $03 ; $47e1
 	call DrawExpScreenCaption ; $47e3
 	ld hl, wScreenScratch ; $47e6
-	ld de, $99e0 ; $47e9
+	ld de, vBGMap0 + 15 * TILEMAP_WIDTH ; $47e9
 	ld c, $04 ; $47ec
 	call QueueVRAMCopy ; $47ee
 	wram_bank $06 ; $47f1
@@ -1021,11 +1021,11 @@ LoadExpScreenGfx:
 	ld de, wDecompBuffer ; $485c
 	call DecompressData ; $485f
 	ld hl, wDecompBuffer ; $4862
-	ld de, $9000 + VRAM_BANK1 ; $4865
+	ld de, vTiles2 + VRAM_BANK1 ; $4865
 	ld c, $80 ; $4868 -- 128 of ExpScreenGfx0's 192 tiles
 	call QueueVRAMCopy ; $486a
 	ld hl, wTextTileBuffer ; $486d
-	ld de, $8800 + VRAM_BANK1 ; $4870
+	ld de, vTiles1 + VRAM_BANK1 ; $4870
 	ld c, $50 ; $4873
 	call QueueVRAMCopy ; $4875
 	ld hl, ExpScreenGfxPalettes0 ; $4878
@@ -1042,14 +1042,14 @@ LoadExpScreenGfx:
 	ld de, wDecompBuffer ; $489d
 	call DecompressData ; $48a0
 	ld hl, wDecompBuffer ; $48a3
-	ld de, $8c00 + VRAM_BANK1 ; $48a6
+	ld de, vTiles1 + $40 * TILE_SIZE + VRAM_BANK1 ; $48a6
 	ld c, ExpScreenGfx6_SIZE / 16 ; $48a9
 	call QueueVRAMCopy ; $48ab
 	ld hl, ExpScreenGfx7 ; $48ae
 	ld de, wDecompBuffer ; $48b1
 	call DecompressData ; $48b4
 	ld hl, wDecompBuffer ; $48b7
-	ld de, $8c40 + VRAM_BANK1 ; $48ba
+	ld de, vTiles1 + $44 * TILE_SIZE + VRAM_BANK1 ; $48ba
 	ld c, ExpScreenGfx7_SIZE / 16 ; $48bd
 	call QueueVRAMCopy ; $48bf
 	ld hl, ExpScreenGfxPalettes2 ; $48c2
@@ -1063,7 +1063,7 @@ LoadExpScreenGfx:
 	ld de, wDecompBuffer ; $48d4
 	call DecompressData ; $48d7
 	ld hl, wDecompBuffer ; $48da
-	ld de, $8c80 + VRAM_BANK1 ; $48dd
+	ld de, vTiles1 + $48 * TILE_SIZE + VRAM_BANK1 ; $48dd
 	ld c, ExpScreenGfx5_SIZE / 16 ; $48e0
 	call QueueVRAMCopy ; $48e2
 	ld hl, ExpScreenGfxPalettes1 ; $48e5
@@ -1080,7 +1080,7 @@ LoadExpScreenGfx:
 	ld de, wTextTileBuffer + 96 * TILE_SIZE ; $4905
 	call DecompressData ; $4908
 	ld hl, wTextTileBuffer + 96 * TILE_SIZE ; $490b
-	ld de, $8ca0 + VRAM_BANK1 ; $490e
+	ld de, vTiles1 + $4a * TILE_SIZE + VRAM_BANK1 ; $490e
 	ld c, $14 ; $4911
 	call QueueVRAMCopy ; $4913
 	wram_bank $01 ; $4916
@@ -1888,11 +1888,11 @@ UnusedDrawExpScreenMessage_1:
 	call DrawPositionedStringToTileBuffer ; $4dcd
 	wram_bank $01 ; $4dd0
 	ld hl, wDecompBuffer ; $4dd6
-	ld de, $9800 + VRAM_BANK1 ; $4dd9
+	ld de, vBGMap0 + VRAM_BANK1 ; $4dd9
 	ld c, $08 ; $4ddc
 	call QueueVRAMCopy ; $4dde
 	ld hl, wDecompBuffer + 64 * TILE_SIZE ; $4de1
-	ld de, $9800 ; $4de4
+	ld de, vBGMap0 ; $4de4
 	ld c, $08 ; $4de7
 	call QueueVRAMCopy ; $4de9
 	call AdvanceFrame ; $4dec
@@ -1923,11 +1923,11 @@ UnusedDrawExpScreenMessage_2:
 	call DrawPositionedStringToTileBuffer ; $4e2b
 	wram_bank $01 ; $4e2e
 	ld hl, wDecompBuffer ; $4e34
-	ld de, $9800 + VRAM_BANK1 ; $4e37
+	ld de, vBGMap0 + VRAM_BANK1 ; $4e37
 	ld c, $08 ; $4e3a
 	call QueueVRAMCopy ; $4e3c
 	ld hl, wDecompBuffer + 64 * TILE_SIZE ; $4e3f
-	ld de, $9800 ; $4e42
+	ld de, vBGMap0 ; $4e42
 	ld c, $08 ; $4e45
 	call QueueVRAMCopy ; $4e47
 	call AdvanceFrame ; $4e4a
@@ -2630,11 +2630,11 @@ DrawExpBonusMessage:
 	call AdvanceFrame ; $54f2
 	wram_bank $01 ; $54f5
 	ld hl, wDecompBuffer ; $54fb
-	ld de, $9800 + VRAM_BANK1 ; $54fe
+	ld de, vBGMap0 + VRAM_BANK1 ; $54fe
 	ld c, $08 ; $5501
 	call QueueVRAMCopy ; $5503
 	ld hl, wDecompBuffer + 64 * TILE_SIZE ; $5506
-	ld de, $9800 ; $5509
+	ld de, vBGMap0 ; $5509
 	ld c, $08 ; $550c
 	call QueueVRAMCopy ; $550e
 	call AdvanceFrame ; $5511
@@ -2715,7 +2715,7 @@ RunDebugCharViewer:
 	call AdvanceFrame ; $682e
 	wram_bank $06 ; $6831
 	ld a, [wCharViewerCharId] ; $6837
-	ld de, $8700 ; $683a
+	ld de, vTiles0 + $70 * TILE_SIZE ; $683a
 	farcall LoadOnCourtCharTilesA ; $683d
 	call AdvanceFrame ; $6840
 	script_fade_in $10 ; $6843
@@ -2747,11 +2747,11 @@ RunCharViewerSelectGrid:
 	ld de, wDecompBuffer ; $688e
 	call DecompressData ; $6891
 	ld hl, wDecompBuffer ; $6894
-	ld de, $9000 + VRAM_BANK1 ; $6897
+	ld de, vTiles2 + VRAM_BANK1 ; $6897
 	ld c, $80 ; $689a -- 128 of CharViewerScreenGfx0's 256 tiles
 	call QueueVRAMCopy ; $689c
 	ld hl, wTextTileBuffer ; $689f
-	ld de, $8800 + VRAM_BANK1 ; $68a2
+	ld de, vTiles1 + VRAM_BANK1 ; $68a2
 	ld c, $80 ; $68a5
 	call QueueVRAMCopy ; $68a7
 	call LoadCharViewerGridTilemap ; $68aa
@@ -2759,12 +2759,12 @@ RunCharViewerSelectGrid:
 	call DrawCharViewerPageNames ; $68b0
 	wram_bank $03 ; $68b3
 	ld hl, wShadowTilemap ; $68b9
-	ld de, $9800 ; $68bc
+	ld de, vBGMap0 ; $68bc
 	ld c, $24 ; $68bf
 	call QueueVRAMCopy ; $68c1
 	wram_bank $02 ; $68c4
 	ld hl, wScreenAttrmap ; $68ca
-	ld de, $9800 + VRAM_BANK1 ; $68cd
+	ld de, vBGMap0 + VRAM_BANK1 ; $68cd
 	ld c, $24 ; $68d0
 	call QueueVRAMCopy ; $68d2
 	call EnableLCD ; $68d5
@@ -2877,7 +2877,7 @@ RunCharViewerSelectGrid:
 	call DrawCharViewerPageNames ; $69ae
 	wram_bank $03 ; $69b1
 	ld hl, wShadowTilemap + 1 * TILEMAP_WIDTH ; $69b7
-	ld de, $9820 ; $69ba
+	ld de, vBGMap0 + 1 * TILEMAP_WIDTH ; $69ba
 	ld c, $20 ; $69bd
 	call QueueVRAMCopy ; $69bf
 	call AdvanceFrame ; $69c2
@@ -3049,12 +3049,12 @@ LoadCharViewerScreen:
 	call LoadCharViewerScreenGfx ; $6b2f
 	wram_bank $03 ; $6b32
 	ld hl, wShadowTilemap ; $6b38
-	ld de, $9800 ; $6b3b
+	ld de, vBGMap0 ; $6b3b
 	ld c, $24 ; $6b3e
 	call QueueVRAMCopy ; $6b40
 	wram_bank $02 ; $6b43
 	ld hl, wScreenAttrmap ; $6b49
-	ld de, $9800 + VRAM_BANK1 ; $6b4c
+	ld de, vBGMap0 + VRAM_BANK1 ; $6b4c
 	ld c, $24 ; $6b4f
 	call QueueVRAMCopy ; $6b51
 	ret ; $6b54
@@ -3067,11 +3067,11 @@ LoadCharViewerScreenGfx:
 	ld de, wDecompBuffer ; $6b67
 	call DecompressData ; $6b6a
 	ld hl, wDecompBuffer ; $6b6d
-	ld de, $9000 + VRAM_BANK1 ; $6b70
+	ld de, vTiles2 + VRAM_BANK1 ; $6b70
 	ld c, $80 ; $6b73 -- 128 of CharViewerScreenGfx0's 256 tiles
 	call QueueVRAMCopy ; $6b75
 	ld hl, wTextTileBuffer ; $6b78
-	ld de, $8800 + VRAM_BANK1 ; $6b7b
+	ld de, vTiles1 + VRAM_BANK1 ; $6b7b
 	ld c, $80 ; $6b7e
 	call QueueVRAMCopy ; $6b80
 	wram_bank $01 ; $6b83
@@ -3433,7 +3433,7 @@ RefreshCharViewerSelection:
 	ld a, $08 ; $6e92
 	ld [hl], a ; $6e94
 	ld hl, wScreenAttrmap + 9 * TILEMAP_WIDTH ; $6e95
-	ld de, $9920 + VRAM_BANK1 ; $6e98
+	ld de, vBGMap0 + 9 * TILEMAP_WIDTH + VRAM_BANK1 ; $6e98
 	ld c, $04 ; $6e9b
 	call QueueVRAMCopy ; $6e9d
 	wram_bank $06 ; $6ea0
@@ -3447,7 +3447,7 @@ RefreshCharViewerSelection:
 	ld a, $08 ; $6eb6
 	ld [hl], a ; $6eb8
 	ld hl, wScreenAttrmap + 14 * TILEMAP_WIDTH ; $6eb9
-	ld de, $99c0 + VRAM_BANK1 ; $6ebc
+	ld de, vBGMap0 + 14 * TILEMAP_WIDTH + VRAM_BANK1 ; $6ebc
 	ld c, $02 ; $6ebf
 	call QueueVRAMCopy ; $6ec1
 	wram_bank $03 ; $6ec4
@@ -3511,7 +3511,7 @@ RefreshCharViewerSelection:
 .queueVRAMCopy2:
 	wram_bank $03 ; $6f2b
 	ld hl, wShadowTilemap + 15 * TILEMAP_WIDTH ; $6f31
-	ld de, $99e0 ; $6f34
+	ld de, vBGMap0 + 15 * TILEMAP_WIDTH ; $6f34
 	ld c, $04 ; $6f37
 	call QueueVRAMCopy ; $6f39
 	ret ; $6f3c
@@ -3656,7 +3656,7 @@ LoadCharViewerMugshot:
 	ld de, wDecompBuffer ; $70ae
 	farcall DecompressCharMugshot ; $70b1
 	ld hl, wDecompBuffer ; $70b4
-	ld de, $9100 + VRAM_BANK1 ; $70b7
+	ld de, vTiles2 + $10 * TILE_SIZE + VRAM_BANK1 ; $70b7
 	ld c, $09 ; $70ba
 	call QueueVRAMCopy ; $70bc
 	ret ; $70bf
@@ -3708,12 +3708,12 @@ RunCharDataConfirmScreen:
 	farcall DrawCharDataConfirmPrompt ; $7984
 	wram_bank $03 ; $7987
 	ld hl, wShadowTilemap ; $798d
-	ld de, $9800 ; $7990
+	ld de, vBGMap0 ; $7990
 	ld c, $24 ; $7993
 	call QueueVRAMCopy ; $7995
 	wram_bank $02 ; $7998
 	ld hl, wScreenAttrmap ; $799e
-	ld de, $9800 + VRAM_BANK1 ; $79a1
+	ld de, vBGMap0 + VRAM_BANK1 ; $79a1
 	ld c, $24 ; $79a4
 	call QueueVRAMCopy ; $79a6
 	call EnableLCD ; $79a9
@@ -3985,28 +3985,28 @@ CharDataScreen_LoadGfx:
 	ld de, wDecompBuffer ; $7b97
 	call DecompressData ; $7b9a
 	ld hl, wDecompBuffer ; $7b9d
-	ld de, $8780 + VRAM_BANK1 ; $7ba0
+	ld de, vTiles0 + $78 * TILE_SIZE + VRAM_BANK1 ; $7ba0
 	ld c, CharDataScreenGfx0_SIZE / 16 ; $7ba3
 	call QueueVRAMCopy ; $7ba5
 	ld hl, CharDataScreenGfx1 ; $7ba8
 	ld de, wDecompBuffer ; $7bab
 	call DecompressData ; $7bae
 	ld hl, wDecompBuffer ; $7bb1
-	ld de, $87a0 + VRAM_BANK1 ; $7bb4
+	ld de, vTiles0 + $7a * TILE_SIZE + VRAM_BANK1 ; $7bb4
 	ld c, CharDataScreenGfx1_SIZE / 16 ; $7bb7
 	call QueueVRAMCopy ; $7bb9
 	ld hl, CharDataScreenGfx2 ; $7bbc
 	ld de, wDecompBuffer ; $7bbf
 	call DecompressData ; $7bc2
 	ld hl, wDecompBuffer ; $7bc5
-	ld de, $87c0 + VRAM_BANK1 ; $7bc8
+	ld de, vTiles0 + $7c * TILE_SIZE + VRAM_BANK1 ; $7bc8
 	ld c, CharDataScreenGfx2_SIZE / 16 ; $7bcb
 	call QueueVRAMCopy ; $7bcd
 	ld hl, CharDataScreenGfx3 ; $7bd0
 	ld de, wDecompBuffer ; $7bd3
 	call DecompressData ; $7bd6
 	ld hl, wDecompBuffer ; $7bd9
-	ld de, $87e0 + VRAM_BANK1 ; $7bdc
+	ld de, vTiles0 + $7e * TILE_SIZE + VRAM_BANK1 ; $7bdc
 	ld c, CharDataScreenGfx3_SIZE / 16 ; $7bdf
 	call QueueVRAMCopy ; $7be1
 	ret ; $7be4

@@ -263,7 +263,7 @@ LoadMenuTilesA:
 	push de ; $5064
 	push hl ; $5065
 	ld hl, MenuWindowTiles_01 ; $5066
-	ld de, $9000 ; $5069
+	ld de, vTiles2 ; $5069
 	ld c, $10 ; $506c
 	call QueueVRAMCopy ; $506e
 	pop hl ; $5071
@@ -277,11 +277,11 @@ LoadMenuTilesB:
 	push de ; $5078
 	push hl ; $5079
 	ld hl, MenuFontTiles_01 ; $507a
-	ld de, $9200 ; $507d
+	ld de, vTiles2 + $20 * TILE_SIZE ; $507d
 	ld c, $60 ; $5080
 	call QueueVRAMCopy ; $5082
 	ld hl, MenuFontFillTiles_01 ; $5085
-	ld de, $8800 ; $5088
+	ld de, vTiles1 ; $5088
 	ld c, $60 ; $508b
 	call QueueVRAMCopy ; $508d
 	pop hl ; $5090
@@ -295,22 +295,22 @@ LoadMenuTilesBStaged:
 	push de ; $5097
 	push hl ; $5098
 	ld hl, MenuFontTiles_01 ; $5099
-	ld de, $9200 ; $509c
+	ld de, vTiles2 + $20 * TILE_SIZE ; $509c
 	ld c, (MenuTilesBStagedTiles0 - MenuFontTiles_01) / 16 ; $509f
 	call QueueVRAMCopy ; $50a1
 	call AdvanceFrame ; $50a4
 	ld hl, MenuTilesBStagedTiles0 ; $50a7
-	ld de, $9400 ; $50aa
+	ld de, vTiles2 + $40 * TILE_SIZE ; $50aa
 	ld c, (MenuTilesBStagedTiles1 - MenuTilesBStagedTiles0) / 16 ; $50ad
 	call QueueVRAMCopy ; $50af
 	call AdvanceFrame ; $50b2
 	ld hl, MenuTilesBStagedTiles1 ; $50b5
-	ld de, $9600 ; $50b8
+	ld de, vTiles2 + $60 * TILE_SIZE ; $50b8
 	ld c, (MenuFontFillTiles_01 - MenuTilesBStagedTiles1) / 16 ; $50bb
 	call QueueVRAMCopy ; $50bd
 	call AdvanceFrame ; $50c0
 	ld hl, MenuFontPalettes_01 ; $50c3
-	ld de, $8e00 ; $50c6
+	ld de, vTiles1 + $60 * TILE_SIZE ; $50c6
 	ld c, $20 ; $50c9
 	call QueueVRAMCopy ; $50cb
 	call AdvanceFrame ; $50ce
@@ -321,7 +321,7 @@ LoadMenuTilesBStaged:
 	ret ; $50d5
 LoadMenuTilesBChunk2:
 	ld hl, MenuTilesBStagedTiles0 ; $50d6
-	ld de, $9400 ; $50d9
+	ld de, vTiles2 + $40 * TILE_SIZE ; $50d9
 	ld c, (MenuTilesBStagedTiles1 - MenuTilesBStagedTiles0) / 16 ; $50dc
 	call QueueVRAMCopy ; $50de
 	ret ; $50e1
@@ -388,18 +388,18 @@ ShowDmgLockoutScreen:
 	ld de, wDecompBuffer ; $6037
 	call DecompressData ; $603a
 	ld hl, wDecompBuffer ; $603d
-	ld de, $9000 ; $6040
+	ld de, vTiles2 ; $6040
 	ld c, $80 ; $6043 -- 128 of DmgLockoutTilesLZ_01's 256 tiles
 	call CopyMemoryFast ; $6045
 	ld hl, wTextTileBuffer ; $6048
-	ld de, $8800 ; $604b
+	ld de, vTiles1 ; $604b
 	ld c, $80 ; $604e
 	call CopyMemoryFast ; $6050
 	ld hl, DmgLockoutTilemapLZ_01 ; $6053
 	ld de, wDecompBuffer ; $6056
 	call DecompressData ; $6059
 	ld hl, wDecompBuffer ; $605c
-	ld de, $9800 ; $605f
+	ld de, vBGMap0 ; $605f
 	ld c, $40 ; $6062
 	call CopyMemoryFast ; $6064
 	ld a, $e4 ; $6067

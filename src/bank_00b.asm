@@ -1112,12 +1112,12 @@ ClearBGForDrillResult:
 	call FillMemoryBC_0b ; $47fa
 	wram_bank $03 ; $47fd
 	ld hl, wShadowTilemap ; $4803
-	ld de, $9800 ; $4806
+	ld de, vBGMap0 ; $4806
 	ld c, $24 ; $4809
 	call QueueVRAMCopy ; $480b
 	wram_bank $02 ; $480e
 	ld hl, wScreenAttrmap ; $4814
-	ld de, $9800 + VRAM_BANK1 ; $4817
+	ld de, vBGMap0 + VRAM_BANK1 ; $4817
 	ld c, $24 ; $481a
 	call QueueVRAMCopy ; $481c
 	call EnableLCD ; $481f

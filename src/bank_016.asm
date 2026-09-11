@@ -934,14 +934,14 @@ InitMatchWinLoseScreen:
 	ld de, wDecompBuffer ; $45c7
 	call DecompressData ; $45ca
 	ld hl, wDecompBuffer ; $45cd
-	ld de, $8000 + VRAM_BANK1 ; $45d0
+	ld de, vTiles0 + VRAM_BANK1 ; $45d0
 	ld c, $20 ; $45d3
 	call QueueVRAMCopy ; $45d5
 	ld hl, MatchWinLoseScreenGfx1 ; $45d8
 	ld de, wDecompBuffer ; $45db
 	call DecompressData ; $45de
 	ld hl, wDecompBuffer ; $45e1
-	ld de, $8200 + VRAM_BANK1 ; $45e4
+	ld de, vTiles0 + $20 * TILE_SIZE + VRAM_BANK1 ; $45e4
 	ld c, $20 ; $45e7
 	call QueueVRAMCopy ; $45e9
 	ld hl, MatchWinLoseScreenPalettes ; $45ec
@@ -949,7 +949,7 @@ InitMatchWinLoseScreen:
 	call LoadPaletteShadow ; $45f2
 	ld b, $09 ; $45f5
 	ld c, $04 ; $45f7
-	ld de, $8400 + VRAM_BANK1 ; $45f9
+	ld de, vTiles0 + $40 * TILE_SIZE + VRAM_BANK1 ; $45f9
 	farcall LoadCompressedTileBlock ; $45fc
 	pop_wram_bank ; $45ff
 	farcall QueueWram3MapToVRAM ; $4604
@@ -1492,25 +1492,25 @@ LoadResultScreenTileGraphics:
 	call TestGameFlagByNumber ; $4e19
 	jr nz, .decompressData ; $4e1c
 	ld hl, MatchResultTitleGfx ; $4e1e
-	ld de, $9000 ; $4e21
+	ld de, vTiles2 ; $4e21
 	call DecompressData ; $4e24
 	jr .loadMatchResultGfxSet ; $4e27
 .decompressData:
 	ld hl, MatchResultTitleGfxAlt ; $4e29
-	ld de, $9000 ; $4e2c
+	ld de, vTiles2 ; $4e2c
 	call DecompressData ; $4e2f
 .loadMatchResultGfxSet:
 	ld a, [wResultScreenWon] ; $4e32
 	or a ; $4e35
 	jr z, LoadMatchResultGfxSet ; $4e36
 	ld hl, MatchResultGfxA2 ; $4e38
-	ld de, $8900 ; $4e3b
+	ld de, vTiles1 + $10 * TILE_SIZE ; $4e3b
 	call DecompressData ; $4e3e
 	ld hl, MatchResultGfxB4 ; $4e41
-	ld de, $8a40 ; $4e44
+	ld de, vTiles1 + $24 * TILE_SIZE ; $4e44
 	call DecompressData ; $4e47
 	ld hl, MatchResultGfxC9 ; $4e4a
-	ld de, $9140 ; $4e4d
+	ld de, vTiles2 + $14 * TILE_SIZE ; $4e4d
 	call DecompressData ; $4e50
 	ret ; $4e53
 LoadMatchResultGfxSet:
@@ -1530,7 +1530,7 @@ LoadMatchResultGfxSet:
 	ld a, [hl+] ; $4e67
 	ld h, [hl] ; $4e68
 	ld l, a ; $4e69
-	ld de, $8900 ; $4e6a
+	ld de, vTiles1 + $10 * TILE_SIZE ; $4e6a
 	call DecompressData ; $4e6d
 	pop hl ; $4e70
 	inc hl ; $4e71
@@ -1539,7 +1539,7 @@ LoadMatchResultGfxSet:
 	ld a, [hl+] ; $4e74
 	ld h, [hl] ; $4e75
 	ld l, a ; $4e76
-	ld de, $8a40 ; $4e77
+	ld de, vTiles1 + $24 * TILE_SIZE ; $4e77
 	call DecompressData ; $4e7a
 	pop hl ; $4e7d
 	inc hl ; $4e7e
@@ -1547,7 +1547,7 @@ LoadMatchResultGfxSet:
 	ld a, [hl+] ; $4e80
 	ld h, [hl] ; $4e81
 	ld l, a ; $4e82
-	ld de, $9140 ; $4e83
+	ld de, vTiles2 + $14 * TILE_SIZE ; $4e83
 	call DecompressData ; $4e86
 	ret ; $4e89
 RemapDoublesMatchGfxIndex:

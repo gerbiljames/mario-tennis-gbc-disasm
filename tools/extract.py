@@ -237,10 +237,11 @@ def render_db(data: bytes) -> str:
 
 
 def render_palettes(data: bytes) -> str:
-    """Render GBC palette data as `dw` colors, four per palette, with the
-    decoded RGB in a comment. Reassembles identically (raw little-endian
-    words)."""
-    out = ["; GBC palettes (BGR555), 4 colors each"]
+    """Render GBC palette data one `palette` macro per palette -- four
+    colours as 5-bit r,g,b components, the decoded RGB in a comment -- or as
+    raw `dw` words when a colour uses bit 15, which the macro cannot spell.
+    Reassembles identically."""
+    out = ["; GBC palettes, 4 colors each as 5-bit r,g,b (include/macros.inc palette)"]
     for pi in range(len(data) // 8):
         words = [data[pi * 8 + c * 2] | (data[pi * 8 + c * 2 + 1] << 8)
                  for c in range(4)]
@@ -248,8 +249,12 @@ def render_palettes(data: bytes) -> str:
         for w in words:
             r, g, b = w & 0x1F, (w >> 5) & 0x1F, (w >> 10) & 0x1F
             rgb.append(f"#{r * 255 // 31:02x}{g * 255 // 31:02x}{b * 255 // 31:02x}")
-        cols = ", ".join(f"${w:04x}" for w in words)
-        out.append(f"\tdw {cols} ; pal {pi}: " + " ".join(rgb))
+        if any(w & 0x8000 for w in words):
+            cols = ", ".join(f"${w:04x}" for w in words)
+            out.append(f"\tdw {cols} ; pal {pi}: " + " ".join(rgb))
+        else:
+            cols = ",  ".join(f"{w & 0x1F:2d},{(w >> 5) & 0x1F:2d},{(w >> 10) & 0x1F:2d}" for w in words)
+            out.append(f"\tpalette {cols} ; pal {pi}: " + " ".join(rgb))
     tail = len(data) % 8
     if tail:
         out.append("\tdb " + ", ".join(f"${b:02x}" for b in data[-tail:]))
@@ -653,6 +658,19 @@ def main() -> int:
         written.add(path)
         count += 1
 
+    previews = Path(manifest).with_name("data.previews")
+    if gfx_ok and previews.exists():
+        try:
+            n = tilemap.previews(previews, outdir)
+            for line in previews.read_text().splitlines():
+                if line.strip() and not line.startswith("#"):
+                    png = Path(line.split()[0]).with_suffix(".preview.png")
+                    if (outdir / png).exists():
+                        written.add(str(png))
+            if n:
+                print(f"composed {n} scene previews")
+        except Exception as e:  # a preview is a convenience, never a failure
+            print(f"note: scene previews not composed: {e}", file=sys.stderr)
     # data/bank_*/ is generated in full from the manifest, so a file there the
     # manifest no longer lists is a leftover from an older carve. Leaving them
     # is actively misleading: a stale text_*.asm reads as if a region were
@@ -667,19 +685,6 @@ def main() -> int:
     if not keep:
         for f in stale:
             f.unlink()
-    previews = Path(manifest).with_name("data.previews")
-    if gfx_ok and previews.exists():
-        try:
-            n = tilemap.previews(previews, outdir)
-            for line in previews.read_text().splitlines():
-                if line.strip() and not line.startswith("#"):
-                    png = Path(line.split()[0]).with_suffix(".preview.png")
-                    if (outdir / png).exists():
-                        written.add(str(png))
-            if n:
-                print(f"composed {n} scene previews")
-        except Exception as e:  # a preview is a convenience, never a failure
-            print(f"note: scene previews not composed: {e}", file=sys.stderr)
     note = (f", {'left' if keep else 'removed'} {len(stale)} stale"
             if stale else "")
     if kept:

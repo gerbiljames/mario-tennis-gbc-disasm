@@ -274,7 +274,7 @@ Unused_05_QueueFullTilemapCopy:
 	ld a, b ; $41ca
 	wram_bank ; $41cb
 	ld hl, $d000 ; $41cf
-	ld de, $9800 ; $41d2
+	ld de, vBGMap0 ; $41d2
 	ld c, $40 ; $41d5
 	call QueueVRAMCopy ; $41d7
 	pop hl ; $41da
@@ -290,7 +290,7 @@ Unused_05_QueueFullAttrmapCopy:
 	ld a, b ; $41e3
 	wram_bank ; $41e4
 	ld hl, $d400 ; $41e8
-	ld de, $9800 + VRAM_BANK1 ; $41eb
+	ld de, vBGMap0 + VRAM_BANK1 ; $41eb
 	ld c, $40 ; $41ee
 	call QueueVRAMCopy ; $41f0
 	pop hl ; $41f3
@@ -326,7 +326,7 @@ Unused_05_CopyTilemapRowToVRAM:
 	ld c, $02 ; $4223
 	call QueueVRAMCopy ; $4225
 	pop bc ; $4228
-	ld hl, $9800 + VRAM_BANK1 ; $4229
+	ld hl, vBGMap0 + VRAM_BANK1 ; $4229
 	add hl, bc ; $422c
 	ld d, h ; $422d
 	ld e, l ; $422e
@@ -5338,7 +5338,7 @@ RedrawWindowText:
 UploadGlyphTilesPartial:
 	push_wram_bank $07 ; $622e
 	ld hl, wGlyphTileBuffer ; $6237
-	ld de, $8800 ; $623a
+	ld de, vTiles1 ; $623a
 	ld c, $1b ; $623d
 	call QueueVRAMCopy ; $623f
 	push af ; $6242
@@ -5349,7 +5349,7 @@ UploadGlyphTilesPartial:
 .restore:
 	pop af ; $624c
 	ld hl, wGlyphTileBuffer + 27 * TILE_SIZE ; $624d
-	ld de, $89b0 ; $6250
+	ld de, vTiles1 + $1b * TILE_SIZE ; $6250
 	ld c, $1b ; $6253
 	call QueueVRAMCopy ; $6255
 	push af ; $6258
@@ -6514,7 +6514,7 @@ DrawPaletteCursorSprites:
 	ret ; $6b6b
 StartDebugPaletteEditor:
 	ld hl, PaletteEditorCursorTiles_05 ; $6b6c
-	ld de, $8600 ; $6b6f
+	ld de, vTiles0 + $60 * TILE_SIZE ; $6b6f
 	ld c, (GetSelectedBGPaletteColorPtr - PaletteEditorCursorTiles_05) / 16 ; $6b72
 	call QueueVRAMCopy ; $6b74
 	xor a ; $6b77
@@ -8383,7 +8383,7 @@ UploadLastGlyphTiles:
 	ld bc, wGlyphTileBuffer ; $7666
 	add hl, bc ; $7669
 	push hl ; $766a
-	ld hl, $8800 ; $766b
+	ld hl, vTiles1 ; $766b
 	add hl, de ; $766e
 	ld d, h ; $766f
 	ld e, l ; $7670

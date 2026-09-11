@@ -158,7 +158,7 @@ FlushBgMapShadowToVram:
 	and $0f ; $4356
 	jr z, .attrPlane ; $4358
 	ld hl, wTextTileBuffer ; $435a
-	ld de, $9800 ; $435d
+	ld de, vBGMap0 ; $435d
 	ld c, $24 ; $4360
 	call QueueVRAMCopy ; $4362
 .attrPlane:
@@ -166,7 +166,7 @@ FlushBgMapShadowToVram:
 	and $f0 ; $4368
 	jr z, .done ; $436a
 	ld hl, wTextTileBuffer + 64 * TILE_SIZE ; $436c
-	ld de, $9800 + VRAM_BANK1 ; $436f
+	ld de, vBGMap0 + VRAM_BANK1 ; $436f
 	ld c, $24 ; $4372
 	call QueueVRAMCopy ; $4374
 .done:
@@ -188,7 +188,7 @@ LoadMenuHandCursorGfx:
 LoadFontTiles:
 	ret ; $438d
 	ld hl, FontTiles ; $438e
-	ld de, $9000 ; $4391
+	ld de, vTiles2 ; $4391
 	ld c, $10 ; $4394 -- 16 of FontTiles's 32 tiles
 	call QueueVRAMCopy ; $4396
 	ret ; $4399
@@ -704,11 +704,11 @@ InitConfirmScreen:
 	ld de, wDecompBuffer ; $52f4
 	call DecompressData ; $52f7
 	ld hl, wDecompBuffer ; $52fa
-	ld de, $9000 + VRAM_BANK1 ; $52fd
+	ld de, vTiles2 + VRAM_BANK1 ; $52fd
 	ld c, $80 ; $5300 -- 128 of ConfirmScreenGfx0's 256 tiles
 	call QueueVRAMCopy ; $5302
 	ld hl, wTextTileBuffer ; $5305
-	ld de, $8800 + VRAM_BANK1 ; $5308
+	ld de, vTiles1 + VRAM_BANK1 ; $5308
 	ld c, $80 ; $530b
 	call QueueVRAMCopy ; $530d
 	ld hl, ConfirmScreenPalette0 ; $5310
@@ -726,13 +726,13 @@ InitConfirmScreen:
 	ld de, wDecompBuffer ; $5334
 	call DecompressData ; $5337
 	ld hl, wDecompBuffer ; $533a
-	ld de, $8300 ; $533d
+	ld de, vTiles0 + $30 * TILE_SIZE ; $533d
 	ld c, ConfirmScreenGfx3_SIZE / 16 ; $5340
 	call QueueVRAMCopy ; $5342
 	ld hl, ConfirmScreenPalette1 ; $5345
 	lb de, $09, $03 ; $5348 palette index, count
 	call LoadPaletteShadow ; $534b
-	ld hl, $8500 ; $534e
+	ld hl, vTiles0 + $50 * TILE_SIZE ; $534e
 	ld de, $0e01 ; $5351
 	call LoadMenuHandCursorGfx ; $5354
 	call LoadConfirmScreenSpriteGfx ; $5357
@@ -1107,13 +1107,13 @@ CopyBytes11:
 	inc de ; $55d9
 	ret ; $55da
 ClearTileVramBothBanks:
-	ld hl, $8000 ; $55db
+	ld hl, vTiles0 ; $55db
 	ld c, $80 ; $55de
 	call ClearMemory16 ; $55e0
 	ldh a, [rVBK] ; $55e3
 	xor $01 ; $55e5
 	ldh [rVBK], a ; $55e7
-	ld hl, $8000 ; $55e9
+	ld hl, vTiles0 ; $55e9
 	ld c, $80 ; $55ec
 	call ClearMemory16 ; $55ee
 	ldh a, [rVBK] ; $55f1
@@ -1125,7 +1125,7 @@ LoadConfirmScreenSpriteGfx:
 	ld de, wDecompBuffer ; $55fb
 	call DecompressData ; $55fe
 	ld hl, wDecompBuffer ; $5601
-	ld de, $8000 + VRAM_BANK1 ; $5604
+	ld de, vTiles0 + VRAM_BANK1 ; $5604
 	ld c, ConfirmScreenSpriteGfx0_SIZE / 16 ; $5607
 	call QueueVRAMCopy ; $5609
 	ld hl, ConfirmScreenSpritePalette0 ; $560c
@@ -1135,7 +1135,7 @@ LoadConfirmScreenSpriteGfx:
 	ld de, wDecompBuffer ; $5618
 	call DecompressData ; $561b
 	ld hl, wDecompBuffer ; $561e
-	ld de, $8200 + VRAM_BANK1 ; $5621
+	ld de, vTiles0 + $20 * TILE_SIZE + VRAM_BANK1 ; $5621
 	ld c, $0c ; $5624
 	call QueueVRAMCopy ; $5626
 	ld hl, ConfirmScreenSpritePalette1 ; $5629
@@ -1182,7 +1182,7 @@ CharSelectCursorPalette:
 	INCLUDE "data/bank_018/CharSelectCursorPalette.asm" ; $59b9, 8 bytes (palettes)
 LoadCharSelectCursorGfx:
 	ld hl, CharSelectCursorGfx ; $59c1
-	ld de, $8400 ; $59c4
+	ld de, vTiles0 + $40 * TILE_SIZE ; $59c4
 	ld c, $0c ; $59c7 -- 12 of CharSelectCursorGfx's 13 tiles
 	call QueueVRAMCopy ; $59c9
 	ld hl, CharSelectCursorPalette ; $59cc
@@ -1513,7 +1513,7 @@ Screen0AssetIdTable:
 LoadScreen0TilesAndPalette:
 	ld b, $06 ; $7740
 	ld c, $28 ; $7742
-	ld de, $8000 ; $7744
+	ld de, vTiles0 ; $7744
 	farcall LoadCompressedTileBlock ; $7747
 	ld hl, Screen0Palette ; $774a
 	lb de, $08, $01 ; $774d palette index, count
@@ -1653,7 +1653,7 @@ AllBgPalettes:
 LoadScreen1ObjTiles:
 	ld b, $07 ; $78b1
 	ld c, $28 ; $78b3
-	ld de, $8000 ; $78b5
+	ld de, vTiles0 ; $78b5
 	farcall LoadCompressedTileBlock ; $78b8
 	ld hl, Screen1ObjPalette ; $78bb
 	lb de, $08, $01 ; $78be palette index, count
@@ -1809,7 +1809,7 @@ Screen2AssetIdBTable:
 LoadScreen2ObjTiles:
 	ld b, $08 ; $7a2d
 	ld c, $14 ; $7a2f
-	ld de, $8000 ; $7a31
+	ld de, vTiles0 ; $7a31
 	farcall LoadCompressedTileBlock ; $7a34
 	ld hl, Screen2ObjPalette ; $7a37
 	lb de, $08, $01 ; $7a3a palette index, count
@@ -2000,15 +2000,15 @@ InitObjectSceneA:
 LoadObjectSceneATiles:
 	ld b, $00 ; $7be7
 	ld c, $10 ; $7be9
-	ld de, $8000 ; $7beb
+	ld de, vTiles0 ; $7beb
 	farcall LoadCompressedTileBlock ; $7bee
 	ld b, $01 ; $7bf1
 	ld c, $10 ; $7bf3
-	ld de, $8100 ; $7bf5
+	ld de, vTiles0 + $10 * TILE_SIZE ; $7bf5
 	farcall LoadCompressedTileBlock ; $7bf8
 	ld b, $02 ; $7bfb
 	ld c, $10 ; $7bfd
-	ld de, $8200 ; $7bff
+	ld de, vTiles0 + $20 * TILE_SIZE ; $7bff
 	farcall LoadCompressedTileBlock ; $7c02
 	ld hl, ObjectSceneATilesPalettes ; $7c05
 	lb de, $09, $03 ; $7c08 palette index, count
@@ -2097,15 +2097,15 @@ InitObjectSceneB:
 LoadObjectSceneBTiles:
 	ld b, $03 ; $7d1c
 	ld c, $10 ; $7d1e
-	ld de, $8000 ; $7d20
+	ld de, vTiles0 ; $7d20
 	farcall LoadCompressedTileBlock ; $7d23
 	ld b, $04 ; $7d26
 	ld c, $10 ; $7d28
-	ld de, $8100 ; $7d2a
+	ld de, vTiles0 + $10 * TILE_SIZE ; $7d2a
 	farcall LoadCompressedTileBlock ; $7d2d
 	ld b, $05 ; $7d30
 	ld c, $10 ; $7d32
-	ld de, $8200 ; $7d34
+	ld de, vTiles0 + $20 * TILE_SIZE ; $7d34
 	farcall LoadCompressedTileBlock ; $7d37
 	ld hl, ObjectSceneBPalette ; $7d3a
 	lb de, $09, $03 ; $7d3d palette index, count

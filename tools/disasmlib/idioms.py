@@ -370,3 +370,70 @@ def render_packed_args(lines, flag_names):
         if roles:
             lines[i] = (f"\tlb {reg}, ${hi:02x}, ${lo:02x} ; {addr} "
                         f"{roles[0]}, {roles[1]}")
+
+
+# Routines whose 16-bit register argument is a VRAM address. A word in
+# $8000-$9fff is also a sign bit, a coordinate pair or a packed argument
+# elsewhere ($932f, $800d, LoadPaletteShadow's index/count), so a site is
+# only renamed when one of these consumes the value.
+_LABEL_RE = re.compile(r"^[A-Za-z_.][\w.]*:")
+VRAM_CONSUMERS = {
+    "QueueVRAMCopy", "LoadCompressedTileBlock", "DecompressData", "StartVRAMDMAFromHL",
+    "ClearMemory16", "ClearMemoryBC16", "CopyMemoryFast", "CopyMapToScrollBuffers",
+    "LoadScoreDigitGfx", "LoadOnCourtCharTilesA", "LoadOnCourtCharTilesB",
+    "LoadAllCharPortraitTiles", "LoadMenuArrowSpriteTiles", "LoadMenuHandCursorGfx",
+    "LoadUnlockDebugCursorGfx", "LoadConfirmScreenSpriteGfx",
+    "DrawTournamentBracketNameBoxes", "ClearTournamentBracketAttrs",
+}
+# Calls that sit between the load and its consumer without touching the pair.
+_VRAM_NEUTRAL = {"AdvanceFrame", "StepMatchFrame", "EnableLCD", "WaitFadeEnd", "DisableLCDSafely"}
+_VRAM_LOAD_RE = re.compile(r"^(\tld (?:hl|de|bc), )\$([89][0-9a-f]{3})( \+ VRAM_BANK1)?( ;.*)$")
+_ANY_CALL_RE = re.compile(r"^\t(?:call|farcall) ([A-Za-z_][A-Za-z0-9_.]*)")
+
+
+def vram_name(addr):
+    """`vTilesN + k * TILE_SIZE` / `vBGMapN + row * TILEMAP_WIDTH + col` for a
+    VRAM address, with the zero terms left out."""
+    if addr < 0x9800:
+        base, name = (addr - 0x8000) // 0x800, None
+        base_addr = 0x8000 + base * 0x800
+        name = f"vTiles{base}"
+        off = addr - base_addr
+        parts = [name]
+        if off // 16:
+            parts.append(f"${off // 16:02x} * TILE_SIZE")
+        if off % 16:
+            parts.append(f"{off % 16}")
+        return " + ".join(parts)
+    base = (addr - 0x9800) // 0x400
+    off = addr - (0x9800 + base * 0x400)
+    parts = [f"vBGMap{base}"]
+    if off // 32:
+        parts.append(f"{off // 32} * TILEMAP_WIDTH")
+    if off % 32:
+        parts.append(f"{off % 32}")
+    return " + ".join(parts)
+
+
+def resolve_vram_addresses(lines):
+    """Post-pass: a VRAM address loaded for one of VRAM_CONSUMERS (within six
+    lines, neutral frame-wait calls skipped, stopping at a label or another
+    call) is written as its region name plus offset."""
+    for i, line in enumerate(lines):
+        m = _VRAM_LOAD_RE.match(line)
+        if not m:
+            continue
+        ok = False
+        for k in range(i + 1, min(len(lines), i + 8)):
+            nxt = lines[k]
+            if _LABEL_RE.match(nxt):
+                break
+            c = _ANY_CALL_RE.match(nxt)
+            if c:
+                if c.group(1) in VRAM_CONSUMERS:
+                    ok = True
+                elif c.group(1) in _VRAM_NEUTRAL:
+                    continue
+                break
+        if ok:
+            lines[i] = f"{m.group(1)}{vram_name(int(m.group(2), 16))}{m.group(3) or ''}{m.group(4)}"
