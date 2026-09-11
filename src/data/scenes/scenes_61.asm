@@ -26,42 +26,42 @@ DataPtr_CenterCourtSceneConfigAlias1:
 	dw CenterCourtSceneConfig ; $4018
 DataPtr_CenterCourtScoreboardColumnAttrs:
 	dw CenterCourtScoreboardColumnAttrs ; $401a
-DataPtr_PracticeCourtPalettes:
-	dw PracticeCourtPalettes ; $401c
+DataPtr_CompositionCourtPalettes:
+	dw CompositionCourtPalettes ; $401c
 DataPtr_CenterCourtTiles:
 	dw CenterCourtTiles ; $401e
-DataPtr_PracticeCourtSceneConfig:
-	dw PracticeCourtSceneConfig ; $4020
-DataPtr_PracticeCourtPalettesAlias1:
-	dw PracticeCourtPalettes ; $4022
-DataPtr_PracticeCourtTilemap:
-	dw PracticeCourtTilemap ; $4024
-DataPtr_PracticeCourtAttrmap:
-	dw PracticeCourtAttrmap ; $4026
-DataPtr_PracticeCourtSceneConfigAlias1:
-	dw PracticeCourtSceneConfig ; $4028
-DataPtr_PracticeCourtScoreboardColumnAttrs:
-	dw PracticeCourtScoreboardColumnAttrs ; $402a
-DataPtr_YoshiCourtPalettes:
-	dw YoshiCourtPalettes ; $402c
-DataPtr_PracticeCourtTiles:
-	dw PracticeCourtTiles ; $402e
-DataPtr_YoshiCourtSceneConfig:
-	dw YoshiCourtSceneConfig ; $4030
-DataPtr_YoshiCourtPalettesAlias1:
-	dw YoshiCourtPalettes ; $4032
-DataPtr_YoshiCourtTilemap:
-	dw YoshiCourtTilemap ; $4034
-DataPtr_YoshiCourtAttrmap:
-	dw YoshiCourtAttrmap ; $4036
-DataPtr_YoshiCourtSceneConfigAlias1:
-	dw YoshiCourtSceneConfig ; $4038
-DataPtr_YoshiCourtScoreboardColumnAttrs:
-	dw YoshiCourtScoreboardColumnAttrs ; $403a
-DataPtr_YoshiCourtSceneUnusedSlot:
-	dw YoshiCourtSceneUnusedSlot ; $403c
-DataPtr_YoshiCourtTiles:
-	dw YoshiCourtTiles ; $403e
+DataPtr_CompositionCourtSceneConfig:
+	dw CompositionCourtSceneConfig ; $4020
+DataPtr_CompositionCourtPalettesAlias1:
+	dw CompositionCourtPalettes ; $4022
+DataPtr_CompositionCourtTilemap:
+	dw CompositionCourtTilemap ; $4024
+DataPtr_CompositionCourtAttrmap:
+	dw CompositionCourtAttrmap ; $4026
+DataPtr_CompositionCourtSceneConfigAlias1:
+	dw CompositionCourtSceneConfig ; $4028
+DataPtr_CompositionCourtScoreboardColumnAttrs:
+	dw CompositionCourtScoreboardColumnAttrs ; $402a
+DataPtr_TropicsCourtPalettes:
+	dw TropicsCourtPalettes ; $402c
+DataPtr_CompositionCourtTiles:
+	dw CompositionCourtTiles ; $402e
+DataPtr_TropicsCourtSceneConfig:
+	dw TropicsCourtSceneConfig ; $4030
+DataPtr_TropicsCourtPalettesAlias1:
+	dw TropicsCourtPalettes ; $4032
+DataPtr_TropicsCourtTilemap:
+	dw TropicsCourtTilemap ; $4034
+DataPtr_TropicsCourtAttrmap:
+	dw TropicsCourtAttrmap ; $4036
+DataPtr_TropicsCourtSceneConfigAlias1:
+	dw TropicsCourtSceneConfig ; $4038
+DataPtr_TropicsCourtScoreboardColumnAttrs:
+	dw TropicsCourtScoreboardColumnAttrs ; $403a
+DataPtr_TropicsCourtSceneUnusedSlot:
+	dw TropicsCourtSceneUnusedSlot ; $403c
+DataPtr_TropicsCourtTiles:
+	dw TropicsCourtTiles ; $403e
 MachineCourtPalettes:
 	INCLUDE "data/bank_061/MachineCourtPalettes.asm" ; $4040, 64 bytes (palettes)
 MachineCourtTiles:
@@ -86,29 +86,29 @@ CenterCourtSceneConfig:
 	INCBIN "data/bank_061/CenterCourtSceneConfig.bin" ; $5bfb, 40 bytes
 CenterCourtScoreboardColumnAttrs:
 	INCBIN "data/bank_061/CenterCourtScoreboardColumnAttrs.bin" ; $5c23, 40 bytes
-PracticeCourtPalettes:
-	INCLUDE "data/bank_061/PracticeCourtPalettes.asm" ; $5c4b, 64 bytes (palettes)
-PracticeCourtTiles:
-	INCBIN "data/bank_061/lz_PracticeCourtTiles.bin" ; $5c8b, 2761 bytes
-PracticeCourtTilemap:
-	INCBIN "data/bank_061/lz_PracticeCourtTilemap.bin" ; $6754, 547 bytes
-PracticeCourtAttrmap:
-	INCBIN "data/bank_061/lz_PracticeCourtAttrmap.bin" ; $6977, 132 bytes
-PracticeCourtSceneConfig:
-	INCBIN "data/bank_061/PracticeCourtSceneConfig.bin" ; $69fb, 40 bytes
-PracticeCourtScoreboardColumnAttrs:
-	INCBIN "data/bank_061/PracticeCourtScoreboardColumnAttrs.bin" ; $6a23, 40 bytes
-YoshiCourtPalettes:
-	INCLUDE "data/bank_061/YoshiCourtPalettes.asm" ; $6a4b, 64 bytes (palettes)
-YoshiCourtTiles:
-	INCBIN "data/bank_061/lz_YoshiCourtTiles.bin" ; $6a8b, 3003 bytes
-YoshiCourtTilemap:
-	INCBIN "data/bank_061/lz_YoshiCourtTilemap.bin" ; $7646, 708 bytes
-YoshiCourtAttrmap:
-	INCBIN "data/bank_061/lz_YoshiCourtAttrmap.bin" ; $790a, 317 bytes
-YoshiCourtSceneConfig:
-	INCBIN "data/bank_061/YoshiCourtSceneConfig.bin" ; $7a47, 40 bytes
-YoshiCourtScoreboardColumnAttrs:
-	INCBIN "data/bank_061/YoshiCourtScoreboardColumnAttrs.bin" ; $7a6f, 40 bytes
-YoshiCourtSceneUnusedSlot:
+CompositionCourtPalettes:
+	INCLUDE "data/bank_061/CompositionCourtPalettes.asm" ; $5c4b, 64 bytes (palettes)
+CompositionCourtTiles:
+	INCBIN "data/bank_061/lz_CompositionCourtTiles.bin" ; $5c8b, 2761 bytes
+CompositionCourtTilemap:
+	INCBIN "data/bank_061/lz_CompositionCourtTilemap.bin" ; $6754, 547 bytes
+CompositionCourtAttrmap:
+	INCBIN "data/bank_061/lz_CompositionCourtAttrmap.bin" ; $6977, 132 bytes
+CompositionCourtSceneConfig:
+	INCBIN "data/bank_061/CompositionCourtSceneConfig.bin" ; $69fb, 40 bytes
+CompositionCourtScoreboardColumnAttrs:
+	INCBIN "data/bank_061/CompositionCourtScoreboardColumnAttrs.bin" ; $6a23, 40 bytes
+TropicsCourtPalettes:
+	INCLUDE "data/bank_061/TropicsCourtPalettes.asm" ; $6a4b, 64 bytes (palettes)
+TropicsCourtTiles:
+	INCBIN "data/bank_061/lz_TropicsCourtTiles.bin" ; $6a8b, 3003 bytes
+TropicsCourtTilemap:
+	INCBIN "data/bank_061/lz_TropicsCourtTilemap.bin" ; $7646, 708 bytes
+TropicsCourtAttrmap:
+	INCBIN "data/bank_061/lz_TropicsCourtAttrmap.bin" ; $790a, 317 bytes
+TropicsCourtSceneConfig:
+	INCBIN "data/bank_061/TropicsCourtSceneConfig.bin" ; $7a47, 40 bytes
+TropicsCourtScoreboardColumnAttrs:
+	INCBIN "data/bank_061/TropicsCourtScoreboardColumnAttrs.bin" ; $7a6f, 40 bytes
+TropicsCourtSceneUnusedSlot:
 	; $7a97, 1385 bytes fill to bank end (linker-padded)

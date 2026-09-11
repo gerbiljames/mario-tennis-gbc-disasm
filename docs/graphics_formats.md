@@ -197,8 +197,8 @@ Decompressing all 619 (via `tools/lz.py`'s `decompress`):
 Two individual streams, decoded with `python3 tools/lz.py baserom.gbc <off>`:
 
 ```
-stream at 0x17c060: 2037 bytes compressed, 3024 decompressed   ; ClubhouseSceneTiles  ($5f:$4060)
-stream at 0x17c855:  625 bytes compressed, 1024 decompressed   ; ClubhouseSceneTilemap ($5f:$4855)
+stream at 0x17c060: 2037 bytes compressed, 3024 decompressed   ; MinigameCourtTiles  ($5f:$4060)
+stream at 0x17c855:  625 bytes compressed, 1024 decompressed   ; MinigameCourtTilemap ($5f:$4855)
 ```
 
 ### 1.6 Editing a stream

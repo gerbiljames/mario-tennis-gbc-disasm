@@ -1,35 +1,35 @@
-DataPtr_IslandOpenCourtSceneConfig:
-	dw IslandOpenCourtSceneConfig ; $4000
-DataPtr_IslandOpenCourtPalettes:
-	dw IslandOpenCourtPalettes ; $4002
-DataPtr_IslandOpenCourtTilemap:
-	dw IslandOpenCourtTilemap ; $4004
-DataPtr_IslandOpenCourtAttrmap:
-	dw IslandOpenCourtAttrmap ; $4006
-DataPtr_IslandOpenCourtSceneConfigAlias1:
-	dw IslandOpenCourtSceneConfig ; $4008
-DataPtr_IslandOpenCourtScoreboardColumnAttrs:
-	dw IslandOpenCourtScoreboardColumnAttrs ; $400a
-DataPtr_DKCourtPalettes:
-	dw DKCourtPalettes ; $400c
-DataPtr_IslandOpenCourtTiles:
-	dw IslandOpenCourtTiles ; $400e
-DataPtr_DKCourtSceneConfig:
-	dw DKCourtSceneConfig ; $4010
-DataPtr_DKCourtPalettesAlias1:
-	dw DKCourtPalettes ; $4012
-DataPtr_DKCourtTilemap:
-	dw DKCourtTilemap ; $4014
-DataPtr_DKCourtAttrmap:
-	dw DKCourtAttrmap ; $4016
-DataPtr_DKCourtSceneConfigAlias1:
-	dw DKCourtSceneConfig ; $4018
-DataPtr_DKCourtScoreboardColumnAttrs:
-	dw DKCourtScoreboardColumnAttrs ; $401a
+DataPtr_WallPracticeCourtSceneConfig:
+	dw WallPracticeCourtSceneConfig ; $4000
+DataPtr_WallPracticeCourtPalettes:
+	dw WallPracticeCourtPalettes ; $4002
+DataPtr_WallPracticeCourtTilemap:
+	dw WallPracticeCourtTilemap ; $4004
+DataPtr_WallPracticeCourtAttrmap:
+	dw WallPracticeCourtAttrmap ; $4006
+DataPtr_WallPracticeCourtSceneConfigAlias1:
+	dw WallPracticeCourtSceneConfig ; $4008
+DataPtr_WallPracticeCourtScoreboardColumnAttrs:
+	dw WallPracticeCourtScoreboardColumnAttrs ; $400a
+DataPtr_JungleCourtPalettes:
+	dw JungleCourtPalettes ; $400c
+DataPtr_WallPracticeCourtTiles:
+	dw WallPracticeCourtTiles ; $400e
+DataPtr_JungleCourtSceneConfig:
+	dw JungleCourtSceneConfig ; $4010
+DataPtr_JungleCourtPalettesAlias1:
+	dw JungleCourtPalettes ; $4012
+DataPtr_JungleCourtTilemap:
+	dw JungleCourtTilemap ; $4014
+DataPtr_JungleCourtAttrmap:
+	dw JungleCourtAttrmap ; $4016
+DataPtr_JungleCourtSceneConfigAlias1:
+	dw JungleCourtSceneConfig ; $4018
+DataPtr_JungleCourtScoreboardColumnAttrs:
+	dw JungleCourtScoreboardColumnAttrs ; $401a
 DataPtr_StarPatternBgSceneConfig:
 	dw StarPatternBgSceneConfig ; $401c
-DataPtr_DKCourtTiles:
-	dw DKCourtTiles ; $401e
+DataPtr_JungleCourtTiles:
+	dw JungleCourtTiles ; $401e
 DataPtr_StarPatternBgSceneConfigAlias1:
 	dw StarPatternBgSceneConfig ; $4020
 DataPtr_StarPatternBgPalettes:
@@ -62,30 +62,30 @@ DataPtr_AcademyMainBldgSceneUnusedSlot:
 	dw AcademyMainBldgSceneUnusedSlot ; $403c
 DataPtr_AcademyMainBldgTiles:
 	dw AcademyMainBldgTiles ; $403e
-IslandOpenCourtPalettes:
-	INCLUDE "data/bank_063/IslandOpenCourtPalettes.asm" ; $4040, 64 bytes (palettes)
-IslandOpenCourtTiles:
-	INCBIN "data/bank_063/lz_IslandOpenCourtTiles.bin" ; $4080, 2042 bytes
-IslandOpenCourtTilemap:
-	INCBIN "data/bank_063/lz_IslandOpenCourtTilemap.bin" ; $487a, 635 bytes
-IslandOpenCourtAttrmap:
-	INCBIN "data/bank_063/lz_IslandOpenCourtAttrmap.bin" ; $4af5, 185 bytes
-IslandOpenCourtSceneConfig:
-	INCBIN "data/bank_063/IslandOpenCourtSceneConfig.bin" ; $4bae, 40 bytes
-IslandOpenCourtScoreboardColumnAttrs:
-	INCBIN "data/bank_063/IslandOpenCourtScoreboardColumnAttrs.bin" ; $4bd6, 40 bytes
-DKCourtPalettes:
-	INCLUDE "data/bank_063/DKCourtPalettes.asm" ; $4bfe, 64 bytes (palettes)
-DKCourtTiles:
-	INCBIN "data/bank_063/lz_DKCourtTiles.bin" ; $4c3e, 3291 bytes
-DKCourtTilemap:
-	INCBIN "data/bank_063/lz_DKCourtTilemap.bin" ; $5919, 713 bytes
-DKCourtAttrmap:
-	INCBIN "data/bank_063/lz_DKCourtAttrmap.bin" ; $5be2, 323 bytes
-DKCourtSceneConfig:
-	INCBIN "data/bank_063/DKCourtSceneConfig.bin" ; $5d25, 40 bytes
-DKCourtScoreboardColumnAttrs:
-	INCBIN "data/bank_063/DKCourtScoreboardColumnAttrs.bin" ; $5d4d, 40 bytes
+WallPracticeCourtPalettes:
+	INCLUDE "data/bank_063/WallPracticeCourtPalettes.asm" ; $4040, 64 bytes (palettes)
+WallPracticeCourtTiles:
+	INCBIN "data/bank_063/lz_WallPracticeCourtTiles.bin" ; $4080, 2042 bytes
+WallPracticeCourtTilemap:
+	INCBIN "data/bank_063/lz_WallPracticeCourtTilemap.bin" ; $487a, 635 bytes
+WallPracticeCourtAttrmap:
+	INCBIN "data/bank_063/lz_WallPracticeCourtAttrmap.bin" ; $4af5, 185 bytes
+WallPracticeCourtSceneConfig:
+	INCBIN "data/bank_063/WallPracticeCourtSceneConfig.bin" ; $4bae, 40 bytes
+WallPracticeCourtScoreboardColumnAttrs:
+	INCBIN "data/bank_063/WallPracticeCourtScoreboardColumnAttrs.bin" ; $4bd6, 40 bytes
+JungleCourtPalettes:
+	INCLUDE "data/bank_063/JungleCourtPalettes.asm" ; $4bfe, 64 bytes (palettes)
+JungleCourtTiles:
+	INCBIN "data/bank_063/lz_JungleCourtTiles.bin" ; $4c3e, 3291 bytes
+JungleCourtTilemap:
+	INCBIN "data/bank_063/lz_JungleCourtTilemap.bin" ; $5919, 713 bytes
+JungleCourtAttrmap:
+	INCBIN "data/bank_063/lz_JungleCourtAttrmap.bin" ; $5be2, 323 bytes
+JungleCourtSceneConfig:
+	INCBIN "data/bank_063/JungleCourtSceneConfig.bin" ; $5d25, 40 bytes
+JungleCourtScoreboardColumnAttrs:
+	INCBIN "data/bank_063/JungleCourtScoreboardColumnAttrs.bin" ; $5d4d, 40 bytes
 StarPatternBgSceneConfig:
 	INCBIN "data/bank_063/StarPatternBgSceneConfig.bin" ; $5d75, 42 bytes
 StarPatternBgPalettes:

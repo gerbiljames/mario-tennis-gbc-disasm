@@ -2933,42 +2933,42 @@ bank_05d/BabyMarioSpriteFrame55.bin 177560 f0 gfx:3x4+3
 bank_05d/BabyMarioSpriteFramesUnused.bin 177650 690 gfx:3x4+3
 bank_05d/BabyMarioSpriteOam.bin 177ce0 244
 bank_05e/TextStrings_5e.asm 17828a 2c05 text_pool
-bank_05f/ClubhouseScenePalettes.asm 17c020 40 palettes
-bank_05f/lz_ClubhouseSceneTiles.bin 17c060 7f5 gfx
-bank_05f/lz_ClubhouseSceneTilemap.bin 17c855 271 tilemap:32
-bank_05f/lz_ClubhouseSceneAttrmap.bin 17cac6 14d tilemap:32
-bank_05f/ClubhouseSceneConfig.bin 17cc13 28
-bank_05f/ClubhouseScoreboardColumnAttrs.bin 17cc3b 28
-bank_05f/CourtyardScenePalettes.asm 17cc63 40 palettes
-bank_05f/lz_CourtyardSceneTiles.bin 17cca3 950 gfx
-bank_05f/lz_CourtyardSceneTilemap.bin 17d5f3 1eb tilemap:32
-bank_05f/lz_CourtyardSceneAttrmap.bin 17d7de 126 tilemap:32
-bank_05f/CourtyardSceneConfig.bin 17d904 28
-bank_05f/CourtyardScoreboardColumnAttrs.bin 17d92c 28
+bank_05f/MinigameCourtPalettes.asm 17c020 40 palettes
+bank_05f/lz_MinigameCourtTiles.bin 17c060 7f5 gfx
+bank_05f/lz_MinigameCourtTilemap.bin 17c855 271 tilemap:32
+bank_05f/lz_MinigameCourtAttrmap.bin 17cac6 14d tilemap:32
+bank_05f/MinigameCourtSceneConfig.bin 17cc13 28
+bank_05f/MinigameCourtScoreboardColumnAttrs.bin 17cc3b 28
+bank_05f/TargetShotCourtPalettes.asm 17cc63 40 palettes
+bank_05f/lz_TargetShotCourtTiles.bin 17cca3 950 gfx
+bank_05f/lz_TargetShotCourtTilemap.bin 17d5f3 1eb tilemap:32
+bank_05f/lz_TargetShotCourtAttrmap.bin 17d7de 126 tilemap:32
+bank_05f/TargetShotCourtSceneConfig.bin 17d904 28
+bank_05f/TargetShotCourtScoreboardColumnAttrs.bin 17d92c 28
 bank_060/GrassCourtPalettes.asm 180040 40 palettes
 bank_060/lz_GrassCourtTiles.bin 180080 ca1 gfx
 bank_060/lz_GrassCourtTilemap.bin 180d21 25c tilemap:32
 bank_060/lz_GrassCourtAttrmap.bin 180f7d 10c tilemap:32
 bank_060/GrassCourtSceneConfig.bin 181089 28
 bank_060/GrassCourtScoreboardColumnAttrs.bin 1810b1 28
-bank_060/HardCourtPalettes.asm 1810d9 40 palettes
-bank_060/lz_HardCourtTiles.bin 181119 930 gfx
-bank_060/lz_HardCourtTilemap.bin 181a49 27d tilemap:32
-bank_060/lz_HardCourtAttrmap.bin 181cc6 9b tilemap:32
-bank_060/HardCourtSceneConfig.bin 181d61 28
-bank_060/HardCourtScoreboardColumnAttrs.bin 181d89 28
+bank_060/TrainingCourtPalettes.asm 1810d9 40 palettes
+bank_060/lz_TrainingCourtTiles.bin 181119 930 gfx
+bank_060/lz_TrainingCourtTilemap.bin 181a49 27d tilemap:32
+bank_060/lz_TrainingCourtAttrmap.bin 181cc6 9b tilemap:32
+bank_060/TrainingCourtSceneConfig.bin 181d61 28
+bank_060/TrainingCourtScoreboardColumnAttrs.bin 181d89 28
 bank_060/ClayCourtPalettes.asm 181db1 40 palettes
 bank_060/lz_ClayCourtTiles.bin 181df1 bb1 gfx
 bank_060/lz_ClayCourtTilemap.bin 1829a2 246 tilemap:32
 bank_060/lz_ClayCourtAttrmap.bin 182be8 a6 tilemap:32
 bank_060/ClayCourtSceneConfig.bin 182c8e 28
 bank_060/ClayCourtScoreboardColumnAttrs.bin 182cb6 28
-bank_060/CompositionCourtPalettes.asm 182cde 40 palettes
-bank_060/lz_CompositionCourtTiles.bin 182d1e bb2 gfx
-bank_060/lz_CompositionCourtTilemap.bin 1838d0 23d tilemap:32
-bank_060/lz_CompositionCourtAttrmap.bin 183b0d a0 tilemap:32
-bank_060/CompositionCourtSceneConfig.bin 183bad 28
-bank_060/CompositionCourtScoreboardColumnAttrs.bin 183bd5 28
+bank_060/HardCourtPalettes.asm 182cde 40 palettes
+bank_060/lz_HardCourtTiles.bin 182d1e bb2 gfx
+bank_060/lz_HardCourtTilemap.bin 1838d0 23d tilemap:32
+bank_060/lz_HardCourtAttrmap.bin 183b0d a0 tilemap:32
+bank_060/HardCourtSceneConfig.bin 183bad 28
+bank_060/HardCourtScoreboardColumnAttrs.bin 183bd5 28
 bank_061/MachineCourtPalettes.asm 184040 40 palettes
 bank_061/lz_MachineCourtTiles.bin 184080 92e gfx
 bank_061/lz_MachineCourtTilemap.bin 1849ae 1cd tilemap:32
@@ -2981,18 +2981,18 @@ bank_061/lz_CenterCourtTilemap.bin 18589a 254 tilemap:32
 bank_061/lz_CenterCourtAttrmap.bin 185aee 10d tilemap:32
 bank_061/CenterCourtSceneConfig.bin 185bfb 28
 bank_061/CenterCourtScoreboardColumnAttrs.bin 185c23 28
-bank_061/PracticeCourtPalettes.asm 185c4b 40 palettes
-bank_061/lz_PracticeCourtTiles.bin 185c8b ac9 gfx
-bank_061/lz_PracticeCourtTilemap.bin 186754 223 tilemap:32
-bank_061/lz_PracticeCourtAttrmap.bin 186977 84 tilemap:32
-bank_061/PracticeCourtSceneConfig.bin 1869fb 28
-bank_061/PracticeCourtScoreboardColumnAttrs.bin 186a23 28
-bank_061/YoshiCourtPalettes.asm 186a4b 40 palettes
-bank_061/lz_YoshiCourtTiles.bin 186a8b bbb gfx
-bank_061/lz_YoshiCourtTilemap.bin 187646 2c4 tilemap:32
-bank_061/lz_YoshiCourtAttrmap.bin 18790a 13d tilemap:32
-bank_061/YoshiCourtSceneConfig.bin 187a47 28
-bank_061/YoshiCourtScoreboardColumnAttrs.bin 187a6f 28
+bank_061/CompositionCourtPalettes.asm 185c4b 40 palettes
+bank_061/lz_CompositionCourtTiles.bin 185c8b ac9 gfx
+bank_061/lz_CompositionCourtTilemap.bin 186754 223 tilemap:32
+bank_061/lz_CompositionCourtAttrmap.bin 186977 84 tilemap:32
+bank_061/CompositionCourtSceneConfig.bin 1869fb 28
+bank_061/CompositionCourtScoreboardColumnAttrs.bin 186a23 28
+bank_061/TropicsCourtPalettes.asm 186a4b 40 palettes
+bank_061/lz_TropicsCourtTiles.bin 186a8b bbb gfx
+bank_061/lz_TropicsCourtTilemap.bin 187646 2c4 tilemap:32
+bank_061/lz_TropicsCourtAttrmap.bin 18790a 13d tilemap:32
+bank_061/TropicsCourtSceneConfig.bin 187a47 28
+bank_061/TropicsCourtScoreboardColumnAttrs.bin 187a6f 28
 bank_062/StarCourtPalettes.asm 188040 40 palettes
 bank_062/lz_StarCourtTiles.bin 188080 7c6 gfx
 bank_062/lz_StarCourtTilemap.bin 188846 1fc tilemap:32
@@ -3005,30 +3005,30 @@ bank_062/lz_BowserCourtTilemap.bin 18928d 256 tilemap:32
 bank_062/lz_BowserCourtAttrmap.bin 1894e3 11d tilemap:32
 bank_062/BowserCourtSceneConfig.bin 189600 28
 bank_062/BowserCourtScoreboardColumnAttrs.bin 189628 28
-bank_062/WarioCourtPalettes.asm 189650 40 palettes
-bank_062/lz_WarioCourtTiles.bin 189690 96c gfx
-bank_062/lz_WarioCourtTilemap.bin 189ffc 2d3 tilemap:32
-bank_062/lz_WarioCourtAttrmap.bin 18a2cf 112 tilemap:32
-bank_062/WarioCourtSceneConfig.bin 18a3e1 28
-bank_062/WarioCourtScoreboardColumnAttrs.bin 18a409 28
-bank_062/PeachCourtPalettes.asm 18a431 40 palettes
-bank_062/lz_PeachCourtTiles.bin 18a471 752 gfx
-bank_062/lz_PeachCourtTilemap.bin 18abc3 232 tilemap:32
-bank_062/lz_PeachCourtAttrmap.bin 18adf5 139 tilemap:32
-bank_062/PeachCourtSceneConfig.bin 18af2e 28
-bank_062/PeachCourtScoreboardColumnAttrs.bin 18af56 28
-bank_063/IslandOpenCourtPalettes.asm 18c040 40 palettes
-bank_063/lz_IslandOpenCourtTiles.bin 18c080 7fa gfx
-bank_063/lz_IslandOpenCourtTilemap.bin 18c87a 27b tilemap:32
-bank_063/lz_IslandOpenCourtAttrmap.bin 18caf5 b9 tilemap:32
-bank_063/IslandOpenCourtSceneConfig.bin 18cbae 28
-bank_063/IslandOpenCourtScoreboardColumnAttrs.bin 18cbd6 28
-bank_063/DKCourtPalettes.asm 18cbfe 40 palettes
-bank_063/lz_DKCourtTiles.bin 18cc3e cdb gfx
-bank_063/lz_DKCourtTilemap.bin 18d919 2c9 tilemap:32
-bank_063/lz_DKCourtAttrmap.bin 18dbe2 143 tilemap:32
-bank_063/DKCourtSceneConfig.bin 18dd25 28
-bank_063/DKCourtScoreboardColumnAttrs.bin 18dd4d 28
+bank_062/WarehouseCourtPalettes.asm 189650 40 palettes
+bank_062/lz_WarehouseCourtTiles.bin 189690 96c gfx
+bank_062/lz_WarehouseCourtTilemap.bin 189ffc 2d3 tilemap:32
+bank_062/lz_WarehouseCourtAttrmap.bin 18a2cf 112 tilemap:32
+bank_062/WarehouseCourtSceneConfig.bin 18a3e1 28
+bank_062/WarehouseCourtScoreboardColumnAttrs.bin 18a409 28
+bank_062/CastleCourtPalettes.asm 18a431 40 palettes
+bank_062/lz_CastleCourtTiles.bin 18a471 752 gfx
+bank_062/lz_CastleCourtTilemap.bin 18abc3 232 tilemap:32
+bank_062/lz_CastleCourtAttrmap.bin 18adf5 139 tilemap:32
+bank_062/CastleCourtSceneConfig.bin 18af2e 28
+bank_062/CastleCourtScoreboardColumnAttrs.bin 18af56 28
+bank_063/WallPracticeCourtPalettes.asm 18c040 40 palettes
+bank_063/lz_WallPracticeCourtTiles.bin 18c080 7fa gfx
+bank_063/lz_WallPracticeCourtTilemap.bin 18c87a 27b tilemap:32
+bank_063/lz_WallPracticeCourtAttrmap.bin 18caf5 b9 tilemap:32
+bank_063/WallPracticeCourtSceneConfig.bin 18cbae 28
+bank_063/WallPracticeCourtScoreboardColumnAttrs.bin 18cbd6 28
+bank_063/JungleCourtPalettes.asm 18cbfe 40 palettes
+bank_063/lz_JungleCourtTiles.bin 18cc3e cdb gfx
+bank_063/lz_JungleCourtTilemap.bin 18d919 2c9 tilemap:32
+bank_063/lz_JungleCourtAttrmap.bin 18dbe2 143 tilemap:32
+bank_063/JungleCourtSceneConfig.bin 18dd25 28
+bank_063/JungleCourtScoreboardColumnAttrs.bin 18dd4d 28
 bank_063/StarPatternBgSceneConfig.bin 18dd75 2a
 bank_063/StarPatternBgPalettes.asm 18dd9f 40 palettes
 bank_063/lz_StarPatternBgTiles.bin 18dddf 2ad gfx
@@ -3043,145 +3043,145 @@ bank_063/lz_AcademyMainBldgTilemap.bin 18f151 5be tilemap:64
 bank_063/lz_AcademyMainBldgAttrmap.bin 18f70f 301 tilemap:64
 bank_063/lz_AcademyMainBldgCollisionMap.bin 18fa10 93
 bank_063/lz_AcademyMainBldgBehaviorMap.bin 18faa3 5e
-bank_064/DormBedroomSceneConfig.bin 190030 2a
-bank_064/DormBedroomPalettes.asm 19005a 40 palettes
-bank_064/lz_DormBedroomTiles.bin 19009a 903 gfx
-bank_064/lz_DormBedroomTilemap.bin 19099d 2c2 tilemap:64
-bank_064/lz_DormBedroomAttrmap.bin 190c5f 1ff tilemap:64
-bank_064/lz_DormBedroomCollisionMap.bin 190e5e 76
-bank_064/lz_DormBedroomBehaviorMap.bin 190ed4 48
-bank_064/CountrysideSceneConfig.bin 190f1c 2a
-bank_064/CountrysidePalettes.asm 190f46 40 palettes
-bank_064/lz_CountrysideTiles.bin 190f86 ca6 gfx
-bank_064/lz_CountrysideTilemap.bin 191c2c 322 tilemap:64
-bank_064/lz_CountrysideAttrmap.bin 191f4e 19b tilemap:64
-bank_064/lz_CountrysideCollisionMap.bin 1920e9 50
-bank_064/lz_CountrysideBehaviorMap.bin 192139 5a
-bank_064/AcademyGroundsSceneConfig.bin 192193 1b
-bank_064/AcademyGroundsPalettes.asm 1921ae 40 palettes
-bank_064/lz_AcademyGroundsTiles.bin 1921ee c1c gfx
-bank_064/lz_AcademyGroundsTilemap.bin 192e0a 595 tilemap:64
-bank_064/lz_AcademyGroundsAttrmap.bin 19339f 2a7 tilemap:64
-bank_064/lz_AcademyGroundsCollisionMap.bin 193646 93
-bank_064/lz_AcademyGroundsBehaviorMap.bin 1936d9 4f
-bank_064/AcademyGroundsSceneUnusedSlot.bin 193730 8d0
-bank_065/SeasideSceneConfig.bin 194030 1b
-bank_065/SeasidePalettes.bin 19404b 40
-bank_065/lz_SeasideTiles.bin 19408b bab gfx
-bank_065/lz_SeasideTilemap.bin 194c36 2ac tilemap:64
-bank_065/lz_SeasideAttrmap.bin 194ee2 1a0 tilemap:64
-bank_065/lz_SeasideCollisionMap.bin 195082 46
-bank_065/lz_SeasideBehaviorMap.bin 1950c8 49
-bank_065/SeasideSceneUnusedSlot.bin 195120 600
-bank_065/HedgeCourtSceneConfig.bin 195720 17
-bank_065/HedgeCourtPalettes.asm 195737 40 palettes
-bank_065/lz_HedgeCourtTiles.bin 195777 769 gfx
-bank_065/lz_HedgeCourtTilemap.bin 195ee0 389 tilemap:64
-bank_065/lz_HedgeCourtAttrmap.bin 196269 205 tilemap:64
-bank_065/lz_HedgeCourtCollisionMap.bin 19646e 46
-bank_065/lz_HedgeCourtBehaviorMap.bin 1964b4 46
-bank_065/HedgeCourtSceneUnusedSlot.bin 196500 600
-bank_065/ClayCourtGroundsSceneConfig.bin 196b00 2a
-bank_065/ClayCourtGroundsPalettes.asm 196b2a 40 palettes
-bank_065/lz_ClayCourtGroundsTiles.bin 196b6a 8ee gfx
-bank_065/lz_ClayCourtGroundsTilemap.bin 197458 49a tilemap:64
-bank_065/lz_ClayCourtGroundsAttrmap.bin 1978f2 3a5 tilemap:64
-bank_065/lz_ClayCourtGroundsCollisionMap.bin 197c97 6e
-bank_065/lz_ClayCourtGroundsBehaviorMap.bin 197d05 51
-bank_066/HardCourtGroundsSceneConfig.bin 198040 2a
-bank_066/HardCourtGroundsPalettes.asm 19806a 40 palettes
-bank_066/lz_HardCourtGroundsTiles.bin 1980aa 50c gfx
-bank_066/lz_HardCourtGroundsTilemap.bin 1985b6 3f4 tilemap:64
-bank_066/lz_HardCourtGroundsAttrmap.bin 1989aa 2f8 tilemap:64
-bank_066/lz_HardCourtGroundsCollisionMap.bin 198ca2 65
-bank_066/lz_HardCourtGroundsBehaviorMap.bin 198d07 48
-bank_066/SpaResortSceneConfig.bin 198d4f 2a
-bank_066/SpaResortPalettes.asm 198d79 40 palettes
-bank_066/lz_SpaResortTiles.bin 198db9 7f2 gfx
-bank_066/lz_SpaResortTilemap.bin 1995ab 43e tilemap:64
-bank_066/lz_SpaResortAttrmap.bin 1999e9 2a3 tilemap:64
-bank_066/lz_SpaResortCollisionMap.bin 199c8c 76
-bank_066/lz_SpaResortBehaviorMap.bin 199d02 80
-bank_066/MainBuildingSceneConfig.bin 199d82 9
-bank_066/MainBuildingPalettes.asm 199d8b 40 palettes
-bank_066/lz_MainBuildingTiles.bin 199dcb 8fd gfx
-bank_066/lz_MainBuildingTilemap.bin 19a6c8 448 tilemap:64
-bank_066/lz_MainBuildingAttrmap.bin 19ab10 23c tilemap:64
-bank_066/lz_MainBuildingCollisionMap.bin 19ad4c 61
-bank_066/lz_MainBuildingBehaviorMap.bin 19adad 4b
-bank_066/GardenPavilionSceneConfig.bin 19adf8 2a
-bank_066/GardenPavilionPalettes.asm 19ae22 40 palettes
-bank_066/lz_GardenPavilionTiles.bin 19ae62 77c gfx
-bank_066/lz_GardenPavilionTilemap.bin 19b5de 3cb tilemap:64
-bank_066/lz_GardenPavilionAttrmap.bin 19b9a9 1da tilemap:64
-bank_066/lz_GardenPavilionCollisionMap.bin 19bb83 5f
-bank_066/lz_GardenPavilionBehaviorMap.bin 19bbe2 4b
-bank_067/FountainCourtSceneConfig.bin 19c030 1b
-bank_067/FountainCourtPalettes.asm 19c04b 40 palettes
-bank_067/lz_FountainCourtTiles.bin 19c08b bec gfx
-bank_067/lz_FountainCourtTilemap.bin 19cc77 44d tilemap:64
-bank_067/lz_FountainCourtAttrmap.bin 19d0c4 2b1 tilemap:64
-bank_067/lz_FountainCourtCollisionMap.bin 19d375 6a
-bank_067/lz_FountainCourtBehaviorMap.bin 19d3df 53
-bank_067/FountainCourtSceneUnusedSlot.bin 19d440 600
-bank_067/CafeCourtSceneConfig.bin 19da40 2a
-bank_067/CafeCourtPalettes.asm 19da6a 40 palettes
-bank_067/lz_CafeCourtTiles.bin 19daaa 935 gfx
-bank_067/lz_CafeCourtTilemap.bin 19e3df 39a tilemap:64
-bank_067/lz_CafeCourtAttrmap.bin 19e779 239 tilemap:64
-bank_067/lz_CafeCourtCollisionMap.bin 19e9b2 67
-bank_067/lz_CafeCourtBehaviorMap.bin 19ea19 4b
-bank_067/CourtComplexSceneConfig.bin 19ea64 2a
-bank_067/CourtComplexPalettes.asm 19ea8e 40 palettes
-bank_067/lz_CourtComplexTiles.bin 19eace 90c gfx
-bank_067/lz_CourtComplexTilemap.bin 19f3da 532 tilemap:64
-bank_067/lz_CourtComplexAttrmap.bin 19f90c 2c6 tilemap:64
-bank_067/lz_CourtComplexCollisionMap.bin 19fbd2 80
-bank_067/lz_CourtComplexBehaviorMap.bin 19fc52 4c
-bank_068/ClubCourtSceneConfig.bin 1a0030 2a
-bank_068/ClubCourtPalettes.asm 1a005a 40 palettes
-bank_068/lz_ClubCourtTiles.bin 1a009a bd8 gfx
-bank_068/lz_ClubCourtTilemap.bin 1a0c72 495 tilemap:64
-bank_068/lz_ClubCourtAttrmap.bin 1a1107 2be tilemap:64
-bank_068/lz_ClubCourtCollisionMap.bin 1a13c5 6c
-bank_068/lz_ClubCourtBehaviorMap.bin 1a1431 4a
-bank_068/StadiumGroundsSceneConfig.bin 1a147b 2a
-bank_068/StadiumGroundsPalettes.asm 1a14a5 40 palettes
-bank_068/lz_StadiumGroundsTiles.bin 1a14e5 83c gfx
-bank_068/lz_StadiumGroundsTilemap.bin 1a1d21 443 tilemap:64
-bank_068/lz_StadiumGroundsAttrmap.bin 1a2164 26c tilemap:64
-bank_068/lz_StadiumGroundsCollisionMap.bin 1a23d0 65
-bank_068/lz_StadiumGroundsBehaviorMap.bin 1a2435 4b
-bank_068/CeremonyHallSceneConfig.bin 1a2480 17
-bank_068/CeremonyHallPalettes.asm 1a2497 40 palettes
-bank_068/lz_CeremonyHallTiles.bin 1a24d7 915 gfx
-bank_068/lz_CeremonyHallTilemap.bin 1a2dec 351 tilemap:64
-bank_068/lz_CeremonyHallAttrmap.bin 1a313d 253 tilemap:64
-bank_068/lz_CeremonyHallCollisionMap.bin 1a3390 67
-bank_068/lz_CeremonyHallBehaviorMap.bin 1a33f7 4a
-bank_068/CeremonyHallSceneUnusedSlot.bin 1a3450 bb0
-bank_069/TrainingHallSceneConfig.bin 1a4030 2a
-bank_069/TrainingHallPalettes.asm 1a405a 40 palettes
-bank_069/lz_TrainingHallTiles.bin 1a409a bc3 gfx
-bank_069/lz_TrainingHallTilemap.bin 1a4c5d 4be tilemap:64
-bank_069/lz_TrainingHallAttrmap.bin 1a511b 2f7 tilemap:64
-bank_069/lz_TrainingHallCollisionMap.bin 1a5412 81
-bank_069/lz_TrainingHallBehaviorMap.bin 1a5493 81
-bank_069/CenterCourtHallSceneConfig.bin 1a5514 2a
-bank_069/CenterCourtHallPalettes.asm 1a553e 40 palettes
-bank_069/lz_CenterCourtHallTiles.bin 1a557e 822 gfx
-bank_069/lz_CenterCourtHallTilemap.bin 1a5da0 3df tilemap:64
-bank_069/lz_CenterCourtHallAttrmap.bin 1a617f 2ef tilemap:64
-bank_069/lz_CenterCourtHallCollisionMap.bin 1a646e 7d
-bank_069/lz_CenterCourtHallBehaviorMap.bin 1a64eb 57
-bank_069/ClubroomInteriorSceneConfig.bin 1a6542 1b
-bank_069/ClubroomInteriorPalettes.asm 1a655d 40 palettes
-bank_069/lz_ClubroomInteriorTiles.bin 1a659d 9b6 gfx
-bank_069/lz_ClubroomInteriorTilemap.bin 1a6f53 3e7 tilemap:64
-bank_069/lz_ClubroomInteriorAttrmap.bin 1a733a 287 tilemap:64
-bank_069/lz_ClubroomInteriorCollisionMap.bin 1a75c1 54
-bank_069/lz_ClubroomInteriorBehaviorMap.bin 1a7615 4b
-bank_069/ClubroomInteriorSceneUnusedSlot.bin 1a7660 9a0
+bank_064/DormRoomSceneConfig.bin 190030 2a
+bank_064/DormRoomPalettes.asm 19005a 40 palettes
+bank_064/lz_DormRoomTiles.bin 19009a 903 gfx
+bank_064/lz_DormRoomTilemap.bin 19099d 2c2 tilemap:64
+bank_064/lz_DormRoomAttrmap.bin 190c5f 1ff tilemap:64
+bank_064/lz_DormRoomCollisionMap.bin 190e5e 76
+bank_064/lz_DormRoomBehaviorMap.bin 190ed4 48
+bank_064/RestaurantPlazaSceneConfig.bin 190f1c 2a
+bank_064/RestaurantPlazaPalettes.asm 190f46 40 palettes
+bank_064/lz_RestaurantPlazaTiles.bin 190f86 ca6 gfx
+bank_064/lz_RestaurantPlazaTilemap.bin 191c2c 322 tilemap:64
+bank_064/lz_RestaurantPlazaAttrmap.bin 191f4e 19b tilemap:64
+bank_064/lz_RestaurantPlazaCollisionMap.bin 1920e9 50
+bank_064/lz_RestaurantPlazaBehaviorMap.bin 192139 5a
+bank_064/CourtyardSceneConfig.bin 192193 1b
+bank_064/CourtyardPalettes.asm 1921ae 40 palettes
+bank_064/lz_CourtyardTiles.bin 1921ee c1c gfx
+bank_064/lz_CourtyardTilemap.bin 192e0a 595 tilemap:64
+bank_064/lz_CourtyardAttrmap.bin 19339f 2a7 tilemap:64
+bank_064/lz_CourtyardCollisionMap.bin 193646 93
+bank_064/lz_CourtyardBehaviorMap.bin 1936d9 4f
+bank_064/CourtyardSceneUnusedSlot.bin 193730 8d0
+bank_065/IslandSkySceneConfig.bin 194030 1b
+bank_065/IslandSkyPalettes.bin 19404b 40
+bank_065/lz_IslandSkyTiles.bin 19408b bab gfx
+bank_065/lz_IslandSkyTilemap.bin 194c36 2ac tilemap:64
+bank_065/lz_IslandSkyAttrmap.bin 194ee2 1a0 tilemap:64
+bank_065/lz_IslandSkyCollisionMap.bin 195082 46
+bank_065/lz_IslandSkyBehaviorMap.bin 1950c8 49
+bank_065/IslandSkySceneUnusedSlot.bin 195120 600
+bank_065/SpecialCourtSceneConfig.bin 195720 17
+bank_065/SpecialCourtPalettes.asm 195737 40 palettes
+bank_065/lz_SpecialCourtTiles.bin 195777 769 gfx
+bank_065/lz_SpecialCourtTilemap.bin 195ee0 389 tilemap:64
+bank_065/lz_SpecialCourtAttrmap.bin 196269 205 tilemap:64
+bank_065/lz_SpecialCourtCollisionMap.bin 19646e 46
+bank_065/lz_SpecialCourtBehaviorMap.bin 1964b4 46
+bank_065/SpecialCourtSceneUnusedSlot.bin 196500 600
+bank_065/SeniorClassCourtSceneConfig.bin 196b00 2a
+bank_065/SeniorClassCourtPalettes.asm 196b2a 40 palettes
+bank_065/lz_SeniorClassCourtTiles.bin 196b6a 8ee gfx
+bank_065/lz_SeniorClassCourtTilemap.bin 197458 49a tilemap:64
+bank_065/lz_SeniorClassCourtAttrmap.bin 1978f2 3a5 tilemap:64
+bank_065/lz_SeniorClassCourtCollisionMap.bin 197c97 6e
+bank_065/lz_SeniorClassCourtBehaviorMap.bin 197d05 51
+bank_066/JuniorClassCourtSceneConfig.bin 198040 2a
+bank_066/JuniorClassCourtPalettes.asm 19806a 40 palettes
+bank_066/lz_JuniorClassCourtTiles.bin 1980aa 50c gfx
+bank_066/lz_JuniorClassCourtTilemap.bin 1985b6 3f4 tilemap:64
+bank_066/lz_JuniorClassCourtAttrmap.bin 1989aa 2f8 tilemap:64
+bank_066/lz_JuniorClassCourtCollisionMap.bin 198ca2 65
+bank_066/lz_JuniorClassCourtBehaviorMap.bin 198d07 48
+bank_066/RestaurantSceneConfig.bin 198d4f 2a
+bank_066/RestaurantPalettes.asm 198d79 40 palettes
+bank_066/lz_RestaurantTiles.bin 198db9 7f2 gfx
+bank_066/lz_RestaurantTilemap.bin 1995ab 43e tilemap:64
+bank_066/lz_RestaurantAttrmap.bin 1999e9 2a3 tilemap:64
+bank_066/lz_RestaurantCollisionMap.bin 199c8c 76
+bank_066/lz_RestaurantBehaviorMap.bin 199d02 80
+bank_066/AcademyEntranceSceneConfig.bin 199d82 9
+bank_066/AcademyEntrancePalettes.asm 199d8b 40 palettes
+bank_066/lz_AcademyEntranceTiles.bin 199dcb 8fd gfx
+bank_066/lz_AcademyEntranceTilemap.bin 19a6c8 448 tilemap:64
+bank_066/lz_AcademyEntranceAttrmap.bin 19ab10 23c tilemap:64
+bank_066/lz_AcademyEntranceCollisionMap.bin 19ad4c 61
+bank_066/lz_AcademyEntranceBehaviorMap.bin 19adad 4b
+bank_066/DormEntranceSceneConfig.bin 19adf8 2a
+bank_066/DormEntrancePalettes.asm 19ae22 40 palettes
+bank_066/lz_DormEntranceTiles.bin 19ae62 77c gfx
+bank_066/lz_DormEntranceTilemap.bin 19b5de 3cb tilemap:64
+bank_066/lz_DormEntranceAttrmap.bin 19b9a9 1da tilemap:64
+bank_066/lz_DormEntranceCollisionMap.bin 19bb83 5f
+bank_066/lz_DormEntranceBehaviorMap.bin 19bbe2 4b
+bank_067/TournamentCourtyardSceneConfig.bin 19c030 1b
+bank_067/TournamentCourtyardPalettes.asm 19c04b 40 palettes
+bank_067/lz_TournamentCourtyardTiles.bin 19c08b bec gfx
+bank_067/lz_TournamentCourtyardTilemap.bin 19cc77 44d tilemap:64
+bank_067/lz_TournamentCourtyardAttrmap.bin 19d0c4 2b1 tilemap:64
+bank_067/lz_TournamentCourtyardCollisionMap.bin 19d375 6a
+bank_067/lz_TournamentCourtyardBehaviorMap.bin 19d3df 53
+bank_067/TournamentCourtyardSceneUnusedSlot.bin 19d440 600
+bank_067/Court1SceneConfig.bin 19da40 2a
+bank_067/Court1Palettes.asm 19da6a 40 palettes
+bank_067/lz_Court1Tiles.bin 19daaa 935 gfx
+bank_067/lz_Court1Tilemap.bin 19e3df 39a tilemap:64
+bank_067/lz_Court1Attrmap.bin 19e779 239 tilemap:64
+bank_067/lz_Court1CollisionMap.bin 19e9b2 67
+bank_067/lz_Court1BehaviorMap.bin 19ea19 4b
+bank_067/TrainingCourtMapSceneConfig.bin 19ea64 2a
+bank_067/TrainingCourtMapPalettes.asm 19ea8e 40 palettes
+bank_067/lz_TrainingCourtMapTiles.bin 19eace 90c gfx
+bank_067/lz_TrainingCourtMapTilemap.bin 19f3da 532 tilemap:64
+bank_067/lz_TrainingCourtMapAttrmap.bin 19f90c 2c6 tilemap:64
+bank_067/lz_TrainingCourtMapCollisionMap.bin 19fbd2 80
+bank_067/lz_TrainingCourtMapBehaviorMap.bin 19fc52 4c
+bank_068/Court2SceneConfig.bin 1a0030 2a
+bank_068/Court2Palettes.asm 1a005a 40 palettes
+bank_068/lz_Court2Tiles.bin 1a009a bd8 gfx
+bank_068/lz_Court2Tilemap.bin 1a0c72 495 tilemap:64
+bank_068/lz_Court2Attrmap.bin 1a1107 2be tilemap:64
+bank_068/lz_Court2CollisionMap.bin 1a13c5 6c
+bank_068/lz_Court2BehaviorMap.bin 1a1431 4a
+bank_068/CenterCourtMapSceneConfig.bin 1a147b 2a
+bank_068/CenterCourtMapPalettes.asm 1a14a5 40 palettes
+bank_068/lz_CenterCourtMapTiles.bin 1a14e5 83c gfx
+bank_068/lz_CenterCourtMapTilemap.bin 1a1d21 443 tilemap:64
+bank_068/lz_CenterCourtMapAttrmap.bin 1a2164 26c tilemap:64
+bank_068/lz_CenterCourtMapCollisionMap.bin 1a23d0 65
+bank_068/lz_CenterCourtMapBehaviorMap.bin 1a2435 4b
+bank_068/PeachsCastleSceneConfig.bin 1a2480 17
+bank_068/PeachsCastlePalettes.asm 1a2497 40 palettes
+bank_068/lz_PeachsCastleTiles.bin 1a24d7 915 gfx
+bank_068/lz_PeachsCastleTilemap.bin 1a2dec 351 tilemap:64
+bank_068/lz_PeachsCastleAttrmap.bin 1a313d 253 tilemap:64
+bank_068/lz_PeachsCastleCollisionMap.bin 1a3390 67
+bank_068/lz_PeachsCastleBehaviorMap.bin 1a33f7 4a
+bank_068/PeachsCastleSceneUnusedSlot.bin 1a3450 bb0
+bank_069/TrainingCenterSceneConfig.bin 1a4030 2a
+bank_069/TrainingCenterPalettes.asm 1a405a 40 palettes
+bank_069/lz_TrainingCenterTiles.bin 1a409a bc3 gfx
+bank_069/lz_TrainingCenterTilemap.bin 1a4c5d 4be tilemap:64
+bank_069/lz_TrainingCenterAttrmap.bin 1a511b 2f7 tilemap:64
+bank_069/lz_TrainingCenterCollisionMap.bin 1a5412 81
+bank_069/lz_TrainingCenterBehaviorMap.bin 1a5493 81
+bank_069/TournamentSceneConfig.bin 1a5514 2a
+bank_069/TournamentPalettes.asm 1a553e 40 palettes
+bank_069/lz_TournamentTiles.bin 1a557e 822 gfx
+bank_069/lz_TournamentTilemap.bin 1a5da0 3df tilemap:64
+bank_069/lz_TournamentAttrmap.bin 1a617f 2ef tilemap:64
+bank_069/lz_TournamentCollisionMap.bin 1a646e 7d
+bank_069/lz_TournamentBehaviorMap.bin 1a64eb 57
+bank_069/AwardsCeremonySceneConfig.bin 1a6542 1b
+bank_069/AwardsCeremonyPalettes.asm 1a655d 40 palettes
+bank_069/lz_AwardsCeremonyTiles.bin 1a659d 9b6 gfx
+bank_069/lz_AwardsCeremonyTilemap.bin 1a6f53 3e7 tilemap:64
+bank_069/lz_AwardsCeremonyAttrmap.bin 1a733a 287 tilemap:64
+bank_069/lz_AwardsCeremonyCollisionMap.bin 1a75c1 54
+bank_069/lz_AwardsCeremonyBehaviorMap.bin 1a7615 4b
+bank_069/AwardsCeremonySceneUnusedSlot.bin 1a7660 9a0
 bank_06a/WalkSprite_6a_00_Gfx00.bin 1a8030 100 gfx:2x2
 bank_06a/WalkSprite_6a_00_Gfx01.bin 1a8130 100 gfx:2x2
 bank_06a/WalkSprite_6a_00_Gfx02.bin 1a8230 100 gfx:2x2

@@ -1016,11 +1016,10 @@ def MENUSLIDE_FORWARD        equ $01 ; into a submenu
 ; --- Scene ids (SceneGfxSlotTable $0a:$59d9; wCurrentScene, wStoryLocationScene) ---
 ; The index of a scene's eight-slot record. 0-15 are the match courts, which
 ; CourtSceneDataTable selects by court id; 16-36 the overworld, which the
-; story_location records select. Named for what loads them, which is the
-; evidence: several of the scene's blob families (SpaResort*, CeremonyHall*,
-; Countryside*, the four unlabelled-court families) still carry the visual
-; guesses they were first named by, and those are the restaurant, Peach's
-; Castle, the restaurant plaza and the courts below.
+; story_location records select. Named for what loads them, and each scene's
+; blob family (its SceneConfig, Palettes, Tiles, Tilemap, Attrmap, ... labels
+; and data/ files) carries the same name in CamelCase: SCENE_RESTAURANT's
+; tilemap is RestaurantTilemap.
 def SCENE_MINIGAME_COURT     equ $00 ; Banana Bunch, Perfect Shot, Fruit Fantasy, and the unused court $0e
 def SCENE_TARGET_SHOT_COURT  equ $01
 def SCENE_GRASS_COURT        equ $02 ; COURT_GRASS and COURT_GRASS_ISLAND_OPEN

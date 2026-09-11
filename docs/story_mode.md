@@ -325,10 +325,13 @@ of eight `dslot` words. Records 0-15 are the match courts (loaded by
 `LoadCourtSceneGraphics` from the `court_scene` rows); the overworld uses
 `$10`-`$24`, which is exactly the range the `story_location` records reference.
 The `SCENE_*` constants name each record for what loads it, and both tables
-and the scene table's row comments use them. Several scene blob families
-(`SpaResort*`, `CeremonyHall*`, `Countryside*`, the four court families
-without a court name) still carry the visual guesses they were first named
-by; the constants' comments say what each really is.
+and the scene table's row comments use them. Each scene's blob family (its
+`SceneConfig`, `Palettes`, `Tiles`, `Tilemap`, `Attrmap`, `CollisionMap` and
+`BehaviorMap` labels, and the `data/` files named after them) carries the
+same name in CamelCase, so `SCENE_RESTAURANT`'s tilemap is
+`lz_RestaurantTilemap.png`; the families were first named by looking at the
+pictures, and several of those guesses (a "spa resort" for the restaurant,
+a "ceremony hall" for Peach's Castle) were wrong.
 
 `LoadStorySceneGraphics` (`$0a:$585d`) reads the eight slots and consumes them in
 this order:

@@ -111,6 +111,18 @@ blob.
 
 ## Recent changes
 
+* **2026-09-11** — the scene blob families are named after their scene.
+  Each of the 37 scenes' blobs (config, palettes, tiles, tilemap, attribute
+  map, collision and behaviour maps, and the `DataPtr_` slots and aliases)
+  now carry the `SCENE_*` name in CamelCase, in the source, `data.manifest`,
+  `data.previews`, the extracted `data/` files and the docs: 440 labels.
+  Nine families had been named by a wrong visual guess (`SpaResort*` was
+  the restaurant, `CeremonyHall*` Peach's Castle, `Countryside*` the
+  restaurant plaza, `Clubhouse*` and `Courtyard*` the two minigame courts,
+  and the `HardCourt`/`CompositionCourt`/`PracticeCourt`/`IslandOpenCourt`
+  families were the training, hard, composition and wall-practice courts);
+  the rest were renamed for consistency (`YoshiCourt*` → `TropicsCourt*`,
+  `CafeCourt*` → `Court1*`, `StadiumGrounds*` → `CenterCourtMap*`, ...).
 * **2026-09-11** — the twin families share one source. 60 families, 271
   of the 279 instruction-identical live routines, are now one file each
   under `src/twins/`, assembled into every member bank through
@@ -149,9 +161,8 @@ blob.
   `hardware.inc`'s `SC_*` bits, and the 42 story entry-point sentinels
   `STORYENTRY_NONE`. What stays literal is mostly per-location stage
   scratch, whose meaning changes by bank, and the numbered entry points.
-  Follow-up: the scene blob families named by visual guess (`SpaResort*`
-  is the restaurant, `CeremonyHall*` Peach's Castle) should be renamed for
-  what loads them.
+  The scene blob families named by visual guess were renamed the same day
+  (below).
 * **2026-09-11** — the tunable tables have named fields. One macro row per
   record, field order in the macro's comment: the 100 character records
   (`char_record`, each with the character's name), the racket and shoe

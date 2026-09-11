@@ -1,92 +1,92 @@
-DataPtr_TrainingHallSceneConfig:
-	dw TrainingHallSceneConfig ; $4000
-DataPtr_TrainingHallPalettes:
-	dw TrainingHallPalettes ; $4002
-DataPtr_TrainingHallTilemap:
-	dw TrainingHallTilemap ; $4004
-DataPtr_TrainingHallAttrmap:
-	dw TrainingHallAttrmap ; $4006
-DataPtr_TrainingHallCollisionMap:
-	dw TrainingHallCollisionMap ; $4008
-DataPtr_TrainingHallBehaviorMap:
-	dw TrainingHallBehaviorMap ; $400a
-DataPtr_CenterCourtHallSceneConfig:
-	dw CenterCourtHallSceneConfig ; $400c
-DataPtr_TrainingHallTiles:
-	dw TrainingHallTiles ; $400e
-DataPtr_CenterCourtHallSceneConfigAlias1:
-	dw CenterCourtHallSceneConfig ; $4010
-DataPtr_CenterCourtHallPalettes:
-	dw CenterCourtHallPalettes ; $4012
-DataPtr_CenterCourtHallTilemap:
-	dw CenterCourtHallTilemap ; $4014
-DataPtr_CenterCourtHallAttrmap:
-	dw CenterCourtHallAttrmap ; $4016
-DataPtr_CenterCourtHallCollisionMap:
-	dw CenterCourtHallCollisionMap ; $4018
-DataPtr_CenterCourtHallBehaviorMap:
-	dw CenterCourtHallBehaviorMap ; $401a
-DataPtr_ClubroomInteriorSceneConfig:
-	dw ClubroomInteriorSceneConfig ; $401c
-DataPtr_CenterCourtHallTiles:
-	dw CenterCourtHallTiles ; $401e
-DataPtr_ClubroomInteriorSceneConfigAlias1:
-	dw ClubroomInteriorSceneConfig ; $4020
-DataPtr_ClubroomInteriorPalettes:
-	dw ClubroomInteriorPalettes ; $4022
-DataPtr_ClubroomInteriorTilemap:
-	dw ClubroomInteriorTilemap ; $4024
-DataPtr_ClubroomInteriorAttrmap:
-	dw ClubroomInteriorAttrmap ; $4026
-DataPtr_ClubroomInteriorCollisionMap:
-	dw ClubroomInteriorCollisionMap ; $4028
-DataPtr_ClubroomInteriorBehaviorMap:
-	dw ClubroomInteriorBehaviorMap ; $402a
-DataPtr_ClubroomInteriorSceneUnusedSlot:
-	dw ClubroomInteriorSceneUnusedSlot ; $402c
-DataPtr_ClubroomInteriorTiles:
-	dw ClubroomInteriorTiles ; $402e
-TrainingHallSceneConfig:
-	INCBIN "data/bank_069/TrainingHallSceneConfig.bin" ; $4030, 42 bytes
-TrainingHallPalettes:
-	INCLUDE "data/bank_069/TrainingHallPalettes.asm" ; $405a, 64 bytes (palettes)
-TrainingHallTiles:
-	INCBIN "data/bank_069/lz_TrainingHallTiles.bin" ; $409a, 3011 bytes
-TrainingHallTilemap:
-	INCBIN "data/bank_069/lz_TrainingHallTilemap.bin" ; $4c5d, 1214 bytes
-TrainingHallAttrmap:
-	INCBIN "data/bank_069/lz_TrainingHallAttrmap.bin" ; $511b, 759 bytes
-TrainingHallCollisionMap:
-	INCBIN "data/bank_069/lz_TrainingHallCollisionMap.bin" ; $5412, 129 bytes
-TrainingHallBehaviorMap:
-	INCBIN "data/bank_069/lz_TrainingHallBehaviorMap.bin" ; $5493, 129 bytes
-CenterCourtHallSceneConfig:
-	INCBIN "data/bank_069/CenterCourtHallSceneConfig.bin" ; $5514, 42 bytes
-CenterCourtHallPalettes:
-	INCLUDE "data/bank_069/CenterCourtHallPalettes.asm" ; $553e, 64 bytes (palettes)
-CenterCourtHallTiles:
-	INCBIN "data/bank_069/lz_CenterCourtHallTiles.bin" ; $557e, 2082 bytes
-CenterCourtHallTilemap:
-	INCBIN "data/bank_069/lz_CenterCourtHallTilemap.bin" ; $5da0, 991 bytes
-CenterCourtHallAttrmap:
-	INCBIN "data/bank_069/lz_CenterCourtHallAttrmap.bin" ; $617f, 751 bytes
-CenterCourtHallCollisionMap:
-	INCBIN "data/bank_069/lz_CenterCourtHallCollisionMap.bin" ; $646e, 125 bytes
-CenterCourtHallBehaviorMap:
-	INCBIN "data/bank_069/lz_CenterCourtHallBehaviorMap.bin" ; $64eb, 87 bytes
-ClubroomInteriorSceneConfig:
-	INCBIN "data/bank_069/ClubroomInteriorSceneConfig.bin" ; $6542, 27 bytes
-ClubroomInteriorPalettes:
-	INCLUDE "data/bank_069/ClubroomInteriorPalettes.asm" ; $655d, 64 bytes (palettes)
-ClubroomInteriorTiles:
-	INCBIN "data/bank_069/lz_ClubroomInteriorTiles.bin" ; $659d, 2486 bytes
-ClubroomInteriorTilemap:
-	INCBIN "data/bank_069/lz_ClubroomInteriorTilemap.bin" ; $6f53, 999 bytes
-ClubroomInteriorAttrmap:
-	INCBIN "data/bank_069/lz_ClubroomInteriorAttrmap.bin" ; $733a, 647 bytes
-ClubroomInteriorCollisionMap:
-	INCBIN "data/bank_069/lz_ClubroomInteriorCollisionMap.bin" ; $75c1, 84 bytes
-ClubroomInteriorBehaviorMap:
-	INCBIN "data/bank_069/lz_ClubroomInteriorBehaviorMap.bin" ; $7615, 75 bytes
-ClubroomInteriorSceneUnusedSlot:
-	INCBIN "data/bank_069/ClubroomInteriorSceneUnusedSlot.bin" ; $7660, 2464 bytes
+DataPtr_TrainingCenterSceneConfig:
+	dw TrainingCenterSceneConfig ; $4000
+DataPtr_TrainingCenterPalettes:
+	dw TrainingCenterPalettes ; $4002
+DataPtr_TrainingCenterTilemap:
+	dw TrainingCenterTilemap ; $4004
+DataPtr_TrainingCenterAttrmap:
+	dw TrainingCenterAttrmap ; $4006
+DataPtr_TrainingCenterCollisionMap:
+	dw TrainingCenterCollisionMap ; $4008
+DataPtr_TrainingCenterBehaviorMap:
+	dw TrainingCenterBehaviorMap ; $400a
+DataPtr_TournamentSceneConfig:
+	dw TournamentSceneConfig ; $400c
+DataPtr_TrainingCenterTiles:
+	dw TrainingCenterTiles ; $400e
+DataPtr_TournamentSceneConfigAlias1:
+	dw TournamentSceneConfig ; $4010
+DataPtr_TournamentPalettes:
+	dw TournamentPalettes ; $4012
+DataPtr_TournamentTilemap:
+	dw TournamentTilemap ; $4014
+DataPtr_TournamentAttrmap:
+	dw TournamentAttrmap ; $4016
+DataPtr_TournamentCollisionMap:
+	dw TournamentCollisionMap ; $4018
+DataPtr_TournamentBehaviorMap:
+	dw TournamentBehaviorMap ; $401a
+DataPtr_AwardsCeremonySceneConfig:
+	dw AwardsCeremonySceneConfig ; $401c
+DataPtr_TournamentTiles:
+	dw TournamentTiles ; $401e
+DataPtr_AwardsCeremonySceneConfigAlias1:
+	dw AwardsCeremonySceneConfig ; $4020
+DataPtr_AwardsCeremonyPalettes:
+	dw AwardsCeremonyPalettes ; $4022
+DataPtr_AwardsCeremonyTilemap:
+	dw AwardsCeremonyTilemap ; $4024
+DataPtr_AwardsCeremonyAttrmap:
+	dw AwardsCeremonyAttrmap ; $4026
+DataPtr_AwardsCeremonyCollisionMap:
+	dw AwardsCeremonyCollisionMap ; $4028
+DataPtr_AwardsCeremonyBehaviorMap:
+	dw AwardsCeremonyBehaviorMap ; $402a
+DataPtr_AwardsCeremonySceneUnusedSlot:
+	dw AwardsCeremonySceneUnusedSlot ; $402c
+DataPtr_AwardsCeremonyTiles:
+	dw AwardsCeremonyTiles ; $402e
+TrainingCenterSceneConfig:
+	INCBIN "data/bank_069/TrainingCenterSceneConfig.bin" ; $4030, 42 bytes
+TrainingCenterPalettes:
+	INCLUDE "data/bank_069/TrainingCenterPalettes.asm" ; $405a, 64 bytes (palettes)
+TrainingCenterTiles:
+	INCBIN "data/bank_069/lz_TrainingCenterTiles.bin" ; $409a, 3011 bytes
+TrainingCenterTilemap:
+	INCBIN "data/bank_069/lz_TrainingCenterTilemap.bin" ; $4c5d, 1214 bytes
+TrainingCenterAttrmap:
+	INCBIN "data/bank_069/lz_TrainingCenterAttrmap.bin" ; $511b, 759 bytes
+TrainingCenterCollisionMap:
+	INCBIN "data/bank_069/lz_TrainingCenterCollisionMap.bin" ; $5412, 129 bytes
+TrainingCenterBehaviorMap:
+	INCBIN "data/bank_069/lz_TrainingCenterBehaviorMap.bin" ; $5493, 129 bytes
+TournamentSceneConfig:
+	INCBIN "data/bank_069/TournamentSceneConfig.bin" ; $5514, 42 bytes
+TournamentPalettes:
+	INCLUDE "data/bank_069/TournamentPalettes.asm" ; $553e, 64 bytes (palettes)
+TournamentTiles:
+	INCBIN "data/bank_069/lz_TournamentTiles.bin" ; $557e, 2082 bytes
+TournamentTilemap:
+	INCBIN "data/bank_069/lz_TournamentTilemap.bin" ; $5da0, 991 bytes
+TournamentAttrmap:
+	INCBIN "data/bank_069/lz_TournamentAttrmap.bin" ; $617f, 751 bytes
+TournamentCollisionMap:
+	INCBIN "data/bank_069/lz_TournamentCollisionMap.bin" ; $646e, 125 bytes
+TournamentBehaviorMap:
+	INCBIN "data/bank_069/lz_TournamentBehaviorMap.bin" ; $64eb, 87 bytes
+AwardsCeremonySceneConfig:
+	INCBIN "data/bank_069/AwardsCeremonySceneConfig.bin" ; $6542, 27 bytes
+AwardsCeremonyPalettes:
+	INCLUDE "data/bank_069/AwardsCeremonyPalettes.asm" ; $655d, 64 bytes (palettes)
+AwardsCeremonyTiles:
+	INCBIN "data/bank_069/lz_AwardsCeremonyTiles.bin" ; $659d, 2486 bytes
+AwardsCeremonyTilemap:
+	INCBIN "data/bank_069/lz_AwardsCeremonyTilemap.bin" ; $6f53, 999 bytes
+AwardsCeremonyAttrmap:
+	INCBIN "data/bank_069/lz_AwardsCeremonyAttrmap.bin" ; $733a, 647 bytes
+AwardsCeremonyCollisionMap:
+	INCBIN "data/bank_069/lz_AwardsCeremonyCollisionMap.bin" ; $75c1, 84 bytes
+AwardsCeremonyBehaviorMap:
+	INCBIN "data/bank_069/lz_AwardsCeremonyBehaviorMap.bin" ; $7615, 75 bytes
+AwardsCeremonySceneUnusedSlot:
+	INCBIN "data/bank_069/AwardsCeremonySceneUnusedSlot.bin" ; $7660, 2464 bytes
