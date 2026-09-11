@@ -116,6 +116,12 @@ label bound to the wrong parent.
 
 ## Recent changes
 
+* **2026-09-11** — every sound call names its id. The 33 ids that were
+  still literal at 182 sites are named from their call sites in
+  `include/constants.inc` (`SFX_NET_CORD`, `SFX_RANKING_MARKER`,
+  `SFX_VOICE_YOSHI`, the two cutscene pop sounds, ...); the comments say
+  where each plays, since the emulator gives no audio to say what it
+  sounds like.
 * **2026-09-11** — two readability changes for modders. VRAM addresses are
   named at the 760 sites a VRAM consumer takes them (`vTiles0 + $10 *
   TILE_SIZE`, `vBGMap0 + 15 * TILEMAP_WIDTH`, `+ VRAM_BANK1`), the 51 words

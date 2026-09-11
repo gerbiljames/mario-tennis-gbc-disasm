@@ -414,7 +414,7 @@ ServiceAceCoachIntroCutscene:
 	script_speak $07 ; $4845
 	script_wait_frames $0f ; $484a
 	script_set_position $03, $1c00, $0b00 ; $4851
-	sound $97 ; $485c
+	sound SFX_CHIME ; $485c
 	script_wait_frames $1e ; $485e
 	script_set_position $03, $3f00, $3f00 ; $4865
 	script_face $06, FACE_LEFT ; $4870
@@ -455,7 +455,7 @@ ServiceAceCoachIntroCutscene:
 	script_set_anim $08, $02 ; $4963
 	script_wait_idle $08 ; $496a
 	script_set_position $04, $1640, $0940 ; $496f
-	sound $98 ; $497a
+	sound SFX_EMOTE ; $497a
 	script_wait_frames $1e ; $497c
 	script_set_position $04, $3f00, $3f00 ; $4983
 	script_wait_frames $1e ; $498e
@@ -710,7 +710,7 @@ DormRoomTile0F_13:
 	ld a, $03 ; $4f14
 	call ComputeEmoteActorPosition_13 ; $4f16
 	call PlaceEmoteActorAtComputedPosition_13 ; $4f19
-	sound $97 ; $4f1c
+	sound SFX_CHIME ; $4f1c
 	script_wait_frames $46 ; $4f1e
 	script_set_position $05, $3f00, $3f00 ; $4f25
 	script_speak $03 ; $4f30
@@ -2408,7 +2408,7 @@ VarsityCourtTourCutscene:
 	farcall WaitPlayerMoveDone ; $6447
 	script_player_speed $0020 ; $644a
 	script_set_position $04, $2100, $1d00 ; $6450
-	sound $98 ; $645b
+	sound SFX_EMOTE ; $645b
 	script_wait_frames $32 ; $645d
 	script_set_position $04, $3f00, $3f00 ; $6464
 	script_set_anim $06, $02 ; $646f
@@ -3066,7 +3066,7 @@ SinglesTravelingTeamVictoryCutscene:
 	script_wait_idle ACTOR_PLAYER ; $718c
 	script_speak $0d ; $7191
 	script_set_position $0c, $0c40, $1bc0 ; $7196
-	sound $98 ; $71a1
+	sound SFX_EMOTE ; $71a1
 	script_wait_frames $28 ; $71a3
 	script_set_position $0c, $3f00, $3f00 ; $71aa
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $71b5
@@ -3228,7 +3228,7 @@ DoublesTravelingTeamVictoryCutscene:
 	script_face ACTOR_PLAYER, FACE_LEFT ; $755b
 	script_set_anim ACTOR_PLAYER, $02 ; $7562
 	script_set_position $0a, $0c00, $1b80 ; $7569
-	sound $96 ; $7574
+	sound SFX_APPEAR2 ; $7574
 	script_wait_frames $28 ; $7576
 	script_set_position $0a, $3f00, $3f00 ; $757d
 	script_face_toward ACTOR_PARTNER, ACTOR_PLAYER ; $7588
@@ -3280,7 +3280,7 @@ DoublesTravelingTeamVictoryCutscene:
 	script_speak ACTOR_PARTNER ; $7689
 	script_face_toward ACTOR_PARTNER, ACTOR_PLAYER ; $768e
 	script_set_position $0a, $0c00, $1b80 ; $7696
-	sound $96 ; $76a1
+	sound SFX_APPEAR2 ; $76a1
 	script_wait_frames $28 ; $76a3
 	script_set_position $0a, $3f00, $3f00 ; $76aa
 	script_wait_frames $0a ; $76b5
@@ -3604,7 +3604,7 @@ MapScriptClearActiveFlag_13:
 	ld [wStoryScriptRan], a ; $7b4f
 	ret ; $7b52
 MapScriptPlaySoundA2_13:
-	sound $a2 ; $7b53
+	sound SFX_STORY_CUE ; $7b53
 	ret ; $7b55
 MapScriptHideLocationName_13:
 	xor a ; $7b56

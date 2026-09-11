@@ -6908,7 +6908,7 @@ Unused_05_RunDebugWindowDemo:
 	call RedrawWindowRows ; $6dd6
 	call EnableLCD ; $6dd9
 	pop_wram_bank ; $6ddc
-	sound $72 ; $6de1
+	sound SFX_BEEP ; $6de1
 .loop:
 	ldh a, [hPlayerInputFlags] ; $6de3
 	ld hl, hScrollX ; $6de5

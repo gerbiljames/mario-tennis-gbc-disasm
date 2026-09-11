@@ -554,7 +554,7 @@ LateStudentCrashCutscene:
 	script_move_target $11, $1800, $1700 ; $483d
 	script_wait_move $11 ; $4848
 	script_set_position $0e, $1980, $15c0 ; $484d
-	sound $98 ; $4858
+	sound SFX_EMOTE ; $4858
 	script_set_speed $11, $0010 ; $485a
 	script_set_speed $0e, $0010 ; $4862
 	script_move_target $0e, $1980, $18c0 ; $486a
@@ -567,7 +567,7 @@ LateStudentCrashCutscene:
 	script_wait_frames $1e ; $48a5
 	script_set_anim $11, $02 ; $48ac
 	script_set_position $0f, $1980, $14c0 ; $48b3
-	sound $97 ; $48be
+	sound SFX_CHIME ; $48be
 	script_wait_frames $14 ; $48c0
 	script_speak $11 ; $48c7
 	script_set_position $0f, $3f00, $3f00 ; $48cc
@@ -588,7 +588,7 @@ LateStudentCrashCutscene:
 	script_wait_move $11 ; $4920
 	script_set_anim $11, $02 ; $4925
 	script_set_position $10, $1900, $1e00 ; $492c
-	sound $96 ; $4937
+	sound SFX_APPEAR2 ; $4937
 	script_wait_frames $3c ; $4939
 	script_set_position $10, $3f00, $3f00 ; $4940
 	script_move_target $11, $1700, $2200 ; $494b
@@ -669,7 +669,7 @@ LateStudentCrashCutscene:
 	script_speak $11 ; $4b2f
 	script_wait_frames $3c ; $4b34
 	script_set_position $0e, $1b80, $21c0 ; $4b3b
-	sound $98 ; $4b46
+	sound SFX_EMOTE ; $4b46
 	script_wait_frames $28 ; $4b48
 	script_set_position $0e, $3f00, $3f00 ; $4b4f
 	script_move_angle $11, FACE_LEFT, $0100 ; $4b5a
@@ -682,7 +682,7 @@ LateStudentCrashCutscene:
 	script_set_position $0e, $3f00, $3f00 ; $4b8c
 	script_wait_frames $3c ; $4b97
 	script_set_position $0f, $1a80, $21c0 ; $4b9e
-	sound $97 ; $4ba9
+	sound SFX_CHIME ; $4ba9
 	script_jump_velocity $11, $ff80 ; $4bab
 	ld a, $11 ; $4bb3
 	farcall ScriptWaitActorJumpDone ; $4bb5
@@ -706,7 +706,7 @@ LateStudentCrashCutscene:
 	script_set_anim $11, $02 ; $4c24
 	script_wait_idle $11 ; $4c2b
 	script_set_position $0f, $1a80, $21c0 ; $4c30
-	sound $97 ; $4c3b
+	sound SFX_CHIME ; $4c3b
 	script_wait_frames $28 ; $4c3d
 	script_set_position $0f, $3f00, $3f00 ; $4c44
 	script_face $11, FACE_UP ; $4c4f
@@ -798,7 +798,7 @@ AcademyArrivalGreetingScene:
 .doubles:
 	script_speak $12 ; $4df5
 	script_set_position $0f, $1940, $11c0 ; $4dfa
-	sound $97 ; $4e05
+	sound SFX_CHIME ; $4e05
 	script_wait_frames $28 ; $4e07
 	script_set_position $0f, $3f00, $3f00 ; $4e0e
 	script_face_toward $12, ACTOR_PLAYER ; $4e19
@@ -818,7 +818,7 @@ AcademyArrivalGreetingScene:
 	script_set_text Text_30_421 ; $4e7b
 	script_speak $03 ; $4e81
 	script_set_position $0e, $1940, $11c0 ; $4e86
-	sound $98 ; $4e91
+	sound SFX_EMOTE ; $4e91
 	script_wait_frames $32 ; $4e93
 	script_set_position $0e, $3f00, $3f00 ; $4e9a
 	script_set_anim $12, $03 ; $4ea5
@@ -2830,7 +2830,7 @@ JuniorClassCourtSinglesMatchReturn:
 	script_wait_idle ACTOR_PLAYER ; $71f9
 	script_face ACTOR_PLAYER, FACE_UP ; $71fe
 	script_set_position $12, $1b80, $1280 ; $7205
-	sound $96 ; $7210
+	sound SFX_APPEAR2 ; $7210
 	script_wait_frames $28 ; $7212
 	script_set_anim $04, $02 ; $7219
 	script_wait_frames $28 ; $7220
@@ -3419,7 +3419,7 @@ MapScriptClearActiveFlag_11:
 	ld [wStoryScriptRan], a ; $7bd3
 	ret ; $7bd6
 MapScriptPlaySoundA2_11:
-	sound $a2 ; $7bd7
+	sound SFX_STORY_CUE ; $7bd7
 	ret ; $7bd9
 MapScriptHideLocationName_11:
 	xor a ; $7bda

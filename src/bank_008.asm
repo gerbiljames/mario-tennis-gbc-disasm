@@ -1670,7 +1670,7 @@ DelayAfterPointResolution:
 	ld a, [wDeuceIndicator] ; $4eb5
 	and a ; $4eb8
 	jr z, .case6 ; $4eb9
-	sound $69 ; $4ebb
+	sound SFX_DEUCE ; $4ebb
 	call StepMatchFrame ; $4ebd
 .case6:
 	farcall UpdateScorePanelDisplay ; $4ec0
@@ -2319,7 +2319,7 @@ StartLandingMarker:
 	ld [hl], b ; $5339
 	ld a, $01 ; $533a
 	ld [wLandingMarkerActive], a ; $533c
-	sound $6d ; $533f
+	sound SFX_LANDING_MARKER ; $533f
 	ret ; $5341
 DrawLandingMarker:
 	ld a, [wLandingMarkerActive] ; $5342
@@ -2436,7 +2436,7 @@ StartHitEffect:
 .specialEffect:
 	ld a, $10 ; $5406
 	ld [wSpecialHitTimer], a ; $5408
-	sound $55 ; $540b
+	sound SFX_SPECIAL_HIT ; $540b
 	ret ; $540d
 DrawHitSpark:
 	ld a, [wHitSparkTimer] ; $540e
@@ -3031,7 +3031,7 @@ HandleBallNetCrossing:
 	add hl, de ; $583c
 	bit 7, h ; $583d
 	jr nz, .done ; $583f
-	sound $5a ; $5841
+	sound SFX_NET_CORD ; $5841
 	call StartBounceEffect ; $5843
 	ld a, $01 ; $5846
 	ld [wBallHasBouncedFlag], a ; $5848
@@ -5879,7 +5879,7 @@ CharSwingWindupPhase:
 	ld hl, wCharSwingAnim ; $6c4a
 	ld d, [hl] ; $6c4d
 	call SetCharAnimation ; $6c4e
-	sound $59 ; $6c51
+	sound SFX_SWING_CHARGE ; $6c51
 	xor a ; $6c53
 	ld [wCharChargeFlashOn], a ; $6c54
 	call EndChargeFlash ; $6c57

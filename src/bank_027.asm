@@ -596,13 +596,13 @@ End12PrincipalsOfficeInitScript_27:
 	script_face $08, FACE_UP ; $4d10
 	script_face $09, FACE_UP ; $4d17
 	script_face $0a, FACE_UP ; $4d1e
-	sound $96 ; $4d25
+	sound SFX_APPEAR2 ; $4d25
 	script_set_position $04, $1f80, $3180 ; $4d27
 	script_delay $28 ; $4d32
-	sound $96 ; $4d37
+	sound SFX_APPEAR2 ; $4d37
 	script_set_position $06, $2180, $3180 ; $4d39
 	script_delay $28 ; $4d44
-	sound $96 ; $4d49
+	sound SFX_APPEAR2 ; $4d49
 	script_set_position $04, $2380, $3180 ; $4d4b
 	script_delay $28 ; $4d56
 	script_set_position $06, $3f00, $3f00 ; $4d5b
@@ -684,7 +684,7 @@ End12PrincipalsOfficeInitScript_27:
 	script_wait_move ACTOR_PARTNER ; $4f5a
 	jp .storeStoryModeExitLocationRequest ; $4f5f
 .playSfx:
-	sound $96 ; $4f62
+	sound SFX_APPEAR2 ; $4f62
 	script_set_position $04, $2180, $3380 ; $4f64
 	script_delay $50 ; $4f6f
 	script_set_position $04, $3f00, $3f00 ; $4f74
@@ -894,7 +894,7 @@ End11TrainingCourtInitScript_27:
 	script_delay $1e ; $5324
 	script_face ACTOR_PLAYER, FACE_DOWN ; $5329
 	script_delay $1e ; $5330
-	sound $98 ; $5335
+	sound SFX_EMOTE ; $5335
 	script_set_position $04, $3480, $0b80 ; $5337
 	script_delay $3c ; $5342
 	script_set_position $03, $3300, $0700 ; $5347
@@ -926,7 +926,7 @@ End11TrainingCourtInitScript_27:
 	script_set_position $04, $3f00, $3f00 ; $53ad
 	script_face ACTOR_PLAYER, FACE_UP ; $53b8
 	script_delay $1e ; $53bf
-	sound $97 ; $53c4
+	sound SFX_CHIME ; $53c4
 	script_set_position $05, $3480, $0b80 ; $53c6
 	script_delay $14 ; $53d1
 	script_jump_velocity $05, $ff40 ; $53d6
@@ -1097,7 +1097,7 @@ SetPartnerObjDefByGender_27:
 	farcall WaitPlayerMoveDone ; $56ad
 	script_move_target $04, $0b00, $1700 ; $56b0
 	script_wait_move $04 ; $56bb
-	sound $98 ; $56c0
+	sound SFX_EMOTE ; $56c0
 	script_set_position $0c, $0c40, $1bc0 ; $56c2
 	script_wait_frames $28 ; $56cd
 	script_set_position $0c, $3f00, $3f00 ; $56d4
@@ -1200,7 +1200,7 @@ SceneSharedData_27:
 	script_wait_idle ACTOR_PARTNER ; $5909
 	script_face ACTOR_PLAYER, FACE_LEFT ; $590e
 	script_set_anim ACTOR_PLAYER, $02 ; $5915
-	sound $96 ; $591c
+	sound SFX_APPEAR2 ; $591c
 	script_set_position $0a, $0c00, $1b80 ; $591e
 	script_wait_frames $28 ; $5929
 	script_set_position $0a, $3f00, $3f00 ; $5930
@@ -1249,7 +1249,7 @@ CeremonyDoublesReaction_27:
 	script_set_anim ACTOR_PARTNER, $02 ; $5a25
 	script_wait_idle ACTOR_PARTNER ; $5a2c
 	script_face_toward ACTOR_PARTNER, ACTOR_PLAYER ; $5a31
-	sound $96 ; $5a39
+	sound SFX_APPEAR2 ; $5a39
 	script_set_position $0a, $0c00, $1b80 ; $5a3b
 	script_wait_frames $28 ; $5a46
 	script_set_position $0a, $3f00, $3f00 ; $5a4d
@@ -1788,7 +1788,7 @@ End5ServiceAceCutscene_27:
 	script_wait_frames $14 ; $65df
 	script_face $12, FACE_LEFT ; $65e6
 	script_wait_frames $28 ; $65ed
-	sound $97 ; $65f4
+	sound SFX_CHIME ; $65f4
 	script_set_position $07, $1c00, $1100 ; $65f6
 	script_set_anim $12, $02 ; $6601
 	script_wait_frames $3c ; $6608
@@ -2214,7 +2214,7 @@ End3DormEntCutscene_27:
 	script_wait_idle ACTOR_PLAYER ; $6dbd
 	script_wait_frames $14 ; $6dc2
 	script_player_speed $0010 ; $6dc9
-	sound $97 ; $6dcf
+	sound SFX_CHIME ; $6dcf
 	script_set_position $05, $1780, $0f00 ; $6dd1
 	script_set_anim $03, $02 ; $6ddc
 	script_wait_idle $03 ; $6de3
@@ -2241,7 +2241,7 @@ End3DormEntCutscene_27:
 	script_wait_move $03 ; $6e73
 	script_move_target $04, $1700, $0f00 ; $6e78
 	script_wait_move $04 ; $6e83
-	sound $98 ; $6e88
+	sound SFX_EMOTE ; $6e88
 	script_set_position $06, $1780, $1100 ; $6e8a
 	script_wait_frames $3c ; $6e95
 	script_set_anim $03, $04 ; $6e9c
@@ -2331,7 +2331,7 @@ EndRestaurantEntCutscene_27:
 	script_wait_frames $1e ; $702c
 	call OpenRestaurantEntDoor_27 ; $7033
 	script_wait_frames $0f ; $7036
-	sound $97 ; $703d
+	sound SFX_CHIME ; $703d
 	script_set_position $03, $1c00, $0b00 ; $703f
 	script_wait_frames $1e ; $704a
 	script_set_position $03, $3f00, $3f00 ; $7051
@@ -2480,7 +2480,7 @@ End1MainBldgInitScript_27:
 	farcall ScriptWaitActorJumpDone ; $740d
 	script_move_target $06, $1800, $1700 ; $7410
 	script_wait_move $06 ; $741b
-	sound $98 ; $7420
+	sound SFX_EMOTE ; $7420
 	script_set_position $03, $1980, $15c0 ; $7422
 	script_set_speed $06, $0010 ; $742d
 	script_set_speed $03, $0010 ; $7435
@@ -2492,7 +2492,7 @@ End1MainBldgInitScript_27:
 	script_wait_move $06 ; $746e
 	script_wait_frames $1e ; $7473
 	script_set_anim $06, $02 ; $747a
-	sound $97 ; $7481
+	sound SFX_CHIME ; $7481
 	script_set_position $04, $1980, $14c0 ; $7483
 	script_wait_frames $14 ; $748e
 	script_set_position $04, $3f00, $3f00 ; $7495
@@ -2512,7 +2512,7 @@ End1MainBldgInitScript_27:
 	call End1MainBldgKnockdown_27 ; $74e6
 	script_wait_move $06 ; $74e9
 	script_set_anim $06, $02 ; $74ee
-	sound $96 ; $74f5
+	sound SFX_APPEAR2 ; $74f5
 	script_set_position $05, $1900, $1e00 ; $74f7
 	script_wait_frames $3c ; $7502
 	script_set_position $05, $3f00, $3f00 ; $7509
@@ -2713,7 +2713,7 @@ MapScriptClearActiveFlag_27:
 	ld [wStoryScriptRan], a ; $7887
 	ret ; $788a
 MapScriptPlaySoundA2_27:
-	sound $a2 ; $788b
+	sound SFX_STORY_CUE ; $788b
 	ret ; $788d
 MapScriptHideLocationName_27:
 	xor a ; $788e

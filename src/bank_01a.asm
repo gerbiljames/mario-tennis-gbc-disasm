@@ -259,7 +259,7 @@ MusicSettingHandler0:
 	jr z, .storeMenuInitialRow ; $41e6
 	cp $03 ; $41e8
 	jr z, .storeMenuInitialRow ; $41ea
-	sound $9b ; $41ec
+	sound SFX_OPTION_TOGGLE ; $41ec
 	bit 0, a ; $41ee
 	jr z, .bit0Clear ; $41f0
 	res 0, a ; $41f2
@@ -282,7 +282,7 @@ MusicSettingHandler1:
 	jr z, .storeMenuInitialRow2 ; $4215
 	cp $03 ; $4217
 	jr z, .storeMenuInitialRow2 ; $4219
-	sound $9b ; $421b
+	sound SFX_OPTION_TOGGLE ; $421b
 	bit 1, a ; $421d
 	jr z, .bit1Clear ; $421f
 	res 1, a ; $4221
@@ -2203,7 +2203,7 @@ DrawExpScreenCaption:
 	ld de, wCharDataPageSlot1 + 2 * TILEMAP_WIDTH + 11 ; $5021
 	ld c, $20 ; $5024
 	farcall RenderProportionalTextAt ; $5026
-	sound $73 ; $5029
+	sound SFX_CAPTION ; $5029
 	ret ; $502b
 .caption4:
 	ld hl, Text_31_243 ; $502c

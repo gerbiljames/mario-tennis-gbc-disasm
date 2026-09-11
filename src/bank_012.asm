@@ -149,7 +149,7 @@ DormEntranceEntry0FScene:
 	script_wait_frames $14 ; $42a3
 	script_player_speed $0010 ; $42aa
 	script_set_position $05, $1780, $0f00 ; $42b0
-	sound $97 ; $42bb
+	sound SFX_CHIME ; $42bb
 	script_set_anim $03, $02 ; $42bd
 	script_wait_idle $03 ; $42c4
 	script_set_position $05, $0100, $0100 ; $42c9
@@ -193,7 +193,7 @@ DormEntranceEntry0FScene:
 	script_move_target $04, $1700, $0f00 ; $43cb
 	script_wait_move $04 ; $43d6
 	script_set_position $06, $1800, $1100 ; $43db
-	sound $98 ; $43e6
+	sound SFX_EMOTE ; $43e6
 	script_wait_frames $3c ; $43e8
 	script_set_anim $03, $04 ; $43ef
 	script_wait_idle $03 ; $43f6
@@ -245,7 +245,7 @@ DormEntranceEntry0FScene:
 	script_wait_idle $03 ; $44e9
 	script_speak $03 ; $44ee
 	script_set_position $06, $1800, $1100 ; $44f3
-	sound $98 ; $44fe
+	sound SFX_EMOTE ; $44fe
 	script_wait_frames $3c ; $4500
 	script_set_position $06, $0100, $0100 ; $4507
 	script_set_anim $04, $03 ; $4512
@@ -3022,7 +3022,7 @@ SeniorDoublesRank2Victory:
 	script_face_pair $09, $08 ; $6eb0
 	script_wait_frames $14 ; $6eb8
 	script_set_position $11, $2400, $1180 ; $6ebf
-	sound $96 ; $6eca
+	sound SFX_APPEAR2 ; $6eca
 	script_wait_frames $1e ; $6ecc
 	script_set_anim $08, $04 ; $6ed3
 	script_wait_idle $08 ; $6eda
@@ -3351,7 +3351,7 @@ SeniorSharedVictoryScene:
 	script_wait_idle ACTOR_PLAYER ; $76be
 	script_face ACTOR_PLAYER, FACE_UP ; $76c3
 	script_set_position $11, $2580, $1980 ; $76ca
-	sound $96 ; $76d5
+	sound SFX_APPEAR2 ; $76d5
 	script_wait_frames $28 ; $76d7
 	script_move_player $2400, $1700 ; $76de
 	farcall WaitPlayerMoveDone ; $76e8
@@ -3761,7 +3761,7 @@ MapScriptClearActiveFlag_12:
 	ld [wStoryScriptRan], a ; $7ab3
 	ret ; $7ab6
 MapScriptPlaySoundA2_12:
-	sound $a2 ; $7ab7
+	sound SFX_STORY_CUE ; $7ab7
 	ret ; $7ab9
 MapScriptHideLocationName_12:
 	xor a ; $7aba

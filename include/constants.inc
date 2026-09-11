@@ -626,6 +626,42 @@ def SFX_SCORE_STEP5          equ $bc
 def SFX_SCORE_STEP6          equ $bb
 def SFX_SCORE_STEP7          equ $ba
 
+; Effects named from their call sites on 2026-09-11 (the emulator gives no
+; audio, so these say where a sound plays, not what it sounds like).
+def SFX_SPECIAL_HIT            equ $55 ; the special-shot hit spark (StartHitEffect $08)
+def SFX_SWING_CHARGE           equ $59 ; a character starting a swing windup (CharSwingWindupPhase $08)
+def SFX_NET_CORD               equ $5a ; the ball clipping the net (HandleBallNetCrossing $08)
+def SFX_LOGO_JINGLE            equ $65 ; the intro logo screen, and TriggerCheatUnlock
+def SFX_DEUCE                  equ $69 ; the deuce call after a point (DelayAfterPointResolution $08)
+def SFX_LANDING_MARKER         equ $6d ; the landing marker appearing (StartLandingMarker $08)
+def SFX_DEBUG_ALARM            equ $6f ; QueueVRAMCopy on queue overflow, debug step mode only
+def SFX_BEEP                   equ $72 ; link-input decode errors (SerialEncode/DecodeInput), the debug window demo
+def SFX_CAPTION                equ $73 ; an EXP-screen caption appearing (DrawExpScreenCaption $1a)
+def SFX_BALL_LAUNCH            equ $76 ; the minigame ball launcher (LaunchBall $0d)
+def SFX_RANKING_MARKER         equ $78 ; a ranking-board marker moving (RankingBoardAnimState_* $1b), the tournament bracket
+def SFX_FIREWORK_LAUNCH        equ $7a ; the island sky scene: firework ascent, the plane pass (bank $14)
+def SFX_FIREWORK_SPARKLE       equ $7d ; the island sky scene: twinkle and plane cues (bank $14)
+def SFX_RANKING_BOARD          equ $7f ; the ranking board opening (ShowRankingBoard $1b, unless wRankingBoardSilent)
+def SFX_RANKING_HIGHLIGHT      equ $80 ; a ranking row highlighted (RankingBoardAnimState_* $1b)
+def SFX_STOMP                  equ $83 ; the cutscene stomp with screen shake (CutsceneStompScreenShake $0f)
+def SFX_THUD                   equ $86 ; a minigame hit scored (ScoreBallHit $0d) and a Mario World NPC landing from a jump
+def SFX_VOICE_YOSHI            equ $87 ; Yoshi speaking in Mario World (MarioWorldNpc09Yoshi_0e)
+def SFX_PEACH_FANFARE          equ $88 ; before "Princess Peach!" in Mario World (MarioWorldNpc0C_0e)
+def SFX_VOICE_BABY_MARIO       equ $89 ; Baby Mario speaking in Mario World (MarioWorldNpc0ABabyMario_0e)
+def SFX_WATER_SPRITE_MAGIC     equ $8a ; the water sprite's palette flash (WaterSpriteRacketRewardScene $15)
+def SFX_CONTEST_WIN            equ $8c ; winning the water-sprite swing contest (WaterSpriteSwingContestScene $15)
+def SFX_CONTEST_FINISH         equ $8d ; the swing contest ending (WaterSpriteSwingContestScene $15)
+def SFX_WATER_SPRITE_APPEAR    equ $8e ; the water sprite appearing after the fade (WaterSpriteRacketRewardScene $15)
+def SFX_WATER_SPRITE_FLY       equ $8f ; the water sprite flying off (WaterSpriteRacketRewardScene $15)
+def SFX_RACKET_GET             equ $90 ; receiving the water sprite's racket (WaterSpriteRacketRewardScene $15)
+def SFX_GRID_CLEAR             equ $94 ; the target grid clearing (AnimateTargetGridClear $0d)
+def SFX_APPEAR2                equ $96 ; the second of the two pop sounds cutscenes alternate as actors are placed one by one (arrivals, match returns, academy init)
+def SFX_CHIME                  equ $97 ; a minigame target hit / score popup, and a success cue in cutscenes
+def SFX_EMOTE                  equ $98 ; an emote actor placed after a line, held $78 frames (academy greeting, crash, coach intro cutscenes)
+def SFX_APPEAR1                equ $99 ; the first of the two pop sounds cutscenes alternate as actors are placed one by one; also after a stomp
+def SFX_OPTION_TOGGLE          equ $9b ; a music/sound option toggled (MusicSettingHandler0/1 $1a)
+def SFX_STORY_CUE              equ $a2 ; the MapScriptPlaySoundA2 handler every story bank carries; which map script selects it is not established
+
 ; --- On-court character animation ids (wCharAnimId $df2e, wCharSwingAnim $df15) ---
 ; One id space, not two. SetCharAnimation ($08:$69ea) stores its argument in
 ; wCharAnimId and indexes wCharAnimTablePtr by it; that table is the 19-entry

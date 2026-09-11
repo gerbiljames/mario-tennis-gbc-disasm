@@ -739,7 +739,7 @@ QueueVRAMCopy:
 	ldh a, [hDebugStepMode] ; $04dc
 	or a ; $04de
 	jr z, .queueFull ; $04df
-	sound $6f ; $04e1
+	sound SFX_DEBUG_ALARM ; $04e1
 .queueFull:
 	pop hl ; $04e3
 	pop af ; $04e4
@@ -7245,7 +7245,7 @@ SerialEncodeInput:
 	jr z, .checkSlaveWait ; $2960
 	cp $02 ; $2962
 	jr z, .checkSlaveWait ; $2964
-	sound $72 ; $2966
+	sound SFX_BEEP ; $2966
 	xor a ; $2968
 	ldh [hLinkRemoteInputBuf], a ; $2969
 	ldh [hLinkTxInput], a ; $296b
@@ -7287,7 +7287,7 @@ SerialDecodeInput:
 	jr z, .decode ; $299d
 	cp $40 ; $299f
 	jr z, .decode ; $29a1
-	sound $72 ; $29a3
+	sound SFX_BEEP ; $29a3
 	xor a ; $29a5
 	ldh [hLinkInput], a ; $29a6
 	jr .done ; $29a8

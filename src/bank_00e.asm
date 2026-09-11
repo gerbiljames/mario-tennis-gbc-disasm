@@ -1670,22 +1670,22 @@ MarioWorldNpc0BLuigi_0e:
 	ret ; $53c1
 MarioWorldNpc09Yoshi_0e:
 	script_set_text Text_5e_151 ; $53c2
-	sound $87 ; $53c8
+	sound SFX_VOICE_YOSHI ; $53c8
 	script_speak $09 ; $53ca
 	ret ; $53cf
 MarioWorldNpc0ABabyMario_0e:
 	script_set_text Text_5e_152 ; $53d0
-	sound $89 ; $53d6
+	sound SFX_VOICE_BABY_MARIO ; $53d6
 	script_speak $0a ; $53d8
 	ret ; $53dd
 MarioWorldNpc0C_0e:
 	script_set_text Text_5e_153 ; $53de
-	sound $88 ; $53e4
+	sound SFX_PEACH_FANFARE ; $53e4
 	script_speak $0c ; $53e6
 	ret ; $53eb
 MarioWorldNpc0D_0e:
 	script_set_text Text_5e_154 ; $53ec
-	sound $86 ; $53f2
+	sound SFX_THUD ; $53f2
 	script_speak $0d ; $53f4
 	ret ; $53f9
 MarioWorldNpc0FBowser_0e:
@@ -1910,13 +1910,13 @@ MarioWorldArrivalSingles:
 	script_wait_move $0e ; $5784
 	script_face $0e, FACE_UP ; $5789
 	script_wait_frames $28 ; $5790
-	sound $96 ; $5797
+	sound SFX_APPEAR2 ; $5797
 	script_set_position $04, $0f00, $0900 ; $5799
 	script_wait_frames $04 ; $57a4
-	sound $96 ; $57ab
+	sound SFX_APPEAR2 ; $57ab
 	script_set_position $05, $1300, $0700 ; $57ad
 	script_wait_frames $04 ; $57b8
-	sound $96 ; $57bf
+	sound SFX_APPEAR2 ; $57bf
 	script_set_position $06, $1700, $0900 ; $57c1
 	script_wait_frames $04 ; $57cc
 	script_face $0f, FACE_RIGHT ; $57d3
@@ -1935,7 +1935,7 @@ MarioWorldArrivalSingles:
 	script_face $0e, FACE_UP ; $5834
 	script_wait_frames $0a ; $583b
 	call MarioWorldLuigiDefendsChampCutscene ; $5842
-	sound $96 ; $5845
+	sound SFX_APPEAR2 ; $5845
 	script_set_position $04, $1380, $0f80 ; $5847
 	script_wait_frames $14 ; $5852
 	script_face $12, FACE_LEFT ; $5859
@@ -2141,9 +2141,9 @@ MarioWorldArrivalDoubles:
 	script_wait_frames $14 ; $5d79
 	script_jump_velocity $0d, $ff80 ; $5d80
 	script_wait_frames $28 ; $5d88
-	sound $86 ; $5d8f
+	sound SFX_THUD ; $5d8f
 	script_speak $0d ; $5d91
-	sound $99 ; $5d96
+	sound SFX_APPEAR1 ; $5d96
 	script_set_position $07, $0f00, $0d00 ; $5d98
 	script_set_speed $0f, $0020 ; $5da3
 	script_set_speed $07, $0020 ; $5dab
@@ -2172,13 +2172,13 @@ MarioWorldArrivalDoubles:
 	script_wait_move $0e ; $5e5d
 	script_face $0e, FACE_UP ; $5e62
 	script_wait_frames $28 ; $5e69
-	sound $99 ; $5e70
+	sound SFX_APPEAR1 ; $5e70
 	script_set_position $04, $0f00, $0900 ; $5e72
 	script_wait_frames $04 ; $5e7d
-	sound $99 ; $5e84
+	sound SFX_APPEAR1 ; $5e84
 	script_set_position $05, $1300, $0700 ; $5e86
 	script_wait_frames $04 ; $5e91
-	sound $99 ; $5e98
+	sound SFX_APPEAR1 ; $5e98
 	script_set_position $06, $1700, $0900 ; $5e9a
 	script_wait_frames $04 ; $5ea5
 	script_face $0f, FACE_RIGHT ; $5eac
@@ -2197,7 +2197,7 @@ MarioWorldArrivalDoubles:
 	script_face $0e, FACE_UP ; $5f0d
 	script_wait_frames $0a ; $5f14
 	call MarioWorldLuigiDefendsChampCutscene ; $5f1b
-	sound $96 ; $5f1e
+	sound SFX_APPEAR2 ; $5f1e
 	script_set_position $04, $1180, $0f80 ; $5f20
 	script_set_position $05, $1380, $0f80 ; $5f2b
 	script_face ACTOR_PLAYER, FACE_RIGHT ; $5f36
@@ -2762,7 +2762,7 @@ MarioWorldArrivalIntroCutscene:
 	script_player_speed $0040 ; $6a6b
 	script_move_player $1200, $1900 ; $6a71
 	farcall WaitPlayerMoveDone ; $6a7b
-	sound $97 ; $6a7e
+	sound SFX_CHIME ; $6a7e
 	script_set_position $03, $1000, $1d00 ; $6a80
 	script_wait_frames $0a ; $6a8b
 	script_jump_velocity $13, $ff80 ; $6a92
@@ -2847,13 +2847,13 @@ MarioWorldWelcomeCutscene:
 	script_wait_idle $0e ; $6c90
 	script_speak $0e ; $6c95
 	script_wait_frames $14 ; $6c9a
-	sound $96 ; $6ca1
+	sound SFX_APPEAR2 ; $6ca1
 	script_set_position $04, $0f00, $0900 ; $6ca3
 	script_wait_frames $04 ; $6cae
-	sound $96 ; $6cb5
+	sound SFX_APPEAR2 ; $6cb5
 	script_set_position $05, $1300, $0700 ; $6cb7
 	script_wait_frames $04 ; $6cc2
-	sound $96 ; $6cc9
+	sound SFX_APPEAR2 ; $6cc9
 	script_set_position $06, $1700, $0900 ; $6ccb
 	script_wait_frames $28 ; $6cd6
 	script_face $08, FACE_LEFT ; $6cdd
@@ -2882,7 +2882,7 @@ MarioWorldWelcomeCutscene:
 	script_set_anim $0f, $04 ; $6d8a
 	script_wait_idle $0f ; $6d91
 	script_face $0f, FACE_RIGHT ; $6d96
-	sound $99 ; $6d9d
+	sound SFX_APPEAR1 ; $6d9d
 	script_set_position $07, $0f00, $0d00 ; $6d9f
 	script_wait_frames $14 ; $6daa
 	script_speak $0f ; $6db1
@@ -2913,7 +2913,7 @@ MarioWorldLuigiDefendsChampCutscene:
 	script_speak $0b ; $6e5f
 	script_wait_frames $0a ; $6e64
 	script_face $0f, FACE_RIGHT ; $6e6b
-	sound $99 ; $6e72
+	sound SFX_APPEAR1 ; $6e72
 	script_set_position $07, $1200, $0b00 ; $6e74
 	script_wait_frames $0a ; $6e7f
 	script_set_anim $0f, $02 ; $6e86
@@ -2960,7 +2960,7 @@ MarioWorldExhibitionDemandCutscene:
 	script_wait_frames $28 ; $6f9f
 	script_speak $0e ; $6fa6
 	script_wait_frames $0a ; $6fab
-	sound $96 ; $6fb2
+	sound SFX_APPEAR2 ; $6fb2
 	script_set_position $04, $1300, $0900 ; $6fb4
 	script_set_position $05, $1700, $0900 ; $6fbf
 	script_wait_frames $14 ; $6fca
@@ -2992,7 +2992,7 @@ MarioWorldExhibitionDemandCutscene:
 	ret ; $7081
 ExhibitionDeclinedCutscene:
 	script_wait_frames $0a ; $7082
-	sound $99 ; $7089
+	sound SFX_APPEAR1 ; $7089
 	script_set_position $07, $1400, $0d00 ; $708b
 	script_wait_frames $28 ; $7096
 	script_speak $0f ; $709d
@@ -3659,7 +3659,7 @@ MapScriptClearActiveFlag_0e:
 	ld [wStoryScriptRan], a ; $7c98
 	ret ; $7c9b
 MapScriptPlaySoundA2_0e:
-	sound $a2 ; $7c9c
+	sound SFX_STORY_CUE ; $7c9c
 	ret ; $7c9e
 MapScriptHideLocationName_0e:
 	xor a ; $7c9f

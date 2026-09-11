@@ -978,7 +978,7 @@ Court2SpectatorChat_14:
 	script_wait_idle $08 ; $4c0d
 	script_speak $08 ; $4c12
 	script_set_position $0c, $0c80, $2180 ; $4c17
-	sound $97 ; $4c22
+	sound SFX_CHIME ; $4c22
 	script_wait_frames $14 ; $4c24
 	script_speak $09 ; $4c2b
 	script_set_position $0c, $3f00, $3f00 ; $4c30
@@ -991,30 +991,30 @@ Court2SpectatorChat_14:
 	script_face_toward ACTOR_PLAYER, $08 ; $4c5d
 	script_wait_frames $14 ; $4c65
 	script_set_position $0c, $0a80, $2180 ; $4c6c
-	sound $97 ; $4c77
+	sound SFX_CHIME ; $4c77
 	script_set_anim $08, $02 ; $4c79
 	script_wait_idle $08 ; $4c80
 	script_set_position $0c, $3f00, $3f00 ; $4c85
 	script_wait_frames $0a ; $4c90
 	script_set_position $0d, $0a80, $2180 ; $4c97
-	sound $96 ; $4ca2
+	sound SFX_APPEAR2 ; $4ca2
 	script_wait_frames $14 ; $4ca4
 	script_speak $08 ; $4cab
 	script_set_position $0d, $3f00, $3f00 ; $4cb0
 	script_set_position $0e, $0c80, $2180 ; $4cbb
-	sound $98 ; $4cc6
+	sound SFX_EMOTE ; $4cc6
 	script_wait_frames $3c ; $4cc8
 	script_set_position $0e, $3f00, $3f00 ; $4ccf
 	script_face_toward ACTOR_PLAYER, $09 ; $4cda
 	script_wait_frames $14 ; $4ce2
 	script_set_position $0c, $0c80, $2180 ; $4ce9
-	sound $97 ; $4cf4
+	sound SFX_CHIME ; $4cf4
 	script_set_anim $09, $02 ; $4cf6
 	script_wait_idle $09 ; $4cfd
 	script_set_position $0c, $3f00, $3f00 ; $4d02
 	script_wait_frames $0a ; $4d0d
 	script_set_position $0d, $0c80, $2180 ; $4d14
-	sound $96 ; $4d1f
+	sound SFX_APPEAR2 ; $4d1f
 	script_wait_frames $14 ; $4d21
 	script_speak $09 ; $4d28
 	script_set_position $0d, $3f00, $3f00 ; $4d2d
@@ -1479,7 +1479,7 @@ IslandSkyInitScript_14:
 	ld [wStoryModeShowLocationName], a ; $539d
 	script_fade_in $06 ; $53a0
 	call WaitFadeEnd ; $53a5
-	sound $7a ; $53a8
+	sound SFX_FIREWORK_LAUNCH ; $53a8
 	script_wait_frames $3c ; $53aa
 	script_set_position ACTOR_PLAYER, $0600, $2700 ; $53b1
 	ld h, $08 ; $53bc
@@ -1574,7 +1574,7 @@ IslandSkyInitScript_14:
 	ld [wMapSceneStage2], a ; $548d
 	dec h ; $5490
 	jr nz, .speak ; $5491
-	sound $7d ; $5493
+	sound SFX_FIREWORK_SPARKLE ; $5493
 	ld h, $04 ; $5495
 .speakDoubles:
 	script_wait_frames $08 ; $5497
@@ -2031,7 +2031,7 @@ QueuePlaneSpriteByFrameCounter_14:
 	ld [wStoryModeShowLocationName], a ; $62d3
 	script_fade_in $06 ; $62d6
 	call WaitFadeEnd ; $62db
-	sound $7a ; $62de
+	sound SFX_FIREWORK_LAUNCH ; $62de
 	script_wait_frames $3c ; $62e0
 	script_set_position ACTOR_PLAYER, $0c00, $1300 ; $62e7
 	ld h, $08 ; $62f2
@@ -2142,7 +2142,7 @@ QueuePlaneSpriteByFrameCounter_14:
 	call AdvancePlaneFrameCounter_14 ; $63f2
 	dec h ; $63f5
 	jr nz, .done ; $63f6
-	sound $7d ; $63f8
+	sound SFX_FIREWORK_SPARKLE ; $63f8
 	script_wait_frames $32 ; $63fa
 	ld c, $04 ; $6401
 	call BeginFadeOut ; $6403
@@ -2520,7 +2520,7 @@ AdvanceFirework1Ascent_14:
 	ld [wStoryModeShowLocationName], a ; $6fce
 	script_fade_in $06 ; $6fd1
 	call WaitFadeEnd ; $6fd6
-	sound $7a ; $6fd9
+	sound SFX_FIREWORK_LAUNCH ; $6fd9
 	script_wait_frames $3c ; $6fdb
 	ld h, $08 ; $6fe2
 .planeLoop:
@@ -2998,7 +2998,7 @@ QueueTwinkleSprite_14:
 	call AdvancePlaneFrameCounter2_14 ; $7849
 	dec h ; $784c
 	jr nz, .done ; $784d
-	sound $7d ; $784f
+	sound SFX_FIREWORK_SPARKLE ; $784f
 	script_wait_frames $46 ; $7851
 	ld c, $04 ; $7858
 	call BeginFadeOut ; $785a
@@ -3079,7 +3079,7 @@ MapScriptClearActiveFlag_14:
 	ld [wStoryScriptRan], a ; $78db
 	ret ; $78de
 MapScriptPlaySoundA2_14:
-	sound $a2 ; $78df
+	sound SFX_STORY_CUE ; $78df
 	ret ; $78e1
 MapScriptHideLocationName_14:
 	xor a ; $78e2

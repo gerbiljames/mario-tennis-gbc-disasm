@@ -6098,7 +6098,7 @@ HandleMinigameTargetHitAlt:
 	bit 2, [hl] ; $6de1
 	ret z ; $6de3
 	res 2, [hl] ; $6de4
-	sound $97 ; $6de6
+	sound SFX_CHIME ; $6de6
 	ld a, $20 ; $6de8
 	ld [wMinigameTargetWork + 2], a ; $6dea
 	ld a, [wMinigameTargetWork + 1] ; $6ded

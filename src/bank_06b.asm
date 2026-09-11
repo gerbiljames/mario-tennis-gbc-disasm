@@ -1406,7 +1406,7 @@ ShowIntroLogoScreen:
 	ld [wCutsceneStepTimer], a ; $51be
 	ld a, $d8 ; $51c1
 	ldh [hScrollY], a ; $51c3
-	sound $65 ; $51c5
+	sound SFX_LOGO_JINGLE ; $51c5
 	call EnableLCD ; $51c7
 	script_fade_in $20 ; $51ca
 	call WaitFadeEnd ; $51cf

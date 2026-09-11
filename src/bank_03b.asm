@@ -7525,7 +7525,7 @@ ShowTournamentBracket:
 	ld a, $01 ; $777c
 	ld hl, BracketHighlightBlinkTask ; $777e
 	call RegisterFrameTask ; $7781
-	sound $78 ; $7784
+	sound SFX_RANKING_MARKER ; $7784
 	wait_frames $78 ; $7786
 .loop:
 	ldh a, [hInputPressed] ; $778a

@@ -140,3 +140,16 @@ it expires, stepping the script via `RunSoundChannelScript`:
   playing, and sound id `$50` is what silences those. `SetMusicMuted` (`$2f86`).
 - `RunSoundEngine` (`$3373`) — per-tick driver (called from `UpdateSoundEngine`
   `$2f1a` and the timer handler when the LCD is off).
+
+## Sound ids in the source
+
+Every `sound` site names its id with a `BGM_*` / `SFX_*` constant from
+`include/constants.inc`. The ids below `$80` that the sound test lists and
+the match engine use were named by what they accompany on screen; the rest
+(33 ids, 182 sites, 2026-09-11) are named from their call sites -- the
+comment on each constant says where it plays -- because the emulator the
+project drives gives no audio, so what a cue sounds like is not established.
+A name has to hold at every site of its id, which is why the two cutscene
+pop sounds are `SFX_APPEAR1`/`SFX_APPEAR2` and `$a2` is `SFX_STORY_CUE`:
+the handler that plays it exists in every story bank and nothing names the
+map script that selects it.

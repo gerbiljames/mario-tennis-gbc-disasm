@@ -1081,7 +1081,7 @@ LaunchBall:
 	ld [wCharAimOffset], a ; $48a5
 	ld hl, $073c ; $48a8
 	call FarCallVector ; $48ab
-	sound $76 ; $48ae
+	sound SFX_BALL_LAUNCH ; $48ae
 	pop_wram_bank ; $48b0
 	ret ; $48b5
 ApplyMinigameCharTargetFromTable:
@@ -1895,7 +1895,7 @@ TargetShotHook_Bounce:
 	ld [hl], d ; $4e0e
 	call AddToMinigameScore ; $4e0f
 	call StartScorePopup ; $4e12
-	sound $97 ; $4e15
+	sound SFX_CHIME ; $4e15
 	ret ; $4e17
 TargetShotHook_BallHit:
 	call FreezeMinigameOpponentOnReturn ; $4e18
@@ -2884,7 +2884,7 @@ ScoreBallHit:
 	ld [wMinigameSceneActor + 3], a ; $57c0
 	ld a, $01 ; $57c3
 	ld [wMinigameHitScored], a ; $57c5
-	sound $86 ; $57c8
+	sound SFX_THUD ; $57c8
 	ld a, [wMinigameHitStreak] ; $57ca
 	add $f5 ; $57cd
 	ld e, a ; $57cf
@@ -3033,7 +3033,7 @@ ProcessTargetTileHit:
 	call DrawMinigameGridCell ; $58f5
 	farcall FlushTilemapToVram ; $58f8
 	pop_wram_bank ; $58fb
-	sound $97 ; $5900
+	sound SFX_CHIME ; $5900
 	ld a, [wTargetTileHit] ; $5902
 	inc a ; $5905
 	ld e, a ; $5906
@@ -3097,7 +3097,7 @@ AnimateTargetGridClear:
 	ld a, c ; $599f
 	call DrawMinigameGridCell ; $59a0
 	farcall FlushTilemapToVram ; $59a3
-	sound $94 ; $59a6
+	sound SFX_GRID_CLEAR ; $59a6
 	ld a, $08 ; $59a8
 	farcall StepMatchFrames ; $59aa
 	pop hl ; $59ad
@@ -3201,7 +3201,7 @@ TreasureBoxHook_Bounce:
 	ld [hl], d ; $5a5e
 	call AddToMinigameScore ; $5a5f
 	call StartScorePopup ; $5a62
-	sound $97 ; $5a65
+	sound SFX_CHIME ; $5a65
 	ret ; $5a67
 TreasureBoxHook_BallHit:
 	call FreezeMinigameOpponentOnReturn ; $5a68

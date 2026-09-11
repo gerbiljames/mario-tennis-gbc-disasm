@@ -3369,7 +3369,7 @@ ResetCheatCodeBuffer:
 	pop_wram_bank ; $6ffd
 	ret ; $7002
 TriggerCheatUnlock:
-	sound $65 ; $7003
+	sound SFX_LOGO_JINGLE ; $7003
 	farcall ApplyUnlockEverythingCheat ; $7005
 	ret ; $7008
 RacketShoesChoiceGfx0:

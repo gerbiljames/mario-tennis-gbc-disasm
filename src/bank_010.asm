@@ -2685,7 +2685,7 @@ RestaurantNpc12_10:
 	script_speak $12 ; $5d28
 	script_face_toward ACTOR_PLAYER, $12 ; $5d2d
 	script_set_position $07, $1c00, $1100 ; $5d35
-	sound $97 ; $5d40
+	sound SFX_CHIME ; $5d40
 	script_set_anim $12, $02 ; $5d42
 	script_wait_frames $28 ; $5d49
 	script_set_position $07, $3f00, $3f00 ; $5d50
@@ -3174,7 +3174,7 @@ AcademyWingNpc03_10:
 	or $20 ; $625c
 	ld [hl], a ; $625e
 	script_set_position $06, $1b80, $2e00 ; $625f
-	sound $97 ; $626a
+	sound SFX_CHIME ; $626a
 	script_wait_frames $3c ; $626c
 	script_set_position $06, $0100, $0100 ; $6273
 	script_set_text Text_30_513 ; $627e
@@ -3367,7 +3367,7 @@ AcademyWingInitScript_10:
 	script_face $08, FACE_UP ; $6595
 	script_wait_frames $28 ; $659c
 	script_set_position $05, $2380, $3100 ; $65a3
-	sound $97 ; $65ae
+	sound SFX_CHIME ; $65ae
 	script_speak $07 ; $65b0
 	script_set_position $05, $3f00, $3f00 ; $65b5
 	script_set_anim $06, $03 ; $65c0
@@ -3376,7 +3376,7 @@ AcademyWingInitScript_10:
 	test_flag FLAG_DOUBLES ; $65d1
 	jp z, .placeActors2 ; $65d4
 	script_set_position $03, $2180, $3100 ; $65d7
-	sound $99 ; $65e2
+	sound SFX_APPEAR1 ; $65e2
 	script_wait_frames $0a ; $65e4
 	farcall AdvanceDialogueTextCursor ; $65eb
 	script_speak $08 ; $65ee
@@ -3406,7 +3406,7 @@ AcademyWingInitScript_10:
 	jr .face ; $66a0
 .placeActors2:
 	script_set_position $05, $2180, $3100 ; $66a2
-	sound $97 ; $66ad
+	sound SFX_CHIME ; $66ad
 	script_wait_frames $1e ; $66af
 	script_speak $08 ; $66b6
 	script_set_position $05, $3f00, $3f00 ; $66bb
@@ -3460,14 +3460,14 @@ AcademyWingInitScript_10:
 	script_set_objdef $53, $05 ; $6814
 	script_set_anim $05, $01 ; $6820
 	script_set_position $03, $1f80, $3100 ; $6827
-	sound $96 ; $6832
+	sound SFX_APPEAR2 ; $6832
 	script_wait_frames $28 ; $6834
 	script_set_position $04, $2180, $3100 ; $683b
-	sound $96 ; $6846
+	sound SFX_APPEAR2 ; $6846
 	script_wait_frames $28 ; $6848
 	script_set_position $03, $3f00, $3f00 ; $684f
 	script_set_position $05, $2380, $3100 ; $685a
-	sound $96 ; $6865
+	sound SFX_APPEAR2 ; $6865
 	script_wait_frames $28 ; $6867
 	script_set_position $04, $3f00, $3f00 ; $686e
 	script_wait_frames $28 ; $6879
@@ -3485,14 +3485,14 @@ AcademyWingInitScript_10:
 	script_set_anim $08, $02 ; $68d2
 	script_wait_idle $08 ; $68d9
 	script_set_position $05, $2380, $3100 ; $68de
-	sound $96 ; $68e9
+	sound SFX_APPEAR2 ; $68e9
 	script_wait_frames $3c ; $68eb
 	script_face_toward $09, $08 ; $68f2
 	script_wait_frames $01 ; $68fa
 	script_set_anim $08, $02 ; $6901
 	script_wait_idle $08 ; $6908
 	script_set_position $03, $1f80, $3100 ; $690d
-	sound $96 ; $6918
+	sound SFX_APPEAR2 ; $6918
 	script_wait_frames $3c ; $691a
 	test_flag FLAG_DOUBLES ; $6921
 	jp z, .walkPlayer ; $6924
@@ -3581,7 +3581,7 @@ AcademyWingInitScript_10:
 	jp .wait ; $6b70
 .placeActors3:
 	script_set_position $04, $2180, $3300 ; $6b73
-	sound $96 ; $6b7e
+	sound SFX_APPEAR2 ; $6b7e
 	script_wait_frames $50 ; $6b80
 	script_set_position $04, $3f00, $3f00 ; $6b87
 	script_face_toward $09, ACTOR_PLAYER ; $6b92
@@ -3631,7 +3631,7 @@ AcademyWingInitScript_10:
 	script_set_objdef $51, $05 ; $6c85
 	script_set_anim $05, $01 ; $6c91
 	script_set_position $05, $2380, $3300 ; $6c98
-	sound $97 ; $6ca3
+	sound SFX_CHIME ; $6ca3
 	script_wait_frames $14 ; $6ca5
 	script_speak $07 ; $6cac
 	script_set_position $05, $3f00, $3f00 ; $6cb1
@@ -3660,7 +3660,7 @@ AcademyWingInitScript_10:
 	script_set_objdef $4d, $05 ; $6d4e
 	script_set_anim $05, $01 ; $6d5a
 	script_set_position $05, $2180, $2d80 ; $6d61
-	sound $98 ; $6d6c
+	sound SFX_EMOTE ; $6d6c
 	script_wait_frames $50 ; $6d6e
 	script_set_position $05, $3f00, $3f00 ; $6d75
 	ld a, $06 ; $6d80
@@ -3825,14 +3825,14 @@ AcademyWingInitActors0_10:
 	jp z, .placeActors4 ; $70c7
 	script_set_position $06, $2080, $3200 ; $70ca
 	script_set_position $07, $2280, $3200 ; $70d5
-	sound $97 ; $70e0
+	sound SFX_CHIME ; $70e0
 	script_wait_frames $50 ; $70e2
 	script_set_position $06, $3f00, $3f00 ; $70e9
 	script_set_position $07, $3f00, $3f00 ; $70f4
 	jr .face3 ; $70ff
 .placeActors4:
 	script_set_position $06, $2180, $3200 ; $7101
-	sound $97 ; $710c
+	sound SFX_CHIME ; $710c
 	script_wait_frames $50 ; $710e
 	script_set_position $06, $3f00, $3f00 ; $7115
 .face3:
@@ -4321,7 +4321,7 @@ AcademyMainBldgNewStudentCutscene_10:
 	script_speak $03 ; $78b1
 	script_face_toward $03, ACTOR_PLAYER ; $78b6
 	script_set_position $06, $2300, $1700 ; $78be
-	sound $98 ; $78c9
+	sound SFX_EMOTE ; $78c9
 	script_wait_frames $3c ; $78cb
 	script_set_position $06, $3f00, $3f00 ; $78d2
 	script_set_anim $04, $03 ; $78dd
@@ -4622,7 +4622,7 @@ MapScriptClearActiveFlag_10:
 	ld [wStoryScriptRan], a ; $7bfb
 	ret ; $7bfe
 MapScriptPlaySoundA2_10:
-	sound $a2 ; $7bff
+	sound SFX_STORY_CUE ; $7bff
 	ret ; $7c01
 MapScriptHideLocationName_10:
 	xor a ; $7c02

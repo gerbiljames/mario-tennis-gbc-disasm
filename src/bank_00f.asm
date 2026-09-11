@@ -279,14 +279,14 @@ AwardsCeremonyTile01_0f:
 	script_wait_move $08 ; $455c
 	script_face $08, FACE_UP ; $4561
 	script_set_position $13, $0d80, $1b00 ; $4568
-	sound $99 ; $4573
+	sound SFX_APPEAR1 ; $4573
 	script_speak $08 ; $4575
 	script_set_position $13, $3f00, $3f00 ; $457a
 	script_set_anim $08, $02 ; $4585
 	script_wait_idle $08 ; $458c
 	script_speak $08 ; $4591
 	script_set_position $14, $0c80, $1900 ; $4596
-	sound $96 ; $45a1
+	sound SFX_APPEAR2 ; $45a1
 	ld a, $78 ; $45a3
 	call DelayFrames ; $45a5
 	script_set_position $14, $3f00, $3f00 ; $45a8
@@ -308,14 +308,14 @@ AwardsCeremonyTile01_0f:
 	script_face $16, FACE_DOWN ; $4608
 	script_face $08, FACE_UP ; $460f
 	script_set_position $13, $0c80, $1b00 ; $4616
-	sound $99 ; $4621
+	sound SFX_APPEAR1 ; $4621
 	script_speak $08 ; $4623
 	script_set_position $13, $3f00, $3f00 ; $4628
 	script_set_anim $08, $02 ; $4633
 	script_wait_idle $08 ; $463a
 	script_speak $08 ; $463f
 	script_set_position $14, $0d00, $1900 ; $4644
-	sound $96 ; $464f
+	sound SFX_APPEAR2 ; $464f
 	ld a, $78 ; $4651
 	call DelayFrames ; $4653
 	script_set_position $14, $3f00, $3f00 ; $4656
@@ -448,7 +448,7 @@ AwardsCeremonyTile02_0f:
 	script_wait_idle $11 ; $493a
 	script_speak $11 ; $493f
 	script_set_position $15, $0f80, $0f80 ; $4944
-	sound $98 ; $494f
+	sound SFX_EMOTE ; $494f
 	ld a, $78 ; $4951
 	call DelayFrames ; $4953
 	script_set_position $15, $3f00, $3f00 ; $4956
@@ -554,11 +554,11 @@ AwardsCeremonyTile02_0f:
 	call DelayFrames ; $4bdc
 	script_set_position $0e, $3f00, $3f00 ; $4bdf
 	script_set_position $13, $0b80, $0c40 ; $4bea
-	sound $99 ; $4bf5
+	sound SFX_APPEAR1 ; $4bf5
 	script_speak $12 ; $4bf7
 	script_set_position $13, $3f00, $3f00 ; $4bfc
 	script_set_position $15, $0b80, $0f80 ; $4c07
-	sound $98 ; $4c12
+	sound SFX_EMOTE ; $4c12
 	ld a, $78 ; $4c14
 	call DelayFrames ; $4c16
 	script_set_position $15, $3f00, $3f00 ; $4c19
@@ -803,7 +803,7 @@ AwardsCeremonyTile02_0f:
 	call DelayFrames ; $521c
 	script_set_position $0f, $3f00, $3f00 ; $521f
 	script_set_position $04, $0c80, $0c80 ; $522a
-	sound $99 ; $5235
+	sound SFX_APPEAR1 ; $5235
 	ld a, $50 ; $5237
 	call DelayFrames ; $5239
 	script_set_position $04, $3f00, $3f00 ; $523c
@@ -812,7 +812,7 @@ AwardsCeremonyTile02_0f:
 	script_wait_idle $15 ; $5253
 	script_speak $15 ; $5258
 	script_set_position $05, $0b80, $0f80 ; $525d
-	sound $98 ; $5268
+	sound SFX_EMOTE ; $5268
 	ld a, $78 ; $526a
 	call DelayFrames ; $526c
 	script_set_position $05, $3f00, $3f00 ; $526f
@@ -1056,7 +1056,7 @@ CutsceneStompScreenShake:
 	script_jump_velocity $08, $ff80 ; $567f
 	ld a, $08 ; $5687
 	farcall ScriptWaitActorJumpDone ; $5689
-	sound $83 ; $568c
+	sound SFX_STOMP ; $568c
 	ld a, $02 ; $568e
 	farcall SetScreenShake ; $5690
 	ld a, $08 ; $5693
@@ -1087,7 +1087,7 @@ CutsceneStompScreenShake:
 	script_wait_idle $04 ; $56fb
 	script_speak $04 ; $5700
 	script_set_position $13, $0c80, $2580 ; $5705
-	sound $99 ; $5710
+	sound SFX_APPEAR1 ; $5710
 	ld a, $3c ; $5712
 	call DelayFrames ; $5714
 	script_set_position $13, $3f00, $3f00 ; $5717
@@ -1140,7 +1140,7 @@ CutsceneStompScreenShake:
 	script_face $04, FACE_LEFT ; $580c
 	script_speak $03 ; $5813
 	script_set_position $13, $0e80, $2580 ; $5818
-	sound $99 ; $5823
+	sound SFX_APPEAR1 ; $5823
 	ld a, $3c ; $5825
 	call DelayFrames ; $5827
 	script_set_position $13, $3f00, $3f00 ; $582a
@@ -1189,7 +1189,7 @@ CutsceneStompScreenShake:
 	script_face_toward ACTOR_PLAYER, $05 ; $5904
 	script_speak $05 ; $590c
 	script_set_position $15, $0c80, $2580 ; $5911
-	sound $98 ; $591c
+	sound SFX_EMOTE ; $591c
 	ld a, $3c ; $591e
 	call DelayFrames ; $5920
 	script_set_position $15, $3f00, $3f00 ; $5923
@@ -1252,11 +1252,11 @@ CutsceneStompScreenShake:
 	script_wait_idle ACTOR_PARTNER ; $5a53
 	call SpeakPartnerVariantLine ; $5a58
 	script_set_position $13, $0e80, $2580 ; $5a5b
-	sound $99 ; $5a66
+	sound SFX_APPEAR1 ; $5a66
 	ld a, $3c ; $5a68
 	call DelayFrames ; $5a6a
 	script_set_position $13, $0e80, $2780 ; $5a6d
-	sound $99 ; $5a78
+	sound SFX_APPEAR1 ; $5a78
 	ld a, $3c ; $5a7a
 	call DelayFrames ; $5a7c
 	script_set_position $13, $3f00, $3f00 ; $5a7f
@@ -2775,7 +2775,7 @@ IslandOpenSinglesMatchReturn:
 	ld l, a ; $74ee
 	farcall InitDialogueTextCursor ; $74ef
 	script_set_position $08, $2200, $0f80 ; $74f2
-	sound $97 ; $74fd
+	sound SFX_CHIME ; $74fd
 	script_wait_frames $2d ; $74ff
 	script_set_anim $03, $02 ; $7506
 	script_wait_idle $03 ; $750d
@@ -2953,7 +2953,7 @@ IslandOpenDoublesMatchReturn:
 	script_face_toward ACTOR_PARTNER, ACTOR_PLAYER ; $7787
 	script_speak ACTOR_PARTNER ; $778f
 	script_set_position $08, $2000, $0f80 ; $7794
-	sound $97 ; $779f
+	sound SFX_CHIME ; $779f
 	script_wait_frames $2d ; $77a1
 	script_set_anim $03, $02 ; $77a8
 	script_wait_idle $03 ; $77af
@@ -3265,7 +3265,7 @@ MapScriptClearActiveFlag_0f:
 	ld [wStoryScriptRan], a ; $7b81
 	ret ; $7b84
 MapScriptPlaySoundA2_0f:
-	sound $a2 ; $7b85
+	sound SFX_STORY_CUE ; $7b85
 	ret ; $7b87
 MapScriptHideLocationName_0f:
 	xor a ; $7b88

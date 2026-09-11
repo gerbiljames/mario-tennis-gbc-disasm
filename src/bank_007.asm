@@ -1912,7 +1912,7 @@ SerialEncodeCommand:
 	jr z, .checkSlaveWait ; $4c35
 	cp $02 ; $4c37
 	jr z, .checkSlaveWait ; $4c39
-	sound $72 ; $4c3b
+	sound SFX_BEEP ; $4c3b
 	xor a ; $4c3d
 	ldh [hLinkRemoteInputBuf], a ; $4c3e
 	ldh [hLinkTxInput], a ; $4c40
@@ -1954,7 +1954,7 @@ SerialDecodeCommand:
 	jr z, .decode ; $4c72
 	cp $40 ; $4c74
 	jr z, .decode ; $4c76
-	sound $72 ; $4c78
+	sound SFX_BEEP ; $4c78
 	xor a ; $4c7a
 	ldh [hLinkInput], a ; $4c7b
 	jr .done ; $4c7d

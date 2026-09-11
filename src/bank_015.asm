@@ -765,7 +765,7 @@ TrainingCourtNpc13_15:
 	add hl, de ; $4bb6
 	ld [hl], a ; $4bb7
 	script_set_position $16, $3680, $0d80 ; $4bb8
-	sound $99 ; $4bc3
+	sound SFX_APPEAR1 ; $4bc3
 	farcall AdvanceDialogueTextCursor ; $4bc5
 	script_speak $13 ; $4bc8
 	script_set_speed ACTOR_PLAYER, $0012 ; $4bcd
@@ -814,7 +814,7 @@ TrainingCourtNpc13_15:
 	ld [hl], a ; $4ceb
 	script_set_anim ACTOR_PLAYER, $02 ; $4cec
 	script_set_position $16, $3480, $0b80 ; $4cf3
-	sound $99 ; $4cfe
+	sound SFX_APPEAR1 ; $4cfe
 	script_wait_frames $50 ; $4d00
 RunWaterSpriteSwingContestAndReward:
 	script_get_actor_state ACTOR_PLAYER ; $4d07
@@ -860,7 +860,7 @@ WaterSpriteRacketRewardScene:
 	script_set_objdef $4d, $16 ; $4dbc
 	script_set_objdef $4c, $13 ; $4dc8
 	script_set_position $16, $3480, $0b80 ; $4dd4
-	sound $98 ; $4ddf
+	sound SFX_EMOTE ; $4ddf
 	script_wait_frames $3c ; $4de1
 	script_set_position $14, $3300, $0700 ; $4de8
 	script_set_active $14, $00 ; $4df3
@@ -873,7 +873,7 @@ WaterSpriteRacketRewardScene:
 	ld hl, WaterSpriteRacketRewardScenePalettes2 ; $4e17
 	lb de, $02, $06 ; $4e1a palette index, count
 	call LoadPalettesImmediate ; $4e1d
-	sound $8a ; $4e20
+	sound SFX_WATER_SPRITE_MAGIC ; $4e20
 	ld a, $10 ; $4e22
 .handOver:
 	ld d, a ; $4e24
@@ -893,7 +893,7 @@ WaterSpriteRacketRewardScene:
 	script_face ACTOR_PLAYER, FACE_UP ; $4e5f
 	script_wait_frames $1e ; $4e66
 	script_set_position $13, $3480, $0b80 ; $4e6d
-	sound $97 ; $4e78
+	sound SFX_CHIME ; $4e78
 	script_wait_frames $14 ; $4e7a
 	script_jump_velocity $13, $ff40 ; $4e81
 	script_jump_velocity ACTOR_PLAYER, $ff40 ; $4e89
@@ -938,13 +938,13 @@ WaterSpriteRacketRewardScene:
 	ld c, $03 ; $4f0a
 	call BeginFadeOut ; $4f0c
 	call WaitFadeEnd ; $4f0f
-	sound $8e ; $4f12
+	sound SFX_WATER_SPRITE_APPEAR ; $4f12
 	script_set_position $15, $3300, $0900 ; $4f14
 	script_wait_frames $1e ; $4f1f
 	script_fade_in $03 ; $4f26
 	call WaitFadeEnd ; $4f2b
 	script_wait_frames $3c ; $4f2e
-	sound $8f ; $4f35
+	sound SFX_WATER_SPRITE_FLY ; $4f35
 	script_set_speed $15, $0005 ; $4f37
 	script_move_target $15, $3300, $0d00 ; $4f3f
 	script_wait_move $15 ; $4f4a
@@ -952,7 +952,7 @@ WaterSpriteRacketRewardScene:
 	farcall AdvanceDialogueTextCursor ; $4f56
 	script_speak ACTOR_PLAYER ; $4f59
 	script_set_position $17, $3480, $0b80 ; $4f5e
-	sound $96 ; $4f69
+	sound SFX_APPEAR2 ; $4f69
 	script_wait_frames $78 ; $4f6b
 	script_set_position $17, $3f00, $3f00 ; $4f72
 	script_set_anim $14, $03 ; $4f7d
@@ -960,7 +960,7 @@ WaterSpriteRacketRewardScene:
 	script_set_text Text_36_683 ; $4f89
 	script_speak $14 ; $4f8f
 	script_wait_frames $32 ; $4f94
-	sound $90 ; $4f9b
+	sound SFX_RACKET_GET ; $4f9b
 	ld d, $10 ; $4f9d
 .done:
 	script_set_active $14, $00 ; $4f9f
@@ -1551,7 +1551,7 @@ WaterSpriteSwingContestScene:
 	ld h, $00 ; $56be
 	ld de, $502c ; $56c0
 .win:
-	sound $8c ; $56c3
+	sound SFX_CONTEST_WIN ; $56c3
 	ld b, $3c ; $56c5
 .lose:
 	farcall DrawDecimalNumberSprites_39 ; $56c7
@@ -1584,7 +1584,7 @@ WaterSpriteSwingContestScene:
 	farcall ScriptSetActorAnimation ; $5703
 	jr .reward ; $5706
 .finish:
-	sound $8d ; $5708
+	sound SFX_CONTEST_FINISH ; $5708
 	script_set_anim ACTOR_PLAYER, $02 ; $570a
 	script_wait_idle ACTOR_PLAYER ; $5711
 	script_wait_frames $3c ; $5716
@@ -4482,7 +4482,7 @@ MapScriptClearActiveFlag_15:
 	ld [wStoryScriptRan], a ; $7d97
 	ret ; $7d9a
 MapScriptPlaySoundA2_15:
-	sound $a2 ; $7d9b
+	sound SFX_STORY_CUE ; $7d9b
 	ret ; $7d9d
 MapScriptHideLocationName_15:
 	xor a ; $7d9e

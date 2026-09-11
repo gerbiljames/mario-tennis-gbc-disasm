@@ -2076,7 +2076,7 @@ UnusedServeSecondBounceSound_1:
 	ld a, [wRallyLength] ; $4e85
 	cp $01 ; $4e88
 	ret nz ; $4e8a
-	sound $72 ; $4e8b
+	sound SFX_BEEP ; $4e8b
 	ret ; $4e8d
 ServicePractice1Hook_BallHit:
 	ld a, [wRallyLength] ; $4e8e
@@ -2305,7 +2305,7 @@ UnusedServeSecondBounceSound_2:
 	ld a, [wRallyLength] ; $5047
 	cp $01 ; $504a
 	ret nz ; $504c
-	sound $72 ; $504d
+	sound SFX_BEEP ; $504d
 	ret ; $504f
 ServicePractice2Hook_BallHit:
 	ld a, [wRallyLength] ; $5050
