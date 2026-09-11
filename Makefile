@@ -10,7 +10,7 @@ RAM_SRCS := ram.asm $(wildcard ram/*.asm)
 
 BASEROM_SHA1 := 414ba58340a27fc27b127bc01455b32764151ff0
 
-.PHONY: all compare check clean
+.PHONY: all compare check test clean
 
 all: $(ROM)
 
@@ -62,6 +62,11 @@ compare: $(ROM)
 # overlap. See tools/check.py.
 check:
 	python3 tools/check.py
+
+# The unit tests need no ROM; the regression pins in tests/test_rom.py skip
+# themselves when baserom.gbc is absent.
+test:
+	python3 -m unittest discover -s tests -t . -v
 
 clean:
 	rm -rf build $(ROM)

@@ -28,6 +28,7 @@ the layout, the names and the structure.
    make                         # builds mariotennis.gbc
    make compare                 # confirms SHA-1 matches the original
    make check                   # structural checks the byte compare cannot make
+   make test                    # the generator's own tests (ROM optional)
    ```
 
 ## What is here
@@ -183,6 +184,10 @@ tables the static analysis cannot classify regress to raw blobs.
   re-encode, no symbol sits inside a stream, every text table addresses real
   strings, every curated constant lands on an instruction holding that value,
   the extracted regions do not overlap, local labels bind to the right parent.
+- `tests/` (`make test`) — the generator's unit tests: the codecs, the
+  macros against the bytes they stand for, the idiom and packed-argument
+  renderers, the curated inputs' structure and the analysis on a synthetic
+  ROM; with `baserom.gbc` present, pins on the generated source as well.
 - `tools/progress.py` — per-bank proven-code bytes and the label-naming
   buckets. `tools/ram_gaps.py` — the bare banked-WRAM operands and why each
   is bare (`--static` adds the ones the dataflow could name).

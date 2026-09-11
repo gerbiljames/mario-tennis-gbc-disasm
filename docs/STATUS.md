@@ -18,7 +18,7 @@ per `data.manifest`.
 | proven code + structured source | 428,461 bytes, 20.4% of the 2 MiB ROM |
 | instructions disassembled | 160,919 |
 | banks containing code | 59 of 128 |
-| labels | 21,974, of which 20,394 human-named and 1,580 generator-derived (`FarPtr_*` slot labels, `SoundTable_*`); 0 state only an address |
+| labels | 21,978, of which 20,398 human-named and 1,580 generator-derived (`FarPtr_*` slot labels, `SoundTable_*`); 0 state only an address |
 | data blobs (`INCBIN`) | 4,218 — 838 LZ streams, the rest raw graphics, tilemaps, sprite frames and sound |
 | coverage inputs | 174 `coverage/*.json` dumps and 2 `hooks/*.json` captures |
 | bare banked-WRAM operands | 97, all `dead`: inside `Unused*` routines nothing references, so no trace can ever reach them. Zero in live code |
@@ -125,6 +125,18 @@ label bound to the wrong parent.
 
 ## Recent changes
 
+* **2026-09-11** — a test suite, `make test` (`tests/`, stdlib `unittest`,
+  47 tests): the codecs (LZ and tile-image round trips, the SM83 decoder's
+  self-test, every idiom macro assembled and compared to the bytes it
+  stands for), the emitter's idiom collapse and packed-argument rendering
+  on synthetic listings, the curated inputs' structure (unique names, union
+  bounds, flag and constant shapes), the analysis on a synthetic ROM
+  (descent, the WRAM-bank dataflow through push/pop, the text-id walkers),
+  and, when `baserom.gbc` is present, pins on the generated source and the
+  analysis (instruction, macro, text-id and manifest counts, every curated
+  label on an instruction start) plus `check.py` and `ram_gaps.py` runs.
+  The last pin caught one stale curated label (`.fromCallerPtr` at
+  `$38:$69aa`, inside an instruction, nothing referencing it), removed.
 * **2026-09-11** — the PNG pipeline: the manifest tags the 2,724 blobs that
   are whole 8x8-tile graphics `gfx`, `extract.py` decodes each to a
   four-colour indexed PNG beside its `.bin` (LZ streams decompressed

@@ -13581,7 +13581,6 @@
  "0xe298e": ".slot0",
  "0xe29a4": ".done",
  "0xe29a5": "GetRemoteSlotBoxAddress",
- "0xe29aa": ".fromCallerPtr",
  "0xe29b1": ".readTable",
  "0xe29bd": ".read",
  "0xe29c1": {
