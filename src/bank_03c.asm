@@ -127,129 +127,129 @@ DataPtr_CharacterSelectLabelTiles1:
 DataPtr_CharacterSelectLabelTiles2:
 	dw CharacterSelectLabelTiles2 ; $407c
 ModeSelectTiles:
-	INCBIN "data/bank_03c/lz_407e.bin" ; $407e, 1283 bytes
+	INCBIN "data/bank_03c/lz_ModeSelectTiles.bin" ; $407e, 1283 bytes
 ModeSelectTilemap:
-	INCBIN "data/bank_03c/lz_4581.bin" ; $4581, 268 bytes
+	INCBIN "data/bank_03c/lz_ModeSelectTilemap.bin" ; $4581, 268 bytes
 ModeSelectAttrmap:
-	INCBIN "data/bank_03c/lz_468d.bin" ; $468d, 132 bytes
+	INCBIN "data/bank_03c/lz_ModeSelectAttrmap.bin" ; $468d, 132 bytes
 ModeSelectPalettes:
-	INCLUDE "data/bank_03c/palettes_4711.asm" ; $4711, 64 bytes (palettes)
+	INCLUDE "data/bank_03c/ModeSelectPalettes.asm" ; $4711, 64 bytes (palettes)
 StadiumTiles:
-	INCBIN "data/bank_03c/lz_4751.bin" ; $4751, 2465 bytes
+	INCBIN "data/bank_03c/lz_StadiumTiles.bin" ; $4751, 2465 bytes
 StadiumTilemap:
-	INCBIN "data/bank_03c/lz_50f2.bin" ; $50f2, 500 bytes
+	INCBIN "data/bank_03c/lz_StadiumTilemap.bin" ; $50f2, 500 bytes
 StadiumAttrmap:
-	INCBIN "data/bank_03c/lz_52e6.bin" ; $52e6, 107 bytes
+	INCBIN "data/bank_03c/lz_StadiumAttrmap.bin" ; $52e6, 107 bytes
 StadiumPalettes:
-	INCLUDE "data/bank_03c/palettes_5351.asm" ; $5351, 64 bytes (palettes)
+	INCLUDE "data/bank_03c/StadiumPalettes.asm" ; $5351, 64 bytes (palettes)
 ModeSelectIconGfx:
-	INCBIN "data/bank_03c/lz_5391.bin" ; $5391, 71 bytes
+	INCBIN "data/bank_03c/lz_ModeSelectIconGfx.bin" ; $5391, 71 bytes
 ModeSelectLabelTiles0:
-	INCBIN "data/bank_03c/lz_53d8.bin" ; $53d8, 228 bytes
+	INCBIN "data/bank_03c/lz_ModeSelectLabelTiles0.bin" ; $53d8, 228 bytes
 ModeSelectLabelTiles1:
-	INCBIN "data/bank_03c/lz_54bc.bin" ; $54bc, 248 bytes
+	INCBIN "data/bank_03c/lz_ModeSelectLabelTiles1.bin" ; $54bc, 248 bytes
 ModeSelectLabelTiles2:
-	INCBIN "data/bank_03c/lz_55b4.bin" ; $55b4, 235 bytes
+	INCBIN "data/bank_03c/lz_ModeSelectLabelTiles2.bin" ; $55b4, 235 bytes
 ModeSelectLabelTiles3:
-	INCBIN "data/bank_03c/lz_569f.bin" ; $569f, 243 bytes
+	INCBIN "data/bank_03c/lz_ModeSelectLabelTiles3.bin" ; $569f, 243 bytes
 ModeSelectLabelTiles4:
-	INCBIN "data/bank_03c/lz_5792.bin" ; $5792, 231 bytes
+	INCBIN "data/bank_03c/lz_ModeSelectLabelTiles4.bin" ; $5792, 231 bytes
 ModeSelectLabelTiles5:
-	INCBIN "data/bank_03c/lz_5879.bin" ; $5879, 238 bytes
+	INCBIN "data/bank_03c/lz_ModeSelectLabelTiles5.bin" ; $5879, 238 bytes
 ModeSelectLabelTiles6:
-	INCBIN "data/bank_03c/lz_5967.bin" ; $5967, 51 bytes
+	INCBIN "data/bank_03c/lz_ModeSelectLabelTiles6.bin" ; $5967, 51 bytes
 ModeSelectLabelTiles7:
-	INCBIN "data/bank_03c/lz_599a.bin" ; $599a, 268 bytes
+	INCBIN "data/bank_03c/lz_ModeSelectLabelTiles7.bin" ; $599a, 268 bytes
 SharedMenuGfx27:
-	INCBIN "data/bank_03c/lz_5aa6.bin" ; $5aa6, 29 bytes
+	INCBIN "data/bank_03c/lz_SharedMenuGfx27.bin" ; $5aa6, 29 bytes
 MainMenuGfx0:
-	INCBIN "data/bank_03c/lz_5ac3.bin" ; $5ac3, 169 bytes
+	INCBIN "data/bank_03c/lz_MainMenuGfx0.bin" ; $5ac3, 169 bytes
 SharedMenuGfx29:
-	INCBIN "data/bank_03c/lz_5b6c.bin" ; $5b6c, 159 bytes
+	INCBIN "data/bank_03c/lz_SharedMenuGfx29.bin" ; $5b6c, 159 bytes
 SharedMenuGfx30:
-	INCBIN "data/bank_03c/lz_5c0b.bin" ; $5c0b, 196 bytes
+	INCBIN "data/bank_03c/lz_SharedMenuGfx30.bin" ; $5c0b, 196 bytes
 MainMenuGfx1:
-	INCBIN "data/bank_03c/lz_5ccf.bin" ; $5ccf, 194 bytes
+	INCBIN "data/bank_03c/lz_MainMenuGfx1.bin" ; $5ccf, 194 bytes
 MainMenuGfx2:
-	INCBIN "data/bank_03c/lz_5d91.bin" ; $5d91, 168 bytes
+	INCBIN "data/bank_03c/lz_MainMenuGfx2.bin" ; $5d91, 168 bytes
 MainMenuGfx3:
-	INCBIN "data/bank_03c/lz_5e39.bin" ; $5e39, 198 bytes
+	INCBIN "data/bank_03c/lz_MainMenuGfx3.bin" ; $5e39, 198 bytes
 MainMenuGfx4:
-	INCBIN "data/bank_03c/lz_5eff.bin" ; $5eff, 195 bytes
+	INCBIN "data/bank_03c/lz_MainMenuGfx4.bin" ; $5eff, 195 bytes
 SharedMenuGfx35:
-	INCBIN "data/bank_03c/lz_5fc2.bin" ; $5fc2, 168 bytes
+	INCBIN "data/bank_03c/lz_SharedMenuGfx35.bin" ; $5fc2, 168 bytes
 SharedMenuGfx36:
-	INCBIN "data/bank_03c/lz_606a.bin" ; $606a, 153 bytes
+	INCBIN "data/bank_03c/lz_SharedMenuGfx36.bin" ; $606a, 153 bytes
 SharedMenuGfx37:
-	INCBIN "data/bank_03c/lz_6103.bin" ; $6103, 165 bytes
+	INCBIN "data/bank_03c/lz_SharedMenuGfx37.bin" ; $6103, 165 bytes
 SharedMenuGfx38:
-	INCBIN "data/bank_03c/lz_61a8.bin" ; $61a8, 164 bytes
+	INCBIN "data/bank_03c/lz_SharedMenuGfx38.bin" ; $61a8, 164 bytes
 SharedMenuGfx39:
-	INCBIN "data/bank_03c/lz_624c.bin" ; $624c, 141 bytes
+	INCBIN "data/bank_03c/lz_SharedMenuGfx39.bin" ; $624c, 141 bytes
 SharedMenuGfx40:
-	INCBIN "data/bank_03c/lz_62d9.bin" ; $62d9, 182 bytes
+	INCBIN "data/bank_03c/lz_SharedMenuGfx40.bin" ; $62d9, 182 bytes
 SharedMenuGfx41:
-	INCBIN "data/bank_03c/lz_638f.bin" ; $638f, 177 bytes
+	INCBIN "data/bank_03c/lz_SharedMenuGfx41.bin" ; $638f, 177 bytes
 SavedDataSourceGfx0:
-	INCBIN "data/bank_03c/lz_6440.bin" ; $6440, 143 bytes
+	INCBIN "data/bank_03c/lz_SavedDataSourceGfx0.bin" ; $6440, 143 bytes
 SavedDataSourceGfx1:
-	INCBIN "data/bank_03c/lz_64cf.bin" ; $64cf, 156 bytes
+	INCBIN "data/bank_03c/lz_SavedDataSourceGfx1.bin" ; $64cf, 156 bytes
 SavedDataSourceGfx2:
-	INCBIN "data/bank_03c/lz_656b.bin" ; $656b, 157 bytes
+	INCBIN "data/bank_03c/lz_SavedDataSourceGfx2.bin" ; $656b, 157 bytes
 SavedDataSourceGfx3:
-	INCBIN "data/bank_03c/lz_6608.bin" ; $6608, 176 bytes
+	INCBIN "data/bank_03c/lz_SavedDataSourceGfx3.bin" ; $6608, 176 bytes
 EraseSavedDataGfx0:
-	INCBIN "data/bank_03c/lz_66b8.bin" ; $66b8, 174 bytes
+	INCBIN "data/bank_03c/lz_EraseSavedDataGfx0.bin" ; $66b8, 174 bytes
 EraseSavedDataGfx1:
-	INCBIN "data/bank_03c/lz_6766.bin" ; $6766, 178 bytes
+	INCBIN "data/bank_03c/lz_EraseSavedDataGfx1.bin" ; $6766, 178 bytes
 EraseSavedDataGfx2:
-	INCBIN "data/bank_03c/lz_6818.bin" ; $6818, 176 bytes
+	INCBIN "data/bank_03c/lz_EraseSavedDataGfx2.bin" ; $6818, 176 bytes
 EraseSavedDataGfx3:
-	INCBIN "data/bank_03c/lz_68c8.bin" ; $68c8, 189 bytes
+	INCBIN "data/bank_03c/lz_EraseSavedDataGfx3.bin" ; $68c8, 189 bytes
 EraseSavedDataGfx4:
-	INCBIN "data/bank_03c/lz_6985.bin" ; $6985, 181 bytes
+	INCBIN "data/bank_03c/lz_EraseSavedDataGfx4.bin" ; $6985, 181 bytes
 MinigameSelectGfx0:
-	INCBIN "data/bank_03c/lz_6a3a.bin" ; $6a3a, 124 bytes
+	INCBIN "data/bank_03c/lz_MinigameSelectGfx0.bin" ; $6a3a, 124 bytes
 MinigameSelectGfx1:
-	INCBIN "data/bank_03c/lz_6ab6.bin" ; $6ab6, 138 bytes
+	INCBIN "data/bank_03c/lz_MinigameSelectGfx1.bin" ; $6ab6, 138 bytes
 MinigameSelectGfx2:
-	INCBIN "data/bank_03c/lz_6b40.bin" ; $6b40, 132 bytes
+	INCBIN "data/bank_03c/lz_MinigameSelectGfx2.bin" ; $6b40, 132 bytes
 MinigameSelectGfx3:
-	INCBIN "data/bank_03c/lz_6bc4.bin" ; $6bc4, 141 bytes
+	INCBIN "data/bank_03c/lz_MinigameSelectGfx3.bin" ; $6bc4, 141 bytes
 MinigameSelectGfx4:
-	INCBIN "data/bank_03c/lz_6c51.bin" ; $6c51, 124 bytes
+	INCBIN "data/bank_03c/lz_MinigameSelectGfx4.bin" ; $6c51, 124 bytes
 MinigameSelectGfx5:
-	INCBIN "data/bank_03c/lz_6ccd.bin" ; $6ccd, 143 bytes
+	INCBIN "data/bank_03c/lz_MinigameSelectGfx5.bin" ; $6ccd, 143 bytes
 N64RecordTypeGfx0:
-	INCBIN "data/bank_03c/lz_6d5c.bin" ; $6d5c, 177 bytes
+	INCBIN "data/bank_03c/lz_N64RecordTypeGfx0.bin" ; $6d5c, 177 bytes
 N64RecordTypeGfx1:
-	INCBIN "data/bank_03c/lz_6e0d.bin" ; $6e0d, 172 bytes
+	INCBIN "data/bank_03c/lz_N64RecordTypeGfx1.bin" ; $6e0d, 172 bytes
 N64RecordTypeLabelTiles0:
-	INCBIN "data/bank_03c/lz_6eb9.bin" ; $6eb9, 175 bytes
+	INCBIN "data/bank_03c/lz_N64RecordTypeLabelTiles0.bin" ; $6eb9, 175 bytes
 N64RecordTypeLabelTiles1:
-	INCBIN "data/bank_03c/lz_6f68.bin" ; $6f68, 233 bytes
+	INCBIN "data/bank_03c/lz_N64RecordTypeLabelTiles1.bin" ; $6f68, 233 bytes
 GamesLabelTiles:
-	INCBIN "data/bank_03c/lz_7051.bin" ; $7051, 178 bytes
+	INCBIN "data/bank_03c/lz_GamesLabelTiles.bin" ; $7051, 178 bytes
 GamesLabelTiles2:
-	INCBIN "data/bank_03c/lz_7103.bin" ; $7103, 170 bytes
+	INCBIN "data/bank_03c/lz_GamesLabelTiles2.bin" ; $7103, 170 bytes
 OneSetLabelTiles:
-	INCBIN "data/bank_03c/lz_71ad.bin" ; $71ad, 189 bytes
+	INCBIN "data/bank_03c/lz_OneSetLabelTiles.bin" ; $71ad, 189 bytes
 ThreeSetsLabelTiles:
-	INCBIN "data/bank_03c/lz_726a.bin" ; $726a, 218 bytes
+	INCBIN "data/bank_03c/lz_ThreeSetsLabelTiles.bin" ; $726a, 218 bytes
 FiveSetsLabelTiles:
-	INCBIN "data/bank_03c/lz_7344.bin" ; $7344, 215 bytes
+	INCBIN "data/bank_03c/lz_FiveSetsLabelTiles.bin" ; $7344, 215 bytes
 CharacterSelectTiles:
-	INCBIN "data/bank_03c/lz_741b.bin" ; $741b, 453 bytes
+	INCBIN "data/bank_03c/lz_CharacterSelectTiles.bin" ; $741b, 453 bytes
 CharacterSelectTilemap:
-	INCBIN "data/bank_03c/lz_75e0.bin" ; $75e0, 140 bytes
+	INCBIN "data/bank_03c/lz_CharacterSelectTilemap.bin" ; $75e0, 140 bytes
 CharacterSelectAttrmap:
-	INCBIN "data/bank_03c/lz_766c.bin" ; $766c, 89 bytes
+	INCBIN "data/bank_03c/lz_CharacterSelectAttrmap.bin" ; $766c, 89 bytes
 CharacterSelectPalettes:
-	INCLUDE "data/bank_03c/palettes_76c5.asm" ; $76c5, 64 bytes (palettes)
+	INCLUDE "data/bank_03c/CharacterSelectPalettes.asm" ; $76c5, 64 bytes (palettes)
 CharacterSelectLabelTiles0:
-	INCBIN "data/bank_03c/lz_7705.bin" ; $7705, 231 bytes
+	INCBIN "data/bank_03c/lz_CharacterSelectLabelTiles0.bin" ; $7705, 231 bytes
 CharacterSelectLabelTiles1:
-	INCBIN "data/bank_03c/lz_77ec.bin" ; $77ec, 227 bytes
+	INCBIN "data/bank_03c/lz_CharacterSelectLabelTiles1.bin" ; $77ec, 227 bytes
 CharacterSelectLabelTiles2:
-	INCBIN "data/bank_03c/lz_78cf.bin" ; $78cf, 253 bytes
+	INCBIN "data/bank_03c/lz_CharacterSelectLabelTiles2.bin" ; $78cf, 253 bytes
 	; $79cc, 1588 bytes fill to bank end (linker-padded)

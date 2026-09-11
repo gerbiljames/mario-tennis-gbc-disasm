@@ -612,9 +612,9 @@ QueueTourPointerSprite_13_SpriteTemplate:
 	; $4d29, 7 bytes (fill)
 	ds 7, $00
 TourPointerTiles_13:
-	INCBIN "data/bank_013/d_4d30.bin" ; $4d30, 64 bytes
+	INCBIN "data/bank_013/TourPointerTiles_13.bin" ; $4d30, 64 bytes
 TourPointerPalette_13:
-	INCLUDE "data/bank_013/palettes_4d70.asm" ; $4d70, 8 bytes (palettes)
+	INCLUDE "data/bank_013/TourPointerPalette_13.asm" ; $4d70, 8 bytes (palettes)
 AnimateDoorOpen_13:
 	sound SFX_DOOR ; $4d78
 	script_copy_scene_rect $14, $08, $06, $15, $02, $02 ; $4d7a
@@ -2624,15 +2624,15 @@ VarsityCourtTourLzPtrs_13:
 	dw VarsityCourtTourLz2_13 ; record 2
 	dw VarsityCourtTourLz3_13 ; record 3
 VarsityCourtTourLz0_13:
-	INCBIN "data/bank_013/lz_6793.bin" ; $6793, 158 bytes
+	INCBIN "data/bank_013/lz_VarsityCourtTourLz0_13.bin" ; $6793, 158 bytes
 VarsityCourtTourLz1_13:
-	INCBIN "data/bank_013/lz_6831.bin" ; $6831, 157 bytes
+	INCBIN "data/bank_013/lz_VarsityCourtTourLz1_13.bin" ; $6831, 157 bytes
 VarsityCourtTourLz2_13:
-	INCBIN "data/bank_013/lz_68ce.bin" ; $68ce, 161 bytes
+	INCBIN "data/bank_013/lz_VarsityCourtTourLz2_13.bin" ; $68ce, 161 bytes
 VarsityCourtTourLz3_13:
-	INCBIN "data/bank_013/lz_696f.bin" ; $696f, 153 bytes
+	INCBIN "data/bank_013/lz_VarsityCourtTourLz3_13.bin" ; $696f, 153 bytes
 VarsityCourtTourPalette_13:
-	INCBIN "data/bank_013/d_6a08.bin" ; $6a08, 8 bytes
+	INCBIN "data/bank_013/VarsityCourtTourPalette_13.bin" ; $6a08, 8 bytes
 SetupStoryMinigameMatch0:
 	script_null_script $05 ; $6a10
 	script_set_anim $05, $01 ; $6a15

@@ -1186,7 +1186,7 @@ InitSaveHeader:
 	pop af ; $47e7
 	ret ; $47e8
 SaveSignature:
-	INCLUDE "data/bank_003/text_47e9.asm" ; $47e9, 16 bytes
+	INCLUDE "data/bank_003/SaveSignature.asm" ; $47e9, 16 bytes
 WipeAllSaveRam:
 	ld e, $00 ; $47f9
 .loop:
@@ -2945,7 +2945,7 @@ InvalidateCurrentSlotBlock:
 	; $52e3, 13 bytes (fill)
 	ds 13, $00
 SaveEditorCursorTiles_03:
-	INCBIN "data/bank_003/d_52f0.bin" ; $52f0, 32 bytes
+	INCBIN "data/bank_003/SaveEditorCursorTiles_03.bin" ; $52f0, 32 bytes
 Unused_03_SaveSlotDebugEditor:
 	ld hl, SaveEditorCursorTiles_03 ; $5310
 	ld de, $8000 ; $5313
@@ -4051,7 +4051,7 @@ TestTextEndMarker:
 	sub $23 ; $5b1d
 	ret ; $5b1f
 ScrollTextPalette_03:
-	INCLUDE "data/bank_003/palettes_5b20.asm" ; $5b20, 8 bytes (palettes)
+	INCLUDE "data/bank_003/ScrollTextPalette_03.asm" ; $5b20, 8 bytes (palettes)
 SetupSceneAnimationPalettes:
 	push_wram_bank $06 ; $5b28
 	xor a ; $5b31
@@ -4115,7 +4115,7 @@ LoadCutsceneAnimFrameGfx_00_08:
 	call DecompressData ; $5bce
 	ld hl, wDecompBuffer ; $5bd1
 	ld de, $8000 ; $5bd4
-	ld c, $04 ; $5bd7
+	ld c, CutsceneAnimFrameLZ_00_SIZE / 16 ; $5bd7
 	call QueueVRAMCopy ; $5bd9
 	ld hl, LoadCutsceneAnimFrameGfx_00_08_SpriteTemplate0 ; $5bdc
 	ld d, $fe ; $5bdf
@@ -4130,7 +4130,7 @@ LoadCutsceneAnimFrameGfx_00_08:
 	call DecompressData ; $5bf6
 	ld hl, wDecompBuffer ; $5bf9
 	ld de, $8000 ; $5bfc
-	ld c, $04 ; $5bff
+	ld c, CutsceneAnimFrameLZ_01_SIZE / 16 ; $5bff
 	call QueueVRAMCopy ; $5c01
 	ld hl, LoadCutsceneAnimFrameGfx_00_08_SpriteTemplate1 ; $5c04
 	ld d, $fe ; $5c07
@@ -4145,7 +4145,7 @@ LoadCutsceneAnimFrameGfx_00_08:
 	call DecompressData ; $5c1e
 	ld hl, wDecompBuffer ; $5c21
 	ld de, $8000 ; $5c24
-	ld c, $04 ; $5c27
+	ld c, CutsceneAnimFrameLZ_02_SIZE / 16 ; $5c27
 	call QueueVRAMCopy ; $5c29
 	ld hl, LoadCutsceneAnimFrameGfx_00_08_SpriteTemplate2 ; $5c2c
 	ld d, $fe ; $5c2f
@@ -4160,7 +4160,7 @@ LoadCutsceneAnimFrameGfx_00_08:
 	call DecompressData ; $5c46
 	ld hl, wDecompBuffer ; $5c49
 	ld de, $8000 ; $5c4c
-	ld c, $04 ; $5c4f
+	ld c, CutsceneAnimFrameLZ_03_SIZE / 16 ; $5c4f
 	call QueueVRAMCopy ; $5c51
 	ld hl, LoadCutsceneAnimFrameGfx_00_08_SpriteTemplate3 ; $5c54
 	ld d, $fe ; $5c57
@@ -4175,7 +4175,7 @@ LoadCutsceneAnimFrameGfx_00_08:
 	call DecompressData ; $5c6e
 	ld hl, wDecompBuffer ; $5c71
 	ld de, $8000 ; $5c74
-	ld c, $04 ; $5c77
+	ld c, CutsceneAnimFrameLZ_04_SIZE / 16 ; $5c77
 	call QueueVRAMCopy ; $5c79
 	ld hl, LoadCutsceneAnimFrameGfx_00_08_SpriteTemplate4 ; $5c7c
 	ld d, $fe ; $5c7f
@@ -4190,7 +4190,7 @@ LoadCutsceneAnimFrameGfx_00_08:
 	call DecompressData ; $5c96
 	ld hl, wDecompBuffer ; $5c99
 	ld de, $8000 ; $5c9c
-	ld c, $04 ; $5c9f
+	ld c, CutsceneAnimFrameLZ_05_SIZE / 16 ; $5c9f
 	call QueueVRAMCopy ; $5ca1
 	ld hl, LoadCutsceneAnimFrameGfx_00_08_SpriteTemplate5 ; $5ca4
 	ld d, $fe ; $5ca7
@@ -4205,7 +4205,7 @@ LoadCutsceneAnimFrameGfx_00_08:
 	call DecompressData ; $5cbe
 	ld hl, wDecompBuffer ; $5cc1
 	ld de, $8000 ; $5cc4
-	ld c, $04 ; $5cc7
+	ld c, CutsceneAnimFrameLZ_06_SIZE / 16 ; $5cc7
 	call QueueVRAMCopy ; $5cc9
 	ld hl, LoadCutsceneAnimFrameGfx_00_08_SpriteTemplate6 ; $5ccc
 	ld d, $fe ; $5ccf
@@ -4220,7 +4220,7 @@ LoadCutsceneAnimFrameGfx_00_08:
 	call DecompressData ; $5ce6
 	ld hl, wDecompBuffer ; $5ce9
 	ld de, $8000 ; $5cec
-	ld c, $04 ; $5cef
+	ld c, CutsceneAnimFrameLZ_07_SIZE / 16 ; $5cef
 	call QueueVRAMCopy ; $5cf1
 	ld hl, LoadCutsceneAnimFrameGfx_00_08_SpriteTemplate7 ; $5cf4
 	ld d, $fe ; $5cf7
@@ -4235,7 +4235,7 @@ LoadCutsceneAnimFrameGfx_00_08:
 	call DecompressData ; $5d0e
 	ld hl, wDecompBuffer ; $5d11
 	ld de, $8000 ; $5d14
-	ld c, $04 ; $5d17
+	ld c, CutsceneAnimFrameLZ_08_SIZE / 16 ; $5d17
 	call QueueVRAMCopy ; $5d19
 	ld hl, LoadCutsceneAnimFrameGfx_00_08_SpriteTemplate8 ; $5d1c
 	ld d, $fe ; $5d1f
@@ -4283,7 +4283,7 @@ LoadCutsceneAnimFrameGfx_09_11:
 	call DecompressData ; $5d82
 	ld hl, wDecompBuffer + 4 * TILE_SIZE ; $5d85
 	ld de, $8040 ; $5d88
-	ld c, $04 ; $5d8b
+	ld c, CutsceneAnimFrameLZ_09_SIZE / 16 ; $5d8b
 	call QueueVRAMCopy ; $5d8d
 	ld hl, LoadCutsceneAnimFrameGfx_09_11_SpriteTemplate0 ; $5d90
 	ld d, $0e ; $5d93
@@ -4298,7 +4298,7 @@ LoadCutsceneAnimFrameGfx_09_11:
 	call DecompressData ; $5daa
 	ld hl, wDecompBuffer + 4 * TILE_SIZE ; $5dad
 	ld de, $8040 ; $5db0
-	ld c, $04 ; $5db3
+	ld c, CutsceneAnimFrameLZ_0a_SIZE / 16 ; $5db3
 	call QueueVRAMCopy ; $5db5
 	ld hl, LoadCutsceneAnimFrameGfx_09_11_SpriteTemplate1 ; $5db8
 	ld d, $0e ; $5dbb
@@ -4313,7 +4313,7 @@ LoadCutsceneAnimFrameGfx_09_11:
 	call DecompressData ; $5dd2
 	ld hl, wDecompBuffer + 4 * TILE_SIZE ; $5dd5
 	ld de, $8040 ; $5dd8
-	ld c, $04 ; $5ddb
+	ld c, CutsceneAnimFrameLZ_0b_SIZE / 16 ; $5ddb
 	call QueueVRAMCopy ; $5ddd
 	ld hl, LoadCutsceneAnimFrameGfx_09_11_SpriteTemplate2 ; $5de0
 	ld d, $0e ; $5de3
@@ -4328,7 +4328,7 @@ LoadCutsceneAnimFrameGfx_09_11:
 	call DecompressData ; $5dfa
 	ld hl, wDecompBuffer + 4 * TILE_SIZE ; $5dfd
 	ld de, $8040 ; $5e00
-	ld c, $04 ; $5e03
+	ld c, CutsceneAnimFrameLZ_0c_SIZE / 16 ; $5e03
 	call QueueVRAMCopy ; $5e05
 	ld hl, LoadCutsceneAnimFrameGfx_09_11_SpriteTemplate3 ; $5e08
 	ld d, $0e ; $5e0b
@@ -4343,7 +4343,7 @@ LoadCutsceneAnimFrameGfx_09_11:
 	call DecompressData ; $5e22
 	ld hl, wDecompBuffer + 4 * TILE_SIZE ; $5e25
 	ld de, $8040 ; $5e28
-	ld c, $04 ; $5e2b
+	ld c, CutsceneAnimFrameLZ_0d_SIZE / 16 ; $5e2b
 	call QueueVRAMCopy ; $5e2d
 	ld hl, LoadCutsceneAnimFrameGfx_09_11_SpriteTemplate4 ; $5e30
 	ld d, $0e ; $5e33
@@ -4358,7 +4358,7 @@ LoadCutsceneAnimFrameGfx_09_11:
 	call DecompressData ; $5e4a
 	ld hl, wDecompBuffer + 4 * TILE_SIZE ; $5e4d
 	ld de, $8040 ; $5e50
-	ld c, $04 ; $5e53
+	ld c, CutsceneAnimFrameLZ_0e_SIZE / 16 ; $5e53
 	call QueueVRAMCopy ; $5e55
 	ld hl, LoadCutsceneAnimFrameGfx_09_11_SpriteTemplate5 ; $5e58
 	ld d, $0e ; $5e5b
@@ -4373,7 +4373,7 @@ LoadCutsceneAnimFrameGfx_09_11:
 	call DecompressData ; $5e72
 	ld hl, wDecompBuffer + 4 * TILE_SIZE ; $5e75
 	ld de, $8040 ; $5e78
-	ld c, $04 ; $5e7b
+	ld c, CutsceneAnimFrameLZ_0f_SIZE / 16 ; $5e7b
 	call QueueVRAMCopy ; $5e7d
 	ld hl, LoadCutsceneAnimFrameGfx_09_11_SpriteTemplate6 ; $5e80
 	ld d, $0e ; $5e83
@@ -4388,7 +4388,7 @@ LoadCutsceneAnimFrameGfx_09_11:
 	call DecompressData ; $5e9a
 	ld hl, wDecompBuffer + 4 * TILE_SIZE ; $5e9d
 	ld de, $8040 ; $5ea0
-	ld c, $04 ; $5ea3
+	ld c, CutsceneAnimFrameLZ_10_SIZE / 16 ; $5ea3
 	call QueueVRAMCopy ; $5ea5
 	ld hl, LoadCutsceneAnimFrameGfx_09_11_SpriteTemplate7 ; $5ea8
 	ld d, $0e ; $5eab
@@ -4403,7 +4403,7 @@ LoadCutsceneAnimFrameGfx_09_11:
 	call DecompressData ; $5ec2
 	ld hl, wDecompBuffer + 4 * TILE_SIZE ; $5ec5
 	ld de, $8040 ; $5ec8
-	ld c, $04 ; $5ecb
+	ld c, CutsceneAnimFrameLZ_11_SIZE / 16 ; $5ecb
 	call QueueVRAMCopy ; $5ecd
 	ld hl, LoadCutsceneAnimFrameGfx_09_11_SpriteTemplate8 ; $5ed0
 	ld d, $0e ; $5ed3
@@ -4451,7 +4451,7 @@ LoadCutsceneAnimFrameGfx_12_1A:
 	call DecompressData ; $5f36
 	ld hl, wDecompBuffer + 8 * TILE_SIZE ; $5f39
 	ld de, $8080 ; $5f3c
-	ld c, $04 ; $5f3f
+	ld c, CutsceneAnimFrameLZ_12_SIZE / 16 ; $5f3f
 	call QueueVRAMCopy ; $5f41
 	ld hl, LoadCutsceneAnimFrameGfx_12_1A_SpriteTemplate0 ; $5f44
 	ld d, $1e ; $5f47
@@ -4466,7 +4466,7 @@ LoadCutsceneAnimFrameGfx_12_1A:
 	call DecompressData ; $5f5e
 	ld hl, wDecompBuffer + 8 * TILE_SIZE ; $5f61
 	ld de, $8080 ; $5f64
-	ld c, $04 ; $5f67
+	ld c, CutsceneAnimFrameLZ_13_SIZE / 16 ; $5f67
 	call QueueVRAMCopy ; $5f69
 	ld hl, LoadCutsceneAnimFrameGfx_12_1A_SpriteTemplate1 ; $5f6c
 	ld d, $1e ; $5f6f
@@ -4481,7 +4481,7 @@ LoadCutsceneAnimFrameGfx_12_1A:
 	call DecompressData ; $5f86
 	ld hl, wDecompBuffer + 8 * TILE_SIZE ; $5f89
 	ld de, $8080 ; $5f8c
-	ld c, $04 ; $5f8f
+	ld c, CutsceneAnimFrameLZ_14_SIZE / 16 ; $5f8f
 	call QueueVRAMCopy ; $5f91
 	ld hl, LoadCutsceneAnimFrameGfx_12_1A_SpriteTemplate2 ; $5f94
 	ld d, $1e ; $5f97
@@ -4496,7 +4496,7 @@ LoadCutsceneAnimFrameGfx_12_1A:
 	call DecompressData ; $5fae
 	ld hl, wDecompBuffer + 8 * TILE_SIZE ; $5fb1
 	ld de, $8080 ; $5fb4
-	ld c, $04 ; $5fb7
+	ld c, CutsceneAnimFrameLZ_15_SIZE / 16 ; $5fb7
 	call QueueVRAMCopy ; $5fb9
 	ld hl, LoadCutsceneAnimFrameGfx_12_1A_SpriteTemplate3 ; $5fbc
 	ld d, $1e ; $5fbf
@@ -4511,7 +4511,7 @@ LoadCutsceneAnimFrameGfx_12_1A:
 	call DecompressData ; $5fd6
 	ld hl, wDecompBuffer + 8 * TILE_SIZE ; $5fd9
 	ld de, $8080 ; $5fdc
-	ld c, $04 ; $5fdf
+	ld c, CutsceneAnimFrameLZ_16_SIZE / 16 ; $5fdf
 	call QueueVRAMCopy ; $5fe1
 	ld hl, LoadCutsceneAnimFrameGfx_12_1A_SpriteTemplate4 ; $5fe4
 	ld d, $1e ; $5fe7
@@ -4526,7 +4526,7 @@ LoadCutsceneAnimFrameGfx_12_1A:
 	call DecompressData ; $5ffe
 	ld hl, wDecompBuffer + 8 * TILE_SIZE ; $6001
 	ld de, $8080 ; $6004
-	ld c, $04 ; $6007
+	ld c, CutsceneAnimFrameLZ_17_SIZE / 16 ; $6007
 	call QueueVRAMCopy ; $6009
 	ld hl, LoadCutsceneAnimFrameGfx_12_1A_SpriteTemplate5 ; $600c
 	ld d, $1e ; $600f
@@ -4541,7 +4541,7 @@ LoadCutsceneAnimFrameGfx_12_1A:
 	call DecompressData ; $6026
 	ld hl, wDecompBuffer + 8 * TILE_SIZE ; $6029
 	ld de, $8080 ; $602c
-	ld c, $04 ; $602f
+	ld c, CutsceneAnimFrameLZ_18_SIZE / 16 ; $602f
 	call QueueVRAMCopy ; $6031
 	ld hl, LoadCutsceneAnimFrameGfx_12_1A_SpriteTemplate6 ; $6034
 	ld d, $1e ; $6037
@@ -4556,7 +4556,7 @@ LoadCutsceneAnimFrameGfx_12_1A:
 	call DecompressData ; $604e
 	ld hl, wDecompBuffer + 8 * TILE_SIZE ; $6051
 	ld de, $8080 ; $6054
-	ld c, $04 ; $6057
+	ld c, CutsceneAnimFrameLZ_19_SIZE / 16 ; $6057
 	call QueueVRAMCopy ; $6059
 	ld hl, LoadCutsceneAnimFrameGfx_12_1A_SpriteTemplate7 ; $605c
 	ld d, $1e ; $605f
@@ -4571,7 +4571,7 @@ LoadCutsceneAnimFrameGfx_12_1A:
 	call DecompressData ; $6076
 	ld hl, wDecompBuffer + 8 * TILE_SIZE ; $6079
 	ld de, $8080 ; $607c
-	ld c, $04 ; $607f
+	ld c, CutsceneAnimFrameLZ_1a_SIZE / 16 ; $607f
 	call QueueVRAMCopy ; $6081
 	ld hl, LoadCutsceneAnimFrameGfx_12_1A_SpriteTemplate8 ; $6084
 	ld d, $1e ; $6087
@@ -4619,7 +4619,7 @@ LoadCutsceneAnimFrameGfx_1B_23:
 	call DecompressData ; $60ea
 	ld hl, wDecompBuffer + 12 * TILE_SIZE ; $60ed
 	ld de, $80c0 ; $60f0
-	ld c, $02 ; $60f3
+	ld c, CutsceneAnimFrameLZ_1b_SIZE / 16 ; $60f3
 	call QueueVRAMCopy ; $60f5
 	ld hl, LoadCutsceneAnimFrameGfx_1B_23_SpriteTemplate0 ; $60f8
 	ld d, $2e ; $60fb
@@ -4634,7 +4634,7 @@ LoadCutsceneAnimFrameGfx_1B_23:
 	call DecompressData ; $6112
 	ld hl, wDecompBuffer + 12 * TILE_SIZE ; $6115
 	ld de, $80c0 ; $6118
-	ld c, $02 ; $611b
+	ld c, CutsceneAnimFrameLZ_1c_SIZE / 16 ; $611b
 	call QueueVRAMCopy ; $611d
 	ld hl, LoadCutsceneAnimFrameGfx_1B_23_SpriteTemplate1 ; $6120
 	ld d, $2e ; $6123
@@ -4649,7 +4649,7 @@ LoadCutsceneAnimFrameGfx_1B_23:
 	call DecompressData ; $613a
 	ld hl, wDecompBuffer + 12 * TILE_SIZE ; $613d
 	ld de, $80c0 ; $6140
-	ld c, $02 ; $6143
+	ld c, CutsceneAnimFrameLZ_1d_SIZE / 16 ; $6143
 	call QueueVRAMCopy ; $6145
 	ld hl, LoadCutsceneAnimFrameGfx_1B_23_SpriteTemplate2 ; $6148
 	ld d, $2e ; $614b
@@ -4664,7 +4664,7 @@ LoadCutsceneAnimFrameGfx_1B_23:
 	call DecompressData ; $6162
 	ld hl, wDecompBuffer + 12 * TILE_SIZE ; $6165
 	ld de, $80c0 ; $6168
-	ld c, $02 ; $616b
+	ld c, CutsceneAnimFrameLZ_1e_SIZE / 16 ; $616b
 	call QueueVRAMCopy ; $616d
 	ld hl, LoadCutsceneAnimFrameGfx_1B_23_SpriteTemplate3 ; $6170
 	ld d, $2e ; $6173
@@ -4679,7 +4679,7 @@ LoadCutsceneAnimFrameGfx_1B_23:
 	call DecompressData ; $618a
 	ld hl, wDecompBuffer + 12 * TILE_SIZE ; $618d
 	ld de, $80c0 ; $6190
-	ld c, $02 ; $6193
+	ld c, CutsceneAnimFrameLZ_1f_SIZE / 16 ; $6193
 	call QueueVRAMCopy ; $6195
 	ld hl, LoadCutsceneAnimFrameGfx_1B_23_SpriteTemplate4 ; $6198
 	ld d, $2e ; $619b
@@ -4694,7 +4694,7 @@ LoadCutsceneAnimFrameGfx_1B_23:
 	call DecompressData ; $61b2
 	ld hl, wDecompBuffer + 12 * TILE_SIZE ; $61b5
 	ld de, $80c0 ; $61b8
-	ld c, $02 ; $61bb
+	ld c, CutsceneAnimFrameLZ_20_SIZE / 16 ; $61bb
 	call QueueVRAMCopy ; $61bd
 	ld hl, LoadCutsceneAnimFrameGfx_1B_23_SpriteTemplate5 ; $61c0
 	ld d, $2e ; $61c3
@@ -4709,7 +4709,7 @@ LoadCutsceneAnimFrameGfx_1B_23:
 	call DecompressData ; $61da
 	ld hl, wDecompBuffer + 12 * TILE_SIZE ; $61dd
 	ld de, $80c0 ; $61e0
-	ld c, $02 ; $61e3
+	ld c, CutsceneAnimFrameLZ_21_SIZE / 16 ; $61e3
 	call QueueVRAMCopy ; $61e5
 	ld hl, LoadCutsceneAnimFrameGfx_1B_23_SpriteTemplate6 ; $61e8
 	ld d, $2e ; $61eb
@@ -4724,7 +4724,7 @@ LoadCutsceneAnimFrameGfx_1B_23:
 	call DecompressData ; $6202
 	ld hl, wDecompBuffer + 12 * TILE_SIZE ; $6205
 	ld de, $80c0 ; $6208
-	ld c, $02 ; $620b
+	ld c, CutsceneAnimFrameLZ_22_SIZE / 16 ; $620b
 	call QueueVRAMCopy ; $620d
 	ld hl, LoadCutsceneAnimFrameGfx_1B_23_SpriteTemplate7 ; $6210
 	ld d, $2e ; $6213
@@ -4739,7 +4739,7 @@ LoadCutsceneAnimFrameGfx_1B_23:
 	call DecompressData ; $622a
 	ld hl, wDecompBuffer + 12 * TILE_SIZE ; $622d
 	ld de, $80c0 ; $6230
-	ld c, $02 ; $6233
+	ld c, CutsceneAnimFrameLZ_23_SIZE / 16 ; $6233
 	call QueueVRAMCopy ; $6235
 	ld hl, LoadCutsceneAnimFrameGfx_1B_23_SpriteTemplate8 ; $6238
 	ld d, $2e ; $623b
@@ -4787,7 +4787,7 @@ LoadCutsceneAnimFrameGfx_24_2C:
 	call DecompressData ; $629e
 	ld hl, wDecompBuffer + 14 * TILE_SIZE ; $62a1
 	ld de, $80e0 ; $62a4
-	ld c, $02 ; $62a7
+	ld c, CutsceneAnimFrameLZ_24_SIZE / 16 ; $62a7
 	call QueueVRAMCopy ; $62a9
 	ld hl, LoadCutsceneAnimFrameGfx_24_2C_SpriteTemplate0 ; $62ac
 	ld d, $36 ; $62af
@@ -4802,7 +4802,7 @@ LoadCutsceneAnimFrameGfx_24_2C:
 	call DecompressData ; $62c6
 	ld hl, wDecompBuffer + 14 * TILE_SIZE ; $62c9
 	ld de, $80e0 ; $62cc
-	ld c, $02 ; $62cf
+	ld c, CutsceneAnimFrameLZ_25_SIZE / 16 ; $62cf
 	call QueueVRAMCopy ; $62d1
 	ld hl, LoadCutsceneAnimFrameGfx_24_2C_SpriteTemplate1 ; $62d4
 	ld d, $36 ; $62d7
@@ -4817,7 +4817,7 @@ LoadCutsceneAnimFrameGfx_24_2C:
 	call DecompressData ; $62ee
 	ld hl, wDecompBuffer + 14 * TILE_SIZE ; $62f1
 	ld de, $80e0 ; $62f4
-	ld c, $02 ; $62f7
+	ld c, CutsceneAnimFrameLZ_26_SIZE / 16 ; $62f7
 	call QueueVRAMCopy ; $62f9
 	ld hl, LoadCutsceneAnimFrameGfx_24_2C_SpriteTemplate2 ; $62fc
 	ld d, $36 ; $62ff
@@ -4832,7 +4832,7 @@ LoadCutsceneAnimFrameGfx_24_2C:
 	call DecompressData ; $6316
 	ld hl, wDecompBuffer + 14 * TILE_SIZE ; $6319
 	ld de, $80e0 ; $631c
-	ld c, $02 ; $631f
+	ld c, CutsceneAnimFrameLZ_27_SIZE / 16 ; $631f
 	call QueueVRAMCopy ; $6321
 	ld hl, LoadCutsceneAnimFrameGfx_24_2C_SpriteTemplate3 ; $6324
 	ld d, $36 ; $6327
@@ -4847,7 +4847,7 @@ LoadCutsceneAnimFrameGfx_24_2C:
 	call DecompressData ; $633e
 	ld hl, wDecompBuffer + 14 * TILE_SIZE ; $6341
 	ld de, $80e0 ; $6344
-	ld c, $02 ; $6347
+	ld c, CutsceneAnimFrameLZ_28_SIZE / 16 ; $6347
 	call QueueVRAMCopy ; $6349
 	ld hl, LoadCutsceneAnimFrameGfx_24_2C_SpriteTemplate4 ; $634c
 	ld d, $36 ; $634f
@@ -4862,7 +4862,7 @@ LoadCutsceneAnimFrameGfx_24_2C:
 	call DecompressData ; $6366
 	ld hl, wDecompBuffer + 14 * TILE_SIZE ; $6369
 	ld de, $80e0 ; $636c
-	ld c, $02 ; $636f
+	ld c, CutsceneAnimFrameLZ_29_SIZE / 16 ; $636f
 	call QueueVRAMCopy ; $6371
 	ld hl, LoadCutsceneAnimFrameGfx_24_2C_SpriteTemplate5 ; $6374
 	ld d, $36 ; $6377
@@ -4877,7 +4877,7 @@ LoadCutsceneAnimFrameGfx_24_2C:
 	call DecompressData ; $638e
 	ld hl, wDecompBuffer + 14 * TILE_SIZE ; $6391
 	ld de, $80e0 ; $6394
-	ld c, $02 ; $6397
+	ld c, CutsceneAnimFrameLZ_2a_SIZE / 16 ; $6397
 	call QueueVRAMCopy ; $6399
 	ld hl, LoadCutsceneAnimFrameGfx_24_2C_SpriteTemplate6 ; $639c
 	ld d, $36 ; $639f
@@ -4892,7 +4892,7 @@ LoadCutsceneAnimFrameGfx_24_2C:
 	call DecompressData ; $63b6
 	ld hl, wDecompBuffer + 14 * TILE_SIZE ; $63b9
 	ld de, $80e0 ; $63bc
-	ld c, $02 ; $63bf
+	ld c, CutsceneAnimFrameLZ_2b_SIZE / 16 ; $63bf
 	call QueueVRAMCopy ; $63c1
 	ld hl, LoadCutsceneAnimFrameGfx_24_2C_SpriteTemplate7 ; $63c4
 	ld d, $36 ; $63c7
@@ -4907,7 +4907,7 @@ LoadCutsceneAnimFrameGfx_24_2C:
 	call DecompressData ; $63de
 	ld hl, wDecompBuffer + 14 * TILE_SIZE ; $63e1
 	ld de, $80e0 ; $63e4
-	ld c, $02 ; $63e7
+	ld c, CutsceneAnimFrameLZ_2c_SIZE / 16 ; $63e7
 	call QueueVRAMCopy ; $63e9
 	ld hl, LoadCutsceneAnimFrameGfx_24_2C_SpriteTemplate8 ; $63ec
 	ld d, $36 ; $63ef
@@ -4955,7 +4955,7 @@ LoadCutsceneAnimFrameGfx_2D_35:
 	call DecompressData ; $6452
 	ld hl, wDecompBuffer + 16 * TILE_SIZE ; $6455
 	ld de, $8100 ; $6458
-	ld c, $02 ; $645b
+	ld c, CutsceneAnimFrameLZ_2d_SIZE / 16 ; $645b
 	call QueueVRAMCopy ; $645d
 	ld hl, LoadCutsceneAnimFrameGfx_2D_35_SpriteTemplate0 ; $6460
 	ld d, $3e ; $6463
@@ -4970,7 +4970,7 @@ LoadCutsceneAnimFrameGfx_2D_35:
 	call DecompressData ; $647a
 	ld hl, wDecompBuffer + 16 * TILE_SIZE ; $647d
 	ld de, $8100 ; $6480
-	ld c, $02 ; $6483
+	ld c, CutsceneAnimFrameLZ_2e_SIZE / 16 ; $6483
 	call QueueVRAMCopy ; $6485
 	ld hl, LoadCutsceneAnimFrameGfx_2D_35_SpriteTemplate1 ; $6488
 	ld d, $3e ; $648b
@@ -4985,7 +4985,7 @@ LoadCutsceneAnimFrameGfx_2D_35:
 	call DecompressData ; $64a2
 	ld hl, wDecompBuffer + 16 * TILE_SIZE ; $64a5
 	ld de, $8100 ; $64a8
-	ld c, $02 ; $64ab
+	ld c, CutsceneAnimFrameLZ_2f_SIZE / 16 ; $64ab
 	call QueueVRAMCopy ; $64ad
 	ld hl, LoadCutsceneAnimFrameGfx_2D_35_SpriteTemplate2 ; $64b0
 	ld d, $3e ; $64b3
@@ -5000,7 +5000,7 @@ LoadCutsceneAnimFrameGfx_2D_35:
 	call DecompressData ; $64ca
 	ld hl, wDecompBuffer + 16 * TILE_SIZE ; $64cd
 	ld de, $8100 ; $64d0
-	ld c, $02 ; $64d3
+	ld c, CutsceneAnimFrameLZ_30_SIZE / 16 ; $64d3
 	call QueueVRAMCopy ; $64d5
 	ld hl, LoadCutsceneAnimFrameGfx_2D_35_SpriteTemplate3 ; $64d8
 	ld d, $3e ; $64db
@@ -5015,7 +5015,7 @@ LoadCutsceneAnimFrameGfx_2D_35:
 	call DecompressData ; $64f2
 	ld hl, wDecompBuffer + 16 * TILE_SIZE ; $64f5
 	ld de, $8100 ; $64f8
-	ld c, $02 ; $64fb
+	ld c, CutsceneAnimFrameLZ_31_SIZE / 16 ; $64fb
 	call QueueVRAMCopy ; $64fd
 	ld hl, LoadCutsceneAnimFrameGfx_2D_35_SpriteTemplate4 ; $6500
 	ld d, $3e ; $6503
@@ -5030,7 +5030,7 @@ LoadCutsceneAnimFrameGfx_2D_35:
 	call DecompressData ; $651a
 	ld hl, wDecompBuffer + 16 * TILE_SIZE ; $651d
 	ld de, $8100 ; $6520
-	ld c, $02 ; $6523
+	ld c, CutsceneAnimFrameLZ_32_SIZE / 16 ; $6523
 	call QueueVRAMCopy ; $6525
 	ld hl, LoadCutsceneAnimFrameGfx_2D_35_SpriteTemplate5 ; $6528
 	ld d, $3e ; $652b
@@ -5045,7 +5045,7 @@ LoadCutsceneAnimFrameGfx_2D_35:
 	call DecompressData ; $6542
 	ld hl, wDecompBuffer + 16 * TILE_SIZE ; $6545
 	ld de, $8100 ; $6548
-	ld c, $02 ; $654b
+	ld c, CutsceneAnimFrameLZ_33_SIZE / 16 ; $654b
 	call QueueVRAMCopy ; $654d
 	ld hl, LoadCutsceneAnimFrameGfx_2D_35_SpriteTemplate6 ; $6550
 	ld d, $3e ; $6553
@@ -5060,7 +5060,7 @@ LoadCutsceneAnimFrameGfx_2D_35:
 	call DecompressData ; $656a
 	ld hl, wDecompBuffer + 16 * TILE_SIZE ; $656d
 	ld de, $8100 ; $6570
-	ld c, $02 ; $6573
+	ld c, CutsceneAnimFrameLZ_34_SIZE / 16 ; $6573
 	call QueueVRAMCopy ; $6575
 	ld hl, LoadCutsceneAnimFrameGfx_2D_35_SpriteTemplate7 ; $6578
 	ld d, $3e ; $657b
@@ -5075,7 +5075,7 @@ LoadCutsceneAnimFrameGfx_2D_35:
 	call DecompressData ; $6592
 	ld hl, wDecompBuffer + 16 * TILE_SIZE ; $6595
 	ld de, $8100 ; $6598
-	ld c, $02 ; $659b
+	ld c, CutsceneAnimFrameLZ_35_SIZE / 16 ; $659b
 	call QueueVRAMCopy ; $659d
 	ld hl, LoadCutsceneAnimFrameGfx_2D_35_SpriteTemplate8 ; $65a0
 	ld d, $3e ; $65a3
@@ -5091,119 +5091,173 @@ LoadCutsceneAnimFrameGfx_2D_35:
 	call QueueSpriteTemplate ; $65b8
 	ret ; $65bb
 SceneAnimObjPalette0_03:
-	INCLUDE "data/bank_003/palettes_65bc.asm" ; $65bc, 8 bytes (palettes)
+	INCLUDE "data/bank_003/SceneAnimObjPalette0_03.asm" ; $65bc, 8 bytes (palettes)
 SceneAnimObjPalette1_03:
-	INCLUDE "data/bank_003/palettes_65c4.asm" ; $65c4, 8 bytes (palettes)
+	INCLUDE "data/bank_003/SceneAnimObjPalette1_03.asm" ; $65c4, 8 bytes (palettes)
 	; $65cc, 4 bytes (fill)
 	ds 4, $00
 CutsceneAnimFrameLZ_00:
-	INCBIN "data/bank_003/lz_65d0.bin" ; $65d0, 42 bytes
+	INCBIN "data/bank_003/lz_CutsceneAnimFrameLZ_00.bin" ; $65d0, 42 bytes
+	INCLUDE "data/bank_003/lz_CutsceneAnimFrameLZ_00.inc" ; DEF CutsceneAnimFrameLZ_00_SIZE EQU its decoded length, generated from the .bin by make
 CutsceneAnimFrameLZ_01:
-	INCBIN "data/bank_003/lz_65fa.bin" ; $65fa, 46 bytes
+	INCBIN "data/bank_003/lz_CutsceneAnimFrameLZ_01.bin" ; $65fa, 46 bytes
+	INCLUDE "data/bank_003/lz_CutsceneAnimFrameLZ_01.inc" ; DEF CutsceneAnimFrameLZ_01_SIZE EQU its decoded length, generated from the .bin by make
 CutsceneAnimFrameLZ_02:
-	INCBIN "data/bank_003/lz_6628.bin" ; $6628, 48 bytes
+	INCBIN "data/bank_003/lz_CutsceneAnimFrameLZ_02.bin" ; $6628, 48 bytes
+	INCLUDE "data/bank_003/lz_CutsceneAnimFrameLZ_02.inc" ; DEF CutsceneAnimFrameLZ_02_SIZE EQU its decoded length, generated from the .bin by make
 CutsceneAnimFrameLZ_03:
-	INCBIN "data/bank_003/lz_6658.bin" ; $6658, 65 bytes
+	INCBIN "data/bank_003/lz_CutsceneAnimFrameLZ_03.bin" ; $6658, 65 bytes
+	INCLUDE "data/bank_003/lz_CutsceneAnimFrameLZ_03.inc" ; DEF CutsceneAnimFrameLZ_03_SIZE EQU its decoded length, generated from the .bin by make
 CutsceneAnimFrameLZ_04:
-	INCBIN "data/bank_003/lz_6699.bin" ; $6699, 66 bytes
+	INCBIN "data/bank_003/lz_CutsceneAnimFrameLZ_04.bin" ; $6699, 66 bytes
+	INCLUDE "data/bank_003/lz_CutsceneAnimFrameLZ_04.inc" ; DEF CutsceneAnimFrameLZ_04_SIZE EQU its decoded length, generated from the .bin by make
 CutsceneAnimFrameLZ_05:
-	INCBIN "data/bank_003/lz_66db.bin" ; $66db, 72 bytes
+	INCBIN "data/bank_003/lz_CutsceneAnimFrameLZ_05.bin" ; $66db, 72 bytes
+	INCLUDE "data/bank_003/lz_CutsceneAnimFrameLZ_05.inc" ; DEF CutsceneAnimFrameLZ_05_SIZE EQU its decoded length, generated from the .bin by make
 CutsceneAnimFrameLZ_06:
-	INCBIN "data/bank_003/lz_6723.bin" ; $6723, 73 bytes
+	INCBIN "data/bank_003/lz_CutsceneAnimFrameLZ_06.bin" ; $6723, 73 bytes
+	INCLUDE "data/bank_003/lz_CutsceneAnimFrameLZ_06.inc" ; DEF CutsceneAnimFrameLZ_06_SIZE EQU its decoded length, generated from the .bin by make
 CutsceneAnimFrameLZ_07:
-	INCBIN "data/bank_003/lz_676c.bin" ; $676c, 73 bytes
+	INCBIN "data/bank_003/lz_CutsceneAnimFrameLZ_07.bin" ; $676c, 73 bytes
+	INCLUDE "data/bank_003/lz_CutsceneAnimFrameLZ_07.inc" ; DEF CutsceneAnimFrameLZ_07_SIZE EQU its decoded length, generated from the .bin by make
 CutsceneAnimFrameLZ_08:
-	INCBIN "data/bank_003/lz_67b5.bin" ; $67b5, 71 bytes
+	INCBIN "data/bank_003/lz_CutsceneAnimFrameLZ_08.bin" ; $67b5, 71 bytes
+	INCLUDE "data/bank_003/lz_CutsceneAnimFrameLZ_08.inc" ; DEF CutsceneAnimFrameLZ_08_SIZE EQU its decoded length, generated from the .bin by make
 CutsceneAnimFrameLZ_09:
-	INCBIN "data/bank_003/lz_67fc.bin" ; $67fc, 38 bytes
+	INCBIN "data/bank_003/lz_CutsceneAnimFrameLZ_09.bin" ; $67fc, 38 bytes
+	INCLUDE "data/bank_003/lz_CutsceneAnimFrameLZ_09.inc" ; DEF CutsceneAnimFrameLZ_09_SIZE EQU its decoded length, generated from the .bin by make
 CutsceneAnimFrameLZ_0a:
-	INCBIN "data/bank_003/lz_6822.bin" ; $6822, 46 bytes
+	INCBIN "data/bank_003/lz_CutsceneAnimFrameLZ_0a.bin" ; $6822, 46 bytes
+	INCLUDE "data/bank_003/lz_CutsceneAnimFrameLZ_0a.inc" ; DEF CutsceneAnimFrameLZ_0a_SIZE EQU its decoded length, generated from the .bin by make
 CutsceneAnimFrameLZ_0b:
-	INCBIN "data/bank_003/lz_6850.bin" ; $6850, 46 bytes
+	INCBIN "data/bank_003/lz_CutsceneAnimFrameLZ_0b.bin" ; $6850, 46 bytes
+	INCLUDE "data/bank_003/lz_CutsceneAnimFrameLZ_0b.inc" ; DEF CutsceneAnimFrameLZ_0b_SIZE EQU its decoded length, generated from the .bin by make
 CutsceneAnimFrameLZ_0c:
-	INCBIN "data/bank_003/lz_687e.bin" ; $687e, 67 bytes
+	INCBIN "data/bank_003/lz_CutsceneAnimFrameLZ_0c.bin" ; $687e, 67 bytes
+	INCLUDE "data/bank_003/lz_CutsceneAnimFrameLZ_0c.inc" ; DEF CutsceneAnimFrameLZ_0c_SIZE EQU its decoded length, generated from the .bin by make
 CutsceneAnimFrameLZ_0d:
-	INCBIN "data/bank_003/lz_68c1.bin" ; $68c1, 75 bytes
+	INCBIN "data/bank_003/lz_CutsceneAnimFrameLZ_0d.bin" ; $68c1, 75 bytes
+	INCLUDE "data/bank_003/lz_CutsceneAnimFrameLZ_0d.inc" ; DEF CutsceneAnimFrameLZ_0d_SIZE EQU its decoded length, generated from the .bin by make
 CutsceneAnimFrameLZ_0e:
-	INCBIN "data/bank_003/lz_690c.bin" ; $690c, 75 bytes
+	INCBIN "data/bank_003/lz_CutsceneAnimFrameLZ_0e.bin" ; $690c, 75 bytes
+	INCLUDE "data/bank_003/lz_CutsceneAnimFrameLZ_0e.inc" ; DEF CutsceneAnimFrameLZ_0e_SIZE EQU its decoded length, generated from the .bin by make
 CutsceneAnimFrameLZ_0f:
-	INCBIN "data/bank_003/lz_6957.bin" ; $6957, 75 bytes
+	INCBIN "data/bank_003/lz_CutsceneAnimFrameLZ_0f.bin" ; $6957, 75 bytes
+	INCLUDE "data/bank_003/lz_CutsceneAnimFrameLZ_0f.inc" ; DEF CutsceneAnimFrameLZ_0f_SIZE EQU its decoded length, generated from the .bin by make
 CutsceneAnimFrameLZ_10:
-	INCBIN "data/bank_003/lz_69a2.bin" ; $69a2, 74 bytes
+	INCBIN "data/bank_003/lz_CutsceneAnimFrameLZ_10.bin" ; $69a2, 74 bytes
+	INCLUDE "data/bank_003/lz_CutsceneAnimFrameLZ_10.inc" ; DEF CutsceneAnimFrameLZ_10_SIZE EQU its decoded length, generated from the .bin by make
 CutsceneAnimFrameLZ_11:
-	INCBIN "data/bank_003/lz_69ec.bin" ; $69ec, 73 bytes
+	INCBIN "data/bank_003/lz_CutsceneAnimFrameLZ_11.bin" ; $69ec, 73 bytes
+	INCLUDE "data/bank_003/lz_CutsceneAnimFrameLZ_11.inc" ; DEF CutsceneAnimFrameLZ_11_SIZE EQU its decoded length, generated from the .bin by make
 CutsceneAnimFrameLZ_12:
-	INCBIN "data/bank_003/lz_6a35.bin" ; $6a35, 39 bytes
+	INCBIN "data/bank_003/lz_CutsceneAnimFrameLZ_12.bin" ; $6a35, 39 bytes
+	INCLUDE "data/bank_003/lz_CutsceneAnimFrameLZ_12.inc" ; DEF CutsceneAnimFrameLZ_12_SIZE EQU its decoded length, generated from the .bin by make
 CutsceneAnimFrameLZ_13:
-	INCBIN "data/bank_003/lz_6a5c.bin" ; $6a5c, 49 bytes
+	INCBIN "data/bank_003/lz_CutsceneAnimFrameLZ_13.bin" ; $6a5c, 49 bytes
+	INCLUDE "data/bank_003/lz_CutsceneAnimFrameLZ_13.inc" ; DEF CutsceneAnimFrameLZ_13_SIZE EQU its decoded length, generated from the .bin by make
 CutsceneAnimFrameLZ_14:
-	INCBIN "data/bank_003/lz_6a8d.bin" ; $6a8d, 53 bytes
+	INCBIN "data/bank_003/lz_CutsceneAnimFrameLZ_14.bin" ; $6a8d, 53 bytes
+	INCLUDE "data/bank_003/lz_CutsceneAnimFrameLZ_14.inc" ; DEF CutsceneAnimFrameLZ_14_SIZE EQU its decoded length, generated from the .bin by make
 CutsceneAnimFrameLZ_15:
-	INCBIN "data/bank_003/lz_6ac2.bin" ; $6ac2, 66 bytes
+	INCBIN "data/bank_003/lz_CutsceneAnimFrameLZ_15.bin" ; $6ac2, 66 bytes
+	INCLUDE "data/bank_003/lz_CutsceneAnimFrameLZ_15.inc" ; DEF CutsceneAnimFrameLZ_15_SIZE EQU its decoded length, generated from the .bin by make
 CutsceneAnimFrameLZ_16:
-	INCBIN "data/bank_003/lz_6b04.bin" ; $6b04, 69 bytes
+	INCBIN "data/bank_003/lz_CutsceneAnimFrameLZ_16.bin" ; $6b04, 69 bytes
+	INCLUDE "data/bank_003/lz_CutsceneAnimFrameLZ_16.inc" ; DEF CutsceneAnimFrameLZ_16_SIZE EQU its decoded length, generated from the .bin by make
 CutsceneAnimFrameLZ_17:
-	INCBIN "data/bank_003/lz_6b49.bin" ; $6b49, 73 bytes
+	INCBIN "data/bank_003/lz_CutsceneAnimFrameLZ_17.bin" ; $6b49, 73 bytes
+	INCLUDE "data/bank_003/lz_CutsceneAnimFrameLZ_17.inc" ; DEF CutsceneAnimFrameLZ_17_SIZE EQU its decoded length, generated from the .bin by make
 CutsceneAnimFrameLZ_18:
-	INCBIN "data/bank_003/lz_6b92.bin" ; $6b92, 74 bytes
+	INCBIN "data/bank_003/lz_CutsceneAnimFrameLZ_18.bin" ; $6b92, 74 bytes
+	INCLUDE "data/bank_003/lz_CutsceneAnimFrameLZ_18.inc" ; DEF CutsceneAnimFrameLZ_18_SIZE EQU its decoded length, generated from the .bin by make
 CutsceneAnimFrameLZ_19:
-	INCBIN "data/bank_003/lz_6bdc.bin" ; $6bdc, 74 bytes
+	INCBIN "data/bank_003/lz_CutsceneAnimFrameLZ_19.bin" ; $6bdc, 74 bytes
+	INCLUDE "data/bank_003/lz_CutsceneAnimFrameLZ_19.inc" ; DEF CutsceneAnimFrameLZ_19_SIZE EQU its decoded length, generated from the .bin by make
 CutsceneAnimFrameLZ_1a:
-	INCBIN "data/bank_003/lz_6c26.bin" ; $6c26, 69 bytes
+	INCBIN "data/bank_003/lz_CutsceneAnimFrameLZ_1a.bin" ; $6c26, 69 bytes
+	INCLUDE "data/bank_003/lz_CutsceneAnimFrameLZ_1a.inc" ; DEF CutsceneAnimFrameLZ_1a_SIZE EQU its decoded length, generated from the .bin by make
 CutsceneAnimFrameLZ_1b:
-	INCBIN "data/bank_003/lz_6c6b.bin" ; $6c6b, 15 bytes
+	INCBIN "data/bank_003/lz_CutsceneAnimFrameLZ_1b.bin" ; $6c6b, 15 bytes
+	INCLUDE "data/bank_003/lz_CutsceneAnimFrameLZ_1b.inc" ; DEF CutsceneAnimFrameLZ_1b_SIZE EQU its decoded length, generated from the .bin by make
 CutsceneAnimFrameLZ_1c:
-	INCBIN "data/bank_003/lz_6c7a.bin" ; $6c7a, 15 bytes
+	INCBIN "data/bank_003/lz_CutsceneAnimFrameLZ_1c.bin" ; $6c7a, 15 bytes
+	INCLUDE "data/bank_003/lz_CutsceneAnimFrameLZ_1c.inc" ; DEF CutsceneAnimFrameLZ_1c_SIZE EQU its decoded length, generated from the .bin by make
 CutsceneAnimFrameLZ_1d:
-	INCBIN "data/bank_003/lz_6c89.bin" ; $6c89, 15 bytes
+	INCBIN "data/bank_003/lz_CutsceneAnimFrameLZ_1d.bin" ; $6c89, 15 bytes
+	INCLUDE "data/bank_003/lz_CutsceneAnimFrameLZ_1d.inc" ; DEF CutsceneAnimFrameLZ_1d_SIZE EQU its decoded length, generated from the .bin by make
 CutsceneAnimFrameLZ_1e:
-	INCBIN "data/bank_003/lz_6c98.bin" ; $6c98, 19 bytes
+	INCBIN "data/bank_003/lz_CutsceneAnimFrameLZ_1e.bin" ; $6c98, 19 bytes
+	INCLUDE "data/bank_003/lz_CutsceneAnimFrameLZ_1e.inc" ; DEF CutsceneAnimFrameLZ_1e_SIZE EQU its decoded length, generated from the .bin by make
 CutsceneAnimFrameLZ_1f:
-	INCBIN "data/bank_003/lz_6cab.bin" ; $6cab, 22 bytes
+	INCBIN "data/bank_003/lz_CutsceneAnimFrameLZ_1f.bin" ; $6cab, 22 bytes
+	INCLUDE "data/bank_003/lz_CutsceneAnimFrameLZ_1f.inc" ; DEF CutsceneAnimFrameLZ_1f_SIZE EQU its decoded length, generated from the .bin by make
 CutsceneAnimFrameLZ_20:
-	INCBIN "data/bank_003/lz_6cc1.bin" ; $6cc1, 22 bytes
+	INCBIN "data/bank_003/lz_CutsceneAnimFrameLZ_20.bin" ; $6cc1, 22 bytes
+	INCLUDE "data/bank_003/lz_CutsceneAnimFrameLZ_20.inc" ; DEF CutsceneAnimFrameLZ_20_SIZE EQU its decoded length, generated from the .bin by make
 CutsceneAnimFrameLZ_21:
-	INCBIN "data/bank_003/lz_6cd7.bin" ; $6cd7, 22 bytes
+	INCBIN "data/bank_003/lz_CutsceneAnimFrameLZ_21.bin" ; $6cd7, 22 bytes
+	INCLUDE "data/bank_003/lz_CutsceneAnimFrameLZ_21.inc" ; DEF CutsceneAnimFrameLZ_21_SIZE EQU its decoded length, generated from the .bin by make
 CutsceneAnimFrameLZ_22:
-	INCBIN "data/bank_003/lz_6ced.bin" ; $6ced, 22 bytes
+	INCBIN "data/bank_003/lz_CutsceneAnimFrameLZ_22.bin" ; $6ced, 22 bytes
+	INCLUDE "data/bank_003/lz_CutsceneAnimFrameLZ_22.inc" ; DEF CutsceneAnimFrameLZ_22_SIZE EQU its decoded length, generated from the .bin by make
 CutsceneAnimFrameLZ_23:
-	INCBIN "data/bank_003/lz_6d03.bin" ; $6d03, 22 bytes
+	INCBIN "data/bank_003/lz_CutsceneAnimFrameLZ_23.bin" ; $6d03, 22 bytes
+	INCLUDE "data/bank_003/lz_CutsceneAnimFrameLZ_23.inc" ; DEF CutsceneAnimFrameLZ_23_SIZE EQU its decoded length, generated from the .bin by make
 CutsceneAnimFrameLZ_24:
-	INCBIN "data/bank_003/lz_6d19.bin" ; $6d19, 15 bytes
+	INCBIN "data/bank_003/lz_CutsceneAnimFrameLZ_24.bin" ; $6d19, 15 bytes
+	INCLUDE "data/bank_003/lz_CutsceneAnimFrameLZ_24.inc" ; DEF CutsceneAnimFrameLZ_24_SIZE EQU its decoded length, generated from the .bin by make
 CutsceneAnimFrameLZ_25:
-	INCBIN "data/bank_003/lz_6d28.bin" ; $6d28, 15 bytes
+	INCBIN "data/bank_003/lz_CutsceneAnimFrameLZ_25.bin" ; $6d28, 15 bytes
+	INCLUDE "data/bank_003/lz_CutsceneAnimFrameLZ_25.inc" ; DEF CutsceneAnimFrameLZ_25_SIZE EQU its decoded length, generated from the .bin by make
 CutsceneAnimFrameLZ_26:
-	INCBIN "data/bank_003/lz_6d37.bin" ; $6d37, 15 bytes
+	INCBIN "data/bank_003/lz_CutsceneAnimFrameLZ_26.bin" ; $6d37, 15 bytes
+	INCLUDE "data/bank_003/lz_CutsceneAnimFrameLZ_26.inc" ; DEF CutsceneAnimFrameLZ_26_SIZE EQU its decoded length, generated from the .bin by make
 CutsceneAnimFrameLZ_27:
-	INCBIN "data/bank_003/lz_6d46.bin" ; $6d46, 20 bytes
+	INCBIN "data/bank_003/lz_CutsceneAnimFrameLZ_27.bin" ; $6d46, 20 bytes
+	INCLUDE "data/bank_003/lz_CutsceneAnimFrameLZ_27.inc" ; DEF CutsceneAnimFrameLZ_27_SIZE EQU its decoded length, generated from the .bin by make
 CutsceneAnimFrameLZ_28:
-	INCBIN "data/bank_003/lz_6d5a.bin" ; $6d5a, 21 bytes
+	INCBIN "data/bank_003/lz_CutsceneAnimFrameLZ_28.bin" ; $6d5a, 21 bytes
+	INCLUDE "data/bank_003/lz_CutsceneAnimFrameLZ_28.inc" ; DEF CutsceneAnimFrameLZ_28_SIZE EQU its decoded length, generated from the .bin by make
 CutsceneAnimFrameLZ_29:
-	INCBIN "data/bank_003/lz_6d6f.bin" ; $6d6f, 22 bytes
+	INCBIN "data/bank_003/lz_CutsceneAnimFrameLZ_29.bin" ; $6d6f, 22 bytes
+	INCLUDE "data/bank_003/lz_CutsceneAnimFrameLZ_29.inc" ; DEF CutsceneAnimFrameLZ_29_SIZE EQU its decoded length, generated from the .bin by make
 CutsceneAnimFrameLZ_2a:
-	INCBIN "data/bank_003/lz_6d85.bin" ; $6d85, 22 bytes
+	INCBIN "data/bank_003/lz_CutsceneAnimFrameLZ_2a.bin" ; $6d85, 22 bytes
+	INCLUDE "data/bank_003/lz_CutsceneAnimFrameLZ_2a.inc" ; DEF CutsceneAnimFrameLZ_2a_SIZE EQU its decoded length, generated from the .bin by make
 CutsceneAnimFrameLZ_2b:
-	INCBIN "data/bank_003/lz_6d9b.bin" ; $6d9b, 22 bytes
+	INCBIN "data/bank_003/lz_CutsceneAnimFrameLZ_2b.bin" ; $6d9b, 22 bytes
+	INCLUDE "data/bank_003/lz_CutsceneAnimFrameLZ_2b.inc" ; DEF CutsceneAnimFrameLZ_2b_SIZE EQU its decoded length, generated from the .bin by make
 CutsceneAnimFrameLZ_2c:
-	INCBIN "data/bank_003/lz_6db1.bin" ; $6db1, 22 bytes
+	INCBIN "data/bank_003/lz_CutsceneAnimFrameLZ_2c.bin" ; $6db1, 22 bytes
+	INCLUDE "data/bank_003/lz_CutsceneAnimFrameLZ_2c.inc" ; DEF CutsceneAnimFrameLZ_2c_SIZE EQU its decoded length, generated from the .bin by make
 CutsceneAnimFrameLZ_2d:
-	INCBIN "data/bank_003/lz_6dc7.bin" ; $6dc7, 15 bytes
+	INCBIN "data/bank_003/lz_CutsceneAnimFrameLZ_2d.bin" ; $6dc7, 15 bytes
+	INCLUDE "data/bank_003/lz_CutsceneAnimFrameLZ_2d.inc" ; DEF CutsceneAnimFrameLZ_2d_SIZE EQU its decoded length, generated from the .bin by make
 CutsceneAnimFrameLZ_2e:
-	INCBIN "data/bank_003/lz_6dd6.bin" ; $6dd6, 15 bytes
+	INCBIN "data/bank_003/lz_CutsceneAnimFrameLZ_2e.bin" ; $6dd6, 15 bytes
+	INCLUDE "data/bank_003/lz_CutsceneAnimFrameLZ_2e.inc" ; DEF CutsceneAnimFrameLZ_2e_SIZE EQU its decoded length, generated from the .bin by make
 CutsceneAnimFrameLZ_2f:
-	INCBIN "data/bank_003/lz_6de5.bin" ; $6de5, 15 bytes
+	INCBIN "data/bank_003/lz_CutsceneAnimFrameLZ_2f.bin" ; $6de5, 15 bytes
+	INCLUDE "data/bank_003/lz_CutsceneAnimFrameLZ_2f.inc" ; DEF CutsceneAnimFrameLZ_2f_SIZE EQU its decoded length, generated from the .bin by make
 CutsceneAnimFrameLZ_30:
-	INCBIN "data/bank_003/lz_6df4.bin" ; $6df4, 19 bytes
+	INCBIN "data/bank_003/lz_CutsceneAnimFrameLZ_30.bin" ; $6df4, 19 bytes
+	INCLUDE "data/bank_003/lz_CutsceneAnimFrameLZ_30.inc" ; DEF CutsceneAnimFrameLZ_30_SIZE EQU its decoded length, generated from the .bin by make
 CutsceneAnimFrameLZ_31:
-	INCBIN "data/bank_003/lz_6e07.bin" ; $6e07, 22 bytes
+	INCBIN "data/bank_003/lz_CutsceneAnimFrameLZ_31.bin" ; $6e07, 22 bytes
+	INCLUDE "data/bank_003/lz_CutsceneAnimFrameLZ_31.inc" ; DEF CutsceneAnimFrameLZ_31_SIZE EQU its decoded length, generated from the .bin by make
 CutsceneAnimFrameLZ_32:
-	INCBIN "data/bank_003/lz_6e1d.bin" ; $6e1d, 22 bytes
+	INCBIN "data/bank_003/lz_CutsceneAnimFrameLZ_32.bin" ; $6e1d, 22 bytes
+	INCLUDE "data/bank_003/lz_CutsceneAnimFrameLZ_32.inc" ; DEF CutsceneAnimFrameLZ_32_SIZE EQU its decoded length, generated from the .bin by make
 CutsceneAnimFrameLZ_33:
-	INCBIN "data/bank_003/lz_6e33.bin" ; $6e33, 22 bytes
+	INCBIN "data/bank_003/lz_CutsceneAnimFrameLZ_33.bin" ; $6e33, 22 bytes
+	INCLUDE "data/bank_003/lz_CutsceneAnimFrameLZ_33.inc" ; DEF CutsceneAnimFrameLZ_33_SIZE EQU its decoded length, generated from the .bin by make
 CutsceneAnimFrameLZ_34:
-	INCBIN "data/bank_003/lz_6e49.bin" ; $6e49, 22 bytes
+	INCBIN "data/bank_003/lz_CutsceneAnimFrameLZ_34.bin" ; $6e49, 22 bytes
+	INCLUDE "data/bank_003/lz_CutsceneAnimFrameLZ_34.inc" ; DEF CutsceneAnimFrameLZ_34_SIZE EQU its decoded length, generated from the .bin by make
 CutsceneAnimFrameLZ_35:
-	INCBIN "data/bank_003/lz_6e5f.bin" ; $6e5f, 22 bytes
+	INCBIN "data/bank_003/lz_CutsceneAnimFrameLZ_35.bin" ; $6e5f, 22 bytes
+	INCLUDE "data/bank_003/lz_CutsceneAnimFrameLZ_35.inc" ; DEF CutsceneAnimFrameLZ_35_SIZE EQU its decoded length, generated from the .bin by make
 LoadCutsceneAnimFrameGfx_00_08_SpriteTemplate0:
 	; $6e75, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00

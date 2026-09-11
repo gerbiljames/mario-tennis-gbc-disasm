@@ -2794,7 +2794,7 @@ LoadStoryObjPalettes:
 	call LoadPaletteShadow ; $533d
 	ret ; $5340
 StoryObjPalettes:
-	INCLUDE "data/bank_00a/palettes_5341.asm" ; $5341, 40 bytes (palettes)
+	INCLUDE "data/bank_00a/StoryObjPalettes.asm" ; $5341, 40 bytes (palettes)
 GetTileTriggerAtPlayer:
 	push bc ; $5369
 	push de ; $536a
@@ -5430,7 +5430,7 @@ MinigameTargetTable:
 	; $66f6, 8 bytes (bytes:8)
 	db $10, $0d, $14, $0f, $18, $0b, $1c, $0e ; 0x00
 DrawMinigameTargetTable:
-	INCBIN "data/bank_00a/d_66fe.bin" ; $66fe, 16 bytes
+	INCBIN "data/bank_00a/DrawMinigameTargetTable.bin" ; $66fe, 16 bytes
 DrawMinigameTarget_SpriteTemplate:
 	; $670e, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
@@ -5779,119 +5779,119 @@ MinigameTargetScriptOpReturn:
 	jr nz, RunMinigameTargetScript.dispatchOp ; $68de
 	ret ; $68e0
 MinigameTargetFormation0Script0:
-	INCBIN "data/bank_00a/d_68e1.bin" ; $68e1, 10 bytes
+	INCBIN "data/bank_00a/MinigameTargetFormation0Script0.bin" ; $68e1, 10 bytes
 MinigameTargetFormation0Script1:
-	INCBIN "data/bank_00a/d_68eb.bin" ; $68eb, 10 bytes
+	INCBIN "data/bank_00a/MinigameTargetFormation0Script1.bin" ; $68eb, 10 bytes
 MinigameTargetFormation0Script2:
-	INCBIN "data/bank_00a/d_68f5.bin" ; $68f5, 10 bytes
+	INCBIN "data/bank_00a/MinigameTargetFormation0Script2.bin" ; $68f5, 10 bytes
 MinigameTargetFormation0Script3:
-	INCBIN "data/bank_00a/d_68ff.bin" ; $68ff, 33 bytes
+	INCBIN "data/bank_00a/MinigameTargetFormation0Script3.bin" ; $68ff, 33 bytes
 MinigameTargetFormation1Script0:
-	INCBIN "data/bank_00a/d_6920.bin" ; $6920, 10 bytes
+	INCBIN "data/bank_00a/MinigameTargetFormation1Script0.bin" ; $6920, 10 bytes
 MinigameTargetFormation1Script1:
-	INCBIN "data/bank_00a/d_692a.bin" ; $692a, 10 bytes
+	INCBIN "data/bank_00a/MinigameTargetFormation1Script1.bin" ; $692a, 10 bytes
 MinigameTargetFormation1Script2:
-	INCBIN "data/bank_00a/d_6934.bin" ; $6934, 10 bytes
+	INCBIN "data/bank_00a/MinigameTargetFormation1Script2.bin" ; $6934, 10 bytes
 MinigameTargetFormation1Script3:
-	INCBIN "data/bank_00a/d_693e.bin" ; $693e, 10 bytes
+	INCBIN "data/bank_00a/MinigameTargetFormation1Script3.bin" ; $693e, 10 bytes
 MinigameTargetFormation1Script4:
-	INCBIN "data/bank_00a/d_6948.bin" ; $6948, 10 bytes
+	INCBIN "data/bank_00a/MinigameTargetFormation1Script4.bin" ; $6948, 10 bytes
 MinigameTargetFormation1Script5:
-	INCBIN "data/bank_00a/d_6952.bin" ; $6952, 10 bytes
+	INCBIN "data/bank_00a/MinigameTargetFormation1Script5.bin" ; $6952, 10 bytes
 MinigameTargetFormation1Script6:
-	INCBIN "data/bank_00a/d_695c.bin" ; $695c, 10 bytes
+	INCBIN "data/bank_00a/MinigameTargetFormation1Script6.bin" ; $695c, 10 bytes
 MinigameTargetFormation1Script7:
-	INCBIN "data/bank_00a/d_6966.bin" ; $6966, 33 bytes
+	INCBIN "data/bank_00a/MinigameTargetFormation1Script7.bin" ; $6966, 33 bytes
 MinigameTargetFormation2Script0:
-	INCBIN "data/bank_00a/d_6987.bin" ; $6987, 10 bytes
+	INCBIN "data/bank_00a/MinigameTargetFormation2Script0.bin" ; $6987, 10 bytes
 MinigameTargetFormation2Script1:
-	INCBIN "data/bank_00a/d_6991.bin" ; $6991, 10 bytes
+	INCBIN "data/bank_00a/MinigameTargetFormation2Script1.bin" ; $6991, 10 bytes
 MinigameTargetFormation2Script2:
-	INCBIN "data/bank_00a/d_699b.bin" ; $699b, 10 bytes
+	INCBIN "data/bank_00a/MinigameTargetFormation2Script2.bin" ; $699b, 10 bytes
 MinigameTargetFormation2Script3:
-	INCBIN "data/bank_00a/d_69a5.bin" ; $69a5, 10 bytes
+	INCBIN "data/bank_00a/MinigameTargetFormation2Script3.bin" ; $69a5, 10 bytes
 MinigameTargetFormation2Script4:
-	INCBIN "data/bank_00a/d_69af.bin" ; $69af, 10 bytes
+	INCBIN "data/bank_00a/MinigameTargetFormation2Script4.bin" ; $69af, 10 bytes
 MinigameTargetFormation2Script5:
-	INCBIN "data/bank_00a/d_69b9.bin" ; $69b9, 10 bytes
+	INCBIN "data/bank_00a/MinigameTargetFormation2Script5.bin" ; $69b9, 10 bytes
 MinigameTargetFormation2Script6:
-	INCBIN "data/bank_00a/d_69c3.bin" ; $69c3, 10 bytes
+	INCBIN "data/bank_00a/MinigameTargetFormation2Script6.bin" ; $69c3, 10 bytes
 MinigameTargetFormation2Script7:
-	INCBIN "data/bank_00a/d_69cd.bin" ; $69cd, 144 bytes
+	INCBIN "data/bank_00a/MinigameTargetFormation2Script7.bin" ; $69cd, 144 bytes
 MinigameTargetFormation3Script00:
-	INCBIN "data/bank_00a/d_6a5d.bin" ; $6a5d, 10 bytes
+	INCBIN "data/bank_00a/MinigameTargetFormation3Script00.bin" ; $6a5d, 10 bytes
 MinigameTargetFormation3Script01:
-	INCBIN "data/bank_00a/d_6a67.bin" ; $6a67, 10 bytes
+	INCBIN "data/bank_00a/MinigameTargetFormation3Script01.bin" ; $6a67, 10 bytes
 MinigameTargetFormation3Script02:
-	INCBIN "data/bank_00a/d_6a71.bin" ; $6a71, 10 bytes
+	INCBIN "data/bank_00a/MinigameTargetFormation3Script02.bin" ; $6a71, 10 bytes
 MinigameTargetFormation3Script03:
-	INCBIN "data/bank_00a/d_6a7b.bin" ; $6a7b, 10 bytes
+	INCBIN "data/bank_00a/MinigameTargetFormation3Script03.bin" ; $6a7b, 10 bytes
 MinigameTargetFormation3Script04:
-	INCBIN "data/bank_00a/d_6a85.bin" ; $6a85, 10 bytes
+	INCBIN "data/bank_00a/MinigameTargetFormation3Script04.bin" ; $6a85, 10 bytes
 MinigameTargetFormation3Script05:
-	INCBIN "data/bank_00a/d_6a8f.bin" ; $6a8f, 10 bytes
+	INCBIN "data/bank_00a/MinigameTargetFormation3Script05.bin" ; $6a8f, 10 bytes
 MinigameTargetFormation3Script06:
-	INCBIN "data/bank_00a/d_6a99.bin" ; $6a99, 10 bytes
+	INCBIN "data/bank_00a/MinigameTargetFormation3Script06.bin" ; $6a99, 10 bytes
 MinigameTargetFormation3Script07:
-	INCBIN "data/bank_00a/d_6aa3.bin" ; $6aa3, 10 bytes
+	INCBIN "data/bank_00a/MinigameTargetFormation3Script07.bin" ; $6aa3, 10 bytes
 MinigameTargetFormation3Script08:
-	INCBIN "data/bank_00a/d_6aad.bin" ; $6aad, 10 bytes
+	INCBIN "data/bank_00a/MinigameTargetFormation3Script08.bin" ; $6aad, 10 bytes
 MinigameTargetFormation3Script09:
-	INCBIN "data/bank_00a/d_6ab7.bin" ; $6ab7, 10 bytes
+	INCBIN "data/bank_00a/MinigameTargetFormation3Script09.bin" ; $6ab7, 10 bytes
 MinigameTargetFormation3Script10:
-	INCBIN "data/bank_00a/d_6ac1.bin" ; $6ac1, 10 bytes
+	INCBIN "data/bank_00a/MinigameTargetFormation3Script10.bin" ; $6ac1, 10 bytes
 MinigameTargetFormation3Script11:
-	INCBIN "data/bank_00a/d_6acb.bin" ; $6acb, 70 bytes
+	INCBIN "data/bank_00a/MinigameTargetFormation3Script11.bin" ; $6acb, 70 bytes
 MinigameTargetFormation4Script00:
-	INCBIN "data/bank_00a/d_6b11.bin" ; $6b11, 10 bytes
+	INCBIN "data/bank_00a/MinigameTargetFormation4Script00.bin" ; $6b11, 10 bytes
 MinigameTargetFormation4Script01:
-	INCBIN "data/bank_00a/d_6b1b.bin" ; $6b1b, 10 bytes
+	INCBIN "data/bank_00a/MinigameTargetFormation4Script01.bin" ; $6b1b, 10 bytes
 MinigameTargetFormation4Script02:
-	INCBIN "data/bank_00a/d_6b25.bin" ; $6b25, 10 bytes
+	INCBIN "data/bank_00a/MinigameTargetFormation4Script02.bin" ; $6b25, 10 bytes
 MinigameTargetFormation4Script03:
-	INCBIN "data/bank_00a/d_6b2f.bin" ; $6b2f, 10 bytes
+	INCBIN "data/bank_00a/MinigameTargetFormation4Script03.bin" ; $6b2f, 10 bytes
 MinigameTargetFormation4Script04:
-	INCBIN "data/bank_00a/d_6b39.bin" ; $6b39, 10 bytes
+	INCBIN "data/bank_00a/MinigameTargetFormation4Script04.bin" ; $6b39, 10 bytes
 MinigameTargetFormation4Script05:
-	INCBIN "data/bank_00a/d_6b43.bin" ; $6b43, 10 bytes
+	INCBIN "data/bank_00a/MinigameTargetFormation4Script05.bin" ; $6b43, 10 bytes
 MinigameTargetFormation4Script06:
-	INCBIN "data/bank_00a/d_6b4d.bin" ; $6b4d, 10 bytes
+	INCBIN "data/bank_00a/MinigameTargetFormation4Script06.bin" ; $6b4d, 10 bytes
 MinigameTargetFormation4Script07:
-	INCBIN "data/bank_00a/d_6b57.bin" ; $6b57, 10 bytes
+	INCBIN "data/bank_00a/MinigameTargetFormation4Script07.bin" ; $6b57, 10 bytes
 MinigameTargetFormation4Script08:
-	INCBIN "data/bank_00a/d_6b61.bin" ; $6b61, 10 bytes
+	INCBIN "data/bank_00a/MinigameTargetFormation4Script08.bin" ; $6b61, 10 bytes
 MinigameTargetFormation4Script09:
-	INCBIN "data/bank_00a/d_6b6b.bin" ; $6b6b, 10 bytes
+	INCBIN "data/bank_00a/MinigameTargetFormation4Script09.bin" ; $6b6b, 10 bytes
 MinigameTargetFormation4Script10:
-	INCBIN "data/bank_00a/d_6b75.bin" ; $6b75, 10 bytes
+	INCBIN "data/bank_00a/MinigameTargetFormation4Script10.bin" ; $6b75, 10 bytes
 MinigameTargetFormation4Script11:
-	INCBIN "data/bank_00a/d_6b7f.bin" ; $6b7f, 42 bytes
+	INCBIN "data/bank_00a/MinigameTargetFormation4Script11.bin" ; $6b7f, 42 bytes
 MinigameTargetFormation5Script0:
-	INCBIN "data/bank_00a/d_6ba9.bin" ; $6ba9, 10 bytes
+	INCBIN "data/bank_00a/MinigameTargetFormation5Script0.bin" ; $6ba9, 10 bytes
 MinigameTargetFormation5Script1:
-	INCBIN "data/bank_00a/d_6bb3.bin" ; $6bb3, 35 bytes
+	INCBIN "data/bank_00a/MinigameTargetFormation5Script1.bin" ; $6bb3, 35 bytes
 MinigameTargetFormation6Script0:
-	INCBIN "data/bank_00a/d_6bd6.bin" ; $6bd6, 10 bytes
+	INCBIN "data/bank_00a/MinigameTargetFormation6Script0.bin" ; $6bd6, 10 bytes
 MinigameTargetFormation6Script1:
-	INCBIN "data/bank_00a/d_6be0.bin" ; $6be0, 10 bytes
+	INCBIN "data/bank_00a/MinigameTargetFormation6Script1.bin" ; $6be0, 10 bytes
 MinigameTargetFormation6Script2:
-	INCBIN "data/bank_00a/d_6bea.bin" ; $6bea, 38 bytes
+	INCBIN "data/bank_00a/MinigameTargetFormation6Script2.bin" ; $6bea, 38 bytes
 MinigameTargetFormation7Script0:
-	INCBIN "data/bank_00a/d_6c10.bin" ; $6c10, 10 bytes
+	INCBIN "data/bank_00a/MinigameTargetFormation7Script0.bin" ; $6c10, 10 bytes
 MinigameTargetFormation7Script1:
-	INCBIN "data/bank_00a/d_6c1a.bin" ; $6c1a, 10 bytes
+	INCBIN "data/bank_00a/MinigameTargetFormation7Script1.bin" ; $6c1a, 10 bytes
 MinigameTargetFormation7Script2:
-	INCBIN "data/bank_00a/d_6c24.bin" ; $6c24, 10 bytes
+	INCBIN "data/bank_00a/MinigameTargetFormation7Script2.bin" ; $6c24, 10 bytes
 MinigameTargetFormation7Script3:
-	INCBIN "data/bank_00a/d_6c2e.bin" ; $6c2e, 37 bytes
+	INCBIN "data/bank_00a/MinigameTargetFormation7Script3.bin" ; $6c2e, 37 bytes
 MinigameTargetFormation8Script0:
-	INCBIN "data/bank_00a/d_6c53.bin" ; $6c53, 10 bytes
+	INCBIN "data/bank_00a/MinigameTargetFormation8Script0.bin" ; $6c53, 10 bytes
 MinigameTargetFormation8Script1:
-	INCBIN "data/bank_00a/d_6c5d.bin" ; $6c5d, 10 bytes
+	INCBIN "data/bank_00a/MinigameTargetFormation8Script1.bin" ; $6c5d, 10 bytes
 MinigameTargetFormation8Script2:
-	INCBIN "data/bank_00a/d_6c67.bin" ; $6c67, 10 bytes
+	INCBIN "data/bank_00a/MinigameTargetFormation8Script2.bin" ; $6c67, 10 bytes
 MinigameTargetFormation8Script3:
-	INCBIN "data/bank_00a/d_6c71.bin" ; $6c71, 10 bytes
+	INCBIN "data/bank_00a/MinigameTargetFormation8Script3.bin" ; $6c71, 10 bytes
 SpawnMinigameTargetFormation:
 	ld a, a ; $6c7b
 	rst Rst00 ; $6c7c
@@ -6081,7 +6081,7 @@ MinigameTargetAltTable:
 	; $6da5, 8 bytes (bytes:8)
 	db $10, $0f, $20, $0e, $30, $0d, $20, $0f ; 0x00
 DrawMinigameTargetAltTable:
-	INCBIN "data/bank_00a/d_6dad.bin" ; $6dad, 16 bytes
+	INCBIN "data/bank_00a/DrawMinigameTargetAltTable.bin" ; $6dad, 16 bytes
 DrawMinigameTargetAlt_SpriteTemplate:
 	; $6dbd, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
@@ -6179,7 +6179,7 @@ EndingCutsceneLocationList:
 	db STORYLOC_SPECIAL_COURT, $01 ; 20
 	db $ff, $ff ; list end
 EndingCreditsSequencePalette:
-	INCLUDE "data/bank_00a/palettes_6e6c.asm" ; $6e6c, 8 bytes (palettes)
+	INCLUDE "data/bank_00a/EndingCreditsSequencePalette.asm" ; $6e6c, 8 bytes (palettes)
 RunEndingCreditsSequence:
 	ld c, $04 ; $6e74
 	call BeginFadeOut ; $6e76

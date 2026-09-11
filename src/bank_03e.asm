@@ -157,7 +157,7 @@ ApplySelectionBoxWobbleY:
 	ld e, a ; $40ed
 	ret ; $40ee
 SelectionBoxWobbleYTable_3e:
-	INCBIN "data/bank_03e/d_40ef.bin" ; $40ef, 16 bytes
+	INCBIN "data/bank_03e/SelectionBoxWobbleYTable_3e.bin" ; $40ef, 16 bytes
 DrawCornerBrackets_3e:
 	push de ; $40ff
 	push bc ; $4100
@@ -2870,7 +2870,7 @@ LoadRacketSelectScreen:
 	farcall QueueWram3MapToVRAM ; $5557
 	ret ; $555a
 Palette_3e:
-	INCLUDE "data/bank_03e/palettes_555b.asm" ; $555b, 8 bytes (palettes)
+	INCLUDE "data/bank_03e/Palette_3e.asm" ; $555b, 8 bytes (palettes)
 DrawOwnedItemIcons:
 	ld hl, wEquipItemList ; $5563
 	ld a, [wEquipItemCount] ; $5566
@@ -4438,11 +4438,11 @@ LoadCourtSelectPanelTiles:
 	call QueueVRAMCopy ; $61d0
 	ret ; $61d3
 CourtSelectTitleTiles:
-	INCBIN "data/bank_03e/lz_61d4.bin" ; $61d4, 159 bytes
+	INCBIN "data/bank_03e/lz_CourtSelectTitleTiles.bin" ; $61d4, 159 bytes
 CourtSelectTitleTiles2Gfx:
-	INCBIN "data/bank_03e/lz_6273.bin" ; $6273, 83 bytes
+	INCBIN "data/bank_03e/lz_CourtSelectTitleTiles2Gfx.bin" ; $6273, 83 bytes
 CourtSelectPanelTiles:
-	INCBIN "data/bank_03e/lz_62c6.bin" ; $62c6, 457 bytes
+	INCBIN "data/bank_03e/lz_CourtSelectPanelTiles.bin" ; $62c6, 457 bytes
 DrawCourtNameTiles:
 	push_wram_bank $03 ; $648f
 	push bc ; $6498
@@ -4837,7 +4837,7 @@ CourtSelect9CursorSpriteTask:
 	call QueueSpriteTemplate ; $6777
 	ret ; $677a
 CourtSelect9CursorTemplatePtrs_3e:
-	INCBIN "data/bank_03e/d_677b.bin" ; $677b, 88 bytes
+	INCBIN "data/bank_03e/CourtSelect9CursorTemplatePtrs_3e.bin" ; $677b, 88 bytes
 CourtSelect9CursorSpriteTask_SpriteTemplate:
 	; $67d3, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
@@ -5095,17 +5095,17 @@ CourtUnlockFlagIds_3e:
 StubNop_3e:
 	ret ; $69d4
 AwardCeremonyTiles:
-	INCBIN "data/bank_03e/lz_69d5.bin" ; $69d5, 2641 bytes
+	INCBIN "data/bank_03e/lz_AwardCeremonyTiles.bin" ; $69d5, 2641 bytes
 AwardCeremonyPalettes:
-	INCLUDE "data/bank_03e/palettes_7426.asm" ; $7426, 64 bytes (palettes)
+	INCLUDE "data/bank_03e/AwardCeremonyPalettes.asm" ; $7426, 64 bytes (palettes)
 AwardCeremonyTilemap5:
-	INCBIN "data/bank_03e/lz_7466.bin" ; $7466, 279 bytes
+	INCBIN "data/bank_03e/lz_AwardCeremonyTilemap5.bin" ; $7466, 279 bytes
 AwardCeremonyAttrmap5:
-	INCBIN "data/bank_03e/lz_757d.bin" ; $757d, 107 bytes
+	INCBIN "data/bank_03e/lz_AwardCeremonyAttrmap5.bin" ; $757d, 107 bytes
 N64TransferItemGfx4:
-	INCBIN "data/bank_03e/lz_75e8.bin" ; $75e8, 179 bytes
+	INCBIN "data/bank_03e/lz_N64TransferItemGfx4.bin" ; $75e8, 179 bytes
 N64TransferItemGfx5:
-	INCBIN "data/bank_03e/lz_769b.bin" ; $769b, 183 bytes
+	INCBIN "data/bank_03e/lz_N64TransferItemGfx5.bin" ; $769b, 183 bytes
 SavedDataSourceGfx5:
-	INCBIN "data/bank_03e/lz_7752.bin" ; $7752, 179 bytes
+	INCBIN "data/bank_03e/lz_SavedDataSourceGfx5.bin" ; $7752, 179 bytes
 	; $7805, 2043 bytes fill to bank end (linker-padded)

@@ -492,7 +492,7 @@ LookupBallPosByShotIndex_24:
 	add hl, de ; $4287
 	ret ; $4288
 BallPosDataLob_24:
-	INCBIN "data/bank_024/d_4289.bin" ; $4289, 768 bytes
+	INCBIN "data/bank_024/BallPosDataLob_24.bin" ; $4289, 768 bytes
 ShotBallPathLob:
 	farcall ComputeShotPlacement ; $4589
 	ld hl, BallPosDataLob_24 ; $458c
@@ -502,9 +502,9 @@ ShotBallPathLob:
 	call ApplyBallTrajectoryCapped_24 ; $4598
 	ret ; $459b
 BallPosBlockOffsetsLob_24:
-	INCBIN "data/bank_024/d_459c.bin" ; $459c, 4 bytes
+	INCBIN "data/bank_024/BallPosBlockOffsetsLob_24.bin" ; $459c, 4 bytes
 BallPosDataDrop_24:
-	INCBIN "data/bank_024/d_45a0.bin" ; $45a0, 3072 bytes
+	INCBIN "data/bank_024/BallPosDataDrop_24.bin" ; $45a0, 3072 bytes
 ShotBallPathDrop:
 	farcall ComputeShotPlacement ; $51a0
 	ld hl, BallPosDataDrop_24 ; $51a3
@@ -516,11 +516,11 @@ ShotBallPathDrop:
 	call ApplyBallTrajectoryCapped_24 ; $51b5
 	ret ; $51b8
 BallPosAimOffsetsDrop_24:
-	INCBIN "data/bank_024/d_51b9.bin" ; $51b9, 64 bytes
+	INCBIN "data/bank_024/BallPosAimOffsetsDrop_24.bin" ; $51b9, 64 bytes
 BallPosBlockOffsetsDrop_24:
-	INCBIN "data/bank_024/d_51f9.bin" ; $51f9, 4 bytes
+	INCBIN "data/bank_024/BallPosBlockOffsetsDrop_24.bin" ; $51f9, 4 bytes
 BallPosDataFallback_24:
-	INCBIN "data/bank_024/d_51fd.bin" ; $51fd, 1536 bytes
+	INCBIN "data/bank_024/BallPosDataFallback_24.bin" ; $51fd, 1536 bytes
 ApplyFallbackBallTrajectory_24:
 	ld a, $01 ; $57fd
 	ld [wFallbackTrajectoryFlag], a ; $57ff
@@ -556,9 +556,9 @@ ApplyFallbackBallTrajectory_24:
 	call ApplyBallTrajectoryCapped_24 ; $5838
 	ret ; $583b
 BallPosFallbackOffsets_24:
-	INCBIN "data/bank_024/d_583c.bin" ; $583c, 8 bytes
+	INCBIN "data/bank_024/BallPosFallbackOffsets_24.bin" ; $583c, 8 bytes
 BallPosDataNeutral_24:
-	INCBIN "data/bank_024/d_5844.bin" ; $5844, 3584 bytes
+	INCBIN "data/bank_024/BallPosDataNeutral_24.bin" ; $5844, 3584 bytes
 ShotBallPathNeutral:
 	farcall ComputeShotPlacement ; $6644
 	push bc ; $6647
@@ -679,7 +679,7 @@ SmashVelocityBySpeed_24:
 StubNop_24:
 	ret ; $6706
 BallPosDataReach_24:
-	INCBIN "data/bank_024/d_6707.bin" ; $6707, 4096 bytes
+	INCBIN "data/bank_024/BallPosDataReach_24.bin" ; $6707, 4096 bytes
 ShotBallPathReach:
 	farcall ComputeShotPlacement ; $7707
 	push bc ; $770a
@@ -690,5 +690,5 @@ ShotBallPathReach:
 	call ApplyBallTrajectory_24 ; $7715
 	ret ; $7718
 BallPosHeightOffsetsReach_24:
-	INCBIN "data/bank_024/d_7719.bin" ; $7719, 64 bytes
+	INCBIN "data/bank_024/BallPosHeightOffsetsReach_24.bin" ; $7719, 64 bytes
 	; $7759, 2215 bytes fill to bank end (linker-padded)

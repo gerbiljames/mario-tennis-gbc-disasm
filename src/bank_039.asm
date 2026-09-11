@@ -475,23 +475,24 @@ LoadFixedTileBlockAndPalette:
 	call DecompressData ; $44e0
 	ld hl, wDecompBuffer ; $44e3
 	pop de ; $44e6
-	ld c, $04 ; $44e7
+	ld c, FixedTileBlockAndPalette_SIZE / 16 ; $44e7
 	call QueueVRAMCopy ; $44e9
 	ld hl, FixedTileBlockPalette ; $44ec
 	lb de, $08, $01 ; $44ef palette index, count
 	call LoadPaletteShadow ; $44f2
 	ret ; $44f5
 FixedTileBlockAndPalette:
-	INCBIN "data/bank_039/lz_44f6.bin" ; $44f6, 32 bytes
+	INCBIN "data/bank_039/lz_FixedTileBlockAndPalette.bin" ; $44f6, 32 bytes
+	INCLUDE "data/bank_039/lz_FixedTileBlockAndPalette.inc" ; DEF FixedTileBlockAndPalette_SIZE EQU its decoded length, generated from the .bin by make
 FixedTileBlockPalette:
-	INCLUDE "data/bank_039/palettes_4516.asm" ; $4516, 8 bytes (palettes)
+	INCLUDE "data/bank_039/FixedTileBlockPalette.asm" ; $4516, 8 bytes (palettes)
 LoadFixedBgPalette0:
 	lb de, $00, $01 ; $451e palette index, count
 	ld hl, FixedBgPalette0Palette ; $4521
 	call LoadPaletteShadow ; $4524
 	ret ; $4527
 FixedBgPalette0Palette:
-	INCLUDE "data/bank_039/palettes_4528.asm" ; $4528, 8 bytes (palettes)
+	INCLUDE "data/bank_039/FixedBgPalette0Palette.asm" ; $4528, 8 bytes (palettes)
 CopyTilemapRect:
 	push af ; $4530
 	push bc ; $4531
@@ -585,14 +586,14 @@ LoadIndexedPalette:
 	call LoadPaletteShadow ; $4595
 	ret ; $4598
 IndexedPalettes:
-	INCLUDE "data/bank_039/palettes_4599.asm" ; $4599, 200 bytes (palettes)
+	INCLUDE "data/bank_039/IndexedPalettes.asm" ; $4599, 200 bytes (palettes)
 LoadFixedPaletteSet:
 	ld hl, FixedPaletteSetPalettes ; $4661
 	lb de, $09, $04 ; $4664 palette index, count
 	call LoadPaletteShadow ; $4667
 	ret ; $466a
 FixedPaletteSetPalettes:
-	INCLUDE "data/bank_039/palettes_466b.asm" ; $466b, 32 bytes (palettes)
+	INCLUDE "data/bank_039/FixedPaletteSetPalettes.asm" ; $466b, 32 bytes (palettes)
 LoadCompressedTileBlock:
 	ldh a, [hWramBank] ; $468b
 	push af ; $468d
@@ -743,15 +744,15 @@ TileBlockPtrs_39:
 	dslot DataPtr_SavedDataTypeSelectGfx ; record 120
 	dslot DataPtr_DigitFontTiles ; record 121
 SharedMenuGfx17:
-	INCBIN "data/bank_039/lz_47ab.bin" ; $47ab, 79 bytes
+	INCBIN "data/bank_039/lz_SharedMenuGfx17.bin" ; $47ab, 79 bytes
 NameEntryGfx:
-	INCBIN "data/bank_039/lz_47fa.bin" ; $47fa, 15 bytes
+	INCBIN "data/bank_039/lz_NameEntryGfx.bin" ; $47fa, 15 bytes
 CharacterSelectGfx:
-	INCBIN "data/bank_039/lz_4809.bin" ; $4809, 42 bytes
+	INCBIN "data/bank_039/lz_CharacterSelectGfx.bin" ; $4809, 42 bytes
 NumberSpriteGfxWideGfx:
-	INCBIN "data/bank_039/lz_4833.bin" ; $4833, 240 bytes
+	INCBIN "data/bank_039/lz_NumberSpriteGfxWideGfx.bin" ; $4833, 240 bytes
 StatLabelTiles:
-	INCBIN "data/bank_039/lz_4923.bin" ; $4923, 243 bytes
+	INCBIN "data/bank_039/lz_StatLabelTiles.bin" ; $4923, 243 bytes
 LoadMenuArrowSpriteTiles:
 	ld c, $04 ; $4a16
 	ld b, $17 ; $4a18
@@ -3237,7 +3238,7 @@ InitNumberSpriteGfxWide:
 	farcall LoadIndexedPalette ; $6f04
 	ret ; $6f07
 NumberSpritePalette:
-	INCLUDE "data/bank_039/palettes_6f08.asm" ; $6f08, 8 bytes (palettes)
+	INCLUDE "data/bank_039/NumberSpritePalette.asm" ; $6f08, 8 bytes (palettes)
 DrawDecimalNumberSprites_39:
 	push af ; $6f10
 	push bc ; $6f11
@@ -3372,21 +3373,21 @@ TriggerCheatUnlock:
 	farcall ApplyUnlockEverythingCheat ; $7005
 	ret ; $7008
 RacketShoesChoiceGfx0:
-	INCBIN "data/bank_039/lz_7009.bin" ; $7009, 178 bytes
+	INCBIN "data/bank_039/lz_RacketShoesChoiceGfx0.bin" ; $7009, 178 bytes
 RacketShoesChoiceGfx1:
-	INCBIN "data/bank_039/lz_70bb.bin" ; $70bb, 194 bytes
+	INCBIN "data/bank_039/lz_RacketShoesChoiceGfx1.bin" ; $70bb, 194 bytes
 MenuArrowGfx0:
-	INCBIN "data/bank_039/lz_717d.bin" ; $717d, 57 bytes
+	INCBIN "data/bank_039/lz_MenuArrowGfx0.bin" ; $717d, 57 bytes
 MenuArrowGfx1:
-	INCBIN "data/bank_039/lz_71b6.bin" ; $71b6, 50 bytes
+	INCBIN "data/bank_039/lz_MenuArrowGfx1.bin" ; $71b6, 50 bytes
 MenuArrowGfx2:
-	INCBIN "data/bank_039/lz_71e8.bin" ; $71e8, 59 bytes
+	INCBIN "data/bank_039/lz_MenuArrowGfx2.bin" ; $71e8, 59 bytes
 MenuArrowGfx3:
-	INCBIN "data/bank_039/lz_7223.bin" ; $7223, 58 bytes
+	INCBIN "data/bank_039/lz_MenuArrowGfx3.bin" ; $7223, 58 bytes
 CharGridGfx2:
-	INCBIN "data/bank_039/lz_725d.bin" ; $725d, 241 bytes
+	INCBIN "data/bank_039/lz_CharGridGfx2.bin" ; $725d, 241 bytes
 DigitFontTiles:
-	INCBIN "data/bank_039/lz_734e.bin" ; $734e, 249 bytes
+	INCBIN "data/bank_039/lz_DigitFontTiles.bin" ; $734e, 249 bytes
 	ret ; $7447
 Unused_39_PushPopNop_1:
 	push af ; $7448

@@ -945,29 +945,29 @@ InitMatchWinLoseScreen:
 	farcall QueueWram3MapToVRAM ; $4604
 	ret ; $4607
 MatchWinLoseScreenGfx:
-	INCBIN "data/bank_016/d_4608.bin" ; $4608, 110 bytes
+	INCBIN "data/bank_016/MatchWinLoseScreenGfx.bin" ; $4608, 110 bytes
 DiagramHighlightPaletteTask:
-	INCBIN "data/bank_016/d_4676.bin" ; $4676, 108 bytes
+	INCBIN "data/bank_016/DiagramHighlightPaletteTask.bin" ; $4676, 108 bytes
 DiagramNearFigureSpriteTask:
-	INCBIN "data/bank_016/d_46e2.bin" ; $46e2, 42 bytes
+	INCBIN "data/bank_016/DiagramNearFigureSpriteTask.bin" ; $46e2, 42 bytes
 DiagramFarFigureSpriteTask:
-	INCBIN "data/bank_016/d_470c.bin" ; $470c, 42 bytes
+	INCBIN "data/bank_016/DiagramFarFigureSpriteTask.bin" ; $470c, 42 bytes
 DiagramMarkerSpriteTask:
-	INCBIN "data/bank_016/d_4736.bin" ; $4736, 30 bytes
+	INCBIN "data/bank_016/DiagramMarkerSpriteTask.bin" ; $4736, 30 bytes
 DiagramBallSpriteTask:
-	INCBIN "data/bank_016/d_4754.bin" ; $4754, 48 bytes
+	INCBIN "data/bank_016/DiagramBallSpriteTask.bin" ; $4754, 48 bytes
 MatchWinLoseScreenGfx1:
-	INCBIN "data/bank_016/d_4784.bin" ; $4784, 10 bytes
+	INCBIN "data/bank_016/MatchWinLoseScreenGfx1.bin" ; $4784, 10 bytes
 DiagramSwingFigureSpriteTask:
-	INCBIN "data/bank_016/d_478e.bin" ; $478e, 97 bytes
+	INCBIN "data/bank_016/DiagramSwingFigureSpriteTask.bin" ; $478e, 97 bytes
 DiagramPolePairSpriteTask:
-	INCBIN "data/bank_016/d_47ef.bin" ; $47ef, 135 bytes
+	INCBIN "data/bank_016/DiagramPolePairSpriteTask.bin" ; $47ef, 135 bytes
 DiagramSpotMarkerSpriteTask:
-	INCBIN "data/bank_016/d_4876.bin" ; $4876, 75 bytes
+	INCBIN "data/bank_016/DiagramSpotMarkerSpriteTask.bin" ; $4876, 75 bytes
 DiagramTargetBracketsSpriteTask:
-	INCBIN "data/bank_016/d_48c1.bin" ; $48c1, 51 bytes
+	INCBIN "data/bank_016/DiagramTargetBracketsSpriteTask.bin" ; $48c1, 51 bytes
 MatchWinLoseScreenPalettes:
-	INCBIN "data/bank_016/d_48f4.bin" ; $48f4, 24 bytes
+	INCBIN "data/bank_016/MatchWinLoseScreenPalettes.bin" ; $48f4, 24 bytes
 LoadWinLoseScreenAssets:
 	ld a, [wResultScreenWon] ; $490c
 	or a ; $490f
@@ -1109,9 +1109,9 @@ LoadMatchResultPalettes:
 	call LoadPaletteShadow ; $4a42
 	ret ; $4a45
 MatchResultPalettes0:
-	INCLUDE "data/bank_016/palettes_4a46.asm" ; $4a46, 8 bytes (palettes)
+	INCLUDE "data/bank_016/MatchResultPalettes0.asm" ; $4a46, 8 bytes (palettes)
 MatchResultPalettes1:
-	INCLUDE "data/bank_016/palettes_4a4e.asm" ; $4a4e, 8 bytes (palettes)
+	INCLUDE "data/bank_016/MatchResultPalettes1.asm" ; $4a4e, 8 bytes (palettes)
 AdjustResultTilemapForLoss:
 	ld a, [wMatchWinLoseFlag] ; $4a56
 	cp WINLOSE_LOSE ; $4a59
@@ -1623,47 +1623,47 @@ GfxSetPointerTable_16:
 .rec20:
 	gfx_set MatchResultGfxA2, MatchResultGfxB4, MatchResultGfxC9
 MatchResultGfxA0:
-	INCBIN "data/bank_016/lz_4f4d.bin" ; $4f4d, 199 bytes
+	INCBIN "data/bank_016/lz_MatchResultGfxA0.bin" ; $4f4d, 199 bytes
 MatchResultGfxB0:
-	INCBIN "data/bank_016/lz_5014.bin" ; $5014, 127 bytes
+	INCBIN "data/bank_016/lz_MatchResultGfxB0.bin" ; $5014, 127 bytes
 MatchResultGfxA1:
-	INCBIN "data/bank_016/lz_5093.bin" ; $5093, 205 bytes
+	INCBIN "data/bank_016/lz_MatchResultGfxA1.bin" ; $5093, 205 bytes
 MatchResultGfxB1:
-	INCBIN "data/bank_016/lz_5160.bin" ; $5160, 178 bytes
+	INCBIN "data/bank_016/lz_MatchResultGfxB1.bin" ; $5160, 178 bytes
 MatchResultGfxB2:
-	INCBIN "data/bank_016/lz_5212.bin" ; $5212, 171 bytes
+	INCBIN "data/bank_016/lz_MatchResultGfxB2.bin" ; $5212, 171 bytes
 MatchResultGfxB3:
-	INCBIN "data/bank_016/lz_52bd.bin" ; $52bd, 154 bytes
+	INCBIN "data/bank_016/lz_MatchResultGfxB3.bin" ; $52bd, 154 bytes
 MatchResultGfxA2:
-	INCBIN "data/bank_016/lz_5357.bin" ; $5357, 106 bytes
+	INCBIN "data/bank_016/lz_MatchResultGfxA2.bin" ; $5357, 106 bytes
 MatchResultGfxB4:
-	INCBIN "data/bank_016/lz_53c1.bin" ; $53c1, 109 bytes
+	INCBIN "data/bank_016/lz_MatchResultGfxB4.bin" ; $53c1, 109 bytes
 MatchResultTitleGfx:
-	INCBIN "data/bank_016/lz_542e.bin" ; $542e, 143 bytes
+	INCBIN "data/bank_016/lz_MatchResultTitleGfx.bin" ; $542e, 143 bytes
 MatchResultTitleGfxAlt:
-	INCBIN "data/bank_016/lz_54bd.bin" ; $54bd, 132 bytes
+	INCBIN "data/bank_016/lz_MatchResultTitleGfxAlt.bin" ; $54bd, 132 bytes
 MatchResultGfxC0:
-	INCBIN "data/bank_016/lz_5541.bin" ; $5541, 93 bytes
+	INCBIN "data/bank_016/lz_MatchResultGfxC0.bin" ; $5541, 93 bytes
 MatchResultGfxC1:
-	INCBIN "data/bank_016/lz_559e.bin" ; $559e, 164 bytes
+	INCBIN "data/bank_016/lz_MatchResultGfxC1.bin" ; $559e, 164 bytes
 MatchResultGfxC2:
-	INCBIN "data/bank_016/lz_5642.bin" ; $5642, 176 bytes
+	INCBIN "data/bank_016/lz_MatchResultGfxC2.bin" ; $5642, 176 bytes
 MatchResultGfxC3:
-	INCBIN "data/bank_016/lz_56f2.bin" ; $56f2, 186 bytes
+	INCBIN "data/bank_016/lz_MatchResultGfxC3.bin" ; $56f2, 186 bytes
 MatchResultGfxC4:
-	INCBIN "data/bank_016/lz_57ac.bin" ; $57ac, 161 bytes
+	INCBIN "data/bank_016/lz_MatchResultGfxC4.bin" ; $57ac, 161 bytes
 MatchResultGfxC5:
-	INCBIN "data/bank_016/lz_584d.bin" ; $584d, 173 bytes
+	INCBIN "data/bank_016/lz_MatchResultGfxC5.bin" ; $584d, 173 bytes
 MatchResultGfxC6:
-	INCBIN "data/bank_016/lz_58fa.bin" ; $58fa, 172 bytes
+	INCBIN "data/bank_016/lz_MatchResultGfxC6.bin" ; $58fa, 172 bytes
 MatchResultGfxC7:
-	INCBIN "data/bank_016/lz_59a6.bin" ; $59a6, 169 bytes
+	INCBIN "data/bank_016/lz_MatchResultGfxC7.bin" ; $59a6, 169 bytes
 MatchResultGfxC8:
-	INCBIN "data/bank_016/lz_5a4f.bin" ; $5a4f, 192 bytes
+	INCBIN "data/bank_016/lz_MatchResultGfxC8.bin" ; $5a4f, 192 bytes
 MatchResultGfxCUnused:
-	INCBIN "data/bank_016/lz_5b0f.bin" ; $5b0f, 230 bytes
+	INCBIN "data/bank_016/lz_MatchResultGfxCUnused.bin" ; $5b0f, 230 bytes
 MatchResultGfxC9:
-	INCBIN "data/bank_016/lz_5bf5.bin" ; $5bf5, 28 bytes
+	INCBIN "data/bank_016/lz_MatchResultGfxC9.bin" ; $5bf5, 28 bytes
 ApplyLinkRoleToWinLoseFlag:
 	ld a, [wGameMode] ; $5c11
 	cp GAMEMODE_LINK_MATCH ; $5c14
@@ -2259,21 +2259,21 @@ WinLosePortraitVariantTable_16:
 	dw WinLosePortrait6 ; 6
 	dw WinLosePortrait7 ; 7
 WinLosePortrait0:
-	INCBIN "data/bank_016/lz_6101.bin" ; $6101, 275 bytes
+	INCBIN "data/bank_016/lz_WinLosePortrait0.bin" ; $6101, 275 bytes
 WinLosePortrait1:
-	INCBIN "data/bank_016/lz_6214.bin" ; $6214, 257 bytes
+	INCBIN "data/bank_016/lz_WinLosePortrait1.bin" ; $6214, 257 bytes
 WinLosePortrait2:
-	INCBIN "data/bank_016/lz_6315.bin" ; $6315, 269 bytes
+	INCBIN "data/bank_016/lz_WinLosePortrait2.bin" ; $6315, 269 bytes
 WinLosePortrait3:
-	INCBIN "data/bank_016/lz_6422.bin" ; $6422, 276 bytes
+	INCBIN "data/bank_016/lz_WinLosePortrait3.bin" ; $6422, 276 bytes
 WinLosePortrait4:
-	INCBIN "data/bank_016/lz_6536.bin" ; $6536, 254 bytes
+	INCBIN "data/bank_016/lz_WinLosePortrait4.bin" ; $6536, 254 bytes
 WinLosePortrait5:
-	INCBIN "data/bank_016/lz_6634.bin" ; $6634, 243 bytes
+	INCBIN "data/bank_016/lz_WinLosePortrait5.bin" ; $6634, 243 bytes
 WinLosePortrait6:
-	INCBIN "data/bank_016/lz_6727.bin" ; $6727, 291 bytes
+	INCBIN "data/bank_016/lz_WinLosePortrait6.bin" ; $6727, 291 bytes
 WinLosePortrait7:
-	INCBIN "data/bank_016/lz_684a.bin" ; $684a, 267 bytes
+	INCBIN "data/bank_016/lz_WinLosePortrait7.bin" ; $684a, 267 bytes
 DecompressCharacterPortrait:
 	ld a, b ; $6955
 	and $1f ; $6956
@@ -2324,63 +2324,63 @@ CharacterPortraitTable_16:
 	dw PortraitGfxWario_16 ; $1e Wario
 	dw PortraitGfxPeach_16 ; $1f Peach
 PortraitGfxAlex_16:
-	INCBIN "data/bank_016/lz_69a8.bin" ; $69a8, 158 bytes
+	INCBIN "data/bank_016/lz_PortraitGfxAlex_16.bin" ; $69a8, 158 bytes
 PortraitGfxNina_16:
-	INCBIN "data/bank_016/lz_6a46.bin" ; $6a46, 163 bytes
+	INCBIN "data/bank_016/lz_PortraitGfxNina_16.bin" ; $6a46, 163 bytes
 PortraitGfxHarry_16:
-	INCBIN "data/bank_016/lz_6ae9.bin" ; $6ae9, 146 bytes
+	INCBIN "data/bank_016/lz_PortraitGfxHarry_16.bin" ; $6ae9, 146 bytes
 PortraitGfxKate_16:
-	INCBIN "data/bank_016/lz_6b7b.bin" ; $6b7b, 165 bytes
+	INCBIN "data/bank_016/lz_PortraitGfxKate_16.bin" ; $6b7b, 165 bytes
 PortraitGfxAllie_16:
-	INCBIN "data/bank_016/lz_6c20.bin" ; $6c20, 134 bytes
+	INCBIN "data/bank_016/lz_PortraitGfxAllie_16.bin" ; $6c20, 134 bytes
 PortraitGfxJoy_16:
-	INCBIN "data/bank_016/lz_6ca6.bin" ; $6ca6, 148 bytes
+	INCBIN "data/bank_016/lz_PortraitGfxJoy_16.bin" ; $6ca6, 148 bytes
 PortraitGfxBrian_16:
-	INCBIN "data/bank_016/lz_6d3a.bin" ; $6d3a, 144 bytes
+	INCBIN "data/bank_016/lz_PortraitGfxBrian_16.bin" ; $6d3a, 144 bytes
 PortraitGfxPam_16:
-	INCBIN "data/bank_016/lz_6dca.bin" ; $6dca, 137 bytes
+	INCBIN "data/bank_016/lz_PortraitGfxPam_16.bin" ; $6dca, 137 bytes
 PortraitGfxBob_16:
-	INCBIN "data/bank_016/lz_6e53.bin" ; $6e53, 141 bytes
+	INCBIN "data/bank_016/lz_PortraitGfxBob_16.bin" ; $6e53, 141 bytes
 PortraitGfxBeth_16:
-	INCBIN "data/bank_016/lz_6ee0.bin" ; $6ee0, 147 bytes
+	INCBIN "data/bank_016/lz_PortraitGfxBeth_16.bin" ; $6ee0, 147 bytes
 PortraitGfxFay_16:
-	INCBIN "data/bank_016/lz_6f73.bin" ; $6f73, 147 bytes
+	INCBIN "data/bank_016/lz_PortraitGfxFay_16.bin" ; $6f73, 147 bytes
 PortraitGfxCurt_16:
-	INCBIN "data/bank_016/lz_7006.bin" ; $7006, 161 bytes
+	INCBIN "data/bank_016/lz_PortraitGfxCurt_16.bin" ; $7006, 161 bytes
 PortraitGfxMark_16:
-	INCBIN "data/bank_016/lz_70a7.bin" ; $70a7, 161 bytes
+	INCBIN "data/bank_016/lz_PortraitGfxMark_16.bin" ; $70a7, 161 bytes
 PortraitGfxSean_16:
-	INCBIN "data/bank_016/lz_7148.bin" ; $7148, 157 bytes
+	INCBIN "data/bank_016/lz_PortraitGfxSean_16.bin" ; $7148, 157 bytes
 PortraitGfxSammi_16:
-	INCBIN "data/bank_016/lz_71e5.bin" ; $71e5, 150 bytes
+	INCBIN "data/bank_016/lz_PortraitGfxSammi_16.bin" ; $71e5, 150 bytes
 PortraitGfxElden_16:
-	INCBIN "data/bank_016/lz_727b.bin" ; $727b, 149 bytes
+	INCBIN "data/bank_016/lz_PortraitGfxElden_16.bin" ; $727b, 149 bytes
 PortraitGfxSpike_16:
-	INCBIN "data/bank_016/lz_7310.bin" ; $7310, 162 bytes
+	INCBIN "data/bank_016/lz_PortraitGfxSpike_16.bin" ; $7310, 162 bytes
 PortraitGfxEmily_16:
-	INCBIN "data/bank_016/lz_73b2.bin" ; $73b2, 151 bytes
+	INCBIN "data/bank_016/lz_PortraitGfxEmily_16.bin" ; $73b2, 151 bytes
 PortraitGfxBCoz_16:
-	INCBIN "data/bank_016/lz_7449.bin" ; $7449, 147 bytes
+	INCBIN "data/bank_016/lz_PortraitGfxBCoz_16.bin" ; $7449, 147 bytes
 PortraitGfxACoz_16:
-	INCBIN "data/bank_016/lz_74dc.bin" ; $74dc, 121 bytes
+	INCBIN "data/bank_016/lz_PortraitGfxACoz_16.bin" ; $74dc, 121 bytes
 PortraitGfxPlaceholder_16:
-	INCBIN "data/bank_016/lz_7555.bin" ; $7555, 126 bytes
+	INCBIN "data/bank_016/lz_PortraitGfxPlaceholder_16.bin" ; $7555, 126 bytes
 PortraitGfxLuigi_16:
-	INCBIN "data/bank_016/lz_75d3.bin" ; $75d3, 154 bytes
+	INCBIN "data/bank_016/lz_PortraitGfxLuigi_16.bin" ; $75d3, 154 bytes
 PortraitGfxDK_16:
-	INCBIN "data/bank_016/lz_766d.bin" ; $766d, 156 bytes
+	INCBIN "data/bank_016/lz_PortraitGfxDK_16.bin" ; $766d, 156 bytes
 PortraitGfxBabyMario_16:
-	INCBIN "data/bank_016/lz_7709.bin" ; $7709, 155 bytes
+	INCBIN "data/bank_016/lz_PortraitGfxBabyMario_16.bin" ; $7709, 155 bytes
 PortraitGfxMario_16:
-	INCBIN "data/bank_016/lz_77a4.bin" ; $77a4, 162 bytes
+	INCBIN "data/bank_016/lz_PortraitGfxMario_16.bin" ; $77a4, 162 bytes
 PortraitGfxWaluigi_16:
-	INCBIN "data/bank_016/lz_7846.bin" ; $7846, 158 bytes
+	INCBIN "data/bank_016/lz_PortraitGfxWaluigi_16.bin" ; $7846, 158 bytes
 PortraitGfxYoshi_16:
-	INCBIN "data/bank_016/lz_78e4.bin" ; $78e4, 139 bytes
+	INCBIN "data/bank_016/lz_PortraitGfxYoshi_16.bin" ; $78e4, 139 bytes
 PortraitGfxBowser_16:
-	INCBIN "data/bank_016/lz_796f.bin" ; $796f, 165 bytes
+	INCBIN "data/bank_016/lz_PortraitGfxBowser_16.bin" ; $796f, 165 bytes
 PortraitGfxWario_16:
-	INCBIN "data/bank_016/lz_7a14.bin" ; $7a14, 162 bytes
+	INCBIN "data/bank_016/lz_PortraitGfxWario_16.bin" ; $7a14, 162 bytes
 PortraitGfxPeach_16:
-	INCBIN "data/bank_016/lz_7ab6.bin" ; $7ab6, 153 bytes
+	INCBIN "data/bank_016/lz_PortraitGfxPeach_16.bin" ; $7ab6, 153 bytes
 	; $7b4f, 1201 bytes fill to bank end (linker-padded)

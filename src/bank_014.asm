@@ -1695,9 +1695,9 @@ ActorScript_14_1:
 	as_halt
 	as_halt
 PlaneObjTiles_14:
-	INCBIN "data/bank_014/d_5650.bin" ; $5650, 1024 bytes
+	INCBIN "data/bank_014/PlaneObjTiles_14.bin" ; $5650, 1024 bytes
 IslandObjTiles_14:
-	INCBIN "data/bank_014/d_5a50.bin" ; $5a50, 1024 bytes
+	INCBIN "data/bank_014/IslandObjTiles_14.bin" ; $5a50, 1024 bytes
 SpriteTemplate_14_0:
 	; $5e50, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
@@ -1710,7 +1710,7 @@ SpriteTemplate_14_0:
 	oam_sprite $20, $20, $0e, $00
 	oam_sprite_end
 IslandObjPalette_14:
-	INCLUDE "data/bank_014/palettes_5e71.asm" ; $5e71, 8 bytes (palettes)
+	INCLUDE "data/bank_014/IslandObjPalette_14.asm" ; $5e71, 8 bytes (palettes)
 LoadPlaneObjGfx_14:
 	push_wram_bank $01 ; $5e79
 	ld hl, PlaneObjTiles_14 ; $5e82
@@ -1751,14 +1751,14 @@ QueuePlaneSpriteByHeight_14:
 	; $5ece, 2 bytes (fill)
 	ds 2, $00
 WaterSplashObjGfx:
-	INCBIN "data/bank_014/d_5ed0.bin" ; $5ed0, 448 bytes
+	INCBIN "data/bank_014/WaterSplashObjGfx.bin" ; $5ed0, 448 bytes
 SpriteTemplate_14_1:
 	; $6090, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
 WaterSplashObjPalette_14:
-	INCLUDE "data/bank_014/palettes_6099.asm" ; $6099, 8 bytes (palettes)
+	INCLUDE "data/bank_014/WaterSplashObjPalette_14.asm" ; $6099, 8 bytes (palettes)
 LoadWaterSplashObjGfx_14:
 	push_wram_bank $01 ; $60a1
 	ld hl, WaterSplashObjGfx ; $60aa
@@ -2243,9 +2243,9 @@ Table_14:
 	; $64d5, 4 bytes (bytes:4)
 	db $00, $0c, $0e, $10 ; 0x00
 UpdateFirework0_14Table:
-	INCBIN "data/bank_014/d_64d9.bin" ; $64d9, 4 bytes
+	INCBIN "data/bank_014/UpdateFirework0_14Table.bin" ; $64d9, 4 bytes
 UpdateFirework1_14Table:
-	INCBIN "data/bank_014/d_64dd.bin" ; $64dd, 4 bytes
+	INCBIN "data/bank_014/UpdateFirework1_14Table.bin" ; $64dd, 4 bytes
 .scriptRespawnLocationActors:
 	ldh a, [hRomBank] ; $64e1
 	ld hl, FireworkMapActors_14 ; $64e3
@@ -2383,7 +2383,7 @@ FireworkMapActors_14:
 	map_actor_end
 	db $00 ; padding after the list end
 FireworkObjTiles_14:
-	INCBIN "data/bank_014/d_6680.bin" ; $6680, 2048 bytes
+	INCBIN "data/bank_014/FireworkObjTiles_14.bin" ; $6680, 2048 bytes
 SpriteTemplate_14_2:
 	; $6e80, 33 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
@@ -2396,7 +2396,7 @@ SpriteTemplate_14_2:
 	oam_sprite $20, $20, $0e, $00
 	oam_sprite_end
 FireworkObjPalettes_14:
-	INCLUDE "data/bank_014/palettes_6ea1.asm" ; $6ea1, 32 bytes (palettes)
+	INCLUDE "data/bank_014/FireworkObjPalettes_14.asm" ; $6ea1, 32 bytes (palettes)
 ; Sits after FireworkObjPalettes_14's four palettes, unreferenced: when hInputRisingEdge bit 1 is newly pressed it resets both cutscene firework objects -- X $40/$68, Y $30/$38, phase 0, timer $1e each -- and returns. Nothing calls or jumps to it; UpdateFirework1_14, which follows, is the live routine.
 Unused_14_ResetFireworkObjOnButton:
 	ldh a, [hInputRisingEdge] ; $6ec1
@@ -2697,11 +2697,11 @@ AdvanceFirework1Ascent_14:
 	; $718b, 5 bytes (fill)
 	ds 5, $00
 IslandSkyTilesA_14:
-	INCBIN "data/bank_014/d_7190.bin" ; $7190, 256 bytes
+	INCBIN "data/bank_014/IslandSkyTilesA_14.bin" ; $7190, 256 bytes
 IslandSkyTilesB_14:
-	INCBIN "data/bank_014/d_7290.bin" ; $7290, 192 bytes
+	INCBIN "data/bank_014/IslandSkyTilesB_14.bin" ; $7290, 192 bytes
 IslandSkySpriteData_14:
-	INCBIN "data/bank_014/d_7350.bin" ; $7350, 33 bytes
+	INCBIN "data/bank_014/IslandSkySpriteData_14.bin" ; $7350, 33 bytes
 AnimateIslandSkyEffectSprites_14_SpriteTemplate:
 	; $7371, 25 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
@@ -2712,7 +2712,7 @@ AnimateIslandSkyEffectSprites_14_SpriteTemplate:
 	oam_sprite $20, $18, $0a, $00
 	oam_sprite_end
 IslandSkyPalettes_14:
-	INCLUDE "data/bank_014/palettes_738a.asm" ; $738a, 32 bytes (palettes)
+	INCLUDE "data/bank_014/IslandSkyPalettes_14.asm" ; $738a, 32 bytes (palettes)
 LoadIslandSkyEffectObjGfx_14:
 	push_wram_bank $01 ; $73aa
 	ld hl, IslandSkyTilesA_14 ; $73b3
@@ -2781,7 +2781,7 @@ AnimateIslandSkyEffectSprites_14:
 	; $742d, 3 bytes (fill)
 	ds 3, $00
 DistantPlaneObjGfx:
-	INCBIN "data/bank_014/d_7430.bin" ; $7430, 256 bytes
+	INCBIN "data/bank_014/DistantPlaneObjGfx.bin" ; $7430, 256 bytes
 SpriteTemplate_14_3:
 	; $7530, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
@@ -2822,9 +2822,9 @@ GetSceneObjectScreenPos_14:
 	; $757e, 2 bytes (fill)
 	ds 2, $00
 TwinkleObjGfx:
-	INCBIN "data/bank_014/d_7580.bin" ; $7580, 256 bytes
+	INCBIN "data/bank_014/TwinkleObjGfx.bin" ; $7580, 256 bytes
 TwinkleObjPalette_14:
-	INCLUDE "data/bank_014/palettes_7680.asm" ; $7680, 8 bytes (palettes)
+	INCLUDE "data/bank_014/TwinkleObjPalette_14.asm" ; $7680, 8 bytes (palettes)
 LoadTwinkleObjGfx_14:
 	push_wram_bank $01 ; $7688
 	ld hl, TwinkleObjGfx ; $7691

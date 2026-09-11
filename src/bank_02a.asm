@@ -486,7 +486,7 @@ LookupBallPosByShotIndex_2a:
 	add hl, de ; $427b
 	ret ; $427c
 BallPosData_2a:
-	INCBIN "data/bank_02a/d_427d.bin" ; $427d, 7200 bytes
+	INCBIN "data/bank_02a/BallPosData_2a.bin" ; $427d, 7200 bytes
 ShotBallPathServeSlice:
 	farcall ComputeShotPlacement ; $5e9d
 	ld hl, BallPosData_2a ; $5ea0

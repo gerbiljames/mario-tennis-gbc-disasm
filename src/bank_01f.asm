@@ -194,7 +194,7 @@ FetchTextTable:
 	dw TextStrings_1f.s367 - TextStrings_1f ; 187
 	dw TextStrings_1f.s369 - TextStrings_1f ; 188
 TextStrings_1f:
-	INCLUDE "data/bank_01f/text_pool_417e.asm" ; $417e, 14605 bytes (text_pool)
+	INCLUDE "data/bank_01f/TextStrings_1f.asm" ; $417e, 14605 bytes (text_pool)
 FetchDialogueText_1f:
 	push af ; $7a8b
 	ld a, $00 ; $7a8c

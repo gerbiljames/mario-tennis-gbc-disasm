@@ -148,45 +148,45 @@ DataPtr_MinigameLabelTiles3:
 DataPtr_MarioMiniGamesTiles:
 	dw MarioMiniGamesTiles ; $4092
 TitleGfx0:
-	INCBIN "data/bank_06d/lz_4094.bin" ; $4094, 180 bytes
+	INCBIN "data/bank_06d/lz_TitleGfx0.bin" ; $4094, 180 bytes
 TitleGfx1:
-	INCBIN "data/bank_06d/lz_4148.bin" ; $4148, 205 bytes
+	INCBIN "data/bank_06d/lz_TitleGfx1.bin" ; $4148, 205 bytes
 TitleGfx2:
-	INCBIN "data/bank_06d/lz_4215.bin" ; $4215, 206 bytes
+	INCBIN "data/bank_06d/lz_TitleGfx2.bin" ; $4215, 206 bytes
 TitleGfx3:
-	INCBIN "data/bank_06d/lz_42e3.bin" ; $42e3, 229 bytes
+	INCBIN "data/bank_06d/lz_TitleGfx3.bin" ; $42e3, 229 bytes
 TitleGfx4:
-	INCBIN "data/bank_06d/lz_43c8.bin" ; $43c8, 224 bytes
+	INCBIN "data/bank_06d/lz_TitleGfx4.bin" ; $43c8, 224 bytes
 TitleGfx5:
-	INCBIN "data/bank_06d/lz_44a8.bin" ; $44a8, 217 bytes
+	INCBIN "data/bank_06d/lz_TitleGfx5.bin" ; $44a8, 217 bytes
 TitleGfx6:
-	INCBIN "data/bank_06d/lz_4581.bin" ; $4581, 213 bytes
+	INCBIN "data/bank_06d/lz_TitleGfx6.bin" ; $4581, 213 bytes
 TitleGfx7:
-	INCBIN "data/bank_06d/lz_4656.bin" ; $4656, 190 bytes
+	INCBIN "data/bank_06d/lz_TitleGfx7.bin" ; $4656, 190 bytes
 IntroAwesomeTiles:
-	INCBIN "data/bank_06d/lz_4714.bin" ; $4714, 1577 bytes
+	INCBIN "data/bank_06d/lz_IntroAwesomeTiles.bin" ; $4714, 1577 bytes
 IntroGreatestPlayerTiles:
-	INCBIN "data/bank_06d/lz_4d3d.bin" ; $4d3d, 1539 bytes
+	INCBIN "data/bank_06d/lz_IntroGreatestPlayerTiles.bin" ; $4d3d, 1539 bytes
 IntroGreatestPlayerTilemap:
-	INCBIN "data/bank_06d/lz_5340.bin" ; $5340, 299 bytes
+	INCBIN "data/bank_06d/lz_IntroGreatestPlayerTilemap.bin" ; $5340, 299 bytes
 IntroGreatestPlayerAttrmap:
-	INCBIN "data/bank_06d/lz_546b.bin" ; $546b, 72 bytes
+	INCBIN "data/bank_06d/lz_IntroGreatestPlayerAttrmap.bin" ; $546b, 72 bytes
 IntroGreatestPlayerPalettes:
-	INCLUDE "data/bank_06d/palettes_54b3.asm" ; $54b3, 64 bytes (palettes)
+	INCLUDE "data/bank_06d/IntroGreatestPlayerPalettes.asm" ; $54b3, 64 bytes (palettes)
 IntroCharactersTiles:
-	INCBIN "data/bank_06d/lz_54f3.bin" ; $54f3, 2597 bytes
+	INCBIN "data/bank_06d/lz_IntroCharactersTiles.bin" ; $54f3, 2597 bytes
 IntroCharactersTilemap:
-	INCBIN "data/bank_06d/lz_5f18.bin" ; $5f18, 329 bytes
+	INCBIN "data/bank_06d/lz_IntroCharactersTilemap.bin" ; $5f18, 329 bytes
 IntroCharactersAttrmap:
-	INCBIN "data/bank_06d/lz_6061.bin" ; $6061, 163 bytes
+	INCBIN "data/bank_06d/lz_IntroCharactersAttrmap.bin" ; $6061, 163 bytes
 IntroCharactersPalettes:
-	INCLUDE "data/bank_06d/palettes_6104.asm" ; $6104, 64 bytes (palettes)
+	INCLUDE "data/bank_06d/IntroCharactersPalettes.asm" ; $6104, 64 bytes (palettes)
 IntroCharactersTilemap2:
-	INCBIN "data/bank_06d/lz_6144.bin" ; $6144, 268 bytes
+	INCBIN "data/bank_06d/lz_IntroCharactersTilemap2.bin" ; $6144, 268 bytes
 IntroCharactersAttrmap2:
-	INCBIN "data/bank_06d/lz_6250.bin" ; $6250, 133 bytes
+	INCBIN "data/bank_06d/lz_IntroCharactersAttrmap2.bin" ; $6250, 133 bytes
 TitleScreenTiles:
-	INCBIN "data/bank_06d/lz_62d5.bin" ; $62d5, 1962 bytes
+	INCBIN "data/bank_06d/lz_TitleScreenTiles.bin" ; $62d5, 1962 bytes
 ShowIntroCharacterScreen:
 	sound BGM_SENIOR_RANKING ; $6a7f
 	call DisableLCDSafely ; $6a81
@@ -220,69 +220,69 @@ IntroCharacterScreenFrameTask:
 	farcall QueueIntroSpriteBlock ; $6ac4
 	ret ; $6ac7
 IntroCharacterIcon00:
-	INCBIN "data/bank_06d/lz_6ac8.bin" ; $6ac8, 75 bytes
+	INCBIN "data/bank_06d/lz_IntroCharacterIcon00.bin" ; $6ac8, 75 bytes
 IntroCharacterIcon01:
-	INCBIN "data/bank_06d/lz_6b13.bin" ; $6b13, 72 bytes
+	INCBIN "data/bank_06d/lz_IntroCharacterIcon01.bin" ; $6b13, 72 bytes
 IntroCharacterIcon02:
-	INCBIN "data/bank_06d/lz_6b5b.bin" ; $6b5b, 71 bytes
+	INCBIN "data/bank_06d/lz_IntroCharacterIcon02.bin" ; $6b5b, 71 bytes
 IntroCharacterIcon03:
-	INCBIN "data/bank_06d/lz_6ba2.bin" ; $6ba2, 67 bytes
+	INCBIN "data/bank_06d/lz_IntroCharacterIcon03.bin" ; $6ba2, 67 bytes
 IntroCharacterIcon04:
-	INCBIN "data/bank_06d/lz_6be5.bin" ; $6be5, 65 bytes
+	INCBIN "data/bank_06d/lz_IntroCharacterIcon04.bin" ; $6be5, 65 bytes
 IntroCharacterIcon05:
-	INCBIN "data/bank_06d/lz_6c26.bin" ; $6c26, 67 bytes
+	INCBIN "data/bank_06d/lz_IntroCharacterIcon05.bin" ; $6c26, 67 bytes
 IntroCharacterIcon06:
-	INCBIN "data/bank_06d/lz_6c69.bin" ; $6c69, 71 bytes
+	INCBIN "data/bank_06d/lz_IntroCharacterIcon06.bin" ; $6c69, 71 bytes
 IntroCharacterIcon07:
-	INCBIN "data/bank_06d/lz_6cb0.bin" ; $6cb0, 72 bytes
+	INCBIN "data/bank_06d/lz_IntroCharacterIcon07.bin" ; $6cb0, 72 bytes
 IntroCharacterIcon08:
-	INCBIN "data/bank_06d/lz_6cf8.bin" ; $6cf8, 73 bytes
+	INCBIN "data/bank_06d/lz_IntroCharacterIcon08.bin" ; $6cf8, 73 bytes
 IntroCharacterIcon09:
-	INCBIN "data/bank_06d/lz_6d41.bin" ; $6d41, 72 bytes
+	INCBIN "data/bank_06d/lz_IntroCharacterIcon09.bin" ; $6d41, 72 bytes
 IntroCharacterIcon10:
-	INCBIN "data/bank_06d/lz_6d89.bin" ; $6d89, 72 bytes
+	INCBIN "data/bank_06d/lz_IntroCharacterIcon10.bin" ; $6d89, 72 bytes
 IntroCharacterIcon11:
-	INCBIN "data/bank_06d/lz_6dd1.bin" ; $6dd1, 69 bytes
+	INCBIN "data/bank_06d/lz_IntroCharacterIcon11.bin" ; $6dd1, 69 bytes
 IntroCharacterIcon12:
-	INCBIN "data/bank_06d/lz_6e16.bin" ; $6e16, 67 bytes
+	INCBIN "data/bank_06d/lz_IntroCharacterIcon12.bin" ; $6e16, 67 bytes
 IntroCharacterIcon13:
-	INCBIN "data/bank_06d/lz_6e59.bin" ; $6e59, 69 bytes
+	INCBIN "data/bank_06d/lz_IntroCharacterIcon13.bin" ; $6e59, 69 bytes
 IntroCharacterIcon14:
-	INCBIN "data/bank_06d/lz_6e9e.bin" ; $6e9e, 72 bytes
+	INCBIN "data/bank_06d/lz_IntroCharacterIcon14.bin" ; $6e9e, 72 bytes
 IntroCharacterIcon15:
-	INCBIN "data/bank_06d/lz_6ee6.bin" ; $6ee6, 72 bytes
+	INCBIN "data/bank_06d/lz_IntroCharacterIcon15.bin" ; $6ee6, 72 bytes
 CourtSelectGfx5:
-	INCBIN "data/bank_06d/lz_6f2e.bin" ; $6f2e, 165 bytes
+	INCBIN "data/bank_06d/lz_CourtSelectGfx5.bin" ; $6f2e, 165 bytes
 CourtSelectGfx6:
-	INCBIN "data/bank_06d/lz_6fd3.bin" ; $6fd3, 180 bytes
+	INCBIN "data/bank_06d/lz_CourtSelectGfx6.bin" ; $6fd3, 180 bytes
 CourtSelectGfx7:
-	INCBIN "data/bank_06d/lz_7087.bin" ; $7087, 171 bytes
+	INCBIN "data/bank_06d/lz_CourtSelectGfx7.bin" ; $7087, 171 bytes
 CourtSelectGfx8:
-	INCBIN "data/bank_06d/lz_7132.bin" ; $7132, 174 bytes
+	INCBIN "data/bank_06d/lz_CourtSelectGfx8.bin" ; $7132, 174 bytes
 CourtSelectGfx9:
-	INCBIN "data/bank_06d/lz_71e0.bin" ; $71e0, 175 bytes
+	INCBIN "data/bank_06d/lz_CourtSelectGfx9.bin" ; $71e0, 175 bytes
 SharedMenuGfx111:
-	INCBIN "data/bank_06d/lz_728f.bin" ; $728f, 144 bytes
+	INCBIN "data/bank_06d/lz_SharedMenuGfx111.bin" ; $728f, 144 bytes
 MinigameSelectIconGfx0:
-	INCBIN "data/bank_06d/lz_731f.bin" ; $731f, 186 bytes
+	INCBIN "data/bank_06d/lz_MinigameSelectIconGfx0.bin" ; $731f, 186 bytes
 MinigameSelectIconGfx1:
-	INCBIN "data/bank_06d/lz_73d9.bin" ; $73d9, 130 bytes
+	INCBIN "data/bank_06d/lz_MinigameSelectIconGfx1.bin" ; $73d9, 130 bytes
 MinigameSelectIconGfx2:
-	INCBIN "data/bank_06d/lz_745b.bin" ; $745b, 172 bytes
+	INCBIN "data/bank_06d/lz_MinigameSelectIconGfx2.bin" ; $745b, 172 bytes
 MinigameLevelSelectGfx0:
-	INCBIN "data/bank_06d/lz_7507.bin" ; $7507, 131 bytes
+	INCBIN "data/bank_06d/lz_MinigameLevelSelectGfx0.bin" ; $7507, 131 bytes
 MinigameLevelSelectIconGfx:
-	INCBIN "data/bank_06d/lz_758a.bin" ; $758a, 144 bytes
+	INCBIN "data/bank_06d/lz_MinigameLevelSelectIconGfx.bin" ; $758a, 144 bytes
 MinigameLevelSelectGfx1:
-	INCBIN "data/bank_06d/lz_761a.bin" ; $761a, 152 bytes
+	INCBIN "data/bank_06d/lz_MinigameLevelSelectGfx1.bin" ; $761a, 152 bytes
 MinigameLabelTiles0:
-	INCBIN "data/bank_06d/lz_76b2.bin" ; $76b2, 231 bytes
+	INCBIN "data/bank_06d/lz_MinigameLabelTiles0.bin" ; $76b2, 231 bytes
 MinigameLabelTiles1:
-	INCBIN "data/bank_06d/lz_7799.bin" ; $7799, 238 bytes
+	INCBIN "data/bank_06d/lz_MinigameLabelTiles1.bin" ; $7799, 238 bytes
 MinigameLabelTiles2:
-	INCBIN "data/bank_06d/lz_7887.bin" ; $7887, 233 bytes
+	INCBIN "data/bank_06d/lz_MinigameLabelTiles2.bin" ; $7887, 233 bytes
 MinigameLabelTiles3:
-	INCBIN "data/bank_06d/lz_7970.bin" ; $7970, 232 bytes
+	INCBIN "data/bank_06d/lz_MinigameLabelTiles3.bin" ; $7970, 232 bytes
 MarioMiniGamesTiles:
-	INCBIN "data/bank_06d/lz_7a58.bin" ; $7a58, 757 bytes
+	INCBIN "data/bank_06d/lz_MarioMiniGamesTiles.bin" ; $7a58, 757 bytes
 	; $7d4d, 691 bytes fill to bank end (linker-padded)

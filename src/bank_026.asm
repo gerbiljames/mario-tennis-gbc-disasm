@@ -254,7 +254,7 @@ FetchTextTable_26:
 	dw TextStrings_26.s247 - TextStrings_26 ; 247
 	dw TextStrings_26.s248 - TextStrings_26 ; 248
 TextStrings_26:
-	INCLUDE "data/bank_026/text_pool_41f6.asm" ; $41f6, 14625 bytes (text_pool)
+	INCLUDE "data/bank_026/TextStrings_26.asm" ; $41f6, 14625 bytes (text_pool)
 FetchDialogueText_26:
 	push af ; $7b17
 	ld a, $00 ; $7b18

@@ -111,105 +111,105 @@ DataPtr_TournamentBracketDoublesTilemap:
 DataPtr_TournamentBracketDoublesAttrmap:
 	dw TournamentBracketDoublesAttrmap ; $406c
 N64ItemLabelTiles0:
-	INCBIN "data/bank_03d/lz_406e.bin" ; $406e, 257 bytes
+	INCBIN "data/bank_03d/lz_N64ItemLabelTiles0.bin" ; $406e, 257 bytes
 N64ItemLabelTiles1:
-	INCBIN "data/bank_03d/lz_416f.bin" ; $416f, 258 bytes
+	INCBIN "data/bank_03d/lz_N64ItemLabelTiles1.bin" ; $416f, 258 bytes
 N64ItemLabelTiles2:
-	INCBIN "data/bank_03d/lz_4271.bin" ; $4271, 256 bytes
+	INCBIN "data/bank_03d/lz_N64ItemLabelTiles2.bin" ; $4271, 256 bytes
 N64ItemLabelTiles3:
-	INCBIN "data/bank_03d/lz_4371.bin" ; $4371, 246 bytes
+	INCBIN "data/bank_03d/lz_N64ItemLabelTiles3.bin" ; $4371, 246 bytes
 N64TransferItemGfx0:
-	INCBIN "data/bank_03d/lz_4467.bin" ; $4467, 180 bytes
+	INCBIN "data/bank_03d/lz_N64TransferItemGfx0.bin" ; $4467, 180 bytes
 N64TransferItemGfx1:
-	INCBIN "data/bank_03d/lz_451b.bin" ; $451b, 195 bytes
+	INCBIN "data/bank_03d/lz_N64TransferItemGfx1.bin" ; $451b, 195 bytes
 N64TransferItemGfx2:
-	INCBIN "data/bank_03d/lz_45de.bin" ; $45de, 164 bytes
+	INCBIN "data/bank_03d/lz_N64TransferItemGfx2.bin" ; $45de, 164 bytes
 N64TransferLabelTiles0:
-	INCBIN "data/bank_03d/lz_4682.bin" ; $4682, 218 bytes
+	INCBIN "data/bank_03d/lz_N64TransferLabelTiles0.bin" ; $4682, 218 bytes
 N64TransferLabelTiles1:
-	INCBIN "data/bank_03d/lz_475c.bin" ; $475c, 212 bytes
+	INCBIN "data/bank_03d/lz_N64TransferLabelTiles1.bin" ; $475c, 212 bytes
 MainMenuGfx5:
-	INCBIN "data/bank_03d/lz_4830.bin" ; $4830, 179 bytes
+	INCBIN "data/bank_03d/lz_MainMenuGfx5.bin" ; $4830, 179 bytes
 SharedMenuGfx63:
-	INCBIN "data/bank_03d/lz_48e3.bin" ; $48e3, 187 bytes
+	INCBIN "data/bank_03d/lz_SharedMenuGfx63.bin" ; $48e3, 187 bytes
 CourtSelectGfx0:
-	INCBIN "data/bank_03d/lz_499e.bin" ; $499e, 183 bytes
+	INCBIN "data/bank_03d/lz_CourtSelectGfx0.bin" ; $499e, 183 bytes
 SharedMenuGfx65:
-	INCBIN "data/bank_03d/lz_4a55.bin" ; $4a55, 167 bytes
+	INCBIN "data/bank_03d/lz_SharedMenuGfx65.bin" ; $4a55, 167 bytes
 SavedDataSourceGfx4:
-	INCBIN "data/bank_03d/lz_4afc.bin" ; $4afc, 145 bytes
+	INCBIN "data/bank_03d/lz_SavedDataSourceGfx4.bin" ; $4afc, 145 bytes
 N64RecordTypeGfx2:
-	INCBIN "data/bank_03d/lz_4b8d.bin" ; $4b8d, 176 bytes
+	INCBIN "data/bank_03d/lz_N64RecordTypeGfx2.bin" ; $4b8d, 176 bytes
 N64TransferItemGfx3:
-	INCBIN "data/bank_03d/lz_4c3d.bin" ; $4c3d, 144 bytes
+	INCBIN "data/bank_03d/lz_N64TransferItemGfx3.bin" ; $4c3d, 144 bytes
 EraseDataConfirmGfx0:
-	INCBIN "data/bank_03d/lz_4ccd.bin" ; $4ccd, 202 bytes
+	INCBIN "data/bank_03d/lz_EraseDataConfirmGfx0.bin" ; $4ccd, 202 bytes
 EraseDataConfirmGfx1:
-	INCBIN "data/bank_03d/lz_4d97.bin" ; $4d97, 163 bytes
+	INCBIN "data/bank_03d/lz_EraseDataConfirmGfx1.bin" ; $4d97, 163 bytes
 MinigameSelectGfx6:
-	INCBIN "data/bank_03d/lz_4e3a.bin" ; $4e3a, 186 bytes
+	INCBIN "data/bank_03d/lz_MinigameSelectGfx6.bin" ; $4e3a, 186 bytes
 SharedMenuGfx72:
-	INCBIN "data/bank_03d/lz_4ef4.bin" ; $4ef4, 226 bytes
+	INCBIN "data/bank_03d/lz_SharedMenuGfx72.bin" ; $4ef4, 226 bytes
 RacketShoesChoiceGfx2:
-	INCBIN "data/bank_03d/lz_4fd6.bin" ; $4fd6, 157 bytes
+	INCBIN "data/bank_03d/lz_RacketShoesChoiceGfx2.bin" ; $4fd6, 157 bytes
 CharGridGfx1:
-	INCBIN "data/bank_03d/lz_5073.bin" ; $5073, 213 bytes
+	INCBIN "data/bank_03d/lz_CharGridGfx1.bin" ; $5073, 213 bytes
 LinkingScreenTiles:
-	INCBIN "data/bank_03d/lz_5148.bin" ; $5148, 1333 bytes
+	INCBIN "data/bank_03d/lz_LinkingScreenTiles.bin" ; $5148, 1333 bytes
 LinkingScreenTilemap:
-	INCBIN "data/bank_03d/lz_567d.bin" ; $567d, 241 bytes
+	INCBIN "data/bank_03d/lz_LinkingScreenTilemap.bin" ; $567d, 241 bytes
 LinkingScreenAttrmap:
-	INCBIN "data/bank_03d/lz_576e.bin" ; $576e, 115 bytes
+	INCBIN "data/bank_03d/lz_LinkingScreenAttrmap.bin" ; $576e, 115 bytes
 LinkingScreenPalettes:
-	INCLUDE "data/bank_03d/palettes_57e1.asm" ; $57e1, 64 bytes (palettes)
+	INCLUDE "data/bank_03d/LinkingScreenPalettes.asm" ; $57e1, 64 bytes (palettes)
 RingShotHudTiles:
-	INCBIN "data/bank_03d/lz_5821.bin" ; $5821, 1216 bytes
+	INCBIN "data/bank_03d/lz_RingShotHudTiles.bin" ; $5821, 1216 bytes
 RingShotHudTilemap:
-	INCBIN "data/bank_03d/lz_5ce1.bin" ; $5ce1, 324 bytes
+	INCBIN "data/bank_03d/lz_RingShotHudTilemap.bin" ; $5ce1, 324 bytes
 RingShotHudAttrmap:
-	INCBIN "data/bank_03d/lz_5e25.bin" ; $5e25, 133 bytes
+	INCBIN "data/bank_03d/lz_RingShotHudAttrmap.bin" ; $5e25, 133 bytes
 RingShotHudPalettes:
-	INCLUDE "data/bank_03d/palettes_5eaa.asm" ; $5eaa, 64 bytes (palettes)
+	INCLUDE "data/bank_03d/RingShotHudPalettes.asm" ; $5eaa, 64 bytes (palettes)
 NumberSpriteGfx:
-	INCBIN "data/bank_03d/lz_5eea.bin" ; $5eea, 175 bytes
+	INCBIN "data/bank_03d/lz_NumberSpriteGfx.bin" ; $5eea, 175 bytes
 MatchStatsTiles:
-	INCBIN "data/bank_03d/lz_5f99.bin" ; $5f99, 2148 bytes
+	INCBIN "data/bank_03d/lz_MatchStatsTiles.bin" ; $5f99, 2148 bytes
 MatchStatsTilemap:
-	INCBIN "data/bank_03d/lz_67fd.bin" ; $67fd, 361 bytes
+	INCBIN "data/bank_03d/lz_MatchStatsTilemap.bin" ; $67fd, 361 bytes
 MatchStatsAttrmap:
-	INCBIN "data/bank_03d/lz_6966.bin" ; $6966, 98 bytes
+	INCBIN "data/bank_03d/lz_MatchStatsAttrmap.bin" ; $6966, 98 bytes
 MatchStatsPalettes:
-	INCLUDE "data/bank_03d/palettes_69c8.asm" ; $69c8, 64 bytes (palettes)
+	INCLUDE "data/bank_03d/MatchStatsPalettes.asm" ; $69c8, 64 bytes (palettes)
 MatchStatsTilemap3:
-	INCBIN "data/bank_03d/lz_6a08.bin" ; $6a08, 289 bytes
+	INCBIN "data/bank_03d/lz_MatchStatsTilemap3.bin" ; $6a08, 289 bytes
 MatchStatsAttrmap3:
-	INCBIN "data/bank_03d/lz_6b29.bin" ; $6b29, 105 bytes
+	INCBIN "data/bank_03d/lz_MatchStatsAttrmap3.bin" ; $6b29, 105 bytes
 MatchStatsTilemap2:
-	INCBIN "data/bank_03d/lz_6b92.bin" ; $6b92, 332 bytes
+	INCBIN "data/bank_03d/lz_MatchStatsTilemap2.bin" ; $6b92, 332 bytes
 MatchStatsAttrmap2:
-	INCBIN "data/bank_03d/lz_6cde.bin" ; $6cde, 91 bytes
+	INCBIN "data/bank_03d/lz_MatchStatsAttrmap2.bin" ; $6cde, 91 bytes
 MatchStatsLabelTiles0:
-	INCBIN "data/bank_03d/lz_6d39.bin" ; $6d39, 245 bytes
+	INCBIN "data/bank_03d/lz_MatchStatsLabelTiles0.bin" ; $6d39, 245 bytes
 MatchStatsLabelTiles1:
-	INCBIN "data/bank_03d/lz_6e2e.bin" ; $6e2e, 250 bytes
+	INCBIN "data/bank_03d/lz_MatchStatsLabelTiles1.bin" ; $6e2e, 250 bytes
 EquipmentSelectTiles:
-	INCBIN "data/bank_03d/lz_6f28.bin" ; $6f28, 2045 bytes
+	INCBIN "data/bank_03d/lz_EquipmentSelectTiles.bin" ; $6f28, 2045 bytes
 EquipmentSelectTilemap:
-	INCBIN "data/bank_03d/lz_7725.bin" ; $7725, 161 bytes
+	INCBIN "data/bank_03d/lz_EquipmentSelectTilemap.bin" ; $7725, 161 bytes
 EquipmentSelectAttrmap:
-	INCBIN "data/bank_03d/lz_77c6.bin" ; $77c6, 106 bytes
+	INCBIN "data/bank_03d/lz_EquipmentSelectAttrmap.bin" ; $77c6, 106 bytes
 EquipmentSelectPalettes:
-	INCLUDE "data/bank_03d/palettes_7830.asm" ; $7830, 64 bytes (palettes)
+	INCLUDE "data/bank_03d/EquipmentSelectPalettes.asm" ; $7830, 64 bytes (palettes)
 SharedMenuGfx99:
-	INCBIN "data/bank_03d/lz_7870.bin" ; $7870, 26 bytes
+	INCBIN "data/bank_03d/lz_SharedMenuGfx99.bin" ; $7870, 26 bytes
 TournamentBracketSinglesTilemap:
-	INCBIN "data/bank_03d/lz_788a.bin" ; $788a, 465 bytes
+	INCBIN "data/bank_03d/lz_TournamentBracketSinglesTilemap.bin" ; $788a, 465 bytes
 TournamentBracketSinglesAttrmap:
-	INCBIN "data/bank_03d/lz_7a5b.bin" ; $7a5b, 115 bytes
+	INCBIN "data/bank_03d/lz_TournamentBracketSinglesAttrmap.bin" ; $7a5b, 115 bytes
 TournamentBracketPalettes:
-	INCLUDE "data/bank_03d/palettes_7ace.asm" ; $7ace, 64 bytes (palettes)
+	INCLUDE "data/bank_03d/TournamentBracketPalettes.asm" ; $7ace, 64 bytes (palettes)
 TournamentBracketDoublesTilemap:
-	INCBIN "data/bank_03d/lz_7b0e.bin" ; $7b0e, 331 bytes
+	INCBIN "data/bank_03d/lz_TournamentBracketDoublesTilemap.bin" ; $7b0e, 331 bytes
 TournamentBracketDoublesAttrmap:
-	INCBIN "data/bank_03d/lz_7c59.bin" ; $7c59, 102 bytes
+	INCBIN "data/bank_03d/lz_TournamentBracketDoublesAttrmap.bin" ; $7c59, 102 bytes
 	; $7cbf, 833 bytes fill to bank end (linker-padded)

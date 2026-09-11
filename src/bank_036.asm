@@ -716,7 +716,7 @@ FetchTextTable_36:
 	dw TextStrings_36.s841 - TextStrings_36 ; 709
 	dw TextStrings_36.s842 - TextStrings_36 ; 710
 TextStrings_36:
-	INCLUDE "data/bank_036/text_pool_4592.asm" ; $4592, 14636 bytes (text_pool)
+	INCLUDE "data/bank_036/TextStrings_36.asm" ; $4592, 14636 bytes (text_pool)
 FetchDialogueText_36:
 	push af ; $7ebe
 	ld a, $00 ; $7ebf

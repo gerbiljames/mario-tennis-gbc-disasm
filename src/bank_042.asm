@@ -155,121 +155,121 @@ KateSpriteFrames:
 	dw KateSpriteFrame55 ; $412c
 	dw KateSpriteFrame55 ; $412e
 KateSpriteFrame00:
-	INCBIN "data/bank_042/d_4130.bin" ; $4130, 240 bytes
+	INCBIN "data/bank_042/KateSpriteFrame00.bin" ; $4130, 240 bytes
 KateSpriteFrame01:
-	INCBIN "data/bank_042/d_4220.bin" ; $4220, 240 bytes
+	INCBIN "data/bank_042/KateSpriteFrame01.bin" ; $4220, 240 bytes
 KateSpriteFrame02:
-	INCBIN "data/bank_042/d_4310.bin" ; $4310, 240 bytes
+	INCBIN "data/bank_042/KateSpriteFrame02.bin" ; $4310, 240 bytes
 KateSpriteFrame03:
-	INCBIN "data/bank_042/d_4400.bin" ; $4400, 240 bytes
+	INCBIN "data/bank_042/KateSpriteFrame03.bin" ; $4400, 240 bytes
 KateSpriteFrame04:
-	INCBIN "data/bank_042/d_44f0.bin" ; $44f0, 240 bytes
+	INCBIN "data/bank_042/KateSpriteFrame04.bin" ; $44f0, 240 bytes
 KateSpriteFrame05:
-	INCBIN "data/bank_042/d_45e0.bin" ; $45e0, 240 bytes
+	INCBIN "data/bank_042/KateSpriteFrame05.bin" ; $45e0, 240 bytes
 KateSpriteFrame06:
-	INCBIN "data/bank_042/d_46d0.bin" ; $46d0, 240 bytes
+	INCBIN "data/bank_042/KateSpriteFrame06.bin" ; $46d0, 240 bytes
 KateSpriteFrame07:
-	INCBIN "data/bank_042/d_47c0.bin" ; $47c0, 240 bytes
+	INCBIN "data/bank_042/KateSpriteFrame07.bin" ; $47c0, 240 bytes
 KateSpriteFrame08:
-	INCBIN "data/bank_042/d_48b0.bin" ; $48b0, 240 bytes
+	INCBIN "data/bank_042/KateSpriteFrame08.bin" ; $48b0, 240 bytes
 KateSpriteFrame09:
-	INCBIN "data/bank_042/d_49a0.bin" ; $49a0, 240 bytes
+	INCBIN "data/bank_042/KateSpriteFrame09.bin" ; $49a0, 240 bytes
 KateSpriteFrame10:
-	INCBIN "data/bank_042/d_4a90.bin" ; $4a90, 240 bytes
+	INCBIN "data/bank_042/KateSpriteFrame10.bin" ; $4a90, 240 bytes
 KateSpriteFrame11:
-	INCBIN "data/bank_042/d_4b80.bin" ; $4b80, 240 bytes
+	INCBIN "data/bank_042/KateSpriteFrame11.bin" ; $4b80, 240 bytes
 KateSpriteFrame12:
-	INCBIN "data/bank_042/d_4c70.bin" ; $4c70, 240 bytes
+	INCBIN "data/bank_042/KateSpriteFrame12.bin" ; $4c70, 240 bytes
 KateSpriteFrame13:
-	INCBIN "data/bank_042/d_4d60.bin" ; $4d60, 240 bytes
+	INCBIN "data/bank_042/KateSpriteFrame13.bin" ; $4d60, 240 bytes
 KateSpriteFrame14:
-	INCBIN "data/bank_042/d_4e50.bin" ; $4e50, 240 bytes
+	INCBIN "data/bank_042/KateSpriteFrame14.bin" ; $4e50, 240 bytes
 KateSpriteFrame15:
-	INCBIN "data/bank_042/d_4f40.bin" ; $4f40, 240 bytes
+	INCBIN "data/bank_042/KateSpriteFrame15.bin" ; $4f40, 240 bytes
 KateSpriteFrame16:
-	INCBIN "data/bank_042/d_5030.bin" ; $5030, 240 bytes
+	INCBIN "data/bank_042/KateSpriteFrame16.bin" ; $5030, 240 bytes
 KateSpriteFrame17:
-	INCBIN "data/bank_042/d_5120.bin" ; $5120, 240 bytes
+	INCBIN "data/bank_042/KateSpriteFrame17.bin" ; $5120, 240 bytes
 KateSpriteFrame18:
-	INCBIN "data/bank_042/d_5210.bin" ; $5210, 240 bytes
+	INCBIN "data/bank_042/KateSpriteFrame18.bin" ; $5210, 240 bytes
 KateSpriteFrame19:
-	INCBIN "data/bank_042/d_5300.bin" ; $5300, 240 bytes
+	INCBIN "data/bank_042/KateSpriteFrame19.bin" ; $5300, 240 bytes
 KateSpriteFrame20:
-	INCBIN "data/bank_042/d_53f0.bin" ; $53f0, 240 bytes
+	INCBIN "data/bank_042/KateSpriteFrame20.bin" ; $53f0, 240 bytes
 KateSpriteFrame21:
-	INCBIN "data/bank_042/d_54e0.bin" ; $54e0, 240 bytes
+	INCBIN "data/bank_042/KateSpriteFrame21.bin" ; $54e0, 240 bytes
 KateSpriteFrame22:
-	INCBIN "data/bank_042/d_55d0.bin" ; $55d0, 240 bytes
+	INCBIN "data/bank_042/KateSpriteFrame22.bin" ; $55d0, 240 bytes
 KateSpriteFrame23:
-	INCBIN "data/bank_042/d_56c0.bin" ; $56c0, 240 bytes
+	INCBIN "data/bank_042/KateSpriteFrame23.bin" ; $56c0, 240 bytes
 KateSpriteFrame24:
-	INCBIN "data/bank_042/d_57b0.bin" ; $57b0, 240 bytes
+	INCBIN "data/bank_042/KateSpriteFrame24.bin" ; $57b0, 240 bytes
 KateSpriteFrame25:
-	INCBIN "data/bank_042/d_58a0.bin" ; $58a0, 240 bytes
+	INCBIN "data/bank_042/KateSpriteFrame25.bin" ; $58a0, 240 bytes
 KateSpriteFrame26:
-	INCBIN "data/bank_042/d_5990.bin" ; $5990, 240 bytes
+	INCBIN "data/bank_042/KateSpriteFrame26.bin" ; $5990, 240 bytes
 KateSpriteFrame27:
-	INCBIN "data/bank_042/d_5a80.bin" ; $5a80, 240 bytes
+	INCBIN "data/bank_042/KateSpriteFrame27.bin" ; $5a80, 240 bytes
 KateSpriteFrame28:
-	INCBIN "data/bank_042/d_5b70.bin" ; $5b70, 240 bytes
+	INCBIN "data/bank_042/KateSpriteFrame28.bin" ; $5b70, 240 bytes
 KateSpriteFrame29:
-	INCBIN "data/bank_042/d_5c60.bin" ; $5c60, 240 bytes
+	INCBIN "data/bank_042/KateSpriteFrame29.bin" ; $5c60, 240 bytes
 KateSpriteFrame30:
-	INCBIN "data/bank_042/d_5d50.bin" ; $5d50, 240 bytes
+	INCBIN "data/bank_042/KateSpriteFrame30.bin" ; $5d50, 240 bytes
 KateSpriteFrame31:
-	INCBIN "data/bank_042/d_5e40.bin" ; $5e40, 240 bytes
+	INCBIN "data/bank_042/KateSpriteFrame31.bin" ; $5e40, 240 bytes
 KateSpriteFrame32:
-	INCBIN "data/bank_042/d_5f30.bin" ; $5f30, 240 bytes
+	INCBIN "data/bank_042/KateSpriteFrame32.bin" ; $5f30, 240 bytes
 KateSpriteFrame33:
-	INCBIN "data/bank_042/d_6020.bin" ; $6020, 240 bytes
+	INCBIN "data/bank_042/KateSpriteFrame33.bin" ; $6020, 240 bytes
 KateSpriteFrame34:
-	INCBIN "data/bank_042/d_6110.bin" ; $6110, 240 bytes
+	INCBIN "data/bank_042/KateSpriteFrame34.bin" ; $6110, 240 bytes
 KateSpriteFrame35:
-	INCBIN "data/bank_042/d_6200.bin" ; $6200, 240 bytes
+	INCBIN "data/bank_042/KateSpriteFrame35.bin" ; $6200, 240 bytes
 KateSpriteFrame36:
-	INCBIN "data/bank_042/d_62f0.bin" ; $62f0, 240 bytes
+	INCBIN "data/bank_042/KateSpriteFrame36.bin" ; $62f0, 240 bytes
 KateSpriteFrame37:
-	INCBIN "data/bank_042/d_63e0.bin" ; $63e0, 240 bytes
+	INCBIN "data/bank_042/KateSpriteFrame37.bin" ; $63e0, 240 bytes
 KateSpriteFrame38:
-	INCBIN "data/bank_042/d_64d0.bin" ; $64d0, 240 bytes
+	INCBIN "data/bank_042/KateSpriteFrame38.bin" ; $64d0, 240 bytes
 KateSpriteFrame39:
-	INCBIN "data/bank_042/d_65c0.bin" ; $65c0, 240 bytes
+	INCBIN "data/bank_042/KateSpriteFrame39.bin" ; $65c0, 240 bytes
 KateSpriteFrame40:
-	INCBIN "data/bank_042/d_66b0.bin" ; $66b0, 320 bytes
+	INCBIN "data/bank_042/KateSpriteFrame40.bin" ; $66b0, 320 bytes
 KateSpriteFrame41:
-	INCBIN "data/bank_042/d_67f0.bin" ; $67f0, 320 bytes
+	INCBIN "data/bank_042/KateSpriteFrame41.bin" ; $67f0, 320 bytes
 KateSpriteFrame42:
-	INCBIN "data/bank_042/d_6930.bin" ; $6930, 240 bytes
+	INCBIN "data/bank_042/KateSpriteFrame42.bin" ; $6930, 240 bytes
 KateSpriteFrame43:
-	INCBIN "data/bank_042/d_6a20.bin" ; $6a20, 240 bytes
+	INCBIN "data/bank_042/KateSpriteFrame43.bin" ; $6a20, 240 bytes
 KateSpriteFrame44:
-	INCBIN "data/bank_042/d_6b10.bin" ; $6b10, 240 bytes
+	INCBIN "data/bank_042/KateSpriteFrame44.bin" ; $6b10, 240 bytes
 KateSpriteFrame45:
-	INCBIN "data/bank_042/d_6c00.bin" ; $6c00, 240 bytes
+	INCBIN "data/bank_042/KateSpriteFrame45.bin" ; $6c00, 240 bytes
 KateSpriteFrame46:
-	INCBIN "data/bank_042/d_6cf0.bin" ; $6cf0, 240 bytes
+	INCBIN "data/bank_042/KateSpriteFrame46.bin" ; $6cf0, 240 bytes
 KateSpriteFrame47:
-	INCBIN "data/bank_042/d_6de0.bin" ; $6de0, 240 bytes
+	INCBIN "data/bank_042/KateSpriteFrame47.bin" ; $6de0, 240 bytes
 KateSpriteFrame48:
-	INCBIN "data/bank_042/d_6ed0.bin" ; $6ed0, 240 bytes
+	INCBIN "data/bank_042/KateSpriteFrame48.bin" ; $6ed0, 240 bytes
 KateSpriteFrame49:
-	INCBIN "data/bank_042/d_6fc0.bin" ; $6fc0, 240 bytes
+	INCBIN "data/bank_042/KateSpriteFrame49.bin" ; $6fc0, 240 bytes
 KateSpriteFrame50:
-	INCBIN "data/bank_042/d_70b0.bin" ; $70b0, 240 bytes
+	INCBIN "data/bank_042/KateSpriteFrame50.bin" ; $70b0, 240 bytes
 KateSpriteFrame51:
-	INCBIN "data/bank_042/d_71a0.bin" ; $71a0, 240 bytes
+	INCBIN "data/bank_042/KateSpriteFrame51.bin" ; $71a0, 240 bytes
 KateSpriteFrame52:
-	INCBIN "data/bank_042/d_7290.bin" ; $7290, 240 bytes
+	INCBIN "data/bank_042/KateSpriteFrame52.bin" ; $7290, 240 bytes
 KateSpriteFrame53:
-	INCBIN "data/bank_042/d_7380.bin" ; $7380, 240 bytes
+	INCBIN "data/bank_042/KateSpriteFrame53.bin" ; $7380, 240 bytes
 KateSpriteFrame54:
-	INCBIN "data/bank_042/d_7470.bin" ; $7470, 240 bytes
+	INCBIN "data/bank_042/KateSpriteFrame54.bin" ; $7470, 240 bytes
 KateSpriteFrame55:
-	INCBIN "data/bank_042/d_7560.bin" ; $7560, 240 bytes
+	INCBIN "data/bank_042/KateSpriteFrame55.bin" ; $7560, 240 bytes
 KateSpriteFramesUnused:
-	INCBIN "data/bank_042/d_7650.bin" ; $7650, 1680 bytes
+	INCBIN "data/bank_042/KateSpriteFramesUnused.bin" ; $7650, 1680 bytes
 KateSpriteOam:
-	INCBIN "data/bank_042/d_7ce0.bin" ; $7ce0, 580 bytes
+	INCBIN "data/bank_042/KateSpriteOam.bin" ; $7ce0, 580 bytes
 KateSpriteAnims:
 	dw KateSpriteAnim00 ; $7f24
 	dw KateSpriteAnim01 ; $7f26

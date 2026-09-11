@@ -65,56 +65,56 @@ DataPtr_AcademyMainBldgSceneUnusedSlot:
 DataPtr_AcademyMainBldgTiles:
 	dw AcademyMainBldgTiles ; $403e
 IslandOpenCourtPalettes:
-	INCLUDE "data/bank_063/palettes_4040.asm" ; $4040, 64 bytes (palettes)
+	INCLUDE "data/bank_063/IslandOpenCourtPalettes.asm" ; $4040, 64 bytes (palettes)
 IslandOpenCourtTiles:
-	INCBIN "data/bank_063/lz_4080.bin" ; $4080, 2042 bytes
+	INCBIN "data/bank_063/lz_IslandOpenCourtTiles.bin" ; $4080, 2042 bytes
 IslandOpenCourtTilemap:
-	INCBIN "data/bank_063/lz_487a.bin" ; $487a, 635 bytes
+	INCBIN "data/bank_063/lz_IslandOpenCourtTilemap.bin" ; $487a, 635 bytes
 IslandOpenCourtAttrmap:
-	INCBIN "data/bank_063/lz_4af5.bin" ; $4af5, 185 bytes
+	INCBIN "data/bank_063/lz_IslandOpenCourtAttrmap.bin" ; $4af5, 185 bytes
 IslandOpenCourtSceneConfig:
-	INCBIN "data/bank_063/d_4bae.bin" ; $4bae, 40 bytes
+	INCBIN "data/bank_063/IslandOpenCourtSceneConfig.bin" ; $4bae, 40 bytes
 IslandOpenCourtScoreboardColumnAttrs:
-	INCBIN "data/bank_063/d_4bd6.bin" ; $4bd6, 40 bytes
+	INCBIN "data/bank_063/IslandOpenCourtScoreboardColumnAttrs.bin" ; $4bd6, 40 bytes
 DKCourtPalettes:
-	INCLUDE "data/bank_063/palettes_4bfe.asm" ; $4bfe, 64 bytes (palettes)
+	INCLUDE "data/bank_063/DKCourtPalettes.asm" ; $4bfe, 64 bytes (palettes)
 DKCourtTiles:
-	INCBIN "data/bank_063/lz_4c3e.bin" ; $4c3e, 3291 bytes
+	INCBIN "data/bank_063/lz_DKCourtTiles.bin" ; $4c3e, 3291 bytes
 DKCourtTilemap:
-	INCBIN "data/bank_063/lz_5919.bin" ; $5919, 713 bytes
+	INCBIN "data/bank_063/lz_DKCourtTilemap.bin" ; $5919, 713 bytes
 DKCourtAttrmap:
-	INCBIN "data/bank_063/lz_5be2.bin" ; $5be2, 323 bytes
+	INCBIN "data/bank_063/lz_DKCourtAttrmap.bin" ; $5be2, 323 bytes
 DKCourtSceneConfig:
-	INCBIN "data/bank_063/d_5d25.bin" ; $5d25, 40 bytes
+	INCBIN "data/bank_063/DKCourtSceneConfig.bin" ; $5d25, 40 bytes
 DKCourtScoreboardColumnAttrs:
-	INCBIN "data/bank_063/d_5d4d.bin" ; $5d4d, 40 bytes
+	INCBIN "data/bank_063/DKCourtScoreboardColumnAttrs.bin" ; $5d4d, 40 bytes
 StarPatternBgSceneConfig:
-	INCBIN "data/bank_063/d_5d75.bin" ; $5d75, 42 bytes
+	INCBIN "data/bank_063/StarPatternBgSceneConfig.bin" ; $5d75, 42 bytes
 StarPatternBgPalettes:
-	INCLUDE "data/bank_063/palettes_5d9f.asm" ; $5d9f, 64 bytes (palettes)
+	INCLUDE "data/bank_063/StarPatternBgPalettes.asm" ; $5d9f, 64 bytes (palettes)
 StarPatternBgTiles:
-	INCBIN "data/bank_063/lz_5ddf.bin" ; $5ddf, 685 bytes
+	INCBIN "data/bank_063/lz_StarPatternBgTiles.bin" ; $5ddf, 685 bytes
 StarPatternBgTilemap:
-	INCBIN "data/bank_063/lz_608c.bin" ; $608c, 274 bytes
+	INCBIN "data/bank_063/lz_StarPatternBgTilemap.bin" ; $608c, 274 bytes
 StarPatternBgAttrmap:
-	INCBIN "data/bank_063/lz_619e.bin" ; $619e, 263 bytes
+	INCBIN "data/bank_063/lz_StarPatternBgAttrmap.bin" ; $619e, 263 bytes
 StarPatternBgCollisionMap:
-	INCBIN "data/bank_063/lz_62a5.bin" ; $62a5, 70 bytes
+	INCBIN "data/bank_063/lz_StarPatternBgCollisionMap.bin" ; $62a5, 70 bytes
 StarPatternBgBehaviorMap:
-	INCBIN "data/bank_063/lz_62eb.bin" ; $62eb, 70 bytes
+	INCBIN "data/bank_063/lz_StarPatternBgBehaviorMap.bin" ; $62eb, 70 bytes
 AcademyMainBldgSceneConfig:
-	INCBIN "data/bank_063/d_6331.bin" ; $6331, 42 bytes
+	INCBIN "data/bank_063/AcademyMainBldgSceneConfig.bin" ; $6331, 42 bytes
 AcademyMainBldgPalettes:
-	INCLUDE "data/bank_063/palettes_635b.asm" ; $635b, 64 bytes (palettes)
+	INCLUDE "data/bank_063/AcademyMainBldgPalettes.asm" ; $635b, 64 bytes (palettes)
 AcademyMainBldgTiles:
-	INCBIN "data/bank_063/lz_639b.bin" ; $639b, 3510 bytes
+	INCBIN "data/bank_063/lz_AcademyMainBldgTiles.bin" ; $639b, 3510 bytes
 AcademyMainBldgTilemap:
-	INCBIN "data/bank_063/lz_7151.bin" ; $7151, 1470 bytes
+	INCBIN "data/bank_063/lz_AcademyMainBldgTilemap.bin" ; $7151, 1470 bytes
 AcademyMainBldgAttrmap:
-	INCBIN "data/bank_063/lz_770f.bin" ; $770f, 769 bytes
+	INCBIN "data/bank_063/lz_AcademyMainBldgAttrmap.bin" ; $770f, 769 bytes
 AcademyMainBldgCollisionMap:
-	INCBIN "data/bank_063/lz_7a10.bin" ; $7a10, 147 bytes
+	INCBIN "data/bank_063/lz_AcademyMainBldgCollisionMap.bin" ; $7a10, 147 bytes
 AcademyMainBldgBehaviorMap:
-	INCBIN "data/bank_063/lz_7aa3.bin" ; $7aa3, 94 bytes
+	INCBIN "data/bank_063/lz_AcademyMainBldgBehaviorMap.bin" ; $7aa3, 94 bytes
 AcademyMainBldgSceneUnusedSlot:
 	; $7b01, 1279 bytes fill to bank end (linker-padded)

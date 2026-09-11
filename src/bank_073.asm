@@ -56,17 +56,17 @@ Padding_73_00:
 	; $4046, 10 bytes (fill)
 	ds 10, $00
 WalkSprite_73_00_Gfx00:
-	INCBIN "data/bank_073/d_4050.bin" ; $4050, 256 bytes
+	INCBIN "data/bank_073/WalkSprite_73_00_Gfx00.bin" ; $4050, 256 bytes
 WalkSprite_73_00_Gfx01:
-	INCBIN "data/bank_073/d_4150.bin" ; $4150, 256 bytes
+	INCBIN "data/bank_073/WalkSprite_73_00_Gfx01.bin" ; $4150, 256 bytes
 WalkSprite_73_00_Gfx02:
-	INCBIN "data/bank_073/d_4250.bin" ; $4250, 256 bytes
+	INCBIN "data/bank_073/WalkSprite_73_00_Gfx02.bin" ; $4250, 256 bytes
 WalkSprite_73_00_Gfx03:
-	INCBIN "data/bank_073/d_4350.bin" ; $4350, 256 bytes
+	INCBIN "data/bank_073/WalkSprite_73_00_Gfx03.bin" ; $4350, 256 bytes
 WalkSprite_73_00_Gfx04:
-	INCBIN "data/bank_073/d_4450.bin" ; $4450, 256 bytes
+	INCBIN "data/bank_073/WalkSprite_73_00_Gfx04.bin" ; $4450, 256 bytes
 WalkSprite_73_00_Gfx05:
-	INCBIN "data/bank_073/d_4550.bin" ; $4550, 256 bytes
+	INCBIN "data/bank_073/WalkSprite_73_00_Gfx05.bin" ; $4550, 256 bytes
 WalkSprite_73_00_AnimPtrs:
 	dw WalkSprite_73_00_Anim00 ; $4650
 	dw WalkSprite_73_00_Anim01 ; $4652
@@ -135,17 +135,17 @@ Padding_73_01:
 	; $46bb, 5 bytes (fill)
 	ds 5, $00
 WalkSprite_73_01_Gfx00:
-	INCBIN "data/bank_073/d_46c0.bin" ; $46c0, 256 bytes
+	INCBIN "data/bank_073/WalkSprite_73_01_Gfx00.bin" ; $46c0, 256 bytes
 WalkSprite_73_01_Gfx01:
-	INCBIN "data/bank_073/d_47c0.bin" ; $47c0, 256 bytes
+	INCBIN "data/bank_073/WalkSprite_73_01_Gfx01.bin" ; $47c0, 256 bytes
 WalkSprite_73_01_Gfx02:
-	INCBIN "data/bank_073/d_48c0.bin" ; $48c0, 256 bytes
+	INCBIN "data/bank_073/WalkSprite_73_01_Gfx02.bin" ; $48c0, 256 bytes
 WalkSprite_73_01_Gfx03:
-	INCBIN "data/bank_073/d_49c0.bin" ; $49c0, 256 bytes
+	INCBIN "data/bank_073/WalkSprite_73_01_Gfx03.bin" ; $49c0, 256 bytes
 WalkSprite_73_01_Gfx04:
-	INCBIN "data/bank_073/d_4ac0.bin" ; $4ac0, 256 bytes
+	INCBIN "data/bank_073/WalkSprite_73_01_Gfx04.bin" ; $4ac0, 256 bytes
 WalkSprite_73_01_Gfx05:
-	INCBIN "data/bank_073/d_4bc0.bin" ; $4bc0, 256 bytes
+	INCBIN "data/bank_073/WalkSprite_73_01_Gfx05.bin" ; $4bc0, 256 bytes
 WalkSprite_73_01_AnimPtrs:
 	dw WalkSprite_73_01_Anim00 ; $4cc0
 	dw WalkSprite_73_01_Anim01 ; $4cc2
@@ -214,17 +214,17 @@ Padding_73_02:
 	; $4d2b, 5 bytes (fill)
 	ds 5, $00
 WalkSprite_73_02_Gfx00:
-	INCBIN "data/bank_073/d_4d30.bin" ; $4d30, 64 bytes
+	INCBIN "data/bank_073/WalkSprite_73_02_Gfx00.bin" ; $4d30, 64 bytes
 WalkSprite_73_02_Gfx01:
-	INCBIN "data/bank_073/d_4d70.bin" ; $4d70, 64 bytes
+	INCBIN "data/bank_073/WalkSprite_73_02_Gfx01.bin" ; $4d70, 64 bytes
 WalkSprite_73_02_Gfx02:
-	INCBIN "data/bank_073/d_4db0.bin" ; $4db0, 64 bytes
+	INCBIN "data/bank_073/WalkSprite_73_02_Gfx02.bin" ; $4db0, 64 bytes
 WalkSprite_73_02_Gfx03:
-	INCBIN "data/bank_073/d_4df0.bin" ; $4df0, 64 bytes
+	INCBIN "data/bank_073/WalkSprite_73_02_Gfx03.bin" ; $4df0, 64 bytes
 WalkSprite_73_02_Gfx04:
-	INCBIN "data/bank_073/d_4e30.bin" ; $4e30, 64 bytes
+	INCBIN "data/bank_073/WalkSprite_73_02_Gfx04.bin" ; $4e30, 64 bytes
 WalkSprite_73_02_Gfx05:
-	INCBIN "data/bank_073/d_4e70.bin" ; $4e70, 64 bytes
+	INCBIN "data/bank_073/WalkSprite_73_02_Gfx05.bin" ; $4e70, 64 bytes
 WalkSprite_73_02_AnimPtrs:
 	dw WalkSprite_73_02_Anim00 ; $4eb0
 	dw WalkSprite_73_02_Anim01 ; $4eb2
@@ -293,17 +293,17 @@ Padding_73_03:
 	; $4f1b, 5 bytes (fill)
 	ds 5, $00
 WalkSprite_73_03_Gfx00:
-	INCBIN "data/bank_073/d_4f20.bin" ; $4f20, 64 bytes
+	INCBIN "data/bank_073/WalkSprite_73_03_Gfx00.bin" ; $4f20, 64 bytes
 WalkSprite_73_03_Gfx01:
-	INCBIN "data/bank_073/d_4f60.bin" ; $4f60, 64 bytes
+	INCBIN "data/bank_073/WalkSprite_73_03_Gfx01.bin" ; $4f60, 64 bytes
 WalkSprite_73_03_Gfx02:
-	INCBIN "data/bank_073/d_4fa0.bin" ; $4fa0, 64 bytes
+	INCBIN "data/bank_073/WalkSprite_73_03_Gfx02.bin" ; $4fa0, 64 bytes
 WalkSprite_73_03_Gfx03:
-	INCBIN "data/bank_073/d_4fe0.bin" ; $4fe0, 64 bytes
+	INCBIN "data/bank_073/WalkSprite_73_03_Gfx03.bin" ; $4fe0, 64 bytes
 WalkSprite_73_03_Gfx04:
-	INCBIN "data/bank_073/d_5020.bin" ; $5020, 64 bytes
+	INCBIN "data/bank_073/WalkSprite_73_03_Gfx04.bin" ; $5020, 64 bytes
 WalkSprite_73_03_Gfx05:
-	INCBIN "data/bank_073/d_5060.bin" ; $5060, 64 bytes
+	INCBIN "data/bank_073/WalkSprite_73_03_Gfx05.bin" ; $5060, 64 bytes
 WalkSprite_73_03_AnimPtrs:
 	dw WalkSprite_73_03_Anim00 ; $50a0
 	dw WalkSprite_73_03_Anim01 ; $50a2
@@ -372,17 +372,17 @@ Padding_73_04:
 	; $510b, 5 bytes (fill)
 	ds 5, $00
 WalkSprite_73_04_Gfx00:
-	INCBIN "data/bank_073/d_5110.bin" ; $5110, 64 bytes
+	INCBIN "data/bank_073/WalkSprite_73_04_Gfx00.bin" ; $5110, 64 bytes
 WalkSprite_73_04_Gfx01:
-	INCBIN "data/bank_073/d_5150.bin" ; $5150, 64 bytes
+	INCBIN "data/bank_073/WalkSprite_73_04_Gfx01.bin" ; $5150, 64 bytes
 WalkSprite_73_04_Gfx02:
-	INCBIN "data/bank_073/d_5190.bin" ; $5190, 64 bytes
+	INCBIN "data/bank_073/WalkSprite_73_04_Gfx02.bin" ; $5190, 64 bytes
 WalkSprite_73_04_Gfx03:
-	INCBIN "data/bank_073/d_51d0.bin" ; $51d0, 64 bytes
+	INCBIN "data/bank_073/WalkSprite_73_04_Gfx03.bin" ; $51d0, 64 bytes
 WalkSprite_73_04_Gfx04:
-	INCBIN "data/bank_073/d_5210.bin" ; $5210, 64 bytes
+	INCBIN "data/bank_073/WalkSprite_73_04_Gfx04.bin" ; $5210, 64 bytes
 WalkSprite_73_04_Gfx05:
-	INCBIN "data/bank_073/d_5250.bin" ; $5250, 64 bytes
+	INCBIN "data/bank_073/WalkSprite_73_04_Gfx05.bin" ; $5250, 64 bytes
 WalkSprite_73_04_AnimPtrs:
 	dw WalkSprite_73_04_Anim00 ; $5290
 	dw WalkSprite_73_04_Anim01 ; $5292
@@ -451,17 +451,17 @@ Padding_73_05:
 	; $52fb, 5 bytes (fill)
 	ds 5, $00
 WalkSprite_73_05_Gfx00:
-	INCBIN "data/bank_073/d_5300.bin" ; $5300, 64 bytes
+	INCBIN "data/bank_073/WalkSprite_73_05_Gfx00.bin" ; $5300, 64 bytes
 WalkSprite_73_05_Gfx01:
-	INCBIN "data/bank_073/d_5340.bin" ; $5340, 64 bytes
+	INCBIN "data/bank_073/WalkSprite_73_05_Gfx01.bin" ; $5340, 64 bytes
 WalkSprite_73_05_Gfx02:
-	INCBIN "data/bank_073/d_5380.bin" ; $5380, 64 bytes
+	INCBIN "data/bank_073/WalkSprite_73_05_Gfx02.bin" ; $5380, 64 bytes
 WalkSprite_73_05_Gfx03:
-	INCBIN "data/bank_073/d_53c0.bin" ; $53c0, 64 bytes
+	INCBIN "data/bank_073/WalkSprite_73_05_Gfx03.bin" ; $53c0, 64 bytes
 WalkSprite_73_05_Gfx04:
-	INCBIN "data/bank_073/d_5400.bin" ; $5400, 64 bytes
+	INCBIN "data/bank_073/WalkSprite_73_05_Gfx04.bin" ; $5400, 64 bytes
 WalkSprite_73_05_Gfx05:
-	INCBIN "data/bank_073/d_5440.bin" ; $5440, 64 bytes
+	INCBIN "data/bank_073/WalkSprite_73_05_Gfx05.bin" ; $5440, 64 bytes
 WalkSprite_73_05_AnimPtrs:
 	dw WalkSprite_73_05_Anim00 ; $5480
 	dw WalkSprite_73_05_Anim01 ; $5482
@@ -531,19 +531,19 @@ Padding_73_06:
 	; $54ed, 3 bytes (fill)
 	ds 3, $00
 WalkSprite_73_06_Gfx00:
-	INCBIN "data/bank_073/d_54f0.bin" ; $54f0, 64 bytes
+	INCBIN "data/bank_073/WalkSprite_73_06_Gfx00.bin" ; $54f0, 64 bytes
 WalkSprite_73_06_Gfx01:
-	INCBIN "data/bank_073/d_5530.bin" ; $5530, 64 bytes
+	INCBIN "data/bank_073/WalkSprite_73_06_Gfx01.bin" ; $5530, 64 bytes
 WalkSprite_73_06_Gfx02:
-	INCBIN "data/bank_073/d_5570.bin" ; $5570, 64 bytes
+	INCBIN "data/bank_073/WalkSprite_73_06_Gfx02.bin" ; $5570, 64 bytes
 WalkSprite_73_06_Gfx03:
-	INCBIN "data/bank_073/d_55b0.bin" ; $55b0, 64 bytes
+	INCBIN "data/bank_073/WalkSprite_73_06_Gfx03.bin" ; $55b0, 64 bytes
 WalkSprite_73_06_Gfx04:
-	INCBIN "data/bank_073/d_55f0.bin" ; $55f0, 64 bytes
+	INCBIN "data/bank_073/WalkSprite_73_06_Gfx04.bin" ; $55f0, 64 bytes
 WalkSprite_73_06_Gfx05:
-	INCBIN "data/bank_073/d_5630.bin" ; $5630, 64 bytes
+	INCBIN "data/bank_073/WalkSprite_73_06_Gfx05.bin" ; $5630, 64 bytes
 WalkSprite_73_06_Gfx06:
-	INCBIN "data/bank_073/d_5670.bin" ; $5670, 64 bytes
+	INCBIN "data/bank_073/WalkSprite_73_06_Gfx06.bin" ; $5670, 64 bytes
 WalkSprite_73_06_AnimPtrs:
 	dw WalkSprite_73_06_Anim00 ; $56b0
 	dw WalkSprite_73_06_Anim00 ; $56b2
@@ -615,19 +615,19 @@ Padding_73_07:
 	; $5721, 15 bytes (fill)
 	ds 15, $00
 WalkSprite_73_07_Gfx00:
-	INCBIN "data/bank_073/d_5730.bin" ; $5730, 64 bytes
+	INCBIN "data/bank_073/WalkSprite_73_07_Gfx00.bin" ; $5730, 64 bytes
 WalkSprite_73_07_Gfx01:
-	INCBIN "data/bank_073/d_5770.bin" ; $5770, 64 bytes
+	INCBIN "data/bank_073/WalkSprite_73_07_Gfx01.bin" ; $5770, 64 bytes
 WalkSprite_73_07_Gfx02:
-	INCBIN "data/bank_073/d_57b0.bin" ; $57b0, 64 bytes
+	INCBIN "data/bank_073/WalkSprite_73_07_Gfx02.bin" ; $57b0, 64 bytes
 WalkSprite_73_07_Gfx03:
-	INCBIN "data/bank_073/d_57f0.bin" ; $57f0, 64 bytes
+	INCBIN "data/bank_073/WalkSprite_73_07_Gfx03.bin" ; $57f0, 64 bytes
 WalkSprite_73_07_Gfx04:
-	INCBIN "data/bank_073/d_5830.bin" ; $5830, 64 bytes
+	INCBIN "data/bank_073/WalkSprite_73_07_Gfx04.bin" ; $5830, 64 bytes
 WalkSprite_73_07_Gfx05:
-	INCBIN "data/bank_073/d_5870.bin" ; $5870, 64 bytes
+	INCBIN "data/bank_073/WalkSprite_73_07_Gfx05.bin" ; $5870, 64 bytes
 WalkSprite_73_07_Gfx06:
-	INCBIN "data/bank_073/d_58b0.bin" ; $58b0, 64 bytes
+	INCBIN "data/bank_073/WalkSprite_73_07_Gfx06.bin" ; $58b0, 64 bytes
 WalkSprite_73_07_AnimPtrs:
 	dw WalkSprite_73_07_Anim00 ; $58f0
 	dw WalkSprite_73_07_Anim00 ; $58f2
@@ -695,17 +695,17 @@ Padding_73_08:
 	; $595d, 3 bytes (fill)
 	ds 3, $00
 WalkSprite_73_08_Gfx00:
-	INCBIN "data/bank_073/d_5960.bin" ; $5960, 256 bytes
+	INCBIN "data/bank_073/WalkSprite_73_08_Gfx00.bin" ; $5960, 256 bytes
 WalkSprite_73_08_Gfx01:
-	INCBIN "data/bank_073/d_5a60.bin" ; $5a60, 256 bytes
+	INCBIN "data/bank_073/WalkSprite_73_08_Gfx01.bin" ; $5a60, 256 bytes
 WalkSprite_73_08_Gfx02:
-	INCBIN "data/bank_073/d_5b60.bin" ; $5b60, 256 bytes
+	INCBIN "data/bank_073/WalkSprite_73_08_Gfx02.bin" ; $5b60, 256 bytes
 WalkSprite_73_08_Gfx03:
-	INCBIN "data/bank_073/d_5c60.bin" ; $5c60, 256 bytes
+	INCBIN "data/bank_073/WalkSprite_73_08_Gfx03.bin" ; $5c60, 256 bytes
 WalkSprite_73_08_Gfx04:
-	INCBIN "data/bank_073/d_5d60.bin" ; $5d60, 256 bytes
+	INCBIN "data/bank_073/WalkSprite_73_08_Gfx04.bin" ; $5d60, 256 bytes
 WalkSprite_73_08_Gfx05:
-	INCBIN "data/bank_073/d_5e60.bin" ; $5e60, 256 bytes
+	INCBIN "data/bank_073/WalkSprite_73_08_Gfx05.bin" ; $5e60, 256 bytes
 WalkSprite_73_08_AnimPtrs:
 	dw WalkSprite_73_08_Anim00 ; $5f60
 	dw WalkSprite_73_08_Anim01 ; $5f62
@@ -777,21 +777,21 @@ Padding_73_09:
 	; $5fd1, 15 bytes (fill)
 	ds 15, $00
 WalkSprite_73_09_Gfx00:
-	INCBIN "data/bank_073/d_5fe0.bin" ; $5fe0, 256 bytes
+	INCBIN "data/bank_073/WalkSprite_73_09_Gfx00.bin" ; $5fe0, 256 bytes
 WalkSprite_73_09_Gfx01:
-	INCBIN "data/bank_073/d_60e0.bin" ; $60e0, 256 bytes
+	INCBIN "data/bank_073/WalkSprite_73_09_Gfx01.bin" ; $60e0, 256 bytes
 WalkSprite_73_09_Gfx02:
-	INCBIN "data/bank_073/d_61e0.bin" ; $61e0, 256 bytes
+	INCBIN "data/bank_073/WalkSprite_73_09_Gfx02.bin" ; $61e0, 256 bytes
 WalkSprite_73_09_Gfx03:
-	INCBIN "data/bank_073/d_62e0.bin" ; $62e0, 256 bytes
+	INCBIN "data/bank_073/WalkSprite_73_09_Gfx03.bin" ; $62e0, 256 bytes
 WalkSprite_73_09_Gfx04:
-	INCBIN "data/bank_073/d_63e0.bin" ; $63e0, 256 bytes
+	INCBIN "data/bank_073/WalkSprite_73_09_Gfx04.bin" ; $63e0, 256 bytes
 WalkSprite_73_09_Gfx05:
-	INCBIN "data/bank_073/d_64e0.bin" ; $64e0, 256 bytes
+	INCBIN "data/bank_073/WalkSprite_73_09_Gfx05.bin" ; $64e0, 256 bytes
 WalkSprite_73_09_Gfx06:
-	INCBIN "data/bank_073/d_65e0.bin" ; $65e0, 256 bytes
+	INCBIN "data/bank_073/WalkSprite_73_09_Gfx06.bin" ; $65e0, 256 bytes
 WalkSprite_73_09_Gfx07:
-	INCBIN "data/bank_073/d_66e0.bin" ; $66e0, 256 bytes
+	INCBIN "data/bank_073/WalkSprite_73_09_Gfx07.bin" ; $66e0, 256 bytes
 WalkSprite_73_09_AnimPtrs:
 	dw WalkSprite_73_09_Anim00 ; $67e0
 	dw WalkSprite_73_09_Anim01 ; $67e2
@@ -866,17 +866,17 @@ Padding_73_10:
 	; $6853, 13 bytes (fill)
 	ds 13, $00
 WalkSprite_73_10_Gfx00:
-	INCBIN "data/bank_073/d_6860.bin" ; $6860, 256 bytes
+	INCBIN "data/bank_073/WalkSprite_73_10_Gfx00.bin" ; $6860, 256 bytes
 WalkSprite_73_10_Gfx01:
-	INCBIN "data/bank_073/d_6960.bin" ; $6960, 256 bytes
+	INCBIN "data/bank_073/WalkSprite_73_10_Gfx01.bin" ; $6960, 256 bytes
 WalkSprite_73_10_Gfx02:
-	INCBIN "data/bank_073/d_6a60.bin" ; $6a60, 256 bytes
+	INCBIN "data/bank_073/WalkSprite_73_10_Gfx02.bin" ; $6a60, 256 bytes
 WalkSprite_73_10_Gfx03:
-	INCBIN "data/bank_073/d_6b60.bin" ; $6b60, 256 bytes
+	INCBIN "data/bank_073/WalkSprite_73_10_Gfx03.bin" ; $6b60, 256 bytes
 WalkSprite_73_10_Gfx04:
-	INCBIN "data/bank_073/d_6c60.bin" ; $6c60, 256 bytes
+	INCBIN "data/bank_073/WalkSprite_73_10_Gfx04.bin" ; $6c60, 256 bytes
 WalkSprite_73_10_Gfx05:
-	INCBIN "data/bank_073/d_6d60.bin" ; $6d60, 256 bytes
+	INCBIN "data/bank_073/WalkSprite_73_10_Gfx05.bin" ; $6d60, 256 bytes
 WalkSprite_73_10_AnimPtrs:
 	dw WalkSprite_73_10_Anim00 ; $6e60
 	dw WalkSprite_73_10_Anim01 ; $6e62
@@ -945,17 +945,17 @@ Padding_73_11:
 	; $6ecb, 5 bytes (fill)
 	ds 5, $00
 WalkSprite_73_11_Gfx00:
-	INCBIN "data/bank_073/d_6ed0.bin" ; $6ed0, 256 bytes
+	INCBIN "data/bank_073/WalkSprite_73_11_Gfx00.bin" ; $6ed0, 256 bytes
 WalkSprite_73_11_Gfx01:
-	INCBIN "data/bank_073/d_6fd0.bin" ; $6fd0, 256 bytes
+	INCBIN "data/bank_073/WalkSprite_73_11_Gfx01.bin" ; $6fd0, 256 bytes
 WalkSprite_73_11_Gfx02:
-	INCBIN "data/bank_073/d_70d0.bin" ; $70d0, 256 bytes
+	INCBIN "data/bank_073/WalkSprite_73_11_Gfx02.bin" ; $70d0, 256 bytes
 WalkSprite_73_11_Gfx03:
-	INCBIN "data/bank_073/d_71d0.bin" ; $71d0, 256 bytes
+	INCBIN "data/bank_073/WalkSprite_73_11_Gfx03.bin" ; $71d0, 256 bytes
 WalkSprite_73_11_Gfx04:
-	INCBIN "data/bank_073/d_72d0.bin" ; $72d0, 256 bytes
+	INCBIN "data/bank_073/WalkSprite_73_11_Gfx04.bin" ; $72d0, 256 bytes
 WalkSprite_73_11_Gfx05:
-	INCBIN "data/bank_073/d_73d0.bin" ; $73d0, 256 bytes
+	INCBIN "data/bank_073/WalkSprite_73_11_Gfx05.bin" ; $73d0, 256 bytes
 WalkSprite_73_11_AnimPtrs:
 	dw WalkSprite_73_11_Anim00 ; $74d0
 	dw WalkSprite_73_11_Anim01 ; $74d2
@@ -1017,9 +1017,9 @@ Padding_73_12:
 	; $752d, 3 bytes (fill)
 	ds 3, $00
 WalkSprite_73_12_Gfx00:
-	INCBIN "data/bank_073/d_7530.bin" ; $7530, 64 bytes
+	INCBIN "data/bank_073/WalkSprite_73_12_Gfx00.bin" ; $7530, 64 bytes
 WalkSprite_73_12_Gfx01:
-	INCBIN "data/bank_073/d_7570.bin" ; $7570, 64 bytes
+	INCBIN "data/bank_073/WalkSprite_73_12_Gfx01.bin" ; $7570, 64 bytes
 WalkSprite_73_12_AnimPtrs:
 	dw WalkSprite_73_12_Anim00 ; $75b0
 	dw WalkSprite_73_12_Anim01 ; $75b2
@@ -1041,9 +1041,9 @@ Padding_73_13:
 	; $75cd, 3 bytes (fill)
 	ds 3, $00
 WalkSprite_73_13_Gfx00:
-	INCBIN "data/bank_073/d_75d0.bin" ; $75d0, 64 bytes
+	INCBIN "data/bank_073/WalkSprite_73_13_Gfx00.bin" ; $75d0, 64 bytes
 WalkSprite_73_13_Gfx01:
-	INCBIN "data/bank_073/d_7610.bin" ; $7610, 64 bytes
+	INCBIN "data/bank_073/WalkSprite_73_13_Gfx01.bin" ; $7610, 64 bytes
 WalkSprite_73_13_AnimPtrs:
 	dw WalkSprite_73_13_Anim00 ; $7650
 	dw WalkSprite_73_13_Anim01 ; $7652
@@ -1072,17 +1072,17 @@ Padding_73_14:
 	; $767b, 5 bytes (fill)
 	ds 5, $00
 WalkSprite_73_14_Gfx00:
-	INCBIN "data/bank_073/d_7680.bin" ; $7680, 64 bytes
+	INCBIN "data/bank_073/WalkSprite_73_14_Gfx00.bin" ; $7680, 64 bytes
 WalkSprite_73_14_Gfx01:
-	INCBIN "data/bank_073/d_76c0.bin" ; $76c0, 64 bytes
+	INCBIN "data/bank_073/WalkSprite_73_14_Gfx01.bin" ; $76c0, 64 bytes
 WalkSprite_73_14_Gfx02:
-	INCBIN "data/bank_073/d_7700.bin" ; $7700, 64 bytes
+	INCBIN "data/bank_073/WalkSprite_73_14_Gfx02.bin" ; $7700, 64 bytes
 WalkSprite_73_14_Gfx03:
-	INCBIN "data/bank_073/d_7740.bin" ; $7740, 64 bytes
+	INCBIN "data/bank_073/WalkSprite_73_14_Gfx03.bin" ; $7740, 64 bytes
 WalkSprite_73_14_Gfx04:
-	INCBIN "data/bank_073/d_7780.bin" ; $7780, 64 bytes
+	INCBIN "data/bank_073/WalkSprite_73_14_Gfx04.bin" ; $7780, 64 bytes
 WalkSprite_73_14_Gfx05:
-	INCBIN "data/bank_073/d_77c0.bin" ; $77c0, 64 bytes
+	INCBIN "data/bank_073/WalkSprite_73_14_Gfx05.bin" ; $77c0, 64 bytes
 WalkSprite_73_14_AnimPtrs:
 	dw WalkSprite_73_14_Anim00 ; $7800
 	dw WalkSprite_73_14_Anim01 ; $7802
@@ -1144,9 +1144,9 @@ Padding_73_15:
 	; $785d, 3 bytes (fill)
 	ds 3, $00
 WalkSprite_73_15_Gfx00:
-	INCBIN "data/bank_073/d_7860.bin" ; $7860, 64 bytes
+	INCBIN "data/bank_073/WalkSprite_73_15_Gfx00.bin" ; $7860, 64 bytes
 WalkSprite_73_15_Gfx01:
-	INCBIN "data/bank_073/d_78a0.bin" ; $78a0, 64 bytes
+	INCBIN "data/bank_073/WalkSprite_73_15_Gfx01.bin" ; $78a0, 64 bytes
 WalkSprite_73_15_AnimPtrs:
 	dw WalkSprite_73_15_Anim00 ; $78e0
 	dw WalkSprite_73_15_Anim01 ; $78e2
@@ -1168,9 +1168,9 @@ Padding_73_16:
 	; $78fd, 3 bytes (fill)
 	ds 3, $00
 WalkSprite_73_16_Gfx00:
-	INCBIN "data/bank_073/d_7900.bin" ; $7900, 64 bytes
+	INCBIN "data/bank_073/WalkSprite_73_16_Gfx00.bin" ; $7900, 64 bytes
 WalkSprite_73_16_Gfx01:
-	INCBIN "data/bank_073/d_7940.bin" ; $7940, 64 bytes
+	INCBIN "data/bank_073/WalkSprite_73_16_Gfx01.bin" ; $7940, 64 bytes
 WalkSprite_73_16_AnimPtrs:
 	dw WalkSprite_73_16_Anim00 ; $7980
 	dw WalkSprite_73_16_Anim01 ; $7982
@@ -1192,9 +1192,9 @@ Padding_73_17:
 	; $799d, 3 bytes (fill)
 	ds 3, $00
 WalkSprite_73_17_Gfx00:
-	INCBIN "data/bank_073/d_79a0.bin" ; $79a0, 64 bytes
+	INCBIN "data/bank_073/WalkSprite_73_17_Gfx00.bin" ; $79a0, 64 bytes
 WalkSprite_73_17_Gfx01:
-	INCBIN "data/bank_073/d_79e0.bin" ; $79e0, 64 bytes
+	INCBIN "data/bank_073/WalkSprite_73_17_Gfx01.bin" ; $79e0, 64 bytes
 WalkSprite_73_17_AnimPtrs:
 	dw WalkSprite_73_17_Anim00 ; $7a20
 	dw WalkSprite_73_17_Anim01 ; $7a22
@@ -1216,9 +1216,9 @@ Padding_73_18:
 	; $7a3d, 3 bytes (fill)
 	ds 3, $00
 WalkSprite_73_18_Gfx00:
-	INCBIN "data/bank_073/d_7a40.bin" ; $7a40, 64 bytes
+	INCBIN "data/bank_073/WalkSprite_73_18_Gfx00.bin" ; $7a40, 64 bytes
 WalkSprite_73_18_Gfx01:
-	INCBIN "data/bank_073/d_7a80.bin" ; $7a80, 64 bytes
+	INCBIN "data/bank_073/WalkSprite_73_18_Gfx01.bin" ; $7a80, 64 bytes
 WalkSprite_73_18_AnimPtrs:
 	dw WalkSprite_73_18_Anim00 ; $7ac0
 	dw WalkSprite_73_18_Anim01 ; $7ac2
@@ -1240,9 +1240,9 @@ Padding_73_19:
 	; $7add, 3 bytes (fill)
 	ds 3, $00
 WalkSprite_73_19_Gfx00:
-	INCBIN "data/bank_073/d_7ae0.bin" ; $7ae0, 64 bytes
+	INCBIN "data/bank_073/WalkSprite_73_19_Gfx00.bin" ; $7ae0, 64 bytes
 WalkSprite_73_19_Gfx01:
-	INCBIN "data/bank_073/d_7b20.bin" ; $7b20, 64 bytes
+	INCBIN "data/bank_073/WalkSprite_73_19_Gfx01.bin" ; $7b20, 64 bytes
 WalkSprite_73_19_AnimPtrs:
 	dw WalkSprite_73_19_Anim00 ; $7b60
 	dw WalkSprite_73_19_Anim01 ; $7b62

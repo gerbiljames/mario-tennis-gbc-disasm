@@ -747,7 +747,7 @@ GetNextMoveCurveValue:
 	xor a ; $47ac
 	ret ; $47ad
 MoveCurveTable_09:
-	INCBIN "data/bank_009/d_47ae.bin" ; $47ae, 197 bytes
+	INCBIN "data/bank_009/MoveCurveTable_09.bin" ; $47ae, 197 bytes
 LoadTilesetGfx:
 	add a ; $4873
 	add a ; $4874
@@ -796,7 +796,7 @@ VramTileset_09:
 	dw $6000, $0010 ; record 28
 	db $00, $00
 TilesetTiles_09:
-	INCBIN "data/bank_009/d_4900.bin" ; $4900, 6144 bytes
+	INCBIN "data/bank_009/TilesetTiles_09.bin" ; $4900, 6144 bytes
 LoadScoreDigitGfx:
 	ld hl, VramGfxPtrTable_09 ; $6100
 	call GetGfxSourcePtr ; $6103
@@ -859,13 +859,13 @@ GetGfxSourcePtr:
 	add hl, bc ; $616b
 	ret ; $616c
 VramGfxPtrTable_09:
-	INCBIN "data/bank_009/d_616d.bin" ; $616d, 4 bytes
+	INCBIN "data/bank_009/VramGfxPtrTable_09.bin" ; $616d, 4 bytes
 Player1ScoreDigitGfxSource:
-	INCBIN "data/bank_009/d_6171.bin" ; $6171, 4 bytes
+	INCBIN "data/bank_009/Player1ScoreDigitGfxSource.bin" ; $6171, 4 bytes
 LoadPlayer2ScoreDigitGfxTable:
-	INCBIN "data/bank_009/d_6175.bin" ; $6175, 2635 bytes
+	INCBIN "data/bank_009/LoadPlayer2ScoreDigitGfxTable.bin" ; $6175, 2635 bytes
 DeuceAdvantageTiles:
-	INCBIN "data/bank_009/d_6bc0.bin" ; $6bc0, 128 bytes
+	INCBIN "data/bank_009/DeuceAdvantageTiles.bin" ; $6bc0, 128 bytes
 LoadServeGfx:
 	ld a, [wCurrentServingPlayer] ; $6c40
 	add a ; $6c43
@@ -895,7 +895,7 @@ LoadServeGfx:
 	call QueueVRAMCopy ; $6c6a
 	ret ; $6c6d
 ServeGfxPtrTable_09:
-	INCBIN "data/bank_009/d_6c6e.bin" ; $6c6e, 1066 bytes
+	INCBIN "data/bank_009/ServeGfxPtrTable_09.bin" ; $6c6e, 1066 bytes
 ObjSlotSpriteTemplate_09:
 	; $7098, 107 bytes (sprite_template)
 	oam_sprite $10, $10, $02, $00

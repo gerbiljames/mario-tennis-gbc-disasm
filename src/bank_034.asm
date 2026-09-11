@@ -292,7 +292,7 @@ FetchTextTable_34:
 	dw TextStrings_34.s460 - TextStrings_34 ; 285
 	dw TextStrings_34.s461 - TextStrings_34 ; 286
 TextStrings_34:
-	INCLUDE "data/bank_034/text_pool_4242.asm" ; $4242, 14593 bytes (text_pool)
+	INCLUDE "data/bank_034/TextStrings_34.asm" ; $4242, 14593 bytes (text_pool)
 FetchDialogueText_34:
 	push af ; $7b43
 	ld a, $00 ; $7b44

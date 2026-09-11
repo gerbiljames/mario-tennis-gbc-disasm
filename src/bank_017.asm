@@ -1584,57 +1584,57 @@ LoadCourtDiagramObjPalettes:
 	call LoadPaletteShadow ; $4b13
 	ret ; $4b16
 CourtDiagramTiles:
-	INCBIN "data/bank_017/lz_4b17.bin" ; $4b17, 590 bytes
+	INCBIN "data/bank_017/lz_CourtDiagramTiles.bin" ; $4b17, 590 bytes
 CourtDiagramTilemap:
-	INCBIN "data/bank_017/lz_4d65.bin" ; $4d65, 221 bytes
+	INCBIN "data/bank_017/lz_CourtDiagramTilemap.bin" ; $4d65, 221 bytes
 CourtDiagramAttrmap:
-	INCBIN "data/bank_017/lz_4e42.bin" ; $4e42, 128 bytes
+	INCBIN "data/bank_017/lz_CourtDiagramAttrmap.bin" ; $4e42, 128 bytes
 CourtDiagramPalettes:
-	INCLUDE "data/bank_017/palettes_4ec2.asm" ; $4ec2, 16 bytes (palettes)
+	INCLUDE "data/bank_017/CourtDiagramPalettes.asm" ; $4ec2, 16 bytes (palettes)
 CycleDiagramTargetPaletteData:
-	INCLUDE "data/bank_017/palettes_4ed2.asm" ; $4ed2, 48 bytes (palettes)
+	INCLUDE "data/bank_017/CycleDiagramTargetPaletteData.asm" ; $4ed2, 48 bytes (palettes)
 CourtDiagramGfx0:
-	INCBIN "data/bank_017/d_4f02.bin" ; $4f02, 59 bytes
+	INCBIN "data/bank_017/CourtDiagramGfx0.bin" ; $4f02, 59 bytes
 CourtDiagramGfx1:
-	INCBIN "data/bank_017/d_4f3d.bin" ; $4f3d, 63 bytes
+	INCBIN "data/bank_017/CourtDiagramGfx1.bin" ; $4f3d, 63 bytes
 CourtDiagramGfx2:
-	INCBIN "data/bank_017/d_4f7c.bin" ; $4f7c, 143 bytes
+	INCBIN "data/bank_017/CourtDiagramGfx2.bin" ; $4f7c, 143 bytes
 CourtDiagramGfx3:
-	INCBIN "data/bank_017/d_500b.bin" ; $500b, 143 bytes
+	INCBIN "data/bank_017/CourtDiagramGfx3.bin" ; $500b, 143 bytes
 CourtDiagramGfx4:
-	INCBIN "data/bank_017/d_509a.bin" ; $509a, 147 bytes
+	INCBIN "data/bank_017/CourtDiagramGfx4.bin" ; $509a, 147 bytes
 CourtDiagramGfx5:
-	INCBIN "data/bank_017/d_512d.bin" ; $512d, 98 bytes
+	INCBIN "data/bank_017/CourtDiagramGfx5.bin" ; $512d, 98 bytes
 CourtDiagramGfx6:
-	INCBIN "data/bank_017/d_518f.bin" ; $518f, 98 bytes
+	INCBIN "data/bank_017/CourtDiagramGfx6.bin" ; $518f, 98 bytes
 CourtDiagramGfx7:
-	INCBIN "data/bank_017/d_51f1.bin" ; $51f1, 143 bytes
+	INCBIN "data/bank_017/CourtDiagramGfx7.bin" ; $51f1, 143 bytes
 CourtDiagramGfx8:
-	INCBIN "data/bank_017/d_5280.bin" ; $5280, 143 bytes
+	INCBIN "data/bank_017/CourtDiagramGfx8.bin" ; $5280, 143 bytes
 CourtDiagramGfx9:
-	INCBIN "data/bank_017/d_530f.bin" ; $530f, 145 bytes
+	INCBIN "data/bank_017/CourtDiagramGfx9.bin" ; $530f, 145 bytes
 CourtDiagramGfx10:
-	INCBIN "data/bank_017/d_53a0.bin" ; $53a0, 105 bytes
+	INCBIN "data/bank_017/CourtDiagramGfx10.bin" ; $53a0, 105 bytes
 CourtDiagramGfx11:
-	INCBIN "data/bank_017/d_5409.bin" ; $5409, 100 bytes
+	INCBIN "data/bank_017/CourtDiagramGfx11.bin" ; $5409, 100 bytes
 CourtDiagramGfx12:
-	INCBIN "data/bank_017/d_546d.bin" ; $546d, 74 bytes
+	INCBIN "data/bank_017/CourtDiagramGfx12.bin" ; $546d, 74 bytes
 CourtDiagramGfx13:
-	INCBIN "data/bank_017/lz_54b7.bin" ; $54b7, 33 bytes
+	INCBIN "data/bank_017/lz_CourtDiagramGfx13.bin" ; $54b7, 33 bytes
 CourtDiagramGfx14:
-	INCBIN "data/bank_017/d_54d8.bin" ; $54d8, 39 bytes
+	INCBIN "data/bank_017/CourtDiagramGfx14.bin" ; $54d8, 39 bytes
 CourtDiagramGfx15:
-	INCBIN "data/bank_017/d_54ff.bin" ; $54ff, 18 bytes
+	INCBIN "data/bank_017/CourtDiagramGfx15.bin" ; $54ff, 18 bytes
 CourtDiagramGfx16:
-	INCBIN "data/bank_017/d_5511.bin" ; $5511, 18 bytes
+	INCBIN "data/bank_017/CourtDiagramGfx16.bin" ; $5511, 18 bytes
 CourtDiagramGfx17:
-	INCBIN "data/bank_017/d_5523.bin" ; $5523, 19 bytes
+	INCBIN "data/bank_017/CourtDiagramGfx17.bin" ; $5523, 19 bytes
 CourtDiagramGfx18:
-	INCBIN "data/bank_017/d_5536.bin" ; $5536, 24 bytes
+	INCBIN "data/bank_017/CourtDiagramGfx18.bin" ; $5536, 24 bytes
 CourtDiagramGfx19:
-	INCBIN "data/bank_017/d_554e.bin" ; $554e, 25 bytes
+	INCBIN "data/bank_017/CourtDiagramGfx19.bin" ; $554e, 25 bytes
 CourtDiagramObjPalettes:
-	INCLUDE "data/bank_017/palettes_5567.asm" ; $5567, 24 bytes (palettes)
+	INCLUDE "data/bank_017/CourtDiagramObjPalettes.asm" ; $5567, 24 bytes (palettes)
 DrillBriefing_ServeToTargets:
 	ld a, $03 ; $557f
 	ld [wBriefingAnimStep], a ; $5581
@@ -1883,19 +1883,19 @@ ServeToTargetsBriefing_AdvanceAnimTable:
 	dw $0054 ; record 6
 	dw $0003 ; record 7
 ServeToTargetsBriefing_AdvanceAnim_BallPosTable:
-	INCLUDE "data/bank_017/text_57cb.asm" ; $57cb, 16 bytes
+	INCLUDE "data/bank_017/ServeToTargetsBriefing_AdvanceAnim_BallPosTable.asm" ; $57cb, 16 bytes
 ServeToTargetsBriefing_AdvanceAnim_HMarkerUnflippedTable:
-	INCBIN "data/bank_017/d_57db.bin" ; $57db, 4 bytes
+	INCBIN "data/bank_017/ServeToTargetsBriefing_AdvanceAnim_HMarkerUnflippedTable.bin" ; $57db, 4 bytes
 ServeToTargetsBriefing_AdvanceAnim_HMarkerPosTable:
-	INCLUDE "data/bank_017/text_57df.asm" ; $57df, 16 bytes
+	INCLUDE "data/bank_017/ServeToTargetsBriefing_AdvanceAnim_HMarkerPosTable.asm" ; $57df, 16 bytes
 ServeToTargetsBriefing_AdvanceAnim_RotMarkerDirTable:
-	INCBIN "data/bank_017/d_57ef.bin" ; $57ef, 4 bytes
+	INCBIN "data/bank_017/ServeToTargetsBriefing_AdvanceAnim_RotMarkerDirTable.bin" ; $57ef, 4 bytes
 ServeToTargetsBriefing_AdvanceAnim_RotMarkerPosTable:
-	INCBIN "data/bank_017/d_57f3.bin" ; $57f3, 16 bytes
+	INCBIN "data/bank_017/ServeToTargetsBriefing_AdvanceAnim_RotMarkerPosTable.bin" ; $57f3, 16 bytes
 ServeToTargetsBriefing_AdvanceAnim_TargetOverlayTable:
-	INCBIN "data/bank_017/d_5803.bin" ; $5803, 4 bytes
+	INCBIN "data/bank_017/ServeToTargetsBriefing_AdvanceAnim_TargetOverlayTable.bin" ; $5803, 4 bytes
 ServeToTargetsBriefing_AdvanceAnim_BracketPosTable:
-	INCBIN "data/bank_017/d_5807.bin" ; $5807, 16 bytes
+	INCBIN "data/bank_017/ServeToTargetsBriefing_AdvanceAnim_BracketPosTable.bin" ; $5807, 16 bytes
 DrillBriefing_SpinServe:
 	ld a, $03 ; $5817
 	ld [wBriefingAnimStep], a ; $5819
@@ -2314,32 +2314,32 @@ SpinServeBriefing_AdvanceAnimTable:
 	dw $0052 ; record 6
 	dw $0000 ; record 7
 SpinServeBriefing_AdvanceAnim_BallPosTable:
-	INCLUDE "data/bank_017/text_5bf5.asm" ; $5bf5, 16 bytes
+	INCLUDE "data/bank_017/SpinServeBriefing_AdvanceAnim_BallPosTable.asm" ; $5bf5, 16 bytes
 SpinServeBriefing_AdvanceAnim_HMarkerUnflippedTable:
-	INCBIN "data/bank_017/d_5c05.bin" ; $5c05, 4 bytes
+	INCBIN "data/bank_017/SpinServeBriefing_AdvanceAnim_HMarkerUnflippedTable.bin" ; $5c05, 4 bytes
 SpinServeBriefing_AdvanceAnim_HMarkerPosTable:
-	INCLUDE "data/bank_017/text_5c09.asm" ; $5c09, 16 bytes
+	INCLUDE "data/bank_017/SpinServeBriefing_AdvanceAnim_HMarkerPosTable.asm" ; $5c09, 16 bytes
 SpinServeBriefing_RotMarkerDirTable:
-	INCBIN "data/bank_017/d_5c19.bin" ; $5c19, 4 bytes
+	INCBIN "data/bank_017/SpinServeBriefing_RotMarkerDirTable.bin" ; $5c19, 4 bytes
 SpinServeBriefing_AdvanceAnim_RotMarkerPosTable:
-	INCBIN "data/bank_017/d_5c1d.bin" ; $5c1d, 16 bytes
+	INCBIN "data/bank_017/SpinServeBriefing_AdvanceAnim_RotMarkerPosTable.bin" ; $5c1d, 16 bytes
 SpinServeBriefing_TargetOverlayTable:
-	INCBIN "data/bank_017/d_5c2d.bin" ; $5c2d, 4 bytes
+	INCBIN "data/bank_017/SpinServeBriefing_TargetOverlayTable.bin" ; $5c2d, 4 bytes
 SpinServeBriefing_AdvanceAnim_BracketPosTable:
-	INCBIN "data/bank_017/d_5c31.bin" ; $5c31, 16 bytes
+	INCBIN "data/bank_017/SpinServeBriefing_AdvanceAnim_BracketPosTable.bin" ; $5c31, 16 bytes
 SpinServeBriefing_AdvanceAnim2_BallPosTable:
-	INCBIN "data/bank_017/d_5c41.bin" ; $5c41, 8 bytes
+	INCBIN "data/bank_017/SpinServeBriefing_AdvanceAnim2_BallPosTable.bin" ; $5c41, 8 bytes
 SpinServeBriefing_AdvanceAnim2_RotMarkerPosTable:
-	INCLUDE "data/bank_017/text_5c49.asm" ; $5c49, 8 bytes
+	INCLUDE "data/bank_017/SpinServeBriefing_AdvanceAnim2_RotMarkerPosTable.asm" ; $5c49, 8 bytes
 SpinServeBriefing_AdvanceAnim2_SpinMarkerUnflippedTable:
 	db $01 ; $5c51
 	db $00 ; $5c52
 SpinServeBriefing_AdvanceAnim2_SpinMarkerPosTable:
-	INCBIN "data/bank_017/d_5c53.bin" ; $5c53, 8 bytes
+	INCBIN "data/bank_017/SpinServeBriefing_AdvanceAnim2_SpinMarkerPosTable.bin" ; $5c53, 8 bytes
 SpinServeBriefing_AdvanceAnim2_SwingFrameTable:
-	INCBIN "data/bank_017/d_5c5b.bin" ; $5c5b, 4 bytes
+	INCBIN "data/bank_017/SpinServeBriefing_AdvanceAnim2_SwingFrameTable.bin" ; $5c5b, 4 bytes
 SpinServeBriefing_AdvanceAnim2_SwingPosTable:
-	INCLUDE "data/bank_017/text_5c5f.asm" ; $5c5f, 8 bytes
+	INCLUDE "data/bank_017/SpinServeBriefing_AdvanceAnim2_SwingPosTable.asm" ; $5c5f, 8 bytes
 DrillBriefing_ServeThroughPoles:
 	ld a, $03 ; $5c67
 	ld [wBriefingAnimStep], a ; $5c69
@@ -2636,25 +2636,25 @@ DrillBriefing_ServeThroughPolesTable:
 	dw $0055 ; record 6
 	dw $0003 ; record 7
 PoleServeBriefing_AdvanceAnim2_PlayerPosTable:
-	INCLUDE "data/bank_017/text_5f16.asm" ; $5f16, 16 bytes
+	INCLUDE "data/bank_017/PoleServeBriefing_AdvanceAnim2_PlayerPosTable.asm" ; $5f16, 16 bytes
 PoleServeBriefing_AdvanceAnim_BallPosTable:
-	INCLUDE "data/bank_017/text_5f26.asm" ; $5f26, 16 bytes
+	INCLUDE "data/bank_017/PoleServeBriefing_AdvanceAnim_BallPosTable.asm" ; $5f26, 16 bytes
 PoleServeBriefing_HMarkerUnflippedTable:
-	INCBIN "data/bank_017/d_5f36.bin" ; $5f36, 4 bytes
+	INCBIN "data/bank_017/PoleServeBriefing_HMarkerUnflippedTable.bin" ; $5f36, 4 bytes
 PoleServeBriefing_AdvanceAnim_HMarkerPosTable:
-	INCLUDE "data/bank_017/text_5f3a.asm" ; $5f3a, 16 bytes
+	INCLUDE "data/bank_017/PoleServeBriefing_AdvanceAnim_HMarkerPosTable.asm" ; $5f3a, 16 bytes
 PoleServeBriefing_AdvanceAnim2_HMarkerPosTable:
-	INCLUDE "data/bank_017/text_5f4a.asm" ; $5f4a, 16 bytes
+	INCLUDE "data/bank_017/PoleServeBriefing_AdvanceAnim2_HMarkerPosTable.asm" ; $5f4a, 16 bytes
 PoleServeBriefing_AdvanceAnim_RotMarkerDirTable:
-	INCBIN "data/bank_017/d_5f5a.bin" ; $5f5a, 4 bytes
+	INCBIN "data/bank_017/PoleServeBriefing_AdvanceAnim_RotMarkerDirTable.bin" ; $5f5a, 4 bytes
 PoleServeBriefing_AdvanceAnim_RotMarkerPosTable:
-	INCBIN "data/bank_017/d_5f5e.bin" ; $5f5e, 16 bytes
+	INCBIN "data/bank_017/PoleServeBriefing_AdvanceAnim_RotMarkerPosTable.bin" ; $5f5e, 16 bytes
 PoleServeBriefing_TargetOverlayTable:
-	INCBIN "data/bank_017/d_5f6e.bin" ; $5f6e, 4 bytes
+	INCBIN "data/bank_017/PoleServeBriefing_TargetOverlayTable.bin" ; $5f6e, 4 bytes
 PoleServeBriefing_AdvanceAnim2_BracketPosTable:
-	INCLUDE "data/bank_017/text_5f72.asm" ; $5f72, 16 bytes
+	INCLUDE "data/bank_017/PoleServeBriefing_AdvanceAnim2_BracketPosTable.asm" ; $5f72, 16 bytes
 PoleServeBriefing_AdvanceAnim2_PolePosTable:
-	INCLUDE "data/bank_017/text_5f82.asm" ; $5f82, 16 bytes
+	INCLUDE "data/bank_017/PoleServeBriefing_AdvanceAnim2_PolePosTable.asm" ; $5f82, 16 bytes
 DrillBriefing_ServeAndVolley:
 	ld a, $52 ; $5f92
 	ld [wBriefingPlayerX], a ; $5f94
@@ -2894,23 +2894,23 @@ ServeAndVolleyBriefing_AdvanceAnimTable:
 	dw $0052 ; record 6
 	dw $0018 ; record 7
 ServeAndVolleyBriefing_AdvanceAnim_OpponentPosTable:
-	INCBIN "data/bank_017/d_61c4.bin" ; $61c4, 16 bytes
+	INCBIN "data/bank_017/ServeAndVolleyBriefing_AdvanceAnim_OpponentPosTable.bin" ; $61c4, 16 bytes
 ServeAndVolleyBriefing_AdvanceAnim_BallPosTable:
-	INCBIN "data/bank_017/d_61d4.bin" ; $61d4, 16 bytes
+	INCBIN "data/bank_017/ServeAndVolleyBriefing_AdvanceAnim_BallPosTable.bin" ; $61d4, 16 bytes
 ServeAndVolleyBriefing_AdvanceAnim_HMarkerUnflippedTable:
-	INCBIN "data/bank_017/d_61e4.bin" ; $61e4, 4 bytes
+	INCBIN "data/bank_017/ServeAndVolleyBriefing_AdvanceAnim_HMarkerUnflippedTable.bin" ; $61e4, 4 bytes
 ServeAndVolleyBriefing_AdvanceAnim_HMarkerPosTable:
-	INCBIN "data/bank_017/d_61e8.bin" ; $61e8, 16 bytes
+	INCBIN "data/bank_017/ServeAndVolleyBriefing_AdvanceAnim_HMarkerPosTable.bin" ; $61e8, 16 bytes
 ServeAndVolleyBriefing_AdvanceAnim_RotMarkerDirTable:
-	INCBIN "data/bank_017/d_61f8.bin" ; $61f8, 4 bytes
+	INCBIN "data/bank_017/ServeAndVolleyBriefing_AdvanceAnim_RotMarkerDirTable.bin" ; $61f8, 4 bytes
 ServeAndVolleyBriefing_AdvanceAnim_RotMarkerPosTable:
-	INCBIN "data/bank_017/d_61fc.bin" ; $61fc, 16 bytes
+	INCBIN "data/bank_017/ServeAndVolleyBriefing_AdvanceAnim_RotMarkerPosTable.bin" ; $61fc, 16 bytes
 ServeAndVolleyBriefing_AdvanceAnim_VMarkerUprightTable:
-	INCBIN "data/bank_017/d_620c.bin" ; $620c, 4 bytes
+	INCBIN "data/bank_017/ServeAndVolleyBriefing_AdvanceAnim_VMarkerUprightTable.bin" ; $620c, 4 bytes
 ServeAndVolleyBriefing_AdvanceAnim_VMarkerPosTable:
-	INCLUDE "data/bank_017/text_6210.asm" ; $6210, 16 bytes
+	INCLUDE "data/bank_017/ServeAndVolleyBriefing_AdvanceAnim_VMarkerPosTable.asm" ; $6210, 16 bytes
 ServeAndVolleyBriefing_AdvanceAnim_BracketPosTable:
-	INCBIN "data/bank_017/d_6220.bin" ; $6220, 16 bytes
+	INCBIN "data/bank_017/ServeAndVolleyBriefing_AdvanceAnim_BracketPosTable.bin" ; $6220, 16 bytes
 DrillBriefing_ServeAndSmash:
 	ld a, $55 ; $6230
 	ld [wBriefingPlayerX], a ; $6232
@@ -3189,15 +3189,15 @@ DrillBriefing_ServeAndSmashTable:
 	dw $0055 ; record 6
 	dw $0003 ; record 7
 DrillBriefing_ServeAndSmash_OpponentPosTable:
-	INCBIN "data/bank_017/d_64cd.bin" ; $64cd, 16 bytes
+	INCBIN "data/bank_017/DrillBriefing_ServeAndSmash_OpponentPosTable.bin" ; $64cd, 16 bytes
 DrillBriefing_ServeAndSmash_BallPosTable:
-	INCBIN "data/bank_017/d_64dd.bin" ; $64dd, 36 bytes
+	INCBIN "data/bank_017/DrillBriefing_ServeAndSmash_BallPosTable.bin" ; $64dd, 36 bytes
 DrillBriefing_ServeAndSmash_RotMarkerDirTable:
-	INCBIN "data/bank_017/d_6501.bin" ; $6501, 4 bytes
+	INCBIN "data/bank_017/DrillBriefing_ServeAndSmash_RotMarkerDirTable.bin" ; $6501, 4 bytes
 DrillBriefing_ServeAndSmash_RotMarkerPosTable:
-	INCBIN "data/bank_017/d_6505.bin" ; $6505, 36 bytes
+	INCBIN "data/bank_017/DrillBriefing_ServeAndSmash_RotMarkerPosTable.bin" ; $6505, 36 bytes
 DrillBriefing_ServeAndSmash_BracketPosTable:
-	INCLUDE "data/bank_017/text_6529.asm" ; $6529, 16 bytes
+	INCLUDE "data/bank_017/DrillBriefing_ServeAndSmash_BracketPosTable.asm" ; $6529, 16 bytes
 DrillBriefing_ServeAndSmash2:
 	ld a, $55 ; $6539
 	ld [wBriefingPlayerX], a ; $653b
@@ -3476,15 +3476,15 @@ DrillBriefing_ServeAndSmash2Table:
 	dw $0055 ; record 6
 	dw $0003 ; record 7
 DrillBriefing_ServeAndSmash2_OpponentPosTable:
-	INCBIN "data/bank_017/d_67d6.bin" ; $67d6, 16 bytes
+	INCBIN "data/bank_017/DrillBriefing_ServeAndSmash2_OpponentPosTable.bin" ; $67d6, 16 bytes
 DrillBriefing_ServeAndSmash2_BallPosTable:
-	INCBIN "data/bank_017/d_67e6.bin" ; $67e6, 36 bytes
+	INCBIN "data/bank_017/DrillBriefing_ServeAndSmash2_BallPosTable.bin" ; $67e6, 36 bytes
 DrillBriefing_ServeAndSmash2_RotMarkerDirTable:
-	INCBIN "data/bank_017/d_680a.bin" ; $680a, 4 bytes
+	INCBIN "data/bank_017/DrillBriefing_ServeAndSmash2_RotMarkerDirTable.bin" ; $680a, 4 bytes
 DrillBriefing_ServeAndSmash2_RotMarkerPosTable:
-	INCBIN "data/bank_017/d_680e.bin" ; $680e, 36 bytes
+	INCBIN "data/bank_017/DrillBriefing_ServeAndSmash2_RotMarkerPosTable.bin" ; $680e, 36 bytes
 DrillBriefing_ServeAndSmash2_BracketPosTable:
-	INCLUDE "data/bank_017/text_6832.asm" ; $6832, 16 bytes
+	INCLUDE "data/bank_017/DrillBriefing_ServeAndSmash2_BracketPosTable.asm" ; $6832, 16 bytes
 DrillBriefing_ReturnToTarget:
 	ld a, $55 ; $6842
 	ld [wBriefingPlayerX], a ; $6844
@@ -3689,19 +3689,19 @@ ReturnToTargetBriefing_AdvanceAnimTable:
 	dw $0055 ; record 6
 	dw $0003 ; record 7
 ReturnToTargetBriefing_AdvanceAnim_OpponentPosTable:
-	INCLUDE "data/bank_017/text_6a1b.asm" ; $6a1b, 16 bytes
+	INCLUDE "data/bank_017/ReturnToTargetBriefing_AdvanceAnim_OpponentPosTable.asm" ; $6a1b, 16 bytes
 ReturnToTargetBriefing_AdvanceAnim_BallPosTable:
-	INCLUDE "data/bank_017/text_6a2b.asm" ; $6a2b, 16 bytes
+	INCLUDE "data/bank_017/ReturnToTargetBriefing_AdvanceAnim_BallPosTable.asm" ; $6a2b, 16 bytes
 ReturnToTargetBriefing_AdvanceAnim_HMarkerUnflippedTable:
-	INCBIN "data/bank_017/d_6a3b.bin" ; $6a3b, 4 bytes
+	INCBIN "data/bank_017/ReturnToTargetBriefing_AdvanceAnim_HMarkerUnflippedTable.bin" ; $6a3b, 4 bytes
 ReturnToTargetBriefing_AdvanceAnim_HMarkerPosTable:
-	INCBIN "data/bank_017/d_6a3f.bin" ; $6a3f, 16 bytes
+	INCBIN "data/bank_017/ReturnToTargetBriefing_AdvanceAnim_HMarkerPosTable.bin" ; $6a3f, 16 bytes
 ReturnToTargetBriefing_AdvanceAnim_RotMarkerDirTable:
-	INCBIN "data/bank_017/d_6a4f.bin" ; $6a4f, 4 bytes
+	INCBIN "data/bank_017/ReturnToTargetBriefing_AdvanceAnim_RotMarkerDirTable.bin" ; $6a4f, 4 bytes
 ReturnToTargetBriefing_AdvanceAnim_RotMarkerPosTable:
-	INCBIN "data/bank_017/d_6a53.bin" ; $6a53, 16 bytes
+	INCBIN "data/bank_017/ReturnToTargetBriefing_AdvanceAnim_RotMarkerPosTable.bin" ; $6a53, 16 bytes
 ReturnToTargetBriefing_AdvanceAnim_BracketPosTable:
-	INCBIN "data/bank_017/d_6a63.bin" ; $6a63, 16 bytes
+	INCBIN "data/bank_017/ReturnToTargetBriefing_AdvanceAnim_BracketPosTable.bin" ; $6a63, 16 bytes
 DrillBriefing_ReturnLob:
 	ld a, $55 ; $6a73
 	ld [wBriefingPlayerX], a ; $6a75
@@ -3926,23 +3926,23 @@ ReturnLobBriefing_AdvanceAnimTable:
 	dw $0055 ; record 6
 	dw $0003 ; record 7
 ReturnLobBriefing_AdvanceAnim_OpponentPosTable:
-	INCLUDE "data/bank_017/text_6c7e.asm" ; $6c7e, 16 bytes
+	INCLUDE "data/bank_017/ReturnLobBriefing_AdvanceAnim_OpponentPosTable.asm" ; $6c7e, 16 bytes
 ReturnLobBriefing_AdvanceAnim_BallPosTable:
-	INCLUDE "data/bank_017/text_6c8e.asm" ; $6c8e, 16 bytes
+	INCLUDE "data/bank_017/ReturnLobBriefing_AdvanceAnim_BallPosTable.asm" ; $6c8e, 16 bytes
 ReturnLobBriefing_AdvanceAnim_HMarkerUnflippedTable:
-	INCBIN "data/bank_017/d_6c9e.bin" ; $6c9e, 4 bytes
+	INCBIN "data/bank_017/ReturnLobBriefing_AdvanceAnim_HMarkerUnflippedTable.bin" ; $6c9e, 4 bytes
 ReturnLobBriefing_AdvanceAnim_HMarkerPosTable:
-	INCBIN "data/bank_017/d_6ca2.bin" ; $6ca2, 16 bytes
+	INCBIN "data/bank_017/ReturnLobBriefing_AdvanceAnim_HMarkerPosTable.bin" ; $6ca2, 16 bytes
 ReturnLobBriefing_AdvanceAnim_RotMarkerDirTable:
-	INCBIN "data/bank_017/d_6cb2.bin" ; $6cb2, 4 bytes
+	INCBIN "data/bank_017/ReturnLobBriefing_AdvanceAnim_RotMarkerDirTable.bin" ; $6cb2, 4 bytes
 ReturnLobBriefing_AdvanceAnim_RotMarkerPosTable:
-	INCBIN "data/bank_017/d_6cb6.bin" ; $6cb6, 16 bytes
+	INCBIN "data/bank_017/ReturnLobBriefing_AdvanceAnim_RotMarkerPosTable.bin" ; $6cb6, 16 bytes
 ReturnLobBriefing_AdvanceAnim_BracketPosTable:
-	INCBIN "data/bank_017/d_6cc6.bin" ; $6cc6, 16 bytes
+	INCBIN "data/bank_017/ReturnLobBriefing_AdvanceAnim_BracketPosTable.bin" ; $6cc6, 16 bytes
 ReturnLobBriefing_AdvanceAnim_SwingFrameTable:
-	INCBIN "data/bank_017/d_6cd6.bin" ; $6cd6, 4 bytes
+	INCBIN "data/bank_017/ReturnLobBriefing_AdvanceAnim_SwingFrameTable.bin" ; $6cd6, 4 bytes
 ReturnLobBriefing_AdvanceAnim_SwingPosTable:
-	INCLUDE "data/bank_017/text_6cda.asm" ; $6cda, 16 bytes
+	INCLUDE "data/bank_017/ReturnLobBriefing_AdvanceAnim_SwingPosTable.asm" ; $6cda, 16 bytes
 DrillBriefing_ReturnDownLine:
 	ld a, $55 ; $6cea
 	ld [wBriefingPlayerX], a ; $6cec
@@ -4147,19 +4147,19 @@ ReturnDownLineBriefing_AdvanceAnimTable:
 	dw $0055 ; record 6
 	dw $0003 ; record 7
 ReturnDownLineBriefing_AdvanceAnim_OpponentPosTable:
-	INCLUDE "data/bank_017/text_6ec3.asm" ; $6ec3, 16 bytes
+	INCLUDE "data/bank_017/ReturnDownLineBriefing_AdvanceAnim_OpponentPosTable.asm" ; $6ec3, 16 bytes
 ReturnDownLineBriefing_AdvanceAnim_BallPosTable:
-	INCLUDE "data/bank_017/text_6ed3.asm" ; $6ed3, 16 bytes
+	INCLUDE "data/bank_017/ReturnDownLineBriefing_AdvanceAnim_BallPosTable.asm" ; $6ed3, 16 bytes
 ReturnDownLineBriefing_AdvanceAnim_HMarkerUnflippedTable:
-	INCBIN "data/bank_017/d_6ee3.bin" ; $6ee3, 4 bytes
+	INCBIN "data/bank_017/ReturnDownLineBriefing_AdvanceAnim_HMarkerUnflippedTable.bin" ; $6ee3, 4 bytes
 ReturnDownLineBriefing_AdvanceAnim_HMarkerPosTable:
-	INCBIN "data/bank_017/d_6ee7.bin" ; $6ee7, 16 bytes
+	INCBIN "data/bank_017/ReturnDownLineBriefing_AdvanceAnim_HMarkerPosTable.bin" ; $6ee7, 16 bytes
 ReturnDownLineBriefing_AdvanceAnim_VMarkerUprightTable:
-	INCBIN "data/bank_017/d_6ef7.bin" ; $6ef7, 4 bytes
+	INCBIN "data/bank_017/ReturnDownLineBriefing_AdvanceAnim_VMarkerUprightTable.bin" ; $6ef7, 4 bytes
 ReturnDownLineBriefing_AdvanceAnim_VMarkerPosTable:
-	INCBIN "data/bank_017/d_6efb.bin" ; $6efb, 16 bytes
+	INCBIN "data/bank_017/ReturnDownLineBriefing_AdvanceAnim_VMarkerPosTable.bin" ; $6efb, 16 bytes
 ReturnDownLineBriefing_AdvanceAnim_BracketPosTable:
-	INCBIN "data/bank_017/d_6f0b.bin" ; $6f0b, 16 bytes
+	INCBIN "data/bank_017/ReturnDownLineBriefing_AdvanceAnim_BracketPosTable.bin" ; $6f0b, 16 bytes
 ShowRulesScreen:
 	push af ; $6f1b
 	wram_bank $03 ; $6f1c
@@ -4817,25 +4817,25 @@ DrawRulesNextPageArrow:
 	farcall QueueStackedSpritePair ; $756c
 	ret ; $756f
 RulesScreenTiles:
-	INCBIN "data/bank_017/lz_7570.bin" ; $7570, 512 bytes
+	INCBIN "data/bank_017/lz_RulesScreenTiles.bin" ; $7570, 512 bytes
 RulesScreenTilemap:
-	INCBIN "data/bank_017/lz_7770.bin" ; $7770, 309 bytes
+	INCBIN "data/bank_017/lz_RulesScreenTilemap.bin" ; $7770, 309 bytes
 RulesScreenAttrmap:
-	INCBIN "data/bank_017/lz_78a5.bin" ; $78a5, 87 bytes
+	INCBIN "data/bank_017/lz_RulesScreenAttrmap.bin" ; $78a5, 87 bytes
 RulesScreenPalettes:
-	INCLUDE "data/bank_017/palettes_78fc.asm" ; $78fc, 64 bytes (palettes)
+	INCLUDE "data/bank_017/RulesScreenPalettes.asm" ; $78fc, 64 bytes (palettes)
 RulesBorderAnimTiles0:
-	INCBIN "data/bank_017/lz_793c.bin" ; $793c, 204 bytes
+	INCBIN "data/bank_017/lz_RulesBorderAnimTiles0.bin" ; $793c, 204 bytes
 RulesBorderAnimTiles1:
-	INCBIN "data/bank_017/lz_7a08.bin" ; $7a08, 39 bytes
+	INCBIN "data/bank_017/lz_RulesBorderAnimTiles1.bin" ; $7a08, 39 bytes
 RulesBorderAnimTiles2:
-	INCBIN "data/bank_017/lz_7a2f.bin" ; $7a2f, 39 bytes
+	INCBIN "data/bank_017/lz_RulesBorderAnimTiles2.bin" ; $7a2f, 39 bytes
 RulesBorderAnimTiles3:
-	INCBIN "data/bank_017/lz_7a56.bin" ; $7a56, 162 bytes
+	INCBIN "data/bank_017/lz_RulesBorderAnimTiles3.bin" ; $7a56, 162 bytes
 RulesBorderAnimTiles4:
-	INCBIN "data/bank_017/lz_7af8.bin" ; $7af8, 32 bytes
+	INCBIN "data/bank_017/lz_RulesBorderAnimTiles4.bin" ; $7af8, 32 bytes
 RulesBorderAnimTiles5:
-	INCBIN "data/bank_017/lz_7b18.bin" ; $7b18, 33 bytes
+	INCBIN "data/bank_017/lz_RulesBorderAnimTiles5.bin" ; $7b18, 33 bytes
 RulesScreenPalette:
-	INCLUDE "data/bank_017/palettes_7b39.asm" ; $7b39, 64 bytes (palettes)
+	INCLUDE "data/bank_017/RulesScreenPalette.asm" ; $7b39, 64 bytes (palettes)
 	; $7b79, 1159 bytes fill to bank end (linker-padded)

@@ -155,121 +155,121 @@ BallMachineSpriteFrames:
 	dw BallMachineSpriteFrame55 ; $412c
 	dw BallMachineSpriteFrame55 ; $412e
 BallMachineSpriteFrame00:
-	INCBIN "data/bank_05a/d_4130.bin" ; $4130, 240 bytes
+	INCBIN "data/bank_05a/BallMachineSpriteFrame00.bin" ; $4130, 240 bytes
 BallMachineSpriteFrame01:
-	INCBIN "data/bank_05a/d_4220.bin" ; $4220, 240 bytes
+	INCBIN "data/bank_05a/BallMachineSpriteFrame01.bin" ; $4220, 240 bytes
 BallMachineSpriteFrame02:
-	INCBIN "data/bank_05a/d_4310.bin" ; $4310, 240 bytes
+	INCBIN "data/bank_05a/BallMachineSpriteFrame02.bin" ; $4310, 240 bytes
 BallMachineSpriteFrame03:
-	INCBIN "data/bank_05a/d_4400.bin" ; $4400, 240 bytes
+	INCBIN "data/bank_05a/BallMachineSpriteFrame03.bin" ; $4400, 240 bytes
 BallMachineSpriteFrame04:
-	INCBIN "data/bank_05a/d_44f0.bin" ; $44f0, 240 bytes
+	INCBIN "data/bank_05a/BallMachineSpriteFrame04.bin" ; $44f0, 240 bytes
 BallMachineSpriteFrame05:
-	INCBIN "data/bank_05a/d_45e0.bin" ; $45e0, 240 bytes
+	INCBIN "data/bank_05a/BallMachineSpriteFrame05.bin" ; $45e0, 240 bytes
 BallMachineSpriteFrame06:
-	INCBIN "data/bank_05a/d_46d0.bin" ; $46d0, 240 bytes
+	INCBIN "data/bank_05a/BallMachineSpriteFrame06.bin" ; $46d0, 240 bytes
 BallMachineSpriteFrame07:
-	INCBIN "data/bank_05a/d_47c0.bin" ; $47c0, 240 bytes
+	INCBIN "data/bank_05a/BallMachineSpriteFrame07.bin" ; $47c0, 240 bytes
 BallMachineSpriteFrame08:
-	INCBIN "data/bank_05a/d_48b0.bin" ; $48b0, 240 bytes
+	INCBIN "data/bank_05a/BallMachineSpriteFrame08.bin" ; $48b0, 240 bytes
 BallMachineSpriteFrame09:
-	INCBIN "data/bank_05a/d_49a0.bin" ; $49a0, 240 bytes
+	INCBIN "data/bank_05a/BallMachineSpriteFrame09.bin" ; $49a0, 240 bytes
 BallMachineSpriteFrame10:
-	INCBIN "data/bank_05a/d_4a90.bin" ; $4a90, 240 bytes
+	INCBIN "data/bank_05a/BallMachineSpriteFrame10.bin" ; $4a90, 240 bytes
 BallMachineSpriteFrame11:
-	INCBIN "data/bank_05a/d_4b80.bin" ; $4b80, 240 bytes
+	INCBIN "data/bank_05a/BallMachineSpriteFrame11.bin" ; $4b80, 240 bytes
 BallMachineSpriteFrame12:
-	INCBIN "data/bank_05a/d_4c70.bin" ; $4c70, 240 bytes
+	INCBIN "data/bank_05a/BallMachineSpriteFrame12.bin" ; $4c70, 240 bytes
 BallMachineSpriteFrame13:
-	INCBIN "data/bank_05a/d_4d60.bin" ; $4d60, 240 bytes
+	INCBIN "data/bank_05a/BallMachineSpriteFrame13.bin" ; $4d60, 240 bytes
 BallMachineSpriteFrame14:
-	INCBIN "data/bank_05a/d_4e50.bin" ; $4e50, 240 bytes
+	INCBIN "data/bank_05a/BallMachineSpriteFrame14.bin" ; $4e50, 240 bytes
 BallMachineSpriteFrame15:
-	INCBIN "data/bank_05a/d_4f40.bin" ; $4f40, 240 bytes
+	INCBIN "data/bank_05a/BallMachineSpriteFrame15.bin" ; $4f40, 240 bytes
 BallMachineSpriteFrame16:
-	INCBIN "data/bank_05a/d_5030.bin" ; $5030, 240 bytes
+	INCBIN "data/bank_05a/BallMachineSpriteFrame16.bin" ; $5030, 240 bytes
 BallMachineSpriteFrame17:
-	INCBIN "data/bank_05a/d_5120.bin" ; $5120, 240 bytes
+	INCBIN "data/bank_05a/BallMachineSpriteFrame17.bin" ; $5120, 240 bytes
 BallMachineSpriteFrame18:
-	INCBIN "data/bank_05a/d_5210.bin" ; $5210, 240 bytes
+	INCBIN "data/bank_05a/BallMachineSpriteFrame18.bin" ; $5210, 240 bytes
 BallMachineSpriteFrame19:
-	INCBIN "data/bank_05a/d_5300.bin" ; $5300, 240 bytes
+	INCBIN "data/bank_05a/BallMachineSpriteFrame19.bin" ; $5300, 240 bytes
 BallMachineSpriteFrame20:
-	INCBIN "data/bank_05a/d_53f0.bin" ; $53f0, 240 bytes
+	INCBIN "data/bank_05a/BallMachineSpriteFrame20.bin" ; $53f0, 240 bytes
 BallMachineSpriteFrame21:
-	INCBIN "data/bank_05a/d_54e0.bin" ; $54e0, 240 bytes
+	INCBIN "data/bank_05a/BallMachineSpriteFrame21.bin" ; $54e0, 240 bytes
 BallMachineSpriteFrame22:
-	INCBIN "data/bank_05a/d_55d0.bin" ; $55d0, 240 bytes
+	INCBIN "data/bank_05a/BallMachineSpriteFrame22.bin" ; $55d0, 240 bytes
 BallMachineSpriteFrame23:
-	INCBIN "data/bank_05a/d_56c0.bin" ; $56c0, 240 bytes
+	INCBIN "data/bank_05a/BallMachineSpriteFrame23.bin" ; $56c0, 240 bytes
 BallMachineSpriteFrame24:
-	INCBIN "data/bank_05a/d_57b0.bin" ; $57b0, 240 bytes
+	INCBIN "data/bank_05a/BallMachineSpriteFrame24.bin" ; $57b0, 240 bytes
 BallMachineSpriteFrame25:
-	INCBIN "data/bank_05a/d_58a0.bin" ; $58a0, 240 bytes
+	INCBIN "data/bank_05a/BallMachineSpriteFrame25.bin" ; $58a0, 240 bytes
 BallMachineSpriteFrame26:
-	INCBIN "data/bank_05a/d_5990.bin" ; $5990, 240 bytes
+	INCBIN "data/bank_05a/BallMachineSpriteFrame26.bin" ; $5990, 240 bytes
 BallMachineSpriteFrame27:
-	INCBIN "data/bank_05a/d_5a80.bin" ; $5a80, 240 bytes
+	INCBIN "data/bank_05a/BallMachineSpriteFrame27.bin" ; $5a80, 240 bytes
 BallMachineSpriteFrame28:
-	INCBIN "data/bank_05a/d_5b70.bin" ; $5b70, 240 bytes
+	INCBIN "data/bank_05a/BallMachineSpriteFrame28.bin" ; $5b70, 240 bytes
 BallMachineSpriteFrame29:
-	INCBIN "data/bank_05a/d_5c60.bin" ; $5c60, 240 bytes
+	INCBIN "data/bank_05a/BallMachineSpriteFrame29.bin" ; $5c60, 240 bytes
 BallMachineSpriteFrame30:
-	INCBIN "data/bank_05a/d_5d50.bin" ; $5d50, 240 bytes
+	INCBIN "data/bank_05a/BallMachineSpriteFrame30.bin" ; $5d50, 240 bytes
 BallMachineSpriteFrame31:
-	INCBIN "data/bank_05a/d_5e40.bin" ; $5e40, 240 bytes
+	INCBIN "data/bank_05a/BallMachineSpriteFrame31.bin" ; $5e40, 240 bytes
 BallMachineSpriteFrame32:
-	INCBIN "data/bank_05a/d_5f30.bin" ; $5f30, 240 bytes
+	INCBIN "data/bank_05a/BallMachineSpriteFrame32.bin" ; $5f30, 240 bytes
 BallMachineSpriteFrame33:
-	INCBIN "data/bank_05a/d_6020.bin" ; $6020, 240 bytes
+	INCBIN "data/bank_05a/BallMachineSpriteFrame33.bin" ; $6020, 240 bytes
 BallMachineSpriteFrame34:
-	INCBIN "data/bank_05a/d_6110.bin" ; $6110, 240 bytes
+	INCBIN "data/bank_05a/BallMachineSpriteFrame34.bin" ; $6110, 240 bytes
 BallMachineSpriteFrame35:
-	INCBIN "data/bank_05a/d_6200.bin" ; $6200, 240 bytes
+	INCBIN "data/bank_05a/BallMachineSpriteFrame35.bin" ; $6200, 240 bytes
 BallMachineSpriteFrame36:
-	INCBIN "data/bank_05a/d_62f0.bin" ; $62f0, 240 bytes
+	INCBIN "data/bank_05a/BallMachineSpriteFrame36.bin" ; $62f0, 240 bytes
 BallMachineSpriteFrame37:
-	INCBIN "data/bank_05a/d_63e0.bin" ; $63e0, 240 bytes
+	INCBIN "data/bank_05a/BallMachineSpriteFrame37.bin" ; $63e0, 240 bytes
 BallMachineSpriteFrame38:
-	INCBIN "data/bank_05a/d_64d0.bin" ; $64d0, 240 bytes
+	INCBIN "data/bank_05a/BallMachineSpriteFrame38.bin" ; $64d0, 240 bytes
 BallMachineSpriteFrame39:
-	INCBIN "data/bank_05a/d_65c0.bin" ; $65c0, 240 bytes
+	INCBIN "data/bank_05a/BallMachineSpriteFrame39.bin" ; $65c0, 240 bytes
 BallMachineSpriteFrame40:
-	INCBIN "data/bank_05a/d_66b0.bin" ; $66b0, 320 bytes
+	INCBIN "data/bank_05a/BallMachineSpriteFrame40.bin" ; $66b0, 320 bytes
 BallMachineSpriteFrame41:
-	INCBIN "data/bank_05a/d_67f0.bin" ; $67f0, 320 bytes
+	INCBIN "data/bank_05a/BallMachineSpriteFrame41.bin" ; $67f0, 320 bytes
 BallMachineSpriteFrame42:
-	INCBIN "data/bank_05a/d_6930.bin" ; $6930, 240 bytes
+	INCBIN "data/bank_05a/BallMachineSpriteFrame42.bin" ; $6930, 240 bytes
 BallMachineSpriteFrame43:
-	INCBIN "data/bank_05a/d_6a20.bin" ; $6a20, 240 bytes
+	INCBIN "data/bank_05a/BallMachineSpriteFrame43.bin" ; $6a20, 240 bytes
 BallMachineSpriteFrame44:
-	INCBIN "data/bank_05a/d_6b10.bin" ; $6b10, 240 bytes
+	INCBIN "data/bank_05a/BallMachineSpriteFrame44.bin" ; $6b10, 240 bytes
 BallMachineSpriteFrame45:
-	INCBIN "data/bank_05a/d_6c00.bin" ; $6c00, 240 bytes
+	INCBIN "data/bank_05a/BallMachineSpriteFrame45.bin" ; $6c00, 240 bytes
 BallMachineSpriteFrame46:
-	INCBIN "data/bank_05a/d_6cf0.bin" ; $6cf0, 240 bytes
+	INCBIN "data/bank_05a/BallMachineSpriteFrame46.bin" ; $6cf0, 240 bytes
 BallMachineSpriteFrame47:
-	INCBIN "data/bank_05a/d_6de0.bin" ; $6de0, 240 bytes
+	INCBIN "data/bank_05a/BallMachineSpriteFrame47.bin" ; $6de0, 240 bytes
 BallMachineSpriteFrame48:
-	INCBIN "data/bank_05a/d_6ed0.bin" ; $6ed0, 240 bytes
+	INCBIN "data/bank_05a/BallMachineSpriteFrame48.bin" ; $6ed0, 240 bytes
 BallMachineSpriteFrame49:
-	INCBIN "data/bank_05a/d_6fc0.bin" ; $6fc0, 240 bytes
+	INCBIN "data/bank_05a/BallMachineSpriteFrame49.bin" ; $6fc0, 240 bytes
 BallMachineSpriteFrame50:
-	INCBIN "data/bank_05a/d_70b0.bin" ; $70b0, 240 bytes
+	INCBIN "data/bank_05a/BallMachineSpriteFrame50.bin" ; $70b0, 240 bytes
 BallMachineSpriteFrame51:
-	INCBIN "data/bank_05a/d_71a0.bin" ; $71a0, 240 bytes
+	INCBIN "data/bank_05a/BallMachineSpriteFrame51.bin" ; $71a0, 240 bytes
 BallMachineSpriteFrame52:
-	INCBIN "data/bank_05a/d_7290.bin" ; $7290, 240 bytes
+	INCBIN "data/bank_05a/BallMachineSpriteFrame52.bin" ; $7290, 240 bytes
 BallMachineSpriteFrame53:
-	INCBIN "data/bank_05a/d_7380.bin" ; $7380, 240 bytes
+	INCBIN "data/bank_05a/BallMachineSpriteFrame53.bin" ; $7380, 240 bytes
 BallMachineSpriteFrame54:
-	INCBIN "data/bank_05a/d_7470.bin" ; $7470, 240 bytes
+	INCBIN "data/bank_05a/BallMachineSpriteFrame54.bin" ; $7470, 240 bytes
 BallMachineSpriteFrame55:
-	INCBIN "data/bank_05a/d_7560.bin" ; $7560, 240 bytes
+	INCBIN "data/bank_05a/BallMachineSpriteFrame55.bin" ; $7560, 240 bytes
 BallMachineSpriteFramesUnused:
-	INCBIN "data/bank_05a/d_7650.bin" ; $7650, 1680 bytes
+	INCBIN "data/bank_05a/BallMachineSpriteFramesUnused.bin" ; $7650, 1680 bytes
 BallMachineSpriteOam:
-	INCBIN "data/bank_05a/d_7ce0.bin" ; $7ce0, 580 bytes
+	INCBIN "data/bank_05a/BallMachineSpriteOam.bin" ; $7ce0, 580 bytes
 BallMachineSpriteAnims:
 	dw BallMachineSpriteAnim00 ; $7f24
 	dw BallMachineSpriteAnim01 ; $7f26

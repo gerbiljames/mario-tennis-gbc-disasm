@@ -155,121 +155,121 @@ EldenSpriteFrames:
 	dw EldenSpriteFrame55 ; $412c
 	dw EldenSpriteFrame55 ; $412e
 EldenSpriteFrame00:
-	INCBIN "data/bank_049/d_4130.bin" ; $4130, 240 bytes
+	INCBIN "data/bank_049/EldenSpriteFrame00.bin" ; $4130, 240 bytes
 EldenSpriteFrame01:
-	INCBIN "data/bank_049/d_4220.bin" ; $4220, 240 bytes
+	INCBIN "data/bank_049/EldenSpriteFrame01.bin" ; $4220, 240 bytes
 EldenSpriteFrame02:
-	INCBIN "data/bank_049/d_4310.bin" ; $4310, 240 bytes
+	INCBIN "data/bank_049/EldenSpriteFrame02.bin" ; $4310, 240 bytes
 EldenSpriteFrame03:
-	INCBIN "data/bank_049/d_4400.bin" ; $4400, 240 bytes
+	INCBIN "data/bank_049/EldenSpriteFrame03.bin" ; $4400, 240 bytes
 EldenSpriteFrame04:
-	INCBIN "data/bank_049/d_44f0.bin" ; $44f0, 240 bytes
+	INCBIN "data/bank_049/EldenSpriteFrame04.bin" ; $44f0, 240 bytes
 EldenSpriteFrame05:
-	INCBIN "data/bank_049/d_45e0.bin" ; $45e0, 240 bytes
+	INCBIN "data/bank_049/EldenSpriteFrame05.bin" ; $45e0, 240 bytes
 EldenSpriteFrame06:
-	INCBIN "data/bank_049/d_46d0.bin" ; $46d0, 240 bytes
+	INCBIN "data/bank_049/EldenSpriteFrame06.bin" ; $46d0, 240 bytes
 EldenSpriteFrame07:
-	INCBIN "data/bank_049/d_47c0.bin" ; $47c0, 240 bytes
+	INCBIN "data/bank_049/EldenSpriteFrame07.bin" ; $47c0, 240 bytes
 EldenSpriteFrame08:
-	INCBIN "data/bank_049/d_48b0.bin" ; $48b0, 240 bytes
+	INCBIN "data/bank_049/EldenSpriteFrame08.bin" ; $48b0, 240 bytes
 EldenSpriteFrame09:
-	INCBIN "data/bank_049/d_49a0.bin" ; $49a0, 240 bytes
+	INCBIN "data/bank_049/EldenSpriteFrame09.bin" ; $49a0, 240 bytes
 EldenSpriteFrame10:
-	INCBIN "data/bank_049/d_4a90.bin" ; $4a90, 240 bytes
+	INCBIN "data/bank_049/EldenSpriteFrame10.bin" ; $4a90, 240 bytes
 EldenSpriteFrame11:
-	INCBIN "data/bank_049/d_4b80.bin" ; $4b80, 240 bytes
+	INCBIN "data/bank_049/EldenSpriteFrame11.bin" ; $4b80, 240 bytes
 EldenSpriteFrame12:
-	INCBIN "data/bank_049/d_4c70.bin" ; $4c70, 240 bytes
+	INCBIN "data/bank_049/EldenSpriteFrame12.bin" ; $4c70, 240 bytes
 EldenSpriteFrame13:
-	INCBIN "data/bank_049/d_4d60.bin" ; $4d60, 240 bytes
+	INCBIN "data/bank_049/EldenSpriteFrame13.bin" ; $4d60, 240 bytes
 EldenSpriteFrame14:
-	INCBIN "data/bank_049/d_4e50.bin" ; $4e50, 240 bytes
+	INCBIN "data/bank_049/EldenSpriteFrame14.bin" ; $4e50, 240 bytes
 EldenSpriteFrame15:
-	INCBIN "data/bank_049/d_4f40.bin" ; $4f40, 240 bytes
+	INCBIN "data/bank_049/EldenSpriteFrame15.bin" ; $4f40, 240 bytes
 EldenSpriteFrame16:
-	INCBIN "data/bank_049/d_5030.bin" ; $5030, 240 bytes
+	INCBIN "data/bank_049/EldenSpriteFrame16.bin" ; $5030, 240 bytes
 EldenSpriteFrame17:
-	INCBIN "data/bank_049/d_5120.bin" ; $5120, 240 bytes
+	INCBIN "data/bank_049/EldenSpriteFrame17.bin" ; $5120, 240 bytes
 EldenSpriteFrame18:
-	INCBIN "data/bank_049/d_5210.bin" ; $5210, 240 bytes
+	INCBIN "data/bank_049/EldenSpriteFrame18.bin" ; $5210, 240 bytes
 EldenSpriteFrame19:
-	INCBIN "data/bank_049/d_5300.bin" ; $5300, 240 bytes
+	INCBIN "data/bank_049/EldenSpriteFrame19.bin" ; $5300, 240 bytes
 EldenSpriteFrame20:
-	INCBIN "data/bank_049/d_53f0.bin" ; $53f0, 240 bytes
+	INCBIN "data/bank_049/EldenSpriteFrame20.bin" ; $53f0, 240 bytes
 EldenSpriteFrame21:
-	INCBIN "data/bank_049/d_54e0.bin" ; $54e0, 240 bytes
+	INCBIN "data/bank_049/EldenSpriteFrame21.bin" ; $54e0, 240 bytes
 EldenSpriteFrame22:
-	INCBIN "data/bank_049/d_55d0.bin" ; $55d0, 240 bytes
+	INCBIN "data/bank_049/EldenSpriteFrame22.bin" ; $55d0, 240 bytes
 EldenSpriteFrame23:
-	INCBIN "data/bank_049/d_56c0.bin" ; $56c0, 240 bytes
+	INCBIN "data/bank_049/EldenSpriteFrame23.bin" ; $56c0, 240 bytes
 EldenSpriteFrame24:
-	INCBIN "data/bank_049/d_57b0.bin" ; $57b0, 240 bytes
+	INCBIN "data/bank_049/EldenSpriteFrame24.bin" ; $57b0, 240 bytes
 EldenSpriteFrame25:
-	INCBIN "data/bank_049/d_58a0.bin" ; $58a0, 240 bytes
+	INCBIN "data/bank_049/EldenSpriteFrame25.bin" ; $58a0, 240 bytes
 EldenSpriteFrame26:
-	INCBIN "data/bank_049/d_5990.bin" ; $5990, 240 bytes
+	INCBIN "data/bank_049/EldenSpriteFrame26.bin" ; $5990, 240 bytes
 EldenSpriteFrame27:
-	INCBIN "data/bank_049/d_5a80.bin" ; $5a80, 240 bytes
+	INCBIN "data/bank_049/EldenSpriteFrame27.bin" ; $5a80, 240 bytes
 EldenSpriteFrame28:
-	INCBIN "data/bank_049/d_5b70.bin" ; $5b70, 240 bytes
+	INCBIN "data/bank_049/EldenSpriteFrame28.bin" ; $5b70, 240 bytes
 EldenSpriteFrame29:
-	INCBIN "data/bank_049/d_5c60.bin" ; $5c60, 240 bytes
+	INCBIN "data/bank_049/EldenSpriteFrame29.bin" ; $5c60, 240 bytes
 EldenSpriteFrame30:
-	INCBIN "data/bank_049/d_5d50.bin" ; $5d50, 240 bytes
+	INCBIN "data/bank_049/EldenSpriteFrame30.bin" ; $5d50, 240 bytes
 EldenSpriteFrame31:
-	INCBIN "data/bank_049/d_5e40.bin" ; $5e40, 240 bytes
+	INCBIN "data/bank_049/EldenSpriteFrame31.bin" ; $5e40, 240 bytes
 EldenSpriteFrame32:
-	INCBIN "data/bank_049/d_5f30.bin" ; $5f30, 240 bytes
+	INCBIN "data/bank_049/EldenSpriteFrame32.bin" ; $5f30, 240 bytes
 EldenSpriteFrame33:
-	INCBIN "data/bank_049/d_6020.bin" ; $6020, 240 bytes
+	INCBIN "data/bank_049/EldenSpriteFrame33.bin" ; $6020, 240 bytes
 EldenSpriteFrame34:
-	INCBIN "data/bank_049/d_6110.bin" ; $6110, 240 bytes
+	INCBIN "data/bank_049/EldenSpriteFrame34.bin" ; $6110, 240 bytes
 EldenSpriteFrame35:
-	INCBIN "data/bank_049/d_6200.bin" ; $6200, 240 bytes
+	INCBIN "data/bank_049/EldenSpriteFrame35.bin" ; $6200, 240 bytes
 EldenSpriteFrame36:
-	INCBIN "data/bank_049/d_62f0.bin" ; $62f0, 240 bytes
+	INCBIN "data/bank_049/EldenSpriteFrame36.bin" ; $62f0, 240 bytes
 EldenSpriteFrame37:
-	INCBIN "data/bank_049/d_63e0.bin" ; $63e0, 240 bytes
+	INCBIN "data/bank_049/EldenSpriteFrame37.bin" ; $63e0, 240 bytes
 EldenSpriteFrame38:
-	INCBIN "data/bank_049/d_64d0.bin" ; $64d0, 240 bytes
+	INCBIN "data/bank_049/EldenSpriteFrame38.bin" ; $64d0, 240 bytes
 EldenSpriteFrame39:
-	INCBIN "data/bank_049/d_65c0.bin" ; $65c0, 240 bytes
+	INCBIN "data/bank_049/EldenSpriteFrame39.bin" ; $65c0, 240 bytes
 EldenSpriteFrame40:
-	INCBIN "data/bank_049/d_66b0.bin" ; $66b0, 320 bytes
+	INCBIN "data/bank_049/EldenSpriteFrame40.bin" ; $66b0, 320 bytes
 EldenSpriteFrame41:
-	INCBIN "data/bank_049/d_67f0.bin" ; $67f0, 320 bytes
+	INCBIN "data/bank_049/EldenSpriteFrame41.bin" ; $67f0, 320 bytes
 EldenSpriteFrame42:
-	INCBIN "data/bank_049/d_6930.bin" ; $6930, 240 bytes
+	INCBIN "data/bank_049/EldenSpriteFrame42.bin" ; $6930, 240 bytes
 EldenSpriteFrame43:
-	INCBIN "data/bank_049/d_6a20.bin" ; $6a20, 240 bytes
+	INCBIN "data/bank_049/EldenSpriteFrame43.bin" ; $6a20, 240 bytes
 EldenSpriteFrame44:
-	INCBIN "data/bank_049/d_6b10.bin" ; $6b10, 240 bytes
+	INCBIN "data/bank_049/EldenSpriteFrame44.bin" ; $6b10, 240 bytes
 EldenSpriteFrame45:
-	INCBIN "data/bank_049/d_6c00.bin" ; $6c00, 240 bytes
+	INCBIN "data/bank_049/EldenSpriteFrame45.bin" ; $6c00, 240 bytes
 EldenSpriteFrame46:
-	INCBIN "data/bank_049/d_6cf0.bin" ; $6cf0, 240 bytes
+	INCBIN "data/bank_049/EldenSpriteFrame46.bin" ; $6cf0, 240 bytes
 EldenSpriteFrame47:
-	INCBIN "data/bank_049/d_6de0.bin" ; $6de0, 240 bytes
+	INCBIN "data/bank_049/EldenSpriteFrame47.bin" ; $6de0, 240 bytes
 EldenSpriteFrame48:
-	INCBIN "data/bank_049/d_6ed0.bin" ; $6ed0, 240 bytes
+	INCBIN "data/bank_049/EldenSpriteFrame48.bin" ; $6ed0, 240 bytes
 EldenSpriteFrame49:
-	INCBIN "data/bank_049/d_6fc0.bin" ; $6fc0, 240 bytes
+	INCBIN "data/bank_049/EldenSpriteFrame49.bin" ; $6fc0, 240 bytes
 EldenSpriteFrame50:
-	INCBIN "data/bank_049/d_70b0.bin" ; $70b0, 240 bytes
+	INCBIN "data/bank_049/EldenSpriteFrame50.bin" ; $70b0, 240 bytes
 EldenSpriteFrame51:
-	INCBIN "data/bank_049/d_71a0.bin" ; $71a0, 240 bytes
+	INCBIN "data/bank_049/EldenSpriteFrame51.bin" ; $71a0, 240 bytes
 EldenSpriteFrame52:
-	INCBIN "data/bank_049/d_7290.bin" ; $7290, 240 bytes
+	INCBIN "data/bank_049/EldenSpriteFrame52.bin" ; $7290, 240 bytes
 EldenSpriteFrame53:
-	INCBIN "data/bank_049/d_7380.bin" ; $7380, 240 bytes
+	INCBIN "data/bank_049/EldenSpriteFrame53.bin" ; $7380, 240 bytes
 EldenSpriteFrame54:
-	INCBIN "data/bank_049/d_7470.bin" ; $7470, 240 bytes
+	INCBIN "data/bank_049/EldenSpriteFrame54.bin" ; $7470, 240 bytes
 EldenSpriteFrame55:
-	INCBIN "data/bank_049/d_7560.bin" ; $7560, 240 bytes
+	INCBIN "data/bank_049/EldenSpriteFrame55.bin" ; $7560, 240 bytes
 EldenSpriteFramesUnused:
-	INCBIN "data/bank_049/d_7650.bin" ; $7650, 1680 bytes
+	INCBIN "data/bank_049/EldenSpriteFramesUnused.bin" ; $7650, 1680 bytes
 EldenSpriteOam:
-	INCBIN "data/bank_049/d_7ce0.bin" ; $7ce0, 580 bytes
+	INCBIN "data/bank_049/EldenSpriteOam.bin" ; $7ce0, 580 bytes
 EldenSpriteAnims:
 	dw EldenSpriteAnim00 ; $7f24
 	dw EldenSpriteAnim01 ; $7f26

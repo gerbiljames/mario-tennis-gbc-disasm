@@ -49,50 +49,50 @@ DataPtr_CourtComplexSceneUnusedSlot:
 DataPtr_CourtComplexTiles:
 	dw CourtComplexTiles ; $402e
 FountainCourtSceneConfig:
-	INCBIN "data/bank_067/d_4030.bin" ; $4030, 27 bytes
+	INCBIN "data/bank_067/FountainCourtSceneConfig.bin" ; $4030, 27 bytes
 FountainCourtPalettes:
-	INCLUDE "data/bank_067/palettes_404b.asm" ; $404b, 64 bytes (palettes)
+	INCLUDE "data/bank_067/FountainCourtPalettes.asm" ; $404b, 64 bytes (palettes)
 FountainCourtTiles:
-	INCBIN "data/bank_067/lz_408b.bin" ; $408b, 3052 bytes
+	INCBIN "data/bank_067/lz_FountainCourtTiles.bin" ; $408b, 3052 bytes
 FountainCourtTilemap:
-	INCBIN "data/bank_067/lz_4c77.bin" ; $4c77, 1101 bytes
+	INCBIN "data/bank_067/lz_FountainCourtTilemap.bin" ; $4c77, 1101 bytes
 FountainCourtAttrmap:
-	INCBIN "data/bank_067/lz_50c4.bin" ; $50c4, 689 bytes
+	INCBIN "data/bank_067/lz_FountainCourtAttrmap.bin" ; $50c4, 689 bytes
 FountainCourtCollisionMap:
-	INCBIN "data/bank_067/lz_5375.bin" ; $5375, 106 bytes
+	INCBIN "data/bank_067/lz_FountainCourtCollisionMap.bin" ; $5375, 106 bytes
 FountainCourtBehaviorMap:
-	INCBIN "data/bank_067/lz_53df.bin" ; $53df, 83 bytes
+	INCBIN "data/bank_067/lz_FountainCourtBehaviorMap.bin" ; $53df, 83 bytes
 	; $5432, 14 bytes (fill)
 	ds 14, $00
 FountainCourtSceneUnusedSlot:
-	INCBIN "data/bank_067/d_5440.bin" ; $5440, 1536 bytes
+	INCBIN "data/bank_067/FountainCourtSceneUnusedSlot.bin" ; $5440, 1536 bytes
 CafeCourtSceneConfig:
-	INCBIN "data/bank_067/d_5a40.bin" ; $5a40, 42 bytes
+	INCBIN "data/bank_067/CafeCourtSceneConfig.bin" ; $5a40, 42 bytes
 CafeCourtPalettes:
-	INCLUDE "data/bank_067/palettes_5a6a.asm" ; $5a6a, 64 bytes (palettes)
+	INCLUDE "data/bank_067/CafeCourtPalettes.asm" ; $5a6a, 64 bytes (palettes)
 CafeCourtTiles:
-	INCBIN "data/bank_067/lz_5aaa.bin" ; $5aaa, 2357 bytes
+	INCBIN "data/bank_067/lz_CafeCourtTiles.bin" ; $5aaa, 2357 bytes
 CafeCourtTilemap:
-	INCBIN "data/bank_067/lz_63df.bin" ; $63df, 922 bytes
+	INCBIN "data/bank_067/lz_CafeCourtTilemap.bin" ; $63df, 922 bytes
 CafeCourtAttrmap:
-	INCBIN "data/bank_067/lz_6779.bin" ; $6779, 569 bytes
+	INCBIN "data/bank_067/lz_CafeCourtAttrmap.bin" ; $6779, 569 bytes
 CafeCourtCollisionMap:
-	INCBIN "data/bank_067/lz_69b2.bin" ; $69b2, 103 bytes
+	INCBIN "data/bank_067/lz_CafeCourtCollisionMap.bin" ; $69b2, 103 bytes
 CafeCourtBehaviorMap:
-	INCBIN "data/bank_067/lz_6a19.bin" ; $6a19, 75 bytes
+	INCBIN "data/bank_067/lz_CafeCourtBehaviorMap.bin" ; $6a19, 75 bytes
 CourtComplexSceneConfig:
-	INCBIN "data/bank_067/d_6a64.bin" ; $6a64, 42 bytes
+	INCBIN "data/bank_067/CourtComplexSceneConfig.bin" ; $6a64, 42 bytes
 CourtComplexPalettes:
-	INCLUDE "data/bank_067/palettes_6a8e.asm" ; $6a8e, 64 bytes (palettes)
+	INCLUDE "data/bank_067/CourtComplexPalettes.asm" ; $6a8e, 64 bytes (palettes)
 CourtComplexTiles:
-	INCBIN "data/bank_067/lz_6ace.bin" ; $6ace, 2316 bytes
+	INCBIN "data/bank_067/lz_CourtComplexTiles.bin" ; $6ace, 2316 bytes
 CourtComplexTilemap:
-	INCBIN "data/bank_067/lz_73da.bin" ; $73da, 1330 bytes
+	INCBIN "data/bank_067/lz_CourtComplexTilemap.bin" ; $73da, 1330 bytes
 CourtComplexAttrmap:
-	INCBIN "data/bank_067/lz_790c.bin" ; $790c, 710 bytes
+	INCBIN "data/bank_067/lz_CourtComplexAttrmap.bin" ; $790c, 710 bytes
 CourtComplexCollisionMap:
-	INCBIN "data/bank_067/lz_7bd2.bin" ; $7bd2, 128 bytes
+	INCBIN "data/bank_067/lz_CourtComplexCollisionMap.bin" ; $7bd2, 128 bytes
 CourtComplexBehaviorMap:
-	INCBIN "data/bank_067/lz_7c52.bin" ; $7c52, 76 bytes
+	INCBIN "data/bank_067/lz_CourtComplexBehaviorMap.bin" ; $7c52, 76 bytes
 CourtComplexSceneUnusedSlot:
 	; $7c9e, 866 bytes fill to bank end (linker-padded)

@@ -1,11 +1,13 @@
 """The byte-level codecs: the LZ format, the tile images, the SM83 decoder,
 and the macro expansions -- each must reproduce its input exactly."""
 import os
+import subprocess
+import sys
 import random
 import tempfile
 import unittest
 
-from tests.helpers import ROOT, assemble, needs_rgbasm
+from tests.helpers import ROOT, TOOLS, assemble, needs_rgbasm
 
 import lz
 import sm83
@@ -75,6 +77,38 @@ class TileImages(unittest.TestCase):
         self.assertEqual(pos[12:], [(0, 32), (8, 32), (16, 32)])
         with self.assertRaises(ValueError):
             self.gfx.parse_layout("3x")
+
+    def test_plain_image_grows_when_drawn_past_its_end(self):
+        rng = random.Random(5)
+        data = bytes(rng.getrandbits(8) | 1 for _ in range(17 * 16))
+        with tempfile.TemporaryDirectory() as d:
+            raw = os.path.join(d, "d_4000.bin")
+            png = os.path.join(d, "d_4000.png")
+            with open(raw, "wb") as f:
+                f.write(data)
+            self.assertEqual(self.gfx.decode(raw, png), 17)
+            # untouched: the 15 blank tiles of the partial row are padding
+            self.assertEqual(self.gfx.image_file_to_tiles(png), data)
+            from PIL import Image
+            from PIL.PngImagePlugin import PngInfo
+            img = Image.open(png)
+            img.putpixel((8 * 3, 8), 3)          # a dot in tile 19
+            info = PngInfo()
+            for k, v in img.text.items():
+                info.add_text(k, v)
+            img.save(png, pnginfo=info)
+            grown = self.gfx.image_file_to_tiles(png)
+            self.assertEqual(len(grown), 20 * 16)
+            self.assertEqual(grown[:17 * 16], data)
+
+    def test_size_inc(self):
+        with tempfile.TemporaryDirectory() as d:
+            p = os.path.join(d, "lz_Thing.bin")
+            with open(p, "wb") as f:
+                f.write(lz.compress(bytes(64)))
+            r = subprocess.run([sys.executable, str(TOOLS / "lz.py"), "--size-inc", p],
+                               capture_output=True, text=True)
+            self.assertEqual(r.stdout.strip(), "DEF Thing_SIZE EQU 64")
 
     def test_file_round_trip_raw_and_lz(self):
         rng = random.Random(3)

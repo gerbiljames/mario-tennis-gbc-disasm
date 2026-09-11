@@ -1672,9 +1672,9 @@ QueueWaterSpriteMinigameCounterPanel_SpriteTemplate:
 	; $57c7, 9 bytes (fill)
 	ds 9, $00
 WaterSpriteHudTiles_15:
-	INCBIN "data/bank_015/d_57d0.bin" ; $57d0, 192 bytes
+	INCBIN "data/bank_015/WaterSpriteHudTiles_15.bin" ; $57d0, 192 bytes
 WaterSpriteHudPalette_15:
-	INCLUDE "data/bank_015/palettes_5890.asm" ; $5890, 8 bytes (palettes)
+	INCLUDE "data/bank_015/WaterSpriteHudPalette_15.asm" ; $5890, 8 bytes (palettes)
 LoadWaterSpriteMinigameHudGfx:
 	push_wram_bank $01 ; $5898
 	ld hl, WaterSpriteHudTiles_15 ; $58a1
@@ -1721,13 +1721,13 @@ InitWaterSpriteMinigameHud:
 	; $58fa, 6 bytes (fill)
 	ds 6, $00
 Palettes_15_0:
-	INCLUDE "data/bank_015/palettes_5900.asm" ; $5900, 16 bytes (palettes)
+	INCLUDE "data/bank_015/Palettes_15_0.asm" ; $5900, 16 bytes (palettes)
 WaterSpriteRacketRewardScenePalettes0:
-	INCLUDE "data/bank_015/palettes_5910.asm" ; $5910, 64 bytes (palettes)
+	INCLUDE "data/bank_015/WaterSpriteRacketRewardScenePalettes0.asm" ; $5910, 64 bytes (palettes)
 WaterSpriteRacketRewardScenePalettes1:
-	INCLUDE "data/bank_015/palettes_5950.asm" ; $5950, 64 bytes (palettes)
+	INCLUDE "data/bank_015/WaterSpriteRacketRewardScenePalettes1.asm" ; $5950, 64 bytes (palettes)
 WaterSpriteRacketRewardScenePalettes2:
-	INCLUDE "data/bank_015/palettes_5990.asm" ; $5990, 48 bytes (palettes)
+	INCLUDE "data/bank_015/WaterSpriteRacketRewardScenePalettes2.asm" ; $5990, 48 bytes (palettes)
 TrainingCourtIntroTourScene:
 	xor a ; $59c0
 	ld [wStoryModeShowLocationName], a ; $59c1

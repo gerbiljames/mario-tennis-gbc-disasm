@@ -155,121 +155,121 @@ HarrySpriteFrames:
 	dw HarrySpriteFrame55 ; $412c
 	dw HarrySpriteFrame55 ; $412e
 HarrySpriteFrame00:
-	INCBIN "data/bank_043/d_4130.bin" ; $4130, 240 bytes
+	INCBIN "data/bank_043/HarrySpriteFrame00.bin" ; $4130, 240 bytes
 HarrySpriteFrame01:
-	INCBIN "data/bank_043/d_4220.bin" ; $4220, 240 bytes
+	INCBIN "data/bank_043/HarrySpriteFrame01.bin" ; $4220, 240 bytes
 HarrySpriteFrame02:
-	INCBIN "data/bank_043/d_4310.bin" ; $4310, 240 bytes
+	INCBIN "data/bank_043/HarrySpriteFrame02.bin" ; $4310, 240 bytes
 HarrySpriteFrame03:
-	INCBIN "data/bank_043/d_4400.bin" ; $4400, 240 bytes
+	INCBIN "data/bank_043/HarrySpriteFrame03.bin" ; $4400, 240 bytes
 HarrySpriteFrame04:
-	INCBIN "data/bank_043/d_44f0.bin" ; $44f0, 240 bytes
+	INCBIN "data/bank_043/HarrySpriteFrame04.bin" ; $44f0, 240 bytes
 HarrySpriteFrame05:
-	INCBIN "data/bank_043/d_45e0.bin" ; $45e0, 240 bytes
+	INCBIN "data/bank_043/HarrySpriteFrame05.bin" ; $45e0, 240 bytes
 HarrySpriteFrame06:
-	INCBIN "data/bank_043/d_46d0.bin" ; $46d0, 240 bytes
+	INCBIN "data/bank_043/HarrySpriteFrame06.bin" ; $46d0, 240 bytes
 HarrySpriteFrame07:
-	INCBIN "data/bank_043/d_47c0.bin" ; $47c0, 240 bytes
+	INCBIN "data/bank_043/HarrySpriteFrame07.bin" ; $47c0, 240 bytes
 HarrySpriteFrame08:
-	INCBIN "data/bank_043/d_48b0.bin" ; $48b0, 240 bytes
+	INCBIN "data/bank_043/HarrySpriteFrame08.bin" ; $48b0, 240 bytes
 HarrySpriteFrame09:
-	INCBIN "data/bank_043/d_49a0.bin" ; $49a0, 240 bytes
+	INCBIN "data/bank_043/HarrySpriteFrame09.bin" ; $49a0, 240 bytes
 HarrySpriteFrame10:
-	INCBIN "data/bank_043/d_4a90.bin" ; $4a90, 240 bytes
+	INCBIN "data/bank_043/HarrySpriteFrame10.bin" ; $4a90, 240 bytes
 HarrySpriteFrame11:
-	INCBIN "data/bank_043/d_4b80.bin" ; $4b80, 240 bytes
+	INCBIN "data/bank_043/HarrySpriteFrame11.bin" ; $4b80, 240 bytes
 HarrySpriteFrame12:
-	INCBIN "data/bank_043/d_4c70.bin" ; $4c70, 240 bytes
+	INCBIN "data/bank_043/HarrySpriteFrame12.bin" ; $4c70, 240 bytes
 HarrySpriteFrame13:
-	INCBIN "data/bank_043/d_4d60.bin" ; $4d60, 240 bytes
+	INCBIN "data/bank_043/HarrySpriteFrame13.bin" ; $4d60, 240 bytes
 HarrySpriteFrame14:
-	INCBIN "data/bank_043/d_4e50.bin" ; $4e50, 240 bytes
+	INCBIN "data/bank_043/HarrySpriteFrame14.bin" ; $4e50, 240 bytes
 HarrySpriteFrame15:
-	INCBIN "data/bank_043/d_4f40.bin" ; $4f40, 240 bytes
+	INCBIN "data/bank_043/HarrySpriteFrame15.bin" ; $4f40, 240 bytes
 HarrySpriteFrame16:
-	INCBIN "data/bank_043/d_5030.bin" ; $5030, 240 bytes
+	INCBIN "data/bank_043/HarrySpriteFrame16.bin" ; $5030, 240 bytes
 HarrySpriteFrame17:
-	INCBIN "data/bank_043/d_5120.bin" ; $5120, 240 bytes
+	INCBIN "data/bank_043/HarrySpriteFrame17.bin" ; $5120, 240 bytes
 HarrySpriteFrame18:
-	INCBIN "data/bank_043/d_5210.bin" ; $5210, 240 bytes
+	INCBIN "data/bank_043/HarrySpriteFrame18.bin" ; $5210, 240 bytes
 HarrySpriteFrame19:
-	INCBIN "data/bank_043/d_5300.bin" ; $5300, 240 bytes
+	INCBIN "data/bank_043/HarrySpriteFrame19.bin" ; $5300, 240 bytes
 HarrySpriteFrame20:
-	INCBIN "data/bank_043/d_53f0.bin" ; $53f0, 240 bytes
+	INCBIN "data/bank_043/HarrySpriteFrame20.bin" ; $53f0, 240 bytes
 HarrySpriteFrame21:
-	INCBIN "data/bank_043/d_54e0.bin" ; $54e0, 240 bytes
+	INCBIN "data/bank_043/HarrySpriteFrame21.bin" ; $54e0, 240 bytes
 HarrySpriteFrame22:
-	INCBIN "data/bank_043/d_55d0.bin" ; $55d0, 240 bytes
+	INCBIN "data/bank_043/HarrySpriteFrame22.bin" ; $55d0, 240 bytes
 HarrySpriteFrame23:
-	INCBIN "data/bank_043/d_56c0.bin" ; $56c0, 240 bytes
+	INCBIN "data/bank_043/HarrySpriteFrame23.bin" ; $56c0, 240 bytes
 HarrySpriteFrame24:
-	INCBIN "data/bank_043/d_57b0.bin" ; $57b0, 240 bytes
+	INCBIN "data/bank_043/HarrySpriteFrame24.bin" ; $57b0, 240 bytes
 HarrySpriteFrame25:
-	INCBIN "data/bank_043/d_58a0.bin" ; $58a0, 240 bytes
+	INCBIN "data/bank_043/HarrySpriteFrame25.bin" ; $58a0, 240 bytes
 HarrySpriteFrame26:
-	INCBIN "data/bank_043/d_5990.bin" ; $5990, 240 bytes
+	INCBIN "data/bank_043/HarrySpriteFrame26.bin" ; $5990, 240 bytes
 HarrySpriteFrame27:
-	INCBIN "data/bank_043/d_5a80.bin" ; $5a80, 240 bytes
+	INCBIN "data/bank_043/HarrySpriteFrame27.bin" ; $5a80, 240 bytes
 HarrySpriteFrame28:
-	INCBIN "data/bank_043/d_5b70.bin" ; $5b70, 240 bytes
+	INCBIN "data/bank_043/HarrySpriteFrame28.bin" ; $5b70, 240 bytes
 HarrySpriteFrame29:
-	INCBIN "data/bank_043/d_5c60.bin" ; $5c60, 240 bytes
+	INCBIN "data/bank_043/HarrySpriteFrame29.bin" ; $5c60, 240 bytes
 HarrySpriteFrame30:
-	INCBIN "data/bank_043/d_5d50.bin" ; $5d50, 240 bytes
+	INCBIN "data/bank_043/HarrySpriteFrame30.bin" ; $5d50, 240 bytes
 HarrySpriteFrame31:
-	INCBIN "data/bank_043/d_5e40.bin" ; $5e40, 240 bytes
+	INCBIN "data/bank_043/HarrySpriteFrame31.bin" ; $5e40, 240 bytes
 HarrySpriteFrame32:
-	INCBIN "data/bank_043/d_5f30.bin" ; $5f30, 240 bytes
+	INCBIN "data/bank_043/HarrySpriteFrame32.bin" ; $5f30, 240 bytes
 HarrySpriteFrame33:
-	INCBIN "data/bank_043/d_6020.bin" ; $6020, 240 bytes
+	INCBIN "data/bank_043/HarrySpriteFrame33.bin" ; $6020, 240 bytes
 HarrySpriteFrame34:
-	INCBIN "data/bank_043/d_6110.bin" ; $6110, 240 bytes
+	INCBIN "data/bank_043/HarrySpriteFrame34.bin" ; $6110, 240 bytes
 HarrySpriteFrame35:
-	INCBIN "data/bank_043/d_6200.bin" ; $6200, 240 bytes
+	INCBIN "data/bank_043/HarrySpriteFrame35.bin" ; $6200, 240 bytes
 HarrySpriteFrame36:
-	INCBIN "data/bank_043/d_62f0.bin" ; $62f0, 240 bytes
+	INCBIN "data/bank_043/HarrySpriteFrame36.bin" ; $62f0, 240 bytes
 HarrySpriteFrame37:
-	INCBIN "data/bank_043/d_63e0.bin" ; $63e0, 240 bytes
+	INCBIN "data/bank_043/HarrySpriteFrame37.bin" ; $63e0, 240 bytes
 HarrySpriteFrame38:
-	INCBIN "data/bank_043/d_64d0.bin" ; $64d0, 240 bytes
+	INCBIN "data/bank_043/HarrySpriteFrame38.bin" ; $64d0, 240 bytes
 HarrySpriteFrame39:
-	INCBIN "data/bank_043/d_65c0.bin" ; $65c0, 240 bytes
+	INCBIN "data/bank_043/HarrySpriteFrame39.bin" ; $65c0, 240 bytes
 HarrySpriteFrame40:
-	INCBIN "data/bank_043/d_66b0.bin" ; $66b0, 320 bytes
+	INCBIN "data/bank_043/HarrySpriteFrame40.bin" ; $66b0, 320 bytes
 HarrySpriteFrame41:
-	INCBIN "data/bank_043/d_67f0.bin" ; $67f0, 320 bytes
+	INCBIN "data/bank_043/HarrySpriteFrame41.bin" ; $67f0, 320 bytes
 HarrySpriteFrame42:
-	INCBIN "data/bank_043/d_6930.bin" ; $6930, 240 bytes
+	INCBIN "data/bank_043/HarrySpriteFrame42.bin" ; $6930, 240 bytes
 HarrySpriteFrame43:
-	INCBIN "data/bank_043/d_6a20.bin" ; $6a20, 240 bytes
+	INCBIN "data/bank_043/HarrySpriteFrame43.bin" ; $6a20, 240 bytes
 HarrySpriteFrame44:
-	INCBIN "data/bank_043/d_6b10.bin" ; $6b10, 240 bytes
+	INCBIN "data/bank_043/HarrySpriteFrame44.bin" ; $6b10, 240 bytes
 HarrySpriteFrame45:
-	INCBIN "data/bank_043/d_6c00.bin" ; $6c00, 240 bytes
+	INCBIN "data/bank_043/HarrySpriteFrame45.bin" ; $6c00, 240 bytes
 HarrySpriteFrame46:
-	INCBIN "data/bank_043/d_6cf0.bin" ; $6cf0, 240 bytes
+	INCBIN "data/bank_043/HarrySpriteFrame46.bin" ; $6cf0, 240 bytes
 HarrySpriteFrame47:
-	INCBIN "data/bank_043/d_6de0.bin" ; $6de0, 240 bytes
+	INCBIN "data/bank_043/HarrySpriteFrame47.bin" ; $6de0, 240 bytes
 HarrySpriteFrame48:
-	INCBIN "data/bank_043/d_6ed0.bin" ; $6ed0, 240 bytes
+	INCBIN "data/bank_043/HarrySpriteFrame48.bin" ; $6ed0, 240 bytes
 HarrySpriteFrame49:
-	INCBIN "data/bank_043/d_6fc0.bin" ; $6fc0, 240 bytes
+	INCBIN "data/bank_043/HarrySpriteFrame49.bin" ; $6fc0, 240 bytes
 HarrySpriteFrame50:
-	INCBIN "data/bank_043/d_70b0.bin" ; $70b0, 240 bytes
+	INCBIN "data/bank_043/HarrySpriteFrame50.bin" ; $70b0, 240 bytes
 HarrySpriteFrame51:
-	INCBIN "data/bank_043/d_71a0.bin" ; $71a0, 240 bytes
+	INCBIN "data/bank_043/HarrySpriteFrame51.bin" ; $71a0, 240 bytes
 HarrySpriteFrame52:
-	INCBIN "data/bank_043/d_7290.bin" ; $7290, 240 bytes
+	INCBIN "data/bank_043/HarrySpriteFrame52.bin" ; $7290, 240 bytes
 HarrySpriteFrame53:
-	INCBIN "data/bank_043/d_7380.bin" ; $7380, 240 bytes
+	INCBIN "data/bank_043/HarrySpriteFrame53.bin" ; $7380, 240 bytes
 HarrySpriteFrame54:
-	INCBIN "data/bank_043/d_7470.bin" ; $7470, 240 bytes
+	INCBIN "data/bank_043/HarrySpriteFrame54.bin" ; $7470, 240 bytes
 HarrySpriteFrame55:
-	INCBIN "data/bank_043/d_7560.bin" ; $7560, 240 bytes
+	INCBIN "data/bank_043/HarrySpriteFrame55.bin" ; $7560, 240 bytes
 HarrySpriteFramesUnused:
-	INCBIN "data/bank_043/d_7650.bin" ; $7650, 1680 bytes
+	INCBIN "data/bank_043/HarrySpriteFramesUnused.bin" ; $7650, 1680 bytes
 HarrySpriteOam:
-	INCBIN "data/bank_043/d_7ce0.bin" ; $7ce0, 580 bytes
+	INCBIN "data/bank_043/HarrySpriteOam.bin" ; $7ce0, 580 bytes
 HarrySpriteAnims:
 	dw HarrySpriteAnim00 ; $7f24
 	dw HarrySpriteAnim01 ; $7f26

@@ -116,6 +116,16 @@ label bound to the wrong parent.
 
 ## Recent changes
 
+* **2026-09-11** — two modding fixes. Data files are named after their
+  labels (`data/bank_040/AlexSpriteFrame00.png`, `lz_MenuFontTiles_01.bin`,
+  `MatchResultPalettes.asm`; only unnamed blobs keep `d_XXXX`). And VRAM
+  copy counts follow their blobs: the 92 whole copies of a decompressed
+  stream are `ld c, Blob_SIZE / 16`, with the decoded length in a `.inc`
+  that `make` derives from the blob (`lz.py --size-inc`), on top of the 34
+  raw whole copies written `(Next - Blob) / 16`; 26 partial copies say
+  which tiles of which blob they take. A plain PNG now grows its blob when
+  drawn past its end, and an end-to-end edit (a tile added to
+  `ConfirmScreenGfx3`) rebuilt with the copy at 33 tiles.
 * **2026-09-11** — sprite frames in the PNGs are drawn assembled. A blob
   that is a run of frames carries a layout in the manifest (`gfx:2x2` for
   the 570 walk-sprite blobs, four 16x16 facings side by side; `gfx:3x4+3`

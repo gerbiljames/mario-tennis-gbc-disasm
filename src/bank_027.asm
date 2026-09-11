@@ -1030,9 +1030,9 @@ Unused_27_Record:
 	; $5570, 16 bytes (bytes:16)
 	db $80, $00, $20, $55, $a0, $7e, $60, $44, $08, $25, $08, $25, $08, $25, $08, $25 ; 0x00
 End11TrainingCourtInitScriptPalette0_27:
-	INCLUDE "data/bank_027/palettes_5580.asm" ; $5580, 64 bytes (palettes)
+	INCLUDE "data/bank_027/End11TrainingCourtInitScriptPalette0_27.asm" ; $5580, 64 bytes (palettes)
 End11TrainingCourtInitScriptPalette1_27:
-	INCLUDE "data/bank_027/palettes_55c0.asm" ; $55c0, 48 bytes (palettes)
+	INCLUDE "data/bank_027/End11TrainingCourtInitScriptPalette1_27.asm" ; $55c0, 48 bytes (palettes)
 End10VarsityCourtMapScripts_27:
 	; $55f0, 14 bytes (map_tree)
 	dw End10VarsityCourtEntryPoints_27 ; slot 0 EntryPoints

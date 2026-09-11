@@ -155,121 +155,121 @@ SpikeSpriteFrames:
 	dw SpikeSpriteFrame55 ; $412c
 	dw SpikeSpriteFrame55 ; $412e
 SpikeSpriteFrame00:
-	INCBIN "data/bank_048/d_4130.bin" ; $4130, 240 bytes
+	INCBIN "data/bank_048/SpikeSpriteFrame00.bin" ; $4130, 240 bytes
 SpikeSpriteFrame01:
-	INCBIN "data/bank_048/d_4220.bin" ; $4220, 240 bytes
+	INCBIN "data/bank_048/SpikeSpriteFrame01.bin" ; $4220, 240 bytes
 SpikeSpriteFrame02:
-	INCBIN "data/bank_048/d_4310.bin" ; $4310, 240 bytes
+	INCBIN "data/bank_048/SpikeSpriteFrame02.bin" ; $4310, 240 bytes
 SpikeSpriteFrame03:
-	INCBIN "data/bank_048/d_4400.bin" ; $4400, 240 bytes
+	INCBIN "data/bank_048/SpikeSpriteFrame03.bin" ; $4400, 240 bytes
 SpikeSpriteFrame04:
-	INCBIN "data/bank_048/d_44f0.bin" ; $44f0, 240 bytes
+	INCBIN "data/bank_048/SpikeSpriteFrame04.bin" ; $44f0, 240 bytes
 SpikeSpriteFrame05:
-	INCBIN "data/bank_048/d_45e0.bin" ; $45e0, 240 bytes
+	INCBIN "data/bank_048/SpikeSpriteFrame05.bin" ; $45e0, 240 bytes
 SpikeSpriteFrame06:
-	INCBIN "data/bank_048/d_46d0.bin" ; $46d0, 240 bytes
+	INCBIN "data/bank_048/SpikeSpriteFrame06.bin" ; $46d0, 240 bytes
 SpikeSpriteFrame07:
-	INCBIN "data/bank_048/d_47c0.bin" ; $47c0, 240 bytes
+	INCBIN "data/bank_048/SpikeSpriteFrame07.bin" ; $47c0, 240 bytes
 SpikeSpriteFrame08:
-	INCBIN "data/bank_048/d_48b0.bin" ; $48b0, 240 bytes
+	INCBIN "data/bank_048/SpikeSpriteFrame08.bin" ; $48b0, 240 bytes
 SpikeSpriteFrame09:
-	INCBIN "data/bank_048/d_49a0.bin" ; $49a0, 240 bytes
+	INCBIN "data/bank_048/SpikeSpriteFrame09.bin" ; $49a0, 240 bytes
 SpikeSpriteFrame10:
-	INCBIN "data/bank_048/d_4a90.bin" ; $4a90, 240 bytes
+	INCBIN "data/bank_048/SpikeSpriteFrame10.bin" ; $4a90, 240 bytes
 SpikeSpriteFrame11:
-	INCBIN "data/bank_048/d_4b80.bin" ; $4b80, 240 bytes
+	INCBIN "data/bank_048/SpikeSpriteFrame11.bin" ; $4b80, 240 bytes
 SpikeSpriteFrame12:
-	INCBIN "data/bank_048/d_4c70.bin" ; $4c70, 240 bytes
+	INCBIN "data/bank_048/SpikeSpriteFrame12.bin" ; $4c70, 240 bytes
 SpikeSpriteFrame13:
-	INCBIN "data/bank_048/d_4d60.bin" ; $4d60, 240 bytes
+	INCBIN "data/bank_048/SpikeSpriteFrame13.bin" ; $4d60, 240 bytes
 SpikeSpriteFrame14:
-	INCBIN "data/bank_048/d_4e50.bin" ; $4e50, 240 bytes
+	INCBIN "data/bank_048/SpikeSpriteFrame14.bin" ; $4e50, 240 bytes
 SpikeSpriteFrame15:
-	INCBIN "data/bank_048/d_4f40.bin" ; $4f40, 240 bytes
+	INCBIN "data/bank_048/SpikeSpriteFrame15.bin" ; $4f40, 240 bytes
 SpikeSpriteFrame16:
-	INCBIN "data/bank_048/d_5030.bin" ; $5030, 240 bytes
+	INCBIN "data/bank_048/SpikeSpriteFrame16.bin" ; $5030, 240 bytes
 SpikeSpriteFrame17:
-	INCBIN "data/bank_048/d_5120.bin" ; $5120, 240 bytes
+	INCBIN "data/bank_048/SpikeSpriteFrame17.bin" ; $5120, 240 bytes
 SpikeSpriteFrame18:
-	INCBIN "data/bank_048/d_5210.bin" ; $5210, 240 bytes
+	INCBIN "data/bank_048/SpikeSpriteFrame18.bin" ; $5210, 240 bytes
 SpikeSpriteFrame19:
-	INCBIN "data/bank_048/d_5300.bin" ; $5300, 240 bytes
+	INCBIN "data/bank_048/SpikeSpriteFrame19.bin" ; $5300, 240 bytes
 SpikeSpriteFrame20:
-	INCBIN "data/bank_048/d_53f0.bin" ; $53f0, 240 bytes
+	INCBIN "data/bank_048/SpikeSpriteFrame20.bin" ; $53f0, 240 bytes
 SpikeSpriteFrame21:
-	INCBIN "data/bank_048/d_54e0.bin" ; $54e0, 240 bytes
+	INCBIN "data/bank_048/SpikeSpriteFrame21.bin" ; $54e0, 240 bytes
 SpikeSpriteFrame22:
-	INCBIN "data/bank_048/d_55d0.bin" ; $55d0, 240 bytes
+	INCBIN "data/bank_048/SpikeSpriteFrame22.bin" ; $55d0, 240 bytes
 SpikeSpriteFrame23:
-	INCBIN "data/bank_048/d_56c0.bin" ; $56c0, 240 bytes
+	INCBIN "data/bank_048/SpikeSpriteFrame23.bin" ; $56c0, 240 bytes
 SpikeSpriteFrame24:
-	INCBIN "data/bank_048/d_57b0.bin" ; $57b0, 240 bytes
+	INCBIN "data/bank_048/SpikeSpriteFrame24.bin" ; $57b0, 240 bytes
 SpikeSpriteFrame25:
-	INCBIN "data/bank_048/d_58a0.bin" ; $58a0, 240 bytes
+	INCBIN "data/bank_048/SpikeSpriteFrame25.bin" ; $58a0, 240 bytes
 SpikeSpriteFrame26:
-	INCBIN "data/bank_048/d_5990.bin" ; $5990, 240 bytes
+	INCBIN "data/bank_048/SpikeSpriteFrame26.bin" ; $5990, 240 bytes
 SpikeSpriteFrame27:
-	INCBIN "data/bank_048/d_5a80.bin" ; $5a80, 240 bytes
+	INCBIN "data/bank_048/SpikeSpriteFrame27.bin" ; $5a80, 240 bytes
 SpikeSpriteFrame28:
-	INCBIN "data/bank_048/d_5b70.bin" ; $5b70, 240 bytes
+	INCBIN "data/bank_048/SpikeSpriteFrame28.bin" ; $5b70, 240 bytes
 SpikeSpriteFrame29:
-	INCBIN "data/bank_048/d_5c60.bin" ; $5c60, 240 bytes
+	INCBIN "data/bank_048/SpikeSpriteFrame29.bin" ; $5c60, 240 bytes
 SpikeSpriteFrame30:
-	INCBIN "data/bank_048/d_5d50.bin" ; $5d50, 240 bytes
+	INCBIN "data/bank_048/SpikeSpriteFrame30.bin" ; $5d50, 240 bytes
 SpikeSpriteFrame31:
-	INCBIN "data/bank_048/d_5e40.bin" ; $5e40, 240 bytes
+	INCBIN "data/bank_048/SpikeSpriteFrame31.bin" ; $5e40, 240 bytes
 SpikeSpriteFrame32:
-	INCBIN "data/bank_048/d_5f30.bin" ; $5f30, 240 bytes
+	INCBIN "data/bank_048/SpikeSpriteFrame32.bin" ; $5f30, 240 bytes
 SpikeSpriteFrame33:
-	INCBIN "data/bank_048/d_6020.bin" ; $6020, 240 bytes
+	INCBIN "data/bank_048/SpikeSpriteFrame33.bin" ; $6020, 240 bytes
 SpikeSpriteFrame34:
-	INCBIN "data/bank_048/d_6110.bin" ; $6110, 240 bytes
+	INCBIN "data/bank_048/SpikeSpriteFrame34.bin" ; $6110, 240 bytes
 SpikeSpriteFrame35:
-	INCBIN "data/bank_048/d_6200.bin" ; $6200, 240 bytes
+	INCBIN "data/bank_048/SpikeSpriteFrame35.bin" ; $6200, 240 bytes
 SpikeSpriteFrame36:
-	INCBIN "data/bank_048/d_62f0.bin" ; $62f0, 240 bytes
+	INCBIN "data/bank_048/SpikeSpriteFrame36.bin" ; $62f0, 240 bytes
 SpikeSpriteFrame37:
-	INCBIN "data/bank_048/d_63e0.bin" ; $63e0, 240 bytes
+	INCBIN "data/bank_048/SpikeSpriteFrame37.bin" ; $63e0, 240 bytes
 SpikeSpriteFrame38:
-	INCBIN "data/bank_048/d_64d0.bin" ; $64d0, 240 bytes
+	INCBIN "data/bank_048/SpikeSpriteFrame38.bin" ; $64d0, 240 bytes
 SpikeSpriteFrame39:
-	INCBIN "data/bank_048/d_65c0.bin" ; $65c0, 240 bytes
+	INCBIN "data/bank_048/SpikeSpriteFrame39.bin" ; $65c0, 240 bytes
 SpikeSpriteFrame40:
-	INCBIN "data/bank_048/d_66b0.bin" ; $66b0, 320 bytes
+	INCBIN "data/bank_048/SpikeSpriteFrame40.bin" ; $66b0, 320 bytes
 SpikeSpriteFrame41:
-	INCBIN "data/bank_048/d_67f0.bin" ; $67f0, 320 bytes
+	INCBIN "data/bank_048/SpikeSpriteFrame41.bin" ; $67f0, 320 bytes
 SpikeSpriteFrame42:
-	INCBIN "data/bank_048/d_6930.bin" ; $6930, 240 bytes
+	INCBIN "data/bank_048/SpikeSpriteFrame42.bin" ; $6930, 240 bytes
 SpikeSpriteFrame43:
-	INCBIN "data/bank_048/d_6a20.bin" ; $6a20, 240 bytes
+	INCBIN "data/bank_048/SpikeSpriteFrame43.bin" ; $6a20, 240 bytes
 SpikeSpriteFrame44:
-	INCBIN "data/bank_048/d_6b10.bin" ; $6b10, 240 bytes
+	INCBIN "data/bank_048/SpikeSpriteFrame44.bin" ; $6b10, 240 bytes
 SpikeSpriteFrame45:
-	INCBIN "data/bank_048/d_6c00.bin" ; $6c00, 240 bytes
+	INCBIN "data/bank_048/SpikeSpriteFrame45.bin" ; $6c00, 240 bytes
 SpikeSpriteFrame46:
-	INCBIN "data/bank_048/d_6cf0.bin" ; $6cf0, 240 bytes
+	INCBIN "data/bank_048/SpikeSpriteFrame46.bin" ; $6cf0, 240 bytes
 SpikeSpriteFrame47:
-	INCBIN "data/bank_048/d_6de0.bin" ; $6de0, 240 bytes
+	INCBIN "data/bank_048/SpikeSpriteFrame47.bin" ; $6de0, 240 bytes
 SpikeSpriteFrame48:
-	INCBIN "data/bank_048/d_6ed0.bin" ; $6ed0, 240 bytes
+	INCBIN "data/bank_048/SpikeSpriteFrame48.bin" ; $6ed0, 240 bytes
 SpikeSpriteFrame49:
-	INCBIN "data/bank_048/d_6fc0.bin" ; $6fc0, 240 bytes
+	INCBIN "data/bank_048/SpikeSpriteFrame49.bin" ; $6fc0, 240 bytes
 SpikeSpriteFrame50:
-	INCBIN "data/bank_048/d_70b0.bin" ; $70b0, 240 bytes
+	INCBIN "data/bank_048/SpikeSpriteFrame50.bin" ; $70b0, 240 bytes
 SpikeSpriteFrame51:
-	INCBIN "data/bank_048/d_71a0.bin" ; $71a0, 240 bytes
+	INCBIN "data/bank_048/SpikeSpriteFrame51.bin" ; $71a0, 240 bytes
 SpikeSpriteFrame52:
-	INCBIN "data/bank_048/d_7290.bin" ; $7290, 240 bytes
+	INCBIN "data/bank_048/SpikeSpriteFrame52.bin" ; $7290, 240 bytes
 SpikeSpriteFrame53:
-	INCBIN "data/bank_048/d_7380.bin" ; $7380, 240 bytes
+	INCBIN "data/bank_048/SpikeSpriteFrame53.bin" ; $7380, 240 bytes
 SpikeSpriteFrame54:
-	INCBIN "data/bank_048/d_7470.bin" ; $7470, 240 bytes
+	INCBIN "data/bank_048/SpikeSpriteFrame54.bin" ; $7470, 240 bytes
 SpikeSpriteFrame55:
-	INCBIN "data/bank_048/d_7560.bin" ; $7560, 240 bytes
+	INCBIN "data/bank_048/SpikeSpriteFrame55.bin" ; $7560, 240 bytes
 SpikeSpriteFramesUnused:
-	INCBIN "data/bank_048/d_7650.bin" ; $7650, 1680 bytes
+	INCBIN "data/bank_048/SpikeSpriteFramesUnused.bin" ; $7650, 1680 bytes
 SpikeSpriteOam:
-	INCBIN "data/bank_048/d_7ce0.bin" ; $7ce0, 580 bytes
+	INCBIN "data/bank_048/SpikeSpriteOam.bin" ; $7ce0, 580 bytes
 SpikeSpriteAnims:
 	dw SpikeSpriteAnim00 ; $7f24
 	dw SpikeSpriteAnim01 ; $7f26

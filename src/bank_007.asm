@@ -2077,37 +2077,37 @@ ComposeLinkStateByte:
 	pop bc ; $4d1f
 	ret ; $4d20
 LinkStateBytePtrs_07:
-	INCBIN "data/bank_007/d_4d21.bin" ; $4d21, 16 bytes
+	INCBIN "data/bank_007/LinkStateBytePtrs_07.bin" ; $4d21, 16 bytes
 ShotPlacementDataTopspin_07:
-	INCBIN "data/bank_007/d_4d31.bin" ; $4d31, 80 bytes
+	INCBIN "data/bank_007/ShotPlacementDataTopspin_07.bin" ; $4d31, 80 bytes
 ShotPlacementDataPowerTopspin_07:
-	INCBIN "data/bank_007/d_4d81.bin" ; $4d81, 80 bytes
+	INCBIN "data/bank_007/ShotPlacementDataPowerTopspin_07.bin" ; $4d81, 80 bytes
 ShotPlacementDataSlice_07:
-	INCBIN "data/bank_007/d_4dd1.bin" ; $4dd1, 80 bytes
+	INCBIN "data/bank_007/ShotPlacementDataSlice_07.bin" ; $4dd1, 80 bytes
 ShotPlacementDataPowerSlice_07:
-	INCBIN "data/bank_007/d_4e21.bin" ; $4e21, 80 bytes
+	INCBIN "data/bank_007/ShotPlacementDataPowerSlice_07.bin" ; $4e21, 80 bytes
 ShotPlacementDataNeutral_07:
-	INCBIN "data/bank_007/d_4e71.bin" ; $4e71, 80 bytes
+	INCBIN "data/bank_007/ShotPlacementDataNeutral_07.bin" ; $4e71, 80 bytes
 ShotPlacementDataSmash_07:
-	INCBIN "data/bank_007/d_4ec1.bin" ; $4ec1, 80 bytes
+	INCBIN "data/bank_007/ShotPlacementDataSmash_07.bin" ; $4ec1, 80 bytes
 ShotPlacementDataReachBasic_07:
-	INCBIN "data/bank_007/d_4f11.bin" ; $4f11, 80 bytes
+	INCBIN "data/bank_007/ShotPlacementDataReachBasic_07.bin" ; $4f11, 80 bytes
 ShotPlacementDataReachPowerTopspin_07:
-	INCBIN "data/bank_007/d_4f61.bin" ; $4f61, 80 bytes
+	INCBIN "data/bank_007/ShotPlacementDataReachPowerTopspin_07.bin" ; $4f61, 80 bytes
 ShotPlacementDataReachPowerSlice_07:
-	INCBIN "data/bank_007/d_4fb1.bin" ; $4fb1, 80 bytes
+	INCBIN "data/bank_007/ShotPlacementDataReachPowerSlice_07.bin" ; $4fb1, 80 bytes
 ShotPlacementDataReach_07:
-	INCBIN "data/bank_007/d_5001.bin" ; $5001, 80 bytes
+	INCBIN "data/bank_007/ShotPlacementDataReach_07.bin" ; $5001, 80 bytes
 ShotPlacementDataLob_07:
-	INCBIN "data/bank_007/d_5051.bin" ; $5051, 16 bytes
+	INCBIN "data/bank_007/ShotPlacementDataLob_07.bin" ; $5051, 16 bytes
 ShotPlacementDataDrop_07:
-	INCBIN "data/bank_007/d_5061.bin" ; $5061, 16 bytes
+	INCBIN "data/bank_007/ShotPlacementDataDrop_07.bin" ; $5061, 16 bytes
 ShotPlacementDataServeTopspin_07:
-	INCBIN "data/bank_007/d_5071.bin" ; $5071, 80 bytes
+	INCBIN "data/bank_007/ShotPlacementDataServeTopspin_07.bin" ; $5071, 80 bytes
 ShotPlacementDataServeSlice_07:
-	INCBIN "data/bank_007/d_50c1.bin" ; $50c1, 80 bytes
+	INCBIN "data/bank_007/ShotPlacementDataServeSlice_07.bin" ; $50c1, 80 bytes
 ShotPlacementDataServeFlat_07:
-	INCBIN "data/bank_007/d_5111.bin" ; $5111, 80 bytes
+	INCBIN "data/bank_007/ShotPlacementDataServeFlat_07.bin" ; $5111, 80 bytes
 ComputeShotPlacement:
 	ld a, [wCurrentShotType] ; $5161
 	rst Rst00 ; $5164
@@ -3512,7 +3512,7 @@ CharFrameGfxDest_07:
 	dw $a200 ; record 2
 	dw $a300 ; record 3
 SetupCharacterSprite_CharTileBaseTable:
-	INCBIN "data/bank_007/d_5aaf.bin" ; $5aaf, 4 bytes
+	INCBIN "data/bank_007/SetupCharacterSprite_CharTileBaseTable.bin" ; $5aaf, 4 bytes
 ; Copies one character's attribute record into the per-character struct: the
 ; reach box CheckCharBallContact tests against, the jump-smash and dive speeds,
 ; and the six AI parameters at record +$0f and +$1b-$1f -- home-position

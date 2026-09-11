@@ -1022,7 +1022,7 @@ LoadExpScreenGfx:
 	call DecompressData ; $485f
 	ld hl, wDecompBuffer ; $4862
 	ld de, $9000 + VRAM_BANK1 ; $4865
-	ld c, $80 ; $4868
+	ld c, $80 ; $4868 -- 128 of ExpScreenGfx0's 192 tiles
 	call QueueVRAMCopy ; $486a
 	ld hl, wTextTileBuffer ; $486d
 	ld de, $8800 + VRAM_BANK1 ; $4870
@@ -1043,14 +1043,14 @@ LoadExpScreenGfx:
 	call DecompressData ; $48a0
 	ld hl, wDecompBuffer ; $48a3
 	ld de, $8c00 + VRAM_BANK1 ; $48a6
-	ld c, $04 ; $48a9
+	ld c, ExpScreenGfx6_SIZE / 16 ; $48a9
 	call QueueVRAMCopy ; $48ab
 	ld hl, ExpScreenGfx7 ; $48ae
 	ld de, wDecompBuffer ; $48b1
 	call DecompressData ; $48b4
 	ld hl, wDecompBuffer ; $48b7
 	ld de, $8c40 + VRAM_BANK1 ; $48ba
-	ld c, $04 ; $48bd
+	ld c, ExpScreenGfx7_SIZE / 16 ; $48bd
 	call QueueVRAMCopy ; $48bf
 	ld hl, ExpScreenGfxPalettes2 ; $48c2
 	lb de, $09, $01 ; $48c5 palette index, count
@@ -1064,7 +1064,7 @@ LoadExpScreenGfx:
 	call DecompressData ; $48d7
 	ld hl, wDecompBuffer ; $48da
 	ld de, $8c80 + VRAM_BANK1 ; $48dd
-	ld c, $02 ; $48e0
+	ld c, ExpScreenGfx5_SIZE / 16 ; $48e0
 	call QueueVRAMCopy ; $48e2
 	ld hl, ExpScreenGfxPalettes1 ; $48e5
 	lb de, $0a, $01 ; $48e8 palette index, count
@@ -2647,32 +2647,35 @@ Padding_1a:
 	; $5523, 13 bytes (fill)
 	ds 13, $00
 ExpScreenGfx0:
-	INCBIN "data/bank_01a/lz_5530.bin" ; $5530, 1711 bytes
+	INCBIN "data/bank_01a/lz_ExpScreenGfx0.bin" ; $5530, 1711 bytes
 	db $00 ; $5bdf
 ExpScreenGfx1:
-	INCBIN "data/bank_01a/d_5be0.bin" ; $5be0, 576 bytes
+	INCBIN "data/bank_01a/ExpScreenGfx1.bin" ; $5be0, 576 bytes
 ExpScreenGfx2:
-	INCBIN "data/bank_01a/d_5e20.bin" ; $5e20, 576 bytes
+	INCBIN "data/bank_01a/ExpScreenGfx2.bin" ; $5e20, 576 bytes
 ExpScreenGfx3:
-	INCBIN "data/bank_01a/d_6060.bin" ; $6060, 576 bytes
+	INCBIN "data/bank_01a/ExpScreenGfx3.bin" ; $6060, 576 bytes
 ExpScreenGfx4:
-	INCBIN "data/bank_01a/d_62a0.bin" ; $62a0, 576 bytes
+	INCBIN "data/bank_01a/ExpScreenGfx4.bin" ; $62a0, 576 bytes
 ExpScreenGfxPalettes0:
-	INCBIN "data/bank_01a/d_64e0.bin" ; $64e0, 368 bytes
+	INCBIN "data/bank_01a/ExpScreenGfxPalettes0.bin" ; $64e0, 368 bytes
 ExpScreenGfx5:
-	INCBIN "data/bank_01a/lz_6650.bin" ; $6650, 24 bytes
+	INCBIN "data/bank_01a/lz_ExpScreenGfx5.bin" ; $6650, 24 bytes
+	INCLUDE "data/bank_01a/lz_ExpScreenGfx5.inc" ; DEF ExpScreenGfx5_SIZE EQU its decoded length, generated from the .bin by make
 ExpScreenGfxPalettes1:
-	INCBIN "data/bank_01a/d_6668.bin" ; $6668, 24 bytes
+	INCBIN "data/bank_01a/ExpScreenGfxPalettes1.bin" ; $6668, 24 bytes
 ExpScreenGfx6:
-	INCBIN "data/bank_01a/lz_6680.bin" ; $6680, 72 bytes
+	INCBIN "data/bank_01a/lz_ExpScreenGfx6.bin" ; $6680, 72 bytes
+	INCLUDE "data/bank_01a/lz_ExpScreenGfx6.inc" ; DEF ExpScreenGfx6_SIZE EQU its decoded length, generated from the .bin by make
 ExpScreenGfx7:
-	INCBIN "data/bank_01a/lz_66c8.bin" ; $66c8, 73 bytes
+	INCBIN "data/bank_01a/lz_ExpScreenGfx7.bin" ; $66c8, 73 bytes
+	INCLUDE "data/bank_01a/lz_ExpScreenGfx7.inc" ; DEF ExpScreenGfx7_SIZE EQU its decoded length, generated from the .bin by make
 ExpScreenGfxPalettes2:
-	INCBIN "data/bank_01a/d_6711.bin" ; $6711, 16 bytes
+	INCBIN "data/bank_01a/ExpScreenGfxPalettes2.bin" ; $6711, 16 bytes
 ExpScreenGfxPalettes3:
-	INCBIN "data/bank_01a/d_6721.bin" ; $6721, 8 bytes
+	INCBIN "data/bank_01a/ExpScreenGfxPalettes3.bin" ; $6721, 8 bytes
 ExpScreenGfx8:
-	INCBIN "data/bank_01a/lz_6729.bin" ; $6729, 171 bytes
+	INCBIN "data/bank_01a/lz_ExpScreenGfx8.bin" ; $6729, 171 bytes
 RunDebugCharViewer:
 	xor a ; $67d4
 	ld [wDebugCharViewerPage], a ; $67d5
@@ -2745,7 +2748,7 @@ RunCharViewerSelectGrid:
 	call DecompressData ; $6891
 	ld hl, wDecompBuffer ; $6894
 	ld de, $9000 + VRAM_BANK1 ; $6897
-	ld c, $80 ; $689a
+	ld c, $80 ; $689a -- 128 of CharViewerScreenGfx0's 256 tiles
 	call QueueVRAMCopy ; $689c
 	ld hl, wTextTileBuffer ; $689f
 	ld de, $8800 + VRAM_BANK1 ; $68a2
@@ -3065,7 +3068,7 @@ LoadCharViewerScreenGfx:
 	call DecompressData ; $6b6a
 	ld hl, wDecompBuffer ; $6b6d
 	ld de, $9000 + VRAM_BANK1 ; $6b70
-	ld c, $80 ; $6b73
+	ld c, $80 ; $6b73 -- 128 of CharViewerScreenGfx0's 256 tiles
 	call QueueVRAMCopy ; $6b75
 	ld hl, wTextTileBuffer ; $6b78
 	ld de, $8800 + VRAM_BANK1 ; $6b7b
@@ -3194,7 +3197,7 @@ DrawCharViewerCursorSpriteTable0:
 	db $50, $78, $50, $80, $50, $88, $58, $38, $58, $40, $58, $48, $58, $50, $58, $58 ; 0x10
 	db $58, $60, $58, $68, $58, $70, $58, $78, $58, $80, $58, $88 ; 0x20
 DrawCharViewerCursorSpriteTable1:
-	INCBIN "data/bank_01a/d_6c95.bin" ; $6c95, 10 bytes
+	INCBIN "data/bank_01a/DrawCharViewerCursorSpriteTable1.bin" ; $6c95, 10 bytes
 RunCharViewerInputLoop:
 	call DrawCharViewerCharSprite ; $6c9f
 	wram_bank $06 ; $6ca2
@@ -3667,17 +3670,17 @@ ApplyCharViewerPalette:
 	farcall LoadIndexedPaletteThunk ; $70d5
 	ret ; $70d8
 Palette_1a_0:
-	INCLUDE "data/bank_01a/palettes_70d9.asm" ; $70d9, 64 bytes (palettes)
+	INCLUDE "data/bank_01a/Palette_1a_0.asm" ; $70d9, 64 bytes (palettes)
 CharViewerScreenGfx0:
-	INCBIN "data/bank_01a/lz_7119.bin" ; $7119, 1636 bytes
+	INCBIN "data/bank_01a/lz_CharViewerScreenGfx0.bin" ; $7119, 1636 bytes
 CharViewerScreenGfx1:
-	INCBIN "data/bank_01a/lz_777d.bin" ; $777d, 180 bytes
+	INCBIN "data/bank_01a/lz_CharViewerScreenGfx1.bin" ; $777d, 180 bytes
 CharViewerScreenGfx2:
-	INCBIN "data/bank_01a/lz_7831.bin" ; $7831, 129 bytes
+	INCBIN "data/bank_01a/lz_CharViewerScreenGfx2.bin" ; $7831, 129 bytes
 CharViewerGridTilemap0:
-	INCBIN "data/bank_01a/lz_78b2.bin" ; $78b2, 58 bytes
+	INCBIN "data/bank_01a/lz_CharViewerGridTilemap0.bin" ; $78b2, 58 bytes
 CharViewerGridTilemap1:
-	INCBIN "data/bank_01a/lz_78ec.bin" ; $78ec, 67 bytes
+	INCBIN "data/bank_01a/lz_CharViewerGridTilemap1.bin" ; $78ec, 67 bytes
 CharViewerInputLoopTable:
 	; $792f, 22 bytes (bytes:16)
 	db $00, $01, $02, $03, $04, $05, $06, $07, $08, $09, $0a, $0b, $0c, $0d, $0e, $0f ; 0x00
@@ -3982,28 +3985,28 @@ CharDataScreen_LoadGfx:
 	call DecompressData ; $7b9a
 	ld hl, wDecompBuffer ; $7b9d
 	ld de, $8780 + VRAM_BANK1 ; $7ba0
-	ld c, $02 ; $7ba3
+	ld c, CharDataScreenGfx0_SIZE / 16 ; $7ba3
 	call QueueVRAMCopy ; $7ba5
 	ld hl, CharDataScreenGfx1 ; $7ba8
 	ld de, wDecompBuffer ; $7bab
 	call DecompressData ; $7bae
 	ld hl, wDecompBuffer ; $7bb1
 	ld de, $87a0 + VRAM_BANK1 ; $7bb4
-	ld c, $02 ; $7bb7
+	ld c, CharDataScreenGfx1_SIZE / 16 ; $7bb7
 	call QueueVRAMCopy ; $7bb9
 	ld hl, CharDataScreenGfx2 ; $7bbc
 	ld de, wDecompBuffer ; $7bbf
 	call DecompressData ; $7bc2
 	ld hl, wDecompBuffer ; $7bc5
 	ld de, $87c0 + VRAM_BANK1 ; $7bc8
-	ld c, $02 ; $7bcb
+	ld c, CharDataScreenGfx2_SIZE / 16 ; $7bcb
 	call QueueVRAMCopy ; $7bcd
 	ld hl, CharDataScreenGfx3 ; $7bd0
 	ld de, wDecompBuffer ; $7bd3
 	call DecompressData ; $7bd6
 	ld hl, wDecompBuffer ; $7bd9
 	ld de, $87e0 + VRAM_BANK1 ; $7bdc
-	ld c, $02 ; $7bdf
+	ld c, CharDataScreenGfx3_SIZE / 16 ; $7bdf
 	call QueueVRAMCopy ; $7be1
 	ret ; $7be4
 DrawStatChangeArrows:
@@ -4335,17 +4338,21 @@ CharDataConfirmScreenTable0:
 	; $7e46, 13 bytes (bytes:13)
 	db $00, $00, $00, $0e, $00, $20, $0e, $0e, $00, $40, $1c, $0e, $ff ; 0x00
 CharDataConfirmScreenGfx1:
-	INCBIN "data/bank_01a/lz_7e53.bin" ; $7e53, 34 bytes
+	INCBIN "data/bank_01a/lz_CharDataConfirmScreenGfx1.bin" ; $7e53, 34 bytes
 CharDataConfirmScreenGfx2:
-	INCBIN "data/bank_01a/lz_7e75.bin" ; $7e75, 9 bytes
+	INCBIN "data/bank_01a/lz_CharDataConfirmScreenGfx2.bin" ; $7e75, 9 bytes
 CharDataScreen_LoadPalette:
-	INCLUDE "data/bank_01a/palettes_7e7e.asm" ; $7e7e, 16 bytes (palettes)
+	INCLUDE "data/bank_01a/CharDataScreen_LoadPalette.asm" ; $7e7e, 16 bytes (palettes)
 CharDataScreenGfx0:
-	INCBIN "data/bank_01a/lz_7e8e.bin" ; $7e8e, 11 bytes
+	INCBIN "data/bank_01a/lz_CharDataScreenGfx0.bin" ; $7e8e, 11 bytes
+	INCLUDE "data/bank_01a/lz_CharDataScreenGfx0.inc" ; DEF CharDataScreenGfx0_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenGfx1:
-	INCBIN "data/bank_01a/lz_7e99.bin" ; $7e99, 11 bytes
+	INCBIN "data/bank_01a/lz_CharDataScreenGfx1.bin" ; $7e99, 11 bytes
+	INCLUDE "data/bank_01a/lz_CharDataScreenGfx1.inc" ; DEF CharDataScreenGfx1_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenGfx2:
-	INCBIN "data/bank_01a/lz_7ea4.bin" ; $7ea4, 11 bytes
+	INCBIN "data/bank_01a/lz_CharDataScreenGfx2.bin" ; $7ea4, 11 bytes
+	INCLUDE "data/bank_01a/lz_CharDataScreenGfx2.inc" ; DEF CharDataScreenGfx2_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenGfx3:
-	INCBIN "data/bank_01a/lz_7eaf.bin" ; $7eaf, 11 bytes
+	INCBIN "data/bank_01a/lz_CharDataScreenGfx3.bin" ; $7eaf, 11 bytes
+	INCLUDE "data/bank_01a/lz_CharDataScreenGfx3.inc" ; DEF CharDataScreenGfx3_SIZE EQU its decoded length, generated from the .bin by make
 	; $7eba, 326 bytes fill to bank end (linker-padded)

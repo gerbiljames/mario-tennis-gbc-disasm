@@ -381,7 +381,7 @@ IntroCutsceneState01Init_6b:
 	script_fade_in $40 ; $42aa
 	jp DispatchCutsceneStateInit.loop ; $42af
 Palettes_6b_00:
-	INCLUDE "data/bank_06b/palettes_42b2.asm" ; $42b2, 64 bytes (palettes)
+	INCLUDE "data/bank_06b/Palettes_6b_00.asm" ; $42b2, 64 bytes (palettes)
 IntroCutsceneState01Exit_6b:
 	ld hl, QueueCutsceneSpriteGroupA ; $42f2
 	call UnregisterFrameTask ; $42f5
@@ -431,7 +431,7 @@ IntroCutsceneState02Init_6b:
 	call LoadPalettesImmediate ; $4369
 	jp DispatchCutsceneStateInit.loop ; $436c
 IntroCutsceneState02InitPalette_6b:
-	INCLUDE "data/bank_06b/palettes_436f.asm" ; $436f, 64 bytes (palettes)
+	INCLUDE "data/bank_06b/IntroCutsceneState02InitPalette_6b.asm" ; $436f, 64 bytes (palettes)
 IntroCutsceneState02Exit_6b:
 	ld c, $06 ; $43af
 	call BeginFadeOut ; $43b1
@@ -539,7 +539,7 @@ IntroCutsceneState04Init_6b:
 	call LoadPalettesImmediate ; $44ca
 	jp DispatchCutsceneStateInit.loop ; $44cd
 IntroCutsceneState04InitPalettes:
-	INCLUDE "data/bank_06b/palettes_44d0.asm" ; $44d0, 64 bytes (palettes)
+	INCLUDE "data/bank_06b/IntroCutsceneState04InitPalettes.asm" ; $44d0, 64 bytes (palettes)
 IntroCutsceneState04Exit_6b:
 	ld c, $06 ; $4510
 	call BeginFadeOut ; $4512
@@ -770,7 +770,7 @@ IntroCutsceneState13Update_6b:
 	jp z, DispatchCutsceneStateInit.loopB ; $4754
 	jp DispatchCutsceneStateInit.loop ; $4757
 IntroCutsceneState13InitPalettes_6b:
-	INCLUDE "data/bank_06b/palettes_475a.asm" ; $475a, 64 bytes (palettes)
+	INCLUDE "data/bank_06b/IntroCutsceneState13InitPalettes_6b.asm" ; $475a, 64 bytes (palettes)
 IntroCutsceneState08Init_6b:
 	call DisableLCDSafely ; $479a
 	ld c, $1c ; $479d
@@ -1050,7 +1050,7 @@ IntroCutsceneState16Exit_6b:
 	ld [wCutsceneStepTimer], a ; $4a52
 	jp DispatchCutsceneStateInit.loop2 ; $4a55
 IntroCutsceneState16InitPalettes_6b:
-	INCLUDE "data/bank_06b/palettes_4a58.asm" ; $4a58, 64 bytes (palettes)
+	INCLUDE "data/bank_06b/IntroCutsceneState16InitPalettes_6b.asm" ; $4a58, 64 bytes (palettes)
 IntroCutsceneState17Init_6b:
 	wram_bank $04 ; $4a98
 	ld hl, wIntroCharactersTilemap + 6 * TILEMAP_WIDTH ; $4a9e
@@ -1187,7 +1187,7 @@ IntroCutsceneState18Exit_6b:
 	ldh [hShowDebugConsole], a ; $4bfb
 	jp DispatchCutsceneStateInit.loop2 ; $4bfd
 Palettes_6b_03:
-	INCLUDE "data/bank_06b/palettes_4c00.asm" ; $4c00, 56 bytes (palettes)
+	INCLUDE "data/bank_06b/Palettes_6b_03.asm" ; $4c00, 56 bytes (palettes)
 IntroCutsceneState19Init_6b:
 	ld hl, Palette_6b_1 ; $4c38
 	lb de, $00, $08 ; $4c3b palette index, count
@@ -1260,7 +1260,7 @@ UpdateCutsceneScrollX:
 	ld [wIntroCutsceneScrollY], a ; $4cbd
 	ret ; $4cc0
 CutsceneScrollXTable:
-	INCBIN "data/bank_06b/d_4cc1.bin" ; $4cc1, 160 bytes
+	INCBIN "data/bank_06b/CutsceneScrollXTable.bin" ; $4cc1, 160 bytes
 UpdateCutsceneScrollY:
 	ld a, [wCutsceneStepTimer] ; $4d61
 	ld hl, CutsceneScrollYTable ; $4d64
@@ -1287,7 +1287,7 @@ UpdateCutsceneScrollY:
 	ld [wCutsceneScrollAccum], a ; $4d80
 	ret ; $4d83
 CutsceneScrollYTable:
-	INCBIN "data/bank_06b/d_4d84.bin" ; $4d84, 169 bytes
+	INCBIN "data/bank_06b/CutsceneScrollYTable.bin" ; $4d84, 169 bytes
 QueueCutsceneAnimatedSprites:
 	ld a, [wCutsceneStepTimer] ; $4e2d
 	cp $20 ; $4e30
@@ -1359,11 +1359,11 @@ QueueCutsceneAnimatedSprites_SpriteTemplate2:
 	oam_sprite $10, $08, $00, $00
 	oam_sprite_end
 CutsceneAnimatedSprites0:
-	INCBIN "data/bank_06b/d_4ea5.bin" ; $4ea5, 240 bytes
+	INCBIN "data/bank_06b/CutsceneAnimatedSprites0.bin" ; $4ea5, 240 bytes
 CutsceneAnimatedSprites1:
-	INCBIN "data/bank_06b/d_4f95.bin" ; $4f95, 216 bytes
+	INCBIN "data/bank_06b/CutsceneAnimatedSprites1.bin" ; $4f95, 216 bytes
 CutsceneAnimatedSprites2:
-	INCBIN "data/bank_06b/d_506d.bin" ; $506d, 288 bytes
+	INCBIN "data/bank_06b/CutsceneAnimatedSprites2.bin" ; $506d, 288 bytes
 ApplyCutsceneScrollToSpriteX:
 	push bc ; $518d
 	push hl ; $518e
@@ -1473,7 +1473,7 @@ LoadCutsceneTileset:
 	call LoadPaletteShadow ; $5256
 	ret ; $5259
 CutsceneTilesetPalettes:
-	INCLUDE "data/bank_06b/palettes_525a.asm" ; $525a, 16 bytes (palettes)
+	INCLUDE "data/bank_06b/CutsceneTilesetPalettes.asm" ; $525a, 16 bytes (palettes)
 QueueCutsceneSpriteGroupA:
 	ld hl, QueueCutsceneSpriteGroupA_SpriteTemplate0 ; $526a
 	ld a, [wCutsceneSpriteAX] ; $526d
@@ -1664,7 +1664,7 @@ InitCutsceneSceneA:
 	call DecompressData ; $5411
 	ld hl, wDecompBuffer ; $5414
 	ld de, $9000 ; $5417
-	ld c, $80 ; $541a
+	ld c, $80 ; $541a -- 128 of CutsceneSceneAGfx0's 144 tiles
 	call QueueVRAMCopy ; $541c
 	ld hl, wTextTileBuffer ; $541f
 	ld de, $8800 ; $5422
@@ -1698,7 +1698,7 @@ InitCutsceneSceneB:
 	call DecompressData ; $5473
 	ld hl, wDecompBuffer ; $5476
 	ld de, $9000 ; $5479
-	ld c, $80 ; $547c
+	ld c, $80 ; $547c -- 128 of CutsceneSceneAGfx0's 144 tiles
 	call QueueVRAMCopy ; $547e
 	ld hl, wTextTileBuffer ; $5481
 	ld de, $8800 ; $5484
@@ -1729,7 +1729,7 @@ InitCutsceneSceneC:
 	call DecompressData ; $54ce
 	ld hl, wDecompBuffer ; $54d1
 	ld de, $9000 ; $54d4
-	ld c, $80 ; $54d7
+	ld c, $80 ; $54d7 -- 128 of CutsceneSceneAGfx0's 144 tiles
 	call QueueVRAMCopy ; $54d9
 	ld hl, wTextTileBuffer ; $54dc
 	ld de, $8800 ; $54df
@@ -1754,17 +1754,17 @@ InitCutsceneSceneC:
 	farcall CopyScrolledSceneTilemapToVram ; $5519
 	ret ; $551c
 CutsceneSceneAGfx0:
-	INCBIN "data/bank_06b/lz_551d.bin" ; $551d, 1210 bytes
+	INCBIN "data/bank_06b/lz_CutsceneSceneAGfx0.bin" ; $551d, 1210 bytes
 CutsceneSceneBGfx0:
-	INCBIN "data/bank_06b/lz_59d7.bin" ; $59d7, 512 bytes
+	INCBIN "data/bank_06b/lz_CutsceneSceneBGfx0.bin" ; $59d7, 512 bytes
 CutsceneSceneBGfx1:
-	INCBIN "data/bank_06b/lz_5bd7.bin" ; $5bd7, 334 bytes
+	INCBIN "data/bank_06b/lz_CutsceneSceneBGfx1.bin" ; $5bd7, 334 bytes
 Palette_6b_1:
-	INCLUDE "data/bank_06b/palettes_5d25.asm" ; $5d25, 64 bytes (palettes)
+	INCLUDE "data/bank_06b/Palette_6b_1.asm" ; $5d25, 64 bytes (palettes)
 CutsceneSceneAGfx1:
-	INCBIN "data/bank_06b/lz_5d65.bin" ; $5d65, 323 bytes
+	INCBIN "data/bank_06b/lz_CutsceneSceneAGfx1.bin" ; $5d65, 323 bytes
 CutsceneSceneAGfx2:
-	INCBIN "data/bank_06b/lz_5ea8.bin" ; $5ea8, 461 bytes
+	INCBIN "data/bank_06b/lz_CutsceneSceneAGfx2.bin" ; $5ea8, 461 bytes
 LoadIntroTilesAndPalette:
 	ld b, $54 ; $6075
 	ld c, $10 ; $6077
@@ -1799,7 +1799,7 @@ LoadIntroTilesAndPalette:
 	call LoadPaletteShadow ; $60c1
 	ret ; $60c4
 IntroPalettes:
-	INCLUDE "data/bank_06b/palettes_60c5.asm" ; $60c5, 16 bytes (palettes)
+	INCLUDE "data/bank_06b/IntroPalettes.asm" ; $60c5, 16 bytes (palettes)
 SetCameraYFromScrollPos:
 	ld hl, wIntroCutsceneScrollY ; $60d5
 	ld a, [hl+] ; $60d8
@@ -1914,7 +1914,7 @@ InitTitleSceneGraphics:
 	call DecompressData ; $6191
 	ld hl, wDecompBuffer ; $6194
 	ld de, $9000 + VRAM_BANK1 ; $6197
-	ld c, $80 ; $619a
+	ld c, $80 ; $619a -- 128 of TitleSceneGraphicsGfx0's 241 tiles
 	call QueueVRAMCopy ; $619c
 	ld hl, wTextTileBuffer ; $619f
 	ld de, $8800 + VRAM_BANK1 ; $61a2
@@ -1941,13 +1941,13 @@ InitTitleSceneGraphics:
 	farcall CopyScrolledSceneTilemapToVram ; $61e2
 	ret ; $61e5
 TitleSceneGraphicsGfx0:
-	INCBIN "data/bank_06b/lz_61e6.bin" ; $61e6, 2774 bytes
+	INCBIN "data/bank_06b/lz_TitleSceneGraphicsGfx0.bin" ; $61e6, 2774 bytes
 TitleSceneGraphicsGfx1:
-	INCBIN "data/bank_06b/lz_6cbc.bin" ; $6cbc, 595 bytes
+	INCBIN "data/bank_06b/lz_TitleSceneGraphicsGfx1.bin" ; $6cbc, 595 bytes
 TitleSceneGraphicsGfx2:
-	INCBIN "data/bank_06b/lz_6f0f.bin" ; $6f0f, 308 bytes
+	INCBIN "data/bank_06b/lz_TitleSceneGraphicsGfx2.bin" ; $6f0f, 308 bytes
 TitleScenePalette:
-	INCLUDE "data/bank_06b/palettes_7043.asm" ; $7043, 64 bytes (palettes)
+	INCLUDE "data/bank_06b/TitleScenePalette.asm" ; $7043, 64 bytes (palettes)
 IntroSequenceTimerTask:
 	ld a, [wCutsceneSpriteAX] ; $7083
 	inc a ; $7086
@@ -1972,13 +1972,13 @@ IntroSequenceTimerTask:
 .done:
 	ret ; $70ae
 BgPalette1TaskPalettes:
-	INCLUDE "data/bank_06b/palettes_70af.asm" ; $70af, 128 bytes (palettes)
+	INCLUDE "data/bank_06b/BgPalette1TaskPalettes.asm" ; $70af, 128 bytes (palettes)
 BgPalettes2And3TaskPalettes0:
-	INCLUDE "data/bank_06b/palettes_712f.asm" ; $712f, 128 bytes (palettes)
+	INCLUDE "data/bank_06b/BgPalettes2And3TaskPalettes0.asm" ; $712f, 128 bytes (palettes)
 BgPalettes2And3TaskPalettes1:
-	INCLUDE "data/bank_06b/palettes_71af.asm" ; $71af, 128 bytes (palettes)
+	INCLUDE "data/bank_06b/BgPalettes2And3TaskPalettes1.asm" ; $71af, 128 bytes (palettes)
 BgPalettes4To7TaskPalettes:
-	INCLUDE "data/bank_06b/palettes_722f.asm" ; $722f, 128 bytes (palettes)
+	INCLUDE "data/bank_06b/BgPalettes4To7TaskPalettes.asm" ; $722f, 128 bytes (palettes)
 AnimateBgPalette1Task:
 	ldh a, [hVBlankCounter] ; $72af
 	and $03 ; $72b1
@@ -2174,9 +2174,9 @@ DecompressIntroTitleTiles:
 	pop_wram_bank ; $7432
 	ret ; $7437
 DecompressIntroTitleTiles1:
-	INCBIN "data/bank_06b/lz_7438.bin" ; $7438, 221 bytes
+	INCBIN "data/bank_06b/lz_DecompressIntroTitleTiles1.bin" ; $7438, 221 bytes
 DecompressIntroTitleTiles2:
-	INCBIN "data/bank_06b/lz_7515.bin" ; $7515, 76 bytes
+	INCBIN "data/bank_06b/lz_DecompressIntroTitleTiles2.bin" ; $7515, 76 bytes
 Unused_6b_IncrementCutsceneStepTimer:
 	ld a, [wCutsceneStepTimer] ; $7561
 	inc a ; $7564
@@ -2187,7 +2187,7 @@ ApplyScrollYFromWram:
 	ldh [hScrollY], a ; $756c
 	ret ; $756e
 IntroCutsceneState18InitPalettes_6b:
-	INCLUDE "data/bank_06b/palettes_756f.asm" ; $756f, 64 bytes (palettes)
+	INCLUDE "data/bank_06b/IntroCutsceneState18InitPalettes_6b.asm" ; $756f, 64 bytes (palettes)
 RunTitleScreen:
 	call ClearFrameTasks ; $75af
 	wram_bank $03 ; $75b2
@@ -2366,27 +2366,27 @@ StepTitleSpriteAnimation:
 	ret ; $774c
 	ret ; $774d
 TitleScreenTilemap:
-	INCBIN "data/bank_06b/lz_774e.bin" ; $774e, 292 bytes
+	INCBIN "data/bank_06b/lz_TitleScreenTilemap.bin" ; $774e, 292 bytes
 TitleScreenAttrmap:
-	INCBIN "data/bank_06b/lz_7872.bin" ; $7872, 157 bytes
+	INCBIN "data/bank_06b/lz_TitleScreenAttrmap.bin" ; $7872, 157 bytes
 TitleScreenPalettes:
-	INCLUDE "data/bank_06b/palettes_790f.asm" ; $790f, 64 bytes (palettes)
+	INCLUDE "data/bank_06b/TitleScreenPalettes.asm" ; $790f, 64 bytes (palettes)
 Palettes_6b_11:
-	INCLUDE "data/bank_06b/palettes_794f.asm" ; $794f, 8 bytes (palettes)
+	INCLUDE "data/bank_06b/Palettes_6b_11.asm" ; $794f, 8 bytes (palettes)
 AwardCeremonyTilemap:
-	INCBIN "data/bank_06b/lz_7957.bin" ; $7957, 293 bytes
+	INCBIN "data/bank_06b/lz_AwardCeremonyTilemap.bin" ; $7957, 293 bytes
 AwardCeremonyAttrmap:
-	INCBIN "data/bank_06b/lz_7a7c.bin" ; $7a7c, 114 bytes
+	INCBIN "data/bank_06b/lz_AwardCeremonyAttrmap.bin" ; $7a7c, 114 bytes
 AwardCeremonyTilemap2:
-	INCBIN "data/bank_06b/lz_7aee.bin" ; $7aee, 292 bytes
+	INCBIN "data/bank_06b/lz_AwardCeremonyTilemap2.bin" ; $7aee, 292 bytes
 AwardCeremonyAttrmap2:
-	INCBIN "data/bank_06b/lz_7c12.bin" ; $7c12, 125 bytes
+	INCBIN "data/bank_06b/lz_AwardCeremonyAttrmap2.bin" ; $7c12, 125 bytes
 AwardCeremonyTilemap3:
-	INCBIN "data/bank_06b/lz_7c8f.bin" ; $7c8f, 296 bytes
+	INCBIN "data/bank_06b/lz_AwardCeremonyTilemap3.bin" ; $7c8f, 296 bytes
 AwardCeremonyAttrmap3:
-	INCBIN "data/bank_06b/lz_7db7.bin" ; $7db7, 120 bytes
+	INCBIN "data/bank_06b/lz_AwardCeremonyAttrmap3.bin" ; $7db7, 120 bytes
 AwardCeremonyTilemap4:
-	INCBIN "data/bank_06b/lz_7e2f.bin" ; $7e2f, 296 bytes
+	INCBIN "data/bank_06b/lz_AwardCeremonyTilemap4.bin" ; $7e2f, 296 bytes
 AwardCeremonyAttrmap4:
-	INCBIN "data/bank_06b/lz_7f57.bin" ; $7f57, 129 bytes
+	INCBIN "data/bank_06b/lz_AwardCeremonyAttrmap4.bin" ; $7f57, 129 bytes
 	; $7fd8, 40 bytes fill to bank end (linker-padded)

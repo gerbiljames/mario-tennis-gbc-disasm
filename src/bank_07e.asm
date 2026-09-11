@@ -148,149 +148,149 @@ SoundTable_7e:
 	snd_channel 0, $00 ; $4120
 	dw Music95_Trk0 ; $4122
 Sfx28_Trk0:
-	INCBIN "data/bank_07e/d_4124.bin" ; $4124, 822 bytes
+	INCBIN "data/bank_07e/Sfx28_Trk0.bin" ; $4124, 822 bytes
 Sfx28_Trk1:
-	INCBIN "data/bank_07e/d_445a.bin" ; $445a, 532 bytes
+	INCBIN "data/bank_07e/Sfx28_Trk1.bin" ; $445a, 532 bytes
 Sfx28_Trk2:
-	INCBIN "data/bank_07e/d_466e.bin" ; $466e, 1680 bytes
+	INCBIN "data/bank_07e/Sfx28_Trk2.bin" ; $466e, 1680 bytes
 Sfx28_Trk3:
-	INCBIN "data/bank_07e/d_4cfe.bin" ; $4cfe, 1566 bytes
+	INCBIN "data/bank_07e/Sfx28_Trk3.bin" ; $4cfe, 1566 bytes
 Sfx29_Trk0:
-	INCBIN "data/bank_07e/d_531c.bin" ; $531c, 808 bytes
+	INCBIN "data/bank_07e/Sfx29_Trk0.bin" ; $531c, 808 bytes
 Sfx29_Trk1:
-	INCBIN "data/bank_07e/d_5644.bin" ; $5644, 746 bytes
+	INCBIN "data/bank_07e/Sfx29_Trk1.bin" ; $5644, 746 bytes
 Sfx29_Trk2:
-	INCBIN "data/bank_07e/d_592e.bin" ; $592e, 836 bytes
+	INCBIN "data/bank_07e/Sfx29_Trk2.bin" ; $592e, 836 bytes
 Sfx29_Trk3:
-	INCBIN "data/bank_07e/d_5c72.bin" ; $5c72, 1286 bytes
+	INCBIN "data/bank_07e/Sfx29_Trk3.bin" ; $5c72, 1286 bytes
 Sfx2c_Trk0:
-	INCBIN "data/bank_07e/d_6178.bin" ; $6178, 688 bytes
+	INCBIN "data/bank_07e/Sfx2c_Trk0.bin" ; $6178, 688 bytes
 Sfx2c_Trk1:
-	INCBIN "data/bank_07e/d_6428.bin" ; $6428, 716 bytes
+	INCBIN "data/bank_07e/Sfx2c_Trk1.bin" ; $6428, 716 bytes
 Sfx2c_Trk2:
-	INCBIN "data/bank_07e/d_66f4.bin" ; $66f4, 606 bytes
+	INCBIN "data/bank_07e/Sfx2c_Trk2.bin" ; $66f4, 606 bytes
 Sfx2c_Trk3:
-	INCBIN "data/bank_07e/d_6952.bin" ; $6952, 1582 bytes
+	INCBIN "data/bank_07e/Sfx2c_Trk3.bin" ; $6952, 1582 bytes
 Music5d_Trk0:
-	INCBIN "data/bank_07e/d_6f80.bin" ; $6f80, 20 bytes
+	INCBIN "data/bank_07e/Music5d_Trk0.bin" ; $6f80, 20 bytes
 Music5e_Trk0:
-	INCBIN "data/bank_07e/d_6f94.bin" ; $6f94, 20 bytes
+	INCBIN "data/bank_07e/Music5e_Trk0.bin" ; $6f94, 20 bytes
 Music5f_Trk0:
-	INCBIN "data/bank_07e/d_6fa8.bin" ; $6fa8, 18 bytes
+	INCBIN "data/bank_07e/Music5f_Trk0.bin" ; $6fa8, 18 bytes
 Music60_Trk0:
-	INCBIN "data/bank_07e/d_6fba.bin" ; $6fba, 24 bytes
+	INCBIN "data/bank_07e/Music60_Trk0.bin" ; $6fba, 24 bytes
 Music61_Trk0:
-	INCBIN "data/bank_07e/d_6fd2.bin" ; $6fd2, 48 bytes
+	INCBIN "data/bank_07e/Music61_Trk0.bin" ; $6fd2, 48 bytes
 Music62_Trk0:
-	INCBIN "data/bank_07e/d_7002.bin" ; $7002, 18 bytes
+	INCBIN "data/bank_07e/Music62_Trk0.bin" ; $7002, 18 bytes
 Music63_Trk0:
-	INCBIN "data/bank_07e/d_7014.bin" ; $7014, 18 bytes
+	INCBIN "data/bank_07e/Music63_Trk0.bin" ; $7014, 18 bytes
 Music64_Trk0:
-	INCBIN "data/bank_07e/d_7026.bin" ; $7026, 20 bytes
+	INCBIN "data/bank_07e/Music64_Trk0.bin" ; $7026, 20 bytes
 Music65_Trk0:
-	INCBIN "data/bank_07e/d_703a.bin" ; $703a, 34 bytes
+	INCBIN "data/bank_07e/Music65_Trk0.bin" ; $703a, 34 bytes
 Music66_Trk0:
-	INCBIN "data/bank_07e/d_705c.bin" ; $705c, 46 bytes
+	INCBIN "data/bank_07e/Music66_Trk0.bin" ; $705c, 46 bytes
 Music67_Trk0:
-	INCBIN "data/bank_07e/d_708a.bin" ; $708a, 74 bytes
+	INCBIN "data/bank_07e/Music67_Trk0.bin" ; $708a, 74 bytes
 Music68_Trk0:
-	INCBIN "data/bank_07e/d_70d4.bin" ; $70d4, 78 bytes
+	INCBIN "data/bank_07e/Music68_Trk0.bin" ; $70d4, 78 bytes
 Music69_Trk0:
-	INCBIN "data/bank_07e/d_7122.bin" ; $7122, 64 bytes
+	INCBIN "data/bank_07e/Music69_Trk0.bin" ; $7122, 64 bytes
 Music6a_Trk0:
-	INCBIN "data/bank_07e/d_7162.bin" ; $7162, 60 bytes
+	INCBIN "data/bank_07e/Music6a_Trk0.bin" ; $7162, 60 bytes
 Music6b_Trk0:
-	INCBIN "data/bank_07e/d_719e.bin" ; $719e, 62 bytes
+	INCBIN "data/bank_07e/Music6b_Trk0.bin" ; $719e, 62 bytes
 Music6c_Trk0:
-	INCBIN "data/bank_07e/d_71dc.bin" ; $71dc, 34 bytes
+	INCBIN "data/bank_07e/Music6c_Trk0.bin" ; $71dc, 34 bytes
 Music6d_Trk0:
-	INCBIN "data/bank_07e/d_71fe.bin" ; $71fe, 66 bytes
+	INCBIN "data/bank_07e/Music6d_Trk0.bin" ; $71fe, 66 bytes
 Music6e_Trk0:
-	INCBIN "data/bank_07e/d_7240.bin" ; $7240, 34 bytes
+	INCBIN "data/bank_07e/Music6e_Trk0.bin" ; $7240, 34 bytes
 Music6f_Trk1:
-	INCBIN "data/bank_07e/d_7262.bin" ; $7262, 34 bytes
+	INCBIN "data/bank_07e/Music6f_Trk1.bin" ; $7262, 34 bytes
 Music6f_Trk0:
-	INCBIN "data/bank_07e/d_7284.bin" ; $7284, 276 bytes
+	INCBIN "data/bank_07e/Music6f_Trk0.bin" ; $7284, 276 bytes
 Music70_Trk0:
-	INCBIN "data/bank_07e/d_7398.bin" ; $7398, 76 bytes
+	INCBIN "data/bank_07e/Music70_Trk0.bin" ; $7398, 76 bytes
 Music71_Trk0:
-	INCBIN "data/bank_07e/d_73e4.bin" ; $73e4, 34 bytes
+	INCBIN "data/bank_07e/Music71_Trk0.bin" ; $73e4, 34 bytes
 Music72_Trk0:
-	INCBIN "data/bank_07e/d_7406.bin" ; $7406, 26 bytes
+	INCBIN "data/bank_07e/Music72_Trk0.bin" ; $7406, 26 bytes
 Music73_Trk0:
-	INCBIN "data/bank_07e/d_7420.bin" ; $7420, 44 bytes
+	INCBIN "data/bank_07e/Music73_Trk0.bin" ; $7420, 44 bytes
 Music74_Trk0:
-	INCBIN "data/bank_07e/d_744c.bin" ; $744c, 38 bytes
+	INCBIN "data/bank_07e/Music74_Trk0.bin" ; $744c, 38 bytes
 Music75_Trk0:
-	INCBIN "data/bank_07e/d_7472.bin" ; $7472, 110 bytes
+	INCBIN "data/bank_07e/Music75_Trk0.bin" ; $7472, 110 bytes
 Music76_Trk0:
-	INCBIN "data/bank_07e/d_74e0.bin" ; $74e0, 54 bytes
+	INCBIN "data/bank_07e/Music76_Trk0.bin" ; $74e0, 54 bytes
 Music77_Trk0:
-	INCBIN "data/bank_07e/d_7516.bin" ; $7516, 56 bytes
+	INCBIN "data/bank_07e/Music77_Trk0.bin" ; $7516, 56 bytes
 Music78_Trk0:
-	INCBIN "data/bank_07e/d_754e.bin" ; $754e, 64 bytes
+	INCBIN "data/bank_07e/Music78_Trk0.bin" ; $754e, 64 bytes
 Music79_Trk0:
-	INCBIN "data/bank_07e/d_758e.bin" ; $758e, 42 bytes
+	INCBIN "data/bank_07e/Music79_Trk0.bin" ; $758e, 42 bytes
 Music7a_Trk0:
-	INCBIN "data/bank_07e/d_75b8.bin" ; $75b8, 54 bytes
+	INCBIN "data/bank_07e/Music7a_Trk0.bin" ; $75b8, 54 bytes
 Music7b_Trk0:
-	INCBIN "data/bank_07e/d_75ee.bin" ; $75ee, 34 bytes
+	INCBIN "data/bank_07e/Music7b_Trk0.bin" ; $75ee, 34 bytes
 Music7c_Trk0:
-	INCBIN "data/bank_07e/d_7610.bin" ; $7610, 62 bytes
+	INCBIN "data/bank_07e/Music7c_Trk0.bin" ; $7610, 62 bytes
 Music7d_Trk0:
-	INCBIN "data/bank_07e/d_764e.bin" ; $764e, 34 bytes
+	INCBIN "data/bank_07e/Music7d_Trk0.bin" ; $764e, 34 bytes
 Music7e_Trk0:
-	INCBIN "data/bank_07e/d_7670.bin" ; $7670, 70 bytes
+	INCBIN "data/bank_07e/Music7e_Trk0.bin" ; $7670, 70 bytes
 Music7f_Trk0:
-	INCBIN "data/bank_07e/d_76b6.bin" ; $76b6, 50 bytes
+	INCBIN "data/bank_07e/Music7f_Trk0.bin" ; $76b6, 50 bytes
 Music80_Trk0:
-	INCBIN "data/bank_07e/d_76e8.bin" ; $76e8, 42 bytes
+	INCBIN "data/bank_07e/Music80_Trk0.bin" ; $76e8, 42 bytes
 Music81_Trk0:
-	INCBIN "data/bank_07e/d_7712.bin" ; $7712, 72 bytes
+	INCBIN "data/bank_07e/Music81_Trk0.bin" ; $7712, 72 bytes
 Music82_Trk1:
-	INCBIN "data/bank_07e/d_775a.bin" ; $775a, 34 bytes
+	INCBIN "data/bank_07e/Music82_Trk1.bin" ; $775a, 34 bytes
 Music82_Trk0:
-	INCBIN "data/bank_07e/d_777c.bin" ; $777c, 276 bytes
+	INCBIN "data/bank_07e/Music82_Trk0.bin" ; $777c, 276 bytes
 Music83_Trk0:
-	INCBIN "data/bank_07e/d_7890.bin" ; $7890, 28 bytes
+	INCBIN "data/bank_07e/Music83_Trk0.bin" ; $7890, 28 bytes
 Music84_Trk0:
-	INCBIN "data/bank_07e/d_78ac.bin" ; $78ac, 42 bytes
+	INCBIN "data/bank_07e/Music84_Trk0.bin" ; $78ac, 42 bytes
 Music84_Trk1:
-	INCBIN "data/bank_07e/d_78d6.bin" ; $78d6, 50 bytes
+	INCBIN "data/bank_07e/Music84_Trk1.bin" ; $78d6, 50 bytes
 Music85_Trk0:
-	INCBIN "data/bank_07e/d_7908.bin" ; $7908, 42 bytes
+	INCBIN "data/bank_07e/Music85_Trk0.bin" ; $7908, 42 bytes
 Music86_Trk0:
-	INCBIN "data/bank_07e/d_7932.bin" ; $7932, 122 bytes
+	INCBIN "data/bank_07e/Music86_Trk0.bin" ; $7932, 122 bytes
 Music87_Trk0:
-	INCBIN "data/bank_07e/d_79ac.bin" ; $79ac, 30 bytes
+	INCBIN "data/bank_07e/Music87_Trk0.bin" ; $79ac, 30 bytes
 Music87_Trk1:
-	INCBIN "data/bank_07e/d_79ca.bin" ; $79ca, 14 bytes
+	INCBIN "data/bank_07e/Music87_Trk1.bin" ; $79ca, 14 bytes
 Music88_Trk0:
-	INCBIN "data/bank_07e/d_79d8.bin" ; $79d8, 50 bytes
+	INCBIN "data/bank_07e/Music88_Trk0.bin" ; $79d8, 50 bytes
 Music89_Trk0:
-	INCBIN "data/bank_07e/d_7a0a.bin" ; $7a0a, 196 bytes
+	INCBIN "data/bank_07e/Music89_Trk0.bin" ; $7a0a, 196 bytes
 Music8a_Trk0:
-	INCBIN "data/bank_07e/d_7ace.bin" ; $7ace, 240 bytes
+	INCBIN "data/bank_07e/Music8a_Trk0.bin" ; $7ace, 240 bytes
 Music8b_Trk0:
-	INCBIN "data/bank_07e/d_7bbe.bin" ; $7bbe, 52 bytes
+	INCBIN "data/bank_07e/Music8b_Trk0.bin" ; $7bbe, 52 bytes
 Music8c_Trk0:
-	INCBIN "data/bank_07e/d_7bf2.bin" ; $7bf2, 22 bytes
+	INCBIN "data/bank_07e/Music8c_Trk0.bin" ; $7bf2, 22 bytes
 Music8d_Trk0:
-	INCBIN "data/bank_07e/d_7c08.bin" ; $7c08, 144 bytes
+	INCBIN "data/bank_07e/Music8d_Trk0.bin" ; $7c08, 144 bytes
 Music8e_Trk0:
-	INCBIN "data/bank_07e/d_7c98.bin" ; $7c98, 64 bytes
+	INCBIN "data/bank_07e/Music8e_Trk0.bin" ; $7c98, 64 bytes
 Music8f_Trk0:
-	INCBIN "data/bank_07e/d_7cd8.bin" ; $7cd8, 264 bytes
+	INCBIN "data/bank_07e/Music8f_Trk0.bin" ; $7cd8, 264 bytes
 Music90_Trk0:
-	INCBIN "data/bank_07e/d_7de0.bin" ; $7de0, 240 bytes
+	INCBIN "data/bank_07e/Music90_Trk0.bin" ; $7de0, 240 bytes
 Music91_Trk0:
-	INCBIN "data/bank_07e/d_7ed0.bin" ; $7ed0, 46 bytes
+	INCBIN "data/bank_07e/Music91_Trk0.bin" ; $7ed0, 46 bytes
 Music92_Trk0:
-	INCBIN "data/bank_07e/d_7efe.bin" ; $7efe, 22 bytes
+	INCBIN "data/bank_07e/Music92_Trk0.bin" ; $7efe, 22 bytes
 Music93_Trk0:
-	INCBIN "data/bank_07e/d_7f14.bin" ; $7f14, 54 bytes
+	INCBIN "data/bank_07e/Music93_Trk0.bin" ; $7f14, 54 bytes
 Music94_Trk0:
-	INCBIN "data/bank_07e/d_7f4a.bin" ; $7f4a, 76 bytes
+	INCBIN "data/bank_07e/Music94_Trk0.bin" ; $7f4a, 76 bytes
 Music95_Trk0:
-	INCBIN "data/bank_07e/d_7f96.bin" ; $7f96, 28 bytes
+	INCBIN "data/bank_07e/Music95_Trk0.bin" ; $7f96, 28 bytes
 	; $7fb2, 78 bytes fill to bank end (linker-padded)

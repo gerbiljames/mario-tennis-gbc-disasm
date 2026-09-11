@@ -155,121 +155,121 @@ SeanSpriteFrames:
 	dw SeanSpriteFrame55 ; $412c
 	dw SeanSpriteFrame55 ; $412e
 SeanSpriteFrame00:
-	INCBIN "data/bank_047/d_4130.bin" ; $4130, 240 bytes
+	INCBIN "data/bank_047/SeanSpriteFrame00.bin" ; $4130, 240 bytes
 SeanSpriteFrame01:
-	INCBIN "data/bank_047/d_4220.bin" ; $4220, 240 bytes
+	INCBIN "data/bank_047/SeanSpriteFrame01.bin" ; $4220, 240 bytes
 SeanSpriteFrame02:
-	INCBIN "data/bank_047/d_4310.bin" ; $4310, 240 bytes
+	INCBIN "data/bank_047/SeanSpriteFrame02.bin" ; $4310, 240 bytes
 SeanSpriteFrame03:
-	INCBIN "data/bank_047/d_4400.bin" ; $4400, 240 bytes
+	INCBIN "data/bank_047/SeanSpriteFrame03.bin" ; $4400, 240 bytes
 SeanSpriteFrame04:
-	INCBIN "data/bank_047/d_44f0.bin" ; $44f0, 240 bytes
+	INCBIN "data/bank_047/SeanSpriteFrame04.bin" ; $44f0, 240 bytes
 SeanSpriteFrame05:
-	INCBIN "data/bank_047/d_45e0.bin" ; $45e0, 240 bytes
+	INCBIN "data/bank_047/SeanSpriteFrame05.bin" ; $45e0, 240 bytes
 SeanSpriteFrame06:
-	INCBIN "data/bank_047/d_46d0.bin" ; $46d0, 240 bytes
+	INCBIN "data/bank_047/SeanSpriteFrame06.bin" ; $46d0, 240 bytes
 SeanSpriteFrame07:
-	INCBIN "data/bank_047/d_47c0.bin" ; $47c0, 240 bytes
+	INCBIN "data/bank_047/SeanSpriteFrame07.bin" ; $47c0, 240 bytes
 SeanSpriteFrame08:
-	INCBIN "data/bank_047/d_48b0.bin" ; $48b0, 240 bytes
+	INCBIN "data/bank_047/SeanSpriteFrame08.bin" ; $48b0, 240 bytes
 SeanSpriteFrame09:
-	INCBIN "data/bank_047/d_49a0.bin" ; $49a0, 240 bytes
+	INCBIN "data/bank_047/SeanSpriteFrame09.bin" ; $49a0, 240 bytes
 SeanSpriteFrame10:
-	INCBIN "data/bank_047/d_4a90.bin" ; $4a90, 240 bytes
+	INCBIN "data/bank_047/SeanSpriteFrame10.bin" ; $4a90, 240 bytes
 SeanSpriteFrame11:
-	INCBIN "data/bank_047/d_4b80.bin" ; $4b80, 240 bytes
+	INCBIN "data/bank_047/SeanSpriteFrame11.bin" ; $4b80, 240 bytes
 SeanSpriteFrame12:
-	INCBIN "data/bank_047/d_4c70.bin" ; $4c70, 240 bytes
+	INCBIN "data/bank_047/SeanSpriteFrame12.bin" ; $4c70, 240 bytes
 SeanSpriteFrame13:
-	INCBIN "data/bank_047/d_4d60.bin" ; $4d60, 240 bytes
+	INCBIN "data/bank_047/SeanSpriteFrame13.bin" ; $4d60, 240 bytes
 SeanSpriteFrame14:
-	INCBIN "data/bank_047/d_4e50.bin" ; $4e50, 240 bytes
+	INCBIN "data/bank_047/SeanSpriteFrame14.bin" ; $4e50, 240 bytes
 SeanSpriteFrame15:
-	INCBIN "data/bank_047/d_4f40.bin" ; $4f40, 240 bytes
+	INCBIN "data/bank_047/SeanSpriteFrame15.bin" ; $4f40, 240 bytes
 SeanSpriteFrame16:
-	INCBIN "data/bank_047/d_5030.bin" ; $5030, 240 bytes
+	INCBIN "data/bank_047/SeanSpriteFrame16.bin" ; $5030, 240 bytes
 SeanSpriteFrame17:
-	INCBIN "data/bank_047/d_5120.bin" ; $5120, 240 bytes
+	INCBIN "data/bank_047/SeanSpriteFrame17.bin" ; $5120, 240 bytes
 SeanSpriteFrame18:
-	INCBIN "data/bank_047/d_5210.bin" ; $5210, 240 bytes
+	INCBIN "data/bank_047/SeanSpriteFrame18.bin" ; $5210, 240 bytes
 SeanSpriteFrame19:
-	INCBIN "data/bank_047/d_5300.bin" ; $5300, 240 bytes
+	INCBIN "data/bank_047/SeanSpriteFrame19.bin" ; $5300, 240 bytes
 SeanSpriteFrame20:
-	INCBIN "data/bank_047/d_53f0.bin" ; $53f0, 240 bytes
+	INCBIN "data/bank_047/SeanSpriteFrame20.bin" ; $53f0, 240 bytes
 SeanSpriteFrame21:
-	INCBIN "data/bank_047/d_54e0.bin" ; $54e0, 240 bytes
+	INCBIN "data/bank_047/SeanSpriteFrame21.bin" ; $54e0, 240 bytes
 SeanSpriteFrame22:
-	INCBIN "data/bank_047/d_55d0.bin" ; $55d0, 240 bytes
+	INCBIN "data/bank_047/SeanSpriteFrame22.bin" ; $55d0, 240 bytes
 SeanSpriteFrame23:
-	INCBIN "data/bank_047/d_56c0.bin" ; $56c0, 240 bytes
+	INCBIN "data/bank_047/SeanSpriteFrame23.bin" ; $56c0, 240 bytes
 SeanSpriteFrame24:
-	INCBIN "data/bank_047/d_57b0.bin" ; $57b0, 240 bytes
+	INCBIN "data/bank_047/SeanSpriteFrame24.bin" ; $57b0, 240 bytes
 SeanSpriteFrame25:
-	INCBIN "data/bank_047/d_58a0.bin" ; $58a0, 240 bytes
+	INCBIN "data/bank_047/SeanSpriteFrame25.bin" ; $58a0, 240 bytes
 SeanSpriteFrame26:
-	INCBIN "data/bank_047/d_5990.bin" ; $5990, 240 bytes
+	INCBIN "data/bank_047/SeanSpriteFrame26.bin" ; $5990, 240 bytes
 SeanSpriteFrame27:
-	INCBIN "data/bank_047/d_5a80.bin" ; $5a80, 240 bytes
+	INCBIN "data/bank_047/SeanSpriteFrame27.bin" ; $5a80, 240 bytes
 SeanSpriteFrame28:
-	INCBIN "data/bank_047/d_5b70.bin" ; $5b70, 240 bytes
+	INCBIN "data/bank_047/SeanSpriteFrame28.bin" ; $5b70, 240 bytes
 SeanSpriteFrame29:
-	INCBIN "data/bank_047/d_5c60.bin" ; $5c60, 240 bytes
+	INCBIN "data/bank_047/SeanSpriteFrame29.bin" ; $5c60, 240 bytes
 SeanSpriteFrame30:
-	INCBIN "data/bank_047/d_5d50.bin" ; $5d50, 240 bytes
+	INCBIN "data/bank_047/SeanSpriteFrame30.bin" ; $5d50, 240 bytes
 SeanSpriteFrame31:
-	INCBIN "data/bank_047/d_5e40.bin" ; $5e40, 240 bytes
+	INCBIN "data/bank_047/SeanSpriteFrame31.bin" ; $5e40, 240 bytes
 SeanSpriteFrame32:
-	INCBIN "data/bank_047/d_5f30.bin" ; $5f30, 240 bytes
+	INCBIN "data/bank_047/SeanSpriteFrame32.bin" ; $5f30, 240 bytes
 SeanSpriteFrame33:
-	INCBIN "data/bank_047/d_6020.bin" ; $6020, 240 bytes
+	INCBIN "data/bank_047/SeanSpriteFrame33.bin" ; $6020, 240 bytes
 SeanSpriteFrame34:
-	INCBIN "data/bank_047/d_6110.bin" ; $6110, 240 bytes
+	INCBIN "data/bank_047/SeanSpriteFrame34.bin" ; $6110, 240 bytes
 SeanSpriteFrame35:
-	INCBIN "data/bank_047/d_6200.bin" ; $6200, 240 bytes
+	INCBIN "data/bank_047/SeanSpriteFrame35.bin" ; $6200, 240 bytes
 SeanSpriteFrame36:
-	INCBIN "data/bank_047/d_62f0.bin" ; $62f0, 240 bytes
+	INCBIN "data/bank_047/SeanSpriteFrame36.bin" ; $62f0, 240 bytes
 SeanSpriteFrame37:
-	INCBIN "data/bank_047/d_63e0.bin" ; $63e0, 240 bytes
+	INCBIN "data/bank_047/SeanSpriteFrame37.bin" ; $63e0, 240 bytes
 SeanSpriteFrame38:
-	INCBIN "data/bank_047/d_64d0.bin" ; $64d0, 240 bytes
+	INCBIN "data/bank_047/SeanSpriteFrame38.bin" ; $64d0, 240 bytes
 SeanSpriteFrame39:
-	INCBIN "data/bank_047/d_65c0.bin" ; $65c0, 240 bytes
+	INCBIN "data/bank_047/SeanSpriteFrame39.bin" ; $65c0, 240 bytes
 SeanSpriteFrame40:
-	INCBIN "data/bank_047/d_66b0.bin" ; $66b0, 320 bytes
+	INCBIN "data/bank_047/SeanSpriteFrame40.bin" ; $66b0, 320 bytes
 SeanSpriteFrame41:
-	INCBIN "data/bank_047/d_67f0.bin" ; $67f0, 320 bytes
+	INCBIN "data/bank_047/SeanSpriteFrame41.bin" ; $67f0, 320 bytes
 SeanSpriteFrame42:
-	INCBIN "data/bank_047/d_6930.bin" ; $6930, 240 bytes
+	INCBIN "data/bank_047/SeanSpriteFrame42.bin" ; $6930, 240 bytes
 SeanSpriteFrame43:
-	INCBIN "data/bank_047/d_6a20.bin" ; $6a20, 240 bytes
+	INCBIN "data/bank_047/SeanSpriteFrame43.bin" ; $6a20, 240 bytes
 SeanSpriteFrame44:
-	INCBIN "data/bank_047/d_6b10.bin" ; $6b10, 240 bytes
+	INCBIN "data/bank_047/SeanSpriteFrame44.bin" ; $6b10, 240 bytes
 SeanSpriteFrame45:
-	INCBIN "data/bank_047/d_6c00.bin" ; $6c00, 240 bytes
+	INCBIN "data/bank_047/SeanSpriteFrame45.bin" ; $6c00, 240 bytes
 SeanSpriteFrame46:
-	INCBIN "data/bank_047/d_6cf0.bin" ; $6cf0, 240 bytes
+	INCBIN "data/bank_047/SeanSpriteFrame46.bin" ; $6cf0, 240 bytes
 SeanSpriteFrame47:
-	INCBIN "data/bank_047/d_6de0.bin" ; $6de0, 240 bytes
+	INCBIN "data/bank_047/SeanSpriteFrame47.bin" ; $6de0, 240 bytes
 SeanSpriteFrame48:
-	INCBIN "data/bank_047/d_6ed0.bin" ; $6ed0, 240 bytes
+	INCBIN "data/bank_047/SeanSpriteFrame48.bin" ; $6ed0, 240 bytes
 SeanSpriteFrame49:
-	INCBIN "data/bank_047/d_6fc0.bin" ; $6fc0, 240 bytes
+	INCBIN "data/bank_047/SeanSpriteFrame49.bin" ; $6fc0, 240 bytes
 SeanSpriteFrame50:
-	INCBIN "data/bank_047/d_70b0.bin" ; $70b0, 240 bytes
+	INCBIN "data/bank_047/SeanSpriteFrame50.bin" ; $70b0, 240 bytes
 SeanSpriteFrame51:
-	INCBIN "data/bank_047/d_71a0.bin" ; $71a0, 240 bytes
+	INCBIN "data/bank_047/SeanSpriteFrame51.bin" ; $71a0, 240 bytes
 SeanSpriteFrame52:
-	INCBIN "data/bank_047/d_7290.bin" ; $7290, 240 bytes
+	INCBIN "data/bank_047/SeanSpriteFrame52.bin" ; $7290, 240 bytes
 SeanSpriteFrame53:
-	INCBIN "data/bank_047/d_7380.bin" ; $7380, 240 bytes
+	INCBIN "data/bank_047/SeanSpriteFrame53.bin" ; $7380, 240 bytes
 SeanSpriteFrame54:
-	INCBIN "data/bank_047/d_7470.bin" ; $7470, 240 bytes
+	INCBIN "data/bank_047/SeanSpriteFrame54.bin" ; $7470, 240 bytes
 SeanSpriteFrame55:
-	INCBIN "data/bank_047/d_7560.bin" ; $7560, 240 bytes
+	INCBIN "data/bank_047/SeanSpriteFrame55.bin" ; $7560, 240 bytes
 SeanSpriteFramesUnused:
-	INCBIN "data/bank_047/d_7650.bin" ; $7650, 1680 bytes
+	INCBIN "data/bank_047/SeanSpriteFramesUnused.bin" ; $7650, 1680 bytes
 SeanSpriteOam:
-	INCBIN "data/bank_047/d_7ce0.bin" ; $7ce0, 580 bytes
+	INCBIN "data/bank_047/SeanSpriteOam.bin" ; $7ce0, 580 bytes
 SeanSpriteAnims:
 	dw SeanSpriteAnim00 ; $7f24
 	dw SeanSpriteAnim01 ; $7f26

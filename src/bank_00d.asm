@@ -800,7 +800,7 @@ MinigameShotDifficultyRamp:
 EndMinigamePoint_PointOutcomeTable:
 	db $01 ; $4547
 LaunchBallTable:
-	INCBIN "data/bank_00d/d_4548.bin" ; $4548, 102 bytes
+	INCBIN "data/bank_00d/LaunchBallTable.bin" ; $4548, 102 bytes
 MinigameShotIntervalByTempo:
 	; $45ae, 5 bytes (bytes:5)
 	db $28, $28, $1e, $14, $0a ; 0x00

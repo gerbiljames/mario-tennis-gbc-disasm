@@ -118,7 +118,7 @@ LoadResultsScreenGraphics:
 	call DecompressData ; $4123
 	ld hl, wDecompBuffer ; $4126
 	ld de, $9000 + VRAM_BANK1 ; $4129
-	ld c, $80 ; $412c
+	ld c, $80 ; $412c -- 128 of ResultsScreenGfx_1e's 176 tiles
 	call QueueVRAMCopy ; $412e
 	ld hl, wTextTileBuffer ; $4131
 	ld de, $8800 + VRAM_BANK1 ; $4134
@@ -144,7 +144,7 @@ LoadResultsScreenGraphics:
 	call DecompressData ; $4178
 	ld hl, wDecompBuffer ; $417b
 	ld de, $9000 ; $417e
-	ld c, $10 ; $4181
+	ld c, PanelFrameGfx_1e_SIZE / 16 ; $4181
 	call QueueVRAMCopy ; $4183
 	ret ; $4186
 ResultsCopyToTilemap:
@@ -1402,23 +1402,24 @@ ClearContinuePromptRows:
 	call FillMemoryC ; $4c3c
 	ret ; $4c3f
 ResultsScreenPalettes:
-	INCLUDE "data/bank_01e/palettes_4c40.asm" ; $4c40, 48 bytes (palettes)
+	INCLUDE "data/bank_01e/ResultsScreenPalettes.asm" ; $4c40, 48 bytes (palettes)
 ResultsScreenGfx_1e:
-	INCBIN "data/bank_01e/lz_4c70.bin" ; $4c70, 1455 bytes
+	INCBIN "data/bank_01e/lz_ResultsScreenGfx_1e.bin" ; $4c70, 1455 bytes
 ResultsScreenTilemap_1e:
-	INCBIN "data/bank_01e/lz_521f.bin" ; $521f, 205 bytes
+	INCBIN "data/bank_01e/lz_ResultsScreenTilemap_1e.bin" ; $521f, 205 bytes
 ResultsScreenAttrmap_1e:
-	INCBIN "data/bank_01e/lz_52ec.bin" ; $52ec, 87 bytes
+	INCBIN "data/bank_01e/lz_ResultsScreenAttrmap_1e.bin" ; $52ec, 87 bytes
 PanelFrameGfx_1e:
-	INCBIN "data/bank_01e/lz_5343.bin" ; $5343, 156 bytes
+	INCBIN "data/bank_01e/lz_PanelFrameGfx_1e.bin" ; $5343, 156 bytes
+	INCLUDE "data/bank_01e/lz_PanelFrameGfx_1e.inc" ; DEF PanelFrameGfx_1e_SIZE EQU its decoded length, generated from the .bin by make
 ResultsSinglesLabelTilemap_1e:
-	INCBIN "data/bank_01e/lz_53df.bin" ; $53df, 19 bytes
+	INCBIN "data/bank_01e/lz_ResultsSinglesLabelTilemap_1e.bin" ; $53df, 19 bytes
 ResultsDoublesLabelTilemap_1e:
-	INCBIN "data/bank_01e/lz_53f2.bin" ; $53f2, 19 bytes
+	INCBIN "data/bank_01e/lz_ResultsDoublesLabelTilemap_1e.bin" ; $53f2, 19 bytes
 ResultsPlayerPanelTilemap_1e:
-	INCBIN "data/bank_01e/lz_5405.bin" ; $5405, 28 bytes
+	INCBIN "data/bank_01e/lz_ResultsPlayerPanelTilemap_1e.bin" ; $5405, 28 bytes
 ResultsPlayerPanelAttrmap_1e:
-	INCBIN "data/bank_01e/lz_5421.bin" ; $5421, 23 bytes
+	INCBIN "data/bank_01e/lz_ResultsPlayerPanelAttrmap_1e.bin" ; $5421, 23 bytes
 ShowExpAwardScreen:
 	call HasPendingExpAwards ; $5438
 	or a ; $543b
@@ -1523,7 +1524,7 @@ LoadExpAwardScreenGraphics:
 	call DecompressData ; $5533
 	ld hl, wDecompBuffer ; $5536
 	ld de, $9000 + VRAM_BANK1 ; $5539
-	ld c, $80 ; $553c
+	ld c, $80 ; $553c -- 128 of ExpAwardScreenGfx_1e's 256 tiles
 	call QueueVRAMCopy ; $553e
 	ld hl, wTextTileBuffer ; $5541
 	ld de, $8800 + VRAM_BANK1 ; $5544
@@ -1549,7 +1550,7 @@ LoadExpAwardScreenGraphics:
 	call DecompressData ; $5588
 	ld hl, wDecompBuffer ; $558b
 	ld de, $9000 ; $558e
-	ld c, $10 ; $5591
+	ld c, PanelFrameGfx_1e_SIZE / 16 ; $5591
 	call QueueVRAMCopy ; $5593
 	ld hl, ExpAwardScreenPalettes1 ; $5596
 	lb de, $08, $01 ; $5599 palette index, count
@@ -1560,7 +1561,7 @@ LoadExpAwardScreenGraphics:
 	call DecompressData ; $55ab
 	ld hl, wDecompBuffer ; $55ae
 	ld de, $86c0 + VRAM_BANK1 ; $55b1
-	ld c, $14 ; $55b4
+	ld c, ExpDigitSpriteGfx_1e_SIZE / 16 ; $55b4
 	call QueueVRAMCopy ; $55b6
 	ret ; $55b9
 ExpScreenCopyToTilemap:
@@ -2285,17 +2286,18 @@ HasPendingExpAwards:
 	ld a, $01 ; $5bde
 	ret ; $5be0
 ExpAwardScreenPalettes0:
-	INCLUDE "data/bank_01e/palettes_5be1.asm" ; $5be1, 24 bytes (palettes)
+	INCLUDE "data/bank_01e/ExpAwardScreenPalettes0.asm" ; $5be1, 24 bytes (palettes)
 ExpAwardScreenGfx_1e:
-	INCBIN "data/bank_01e/lz_5bf9.bin" ; $5bf9, 1745 bytes
+	INCBIN "data/bank_01e/lz_ExpAwardScreenGfx_1e.bin" ; $5bf9, 1745 bytes
 ExpAwardScreenTilemap_1e:
-	INCBIN "data/bank_01e/lz_62ca.bin" ; $62ca, 389 bytes
+	INCBIN "data/bank_01e/lz_ExpAwardScreenTilemap_1e.bin" ; $62ca, 389 bytes
 ExpAwardScreenAttrmap_1e:
-	INCBIN "data/bank_01e/lz_644f.bin" ; $644f, 70 bytes
+	INCBIN "data/bank_01e/lz_ExpAwardScreenAttrmap_1e.bin" ; $644f, 70 bytes
 ExpAwardScreenPalettes1:
-	INCLUDE "data/bank_01e/palettes_6495.asm" ; $6495, 8 bytes (palettes)
+	INCLUDE "data/bank_01e/ExpAwardScreenPalettes1.asm" ; $6495, 8 bytes (palettes)
 ExpDigitSpriteGfx_1e:
-	INCBIN "data/bank_01e/lz_649d.bin" ; $649d, 150 bytes
+	INCBIN "data/bank_01e/lz_ExpDigitSpriteGfx_1e.bin" ; $649d, 150 bytes
+	INCLUDE "data/bank_01e/lz_ExpDigitSpriteGfx_1e.inc" ; DEF ExpDigitSpriteGfx_1e_SIZE EQU its decoded length, generated from the .bin by make
 StubNop_1e:
 	ret ; $6533
 ProcessMatchRewards:
@@ -4646,14 +4648,14 @@ LoadGameProgressScreenTiles:
 	call DecompressData ; $7513
 	ld hl, wDecompBuffer ; $7516
 	ld de, $9000 + VRAM_BANK1 ; $7519
-	ld c, $20 ; $751c
+	ld c, GameProgressHeaderGfx_1e_SIZE / 16 ; $751c
 	call QueueVRAMCopy ; $751e
 	ld hl, GameProgressHeaderTilemap_1e ; $7521
 	ld de, wDecompBuffer ; $7524
 	call DecompressData ; $7527
 	ld hl, wDecompBuffer ; $752a
 	ld de, $9800 ; $752d
-	ld c, $06 ; $7530
+	ld c, GameProgressHeaderTilemap_1e_SIZE / 16 ; $7530
 	call QueueVRAMCopy ; $7532
 	ld hl, GameProgressHeaderAttrmap_1e ; $7535
 	ld de, wDecompBuffer ; $7538
@@ -4691,7 +4693,7 @@ LoadGameProgressScreenTiles:
 	call QueueVRAMCopy ; $757a
 	ld hl, GameProgressScreenTiles2 ; $757d
 	ld de, $8100 + VRAM_BANK1 ; $7580
-	ld c, $04 ; $7583
+	ld c, $04 ; $7583 -- 4 of GameProgressScreenTiles2's 8 tiles
 	call QueueVRAMCopy ; $7585
 	ld hl, GameProgressScreenTiles1 ; $7588
 	ld de, $8200 + VRAM_BANK1 ; $758b
@@ -4705,25 +4707,27 @@ LoadGameProgressScreenTiles:
 	call LoadPaletteShadow ; $75a2
 	ret ; $75a5
 GameProgressHeaderGfx_1e:
-	INCBIN "data/bank_01e/lz_75a6.bin" ; $75a6, 236 bytes
+	INCBIN "data/bank_01e/lz_GameProgressHeaderGfx_1e.bin" ; $75a6, 236 bytes
+	INCLUDE "data/bank_01e/lz_GameProgressHeaderGfx_1e.inc" ; DEF GameProgressHeaderGfx_1e_SIZE EQU its decoded length, generated from the .bin by make
 GameProgressHeaderTilemap_1e:
-	INCBIN "data/bank_01e/lz_7692.bin" ; $7692, 80 bytes
+	INCBIN "data/bank_01e/lz_GameProgressHeaderTilemap_1e.bin" ; $7692, 80 bytes
+	INCLUDE "data/bank_01e/lz_GameProgressHeaderTilemap_1e.inc" ; DEF GameProgressHeaderTilemap_1e_SIZE EQU its decoded length, generated from the .bin by make
 GameProgressHeaderAttrmap_1e:
-	INCBIN "data/bank_01e/lz_76e2.bin" ; $76e2, 24 bytes
+	INCBIN "data/bank_01e/lz_GameProgressHeaderAttrmap_1e.bin" ; $76e2, 24 bytes
 	; $76fa, 6 bytes (fill)
 	ds 6, $00
 GameProgressScreenPalettes0:
-	INCLUDE "data/bank_01e/palettes_7700.asm" ; $7700, 16 bytes (palettes)
+	INCLUDE "data/bank_01e/GameProgressScreenPalettes0.asm" ; $7700, 16 bytes (palettes)
 GameProgressScreenTiles0:
-	INCLUDE "data/bank_01e/palettes_7710.asm" ; $7710, 256 bytes (palettes)
+	INCLUDE "data/bank_01e/GameProgressScreenTiles0.asm" ; $7710, 256 bytes (palettes)
 GameProgressScreenPalettes1:
-	INCLUDE "data/bank_01e/palettes_7810.asm" ; $7810, 16 bytes (palettes)
+	INCLUDE "data/bank_01e/GameProgressScreenPalettes1.asm" ; $7810, 16 bytes (palettes)
 GameProgressScreenTiles1:
-	INCLUDE "data/bank_01e/palettes_7820.asm" ; $7820, 320 bytes (palettes)
+	INCLUDE "data/bank_01e/GameProgressScreenTiles1.asm" ; $7820, 320 bytes (palettes)
 GameProgressScreenTiles2:
-	INCLUDE "data/bank_01e/palettes_7960.asm" ; $7960, 128 bytes (palettes)
+	INCLUDE "data/bank_01e/GameProgressScreenTiles2.asm" ; $7960, 128 bytes (palettes)
 GameProgressScreenPalettes2:
-	INCLUDE "data/bank_01e/palettes_79e0.asm" ; $79e0, 8 bytes (palettes)
+	INCLUDE "data/bank_01e/GameProgressScreenPalettes2.asm" ; $79e0, 8 bytes (palettes)
 FillProgressListRowTiles:
 	ld hl, wShadowTilemapPtr ; $79e8
 	ld a, [hl+] ; $79eb

@@ -33,28 +33,28 @@ DataPtr_CourtyardSceneUnusedSlot:
 DataPtr_CourtyardSceneTiles:
 	dw CourtyardSceneTiles ; $401e
 ClubhouseScenePalettes:
-	INCLUDE "data/bank_05f/palettes_4020.asm" ; $4020, 64 bytes (palettes)
+	INCLUDE "data/bank_05f/ClubhouseScenePalettes.asm" ; $4020, 64 bytes (palettes)
 ClubhouseSceneTiles:
-	INCBIN "data/bank_05f/lz_4060.bin" ; $4060, 2037 bytes
+	INCBIN "data/bank_05f/lz_ClubhouseSceneTiles.bin" ; $4060, 2037 bytes
 ClubhouseSceneTilemap:
-	INCBIN "data/bank_05f/lz_4855.bin" ; $4855, 625 bytes
+	INCBIN "data/bank_05f/lz_ClubhouseSceneTilemap.bin" ; $4855, 625 bytes
 ClubhouseSceneAttrmap:
-	INCBIN "data/bank_05f/lz_4ac6.bin" ; $4ac6, 333 bytes
+	INCBIN "data/bank_05f/lz_ClubhouseSceneAttrmap.bin" ; $4ac6, 333 bytes
 ClubhouseSceneConfig:
-	INCBIN "data/bank_05f/d_4c13.bin" ; $4c13, 40 bytes
+	INCBIN "data/bank_05f/ClubhouseSceneConfig.bin" ; $4c13, 40 bytes
 ClubhouseScoreboardColumnAttrs:
-	INCBIN "data/bank_05f/d_4c3b.bin" ; $4c3b, 40 bytes
+	INCBIN "data/bank_05f/ClubhouseScoreboardColumnAttrs.bin" ; $4c3b, 40 bytes
 CourtyardScenePalettes:
-	INCLUDE "data/bank_05f/palettes_4c63.asm" ; $4c63, 64 bytes (palettes)
+	INCLUDE "data/bank_05f/CourtyardScenePalettes.asm" ; $4c63, 64 bytes (palettes)
 CourtyardSceneTiles:
-	INCBIN "data/bank_05f/lz_4ca3.bin" ; $4ca3, 2384 bytes
+	INCBIN "data/bank_05f/lz_CourtyardSceneTiles.bin" ; $4ca3, 2384 bytes
 CourtyardSceneTilemap:
-	INCBIN "data/bank_05f/lz_55f3.bin" ; $55f3, 491 bytes
+	INCBIN "data/bank_05f/lz_CourtyardSceneTilemap.bin" ; $55f3, 491 bytes
 CourtyardSceneAttrmap:
-	INCBIN "data/bank_05f/lz_57de.bin" ; $57de, 294 bytes
+	INCBIN "data/bank_05f/lz_CourtyardSceneAttrmap.bin" ; $57de, 294 bytes
 CourtyardSceneConfig:
-	INCBIN "data/bank_05f/d_5904.bin" ; $5904, 40 bytes
+	INCBIN "data/bank_05f/CourtyardSceneConfig.bin" ; $5904, 40 bytes
 CourtyardScoreboardColumnAttrs:
-	INCBIN "data/bank_05f/d_592c.bin" ; $592c, 40 bytes
+	INCBIN "data/bank_05f/CourtyardScoreboardColumnAttrs.bin" ; $592c, 40 bytes
 CourtyardSceneUnusedSlot:
 	ds 9900, $ff ; $5954, fill

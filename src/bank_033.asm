@@ -226,7 +226,7 @@ FetchTextTable_33:
 	dw TextStrings_33.s422 - TextStrings_33 ; 219
 	dw TextStrings_33.s423 - TextStrings_33 ; 220
 TextStrings_33:
-	INCLUDE "data/bank_033/text_pool_41be.asm" ; $41be, 14604 bytes (text_pool)
+	INCLUDE "data/bank_033/TextStrings_33.asm" ; $41be, 14604 bytes (text_pool)
 FetchDialogueText_33:
 	push af ; $7aca
 	ld a, $00 ; $7acb

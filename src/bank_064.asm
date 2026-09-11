@@ -49,48 +49,48 @@ DataPtr_AcademyGroundsSceneUnusedSlot:
 DataPtr_AcademyGroundsTiles:
 	dw AcademyGroundsTiles ; $402e
 DormBedroomSceneConfig:
-	INCBIN "data/bank_064/d_4030.bin" ; $4030, 42 bytes
+	INCBIN "data/bank_064/DormBedroomSceneConfig.bin" ; $4030, 42 bytes
 DormBedroomPalettes:
-	INCLUDE "data/bank_064/palettes_405a.asm" ; $405a, 64 bytes (palettes)
+	INCLUDE "data/bank_064/DormBedroomPalettes.asm" ; $405a, 64 bytes (palettes)
 DormBedroomTiles:
-	INCBIN "data/bank_064/lz_409a.bin" ; $409a, 2307 bytes
+	INCBIN "data/bank_064/lz_DormBedroomTiles.bin" ; $409a, 2307 bytes
 DormBedroomTilemap:
-	INCBIN "data/bank_064/lz_499d.bin" ; $499d, 706 bytes
+	INCBIN "data/bank_064/lz_DormBedroomTilemap.bin" ; $499d, 706 bytes
 DormBedroomAttrmap:
-	INCBIN "data/bank_064/lz_4c5f.bin" ; $4c5f, 511 bytes
+	INCBIN "data/bank_064/lz_DormBedroomAttrmap.bin" ; $4c5f, 511 bytes
 DormBedroomCollisionMap:
-	INCBIN "data/bank_064/lz_4e5e.bin" ; $4e5e, 118 bytes
+	INCBIN "data/bank_064/lz_DormBedroomCollisionMap.bin" ; $4e5e, 118 bytes
 DormBedroomBehaviorMap:
-	INCBIN "data/bank_064/lz_4ed4.bin" ; $4ed4, 72 bytes
+	INCBIN "data/bank_064/lz_DormBedroomBehaviorMap.bin" ; $4ed4, 72 bytes
 CountrysideSceneConfig:
-	INCBIN "data/bank_064/d_4f1c.bin" ; $4f1c, 42 bytes
+	INCBIN "data/bank_064/CountrysideSceneConfig.bin" ; $4f1c, 42 bytes
 CountrysidePalettes:
-	INCLUDE "data/bank_064/palettes_4f46.asm" ; $4f46, 64 bytes (palettes)
+	INCLUDE "data/bank_064/CountrysidePalettes.asm" ; $4f46, 64 bytes (palettes)
 CountrysideTiles:
-	INCBIN "data/bank_064/lz_4f86.bin" ; $4f86, 3238 bytes
+	INCBIN "data/bank_064/lz_CountrysideTiles.bin" ; $4f86, 3238 bytes
 CountrysideTilemap:
-	INCBIN "data/bank_064/lz_5c2c.bin" ; $5c2c, 802 bytes
+	INCBIN "data/bank_064/lz_CountrysideTilemap.bin" ; $5c2c, 802 bytes
 CountrysideAttrmap:
-	INCBIN "data/bank_064/lz_5f4e.bin" ; $5f4e, 411 bytes
+	INCBIN "data/bank_064/lz_CountrysideAttrmap.bin" ; $5f4e, 411 bytes
 CountrysideCollisionMap:
-	INCBIN "data/bank_064/lz_60e9.bin" ; $60e9, 80 bytes
+	INCBIN "data/bank_064/lz_CountrysideCollisionMap.bin" ; $60e9, 80 bytes
 CountrysideBehaviorMap:
-	INCBIN "data/bank_064/lz_6139.bin" ; $6139, 90 bytes
+	INCBIN "data/bank_064/lz_CountrysideBehaviorMap.bin" ; $6139, 90 bytes
 AcademyGroundsSceneConfig:
-	INCBIN "data/bank_064/d_6193.bin" ; $6193, 27 bytes
+	INCBIN "data/bank_064/AcademyGroundsSceneConfig.bin" ; $6193, 27 bytes
 AcademyGroundsPalettes:
-	INCLUDE "data/bank_064/palettes_61ae.asm" ; $61ae, 64 bytes (palettes)
+	INCLUDE "data/bank_064/AcademyGroundsPalettes.asm" ; $61ae, 64 bytes (palettes)
 AcademyGroundsTiles:
-	INCBIN "data/bank_064/lz_61ee.bin" ; $61ee, 3100 bytes
+	INCBIN "data/bank_064/lz_AcademyGroundsTiles.bin" ; $61ee, 3100 bytes
 AcademyGroundsTilemap:
-	INCBIN "data/bank_064/lz_6e0a.bin" ; $6e0a, 1429 bytes
+	INCBIN "data/bank_064/lz_AcademyGroundsTilemap.bin" ; $6e0a, 1429 bytes
 AcademyGroundsAttrmap:
-	INCBIN "data/bank_064/lz_739f.bin" ; $739f, 679 bytes
+	INCBIN "data/bank_064/lz_AcademyGroundsAttrmap.bin" ; $739f, 679 bytes
 AcademyGroundsCollisionMap:
-	INCBIN "data/bank_064/lz_7646.bin" ; $7646, 147 bytes
+	INCBIN "data/bank_064/lz_AcademyGroundsCollisionMap.bin" ; $7646, 147 bytes
 AcademyGroundsBehaviorMap:
-	INCBIN "data/bank_064/lz_76d9.bin" ; $76d9, 79 bytes
+	INCBIN "data/bank_064/lz_AcademyGroundsBehaviorMap.bin" ; $76d9, 79 bytes
 	; $7728, 8 bytes (fill)
 	ds 8, $00
 AcademyGroundsSceneUnusedSlot:
-	INCBIN "data/bank_064/d_7730.bin" ; $7730, 2256 bytes
+	INCBIN "data/bank_064/AcademyGroundsSceneUnusedSlot.bin" ; $7730, 2256 bytes

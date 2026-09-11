@@ -488,11 +488,11 @@ LookupBallPosByShotIndex_2c:
 	add hl, de ; $427f
 	ret ; $4280
 ShotPlacementData0_2c:
-	INCBIN "data/bank_02c/d_4281.bin" ; $4281, 3072 bytes
+	INCBIN "data/bank_02c/ShotPlacementData0_2c.bin" ; $4281, 3072 bytes
 ShotPlacementData1_2c:
-	INCBIN "data/bank_02c/d_4e81.bin" ; $4e81, 4608 bytes
+	INCBIN "data/bank_02c/ShotPlacementData1_2c.bin" ; $4e81, 4608 bytes
 ShotPlacementData2_2c:
-	INCBIN "data/bank_02c/d_6081.bin" ; $6081, 4608 bytes
+	INCBIN "data/bank_02c/ShotPlacementData2_2c.bin" ; $6081, 4608 bytes
 ProjectShotPlacement0:
 	farcall ComputeShotPlacement ; $7281
 	push bc ; $7284

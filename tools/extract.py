@@ -544,9 +544,12 @@ def main() -> int:
     # is actively misleading: a stale text_*.asm reads as if a region were
     # decoded as game text when the current source renders it as a table.
     # data/gfx/ is gfxdump.py's contact sheets, not ours to remove.
+    # (a .inc is make's, derived from the .bin beside it: stale only with it)
     stale = [f for d in sorted(outdir.glob("bank_*")) if d.is_dir()
              for f in sorted(d.rglob("*"))
-             if f.is_file() and str(f.relative_to(outdir)) not in written]
+             if f.is_file() and str(f.relative_to(outdir)) not in written
+             and not (f.suffix == ".inc"
+                      and str(f.with_suffix(".bin").relative_to(outdir)) in written)]
     for f in stale:
         f.unlink()
     note = f", removed {len(stale)} stale" if stale else ""

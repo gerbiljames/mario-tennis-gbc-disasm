@@ -98,99 +98,99 @@ SoundTable_7b:
 	snd_channel 0, $00 ; $40bc
 	dw Music9b_Trk0 ; $40be
 Sfx16_Trk0:
-	INCBIN "data/bank_07b/d_40c0.bin" ; $40c0, 438 bytes
+	INCBIN "data/bank_07b/Sfx16_Trk0.bin" ; $40c0, 438 bytes
 Sfx16_Trk1:
-	INCBIN "data/bank_07b/d_4276.bin" ; $4276, 456 bytes
+	INCBIN "data/bank_07b/Sfx16_Trk1.bin" ; $4276, 456 bytes
 Sfx16_Trk2:
-	INCBIN "data/bank_07b/d_443e.bin" ; $443e, 344 bytes
+	INCBIN "data/bank_07b/Sfx16_Trk2.bin" ; $443e, 344 bytes
 Sfx16_Trk3:
-	INCBIN "data/bank_07b/d_4596.bin" ; $4596, 598 bytes
+	INCBIN "data/bank_07b/Sfx16_Trk3.bin" ; $4596, 598 bytes
 Sfx17_Trk0:
-	INCBIN "data/bank_07b/d_47ec.bin" ; $47ec, 264 bytes
+	INCBIN "data/bank_07b/Sfx17_Trk0.bin" ; $47ec, 264 bytes
 Sfx17_Trk1:
-	INCBIN "data/bank_07b/d_48f4.bin" ; $48f4, 196 bytes
+	INCBIN "data/bank_07b/Sfx17_Trk1.bin" ; $48f4, 196 bytes
 Sfx17_Trk2:
-	INCBIN "data/bank_07b/d_49b8.bin" ; $49b8, 158 bytes
+	INCBIN "data/bank_07b/Sfx17_Trk2.bin" ; $49b8, 158 bytes
 Sfx17_Trk3:
-	INCBIN "data/bank_07b/d_4a56.bin" ; $4a56, 82 bytes
+	INCBIN "data/bank_07b/Sfx17_Trk3.bin" ; $4a56, 82 bytes
 Sfx18_Trk0:
-	INCBIN "data/bank_07b/d_4aa8.bin" ; $4aa8, 302 bytes
+	INCBIN "data/bank_07b/Sfx18_Trk0.bin" ; $4aa8, 302 bytes
 Sfx18_Trk1:
-	INCBIN "data/bank_07b/d_4bd6.bin" ; $4bd6, 302 bytes
+	INCBIN "data/bank_07b/Sfx18_Trk1.bin" ; $4bd6, 302 bytes
 Sfx18_Trk2:
-	INCBIN "data/bank_07b/d_4d04.bin" ; $4d04, 148 bytes
+	INCBIN "data/bank_07b/Sfx18_Trk2.bin" ; $4d04, 148 bytes
 Sfx18_Trk3:
-	INCBIN "data/bank_07b/d_4d98.bin" ; $4d98, 986 bytes
+	INCBIN "data/bank_07b/Sfx18_Trk3.bin" ; $4d98, 986 bytes
 Sfx19_Trk0:
-	INCBIN "data/bank_07b/d_5172.bin" ; $5172, 500 bytes
+	INCBIN "data/bank_07b/Sfx19_Trk0.bin" ; $5172, 500 bytes
 Sfx19_Trk1:
-	INCBIN "data/bank_07b/d_5366.bin" ; $5366, 446 bytes
+	INCBIN "data/bank_07b/Sfx19_Trk1.bin" ; $5366, 446 bytes
 Sfx19_Trk2:
-	INCBIN "data/bank_07b/d_5524.bin" ; $5524, 716 bytes
+	INCBIN "data/bank_07b/Sfx19_Trk2.bin" ; $5524, 716 bytes
 Sfx19_Trk3:
-	INCBIN "data/bank_07b/d_57f0.bin" ; $57f0, 154 bytes
+	INCBIN "data/bank_07b/Sfx19_Trk3.bin" ; $57f0, 154 bytes
 Sfx1a_Trk0:
-	INCBIN "data/bank_07b/d_588a.bin" ; $588a, 218 bytes
+	INCBIN "data/bank_07b/Sfx1a_Trk0.bin" ; $588a, 218 bytes
 Sfx1a_Trk1:
-	INCBIN "data/bank_07b/d_5964.bin" ; $5964, 222 bytes
+	INCBIN "data/bank_07b/Sfx1a_Trk1.bin" ; $5964, 222 bytes
 Sfx1a_Trk2:
-	INCBIN "data/bank_07b/d_5a42.bin" ; $5a42, 124 bytes
+	INCBIN "data/bank_07b/Sfx1a_Trk2.bin" ; $5a42, 124 bytes
 Sfx1b_Trk0:
-	INCBIN "data/bank_07b/d_5abe.bin" ; $5abe, 184 bytes
+	INCBIN "data/bank_07b/Sfx1b_Trk0.bin" ; $5abe, 184 bytes
 Sfx1b_Trk1:
-	INCBIN "data/bank_07b/d_5b76.bin" ; $5b76, 186 bytes
+	INCBIN "data/bank_07b/Sfx1b_Trk1.bin" ; $5b76, 186 bytes
 Sfx1b_Trk2:
-	INCBIN "data/bank_07b/d_5c30.bin" ; $5c30, 208 bytes
+	INCBIN "data/bank_07b/Sfx1b_Trk2.bin" ; $5c30, 208 bytes
 Sfx1b_Trk3:
-	INCBIN "data/bank_07b/d_5d00.bin" ; $5d00, 338 bytes
+	INCBIN "data/bank_07b/Sfx1b_Trk3.bin" ; $5d00, 338 bytes
 Sfx1c_Trk0:
-	INCBIN "data/bank_07b/d_5e52.bin" ; $5e52, 132 bytes
+	INCBIN "data/bank_07b/Sfx1c_Trk0.bin" ; $5e52, 132 bytes
 Sfx1c_Trk1:
-	INCBIN "data/bank_07b/d_5ed6.bin" ; $5ed6, 234 bytes
+	INCBIN "data/bank_07b/Sfx1c_Trk1.bin" ; $5ed6, 234 bytes
 Sfx1c_Trk2:
-	INCBIN "data/bank_07b/d_5fc0.bin" ; $5fc0, 396 bytes
+	INCBIN "data/bank_07b/Sfx1c_Trk2.bin" ; $5fc0, 396 bytes
 Sfx1c_Trk3:
-	INCBIN "data/bank_07b/d_614c.bin" ; $614c, 412 bytes
+	INCBIN "data/bank_07b/Sfx1c_Trk3.bin" ; $614c, 412 bytes
 Sfx1d_Trk0:
-	INCBIN "data/bank_07b/d_62e8.bin" ; $62e8, 302 bytes
+	INCBIN "data/bank_07b/Sfx1d_Trk0.bin" ; $62e8, 302 bytes
 Sfx1d_Trk1:
-	INCBIN "data/bank_07b/d_6416.bin" ; $6416, 448 bytes
+	INCBIN "data/bank_07b/Sfx1d_Trk1.bin" ; $6416, 448 bytes
 Sfx1d_Trk2:
-	INCBIN "data/bank_07b/d_65d6.bin" ; $65d6, 240 bytes
+	INCBIN "data/bank_07b/Sfx1d_Trk2.bin" ; $65d6, 240 bytes
 Sfx1d_Trk3:
-	INCBIN "data/bank_07b/d_66c6.bin" ; $66c6, 96 bytes
+	INCBIN "data/bank_07b/Sfx1d_Trk3.bin" ; $66c6, 96 bytes
 Sfx1e_Trk0:
-	INCBIN "data/bank_07b/d_6726.bin" ; $6726, 724 bytes
+	INCBIN "data/bank_07b/Sfx1e_Trk0.bin" ; $6726, 724 bytes
 Sfx1e_Trk1:
-	INCBIN "data/bank_07b/d_69fa.bin" ; $69fa, 1078 bytes
+	INCBIN "data/bank_07b/Sfx1e_Trk1.bin" ; $69fa, 1078 bytes
 Sfx1e_Trk2:
-	INCBIN "data/bank_07b/d_6e30.bin" ; $6e30, 1196 bytes
+	INCBIN "data/bank_07b/Sfx1e_Trk2.bin" ; $6e30, 1196 bytes
 Sfx1e_Trk3:
-	INCBIN "data/bank_07b/d_72dc.bin" ; $72dc, 1726 bytes
+	INCBIN "data/bank_07b/Sfx1e_Trk3.bin" ; $72dc, 1726 bytes
 Sfx1f_Trk0:
-	INCBIN "data/bank_07b/d_799a.bin" ; $799a, 212 bytes
+	INCBIN "data/bank_07b/Sfx1f_Trk0.bin" ; $799a, 212 bytes
 Sfx1f_Trk1:
-	INCBIN "data/bank_07b/d_7a6e.bin" ; $7a6e, 216 bytes
+	INCBIN "data/bank_07b/Sfx1f_Trk1.bin" ; $7a6e, 216 bytes
 Sfx1f_Trk2:
-	INCBIN "data/bank_07b/d_7b46.bin" ; $7b46, 450 bytes
+	INCBIN "data/bank_07b/Sfx1f_Trk2.bin" ; $7b46, 450 bytes
 Sfx1f_Trk3:
-	INCBIN "data/bank_07b/d_7d08.bin" ; $7d08, 340 bytes
+	INCBIN "data/bank_07b/Sfx1f_Trk3.bin" ; $7d08, 340 bytes
 Sfx2f_Trk0:
-	INCBIN "data/bank_07b/d_7e5c.bin" ; $7e5c, 28 bytes
+	INCBIN "data/bank_07b/Sfx2f_Trk0.bin" ; $7e5c, 28 bytes
 Sfx2f_Trk1:
-	INCBIN "data/bank_07b/d_7e78.bin" ; $7e78, 28 bytes
+	INCBIN "data/bank_07b/Sfx2f_Trk1.bin" ; $7e78, 28 bytes
 Sfx2f_Trk2:
-	INCBIN "data/bank_07b/d_7e94.bin" ; $7e94, 22 bytes
+	INCBIN "data/bank_07b/Sfx2f_Trk2.bin" ; $7e94, 22 bytes
 Sfx2f_Trk3:
-	INCBIN "data/bank_07b/d_7eaa.bin" ; $7eaa, 76 bytes
+	INCBIN "data/bank_07b/Sfx2f_Trk3.bin" ; $7eaa, 76 bytes
 Sfx31_Trk0:
-	INCBIN "data/bank_07b/d_7ef6.bin" ; $7ef6, 38 bytes
+	INCBIN "data/bank_07b/Sfx31_Trk0.bin" ; $7ef6, 38 bytes
 Sfx31_Trk1:
-	INCBIN "data/bank_07b/d_7f1c.bin" ; $7f1c, 38 bytes
+	INCBIN "data/bank_07b/Sfx31_Trk1.bin" ; $7f1c, 38 bytes
 Sfx31_Trk2:
-	INCBIN "data/bank_07b/d_7f42.bin" ; $7f42, 34 bytes
+	INCBIN "data/bank_07b/Sfx31_Trk2.bin" ; $7f42, 34 bytes
 Sfx31_Trk3:
-	INCBIN "data/bank_07b/d_7f64.bin" ; $7f64, 130 bytes
+	INCBIN "data/bank_07b/Sfx31_Trk3.bin" ; $7f64, 130 bytes
 Music9b_Trk0:
-	INCBIN "data/bank_07b/d_7fe6.bin" ; $7fe6, 10 bytes
+	INCBIN "data/bank_07b/Music9b_Trk0.bin" ; $7fe6, 10 bytes
 	; $7ff0, 16 bytes fill to bank end (linker-padded)

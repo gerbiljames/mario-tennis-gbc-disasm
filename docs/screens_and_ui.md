@@ -1174,7 +1174,7 @@ does not re-derive them.
 - `PushTextArgShortTextId` (`$05:$517a`) has no callers and control code `$08`
   is a `ret`, so the short-text argument queue is write-never/read-never; only
   the measuring pass would consume it.
-- Control codes `$05` and `$08` never appear in any string in `data/*/text_pool_*.asm`.
+- Control codes `$05` and `$08` never appear in any string in `data/*/TextStrings_*.asm`.
 - `CopyMapToScrollBuffers` (`$00:$086c`) expands two of its four map planes and
   then immediately clears the region it wrote (`$08b3`, `$08fb`).
 - The queue-compaction tail at `$00:$0595`-`$05ae` sits after a `ret` and is

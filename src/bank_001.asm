@@ -231,19 +231,19 @@ Unused_01:
 	jp Unused_01_MenuRedraw.loop ; $420c
 	db $00 ; $420f
 MenuWindowTiles_01:
-	INCBIN "data/bank_001/d_4210.bin" ; $4210, 256 bytes
+	INCBIN "data/bank_001/MenuWindowTiles_01.bin" ; $4210, 256 bytes
 	ds 256, $00 ; $4310, fill
 MenuFontTiles_01:
-	INCBIN "data/bank_001/d_4410.bin" ; $4410, 512 bytes
+	INCBIN "data/bank_001/MenuFontTiles_01.bin" ; $4410, 512 bytes
 MenuTilesBStagedTiles0:
-	INCBIN "data/bank_001/d_4610.bin" ; $4610, 512 bytes
+	INCBIN "data/bank_001/MenuTilesBStagedTiles0.bin" ; $4610, 512 bytes
 MenuTilesBStagedTiles1:
-	INCBIN "data/bank_001/d_4810.bin" ; $4810, 512 bytes
+	INCBIN "data/bank_001/MenuTilesBStagedTiles1.bin" ; $4810, 512 bytes
 MenuFontFillTiles_01:
 	; $4a10, 1536 bytes (pattern)
 	ds 1536, $ff, $00
 MenuFontPalettes_01:
-	INCLUDE "data/bank_001/palettes_5010.asm" ; $5010, 64 bytes (palettes)
+	INCLUDE "data/bank_001/MenuFontPalettes_01.asm" ; $5010, 64 bytes (palettes)
 LoadMenuFontPalette:
 	push af ; $5050
 	push bc ; $5051
@@ -336,7 +336,7 @@ LoadMenuFontGfxStaged:
 	call LoadMenuTilesBStaged ; $50f2
 	ret ; $50f5
 DebugMenuPalettes_01:
-	INCLUDE "data/bank_001/palettes_50f6.asm" ; $50f6, 128 bytes (palettes)
+	INCLUDE "data/bank_001/DebugMenuPalettes_01.asm" ; $50f6, 128 bytes (palettes)
 LoadMenuBgPalettes3To7:
 	push af ; $5176
 	push bc ; $5177
@@ -375,12 +375,12 @@ LoadDebugMenuPalette:
 	; $51ab, 5 bytes (fill)
 	ds 5, $00
 UnusedJpWindowTiles_01:
-	INCBIN "data/bank_001/d_51b0.bin" ; $51b0, 256 bytes
+	INCBIN "data/bank_001/UnusedJpWindowTiles_01.bin" ; $51b0, 256 bytes
 	ds 256, $00 ; $52b0, fill
 UnusedJpFontTiles_01:
-	INCBIN "data/bank_001/d_53b0.bin" ; $53b0, 3136 bytes
+	INCBIN "data/bank_001/UnusedJpFontTiles_01.bin" ; $53b0, 3136 bytes
 UnusedJpFontPalettes_01:
-	INCLUDE "data/bank_001/palettes_5ff0.asm" ; $5ff0, 64 bytes (palettes)
+	INCLUDE "data/bank_001/UnusedJpFontPalettes_01.asm" ; $5ff0, 64 bytes (palettes)
 ShowDmgLockoutScreen:
 	ld a, $00 ; $6030
 	ldh [rLCDC], a ; $6032
@@ -389,7 +389,7 @@ ShowDmgLockoutScreen:
 	call DecompressData ; $603a
 	ld hl, wDecompBuffer ; $603d
 	ld de, $9000 ; $6040
-	ld c, $80 ; $6043
+	ld c, $80 ; $6043 -- 128 of DmgLockoutTilesLZ_01's 256 tiles
 	call CopyMemoryFast ; $6045
 	ld hl, wTextTileBuffer ; $6048
 	ld de, $8800 ; $604b
@@ -415,9 +415,9 @@ ShowDmgLockoutScreen:
 	call AdvanceFrame ; $6077
 	jr .loop ; $607a
 DmgLockoutTilesLZ_01:
-	INCBIN "data/bank_001/lz_607c.bin" ; $607c, 2183 bytes
+	INCBIN "data/bank_001/lz_DmgLockoutTilesLZ_01.bin" ; $607c, 2183 bytes
 DmgLockoutTilemapLZ_01:
-	INCBIN "data/bank_001/lz_6903.bin" ; $6903, 344 bytes
+	INCBIN "data/bank_001/lz_DmgLockoutTilemapLZ_01.bin" ; $6903, 344 bytes
 RunSoundTest:
 	push af ; $6a5b
 	push bc ; $6a5c
@@ -585,9 +585,9 @@ RunSoundTest:
 .continueLoop:
 	jp .loop ; $6b61
 SoundTestStrings_01:
-	INCLUDE "data/bank_001/sound_data_6b64.asm" ; $6b64, 6 bytes (sound_data)
+	INCLUDE "data/bank_001/SoundTestStrings_01.asm" ; $6b64, 6 bytes (sound_data)
 SoundTestString0:
-	INCLUDE "data/bank_001/text_6b6a.asm" ; $6b6a, 7 bytes
+	INCLUDE "data/bank_001/SoundTestString0.asm" ; $6b6a, 7 bytes
 SoundTestString1:
 	db $3e ; $6b71
 	db $00 ; $6b72
@@ -595,7 +595,7 @@ SoundTestString2:
 	db $20 ; $6b73
 	db $00 ; $6b74
 SoundTestSoundsA_01:
-	INCLUDE "data/bank_001/sound_data_6b75.asm" ; $6b75, 63 bytes (sound_data)
+	INCLUDE "data/bank_001/SoundTestSoundsA_01.asm" ; $6b75, 63 bytes (sound_data)
 SoundTestSoundsB_01:
-	INCLUDE "data/bank_001/sound_data_6bb4.asm" ; $6bb4, 114 bytes (sound_data)
+	INCLUDE "data/bank_001/SoundTestSoundsB_01.asm" ; $6bb4, 114 bytes (sound_data)
 	; $6c26, 5082 bytes fill to bank end (linker-padded)

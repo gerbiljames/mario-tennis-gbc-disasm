@@ -486,7 +486,7 @@ LookupBallPosByShotIndex_23:
 	add hl, de ; $427b
 	ret ; $427c
 BallPosData_23:
-	INCBIN "data/bank_023/d_427d.bin" ; $427d, 15360 bytes
+	INCBIN "data/bank_023/BallPosData_23.bin" ; $427d, 15360 bytes
 ShotBallPathPowerTopspin:
 	farcall ComputeShotPlacement ; $7e7d
 	push bc ; $7e80

@@ -155,121 +155,121 @@ BethSpriteFrames:
 	dw BethSpriteFrame55 ; $412c
 	dw BethSpriteFrame55 ; $412e
 BethSpriteFrame00:
-	INCBIN "data/bank_058/d_4130.bin" ; $4130, 240 bytes
+	INCBIN "data/bank_058/BethSpriteFrame00.bin" ; $4130, 240 bytes
 BethSpriteFrame01:
-	INCBIN "data/bank_058/d_4220.bin" ; $4220, 240 bytes
+	INCBIN "data/bank_058/BethSpriteFrame01.bin" ; $4220, 240 bytes
 BethSpriteFrame02:
-	INCBIN "data/bank_058/d_4310.bin" ; $4310, 240 bytes
+	INCBIN "data/bank_058/BethSpriteFrame02.bin" ; $4310, 240 bytes
 BethSpriteFrame03:
-	INCBIN "data/bank_058/d_4400.bin" ; $4400, 240 bytes
+	INCBIN "data/bank_058/BethSpriteFrame03.bin" ; $4400, 240 bytes
 BethSpriteFrame04:
-	INCBIN "data/bank_058/d_44f0.bin" ; $44f0, 240 bytes
+	INCBIN "data/bank_058/BethSpriteFrame04.bin" ; $44f0, 240 bytes
 BethSpriteFrame05:
-	INCBIN "data/bank_058/d_45e0.bin" ; $45e0, 240 bytes
+	INCBIN "data/bank_058/BethSpriteFrame05.bin" ; $45e0, 240 bytes
 BethSpriteFrame06:
-	INCBIN "data/bank_058/d_46d0.bin" ; $46d0, 240 bytes
+	INCBIN "data/bank_058/BethSpriteFrame06.bin" ; $46d0, 240 bytes
 BethSpriteFrame07:
-	INCBIN "data/bank_058/d_47c0.bin" ; $47c0, 240 bytes
+	INCBIN "data/bank_058/BethSpriteFrame07.bin" ; $47c0, 240 bytes
 BethSpriteFrame08:
-	INCBIN "data/bank_058/d_48b0.bin" ; $48b0, 240 bytes
+	INCBIN "data/bank_058/BethSpriteFrame08.bin" ; $48b0, 240 bytes
 BethSpriteFrame09:
-	INCBIN "data/bank_058/d_49a0.bin" ; $49a0, 240 bytes
+	INCBIN "data/bank_058/BethSpriteFrame09.bin" ; $49a0, 240 bytes
 BethSpriteFrame10:
-	INCBIN "data/bank_058/d_4a90.bin" ; $4a90, 240 bytes
+	INCBIN "data/bank_058/BethSpriteFrame10.bin" ; $4a90, 240 bytes
 BethSpriteFrame11:
-	INCBIN "data/bank_058/d_4b80.bin" ; $4b80, 240 bytes
+	INCBIN "data/bank_058/BethSpriteFrame11.bin" ; $4b80, 240 bytes
 BethSpriteFrame12:
-	INCBIN "data/bank_058/d_4c70.bin" ; $4c70, 240 bytes
+	INCBIN "data/bank_058/BethSpriteFrame12.bin" ; $4c70, 240 bytes
 BethSpriteFrame13:
-	INCBIN "data/bank_058/d_4d60.bin" ; $4d60, 240 bytes
+	INCBIN "data/bank_058/BethSpriteFrame13.bin" ; $4d60, 240 bytes
 BethSpriteFrame14:
-	INCBIN "data/bank_058/d_4e50.bin" ; $4e50, 240 bytes
+	INCBIN "data/bank_058/BethSpriteFrame14.bin" ; $4e50, 240 bytes
 BethSpriteFrame15:
-	INCBIN "data/bank_058/d_4f40.bin" ; $4f40, 240 bytes
+	INCBIN "data/bank_058/BethSpriteFrame15.bin" ; $4f40, 240 bytes
 BethSpriteFrame16:
-	INCBIN "data/bank_058/d_5030.bin" ; $5030, 240 bytes
+	INCBIN "data/bank_058/BethSpriteFrame16.bin" ; $5030, 240 bytes
 BethSpriteFrame17:
-	INCBIN "data/bank_058/d_5120.bin" ; $5120, 240 bytes
+	INCBIN "data/bank_058/BethSpriteFrame17.bin" ; $5120, 240 bytes
 BethSpriteFrame18:
-	INCBIN "data/bank_058/d_5210.bin" ; $5210, 240 bytes
+	INCBIN "data/bank_058/BethSpriteFrame18.bin" ; $5210, 240 bytes
 BethSpriteFrame19:
-	INCBIN "data/bank_058/d_5300.bin" ; $5300, 240 bytes
+	INCBIN "data/bank_058/BethSpriteFrame19.bin" ; $5300, 240 bytes
 BethSpriteFrame20:
-	INCBIN "data/bank_058/d_53f0.bin" ; $53f0, 240 bytes
+	INCBIN "data/bank_058/BethSpriteFrame20.bin" ; $53f0, 240 bytes
 BethSpriteFrame21:
-	INCBIN "data/bank_058/d_54e0.bin" ; $54e0, 240 bytes
+	INCBIN "data/bank_058/BethSpriteFrame21.bin" ; $54e0, 240 bytes
 BethSpriteFrame22:
-	INCBIN "data/bank_058/d_55d0.bin" ; $55d0, 240 bytes
+	INCBIN "data/bank_058/BethSpriteFrame22.bin" ; $55d0, 240 bytes
 BethSpriteFrame23:
-	INCBIN "data/bank_058/d_56c0.bin" ; $56c0, 240 bytes
+	INCBIN "data/bank_058/BethSpriteFrame23.bin" ; $56c0, 240 bytes
 BethSpriteFrame24:
-	INCBIN "data/bank_058/d_57b0.bin" ; $57b0, 240 bytes
+	INCBIN "data/bank_058/BethSpriteFrame24.bin" ; $57b0, 240 bytes
 BethSpriteFrame25:
-	INCBIN "data/bank_058/d_58a0.bin" ; $58a0, 240 bytes
+	INCBIN "data/bank_058/BethSpriteFrame25.bin" ; $58a0, 240 bytes
 BethSpriteFrame26:
-	INCBIN "data/bank_058/d_5990.bin" ; $5990, 240 bytes
+	INCBIN "data/bank_058/BethSpriteFrame26.bin" ; $5990, 240 bytes
 BethSpriteFrame27:
-	INCBIN "data/bank_058/d_5a80.bin" ; $5a80, 240 bytes
+	INCBIN "data/bank_058/BethSpriteFrame27.bin" ; $5a80, 240 bytes
 BethSpriteFrame28:
-	INCBIN "data/bank_058/d_5b70.bin" ; $5b70, 240 bytes
+	INCBIN "data/bank_058/BethSpriteFrame28.bin" ; $5b70, 240 bytes
 BethSpriteFrame29:
-	INCBIN "data/bank_058/d_5c60.bin" ; $5c60, 240 bytes
+	INCBIN "data/bank_058/BethSpriteFrame29.bin" ; $5c60, 240 bytes
 BethSpriteFrame30:
-	INCBIN "data/bank_058/d_5d50.bin" ; $5d50, 240 bytes
+	INCBIN "data/bank_058/BethSpriteFrame30.bin" ; $5d50, 240 bytes
 BethSpriteFrame31:
-	INCBIN "data/bank_058/d_5e40.bin" ; $5e40, 240 bytes
+	INCBIN "data/bank_058/BethSpriteFrame31.bin" ; $5e40, 240 bytes
 BethSpriteFrame32:
-	INCBIN "data/bank_058/d_5f30.bin" ; $5f30, 240 bytes
+	INCBIN "data/bank_058/BethSpriteFrame32.bin" ; $5f30, 240 bytes
 BethSpriteFrame33:
-	INCBIN "data/bank_058/d_6020.bin" ; $6020, 240 bytes
+	INCBIN "data/bank_058/BethSpriteFrame33.bin" ; $6020, 240 bytes
 BethSpriteFrame34:
-	INCBIN "data/bank_058/d_6110.bin" ; $6110, 240 bytes
+	INCBIN "data/bank_058/BethSpriteFrame34.bin" ; $6110, 240 bytes
 BethSpriteFrame35:
-	INCBIN "data/bank_058/d_6200.bin" ; $6200, 240 bytes
+	INCBIN "data/bank_058/BethSpriteFrame35.bin" ; $6200, 240 bytes
 BethSpriteFrame36:
-	INCBIN "data/bank_058/d_62f0.bin" ; $62f0, 240 bytes
+	INCBIN "data/bank_058/BethSpriteFrame36.bin" ; $62f0, 240 bytes
 BethSpriteFrame37:
-	INCBIN "data/bank_058/d_63e0.bin" ; $63e0, 240 bytes
+	INCBIN "data/bank_058/BethSpriteFrame37.bin" ; $63e0, 240 bytes
 BethSpriteFrame38:
-	INCBIN "data/bank_058/d_64d0.bin" ; $64d0, 240 bytes
+	INCBIN "data/bank_058/BethSpriteFrame38.bin" ; $64d0, 240 bytes
 BethSpriteFrame39:
-	INCBIN "data/bank_058/d_65c0.bin" ; $65c0, 240 bytes
+	INCBIN "data/bank_058/BethSpriteFrame39.bin" ; $65c0, 240 bytes
 BethSpriteFrame40:
-	INCBIN "data/bank_058/d_66b0.bin" ; $66b0, 320 bytes
+	INCBIN "data/bank_058/BethSpriteFrame40.bin" ; $66b0, 320 bytes
 BethSpriteFrame41:
-	INCBIN "data/bank_058/d_67f0.bin" ; $67f0, 320 bytes
+	INCBIN "data/bank_058/BethSpriteFrame41.bin" ; $67f0, 320 bytes
 BethSpriteFrame42:
-	INCBIN "data/bank_058/d_6930.bin" ; $6930, 240 bytes
+	INCBIN "data/bank_058/BethSpriteFrame42.bin" ; $6930, 240 bytes
 BethSpriteFrame43:
-	INCBIN "data/bank_058/d_6a20.bin" ; $6a20, 240 bytes
+	INCBIN "data/bank_058/BethSpriteFrame43.bin" ; $6a20, 240 bytes
 BethSpriteFrame44:
-	INCBIN "data/bank_058/d_6b10.bin" ; $6b10, 240 bytes
+	INCBIN "data/bank_058/BethSpriteFrame44.bin" ; $6b10, 240 bytes
 BethSpriteFrame45:
-	INCBIN "data/bank_058/d_6c00.bin" ; $6c00, 240 bytes
+	INCBIN "data/bank_058/BethSpriteFrame45.bin" ; $6c00, 240 bytes
 BethSpriteFrame46:
-	INCBIN "data/bank_058/d_6cf0.bin" ; $6cf0, 240 bytes
+	INCBIN "data/bank_058/BethSpriteFrame46.bin" ; $6cf0, 240 bytes
 BethSpriteFrame47:
-	INCBIN "data/bank_058/d_6de0.bin" ; $6de0, 240 bytes
+	INCBIN "data/bank_058/BethSpriteFrame47.bin" ; $6de0, 240 bytes
 BethSpriteFrame48:
-	INCBIN "data/bank_058/d_6ed0.bin" ; $6ed0, 240 bytes
+	INCBIN "data/bank_058/BethSpriteFrame48.bin" ; $6ed0, 240 bytes
 BethSpriteFrame49:
-	INCBIN "data/bank_058/d_6fc0.bin" ; $6fc0, 240 bytes
+	INCBIN "data/bank_058/BethSpriteFrame49.bin" ; $6fc0, 240 bytes
 BethSpriteFrame50:
-	INCBIN "data/bank_058/d_70b0.bin" ; $70b0, 240 bytes
+	INCBIN "data/bank_058/BethSpriteFrame50.bin" ; $70b0, 240 bytes
 BethSpriteFrame51:
-	INCBIN "data/bank_058/d_71a0.bin" ; $71a0, 240 bytes
+	INCBIN "data/bank_058/BethSpriteFrame51.bin" ; $71a0, 240 bytes
 BethSpriteFrame52:
-	INCBIN "data/bank_058/d_7290.bin" ; $7290, 240 bytes
+	INCBIN "data/bank_058/BethSpriteFrame52.bin" ; $7290, 240 bytes
 BethSpriteFrame53:
-	INCBIN "data/bank_058/d_7380.bin" ; $7380, 240 bytes
+	INCBIN "data/bank_058/BethSpriteFrame53.bin" ; $7380, 240 bytes
 BethSpriteFrame54:
-	INCBIN "data/bank_058/d_7470.bin" ; $7470, 240 bytes
+	INCBIN "data/bank_058/BethSpriteFrame54.bin" ; $7470, 240 bytes
 BethSpriteFrame55:
-	INCBIN "data/bank_058/d_7560.bin" ; $7560, 240 bytes
+	INCBIN "data/bank_058/BethSpriteFrame55.bin" ; $7560, 240 bytes
 BethSpriteFramesUnused:
-	INCBIN "data/bank_058/d_7650.bin" ; $7650, 1680 bytes
+	INCBIN "data/bank_058/BethSpriteFramesUnused.bin" ; $7650, 1680 bytes
 BethSpriteOam:
-	INCBIN "data/bank_058/d_7ce0.bin" ; $7ce0, 580 bytes
+	INCBIN "data/bank_058/BethSpriteOam.bin" ; $7ce0, 580 bytes
 BethSpriteAnims:
 	dw BethSpriteAnim00 ; $7f24
 	dw BethSpriteAnim01 ; $7f26

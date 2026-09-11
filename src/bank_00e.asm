@@ -3229,13 +3229,13 @@ UpdateStarWarpTrailSparkles:
 	jr nz, .drawLoop ; $72cb
 	ret ; $72cd
 StarWarpPalette:
-	INCLUDE "data/bank_00e/palettes_72ce.asm" ; $72ce, 8 bytes (palettes)
+	INCLUDE "data/bank_00e/StarWarpPalette.asm" ; $72ce, 8 bytes (palettes)
 	; $72d6, 10 bytes (fill)
 	ds 10, $00
 StarWarpTiles:
-	INCBIN "data/bank_00e/d_72e0.bin" ; $72e0, 384 bytes
+	INCBIN "data/bank_00e/StarWarpTiles.bin" ; $72e0, 384 bytes
 StarWarpSparkleTiles:
-	INCBIN "data/bank_00e/d_7460.bin" ; $7460, 32 bytes
+	INCBIN "data/bank_00e/StarWarpSparkleTiles.bin" ; $7460, 32 bytes
 StarWarpFrameSprites:
 	; $7480, 12 bytes (bytes:2)
 	db $00, $02 ; 0x00

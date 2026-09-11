@@ -65,52 +65,52 @@ DataPtr_CompositionCourtSceneUnusedSlot:
 DataPtr_CompositionCourtTiles:
 	dw CompositionCourtTiles ; $403e
 GrassCourtPalettes:
-	INCLUDE "data/bank_060/palettes_4040.asm" ; $4040, 64 bytes (palettes)
+	INCLUDE "data/bank_060/GrassCourtPalettes.asm" ; $4040, 64 bytes (palettes)
 GrassCourtTiles:
-	INCBIN "data/bank_060/lz_4080.bin" ; $4080, 3233 bytes
+	INCBIN "data/bank_060/lz_GrassCourtTiles.bin" ; $4080, 3233 bytes
 GrassCourtTilemap:
-	INCBIN "data/bank_060/lz_4d21.bin" ; $4d21, 604 bytes
+	INCBIN "data/bank_060/lz_GrassCourtTilemap.bin" ; $4d21, 604 bytes
 GrassCourtAttrmap:
-	INCBIN "data/bank_060/lz_4f7d.bin" ; $4f7d, 268 bytes
+	INCBIN "data/bank_060/lz_GrassCourtAttrmap.bin" ; $4f7d, 268 bytes
 GrassCourtSceneConfig:
-	INCBIN "data/bank_060/d_5089.bin" ; $5089, 40 bytes
+	INCBIN "data/bank_060/GrassCourtSceneConfig.bin" ; $5089, 40 bytes
 GrassCourtScoreboardColumnAttrs:
-	INCBIN "data/bank_060/d_50b1.bin" ; $50b1, 40 bytes
+	INCBIN "data/bank_060/GrassCourtScoreboardColumnAttrs.bin" ; $50b1, 40 bytes
 HardCourtPalettes:
-	INCLUDE "data/bank_060/palettes_50d9.asm" ; $50d9, 64 bytes (palettes)
+	INCLUDE "data/bank_060/HardCourtPalettes.asm" ; $50d9, 64 bytes (palettes)
 HardCourtTiles:
-	INCBIN "data/bank_060/lz_5119.bin" ; $5119, 2352 bytes
+	INCBIN "data/bank_060/lz_HardCourtTiles.bin" ; $5119, 2352 bytes
 HardCourtTilemap:
-	INCBIN "data/bank_060/lz_5a49.bin" ; $5a49, 637 bytes
+	INCBIN "data/bank_060/lz_HardCourtTilemap.bin" ; $5a49, 637 bytes
 HardCourtAttrmap:
-	INCBIN "data/bank_060/lz_5cc6.bin" ; $5cc6, 155 bytes
+	INCBIN "data/bank_060/lz_HardCourtAttrmap.bin" ; $5cc6, 155 bytes
 HardCourtSceneConfig:
-	INCBIN "data/bank_060/d_5d61.bin" ; $5d61, 40 bytes
+	INCBIN "data/bank_060/HardCourtSceneConfig.bin" ; $5d61, 40 bytes
 HardCourtScoreboardColumnAttrs:
-	INCBIN "data/bank_060/d_5d89.bin" ; $5d89, 40 bytes
+	INCBIN "data/bank_060/HardCourtScoreboardColumnAttrs.bin" ; $5d89, 40 bytes
 ClayCourtPalettes:
-	INCLUDE "data/bank_060/palettes_5db1.asm" ; $5db1, 64 bytes (palettes)
+	INCLUDE "data/bank_060/ClayCourtPalettes.asm" ; $5db1, 64 bytes (palettes)
 ClayCourtTiles:
-	INCBIN "data/bank_060/lz_5df1.bin" ; $5df1, 2993 bytes
+	INCBIN "data/bank_060/lz_ClayCourtTiles.bin" ; $5df1, 2993 bytes
 ClayCourtTilemap:
-	INCBIN "data/bank_060/lz_69a2.bin" ; $69a2, 582 bytes
+	INCBIN "data/bank_060/lz_ClayCourtTilemap.bin" ; $69a2, 582 bytes
 ClayCourtAttrmap:
-	INCBIN "data/bank_060/lz_6be8.bin" ; $6be8, 166 bytes
+	INCBIN "data/bank_060/lz_ClayCourtAttrmap.bin" ; $6be8, 166 bytes
 ClayCourtSceneConfig:
-	INCBIN "data/bank_060/d_6c8e.bin" ; $6c8e, 40 bytes
+	INCBIN "data/bank_060/ClayCourtSceneConfig.bin" ; $6c8e, 40 bytes
 ClayCourtScoreboardColumnAttrs:
-	INCBIN "data/bank_060/d_6cb6.bin" ; $6cb6, 40 bytes
+	INCBIN "data/bank_060/ClayCourtScoreboardColumnAttrs.bin" ; $6cb6, 40 bytes
 CompositionCourtPalettes:
-	INCLUDE "data/bank_060/palettes_6cde.asm" ; $6cde, 64 bytes (palettes)
+	INCLUDE "data/bank_060/CompositionCourtPalettes.asm" ; $6cde, 64 bytes (palettes)
 CompositionCourtTiles:
-	INCBIN "data/bank_060/lz_6d1e.bin" ; $6d1e, 2994 bytes
+	INCBIN "data/bank_060/lz_CompositionCourtTiles.bin" ; $6d1e, 2994 bytes
 CompositionCourtTilemap:
-	INCBIN "data/bank_060/lz_78d0.bin" ; $78d0, 573 bytes
+	INCBIN "data/bank_060/lz_CompositionCourtTilemap.bin" ; $78d0, 573 bytes
 CompositionCourtAttrmap:
-	INCBIN "data/bank_060/lz_7b0d.bin" ; $7b0d, 160 bytes
+	INCBIN "data/bank_060/lz_CompositionCourtAttrmap.bin" ; $7b0d, 160 bytes
 CompositionCourtSceneConfig:
-	INCBIN "data/bank_060/d_7bad.bin" ; $7bad, 40 bytes
+	INCBIN "data/bank_060/CompositionCourtSceneConfig.bin" ; $7bad, 40 bytes
 CompositionCourtScoreboardColumnAttrs:
-	INCBIN "data/bank_060/d_7bd5.bin" ; $7bd5, 40 bytes
+	INCBIN "data/bank_060/CompositionCourtScoreboardColumnAttrs.bin" ; $7bd5, 40 bytes
 CompositionCourtSceneUnusedSlot:
 	; $7bfd, 1027 bytes fill to bank end (linker-padded)

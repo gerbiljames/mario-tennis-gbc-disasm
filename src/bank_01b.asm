@@ -825,33 +825,33 @@ DrawAsciiDigitChar:
 	pop hl ; $44af
 	ret ; $44b0
 MugshotGfxAlex_1b:
-	INCBIN "data/bank_01b/lz_44b1.bin" ; $44b1, 158 bytes
+	INCBIN "data/bank_01b/lz_MugshotGfxAlex_1b.bin" ; $44b1, 158 bytes
 MugshotGfxNina_1b:
-	INCBIN "data/bank_01b/lz_454f.bin" ; $454f, 163 bytes
+	INCBIN "data/bank_01b/lz_MugshotGfxNina_1b.bin" ; $454f, 163 bytes
 MugshotGfxHarry_1b:
-	INCBIN "data/bank_01b/lz_45f2.bin" ; $45f2, 146 bytes
+	INCBIN "data/bank_01b/lz_MugshotGfxHarry_1b.bin" ; $45f2, 146 bytes
 MugshotGfxKate_1b:
-	INCBIN "data/bank_01b/lz_4684.bin" ; $4684, 165 bytes
+	INCBIN "data/bank_01b/lz_MugshotGfxKate_1b.bin" ; $4684, 165 bytes
 MugshotGfxMario_1b:
-	INCBIN "data/bank_01b/lz_4729.bin" ; $4729, 162 bytes
+	INCBIN "data/bank_01b/lz_MugshotGfxMario_1b.bin" ; $4729, 162 bytes
 MugshotGfxWaluigi_1b:
-	INCBIN "data/bank_01b/lz_47cb.bin" ; $47cb, 158 bytes
+	INCBIN "data/bank_01b/lz_MugshotGfxWaluigi_1b.bin" ; $47cb, 158 bytes
 MugshotGfxYoshi_1b:
-	INCBIN "data/bank_01b/lz_4869.bin" ; $4869, 139 bytes
+	INCBIN "data/bank_01b/lz_MugshotGfxYoshi_1b.bin" ; $4869, 139 bytes
 MugshotGfxBowser_1b:
-	INCBIN "data/bank_01b/lz_48f4.bin" ; $48f4, 165 bytes
+	INCBIN "data/bank_01b/lz_MugshotGfxBowser_1b.bin" ; $48f4, 165 bytes
 MugshotGfxWario_1b:
-	INCBIN "data/bank_01b/lz_4999.bin" ; $4999, 162 bytes
+	INCBIN "data/bank_01b/lz_MugshotGfxWario_1b.bin" ; $4999, 162 bytes
 MugshotGfxPeach_1b:
-	INCBIN "data/bank_01b/lz_4a3b.bin" ; $4a3b, 153 bytes
+	INCBIN "data/bank_01b/lz_MugshotGfxPeach_1b.bin" ; $4a3b, 153 bytes
 MugshotGfxStorySlot1_1b:
-	INCBIN "data/bank_01b/lz_4ad4.bin" ; $4ad4, 110 bytes
+	INCBIN "data/bank_01b/lz_MugshotGfxStorySlot1_1b.bin" ; $4ad4, 110 bytes
 MugshotGfxStorySlot2_1b:
-	INCBIN "data/bank_01b/lz_4b42.bin" ; $4b42, 147 bytes
+	INCBIN "data/bank_01b/lz_MugshotGfxStorySlot2_1b.bin" ; $4b42, 147 bytes
 MugshotGfxStorySlot3_1b:
-	INCBIN "data/bank_01b/lz_4bd5.bin" ; $4bd5, 153 bytes
+	INCBIN "data/bank_01b/lz_MugshotGfxStorySlot3_1b.bin" ; $4bd5, 153 bytes
 MugshotGfxPlaceholder_1b:
-	INCBIN "data/bank_01b/lz_4c6e.bin" ; $4c6e, 126 bytes
+	INCBIN "data/bank_01b/lz_MugshotGfxPlaceholder_1b.bin" ; $4c6e, 126 bytes
 CharMugshotGfxPointers:
 	; $4cec, 288 bytes (mugshot_ptr_table)
 	dw MugshotGfxAlex_1b, .unused ; $00 Alex
@@ -1124,7 +1124,7 @@ BuildRankingBoardScreen:
 	farcall QueueWram3MapToVRAM ; $4f72
 	ret ; $4f75
 RankingBoardScreenPalettes:
-	INCLUDE "data/bank_01b/palettes_4f76.asm" ; $4f76, 48 bytes (palettes)
+	INCLUDE "data/bank_01b/RankingBoardScreenPalettes.asm" ; $4f76, 48 bytes (palettes)
 LoadRankingBoardTiles:
 	push_wram_bank $01 ; $4fa6
 	ld hl, (BANK(DataPtr_BracketCharIcon00) << 8) | LOW(DataPtr_BracketCharIcon00) ; $4faf
@@ -2312,7 +2312,7 @@ RankingBoardAnimTask_1b_SpriteTemplate:
 	oam_sprite $10, $40, $0e, $00
 	oam_sprite_end
 RankingBoardAnimTaskTable:
-	INCBIN "data/bank_01b/d_597b.bin" ; $597b, 137 bytes
+	INCBIN "data/bank_01b/RankingBoardAnimTaskTable.bin" ; $597b, 137 bytes
 RankingCursorBobTask:
 	ld a, [wRankingBannerAnimFrame] ; $5a04
 	or a ; $5a07
@@ -4074,7 +4074,7 @@ LoadUnlockDebugCursorGfx:
 	call DecompressData ; $68e5
 	ld hl, wDecompBuffer ; $68e8
 	ld de, $8500 ; $68eb
-	ld c, $02 ; $68ee
+	ld c, UnlockDebugCursorGfx_SIZE / 16 ; $68ee
 	call QueueVRAMCopy ; $68f0
 	pop_wram_bank ; $68f3
 	ld hl, UnlockDebugCursorPalette ; $68f8
@@ -4085,11 +4085,12 @@ LoadUnlockDebugCursorGfx:
 	call RegisterFrameTask ; $6906
 	ret ; $6909
 UnlockDebugCursorGfx:
-	INCBIN "data/bank_01b/lz_690a.bin" ; $690a, 29 bytes
+	INCBIN "data/bank_01b/lz_UnlockDebugCursorGfx.bin" ; $690a, 29 bytes
+	INCLUDE "data/bank_01b/lz_UnlockDebugCursorGfx.inc" ; DEF UnlockDebugCursorGfx_SIZE EQU its decoded length, generated from the .bin by make
 	; $6927, 9 bytes (fill)
 	ds 9, $00
 UnlockDebugCursorPalette:
-	INCLUDE "data/bank_01b/palettes_6930.asm" ; $6930, 8 bytes (palettes)
+	INCLUDE "data/bank_01b/UnlockDebugCursorPalette.asm" ; $6930, 8 bytes (palettes)
 DrawUnlockDebugFlagSprites:
 	push_wram_bank $06 ; $6938
 	ld hl, wUnlockFlagsBlock + 2 ; $6941
@@ -6150,21 +6151,21 @@ CompactMinigameDataRows:
 	pop_wram_bank ; $78b7
 	ret ; $78bc
 ObjectSceneAGfx0:
-	INCBIN "data/bank_01b/lz_78bd.bin" ; $78bd, 179 bytes
+	INCBIN "data/bank_01b/lz_ObjectSceneAGfx0.bin" ; $78bd, 179 bytes
 ObjectSceneAGfx1:
-	INCBIN "data/bank_01b/lz_7970.bin" ; $7970, 80 bytes
+	INCBIN "data/bank_01b/lz_ObjectSceneAGfx1.bin" ; $7970, 80 bytes
 ObjectSceneAGfx2:
-	INCBIN "data/bank_01b/lz_79c0.bin" ; $79c0, 184 bytes
+	INCBIN "data/bank_01b/lz_ObjectSceneAGfx2.bin" ; $79c0, 184 bytes
 ObjectSceneBGfx0:
-	INCBIN "data/bank_01b/lz_7a78.bin" ; $7a78, 61 bytes
+	INCBIN "data/bank_01b/lz_ObjectSceneBGfx0.bin" ; $7a78, 61 bytes
 ObjectSceneBGfx1:
-	INCBIN "data/bank_01b/lz_7ab5.bin" ; $7ab5, 65 bytes
+	INCBIN "data/bank_01b/lz_ObjectSceneBGfx1.bin" ; $7ab5, 65 bytes
 ObjectSceneBGfx2:
-	INCBIN "data/bank_01b/lz_7af6.bin" ; $7af6, 65 bytes
+	INCBIN "data/bank_01b/lz_ObjectSceneBGfx2.bin" ; $7af6, 65 bytes
 Screen0Gfx:
-	INCBIN "data/bank_01b/lz_7b37.bin" ; $7b37, 503 bytes
+	INCBIN "data/bank_01b/lz_Screen0Gfx.bin" ; $7b37, 503 bytes
 Screen1ObjGfx:
-	INCBIN "data/bank_01b/lz_7d2e.bin" ; $7d2e, 321 bytes
+	INCBIN "data/bank_01b/lz_Screen1ObjGfx.bin" ; $7d2e, 321 bytes
 Screen2ObjGfx:
-	INCBIN "data/bank_01b/lz_7e6f.bin" ; $7e6f, 323 bytes
+	INCBIN "data/bank_01b/lz_Screen2ObjGfx.bin" ; $7e6f, 323 bytes
 	; $7fb2, 78 bytes fill to bank end (linker-padded)

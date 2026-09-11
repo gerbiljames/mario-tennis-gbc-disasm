@@ -2237,9 +2237,9 @@ MenuTilemaps_02:
 	; $51fa, 8 bytes (bytes:16)
 	db $46, $41, $49, $4c, $45, $44, $20, $00 ; 0x00
 DebugStoryStatsScreenString0:
-	INCLUDE "data/bank_002/text_5202.asm" ; $5202, 8 bytes
+	INCLUDE "data/bank_002/DebugStoryStatsScreenString0.asm" ; $5202, 8 bytes
 DebugStoryStatsScreenString1:
-	INCLUDE "data/bank_002/text_520a.asm" ; $520a, 16 bytes
+	INCLUDE "data/bank_002/DebugStoryStatsScreenString1.asm" ; $520a, 16 bytes
 DebugStoryStatsScreenString2:
 	; $521a, 45 bytes (bytes:16)
 	db $20, $20, $20, $20, $20, $20, $00, $00, $01, $02, $03, $04, $05, $06, $07, $08 ; 0x00

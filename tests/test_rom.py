@@ -43,6 +43,26 @@ class GeneratedSource(unittest.TestCase):
         self.assertEqual(count(r"^\tld de, \$[0-9a-f]{4} ; \$[0-9a-f]{4}\n\t(?:far)?call (Set|Clear|Test)GameFlag "),
                          0, "a raw game-flag id passed straight to a flag helper")
 
+    def test_copy_lengths_follow_their_blobs(self):
+        self.assertEqual(count(r"^\tld c, \(\w+ - \w+\) / 16 ;"), 34)
+        n = count(r"^\tld c, (\w+)_SIZE / 16 ;")
+        self.assertGreaterEqual(n, 90)
+        # every _SIZE constant used is INCLUDEd from the .inc beside its blob
+        for f in SRC:
+            text = f.read_text()
+            used = set(re.findall(r"\bld c, (\w+)_SIZE / 16", text))
+            have = set(re.findall(r'INCLUDE "data/bank_[0-9a-f]{3}/lz_(\w+)\.inc"', text))
+            self.assertEqual(used - have, set(), f.name)
+        self.assertGreaterEqual(count(r"^\tld c, \$[0-9a-f]{2} ; \$[0-9a-f]{4} -- \d+ of \w+'s \d+ tiles"), 25)
+
+    def test_data_files_are_named_after_labels(self):
+        lines = [l.split() for l in (ROOT / "data.manifest").read_text().splitlines()
+                 if l.strip() and not l.startswith("#")]
+        by_addr = sum(1 for f in lines if re.fullmatch(r"bank_[0-9a-f]{3}/(d|lz|text|\w+)_[0-9a-f]{4}\.\w+", f[0]))
+        self.assertLess(by_addr, 700, "most data files carry their label's name")
+        self.assertTrue(any(f[0] == "bank_040/AlexSpriteFrame00.bin" for f in lines))
+        self.assertTrue(any(f[0].endswith("/lz_CutsceneAnimFrameLZ_00.bin") for f in lines))
+
     def test_structured_regions_render(self):
         # a spec whose renderer gives up falls back to `db` on its first line
         for spec in ("sprite_anim", "map_actors", "actor_script", "flag_ids"):

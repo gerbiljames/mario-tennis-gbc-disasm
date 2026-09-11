@@ -169,11 +169,22 @@ def decode(bin_path, png_path, layout=None):
 
 def image_file_to_tiles(png_path):
     """The tile bytes an extracted PNG encodes to, using the tile count and
-    layout stored in the file."""
+    layout stored in the file. A plain image (no layout) whose canvas holds
+    more tiles than the count -- an editor enlarged it -- encodes up to the
+    last tile that is not blank, so a blob grows by drawing past its end;
+    blank padding in a partial last row stays padding."""
     from PIL import Image
     img = Image.open(png_path)
     ntiles = int(img.text.get("tiles", 0)) or None
-    return image_to_tiles(img, ntiles, img.text.get("layout") or None)
+    layout = img.text.get("layout") or None
+    if ntiles and not layout:
+        total = (img.width // 8) * (img.height // 8)
+        if total > ntiles:
+            all_tiles = image_to_tiles(img, total)
+            last = max((t for t in range(total)
+                        if any(all_tiles[t * 16:t * 16 + 16])), default=-1)
+            ntiles = max(ntiles, last + 1)
+    return image_to_tiles(img, ntiles, layout)
 
 
 def encode(png_path, bin_path):

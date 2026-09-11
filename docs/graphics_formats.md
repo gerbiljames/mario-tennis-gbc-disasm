@@ -20,12 +20,27 @@ below).
 
 ## 0. Editing graphics
 
-Every blob that is a whole number of 8x8 tiles — the manifest tags them
-`gfx` — is extracted to a PNG beside its `.bin` in `data/`: the tiles in
-blob order, sixteen per row, as a four-colour indexed image with the tile
-count in the file. `make` re-encodes any blob whose PNG is newer
+Every file under `data/` is named after its label in the source
+(`data/bank_040/AlexSpriteFrame00.bin`; an `lz_` prefix marks a compressed
+stream, `lz_MenuFontTiles_01.bin`; a blob nothing names keeps an address
+name, `d_4004.bin`). Every blob that is a whole number of 8x8 tiles — the
+manifest tags them `gfx` — is extracted to a PNG beside its `.bin`: the
+tiles in blob order, sixteen per row, as a four-colour indexed image with
+the tile count in the file. `make` re-encodes any blob whose PNG is newer
 (`tools/gfx.py encode`, then `tools/lz.py` for an `lz_*` stream), and
-`make check` verifies that every PNG still encodes back to its blob.
+`make check` verifies that every PNG still encodes back to its blob. A
+plain image grows its blob when the canvas is enlarged and something is
+drawn past the last tile; blank padding in a partial last row is not
+growth.
+
+The copies that put a blob into VRAM follow its size where the source can
+say so: a whole copy of a raw blob is `ld c, (Next - Blob) / 16`, and a
+whole copy of a decompressed stream is `ld c, Blob_SIZE / 16`, with
+`Blob_SIZE` the decoded length in a `data/<bank>/lz_Blob.inc` that `make`
+derives from the `.bin` (`tools/lz.py --size-inc`) and the bank source
+INCLUDEs after the INCBIN. A partial copy keeps its literal count with a
+comment naming the blob and the tiles it takes. The copies that remain
+plain literals decode through a helper the emitter cannot follow.
 
 A blob that is a run of sprite frames carries a **layout** (`gfx:2x2`,
 `gfx:3x4+3`, `gfx:4x4+4` in the manifest; `layout=` in the PNG) so each

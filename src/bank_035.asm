@@ -275,7 +275,7 @@ FetchTextTable_35:
 	dw TextStrings_35.s447 - TextStrings_35 ; 268
 	dw TextStrings_35.s449 - TextStrings_35 ; 269
 TextStrings_35:
-	INCLUDE "data/bank_035/text_pool_4220.asm" ; $4220, 14601 bytes (text_pool)
+	INCLUDE "data/bank_035/TextStrings_35.asm" ; $4220, 14601 bytes (text_pool)
 FetchDialogueText_35:
 	push af ; $7b29
 	ld a, $00 ; $7b2a

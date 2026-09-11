@@ -39,6 +39,12 @@ build/ram.o: $(RAM_SRCS) | build/rgbdscheck.o
 data/%.bin: data/%.png
 	python3 tools/gfx.py encode $< $@
 
+# `DEF <Label>_SIZE EQU <decoded length>` for an LZ stream the source copies
+# whole after decompressing (`ld c, Label_SIZE / 16`): the assembler cannot
+# measure a decoded length, so it is derived from the blob and follows edits.
+data/%.inc: data/%.bin
+	python3 tools/lz.py --size-inc $< > $@
+
 build/rgbdscheck.o: rgbdscheck.asm | build
 	$(RGBASM) -o $@ $<
 

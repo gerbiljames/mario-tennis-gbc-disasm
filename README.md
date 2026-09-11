@@ -66,12 +66,17 @@ restated:
   moves what follows and every reference follows it. Each bank's section stops
   at its last real byte and `rgblink -p 0xff` pads the rest, so the trailing
   space (186 KiB across 122 banks) is free for new code.
-- **Text.** Edit the strings in `data/<bank>/text_pool_*.asm`; the per-bank
-  offset table is `dw Pool.sN - Pool` in the bank source, so the assembler
-  recomputes every offset. Find a string with
+- **Text.** Edit the strings in `data/<bank>/TextStrings_<bank>.asm`; the
+  per-bank offset table is `dw Pool.sN - Pool` in the bank source, so the
+  assembler recomputes every offset. Find a string with
   `tools/strings.py baserom.gbc --index --bank <bank>`; a text id in the code
   is spelled `Text_<bank>_<index>` (`include/text_ids.inc`).
-- **Graphics are images.** Every blob that is tile graphics (2,724 of
+- **Data files carry their names.** Everything extracted into `data/` is
+  named after its label in the source: `data/bank_040/AlexSpriteFrame00.png`,
+  `data/bank_001/lz_MenuFontTiles_01.bin` (the `lz_` prefix marks a
+  compressed stream), `data/bank_017/MatchResultPalettes.asm`. Only a blob
+  nothing names keeps an address name (`d_4004.bin`).
+- **Graphics are images.** Every blob that is tile graphics (2,725 of
   them: character and object frames, tile sets, icons, portraits, fonts) is
   extracted twice, as the `.bin` the source includes and as a PNG beside it
   in `data/` — a four-colour indexed image. Sprite frames are drawn
@@ -80,16 +85,20 @@ restated:
   (`docs/graphics_formats.md` §0); everything else is the tiles in blob
   order, sixteen per row. Edit the PNG and `make` re-encodes the blob, compressing
   it again if it is an LZ stream (`lz_*`); a PNG you have not touched never
-  rebuilds anything. `make check` confirms every PNG still encodes back to
+  rebuilds anything. A plain image grows its blob if you enlarge the canvas
+  and draw past the last tile. `make check` confirms every PNG still encodes back to
   its blob. `tools/gfx.py` and `tools/lz.py` are the converters if you need
   them by hand.
 - **Tables.** Stats, physics constants, mode hooks, map actors, animation
   scripts, flag lists and menu definitions render as structured source with
   named fields — `docs/graphics_formats.md` and `docs/story_mode.md` give the
   layouts.
-- **Copy counts follow their source.** A VRAM copy whose length equalled its
-  blob's size is written `ld c, (Next - Blob) / 16`, so growing the blob copies
-  the extra tiles instead of silently truncating.
+- **Copy counts follow their source.** A VRAM copy of a whole blob is
+  written `ld c, (Next - Blob) / 16`, and a whole copy of a decompressed
+  stream `ld c, Blob_SIZE / 16`, where `Blob_SIZE` is the decoded length in
+  a `.inc` `make` derives from the blob beside it. Either way, growing the
+  blob copies the extra tiles instead of silently truncating. A partial copy
+  keeps its literal count and says which tiles of which blob it takes.
 - **The header is fixed up.** `make` runs `rgbfix -v`, so editing the title or
   cart type cannot leave a header checksum the CGB boot ROM rejects. It changes
   nothing in the unmodified build, which is why `make compare` still holds.

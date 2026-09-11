@@ -2011,7 +2011,7 @@ GetStatDigitSpritePos:
 	ld e, a ; $4fe7
 	ret ; $4fe8
 RadialOffsetRamps_1c:
-	INCBIN "data/bank_01c/d_4fe9.bin" ; $4fe9, 96 bytes
+	INCBIN "data/bank_01c/RadialOffsetRamps_1c.bin" ; $4fe9, 96 bytes
 DrawRemainingPointsSprite:
 	wram_bank $06 ; $5049
 	ld a, [wCharDataPointsLeft] ; $504f
@@ -2869,179 +2869,179 @@ CharDataBand8RunsStep1_1c:
 	db $00, $14, $00, $01, $00, $34, $06, $01, $00, $54, $0c, $01, $00, $74, $12, $01 ; 0x00
 	db $ff ; 0x10
 CharDataScreen_LoadScreenPalette:
-	INCLUDE "data/bank_01c/palettes_598c.asm" ; $598c, 64 bytes (palettes)
+	INCLUDE "data/bank_01c/CharDataScreen_LoadScreenPalette.asm" ; $598c, 64 bytes (palettes)
 CharDataScreenGfx0_1c:
-	INCBIN "data/bank_01c/lz_59cc.bin" ; $59cc, 2618 bytes
+	INCBIN "data/bank_01c/lz_CharDataScreenGfx0_1c.bin" ; $59cc, 2618 bytes
 CharDataScreenGfx1_1c:
-	INCBIN "data/bank_01c/lz_6406.bin" ; $6406, 99 bytes
+	INCBIN "data/bank_01c/lz_CharDataScreenGfx1_1c.bin" ; $6406, 99 bytes
 CharDataScreenGfx2_1c:
-	INCBIN "data/bank_01c/lz_6469.bin" ; $6469, 59 bytes
+	INCBIN "data/bank_01c/lz_CharDataScreenGfx2_1c.bin" ; $6469, 59 bytes
 CharDataScreenStatBar00:
-	INCBIN "data/bank_01c/d_64a4.bin" ; $64a4, 5 bytes
+	INCBIN "data/bank_01c/CharDataScreenStatBar00.bin" ; $64a4, 5 bytes
 CharDataScreenStatBar01:
-	INCBIN "data/bank_01c/d_64a9.bin" ; $64a9, 5 bytes
+	INCBIN "data/bank_01c/CharDataScreenStatBar01.bin" ; $64a9, 5 bytes
 CharDataScreenStatBar02:
-	INCBIN "data/bank_01c/d_64ae.bin" ; $64ae, 5 bytes
+	INCBIN "data/bank_01c/CharDataScreenStatBar02.bin" ; $64ae, 5 bytes
 CharDataScreenStatBar03:
-	INCBIN "data/bank_01c/d_64b3.bin" ; $64b3, 5 bytes
+	INCBIN "data/bank_01c/CharDataScreenStatBar03.bin" ; $64b3, 5 bytes
 CharDataScreenStatBar04:
-	INCBIN "data/bank_01c/d_64b8.bin" ; $64b8, 5 bytes
+	INCBIN "data/bank_01c/CharDataScreenStatBar04.bin" ; $64b8, 5 bytes
 CharDataScreenStatBar05:
-	INCBIN "data/bank_01c/d_64bd.bin" ; $64bd, 5 bytes
+	INCBIN "data/bank_01c/CharDataScreenStatBar05.bin" ; $64bd, 5 bytes
 CharDataScreenStatBar06:
-	INCBIN "data/bank_01c/d_64c2.bin" ; $64c2, 5 bytes
+	INCBIN "data/bank_01c/CharDataScreenStatBar06.bin" ; $64c2, 5 bytes
 CharDataScreenStatBar07:
-	INCBIN "data/bank_01c/d_64c7.bin" ; $64c7, 5 bytes
+	INCBIN "data/bank_01c/CharDataScreenStatBar07.bin" ; $64c7, 5 bytes
 CharDataScreenStatBar08:
-	INCBIN "data/bank_01c/d_64cc.bin" ; $64cc, 5 bytes
+	INCBIN "data/bank_01c/CharDataScreenStatBar08.bin" ; $64cc, 5 bytes
 CharDataScreenStatBar09:
-	INCBIN "data/bank_01c/d_64d1.bin" ; $64d1, 5 bytes
+	INCBIN "data/bank_01c/CharDataScreenStatBar09.bin" ; $64d1, 5 bytes
 CharDataScreenStatBar10:
-	INCBIN "data/bank_01c/d_64d6.bin" ; $64d6, 5 bytes
+	INCBIN "data/bank_01c/CharDataScreenStatBar10.bin" ; $64d6, 5 bytes
 CharDataScreenStatBar11:
-	INCBIN "data/bank_01c/d_64db.bin" ; $64db, 5 bytes
+	INCBIN "data/bank_01c/CharDataScreenStatBar11.bin" ; $64db, 5 bytes
 CharDataScreenStatBar12:
-	INCBIN "data/bank_01c/d_64e0.bin" ; $64e0, 5 bytes
+	INCBIN "data/bank_01c/CharDataScreenStatBar12.bin" ; $64e0, 5 bytes
 CharDataScreenStatBar13:
-	INCBIN "data/bank_01c/d_64e5.bin" ; $64e5, 5 bytes
+	INCBIN "data/bank_01c/CharDataScreenStatBar13.bin" ; $64e5, 5 bytes
 CharDataScreenStatBar14:
-	INCBIN "data/bank_01c/d_64ea.bin" ; $64ea, 5 bytes
+	INCBIN "data/bank_01c/CharDataScreenStatBar14.bin" ; $64ea, 5 bytes
 CharDataScreenStatBar15:
-	INCBIN "data/bank_01c/d_64ef.bin" ; $64ef, 5 bytes
+	INCBIN "data/bank_01c/CharDataScreenStatBar15.bin" ; $64ef, 5 bytes
 CharDataScreenStatBar16:
-	INCBIN "data/bank_01c/d_64f4.bin" ; $64f4, 5 bytes
+	INCBIN "data/bank_01c/CharDataScreenStatBar16.bin" ; $64f4, 5 bytes
 CharDataScreenStatBar17:
-	INCBIN "data/bank_01c/d_64f9.bin" ; $64f9, 5 bytes
+	INCBIN "data/bank_01c/CharDataScreenStatBar17.bin" ; $64f9, 5 bytes
 CharDataScreenStatBar18:
-	INCBIN "data/bank_01c/d_64fe.bin" ; $64fe, 5 bytes
+	INCBIN "data/bank_01c/CharDataScreenStatBar18.bin" ; $64fe, 5 bytes
 CharDataScreenStatBar19:
-	INCBIN "data/bank_01c/d_6503.bin" ; $6503, 5 bytes
+	INCBIN "data/bank_01c/CharDataScreenStatBar19.bin" ; $6503, 5 bytes
 CharDataScreenStatBar20:
-	INCBIN "data/bank_01c/d_6508.bin" ; $6508, 5 bytes
+	INCBIN "data/bank_01c/CharDataScreenStatBar20.bin" ; $6508, 5 bytes
 CharDataScreenStatBar21:
-	INCBIN "data/bank_01c/d_650d.bin" ; $650d, 5 bytes
+	INCBIN "data/bank_01c/CharDataScreenStatBar21.bin" ; $650d, 5 bytes
 CharDataScreenStatBar22:
-	INCBIN "data/bank_01c/d_6512.bin" ; $6512, 5 bytes
+	INCBIN "data/bank_01c/CharDataScreenStatBar22.bin" ; $6512, 5 bytes
 CharDataScreenStatBar23:
-	INCBIN "data/bank_01c/d_6517.bin" ; $6517, 5 bytes
+	INCBIN "data/bank_01c/CharDataScreenStatBar23.bin" ; $6517, 5 bytes
 CharDataScreenStatBar24:
-	INCBIN "data/bank_01c/d_651c.bin" ; $651c, 5 bytes
+	INCBIN "data/bank_01c/CharDataScreenStatBar24.bin" ; $651c, 5 bytes
 CharDataScreenStatBar25:
-	INCBIN "data/bank_01c/d_6521.bin" ; $6521, 5 bytes
+	INCBIN "data/bank_01c/CharDataScreenStatBar25.bin" ; $6521, 5 bytes
 CharDataScreenStatBar26:
-	INCBIN "data/bank_01c/d_6526.bin" ; $6526, 5 bytes
+	INCBIN "data/bank_01c/CharDataScreenStatBar26.bin" ; $6526, 5 bytes
 CharDataScreenStatBar27:
-	INCBIN "data/bank_01c/d_652b.bin" ; $652b, 5 bytes
+	INCBIN "data/bank_01c/CharDataScreenStatBar27.bin" ; $652b, 5 bytes
 CharDataScreenStatBar28:
-	INCBIN "data/bank_01c/d_6530.bin" ; $6530, 5 bytes
+	INCBIN "data/bank_01c/CharDataScreenStatBar28.bin" ; $6530, 5 bytes
 CharDataScreenStatBar29:
-	INCBIN "data/bank_01c/d_6535.bin" ; $6535, 5 bytes
+	INCBIN "data/bank_01c/CharDataScreenStatBar29.bin" ; $6535, 5 bytes
 CharDataScreenStatBar30:
-	INCBIN "data/bank_01c/d_653a.bin" ; $653a, 5 bytes
+	INCBIN "data/bank_01c/CharDataScreenStatBar30.bin" ; $653a, 5 bytes
 CharDataScreenStatBar31:
-	INCBIN "data/bank_01c/d_653f.bin" ; $653f, 5 bytes
+	INCBIN "data/bank_01c/CharDataScreenStatBar31.bin" ; $653f, 5 bytes
 CharDataScreenStatBar32:
-	INCBIN "data/bank_01c/d_6544.bin" ; $6544, 5 bytes
+	INCBIN "data/bank_01c/CharDataScreenStatBar32.bin" ; $6544, 5 bytes
 CharDataScreenGfx3_1c:
-	INCBIN "data/bank_01c/lz_6549.bin" ; $6549, 54 bytes
+	INCBIN "data/bank_01c/lz_CharDataScreenGfx3_1c.bin" ; $6549, 54 bytes
 CharDataScreenGfx4:
-	INCBIN "data/bank_01c/lz_657f.bin" ; $657f, 23 bytes
+	INCBIN "data/bank_01c/lz_CharDataScreenGfx4.bin" ; $657f, 23 bytes
 CharDataScreenPage0Columns:
-	INCBIN "data/bank_01c/d_6596.bin" ; $6596, 50 bytes
+	INCBIN "data/bank_01c/CharDataScreenPage0Columns.bin" ; $6596, 50 bytes
 CharDataScreenGfx5:
-	INCBIN "data/bank_01c/lz_65c8.bin" ; $65c8, 67 bytes
+	INCBIN "data/bank_01c/lz_CharDataScreenGfx5.bin" ; $65c8, 67 bytes
 CharDataScreenGfx6:
-	INCBIN "data/bank_01c/lz_660b.bin" ; $660b, 23 bytes
+	INCBIN "data/bank_01c/lz_CharDataScreenGfx6.bin" ; $660b, 23 bytes
 CharDataScreenPage1Columns:
-	INCBIN "data/bank_01c/d_6622.bin" ; $6622, 70 bytes
+	INCBIN "data/bank_01c/CharDataScreenPage1Columns.bin" ; $6622, 70 bytes
 CharDataScreenGfx7:
-	INCBIN "data/bank_01c/lz_6668.bin" ; $6668, 58 bytes
+	INCBIN "data/bank_01c/lz_CharDataScreenGfx7.bin" ; $6668, 58 bytes
 CharDataScreenGfx8:
-	INCBIN "data/bank_01c/lz_66a2.bin" ; $66a2, 24 bytes
+	INCBIN "data/bank_01c/lz_CharDataScreenGfx8.bin" ; $66a2, 24 bytes
 CharDataScreenPage2Columns:
-	INCBIN "data/bank_01c/d_66ba.bin" ; $66ba, 50 bytes
+	INCBIN "data/bank_01c/CharDataScreenPage2Columns.bin" ; $66ba, 50 bytes
 CharDataScreenGfx9:
-	INCBIN "data/bank_01c/lz_66ec.bin" ; $66ec, 72 bytes
+	INCBIN "data/bank_01c/lz_CharDataScreenGfx9.bin" ; $66ec, 72 bytes
 CharDataScreenGfx10:
-	INCBIN "data/bank_01c/lz_6734.bin" ; $6734, 25 bytes
+	INCBIN "data/bank_01c/lz_CharDataScreenGfx10.bin" ; $6734, 25 bytes
 CharDataScreenPage3Columns:
-	INCBIN "data/bank_01c/d_674d.bin" ; $674d, 90 bytes
+	INCBIN "data/bank_01c/CharDataScreenPage3Columns.bin" ; $674d, 90 bytes
 CharDataScreenPage4Columns:
-	INCBIN "data/bank_01c/d_67a7.bin" ; $67a7, 30 bytes
+	INCBIN "data/bank_01c/CharDataScreenPage4Columns.bin" ; $67a7, 30 bytes
 CharDataScreenGfx11:
-	INCBIN "data/bank_01c/lz_67c5.bin" ; $67c5, 14 bytes
+	INCBIN "data/bank_01c/lz_CharDataScreenGfx11.bin" ; $67c5, 14 bytes
 CharDataScreenGfx12:
-	INCBIN "data/bank_01c/lz_67d3.bin" ; $67d3, 7 bytes
+	INCBIN "data/bank_01c/lz_CharDataScreenGfx12.bin" ; $67d3, 7 bytes
 CharDataScreenUIGraphicsGfx0:
-	INCBIN "data/bank_01c/lz_67da.bin" ; $67da, 24 bytes
+	INCBIN "data/bank_01c/lz_CharDataScreenUIGraphicsGfx0.bin" ; $67da, 24 bytes
 CharDataScreenUIGraphicsGfx1:
-	INCBIN "data/bank_01c/lz_67f2.bin" ; $67f2, 12 bytes
+	INCBIN "data/bank_01c/lz_CharDataScreenUIGraphicsGfx1.bin" ; $67f2, 12 bytes
 CharDataScreenUIGraphicsGfx2:
-	INCBIN "data/bank_01c/lz_67fe.bin" ; $67fe, 39 bytes
+	INCBIN "data/bank_01c/lz_CharDataScreenUIGraphicsGfx2.bin" ; $67fe, 39 bytes
 CharDataScreenUIGraphicsGfx3:
-	INCBIN "data/bank_01c/lz_6825.bin" ; $6825, 9 bytes
+	INCBIN "data/bank_01c/lz_CharDataScreenUIGraphicsGfx3.bin" ; $6825, 9 bytes
 CharDataScreenUIGraphicsGfx4:
-	INCBIN "data/bank_01c/lz_682e.bin" ; $682e, 26 bytes
+	INCBIN "data/bank_01c/lz_CharDataScreenUIGraphicsGfx4.bin" ; $682e, 26 bytes
 CharDataScreenUIGraphicsGfx5:
-	INCBIN "data/bank_01c/lz_6848.bin" ; $6848, 7 bytes
+	INCBIN "data/bank_01c/lz_CharDataScreenUIGraphicsGfx5.bin" ; $6848, 7 bytes
 CharDataScreenUIGraphicsGfx6:
-	INCBIN "data/bank_01c/lz_684f.bin" ; $684f, 28 bytes
+	INCBIN "data/bank_01c/lz_CharDataScreenUIGraphicsGfx6.bin" ; $684f, 28 bytes
 CharDataScreenUIGraphicsGfx7:
-	INCBIN "data/bank_01c/lz_686b.bin" ; $686b, 7 bytes
+	INCBIN "data/bank_01c/lz_CharDataScreenUIGraphicsGfx7.bin" ; $686b, 7 bytes
 	; $6872, 14 bytes (fill)
 	ds 14, $00
 UnusedShiftGfx00:
-	INCBIN "data/bank_01c/d_6880.bin" ; $6880, 64 bytes
+	INCBIN "data/bank_01c/UnusedShiftGfx00.bin" ; $6880, 64 bytes
 UnusedShiftGfx01:
-	INCBIN "data/bank_01c/d_68c0.bin" ; $68c0, 64 bytes
+	INCBIN "data/bank_01c/UnusedShiftGfx01.bin" ; $68c0, 64 bytes
 UnusedShiftGfx02:
-	INCBIN "data/bank_01c/d_6900.bin" ; $6900, 64 bytes
+	INCBIN "data/bank_01c/UnusedShiftGfx02.bin" ; $6900, 64 bytes
 UnusedShiftGfx03:
-	INCBIN "data/bank_01c/d_6940.bin" ; $6940, 64 bytes
+	INCBIN "data/bank_01c/UnusedShiftGfx03.bin" ; $6940, 64 bytes
 UnusedShiftGfx04:
-	INCBIN "data/bank_01c/d_6980.bin" ; $6980, 64 bytes
+	INCBIN "data/bank_01c/UnusedShiftGfx04.bin" ; $6980, 64 bytes
 UnusedShiftGfx05:
-	INCBIN "data/bank_01c/d_69c0.bin" ; $69c0, 64 bytes
+	INCBIN "data/bank_01c/UnusedShiftGfx05.bin" ; $69c0, 64 bytes
 UnusedShiftGfx06:
-	INCBIN "data/bank_01c/d_6a00.bin" ; $6a00, 64 bytes
+	INCBIN "data/bank_01c/UnusedShiftGfx06.bin" ; $6a00, 64 bytes
 UnusedShiftGfx07:
-	INCBIN "data/bank_01c/d_6a40.bin" ; $6a40, 64 bytes
+	INCBIN "data/bank_01c/UnusedShiftGfx07.bin" ; $6a40, 64 bytes
 UnusedShiftGfx08:
-	INCBIN "data/bank_01c/d_6a80.bin" ; $6a80, 64 bytes
+	INCBIN "data/bank_01c/UnusedShiftGfx08.bin" ; $6a80, 64 bytes
 UnusedShiftGfx09:
-	INCBIN "data/bank_01c/d_6ac0.bin" ; $6ac0, 64 bytes
+	INCBIN "data/bank_01c/UnusedShiftGfx09.bin" ; $6ac0, 64 bytes
 UnusedShiftGfx10:
-	INCBIN "data/bank_01c/d_6b00.bin" ; $6b00, 64 bytes
+	INCBIN "data/bank_01c/UnusedShiftGfx10.bin" ; $6b00, 64 bytes
 UnusedShiftGfx11:
-	INCBIN "data/bank_01c/d_6b40.bin" ; $6b40, 64 bytes
+	INCBIN "data/bank_01c/UnusedShiftGfx11.bin" ; $6b40, 64 bytes
 UnusedShiftGfx12:
-	INCBIN "data/bank_01c/d_6b80.bin" ; $6b80, 64 bytes
+	INCBIN "data/bank_01c/UnusedShiftGfx12.bin" ; $6b80, 64 bytes
 UnusedShiftGfx13:
-	INCBIN "data/bank_01c/d_6bc0.bin" ; $6bc0, 64 bytes
+	INCBIN "data/bank_01c/UnusedShiftGfx13.bin" ; $6bc0, 64 bytes
 UnusedShiftGfx14:
-	INCBIN "data/bank_01c/d_6c00.bin" ; $6c00, 64 bytes
+	INCBIN "data/bank_01c/UnusedShiftGfx14.bin" ; $6c00, 64 bytes
 UnusedShiftGfx15:
-	INCBIN "data/bank_01c/d_6c40.bin" ; $6c40, 64 bytes
+	INCBIN "data/bank_01c/UnusedShiftGfx15.bin" ; $6c40, 64 bytes
 UnusedShiftGfx16:
-	INCBIN "data/bank_01c/d_6c80.bin" ; $6c80, 64 bytes
+	INCBIN "data/bank_01c/UnusedShiftGfx16.bin" ; $6c80, 64 bytes
 UnusedShiftGfx17:
-	INCBIN "data/bank_01c/d_6cc0.bin" ; $6cc0, 64 bytes
+	INCBIN "data/bank_01c/UnusedShiftGfx17.bin" ; $6cc0, 64 bytes
 UnusedShiftGfx18:
-	INCBIN "data/bank_01c/d_6d00.bin" ; $6d00, 64 bytes
+	INCBIN "data/bank_01c/UnusedShiftGfx18.bin" ; $6d00, 64 bytes
 UnusedShiftGfx19:
-	INCBIN "data/bank_01c/d_6d40.bin" ; $6d40, 64 bytes
+	INCBIN "data/bank_01c/UnusedShiftGfx19.bin" ; $6d40, 64 bytes
 UnusedShiftGfx20:
-	INCBIN "data/bank_01c/d_6d80.bin" ; $6d80, 64 bytes
+	INCBIN "data/bank_01c/UnusedShiftGfx20.bin" ; $6d80, 64 bytes
 UnusedShiftGfx21:
-	INCBIN "data/bank_01c/d_6dc0.bin" ; $6dc0, 64 bytes
+	INCBIN "data/bank_01c/UnusedShiftGfx21.bin" ; $6dc0, 64 bytes
 UnusedShiftGfx22:
-	INCBIN "data/bank_01c/d_6e00.bin" ; $6e00, 64 bytes
+	INCBIN "data/bank_01c/UnusedShiftGfx22.bin" ; $6e00, 64 bytes
 UnusedShiftGfx23:
-	INCBIN "data/bank_01c/d_6e40.bin" ; $6e40, 64 bytes
+	INCBIN "data/bank_01c/UnusedShiftGfx23.bin" ; $6e40, 64 bytes
 UnusedShiftGfx24:
-	INCBIN "data/bank_01c/d_6e80.bin" ; $6e80, 64 bytes
+	INCBIN "data/bank_01c/UnusedShiftGfx24.bin" ; $6e80, 64 bytes
 UnusedShiftGfx25:
-	INCBIN "data/bank_01c/d_6ec0.bin" ; $6ec0, 47 bytes
+	INCBIN "data/bank_01c/UnusedShiftGfx25.bin" ; $6ec0, 47 bytes
 Unused_1c_1:
 	; $6eef, 17 bytes (bytes:16)
 	db $ec, $00, $00, $00, $00, $08, $07, $20, $1f, $44, $38, $0a, $71, $84, $73, $10 ; 0x00
@@ -3052,19 +3052,20 @@ UnusedShiftGfx26:
 	db $20, $cf, $10, $cf, $40, $9f, $a0, $1f, $42, $3c, $09, $f0, $94, $63, $48, $27 ; 0x10
 	db $80, $00, $00, $00, $00, $00, $80, $00, $20, $c0 ; 0x20
 CharDataScreenTiles_1c:
-	INCBIN "data/bank_01c/d_6f2a.bin" ; $6f2a, 22 bytes
+	INCBIN "data/bank_01c/CharDataScreenTiles_1c.bin" ; $6f2a, 22 bytes
 UnusedShiftGfx27:
-	INCBIN "data/bank_01c/d_6f40.bin" ; $6f40, 64 bytes
+	INCBIN "data/bank_01c/UnusedShiftGfx27.bin" ; $6f40, 64 bytes
 UnusedShiftGfx28:
-	INCBIN "data/bank_01c/d_6f80.bin" ; $6f80, 64 bytes
+	INCBIN "data/bank_01c/UnusedShiftGfx28.bin" ; $6f80, 64 bytes
 UnusedShiftGfx29:
-	INCBIN "data/bank_01c/d_6fc0.bin" ; $6fc0, 64 bytes
+	INCBIN "data/bank_01c/UnusedShiftGfx29.bin" ; $6fc0, 64 bytes
 UnusedShiftGfx30:
-	INCBIN "data/bank_01c/d_7000.bin" ; $7000, 64 bytes
+	INCBIN "data/bank_01c/UnusedShiftGfx30.bin" ; $7000, 64 bytes
 UnusedShiftGfx31:
-	INCBIN "data/bank_01c/d_7040.bin" ; $7040, 64 bytes
+	INCBIN "data/bank_01c/UnusedShiftGfx31.bin" ; $7040, 64 bytes
 CharDataScreenGfx13:
-	INCBIN "data/bank_01c/lz_7080.bin" ; $7080, 150 bytes
+	INCBIN "data/bank_01c/lz_CharDataScreenGfx13.bin" ; $7080, 150 bytes
+	INCLUDE "data/bank_01c/lz_CharDataScreenGfx13.inc" ; DEF CharDataScreenGfx13_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreen_LoadScreen:
 	ld hl, CharDataScreen_LoadScreenPalette ; $7116
 	lb de, $00, $08 ; $7119 palette index, count
@@ -3078,7 +3079,7 @@ CharDataScreen_LoadScreen:
 	call DecompressData ; $7134
 	ld hl, wDecompBuffer ; $7137
 	ld de, $8000 + VRAM_BANK1 ; $713a
-	ld c, $14 ; $713d
+	ld c, CharDataScreenGfx13_SIZE / 16 ; $713d
 	call QueueVRAMCopy ; $713f
 	farcall CharDataScreen_LoadGfx ; $7142
 	wram_bank $01 ; $7145
@@ -3087,7 +3088,7 @@ CharDataScreen_LoadScreen:
 	call DecompressData ; $7151
 	ld hl, wDecompBuffer ; $7154
 	ld de, $9000 + VRAM_BANK1 ; $7157
-	ld c, $80 ; $715a
+	ld c, $80 ; $715a -- 128 of CharDataScreenGfx0_1c's 256 tiles
 	call QueueVRAMCopy ; $715c
 	ld hl, wTextTileBuffer ; $715f
 	ld de, $8800 + VRAM_BANK1 ; $7162
@@ -3379,7 +3380,7 @@ LoadCharDataScreenBgAndPalettes:
 	call DecompressData ; $7443
 	ld hl, wDecompBuffer ; $7446
 	ld de, $9000 + VRAM_BANK1 ; $7449
-	ld c, $80 ; $744c
+	ld c, $80 ; $744c -- 128 of CharDataScreenBgAndPalettes0's 256 tiles
 	call QueueVRAMCopy ; $744e
 	ld hl, wTextTileBuffer ; $7451
 	ld de, $8800 + VRAM_BANK1 ; $7454
@@ -3493,11 +3494,11 @@ LoadCharDataScreenMugshots:
 	farcall GrayscalePaletteColorInPlace ; $753d
 	ret ; $7540
 CharDataScreenBgAndPalettes:
-	INCLUDE "data/bank_01c/palettes_7541.asm" ; $7541, 64 bytes (palettes)
+	INCLUDE "data/bank_01c/CharDataScreenBgAndPalettes.asm" ; $7541, 64 bytes (palettes)
 CharDataScreenBgAndPalettes0:
-	INCBIN "data/bank_01c/lz_7581.bin" ; $7581, 1886 bytes
+	INCBIN "data/bank_01c/lz_CharDataScreenBgAndPalettes0.bin" ; $7581, 1886 bytes
 CharDataScreenBgAndPalettes1:
-	INCBIN "data/bank_01c/lz_7cdf.bin" ; $7cdf, 320 bytes
+	INCBIN "data/bank_01c/lz_CharDataScreenBgAndPalettes1.bin" ; $7cdf, 320 bytes
 CharDataScreenBgAndPalettes2:
-	INCBIN "data/bank_01c/lz_7e1f.bin" ; $7e1f, 216 bytes
+	INCBIN "data/bank_01c/lz_CharDataScreenBgAndPalettes2.bin" ; $7e1f, 216 bytes
 	; $7ef7, 265 bytes fill to bank end (linker-padded)

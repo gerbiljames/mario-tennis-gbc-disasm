@@ -56,57 +56,57 @@ SoundTable_7a:
 	snd_channel 4, $02 ; $4068
 	dw Sfx2e_Trk2 ; $406a
 Sfx10_Trk0:
-	INCBIN "data/bank_07a/d_406c.bin" ; $406c, 850 bytes
+	INCBIN "data/bank_07a/Sfx10_Trk0.bin" ; $406c, 850 bytes
 Sfx10_Trk1:
-	INCBIN "data/bank_07a/d_43be.bin" ; $43be, 628 bytes
+	INCBIN "data/bank_07a/Sfx10_Trk1.bin" ; $43be, 628 bytes
 Sfx10_Trk2:
-	INCBIN "data/bank_07a/d_4632.bin" ; $4632, 1622 bytes
+	INCBIN "data/bank_07a/Sfx10_Trk2.bin" ; $4632, 1622 bytes
 Sfx10_Trk3:
-	INCBIN "data/bank_07a/d_4c88.bin" ; $4c88, 780 bytes
+	INCBIN "data/bank_07a/Sfx10_Trk3.bin" ; $4c88, 780 bytes
 Sfx11_Trk0:
-	INCBIN "data/bank_07a/d_4f94.bin" ; $4f94, 720 bytes
+	INCBIN "data/bank_07a/Sfx11_Trk0.bin" ; $4f94, 720 bytes
 Sfx11_Trk1:
-	INCBIN "data/bank_07a/d_5264.bin" ; $5264, 756 bytes
+	INCBIN "data/bank_07a/Sfx11_Trk1.bin" ; $5264, 756 bytes
 Sfx11_Trk2:
-	INCBIN "data/bank_07a/d_5558.bin" ; $5558, 610 bytes
+	INCBIN "data/bank_07a/Sfx11_Trk2.bin" ; $5558, 610 bytes
 Sfx11_Trk3:
-	INCBIN "data/bank_07a/d_57ba.bin" ; $57ba, 752 bytes
+	INCBIN "data/bank_07a/Sfx11_Trk3.bin" ; $57ba, 752 bytes
 Sfx12_Trk0:
-	INCBIN "data/bank_07a/d_5aaa.bin" ; $5aaa, 1454 bytes
+	INCBIN "data/bank_07a/Sfx12_Trk0.bin" ; $5aaa, 1454 bytes
 Sfx12_Trk1:
-	INCBIN "data/bank_07a/d_6058.bin" ; $6058, 1246 bytes
+	INCBIN "data/bank_07a/Sfx12_Trk1.bin" ; $6058, 1246 bytes
 Sfx12_Trk2:
-	INCBIN "data/bank_07a/d_6536.bin" ; $6536, 320 bytes
+	INCBIN "data/bank_07a/Sfx12_Trk2.bin" ; $6536, 320 bytes
 Sfx12_Trk3:
-	INCBIN "data/bank_07a/d_6676.bin" ; $6676, 672 bytes
+	INCBIN "data/bank_07a/Sfx12_Trk3.bin" ; $6676, 672 bytes
 Sfx13_Trk0:
-	INCBIN "data/bank_07a/d_6916.bin" ; $6916, 520 bytes
+	INCBIN "data/bank_07a/Sfx13_Trk0.bin" ; $6916, 520 bytes
 Sfx13_Trk1:
-	INCBIN "data/bank_07a/d_6b1e.bin" ; $6b1e, 610 bytes
+	INCBIN "data/bank_07a/Sfx13_Trk1.bin" ; $6b1e, 610 bytes
 Sfx13_Trk2:
-	INCBIN "data/bank_07a/d_6d80.bin" ; $6d80, 680 bytes
+	INCBIN "data/bank_07a/Sfx13_Trk2.bin" ; $6d80, 680 bytes
 Sfx13_Trk3:
-	INCBIN "data/bank_07a/d_7028.bin" ; $7028, 624 bytes
+	INCBIN "data/bank_07a/Sfx13_Trk3.bin" ; $7028, 624 bytes
 Sfx14_Trk0:
-	INCBIN "data/bank_07a/d_7298.bin" ; $7298, 364 bytes
+	INCBIN "data/bank_07a/Sfx14_Trk0.bin" ; $7298, 364 bytes
 Sfx14_Trk1:
-	INCBIN "data/bank_07a/d_7404.bin" ; $7404, 318 bytes
+	INCBIN "data/bank_07a/Sfx14_Trk1.bin" ; $7404, 318 bytes
 Sfx14_Trk2:
-	INCBIN "data/bank_07a/d_7542.bin" ; $7542, 370 bytes
+	INCBIN "data/bank_07a/Sfx14_Trk2.bin" ; $7542, 370 bytes
 Sfx14_Trk3:
-	INCBIN "data/bank_07a/d_76b4.bin" ; $76b4, 678 bytes
+	INCBIN "data/bank_07a/Sfx14_Trk3.bin" ; $76b4, 678 bytes
 Sfx15_Trk0:
-	INCBIN "data/bank_07a/d_795a.bin" ; $795a, 406 bytes
+	INCBIN "data/bank_07a/Sfx15_Trk0.bin" ; $795a, 406 bytes
 Sfx15_Trk1:
-	INCBIN "data/bank_07a/d_7af0.bin" ; $7af0, 382 bytes
+	INCBIN "data/bank_07a/Sfx15_Trk1.bin" ; $7af0, 382 bytes
 Sfx15_Trk2:
-	INCBIN "data/bank_07a/d_7c6e.bin" ; $7c6e, 294 bytes
+	INCBIN "data/bank_07a/Sfx15_Trk2.bin" ; $7c6e, 294 bytes
 Sfx15_Trk3:
-	INCBIN "data/bank_07a/d_7d94.bin" ; $7d94, 364 bytes
+	INCBIN "data/bank_07a/Sfx15_Trk3.bin" ; $7d94, 364 bytes
 Sfx2e_Trk0:
-	INCBIN "data/bank_07a/d_7f00.bin" ; $7f00, 94 bytes
+	INCBIN "data/bank_07a/Sfx2e_Trk0.bin" ; $7f00, 94 bytes
 Sfx2e_Trk1:
-	INCBIN "data/bank_07a/d_7f5e.bin" ; $7f5e, 76 bytes
+	INCBIN "data/bank_07a/Sfx2e_Trk1.bin" ; $7f5e, 76 bytes
 Sfx2e_Trk2:
-	INCBIN "data/bank_07a/d_7faa.bin" ; $7faa, 70 bytes
+	INCBIN "data/bank_07a/Sfx2e_Trk2.bin" ; $7faa, 70 bytes
 	; $7ff0, 16 bytes fill to bank end (linker-padded)

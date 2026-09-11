@@ -247,7 +247,7 @@ FetchTextTable_6e:
 	dw TextStrings_6e.s424 - TextStrings_6e ; 240
 	dw TextStrings_6e.s426 - TextStrings_6e ; 241
 TextStrings_6e:
-	INCLUDE "data/bank_06e/text_pool_41e8.asm" ; $41e8, 14624 bytes (text_pool)
+	INCLUDE "data/bank_06e/TextStrings_6e.asm" ; $41e8, 14624 bytes (text_pool)
 FetchDialogueText_6e:
 	push af ; $7b08
 	ld a, $00 ; $7b09

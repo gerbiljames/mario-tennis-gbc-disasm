@@ -155,121 +155,121 @@ DKSpriteFrames:
 	dw DKSpriteFrame55 ; $412c
 	dw DKSpriteFrame55 ; $412e
 DKSpriteFrame00:
-	INCBIN "data/bank_05c/d_4130.bin" ; $4130, 240 bytes
+	INCBIN "data/bank_05c/DKSpriteFrame00.bin" ; $4130, 240 bytes
 DKSpriteFrame01:
-	INCBIN "data/bank_05c/d_4220.bin" ; $4220, 240 bytes
+	INCBIN "data/bank_05c/DKSpriteFrame01.bin" ; $4220, 240 bytes
 DKSpriteFrame02:
-	INCBIN "data/bank_05c/d_4310.bin" ; $4310, 240 bytes
+	INCBIN "data/bank_05c/DKSpriteFrame02.bin" ; $4310, 240 bytes
 DKSpriteFrame03:
-	INCBIN "data/bank_05c/d_4400.bin" ; $4400, 240 bytes
+	INCBIN "data/bank_05c/DKSpriteFrame03.bin" ; $4400, 240 bytes
 DKSpriteFrame04:
-	INCBIN "data/bank_05c/d_44f0.bin" ; $44f0, 240 bytes
+	INCBIN "data/bank_05c/DKSpriteFrame04.bin" ; $44f0, 240 bytes
 DKSpriteFrame05:
-	INCBIN "data/bank_05c/d_45e0.bin" ; $45e0, 240 bytes
+	INCBIN "data/bank_05c/DKSpriteFrame05.bin" ; $45e0, 240 bytes
 DKSpriteFrame06:
-	INCBIN "data/bank_05c/d_46d0.bin" ; $46d0, 240 bytes
+	INCBIN "data/bank_05c/DKSpriteFrame06.bin" ; $46d0, 240 bytes
 DKSpriteFrame07:
-	INCBIN "data/bank_05c/d_47c0.bin" ; $47c0, 240 bytes
+	INCBIN "data/bank_05c/DKSpriteFrame07.bin" ; $47c0, 240 bytes
 DKSpriteFrame08:
-	INCBIN "data/bank_05c/d_48b0.bin" ; $48b0, 240 bytes
+	INCBIN "data/bank_05c/DKSpriteFrame08.bin" ; $48b0, 240 bytes
 DKSpriteFrame09:
-	INCBIN "data/bank_05c/d_49a0.bin" ; $49a0, 240 bytes
+	INCBIN "data/bank_05c/DKSpriteFrame09.bin" ; $49a0, 240 bytes
 DKSpriteFrame10:
-	INCBIN "data/bank_05c/d_4a90.bin" ; $4a90, 240 bytes
+	INCBIN "data/bank_05c/DKSpriteFrame10.bin" ; $4a90, 240 bytes
 DKSpriteFrame11:
-	INCBIN "data/bank_05c/d_4b80.bin" ; $4b80, 240 bytes
+	INCBIN "data/bank_05c/DKSpriteFrame11.bin" ; $4b80, 240 bytes
 DKSpriteFrame12:
-	INCBIN "data/bank_05c/d_4c70.bin" ; $4c70, 240 bytes
+	INCBIN "data/bank_05c/DKSpriteFrame12.bin" ; $4c70, 240 bytes
 DKSpriteFrame13:
-	INCBIN "data/bank_05c/d_4d60.bin" ; $4d60, 240 bytes
+	INCBIN "data/bank_05c/DKSpriteFrame13.bin" ; $4d60, 240 bytes
 DKSpriteFrame14:
-	INCBIN "data/bank_05c/d_4e50.bin" ; $4e50, 240 bytes
+	INCBIN "data/bank_05c/DKSpriteFrame14.bin" ; $4e50, 240 bytes
 DKSpriteFrame15:
-	INCBIN "data/bank_05c/d_4f40.bin" ; $4f40, 240 bytes
+	INCBIN "data/bank_05c/DKSpriteFrame15.bin" ; $4f40, 240 bytes
 DKSpriteFrame16:
-	INCBIN "data/bank_05c/d_5030.bin" ; $5030, 240 bytes
+	INCBIN "data/bank_05c/DKSpriteFrame16.bin" ; $5030, 240 bytes
 DKSpriteFrame17:
-	INCBIN "data/bank_05c/d_5120.bin" ; $5120, 240 bytes
+	INCBIN "data/bank_05c/DKSpriteFrame17.bin" ; $5120, 240 bytes
 DKSpriteFrame18:
-	INCBIN "data/bank_05c/d_5210.bin" ; $5210, 240 bytes
+	INCBIN "data/bank_05c/DKSpriteFrame18.bin" ; $5210, 240 bytes
 DKSpriteFrame19:
-	INCBIN "data/bank_05c/d_5300.bin" ; $5300, 240 bytes
+	INCBIN "data/bank_05c/DKSpriteFrame19.bin" ; $5300, 240 bytes
 DKSpriteFrame20:
-	INCBIN "data/bank_05c/d_53f0.bin" ; $53f0, 240 bytes
+	INCBIN "data/bank_05c/DKSpriteFrame20.bin" ; $53f0, 240 bytes
 DKSpriteFrame21:
-	INCBIN "data/bank_05c/d_54e0.bin" ; $54e0, 240 bytes
+	INCBIN "data/bank_05c/DKSpriteFrame21.bin" ; $54e0, 240 bytes
 DKSpriteFrame22:
-	INCBIN "data/bank_05c/d_55d0.bin" ; $55d0, 240 bytes
+	INCBIN "data/bank_05c/DKSpriteFrame22.bin" ; $55d0, 240 bytes
 DKSpriteFrame23:
-	INCBIN "data/bank_05c/d_56c0.bin" ; $56c0, 240 bytes
+	INCBIN "data/bank_05c/DKSpriteFrame23.bin" ; $56c0, 240 bytes
 DKSpriteFrame24:
-	INCBIN "data/bank_05c/d_57b0.bin" ; $57b0, 240 bytes
+	INCBIN "data/bank_05c/DKSpriteFrame24.bin" ; $57b0, 240 bytes
 DKSpriteFrame25:
-	INCBIN "data/bank_05c/d_58a0.bin" ; $58a0, 240 bytes
+	INCBIN "data/bank_05c/DKSpriteFrame25.bin" ; $58a0, 240 bytes
 DKSpriteFrame26:
-	INCBIN "data/bank_05c/d_5990.bin" ; $5990, 240 bytes
+	INCBIN "data/bank_05c/DKSpriteFrame26.bin" ; $5990, 240 bytes
 DKSpriteFrame27:
-	INCBIN "data/bank_05c/d_5a80.bin" ; $5a80, 240 bytes
+	INCBIN "data/bank_05c/DKSpriteFrame27.bin" ; $5a80, 240 bytes
 DKSpriteFrame28:
-	INCBIN "data/bank_05c/d_5b70.bin" ; $5b70, 240 bytes
+	INCBIN "data/bank_05c/DKSpriteFrame28.bin" ; $5b70, 240 bytes
 DKSpriteFrame29:
-	INCBIN "data/bank_05c/d_5c60.bin" ; $5c60, 240 bytes
+	INCBIN "data/bank_05c/DKSpriteFrame29.bin" ; $5c60, 240 bytes
 DKSpriteFrame30:
-	INCBIN "data/bank_05c/d_5d50.bin" ; $5d50, 240 bytes
+	INCBIN "data/bank_05c/DKSpriteFrame30.bin" ; $5d50, 240 bytes
 DKSpriteFrame31:
-	INCBIN "data/bank_05c/d_5e40.bin" ; $5e40, 240 bytes
+	INCBIN "data/bank_05c/DKSpriteFrame31.bin" ; $5e40, 240 bytes
 DKSpriteFrame32:
-	INCBIN "data/bank_05c/d_5f30.bin" ; $5f30, 240 bytes
+	INCBIN "data/bank_05c/DKSpriteFrame32.bin" ; $5f30, 240 bytes
 DKSpriteFrame33:
-	INCBIN "data/bank_05c/d_6020.bin" ; $6020, 240 bytes
+	INCBIN "data/bank_05c/DKSpriteFrame33.bin" ; $6020, 240 bytes
 DKSpriteFrame34:
-	INCBIN "data/bank_05c/d_6110.bin" ; $6110, 240 bytes
+	INCBIN "data/bank_05c/DKSpriteFrame34.bin" ; $6110, 240 bytes
 DKSpriteFrame35:
-	INCBIN "data/bank_05c/d_6200.bin" ; $6200, 240 bytes
+	INCBIN "data/bank_05c/DKSpriteFrame35.bin" ; $6200, 240 bytes
 DKSpriteFrame36:
-	INCBIN "data/bank_05c/d_62f0.bin" ; $62f0, 240 bytes
+	INCBIN "data/bank_05c/DKSpriteFrame36.bin" ; $62f0, 240 bytes
 DKSpriteFrame37:
-	INCBIN "data/bank_05c/d_63e0.bin" ; $63e0, 240 bytes
+	INCBIN "data/bank_05c/DKSpriteFrame37.bin" ; $63e0, 240 bytes
 DKSpriteFrame38:
-	INCBIN "data/bank_05c/d_64d0.bin" ; $64d0, 240 bytes
+	INCBIN "data/bank_05c/DKSpriteFrame38.bin" ; $64d0, 240 bytes
 DKSpriteFrame39:
-	INCBIN "data/bank_05c/d_65c0.bin" ; $65c0, 240 bytes
+	INCBIN "data/bank_05c/DKSpriteFrame39.bin" ; $65c0, 240 bytes
 DKSpriteFrame40:
-	INCBIN "data/bank_05c/d_66b0.bin" ; $66b0, 320 bytes
+	INCBIN "data/bank_05c/DKSpriteFrame40.bin" ; $66b0, 320 bytes
 DKSpriteFrame41:
-	INCBIN "data/bank_05c/d_67f0.bin" ; $67f0, 320 bytes
+	INCBIN "data/bank_05c/DKSpriteFrame41.bin" ; $67f0, 320 bytes
 DKSpriteFrame42:
-	INCBIN "data/bank_05c/d_6930.bin" ; $6930, 240 bytes
+	INCBIN "data/bank_05c/DKSpriteFrame42.bin" ; $6930, 240 bytes
 DKSpriteFrame43:
-	INCBIN "data/bank_05c/d_6a20.bin" ; $6a20, 240 bytes
+	INCBIN "data/bank_05c/DKSpriteFrame43.bin" ; $6a20, 240 bytes
 DKSpriteFrame44:
-	INCBIN "data/bank_05c/d_6b10.bin" ; $6b10, 240 bytes
+	INCBIN "data/bank_05c/DKSpriteFrame44.bin" ; $6b10, 240 bytes
 DKSpriteFrame45:
-	INCBIN "data/bank_05c/d_6c00.bin" ; $6c00, 240 bytes
+	INCBIN "data/bank_05c/DKSpriteFrame45.bin" ; $6c00, 240 bytes
 DKSpriteFrame46:
-	INCBIN "data/bank_05c/d_6cf0.bin" ; $6cf0, 240 bytes
+	INCBIN "data/bank_05c/DKSpriteFrame46.bin" ; $6cf0, 240 bytes
 DKSpriteFrame47:
-	INCBIN "data/bank_05c/d_6de0.bin" ; $6de0, 240 bytes
+	INCBIN "data/bank_05c/DKSpriteFrame47.bin" ; $6de0, 240 bytes
 DKSpriteFrame48:
-	INCBIN "data/bank_05c/d_6ed0.bin" ; $6ed0, 240 bytes
+	INCBIN "data/bank_05c/DKSpriteFrame48.bin" ; $6ed0, 240 bytes
 DKSpriteFrame49:
-	INCBIN "data/bank_05c/d_6fc0.bin" ; $6fc0, 240 bytes
+	INCBIN "data/bank_05c/DKSpriteFrame49.bin" ; $6fc0, 240 bytes
 DKSpriteFrame50:
-	INCBIN "data/bank_05c/d_70b0.bin" ; $70b0, 240 bytes
+	INCBIN "data/bank_05c/DKSpriteFrame50.bin" ; $70b0, 240 bytes
 DKSpriteFrame51:
-	INCBIN "data/bank_05c/d_71a0.bin" ; $71a0, 240 bytes
+	INCBIN "data/bank_05c/DKSpriteFrame51.bin" ; $71a0, 240 bytes
 DKSpriteFrame52:
-	INCBIN "data/bank_05c/d_7290.bin" ; $7290, 240 bytes
+	INCBIN "data/bank_05c/DKSpriteFrame52.bin" ; $7290, 240 bytes
 DKSpriteFrame53:
-	INCBIN "data/bank_05c/d_7380.bin" ; $7380, 240 bytes
+	INCBIN "data/bank_05c/DKSpriteFrame53.bin" ; $7380, 240 bytes
 DKSpriteFrame54:
-	INCBIN "data/bank_05c/d_7470.bin" ; $7470, 240 bytes
+	INCBIN "data/bank_05c/DKSpriteFrame54.bin" ; $7470, 240 bytes
 DKSpriteFrame55:
-	INCBIN "data/bank_05c/d_7560.bin" ; $7560, 240 bytes
+	INCBIN "data/bank_05c/DKSpriteFrame55.bin" ; $7560, 240 bytes
 DKSpriteFramesUnused:
-	INCBIN "data/bank_05c/d_7650.bin" ; $7650, 1680 bytes
+	INCBIN "data/bank_05c/DKSpriteFramesUnused.bin" ; $7650, 1680 bytes
 DKSpriteOam:
-	INCBIN "data/bank_05c/d_7ce0.bin" ; $7ce0, 580 bytes
+	INCBIN "data/bank_05c/DKSpriteOam.bin" ; $7ce0, 580 bytes
 DKSpriteAnims:
 	dw DKSpriteAnim00 ; $7f24
 	dw DKSpriteAnim01 ; $7f26

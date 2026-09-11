@@ -328,7 +328,7 @@ FetchTextTable_5e:
 	dw TextStrings_5e.s437 - TextStrings_5e ; 321
 	dw TextStrings_5e.s438 - TextStrings_5e ; 322
 TextStrings_5e:
-	INCLUDE "data/bank_05e/text_pool_428a.asm" ; $428a, 11269 bytes (text_pool)
+	INCLUDE "data/bank_05e/TextStrings_5e.asm" ; $428a, 11269 bytes (text_pool)
 FetchDialogueText_5e:
 	push af ; $6e8f
 	ld a, $00 ; $6e90

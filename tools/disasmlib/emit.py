@@ -116,14 +116,42 @@ _TILE_COUNT_CALLS = ("QueueVRAMCopy", "CopyMemoryFast")
 _CALL_RE = re.compile(r"^\t(?:call|farcall) ([A-Za-z_][A-Za-z0-9_.]*)")
 
 
-def resolve_copy_lengths(lines, base):
-    """Post-pass: rewrite a copy count that equals its source blob's size into
-    the difference of two labels. `ld hl, Tiles; ld c, $20; call QueueVRAMCopy`
-    copies 32 tiles because the blob happens to be 512 bytes long -- edit the
-    blob and the literal is silently wrong, while `(Next - Tiles) / 16` follows
-    it. Only rewritten when a label already marks the blob's end, so this
-    invents no symbols."""
-    start, size, label_at = {}, {}, {}
+_DECOMP_BUF_RE = re.compile(r"^\tld hl, wDecompBuffer(?: \+ ([^;]+?))? ;")
+_DECOMP_DEST_RE = re.compile(r"^\tld de, wDecompBuffer(?: \+ ([^;]+?))? ;")
+_HL_LOAD_RE = re.compile(r"^\tld hl, ([A-Za-z_][A-Za-z0-9_]*) ;")
+
+
+def _buffer_offset(expr):
+    """Byte offset of a `wDecompBuffer + expr` source: a literal, or the
+    `N * TILE_SIZE` form the emitter writes for tile-aligned offsets."""
+    if not expr:
+        return 0
+    expr = expr.strip().replace("TILE_SIZE", "16")
+    if not re.fullmatch(r"[\$0-9a-f\s*+]+", expr):
+        return None
+    return eval(re.sub(r"\$([0-9a-f]+)", lambda m: str(int(m.group(1), 16)), expr))
+_DECOMP_CALL_RE = re.compile(r"^\t(?:call|farcall) \w*Decompress\w*")
+_LZ_INCBIN_RE = re.compile(r'^\tINCBIN "(data/bank_[0-9a-f]{3}/lz_\w+)\.bin"')
+
+
+def resolve_copy_lengths(lines, base, lz_sizes=None):
+    """Post-pass over the tile-count copies (`ld c, N` before QueueVRAMCopy or
+    CopyMemoryFast), so a graphics edit that changes a blob's size is not
+    silently truncated by a literal that happened to equal it:
+
+    * `ld hl, Tiles; ld c, $20`: a raw blob copied whole becomes
+      `(Next - Tiles) / 16`, the assembler's own measure of the blob -- only
+      when a label already marks the blob's end, so this invents no symbols.
+    * `ld hl, Lz; call Decompress...; ld hl, wDecompBuffer; ld c, $40`: the
+      decoded stream copied whole becomes `Lz_SIZE / 16`. The assembler cannot
+      measure a decoded length, so the constant comes from a generated
+      `.inc` beside the blob (`DEF Lz_SIZE EQU n`, written by `lz.py
+      --size-inc`; the Makefile derives it from the .bin), INCLUDEd after the
+      INCBIN. `lz_sizes` maps each LZ blob's label to its decoded length.
+    * A partial copy of either keeps its literal and gains a comment saying
+      how many of the blob's tiles it takes, and from where."""
+    lz_sizes = lz_sizes or {}
+    start, size, label_at, lz_file = {}, {}, {}, {}
     for i, line in enumerate(lines[:-1]):
         m = _LABEL_LINE_RE.match(line)
         if not m:
@@ -135,23 +163,92 @@ def resolve_copy_lengths(lines, base):
         if r:
             start[m.group(1)] = int(r.group(1), 16)
             size[m.group(1)] = int(r.group(2))
-    for i, line in enumerate(lines):
-        m = _SRC_LOAD_RE.match(line)
-        if not m or m.group(1) not in size:
-            continue
-        blob = m.group(1)
-        end = label_at.get(start[blob] + size[blob])
-        if not end:
-            continue
+        z = _LZ_INCBIN_RE.match(lines[i + 1])
+        if z and m.group(1) in lz_sizes:
+            lz_file[m.group(1)] = z.group(1)
+
+    def count_site(i):
+        """(index, tiles) of the `ld c, N` that feeds a tile-count call in
+        the lines after i, or None."""
         for k in range(i + 1, min(len(lines), i + 7)):
             n = _COUNT_RE.match(lines[k])
-            if n and int(n.group(2), 16) * 16 == size[blob]:
+            if n:
                 call = next((_CALL_RE.match(x) for x in lines[k:k + 3]
                              if _CALL_RE.match(x)), None)
                 if call and call.group(1) in _TILE_COUNT_CALLS:
-                    lines[k] = f"{n.group(1)}({end} - {blob}) / 16{n.group(3)}"
-                break
+                    return k, int(n.group(2), 16)
+                return None
             if _CALL_RE.match(lines[k]):
+                return None
+        return None
+
+    def annotate(k, tiles, blob, total, offset=0):
+        n = _COUNT_RE.match(lines[k])
+        where = f" from tile {offset // 16}" if offset else ""
+        lines[k] = (f"{n.group(1)}${tiles:02x}{n.group(3)} -- {tiles} of "
+                    f"{blob}'s {total // 16} tiles{where}")
+
+    needed = set()
+    for i, line in enumerate(lines):
+        m = _SRC_LOAD_RE.match(line)
+        if m and m.group(1) in size:
+            blob = m.group(1)
+            hit = count_site(i)
+            if not hit:
+                continue
+            k, tiles = hit
+            end = label_at.get(start[blob] + size[blob])
+            if tiles * 16 == size[blob] and end:
+                n = _COUNT_RE.match(lines[k])
+                lines[k] = f"{n.group(1)}({end} - {blob}) / 16{n.group(3)}"
+            elif tiles * 16 < size[blob]:
+                annotate(k, tiles, blob, size[blob])
+            continue
+        d = _DECOMP_BUF_RE.match(line)
+        if not d:
+            continue
+        hit = count_site(i)
+        if not hit:
+            continue
+        k, tiles = hit
+        # the stream decoded into the buffer: the nearest Decompress call
+        # above, and the `ld hl, Lz` that fed it
+        blob, dest = None, 0
+        for j in range(i - 1, max(-1, i - 17), -1):
+            if _DECOMP_CALL_RE.match(lines[j]):
+                for x in lines[max(0, j - 5):j]:
+                    mm = _HL_LOAD_RE.match(x)
+                    if mm:
+                        blob = mm.group(1)
+                    md = _DECOMP_DEST_RE.match(x)
+                    if md:
+                        dest = _buffer_offset(md.group(1))
+                break
+            if _LABEL_LINE_RE.match(lines[j]) and not lines[j].startswith("."):
+                break
+        if blob not in lz_sizes:
+            continue
+        total = lz_sizes[blob]
+        off = _buffer_offset(d.group(1))
+        if off is None or dest is None:
+            continue
+        off -= dest                # relative to where the stream was decoded
+        if off < 0:
+            continue
+        if off == 0 and tiles * 16 == total:
+            n = _COUNT_RE.match(lines[k])
+            lines[k] = f"{n.group(1)}{blob}_SIZE / 16{n.group(3)}"
+            needed.add(blob)
+        elif off + tiles * 16 <= total:
+            annotate(k, tiles, blob, total, off)
+    for blob in needed:
+        if blob not in lz_file:
+            raise RuntimeError(f"{blob}_SIZE used but its INCBIN is not in this bank")
+        for i, line in enumerate(lines):
+            if _LABEL_LINE_RE.match(line) and line[:-1] == blob:
+                lines.insert(i + 2, f'\tINCLUDE "{lz_file[blob]}.inc" ; DEF '
+                                    f"{blob}_SIZE EQU its decoded length, "
+                                    f"generated from the .bin by make")
                 break
 
 
@@ -572,7 +669,7 @@ class Emitter:
         if self.flag_names:
             resolve_flag_names(lines, self.flag_names, self.flag_raw_sites,
                                base)
-        resolve_copy_lengths(lines, base)
+        resolve_copy_lengths(lines, base, self._lz_sizes(bank))
         self._resolve_split_base(lines, bank)
         collapse_line_idioms(lines)
         render_packed_args(lines, self.flag_names or {})
@@ -958,7 +1055,7 @@ class Emitter:
         if self._looks_like_text(seg, j):
             # text renders as generated db source (still under gitignored
             # data/, so no ROM content lands in the repository)
-            blob = f"bank_{bank:03x}/text_{cpu:04x}.asm"
+            blob = self._data_file(seg, bank, "text", "asm")
             self.lines.append(
                 f"{self.labels.get(seg, f'Text_{bank:02x}_{cpu:04x}')}:")
             self.lines.append(f'\tINCLUDE "data/{blob}" ; ${cpu:04x}, {n} bytes')
@@ -1304,12 +1401,37 @@ class Emitter:
         cuts = set(self._between(self.ptr_cuts, start, end))
         return self._valid_cuts(spec, start, end, cuts) == cuts
 
+    def _lz_sizes(self, bank):
+        """Decoded length of every LZ blob this bank has registered, by label."""
+        out = {}
+        for blob, start, length, spec in self.manifest:
+            if not blob.startswith(f"bank_{bank:03x}/lz_"):
+                continue
+            name = self.labels.get(start)
+            if name:
+                try:
+                    out[name] = len(lz.decompress(self.rom, start)[0])
+                except Exception:
+                    pass
+        return out
+
+    def _data_file(self, start, bank, prefix, ext):
+        """Path under data/ for the region at `start`: named after its label
+        when it has one (`lz_` kept as a prefix, since tools/gfx.py and the
+        Makefile tell a compressed blob by its stem), else by CPU address."""
+        name = self.labels.get(start)
+        if name and re.fullmatch(r"[A-Za-z_]\w*", name):
+            stem = f"lz_{name}" if prefix == "lz" else name
+        else:
+            stem = f"{prefix}_{offset_to_cpu(start):04x}"
+        return f"bank_{bank:03x}/{stem}.{ext}"
+
     def _incbin(self, start, length, bank, prefix="d", note=""):
         """Register a blob in the manifest and return its INCBIN line. A blob
         whose label says it is tile graphics is tagged `gfx`, which is what
         tools/extract.py decodes to an editable PNG beside the .bin."""
         cpu = offset_to_cpu(start)
-        blob = f"bank_{bank:03x}/{prefix}_{cpu:04x}.bin"
+        blob = self._data_file(start, bank, prefix, "bin")
         spec = None
         if is_gfx_name(self.labels.get(start, "")):
             # only a whole number of 8x8 tiles can be drawn as an image; a
@@ -1332,7 +1454,7 @@ class Emitter:
         generate it into gitignored data/ at setup and INCLUDE it, the same way
         game text is handled, so the repository carries no such content."""
         cpu = offset_to_cpu(start)
-        blob = f"bank_{bank:03x}/{spec}_{cpu:04x}.asm"
+        blob = self._data_file(start, bank, spec, "asm")
         self.manifest.append((blob, start, length, spec))
         self.lines.append(
             f'\tINCLUDE "data/{blob}" ; ${cpu:04x}, {length} bytes ({spec})')

@@ -32,7 +32,7 @@ ShowCharDataScreen:
 	call DecompressData ; $4049
 	ld hl, wDecompBuffer ; $404c
 	ld de, $8600 + VRAM_BANK1 ; $404f
-	ld c, $14 ; $4052
+	ld c, CharDataScreenGfx14_SIZE / 16 ; $4052
 	call QueueVRAMCopy ; $4054
 	farcall InitMenuBgScroll ; $4057
 	ld b, $05 ; $405a
@@ -150,7 +150,7 @@ LoadCharDataScreenPageGraphics:
 	call DecompressData ; $4181
 	ld hl, wDecompBuffer ; $4184
 	ld de, $8140 + VRAM_BANK1 ; $4187
-	ld c, $0a ; $418a
+	ld c, CharDataScreenPageGfx14_SIZE / 16 ; $418a
 	call QueueVRAMCopy ; $418c
 	wram_bank $01 ; $418f
 	ld hl, CharDataScreenPageGraphicsGfx0 ; $4195
@@ -158,7 +158,7 @@ LoadCharDataScreenPageGraphics:
 	call DecompressData ; $419b
 	ld hl, wDecompBuffer ; $419e
 	ld de, $81e0 + VRAM_BANK1 ; $41a1
-	ld c, $0a ; $41a4
+	ld c, CharDataScreenPageGraphicsGfx0_SIZE / 16 ; $41a4
 	call QueueVRAMCopy ; $41a6
 	wram_bank $01 ; $41a9
 	ld hl, CharDataScreenPageGraphicsGfx1 ; $41af
@@ -166,7 +166,7 @@ LoadCharDataScreenPageGraphics:
 	call DecompressData ; $41b5
 	ld hl, wDecompBuffer ; $41b8
 	ld de, $8280 + VRAM_BANK1 ; $41bb
-	ld c, $08 ; $41be
+	ld c, CharDataScreenPageGraphicsGfx1_SIZE / 16 ; $41be
 	call QueueVRAMCopy ; $41c0
 	wram_bank $01 ; $41c3
 	ld hl, CharDataScreenPageGraphicsGfx2 ; $41c9
@@ -266,14 +266,14 @@ LoadCharDataScreenPageGraphics:
 	call DecompressData ; $4309
 	ld hl, wDecompBuffer ; $430c
 	ld de, $8380 + VRAM_BANK1 ; $430f
-	ld c, $14 ; $4312
+	ld c, CharDataScreenPageGfx10_SIZE / 16 ; $4312
 	call QueueVRAMCopy ; $4314
 	ld hl, CharDataScreenPageGfx13 ; $4317
 	ld de, wDecompBuffer ; $431a
 	call DecompressData ; $431d
 	ld hl, wDecompBuffer ; $4320
 	ld de, $84c0 + VRAM_BANK1 ; $4323
-	ld c, $14 ; $4326
+	ld c, CharDataScreenPageGfx13_SIZE / 16 ; $4326
 	call QueueVRAMCopy ; $4328
 	wram_bank $01 ; $432b
 	ld hl, CharDataScreenPageGfx11 ; $4331
@@ -3238,199 +3238,203 @@ StopCharDataValuesSyncTask:
 	call UnregisterFrameTask ; $5c21
 	ret ; $5c24
 DrillDisplayData_1d:
-	INCBIN "data/bank_01d/d_5c25.bin" ; $5c25, 9 bytes
+	INCBIN "data/bank_01d/DrillDisplayData_1d.bin" ; $5c25, 9 bytes
 StatPageTilemapPatch0:
-	INCBIN "data/bank_01d/d_5c2e.bin" ; $5c2e, 5 bytes
+	INCBIN "data/bank_01d/StatPageTilemapPatch0.bin" ; $5c2e, 5 bytes
 CharDataSummaryPageTilemapPatch0:
-	INCBIN "data/bank_01d/d_5c33.bin" ; $5c33, 53 bytes
+	INCBIN "data/bank_01d/CharDataSummaryPageTilemapPatch0.bin" ; $5c33, 53 bytes
 CharDataSummaryPageTilemapPatch1:
-	INCBIN "data/bank_01d/d_5c68.bin" ; $5c68, 53 bytes
+	INCBIN "data/bank_01d/CharDataSummaryPageTilemapPatch1.bin" ; $5c68, 53 bytes
 CharDataSummaryPageTilemapPatch2:
-	INCBIN "data/bank_01d/d_5c9d.bin" ; $5c9d, 9 bytes
+	INCBIN "data/bank_01d/CharDataSummaryPageTilemapPatch2.bin" ; $5c9d, 9 bytes
 StatPageTilemapPatch1:
-	INCBIN "data/bank_01d/d_5ca6.bin" ; $5ca6, 21 bytes
+	INCBIN "data/bank_01d/StatPageTilemapPatch1.bin" ; $5ca6, 21 bytes
 CharDataConfirmScreenTilemapPatch0:
-	INCBIN "data/bank_01d/d_5cbb.bin" ; $5cbb, 21 bytes
+	INCBIN "data/bank_01d/CharDataConfirmScreenTilemapPatch0.bin" ; $5cbb, 21 bytes
 StatPageTilemapPatch2:
-	INCBIN "data/bank_01d/d_5cd0.bin" ; $5cd0, 29 bytes
+	INCBIN "data/bank_01d/StatPageTilemapPatch2.bin" ; $5cd0, 29 bytes
 CharDataConfirmScreenTilemapPatch1:
-	INCBIN "data/bank_01d/d_5ced.bin" ; $5ced, 29 bytes
+	INCBIN "data/bank_01d/CharDataConfirmScreenTilemapPatch1.bin" ; $5ced, 29 bytes
 StatPageTilemapPatch3:
-	INCBIN "data/bank_01d/d_5d0a.bin" ; $5d0a, 21 bytes
+	INCBIN "data/bank_01d/StatPageTilemapPatch3.bin" ; $5d0a, 21 bytes
 CharDataConfirmScreenTilemapPatch2:
-	INCBIN "data/bank_01d/d_5d1f.bin" ; $5d1f, 21 bytes
+	INCBIN "data/bank_01d/CharDataConfirmScreenTilemapPatch2.bin" ; $5d1f, 21 bytes
 StatPageTilemapPatch4:
-	INCBIN "data/bank_01d/d_5d34.bin" ; $5d34, 37 bytes
+	INCBIN "data/bank_01d/StatPageTilemapPatch4.bin" ; $5d34, 37 bytes
 CharDataConfirmScreenTilemapPatch3:
-	INCBIN "data/bank_01d/d_5d59.bin" ; $5d59, 37 bytes
+	INCBIN "data/bank_01d/CharDataConfirmScreenTilemapPatch3.bin" ; $5d59, 37 bytes
 CharDataSummaryFieldsTilePlot0:
-	INCBIN "data/bank_01d/d_5d7e.bin" ; $5d7e, 19 bytes
+	INCBIN "data/bank_01d/CharDataSummaryFieldsTilePlot0.bin" ; $5d7e, 19 bytes
 CharDataSummaryFieldsTilePlot1:
-	INCBIN "data/bank_01d/d_5d91.bin" ; $5d91, 19 bytes
+	INCBIN "data/bank_01d/CharDataSummaryFieldsTilePlot1.bin" ; $5d91, 19 bytes
 MainCharStatPageTilemapPatch00:
-	INCBIN "data/bank_01d/d_5da4.bin" ; $5da4, 13 bytes
+	INCBIN "data/bank_01d/MainCharStatPageTilemapPatch00.bin" ; $5da4, 13 bytes
 PartnerStatPageTilemapPatch00:
-	INCBIN "data/bank_01d/d_5db1.bin" ; $5db1, 13 bytes
+	INCBIN "data/bank_01d/PartnerStatPageTilemapPatch00.bin" ; $5db1, 13 bytes
 CharDataConfirmScreenTilemapPatch4:
-	INCBIN "data/bank_01d/d_5dbe.bin" ; $5dbe, 13 bytes
+	INCBIN "data/bank_01d/CharDataConfirmScreenTilemapPatch4.bin" ; $5dbe, 13 bytes
 MainCharStatPageTilemapPatch01:
-	INCBIN "data/bank_01d/d_5dcb.bin" ; $5dcb, 13 bytes
+	INCBIN "data/bank_01d/MainCharStatPageTilemapPatch01.bin" ; $5dcb, 13 bytes
 PartnerStatPageTilemapPatch01:
-	INCBIN "data/bank_01d/d_5dd8.bin" ; $5dd8, 13 bytes
+	INCBIN "data/bank_01d/PartnerStatPageTilemapPatch01.bin" ; $5dd8, 13 bytes
 StatPageTilemapPatch5:
-	INCBIN "data/bank_01d/d_5de5.bin" ; $5de5, 13 bytes
+	INCBIN "data/bank_01d/StatPageTilemapPatch5.bin" ; $5de5, 13 bytes
 StatPageTilemapPatch6:
-	INCBIN "data/bank_01d/d_5df2.bin" ; $5df2, 33 bytes
+	INCBIN "data/bank_01d/StatPageTilemapPatch6.bin" ; $5df2, 33 bytes
 StatPageTilemapPatch7:
-	INCBIN "data/bank_01d/d_5e13.bin" ; $5e13, 33 bytes
+	INCBIN "data/bank_01d/StatPageTilemapPatch7.bin" ; $5e13, 33 bytes
 StatPageTilemapPatch8:
-	INCBIN "data/bank_01d/d_5e34.bin" ; $5e34, 9 bytes
+	INCBIN "data/bank_01d/StatPageTilemapPatch8.bin" ; $5e34, 9 bytes
 MainCharStatPageTilemapPatch02:
-	INCBIN "data/bank_01d/d_5e3d.bin" ; $5e3d, 21 bytes
+	INCBIN "data/bank_01d/MainCharStatPageTilemapPatch02.bin" ; $5e3d, 21 bytes
 MainCharStatPageTilemapPatch03:
-	INCBIN "data/bank_01d/d_5e52.bin" ; $5e52, 33 bytes
+	INCBIN "data/bank_01d/MainCharStatPageTilemapPatch03.bin" ; $5e52, 33 bytes
 MainCharStatPageTilemapPatch04:
-	INCBIN "data/bank_01d/d_5e73.bin" ; $5e73, 9 bytes
+	INCBIN "data/bank_01d/MainCharStatPageTilemapPatch04.bin" ; $5e73, 9 bytes
 MainCharStatPageTilemapPatch05:
-	INCBIN "data/bank_01d/d_5e7c.bin" ; $5e7c, 21 bytes
+	INCBIN "data/bank_01d/MainCharStatPageTilemapPatch05.bin" ; $5e7c, 21 bytes
 MainCharStatPageTilemapPatch06:
-	INCBIN "data/bank_01d/d_5e91.bin" ; $5e91, 33 bytes
+	INCBIN "data/bank_01d/MainCharStatPageTilemapPatch06.bin" ; $5e91, 33 bytes
 MainCharStatPageTilemapPatch07:
-	INCBIN "data/bank_01d/d_5eb2.bin" ; $5eb2, 9 bytes
+	INCBIN "data/bank_01d/MainCharStatPageTilemapPatch07.bin" ; $5eb2, 9 bytes
 MainCharStatPageTilemapPatch08:
-	INCBIN "data/bank_01d/d_5ebb.bin" ; $5ebb, 21 bytes
+	INCBIN "data/bank_01d/MainCharStatPageTilemapPatch08.bin" ; $5ebb, 21 bytes
 MainCharStatPageTilemapPatch09:
-	INCBIN "data/bank_01d/d_5ed0.bin" ; $5ed0, 33 bytes
+	INCBIN "data/bank_01d/MainCharStatPageTilemapPatch09.bin" ; $5ed0, 33 bytes
 MainCharStatPageTilemapPatch10:
-	INCBIN "data/bank_01d/d_5ef1.bin" ; $5ef1, 9 bytes
+	INCBIN "data/bank_01d/MainCharStatPageTilemapPatch10.bin" ; $5ef1, 9 bytes
 MainCharStatPageTilemapPatch11:
-	INCBIN "data/bank_01d/d_5efa.bin" ; $5efa, 21 bytes
+	INCBIN "data/bank_01d/MainCharStatPageTilemapPatch11.bin" ; $5efa, 21 bytes
 MainCharStatPageTilemapPatch12:
-	INCBIN "data/bank_01d/d_5f0f.bin" ; $5f0f, 33 bytes
+	INCBIN "data/bank_01d/MainCharStatPageTilemapPatch12.bin" ; $5f0f, 33 bytes
 MainCharStatPageTilemapPatch13:
-	INCBIN "data/bank_01d/d_5f30.bin" ; $5f30, 9 bytes
+	INCBIN "data/bank_01d/MainCharStatPageTilemapPatch13.bin" ; $5f30, 9 bytes
 PartnerStatPageTilemapPatch02:
-	INCBIN "data/bank_01d/d_5f39.bin" ; $5f39, 21 bytes
+	INCBIN "data/bank_01d/PartnerStatPageTilemapPatch02.bin" ; $5f39, 21 bytes
 PartnerStatPageTilemapPatch03:
-	INCBIN "data/bank_01d/d_5f4e.bin" ; $5f4e, 33 bytes
+	INCBIN "data/bank_01d/PartnerStatPageTilemapPatch03.bin" ; $5f4e, 33 bytes
 PartnerStatPageTilemapPatch04:
-	INCBIN "data/bank_01d/d_5f6f.bin" ; $5f6f, 9 bytes
+	INCBIN "data/bank_01d/PartnerStatPageTilemapPatch04.bin" ; $5f6f, 9 bytes
 PartnerStatPageTilemapPatch05:
-	INCBIN "data/bank_01d/d_5f78.bin" ; $5f78, 21 bytes
+	INCBIN "data/bank_01d/PartnerStatPageTilemapPatch05.bin" ; $5f78, 21 bytes
 PartnerStatPageTilemapPatch06:
-	INCBIN "data/bank_01d/d_5f8d.bin" ; $5f8d, 33 bytes
+	INCBIN "data/bank_01d/PartnerStatPageTilemapPatch06.bin" ; $5f8d, 33 bytes
 PartnerStatPageTilemapPatch07:
-	INCBIN "data/bank_01d/d_5fae.bin" ; $5fae, 9 bytes
+	INCBIN "data/bank_01d/PartnerStatPageTilemapPatch07.bin" ; $5fae, 9 bytes
 PartnerStatPageTilemapPatch08:
-	INCBIN "data/bank_01d/d_5fb7.bin" ; $5fb7, 21 bytes
+	INCBIN "data/bank_01d/PartnerStatPageTilemapPatch08.bin" ; $5fb7, 21 bytes
 PartnerStatPageTilemapPatch09:
-	INCBIN "data/bank_01d/d_5fcc.bin" ; $5fcc, 33 bytes
+	INCBIN "data/bank_01d/PartnerStatPageTilemapPatch09.bin" ; $5fcc, 33 bytes
 PartnerStatPageTilemapPatch10:
-	INCBIN "data/bank_01d/d_5fed.bin" ; $5fed, 9 bytes
+	INCBIN "data/bank_01d/PartnerStatPageTilemapPatch10.bin" ; $5fed, 9 bytes
 PartnerStatPageTilemapPatch11:
-	INCBIN "data/bank_01d/d_5ff6.bin" ; $5ff6, 21 bytes
+	INCBIN "data/bank_01d/PartnerStatPageTilemapPatch11.bin" ; $5ff6, 21 bytes
 PartnerStatPageTilemapPatch12:
-	INCBIN "data/bank_01d/d_600b.bin" ; $600b, 33 bytes
+	INCBIN "data/bank_01d/PartnerStatPageTilemapPatch12.bin" ; $600b, 33 bytes
 PartnerStatPageTilemapPatch13:
-	INCBIN "data/bank_01d/d_602c.bin" ; $602c, 9 bytes
+	INCBIN "data/bank_01d/PartnerStatPageTilemapPatch13.bin" ; $602c, 9 bytes
 MainCharStatPageTilemapPatch14:
-	INCBIN "data/bank_01d/d_6035.bin" ; $6035, 33 bytes
+	INCBIN "data/bank_01d/MainCharStatPageTilemapPatch14.bin" ; $6035, 33 bytes
 MainCharStatPageTilemapPatch15:
-	INCBIN "data/bank_01d/d_6056.bin" ; $6056, 33 bytes
+	INCBIN "data/bank_01d/MainCharStatPageTilemapPatch15.bin" ; $6056, 33 bytes
 MainCharStatPageTilemapPatch16:
-	INCBIN "data/bank_01d/d_6077.bin" ; $6077, 9 bytes
+	INCBIN "data/bank_01d/MainCharStatPageTilemapPatch16.bin" ; $6077, 9 bytes
 MainCharStatPageTilemapPatch17:
-	INCBIN "data/bank_01d/d_6080.bin" ; $6080, 33 bytes
+	INCBIN "data/bank_01d/MainCharStatPageTilemapPatch17.bin" ; $6080, 33 bytes
 MainCharStatPageTilemapPatch18:
-	INCBIN "data/bank_01d/d_60a1.bin" ; $60a1, 33 bytes
+	INCBIN "data/bank_01d/MainCharStatPageTilemapPatch18.bin" ; $60a1, 33 bytes
 MainCharStatPageTilemapPatch19:
-	INCBIN "data/bank_01d/d_60c2.bin" ; $60c2, 9 bytes
+	INCBIN "data/bank_01d/MainCharStatPageTilemapPatch19.bin" ; $60c2, 9 bytes
 MainCharStatPageTilemapPatch20:
-	INCBIN "data/bank_01d/d_60cb.bin" ; $60cb, 33 bytes
+	INCBIN "data/bank_01d/MainCharStatPageTilemapPatch20.bin" ; $60cb, 33 bytes
 MainCharStatPageTilemapPatch21:
-	INCBIN "data/bank_01d/d_60ec.bin" ; $60ec, 33 bytes
+	INCBIN "data/bank_01d/MainCharStatPageTilemapPatch21.bin" ; $60ec, 33 bytes
 MainCharStatPageTilemapPatch22:
-	INCBIN "data/bank_01d/d_610d.bin" ; $610d, 9 bytes
+	INCBIN "data/bank_01d/MainCharStatPageTilemapPatch22.bin" ; $610d, 9 bytes
 MainCharStatPageTilemapPatch23:
-	INCBIN "data/bank_01d/d_6116.bin" ; $6116, 33 bytes
+	INCBIN "data/bank_01d/MainCharStatPageTilemapPatch23.bin" ; $6116, 33 bytes
 MainCharStatPageTilemapPatch24:
-	INCBIN "data/bank_01d/d_6137.bin" ; $6137, 33 bytes
+	INCBIN "data/bank_01d/MainCharStatPageTilemapPatch24.bin" ; $6137, 33 bytes
 MainCharStatPageTilemapPatch25:
-	INCBIN "data/bank_01d/d_6158.bin" ; $6158, 5 bytes
+	INCBIN "data/bank_01d/MainCharStatPageTilemapPatch25.bin" ; $6158, 5 bytes
 MainCharStatPageTilemapPatch26:
-	INCBIN "data/bank_01d/d_615d.bin" ; $615d, 21 bytes
+	INCBIN "data/bank_01d/MainCharStatPageTilemapPatch26.bin" ; $615d, 21 bytes
 MainCharStatPageTilemapPatch27:
-	INCBIN "data/bank_01d/d_6172.bin" ; $6172, 33 bytes
+	INCBIN "data/bank_01d/MainCharStatPageTilemapPatch27.bin" ; $6172, 33 bytes
 MainCharStatPageTilemapPatch28:
-	INCBIN "data/bank_01d/d_6193.bin" ; $6193, 5 bytes
+	INCBIN "data/bank_01d/MainCharStatPageTilemapPatch28.bin" ; $6193, 5 bytes
 PartnerStatPageTilemapPatch14:
-	INCBIN "data/bank_01d/d_6198.bin" ; $6198, 33 bytes
+	INCBIN "data/bank_01d/PartnerStatPageTilemapPatch14.bin" ; $6198, 33 bytes
 PartnerStatPageTilemapPatch15:
-	INCBIN "data/bank_01d/d_61b9.bin" ; $61b9, 33 bytes
+	INCBIN "data/bank_01d/PartnerStatPageTilemapPatch15.bin" ; $61b9, 33 bytes
 PartnerStatPageTilemapPatch16:
-	INCBIN "data/bank_01d/d_61da.bin" ; $61da, 9 bytes
+	INCBIN "data/bank_01d/PartnerStatPageTilemapPatch16.bin" ; $61da, 9 bytes
 PartnerStatPageTilemapPatch17:
-	INCBIN "data/bank_01d/d_61e3.bin" ; $61e3, 33 bytes
+	INCBIN "data/bank_01d/PartnerStatPageTilemapPatch17.bin" ; $61e3, 33 bytes
 PartnerStatPageTilemapPatch18:
-	INCBIN "data/bank_01d/d_6204.bin" ; $6204, 33 bytes
+	INCBIN "data/bank_01d/PartnerStatPageTilemapPatch18.bin" ; $6204, 33 bytes
 PartnerStatPageTilemapPatch19:
-	INCBIN "data/bank_01d/d_6225.bin" ; $6225, 9 bytes
+	INCBIN "data/bank_01d/PartnerStatPageTilemapPatch19.bin" ; $6225, 9 bytes
 PartnerStatPageTilemapPatch20:
-	INCBIN "data/bank_01d/d_622e.bin" ; $622e, 33 bytes
+	INCBIN "data/bank_01d/PartnerStatPageTilemapPatch20.bin" ; $622e, 33 bytes
 PartnerStatPageTilemapPatch21:
-	INCBIN "data/bank_01d/d_624f.bin" ; $624f, 33 bytes
+	INCBIN "data/bank_01d/PartnerStatPageTilemapPatch21.bin" ; $624f, 33 bytes
 PartnerStatPageTilemapPatch22:
-	INCBIN "data/bank_01d/d_6270.bin" ; $6270, 9 bytes
+	INCBIN "data/bank_01d/PartnerStatPageTilemapPatch22.bin" ; $6270, 9 bytes
 PartnerStatPageTilemapPatch23:
-	INCBIN "data/bank_01d/d_6279.bin" ; $6279, 33 bytes
+	INCBIN "data/bank_01d/PartnerStatPageTilemapPatch23.bin" ; $6279, 33 bytes
 PartnerStatPageTilemapPatch24:
-	INCBIN "data/bank_01d/d_629a.bin" ; $629a, 33 bytes
+	INCBIN "data/bank_01d/PartnerStatPageTilemapPatch24.bin" ; $629a, 33 bytes
 PartnerStatPageTilemapPatch25:
-	INCBIN "data/bank_01d/d_62bb.bin" ; $62bb, 9 bytes
+	INCBIN "data/bank_01d/PartnerStatPageTilemapPatch25.bin" ; $62bb, 9 bytes
 PartnerStatPageTilemapPatch26:
-	INCBIN "data/bank_01d/d_62c4.bin" ; $62c4, 21 bytes
+	INCBIN "data/bank_01d/PartnerStatPageTilemapPatch26.bin" ; $62c4, 21 bytes
 PartnerStatPageTilemapPatch27:
-	INCBIN "data/bank_01d/d_62d9.bin" ; $62d9, 33 bytes
+	INCBIN "data/bank_01d/PartnerStatPageTilemapPatch27.bin" ; $62d9, 33 bytes
 PartnerStatPageTilemapPatch28:
-	INCBIN "data/bank_01d/d_62fa.bin" ; $62fa, 9 bytes
+	INCBIN "data/bank_01d/PartnerStatPageTilemapPatch28.bin" ; $62fa, 9 bytes
 CharDataConfirmScreenTilemapPatch5:
-	INCBIN "data/bank_01d/d_6303.bin" ; $6303, 13 bytes
+	INCBIN "data/bank_01d/CharDataConfirmScreenTilemapPatch5.bin" ; $6303, 13 bytes
 CharDataConfirmPromptTilemapPatch:
-	INCBIN "data/bank_01d/d_6310.bin" ; $6310, 17 bytes
+	INCBIN "data/bank_01d/CharDataConfirmPromptTilemapPatch.bin" ; $6310, 17 bytes
 CharDataScreenPageGfx00:
-	INCBIN "data/bank_01d/lz_6321.bin" ; $6321, 10 bytes
+	INCBIN "data/bank_01d/lz_CharDataScreenPageGfx00.bin" ; $6321, 10 bytes
 CharDataScreenPageGfx01:
-	INCBIN "data/bank_01d/lz_632b.bin" ; $632b, 9 bytes
+	INCBIN "data/bank_01d/lz_CharDataScreenPageGfx01.bin" ; $632b, 9 bytes
 CharDataScreenPalettes:
-	INCBIN "data/bank_01d/d_6334.bin" ; $6334, 8 bytes
+	INCBIN "data/bank_01d/CharDataScreenPalettes.bin" ; $6334, 8 bytes
 CharDataScreenGfx14:
-	INCBIN "data/bank_01d/lz_633c.bin" ; $633c, 184 bytes
+	INCBIN "data/bank_01d/lz_CharDataScreenGfx14.bin" ; $633c, 184 bytes
+	INCLUDE "data/bank_01d/lz_CharDataScreenGfx14.inc" ; DEF CharDataScreenGfx14_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenPageGfx02:
-	INCBIN "data/bank_01d/lz_63f4.bin" ; $63f4, 85 bytes
+	INCBIN "data/bank_01d/lz_CharDataScreenPageGfx02.bin" ; $63f4, 85 bytes
 CharDataScreenPageGfx03:
-	INCBIN "data/bank_01d/lz_6449.bin" ; $6449, 18 bytes
+	INCBIN "data/bank_01d/lz_CharDataScreenPageGfx03.bin" ; $6449, 18 bytes
 CharDataScreenPageGfx04:
-	INCBIN "data/bank_01d/lz_645b.bin" ; $645b, 35 bytes
+	INCBIN "data/bank_01d/lz_CharDataScreenPageGfx04.bin" ; $645b, 35 bytes
 CharDataScreenPageGfx05:
-	INCBIN "data/bank_01d/lz_647e.bin" ; $647e, 7 bytes
+	INCBIN "data/bank_01d/lz_CharDataScreenPageGfx05.bin" ; $647e, 7 bytes
 CharDataScreenPageGfx06:
-	INCBIN "data/bank_01d/lz_6485.bin" ; $6485, 14 bytes
+	INCBIN "data/bank_01d/lz_CharDataScreenPageGfx06.bin" ; $6485, 14 bytes
 CharDataScreenPageGfx07:
-	INCBIN "data/bank_01d/lz_6493.bin" ; $6493, 7 bytes
+	INCBIN "data/bank_01d/lz_CharDataScreenPageGfx07.bin" ; $6493, 7 bytes
 CharDataScreenPageGfx08:
-	INCBIN "data/bank_01d/lz_649a.bin" ; $649a, 24 bytes
+	INCBIN "data/bank_01d/lz_CharDataScreenPageGfx08.bin" ; $649a, 24 bytes
 CharDataScreenPageGfx09:
-	INCBIN "data/bank_01d/lz_64b2.bin" ; $64b2, 9 bytes
+	INCBIN "data/bank_01d/lz_CharDataScreenPageGfx09.bin" ; $64b2, 9 bytes
 CharDataScreenPageGfx10:
-	INCBIN "data/bank_01d/lz_64bb.bin" ; $64bb, 149 bytes
+	INCBIN "data/bank_01d/lz_CharDataScreenPageGfx10.bin" ; $64bb, 149 bytes
+	INCLUDE "data/bank_01d/lz_CharDataScreenPageGfx10.inc" ; DEF CharDataScreenPageGfx10_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenPageGfx11:
-	INCBIN "data/bank_01d/lz_6550.bin" ; $6550, 24 bytes
+	INCBIN "data/bank_01d/lz_CharDataScreenPageGfx11.bin" ; $6550, 24 bytes
 CharDataScreenPageGfx12:
-	INCBIN "data/bank_01d/lz_6568.bin" ; $6568, 7 bytes
+	INCBIN "data/bank_01d/lz_CharDataScreenPageGfx12.bin" ; $6568, 7 bytes
 CharDataScreenPageGfx13:
-	INCBIN "data/bank_01d/lz_656f.bin" ; $656f, 117 bytes
+	INCBIN "data/bank_01d/lz_CharDataScreenPageGfx13.bin" ; $656f, 117 bytes
+	INCLUDE "data/bank_01d/lz_CharDataScreenPageGfx13.inc" ; DEF CharDataScreenPageGfx13_SIZE EQU its decoded length, generated from the .bin by make
 CharDataScreenPageGfx14:
-	INCBIN "data/bank_01d/lz_65e4.bin" ; $65e4, 134 bytes
+	INCBIN "data/bank_01d/lz_CharDataScreenPageGfx14.bin" ; $65e4, 134 bytes
+	INCLUDE "data/bank_01d/lz_CharDataScreenPageGfx14.inc" ; DEF CharDataScreenPageGfx14_SIZE EQU its decoded length, generated from the .bin by make
 DrawCharDataPageArrowsTask_SpriteTemplate0:
 	; $666a, 21 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
@@ -3440,7 +3444,8 @@ DrawCharDataPageArrowsTask_SpriteTemplate0:
 	oam_sprite $10, $28, $08, $00
 	oam_sprite_end
 CharDataScreenPageGraphicsGfx0:
-	INCBIN "data/bank_01d/lz_667f.bin" ; $667f, 141 bytes
+	INCBIN "data/bank_01d/lz_CharDataScreenPageGraphicsGfx0.bin" ; $667f, 141 bytes
+	INCLUDE "data/bank_01d/lz_CharDataScreenPageGraphicsGfx0.inc" ; DEF CharDataScreenPageGraphicsGfx0_SIZE EQU its decoded length, generated from the .bin by make
 DrawCharDataPageArrowsTask_SpriteTemplate1:
 	; $670c, 21 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
@@ -3450,7 +3455,8 @@ DrawCharDataPageArrowsTask_SpriteTemplate1:
 	oam_sprite $10, $28, $08, $00
 	oam_sprite_end
 CharDataScreenPageGraphicsGfx1:
-	INCBIN "data/bank_01d/lz_6721.bin" ; $6721, 121 bytes
+	INCBIN "data/bank_01d/lz_CharDataScreenPageGraphicsGfx1.bin" ; $6721, 121 bytes
+	INCLUDE "data/bank_01d/lz_CharDataScreenPageGraphicsGfx1.inc" ; DEF CharDataScreenPageGraphicsGfx1_SIZE EQU its decoded length, generated from the .bin by make
 DrawCharDataPageArrowsTask_SpriteTemplate2:
 	; $679a, 17 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
@@ -3459,7 +3465,7 @@ DrawCharDataPageArrowsTask_SpriteTemplate2:
 	oam_sprite $10, $20, $06, $00
 	oam_sprite_end
 CharDataScreenPageGraphicsGfx2:
-	INCBIN "data/bank_01d/d_67ab.bin" ; $67ab, 101 bytes
+	INCBIN "data/bank_01d/CharDataScreenPageGraphicsGfx2.bin" ; $67ab, 101 bytes
 CharDataPageArrowsTaskSpriteTemplate:
 	; $6810, 11 bytes (sprite_template)
 	oam_sprite $7f, $90, $c0, $20
@@ -3659,7 +3665,7 @@ BuildExpDistributionScreen:
 	call DecompressData ; $69ce
 	ld hl, wDecompBuffer ; $69d1
 	ld de, $8160 + VRAM_BANK1 ; $69d4
-	ld c, $02 ; $69d7
+	ld c, ExpDistributionScreenGfx7_SIZE / 16 ; $69d7
 	call QueueVRAMCopy ; $69d9
 	wram_bank $01 ; $69dc
 	ld hl, ExpDistributionScreenGfx2 ; $69e2
@@ -3667,7 +3673,7 @@ BuildExpDistributionScreen:
 	call DecompressData ; $69e8
 	ld hl, wDecompBuffer ; $69eb
 	ld de, $8180 + VRAM_BANK1 ; $69ee
-	ld c, $14 ; $69f1
+	ld c, ExpDistributionScreenGfx2_SIZE / 16 ; $69f1
 	call QueueVRAMCopy ; $69f3
 	wram_bank $01 ; $69f6
 	ld hl, ExpDistributionScreenGfx3 ; $69fc
@@ -3675,7 +3681,7 @@ BuildExpDistributionScreen:
 	call DecompressData ; $6a02
 	ld hl, wDecompBuffer ; $6a05
 	ld de, $82c0 + VRAM_BANK1 ; $6a08
-	ld c, $18 ; $6a0b
+	ld c, ExpDistributionScreenGfx3_SIZE / 16 ; $6a0b
 	call QueueVRAMCopy ; $6a0d
 	wram_bank $01 ; $6a10
 	ld hl, ExpDistributionScreenGfx4 ; $6a16
@@ -3683,7 +3689,7 @@ BuildExpDistributionScreen:
 	call DecompressData ; $6a1c
 	ld hl, wDecompBuffer ; $6a1f
 	ld de, $8440 + VRAM_BANK1 ; $6a22
-	ld c, $18 ; $6a25
+	ld c, ExpDistributionScreenGfx4_SIZE / 16 ; $6a25
 	call QueueVRAMCopy ; $6a27
 	ld hl, ExpDistributionScreenPalettes ; $6a2a
 	lb de, $0e, $02 ; $6a2d palette index, count
@@ -3694,7 +3700,7 @@ BuildExpDistributionScreen:
 	call DecompressData ; $6a3f
 	ld hl, wDecompBuffer ; $6a42
 	ld de, $8000 + VRAM_BANK1 ; $6a45
-	ld c, $0c ; $6a48
+	ld c, ExpDistributionScreenGfx8_SIZE / 16 ; $6a48
 	call QueueVRAMCopy ; $6a4a
 	wram_bank $01 ; $6a4d
 	ld hl, ExpDistributionScreenGfx0 ; $6a53
@@ -3702,7 +3708,7 @@ BuildExpDistributionScreen:
 	call DecompressData ; $6a59
 	ld hl, wDecompBuffer ; $6a5c
 	ld de, $80c0 + VRAM_BANK1 ; $6a5f
-	ld c, $04 ; $6a62
+	ld c, ExpDistributionScreenGfx0_SIZE / 16 ; $6a62
 	call QueueVRAMCopy ; $6a64
 	wram_bank $01 ; $6a67
 	ld hl, ExpDistributionScreenGfx1 ; $6a6d
@@ -3710,7 +3716,7 @@ BuildExpDistributionScreen:
 	call DecompressData ; $6a73
 	ld hl, wDecompBuffer ; $6a76
 	ld de, $8100 + VRAM_BANK1 ; $6a79
-	ld c, $06 ; $6a7c
+	ld c, ExpDistributionScreenGfx1_SIZE / 16 ; $6a7c
 	call QueueVRAMCopy ; $6a7e
 	wram_bank $03 ; $6a81
 	ld hl, wShadowTilemap ; $6a87
@@ -5431,27 +5437,29 @@ TickLevelUpJingle:
 	sound BGM_LEVEL_UP ; $77c5
 	ret ; $77c7
 ExpPromptWindowFrame_1d:
-	INCBIN "data/bank_01d/d_77c8.bin" ; $77c8, 25 bytes
+	INCBIN "data/bank_01d/ExpPromptWindowFrame_1d.bin" ; $77c8, 25 bytes
 ExpLevelDownTilemapPatch0:
-	INCBIN "data/bank_01d/d_77e1.bin" ; $77e1, 21 bytes
+	INCBIN "data/bank_01d/ExpLevelDownTilemapPatch0.bin" ; $77e1, 21 bytes
 ExpLevelDownTilemapPatch1:
-	INCBIN "data/bank_01d/d_77f6.bin" ; $77f6, 17 bytes
+	INCBIN "data/bank_01d/ExpLevelDownTilemapPatch1.bin" ; $77f6, 17 bytes
 ExpLevelDownTilemapPatch2:
-	INCBIN "data/bank_01d/d_7807.bin" ; $7807, 13 bytes
+	INCBIN "data/bank_01d/ExpLevelDownTilemapPatch2.bin" ; $7807, 13 bytes
 ExpLevelDownTilemapPatch3:
-	INCBIN "data/bank_01d/d_7814.bin" ; $7814, 9 bytes
+	INCBIN "data/bank_01d/ExpLevelDownTilemapPatch3.bin" ; $7814, 9 bytes
 ExpLevelDownTilemapPatch4:
-	INCBIN "data/bank_01d/d_781d.bin" ; $781d, 5 bytes
+	INCBIN "data/bank_01d/ExpLevelDownTilemapPatch4.bin" ; $781d, 5 bytes
 ExpDistributionScreenGfx5:
-	INCBIN "data/bank_01d/lz_7822.bin" ; $7822, 47 bytes
+	INCBIN "data/bank_01d/lz_ExpDistributionScreenGfx5.bin" ; $7822, 47 bytes
 ExpDistributionScreenGfx6:
-	INCBIN "data/bank_01d/lz_7851.bin" ; $7851, 37 bytes
+	INCBIN "data/bank_01d/lz_ExpDistributionScreenGfx6.bin" ; $7851, 37 bytes
 ExpDistributionScreenGfx7:
-	INCBIN "data/bank_01d/lz_7876.bin" ; $7876, 25 bytes
+	INCBIN "data/bank_01d/lz_ExpDistributionScreenGfx7.bin" ; $7876, 25 bytes
+	INCLUDE "data/bank_01d/lz_ExpDistributionScreenGfx7.inc" ; DEF ExpDistributionScreenGfx7_SIZE EQU its decoded length, generated from the .bin by make
 ExpDistributionScreenPalettes:
-	INCBIN "data/bank_01d/d_788f.bin" ; $788f, 24 bytes
+	INCBIN "data/bank_01d/ExpDistributionScreenPalettes.bin" ; $788f, 24 bytes
 ExpDistributionScreenGfx8:
-	INCBIN "data/bank_01d/lz_78a7.bin" ; $78a7, 137 bytes
+	INCBIN "data/bank_01d/lz_ExpDistributionScreenGfx8.bin" ; $78a7, 137 bytes
+	INCLUDE "data/bank_01d/lz_ExpDistributionScreenGfx8.inc" ; DEF ExpDistributionScreenGfx8_SIZE EQU its decoded length, generated from the .bin by make
 DrawExpCharCursorTask_SpriteTemplate:
 	; $7930, 25 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
@@ -5462,14 +5470,16 @@ DrawExpCharCursorTask_SpriteTemplate:
 	oam_sprite $20, $18, $0a, $00
 	oam_sprite_end
 ExpDistributionScreenGfx0:
-	INCBIN "data/bank_01d/lz_7949.bin" ; $7949, 49 bytes
+	INCBIN "data/bank_01d/lz_ExpDistributionScreenGfx0.bin" ; $7949, 49 bytes
+	INCLUDE "data/bank_01d/lz_ExpDistributionScreenGfx0.inc" ; DEF ExpDistributionScreenGfx0_SIZE EQU its decoded length, generated from the .bin by make
 DrawExpBarFillMarkersTask_SpriteTemplate:
 	; $797a, 9 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
 	oam_sprite $10, $10, $02, $00
 	oam_sprite_end
 ExpDistributionScreenGfx1:
-	INCBIN "data/bank_01d/lz_7983.bin" ; $7983, 49 bytes
+	INCBIN "data/bank_01d/lz_ExpDistributionScreenGfx1.bin" ; $7983, 49 bytes
+	INCLUDE "data/bank_01d/lz_ExpDistributionScreenGfx1.inc" ; DEF ExpDistributionScreenGfx1_SIZE EQU its decoded length, generated from the .bin by make
 DrawExpBarSweepSpriteTask_SpriteTemplate:
 	; $79b4, 13 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
@@ -5477,9 +5487,11 @@ DrawExpBarSweepSpriteTask_SpriteTemplate:
 	oam_sprite $10, $18, $04, $00
 	oam_sprite_end
 ExpDistributionScreenGfx2:
-	INCBIN "data/bank_01d/lz_79c1.bin" ; $79c1, 162 bytes
+	INCBIN "data/bank_01d/lz_ExpDistributionScreenGfx2.bin" ; $79c1, 162 bytes
+	INCLUDE "data/bank_01d/lz_ExpDistributionScreenGfx2.inc" ; DEF ExpDistributionScreenGfx2_SIZE EQU its decoded length, generated from the .bin by make
 ExpDistributionScreenGfx3:
-	INCBIN "data/bank_01d/lz_7a63.bin" ; $7a63, 246 bytes
+	INCBIN "data/bank_01d/lz_ExpDistributionScreenGfx3.bin" ; $7a63, 246 bytes
+	INCLUDE "data/bank_01d/lz_ExpDistributionScreenGfx3.inc" ; DEF ExpDistributionScreenGfx3_SIZE EQU its decoded length, generated from the .bin by make
 DrawExpToNextLevelTask_SpriteTemplate0:
 	; $7b59, 49 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00
@@ -5496,7 +5508,8 @@ DrawExpToNextLevelTask_SpriteTemplate0:
 	oam_sprite $20, $30, $16, $00
 	oam_sprite_end
 ExpDistributionScreenGfx4:
-	INCBIN "data/bank_01d/lz_7b8a.bin" ; $7b8a, 243 bytes
+	INCBIN "data/bank_01d/lz_ExpDistributionScreenGfx4.bin" ; $7b8a, 243 bytes
+	INCLUDE "data/bank_01d/lz_ExpDistributionScreenGfx4.inc" ; DEF ExpDistributionScreenGfx4_SIZE EQU its decoded length, generated from the .bin by make
 DrawExpToNextLevelTask_SpriteTemplate1:
 	; $7c7d, 49 bytes (sprite_template)
 	oam_sprite $10, $08, $00, $00

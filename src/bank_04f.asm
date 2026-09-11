@@ -155,121 +155,121 @@ BobSpriteFrames:
 	dw BobSpriteFrame55 ; $412c
 	dw BobSpriteFrame55 ; $412e
 BobSpriteFrame00:
-	INCBIN "data/bank_04f/d_4130.bin" ; $4130, 240 bytes
+	INCBIN "data/bank_04f/BobSpriteFrame00.bin" ; $4130, 240 bytes
 BobSpriteFrame01:
-	INCBIN "data/bank_04f/d_4220.bin" ; $4220, 240 bytes
+	INCBIN "data/bank_04f/BobSpriteFrame01.bin" ; $4220, 240 bytes
 BobSpriteFrame02:
-	INCBIN "data/bank_04f/d_4310.bin" ; $4310, 240 bytes
+	INCBIN "data/bank_04f/BobSpriteFrame02.bin" ; $4310, 240 bytes
 BobSpriteFrame03:
-	INCBIN "data/bank_04f/d_4400.bin" ; $4400, 240 bytes
+	INCBIN "data/bank_04f/BobSpriteFrame03.bin" ; $4400, 240 bytes
 BobSpriteFrame04:
-	INCBIN "data/bank_04f/d_44f0.bin" ; $44f0, 240 bytes
+	INCBIN "data/bank_04f/BobSpriteFrame04.bin" ; $44f0, 240 bytes
 BobSpriteFrame05:
-	INCBIN "data/bank_04f/d_45e0.bin" ; $45e0, 240 bytes
+	INCBIN "data/bank_04f/BobSpriteFrame05.bin" ; $45e0, 240 bytes
 BobSpriteFrame06:
-	INCBIN "data/bank_04f/d_46d0.bin" ; $46d0, 240 bytes
+	INCBIN "data/bank_04f/BobSpriteFrame06.bin" ; $46d0, 240 bytes
 BobSpriteFrame07:
-	INCBIN "data/bank_04f/d_47c0.bin" ; $47c0, 240 bytes
+	INCBIN "data/bank_04f/BobSpriteFrame07.bin" ; $47c0, 240 bytes
 BobSpriteFrame08:
-	INCBIN "data/bank_04f/d_48b0.bin" ; $48b0, 240 bytes
+	INCBIN "data/bank_04f/BobSpriteFrame08.bin" ; $48b0, 240 bytes
 BobSpriteFrame09:
-	INCBIN "data/bank_04f/d_49a0.bin" ; $49a0, 240 bytes
+	INCBIN "data/bank_04f/BobSpriteFrame09.bin" ; $49a0, 240 bytes
 BobSpriteFrame10:
-	INCBIN "data/bank_04f/d_4a90.bin" ; $4a90, 240 bytes
+	INCBIN "data/bank_04f/BobSpriteFrame10.bin" ; $4a90, 240 bytes
 BobSpriteFrame11:
-	INCBIN "data/bank_04f/d_4b80.bin" ; $4b80, 240 bytes
+	INCBIN "data/bank_04f/BobSpriteFrame11.bin" ; $4b80, 240 bytes
 BobSpriteFrame12:
-	INCBIN "data/bank_04f/d_4c70.bin" ; $4c70, 240 bytes
+	INCBIN "data/bank_04f/BobSpriteFrame12.bin" ; $4c70, 240 bytes
 BobSpriteFrame13:
-	INCBIN "data/bank_04f/d_4d60.bin" ; $4d60, 240 bytes
+	INCBIN "data/bank_04f/BobSpriteFrame13.bin" ; $4d60, 240 bytes
 BobSpriteFrame14:
-	INCBIN "data/bank_04f/d_4e50.bin" ; $4e50, 240 bytes
+	INCBIN "data/bank_04f/BobSpriteFrame14.bin" ; $4e50, 240 bytes
 BobSpriteFrame15:
-	INCBIN "data/bank_04f/d_4f40.bin" ; $4f40, 240 bytes
+	INCBIN "data/bank_04f/BobSpriteFrame15.bin" ; $4f40, 240 bytes
 BobSpriteFrame16:
-	INCBIN "data/bank_04f/d_5030.bin" ; $5030, 240 bytes
+	INCBIN "data/bank_04f/BobSpriteFrame16.bin" ; $5030, 240 bytes
 BobSpriteFrame17:
-	INCBIN "data/bank_04f/d_5120.bin" ; $5120, 240 bytes
+	INCBIN "data/bank_04f/BobSpriteFrame17.bin" ; $5120, 240 bytes
 BobSpriteFrame18:
-	INCBIN "data/bank_04f/d_5210.bin" ; $5210, 240 bytes
+	INCBIN "data/bank_04f/BobSpriteFrame18.bin" ; $5210, 240 bytes
 BobSpriteFrame19:
-	INCBIN "data/bank_04f/d_5300.bin" ; $5300, 240 bytes
+	INCBIN "data/bank_04f/BobSpriteFrame19.bin" ; $5300, 240 bytes
 BobSpriteFrame20:
-	INCBIN "data/bank_04f/d_53f0.bin" ; $53f0, 240 bytes
+	INCBIN "data/bank_04f/BobSpriteFrame20.bin" ; $53f0, 240 bytes
 BobSpriteFrame21:
-	INCBIN "data/bank_04f/d_54e0.bin" ; $54e0, 240 bytes
+	INCBIN "data/bank_04f/BobSpriteFrame21.bin" ; $54e0, 240 bytes
 BobSpriteFrame22:
-	INCBIN "data/bank_04f/d_55d0.bin" ; $55d0, 240 bytes
+	INCBIN "data/bank_04f/BobSpriteFrame22.bin" ; $55d0, 240 bytes
 BobSpriteFrame23:
-	INCBIN "data/bank_04f/d_56c0.bin" ; $56c0, 240 bytes
+	INCBIN "data/bank_04f/BobSpriteFrame23.bin" ; $56c0, 240 bytes
 BobSpriteFrame24:
-	INCBIN "data/bank_04f/d_57b0.bin" ; $57b0, 240 bytes
+	INCBIN "data/bank_04f/BobSpriteFrame24.bin" ; $57b0, 240 bytes
 BobSpriteFrame25:
-	INCBIN "data/bank_04f/d_58a0.bin" ; $58a0, 240 bytes
+	INCBIN "data/bank_04f/BobSpriteFrame25.bin" ; $58a0, 240 bytes
 BobSpriteFrame26:
-	INCBIN "data/bank_04f/d_5990.bin" ; $5990, 240 bytes
+	INCBIN "data/bank_04f/BobSpriteFrame26.bin" ; $5990, 240 bytes
 BobSpriteFrame27:
-	INCBIN "data/bank_04f/d_5a80.bin" ; $5a80, 240 bytes
+	INCBIN "data/bank_04f/BobSpriteFrame27.bin" ; $5a80, 240 bytes
 BobSpriteFrame28:
-	INCBIN "data/bank_04f/d_5b70.bin" ; $5b70, 240 bytes
+	INCBIN "data/bank_04f/BobSpriteFrame28.bin" ; $5b70, 240 bytes
 BobSpriteFrame29:
-	INCBIN "data/bank_04f/d_5c60.bin" ; $5c60, 240 bytes
+	INCBIN "data/bank_04f/BobSpriteFrame29.bin" ; $5c60, 240 bytes
 BobSpriteFrame30:
-	INCBIN "data/bank_04f/d_5d50.bin" ; $5d50, 240 bytes
+	INCBIN "data/bank_04f/BobSpriteFrame30.bin" ; $5d50, 240 bytes
 BobSpriteFrame31:
-	INCBIN "data/bank_04f/d_5e40.bin" ; $5e40, 240 bytes
+	INCBIN "data/bank_04f/BobSpriteFrame31.bin" ; $5e40, 240 bytes
 BobSpriteFrame32:
-	INCBIN "data/bank_04f/d_5f30.bin" ; $5f30, 240 bytes
+	INCBIN "data/bank_04f/BobSpriteFrame32.bin" ; $5f30, 240 bytes
 BobSpriteFrame33:
-	INCBIN "data/bank_04f/d_6020.bin" ; $6020, 240 bytes
+	INCBIN "data/bank_04f/BobSpriteFrame33.bin" ; $6020, 240 bytes
 BobSpriteFrame34:
-	INCBIN "data/bank_04f/d_6110.bin" ; $6110, 240 bytes
+	INCBIN "data/bank_04f/BobSpriteFrame34.bin" ; $6110, 240 bytes
 BobSpriteFrame35:
-	INCBIN "data/bank_04f/d_6200.bin" ; $6200, 240 bytes
+	INCBIN "data/bank_04f/BobSpriteFrame35.bin" ; $6200, 240 bytes
 BobSpriteFrame36:
-	INCBIN "data/bank_04f/d_62f0.bin" ; $62f0, 240 bytes
+	INCBIN "data/bank_04f/BobSpriteFrame36.bin" ; $62f0, 240 bytes
 BobSpriteFrame37:
-	INCBIN "data/bank_04f/d_63e0.bin" ; $63e0, 240 bytes
+	INCBIN "data/bank_04f/BobSpriteFrame37.bin" ; $63e0, 240 bytes
 BobSpriteFrame38:
-	INCBIN "data/bank_04f/d_64d0.bin" ; $64d0, 240 bytes
+	INCBIN "data/bank_04f/BobSpriteFrame38.bin" ; $64d0, 240 bytes
 BobSpriteFrame39:
-	INCBIN "data/bank_04f/d_65c0.bin" ; $65c0, 240 bytes
+	INCBIN "data/bank_04f/BobSpriteFrame39.bin" ; $65c0, 240 bytes
 BobSpriteFrame40:
-	INCBIN "data/bank_04f/d_66b0.bin" ; $66b0, 320 bytes
+	INCBIN "data/bank_04f/BobSpriteFrame40.bin" ; $66b0, 320 bytes
 BobSpriteFrame41:
-	INCBIN "data/bank_04f/d_67f0.bin" ; $67f0, 320 bytes
+	INCBIN "data/bank_04f/BobSpriteFrame41.bin" ; $67f0, 320 bytes
 BobSpriteFrame42:
-	INCBIN "data/bank_04f/d_6930.bin" ; $6930, 240 bytes
+	INCBIN "data/bank_04f/BobSpriteFrame42.bin" ; $6930, 240 bytes
 BobSpriteFrame43:
-	INCBIN "data/bank_04f/d_6a20.bin" ; $6a20, 240 bytes
+	INCBIN "data/bank_04f/BobSpriteFrame43.bin" ; $6a20, 240 bytes
 BobSpriteFrame44:
-	INCBIN "data/bank_04f/d_6b10.bin" ; $6b10, 240 bytes
+	INCBIN "data/bank_04f/BobSpriteFrame44.bin" ; $6b10, 240 bytes
 BobSpriteFrame45:
-	INCBIN "data/bank_04f/d_6c00.bin" ; $6c00, 240 bytes
+	INCBIN "data/bank_04f/BobSpriteFrame45.bin" ; $6c00, 240 bytes
 BobSpriteFrame46:
-	INCBIN "data/bank_04f/d_6cf0.bin" ; $6cf0, 240 bytes
+	INCBIN "data/bank_04f/BobSpriteFrame46.bin" ; $6cf0, 240 bytes
 BobSpriteFrame47:
-	INCBIN "data/bank_04f/d_6de0.bin" ; $6de0, 240 bytes
+	INCBIN "data/bank_04f/BobSpriteFrame47.bin" ; $6de0, 240 bytes
 BobSpriteFrame48:
-	INCBIN "data/bank_04f/d_6ed0.bin" ; $6ed0, 240 bytes
+	INCBIN "data/bank_04f/BobSpriteFrame48.bin" ; $6ed0, 240 bytes
 BobSpriteFrame49:
-	INCBIN "data/bank_04f/d_6fc0.bin" ; $6fc0, 240 bytes
+	INCBIN "data/bank_04f/BobSpriteFrame49.bin" ; $6fc0, 240 bytes
 BobSpriteFrame50:
-	INCBIN "data/bank_04f/d_70b0.bin" ; $70b0, 240 bytes
+	INCBIN "data/bank_04f/BobSpriteFrame50.bin" ; $70b0, 240 bytes
 BobSpriteFrame51:
-	INCBIN "data/bank_04f/d_71a0.bin" ; $71a0, 240 bytes
+	INCBIN "data/bank_04f/BobSpriteFrame51.bin" ; $71a0, 240 bytes
 BobSpriteFrame52:
-	INCBIN "data/bank_04f/d_7290.bin" ; $7290, 240 bytes
+	INCBIN "data/bank_04f/BobSpriteFrame52.bin" ; $7290, 240 bytes
 BobSpriteFrame53:
-	INCBIN "data/bank_04f/d_7380.bin" ; $7380, 240 bytes
+	INCBIN "data/bank_04f/BobSpriteFrame53.bin" ; $7380, 240 bytes
 BobSpriteFrame54:
-	INCBIN "data/bank_04f/d_7470.bin" ; $7470, 240 bytes
+	INCBIN "data/bank_04f/BobSpriteFrame54.bin" ; $7470, 240 bytes
 BobSpriteFrame55:
-	INCBIN "data/bank_04f/d_7560.bin" ; $7560, 240 bytes
+	INCBIN "data/bank_04f/BobSpriteFrame55.bin" ; $7560, 240 bytes
 BobSpriteFramesUnused:
-	INCBIN "data/bank_04f/d_7650.bin" ; $7650, 1680 bytes
+	INCBIN "data/bank_04f/BobSpriteFramesUnused.bin" ; $7650, 1680 bytes
 BobSpriteOam:
-	INCBIN "data/bank_04f/d_7ce0.bin" ; $7ce0, 580 bytes
+	INCBIN "data/bank_04f/BobSpriteOam.bin" ; $7ce0, 580 bytes
 BobSpriteAnims:
 	dw BobSpriteAnim00 ; $7f24
 	dw BobSpriteAnim01 ; $7f26

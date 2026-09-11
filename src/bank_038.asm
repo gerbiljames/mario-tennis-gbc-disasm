@@ -1051,7 +1051,7 @@ RefreshMatchTypeLabelRow:
 	call QueueVRAMCopy ; $4691
 	ret ; $4694
 MatchTypeLabelSpriteLayouts:
-	INCBIN "data/bank_038/d_4695.bin" ; $4695, 141 bytes
+	INCBIN "data/bank_038/MatchTypeLabelSpriteLayouts.bin" ; $4695, 141 bytes
 DrawMatchTypeOptionLabel:
 	wram_bank $03 ; $4722
 	ld c, $01 ; $4728
@@ -1958,7 +1958,7 @@ SetupCharGridScreen:
 	call DecompressData ; $4f96
 	ld hl, wDecompBuffer ; $4f99
 	ld de, $8100 + VRAM_BANK1 ; $4f9c
-	ld c, $08 ; $4f9f
+	ld c, CharGridScreenGfx1_SIZE / 16 ; $4f9f
 	call QueueVRAMCopy ; $4fa1
 	ld hl, CharGridScreenGfx2 ; $4fa4
 	lb de, $09, $01 ; $4fa7 palette index, count
@@ -1969,7 +1969,7 @@ SetupCharGridScreen:
 	call DecompressData ; $4fb9
 	ld hl, wDecompBuffer ; $4fbc
 	ld de, $8200 + VRAM_BANK1 ; $4fbf
-	ld c, $10 ; $4fc2
+	ld c, CharGridScreenGfx3_SIZE / 16 ; $4fc2
 	call QueueVRAMCopy ; $4fc4
 	ld c, $01 ; $4fc7
 	farcall LoadScreenAssetRecord ; $4fc9
@@ -2047,11 +2047,13 @@ CharGridScreenTable0:
 	db $5f, $01, $ff, $6b, $df, $01, $00, $00, $5f, $01, $ff, $6b, $1f, $00, $00, $00 ; 0x10
 	db $5f, $01, $ff, $6b, $4a, $7d, $00, $00 ; 0x20
 CharGridScreenGfx1:
-	INCBIN "data/bank_038/lz_50a7.bin" ; $50a7, 74 bytes
+	INCBIN "data/bank_038/lz_CharGridScreenGfx1.bin" ; $50a7, 74 bytes
+	INCLUDE "data/bank_038/lz_CharGridScreenGfx1.inc" ; DEF CharGridScreenGfx1_SIZE EQU its decoded length, generated from the .bin by make
 CharGridScreenGfx2:
-	INCBIN "data/bank_038/d_50f1.bin" ; $50f1, 8 bytes
+	INCBIN "data/bank_038/CharGridScreenGfx2.bin" ; $50f1, 8 bytes
 CharGridScreenGfx3:
-	INCBIN "data/bank_038/lz_50f9.bin" ; $50f9, 156 bytes
+	INCBIN "data/bank_038/lz_CharGridScreenGfx3.bin" ; $50f9, 156 bytes
+	INCLUDE "data/bank_038/lz_CharGridScreenGfx3.inc" ; DEF CharGridScreenGfx3_SIZE EQU its decoded length, generated from the .bin by make
 HandleCharGridDpad:
 	push_wram_bank $03 ; $5195
 	ld a, [wCharSelectSlot] ; $519e
@@ -6512,7 +6514,7 @@ DrawNameEntryCursor:
 	call QueueNameEntryCursorSprites ; $70a1
 	ret ; $70a4
 NameEntryCursorTable:
-	INCBIN "data/bank_038/d_70a5.bin" ; $70a5, 180 bytes
+	INCBIN "data/bank_038/NameEntryCursorTable.bin" ; $70a5, 180 bytes
 DrawEnterNameLabel:
 	push_wram_bank $03 ; $7159
 	ld hl, EnterNameText_38 ; $7162
@@ -6521,7 +6523,7 @@ DrawEnterNameLabel:
 	pop_wram_bank ; $716b
 	ret ; $7170
 EnterNameText_38:
-	INCLUDE "data/bank_038/text_7171.asm" ; $7171, 11 bytes
+	INCLUDE "data/bank_038/EnterNameText_38.asm" ; $7171, 11 bytes
 DrawNameEntryCharGrid:
 	push_wram_bank $03 ; $717c
 	ld c, $05 ; $7185
@@ -6560,7 +6562,7 @@ DrawNameEntryCharGrid:
 	pop_wram_bank ; $71b0
 	ret ; $71b5
 NameEntryCharset_38:
-	INCLUDE "data/bank_038/text_71b6.asm" ; $71b6, 106 bytes
+	INCLUDE "data/bank_038/NameEntryCharset_38.asm" ; $71b6, 106 bytes
 GetNameEntryBottomRowAction:
 	ld hl, NameEntryBottomRowActionTable ; $7220
 	ld a, [wMenuCursorX] ; $7223

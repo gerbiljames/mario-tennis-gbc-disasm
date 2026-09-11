@@ -49,54 +49,54 @@ DataPtr_ClayCourtGroundsSceneUnusedSlot:
 DataPtr_ClayCourtGroundsTiles:
 	dw ClayCourtGroundsTiles ; $402e
 SeasideSceneConfig:
-	INCBIN "data/bank_065/d_4030.bin" ; $4030, 27 bytes
+	INCBIN "data/bank_065/SeasideSceneConfig.bin" ; $4030, 27 bytes
 SeasidePalettes:
-	INCBIN "data/bank_065/d_404b.bin" ; $404b, 64 bytes
+	INCBIN "data/bank_065/SeasidePalettes.bin" ; $404b, 64 bytes
 SeasideTiles:
-	INCBIN "data/bank_065/lz_408b.bin" ; $408b, 2987 bytes
+	INCBIN "data/bank_065/lz_SeasideTiles.bin" ; $408b, 2987 bytes
 SeasideTilemap:
-	INCBIN "data/bank_065/lz_4c36.bin" ; $4c36, 684 bytes
+	INCBIN "data/bank_065/lz_SeasideTilemap.bin" ; $4c36, 684 bytes
 SeasideAttrmap:
-	INCBIN "data/bank_065/lz_4ee2.bin" ; $4ee2, 416 bytes
+	INCBIN "data/bank_065/lz_SeasideAttrmap.bin" ; $4ee2, 416 bytes
 SeasideCollisionMap:
-	INCBIN "data/bank_065/lz_5082.bin" ; $5082, 70 bytes
+	INCBIN "data/bank_065/lz_SeasideCollisionMap.bin" ; $5082, 70 bytes
 SeasideBehaviorMap:
-	INCBIN "data/bank_065/lz_50c8.bin" ; $50c8, 73 bytes
+	INCBIN "data/bank_065/lz_SeasideBehaviorMap.bin" ; $50c8, 73 bytes
 	; $5111, 15 bytes (fill)
 	ds 15, $00
 SeasideSceneUnusedSlot:
-	INCBIN "data/bank_065/d_5120.bin" ; $5120, 1536 bytes
+	INCBIN "data/bank_065/SeasideSceneUnusedSlot.bin" ; $5120, 1536 bytes
 HedgeCourtSceneConfig:
-	INCBIN "data/bank_065/d_5720.bin" ; $5720, 23 bytes
+	INCBIN "data/bank_065/HedgeCourtSceneConfig.bin" ; $5720, 23 bytes
 HedgeCourtPalettes:
-	INCLUDE "data/bank_065/palettes_5737.asm" ; $5737, 64 bytes (palettes)
+	INCLUDE "data/bank_065/HedgeCourtPalettes.asm" ; $5737, 64 bytes (palettes)
 HedgeCourtTiles:
-	INCBIN "data/bank_065/lz_5777.bin" ; $5777, 1897 bytes
+	INCBIN "data/bank_065/lz_HedgeCourtTiles.bin" ; $5777, 1897 bytes
 HedgeCourtTilemap:
-	INCBIN "data/bank_065/lz_5ee0.bin" ; $5ee0, 905 bytes
+	INCBIN "data/bank_065/lz_HedgeCourtTilemap.bin" ; $5ee0, 905 bytes
 HedgeCourtAttrmap:
-	INCBIN "data/bank_065/lz_6269.bin" ; $6269, 517 bytes
+	INCBIN "data/bank_065/lz_HedgeCourtAttrmap.bin" ; $6269, 517 bytes
 HedgeCourtCollisionMap:
-	INCBIN "data/bank_065/lz_646e.bin" ; $646e, 70 bytes
+	INCBIN "data/bank_065/lz_HedgeCourtCollisionMap.bin" ; $646e, 70 bytes
 HedgeCourtBehaviorMap:
-	INCBIN "data/bank_065/lz_64b4.bin" ; $64b4, 70 bytes
+	INCBIN "data/bank_065/lz_HedgeCourtBehaviorMap.bin" ; $64b4, 70 bytes
 	; $64fa, 6 bytes (fill)
 	ds 6, $00
 HedgeCourtSceneUnusedSlot:
-	INCBIN "data/bank_065/d_6500.bin" ; $6500, 1536 bytes
+	INCBIN "data/bank_065/HedgeCourtSceneUnusedSlot.bin" ; $6500, 1536 bytes
 ClayCourtGroundsSceneConfig:
-	INCBIN "data/bank_065/d_6b00.bin" ; $6b00, 42 bytes
+	INCBIN "data/bank_065/ClayCourtGroundsSceneConfig.bin" ; $6b00, 42 bytes
 ClayCourtGroundsPalettes:
-	INCLUDE "data/bank_065/palettes_6b2a.asm" ; $6b2a, 64 bytes (palettes)
+	INCLUDE "data/bank_065/ClayCourtGroundsPalettes.asm" ; $6b2a, 64 bytes (palettes)
 ClayCourtGroundsTiles:
-	INCBIN "data/bank_065/lz_6b6a.bin" ; $6b6a, 2286 bytes
+	INCBIN "data/bank_065/lz_ClayCourtGroundsTiles.bin" ; $6b6a, 2286 bytes
 ClayCourtGroundsTilemap:
-	INCBIN "data/bank_065/lz_7458.bin" ; $7458, 1178 bytes
+	INCBIN "data/bank_065/lz_ClayCourtGroundsTilemap.bin" ; $7458, 1178 bytes
 ClayCourtGroundsAttrmap:
-	INCBIN "data/bank_065/lz_78f2.bin" ; $78f2, 933 bytes
+	INCBIN "data/bank_065/lz_ClayCourtGroundsAttrmap.bin" ; $78f2, 933 bytes
 ClayCourtGroundsCollisionMap:
-	INCBIN "data/bank_065/lz_7c97.bin" ; $7c97, 110 bytes
+	INCBIN "data/bank_065/lz_ClayCourtGroundsCollisionMap.bin" ; $7c97, 110 bytes
 ClayCourtGroundsBehaviorMap:
-	INCBIN "data/bank_065/lz_7d05.bin" ; $7d05, 81 bytes
+	INCBIN "data/bank_065/lz_ClayCourtGroundsBehaviorMap.bin" ; $7d05, 81 bytes
 ClayCourtGroundsSceneUnusedSlot:
 	; $7d56, 682 bytes fill to bank end (linker-padded)

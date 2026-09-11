@@ -6874,7 +6874,7 @@ DpadToFacingTable_08:
 	db $ff, $00, $80, $ff, $c0, $e0, $a0, $c0 ; 0x00
 	db $40, $20, $60, $40, $ff, $00, $80, $ff ; 0x08
 AngleToDpadTable_08:
-	INCBIN "data/bank_008/d_7296.bin" ; $7296, 16 bytes
+	INCBIN "data/bank_008/AngleToDpadTable_08.bin" ; $7296, 16 bytes
 StepCharJumpPhysics:
 	ld hl, wCharFlags ; $72a6
 	bit CHARB_AIRBORNE, [hl] ; $72a9

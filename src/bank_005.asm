@@ -5668,7 +5668,7 @@ DebugDrawFlagsWindow2:
 	pop af ; $6486
 	ret ; $6487
 HexDigitChars_05:
-	INCBIN "data/bank_005/d_6488.bin" ; $6488, 16 bytes
+	INCBIN "data/bank_005/HexDigitChars_05.bin" ; $6488, 16 bytes
 DebugDrawHexRowLabel:
 	push af ; $6498
 	push bc ; $6499
@@ -6196,7 +6196,7 @@ DebugStepValueWithDpad:
 	; $6886, 10 bytes (fill)
 	ds 10, $00
 PaletteEditorCursorTiles_05:
-	INCBIN "data/bank_005/d_6890.bin" ; $6890, 192 bytes
+	INCBIN "data/bank_005/PaletteEditorCursorTiles_05.bin" ; $6890, 192 bytes
 GetSelectedBGPaletteColorPtr:
 	ld hl, wDebugPaletteIndex ; $6950
 	ld a, [hl] ; $6953
@@ -7986,7 +7986,7 @@ ClearGlyphBuffer:
 	ld b, $80 ; $73d2
 .glyphLoop:
 	ld hl, FontGlyphs ; $73d4
-	ld c, $01 ; $73d7
+	ld c, $01 ; $73d7 -- 1 of FontGlyphs's 102 tiles
 	call CopyMemoryFast ; $73d9
 	dec b ; $73dc
 	jr nz, .glyphLoop ; $73dd
@@ -8031,7 +8031,7 @@ ClearWindowGlyphTiles:
 	wram_bank $07 ; $7416
 .loop:
 	ld hl, FontGlyphs ; $741c
-	ld c, $01 ; $741f
+	ld c, $01 ; $741f -- 1 of FontGlyphs's 102 tiles
 	call CopyMemoryFast ; $7421
 	dec b ; $7424
 	jr nz, .loop ; $7425
@@ -8822,7 +8822,7 @@ Unused_05_DrawGlyphString:
 	; $7916, 10 bytes (fill)
 	ds 10, $00
 FontGlyphs:
-	INCBIN "data/bank_005/d_7920.bin" ; $7920, 1632 bytes
+	INCBIN "data/bank_005/FontGlyphs.bin" ; $7920, 1632 bytes
 GlyphWidths_05:
 	; $7f80, 96 bytes (bytes:16)
 	db $05, $04, $06, $06, $06, $06, $07, $04, $04, $04, $06, $06, $04, $06, $04, $06 ; 0x00

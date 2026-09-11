@@ -13,49 +13,49 @@ Padding_28_0:
 	; $4012, 14 bytes (fill)
 	ds 14, $00
 MatchGraphicsGfx:
-	INCBIN "data/bank_028/d_4020.bin" ; $4020, 832 bytes
+	INCBIN "data/bank_028/MatchGraphicsGfx.bin" ; $4020, 832 bytes
 SpecialHitEffectTiles_28:
-	INCBIN "data/bank_028/d_4360.bin" ; $4360, 256 bytes
+	INCBIN "data/bank_028/SpecialHitEffectTiles_28.bin" ; $4360, 256 bytes
 BallTouchCharEffectTilesA_28:
-	INCBIN "data/bank_028/d_4460.bin" ; $4460, 256 bytes
+	INCBIN "data/bank_028/BallTouchCharEffectTilesA_28.bin" ; $4460, 256 bytes
 BallTouchCharEffectTilesB_28:
-	INCBIN "data/bank_028/d_4560.bin" ; $4560, 128 bytes
+	INCBIN "data/bank_028/BallTouchCharEffectTilesB_28.bin" ; $4560, 128 bytes
 MatchGfxTilesA_28:
-	INCBIN "data/bank_028/lz_45e0.bin" ; $45e0, 1472 bytes
+	INCBIN "data/bank_028/lz_MatchGfxTilesA_28.bin" ; $45e0, 1472 bytes
 MatchGfxPalettesA_28:
-	INCLUDE "data/bank_028/palettes_4ba0.asm" ; $4ba0, 64 bytes (palettes)
+	INCLUDE "data/bank_028/MatchGfxPalettesA_28.asm" ; $4ba0, 64 bytes (palettes)
 MatchGraphicsPalettes:
-	INCLUDE "data/bank_028/palettes_4be0.asm" ; $4be0, 16 bytes (palettes)
+	INCLUDE "data/bank_028/MatchGraphicsPalettes.asm" ; $4be0, 16 bytes (palettes)
 MatchGfxMapsA_28:
-	INCBIN "data/bank_028/d_4bf0.bin" ; $4bf0, 320 bytes
+	INCBIN "data/bank_028/MatchGfxMapsA_28.bin" ; $4bf0, 320 bytes
 MatchVariantTiles0:
-	INCBIN "data/bank_028/d_4d30.bin" ; $4d30, 256 bytes
+	INCBIN "data/bank_028/MatchVariantTiles0.bin" ; $4d30, 256 bytes
 MatchVariantTiles1:
-	INCBIN "data/bank_028/d_4e30.bin" ; $4e30, 768 bytes
+	INCBIN "data/bank_028/MatchVariantTiles1.bin" ; $4e30, 768 bytes
 MatchVariantTiles2:
-	INCBIN "data/bank_028/d_5130.bin" ; $5130, 832 bytes
+	INCBIN "data/bank_028/MatchVariantTiles2.bin" ; $5130, 832 bytes
 MatchVariantTiles3:
-	INCBIN "data/bank_028/d_5470.bin" ; $5470, 32 bytes
+	INCBIN "data/bank_028/MatchVariantTiles3.bin" ; $5470, 32 bytes
 MatchVariantTiles4:
-	INCBIN "data/bank_028/d_5490.bin" ; $5490, 256 bytes
+	INCBIN "data/bank_028/MatchVariantTiles4.bin" ; $5490, 256 bytes
 MatchSharedTiles_28:
-	INCBIN "data/bank_028/d_5590.bin" ; $5590, 2208 bytes
+	INCBIN "data/bank_028/MatchSharedTiles_28.bin" ; $5590, 2208 bytes
 MatchGfxPalettesB_28:
-	INCLUDE "data/bank_028/palettes_5e30.asm" ; $5e30, 8 bytes (palettes)
+	INCLUDE "data/bank_028/MatchGfxPalettesB_28.asm" ; $5e30, 8 bytes (palettes)
 MatchVariantGraphicsPalettes0:
-	INCLUDE "data/bank_028/palettes_5e38.asm" ; $5e38, 24 bytes (palettes)
+	INCLUDE "data/bank_028/MatchVariantGraphicsPalettes0.asm" ; $5e38, 24 bytes (palettes)
 MatchVariantGraphicsPalettes1:
-	INCLUDE "data/bank_028/palettes_5e50.asm" ; $5e50, 24 bytes (palettes)
+	INCLUDE "data/bank_028/MatchVariantGraphicsPalettes1.asm" ; $5e50, 24 bytes (palettes)
 MatchVariantGraphicsPalettes2:
-	INCLUDE "data/bank_028/palettes_5e68.asm" ; $5e68, 16 bytes (palettes)
+	INCLUDE "data/bank_028/MatchVariantGraphicsPalettes2.asm" ; $5e68, 16 bytes (palettes)
 MatchVariantGraphicsPalettes3:
-	INCLUDE "data/bank_028/palettes_5e78.asm" ; $5e78, 8 bytes (palettes)
+	INCLUDE "data/bank_028/MatchVariantGraphicsPalettes3.asm" ; $5e78, 8 bytes (palettes)
 MatchVariantGraphicsPalettes4:
-	INCLUDE "data/bank_028/palettes_5e80.asm" ; $5e80, 24 bytes (palettes)
+	INCLUDE "data/bank_028/MatchVariantGraphicsPalettes4.asm" ; $5e80, 24 bytes (palettes)
 MatchVariantGraphicsPalettes5:
-	INCLUDE "data/bank_028/palettes_5e98.asm" ; $5e98, 8 bytes (palettes)
+	INCLUDE "data/bank_028/MatchVariantGraphicsPalettes5.asm" ; $5e98, 8 bytes (palettes)
 MatchVariantGraphicsPalettes6:
-	INCLUDE "data/bank_028/palettes_5ea0.asm" ; $5ea0, 16 bytes (palettes)
+	INCLUDE "data/bank_028/MatchVariantGraphicsPalettes6.asm" ; $5ea0, 16 bytes (palettes)
 LoadMatchGraphics:
 	wram_bank $01 ; $5eb0
 	ld hl, MatchGfxPalettesA_28 ; $5eb6
@@ -73,7 +73,7 @@ LoadMatchGraphics:
 	call DecompressData ; $5ed9
 	ld hl, wDecompBuffer ; $5edc
 	ld de, $9000 ; $5edf
-	ld c, $80 ; $5ee2
+	ld c, $80 ; $5ee2 -- 128 of MatchGfxTilesA_28's 256 tiles
 	call QueueVRAMCopy ; $5ee4
 	ld hl, wTextTileBuffer ; $5ee7
 	ld de, $8800 ; $5eea
@@ -133,7 +133,7 @@ LoadMatchVariantGraphics:
 .queueVRAMCopy:
 	ld hl, MatchGfxMapsA_28 ; $5f5b
 	ld de, $8200 + VRAM_BANK1 ; $5f5e
-	ld c, $08 ; $5f61
+	ld c, $08 ; $5f61 -- 8 of MatchGfxMapsA_28's 20 tiles
 	call QueueVRAMCopy ; $5f63
 	call LoadMatchSharedTiles_28 ; $5f66
 	ret ; $5f69
@@ -174,7 +174,7 @@ LoadMatchVariantGraphics:
 .queueVRAMCopy2:
 	ld hl, MatchGfxMapsA_28 ; $5fbd
 	ld de, $8200 + VRAM_BANK1 ; $5fc0
-	ld c, $08 ; $5fc3
+	ld c, $08 ; $5fc3 -- 8 of MatchGfxMapsA_28's 20 tiles
 	call QueueVRAMCopy ; $5fc5
 	ld hl, MatchVariantGraphicsPalettes4 ; $5fc8
 	lb de, $0e, $01 ; $5fcb palette index, count
@@ -194,11 +194,11 @@ LoadMatchVariantGraphics:
 	call LoadPaletteShadow ; $5fef
 	ld hl, MatchVariantTiles1 ; $5ff2
 	ld de, $8100 + VRAM_BANK1 ; $5ff5
-	ld c, $10 ; $5ff8
+	ld c, $10 ; $5ff8 -- 16 of MatchVariantTiles1's 48 tiles
 	call QueueVRAMCopy ; $5ffa
 	ld hl, MatchVariantTiles2 ; $5ffd
 	ld de, $8200 + VRAM_BANK1 ; $6000
-	ld c, $10 ; $6003
+	ld c, $10 ; $6003 -- 16 of MatchVariantTiles2's 52 tiles
 	call QueueVRAMCopy ; $6005
 	call LoadMatchSharedTiles_28 ; $6008
 	ret ; $600b
@@ -215,7 +215,7 @@ LoadMatchVariantGraphics:
 LoadMatchSharedTiles_28:
 	ld hl, MatchSharedTiles_28 ; $6024
 	ld de, $8080 ; $6027
-	ld c, $14 ; $602a
+	ld c, $14 ; $602a -- 20 of MatchSharedTiles_28's 138 tiles
 	call QueueVRAMCopy ; $602c
 	ret ; $602f
 LoadSpecialHitEffectTiles:
@@ -309,7 +309,7 @@ LoadMatchStoryGfx:
 	call DecompressData ; $60e7
 	ld hl, wDecompBuffer ; $60ea
 	ld de, $9000 ; $60ed
-	ld c, $20 ; $60f0
+	ld c, $20 ; $60f0 -- 32 of MatchGfxTilesB_28's 256 tiles
 	call QueueVRAMCopy ; $60f2
 	push af ; $60f5
 	ldh a, [rLCDC] ; $60f6
@@ -320,7 +320,7 @@ LoadMatchStoryGfx:
 	pop af ; $60ff
 	ld hl, wDecompBuffer + 32 * TILE_SIZE ; $6100
 	ld de, $9200 ; $6103
-	ld c, $20 ; $6106
+	ld c, $20 ; $6106 -- 32 of MatchGfxTilesB_28's 256 tiles from tile 32
 	call QueueVRAMCopy ; $6108
 	push af ; $610b
 	ldh a, [rLCDC] ; $610c
@@ -376,11 +376,11 @@ Padding_28_1:
 	; $6171, 15 bytes (fill)
 	ds 15, $00
 MatchGfxTilesB_28:
-	INCBIN "data/bank_028/lz_6180.bin" ; $6180, 2964 bytes
+	INCBIN "data/bank_028/lz_MatchGfxTilesB_28.bin" ; $6180, 2964 bytes
 UnusedMatchGfxPalette_28:
-	INCBIN "data/bank_028/d_6d14.bin" ; $6d14, 8 bytes
+	INCBIN "data/bank_028/UnusedMatchGfxPalette_28.bin" ; $6d14, 8 bytes
 MatchGfxPalettesC_28:
-	INCLUDE "data/bank_028/palettes_6d1c.asm" ; $6d1c, 56 bytes (palettes)
+	INCLUDE "data/bank_028/MatchGfxPalettesC_28.asm" ; $6d1c, 56 bytes (palettes)
 MatchStoryGfxPalettes:
-	INCLUDE "data/bank_028/palettes_6d54.asm" ; $6d54, 16 bytes (palettes)
+	INCLUDE "data/bank_028/MatchStoryGfxPalettes.asm" ; $6d54, 16 bytes (palettes)
 	; $6d64, 4764 bytes fill to bank end (linker-padded)

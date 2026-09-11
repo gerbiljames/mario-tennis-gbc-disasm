@@ -49,46 +49,46 @@ DataPtr_ClubroomInteriorSceneUnusedSlot:
 DataPtr_ClubroomInteriorTiles:
 	dw ClubroomInteriorTiles ; $402e
 TrainingHallSceneConfig:
-	INCBIN "data/bank_069/d_4030.bin" ; $4030, 42 bytes
+	INCBIN "data/bank_069/TrainingHallSceneConfig.bin" ; $4030, 42 bytes
 TrainingHallPalettes:
-	INCLUDE "data/bank_069/palettes_405a.asm" ; $405a, 64 bytes (palettes)
+	INCLUDE "data/bank_069/TrainingHallPalettes.asm" ; $405a, 64 bytes (palettes)
 TrainingHallTiles:
-	INCBIN "data/bank_069/lz_409a.bin" ; $409a, 3011 bytes
+	INCBIN "data/bank_069/lz_TrainingHallTiles.bin" ; $409a, 3011 bytes
 TrainingHallTilemap:
-	INCBIN "data/bank_069/lz_4c5d.bin" ; $4c5d, 1214 bytes
+	INCBIN "data/bank_069/lz_TrainingHallTilemap.bin" ; $4c5d, 1214 bytes
 TrainingHallAttrmap:
-	INCBIN "data/bank_069/lz_511b.bin" ; $511b, 759 bytes
+	INCBIN "data/bank_069/lz_TrainingHallAttrmap.bin" ; $511b, 759 bytes
 TrainingHallCollisionMap:
-	INCBIN "data/bank_069/lz_5412.bin" ; $5412, 129 bytes
+	INCBIN "data/bank_069/lz_TrainingHallCollisionMap.bin" ; $5412, 129 bytes
 TrainingHallBehaviorMap:
-	INCBIN "data/bank_069/lz_5493.bin" ; $5493, 129 bytes
+	INCBIN "data/bank_069/lz_TrainingHallBehaviorMap.bin" ; $5493, 129 bytes
 CenterCourtHallSceneConfig:
-	INCBIN "data/bank_069/d_5514.bin" ; $5514, 42 bytes
+	INCBIN "data/bank_069/CenterCourtHallSceneConfig.bin" ; $5514, 42 bytes
 CenterCourtHallPalettes:
-	INCLUDE "data/bank_069/palettes_553e.asm" ; $553e, 64 bytes (palettes)
+	INCLUDE "data/bank_069/CenterCourtHallPalettes.asm" ; $553e, 64 bytes (palettes)
 CenterCourtHallTiles:
-	INCBIN "data/bank_069/lz_557e.bin" ; $557e, 2082 bytes
+	INCBIN "data/bank_069/lz_CenterCourtHallTiles.bin" ; $557e, 2082 bytes
 CenterCourtHallTilemap:
-	INCBIN "data/bank_069/lz_5da0.bin" ; $5da0, 991 bytes
+	INCBIN "data/bank_069/lz_CenterCourtHallTilemap.bin" ; $5da0, 991 bytes
 CenterCourtHallAttrmap:
-	INCBIN "data/bank_069/lz_617f.bin" ; $617f, 751 bytes
+	INCBIN "data/bank_069/lz_CenterCourtHallAttrmap.bin" ; $617f, 751 bytes
 CenterCourtHallCollisionMap:
-	INCBIN "data/bank_069/lz_646e.bin" ; $646e, 125 bytes
+	INCBIN "data/bank_069/lz_CenterCourtHallCollisionMap.bin" ; $646e, 125 bytes
 CenterCourtHallBehaviorMap:
-	INCBIN "data/bank_069/lz_64eb.bin" ; $64eb, 87 bytes
+	INCBIN "data/bank_069/lz_CenterCourtHallBehaviorMap.bin" ; $64eb, 87 bytes
 ClubroomInteriorSceneConfig:
-	INCBIN "data/bank_069/d_6542.bin" ; $6542, 27 bytes
+	INCBIN "data/bank_069/ClubroomInteriorSceneConfig.bin" ; $6542, 27 bytes
 ClubroomInteriorPalettes:
-	INCLUDE "data/bank_069/palettes_655d.asm" ; $655d, 64 bytes (palettes)
+	INCLUDE "data/bank_069/ClubroomInteriorPalettes.asm" ; $655d, 64 bytes (palettes)
 ClubroomInteriorTiles:
-	INCBIN "data/bank_069/lz_659d.bin" ; $659d, 2486 bytes
+	INCBIN "data/bank_069/lz_ClubroomInteriorTiles.bin" ; $659d, 2486 bytes
 ClubroomInteriorTilemap:
-	INCBIN "data/bank_069/lz_6f53.bin" ; $6f53, 999 bytes
+	INCBIN "data/bank_069/lz_ClubroomInteriorTilemap.bin" ; $6f53, 999 bytes
 ClubroomInteriorAttrmap:
-	INCBIN "data/bank_069/lz_733a.bin" ; $733a, 647 bytes
+	INCBIN "data/bank_069/lz_ClubroomInteriorAttrmap.bin" ; $733a, 647 bytes
 ClubroomInteriorCollisionMap:
-	INCBIN "data/bank_069/lz_75c1.bin" ; $75c1, 84 bytes
+	INCBIN "data/bank_069/lz_ClubroomInteriorCollisionMap.bin" ; $75c1, 84 bytes
 ClubroomInteriorBehaviorMap:
-	INCBIN "data/bank_069/lz_7615.bin" ; $7615, 75 bytes
+	INCBIN "data/bank_069/lz_ClubroomInteriorBehaviorMap.bin" ; $7615, 75 bytes
 ClubroomInteriorSceneUnusedSlot:
-	INCBIN "data/bank_069/d_7660.bin" ; $7660, 2464 bytes
+	INCBIN "data/bank_069/ClubroomInteriorSceneUnusedSlot.bin" ; $7660, 2464 bytes
