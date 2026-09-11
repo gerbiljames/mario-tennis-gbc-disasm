@@ -1,51 +1,9 @@
 ; Instruction-identical to GetCellIndexFromCursorPtr_3b and GetCellIndexFromCursorPtr_3e (one copy per bank); a change here belongs in every copy.
-GetCellIndexFromCursorPtr_16:
-	push bc ; $4399
-	ld a, [hl-] ; $439a
-	ld b, a ; $439b
-	xor a ; $439c
-	inc b ; $439d
-.loop:
-	dec b ; $439e
-	jr z, .countDone ; $439f
-	add c ; $43a1
-	jr .loop ; $43a2
-.countDone:
-	ld b, a ; $43a4
-	ld a, [hl] ; $43a5
-	add b ; $43a6
-	pop bc ; $43a7
-	ret ; $43a8
+	twin get_cell_index_from_cursor_ptr, 16 ; $4399 GetCellIndexFromCursorPtr_16
 ; Instruction-identical to SetMenuCursorFromIndex_38, SetMenuCursorFromIndex_3b and SetMenuCursorFromIndex_3e (one copy per bank); a change here belongs in every copy.
-SetMenuCursorFromIndex_16:
-	ld d, $00 ; $43a9
-	ld a, c ; $43ab
-.divLoop:
-	cp b ; $43ac
-	jr c, .store ; $43ad
-	inc d ; $43af
-	sub b ; $43b0
-	jr .divLoop ; $43b1
-.store:
-	ld [wMenuCursorX], a ; $43b3
-	ld a, d ; $43b6
-	ld [wMenuCursorY], a ; $43b7
-	ret ; $43ba
+	twin set_menu_cursor_from_index, 16 ; $43a9 SetMenuCursorFromIndex_16
 ; Instruction-identical to SetMenuCursorFromIndexToPtr_38 and SetMenuCursorFromIndexToPtr_3e (one copy per bank); a change here belongs in every copy.
-SetMenuCursorFromIndexToPtr_16:
-	ld d, $00 ; $43bb
-	ld a, c ; $43bd
-.divLoop:
-	cp b ; $43be
-	jr c, .store ; $43bf
-	inc d ; $43c1
-	sub b ; $43c2
-	jr .divLoop ; $43c3
-.store:
-	ld [hl+], a ; $43c5
-	ld a, d ; $43c6
-	ld [hl], a ; $43c7
-	ret ; $43c8
+	twin set_menu_cursor_from_index_to_ptr, 16 ; $43bb SetMenuCursorFromIndexToPtr_16
 ClearWram3Row64_16:
 	push_wram_bank $03 ; $43c9
 	xor a ; $43d2
@@ -156,23 +114,7 @@ PrintNumberString_16:
 .done:
 	ret ; $445d
 ; Instruction-identical to DrawAsciiDigitChar_17, DrawAsciiDigitChar_1b, DrawAsciiDigitChar_3b and DrawAsciiDigitChar_3e (one copy per bank); a change here belongs in every copy.
-DrawAsciiDigitChar_16:
-	push hl ; $445e
-	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH ; $445f
-	sub $30 ; $4462
-	jr c, .carry ; $4464
-	add $30 ; $4466
-	ld b, a ; $4468
-	wram_bank $03 ; $4469
-	ld a, b ; $446f
-	ld [de], a ; $4470
-	inc de ; $4471
-	pop hl ; $4472
-	ret ; $4473
-.carry:
-	inc de ; $4474
-	pop hl ; $4475
-	ret ; $4476
+	twin draw_ascii_digit_char, 16 ; $445e DrawAsciiDigitChar_16
 RunMatchWinLoseScreen:
 	ld a, [wMatchAbortFlag] ; $4477
 	bit MATCHABORTB_MATCH, a ; $447a

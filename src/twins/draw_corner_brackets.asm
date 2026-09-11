@@ -1,0 +1,50 @@
+; DrawCornerBrackets_<bank>: one routine assembled into banks $1b, $38, $3b, $3e through
+; `twin draw_corner_brackets, <bank>` -- {TWIN} is the bank suffix, so the labels and the
+; bank-local references become that bank's. No per-instruction addresses:
+; the `twin` line in each bank carries the member's address. Every member's
+; note is above its `twin` line. A fix here lands in every bank.
+
+DrawCornerBrackets_{TWIN}:
+	push de
+	push bc
+	ld c, $00
+	ld b, $09
+	call QueueSprite
+	pop bc
+	pop de
+	push de
+	push bc
+	ld a, b
+	add d
+	ld d, a
+	push de
+	ld c, $00
+	ld b, $29
+	call QueueSprite
+	pop de
+	pop bc
+	pop de
+	push de
+	push bc
+	ld a, c
+	add e
+	ld e, a
+	ld a, b
+	add d
+	ld d, a
+	push de
+	ld c, $00
+	ld b, $69
+	call QueueSprite
+	pop de
+	pop bc
+	pop de
+	ld a, e
+	add c
+	ld e, a
+	push de
+	ld c, $00
+	ld b, $49
+	call QueueSprite
+	pop de
+	ret

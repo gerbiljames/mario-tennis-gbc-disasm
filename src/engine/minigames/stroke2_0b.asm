@@ -148,31 +148,7 @@ StrokeMatch2HandlePointEnd:
 	call PlayDrillPointEndSequence ; $67be
 	ret ; $67c1
 ; Instruction-identical to NetGameMatch1AwardPointToSide, NetGameMatch2AwardPointToSide, NetGameMatch3AwardPointToSide, ServiceMatch2AwardPointToSide, ServiceMatch3AwardPointToSide and StrokeMatch3AwardPointToSide (in this bank); a change here belongs in every copy.
-StrokeMatch2AwardPointToSide:
-	ld a, [wPointWinLoseFlag] ; $67c2
-	or a ; $67c5
-	ret z ; $67c6
-	inc a ; $67c7
-	srl a ; $67c8
-	ld b, a ; $67ca
-	ld a, [wTotalPointsScoredInCurrentGame] ; $67cb
-	and $01 ; $67ce
-	xor $01 ; $67d0
-	add b ; $67d2
-	bit 0, a ; $67d3
-	jr nz, .clearServeFaultFlag ; $67d5
-	ld hl, wPlayer2PointsWon ; $67d7
-	bit 1, a ; $67da
-	jr z, .bump ; $67dc
-	ld hl, wPlayer1PointsWon ; $67de
-.bump:
-	inc [hl] ; $67e1
-.clearServeFaultFlag:
-	xor a ; $67e2
-	ld [wServeFaultFlag], a ; $67e3
-	ld hl, wTotalPointsScoredInCurrentGame ; $67e6
-	inc [hl] ; $67e9
-	ret ; $67ea
+	twin_named net_game_match1_award_point_to_side, StrokeMatch2AwardPointToSide ; $67c2
 StrokeMatch2JudgeOnPointEnd:
 	ld a, $00 ; $67eb
 	call StrokeMatch2JudgePoint ; $67ed
@@ -501,31 +477,7 @@ StrokeMatch3HandlePointEnd:
 	call PlayDrillPointEndSequence ; $6a09
 	ret ; $6a0c
 ; Instruction-identical to NetGameMatch1AwardPointToSide, NetGameMatch2AwardPointToSide, NetGameMatch3AwardPointToSide, ServiceMatch2AwardPointToSide, ServiceMatch3AwardPointToSide and StrokeMatch2AwardPointToSide (in this bank); a change here belongs in every copy.
-StrokeMatch3AwardPointToSide:
-	ld a, [wPointWinLoseFlag] ; $6a0d
-	or a ; $6a10
-	ret z ; $6a11
-	inc a ; $6a12
-	srl a ; $6a13
-	ld b, a ; $6a15
-	ld a, [wTotalPointsScoredInCurrentGame] ; $6a16
-	and $01 ; $6a19
-	xor $01 ; $6a1b
-	add b ; $6a1d
-	bit 0, a ; $6a1e
-	jr nz, .clearServeFaultFlag ; $6a20
-	ld hl, wPlayer2PointsWon ; $6a22
-	bit 1, a ; $6a25
-	jr z, .bump ; $6a27
-	ld hl, wPlayer1PointsWon ; $6a29
-.bump:
-	inc [hl] ; $6a2c
-.clearServeFaultFlag:
-	xor a ; $6a2d
-	ld [wServeFaultFlag], a ; $6a2e
-	ld hl, wTotalPointsScoredInCurrentGame ; $6a31
-	inc [hl] ; $6a34
-	ret ; $6a35
+	twin_named net_game_match1_award_point_to_side, StrokeMatch3AwardPointToSide ; $6a0d
 StrokeMatch3JudgeOnPointEnd:
 	ld a, $00 ; $6a36
 	call StrokeMatch3JudgePoint ; $6a38

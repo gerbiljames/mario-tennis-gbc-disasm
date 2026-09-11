@@ -167,20 +167,7 @@ ActorScript_0e_04:
 	as_wait $01
 	as_jump ActorScript_0e_04
 ; Instruction-identical to TogglePlayerSpriteXFlip (one copy per bank); a change here belongs in every copy.
-MirrorPlayerSpriteIfLeftHanded:
-	ld a, [wStoryModeMainCharacterLeftHanded] ; $520f
-	and a ; $5212
-	jr z, .done ; $5213
-	script_get_actor_state ACTOR_PLAYER ; $5215
-	ld c, l ; $521a
-	ld b, h ; $521b
-	ld hl, $0037 ; $521c
-	add hl, bc ; $521f
-	ld a, [hl] ; $5220
-	xor $20 ; $5221
-	ld [hl], a ; $5223
-.done:
-	ret ; $5224
+	twin_named mirror_player_sprite_if_left_handed, MirrorPlayerSpriteIfLeftHanded ; $520f
 ActorScript_0e_05:
 	; $5225, 35 bytes (actor_script)
 	as_flag $01, $05, $02

@@ -49,9 +49,11 @@ def routines(min_instrs):
             if not line.startswith("\t") or line.startswith("\t;"):
                 continue
             body = line.split(" ; ")[0]
-            seq.append(_SUFFIX_RE.sub(r"\1", body))
-            if " ; $" in line and not body.startswith(("\tdb", "\tdw", "\tds",
-                                                         "\tINCBIN", "\tINCLUDE")):
+            # a text id (Text_25_61) is not a bank-suffixed name
+            seq.append(_SUFFIX_RE.sub(lambda m: m.group(0) if m.group(1).startswith("Text_")
+                                      else m.group(1), body))
+            if body.strip() and not body.startswith(("\tdb", "\tdw", "\tds", "\tINCBIN",
+                                                     "\tINCLUDE", "\ttwin")):
                 n += 1
         flush()
     return out

@@ -22,109 +22,19 @@ UpdateAnimatedTilesTask:
 	farcall UpdateAnimatedTiles ; $4430
 	ret ; $4433
 ; Instruction-identical to DrawNameWithDiacritics_17 and DrawNameWithDiacritics_3e (one copy per bank); a change here belongs in every copy.
-DrawNameWithDiacritics_1b:
-	push af ; $4434
-	push bc ; $4435
-.loop:
-	ld a, [hl] ; $4436
-	cp $00 ; $4437
-	jr z, .restore ; $4439
-	ld [de], a ; $443b
-	inc hl ; $443c
-	ld a, [hl] ; $443d
-	cp $de ; $443e
-	jr z, .eqde ; $4440
-	cp $df ; $4442
-	jr nz, .nedf ; $4444
-.eqde:
-	push hl ; $4446
-	push bc ; $4447
-	ld h, d ; $4448
-	ld l, e ; $4449
-	ld bc, $ffe0 ; $444a
-	add hl, bc ; $444d
-	ld b, a ; $444e
-	ld a, [hl] ; $444f
-	cp $03 ; $4450
-	ld a, b ; $4452
-	jr nz, .store ; $4453
-	sub $d0 ; $4455
-.store:
-	ld [hl], a ; $4457
-	pop bc ; $4458
-	pop hl ; $4459
-	inc hl ; $445a
-.nedf:
-	inc de ; $445b
-	ld a, e ; $445c
-	and $1f ; $445d
-	jr nz, .loop ; $445f
-	push hl ; $4461
-	ld h, d ; $4462
-	ld l, e ; $4463
-	add hl, de ; $4464
-	ld d, h ; $4465
-	ld e, l ; $4466
-	pop hl ; $4467
-	jr .loop ; $4468
-.restore:
-	pop bc ; $446a
-	pop af ; $446b
-	ret ; $446c
+	twin draw_name_with_diacritics, 1b ; $4434 DrawNameWithDiacritics_1b
 ; Instruction-identical to DrawDecimalNumber_17, DrawDecimalNumber_3b and DrawDecimalNumber_3e (one copy per bank); a change here belongs in every copy.
-DrawDecimalNumber_1b:
-	push af ; $446d
-	push bc ; $446e
-	push hl ; $446f
-	add sp, -10 ; $4470
-	push bc ; $4472
-	push de ; $4473
-	ld c, l ; $4474
-	ld b, h ; $4475
-	ld hl, sp + 4 ; $4476
-	ld e, l ; $4478
-	ld d, h ; $4479
-	ld l, c ; $447a
-	ld h, b ; $447b
-	ld c, e ; $447c
-	ld b, d ; $447d
-	call FormatDecimalNumber ; $447e
-	ld l, c ; $4481
-	ld h, b ; $4482
-	pop de ; $4483
-	pop bc ; $4484
-	call DrawAsciiDigitString ; $4485
-	add sp, 10 ; $4488
-	pop hl ; $448a
-	pop bc ; $448b
-	pop af ; $448c
-	ret ; $448d
-DrawAsciiDigitString:
+	twin draw_decimal_number, 1b ; $446d DrawDecimalNumber_1b
+DrawAsciiDigitString_1b:
 	ld a, [hl+] ; $448e
 	and a ; $448f
 	jr z, .done ; $4490
 	call DrawAsciiDigitChar_1b ; $4492
-	jr DrawAsciiDigitString ; $4495
+	jr DrawAsciiDigitString_1b ; $4495
 .done:
 	ret ; $4497
 ; Instruction-identical to DrawAsciiDigitChar_16, DrawAsciiDigitChar_17, DrawAsciiDigitChar_3b and DrawAsciiDigitChar_3e (one copy per bank); a change here belongs in every copy.
-DrawAsciiDigitChar_1b:
-	push hl ; $4498
-	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH ; $4499
-	sub $30 ; $449c
-	jr c, .carry ; $449e
-	add $30 ; $44a0
-	ld b, a ; $44a2
-	wram_bank $03 ; $44a3
-	ld a, b ; $44a9
-	ld [de], a ; $44aa
-	inc de ; $44ab
-	pop hl ; $44ac
-	ret ; $44ad
-.carry:
-	inc de ; $44ae
-	pop hl ; $44af
-	ret ; $44b0
+	twin draw_ascii_digit_char, 1b ; $4498 DrawAsciiDigitChar_1b
 MugshotGfxAlex_1b:
 	INCBIN "data/bank_01b/lz_MugshotGfxAlex_1b.bin" ; $44b1, 158 bytes
 MugshotGfxNina_1b:

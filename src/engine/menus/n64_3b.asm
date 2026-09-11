@@ -1,36 +1,7 @@
 ; Instruction-identical to GetCellIndexFromCursorPtr_16 and GetCellIndexFromCursorPtr_3e (one copy per bank); a change here belongs in every copy.
-GetCellIndexFromCursorPtr_3b:
-	push bc ; $43cb
-	ld a, [hl-] ; $43cc
-	ld b, a ; $43cd
-	xor a ; $43ce
-	inc b ; $43cf
-.loop:
-	dec b ; $43d0
-	jr z, .countDone ; $43d1
-	add c ; $43d3
-	jr .loop ; $43d4
-.countDone:
-	ld b, a ; $43d6
-	ld a, [hl] ; $43d7
-	add b ; $43d8
-	pop bc ; $43d9
-	ret ; $43da
+	twin get_cell_index_from_cursor_ptr, 3b ; $43cb GetCellIndexFromCursorPtr_3b
 ; Instruction-identical to SetMenuCursorFromIndex_16, SetMenuCursorFromIndex_38 and SetMenuCursorFromIndex_3e (one copy per bank); a change here belongs in every copy.
-SetMenuCursorFromIndex_3b:
-	ld d, $00 ; $43db
-	ld a, c ; $43dd
-.divLoop:
-	cp b ; $43de
-	jr c, .store ; $43df
-	inc d ; $43e1
-	sub b ; $43e2
-	jr .divLoop ; $43e3
-.store:
-	ld [wMenuCursorX], a ; $43e5
-	ld a, d ; $43e8
-	ld [wMenuCursorY], a ; $43e9
-	ret ; $43ec
+	twin set_menu_cursor_from_index, 3b ; $43db SetMenuCursorFromIndex_3b
 StoreCellIndexToCursorPtr:
 	ld d, $00 ; $43ed
 	ld a, c ; $43ef
@@ -69,83 +40,9 @@ UpdateAnimatedTilesTask_3b:
 	farcall UpdateAnimatedTiles ; $4428
 	ret ; $442b
 ; Instruction-identical to DrawNameWithDiacritics_38 (one copy per bank); a change here belongs in every copy.
-DrawNameWithDiacritics_3b:
-	push af ; $442c
-	push bc ; $442d
-.charLoop:
-	ld a, [hl] ; $442e
-	cp $00 ; $442f
-	jr z, .done ; $4431
-	ld [de], a ; $4433
-	inc hl ; $4434
-	ld a, [hl] ; $4435
-	cp $de ; $4436
-	jr z, .markChar ; $4438
-	cp $df ; $443a
-	jr nz, .nextCell ; $443c
-.markChar:
-	push hl ; $443e
-	push bc ; $443f
-	ld h, d ; $4440
-	ld l, e ; $4441
-	ld bc, $ffe0 ; $4442
-	add hl, bc ; $4445
-	ld b, a ; $4446
-	ld a, [hl] ; $4447
-	cp $03 ; $4448
-	ld a, b ; $444a
-	jr nz, .writeMark ; $444b
-	sub $d0 ; $444d
-.writeMark:
-	ld [hl], a ; $444f
-	pop bc ; $4450
-	pop hl ; $4451
-	inc hl ; $4452
-.nextCell:
-	inc de ; $4453
-	ld a, e ; $4454
-	and $1f ; $4455
-	jr nz, .charLoop ; $4457
-	push hl ; $4459
-	ld h, d ; $445a
-	ld l, e ; $445b
-	add hl, de ; $445c
-	ld d, h ; $445d
-	ld e, l ; $445e
-	pop hl ; $445f
-	jr .charLoop ; $4460
-.done:
-	pop bc ; $4462
-	pop af ; $4463
-	ret ; $4464
+	twin draw_name_with_diacritics_38, 3b ; $442c DrawNameWithDiacritics_3b
 ; Instruction-identical to DrawDecimalNumber_17, DrawDecimalNumber_1b and DrawDecimalNumber_3e (one copy per bank); a change here belongs in every copy.
-DrawDecimalNumber_3b:
-	push af ; $4465
-	push bc ; $4466
-	push hl ; $4467
-	add sp, -10 ; $4468
-	push bc ; $446a
-	push de ; $446b
-	ld c, l ; $446c
-	ld b, h ; $446d
-	ld hl, sp + 4 ; $446e
-	ld e, l ; $4470
-	ld d, h ; $4471
-	ld l, c ; $4472
-	ld h, b ; $4473
-	ld c, e ; $4474
-	ld b, d ; $4475
-	call FormatDecimalNumber ; $4476
-	ld l, c ; $4479
-	ld h, b ; $447a
-	pop de ; $447b
-	pop bc ; $447c
-	call DrawAsciiDigitString_3b ; $447d
-	add sp, 10 ; $4480
-	pop hl ; $4482
-	pop bc ; $4483
-	pop af ; $4484
-	ret ; $4485
+	twin draw_decimal_number, 3b ; $4465 DrawDecimalNumber_3b
 DrawAsciiDigitString_3b:
 	ld a, [hl+] ; $4486
 	and a ; $4487
@@ -155,23 +52,7 @@ DrawAsciiDigitString_3b:
 .done:
 	ret ; $448f
 ; Instruction-identical to DrawAsciiDigitChar_16, DrawAsciiDigitChar_17, DrawAsciiDigitChar_1b and DrawAsciiDigitChar_3e (one copy per bank); a change here belongs in every copy.
-DrawAsciiDigitChar_3b:
-	push hl ; $4490
-	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH ; $4491
-	sub $30 ; $4494
-	jr c, .carry ; $4496
-	add $30 ; $4498
-	ld b, a ; $449a
-	wram_bank $03 ; $449b
-	ld a, b ; $44a1
-	ld [de], a ; $44a2
-	inc de ; $44a3
-	pop hl ; $44a4
-	ret ; $44a5
-.carry:
-	inc de ; $44a6
-	pop hl ; $44a7
-	ret ; $44a8
+	twin draw_ascii_digit_char, 3b ; $4490 DrawAsciiDigitChar_3b
 StubNop_3b:
 	ret ; $44a9
 RunN64ExhibData:

@@ -273,40 +273,7 @@ ActorScript_11_52:
 	as_anim $03
 	as_jump ActorScript_11_52
 ; Instruction-identical to ComputeRankingProgressIndex_0e, ComputeRankingProgressIndex_12 and ComputeRankingProgressIndex_27 (one copy per bank); a change here belongs in every copy.
-ComputeRankingProgressIndex_11:
-	test_flag FLAG_DOUBLES ; $7d95
-	jr nz, .doubles ; $7d98
-	ld a, STORYRANK_SINGLES_ACADEMY ; $7d9a
-	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7d9c
-	jr z, .store ; $7d9f
-	ld a, STORYRANK_SINGLES_JUNIOR_CHAMP ; $7da1
-	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $7da3
-	jr z, .store ; $7da6
-	ld a, STORYRANK_SINGLES_SENIOR_CHAMP ; $7da8
-	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $7daa
-	jr z, .store ; $7dad
-	ld a, STORYRANK_SINGLES_ISLAND_OPEN ; $7daf
-	test_flag FLAG_STORY_COMPLETE_SINGLES ; $7db1
-	jr z, .store ; $7db4
-	ld a, STORYRANK_SINGLES_COMPLETE ; $7db6
-.store:
-	ld [wMapSceneStage], a ; $7db8
-	ret ; $7dbb
-.doubles:
-	ld a, STORYRANK_DOUBLES_ACADEMY ; $7dbc
-	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $7dbe
-	jr z, .store ; $7dc1
-	ld a, STORYRANK_DOUBLES_JUNIOR_CHAMP ; $7dc3
-	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_1 ; $7dc5
-	jr z, .store ; $7dc8
-	ld a, STORYRANK_DOUBLES_SENIOR_CHAMP ; $7dca
-	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $7dcc
-	jr z, .store ; $7dcf
-	ld a, STORYRANK_DOUBLES_ISLAND_OPEN ; $7dd1
-	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $7dd3
-	jr z, .store ; $7dd6
-	ld a, STORYRANK_DOUBLES_COMPLETE ; $7dd8
-	jr .store ; $7dda
+	twin compute_ranking_progress_index, 11 ; $7d95 ComputeRankingProgressIndex_11
 ; This bank's copy of ComputeStoryRankTier_13, identical instruction for instruction: the shared story include carried it into every story bank, and only bank $13's copy is called (by SetStoryRankTier). Nothing calls this one.
 Unused_11_ComputeStoryRankTier:
 	ld a, $00 ; $7ddc

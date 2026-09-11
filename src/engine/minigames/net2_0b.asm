@@ -395,38 +395,7 @@ NetGamePractice1Table:
 	dw $04e0 ; record 15
 	dw $ffff ; record 16
 ; Instruction-identical to NetGamePractice2HandlePointEnd and NetGamePractice3HandlePointEnd (in this bank); a change here belongs in every copy.
-NetGamePractice1HandlePointEnd:
-	farcall UpdateScorePanelDisplay ; $5cf9
-	ld a, [wDrillPointJudgement] ; $5cfc
-	ld [wPointWinLoseFlag], a ; $5cff
-	cp $01 ; $5d02
-	jr nz, .recordDrillPointResultBits ; $5d04
-	ld hl, wDrillCounters + 4 ; $5d06
-	inc [hl] ; $5d09
-.recordDrillPointResultBits:
-	call RecordDrillPointResultBits ; $5d0a
-	call ShowQueuedDrillMessage ; $5d0d
-	farcall UpdatePointStats ; $5d10
-	farcall AwardPoint ; $5d13
-	ld a, [wDrillCounters + 4] ; $5d16
-	ld [wPlayer1PointsWon], a ; $5d19
-	xor a ; $5d1c
-	ld [wPlayer2PointsWon], a ; $5d1d
-	ld a, [wPlayer1PointsWon] ; $5d20
-	ld b, $01 ; $5d23
-	farcall LoadPlayer1PointsDigitGfx ; $5d25
-	ld a, [wPlayer2PointsWon] ; $5d28
-	ld b, $01 ; $5d2b
-	farcall LoadPlayer2PointsDigitGfx ; $5d2d
-	farcall StepMatchFrame ; $5d30
-	ld a, $01 ; $5d33
-	ld hl, SyncPointWinLoseFlagTask ; $5d35
-	call RegisterFrameTask ; $5d38
-	farcall StartPointEndReactions ; $5d3b
-	ld hl, SyncPointWinLoseFlagTask ; $5d3e
-	call UnregisterFrameTask ; $5d41
-	call PlayDrillPointEndSequence ; $5d44
-	ret ; $5d47
+	twin_named net_game_practice1_handle_point_end, NetGamePractice1HandlePointEnd ; $5cf9
 NetGamePractice1JudgeOnPointEnd:
 	ld a, $00 ; $5d48
 	call NetGamePractice1JudgePoint ; $5d4a
@@ -780,38 +749,7 @@ NetGamePractice2PointStartDrillPositions:
 	dw $0000, $02a0 ; record 7
 	db $ff, $ff
 ; Instruction-identical to NetGamePractice1HandlePointEnd and NetGamePractice3HandlePointEnd (in this bank); a change here belongs in every copy.
-NetGamePractice2HandlePointEnd:
-	farcall UpdateScorePanelDisplay ; $5fb3
-	ld a, [wDrillPointJudgement] ; $5fb6
-	ld [wPointWinLoseFlag], a ; $5fb9
-	cp $01 ; $5fbc
-	jr nz, .recordDrillPointResultBits ; $5fbe
-	ld hl, wDrillCounters + 4 ; $5fc0
-	inc [hl] ; $5fc3
-.recordDrillPointResultBits:
-	call RecordDrillPointResultBits ; $5fc4
-	call ShowQueuedDrillMessage ; $5fc7
-	farcall UpdatePointStats ; $5fca
-	farcall AwardPoint ; $5fcd
-	ld a, [wDrillCounters + 4] ; $5fd0
-	ld [wPlayer1PointsWon], a ; $5fd3
-	xor a ; $5fd6
-	ld [wPlayer2PointsWon], a ; $5fd7
-	ld a, [wPlayer1PointsWon] ; $5fda
-	ld b, $01 ; $5fdd
-	farcall LoadPlayer1PointsDigitGfx ; $5fdf
-	ld a, [wPlayer2PointsWon] ; $5fe2
-	ld b, $01 ; $5fe5
-	farcall LoadPlayer2PointsDigitGfx ; $5fe7
-	farcall StepMatchFrame ; $5fea
-	ld a, $01 ; $5fed
-	ld hl, SyncPointWinLoseFlagTask ; $5fef
-	call RegisterFrameTask ; $5ff2
-	farcall StartPointEndReactions ; $5ff5
-	ld hl, SyncPointWinLoseFlagTask ; $5ff8
-	call UnregisterFrameTask ; $5ffb
-	call PlayDrillPointEndSequence ; $5ffe
-	ret ; $6001
+	twin_named net_game_practice1_handle_point_end, NetGamePractice2HandlePointEnd ; $5fb3
 NetGamePractice2JudgeOnPointEnd:
 	ld a, $00 ; $6002
 	call NetGamePractice2JudgePoint ; $6004

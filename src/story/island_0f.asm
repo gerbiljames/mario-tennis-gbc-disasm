@@ -371,27 +371,7 @@ UnusedSetActorDrawModeFromSceneTileSingle_0f:
 	ld [hl], a ; $6406
 	ret ; $6407
 ; Instruction-identical to ReadSceneTilemapTile_10 (one copy per bank); a change here belongs in every copy.
-ReadSceneTilemapTile_0f:
-	wram_bank $02 ; $6408
-	ld h, e ; $640e
-	ld l, $00 ; $640f
-	srl h ; $6411
-	rr l ; $6413
-	srl h ; $6415
-	rr l ; $6417
-	ld a, d ; $6419
-	add l ; $641a
-	ld l, a ; $641b
-	jr nc, .read ; $641c
-	inc h ; $641e
-.read:
-	ld d, h ; $641f
-	ld e, l ; $6420
-	ld l, c ; $6421
-	ld h, b ; $6422
-	add hl, de ; $6423
-	ld a, [hl] ; $6424
-	ret ; $6425
+	twin read_scene_tilemap_tile, 0f ; $6408 ReadSceneTilemapTile_0f
 IslandOpenArrivalCutscene:
 	set_flag FLAG_ISLAND_OPEN_IN_PROGRESS ; $6426
 	ldh a, [hRomBank] ; $6429

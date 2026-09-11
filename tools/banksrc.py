@@ -10,6 +10,14 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 _FRAG_RE = re.compile(r'^INCLUDE "(src/[^"]+\.asm)"')
+_TWIN_RE = re.compile(r"^\t(twin|twin_named) (\w+), (\w+)")
+
+
+def _twin_lines(kind, name, arg):
+    """The shared routine src/twins/<name>.asm as the bank sees it."""
+    body = (ROOT / "src" / "twins" / f"{name}.asm").read_text().split("\n")
+    key = "{TWIN}" if kind == "twin" else "{TWIN_LABEL}"
+    return [l.replace(key, arg) for l in body]
 
 
 def holders():
@@ -40,6 +48,12 @@ def bank_lines(holder):
         if m:
             frag = ROOT / m.group(1)
             for k, fl in enumerate(frag.read_text().split("\n")):
+                t = _TWIN_RE.match(fl)
+                if t:
+                    for tl in _twin_lines(t.group(1), t.group(2), t.group(3)):
+                        lines.append(tl)
+                        origin.append((frag, k + 1))
+                    continue
                 lines.append(fl)
                 origin.append((frag, k + 1))
         else:

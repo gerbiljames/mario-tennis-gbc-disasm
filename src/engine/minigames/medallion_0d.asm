@@ -76,21 +76,7 @@ DrawTreasureBoxHitCountdown:
 	call QueueMinigameHitBurstFirstFour ; $5cd3
 	ret ; $5cd6
 ; Instruction-identical to ProjectMedallionMatchWorldPosition (in this bank); a change here belongs in every copy.
-ProjectTreasureBoxWorldPosition:
-	ld hl, wMinigameSceneActor + 10 ; $5cd7
-	ld a, [hl+] ; $5cda
-	ld e, a ; $5cdb
-	ld a, [hl+] ; $5cdc
-	ld d, a ; $5cdd
-	ld a, [hl+] ; $5cde
-	ld c, a ; $5cdf
-	ld a, [hl+] ; $5ce0
-	ld b, a ; $5ce1
-	ld l, e ; $5ce2
-	ld h, d ; $5ce3
-	farcall ApplyCameraProjection ; $5ce4
-	ld b, $0f ; $5ce7
-	ret ; $5ce9
+	twin_named project_medallion_match_world_position, ProjectTreasureBoxWorldPosition ; $5cd7
 MinigameConfig_MedallionMatch:
 	; $5cea, 16 bytes (bytes:16)
 	db $17, $15, $02, $08, $23, $19, $00, $1b, $0c, $5d, $bd, $40, $fa, $5c, $00, $00 ; 0x00
@@ -266,83 +252,7 @@ AdvanceMedallionMatchActorState:
 	call DrawMedallionMatchSprite ; $5e33
 	ret ; $5e36
 ; Instruction-identical to IsBallInTreasureBoxHitZone (in this bank); a change here belongs in every copy.
-IsBallInMedallionMatchHitZone:
-	ld a, [wLastShotCharIndex] ; $5e37
-	and $01 ; $5e3a
-	jp nz, .returnZero ; $5e3c
-	ld hl, wMinigameSceneActor + 6 ; $5e3f
-	ld a, [hl+] ; $5e42
-	ld d, [hl] ; $5e43
-	ld e, a ; $5e44
-	ld hl, wBallX ; $5e45
-	ld a, [hl+] ; $5e48
-	ld h, [hl] ; $5e49
-	ld l, a ; $5e4a
-	ld a, l ; $5e4b
-	sub e ; $5e4c
-	ld l, a ; $5e4d
-	ld a, h ; $5e4e
-	sbc d ; $5e4f
-	ld h, a ; $5e50
-	bit 7, h ; $5e51
-	jr z, .positive ; $5e53
-	xor a ; $5e55
-	sub l ; $5e56
-	ld l, a ; $5e57
-	sbc a ; $5e58
-	sub h ; $5e59
-	ld h, a ; $5e5a
-.positive:
-	ld de, $ffa0 ; $5e5b
-	add hl, de ; $5e5e
-	jr c, .returnZero ; $5e5f
-	ld hl, wMinigameSceneActor + 8 ; $5e61
-	ld a, [hl+] ; $5e64
-	ld d, [hl] ; $5e65
-	ld e, a ; $5e66
-	ld hl, wBallDepth ; $5e67
-	ld a, [hl+] ; $5e6a
-	ld h, [hl] ; $5e6b
-	ld l, a ; $5e6c
-	ld a, l ; $5e6d
-	sub e ; $5e6e
-	ld l, a ; $5e6f
-	ld a, h ; $5e70
-	sbc d ; $5e71
-	ld h, a ; $5e72
-	bit 7, h ; $5e73
-	jr z, .positive2 ; $5e75
-	xor a ; $5e77
-	sub l ; $5e78
-	ld l, a ; $5e79
-	sbc a ; $5e7a
-	sub h ; $5e7b
-	ld h, a ; $5e7c
-.positive2:
-	ld de, $ff80 ; $5e7d
-	add hl, de ; $5e80
-	jr c, .returnZero ; $5e81
-	ld hl, wBallHeight ; $5e83
-	ld a, [hl+] ; $5e86
-	ld h, [hl] ; $5e87
-	ld l, a ; $5e88
-	bit 7, h ; $5e89
-	jr z, .positive3 ; $5e8b
-	xor a ; $5e8d
-	sub l ; $5e8e
-	ld l, a ; $5e8f
-	sbc a ; $5e90
-	sub h ; $5e91
-	ld h, a ; $5e92
-.positive3:
-	ld de, $ff40 ; $5e93
-	add hl, de ; $5e96
-	jr c, .returnZero ; $5e97
-	ld a, $01 ; $5e99
-	ret ; $5e9b
-.returnZero:
-	xor a ; $5e9c
-	ret ; $5e9d
+	twin_named is_ball_in_medallion_match_hit_zone, IsBallInMedallionMatchHitZone ; $5e37
 AwardMedallionMatchHitScore:
 	ld a, $10 ; $5e9e
 	ld [wMinigameSceneActor + 3], a ; $5ea0
@@ -410,21 +320,7 @@ DrawMedallionMatchHitCountdown:
 	call QueueMinigameHitBurstFirstTwo ; $5f1b
 	ret ; $5f1e
 ; Instruction-identical to ProjectTreasureBoxWorldPosition (in this bank); a change here belongs in every copy.
-ProjectMedallionMatchWorldPosition:
-	ld hl, wMinigameSceneActor + 10 ; $5f1f
-	ld a, [hl+] ; $5f22
-	ld e, a ; $5f23
-	ld a, [hl+] ; $5f24
-	ld d, a ; $5f25
-	ld a, [hl+] ; $5f26
-	ld c, a ; $5f27
-	ld a, [hl+] ; $5f28
-	ld b, a ; $5f29
-	ld l, e ; $5f2a
-	ld h, d ; $5f2b
-	farcall ApplyCameraProjection ; $5f2c
-	ld b, $0f ; $5f2f
-	ret ; $5f31
+	twin_named project_medallion_match_world_position, ProjectMedallionMatchWorldPosition ; $5f1f
 MinigameConfig_FruitFantasy:
 	; $5f32, 16 bytes (bytes:16)
 	db $00, $16, $01, $08, $20, $13, $00, $1c, $61, $5f, $b4, $40, $42, $5f, $00, $00 ; 0x00

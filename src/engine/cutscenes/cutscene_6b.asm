@@ -179,22 +179,7 @@ IntroCutsceneState19Exit_6b:
 	call WaitFadeEnd ; $4c73
 	jp DispatchCutsceneStateInit.loop2 ; $4c76
 ; Instruction-identical to IntroCutsceneState00Update_6b (in this bank); a change here belongs in every copy.
-IntroCutsceneState19Update_6b:
-	ld a, [wCutsceneStepTimer] ; $4c79
-	inc a ; $4c7c
-	ld [wCutsceneStepTimer], a ; $4c7d
-	cp $80 ; $4c80
-	jp z, DispatchCutsceneStateInit.loopB ; $4c82
-	cp $64 ; $4c85
-	jr nc, .updateCutsceneScrollY ; $4c87
-	call AdvanceSpriteAnimTimer ; $4c89
-.updateCutsceneScrollY:
-	call UpdateCutsceneScrollY ; $4c8c
-	call UpdateCutsceneScrollX ; $4c8f
-	call SetCameraYFromScrollPos ; $4c92
-	call QueueScrollingSprite ; $4c95
-	call QueueCutsceneAnimatedSprites ; $4c98
-	jp DispatchCutsceneStateInit.loop ; $4c9b
+	twin_named intro_cutscene_state00_update, IntroCutsceneState19Update_6b ; $4c79
 UpdateCutsceneScrollX:
 	ld a, [wCutsceneStepTimer] ; $4c9e
 	ld hl, CutsceneScrollXTable ; $4ca1

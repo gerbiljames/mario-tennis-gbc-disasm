@@ -436,22 +436,7 @@ RestaurantEntryPoints_10:
 	map_entry $02, FACE_DOWN, $0500, $1700, MapArrivalWalkPair_10
 	db $ff
 ; Instruction-identical to AcademyMainBldgArrival01_10, MapArrivalWalk_11, DormEntranceArrival01_12 and RestaurantPlazaArrival04_13 (one copy per bank); a change here belongs in every copy.
-RestaurantArrival01_10:
-	ld a, [wStoryModeEntryPoint] ; $5b97
-	cp STORYENTRY_NONE ; $5b9a
-	jp z, .done ; $5b9c
-	test_flag FLAG_DOUBLES ; $5b9f
-	jr z, .walkOff ; $5ba2
-	script_set_speed ACTOR_PARTNER, $00ff ; $5ba4
-	script_move_angle ACTOR_PARTNER, FACE_DOWN, $0200 ; $5bac
-	script_wait_move ACTOR_PARTNER ; $5bb6
-	script_face ACTOR_PARTNER, FACE_UP ; $5bbb
-	script_set_speed ACTOR_PARTNER, $0010 ; $5bc2
-.walkOff:
-	script_set_speed ACTOR_PLAYER, $0010 ; $5bca
-	script_move_angle ACTOR_PLAYER, FACE_UP, $0200 ; $5bd2
-.done:
-	ret ; $5bdc
+	twin_named academy_main_bldg_arrival01, RestaurantArrival01_10 ; $5b97
 RestaurantExitTriggers_10:
 	; $5bdd, 17 bytes (map_scripts:exit)
 	map_script $01, FACEMASK_ANY, $0000, RestaurantExit01_10, STORYLOC_RESTAURANT_PLAZA, $02

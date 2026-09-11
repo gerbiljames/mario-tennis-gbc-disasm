@@ -22,55 +22,7 @@ UpdateAnimatedTilesTask_38:
 	farcall UpdateAnimatedTiles ; $4408
 	ret ; $440b
 ; Instruction-identical to DrawNameWithDiacritics_3b (one copy per bank); a change here belongs in every copy.
-DrawNameWithDiacritics_38:
-	push af ; $440c
-	push bc ; $440d
-.charLoop:
-	ld a, [hl] ; $440e
-	cp $00 ; $440f
-	jr z, .done ; $4411
-	ld [de], a ; $4413
-	inc hl ; $4414
-	ld a, [hl] ; $4415
-	cp $de ; $4416
-	jr z, .markChar ; $4418
-	cp $df ; $441a
-	jr nz, .nextCell ; $441c
-.markChar:
-	push hl ; $441e
-	push bc ; $441f
-	ld h, d ; $4420
-	ld l, e ; $4421
-	ld bc, $ffe0 ; $4422
-	add hl, bc ; $4425
-	ld b, a ; $4426
-	ld a, [hl] ; $4427
-	cp $03 ; $4428
-	ld a, b ; $442a
-	jr nz, .writeMark ; $442b
-	sub $d0 ; $442d
-.writeMark:
-	ld [hl], a ; $442f
-	pop bc ; $4430
-	pop hl ; $4431
-	inc hl ; $4432
-.nextCell:
-	inc de ; $4433
-	ld a, e ; $4434
-	and $1f ; $4435
-	jr nz, .charLoop ; $4437
-	push hl ; $4439
-	ld h, d ; $443a
-	ld l, e ; $443b
-	add hl, de ; $443c
-	ld d, h ; $443d
-	ld e, l ; $443e
-	pop hl ; $443f
-	jr .charLoop ; $4440
-.done:
-	pop bc ; $4442
-	pop af ; $4443
-	ret ; $4444
+	twin draw_name_with_diacritics_38, 38 ; $440c DrawNameWithDiacritics_38
 DrawDecimalNumber:
 	push af ; $4445
 	push bc ; $4446

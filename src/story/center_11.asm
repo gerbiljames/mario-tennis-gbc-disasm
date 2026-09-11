@@ -227,22 +227,7 @@ CenterCourtSceneVariantActors_11:
 	map_actor $0000, ActorScript_11_45, $2700, $1d00, FACE_LEFT, $6a, $01, $04
 	map_actor_end
 ; Instruction-identical to AcademyMainBldgArrival01_10, RestaurantArrival01_10, DormEntranceArrival01_12 and RestaurantPlazaArrival04_13 (one copy per bank); a change here belongs in every copy.
-MapArrivalWalk_11:
-	ld a, [wStoryModeEntryPoint] ; $42fd
-	cp STORYENTRY_NONE ; $4300
-	jp z, .done ; $4302
-	test_flag FLAG_DOUBLES ; $4305
-	jr z, .walkOff ; $4308
-	script_set_speed ACTOR_PARTNER, $00ff ; $430a
-	script_move_angle ACTOR_PARTNER, FACE_DOWN, $0200 ; $4312
-	script_wait_move ACTOR_PARTNER ; $431c
-	script_face ACTOR_PARTNER, FACE_UP ; $4321
-	script_set_speed ACTOR_PARTNER, $0010 ; $4328
-.walkOff:
-	script_set_speed ACTOR_PLAYER, $0010 ; $4330
-	script_move_angle ACTOR_PLAYER, FACE_UP, $0200 ; $4338
-.done:
-	ret ; $4342
+	twin_named academy_main_bldg_arrival01, MapArrivalWalk_11 ; $42fd
 SetPlayerAndPartnerObjectDefs_11:
 	test_flag FLAG_DOUBLES ; $4343
 	jp z, .notDoubles ; $4346
@@ -338,22 +323,7 @@ AcademyArrivalEntryPoints_11:
 	map_entry $0f, FACE_UP, $1800, $2f00, $0000
 	db $ff
 ; Instruction-identical to AcademyMainBldgArrival02_10 and DormEntranceArrival02_12 (one copy per bank); a change here belongs in every copy.
-AcademyArrivalArrival01_11:
-	ld a, [wStoryModeEntryPoint] ; $4536
-	cp STORYENTRY_NONE ; $4539
-	jp z, .done ; $453b
-	test_flag FLAG_DOUBLES ; $453e
-	jr z, .walkOff ; $4541
-	script_set_speed ACTOR_PARTNER, $00ff ; $4543
-	script_move_angle ACTOR_PARTNER, FACE_UP, $0200 ; $454b
-	script_wait_move ACTOR_PARTNER ; $4555
-	script_face ACTOR_PARTNER, FACE_DOWN ; $455a
-	script_set_speed ACTOR_PARTNER, $0010 ; $4561
-.walkOff:
-	script_set_speed ACTOR_PLAYER, $0010 ; $4569
-	script_move_angle ACTOR_PLAYER, FACE_DOWN, $0200 ; $4571
-.done:
-	ret ; $457b
+	twin_named academy_main_bldg_arrival02, AcademyArrivalArrival01_11 ; $4536
 AcademyArrivalExitTriggers_11:
 	; $457c, 33 bytes (map_scripts:exit)
 	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_11, STORYLOC_ACADEMY_MAIN_BLDG, $01

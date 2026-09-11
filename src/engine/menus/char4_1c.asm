@@ -1,18 +1,5 @@
 ; Instruction-identical to DrawConfirmSelectionCursor_1a and DrawConfirmSelectionCursor_1d (one copy per bank); a change here belongs in every copy.
-DrawConfirmSelectionCursor_1c:
-	wram_bank $06 ; $53a3
-	ld a, [wCharDataConfirmState] ; $53a9
-	or a ; $53ac
-	jr nz, .nonZero ; $53ad
-	lb bc, $0f, $d4 ; $53af attr, tile
-	lb de, $7a, $0c ; $53b2 x, y
-	call QueueSprite ; $53b5
-	ret ; $53b8
-.nonZero:
-	lb bc, $0f, $d4 ; $53b9 attr, tile
-	lb de, $7a, $14 ; $53bc x, y
-	call QueueSprite ; $53bf
-	ret ; $53c2
+	twin draw_confirm_selection_cursor, 1c ; $53a3 DrawConfirmSelectionCursor_1c
 MoveCharDataScreenSelection:
 	wram_bank $06 ; $53c3
 	ld a, [wCharDataPage] ; $53c9

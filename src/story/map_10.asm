@@ -1,25 +1,5 @@
 ; Instruction-identical to ReadSceneTilemapTile_0f (one copy per bank); a change here belongs in every copy.
-ReadSceneTilemapTile_10:
-	wram_bank $02 ; $7ac8
-	ld h, e ; $7ace
-	ld l, $00 ; $7acf
-	srl h ; $7ad1
-	rr l ; $7ad3
-	srl h ; $7ad5
-	rr l ; $7ad7
-	ld a, d ; $7ad9
-	add l ; $7ada
-	ld l, a ; $7adb
-	jr nc, .read ; $7adc
-	inc h ; $7ade
-.read:
-	ld d, h ; $7adf
-	ld e, l ; $7ae0
-	ld l, c ; $7ae1
-	ld h, b ; $7ae2
-	add hl, de ; $7ae3
-	ld a, [hl] ; $7ae4
-	ret ; $7ae5
+	twin read_scene_tilemap_tile, 10 ; $7ac8 ReadSceneTilemapTile_10
 MapExitWalkCurveRight_10:
 	script_set_speed ACTOR_PLAYER, $0010 ; $7ae6
 	script_set_speed ACTOR_PARTNER, $0010 ; $7aee

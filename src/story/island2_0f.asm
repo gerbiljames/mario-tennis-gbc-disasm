@@ -444,19 +444,7 @@ IslandOpenRoundScriptsSingles_0f:
 	map_script $05, FACEMASK_ANY, $0000, IslandOpenRoundSinglesNpc05_0f, $03, $00
 	db $ff
 ; Instruction-identical to IslandOpenRoundDoublesNpc04_0f (in this bank); a change here belongs in every copy.
-IslandOpenRoundSinglesNpc04_0f:
-	script_set_text Text_25_73 ; $762e
-	ld a, [wMapSceneStage] ; $7634
-	dec a ; $7637
-	ld hl, $2862 ; $7638
-	add l ; $763b
-	ld l, a ; $763c
-	jr nc, .queue ; $763d
-	inc h ; $763f
-.queue:
-	call QueueShortText ; $7640
-	script_speak $04 ; $7643
-	ret ; $7648
+	twin_named island_open_round_doubles_npc04, IslandOpenRoundSinglesNpc04_0f ; $762e
 IslandOpenRoundSinglesNpc03_0f:
 	ld a, [wMapSceneStage] ; $7649
 	add a ; $764c
@@ -625,19 +613,7 @@ IslandOpenRoundScriptsDoubles_0f:
 	map_script $04, FACEMASK_ANY, $0000, IslandOpenRoundDoublesNpc04_0f, $03, $00
 	db $ff
 ; Instruction-identical to IslandOpenRoundSinglesNpc04_0f (in this bank); a change here belongs in every copy.
-IslandOpenRoundDoublesNpc04_0f:
-	script_set_text Text_25_73 ; $78b1
-	ld a, [wMapSceneStage] ; $78b7
-	dec a ; $78ba
-	ld hl, $2862 ; $78bb
-	add l ; $78be
-	ld l, a ; $78bf
-	jr nc, .queue ; $78c0
-	inc h ; $78c2
-.queue:
-	call QueueShortText ; $78c3
-	script_speak $04 ; $78c6
-	ret ; $78cb
+	twin_named island_open_round_doubles_npc04, IslandOpenRoundDoublesNpc04_0f ; $78b1
 IslandOpenRoundDoublesNpc03_0f:
 	ld a, [wMapSceneStage] ; $78cc
 	dec a ; $78cf

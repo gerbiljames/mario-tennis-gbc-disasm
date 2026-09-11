@@ -193,20 +193,7 @@ PromptCharDataConfirm:
 	ld a, [wCharDataConfirmState] ; $5af6
 	ret ; $5af9
 ; Instruction-identical to DrawConfirmSelectionCursor_1a and DrawConfirmSelectionCursor_1c (one copy per bank); a change here belongs in every copy.
-DrawConfirmSelectionCursor_1d:
-	wram_bank $06 ; $5afa
-	ld a, [wCharDataConfirmState] ; $5b00
-	or a ; $5b03
-	jr nz, .nonZero ; $5b04
-	lb bc, $0f, $d4 ; $5b06 attr, tile
-	lb de, $7a, $0c ; $5b09 x, y
-	call QueueSprite ; $5b0c
-	ret ; $5b0f
-.nonZero:
-	lb bc, $0f, $d4 ; $5b10 attr, tile
-	lb de, $7a, $14 ; $5b13 x, y
-	call QueueSprite ; $5b16
-	ret ; $5b19
+	twin draw_confirm_selection_cursor, 1d ; $5afa DrawConfirmSelectionCursor_1d
 BuildCharDataConfirmScreen:
 	push af ; $5b1a
 	farcall CharDataScreen_LoadScreen ; $5b1b

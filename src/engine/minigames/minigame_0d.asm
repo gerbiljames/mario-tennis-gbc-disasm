@@ -2,73 +2,7 @@
 	farptr GetDefaultMinigameRecordValue ; $4002
 	farptr ShowMinigamePointResult ; $4004
 ; Instruction-identical to StartDrillFromDefinition (one copy per bank); a change here belongs in every copy.
-InitMinigameFromConfig:
-	ld hl, $0000 ; $4006
-	add hl, bc ; $4009
-	ld a, [hl] ; $400a
-	ld [wMatchOpponentChar], a ; $400b
-	ld hl, $0001 ; $400e
-	add hl, bc ; $4011
-	ld a, [hl] ; $4012
-	ld [wCurrentlyUsedCourt], a ; $4013
-	ld hl, $0002 ; $4016
-	add hl, bc ; $4019
-	ld a, [hl] ; $401a
-	ld [wOnCourtCharCount], a ; $401b
-	ld hl, $0003 ; $401e
-	add hl, bc ; $4021
-	ld a, [hl] ; $4022
-	ld [wGameMode], a ; $4023
-	ld a, MATCHLIST_TRAINING ; $4026
-	ld [wCurrentMinigameStoryMatch], a ; $4028
-	ld hl, $0004 ; $402b
-	add hl, bc ; $402e
-	ld a, [hl] ; $402f
-	ld [wCurrentMinigameStoryMatch + 1], a ; $4030
-	ld hl, $0005 ; $4033
-	add hl, bc ; $4036
-	ld a, [hl] ; $4037
-	ld [wMatchBGM], a ; $4038
-	push bc ; $403b
-	ld hl, $0007 ; $403c
-	add hl, bc ; $403f
-	ld b, [hl] ; $4040
-	ld c, $00 ; $4041
-	farcall InitCa00RecordFromCharId ; $4043
-	ld a, [wStoryModeMainCharacterOverworldSprite] ; $4046
-	ld [wMatchPlayerChar], a ; $4049
-	ld a, [wMatchOpponentChar] ; $404c
-	cp CHAR_NONE ; $404f
-	jr z, .restore ; $4051
-	ld b, a ; $4053
-	ld c, $02 ; $4054
-	farcall InitCa00RecordFromCharId ; $4056
-.restore:
-	pop bc ; $4059
-	ld hl, $0008 ; $405a
-	add hl, bc ; $405d
-	ld a, [hl+] ; $405e
-	ld d, [hl] ; $405f
-	ld e, a ; $4060
-	ldh a, [hRomBank] ; $4061
-	farcall SetModeHookTable ; $4063
-	ld hl, $000a ; $4066
-	add hl, bc ; $4069
-	ld a, [hl+] ; $406a
-	ld d, [hl] ; $406b
-	ld e, a ; $406c
-	farcall SetMinigamePointTable ; $406d
-	ld hl, $000c ; $4070
-	add hl, bc ; $4073
-	ld a, [hl+] ; $4074
-	ld h, [hl] ; $4075
-	ld l, a ; $4076
-	ld a, h ; $4077
-	or l ; $4078
-	jr z, .done ; $4079
-	call JumpToHL ; $407b
-.done:
-	ret ; $407e
+	twin_named start_drill_from_definition, InitMinigameFromConfig ; $4006
 StartMinigameByID:
 	sub MINIGAME_TENNIS_MACHINE_1 ; $407f
 	ld l, a ; $4081

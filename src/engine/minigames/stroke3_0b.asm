@@ -25,47 +25,7 @@ StrokePractice1Hook_PointEnd:
 	ld [wPointWinLoseFlag], a ; $6bfd
 	ret ; $6c00
 ; Instruction-identical to StrokePractice3EvaluateResult (in this bank); a change here belongs in every copy.
-StrokePractice1EvaluateResult:
-	ld a, [wDrillCounters + 2] ; $6c01
-	cp $04 ; $6c04
-	jr nz, .ne04 ; $6c06
-	xor a ; $6c08
-	ld [wDrillLessonResult], a ; $6c09
-	ld a, $01 ; $6c0c
-	ret ; $6c0e
-.ne04:
-	ld a, [wDrillCounters + 1] ; $6c0f
-	cp $04 ; $6c12
-	jr c, .compare ; $6c14
-	ld a, $01 ; $6c16
-	ld [wDrillLessonResult], a ; $6c18
-	jr .notFound ; $6c1b
-.compare:
-	cp $02 ; $6c1d
-	jr c, .lt02 ; $6c1f
-	ld a, $02 ; $6c21
-	ld [wDrillLessonResult], a ; $6c23
-	jr .notFound ; $6c26
-.lt02:
-	ld a, [wDrillCounters + 2] ; $6c28
-	or a ; $6c2b
-	jr nz, .compare2 ; $6c2c
-	ld a, $03 ; $6c2e
-	ld [wDrillLessonResult], a ; $6c30
-	jr .notFound ; $6c33
-.compare2:
-	cp $03 ; $6c35
-	jr nz, .ne03 ; $6c37
-	ld a, $05 ; $6c39
-	ld [wDrillLessonResult], a ; $6c3b
-	jr .notFound ; $6c3e
-.ne03:
-	ld a, $04 ; $6c40
-	ld [wDrillLessonResult], a ; $6c42
-	jr .notFound ; $6c45
-.notFound:
-	ld a, $ff ; $6c47
-	ret ; $6c49
+	twin_named stroke_practice1_evaluate_result, StrokePractice1EvaluateResult ; $6c01
 StrokePractice1Hook_RallyTick:
 	call StrokePractice1JudgeOnRallyTick ; $6c4a
 	ret ; $6c4d
@@ -99,38 +59,7 @@ StrokePractice1Table:
 	dw $04e0 ; record 15
 	dw $ffff ; record 16
 ; Instruction-identical to StrokePractice3HandlePointEnd (in this bank); a change here belongs in every copy.
-StrokePractice1HandlePointEnd:
-	farcall UpdateScorePanelDisplay ; $6c81
-	ld a, [wDrillPointJudgement] ; $6c84
-	ld [wPointWinLoseFlag], a ; $6c87
-	cp $01 ; $6c8a
-	jr nz, .recordDrillPointResultBits ; $6c8c
-	ld hl, wDrillCounters + 2 ; $6c8e
-	inc [hl] ; $6c91
-.recordDrillPointResultBits:
-	call RecordDrillPointResultBits ; $6c92
-	call ShowQueuedDrillMessage ; $6c95
-	farcall UpdatePointStats ; $6c98
-	farcall AwardPoint ; $6c9b
-	ld a, [wDrillCounters + 2] ; $6c9e
-	ld [wPlayer1PointsWon], a ; $6ca1
-	xor a ; $6ca4
-	ld [wPlayer2PointsWon], a ; $6ca5
-	ld a, [wPlayer1PointsWon] ; $6ca8
-	ld b, $01 ; $6cab
-	farcall LoadPlayer1PointsDigitGfx ; $6cad
-	ld a, [wPlayer2PointsWon] ; $6cb0
-	ld b, $01 ; $6cb3
-	farcall LoadPlayer2PointsDigitGfx ; $6cb5
-	farcall StepMatchFrame ; $6cb8
-	ld a, $01 ; $6cbb
-	ld hl, SyncPointWinLoseFlagTask ; $6cbd
-	call RegisterFrameTask ; $6cc0
-	farcall StartPointEndReactions ; $6cc3
-	ld hl, SyncPointWinLoseFlagTask ; $6cc6
-	call UnregisterFrameTask ; $6cc9
-	call PlayDrillPointEndSequence ; $6ccc
-	ret ; $6ccf
+	twin_named stroke_practice1_handle_point_end, StrokePractice1HandlePointEnd ; $6c81
 StrokePractice1JudgeOnPointEnd:
 	ld a, $00 ; $6cd0
 	call StrokePractice1JudgePoint ; $6cd2
@@ -240,40 +169,7 @@ StrokePractice1Cases1SignedTable:
 	; $6d69, 10 bytes (bytes:10)
 	db $ff, $ff, $ff, $ff, $59, $59, $57, $5d, $5d, $57 ; 0x00
 ; Instruction-identical to StrokePractice3Cases2 (in this bank); a change here belongs in every copy.
-StrokePractice1Cases2:
-	xor a ; $6d73
-	ret ; $6d74
-.checkBallBounceCount:
-	ld a, [wBallBounceCount] ; $6d75
-	cp $01 ; $6d78
-	ld a, $00 ; $6d7a
-	ret nz ; $6d7c
-	ld a, $57 ; $6d7d
-	ld b, $00 ; $6d7f
-	call QueueDrillResultMessage ; $6d81
-	call RecordDrillTargetZoneHit ; $6d84
-	call CheckDrillTargetZoneMissed ; $6d87
-	or a ; $6d8a
-	jp nz, .nonZero ; $6d8b
-	ld a, $5a ; $6d8e
-	ld b, $00 ; $6d90
-	call QueueDrillResultMessage ; $6d92
-	ld hl, wDrillCounters + 3 ; $6d95
-	inc [hl] ; $6d98
-	jp .storeMatchAbortFlag ; $6d99
-.storeMatchAbortFlag2:
-	xor a ; $6d9c
-	ret ; $6d9d
-.nonZero:
-	ld a, MATCHABORT_POINT ; $6d9e
-	ld [wMatchAbortFlag], a ; $6da0
-	ld a, $01 ; $6da3
-	ret ; $6da5
-.storeMatchAbortFlag:
-	ld a, MATCHABORT_POINT ; $6da6
-	ld [wMatchAbortFlag], a ; $6da8
-	ld a, $ff ; $6dab
-	ret ; $6dad
+	twin_named stroke_practice1_cases2, StrokePractice1Cases2 ; $6d73
 StrokePractice2Drill:
 	; $6dae, 16 bytes (drill_definition)
 	db $47, $09, $02, $05, $10, $25, $00, $80 ; opponent, court, chars, mode, story, bgm, -, player
@@ -683,47 +579,7 @@ StrokePractice3Hook_PointEnd:
 	ld [wPointWinLoseFlag], a ; $70a1
 	ret ; $70a4
 ; Instruction-identical to StrokePractice1EvaluateResult (in this bank); a change here belongs in every copy.
-StrokePractice3EvaluateResult:
-	ld a, [wDrillCounters + 2] ; $70a5
-	cp $04 ; $70a8
-	jr nz, .ne04 ; $70aa
-	xor a ; $70ac
-	ld [wDrillLessonResult], a ; $70ad
-	ld a, $01 ; $70b0
-	ret ; $70b2
-.ne04:
-	ld a, [wDrillCounters + 1] ; $70b3
-	cp $04 ; $70b6
-	jr c, .compare ; $70b8
-	ld a, $01 ; $70ba
-	ld [wDrillLessonResult], a ; $70bc
-	jr .notFound ; $70bf
-.compare:
-	cp $02 ; $70c1
-	jr c, .lt02 ; $70c3
-	ld a, $02 ; $70c5
-	ld [wDrillLessonResult], a ; $70c7
-	jr .notFound ; $70ca
-.lt02:
-	ld a, [wDrillCounters + 2] ; $70cc
-	or a ; $70cf
-	jr nz, .compare2 ; $70d0
-	ld a, $03 ; $70d2
-	ld [wDrillLessonResult], a ; $70d4
-	jr .notFound ; $70d7
-.compare2:
-	cp $03 ; $70d9
-	jr nz, .ne03 ; $70db
-	ld a, $05 ; $70dd
-	ld [wDrillLessonResult], a ; $70df
-	jr .notFound ; $70e2
-.ne03:
-	ld a, $04 ; $70e4
-	ld [wDrillLessonResult], a ; $70e6
-	jr .notFound ; $70e9
-.notFound:
-	ld a, $ff ; $70eb
-	ret ; $70ed
+	twin_named stroke_practice1_evaluate_result, StrokePractice3EvaluateResult ; $70a5
 StrokePractice3Hook_RallyTick:
 	call StrokePractice3JudgeOnRallyTick ; $70ee
 	ld a, [wRallyLength] ; $70f1
@@ -753,38 +609,7 @@ StrokePractice3PointStartDrillPositions:
 	dw $01b0, $04e0 ; record 7
 	db $ff, $ff
 ; Instruction-identical to StrokePractice1HandlePointEnd (in this bank); a change here belongs in every copy.
-StrokePractice3HandlePointEnd:
-	farcall UpdateScorePanelDisplay ; $712b
-	ld a, [wDrillPointJudgement] ; $712e
-	ld [wPointWinLoseFlag], a ; $7131
-	cp $01 ; $7134
-	jr nz, .recordDrillPointResultBits ; $7136
-	ld hl, wDrillCounters + 2 ; $7138
-	inc [hl] ; $713b
-.recordDrillPointResultBits:
-	call RecordDrillPointResultBits ; $713c
-	call ShowQueuedDrillMessage ; $713f
-	farcall UpdatePointStats ; $7142
-	farcall AwardPoint ; $7145
-	ld a, [wDrillCounters + 2] ; $7148
-	ld [wPlayer1PointsWon], a ; $714b
-	xor a ; $714e
-	ld [wPlayer2PointsWon], a ; $714f
-	ld a, [wPlayer1PointsWon] ; $7152
-	ld b, $01 ; $7155
-	farcall LoadPlayer1PointsDigitGfx ; $7157
-	ld a, [wPlayer2PointsWon] ; $715a
-	ld b, $01 ; $715d
-	farcall LoadPlayer2PointsDigitGfx ; $715f
-	farcall StepMatchFrame ; $7162
-	ld a, $01 ; $7165
-	ld hl, SyncPointWinLoseFlagTask ; $7167
-	call RegisterFrameTask ; $716a
-	farcall StartPointEndReactions ; $716d
-	ld hl, SyncPointWinLoseFlagTask ; $7170
-	call UnregisterFrameTask ; $7173
-	call PlayDrillPointEndSequence ; $7176
-	ret ; $7179
+	twin_named stroke_practice1_handle_point_end, StrokePractice3HandlePointEnd ; $712b
 StrokePractice3JudgeOnPointEnd:
 	ld a, $00 ; $717a
 	call StrokePractice3JudgePoint ; $717c
@@ -891,40 +716,7 @@ StrokePractice3Cases1DrillShotTable:
 	; $7213, 10 bytes (bytes:10)
 	db $ff, $ff, $ff, $ff, $59, $59, $57, $5d, $5d, $57 ; 0x00
 ; Instruction-identical to StrokePractice1Cases2 (in this bank); a change here belongs in every copy.
-StrokePractice3Cases2:
-	xor a ; $721d
-	ret ; $721e
-.checkBallBounceCount:
-	ld a, [wBallBounceCount] ; $721f
-	cp $01 ; $7222
-	ld a, $00 ; $7224
-	ret nz ; $7226
-	ld a, $57 ; $7227
-	ld b, $00 ; $7229
-	call QueueDrillResultMessage ; $722b
-	call RecordDrillTargetZoneHit ; $722e
-	call CheckDrillTargetZoneMissed ; $7231
-	or a ; $7234
-	jp nz, .nonZero ; $7235
-	ld a, $5a ; $7238
-	ld b, $00 ; $723a
-	call QueueDrillResultMessage ; $723c
-	ld hl, wDrillCounters + 3 ; $723f
-	inc [hl] ; $7242
-	jp .storeMatchAbortFlag ; $7243
-.storeMatchAbortFlag2:
-	xor a ; $7246
-	ret ; $7247
-.nonZero:
-	ld a, MATCHABORT_POINT ; $7248
-	ld [wMatchAbortFlag], a ; $724a
-	ld a, $01 ; $724d
-	ret ; $724f
-.storeMatchAbortFlag:
-	ld a, MATCHABORT_POINT ; $7250
-	ld [wMatchAbortFlag], a ; $7252
-	ld a, $ff ; $7255
-	ret ; $7257
+	twin_named stroke_practice1_cases2, StrokePractice3Cases2 ; $721d
 RunDoublesDrillMatch:
 	xor a ; $7258
 	ld [wMatchContext], a ; $7259

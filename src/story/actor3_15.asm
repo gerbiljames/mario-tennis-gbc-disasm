@@ -335,66 +335,7 @@ ActorScript_15_25:
 	as_anim $03
 	as_jump .Ld
 ; Instruction-identical to ComputeRankingProgressIndex_13 and ComputeRankingProgressIndex_14 (one copy per bank); a change here belongs in every copy.
-ComputeRankingProgressIndex_15:
-	test_flag FLAG_DOUBLES ; $7f59
-	jr nz, .isDoubles ; $7f5c
-	ld a, STORYRANK_SINGLES_ACADEMY ; $7f5e
-	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7f60
-	jr z, .loop ; $7f63
-	ld a, STORYRANK_SINGLES_JUNIOR_CHAMP ; $7f65
-	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $7f67
-	jr z, .loop ; $7f6a
-	ld a, STORYRANK_SINGLES_SENIOR_CHAMP ; $7f6c
-	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $7f6e
-	jr z, .loop ; $7f71
-	ld a, STORYRANK_SINGLES_ISLAND_OPEN ; $7f73
-	test_flag FLAG_STORY_COMPLETE_SINGLES ; $7f75
-	jr z, .loop ; $7f78
-	ld a, STORYRANK_SINGLES_COMPLETE ; $7f7a
-.loop:
-	ld [wMapSceneStage], a ; $7f7c
-	ret ; $7f7f
-.isDoubles:
-	ld a, STORYRANK_DOUBLES_ACADEMY ; $7f80
-	test_flag FLAG_WON_JUNIOR_DOUBLES_RANK_1 ; $7f82
-	jr z, .loop ; $7f85
-	ld a, STORYRANK_DOUBLES_JUNIOR_CHAMP ; $7f87
-	test_flag FLAG_WON_SENIOR_DOUBLES_RANK_1 ; $7f89
-	jr z, .loop ; $7f8c
-	ld a, STORYRANK_DOUBLES_SENIOR_CHAMP ; $7f8e
-	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $7f90
-	jr z, .loop ; $7f93
-	ld a, STORYRANK_DOUBLES_ISLAND_OPEN ; $7f95
-	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $7f97
-	jr z, .loop ; $7f9a
-	ld a, STORYRANK_DOUBLES_COMPLETE ; $7f9c
-	jr .loop ; $7f9e
+	twin compute_ranking_progress_index_13, 15 ; $7f59 ComputeRankingProgressIndex_15
 ; Instruction-identical to ComputeStoryRankTier_13 (one copy per bank); a change here belongs in every copy.
-ComputeStoryRankTier_15:
-	ld a, $00 ; $7fa0
-	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7fa2
-	jr z, .loop ; $7fa5
-	inc a ; $7fa7
-	test_flag FLAG_WON_SENIOR_SINGLES_RANK_1 ; $7fa8
-	jr z, .loop ; $7fab
-	inc a ; $7fad
-	test_flag FLAG_DOUBLES ; $7fae
-	jr nz, .checkFlag ; $7fb1
-	test_flag FLAG_REACHED_ISLAND_OPEN_SINGLES ; $7fb3
-	jr z, .loop ; $7fb6
-	inc a ; $7fb8
-	test_flag FLAG_STORY_COMPLETE_SINGLES ; $7fb9
-	jr z, .loop ; $7fbc
-	inc a ; $7fbe
-.loop:
-	ld [wMapSceneStage], a ; $7fbf
-	ret ; $7fc2
-.checkFlag:
-	test_flag FLAG_REACHED_ISLAND_OPEN_DOUBLES ; $7fc3
-	jr z, .loop ; $7fc6
-	inc a ; $7fc8
-	test_flag FLAG_STORY_COMPLETE_DOUBLES ; $7fc9
-	jr z, .loop ; $7fcc
-	inc a ; $7fce
-	jr .loop ; $7fcf
+	twin compute_story_rank_tier, 15 ; $7fa0 ComputeStoryRankTier_15
 	; $7fd1, 47 bytes fill to bank end (linker-padded)

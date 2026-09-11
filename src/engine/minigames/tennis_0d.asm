@@ -67,28 +67,7 @@ GetMinigameCharCoordsEntry:
 	ld h, b ; $4938
 	ret ; $4939
 ; Instruction-identical to SnapCameraTo (one copy per bank); a change here belongs in every copy.
-SnapCameraTo_0d:
-	ld c, l ; $493a
-	ld b, h ; $493b
-	ld hl, wMatchCameraX ; $493c
-	ld a, c ; $493f
-	ld [hl+], a ; $4940
-	ld [hl], b ; $4941
-	ld hl, wMatchCameraTargetX ; $4942
-	ld a, c ; $4945
-	ld [hl+], a ; $4946
-	ld [hl], b ; $4947
-	ld hl, wMatchCameraY ; $4948
-	ld a, e ; $494b
-	ld [hl+], a ; $494c
-	ld [hl], d ; $494d
-	ld hl, wMatchCameraTargetY ; $494e
-	ld a, e ; $4951
-	ld [hl+], a ; $4952
-	ld [hl], d ; $4953
-	xor a ; $4954
-	ld [wCameraFollowBall], a ; $4955
-	ret ; $4958
+	twin_named snap_camera_to, SnapCameraTo_0d ; $493a
 MinigameConfig_TennisMachine2:
 	; $4959, 16 bytes (bytes:16)
 	db $15, $0a, $02, $06, $13, $1e, $00, $80, $74, $49, $bd, $40, $69, $49, $00, $00 ; 0x00
@@ -243,19 +222,7 @@ TennisMachine4Hook_PerFrame:
 	call DrawMinigameScoreHud ; $4a47
 	ret ; $4a4a
 ; Instruction-identical to TennisMachineHighScoreHook_PointStart (in this bank); a change here belongs in every copy.
-TennisMachine4Hook_PointStart:
-	farcall AdvanceMatchRng ; $4a4b
-	and $07 ; $4a4e
-	inc a ; $4a50
-	ld hl, wMinigameServeSlot ; $4a51
-	add [hl] ; $4a54
-	cp $09 ; $4a55
-	jr c, .store ; $4a57
-	sub $09 ; $4a59
-.store:
-	ld [hl], a ; $4a5b
-	call LaunchMinigameServe ; $4a5c
-	ret ; $4a5f
+	twin_named tennis_machine4_hook__point_start, TennisMachine4Hook_PointStart ; $4a4b
 TennisMachine4Hook_PointEnd:
 	call AwardMinigamePointAndEnd ; $4a60
 	ret ; $4a63

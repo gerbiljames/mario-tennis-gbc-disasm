@@ -111,6 +111,21 @@ blob.
 
 ## Recent changes
 
+* **2026-09-11** — the twin families share one source. 60 families, 271
+  of the 279 instruction-identical live routines, are now one file each
+  under `src/twins/`, assembled into every member bank through
+  `twin file, <bank>` (labels and bank-local references take the bank
+  suffix through `{TWIN}`) or `twin_named file, Label` for identical bodies
+  under different names. The bytes are unchanged; the shared bodies drop
+  the per-instruction address comments and the `twin` line carries the
+  copy's start. Three labels gained the suffix their family used
+  (`FetchTextTable_1f`, `DrawAsciiDigitString_1b`,
+  `SpriteWobbleXTable_17`). Eight copies stay separate: the two
+  `ShotBallPath*` pairs reference different tables under different names,
+  and four Island Open NPC scripts differ only in a text id, which the
+  twins tool had mistaken for a bank suffix (fixed). Also fixed: the split
+  commit had left `src/data/` untracked because `.gitignore`'s `data/`
+  matched it; the pattern is now anchored and the 76 files are in.
 * **2026-09-11** — the source is split by subsystem. Each
   `src/bank_XXX.asm` is now a holder — the `SECTION` line, the
   decoded-length includes, and an ordered `INCLUDE` list — and the

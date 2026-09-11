@@ -586,37 +586,7 @@ MatchFormatSlideIn:
 	jr nz, .loopB ; $5f08
 	ret ; $5f0a
 ; Instruction-identical to CloseMatchRulesPanel (one copy per bank); a change here belongs in every copy.
-MatchFormatSlideOut:
-	ld a, b ; $5f0b
-	or a ; $5f0c
-	jr z, .zero ; $5f0d
-	ld c, $00 ; $5f0f
-.loop:
-	call AdvanceFrame ; $5f11
-	ld b, $03 ; $5f14
-	farcall RestoreMenuBgAndDrawPanel ; $5f16
-	ld b, $00 ; $5f19
-	farcall FlushWram3MapRows ; $5f1b
-	ld a, c ; $5f1e
-	inc a ; $5f1f
-	ld c, a ; $5f20
-	cp $0b ; $5f21
-	jr nz, .loop ; $5f23
-	ret ; $5f25
-.zero:
-	ld c, $0d ; $5f26
-.loopB:
-	call AdvanceFrame ; $5f28
-	ld b, $02 ; $5f2b
-	farcall RestoreMenuBgAndDrawPanel ; $5f2d
-	ld b, $00 ; $5f30
-	farcall FlushWram3MapRows ; $5f32
-	ld a, c ; $5f35
-	dec a ; $5f36
-	ld c, a ; $5f37
-	or a ; $5f38
-	jr nz, .loopB ; $5f39
-	ret ; $5f3b
+	twin_named match_format_slide_out, MatchFormatSlideOut ; $5f0b
 HandleMatchFormatInput:
 	ld a, [wMenuInputPressed] ; $5f3c
 	bit PADB_LEFT, a ; $5f3f
@@ -808,38 +778,7 @@ MatchFormatOptionCellTable:
 	; $6093, 7 bytes (bytes:8)
 	db $0c, $0c, $0e, $0e, $0f, $0f, $0f ; 0x00
 ; Instruction-identical to FlushMatchRuleRowAttrs (one copy per bank); a change here belongs in every copy.
-FlushMatchFormatRowToVram:
-	push af ; $609a
-	push bc ; $609b
-	push de ; $609c
-	push hl ; $609d
-	ld a, b ; $609e
-	or a ; $609f
-	jr nz, .row1 ; $60a0
-	ld hl, wShadowAttrmap + 3 * TILEMAP_WIDTH ; $60a2
-	ld de, vBGMap0 + 3 * TILEMAP_WIDTH + VRAM_BANK1 ; $60a5
-	ld c, $06 ; $60a8
-	call QueueVRAMCopy ; $60aa
-	jr .done ; $60ad
-.row1:
-	cp $01 ; $60af
-	jr nz, .row2 ; $60b1
-	ld hl, wShadowAttrmap + 7 * TILEMAP_WIDTH ; $60b3
-	ld de, vBGMap0 + 7 * TILEMAP_WIDTH + VRAM_BANK1 ; $60b6
-	ld c, $06 ; $60b9
-	call QueueVRAMCopy ; $60bb
-	jr .done ; $60be
-.row2:
-	ld hl, wShadowAttrmap + 11 * TILEMAP_WIDTH ; $60c0
-	ld de, vBGMap0 + 11 * TILEMAP_WIDTH + VRAM_BANK1 ; $60c3
-	ld c, $06 ; $60c6
-	call QueueVRAMCopy ; $60c8
-.done:
-	pop hl ; $60cb
-	pop de ; $60cc
-	pop bc ; $60cd
-	pop af ; $60ce
-	ret ; $60cf
+	twin_named flush_match_format_row_to_vram, FlushMatchFormatRowToVram ; $609a
 MatchFormatCursorSpriteTask:
 	farcall TickMenuBgScroll ; $60d0
 	ld c, $01 ; $60d3

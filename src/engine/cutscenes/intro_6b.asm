@@ -282,22 +282,7 @@ IntroCutsceneState00Exit_6b:
 	ld [wCameraY + 1], a ; $41f4
 	jp DispatchCutsceneStateInit.loop2 ; $41f7
 ; Instruction-identical to IntroCutsceneState19Update_6b (in this bank); a change here belongs in every copy.
-IntroCutsceneState00Update_6b:
-	ld a, [wCutsceneStepTimer] ; $41fa
-	inc a ; $41fd
-	ld [wCutsceneStepTimer], a ; $41fe
-	cp $80 ; $4201
-	jp z, DispatchCutsceneStateInit.loopB ; $4203
-	cp $64 ; $4206
-	jr nc, .updateCutsceneScrollY ; $4208
-	call AdvanceSpriteAnimTimer ; $420a
-.updateCutsceneScrollY:
-	call UpdateCutsceneScrollY ; $420d
-	call UpdateCutsceneScrollX ; $4210
-	call SetCameraYFromScrollPos ; $4213
-	call QueueScrollingSprite ; $4216
-	call QueueCutsceneAnimatedSprites ; $4219
-	jp DispatchCutsceneStateInit.loop ; $421c
+	twin_named intro_cutscene_state00_update, IntroCutsceneState00Update_6b ; $41fa
 IntroCutsceneState01Init_6b:
 	call DisableLCDSafely ; $421f
 	xor a ; $4222

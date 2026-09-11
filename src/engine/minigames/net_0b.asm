@@ -89,31 +89,7 @@ NetGameMatch1HandlePointEnd:
 	call PlayDrillPointEndSequence ; $548d
 	ret ; $5490
 ; Instruction-identical to NetGameMatch2AwardPointToSide, NetGameMatch3AwardPointToSide, ServiceMatch2AwardPointToSide, ServiceMatch3AwardPointToSide, StrokeMatch2AwardPointToSide and StrokeMatch3AwardPointToSide (in this bank); a change here belongs in every copy.
-NetGameMatch1AwardPointToSide:
-	ld a, [wPointWinLoseFlag] ; $5491
-	or a ; $5494
-	ret z ; $5495
-	inc a ; $5496
-	srl a ; $5497
-	ld b, a ; $5499
-	ld a, [wTotalPointsScoredInCurrentGame] ; $549a
-	and $01 ; $549d
-	xor $01 ; $549f
-	add b ; $54a1
-	bit 0, a ; $54a2
-	jr nz, .clearServeFaultFlag ; $54a4
-	ld hl, wPlayer2PointsWon ; $54a6
-	bit 1, a ; $54a9
-	jr z, .bump ; $54ab
-	ld hl, wPlayer1PointsWon ; $54ad
-.bump:
-	inc [hl] ; $54b0
-.clearServeFaultFlag:
-	xor a ; $54b1
-	ld [wServeFaultFlag], a ; $54b2
-	ld hl, wTotalPointsScoredInCurrentGame ; $54b5
-	inc [hl] ; $54b8
-	ret ; $54b9
+	twin_named net_game_match1_award_point_to_side, NetGameMatch1AwardPointToSide ; $5491
 NetGameMatch1DecideWinner:
 	ld a, [wPlayer1PointsWon] ; $54ba
 	ld b, a ; $54bd
@@ -493,31 +469,7 @@ NetGameMatch2HandlePointEnd:
 	call PlayDrillPointEndSequence ; $5720
 	ret ; $5723
 ; Instruction-identical to NetGameMatch1AwardPointToSide, NetGameMatch3AwardPointToSide, ServiceMatch2AwardPointToSide, ServiceMatch3AwardPointToSide, StrokeMatch2AwardPointToSide and StrokeMatch3AwardPointToSide (in this bank); a change here belongs in every copy.
-NetGameMatch2AwardPointToSide:
-	ld a, [wPointWinLoseFlag] ; $5724
-	or a ; $5727
-	ret z ; $5728
-	inc a ; $5729
-	srl a ; $572a
-	ld b, a ; $572c
-	ld a, [wTotalPointsScoredInCurrentGame] ; $572d
-	and $01 ; $5730
-	xor $01 ; $5732
-	add b ; $5734
-	bit 0, a ; $5735
-	jr nz, .clearServeFaultFlag ; $5737
-	ld hl, wPlayer2PointsWon ; $5739
-	bit 1, a ; $573c
-	jr z, .bump ; $573e
-	ld hl, wPlayer1PointsWon ; $5740
-.bump:
-	inc [hl] ; $5743
-.clearServeFaultFlag:
-	xor a ; $5744
-	ld [wServeFaultFlag], a ; $5745
-	ld hl, wTotalPointsScoredInCurrentGame ; $5748
-	inc [hl] ; $574b
-	ret ; $574c
+	twin_named net_game_match1_award_point_to_side, NetGameMatch2AwardPointToSide ; $5724
 NetGameMatch2JudgeOnPointEnd:
 	ld a, $00 ; $574d
 	call NetGameMatch2JudgePoint ; $574f
@@ -983,28 +935,4 @@ NetGameMatch3HandlePointEndTable:
 	xor a ; $5a4d
 	ret ; $5a4e
 ; Instruction-identical to NetGameMatch1AwardPointToSide, NetGameMatch2AwardPointToSide, ServiceMatch2AwardPointToSide, ServiceMatch3AwardPointToSide, StrokeMatch2AwardPointToSide and StrokeMatch3AwardPointToSide (in this bank); a change here belongs in every copy.
-NetGameMatch3AwardPointToSide:
-	ld a, [wPointWinLoseFlag] ; $5a4f
-	or a ; $5a52
-	ret z ; $5a53
-	inc a ; $5a54
-	srl a ; $5a55
-	ld b, a ; $5a57
-	ld a, [wTotalPointsScoredInCurrentGame] ; $5a58
-	and $01 ; $5a5b
-	xor $01 ; $5a5d
-	add b ; $5a5f
-	bit 0, a ; $5a60
-	jr nz, .clearServeFaultFlag ; $5a62
-	ld hl, wPlayer2PointsWon ; $5a64
-	bit 1, a ; $5a67
-	jr z, .bump ; $5a69
-	ld hl, wPlayer1PointsWon ; $5a6b
-.bump:
-	inc [hl] ; $5a6e
-.clearServeFaultFlag:
-	xor a ; $5a6f
-	ld [wServeFaultFlag], a ; $5a70
-	ld hl, wTotalPointsScoredInCurrentGame ; $5a73
-	inc [hl] ; $5a76
-	ret ; $5a77
+	twin_named net_game_match1_award_point_to_side, NetGameMatch3AwardPointToSide ; $5a4f

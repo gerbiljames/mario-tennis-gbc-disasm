@@ -414,29 +414,7 @@ TournamentSiteEntryWalkInFacings:
 	; $4757, 8 bytes (enum:FACE:8)
 	db FACE_LEFT, FACE_RIGHT, FACE_DOWN, FACE_UP, FACE_RIGHT, FACE_LEFT, FACE_UP, FACE_DOWN ; 0x00
 ; Instruction-identical to LoadCourtPlayerPartnerObjDefs_14 (one copy per bank); a change here belongs in every copy.
-SetPlayerPartnerActorSprites:
-	test_flag FLAG_DOUBLES ; $475f
-	jp z, .notDoubles ; $4762
-	ld a, [wStoryModeGenderOfPartnerCharacter] ; $4765
-	ld d, $58 ; $4768
-	add d ; $476a
-	ld d, a ; $476b
-	script_get_actor_state ACTOR_PARTNER ; $476c
-	ld c, l ; $4771
-	ld b, h ; $4772
-	farcall LoadActorObjectDefIfValid ; $4773
-	script_set_anim ACTOR_PARTNER, $01 ; $4776
-.notDoubles:
-	ld a, [wStoryModeGenderOfMainCharacter] ; $477d
-	ld d, $56 ; $4780
-	add d ; $4782
-	ld d, a ; $4783
-	script_get_actor_state ACTOR_PLAYER ; $4784
-	ld c, l ; $4789
-	ld b, h ; $478a
-	farcall LoadActorObjectDefIfValid ; $478b
-	script_set_anim ACTOR_PLAYER, $01 ; $478e
-	ret ; $4795
+	twin_named load_court_player_partner_obj_defs, SetPlayerPartnerActorSprites ; $475f
 TrainingCourtMapScripts_15:
 	; $4796, 14 bytes (map_tree)
 	dw TrainingCourtEntryPoints_15 ; slot 0 EntryPoints

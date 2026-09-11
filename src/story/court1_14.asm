@@ -170,29 +170,7 @@ Court1EntryWalkIn:
 .done:
 	ret ; $51e9
 ; Instruction-identical to SetPlayerPartnerActorSprites (one copy per bank); a change here belongs in every copy.
-LoadCourtPlayerPartnerObjDefs_14:
-	test_flag FLAG_DOUBLES ; $51ea
-	jp z, .notDoubles ; $51ed
-	ld a, [wStoryModeGenderOfPartnerCharacter] ; $51f0
-	ld d, $58 ; $51f3
-	add d ; $51f5
-	ld d, a ; $51f6
-	script_get_actor_state ACTOR_PARTNER ; $51f7
-	ld c, l ; $51fc
-	ld b, h ; $51fd
-	farcall LoadActorObjectDefIfValid ; $51fe
-	script_set_anim ACTOR_PARTNER, $01 ; $5201
-.notDoubles:
-	ld a, [wStoryModeGenderOfMainCharacter] ; $5208
-	ld d, $56 ; $520b
-	add d ; $520d
-	ld d, a ; $520e
-	script_get_actor_state ACTOR_PLAYER ; $520f
-	ld c, l ; $5214
-	ld b, h ; $5215
-	farcall LoadActorObjectDefIfValid ; $5216
-	script_set_anim ACTOR_PLAYER, $01 ; $5219
-	ret ; $5220
+	twin_named load_court_player_partner_obj_defs, LoadCourtPlayerPartnerObjDefs_14 ; $51ea
 IslandSkyMapScripts_14:
 	; $5221, 14 bytes (map_tree)
 	dw IslandSkyEntryPoints_14 ; slot 0 EntryPoints

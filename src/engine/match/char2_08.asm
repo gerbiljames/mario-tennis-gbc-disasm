@@ -248,28 +248,7 @@ GetServeCameraTarget:
 	ld hl, $0000 ; $61a6
 	ret ; $61a9
 ; Instruction-identical to SnapCameraTo_0d (one copy per bank); a change here belongs in every copy.
-SnapCameraTo:
-	ld c, l ; $61aa
-	ld b, h ; $61ab
-	ld hl, wMatchCameraX ; $61ac
-	ld a, c ; $61af
-	ld [hl+], a ; $61b0
-	ld [hl], b ; $61b1
-	ld hl, wMatchCameraTargetX ; $61b2
-	ld a, c ; $61b5
-	ld [hl+], a ; $61b6
-	ld [hl], b ; $61b7
-	ld hl, wMatchCameraY ; $61b8
-	ld a, e ; $61bb
-	ld [hl+], a ; $61bc
-	ld [hl], d ; $61bd
-	ld hl, wMatchCameraTargetY ; $61be
-	ld a, e ; $61c1
-	ld [hl+], a ; $61c2
-	ld [hl], d ; $61c3
-	xor a ; $61c4
-	ld [wCameraFollowBall], a ; $61c5
-	ret ; $61c8
+	twin_named snap_camera_to, SnapCameraTo ; $61aa
 SetCameraTarget:
 	ld c, l ; $61c9
 	ld b, h ; $61ca

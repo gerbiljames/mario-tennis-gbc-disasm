@@ -181,19 +181,7 @@ TennisMachineHighScoreHook_PerFrame:
 	call DrawMinigameScoreHud ; $4d12
 	ret ; $4d15
 ; Instruction-identical to TennisMachine4Hook_PointStart (in this bank); a change here belongs in every copy.
-TennisMachineHighScoreHook_PointStart:
-	farcall AdvanceMatchRng ; $4d16
-	and $07 ; $4d19
-	inc a ; $4d1b
-	ld hl, wMinigameServeSlot ; $4d1c
-	add [hl] ; $4d1f
-	cp $09 ; $4d20
-	jr c, .store ; $4d22
-	sub $09 ; $4d24
-.store:
-	ld [hl], a ; $4d26
-	call LaunchMinigameServe ; $4d27
-	ret ; $4d2a
+	twin_named tennis_machine4_hook__point_start, TennisMachineHighScoreHook_PointStart ; $4d16
 TennisMachineHighScoreHook_PointEnd:
 	call AwardMinigamePointAndEnd ; $4d2b
 	ret ; $4d2e

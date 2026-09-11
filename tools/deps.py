@@ -23,6 +23,9 @@ def main():
                 m = re.match(r'^\s+(?:INCBIN|INCLUDE) "([^"]+)"', line)
                 if m:
                     deps.append(m.group(1))
+                m = re.match(r"^\t(?:twin|twin_named) (\w+),", line)
+                if m:
+                    deps.append(f"src/twins/{m.group(1)}.asm")
         print(f"build/{h.stem}.o: " + " ".join(dict.fromkeys(deps)))
 
 

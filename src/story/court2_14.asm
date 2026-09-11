@@ -677,19 +677,4 @@ Court2ActorsAlt_14:
 	map_actor $0000, ActorScript_14_2, $fd00, $0100, FACE_DOWN, $4d, $01, $00
 	map_actor_end
 ; Instruction-identical to RestaurantPlazaArrival06_13 (one copy per bank); a change here belongs in every copy.
-Court2EntryWalkIn:
-	ld a, [wStoryModeEntryPoint] ; $4f66
-	cp STORYENTRY_NONE ; $4f69
-	jp z, .done ; $4f6b
-	test_flag FLAG_DOUBLES ; $4f6e
-	jr z, .walkOff ; $4f71
-	script_set_speed ACTOR_PARTNER, $00ff ; $4f73
-	script_move_angle ACTOR_PARTNER, FACE_RIGHT, $0200 ; $4f7b
-	script_wait_move ACTOR_PARTNER ; $4f85
-	script_face ACTOR_PARTNER, FACE_LEFT ; $4f8a
-	script_set_speed ACTOR_PARTNER, $0010 ; $4f91
-.walkOff:
-	script_set_speed ACTOR_PLAYER, $0010 ; $4f99
-	script_move_angle ACTOR_PLAYER, FACE_LEFT, $0200 ; $4fa1
-.done:
-	ret ; $4fab
+	twin_named restaurant_plaza_arrival06, Court2EntryWalkIn ; $4f66

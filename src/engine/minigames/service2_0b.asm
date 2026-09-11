@@ -121,31 +121,7 @@ ServiceMatch3HandlePointEnd:
 	call PlayDrillPointEndSequence ; $4cea
 	ret ; $4ced
 ; Instruction-identical to NetGameMatch1AwardPointToSide, NetGameMatch2AwardPointToSide, NetGameMatch3AwardPointToSide, ServiceMatch2AwardPointToSide, StrokeMatch2AwardPointToSide and StrokeMatch3AwardPointToSide (in this bank); a change here belongs in every copy.
-ServiceMatch3AwardPointToSide:
-	ld a, [wPointWinLoseFlag] ; $4cee
-	or a ; $4cf1
-	ret z ; $4cf2
-	inc a ; $4cf3
-	srl a ; $4cf4
-	ld b, a ; $4cf6
-	ld a, [wTotalPointsScoredInCurrentGame] ; $4cf7
-	and $01 ; $4cfa
-	xor $01 ; $4cfc
-	add b ; $4cfe
-	bit 0, a ; $4cff
-	jr nz, .clearServeFaultFlag ; $4d01
-	ld hl, wPlayer2PointsWon ; $4d03
-	bit 1, a ; $4d06
-	jr z, .bump ; $4d08
-	ld hl, wPlayer1PointsWon ; $4d0a
-.bump:
-	inc [hl] ; $4d0d
-.clearServeFaultFlag:
-	xor a ; $4d0e
-	ld [wServeFaultFlag], a ; $4d0f
-	ld hl, wTotalPointsScoredInCurrentGame ; $4d12
-	inc [hl] ; $4d15
-	ret ; $4d16
+	twin_named net_game_match1_award_point_to_side, ServiceMatch3AwardPointToSide ; $4cee
 ServiceMatch3JudgeOnPointEnd:
 	ld a, $00 ; $4d17
 	call ServiceMatch3JudgePoint ; $4d19

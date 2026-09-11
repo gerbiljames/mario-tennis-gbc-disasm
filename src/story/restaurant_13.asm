@@ -28,39 +28,9 @@ RestaurantPlazaEntryPoints_13:
 	map_entry $0f, FACE_LEFT, $3200, $0f00, $0000
 	db $ff
 ; Instruction-identical to AcademyMainBldgArrival01_10, RestaurantArrival01_10, MapArrivalWalk_11 and DormEntranceArrival01_12 (one copy per bank); a change here belongs in every copy.
-RestaurantPlazaArrival04_13:
-	ld a, [wStoryModeEntryPoint] ; $405f
-	cp STORYENTRY_NONE ; $4062
-	jp z, .done ; $4064
-	test_flag FLAG_DOUBLES ; $4067
-	jr z, .walkOff ; $406a
-	script_set_speed ACTOR_PARTNER, $00ff ; $406c
-	script_move_angle ACTOR_PARTNER, FACE_DOWN, $0200 ; $4074
-	script_wait_move ACTOR_PARTNER ; $407e
-	script_face ACTOR_PARTNER, FACE_UP ; $4083
-	script_set_speed ACTOR_PARTNER, $0010 ; $408a
-.walkOff:
-	script_set_speed ACTOR_PLAYER, $0010 ; $4092
-	script_move_angle ACTOR_PLAYER, FACE_UP, $0200 ; $409a
-.done:
-	ret ; $40a4
+	twin_named academy_main_bldg_arrival01, RestaurantPlazaArrival04_13 ; $405f
 ; Instruction-identical to Court2EntryWalkIn (one copy per bank); a change here belongs in every copy.
-RestaurantPlazaArrival06_13:
-	ld a, [wStoryModeEntryPoint] ; $40a5
-	cp STORYENTRY_NONE ; $40a8
-	jp z, .done ; $40aa
-	test_flag FLAG_DOUBLES ; $40ad
-	jr z, .walkOff ; $40b0
-	script_set_speed ACTOR_PARTNER, $00ff ; $40b2
-	script_move_angle ACTOR_PARTNER, FACE_RIGHT, $0200 ; $40ba
-	script_wait_move ACTOR_PARTNER ; $40c4
-	script_face ACTOR_PARTNER, FACE_LEFT ; $40c9
-	script_set_speed ACTOR_PARTNER, $0010 ; $40d0
-.walkOff:
-	script_set_speed ACTOR_PLAYER, $0010 ; $40d8
-	script_move_angle ACTOR_PLAYER, FACE_LEFT, $0200 ; $40e0
-.done:
-	ret ; $40ea
+	twin_named restaurant_plaza_arrival06, RestaurantPlazaArrival06_13 ; $40a5
 RestaurantPlazaArrival01_13:
 	ld a, [wStoryModeEntryPoint] ; $40eb
 	cp STORYENTRY_NONE ; $40ee

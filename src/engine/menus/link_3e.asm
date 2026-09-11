@@ -86,38 +86,7 @@ MatchRuleOptionAttrWidths_3e:
 	; $48b4, 7 bytes (bytes:7)
 	db $0c, $0c, $0e, $0e, $0f, $0f, $0f ; 0x00
 ; Instruction-identical to FlushMatchFormatRowToVram (one copy per bank); a change here belongs in every copy.
-FlushMatchRuleRowAttrs:
-	push af ; $48bb
-	push bc ; $48bc
-	push de ; $48bd
-	push hl ; $48be
-	ld a, b ; $48bf
-	or a ; $48c0
-	jr nz, .row1 ; $48c1
-	ld hl, wShadowAttrmap + 3 * TILEMAP_WIDTH ; $48c3
-	ld de, vBGMap0 + 3 * TILEMAP_WIDTH + VRAM_BANK1 ; $48c6
-	ld c, $06 ; $48c9
-	call QueueVRAMCopy ; $48cb
-	jr .done ; $48ce
-.row1:
-	cp $01 ; $48d0
-	jr nz, .row2 ; $48d2
-	ld hl, wShadowAttrmap + 7 * TILEMAP_WIDTH ; $48d4
-	ld de, vBGMap0 + 7 * TILEMAP_WIDTH + VRAM_BANK1 ; $48d7
-	ld c, $06 ; $48da
-	call QueueVRAMCopy ; $48dc
-	jr .done ; $48df
-.row2:
-	ld hl, wShadowAttrmap + 11 * TILEMAP_WIDTH ; $48e1
-	ld de, vBGMap0 + 11 * TILEMAP_WIDTH + VRAM_BANK1 ; $48e4
-	ld c, $06 ; $48e7
-	call QueueVRAMCopy ; $48e9
-.done:
-	pop hl ; $48ec
-	pop de ; $48ed
-	pop bc ; $48ee
-	pop af ; $48ef
-	ret ; $48f0
+	twin_named flush_match_format_row_to_vram, FlushMatchRuleRowAttrs ; $48bb
 MatchRulesCursorSpriteTask:
 	ld c, $01 ; $48f1
 	call GetMenuCursorIndex_3e ; $48f3

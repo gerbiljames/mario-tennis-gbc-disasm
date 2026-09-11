@@ -199,20 +199,7 @@ WaterSpriteSwingContestScene:
 	script_speak ACTOR_PLAYER ; $5771
 	ret ; $5776
 ; Instruction-identical to MirrorPlayerSpriteIfLeftHanded (one copy per bank); a change here belongs in every copy.
-TogglePlayerSpriteXFlip:
-	ld a, [wStoryModeMainCharacterLeftHanded] ; $5777
-	and a ; $577a
-	jr z, .done ; $577b
-	script_get_actor_state ACTOR_PLAYER ; $577d
-	ld c, l ; $5782
-	ld b, h ; $5783
-	ld hl, $0037 ; $5784
-	add hl, bc ; $5787
-	ld a, [hl] ; $5788
-	xor $20 ; $5789
-	ld [hl], a ; $578b
-.done:
-	ret ; $578c
+	twin_named mirror_player_sprite_if_left_handed, TogglePlayerSpriteXFlip ; $5777
 DrawWaterSpriteMinigameCounters:
 	ld hl, wSwingContestTimer ; $578d
 	ld a, [hl+] ; $5790

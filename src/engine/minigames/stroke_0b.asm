@@ -149,38 +149,7 @@ NetGamePractice3PointStartDrillPositions:
 	dw $0000, $02a0 ; record 7
 	db $ff, $ff
 ; Instruction-identical to NetGamePractice1HandlePointEnd and NetGamePractice2HandlePointEnd (in this bank); a change here belongs in every copy.
-NetGamePractice3HandlePointEnd:
-	farcall UpdateScorePanelDisplay ; $6272
-	ld a, [wDrillPointJudgement] ; $6275
-	ld [wPointWinLoseFlag], a ; $6278
-	cp $01 ; $627b
-	jr nz, .recordDrillPointResultBits ; $627d
-	ld hl, wDrillCounters + 4 ; $627f
-	inc [hl] ; $6282
-.recordDrillPointResultBits:
-	call RecordDrillPointResultBits ; $6283
-	call ShowQueuedDrillMessage ; $6286
-	farcall UpdatePointStats ; $6289
-	farcall AwardPoint ; $628c
-	ld a, [wDrillCounters + 4] ; $628f
-	ld [wPlayer1PointsWon], a ; $6292
-	xor a ; $6295
-	ld [wPlayer2PointsWon], a ; $6296
-	ld a, [wPlayer1PointsWon] ; $6299
-	ld b, $01 ; $629c
-	farcall LoadPlayer1PointsDigitGfx ; $629e
-	ld a, [wPlayer2PointsWon] ; $62a1
-	ld b, $01 ; $62a4
-	farcall LoadPlayer2PointsDigitGfx ; $62a6
-	farcall StepMatchFrame ; $62a9
-	ld a, $01 ; $62ac
-	ld hl, SyncPointWinLoseFlagTask ; $62ae
-	call RegisterFrameTask ; $62b1
-	farcall StartPointEndReactions ; $62b4
-	ld hl, SyncPointWinLoseFlagTask ; $62b7
-	call UnregisterFrameTask ; $62ba
-	call PlayDrillPointEndSequence ; $62bd
-	ret ; $62c0
+	twin_named net_game_practice1_handle_point_end, NetGamePractice3HandlePointEnd ; $6272
 NetGamePractice3JudgeOnPointEnd:
 	ld a, $00 ; $62c1
 	call NetGamePractice3JudgePoint ; $62c3

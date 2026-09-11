@@ -109,39 +109,9 @@ AcademyMainBldgEntryPoints_10:
 	map_entry $0f, FACE_UP, $2200, $1d00, $0000
 	db $ff
 ; Instruction-identical to AcademyArrivalArrival01_11 and DormEntranceArrival02_12 (one copy per bank); a change here belongs in every copy.
-AcademyMainBldgArrival02_10:
-	ld a, [wStoryModeEntryPoint] ; $7532
-	cp STORYENTRY_NONE ; $7535
-	jp z, .done ; $7537
-	test_flag FLAG_DOUBLES ; $753a
-	jr z, .walkOff ; $753d
-	script_set_speed ACTOR_PARTNER, $00ff ; $753f
-	script_move_angle ACTOR_PARTNER, FACE_UP, $0200 ; $7547
-	script_wait_move ACTOR_PARTNER ; $7551
-	script_face ACTOR_PARTNER, FACE_DOWN ; $7556
-	script_set_speed ACTOR_PARTNER, $0010 ; $755d
-.walkOff:
-	script_set_speed ACTOR_PLAYER, $0010 ; $7565
-	script_move_angle ACTOR_PLAYER, FACE_DOWN, $0200 ; $756d
-.done:
-	ret ; $7577
+	twin_named academy_main_bldg_arrival02, AcademyMainBldgArrival02_10 ; $7532
 ; Instruction-identical to RestaurantArrival01_10, MapArrivalWalk_11, DormEntranceArrival01_12 and RestaurantPlazaArrival04_13 (one copy per bank); a change here belongs in every copy.
-AcademyMainBldgArrival01_10:
-	ld a, [wStoryModeEntryPoint] ; $7578
-	cp STORYENTRY_NONE ; $757b
-	jp z, .done ; $757d
-	test_flag FLAG_DOUBLES ; $7580
-	jr z, .walkOff ; $7583
-	script_set_speed ACTOR_PARTNER, $00ff ; $7585
-	script_move_angle ACTOR_PARTNER, FACE_DOWN, $0200 ; $758d
-	script_wait_move ACTOR_PARTNER ; $7597
-	script_face ACTOR_PARTNER, FACE_UP ; $759c
-	script_set_speed ACTOR_PARTNER, $0010 ; $75a3
-.walkOff:
-	script_set_speed ACTOR_PLAYER, $0010 ; $75ab
-	script_move_angle ACTOR_PLAYER, FACE_UP, $0200 ; $75b3
-.done:
-	ret ; $75bd
+	twin_named academy_main_bldg_arrival01, AcademyMainBldgArrival01_10 ; $7578
 AcademyMainBldgExitTriggers_10:
 	; $75be, 41 bytes (map_scripts:exit)
 	map_script $01, FACEMASK_ANY, $0000, MapScriptNop_10, STORYLOC_ACADEMY_ENTRANCE, $01

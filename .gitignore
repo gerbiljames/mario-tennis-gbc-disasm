@@ -1,5 +1,5 @@
 baserom.gbc
-data/
+/data/
 build/
 tools/rgbds/
 *.o

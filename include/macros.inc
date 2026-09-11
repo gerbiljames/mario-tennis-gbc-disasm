@@ -57,6 +57,25 @@ EXPORT SCREENASSET_\1
 	dslot \2, \3, \4, \5
 ENDM
 
+; --- Shared routine families (src/twins/) ---
+; The ROM assembles the same routine into several banks. Each such family is
+; one file under src/twins/, and every bank that holds a copy assembles it
+; here: `twin file, 25` includes src/twins/file.asm with {TWIN} = "25", so
+; `FetchText_{TWIN}:` and the bank-local references in the body become that
+; bank's; `twin_named file, Label` includes it with {TWIN_LABEL} = Label for
+; the copies that carry different names. The bytes are the copies' own.
+MACRO twin
+DEF TWIN EQUS "\2"
+	INCLUDE "src/twins/\1.asm"
+PURGE TWIN
+ENDM
+
+MACRO twin_named
+DEF TWIN_LABEL EQUS "\2"
+	INCLUDE "src/twins/\1.asm"
+PURGE TWIN_LABEL
+ENDM
+
 ; --- Tunable record tables (one macro row per record, fields in order) ---
 
 ; One StoryCharacterRecords_02 row: the 29 bytes InitCa00RecordFromCharId
