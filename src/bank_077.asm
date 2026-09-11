@@ -362,8 +362,9 @@ WalkSprite_77_03_Anim04:
 	anim_set $01
 WalkSprite_77_03_Anim05:
 	; $6009, 5 bytes (sprite_anim)
-	db $03
-	db $14, $04, $1e, $ff
+	anim_frame $03, $14
+	anim_frame $04, $1e
+	db $ff ; anim_loop whose operand is the next script's first byte ($00)
 WalkSprite_77_03_Anim06:
 	; $600e, 12 bytes (sprite_anim)
 	anim_frame $00, $0a
@@ -468,8 +469,9 @@ WalkSprite_77_04_Anim04:
 	anim_set $01
 WalkSprite_77_04_Anim05:
 	; $6699, 5 bytes (sprite_anim)
-	db $03
-	db $14, $04, $1e, $ff
+	anim_frame $03, $14
+	anim_frame $04, $1e
+	db $ff ; anim_loop whose operand is the next script's first byte ($00)
 WalkSprite_77_04_Anim06:
 	; $669e, 12 bytes (sprite_anim)
 	anim_frame $00, $0a
@@ -574,8 +576,9 @@ WalkSprite_77_05_Anim04:
 	anim_set $01
 WalkSprite_77_05_Anim05:
 	; $6d29, 5 bytes (sprite_anim)
-	db $03
-	db $14, $04, $1e, $ff
+	anim_frame $03, $14
+	anim_frame $04, $1e
+	db $ff ; anim_loop whose operand is the next script's first byte ($00)
 WalkSprite_77_05_Anim06:
 	; $6d2e, 12 bytes (sprite_anim)
 	anim_frame $00, $0a
@@ -680,8 +683,9 @@ WalkSprite_77_06_Anim04:
 	anim_set $01
 WalkSprite_77_06_Anim05:
 	; $73b9, 5 bytes (sprite_anim)
-	db $03
-	db $14, $04, $1e, $ff
+	anim_frame $03, $14
+	anim_frame $04, $1e
+	db $ff ; anim_loop whose operand is the next script's first byte ($00)
 WalkSprite_77_06_Anim06:
 	; $73be, 12 bytes (sprite_anim)
 	anim_frame $00, $0a

@@ -1323,6 +1323,7 @@
  "0x6ab0f": "bytes:16",
  "0x6ac69": "bytes:16",
  "0x6afcf": "map_actors",
+ "0x6b011": "actor_script",
  "0x6b08e": "bytes:8",
  "0x6b0d9": "palettes",
  "0x6b92f": "bytes:16",

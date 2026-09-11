@@ -252,12 +252,16 @@ WalkSprite_72_02_Anim04:
 	anim_set $01
 WalkSprite_72_02_Anim05:
 	; $5651, 8 bytes (sprite_anim)
-	db $00
-	db $14, $02, $0a, $01, $1e, $fd, $00
+	anim_frame $00, $14
+	anim_frame $02, $0a
+	anim_frame $01, $1e
+	anim_hold $fd
+	db $00 ; never read: the hold above ends the script
 WalkSprite_72_02_Anim06:
 	; $5659, 5 bytes (sprite_anim)
-	db $03
-	db "(", $04, "F", $ff
+	anim_frame $03, $28
+	anim_frame $04, $46
+	db $ff ; anim_loop whose operand is the next script's first byte ($00)
 WalkSprite_72_02_Anim07:
 	; $565e, 12 bytes (sprite_anim)
 	anim_frame $00, $0a

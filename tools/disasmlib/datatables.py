@@ -142,14 +142,31 @@ def render_sprite_anim(rom, start, end):
     region falls back to plain bytes rather than rendering a lie."""
     out = []
     off = start
+    held = False
     while off < end:
         op = rom[off]
         if 0xF0 <= op <= 0xFD and op != 0xFB:
             out.append(f"\tanim_hold ${op:02x}")
             off += 1
+            held = True
             continue
         if off + 1 >= end:
+            # Two shapes the data was authored in. A script written as pairs
+            # ends `$fd, $00`: the hold is one byte to the interpreter, so
+            # its "operand" is never read. And the five-byte walk script
+            # `03 14 04 1e ff` ends on a bare loop command whose operand is
+            # the first byte of the script that follows (always $00, a
+            # frame-0 entry): the interpreter reads it, so the loop restarts
+            # at +0, but the byte belongs to the next script's label.
+            if held:
+                out.append(f"\tdb ${op:02x} ; never read: the hold above ends the script")
+                return out
+            if op == 0xFF and end < len(rom):
+                out.append(f"\tdb $ff ; anim_loop whose operand is the next"
+                           f" script's first byte (${rom[end]:02x})")
+                return out
             return None
+        held = False
         arg = rom[off + 1]
         if op < 0xF0:
             out.append(f"\tanim_frame ${op:02x}, ${arg:02x}")
@@ -322,9 +339,11 @@ def render_map_table(spec, rom, seg, end, bank, labels, role=None,
                        f"{sym(p + 2)}, {handler}, {arg0}, "
                        f"${rom[p + 7]:02x}")
             p += 8
+    pad = spec == "map_actors" and p < end and not any(rom[p:end])
     while p < end:
         n = min(end - p, 8)
-        out.append("\tdb " + ", ".join(f"${rom[p + k]:02x}" for k in range(n)))
+        out.append("\tdb " + ", ".join(f"${rom[p + k]:02x}" for k in range(n))
+                   + (" ; padding after the list end" if pad else ""))
         p += n
     return out
 

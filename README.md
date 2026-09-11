@@ -40,7 +40,7 @@ graphics, audio, tilemaps and text.
 |---|---|
 | instructions disassembled | 160,940, across every code bank |
 | proven code and structured source | 428,509 bytes, 20.4% of the ROM |
-| labels | 21,978 — 20,398 human-named, the rest derived by the generator from something already named (a bank's `$4000` slot table, a sound table) |
+| labels | 21,979 — 20,399 human-named, the rest derived by the generator from something already named (a bank's `$4000` slot table, a sound table) |
 | compressed graphics | 838 LZ streams, each named, sized by decoding it |
 | `Unused_` routines | 199 routines and 100 blobs nothing references, catalogued in `docs/unused_code.md` |
 

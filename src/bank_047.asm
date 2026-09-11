@@ -315,7 +315,11 @@ SeanSpriteAnim03:
 	anim_loop $00
 SeanSpriteAnim04:
 	; $7f67, 8 bytes (sprite_anim)
-	db $1a, $14, $1b, $14, $1c, $14, $fd, $00
+	anim_frame $1a, $14
+	anim_frame $1b, $14
+	anim_frame $1c, $14
+	anim_hold $fd
+	db $00 ; never read: the hold above ends the script
 SeanSpriteAnim05:
 	; $7f6f, 6 bytes (sprite_anim)
 	anim_frame $06, $04

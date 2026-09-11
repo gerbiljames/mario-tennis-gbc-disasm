@@ -43,6 +43,11 @@ class GeneratedSource(unittest.TestCase):
         self.assertEqual(count(r"^\tld de, \$[0-9a-f]{4} ; \$[0-9a-f]{4}\n\t(?:far)?call (Set|Clear|Test)GameFlag "),
                          0, "a raw game-flag id passed straight to a flag helper")
 
+    def test_structured_regions_render(self):
+        # a spec whose renderer gives up falls back to `db` on its first line
+        for spec in ("sprite_anim", "map_actors", "actor_script", "flag_ids"):
+            self.assertEqual(count(rf"\({spec}\)\n\tdb "), 0, spec)
+
     def test_no_auto_names(self):
         for stem in ("Func_", "Label_", "Data_", "Lz_", "Fill_"):
             self.assertEqual(count(rf"^{stem}[0-9a-f_]+:"), 0, stem)

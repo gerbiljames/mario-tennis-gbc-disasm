@@ -90,8 +90,11 @@ WalkSprite_74_00_Anim04:
 	anim_set $01
 WalkSprite_74_00_Anim05:
 	; $4771, 8 bytes (sprite_anim)
-	db $00
-	db $14, $02, $0a, $01, $1e, $fd, $00
+	anim_frame $00, $14
+	anim_frame $02, $0a
+	anim_frame $01, $1e
+	anim_hold $fd
+	db $00 ; never read: the hold above ends the script
 WalkSprite_74_00_Anim06:
 	; $4779, 12 bytes (sprite_anim)
 	anim_frame $00, $0a

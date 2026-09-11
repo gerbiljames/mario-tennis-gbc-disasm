@@ -556,15 +556,22 @@ loose: the code is `and $0f` *then* `xor d`, so it clears bits 4-7 first and
 
 `render_sprite_anim` (`tools/disasmlib/datatables.py:128`) returns `None`
 for anything it cannot account for, deliberately, so a mis-declared region
-falls back to plain `db` rather than rendering a lie. Counted over the emitted
-source (matching each `; … (sprite_anim)` spec comment against the line that
-follows it): of the **570 character-bank scripts, 569 render as `anim_*`
-macros**; `SeanSpriteAnim04` (`$47:$7f67`) carries one `$00` after its hold
-command and falls back. Of the **635 walk-sprite scripts (banks `$6a`, `$6f`,
-`$70`-`$77`), 593 render**; the 42 that do not are the five-byte
-`03 14 04 1e ff` script every bank repeats, whose closing loop command takes
-its operand from the first byte of the *next* script — an overlap the source
-cannot express, so those stay `db`.
+falls back to plain `db` rather than rendering a lie. Every declared script
+renders (570 character-bank scripts; 635 walk-sprite scripts in banks `$6a`,
+`$6f`, `$70`-`$77`), and 34 of them end on a byte the macros cannot spell,
+which is written as a commented `db`:
+
+- **An unread hold operand.** `SeanSpriteAnim04` (`$47:$7f67`) and six
+  walk-sprite scripts were authored as byte pairs and end `$fd, $00`. The
+  hold is one byte to both interpreters, so the `$00` is never read; it
+  renders as `db $00 ; never read: the hold above ends the script`.
+- **A loop whose operand is the next script.** The five-byte
+  `03 14 04 1e ff` script that 27 walk-sprite objects repeat ends on a bare
+  loop command; the interpreter reads its operand from the first byte of the
+  script that follows, always `$00` (a frame-0 entry), so the loop restarts
+  at +0. The byte belongs to the next script's label, so the command
+  renders as `db $ff ; anim_loop whose operand is the next script's first
+  byte ($00)`.
 
 ### 4.5 The two interpreters
 

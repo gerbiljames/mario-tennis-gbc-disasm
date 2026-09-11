@@ -18,7 +18,7 @@ per `data.manifest`.
 | proven code + structured source | 428,461 bytes, 20.4% of the 2 MiB ROM |
 | instructions disassembled | 160,919 |
 | banks containing code | 59 of 128 |
-| labels | 21,978, of which 20,398 human-named and 1,580 generator-derived (`FarPtr_*` slot labels, `SoundTable_*`); 0 state only an address |
+| labels | 21,979, of which 20,399 human-named and 1,580 generator-derived (`FarPtr_*` slot labels, `SoundTable_*`); 0 state only an address |
 | data blobs (`INCBIN`) | 4,218 — 838 LZ streams, the rest raw graphics, tilemaps, sprite frames and sound |
 | coverage inputs | 174 `coverage/*.json` dumps and 2 `hooks/*.json` captures |
 | bare banked-WRAM operands | 97, all `dead`: inside `Unused*` routines nothing references, so no trace can ever reach them. Zero in live code |
@@ -78,11 +78,6 @@ are a constant, the scene record is read only to `+5`); `docs/story_mode.md` "Od
 and open questions" keeps only the shipped-defect entries (the Star Court
 unlock and the dead record fields are resolved); the "not established" sentences in `docs/match_engine.md`.
 
-**Small rendering leads.** `SeanSpriteAnim04` and the 42 five-byte
-walk-sprite scripts render as `db` for reasons `docs/graphics_formats.md`
-§4.4 gives. Two `map_actors` tables carry one padding byte past their
-terminator.
-
 **Not started, and only worth it for other people.** A ROM-free CI job
 (`make test` skips the ROM-dependent pins when `baserom.gbc` is absent, so
 it would run as it stands), and sprite-aware PNG layouts: the PNGs are tiles
@@ -127,6 +122,15 @@ label bound to the wrong parent.
 
 ## Recent changes
 
+* **2026-09-11** — the last `db` fallbacks in the rendered data are gone.
+  The 34 animation scripts that end on a byte the macros cannot spell (a
+  hold's unread `$00` operand; the five-byte walk script whose bare loop
+  command takes its operand from the next script's first byte) render as
+  macros plus one commented `db` (`docs/graphics_formats.md` §4.4). The
+  "padding byte" after `CharViewerSceneActors_1a` is the one-opcode
+  `as_halt` script its four records point at, now `ActorScript_1a_CharViewer`;
+  the one after `FireworkMapActors_14` is padding before the aligned tile
+  blob, and is labelled as such.
 * **2026-09-11** — a test suite, `make test` (`tests/`, stdlib `unittest`,
   47 tests): the codecs (LZ and tile-image round trips, the SM83 decoder's
   self-test, every idiom macro assembled and compared to the bytes it

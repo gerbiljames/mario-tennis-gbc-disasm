@@ -10312,6 +10312,7 @@
  "0x6af2b": ".queueVRAMCopy2",
  "0x6af3d": "SetupCharViewerScene",
  "0x6afcf": "CharViewerSceneActors_1a",
+ "0x6b011": {"name": "ActorScript_1a_CharViewer", "note": "A one-opcode actor script, as_halt: the four character-viewer actors stand still."},
  "0x6b012": "DrawCharViewerCharSprite",
  "0x6b08e": "DrawCharViewerCharSprite_CharScreenPosTable",
  "0x6b096": "LoadCharViewerMugshot",

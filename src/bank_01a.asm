@@ -3565,13 +3565,16 @@ SetupCharViewerScene:
 	ld [hl], $60 ; $6fcc
 	ret ; $6fce
 CharViewerSceneActors_1a:
-	; $6fcf, 67 bytes (map_actors)
-	map_actor $0000, $7011, $0f00, $0400, FACE_DOWN, $26, $01, $00
-	map_actor $0000, $7011, $1180, $0400, FACE_LEFT, $26, $01, $00
-	map_actor $0000, $7011, $0f00, $0680, FACE_UP, $26, $01, $00
-	map_actor $0000, $7011, $1180, $0680, FACE_RIGHT, $26, $01, $00
+	; $6fcf, 66 bytes (map_actors)
+	map_actor $0000, ActorScript_1a_CharViewer, $0f00, $0400, FACE_DOWN, $26, $01, $00
+	map_actor $0000, ActorScript_1a_CharViewer, $1180, $0400, FACE_LEFT, $26, $01, $00
+	map_actor $0000, ActorScript_1a_CharViewer, $0f00, $0680, FACE_UP, $26, $01, $00
+	map_actor $0000, ActorScript_1a_CharViewer, $1180, $0680, FACE_RIGHT, $26, $01, $00
 	map_actor_end
-	db $00
+; A one-opcode actor script, as_halt: the four character-viewer actors stand still.
+ActorScript_1a_CharViewer:
+	; $7011, 1 bytes (actor_script)
+	as_halt
 DrawCharViewerCharSprite:
 	lb bc, $07, $70 ; $7012 attr, tile
 	lb de, $46, $15 ; $7015 x, y

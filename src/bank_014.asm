@@ -2381,7 +2381,7 @@ UpdateFirework1_14Table:
 FireworkMapActors_14:
 	; $6675, 11 bytes (map_actors)
 	map_actor_end
-	db $00
+	db $00 ; padding after the list end
 FireworkObjTiles_14:
 	INCBIN "data/bank_014/d_6680.bin" ; $6680, 2048 bytes
 SpriteTemplate_14_2:
