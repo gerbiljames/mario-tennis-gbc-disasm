@@ -107,6 +107,15 @@ restated:
   scripts, flag lists and menu definitions render as structured source with
   named fields — `docs/graphics_formats.md` and `docs/story_mode.md` give the
   layouts.
+- **Assets are referenced by name.** The two screen-asset dispatchers take
+  an index into a table in bank `$39`, and each table row defines its own:
+  `tileblock MenuFontTiles_01` is a row of `TileBlockPtrs_39` and defines
+  `TILEBLOCK_MenuFontTiles_01`, `screen_asset TitleScreen, ...` a row of
+  `ScreenAssetRecordTable` and `SCREENASSET_TitleScreen`. Call sites and the
+  cutscene id lists use those names, so inserting a row renumbers what
+  follows and every reference moves. A slot in a bank's `$4000` table is
+  likewise a `DataPtr_`/`FarPtr_` label, referenced as `BANK(...)` /
+  `LOW(...)` or through `dslot`.
 - **Copy counts follow their source.** A VRAM copy of a whole blob is
   written `ld c, (Next - Blob) / 16`, and a whole copy of a decompressed
   stream `ld c, Blob_SIZE / 16`, where `Blob_SIZE` is the decoded length in

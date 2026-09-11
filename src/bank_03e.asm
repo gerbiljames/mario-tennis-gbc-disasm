@@ -1,5 +1,25 @@
 SECTION "ROM Bank $3e", ROMX[$4000], BANK[$3e]
 
+; decoded lengths of the tile blocks this bank copies whole through LoadCompressedTileBlock
+	INCLUDE "data/bank_039/lz_RacketShoesChoiceGfx0.inc" ; DEF RacketShoesChoiceGfx0_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_039/lz_RacketShoesChoiceGfx1.inc" ; DEF RacketShoesChoiceGfx1_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_039/lz_SharedMenuGfx17.inc" ; DEF SharedMenuGfx17_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03c/lz_SharedMenuGfx27.inc" ; DEF SharedMenuGfx27_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03c/lz_SharedMenuGfx35.inc" ; DEF SharedMenuGfx35_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03c/lz_SharedMenuGfx36.inc" ; DEF SharedMenuGfx36_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03c/lz_SharedMenuGfx37.inc" ; DEF SharedMenuGfx37_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03c/lz_SharedMenuGfx38.inc" ; DEF SharedMenuGfx38_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03c/lz_SharedMenuGfx39.inc" ; DEF SharedMenuGfx39_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03c/lz_SharedMenuGfx40.inc" ; DEF SharedMenuGfx40_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03c/lz_SharedMenuGfx41.inc" ; DEF SharedMenuGfx41_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03d/lz_CourtSelectGfx0.inc" ; DEF CourtSelectGfx0_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03d/lz_EraseDataConfirmGfx0.inc" ; DEF EraseDataConfirmGfx0_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03d/lz_EraseDataConfirmGfx1.inc" ; DEF EraseDataConfirmGfx1_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03d/lz_RacketShoesChoiceGfx2.inc" ; DEF RacketShoesChoiceGfx2_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03d/lz_SharedMenuGfx63.inc" ; DEF SharedMenuGfx63_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03d/lz_SharedMenuGfx65.inc" ; DEF SharedMenuGfx65_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03d/lz_SharedMenuGfx99.inc" ; DEF SharedMenuGfx99_SIZE EQU its decoded length, generated from the .bin by make
+
 	farptr RunLinkMatchRulesMenu ; $4000
 	farptr RestoreMenuScreenAndFadeIn ; $4002
 	farptr ShowLinkMessageScreen ; $4004
@@ -1043,48 +1063,48 @@ LoadMatchRulesMenuGraphics:
 	ld a, c ; $4651
 	cp $07 ; $4652
 	jr nz, .loop ; $4654
-	ld b, $23 ; $4656
-	ld c, $10 ; $4658
+	ld b, TILEBLOCK_SharedMenuGfx35 ; $4656
+	ld c, SharedMenuGfx35_SIZE / 16 ; $4658
 	ld de, vTiles0 + VRAM_BANK1 ; $465a
 	farcall LoadCompressedTileBlock ; $465d
 	call AdvanceFrame ; $4660
-	ld b, $24 ; $4663
-	ld c, $10 ; $4665
+	ld b, TILEBLOCK_SharedMenuGfx36 ; $4663
+	ld c, SharedMenuGfx36_SIZE / 16 ; $4665
 	ld de, vTiles0 + $10 * TILE_SIZE + VRAM_BANK1 ; $4667
 	farcall LoadCompressedTileBlock ; $466a
 	call AdvanceFrame ; $466d
-	ld b, $25 ; $4670
-	ld c, $10 ; $4672
+	ld b, TILEBLOCK_SharedMenuGfx37 ; $4670
+	ld c, SharedMenuGfx37_SIZE / 16 ; $4672
 	ld de, vTiles0 + $20 * TILE_SIZE + VRAM_BANK1 ; $4674
 	farcall LoadCompressedTileBlock ; $4677
 	call AdvanceFrame ; $467a
-	ld b, $26 ; $467d
-	ld c, $10 ; $467f
+	ld b, TILEBLOCK_SharedMenuGfx38 ; $467d
+	ld c, SharedMenuGfx38_SIZE / 16 ; $467f
 	ld de, vTiles0 + $30 * TILE_SIZE + VRAM_BANK1 ; $4681
 	farcall LoadCompressedTileBlock ; $4684
 	call AdvanceFrame ; $4687
-	ld b, $27 ; $468a
-	ld c, $10 ; $468c
+	ld b, TILEBLOCK_SharedMenuGfx39 ; $468a
+	ld c, SharedMenuGfx39_SIZE / 16 ; $468c
 	ld de, vTiles0 + $40 * TILE_SIZE + VRAM_BANK1 ; $468e
 	farcall LoadCompressedTileBlock ; $4691
 	call AdvanceFrame ; $4694
-	ld b, $28 ; $4697
-	ld c, $10 ; $4699
+	ld b, TILEBLOCK_SharedMenuGfx40 ; $4697
+	ld c, SharedMenuGfx40_SIZE / 16 ; $4699
 	ld de, vTiles0 + $50 * TILE_SIZE + VRAM_BANK1 ; $469b
 	farcall LoadCompressedTileBlock ; $469e
 	call AdvanceFrame ; $46a1
-	ld b, $29 ; $46a4
-	ld c, $10 ; $46a6
+	ld b, TILEBLOCK_SharedMenuGfx41 ; $46a4
+	ld c, SharedMenuGfx41_SIZE / 16 ; $46a6
 	ld de, vTiles0 + $60 * TILE_SIZE + VRAM_BANK1 ; $46a8
 	farcall LoadCompressedTileBlock ; $46ab
 	call AdvanceFrame ; $46ae
-	ld b, $1b ; $46b1
-	ld c, $04 ; $46b3
+	ld b, TILEBLOCK_SharedMenuGfx27 ; $46b1
+	ld c, SharedMenuGfx27_SIZE / 16 ; $46b3
 	ld de, vTiles0 + $70 * TILE_SIZE + VRAM_BANK1 ; $46b5
 	farcall LoadCompressedTileBlock ; $46b8
 	call AdvanceFrame ; $46bb
-	ld b, $3f ; $46be
-	ld c, $14 ; $46c0
+	ld b, TILEBLOCK_SharedMenuGfx63 ; $46be
+	ld c, SharedMenuGfx63_SIZE / 16 ; $46c0
 	ld de, vTiles0 ; $46c2
 	farcall LoadCompressedTileBlock ; $46c5
 	call AdvanceFrame ; $46c8
@@ -1540,11 +1560,11 @@ ShowLinkMessageScreen:
 	pop af ; $4a12
 	ret ; $4a13
 LoadLinkMessageScreen:
-	ld c, $11 ; $4a14
+	ld c, SCREENASSET_LinkingScreen ; $4a14
 	farcall LoadScreenAssetRecord ; $4a16
 	farcall ResetTextWindowState ; $4a19
-	ld b, $11 ; $4a1c
-	ld c, $10 ; $4a1e
+	ld b, TILEBLOCK_SharedMenuGfx17Alias17 ; $4a1c
+	ld c, SharedMenuGfx17_SIZE / 16 ; $4a1e
 	ld de, vTiles2 ; $4a20
 	farcall LoadCompressedTileBlock ; $4a23
 	wram_bank $05 ; $4a26
@@ -1636,11 +1656,11 @@ ShowLinkErrorScreen:
 	call ClearFrameTasks ; $4ada
 	ret ; $4add
 LoadLinkErrorScreen:
-	ld c, $22 ; $4ade
+	ld c, SCREENASSET_LinkError ; $4ade
 	farcall LoadScreenAssetRecord ; $4ae0
 	farcall ResetTextWindowState ; $4ae3
-	ld b, $11 ; $4ae6
-	ld c, $10 ; $4ae8
+	ld b, TILEBLOCK_SharedMenuGfx17Alias17 ; $4ae6
+	ld c, SharedMenuGfx17_SIZE / 16 ; $4ae8
 	ld de, vTiles2 ; $4aea
 	farcall LoadCompressedTileBlock ; $4aed
 	wram_bank $05 ; $4af0
@@ -1845,7 +1865,7 @@ LoadEraseDataConfirmScreen:
 	ld [wDigitSpriteAttr], a ; $4cc1
 	ld a, $10 ; $4cc4
 	ld [wDigitSpriteTileBase], a ; $4cc6
-	ld c, $10 ; $4cc9
+	ld c, SCREENASSET_WarningScreen ; $4cc9
 	farcall LoadScreenAssetRecord ; $4ccb
 	wram_bank $03 ; $4cce
 	ld de, wShadowAttrmap + 5 * TILEMAP_WIDTH + 3 ; $4cd4
@@ -1859,8 +1879,8 @@ LoadEraseDataConfirmScreen:
 	ld h, $20 ; $4ce7
 	farcall FillTilemapRect ; $4ce9
 	farcall ResetTextWindowState ; $4cec
-	ld b, $11 ; $4cef
-	ld c, $10 ; $4cf1
+	ld b, TILEBLOCK_SharedMenuGfx17Alias17 ; $4cef
+	ld c, SharedMenuGfx17_SIZE / 16 ; $4cf1
 	ld de, vTiles2 ; $4cf3
 	farcall LoadCompressedTileBlock ; $4cf6
 	wram_bank $05 ; $4cf9
@@ -1907,8 +1927,8 @@ LoadEraseDataConfirmScreen:
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 2 ; $4d69
 	ld c, $0e ; $4d6c
 	farcall RenderProportionalTextAt ; $4d6e
-	ld b, $41 ; $4d71
-	ld c, $14 ; $4d73
+	ld b, TILEBLOCK_SharedMenuGfx65 ; $4d71
+	ld c, SharedMenuGfx65_SIZE / 16 ; $4d73
 	ld de, vTiles0 ; $4d75
 	farcall LoadCompressedTileBlock ; $4d78
 	jp .renderProportionalTextAt ; $4d7b
@@ -1931,8 +1951,8 @@ LoadEraseDataConfirmScreen:
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 2 ; $4da5
 	ld c, $0e ; $4da8
 	farcall RenderProportionalTextAt ; $4daa
-	ld b, $45 ; $4dad
-	ld c, $14 ; $4daf
+	ld b, TILEBLOCK_EraseDataConfirmGfx0 ; $4dad
+	ld c, EraseDataConfirmGfx0_SIZE / 16 ; $4daf
 	ld de, vTiles0 ; $4db1
 	farcall LoadCompressedTileBlock ; $4db4
 	jr .renderProportionalTextAt ; $4db7
@@ -1953,8 +1973,8 @@ LoadEraseDataConfirmScreen:
 	ld de, wShadowTilemap + 16 * TILEMAP_WIDTH + 2 ; $4ddd
 	ld c, $0e ; $4de0
 	farcall RenderProportionalTextAt ; $4de2
-	ld b, $46 ; $4de5
-	ld c, $14 ; $4de7
+	ld b, TILEBLOCK_EraseDataConfirmGfx1 ; $4de5
+	ld c, EraseDataConfirmGfx1_SIZE / 16 ; $4de7
 	ld de, vTiles0 ; $4de9
 	farcall LoadCompressedTileBlock ; $4dec
 .renderProportionalTextAt:
@@ -2157,23 +2177,23 @@ LoadRacketShoesChoiceGraphics:
 	ld a, c ; $4f7d
 	cp $02 ; $4f7e
 	jr nz, .loop ; $4f80
-	ld b, $4a ; $4f82
-	ld c, $10 ; $4f84
+	ld b, TILEBLOCK_RacketShoesChoiceGfx0 ; $4f82
+	ld c, RacketShoesChoiceGfx0_SIZE / 16 ; $4f84
 	ld de, vTiles0 + VRAM_BANK1 ; $4f86
 	farcall LoadCompressedTileBlock ; $4f89
 	call AdvanceFrame ; $4f8c
-	ld b, $4b ; $4f8f
-	ld c, $10 ; $4f91
+	ld b, TILEBLOCK_RacketShoesChoiceGfx1 ; $4f8f
+	ld c, RacketShoesChoiceGfx1_SIZE / 16 ; $4f91
 	ld de, vTiles0 + $10 * TILE_SIZE + VRAM_BANK1 ; $4f93
 	farcall LoadCompressedTileBlock ; $4f96
 	call AdvanceFrame ; $4f99
-	ld b, $1b ; $4f9c
-	ld c, $04 ; $4f9e
+	ld b, TILEBLOCK_SharedMenuGfx27 ; $4f9c
+	ld c, SharedMenuGfx27_SIZE / 16 ; $4f9e
 	ld de, vTiles0 + $70 * TILE_SIZE + VRAM_BANK1 ; $4fa0
 	farcall LoadCompressedTileBlock ; $4fa3
 	call AdvanceFrame ; $4fa6
-	ld b, $4c ; $4fa9
-	ld c, $14 ; $4fab
+	ld b, TILEBLOCK_RacketShoesChoiceGfx2 ; $4fa9
+	ld c, RacketShoesChoiceGfx2_SIZE / 16 ; $4fab
 	ld de, vTiles0 ; $4fad
 	farcall LoadCompressedTileBlock ; $4fb0
 	call AdvanceFrame ; $4fb3
@@ -2560,18 +2580,18 @@ LoadPlayAlonePartnerGraphics:
 	ld a, c ; $5273
 	cp $02 ; $5274
 	jr nz, .loop ; $5276
-	ld b, $23 ; $5278
-	ld c, $10 ; $527a
+	ld b, TILEBLOCK_SharedMenuGfx35 ; $5278
+	ld c, SharedMenuGfx35_SIZE / 16 ; $527a
 	ld de, vTiles0 + VRAM_BANK1 ; $527c
 	farcall LoadCompressedTileBlock ; $527f
 	call AdvanceFrame ; $5282
-	ld b, $24 ; $5285
-	ld c, $10 ; $5287
+	ld b, TILEBLOCK_SharedMenuGfx36 ; $5285
+	ld c, SharedMenuGfx36_SIZE / 16 ; $5287
 	ld de, vTiles0 + $10 * TILE_SIZE + VRAM_BANK1 ; $5289
 	farcall LoadCompressedTileBlock ; $528c
 	call AdvanceFrame ; $528f
-	ld b, $1b ; $5292
-	ld c, $04 ; $5294
+	ld b, TILEBLOCK_SharedMenuGfx27 ; $5292
+	ld c, SharedMenuGfx27_SIZE / 16 ; $5294
 	ld de, vTiles0 + $70 * TILE_SIZE + VRAM_BANK1 ; $5296
 	farcall LoadCompressedTileBlock ; $5299
 	call AdvanceFrame ; $529c
@@ -2733,11 +2753,11 @@ DrawEquipmentStatusScreen:
 	farcall QueueWram3MapToVRAM ; $53ed
 	ret ; $53f0
 LoadEquipmentStatusWindows:
-	ld c, $21 ; $53f1
+	ld c, SCREENASSET_EquipmentSelect ; $53f1
 	farcall LoadScreenAssetRecord ; $53f3
 	farcall ResetTextWindowState ; $53f6
-	ld b, $11 ; $53f9
-	ld c, $10 ; $53fb
+	ld b, TILEBLOCK_SharedMenuGfx17Alias17 ; $53f9
+	ld c, SharedMenuGfx17_SIZE / 16 ; $53fb
 	ld de, vTiles2 ; $53fd
 	farcall LoadCompressedTileBlock ; $5400
 	wram_bank $05 ; $5403
@@ -2855,7 +2875,7 @@ RunRacketSelectScreen:
 	xor a ; $550b
 	ret ; $550c
 LoadRacketSelectScreen:
-	ld c, $21 ; $550d
+	ld c, SCREENASSET_EquipmentSelect ; $550d
 	farcall LoadScreenAssetRecord ; $550f
 	farcall PrepareGlyphBuffer ; $5512
 	call LoadEquipSelectCommon ; $5515
@@ -2874,8 +2894,8 @@ LoadRacketSelectScreen:
 	call BuildOwnedItemList ; $553b
 	call DrawOwnedItemIcons ; $553e
 	call DrawRacketInfoPanel ; $5541
-	ld b, $63 ; $5544
-	ld c, $02 ; $5546
+	ld b, TILEBLOCK_SharedMenuGfx99 ; $5544
+	ld c, SharedMenuGfx99_SIZE / 16 ; $5546
 	ld de, vTiles0 + $20 * TILE_SIZE + VRAM_BANK1 ; $5548
 	farcall LoadCompressedTileBlock ; $554b
 	ld hl, Palette_3e ; $554e
@@ -3060,7 +3080,7 @@ RunShoesSelectScreen:
 	ret ; $5694
 	ret ; $5695
 LoadShoesSelectScreen:
-	ld c, $21 ; $5696
+	ld c, SCREENASSET_EquipmentSelect ; $5696
 	farcall LoadScreenAssetRecord ; $5698
 	farcall PrepareGlyphBuffer ; $569b
 	call LoadEquipSelectCommon ; $569e
@@ -3090,8 +3110,8 @@ LoadShoesSelectScreen:
 	call BuildOwnedItemList ; $56e4
 	call DrawOwnedItemIcons ; $56e7
 	call DrawShoesInfoPanel ; $56ea
-	ld b, $63 ; $56ed
-	ld c, $02 ; $56ef
+	ld b, TILEBLOCK_SharedMenuGfx99 ; $56ed
+	ld c, SharedMenuGfx99_SIZE / 16 ; $56ef
 	ld de, vTiles0 + $20 * TILE_SIZE + VRAM_BANK1 ; $56f1
 	farcall LoadCompressedTileBlock ; $56f4
 	ld hl, Palette_3e ; $56f7
@@ -3246,8 +3266,8 @@ ShoeItemTiles_3e:
 	db $67, $68 ; 0x00
 LoadEquipSelectCommon:
 	farcall ResetTextWindowState ; $57f4
-	ld b, $11 ; $57f7
-	ld c, $10 ; $57f9
+	ld b, TILEBLOCK_SharedMenuGfx17Alias17 ; $57f7
+	ld c, SharedMenuGfx17_SIZE / 16 ; $57f9
 	ld de, vTiles2 ; $57fb
 	farcall LoadCompressedTileBlock ; $57fe
 	wram_bank $05 ; $5801
@@ -3952,52 +3972,52 @@ LoadCourtSelectGraphics:
 	ld a, c ; $5d67
 	cp $09 ; $5d68
 	jr nz, .loop ; $5d6a
-	ld b, $65 ; $5d6c
-	ld c, $12 ; $5d6e
+	ld b, TILEBLOCK_CourtSelectGfx1 ; $5d6c
+	ld c, $12 ; $5d6e -- 18 of CourtSelectGfx1's 16 tiles
 	ld de, vTiles0 + VRAM_BANK1 ; $5d70
 	farcall LoadCompressedTileBlock ; $5d73
-	ld b, $66 ; $5d76
-	ld c, $12 ; $5d78
+	ld b, TILEBLOCK_CourtSelectGfx2 ; $5d76
+	ld c, $12 ; $5d78 -- 18 of CourtSelectGfx2's 16 tiles
 	ld de, vTiles0 + $10 * TILE_SIZE + VRAM_BANK1 ; $5d7a
 	farcall LoadCompressedTileBlock ; $5d7d
-	ld b, $67 ; $5d80
-	ld c, $12 ; $5d82
+	ld b, TILEBLOCK_CourtSelectGfx3 ; $5d80
+	ld c, $12 ; $5d82 -- 18 of CourtSelectGfx3's 16 tiles
 	ld de, vTiles0 + $20 * TILE_SIZE + VRAM_BANK1 ; $5d84
 	farcall LoadCompressedTileBlock ; $5d87
-	ld b, $68 ; $5d8a
-	ld c, $14 ; $5d8c
+	ld b, TILEBLOCK_CourtSelectGfx4 ; $5d8a
+	ld c, $14 ; $5d8c -- 20 of CourtSelectGfx4's 18 tiles
 	ld de, vTiles0 + $30 * TILE_SIZE + VRAM_BANK1 ; $5d8e
 	farcall LoadCompressedTileBlock ; $5d91
-	ld b, $6a ; $5d94
-	ld c, $12 ; $5d96
+	ld b, TILEBLOCK_CourtSelectGfx5Alias16 ; $5d94
+	ld c, $12 ; $5d96 -- 18 of CourtSelectGfx5's 16 tiles
 	ld de, vTiles0 + $42 * TILE_SIZE + VRAM_BANK1 ; $5d98
 	farcall LoadCompressedTileBlock ; $5d9b
-	ld b, $6b ; $5d9e
-	ld c, $12 ; $5da0
+	ld b, TILEBLOCK_CourtSelectGfx6 ; $5d9e
+	ld c, $12 ; $5da0 -- 18 of CourtSelectGfx6's 16 tiles
 	ld de, vTiles0 + $52 * TILE_SIZE + VRAM_BANK1 ; $5da2
 	farcall LoadCompressedTileBlock ; $5da5
-	ld b, $6c ; $5da8
-	ld c, $12 ; $5daa
+	ld b, TILEBLOCK_CourtSelectGfx7 ; $5da8
+	ld c, $12 ; $5daa -- 18 of CourtSelectGfx7's 16 tiles
 	ld de, vTiles0 + $62 * TILE_SIZE + VRAM_BANK1 ; $5dac
 	farcall LoadCompressedTileBlock ; $5daf
-	ld b, $6d ; $5db2
-	ld c, $12 ; $5db4
+	ld b, TILEBLOCK_CourtSelectGfx8 ; $5db2
+	ld c, $12 ; $5db4 -- 18 of CourtSelectGfx8's 16 tiles
 	ld de, vTiles0 + $20 * TILE_SIZE ; $5db6
 	farcall LoadCompressedTileBlock ; $5db9
-	ld b, $6e ; $5dbc
-	ld c, $12 ; $5dbe
+	ld b, TILEBLOCK_CourtSelectGfx9 ; $5dbc
+	ld c, $12 ; $5dbe -- 18 of CourtSelectGfx9's 16 tiles
 	ld de, vTiles0 + $30 * TILE_SIZE ; $5dc0
 	farcall LoadCompressedTileBlock ; $5dc3
-	ld b, $6f ; $5dc6
-	ld c, $12 ; $5dc8
+	ld b, TILEBLOCK_SharedMenuGfx111 ; $5dc6
+	ld c, $12 ; $5dc8 -- 18 of SharedMenuGfx111's 16 tiles
 	ld de, vTiles0 + $40 * TILE_SIZE ; $5dca
 	farcall LoadCompressedTileBlock ; $5dcd
-	ld b, $1b ; $5dd0
-	ld c, $04 ; $5dd2
+	ld b, TILEBLOCK_SharedMenuGfx27 ; $5dd0
+	ld c, SharedMenuGfx27_SIZE / 16 ; $5dd2
 	ld de, vTiles0 + $72 * TILE_SIZE + VRAM_BANK1 ; $5dd4
 	farcall LoadCompressedTileBlock ; $5dd7
-	ld b, $40 ; $5dda
-	ld c, $14 ; $5ddc
+	ld b, TILEBLOCK_CourtSelectGfx0 ; $5dda
+	ld c, CourtSelectGfx0_SIZE / 16 ; $5ddc
 	ld de, vTiles0 ; $5dde
 	farcall LoadCompressedTileBlock ; $5de1
 	ld b, $08 ; $5de4

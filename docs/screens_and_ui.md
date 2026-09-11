@@ -430,8 +430,8 @@ Three dispatchers cover nearly every screen asset in the ROM:
 
 | dispatcher | addr | argument | table |
 |---|---|---|---|
-| `LoadScreenAssetRecord` | `$39:$407e` | `c` = record id | `ScreenAssetRecordTable` (`$39:$40f5`), 70 records × 4 slots |
-| `LoadCompressedTileBlock` | `$39:$468b` | `b` = block id, `de` = VRAM destination, `c` = length | `TileBlockPtrs_39` (`$39:$46b7`), 122 records × 1 slot |
+| `LoadScreenAssetRecord` | `$39:$407e` | `c` = record id, `SCREENASSET_<Name>` | `ScreenAssetRecordTable` (`$39:$40f5`), 70 `screen_asset` records × 4 slots |
+| `LoadCompressedTileBlock` | `$39:$468b` | `b` = block id, `TILEBLOCK_<Blob>`; `de` = VRAM destination; `c` = tile count, `<Blob>_SIZE / 16` when it is the whole block | `TileBlockPtrs_39` (`$39:$46b7`), 122 `tileblock` records × 1 slot |
 | `SceneGfxSlotTable` | bank `$0a` | scene index | 8 slots per story scene |
 
 A `ScreenAssetRecordTable` record is `(Tiles, Tilemap, Attrmap, Palettes)` and
@@ -448,6 +448,15 @@ A `ScreenAssetRecordTable` record is `(Tiles, Tilemap, Attrmap, Palettes)` and
 `LoadCompressedTileBlock` is the general "decompress a tile block to an
 arbitrary VRAM address" path: it decompresses to `wDecompBuffer` and forwards
 the caller's `de`/`c` to `QueueVRAMCopy`, restoring the WRAM bank around it.
+
+Both tables define their own indices: a `tileblock Name` row is the slot word
+for `DataPtr_Name` plus `TILEBLOCK_Name`, its position, and a `screen_asset
+Name, ...` row likewise defines `SCREENASSET_Name` (`include/macros.inc`).
+Every call site uses the name (`ld b, TILEBLOCK_MenuFontTiles_01`, `ld c,
+SCREENASSET_TitleScreen`), as do the bank `$18` id lists the story cutscenes
+index by scene, so a row inserted in either table renumbers what follows and
+every reference moves with it. To add a block: a `DataPtr_` slot in some
+bank's `$4000` table, a `tileblock` row, and the name at the call site.
 
 Because these are the only ways in, the *size* of a decompressed blob is often
 enough to name it — 64 bytes is an icon or a palette set, 1024 a tilemap or
@@ -944,7 +953,7 @@ end to end is the fastest way to see how the pieces bind:
    caller must have cleared);
 2. `LoadStadiumBgGraphics`;
 3. `ResetTextWindowState` (bank `$05`, §7.5);
-4. `LoadCompressedTileBlock(b = $11, c = $10, de = $9000)` — the menu font;
+4. `LoadCompressedTileBlock(b = TILEBLOCK_MenuFontTiles_01, c = 16 tiles, de = $9000)` — the menu font;
 5. `wram_bank $05`, then `wShadowTilemapBank = $03` and `wWindowTileAttr = $00`
    — **this is the line that points the window engine at the screen's own
    tilemap** rather than bank `$05`'s;

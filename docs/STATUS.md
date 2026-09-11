@@ -111,6 +111,14 @@ blob.
 
 ## Recent changes
 
+* **2026-09-11** — screen assets are referenced by name. The two bank
+  `$39` dispatch tables define their own indices: `tileblock Name` rows
+  (122) export `TILEBLOCK_Name`, `screen_asset Name, ...` rows (70) export
+  `SCREENASSET_Name`, and all 153 `LoadCompressedTileBlock` sites and 38
+  `LoadScreenAssetRecord` sites, plus the five cutscene id lists in bank
+  `$18`, use them. The 139 tile-block copies that take the whole decoded
+  block now say `Blob_SIZE / 16` (the `.inc` included at the top of the
+  using bank); the 13 partial ones say which tiles of which blob.
 * **2026-09-11** — the generator is retired and `src/` is the source of
   truth. A final run reproduced the committed tree byte for byte, the tag
   `generator-final` was placed on it, and `tools/disasm.py`, `disasmlib/`,

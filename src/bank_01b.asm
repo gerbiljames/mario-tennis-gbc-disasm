@@ -1,5 +1,15 @@
 SECTION "ROM Bank $1b", ROMX[$4000], BANK[$1b]
 
+; decoded lengths of the tile blocks this bank copies whole through LoadCompressedTileBlock
+	INCLUDE "data/bank_03c/lz_SharedMenuGfx27.inc" ; DEF SharedMenuGfx27_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03c/lz_SharedMenuGfx29.inc" ; DEF SharedMenuGfx29_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03c/lz_SharedMenuGfx30.inc" ; DEF SharedMenuGfx30_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03f/lz_MinigameLevelSelectGfx2.inc" ; DEF MinigameLevelSelectGfx2_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03f/lz_SavedDataTypeSelectGfx.inc" ; DEF SavedDataTypeSelectGfx_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_06d/lz_MinigameLevelSelectGfx0.inc" ; DEF MinigameLevelSelectGfx0_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_06d/lz_MinigameLevelSelectGfx1.inc" ; DEF MinigameLevelSelectGfx1_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_06d/lz_SharedMenuGfx111.inc" ; DEF SharedMenuGfx111_SIZE EQU its decoded length, generated from the .bin by make
+
 	farptr DecompressCharMugshot ; $4000
 	farptr LoadIndexedPaletteThunk ; $4002
 	farptr StubNop_1b_05 ; $4004
@@ -1102,14 +1112,14 @@ BuildRankingBoardScreen:
 	ld a, [wRankingBoardDoubles] ; $4f25
 	or a ; $4f28
 	jr z, .zero ; $4f29
-	ld c, $2a ; $4f2b
+	ld c, SCREENASSET_TournamentBracketDoubles ; $4f2b
 	farcall LoadScreenAssetRecord ; $4f2d
 	wram_bank $03 ; $4f30
 	call DrawDoublesRankingNames ; $4f36
 	call HighlightDoublesRankingRows ; $4f39
 	jr .loadRankingBoardTiles ; $4f3c
 .zero:
-	ld c, $29 ; $4f3e
+	ld c, SCREENASSET_TournamentBracketSingles ; $4f3e
 	farcall LoadScreenAssetRecord ; $4f40
 	wram_bank $03 ; $4f43
 	call DrawSinglesRankingNames ; $4f49
@@ -4593,8 +4603,8 @@ LoadMinigameLevelSelectGfx:
 	cp $04 ; $6cc1
 	jr nz, .loop ; $6cc3
 .loadCompressedTileBlock2:
-	ld b, $70 ; $6cc5
-	ld c, $10 ; $6cc7
+	ld b, TILEBLOCK_MinigameLevelSelectGfx0 ; $6cc5
+	ld c, MinigameLevelSelectGfx0_SIZE / 16 ; $6cc7
 	ld de, vTiles0 + VRAM_BANK1 ; $6cc9
 	farcall LoadCompressedTileBlock ; $6ccc
 	call AdvanceFrame ; $6ccf
@@ -4605,27 +4615,27 @@ LoadMinigameLevelSelectGfx:
 	ld a, b ; $6ce4
 	or a ; $6ce5
 	jr z, .zero2 ; $6ce6
-	ld b, $71 ; $6ce8
+	ld b, TILEBLOCK_MinigameLevelSelectIconGfx ; $6ce8
 	jr .loadCompressedTileBlock ; $6cea
 .zero2:
-	ld b, $6f ; $6cec
+	ld b, TILEBLOCK_SharedMenuGfx111 ; $6cec
 .loadCompressedTileBlock:
-	ld c, $10 ; $6cee
+	ld c, SharedMenuGfx111_SIZE / 16 ; $6cee
 	ld de, vTiles0 + $10 * TILE_SIZE + VRAM_BANK1 ; $6cf0
 	farcall LoadCompressedTileBlock ; $6cf3
 	call AdvanceFrame ; $6cf6
-	ld b, $72 ; $6cf9
-	ld c, $10 ; $6cfb
+	ld b, TILEBLOCK_MinigameLevelSelectGfx1 ; $6cf9
+	ld c, MinigameLevelSelectGfx1_SIZE / 16 ; $6cfb
 	ld de, vTiles0 + $20 * TILE_SIZE + VRAM_BANK1 ; $6cfd
 	farcall LoadCompressedTileBlock ; $6d00
 	call AdvanceFrame ; $6d03
-	ld b, $1b ; $6d06
-	ld c, $04 ; $6d08
+	ld b, TILEBLOCK_SharedMenuGfx27 ; $6d06
+	ld c, SharedMenuGfx27_SIZE / 16 ; $6d08
 	ld de, vTiles0 + $70 * TILE_SIZE + VRAM_BANK1 ; $6d0a
 	farcall LoadCompressedTileBlock ; $6d0d
 	call AdvanceFrame ; $6d10
-	ld b, $77 ; $6d13
-	ld c, $14 ; $6d15
+	ld b, TILEBLOCK_MinigameLevelSelectGfx2Alias16 ; $6d13
+	ld c, MinigameLevelSelectGfx2_SIZE / 16 ; $6d15
 	ld de, vTiles0 ; $6d17
 	farcall LoadCompressedTileBlock ; $6d1a
 	call AdvanceFrame ; $6d1d
@@ -5279,23 +5289,23 @@ LoadSavedDataTypeSelectGfx:
 	ld a, c ; $7254
 	cp $02 ; $7255
 	jr nz, .loop ; $7257
-	ld b, $1d ; $7259
-	ld c, $10 ; $725b
+	ld b, TILEBLOCK_SharedMenuGfx29 ; $7259
+	ld c, SharedMenuGfx29_SIZE / 16 ; $725b
 	ld de, vTiles0 + VRAM_BANK1 ; $725d
 	farcall LoadCompressedTileBlock ; $7260
 	call AdvanceFrame ; $7263
-	ld b, $1e ; $7266
-	ld c, $12 ; $7268
+	ld b, TILEBLOCK_SharedMenuGfx30 ; $7266
+	ld c, SharedMenuGfx30_SIZE / 16 ; $7268
 	ld de, vTiles0 + $10 * TILE_SIZE + VRAM_BANK1 ; $726a
 	farcall LoadCompressedTileBlock ; $726d
 	call AdvanceFrame ; $7270
-	ld b, $1b ; $7273
-	ld c, $04 ; $7275
+	ld b, TILEBLOCK_SharedMenuGfx27 ; $7273
+	ld c, SharedMenuGfx27_SIZE / 16 ; $7275
 	ld de, vTiles0 + $70 * TILE_SIZE + VRAM_BANK1 ; $7277
 	farcall LoadCompressedTileBlock ; $727a
 	call AdvanceFrame ; $727d
-	ld b, $78 ; $7280
-	ld c, $14 ; $7282
+	ld b, TILEBLOCK_SavedDataTypeSelectGfx ; $7280
+	ld c, SavedDataTypeSelectGfx_SIZE / 16 ; $7282
 	ld de, vTiles0 ; $7284
 	farcall LoadCompressedTileBlock ; $7287
 	call AdvanceFrame ; $728a
@@ -5515,7 +5525,7 @@ ShowMinigameDataScreen:
 	ld a, $ff ; $7446
 	ret ; $7448
 BuildMinigameDataScreen:
-	ld c, $2b ; $7449
+	ld c, SCREENASSET_MarioMiniGames ; $7449
 	farcall LoadScreenAssetRecord ; $744b
 	xor a ; $744e
 	ld [wMenuCursorX], a ; $744f

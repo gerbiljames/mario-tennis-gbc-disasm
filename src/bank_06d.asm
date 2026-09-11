@@ -194,7 +194,7 @@ ShowIntroCharacterScreen:
 	xor a ; $6a87
 	ldh [hScrollY], a ; $6a88
 	ldh [hScrollX], a ; $6a8a
-	ld c, $28 ; $6a8c
+	ld c, SCREENASSET_IntroCharacterIcon ; $6a8c
 	farcall LoadScreenAssetRecord ; $6a8e
 	farcall LoadIntroTilesAndPalette ; $6a91
 	farcall QueueWram3MapToVRAM ; $6a94

@@ -1,5 +1,8 @@
 SECTION "ROM Bank $17", ROMX[$4000], BANK[$17]
 
+; decoded lengths of the tile blocks this bank copies whole through LoadCompressedTileBlock
+	INCLUDE "data/bank_039/lz_SharedMenuGfx17.inc" ; DEF SharedMenuGfx17_SIZE EQU its decoded length, generated from the .bin by make
+
 	farptr ShowCourtDiagramTestScreen ; $4000
 DataPtr_CourtDiagramTiles:
 	dw CourtDiagramTiles ; $4002
@@ -1363,7 +1366,7 @@ DrawBriefingTargetBrackets:
 	pop_wram_bank ; $495a
 	ret ; $495f
 LoadCourtDiagramScreen:
-	ld c, $24 ; $4960
+	ld c, SCREENASSET_CourtDiagram ; $4960
 	farcall LoadScreenAssetRecord ; $4962
 	call InitCourtDiagramTextWindow ; $4965
 	wram_bank $03 ; $4968
@@ -1395,8 +1398,8 @@ AdvanceFrameCheckInput:
 	ret ; $499e
 InitCourtDiagramTextWindow:
 	farcall ResetTextWindowState ; $499f
-	ld b, $11 ; $49a2
-	ld c, $10 ; $49a4
+	ld b, TILEBLOCK_SharedMenuGfx17Alias17 ; $49a2
+	ld c, SharedMenuGfx17_SIZE / 16 ; $49a4
 	ld de, vTiles2 ; $49a6
 	farcall LoadCompressedTileBlock ; $49a9
 	wram_bank $05 ; $49ac
@@ -4397,7 +4400,7 @@ MinigameRulesPageLoop:
 LoadRulesScreen:
 	call LoadRulesBorderAnimTiles ; $7157
 	farcall LoadMenuFontGfx ; $715a
-	ld c, $44 ; $715d
+	ld c, SCREENASSET_RulesScreen ; $715d
 	farcall LoadScreenAssetRecord ; $715f
 	ldh a, [hWramBank] ; $7162
 	push af ; $7164
@@ -4418,8 +4421,8 @@ LoadRulesScreen:
 	ld b, $08 ; $7192
 	ld c, $0f ; $7194
 	farcall LoadIndexedPalette ; $7196
-	ld b, $11 ; $7199
-	ld c, $10 ; $719b
+	ld b, TILEBLOCK_SharedMenuGfx17Alias17 ; $7199
+	ld c, SharedMenuGfx17_SIZE / 16 ; $719b
 	ld de, vTiles2 ; $719d
 	farcall LoadCompressedTileBlock ; $71a0
 	ld a, $03 ; $71a3

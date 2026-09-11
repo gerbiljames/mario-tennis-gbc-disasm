@@ -1,5 +1,8 @@
 SECTION "ROM Bank $16", ROMX[$4000], BANK[$16]
 
+; decoded lengths of the tile blocks this bank copies whole through LoadCompressedTileBlock
+	INCLUDE "data/bank_018/lz_MatchWinLoseGfx.inc" ; DEF MatchWinLoseGfx_SIZE EQU its decoded length, generated from the .bin by make
+
 	farptr RunMatchWinLoseScreen ; $4000
 	farptr RunMatchStatsScreen ; $4002
 	farptr DecompressCharacterPortrait ; $4004
@@ -947,8 +950,8 @@ InitMatchWinLoseScreen:
 	ld hl, MatchWinLoseScreenPalettes ; $45ec
 	lb de, $08, $03 ; $45ef palette index, count
 	call LoadPaletteShadow ; $45f2
-	ld b, $09 ; $45f5
-	ld c, $04 ; $45f7
+	ld b, TILEBLOCK_MatchWinLoseGfx ; $45f5
+	ld c, MatchWinLoseGfx_SIZE / 16 ; $45f7
 	ld de, vTiles0 + $40 * TILE_SIZE + VRAM_BANK1 ; $45f9
 	farcall LoadCompressedTileBlock ; $45fc
 	pop_wram_bank ; $45ff
@@ -982,11 +985,11 @@ LoadWinLoseScreenAssets:
 	ld a, [wResultScreenWon] ; $490c
 	or a ; $490f
 	jr z, .zero ; $4910
-	ld c, $14 ; $4912
+	ld c, SCREENASSET_MatchStats2 ; $4912
 	farcall LoadScreenAssetRecord ; $4914
 	jr .testGameFlagByNumber ; $4917
 .zero:
-	ld c, $13 ; $4919
+	ld c, SCREENASSET_MatchStats ; $4919
 	farcall LoadScreenAssetRecord ; $491b
 	jr .testGameFlagByNumber ; $491e
 .testGameFlagByNumber:
@@ -1735,7 +1738,7 @@ RunMatchStatsScreen:
 	ld a, $ff ; $5c87
 	ret ; $5c89
 InitMatchStatsScreen:
-	ld c, $23 ; $5c8a
+	ld c, SCREENASSET_MatchStats3 ; $5c8a
 	farcall LoadScreenAssetRecord ; $5c8c
 	ld de, $8000 + VRAM_BANK1 ; $5c8f
 	ld c, $00 ; $5c92

@@ -1,5 +1,15 @@
 SECTION "ROM Bank $38", ROMX[$4000], BANK[$38]
 
+; decoded lengths of the tile blocks this bank copies whole through LoadCompressedTileBlock
+	INCLUDE "data/bank_039/lz_CharGridGfx2.inc" ; DEF CharGridGfx2_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_039/lz_CharacterSelectGfx.inc" ; DEF CharacterSelectGfx_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_039/lz_DigitFontTiles.inc" ; DEF DigitFontTiles_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_039/lz_NameEntryGfx.inc" ; DEF NameEntryGfx_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_039/lz_SharedMenuGfx17.inc" ; DEF SharedMenuGfx17_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_039/lz_StatLabelTiles.inc" ; DEF StatLabelTiles_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03d/lz_CharGridGfx1.inc" ; DEF CharGridGfx1_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03d/lz_SharedMenuGfx72.inc" ; DEF SharedMenuGfx72_SIZE EQU its decoded length, generated from the .bin by make
+
 	farptr RunCharacterSelectScreen ; $4000
 	farptr RunMatchTypeMenu ; $4002
 	farptr RunLinkMatchSequence ; $4004
@@ -1010,11 +1020,11 @@ SetupMatchTypeMenuScreen:
 	ld a, [wMainMenuCursor] ; $4611
 	ld c, a ; $4614
 	call SetMenuCursorFromIndex_38 ; $4615
-	ld c, $00 ; $4618
+	ld c, SCREENASSET_MatchTypeMenu ; $4618
 	farcall LoadScreenAssetRecord ; $461a
 	farcall ResetTextWindowState ; $461d
-	ld b, $11 ; $4620
-	ld c, $10 ; $4622
+	ld b, TILEBLOCK_SharedMenuGfx17Alias17 ; $4620
+	ld c, SharedMenuGfx17_SIZE / 16 ; $4622
 	ld de, vTiles2 ; $4624
 	farcall LoadCompressedTileBlock ; $4627
 	wram_bank $05 ; $462a
@@ -1387,12 +1397,12 @@ SetupCharacterSelectScreen:
 	ld c, $00 ; $49a7
 	call SetMenuCursorFromIndex_38 ; $49a9
 	farcall LoadMenuFontGfx ; $49ac
-	ld c, $05 ; $49af
+	ld c, SCREENASSET_CharacterSelect ; $49af
 	farcall LoadScreenAssetRecord ; $49b1
 	call LoadCharSelectCharPalettes ; $49b4
 	farcall ResetTextWindowState ; $49b7
-	ld b, $11 ; $49ba
-	ld c, $10 ; $49bc
+	ld b, TILEBLOCK_SharedMenuGfx17Alias17 ; $49ba
+	ld c, SharedMenuGfx17_SIZE / 16 ; $49bc
 	ld de, vTiles2 ; $49be
 	farcall LoadCompressedTileBlock ; $49c1
 	wram_bank $05 ; $49c4
@@ -1453,8 +1463,8 @@ SetupCharacterSelectScreen:
 	ld h, $0f ; $4a5c
 	farcall FillTilemapRect ; $4a5e
 .secondRow:
-	ld b, $13 ; $4a61
-	ld c, $04 ; $4a63
+	ld b, TILEBLOCK_CharacterSelectGfx ; $4a61
+	ld c, CharacterSelectGfx_SIZE / 16 ; $4a63
 	ld de, vTiles0 ; $4a65
 	farcall LoadCompressedTileBlock ; $4a68
 	ld b, $08 ; $4a6b
@@ -1473,8 +1483,8 @@ SetupCharacterSelectScreen:
 	ld a, $10 ; $4a8f
 	ld [wMenuBgScrollTile], a ; $4a91
 	ld [wMenuBgScrollTile + 1], a ; $4a94
-	ld b, $48 ; $4a97
-	ld c, $14 ; $4a99
+	ld b, TILEBLOCK_SharedMenuGfx72 ; $4a97
+	ld c, SharedMenuGfx72_SIZE / 16 ; $4a99
 	ld de, vTiles0 + $10 * TILE_SIZE ; $4a9b
 	farcall LoadCompressedTileBlock ; $4a9e
 	call LoadCharSelectCharPalettes ; $4aa1
@@ -1980,7 +1990,7 @@ SetupCharGridScreen:
 	ld de, vTiles0 + $20 * TILE_SIZE + VRAM_BANK1 ; $4fbf
 	ld c, CharGridScreenGfx3_SIZE / 16 ; $4fc2
 	call QueueVRAMCopy ; $4fc4
-	ld c, $01 ; $4fc7
+	ld c, SCREENASSET_ExhibitionSetup ; $4fc7
 	farcall LoadScreenAssetRecord ; $4fc9
 	farcall ResetTextWindowState ; $4fcc
 	wram_bank $05 ; $4fcf
@@ -2002,20 +2012,20 @@ SetupCharGridScreen:
 	farcall CreateWindowFromScreenRect ; $4ff8
 	farcall DrawTextWindowFrame ; $4ffb
 	farcall RedrawWindowRows ; $4ffe
-	ld b, $11 ; $5001
-	ld c, $10 ; $5003
+	ld b, TILEBLOCK_SharedMenuGfx17Alias17 ; $5001
+	ld c, SharedMenuGfx17_SIZE / 16 ; $5003
 	ld de, vTiles2 ; $5005
 	farcall LoadCompressedTileBlock ; $5008
-	ld b, $15 ; $500b
-	ld c, $10 ; $500d
+	ld b, TILEBLOCK_StatLabelTiles ; $500b
+	ld c, StatLabelTiles_SIZE / 16 ; $500d
 	ld de, vTiles2 + $10 * TILE_SIZE ; $500f
 	farcall LoadCompressedTileBlock ; $5012
-	ld b, $75 ; $5015
-	ld c, $14 ; $5017
+	ld b, TILEBLOCK_CharGridGfx2 ; $5015
+	ld c, CharGridGfx2_SIZE / 16 ; $5017
 	ld de, vTiles0 + $50 * TILE_SIZE + VRAM_BANK1 ; $5019
 	farcall LoadCompressedTileBlock ; $501c
-	ld b, $79 ; $501f
-	ld c, $14 ; $5021
+	ld b, TILEBLOCK_DigitFontTiles ; $501f
+	ld c, DigitFontTiles_SIZE / 16 ; $5021
 	ld de, vTiles0 + $64 * TILE_SIZE + VRAM_BANK1 ; $5023
 	farcall LoadCompressedTileBlock ; $5026
 	ld de, vTiles0 ; $5029
@@ -2044,8 +2054,8 @@ SetupCharGridScreen:
 	ld a, $09 ; $5069
 	ld [wMenuBgScrollAttr], a ; $506b
 	ld [wMenuBgScrollAttr + 1], a ; $506e
-	ld b, $64 ; $5071
-	ld c, $14 ; $5073
+	ld b, TILEBLOCK_CharGridGfx1 ; $5071
+	ld c, CharGridGfx1_SIZE / 16 ; $5073
 	ld de, vTiles0 + $30 * TILE_SIZE + VRAM_BANK1 ; $5075
 	farcall LoadCompressedTileBlock ; $5078
 	farcall InitDefaultMatchSettings ; $507b
@@ -6387,8 +6397,8 @@ RunNameEntryScreen:
 	ld a, $00 ; $6f6b
 	ret ; $6f6d
 SetupNameEntryScreen:
-	ld b, $12 ; $6f6e
-	ld c, $02 ; $6f70
+	ld b, TILEBLOCK_NameEntryGfx ; $6f6e
+	ld c, NameEntryGfx_SIZE / 16 ; $6f70
 	ld de, vTiles0 + $10 * TILE_SIZE + VRAM_BANK1 ; $6f72
 	farcall LoadCompressedTileBlock ; $6f75
 	ld hl, vTiles0 + VRAM_BANK1 ; $6f78
@@ -6397,11 +6407,11 @@ SetupNameEntryScreen:
 	ld b, $0f ; $6f81
 	ld c, $00 ; $6f83
 	call SetMenuCursorFromIndex_38 ; $6f85
-	ld c, $06 ; $6f88
+	ld c, SCREENASSET_NameEntry ; $6f88
 	farcall LoadScreenAssetRecord ; $6f8a
 	farcall ResetTextWindowState ; $6f8d
-	ld b, $11 ; $6f90
-	ld c, $10 ; $6f92
+	ld b, TILEBLOCK_SharedMenuGfx17Alias17 ; $6f90
+	ld c, SharedMenuGfx17_SIZE / 16 ; $6f92
 	ld de, vTiles2 ; $6f94
 	farcall LoadCompressedTileBlock ; $6f97
 	wram_bank $05 ; $6f9a
@@ -6456,8 +6466,8 @@ SetupNameEntryScreen:
 	ld a, $10 ; $7024
 	ld [wMenuBgScrollTile], a ; $7026
 	ld [wMenuBgScrollTile + 1], a ; $7029
-	ld b, $48 ; $702c
-	ld c, $14 ; $702e
+	ld b, TILEBLOCK_SharedMenuGfx72 ; $702c
+	ld c, SharedMenuGfx72_SIZE / 16 ; $702e
 	ld de, vTiles0 + $10 * TILE_SIZE ; $7030
 	farcall LoadCompressedTileBlock ; $7033
 	push_wram_bank $02 ; $7036

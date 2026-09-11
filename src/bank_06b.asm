@@ -1,5 +1,28 @@
 SECTION "ROM Bank $6b", ROMX[$4000], BANK[$6b]
 
+; decoded lengths of the tile blocks this bank copies whole through LoadCompressedTileBlock
+	INCLUDE "data/bank_06c/lz_CutsceneGfx0.inc" ; DEF CutsceneGfx0_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_06c/lz_CutsceneGfx1.inc" ; DEF CutsceneGfx1_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_06c/lz_CutsceneGfx2.inc" ; DEF CutsceneGfx2_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_06c/lz_CutsceneGfx3.inc" ; DEF CutsceneGfx3_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_06c/lz_CutsceneGfx4.inc" ; DEF CutsceneGfx4_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_06c/lz_CutsceneGfx5.inc" ; DEF CutsceneGfx5_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_06c/lz_CutsceneGfx6.inc" ; DEF CutsceneGfx6_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_06c/lz_IntroGfx0.inc" ; DEF IntroGfx0_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_06c/lz_IntroGfx1.inc" ; DEF IntroGfx1_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_06c/lz_IntroGfx2.inc" ; DEF IntroGfx2_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_06c/lz_IntroGfx3.inc" ; DEF IntroGfx3_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_06c/lz_IntroGfx4.inc" ; DEF IntroGfx4_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_06c/lz_IntroGfx5.inc" ; DEF IntroGfx5_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_06d/lz_TitleGfx0.inc" ; DEF TitleGfx0_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_06d/lz_TitleGfx1.inc" ; DEF TitleGfx1_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_06d/lz_TitleGfx2.inc" ; DEF TitleGfx2_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_06d/lz_TitleGfx3.inc" ; DEF TitleGfx3_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_06d/lz_TitleGfx4.inc" ; DEF TitleGfx4_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_06d/lz_TitleGfx5.inc" ; DEF TitleGfx5_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_06d/lz_TitleGfx6.inc" ; DEF TitleGfx6_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_06d/lz_TitleGfx7.inc" ; DEF TitleGfx7_SIZE EQU its decoded length, generated from the .bin by make
+
 	farptr RunIntroCutscene ; $4000
 	farptr RunTitleScreen ; $4002
 DataPtr_TitleScreenTilemap:
@@ -345,7 +368,7 @@ IntroCutsceneState01Init_6b:
 	ld [wCutsceneSpriteBX], a ; $4235
 	ld a, $28 ; $4238
 	ld [wCutsceneSpriteBY], a ; $423a
-	ld c, $16 ; $423d
+	ld c, SCREENASSET_IntroRallies ; $423d
 	farcall LoadScreenAssetRecord ; $423f
 	call LoadCutsceneTileset ; $4242
 	push_wram_bank $03 ; $4245
@@ -451,7 +474,7 @@ IntroCutsceneState02Update_6b:
 	jp DispatchCutsceneStateInit.loopB ; $43cc
 IntroCutsceneState03Init_6b:
 	call DisableLCDSafely ; $43cf
-	ld c, $17 ; $43d2
+	ld c, SCREENASSET_IntroRallies2 ; $43d2
 	farcall LoadScreenAssetRecord ; $43d4
 	push_wram_bank $03 ; $43d7
 	ld h, $8a ; $43e0
@@ -557,7 +580,7 @@ IntroCutsceneState04Update_6b:
 	jp DispatchCutsceneStateInit.loop ; $452b
 IntroCutsceneState05Init_6b:
 	call DisableLCDSafely ; $452e
-	ld c, $18 ; $4531
+	ld c, SCREENASSET_IntroRallies3 ; $4531
 	farcall LoadScreenAssetRecord ; $4533
 	push_wram_bank $03 ; $4536
 	ld h, $8a ; $453f
@@ -572,7 +595,7 @@ IntroCutsceneState05Init_6b:
 	farcall FillTilemapRect ; $4554
 	pop_wram_bank ; $4557
 	farcall QueueWram3MapToVRAM ; $455c
-	ld c, $19 ; $455f
+	ld c, SCREENASSET_IntroRallies4 ; $455f
 	farcall LoadScreenAssetRecord ; $4561
 	ld a, $08 ; $4564
 	ldh [rSTAT], a ; $4566
@@ -774,7 +797,7 @@ IntroCutsceneState13InitPalettes_6b:
 	INCLUDE "data/bank_06b/IntroCutsceneState13InitPalettes_6b.asm" ; $475a, 64 bytes (palettes)
 IntroCutsceneState08Init_6b:
 	call DisableLCDSafely ; $479a
-	ld c, $1c ; $479d
+	ld c, SCREENASSET_IntroWave ; $479d
 	farcall LoadScreenAssetRecord ; $479f
 	farcall QueueWram3MapToVRAM ; $47a2
 	xor a ; $47a5
@@ -806,7 +829,7 @@ IntroCutsceneState08Update_6b:
 	jp DispatchCutsceneStateInit.loop ; $47e4
 IntroCutsceneState09Init_6b:
 	call DisableLCDSafely ; $47e7
-	ld c, $1d ; $47ea
+	ld c, SCREENASSET_IntroDive ; $47ea
 	farcall LoadScreenAssetRecord ; $47ec
 	farcall QueueWram3MapToVRAM ; $47ef
 	ld a, $94 ; $47f2
@@ -839,7 +862,7 @@ IntroCutsceneState09Update_6b:
 	jp DispatchCutsceneStateInit.loop ; $4833
 IntroCutsceneState10Init_6b:
 	call DisableLCDSafely ; $4836
-	ld c, $1e ; $4839
+	ld c, SCREENASSET_IntroGirlSwing ; $4839
 	farcall LoadScreenAssetRecord ; $483b
 	farcall QueueWram3MapToVRAM ; $483e
 	ld a, $a8 ; $4841
@@ -872,7 +895,7 @@ IntroCutsceneState10Update_6b:
 	jp DispatchCutsceneStateInit.loop ; $4882
 IntroCutsceneState11Init_6b:
 	call DisableLCDSafely ; $4885
-	ld c, $20 ; $4888
+	ld c, SCREENASSET_DecompressIntroTitleTilesPtrs ; $4888
 	farcall LoadScreenAssetRecord ; $488a
 	ld a, $01 ; $488d
 	ldh [hShowDebugConsole], a ; $488f
@@ -1397,7 +1420,7 @@ ApplyCutsceneScrollToSpriteX:
 	ret ; $51ad
 ShowIntroLogoScreen:
 	call DisableLCDSafely ; $51ae
-	ld c, $15 ; $51b1
+	ld c, SCREENASSET_CompanyLogos ; $51b1
 	farcall LoadScreenAssetRecord ; $51b3
 	farcall QueueWram3MapToVRAM ; $51b6
 	xor a ; $51b9
@@ -1442,32 +1465,32 @@ ScrollOutIntroLogo:
 	ldh [hScrollY], a ; $5207
 	ret ; $5209
 LoadCutsceneTileset:
-	ld b, $4d ; $520a
-	ld c, $06 ; $520c
+	ld b, TILEBLOCK_CutsceneGfx0 ; $520a
+	ld c, CutsceneGfx0_SIZE / 16 ; $520c
 	ld de, vTiles0 + VRAM_BANK1 ; $520e
 	farcall LoadCompressedTileBlock ; $5211
-	ld b, $4e ; $5214
-	ld c, $0a ; $5216
+	ld b, TILEBLOCK_CutsceneGfx1 ; $5214
+	ld c, CutsceneGfx1_SIZE / 16 ; $5216
 	ld de, vTiles0 + $06 * TILE_SIZE + VRAM_BANK1 ; $5218
 	farcall LoadCompressedTileBlock ; $521b
-	ld b, $4f ; $521e
-	ld c, $10 ; $5220
+	ld b, TILEBLOCK_CutsceneGfx2 ; $521e
+	ld c, CutsceneGfx2_SIZE / 16 ; $5220
 	ld de, vTiles0 + $10 * TILE_SIZE + VRAM_BANK1 ; $5222
 	farcall LoadCompressedTileBlock ; $5225
-	ld b, $50 ; $5228
-	ld c, $06 ; $522a
+	ld b, TILEBLOCK_CutsceneGfx3 ; $5228
+	ld c, CutsceneGfx3_SIZE / 16 ; $522a
 	ld de, vTiles0 + $20 * TILE_SIZE + VRAM_BANK1 ; $522c
 	farcall LoadCompressedTileBlock ; $522f
-	ld b, $51 ; $5232
-	ld c, $12 ; $5234
+	ld b, TILEBLOCK_CutsceneGfx4 ; $5232
+	ld c, CutsceneGfx4_SIZE / 16 ; $5234
 	ld de, vTiles0 + $26 * TILE_SIZE + VRAM_BANK1 ; $5236
 	farcall LoadCompressedTileBlock ; $5239
-	ld b, $52 ; $523c
-	ld c, $10 ; $523e
+	ld b, TILEBLOCK_CutsceneGfx5 ; $523c
+	ld c, CutsceneGfx5_SIZE / 16 ; $523e
 	ld de, vTiles0 + $38 * TILE_SIZE + VRAM_BANK1 ; $5240
 	farcall LoadCompressedTileBlock ; $5243
-	ld b, $53 ; $5246
-	ld c, $02 ; $5248
+	ld b, TILEBLOCK_CutsceneGfx6 ; $5246
+	ld c, CutsceneGfx6_SIZE / 16 ; $5248
 	ld de, vTiles0 + $48 * TILE_SIZE + VRAM_BANK1 ; $524a
 	farcall LoadCompressedTileBlock ; $524d
 	ld hl, CutsceneTilesetPalettes ; $5250
@@ -1768,32 +1791,32 @@ CutsceneSceneAGfx1:
 CutsceneSceneAGfx2:
 	INCBIN "data/bank_06b/lz_CutsceneSceneAGfx2.bin" ; $5ea8, 461 bytes
 LoadIntroTilesAndPalette:
-	ld b, $54 ; $6075
-	ld c, $10 ; $6077
+	ld b, TILEBLOCK_IntroGfx0 ; $6075
+	ld c, IntroGfx0_SIZE / 16 ; $6077
 	ld de, vTiles0 + VRAM_BANK1 ; $6079
 	farcall LoadCompressedTileBlock ; $607c
-	ld b, $55 ; $607f
-	ld c, $10 ; $6081
+	ld b, TILEBLOCK_IntroGfx1 ; $607f
+	ld c, IntroGfx1_SIZE / 16 ; $6081
 	ld de, vTiles0 + $10 * TILE_SIZE + VRAM_BANK1 ; $6083
 	farcall LoadCompressedTileBlock ; $6086
-	ld b, $56 ; $6089
-	ld c, $10 ; $608b
+	ld b, TILEBLOCK_IntroGfx2 ; $6089
+	ld c, IntroGfx2_SIZE / 16 ; $608b
 	ld de, vTiles0 + $20 * TILE_SIZE + VRAM_BANK1 ; $608d
 	farcall LoadCompressedTileBlock ; $6090
-	ld b, $57 ; $6093
-	ld c, $10 ; $6095
+	ld b, TILEBLOCK_IntroGfx3 ; $6093
+	ld c, IntroGfx3_SIZE / 16 ; $6095
 	ld de, vTiles0 + $30 * TILE_SIZE + VRAM_BANK1 ; $6097
 	farcall LoadCompressedTileBlock ; $609a
-	ld b, $58 ; $609d
-	ld c, $04 ; $609f
+	ld b, TILEBLOCK_IntroGfx4 ; $609d
+	ld c, IntroGfx4_SIZE / 16 ; $609f
 	ld de, vTiles0 + $40 * TILE_SIZE + VRAM_BANK1 ; $60a1
 	farcall LoadCompressedTileBlock ; $60a4
-	ld b, $59 ; $60a7
-	ld c, $04 ; $60a9
+	ld b, TILEBLOCK_IntroGfx5 ; $60a7
+	ld c, IntroGfx5_SIZE / 16 ; $60a9
 	ld de, vTiles0 + $44 * TILE_SIZE + VRAM_BANK1 ; $60ab
 	farcall LoadCompressedTileBlock ; $60ae
-	ld b, $5a ; $60b1
-	ld c, $04 ; $60b3
+	ld b, TILEBLOCK_IntroGfx6 ; $60b1
+	ld c, $04 ; $60b3 -- 4 of IntroGfx6's 2 tiles
 	ld de, vTiles0 + $48 * TILE_SIZE + VRAM_BANK1 ; $60b5
 	farcall LoadCompressedTileBlock ; $60b8
 	ld hl, IntroPalettes ; $60bb
@@ -2208,39 +2231,39 @@ RunTitleScreen:
 	ld c, $7f ; $75d6
 	call BeginFadeOut ; $75d8
 	call WaitFadeEnd ; $75db
-	ld c, $1f ; $75de
+	ld c, SCREENASSET_TitleScreen ; $75de
 	farcall LoadScreenAssetRecord ; $75e0
 	farcall QueueWram3MapToVRAM ; $75e3
-	ld c, $14 ; $75e6
-	ld b, $5b ; $75e8
+	ld c, TitleGfx0_SIZE / 16 ; $75e6
+	ld b, TILEBLOCK_TitleGfx0 ; $75e8
 	ld de, vTiles0 + VRAM_BANK1 ; $75ea
 	farcall LoadCompressedTileBlock ; $75ed
-	ld c, $14 ; $75f0
-	ld b, $5c ; $75f2
+	ld c, TitleGfx1_SIZE / 16 ; $75f0
+	ld b, TILEBLOCK_TitleGfx1 ; $75f2
 	ld de, vTiles0 + $20 * TILE_SIZE + VRAM_BANK1 ; $75f4
 	farcall LoadCompressedTileBlock ; $75f7
-	ld c, $14 ; $75fa
-	ld b, $5d ; $75fc
+	ld c, TitleGfx2_SIZE / 16 ; $75fa
+	ld b, TILEBLOCK_TitleGfx2 ; $75fc
 	ld de, vTiles0 + $40 * TILE_SIZE + VRAM_BANK1 ; $75fe
 	farcall LoadCompressedTileBlock ; $7601
-	ld c, $14 ; $7604
-	ld b, $5e ; $7606
+	ld c, TitleGfx3_SIZE / 16 ; $7604
+	ld b, TILEBLOCK_TitleGfx3 ; $7606
 	ld de, vTiles0 + $60 * TILE_SIZE + VRAM_BANK1 ; $7608
 	farcall LoadCompressedTileBlock ; $760b
-	ld c, $14 ; $760e
-	ld b, $5f ; $7610
+	ld c, TitleGfx4_SIZE / 16 ; $760e
+	ld b, TILEBLOCK_TitleGfx4 ; $7610
 	ld de, vTiles0 ; $7612
 	farcall LoadCompressedTileBlock ; $7615
-	ld c, $14 ; $7618
-	ld b, $60 ; $761a
+	ld c, TitleGfx5_SIZE / 16 ; $7618
+	ld b, TILEBLOCK_TitleGfx5 ; $761a
 	ld de, vTiles0 + $20 * TILE_SIZE ; $761c
 	farcall LoadCompressedTileBlock ; $761f
-	ld c, $14 ; $7622
-	ld b, $61 ; $7624
+	ld c, TitleGfx6_SIZE / 16 ; $7622
+	ld b, TILEBLOCK_TitleGfx6 ; $7624
 	ld de, vTiles0 + $40 * TILE_SIZE ; $7626
 	farcall LoadCompressedTileBlock ; $7629
-	ld c, $14 ; $762c
-	ld b, $62 ; $762e
+	ld c, TitleGfx7_SIZE / 16 ; $762c
+	ld b, TILEBLOCK_TitleGfx7 ; $762e
 	ld de, vTiles0 + $60 * TILE_SIZE ; $7630
 	farcall LoadCompressedTileBlock ; $7633
 	ld hl, Palettes_6b_11 ; $7636

@@ -36,6 +36,27 @@ MACRO dslot
 	ENDR
 ENDM
 
+; One row of TileBlockPtrs_39, the table LoadCompressedTileBlock indexes with
+; b: the slot word for DataPtr_<name>, and TILEBLOCK_<name>, its index,
+; exported so a call site reads `ld b, TILEBLOCK_MatchWinLoseGfx`. The index
+; is the row's position, so inserting a row renumbers everything after it
+; and every site follows.
+MACRO tileblock
+DEF TILEBLOCK_\1 EQU (@ - TileBlockPtrs_39) / 2
+EXPORT TILEBLOCK_\1
+	dslot DataPtr_\1
+ENDM
+
+; One row of ScreenAssetRecordTable, the table LoadScreenAssetRecord indexes
+; with c: `screen_asset Name, tiles, tilemap, attrmap, palettes` writes the
+; four slot words and SCREENASSET_Name, the record's index, exported so a
+; call site reads `ld c, SCREENASSET_TitleScreen`.
+MACRO screen_asset
+DEF SCREENASSET_\1 EQU (@ - ScreenAssetRecordTable) / 8
+EXPORT SCREENASSET_\1
+	dslot \2, \3, \4, \5
+ENDM
+
 ; One $4000 pointer-table entry: defines the FarPtr_<suffix> label and the dw
 ; slot that farcall's operand bytes index. One arg when the target symbol is
 ; the suffix (farptr RunMatch -> FarPtr_RunMatch: dw RunMatch); two when they

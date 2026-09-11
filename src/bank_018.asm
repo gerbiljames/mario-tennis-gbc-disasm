@@ -1,5 +1,16 @@
 SECTION "ROM Bank $18", ROMX[$4000], BANK[$18]
 
+; decoded lengths of the tile blocks this bank copies whole through LoadCompressedTileBlock
+	INCLUDE "data/bank_01b/lz_ObjectSceneAGfx0.inc" ; DEF ObjectSceneAGfx0_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_01b/lz_ObjectSceneAGfx1.inc" ; DEF ObjectSceneAGfx1_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_01b/lz_ObjectSceneAGfx2.inc" ; DEF ObjectSceneAGfx2_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_01b/lz_ObjectSceneBGfx0.inc" ; DEF ObjectSceneBGfx0_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_01b/lz_ObjectSceneBGfx1.inc" ; DEF ObjectSceneBGfx1_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_01b/lz_ObjectSceneBGfx2.inc" ; DEF ObjectSceneBGfx2_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_01b/lz_Screen0Gfx.inc" ; DEF Screen0Gfx_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_01b/lz_Screen1ObjGfx.inc" ; DEF Screen1ObjGfx_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_01b/lz_Screen2ObjGfx.inc" ; DEF Screen2ObjGfx_SIZE EQU its decoded length, generated from the .bin by make
+
 	farptr LoadAllIndexedPalettes_18 ; $4000
 	farptr LoadIndexedPalette_18 ; $4002
 	farptr RenderProportionalTextAt32 ; $4004
@@ -1445,8 +1456,8 @@ DebugScreenAssetViewer:
 	ret ; $769b
 DebugScreenAssetViewerRecords:
 	; $769c, 24 bytes (bytes:12)
-	db $2c, $2d, $2e, $2f, $30, $31, $32, $33, $34, $35, $36, $37 ; 0x00
-	db $38, $39, $3a, $3b, $3c, $3d, $3e, $3f, $40, $41, $42, $43 ; 0x0c
+	db SCREENASSET_VictoryCutscene, SCREENASSET_VictoryCutscene2, SCREENASSET_VictoryCutscene3, SCREENASSET_VictoryCutscene4, SCREENASSET_VictoryCutscene5, SCREENASSET_VictoryCutscene6, SCREENASSET_ShopCutscene, SCREENASSET_ShopCutscene2, SCREENASSET_ShopCutscene3, SCREENASSET_ShopCutscene4, SCREENASSET_ShopCutscene5, SCREENASSET_ShopCutscene6 ; 0x00
+	db SCREENASSET_AwardCeremony, SCREENASSET_AwardCeremony2, SCREENASSET_AwardCeremony3, SCREENASSET_AwardCeremony4, SCREENASSET_AwardCeremony5, SCREENASSET_AwardCeremony6, SCREENASSET_ChampionMedal, SCREENASSET_ChampionMedal2, SCREENASSET_ChampionMedal3, SCREENASSET_ChampionMedal4, SCREENASSET_ChampionMedal5, SCREENASSET_ChampionMedal6 ; 0x0c
 PlayScreenSequence0:
 	call SetupScreen0Assets ; $76b4
 	call LoadScreen0TilesAndPalette ; $76b7
@@ -1509,10 +1520,10 @@ LookupScreen0AssetId:
 	ret ; $7739
 Screen0AssetIdTable:
 	; $773a, 6 bytes (bytes:6)
-	db $2c, $2d, $2f, $2e, $30, $31 ; 0x00
+	db SCREENASSET_VictoryCutscene, SCREENASSET_VictoryCutscene2, SCREENASSET_VictoryCutscene4, SCREENASSET_VictoryCutscene3, SCREENASSET_VictoryCutscene5, SCREENASSET_VictoryCutscene6 ; 0x00
 LoadScreen0TilesAndPalette:
-	ld b, $06 ; $7740
-	ld c, $28 ; $7742
+	ld b, TILEBLOCK_Screen0Gfx ; $7740
+	ld c, Screen0Gfx_SIZE / 16 ; $7742
 	ld de, vTiles0 ; $7744
 	farcall LoadCompressedTileBlock ; $7747
 	ld hl, Screen0Palette ; $774a
@@ -1617,10 +1628,10 @@ LookupScreen1AssetId:
 	ret ; $784e
 Screen1AssetIdTable:
 	; $784f, 6 bytes (bytes:6)
-	db $32, $33, $35, $34, $36, $37 ; 0x00
+	db SCREENASSET_ShopCutscene, SCREENASSET_ShopCutscene2, SCREENASSET_ShopCutscene4, SCREENASSET_ShopCutscene3, SCREENASSET_ShopCutscene5, SCREENASSET_ShopCutscene6 ; 0x00
 FillAllBgPalettes:
 	call ResetScrollAndCamera ; $7855
-	ld c, $32 ; $7858
+	ld c, SCREENASSET_ShopCutscene ; $7858
 	farcall LoadScreenAssetRecord ; $785a
 	ld hl, AllBgPalettes ; $785d
 	lb de, $00, $01 ; $7860 palette index, count
@@ -1651,8 +1662,8 @@ FillAllBgPalettes:
 AllBgPalettes:
 	INCLUDE "data/bank_018/AllBgPalettes.asm" ; $78a9, 8 bytes (palettes)
 LoadScreen1ObjTiles:
-	ld b, $07 ; $78b1
-	ld c, $28 ; $78b3
+	ld b, TILEBLOCK_Screen1ObjGfx ; $78b1
+	ld c, Screen1ObjGfx_SIZE / 16 ; $78b3
 	ld de, vTiles0 ; $78b5
 	farcall LoadCompressedTileBlock ; $78b8
 	ld hl, Screen1ObjPalette ; $78bb
@@ -1792,7 +1803,7 @@ LookupScreen2AssetIdA:
 	ret ; $7a13
 Screen2AssetIdATable:
 	; $7a14, 6 bytes (bytes:6)
-	db $38, $39, $3b, $3a, $3c, $3d ; 0x00
+	db SCREENASSET_AwardCeremony, SCREENASSET_AwardCeremony2, SCREENASSET_AwardCeremony4, SCREENASSET_AwardCeremony3, SCREENASSET_AwardCeremony5, SCREENASSET_AwardCeremony6 ; 0x00
 LookupScreen2AssetIdB:
 	ld a, [wStorySceneAssetIndex] ; $7a1a
 	ld hl, Screen2AssetIdBTable ; $7a1d
@@ -1805,10 +1816,10 @@ LookupScreen2AssetIdB:
 	ret ; $7a26
 Screen2AssetIdBTable:
 	; $7a27, 6 bytes (bytes:6)
-	db $3e, $3f, $41, $40, $42, $43 ; 0x00
+	db SCREENASSET_ChampionMedal, SCREENASSET_ChampionMedal2, SCREENASSET_ChampionMedal4, SCREENASSET_ChampionMedal3, SCREENASSET_ChampionMedal5, SCREENASSET_ChampionMedal6 ; 0x00
 LoadScreen2ObjTiles:
-	ld b, $08 ; $7a2d
-	ld c, $14 ; $7a2f
+	ld b, TILEBLOCK_Screen2ObjGfx ; $7a2d
+	ld c, Screen2ObjGfx_SIZE / 16 ; $7a2f
 	ld de, vTiles0 ; $7a31
 	farcall LoadCompressedTileBlock ; $7a34
 	ld hl, Screen2ObjPalette ; $7a37
@@ -1998,16 +2009,16 @@ InitObjectSceneA:
 	call LoadObjectSceneATiles ; $7be3
 	ret ; $7be6
 LoadObjectSceneATiles:
-	ld b, $00 ; $7be7
-	ld c, $10 ; $7be9
+	ld b, TILEBLOCK_ObjectSceneAGfx0 ; $7be7
+	ld c, ObjectSceneAGfx0_SIZE / 16 ; $7be9
 	ld de, vTiles0 ; $7beb
 	farcall LoadCompressedTileBlock ; $7bee
-	ld b, $01 ; $7bf1
-	ld c, $10 ; $7bf3
+	ld b, TILEBLOCK_ObjectSceneAGfx1 ; $7bf1
+	ld c, ObjectSceneAGfx1_SIZE / 16 ; $7bf3
 	ld de, vTiles0 + $10 * TILE_SIZE ; $7bf5
 	farcall LoadCompressedTileBlock ; $7bf8
-	ld b, $02 ; $7bfb
-	ld c, $10 ; $7bfd
+	ld b, TILEBLOCK_ObjectSceneAGfx2 ; $7bfb
+	ld c, ObjectSceneAGfx2_SIZE / 16 ; $7bfd
 	ld de, vTiles0 + $20 * TILE_SIZE ; $7bff
 	farcall LoadCompressedTileBlock ; $7c02
 	ld hl, ObjectSceneATilesPalettes ; $7c05
@@ -2095,16 +2106,16 @@ InitObjectSceneB:
 	call LoadObjectSceneBTiles ; $7d18
 	ret ; $7d1b
 LoadObjectSceneBTiles:
-	ld b, $03 ; $7d1c
-	ld c, $10 ; $7d1e
+	ld b, TILEBLOCK_ObjectSceneBGfx0 ; $7d1c
+	ld c, ObjectSceneBGfx0_SIZE / 16 ; $7d1e
 	ld de, vTiles0 ; $7d20
 	farcall LoadCompressedTileBlock ; $7d23
-	ld b, $04 ; $7d26
-	ld c, $10 ; $7d28
+	ld b, TILEBLOCK_ObjectSceneBGfx1 ; $7d26
+	ld c, ObjectSceneBGfx1_SIZE / 16 ; $7d28
 	ld de, vTiles0 + $10 * TILE_SIZE ; $7d2a
 	farcall LoadCompressedTileBlock ; $7d2d
-	ld b, $05 ; $7d30
-	ld c, $10 ; $7d32
+	ld b, TILEBLOCK_ObjectSceneBGfx2 ; $7d30
+	ld c, ObjectSceneBGfx2_SIZE / 16 ; $7d32
 	ld de, vTiles0 + $20 * TILE_SIZE ; $7d34
 	farcall LoadCompressedTileBlock ; $7d37
 	ld hl, ObjectSceneBPalette ; $7d3a

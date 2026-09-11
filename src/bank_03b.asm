@@ -1,5 +1,52 @@
 SECTION "ROM Bank $3b", ROMX[$4000], BANK[$3b]
 
+; decoded lengths of the tile blocks this bank copies whole through LoadCompressedTileBlock
+	INCLUDE "data/bank_03c/lz_EraseSavedDataGfx0.inc" ; DEF EraseSavedDataGfx0_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03c/lz_EraseSavedDataGfx1.inc" ; DEF EraseSavedDataGfx1_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03c/lz_EraseSavedDataGfx2.inc" ; DEF EraseSavedDataGfx2_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03c/lz_EraseSavedDataGfx3.inc" ; DEF EraseSavedDataGfx3_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03c/lz_EraseSavedDataGfx4.inc" ; DEF EraseSavedDataGfx4_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03c/lz_MainMenuGfx0.inc" ; DEF MainMenuGfx0_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03c/lz_MainMenuGfx1.inc" ; DEF MainMenuGfx1_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03c/lz_MainMenuGfx2.inc" ; DEF MainMenuGfx2_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03c/lz_MainMenuGfx3.inc" ; DEF MainMenuGfx3_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03c/lz_MainMenuGfx4.inc" ; DEF MainMenuGfx4_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03c/lz_MinigameSelectGfx0.inc" ; DEF MinigameSelectGfx0_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03c/lz_MinigameSelectGfx1.inc" ; DEF MinigameSelectGfx1_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03c/lz_MinigameSelectGfx2.inc" ; DEF MinigameSelectGfx2_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03c/lz_MinigameSelectGfx3.inc" ; DEF MinigameSelectGfx3_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03c/lz_MinigameSelectGfx4.inc" ; DEF MinigameSelectGfx4_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03c/lz_MinigameSelectGfx5.inc" ; DEF MinigameSelectGfx5_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03c/lz_N64RecordTypeGfx0.inc" ; DEF N64RecordTypeGfx0_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03c/lz_N64RecordTypeGfx1.inc" ; DEF N64RecordTypeGfx1_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03c/lz_SavedDataSourceGfx0.inc" ; DEF SavedDataSourceGfx0_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03c/lz_SavedDataSourceGfx1.inc" ; DEF SavedDataSourceGfx1_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03c/lz_SavedDataSourceGfx2.inc" ; DEF SavedDataSourceGfx2_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03c/lz_SavedDataSourceGfx3.inc" ; DEF SavedDataSourceGfx3_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03c/lz_SharedMenuGfx27.inc" ; DEF SharedMenuGfx27_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03c/lz_SharedMenuGfx29.inc" ; DEF SharedMenuGfx29_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03c/lz_SharedMenuGfx30.inc" ; DEF SharedMenuGfx30_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03c/lz_SharedMenuGfx35.inc" ; DEF SharedMenuGfx35_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03c/lz_SharedMenuGfx36.inc" ; DEF SharedMenuGfx36_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03c/lz_SharedMenuGfx37.inc" ; DEF SharedMenuGfx37_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03c/lz_SharedMenuGfx38.inc" ; DEF SharedMenuGfx38_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03c/lz_SharedMenuGfx39.inc" ; DEF SharedMenuGfx39_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03c/lz_SharedMenuGfx40.inc" ; DEF SharedMenuGfx40_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03c/lz_SharedMenuGfx41.inc" ; DEF SharedMenuGfx41_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03d/lz_MainMenuGfx5.inc" ; DEF MainMenuGfx5_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03d/lz_MinigameSelectGfx6.inc" ; DEF MinigameSelectGfx6_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03d/lz_N64RecordTypeGfx2.inc" ; DEF N64RecordTypeGfx2_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03d/lz_N64TransferItemGfx0.inc" ; DEF N64TransferItemGfx0_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03d/lz_N64TransferItemGfx1.inc" ; DEF N64TransferItemGfx1_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03d/lz_N64TransferItemGfx2.inc" ; DEF N64TransferItemGfx2_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03d/lz_N64TransferItemGfx3.inc" ; DEF N64TransferItemGfx3_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03d/lz_SavedDataSourceGfx4.inc" ; DEF SavedDataSourceGfx4_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03d/lz_SharedMenuGfx63.inc" ; DEF SharedMenuGfx63_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03d/lz_SharedMenuGfx65.inc" ; DEF SharedMenuGfx65_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03e/lz_N64TransferItemGfx4.inc" ; DEF N64TransferItemGfx4_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03e/lz_SavedDataSourceGfx5.inc" ; DEF SavedDataSourceGfx5_SIZE EQU its decoded length, generated from the .bin by make
+	INCLUDE "data/bank_03f/lz_TournamentBracketGfx.inc" ; DEF TournamentBracketGfx_SIZE EQU its decoded length, generated from the .bin by make
+
 	farptr StubNop_3b ; $4000
 	farptr RunN64ExhibData ; $4002
 	farptr RunN64ExhibDataAlias1, RunN64ExhibData ; $4004
@@ -963,7 +1010,7 @@ BuildN64ExhibDataScreen:
 	xor a ; $45da
 	ld [wN64ExhibCursorRow], a ; $45db
 	ld [wN64ExhibPage], a ; $45de
-	ld c, $0c ; $45e1
+	ld c, SCREENASSET_ExhibitionMenu ; $45e1
 	farcall LoadScreenAssetRecord ; $45e3
 	ld de, $8ac0 + VRAM_BANK1 ; $45e6
 	call LoadChartWindowTiles ; $45e9
@@ -1448,8 +1495,8 @@ Unused_3b_FillN64RecordsPalettes:
 	jr nz, .loopB ; $48ef
 	ret ; $48f1
 LoadChartWindowTiles:
-	ld b, $16 ; $48f2
-	ld c, $44 ; $48f4
+	ld b, TILEBLOCK_MugshotTiles ; $48f2
+	ld c, $44 ; $48f4 -- 68 of MugshotTiles's 96 tiles
 	farcall LoadCompressedTileBlock ; $48f6
 	ret ; $48f9
 DrawChartCharIcon:
@@ -1582,11 +1629,11 @@ BuildTrophiesScreen:
 	ld a, [wTrophySecondSetPresent] ; $49ee
 	or a ; $49f1
 	jr nz, .nonZero ; $49f2
-	ld c, $0e ; $49f4
+	ld c, SCREENASSET_N64Tournament2 ; $49f4
 	farcall LoadScreenAssetRecord ; $49f6
 	jr .drawTrophiesWonRows ; $49f9
 .nonZero:
-	ld c, $0d ; $49fb
+	ld c, SCREENASSET_N64Tournament ; $49fb
 	farcall LoadScreenAssetRecord ; $49fd
 .drawTrophiesWonRows:
 	wram_bank $03 ; $4a00
@@ -2036,7 +2083,7 @@ ScrollN64TnmtDataCursor:
 .done:
 	ret ; $4dbc
 BuildN64TnmtDataScreen:
-	ld c, $0f ; $4dbd
+	ld c, SCREENASSET_ModeSelect ; $4dbd
 	farcall LoadScreenAssetRecord ; $4dbf
 	wram_bank $03 ; $4dc2
 	xor a ; $4dc8
@@ -2578,7 +2625,7 @@ BuildN64RingShotScreen:
 	xor a ; $51b3
 	ld [wMenuCursorX], a ; $51b4
 	ld [wMenuCursorY], a ; $51b7
-	ld c, $12 ; $51ba
+	ld c, SCREENASSET_RingShotHud ; $51ba
 	farcall LoadScreenAssetRecord ; $51bc
 	wram_bank $03 ; $51bf
 	call LoadN64RingShotRecords ; $51c5
@@ -3342,51 +3389,51 @@ LoadMainMenuGfx:
 	ld de, $8f00 + VRAM_BANK1 ; $5758
 	farcall CopyMugshotBufferToVram ; $575b
 	call AdvanceFrame ; $575e
-	ld b, $1c ; $5761
-	ld c, $10 ; $5763
+	ld b, TILEBLOCK_MainMenuGfx0 ; $5761
+	ld c, MainMenuGfx0_SIZE / 16 ; $5763
 	ld de, vTiles0 + VRAM_BANK1 ; $5765
 	farcall LoadCompressedTileBlock ; $5768
 	call AdvanceFrame ; $576b
-	ld b, $1d ; $576e
-	ld c, $10 ; $5770
+	ld b, TILEBLOCK_SharedMenuGfx29 ; $576e
+	ld c, SharedMenuGfx29_SIZE / 16 ; $5770
 	ld de, vTiles0 + $10 * TILE_SIZE + VRAM_BANK1 ; $5772
 	farcall LoadCompressedTileBlock ; $5775
 	call AdvanceFrame ; $5778
-	ld b, $1e ; $577b
-	ld c, $12 ; $577d
+	ld b, TILEBLOCK_SharedMenuGfx30 ; $577b
+	ld c, SharedMenuGfx30_SIZE / 16 ; $577d
 	ld de, vTiles0 + $20 * TILE_SIZE + VRAM_BANK1 ; $577f
 	farcall LoadCompressedTileBlock ; $5782
 	call AdvanceFrame ; $5785
-	ld b, $1f ; $5788
-	ld c, $10 ; $578a
+	ld b, TILEBLOCK_MainMenuGfx1 ; $5788
+	ld c, MainMenuGfx1_SIZE / 16 ; $578a
 	ld de, vTiles0 + $32 * TILE_SIZE + VRAM_BANK1 ; $578c
 	farcall LoadCompressedTileBlock ; $578f
 	call AdvanceFrame ; $5792
-	ld b, $20 ; $5795
-	ld c, $10 ; $5797
+	ld b, TILEBLOCK_MainMenuGfx2 ; $5795
+	ld c, MainMenuGfx2_SIZE / 16 ; $5797
 	ld de, vTiles0 + $42 * TILE_SIZE + VRAM_BANK1 ; $5799
 	farcall LoadCompressedTileBlock ; $579c
 	call AdvanceFrame ; $579f
-	ld b, $21 ; $57a2
-	ld c, $10 ; $57a4
+	ld b, TILEBLOCK_MainMenuGfx3 ; $57a2
+	ld c, MainMenuGfx3_SIZE / 16 ; $57a4
 	ld de, vTiles0 + $52 * TILE_SIZE + VRAM_BANK1 ; $57a6
 	farcall LoadCompressedTileBlock ; $57a9
 	call AdvanceFrame ; $57ac
-	ld b, $22 ; $57af
-	ld c, $10 ; $57b1
+	ld b, TILEBLOCK_MainMenuGfx4 ; $57af
+	ld c, MainMenuGfx4_SIZE / 16 ; $57b1
 	ld de, vTiles0 + $62 * TILE_SIZE + VRAM_BANK1 ; $57b3
 	farcall LoadCompressedTileBlock ; $57b6
 	call AdvanceFrame ; $57b9
-	ld b, $1b ; $57bc
-	ld c, $04 ; $57be
+	ld b, TILEBLOCK_SharedMenuGfx27 ; $57bc
+	ld c, SharedMenuGfx27_SIZE / 16 ; $57be
 	ld de, vTiles0 + $72 * TILE_SIZE + VRAM_BANK1 ; $57c0
 	farcall LoadCompressedTileBlock ; $57c3
 	ld b, $08 ; $57c6
 	ld c, $10 ; $57c8
 	farcall LoadIndexedPalette ; $57ca
 	call AdvanceFrame ; $57cd
-	ld b, $3e ; $57d0
-	ld c, $14 ; $57d2
+	ld b, TILEBLOCK_MainMenuGfx5Alias4 ; $57d0
+	ld c, MainMenuGfx5_SIZE / 16 ; $57d2
 	ld de, vTiles0 ; $57d4
 	farcall LoadCompressedTileBlock ; $57d7
 	pop_wram_bank ; $57da
@@ -4248,48 +4295,48 @@ LoadMatchFormatGfx:
 	ld a, c ; $5e36
 	cp $07 ; $5e37
 	jr nz, .loop ; $5e39
-	ld b, $23 ; $5e3b
-	ld c, $10 ; $5e3d
+	ld b, TILEBLOCK_SharedMenuGfx35 ; $5e3b
+	ld c, SharedMenuGfx35_SIZE / 16 ; $5e3d
 	ld de, vTiles0 + VRAM_BANK1 ; $5e3f
 	farcall LoadCompressedTileBlock ; $5e42
 	call AdvanceFrame ; $5e45
-	ld b, $24 ; $5e48
-	ld c, $10 ; $5e4a
+	ld b, TILEBLOCK_SharedMenuGfx36 ; $5e48
+	ld c, SharedMenuGfx36_SIZE / 16 ; $5e4a
 	ld de, vTiles0 + $10 * TILE_SIZE + VRAM_BANK1 ; $5e4c
 	farcall LoadCompressedTileBlock ; $5e4f
 	call AdvanceFrame ; $5e52
-	ld b, $25 ; $5e55
-	ld c, $10 ; $5e57
+	ld b, TILEBLOCK_SharedMenuGfx37 ; $5e55
+	ld c, SharedMenuGfx37_SIZE / 16 ; $5e57
 	ld de, vTiles0 + $20 * TILE_SIZE + VRAM_BANK1 ; $5e59
 	farcall LoadCompressedTileBlock ; $5e5c
 	call AdvanceFrame ; $5e5f
-	ld b, $26 ; $5e62
-	ld c, $10 ; $5e64
+	ld b, TILEBLOCK_SharedMenuGfx38 ; $5e62
+	ld c, SharedMenuGfx38_SIZE / 16 ; $5e64
 	ld de, vTiles0 + $30 * TILE_SIZE + VRAM_BANK1 ; $5e66
 	farcall LoadCompressedTileBlock ; $5e69
 	call AdvanceFrame ; $5e6c
-	ld b, $27 ; $5e6f
-	ld c, $10 ; $5e71
+	ld b, TILEBLOCK_SharedMenuGfx39 ; $5e6f
+	ld c, SharedMenuGfx39_SIZE / 16 ; $5e71
 	ld de, vTiles0 + $40 * TILE_SIZE + VRAM_BANK1 ; $5e73
 	farcall LoadCompressedTileBlock ; $5e76
 	call AdvanceFrame ; $5e79
-	ld b, $28 ; $5e7c
-	ld c, $10 ; $5e7e
+	ld b, TILEBLOCK_SharedMenuGfx40 ; $5e7c
+	ld c, SharedMenuGfx40_SIZE / 16 ; $5e7e
 	ld de, vTiles0 + $50 * TILE_SIZE + VRAM_BANK1 ; $5e80
 	farcall LoadCompressedTileBlock ; $5e83
 	call AdvanceFrame ; $5e86
-	ld b, $29 ; $5e89
-	ld c, $10 ; $5e8b
+	ld b, TILEBLOCK_SharedMenuGfx41 ; $5e89
+	ld c, SharedMenuGfx41_SIZE / 16 ; $5e8b
 	ld de, vTiles0 + $60 * TILE_SIZE + VRAM_BANK1 ; $5e8d
 	farcall LoadCompressedTileBlock ; $5e90
 	call AdvanceFrame ; $5e93
-	ld b, $1b ; $5e96
-	ld c, $04 ; $5e98
+	ld b, TILEBLOCK_SharedMenuGfx27 ; $5e96
+	ld c, SharedMenuGfx27_SIZE / 16 ; $5e98
 	ld de, vTiles0 + $70 * TILE_SIZE + VRAM_BANK1 ; $5e9a
 	farcall LoadCompressedTileBlock ; $5e9d
 	call AdvanceFrame ; $5ea0
-	ld b, $3f ; $5ea3
-	ld c, $14 ; $5ea5
+	ld b, TILEBLOCK_SharedMenuGfx63 ; $5ea3
+	ld c, SharedMenuGfx63_SIZE / 16 ; $5ea5
 	ld de, vTiles0 ; $5ea7
 	farcall LoadCompressedTileBlock ; $5eaa
 	call AdvanceFrame ; $5ead
@@ -4902,33 +4949,33 @@ LoadMinigameSelectGfx:
 	ld c, a ; $6322
 	cp $09 ; $6323
 	jr nz, .loop ; $6325
-	ld b, $33 ; $6327
-	ld c, $10 ; $6329
+	ld b, TILEBLOCK_MinigameSelectGfx0 ; $6327
+	ld c, MinigameSelectGfx0_SIZE / 16 ; $6329
 	ld de, vTiles0 + VRAM_BANK1 ; $632b
 	farcall LoadCompressedTileBlock ; $632e
 	call AdvanceFrame ; $6331
-	ld b, $34 ; $6334
-	ld c, $10 ; $6336
+	ld b, TILEBLOCK_MinigameSelectGfx1 ; $6334
+	ld c, MinigameSelectGfx1_SIZE / 16 ; $6336
 	ld de, vTiles0 + $10 * TILE_SIZE + VRAM_BANK1 ; $6338
 	farcall LoadCompressedTileBlock ; $633b
 	call AdvanceFrame ; $633e
-	ld b, $35 ; $6341
-	ld c, $10 ; $6343
+	ld b, TILEBLOCK_MinigameSelectGfx2 ; $6341
+	ld c, MinigameSelectGfx2_SIZE / 16 ; $6343
 	ld de, vTiles0 + $20 * TILE_SIZE + VRAM_BANK1 ; $6345
 	farcall LoadCompressedTileBlock ; $6348
 	call AdvanceFrame ; $634b
-	ld b, $36 ; $634e
-	ld c, $10 ; $6350
+	ld b, TILEBLOCK_MinigameSelectGfx3 ; $634e
+	ld c, MinigameSelectGfx3_SIZE / 16 ; $6350
 	ld de, vTiles0 + $30 * TILE_SIZE + VRAM_BANK1 ; $6352
 	farcall LoadCompressedTileBlock ; $6355
 	call AdvanceFrame ; $6358
-	ld b, $37 ; $635b
-	ld c, $10 ; $635d
+	ld b, TILEBLOCK_MinigameSelectGfx4 ; $635b
+	ld c, MinigameSelectGfx4_SIZE / 16 ; $635d
 	ld de, vTiles0 + $40 * TILE_SIZE + VRAM_BANK1 ; $635f
 	farcall LoadCompressedTileBlock ; $6362
 	call AdvanceFrame ; $6365
-	ld b, $38 ; $6368
-	ld c, $10 ; $636a
+	ld b, TILEBLOCK_MinigameSelectGfx5 ; $6368
+	ld c, MinigameSelectGfx5_SIZE / 16 ; $636a
 	ld de, vTiles0 + $50 * TILE_SIZE + VRAM_BANK1 ; $636c
 	farcall LoadCompressedTileBlock ; $636f
 	call AdvanceFrame ; $6372
@@ -4955,18 +5002,18 @@ LoadMinigameSelectGfx:
 	ld c, $10 ; $63af
 	call QueueVRAMCopy ; $63b1
 	call AdvanceFrame ; $63b4
-	ld b, $6f ; $63b7
-	ld c, $12 ; $63b9
+	ld b, TILEBLOCK_SharedMenuGfx111 ; $63b7
+	ld c, $12 ; $63b9 -- 18 of SharedMenuGfx111's 16 tiles
 	ld de, vTiles0 + $50 * TILE_SIZE ; $63bb
 	farcall LoadCompressedTileBlock ; $63be
 	call AdvanceFrame ; $63c1
-	ld b, $47 ; $63c4
-	ld c, $14 ; $63c6
+	ld b, TILEBLOCK_MinigameSelectGfx6 ; $63c4
+	ld c, MinigameSelectGfx6_SIZE / 16 ; $63c6
 	ld de, vTiles0 ; $63c8
 	farcall LoadCompressedTileBlock ; $63cb
 	call AdvanceFrame ; $63ce
-	ld b, $1b ; $63d1
-	ld c, $04 ; $63d3
+	ld b, TILEBLOCK_SharedMenuGfx27 ; $63d1
+	ld c, SharedMenuGfx27_SIZE / 16 ; $63d3
 	ld de, vTiles0 + $70 * TILE_SIZE + VRAM_BANK1 ; $63d5
 	farcall LoadCompressedTileBlock ; $63d8
 	ld b, $08 ; $63db
@@ -5649,38 +5696,38 @@ LoadSavedDataSourceGfx:
 	ld de, $8f00 + VRAM_BANK1 ; $68ec
 	farcall CopyMugshotBufferToVram ; $68ef
 	call AdvanceFrame ; $68f2
-	ld b, $2a ; $68f5
-	ld c, $10 ; $68f7
+	ld b, TILEBLOCK_SavedDataSourceGfx0 ; $68f5
+	ld c, SavedDataSourceGfx0_SIZE / 16 ; $68f7
 	ld de, vTiles0 + VRAM_BANK1 ; $68f9
 	farcall LoadCompressedTileBlock ; $68fc
 	call AdvanceFrame ; $68ff
-	ld b, $2b ; $6902
-	ld c, $10 ; $6904
+	ld b, TILEBLOCK_SavedDataSourceGfx1 ; $6902
+	ld c, SavedDataSourceGfx1_SIZE / 16 ; $6904
 	ld de, vTiles0 + $10 * TILE_SIZE + VRAM_BANK1 ; $6906
 	farcall LoadCompressedTileBlock ; $6909
 	call AdvanceFrame ; $690c
-	ld b, $2c ; $690f
-	ld c, $10 ; $6911
+	ld b, TILEBLOCK_SavedDataSourceGfx2 ; $690f
+	ld c, SavedDataSourceGfx2_SIZE / 16 ; $6911
 	ld de, vTiles0 + $20 * TILE_SIZE + VRAM_BANK1 ; $6913
 	farcall LoadCompressedTileBlock ; $6916
 	call AdvanceFrame ; $6919
-	ld b, $2d ; $691c
-	ld c, $10 ; $691e
+	ld b, TILEBLOCK_SavedDataSourceGfx3 ; $691c
+	ld c, SavedDataSourceGfx3_SIZE / 16 ; $691e
 	ld de, vTiles0 + $30 * TILE_SIZE + VRAM_BANK1 ; $6920
 	farcall LoadCompressedTileBlock ; $6923
 	call AdvanceFrame ; $6926
-	ld b, $76 ; $6929
-	ld c, $10 ; $692b
+	ld b, TILEBLOCK_SavedDataSourceGfx5 ; $6929
+	ld c, SavedDataSourceGfx5_SIZE / 16 ; $692b
 	ld de, vTiles0 + $40 * TILE_SIZE + VRAM_BANK1 ; $692d
 	farcall LoadCompressedTileBlock ; $6930
 	call AdvanceFrame ; $6933
-	ld b, $1b ; $6936
-	ld c, $04 ; $6938
+	ld b, TILEBLOCK_SharedMenuGfx27 ; $6936
+	ld c, SharedMenuGfx27_SIZE / 16 ; $6938
 	ld de, vTiles0 + $70 * TILE_SIZE + VRAM_BANK1 ; $693a
 	farcall LoadCompressedTileBlock ; $693d
 	call AdvanceFrame ; $6940
-	ld b, $42 ; $6943
-	ld c, $14 ; $6945
+	ld b, TILEBLOCK_SavedDataSourceGfx4 ; $6943
+	ld c, SavedDataSourceGfx4_SIZE / 16 ; $6945
 	ld de, vTiles0 ; $6947
 	farcall LoadCompressedTileBlock ; $694a
 	call AdvanceFrame ; $694d
@@ -6228,38 +6275,38 @@ LoadEraseSavedDataGfx:
 	ld c, $10 ; $6db4
 	call QueueVRAMCopy ; $6db6
 	call AdvanceFrame ; $6db9
-	ld b, $2e ; $6dbc
-	ld c, $10 ; $6dbe
+	ld b, TILEBLOCK_EraseSavedDataGfx0 ; $6dbc
+	ld c, EraseSavedDataGfx0_SIZE / 16 ; $6dbe
 	ld de, vTiles0 + VRAM_BANK1 ; $6dc0
 	farcall LoadCompressedTileBlock ; $6dc3
 	call AdvanceFrame ; $6dc6
-	ld b, $2f ; $6dc9
-	ld c, $10 ; $6dcb
+	ld b, TILEBLOCK_EraseSavedDataGfx1 ; $6dc9
+	ld c, EraseSavedDataGfx1_SIZE / 16 ; $6dcb
 	ld de, vTiles0 + $10 * TILE_SIZE + VRAM_BANK1 ; $6dcd
 	farcall LoadCompressedTileBlock ; $6dd0
 	call AdvanceFrame ; $6dd3
-	ld b, $30 ; $6dd6
-	ld c, $10 ; $6dd8
+	ld b, TILEBLOCK_EraseSavedDataGfx2 ; $6dd6
+	ld c, EraseSavedDataGfx2_SIZE / 16 ; $6dd8
 	ld de, vTiles0 + $20 * TILE_SIZE + VRAM_BANK1 ; $6dda
 	farcall LoadCompressedTileBlock ; $6ddd
 	call AdvanceFrame ; $6de0
-	ld b, $31 ; $6de3
-	ld c, $10 ; $6de5
+	ld b, TILEBLOCK_EraseSavedDataGfx3 ; $6de3
+	ld c, EraseSavedDataGfx3_SIZE / 16 ; $6de5
 	ld de, vTiles0 + $30 * TILE_SIZE + VRAM_BANK1 ; $6de7
 	farcall LoadCompressedTileBlock ; $6dea
 	call AdvanceFrame ; $6ded
-	ld b, $32 ; $6df0
-	ld c, $10 ; $6df2
+	ld b, TILEBLOCK_EraseSavedDataGfx4 ; $6df0
+	ld c, EraseSavedDataGfx4_SIZE / 16 ; $6df2
 	ld de, vTiles0 + $40 * TILE_SIZE + VRAM_BANK1 ; $6df4
 	farcall LoadCompressedTileBlock ; $6df7
 	call AdvanceFrame ; $6dfa
-	ld b, $1b ; $6dfd
-	ld c, $04 ; $6dff
+	ld b, TILEBLOCK_SharedMenuGfx27 ; $6dfd
+	ld c, SharedMenuGfx27_SIZE / 16 ; $6dff
 	ld de, vTiles0 + $70 * TILE_SIZE + VRAM_BANK1 ; $6e01
 	farcall LoadCompressedTileBlock ; $6e04
 	call AdvanceFrame ; $6e07
-	ld b, $41 ; $6e0a
-	ld c, $14 ; $6e0c
+	ld b, TILEBLOCK_SharedMenuGfx65 ; $6e0a
+	ld c, SharedMenuGfx65_SIZE / 16 ; $6e0c
 	ld de, vTiles0 ; $6e0e
 	farcall LoadCompressedTileBlock ; $6e11
 	call AdvanceFrame ; $6e14
@@ -6887,28 +6934,28 @@ LoadN64RecordTypeGfx:
 	ld a, c ; $728d
 	cp $03 ; $728e
 	jr nz, .loop ; $7290
-	ld b, $39 ; $7292
-	ld c, $10 ; $7294
+	ld b, TILEBLOCK_N64RecordTypeGfx0 ; $7292
+	ld c, N64RecordTypeGfx0_SIZE / 16 ; $7294
 	ld de, vTiles0 + VRAM_BANK1 ; $7296
 	farcall LoadCompressedTileBlock ; $7299
 	call AdvanceFrame ; $729c
-	ld b, $1d ; $729f
-	ld c, $10 ; $72a1
+	ld b, TILEBLOCK_SharedMenuGfx29 ; $729f
+	ld c, SharedMenuGfx29_SIZE / 16 ; $72a1
 	ld de, vTiles0 + $10 * TILE_SIZE + VRAM_BANK1 ; $72a3
 	farcall LoadCompressedTileBlock ; $72a6
 	call AdvanceFrame ; $72a9
-	ld b, $3a ; $72ac
-	ld c, $10 ; $72ae
+	ld b, TILEBLOCK_N64RecordTypeGfx1 ; $72ac
+	ld c, N64RecordTypeGfx1_SIZE / 16 ; $72ae
 	ld de, vTiles0 + $20 * TILE_SIZE + VRAM_BANK1 ; $72b0
 	farcall LoadCompressedTileBlock ; $72b3
 	call AdvanceFrame ; $72b6
-	ld b, $1b ; $72b9
-	ld c, $04 ; $72bb
+	ld b, TILEBLOCK_SharedMenuGfx27 ; $72b9
+	ld c, SharedMenuGfx27_SIZE / 16 ; $72bb
 	ld de, vTiles0 + $70 * TILE_SIZE + VRAM_BANK1 ; $72bd
 	farcall LoadCompressedTileBlock ; $72c0
 	call AdvanceFrame ; $72c3
-	ld b, $43 ; $72c6
-	ld c, $14 ; $72c8
+	ld b, TILEBLOCK_N64RecordTypeGfx2 ; $72c6
+	ld c, N64RecordTypeGfx2_SIZE / 16 ; $72c8
 	ld de, vTiles0 ; $72ca
 	farcall LoadCompressedTileBlock ; $72cd
 	call AdvanceFrame ; $72d0
@@ -7303,33 +7350,33 @@ LoadN64TransferItemGfx:
 	ld a, c ; $759c
 	cp $04 ; $759d
 	jr nz, .loop ; $759f
-	ld b, $3b ; $75a1
-	ld c, $10 ; $75a3
+	ld b, TILEBLOCK_N64TransferItemGfx0 ; $75a1
+	ld c, N64TransferItemGfx0_SIZE / 16 ; $75a3
 	ld de, vTiles0 + VRAM_BANK1 ; $75a5
 	farcall LoadCompressedTileBlock ; $75a8
 	call AdvanceFrame ; $75ab
-	ld b, $73 ; $75ae
-	ld c, $10 ; $75b0
+	ld b, TILEBLOCK_N64TransferItemGfx4 ; $75ae
+	ld c, N64TransferItemGfx4_SIZE / 16 ; $75b0
 	ld de, vTiles0 + $10 * TILE_SIZE + VRAM_BANK1 ; $75b2
 	farcall LoadCompressedTileBlock ; $75b5
 	call AdvanceFrame ; $75b8
-	ld b, $3c ; $75bb
-	ld c, $10 ; $75bd
+	ld b, TILEBLOCK_N64TransferItemGfx1 ; $75bb
+	ld c, N64TransferItemGfx1_SIZE / 16 ; $75bd
 	ld de, vTiles0 + $20 * TILE_SIZE + VRAM_BANK1 ; $75bf
 	farcall LoadCompressedTileBlock ; $75c2
 	call AdvanceFrame ; $75c5
-	ld b, $3d ; $75c8
-	ld c, $10 ; $75ca
+	ld b, TILEBLOCK_N64TransferItemGfx2 ; $75c8
+	ld c, N64TransferItemGfx2_SIZE / 16 ; $75ca
 	ld de, vTiles0 + $30 * TILE_SIZE + VRAM_BANK1 ; $75cc
 	farcall LoadCompressedTileBlock ; $75cf
 	call AdvanceFrame ; $75d2
-	ld b, $1b ; $75d5
-	ld c, $04 ; $75d7
+	ld b, TILEBLOCK_SharedMenuGfx27 ; $75d5
+	ld c, SharedMenuGfx27_SIZE / 16 ; $75d7
 	ld de, vTiles0 + $70 * TILE_SIZE + VRAM_BANK1 ; $75d9
 	farcall LoadCompressedTileBlock ; $75dc
 	call AdvanceFrame ; $75df
-	ld b, $44 ; $75e2
-	ld c, $14 ; $75e4
+	ld b, TILEBLOCK_N64TransferItemGfx3 ; $75e2
+	ld c, N64TransferItemGfx3_SIZE / 16 ; $75e4
 	ld de, vTiles0 ; $75e6
 	farcall LoadCompressedTileBlock ; $75e9
 	call AdvanceFrame ; $75ec
@@ -7546,10 +7593,10 @@ BuildTournamentBracketScreen:
 	ld a, [wScreenScratch] ; $77a7
 	or a ; $77aa
 	jr nz, .nonZero ; $77ab
-	ld c, $25 ; $77ad
+	ld c, SCREENASSET_VarsityTeamChart ; $77ad
 	farcall LoadScreenAssetRecord ; $77af
-	ld b, $69 ; $77b2
-	ld c, $10 ; $77b4
+	ld b, TILEBLOCK_TournamentBracketGfx ; $77b2
+	ld c, TournamentBracketGfx_SIZE / 16 ; $77b4
 	ld de, vTiles2 ; $77b6
 	farcall LoadCompressedTileBlock ; $77b9
 	wram_bank $03 ; $77bc
@@ -7560,10 +7607,10 @@ BuildTournamentBracketScreen:
 	farcall QueueWram3MapToVRAM ; $77ce
 	ret ; $77d1
 .nonZero:
-	ld c, $26 ; $77d2
+	ld c, SCREENASSET_VarsityTeamChart2 ; $77d2
 	farcall LoadScreenAssetRecord ; $77d4
-	ld b, $69 ; $77d7
-	ld c, $10 ; $77d9
+	ld b, TILEBLOCK_TournamentBracketGfx ; $77d7
+	ld c, TournamentBracketGfx_SIZE / 16 ; $77d9
 	ld de, vTiles2 ; $77db
 	farcall LoadCompressedTileBlock ; $77de
 	wram_bank $03 ; $77e1
@@ -8005,7 +8052,7 @@ BuildMarioCastExhibScreen:
 	xor a ; $7b17
 	ld [wN64ExhibCursorRow], a ; $7b18
 	ld [wN64ExhibPage], a ; $7b1b
-	ld c, $0c ; $7b1e
+	ld c, SCREENASSET_ExhibitionMenu ; $7b1e
 	farcall LoadScreenAssetRecord ; $7b20
 	ld de, $8ac0 + VRAM_BANK1 ; $7b23
 	call LoadChartWindowTiles ; $7b26
