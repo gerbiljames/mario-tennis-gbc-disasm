@@ -139,7 +139,7 @@ class FreeRam(unittest.TestCase):
     def test_static_free_ranges(self):
         ranges = ram_free.free_ranges()
         total = sum(b - a for _, _, a, b in ranges)
-        self.assertEqual((len(ranges), total), (171, 4416))
+        self.assertEqual((len(ranges), total), (168, 4404))
         for space, bank, a, b in ranges:
             self.assertFalse(space == "w" and bank == 0 and b > ram_free.STACK_ZONE,
                              f"${a:04x}: the stack zone is not free")

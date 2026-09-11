@@ -4341,7 +4341,8 @@ w4CharSpriteSetId:: db
 w4AiPositionStrategy:: db
 ; [4 bytes] Per-character banked struct (WRAM4-7): sprite-slot record [tile, attr, screenY, screenX] for the character sprite
 w4CharSpriteSlot:: ds 4
-	ds 4
+; [4 bytes] The frame descriptor the single-character screens park after the sprite slot: DrawCharViewerCharSprite ($1a:$706c) and the results/EXP screen drawers ($1e:$4b08, $5947) write eight bytes at wCharSpriteSlot -- the slot's [tile, attr, y, x], then wCharSpriteFrame + 2 (the 32x32 flag), + 1 and + 0 (the Y and X offsets QueueSprite24x32 adds) and a depth key (slot * 8 + $80, the shape of wCharDepthKey). The match engine's own drawer never writes it (its slot reset covers only the three records at +$00, +$08, +$0c), which is why a RAM poison run saw it filled on the status screen and in the credits but not in a match
+w4CharSpriteSlotFrame:: ds 4
 ; [4 bytes] Per-character banked struct (WRAM4-7): sprite-slot record for the airborne shadow (tiles $50/$52/$54/$56 shrink with jump height; drawn only while wCharFlags bit 2 set)
 w4CharAirShadowSlot:: ds 4
 ; [4 bytes] Per-character banked struct (WRAM4-7): sprite-slot record for the standing shadow (tile $58; flicker-transparency while grounded)
@@ -4583,7 +4584,8 @@ w5CharSpriteSetId:: db
 w5AiPositionStrategy:: db
 ; [4 bytes] Per-character banked struct (WRAM4-7): sprite-slot record [tile, attr, screenY, screenX] for the character sprite
 w5CharSpriteSlot:: ds 4
-	ds 4
+; [4 bytes] The frame descriptor the single-character screens park after the sprite slot: DrawCharViewerCharSprite ($1a:$706c) and the results/EXP screen drawers ($1e:$4b08, $5947) write eight bytes at wCharSpriteSlot -- the slot's [tile, attr, y, x], then wCharSpriteFrame + 2 (the 32x32 flag), + 1 and + 0 (the Y and X offsets QueueSprite24x32 adds) and a depth key (slot * 8 + $80, the shape of wCharDepthKey). The match engine's own drawer never writes it (its slot reset covers only the three records at +$00, +$08, +$0c), which is why a RAM poison run saw it filled on the status screen and in the credits but not in a match
+w5CharSpriteSlotFrame:: ds 4
 ; [4 bytes] Per-character banked struct (WRAM4-7): sprite-slot record for the airborne shadow (tiles $50/$52/$54/$56 shrink with jump height; drawn only while wCharFlags bit 2 set)
 w5CharAirShadowSlot:: ds 4
 ; [4 bytes] Per-character banked struct (WRAM4-7): sprite-slot record for the standing shadow (tile $58; flicker-transparency while grounded)
@@ -4825,7 +4827,8 @@ w6CharSpriteSetId:: db
 w6AiPositionStrategy:: db
 ; [4 bytes] Per-character banked struct (WRAM4-7): sprite-slot record [tile, attr, screenY, screenX] for the character sprite
 w6CharSpriteSlot:: ds 4
-	ds 4
+; [4 bytes] The frame descriptor the single-character screens park after the sprite slot: DrawCharViewerCharSprite ($1a:$706c) and the results/EXP screen drawers ($1e:$4b08, $5947) write eight bytes at wCharSpriteSlot -- the slot's [tile, attr, y, x], then wCharSpriteFrame + 2 (the 32x32 flag), + 1 and + 0 (the Y and X offsets QueueSprite24x32 adds) and a depth key (slot * 8 + $80, the shape of wCharDepthKey). The match engine's own drawer never writes it (its slot reset covers only the three records at +$00, +$08, +$0c), which is why a RAM poison run saw it filled on the status screen and in the credits but not in a match
+w6CharSpriteSlotFrame:: ds 4
 ; [4 bytes] Per-character banked struct (WRAM4-7): sprite-slot record for the airborne shadow (tiles $50/$52/$54/$56 shrink with jump height; drawn only while wCharFlags bit 2 set)
 w6CharAirShadowSlot:: ds 4
 ; [4 bytes] Per-character banked struct (WRAM4-7): sprite-slot record for the standing shadow (tile $58; flicker-transparency while grounded)
@@ -5067,7 +5070,8 @@ w7CharSpriteSetId:: db
 w7AiPositionStrategy:: db
 ; [4 bytes] Per-character banked struct (WRAM4-7): sprite-slot record [tile, attr, screenY, screenX] for the character sprite
 w7CharSpriteSlot:: ds 4
-	ds 4
+; [4 bytes] The frame descriptor the single-character screens park after the sprite slot: DrawCharViewerCharSprite ($1a:$706c) and the results/EXP screen drawers ($1e:$4b08, $5947) write eight bytes at wCharSpriteSlot -- the slot's [tile, attr, y, x], then wCharSpriteFrame + 2 (the 32x32 flag), + 1 and + 0 (the Y and X offsets QueueSprite24x32 adds) and a depth key (slot * 8 + $80, the shape of wCharDepthKey). The match engine's own drawer never writes it (its slot reset covers only the three records at +$00, +$08, +$0c), which is why a RAM poison run saw it filled on the status screen and in the credits but not in a match
+w7CharSpriteSlotFrame:: ds 4
 ; [4 bytes] Per-character banked struct (WRAM4-7): sprite-slot record for the airborne shadow (tiles $50/$52/$54/$56 shrink with jump height; drawn only while wCharFlags bit 2 set)
 w7CharAirShadowSlot:: ds 4
 ; [4 bytes] Per-character banked struct (WRAM4-7): sprite-slot record for the standing shadow (tile $58; flicker-transparency while grounded)

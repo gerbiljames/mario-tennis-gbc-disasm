@@ -332,6 +332,9 @@ def wAiPositionStrategy equ $df7f
 ; [4 bytes] Per-character banked struct (WRAM4-7): sprite-slot record [tile, attr, screenY, screenX] for the character sprite
 def wCharSpriteSlot equ $df80
 
+; [4 bytes] The frame descriptor the single-character screens park after the sprite slot: DrawCharViewerCharSprite ($1a:$706c) and the results/EXP screen drawers ($1e:$4b08, $5947) write eight bytes at wCharSpriteSlot -- the slot's [tile, attr, y, x], then wCharSpriteFrame + 2 (the 32x32 flag), + 1 and + 0 (the Y and X offsets QueueSprite24x32 adds) and a depth key (slot * 8 + $80, the shape of wCharDepthKey). The match engine's own drawer never writes it (its slot reset covers only the three records at +$00, +$08, +$0c), which is why a RAM poison run saw it filled on the status screen and in the credits but not in a match
+def wCharSpriteSlotFrame equ $df84
+
 ; [4 bytes] Per-character banked struct (WRAM4-7): sprite-slot record for the airborne shadow (tiles $50/$52/$54/$56 shrink with jump height; drawn only while wCharFlags bit 2 set)
 def wCharAirShadowSlot equ $df88
 

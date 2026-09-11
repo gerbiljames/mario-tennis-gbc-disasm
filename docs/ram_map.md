@@ -616,7 +616,7 @@ not padding.) The written bytes were then checked against every saved state
 of the session: a byte that was written but is zero in all of them was only
 ever *cleared*.
 
-Three classes came out of the 4,416 bytes the static pass lists once the
+Three classes came out of the 4,404 bytes the static pass lists once the
 tile-animation buffer, the second shadow-OAM page, the character records'
 documented field groups and the mirror records' name, id, palette, gender
 and handedness fields are declared (all of which the first pass had counted
@@ -696,18 +696,17 @@ as unnamed):
 
 * **Holds data (209 bytes).** Written with real values somewhere in the
   session. What was left of this class once the record fields were named
-  is three things, each now understood: `$c6e0-$c6ff`, `$c705` and
+  is two things, each now understood: `$c6e0-$c6ff`, `$c705` and
   `$c730-$c75f` are leftovers of the save engine's staging copy --
   `MirrorSaveHeaderToBank1` runs each 512-byte SRAM header region through
   `$c600-$c7ff` on its way to SRAM bank 1, so the tail of the block
   directory stays behind under the debug-menu variables (`wTextBuffer`'s
   note); `$d2b0-$d2ff` of bank `$07` are five glyph tiles the text engine
   writes *below* `wGlyphTileBuffer` when the pen goes negative, seen on the
-  lesson menu's second page (`docs/bugs.md`); and four bytes at `$df84` of
-  bank `$06`, between the character's sprite-slot and air-shadow records,
-  that the ending credits fill with a slot-shaped `00 f1 fc 80` and no
-  routine addresses by name -- the one byte group this inventory leaves
-  unexplained.
+  lesson menu's second page (`docs/bugs.md`). (The four bytes at `$df84`
+  of the character banks that an earlier pass left unexplained are
+  `wCharSpriteSlotFrame`: the single-character screens park the frame
+  descriptor after the sprite slot, and only they write it.)
 
 Not exercised: the minigames, link play, the N64 transfer screens and the
 story scenes beyond the Test map, so a range here is free for those modes

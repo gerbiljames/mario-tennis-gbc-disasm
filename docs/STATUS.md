@@ -69,12 +69,6 @@ which no `ShowRankingBoard` argument ever selects); and one arithmetic
 constant. `ram_gaps.py --static` reports any site whose bank the dataflow
 knows but no union names, and that bucket is empty too.
 
-**Unnamed but used RAM.** Four bytes at bank `$06` `$df84`, between the
-character's sprite-slot and air-shadow records, that the ending credits
-fill with a slot-shaped record and nothing addresses by name. Everything
-else the free-RAM inventory turned up is now declared or explained
-(`docs/ram_map.md`, "Free RAM").
-
 **Named in the docs as not established.** `docs/graphics_formats.md` §8 now
 holds two items, and both are about the developers' intent rather than the
 bytes: why the `$63` per-object-palette sentinel exists when no object uses
@@ -132,8 +126,11 @@ label bound to the wrong parent.
   not variables: the "records" at `$c6e0`/`$c730` are the save engine's
   staging copy passing through `$c600-$c7ff`, and bank `$07` `$d2b0-$d2ff`
   is the text engine writing five glyph tiles below `wGlyphTileBuffer`
-  when the pen goes negative (`docs/bugs.md`). Static unnamed RAM is down
-  to 4,416 bytes: 2,591 untouched, 1,616 cleared only, 209 explained.
+  when the pen goes negative (`docs/bugs.md`); and the four bytes after
+  each character's sprite slot are `wCharSpriteSlotFrame`, the frame
+  descriptor the status, results and EXP screens park there. Static
+  unnamed RAM is down to 4,404 bytes: 2,591 untouched, 1,616 cleared only,
+  the rest explained; nothing the poison run found in use is left unnamed.
 * **2026-09-11** — the "text-engine buffers" were block clears. Checking
   every written-but-unnamed byte against all seventeen saved states showed
   the 1,455 bytes of WRAM bank `$05` (and `$df97-$dfff` of banks `$05`-`$07`,
