@@ -8,7 +8,10 @@ under data/, they are generated from the user's ROM and never committed.
 """
 import math
 import sys
+import re
 from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
 
 # Printable ASCII safe inside an rgbasm string literal: excludes the quote,
 # backslash, and the {} symbol-interpolation characters.
@@ -53,6 +56,24 @@ TEXT_CODES = {0x04: "TX_ARG_STRING", 0x05: "TX_DELAY_30", 0x06: "TX_DELAY_15",
 TEXT_CODES.update({c: f"TX_NEWLINE_{c:02X}" for c in range(0x14, 0x1E)})
 
 
+def _char_names():
+    """The CHAR_* roster ids of include/constants.inc, by value: the operand
+    of TX_SHORT_TEXT is a character id (short text $1b + id is the roster
+    name), so the pools spell it with the character's name."""
+    names = {}
+    try:
+        for line in (ROOT / "include" / "constants.inc").read_text().splitlines():
+            m = re.match(r"def (CHAR_\w+)\s+equ \$([0-9a-f]{2})\b", line)
+            if m and int(m.group(2), 16) < 0x20:
+                names.setdefault(int(m.group(2), 16), m.group(1))
+    except OSError:
+        pass
+    return names
+
+
+CHAR_NAMES = _char_names()
+
+
 def render_string(chunk: bytes) -> list:
     """Render one string as text/line/page macro lines (see macros.inc).
     Segments are split on the $01/$02 control bytes; the other control codes
@@ -82,7 +103,7 @@ def render_string(chunk: bytes) -> list:
 
     for b in chunk:
         if operand:
-            items.append(f"${b:02x}")
+            items.append(CHAR_NAMES.get(b, f"${b:02x}"))
             operand = False
         elif b in TEXT_CODES:
             flush_buf()

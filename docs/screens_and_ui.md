@@ -688,7 +688,8 @@ by `a * 2`, and `jp hl`.
 In the generated pools (`data/<bank>/TextStrings_*.asm`) these bytes are
 written as the `TX_*` names of `include/text_codes.inc` (`$01`/`$02`/`$03`
 as the `line`/`page`/`done` macros), with `TX_SHORT_TEXT`'s operand as the
-numeric byte after it. The codes the retail strings use: `$07` (136
+`CHAR_*` constant of the character whose roster name it prints
+(`TX_SHORT_TEXT, CHAR_EMILY` in "Oh, Coach Emily!"). The codes the retail strings use: `$07` (136
 times), `$0e` (40), `$06` (35), `$0b` (19), `$11` (17), `$09` (10), `$14`
 (10), `$0c` (6), `$1a` (5), `$04` (2), `$1d` (2); `$05`, `$08` and the
 dakuten pair never.

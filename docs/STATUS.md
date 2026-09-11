@@ -121,7 +121,8 @@ label bound to the wrong parent.
   the string and number argument pops, the three delays, the short-text
   code and its operand, the newline aliases and the no-ops) and the pool
   renderer writes them, so a string reads `text TX_PLAYER_NAME, " won"`
-  instead of `text $07, " won"`. The include is in the build prelude; a
+  instead of `text $07, " won"`, and a roster name inserted into a string
+  is `TX_SHORT_TEXT, CHAR_EMILY`. The include is in the build prelude; a
   test round-trips a string through the renderer and rgbasm.
 * **2026-09-11** — the RAM the poison run found in use is named. The
   character records' documented field groups are declared in all eight

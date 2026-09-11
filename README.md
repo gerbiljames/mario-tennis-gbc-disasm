@@ -71,7 +71,8 @@ restated:
   assembler recomputes every offset. Line and page breaks are the `line` /
   `page` / `done` macros and the other control codes are named
   (`TX_PLAYER_NAME`, `TX_ARG_NUMBER`, `TX_DELAY_15`, ...,
-  `include/text_codes.inc`, with what each does). Find a string with
+  `include/text_codes.inc`, with what each does); a roster name inserted
+  into a string is `TX_SHORT_TEXT, CHAR_EMILY`. Find a string with
   `tools/strings.py baserom.gbc --index --bank <bank>`; a text id in the code
   is spelled `Text_<bank>_<index>` (`include/text_ids.inc`).
 - **Data files carry their names.** Everything extracted into `data/` is

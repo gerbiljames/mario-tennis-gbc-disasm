@@ -207,7 +207,7 @@ class MacroBytes(unittest.TestCase):
         raw = bytes.fromhex("07") + b" won" + bytes.fromhex("010e05") + b"!" + bytes.fromhex("0603")
         lines = extract.render_string(raw)
         self.assertEqual(lines, ['\ttext TX_PLAYER_NAME, " won"',
-                                 '\tline TX_SHORT_TEXT, $05, "!", TX_DELAY_15',
+                                 '\tline TX_SHORT_TEXT, CHAR_JOY, "!", TX_DELAY_15',
                                  '\tdone'])
         self.assertEqual(self.bytes_of("\n".join(lines))[:len(raw)], raw)
 
