@@ -125,6 +125,18 @@ label bound to the wrong parent.
 
 ## Recent changes
 
+* **2026-09-11** — the PNG pipeline: the manifest tags the 2,724 blobs that
+  are whole 8x8-tile graphics `gfx`, `extract.py` decodes each to a
+  four-colour indexed PNG beside its `.bin` (LZ streams decompressed
+  first, the tile count stored in the file), the Makefile re-encodes a blob
+  whose PNG is newer, and `make check` round-trips every image. Editing a
+  tile is now editing an image.
+  Setting it up caught one mis-carve and one mis-name: the Academy Main
+  Building interior's tile set (scene record 17, loaded by location 5 and
+  the ending's Principal's Office) was a raw blob because its stream
+  expands too little for the exact-extent promotion; a data-copy hook
+  capture of that load classifies it, and the record family it belongs
+  to, named `DormInterior*` until now, is `AcademyMainBldg*`.
 * **2026-09-11** — packed call arguments: a raw `ld rr, $hhll` whose callee
   reads the pair as two bytes renders as `lb rr, $hh, $ll` with the halves
   named at the site (440 sites: palette index/count, sprite x/y and

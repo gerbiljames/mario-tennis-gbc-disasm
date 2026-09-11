@@ -70,10 +70,15 @@ restated:
   recomputes every offset. Find a string with
   `tools/strings.py baserom.gbc --index --bank <bank>`; a text id in the code
   is spelled `Text_<bank>_<index>` (`include/text_ids.inc`).
-- **Compressed graphics.** `tools/lz.py rom <offset> out.bin` to decode,
-  edit, `tools/lz.py -c out.bin data/<bank>/lz_<addr>.bin` to encode back. The
-  new stream need not be the same size; `make check` confirms every stream
-  still decodes inside its extent.
+- **Graphics are images.** Every blob that is tile graphics (2,724 of
+  them: character and object frames, tile sets, icons, portraits, fonts) is
+  extracted twice, as the `.bin` the source includes and as a PNG beside it
+  in `data/` — the tiles in blob order, sixteen per row, a four-colour
+  indexed image. Edit the PNG and `make` re-encodes the blob, compressing
+  it again if it is an LZ stream (`lz_*`); a PNG you have not touched never
+  rebuilds anything. `make check` confirms every PNG still encodes back to
+  its blob. `tools/gfx.py` and `tools/lz.py` are the converters if you need
+  them by hand.
 - **Tables.** Stats, physics constants, mode hooks, map actors, animation
   scripts, flag lists and menu definitions render as structured source with
   named fields — `docs/graphics_formats.md` and `docs/story_mode.md` give the

@@ -32,6 +32,13 @@ build/%.o: src/%.asm $(PRELUDE) | build/rgbdscheck.o
 build/ram.o: $(RAM_SRCS) | build/rgbdscheck.o
 	$(RGBASM) -E -I include -I . -o $@ ram.asm
 
+# A graphics blob whose PNG (written by extract.py beside it) is newer is
+# re-encoded from the image -- and re-compressed if it is an LZ stream. The
+# PNG only exists for blobs the manifest tags gfx, and extract.py writes the
+# .bin last, so an untouched tree never triggers this.
+data/%.bin: data/%.png
+	python3 tools/gfx.py encode $< $@
+
 build/rgbdscheck.o: rgbdscheck.asm | build
 	$(RGBASM) -o $@ $<
 

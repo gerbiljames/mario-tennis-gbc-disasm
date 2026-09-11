@@ -494,6 +494,15 @@ def main() -> int:
 
     count = 0
     written = set()
+    pngs = gfx_skipped = 0
+    try:
+        import gfx
+        from PIL import Image  # noqa: F401
+        gfx_ok = True
+    except ImportError:
+        gfx_ok = False
+        print("note: Pillow not installed; graphics PNGs not generated",
+              file=sys.stderr)
     for line in manifest.read_text().splitlines():
         line = line.strip()
         if not line or line.startswith("#"):
@@ -507,7 +516,21 @@ def main() -> int:
             return 1
         dest = outdir / path
         dest.parent.mkdir(parents=True, exist_ok=True)
-        if spec:
+        if spec == "gfx":
+            # the .bin as always, plus the PNG a modder edits; the .bin is
+            # written last so it is the newer file and make leaves it alone
+            # until the PNG changes
+            png = dest.with_suffix(".png")
+            dest.write_bytes(rom[off:off + length])
+            if gfx_ok:
+                if gfx.decode(dest, png) is None:
+                    png.unlink(missing_ok=True)
+                    gfx_skipped += 1
+                else:
+                    written.add(str(png.relative_to(outdir)))
+                    pngs += 1
+                    dest.write_bytes(rom[off:off + length])
+        elif spec:
             dest.write_text(render_spec(rom[off:off + length], spec))
         elif path.endswith(".asm"):
             dest.write_text(render_text(rom[off:off + length]))
@@ -527,6 +550,10 @@ def main() -> int:
     for f in stale:
         f.unlink()
     note = f", removed {len(stale)} stale" if stale else ""
+    if pngs:
+        note += f", {pngs} graphics PNGs"
+    if gfx_skipped:
+        note += f" ({gfx_skipped} gfx blobs not a whole number of tiles)"
     print(f"extracted {count} files to {outdir}/{note}")
     return 0
 

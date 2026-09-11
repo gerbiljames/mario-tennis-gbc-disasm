@@ -18,6 +18,18 @@ below).
 
 ---
 
+## 0. Editing graphics
+
+Every blob that is a whole number of 8x8 tiles — the manifest tags them
+`gfx` — is extracted to a PNG beside its `.bin` in `data/`: the tiles in
+blob order, sixteen per row, as a four-colour indexed image with the tile
+count in the file. `make` re-encodes any blob whose PNG is newer
+(`tools/gfx.py encode`, then `tools/lz.py` for an `lz_*` stream), and
+`make check` verifies that every PNG still encodes back to its blob. The
+image is a container for the tile bytes in order, so an 8x16 object or a
+multi-tile metasprite appears as its tiles in memory order, not as the
+assembled sprite; the record layouts below say how the game arranges them.
+
 ## 1. The LZ format
 
 ### 1.1 Stream shape

@@ -305,6 +305,34 @@ _ADDR_RE = re.compile(r"; \$([0-9a-f]{4})\s*$")
 _BRANCH_RE = re.compile(r"^\t(jr|jp) (nz|z|nc|c), ([.A-Za-z_][\w.]*) ; \$([0-9a-f]{4})$")
 
 
+def check_gfx(manifest, fail):
+    """Every gfx-tagged blob with a PNG beside it encodes back to the bytes
+    the PNG was decoded from: the image is a faithful, editable copy."""
+    sys.path.insert(0, str(ROOT / "tools"))
+    try:
+        import gfx
+        from PIL import Image
+    except ImportError:
+        return 0
+    n = 0
+    for path, off, length, spec in manifest:
+        if spec != "gfx":
+            continue
+        binp = ROOT / "data" / path
+        png = binp.with_suffix(".png")
+        if not png.exists() or not binp.exists():
+            continue
+        n += 1
+        raw = binp.read_bytes()
+        want = gfx.lz.decompress(raw, 0)[0] if gfx.is_lz(binp) else raw
+        img = Image.open(png)
+        got = gfx.image_to_tiles(img, int(img.text.get("tiles", 0)) or None)
+        if got != want:
+            fail("gfx", f"{path}: PNG does not encode back to the blob "
+                        f"({len(got)} vs {len(want)} bytes)")
+    return n
+
+
 def check_collapsed_branches(fail):
     """Find `jr cc, X` / `jp cc, X` where X is the very next instruction.
 
@@ -378,6 +406,7 @@ def main():
         "regions": check_regions(manifest, fail),
         "scopes": check_stranded_scopes(fail),
         "branches": check_collapsed_branches(fail),
+        "gfx": check_gfx(manifest, fail),
     }
     by_check = {}
     for check, msg in failures:

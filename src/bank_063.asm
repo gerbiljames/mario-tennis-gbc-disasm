@@ -44,26 +44,26 @@ DataPtr_StarPatternBgCollisionMap:
 	dw StarPatternBgCollisionMap ; $4028
 DataPtr_StarPatternBgBehaviorMap:
 	dw StarPatternBgBehaviorMap ; $402a
-DataPtr_DormInteriorSceneConfig:
-	dw DormInteriorSceneConfig ; $402c
+DataPtr_AcademyMainBldgSceneConfig:
+	dw AcademyMainBldgSceneConfig ; $402c
 DataPtr_StarPatternBgTiles:
 	dw StarPatternBgTiles ; $402e
-DataPtr_DormInteriorSceneConfigAlias1:
-	dw DormInteriorSceneConfig ; $4030
-DataPtr_DormInteriorPalettes:
-	dw DormInteriorPalettes ; $4032
-DataPtr_DormInteriorTilemap:
-	dw DormInteriorTilemap ; $4034
-DataPtr_DormInteriorAttrmap:
-	dw DormInteriorAttrmap ; $4036
-DataPtr_DormInteriorCollisionMap:
-	dw DormInteriorCollisionMap ; $4038
-DataPtr_DormInteriorBehaviorMap:
-	dw DormInteriorBehaviorMap ; $403a
-DataPtr_DormInteriorSceneUnusedSlot:
-	dw DormInteriorSceneUnusedSlot ; $403c
-DataPtr_DormInteriorTiles:
-	dw DormInteriorTiles ; $403e
+DataPtr_AcademyMainBldgSceneConfigAlias1:
+	dw AcademyMainBldgSceneConfig ; $4030
+DataPtr_AcademyMainBldgPalettes:
+	dw AcademyMainBldgPalettes ; $4032
+DataPtr_AcademyMainBldgTilemap:
+	dw AcademyMainBldgTilemap ; $4034
+DataPtr_AcademyMainBldgAttrmap:
+	dw AcademyMainBldgAttrmap ; $4036
+DataPtr_AcademyMainBldgCollisionMap:
+	dw AcademyMainBldgCollisionMap ; $4038
+DataPtr_AcademyMainBldgBehaviorMap:
+	dw AcademyMainBldgBehaviorMap ; $403a
+DataPtr_AcademyMainBldgSceneUnusedSlot:
+	dw AcademyMainBldgSceneUnusedSlot ; $403c
+DataPtr_AcademyMainBldgTiles:
+	dw AcademyMainBldgTiles ; $403e
 IslandOpenCourtPalettes:
 	INCLUDE "data/bank_063/palettes_4040.asm" ; $4040, 64 bytes (palettes)
 IslandOpenCourtTiles:
@@ -102,19 +102,19 @@ StarPatternBgCollisionMap:
 	INCBIN "data/bank_063/lz_62a5.bin" ; $62a5, 70 bytes
 StarPatternBgBehaviorMap:
 	INCBIN "data/bank_063/lz_62eb.bin" ; $62eb, 70 bytes
-DormInteriorSceneConfig:
+AcademyMainBldgSceneConfig:
 	INCBIN "data/bank_063/d_6331.bin" ; $6331, 42 bytes
-DormInteriorPalettes:
+AcademyMainBldgPalettes:
 	INCLUDE "data/bank_063/palettes_635b.asm" ; $635b, 64 bytes (palettes)
-DormInteriorTiles:
-	INCBIN "data/bank_063/d_639b.bin" ; $639b, 3510 bytes
-DormInteriorTilemap:
+AcademyMainBldgTiles:
+	INCBIN "data/bank_063/lz_639b.bin" ; $639b, 3510 bytes
+AcademyMainBldgTilemap:
 	INCBIN "data/bank_063/lz_7151.bin" ; $7151, 1470 bytes
-DormInteriorAttrmap:
+AcademyMainBldgAttrmap:
 	INCBIN "data/bank_063/lz_770f.bin" ; $770f, 769 bytes
-DormInteriorCollisionMap:
+AcademyMainBldgCollisionMap:
 	INCBIN "data/bank_063/lz_7a10.bin" ; $7a10, 147 bytes
-DormInteriorBehaviorMap:
+AcademyMainBldgBehaviorMap:
 	INCBIN "data/bank_063/lz_7aa3.bin" ; $7aa3, 94 bytes
-DormInteriorSceneUnusedSlot:
+AcademyMainBldgSceneUnusedSlot:
 	; $7b01, 1279 bytes fill to bank end (linker-padded)

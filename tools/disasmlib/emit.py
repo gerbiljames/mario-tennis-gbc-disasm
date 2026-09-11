@@ -177,6 +177,23 @@ def resolve_flag_names(lines, flag_names, raw_sites=(), base=0):
             lines[i] = f"\t{m.group(1)} {name}{m.group(4)}"
 
 
+# Blob labels that name tile graphics: character and object frames, tile sets,
+# icons, portraits, fonts. The negative list keeps the tilemaps, attribute
+# maps, collision maps, tables and sound scripts that share those words out.
+_GFX_NAME_RE = re.compile(
+    r"(Frame\d+|FramesUnused|Gfx\d*(_[0-9a-f]{2})?|Tiles\w*|Icon\d*|"
+    r"Portrait\d*|Mugshot\w*|Glyphs|Font\w*|Logo\w*|Banner\w*|Cursor\w*|"
+    r"Digits?\w*|Sprites\d*)$")
+_NOT_GFX_NAME_RE = re.compile(
+    r"(Tilemap\d*|Attrmap\d*|Map|Table|Trk\d|Oam|Data\w*|Slot|Palettes?|"
+    r"Patch\d*|Snd\w*|Config\w*|Records?|List|Ptrs|Anim\d*)$")
+
+
+def is_gfx_name(name):
+    return bool(name and _GFX_NAME_RE.search(name)
+                and not _NOT_GFX_NAME_RE.search(name))
+
+
 def bank_end_fill(cpu, length):
     """Note the trailing $ff mastering fill a bank's section stops short of.
 
@@ -1268,10 +1285,25 @@ class Emitter:
         return self._valid_cuts(spec, start, end, cuts) == cuts
 
     def _incbin(self, start, length, bank, prefix="d", note=""):
-        """Register a blob in the manifest and return its INCBIN line."""
+        """Register a blob in the manifest and return its INCBIN line. A blob
+        whose label says it is tile graphics is tagged `gfx`, which is what
+        tools/extract.py decodes to an editable PNG beside the .bin."""
         cpu = offset_to_cpu(start)
         blob = f"bank_{bank:03x}/{prefix}_{cpu:04x}.bin"
-        self.manifest.append((blob, start, length, None))
+        spec = None
+        if is_gfx_name(self.labels.get(start, "")):
+            # only a whole number of 8x8 tiles can be drawn as an image; a
+            # "Gfx" that is really sprite records or a stub stays a plain blob
+            if prefix == "lz":
+                try:
+                    n = len(lz.decompress(self.rom, start)[0])
+                except Exception:
+                    n = 1
+            else:
+                n = length
+            if n and n % 16 == 0:
+                spec = "gfx"
+        self.manifest.append((blob, start, length, spec))
         return f'\tINCBIN "data/{blob}" ; ${cpu:04x}, {length} bytes{note}'
 
     def _emit_generated_spec(self, start, length, bank, spec):
