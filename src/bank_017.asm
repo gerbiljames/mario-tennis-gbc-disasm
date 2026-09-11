@@ -78,6 +78,7 @@ DataPtr_RulesScreenPalettes:
 	call QueueSprite ; $4074
 	pop de ; $4077
 	ret ; $4078
+; Instruction-identical to ApplySpriteWobbleX_16 (one copy per bank); a change here belongs in every copy.
 ApplySpriteWobbleX_17:
 	ldh a, [hVBlankCounter] ; $4079
 	and $0f ; $407b
@@ -104,6 +105,7 @@ ApplySpriteWobbleX_17:
 SpriteWobbleXTable:
 	; $4093, 16 bytes (bytes:16)
 	db $00, $00, $00, $01, $01, $01, $01, $01, $01, $01, $01, $00, $00, $00, $00, $00 ; 0x00
+; Instruction-identical to ApplySpriteWobbleY_16 (one copy per bank); a change here belongs in every copy.
 ApplySpriteWobbleY_17:
 	ldh a, [hVBlankCounter] ; $40a3
 	and $0f ; $40a5
@@ -173,6 +175,7 @@ SpriteWobbleYTable_17:
 	call QueueSprite ; $4103
 	pop de ; $4106
 	ret ; $4107
+; Instruction-identical to MoveMenuCursorGrid_1b (one copy per bank); a change here belongs in every copy.
 MoveMenuCursorGrid_17:
 	ld a, [wMenuCursorX] ; $4108
 	ld d, a ; $410b
@@ -261,6 +264,7 @@ MoveMenuCursorGrid_17:
 .checkMenuCursorX5:
 	ld a, $01 ; $4183
 	ret ; $4185
+; Instruction-identical to MoveMenuCursorGridFromLinkInput_1b (one copy per bank); a change here belongs in every copy.
 MoveMenuCursorGridFromLinkInput_17:
 	ld a, [wMenuCursorX] ; $4186
 	ld d, a ; $4189
@@ -709,7 +713,8 @@ ClearWram3Row64Alt_17:
 UpdateAnimatedTilesTask_17:
 	farcall UpdateAnimatedTiles ; $4406
 	ret ; $4409
-CopyStringToTilemap_17:
+; Instruction-identical to DrawNameWithDiacritics_1b and DrawNameWithDiacritics_3e (one copy per bank); a change here belongs in every copy.
+DrawNameWithDiacritics_17:
 	push af ; $440a
 	push bc ; $440b
 .loop:
@@ -758,6 +763,7 @@ CopyStringToTilemap_17:
 	pop bc ; $4440
 	pop af ; $4441
 	ret ; $4442
+; Instruction-identical to DrawDecimalNumber_1b, DrawDecimalNumber_3b and DrawDecimalNumber_3e (one copy per bank); a change here belongs in every copy.
 DrawDecimalNumber_17:
 	push af ; $4443
 	push bc ; $4444
@@ -793,6 +799,7 @@ DrawAsciiDigitString_17:
 	jr DrawAsciiDigitString_17 ; $446b
 .done:
 	ret ; $446d
+; Instruction-identical to DrawAsciiDigitChar_16, DrawAsciiDigitChar_1b, DrawAsciiDigitChar_3b and DrawAsciiDigitChar_3e (one copy per bank); a change here belongs in every copy.
 DrawAsciiDigitChar_17:
 	push hl ; $446e
 	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH ; $446f

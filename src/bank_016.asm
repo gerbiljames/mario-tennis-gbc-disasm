@@ -63,6 +63,7 @@ DrawWobblingCornerBrackets:
 	call QueueSprite ; $4064
 	pop de ; $4067
 	ret ; $4068
+; Instruction-identical to ApplySpriteWobbleX_17 (one copy per bank); a change here belongs in every copy.
 ApplySpriteWobbleX_16:
 	ldh a, [hVBlankCounter] ; $4069
 	and $0f ; $406b
@@ -89,6 +90,7 @@ ApplySpriteWobbleX_16:
 SpriteWobbleXTable_16:
 	; $4083, 16 bytes (bytes:16)
 	db $00, $00, $00, $01, $01, $01, $01, $01, $01, $01, $01, $00, $00, $00, $00, $00 ; 0x00
+; Instruction-identical to ApplySpriteWobbleY_17 (one copy per bank); a change here belongs in every copy.
 ApplySpriteWobbleY_16:
 	ldh a, [hVBlankCounter] ; $4093
 	and $0f ; $4095
@@ -236,6 +238,7 @@ MoveMenuCursorGrid_16:
 .moved:
 	ld a, $01 ; $4173
 	ret ; $4175
+; Instruction-identical to MoveMenuCursorGridFromLinkInput_38 and MoveMenuCursorGridFromLinkInput_3e (one copy per bank); a change here belongs in every copy.
 MoveMenuCursorGridFromLinkInput_16:
 	ld a, [wMenuCursorX] ; $4176
 	ld d, a ; $4179
@@ -324,6 +327,7 @@ MoveMenuCursorGridFromLinkInput_16:
 .moved:
 	ld a, $01 ; $41f0
 	ret ; $41f2
+; Instruction-identical to MoveMenuCursorGridRemote_38 and MoveMenuCursorGridRemote_3e (one copy per bank); a change here belongs in every copy.
 MoveMenuCursorGridRemote_16:
 	ld a, [wMenuCursorX] ; $41f3
 	ld d, a ; $41f6
@@ -458,6 +462,7 @@ MoveMenuCursorGridRemote_16:
 .moved:
 	ld a, $01 ; $42bb
 	ret ; $42bd
+; Instruction-identical to MoveMenuCursor2GridRemote_3e (one copy per bank); a change here belongs in every copy.
 MoveMenuCursor2GridRemote_16:
 	ld a, [wMenuCursor2X] ; $42be
 	ld d, a ; $42c1
@@ -591,6 +596,7 @@ MoveMenuCursor2GridRemote_16:
 .moved:
 	ld a, $01 ; $4384
 	ret ; $4386
+; Instruction-identical to GetMenuCursorIndex_1b, GetMenuCursorIndex_38, GetMenuCursorIndex_3b and GetMenuCursorIndex_3e (one copy per bank); a change here belongs in every copy.
 GetMenuCursorIndex_16:
 	ld a, [wMenuCursorY] ; $4387
 	ld b, a ; $438a
@@ -606,6 +612,7 @@ GetMenuCursorIndex_16:
 	ld a, [wMenuCursorX] ; $4394
 	add b ; $4397
 	ret ; $4398
+; Instruction-identical to GetCellIndexFromCursorPtr_3b and GetCellIndexFromCursorPtr_3e (one copy per bank); a change here belongs in every copy.
 GetCellIndexFromCursorPtr_16:
 	push bc ; $4399
 	ld a, [hl-] ; $439a
@@ -623,6 +630,7 @@ GetCellIndexFromCursorPtr_16:
 	add b ; $43a6
 	pop bc ; $43a7
 	ret ; $43a8
+; Instruction-identical to SetMenuCursorFromIndex_38, SetMenuCursorFromIndex_3b and SetMenuCursorFromIndex_3e (one copy per bank); a change here belongs in every copy.
 SetMenuCursorFromIndex_16:
 	ld d, $00 ; $43a9
 	ld a, c ; $43ab
@@ -637,6 +645,7 @@ SetMenuCursorFromIndex_16:
 	ld a, d ; $43b6
 	ld [wMenuCursorY], a ; $43b7
 	ret ; $43ba
+; Instruction-identical to SetMenuCursorFromIndexToPtr_38 and SetMenuCursorFromIndexToPtr_3e (one copy per bank); a change here belongs in every copy.
 SetMenuCursorFromIndexToPtr_16:
 	ld d, $00 ; $43bb
 	ld a, c ; $43bd
@@ -756,11 +765,12 @@ PrintNumberString_16:
 	ld a, [hl+] ; $4454
 	and a ; $4455
 	jr z, .done ; $4456
-	call PrintNumberStringChar_16 ; $4458
+	call DrawAsciiDigitChar_16 ; $4458
 	jr PrintNumberString_16 ; $445b
 .done:
 	ret ; $445d
-PrintNumberStringChar_16:
+; Instruction-identical to DrawAsciiDigitChar_17, DrawAsciiDigitChar_1b, DrawAsciiDigitChar_3b and DrawAsciiDigitChar_3e (one copy per bank); a change here belongs in every copy.
+DrawAsciiDigitChar_16:
 	push hl ; $445e
 	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH ; $445f
 	sub $30 ; $4462

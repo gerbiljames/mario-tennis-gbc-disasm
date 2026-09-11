@@ -1156,6 +1156,7 @@ Court2ActorsAlt_14:
 	map_actor $0000, ActorScript_14_2, $fd00, $0100, FACE_DOWN, $53, $01, $00
 	map_actor $0000, ActorScript_14_2, $fd00, $0100, FACE_DOWN, $4d, $01, $00
 	map_actor_end
+; Instruction-identical to RestaurantPlazaArrival06_13 (one copy per bank); a change here belongs in every copy.
 Court2EntryWalkIn:
 	ld a, [wStoryModeEntryPoint] ; $4f66
 	cp STORYENTRY_NONE ; $4f69
@@ -1343,6 +1344,7 @@ Court1EntryWalkIn:
 	script_move_angle ACTOR_PLAYER, FACE_RIGHT, $0200 ; $51df
 .done:
 	ret ; $51e9
+; Instruction-identical to SetPlayerPartnerActorSprites (one copy per bank); a change here belongs in every copy.
 LoadCourtPlayerPartnerObjDefs_14:
 	test_flag FLAG_DOUBLES ; $51ea
 	jp z, .notDoubles ; $51ed
@@ -3258,6 +3260,7 @@ ActorScript_14_4:
 	as_wait $8c
 	as_anim $03
 	as_jump .L1a7
+; Instruction-identical to ComputeRankingProgressIndex_13 and ComputeRankingProgressIndex_15 (one copy per bank); a change here belongs in every copy.
 ComputeRankingProgressIndex_14:
 	test_flag FLAG_DOUBLES ; $7a9d
 	jr nz, .isDoubles ; $7aa0

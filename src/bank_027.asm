@@ -2900,7 +2900,8 @@ ActorScript_27_33:
 	as_wait $8c
 	as_anim $03
 	as_jump .L76
-SetStoryRankSceneIndex:
+; Instruction-identical to ComputeRankingProgressIndex_0e, ComputeRankingProgressIndex_11 and ComputeRankingProgressIndex_12 (one copy per bank); a change here belongs in every copy.
+ComputeRankingProgressIndex_27:
 	test_flag FLAG_DOUBLES ; $7a49
 	jr nz, .doubles ; $7a4c
 	ld a, STORYRANK_SINGLES_ACADEMY ; $7a4e

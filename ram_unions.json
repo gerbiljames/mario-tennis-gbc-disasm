@@ -2107,7 +2107,7 @@
       },
       "0xd025": {
        "name": "wCharDataConfirmState",
-       "note": "[8-bit] Step of the confirm prompt (RunCharDataConfirmScreen); DrawCharDataPromptCursor draws the cursor from it"
+       "note": "[8-bit] Step of the confirm prompt (RunCharDataConfirmScreen); DrawConfirmSelectionCursor_1a draws the cursor from it"
       },
       "0xd026": {
        "name": "wCharDataRevealTimer",
@@ -4243,7 +4243,7 @@
       },
       "0xd860": {
        "name": "wRankingNameRowBuffer",
-       "note": "[7 bytes] Where a ranking name too long for one row is split. RenderPlayerNameFitted measures the name with GetStringLength and, at six characters or more, calls RenderNameTwoRows: RenderNameTopRow copies the first four characters here and appends $2d ('-') and a terminator, RenderNameBottomRow copies the seven bytes from the fifth character on, and each row is then drawn from here by DrawNameWithDiacritics",
+       "note": "[7 bytes] Where a ranking name too long for one row is split. RenderPlayerNameFitted measures the name with GetStringLength and, at six characters or more, calls RenderNameTwoRows: RenderNameTopRow copies the first four characters here and appends $2d ('-') and a terminator, RenderNameBottomRow copies the seven bytes from the fifth character on, and each row is then drawn from here by DrawNameWithDiacritics_1b",
        "size": 7
       }
      }

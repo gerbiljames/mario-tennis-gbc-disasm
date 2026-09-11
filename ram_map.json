@@ -166,7 +166,7 @@
  },
  "0xc2b0": {
   "name": "wMapSceneStage",
-  "note": "[8-bit] Scene stage of the story location that is currently loaded. Each map's init script derives it from the save flags (SetupCenterCourtSceneVariant, InitCourt1SceneVariant, ComputeIslandOpenRound, SetStoryRankSceneIndex, ...) and the location's NPC scripts index their per-stage text-id tables with it, so one NPC speaks a different line as the story advances. Values are per location. $c2b0-$c2bf is the location's scratch block as a whole: the bank $14 island-sky and firework cutscenes borrow it for sprite positions and timers once a map is loaded, and the water-sprite minigame keeps its counters at $c2b4-$c2ba"
+  "note": "[8-bit] Scene stage of the story location that is currently loaded. Each map's init script derives it from the save flags (SetupCenterCourtSceneVariant, InitCourt1SceneVariant, ComputeIslandOpenRound, ComputeRankingProgressIndex_27, ...) and the location's NPC scripts index their per-stage text-id tables with it, so one NPC speaks a different line as the story advances. Values are per location. $c2b0-$c2bf is the location's scratch block as a whole: the bank $14 island-sky and firework cutscenes borrow it for sprite positions and timers once a map is loaded, and the water-sprite minigame keeps its counters at $c2b4-$c2ba"
  },
  "0xc2b1": {
   "name": "wMapSceneStage2",
@@ -2244,12 +2244,12 @@
  },
  "0xcb04": {
   "name": "wMenuCursorX",
-  "note": "[8-bit] Menu cursor column; MoveMenuCursor wraps it at the column count in b",
+  "note": "[8-bit] Menu cursor column; MoveMenuCursorGrid_3b wraps it at the column count in b",
   "size": 1
  },
  "0xcb05": {
   "name": "wMenuCursorY",
-  "note": "[8-bit] Menu cursor row; MoveMenuCursor wraps it at the row count in c",
+  "note": "[8-bit] Menu cursor row; MoveMenuCursorGrid_3b wraps it at the row count in c",
   "size": 1
  },
  "0xcb06": {
@@ -2330,7 +2330,7 @@
  },
  "0xcb1b": {
   "name": "wMainMenuCursor",
-  "note": "[8-bit] Cell index the main-menu cursor was last left on, so the menu reopens where you were; RunMainMenu restores it through SetMenuCursorFromCellIndex and stores it back on exit. Cleared with the other saved cursors when a new game starts"
+  "note": "[8-bit] Cell index the main-menu cursor was last left on, so the menu reopens where you were; RunMainMenu restores it through SetMenuCursorFromIndex_3b and stores it back on exit. Cleared with the other saved cursors when a new game starts"
  },
  "0xcb1c": {
   "name": "wSavedDataMenuCursor",

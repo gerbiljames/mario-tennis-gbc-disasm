@@ -143,7 +143,7 @@ wStoryModeInteractRequest:: db
 wStoryModeMenuRequest:: db
 	ds 10
 
-; [8-bit] Scene stage of the story location that is currently loaded. Each map's init script derives it from the save flags (SetupCenterCourtSceneVariant, InitCourt1SceneVariant, ComputeIslandOpenRound, SetStoryRankSceneIndex, ...) and the location's NPC scripts index their per-stage text-id tables with it, so one NPC speaks a different line as the story advances. Values are per location. $c2b0-$c2bf is the location's scratch block as a whole: the bank $14 island-sky and firework cutscenes borrow it for sprite positions and timers once a map is loaded, and the water-sprite minigame keeps its counters at $c2b4-$c2ba
+; [8-bit] Scene stage of the story location that is currently loaded. Each map's init script derives it from the save flags (SetupCenterCourtSceneVariant, InitCourt1SceneVariant, ComputeIslandOpenRound, ComputeRankingProgressIndex_27, ...) and the location's NPC scripts index their per-stage text-id tables with it, so one NPC speaks a different line as the story advances. Values are per location. $c2b0-$c2bf is the location's scratch block as a whole: the bank $14 island-sky and firework cutscenes borrow it for sprite positions and timers once a map is loaded, and the water-sprite minigame keeps its counters at $c2b4-$c2ba
 wMapSceneStage:: db
 
 ; [8-bit] Second per-location scene stage, alongside wMapSceneStage; set by the map init scripts (CafeteriaInitScript_10, RestaurantInitScript_10, TrainingCourtReentryDispatch, the challenger result scenes) and read by the same location's NPC scripts to pick a text id
@@ -2081,10 +2081,10 @@ wRasterScrollStartLY:: db
 ; [8-bit] Scanline at which it puts rSCX back to 0, ending the split. The win/lose screen, the ending credits and the intro cutscene each set their own pair
 wRasterScrollEndLY:: db
 
-; [8-bit] Menu cursor column; MoveMenuCursor wraps it at the column count in b
+; [8-bit] Menu cursor column; MoveMenuCursorGrid_3b wraps it at the column count in b
 wMenuCursorX:: db
 
-; [8-bit] Menu cursor row; MoveMenuCursor wraps it at the row count in c
+; [8-bit] Menu cursor row; MoveMenuCursorGrid_3b wraps it at the row count in c
 wMenuCursorY:: db
 
 ; [8-bit] Secondary menu cursor column (parallel to wMenuCursorX; second selection region of the shared menu-input handler)
@@ -2141,7 +2141,7 @@ wMenuBgScrollLane:: db
 ; [8-bit] How many button presses of the cheat code have been entered. It indexes the 32-byte buffer at WRAM bank $01 $d000 (masked to $1f) that UpdateCheatCodeEntry compares against CheatCodeEntryTable, and ResetCheatCodeBuffer zeroes both
 wCheatCodeLength:: db
 
-; [8-bit] Cell index the main-menu cursor was last left on, so the menu reopens where you were; RunMainMenu restores it through SetMenuCursorFromCellIndex and stores it back on exit. Cleared with the other saved cursors when a new game starts
+; [8-bit] Cell index the main-menu cursor was last left on, so the menu reopens where you were; RunMainMenu restores it through SetMenuCursorFromIndex_3b and stores it back on exit. Cleared with the other saved cursors when a new game starts
 wMainMenuCursor:: db
 
 ; [8-bit] Saved cursor cell for the saved-data source menu (RunSavedDataSourceSelect)
@@ -2824,7 +2824,7 @@ wRankingAnimStateDone:: db
 ; [8-bit] Set when ShowRankingBoard is called with mode $03, which it then rewrites to $00. It suppresses the board's entrance animation (DispatchRankingBoardAnim returns at once) and the closing jingle -- the quiet variant used when the board is shown as part of a longer sequence
 wRankingBoardSilent:: db
 	ds 5
-; [7 bytes] Where a ranking name too long for one row is split. RenderPlayerNameFitted measures the name with GetStringLength and, at six characters or more, calls RenderNameTwoRows: RenderNameTopRow copies the first four characters here and appends $2d ('-') and a terminator, RenderNameBottomRow copies the seven bytes from the fifth character on, and each row is then drawn from here by DrawNameWithDiacritics
+; [7 bytes] Where a ranking name too long for one row is split. RenderPlayerNameFitted measures the name with GetStringLength and, at six characters or more, calls RenderNameTwoRows: RenderNameTopRow copies the first four characters here and appends $2d ('-') and a terminator, RenderNameBottomRow copies the seven bytes from the fifth character on, and each row is then drawn from here by DrawNameWithDiacritics_1b
 wRankingNameRowBuffer:: ds 7
 ENDU
 
@@ -3552,7 +3552,7 @@ wCharDataStats:: ds 11
 wCharDataStatDeltas:: ds 11
 ; [8-bit] Which of the four level-up choices the cursor is on, or $04 for the confirm cell; CharDataScreen_DrawPageColumns and DrawStatValueSprites both key off it
 wCharDataPage:: db
-; [8-bit] Step of the confirm prompt (RunCharDataConfirmScreen); DrawCharDataPromptCursor draws the cursor from it
+; [8-bit] Step of the confirm prompt (RunCharDataConfirmScreen); DrawConfirmSelectionCursor_1a draws the cursor from it
 wCharDataConfirmState:: db
 ; [8-bit] AnimateCharDataStatsReveal countdown between stat rows; CharDataScreen_InitState seeds it with $0a
 wCharDataRevealTimer:: db

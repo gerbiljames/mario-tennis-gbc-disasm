@@ -228,6 +228,7 @@ CenterCourtSceneVariantActors_11:
 	map_actor $0000, ActorScript_11_45, $2b00, $1e00, FACE_LEFT, $6b, $01, $00
 	map_actor $0000, ActorScript_11_45, $2700, $1d00, FACE_LEFT, $6a, $01, $04
 	map_actor_end
+; Instruction-identical to AcademyMainBldgArrival01_10, RestaurantArrival01_10, DormEntranceArrival01_12 and RestaurantPlazaArrival04_13 (one copy per bank); a change here belongs in every copy.
 MapArrivalWalk_11:
 	ld a, [wStoryModeEntryPoint] ; $42fd
 	cp STORYENTRY_NONE ; $4300
@@ -338,6 +339,7 @@ AcademyArrivalEntryPoints_11:
 	map_entry $0c, FACE_DOWN, $1800, $2f00, $0000
 	map_entry $0f, FACE_UP, $1800, $2f00, $0000
 	db $ff
+; Instruction-identical to AcademyMainBldgArrival02_10 and DormEntranceArrival02_12 (one copy per bank); a change here belongs in every copy.
 AcademyArrivalArrival01_11:
 	ld a, [wStoryModeEntryPoint] ; $4536
 	cp STORYENTRY_NONE ; $4539
@@ -483,7 +485,7 @@ AcademyArrivalTile0F_11:
 	call ResumeAcademyGuideTour ; $46ad
 	ret ; $46b0
 AcademyArrivalInitScript_11:
-	call ComputeRankingProgressIndex ; $46b1
+	call ComputeRankingProgressIndex_11 ; $46b1
 	call EnableAcademyCampusExit ; $46b4
 	call MoveCampusGateGuardAside ; $46b7
 	ld a, [wStoryModeEntryPoint] ; $46ba
@@ -3605,7 +3607,8 @@ ActorScript_11_52:
 	as_wait $8c
 	as_anim $03
 	as_jump ActorScript_11_52
-ComputeRankingProgressIndex:
+; Instruction-identical to ComputeRankingProgressIndex_0e, ComputeRankingProgressIndex_12 and ComputeRankingProgressIndex_27 (one copy per bank); a change here belongs in every copy.
+ComputeRankingProgressIndex_11:
 	test_flag FLAG_DOUBLES ; $7d95
 	jr nz, .doubles ; $7d98
 	ld a, STORYRANK_SINGLES_ACADEMY ; $7d9a

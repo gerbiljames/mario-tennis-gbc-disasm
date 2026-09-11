@@ -205,6 +205,7 @@ FetchShortText_32:
 	call FetchText_32 ; $7ab2
 	pop af ; $7ab5
 	ret ; $7ab6
+; Instruction-identical to FetchText_1f, FetchText_25, FetchText_26, FetchText_30, FetchText_31, FetchText_33, FetchText_34, FetchText_35, FetchText_36, FetchText_37, FetchText_5e and FetchText_6e (one copy per bank); a change here belongs in every copy.
 FetchText_32:
 	push bc ; $7ab7
 	push de ; $7ab8

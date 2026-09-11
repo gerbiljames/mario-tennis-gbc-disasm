@@ -140,7 +140,8 @@ ApplyCursorBounceY:
 CursorBounceYTable:
 	; $40df, 16 bytes (bytes:16)
 	db $00, $00, $00, $01, $01, $01, $01, $01, $01, $01, $01, $00, $00, $00, $00, $00 ; 0x00
-QueueCursorCornersStatic:
+; Instruction-identical to DrawCornerBrackets_1b, DrawCornerBrackets_38 and DrawCornerBrackets_3e (one copy per bank); a change here belongs in every copy.
+DrawCornerBrackets_3b:
 	push de ; $40ef
 	push bc ; $40f0
 	ld c, $00 ; $40f1
@@ -184,7 +185,8 @@ QueueCursorCornersStatic:
 	call QueueSprite ; $4125
 	pop de ; $4128
 	ret ; $4129
-MoveMenuCursor:
+; Instruction-identical to MoveMenuCursorGrid_38 and MoveMenuCursorGrid_3e (one copy per bank); a change here belongs in every copy.
+MoveMenuCursorGrid_3b:
 	ld a, [wMenuCursorX] ; $412a
 	ld d, a ; $412d
 	ld a, [wMenuCursorY] ; $412e
@@ -627,7 +629,8 @@ MoveMenuCursorLinkRemote:
 .checkMenuCursorY:
 	ld a, $01 ; $43b6
 	ret ; $43b8
-GetMenuCursorCellIndex:
+; Instruction-identical to GetMenuCursorIndex_16, GetMenuCursorIndex_1b, GetMenuCursorIndex_38 and GetMenuCursorIndex_3e (one copy per bank); a change here belongs in every copy.
+GetMenuCursorIndex_3b:
 	ld a, [wMenuCursorY] ; $43b9
 	ld b, a ; $43bc
 	xor a ; $43bd
@@ -642,7 +645,8 @@ GetMenuCursorCellIndex:
 	ld a, [wMenuCursorX] ; $43c6
 	add b ; $43c9
 	ret ; $43ca
-GetCellIndexFromCursorPtr:
+; Instruction-identical to GetCellIndexFromCursorPtr_16 and GetCellIndexFromCursorPtr_3e (one copy per bank); a change here belongs in every copy.
+GetCellIndexFromCursorPtr_3b:
 	push bc ; $43cb
 	ld a, [hl-] ; $43cc
 	ld b, a ; $43cd
@@ -659,7 +663,8 @@ GetCellIndexFromCursorPtr:
 	add b ; $43d8
 	pop bc ; $43d9
 	ret ; $43da
-SetMenuCursorFromCellIndex:
+; Instruction-identical to SetMenuCursorFromIndex_16, SetMenuCursorFromIndex_38 and SetMenuCursorFromIndex_3e (one copy per bank); a change here belongs in every copy.
+SetMenuCursorFromIndex_3b:
 	ld d, $00 ; $43db
 	ld a, c ; $43dd
 .divLoop:
@@ -710,6 +715,7 @@ ClearWram3Row64Alt:
 UpdateAnimatedTilesTask_3b:
 	farcall UpdateAnimatedTiles ; $4428
 	ret ; $442b
+; Instruction-identical to DrawNameWithDiacritics_38 (one copy per bank); a change here belongs in every copy.
 DrawNameWithDiacritics_3b:
 	push af ; $442c
 	push bc ; $442d
@@ -759,7 +765,8 @@ DrawNameWithDiacritics_3b:
 	pop bc ; $4462
 	pop af ; $4463
 	ret ; $4464
-PrintNumberString_3b:
+; Instruction-identical to DrawDecimalNumber_17, DrawDecimalNumber_1b and DrawDecimalNumber_3e (one copy per bank); a change here belongs in every copy.
+DrawDecimalNumber_3b:
 	push af ; $4465
 	push bc ; $4466
 	push hl ; $4467
@@ -794,6 +801,7 @@ DrawAsciiDigitString_3b:
 	jr DrawAsciiDigitString_3b ; $448d
 .done:
 	ret ; $448f
+; Instruction-identical to DrawAsciiDigitChar_16, DrawAsciiDigitChar_17, DrawAsciiDigitChar_1b and DrawAsciiDigitChar_3e (one copy per bank); a change here belongs in every copy.
 DrawAsciiDigitChar_3b:
 	push hl ; $4490
 	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH ; $4491
@@ -3160,7 +3168,7 @@ RunMainMenu:
 	ld b, $03 ; $55ef
 	ld a, [wMainMenuCursor] ; $55f1
 	ld c, a ; $55f4
-	call SetMenuCursorFromCellIndex ; $55f5
+	call SetMenuCursorFromIndex_3b ; $55f5
 	ld a, $00 ; $55f8
 	ld [wMenuBgScrollTile + 1], a ; $55fa
 	ld a, $01 ; $55fd
@@ -3183,7 +3191,7 @@ RunMainMenu:
 	ld [wMenuInputPressed], a ; $562e
 	ld b, $03 ; $5631
 	ld c, $03 ; $5633
-	call MoveMenuCursor ; $5635
+	call MoveMenuCursorGrid_3b ; $5635
 	or a ; $5638
 	jr nz, .playSfx ; $5639
 	jr .checkMenuInputPressed ; $563b
@@ -3217,7 +3225,7 @@ RunMainMenu:
 	cp $00 ; $5673
 	jr nz, .storeMenuSlideDirection ; $5675
 	ld c, $03 ; $5677
-	call GetMenuCursorCellIndex ; $5679
+	call GetMenuCursorIndex_3b ; $5679
 	ld [wMainMenuCursor], a ; $567c
 	call TryMainMenuLinkHandshake ; $567f
 	jp c, RunMainMenu ; $5682
@@ -3225,7 +3233,7 @@ RunMainMenu:
 	ld a, $01 ; $5685
 	ld [wMenuSlideDirection], a ; $5687
 	ld c, $03 ; $568a
-	call GetMenuCursorCellIndex ; $568c
+	call GetMenuCursorIndex_3b ; $568c
 	ld [wMainMenuCursor], a ; $568f
 	call MapMainMenuCursorToItemId ; $5692
 	ret ; $5695
@@ -3468,7 +3476,7 @@ MainMenuSlideOut:
 MainMenuCursorSpriteTask:
 	farcall TickMenuBgScroll ; $5863
 	ld c, $03 ; $5866
-	call GetMenuCursorCellIndex ; $5868
+	call GetMenuCursorIndex_3b ; $5868
 	push af ; $586b
 	ld hl, MainMenuCursorSpriteTaskTable1 ; $586c
 	add l ; $586f
@@ -3504,7 +3512,7 @@ MainMenuCursorSpriteTask:
 	push de ; $5894
 	call QueueSpriteTemplate ; $5895
 	ld c, $03 ; $5898
-	call GetMenuCursorCellIndex ; $589a
+	call GetMenuCursorIndex_3b ; $589a
 	ld hl, MainMenuCursorSpriteTaskTable2 ; $589d
 	add l ; $58a0
 	ld l, a ; $58a1
@@ -3588,12 +3596,12 @@ DrawMainMenuSelection:
 	cp $09 ; $5978
 	jr nz, .loop ; $597a
 	ld c, $03 ; $597c
-	call GetMenuCursorCellIndex ; $597e
+	call GetMenuCursorIndex_3b ; $597e
 	ld b, a ; $5981
 	ld c, $01 ; $5982
 	call FillMainMenuCellHighlight ; $5984
 	ld c, $03 ; $5987
-	call GetMenuCursorCellIndex ; $5989
+	call GetMenuCursorIndex_3b ; $5989
 	cp $06 ; $598c
 	jr nc, .loadMainMenuItemPalette ; $598e
 	cp $03 ; $5990
@@ -3826,7 +3834,7 @@ BuildSaveSlotSummaries:
 DrawMainMenuCaption:
 	push_wram_bank $03 ; $5b3e
 	ld c, $03 ; $5b47
-	call GetMenuCursorCellIndex ; $5b49
+	call GetMenuCursorIndex_3b ; $5b49
 	ld b, a ; $5b4c
 	cp $06 ; $5b4d
 	jp nc, .step3 ; $5b4f
@@ -4105,7 +4113,7 @@ RunMatchFormatSelect:
 	call HandleMatchFormatInput ; $5d30
 	ld b, $01 ; $5d33
 	ld c, $03 ; $5d35
-	call MoveMenuCursor ; $5d37
+	call MoveMenuCursorGrid_3b ; $5d37
 	or a ; $5d3a
 	jr z, .checkMenuInputPressed ; $5d3b
 	sound SFX_MENU_MOVE ; $5d3d
@@ -4127,7 +4135,7 @@ RunMatchFormatSelect:
 	ld a, $01 ; $5d5e
 	ld [wMenuSlideDirection], a ; $5d60
 	ld c, $03 ; $5d63
-	call GetMenuCursorCellIndex ; $5d65
+	call GetMenuCursorIndex_3b ; $5d65
 	ret ; $5d68
 .playSfx2:
 	sound SFX_MENU_CANCEL ; $5d69
@@ -4143,7 +4151,7 @@ RunMatchFormatSelect:
 InitMatchFormatOptions:
 	ld b, $01 ; $5d80
 	ld c, $00 ; $5d82
-	call SetMenuCursorFromCellIndex ; $5d84
+	call SetMenuCursorFromIndex_3b ; $5d84
 	ld a, [wMatchFormatDoubles] ; $5d87
 	ld b, a ; $5d8a
 	ld c, $01 ; $5d8b
@@ -4339,6 +4347,7 @@ MatchFormatSlideIn:
 	cp $ff ; $5f06
 	jr nz, .loopB ; $5f08
 	ret ; $5f0a
+; Instruction-identical to CloseMatchRulesPanel (one copy per bank); a change here belongs in every copy.
 MatchFormatSlideOut:
 	ld a, b ; $5f0b
 	or a ; $5f0c
@@ -4380,7 +4389,7 @@ HandleMatchFormatInput:
 .playSfx:
 	sound SFX_MENU_MOVE ; $5f48
 	ld c, $01 ; $5f4a
-	call GetMenuCursorCellIndex ; $5f4c
+	call GetMenuCursorIndex_3b ; $5f4c
 	or a ; $5f4f
 	jr nz, .compare ; $5f50
 	ld a, [wMatchFormatDoubles] ; $5f52
@@ -4425,7 +4434,7 @@ HandleMatchFormatInput:
 .playSfx2:
 	sound SFX_MENU_MOVE ; $5f9f
 	ld c, $01 ; $5fa1
-	call GetMenuCursorCellIndex ; $5fa3
+	call GetMenuCursorIndex_3b ; $5fa3
 	or a ; $5fa6
 	jr nz, .compare2 ; $5fa7
 	ld a, [wMatchFormatDoubles] ; $5fa9
@@ -4560,6 +4569,7 @@ FillMatchFormatOptionCellTable:
 MatchFormatOptionCellTable:
 	; $6093, 7 bytes (bytes:8)
 	db $0c, $0c, $0e, $0e, $0f, $0f, $0f ; 0x00
+; Instruction-identical to FlushMatchRuleRowAttrs (one copy per bank); a change here belongs in every copy.
 FlushMatchFormatRowToVram:
 	push af ; $609a
 	push bc ; $609b
@@ -4595,7 +4605,7 @@ FlushMatchFormatRowToVram:
 MatchFormatCursorSpriteTask:
 	farcall TickMenuBgScroll ; $60d0
 	ld c, $01 ; $60d3
-	call GetMenuCursorCellIndex ; $60d5
+	call GetMenuCursorIndex_3b ; $60d5
 	or a ; $60d8
 	jr nz, .compare ; $60d9
 	ld a, [wMatchFormatDoubles] ; $60db
@@ -4691,7 +4701,7 @@ DrawMatchFormatCaption:
 RenderMatchFormatOptionText:
 	wram_bank $03 ; $619b
 	ld c, $01 ; $61a1
-	call GetMenuCursorCellIndex ; $61a3
+	call GetMenuCursorIndex_3b ; $61a3
 	or a ; $61a6
 	jr nz, .compare ; $61a7
 	ld a, [wMatchFormatDoubles] ; $61a9
@@ -4765,7 +4775,7 @@ RunMinigameSelect:
 	ld a, [wSelectedMinigame] ; $6227
 	ld c, a ; $622a
 	ld b, $03 ; $622b
-	call SetMenuCursorFromCellIndex ; $622d
+	call SetMenuCursorFromIndex_3b ; $622d
 	ld a, $01 ; $6230
 	ld hl, MinigameSelectCursorSpriteTask ; $6232
 	call RegisterFrameTask ; $6235
@@ -4795,7 +4805,7 @@ RunMinigameSelect:
 .nonZero:
 	ld b, $03 ; $626a
 	ld c, $03 ; $626c
-	call MoveMenuCursor ; $626e
+	call MoveMenuCursorGrid_3b ; $626e
 	or a ; $6271
 	jr z, .advanceFrame ; $6272
 	sound SFX_MENU_MOVE ; $6274
@@ -4811,7 +4821,7 @@ RunMinigameSelect:
 	jr .loop ; $628a
 .getMenuCursorCellIndex:
 	ld c, $03 ; $628c
-	call GetMenuCursorCellIndex ; $628e
+	call GetMenuCursorIndex_3b ; $628e
 	ld c, a ; $6291
 	call GetUnlockedMarioCastCharAtGridSlot ; $6292
 	cp CHAR_UNUSED_15 ; $6295
@@ -4838,7 +4848,7 @@ RunMinigameSelect:
 	xor a ; $62be
 	ld [wMinigameSelectUnused], a ; $62bf
 	ld c, $03 ; $62c2
-	call GetMenuCursorCellIndex ; $62c4
+	call GetMenuCursorIndex_3b ; $62c4
 	ld [wSelectedMinigame], a ; $62c7
 	ret ; $62ca
 .playSfx2:
@@ -5049,7 +5059,7 @@ MinigameSelectSlideOut9:
 MinigameSelectCursorSpriteTask:
 	farcall TickMenuBgScroll ; $646d
 	ld c, $03 ; $6470
-	call GetMenuCursorCellIndex ; $6472
+	call GetMenuCursorIndex_3b ; $6472
 	push af ; $6475
 	ld hl, MinigameSelectCursorSpriteTaskTable1 ; $6476
 	add l ; $6479
@@ -5145,7 +5155,7 @@ OverrideMinigameCursorIfLocked:
 	push hl ; $654e
 	push de ; $654f
 	ld c, $03 ; $6550
-	call GetMenuCursorCellIndex ; $6552
+	call GetMenuCursorIndex_3b ; $6552
 	ld c, a ; $6555
 	call GetUnlockedMarioCastCharAtGridSlot ; $6556
 	cp CHAR_UNUSED_15 ; $6559
@@ -5186,7 +5196,7 @@ DrawMinigameSelectCaption:
 RenderMinigameNameText:
 	wram_bank $03 ; $65a0
 	ld c, $03 ; $65a6
-	call GetMenuCursorCellIndex ; $65a8
+	call GetMenuCursorIndex_3b ; $65a8
 	push af ; $65ab
 	ld c, a ; $65ac
 	call GetUnlockedMarioCastCharAtGridSlot ; $65ad
@@ -5242,12 +5252,12 @@ DrawMinigameSelectGrid9:
 	cp $09 ; $65fc
 	jr nz, .loop ; $65fe
 	ld c, $03 ; $6600
-	call GetMenuCursorCellIndex ; $6602
+	call GetMenuCursorIndex_3b ; $6602
 	ld b, a ; $6605
 	ld c, $01 ; $6606
 	call FillMinigameSelectCell ; $6608
 	ld c, $03 ; $660b
-	call GetMenuCursorCellIndex ; $660d
+	call GetMenuCursorIndex_3b ; $660d
 	call LoadMinigameCharPalette ; $6610
 	ld hl, wShadowAttrmap + 3 * TILEMAP_WIDTH ; $6613
 	ld de, $9860 + VRAM_BANK1 ; $6616
@@ -5483,12 +5493,12 @@ DrawMinigameSelectGrid6:
 	cp $06 ; $6773
 	jr nz, .loop ; $6775
 	ld c, $03 ; $6777
-	call GetMenuCursorCellIndex ; $6779
+	call GetMenuCursorIndex_3b ; $6779
 	ld b, a ; $677c
 	ld c, $01 ; $677d
 	farcall FillMenuGridCellTile ; $677f
 	ld c, $03 ; $6782
-	call GetMenuCursorCellIndex ; $6784
+	call GetMenuCursorIndex_3b ; $6784
 	call LoadMinigameCharPalette ; $6787
 	ld hl, wShadowAttrmap + 4 * TILEMAP_WIDTH ; $678a
 	ld de, $9880 + VRAM_BANK1 ; $678d
@@ -5517,7 +5527,7 @@ RunSavedDataSourceSelect:
 	ld a, [wSavedDataMenuCursor] ; $67c8
 	ld c, a ; $67cb
 	ld b, $03 ; $67cc
-	call SetMenuCursorFromCellIndex ; $67ce
+	call SetMenuCursorFromIndex_3b ; $67ce
 	ld a, $01 ; $67d1
 	ld hl, SavedDataSourceCursorSpriteTask ; $67d3
 	call RegisterFrameTask ; $67d6
@@ -5541,7 +5551,7 @@ RunSavedDataSourceSelect:
 	jr .loop ; $6800
 .getMenuCursorCellIndex:
 	ld c, $03 ; $6802
-	call GetMenuCursorCellIndex ; $6804
+	call GetMenuCursorIndex_3b ; $6804
 	cp $04 ; $6807
 	jr nz, .ne04 ; $6809
 	call CheckN64DataPresent ; $680b
@@ -5551,7 +5561,7 @@ RunSavedDataSourceSelect:
 	jr .loop ; $6813
 .ne04:
 	ld c, $03 ; $6815
-	call GetMenuCursorCellIndex ; $6817
+	call GetMenuCursorIndex_3b ; $6817
 	cp $03 ; $681a
 	jp nc, .playSfx2 ; $681c
 	add a ; $681f
@@ -5583,7 +5593,7 @@ RunSavedDataSourceSelect:
 	ld a, $01 ; $6849
 	ld [wMenuSlideDirection], a ; $684b
 	ld c, $03 ; $684e
-	call GetMenuCursorCellIndex ; $6850
+	call GetMenuCursorIndex_3b ; $6850
 	ld [wSavedDataMenuCursor], a ; $6853
 	ret ; $6856
 .playSfx3:
@@ -5761,7 +5771,7 @@ Unused_3b_SlideMenuPanel_2:
 SavedDataSourceCursorSpriteTask:
 	farcall TickMenuBgScroll ; $69dc
 	ld c, $03 ; $69df
-	call GetMenuCursorCellIndex ; $69e1
+	call GetMenuCursorIndex_3b ; $69e1
 	push af ; $69e4
 	ld hl, SavedDataSourceCursorSpriteTaskTable1 ; $69e5
 	add l ; $69e8
@@ -5832,12 +5842,12 @@ DrawSavedDataSourceGrid:
 	cp $05 ; $6a8e
 	jr nz, .loop ; $6a90
 	ld c, $03 ; $6a92
-	call GetMenuCursorCellIndex ; $6a94
+	call GetMenuCursorIndex_3b ; $6a94
 	ld b, a ; $6a97
 	ld c, $01 ; $6a98
 	call FillSavedDataSourceCell ; $6a9a
 	ld c, $03 ; $6a9d
-	call GetMenuCursorCellIndex ; $6a9f
+	call GetMenuCursorIndex_3b ; $6a9f
 	cp $03 ; $6aa2
 	jr nc, .loadSavedDataSourceCellPalette ; $6aa4
 	add a ; $6aa6
@@ -5973,7 +5983,7 @@ SavedDataSourceCellPalette1:
 DrawSavedDataSourceCaption:
 	push_wram_bank $03 ; $6b83
 	ld c, $03 ; $6b8c
-	call GetMenuCursorCellIndex ; $6b8e
+	call GetMenuCursorIndex_3b ; $6b8e
 	ld b, a ; $6b91
 	cp $03 ; $6b92
 	jp nc, .compare ; $6b94
@@ -6106,7 +6116,7 @@ RunEraseSavedDataSelect:
 	farcall LoadMenuSpritePalettePair ; $6ca0
 	ld c, $00 ; $6ca3
 	ld b, $03 ; $6ca5
-	call SetMenuCursorFromCellIndex ; $6ca7
+	call SetMenuCursorFromIndex_3b ; $6ca7
 	ld a, $01 ; $6caa
 	ld hl, EraseSavedDataCursorSpriteTask ; $6cac
 	call RegisterFrameTask ; $6caf
@@ -6130,7 +6140,7 @@ RunEraseSavedDataSelect:
 	jr .loop ; $6cd9
 .getMenuCursorCellIndex:
 	ld c, $03 ; $6cdb
-	call GetMenuCursorCellIndex ; $6cdd
+	call GetMenuCursorIndex_3b ; $6cdd
 	cp $03 ; $6ce0
 	jp nc, .playSfx2 ; $6ce2
 	add a ; $6ce5
@@ -6162,7 +6172,7 @@ RunEraseSavedDataSelect:
 	ld a, $01 ; $6d0f
 	ld [wMenuSlideDirection], a ; $6d11
 	ld c, $03 ; $6d14
-	call GetMenuCursorCellIndex ; $6d16
+	call GetMenuCursorIndex_3b ; $6d16
 	ret ; $6d19
 .playSfx3:
 	sound SFX_MENU_CANCEL ; $6d1a
@@ -6456,7 +6466,7 @@ SavedDataPickerCursorTable1:
 EraseSavedDataCursorSpriteTask:
 	farcall TickMenuBgScroll ; $6f5b
 	ld c, $03 ; $6f5e
-	call GetMenuCursorCellIndex ; $6f60
+	call GetMenuCursorIndex_3b ; $6f60
 	push af ; $6f63
 	ld hl, EraseSavedDataCursorSpriteTaskTable1 ; $6f64
 	add l ; $6f67
@@ -6527,12 +6537,12 @@ DrawEraseSavedDataGrid:
 	cp $05 ; $700b
 	jr nz, .loop ; $700d
 	ld c, $03 ; $700f
-	call GetMenuCursorCellIndex ; $7011
+	call GetMenuCursorIndex_3b ; $7011
 	ld b, a ; $7014
 	ld c, $01 ; $7015
 	call FillEraseSavedDataCell ; $7017
 	ld c, $03 ; $701a
-	call GetMenuCursorCellIndex ; $701c
+	call GetMenuCursorIndex_3b ; $701c
 	cp $03 ; $701f
 	jr nc, .loadEraseSavedDataCellPalette ; $7021
 	add a ; $7023
@@ -6668,7 +6678,7 @@ SavedDataCellPalette1:
 DrawEraseSavedDataCaption:
 	push_wram_bank $03 ; $7100
 	ld c, $03 ; $7109
-	call GetMenuCursorCellIndex ; $710b
+	call GetMenuCursorIndex_3b ; $710b
 	ld b, a ; $710e
 	cp $03 ; $710f
 	jp nc, .ge03 ; $7111
@@ -6775,7 +6785,7 @@ RunN64RecordTypeSelect:
 	ld a, [wSubMenuCursor] ; $71d1
 	ld c, a ; $71d4
 	ld b, $03 ; $71d5
-	call SetMenuCursorFromCellIndex ; $71d7
+	call SetMenuCursorFromIndex_3b ; $71d7
 	ld a, $01 ; $71da
 	ld hl, N64RecordTypeCursorSpriteTask ; $71dc
 	call RegisterFrameTask ; $71df
@@ -6787,7 +6797,7 @@ RunN64RecordTypeSelect:
 	ld [wMenuInputPressed], a ; $71f0
 	ld b, $03 ; $71f3
 	ld c, $01 ; $71f5
-	call MoveMenuCursor ; $71f7
+	call MoveMenuCursorGrid_3b ; $71f7
 	or a ; $71fa
 	jr z, .checkMenuInputPressed ; $71fb
 	sound SFX_MENU_MOVE ; $71fd
@@ -6809,7 +6819,7 @@ RunN64RecordTypeSelect:
 	ld a, $01 ; $721e
 	ld [wMenuSlideDirection], a ; $7220
 	ld c, $03 ; $7223
-	call GetMenuCursorCellIndex ; $7225
+	call GetMenuCursorIndex_3b ; $7225
 	ld [wSubMenuCursor], a ; $7228
 	ret ; $722b
 .playSfx2:
@@ -6982,7 +6992,7 @@ N64RecordTypeSlideOut:
 N64RecordTypeCursorSpriteTask:
 	farcall TickMenuBgScroll ; $734f
 	ld c, $03 ; $7352
-	call GetMenuCursorCellIndex ; $7354
+	call GetMenuCursorIndex_3b ; $7354
 	push af ; $7357
 	ld hl, N64RecordTypeCursorSpriteTaskTable1 ; $7358
 	add l ; $735b
@@ -7051,12 +7061,12 @@ DrawN64RecordTypeGrid:
 	cp $03 ; $73cf
 	jr nz, .loop ; $73d1
 	ld c, $03 ; $73d3
-	call GetMenuCursorCellIndex ; $73d5
+	call GetMenuCursorIndex_3b ; $73d5
 	ld b, a ; $73d8
 	ld c, $01 ; $73d9
 	call FillN64RecordTypeCell ; $73db
 	ld c, $03 ; $73de
-	call GetMenuCursorCellIndex ; $73e0
+	call GetMenuCursorIndex_3b ; $73e0
 	call LoadN64RecordTypeCellPalette ; $73e3
 	wram_bank $03 ; $73e6
 	ld de, wShadowTilemap + 15 * TILEMAP_WIDTH ; $73ec
@@ -7162,7 +7172,7 @@ N64RecordTypeCellPalette2:
 DrawN64RecordTypeCaption:
 	push_wram_bank $03 ; $749a
 	ld c, $03 ; $74a3
-	call GetMenuCursorCellIndex ; $74a5
+	call GetMenuCursorIndex_3b ; $74a5
 	ld b, a ; $74a8
 	ld hl, $00cf ; $74a9
 	add l ; $74ac
@@ -7191,7 +7201,7 @@ RunN64TransferItemSelect:
 	ld a, [wN64TransferMenuCursor] ; $74e0
 	ld c, a ; $74e3
 	ld b, $02 ; $74e4
-	call SetMenuCursorFromCellIndex ; $74e6
+	call SetMenuCursorFromIndex_3b ; $74e6
 	ld a, $01 ; $74e9
 	ld hl, N64TransferItemCursorSpriteTask ; $74eb
 	call RegisterFrameTask ; $74ee
@@ -7203,7 +7213,7 @@ RunN64TransferItemSelect:
 	ld [wMenuInputPressed], a ; $74ff
 	ld b, $02 ; $7502
 	ld c, $02 ; $7504
-	call MoveMenuCursor ; $7506
+	call MoveMenuCursorGrid_3b ; $7506
 	or a ; $7509
 	jr z, .checkMenuInputPressed ; $750a
 	sound SFX_MENU_MOVE ; $750c
@@ -7225,7 +7235,7 @@ RunN64TransferItemSelect:
 	ld a, $01 ; $752d
 	ld [wMenuSlideDirection], a ; $752f
 	ld c, $02 ; $7532
-	call GetMenuCursorCellIndex ; $7534
+	call GetMenuCursorIndex_3b ; $7534
 	ld [wN64TransferMenuCursor], a ; $7537
 	ret ; $753a
 .playSfx2:
@@ -7352,12 +7362,12 @@ DrawN64TransferItemGrid:
 	cp $04 ; $761c
 	jr nz, .loop ; $761e
 	ld c, $02 ; $7620
-	call GetMenuCursorCellIndex ; $7622
+	call GetMenuCursorIndex_3b ; $7622
 	ld b, a ; $7625
 	ld c, $01 ; $7626
 	farcall SetCourtSelect4TabAttrRect ; $7628
 	ld c, $02 ; $762b
-	call GetMenuCursorCellIndex ; $762d
+	call GetMenuCursorIndex_3b ; $762d
 	call LoadN64TransferItemCellPalette ; $7630
 	wram_bank $03 ; $7633
 	ld de, wShadowTilemap + 15 * TILEMAP_WIDTH ; $7639
@@ -7428,7 +7438,7 @@ N64TransferItemCellPalette3:
 DrawN64TransferItemCaption:
 	push_wram_bank $03 ; $76c5
 	ld c, $02 ; $76ce
-	call GetMenuCursorCellIndex ; $76d0
+	call GetMenuCursorIndex_3b ; $76d0
 	ld b, a ; $76d3
 	ld hl, $00d2 ; $76d4
 	add l ; $76d7
@@ -7444,7 +7454,7 @@ DrawN64TransferItemCaption:
 N64TransferItemCursorSpriteTask:
 	farcall TickMenuBgScroll ; $76ea
 	ld c, $02 ; $76ed
-	call GetMenuCursorCellIndex ; $76ef
+	call GetMenuCursorIndex_3b ; $76ef
 	push af ; $76f2
 	ld hl, N64TransferItemCursorSpriteTaskTable1 ; $76f3
 	add l ; $76f6

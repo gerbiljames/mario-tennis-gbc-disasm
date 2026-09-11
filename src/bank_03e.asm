@@ -158,6 +158,7 @@ ApplySelectionBoxWobbleY:
 	ret ; $40ee
 SelectionBoxWobbleYTable_3e:
 	INCBIN "data/bank_03e/SelectionBoxWobbleYTable_3e.bin" ; $40ef, 16 bytes
+; Instruction-identical to DrawCornerBrackets_1b, DrawCornerBrackets_38 and DrawCornerBrackets_3b (one copy per bank); a change here belongs in every copy.
 DrawCornerBrackets_3e:
 	push de ; $40ff
 	push bc ; $4100
@@ -202,6 +203,7 @@ DrawCornerBrackets_3e:
 	call QueueSprite ; $4135
 	pop de ; $4138
 	ret ; $4139
+; Instruction-identical to MoveMenuCursorGrid_38 and MoveMenuCursorGrid_3b (one copy per bank); a change here belongs in every copy.
 MoveMenuCursorGrid_3e:
 	ld a, [wMenuCursorX] ; $413a
 	ld d, a ; $413d
@@ -290,6 +292,7 @@ MoveMenuCursorGrid_3e:
 .moved:
 	ld a, $01 ; $41b5
 	ret ; $41b7
+; Instruction-identical to MoveMenuCursorGridFromLinkInput_16 and MoveMenuCursorGridFromLinkInput_38 (one copy per bank); a change here belongs in every copy.
 MoveMenuCursorGridFromLinkInput_3e:
 	ld a, [wMenuCursorX] ; $41b8
 	ld d, a ; $41bb
@@ -378,6 +381,7 @@ MoveMenuCursorGridFromLinkInput_3e:
 .moved:
 	ld a, $01 ; $4232
 	ret ; $4234
+; Instruction-identical to MoveMenuCursorGridRemote_16 and MoveMenuCursorGridRemote_38 (one copy per bank); a change here belongs in every copy.
 MoveMenuCursorGridRemote_3e:
 	ld a, [wMenuCursorX] ; $4235
 	ld d, a ; $4238
@@ -512,6 +516,7 @@ MoveMenuCursorGridRemote_3e:
 .moved:
 	ld a, $01 ; $42fd
 	ret ; $42ff
+; Instruction-identical to MoveMenuCursor2GridRemote_16 (one copy per bank); a change here belongs in every copy.
 MoveMenuCursor2GridRemote_3e:
 	ld a, [wMenuCursor2X] ; $4300
 	ld d, a ; $4303
@@ -645,6 +650,7 @@ MoveMenuCursor2GridRemote_3e:
 .moved:
 	ld a, $01 ; $43c6
 	ret ; $43c8
+; Instruction-identical to GetMenuCursorIndex_16, GetMenuCursorIndex_1b, GetMenuCursorIndex_38 and GetMenuCursorIndex_3b (one copy per bank); a change here belongs in every copy.
 GetMenuCursorIndex_3e:
 	ld a, [wMenuCursorY] ; $43c9
 	ld b, a ; $43cc
@@ -660,6 +666,7 @@ GetMenuCursorIndex_3e:
 	ld a, [wMenuCursorX] ; $43d6
 	add b ; $43d9
 	ret ; $43da
+; Instruction-identical to GetCellIndexFromCursorPtr_16 and GetCellIndexFromCursorPtr_3b (one copy per bank); a change here belongs in every copy.
 GetCellIndexFromCursorPtr_3e:
 	push bc ; $43db
 	ld a, [hl-] ; $43dc
@@ -677,6 +684,7 @@ GetCellIndexFromCursorPtr_3e:
 	add b ; $43e8
 	pop bc ; $43e9
 	ret ; $43ea
+; Instruction-identical to SetMenuCursorFromIndex_16, SetMenuCursorFromIndex_38 and SetMenuCursorFromIndex_3b (one copy per bank); a change here belongs in every copy.
 SetMenuCursorFromIndex_3e:
 	ld d, $00 ; $43eb
 	ld a, c ; $43ed
@@ -691,7 +699,8 @@ SetMenuCursorFromIndex_3e:
 	ld a, d ; $43f8
 	ld [wMenuCursorY], a ; $43f9
 	ret ; $43fc
-SetMenuCursorFromIndexToPtr:
+; Instruction-identical to SetMenuCursorFromIndexToPtr_16 and SetMenuCursorFromIndexToPtr_38 (one copy per bank); a change here belongs in every copy.
+SetMenuCursorFromIndexToPtr_3e:
 	ld d, $00 ; $43fd
 	ld a, c ; $43ff
 .divLoop:
@@ -728,6 +737,7 @@ ClearWram3Row64Alt_3e:
 UpdateAnimatedTiles_3e:
 	farcall UpdateAnimatedTiles ; $4438
 	ret ; $443b
+; Instruction-identical to DrawNameWithDiacritics_17 and DrawNameWithDiacritics_1b (one copy per bank); a change here belongs in every copy.
 DrawNameWithDiacritics_3e:
 	push af ; $443c
 	push bc ; $443d
@@ -777,7 +787,8 @@ DrawNameWithDiacritics_3e:
 	pop bc ; $4472
 	pop af ; $4473
 	ret ; $4474
-PrintNumberString_3e:
+; Instruction-identical to DrawDecimalNumber_17, DrawDecimalNumber_1b and DrawDecimalNumber_3b (one copy per bank); a change here belongs in every copy.
+DrawDecimalNumber_3e:
 	push af ; $4475
 	push bc ; $4476
 	push hl ; $4477
@@ -812,6 +823,7 @@ DrawAsciiDigitString_3e:
 	jr DrawAsciiDigitString_3e ; $449d
 .done:
 	ret ; $449f
+; Instruction-identical to DrawAsciiDigitChar_16, DrawAsciiDigitChar_17, DrawAsciiDigitChar_1b and DrawAsciiDigitChar_3b (one copy per bank); a change here belongs in every copy.
 DrawAsciiDigitChar_3e:
 	push hl ; $44a0
 	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH ; $44a1
@@ -1132,6 +1144,7 @@ OpenMatchRulesPanel:
 	jr nz, .loopB ; $4726
 	call AdvanceFrame ; $4728
 	ret ; $472b
+; Instruction-identical to MatchFormatSlideOut (one copy per bank); a change here belongs in every copy.
 CloseMatchRulesPanel:
 	ld a, b ; $472c
 	or a ; $472d
@@ -1347,6 +1360,7 @@ MatchRuleOptionAttrAddrs_3e:
 MatchRuleOptionAttrWidths_3e:
 	; $48b4, 7 bytes (bytes:7)
 	db $0c, $0c, $0e, $0e, $0f, $0f, $0f ; 0x00
+; Instruction-identical to FlushMatchFormatRowToVram (one copy per bank); a change here belongs in every copy.
 FlushMatchRuleRowAttrs:
 	push af ; $48bb
 	push bc ; $48bc

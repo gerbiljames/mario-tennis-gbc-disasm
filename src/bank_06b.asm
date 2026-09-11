@@ -315,6 +315,7 @@ IntroCutsceneState00Exit_6b:
 	ld [wCameraY], a ; $41f1
 	ld [wCameraY + 1], a ; $41f4
 	jp DispatchCutsceneStateInit.loop2 ; $41f7
+; Instruction-identical to IntroCutsceneState19Update_6b (in this bank); a change here belongs in every copy.
 IntroCutsceneState00Update_6b:
 	ld a, [wCutsceneStepTimer] ; $41fa
 	inc a ; $41fd
@@ -1218,6 +1219,7 @@ IntroCutsceneState19Exit_6b:
 	call BeginFadeOut ; $4c70
 	call WaitFadeEnd ; $4c73
 	jp DispatchCutsceneStateInit.loop2 ; $4c76
+; Instruction-identical to IntroCutsceneState00Update_6b (in this bank); a change here belongs in every copy.
 IntroCutsceneState19Update_6b:
 	ld a, [wCutsceneStepTimer] ; $4c79
 	inc a ; $4c7c

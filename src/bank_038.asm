@@ -124,7 +124,8 @@ ApplySpriteBobOffsetY:
 SpriteBobOffsetYTable_38:
 	; $40bf, 16 bytes (bytes:16)
 	db $00, $00, $00, $01, $01, $01, $01, $01, $01, $01, $01, $00, $00, $00, $00, $00 ; 0x00
-DrawUnselectedOptionBox:
+; Instruction-identical to DrawCornerBrackets_1b, DrawCornerBrackets_3b and DrawCornerBrackets_3e (one copy per bank); a change here belongs in every copy.
+DrawCornerBrackets_38:
 	push de ; $40cf
 	push bc ; $40d0
 	ld c, $00 ; $40d1
@@ -168,7 +169,8 @@ DrawUnselectedOptionBox:
 	call QueueSprite ; $4105
 	pop de ; $4108
 	ret ; $4109
-MoveMenuCursorBox:
+; Instruction-identical to MoveMenuCursorGrid_3b and MoveMenuCursorGrid_3e (one copy per bank); a change here belongs in every copy.
+MoveMenuCursorGrid_38:
 	ld a, [wMenuCursorX] ; $410a
 	ld d, a ; $410d
 	ld a, [wMenuCursorY] ; $410e
@@ -256,7 +258,8 @@ MoveMenuCursorBox:
 .moved:
 	ld a, $01 ; $4185
 	ret ; $4187
-MoveMenuCursorBoxLink:
+; Instruction-identical to MoveMenuCursorGridFromLinkInput_16 and MoveMenuCursorGridFromLinkInput_3e (one copy per bank); a change here belongs in every copy.
+MoveMenuCursorGridFromLinkInput_38:
 	ld a, [wMenuCursorX] ; $4188
 	ld d, a ; $418b
 	ld a, [wMenuCursorY] ; $418c
@@ -344,7 +347,8 @@ MoveMenuCursorBoxLink:
 .moved:
 	ld a, $01 ; $4202
 	ret ; $4204
-MoveMenuCursorBoxRemote_38:
+; Instruction-identical to MoveMenuCursorGridRemote_16 and MoveMenuCursorGridRemote_3e (one copy per bank); a change here belongs in every copy.
+MoveMenuCursorGridRemote_38:
 	ld a, [wMenuCursorX] ; $4205
 	ld d, a ; $4208
 	ld a, [wMenuCursorY] ; $4209
@@ -611,7 +615,8 @@ MoveMenuCursor2GridRemote_38:
 .moved2:
 	ld a, $01 ; $4396
 	ret ; $4398
-GetMenuCursorLinearIndex:
+; Instruction-identical to GetMenuCursorIndex_16, GetMenuCursorIndex_1b, GetMenuCursorIndex_3b and GetMenuCursorIndex_3e (one copy per bank); a change here belongs in every copy.
+GetMenuCursorIndex_38:
 	ld a, [wMenuCursorY] ; $4399
 	ld b, a ; $439c
 	xor a ; $439d
@@ -626,7 +631,8 @@ GetMenuCursorLinearIndex:
 	ld a, [wMenuCursorX] ; $43a6
 	add b ; $43a9
 	ret ; $43aa
-GetMenuCursorLinearIndexFromPtr:
+; Instruction-identical to GetMenuCursorIndexFromPtr_1b (one copy per bank); a change here belongs in every copy.
+GetMenuCursorIndexFromPtr_38:
 	push bc ; $43ab
 	ld a, [hl-] ; $43ac
 	ld b, a ; $43ad
@@ -643,7 +649,8 @@ GetMenuCursorLinearIndexFromPtr:
 	add b ; $43b8
 	pop bc ; $43b9
 	ret ; $43ba
-SetMenuCursorFromLinearIndex:
+; Instruction-identical to SetMenuCursorFromIndex_16, SetMenuCursorFromIndex_3b and SetMenuCursorFromIndex_3e (one copy per bank); a change here belongs in every copy.
+SetMenuCursorFromIndex_38:
 	ld d, $00 ; $43bb
 	ld a, c ; $43bd
 .divLoop:
@@ -657,7 +664,8 @@ SetMenuCursorFromLinearIndex:
 	ld a, d ; $43c8
 	ld [wMenuCursorY], a ; $43c9
 	ret ; $43cc
-SetMenuCursorFromLinearIndexToPtr:
+; Instruction-identical to SetMenuCursorFromIndexToPtr_16 and SetMenuCursorFromIndexToPtr_3e (one copy per bank); a change here belongs in every copy.
+SetMenuCursorFromIndexToPtr_38:
 	ld d, $00 ; $43cd
 	ld a, c ; $43cf
 .divLoop:
@@ -694,7 +702,8 @@ ClearWram3Row64Alt_38:
 UpdateAnimatedTilesTask_38:
 	farcall UpdateAnimatedTiles ; $4408
 	ret ; $440b
-CopyStringToTilemap:
+; Instruction-identical to DrawNameWithDiacritics_3b (one copy per bank); a change here belongs in every copy.
+DrawNameWithDiacritics_38:
 	push af ; $440c
 	push bc ; $440d
 .charLoop:
@@ -814,7 +823,7 @@ RunMatchTypeMenu:
 	call AdjustMatchTypeSetting ; $44b2
 	ld b, $01 ; $44b5
 	ld c, $03 ; $44b7
-	call MoveMenuCursorBox ; $44b9
+	call MoveMenuCursorGrid_38 ; $44b9
 	or a ; $44bc
 	jr z, .adjust ; $44bd
 	call RefreshMatchTypeLabelRow ; $44bf
@@ -873,7 +882,7 @@ RunMatchTypeMenuLink:
 	call AdjustMatchTypeSetting ; $452e
 	ld b, $01 ; $4531
 	ld c, $03 ; $4533
-	call MoveMenuCursorBoxLink ; $4535
+	call MoveMenuCursorGridFromLinkInput_38 ; $4535
 	or a ; $4538
 	jr z, .adjust ; $4539
 	call RefreshMatchTypeLabelRow ; $453b
@@ -932,11 +941,11 @@ DrawMatchTypeOptionBoxes:
 	ld d, [hl] ; $459a
 	ld e, a ; $459b
 	ld c, $01 ; $459c
-	call GetMenuCursorLinearIndex ; $459e
+	call GetMenuCursorIndex_38 ; $459e
 	or a ; $45a1
 	jr z, .drawDoubles ; $45a2
 	ld bc, $3010 ; $45a4
-	call DrawUnselectedOptionBox ; $45a7
+	call DrawCornerBrackets_38 ; $45a7
 	jr .gamesBox ; $45aa
 .drawDoubles:
 	ld bc, $3010 ; $45ac
@@ -954,11 +963,11 @@ DrawMatchTypeOptionBoxes:
 	ld d, [hl] ; $45bf
 	ld e, a ; $45c0
 	ld c, $01 ; $45c1
-	call GetMenuCursorLinearIndex ; $45c3
+	call GetMenuCursorIndex_38 ; $45c3
 	cp $01 ; $45c6
 	jr z, .drawGames ; $45c8
 	ld bc, $3010 ; $45ca
-	call DrawUnselectedOptionBox ; $45cd
+	call DrawCornerBrackets_38 ; $45cd
 	jr .setsBox ; $45d0
 .drawGames:
 	ld bc, $3010 ; $45d2
@@ -976,11 +985,11 @@ DrawMatchTypeOptionBoxes:
 	ld d, [hl] ; $45e5
 	ld e, a ; $45e6
 	ld c, $01 ; $45e7
-	call GetMenuCursorLinearIndex ; $45e9
+	call GetMenuCursorIndex_38 ; $45e9
 	cp $02 ; $45ec
 	jr z, .drawSets ; $45ee
 	ld bc, $3010 ; $45f0
-	call DrawUnselectedOptionBox ; $45f3
+	call DrawCornerBrackets_38 ; $45f3
 	jr .done ; $45f6
 .drawSets:
 	ld bc, $3010 ; $45f8
@@ -1000,7 +1009,7 @@ SetupMatchTypeMenuScreen:
 	ld b, $01 ; $460f
 	ld a, [wMainMenuCursor] ; $4611
 	ld c, a ; $4614
-	call SetMenuCursorFromLinearIndex ; $4615
+	call SetMenuCursorFromIndex_38 ; $4615
 	ld c, $00 ; $4618
 	farcall LoadScreenAssetRecord ; $461a
 	farcall ResetTextWindowState ; $461d
@@ -1055,7 +1064,7 @@ MatchTypeLabelSpriteLayouts:
 DrawMatchTypeOptionLabel:
 	wram_bank $03 ; $4722
 	ld c, $01 ; $4728
-	call GetMenuCursorLinearIndex ; $472a
+	call GetMenuCursorIndex_38 ; $472a
 	ld b, a ; $472d
 	add a ; $472e
 	ld hl, MatchTypeOptionLabelTable ; $472f
@@ -1090,7 +1099,7 @@ AdjustMatchTypeSetting:
 .decrease:
 	sound SFX_MENU_MOVE ; $475b
 	ld c, $01 ; $475d
-	call GetMenuCursorLinearIndex ; $475f
+	call GetMenuCursorIndex_38 ; $475f
 	or a ; $4762
 	jr nz, .decGames ; $4763
 	ld a, [wMatchFormatDoubles] ; $4765
@@ -1123,7 +1132,7 @@ AdjustMatchTypeSetting:
 .increase:
 	sound SFX_MENU_MOVE ; $4791
 	ld c, $01 ; $4793
-	call GetMenuCursorLinearIndex ; $4795
+	call GetMenuCursorIndex_38 ; $4795
 	or a ; $4798
 	jr nz, .incGames ; $4799
 	ld a, [wMatchFormatDoubles] ; $479b
@@ -1206,7 +1215,7 @@ RunCharacterSelectScreen:
 	ld [wMenuInputPressed], a ; $4859
 	ld b, $02 ; $485c
 	ld c, $01 ; $485e
-	call MoveMenuCursorBox ; $4860
+	call MoveMenuCursorGrid_38 ; $4860
 	or a ; $4863
 	jr z, .inputLoop ; $4864
 	call RefreshCharacterSelectHighlight ; $4866
@@ -1226,7 +1235,7 @@ RunCharacterSelectScreen:
 	call BeginFadeOut ; $4880
 	call WaitFadeEnd ; $4883
 	ld c, $02 ; $4886
-	call GetMenuCursorLinearIndex ; $4888
+	call GetMenuCursorIndex_38 ; $4888
 	push af ; $488b
 	wram_bank $02 ; $488c
 	ld a, [wCharSelectHandedness] ; $4892
@@ -1290,7 +1299,7 @@ RunCharacterSelectScreen:
 ; DrawCharGridCursorBox with a different palette (c = 2), template and 48 x 24 extent: the same cursor-box drawer sized for another grid. Nothing calls it.
 Unused_38_DrawCharSelectCursorBox:
 	ld c, $02 ; $490c
-	call GetMenuCursorLinearIndex ; $490e
+	call GetMenuCursorIndex_38 ; $490e
 	add a ; $4911
 	ld hl, CharacterSelectScreenTable ; $4912
 	add l ; $4915
@@ -1323,7 +1332,7 @@ LoadCharSelectCharPalettes:
 	ret ; $4948
 LoadHighlightedCharPalette:
 	ld c, $02 ; $4949
-	call GetMenuCursorLinearIndex ; $494b
+	call GetMenuCursorIndex_38 ; $494b
 	ld b, a ; $494e
 	push_wram_bank $02 ; $494f
 	ld a, [wCharSelectIsPartner] ; $4958
@@ -1376,7 +1385,7 @@ SetupCharacterSelectScreen:
 	farcall InitActorEngine ; $49a2
 	ld b, $02 ; $49a5
 	ld c, $00 ; $49a7
-	call SetMenuCursorFromLinearIndex ; $49a9
+	call SetMenuCursorFromIndex_38 ; $49a9
 	farcall LoadMenuFontGfx ; $49ac
 	ld c, $05 ; $49af
 	farcall LoadScreenAssetRecord ; $49b1
@@ -1772,7 +1781,7 @@ TickCharSelectIdleAnim:
 	ret ; $4df9
 GetSelectedCharWramBank:
 	ld c, $02 ; $4dfa
-	call GetMenuCursorLinearIndex ; $4dfc
+	call GetMenuCursorIndex_38 ; $4dfc
 	ld b, a ; $4dff
 	push_wram_bank $02 ; $4e00
 	ld a, [wCharSelectIsPartner] ; $4e09
@@ -1794,7 +1803,7 @@ SelectedCharWramBankTable:
 	db $04, $05, $06, $07 ; 0x00
 DrawCharacterSelectCursor:
 	ld c, $02 ; $4e23
-	call GetMenuCursorLinearIndex ; $4e25
+	call GetMenuCursorIndex_38 ; $4e25
 	add a ; $4e28
 	ld hl, CharacterSelectCursorTable ; $4e29
 	add l ; $4e2c
@@ -1923,7 +1932,7 @@ RunExhibitionCharSelectScreen:
 	ret ; $4f4a
 DrawCharGridCursorBox:
 	ld c, $03 ; $4f4b
-	call GetMenuCursorLinearIndex ; $4f4d
+	call GetMenuCursorIndex_38 ; $4f4d
 	add a ; $4f50
 	ld hl, CharGridCursorBoxTable ; $4f51
 	add l ; $4f54
@@ -1951,7 +1960,7 @@ SetupCharGridScreen:
 	call BuildCreatedCharRecords ; $4f80
 	ld b, $03 ; $4f83
 	ld c, $00 ; $4f85
-	call SetMenuCursorFromLinearIndex ; $4f87
+	call SetMenuCursorFromIndex_38 ; $4f87
 	wram_bank $01 ; $4f8a
 	ld hl, CharGridScreenGfx1 ; $4f90
 	ld de, wDecompBuffer ; $4f93
@@ -3019,7 +3028,7 @@ DrawCreatedCharStats:
 	ld hl, $0007 ; $5804
 	add hl, bc ; $5807
 	ld de, wShadowTilemap + 13 * TILEMAP_WIDTH + 3 ; $5808
-	call CopyStringToTilemap ; $580b
+	call DrawNameWithDiacritics_38 ; $580b
 	pop hl ; $580e
 	pop de ; $580f
 	pop bc ; $5810
@@ -6269,7 +6278,7 @@ RunNameEntryScreen:
 	ld [wMenuInputPressed], a ; $6e6b
 	ld b, $0f ; $6e6e
 	ld c, $06 ; $6e70
-	call MoveMenuCursorBox ; $6e72
+	call MoveMenuCursorGrid_38 ; $6e72
 	or a ; $6e75
 	jr z, .inputLoop ; $6e76
 	call HandleNameEntryCursorMove ; $6e78
@@ -6387,7 +6396,7 @@ SetupNameEntryScreen:
 	farcall LoadMenuHandCursorGfx ; $6f7e
 	ld b, $0f ; $6f81
 	ld c, $00 ; $6f83
-	call SetMenuCursorFromLinearIndex ; $6f85
+	call SetMenuCursorFromIndex_38 ; $6f85
 	ld c, $06 ; $6f88
 	farcall LoadScreenAssetRecord ; $6f8a
 	farcall ResetTextWindowState ; $6f8d
@@ -6500,7 +6509,7 @@ HandleNameEntryCursorMove:
 	ret ; $708f
 DrawNameEntryCursor:
 	ld c, $0f ; $7090
-	call GetMenuCursorLinearIndex ; $7092
+	call GetMenuCursorIndex_38 ; $7092
 	add a ; $7095
 	ld hl, NameEntryCursorTable ; $7096
 	add l ; $7099
@@ -6519,7 +6528,7 @@ DrawEnterNameLabel:
 	push_wram_bank $03 ; $7159
 	ld hl, EnterNameText_38 ; $7162
 	ld de, wShadowTilemap + 3 * TILEMAP_WIDTH + 1 ; $7165
-	call CopyStringToTilemap ; $7168
+	call DrawNameWithDiacritics_38 ; $7168
 	pop_wram_bank ; $716b
 	ret ; $7170
 EnterNameText_38:
@@ -6630,7 +6639,7 @@ DrawEnteredName:
 	ld [hl+], a ; $72a3
 	ld hl, wNameEntryBuffer ; $72a4
 	ld de, wShadowTilemap + 6 * TILEMAP_WIDTH + 7 ; $72a7
-	call CopyStringToTilemap ; $72aa
+	call DrawNameWithDiacritics_38 ; $72aa
 	pop_wram_bank ; $72ad
 	ret ; $72b2
 AppendCharToName:
@@ -6645,7 +6654,7 @@ AppendCharToName:
 .lookupChar:
 	push hl ; $72c7
 	ld c, $0f ; $72c8
-	call GetMenuCursorLinearIndex ; $72ca
+	call GetMenuCursorIndex_38 ; $72ca
 	ld d, a ; $72cd
 	ld hl, NameEntryCharset_38 ; $72ce
 	wram_bank $02 ; $72d1

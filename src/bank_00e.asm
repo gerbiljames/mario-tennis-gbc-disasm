@@ -412,7 +412,7 @@ TrainingGymTile03_0e:
 	ld [wStoryModeExitTriggerRequest], a ; $4615
 	ret ; $4618
 TrainingGymInitScript_0e:
-	call ComputeTrainingGymProgressIndex ; $4619
+	call ComputeRankingProgressIndex_0e ; $4619
 	script_get_actor_state $07 ; $461c
 	ld a, $03 ; $4621
 	ld e, l ; $4623
@@ -1571,6 +1571,7 @@ ActorScript_0e_04:
 	as_anim $01
 	as_wait $01
 	as_jump ActorScript_0e_04
+; Instruction-identical to TogglePlayerSpriteXFlip (one copy per bank); a change here belongs in every copy.
 MirrorPlayerSpriteIfLeftHanded:
 	ld a, [wStoryModeMainCharacterLeftHanded] ; $520f
 	and a ; $5212
@@ -3844,7 +3845,8 @@ ActorScript_0e_28:
 	as_wait $8c
 	as_anim $03
 	as_jump ActorScript_0e_28
-ComputeTrainingGymProgressIndex:
+; Instruction-identical to ComputeRankingProgressIndex_11, ComputeRankingProgressIndex_12 and ComputeRankingProgressIndex_27 (one copy per bank); a change here belongs in every copy.
+ComputeRankingProgressIndex_0e:
 	test_flag FLAG_DOUBLES ; $7e5a
 	jr nz, .doubles ; $7e5d
 	ld a, STORYRANK_SINGLES_ACADEMY ; $7e5f

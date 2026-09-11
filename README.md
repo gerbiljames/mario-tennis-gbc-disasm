@@ -137,6 +137,11 @@ assets outside the tree and copy them in, or do not re-run extraction.
   holds the structures that exist identically in several banks.
 - **`Unused_` routines** are proven unreferenced. Where one is a copy or a
   sibling of a live routine, its note says which and how it differs.
+- **Twins.** 279 live routines are instruction-identical copies of one
+  another, mostly one per bank (`FetchText_25` / `FetchText_26`, the shot
+  solver's helpers in every court bank, the menu-cursor library). Each
+  one's note names its copies, because a fix has to land in all of them;
+  `docs/duplicated_code.md` is the full list.
 
 ## Layout
 
@@ -154,7 +159,8 @@ assets outside the tree and copy them in, or do not re-run extraction.
   `graphics_formats.md`, `actor_script.md`, `sound_engine.md`,
   `save_format.md`, `ram_map.md`, `bank0_notes.md` (one subsystem each),
   `bugs.md` (defects in the game, with dead stores and stubbed routines kept
-  apart), `unused_code.md` (the unreferenced code and its patterns).
+  apart), `unused_code.md` (the unreferenced code and its patterns),
+  `duplicated_code.md` (the live routines that exist as identical copies).
 - The **curated inputs** the source is generated from — all JSON, all keyed
   by flat ROM offset (`bank * 0x4000 + cpu - 0x4000`) where they name a site:
   `labels.json` (symbol names; a value may be `{"name", "note"}`, and a
@@ -200,6 +206,8 @@ tables the static analysis cannot classify regress to raw blobs.
   macros against the bytes they stand for, the idiom and packed-argument
   renderers, the curated inputs' structure and the analysis on a synthetic
   ROM; with `baserom.gbc` present, pins on the generated source as well.
+- `tools/twins.py` — the groups of instruction-identical live routines
+  (`docs/duplicated_code.md`).
 - `tools/progress.py` — per-bank proven-code bytes and the label-naming
   buckets. `tools/ram_gaps.py` — the bare banked-WRAM operands and why each
   is bare (`--static` adds the ones the dataflow could name).

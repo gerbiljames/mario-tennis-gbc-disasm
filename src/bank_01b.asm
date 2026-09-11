@@ -153,7 +153,8 @@ ApplyArrowBobOffset:
 ArrowBobOffsetTable_1b:
 	; $40e7, 16 bytes (bytes:16)
 	db $00, $00, $00, $01, $01, $01, $01, $01, $01, $01, $01, $00, $00, $00, $00, $00 ; 0x00
-DrawMenuCursorCornersAlt:
+; Instruction-identical to DrawCornerBrackets_38, DrawCornerBrackets_3b and DrawCornerBrackets_3e (one copy per bank); a change here belongs in every copy.
+DrawCornerBrackets_1b:
 	push de ; $40f7
 	push bc ; $40f8
 	ld c, $00 ; $40f9
@@ -197,7 +198,8 @@ DrawMenuCursorCornersAlt:
 	call QueueSprite ; $412d
 	pop de ; $4130
 	ret ; $4131
-MoveMenuCursorGrid:
+; Instruction-identical to MoveMenuCursorGrid_17 (one copy per bank); a change here belongs in every copy.
+MoveMenuCursorGrid_1b:
 	ld a, [wMenuCursorX] ; $4132
 	ld d, a ; $4135
 	ld a, [wMenuCursorY] ; $4136
@@ -285,6 +287,7 @@ MoveMenuCursorGrid:
 .checkMenuCursorX5:
 	ld a, $01 ; $41ad
 	ret ; $41af
+; Instruction-identical to MoveMenuCursorGridFromLinkInput_17 (one copy per bank); a change here belongs in every copy.
 MoveMenuCursorGridFromLinkInput_1b:
 	ld a, [wMenuCursorX] ; $41b0
 	ld d, a ; $41b3
@@ -640,7 +643,8 @@ MoveMenuCursor2GridRemote_1b:
 .checkMenuCursorY:
 	ld a, $01 ; $43be
 	ret ; $43c0
-GetMenuCursorIndex:
+; Instruction-identical to GetMenuCursorIndex_16, GetMenuCursorIndex_38, GetMenuCursorIndex_3b and GetMenuCursorIndex_3e (one copy per bank); a change here belongs in every copy.
+GetMenuCursorIndex_1b:
 	ld a, [wMenuCursorY] ; $43c1
 	ld b, a ; $43c4
 	xor a ; $43c5
@@ -655,7 +659,8 @@ GetMenuCursorIndex:
 	ld a, [wMenuCursorX] ; $43ce
 	add b ; $43d1
 	ret ; $43d2
-GetMenuCursorIndexFromPtr:
+; Instruction-identical to GetMenuCursorIndexFromPtr_38 (one copy per bank); a change here belongs in every copy.
+GetMenuCursorIndexFromPtr_1b:
 	push bc ; $43d3
 	ld a, [hl-] ; $43d4
 	ld b, a ; $43d5
@@ -723,7 +728,8 @@ ClearWram3Row64Alt_1b:
 UpdateAnimatedTilesTask:
 	farcall UpdateAnimatedTiles ; $4430
 	ret ; $4433
-DrawNameWithDiacritics:
+; Instruction-identical to DrawNameWithDiacritics_17 and DrawNameWithDiacritics_3e (one copy per bank); a change here belongs in every copy.
+DrawNameWithDiacritics_1b:
 	push af ; $4434
 	push bc ; $4435
 .loop:
@@ -772,6 +778,7 @@ DrawNameWithDiacritics:
 	pop bc ; $446a
 	pop af ; $446b
 	ret ; $446c
+; Instruction-identical to DrawDecimalNumber_17, DrawDecimalNumber_3b and DrawDecimalNumber_3e (one copy per bank); a change here belongs in every copy.
 DrawDecimalNumber_1b:
 	push af ; $446d
 	push bc ; $446e
@@ -803,11 +810,12 @@ DrawAsciiDigitString:
 	ld a, [hl+] ; $448e
 	and a ; $448f
 	jr z, .done ; $4490
-	call DrawAsciiDigitChar ; $4492
+	call DrawAsciiDigitChar_1b ; $4492
 	jr DrawAsciiDigitString ; $4495
 .done:
 	ret ; $4497
-DrawAsciiDigitChar:
+; Instruction-identical to DrawAsciiDigitChar_16, DrawAsciiDigitChar_17, DrawAsciiDigitChar_3b and DrawAsciiDigitChar_3e (one copy per bank); a change here belongs in every copy.
+DrawAsciiDigitChar_1b:
 	push hl ; $4498
 	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH ; $4499
 	sub $30 ; $449c
@@ -1950,7 +1958,7 @@ RenderPlayerNameFitted:
 	call GetStringLength ; $56b3
 	cp $06 ; $56b6
 	jr nc, .renderNameTwoRows ; $56b8
-	call DrawNameWithDiacritics ; $56ba
+	call DrawNameWithDiacritics_1b ; $56ba
 	ret ; $56bd
 .renderNameTwoRows:
 	call RenderNameTwoRows ; $56be
@@ -1994,7 +2002,7 @@ RenderNameTopRow:
 	ld [de], a ; $56f1
 	pop de ; $56f2
 	ld hl, wRankingNameRowBuffer ; $56f3
-	call DrawNameWithDiacritics ; $56f6
+	call DrawNameWithDiacritics_1b ; $56f6
 	ret ; $56f9
 RenderNameBottomRow:
 	push de ; $56fa
@@ -2005,7 +2013,7 @@ RenderNameBottomRow:
 	call CopyMemoryBC ; $5705
 	pop de ; $5708
 	ld hl, wRankingNameRowBuffer ; $5709
-	call DrawNameWithDiacritics ; $570c
+	call DrawNameWithDiacritics_1b ; $570c
 	ret ; $570f
 HighlightSinglesRankingRows:
 	ld a, [wRankingBoardPlayerRow] ; $5710
@@ -4644,7 +4652,7 @@ DrawMinigameLevelDescription:
 	or a ; $6d49
 	jr nz, .getMenuCursorIndex ; $6d4a
 	ld c, $03 ; $6d4c
-	call GetMenuCursorIndex ; $6d4e
+	call GetMenuCursorIndex_1b ; $6d4e
 	cp $01 ; $6d51
 	jr nz, .getMenuCursorIndex ; $6d53
 	wram_bank $03 ; $6d55
@@ -4654,7 +4662,7 @@ DrawMinigameLevelDescription:
 .getMenuCursorIndex:
 	wram_bank $03 ; $6d63
 	ld c, $03 ; $6d69
-	call GetMenuCursorIndex ; $6d6b
+	call GetMenuCursorIndex_1b ; $6d6b
 	ld b, a ; $6d6e
 	ld hl, MinigameLevelDescriptionTable ; $6d6f
 	add a ; $6d72
@@ -4784,7 +4792,7 @@ RunMinigameLevelSelect2:
 	ld [wMenuInputPressed], a ; $6e7d
 	call GetMinigameLevelColumnCount ; $6e80
 	ld c, $01 ; $6e83
-	call MoveMenuCursorGrid ; $6e85
+	call MoveMenuCursorGrid_1b ; $6e85
 	or a ; $6e88
 	jr z, .checkMenuInputPressed ; $6e89
 	sound SFX_MENU_MOVE ; $6e8b
@@ -4798,7 +4806,7 @@ RunMinigameLevelSelect2:
 	jr .loop ; $6e9b
 .getMenuCursorIndex:
 	ld c, $03 ; $6e9d
-	call GetMenuCursorIndex ; $6e9f
+	call GetMenuCursorIndex_1b ; $6e9f
 	or a ; $6ea2
 	jr z, .playSfx ; $6ea3
 	wram_bank $02 ; $6ea5
@@ -4819,7 +4827,7 @@ RunMinigameLevelSelect2:
 	ld [wMenuSlideDirection], a ; $6ecc
 	wram_bank $02 ; $6ecf
 	ld c, $03 ; $6ed5
-	call GetMenuCursorIndex ; $6ed7
+	call GetMenuCursorIndex_1b ; $6ed7
 	ld [wScreenAttrmap + 3], a ; $6eda
 	ret ; $6edd
 .playSfx2:
@@ -4848,12 +4856,12 @@ RedrawMinigameLevelSelect2:
 	cp $02 ; $6f14
 	jr nz, .loop ; $6f16
 	ld c, $02 ; $6f18
-	call GetMenuCursorIndex ; $6f1a
+	call GetMenuCursorIndex_1b ; $6f1a
 	ld b, a ; $6f1d
 	ld c, $01 ; $6f1e
 	call SetSelectPanelAttrRect ; $6f20
 	ld c, $03 ; $6f23
-	call GetMenuCursorIndex ; $6f25
+	call GetMenuCursorIndex_1b ; $6f25
 	call LoadMinigameLevelSelectPalette ; $6f28
 	call ClearMinigameLevelDescriptionRow ; $6f2b
 	call DrawMinigameLevelDescription ; $6f2e
@@ -4899,7 +4907,7 @@ SelectPanelAttrRectTable:
 DrawMinigameLevelSelect2Cursor:
 	farcall TickMenuBgScroll ; $6f62
 	ld c, $03 ; $6f65
-	call GetMenuCursorIndex ; $6f67
+	call GetMenuCursorIndex_1b ; $6f67
 	push af ; $6f6a
 	ld hl, MinigameLevelSelect2CursorTable1 ; $6f6b
 	add l ; $6f6e
@@ -4986,7 +4994,7 @@ RunMinigameLevelSelect3:
 	ld [wMenuInputPressed], a ; $701e
 	call GetMinigameLevelColumnCount ; $7021
 	ld c, $01 ; $7024
-	call MoveMenuCursorGrid ; $7026
+	call MoveMenuCursorGrid_1b ; $7026
 	or a ; $7029
 	jr z, .checkMenuInputPressed ; $702a
 	sound SFX_MENU_MOVE ; $702c
@@ -5010,7 +5018,7 @@ RunMinigameLevelSelect3:
 	ld [wMenuSlideDirection], a ; $7055
 	wram_bank $02 ; $7058
 	ld c, $03 ; $705e
-	call GetMenuCursorIndex ; $7060
+	call GetMenuCursorIndex_1b ; $7060
 	ld [wScreenAttrmap + 3], a ; $7063
 	ret ; $7066
 .playSfx2:
@@ -5039,12 +5047,12 @@ RedrawMinigameLevelSelect3:
 	cp $03 ; $709d
 	jr nz, .loop ; $709f
 	ld c, $02 ; $70a1
-	call GetMenuCursorIndex ; $70a3
+	call GetMenuCursorIndex_1b ; $70a3
 	ld b, a ; $70a6
 	ld c, $01 ; $70a7
 	call SetSelectPanelAttrRect3 ; $70a9
 	ld c, $03 ; $70ac
-	call GetMenuCursorIndex ; $70ae
+	call GetMenuCursorIndex_1b ; $70ae
 	call LoadMinigameLevelSelectPalette ; $70b1
 	call ClearMinigameLevelDescriptionRow ; $70b4
 	call DrawMinigameLevelDescription ; $70b7
@@ -5090,7 +5098,7 @@ SelectPanelAttrRect3Table:
 DrawMinigameLevelSelect3Cursor:
 	farcall TickMenuBgScroll ; $70ed
 	ld c, $03 ; $70f0
-	call GetMenuCursorIndex ; $70f2
+	call GetMenuCursorIndex_1b ; $70f2
 	push af ; $70f5
 	ld hl, MinigameLevelSelect3CursorTable1 ; $70f6
 	add l ; $70f9
@@ -5178,7 +5186,7 @@ RunSavedDataTypeSelect:
 	ld [wMenuInputPressed], a ; $71a5
 	ld b, $02 ; $71a8
 	ld c, $01 ; $71aa
-	call MoveMenuCursorGrid ; $71ac
+	call MoveMenuCursorGrid_1b ; $71ac
 	or a ; $71af
 	jr z, .checkMenuInputPressed ; $71b0
 	sound SFX_MENU_MOVE ; $71b2
@@ -5201,7 +5209,7 @@ RunSavedDataTypeSelect:
 	ld a, $01 ; $71d9
 	ld [wMenuSlideDirection], a ; $71db
 	ld c, $02 ; $71de
-	call GetMenuCursorIndex ; $71e0
+	call GetMenuCursorIndex_1b ; $71e0
 	ld [wSavedDataTypeTabIndex], a ; $71e3
 	ret ; $71e6
 .playSfx2:
@@ -5307,7 +5315,7 @@ TickMenuBgScrollTask_1b:
 	ret ; $72a7
 DrawSavedDataTypeSelectCursor:
 	ld c, $02 ; $72a8
-	call GetMenuCursorIndex ; $72aa
+	call GetMenuCursorIndex_1b ; $72aa
 	or a ; $72ad
 	jr nz, .drawSavedDataCursorOption1 ; $72ae
 	call DrawSavedDataCursorOption0 ; $72b0
@@ -5397,12 +5405,12 @@ RedrawSavedDataTypeSelect:
 	cp $02 ; $7362
 	jr nz, .loop ; $7364
 	ld c, $02 ; $7366
-	call GetMenuCursorIndex ; $7368
+	call GetMenuCursorIndex_1b ; $7368
 	ld b, a ; $736b
 	ld c, $01 ; $736c
 	call SetSelectPanelAttrRect ; $736e
 	ld c, $03 ; $7371
-	call GetMenuCursorIndex ; $7373
+	call GetMenuCursorIndex_1b ; $7373
 	call LoadSavedDataTypePalette ; $7376
 	call ClearMinigameLevelDescriptionRow ; $7379
 	call DrawSavedDataTypeDescription ; $737c
@@ -5411,7 +5419,7 @@ RedrawSavedDataTypeSelect:
 DrawSavedDataTypeDescription:
 	push_wram_bank $03 ; $7383
 	ld c, $03 ; $738c
-	call GetMenuCursorIndex ; $738e
+	call GetMenuCursorIndex_1b ; $738e
 	ld b, a ; $7391
 	ld hl, SavedDataTypeDescriptionTable ; $7392
 	add a ; $7395

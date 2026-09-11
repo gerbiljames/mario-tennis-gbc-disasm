@@ -1,6 +1,7 @@
 SECTION "ROM Bank $0b", ROMX[$4000], BANK[$0b]
 
 	farptr RunTrainingDrillByID ; $4000
+; Instruction-identical to InitMinigameFromConfig (one copy per bank); a change here belongs in every copy.
 StartDrillFromDefinition:
 	ld hl, $0000 ; $4002
 	add hl, bc ; $4005
@@ -1538,6 +1539,7 @@ ServiceMatch2HandlePointEnd:
 	farcall StartPointEndReactions ; $4afe
 	call PlayDrillPointEndSequence ; $4b01
 	ret ; $4b04
+; Instruction-identical to NetGameMatch1AwardPointToSide, NetGameMatch2AwardPointToSide, NetGameMatch3AwardPointToSide, ServiceMatch3AwardPointToSide, StrokeMatch2AwardPointToSide and StrokeMatch3AwardPointToSide (in this bank); a change here belongs in every copy.
 ServiceMatch2AwardPointToSide:
 	ld a, [wPointWinLoseFlag] ; $4b05
 	or a ; $4b08
@@ -1820,6 +1822,7 @@ ServiceMatch3HandlePointEnd:
 	farcall StartPointEndReactions ; $4ce7
 	call PlayDrillPointEndSequence ; $4cea
 	ret ; $4ced
+; Instruction-identical to NetGameMatch1AwardPointToSide, NetGameMatch2AwardPointToSide, NetGameMatch3AwardPointToSide, ServiceMatch2AwardPointToSide, StrokeMatch2AwardPointToSide and StrokeMatch3AwardPointToSide (in this bank); a change here belongs in every copy.
 ServiceMatch3AwardPointToSide:
 	ld a, [wPointWinLoseFlag] ; $4cee
 	or a ; $4cf1
@@ -2838,6 +2841,7 @@ NetGameMatch1HandlePointEnd:
 	farcall StartPointEndReactions ; $548a
 	call PlayDrillPointEndSequence ; $548d
 	ret ; $5490
+; Instruction-identical to NetGameMatch2AwardPointToSide, NetGameMatch3AwardPointToSide, ServiceMatch2AwardPointToSide, ServiceMatch3AwardPointToSide, StrokeMatch2AwardPointToSide and StrokeMatch3AwardPointToSide (in this bank); a change here belongs in every copy.
 NetGameMatch1AwardPointToSide:
 	ld a, [wPointWinLoseFlag] ; $5491
 	or a ; $5494
@@ -3241,6 +3245,7 @@ NetGameMatch2HandlePointEnd:
 	farcall StartPointEndReactions ; $571d
 	call PlayDrillPointEndSequence ; $5720
 	ret ; $5723
+; Instruction-identical to NetGameMatch1AwardPointToSide, NetGameMatch3AwardPointToSide, ServiceMatch2AwardPointToSide, ServiceMatch3AwardPointToSide, StrokeMatch2AwardPointToSide and StrokeMatch3AwardPointToSide (in this bank); a change here belongs in every copy.
 NetGameMatch2AwardPointToSide:
 	ld a, [wPointWinLoseFlag] ; $5724
 	or a ; $5727
@@ -3730,6 +3735,7 @@ NetGameMatch3HandlePointEndTable:
 	ld [wDrillMessageId], a ; $5a4a
 	xor a ; $5a4d
 	ret ; $5a4e
+; Instruction-identical to NetGameMatch1AwardPointToSide, NetGameMatch2AwardPointToSide, ServiceMatch2AwardPointToSide, ServiceMatch3AwardPointToSide, StrokeMatch2AwardPointToSide and StrokeMatch3AwardPointToSide (in this bank); a change here belongs in every copy.
 NetGameMatch3AwardPointToSide:
 	ld a, [wPointWinLoseFlag] ; $5a4f
 	or a ; $5a52
@@ -4151,6 +4157,7 @@ NetGamePractice1Table:
 	dw $01b0 ; record 14
 	dw $04e0 ; record 15
 	dw $ffff ; record 16
+; Instruction-identical to NetGamePractice2HandlePointEnd and NetGamePractice3HandlePointEnd (in this bank); a change here belongs in every copy.
 NetGamePractice1HandlePointEnd:
 	farcall UpdateScorePanelDisplay ; $5cf9
 	ld a, [wDrillPointJudgement] ; $5cfc
@@ -4535,6 +4542,7 @@ NetGamePractice2PointStartDrillPositions:
 	dw $fe50, $01c0 ; record 6
 	dw $0000, $02a0 ; record 7
 	db $ff, $ff
+; Instruction-identical to NetGamePractice1HandlePointEnd and NetGamePractice3HandlePointEnd (in this bank); a change here belongs in every copy.
 NetGamePractice2HandlePointEnd:
 	farcall UpdateScorePanelDisplay ; $5fb3
 	ld a, [wDrillPointJudgement] ; $5fb6
@@ -4923,6 +4931,7 @@ NetGamePractice3PointStartDrillPositions:
 	dw $fe50, $01c0 ; record 6
 	dw $0000, $02a0 ; record 7
 	db $ff, $ff
+; Instruction-identical to NetGamePractice1HandlePointEnd and NetGamePractice2HandlePointEnd (in this bank); a change here belongs in every copy.
 NetGamePractice3HandlePointEnd:
 	farcall UpdateScorePanelDisplay ; $6272
 	ld a, [wDrillPointJudgement] ; $6275
@@ -5710,6 +5719,7 @@ StrokeMatch2HandlePointEnd:
 	farcall StartPointEndReactions ; $67bb
 	call PlayDrillPointEndSequence ; $67be
 	ret ; $67c1
+; Instruction-identical to NetGameMatch1AwardPointToSide, NetGameMatch2AwardPointToSide, NetGameMatch3AwardPointToSide, ServiceMatch2AwardPointToSide, ServiceMatch3AwardPointToSide and StrokeMatch3AwardPointToSide (in this bank); a change here belongs in every copy.
 StrokeMatch2AwardPointToSide:
 	ld a, [wPointWinLoseFlag] ; $67c2
 	or a ; $67c5
@@ -6062,6 +6072,7 @@ StrokeMatch3HandlePointEnd:
 	farcall StartPointEndReactions ; $6a06
 	call PlayDrillPointEndSequence ; $6a09
 	ret ; $6a0c
+; Instruction-identical to NetGameMatch1AwardPointToSide, NetGameMatch2AwardPointToSide, NetGameMatch3AwardPointToSide, ServiceMatch2AwardPointToSide, ServiceMatch3AwardPointToSide and StrokeMatch2AwardPointToSide (in this bank); a change here belongs in every copy.
 StrokeMatch3AwardPointToSide:
 	ld a, [wPointWinLoseFlag] ; $6a0d
 	or a ; $6a10
@@ -6371,6 +6382,7 @@ StrokePractice1Hook_PointEnd:
 	call StrokePractice1EvaluateResult ; $6bfa
 	ld [wPointWinLoseFlag], a ; $6bfd
 	ret ; $6c00
+; Instruction-identical to StrokePractice3EvaluateResult (in this bank); a change here belongs in every copy.
 StrokePractice1EvaluateResult:
 	ld a, [wDrillCounters + 2] ; $6c01
 	cp $04 ; $6c04
@@ -6444,6 +6456,7 @@ StrokePractice1Table:
 	dw $0000 ; record 14
 	dw $04e0 ; record 15
 	dw $ffff ; record 16
+; Instruction-identical to StrokePractice3HandlePointEnd (in this bank); a change here belongs in every copy.
 StrokePractice1HandlePointEnd:
 	farcall UpdateScorePanelDisplay ; $6c81
 	ld a, [wDrillPointJudgement] ; $6c84
@@ -6584,6 +6597,7 @@ StrokePractice1Cases1:
 StrokePractice1Cases1SignedTable:
 	; $6d69, 10 bytes (bytes:10)
 	db $ff, $ff, $ff, $ff, $59, $59, $57, $5d, $5d, $57 ; 0x00
+; Instruction-identical to StrokePractice3Cases2 (in this bank); a change here belongs in every copy.
 StrokePractice1Cases2:
 	xor a ; $6d73
 	ret ; $6d74
@@ -7026,6 +7040,7 @@ StrokePractice3Hook_PointEnd:
 	call StrokePractice3EvaluateResult ; $709e
 	ld [wPointWinLoseFlag], a ; $70a1
 	ret ; $70a4
+; Instruction-identical to StrokePractice1EvaluateResult (in this bank); a change here belongs in every copy.
 StrokePractice3EvaluateResult:
 	ld a, [wDrillCounters + 2] ; $70a5
 	cp $04 ; $70a8
@@ -7095,6 +7110,7 @@ StrokePractice3PointStartDrillPositions:
 	dw $0120, $02a0 ; record 6
 	dw $01b0, $04e0 ; record 7
 	db $ff, $ff
+; Instruction-identical to StrokePractice1HandlePointEnd (in this bank); a change here belongs in every copy.
 StrokePractice3HandlePointEnd:
 	farcall UpdateScorePanelDisplay ; $712b
 	ld a, [wDrillPointJudgement] ; $712e
@@ -7232,6 +7248,7 @@ StrokePractice3Cases1:
 StrokePractice3Cases1DrillShotTable:
 	; $7213, 10 bytes (bytes:10)
 	db $ff, $ff, $ff, $ff, $59, $59, $57, $5d, $5d, $57 ; 0x00
+; Instruction-identical to StrokePractice1Cases2 (in this bank); a change here belongs in every copy.
 StrokePractice3Cases2:
 	xor a ; $721d
 	ret ; $721e

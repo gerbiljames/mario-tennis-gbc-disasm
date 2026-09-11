@@ -415,6 +415,7 @@ TournamentSiteEntryWalkIn:
 TournamentSiteEntryWalkInFacings:
 	; $4757, 8 bytes (enum:FACE:8)
 	db FACE_LEFT, FACE_RIGHT, FACE_DOWN, FACE_UP, FACE_RIGHT, FACE_LEFT, FACE_UP, FACE_DOWN ; 0x00
+; Instruction-identical to LoadCourtPlayerPartnerObjDefs_14 (one copy per bank); a change here belongs in every copy.
 SetPlayerPartnerActorSprites:
 	test_flag FLAG_DOUBLES ; $475f
 	jp z, .notDoubles ; $4762
@@ -1227,7 +1228,7 @@ TrainingCourtTile01_15:
 	call RunWaterSpriteSwingContestAndReward ; $532a
 	ret ; $532d
 TrainingCourtInitScript_15:
-	call ComputeTrainingCourtProgressIndex ; $532e
+	call ComputeStoryRankTier_15 ; $532e
 	ld a, [wMapSceneStage] ; $5331
 	cp $05 ; $5334
 	jr c, .fromLesson ; $5336
@@ -1626,6 +1627,7 @@ WaterSpriteSwingContestScene:
 	farcall PushTextArgNumber ; $576e
 	script_speak ACTOR_PLAYER ; $5771
 	ret ; $5776
+; Instruction-identical to MirrorPlayerSpriteIfLeftHanded (one copy per bank); a change here belongs in every copy.
 TogglePlayerSpriteXFlip:
 	ld a, [wStoryModeMainCharacterLeftHanded] ; $5777
 	and a ; $577a
@@ -4662,6 +4664,7 @@ ActorScript_15_25:
 	as_wait $8c
 	as_anim $03
 	as_jump .Ld
+; Instruction-identical to ComputeRankingProgressIndex_13 and ComputeRankingProgressIndex_14 (one copy per bank); a change here belongs in every copy.
 ComputeRankingProgressIndex_15:
 	test_flag FLAG_DOUBLES ; $7f59
 	jr nz, .isDoubles ; $7f5c
@@ -4696,7 +4699,8 @@ ComputeRankingProgressIndex_15:
 	jr z, .loop ; $7f9a
 	ld a, STORYRANK_DOUBLES_COMPLETE ; $7f9c
 	jr .loop ; $7f9e
-ComputeTrainingCourtProgressIndex:
+; Instruction-identical to ComputeStoryRankTier_13 (one copy per bank); a change here belongs in every copy.
+ComputeStoryRankTier_15:
 	ld a, $00 ; $7fa0
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7fa2
 	jr z, .loop ; $7fa5

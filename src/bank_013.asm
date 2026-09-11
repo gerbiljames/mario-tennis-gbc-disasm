@@ -29,6 +29,7 @@ RestaurantPlazaEntryPoints_13:
 	map_entry $0e, FACE_LEFT, $3b00, $0f00, $0000
 	map_entry $0f, FACE_LEFT, $3200, $0f00, $0000
 	db $ff
+; Instruction-identical to AcademyMainBldgArrival01_10, RestaurantArrival01_10, MapArrivalWalk_11 and DormEntranceArrival01_12 (one copy per bank); a change here belongs in every copy.
 RestaurantPlazaArrival04_13:
 	ld a, [wStoryModeEntryPoint] ; $405f
 	cp STORYENTRY_NONE ; $4062
@@ -45,6 +46,7 @@ RestaurantPlazaArrival04_13:
 	script_move_angle ACTOR_PLAYER, FACE_UP, $0200 ; $409a
 .done:
 	ret ; $40a4
+; Instruction-identical to Court2EntryWalkIn (one copy per bank); a change here belongs in every copy.
 RestaurantPlazaArrival06_13:
 	ld a, [wStoryModeEntryPoint] ; $40a5
 	cp STORYENTRY_NONE ; $40a8
@@ -3784,6 +3786,7 @@ ActorScript_13_30:
 	as_wait $8c
 	as_anim $03
 	as_jump .Ld
+; Instruction-identical to ComputeRankingProgressIndex_14 and ComputeRankingProgressIndex_15 (one copy per bank); a change here belongs in every copy.
 ComputeRankingProgressIndex_13:
 	test_flag FLAG_DOUBLES ; $7d11
 	jr nz, .isDoubles ; $7d14
@@ -3818,6 +3821,7 @@ ComputeRankingProgressIndex_13:
 	jr z, .loop ; $7d52
 	ld a, STORYRANK_DOUBLES_COMPLETE ; $7d54
 	jr .loop ; $7d56
+; Instruction-identical to ComputeStoryRankTier_15 (one copy per bank); a change here belongs in every copy.
 ComputeStoryRankTier_13:
 	ld a, $00 ; $7d58
 	test_flag FLAG_WON_JUNIOR_SINGLES_RANK_1 ; $7d5a

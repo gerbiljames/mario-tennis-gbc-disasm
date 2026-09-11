@@ -7,6 +7,7 @@ SECTION "ROM Bank $24", ROMX[$4000], BANK[$24]
 	farptr ShotBallPathSmash ; $4008
 	farptr StubNop_24 ; $400a
 	farptr ShotBallPathReach ; $400c
+; Instruction-identical to BallTrajEntryPtr6_20, BallTrajEntryPtr6_21, BallTrajEntryPtr6_22, BallTrajEntryPtr6_23, BallTrajEntryPtr6_29, BallTrajEntryPtr6_2a, BallTrajEntryPtr6_2b and BallTrajEntryPtr6_2c (one copy per bank); a change here belongs in every copy.
 BallTrajEntryPtr6_24:
 	push hl ; $400e
 	ld l, e ; $400f
@@ -23,6 +24,7 @@ BallTrajEntryPtr6_24:
 	pop de ; $401b
 	add hl, de ; $401c
 	ret ; $401d
+; Instruction-identical to BallTrajEntryPtr4_20, BallTrajEntryPtr4_21, BallTrajEntryPtr4_22, BallTrajEntryPtr4_23, BallTrajEntryPtr4_29, BallTrajEntryPtr4_2a, BallTrajEntryPtr4_2b and BallTrajEntryPtr4_2c (one copy per bank); a change here belongs in every copy.
 BallTrajEntryPtr4_24:
 	push hl ; $401e
 	ld l, e ; $401f
@@ -36,6 +38,7 @@ BallTrajEntryPtr4_24:
 	pop de ; $4028
 	add hl, de ; $4029
 	ret ; $402a
+; Instruction-identical to SeekBallTrajEntry6_20, SeekBallTrajEntry6_21, SeekBallTrajEntry6_22, SeekBallTrajEntry6_23, SeekBallTrajEntry6_29, SeekBallTrajEntry6_2a, SeekBallTrajEntry6_2b and SeekBallTrajEntry6_2c (one copy per bank); a change here belongs in every copy.
 SeekBallTrajEntry6_24:
 	ld a, [wShotTrajRowMin] ; $402b
 	ld d, a ; $402e
@@ -62,6 +65,7 @@ SeekBallTrajEntry6_24:
 	jr .loop ; $4047
 .done:
 	ret ; $4049
+; Instruction-identical to SeekBallTrajEntry4_20, SeekBallTrajEntry4_21, SeekBallTrajEntry4_22, SeekBallTrajEntry4_23, SeekBallTrajEntry4_29, SeekBallTrajEntry4_2a, SeekBallTrajEntry4_2b and SeekBallTrajEntry4_2c (one copy per bank); a change here belongs in every copy.
 SeekBallTrajEntry4_24:
 	ld a, [wShotTrajRowMin] ; $404a
 	ld d, a ; $404d
@@ -88,6 +92,7 @@ SeekBallTrajEntry4_24:
 	jr .loop ; $4066
 .done:
 	ret ; $4068
+; Instruction-identical to SetBallVelocityFromEntry6_20, SetBallVelocityFromEntry6_21, SetBallVelocityFromEntry6_22, SetBallVelocityFromEntry6_23, SetBallVelocityFromEntry6_29, SetBallVelocityFromEntry6_2a, SetBallVelocityFromEntry6_2b and SetBallVelocityFromEntry6_2c (one copy per bank); a change here belongs in every copy.
 SetBallVelocityFromEntry6_24:
 	ld a, [hl+] ; $4069
 	ld c, a ; $406a
@@ -122,6 +127,7 @@ SetBallVelocityFromEntry6_24:
 	pop hl ; $408b
 	farcall SetBallVelocityPolar ; $408c
 	ret ; $408f
+; Instruction-identical to SetBallVelocityFromEntry4_20, SetBallVelocityFromEntry4_21, SetBallVelocityFromEntry4_22, SetBallVelocityFromEntry4_23, SetBallVelocityFromEntry4_29, SetBallVelocityFromEntry4_2a, SetBallVelocityFromEntry4_2b and SetBallVelocityFromEntry4_2c (one copy per bank); a change here belongs in every copy.
 SetBallVelocityFromEntry4_24:
 	ld a, [hl+] ; $4090
 	ld c, a ; $4091
@@ -139,6 +145,7 @@ SetBallVelocityFromEntry4_24:
 	pop hl ; $409f
 	farcall SetBallVelocityPolar ; $40a0
 	ret ; $40a3
+; Instruction-identical to SetBallTargetByPrediction_20, SetBallTargetByPrediction_21, SetBallTargetByPrediction_22, SetBallTargetByPrediction_23, SetBallTargetByPrediction_29, SetBallTargetByPrediction_2a, SetBallTargetByPrediction_2b and SetBallTargetByPrediction_2c (one copy per bank); a change here belongs in every copy.
 SetBallTargetByPrediction_24:
 	ld a, [hl+] ; $40a4
 	ld c, a ; $40a5
@@ -222,6 +229,7 @@ SetBallTargetByPrediction_24:
 	ld [hl+], a ; $410b
 	ld [hl], d ; $410c
 	ret ; $410d
+; Instruction-identical to ApplyBallTrajectory6Capped_20, ApplyBallTrajectory6Capped_21, ApplyBallTrajectory6Capped_22, ApplyBallTrajectory6Capped_23, ApplyBallTrajectory6Capped_29, ApplyBallTrajectory6Capped_2a, ApplyBallTrajectory6Capped_2b and ApplyBallTrajectory6Capped_2c (one copy per bank); a change here belongs in every copy.
 ApplyBallTrajectory6Capped_24:
 	xor a ; $410e
 	sub c ; $410f
@@ -255,6 +263,7 @@ ApplyBallTrajectory6Capped_24:
 	rr l ; $413b
 	call SetBallTargetFromAim_24 ; $413d
 	ret ; $4140
+; Instruction-identical to ApplyBallTrajectory6_20, ApplyBallTrajectory6_21, ApplyBallTrajectory6_22, ApplyBallTrajectory6_23, ApplyBallTrajectory6_29, ApplyBallTrajectory6_2a, ApplyBallTrajectory6_2b and ApplyBallTrajectory6_2c (one copy per bank); a change here belongs in every copy.
 ApplyBallTrajectory6_24:
 	xor a ; $4141
 	sub c ; $4142
@@ -279,6 +288,7 @@ ApplyBallTrajectory6_24:
 	rr l ; $4163
 	call SetBallTargetFromAim_24 ; $4165
 	ret ; $4168
+; Instruction-identical to ApplyBallTrajectoryCapped_20, ApplyBallTrajectoryCapped_21, ApplyBallTrajectoryCapped_22, ApplyBallTrajectoryCapped_23, ApplyBallTrajectoryCapped_2a, ApplyBallTrajectoryCapped_2b and ApplyBallTrajectoryCapped_2c (one copy per bank); a change here belongs in every copy.
 ApplyBallTrajectoryCapped_24:
 	push hl ; $4169
 	ld hl, wShotAimAngle ; $416a
@@ -319,7 +329,8 @@ ApplyBallTrajectoryCapped_24:
 	pop hl ; $419d
 	call SetBallTargetFromAim_24 ; $419e
 	ret ; $41a1
-ApplyBallTrajectory_24:
+; Instruction-identical to ApplyBallTrajectory4Capped_20, ApplyBallTrajectory4Capped_21, ApplyBallTrajectory4Capped_22, ApplyBallTrajectory4Capped_23, ApplyBallTrajectory4Capped_29, ApplyBallTrajectory4Capped_2a, ApplyBallTrajectory4Capped_2b and ApplyBallTrajectory4Capped_2c (one copy per bank); a change here belongs in every copy.
+ApplyBallTrajectory4Capped_24:
 	xor a ; $41a2
 	sub c ; $41a3
 	ld c, a ; $41a4
@@ -352,6 +363,7 @@ ApplyBallTrajectory_24:
 	rr l ; $41cf
 	call SetBallTargetFromAim_24 ; $41d1
 	ret ; $41d4
+; Instruction-identical to ApplyBallTrajectory4_20, ApplyBallTrajectory4_21, ApplyBallTrajectory4_22, ApplyBallTrajectory4_23, ApplyBallTrajectory4_29, ApplyBallTrajectory4_2a, ApplyBallTrajectory4_2b and ApplyBallTrajectory4_2c (one copy per bank); a change here belongs in every copy.
 ApplyBallTrajectory4_24:
 	xor a ; $41d5
 	sub c ; $41d6
@@ -379,6 +391,7 @@ ApplyBallTrajectory4_24:
 .applyFallbackBallTrajectory:
 	farcall ApplyFallbackBallTrajectory_24 ; $41fd
 	ret ; $4200
+; Instruction-identical to SetBallTargetFromAim_20, SetBallTargetFromAim_21, SetBallTargetFromAim_22, SetBallTargetFromAim_23, SetBallTargetFromAim_29, SetBallTargetFromAim_2a, SetBallTargetFromAim_2b and SetBallTargetFromAim_2c (one copy per bank); a change here belongs in every copy.
 SetBallTargetFromAim_24:
 	ld a, [wShotAimAngle] ; $4201
 	ld c, a ; $4204
@@ -410,6 +423,7 @@ SetBallTargetFromAim_24:
 	ld [hl+], a ; $422a
 	ld [hl], d ; $422b
 	ret ; $422c
+; Instruction-identical to LookupBallPosByAim_2c (one copy per bank); a change here belongs in every copy.
 LookupBallPosByAim_24:
 	push hl ; $422d
 	push bc ; $422e
@@ -443,6 +457,7 @@ LookupBallPosByAim_24:
 	ld l, a ; $4255
 	add hl, de ; $4256
 	ret ; $4257
+; Instruction-identical to LookupBallPosByHeight_20, LookupBallPosByHeight_21, LookupBallPosByHeight_22, LookupBallPosByHeight_23, LookupBallPosByHeight_29, LookupBallPosByHeight_2a, LookupBallPosByHeight_2b and LookupBallPosByHeight_2c (one copy per bank); a change here belongs in every copy.
 LookupBallPosByHeight_24:
 	ld e, l ; $4258
 	ld d, h ; $4259
@@ -475,6 +490,7 @@ LookupBallPosByHeight_24:
 	ld l, a ; $4277
 	add hl, de ; $4278
 	ret ; $4279
+; Instruction-identical to LookupBallPosByShotIndex_20, LookupBallPosByShotIndex_21, LookupBallPosByShotIndex_22, LookupBallPosByShotIndex_23, LookupBallPosByShotIndex_29, LookupBallPosByShotIndex_2a and LookupBallPosByShotIndex_2b (one copy per bank); a change here belongs in every copy.
 LookupBallPosByShotIndex_24:
 	ld e, l ; $427a
 	ld d, h ; $427b
@@ -566,7 +582,7 @@ ShotBallPathNeutral:
 	ld bc, BallPosHeightOffsetsNeutral_24 ; $664b
 	call LookupBallPosByHeight_24 ; $664e
 	pop bc ; $6651
-	call ApplyBallTrajectory_24 ; $6652
+	call ApplyBallTrajectory4Capped_24 ; $6652
 	ret ; $6655
 BallPosHeightOffsetsNeutral_24:
 	; $6656, 64 bytes (records:2)
@@ -687,7 +703,7 @@ ShotBallPathReach:
 	ld bc, BallPosHeightOffsetsReach_24 ; $770e
 	call LookupBallPosByHeight_24 ; $7711
 	pop bc ; $7714
-	call ApplyBallTrajectory_24 ; $7715
+	call ApplyBallTrajectory4Capped_24 ; $7715
 	ret ; $7718
 BallPosHeightOffsetsReach_24:
 	INCBIN "data/bank_024/BallPosHeightOffsetsReach_24.bin" ; $7719, 64 bytes

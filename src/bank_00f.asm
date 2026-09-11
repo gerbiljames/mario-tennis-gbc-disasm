@@ -1860,6 +1860,7 @@ UnusedSetActorDrawModeFromSceneTileSingle_0f:
 	ld a, $02 ; $6404
 	ld [hl], a ; $6406
 	ret ; $6407
+; Instruction-identical to ReadSceneTilemapTile_10 (one copy per bank); a change here belongs in every copy.
 ReadSceneTilemapTile_0f:
 	wram_bank $02 ; $6408
 	ld h, e ; $640e
@@ -2237,6 +2238,7 @@ IslandOpenRound1DoublesNpc0A_0f:
 .speak:
 	script_speak $0a ; $6bf8
 	ret ; $6bfd
+; Instruction-identical to IslandOpenFinalDoublesNpc0B_0f (in this bank); a change here belongs in every copy.
 IslandOpenRound1DoublesNpc0B_0f:
 	script_set_text Text_25_33 ; $6bfe
 	ld a, $0b ; $6c04
@@ -2250,6 +2252,7 @@ IslandOpenRound1DoublesNpc0B_0f:
 .speak:
 	script_speak $0b ; $6c1c
 	ret ; $6c21
+; Instruction-identical to IslandOpenSemifinalDoublesNpc0D_0f (in this bank); a change here belongs in every copy.
 IslandOpenRound1DoublesNpc0D_0f:
 	script_set_text Text_25_37 ; $6c22
 	ld a, $0d ; $6c28
@@ -2307,6 +2310,7 @@ IslandOpenSemifinalDoublesNpc08_0f:
 .speak:
 	script_speak $08 ; $6d85
 	ret ; $6d8a
+; Instruction-identical to IslandOpenRound1DoublesNpc0D_0f (in this bank); a change here belongs in every copy.
 IslandOpenSemifinalDoublesNpc0D_0f:
 	script_set_text Text_25_51 ; $6d8b
 	ld a, $0d ; $6d91
@@ -2364,6 +2368,7 @@ IslandOpenFinalDoublesNpc0C_0f:
 .speak:
 	script_speak $0c ; $6eee
 	ret ; $6ef3
+; Instruction-identical to IslandOpenRound1DoublesNpc0B_0f (in this bank); a change here belongs in every copy.
 IslandOpenFinalDoublesNpc0B_0f:
 	script_set_text Text_25_61 ; $6ef4
 	ld a, $0b ; $6efa
@@ -2822,6 +2827,7 @@ IslandOpenRoundScriptsSingles_0f:
 	map_script $04, FACEMASK_ANY, $0000, IslandOpenRoundSinglesNpc04_0f, $03, $00
 	map_script $05, FACEMASK_ANY, $0000, IslandOpenRoundSinglesNpc05_0f, $03, $00
 	db $ff
+; Instruction-identical to IslandOpenRoundDoublesNpc04_0f (in this bank); a change here belongs in every copy.
 IslandOpenRoundSinglesNpc04_0f:
 	script_set_text Text_25_73 ; $762e
 	ld a, [wMapSceneStage] ; $7634
@@ -3002,6 +3008,7 @@ IslandOpenRoundScriptsDoubles_0f:
 	map_script $03, FACEMASK_ANY, $0000, IslandOpenRoundDoublesNpc03_0f, $03, $00
 	map_script $04, FACEMASK_ANY, $0000, IslandOpenRoundDoublesNpc04_0f, $03, $00
 	db $ff
+; Instruction-identical to IslandOpenRoundSinglesNpc04_0f (in this bank); a change here belongs in every copy.
 IslandOpenRoundDoublesNpc04_0f:
 	script_set_text Text_25_73 ; $78b1
 	ld a, [wMapSceneStage] ; $78b7

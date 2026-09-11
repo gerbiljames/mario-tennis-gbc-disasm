@@ -4439,6 +4439,7 @@ GetServeCameraTarget:
 .done:
 	ld hl, $0000 ; $61a6
 	ret ; $61a9
+; Instruction-identical to SnapCameraTo_0d (one copy per bank); a change here belongs in every copy.
 SnapCameraTo:
 	ld c, l ; $61aa
 	ld b, h ; $61ab

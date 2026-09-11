@@ -307,8 +307,8 @@ table rather than editing rows here.
 | `0xc94e` | WRAM | `wStoryModePartnerCharacterLeftHanded` | [8-bit] Story Mode - the partner record's copy of the left-handed flag (record offset +$0e at the $40 stride); written by the same character-select path as wStoryModeMainCharacterLeftHanded. |
 | `0xc9c0` | WRAM | `wGameFlags` | Event flag bit-array; rst $20/$28/$30 set/clear/test wGameFlags[byte] with mask $80 >> bit |
 | `0xcb00` | WRAM | `wStoryCharacterSlot` | [8-bit] Story Mode - which of the two story character records the character-select / name-entry / char-data screens are acting on: 0 = main character, 1 = partner. Used as a $40-stride index into the wStoryModeMainCharacter*/wStoryModePartnerCharacter* pair (GetActiveStoryNameBuffer at $38:$73fa returns wStoryModeNameOfMainCharacter or ...OfPartnerCharacter straight off it). |
-| `0xcb04` | WRAM | `wMenuCursorX` | [8-bit] Menu cursor column; MoveMenuCursor wraps it at the column count in b |
-| `0xcb05` | WRAM | `wMenuCursorY` | [8-bit] Menu cursor row; MoveMenuCursor wraps it at the row count in c |
+| `0xcb04` | WRAM | `wMenuCursorX` | [8-bit] Menu cursor column; MoveMenuCursorGrid_3b wraps it at the column count in b |
+| `0xcb05` | WRAM | `wMenuCursorY` | [8-bit] Menu cursor row; MoveMenuCursorGrid_3b wraps it at the row count in c |
 | `0xcb06` | WRAM | `wMenuCursor2X` | [8-bit] Secondary menu cursor column (parallel to wMenuCursorX; second selection region of the shared menu-input handler) |
 | `0xcb07` | WRAM | `wMenuCursor2Y` | [8-bit] Secondary menu cursor row (parallel to wMenuCursorY) |
 | `0xcb08` | WRAM | `wMenuCursorLockFlags` | [8-bit] Menu cursor lock flags: bit 0 / bit 1 freeze the primary / secondary cursor's movement (set on confirm) in the shared menu-input handler |

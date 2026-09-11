@@ -3,6 +3,7 @@ SECTION "ROM Bank $0d", ROMX[$4000], BANK[$0d]
 	farptr StartMinigameByID ; $4000
 	farptr GetDefaultMinigameRecordValue ; $4002
 	farptr ShowMinigamePointResult ; $4004
+; Instruction-identical to StartDrillFromDefinition (one copy per bank); a change here belongs in every copy.
 InitMinigameFromConfig:
 	ld hl, $0000 ; $4006
 	add hl, bc ; $4009
@@ -1151,6 +1152,7 @@ GetMinigameCharCoordsEntry:
 	ld l, c ; $4937
 	ld h, b ; $4938
 	ret ; $4939
+; Instruction-identical to SnapCameraTo (one copy per bank); a change here belongs in every copy.
 SnapCameraTo_0d:
 	ld c, l ; $493a
 	ld b, h ; $493b
@@ -1326,6 +1328,7 @@ TennisMachine4Hook_MinigameStart:
 TennisMachine4Hook_PerFrame:
 	call DrawMinigameScoreHud ; $4a47
 	ret ; $4a4a
+; Instruction-identical to TennisMachineHighScoreHook_PointStart (in this bank); a change here belongs in every copy.
 TennisMachine4Hook_PointStart:
 	farcall AdvanceMatchRng ; $4a4b
 	and $07 ; $4a4e
@@ -1728,6 +1731,7 @@ TennisMachineHighScoreHook_MinigameStart:
 TennisMachineHighScoreHook_PerFrame:
 	call DrawMinigameScoreHud ; $4d12
 	ret ; $4d15
+; Instruction-identical to TennisMachine4Hook_PointStart (in this bank); a change here belongs in every copy.
 TennisMachineHighScoreHook_PointStart:
 	farcall AdvanceMatchRng ; $4d16
 	and $07 ; $4d19
@@ -3369,6 +3373,7 @@ TreasureBoxSpawnPoints4:
 	db $00, $00, $80, $fe ; 0x04
 	db $00, $01, $c0, $fd ; 0x08
 	db $00, $ff, $c0, $fd ; 0x0c
+; Instruction-identical to IsBallInMedallionMatchHitZone (in this bank); a change here belongs in every copy.
 IsBallInTreasureBoxHitZone:
 	ld a, [wLastShotCharIndex] ; $5bc5
 	and $01 ; $5bc8
@@ -3523,6 +3528,7 @@ DrawTreasureBoxHitCountdown:
 	ld a, [wMinigameSceneActor + 3] ; $5cd0
 	call QueueMinigameHitBurstFirstFour ; $5cd3
 	ret ; $5cd6
+; Instruction-identical to ProjectMedallionMatchWorldPosition (in this bank); a change here belongs in every copy.
 ProjectTreasureBoxWorldPosition:
 	ld hl, wMinigameSceneActor + 10 ; $5cd7
 	ld a, [hl+] ; $5cda
@@ -3712,6 +3718,7 @@ AdvanceMedallionMatchActorState:
 .drawMedallionMatchSprite2:
 	call DrawMedallionMatchSprite ; $5e33
 	ret ; $5e36
+; Instruction-identical to IsBallInTreasureBoxHitZone (in this bank); a change here belongs in every copy.
 IsBallInMedallionMatchHitZone:
 	ld a, [wLastShotCharIndex] ; $5e37
 	and $01 ; $5e3a
@@ -3855,6 +3862,7 @@ DrawMedallionMatchHitCountdown:
 	ld a, [wMinigameSceneActor + 3] ; $5f18
 	call QueueMinigameHitBurstFirstTwo ; $5f1b
 	ret ; $5f1e
+; Instruction-identical to ProjectTreasureBoxWorldPosition (in this bank); a change here belongs in every copy.
 ProjectMedallionMatchWorldPosition:
 	ld hl, wMinigameSceneActor + 10 ; $5f1f
 	ld a, [hl+] ; $5f22

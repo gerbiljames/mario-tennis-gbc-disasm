@@ -3073,7 +3073,7 @@ PromptCharDataConfirm:
 	ld a, $01 ; $5aa0
 	ld [wCharDataConfirmState], a ; $5aa2
 .loop:
-	call DrawCharDataConfirmCursor ; $5aa5
+	call DrawConfirmSelectionCursor_1d ; $5aa5
 	call AdvanceFrame ; $5aa8
 	ldh a, [hInputRisingEdge] ; $5aab
 	bit PADB_A, a ; $5aad
@@ -3108,7 +3108,8 @@ PromptCharDataConfirm:
 	wram_bank $06 ; $5af0
 	ld a, [wCharDataConfirmState] ; $5af6
 	ret ; $5af9
-DrawCharDataConfirmCursor:
+; Instruction-identical to DrawConfirmSelectionCursor_1a and DrawConfirmSelectionCursor_1c (one copy per bank); a change here belongs in every copy.
+DrawConfirmSelectionCursor_1d:
 	wram_bank $06 ; $5afa
 	ld a, [wCharDataConfirmState] ; $5b00
 	or a ; $5b03

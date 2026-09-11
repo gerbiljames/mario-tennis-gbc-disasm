@@ -2258,7 +2258,7 @@ CharDataScreen_InputLoop:
 	xor a ; $528d
 	ld [wCharDataViewOnly], a ; $528e
 .confirmLoop:
-	call DrawConfirmSelectionCursor ; $5291
+	call DrawConfirmSelectionCursor_1c ; $5291
 	call AdvanceFrame ; $5294
 	ldh a, [hInputRisingEdge] ; $5297
 	bit PADB_A, a ; $5299
@@ -2355,7 +2355,8 @@ CharDataScreen_InputLoop:
 	ld hl, DrawStatArrowIndicators ; $539a
 	call RegisterFrameTask ; $539d
 	jp CharDataScreen_InputLoop ; $53a0
-DrawConfirmSelectionCursor:
+; Instruction-identical to DrawConfirmSelectionCursor_1a and DrawConfirmSelectionCursor_1d (one copy per bank); a change here belongs in every copy.
+DrawConfirmSelectionCursor_1c:
 	wram_bank $06 ; $53a3
 	ld a, [wCharDataConfirmState] ; $53a9
 	or a ; $53ac

@@ -464,7 +464,7 @@ the rally path.
 progress index, then normalising it:
 
 ```
-        call ComputeTrainingCourtProgressIndex
+        call ComputeStoryRankTier_15
         ld a, [wMapSceneStage]
         cp $05
         jr c, .fromLesson        ; always taken
@@ -474,7 +474,7 @@ progress index, then normalising it:
 .fromLesson:
 ```
 
-`ComputeTrainingCourtProgressIndex` (`$15:$7fa0`) starts at `$00` and steps with
+`ComputeStoryRankTier_15` (`$15:$7fa0`) starts at `$00` and steps with
 `inc a` through at most four flags — junior title, senior title, then either the
 singles or the doubles pair of Island Open flags. Its maximum output is `$04`,
 on both ladders. The `cp $05` therefore always sets carry, the branch is always

@@ -1005,9 +1005,9 @@ differs is only the input source and which cursor pair is written:
 | bank | local pad (`wMenuInputPressed`) | link frame (`hLinkInput`) | remote, cursor 1 | remote, cursor 2 |
 |---|---|---|---|---|
 | `$16` | `MoveMenuCursorGrid_16` `$40cd` | `MoveMenuCursorGridFromLinkInput_16` `$414b` | `MoveMenuCursorGridRemote_16` `$41d5` | `MoveMenuCursor2GridRemote_16` `$42a0` |
-| `$1b` | `MoveMenuCursorGrid` `$4107` | — | — | `MoveMenuCursor2GridRemote_1b` `$42da` |
-| `$38` | `MoveMenuCursorBox` `$410a` | `MoveMenuCursorBoxLink` `$4188` | `MoveMenuCursorBoxRemote_38` `$4212` | `MoveMenuCursor2GridRemote_38` `$42dd` |
-| `$3b` | `MoveMenuCursor` `$412a` | `MoveMenuCursorRepeat` `$41a8` | `MoveMenuCursorLinkLocal` `$4225` | `MoveMenuCursorLinkRemote` `$42f0` |
+| `$1b` | `MoveMenuCursorGrid_1b` `$4107` | — | — | `MoveMenuCursor2GridRemote_1b` `$42da` |
+| `$38` | `MoveMenuCursorGrid_38` `$410a` | `MoveMenuCursorGridFromLinkInput_38` `$4188` | `MoveMenuCursorGridRemote_38` `$4212` | `MoveMenuCursor2GridRemote_38` `$42dd` |
+| `$3b` | `MoveMenuCursorGrid_3b` `$412a` | `MoveMenuCursorRepeat` `$41a8` | `MoveMenuCursorLinkLocal` `$4225` | `MoveMenuCursorLinkRemote` `$42f0` |
 | `$3e` | `MoveMenuCursorGrid_3e` `$413a` | `MoveMenuCursorGridFromLinkInput_3e` `$41b8` | `MoveMenuCursorGridRemote_3e` `$4242` | `MoveMenuCursor2GridRemote_3e` `$430d` |
 
 The "remote" variants choose between `hLinkRemoteInputBuf` and

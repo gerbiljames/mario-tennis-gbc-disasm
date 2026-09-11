@@ -28,6 +28,7 @@ DormEntranceEntryPoints_12:
 	map_entry $02, FACE_DOWN, $1600, $0d00, DormEntranceArrival02_12
 	map_entry $0f, FACE_UP, $1600, $1b00, $0000
 	db $ff
+; Instruction-identical to AcademyMainBldgArrival02_10 and AcademyArrivalArrival01_11 (one copy per bank); a change here belongs in every copy.
 DormEntranceArrival02_12:
 	ld a, [wStoryModeEntryPoint] ; $406f
 	cp STORYENTRY_NONE ; $4072
@@ -44,6 +45,7 @@ DormEntranceArrival02_12:
 	script_move_angle ACTOR_PLAYER, FACE_DOWN, $0200 ; $40aa
 .done:
 	ret ; $40b4
+; Instruction-identical to AcademyMainBldgArrival01_10, RestaurantArrival01_10, MapArrivalWalk_11 and RestaurantPlazaArrival04_13 (one copy per bank); a change here belongs in every copy.
 DormEntranceArrival01_12:
 	ld a, [wStoryModeEntryPoint] ; $40b5
 	cp STORYENTRY_NONE ; $40b8
@@ -1932,7 +1934,7 @@ SeniorCourtTile01_12:
 	script_face_toward ACTOR_PLAYER, $0b ; $5d13
 	ret ; $5d1b
 SeniorCourtInitScript_12:
-	call ComputeSeniorCourtStageB ; $5d1c
+	call ComputeRankingProgressIndex_12 ; $5d1c
 	call ComputeSeniorCourtStage ; $5d1f
 	ld a, [wMapSceneStage2] ; $5d22
 	cp SENIORCOURTSTAGE_SINGLES_RANK4 ; $5d25
@@ -3948,7 +3950,8 @@ ActorScript_12_58:
 	as_wait $8c
 	as_anim $03
 	as_jump ActorScript_12_58
-ComputeSeniorCourtStageB:
+; Instruction-identical to ComputeRankingProgressIndex_0e, ComputeRankingProgressIndex_11 and ComputeRankingProgressIndex_27 (one copy per bank); a change here belongs in every copy.
+ComputeRankingProgressIndex_12:
 	test_flag FLAG_DOUBLES ; $7c75
 	jr nz, .doubles ; $7c78
 	ld a, STORYRANK_SINGLES_ACADEMY ; $7c7a

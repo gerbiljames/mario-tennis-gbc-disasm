@@ -31,7 +31,7 @@ story bank; `UnusedEvalFlagCondition_0a` is
 `EvalFlagCondition` from bank `$04`; `Unused_05_FetchSRAMShortText` is
 `FetchSRAMDialogueText`. This is what a shared include assembled into every
 story bank looks like: each bank got the whole set, and only the copy the
-bank's own scripts call survived as live code. `DrawAsciiDigitChar` is the
+bank's own scripts call survived as live code. `DrawAsciiDigitChar_1b` is the
 same idea where every copy *is* called.
 
 **3. A ROM0 library with spare parts.** Bank `$00` carries 25 unused routines,

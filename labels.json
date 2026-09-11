@@ -3836,7 +3836,10 @@
  "0x22192": "ResetCameraForServe",
  "0x22199": "GetServeCameraTarget",
  "0x221a6": ".done",
- "0x221aa": "SnapCameraTo",
+ "0x221aa": {
+  "name": "SnapCameraTo",
+  "note": "Instruction-identical to SnapCameraTo_0d (one copy per bank); a change here belongs in every copy."
+ },
  "0x221c9": "SetCameraTarget",
  "0x221dc": "UpdateMatchCamera",
  "0x221f4": ".easeX",
@@ -4852,7 +4855,10 @@
  "0x2af28": ".actorLoop",
  "0x2af37": ".next",
  "0x2af45": "Unused_0a_2",
- "0x2c002": "StartDrillFromDefinition",
+ "0x2c002": {
+  "name": "StartDrillFromDefinition",
+  "note": "Instruction-identical to InitMinigameFromConfig (one copy per bank); a change here belongs in every copy."
+ },
  "0x2c055": ".restore",
  "0x2c07a": ".done",
  "0x2c07b": "RecordDrillPointResultBits",
@@ -5017,7 +5023,10 @@
  "0x2cabd": ".store",
  "0x2cae1": ".read",
  "0x2cae8": ".serviceMatch2AwardPointToSide",
- "0x2cb05": "ServiceMatch2AwardPointToSide",
+ "0x2cb05": {
+  "name": "ServiceMatch2AwardPointToSide",
+  "note": "Instruction-identical to NetGameMatch1AwardPointToSide, NetGameMatch2AwardPointToSide, NetGameMatch3AwardPointToSide, ServiceMatch3AwardPointToSide, StrokeMatch2AwardPointToSide and StrokeMatch3AwardPointToSide (in this bank); a change here belongs in every copy."
+ },
  "0x2cb24": ".bump",
  "0x2cb25": ".clearServeFaultFlag",
  "0x2cb2e": "ServiceMatch2JudgeOnPointEnd",
@@ -5056,7 +5065,10 @@
  "0x2cc94": "ServiceMatch3Hook_BallHit",
  "0x2cc98": "ServiceMatch3HandlePointEnd",
  "0x2cca9": ".store",
- "0x2ccee": "ServiceMatch3AwardPointToSide",
+ "0x2ccee": {
+  "name": "ServiceMatch3AwardPointToSide",
+  "note": "Instruction-identical to NetGameMatch1AwardPointToSide, NetGameMatch2AwardPointToSide, NetGameMatch3AwardPointToSide, ServiceMatch2AwardPointToSide, StrokeMatch2AwardPointToSide and StrokeMatch3AwardPointToSide (in this bank); a change here belongs in every copy."
+ },
  "0x2cd0d": ".bump",
  "0x2cd0e": ".clearServeFaultFlag",
  "0x2cd17": "ServiceMatch3JudgeOnPointEnd",
@@ -5186,7 +5198,10 @@
  "0x2d453": "NetGameMatch1Hook_BallHit",
  "0x2d457": "NetGameMatch1HandlePointEnd",
  "0x2d468": ".store",
- "0x2d491": "NetGameMatch1AwardPointToSide",
+ "0x2d491": {
+  "name": "NetGameMatch1AwardPointToSide",
+  "note": "Instruction-identical to NetGameMatch2AwardPointToSide, NetGameMatch3AwardPointToSide, ServiceMatch2AwardPointToSide, ServiceMatch3AwardPointToSide, StrokeMatch2AwardPointToSide and StrokeMatch3AwardPointToSide (in this bank); a change here belongs in every copy."
+ },
  "0x2d4b0": ".bump",
  "0x2d4b1": ".clearServeFaultFlag",
  "0x2d4ba": "NetGameMatch1DecideWinner",
@@ -5250,7 +5265,10 @@
  "0x2d6e6": "NetGameMatch2Hook_BallHit",
  "0x2d6ea": "NetGameMatch2HandlePointEnd",
  "0x2d6fb": ".store",
- "0x2d724": "NetGameMatch2AwardPointToSide",
+ "0x2d724": {
+  "name": "NetGameMatch2AwardPointToSide",
+  "note": "Instruction-identical to NetGameMatch1AwardPointToSide, NetGameMatch3AwardPointToSide, ServiceMatch2AwardPointToSide, ServiceMatch3AwardPointToSide, StrokeMatch2AwardPointToSide and StrokeMatch3AwardPointToSide (in this bank); a change here belongs in every copy."
+ },
  "0x2d743": ".bump",
  "0x2d744": ".clearServeFaultFlag",
  "0x2d74d": "NetGameMatch2JudgeOnPointEnd",
@@ -5322,7 +5340,10 @@
  "0x2da36": ".checkTotalPointsScoredInCurrentGame",
  "0x2da40": ".checkTotalPointsScoredInCurrentGame2",
  "0x2da48": ".checkPointWinLoseFlag",
- "0x2da4f": "NetGameMatch3AwardPointToSide",
+ "0x2da4f": {
+  "name": "NetGameMatch3AwardPointToSide",
+  "note": "Instruction-identical to NetGameMatch1AwardPointToSide, NetGameMatch2AwardPointToSide, ServiceMatch2AwardPointToSide, ServiceMatch3AwardPointToSide, StrokeMatch2AwardPointToSide and StrokeMatch3AwardPointToSide (in this bank); a change here belongs in every copy."
+ },
  "0x2da6e": ".bump",
  "0x2da6f": ".clearServeFaultFlag",
  "0x2da78": "NetGameMatch3JudgeOnPointEnd",
@@ -5392,7 +5413,10 @@
  "0x2dcc9": "NetGamePractice1Hook_BallHit",
  "0x2dcd6": ".done",
  "0x2dcd7": "NetGamePractice1Table",
- "0x2dcf9": "NetGamePractice1HandlePointEnd",
+ "0x2dcf9": {
+  "name": "NetGamePractice1HandlePointEnd",
+  "note": "Instruction-identical to NetGamePractice2HandlePointEnd and NetGamePractice3HandlePointEnd (in this bank); a change here belongs in every copy."
+ },
  "0x2dd0a": ".recordDrillPointResultBits",
  "0x2dd48": "NetGamePractice1JudgeOnPointEnd",
  "0x2dd51": "NetGamePractice1JudgeOnBallHit",
@@ -5452,7 +5476,10 @@
  "0x2df83": "NetGamePractice2Hook_BallHit",
  "0x2df90": ".done",
  "0x2df91": "NetGamePractice2PointStartDrillPositions",
- "0x2dfb3": "NetGamePractice2HandlePointEnd",
+ "0x2dfb3": {
+  "name": "NetGamePractice2HandlePointEnd",
+  "note": "Instruction-identical to NetGamePractice1HandlePointEnd and NetGamePractice3HandlePointEnd (in this bank); a change here belongs in every copy."
+ },
  "0x2dfc4": ".recordDrillPointResultBits",
  "0x2e002": "NetGamePractice2JudgeOnPointEnd",
  "0x2e00b": "NetGamePractice2JudgeOnBallHit",
@@ -5508,7 +5535,10 @@
  "0x2e242": "NetGamePractice3Hook_BallHit",
  "0x2e24f": ".done",
  "0x2e250": "NetGamePractice3PointStartDrillPositions",
- "0x2e272": "NetGamePractice3HandlePointEnd",
+ "0x2e272": {
+  "name": "NetGamePractice3HandlePointEnd",
+  "note": "Instruction-identical to NetGamePractice1HandlePointEnd and NetGamePractice2HandlePointEnd (in this bank); a change here belongs in every copy."
+ },
  "0x2e283": ".recordDrillPointResultBits",
  "0x2e2c1": "NetGamePractice3JudgeOnPointEnd",
  "0x2e2ca": "NetGamePractice3JudgeOnBallHit",
@@ -5620,7 +5650,10 @@
  "0x2e784": "StrokeMatch2Hook_BallHit",
  "0x2e788": "StrokeMatch2HandlePointEnd",
  "0x2e799": ".store",
- "0x2e7c2": "StrokeMatch2AwardPointToSide",
+ "0x2e7c2": {
+  "name": "StrokeMatch2AwardPointToSide",
+  "note": "Instruction-identical to NetGameMatch1AwardPointToSide, NetGameMatch2AwardPointToSide, NetGameMatch3AwardPointToSide, ServiceMatch2AwardPointToSide, ServiceMatch3AwardPointToSide and StrokeMatch3AwardPointToSide (in this bank); a change here belongs in every copy."
+ },
  "0x2e7e1": ".bump",
  "0x2e7e2": ".clearServeFaultFlag",
  "0x2e7eb": "StrokeMatch2JudgeOnPointEnd",
@@ -5674,7 +5707,10 @@
  "0x2e9cf": "StrokeMatch3Hook_BallHit",
  "0x2e9d3": "StrokeMatch3HandlePointEnd",
  "0x2e9e4": ".store",
- "0x2ea0d": "StrokeMatch3AwardPointToSide",
+ "0x2ea0d": {
+  "name": "StrokeMatch3AwardPointToSide",
+  "note": "Instruction-identical to NetGameMatch1AwardPointToSide, NetGameMatch2AwardPointToSide, NetGameMatch3AwardPointToSide, ServiceMatch2AwardPointToSide, ServiceMatch3AwardPointToSide and StrokeMatch2AwardPointToSide (in this bank); a change here belongs in every copy."
+ },
  "0x2ea2c": ".bump",
  "0x2ea2d": ".clearServeFaultFlag",
  "0x2ea36": "StrokeMatch3JudgeOnPointEnd",
@@ -5725,7 +5761,10 @@
  "0x2ebe1": "StrokePractice1Hook_PointEnd",
  "0x2ebed": ".eq05",
  "0x2ebf1": ".strokePractice1HandlePointEnd",
- "0x2ec01": "StrokePractice1EvaluateResult",
+ "0x2ec01": {
+  "name": "StrokePractice1EvaluateResult",
+  "note": "Instruction-identical to StrokePractice3EvaluateResult (in this bank); a change here belongs in every copy."
+ },
  "0x2ec0f": ".ne04",
  "0x2ec1d": ".compare",
  "0x2ec28": ".lt02",
@@ -5736,7 +5775,10 @@
  "0x2ec4e": "StrokePractice1Hook_Bounce",
  "0x2ec52": "StrokePractice1Hook_BallHit",
  "0x2ec5f": "StrokePractice1Table",
- "0x2ec81": "StrokePractice1HandlePointEnd",
+ "0x2ec81": {
+  "name": "StrokePractice1HandlePointEnd",
+  "note": "Instruction-identical to StrokePractice3HandlePointEnd (in this bank); a change here belongs in every copy."
+ },
  "0x2ec92": ".recordDrillPointResultBits",
  "0x2ecd0": "StrokePractice1JudgeOnPointEnd",
  "0x2ecd9": "StrokePractice1JudgeOnBallHit",
@@ -5759,7 +5801,10 @@
  "0x2ed55": ".read",
  "0x2ed67": ".readB",
  "0x2ed69": "StrokePractice1Cases1SignedTable",
- "0x2ed73": "StrokePractice1Cases2",
+ "0x2ed73": {
+  "name": "StrokePractice1Cases2",
+  "note": "Instruction-identical to StrokePractice3Cases2 (in this bank); a change here belongs in every copy."
+ },
  "0x2ed75": ".checkBallBounceCount",
  "0x2ed9c": ".storeMatchAbortFlag2",
  "0x2ed9e": ".nonZero",
@@ -5820,7 +5865,10 @@
  "0x2f07d": "StrokePractice3PointStartTable",
  "0x2f081": "StrokePractice3TargetZoneDelayTask",
  "0x2f092": "StrokePractice3Hook_PointEnd",
- "0x2f0a5": "StrokePractice3EvaluateResult",
+ "0x2f0a5": {
+  "name": "StrokePractice3EvaluateResult",
+  "note": "Instruction-identical to StrokePractice1EvaluateResult (in this bank); a change here belongs in every copy."
+ },
  "0x2f0b3": ".ne04",
  "0x2f0c1": ".compare",
  "0x2f0cc": ".lt02",
@@ -5831,7 +5879,10 @@
  "0x2f0fb": "StrokePractice3Hook_Bounce",
  "0x2f0ff": "StrokePractice3Hook_BallHit",
  "0x2f109": "StrokePractice3PointStartDrillPositions",
- "0x2f12b": "StrokePractice3HandlePointEnd",
+ "0x2f12b": {
+  "name": "StrokePractice3HandlePointEnd",
+  "note": "Instruction-identical to StrokePractice1HandlePointEnd (in this bank); a change here belongs in every copy."
+ },
  "0x2f13c": ".recordDrillPointResultBits",
  "0x2f17a": "StrokePractice3JudgeOnPointEnd",
  "0x2f183": "StrokePractice3JudgeOnBallHit",
@@ -5851,7 +5902,10 @@
  "0x2f1ff": ".read",
  "0x2f211": ".readB",
  "0x2f213": "StrokePractice3Cases1DrillShotTable",
- "0x2f21d": "StrokePractice3Cases2",
+ "0x2f21d": {
+  "name": "StrokePractice3Cases2",
+  "note": "Instruction-identical to StrokePractice1Cases2 (in this bank); a change here belongs in every copy."
+ },
  "0x2f21f": ".checkBallBounceCount",
  "0x2f246": ".storeMatchAbortFlag2",
  "0x2f248": ".nonZero",
@@ -5897,7 +5951,10 @@
  "0x33e14": "UnusedSnd0c_33",
  "0x33e5c": "UnusedSnd0c_34",
  "0x33e6e": "UnusedSnd0c_35",
- "0x34006": "InitMinigameFromConfig",
+ "0x34006": {
+  "name": "InitMinigameFromConfig",
+  "note": "Instruction-identical to StartDrillFromDefinition (one copy per bank); a change here belongs in every copy."
+ },
  "0x34059": ".restore",
  "0x3407e": ".done",
  "0x3407f": "StartMinigameByID",
@@ -6003,7 +6060,10 @@
  "0x3490c": ".nonZero2",
  "0x34925": ".done",
  "0x34926": "GetMinigameCharCoordsEntry",
- "0x3493a": "SnapCameraTo_0d",
+ "0x3493a": {
+  "name": "SnapCameraTo_0d",
+  "note": "Instruction-identical to SnapCameraTo (one copy per bank); a change here belongs in every copy."
+ },
  "0x34959": "MinigameConfig_TennisMachine2",
  "0x34969": "InitMinigame_TennisMachine2",
  "0x34974": "MinigameHooks_TennisMachine2",
@@ -6031,7 +6091,10 @@
  "0x34a2e": "MinigameHooks_TennisMachine4",
  "0x34a3e": "TennisMachine4Hook_MinigameStart",
  "0x34a47": "TennisMachine4Hook_PerFrame",
- "0x34a4b": "TennisMachine4Hook_PointStart",
+ "0x34a4b": {
+  "name": "TennisMachine4Hook_PointStart",
+  "note": "Instruction-identical to TennisMachineHighScoreHook_PointStart (in this bank); a change here belongs in every copy."
+ },
  "0x34a5b": ".store",
  "0x34a60": "TennisMachine4Hook_PointEnd",
  "0x34a64": "TennisMachine4Hook_RallyTick",
@@ -6088,7 +6151,10 @@
  "0x34cf9": "MinigameHooks_TennisMachineHighScore",
  "0x34d09": "TennisMachineHighScoreHook_MinigameStart",
  "0x34d12": "TennisMachineHighScoreHook_PerFrame",
- "0x34d16": "TennisMachineHighScoreHook_PointStart",
+ "0x34d16": {
+  "name": "TennisMachineHighScoreHook_PointStart",
+  "note": "Instruction-identical to TennisMachine4Hook_PointStart (in this bank); a change here belongs in every copy."
+ },
  "0x34d26": ".store",
  "0x34d2b": "TennisMachineHighScoreHook_PointEnd",
  "0x34d2f": "TennisMachineHighScoreHook_RallyTick",
@@ -6302,7 +6368,10 @@
  "0x35b95": "TreasureBoxSpawnPoints2",
  "0x35ba5": "TreasureBoxSpawnPoints3",
  "0x35bb5": "TreasureBoxSpawnPoints4",
- "0x35bc5": "IsBallInTreasureBoxHitZone",
+ "0x35bc5": {
+  "name": "IsBallInTreasureBoxHitZone",
+  "note": "Instruction-identical to IsBallInMedallionMatchHitZone (in this bank); a change here belongs in every copy."
+ },
  "0x35be9": ".positive",
  "0x35c0b": ".positive2",
  "0x35c21": ".positive3",
@@ -6314,7 +6383,10 @@
  "0x35c89": "DrawTreasureBoxSprite",
  "0x35cab": "TreasureBoxSpriteAnimFrames",
  "0x35ccb": "DrawTreasureBoxHitCountdown",
- "0x35cd7": "ProjectTreasureBoxWorldPosition",
+ "0x35cd7": {
+  "name": "ProjectTreasureBoxWorldPosition",
+  "note": "Instruction-identical to ProjectMedallionMatchWorldPosition (in this bank); a change here belongs in every copy."
+ },
  "0x35cea": "MinigameConfig_MedallionMatch",
  "0x35cfa": "InitMinigame_MedallionMatch",
  "0x35d0b": ".done",
@@ -6338,7 +6410,10 @@
  "0x35e04": ".drawMedallionMatchSprite",
  "0x35e12": ".drawMedallionMatchHitCountdown",
  "0x35e33": ".drawMedallionMatchSprite2",
- "0x35e37": "IsBallInMedallionMatchHitZone",
+ "0x35e37": {
+  "name": "IsBallInMedallionMatchHitZone",
+  "note": "Instruction-identical to IsBallInTreasureBoxHitZone (in this bank); a change here belongs in every copy."
+ },
  "0x35e5b": ".positive",
  "0x35e7d": ".positive2",
  "0x35e93": ".positive3",
@@ -6350,7 +6425,10 @@
  "0x35ef2": "DrawMedallionMatchSprite",
  "0x35f0f": "MedallionMatchSpriteAnimFrames",
  "0x35f13": "DrawMedallionMatchHitCountdown",
- "0x35f1f": "ProjectMedallionMatchWorldPosition",
+ "0x35f1f": {
+  "name": "ProjectMedallionMatchWorldPosition",
+  "note": "Instruction-identical to ProjectTreasureBoxWorldPosition (in this bank); a change here belongs in every copy."
+ },
  "0x35f32": "MinigameConfig_FruitFantasy",
  "0x35f42": "InitMinigame_FruitFantasy",
  "0x35f60": ".done",
@@ -6484,7 +6562,10 @@
  "0x391a3": ".handOver",
  "0x391d7": "ActorScript_0e_03",
  "0x391e4": "ActorScript_0e_04",
- "0x3920f": "MirrorPlayerSpriteIfLeftHanded",
+ "0x3920f": {
+  "name": "MirrorPlayerSpriteIfLeftHanded",
+  "note": "Instruction-identical to TogglePlayerSpriteXFlip (one copy per bank); a change here belongs in every copy."
+ },
  "0x39224": ".done",
  "0x39225": "ActorScript_0e_05",
  "0x39248": "MarioWorldMapScripts_0e",
@@ -6637,7 +6718,10 @@
  "0x3bddb": "ActorScript_0e_26",
  "0x3be3e": "ActorScript_0e_27",
  "0x3be4b": "ActorScript_0e_28",
- "0x3be5a": "ComputeTrainingGymProgressIndex",
+ "0x3be5a": {
+  "name": "ComputeRankingProgressIndex_0e",
+  "note": "Instruction-identical to ComputeRankingProgressIndex_11, ComputeRankingProgressIndex_12 and ComputeRankingProgressIndex_27 (one copy per bank); a change here belongs in every copy."
+ },
  "0x3be7d": ".store",
  "0x3be81": ".doubles",
  "0x3bea1": {
@@ -6748,7 +6832,10 @@
  },
  "0x3e3e1": ".nextActor",
  "0x3e3fa": ".done",
- "0x3e408": "ReadSceneTilemapTile_0f",
+ "0x3e408": {
+  "name": "ReadSceneTilemapTile_0f",
+  "note": "Instruction-identical to ReadSceneTilemapTile_10 (one copy per bank); a change here belongs in every copy."
+ },
  "0x3e41f": ".read",
  "0x3e426": "IslandOpenArrivalCutscene",
  "0x3e582": ".doubles",
@@ -6778,21 +6865,33 @@
  "0x3eb79": "IslandOpenRound1ScriptsDoubles_0f",
  "0x3ebda": "IslandOpenRound1DoublesNpc0A_0f",
  "0x3ebf8": ".speak",
- "0x3ebfe": "IslandOpenRound1DoublesNpc0B_0f",
+ "0x3ebfe": {
+  "name": "IslandOpenRound1DoublesNpc0B_0f",
+  "note": "Instruction-identical to IslandOpenFinalDoublesNpc0B_0f (in this bank); a change here belongs in every copy."
+ },
  "0x3ec1c": ".speak",
- "0x3ec22": "IslandOpenRound1DoublesNpc0D_0f",
+ "0x3ec22": {
+  "name": "IslandOpenRound1DoublesNpc0D_0f",
+  "note": "Instruction-identical to IslandOpenSemifinalDoublesNpc0D_0f (in this bank); a change here belongs in every copy."
+ },
  "0x3ec40": ".speak",
  "0x3ec46": "IslandOpenSemifinalActorsDoubles_0f",
  "0x3ed06": "IslandOpenSemifinalScriptsDoubles_0f",
  "0x3ed67": "IslandOpenSemifinalDoublesNpc08_0f",
  "0x3ed85": ".speak",
- "0x3ed8b": "IslandOpenSemifinalDoublesNpc0D_0f",
+ "0x3ed8b": {
+  "name": "IslandOpenSemifinalDoublesNpc0D_0f",
+  "note": "Instruction-identical to IslandOpenRound1DoublesNpc0D_0f (in this bank); a change here belongs in every copy."
+ },
  "0x3eda9": ".speak",
  "0x3edaf": "IslandOpenFinalActorsDoubles_0f",
  "0x3ee6f": "IslandOpenFinalScriptsDoubles_0f",
  "0x3eed0": "IslandOpenFinalDoublesNpc0C_0f",
  "0x3eeee": ".speak",
- "0x3eef4": "IslandOpenFinalDoublesNpc0B_0f",
+ "0x3eef4": {
+  "name": "IslandOpenFinalDoublesNpc0B_0f",
+  "note": "Instruction-identical to IslandOpenRound1DoublesNpc0B_0f (in this bank); a change here belongs in every copy."
+ },
  "0x3ef12": ".speak",
  "0x3ef18": {
   "name": "UnusedTournamentNpc0A_0f",
@@ -6841,7 +6940,10 @@
  "0x3f571": ".done",
  "0x3f5b7": "IslandOpenRoundActorsSingles_0f",
  "0x3f615": "IslandOpenRoundScriptsSingles_0f",
- "0x3f62e": "IslandOpenRoundSinglesNpc04_0f",
+ "0x3f62e": {
+  "name": "IslandOpenRoundSinglesNpc04_0f",
+  "note": "Instruction-identical to IslandOpenRoundDoublesNpc04_0f (in this bank); a change here belongs in every copy."
+ },
  "0x3f640": ".queue",
  "0x3f649": "IslandOpenRoundSinglesNpc03_0f",
  "0x3f66c": "IslandOpenRoundSinglesNpc05_0f",
@@ -6856,7 +6958,10 @@
  "0x3f83a": "IslandOpenRoundSinglesNpc05TextIds",
  "0x3f842": "IslandOpenRoundActorsDoubles_0f",
  "0x3f8a0": "IslandOpenRoundScriptsDoubles_0f",
- "0x3f8b1": "IslandOpenRoundDoublesNpc04_0f",
+ "0x3f8b1": {
+  "name": "IslandOpenRoundDoublesNpc04_0f",
+  "note": "Instruction-identical to IslandOpenRoundSinglesNpc04_0f (in this bank); a change here belongs in every copy."
+ },
  "0x3f8c3": ".queue",
  "0x3f8cc": "IslandOpenRoundDoublesNpc03_0f",
  "0x3f8e4": "IslandOpenRoundDoublesNpc03TextIds",
@@ -7175,7 +7280,10 @@
  "0x41a80": "RestaurantMapScripts_10",
  "0x41a8e": "RestaurantActors_10",
  "0x41b86": "RestaurantEntryPoints_10",
- "0x41b97": "RestaurantArrival01_10",
+ "0x41b97": {
+  "name": "RestaurantArrival01_10",
+  "note": "Instruction-identical to AcademyMainBldgArrival01_10, MapArrivalWalk_11, DormEntranceArrival01_12 and RestaurantPlazaArrival04_13 (one copy per bank); a change here belongs in every copy."
+ },
  "0x41bca": ".walkOff",
  "0x41bdc": ".done",
  "0x41bdd": "RestaurantExitTriggers_10",
@@ -7309,10 +7417,16 @@
  "0x434a9": "AcademyMainBldgMapScripts_10",
  "0x434b7": "AcademyMainBldgActors_10",
  "0x434f9": "AcademyMainBldgEntryPoints_10",
- "0x43532": "AcademyMainBldgArrival02_10",
+ "0x43532": {
+  "name": "AcademyMainBldgArrival02_10",
+  "note": "Instruction-identical to AcademyArrivalArrival01_11 and DormEntranceArrival02_12 (one copy per bank); a change here belongs in every copy."
+ },
  "0x43565": ".walkOff",
  "0x43577": ".done",
- "0x43578": "AcademyMainBldgArrival01_10",
+ "0x43578": {
+  "name": "AcademyMainBldgArrival01_10",
+  "note": "Instruction-identical to RestaurantArrival01_10, MapArrivalWalk_11, DormEntranceArrival01_12 and RestaurantPlazaArrival04_13 (one copy per bank); a change here belongs in every copy."
+ },
  "0x435ab": ".walkOff",
  "0x435bd": ".done",
  "0x435be": "AcademyMainBldgExitTriggers_10",
@@ -7350,7 +7464,10 @@
  },
  "0x43aa1": ".nextActor",
  "0x43aba": ".done",
- "0x43ac8": "ReadSceneTilemapCell_10",
+ "0x43ac8": {
+  "name": "ReadSceneTilemapTile_10",
+  "note": "Instruction-identical to ReadSceneTilemapTile_0f (one copy per bank); a change here belongs in every copy."
+ },
  "0x43adf": ".read",
  "0x43ae6": "MapExitWalkCurveRight_10",
  "0x43b1f": "MapExitWalkCurveLeft_10",
@@ -7407,7 +7524,10 @@
  "0x44202": ".stage4",
  "0x4420d": ".done",
  "0x44213": "CenterCourtSceneVariantActors_11",
- "0x442fd": "MapArrivalWalk_11",
+ "0x442fd": {
+  "name": "MapArrivalWalk_11",
+  "note": "Instruction-identical to AcademyMainBldgArrival01_10, RestaurantArrival01_10, DormEntranceArrival01_12 and RestaurantPlazaArrival04_13 (one copy per bank); a change here belongs in every copy."
+ },
  "0x44330": ".walkOff",
  "0x44342": ".done",
  "0x44343": "SetPlayerAndPartnerObjectDefs_11",
@@ -7419,7 +7539,10 @@
  "0x44401": "AcademyArrivalMapScripts_11",
  "0x4440f": "AcademyArrivalActors_11",
  "0x44515": "AcademyArrivalEntryPoints_11",
- "0x44536": "AcademyArrivalArrival01_11",
+ "0x44536": {
+  "name": "AcademyArrivalArrival01_11",
+  "note": "Instruction-identical to AcademyMainBldgArrival02_10 and DormEntranceArrival02_12 (one copy per bank); a change here belongs in every copy."
+ },
  "0x44569": ".walkOff",
  "0x4457b": ".done",
  "0x4457c": "AcademyArrivalExitTriggers_11",
@@ -7671,7 +7794,10 @@
  "0x47ca9": "ActorScript_11_50",
  "0x47d10": "ActorScript_11_51",
  "0x47d86": "ActorScript_11_52",
- "0x47d95": "ComputeRankingProgressIndex",
+ "0x47d95": {
+  "name": "ComputeRankingProgressIndex_11",
+  "note": "Instruction-identical to ComputeRankingProgressIndex_0e, ComputeRankingProgressIndex_12 and ComputeRankingProgressIndex_27 (one copy per bank); a change here belongs in every copy."
+ },
  "0x47db8": ".store",
  "0x47dbc": ".doubles",
  "0x47ddc": {
@@ -7683,10 +7809,16 @@
  "0x48006": "DormEntranceMapScripts_12",
  "0x48014": "DormEntranceActors_12",
  "0x48056": "DormEntranceEntryPoints_12",
- "0x4806f": "DormEntranceArrival02_12",
+ "0x4806f": {
+  "name": "DormEntranceArrival02_12",
+  "note": "Instruction-identical to AcademyMainBldgArrival02_10 and AcademyArrivalArrival01_11 (one copy per bank); a change here belongs in every copy."
+ },
  "0x480a2": ".walkOff",
  "0x480b4": ".done",
- "0x480b5": "DormEntranceArrival01_12",
+ "0x480b5": {
+  "name": "DormEntranceArrival01_12",
+  "note": "Instruction-identical to AcademyMainBldgArrival01_10, RestaurantArrival01_10, MapArrivalWalk_11 and RestaurantPlazaArrival04_13 (one copy per bank); a change here belongs in every copy."
+ },
  "0x480e8": ".walkOff",
  "0x480fa": ".done",
  "0x480fb": "DormEntranceExitTriggers_12",
@@ -7996,7 +8128,10 @@
  "0x4bbf0": "ActorScript_12_56",
  "0x4bc59": "ActorScript_12_57",
  "0x4bc66": "ActorScript_12_58",
- "0x4bc75": "ComputeSeniorCourtStageB",
+ "0x4bc75": {
+  "name": "ComputeRankingProgressIndex_12",
+  "note": "Instruction-identical to ComputeRankingProgressIndex_0e, ComputeRankingProgressIndex_11 and ComputeRankingProgressIndex_27 (one copy per bank); a change here belongs in every copy."
+ },
  "0x4bc98": ".store",
  "0x4bc9c": ".doubles",
  "0x4bcbc": {
@@ -8008,10 +8143,16 @@
  "0x4c006": "RestaurantPlazaMapScripts_13",
  "0x4c014": "RestaurantPlazaActors_13",
  "0x4c01e": "RestaurantPlazaEntryPoints_13",
- "0x4c05f": "RestaurantPlazaArrival04_13",
+ "0x4c05f": {
+  "name": "RestaurantPlazaArrival04_13",
+  "note": "Instruction-identical to AcademyMainBldgArrival01_10, RestaurantArrival01_10, MapArrivalWalk_11 and DormEntranceArrival01_12 (one copy per bank); a change here belongs in every copy."
+ },
  "0x4c092": ".walkOff",
  "0x4c0a4": ".done",
- "0x4c0a5": "RestaurantPlazaArrival06_13",
+ "0x4c0a5": {
+  "name": "RestaurantPlazaArrival06_13",
+  "note": "Instruction-identical to Court2EntryWalkIn (one copy per bank); a change here belongs in every copy."
+ },
  "0x4c0d8": ".walkOff",
  "0x4c0ea": ".done",
  "0x4c0eb": "RestaurantPlazaArrival01_13",
@@ -8309,10 +8450,16 @@
  "0x4fb56": "MapScriptHideLocationName_13",
  "0x4fb5b": "ActorScript_13_29",
  "0x4fcf5": "ActorScript_13_30",
- "0x4fd11": "ComputeRankingProgressIndex_13",
+ "0x4fd11": {
+  "name": "ComputeRankingProgressIndex_13",
+  "note": "Instruction-identical to ComputeRankingProgressIndex_14 and ComputeRankingProgressIndex_15 (one copy per bank); a change here belongs in every copy."
+ },
  "0x4fd34": ".loop",
  "0x4fd38": ".isDoubles",
- "0x4fd58": "ComputeStoryRankTier_13",
+ "0x4fd58": {
+  "name": "ComputeStoryRankTier_13",
+  "note": "Instruction-identical to ComputeStoryRankTier_15 (one copy per bank); a change here belongs in every copy."
+ },
  "0x4fd77": ".loop",
  "0x4fd7b": ".checkFlag",
  "0x50008": "TennisMachineRoomMapScripts_14",
@@ -8427,7 +8574,10 @@
  "0x50ea6": ".doublesStage2",
  "0x50eaf": ".done",
  "0x50eb4": "Court2ActorsAlt_14",
- "0x50f66": "Court2EntryWalkIn",
+ "0x50f66": {
+  "name": "Court2EntryWalkIn",
+  "note": "Instruction-identical to RestaurantPlazaArrival06_13 (one copy per bank); a change here belongs in every copy."
+ },
  "0x50f99": ".walkOff",
  "0x50fab": ".done",
  "0x50fac": "Court1MapScripts_14",
@@ -8457,7 +8607,10 @@
  "0x511a4": "Court1EntryWalkIn",
  "0x511d7": ".walkOff",
  "0x511e9": ".done",
- "0x511ea": "LoadCourtPlayerPartnerObjDefs_14",
+ "0x511ea": {
+  "name": "LoadCourtPlayerPartnerObjDefs_14",
+  "note": "Instruction-identical to SetPlayerPartnerActorSprites (one copy per bank); a change here belongs in every copy."
+ },
  "0x51208": ".notDoubles",
  "0x51221": "IslandSkyMapScripts_14",
  "0x5122f": "IslandSkyActors_14",
@@ -8617,7 +8770,10 @@
  "0x538df": "MapScriptPlaySoundA2_14",
  "0x538e2": "MapScriptHideLocationName_14",
  "0x538e7": "ActorScript_14_4",
- "0x53a9d": "ComputeRankingProgressIndex_14",
+ "0x53a9d": {
+  "name": "ComputeRankingProgressIndex_14",
+  "note": "Instruction-identical to ComputeRankingProgressIndex_13 and ComputeRankingProgressIndex_15 (one copy per bank); a change here belongs in every copy."
+ },
  "0x53ac0": ".loop",
  "0x53ac4": ".isDoubles",
  "0x53ae4": {
@@ -8666,7 +8822,10 @@
  "0x54739": ".walkOff",
  "0x54756": ".done",
  "0x54757": "TournamentSiteEntryWalkInFacings",
- "0x5475f": "SetPlayerPartnerActorSprites",
+ "0x5475f": {
+  "name": "SetPlayerPartnerActorSprites",
+  "note": "Instruction-identical to LoadCourtPlayerPartnerObjDefs_14 (one copy per bank); a change here belongs in every copy."
+ },
  "0x5477d": ".notDoubles",
  "0x54796": "TrainingCourtMapScripts_15",
  "0x547a4": "TrainingCourtActors_15",
@@ -8778,7 +8937,10 @@
  "0x556fe": ".rewardWait",
  "0x55708": ".finish",
  "0x5572a": ".done",
- "0x55777": "TogglePlayerSpriteXFlip",
+ "0x55777": {
+  "name": "TogglePlayerSpriteXFlip",
+  "note": "Instruction-identical to MirrorPlayerSpriteIfLeftHanded (one copy per bank); a change here belongs in every copy."
+ },
  "0x5578c": ".done",
  "0x5578d": "DrawWaterSpriteMinigameCounters",
  "0x557d0": "WaterSpriteHudTiles_15",
@@ -9017,18 +9179,30 @@
  "0x57d9e": "MapScriptHideLocationName_15",
  "0x57da3": "ActorScript_15_24",
  "0x57f3d": "ActorScript_15_25",
- "0x57f59": "ComputeRankingProgressIndex_15",
+ "0x57f59": {
+  "name": "ComputeRankingProgressIndex_15",
+  "note": "Instruction-identical to ComputeRankingProgressIndex_13 and ComputeRankingProgressIndex_14 (one copy per bank); a change here belongs in every copy."
+ },
  "0x57f7c": ".loop",
  "0x57f80": ".isDoubles",
- "0x57fa0": "ComputeTrainingCourtProgressIndex",
+ "0x57fa0": {
+  "name": "ComputeStoryRankTier_15",
+  "note": "Instruction-identical to ComputeStoryRankTier_13 (one copy per bank); a change here belongs in every copy."
+ },
  "0x57fbf": ".loop",
  "0x57fc3": ".checkFlag",
  "0x58016": "DrawWobblingCornerBrackets",
- "0x58069": "ApplySpriteWobbleX_16",
+ "0x58069": {
+  "name": "ApplySpriteWobbleX_16",
+  "note": "Instruction-identical to ApplySpriteWobbleX_17 (one copy per bank); a change here belongs in every copy."
+ },
  "0x58075": ".readOffset",
  "0x5807f": ".subtract",
  "0x58083": "SpriteWobbleXTable_16",
- "0x58093": "ApplySpriteWobbleY_16",
+ "0x58093": {
+  "name": "ApplySpriteWobbleY_16",
+  "note": "Instruction-identical to ApplySpriteWobbleY_17 (one copy per bank); a change here belongs in every copy."
+ },
  "0x5809f": ".readOffset",
  "0x580a9": ".subtract",
  "0x580ad": "SpriteWobbleYTable_16",
@@ -9047,7 +9221,10 @@
  "0x58162": ".storeDown",
  "0x58165": ".compare",
  "0x58173": ".moved",
- "0x58176": "MoveMenuCursorGridFromLinkInput_16",
+ "0x58176": {
+  "name": "MoveMenuCursorGridFromLinkInput_16",
+  "note": "Instruction-identical to MoveMenuCursorGridFromLinkInput_38 and MoveMenuCursorGridFromLinkInput_3e (one copy per bank); a change here belongs in every copy."
+ },
  "0x5818f": ".wrapRight",
  "0x58194": ".storeRight",
  "0x58199": ".checkLeft",
@@ -9061,7 +9238,10 @@
  "0x581df": ".storeDown",
  "0x581e2": ".compare",
  "0x581f0": ".moved",
- "0x581f3": "MoveMenuCursorGridRemote_16",
+ "0x581f3": {
+  "name": "MoveMenuCursorGridRemote_16",
+  "note": "Instruction-identical to MoveMenuCursorGridRemote_38 and MoveMenuCursorGridRemote_3e (one copy per bank); a change here belongs in every copy."
+ },
  "0x58208": ".asMaster",
  "0x5820c": ".asSlave",
  "0x5820e": ".haveInput",
@@ -9082,7 +9262,10 @@
  "0x582aa": ".storeLock",
  "0x582ad": ".compare",
  "0x582bb": ".moved",
- "0x582be": "MoveMenuCursor2GridRemote_16",
+ "0x582be": {
+  "name": "MoveMenuCursor2GridRemote_16",
+  "note": "Instruction-identical to MoveMenuCursor2GridRemote_3e (one copy per bank); a change here belongs in every copy."
+ },
  "0x582d3": ".asMaster",
  "0x582d7": ".asSlave",
  "0x582d9": ".haveInput",
@@ -9103,16 +9286,28 @@
  "0x58373": ".storeLock",
  "0x58376": ".compare",
  "0x58384": ".moved",
- "0x58387": "GetMenuCursorIndex_16",
+ "0x58387": {
+  "name": "GetMenuCursorIndex_16",
+  "note": "Instruction-identical to GetMenuCursorIndex_1b, GetMenuCursorIndex_38, GetMenuCursorIndex_3b and GetMenuCursorIndex_3e (one copy per bank); a change here belongs in every copy."
+ },
  "0x5838d": ".mulLoop",
  "0x58393": ".addColumn",
- "0x58399": "GetCellIndexFromCursorPtr_16",
+ "0x58399": {
+  "name": "GetCellIndexFromCursorPtr_16",
+  "note": "Instruction-identical to GetCellIndexFromCursorPtr_3b and GetCellIndexFromCursorPtr_3e (one copy per bank); a change here belongs in every copy."
+ },
  "0x5839e": ".loop",
  "0x583a4": ".countDone",
- "0x583a9": "SetMenuCursorFromIndex_16",
+ "0x583a9": {
+  "name": "SetMenuCursorFromIndex_16",
+  "note": "Instruction-identical to SetMenuCursorFromIndex_38, SetMenuCursorFromIndex_3b and SetMenuCursorFromIndex_3e (one copy per bank); a change here belongs in every copy."
+ },
  "0x583ac": ".divLoop",
  "0x583b3": ".store",
- "0x583bb": "SetMenuCursorFromIndexToPtr_16",
+ "0x583bb": {
+  "name": "SetMenuCursorFromIndexToPtr_16",
+  "note": "Instruction-identical to SetMenuCursorFromIndexToPtr_38 and SetMenuCursorFromIndexToPtr_3e (one copy per bank); a change here belongs in every copy."
+ },
  "0x583be": ".divLoop",
  "0x583c5": ".store",
  "0x583c9": "ClearWram3Row64_16",
@@ -9131,7 +9326,10 @@
  "0x58443": "PrintDecimalNumber",
  "0x58454": "PrintNumberString_16",
  "0x5845d": ".done",
- "0x5845e": "PrintNumberStringChar_16",
+ "0x5845e": {
+  "name": "DrawAsciiDigitChar_16",
+  "note": "Instruction-identical to DrawAsciiDigitChar_17, DrawAsciiDigitChar_1b, DrawAsciiDigitChar_3b and DrawAsciiDigitChar_3e (one copy per bank); a change here belongs in every copy."
+ },
  "0x58474": ".carry",
  "0x58477": "RunMatchWinLoseScreen",
  "0x58496": ".step",
@@ -9310,15 +9508,24 @@
  "0x5b96f": "PortraitGfxBowser_16",
  "0x5ba14": "PortraitGfxWario_16",
  "0x5bab6": "PortraitGfxPeach_16",
- "0x5c079": "ApplySpriteWobbleX_17",
+ "0x5c079": {
+  "name": "ApplySpriteWobbleX_17",
+  "note": "Instruction-identical to ApplySpriteWobbleX_16 (one copy per bank); a change here belongs in every copy."
+ },
  "0x5c085": ".readOffset",
  "0x5c08f": ".subtract",
  "0x5c093": "SpriteWobbleXTable",
- "0x5c0a3": "ApplySpriteWobbleY_17",
+ "0x5c0a3": {
+  "name": "ApplySpriteWobbleY_17",
+  "note": "Instruction-identical to ApplySpriteWobbleY_16 (one copy per bank); a change here belongs in every copy."
+ },
  "0x5c0af": ".readOffset",
  "0x5c0b9": ".subtract",
  "0x5c0bd": "SpriteWobbleYTable_17",
- "0x5c108": "MoveMenuCursorGrid_17",
+ "0x5c108": {
+  "name": "MoveMenuCursorGrid_17",
+  "note": "Instruction-identical to MoveMenuCursorGrid_1b (one copy per bank); a change here belongs in every copy."
+ },
  "0x5c122": ".noCarry",
  "0x5c127": ".store",
  "0x5c12c": ".checkMenuCursorX4",
@@ -9332,7 +9539,10 @@
  "0x5c172": ".store4",
  "0x5c175": ".checkMenuCursorX",
  "0x5c183": ".checkMenuCursorX5",
- "0x5c186": "MoveMenuCursorGridFromLinkInput_17",
+ "0x5c186": {
+  "name": "MoveMenuCursorGridFromLinkInput_17",
+  "note": "Instruction-identical to MoveMenuCursorGridFromLinkInput_1b (one copy per bank); a change here belongs in every copy."
+ },
  "0x5c19f": ".noCarry5",
  "0x5c1a4": ".store5",
  "0x5c1a9": ".bit4Clear",
@@ -9411,16 +9621,25 @@
  "0x5c3ef": "ClearWram3Row64Alt_17",
  "0x5c3fc": ".loop5",
  "0x5c406": "UpdateAnimatedTilesTask_17",
- "0x5c40a": "CopyStringToTilemap_17",
+ "0x5c40a": {
+  "name": "DrawNameWithDiacritics_17",
+  "note": "Instruction-identical to DrawNameWithDiacritics_1b and DrawNameWithDiacritics_3e (one copy per bank); a change here belongs in every copy."
+ },
  "0x5c40c": ".loop",
  "0x5c41c": ".eqde",
  "0x5c42d": ".store",
  "0x5c431": ".nedf",
  "0x5c440": ".restore",
- "0x5c443": "DrawDecimalNumber_17",
+ "0x5c443": {
+  "name": "DrawDecimalNumber_17",
+  "note": "Instruction-identical to DrawDecimalNumber_1b, DrawDecimalNumber_3b and DrawDecimalNumber_3e (one copy per bank); a change here belongs in every copy."
+ },
  "0x5c464": "DrawAsciiDigitString_17",
  "0x5c46d": ".done",
- "0x5c46e": "DrawAsciiDigitChar_17",
+ "0x5c46e": {
+  "name": "DrawAsciiDigitChar_17",
+  "note": "Instruction-identical to DrawAsciiDigitChar_16, DrawAsciiDigitChar_1b, DrawAsciiDigitChar_3b and DrawAsciiDigitChar_3e (one copy per bank); a change here belongs in every copy."
+ },
  "0x5c484": ".carry",
  "0x5c487": "ShowDrillBriefingScreen",
  "0x5c4d3": ".dispatch",
@@ -10312,7 +10531,10 @@
  "0x6af2b": ".queueVRAMCopy2",
  "0x6af3d": "SetupCharViewerScene",
  "0x6afcf": "CharViewerSceneActors_1a",
- "0x6b011": {"name": "ActorScript_1a_CharViewer", "note": "A one-opcode actor script, as_halt: the four character-viewer actors stand still."},
+ "0x6b011": {
+  "name": "ActorScript_1a_CharViewer",
+  "note": "A one-opcode actor script, as_halt: the four character-viewer actors stand still."
+ },
  "0x6b012": "DrawCharViewerCharSprite",
  "0x6b08e": "DrawCharViewerCharSprite_CharScreenPosTable",
  "0x6b096": "LoadCharViewerMugshot",
@@ -10329,7 +10551,10 @@
  "0x6b9e8": ".step",
  "0x6b9f8": ".beginFadeOut2",
  "0x6ba05": ".beginFadeOut",
- "0x6ba1d": "DrawCharDataPromptCursor",
+ "0x6ba1d": {
+  "name": "DrawConfirmSelectionCursor_1a",
+  "note": "Instruction-identical to DrawConfirmSelectionCursor_1c and DrawConfirmSelectionCursor_1d (one copy per bank); a change here belongs in every copy."
+ },
  "0x6ba33": ".nonZero",
  "0x6ba3d": "CopyBank1ToBank3BufferAlt",
  "0x6ba52": "CopyBank1ToBank2BufferAlt",
@@ -10378,8 +10603,14 @@
  "0x6c0d9": ".readOffset",
  "0x6c0e3": ".subtract",
  "0x6c0e7": "ArrowBobOffsetTable_1b",
- "0x6c0f7": "DrawMenuCursorCornersAlt",
- "0x6c132": "MoveMenuCursorGrid",
+ "0x6c0f7": {
+  "name": "DrawCornerBrackets_1b",
+  "note": "Instruction-identical to DrawCornerBrackets_38, DrawCornerBrackets_3b and DrawCornerBrackets_3e (one copy per bank); a change here belongs in every copy."
+ },
+ "0x6c132": {
+  "name": "MoveMenuCursorGrid_1b",
+  "note": "Instruction-identical to MoveMenuCursorGrid_17 (one copy per bank); a change here belongs in every copy."
+ },
  "0x6c14c": ".noCarry",
  "0x6c151": ".store",
  "0x6c156": ".checkMenuCursorX4",
@@ -10393,7 +10624,10 @@
  "0x6c19c": ".store4",
  "0x6c19f": ".checkMenuCursorX",
  "0x6c1ad": ".checkMenuCursorX5",
- "0x6c1b0": "MoveMenuCursorGridFromLinkInput_1b",
+ "0x6c1b0": {
+  "name": "MoveMenuCursorGridFromLinkInput_1b",
+  "note": "Instruction-identical to MoveMenuCursorGridFromLinkInput_17 (one copy per bank); a change here belongs in every copy."
+ },
  "0x6c1c9": ".noCarry5",
  "0x6c1ce": ".store5",
  "0x6c1d3": ".bit4Clear",
@@ -10449,10 +10683,16 @@
  "0x6c3ad": ".store18",
  "0x6c3b0": ".checkMenuCursor2X",
  "0x6c3be": ".checkMenuCursorY",
- "0x6c3c1": "GetMenuCursorIndex",
+ "0x6c3c1": {
+  "name": "GetMenuCursorIndex_1b",
+  "note": "Instruction-identical to GetMenuCursorIndex_16, GetMenuCursorIndex_38, GetMenuCursorIndex_3b and GetMenuCursorIndex_3e (one copy per bank); a change here belongs in every copy."
+ },
  "0x6c3c7": ".mulLoop",
  "0x6c3cd": ".addColumn",
- "0x6c3d3": "GetMenuCursorIndexFromPtr",
+ "0x6c3d3": {
+  "name": "GetMenuCursorIndexFromPtr_1b",
+  "note": "Instruction-identical to GetMenuCursorIndexFromPtr_38 (one copy per bank); a change here belongs in every copy."
+ },
  "0x6c3d8": ".mulLoop",
  "0x6c3de": ".addColumn",
  "0x6c3e3": "SetMenuCursorFromIndex",
@@ -10466,16 +10706,25 @@
  "0x6c419": "ClearWram3Row64Alt_1b",
  "0x6c426": ".loop3",
  "0x6c430": "UpdateAnimatedTilesTask",
- "0x6c434": "DrawNameWithDiacritics",
+ "0x6c434": {
+  "name": "DrawNameWithDiacritics_1b",
+  "note": "Instruction-identical to DrawNameWithDiacritics_17 and DrawNameWithDiacritics_3e (one copy per bank); a change here belongs in every copy."
+ },
  "0x6c436": ".loop",
  "0x6c446": ".eqde",
  "0x6c457": ".store",
  "0x6c45b": ".nedf",
  "0x6c46a": ".restore",
- "0x6c46d": "DrawDecimalNumber_1b",
+ "0x6c46d": {
+  "name": "DrawDecimalNumber_1b",
+  "note": "Instruction-identical to DrawDecimalNumber_17, DrawDecimalNumber_3b and DrawDecimalNumber_3e (one copy per bank); a change here belongs in every copy."
+ },
  "0x6c48e": "DrawAsciiDigitString",
  "0x6c497": ".done",
- "0x6c498": "DrawAsciiDigitChar",
+ "0x6c498": {
+  "name": "DrawAsciiDigitChar_1b",
+  "note": "Instruction-identical to DrawAsciiDigitChar_16, DrawAsciiDigitChar_17, DrawAsciiDigitChar_3b and DrawAsciiDigitChar_3e (one copy per bank); a change here belongs in every copy."
+ },
  "0x6c4ae": ".carry",
  "0x6c4b1": "MugshotGfxAlex_1b",
  "0x6c54f": "MugshotGfxNina_1b",
@@ -11171,7 +11420,10 @@
  "0x71291": ".confirmLoop",
  "0x712b1": ".confirmA",
  "0x712c1": ".cancel",
- "0x713a3": "DrawConfirmSelectionCursor",
+ "0x713a3": {
+  "name": "DrawConfirmSelectionCursor_1c",
+  "note": "Instruction-identical to DrawConfirmSelectionCursor_1a and DrawConfirmSelectionCursor_1d (one copy per bank); a change here belongs in every copy."
+ },
  "0x713b9": ".nonZero",
  "0x713c3": "MoveCharDataScreenSelection",
  "0x713d1": ".readTarget",
@@ -11516,7 +11768,10 @@
  "0x75ac5": ".step",
  "0x75ad5": ".beginFadeOut2",
  "0x75ae2": ".beginFadeOut",
- "0x75afa": "DrawCharDataConfirmCursor",
+ "0x75afa": {
+  "name": "DrawConfirmSelectionCursor_1d",
+  "note": "Instruction-identical to DrawConfirmSelectionCursor_1a and DrawConfirmSelectionCursor_1c (one copy per bank); a change here belongs in every copy."
+ },
  "0x75b10": ".nonZero",
  "0x75b1a": "BuildCharDataConfirmScreen",
  "0x75b31": ".zero",
@@ -12252,181 +12507,436 @@
  "0x7c17e": "TextStrings_1f",
  "0x7fa8b": "FetchDialogueText_1f",
  "0x7fa93": "FetchShortText_1f",
- "0x7fa9b": "FetchText_1f",
+ "0x7fa9b": {
+  "name": "FetchText_1f",
+  "note": "Instruction-identical to FetchText_25, FetchText_26, FetchText_30, FetchText_31, FetchText_32, FetchText_33, FetchText_34, FetchText_35, FetchText_36, FetchText_37, FetchText_5e and FetchText_6e (one copy per bank); a change here belongs in every copy."
+ },
  "0x7fab7": ".nonZero",
  "0x7fabc": ".loop",
  "0x7fac9": ".countDone",
  "0x7fad2": ".restore",
- "0x80002": "BallTrajEntryPtr6_20",
- "0x80012": "BallTrajEntryPtr4_20",
- "0x8001f": "SeekBallTrajEntry6_20",
+ "0x80002": {
+  "name": "BallTrajEntryPtr6_20",
+  "note": "Instruction-identical to BallTrajEntryPtr6_21, BallTrajEntryPtr6_22, BallTrajEntryPtr6_23, BallTrajEntryPtr6_24, BallTrajEntryPtr6_29, BallTrajEntryPtr6_2a, BallTrajEntryPtr6_2b and BallTrajEntryPtr6_2c (one copy per bank); a change here belongs in every copy."
+ },
+ "0x80012": {
+  "name": "BallTrajEntryPtr4_20",
+  "note": "Instruction-identical to BallTrajEntryPtr4_21, BallTrajEntryPtr4_22, BallTrajEntryPtr4_23, BallTrajEntryPtr4_24, BallTrajEntryPtr4_29, BallTrajEntryPtr4_2a, BallTrajEntryPtr4_2b and BallTrajEntryPtr4_2c (one copy per bank); a change here belongs in every copy."
+ },
+ "0x8001f": {
+  "name": "SeekBallTrajEntry6_20",
+  "note": "Instruction-identical to SeekBallTrajEntry6_21, SeekBallTrajEntry6_22, SeekBallTrajEntry6_23, SeekBallTrajEntry6_24, SeekBallTrajEntry6_29, SeekBallTrajEntry6_2a, SeekBallTrajEntry6_2b and SeekBallTrajEntry6_2c (one copy per bank); a change here belongs in every copy."
+ },
  "0x80027": ".loop",
  "0x8003b": ".gotPtr",
  "0x8003d": ".done",
- "0x8003e": "SeekBallTrajEntry4_20",
+ "0x8003e": {
+  "name": "SeekBallTrajEntry4_20",
+  "note": "Instruction-identical to SeekBallTrajEntry4_21, SeekBallTrajEntry4_22, SeekBallTrajEntry4_23, SeekBallTrajEntry4_24, SeekBallTrajEntry4_29, SeekBallTrajEntry4_2a, SeekBallTrajEntry4_2b and SeekBallTrajEntry4_2c (one copy per bank); a change here belongs in every copy."
+ },
  "0x80046": ".loop",
  "0x8005a": ".gotPtr",
  "0x8005c": ".done",
- "0x8005d": "SetBallVelocityFromEntry6_20",
+ "0x8005d": {
+  "name": "SetBallVelocityFromEntry6_20",
+  "note": "Instruction-identical to SetBallVelocityFromEntry6_21, SetBallVelocityFromEntry6_22, SetBallVelocityFromEntry6_23, SetBallVelocityFromEntry6_24, SetBallVelocityFromEntry6_29, SetBallVelocityFromEntry6_2a, SetBallVelocityFromEntry6_2b and SetBallVelocityFromEntry6_2c (one copy per bank); a change here belongs in every copy."
+ },
  "0x80076": ".zero",
- "0x80084": "SetBallVelocityFromEntry4_20",
- "0x80098": "SetBallTargetByPrediction_20",
+ "0x80084": {
+  "name": "SetBallVelocityFromEntry4_20",
+  "note": "Instruction-identical to SetBallVelocityFromEntry4_21, SetBallVelocityFromEntry4_22, SetBallVelocityFromEntry4_23, SetBallVelocityFromEntry4_24, SetBallVelocityFromEntry4_29, SetBallVelocityFromEntry4_2a, SetBallVelocityFromEntry4_2b and SetBallVelocityFromEntry4_2c (one copy per bank); a change here belongs in every copy."
+ },
+ "0x80098": {
+  "name": "SetBallTargetByPrediction_20",
+  "note": "Instruction-identical to SetBallTargetByPrediction_21, SetBallTargetByPrediction_22, SetBallTargetByPrediction_23, SetBallTargetByPrediction_24, SetBallTargetByPrediction_29, SetBallTargetByPrediction_2a, SetBallTargetByPrediction_2b and SetBallTargetByPrediction_2c (one copy per bank); a change here belongs in every copy."
+ },
  "0x800b3": ".offset",
  "0x800d3": ".zero",
  "0x800f0": ".maskClear",
- "0x80102": "ApplyBallTrajectory_20",
- "0x80135": "ApplyBallTrajectory6_20",
- "0x8015d": "ApplyBallTrajectoryCapped_20",
+ "0x80102": {
+  "name": "ApplyBallTrajectory6Capped_20",
+  "note": "Instruction-identical to ApplyBallTrajectory6Capped_21, ApplyBallTrajectory6Capped_22, ApplyBallTrajectory6Capped_23, ApplyBallTrajectory6Capped_24, ApplyBallTrajectory6Capped_29, ApplyBallTrajectory6Capped_2a, ApplyBallTrajectory6Capped_2b and ApplyBallTrajectory6Capped_2c (one copy per bank); a change here belongs in every copy."
+ },
+ "0x80135": {
+  "name": "ApplyBallTrajectory6_20",
+  "note": "Instruction-identical to ApplyBallTrajectory6_21, ApplyBallTrajectory6_22, ApplyBallTrajectory6_23, ApplyBallTrajectory6_24, ApplyBallTrajectory6_29, ApplyBallTrajectory6_2a, ApplyBallTrajectory6_2b and ApplyBallTrajectory6_2c (one copy per bank); a change here belongs in every copy."
+ },
+ "0x8015d": {
+  "name": "ApplyBallTrajectoryCapped_20",
+  "note": "Instruction-identical to ApplyBallTrajectoryCapped_21, ApplyBallTrajectoryCapped_22, ApplyBallTrajectoryCapped_23, ApplyBallTrajectoryCapped_24, ApplyBallTrajectoryCapped_2a, ApplyBallTrajectoryCapped_2b and ApplyBallTrajectoryCapped_2c (one copy per bank); a change here belongs in every copy."
+ },
  "0x80189": ".restore",
- "0x80196": "ApplyBallTrajectory4Capped_20",
- "0x801c9": "ApplyBallTrajectory4_20",
+ "0x80196": {
+  "name": "ApplyBallTrajectory4Capped_20",
+  "note": "Instruction-identical to ApplyBallTrajectory4Capped_21, ApplyBallTrajectory4Capped_22, ApplyBallTrajectory4Capped_23, ApplyBallTrajectory4Capped_24, ApplyBallTrajectory4Capped_29, ApplyBallTrajectory4Capped_2a, ApplyBallTrajectory4Capped_2b and ApplyBallTrajectory4Capped_2c (one copy per bank); a change here belongs in every copy."
+ },
+ "0x801c9": {
+  "name": "ApplyBallTrajectory4_20",
+  "note": "Instruction-identical to ApplyBallTrajectory4_21, ApplyBallTrajectory4_22, ApplyBallTrajectory4_23, ApplyBallTrajectory4_24, ApplyBallTrajectory4_29, ApplyBallTrajectory4_2a, ApplyBallTrajectory4_2b and ApplyBallTrajectory4_2c (one copy per bank); a change here belongs in every copy."
+ },
  "0x801f1": ".applyFallbackBallTrajectory",
- "0x801f5": "SetBallTargetFromAim_20",
- "0x80221": "LookupBallPosByAim_20",
+ "0x801f5": {
+  "name": "SetBallTargetFromAim_20",
+  "note": "Instruction-identical to SetBallTargetFromAim_21, SetBallTargetFromAim_22, SetBallTargetFromAim_23, SetBallTargetFromAim_24, SetBallTargetFromAim_29, SetBallTargetFromAim_2a, SetBallTargetFromAim_2b and SetBallTargetFromAim_2c (one copy per bank); a change here belongs in every copy."
+ },
+ "0x80221": {
+  "name": "LookupBallPosByAim_20",
+  "note": "Instruction-identical to LookupBallPosByAim_21, LookupBallPosByAim_22, LookupBallPosByAim_23, LookupBallPosByAim_29, LookupBallPosByAim_2a and LookupBallPosByAim_2b (one copy per bank); a change here belongs in every copy."
+ },
  "0x80247": ".readEntry",
- "0x8024c": "LookupBallPosByHeight_20",
+ "0x8024c": {
+  "name": "LookupBallPosByHeight_20",
+  "note": "Instruction-identical to LookupBallPosByHeight_21, LookupBallPosByHeight_22, LookupBallPosByHeight_23, LookupBallPosByHeight_24, LookupBallPosByHeight_29, LookupBallPosByHeight_2a, LookupBallPosByHeight_2b and LookupBallPosByHeight_2c (one copy per bank); a change here belongs in every copy."
+ },
  "0x80269": ".read",
- "0x8026e": "LookupBallPosByShotIndex_20",
+ "0x8026e": {
+  "name": "LookupBallPosByShotIndex_20",
+  "note": "Instruction-identical to LookupBallPosByShotIndex_21, LookupBallPosByShotIndex_22, LookupBallPosByShotIndex_23, LookupBallPosByShotIndex_24, LookupBallPosByShotIndex_29, LookupBallPosByShotIndex_2a and LookupBallPosByShotIndex_2b (one copy per bank); a change here belongs in every copy."
+ },
  "0x80278": ".read",
  "0x8027d": "BallPosData_20",
- "0x83e7d": "ShotBallPathSlice",
+ "0x83e7d": {
+  "name": "ShotBallPathSlice",
+  "note": "Instruction-identical to ShotBallPathPowerSlice (one copy per bank); a change here belongs in every copy."
+ },
  "0x83e98": "BallPosHeightOffsets_20",
  "0x83ed8": "BallPosBlockOffsets_20",
- "0x84002": "BallTrajEntryPtr6_21",
- "0x84012": "BallTrajEntryPtr4_21",
- "0x8401f": "SeekBallTrajEntry6_21",
+ "0x84002": {
+  "name": "BallTrajEntryPtr6_21",
+  "note": "Instruction-identical to BallTrajEntryPtr6_20, BallTrajEntryPtr6_22, BallTrajEntryPtr6_23, BallTrajEntryPtr6_24, BallTrajEntryPtr6_29, BallTrajEntryPtr6_2a, BallTrajEntryPtr6_2b and BallTrajEntryPtr6_2c (one copy per bank); a change here belongs in every copy."
+ },
+ "0x84012": {
+  "name": "BallTrajEntryPtr4_21",
+  "note": "Instruction-identical to BallTrajEntryPtr4_20, BallTrajEntryPtr4_22, BallTrajEntryPtr4_23, BallTrajEntryPtr4_24, BallTrajEntryPtr4_29, BallTrajEntryPtr4_2a, BallTrajEntryPtr4_2b and BallTrajEntryPtr4_2c (one copy per bank); a change here belongs in every copy."
+ },
+ "0x8401f": {
+  "name": "SeekBallTrajEntry6_21",
+  "note": "Instruction-identical to SeekBallTrajEntry6_20, SeekBallTrajEntry6_22, SeekBallTrajEntry6_23, SeekBallTrajEntry6_24, SeekBallTrajEntry6_29, SeekBallTrajEntry6_2a, SeekBallTrajEntry6_2b and SeekBallTrajEntry6_2c (one copy per bank); a change here belongs in every copy."
+ },
  "0x84027": ".loop",
  "0x8403b": ".gotPtr",
  "0x8403d": ".done",
- "0x8403e": "SeekBallTrajEntry4_21",
+ "0x8403e": {
+  "name": "SeekBallTrajEntry4_21",
+  "note": "Instruction-identical to SeekBallTrajEntry4_20, SeekBallTrajEntry4_22, SeekBallTrajEntry4_23, SeekBallTrajEntry4_24, SeekBallTrajEntry4_29, SeekBallTrajEntry4_2a, SeekBallTrajEntry4_2b and SeekBallTrajEntry4_2c (one copy per bank); a change here belongs in every copy."
+ },
  "0x84046": ".loop",
  "0x8405a": ".gotPtr",
  "0x8405c": ".done",
- "0x8405d": "SetBallVelocityFromEntry6_21",
+ "0x8405d": {
+  "name": "SetBallVelocityFromEntry6_21",
+  "note": "Instruction-identical to SetBallVelocityFromEntry6_20, SetBallVelocityFromEntry6_22, SetBallVelocityFromEntry6_23, SetBallVelocityFromEntry6_24, SetBallVelocityFromEntry6_29, SetBallVelocityFromEntry6_2a, SetBallVelocityFromEntry6_2b and SetBallVelocityFromEntry6_2c (one copy per bank); a change here belongs in every copy."
+ },
  "0x84076": ".zero",
- "0x84084": "SetBallVelocityFromEntry4_21",
- "0x84098": "SetBallTargetByPrediction_21",
+ "0x84084": {
+  "name": "SetBallVelocityFromEntry4_21",
+  "note": "Instruction-identical to SetBallVelocityFromEntry4_20, SetBallVelocityFromEntry4_22, SetBallVelocityFromEntry4_23, SetBallVelocityFromEntry4_24, SetBallVelocityFromEntry4_29, SetBallVelocityFromEntry4_2a, SetBallVelocityFromEntry4_2b and SetBallVelocityFromEntry4_2c (one copy per bank); a change here belongs in every copy."
+ },
+ "0x84098": {
+  "name": "SetBallTargetByPrediction_21",
+  "note": "Instruction-identical to SetBallTargetByPrediction_20, SetBallTargetByPrediction_22, SetBallTargetByPrediction_23, SetBallTargetByPrediction_24, SetBallTargetByPrediction_29, SetBallTargetByPrediction_2a, SetBallTargetByPrediction_2b and SetBallTargetByPrediction_2c (one copy per bank); a change here belongs in every copy."
+ },
  "0x840b3": ".offset",
  "0x840d3": ".zero",
  "0x840f0": ".maskClear",
- "0x84102": "ApplyBallTrajectory_21",
- "0x84135": "ApplyBallTrajectory6_21",
- "0x8415d": "ApplyBallTrajectoryCapped_21",
+ "0x84102": {
+  "name": "ApplyBallTrajectory6Capped_21",
+  "note": "Instruction-identical to ApplyBallTrajectory6Capped_20, ApplyBallTrajectory6Capped_22, ApplyBallTrajectory6Capped_23, ApplyBallTrajectory6Capped_24, ApplyBallTrajectory6Capped_29, ApplyBallTrajectory6Capped_2a, ApplyBallTrajectory6Capped_2b and ApplyBallTrajectory6Capped_2c (one copy per bank); a change here belongs in every copy."
+ },
+ "0x84135": {
+  "name": "ApplyBallTrajectory6_21",
+  "note": "Instruction-identical to ApplyBallTrajectory6_20, ApplyBallTrajectory6_22, ApplyBallTrajectory6_23, ApplyBallTrajectory6_24, ApplyBallTrajectory6_29, ApplyBallTrajectory6_2a, ApplyBallTrajectory6_2b and ApplyBallTrajectory6_2c (one copy per bank); a change here belongs in every copy."
+ },
+ "0x8415d": {
+  "name": "ApplyBallTrajectoryCapped_21",
+  "note": "Instruction-identical to ApplyBallTrajectoryCapped_20, ApplyBallTrajectoryCapped_22, ApplyBallTrajectoryCapped_23, ApplyBallTrajectoryCapped_24, ApplyBallTrajectoryCapped_2a, ApplyBallTrajectoryCapped_2b and ApplyBallTrajectoryCapped_2c (one copy per bank); a change here belongs in every copy."
+ },
  "0x84189": ".restore",
- "0x84196": "ApplyBallTrajectory4Capped_21",
- "0x841c9": "ApplyBallTrajectory4_21",
+ "0x84196": {
+  "name": "ApplyBallTrajectory4Capped_21",
+  "note": "Instruction-identical to ApplyBallTrajectory4Capped_20, ApplyBallTrajectory4Capped_22, ApplyBallTrajectory4Capped_23, ApplyBallTrajectory4Capped_24, ApplyBallTrajectory4Capped_29, ApplyBallTrajectory4Capped_2a, ApplyBallTrajectory4Capped_2b and ApplyBallTrajectory4Capped_2c (one copy per bank); a change here belongs in every copy."
+ },
+ "0x841c9": {
+  "name": "ApplyBallTrajectory4_21",
+  "note": "Instruction-identical to ApplyBallTrajectory4_20, ApplyBallTrajectory4_22, ApplyBallTrajectory4_23, ApplyBallTrajectory4_24, ApplyBallTrajectory4_29, ApplyBallTrajectory4_2a, ApplyBallTrajectory4_2b and ApplyBallTrajectory4_2c (one copy per bank); a change here belongs in every copy."
+ },
  "0x841f1": ".applyFallbackBallTrajectory",
- "0x841f5": "SetBallTargetFromAim_21",
- "0x84221": "LookupBallPosByAim_21",
+ "0x841f5": {
+  "name": "SetBallTargetFromAim_21",
+  "note": "Instruction-identical to SetBallTargetFromAim_20, SetBallTargetFromAim_22, SetBallTargetFromAim_23, SetBallTargetFromAim_24, SetBallTargetFromAim_29, SetBallTargetFromAim_2a, SetBallTargetFromAim_2b and SetBallTargetFromAim_2c (one copy per bank); a change here belongs in every copy."
+ },
+ "0x84221": {
+  "name": "LookupBallPosByAim_21",
+  "note": "Instruction-identical to LookupBallPosByAim_20, LookupBallPosByAim_22, LookupBallPosByAim_23, LookupBallPosByAim_29, LookupBallPosByAim_2a and LookupBallPosByAim_2b (one copy per bank); a change here belongs in every copy."
+ },
  "0x84247": ".readEntry",
- "0x8424c": "LookupBallPosByHeight_21",
+ "0x8424c": {
+  "name": "LookupBallPosByHeight_21",
+  "note": "Instruction-identical to LookupBallPosByHeight_20, LookupBallPosByHeight_22, LookupBallPosByHeight_23, LookupBallPosByHeight_24, LookupBallPosByHeight_29, LookupBallPosByHeight_2a, LookupBallPosByHeight_2b and LookupBallPosByHeight_2c (one copy per bank); a change here belongs in every copy."
+ },
  "0x84269": ".read",
- "0x8426e": "LookupBallPosByShotIndex_21",
+ "0x8426e": {
+  "name": "LookupBallPosByShotIndex_21",
+  "note": "Instruction-identical to LookupBallPosByShotIndex_20, LookupBallPosByShotIndex_22, LookupBallPosByShotIndex_23, LookupBallPosByShotIndex_24, LookupBallPosByShotIndex_29, LookupBallPosByShotIndex_2a and LookupBallPosByShotIndex_2b (one copy per bank); a change here belongs in every copy."
+ },
  "0x84278": ".read",
  "0x8427d": "BallPosData_21",
- "0x87e7d": "ShotBallPathPowerSlice",
+ "0x87e7d": {
+  "name": "ShotBallPathPowerSlice",
+  "note": "Instruction-identical to ShotBallPathSlice (one copy per bank); a change here belongs in every copy."
+ },
  "0x87e98": "BallPosHeightOffsets_21",
  "0x87ed8": "BallPosBlockOffsets_21",
- "0x88002": "BallTrajEntryPtr6_22",
- "0x88012": "BallTrajEntryPtr4_22",
- "0x8801f": "SeekBallTrajEntry6_22",
+ "0x88002": {
+  "name": "BallTrajEntryPtr6_22",
+  "note": "Instruction-identical to BallTrajEntryPtr6_20, BallTrajEntryPtr6_21, BallTrajEntryPtr6_23, BallTrajEntryPtr6_24, BallTrajEntryPtr6_29, BallTrajEntryPtr6_2a, BallTrajEntryPtr6_2b and BallTrajEntryPtr6_2c (one copy per bank); a change here belongs in every copy."
+ },
+ "0x88012": {
+  "name": "BallTrajEntryPtr4_22",
+  "note": "Instruction-identical to BallTrajEntryPtr4_20, BallTrajEntryPtr4_21, BallTrajEntryPtr4_23, BallTrajEntryPtr4_24, BallTrajEntryPtr4_29, BallTrajEntryPtr4_2a, BallTrajEntryPtr4_2b and BallTrajEntryPtr4_2c (one copy per bank); a change here belongs in every copy."
+ },
+ "0x8801f": {
+  "name": "SeekBallTrajEntry6_22",
+  "note": "Instruction-identical to SeekBallTrajEntry6_20, SeekBallTrajEntry6_21, SeekBallTrajEntry6_23, SeekBallTrajEntry6_24, SeekBallTrajEntry6_29, SeekBallTrajEntry6_2a, SeekBallTrajEntry6_2b and SeekBallTrajEntry6_2c (one copy per bank); a change here belongs in every copy."
+ },
  "0x88027": ".loop",
  "0x8803b": ".gotPtr",
  "0x8803d": ".done",
- "0x8803e": "SeekBallTrajEntry4_22",
+ "0x8803e": {
+  "name": "SeekBallTrajEntry4_22",
+  "note": "Instruction-identical to SeekBallTrajEntry4_20, SeekBallTrajEntry4_21, SeekBallTrajEntry4_23, SeekBallTrajEntry4_24, SeekBallTrajEntry4_29, SeekBallTrajEntry4_2a, SeekBallTrajEntry4_2b and SeekBallTrajEntry4_2c (one copy per bank); a change here belongs in every copy."
+ },
  "0x88046": ".loop",
  "0x8805a": ".gotPtr",
  "0x8805c": ".done",
- "0x8805d": "SetBallVelocityFromEntry6_22",
+ "0x8805d": {
+  "name": "SetBallVelocityFromEntry6_22",
+  "note": "Instruction-identical to SetBallVelocityFromEntry6_20, SetBallVelocityFromEntry6_21, SetBallVelocityFromEntry6_23, SetBallVelocityFromEntry6_24, SetBallVelocityFromEntry6_29, SetBallVelocityFromEntry6_2a, SetBallVelocityFromEntry6_2b and SetBallVelocityFromEntry6_2c (one copy per bank); a change here belongs in every copy."
+ },
  "0x88076": ".zero",
- "0x88084": "SetBallVelocityFromEntry4_22",
- "0x88098": "SetBallTargetByPrediction_22",
+ "0x88084": {
+  "name": "SetBallVelocityFromEntry4_22",
+  "note": "Instruction-identical to SetBallVelocityFromEntry4_20, SetBallVelocityFromEntry4_21, SetBallVelocityFromEntry4_23, SetBallVelocityFromEntry4_24, SetBallVelocityFromEntry4_29, SetBallVelocityFromEntry4_2a, SetBallVelocityFromEntry4_2b and SetBallVelocityFromEntry4_2c (one copy per bank); a change here belongs in every copy."
+ },
+ "0x88098": {
+  "name": "SetBallTargetByPrediction_22",
+  "note": "Instruction-identical to SetBallTargetByPrediction_20, SetBallTargetByPrediction_21, SetBallTargetByPrediction_23, SetBallTargetByPrediction_24, SetBallTargetByPrediction_29, SetBallTargetByPrediction_2a, SetBallTargetByPrediction_2b and SetBallTargetByPrediction_2c (one copy per bank); a change here belongs in every copy."
+ },
  "0x880b3": ".offset",
  "0x880d3": ".zero",
  "0x880f0": ".maskClear",
- "0x88102": "ApplyBallTrajectory_22",
- "0x88135": "ApplyBallTrajectory6_22",
- "0x8815d": "ApplyBallTrajectoryCapped_22",
+ "0x88102": {
+  "name": "ApplyBallTrajectory6Capped_22",
+  "note": "Instruction-identical to ApplyBallTrajectory6Capped_20, ApplyBallTrajectory6Capped_21, ApplyBallTrajectory6Capped_23, ApplyBallTrajectory6Capped_24, ApplyBallTrajectory6Capped_29, ApplyBallTrajectory6Capped_2a, ApplyBallTrajectory6Capped_2b and ApplyBallTrajectory6Capped_2c (one copy per bank); a change here belongs in every copy."
+ },
+ "0x88135": {
+  "name": "ApplyBallTrajectory6_22",
+  "note": "Instruction-identical to ApplyBallTrajectory6_20, ApplyBallTrajectory6_21, ApplyBallTrajectory6_23, ApplyBallTrajectory6_24, ApplyBallTrajectory6_29, ApplyBallTrajectory6_2a, ApplyBallTrajectory6_2b and ApplyBallTrajectory6_2c (one copy per bank); a change here belongs in every copy."
+ },
+ "0x8815d": {
+  "name": "ApplyBallTrajectoryCapped_22",
+  "note": "Instruction-identical to ApplyBallTrajectoryCapped_20, ApplyBallTrajectoryCapped_21, ApplyBallTrajectoryCapped_23, ApplyBallTrajectoryCapped_24, ApplyBallTrajectoryCapped_2a, ApplyBallTrajectoryCapped_2b and ApplyBallTrajectoryCapped_2c (one copy per bank); a change here belongs in every copy."
+ },
  "0x88189": ".restore",
- "0x88196": "ApplyBallTrajectory4Capped_22",
- "0x881c9": "ApplyBallTrajectory4_22",
+ "0x88196": {
+  "name": "ApplyBallTrajectory4Capped_22",
+  "note": "Instruction-identical to ApplyBallTrajectory4Capped_20, ApplyBallTrajectory4Capped_21, ApplyBallTrajectory4Capped_23, ApplyBallTrajectory4Capped_24, ApplyBallTrajectory4Capped_29, ApplyBallTrajectory4Capped_2a, ApplyBallTrajectory4Capped_2b and ApplyBallTrajectory4Capped_2c (one copy per bank); a change here belongs in every copy."
+ },
+ "0x881c9": {
+  "name": "ApplyBallTrajectory4_22",
+  "note": "Instruction-identical to ApplyBallTrajectory4_20, ApplyBallTrajectory4_21, ApplyBallTrajectory4_23, ApplyBallTrajectory4_24, ApplyBallTrajectory4_29, ApplyBallTrajectory4_2a, ApplyBallTrajectory4_2b and ApplyBallTrajectory4_2c (one copy per bank); a change here belongs in every copy."
+ },
  "0x881f1": ".applyFallbackBallTrajectory",
- "0x881f5": "SetBallTargetFromAim_22",
- "0x88221": "LookupBallPosByAim_22",
+ "0x881f5": {
+  "name": "SetBallTargetFromAim_22",
+  "note": "Instruction-identical to SetBallTargetFromAim_20, SetBallTargetFromAim_21, SetBallTargetFromAim_23, SetBallTargetFromAim_24, SetBallTargetFromAim_29, SetBallTargetFromAim_2a, SetBallTargetFromAim_2b and SetBallTargetFromAim_2c (one copy per bank); a change here belongs in every copy."
+ },
+ "0x88221": {
+  "name": "LookupBallPosByAim_22",
+  "note": "Instruction-identical to LookupBallPosByAim_20, LookupBallPosByAim_21, LookupBallPosByAim_23, LookupBallPosByAim_29, LookupBallPosByAim_2a and LookupBallPosByAim_2b (one copy per bank); a change here belongs in every copy."
+ },
  "0x88247": ".readEntry",
- "0x8824c": "LookupBallPosByHeight_22",
+ "0x8824c": {
+  "name": "LookupBallPosByHeight_22",
+  "note": "Instruction-identical to LookupBallPosByHeight_20, LookupBallPosByHeight_21, LookupBallPosByHeight_23, LookupBallPosByHeight_24, LookupBallPosByHeight_29, LookupBallPosByHeight_2a, LookupBallPosByHeight_2b and LookupBallPosByHeight_2c (one copy per bank); a change here belongs in every copy."
+ },
  "0x88269": ".read",
- "0x8826e": "LookupBallPosByShotIndex_22",
+ "0x8826e": {
+  "name": "LookupBallPosByShotIndex_22",
+  "note": "Instruction-identical to LookupBallPosByShotIndex_20, LookupBallPosByShotIndex_21, LookupBallPosByShotIndex_23, LookupBallPosByShotIndex_24, LookupBallPosByShotIndex_29, LookupBallPosByShotIndex_2a and LookupBallPosByShotIndex_2b (one copy per bank); a change here belongs in every copy."
+ },
  "0x88278": ".read",
  "0x8827d": "BallPosData_22",
- "0x8be7d": "ShotBallPathTopspin",
+ "0x8be7d": {
+  "name": "ShotBallPathTopspin",
+  "note": "Instruction-identical to ShotBallPathPowerTopspin (one copy per bank); a change here belongs in every copy."
+ },
  "0x8be98": "BallPosHeightOffsets_22",
  "0x8bed8": "BallPosBlockOffsets_22",
- "0x8c002": "BallTrajEntryPtr6_23",
- "0x8c012": "BallTrajEntryPtr4_23",
- "0x8c01f": "SeekBallTrajEntry6_23",
+ "0x8c002": {
+  "name": "BallTrajEntryPtr6_23",
+  "note": "Instruction-identical to BallTrajEntryPtr6_20, BallTrajEntryPtr6_21, BallTrajEntryPtr6_22, BallTrajEntryPtr6_24, BallTrajEntryPtr6_29, BallTrajEntryPtr6_2a, BallTrajEntryPtr6_2b and BallTrajEntryPtr6_2c (one copy per bank); a change here belongs in every copy."
+ },
+ "0x8c012": {
+  "name": "BallTrajEntryPtr4_23",
+  "note": "Instruction-identical to BallTrajEntryPtr4_20, BallTrajEntryPtr4_21, BallTrajEntryPtr4_22, BallTrajEntryPtr4_24, BallTrajEntryPtr4_29, BallTrajEntryPtr4_2a, BallTrajEntryPtr4_2b and BallTrajEntryPtr4_2c (one copy per bank); a change here belongs in every copy."
+ },
+ "0x8c01f": {
+  "name": "SeekBallTrajEntry6_23",
+  "note": "Instruction-identical to SeekBallTrajEntry6_20, SeekBallTrajEntry6_21, SeekBallTrajEntry6_22, SeekBallTrajEntry6_24, SeekBallTrajEntry6_29, SeekBallTrajEntry6_2a, SeekBallTrajEntry6_2b and SeekBallTrajEntry6_2c (one copy per bank); a change here belongs in every copy."
+ },
  "0x8c027": ".loop",
  "0x8c03b": ".gotPtr",
  "0x8c03d": ".done",
- "0x8c03e": "SeekBallTrajEntry4_23",
+ "0x8c03e": {
+  "name": "SeekBallTrajEntry4_23",
+  "note": "Instruction-identical to SeekBallTrajEntry4_20, SeekBallTrajEntry4_21, SeekBallTrajEntry4_22, SeekBallTrajEntry4_24, SeekBallTrajEntry4_29, SeekBallTrajEntry4_2a, SeekBallTrajEntry4_2b and SeekBallTrajEntry4_2c (one copy per bank); a change here belongs in every copy."
+ },
  "0x8c046": ".loop",
  "0x8c05a": ".gotPtr",
  "0x8c05c": ".done",
- "0x8c05d": "SetBallVelocityFromEntry6_23",
+ "0x8c05d": {
+  "name": "SetBallVelocityFromEntry6_23",
+  "note": "Instruction-identical to SetBallVelocityFromEntry6_20, SetBallVelocityFromEntry6_21, SetBallVelocityFromEntry6_22, SetBallVelocityFromEntry6_24, SetBallVelocityFromEntry6_29, SetBallVelocityFromEntry6_2a, SetBallVelocityFromEntry6_2b and SetBallVelocityFromEntry6_2c (one copy per bank); a change here belongs in every copy."
+ },
  "0x8c076": ".zero",
- "0x8c084": "SetBallVelocityFromEntry4_23",
- "0x8c098": "SetBallTargetByPrediction_23",
+ "0x8c084": {
+  "name": "SetBallVelocityFromEntry4_23",
+  "note": "Instruction-identical to SetBallVelocityFromEntry4_20, SetBallVelocityFromEntry4_21, SetBallVelocityFromEntry4_22, SetBallVelocityFromEntry4_24, SetBallVelocityFromEntry4_29, SetBallVelocityFromEntry4_2a, SetBallVelocityFromEntry4_2b and SetBallVelocityFromEntry4_2c (one copy per bank); a change here belongs in every copy."
+ },
+ "0x8c098": {
+  "name": "SetBallTargetByPrediction_23",
+  "note": "Instruction-identical to SetBallTargetByPrediction_20, SetBallTargetByPrediction_21, SetBallTargetByPrediction_22, SetBallTargetByPrediction_24, SetBallTargetByPrediction_29, SetBallTargetByPrediction_2a, SetBallTargetByPrediction_2b and SetBallTargetByPrediction_2c (one copy per bank); a change here belongs in every copy."
+ },
  "0x8c0b3": ".offset",
  "0x8c0d3": ".zero",
  "0x8c0f0": ".maskClear",
- "0x8c102": "ApplyBallTrajectory_23",
- "0x8c135": "ApplyBallTrajectory6_23",
- "0x8c15d": "ApplyBallTrajectoryCapped_23",
+ "0x8c102": {
+  "name": "ApplyBallTrajectory6Capped_23",
+  "note": "Instruction-identical to ApplyBallTrajectory6Capped_20, ApplyBallTrajectory6Capped_21, ApplyBallTrajectory6Capped_22, ApplyBallTrajectory6Capped_24, ApplyBallTrajectory6Capped_29, ApplyBallTrajectory6Capped_2a, ApplyBallTrajectory6Capped_2b and ApplyBallTrajectory6Capped_2c (one copy per bank); a change here belongs in every copy."
+ },
+ "0x8c135": {
+  "name": "ApplyBallTrajectory6_23",
+  "note": "Instruction-identical to ApplyBallTrajectory6_20, ApplyBallTrajectory6_21, ApplyBallTrajectory6_22, ApplyBallTrajectory6_24, ApplyBallTrajectory6_29, ApplyBallTrajectory6_2a, ApplyBallTrajectory6_2b and ApplyBallTrajectory6_2c (one copy per bank); a change here belongs in every copy."
+ },
+ "0x8c15d": {
+  "name": "ApplyBallTrajectoryCapped_23",
+  "note": "Instruction-identical to ApplyBallTrajectoryCapped_20, ApplyBallTrajectoryCapped_21, ApplyBallTrajectoryCapped_22, ApplyBallTrajectoryCapped_24, ApplyBallTrajectoryCapped_2a, ApplyBallTrajectoryCapped_2b and ApplyBallTrajectoryCapped_2c (one copy per bank); a change here belongs in every copy."
+ },
  "0x8c189": ".restore",
- "0x8c196": "ApplyBallTrajectory4Capped_23",
- "0x8c1c9": "ApplyBallTrajectory4_23",
+ "0x8c196": {
+  "name": "ApplyBallTrajectory4Capped_23",
+  "note": "Instruction-identical to ApplyBallTrajectory4Capped_20, ApplyBallTrajectory4Capped_21, ApplyBallTrajectory4Capped_22, ApplyBallTrajectory4Capped_24, ApplyBallTrajectory4Capped_29, ApplyBallTrajectory4Capped_2a, ApplyBallTrajectory4Capped_2b and ApplyBallTrajectory4Capped_2c (one copy per bank); a change here belongs in every copy."
+ },
+ "0x8c1c9": {
+  "name": "ApplyBallTrajectory4_23",
+  "note": "Instruction-identical to ApplyBallTrajectory4_20, ApplyBallTrajectory4_21, ApplyBallTrajectory4_22, ApplyBallTrajectory4_24, ApplyBallTrajectory4_29, ApplyBallTrajectory4_2a, ApplyBallTrajectory4_2b and ApplyBallTrajectory4_2c (one copy per bank); a change here belongs in every copy."
+ },
  "0x8c1f1": ".applyFallbackBallTrajectory",
- "0x8c1f5": "SetBallTargetFromAim_23",
- "0x8c221": "LookupBallPosByAim_23",
+ "0x8c1f5": {
+  "name": "SetBallTargetFromAim_23",
+  "note": "Instruction-identical to SetBallTargetFromAim_20, SetBallTargetFromAim_21, SetBallTargetFromAim_22, SetBallTargetFromAim_24, SetBallTargetFromAim_29, SetBallTargetFromAim_2a, SetBallTargetFromAim_2b and SetBallTargetFromAim_2c (one copy per bank); a change here belongs in every copy."
+ },
+ "0x8c221": {
+  "name": "LookupBallPosByAim_23",
+  "note": "Instruction-identical to LookupBallPosByAim_20, LookupBallPosByAim_21, LookupBallPosByAim_22, LookupBallPosByAim_29, LookupBallPosByAim_2a and LookupBallPosByAim_2b (one copy per bank); a change here belongs in every copy."
+ },
  "0x8c247": ".readEntry",
- "0x8c24c": "LookupBallPosByHeight_23",
+ "0x8c24c": {
+  "name": "LookupBallPosByHeight_23",
+  "note": "Instruction-identical to LookupBallPosByHeight_20, LookupBallPosByHeight_21, LookupBallPosByHeight_22, LookupBallPosByHeight_24, LookupBallPosByHeight_29, LookupBallPosByHeight_2a, LookupBallPosByHeight_2b and LookupBallPosByHeight_2c (one copy per bank); a change here belongs in every copy."
+ },
  "0x8c269": ".read",
- "0x8c26e": "LookupBallPosByShotIndex_23",
+ "0x8c26e": {
+  "name": "LookupBallPosByShotIndex_23",
+  "note": "Instruction-identical to LookupBallPosByShotIndex_20, LookupBallPosByShotIndex_21, LookupBallPosByShotIndex_22, LookupBallPosByShotIndex_24, LookupBallPosByShotIndex_29, LookupBallPosByShotIndex_2a and LookupBallPosByShotIndex_2b (one copy per bank); a change here belongs in every copy."
+ },
  "0x8c278": ".read",
  "0x8c27d": "BallPosData_23",
- "0x8fe7d": "ShotBallPathPowerTopspin",
+ "0x8fe7d": {
+  "name": "ShotBallPathPowerTopspin",
+  "note": "Instruction-identical to ShotBallPathTopspin (one copy per bank); a change here belongs in every copy."
+ },
  "0x8fe98": "BallPosHeightOffsets_23",
  "0x8fed8": "BallPosBlockOffsets_23",
- "0x9000e": "BallTrajEntryPtr6_24",
- "0x9001e": "BallTrajEntryPtr4_24",
- "0x9002b": "SeekBallTrajEntry6_24",
+ "0x9000e": {
+  "name": "BallTrajEntryPtr6_24",
+  "note": "Instruction-identical to BallTrajEntryPtr6_20, BallTrajEntryPtr6_21, BallTrajEntryPtr6_22, BallTrajEntryPtr6_23, BallTrajEntryPtr6_29, BallTrajEntryPtr6_2a, BallTrajEntryPtr6_2b and BallTrajEntryPtr6_2c (one copy per bank); a change here belongs in every copy."
+ },
+ "0x9001e": {
+  "name": "BallTrajEntryPtr4_24",
+  "note": "Instruction-identical to BallTrajEntryPtr4_20, BallTrajEntryPtr4_21, BallTrajEntryPtr4_22, BallTrajEntryPtr4_23, BallTrajEntryPtr4_29, BallTrajEntryPtr4_2a, BallTrajEntryPtr4_2b and BallTrajEntryPtr4_2c (one copy per bank); a change here belongs in every copy."
+ },
+ "0x9002b": {
+  "name": "SeekBallTrajEntry6_24",
+  "note": "Instruction-identical to SeekBallTrajEntry6_20, SeekBallTrajEntry6_21, SeekBallTrajEntry6_22, SeekBallTrajEntry6_23, SeekBallTrajEntry6_29, SeekBallTrajEntry6_2a, SeekBallTrajEntry6_2b and SeekBallTrajEntry6_2c (one copy per bank); a change here belongs in every copy."
+ },
  "0x90033": ".loop",
  "0x90047": ".gotPtr",
  "0x90049": ".done",
- "0x9004a": "SeekBallTrajEntry4_24",
+ "0x9004a": {
+  "name": "SeekBallTrajEntry4_24",
+  "note": "Instruction-identical to SeekBallTrajEntry4_20, SeekBallTrajEntry4_21, SeekBallTrajEntry4_22, SeekBallTrajEntry4_23, SeekBallTrajEntry4_29, SeekBallTrajEntry4_2a, SeekBallTrajEntry4_2b and SeekBallTrajEntry4_2c (one copy per bank); a change here belongs in every copy."
+ },
  "0x90052": ".loop",
  "0x90066": ".gotPtr",
  "0x90068": ".done",
- "0x90069": "SetBallVelocityFromEntry6_24",
+ "0x90069": {
+  "name": "SetBallVelocityFromEntry6_24",
+  "note": "Instruction-identical to SetBallVelocityFromEntry6_20, SetBallVelocityFromEntry6_21, SetBallVelocityFromEntry6_22, SetBallVelocityFromEntry6_23, SetBallVelocityFromEntry6_29, SetBallVelocityFromEntry6_2a, SetBallVelocityFromEntry6_2b and SetBallVelocityFromEntry6_2c (one copy per bank); a change here belongs in every copy."
+ },
  "0x90082": ".zero",
- "0x90090": "SetBallVelocityFromEntry4_24",
- "0x900a4": "SetBallTargetByPrediction_24",
+ "0x90090": {
+  "name": "SetBallVelocityFromEntry4_24",
+  "note": "Instruction-identical to SetBallVelocityFromEntry4_20, SetBallVelocityFromEntry4_21, SetBallVelocityFromEntry4_22, SetBallVelocityFromEntry4_23, SetBallVelocityFromEntry4_29, SetBallVelocityFromEntry4_2a, SetBallVelocityFromEntry4_2b and SetBallVelocityFromEntry4_2c (one copy per bank); a change here belongs in every copy."
+ },
+ "0x900a4": {
+  "name": "SetBallTargetByPrediction_24",
+  "note": "Instruction-identical to SetBallTargetByPrediction_20, SetBallTargetByPrediction_21, SetBallTargetByPrediction_22, SetBallTargetByPrediction_23, SetBallTargetByPrediction_29, SetBallTargetByPrediction_2a, SetBallTargetByPrediction_2b and SetBallTargetByPrediction_2c (one copy per bank); a change here belongs in every copy."
+ },
  "0x900bf": ".offset",
  "0x900df": ".zero",
  "0x900fc": ".maskClear",
- "0x9010e": "ApplyBallTrajectory6Capped_24",
- "0x90141": "ApplyBallTrajectory6_24",
- "0x90169": "ApplyBallTrajectoryCapped_24",
+ "0x9010e": {
+  "name": "ApplyBallTrajectory6Capped_24",
+  "note": "Instruction-identical to ApplyBallTrajectory6Capped_20, ApplyBallTrajectory6Capped_21, ApplyBallTrajectory6Capped_22, ApplyBallTrajectory6Capped_23, ApplyBallTrajectory6Capped_29, ApplyBallTrajectory6Capped_2a, ApplyBallTrajectory6Capped_2b and ApplyBallTrajectory6Capped_2c (one copy per bank); a change here belongs in every copy."
+ },
+ "0x90141": {
+  "name": "ApplyBallTrajectory6_24",
+  "note": "Instruction-identical to ApplyBallTrajectory6_20, ApplyBallTrajectory6_21, ApplyBallTrajectory6_22, ApplyBallTrajectory6_23, ApplyBallTrajectory6_29, ApplyBallTrajectory6_2a, ApplyBallTrajectory6_2b and ApplyBallTrajectory6_2c (one copy per bank); a change here belongs in every copy."
+ },
+ "0x90169": {
+  "name": "ApplyBallTrajectoryCapped_24",
+  "note": "Instruction-identical to ApplyBallTrajectoryCapped_20, ApplyBallTrajectoryCapped_21, ApplyBallTrajectoryCapped_22, ApplyBallTrajectoryCapped_23, ApplyBallTrajectoryCapped_2a, ApplyBallTrajectoryCapped_2b and ApplyBallTrajectoryCapped_2c (one copy per bank); a change here belongs in every copy."
+ },
  "0x90195": ".restore",
- "0x901a2": "ApplyBallTrajectory_24",
- "0x901d5": "ApplyBallTrajectory4_24",
+ "0x901a2": {
+  "name": "ApplyBallTrajectory4Capped_24",
+  "note": "Instruction-identical to ApplyBallTrajectory4Capped_20, ApplyBallTrajectory4Capped_21, ApplyBallTrajectory4Capped_22, ApplyBallTrajectory4Capped_23, ApplyBallTrajectory4Capped_29, ApplyBallTrajectory4Capped_2a, ApplyBallTrajectory4Capped_2b and ApplyBallTrajectory4Capped_2c (one copy per bank); a change here belongs in every copy."
+ },
+ "0x901d5": {
+  "name": "ApplyBallTrajectory4_24",
+  "note": "Instruction-identical to ApplyBallTrajectory4_20, ApplyBallTrajectory4_21, ApplyBallTrajectory4_22, ApplyBallTrajectory4_23, ApplyBallTrajectory4_29, ApplyBallTrajectory4_2a, ApplyBallTrajectory4_2b and ApplyBallTrajectory4_2c (one copy per bank); a change here belongs in every copy."
+ },
  "0x901fd": ".applyFallbackBallTrajectory",
- "0x90201": "SetBallTargetFromAim_24",
- "0x9022d": "LookupBallPosByAim_24",
+ "0x90201": {
+  "name": "SetBallTargetFromAim_24",
+  "note": "Instruction-identical to SetBallTargetFromAim_20, SetBallTargetFromAim_21, SetBallTargetFromAim_22, SetBallTargetFromAim_23, SetBallTargetFromAim_29, SetBallTargetFromAim_2a, SetBallTargetFromAim_2b and SetBallTargetFromAim_2c (one copy per bank); a change here belongs in every copy."
+ },
+ "0x9022d": {
+  "name": "LookupBallPosByAim_24",
+  "note": "Instruction-identical to LookupBallPosByAim_2c (one copy per bank); a change here belongs in every copy."
+ },
  "0x90253": ".read",
- "0x90258": "LookupBallPosByHeight_24",
+ "0x90258": {
+  "name": "LookupBallPosByHeight_24",
+  "note": "Instruction-identical to LookupBallPosByHeight_20, LookupBallPosByHeight_21, LookupBallPosByHeight_22, LookupBallPosByHeight_23, LookupBallPosByHeight_29, LookupBallPosByHeight_2a, LookupBallPosByHeight_2b and LookupBallPosByHeight_2c (one copy per bank); a change here belongs in every copy."
+ },
  "0x90275": ".read",
- "0x9027a": "LookupBallPosByShotIndex_24",
+ "0x9027a": {
+  "name": "LookupBallPosByShotIndex_24",
+  "note": "Instruction-identical to LookupBallPosByShotIndex_20, LookupBallPosByShotIndex_21, LookupBallPosByShotIndex_22, LookupBallPosByShotIndex_23, LookupBallPosByShotIndex_29, LookupBallPosByShotIndex_2a and LookupBallPosByShotIndex_2b (one copy per bank); a change here belongs in every copy."
+ },
  "0x90284": ".read",
  "0x90289": "BallPosDataLob_24",
  "0x90589": "ShotBallPathLob",
@@ -12453,7 +12963,10 @@
  "0x9421a": "TextStrings_25",
  "0x97b38": "FetchDialogueText_25",
  "0x97b40": "FetchShortText_25",
- "0x97b48": "FetchText_25",
+ "0x97b48": {
+  "name": "FetchText_25",
+  "note": "Instruction-identical to FetchText_1f, FetchText_26, FetchText_30, FetchText_31, FetchText_32, FetchText_33, FetchText_34, FetchText_35, FetchText_36, FetchText_37, FetchText_5e and FetchText_6e (one copy per bank); a change here belongs in every copy."
+ },
  "0x97b64": ".nonZero",
  "0x97b69": ".loop",
  "0x97b76": ".countDone",
@@ -12462,7 +12975,10 @@
  "0x981f6": "TextStrings_26",
  "0x9bb17": "FetchDialogueText_26",
  "0x9bb1f": "FetchShortText_26",
- "0x9bb27": "FetchText_26",
+ "0x9bb27": {
+  "name": "FetchText_26",
+  "note": "Instruction-identical to FetchText_1f, FetchText_25, FetchText_30, FetchText_31, FetchText_32, FetchText_33, FetchText_34, FetchText_35, FetchText_36, FetchText_37, FetchText_5e and FetchText_6e (one copy per bank); a change here belongs in every copy."
+ },
  "0x9bb43": ".nonZero",
  "0x9bb48": ".loop",
  "0x9bb55": ".countDone",
@@ -12692,7 +13208,10 @@
  "0x9f8f6": "ActorScript_27_31",
  "0x9f95d": "ActorScript_27_32",
  "0x9f9c4": "ActorScript_27_33",
- "0x9fa49": "SetStoryRankSceneIndex",
+ "0x9fa49": {
+  "name": "ComputeRankingProgressIndex_27",
+  "note": "Instruction-identical to ComputeRankingProgressIndex_0e, ComputeRankingProgressIndex_11 and ComputeRankingProgressIndex_12 (one copy per bank); a change here belongs in every copy."
+ },
  "0x9fa6c": ".store",
  "0x9fa70": ".doubles",
  "0x9fa90": "SetStoryRankTier",
@@ -12757,108 +13276,249 @@
  },
  "0xa2d1c": "MatchGfxPalettesC_28",
  "0xa2d54": "MatchStoryGfxPalettes",
- "0xa4002": "BallTrajEntryPtr6_29",
- "0xa4012": "BallTrajEntryPtr4_29",
- "0xa401f": "SeekBallTrajEntry6_29",
+ "0xa4002": {
+  "name": "BallTrajEntryPtr6_29",
+  "note": "Instruction-identical to BallTrajEntryPtr6_20, BallTrajEntryPtr6_21, BallTrajEntryPtr6_22, BallTrajEntryPtr6_23, BallTrajEntryPtr6_24, BallTrajEntryPtr6_2a, BallTrajEntryPtr6_2b and BallTrajEntryPtr6_2c (one copy per bank); a change here belongs in every copy."
+ },
+ "0xa4012": {
+  "name": "BallTrajEntryPtr4_29",
+  "note": "Instruction-identical to BallTrajEntryPtr4_20, BallTrajEntryPtr4_21, BallTrajEntryPtr4_22, BallTrajEntryPtr4_23, BallTrajEntryPtr4_24, BallTrajEntryPtr4_2a, BallTrajEntryPtr4_2b and BallTrajEntryPtr4_2c (one copy per bank); a change here belongs in every copy."
+ },
+ "0xa401f": {
+  "name": "SeekBallTrajEntry6_29",
+  "note": "Instruction-identical to SeekBallTrajEntry6_20, SeekBallTrajEntry6_21, SeekBallTrajEntry6_22, SeekBallTrajEntry6_23, SeekBallTrajEntry6_24, SeekBallTrajEntry6_2a, SeekBallTrajEntry6_2b and SeekBallTrajEntry6_2c (one copy per bank); a change here belongs in every copy."
+ },
  "0xa4027": ".loop",
  "0xa403b": ".gotPtr",
  "0xa403d": ".done",
- "0xa403e": "SeekBallTrajEntry4_29",
+ "0xa403e": {
+  "name": "SeekBallTrajEntry4_29",
+  "note": "Instruction-identical to SeekBallTrajEntry4_20, SeekBallTrajEntry4_21, SeekBallTrajEntry4_22, SeekBallTrajEntry4_23, SeekBallTrajEntry4_24, SeekBallTrajEntry4_2a, SeekBallTrajEntry4_2b and SeekBallTrajEntry4_2c (one copy per bank); a change here belongs in every copy."
+ },
  "0xa4046": ".loop",
  "0xa405a": ".gotPtr",
  "0xa405c": ".done",
- "0xa405d": "SetBallVelocityFromEntry6_29",
+ "0xa405d": {
+  "name": "SetBallVelocityFromEntry6_29",
+  "note": "Instruction-identical to SetBallVelocityFromEntry6_20, SetBallVelocityFromEntry6_21, SetBallVelocityFromEntry6_22, SetBallVelocityFromEntry6_23, SetBallVelocityFromEntry6_24, SetBallVelocityFromEntry6_2a, SetBallVelocityFromEntry6_2b and SetBallVelocityFromEntry6_2c (one copy per bank); a change here belongs in every copy."
+ },
  "0xa4076": ".zero",
- "0xa4084": "SetBallVelocityFromEntry4_29",
- "0xa4098": "SetBallTargetByPrediction_29",
+ "0xa4084": {
+  "name": "SetBallVelocityFromEntry4_29",
+  "note": "Instruction-identical to SetBallVelocityFromEntry4_20, SetBallVelocityFromEntry4_21, SetBallVelocityFromEntry4_22, SetBallVelocityFromEntry4_23, SetBallVelocityFromEntry4_24, SetBallVelocityFromEntry4_2a, SetBallVelocityFromEntry4_2b and SetBallVelocityFromEntry4_2c (one copy per bank); a change here belongs in every copy."
+ },
+ "0xa4098": {
+  "name": "SetBallTargetByPrediction_29",
+  "note": "Instruction-identical to SetBallTargetByPrediction_20, SetBallTargetByPrediction_21, SetBallTargetByPrediction_22, SetBallTargetByPrediction_23, SetBallTargetByPrediction_24, SetBallTargetByPrediction_2a, SetBallTargetByPrediction_2b and SetBallTargetByPrediction_2c (one copy per bank); a change here belongs in every copy."
+ },
  "0xa40b3": ".offset",
  "0xa40d3": ".zero",
  "0xa40f0": ".maskClear",
- "0xa4102": "ApplyBallTrajectory6Capped_29",
- "0xa4135": "ApplyBallTrajectory6_29",
+ "0xa4102": {
+  "name": "ApplyBallTrajectory6Capped_29",
+  "note": "Instruction-identical to ApplyBallTrajectory6Capped_20, ApplyBallTrajectory6Capped_21, ApplyBallTrajectory6Capped_22, ApplyBallTrajectory6Capped_23, ApplyBallTrajectory6Capped_24, ApplyBallTrajectory6Capped_2a, ApplyBallTrajectory6Capped_2b and ApplyBallTrajectory6Capped_2c (one copy per bank); a change here belongs in every copy."
+ },
+ "0xa4135": {
+  "name": "ApplyBallTrajectory6_29",
+  "note": "Instruction-identical to ApplyBallTrajectory6_20, ApplyBallTrajectory6_21, ApplyBallTrajectory6_22, ApplyBallTrajectory6_23, ApplyBallTrajectory6_24, ApplyBallTrajectory6_2a, ApplyBallTrajectory6_2b and ApplyBallTrajectory6_2c (one copy per bank); a change here belongs in every copy."
+ },
  "0xa415d": "ApplyBallTrajectoryCapped_29",
  "0xa4189": ".clampDist",
- "0xa4196": "ApplyBallTrajectory4Capped_29",
- "0xa41c9": "ApplyBallTrajectory4_29",
+ "0xa4196": {
+  "name": "ApplyBallTrajectory4Capped_29",
+  "note": "Instruction-identical to ApplyBallTrajectory4Capped_20, ApplyBallTrajectory4Capped_21, ApplyBallTrajectory4Capped_22, ApplyBallTrajectory4Capped_23, ApplyBallTrajectory4Capped_24, ApplyBallTrajectory4Capped_2a, ApplyBallTrajectory4Capped_2b and ApplyBallTrajectory4Capped_2c (one copy per bank); a change here belongs in every copy."
+ },
+ "0xa41c9": {
+  "name": "ApplyBallTrajectory4_29",
+  "note": "Instruction-identical to ApplyBallTrajectory4_20, ApplyBallTrajectory4_21, ApplyBallTrajectory4_22, ApplyBallTrajectory4_23, ApplyBallTrajectory4_24, ApplyBallTrajectory4_2a, ApplyBallTrajectory4_2b and ApplyBallTrajectory4_2c (one copy per bank); a change here belongs in every copy."
+ },
  "0xa41f1": ".applyFallbackBallTrajectory",
- "0xa41f5": "SetBallTargetFromAim_29",
- "0xa4221": "LookupBallPosByAim_29",
+ "0xa41f5": {
+  "name": "SetBallTargetFromAim_29",
+  "note": "Instruction-identical to SetBallTargetFromAim_20, SetBallTargetFromAim_21, SetBallTargetFromAim_22, SetBallTargetFromAim_23, SetBallTargetFromAim_24, SetBallTargetFromAim_2a, SetBallTargetFromAim_2b and SetBallTargetFromAim_2c (one copy per bank); a change here belongs in every copy."
+ },
+ "0xa4221": {
+  "name": "LookupBallPosByAim_29",
+  "note": "Instruction-identical to LookupBallPosByAim_20, LookupBallPosByAim_21, LookupBallPosByAim_22, LookupBallPosByAim_23, LookupBallPosByAim_2a and LookupBallPosByAim_2b (one copy per bank); a change here belongs in every copy."
+ },
  "0xa4247": ".readEntry",
- "0xa424c": "LookupBallPosByHeight_29",
+ "0xa424c": {
+  "name": "LookupBallPosByHeight_29",
+  "note": "Instruction-identical to LookupBallPosByHeight_20, LookupBallPosByHeight_21, LookupBallPosByHeight_22, LookupBallPosByHeight_23, LookupBallPosByHeight_24, LookupBallPosByHeight_2a, LookupBallPosByHeight_2b and LookupBallPosByHeight_2c (one copy per bank); a change here belongs in every copy."
+ },
  "0xa4269": ".read",
- "0xa426e": "LookupBallPosByShotIndex_29",
+ "0xa426e": {
+  "name": "LookupBallPosByShotIndex_29",
+  "note": "Instruction-identical to LookupBallPosByShotIndex_20, LookupBallPosByShotIndex_21, LookupBallPosByShotIndex_22, LookupBallPosByShotIndex_23, LookupBallPosByShotIndex_24, LookupBallPosByShotIndex_2a and LookupBallPosByShotIndex_2b (one copy per bank); a change here belongs in every copy."
+ },
  "0xa4278": ".read",
  "0xa427d": "BallPosData_29",
  "0xa5e9d": "ShotBallPathServeTopspin",
  "0xa5ebf": "ShotBallPathServeTopspinTable",
  "0xa5ed3": "ShotBallPathServeTopspinSpeeds",
  "0xa5ee7": "ShotBallPathServeTopspinHeights",
- "0xa8002": "BallTrajEntryPtr6_2a",
- "0xa8012": "BallTrajEntryPtr4_2a",
- "0xa801f": "SeekBallTrajEntry6_2a",
+ "0xa8002": {
+  "name": "BallTrajEntryPtr6_2a",
+  "note": "Instruction-identical to BallTrajEntryPtr6_20, BallTrajEntryPtr6_21, BallTrajEntryPtr6_22, BallTrajEntryPtr6_23, BallTrajEntryPtr6_24, BallTrajEntryPtr6_29, BallTrajEntryPtr6_2b and BallTrajEntryPtr6_2c (one copy per bank); a change here belongs in every copy."
+ },
+ "0xa8012": {
+  "name": "BallTrajEntryPtr4_2a",
+  "note": "Instruction-identical to BallTrajEntryPtr4_20, BallTrajEntryPtr4_21, BallTrajEntryPtr4_22, BallTrajEntryPtr4_23, BallTrajEntryPtr4_24, BallTrajEntryPtr4_29, BallTrajEntryPtr4_2b and BallTrajEntryPtr4_2c (one copy per bank); a change here belongs in every copy."
+ },
+ "0xa801f": {
+  "name": "SeekBallTrajEntry6_2a",
+  "note": "Instruction-identical to SeekBallTrajEntry6_20, SeekBallTrajEntry6_21, SeekBallTrajEntry6_22, SeekBallTrajEntry6_23, SeekBallTrajEntry6_24, SeekBallTrajEntry6_29, SeekBallTrajEntry6_2b and SeekBallTrajEntry6_2c (one copy per bank); a change here belongs in every copy."
+ },
  "0xa8027": ".loop",
  "0xa803b": ".gotPtr",
  "0xa803d": ".done",
- "0xa803e": "SeekBallTrajEntry4_2a",
+ "0xa803e": {
+  "name": "SeekBallTrajEntry4_2a",
+  "note": "Instruction-identical to SeekBallTrajEntry4_20, SeekBallTrajEntry4_21, SeekBallTrajEntry4_22, SeekBallTrajEntry4_23, SeekBallTrajEntry4_24, SeekBallTrajEntry4_29, SeekBallTrajEntry4_2b and SeekBallTrajEntry4_2c (one copy per bank); a change here belongs in every copy."
+ },
  "0xa8046": ".loop",
  "0xa805a": ".gotPtr",
  "0xa805c": ".done",
- "0xa805d": "SetBallVelocityFromEntry6_2a",
+ "0xa805d": {
+  "name": "SetBallVelocityFromEntry6_2a",
+  "note": "Instruction-identical to SetBallVelocityFromEntry6_20, SetBallVelocityFromEntry6_21, SetBallVelocityFromEntry6_22, SetBallVelocityFromEntry6_23, SetBallVelocityFromEntry6_24, SetBallVelocityFromEntry6_29, SetBallVelocityFromEntry6_2b and SetBallVelocityFromEntry6_2c (one copy per bank); a change here belongs in every copy."
+ },
  "0xa8076": ".zero",
- "0xa8084": "SetBallVelocityFromEntry4_2a",
- "0xa8098": "SetBallTargetByPrediction_2a",
+ "0xa8084": {
+  "name": "SetBallVelocityFromEntry4_2a",
+  "note": "Instruction-identical to SetBallVelocityFromEntry4_20, SetBallVelocityFromEntry4_21, SetBallVelocityFromEntry4_22, SetBallVelocityFromEntry4_23, SetBallVelocityFromEntry4_24, SetBallVelocityFromEntry4_29, SetBallVelocityFromEntry4_2b and SetBallVelocityFromEntry4_2c (one copy per bank); a change here belongs in every copy."
+ },
+ "0xa8098": {
+  "name": "SetBallTargetByPrediction_2a",
+  "note": "Instruction-identical to SetBallTargetByPrediction_20, SetBallTargetByPrediction_21, SetBallTargetByPrediction_22, SetBallTargetByPrediction_23, SetBallTargetByPrediction_24, SetBallTargetByPrediction_29, SetBallTargetByPrediction_2b and SetBallTargetByPrediction_2c (one copy per bank); a change here belongs in every copy."
+ },
  "0xa80b3": ".offset",
  "0xa80d3": ".zero",
  "0xa80f0": ".maskClear",
- "0xa8102": "ApplyBallTrajectory6Capped_2a",
- "0xa8135": "ApplyBallTrajectory6_2a",
- "0xa815d": "ApplyBallTrajectoryCapped_2a",
+ "0xa8102": {
+  "name": "ApplyBallTrajectory6Capped_2a",
+  "note": "Instruction-identical to ApplyBallTrajectory6Capped_20, ApplyBallTrajectory6Capped_21, ApplyBallTrajectory6Capped_22, ApplyBallTrajectory6Capped_23, ApplyBallTrajectory6Capped_24, ApplyBallTrajectory6Capped_29, ApplyBallTrajectory6Capped_2b and ApplyBallTrajectory6Capped_2c (one copy per bank); a change here belongs in every copy."
+ },
+ "0xa8135": {
+  "name": "ApplyBallTrajectory6_2a",
+  "note": "Instruction-identical to ApplyBallTrajectory6_20, ApplyBallTrajectory6_21, ApplyBallTrajectory6_22, ApplyBallTrajectory6_23, ApplyBallTrajectory6_24, ApplyBallTrajectory6_29, ApplyBallTrajectory6_2b and ApplyBallTrajectory6_2c (one copy per bank); a change here belongs in every copy."
+ },
+ "0xa815d": {
+  "name": "ApplyBallTrajectoryCapped_2a",
+  "note": "Instruction-identical to ApplyBallTrajectoryCapped_20, ApplyBallTrajectoryCapped_21, ApplyBallTrajectoryCapped_22, ApplyBallTrajectoryCapped_23, ApplyBallTrajectoryCapped_24, ApplyBallTrajectoryCapped_2b and ApplyBallTrajectoryCapped_2c (one copy per bank); a change here belongs in every copy."
+ },
  "0xa8189": ".restore",
- "0xa8196": "ApplyBallTrajectory4Capped_2a",
- "0xa81c9": "ApplyBallTrajectory4_2a",
+ "0xa8196": {
+  "name": "ApplyBallTrajectory4Capped_2a",
+  "note": "Instruction-identical to ApplyBallTrajectory4Capped_20, ApplyBallTrajectory4Capped_21, ApplyBallTrajectory4Capped_22, ApplyBallTrajectory4Capped_23, ApplyBallTrajectory4Capped_24, ApplyBallTrajectory4Capped_29, ApplyBallTrajectory4Capped_2b and ApplyBallTrajectory4Capped_2c (one copy per bank); a change here belongs in every copy."
+ },
+ "0xa81c9": {
+  "name": "ApplyBallTrajectory4_2a",
+  "note": "Instruction-identical to ApplyBallTrajectory4_20, ApplyBallTrajectory4_21, ApplyBallTrajectory4_22, ApplyBallTrajectory4_23, ApplyBallTrajectory4_24, ApplyBallTrajectory4_29, ApplyBallTrajectory4_2b and ApplyBallTrajectory4_2c (one copy per bank); a change here belongs in every copy."
+ },
  "0xa81f1": ".applyFallbackBallTrajectory",
- "0xa81f5": "SetBallTargetFromAim_2a",
- "0xa8221": "LookupBallPosByAim_2a",
+ "0xa81f5": {
+  "name": "SetBallTargetFromAim_2a",
+  "note": "Instruction-identical to SetBallTargetFromAim_20, SetBallTargetFromAim_21, SetBallTargetFromAim_22, SetBallTargetFromAim_23, SetBallTargetFromAim_24, SetBallTargetFromAim_29, SetBallTargetFromAim_2b and SetBallTargetFromAim_2c (one copy per bank); a change here belongs in every copy."
+ },
+ "0xa8221": {
+  "name": "LookupBallPosByAim_2a",
+  "note": "Instruction-identical to LookupBallPosByAim_20, LookupBallPosByAim_21, LookupBallPosByAim_22, LookupBallPosByAim_23, LookupBallPosByAim_29 and LookupBallPosByAim_2b (one copy per bank); a change here belongs in every copy."
+ },
  "0xa8247": ".readEntry",
- "0xa824c": "LookupBallPosByHeight_2a",
+ "0xa824c": {
+  "name": "LookupBallPosByHeight_2a",
+  "note": "Instruction-identical to LookupBallPosByHeight_20, LookupBallPosByHeight_21, LookupBallPosByHeight_22, LookupBallPosByHeight_23, LookupBallPosByHeight_24, LookupBallPosByHeight_29, LookupBallPosByHeight_2b and LookupBallPosByHeight_2c (one copy per bank); a change here belongs in every copy."
+ },
  "0xa8269": ".read",
- "0xa826e": "LookupBallPosByShotIndex_2a",
+ "0xa826e": {
+  "name": "LookupBallPosByShotIndex_2a",
+  "note": "Instruction-identical to LookupBallPosByShotIndex_20, LookupBallPosByShotIndex_21, LookupBallPosByShotIndex_22, LookupBallPosByShotIndex_23, LookupBallPosByShotIndex_24, LookupBallPosByShotIndex_29 and LookupBallPosByShotIndex_2b (one copy per bank); a change here belongs in every copy."
+ },
  "0xa8278": ".read",
  "0xa827d": "BallPosData_2a",
  "0xa9e9d": "ShotBallPathServeSlice",
  "0xa9ebf": "BallPosBlockOffsets_2a",
  "0xa9ed3": "BallPosSubOffsets_2a",
  "0xa9ee7": "BallPosHeightOffsets_2a",
- "0xac002": "BallTrajEntryPtr6_2b",
- "0xac012": "BallTrajEntryPtr4_2b",
- "0xac01f": "SeekBallTrajEntry6_2b",
+ "0xac002": {
+  "name": "BallTrajEntryPtr6_2b",
+  "note": "Instruction-identical to BallTrajEntryPtr6_20, BallTrajEntryPtr6_21, BallTrajEntryPtr6_22, BallTrajEntryPtr6_23, BallTrajEntryPtr6_24, BallTrajEntryPtr6_29, BallTrajEntryPtr6_2a and BallTrajEntryPtr6_2c (one copy per bank); a change here belongs in every copy."
+ },
+ "0xac012": {
+  "name": "BallTrajEntryPtr4_2b",
+  "note": "Instruction-identical to BallTrajEntryPtr4_20, BallTrajEntryPtr4_21, BallTrajEntryPtr4_22, BallTrajEntryPtr4_23, BallTrajEntryPtr4_24, BallTrajEntryPtr4_29, BallTrajEntryPtr4_2a and BallTrajEntryPtr4_2c (one copy per bank); a change here belongs in every copy."
+ },
+ "0xac01f": {
+  "name": "SeekBallTrajEntry6_2b",
+  "note": "Instruction-identical to SeekBallTrajEntry6_20, SeekBallTrajEntry6_21, SeekBallTrajEntry6_22, SeekBallTrajEntry6_23, SeekBallTrajEntry6_24, SeekBallTrajEntry6_29, SeekBallTrajEntry6_2a and SeekBallTrajEntry6_2c (one copy per bank); a change here belongs in every copy."
+ },
  "0xac027": ".loop",
  "0xac03b": ".gotPtr",
  "0xac03d": ".done",
- "0xac03e": "SeekBallTrajEntry4_2b",
+ "0xac03e": {
+  "name": "SeekBallTrajEntry4_2b",
+  "note": "Instruction-identical to SeekBallTrajEntry4_20, SeekBallTrajEntry4_21, SeekBallTrajEntry4_22, SeekBallTrajEntry4_23, SeekBallTrajEntry4_24, SeekBallTrajEntry4_29, SeekBallTrajEntry4_2a and SeekBallTrajEntry4_2c (one copy per bank); a change here belongs in every copy."
+ },
  "0xac046": ".loop",
  "0xac05a": ".gotPtr",
  "0xac05c": ".done",
- "0xac05d": "SetBallVelocityFromEntry6_2b",
+ "0xac05d": {
+  "name": "SetBallVelocityFromEntry6_2b",
+  "note": "Instruction-identical to SetBallVelocityFromEntry6_20, SetBallVelocityFromEntry6_21, SetBallVelocityFromEntry6_22, SetBallVelocityFromEntry6_23, SetBallVelocityFromEntry6_24, SetBallVelocityFromEntry6_29, SetBallVelocityFromEntry6_2a and SetBallVelocityFromEntry6_2c (one copy per bank); a change here belongs in every copy."
+ },
  "0xac076": ".zero",
- "0xac084": "SetBallVelocityFromEntry4_2b",
- "0xac098": "SetBallTargetByPrediction_2b",
+ "0xac084": {
+  "name": "SetBallVelocityFromEntry4_2b",
+  "note": "Instruction-identical to SetBallVelocityFromEntry4_20, SetBallVelocityFromEntry4_21, SetBallVelocityFromEntry4_22, SetBallVelocityFromEntry4_23, SetBallVelocityFromEntry4_24, SetBallVelocityFromEntry4_29, SetBallVelocityFromEntry4_2a and SetBallVelocityFromEntry4_2c (one copy per bank); a change here belongs in every copy."
+ },
+ "0xac098": {
+  "name": "SetBallTargetByPrediction_2b",
+  "note": "Instruction-identical to SetBallTargetByPrediction_20, SetBallTargetByPrediction_21, SetBallTargetByPrediction_22, SetBallTargetByPrediction_23, SetBallTargetByPrediction_24, SetBallTargetByPrediction_29, SetBallTargetByPrediction_2a and SetBallTargetByPrediction_2c (one copy per bank); a change here belongs in every copy."
+ },
  "0xac0b3": ".offset",
  "0xac0d3": ".zero",
  "0xac0f0": ".maskClear",
- "0xac102": "ApplyBallTrajectory6Capped_2b",
- "0xac135": "ApplyBallTrajectory6_2b",
- "0xac15d": "ApplyBallTrajectoryCapped_2b",
+ "0xac102": {
+  "name": "ApplyBallTrajectory6Capped_2b",
+  "note": "Instruction-identical to ApplyBallTrajectory6Capped_20, ApplyBallTrajectory6Capped_21, ApplyBallTrajectory6Capped_22, ApplyBallTrajectory6Capped_23, ApplyBallTrajectory6Capped_24, ApplyBallTrajectory6Capped_29, ApplyBallTrajectory6Capped_2a and ApplyBallTrajectory6Capped_2c (one copy per bank); a change here belongs in every copy."
+ },
+ "0xac135": {
+  "name": "ApplyBallTrajectory6_2b",
+  "note": "Instruction-identical to ApplyBallTrajectory6_20, ApplyBallTrajectory6_21, ApplyBallTrajectory6_22, ApplyBallTrajectory6_23, ApplyBallTrajectory6_24, ApplyBallTrajectory6_29, ApplyBallTrajectory6_2a and ApplyBallTrajectory6_2c (one copy per bank); a change here belongs in every copy."
+ },
+ "0xac15d": {
+  "name": "ApplyBallTrajectoryCapped_2b",
+  "note": "Instruction-identical to ApplyBallTrajectoryCapped_20, ApplyBallTrajectoryCapped_21, ApplyBallTrajectoryCapped_22, ApplyBallTrajectoryCapped_23, ApplyBallTrajectoryCapped_24, ApplyBallTrajectoryCapped_2a and ApplyBallTrajectoryCapped_2c (one copy per bank); a change here belongs in every copy."
+ },
  "0xac189": ".restore",
- "0xac196": "ApplyBallTrajectory4Capped_2b",
- "0xac1c9": "ApplyBallTrajectory4_2b",
+ "0xac196": {
+  "name": "ApplyBallTrajectory4Capped_2b",
+  "note": "Instruction-identical to ApplyBallTrajectory4Capped_20, ApplyBallTrajectory4Capped_21, ApplyBallTrajectory4Capped_22, ApplyBallTrajectory4Capped_23, ApplyBallTrajectory4Capped_24, ApplyBallTrajectory4Capped_29, ApplyBallTrajectory4Capped_2a and ApplyBallTrajectory4Capped_2c (one copy per bank); a change here belongs in every copy."
+ },
+ "0xac1c9": {
+  "name": "ApplyBallTrajectory4_2b",
+  "note": "Instruction-identical to ApplyBallTrajectory4_20, ApplyBallTrajectory4_21, ApplyBallTrajectory4_22, ApplyBallTrajectory4_23, ApplyBallTrajectory4_24, ApplyBallTrajectory4_29, ApplyBallTrajectory4_2a and ApplyBallTrajectory4_2c (one copy per bank); a change here belongs in every copy."
+ },
  "0xac1f1": ".applyFallbackBallTrajectory",
- "0xac1f5": "SetBallTargetFromAim_2b",
- "0xac221": "LookupBallPosByAim_2b",
+ "0xac1f5": {
+  "name": "SetBallTargetFromAim_2b",
+  "note": "Instruction-identical to SetBallTargetFromAim_20, SetBallTargetFromAim_21, SetBallTargetFromAim_22, SetBallTargetFromAim_23, SetBallTargetFromAim_24, SetBallTargetFromAim_29, SetBallTargetFromAim_2a and SetBallTargetFromAim_2c (one copy per bank); a change here belongs in every copy."
+ },
+ "0xac221": {
+  "name": "LookupBallPosByAim_2b",
+  "note": "Instruction-identical to LookupBallPosByAim_20, LookupBallPosByAim_21, LookupBallPosByAim_22, LookupBallPosByAim_23, LookupBallPosByAim_29 and LookupBallPosByAim_2a (one copy per bank); a change here belongs in every copy."
+ },
  "0xac247": ".readEntry",
- "0xac24c": "LookupBallPosByHeight_2b",
+ "0xac24c": {
+  "name": "LookupBallPosByHeight_2b",
+  "note": "Instruction-identical to LookupBallPosByHeight_20, LookupBallPosByHeight_21, LookupBallPosByHeight_22, LookupBallPosByHeight_23, LookupBallPosByHeight_24, LookupBallPosByHeight_29, LookupBallPosByHeight_2a and LookupBallPosByHeight_2c (one copy per bank); a change here belongs in every copy."
+ },
  "0xac269": ".read",
- "0xac26e": "LookupBallPosByShotIndex_2b",
+ "0xac26e": {
+  "name": "LookupBallPosByShotIndex_2b",
+  "note": "Instruction-identical to LookupBallPosByShotIndex_20, LookupBallPosByShotIndex_21, LookupBallPosByShotIndex_22, LookupBallPosByShotIndex_23, LookupBallPosByShotIndex_24, LookupBallPosByShotIndex_29 and LookupBallPosByShotIndex_2a (one copy per bank); a change here belongs in every copy."
+ },
  "0xac278": ".read",
  "0xac27d": "BallPosData_2b",
  "0xade9d": "ShotBallPathServeFlat",
@@ -12868,34 +13528,79 @@
  "0xb0000": "FarPtr_ProjectShotPlacement0",
  "0xb0002": "FarPtr_ProjectShotPlacement1",
  "0xb0004": "FarPtr_ProjectShotPlacement2",
- "0xb0006": "BallTrajEntryPtr6_2c",
- "0xb0016": "BallTrajEntryPtr4_2c",
- "0xb0023": "SeekBallTrajEntry6_2c",
+ "0xb0006": {
+  "name": "BallTrajEntryPtr6_2c",
+  "note": "Instruction-identical to BallTrajEntryPtr6_20, BallTrajEntryPtr6_21, BallTrajEntryPtr6_22, BallTrajEntryPtr6_23, BallTrajEntryPtr6_24, BallTrajEntryPtr6_29, BallTrajEntryPtr6_2a and BallTrajEntryPtr6_2b (one copy per bank); a change here belongs in every copy."
+ },
+ "0xb0016": {
+  "name": "BallTrajEntryPtr4_2c",
+  "note": "Instruction-identical to BallTrajEntryPtr4_20, BallTrajEntryPtr4_21, BallTrajEntryPtr4_22, BallTrajEntryPtr4_23, BallTrajEntryPtr4_24, BallTrajEntryPtr4_29, BallTrajEntryPtr4_2a and BallTrajEntryPtr4_2b (one copy per bank); a change here belongs in every copy."
+ },
+ "0xb0023": {
+  "name": "SeekBallTrajEntry6_2c",
+  "note": "Instruction-identical to SeekBallTrajEntry6_20, SeekBallTrajEntry6_21, SeekBallTrajEntry6_22, SeekBallTrajEntry6_23, SeekBallTrajEntry6_24, SeekBallTrajEntry6_29, SeekBallTrajEntry6_2a and SeekBallTrajEntry6_2b (one copy per bank); a change here belongs in every copy."
+ },
  "0xb002b": ".loop",
  "0xb003f": ".gotPtr",
  "0xb0041": ".done",
- "0xb0042": "SeekBallTrajEntry4_2c",
+ "0xb0042": {
+  "name": "SeekBallTrajEntry4_2c",
+  "note": "Instruction-identical to SeekBallTrajEntry4_20, SeekBallTrajEntry4_21, SeekBallTrajEntry4_22, SeekBallTrajEntry4_23, SeekBallTrajEntry4_24, SeekBallTrajEntry4_29, SeekBallTrajEntry4_2a and SeekBallTrajEntry4_2b (one copy per bank); a change here belongs in every copy."
+ },
  "0xb004a": ".loop",
  "0xb005e": ".gotPtr",
  "0xb0060": ".done",
- "0xb0061": "SetBallVelocityFromEntry6_2c",
+ "0xb0061": {
+  "name": "SetBallVelocityFromEntry6_2c",
+  "note": "Instruction-identical to SetBallVelocityFromEntry6_20, SetBallVelocityFromEntry6_21, SetBallVelocityFromEntry6_22, SetBallVelocityFromEntry6_23, SetBallVelocityFromEntry6_24, SetBallVelocityFromEntry6_29, SetBallVelocityFromEntry6_2a and SetBallVelocityFromEntry6_2b (one copy per bank); a change here belongs in every copy."
+ },
  "0xb007a": ".zero",
- "0xb0088": "SetBallVelocityFromEntry4_2c",
- "0xb009c": "SetBallTargetByPrediction_2c",
+ "0xb0088": {
+  "name": "SetBallVelocityFromEntry4_2c",
+  "note": "Instruction-identical to SetBallVelocityFromEntry4_20, SetBallVelocityFromEntry4_21, SetBallVelocityFromEntry4_22, SetBallVelocityFromEntry4_23, SetBallVelocityFromEntry4_24, SetBallVelocityFromEntry4_29, SetBallVelocityFromEntry4_2a and SetBallVelocityFromEntry4_2b (one copy per bank); a change here belongs in every copy."
+ },
+ "0xb009c": {
+  "name": "SetBallTargetByPrediction_2c",
+  "note": "Instruction-identical to SetBallTargetByPrediction_20, SetBallTargetByPrediction_21, SetBallTargetByPrediction_22, SetBallTargetByPrediction_23, SetBallTargetByPrediction_24, SetBallTargetByPrediction_29, SetBallTargetByPrediction_2a and SetBallTargetByPrediction_2b (one copy per bank); a change here belongs in every copy."
+ },
  "0xb00b7": ".offset",
  "0xb00d7": ".zero",
  "0xb00f4": ".maskClear",
- "0xb0106": "ApplyBallTrajectory6Capped_2c",
- "0xb0139": "ApplyBallTrajectory6_2c",
- "0xb0161": "ApplyBallTrajectoryCapped_2c",
+ "0xb0106": {
+  "name": "ApplyBallTrajectory6Capped_2c",
+  "note": "Instruction-identical to ApplyBallTrajectory6Capped_20, ApplyBallTrajectory6Capped_21, ApplyBallTrajectory6Capped_22, ApplyBallTrajectory6Capped_23, ApplyBallTrajectory6Capped_24, ApplyBallTrajectory6Capped_29, ApplyBallTrajectory6Capped_2a and ApplyBallTrajectory6Capped_2b (one copy per bank); a change here belongs in every copy."
+ },
+ "0xb0139": {
+  "name": "ApplyBallTrajectory6_2c",
+  "note": "Instruction-identical to ApplyBallTrajectory6_20, ApplyBallTrajectory6_21, ApplyBallTrajectory6_22, ApplyBallTrajectory6_23, ApplyBallTrajectory6_24, ApplyBallTrajectory6_29, ApplyBallTrajectory6_2a and ApplyBallTrajectory6_2b (one copy per bank); a change here belongs in every copy."
+ },
+ "0xb0161": {
+  "name": "ApplyBallTrajectoryCapped_2c",
+  "note": "Instruction-identical to ApplyBallTrajectoryCapped_20, ApplyBallTrajectoryCapped_21, ApplyBallTrajectoryCapped_22, ApplyBallTrajectoryCapped_23, ApplyBallTrajectoryCapped_24, ApplyBallTrajectoryCapped_2a and ApplyBallTrajectoryCapped_2b (one copy per bank); a change here belongs in every copy."
+ },
  "0xb018d": ".restore",
- "0xb019a": "ApplyBallTrajectory4Capped_2c",
- "0xb01cd": "ApplyBallTrajectory4_2c",
+ "0xb019a": {
+  "name": "ApplyBallTrajectory4Capped_2c",
+  "note": "Instruction-identical to ApplyBallTrajectory4Capped_20, ApplyBallTrajectory4Capped_21, ApplyBallTrajectory4Capped_22, ApplyBallTrajectory4Capped_23, ApplyBallTrajectory4Capped_24, ApplyBallTrajectory4Capped_29, ApplyBallTrajectory4Capped_2a and ApplyBallTrajectory4Capped_2b (one copy per bank); a change here belongs in every copy."
+ },
+ "0xb01cd": {
+  "name": "ApplyBallTrajectory4_2c",
+  "note": "Instruction-identical to ApplyBallTrajectory4_20, ApplyBallTrajectory4_21, ApplyBallTrajectory4_22, ApplyBallTrajectory4_23, ApplyBallTrajectory4_24, ApplyBallTrajectory4_29, ApplyBallTrajectory4_2a and ApplyBallTrajectory4_2b (one copy per bank); a change here belongs in every copy."
+ },
  "0xb01f5": ".applyFallbackBallTrajectory",
- "0xb01f9": "SetBallTargetFromAim_2c",
- "0xb0225": "LookupBallPosByAim_2c",
+ "0xb01f9": {
+  "name": "SetBallTargetFromAim_2c",
+  "note": "Instruction-identical to SetBallTargetFromAim_20, SetBallTargetFromAim_21, SetBallTargetFromAim_22, SetBallTargetFromAim_23, SetBallTargetFromAim_24, SetBallTargetFromAim_29, SetBallTargetFromAim_2a and SetBallTargetFromAim_2b (one copy per bank); a change here belongs in every copy."
+ },
+ "0xb0225": {
+  "name": "LookupBallPosByAim_2c",
+  "note": "Instruction-identical to LookupBallPosByAim_24 (one copy per bank); a change here belongs in every copy."
+ },
  "0xb024b": ".read",
- "0xb0250": "LookupBallPosByHeight_2c",
+ "0xb0250": {
+  "name": "LookupBallPosByHeight_2c",
+  "note": "Instruction-identical to LookupBallPosByHeight_20, LookupBallPosByHeight_21, LookupBallPosByHeight_22, LookupBallPosByHeight_23, LookupBallPosByHeight_24, LookupBallPosByHeight_29, LookupBallPosByHeight_2a and LookupBallPosByHeight_2b (one copy per bank); a change here belongs in every copy."
+ },
  "0xb026d": ".read",
  "0xb0272": "LookupBallPosByShotIndex_2c",
  "0xb027c": ".readB",
@@ -12917,7 +13622,10 @@
  "0xc0464": "TextStrings_30",
  "0xc3d82": "FetchDialogueText_30",
  "0xc3d8a": "FetchShortText_30",
- "0xc3d92": "FetchText_30",
+ "0xc3d92": {
+  "name": "FetchText_30",
+  "note": "Instruction-identical to FetchText_1f, FetchText_25, FetchText_26, FetchText_31, FetchText_32, FetchText_33, FetchText_34, FetchText_35, FetchText_36, FetchText_37, FetchText_5e and FetchText_6e (one copy per bank); a change here belongs in every copy."
+ },
  "0xc3dae": ".nonZero",
  "0xc3db3": ".loop",
  "0xc3dc0": ".countDone",
@@ -12926,7 +13634,10 @@
  "0xc42ba": "TextStrings_31",
  "0xc7bc3": "FetchDialogueText_31",
  "0xc7bcb": "FetchShortText_31",
- "0xc7bd3": "FetchText_31",
+ "0xc7bd3": {
+  "name": "FetchText_31",
+  "note": "Instruction-identical to FetchText_1f, FetchText_25, FetchText_26, FetchText_30, FetchText_32, FetchText_33, FetchText_34, FetchText_35, FetchText_36, FetchText_37, FetchText_5e and FetchText_6e (one copy per bank); a change here belongs in every copy."
+ },
  "0xc7bef": ".nonZero",
  "0xc7bf4": ".loop",
  "0xc7c01": ".countDone",
@@ -12935,7 +13646,10 @@
  "0xc817a": "TextStrings_32",
  "0xcbaa7": "FetchDialogueText_32",
  "0xcbaaf": "FetchShortText_32",
- "0xcbab7": "FetchText_32",
+ "0xcbab7": {
+  "name": "FetchText_32",
+  "note": "Instruction-identical to FetchText_1f, FetchText_25, FetchText_26, FetchText_30, FetchText_31, FetchText_33, FetchText_34, FetchText_35, FetchText_36, FetchText_37, FetchText_5e and FetchText_6e (one copy per bank); a change here belongs in every copy."
+ },
  "0xcbad3": ".nonZero",
  "0xcbad8": ".loop",
  "0xcbae5": ".countDone",
@@ -12944,7 +13658,10 @@
  "0xcc1be": "TextStrings_33",
  "0xcfaca": "FetchDialogueText_33",
  "0xcfad2": "FetchShortText_33",
- "0xcfada": "FetchText_33",
+ "0xcfada": {
+  "name": "FetchText_33",
+  "note": "Instruction-identical to FetchText_1f, FetchText_25, FetchText_26, FetchText_30, FetchText_31, FetchText_32, FetchText_34, FetchText_35, FetchText_36, FetchText_37, FetchText_5e and FetchText_6e (one copy per bank); a change here belongs in every copy."
+ },
  "0xcfaf6": ".nonZero",
  "0xcfafb": ".loop",
  "0xcfb08": ".countDone",
@@ -12953,7 +13670,10 @@
  "0xd0242": "TextStrings_34",
  "0xd3b43": "FetchDialogueText_34",
  "0xd3b4b": "FetchShortText_34",
- "0xd3b53": "FetchText_34",
+ "0xd3b53": {
+  "name": "FetchText_34",
+  "note": "Instruction-identical to FetchText_1f, FetchText_25, FetchText_26, FetchText_30, FetchText_31, FetchText_32, FetchText_33, FetchText_35, FetchText_36, FetchText_37, FetchText_5e and FetchText_6e (one copy per bank); a change here belongs in every copy."
+ },
  "0xd3b6f": ".nonZero",
  "0xd3b74": ".loop",
  "0xd3b81": ".countDone",
@@ -12962,7 +13682,10 @@
  "0xd4220": "TextStrings_35",
  "0xd7b29": "FetchDialogueText_35",
  "0xd7b31": "FetchShortText_35",
- "0xd7b39": "FetchText_35",
+ "0xd7b39": {
+  "name": "FetchText_35",
+  "note": "Instruction-identical to FetchText_1f, FetchText_25, FetchText_26, FetchText_30, FetchText_31, FetchText_32, FetchText_33, FetchText_34, FetchText_36, FetchText_37, FetchText_5e and FetchText_6e (one copy per bank); a change here belongs in every copy."
+ },
  "0xd7b55": ".nonZero",
  "0xd7b5a": ".loop",
  "0xd7b67": ".countDone",
@@ -12971,7 +13694,10 @@
  "0xd8592": "TextStrings_36",
  "0xdbebe": "FetchDialogueText_36",
  "0xdbec6": "FetchShortText_36",
- "0xdbece": "FetchText_36",
+ "0xdbece": {
+  "name": "FetchText_36",
+  "note": "Instruction-identical to FetchText_1f, FetchText_25, FetchText_26, FetchText_30, FetchText_31, FetchText_32, FetchText_33, FetchText_34, FetchText_35, FetchText_37, FetchText_5e and FetchText_6e (one copy per bank); a change here belongs in every copy."
+ },
  "0xdbeea": ".nonZero",
  "0xdbeef": ".loop",
  "0xdbefc": ".countDone",
@@ -12980,7 +13706,10 @@
  "0xdc204": "TextStrings_37",
  "0xdfb1e": "FetchDialogueText_37",
  "0xdfb26": "FetchShortText_37",
- "0xdfb2e": "FetchText_37",
+ "0xdfb2e": {
+  "name": "FetchText_37",
+  "note": "Instruction-identical to FetchText_1f, FetchText_25, FetchText_26, FetchText_30, FetchText_31, FetchText_32, FetchText_33, FetchText_34, FetchText_35, FetchText_36, FetchText_5e and FetchText_6e (one copy per bank); a change here belongs in every copy."
+ },
  "0xdfb4a": ".nonZero",
  "0xdfb4f": ".loop",
  "0xdfb5c": ".countDone",
@@ -12994,8 +13723,14 @@
  "0xe00b1": ".readOffset",
  "0xe00bb": ".subtract",
  "0xe00bf": "SpriteBobOffsetYTable_38",
- "0xe00cf": "DrawUnselectedOptionBox",
- "0xe010a": "MoveMenuCursorBox",
+ "0xe00cf": {
+  "name": "DrawCornerBrackets_38",
+  "note": "Instruction-identical to DrawCornerBrackets_1b, DrawCornerBrackets_3b and DrawCornerBrackets_3e (one copy per bank); a change here belongs in every copy."
+ },
+ "0xe010a": {
+  "name": "MoveMenuCursorGrid_38",
+  "note": "Instruction-identical to MoveMenuCursorGrid_3b and MoveMenuCursorGrid_3e (one copy per bank); a change here belongs in every copy."
+ },
  "0xe0124": ".wrapRight",
  "0xe0129": ".storeRight",
  "0xe012e": ".checkLeft",
@@ -13009,7 +13744,10 @@
  "0xe0174": ".storeDown",
  "0xe0177": ".compare",
  "0xe0185": ".moved",
- "0xe0188": "MoveMenuCursorBoxLink",
+ "0xe0188": {
+  "name": "MoveMenuCursorGridFromLinkInput_38",
+  "note": "Instruction-identical to MoveMenuCursorGridFromLinkInput_16 and MoveMenuCursorGridFromLinkInput_3e (one copy per bank); a change here belongs in every copy."
+ },
  "0xe01a1": ".wrapRight",
  "0xe01a6": ".storeRight",
  "0xe01ab": ".checkLeft",
@@ -13023,7 +13761,10 @@
  "0xe01f1": ".storeDown",
  "0xe01f4": ".compare",
  "0xe0202": ".moved",
- "0xe0205": "MoveMenuCursorBoxRemote_38",
+ "0xe0205": {
+  "name": "MoveMenuCursorGridRemote_38",
+  "note": "Instruction-identical to MoveMenuCursorGridRemote_16 and MoveMenuCursorGridRemote_3e (one copy per bank); a change here belongs in every copy."
+ },
  "0xe021a": ".asMaster",
  "0xe021e": ".asSlave",
  "0xe0220": ".haveInput",
@@ -13065,16 +13806,28 @@
  "0xe0385": ".storeLock2",
  "0xe0388": ".compare2",
  "0xe0396": ".moved2",
- "0xe0399": "GetMenuCursorLinearIndex",
+ "0xe0399": {
+  "name": "GetMenuCursorIndex_38",
+  "note": "Instruction-identical to GetMenuCursorIndex_16, GetMenuCursorIndex_1b, GetMenuCursorIndex_3b and GetMenuCursorIndex_3e (one copy per bank); a change here belongs in every copy."
+ },
  "0xe039f": ".mulLoop",
  "0xe03a5": ".addColumn",
- "0xe03ab": "GetMenuCursorLinearIndexFromPtr",
+ "0xe03ab": {
+  "name": "GetMenuCursorIndexFromPtr_38",
+  "note": "Instruction-identical to GetMenuCursorIndexFromPtr_1b (one copy per bank); a change here belongs in every copy."
+ },
  "0xe03b0": ".mulLoop",
  "0xe03b6": ".addColumn",
- "0xe03bb": "SetMenuCursorFromLinearIndex",
+ "0xe03bb": {
+  "name": "SetMenuCursorFromIndex_38",
+  "note": "Instruction-identical to SetMenuCursorFromIndex_16, SetMenuCursorFromIndex_3b and SetMenuCursorFromIndex_3e (one copy per bank); a change here belongs in every copy."
+ },
  "0xe03be": ".divLoop",
  "0xe03c5": ".store",
- "0xe03cd": "SetMenuCursorFromLinearIndexToPtr",
+ "0xe03cd": {
+  "name": "SetMenuCursorFromIndexToPtr_38",
+  "note": "Instruction-identical to SetMenuCursorFromIndexToPtr_16 and SetMenuCursorFromIndexToPtr_3e (one copy per bank); a change here belongs in every copy."
+ },
  "0xe03d0": ".divLoop",
  "0xe03d7": ".store",
  "0xe03db": "ClearWram3Row64_38",
@@ -13082,7 +13835,10 @@
  "0xe03f1": "ClearWram3Row64Alt_38",
  "0xe03fe": ".loopB",
  "0xe0408": "UpdateAnimatedTilesTask_38",
- "0xe040c": "CopyStringToTilemap",
+ "0xe040c": {
+  "name": "DrawNameWithDiacritics_38",
+  "note": "Instruction-identical to DrawNameWithDiacritics_3b (one copy per bank); a change here belongs in every copy."
+ },
  "0xe040e": ".charLoop",
  "0xe041e": ".markChar",
  "0xe042f": ".writeMark",
@@ -13980,8 +14736,14 @@
  "0xec0d1": ".readOffset",
  "0xec0db": ".subtract",
  "0xec0df": "CursorBounceYTable",
- "0xec0ef": "QueueCursorCornersStatic",
- "0xec12a": "MoveMenuCursor",
+ "0xec0ef": {
+  "name": "DrawCornerBrackets_3b",
+  "note": "Instruction-identical to DrawCornerBrackets_1b, DrawCornerBrackets_38 and DrawCornerBrackets_3e (one copy per bank); a change here belongs in every copy."
+ },
+ "0xec12a": {
+  "name": "MoveMenuCursorGrid_3b",
+  "note": "Instruction-identical to MoveMenuCursorGrid_38 and MoveMenuCursorGrid_3e (one copy per bank); a change here belongs in every copy."
+ },
  "0xec144": ".wrapRight",
  "0xec149": ".storeRight",
  "0xec14e": ".checkLeft",
@@ -14051,13 +14813,22 @@
  "0xec3a5": ".store5",
  "0xec3a8": ".checkMenuCursor2X",
  "0xec3b6": ".checkMenuCursorY",
- "0xec3b9": "GetMenuCursorCellIndex",
+ "0xec3b9": {
+  "name": "GetMenuCursorIndex_3b",
+  "note": "Instruction-identical to GetMenuCursorIndex_16, GetMenuCursorIndex_1b, GetMenuCursorIndex_38 and GetMenuCursorIndex_3e (one copy per bank); a change here belongs in every copy."
+ },
  "0xec3bf": ".mulLoop",
  "0xec3c5": ".addColumn",
- "0xec3cb": "GetCellIndexFromCursorPtr",
+ "0xec3cb": {
+  "name": "GetCellIndexFromCursorPtr_3b",
+  "note": "Instruction-identical to GetCellIndexFromCursorPtr_16 and GetCellIndexFromCursorPtr_3e (one copy per bank); a change here belongs in every copy."
+ },
  "0xec3d0": ".loop",
  "0xec3d6": ".countDone",
- "0xec3db": "SetMenuCursorFromCellIndex",
+ "0xec3db": {
+  "name": "SetMenuCursorFromIndex_3b",
+  "note": "Instruction-identical to SetMenuCursorFromIndex_16, SetMenuCursorFromIndex_38 and SetMenuCursorFromIndex_3e (one copy per bank); a change here belongs in every copy."
+ },
  "0xec3de": ".divLoop",
  "0xec3e5": ".store",
  "0xec3ed": "StoreCellIndexToCursorPtr",
@@ -14068,16 +14839,25 @@
  "0xec411": "ClearWram3Row64Alt",
  "0xec41e": ".loopB",
  "0xec428": "UpdateAnimatedTilesTask_3b",
- "0xec42c": "DrawNameWithDiacritics_3b",
+ "0xec42c": {
+  "name": "DrawNameWithDiacritics_3b",
+  "note": "Instruction-identical to DrawNameWithDiacritics_38 (one copy per bank); a change here belongs in every copy."
+ },
  "0xec42e": ".charLoop",
  "0xec43e": ".markChar",
  "0xec44f": ".writeMark",
  "0xec453": ".nextCell",
  "0xec462": ".done",
- "0xec465": "PrintNumberString_3b",
+ "0xec465": {
+  "name": "DrawDecimalNumber_3b",
+  "note": "Instruction-identical to DrawDecimalNumber_17, DrawDecimalNumber_1b and DrawDecimalNumber_3e (one copy per bank); a change here belongs in every copy."
+ },
  "0xec486": "DrawAsciiDigitString_3b",
  "0xec48f": ".done",
- "0xec490": "DrawAsciiDigitChar_3b",
+ "0xec490": {
+  "name": "DrawAsciiDigitChar_3b",
+  "note": "Instruction-identical to DrawAsciiDigitChar_16, DrawAsciiDigitChar_17, DrawAsciiDigitChar_1b and DrawAsciiDigitChar_3e (one copy per bank); a change here belongs in every copy."
+ },
  "0xec4a6": ".carry",
  "0xec4a9": "StubNop_3b",
  "0xec4aa": "RunN64ExhibData",
@@ -14415,7 +15195,10 @@
  "0xededf": ".loop",
  "0xedef4": ".zero",
  "0xedef6": ".loopB",
- "0xedf0b": "MatchFormatSlideOut",
+ "0xedf0b": {
+  "name": "MatchFormatSlideOut",
+  "note": "Instruction-identical to CloseMatchRulesPanel (one copy per bank); a change here belongs in every copy."
+ },
  "0xedf11": ".loop",
  "0xedf26": ".zero",
  "0xedf28": ".loopB",
@@ -14439,7 +15222,10 @@
  "0xee074": ".fill",
  "0xee085": "FillMatchFormatOptionCellTable",
  "0xee093": "MatchFormatOptionCellTable",
- "0xee09a": "FlushMatchFormatRowToVram",
+ "0xee09a": {
+  "name": "FlushMatchFormatRowToVram",
+  "note": "Instruction-identical to FlushMatchRuleRowAttrs (one copy per bank); a change here belongs in every copy."
+ },
  "0xee0af": ".row1",
  "0xee0c0": ".row2",
  "0xee0cb": ".done",
@@ -14963,8 +15749,14 @@
  "0xf80e1": ".readOffset",
  "0xf80eb": ".subtract",
  "0xf80ef": "SelectionBoxWobbleYTable_3e",
- "0xf80ff": "DrawCornerBrackets_3e",
- "0xf813a": "MoveMenuCursorGrid_3e",
+ "0xf80ff": {
+  "name": "DrawCornerBrackets_3e",
+  "note": "Instruction-identical to DrawCornerBrackets_1b, DrawCornerBrackets_38 and DrawCornerBrackets_3b (one copy per bank); a change here belongs in every copy."
+ },
+ "0xf813a": {
+  "name": "MoveMenuCursorGrid_3e",
+  "note": "Instruction-identical to MoveMenuCursorGrid_38 and MoveMenuCursorGrid_3b (one copy per bank); a change here belongs in every copy."
+ },
  "0xf8154": ".wrapRight",
  "0xf8159": ".storeRight",
  "0xf815e": ".checkLeft",
@@ -14978,7 +15770,10 @@
  "0xf81a4": ".storeDown",
  "0xf81a7": ".compare",
  "0xf81b5": ".moved",
- "0xf81b8": "MoveMenuCursorGridFromLinkInput_3e",
+ "0xf81b8": {
+  "name": "MoveMenuCursorGridFromLinkInput_3e",
+  "note": "Instruction-identical to MoveMenuCursorGridFromLinkInput_16 and MoveMenuCursorGridFromLinkInput_38 (one copy per bank); a change here belongs in every copy."
+ },
  "0xf81d1": ".wrapRight",
  "0xf81d6": ".storeRight",
  "0xf81db": ".checkLeft",
@@ -14992,7 +15787,10 @@
  "0xf8221": ".storeDown",
  "0xf8224": ".compare",
  "0xf8232": ".moved",
- "0xf8235": "MoveMenuCursorGridRemote_3e",
+ "0xf8235": {
+  "name": "MoveMenuCursorGridRemote_3e",
+  "note": "Instruction-identical to MoveMenuCursorGridRemote_16 and MoveMenuCursorGridRemote_38 (one copy per bank); a change here belongs in every copy."
+ },
  "0xf824a": ".asMaster",
  "0xf824e": ".asSlave",
  "0xf8250": ".haveInput",
@@ -15013,7 +15811,10 @@
  "0xf82ec": ".storeLock",
  "0xf82ef": ".compare",
  "0xf82fd": ".moved",
- "0xf8300": "MoveMenuCursor2GridRemote_3e",
+ "0xf8300": {
+  "name": "MoveMenuCursor2GridRemote_3e",
+  "note": "Instruction-identical to MoveMenuCursor2GridRemote_16 (one copy per bank); a change here belongs in every copy."
+ },
  "0xf8315": ".asMaster",
  "0xf8319": ".asSlave",
  "0xf831b": ".haveInput",
@@ -15034,16 +15835,28 @@
  "0xf83b5": ".storeLock",
  "0xf83b8": ".compare",
  "0xf83c6": ".moved",
- "0xf83c9": "GetMenuCursorIndex_3e",
+ "0xf83c9": {
+  "name": "GetMenuCursorIndex_3e",
+  "note": "Instruction-identical to GetMenuCursorIndex_16, GetMenuCursorIndex_1b, GetMenuCursorIndex_38 and GetMenuCursorIndex_3b (one copy per bank); a change here belongs in every copy."
+ },
  "0xf83cf": ".mulLoop",
  "0xf83d5": ".addColumn",
- "0xf83db": "GetCellIndexFromCursorPtr_3e",
+ "0xf83db": {
+  "name": "GetCellIndexFromCursorPtr_3e",
+  "note": "Instruction-identical to GetCellIndexFromCursorPtr_16 and GetCellIndexFromCursorPtr_3b (one copy per bank); a change here belongs in every copy."
+ },
  "0xf83e0": ".loop",
  "0xf83e6": ".countDone",
- "0xf83eb": "SetMenuCursorFromIndex_3e",
+ "0xf83eb": {
+  "name": "SetMenuCursorFromIndex_3e",
+  "note": "Instruction-identical to SetMenuCursorFromIndex_16, SetMenuCursorFromIndex_38 and SetMenuCursorFromIndex_3b (one copy per bank); a change here belongs in every copy."
+ },
  "0xf83ee": ".divLoop",
  "0xf83f5": ".store",
- "0xf83fd": "SetMenuCursorFromIndexToPtr",
+ "0xf83fd": {
+  "name": "SetMenuCursorFromIndexToPtr_3e",
+  "note": "Instruction-identical to SetMenuCursorFromIndexToPtr_16 and SetMenuCursorFromIndexToPtr_38 (one copy per bank); a change here belongs in every copy."
+ },
  "0xf8400": ".divLoop",
  "0xf8407": ".store",
  "0xf840b": "ClearWram3Row64_3e",
@@ -15051,16 +15864,25 @@
  "0xf8421": "ClearWram3Row64Alt_3e",
  "0xf842e": ".loop",
  "0xf8438": "UpdateAnimatedTiles_3e",
- "0xf843c": "DrawNameWithDiacritics_3e",
+ "0xf843c": {
+  "name": "DrawNameWithDiacritics_3e",
+  "note": "Instruction-identical to DrawNameWithDiacritics_17 and DrawNameWithDiacritics_1b (one copy per bank); a change here belongs in every copy."
+ },
  "0xf843e": ".loop",
  "0xf844e": ".eqde",
  "0xf845f": ".store",
  "0xf8463": ".nedf",
  "0xf8472": ".restore",
- "0xf8475": "PrintNumberString_3e",
+ "0xf8475": {
+  "name": "DrawDecimalNumber_3e",
+  "note": "Instruction-identical to DrawDecimalNumber_17, DrawDecimalNumber_1b and DrawDecimalNumber_3b (one copy per bank); a change here belongs in every copy."
+ },
  "0xf8496": "DrawAsciiDigitString_3e",
  "0xf849f": ".done",
- "0xf84a0": "DrawAsciiDigitChar_3e",
+ "0xf84a0": {
+  "name": "DrawAsciiDigitChar_3e",
+  "note": "Instruction-identical to DrawAsciiDigitChar_16, DrawAsciiDigitChar_17, DrawAsciiDigitChar_1b and DrawAsciiDigitChar_3b (one copy per bank); a change here belongs in every copy."
+ },
  "0xf84b6": ".carry",
  "0xf84b9": "RestoreMenuScreenAndFadeIn",
  "0xf84cb": "RunLinkMatchRulesMenu",
@@ -15082,7 +15904,10 @@
  "0xf86fa": ".loop",
  "0xf8712": ".zero",
  "0xf8714": ".loopB",
- "0xf872c": "CloseMatchRulesPanel",
+ "0xf872c": {
+  "name": "CloseMatchRulesPanel",
+  "note": "Instruction-identical to MatchFormatSlideOut (one copy per bank); a change here belongs in every copy."
+ },
  "0xf8732": ".loop",
  "0xf8747": ".zero",
  "0xf8749": ".loopB",
@@ -15106,7 +15931,10 @@
  "0xf8895": ".fill",
  "0xf88a6": "MatchRuleOptionAttrAddrs_3e",
  "0xf88b4": "MatchRuleOptionAttrWidths_3e",
- "0xf88bb": "FlushMatchRuleRowAttrs",
+ "0xf88bb": {
+  "name": "FlushMatchRuleRowAttrs",
+  "note": "Instruction-identical to FlushMatchFormatRowToVram (one copy per bank); a change here belongs in every copy."
+ },
  "0xf88d0": ".row1",
  "0xf88e1": ".row2",
  "0xf88ec": ".done",
@@ -18151,7 +18979,10 @@
  "0x17828a": "TextStrings_5e",
  "0x17ae8f": "FetchDialogueText_5e",
  "0x17ae97": "FetchShortText_5e",
- "0x17ae9f": "FetchText_5e",
+ "0x17ae9f": {
+  "name": "FetchText_5e",
+  "note": "Instruction-identical to FetchText_1f, FetchText_25, FetchText_26, FetchText_30, FetchText_31, FetchText_32, FetchText_33, FetchText_34, FetchText_35, FetchText_36, FetchText_37 and FetchText_6e (one copy per bank); a change here belongs in every copy."
+ },
  "0x17aebb": ".nonZero",
  "0x17aec0": ".loop",
  "0x17aecd": ".countDone",
@@ -18547,7 +19378,10 @@
  "0x1ac17f": "IntroCutsceneState15Update_6b",
  "0x1ac18e": "IntroCutsceneState00Init_6b",
  "0x1ac1d3": "IntroCutsceneState00Exit_6b",
- "0x1ac1fa": "IntroCutsceneState00Update_6b",
+ "0x1ac1fa": {
+  "name": "IntroCutsceneState00Update_6b",
+  "note": "Instruction-identical to IntroCutsceneState19Update_6b (in this bank); a change here belongs in every copy."
+ },
  "0x1ac20d": ".updateCutsceneScrollY",
  "0x1ac21f": "IntroCutsceneState01Init_6b",
  "0x1ac2b2": "Palettes_6b_00",
@@ -18612,7 +19446,10 @@
  "0x1acc00": "Palettes_6b_03",
  "0x1acc38": "IntroCutsceneState19Init_6b",
  "0x1acc6e": "IntroCutsceneState19Exit_6b",
- "0x1acc79": "IntroCutsceneState19Update_6b",
+ "0x1acc79": {
+  "name": "IntroCutsceneState19Update_6b",
+  "note": "Instruction-identical to IntroCutsceneState00Update_6b (in this bank); a change here belongs in every copy."
+ },
  "0x1acc8c": ".updateCutsceneScrollY",
  "0x1acc9e": "UpdateCutsceneScrollX",
  "0x1acca9": ".read",
@@ -18851,7 +19688,10 @@
  "0x1b81e8": "TextStrings_6e",
  "0x1bbb08": "FetchDialogueText_6e",
  "0x1bbb10": "FetchShortText_6e",
- "0x1bbb18": "FetchText_6e",
+ "0x1bbb18": {
+  "name": "FetchText_6e",
+  "note": "Instruction-identical to FetchText_1f, FetchText_25, FetchText_26, FetchText_30, FetchText_31, FetchText_32, FetchText_33, FetchText_34, FetchText_35, FetchText_36, FetchText_37 and FetchText_5e (one copy per bank); a change here belongs in every copy."
+ },
  "0x1bbb34": ".nonZero",
  "0x1bbb39": ".loop",
  "0x1bbb46": ".countDone",

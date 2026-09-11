@@ -2540,6 +2540,7 @@ RestaurantEntryPoints_10:
 	map_entry $01, FACE_UP, $0c00, $2100, RestaurantArrival01_10
 	map_entry $02, FACE_DOWN, $0500, $1700, MapArrivalWalkPair_10
 	db $ff
+; Instruction-identical to AcademyMainBldgArrival01_10, MapArrivalWalk_11, DormEntranceArrival01_12 and RestaurantPlazaArrival04_13 (one copy per bank); a change here belongs in every copy.
 RestaurantArrival01_10:
 	ld a, [wStoryModeEntryPoint] ; $5b97
 	cp STORYENTRY_NONE ; $5b9a
@@ -4066,6 +4067,7 @@ AcademyMainBldgEntryPoints_10:
 	map_entry $0e, FACE_UP, $2200, $1300, $0000
 	map_entry $0f, FACE_UP, $2200, $1d00, $0000
 	db $ff
+; Instruction-identical to AcademyArrivalArrival01_11 and DormEntranceArrival02_12 (one copy per bank); a change here belongs in every copy.
 AcademyMainBldgArrival02_10:
 	ld a, [wStoryModeEntryPoint] ; $7532
 	cp STORYENTRY_NONE ; $7535
@@ -4082,6 +4084,7 @@ AcademyMainBldgArrival02_10:
 	script_move_angle ACTOR_PLAYER, FACE_DOWN, $0200 ; $756d
 .done:
 	ret ; $7577
+; Instruction-identical to RestaurantArrival01_10, MapArrivalWalk_11, DormEntranceArrival01_12 and RestaurantPlazaArrival04_13 (one copy per bank); a change here belongs in every copy.
 AcademyMainBldgArrival01_10:
 	ld a, [wStoryModeEntryPoint] ; $7578
 	cp STORYENTRY_NONE ; $757b
@@ -4399,7 +4402,7 @@ UpdateActorTileAnimState_10:
 	dec e ; $7a14
 .readCell:
 	push de ; $7a15
-	call ReadSceneTilemapCell_10 ; $7a16
+	call ReadSceneTilemapTile_10 ; $7a16
 	pop de ; $7a19
 	and $87 ; $7a1a
 	cp $06 ; $7a1c
@@ -4413,7 +4416,7 @@ UpdateActorTileAnimState_10:
 	ret ; $7a2e
 .checkBelow:
 	inc d ; $7a2f
-	call ReadSceneTilemapCell_10 ; $7a30
+	call ReadSceneTilemapTile_10 ; $7a30
 	and $07 ; $7a33
 	cp $06 ; $7a35
 	jr nz, .actorLoop ; $7a37
@@ -4463,7 +4466,7 @@ Unused_10_UpdateActorTileAnimStateByIndex:
 	dec e ; $7a85
 	dec e ; $7a86
 	push de ; $7a87
-	call ReadSceneTilemapCell_10 ; $7a88
+	call ReadSceneTilemapTile_10 ; $7a88
 	pop de ; $7a8b
 	and $87 ; $7a8c
 	cp $06 ; $7a8e
@@ -4477,7 +4480,7 @@ Unused_10_UpdateActorTileAnimStateByIndex:
 	ret ; $7aa0
 .nextActor:
 	inc d ; $7aa1
-	call ReadSceneTilemapCell_10 ; $7aa2
+	call ReadSceneTilemapTile_10 ; $7aa2
 	and $07 ; $7aa5
 	cp $06 ; $7aa7
 	jr nz, .done ; $7aa9
@@ -4495,7 +4498,8 @@ Unused_10_UpdateActorTileAnimStateByIndex:
 	ld a, $02 ; $7ac4
 	ld [hl], a ; $7ac6
 	ret ; $7ac7
-ReadSceneTilemapCell_10:
+; Instruction-identical to ReadSceneTilemapTile_0f (one copy per bank); a change here belongs in every copy.
+ReadSceneTilemapTile_10:
 	wram_bank $02 ; $7ac8
 	ld h, e ; $7ace
 	ld l, $00 ; $7acf

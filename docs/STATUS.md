@@ -116,6 +116,15 @@ label bound to the wrong parent.
 
 ## Recent changes
 
+* **2026-09-11** — live twins are marked. `tools/twins.py` fingerprints the
+  generated source and finds 64 groups of instruction-identical live
+  routines, 279 in all (the shot solver's fifteen helpers in nine banks,
+  `FetchText` in thirteen, the menu-cursor library in six, story-bank
+  helpers, per-minigame handlers). Every member's note names its copies,
+  39 whose names had drifted apart were renamed to one base plus bank
+  suffix (`MoveMenuCursorBox` is `MoveMenuCursorGrid_38`,
+  `PrintNumberString_3b` is `DrawDecimalNumber_3b`), and
+  `docs/duplicated_code.md` lists the groups.
 * **2026-09-11** — two modding fixes. Data files are named after their
   labels (`data/bank_040/AlexSpriteFrame00.png`, `lz_MenuFontTiles_01.bin`,
   `MatchResultPalettes.asm`; only unnamed blobs keep `d_XXXX`). And VRAM
