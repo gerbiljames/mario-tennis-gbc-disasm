@@ -4178,20 +4178,20 @@ CpuDifficultyParamPtrs_38:
 	dw CpuDifficultyParamsHard ; record 3
 	dw CpuDifficultyParamsIntense ; record 4
 CpuDifficultyParamsUnset:
-	; $5ff5, 6 bytes (bytes:6)
-	db $02, $02, $00, $e6, $03, $07 ; 0x00
+	; $5ff5, 6 bytes (cpu_difficulty)
+	cpu_difficulty 2, 2, 0, 230, 3, 7
 CpuDifficultyParamsEasy:
-	; $5ffb, 6 bytes (bytes:6)
-	db $1c, $18, $0c, $3c, $00, $01 ; 0x00
+	; $5ffb, 6 bytes (cpu_difficulty)
+	cpu_difficulty 28, 24, 12, 60, 0, 1
 CpuDifficultyParamsNormal:
-	; $6001, 6 bytes (bytes:6)
-	db $12, $0f, $09, $78, $01, $03 ; 0x00
+	; $6001, 6 bytes (cpu_difficulty)
+	cpu_difficulty 18, 15, 9, 120, 1, 3
 CpuDifficultyParamsHard:
-	; $6007, 6 bytes (bytes:6)
-	db $0a, $09, $05, $be, $02, $05 ; 0x00
+	; $6007, 6 bytes (cpu_difficulty)
+	cpu_difficulty 10, 9, 5, 190, 2, 5
 CpuDifficultyParamsIntense:
-	; $600d, 6 bytes (bytes:6)
-	db $02, $02, $00, $e6, $03, $07 ; 0x00
+	; $600d, 6 bytes (cpu_difficulty)
+	cpu_difficulty 2, 2, 0, 230, 3, 7
 IsCreatedCharId:
 	cp $04 ; $6013
 	jr nc, .no ; $6015

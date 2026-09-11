@@ -3947,33 +3947,34 @@ ResolvePointWinner:
 	add a ; $5dc1
 	dec a ; $5dc2
 	ret ; $5dc3
-LoadCourtSceneDataTable:
-	; $5dc4, 100 bytes (bytes:4)
-	db $cd, $cd, $05, $21 ; 0x00
-	db $b3, $99, $04, $22 ; 0x04
-	db $e6, $99, $02, $23 ; 0x08
-	db $f0, $b3, $08, $20 ; 0x0c
-	db $e6, $cd, $0a, $11 ; 0x10
-	db $cd, $b3, $0d, $12 ; 0x14
-	db $f0, $99, $09, $13 ; 0x18
-	db $e6, $e6, $0f, $16 ; 0x1c
-	db $b3, $cd, $0c, $14 ; 0x20
-	db $cd, $b3, $03, $25 ; 0x24
-	db $cd, $b3, $06, $1e ; 0x28
-	db $cd, $b3, $0e, $1f ; 0x2c
-	db $e6, $99, $07, $28 ; 0x30
-	db $e6, $99, $02, $27 ; 0x34
-	db $cd, $b3, $00, $29 ; 0x38
-	db $cd, $b3, $01, $17 ; 0x3c
-	db $e6, $cd, $0a, $18 ; 0x40
-	db $cd, $b3, $00, $16 ; 0x44
-	db $e6, $cd, $0a, $11 ; 0x48
-	db $cd, $b3, $00, $12 ; 0x4c
-	db $b3, $cd, $0c, $14 ; 0x50
-	db $b3, $cd, $0c, $19 ; 0x54
-	db $cd, $b3, $00, $13 ; 0x58
-	db $b3, $cd, $0c, $15 ; 0x5c
-	db $cd, $b3, $03, $24 ; 0x60
+CourtSceneDataTable:
+	; $5dc4, 100 bytes (court_scene)
+; court_scene friction, bounce, scene, unused
+	court_scene $cd, $cd, 5, $21 ; $00 COURT_HARD
+	court_scene $b3, $99, 4, $22 ; $01 COURT_CLAY
+	court_scene $e6, $99, 2, $23 ; $02 COURT_GRASS (exhibition)
+	court_scene $f0, $b3, 8, $20 ; $03 COURT_COMPOSITION
+	court_scene $e6, $cd, 10, $11 ; $04 COURT_STAR
+	court_scene $cd, $b3, 13, $12 ; $05 COURT_CASTLE
+	court_scene $f0, $99, 9, $13 ; $06 COURT_TROPICS
+	court_scene $e6, $e6, 15, $16 ; $07 COURT_JUNGLE
+	court_scene $b3, $cd, 12, $14 ; $08 COURT_WAREHOUSE
+	court_scene $cd, $b3, 3, $25 ; $09 COURT_TRAINING_PRACTICE
+	court_scene $cd, $b3, 6, $1e ; $0a COURT_TENNIS_MACHINE
+	court_scene $cd, $b3, 14, $1f ; $0b COURT_WALL_PRACTICE
+	court_scene $e6, $99, 7, $28 ; $0c COURT_CENTER
+	court_scene $e6, $99, 2, $27 ; $0d COURT_GRASS_ISLAND_OPEN
+	court_scene $cd, $b3, 0, $29 ; $0e COURT_UNUSED_0E
+	court_scene $cd, $b3, 1, $17 ; $0f Target Shot
+	court_scene $e6, $cd, 10, $18 ; $10 Shooting Star
+	court_scene $cd, $b3, 0, $16 ; $11 Banana Bunch
+	court_scene $e6, $cd, 10, $11 ; $12 Boo Blast
+	court_scene $cd, $b3, 0, $12 ; $13 Perfect Shot
+	court_scene $b3, $cd, 12, $14 ; $14 Treasure Box
+	court_scene $b3, $cd, 12, $19 ; $15 Medallion Match
+	court_scene $cd, $b3, 0, $13 ; $16 Fruit Fantasy
+	court_scene $b3, $cd, 12, $15 ; $17 Two-On-One
+	court_scene $cd, $b3, 3, $24 ; $18 Training Court (match)
 LoadCourtSceneData:
 	ldh a, [hWramBank] ; $5e28
 	push af ; $5e2a
@@ -3984,7 +3985,7 @@ LoadCourtSceneData:
 	ld a, [wCurrentlyUsedCourt] ; $5e31
 	add a ; $5e34
 	add a ; $5e35
-	ld_hl_indexed LoadCourtSceneDataTable ; $5e36
+	ld_hl_indexed CourtSceneDataTable ; $5e36
 	ld a, [hl+] ; $5e3d
 	ld [wCourtSurfaceFriction], a ; $5e3e
 	ld a, [hl+] ; $5e41

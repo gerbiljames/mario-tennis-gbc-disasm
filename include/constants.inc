@@ -124,6 +124,17 @@ def SHOTTYPE_SERVE_TOPSPIN     equ $0c ; serve, A
 def SHOTTYPE_SERVE_SLICE       equ $0d ; serve, B
 def SHOTTYPE_SERVE_FLAT        equ $0e ; serve, A+B
 
+; AI shot habits (CharGroupTable_02, one 16-entry row per serve style;
+; AiPickShotButtons $08 draws one by AdvanceMatchRng & $0f): the stroke's two
+; button presses as nibbles, first press high -- 1 = A, 2 = B, 3 = A+B.
+def AISHOT_TOPSPIN             equ $10 ; A
+def AISHOT_POWER_TOPSPIN       equ $11 ; A -> A
+def AISHOT_LOB                 equ $12 ; A -> B
+def AISHOT_SLICE               equ $20 ; B
+def AISHOT_DROP                equ $21 ; B -> A
+def AISHOT_POWER_SLICE         equ $22 ; B -> B
+def AISHOT_NEUTRAL             equ $30 ; A+B, a smash when the ball is in range
+
 ; --- Point outcome (wPointOutcome, $c4d8) — MATCH context ---
 ; ResolvePointOutcome ($08:$4df4) dispatches `rst Rst00` on wPointOutcome:
 ; 1-5 -> ShowCourtBanner(wPointOutcome) (banner id == the value), 6 -> the
@@ -592,6 +603,14 @@ def JINGLE_DONE_FOR_THE_DAY  equ $41 ; going to bed (DormRoomNpc03_13) and the s
 
 ; Sound effects. Named from the event the call site plays them for.
 def SFX_STOP                 equ $50 ; silences the two effect channels
+; The racket-contact sounds, one per shot type in ShotTypePresets_07
+; (ApplyShotTypePresets $07 plays the row's first byte at contact). Named for
+; the stroke family that uses each; the smash shares the slice sound.
+def SFX_HIT_TOPSPIN          equ $51 ; topspin, power topspin, neutral and the reach strokes
+def SFX_HIT_DROP             equ $52
+def SFX_HIT_LOB              equ $53
+def SFX_HIT_SERVE            equ $54 ; all three serves
+def SFX_HIT_SLICE            equ $57 ; slice, power slice and the smash
 def SFX_BALL_BOUNCE          equ $5b ; HandleBallBounceEvent ($08:$435e)
 ; The next two were confirmed on the emulator rather than from the call sites,
 ; by hooking PlaySound.startChannels ($32dc) -- `hl` there is the index-table

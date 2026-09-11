@@ -106,7 +106,15 @@ restated:
 - **Tables.** Stats, physics constants, mode hooks, map actors, animation
   scripts, flag lists and menu definitions render as structured source with
   named fields — `docs/graphics_formats.md` and `docs/story_mode.md` give the
-  layouts.
+  layouts. The tables a balance mod reaches for are one macro row per record
+  with the field order in the macro's comment (`include/macros.inc`): every
+  character's attributes and eleven stat bars (`char_record`, named per
+  character, `src/bank_002.asm`), the racket and shoe bonuses
+  (`equip_stat_deltas`), the four stat-growth archetypes (`stat_thresholds`),
+  the EXP curve (`exp_threshold`), the AI's shot habits per serve style
+  (`AISHOT_*`), the CPU difficulty rows (`cpu_difficulty`, `src/bank_038.asm`),
+  the shot-type presets (`shot_preset`, `src/bank_007.asm`) and the per-court
+  surface physics (`court_scene`, `src/bank_008.asm`).
 - **Assets are referenced by name.** The two screen-asset dispatchers take
   an index into a table in bank `$39`, and each table row defines its own:
   `tileblock MenuFontTiles_01` is a row of `TileBlockPtrs_39` and defines

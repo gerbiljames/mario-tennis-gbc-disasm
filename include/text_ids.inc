@@ -1,7 +1,8 @@
 ; Text ids. Text_<bank>_<index> = a dialogue text id, named by the (text
-; bank : string index) coordinate it decodes to: string `.s<index>` of
-; data/bank_0<bank>/TextStrings_<bank>.asm. List them with
-; `tools/strings.py --index --bank <bank>`. Hand-maintained.
+; bank : string index) coordinate it decodes to: row <index> of the bank's
+; offset table in src/bank_0<bank>.asm, which points at a `.sN` string of
+; data/bank_0<bank>/TextStrings_<bank>.asm (the two orders differ). List
+; them with `tools/strings.py --index --bank <bank>`. Hand-maintained.
 
 def Text_30_1 equ $0001
 def Text_30_26 equ $001a

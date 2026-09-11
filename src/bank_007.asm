@@ -2754,23 +2754,23 @@ ApplyShotTypePresets:
 	ld c, a ; $559c
 	ret ; $559d
 ShotTypePresets_07:
-	; $559e, 75 bytes (records:5)
-; 15 records x 5 bytes
-	db $51, $00, $00, $80, $02 ; record 0
-	db $51, $00, $01, $c0, $03 ; record 1
-	db $57, $00, $00, $80, $02 ; record 2
-	db $57, $00, $02, $c0, $03 ; record 3
-	db $51, $00, $00, $c0, $03 ; record 4
-	db $51, $01, $00, $c0, $03 ; record 5
-	db $51, $01, $00, $80, $04 ; record 6
-	db $51, $01, $00, $80, $03 ; record 7
-	db $51, $01, $00, $c0, $03 ; record 8
-	db $57, $02, $03, $40, $04 ; record 9
-	db $53, $03, $00, $00, $02 ; record 10
-	db $52, $03, $00, $00, $02 ; record 11
-	db $54, $04, $01, $a0, $02 ; record 12
-	db $54, $04, $02, $a0, $02 ; record 13
-	db $54, $04, $03, $a0, $02 ; record 14
+	; $559e, 75 bytes (shot_preset)
+; shot_preset sound, recoil variant, trail colour, target depth
+	shot_preset SFX_HIT_TOPSPIN, 0, 0, $0280 ; SHOTTYPE_TOPSPIN
+	shot_preset SFX_HIT_TOPSPIN, 0, 1, $03c0 ; SHOTTYPE_POWER_TOPSPIN
+	shot_preset SFX_HIT_SLICE, 0, 0, $0280 ; SHOTTYPE_SLICE
+	shot_preset SFX_HIT_SLICE, 0, 2, $03c0 ; SHOTTYPE_POWER_SLICE
+	shot_preset SFX_HIT_TOPSPIN, 0, 0, $03c0 ; SHOTTYPE_NEUTRAL
+	shot_preset SFX_HIT_TOPSPIN, 1, 0, $03c0 ; SHOTTYPE_REACH
+	shot_preset SFX_HIT_TOPSPIN, 1, 0, $0480 ; SHOTTYPE_REACH_POWER_TOPSPIN
+	shot_preset SFX_HIT_TOPSPIN, 1, 0, $0380 ; SHOTTYPE_REACH_POWER_SLICE
+	shot_preset SFX_HIT_TOPSPIN, 1, 0, $03c0 ; SHOTTYPE_REACH_BASIC
+	shot_preset SFX_HIT_SLICE, 2, 3, $0440 ; SHOTTYPE_SMASH
+	shot_preset SFX_HIT_LOB, 3, 0, $0200 ; SHOTTYPE_LOB
+	shot_preset SFX_HIT_DROP, 3, 0, $0200 ; SHOTTYPE_DROP
+	shot_preset SFX_HIT_SERVE, 4, 1, $02a0 ; SHOTTYPE_SERVE_TOPSPIN
+	shot_preset SFX_HIT_SERVE, 4, 2, $02a0 ; SHOTTYPE_SERVE_SLICE
+	shot_preset SFX_HIT_SERVE, 4, 3, $02a0 ; SHOTTYPE_SERVE_FLAT
 GetShotAimOffsetForSide:
 	ld hl, ShotAimOffsetForSideCourtSideOffsets ; $55e9
 	ld a, [wMinigameUsesWall] ; $55ec
@@ -3477,9 +3477,39 @@ LookupCharSpriteSet:
 	pop hl ; $5a4e
 	ret ; $5a4f
 CharSpriteSetTable:
-	; $5a50, 32 bytes (bytes:16)
-	db $00, $01, $03, $02, $0c, $16, $0d, $17, $0f, $18, $19, $0e, $05, $07, $06, $09 ; 0x00
-	db $08, $04, $0b, $0a, $0a, $1a, $0c, $1b, $1c, $1d, $10, $11, $12, $13, $15, $14 ; 0x10
+	; $5a50, 32 bytes (bytes:1, one per character id)
+	db $00 ; $00 Alex
+	db $01 ; $01 Nina
+	db $03 ; $02 Harry
+	db $02 ; $03 Kate
+	db $0c ; $04 Allie
+	db $16 ; $05 Joy
+	db $0d ; $06 Brian
+	db $17 ; $07 Pam
+	db $0f ; $08 Bob
+	db $18 ; $09 Beth
+	db $19 ; $0a Fay
+	db $0e ; $0b Curt
+	db $05 ; $0c Mark
+	db $07 ; $0d Sean
+	db $06 ; $0e Sammi
+	db $09 ; $0f Elden
+	db $08 ; $10 Spike
+	db $04 ; $11 Emily
+	db $0b ; $12 B. Coz
+	db $0a ; $13 A. Coz
+	db $0a ; $14 Kevin
+	db $1a ; $15 Not used
+	db $0c ; $16 Not used
+	db $1b ; $17 Luigi
+	db $1c ; $18 DK
+	db $1d ; $19 Baby M.
+	db $10 ; $1a Mario
+	db $11 ; $1b Waluigi
+	db $12 ; $1c Yoshi
+	db $13 ; $1d Bowser
+	db $15 ; $1e Wario
+	db $14 ; $1f Peach
 SetupCharacterSprite:
 	push de ; $5a70
 	farcall SetupCharSpriteFromObjectDef ; $5a71

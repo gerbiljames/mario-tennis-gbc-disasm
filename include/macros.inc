@@ -57,6 +57,73 @@ EXPORT SCREENASSET_\1
 	dslot \2, \3, \4, \5
 ENDM
 
+; --- Tunable record tables (one macro row per record, fields in order) ---
+
+; One StoryCharacterRecords_02 row: the 29 bytes InitCa00RecordFromCharId
+; copies into a character record at +$0f-+$2b and LoadCharacterAttributes
+; turns into the wChar*/wAi* struct fields (docs/match_engine.md "Character
+; stats into the engine"). Words are little-endian.
+;   char_record strategy, reach_h, reach_x, smash_jump, dive, tier, swing,
+;               delay_near, delay_far, tracking, aim_away, serve_style,
+;               Top, Slice, Serve, Stroke, Volley, Angle, Placement, Speed,
+;               Dash, Reaction, Stop, speed_bonus
+MACRO char_record
+	db \1
+	dw \2, \3, \4, \5
+	db \6
+	dw \7
+	db \8, \9, \<10>, \<11>, \<12>
+	db \<13>, \<14>, \<15>, \<16>, \<17>, \<18>, \<19>, \<20>, \<21>, \<22>, \<23>
+	db \<24>
+ENDM
+
+; One ShotTypePresets_07 row, read by ApplyShotTypePresets: the contact sound,
+; the ApplyShotRecoil variant, the SetBallTrailColor index and the nominal
+; landing depth past the net that ComputeShotTrajectory aims at.
+;   shot_preset sound, recoil, trail, depth
+MACRO shot_preset
+	db \1, \2, \3
+	dw \4
+ENDM
+
+; One CpuDifficultyParams* row: the four AI bytes ApplyCpuDifficultyToCharRecords
+; writes to a CPU record's +$1b-+$1e (frames of inertness after a stroke near
+; the net and away from it, the tracking countdown, the aim-away RNG threshold),
+; then the partner's difficulty and EXP tier.
+;   cpu_difficulty delay_near, delay_far, tracking, aim_away, partner_difficulty, partner_tier
+MACRO cpu_difficulty
+	db \1, \2, \3, \4, \5, \6
+ENDM
+
+; One equipment row (RacketStatDeltas_02 / ShoeStatDeltas_02): the signed
+; delta ApplyStatModifierRow adds to each of the eleven stat bars, padded to
+; the 16-byte stride.
+;   equip_stat_deltas Top, Slice, Serve, Stroke, Volley, Angle, Placement, Speed, Dash, Reaction, Stop
+MACRO equip_stat_deltas
+	db \1, \2, \3, \4, \5, \6, \7, \8, \9, \<10>, \<11>, 0, 0, 0, 0, 0
+ENDM
+
+; One stat's nine ascending signed thresholds in a StatArchetype*_02 table:
+; LookupStatBarLevel counts how many the scaled level clears, which is the
+; 0-9 bar.
+MACRO stat_thresholds
+	db \1, \2, \3, \4, \5, \6, \7, \8, \9
+ENDM
+
+; One ExpLevelThresholds_02 entry: the cumulative EXP that reaches the level,
+; as the 24-bit little-endian accumulator AddExpCapped keeps.
+MACRO exp_threshold
+	db LOW(\1), HIGH(\1), (\1) >> 16
+ENDM
+
+; One CourtSceneDataTable row, indexed by court id: the two surface damping
+; bytes LoadCourtSceneData stores (wCourtSurfaceFriction, wCourtSurfaceBounce),
+; the scene index handed to LoadCourtSceneGraphics, and a byte nothing reads.
+;   court_scene friction, bounce, scene, unused
+MACRO court_scene
+	db \1, \2, \3, \4
+ENDM
+
 ; One $4000 pointer-table entry: defines the FarPtr_<suffix> label and the dw
 ; slot that farcall's operand bytes index. One arg when the target symbol is
 ; the suffix (farptr RunMatch -> FarPtr_RunMatch: dw RunMatch); two when they

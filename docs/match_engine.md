@@ -428,7 +428,8 @@ and both handednesses.
 
 `ApplyShotTypePresets` (`$07:$557e`) reads a **5-byte record** from
 `ShotTypePresets_07` (`$07:$559e`), indexed by shot type: `[sound id, recoil
-variant, trail colour, target depth lo, target depth hi]`. The target depth is
+variant, trail colour, target depth lo, target depth hi]`, one `shot_preset`
+row per `SHOTTYPE_*` with the sound as `SFX_HIT_*`. The target depth is
 the shot's nominal landing depth past the net, and it is the shot type's whole
 personality: ground strokes aim `$0280` (6.1 m), the power variants `$03c0`
 (9.1 m), a smash `$0440` (10.4 m), lobs and drops `$0200` (4.9 m), serves
@@ -536,7 +537,7 @@ entry points and the trailing data differ.
 
 `ram_map.md` calls these "court banks". They are not per-court — bank `$22` is
 topspin on every court, and the per-court data is the two damping bytes in
-`LoadCourtSceneDataTable`.
+`CourtSceneDataTable` (`court_scene` rows, one per court id).
 
 **A row.** Rows are 6 bytes (or 4 in the tables that do not carry a lateral
 delta):
@@ -1002,8 +1003,8 @@ case.
 **The 0-3 difficulty value is never read by the AI.** Difficulty is baked into
 four parameter bytes before the match starts.
 `ApplyCpuDifficultyToCharRecords` (`$38:$5f4c`) copies a 4-byte row per CPU slot
-from `CpuDifficultyParamPtrs_38` (`$38:$5feb`) into each character record's
-bytes `+$1b`..`+$1e`; `LoadCharacterAttributes` (`$07:$5ab3`) then loads them
+from `CpuDifficultyParamPtrs_38` (`$38:$5feb`; the rows are `cpu_difficulty`
+records) into each character record's bytes `+$1b`..`+$1e`; `LoadCharacterAttributes` (`$07:$5ab3`) then loads them
 into the struct. Slot 0 — the human — is never touched.
 
 | Field | Struct | Easy → Intense | Effect |
@@ -1040,9 +1041,9 @@ placement is hard to read.
    depth `$01e0` → A→B → `SHOTTYPE_LOB`. **The CPU lobs when you come to the
    net.**
 3. Otherwise a per-character 16-entry distribution of button pairs read from
-   `CharGroupTable_02` (`$02:$5e23`, 9 rows × 16) by
-   `AdvanceMatchRng & $0f`, indexed by `wAiServeStyle`. This is the character's
-   shot personality.
+   `CharGroupTable_02` (`$02:$5e23`, 9 rows × 16, written with the `AISHOT_*`
+   button-pair codes) by `AdvanceMatchRng & $0f`, indexed by `wAiServeStyle`.
+   This is the character's shot personality.
 
 `AiAimAwayFromChar` (`$08:$7b1f`) reads the target character's X position **and
 X velocity** out of that character's WRAM bank and rolls: 2 chances in 4 to aim
@@ -1425,7 +1426,8 @@ is Main, Main, Partner, Partner.)
 `InitCa00RecordFromCharId` (`$02:$4066`) fills a slot from a character id:
 
 - **Roster character** (id bit 7 clear): copies 29 bytes from a 100-record ROM
-  table (`StoryCharacterRecords_02`, `$02:$52cf`, 29-byte stride) into record
+  table (`StoryCharacterRecords_02`, `$02:$52cf`, 29-byte stride, one
+  `char_record` row per id with the character's name beside it) into record
   offset `+$0f` — which is exactly the span `LoadCharacterAttributes` reads. The
   eleven stat bars for Mario, Bowser and company are hard-coded there.
 - **Created story character** (id bit 7 set): copies 64 bytes from `$c900` or
@@ -1566,7 +1568,7 @@ Things this document deliberately does not claim:
   nowhere in the ROM.
 - **Placement-record bytes `+6`/`+7`** are zero in all fifteen tables and no
   reader was found.
-- **The fourth byte of each court record** in `LoadCourtSceneDataTable` is not
+- **The fourth byte of each court record** in `CourtSceneDataTable` is not
   read by `LoadCourtSceneData`, and no other reader of that table exists.
 - **The incoming-pace term's sign.** `AddBallSpeedQuarter` and its siblings force
   the term negative, so absorbing a fast ball *reduces* the requested shot speed.

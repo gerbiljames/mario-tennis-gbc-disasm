@@ -628,8 +628,10 @@ bar  = count of thresholds raw clears (0-9)     ; LookupStatBarLevel, 9-entry si
 ```
 
 The threshold tables are grouped per character archetype: `record[+$0b] & 3`
-picks one of four ~113-byte tables through `EquipRecordPtrs_02` (`$02:$4b?`,
-`src/bank_002.asm:1103`), and each stat reads a 9-byte slice of it. Level-to-stat
+picks one of four 113-byte tables through `StatArchetypePtrs_02`
+(`StatArchetype0_02`-`StatArchetype3_02`): a tier byte, the 12-byte template
+copied to `+$30`-`+$3b` when the record is built, then eleven
+`stat_thresholds` rows, one per stat. Level-to-stat
 mapping:
 
 | trainable level | feeds |
@@ -649,8 +651,9 @@ byte is zero**, calling `ApplyStatModifiers` (`$02:$468e`). That condition is
 true for `$c800`, `$c900` and `$ca00` but not for `$c840`/`$c940`/`$ca40`/`$ca80`/
 `$cac0`, so equipment bonuses apply to the main character's records only.
 `ApplyStatModifiers` reads the two nibbles of `+$3c` and adds a signed per-stat
-row from the racket table (`CharStatClampData_02`, 7 rows) and the shoe table
-(`CharStatClamp`, `$02:$475f`, 3 rows).
+row from the racket table (`RacketStatDeltas_02`, 7 rows) and the shoe table
+(`ShoeStatDeltas_02`, `$02:$475f`, 3 rows), both `equip_stat_deltas` rows with
+the equipment named beside each.
 
 Equipment ownership is gated on the `FLAG_HAVE_*_RACKET` / `FLAG_HAVE_*_SHOES`
 bits (`wGameFlags` bytes `$0c`/`$0d`); the equip screen in bank `$3e`
@@ -666,9 +669,9 @@ snapshots the eleven bars before and after so the level-up screen can show
 arrows.
 
 EXP is added by `AddPlayerExp` → `AddExpCapped` (`src/bank_002.asm:1703`). The
-threshold curve is `CharData_02` (`src/bank_002.asm:1962`), a cumulative
-3-bytes-per-level table terminated by `$ff,$ff,$ff` and indexed by
-`(level-1)*3`; `GetExpRequiredForLevel`, `GetExpRemainingToNextLevel`,
+threshold curve is `ExpLevelThresholds_02`, a cumulative 3-bytes-per-level
+table (`exp_threshold` rows, 99 levels) terminated by `$ff,$ff,$ff` and
+indexed by `(level-1)*3`; `GetExpRequiredForLevel`, `GetExpRemainingToNextLevel`,
 `GetExpProgressInCurrentLevel` and `HasReachedNextLevelExp` all read it. Awards
 are staged per source (`wPendingExpStory`, `wPendingExpTrophy`,
 `wPendingExpExhibition`, `wPendingExpLinked`) and applied by

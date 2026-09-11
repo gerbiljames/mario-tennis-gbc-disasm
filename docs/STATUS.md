@@ -111,6 +111,18 @@ blob.
 
 ## Recent changes
 
+* **2026-09-11** — the tunable tables have named fields. One macro row per
+  record, field order in the macro's comment: the 100 character records
+  (`char_record`, each with the character's name), the racket and shoe
+  bonuses (`equip_stat_deltas`), the four stat archetypes
+  (`stat_thresholds`), the EXP curve (`exp_threshold`, in decimal), the
+  shot-type presets (`shot_preset`, with five new `SFX_HIT_*` ids), the CPU
+  difficulty rows (`cpu_difficulty`), the court surface table
+  (`court_scene`, named per court) and the AI shot habits (`AISHOT_*`
+  codes). Labels renamed for what they hold: `RacketStatDeltas_02`,
+  `ShoeStatDeltas_02`, `StatArchetype0-3_02`, `ExpLevelThresholds_02`,
+  `CourtSceneDataTable`. Also fixed `strings.py --index`, which had listed
+  strings in pool order rather than text-id order since the retirement.
 * **2026-09-11** — screen assets are referenced by name. The two bank
   `$39` dispatch tables define their own indices: `tileblock Name` rows
   (122) export `TILEBLOCK_Name`, `screen_asset Name, ...` rows (70) export

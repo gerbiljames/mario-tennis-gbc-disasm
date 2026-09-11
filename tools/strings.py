@@ -34,28 +34,36 @@ def _segment(args):
 
 
 def dump_indexed(want_bank, min_len, pat):
+    """The text id is the position in the bank's offset table
+    (`dw TextStrings_XX.sN - TextStrings_XX ; id` rows in src/), which does
+    not follow the pool's `.sN` order; the pool label only says where the
+    bytes sit."""
     for path in sorted((ROOT / "data").glob("bank_*/TextStrings_*.asm")):
         bank = int(path.parent.name.split("_")[1], 16)
         if want_bank is not None and bank != want_bank:
             continue
-        index, txt = None, ""
-
-        def emit():
-            if index is not None and len(txt) >= min_len \
-                    and (pat is None or pat.search(txt)):
-                print(f"{bank:02x}:{index} {txt}")
-
+        pool = {}
+        label, txt = None, ""
         for line in path.read_text().splitlines():
             m = re.match(r"\.s(\d+)$", line)
             if m:
-                emit()
-                index, txt = int(m.group(1)), ""
+                if label is not None:
+                    pool[label] = txt
+                label, txt = int(m.group(1)), ""
                 continue
             m = re.match(r"\t(text|line|page) (.*)$", line)
             if m:
                 sep = {"text": "", "line": "\\n", "page": "\\p"}[m.group(1)]
                 txt += sep + _segment(m.group(2))
-        emit()
+        if label is not None:
+            pool[label] = txt
+        table = re.findall(r"\tdw TextStrings_%02x\.s(\d+) - TextStrings_%02x ; (\d+)"
+                           % (bank, bank),
+                           (ROOT / "src" / f"bank_{bank:03x}.asm").read_text())
+        for s, index in table:
+            text = pool.get(int(s), "")
+            if len(text) >= min_len and (pat is None or pat.search(text)):
+                print(f"{bank:02x}:{index} {text}")
 
 
 def main():
