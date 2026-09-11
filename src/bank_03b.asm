@@ -3720,7 +3720,7 @@ LoadMainMenuItemPalette:
 	ld a, [hl+] ; $5a60
 	ld h, [hl] ; $5a61
 	ld l, a ; $5a62
-	ld de, $0401 ; $5a63
+	lb de, $04, $01 ; $5a63 palette index, count
 	call LoadPaletteShadow ; $5a66
 	ret ; $5a69
 MainMenuItemPalettePtrs:
@@ -5950,7 +5950,7 @@ LoadSavedDataSourceCellPalette:
 	ld a, [hl+] ; $6b57
 	ld h, [hl] ; $6b58
 	ld l, a ; $6b59
-	ld de, $0401 ; $6b5a
+	lb de, $04, $01 ; $6b5a palette index, count
 	call LoadPaletteShadow ; $6b5d
 	ret ; $6b60
 SavedDataSourceCellPalettePtrs:
@@ -6645,7 +6645,7 @@ LoadEraseSavedDataCellPalette:
 	ld a, [hl+] ; $70d4
 	ld h, [hl] ; $70d5
 	ld l, a ; $70d6
-	ld de, $0401 ; $70d7
+	lb de, $04, $01 ; $70d7 palette index, count
 	call LoadPaletteShadow ; $70da
 	ret ; $70dd
 EraseSavedDataCellPalettePtrs:
@@ -7136,7 +7136,7 @@ LoadN64RecordTypeCellPalette:
 	ld a, [hl+] ; $7466
 	ld h, [hl] ; $7467
 	ld l, a ; $7468
-	ld de, $0401 ; $7469
+	lb de, $04, $01 ; $7469 palette index, count
 	call LoadPaletteShadow ; $746c
 	ret ; $746f
 N64RecordTypeCellPalettePtrs:
@@ -7399,7 +7399,7 @@ LoadN64TransferItemCellPalette:
 	ld a, [hl+] ; $7689
 	ld h, [hl] ; $768a
 	ld l, a ; $768b
-	ld de, $0401 ; $768c
+	lb de, $04, $01 ; $768c palette index, count
 	call LoadPaletteShadow ; $768f
 	ret ; $7692
 N64TransferItemCellPalettePtrs:
@@ -7855,7 +7855,7 @@ BracketHighlightBlinkTask:
 	jr z, .maskClear ; $79dd
 	ld hl, BracketHighlightBlinkTaskPalettes1 ; $79df
 .maskClear:
-	ld de, $0501 ; $79e2
+	lb de, $05, $01 ; $79e2 palette index, count
 	call LoadPalettesImmediate ; $79e5
 	ret ; $79e8
 BracketHighlightBlinkTaskPalettes0:
@@ -8297,7 +8297,7 @@ RecordExhibitionVictory:
 	ld a, [wMatchWinLoseFlag] ; $7d60
 	cp WINLOSE_LOSE ; $7d63
 	jr z, .restore ; $7d65
-	ld de, $002f ; $7d67
+	ld de, FLAG_DOUBLES ; $7d67
 	call TestGameFlagByNumber ; $7d6a
 	jr nz, .restore ; $7d6d
 	ld a, [wPlayer1CurrentMainCharacter] ; $7d6f

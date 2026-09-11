@@ -104,35 +104,35 @@ DrawPauseMenuSettingValues:
 	dec a ; $40b7
 	jr z, .countDone ; $40b8
 	ld l, $75 ; $40ba
-	ld de, $0a05 ; $40bc
+	lb de, $0a, $05 ; $40bc column, row
 	call QueueWindowTileWrite ; $40bf
 	ld l, $7f ; $40c2
-	ld de, $0b05 ; $40c4
+	lb de, $0b, $05 ; $40c4 column, row
 	call QueueWindowTileWrite ; $40c7
 	ld l, $72 ; $40ca
-	ld de, $0c05 ; $40cc
+	lb de, $0c, $05 ; $40cc column, row
 	call QueueWindowTileWrite ; $40cf
 	jr .checkMusic ; $40d2
 .countDone:
 	ld l, $8c ; $40d4
-	ld de, $0a05 ; $40d6
+	lb de, $0a, $05 ; $40d6 column, row
 	call QueueWindowTileWrite ; $40d9
 	ld l, $82 ; $40dc
-	ld de, $0b05 ; $40de
+	lb de, $0b, $05 ; $40de column, row
 	call QueueWindowTileWrite ; $40e1
 	ld l, $73 ; $40e4
-	ld de, $0c05 ; $40e6
+	lb de, $0c, $05 ; $40e6 column, row
 	call QueueWindowTileWrite ; $40e9
 	jr .checkMusic ; $40ec
 .maskClear:
 	ld l, $8a ; $40ee
-	ld de, $0a05 ; $40f0
+	lb de, $0a, $05 ; $40f0 column, row
 	call QueueWindowTileWrite ; $40f3
 	ld l, $94 ; $40f6
-	ld de, $0b05 ; $40f8
+	lb de, $0b, $05 ; $40f8 column, row
 	call QueueWindowTileWrite ; $40fb
 	ld l, $72 ; $40fe
-	ld de, $0c05 ; $4100
+	lb de, $0c, $05 ; $4100 column, row
 	call QueueWindowTileWrite ; $4103
 	jr .checkMusic ; $4106
 .checkMusic:
@@ -153,12 +153,12 @@ DrawPauseMenuSettingValues:
 	and $01 ; $4121
 	jr nz, .maskSet ; $4123
 	ld l, $dd ; $4125
-	ld de, $0b07 ; $4127
+	lb de, $0b, $07 ; $4127 column, row
 	call QueueWindowTileWrite ; $412a
 	jr .restore ; $412d
 .maskSet:
 	ld l, $cc ; $412f
-	ld de, $0b07 ; $4131
+	lb de, $0b, $07 ; $4131 column, row
 	call QueueWindowTileWrite ; $4134
 .restore:
 	pop hl ; $4137
@@ -957,8 +957,8 @@ ExpScreenDrawTask:
 	ld e, a ; $479d
 	ld bc, $0e00 ; $479e
 	ld hl, ExpScreenDrawTask_SpriteTemplate ; $47a1
-	ld bc, $09c0 ; $47a4
-	ld de, $7058 ; $47a7
+	lb bc, $09, $c0 ; $47a4 attr, tile
+	lb de, $70, $58 ; $47a7 x, y
 	call QueueSpriteTemplate ; $47aa
 	ld a, [wExpScreenFlags] ; $47ad
 	and $80 ; $47b0
@@ -1029,7 +1029,7 @@ LoadExpScreenGfx:
 	ld c, $50 ; $4873
 	call QueueVRAMCopy ; $4875
 	ld hl, ExpScreenGfxPalettes0 ; $4878
-	ld de, $0008 ; $487b
+	lb de, $00, $08 ; $487b palette index, count
 	call LoadPalettesMasterOnly ; $487e
 	wram_bank $01 ; $4881
 	ld a, [wStoryModeMainCharacterOverworldSpriteColor] ; $4887
@@ -1053,7 +1053,7 @@ LoadExpScreenGfx:
 	ld c, $04 ; $48bd
 	call QueueVRAMCopy ; $48bf
 	ld hl, ExpScreenGfxPalettes2 ; $48c2
-	ld de, $0901 ; $48c5
+	lb de, $09, $01 ; $48c5 palette index, count
 	call LoadPalettesMasterOnly ; $48c8
 	pop hl ; $48cb
 	ld a, h ; $48cc
@@ -1067,13 +1067,13 @@ LoadExpScreenGfx:
 	ld c, $02 ; $48e0
 	call QueueVRAMCopy ; $48e2
 	ld hl, ExpScreenGfxPalettes1 ; $48e5
-	ld de, $0a01 ; $48e8
+	lb de, $0a, $01 ; $48e8 palette index, count
 	call LoadPalettesMasterOnly ; $48eb
 	jr .copyMemoryFast ; $48ee
 .processVRAMCopyQueues:
 	call ProcessVRAMCopyQueues ; $48f0
 	ld hl, ExpScreenGfxPalettes3 ; $48f3
-	ld de, $0f01 ; $48f6
+	lb de, $0f, $01 ; $48f6 palette index, count
 	call LoadPalettesMasterOnly ; $48f9
 	wram_bank $01 ; $48fc
 	ld hl, ExpScreenGfx8 ; $4902
@@ -2734,10 +2734,10 @@ RunCharViewerSelectGrid:
 	wram_bank $06 ; $686c
 	xor a ; $6872
 	ld hl, Palette_1a_0 ; $6873
-	ld de, $0008 ; $6876
+	lb de, $00, $08 ; $6876 palette index, count
 	call LoadPaletteShadow ; $6879
 	ld hl, Palette_1a_0 ; $687c
-	ld de, $0808 ; $687f
+	lb de, $08, $08 ; $687f palette index, count
 	call LoadPaletteShadow ; $6882
 	wram_bank $01 ; $6885
 	ld hl, CharViewerScreenGfx0 ; $688b
@@ -3007,22 +3007,22 @@ DrawCharViewerGridCursor:
 	jr z, .queueSprite ; $6ac6
 	ld b, $0a ; $6ac8
 	ld c, $86 ; $6aca
-	ld de, $964a ; $6acc
+	lb de, $96, $4a ; $6acc x, y
 	call QueueSprite ; $6acf
 	jr .checkVBlankCounter ; $6ad2
 	ld b, $0a ; $6ad4
 	ld c, $84 ; $6ad6
-	ld de, $0a4a ; $6ad8
+	lb de, $0a, $4a ; $6ad8 x, y
 	call QueueSprite ; $6adb
 	ld b, $0a ; $6ade
 	ld c, $86 ; $6ae0
-	ld de, $964a ; $6ae2
+	lb de, $96, $4a ; $6ae2 x, y
 	call QueueSprite ; $6ae5
 	jr .checkVBlankCounter ; $6ae8
 .queueSprite:
 	ld b, $0a ; $6aea
 	ld c, $84 ; $6aec
-	ld de, $0a4a ; $6aee
+	lb de, $0a, $4a ; $6aee x, y
 	call QueueSprite ; $6af1
 .checkVBlankCounter:
 	ldh a, [hVBlankCounter] ; $6af4
@@ -3057,7 +3057,7 @@ LoadCharViewerScreen:
 	ret ; $6b54
 LoadCharViewerScreenGfx:
 	ld hl, Palette_1a_0 ; $6b55
-	ld de, $0008 ; $6b58
+	lb de, $00, $08 ; $6b58 palette index, count
 	call LoadPaletteShadow ; $6b5b
 	wram_bank $01 ; $6b5e
 	ld hl, CharViewerScreenGfx0 ; $6b64
@@ -3573,11 +3573,11 @@ CharViewerSceneActors_1a:
 	map_actor_end
 	db $00
 DrawCharViewerCharSprite:
-	ld bc, $0770 ; $7012
-	ld de, $4615 ; $7015
+	lb bc, $07, $70 ; $7012 attr, tile
+	lb de, $46, $15 ; $7015 x, y
 	call QueueSprite ; $7018
-	ld bc, $0772 ; $701b
-	ld de, $4e15 ; $701e
+	lb bc, $07, $72 ; $701b attr, tile
+	lb de, $4e, $15 ; $701e x, y
 	call QueueSprite ; $7021
 	wram_bank $04 ; $7024
 	ld hl, wCharPosX ; $702a
@@ -3640,7 +3640,7 @@ DrawCharViewerCharSprite_CharScreenPosTable:
 	db $00, $00, $00, $20, $20, $20, $00, $00 ; 0x00
 LoadCharViewerMugshot:
 	xor a ; $7096
-	ld de, $0701 ; $7097
+	lb de, $07, $01 ; $7097 palette index, count
 	farcall LoadIndexedPaletteThunk ; $709a
 	wram_bank $06 ; $709d
 	ld a, [wCharDataFlushChunk] ; $70a3
@@ -3657,10 +3657,10 @@ LoadCharViewerMugshot:
 ApplyCharViewerPalette:
 	wram_bank $06 ; $70c0
 	ld a, [wCharDataLevel] ; $70c6
-	ld de, $0701 ; $70c9
+	lb de, $07, $01 ; $70c9 palette index, count
 	farcall LoadIndexedPaletteThunk ; $70cc
 	ld a, [wCharDataLevel] ; $70cf
-	ld de, $0f01 ; $70d2
+	lb de, $0f, $01 ; $70d2 palette index, count
 	farcall LoadIndexedPaletteThunk ; $70d5
 	ret ; $70d8
 Palette_1a_0:
@@ -3760,13 +3760,13 @@ DrawCharDataPromptCursor:
 	ld a, [wCharDataConfirmState] ; $7a23
 	or a ; $7a26
 	jr nz, .nonZero ; $7a27
-	ld bc, $0fd4 ; $7a29
-	ld de, $7a0c ; $7a2c
+	lb bc, $0f, $d4 ; $7a29 attr, tile
+	lb de, $7a, $0c ; $7a2c x, y
 	call QueueSprite ; $7a2f
 	ret ; $7a32
 .nonZero:
-	ld bc, $0fd4 ; $7a33
-	ld de, $7a14 ; $7a36
+	lb bc, $0f, $d4 ; $7a33 attr, tile
+	lb de, $7a, $14 ; $7a36 x, y
 	call QueueSprite ; $7a39
 	ret ; $7a3c
 CopyBank1ToBank3BufferAlt:
@@ -3971,7 +3971,7 @@ CharDataScreen_BuildStats:
 	ret ; $7b84
 CharDataScreen_LoadGfx:
 	ld hl, CharDataScreen_LoadPalette ; $7b85
-	ld de, $0c02 ; $7b88
+	lb de, $0c, $02 ; $7b88 palette index, count
 	call LoadPaletteShadow ; $7b8b
 	wram_bank $01 ; $7b8e
 	ld hl, CharDataScreenGfx0 ; $7b94

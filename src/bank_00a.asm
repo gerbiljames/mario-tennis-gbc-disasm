@@ -2790,7 +2790,7 @@ ShowLocationNamePopup:
 	ret ; $5336
 LoadStoryObjPalettes:
 	ld hl, StoryObjPalettes ; $5337
-	ld de, $0b05 ; $533a
+	lb de, $0b, $05 ; $533a palette index, count
 	call LoadPaletteShadow ; $533d
 	ret ; $5340
 StoryObjPalettes:
@@ -3539,7 +3539,7 @@ LoadStorySceneGraphics:
 	ld bc, $0040 ; $58f3
 	call CopyDataFromBank ; $58f6
 	ld hl, wDecompBuffer + 1 * TILE_SIZE ; $58f9
-	ld de, $0206 ; $58fc
+	lb de, $02, $06 ; $58fc palette index, count
 	call LoadPaletteShadow ; $58ff
 	wram_bank $06 ; $5902
 	pop hl ; $5908
@@ -3984,7 +3984,7 @@ LoadSceneGraphicsDirect:
 	ld bc, $0040 ; $5dce
 	call CopyDataFromBank ; $5dd1
 	ld hl, wDecompBuffer + 8 ; $5dd4
-	ld de, $0107 ; $5dd7
+	lb de, $01, $07 ; $5dd7 palette index, count
 	call LoadPalettesMasterOnly ; $5dda
 	pop hl ; $5ddd
 	pop de ; $5dde
@@ -4034,7 +4034,7 @@ SceneViewerSelectScene:
 	ld [wUnusedPrevSceneIndex], a ; $5e31
 	call StopSceneTileAnimations ; $5e34
 	pop af ; $5e37
-	ld hl, $0176 ; $5e38
+	ld hl, Text_30_374 ; $5e38
 	farcall RunPagedTextMenu ; $5e3b
 	ld [wCurrentScene], a ; $5e3e
 	cp $ff ; $5e41
@@ -4088,7 +4088,7 @@ RunSceneSelectDebugMenu:
 	ld [wUnusedPrevSceneIndex], a ; $5ea4
 	call StopSceneTileAnimations ; $5ea7
 	pop af ; $5eaa
-	ld hl, $0176 ; $5eab
+	ld hl, Text_30_374 ; $5eab
 	farcall RunPagedTextMenu ; $5eae
 	ld [wCurrentScene], a ; $5eb1
 	cp $ff ; $5eb4
@@ -4845,10 +4845,10 @@ LoadCourtSceneGraphics:
 	ld bc, $0040 ; $637e
 	call CopyDataFromBank ; $6381
 	ld hl, wScreenAttrmap + 16 ; $6384
-	ld de, $0206 ; $6387
+	lb de, $02, $06 ; $6387 palette index, count
 	call LoadPaletteShadow ; $638a
 	ld hl, wScreenAttrmap + 1 * TILEMAP_WIDTH + 8 ; $638d
-	ld de, $0b01 ; $6390
+	lb de, $0b, $01 ; $6390 palette index, count
 	call LoadPaletteShadow ; $6393
 	pop hl ; $6396
 	pop de ; $6397
@@ -6188,7 +6188,7 @@ RunEndingCreditsSequence:
 	sound BGM_CREDITS ; $6e7f
 	farcall LoadMenuFontGfx ; $6e81
 	ld hl, EndingCreditsSequencePalette ; $6e84
-	ld de, $0001 ; $6e87
+	lb de, $00, $01 ; $6e87 palette index, count
 	call LoadPalettesMasterOnly ; $6e8a
 	xor a ; $6e8d
 	ld [wStoryCharacterSlot], a ; $6e8e

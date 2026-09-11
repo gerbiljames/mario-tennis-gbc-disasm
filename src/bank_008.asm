@@ -2045,7 +2045,7 @@ SetBallTrailColor:
 	add a ; $518d
 	add a ; $518e
 	ld_hl_indexed BallTrailPalettes ; $518f
-	ld de, $0801 ; $5196
+	lb de, $08, $01 ; $5196 palette index, count
 	call LoadPalettesImmediate ; $5199
 	ret ; $519c
 BuildBallSlot:
@@ -2544,7 +2544,7 @@ DrawBallTouchCharEffectTable:
 	ld l, a ; $54f8
 	call ProjectWorldToScreen_08 ; $54f9
 	call ApplyCameraProjection ; $54fc
-	ld bc, $095e ; $54ff
+	lb bc, $09, $5e ; $54ff attr, tile
 	call QueueSprite ; $5502
 	ret ; $5505
 UnusedDrawBallTargetMarker:
@@ -2559,7 +2559,7 @@ UnusedDrawBallTargetMarker:
 	ld l, a ; $5514
 	call ProjectWorldToScreen_08 ; $5515
 	call ApplyCameraProjection ; $5518
-	ld bc, $0c5e ; $551b
+	lb bc, $0c, $5e ; $551b attr, tile
 	call QueueSprite ; $551e
 	ret ; $5521
 DrawTargetZone:
@@ -2578,7 +2578,7 @@ DrawTargetZone:
 	call ProjectWorldToScreen_08 ; $5536
 	call ApplyCameraProjection ; $5539
 	ld hl, DrawTargetZone_SpriteTemplate0 ; $553c
-	ld bc, $0920 ; $553f
+	lb bc, $09, $20 ; $553f attr, tile
 	call QueueSpriteTemplate ; $5542
 	ld hl, wTargetZoneDepth1 ; $5545
 	ld a, [hl+] ; $5548
@@ -2592,7 +2592,7 @@ DrawTargetZone:
 	call ProjectWorldToScreen_08 ; $5554
 	call ApplyCameraProjection ; $5557
 	ld hl, DrawTargetZone_SpriteTemplate1 ; $555a
-	ld bc, $0922 ; $555d
+	lb bc, $09, $22 ; $555d attr, tile
 	call QueueSpriteTemplate ; $5560
 	ld hl, wTargetZoneDepth2 ; $5563
 	ld a, [hl+] ; $5566
@@ -2606,7 +2606,7 @@ DrawTargetZone:
 	call ProjectWorldToScreen_08 ; $5572
 	call ApplyCameraProjection ; $5575
 	ld hl, DrawTargetZone_SpriteTemplate2 ; $5578
-	ld bc, $0924 ; $557b
+	lb bc, $09, $24 ; $557b attr, tile
 	call QueueSpriteTemplate ; $557e
 	ld hl, wTargetZoneDepth2 ; $5581
 	ld a, [hl+] ; $5584
@@ -2620,7 +2620,7 @@ DrawTargetZone:
 	call ProjectWorldToScreen_08 ; $5590
 	call ApplyCameraProjection ; $5593
 	ld hl, DrawTargetZone_SpriteTemplate3 ; $5596
-	ld bc, $0926 ; $5599
+	lb bc, $09, $26 ; $5599 attr, tile
 	call QueueSpriteTemplate ; $559c
 	ret ; $559f
 DrawTargetZone_SpriteTemplate0:

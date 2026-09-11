@@ -299,3 +299,74 @@ def collapse_line_idioms(lines):
         out.append(lines[i])
         i += 1
     lines[:] = out
+
+
+# Callees that read a register pair as two separate bytes, (high, low), so a
+# `ld rr, $hhll` before the call is two arguments packed into one immediate.
+# Each entry was read to confirm which half is which.
+PACKED_ARGS = {
+    "LoadPaletteShadow":      {"de": ("palette index", "count")},
+    "LoadPalettesImmediate":  {"de": ("palette index", "count")},
+    "LoadPalettesMasterOnly": {"de": ("palette index", "count")},
+    "LoadIndexedPaletteThunk": {"de": ("palette index", "count")},
+    "LoadIndexedPalette_18":  {"de": ("palette index", "count")},
+    "QueueSprite":            {"de": ("x", "y"), "bc": ("attr", "tile")},
+    "QueueSpriteTemplate":    {"de": ("x", "y"), "bc": ("attr", "tile")},
+    "QueueStatChangeArrow":   {"de": ("x", "y")},
+    "QueueSpriteBlockPart":   {"de": ("y", "x")},
+    "FillTilemapRun":         {"bc": ("tile", "count")},
+    "CopyTextRect":           {"bc": ("width", "rows")},
+    "PrintString":            {"de": ("column", "row")},
+    "QueueWindowTileWrite":   {"de": ("column", "row")},
+}
+_FLAG_ID_CALLEES = {"SetGameFlag", "ClearGameFlag", "TestGameFlag"}
+_FLAG_NUM_CALLEES = {"SetGameFlagByNumber", "ClearGameFlagByNumber",
+                     "TestGameFlagByNumber"}
+_LD_PAIR_RE = re.compile(r"^\tld (de|bc|hl), \$([0-9a-f]{4}) ; (\$[0-9a-f]{4})$")
+_CALL_RE = re.compile(r"^\t(?:call|farcall) ([A-Za-z_]\w*) ;")
+
+
+def render_packed_args(lines, flag_names):
+    """Post-pass over emitted lines: a raw `ld rr, $hhll` whose next call
+    (within four instruction lines, nothing branching in between) reads the
+    pair as two bytes renders as `lb rr, $hh, $ll` with the halves named in
+    the comment; a raw `de` handed to Set/Clear/TestGameFlag renders as
+    `ld_flag_id de, FLAG_NAME`, and one handed to a *ByNumber helper as the
+    flag constant itself. Only the raw hex form is touched: a load the
+    operand passes already named (a RAM symbol, a text id, a curated
+    constant) is left alone."""
+    for i, line in enumerate(lines):
+        m = _LD_PAIR_RE.match(line)
+        if not m:
+            continue
+        reg, imm, addr = m.group(1), int(m.group(2), 16), m.group(3)
+        callee = None
+        for j in range(i + 1, min(i + 5, len(lines))):
+            nxt = lines[j]
+            if not nxt.startswith("\t") or nxt.startswith("\t;"):
+                break                                   # label or note
+            c = _CALL_RE.match(nxt)
+            if c:
+                callee = c.group(1)
+                break
+            t = nxt[1:].split(" ;")[0]
+            if t.startswith(("jp ", "jr ", "ret", f"ld {reg},",
+                             f"ld {reg[0]},", f"ld {reg[1]},", "pop " + reg)):
+                break
+        if not callee:
+            continue
+        hi, lo = imm >> 8, imm & 0xFF
+        if callee in _FLAG_ID_CALLEES and reg == "de" and lo & 0x1F == 0:
+            name = flag_names.get(hi * 8 + (lo >> 5))
+            if name:
+                lines[i] = f"\tld_flag_id de, {name} ; {addr}"
+            continue
+        if callee in _FLAG_NUM_CALLEES and reg == "de":
+            name = flag_names.get(imm)
+            if name:
+                lines[i] = f"\tld de, {name} ; {addr}"
+            continue
+        roles = PACKED_ARGS.get(callee, {}).get(reg)
+        if roles:
+            lines[i] = (f"\tlb {reg}, ${hi:02x}, ${lo:02x} ; {addr} "
+                        f"{roles[0]}, {roles[1]}")

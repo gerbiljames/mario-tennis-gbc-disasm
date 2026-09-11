@@ -24,7 +24,7 @@ ShowCharDataScreen:
 	call WaitFadeEnd ; $402e
 	call InitCharDataScreenVideo ; $4031
 	ld hl, CharDataScreenPalettes ; $4034
-	ld de, $0d01 ; $4037
+	lb de, $0d, $01 ; $4037 palette index, count
 	call LoadPaletteShadow ; $403a
 	wram_bank $01 ; $403d
 	ld hl, CharDataScreenGfx14 ; $4043
@@ -306,7 +306,7 @@ LoadCharDataScreenPageGraphics:
 	ld h, a ; $4372
 	pop af ; $4373
 	ld a, [hl] ; $4374
-	ld de, $0401 ; $4375
+	lb de, $04, $01 ; $4375 palette index, count
 	farcall LoadIndexedPaletteThunk ; $4378
 	wram_bank $01 ; $437b
 	push af ; $4381
@@ -355,7 +355,7 @@ LoadCharDataScreenPageGraphics:
 	ld h, a ; $43d6
 	pop af ; $43d7
 	ld a, [hl] ; $43d8
-	ld de, $0101 ; $43d9
+	lb de, $01, $01 ; $43d9 palette index, count
 	farcall LoadIndexedPaletteThunk ; $43dc
 	wram_bank $01 ; $43df
 	push af ; $43e5
@@ -3113,13 +3113,13 @@ DrawCharDataConfirmCursor:
 	ld a, [wCharDataConfirmState] ; $5b00
 	or a ; $5b03
 	jr nz, .nonZero ; $5b04
-	ld bc, $0fd4 ; $5b06
-	ld de, $7a0c ; $5b09
+	lb bc, $0f, $d4 ; $5b06 attr, tile
+	lb de, $7a, $0c ; $5b09 x, y
 	call QueueSprite ; $5b0c
 	ret ; $5b0f
 .nonZero:
-	ld bc, $0fd4 ; $5b10
-	ld de, $7a14 ; $5b13
+	lb bc, $0f, $d4 ; $5b10 attr, tile
+	lb de, $7a, $14 ; $5b13 x, y
 	call QueueSprite ; $5b16
 	ret ; $5b19
 BuildCharDataConfirmScreen:
@@ -3143,7 +3143,7 @@ BuildCharDataConfirmScreen:
 	ld h, a ; $5b38
 	pop af ; $5b39
 	ld a, [hl] ; $5b3a
-	ld de, $0401 ; $5b3b
+	lb de, $04, $01 ; $5b3b palette index, count
 	farcall LoadIndexedPaletteThunk ; $5b3e
 	wram_bank $01 ; $5b41
 	push af ; $5b47
@@ -3686,7 +3686,7 @@ BuildExpDistributionScreen:
 	ld c, $18 ; $6a25
 	call QueueVRAMCopy ; $6a27
 	ld hl, ExpDistributionScreenPalettes ; $6a2a
-	ld de, $0e02 ; $6a2d
+	lb de, $0e, $02 ; $6a2d palette index, count
 	call LoadPaletteShadow ; $6a30
 	wram_bank $01 ; $6a33
 	ld hl, ExpDistributionScreenGfx8 ; $6a39
@@ -4648,10 +4648,10 @@ GetExpBarSweepStep:
 	ret ; $7188
 UpdateExpScreenSelectionPalettes:
 	ld a, [wStoryModeMainCharacterOverworldSpriteColor] ; $7189
-	ld de, $0101 ; $718c
+	lb de, $01, $01 ; $718c palette index, count
 	farcall LoadIndexedPaletteThunk ; $718f
 	ld a, [wStoryModePartnerCharacterOverworldSpriteColor] ; $7192
-	ld de, $0201 ; $7195
+	lb de, $02, $01 ; $7195 palette index, count
 	farcall LoadIndexedPaletteThunk ; $7198
 	wram_bank $06 ; $719b
 	ld a, [wExpScreenCharStats + 10] ; $71a1
@@ -5076,10 +5076,10 @@ CheckExpLevelDown:
 	ld a, [wExpScreenCharStats + 26] ; $7476
 	ld [wBGPalettes + 35], a ; $7479
 	ld a, [wStoryModeMainCharacterOverworldSpriteColor] ; $747c
-	ld de, $0101 ; $747f
+	lb de, $01, $01 ; $747f palette index, count
 	farcall LoadIndexedPaletteThunk ; $7482
 	ld a, [wStoryModePartnerCharacterOverworldSpriteColor] ; $7485
-	ld de, $0201 ; $7488
+	lb de, $02, $01 ; $7488 palette index, count
 	farcall LoadIndexedPaletteThunk ; $748b
 	ld hl, hPaletteDirtyFlags ; $748e
 	set 0, [hl] ; $7491
@@ -5304,23 +5304,23 @@ DrawExpToNextLevelTask:
 	cp $20 ; $7695
 	jr z, .eq20 ; $7697
 	call GetExpScreenDigitSprite ; $7699
-	ld de, $182f ; $769c
+	lb de, $18, $2f ; $769c x, y
 	call QueueSprite ; $769f
 .eq20:
 	ld a, [wCharDataNumberBuffer + 1] ; $76a2
 	cp $20 ; $76a5
 	jr z, .eq202 ; $76a7
 	call GetExpScreenDigitSprite ; $76a9
-	ld de, $1f2f ; $76ac
+	lb de, $1f, $2f ; $76ac x, y
 	call QueueSprite ; $76af
 .eq202:
 	ld a, [wCharDataNumberBuffer + 2] ; $76b2
 	call GetExpScreenDigitSprite ; $76b5
-	ld de, $262f ; $76b8
+	lb de, $26, $2f ; $76b8 x, y
 	call QueueSprite ; $76bb
 	ld hl, DrawExpToNextLevelTask_SpriteTemplate0 ; $76be
-	ld bc, $0e2c ; $76c1
-	ld de, $142e ; $76c4
+	lb bc, $0e, $2c ; $76c1 attr, tile
+	lb de, $14, $2e ; $76c4 x, y
 	call QueueSpriteTemplate ; $76c7
 	ret ; $76ca
 .nonZero:
@@ -5339,23 +5339,23 @@ DrawExpToNextLevelTask:
 	cp $20 ; $76e8
 	jr z, .eq203 ; $76ea
 	call GetExpScreenDigitSprite ; $76ec
-	ld de, $1862 ; $76ef
+	lb de, $18, $62 ; $76ef x, y
 	call QueueSprite ; $76f2
 .eq203:
 	ld a, [wCharDataNumberBuffer + 1] ; $76f5
 	cp $20 ; $76f8
 	jr z, .eq204 ; $76fa
 	call GetExpScreenDigitSprite ; $76fc
-	ld de, $1f62 ; $76ff
+	lb de, $1f, $62 ; $76ff x, y
 	call QueueSprite ; $7702
 .eq204:
 	ld a, [wCharDataNumberBuffer + 2] ; $7705
 	call GetExpScreenDigitSprite ; $7708
-	ld de, $2662 ; $770b
+	lb de, $26, $62 ; $770b x, y
 	call QueueSprite ; $770e
 	ld hl, DrawExpToNextLevelTask_SpriteTemplate1 ; $7711
-	ld bc, $0e44 ; $7714
-	ld de, $1461 ; $7717
+	lb bc, $0e, $44 ; $7714 attr, tile
+	lb de, $14, $61 ; $7717 x, y
 	call QueueSpriteTemplate ; $771a
 	ret ; $771d
 GetExpScreenDigitSprite:
@@ -5374,7 +5374,7 @@ DrawExpCharCursorTask:
 	ld e, a ; $7739
 	ld d, $19 ; $773a
 	ld hl, DrawExpCharCursorTask_SpriteTemplate ; $773c
-	ld bc, $0e00 ; $773f
+	lb bc, $0e, $00 ; $773f attr, tile
 	call QueueSpriteTemplate ; $7742
 	ret ; $7745
 DrawExpCharCursorTaskTable:
@@ -5388,14 +5388,14 @@ DrawExpBarFillMarkersTask:
 	add d ; $776c
 	ld d, a ; $776d
 	ld hl, DrawExpBarFillMarkersTask_SpriteTemplate ; $776e
-	ld bc, $0f0c ; $7771
+	lb bc, $0f, $0c ; $7771 attr, tile
 	call QueueSpriteTemplate ; $7774
 	ld de, $3849 ; $7777
 	ld a, [wExpScreenCharStats + 18] ; $777a
 	add d ; $777d
 	ld d, a ; $777e
 	ld hl, DrawExpBarFillMarkersTask_SpriteTemplate ; $777f
-	ld bc, $0f0c ; $7782
+	lb bc, $0f, $0c ; $7782 attr, tile
 	call QueueSpriteTemplate ; $7785
 	ret ; $7788
 DrawExpBarSweepSpriteTask:
@@ -5409,7 +5409,7 @@ DrawExpBarSweepSpriteTask:
 	ld a, [wExpBarMarkerX] ; $7799
 	ld d, a ; $779c
 	ld hl, DrawExpBarSweepSpriteTask_SpriteTemplate ; $779d
-	ld bc, $0f10 ; $77a0
+	lb bc, $0f, $10 ; $77a0 attr, tile
 	call QueueSpriteTemplate ; $77a3
 	ret ; $77a6
 TickLevelUpJingle:

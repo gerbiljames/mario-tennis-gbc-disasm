@@ -581,7 +581,7 @@ LoadTourPointerSpriteGfx_13:
 	ld c, (TourPointerPalette_13 - TourPointerTiles_13) / 16 ; $4ceb
 	call QueueVRAMCopy ; $4ced
 	ld hl, TourPointerPalette_13 ; $4cf0
-	ld de, $0801 ; $4cf3
+	lb de, $08, $01 ; $4cf3 palette index, count
 	call LoadPaletteShadow ; $4cf6
 	pop_wram_bank ; $4cf9
 	ret ; $4cfe
@@ -1505,7 +1505,7 @@ RunAcademyQuestionsMenu:
 	ld hl, $054d ; $58dc
 	test_flag FLAG_WON_VARSITY_SINGLES_RANK_4 ; $58df
 	jr z, .runMenu ; $58e2
-	ld hl, $054e ; $58e4
+	ld hl, Text_31_334 ; $58e4
 .runMenu:
 	ld de, $0101 ; $58e7
 	ld a, $01 ; $58ea
@@ -2524,7 +2524,7 @@ DecompressVarsityCourtTourRecords_13:
 	dec c ; $66b1
 	jr nz, .loop ; $66b2
 	ld hl, VarsityCourtTourPalette_13 ; $66b4
-	ld de, $0801 ; $66b7
+	lb de, $08, $01 ; $66b7 palette index, count
 	call LoadPaletteShadow ; $66ba
 	pop_wram_bank ; $66bd
 	ret ; $66c2

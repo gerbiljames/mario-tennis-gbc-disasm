@@ -167,6 +167,20 @@ MACRO wait_frames
 	db \1
 ENDM
 
+; lb pair, hi, lo -- load two bytes into a register pair with one 16-bit
+; immediate. Used where a callee reads the halves separately (QueueSprite's
+; x/y, LoadPaletteShadow's index/count, ...); the site comment says which.
+MACRO lb
+	ld \1, ((\2) << 8) | (\3)
+ENDM
+
+; ld_flag_id pair, FLAG_NAME -- the (byte << 8) | (bit << 5) form of a game
+; flag that Set/Clear/TestGameFlag take in de, from the flag number the
+; *ByNumber helpers and set_flag/test_flag use.
+MACRO ld_flag_id
+	ld \1, ((((\2) / 8) << 8) | (((\2) % 8) << 5))
+ENDM
+
 ; --- Story-mode map-script tables (banks $0e-$15) ---
 ; Each story location owns a 7-word directory (a map_tree) copied to $c286.
 ; The words point at the location's sub-tables, one per slot, consumed by the

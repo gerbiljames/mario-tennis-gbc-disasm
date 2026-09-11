@@ -935,7 +935,7 @@ InitMatchWinLoseScreen:
 	ld c, $20 ; $45e7
 	call QueueVRAMCopy ; $45e9
 	ld hl, MatchWinLoseScreenPalettes ; $45ec
-	ld de, $0803 ; $45ef
+	lb de, $08, $03 ; $45ef palette index, count
 	call LoadPaletteShadow ; $45f2
 	ld b, $09 ; $45f5
 	ld c, $04 ; $45f7
@@ -980,7 +980,7 @@ LoadWinLoseScreenAssets:
 	farcall LoadScreenAssetRecord ; $491b
 	jr .testGameFlagByNumber ; $491e
 .testGameFlagByNumber:
-	ld de, $002f ; $4920
+	ld de, FLAG_DOUBLES ; $4920
 	call TestGameFlagByNumber ; $4923
 	jr nz, .done ; $4926
 	wram_bank $03 ; $4928
@@ -1010,7 +1010,7 @@ SetWinLosePortraitPaletteAttrs:
 	ld a, [wResultScreenMode] ; $4963
 	or a ; $4966
 	jr nz, .nonZero ; $4967
-	ld de, $002f ; $4969
+	ld de, FLAG_DOUBLES ; $4969
 	call TestGameFlagByNumber ; $496c
 	jr z, .zero ; $496f
 	ld de, wShadowAttrmap + 4 * TILEMAP_WIDTH + 11 ; $4971
@@ -1048,7 +1048,7 @@ SetWinLosePortraitPaletteAttrs:
 .done:
 	ret ; $49bb
 .nonZero:
-	ld de, $002f ; $49bc
+	ld de, FLAG_DOUBLES ; $49bc
 	call TestGameFlagByNumber ; $49bf
 	jr z, .fillTilemapRect ; $49c2
 	ld de, wShadowAttrmap + 5 * TILEMAP_WIDTH + 12 ; $49c4
@@ -1092,20 +1092,20 @@ LoadMatchResultPalettes:
 	ld a, $02 ; $4a16
 	ld [wAnimatedTileSet], a ; $4a18
 	ld hl, MatchResultPalettes1 ; $4a1b
-	ld de, $0101 ; $4a1e
+	lb de, $01, $01 ; $4a1e palette index, count
 	call LoadPaletteShadow ; $4a21
 	ld hl, MatchResultPalettes0 ; $4a24
-	ld de, $0201 ; $4a27
+	lb de, $02, $01 ; $4a27 palette index, count
 	call LoadPaletteShadow ; $4a2a
 	ret ; $4a2d
 .eqff:
 	ld a, $03 ; $4a2e
 	ld [wAnimatedTileSet], a ; $4a30
 	ld hl, MatchResultPalettes1 ; $4a33
-	ld de, $0201 ; $4a36
+	lb de, $02, $01 ; $4a36 palette index, count
 	call LoadPaletteShadow ; $4a39
 	ld hl, MatchResultPalettes0 ; $4a3c
-	ld de, $0101 ; $4a3f
+	lb de, $01, $01 ; $4a3f palette index, count
 	call LoadPaletteShadow ; $4a42
 	ret ; $4a45
 MatchResultPalettes0:
@@ -1478,7 +1478,7 @@ LoadResultScreenTileGraphics:
 	ld c, $02 ; $4e0f
 	ld h, $0b ; $4e11
 	farcall FillTilemapRect ; $4e13
-	ld de, $002f ; $4e16
+	ld de, FLAG_DOUBLES ; $4e16
 	call TestGameFlagByNumber ; $4e19
 	jr nz, .decompressData ; $4e1c
 	ld hl, MatchResultTitleGfx ; $4e1e
@@ -1542,7 +1542,7 @@ LoadMatchResultGfxSet:
 	ret ; $4e89
 RemapDoublesMatchGfxIndex:
 	push af ; $4e8a
-	ld de, $002f ; $4e8b
+	ld de, FLAG_DOUBLES ; $4e8b
 	call TestGameFlagByNumber ; $4e8e
 	jr z, .restore ; $4e91
 	cp $11 ; $4e93
@@ -1758,7 +1758,7 @@ InitMatchStatsScreen:
 	farcall QueueWram3MapToVRAM ; $5cd8
 	ret ; $5cdb
 SetMatchStatsPortraitPaletteAttrs:
-	ld de, $002f ; $5cdc
+	ld de, FLAG_DOUBLES ; $5cdc
 	call TestGameFlagByNumber ; $5cdf
 	jr z, .fillTilemapRect ; $5ce2
 	ld de, wShadowAttrmap + 4 * TILEMAP_WIDTH + 1 ; $5ce4
@@ -1797,7 +1797,7 @@ SetMatchStatsPortraitPaletteAttrs:
 	ret ; $5d2e
 PrintMatchStatistics:
 	call ClearMatchStatsNumberArea ; $5d2f
-	ld de, $002f ; $5d32
+	ld de, FLAG_DOUBLES ; $5d32
 	call TestGameFlagByNumber ; $5d35
 	jr z, .printSinglesMatchStats ; $5d38
 	call PrintDoublesMatchStats ; $5d3a
@@ -2049,7 +2049,7 @@ ClearMatchStatsNumberArea:
 	farcall FillTilemapRect ; $5f8e
 	ret ; $5f91
 CopyMatchStatsHeaderRects:
-	ld de, $002f ; $5f92
+	ld de, FLAG_DOUBLES ; $5f92
 	call TestGameFlagByNumber ; $5f95
 	ret nz ; $5f98
 	ld hl, wShadowTilemap + 18 * TILEMAP_WIDTH ; $5f99
@@ -2108,7 +2108,7 @@ LoadResultScreenPortraits:
 	ld b, a ; $600d
 	ld c, $02 ; $600e
 	call LoadResultPortraitSlot ; $6010
-	ld de, $002f ; $6013
+	ld de, FLAG_DOUBLES ; $6013
 	call TestGameFlagByNumber ; $6016
 	jr z, .done ; $6019
 	ld a, [wPlayer1CurrentPartnerCharacter] ; $601b
@@ -2138,7 +2138,7 @@ LoadResultScreenPortraits:
 	ld b, a ; $604a
 	ld c, $00 ; $604b
 	call LoadResultPortraitSlot ; $604d
-	ld de, $002f ; $6050
+	ld de, FLAG_DOUBLES ; $6050
 	call TestGameFlagByNumber ; $6053
 	jr z, .doneB ; $6056
 	ld a, [wPlayer1CurrentPartnerCharacter] ; $6058

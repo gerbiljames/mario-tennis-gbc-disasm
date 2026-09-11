@@ -654,7 +654,7 @@ CharDataScreen_DrawPortrait:
 	ld h, a ; $45ad
 	pop af ; $45ae
 	ld a, [hl] ; $45af
-	ld de, $0401 ; $45b0
+	lb de, $04, $01 ; $45b0 palette index, count
 	farcall LoadIndexedPaletteThunk ; $45b3
 	wram_bank $01 ; $45b6
 	push af ; $45bc
@@ -2360,13 +2360,13 @@ DrawConfirmSelectionCursor:
 	ld a, [wCharDataConfirmState] ; $53a9
 	or a ; $53ac
 	jr nz, .nonZero ; $53ad
-	ld bc, $0fd4 ; $53af
-	ld de, $7a0c ; $53b2
+	lb bc, $0f, $d4 ; $53af attr, tile
+	lb de, $7a, $0c ; $53b2 x, y
 	call QueueSprite ; $53b5
 	ret ; $53b8
 .nonZero:
-	ld bc, $0fd4 ; $53b9
-	ld de, $7a14 ; $53bc
+	lb bc, $0f, $d4 ; $53b9 attr, tile
+	lb de, $7a, $14 ; $53bc x, y
 	call QueueSprite ; $53bf
 	ret ; $53c2
 MoveCharDataScreenSelection:
@@ -2536,37 +2536,37 @@ SelectCharDataConfirmSlot:
 DrawStatArrowIndicators:
 	wram_bank $06 ; $54f2
 	ld a, [wCharDataStatDeltas] ; $54f8
-	ld de, $4c24 ; $54fb
+	lb de, $4c, $24 ; $54fb x, y
 	call QueueStatChangeArrow ; $54fe
 	ld a, [wCharDataStatDeltas + 1] ; $5501
-	ld de, $4c34 ; $5504
+	lb de, $4c, $34 ; $5504 x, y
 	call QueueStatChangeArrow ; $5507
 	ld a, [wCharDataStatDeltas + 2] ; $550a
-	ld de, $4c4c ; $550d
+	lb de, $4c, $4c ; $550d x, y
 	call QueueStatChangeArrow ; $5510
 	ld a, [wCharDataStatDeltas + 3] ; $5513
-	ld de, $4c5c ; $5516
+	lb de, $4c, $5c ; $5516 x, y
 	call QueueStatChangeArrow ; $5519
 	ld a, [wCharDataStatDeltas + 4] ; $551c
-	ld de, $4c6c ; $551f
+	lb de, $4c, $6c ; $551f x, y
 	call QueueStatChangeArrow ; $5522
 	ld a, [wCharDataStatDeltas + 5] ; $5525
-	ld de, $9c24 ; $5528
+	lb de, $9c, $24 ; $5528 x, y
 	call QueueStatChangeArrow ; $552b
 	ld a, [wCharDataStatDeltas + 6] ; $552e
-	ld de, $9c34 ; $5531
+	lb de, $9c, $34 ; $5531 x, y
 	call QueueStatChangeArrow ; $5534
 	ld a, [wCharDataStatDeltas + 7] ; $5537
-	ld de, $9c4c ; $553a
+	lb de, $9c, $4c ; $553a x, y
 	call QueueStatChangeArrow ; $553d
 	ld a, [wCharDataStatDeltas + 8] ; $5540
-	ld de, $9c5c ; $5543
+	lb de, $9c, $5c ; $5543 x, y
 	call QueueStatChangeArrow ; $5546
 	ld a, [wCharDataStatDeltas + 9] ; $5549
-	ld de, $9c6c ; $554c
+	lb de, $9c, $6c ; $554c x, y
 	call QueueStatChangeArrow ; $554f
 	ld a, [wCharDataStatDeltas + 10] ; $5552
-	ld de, $9c7c ; $5555
+	lb de, $9c, $7c ; $5555 x, y
 	call QueueStatChangeArrow ; $5558
 	ret ; $555b
 QueueStatChangeArrow:
@@ -3067,10 +3067,10 @@ CharDataScreenGfx13:
 	INCBIN "data/bank_01c/lz_7080.bin" ; $7080, 150 bytes
 CharDataScreen_LoadScreen:
 	ld hl, CharDataScreen_LoadScreenPalette ; $7116
-	ld de, $0008 ; $7119
+	lb de, $00, $08 ; $7119 palette index, count
 	call LoadPaletteShadow ; $711c
 	ld hl, CharDataScreen_LoadScreenPalette ; $711f
-	ld de, $0808 ; $7122
+	lb de, $08, $08 ; $7122 palette index, count
 	call LoadPaletteShadow ; $7125
 	wram_bank $01 ; $7128
 	ld hl, CharDataScreenGfx13 ; $712e
@@ -3355,10 +3355,10 @@ LoadCharDataScreenGraphics:
 	ret ; $73fa
 LoadCharDataScreenBgAndPalettes:
 	ld hl, CharDataScreenBgAndPalettes ; $73fb
-	ld de, $0008 ; $73fe
+	lb de, $00, $08 ; $73fe palette index, count
 	call LoadPaletteShadow ; $7401
 	ld hl, CharDataScreenBgAndPalettes ; $7404
-	ld de, $0808 ; $7407
+	lb de, $08, $08 ; $7407 palette index, count
 	call LoadPaletteShadow ; $740a
 	wram_bank $06 ; $740d
 	ld a, [wMasterPalettes + 58] ; $7413
@@ -3418,7 +3418,7 @@ LoadCharDataScreenMugshots:
 	ld h, a ; $74a4
 	pop af ; $74a5
 	ld a, [hl] ; $74a6
-	ld de, $0101 ; $74a7
+	lb de, $01, $01 ; $74a7 palette index, count
 	farcall LoadIndexedPaletteThunk ; $74aa
 	wram_bank $01 ; $74ad
 	push af ; $74b3
@@ -3459,7 +3459,7 @@ LoadCharDataScreenMugshots:
 	ld h, a ; $74f2
 	pop af ; $74f3
 	ld a, [hl] ; $74f4
-	ld de, $0201 ; $74f5
+	lb de, $02, $01 ; $74f5 palette index, count
 	farcall LoadIndexedPaletteThunk ; $74f8
 	wram_bank $01 ; $74fb
 	push af ; $7501

@@ -348,7 +348,7 @@ LoadTennisDictionaryAssetsDefault:
 	ld c, $80 ; $427f
 	call QueueVRAMCopy ; $4281
 	ld hl, TennisDictionaryPalettesDefault ; $4284
-	ld de, $0008 ; $4287
+	lb de, $00, $08 ; $4287 palette index, count
 	call LoadPalettesMasterOnly ; $428a
 	wram_bank $02 ; $428d
 	ld hl, TennisDictionaryListDataDefault ; $4293
@@ -370,7 +370,7 @@ LoadTennisDictionaryAssetsChar6:
 	ld c, $80 ; $42c0
 	call QueueVRAMCopy ; $42c2
 	ld hl, TennisDictionaryPalettesChar6 ; $42c5
-	ld de, $0008 ; $42c8
+	lb de, $00, $08 ; $42c8 palette index, count
 	call LoadPalettesMasterOnly ; $42cb
 	wram_bank $02 ; $42ce
 	ld hl, TennisDictionaryListDataChar6 ; $42d4
@@ -468,7 +468,7 @@ LoadTennisDictionaryScreen:
 	ld c, $20 ; $43aa
 	call QueueVRAMCopy ; $43ac
 	ld hl, TennisDictionaryPalettes ; $43af
-	ld de, $0808 ; $43b2
+	lb de, $08, $08 ; $43b2 palette index, count
 	call LoadPalettesMasterOnly ; $43b5
 	wram_bank $06 ; $43b8
 	ld a, [wTennisDictMode] ; $43be
@@ -803,22 +803,22 @@ UpdateTennisDictionarySprites:
 	add $0a ; $4fba
 	ld d, a ; $4fbc
 	ld hl, UpdateTennisDictionarySprites_SpriteTemplate1 ; $4fbd
-	ld bc, $0b28 ; $4fc0
+	lb bc, $0b, $28 ; $4fc0 attr, tile
 	call QueueSpriteTemplate ; $4fc3
 	ld a, [wTennisDictFlags] ; $4fc6
 	bit 2, a ; $4fc9
 	jr z, .checkTennisDictFlags2 ; $4fcb
 	ld hl, UpdateTennisDictionarySprites_SpriteTemplate0 ; $4fcd
-	ld de, $1810 ; $4fd0
-	ld bc, $0d34 ; $4fd3
+	lb de, $18, $10 ; $4fd0 x, y
+	lb bc, $0d, $34 ; $4fd3 attr, tile
 	call QueueSpriteTemplate ; $4fd6
 .checkTennisDictFlags2:
 	ld a, [wTennisDictFlags] ; $4fd9
 	bit 3, a ; $4fdc
 	jr z, .restore ; $4fde
 	ld hl, UpdateTennisDictionarySprites_SpriteTemplate0 ; $4fe0
-	ld de, $8810 ; $4fe3
-	ld bc, $0d3a ; $4fe6
+	lb de, $88, $10 ; $4fe3 x, y
+	lb bc, $0d, $3a ; $4fe6 attr, tile
 	call QueueSpriteTemplate ; $4fe9
 .restore:
 	pop hl ; $4fec

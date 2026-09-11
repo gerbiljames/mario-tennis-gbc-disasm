@@ -498,7 +498,7 @@ DrawMinigameGridCell:
 	ld a, d ; $4340
 	add $d8 ; $4341
 	ld d, a ; $4343
-	ld bc, $0202 ; $4344
+	lb bc, $02, $02 ; $4344 width, rows
 	call CopyTextRect ; $4347
 	pop de ; $434a
 	pop hl ; $434b
@@ -506,7 +506,7 @@ DrawMinigameGridCell:
 	ld a, d ; $434d
 	add $d0 ; $434e
 	ld d, a ; $4350
-	ld bc, $0202 ; $4351
+	lb bc, $02, $02 ; $4351 width, rows
 	call CopyTextRect ; $4354
 	pop de ; $4357
 	pop hl ; $4358
@@ -514,7 +514,7 @@ DrawMinigameGridCell:
 	ld a, d ; $435a
 	add $dc ; $435b
 	ld d, a ; $435d
-	ld bc, $0202 ; $435e
+	lb bc, $02, $02 ; $435e width, rows
 	call CopyTextRect ; $4361
 	pop de ; $4364
 	pop hl ; $4365
@@ -522,7 +522,7 @@ DrawMinigameGridCell:
 	ld a, d ; $4367
 	add $d4 ; $4368
 	ld d, a ; $436a
-	ld bc, $0202 ; $436b
+	lb bc, $02, $02 ; $436b width, rows
 	call CopyTextRect ; $436e
 	pop de ; $4371
 	ret ; $4372
@@ -2067,19 +2067,19 @@ LoadMatchUiCourtTilemap:
 	push hl ; $5110
 	pop hl ; $5111
 	ld de, wCourtTilemapSaved + 9 * TILEMAP_WIDTH + 11 ; $5112
-	ld bc, $0a05 ; $5115
+	lb bc, $0a, $05 ; $5115 width, rows
 	call CopyTextRect ; $5118
 	pop hl ; $511b
 	ld de, wCourtTilemap + 9 * TILEMAP_WIDTH + 11 ; $511c
-	ld bc, $0a05 ; $511f
+	lb bc, $0a, $05 ; $511f width, rows
 	call CopyTextRect ; $5122
 	pop hl ; $5125
 	ld de, wCourtAttrmapSaved + 9 * TILEMAP_WIDTH + 11 ; $5126
-	ld bc, $0a05 ; $5129
+	lb bc, $0a, $05 ; $5129 width, rows
 	call CopyTextRect ; $512c
 	pop hl ; $512f
 	ld de, wCourtAttrmap + 9 * TILEMAP_WIDTH + 11 ; $5130
-	ld bc, $0a05 ; $5133
+	lb bc, $0a, $05 ; $5133 width, rows
 	call CopyTextRect ; $5136
 	ret ; $5139
 TargetShotZoneOverlayOffsets:

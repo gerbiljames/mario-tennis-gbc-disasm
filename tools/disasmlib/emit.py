@@ -38,7 +38,8 @@ from .datatables import (render_actor_list, render_actor_script,
                          render_text_offsets,
                          render_tilemap_dispatch, render_tilemap_scripts)
 from .idioms import (INLINE_ARG_MACROS, collapse_line_idioms,
-                     match_launcher_seq, script_cmd_seq, wram_bank_seq)
+                     match_launcher_seq, render_packed_args, script_cmd_seq,
+                     wram_bank_seq)
 from .labels import LabelScopes
 from .macros import MACROS_INC
 from .operands import render_operand
@@ -537,6 +538,7 @@ class Emitter:
         resolve_copy_lengths(lines, base)
         self._resolve_split_base(lines, bank)
         collapse_line_idioms(lines)
+        render_packed_args(lines, self.flag_names or {})
         # Several emitters declare a label for the same offset (the fill /
         # segment path that runs up to a blob, and the blob's own mark). Most
         # guard on lines[-1]; collapsing here covers the rest -- two identical

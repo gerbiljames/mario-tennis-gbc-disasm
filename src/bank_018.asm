@@ -711,7 +711,7 @@ InitConfirmScreen:
 	ld c, $80 ; $530b
 	call QueueVRAMCopy ; $530d
 	ld hl, ConfirmScreenPalette0 ; $5310
-	ld de, $0008 ; $5313
+	lb de, $00, $08 ; $5313 palette index, count
 	call LoadPaletteShadow ; $5316
 	ld hl, ConfirmScreenGfx2 ; $5319
 	ld de, wTextTileBuffer + 64 * TILE_SIZE ; $531c
@@ -729,7 +729,7 @@ InitConfirmScreen:
 	ld c, $14 ; $5340
 	call QueueVRAMCopy ; $5342
 	ld hl, ConfirmScreenPalette1 ; $5345
-	ld de, $0903 ; $5348
+	lb de, $09, $03 ; $5348 palette index, count
 	call LoadPaletteShadow ; $534b
 	ld hl, $8500 ; $534e
 	ld de, $0e01 ; $5351
@@ -1128,7 +1128,7 @@ LoadConfirmScreenSpriteGfx:
 	ld c, $1c ; $5607
 	call QueueVRAMCopy ; $5609
 	ld hl, ConfirmScreenSpritePalette0 ; $560c
-	ld de, $0c03 ; $560f
+	lb de, $0c, $03 ; $560f palette index, count
 	call LoadPalettesImmediate ; $5612
 	ld hl, ConfirmScreenSpriteGfx1 ; $5615
 	ld de, wDecompBuffer ; $5618
@@ -1138,7 +1138,7 @@ LoadConfirmScreenSpriteGfx:
 	ld c, $0c ; $5624
 	call QueueVRAMCopy ; $5626
 	ld hl, ConfirmScreenSpritePalette1 ; $5629
-	ld de, $0801 ; $562c
+	lb de, $08, $01 ; $562c palette index, count
 	call LoadPalettesImmediate ; $562f
 	ret ; $5632
 ConfirmScreenSpriteGfx0:
@@ -1184,7 +1184,7 @@ LoadCharSelectCursorGfx:
 	ld c, $0c ; $59c7
 	call QueueVRAMCopy ; $59c9
 	ld hl, CharSelectCursorPalette ; $59cc
-	ld de, $0a01 ; $59cf
+	lb de, $0a, $01 ; $59cf palette index, count
 	call LoadPaletteShadow ; $59d2
 	ret ; $59d5
 DrawCharSelectCursor:
@@ -1204,7 +1204,7 @@ DrawCharSelectCursor:
 	ld a, [hl+] ; $59f4
 	ld h, [hl] ; $59f5
 	ld l, a ; $59f6
-	ld bc, $0240 ; $59f7
+	lb bc, $02, $40 ; $59f7 attr, tile
 	call QueueSpriteTemplate ; $59fa
 	ret ; $59fd
 CharSelectCursorAnimTable:
@@ -1514,14 +1514,14 @@ LoadScreen0TilesAndPalette:
 	ld de, $8000 ; $7744
 	farcall LoadCompressedTileBlock ; $7747
 	ld hl, Screen0Palette ; $774a
-	ld de, $0801 ; $774d
+	lb de, $08, $01 ; $774d palette index, count
 	call LoadPaletteShadow ; $7750
 	ret ; $7753
 Screen0Palette:
 	INCLUDE "data/bank_018/palettes_7754.asm" ; $7754, 8 bytes (palettes)
 QueueScreen0Sprites:
 	ld hl, QueueScreen0Sprites_SpriteTemplate ; $775c
-	ld de, $283a ; $775f
+	lb de, $28, $3a ; $775f x, y
 	ld c, $00 ; $7762
 	ld b, $00 ; $7764
 	call QueueSpriteTemplate ; $7766
@@ -1621,28 +1621,28 @@ FillAllBgPalettes:
 	ld c, $32 ; $7858
 	farcall LoadScreenAssetRecord ; $785a
 	ld hl, AllBgPalettes ; $785d
-	ld de, $0001 ; $7860
+	lb de, $00, $01 ; $7860 palette index, count
 	call LoadPaletteShadow ; $7863
 	ld hl, AllBgPalettes ; $7866
-	ld de, $0101 ; $7869
+	lb de, $01, $01 ; $7869 palette index, count
 	call LoadPaletteShadow ; $786c
 	ld hl, AllBgPalettes ; $786f
-	ld de, $0201 ; $7872
+	lb de, $02, $01 ; $7872 palette index, count
 	call LoadPaletteShadow ; $7875
 	ld hl, AllBgPalettes ; $7878
-	ld de, $0301 ; $787b
+	lb de, $03, $01 ; $787b palette index, count
 	call LoadPaletteShadow ; $787e
 	ld hl, AllBgPalettes ; $7881
-	ld de, $0401 ; $7884
+	lb de, $04, $01 ; $7884 palette index, count
 	call LoadPaletteShadow ; $7887
 	ld hl, AllBgPalettes ; $788a
-	ld de, $0501 ; $788d
+	lb de, $05, $01 ; $788d palette index, count
 	call LoadPaletteShadow ; $7890
 	ld hl, AllBgPalettes ; $7893
-	ld de, $0601 ; $7896
+	lb de, $06, $01 ; $7896 palette index, count
 	call LoadPaletteShadow ; $7899
 	ld hl, AllBgPalettes ; $789c
-	ld de, $0701 ; $789f
+	lb de, $07, $01 ; $789f palette index, count
 	call LoadPaletteShadow ; $78a2
 	farcall QueueWram3MapToVRAM ; $78a5
 	ret ; $78a8
@@ -1654,14 +1654,14 @@ LoadScreen1ObjTiles:
 	ld de, $8000 ; $78b5
 	farcall LoadCompressedTileBlock ; $78b8
 	ld hl, Screen1ObjPalette ; $78bb
-	ld de, $0801 ; $78be
+	lb de, $08, $01 ; $78be palette index, count
 	call LoadPaletteShadow ; $78c1
 	ret ; $78c4
 Screen1ObjPalette:
 	INCLUDE "data/bank_018/palettes_78c5.asm" ; $78c5, 8 bytes (palettes)
 QueueScreen1Sprites:
 	ld hl, QueueScreen1Sprites_SpriteTemplate ; $78cd
-	ld de, $283a ; $78d0
+	lb de, $28, $3a ; $78d0 x, y
 	ld c, $00 ; $78d3
 	ld b, $00 ; $78d5
 	call QueueSpriteTemplate ; $78d7
@@ -1713,7 +1713,7 @@ PlayScreenSequence2:
 	ld c, $02 ; $7961
 	call BeginFadeOut ; $7963
 	call WaitFadeEnd ; $7966
-	ld de, $05e0 ; $7969
+	ld_flag_id de, FLAG_DOUBLES ; $7969
 	call TestGameFlag ; $796c
 	jr z, .scene2 ; $796f
 	ld de, $1700 ; $7971
@@ -1766,7 +1766,7 @@ PlayScreenSequence2:
 	jr z, .scene5 ; $79e5
 	ld de, SAVEFLAG_OPENING_SEEN ; $79e7
 	farcall SetSaveFlag ; $79ea
-	ld de, $05e0 ; $79ed
+	ld_flag_id de, FLAG_DOUBLES ; $79ed
 	call TestGameFlag ; $79f0
 	jr z, .fadeOut ; $79f3
 	ld de, $1700 ; $79f5
@@ -1810,14 +1810,14 @@ LoadScreen2ObjTiles:
 	ld de, $8000 ; $7a31
 	farcall LoadCompressedTileBlock ; $7a34
 	ld hl, Screen2ObjPalette ; $7a37
-	ld de, $0801 ; $7a3a
+	lb de, $08, $01 ; $7a3a palette index, count
 	call LoadPaletteShadow ; $7a3d
 	ret ; $7a40
 Screen2ObjPalette:
 	INCLUDE "data/bank_018/palettes_7a41.asm" ; $7a41, 8 bytes (palettes)
 QueueScreen2Sprites:
 	ld hl, QueueScreen2Sprites_SpriteTemplate ; $7a49
-	ld de, $2840 ; $7a4c
+	lb de, $28, $40 ; $7a4c x, y
 	ld c, $00 ; $7a4f
 	ld b, $00 ; $7a51
 	call QueueSpriteTemplate ; $7a53
@@ -1850,7 +1850,7 @@ TaskFadeInPalette_18:
 	jr nc, .read ; $7a99
 	inc h ; $7a9b
 .read:
-	ld de, $0801 ; $7a9c
+	lb de, $08, $01 ; $7a9c palette index, count
 	call LoadPalettesImmediate ; $7a9f
 	ldh a, [hVBlankCounter] ; $7aa2
 	and $03 ; $7aa4
@@ -2009,7 +2009,7 @@ LoadObjectSceneATiles:
 	ld de, $8200 ; $7bff
 	farcall LoadCompressedTileBlock ; $7c02
 	ld hl, ObjectSceneATilesPalettes ; $7c05
-	ld de, $0903 ; $7c08
+	lb de, $09, $03 ; $7c08 palette index, count
 	call LoadPaletteShadow ; $7c0b
 	ret ; $7c0e
 ObjectSceneATilesPalettes:
@@ -2106,7 +2106,7 @@ LoadObjectSceneBTiles:
 	ld de, $8200 ; $7d34
 	farcall LoadCompressedTileBlock ; $7d37
 	ld hl, ObjectSceneBPalette ; $7d3a
-	ld de, $0903 ; $7d3d
+	lb de, $09, $03 ; $7d3d palette index, count
 	call LoadPaletteShadow ; $7d40
 	ret ; $7d43
 ObjectSceneBPalette:

@@ -1961,7 +1961,7 @@ SetupCharGridScreen:
 	ld c, $08 ; $4f9f
 	call QueueVRAMCopy ; $4fa1
 	ld hl, CharGridScreenGfx2 ; $4fa4
-	ld de, $0901 ; $4fa7
+	lb de, $09, $01 ; $4fa7 palette index, count
 	call LoadPalettesMasterOnly ; $4faa
 	wram_bank $01 ; $4fad
 	ld hl, CharGridScreenGfx3 ; $4fb3
@@ -2020,7 +2020,7 @@ SetupCharGridScreen:
 	ld de, $8000 + VRAM_BANK1 ; $5041
 	farcall LoadFixedTileBlockAndPalette ; $5044
 	ld hl, CharGridScreenTable0 ; $5047
-	ld de, $0b05 ; $504a
+	lb de, $0b, $05 ; $504a palette index, count
 	call LoadPalettesMasterOnly ; $504d
 	ld c, $0b ; $5050
 	ld b, $0a ; $5052

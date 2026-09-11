@@ -1109,7 +1109,7 @@ BuildRankingBoardScreen:
 .loadRankingBoardTiles:
 	call LoadRankingBoardTiles ; $4f4f
 	ld hl, RankingBoardScreenPalettes ; $4f52
-	ld de, $0806 ; $4f55
+	lb de, $08, $06 ; $4f55 palette index, count
 	call LoadPaletteShadow ; $4f58
 	ld a, $01 ; $4f5b
 	ld hl, DrawRankingMarkersTask ; $4f5d
@@ -3006,7 +3006,7 @@ Unused_1b_LoadCharSelectScreenGfx:
 	ld de, $d800 ; $6019
 	call DecompressData ; $601c
 	ld hl, CharSelectNavGridTable ; $601f
-	ld de, $0008 ; $6022
+	lb de, $00, $08 ; $6022 palette index, count
 	call LoadPaletteShadow ; $6025
 	ret ; $6028
 StartCharSelectCursorTask:
@@ -3729,7 +3729,7 @@ LoadUnlockDebugScreenGfx:
 	ld de, wTextTileBuffer ; $663a
 	call DecompressData ; $663d
 	ld hl, UnlockDebugNavGridTable ; $6640
-	ld de, $0008 ; $6643
+	lb de, $00, $08 ; $6643 palette index, count
 	call LoadPaletteShadow ; $6646
 	ret ; $6649
 ; Decompresses UnlockDebugNavGridTable to $d000, uploads it to $8500 and loads
@@ -3745,7 +3745,7 @@ Unused_1b_LoadUnlockDebugNavGridGfx:
 	ld c, $28 ; $665a
 	call QueueVRAMCopy ; $665c
 	ld hl, UnlockDebugNavGridTable ; $665f
-	ld de, $0801 ; $6662
+	lb de, $08, $01 ; $6662 palette index, count
 	call LoadPaletteShadow ; $6665
 	ld a, $0a ; $6668
 	ld hl, UpdateBobbingDecorSprite ; $666a
@@ -3755,7 +3755,7 @@ UpdateBobbingDecorSprite:
 	ld de, $2cfa ; $6671
 	farcall ApplySpriteBobOffset_18 ; $6674
 	ld hl, UnlockDebugNavGridTable ; $6677
-	ld bc, $0050 ; $667a
+	lb bc, $00, $50 ; $667a attr, tile
 	call QueueSpriteTemplate ; $667d
 	ret ; $6680
 StartUnlockDebugCursorTask:
@@ -4078,7 +4078,7 @@ LoadUnlockDebugCursorGfx:
 	call QueueVRAMCopy ; $68f0
 	pop_wram_bank ; $68f3
 	ld hl, UnlockDebugCursorPalette ; $68f8
-	ld de, $0801 ; $68fb
+	lb de, $08, $01 ; $68fb palette index, count
 	call LoadPaletteShadow ; $68fe
 	ld a, $01 ; $6901
 	ld hl, DrawUnlockDebugFlagSprites ; $6903
@@ -4698,7 +4698,7 @@ LoadMinigameLevelSelectPalette:
 	ld a, [hl+] ; $6d9e
 	ld h, [hl] ; $6d9f
 	ld l, a ; $6da0
-	ld de, $0401 ; $6da1
+	lb de, $04, $01 ; $6da1 palette index, count
 	call LoadPaletteShadow ; $6da4
 	ret ; $6da7
 MinigameLevelSelectPalettePtrs:
@@ -5447,7 +5447,7 @@ LoadSavedDataTypePalette:
 	ld a, [hl+] ; $73bf
 	ld h, [hl] ; $73c0
 	ld l, a ; $73c1
-	ld de, $0401 ; $73c2
+	lb de, $04, $01 ; $73c2 palette index, count
 	call LoadPaletteShadow ; $73c5
 	ret ; $73c8
 SavedDataTypePalettePtrs:

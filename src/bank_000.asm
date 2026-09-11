@@ -7965,21 +7965,21 @@ QueueSprite32x32:
 	ld h, a ; $2cfc
 	ldh a, [hSpriteQueueIndex] ; $2cfd
 	ld l, a ; $2cff
-	ld de, $0000 ; $2d00
+	lb de, $00, $00 ; $2d00 y, x
 	call QueueSpriteBlockPart ; $2d03
-	ld de, $0010 ; $2d06
+	lb de, $00, $10 ; $2d06 y, x
 	call QueueSpriteBlockPart ; $2d09
-	ld de, $0800 ; $2d0c
+	lb de, $08, $00 ; $2d0c y, x
 	call QueueSpriteBlockPart ; $2d0f
-	ld de, $0810 ; $2d12
+	lb de, $08, $10 ; $2d12 y, x
 	call QueueSpriteBlockPart ; $2d15
-	ld de, $1000 ; $2d18
+	lb de, $10, $00 ; $2d18 y, x
 	call QueueSpriteBlockPart ; $2d1b
-	ld de, $1010 ; $2d1e
+	lb de, $10, $10 ; $2d1e y, x
 	call QueueSpriteBlockPart ; $2d21
-	ld de, $1800 ; $2d24
+	lb de, $18, $00 ; $2d24 y, x
 	call QueueSpriteBlockPart ; $2d27
-	ld de, $1810 ; $2d2a
+	lb de, $18, $10 ; $2d2a y, x
 	call QueueSpriteBlockPart ; $2d2d
 	ld a, l ; $2d30
 	ldh [hSpriteQueueIndex], a ; $2d31
@@ -7996,21 +7996,21 @@ QueueSprite32x32:
 	ld h, a ; $2d41
 	ldh a, [hSpriteQueueIndex] ; $2d42
 	ld l, a ; $2d44
-	ld de, $0000 ; $2d45
+	lb de, $00, $00 ; $2d45 y, x
 	call QueueSpriteBlockPart ; $2d48
-	ld de, $0010 ; $2d4b
+	lb de, $00, $10 ; $2d4b y, x
 	call QueueSpriteBlockPart ; $2d4e
-	ld de, $f800 ; $2d51
+	lb de, $f8, $00 ; $2d51 y, x
 	call QueueSpriteBlockPart ; $2d54
-	ld de, $f810 ; $2d57
+	lb de, $f8, $10 ; $2d57 y, x
 	call QueueSpriteBlockPart ; $2d5a
-	ld de, $f000 ; $2d5d
+	lb de, $f0, $00 ; $2d5d y, x
 	call QueueSpriteBlockPart ; $2d60
-	ld de, $f010 ; $2d63
+	lb de, $f0, $10 ; $2d63 y, x
 	call QueueSpriteBlockPart ; $2d66
-	ld de, $e800 ; $2d69
+	lb de, $e8, $00 ; $2d69 y, x
 	call QueueSpriteBlockPart ; $2d6c
-	ld de, $e810 ; $2d6f
+	lb de, $e8, $10 ; $2d6f y, x
 	call QueueSpriteBlockPart ; $2d72
 	ld a, l ; $2d75
 	ldh [hSpriteQueueIndex], a ; $2d76

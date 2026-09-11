@@ -33,7 +33,11 @@ def text_id_name(idv):
 # flag of the id encoding), and CreateWindowWithTextId says so in its name.
 # Everything else is derived -- a routine that hands hl straight to one of
 # these takes an id too, which is what the wrappers in the menu banks do.
-TEXT_ID_SINKS = ("FetchDialogueText", "AddTextIdOffset", "CreateWindowWithTextId")
+# RunPagedTextMenu takes a menu text id in hl too: it parks it on the stack
+# and re-adds the page offset each time round, so the forwarding walk cannot
+# see it reach a sink; read to confirm ($05:$4946).
+TEXT_ID_SINKS = ("FetchDialogueText", "AddTextIdOffset", "CreateWindowWithTextId",
+                 "RunPagedTextMenu")
 
 _HL_CLOBBER = ("ld hl,", "ld h,", "ld l,", "pop hl")
 

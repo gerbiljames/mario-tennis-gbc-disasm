@@ -119,7 +119,7 @@ MatchSelectInitScript_10:
 	ld [wStoryModeShowLocationName], a ; $4191
 	ret ; $4194
 RunSinglesMatchListMenu:
-	ld hl, $0484 ; $4195
+	ld hl, Text_31_132 ; $4195
 	ld de, $0101 ; $4198
 	ld a, $05 ; $419b
 	farcall RunPagedTextMenu ; $419d
@@ -146,7 +146,7 @@ RunSinglesMatchListMenu:
 	farcall RestoreOverworldAfterMatch ; $41d6
 	ret ; $41d9
 RunDoublesMatchListMenu:
-	ld hl, $0489 ; $41da
+	ld hl, Text_31_137 ; $41da
 	ld de, $0101 ; $41dd
 	ld a, $04 ; $41e0
 	farcall RunPagedTextMenu ; $41e2
@@ -317,7 +317,7 @@ LoadMatchDoublesVarsityPractice:
 	load_match_settings $010a ; $4442
 	ret ; $444f
 RunDrillMatchListMenu:
-	ld hl, $048d ; $4450
+	ld hl, Text_31_141 ; $4450
 	ld a, $09 ; $4453
 	farcall RunPagedTextMenu ; $4455
 	cp $ff ; $4458
@@ -394,7 +394,7 @@ RunLessonSelectMenu:
 	ld a, h ; $4507
 	sbc d ; $4508
 	ld h, a ; $4509
-	ld hl, $1c0c ; $450a
+	ld hl, Text_37_12 ; $450a
 	ld de, $0101 ; $450d
 	ld a, $01 ; $4510
 	farcall RunPagedTextMenu ; $4512
@@ -407,7 +407,7 @@ RunLessonSelectMenu:
 	dw RunStrokeLessonMenu ; $4520 jumptable
 	dw ShowRankingBoardSamples ; $4522 jumptable
 RunServiceLessonMenu:
-	ld hl, $1c0d ; $4524
+	ld hl, Text_37_13 ; $4524
 	ld de, $0101 ; $4527
 	ld a, $01 ; $452a
 	farcall RunPagedTextMenu ; $452c
@@ -429,7 +429,7 @@ RunServiceLessonMenu:
 	farcall ShowDrillBriefingScreen ; $4558
 	ret ; $455b
 RunNetLessonMenu:
-	ld hl, $1c0e ; $455c
+	ld hl, Text_37_14 ; $455c
 	ld de, $0101 ; $455f
 	ld a, $01 ; $4562
 	farcall RunPagedTextMenu ; $4564
@@ -451,7 +451,7 @@ RunNetLessonMenu:
 	farcall ShowDrillBriefingScreen ; $4590
 	ret ; $4593
 RunStrokeLessonMenu:
-	ld hl, $1c0f ; $4594
+	ld hl, Text_37_15 ; $4594
 	ld de, $0101 ; $4597
 	ld a, $01 ; $459a
 	farcall RunPagedTextMenu ; $459c
@@ -523,7 +523,7 @@ ShowRankingBoardSamples:
 	farcall ShowRankingBoard ; $463c
 	ret ; $463f
 RunMinigameSelectMenu:
-	ld hl, $0496 ; $4640
+	ld hl, Text_31_150 ; $4640
 	ld a, $03 ; $4643
 	farcall RunPagedTextMenu ; $4645
 	cp $ff ; $4648
@@ -534,7 +534,7 @@ RunMinigameSelectMenu:
 	jr nc, .runPagedTextMenu ; $4652
 	inc d ; $4654
 .runPagedTextMenu:
-	ld hl, $0499 ; $4655
+	ld hl, Text_31_153 ; $4655
 	ld a, $01 ; $4658
 	farcall RunPagedTextMenu ; $465a
 	cp $ff ; $465d

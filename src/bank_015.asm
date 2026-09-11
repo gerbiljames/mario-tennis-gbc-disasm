@@ -866,11 +866,11 @@ WaterSpriteRacketRewardScene:
 	script_player_speed $0010 ; $4dfa
 	script_move_player_to_actor $14 ; $4e00
 	ld hl, WaterSpriteRacketRewardScenePalettes1 ; $4e07
-	ld de, $0206 ; $4e0a
+	lb de, $02, $06 ; $4e0a palette index, count
 	call LoadPalettesImmediate ; $4e0d
 	script_wait_frames $1e ; $4e10
 	ld hl, WaterSpriteRacketRewardScenePalettes2 ; $4e17
-	ld de, $0206 ; $4e1a
+	lb de, $02, $06 ; $4e1a palette index, count
 	call LoadPalettesImmediate ; $4e1d
 	sound $8a ; $4e20
 	ld a, $10 ; $4e22
@@ -979,11 +979,11 @@ WaterSpriteRacketRewardScene:
 	script_speak $14 ; $4fda
 	script_set_position $15, $3f00, $3f00 ; $4fdf
 	ld hl, WaterSpriteRacketRewardScenePalettes1 ; $4fea
-	ld de, $0206 ; $4fed
+	lb de, $02, $06 ; $4fed palette index, count
 	call LoadPalettesImmediate ; $4ff0
 	script_wait_frames $1e ; $4ff3
 	ld hl, WaterSpriteRacketRewardScenePalettes0 ; $4ffa
-	ld de, $0206 ; $4ffd
+	lb de, $02, $06 ; $4ffd palette index, count
 	call LoadPalettesImmediate ; $5000
 	script_wait_frames $1e ; $5003
 	script_face ACTOR_PLAYER, FACE_LEFT ; $500a
@@ -1682,7 +1682,7 @@ LoadWaterSpriteMinigameHudGfx:
 	ld c, (WaterSpriteHudPalette_15 - WaterSpriteHudTiles_15) / 16 ; $58a7
 	call QueueVRAMCopy ; $58a9
 	ld hl, WaterSpriteHudPalette_15 ; $58ac
-	ld de, $0802 ; $58af
+	lb de, $08, $02 ; $58af palette index, count
 	call LoadPaletteShadow ; $58b2
 	pop_wram_bank ; $58b5
 	ret ; $58ba

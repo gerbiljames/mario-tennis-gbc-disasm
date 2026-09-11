@@ -1718,7 +1718,7 @@ LoadPlaneObjGfx_14:
 	ld c, $60 ; $5e88
 	call QueueVRAMCopy ; $5e8a
 	ld hl, IslandObjPalette_14 ; $5e8d
-	ld de, $0801 ; $5e90
+	lb de, $08, $01 ; $5e90 palette index, count
 	call LoadPaletteShadow ; $5e93
 	pop_wram_bank ; $5e96
 	ret ; $5e9b
@@ -1766,7 +1766,7 @@ LoadWaterSplashObjGfx_14:
 	ld c, (SpriteTemplate_14_1 - WaterSplashObjGfx) / 16 ; $60b0
 	call QueueVRAMCopy ; $60b2
 	ld hl, WaterSplashObjPalette_14 ; $60b5
-	ld de, $0901 ; $60b8
+	lb de, $09, $01 ; $60b8 palette index, count
 	call LoadPaletteShadow ; $60bb
 	pop_wram_bank ; $60be
 	ret ; $60c3
@@ -1975,7 +1975,7 @@ LoadPlaneObjGfx2_14:
 	ld c, $60 ; $6247
 	call QueueVRAMCopy ; $6249
 	ld hl, IslandObjPalette_14 ; $624c
-	ld de, $0801 ; $624f
+	lb de, $08, $01 ; $624f palette index, count
 	call LoadPaletteShadow ; $6252
 	pop_wram_bank ; $6255
 	ret ; $625a
@@ -2166,7 +2166,7 @@ LoadFireworkObjGfx_14:
 	ld c, (SpriteTemplate_14_2 - FireworkObjTiles_14) / 16 ; $6436
 	call QueueVRAMCopy ; $6438
 	ld hl, FireworkObjPalettes_14 ; $643b
-	ld de, $0904 ; $643e
+	lb de, $09, $04 ; $643e palette index, count
 	call LoadPaletteShadow ; $6441
 	pop_wram_bank ; $6444
 	ret ; $6449
@@ -2724,7 +2724,7 @@ LoadIslandSkyEffectObjGfx_14:
 	ld c, $30 ; $73c4
 	call QueueVRAMCopy ; $73c6
 	ld hl, IslandSkyPalettes_14 ; $73c9
-	ld de, $0903 ; $73cc
+	lb de, $09, $03 ; $73cc palette index, count
 	call LoadPaletteShadow ; $73cf
 	pop_wram_bank ; $73d2
 	ret ; $73d7
@@ -2794,7 +2794,7 @@ LoadDistantPlaneObjGfx_14:
 	ld c, (SpriteTemplate_14_3 - DistantPlaneObjGfx) / 16 ; $7548
 	call QueueVRAMCopy ; $754a
 	ld hl, IslandObjPalette_14 ; $754d
-	ld de, $0801 ; $7550
+	lb de, $08, $01 ; $7550 palette index, count
 	call LoadPaletteShadow ; $7553
 	pop_wram_bank ; $7556
 	ret ; $755b
@@ -2832,7 +2832,7 @@ LoadTwinkleObjGfx_14:
 	ld c, (TwinkleObjPalette_14 - TwinkleObjGfx) / 16 ; $7697
 	call QueueVRAMCopy ; $7699
 	ld hl, TwinkleObjPalette_14 ; $769c
-	ld de, $0801 ; $769f
+	lb de, $08, $01 ; $769f palette index, count
 	call LoadPaletteShadow ; $76a2
 	pop_wram_bank ; $76a5
 	ret ; $76aa

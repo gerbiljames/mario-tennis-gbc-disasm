@@ -2559,7 +2559,7 @@ PromptExhibitionMatch:
 	jr z, .startMatchScene ; $6649
 	farcall AdvanceDialogueTextCursor ; $664b
 	script_speak $08 ; $664e
-	ld hl, $3088 ; $6653
+	ld hl, Text_5e_136 ; $6653
 	ld de, $0101 ; $6656
 	ld a, $01 ; $6659
 	farcall RunPagedTextMenu ; $665b
@@ -3027,7 +3027,7 @@ PlayStarWarpTransition:
 	ldh a, [hWramBank] ; $7150
 	push af ; $7152
 	ld hl, StarWarpPalette ; $7153
-	ld de, $0901 ; $7156
+	lb de, $09, $01 ; $7156 palette index, count
 	call LoadPaletteShadow ; $7159
 	ld hl, StarWarpTiles ; $715c
 	ld de, $8000 + VRAM_BANK1 ; $715f

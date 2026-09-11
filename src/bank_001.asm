@@ -65,7 +65,7 @@ InitAndRunGame:
 	farcall RunStoryModeOverworld ; $40af
 .loopB:
 	ld hl, BuildStamp ; $40b2
-	ld de, $0511 ; $40b5
+	lb de, $05, $11 ; $40b5 column, row
 	call PrintString ; $40b8
 	ld a, $03 ; $40bb
 	ldh [hDebugStepMode], a ; $40bd
@@ -94,7 +94,7 @@ InitAndRunGame:
 	jp .loopB ; $40e9
 Unused_01_MenuRedraw:
 	ld hl, BuildStamp ; $40ec
-	ld de, $0511 ; $40ef
+	lb de, $05, $11 ; $40ef column, row
 	call PrintString ; $40f2
 	ld a, $03 ; $40f5
 	ldh [hDebugStepMode], a ; $40f7
@@ -164,7 +164,7 @@ Unused_01_MenuRedraw:
 	ld [wPlayer2CurrentPartnerCharacter], a ; $417f
 	ld a, $03 ; $4182
 	ld [wAnimatedTilePeriod], a ; $4184
-	ld de, $002f ; $4187
+	ld de, FLAG_DOUBLES ; $4187
 	call SetGameFlagByNumber ; $418a
 	ld a, $00 ; $418d
 	ld [wCurrentMinigameStoryMatch + 1], a ; $418f
@@ -176,7 +176,7 @@ Unused_01_MenuRedraw:
 	jr .loop3 ; $419c
 Unused_01_MatchSetup:
 	farcall ShowEquipmentStatusScreen ; $419e
-	ld de, $002f ; $41a1
+	ld de, FLAG_DOUBLES ; $41a1
 	call ClearGameFlagByNumber ; $41a4
 	ld a, GAMEMODE_EXHIBITION ; $41a7
 	ld [wGameMode], a ; $41a9
@@ -250,7 +250,7 @@ LoadMenuFontPalette:
 	push de ; $5052
 	push hl ; $5053
 	ld hl, MenuFontPalettes_01 ; $5054
-	ld de, $0001 ; $5057
+	lb de, $00, $01 ; $5057 palette index, count
 	call LoadPaletteShadow ; $505a
 	pop hl ; $505d
 	pop de ; $505e
@@ -343,7 +343,7 @@ LoadMenuBgPalettes3To7:
 	push de ; $5178
 	push hl ; $5179
 	ld hl, $87c8 ; $517a
-	ld de, $0305 ; $517d
+	lb de, $03, $05 ; $517d palette index, count
 	call LoadPaletteShadow ; $5180
 	pop hl ; $5183
 	pop de ; $5184
@@ -356,7 +356,7 @@ LoadMenuObjPalettes3To7:
 	push de ; $518a
 	push hl ; $518b
 	ld hl, $87c8 ; $518c
-	ld de, $0b05 ; $518f
+	lb de, $0b, $05 ; $518f palette index, count
 	call LoadPaletteShadow ; $5192
 	pop hl ; $5195
 	pop de ; $5196
@@ -435,14 +435,14 @@ RunSoundTest:
 	push hl ; $6a70
 	push de ; $6a71
 	ld hl, SoundTestStrings_01 ; $6a72
-	ld de, $0d09 ; $6a75
+	lb de, $0d, $09 ; $6a75 column, row
 	call PrintString ; $6a78
 	pop de ; $6a7b
 	pop hl ; $6a7c
 	push hl ; $6a7d
 	push de ; $6a7e
 	ld hl, SoundTestString0 ; $6a7f
-	ld de, $0d0b ; $6a82
+	lb de, $0d, $0b ; $6a82 column, row
 	call PrintString ; $6a85
 	pop de ; $6a88
 	pop hl ; $6a89
@@ -509,14 +509,14 @@ RunSoundTest:
 	push hl ; $6ae1
 	push de ; $6ae2
 	ld hl, SoundTestString1 ; $6ae3
-	ld de, $0c09 ; $6ae6
+	lb de, $0c, $09 ; $6ae6 column, row
 	call PrintString ; $6ae9
 	pop de ; $6aec
 	pop hl ; $6aed
 	push hl ; $6aee
 	push de ; $6aef
 	ld hl, SoundTestString2 ; $6af0
-	ld de, $0c0b ; $6af3
+	lb de, $0c, $0b ; $6af3 column, row
 	call PrintString ; $6af6
 	pop de ; $6af9
 	pop hl ; $6afa
@@ -525,14 +525,14 @@ RunSoundTest:
 	push hl ; $6afd
 	push de ; $6afe
 	ld hl, SoundTestString1 ; $6aff
-	ld de, $0c0b ; $6b02
+	lb de, $0c, $0b ; $6b02 column, row
 	call PrintString ; $6b05
 	pop de ; $6b08
 	pop hl ; $6b09
 	push hl ; $6b0a
 	push de ; $6b0b
 	ld hl, SoundTestString2 ; $6b0c
-	ld de, $0c09 ; $6b0f
+	lb de, $0c, $09 ; $6b0f column, row
 	call PrintString ; $6b12
 	pop de ; $6b15
 	pop hl ; $6b16

@@ -148,7 +148,7 @@ LoadScreenAssetRecord:
 	ld bc, $0040 ; $40e5
 	call CopyDataFromBank ; $40e8
 	ld hl, wDecompBuffer ; $40eb
-	ld de, $0008 ; $40ee
+	lb de, $00, $08 ; $40ee palette index, count
 	call LoadPaletteShadow ; $40f1
 	ret ; $40f4
 ScreenAssetRecordTable:
@@ -478,7 +478,7 @@ LoadFixedTileBlockAndPalette:
 	ld c, $04 ; $44e7
 	call QueueVRAMCopy ; $44e9
 	ld hl, FixedTileBlockPalette ; $44ec
-	ld de, $0801 ; $44ef
+	lb de, $08, $01 ; $44ef palette index, count
 	call LoadPaletteShadow ; $44f2
 	ret ; $44f5
 FixedTileBlockAndPalette:
@@ -486,7 +486,7 @@ FixedTileBlockAndPalette:
 FixedTileBlockPalette:
 	INCLUDE "data/bank_039/palettes_4516.asm" ; $4516, 8 bytes (palettes)
 LoadFixedBgPalette0:
-	ld de, $0001 ; $451e
+	lb de, $00, $01 ; $451e palette index, count
 	ld hl, FixedBgPalette0Palette ; $4521
 	call LoadPaletteShadow ; $4524
 	ret ; $4527
@@ -588,7 +588,7 @@ IndexedPalettes:
 	INCLUDE "data/bank_039/palettes_4599.asm" ; $4599, 200 bytes (palettes)
 LoadFixedPaletteSet:
 	ld hl, FixedPaletteSetPalettes ; $4661
-	ld de, $0904 ; $4664
+	lb de, $09, $04 ; $4664 palette index, count
 	call LoadPaletteShadow ; $4667
 	ret ; $466a
 FixedPaletteSetPalettes:
@@ -1019,7 +1019,7 @@ LoadStadiumBgGraphics:
 	ld bc, $0040 ; $4c96
 	call CopyDataFromBank ; $4c99
 	ld hl, wDecompBuffer ; $4c9c
-	ld de, $0008 ; $4c9f
+	lb de, $00, $08 ; $4c9f palette index, count
 	call LoadPaletteShadow ; $4ca2
 	pop_wram_bank ; $4ca5
 	ret ; $4caa

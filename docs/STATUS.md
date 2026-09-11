@@ -125,6 +125,15 @@ label bound to the wrong parent.
 
 ## Recent changes
 
+* **2026-09-11** — packed call arguments: a raw `ld rr, $hhll` whose callee
+  reads the pair as two bytes renders as `lb rr, $hh, $ll` with the halves
+  named at the site (440 sites: palette index/count, sprite x/y and
+  attr/tile, tilemap tile/count, text column/row, rect width/rows); a
+  game-flag id handed to Set/Clear/TestGameFlag renders as
+  `ld_flag_id de, FLAG_*` and one handed to a `*ByNumber` helper as the
+  constant; `RunPagedTextMenu` joins the text-id sinks (13 menu ids named,
+  605 → 619). Lead left: the flags at numbers 160-184 that the remaining
+  raw `SetGameFlag` sites set have no names in `flags.json`.
 * **2026-09-11** — three idiom macros: `push_wram_bank N` / `pop_wram_bank`
   for the bank prologue and epilogue (351 / 452 sites), `ld_hl_indexed T`
   for the five-instruction split-base table index (414), and `wait_frames N`

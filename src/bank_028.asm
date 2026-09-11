@@ -59,10 +59,10 @@ MatchVariantGraphicsPalettes6:
 LoadMatchGraphics:
 	wram_bank $01 ; $5eb0
 	ld hl, MatchGfxPalettesA_28 ; $5eb6
-	ld de, $0803 ; $5eb9
+	lb de, $08, $03 ; $5eb9 palette index, count
 	call LoadPaletteShadow ; $5ebc
 	ld hl, MatchGraphicsPalettes ; $5ebf
-	ld de, $0002 ; $5ec2
+	lb de, $00, $02 ; $5ec2 palette index, count
 	call LoadPaletteShadow ; $5ec5
 	ld hl, MatchGraphicsGfx ; $5ec8
 	ld de, $8400 + VRAM_BANK1 ; $5ecb
@@ -119,10 +119,10 @@ LoadMatchVariantGraphics:
 	ret ; $5f39
 .loadPaletteShadow:
 	ld hl, MatchGfxPalettesB_28 ; $5f3a
-	ld de, $0b01 ; $5f3d
+	lb de, $0b, $01 ; $5f3d palette index, count
 	call LoadPaletteShadow ; $5f40
 	ld hl, MatchVariantGraphicsPalettes0 ; $5f43
-	ld de, $0d03 ; $5f46
+	lb de, $0d, $03 ; $5f46 palette index, count
 	call LoadPaletteShadow ; $5f49
 	ld hl, MatchVariantTiles0 ; $5f4c
 	ld de, $8100 + VRAM_BANK1 ; $5f4f
@@ -139,7 +139,7 @@ LoadMatchVariantGraphics:
 	ret ; $5f69
 .loadPaletteShadow2:
 	ld hl, MatchVariantGraphicsPalettes6 ; $5f6a
-	ld de, $0e02 ; $5f6d
+	lb de, $0e, $02 ; $5f6d palette index, count
 	call LoadPaletteShadow ; $5f70
 	ld hl, MatchVariantTiles3 ; $5f73
 	ld de, $83c0 + VRAM_BANK1 ; $5f76
@@ -149,7 +149,7 @@ LoadMatchVariantGraphics:
 	ret ; $5f81
 .loadPaletteShadow3:
 	ld hl, MatchVariantGraphicsPalettes2 ; $5f82
-	ld de, $0e02 ; $5f85
+	lb de, $0e, $02 ; $5f85 palette index, count
 	call LoadPaletteShadow ; $5f88
 	ld hl, MatchVariantTiles3 ; $5f8b
 	ld de, $83c0 + VRAM_BANK1 ; $5f8e
@@ -159,7 +159,7 @@ LoadMatchVariantGraphics:
 	ret ; $5f99
 .loadPaletteShadow4:
 	ld hl, MatchVariantGraphicsPalettes3 ; $5f9a
-	ld de, $0f01 ; $5f9d
+	lb de, $0f, $01 ; $5f9d palette index, count
 	call LoadPaletteShadow ; $5fa0
 	ld hl, MatchVariantTiles4 ; $5fa3
 	ld de, $8200 + VRAM_BANK1 ; $5fa6
@@ -177,10 +177,10 @@ LoadMatchVariantGraphics:
 	ld c, $08 ; $5fc3
 	call QueueVRAMCopy ; $5fc5
 	ld hl, MatchVariantGraphicsPalettes4 ; $5fc8
-	ld de, $0e01 ; $5fcb
+	lb de, $0e, $01 ; $5fcb palette index, count
 	call LoadPaletteShadow ; $5fce
 	ld hl, MatchVariantGraphicsPalettes5 ; $5fd1
-	ld de, $0f01 ; $5fd4
+	lb de, $0f, $01 ; $5fd4 palette index, count
 	call LoadPaletteShadow ; $5fd7
 	ld hl, MatchVariantTiles3 ; $5fda
 	ld de, $83c0 + VRAM_BANK1 ; $5fdd
@@ -190,7 +190,7 @@ LoadMatchVariantGraphics:
 	ret ; $5fe8
 .loadPaletteShadow5:
 	ld hl, MatchVariantGraphicsPalettes1 ; $5fe9
-	ld de, $0d03 ; $5fec
+	lb de, $0d, $03 ; $5fec palette index, count
 	call LoadPaletteShadow ; $5fef
 	ld hl, MatchVariantTiles1 ; $5ff2
 	ld de, $8100 + VRAM_BANK1 ; $5ff5
@@ -204,7 +204,7 @@ LoadMatchVariantGraphics:
 	ret ; $600b
 .loadPaletteShadow6:
 	ld hl, MatchVariantGraphicsPalettes1 ; $600c
-	ld de, $0d03 ; $600f
+	lb de, $0d, $03 ; $600f palette index, count
 	call LoadPaletteShadow ; $6012
 	ld hl, MatchVariantTiles1 ; $6015
 	ld de, $8100 + VRAM_BANK1 ; $6018
@@ -299,10 +299,10 @@ LoadEffectFrameTiles_28Table:
 LoadMatchStoryGfx:
 	wram_bank $01 ; $60c9
 	ld hl, MatchGfxPalettesC_28 ; $60cf
-	ld de, $0902 ; $60d2
+	lb de, $09, $02 ; $60d2 palette index, count
 	call LoadPaletteShadow ; $60d5
 	ld hl, MatchStoryGfxPalettes ; $60d8
-	ld de, $0002 ; $60db
+	lb de, $00, $02 ; $60db palette index, count
 	call LoadPaletteShadow ; $60de
 	ld hl, MatchGfxTilesB_28 ; $60e1
 	ld de, wDecompBuffer ; $60e4

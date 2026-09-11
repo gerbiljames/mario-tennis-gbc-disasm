@@ -107,10 +107,10 @@ BuildResultsScreenTilemap:
 	ret ; $4104
 LoadResultsScreenGraphics:
 	ld hl, ResultsScreenPalettes ; $4105
-	ld de, $0006 ; $4108
+	lb de, $00, $06 ; $4108 palette index, count
 	call LoadPaletteShadow ; $410b
 	ld hl, ResultsScreenPalettes ; $410e
-	ld de, $0801 ; $4111
+	lb de, $08, $01 ; $4111 palette index, count
 	call LoadPaletteShadow ; $4114
 	wram_bank $01 ; $4117
 	ld hl, ResultsScreenGfx_1e ; $411d
@@ -1114,7 +1114,7 @@ InitResultsScreenCharacters:
 	farcall SetCharAnimation ; $49e7
 	pop af ; $49ea
 	farcall GetCharPaletteIndex ; $49eb
-	ld de, $0f01 ; $49ee
+	lb de, $0f, $01 ; $49ee palette index, count
 	farcall LoadIndexedPaletteThunk ; $49f1
 	wram_bank $06 ; $49f4
 	ld a, [wContinuePromptKind] ; $49fa
@@ -1172,7 +1172,7 @@ InitResultsScreenCharacters:
 	farcall SetCharAnimation ; $4a62
 	pop af ; $4a65
 	farcall GetCharPaletteIndex ; $4a66
-	ld de, $0e01 ; $4a69
+	lb de, $0e, $01 ; $4a69 palette index, count
 	farcall LoadIndexedPaletteThunk ; $4a6c
 	wram_bank $04 ; $4a6f
 	ret ; $4a75
@@ -1301,7 +1301,7 @@ DrawContinuePromptCursor:
 .nonZero:
 	ld de, $7a44 ; $4b57
 .queueSprite:
-	ld bc, $088e ; $4b5a
+	lb bc, $08, $8e ; $4b5a attr, tile
 	call QueueSprite ; $4b5d
 	ret ; $4b60
 .playSfx:
@@ -1515,7 +1515,7 @@ BuildExpAwardScreenTilemap:
 	ret ; $551d
 LoadExpAwardScreenGraphics:
 	ld hl, ExpAwardScreenPalettes0 ; $551e
-	ld de, $0003 ; $5521
+	lb de, $00, $03 ; $5521 palette index, count
 	call LoadPaletteShadow ; $5524
 	wram_bank $01 ; $5527
 	ld hl, ExpAwardScreenGfx_1e ; $552d
@@ -1552,7 +1552,7 @@ LoadExpAwardScreenGraphics:
 	ld c, $10 ; $5591
 	call QueueVRAMCopy ; $5593
 	ld hl, ExpAwardScreenPalettes1 ; $5596
-	ld de, $0801 ; $5599
+	lb de, $08, $01 ; $5599 palette index, count
 	call LoadPaletteShadow ; $559c
 	wram_bank $01 ; $559f
 	ld hl, ExpDigitSpriteGfx_1e ; $55a5
@@ -1663,39 +1663,39 @@ DrawExpSinglesPlayerPanel:
 	ret ; $5692
 DrawExpDoublesPlayerPanel:
 	ld hl, wShadowTilemap + 5 * TILEMAP_WIDTH ; $5693
-	ld bc, $0201 ; $5696
+	lb bc, $02, $01 ; $5696 tile, count
 	call FillTilemapRun ; $5699
-	ld bc, $0307 ; $569c
+	lb bc, $03, $07 ; $569c tile, count
 	call FillTilemapRun ; $569f
-	ld bc, $0401 ; $56a2
+	lb bc, $04, $01 ; $56a2 tile, count
 	call FillTilemapRun ; $56a5
 	ld hl, wScreenAttrmap + 6 * TILEMAP_WIDTH ; $56a8
-	ld bc, $0501 ; $56ab
+	lb bc, $05, $01 ; $56ab tile, count
 	call FillTilemapRun ; $56ae
-	ld bc, $2007 ; $56b1
+	lb bc, $20, $07 ; $56b1 tile, count
 	call FillTilemapRun ; $56b4
-	ld bc, $0601 ; $56b7
+	lb bc, $06, $01 ; $56b7 tile, count
 	call FillTilemapRun ; $56ba
 	ld hl, wScreenAttrmap + 7 * TILEMAP_WIDTH ; $56bd
-	ld bc, $0501 ; $56c0
+	lb bc, $05, $01 ; $56c0 tile, count
 	call FillTilemapRun ; $56c3
-	ld bc, $2007 ; $56c6
+	lb bc, $20, $07 ; $56c6 tile, count
 	call FillTilemapRun ; $56c9
-	ld bc, $0601 ; $56cc
+	lb bc, $06, $01 ; $56cc tile, count
 	call FillTilemapRun ; $56cf
 	ld hl, wScreenAttrmap + 8 * TILEMAP_WIDTH ; $56d2
-	ld bc, $0501 ; $56d5
+	lb bc, $05, $01 ; $56d5 tile, count
 	call FillTilemapRun ; $56d8
-	ld bc, $2007 ; $56db
+	lb bc, $20, $07 ; $56db tile, count
 	call FillTilemapRun ; $56de
-	ld bc, $0601 ; $56e1
+	lb bc, $06, $01 ; $56e1 tile, count
 	call FillTilemapRun ; $56e4
 	ld hl, wScreenAttrmap + 9 * TILEMAP_WIDTH ; $56e7
-	ld bc, $0701 ; $56ea
+	lb bc, $07, $01 ; $56ea tile, count
 	call FillTilemapRun ; $56ed
-	ld bc, $0807 ; $56f0
+	lb bc, $08, $07 ; $56f0 tile, count
 	call FillTilemapRun ; $56f3
-	ld bc, $0901 ; $56f6
+	lb bc, $09, $01 ; $56f6 tile, count
 	call FillTilemapRun ; $56f9
 	ld a, [wGameMode] ; $56fc
 	or a ; $56ff
@@ -1739,39 +1739,39 @@ DrawExpDoublesPlayerPanel:
 	ret ; $5757
 DrawExpDoublesPartnerPanel:
 	ld hl, wShadowTilemap + 5 * TILEMAP_WIDTH + 11 ; $5758
-	ld bc, $0201 ; $575b
+	lb bc, $02, $01 ; $575b tile, count
 	call FillTilemapRun ; $575e
-	ld bc, $0307 ; $5761
+	lb bc, $03, $07 ; $5761 tile, count
 	call FillTilemapRun ; $5764
-	ld bc, $0401 ; $5767
+	lb bc, $04, $01 ; $5767 tile, count
 	call FillTilemapRun ; $576a
 	ld hl, wScreenAttrmap + 6 * TILEMAP_WIDTH + 11 ; $576d
-	ld bc, $0501 ; $5770
+	lb bc, $05, $01 ; $5770 tile, count
 	call FillTilemapRun ; $5773
-	ld bc, $2007 ; $5776
+	lb bc, $20, $07 ; $5776 tile, count
 	call FillTilemapRun ; $5779
-	ld bc, $0601 ; $577c
+	lb bc, $06, $01 ; $577c tile, count
 	call FillTilemapRun ; $577f
 	ld hl, wScreenAttrmap + 7 * TILEMAP_WIDTH + 11 ; $5782
-	ld bc, $0501 ; $5785
+	lb bc, $05, $01 ; $5785 tile, count
 	call FillTilemapRun ; $5788
-	ld bc, $2007 ; $578b
+	lb bc, $20, $07 ; $578b tile, count
 	call FillTilemapRun ; $578e
-	ld bc, $0601 ; $5791
+	lb bc, $06, $01 ; $5791 tile, count
 	call FillTilemapRun ; $5794
 	ld hl, wScreenAttrmap + 8 * TILEMAP_WIDTH + 11 ; $5797
-	ld bc, $0501 ; $579a
+	lb bc, $05, $01 ; $579a tile, count
 	call FillTilemapRun ; $579d
-	ld bc, $2007 ; $57a0
+	lb bc, $20, $07 ; $57a0 tile, count
 	call FillTilemapRun ; $57a3
-	ld bc, $0601 ; $57a6
+	lb bc, $06, $01 ; $57a6 tile, count
 	call FillTilemapRun ; $57a9
 	ld hl, wScreenAttrmap + 9 * TILEMAP_WIDTH + 11 ; $57ac
-	ld bc, $0701 ; $57af
+	lb bc, $07, $01 ; $57af tile, count
 	call FillTilemapRun ; $57b2
-	ld bc, $0807 ; $57b5
+	lb bc, $08, $07 ; $57b5 tile, count
 	call FillTilemapRun ; $57b8
-	ld bc, $0901 ; $57bb
+	lb bc, $09, $01 ; $57bb tile, count
 	call FillTilemapRun ; $57be
 	ld a, [wGameMode] ; $57c1
 	or a ; $57c4
@@ -1812,43 +1812,43 @@ DrawExpDoublesPartnerPanel:
 	ret ; $5813
 DrawExpTotalPanel:
 	ld hl, wScreenAttrmap + 14 * TILEMAP_WIDTH + 2 ; $5814
-	ld bc, $0201 ; $5817
+	lb bc, $02, $01 ; $5817 tile, count
 	call FillTilemapRun ; $581a
-	ld bc, $0308 ; $581d
+	lb bc, $03, $08 ; $581d tile, count
 	call FillTilemapRun ; $5820
-	ld bc, $0401 ; $5823
+	lb bc, $04, $01 ; $5823 tile, count
 	call FillTilemapRun ; $5826
-	ld bc, $0201 ; $5829
+	lb bc, $02, $01 ; $5829 tile, count
 	call FillTilemapRun ; $582c
-	ld bc, $0304 ; $582f
+	lb bc, $03, $04 ; $582f tile, count
 	call FillTilemapRun ; $5832
-	ld bc, $0401 ; $5835
+	lb bc, $04, $01 ; $5835 tile, count
 	call FillTilemapRun ; $5838
 	ld hl, wScreenAttrmap + 15 * TILEMAP_WIDTH + 2 ; $583b
-	ld bc, $0501 ; $583e
+	lb bc, $05, $01 ; $583e tile, count
 	call FillTilemapRun ; $5841
-	ld bc, $2008 ; $5844
+	lb bc, $20, $08 ; $5844 tile, count
 	call FillTilemapRun ; $5847
-	ld bc, $0601 ; $584a
+	lb bc, $06, $01 ; $584a tile, count
 	call FillTilemapRun ; $584d
-	ld bc, $0501 ; $5850
+	lb bc, $05, $01 ; $5850 tile, count
 	call FillTilemapRun ; $5853
-	ld bc, $2004 ; $5856
+	lb bc, $20, $04 ; $5856 tile, count
 	call FillTilemapRun ; $5859
-	ld bc, $0601 ; $585c
+	lb bc, $06, $01 ; $585c tile, count
 	call FillTilemapRun ; $585f
 	ld hl, wScreenAttrmap + 16 * TILEMAP_WIDTH + 2 ; $5862
-	ld bc, $0701 ; $5865
+	lb bc, $07, $01 ; $5865 tile, count
 	call FillTilemapRun ; $5868
-	ld bc, $0808 ; $586b
+	lb bc, $08, $08 ; $586b tile, count
 	call FillTilemapRun ; $586e
-	ld bc, $0901 ; $5871
+	lb bc, $09, $01 ; $5871 tile, count
 	call FillTilemapRun ; $5874
-	ld bc, $0701 ; $5877
+	lb bc, $07, $01 ; $5877 tile, count
 	call FillTilemapRun ; $587a
-	ld bc, $0804 ; $587d
+	lb bc, $08, $04 ; $587d tile, count
 	call FillTilemapRun ; $5880
-	ld bc, $0901 ; $5883
+	lb bc, $09, $01 ; $5883 tile, count
 	call FillTilemapRun ; $5886
 	ld hl, Text_31_231 ; $5889
 	ld de, wScreenAttrmap + 15 * TILEMAP_WIDTH + 3 ; $588c
@@ -1857,39 +1857,39 @@ DrawExpTotalPanel:
 	ret ; $5895
 DrawExpMessageWindow:
 	ld hl, wScreenAttrmap ; $5896
-	ld bc, $0201 ; $5899
+	lb bc, $02, $01 ; $5899 tile, count
 	call FillTilemapRun ; $589c
-	ld bc, $0312 ; $589f
+	lb bc, $03, $12 ; $589f tile, count
 	call FillTilemapRun ; $58a2
-	ld bc, $0401 ; $58a5
+	lb bc, $04, $01 ; $58a5 tile, count
 	call FillTilemapRun ; $58a8
 	ld hl, wScreenAttrmap + 1 * TILEMAP_WIDTH ; $58ab
-	ld bc, $0501 ; $58ae
+	lb bc, $05, $01 ; $58ae tile, count
 	call FillTilemapRun ; $58b1
-	ld bc, $2012 ; $58b4
+	lb bc, $20, $12 ; $58b4 tile, count
 	call FillTilemapRun ; $58b7
-	ld bc, $0601 ; $58ba
+	lb bc, $06, $01 ; $58ba tile, count
 	call FillTilemapRun ; $58bd
 	ld hl, wScreenAttrmap + 2 * TILEMAP_WIDTH ; $58c0
-	ld bc, $0501 ; $58c3
+	lb bc, $05, $01 ; $58c3 tile, count
 	call FillTilemapRun ; $58c6
-	ld bc, $2012 ; $58c9
+	lb bc, $20, $12 ; $58c9 tile, count
 	call FillTilemapRun ; $58cc
-	ld bc, $0601 ; $58cf
+	lb bc, $06, $01 ; $58cf tile, count
 	call FillTilemapRun ; $58d2
 	ld hl, wScreenAttrmap + 3 * TILEMAP_WIDTH ; $58d5
-	ld bc, $0501 ; $58d8
+	lb bc, $05, $01 ; $58d8 tile, count
 	call FillTilemapRun ; $58db
-	ld bc, $2012 ; $58de
+	lb bc, $20, $12 ; $58de tile, count
 	call FillTilemapRun ; $58e1
-	ld bc, $0601 ; $58e4
+	lb bc, $06, $01 ; $58e4 tile, count
 	call FillTilemapRun ; $58e7
 	ld hl, wScreenAttrmap + 4 * TILEMAP_WIDTH ; $58ea
-	ld bc, $0701 ; $58ed
+	lb bc, $07, $01 ; $58ed tile, count
 	call FillTilemapRun ; $58f0
-	ld bc, $0812 ; $58f3
+	lb bc, $08, $12 ; $58f3 tile, count
 	call FillTilemapRun ; $58f6
-	ld bc, $0901 ; $58f9
+	lb bc, $09, $01 ; $58f9 tile, count
 	call FillTilemapRun ; $58fc
 	ret ; $58ff
 FillTilemapRun:
@@ -2085,28 +2085,28 @@ DrawExpTotalDigits:
 	cp $20 ; $5a6b
 	jr z, .eq20 ; $5a6d
 	call GetDigitSpriteTile ; $5a6f
-	ld de, $6b77 ; $5a72
+	lb de, $6b, $77 ; $5a72 x, y
 	call QueueSprite ; $5a75
 .eq20:
 	ld a, [wTextBuffer + 1] ; $5a78
 	cp $20 ; $5a7b
 	jr z, .eq202 ; $5a7d
 	call GetDigitSpriteTile ; $5a7f
-	ld de, $7377 ; $5a82
+	lb de, $73, $77 ; $5a82 x, y
 	call QueueSprite ; $5a85
 .eq202:
 	ld a, [wTextBuffer + 2] ; $5a88
 	cp $20 ; $5a8b
 	jr z, .eq203 ; $5a8d
 	call GetDigitSpriteTile ; $5a8f
-	ld de, $7b77 ; $5a92
+	lb de, $7b, $77 ; $5a92 x, y
 	call QueueSprite ; $5a95
 .eq203:
 	ld a, [wTextBuffer + 3] ; $5a98
 	cp $20 ; $5a9b
 	jr z, .done ; $5a9d
 	call GetDigitSpriteTile ; $5a9f
-	ld de, $8377 ; $5aa2
+	lb de, $83, $77 ; $5aa2 x, y
 	call QueueSprite ; $5aa5
 .done:
 	ret ; $5aa8
@@ -2115,35 +2115,35 @@ DrawExpTotalDigits:
 	cp $20 ; $5aac
 	jr z, .eq204 ; $5aae
 	call GetDigitSpriteTile ; $5ab0
-	ld de, $6777 ; $5ab3
+	lb de, $67, $77 ; $5ab3 x, y
 	call QueueSprite ; $5ab6
 .eq204:
 	ld a, [wTextBuffer + 1] ; $5ab9
 	cp $20 ; $5abc
 	jr z, .eq205 ; $5abe
 	call GetDigitSpriteTile ; $5ac0
-	ld de, $6f77 ; $5ac3
+	lb de, $6f, $77 ; $5ac3 x, y
 	call QueueSprite ; $5ac6
 .eq205:
 	ld a, [wTextBuffer + 2] ; $5ac9
 	cp $20 ; $5acc
 	jr z, .eq206 ; $5ace
 	call GetDigitSpriteTile ; $5ad0
-	ld de, $7777 ; $5ad3
+	lb de, $77, $77 ; $5ad3 x, y
 	call QueueSprite ; $5ad6
 .eq206:
 	ld a, [wTextBuffer + 3] ; $5ad9
 	cp $20 ; $5adc
 	jr z, .eq207 ; $5ade
 	call GetDigitSpriteTile ; $5ae0
-	ld de, $7f77 ; $5ae3
+	lb de, $7f, $77 ; $5ae3 x, y
 	call QueueSprite ; $5ae6
 .eq207:
 	ld a, [wTextBuffer + 4] ; $5ae9
 	cp $20 ; $5aec
 	jr z, .doneB ; $5aee
 	call GetDigitSpriteTile ; $5af0
-	ld de, $8777 ; $5af3
+	lb de, $87, $77 ; $5af3 x, y
 	call QueueSprite ; $5af6
 .doneB:
 	ret ; $5af9
@@ -4698,10 +4698,10 @@ LoadGameProgressScreenTiles:
 	ld c, (GameProgressScreenTiles2 - GameProgressScreenTiles1) / 16 ; $758e
 	call QueueVRAMCopy ; $7590
 	ld hl, GameProgressScreenPalettes1 ; $7593
-	ld de, $0a01 ; $7596
+	lb de, $0a, $01 ; $7596 palette index, count
 	call LoadPaletteShadow ; $7599
 	ld hl, GameProgressScreenPalettes2 ; $759c
-	ld de, $0901 ; $759f
+	lb de, $09, $01 ; $759f palette index, count
 	call LoadPaletteShadow ; $75a2
 	ret ; $75a5
 GameProgressHeaderGfx_1e:

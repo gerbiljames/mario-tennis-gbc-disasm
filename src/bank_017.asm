@@ -1047,7 +1047,7 @@ CycleDiagramTargetPalette:
 	inc hl ; $46b1
 	ld [hl], d ; $46b2
 	ld hl, wBriefingTargetPalette ; $46b3
-	ld de, $0201 ; $46b6
+	lb de, $02, $01 ; $46b6 palette index, count
 	call LoadPaletteShadow ; $46b9
 	pop_wram_bank ; $46bc
 	ret ; $46c1
@@ -1262,7 +1262,7 @@ DrawBlinkingPrompt:
 	jr z, .restore ; $48af
 	ld c, $72 ; $48b1
 	ld b, $09 ; $48b3
-	ld de, $508c ; $48b5
+	lb de, $50, $8c ; $48b5 x, y
 	call QueueSprite ; $48b8
 .restore:
 	pop_wram_bank ; $48bb
@@ -1457,7 +1457,7 @@ QueueSpritePair_17:
 	ld c, $04 ; $4a1b
 	ld b, $09 ; $4a1d
 	ld hl, QueueSpritePair_17_SpriteTemplate ; $4a1f
-	ld de, $2020 ; $4a22
+	lb de, $20, $20 ; $4a22 x, y
 	call QueueSpriteTemplate ; $4a25
 	ret ; $4a28
 QueueSpritePair_17_SpriteTemplate:
@@ -1580,7 +1580,7 @@ CourtDiagramGraphicsList:
 	db $00, $00 ; 0x50
 LoadCourtDiagramObjPalettes:
 	ld hl, CourtDiagramObjPalettes ; $4b0d
-	ld de, $0803 ; $4b10
+	lb de, $08, $03 ; $4b10 palette index, count
 	call LoadPaletteShadow ; $4b13
 	ret ; $4b16
 CourtDiagramTiles:
@@ -4404,7 +4404,7 @@ LoadRulesScreen:
 	farcall PrepareGlyphBuffer ; $717d
 	call ClearRulesScreenTextArea ; $7180
 	ld hl, RulesScreenPalette ; $7183
-	ld de, $0902 ; $7186
+	lb de, $09, $02 ; $7186 palette index, count
 	call LoadPalettesImmediate ; $7189
 	ld de, $8000 + VRAM_BANK1 ; $718c
 	farcall LoadMenuArrowSpriteTiles ; $718f
@@ -4766,7 +4766,7 @@ DrawRulesScreenCharacters:
 	inc h ; $74fc
 .readB:
 	ld b, [hl] ; $74fd
-	ld de, $7e68 ; $74fe
+	lb de, $7e, $68 ; $74fe x, y
 	ld hl, DrawRulesScreenCharacters_SpriteTemplate ; $7501
 	call QueueSpriteTemplate ; $7504
 	pop bc ; $7507
@@ -4781,7 +4781,7 @@ DrawRulesScreenCharacters:
 	inc h ; $7516
 .read2:
 	ld b, [hl] ; $7517
-	ld de, $7e68 ; $7518
+	lb de, $7e, $68 ; $7518 x, y
 	ld hl, DrawRulesScreenCharacters_SpriteTemplate ; $751b
 	call QueueSpriteTemplate ; $751e
 	pop_wram_bank ; $7521

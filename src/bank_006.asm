@@ -1555,7 +1555,7 @@ DrawScoreboardSprites:
 	ld a, [hl+] ; $5086
 	ld h, [hl] ; $5087
 	ld l, a ; $5088
-	ld bc, $0000 ; $5089
+	lb bc, $00, $00 ; $5089 attr, tile
 	call QueueSpriteTemplate ; $508c
 	pop de ; $508f
 	ld a, [wScoreboardLayout] ; $5090
@@ -1911,7 +1911,7 @@ DrawMatchMenuItem:
 	push hl ; $6810
 	call GetShadowTilemapAddr ; $6811
 	pop hl ; $6814
-	ld bc, $0302 ; $6815
+	lb bc, $03, $02 ; $6815 width, rows
 	call CopyTextRect ; $6818
 	pop de ; $681b
 	pop af ; $681c
@@ -1924,7 +1924,7 @@ DrawMatchMenuItem:
 	push hl ; $6829
 	call GetShadowAttrmapAddr ; $682a
 	pop hl ; $682d
-	ld bc, $0302 ; $682e
+	lb bc, $03, $02 ; $682e width, rows
 	call CopyTextRect ; $6831
 	ret ; $6834
 MatchMenuItemRectPointers:
@@ -2167,12 +2167,12 @@ Unused_06_DrawMusicMenuRow:
 	ld de, $030a ; $698b
 	call GetShadowTilemapAddr ; $698e
 	ld hl, Unused_06_DrawMusicMenuRowTextRect ; $6991
-	ld bc, $0c02 ; $6994
+	lb bc, $0c, $02 ; $6994 width, rows
 	call CopyTextRect ; $6997
 	ld de, $030a ; $699a
 	call GetShadowAttrmapAddr ; $699d
 	ld hl, TextRectAttrs_06 ; $69a0
-	ld bc, $0c02 ; $69a3
+	lb bc, $0c, $02 ; $69a3 width, rows
 	call CopyTextRect ; $69a6
 	ld a, [wCourtViewLocked] ; $69a9
 	and a ; $69ac
@@ -2187,7 +2187,7 @@ QueueMatchMenuCursorSprite:
 	ld d, a ; $69ba
 	call AdjustSpriteCoordsForScroll ; $69bb
 	ld hl, QueueMatchMenuCursorSprite_SpriteTemplate ; $69be
-	ld bc, $0000 ; $69c1
+	lb bc, $00, $00 ; $69c1 attr, tile
 	call QueueSpriteTemplate ; $69c4
 	ret ; $69c7
 DrawScoreboardModeTitle:
@@ -2204,7 +2204,7 @@ DrawScoreboardModeTitle:
 	farcall AddBobbingOffsetYLarge ; $69d7
 	call AdjustSpriteCoordsForScroll ; $69da
 	ld hl, DrawScoreboardModeTitle_SpriteTemplate ; $69dd
-	ld bc, $0000 ; $69e0
+	lb bc, $00, $00 ; $69e0 attr, tile
 	call QueueSpriteTemplate ; $69e3
 	ret ; $69e6
 QueueMatchMenuCursorSprite_SpriteTemplate:
@@ -2454,12 +2454,12 @@ QueueDebugStatsCursorSprites:
 	add a ; $6c1e
 	add e ; $6c1f
 	ld e, a ; $6c20
-	ld bc, $0942 ; $6c21
+	lb bc, $09, $42 ; $6c21 attr, tile
 	call QueueSprite ; $6c24
 	ld a, d ; $6c27
 	add $40 ; $6c28
 	ld d, a ; $6c2a
-	ld bc, $0942 ; $6c2b
+	lb bc, $09, $42 ; $6c2b attr, tile
 	call QueueSprite ; $6c2e
 	ret ; $6c31
 AdjustSelectedDebugStat:
@@ -3333,7 +3333,7 @@ QueueStoryMenuCursorSprite:
 	ld d, a ; $72d1
 	call AdjustSpriteCoordsForScroll ; $72d2
 	ld hl, QueueStoryMenuCursorSprite_SpriteTemplate ; $72d5
-	ld bc, $0000 ; $72d8
+	lb bc, $00, $00 ; $72d8 attr, tile
 	call QueueSpriteTemplate ; $72db
 	ret ; $72de
 QueueStoryMenuCursorSprite_SpriteTemplate:

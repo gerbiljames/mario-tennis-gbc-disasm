@@ -1568,7 +1568,7 @@ AnimateLinkStatusPalette:
 	ld a, [hl+] ; $4a69
 	ld h, [hl] ; $4a6a
 	ld l, a ; $4a6b
-	ld de, $0501 ; $4a6c
+	lb de, $05, $01 ; $4a6c palette index, count
 	call LoadPaletteShadow ; $4a6f
 	pop hl ; $4a72
 	pop de ; $4a73
@@ -1690,7 +1690,7 @@ AnimateLinkErrorPalette:
 	inc hl ; $4b72
 	ld [hl], d ; $4b73
 	ld hl, wLinkErrorPalette ; $4b74
-	ld de, $0301 ; $4b77
+	lb de, $03, $01 ; $4b77 palette index, count
 	call LoadPaletteShadow ; $4b7a
 	pop_wram_bank ; $4b7d
 	ret ; $4b82
@@ -2014,7 +2014,7 @@ AnimateEraseConfirmPalette:
 	inc hl ; $4e6f
 	ld [hl], d ; $4e70
 	ld hl, wEraseConfirmPalette ; $4e71
-	ld de, $0401 ; $4e74
+	lb de, $04, $01 ; $4e74 palette index, count
 	call LoadPaletteShadow ; $4e77
 	pop_wram_bank ; $4e7a
 	ret ; $4e7f
@@ -2229,7 +2229,7 @@ SetRacketShoesChoicePalette:
 	ld a, [hl+] ; $5041
 	ld h, [hl] ; $5042
 	ld l, a ; $5043
-	ld de, $0401 ; $5044
+	lb de, $04, $01 ; $5044 palette index, count
 	call LoadPaletteShadow ; $5047
 	ret ; $504a
 RacketShoesChoicePalettePtrs:
@@ -2628,7 +2628,7 @@ SetPlayAlonePartnerPalette:
 	ld a, [hl+] ; $5329
 	ld h, [hl] ; $532a
 	ld l, a ; $532b
-	ld de, $0401 ; $532c
+	lb de, $04, $01 ; $532c palette index, count
 	call LoadPaletteShadow ; $532f
 	ret ; $5332
 PlayAlonePartnerPalettePtrs:
@@ -2865,7 +2865,7 @@ LoadRacketSelectScreen:
 	ld de, $8200 + VRAM_BANK1 ; $5548
 	farcall LoadCompressedTileBlock ; $554b
 	ld hl, Palette_3e ; $554e
-	ld de, $0901 ; $5551
+	lb de, $09, $01 ; $5551 palette index, count
 	call LoadPaletteShadow ; $5554
 	farcall QueueWram3MapToVRAM ; $5557
 	ret ; $555a
@@ -3081,7 +3081,7 @@ LoadShoesSelectScreen:
 	ld de, $8200 + VRAM_BANK1 ; $56f1
 	farcall LoadCompressedTileBlock ; $56f4
 	ld hl, Palette_3e ; $56f7
-	ld de, $0901 ; $56fa
+	lb de, $09, $01 ; $56fa palette index, count
 	call LoadPaletteShadow ; $56fd
 	farcall QueueWram3MapToVRAM ; $5700
 	ret ; $5703
@@ -4279,7 +4279,7 @@ SetCourtSelect4Palette:
 	ld a, [hl+] ; $5fe7
 	ld h, [hl] ; $5fe8
 	ld l, a ; $5fe9
-	ld de, $0401 ; $5fea
+	lb de, $04, $01 ; $5fea palette index, count
 	call LoadPaletteShadow ; $5fed
 	ret ; $5ff0
 CourtSelect4PalettePtrs:
@@ -4970,7 +4970,7 @@ SetCourtSelect9Palette:
 	ld a, [hl+] ; $68cf
 	ld h, [hl] ; $68d0
 	ld l, a ; $68d1
-	ld de, $0401 ; $68d2
+	lb de, $04, $01 ; $68d2 palette index, count
 	call LoadPaletteShadow ; $68d5
 	ret ; $68d8
 CourtSelect9PalettePtrs:
