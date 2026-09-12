@@ -40,53 +40,31 @@ WaterSpriteHook_PointEnd:
 	ld [wMatchAbortFlag], a ; $4c0f
 	ret ; $4c12
 Test2InitScriptMinigamePointTable_10:
-	; $4c13, 184 bytes (bytes:4)
-	db $00, $03, $09, $09 ; 0x00
-	db $00, $01, $09, $09 ; 0x04
-	db $03, $00, $09, $09 ; 0x08
-	db $01, $00, $09, $09 ; 0x0c
-	db $01, $02, $09, $09 ; 0x10
-	db $00, $01, $09, $09 ; 0x14
-	db $02, $01, $09, $09 ; 0x18
-	db $01, $00, $09, $09 ; 0x1c
-	db $03, $00, $09, $09 ; 0x20
-	db $00, $01, $09, $09 ; 0x24
-	db $00, $03, $09, $09 ; 0x28
-	db $01, $00, $09, $09 ; 0x2c
-	db $02, $01, $09, $09 ; 0x30
-	db $00, $01, $09, $09 ; 0x34
-	db $01, $02, $09, $09 ; 0x38
-	db $01, $00, $09, $09 ; 0x3c
-	db $ff, $f0, $94, $e6 ; 0x40
-	db $03, $57, $21, $b4 ; 0x44
-	db $c2, $7e, $b7, $72 ; 0x48
-	db $20, $1d, $7a, $b7 ; 0x4c
-	db $28, $19, $21, $b2 ; 0x50
-	db $c2, $2a, $56, $5f ; 0x54
-	db $13, $21, $b2, $c2 ; 0x58
-	db $7b, $22, $72, $e5 ; 0x5c
-	db $d5, $62, $6b, $11 ; 0x60
-	db $04, $0f, $cd, $ce ; 0x64
-	db $1a, $d1, $e1, $21 ; 0x68
-	db $b0, $c2, $2a, $56 ; 0x6c
-	db $5f, $1b, $7a, $b3 ; 0x70
-	db $28, $0c, $21, $b0 ; 0x74
-	db $c2, $7b, $22, $72 ; 0x78
-	db $3e, $01, $ea, $b5 ; 0x7c
-	db $c2, $c9, $21, $54 ; 0x80
-	db $4c, $cd, $cb, $1b ; 0x84
-	db $af, $ea, $b5, $c2 ; 0x88
-	db $c9, $cf, $74, $11 ; 0x8c
-	db $58, $02, $21, $b0 ; 0x90
-	db $c2, $7b, $22, $72 ; 0x94
-	db $21, $b2, $c2, $af ; 0x98
-	db $22, $22, $22, $22 ; 0x9c
-	db $3e, $01, $21, $54 ; 0xa0
-	db $4c, $cd, $6a, $1b ; 0xa4
-	db $cd, $31, $26, $fa ; 0xa8
-	db $b5, $c2, $b7, $20 ; 0xac
-	db $f7, $cf, $75, $cd ; 0xb0
-	db $25, $27, $78, $c9 ; 0xb4
+	; $4c13, 184 bytes (court_positions)
+; court_positions pos0, pos1, pos2, pos3, role0, role1, role2, role3
+	court_positions $00, $03, $09, $09, $00, $01, $09, $09 ; point 0
+	court_positions $03, $00, $09, $09, $01, $00, $09, $09 ; point 1
+	court_positions $01, $02, $09, $09, $00, $01, $09, $09 ; point 2
+	court_positions $02, $01, $09, $09, $01, $00, $09, $09 ; point 3
+	court_positions $03, $00, $09, $09, $00, $01, $09, $09 ; point 4
+	court_positions $00, $03, $09, $09, $01, $00, $09, $09 ; point 5
+	court_positions $02, $01, $09, $09, $00, $01, $09, $09 ; point 6
+	court_positions $01, $02, $09, $09, $01, $00, $09, $09 ; point 7
+	court_positions $ff, $f0, $94, $e6, $03, $57, $21, $b4 ; point 8
+	court_positions $c2, $7e, $b7, $72, $20, $1d, $7a, $b7 ; point 9
+	court_positions $28, $19, $21, $b2, $c2, $2a, $56, $5f ; point 10
+	court_positions $13, $21, $b2, $c2, $7b, $22, $72, $e5 ; point 11
+	court_positions $d5, $62, $6b, $11, $04, $0f, $cd, $ce ; point 12
+	court_positions $1a, $d1, $e1, $21, $b0, $c2, $2a, $56 ; point 13
+	court_positions $5f, $1b, $7a, $b3, $28, $0c, $21, $b0 ; point 14
+	court_positions $c2, $7b, $22, $72, $3e, $01, $ea, $b5 ; point 15
+	court_positions $c2, $c9, $21, $54, $4c, $cd, $cb, $1b ; point 16
+	court_positions $af, $ea, $b5, $c2, $c9, $cf, $74, $11 ; point 17
+	court_positions $58, $02, $21, $b0, $c2, $7b, $22, $72 ; point 18
+	court_positions $21, $b2, $c2, $af, $22, $22, $22, $22 ; point 19
+	court_positions $3e, $01, $21, $54, $4c, $cd, $6a, $1b ; point 20
+	court_positions $cd, $31, $26, $fa, $b5, $c2, $b7, $20 ; point 21
+	court_positions $f7, $cf, $75, $cd, $25, $27, $78, $c9 ; point 22
 DevelopmentMapScripts_10:
 	; $4ccb, 14 bytes (map_tree)
 	dw DevelopmentEntryPoints_10 ; slot 0 EntryPoints

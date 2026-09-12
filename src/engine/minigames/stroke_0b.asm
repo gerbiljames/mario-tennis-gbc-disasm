@@ -137,17 +137,13 @@ NetGamePractice3Hook_BallHit:
 .done:
 	ret ; $624f
 NetGamePractice3PointStartDrillPositions:
-	; $6250, 34 bytes (records:4)
-; 8 records x 4 bytes
-	dw $fe50, $fd60 ; record 0
-	dw $0000, $fe40 ; record 1
-	dw $0000, $fd60 ; record 2
-	dw $01b0, $fe40 ; record 3
-	dw $0000, $01c0 ; record 4
-	dw $01b0, $02a0 ; record 5
-	dw $fe50, $01c0 ; record 6
-	dw $0000, $02a0 ; record 7
-	db $ff, $ff
+	; $6250, 34 bytes (drill_gates)
+; drill_gates x1, depth1, x2, depth2
+	drill_gates $fe50, $fd60, $0000, $fe40 ; point 0
+	drill_gates $0000, $fd60, $01b0, $fe40 ; point 1
+	drill_gates $0000, $01c0, $01b0, $02a0 ; point 2
+	drill_gates $fe50, $01c0, $0000, $02a0 ; point 3
+	db $ff, $ff ; end
 ; Instruction-identical to NetGamePractice1HandlePointEnd and NetGamePractice2HandlePointEnd (in this bank); a change here belongs in every copy.
 	twin_named net_game_practice1_handle_point_end, NetGamePractice3HandlePointEnd ; $6272
 NetGamePractice3JudgeOnPointEnd:

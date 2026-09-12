@@ -490,25 +490,17 @@ ServiceMatch2Hook_BallHit:
 	call ServiceMatch2JudgeOnBallHit ; $4a66
 	ret ; $4a69
 ServiceMatch2PointStartDrillPositions:
-	; $4a6a, 66 bytes (records:4)
-; 16 records x 4 bytes
-	dw $0000, $0000 ; record 0
-	dw $01b0, $0000 ; record 1
-	dw $fe50, $0000 ; record 2
-	dw $0000, $0000 ; record 3
-	dw $fe50, $0000 ; record 4
-	dw $0000, $0000 ; record 5
-	dw $0000, $0000 ; record 6
-	dw $01b0, $0000 ; record 7
-	dw $fe50, $0000 ; record 8
-	dw $0000, $0000 ; record 9
-	dw $0000, $0000 ; record 10
-	dw $01b0, $0000 ; record 11
-	dw $0000, $0000 ; record 12
-	dw $01b0, $0000 ; record 13
-	dw $fe50, $0000 ; record 14
-	dw $0000, $0000 ; record 15
-	db $ff, $ff
+	; $4a6a, 66 bytes (drill_gates)
+; drill_gates x1, depth1, x2, depth2
+	drill_gates $0000, $0000, $01b0, $0000 ; point 0
+	drill_gates $fe50, $0000, $0000, $0000 ; point 1
+	drill_gates $fe50, $0000, $0000, $0000 ; point 2
+	drill_gates $0000, $0000, $01b0, $0000 ; point 3
+	drill_gates $fe50, $0000, $0000, $0000 ; point 4
+	drill_gates $0000, $0000, $01b0, $0000 ; point 5
+	drill_gates $0000, $0000, $01b0, $0000 ; point 6
+	drill_gates $fe50, $0000, $0000, $0000 ; point 7
+	db $ff, $ff ; end
 ServiceMatch2HandlePointEnd:
 	farcall UpdateScorePanelDisplay ; $4aac
 	ld a, [wDrillPointJudgement] ; $4aaf

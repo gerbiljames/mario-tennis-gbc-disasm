@@ -1,25 +1,19 @@
 PracticeDrillPointTable:
-	; $4300, 32 bytes (bytes:4)
-	db $00, $03, $09, $09 ; 0x00
-	db $00, $01, $09, $09 ; 0x04
-	db $01, $02, $09, $09 ; 0x08
-	db $00, $01, $09, $09 ; 0x0c
-	db $03, $00, $09, $09 ; 0x10
-	db $00, $01, $09, $09 ; 0x14
-	db $02, $01, $09, $09 ; 0x18
-	db $00, $01, $09, $09 ; 0x1c
+	; $4300, 32 bytes (court_positions)
+; court_positions pos0, pos1, pos2, pos3, role0, role1, role2, role3
+	court_positions $00, $03, $09, $09, $00, $01, $09, $09 ; point 0
+	court_positions $01, $02, $09, $09, $00, $01, $09, $09 ; point 1
+	court_positions $03, $00, $09, $09, $00, $01, $09, $09 ; point 2
+	court_positions $02, $01, $09, $09, $00, $01, $09, $09 ; point 3
 	; $4320, 1 bytes (fill)
 	ds 1, $ff
 StrokePracticePointTable:
-	; $4321, 32 bytes (bytes:4)
-	db $00, $03, $09, $09 ; 0x00
-	db $01, $00, $09, $09 ; 0x04
-	db $01, $02, $09, $09 ; 0x08
-	db $01, $00, $09, $09 ; 0x0c
-	db $03, $00, $09, $09 ; 0x10
-	db $01, $00, $09, $09 ; 0x14
-	db $02, $01, $09, $09 ; 0x18
-	db $01, $00, $09, $09 ; 0x1c
+	; $4321, 32 bytes (court_positions)
+; court_positions pos0, pos1, pos2, pos3, role0, role1, role2, role3
+	court_positions $00, $03, $09, $09, $01, $00, $09, $09 ; point 0
+	court_positions $01, $02, $09, $09, $01, $00, $09, $09 ; point 1
+	court_positions $03, $00, $09, $09, $01, $00, $09, $09 ; point 2
+	court_positions $02, $01, $09, $09, $01, $00, $09, $09 ; point 3
 	; $4341, 1 bytes (fill)
 	ds 1, $ff
 TargetPositions_0b_0:

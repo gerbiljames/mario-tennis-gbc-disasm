@@ -363,17 +363,13 @@ ServicePractice1Hook_BallHit:
 .done:
 	ret ; $4e9f
 ServicePractice1PointStartDrillPositions:
-	; $4ea0, 34 bytes (records:4)
-; 8 records x 4 bytes
-	dw $fe50, $fd60 ; record 0
-	dw $ff28, $feb0 ; record 1
-	dw $00d8, $fd60 ; record 2
-	dw $01b0, $feb0 ; record 3
-	dw $00d8, $0150 ; record 4
-	dw $01b0, $02a0 ; record 5
-	dw $fe50, $0150 ; record 6
-	dw $ff28, $02a0 ; record 7
-	db $ff, $ff
+	; $4ea0, 34 bytes (drill_gates)
+; drill_gates x1, depth1, x2, depth2
+	drill_gates $fe50, $fd60, $ff28, $feb0 ; point 0
+	drill_gates $00d8, $fd60, $01b0, $feb0 ; point 1
+	drill_gates $00d8, $0150, $01b0, $02a0 ; point 2
+	drill_gates $fe50, $0150, $ff28, $02a0 ; point 3
+	db $ff, $ff ; end
 ServicePractice1HandlePointEnd:
 	farcall UpdateScorePanelDisplay ; $4ec2
 	call ServicePractice1QueueOutcomeMessage ; $4ec5

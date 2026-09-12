@@ -307,17 +307,13 @@ StrokePractice2Hook_BallHit:
 	call StrokePractice2JudgeOnBallHit ; $6ea3
 	ret ; $6ea6
 StrokePractice2PointStartDrillPositions:
-	; $6ea7, 34 bytes (records:4)
-; 8 records x 4 bytes
-	dw $fe50, $fb20 ; record 0
-	dw $0000, $fd60 ; record 1
-	dw $0000, $fb20 ; record 2
-	dw $01b0, $fd60 ; record 3
-	dw $0000, $02a0 ; record 4
-	dw $01b0, $04e0 ; record 5
-	dw $fe50, $02a0 ; record 6
-	dw $0000, $04e0 ; record 7
-	db $ff, $ff
+	; $6ea7, 34 bytes (drill_gates)
+; drill_gates x1, depth1, x2, depth2
+	drill_gates $fe50, $fb20, $0000, $fd60 ; point 0
+	drill_gates $0000, $fb20, $01b0, $fd60 ; point 1
+	drill_gates $0000, $02a0, $01b0, $04e0 ; point 2
+	drill_gates $fe50, $02a0, $0000, $04e0 ; point 3
+	db $ff, $ff ; end
 StrokePractice2HandlePointEnd:
 	farcall UpdateScorePanelDisplay ; $6ec9
 	ld a, [wDrillPointJudgement] ; $6ecc
@@ -597,17 +593,13 @@ StrokePractice3Hook_BallHit:
 	ret nz ; $7107
 	ret ; $7108
 StrokePractice3PointStartDrillPositions:
-	; $7109, 34 bytes (records:4)
-; 8 records x 4 bytes
-	dw $0120, $fb20 ; record 0
-	dw $01b0, $fd60 ; record 1
-	dw $fe50, $fb20 ; record 2
-	dw $fee0, $fd60 ; record 3
-	dw $fe50, $02a0 ; record 4
-	dw $fee0, $04e0 ; record 5
-	dw $0120, $02a0 ; record 6
-	dw $01b0, $04e0 ; record 7
-	db $ff, $ff
+	; $7109, 34 bytes (drill_gates)
+; drill_gates x1, depth1, x2, depth2
+	drill_gates $0120, $fb20, $01b0, $fd60 ; point 0
+	drill_gates $fe50, $fb20, $fee0, $fd60 ; point 1
+	drill_gates $fe50, $02a0, $fee0, $04e0 ; point 2
+	drill_gates $0120, $02a0, $01b0, $04e0 ; point 3
+	db $ff, $ff ; end
 ; Instruction-identical to StrokePractice1HandlePointEnd (in this bank); a change here belongs in every copy.
 	twin_named stroke_practice1_handle_point_end, StrokePractice3HandlePointEnd ; $712b
 StrokePractice3JudgeOnPointEnd:

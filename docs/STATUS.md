@@ -112,6 +112,13 @@ blob.
 
 ## Recent changes
 
+* **2026-09-12** — the minigame point tables and the drill gate tables have
+  named fields. The eight `*PointTable`s are the court-position record shape
+  (`court_positions`, one row per point; the old rendering had split each
+  record in half), with their `$ff` terminators already carved as one-byte
+  fills. The eight `*PointStartDrillPositions` tables are `drill_gates x1,
+  depth1, x2, depth2` rows, the two ball-gate points `IndexDrillTableByPoint`
+  sets per point, ending on `$ff, $ff`.
 * **2026-09-12** — the match-screen object templates have named fields.
   Bank `$09`'s seven `*ObjTemplate*` tables (45 records: the score display,
   the serve indicators, the win/lose result, the 29 court banners) render as

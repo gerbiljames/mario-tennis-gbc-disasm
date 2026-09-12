@@ -289,13 +289,23 @@ MACRO drill_outcomes
 	db \1, \2, \3, \4, \5, \6, \7, \8, \9, \<10>
 ENDM
 
-; One court-position record (GamePosition*, TiebreakPosition*; LoadPositionRecord):
-; the court-position code (wCharCourtPos: bit 1 = which end, bit 0 = which
+; One court-position record (GamePosition*, TiebreakPosition*; LoadPositionRecord),
+; and one point of a minigame point table (*PointTable; LoadMinigamePointLayout
+; installs it and stops at a record whose first byte is $ff): the
+; court-position code (wCharCourtPos: bit 1 = which end, bit 0 = which
 ; lateral half) for characters 0-3, then their serve/side role codes
 ; (wCharServeRole: 0 server, 1 receiver, 2/3 partners, $09 unused slot).
 ;   court_positions pos0, pos1, pos2, pos3, role0, role1, role2, role3
 MACRO court_positions
 	db \1, \2, \3, \4, \5, \6, \7, \8
+ENDM
+
+; One point of a training drill's *PointStartDrillPositions table
+; (IndexDrillTableByPoint): the two ball-gate points the drill sets for
+; that point, each an X and a depth in court units. The list ends on $ff, $ff.
+;   drill_gates x1, depth1, x2, depth2
+MACRO drill_gates
+	dw \1, \2, \3, \4
 ENDM
 
 ; One Target Shot scoring rule (TargetShotScoreRules; LookupMinigameShotResult
